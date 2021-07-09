@@ -2,216 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 10C213C25B2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jul 2021 16:15:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F4753C26F5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jul 2021 17:37:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231764AbhGIOSd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jul 2021 10:18:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57284 "EHLO
+        id S232248AbhGIPkH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jul 2021 11:40:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47654 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231797AbhGIOSa (ORCPT
+        with ESMTP id S232411AbhGIPkG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jul 2021 10:18:30 -0400
-Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1A0DC0613DD
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jul 2021 07:15:46 -0700 (PDT)
-Received: by mail-qt1-x82f.google.com with SMTP id d1so7677450qto.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jul 2021 07:15:46 -0700 (PDT)
+        Fri, 9 Jul 2021 11:40:06 -0400
+Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 59486C0613E6
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jul 2021 08:37:22 -0700 (PDT)
+Received: by mail-qt1-x830.google.com with SMTP id d1so7874682qto.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jul 2021 08:37:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=M33a9nhurlkTFJs9VeR1HHlfHGFlu3qKRWk6opI+opw=;
-        b=mPAAE/KdxqHgpheCvAJeuNaMqCjgzLFDfgIrqC4MQwPAXgFsAvuEeFyYjsQYz6I63C
-         1xH2Om/QBoR6t/3Wt+xSoY3Q64jwq6uZxcWMmd+qexg72gi9vjYva5PVljWDp/NqyUAT
-         i/Sp4qFiopz2smSYzB4KTY1I+7BC3kY03s1jFURFFFQhUTTQ4BXxU0/koCSQQdllMHnG
-         0TZtCqNsvTXs0SaGGjNQTfSinYSq12p9fiHv16WdqMzPnnl2qtC2j5vmwfOmMWaIx++U
-         dexRP2PVCk2VoLtNjK6lMAILQ+r7mDhlNaWP+kE8yTTZ7nOVzNnprqyL76tvDqPVkbsz
-         SK1Q==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=rcHQGITQT0Ev3LUdWDmu/OcX9pKeYERhlnakz2AyIbw=;
+        b=JhI+lUTdrAqp+quFOkd+uVXkExHP3MSCVfAQKGk8S3CI9aJi81f1YJ8O3vZMhy8muw
+         xH/M1oQXWZgcOJ4FWcDDapK005XdTg7AJBqXy9BUU8kS/y21VnaVi7fr/HAFNW/GJhHX
+         FIVliP1ss4+WCKvlzXJphI5x2kvMhb00A7xmCYrTDGWiCRIgzZkB/Hf8P3CYqtWOULmg
+         s781MBklg/7ag9lAGYRUgBhLsH7ZpzGzmVWPKGzudgC5C3digdUw+IJV08YDi2OYuvLZ
+         QI9pEFDqOBbI5Xtiu5i0E3lf6h40Hm4+A6BE1F5HaWq+u0iaZix08WFVlhjvbklIBdAz
+         pt4g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=M33a9nhurlkTFJs9VeR1HHlfHGFlu3qKRWk6opI+opw=;
-        b=rLt1VtBi7eh9rW50WK3jg//zN5PWe1eCBgY5UkRLkgAsnqsgKEwqzkNGUByA1wKnG7
-         BmKGiJMorQOJTnv5f82OuxAxIwCDjXTm7k6TH2ETl/Mwf135q76SgChcmSewPfYzsnoE
-         VACaSjAA/oT1zltqziYWSe7XEALukKjr/7YMH323IsIB04fT+DO8fbMN9OGASi0e918E
-         7FrsBvEGI120idAu+3wBHiPU++LqfcK8oqdGuOJuTUNBs+F1JmDjNn8tKStcoGYezXB7
-         KNFVwXILqWBpwHjTKR8FTPNUjElOyKZXWxtrCUMetk/2fLnpJvF4TytlE91dXL+g8Z/2
-         xHAg==
-X-Gm-Message-State: AOAM533kCCK9utGwA+X3Jfx5a/EUuv6/pG1o3y/6dZ3ZHS8La0Z+CM63
-        EnwUE/lh+hLJdSHISdbVTzQhHbGjax9CUyqzLIvKwQ==
-X-Google-Smtp-Source: ABdhPJxRMZ8IqU54zp9xUCY97QPAWSXjpu0GIaXhTQFDAaBho80mbtVBLIuWTNd1FQ08JJjxXTeCMWJHTLHkJTq6IlE=
-X-Received: by 2002:ac8:5b0d:: with SMTP id m13mr33972430qtw.364.1625840146016;
- Fri, 09 Jul 2021 07:15:46 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=rcHQGITQT0Ev3LUdWDmu/OcX9pKeYERhlnakz2AyIbw=;
+        b=Pzr6CHeUKUS7aFTlUXkx+HbPNKsdGxyOgFXm6QaB3yV5PmUF7QYJHCyqERe43Z1UWa
+         OnT5tbHO2PoMaxyMLo9h4RQWJG0gicUtsZChz9VfaBLrJkv5HUxBnv4w9DDLP+/zm5p4
+         pwOBmgNlqV1HQQ+shV9sra+iCMPmbPF4NXoNRfJsweu5Ru0YWniKnRdsBXs4AwaV2H5q
+         GNC/r0l7jlns9ZR2VnUXpldrFiKlc1NoymUabtEaSJGosx46oO3nEwU4IMBV+V4BZIq8
+         UjK9Weq4Flc7mN9OFINvLejAcFaIh4We5fa4V9/VXQRw3Y3NVn+5YqLXzH4Ns7VavnlT
+         mKeg==
+X-Gm-Message-State: AOAM530M8kUVBtGDOq3A5lYId9vHkG5AuXy34UdHmYTZQcuN2UKsQALH
+        PcagIrW3JeU8c1856I3+R8DhDQ==
+X-Google-Smtp-Source: ABdhPJz2Ui9kkZjSYNnuX2OGcNaYVVRTDwn4JfVlNcgsksptri/fedwygrdh1WQfi0MU5YbbAMhXZQ==
+X-Received: by 2002:ac8:744e:: with SMTP id h14mr25952977qtr.34.1625845041088;
+        Fri, 09 Jul 2021 08:37:21 -0700 (PDT)
+Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.gmail.com with ESMTPSA id p187sm2675297qkd.101.2021.07.09.08.37.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 09 Jul 2021 08:37:20 -0700 (PDT)
+Subject: Re: [Patch v3 3/6] cpufreq: qcom-cpufreq-hw: Add dcvs interrupt
+ support
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, rui.zhang@intel.com,
+        daniel.lezcano@linaro.org, rjw@rjwysocki.net, robh+dt@kernel.org,
+        tdas@codeaurora.org, mka@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20210708120656.663851-1-thara.gopinath@linaro.org>
+ <20210708120656.663851-4-thara.gopinath@linaro.org>
+ <20210709064646.7vjgiba2o7beudly@vireshk-i7>
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Message-ID: <5a98ef2a-d170-f52d-cc48-b838cddaa5c2@linaro.org>
+Date:   Fri, 9 Jul 2021 11:37:19 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-References: <20210709043136.533205-1-dmitry.baryshkov@linaro.org>
- <20210709043136.533205-5-dmitry.baryshkov@linaro.org> <CAPDyKFprYK8bSk+rdnDt3xRUR9BRNdyRiBdefO+s7qzOwHf7hg@mail.gmail.com>
- <CAA8EJprrjz=o7Ymt1mNBZASzTeX==1ceRTeKA4f3QrVMcpO6xg@mail.gmail.com>
- <CAPDyKFoLcsYLisEiOF66dDsV+759c5k0PD64uxU11jc5VTdNYQ@mail.gmail.com>
- <CAA8EJpr2HEm4R+bGrH6DHA_z8bjN69Zam9UUiAeKAr5vsCKr3A@mail.gmail.com>
- <CAPDyKFr+-qXbi4z4_wzDRaMMLKSKM7zNr55Kt-AOk97mVKM+8A@mail.gmail.com>
- <YOhXX+u9HuScTDp6@yoga> <CAPDyKFrsWhaURyOcR6_hY5nH=yOmwmnpCsMjPOTscXif7DPMUQ@mail.gmail.com>
-In-Reply-To: <CAPDyKFrsWhaURyOcR6_hY5nH=yOmwmnpCsMjPOTscXif7DPMUQ@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 9 Jul 2021 17:15:34 +0300
-Message-ID: <CAA8EJppUz2nuCkerW2wh56VfkvuxzUNS3qh8Bacn-RK1Wu99AA@mail.gmail.com>
-Subject: Re: [RESEND PATCH v2 4/7] clk: qcom: gdsc: enable optional power
- domain support
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20210709064646.7vjgiba2o7beudly@vireshk-i7>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 9 Jul 2021 at 17:13, Ulf Hansson <ulf.hansson@linaro.org> wrote:
->
-> On Fri, 9 Jul 2021 at 16:04, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
-> >
-> > On Fri 09 Jul 08:14 CDT 2021, Ulf Hansson wrote:
-> >
-> > > On Fri, 9 Jul 2021 at 14:59, Dmitry Baryshkov
-> > > <dmitry.baryshkov@linaro.org> wrote:
-> > > >
-> > > > On Fri, 9 Jul 2021 at 15:18, Ulf Hansson <ulf.hansson@linaro.org> wrote:
-> > > > >
-> > > > > On Fri, 9 Jul 2021 at 13:46, Dmitry Baryshkov
-> > > > > <dmitry.baryshkov@linaro.org> wrote:
-> > > > > >
-> > > > > > On Fri, 9 Jul 2021 at 12:33, Ulf Hansson <ulf.hansson@linaro.org> wrote:
-> > > > > > >
-> > > > > > > On Fri, 9 Jul 2021 at 06:32, Dmitry Baryshkov
-> > > > > > > <dmitry.baryshkov@linaro.org> wrote:
-> > > > > > > >
-> > > > > > > > On sm8250 dispcc and videocc registers are powered up by the MMCX power
-> > > > > > > > domain. Currently we used a regulator to enable this domain on demand,
-> > > > > > > > however this has some consequences, as genpd code is not reentrant.
-> > > > > > > >
-> > > > > > > > Teach Qualcomm clock controller code about setting up power domains and
-> > > > > > > > using them for gdsc control.
-> > > > > > > >
-> > > > > > > > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > > > > > >
-> > > > > > > [...]
-> > > > > > >
-> > > > > > > > diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
-> > > > > > > > index 51ed640e527b..9401d01533c8 100644
-> > > > > > > > --- a/drivers/clk/qcom/gdsc.c
-> > > > > > > > +++ b/drivers/clk/qcom/gdsc.c
-> > > > > > > > @@ -427,6 +427,7 @@ int gdsc_register(struct gdsc_desc *desc,
-> > > > > > > >                         continue;
-> > > > > > > >                 scs[i]->regmap = regmap;
-> > > > > > > >                 scs[i]->rcdev = rcdev;
-> > > > > > > > +               scs[i]->pd.dev.parent = desc->dev;
-> > > > > > > >                 ret = gdsc_init(scs[i]);
-> > > > > > > >                 if (ret)
-> > > > > > > >                         return ret;
-> > > > > > > > @@ -439,6 +440,8 @@ int gdsc_register(struct gdsc_desc *desc,
-> > > > > > > >                         continue;
-> > > > > > > >                 if (scs[i]->parent)
-> > > > > > > >                         pm_genpd_add_subdomain(scs[i]->parent, &scs[i]->pd);
-> > > > > > > > +               else if (!IS_ERR_OR_NULL(dev->pm_domain))
-> > > > > > >
-> > > > > > > So dev_pm_domain_attach() (which calls genpd_dev_pm_attach() is being
-> > > > > > > called for gdsc platform device from the platform bus', to try to
-> > > > > > > attach the device to its corresponding PM domain.
-> > > > > > >
-> > > > > > > Looking a bit closer to genpd_dev_pm_attach(), I realize that we
-> > > > > > > shouldn't really try to attach a device to its PM domain, when its OF
-> > > > > > > node (dev->of_node) contains a "#power-domain-cells" specifier. This
-> > > > > > > is because it indicates that the device belongs to a genpd provider
-> > > > > > > itself. In this case, a "power-domains" specifier tells that it has a
-> > > > > > > parent domain.
-> > > > > > >
-> > > > > > > I will post a patch that fixes this asap.
-> > > > > >
-> > > > > > I think there is nothing to fix here. The dispcc/videocc drivers
-> > > > > > provide clocks in addition to the gdsc power domain. And provided
-> > > > > > clocks would definitely benefit from having the dispcc device being
-> > > > > > attached to the power domain which governs clock registers (MMCX in
-> > > > > > our case). Thus I think it is perfectly valid to have:
-> > > > > >
-> > > > > > rpmhpd device:
-> > > > > >  - provides MMCX domain.
-> > > > > >
-> > > > > > dispcc device:
-> > > > > >  - is attached to the MMCX domain,
-> > > > >
-> > > > > We don't need this, it's redundant and weird to me.
-> > > > >
-> > > > > Also I am kind of worried that you will hit another new path in genpd,
-> > > > > causing locking issues etc, as it has not been designed to work like
-> > > > > this (a provider device and a child domain sharing the same "parent").
-> > > >
-> > > > So, which domain should the dispcc device belong to? It's registers
-> > > > are powered by the MMCX domain. I can not attach it to the child
-> > > > (GDSC) domain either: in the case of videocc there are 4 child
-> > > > domains.
-> > >
-> > > The dispcc device should *not* be attached to a PM domain.
-> > >
-> >
-> > dispcc is powered by the MMCX power domain, so it needs to be on if you
-> > want to touch the registers.
-> >
-> > I presume that for genpd this might not be a problem as long as all the
-> > exposed power domains are parented by the genpd provider's parent, as
-> > the core would turn the parent on before and turn off after performing
-> > those operations. But without attaching to the domain we don't have
-> > power to get through probe/registration.
-> >
-> > Further more, dispcc is also a clock driver and there's certainly
-> > operations where the genpd framework won't save us.
-> >
-> > > Instead it should be registered as a genpd provider and the
-> > > corresponding PM domains it provides, should be assigned as child
-> > > domains to the MMCX domain.
-> > >
-> >
-> > Right, this relationship is today missing and is what Dmitry needs to
-> > add - so that the parent domains stays powered even when we're not
-> > keeping the parent domain enabled to poke the dispcc.
-> >
-> > > This is exactly what the child/parent domain support in genpd is there
-> > > to help with.
-> > >
-> > > > An alternative would be to request that all users of the provided
-> > > > clocks power on one of the child domains. However this is also not
-> > > > perfect. If some generic code (e.g. clock framework) calls into
-> > > > provided clocks (e.g. because of assigned-clock-rates), this can
-> > > > happen w/o proper power domain being powered up yet.
-> > >
-> > > Issues with power on/off synchronization during genpd initializations
-> > > and genpd provider registration, certainly need to be fixed and I am
-> > > happy to help. However, my point is that I think it's a bad idea to
-> > > fix it through modelling the PM domain hierarchy in an incorrect way.
-> > >
-> >
-> > This was my initial feeling to the patch as well and I think it might be
-> > better to push the pm_runtime_get/put operations into gdsc.c - in
-> > particular if you're saying that the general case is not for the genpd
-> > provider itself to be powered by the specified parent domain.
-> >
-> > At least we could start by doing it manually in gdsc.c and possibly move
-> > it into the framework if we're confident that it's a good idea.
->
-> Yes, better to start making this Qcom specific, then we can take it from there.
 
-I will re-add pm_runtime calls to gdsc.c and send a v3.
+
+On 7/9/21 2:46 AM, Viresh Kumar wrote:
+> On 08-07-21, 08:06, Thara Gopinath wrote:
+>>   static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
+>>   {
+>>   	struct platform_device *pdev = cpufreq_get_driver_data();
+>> @@ -370,6 +480,10 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
+>>   			dev_warn(cpu_dev, "failed to enable boost: %d\n", ret);
+>>   	}
+>>   
+>> +	ret = qcom_cpufreq_hw_lmh_init(policy, index);
+> 
+> You missed unregistering EM here (which is also missing from exit,
+> which you need to fix first in a separate patch).
+
+Hi!
+
+So how exactly do you do this? I checked other users of the api and I do 
+not see any free. I would say if needed, it should be a separate patch 
+and outside of this series.
+
+> 
+>> +	if (ret)
+>> +		goto error;
+>> +
+>>   	return 0;
+>>   error:
+>>   	kfree(data);
+>> @@ -389,6 +503,10 @@ static int qcom_cpufreq_hw_cpu_exit(struct cpufreq_policy *policy)
+>>   
+>>   	dev_pm_opp_remove_all_dynamic(cpu_dev);
+>>   	dev_pm_opp_of_cpumask_remove_table(policy->related_cpus);
+>> +	if (data->lmh_dcvs_irq > 0) {
+>> +		devm_free_irq(cpu_dev, data->lmh_dcvs_irq, data);
+> 
+> Why using devm variants here and while requesting the irq ?
+> 
+>> +		cancel_delayed_work_sync(&data->lmh_dcvs_poll_work);
+>> +	}
+> 
+> Please move this to qcom_cpufreq_hw_lmh_exit() or something.
+
+Ok.
+
+> 
+> Now with sequence of disabling interrupt, etc, I see a potential
+> problem.
+> 
+> CPU0                                    CPU1
+> 
+> qcom_cpufreq_hw_cpu_exit()
+> -> devm_free_irq();
+>                                          qcom_lmh_dcvs_poll()
+>                                          -> qcom_lmh_dcvs_notify()
+>                                            -> enable_irq()
+> 
+> -> cancel_delayed_work_sync();
+> 
+> 
+> What will happen if enable_irq() gets called after freeing the irq ?
+> Not sure, but it looks like you will hit this then from manage.c:
+> 
+> WARN(!desc->irq_data.chip, KERN_ERR "enable_irq before
+>                                       setup/request_irq: irq %u\n", irq))
+> 
+> ?
+> 
+> You got a chicken n egg problem :)
+
+Yes indeed! But also it is a very rare chicken and egg problem.
+The scenario here is that the cpus are busy and running load causing a 
+thermal overrun and lmh is engaged. At the same time for this issue to 
+be hit the cpu is trying to exit/disable cpufreq. Calling 
+cancel_delayed_work_sync first could solve this issue, right ? 
+cancel_delayed_work_sync guarantees the work not to be pending even if
+it requeues itself on return. So once the delayed work is cancelled, the 
+interrupts can be safely disabled. Thoughts ?
+
+
+> 
 
 -- 
-With best wishes
-Dmitry
+Warm Regards
+Thara (She/Her/Hers)
