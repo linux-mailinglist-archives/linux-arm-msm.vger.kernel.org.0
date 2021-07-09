@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 120003C25AD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jul 2021 16:15:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 10C213C25B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  9 Jul 2021 16:15:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231905AbhGIORm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jul 2021 10:17:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57068 "EHLO
+        id S231764AbhGIOSd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jul 2021 10:18:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57284 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232200AbhGIORl (ORCPT
+        with ESMTP id S231797AbhGIOSa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jul 2021 10:17:41 -0400
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2164BC0613E6
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jul 2021 07:14:57 -0700 (PDT)
-Received: by mail-qk1-x729.google.com with SMTP id a6so9423675qka.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jul 2021 07:14:57 -0700 (PDT)
+        Fri, 9 Jul 2021 10:18:30 -0400
+Received: from mail-qt1-x82f.google.com (mail-qt1-x82f.google.com [IPv6:2607:f8b0:4864:20::82f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C1A0DC0613DD
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jul 2021 07:15:46 -0700 (PDT)
+Received: by mail-qt1-x82f.google.com with SMTP id d1so7677450qto.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jul 2021 07:15:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=igRa73Ep9fDKPnsyNmc5V2ieW+E+odN7WzNW9RCcwxw=;
-        b=J6azk59ix+0PU2toomtSuFZVu9fQRhRJqIgschSBWLXFE0e42W4vVLmhiiYkmObgpM
-         BDUsVxNiO8oW6qlbp7gTp1dUXArSvrEJxNhfwD28yqOX1z9OHgL2WslTvbIZAc3acZ4h
-         wymEWYBCZjaySKQ4LpzREGZvcpcOf2aaPXevuR6M44doGD5Jk30GsLKNzlPJw6Vb1HEh
-         LreEEVIwG9vaV3dl2Jp8RIR61g/6zsLh5Omj6EaAptaj0d9iib1/OnGQhsQSTT6a0mqh
-         xMVy4I5aaTnBt4XGdHQbGVJF0oe3hzVOB/gQu+94TtMHqEWZ5yNwec6RUt2r4kjAG5TB
-         UJSQ==
+        bh=M33a9nhurlkTFJs9VeR1HHlfHGFlu3qKRWk6opI+opw=;
+        b=mPAAE/KdxqHgpheCvAJeuNaMqCjgzLFDfgIrqC4MQwPAXgFsAvuEeFyYjsQYz6I63C
+         1xH2Om/QBoR6t/3Wt+xSoY3Q64jwq6uZxcWMmd+qexg72gi9vjYva5PVljWDp/NqyUAT
+         i/Sp4qFiopz2smSYzB4KTY1I+7BC3kY03s1jFURFFFQhUTTQ4BXxU0/koCSQQdllMHnG
+         0TZtCqNsvTXs0SaGGjNQTfSinYSq12p9fiHv16WdqMzPnnl2qtC2j5vmwfOmMWaIx++U
+         dexRP2PVCk2VoLtNjK6lMAILQ+r7mDhlNaWP+kE8yTTZ7nOVzNnprqyL76tvDqPVkbsz
+         SK1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=igRa73Ep9fDKPnsyNmc5V2ieW+E+odN7WzNW9RCcwxw=;
-        b=TczCk5VBDZq7akLHeq3JLX3NaC3+hJTz2mgrKSjWb9vQCt+tb+XI/DYiwhxFMEc8Od
-         uwKpDOu3b4h3t+tln/kqNs0dlzNs3Ke5mGTiTiNyUsCW+8VZ6oem9OA7h6bQiJuyL7cc
-         zs6G4hTP6joPNSJz8oCFutYJsxEycYSo8SmpptStubyHeVoxpOSSUT1UoHiT53Ia6YDx
-         BryGb2TEbhHzPMjUf4ALK6yA4Zd5bIozk5JW9dcXZqYQwARktD+ELc6GZs6sRTksT03I
-         C+v5Yd/RIRZfhFpET6p6suqq514IVhJMNyHXDdXcQjbT802wwnFD/cZWKTsVP0j5W6EW
-         zS/g==
-X-Gm-Message-State: AOAM532yCPqxMeTa7V9FKDHhwo+EzU3P4D8pYY1h7XvRj7QAserdMLVl
-        9bwrIpX8ZTfDSnxhzJKQOq1j1eMqk/L56B8oLM2gmQ==
-X-Google-Smtp-Source: ABdhPJw6Jq6Jvctn4bU55o8MGFoXji5V6u32cBfCAnYqa1YfeUZo+HZW3nJNwMx7aTSlO7/isQiA3mqToUJDuPKouGo=
-X-Received: by 2002:ae9:e643:: with SMTP id x3mr31130102qkl.162.1625840096249;
- Fri, 09 Jul 2021 07:14:56 -0700 (PDT)
+        bh=M33a9nhurlkTFJs9VeR1HHlfHGFlu3qKRWk6opI+opw=;
+        b=rLt1VtBi7eh9rW50WK3jg//zN5PWe1eCBgY5UkRLkgAsnqsgKEwqzkNGUByA1wKnG7
+         BmKGiJMorQOJTnv5f82OuxAxIwCDjXTm7k6TH2ETl/Mwf135q76SgChcmSewPfYzsnoE
+         VACaSjAA/oT1zltqziYWSe7XEALukKjr/7YMH323IsIB04fT+DO8fbMN9OGASi0e918E
+         7FrsBvEGI120idAu+3wBHiPU++LqfcK8oqdGuOJuTUNBs+F1JmDjNn8tKStcoGYezXB7
+         KNFVwXILqWBpwHjTKR8FTPNUjElOyKZXWxtrCUMetk/2fLnpJvF4TytlE91dXL+g8Z/2
+         xHAg==
+X-Gm-Message-State: AOAM533kCCK9utGwA+X3Jfx5a/EUuv6/pG1o3y/6dZ3ZHS8La0Z+CM63
+        EnwUE/lh+hLJdSHISdbVTzQhHbGjax9CUyqzLIvKwQ==
+X-Google-Smtp-Source: ABdhPJxRMZ8IqU54zp9xUCY97QPAWSXjpu0GIaXhTQFDAaBho80mbtVBLIuWTNd1FQ08JJjxXTeCMWJHTLHkJTq6IlE=
+X-Received: by 2002:ac8:5b0d:: with SMTP id m13mr33972430qtw.364.1625840146016;
+ Fri, 09 Jul 2021 07:15:46 -0700 (PDT)
 MIME-Version: 1.0
 References: <20210709043136.533205-1-dmitry.baryshkov@linaro.org>
  <20210709043136.533205-5-dmitry.baryshkov@linaro.org> <CAPDyKFprYK8bSk+rdnDt3xRUR9BRNdyRiBdefO+s7qzOwHf7hg@mail.gmail.com>
@@ -51,16 +51,16 @@ References: <20210709043136.533205-1-dmitry.baryshkov@linaro.org>
  <CAPDyKFoLcsYLisEiOF66dDsV+759c5k0PD64uxU11jc5VTdNYQ@mail.gmail.com>
  <CAA8EJpr2HEm4R+bGrH6DHA_z8bjN69Zam9UUiAeKAr5vsCKr3A@mail.gmail.com>
  <CAPDyKFr+-qXbi4z4_wzDRaMMLKSKM7zNr55Kt-AOk97mVKM+8A@mail.gmail.com>
- <CAA8EJpr+N-GwY63SSpqURBrQ=Xmx51MAFZzXqSiD6x89yB-DAQ@mail.gmail.com> <CAPDyKFp8xfaBhNoR1KzKwBpnvEnRPfby8SeJ7TAeyaS4LTYjrA@mail.gmail.com>
-In-Reply-To: <CAPDyKFp8xfaBhNoR1KzKwBpnvEnRPfby8SeJ7TAeyaS4LTYjrA@mail.gmail.com>
+ <YOhXX+u9HuScTDp6@yoga> <CAPDyKFrsWhaURyOcR6_hY5nH=yOmwmnpCsMjPOTscXif7DPMUQ@mail.gmail.com>
+In-Reply-To: <CAPDyKFrsWhaURyOcR6_hY5nH=yOmwmnpCsMjPOTscXif7DPMUQ@mail.gmail.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Fri, 9 Jul 2021 17:14:43 +0300
-Message-ID: <CAA8EJpp_oFgT66FPavw0WBe71MiPLy+aqqdY3+deTayJRa1kYg@mail.gmail.com>
+Date:   Fri, 9 Jul 2021 17:15:34 +0300
+Message-ID: <CAA8EJppUz2nuCkerW2wh56VfkvuxzUNS3qh8Bacn-RK1Wu99AA@mail.gmail.com>
 Subject: Re: [RESEND PATCH v2 4/7] clk: qcom: gdsc: enable optional power
  domain support
 To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Stephen Boyd <sboyd@kernel.org>,
         Taniya Das <tdas@codeaurora.org>,
@@ -77,13 +77,12 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 9 Jul 2021 at 17:11, Ulf Hansson <ulf.hansson@linaro.org> wrote:
+On Fri, 9 Jul 2021 at 17:13, Ulf Hansson <ulf.hansson@linaro.org> wrote:
 >
-> On Fri, 9 Jul 2021 at 15:22, Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
+> On Fri, 9 Jul 2021 at 16:04, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
 > >
-> > On Fri, 9 Jul 2021 at 16:14, Ulf Hansson <ulf.hansson@linaro.org> wrote:
-> > >
+> > On Fri 09 Jul 08:14 CDT 2021, Ulf Hansson wrote:
+> >
 > > > On Fri, 9 Jul 2021 at 14:59, Dmitry Baryshkov
 > > > <dmitry.baryshkov@linaro.org> wrote:
 > > > >
@@ -164,25 +163,31 @@ On Fri, 9 Jul 2021 at 17:11, Ulf Hansson <ulf.hansson@linaro.org> wrote:
 > > >
 > > > The dispcc device should *not* be attached to a PM domain.
 > > >
+> >
+> > dispcc is powered by the MMCX power domain, so it needs to be on if you
+> > want to touch the registers.
+> >
+> > I presume that for genpd this might not be a problem as long as all the
+> > exposed power domains are parented by the genpd provider's parent, as
+> > the core would turn the parent on before and turn off after performing
+> > those operations. But without attaching to the domain we don't have
+> > power to get through probe/registration.
+> >
+> > Further more, dispcc is also a clock driver and there's certainly
+> > operations where the genpd framework won't save us.
+> >
 > > > Instead it should be registered as a genpd provider and the
 > > > corresponding PM domains it provides, should be assigned as child
 > > > domains to the MMCX domain.
 > > >
+> >
+> > Right, this relationship is today missing and is what Dmitry needs to
+> > add - so that the parent domains stays powered even when we're not
+> > keeping the parent domain enabled to poke the dispcc.
+> >
 > > > This is exactly what the child/parent domain support in genpd is there
 > > > to help with.
-> >
-> > This is done in this patchset. If we stop attaching dispcc to the MMCX
-> > genpd, I'll have to locate it in a different way, but the idea is
-> > implemented here.
->
-> Right. Perhaps it's not such a bad idea after all as it gives you two things:
->
-> 1) The handle to the MMCX PM domain, which makes sure it has been
-> registered too before dispcc gets probed.
-> 2) The possibility to control power for the MMCX PM domain via runtime
-> PM for the dispcc device. This seems useful for your use case.
->
-> >
+> > >
 > > > > An alternative would be to request that all users of the provided
 > > > > clocks power on one of the child domains. However this is also not
 > > > > perfect. If some generic code (e.g. clock framework) calls into
@@ -193,31 +198,19 @@ On Fri, 9 Jul 2021 at 17:11, Ulf Hansson <ulf.hansson@linaro.org> wrote:
 > > > and genpd provider registration, certainly need to be fixed and I am
 > > > happy to help. However, my point is that I think it's a bad idea to
 > > > fix it through modelling the PM domain hierarchy in an incorrect way.
+> > >
 > >
-> > So, which device should I pass to clk_register to handle runtime PM
-> > for the provided clocks? dispcc, should I not?
->
-> Right, anything but dispcc seems wrong.
->
-> > Then if the dispcc is not attached, we will have to manually handle
-> > MMCX from dispcc's runtime pm callbacks. Correct?
->
-> Yep - and we don't want that either.
->
+> > This was my initial feeling to the patch as well and I think it might be
+> > better to push the pm_runtime_get/put operations into gdsc.c - in
+> > particular if you're saying that the general case is not for the genpd
+> > provider itself to be powered by the specified parent domain.
 > >
-> > Could you please be more specific, why is it so wrong to attach dispcc
-> > to the MMCX genpd?
+> > At least we could start by doing it manually in gdsc.c and possibly move
+> > it into the framework if we're confident that it's a good idea.
 >
-> In the end it seems like I just needed to make my brain feel a little
-> more comfortable with the ideas that you put forward.
->
-> It should work fine, I think! My apologies for all the noise.
+> Yes, better to start making this Qcom specific, then we can take it from there.
 
-No problem, it is always better to have a discussion (and a
-conclusion) rather than not to have it.
-
-Thank you for your comments!
-
+I will re-add pm_runtime calls to gdsc.c and send a v3.
 
 -- 
 With best wishes
