@@ -2,293 +2,273 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 867783C2B2F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jul 2021 00:10:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7419B3C2B35
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jul 2021 00:13:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229542AbhGIWNV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jul 2021 18:13:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51538 "EHLO
+        id S229792AbhGIWQW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jul 2021 18:16:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52212 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229552AbhGIWNV (ORCPT
+        with ESMTP id S229552AbhGIWQV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jul 2021 18:13:21 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CFCBC0613E5
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jul 2021 15:10:37 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id a18so26081322lfs.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jul 2021 15:10:37 -0700 (PDT)
+        Fri, 9 Jul 2021 18:16:21 -0400
+Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AADB1C0613DD
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jul 2021 15:13:37 -0700 (PDT)
+Received: by mail-lf1-x12d.google.com with SMTP id v14so26173145lfb.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jul 2021 15:13:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=uVekkBCXr4urFNfCMQxnITdCN/ES/x/lzFoar5LQqTw=;
-        b=GcJWh0B5u907ldfCF3RPOO/yD60iEF/fCXS6YCJqTvP8mSuZXcSCTXOo+toAA7Ffjn
-         OWfYlXi/ErTPbn8ReCPhHpb8G5EzEpGFxcZTKs3Mb6jWKJuECwze8j8JQT6hlRAEFvhJ
-         yLQODEuFGIk68GW4Im5F13bwukQ0f5tQIajLQoerjqECUv/WjMVWuNuHPRlC4f2NatSs
-         t39ld5Wq3QpXd7FGHaiV8N1QmlbbtVCmgZ2bZtJ4sEQI6ef5LwMle4fJHt/DO2Ju0F7U
-         NHO0o7YX9HzRxMlPx0VZdoGvwNUw5EeupU4zoKwmAuPkE9xiF94jK8N800ETjRammpC6
-         kp1A==
+        bh=cyu46Nc7pDH2wC0w7fNEd1R3CotJ59G89/FxqesF7Cc=;
+        b=fpKEGEt7b7OfdEodD2X7/mx8U9zb9I+rQCUXwrWMpDxSvsS8UlEu+4lR6v8cdCQPl5
+         oeXQZWk/ICbHqLvdE0SdJdoaSsEOl5NEJVNt2KG9kfIRgCnsFAYL7dJ7ZAwpMKo3fG/X
+         /ZQGkWV1bP0cZh+fs+ROK8TA+idP0J91YdYkpGpiyDbhjJKpCMUxLItCZ5NYUlnIfOKA
+         ax8hI1+/eGdX8j/SCTQrgNGc342n5LxZfRHjn/N7yU7miq8AOcQcNtTJkJ8tdzitYalB
+         WLP9NtJvw1LHmBwZdga8+WDaUUEiqW4Gm1bTQozdBST2kjjVSRhqH4Op9q6liYse7S2j
+         1FUQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=uVekkBCXr4urFNfCMQxnITdCN/ES/x/lzFoar5LQqTw=;
-        b=jyBlmK7UygPWAh7/1aVVqj0e0wLSMvao6YrzH3xd0BztaqpQpmxFSJ2GMXwIFLxlXc
-         ohtcb2+yc2yZHRPiLFcZhWZbJsxsQ3snw1ux2FiNzuYdGjuZuDMhMFaMnn1pljGv+0wG
-         ItOl+PVboBaWD9hW1r6T8IUcp7FL0fWrDnBVDeVW2W0+vqZamNvF+HTl5fdGDxCLF+tb
-         lCijAj8CEcFp3fevQEPdueGKEI6pTGkAlG8yO4LJMQ9vVEM0YoXoPEnxtszYesrd3F/+
-         4aBsp4vb6KxYVgzOa6JuXS1QU0AnjdgVkdM15GITwLTeW/1h08IXjXmitEAdGaEFwZTx
-         b/VQ==
-X-Gm-Message-State: AOAM532/5h5CgmRRyYHZjqE/AoXcejxfJq1VEB1rGkn4B3/yLT3YzbzB
-        rrsortLQ+MWgHHzBO2CDw3enOA==
-X-Google-Smtp-Source: ABdhPJyWQKDoo83HNZLdGACJlz1IfQyi1PreZXjqp6g8VGQEp76C3eaWxPrykp/WIHlLny20ybErqQ==
-X-Received: by 2002:ac2:5e39:: with SMTP id o25mr19305928lfg.504.1625868635334;
-        Fri, 09 Jul 2021 15:10:35 -0700 (PDT)
+        bh=cyu46Nc7pDH2wC0w7fNEd1R3CotJ59G89/FxqesF7Cc=;
+        b=U6jyuOb7RiXDayZq5lPLkP1KJZm9hyxZQizlJNadjbNc0oc6WfWmGoLjUP9zSI5/Ee
+         0bVtvxBfvvN5kbdiLxrTHLWyPNR2kn+bL6IAPcQGEvyhm1lCOrizZA9cZNbEoKWNgL/M
+         BUXL9CgiMsLwtnk7FLsDzgGGvFNzfNhlf2n3LFxaoFFchXwOgIC2aUKUhat6pUbvPGrM
+         0Gnxy1JWu49UWTUbFdWBTFYYYFboo2XtGM0mG3m/mpMZpTvZh2JAsAfuv7Z+onCshbam
+         jApKm0DyLInW3mlPLYgn/4KKAypu/OcnETDPYZBcckaSI1/A1y9J0olt2twWq7Gb+hOx
+         sXtA==
+X-Gm-Message-State: AOAM530KJTk5PGCJWs2o3qySDufm+WtoJyCtouPf2objodIJzCiBmXdR
+        2CDFjEw2NVNqPaMrsKVWu/AJYQ==
+X-Google-Smtp-Source: ABdhPJzk1Vjp1SlXY6p3zNbVzy8OiJM48XqE1AF07rKVGeyL+mYX8CZ38OvicPzCZ8/Sw5c9vMYuLQ==
+X-Received: by 2002:a05:6512:1393:: with SMTP id p19mr29684837lfa.570.1625868815881;
+        Fri, 09 Jul 2021 15:13:35 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id t7sm560505lfc.103.2021.07.09.15.10.34
+        by smtp.gmail.com with ESMTPSA id a18sm556400lfj.308.2021.07.09.15.13.35
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Jul 2021 15:10:34 -0700 (PDT)
-Subject: Re: [PATCH v3 4/7] clk: qcom: gdsc: call runtime PM functions for the
- provider device
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
+        Fri, 09 Jul 2021 15:13:35 -0700 (PDT)
+Subject: Re: [Freedreno] [PATCH v1 3/7] drm/msm/dpu: support setting up two
+ independent DSI connectors
+To:     abhinavk@codeaurora.org
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Jonathan Marek <jonathan@marek.ca>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-clk@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        linux-kernel@vger.kernel.org
-References: <20210709173202.667820-1-dmitry.baryshkov@linaro.org>
- <20210709173202.667820-5-dmitry.baryshkov@linaro.org> <YOibXCHvnG70ftQ0@yoga>
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        freedreno@lists.freedesktop.org
+References: <20210708122833.363451-1-dmitry.baryshkov@linaro.org>
+ <20210708122833.363451-4-dmitry.baryshkov@linaro.org>
+ <72d95728559ef617a3dc29621cc5a2b5@codeaurora.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <613b2f07-ffea-9c65-ebd0-6ad3b4fe10b8@linaro.org>
-Date:   Sat, 10 Jul 2021 01:10:34 +0300
+Message-ID: <99575650-837b-7f2d-eb73-7f51f32a6623@linaro.org>
+Date:   Sat, 10 Jul 2021 01:13:34 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <YOibXCHvnG70ftQ0@yoga>
+In-Reply-To: <72d95728559ef617a3dc29621cc5a2b5@codeaurora.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/07/2021 21:54, Bjorn Andersson wrote:
-> On Fri 09 Jul 12:31 CDT 2021, Dmitry Baryshkov wrote:
-> 
->> In order to properly handle runtime PM status of the provider device,
->> call pm_runtime_get/pm_runtime_put on the clock controller device.
+On 10/07/2021 01:09, abhinavk@codeaurora.org wrote:
+> On 2021-07-08 05:28, Dmitry Baryshkov wrote:
+>> Move setting up encoders from set_encoder_mode to
+>> _dpu_kms_initialize_dsi() / _dpu_kms_initialize_displayport(). This
+>> allows us to support not only "single DSI" and "bonded DSI" but also "two
+>> independent DSI" configurations. In future this would also help adding
+>> support for multiple DP connectors.
 >>
 >> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 >> ---
->>   drivers/clk/qcom/gdsc.c | 66 ++++++++++++++++++++++++++++++++++++++---
->>   drivers/clk/qcom/gdsc.h |  2 ++
->>   2 files changed, 64 insertions(+), 4 deletions(-)
+>>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 102 +++++++++++++-----------
+>>  1 file changed, 57 insertions(+), 45 deletions(-)
 >>
->> diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
->> index ccd36617d067..6bec31fccb09 100644
->> --- a/drivers/clk/qcom/gdsc.c
->> +++ b/drivers/clk/qcom/gdsc.c
->> @@ -11,6 +11,7 @@
->>   #include <linux/kernel.h>
->>   #include <linux/ktime.h>
->>   #include <linux/pm_domain.h>
->> +#include <linux/pm_runtime.h>
->>   #include <linux/regmap.h>
->>   #include <linux/regulator/consumer.h>
->>   #include <linux/reset-controller.h>
->> @@ -50,6 +51,30 @@ enum gdsc_status {
->>   	GDSC_ON
->>   };
->>   
->> +static int gdsc_pm_runtime_get(struct gdsc *sc)
->> +{
->> +	int ret;
->> +
->> +	if (!sc->rpm_dev)
->> +		return 0;
->> +
->> +	ret = pm_runtime_get_sync(sc->rpm_dev);
->> +	if (ret < 0) {
->> +		pm_runtime_put_noidle(sc->rpm_dev);
->> +		return ret;
->> +	}
->> +
->> +	return 0;
->> +}
->> +
->> +static int gdsc_pm_runtime_put(struct gdsc *sc)
->> +{
->> +	if (!sc->rpm_dev)
->> +		return 0;
->> +
->> +	return pm_runtime_put_sync(sc->rpm_dev);
->> +}
->> +
->>   /* Returns 1 if GDSC status is status, 0 if not, and < 0 on error */
->>   static int gdsc_check_status(struct gdsc *sc, enum gdsc_status status)
->>   {
->> @@ -232,9 +257,8 @@ static void gdsc_retain_ff_on(struct gdsc *sc)
->>   	regmap_update_bits(sc->regmap, sc->gdscr, mask, mask);
->>   }
->>   
->> -static int gdsc_enable(struct generic_pm_domain *domain)
->> +static int _gdsc_enable(struct gdsc *sc)
->>   {
->> -	struct gdsc *sc = domain_to_gdsc(domain);
->>   	int ret;
->>   
->>   	if (sc->pwrsts == PWRSTS_ON)
->> @@ -290,11 +314,28 @@ static int gdsc_enable(struct generic_pm_domain *domain)
->>   	return 0;
->>   }
->>   
->> -static int gdsc_disable(struct generic_pm_domain *domain)
->> +static int gdsc_enable(struct generic_pm_domain *domain)
->>   {
->>   	struct gdsc *sc = domain_to_gdsc(domain);
->>   	int ret;
->>   
->> +	ret = gdsc_pm_runtime_get(sc);
->> +	if (ret)
->> +		return ret;
->> +
->> +	ret = _gdsc_enable(sc);
->> +	if (ret) {
->> +		gdsc_pm_runtime_put(sc);
-> 
-> I presume what you do here is to leave the pm_runtime state of dispcc
-> active if we succeeded in enabling the gdsc. But the gdsc is a subdomain
-> of the parent domain, so the framework should take case of its
-> dependency.
-> 
-> So the reason for gdsc_pm_runtime_get()/put() in this code path is so
-> that you can access the dispcc registers, i.e. I think you should
-> get()/put() regardless of the return value.
-
-pm domain code will handle enabling MMCX, so this code is not required 
-strictly speaking. Ulf suggested adding it back, so I followed the 
-suggestion. Maybe I misunderstood his suggestion.
-
-putting pm_runtime after gdsc_enable does not sound like a logical case. 
-However it would simplify code a bit. Let me try...
-
-> 
->> +		return ret;
->> +	}
->> +
->> +	return 0;
->> +}
->> +
->> +static int _gdsc_disable(struct gdsc *sc)
->> +{
->> +	int ret;
->> +
->>   	if (sc->pwrsts == PWRSTS_ON)
->>   		return gdsc_assert_reset(sc);
->>   
->> @@ -329,6 +370,18 @@ static int gdsc_disable(struct generic_pm_domain *domain)
->>   	return 0;
->>   }
->>   
->> +static int gdsc_disable(struct generic_pm_domain *domain)
->> +{
->> +	struct gdsc *sc = domain_to_gdsc(domain);
->> +	int ret;
->> +
-> 
-> If the gdsc is found to be on at initialization, the next operation that
-> will happen is gdsc_disable() and as you didn't activate the pm_runtime
-> state in gdsc_init() you would in theory get here with registers
-> unaccessible.
-> 
-> In practice though, the active gdsc should through the being a subdomain
-> of the parent domain keep power on for you, so you won't notice this
-> issue.
-
-Nice catch.
-
-> 
-> But as above, I think you should wrap _gdsc_disable() in a get()/put()
-> pair.
-> 
->> +	ret = _gdsc_disable(sc);
->> +	if (ret)
->> +		return ret;
->> +
->> +	return gdsc_pm_runtime_put(sc);
->> +}
->> +
->>   static int gdsc_init(struct gdsc *sc)
->>   {
->>   	u32 mask, val;
->> @@ -425,6 +478,8 @@ int gdsc_register(struct gdsc_desc *desc,
->>   	for (i = 0; i < num; i++) {
->>   		if (!scs[i])
->>   			continue;
->> +		if (pm_runtime_enabled(dev))
->> +			scs[i]->rpm_dev = dev;
->>   		scs[i]->regmap = regmap;
->>   		scs[i]->rcdev = rcdev;
->>   		ret = gdsc_init(scs[i]);
->> @@ -486,7 +541,10 @@ void gdsc_unregister(struct gdsc_desc *desc)
->>    */
->>   int gdsc_gx_do_nothing_enable(struct generic_pm_domain *domain)
->>   {
->> +	struct gdsc *sc = domain_to_gdsc(domain);
->> +
->>   	/* Do nothing but give genpd the impression that we were successful */
->> -	return 0;
->> +	/* Get the runtime PM device only */
->> +	return gdsc_pm_runtime_get(sc);
-> 
-> Per above, if you let the framework deal with the gdsc's dependencies on
-> the parent domain and you only get()/put() for the sake of dispcc then
-> you don't need you don't need to do this to keep the subsequent
-> gdsc_disable() in balance.
-> 
->>   }
->>   EXPORT_SYMBOL_GPL(gdsc_gx_do_nothing_enable);
->> diff --git a/drivers/clk/qcom/gdsc.h b/drivers/clk/qcom/gdsc.h
->> index 5bb396b344d1..a82982df0a55 100644
->> --- a/drivers/clk/qcom/gdsc.h
->> +++ b/drivers/clk/qcom/gdsc.h
->> @@ -25,6 +25,7 @@ struct reset_controller_dev;
->>    * @resets: ids of resets associated with this gdsc
->>    * @reset_count: number of @resets
->>    * @rcdev: reset controller
->> + * @rpm_dev: runtime PM device
->>    */
->>   struct gdsc {
->>   	struct generic_pm_domain	pd;
->> @@ -58,6 +59,7 @@ struct gdsc {
->>   
->>   	const char 			*supply;
->>   	struct regulator		*rsupply;
->> +	struct device 			*rpm_dev;
-> 
-> This isn't just the "runtime pm device", it's the device this gdsc is
-> associated with. So "dev" sounds sufficient to me, but that requires
-> that you have a separate bool rpm_enabled to remember if
-> pm_runtime_enabled() was true during probe.
-> 
-> So unless we need "dev" for something else this might be sufficient.
-> 
-> Regards,
-> Bjorn
-> 
->>   };
->>   
->>   struct gdsc_desc {
->> -- 
->> 2.30.2
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> index 1d3a4f395e74..8459da36174e 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> @@ -471,30 +471,68 @@ static int _dpu_kms_initialize_dsi(struct 
+>> drm_device *dev,
+>>                      struct dpu_kms *dpu_kms)
+>>  {
+>>      struct drm_encoder *encoder = NULL;
+>> +    struct msm_display_info info;
+>>      int i, rc = 0;
 >>
+>>      if (!(priv->dsi[0] || priv->dsi[1]))
+>>          return rc;
+>>
+>> -    /*TODO: Support two independent DSI connectors */
+>> -    encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_DSI);
+>> -    if (IS_ERR(encoder)) {
+>> -        DPU_ERROR("encoder init failed for dsi display\n");
+>> -        return PTR_ERR(encoder);
+>> -    }
+>> -
+>> -    priv->encoders[priv->num_encoders++] = encoder;
+>> -
+>> +    /*
+>> +     * We support following confiurations:
+>> +     * - Single DSI host (dsi0 or dsi1)
+>> +     * - Two independent DSI hosts
+>> +     * - Bonded DSI0 and DSI1 hosts
+>> +     *
+>> +     *   TODO: Support swapping DSI0 and DSI1 in the bonded setup.
+>> +     */
+>>      for (i = 0; i < ARRAY_SIZE(priv->dsi); i++) {
+>>          if (!priv->dsi[i])
+>>              continue;
+>>
+>> +        if (!encoder) {
+>> +            encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_DSI);
+>> +            if (IS_ERR(encoder)) {
+>> +                DPU_ERROR("encoder init failed for dsi display\n");
+>> +                return PTR_ERR(encoder);
+>> +            }
+>> +
+>> +            priv->encoders[priv->num_encoders++] = encoder;
+>> +
+>> +            memset(&info, 0, sizeof(info));
+>> +            info.intf_type = encoder->encoder_type;
+>> +            info.capabilities = msm_dsi_is_cmd_mode(priv->dsi[i]) ?
+>> +                MSM_DISPLAY_CAP_CMD_MODE :
+>> +                MSM_DISPLAY_CAP_VID_MODE;
+>> +        }
+>> +
+>>          rc = msm_dsi_modeset_init(priv->dsi[i], dev, encoder);
+>>          if (rc) {
+>>              DPU_ERROR("modeset_init failed for dsi[%d], rc = %d\n",
+>>                  i, rc);
+>>              break;
+>>          }
+>> +
+>> +        info.h_tile_instance[info.num_of_h_tiles++] = i;
+>> +
+>> +        /* Register non-bonded encoder here. If the encoder is bonded,
+>> +         * it will be registered later, when both DSI hosts are
+>> +         * initialized.
+>> +         */
+>> +        if (!msm_dsi_is_bonded_dsi(priv->dsi[i])) {
+>> +            rc = dpu_encoder_setup(dev, encoder, &info);
+>> +            if (rc)
+>> +                DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
+>> +                      encoder->base.id, rc);
+>> +            encoder = NULL;
+> Seems like you are using encoder = NULL as a check to distinguish 
+> whether this is bonded mode or not.
+
+Whether the encoder war setup or not.
+
+>> +        }
+>> +    }
+>> +
+>> +    /* Register bonded encoder here, when both DSI hosts are 
+>> initialized */
+>> +    if (encoder) {
+> Why cant we replace this with if (msm_dsi_is_bonded_dsi(priv->dsi[i]) 
+> and get rid
+> of the encoder = NULL?
+
+I can. Maybe I should rewrite this to clearly handle bonded mode.
+
+>> +        rc = dpu_encoder_setup(dev, encoder, &info);
+>> +        if (rc)
+>> +            DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
+>> +                  encoder->base.id, rc);
+>>      }
+>>
+>>      return rc;
+>> @@ -505,6 +543,7 @@ static int _dpu_kms_initialize_displayport(struct
+>> drm_device *dev,
+>>                          struct dpu_kms *dpu_kms)
+>>  {
+>>      struct drm_encoder *encoder = NULL;
+>> +    struct msm_display_info info;
+>>      int rc = 0;
+>>
+>>      if (!priv->dp)
+>> @@ -516,6 +555,7 @@ static int _dpu_kms_initialize_displayport(struct
+>> drm_device *dev,
+>>          return PTR_ERR(encoder);
+>>      }
+>>
+>> +    memset(&info, 0, sizeof(info));
+>>      rc = msm_dp_modeset_init(priv->dp, dev, encoder);
+>>      if (rc) {
+>>          DPU_ERROR("modeset_init failed for DP, rc = %d\n", rc);
+>> @@ -524,6 +564,14 @@ static int _dpu_kms_initialize_displayport(struct
+>> drm_device *dev,
+>>      }
+>>
+>>      priv->encoders[priv->num_encoders++] = encoder;
+>> +
+>> +    info.num_of_h_tiles = 1;
+>> +    info.capabilities = MSM_DISPLAY_CAP_VID_MODE;
+>> +    info.intf_type = encoder->encoder_type;
+>> +    rc = dpu_encoder_setup(dev, encoder, &info);
+>> +    if (rc)
+>> +        DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
+>> +              encoder->base.id, rc);
+>>      return rc;
+>>  }
+>>
+>> @@ -726,41 +774,6 @@ static void dpu_kms_destroy(struct msm_kms *kms)
+>>      msm_kms_destroy(&dpu_kms->base);
+>>  }
+>>
+>> -static void _dpu_kms_set_encoder_mode(struct msm_kms *kms,
+>> -                 struct drm_encoder *encoder,
+>> -                 bool cmd_mode)
+>> -{
+>> -    struct msm_display_info info;
+>> -    struct msm_drm_private *priv = encoder->dev->dev_private;
+>> -    int i, rc = 0;
+>> -
+>> -    memset(&info, 0, sizeof(info));
+>> -
+>> -    info.intf_type = encoder->encoder_type;
+>> -    info.capabilities = cmd_mode ? MSM_DISPLAY_CAP_CMD_MODE :
+>> -            MSM_DISPLAY_CAP_VID_MODE;
+>> -
+>> -    switch (info.intf_type) {
+>> -    case DRM_MODE_ENCODER_DSI:
+>> -        /* TODO: No support for DSI swap */
+>> -        for (i = 0; i < ARRAY_SIZE(priv->dsi); i++) {
+>> -            if (priv->dsi[i]) {
+>> -                info.h_tile_instance[info.num_of_h_tiles] = i;
+>> -                info.num_of_h_tiles++;
+>> -            }
+>> -        }
+>> -        break;
+>> -    case DRM_MODE_ENCODER_TMDS:
+>> -        info.num_of_h_tiles = 1;
+>> -        break;
+>> -    }
+>> -
+>> -    rc = dpu_encoder_setup(encoder->dev, encoder, &info);
+>> -    if (rc)
+>> -        DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
+>> -            encoder->base.id, rc);
+>> -}
+>> -
+>>  static irqreturn_t dpu_irq(struct msm_kms *kms)
+>>  {
+>>      struct dpu_kms *dpu_kms = to_dpu_kms(kms);
+>> @@ -863,7 +876,6 @@ static const struct msm_kms_funcs kms_funcs = {
+>>      .get_format      = dpu_get_msm_format,
+>>      .round_pixclk    = dpu_kms_round_pixclk,
+>>      .destroy         = dpu_kms_destroy,
+>> -    .set_encoder_mode = _dpu_kms_set_encoder_mode,
+>>      .snapshot        = dpu_kms_mdp_snapshot,
+>>  #ifdef CONFIG_DEBUG_FS
+>>      .debugfs_init    = dpu_kms_debugfs_init,
 
 
 -- 
