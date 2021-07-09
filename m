@@ -2,207 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 80E073C2B70
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jul 2021 00:38:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 367A23C2BC0
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jul 2021 01:46:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229792AbhGIWlH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jul 2021 18:41:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57678 "EHLO
+        id S230168AbhGIXtV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jul 2021 19:49:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229542AbhGIWlG (ORCPT
+        with ESMTP id S230130AbhGIXtU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jul 2021 18:41:06 -0400
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E655EC0613DD
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jul 2021 15:38:21 -0700 (PDT)
-Received: by mail-qk1-x731.google.com with SMTP id 14so11185255qkh.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jul 2021 15:38:21 -0700 (PDT)
+        Fri, 9 Jul 2021 19:49:20 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76AFEC0613DD
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jul 2021 16:46:36 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id c28so25983045lfp.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jul 2021 16:46:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=in4kX7sLTOvzGIkTNM27VoAm2lJJuZoW6Y2T2jtB9og=;
-        b=hszLVAfastfyWky57gCrlZ/WcIVeDaPB73el6QR1RDtWzS2BSVi5iqH/MQAzIHxy9k
-         pHW1JsuN2pCSrLkXKRkr++6Pme3Qy33J8zG25hrOIwCdJkxlunSag78fgccRAvjjFmtz
-         P3mWNoFQitYr6cojWimJYGR8YaL3h6x/XYMAU=
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=GR17m4TCo1bxAJbxwHuYhDUZxpveBueDWH1Tshnwhcw=;
+        b=hmPlfythTE2CxjcaXjAVAWgrW2Gi2aikI45PIV7gfoj4G7M6oAEMPoirHnWK1fF1iE
+         0rfo4/3xZQIb9+cs+6ntmClUn1ek8wkuiQvWcbmvMXOnVJQkWWPFYX5P76tR6llo7yq2
+         R5YGjcVaF2tRv4h1oplG/+1/gGUhQ7atnCgKSIkpWsUigEGdImiRELOxKp3mWXcA+CTx
+         3/ENzIMdnPfl+QViXdMA2oDoe0noNm1w1KMTN2g3X9NqdUmwTUmoBe06wME9672G7aQ8
+         8oPCZxiqzPIXLR9lc334HvcNUET2CkZX0ymL8cC8ajAqq98TQBtrnJYTrOMYgecX1J4u
+         JVLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=in4kX7sLTOvzGIkTNM27VoAm2lJJuZoW6Y2T2jtB9og=;
-        b=d8OLLjz8fqTJr0jEClgbBWJtLMli5AUppzLKHJGCGeP4GeZjCtq6nNtQ9xEpilJyts
-         erTClsAiORi5XLBzS5njapJTyaOgZTswMGynBaRMfpPHYd8OK4gk5zW2TjlA/ZImB2M0
-         ujn7kKbzMHlirvZbm8P1+J2CBGysM3PTfG4eZSq265g0Jb0UkBcM+WXvcdYiNB0TUH8g
-         M99DHdC9/BDzAccjS05Nbw+LI6u68+rzV49e65aA/zQkFZMEqwy50nO6ZUl3t42bl2sW
-         qHQOR6meylOOqEHmXaulAu+rF1aO3bTcAF3dj36bjOKeguSF9EoXHtITEhnRJOgoXYD/
-         D55A==
-X-Gm-Message-State: AOAM531XVW9YQC2tQUxPbGzsrS2/11gvCh+PR18oHriVL7oJKRJCN0Yf
-        IUnPdzH9JsFAjnLRcoj4td2gWJ8Swl76+g==
-X-Google-Smtp-Source: ABdhPJzFZcnA2G3/MV6r0Igi42ocoyG/VLfdQu8WAyZljS6gw0M+fY4zxp3sj/OW/+FS9+u1ZDCh5g==
-X-Received: by 2002:a05:620a:14b5:: with SMTP id x21mr3010132qkj.148.1625870301046;
-        Fri, 09 Jul 2021 15:38:21 -0700 (PDT)
-Received: from mail-yb1-f175.google.com (mail-yb1-f175.google.com. [209.85.219.175])
-        by smtp.gmail.com with ESMTPSA id n64sm3105658qkd.79.2021.07.09.15.38.20
-        for <linux-arm-msm@vger.kernel.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=GR17m4TCo1bxAJbxwHuYhDUZxpveBueDWH1Tshnwhcw=;
+        b=Me3qhi3/UZCyqH01kFkzeWuay/YA3ZKeCJXr3LH3S+XukUgjOEUvnVW4rRjY8nrr+3
+         e7NlAnHCcV+BW8RwWsBW8OfZQh3xiB2WXRe2ioGGK9z8MTwU+ol8bUA4vcPyFRg90ZNQ
+         9rWO+Oko897AyyJOJfUAchTIg97h1vWy5FoEHtpLfFATsWunuLafPXHcxoG4/B2Zbjzs
+         8PiVM+drpB9CPZYQ6sr3GQh2ocqFIKiK+uZ+E+M1qeLDEzd8x3c4UbcVIeTLTdAD2uBi
+         XjwxaZxpi1GCvrp5KrgwgkYpGrDQ4JcN4tHx5i4x22YFgI6Iui6fHeVZRov0DU7lQoEP
+         dM8w==
+X-Gm-Message-State: AOAM530ow5pCYb0P3WeE7LZbHF65YUWdQS3zD1kZXWc/zhIsXs/NN8kw
+        /NDM1ynloiBq3ocKyux4SQs+IVCRTfTH9w==
+X-Google-Smtp-Source: ABdhPJwLXKpJ5yziTMVpeRJ+aJVWJpnPi6aLSogHhO7o4SSJprFYE+zfyjZMegAk5EL+0c93bLJgqA==
+X-Received: by 2002:ac2:598b:: with SMTP id w11mr31398334lfn.534.1625874394692;
+        Fri, 09 Jul 2021 16:46:34 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id 189sm748273ljf.117.2021.07.09.16.46.34
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 09 Jul 2021 15:38:20 -0700 (PDT)
-Received: by mail-yb1-f175.google.com with SMTP id k184so16851544ybf.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jul 2021 15:38:20 -0700 (PDT)
-X-Received: by 2002:a25:60c1:: with SMTP id u184mr49707810ybb.343.1625869916303;
- Fri, 09 Jul 2021 15:31:56 -0700 (PDT)
+        Fri, 09 Jul 2021 16:46:34 -0700 (PDT)
+Subject: Re: [Freedreno] [PATCH v1 5/7] drm/msm/dp: stop calling
+ set_encoder_mode callback
+To:     abhinavk@codeaurora.org
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        freedreno@lists.freedesktop.org
+References: <20210708122833.363451-1-dmitry.baryshkov@linaro.org>
+ <20210708122833.363451-6-dmitry.baryshkov@linaro.org>
+ <16be30732d3c2108f7a3ca640ed8285d@codeaurora.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <2920aa33-c5cf-717f-4e6e-dfd473a87820@linaro.org>
+Date:   Sat, 10 Jul 2021 02:46:33 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-References: <1624726268-14869-1-git-send-email-rajeevny@codeaurora.org>
- <CAD=FV=UP9jrS=JG=TuB7+i9QcZv8GOLYdPdb3_KNhEsgapGeww@mail.gmail.com> <YOi0WbTP0crIkOGy@intel.com>
-In-Reply-To: <YOi0WbTP0crIkOGy@intel.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 9 Jul 2021 15:31:44 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Vce_zdKMgzg+X-hK8XPEeuMEN3ViFnsb7AEsz1=EN-+A@mail.gmail.com>
-Message-ID: <CAD=FV=Vce_zdKMgzg+X-hK8XPEeuMEN3ViFnsb7AEsz1=EN-+A@mail.gmail.com>
-Subject: Re: [v8 0/6] drm: Support basic DPCD backlight in panel-simple and
- add a new panel ATNA33XC20
-To:     =?UTF-8?B?VmlsbGUgU3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
-Cc:     Rajeev Nandan <rajeevny@codeaurora.org>,
-        linux-fbdev@vger.kernel.org,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        "Kristian H. Kristensen" <hoegsberg@chromium.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Jani Nikula <jani.nikula@intel.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Krishna Manikandan <mkrishn@codeaurora.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        LKML <linux-kernel@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <16be30732d3c2108f7a3ca640ed8285d@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 10/07/2021 01:16, abhinavk@codeaurora.org wrote:
+> On 2021-07-08 05:28, Dmitry Baryshkov wrote:
+>> None of the display drivers now implement set_encoder_mode callback.
+>> Stop calling it from the modeset init code.
+>>
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
+> The change looks fine,
+> Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
+> 
+> But has DP been re-verified with this change by Bjorn?
+> If not, I can verify this on my board and give my Tested-by
 
-On Fri, Jul 9, 2021 at 1:41 PM Ville Syrj=C3=A4l=C3=A4
-<ville.syrjala@linux.intel.com> wrote:
->
-> On Fri, Jul 09, 2021 at 06:54:05AM -0700, Doug Anderson wrote:
-> > Hi,
-> >
-> > On Sat, Jun 26, 2021 at 9:52 AM Rajeev Nandan <rajeevny@codeaurora.org>=
- wrote:
-> > >
-> > > This series adds the support for the eDP panel that needs the backlig=
-ht
-> > > controlling over the DP AUX channel using DPCD registers of the panel
-> > > as per the VESA's standard.
-> > >
-> > > This series also adds support for the Samsung eDP AMOLED panel that
-> > > needs DP AUX to control the backlight, and introduces new delays in t=
-he
-> > > @panel_desc.delay to support this panel.
-> > >
-> > > This patch series depends on the following two series:
-> > > - Doug's series [1], exposed the DP AUX channel to the panel-simple.
-> > > - Lyude's series [2], introduced new drm helper functions for DPCD
-> > >   backlight.
-> > >
-> > > This series is the logical successor to the series [3].
-> > >
-> > > Changes in v1:
-> > > - Created dpcd backlight helper with very basic functionality, added
-> > >   backlight registration in the ti-sn65dsi86 bridge driver.
-> > >
-> > > Changes in v2:
-> > > - Created a new DisplayPort aux backlight driver and moved the code f=
-rom
-> > >   drm_dp_aux_backlight.c (v1) to the new driver.
-> > >
-> > > Changes in v3:
-> > > - Fixed module compilation (kernel test bot).
-> > >
-> > > Changes in v4:
-> > > - Added basic DPCD backlight support in panel-simple.
-> > > - Added support for a new Samsung panel ATNA33XC20 that needs DPCD
-> > >   backlight controlling and has a requirement of delays between enabl=
-e
-> > >   GPIO and regulator.
-> > >
-> > > Changes in v5:
-> > > Addressed review suggestions from Douglas:
-> > > - Created a new API drm_panel_dp_aux_backlight() in drm_panel.c
-> > > - Moved DP AUX backlight functions from panel-simple.c to drm_panel.c
-> > > - panel-simple probe() calls drm_panel_dp_aux_backlight() to create
-> > >   backlight when the backlight phandle is not specified in panel DT
-> > >   and DP AUX channel is present.
-> > > - Added check for drm_edp_backlight_supported() before registering.
-> > > - Removed the @uses_dpcd_backlight flag from panel_desc as this
-> > >   should be auto-detected.
-> > > - Updated comments/descriptions.
-> > >
-> > > Changes in v6:
-> > > - Rebased
-> > > - Updated wanrning messages, fixed word wrapping in comments.
-> > > - Fixed ordering of memory allocation
-> > >
-> > > Changes in v7:
-> > > - Updated the disable_to_power_off and power_to_enable panel delays
-> > > as discovered at <https://crrev.com/c/2966167> (Douglas)
-> > >
-> > > Changes in v8:
-> > > - Now using backlight_is_blank() to get the backlight blank status (S=
-am Ravnborg)
-> > > - Added a new patch #4 to fix the warnings for eDP panel description =
-(Sam Ravnborg)
-> > >
-> > > [1] https://lore.kernel.org/dri-devel/20210525000159.3384921-1-diande=
-rs@chromium.org/
-> > > [2] https://lore.kernel.org/dri-devel/20210514181504.565252-1-lyude@r=
-edhat.com/
-> > > [3] https://lore.kernel.org/dri-devel/1619416756-3533-1-git-send-emai=
-l-rajeevny@codeaurora.org/
-> > >
-> > > Rajeev Nandan (6):
-> > >   drm/panel: add basic DP AUX backlight support
-> > >   drm/panel-simple: Support DP AUX backlight
-> > >   drm/panel-simple: Support for delays between GPIO & regulator
-> > >   drm/panel-simple: Update validation warnings for eDP panel descript=
-ion
-> > >   dt-bindings: display: simple: Add Samsung ATNA33XC20
-> > >   drm/panel-simple: Add Samsung ATNA33XC20
-> > >
-> > >  .../bindings/display/panel/panel-simple.yaml       |   2 +
-> > >  drivers/gpu/drm/drm_panel.c                        | 108 +++++++++++=
-++++++++++
-> > >  drivers/gpu/drm/panel/panel-simple.c               |  73 +++++++++++=
-++-
-> > >  include/drm/drm_panel.h                            |  15 ++-
-> > >  4 files changed, 190 insertions(+), 8 deletions(-)
-> >
-> > Pushed to drm-misc-next.
-> >
-> > 4bfe6c8f7c23 drm/panel-simple: Add Samsung ATNA33XC20
-> > c20dec193584 dt-bindings: display: simple: Add Samsung ATNA33XC20
-> > 13aceea56fd5 drm/panel-simple: Update validation warnings for eDP
-> > panel description
-> > 18a1488bf1e1 drm/panel-simple: Support for delays between GPIO & regula=
-tor
-> > bfd451403d70 drm/panel-simple: Support DP AUX backlight
-> > 10f7b40e4f30 drm/panel: add basic DP AUX backlight support
->
-> depmod: ERROR: Cycle detected: drm_kms_helper -> drm -> drm_kms_helper
->
-> Looks to be due to drm_edp_backlight_enable().
+Please test it on your setup.
 
-Ugh. Thanks for the report! I've taken a schwag at a fix here:
+> 
+>> ---
+>>  drivers/gpu/drm/msm/dp/dp_display.c | 18 ------------------
+>>  1 file changed, 18 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c
+>> b/drivers/gpu/drm/msm/dp/dp_display.c
+>> index 051c1be1de7e..70b319a8fe83 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>> @@ -102,8 +102,6 @@ struct dp_display_private {
+>>      struct dp_display_mode dp_mode;
+>>      struct msm_dp dp_display;
+>>
+>> -    bool encoder_mode_set;
+>> -
+>>      /* wait for audio signaling */
+>>      struct completion audio_comp;
+>>
+>> @@ -283,20 +281,6 @@ static void dp_display_send_hpd_event(struct
+>> msm_dp *dp_display)
+>>  }
+>>
+>>
+>> -static void dp_display_set_encoder_mode(struct dp_display_private *dp)
+>> -{
+>> -    struct msm_drm_private *priv = dp->dp_display.drm_dev->dev_private;
+>> -    struct msm_kms *kms = priv->kms;
+>> -
+>> -    if (!dp->encoder_mode_set && dp->dp_display.encoder &&
+>> -                kms->funcs->set_encoder_mode) {
+>> -        kms->funcs->set_encoder_mode(kms,
+>> -                dp->dp_display.encoder, false);
+>> -
+>> -        dp->encoder_mode_set = true;
+>> -    }
+>> -}
+>> -
+>>  static int dp_display_send_hpd_notification(struct dp_display_private 
+>> *dp,
+>>                          bool hpd)
+>>  {
+>> @@ -369,8 +353,6 @@ static void dp_display_host_init(struct
+>> dp_display_private *dp, int reset)
+>>      if (dp->usbpd->orientation == ORIENTATION_CC2)
+>>          flip = true;
+>>
+>> -    dp_display_set_encoder_mode(dp);
+>> -
+>>      dp_power_init(dp->power, flip);
+>>      dp_ctrl_host_init(dp->ctrl, flip, reset);
+>>      dp_aux_init(dp->aux);
 
-https://lore.kernel.org/lkml/20210709152909.1.I23eb4cc5a680341e7b3e791632a6=
-35566fa5806a@changeid/
 
--Doug
+-- 
+With best wishes
+Dmitry
