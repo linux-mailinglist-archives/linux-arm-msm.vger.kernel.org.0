@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E26323C370D
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Jul 2021 00:20:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 38E623C370E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Jul 2021 00:20:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229704AbhGJWW7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 10 Jul 2021 18:22:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57366 "EHLO
+        id S229614AbhGJWXA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 10 Jul 2021 18:23:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229614AbhGJWW7 (ORCPT
+        with ESMTP id S229714AbhGJWW7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Sat, 10 Jul 2021 18:22:59 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3564DC0613DD
-        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Jul 2021 15:20:13 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id t17so32212282lfq.0
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07E0DC0613E5
+        for <linux-arm-msm@vger.kernel.org>; Sat, 10 Jul 2021 15:20:14 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id u14so4463387ljh.0
         for <linux-arm-msm@vger.kernel.org>; Sat, 10 Jul 2021 15:20:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=hoN8ubV+NL8AcGXwOuvZXUIKfTF5XnABfb0Z79GoR78=;
-        b=ZUh4O8Uq5OAkw2Yj6Tt6vfKLJ/c73uzzW70zh4gYRHDgFdfcbsa9TYHfkCUDw2rKi7
-         kAdD8eskVqCnEQ0tu3+v+oF025XuGQj9vgwDSR4gl9g+Zw4RX3uAtMfP905ofFNlCThO
-         ZHpI78Vokpv2+sTfxbqa38wjCZNVsayUgFO0bMDnQGY18cV8/6c4/jMyXHdrxrDNPeV4
-         o0m7dwZaWRP7cZPv5kdtXUUDQcs+Xd+7imJa2oM6+0qswIrzcw2XFUAh8lLu6i6iE6m0
-         3ijY7ZZDKsoS5GQhgCnFTjZLRb1x4E3pt2+6X24d0TGKdQrg+QzNZET55uHjYHVMueSM
-         E2gA==
+        bh=TR8ndGweFJ1zlT+mXoJoL5P2xKgyplXAag8kXZdug0c=;
+        b=fENDnaOf/UP/RMKJFYxauZAcyuS6+LC9ElBy6sBFJckE4FkoINX7w/pLhlpwRb4LoH
+         XS7790rHbisHZYZ4cPkK628jgpa/blwWMmDhdysWbQfPlHl7/YMP+ESJAtaCLENjNwrJ
+         Dr9YIrK5QvICN/LOqmnkhbxvYiTdRGirUbBsAtjJvY3QnQ+cGowPilRnDUQjtOma3it/
+         JTeE/JLC0WsvYAgyAe44aYh7uWetQxjpzHRwxW4ig7m6/cP900djixGACrWpPId/5jys
+         V3fMnGQ7vF5nmdiYsH/IVynAN8DRFh7VEAB+ZzoSWpLuCmPIgimJ0IEJaKfZ1ESTTQA/
+         rV6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=hoN8ubV+NL8AcGXwOuvZXUIKfTF5XnABfb0Z79GoR78=;
-        b=iZFLipbRyd+x/uJ+nS/UW/xTmNkzSOski5VRsy8swtnEbW8fKeKwRs4y80i1IiZN1z
-         /6IDnAcywRjL3Pa4LDz+46+wBG/Au+kXfP96OizH20pKTWqedHs1Qxhvg6I/XZX1AEXO
-         LIU0lZ3z9iKpNdczmXf/smDhoEmZ73iU2vzNJ6Fe5DQq9Pu6xx8w43OwhV5wNmfbBTJ8
-         oZmnaZfcdoeOktWBk0q7mhK/esVtvQ5/Mh93hw3x418/Le85St/if1d9SMTvoMWaFkiJ
-         lGkJ9v0wpkrwvfL+MIh3zFmIigc/3fEFnxuPjdgtDm71KewhSTSsjeLN+NenmkkeygNF
-         u0SA==
-X-Gm-Message-State: AOAM533NnSOcQVnCoWBmjTIqRuH5MOY1MwskKsFPEoF2aQB0FhSpCbPH
-        7itxorM7SKFeQLcm5OD/4STqDA==
-X-Google-Smtp-Source: ABdhPJyjcx0AB95L0qYORaJEoRS4aSNevZfMQ7NnsUs741NpjV75fb0/QM9yQBZhwXEVPVc2YlLDjQ==
-X-Received: by 2002:a19:e012:: with SMTP id x18mr34883500lfg.394.1625955611596;
-        Sat, 10 Jul 2021 15:20:11 -0700 (PDT)
+        bh=TR8ndGweFJ1zlT+mXoJoL5P2xKgyplXAag8kXZdug0c=;
+        b=qiklAD1q+jjMWeqit22GGHJVEeypi6RaaDw99G/J5sBMJB27JlYi1iglV7buzvh2W4
+         UG+zed9VcVUUZn+wHdpnj2TkTzcGyI9G+Ts98bVibSUAKgt+l7Yna/BgJq+8LDICRgqj
+         hzM1dfOEw0FteJoabi2xh7YzTJqLSJ4XGpsrAg3QtgqL+BjrzfanKLSnXOgv7JyJAY6z
+         kBcLZoAMzRdhrDegRU9cBaSPUZiBUzq/TP8WIMoWsTpP1ytHZ31OC00KlfoRYN3BMvZJ
+         aea24FFaMlJrtpwtU321iFAl0ReXltkoJZwYoD9k5C1Awu8GfFwD8XWiX4b+67+y4Guh
+         wygA==
+X-Gm-Message-State: AOAM533IetcMARgnPiyCHQA3JbFzIZvriSyHaACDMxJ5muGTvWUuF9YG
+        bhxBEhos7X/Ux8ormlgRZ0EexA==
+X-Google-Smtp-Source: ABdhPJz0KbTfdTPuQA7RGX6XRfCQOgs7wgEMdI9iLQdfZVyS+bMtCRlrYXKmytfRxjRqvDUwt3V3YQ==
+X-Received: by 2002:a2e:9e53:: with SMTP id g19mr36997908ljk.58.1625955612418;
+        Sat, 10 Jul 2021 15:20:12 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
         by smtp.gmail.com with ESMTPSA id s15sm795466lfp.216.2021.07.10.15.20.11
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 10 Jul 2021 15:20:11 -0700 (PDT)
+        Sat, 10 Jul 2021 15:20:12 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
@@ -57,9 +57,9 @@ Cc:     Jonathan Marek <jonathan@marek.ca>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH v3 4/7] drm/msm/mdp5: move mdp5_encoder_set_intf_mode after msm_dsi_modeset_init
-Date:   Sun, 11 Jul 2021 01:20:02 +0300
-Message-Id: <20210710222005.1334734-5-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 5/7] drm/msm/dp: stop calling set_encoder_mode callback
+Date:   Sun, 11 Jul 2021 01:20:03 +0300
+Message-Id: <20210710222005.1334734-6-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210710222005.1334734-1-dmitry.baryshkov@linaro.org>
 References: <20210710222005.1334734-1-dmitry.baryshkov@linaro.org>
@@ -69,51 +69,58 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Move a call to mdp5_encoder_set_intf_mode() after
-msm_dsi_modeset_init(), removing set_encoder_mode callback.
+None of the display drivers now implement set_encoder_mode callback.
+Stop calling it from the modeset init code.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
 ---
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c | 11 +++--------
- 1 file changed, 3 insertions(+), 8 deletions(-)
+ drivers/gpu/drm/msm/dp/dp_display.c | 18 ------------------
+ 1 file changed, 18 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index 15aed45022bc..b3b42672b2d4 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -209,13 +209,6 @@ static int mdp5_set_split_display(struct msm_kms *kms,
- 							  slave_encoder);
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 051c1be1de7e..70b319a8fe83 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -102,8 +102,6 @@ struct dp_display_private {
+ 	struct dp_display_mode dp_mode;
+ 	struct msm_dp dp_display;
+ 
+-	bool encoder_mode_set;
+-
+ 	/* wait for audio signaling */
+ 	struct completion audio_comp;
+ 
+@@ -283,20 +281,6 @@ static void dp_display_send_hpd_event(struct msm_dp *dp_display)
  }
  
--static void mdp5_set_encoder_mode(struct msm_kms *kms,
--				  struct drm_encoder *encoder,
--				  bool cmd_mode)
+ 
+-static void dp_display_set_encoder_mode(struct dp_display_private *dp)
 -{
--	mdp5_encoder_set_intf_mode(encoder, cmd_mode);
+-	struct msm_drm_private *priv = dp->dp_display.drm_dev->dev_private;
+-	struct msm_kms *kms = priv->kms;
+-
+-	if (!dp->encoder_mode_set && dp->dp_display.encoder &&
+-				kms->funcs->set_encoder_mode) {
+-		kms->funcs->set_encoder_mode(kms,
+-				dp->dp_display.encoder, false);
+-
+-		dp->encoder_mode_set = true;
+-	}
 -}
 -
- static void mdp5_kms_destroy(struct msm_kms *kms)
+ static int dp_display_send_hpd_notification(struct dp_display_private *dp,
+ 					    bool hpd)
  {
- 	struct mdp5_kms *mdp5_kms = to_mdp5_kms(to_mdp_kms(kms));
-@@ -287,7 +280,6 @@ static const struct mdp_kms_funcs kms_funcs = {
- 		.get_format      = mdp_get_format,
- 		.round_pixclk    = mdp5_round_pixclk,
- 		.set_split_display = mdp5_set_split_display,
--		.set_encoder_mode = mdp5_set_encoder_mode,
- 		.destroy         = mdp5_kms_destroy,
- #ifdef CONFIG_DEBUG_FS
- 		.debugfs_init    = mdp5_kms_debugfs_init,
-@@ -448,6 +440,9 @@ static int modeset_init_intf(struct mdp5_kms *mdp5_kms,
- 		}
+@@ -369,8 +353,6 @@ static void dp_display_host_init(struct dp_display_private *dp, int reset)
+ 	if (dp->usbpd->orientation == ORIENTATION_CC2)
+ 		flip = true;
  
- 		ret = msm_dsi_modeset_init(priv->dsi[dsi_id], dev, encoder);
-+		if (!ret)
-+			mdp5_encoder_set_intf_mode(encoder, msm_dsi_is_cmd_mode(priv->dsi[dsi_id]));
-+
- 		break;
- 	}
- 	default:
+-	dp_display_set_encoder_mode(dp);
+-
+ 	dp_power_init(dp->power, flip);
+ 	dp_ctrl_host_init(dp->ctrl, flip, reset);
+ 	dp_aux_init(dp->aux);
 -- 
 2.30.2
 
