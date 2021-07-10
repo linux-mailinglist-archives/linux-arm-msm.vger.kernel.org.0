@@ -2,124 +2,311 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 400F73C2CA3
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jul 2021 03:34:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B1173C3213
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 10 Jul 2021 04:56:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231785AbhGJBfu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 9 Jul 2021 21:35:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39340 "EHLO
+        id S231827AbhGJC6z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 9 Jul 2021 22:58:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57698 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231704AbhGJBfp (ORCPT
+        with ESMTP id S231698AbhGJC6x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 9 Jul 2021 21:35:45 -0400
-Received: from mail-lj1-x233.google.com (mail-lj1-x233.google.com [IPv6:2a00:1450:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85483C0613F0
-        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jul 2021 18:33:01 -0700 (PDT)
-Received: by mail-lj1-x233.google.com with SMTP id e20so10898814ljn.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jul 2021 18:33:01 -0700 (PDT)
+        Fri, 9 Jul 2021 22:58:53 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94817C0613DD
+        for <linux-arm-msm@vger.kernel.org>; Fri,  9 Jul 2021 19:56:08 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id w15-20020a056830144fb02904af2a0d96f3so11513221otp.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 09 Jul 2021 19:56:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=s/A7UPTK4i/YxYWo+py1ZfWr+92yU5mUYYeUPHiFkEg=;
-        b=lrVwstQAI1v5pb4k+3c+P83tiywljkXeskO28iiu/PzggOC3pkpID/AbcckRBATRY+
-         4uhSyNM/2umDKActyEtPS5GXvrFOk0tfPOtky9y3L7opDou9xxts8f+rNDrQD5KHOdJU
-         XjlFq99cDfEv5fmSfewu5NGVOlIrGIY9kZx93cMvMsB62ci051Fq5Hhd0EMNZ1m7Rmwx
-         C3zanel+aChq5lzIBbjTxDoSxdkiGx1tbJOY6QLyfnqDth687uFIPUn8KoLcLfFQ89RH
-         12maxKtryyowubP1QWGY7kIrWOKGq6UReDPUXGmR3H4CKKePA4+cSZuwS5gUYF5eE6C9
-         t6RA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=q7U9qOUSDsrK43rTblnVFlDzcLe5oOcvy0x/FulEFg4=;
+        b=Q5KihE7myg2Fa2kbHoO6bSWVzJ9OoS4CYqKXpk/YDl5w0Fq+YgHptlXWsozdB66+xb
+         thwdX5c2fHAYONlIN76homPwsmufgljdBkPO5vAmYKz7hXDa/KkTXGha7O1D5hyCkjOZ
+         gKCTMYZChCezzcVTfPk7J6YDmigv46yjCIdcTnO8+lmtS02aI8fYrvbKTSzQTjTz7QjJ
+         bUQO6VuwJ+rVFVtUhr+TDGbJp+qnZIqr0ZDNF1Lbw4I5DX3rZjsoNIlwjXejfzv0iWvu
+         BuUDSx6WAoIEeSHdsuuA1efKO8jxyJgL+GRTh1VyjiJsTD4pq9hC4pk1n4m6I+tqYSxN
+         h3gw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=s/A7UPTK4i/YxYWo+py1ZfWr+92yU5mUYYeUPHiFkEg=;
-        b=dT8LzxZwIhAcXviDuq4cIlcoALP/9XQ91UMZUsdFZxBJGbGx1TcMXYMx5mzEWT9t/t
-         vvTUtEbQFOfcO2GOJKwYYkLqUa0vBcjjPB00t8sqCIO33B7bkBHcXImyjpa29b9WlH2P
-         lmVC2oC1MVe4z7M+R4XC7ztZooiTin+x3d65X9Ti5iFw57sLOeQ+oJzI5rNeSTg9W1hm
-         TtfgX13DUYvdneTECmrCb6zYJAfEMO03J14DZvGjtPww4QWA8+Z8/vgqGyCghqcueDxY
-         5mki2yrDVoU6Q3Fo46uxaSOUUQ0aew6GacyEsbVRPnwRlkHvmf5qJphBiyZsvOxMatY9
-         aEyQ==
-X-Gm-Message-State: AOAM5314C1+BroJE3IM2guWR9NudCAW681ZznAodCBaWmkA0eRifydra
-        8y4GcPDg7Q0R5QnvOb3WZ7Nk7A==
-X-Google-Smtp-Source: ABdhPJyU6jh3ZTKOA1TAcFOaxn3VIMjw3SCnYqLIb5j9ObLW0rPylTCZIMci2OG3NfOhp+qjl44Iww==
-X-Received: by 2002:a2e:a54a:: with SMTP id e10mr31836469ljn.120.1625880779935;
-        Fri, 09 Jul 2021 18:32:59 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id p13sm588788lfh.206.2021.07.09.18.32.59
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=q7U9qOUSDsrK43rTblnVFlDzcLe5oOcvy0x/FulEFg4=;
+        b=ZmvWSfG4pEMBowGqX8M/C827+h8tmt8rgpXyH7cg+yFsA9Ki9XLRX4HWoP2adA+Hob
+         ao27p7d4SFpEZ4I1BXme2cA6+qUEBQwKyBRzCW9b5j8iiDPv8yAdp/USEE1FZBaHBk6h
+         MS0/Mn4tkm57lod5jCtRLLNSkFRYMNLVcCJ3s4DUMDPYNhBo+wrT9MsuxjzrEAXqNiyZ
+         3htFZXOHrHu9OJDilILPz3iN1qA/qSpKK9RZoa2NZbtMlsQmVHdg7EseveodatS9t0l7
+         AOnPtLjvnwqZAuv29juYwm20pusntiqOyqh8rnJQTbKmKDWmx/xagEvzDXYC9/eQJK5d
+         RWOw==
+X-Gm-Message-State: AOAM532YKC1mmESSY4C80MzBayQDu+RFcSAfI/IQ3juL1d0F5hw3ZgEf
+        FqvI+f7sC5L0qrvq97Q/g949SA==
+X-Google-Smtp-Source: ABdhPJyfqhCT/qHSmLTE+M5EyuvsusE1Dn0OTmnRU1cjJlyhVjfgSmGkSzQqdxhjf1j17G8E4xNrMw==
+X-Received: by 2002:a9d:7f0d:: with SMTP id j13mr7672945otq.322.1625885767876;
+        Fri, 09 Jul 2021 19:56:07 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id b16sm1637278oic.5.2021.07.09.19.56.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 09 Jul 2021 18:32:59 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Michael Turquette <mturquette@baylibre.com>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-clk@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v4 6/6] clk: qcom: videocc-sm8250: stop using mmcx regulator
-Date:   Sat, 10 Jul 2021 04:32:53 +0300
-Message-Id: <20210710013253.1134341-7-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210710013253.1134341-1-dmitry.baryshkov@linaro.org>
-References: <20210710013253.1134341-1-dmitry.baryshkov@linaro.org>
+        Fri, 09 Jul 2021 19:56:07 -0700 (PDT)
+Date:   Fri, 9 Jul 2021 21:56:05 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     quic_vamslank@quicinc.com
+Cc:     agross@kernel.org, linus.walleij@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, manivannan.sadhasivam@linaro.org
+Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: Add SDX65 pinctrl
+ bindings
+Message-ID: <YOkMRZamuFplNyT/@yoga>
+References: <20210709200618.20230-1-quic_vamslank@quicinc.com>
+ <20210709200618.20230-2-quic_vamslank@quicinc.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210709200618.20230-2-quic_vamslank@quicinc.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Now as the common qcom clock controller code has been taught about power
-domains, stop mentioning mmcx supply as a way to power up the clock
-controller's gdscs.
+On Fri 09 Jul 15:06 CDT 2021, quic_vamslank@quicinc.com wrote:
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/clk/qcom/videocc-sm8250.c | 4 ----
- 1 file changed, 4 deletions(-)
+> From: Vamsi krishna Lanka <quic_vamslank@quicinc.com>
+> 
+> Add device tree binding Documentation details for Qualcomm SDX65
+> pinctrl driver.
+> 
+> Signed-off-by: Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
+> ---
+>  .../bindings/pinctrl/qcom,sdx65-pinctrl.yaml  | 175 ++++++++++++++++++
+>  1 file changed, 175 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sdx65-pinctrl.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sdx65-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sdx65-pinctrl.yaml
+> new file mode 100644
+> index 000000000000..0d04bba4d8e0
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sdx65-pinctrl.yaml
+> @@ -0,0 +1,175 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pinctrl/qcom,sdx65-pinctrl.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Technologies, Inc. SDX65 TLMM block
+> +
+> +maintainers:
+> +  - Vamsi krishna Lanka <quic_vamslank@quicinc.com>
+> +
+> +description: |
+> +  This binding describes the Top Level Mode Multiplexer block found in the
+> +  SDX65 platform.
+> +
+> +properties:
+> +  compatible:
+> +    const: qcom,sdx65-pinctrl
 
-diff --git a/drivers/clk/qcom/videocc-sm8250.c b/drivers/clk/qcom/videocc-sm8250.c
-index 7b435a1c2c4b..eedef85d90e5 100644
---- a/drivers/clk/qcom/videocc-sm8250.c
-+++ b/drivers/clk/qcom/videocc-sm8250.c
-@@ -276,7 +276,6 @@ static struct gdsc mvs0c_gdsc = {
- 	},
- 	.flags = 0,
- 	.pwrsts = PWRSTS_OFF_ON,
--	.supply = "mmcx",
- };
- 
- static struct gdsc mvs1c_gdsc = {
-@@ -286,7 +285,6 @@ static struct gdsc mvs1c_gdsc = {
- 	},
- 	.flags = 0,
- 	.pwrsts = PWRSTS_OFF_ON,
--	.supply = "mmcx",
- };
- 
- static struct gdsc mvs0_gdsc = {
-@@ -296,7 +294,6 @@ static struct gdsc mvs0_gdsc = {
- 	},
- 	.flags = HW_CTRL,
- 	.pwrsts = PWRSTS_OFF_ON,
--	.supply = "mmcx",
- };
- 
- static struct gdsc mvs1_gdsc = {
-@@ -306,7 +303,6 @@ static struct gdsc mvs1_gdsc = {
- 	},
- 	.flags = HW_CTRL,
- 	.pwrsts = PWRSTS_OFF_ON,
--	.supply = "mmcx",
- };
- 
- static struct clk_regmap *video_cc_sm8250_clocks[] = {
--- 
-2.30.2
+Please make this qcom,sdx65-tlmm
 
+> +
+> +  reg:
+> +    description: Specifies the base address and size of the TLMM register space
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    description: Specifies the TLMM summary IRQ
+> +    maxItems: 1
+> +
+> +  interrupt-controller: true
+> +
+> +  '#interrupt-cells':
+> +    description: Specifies the PIN numbers and Flags, as defined in
+> +      include/dt-bindings/interrupt-controller/irq.h
+> +    const: 2
+> +
+> +  gpio-controller: true
+> +
+> +  '#gpio-cells':
+> +    description: Specifying the pin number and flags, as defined in
+> +      include/dt-bindings/gpio/gpio.h
+> +    const: 2
+> +
+> +  gpio-ranges:
+> +    maxItems: 1
+> +
+> +  gpio-reserved-ranges:
+> +    maxItems: 1
+> +
+> +#PIN CONFIGURATION NODES
+> +patternProperties:
+> +  '-pins$':
+
+This only allows:
+
+&tlmm {
+	some-pins {
+		pins = "gpio1";
+		properties...;
+	};
+};
+
+Not:
+
+&tlmm {
+	some-pins {
+		foo {
+			pins = "gpio1";
+			properties...;
+		};
+
+		bar {
+			pins = "gpio2";
+			other-properties;
+		};
+	};
+};
+
+And we want to be able to use both styles.
+
+Also, the thing we describe here isn't a bunch of pins, but rather a
+"state".
+
+So please rework this following qcom,sc8180x-pinctrl.yaml and how it
+uses qcom,tlmm-common.yaml.
+
+> +    type: object
+> +    description:
+> +      Pinctrl node's client devices use subnodes for desired pin configuration.
+> +      Client device subnodes use below standard properties.
+> +    $ref: "/schemas/pinctrl/pincfg-node.yaml"
+> +
+> +    properties:
+> +      pins:
+> +        description:
+> +          List of gpio pins affected by the properties specified in this subnode.
+> +        items:
+> +          oneOf:
+> +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-1][0-6])$"
+> +            - enum: [ sdc1_clk, sdc1_cmd, sdc1_data, sdc2_clk, sdc2_cmd, sdc2_data, sdc1_rclk ]
+
+Your driver has "ufs_reset" as a pin a well.
+
+> +        minItems: 1
+> +	maxItems: 150
+> +
+> +      function:
+> +        description:
+> +          Specify the alternative function to be configured for the specified
+> +          pins. Functions are only valid for gpio pins.
+> +        enum: [ blsp_uart1, blsp_spi1, blsp_i2c1, blsp_uim1, atest_tsens,
+> +          bimc_dte1, dac_calib0, blsp_spi8, blsp_uart8, blsp_uim8,
+> +          qdss_cti_trig_out_b, bimc_dte0, dac_calib1, qdss_cti_trig_in_b,
+> +          dac_calib2, atest_tsens2, atest_usb1, blsp_spi10, blsp_uart10,
+> +          blsp_uim10, atest_bbrx1, atest_usb13, atest_bbrx0, atest_usb12,
+> +          mdp_vsync, edp_lcd, blsp_i2c10, atest_gpsadc1, atest_usb11,
+> +          atest_gpsadc0, edp_hot, atest_usb10, m_voc, dac_gpio, atest_char,
+> +          cam_mclk, pll_bypassnl, qdss_stm7, blsp_i2c8, qdss_tracedata_b,
+> +          pll_reset, qdss_stm6, qdss_stm5, qdss_stm4, atest_usb2, cci_i2c,
+> +          qdss_stm3, dac_calib3, atest_usb23, atest_char3, dac_calib4,
+> +          qdss_stm2, atest_usb22, atest_char2, qdss_stm1, dac_calib5,
+> +          atest_usb21, atest_char1, dbg_out, qdss_stm0, dac_calib6,
+> +          atest_usb20, atest_char0, dac_calib10, qdss_stm10,
+> +          qdss_cti_trig_in_a, cci_timer4, blsp_spi6, blsp_uart6, blsp_uim6,
+> +          blsp2_spi, qdss_stm9, qdss_cti_trig_out_a, dac_calib11,
+> +          qdss_stm8, cci_timer0, qdss_stm13, dac_calib7, cci_timer1,
+> +          qdss_stm12, dac_calib8, cci_timer2, blsp1_spi, qdss_stm11,
+> +          dac_calib9, cci_timer3, cci_async, dac_calib12, blsp_i2c6,
+> +          qdss_tracectl_a, dac_calib13, qdss_traceclk_a, dac_calib14,
+> +          dac_calib15, hdmi_rcv, dac_calib16, hdmi_cec, pwr_modem,
+> +          dac_calib17, hdmi_ddc, pwr_nav, dac_calib18, pwr_crypto,
+> +          dac_calib19, hdmi_hot, dac_calib20, dac_calib21, pci_e0,
+> +          dac_calib22, dac_calib23, dac_calib24, tsif1_sync, dac_calib25,
+> +          sd_write, tsif1_error, blsp_spi2, blsp_uart2, blsp_uim2,
+> +          qdss_cti, blsp_i2c2, blsp_spi3, blsp_uart3, blsp_uim3, blsp_i2c3,
+> +          uim3, blsp_spi9, blsp_uart9, blsp_uim9, blsp10_spi, blsp_i2c9,
+> +          blsp_spi7, blsp_uart7, blsp_uim7, qdss_tracedata_a, blsp_i2c7,
+> +          qua_mi2s, gcc_gp1_clk_a, ssc_irq, uim4, blsp_spi11, blsp_uart11,
+> +          blsp_uim11, gcc_gp2_clk_a, gcc_gp3_clk_a, blsp_i2c11, cri_trng0,
+> +          cri_trng1, cri_trng, qdss_stm18, pri_mi2s, qdss_stm17, blsp_spi4,
+> +          blsp_uart4, blsp_uim4, qdss_stm16, qdss_stm15, blsp_i2c4,
+> +          qdss_stm14, dac_calib26, spkr_i2s, audio_ref, lpass_slimbus,
+> +          isense_dbg, tsense_pwm1, tsense_pwm2, btfm_slimbus, ter_mi2s,
+> +          qdss_stm22, qdss_stm21, qdss_stm20, qdss_stm19, gcc_gp1_clk_b,
+> +          sec_mi2s, blsp_spi5, blsp_uart5, blsp_uim5, gcc_gp2_clk_b,
+> +          gcc_gp3_clk_b, blsp_i2c5, blsp_spi12, blsp_uart12, blsp_uim12,
+> +          qdss_stm25, qdss_stm31, blsp_i2c12, qdss_stm30, qdss_stm29,
+> +          tsif1_clk, qdss_stm28, tsif1_en, tsif1_data, sdc4_cmd, qdss_stm27,
+> +          qdss_traceclk_b, tsif2_error, sdc43, vfr_1, qdss_stm26, tsif2_clk,
+> +          sdc4_clk, qdss_stm24, tsif2_en, sdc42, qdss_stm23, qdss_tracectl_b,
+> +          sd_card, tsif2_data, sdc41, tsif2_sync, sdc40, mdp_vsync_p_b,
+> +          ldo_en, mdp_vsync_s_b, ldo_update, blsp11_uart_tx_b, blsp11_uart_rx_b,
+> +          blsp11_i2c_sda_b, prng_rosc, blsp11_i2c_scl_b, uim2, uim1, uim_batt,
+> +          pci_e2, pa_indicator, adsp_ext, ddr_bist, qdss_tracedata_11,
+> +          qdss_tracedata_12, modem_tsync, nav_dr, nav_pps, pci_e1, gsm_tx,
+> +          qspi_cs, ssbi2, ssbi1, mss_lte, qspi_clk, qspi0, qspi1, qspi2, qspi3,
+> +          gpio ]
+> +
+> +      drive-strength:
+> +        enum: [2, 4, 6, 8, 10, 12, 14, 16]
+> +        default: 2
+> +        description:
+> +          Selects the drive strength for the specified pins, in mA.
+> +
+> +      bias-pull-down: true
+> +
+> +      bias-pull-up: true
+> +
+> +      bias-disable: true
+> +
+> +      output-high: true
+> +
+> +      output-low: true
+> +
+> +    required:
+> +      - pins
+> +      - function
+> +
+> +    additionalProperties: false
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - interrupt-controller
+> +  - '#interrupt-cells'
+> +  - gpio-controller
+> +  - '#gpio-cells'
+> +  - gpio-ranges
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +        tlmm: pinctrl@f100000{
+> +                compatible = "qcom,sdx65-pinctrl";
+> +                reg = <0x03000000 0xdc2000>;
+> +                gpio-controller;
+> +                #gpio-cells = <2>;
+> +                gpio-ranges = <&tlmm 0 0 108>;
+> +                interrupt-controller;
+> +                #interrupt-cells = <2>;
+> +                interrupts = <GIC_SPI 212 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +                serial-pins {
+> +                        pins = "gpio8", "gpio9";
+> +                        function = "blsp_uart3";
+> +                        drive-strength = <2>;
+> +                        bias-disable;
+> +                };
+> +        };
+> +
+
+Please drop this empty line.
+
+Regards,
+Bjorn
+
+> +...
+> -- 
+> 2.32.0
+> 
