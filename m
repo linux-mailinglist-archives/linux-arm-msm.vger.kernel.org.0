@@ -2,57 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D611A3C3AF9
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Jul 2021 09:15:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1188A3C3B6F
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Jul 2021 12:03:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229758AbhGKHSi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 11 Jul 2021 03:18:38 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47690 "EHLO mail.kernel.org"
+        id S230430AbhGKKFz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 11 Jul 2021 06:05:55 -0400
+Received: from mail.z3ntu.xyz ([128.199.32.197]:49418 "EHLO mail.z3ntu.xyz"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229544AbhGKHSi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 11 Jul 2021 03:18:38 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 833B561351;
-        Sun, 11 Jul 2021 07:15:50 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1625987751;
-        bh=z58bNMM3hhzvbsV96yCZjMHGp/nJ0qCVyPILy3am8HU=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Cf1jGehHwUfnZ1auuGFj3S0WyxDdCMMrIZBILqFQWGphqz7heQfZm+nM6JuHoXxHX
-         tjgUbcJH2JaSPvb0FugFPlzTJwVGbNo+YFORJ3lJXFudDrcDHbQK9Whey1Ef+S+ZZj
-         GTuSKgWA+0xYqjPQxKObD9mPciknCK7BPU9Ts3Lmes3Z+/JU5Q7cM7uzk18vgsfzdF
-         x5Kfr7xikcWs8tZT19MWcUHHqA031byq7IJFnJGOmSv1DlEq499aEG2rkypv+KdfqS
-         wp61a3qPH6c4cTNt28iRI7SSguolvSHG7jnDo+b475WUcvFnIGiqjL2h4te6Cw1nAA
-         O/E9EJa96i50A==
-Date:   Sun, 11 Jul 2021 15:15:46 +0800
-From:   Shawn Guo <shawnguo@kernel.org>
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: c630: fix correct powerdown pin for
- WSA881x
-Message-ID: <20210711071545.GA621@dragon>
-References: <20210706083523.10601-1-srinivas.kandagatla@linaro.org>
+        id S229800AbhGKKFz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 11 Jul 2021 06:05:55 -0400
+X-Greylist: delayed 339 seconds by postgrey-1.27 at vger.kernel.org; Sun, 11 Jul 2021 06:05:53 EDT
+Received: by mail.z3ntu.xyz (Postfix, from userid 182)
+        id 3BC02CA760; Sun, 11 Jul 2021 09:57:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1625997447; bh=GpWwGWz6u4k4mvdDD2L416E7IIFp/oI3LOwPDDMa5sA=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=a3+cPsJ4Qs4lJOs2iIXzpQvjvF9VTCYF7nzXtsy2GTZe0JPlm1jDeIHBjoGHIA0rI
+         QcMJ5ZGwF5+cvgTjSx0Qo84gb0p2dzRnWD5Kyyi8zWeEnyaY6YDoTw+lqV2waZGpyC
+         rVxIoxWRcWab7cnab5GaKtc99orHCrmacyAyoqj0=
+X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on arch-vps
+X-Spam-Level: *
+X-Spam-Status: No, score=1.3 required=5.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FROM_SUSPICIOUS_NTLD,
+        PDS_OTHER_BAD_TLD,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.6
+Received: from g550jk.localnet (ip-213-127-106-58.ip.prioritytelecom.net [213.127.106.58])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id BE702CA75D;
+        Sun, 11 Jul 2021 09:57:25 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1625997445; bh=GpWwGWz6u4k4mvdDD2L416E7IIFp/oI3LOwPDDMa5sA=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=vRwR7OEwSAAmATtmzvsoph2OXWDWR5l/aF4GqJRscgnm3qWIyBI71G0fCdgMkxwQK
+         CJJ+ZRGz/hazf7ldz21De0Nzc6IfHTiVjiiGP23aLuMHmhFUzALLqprFMnl/5uV+1e
+         CcZSKSugsuCItbYn4bQTyV8zLUMKW8nPh9ZFrS04=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Shawn Guo <shawn.guo@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org,
+        Shawn Guo <shawn.guo@linaro.org>
+Subject: Re: [PATCH] Input: pm8941-pwrkey - respect reboot_mode for warm reset
+Date:   Sun, 11 Jul 2021 11:57:25 +0200
+Message-ID: <1824770.6rn2EVs8mz@g550jk>
+In-Reply-To: <20210629030509.2893-1-shawn.guo@linaro.org>
+References: <20210629030509.2893-1-shawn.guo@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210706083523.10601-1-srinivas.kandagatla@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 06, 2021 at 09:35:23AM +0100, Srinivas Kandagatla wrote:
-> WSA881x powerdown pin is connected to GPIO1, GPIO2 not GPIO2 and GPIO3,
-> so correct this. This was working so far due to a shift bug in gpio driver,
-> however once that is fixed this will stop working, so fix this!
-> 
-> For some reason we forgot to add this dts change in last merge cycle so
-> currently audio is broken in 5.13 as the gpio driver fix already landed
-> in 5.13.
-> 
-> Reported-by: Shawn Guo <shawnguo@kernel.org>
-> Fixes: 45021d35fcb2 ("arm64: dts: qcom: c630: Enable audio support")
-> Signed-off-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Hi Shawn,
 
-Tested-by: Shawn Guo <shawnguo@kernel.org>
+On Dienstag, 29. Juni 2021 05:05:09 CEST Shawn Guo wrote:
+> On some devices, e.g. Sony Xperia M4 Aqua, warm reset is used to reboot
+> device into bootloader and recovery mode.  Instead of always doing hard
+> reset, add a check on reboot_mode for possible warm reset.
+> 
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> ---
+>  drivers/input/misc/pm8941-pwrkey.c | 6 +++++-
+>  1 file changed, 5 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/input/misc/pm8941-pwrkey.c
+> b/drivers/input/misc/pm8941-pwrkey.c index cf8104454e74..9b14d6eb1918
+> 100644
+> --- a/drivers/input/misc/pm8941-pwrkey.c
+> +++ b/drivers/input/misc/pm8941-pwrkey.c
+> @@ -27,6 +27,7 @@
+>  #define PON_PS_HOLD_RST_CTL2		0x5b
+>  #define  PON_PS_HOLD_ENABLE		BIT(7)
+>  #define  PON_PS_HOLD_TYPE_MASK		0x0f
+> +#define  PON_PS_HOLD_TYPE_WARM_RESET	1
+>  #define  PON_PS_HOLD_TYPE_SHUTDOWN	4
+>  #define  PON_PS_HOLD_TYPE_HARD_RESET	7
+> 
+> @@ -93,7 +94,10 @@ static int pm8941_reboot_notify(struct notifier_block
+> *nb, break;
+>  	case SYS_RESTART:
+>  	default:
+> -		reset_type = PON_PS_HOLD_TYPE_HARD_RESET;
+> +		if (reboot_mode == REBOOT_WARM)
+
+This doesn't compile with CONFIG_INPUT_PM8941_PWRKEY=m
+
+ ERROR: modpost: "reboot_mode" [drivers/input/misc/pm8941-pwrkey.ko] undefined!
+
+Also just to clarify, this is supposed to trigger when rebooting with 
+LINUX_REBOOT_CMD_RESTART2 and adding an argument that way, right?
+
+Regards
+Luca
+
+> +			reset_type = PON_PS_HOLD_TYPE_WARM_RESET;
+> +		else
+> +			reset_type = PON_PS_HOLD_TYPE_HARD_RESET;
+>  		break;
+>  	}
+
+
+
+
