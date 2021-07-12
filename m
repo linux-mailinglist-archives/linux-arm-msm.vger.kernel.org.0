@@ -2,106 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 87D663C3D7A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 11 Jul 2021 16:55:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21F783C4218
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jul 2021 05:41:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233963AbhGKO6J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 11 Jul 2021 10:58:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48028 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233666AbhGKO6J (ORCPT
+        id S230008AbhGLDo2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 11 Jul 2021 23:44:28 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:41353 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232540AbhGLDo2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 11 Jul 2021 10:58:09 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8BA85C0613E5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Jul 2021 07:55:21 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id z2so4771410plg.8
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Jul 2021 07:55:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=c3ykowIwDTRKsInbKYf/ek7DP95JkPgh9oE6DtLLi+A=;
-        b=f8oRiz7tCeeeXv/MqXq5OZOEzZswGECCi/HKTpvgEkbG0cllAp+VR+0I4HSYLIxAB+
-         24hZbfG6kZ/VSWsE/If4A/XA+e82SHh49PTD47WSoB6zeJWqaPwHUE7eU4Y9Fwj0mgIh
-         YmQF1alZ3ON6hCFsBykpcyyGmu8zyYbilzDJk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=c3ykowIwDTRKsInbKYf/ek7DP95JkPgh9oE6DtLLi+A=;
-        b=OMH8y7q19Mkiti3cHxKRcx5bjxjUyAkmdYKD9BNUe2ZGip0ulBFStW4aRC/hT6huIl
-         PARTIgF4m1BMLHF4HdSAPwF97NLVBM6n4jf6KK2IJmKexSrs/KqOk74enaDViCIw9w0X
-         YlZbhHc2qGx4HAx1MaP1adiKHWiUeP92DZB5Z4LGE84kKhc61uhtMdpv0JgdaHeT3MZ5
-         xD3OqXGCOzu7wwy8WSqSzOdpnfNZJymFO3UebpJgRyyXcedRw5eUGdqEON5K/q7ohtAe
-         O+iqnJVeOU6v4pxEnO0U95FnZYyfvN41Sp4xi+AlilDQ1k26IWOxw6qlCUVwCWVxi9tN
-         axlg==
-X-Gm-Message-State: AOAM532wKZ8sJrucxi+Fm0C9kVsSvfIZqsOvFyI45hRybetTdT22MRiL
-        p2eLjsK4aSyMGnVtqrer0P+lZQ==
-X-Google-Smtp-Source: ABdhPJzWwSuvGf7jsorlyDuYO0Lb3IQ103oXQCwHaS7V5m6oxgrlvvImbzsl+aKWkIQc8R8vXy4oVw==
-X-Received: by 2002:a17:90b:4b52:: with SMTP id mi18mr31807452pjb.37.1626015320918;
-        Sun, 11 Jul 2021 07:55:20 -0700 (PDT)
-Received: from www.outflux.net (smtp.outflux.net. [198.145.64.163])
-        by smtp.gmail.com with ESMTPSA id b4sm10932548pji.52.2021.07.11.07.55.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 11 Jul 2021 07:55:20 -0700 (PDT)
-From:   Kees Cook <keescook@chromium.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Kees Cook <keescook@chromium.org>,
-        Mathieu Poirier <mathieu.poirier@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Ohad Ben-Cohen <ohad@wizery.com>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        linux-hardening@vger.kernel.org
-Subject: [PATCH] rpmsg: glink: Replace strncpy() with strscpy_pad()
-Date:   Sun, 11 Jul 2021 07:55:17 -0700
-Message-Id: <20210711145517.1434486-1-keescook@chromium.org>
-X-Mailer: git-send-email 2.30.2
+        Sun, 11 Jul 2021 23:44:28 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1626061300; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=hs7Tqld0fBRwacaQc2I/5U3RxF7nEO0L5nh1M+lL7NQ=;
+ b=ct8mRNS3kU01NHoNNDSzxFPe3J7ske1cq1MtZyO2I4KZQuJnDUKNyyTpxC/vGk4I3khsmcXO
+ xMJjEEdzFJIYIafyI3OXOQnxSvQFSxqLuUnRVgs+n+vefe2TylYj6VnesB4fo8bdV/GUPOg1
+ 5vPmP0EhxW8yHsklPaFBsG0SfO0=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 60ebb9ec7b2963a2828d7af5 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 12 Jul 2021 03:41:32
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 06508C4338A; Mon, 12 Jul 2021 03:41:32 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 12B2AC433F1;
+        Mon, 12 Jul 2021 03:41:31 +0000 (UTC)
 MIME-Version: 1.0
-X-Developer-Signature: v=1; a=openpgp-sha256; l=1814; h=from:subject; bh=CGejJDIBWoCTMrdLfdYOlKTt2khst8/bmsGsqzGrjiA=; b=owEBbQKS/ZANAwAKAYly9N/cbcAmAcsmYgBg6wZVj+vEe7YcbCfgSji3keoTaHrI/ZHofnZ1HVRt kwNnps2JAjMEAAEKAB0WIQSlw/aPIp3WD3I+bhOJcvTf3G3AJgUCYOsGVQAKCRCJcvTf3G3AJjp7D/ 4xOOjTrRSPqTRBymI1eoBS8GYyPpRa2EVxvB8ZW9jVsORyPMd+qrSptl1PBlgEtLrz91zlFDHigp3M Cl4XecxDPkow1jRbAEfCks39EzVxzHMY9gV7fpYG5qIPKFeKciIn4Ou6vwXPFl6E9iPBqm4F8t6yo+ IkCfBrhLyVYo4u4B1Ri8wj6ztXeIIzQNVxEmzxWzh5UcNp4l7IAkoru3ZgFHoE3yfbABsX4Qitw+cz LELsLx3KrcqETDczzGGSdZKT83iChx4H4B/y1xGvK7azhx/1PnCisiui7W8V0D/LswCl8qeTrj3XFB TZfCKs/qRQe60vO6/Se8gJkLnzovkODC9RxeVAkqGpq78fD6QoDryD8F8QoS2xn3AoJz2SiMBV0pPs CoQfmYM4IKYxecE1UxDmzwdup5vtSvb0xVobHYXQt+i9sbpferpFh2pjYPn6I43Gpju1PfUSyXQ2ZD 1NcASe91/pxA/1TD0+ccRSdz3olzulteWAdzMPKVEyU9X5/PEjJ2VZ+diHDzcN0EEPc64XCwBDyrfe ZKGvs1VDZT9hwo4Gy3N8hdikkUEOyjpvJWA+97P1iu0BOdnlCFIS5TwnOnY1zKvkfAMt5rRnKsWVdP MXSFMMpvhblVW8gDISa8TsXX5a7UVzuihmcw5yXT/PxOqiJn51exkx9Tl2SQ==
-X-Developer-Key: i=keescook@chromium.org; a=openpgp; fpr=A5C3F68F229DD60F723E6E138972F4DFDC6DC026
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 12 Jul 2021 09:11:30 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Kalyan Thota <kalyan_t@codeaurora.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dianders@chromium.org, mkrishn@codeaurora.org,
+        rnayak@codeaurora.org
+Subject: Re: [v1] drm/msm/disp/dpu1: add safe lut config in dpu driver
+In-Reply-To: <1625827244-23274-1-git-send-email-kalyan_t@codeaurora.org>
+References: <1625827244-23274-1-git-send-email-kalyan_t@codeaurora.org>
+Message-ID: <38beafdc174cbb16de6f1d646fff6816@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The use of strncpy() is considered deprecated for NUL-terminated
-strings[1]. Replace strncpy() with strscpy_pad() (as it seems this case
-expects the NUL padding to fill the allocation following the flexible
-array). This additionally silences a warning seen when building under
--Warray-bounds:
+On 2021-07-09 16:10, Kalyan Thota wrote:
+> Add safe lut configuration for all the targets in dpu
+> driver as per QOS recommendation.
+> 
+> Issue reported on SC7280:
+> 
+> With wait-for-safe feature in smmu enabled, RT client
+> buffer levels are checked to be safe before smmu invalidation.
+> Since display was always set to unsafe it was delaying the
+> invalidaiton process thus impacting the performance on NRT clients
+> such as eMMC and NVMe.
+> 
+> Validated this change on SC7280, With this change eMMC performance
+> has improved significantly.
+> 
+> Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 5 +++++
+>  1 file changed, 5 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index d01c4c9..2e482cd 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -974,6 +974,7 @@ static const struct dpu_perf_cfg sdm845_perf_data = 
+> {
+>  	.amortizable_threshold = 25,
+>  	.min_prefill_lines = 24,
+>  	.danger_lut_tbl = {0xf, 0xffff, 0x0},
+> +	.safe_lut_tbl = {0xfff0, 0xf000, 0xffff},
+>  	.qos_lut_tbl = {
+>  		{.nentry = ARRAY_SIZE(sdm845_qos_linear),
+>  		.entries = sdm845_qos_linear
+> @@ -1001,6 +1002,7 @@ static const struct dpu_perf_cfg sc7180_perf_data 
+> = {
+>  	.min_dram_ib = 1600000,
+>  	.min_prefill_lines = 24,
+>  	.danger_lut_tbl = {0xff, 0xffff, 0x0},
+> +	.safe_lut_tbl = {0xfff0, 0xff00, 0xffff},
+>  	.qos_lut_tbl = {
+>  		{.nentry = ARRAY_SIZE(sc7180_qos_linear),
+>  		.entries = sc7180_qos_linear
+> @@ -1028,6 +1030,7 @@ static const struct dpu_perf_cfg sm8150_perf_data 
+> = {
+>  	.min_dram_ib = 800000,
+>  	.min_prefill_lines = 24,
+>  	.danger_lut_tbl = {0xf, 0xffff, 0x0},
+> +	.safe_lut_tbl = {0xfff8, 0xf000, 0xffff},
+>  	.qos_lut_tbl = {
+>  		{.nentry = ARRAY_SIZE(sm8150_qos_linear),
+>  		.entries = sm8150_qos_linear
+> @@ -1056,6 +1059,7 @@ static const struct dpu_perf_cfg sm8250_perf_data 
+> = {
+>  	.min_dram_ib = 800000,
+>  	.min_prefill_lines = 35,
+>  	.danger_lut_tbl = {0xf, 0xffff, 0x0},
+> +	.safe_lut_tbl = {0xfff0, 0xff00, 0xffff},
+>  	.qos_lut_tbl = {
+>  		{.nentry = ARRAY_SIZE(sc7180_qos_linear),
+>  		.entries = sc7180_qos_linear
+> @@ -1084,6 +1088,7 @@ static const struct dpu_perf_cfg sc7280_perf_data 
+> = {
+>  	.min_dram_ib = 1600000,
+>  	.min_prefill_lines = 24,
+>  	.danger_lut_tbl = {0xffff, 0xffff, 0x0},
+> +	.safe_lut_tbl = {0xff00, 0xff00, 0xffff},
+>  	.qos_lut_tbl = {
+>  		{.nentry = ARRAY_SIZE(sc7180_qos_macrotile),
+>  		.entries = sc7180_qos_macrotile
 
-./include/linux/fortify-string.h:38:30: warning: '__builtin_strncpy' offset 24 from the object at '__mptr' is out of the bounds of referenced subobject 'data' with type 'u8[]' {aka 'unsigned char[]'} at offset 24 [-Warray-bounds]
-   38 | #define __underlying_strncpy __builtin_strncpy
-      |                              ^
-./include/linux/fortify-string.h:50:9: note: in expansion of macro '__underlying_strncpy'
-   50 |  return __underlying_strncpy(p, q, size);
-      |         ^~~~~~~~~~~~~~~~~~~~
-drivers/rpmsg/qcom_glink_native.c: In function 'qcom_glink_work':
-drivers/rpmsg/qcom_glink_native.c:36:5: note: subobject 'data' declared here
-   36 |  u8 data[];
-      |     ^~~~
+Tested-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org> 
+(sc7280, sc7180)
 
-[1] https://www.kernel.org/doc/html/latest/process/deprecated.html#strncpy-on-nul-terminated-strings
+This will need fixes and stable tag and I think this should also fix the
+wait-for-safe issue with sdm845 (ufs/usb speed slowdown with display 
+active)
+which we have in arm-smmu-qcom.
 
-Signed-off-by: Kees Cook <keescook@chromium.org>
----
- drivers/rpmsg/qcom_glink_native.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Thanks,
+Sai
 
-diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
-index 05533c71b10e..c7b9de655080 100644
---- a/drivers/rpmsg/qcom_glink_native.c
-+++ b/drivers/rpmsg/qcom_glink_native.c
-@@ -1440,7 +1440,7 @@ static int qcom_glink_rx_open(struct qcom_glink *glink, unsigned int rcid,
- 		}
- 
- 		rpdev->ept = &channel->ept;
--		strncpy(rpdev->id.name, name, RPMSG_NAME_SIZE);
-+		strscpy_pad(rpdev->id.name, name, RPMSG_NAME_SIZE);
- 		rpdev->src = RPMSG_ADDR_ANY;
- 		rpdev->dst = RPMSG_ADDR_ANY;
- 		rpdev->ops = &glink_device_ops;
 -- 
-2.30.2
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
