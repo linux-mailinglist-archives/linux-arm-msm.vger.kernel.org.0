@@ -2,170 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 23F3B3C55B7
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jul 2021 12:56:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 98C953C5A25
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jul 2021 13:03:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243473AbhGLILp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jul 2021 04:11:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48228 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353271AbhGLIBr (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jul 2021 04:01:47 -0400
-Received: from mail-pg1-x533.google.com (mail-pg1-x533.google.com [IPv6:2607:f8b0:4864:20::533])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE04FC0610E1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jul 2021 00:53:07 -0700 (PDT)
-Received: by mail-pg1-x533.google.com with SMTP id a2so17413704pgi.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 12 Jul 2021 00:53:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=8H0yUJOEvi3zZTuxDoA57QDVjTfFiJnGcoqqzbwxmVs=;
-        b=ZG5p7Tqp7gaCXtfqcGueAgC03BaZ6tkCjgmLL+HntOiwhJVqLV6P6FH1PU6ijigIwa
-         2D4aHrU2WxmK0t/cVP5bhnfA6Hkfog08BhnyIsOcgCOM9FnYRcvnd7v6hZUq3SbkC8p8
-         drICwrUijHqS3WKlo2GtM6VUvreUSiSm45XYaSrDodqEoAdcJwkF91hPc2NmPEe2cBy8
-         Ln6qOoZO1+4J3z+jn4vMSOYSxCAI7XrZrZj0PRJtLPs4Ww9EUDq+huGj459Y7BO1sr9d
-         e2PNoPqExJBslLp/TZZ8xwXSDQ/72n1gP1FAu2OXrZICejo4aQ5No5TQFgZsULmFensl
-         vafw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=8H0yUJOEvi3zZTuxDoA57QDVjTfFiJnGcoqqzbwxmVs=;
-        b=ejKA496Td1yNqL1KvQu8muk7edGnxc5Y00XdHdVWDDTDz/nCsrefMFWwiSoCUMkGMa
-         KdPhPjGsiVe4UQ/q35PDX74wGA+i2n55c+m4P62iDtrYEDDUaZ+yDh0G5oUWdWvVn2ys
-         W48ZOuZ7PBMMW9ONVz7NViy5ArGWnvOZXIVBt6R4DkkGJB+kXXDvBeQUnSQHSGx4/DJe
-         VV4JuZcp4kHrG6LDIcIglF+nYTCawUrHjfnKLn2NJopGYjCCly/fXfXXXrueQIj4lOzK
-         JN1vzmUQJs3GgW4rim3bgJ2hBT+nq2MAbHvFLZjukKDOk5B3oGiSbcZrAbpeWGU3O7oT
-         SnLg==
-X-Gm-Message-State: AOAM530rYUNRy951Lk398sQqabcSHj3X49njkkGxsPAO6IOj4Zk7uPHA
-        gaNdhcwDp++wLrW9JPUyM/FS
-X-Google-Smtp-Source: ABdhPJwSTnl9VFCmFcSRDus9OJnYbw708x25bRrEGojoECLrgUODo4vjpCMqB2mk+hCd78dAXbA+kw==
-X-Received: by 2002:a62:1d86:0:b029:32a:311a:9595 with SMTP id d128-20020a621d860000b029032a311a9595mr10855485pfd.74.1626076387347;
-        Mon, 12 Jul 2021 00:53:07 -0700 (PDT)
-Received: from workstation ([120.138.12.18])
-        by smtp.gmail.com with ESMTPSA id z3sm16409753pgl.77.2021.07.12.00.53.03
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 12 Jul 2021 00:53:07 -0700 (PDT)
-Date:   Mon, 12 Jul 2021 13:23:02 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        devicetree@vger.kernel.org, PCI <linux-pci@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        hemantk@codeaurora.org,
-        Siddartha Mohanadoss <smohanad@codeaurora.org>,
+        id S235761AbhGLJfx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jul 2021 05:35:53 -0400
+Received: from mail.kernel.org ([198.145.29.99]:51302 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1356758AbhGLJe3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 12 Jul 2021 05:34:29 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 4C8F26101E;
+        Mon, 12 Jul 2021 09:31:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1626082300;
+        bh=SLyG9PB5xze2TXVay8AsDKn3rf1aPGEPwRhz6WO1OgY=;
+        h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+        b=Uk0tjRYmT5CgR9ClwEFtLlKeE+rPDwo3gzQttiGJj3W8VzQZ6ug0dUsPIHcD6Xw3u
+         L+P5bfn2/HPe3ANlt1J9hBJAVo0aVY3m63UvhddAKtISpJwTsiUIA3STOqgKrsTXaR
+         UuX5vU1Jyo2glF6NippVyx0EHLq2imlnahPgBfiH65gq0sVuSS61gPN2RATgP/Q52P
+         3hXNfj5o7eGN9p10bwwaOHOd5YeF4vPhNoyYsFgP1YEPwhBwn3R4ZPY5XpX0dbnoqS
+         W4TNcAi0aAz43eB5BMzYn8iw0ZYJWwg+wvcT1s4vF0l3LhrDPiPgO3Iy5Mf83CCXdW
+         sN6ckYUmPWorw==
+From:   Felipe Balbi <balbi@kernel.org>
+To:     Sandeep Maheswaram <sanm@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sriharsha Allenki <sallenki@codeaurora.org>,
-        skananth@codeaurora.org, vpernami@codeaurora.org,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>
-Subject: Re: [PATCH v5 0/3] Add Qualcomm PCIe Endpoint driver support
-Message-ID: <20210712075302.GA8113@workstation>
-References: <20210630034653.10260-1-manivannan.sadhasivam@linaro.org>
- <CAL_JsqLHp3kBc1VtGVRxVr_k69GqSC_JX88jo3stdM4W9Qq6AQ@mail.gmail.com>
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Pratham Pratap <prathampratap@codeaurora.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>
+Subject: Re: [PATCH v8 2/6] usb: host: xhci: plat: Add suspend quirk for
+ dwc3 controller
+In-Reply-To: <1624882097-23265-3-git-send-email-sanm@codeaurora.org>
+References: <1624882097-23265-1-git-send-email-sanm@codeaurora.org>
+ <1624882097-23265-3-git-send-email-sanm@codeaurora.org>
+Date:   Mon, 12 Jul 2021 12:31:31 +0300
+Message-ID: <87im1fzxn0.fsf@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAL_JsqLHp3kBc1VtGVRxVr_k69GqSC_JX88jo3stdM4W9Qq6AQ@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Type: multipart/signed; boundary="=-=-=";
+        micalg=pgp-sha256; protocol="application/pgp-signature"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 01, 2021 at 09:25:01AM -0600, Rob Herring wrote:
-> On Tue, Jun 29, 2021 at 9:47 PM Manivannan Sadhasivam
-> <manivannan.sadhasivam@linaro.org> wrote:
-> >
-> > Hello,
-> >
-> > This series adds support for Qualcomm PCIe Endpoint controller found
-> > in platforms like SDX55. The Endpoint controller is based on the designware
-> > core with additional Qualcomm wrappers around the core.
-> >
-> > The driver is added separately unlike other Designware based drivers that
-> > combine RC and EP in a single driver. This is done to avoid complexity and
-> > to maintain this driver autonomously.
-> >
-> > The driver has been validated with an out of tree MHI function driver on
-> > SDX55 based Telit FN980 EVB connected to x86 host machine over PCIe.
-> >
-> > Thanks,
-> > Mani
-> >
-> > Changes in v5:
-> >
-> > * Removed the DBI register settings that are not needed
-> > * Used the standard definitions available in pci_regs.h
-> > * Added defines for all the register fields
-> > * Removed the left over code from previous iteration
-> >
-> > Changes in v4:
-> >
-> > * Removed the active_config settings needed for IPA integration
-> > * Switched to writel for couple of relaxed versions that sneaked in
-> 
-> I thought we resolved this discussion. Use _relaxed variants unless
-> you need the stronger ones.
-> 
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
-I thought the discussion was resolved in favor of using read/writel. Here
-is the last reply from Bjorn:
 
-"I think we came to the conclusion that writel() was better
-than incorrect use of writel_relaxed() followed by wmb(). And in this
-particular case it's definitely not happening in a hot code path..."
+Hi,
 
-IMO, it is safer to use readl/writel calls than the relaxed variants.
-And so far the un-written rule I assumed is, only consider using the
-relaxed variants if the code is in hot path (but somehow I used the
-relaxed version in v1 :P )
+Sandeep Maheswaram <sanm@codeaurora.org> writes:
+> During suspend read the status of all port and make sure the PHYs
+> are in the correct mode based on current speed.
+> Phy interrupt masks are set based on this mode. Keep track of the mode
+> of the HS PHY to be able to configure wakeup properly.
+>
+> Also check during suspend if any wakeup capable devices are
+> connected to the controller (directly or through hubs), if there
+> are none set a flag to indicate that the PHY should be powered
+> down during suspend.
+>
+> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+> ---
+>  drivers/usb/host/xhci-plat.c | 38 ++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 38 insertions(+)
+>
+> diff --git a/drivers/usb/host/xhci-plat.c b/drivers/usb/host/xhci-plat.c
+> index c1edcc9..ee87923 100644
+> --- a/drivers/usb/host/xhci-plat.c
+> +++ b/drivers/usb/host/xhci-plat.c
+> @@ -24,6 +24,7 @@
+>  #include "xhci-plat.h"
+>  #include "xhci-mvebu.h"
+>  #include "xhci-rcar.h"
+> +#include "../dwc3/core.h"
+>=20=20
+>  static struct hc_driver __read_mostly xhci_plat_hc_driver;
+>=20=20
+> @@ -430,6 +431,39 @@ static int xhci_plat_remove(struct platform_device *=
+dev)
+>=20=20
+>  	return 0;
+>  }
+> +static void xhci_dwc3_suspend_quirk(struct usb_hcd *hcd)
+> +{
+> +	int i, num_ports;
+> +	u32 reg;
+> +	unsigned int ss_phy_mode =3D 0;
+> +	struct dwc3 *dwc =3D dev_get_drvdata(hcd->self.controller->parent);
+> +	struct xhci_hcd	*xhci_hcd =3D hcd_to_xhci(hcd);
+> +
+> +	dwc->hs_phy_mode =3D 0;
 
-Thanks,
-Mani
+you're still bypassing the driver layering. First you had dwc access
+xhci, now you want xhci to access dwc. Either way is wrong. You need to
+rely on drivers core and device properties for this stuff. Don't access
+data you don't own.
 
-> Rob
-> 
-> >
-> > Changes in v3:
-> >
-> > * Lot of minor cleanups to the driver patch based on review from Bjorn and Stan.
-> > * Noticeable changes are:
-> >   - Got rid of _relaxed calls and used readl/writel
-> >   - Got rid of separate TCSR memory region and used syscon for getting the
-> >     register offsets for Perst registers
-> >   - Changed the wake gpio handling logic
-> >   - Added remove() callback and removed "suppress_bind_attrs"
-> >   - stop_link() callback now just disables PERST IRQ
-> > * Added MMIO region and doorbell interrupt to the binding
-> > * Added logic to write MMIO physicall address to MHI base address as it is
-> >   for the function driver to work
-> >
-> > Changes in v2:
-> >
-> > * Addressed the comments from Rob on bindings patch
-> > * Modified the driver as per binding change
-> > * Fixed the warnings reported by Kbuild bot
-> > * Removed the PERST# "enable_irq" call from probe()
-> >
-> > Manivannan Sadhasivam (3):
-> >   dt-bindings: pci: Add devicetree binding for Qualcomm PCIe EP
-> >     controller
-> >   PCI: dwc: Add Qualcomm PCIe Endpoint controller driver
-> >   MAINTAINERS: Add entry for Qualcomm PCIe Endpoint driver and binding
-> >
-> >  .../devicetree/bindings/pci/qcom,pcie-ep.yaml | 160 ++++
-> >  MAINTAINERS                                   |  10 +-
-> >  drivers/pci/controller/dwc/Kconfig            |  10 +
-> >  drivers/pci/controller/dwc/Makefile           |   1 +
-> >  drivers/pci/controller/dwc/pcie-qcom-ep.c     | 742 ++++++++++++++++++
-> >  5 files changed, 922 insertions(+), 1 deletion(-)
-> >  create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> >  create mode 100644 drivers/pci/controller/dwc/pcie-qcom-ep.c
-> >
-> > --
-> > 2.25.1
-> >
+=2D-=20
+balbi
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFFBAEBCAAvFiEE9DumQ60WEZ09LIErzlfNM9wDzUgFAmDsC/MRHGJhbGJpQGtl
+cm5lbC5vcmcACgkQzlfNM9wDzUgX1QgAuLQkROuNiEzBb++memK/UL5PiEaYklbg
+TwXM6yJ5KcvCvosUXw6wpY8uHPuq6wJspPyKZYr5vUjzg/+B8pDmO6JELDiqFnph
+gXfUkimhDyRm+F/4tR/Ed7+H0AHS+g+2mDE1tjKcJOlcpLGr43AANRt3SEKYMqyT
+Ji2zedr4BV87GDdCuiVdJHWOMW8/TW8G3bQ5yZUR2BneTpqjlkgt/y8AC4hOxMbk
+xQAP0awJVaLU8QpVZdqxjLa5RwFTgERFnPGqpnOrnPs804sU/bq4Ygj/Rd7j4I+B
+HhGVbknxE4tvTDpf93qoXy3qSwtv8MFobSGc2KeaI+MtiLvY/KLOLQ==
+=6ret
+-----END PGP SIGNATURE-----
+--=-=-=--
