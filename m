@@ -2,261 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 627FC3C6555
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jul 2021 23:15:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D1E533C66EA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jul 2021 01:23:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229842AbhGLVSj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jul 2021 17:18:39 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:40731 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229765AbhGLVSi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jul 2021 17:18:38 -0400
+        id S230137AbhGLX0h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jul 2021 19:26:37 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:20772 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230132AbhGLX0h (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 12 Jul 2021 19:26:37 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1626124550; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=M8Ba+PIbxtyBGm9Fe+a60np6mzytBwRoDr3eWzyGGiQ=;
- b=aEhHLBT5mq4J/0ZiCxLiEX3NhaVPLFXwnOfNDaGu2Yvv8E+a/4CqnPS8esjcHselDRtsxcid
- GIVcXR5dR/xLDxWPWJQ0jnlJS7igrVkCFQt03u8UNMM/s8yi8igicmjS3zedIEd4kYPmkrvk
- Rr/k2nD7rUXPCb8Z+cEYFKbeBPw=
-X-Mailgun-Sending-Ip: 69.72.43.7
+ s=smtp; t=1626132228; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=n8zu2+yyYfKoRSknIfHiAcFCRFragvnkngkp+ZsvrDo=; b=VnozR+NqBGpg1gDN8XrweN8QI1dbK1U1UOMfzsCxh4WZPv+qrwFAtrV6wGsy2Tx+hRgdMQRB
+ UEjId3//yoZ7r3xmVNt0QDkbVgTq2APKGcgbxOVagqeUOgefmu3/IGPw4AgkMp2FhEdGBUGy
+ SPQIE4xPUgOv1S74BpGb+PO8XI4=
+X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 60ecb0f63a8b6d0a455c5aef (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 12 Jul 2021 21:15:34
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 60eccef37b2963a2822c8970 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 12 Jul 2021 23:23:31
  GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Sender: collinsd=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id F1901C433F1; Mon, 12 Jul 2021 21:15:33 +0000 (UTC)
+        id 24FC2C43217; Mon, 12 Jul 2021 23:23:31 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C9023C433D3;
-        Mon, 12 Jul 2021 21:15:32 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 12 Jul 2021 14:15:32 -0700
-From:   abhinavk@codeaurora.org
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v3 3/7] drm/msm/dpu: support setting up two independent
- DSI connectors
-In-Reply-To: <20210710222005.1334734-4-dmitry.baryshkov@linaro.org>
-References: <20210710222005.1334734-1-dmitry.baryshkov@linaro.org>
- <20210710222005.1334734-4-dmitry.baryshkov@linaro.org>
-Message-ID: <2b7677a4acfa1ab8ba5d67a69fea9e07@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        (Authenticated sender: collinsd)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 12F38C433F1;
+        Mon, 12 Jul 2021 23:23:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 12F38C433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=collinsd@codeaurora.org
+From:   David Collins <collinsd@codeaurora.org>
+To:     Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org
+Cc:     David Collins <collinsd@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, Kiran Gunda <kgunda@codeaurora.org>,
+        Anirudh Ghayal <aghayal@codeaurora.org>,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+Subject: [PATCH] spmi: spmi-pmic-arb: fix irq_set_type race condition
+Date:   Mon, 12 Jul 2021 16:22:24 -0700
+Message-Id: <20210712232224.22410-1-collinsd@codeaurora.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-07-10 15:20, Dmitry Baryshkov wrote:
-> Move setting up encoders from set_encoder_mode to
-> _dpu_kms_initialize_dsi() / _dpu_kms_initialize_displayport(). This
-> allows us to support not only "single DSI" and "bonded DSI" but also 
-> "two
-> independent DSI" configurations. In future this would also help adding
-> support for multiple DP connectors.
-> 
+The qpnpint_irq_set_type() callback function configures the type
+(edge vs level) and polarity (high, low, or both) of a particular
+PMIC interrupt within a given peripheral.  To do this, it reads
+the three consecutive IRQ configuration registers, modifies the
+specified IRQ bit within the register values, and finally writes
+the three modified register values back to the PMIC.  While a
+spinlock is used to provide mutual exclusion on the SPMI bus
+during the register read and write calls, there is no locking
+around the overall read, modify, write sequence.  This opens up
+the possibility of a race condition if two tasks set the type of
+a PMIC IRQ within the same peripheral simultaneously.
 
-This looks quite neat now,so i am okay with this version of it:
+When the race condition is encountered, both tasks will read the
+old value of the registers and IRQ bits set by one of the tasks
+will be dropped upon the register write of the other task.  This
+then leads to PMIC IRQs being enabled with an incorrect type and
+polarity configured.  Such misconfiguration can lead to an IRQ
+storm that overwhelms the system and causes it to crash.
 
-Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
+This race condition and IRQ storm have been observed when using
+a pair of pm8941-pwrkey devices to handle PMK8350 pwrkey and
+resin interrupts.  The independent devices probe asynchronously
+in parallel and can simultaneously request and configure PMIC
+IRQs in the same PMIC peripheral.
 
-Just a suggestion, since we are only supporting two dsis so far, do we 
-need
-an extra variable to get the other DSI? Can't we just do 
-priv->dsi[DSI_1]?
-as usually DSI_0 is the master
+For a good case, the IRQ configuration calls end up serialized
+due to timing deltas and the register read/write sequence looks
+like this:
 
-> +		int other = (i + 1) % 2;
+1. pwrkey probe: SPMI  read(0x1311): 0x00, 0x00, 0x00
+2. pwrkey probe: SPMI write(0x1311): 0x80, 0x80, 0x80
+3. resin probe:  SPMI  read(0x1311): 0x80, 0x80, 0x80
+4. resin probe:  SPMI write(0x1311): 0xC0, 0xC0, 0xC0
 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 102 +++++++++++++-----------
->  1 file changed, 57 insertions(+), 45 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> index 1d3a4f395e74..3cd2011e18d4 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-> @@ -471,30 +471,68 @@ static int _dpu_kms_initialize_dsi(struct 
-> drm_device *dev,
->  				    struct dpu_kms *dpu_kms)
->  {
->  	struct drm_encoder *encoder = NULL;
-> +	struct msm_display_info info;
->  	int i, rc = 0;
-> 
->  	if (!(priv->dsi[0] || priv->dsi[1]))
->  		return rc;
-> 
-> -	/*TODO: Support two independent DSI connectors */
-> -	encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_DSI);
-> -	if (IS_ERR(encoder)) {
-> -		DPU_ERROR("encoder init failed for dsi display\n");
-> -		return PTR_ERR(encoder);
-> -	}
-> -
-> -	priv->encoders[priv->num_encoders++] = encoder;
-> -
-> +	/*
-> +	 * We support following confiurations:
-> +	 * - Single DSI host (dsi0 or dsi1)
-> +	 * - Two independent DSI hosts
-> +	 * - Bonded DSI0 and DSI1 hosts
-> +	 *
-> +	 * TODO: Support swapping DSI0 and DSI1 in the bonded setup.
-> +	 */
->  	for (i = 0; i < ARRAY_SIZE(priv->dsi); i++) {
-> +		int other = (i + 1) % 2;
-> +
->  		if (!priv->dsi[i])
->  			continue;
-> 
-> +		if (msm_dsi_is_bonded_dsi(priv->dsi[i]) &&
-> +		    !msm_dsi_is_master_dsi(priv->dsi[i]))
-> +			continue;
-> +
-> +		encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_DSI);
-> +		if (IS_ERR(encoder)) {
-> +			DPU_ERROR("encoder init failed for dsi display\n");
-> +			return PTR_ERR(encoder);
-> +		}
-> +
-> +		priv->encoders[priv->num_encoders++] = encoder;
-> +
-> +		memset(&info, 0, sizeof(info));
-> +		info.intf_type = encoder->encoder_type;
-> +
->  		rc = msm_dsi_modeset_init(priv->dsi[i], dev, encoder);
->  		if (rc) {
->  			DPU_ERROR("modeset_init failed for dsi[%d], rc = %d\n",
->  				i, rc);
->  			break;
->  		}
-> +
-> +		info.h_tile_instance[info.num_of_h_tiles++] = i;
-> +		info.capabilities = msm_dsi_is_cmd_mode(priv->dsi[i]) ?
-> +			MSM_DISPLAY_CAP_CMD_MODE :
-> +			MSM_DISPLAY_CAP_VID_MODE;
-> +
-> +		if (msm_dsi_is_bonded_dsi(priv->dsi[i]) && priv->dsi[other]) {
-> +			rc = msm_dsi_modeset_init(priv->dsi[other], dev, encoder);
-> +			if (rc) {
-> +				DPU_ERROR("modeset_init failed for dsi[%d], rc = %d\n",
-> +					other, rc);
-> +				break;
-> +			}
-> +
-> +			info.h_tile_instance[info.num_of_h_tiles++] = other;
-> +		}
-> +
-> +		rc = dpu_encoder_setup(dev, encoder, &info);
-> +		if (rc)
-> +			DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
-> +				  encoder->base.id, rc);
->  	}
-> 
->  	return rc;
-> @@ -505,6 +543,7 @@ static int _dpu_kms_initialize_displayport(struct
-> drm_device *dev,
->  					    struct dpu_kms *dpu_kms)
->  {
->  	struct drm_encoder *encoder = NULL;
-> +	struct msm_display_info info;
->  	int rc = 0;
-> 
->  	if (!priv->dp)
-> @@ -516,6 +555,7 @@ static int _dpu_kms_initialize_displayport(struct
-> drm_device *dev,
->  		return PTR_ERR(encoder);
->  	}
-> 
-> +	memset(&info, 0, sizeof(info));
->  	rc = msm_dp_modeset_init(priv->dp, dev, encoder);
->  	if (rc) {
->  		DPU_ERROR("modeset_init failed for DP, rc = %d\n", rc);
-> @@ -524,6 +564,14 @@ static int _dpu_kms_initialize_displayport(struct
-> drm_device *dev,
->  	}
-> 
->  	priv->encoders[priv->num_encoders++] = encoder;
-> +
-> +	info.num_of_h_tiles = 1;
-> +	info.capabilities = MSM_DISPLAY_CAP_VID_MODE;
-> +	info.intf_type = encoder->encoder_type;
-> +	rc = dpu_encoder_setup(dev, encoder, &info);
-> +	if (rc)
-> +		DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
-> +			  encoder->base.id, rc);
->  	return rc;
->  }
-> 
-> @@ -726,41 +774,6 @@ static void dpu_kms_destroy(struct msm_kms *kms)
->  	msm_kms_destroy(&dpu_kms->base);
->  }
-> 
-> -static void _dpu_kms_set_encoder_mode(struct msm_kms *kms,
-> -				 struct drm_encoder *encoder,
-> -				 bool cmd_mode)
-> -{
-> -	struct msm_display_info info;
-> -	struct msm_drm_private *priv = encoder->dev->dev_private;
-> -	int i, rc = 0;
-> -
-> -	memset(&info, 0, sizeof(info));
-> -
-> -	info.intf_type = encoder->encoder_type;
-> -	info.capabilities = cmd_mode ? MSM_DISPLAY_CAP_CMD_MODE :
-> -			MSM_DISPLAY_CAP_VID_MODE;
-> -
-> -	switch (info.intf_type) {
-> -	case DRM_MODE_ENCODER_DSI:
-> -		/* TODO: No support for DSI swap */
-> -		for (i = 0; i < ARRAY_SIZE(priv->dsi); i++) {
-> -			if (priv->dsi[i]) {
-> -				info.h_tile_instance[info.num_of_h_tiles] = i;
-> -				info.num_of_h_tiles++;
-> -			}
-> -		}
-> -		break;
-> -	case DRM_MODE_ENCODER_TMDS:
-> -		info.num_of_h_tiles = 1;
-> -		break;
-> -	}
-> -
-> -	rc = dpu_encoder_setup(encoder->dev, encoder, &info);
-> -	if (rc)
-> -		DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
-> -			encoder->base.id, rc);
-> -}
-> -
->  static irqreturn_t dpu_irq(struct msm_kms *kms)
->  {
->  	struct dpu_kms *dpu_kms = to_dpu_kms(kms);
-> @@ -863,7 +876,6 @@ static const struct msm_kms_funcs kms_funcs = {
->  	.get_format      = dpu_get_msm_format,
->  	.round_pixclk    = dpu_kms_round_pixclk,
->  	.destroy         = dpu_kms_destroy,
-> -	.set_encoder_mode = _dpu_kms_set_encoder_mode,
->  	.snapshot        = dpu_kms_mdp_snapshot,
->  #ifdef CONFIG_DEBUG_FS
->  	.debugfs_init    = dpu_kms_debugfs_init,
+The final register states after both devices have requested and
+enabled their respective IRQs is thus:
+
+0x1311: 0xC0
+0x1312: 0xC0
+0x1313: 0xC0
+0x1314: 0x00
+0x1315: 0xC0
+
+For a bad case, the IRQ configuration calls end up occurring
+simultaneously and the race condition is encountered.  The
+register read/write sequence then looks like this:
+
+1. pwrkey probe: SPMI  read(0x1311): 0x00, 0x00, 0x00
+2. resin probe:  SPMI  read(0x1311): 0x00, 0x00, 0x00
+3. pwrkey probe: SPMI write(0x1311): 0x80, 0x80, 0x80
+4. resin probe:  SPMI write(0x1311): 0x40, 0x40, 0x40
+
+In this case, the final register states after both devices have
+requested and enabled their respective IRQs is thus:
+
+0x1311: 0x40
+0x1312: 0x40
+0x1313: 0x40
+0x1314: 0x00
+0x1315: 0xC0
+
+This corresponds to the resin IRQ being configured for both
+rising and falling edges, as expected.  However, the pwrkey IRQ
+is misconfigured as level type with both polarity high and low
+set to disabled.  The PMIC IRQ triggering hardware treats this
+particular register configuration as if level low triggering is
+enabled.
+
+The raw pwrkey IRQ signal is low when the power key is not being
+pressed.  Thus, the pwrkey IRQ begins firing continuously in an
+IRQ storm.
+
+Fix the race condition by locking a spinlock for the duration of
+the read, modify, write sequence in the qpnpint_irq_set_type()
+function.
+
+Fixes: 67b563f1f258 ("spmi: pmic_arb: add support for interrupt handling")
+Signed-off-by: David Collins <collinsd@codeaurora.org>
+---
+ drivers/spmi/spmi-pmic-arb.c | 12 +++++++++++-
+ 1 file changed, 11 insertions(+), 1 deletion(-)
+
+diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
+index bbbd311eda03..379ad6c1c14a 100644
+--- a/drivers/spmi/spmi-pmic-arb.c
++++ b/drivers/spmi/spmi-pmic-arb.c
+@@ -127,6 +127,7 @@ struct apid_data {
+  * @intr:		address of the SPMI interrupt control registers.
+  * @cnfg:		address of the PMIC Arbiter configuration registers.
+  * @lock:		lock to synchronize accesses.
++ * @irq_lock:		lock to ensure mutual exclusion for IRQ type setting
+  * @channel:		execution environment channel to use for accesses.
+  * @irq:		PMIC ARB interrupt.
+  * @ee:			the current Execution Environment
+@@ -146,6 +147,7 @@ struct spmi_pmic_arb {
+ 	void __iomem		*core;
+ 	resource_size_t		core_size;
+ 	raw_spinlock_t		lock;
++	raw_spinlock_t		irq_lock;
+ 	u8			channel;
+ 	int			irq;
+ 	u8			ee;
+@@ -600,10 +602,13 @@ static void qpnpint_irq_unmask(struct irq_data *d)
+ 
+ static int qpnpint_irq_set_type(struct irq_data *d, unsigned int flow_type)
+ {
++	struct spmi_pmic_arb *pmic_arb = irq_data_get_irq_chip_data(d);
+ 	struct spmi_pmic_arb_qpnpint_type type;
+ 	irq_flow_handler_t flow_handler;
+ 	u8 irq = hwirq_to_irq(d->hwirq);
++	unsigned long flags;
+ 
++	raw_spin_lock_irqsave(&pmic_arb->irq_lock, flags);
+ 	qpnpint_spmi_read(d, QPNPINT_REG_SET_TYPE, &type, sizeof(type));
+ 
+ 	if (flow_type & (IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING)) {
+@@ -616,8 +621,10 @@ static int qpnpint_irq_set_type(struct irq_data *d, unsigned int flow_type)
+ 		flow_handler = handle_edge_irq;
+ 	} else {
+ 		if ((flow_type & (IRQF_TRIGGER_HIGH)) &&
+-		    (flow_type & (IRQF_TRIGGER_LOW)))
++		    (flow_type & (IRQF_TRIGGER_LOW))) {
++			raw_spin_unlock_irqrestore(&pmic_arb->irq_lock, flags);
+ 			return -EINVAL;
++		}
+ 
+ 		type.type &= ~BIT(irq); /* level trig */
+ 		if (flow_type & IRQF_TRIGGER_HIGH)
+@@ -629,6 +636,8 @@ static int qpnpint_irq_set_type(struct irq_data *d, unsigned int flow_type)
+ 	}
+ 
+ 	qpnpint_spmi_write(d, QPNPINT_REG_SET_TYPE, &type, sizeof(type));
++	raw_spin_unlock_irqrestore(&pmic_arb->irq_lock, flags);
++
+ 	irq_set_handler_locked(d, flow_handler);
+ 
+ 	return 0;
+@@ -1285,6 +1294,7 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, ctrl);
+ 	raw_spin_lock_init(&pmic_arb->lock);
++	raw_spin_lock_init(&pmic_arb->irq_lock);
+ 
+ 	ctrl->cmd = pmic_arb_cmd;
+ 	ctrl->read_cmd = pmic_arb_read_cmd;
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
