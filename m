@@ -2,306 +2,305 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9EDD53C5A4C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jul 2021 13:03:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B25C73C5D72
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jul 2021 15:39:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238886AbhGLJsE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jul 2021 05:48:04 -0400
-Received: from smtp-out1.suse.de ([195.135.220.28]:45790 "EHLO
-        smtp-out1.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238845AbhGLJsD (ORCPT
+        id S234290AbhGLNmY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jul 2021 09:42:24 -0400
+Received: from mo4-p00-ob.smtp.rzone.de ([85.215.255.22]:14144 "EHLO
+        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231891AbhGLNmY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jul 2021 05:48:03 -0400
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out1.suse.de (Postfix) with ESMTPS id ACB4022142;
-        Mon, 12 Jul 2021 09:45:13 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1626083113; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=gfwhSPRIk1+SU5zNMfYFVZ/T+A7xSDs2uH693upll9k=;
-        b=cCH0WnhWwxgMyqUi3AB538P3pV7PNZoCiQKbCqHz8+PnICeDkY+Nhrl7bdbiHlaQxMtOEH
-        w5mhyq8u+6RLMx5kTVZhZeub7ZgVcXFQP7XxJ1XfvgfdyQY9tf3lCCvZhUDWVewIZYMuDC
-        afMNyZDqJ/OWwCYdSz+yUocwnha4Eq0=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1626083113;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=gfwhSPRIk1+SU5zNMfYFVZ/T+A7xSDs2uH693upll9k=;
-        b=Sc8CI5XeRV6twIKVWmbSDM9JxVmlgzFnM/oDF3vmiP1rO2Enj1E6QKpL6trvKngrYiJDcP
-        xkWeznEE7D0NLHBA==
-Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 423A913B1D;
-        Mon, 12 Jul 2021 09:45:13 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap2.suse-dmz.suse.de with ESMTPSA
-        id veg6DykP7GAuKgAAMHmgww
-        (envelope-from <tzimmermann@suse.de>); Mon, 12 Jul 2021 09:45:13 +0000
-Subject: Re: [v8 1/6] drm/panel: add basic DP AUX backlight support
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-To:     Rajeev Nandan <rajeevny@codeaurora.org>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, thierry.reding@gmail.com,
-        sam@ravnborg.org, robdclark@gmail.com, dianders@chromium.org,
-        lyude@redhat.com, jani.nikula@intel.com, robh@kernel.org,
-        laurent.pinchart@ideasonboard.com, a.hajda@samsung.com,
-        daniel.thompson@linaro.org, hoegsberg@chromium.org,
-        abhinavk@codeaurora.org, seanpaul@chromium.org,
-        kalyan_t@codeaurora.org, mkrishn@codeaurora.org,
-        lee.jones@linaro.org, jingoohan1@gmail.com,
-        linux-fbdev@vger.kernel.org
-References: <1624726268-14869-1-git-send-email-rajeevny@codeaurora.org>
- <1624726268-14869-2-git-send-email-rajeevny@codeaurora.org>
- <7f8562df-7e1f-dcfb-1c58-f1edd9dcc606@suse.de>
-Message-ID: <00e95983-c7de-1091-d295-9d544f37687c@suse.de>
-Date:   Mon, 12 Jul 2021 11:45:12 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        Mon, 12 Jul 2021 09:42:24 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1626097166;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
+    bh=HUSaL/wEM46QJuN5B0ihwBlV8QNJ6fExqFTlEQxtNFY=;
+    b=oYAiGuyYYJm/H31U/o8wmyIyfj3R61TxqDl+8nm48h8fHIjsX7t9dwIskTPcNx1c6g
+    wMh7Nn58aWHOsczGd9Z7RceVi7RaOTrinDAa9FpyQ+IJXFQzqpLO5XVqP7ENMmfLSIhr
+    k11hW2C+TukQ3BM925hN61Wu57ue2qBXK6dacRAUPBcjGSvvonQ/5XectVz4m7wbHTRe
+    2kk6f3bo8q2S4cqwDhgHHjRcKSMEbXx0AZ8kdPeDJrPQzVC5ZDqdrkzxUJ6XLJoCh5FB
+    6wUW9R5PfimAqqSuBmafypVq2/rFf698gqdK3N8UiCkQpXcNWJ4gJOTBppyB7gqSv2mt
+    1YnA==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXS7IYBkLahKxB426L3OY="
+X-RZG-CLASS-ID: mo00
+Received: from droid..
+    by smtp.strato.de (RZmta 47.28.1 DYNA|AUTH)
+    with ESMTPSA id Y070ccx6CDdQ9tW
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Mon, 12 Jul 2021 15:39:26 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Stephan Gerhold <stephan@gerhold.net>
+Subject: [PATCH 1/4] arm64: dts: qcom: Add device tree for Xiaomi Redmi 2 (wingtech-wt88047)
+Date:   Mon, 12 Jul 2021 15:37:32 +0200
+Message-Id: <20210712133735.318250-1-stephan@gerhold.net>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-In-Reply-To: <7f8562df-7e1f-dcfb-1c58-f1edd9dcc606@suse.de>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="t9eMn3jl6KwcYz0iCxm3oll8aCOnlDRLo"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---t9eMn3jl6KwcYz0iCxm3oll8aCOnlDRLo
-Content-Type: multipart/mixed; boundary="DFHLtkuiMWmSrmqVbMA3p8REMY4RbpHUp";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Rajeev Nandan <rajeevny@codeaurora.org>, dri-devel@lists.freedesktop.org,
- linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
- devicetree@vger.kernel.org
-Cc: linux-kernel@vger.kernel.org, thierry.reding@gmail.com, sam@ravnborg.org,
- robdclark@gmail.com, dianders@chromium.org, lyude@redhat.com,
- jani.nikula@intel.com, robh@kernel.org, laurent.pinchart@ideasonboard.com,
- a.hajda@samsung.com, daniel.thompson@linaro.org, hoegsberg@chromium.org,
- abhinavk@codeaurora.org, seanpaul@chromium.org, kalyan_t@codeaurora.org,
- mkrishn@codeaurora.org, lee.jones@linaro.org, jingoohan1@gmail.com,
- linux-fbdev@vger.kernel.org
-Message-ID: <00e95983-c7de-1091-d295-9d544f37687c@suse.de>
-Subject: Re: [v8 1/6] drm/panel: add basic DP AUX backlight support
-References: <1624726268-14869-1-git-send-email-rajeevny@codeaurora.org>
- <1624726268-14869-2-git-send-email-rajeevny@codeaurora.org>
- <7f8562df-7e1f-dcfb-1c58-f1edd9dcc606@suse.de>
-In-Reply-To: <7f8562df-7e1f-dcfb-1c58-f1edd9dcc606@suse.de>
+The Xiaomi Redmi 2 is a MSM8916 smartphone that was made by Wingtech
+(codename: wt88047). It's fairly similar to the other MSM8916 devices.
 
---DFHLtkuiMWmSrmqVbMA3p8REMY4RbpHUp
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+The device tree contains initial support for the Xiaomi Redmi 2 with:
+  - UART (untested, probably available via some test points)
+  - eMMC/SD card
+  - Buttons
+  - Vibrator
+  - WiFi/Bluetooth (WCNSS)
+  - USB
 
-Hi
+Note that the Xiaomi Redmi 2 is available in variants with different
+names (e.g. Redmi 2 Prime, Redmi 2 Pro, ...). As far as I know the main
+difference between those is the amount of RAM and supported LTE bands.
+This difference is automatically handled by bootloader/modem firmware
+so there is no need for separate device trees.
 
-Am 12.07.21 um 11:41 schrieb Thomas Zimmermann:
->=20
->=20
-> Am 26.06.21 um 18:51 schrieb Rajeev Nandan:
->> Some panels support backlight control over DP AUX channel using
->> VESA's standard backlight control interface.
->> Using new DRM eDP backlight helpers, add support to create and
->> register a backlight for those panels in drm_panel to simplify
->> the panel drivers.
->>
->> The panel driver with access to "struct drm_dp_aux" can create and
->> register a backlight device using following code snippet in its
->> probe() function:
->>
->> =C2=A0=C2=A0=C2=A0=C2=A0err =3D drm_panel_dp_aux_backlight(panel, aux)=
-;
->> =C2=A0=C2=A0=C2=A0=C2=A0if (err)
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return err;
->>
->> Then drm_panel will handle backlight_(enable|disable) calls
->> similar to the case when drm_panel_of_backlight() is used.
->>
->> Currently, we are not supporting one feature where the source
->> device can combine the backlight brightness levels set through
->> DP AUX and the BL_PWM_DIM eDP connector pin. Since it's not
->> required for the basic backlight controls, it can be added later.
->>
->> Signed-off-by: Rajeev Nandan <rajeevny@codeaurora.org>
->> Reviewed-by: Douglas Anderson <dianders@chromium.org>
->> Reviewed-by: Lyude Paul <lyude@redhat.com>
->> ---
->>
->> Changes in v5:
->> - New
->>
->> Changes in v6:
->> - Fixed ordering of memory allocation (Douglas)
->> - Updated word wrapping in a comment (Douglas)
->>
->> Changes in v8:
->> - Now using backlight_is_blank() to get the backlight blank status=20
->> (Sam Ravnborg)
->>
->> =C2=A0 drivers/gpu/drm/drm_panel.c | 108=20
->> ++++++++++++++++++++++++++++++++++++++++++++
->> =C2=A0 include/drm/drm_panel.h=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 15 ++++=
---
->> =C2=A0 2 files changed, 119 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/drm_panel.c b/drivers/gpu/drm/drm_panel.c=
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+---
+The reason this is GPL-2.0-only instead of BSD is the same as for
+huawei-g7, see https://lore.kernel.org/linux-arm-msm/YMIznk4scPv1qOzP@gerhold.net/
+---
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../dts/qcom/msm8916-wingtech-wt88047.dts     | 208 ++++++++++++++++++
+ 2 files changed, 209 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts
 
->> index f634371..4fa1e3b 100644
->> --- a/drivers/gpu/drm/drm_panel.c
->> +++ b/drivers/gpu/drm/drm_panel.c
->> @@ -26,12 +26,20 @@
->> =C2=A0 #include <linux/module.h>
->> =C2=A0 #include <drm/drm_crtc.h>
->> +#include <drm/drm_dp_helper.h>
->> =C2=A0 #include <drm/drm_panel.h>
->> =C2=A0 #include <drm/drm_print.h>
->> =C2=A0 static DEFINE_MUTEX(panel_lock);
->> =C2=A0 static LIST_HEAD(panel_list);
->> +struct dp_aux_backlight {
->> +=C2=A0=C2=A0=C2=A0 struct backlight_device *base;
->> +=C2=A0=C2=A0=C2=A0 struct drm_dp_aux *aux;
->> +=C2=A0=C2=A0=C2=A0 struct drm_edp_backlight_info info;
->> +=C2=A0=C2=A0=C2=A0 bool enabled;
->> +};
->> +
->> =C2=A0 /**
->> =C2=A0=C2=A0 * DOC: drm panel
->> =C2=A0=C2=A0 *
->> @@ -342,6 +350,106 @@ int drm_panel_of_backlight(struct drm_panel *pan=
-el)
->> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return 0;
->> =C2=A0 }
->> =C2=A0 EXPORT_SYMBOL(drm_panel_of_backlight);
->> +
->> +static int dp_aux_backlight_update_status(struct backlight_device *bd=
-)
->> +{
->> +=C2=A0=C2=A0=C2=A0 struct dp_aux_backlight *bl =3D bl_get_data(bd);
->> +=C2=A0=C2=A0=C2=A0 u16 brightness =3D backlight_get_brightness(bd);
->> +=C2=A0=C2=A0=C2=A0 int ret =3D 0;
->> +
->> +=C2=A0=C2=A0=C2=A0 if (!backlight_is_blank(bd)) {
->> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (!bl->enabled) {
->> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dr=
-m_edp_backlight_enable(bl->aux, &bl->info, brightness);
->> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bl=
-->enabled =3D true;
->> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 re=
-turn 0;
->> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
->> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ret =3D drm_edp_backlight_=
-set_level(bl->aux, &bl->info,=20
->> brightness);
->> +=C2=A0=C2=A0=C2=A0 } else {
->> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (bl->enabled) {
->> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dr=
-m_edp_backlight_disable(bl->aux, &bl->info);
->> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bl=
-->enabled =3D false;
->> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
->> +=C2=A0=C2=A0=C2=A0 }
->> +
->> +=C2=A0=C2=A0=C2=A0 return ret;
->> +}
->> +
->> +static const struct backlight_ops dp_aux_bl_ops =3D {
->> +=C2=A0=C2=A0=C2=A0 .update_status =3D dp_aux_backlight_update_status,=
+diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
+index 4f0597091976..a571bfdddd61 100644
+--- a/arch/arm64/boot/dts/qcom/Makefile
++++ b/arch/arm64/boot/dts/qcom/Makefile
+@@ -15,6 +15,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-longcheer-l8910.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-mtp.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-a3u-eur.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-samsung-a5u-eur.dtb
++dtb-$(CONFIG_ARCH_QCOM)	+= msm8916-wingtech-wt88047.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-bullhead-rev-101.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-msft-lumia-octagon-talkman.dtb
+ dtb-$(CONFIG_ARCH_QCOM)	+= msm8992-xiaomi-libra.dtb
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts b/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts
+new file mode 100644
+index 000000000000..5ee35a9b7dc6
+--- /dev/null
++++ b/arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dts
+@@ -0,0 +1,208 @@
++// SPDX-License-Identifier: GPL-2.0-only
++// Copyright (C) 2020 Stephan Gerhold
++
++/dts-v1/;
++
++#include "msm8916-pm8916.dtsi"
++#include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/input/input.h>
++
++/ {
++	model = "Xiaomi Redmi 2 (Wingtech WT88047)";
++	compatible = "wingtech,wt88047", "qcom,msm8916";
++
++	aliases {
++		serial0 = &blsp1_uart2;
++	};
++
++	chosen {
++		stdout-path = "serial0";
++	};
++
++	gpio-keys {
++		compatible = "gpio-keys";
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&gpio_keys_default>;
++
++		label = "GPIO Buttons";
++
++		volume-up {
++			label = "Volume Up";
++			gpios = <&msmgpio 107 GPIO_ACTIVE_LOW>;
++			linux,code = <KEY_VOLUMEUP>;
++		};
++	};
++
++	usb_id: usb-id {
++		compatible = "linux,extcon-usb-gpio";
++		id-gpio = <&msmgpio 110 GPIO_ACTIVE_HIGH>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&usb_id_default>;
++	};
++};
++
++&blsp1_uart2 {
++	status = "okay";
++};
++
++&pm8916_resin {
++	status = "okay";
++	linux,code = <KEY_VOLUMEDOWN>;
++};
++
++&pm8916_vib {
++	status = "okay";
++};
++
++&pronto {
++	status = "okay";
++};
++
++&sdhc_1 {
++	status = "okay";
++
++	pinctrl-names = "default", "sleep";
++	pinctrl-0 = <&sdc1_clk_on &sdc1_cmd_on &sdc1_data_on>;
++	pinctrl-1 = <&sdc1_clk_off &sdc1_cmd_off &sdc1_data_off>;
++};
++
++&sdhc_2 {
++	status = "okay";
++
++	pinctrl-names = "default", "sleep";
++	pinctrl-0 = <&sdc2_clk_on &sdc2_cmd_on &sdc2_data_on>;
++	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off>;
++
++	non-removable;
++};
++
++&usb {
++	status = "okay";
++	extcon = <&usb_id>, <&usb_id>;
++};
++
++&usb_hs_phy {
++	extcon = <&usb_id>;
++};
++
++&smd_rpm_regulators {
++	vdd_l1_l2_l3-supply = <&pm8916_s3>;
++	vdd_l4_l5_l6-supply = <&pm8916_s4>;
++	vdd_l7-supply = <&pm8916_s4>;
++
++	s3 {
++		regulator-min-microvolt = <1200000>;
++		regulator-max-microvolt = <1300000>;
++	};
++
++	s4 {
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <2100000>;
++	};
++
++	l1 {
++		regulator-min-microvolt = <1225000>;
++		regulator-max-microvolt = <1225000>;
++	};
++
++	l2 {
++		regulator-min-microvolt = <1200000>;
++		regulator-max-microvolt = <1200000>;
++	};
++
++	l4 {
++		regulator-min-microvolt = <2050000>;
++		regulator-max-microvolt = <2050000>;
++	};
++
++	l5 {
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
++	};
++
++	l6 {
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
++	};
++
++	l7 {
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <1800000>;
++	};
++
++	l8 {
++		regulator-min-microvolt = <2850000>;
++		regulator-max-microvolt = <2900000>;
++	};
++
++	l9 {
++		regulator-min-microvolt = <3300000>;
++		regulator-max-microvolt = <3300000>;
++	};
++
++	l10 {
++		regulator-min-microvolt = <2700000>;
++		regulator-max-microvolt = <2800000>;
++	};
++
++	l11 {
++		regulator-min-microvolt = <2950000>;
++		regulator-max-microvolt = <2950000>;
++		regulator-allow-set-load;
++		regulator-system-load = <200000>;
++	};
++
++	l12 {
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <2950000>;
++	};
++
++	l13 {
++		regulator-min-microvolt = <3075000>;
++		regulator-max-microvolt = <3075000>;
++	};
++
++	l14 {
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <3300000>;
++	};
++
++	l15 {
++		regulator-min-microvolt = <1800000>;
++		regulator-max-microvolt = <3300000>;
++	};
++
++	l16 {
++		regulator-min-microvolt = <2800000>;
++		regulator-max-microvolt = <3300000>;
++	};
++
++	l17 {
++		regulator-min-microvolt = <2850000>;
++		regulator-max-microvolt = <2850000>;
++	};
++
++	l18 {
++		regulator-min-microvolt = <2700000>;
++		regulator-max-microvolt = <2700000>;
++	};
++};
++
++&msmgpio {
++	gpio_keys_default: gpio-keys-default {
++		pins = "gpio107";
++		function = "gpio";
++
++		drive-strength = <2>;
++		bias-pull-up;
++	};
++
++	usb_id_default: usb-id-default {
++		pins = "gpio110";
++		function = "gpio";
++
++		drive-strength = <8>;
++		bias-pull-up;
++	};
++};
+-- 
+2.32.0
 
->> +};
->> +
->> +/**
->> + * drm_panel_dp_aux_backlight - create and use DP AUX backlight
->> + * @panel: DRM panel
->> + * @aux: The DP AUX channel to use
->> + *
->> + * Use this function to create and handle backlight if your panel
->> + * supports backlight control over DP AUX channel using DPCD
->> + * registers as per VESA's standard backlight control interface.
->> + *
->> + * When the panel is enabled backlight will be enabled after a
->> + * successful call to &drm_panel_funcs.enable()
->> + *
->> + * When the panel is disabled backlight will be disabled before the
->> + * call to &drm_panel_funcs.disable().
->> + *
->> + * A typical implementation for a panel driver supporting backlight
->> + * control over DP AUX will call this function at probe time.
->> + * Backlight will then be handled transparently without requiring
->> + * any intervention from the driver.
->> + *
->> + * drm_panel_dp_aux_backlight() must be called after the call to=20
->> drm_panel_init().
->> + *
->> + * Return: 0 on success or a negative error code on failure.
->> + */
->> +int drm_panel_dp_aux_backlight(struct drm_panel *panel, struct=20
->> drm_dp_aux *aux)
->> +{
->> +=C2=A0=C2=A0=C2=A0 struct dp_aux_backlight *bl;
->> +=C2=A0=C2=A0=C2=A0 struct backlight_properties props =3D { 0 };
->> +=C2=A0=C2=A0=C2=A0 u16 current_level;
->> +=C2=A0=C2=A0=C2=A0 u8 current_mode;
->> +=C2=A0=C2=A0=C2=A0 u8 edp_dpcd[EDP_DISPLAY_CTL_CAP_SIZE];
->> +=C2=A0=C2=A0=C2=A0 int ret;
->> +
->> +=C2=A0=C2=A0=C2=A0 if (!panel || !panel->dev || !aux)
->> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return -EINVAL;
->> +
->> +=C2=A0=C2=A0=C2=A0 ret =3D drm_dp_dpcd_read(aux, DP_EDP_DPCD_REV, edp=
-_dpcd,
->> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
-=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 EDP_DISPLAY_CTL_CAP_SIZE);
->=20
-> This creates a cyclic dependency between drm_kms_helper-ko and drm.ko. =
-
-> drm_panel.c is in the latter, while drm_dp_dpcd_read() in=20
-> drm_dp_helper.c is in the former. Please fix.
-
-FYI, build DRM as modules and the error shows up during make module_insta=
-ll.
-
-Best regards
-Thomas
-
-
---=20
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
-(HRB 36809, AG N=C3=BCrnberg)
-Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
-
-
---DFHLtkuiMWmSrmqVbMA3p8REMY4RbpHUp--
-
---t9eMn3jl6KwcYz0iCxm3oll8aCOnlDRLo
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
-
------BEGIN PGP SIGNATURE-----
-
-wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmDsDygFAwAAAAAACgkQlh/E3EQov+AU
-kw//R7KbArU8YSyU6DQ9XelF9MKwAlhPhJXTR5BGVwrq8JiRKrc+JXxyAe1ScbUUEhIbMsgFHN3E
-X/MQ/qxycEc8A/Ud5hAOzGLdA+06WsDvDsN5TPBNmbJ/gTBIqnkj9nPWXNAhyVIm6pPjSJi7kwDZ
-j6cK8dUz3Np1W5ewQfMakllblTXHnYqD2q0fUGGNmsSnMSOc69rLataleWk70M3xZYBolAOMQpuG
-8EaVuVOXG1KyQSka15oZgpRnRsfXbfww5XKZca6hbUKZuJI7iMQtK8UHjL6ZGyL+2fQUqKKIqaxL
-Ksx6JFvA56BLDzoVokkOgx0DHw/VfqSU1w+uDIxrI7g1NtKxJaxr3wlQl94O0fVbPrzlJqp7ZxyT
-NA8FXUFB7EyyxfkpkVm/0jt2lFZfXLFS+kmcdR/j0cCwxxORnDmAL5TRLsIlz++J8Sfaj6UXtvq7
-5yvD56i7oQLCbgQFPUdlnCiziF4XVN0xQVkph43A6g5b0V9tDr2vHcIMuP2+oNq0eGJ1eBk0s7w5
-Y5LTfeugG+uXmeLxFRmEdQXQeuxGblg65r5tW5mZhEN/lvHKy9pgEk84tfueSdTYAE4UxZHNOYl/
-4xrUPztEJ8BHzL9PDSW47BgtCHht074azHLhX45a5qcMmuoFRW61OMpwSMAL+yC5vw0sN0b+7OH5
-VVE=
-=/HfC
------END PGP SIGNATURE-----
-
---t9eMn3jl6KwcYz0iCxm3oll8aCOnlDRLo--
