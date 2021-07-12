@@ -2,56 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C6793C431A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jul 2021 06:35:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AEC443C433E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jul 2021 06:41:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229521AbhGLEiG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jul 2021 00:38:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59328 "EHLO
+        id S229466AbhGLEoD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jul 2021 00:44:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60714 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229466AbhGLEiG (ORCPT
+        with ESMTP id S229477AbhGLEoD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jul 2021 00:38:06 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC86AC0613DD
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Jul 2021 21:35:17 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id b8-20020a17090a4888b02901725eedd346so9788936pjh.4
-        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Jul 2021 21:35:17 -0700 (PDT)
+        Mon, 12 Jul 2021 00:44:03 -0400
+Received: from mail-pl1-x631.google.com (mail-pl1-x631.google.com [IPv6:2607:f8b0:4864:20::631])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4DA1C0613E9
+        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Jul 2021 21:41:15 -0700 (PDT)
+Received: by mail-pl1-x631.google.com with SMTP id v14so1562697plg.9
+        for <linux-arm-msm@vger.kernel.org>; Sun, 11 Jul 2021 21:41:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=rmGLdBbyR/yGG+zKrhDWgh07yOAMlhLUGNP6ofQQJRo=;
-        b=nwDOp4z7ovILlGRp/8705+bIVZqC8l2kngp2tnOLTu9nBV/ig/3lr1zjpTtCF2u9QH
-         /6zIJSmg9nRsKRHm1ZPs3ZYhzYW0OhVRRkQrLiLx7M1JCtQ4iiCRqnOZChm2r/vvr8TC
-         XdvFMut3x54aORCsfwOP+wrFhfUiVKRm2pESYD9ZP2gf/Uexj2vM2B/OlFT+D7uE4akV
-         LHJf2peNV9+1aDk986Ro6uFrGwHyvl0r8GYBSfTijRja4tAodavCutWXCrg9EKNPL4hD
-         7ShMJBwgKMJ+DpHNjuMWBBMbxNnRFpQpgmO+T4fsipHbFxAcfklVXqv3DLQCX1hMV/sU
-         Dkzw==
+        bh=ZL0bec2agHsc0j6ce/Gb5bsSghII65P7kEsioPLg7/I=;
+        b=WPci+XbTcvjEfOXEze65WR/kHiJj7UnotldAAu3YV5QxlaYIadepyymWghBbbGgVhR
+         S9Lezk9hED0qIXMmE07/fHAeTk0Tu+2zzWJa38fGbKb1jvqBRxN26Nl4R8cmK9EO/NbE
+         O7HFlaT8Vh2s0HQL0mutd3aGJcZW969KDbu7cVK84yZDtn+lQutF8Ap2xKeLMxmjiYkk
+         SSR4D7i5jnaRKH6bwcidT5MLu7HqcW20j6GW7w/qG3Pba1DyV0zt14wq7xnpEbugEHvk
+         Gx8kbYIY4/bOsIg7wfcutupfK46FJeJ38nH3mTO2r2SrSgfzBg/rjZdu2VCInk47K0k+
+         Ma/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=rmGLdBbyR/yGG+zKrhDWgh07yOAMlhLUGNP6ofQQJRo=;
-        b=N9BqvGfsHluv2eSlYfqrpuPAsNrI3XezwhMaji6msMu/vplpVsS61UFSURovKS6qZo
-         WlxiKJXd9usx4yOlxAkMnMlln7onLjkeSTKZ9qYHNm/0SEEHc+1e5xLRA6RfJCmPc/uz
-         BubtzXYdJvp5fh8zQLIy2a4v+h1r1nvhRba/A7ImtSvE2Wu2u3ezdiZOAS7EtTLTtVmd
-         UtlZNezgAr+bW3MEBrDCEqNh/n65SqtA2sI0T4jX/V1J+tzSFpjJo4LUVFsyAr3tOZSw
-         4bG2npmaQbvWDUZndieG3wSFUGF82eepsrVEcBrdmU5l34i0wr+bDmY0B/UmONsZiNTr
-         4hDg==
-X-Gm-Message-State: AOAM532yrmumXIfSEADnwdzN3TNdOEn9PQYMru3CwoINXsg9KjWXZ9kE
-        KSZqYb3yVSFuf20LkOiG+g20BA==
-X-Google-Smtp-Source: ABdhPJyYK2HkWzveNkGLeG7+KdOGAgtFAMCx2Bq7Pc2S3zlCBItilSOYkwsW/vszIQLMAb18Fm8uvg==
-X-Received: by 2002:a17:90a:e284:: with SMTP id d4mr12285357pjz.126.1626064517217;
-        Sun, 11 Jul 2021 21:35:17 -0700 (PDT)
+        bh=ZL0bec2agHsc0j6ce/Gb5bsSghII65P7kEsioPLg7/I=;
+        b=qytdITLzptqBsa3393sUyQQvvu50+MW8M3ArRzyoWEUlIMiy4ModUiO22P9lMujHaX
+         /8mGOchYHVo3r2hk56nS9npbuJUszYQ3sbh53KOuFONRLUCa9/2q6rBpFkrW8KQbXPbH
+         c9toEOrfcUeDgbmBxhOOKytlMwFKOyF/btUT+RPV7fZhioGGc0NR1kt8svKsSWxV3QPU
+         iBR7GiRD1QuAfiisqcFVpovmYncGIbwAMcAz6ytOv129CJkpZl+3g7jLDOpv07fnWQ9x
+         WdLKJfKAKWbuUkda8VEyTLR7WPzt6iN+l+k/1ixX8LPWBNZsbDcCRvxbKZ3GV5vGDIif
+         AfXA==
+X-Gm-Message-State: AOAM5315IwyJByjgNdecdve7+RfgHzVUq6SZFXpYxgorrfxv1PpTYUW4
+        gG509Vyef5TWs9VLO7tyDVFKAg==
+X-Google-Smtp-Source: ABdhPJwyJwbbVUxFVSM9rN48hfrK7Ghw5kZUYF+Hhou78UTmm5hOddVf9Ch77a6a3nYY5Vr3tBDR9w==
+X-Received: by 2002:a17:90a:db98:: with SMTP id h24mr23092454pjv.156.1626064875097;
+        Sun, 11 Jul 2021 21:41:15 -0700 (PDT)
 Received: from localhost ([106.201.108.2])
-        by smtp.gmail.com with ESMTPSA id p1sm14072015pfp.137.2021.07.11.21.35.16
+        by smtp.gmail.com with ESMTPSA id s36sm6810167pgk.64.2021.07.11.21.41.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 11 Jul 2021 21:35:16 -0700 (PDT)
-Date:   Mon, 12 Jul 2021 10:05:14 +0530
+        Sun, 11 Jul 2021 21:41:14 -0700 (PDT)
+Date:   Mon, 12 Jul 2021 10:11:12 +0530
 From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Thara Gopinath <thara.gopinath@linaro.org>,
-        Lukasz Luba <lukasz.luba@arm.com>
+To:     Thara Gopinath <thara.gopinath@linaro.org>
 Cc:     agross@kernel.org, bjorn.andersson@linaro.org, rui.zhang@intel.com,
         daniel.lezcano@linaro.org, rjw@rjwysocki.net, robh+dt@kernel.org,
         tdas@codeaurora.org, mka@chromium.org,
@@ -59,7 +58,7 @@ Cc:     agross@kernel.org, bjorn.andersson@linaro.org, rui.zhang@intel.com,
         linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
 Subject: Re: [Patch v3 3/6] cpufreq: qcom-cpufreq-hw: Add dcvs interrupt
  support
-Message-ID: <20210712043514.ijp6cm3zuri7u5hb@vireshk-i7>
+Message-ID: <20210712044112.svhlagrktcfvyj35@vireshk-i7>
 References: <20210708120656.663851-1-thara.gopinath@linaro.org>
  <20210708120656.663851-4-thara.gopinath@linaro.org>
  <20210709064646.7vjgiba2o7beudly@vireshk-i7>
@@ -73,37 +72,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+Lukasz,
-
 On 09-07-21, 11:37, Thara Gopinath wrote:
 > On 7/9/21 2:46 AM, Viresh Kumar wrote:
-> > On 08-07-21, 08:06, Thara Gopinath wrote:
-> > >   static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
-> > >   {
-> > >   	struct platform_device *pdev = cpufreq_get_driver_data();
-> > > @@ -370,6 +480,10 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
-> > >   			dev_warn(cpu_dev, "failed to enable boost: %d\n", ret);
-> > >   	}
-> > > +	ret = qcom_cpufreq_hw_lmh_init(policy, index);
+> > > @@ -389,6 +503,10 @@ static int qcom_cpufreq_hw_cpu_exit(struct cpufreq_policy *policy)
+> > >   	dev_pm_opp_remove_all_dynamic(cpu_dev);
+> > >   	dev_pm_opp_of_cpumask_remove_table(policy->related_cpus);
+> > > +	if (data->lmh_dcvs_irq > 0) {
+> > > +		devm_free_irq(cpu_dev, data->lmh_dcvs_irq, data);
 > > 
-> > You missed unregistering EM here (which is also missing from exit,
-> > which you need to fix first in a separate patch).
+> > Why using devm variants here and while requesting the irq ?
+
+Missed this one ?
+
+> > 
+> > > +		cancel_delayed_work_sync(&data->lmh_dcvs_poll_work);
+> > > +	}
+> > 
+> > Please move this to qcom_cpufreq_hw_lmh_exit() or something.
 > 
-> Hi!
+> Ok.
 > 
-> So how exactly do you do this? I checked other users of the api and I do not
-> see any free.
+> > 
+> > Now with sequence of disabling interrupt, etc, I see a potential
+> > problem.
+> > 
+> > CPU0                                    CPU1
+> > 
+> > qcom_cpufreq_hw_cpu_exit()
+> > -> devm_free_irq();
+> >                                          qcom_lmh_dcvs_poll()
+> >                                          -> qcom_lmh_dcvs_notify()
+> >                                            -> enable_irq()
+> > 
+> > -> cancel_delayed_work_sync();
+> > 
+> > 
+> > What will happen if enable_irq() gets called after freeing the irq ?
+> > Not sure, but it looks like you will hit this then from manage.c:
+> > 
+> > WARN(!desc->irq_data.chip, KERN_ERR "enable_irq before
+> >                                       setup/request_irq: irq %u\n", irq))
+> > 
+> > ?
+> > 
+> > You got a chicken n egg problem :)
+> 
+> Yes indeed! But also it is a very rare chicken and egg problem.
+> The scenario here is that the cpus are busy and running load causing a
+> thermal overrun and lmh is engaged. At the same time for this issue to be
+> hit the cpu is trying to exit/disable cpufreq.
 
-Lukasz,
+Yes, it is a very specific case but it needs to be resolved anyway. You don't
+want to get this ever :)
 
-I don't see the cpufreq drivers ever calling dev_pm_opp_of_unregister_em(), and
-even if they called, it would translate to em_dev_unregister_perf_domain(),
-which has this:
+> Calling
+> cancel_delayed_work_sync first could solve this issue, right ?
+> cancel_delayed_work_sync guarantees the work not to be pending even if
+> it requeues itself on return. So once the delayed work is cancelled, the
+> interrupts can be safely disabled. Thoughts ?
 
-	if (_is_cpu_device(dev))
-		return;
+I don't think even that would provide such guarantees to you here, as there is
+a chance the work gets queued again because of an interrupt that triggers right
+after you cancel the work.
 
-I am not sure what's going on here, can you help ?
+The basic way of solving such issues is that once you cancel something, you need
+to guarantee that it doesn't get triggered again, no matter what.
+
+The problem here I see is with your design itself, both delayed work and irq can
+enable each other, so no matter which one you disable first, won't be
+sufficient. You need to fix that design somehow.
 
 -- 
 viresh
