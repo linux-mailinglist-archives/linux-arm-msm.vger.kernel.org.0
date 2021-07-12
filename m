@@ -2,193 +2,306 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E55EB3C5A44
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jul 2021 13:03:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9EDD53C5A4C
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jul 2021 13:03:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238181AbhGLJpO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jul 2021 05:45:14 -0400
-Received: from mail.kernel.org ([198.145.29.99]:53764 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234094AbhGLJpO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jul 2021 05:45:14 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id B582760FE9;
-        Mon, 12 Jul 2021 09:42:23 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1626082946;
-        bh=Qh9aRe+w2O3BEIaSWxVtGbcCHzgHWQrrlLvYEpdfYdg=;
-        h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
-        b=JfPH1eiQymOWJjQTN8+IkVCo8OPqtIzwZZj9MlzmJE1qJXgHe44Kia14W/qtL5RCd
-         7imFCLdtpxF7VsxioYKRX+SnQCrXISeoIDs7Z5V7tGcsRus9FYdVtLdtDCgV9yv27l
-         GPwlaKObHOG7kg+VdNodZCko2/i8whKu5ojFEG0WkzsRl7dtD8J3TDZJdFgN7EIyiM
-         r7DNmdvResxV8tVOUllm8oJBApCT4yCekfCuDuJgH7dah5zRH8oOM25VJTjk34BUTJ
-         anefkJFYWo8IEb512w43YxQtzfsNSgYu9z5VnAXe28r8sxrN9PzFzJs1vmrbT9vFXj
-         F6dxx0lgxxaKg==
-From:   Felipe Balbi <balbi@kernel.org>
-To:     Matthias Kaehlcke <mka@chromium.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Pratham Pratap <prathampratap@codeaurora.org>
-Subject: Re: [PATCH v8 6/6] usb: dwc3: qcom: Keep power domain on to support
- wakeup
-In-Reply-To: <YNo97HQXmYjUNz/C@google.com>
-References: <1624882097-23265-1-git-send-email-sanm@codeaurora.org>
- <1624882097-23265-7-git-send-email-sanm@codeaurora.org>
- <YNo97HQXmYjUNz/C@google.com>
-Date:   Mon, 12 Jul 2021 12:42:17 +0300
-Message-ID: <87fswjzx52.fsf@kernel.org>
+        id S238886AbhGLJsE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jul 2021 05:48:04 -0400
+Received: from smtp-out1.suse.de ([195.135.220.28]:45790 "EHLO
+        smtp-out1.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238845AbhGLJsD (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 12 Jul 2021 05:48:03 -0400
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out1.suse.de (Postfix) with ESMTPS id ACB4022142;
+        Mon, 12 Jul 2021 09:45:13 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1626083113; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=gfwhSPRIk1+SU5zNMfYFVZ/T+A7xSDs2uH693upll9k=;
+        b=cCH0WnhWwxgMyqUi3AB538P3pV7PNZoCiQKbCqHz8+PnICeDkY+Nhrl7bdbiHlaQxMtOEH
+        w5mhyq8u+6RLMx5kTVZhZeub7ZgVcXFQP7XxJ1XfvgfdyQY9tf3lCCvZhUDWVewIZYMuDC
+        afMNyZDqJ/OWwCYdSz+yUocwnha4Eq0=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1626083113;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=gfwhSPRIk1+SU5zNMfYFVZ/T+A7xSDs2uH693upll9k=;
+        b=Sc8CI5XeRV6twIKVWmbSDM9JxVmlgzFnM/oDF3vmiP1rO2Enj1E6QKpL6trvKngrYiJDcP
+        xkWeznEE7D0NLHBA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id 423A913B1D;
+        Mon, 12 Jul 2021 09:45:13 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id veg6DykP7GAuKgAAMHmgww
+        (envelope-from <tzimmermann@suse.de>); Mon, 12 Jul 2021 09:45:13 +0000
+Subject: Re: [v8 1/6] drm/panel: add basic DP AUX backlight support
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+To:     Rajeev Nandan <rajeevny@codeaurora.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, thierry.reding@gmail.com,
+        sam@ravnborg.org, robdclark@gmail.com, dianders@chromium.org,
+        lyude@redhat.com, jani.nikula@intel.com, robh@kernel.org,
+        laurent.pinchart@ideasonboard.com, a.hajda@samsung.com,
+        daniel.thompson@linaro.org, hoegsberg@chromium.org,
+        abhinavk@codeaurora.org, seanpaul@chromium.org,
+        kalyan_t@codeaurora.org, mkrishn@codeaurora.org,
+        lee.jones@linaro.org, jingoohan1@gmail.com,
+        linux-fbdev@vger.kernel.org
+References: <1624726268-14869-1-git-send-email-rajeevny@codeaurora.org>
+ <1624726268-14869-2-git-send-email-rajeevny@codeaurora.org>
+ <7f8562df-7e1f-dcfb-1c58-f1edd9dcc606@suse.de>
+Message-ID: <00e95983-c7de-1091-d295-9d544f37687c@suse.de>
+Date:   Mon, 12 Jul 2021 11:45:12 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; boundary="=-=-=";
-        micalg=pgp-sha256; protocol="application/pgp-signature"
+In-Reply-To: <7f8562df-7e1f-dcfb-1c58-f1edd9dcc606@suse.de>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="t9eMn3jl6KwcYz0iCxm3oll8aCOnlDRLo"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
---=-=-=
-Content-Type: text/plain
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--t9eMn3jl6KwcYz0iCxm3oll8aCOnlDRLo
+Content-Type: multipart/mixed; boundary="DFHLtkuiMWmSrmqVbMA3p8REMY4RbpHUp";
+ protected-headers="v1"
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: Rajeev Nandan <rajeevny@codeaurora.org>, dri-devel@lists.freedesktop.org,
+ linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+ devicetree@vger.kernel.org
+Cc: linux-kernel@vger.kernel.org, thierry.reding@gmail.com, sam@ravnborg.org,
+ robdclark@gmail.com, dianders@chromium.org, lyude@redhat.com,
+ jani.nikula@intel.com, robh@kernel.org, laurent.pinchart@ideasonboard.com,
+ a.hajda@samsung.com, daniel.thompson@linaro.org, hoegsberg@chromium.org,
+ abhinavk@codeaurora.org, seanpaul@chromium.org, kalyan_t@codeaurora.org,
+ mkrishn@codeaurora.org, lee.jones@linaro.org, jingoohan1@gmail.com,
+ linux-fbdev@vger.kernel.org
+Message-ID: <00e95983-c7de-1091-d295-9d544f37687c@suse.de>
+Subject: Re: [v8 1/6] drm/panel: add basic DP AUX backlight support
+References: <1624726268-14869-1-git-send-email-rajeevny@codeaurora.org>
+ <1624726268-14869-2-git-send-email-rajeevny@codeaurora.org>
+ <7f8562df-7e1f-dcfb-1c58-f1edd9dcc606@suse.de>
+In-Reply-To: <7f8562df-7e1f-dcfb-1c58-f1edd9dcc606@suse.de>
+
+--DFHLtkuiMWmSrmqVbMA3p8REMY4RbpHUp
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
 
+Hi
 
-Hi,
-
-Matthias Kaehlcke <mka@chromium.org> writes:
-> On Mon, Jun 28, 2021 at 05:38:17PM +0530, Sandeep Maheswaram wrote:
->> If wakeup capable devices are connected to the controller (directly
->> or through hubs) at suspend time keep the power domain on in order
->> to support wakeup from these devices.
->>=20
->> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+Am 12.07.21 um 11:41 schrieb Thomas Zimmermann:
+>=20
+>=20
+> Am 26.06.21 um 18:51 schrieb Rajeev Nandan:
+>> Some panels support backlight control over DP AUX channel using
+>> VESA's standard backlight control interface.
+>> Using new DRM eDP backlight helpers, add support to create and
+>> register a backlight for those panels in drm_panel to simplify
+>> the panel drivers.
+>>
+>> The panel driver with access to "struct drm_dp_aux" can create and
+>> register a backlight device using following code snippet in its
+>> probe() function:
+>>
+>> =C2=A0=C2=A0=C2=A0=C2=A0err =3D drm_panel_dp_aux_backlight(panel, aux)=
+;
+>> =C2=A0=C2=A0=C2=A0=C2=A0if (err)
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return err;
+>>
+>> Then drm_panel will handle backlight_(enable|disable) calls
+>> similar to the case when drm_panel_of_backlight() is used.
+>>
+>> Currently, we are not supporting one feature where the source
+>> device can combine the backlight brightness levels set through
+>> DP AUX and the BL_PWM_DIM eDP connector pin. Since it's not
+>> required for the basic backlight controls, it can be added later.
+>>
+>> Signed-off-by: Rajeev Nandan <rajeevny@codeaurora.org>
+>> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+>> Reviewed-by: Lyude Paul <lyude@redhat.com>
 >> ---
->> Checking phy_power_off flag instead of usb_wakeup_enabled_descendants=20
->> to keep gdsc active.
->>=20
->>  drivers/usb/dwc3/dwc3-qcom.c | 13 +++++++++++++
->>  1 file changed, 13 insertions(+)
->>=20
->> diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
->> index 82125bc..ba31aa3 100644
->> --- a/drivers/usb/dwc3/dwc3-qcom.c
->> +++ b/drivers/usb/dwc3/dwc3-qcom.c
->> @@ -17,6 +17,7 @@
->>  #include <linux/of_platform.h>
->>  #include <linux/platform_device.h>
->>  #include <linux/phy/phy.h>
->> +#include <linux/pm_domain.h>
->>  #include <linux/usb/of.h>
->>  #include <linux/reset.h>
->>  #include <linux/iopoll.h>
->> @@ -355,9 +356,15 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom)
->>  	u32 val;
->>  	int i, ret;
->>=20=20
->> +	struct dwc3 *dwc =3D platform_get_drvdata(qcom->dwc3);
->> +	struct generic_pm_domain *genpd =3D pd_to_genpd(qcom->dev->pm_domain);
+>>
+>> Changes in v5:
+>> - New
+>>
+>> Changes in v6:
+>> - Fixed ordering of memory allocation (Douglas)
+>> - Updated word wrapping in a comment (Douglas)
+>>
+>> Changes in v8:
+>> - Now using backlight_is_blank() to get the backlight blank status=20
+>> (Sam Ravnborg)
+>>
+>> =C2=A0 drivers/gpu/drm/drm_panel.c | 108=20
+>> ++++++++++++++++++++++++++++++++++++++++++++
+>> =C2=A0 include/drm/drm_panel.h=C2=A0=C2=A0=C2=A0=C2=A0 |=C2=A0 15 ++++=
+--
+>> =C2=A0 2 files changed, 119 insertions(+), 4 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/drm_panel.c b/drivers/gpu/drm/drm_panel.c=
+
+>> index f634371..4fa1e3b 100644
+>> --- a/drivers/gpu/drm/drm_panel.c
+>> +++ b/drivers/gpu/drm/drm_panel.c
+>> @@ -26,12 +26,20 @@
+>> =C2=A0 #include <linux/module.h>
+>> =C2=A0 #include <drm/drm_crtc.h>
+>> +#include <drm/drm_dp_helper.h>
+>> =C2=A0 #include <drm/drm_panel.h>
+>> =C2=A0 #include <drm/drm_print.h>
+>> =C2=A0 static DEFINE_MUTEX(panel_lock);
+>> =C2=A0 static LIST_HEAD(panel_list);
+>> +struct dp_aux_backlight {
+>> +=C2=A0=C2=A0=C2=A0 struct backlight_device *base;
+>> +=C2=A0=C2=A0=C2=A0 struct drm_dp_aux *aux;
+>> +=C2=A0=C2=A0=C2=A0 struct drm_edp_backlight_info info;
+>> +=C2=A0=C2=A0=C2=A0 bool enabled;
+>> +};
 >> +
->>  	if (qcom->is_suspended)
->>  		return 0;
->>=20=20
->> +	if (!dwc->phy_power_off && dwc->xhci)
->> +		genpd->flags |=3D GENPD_FLAG_ACTIVE_WAKEUP;
+>> =C2=A0 /**
+>> =C2=A0=C2=A0 * DOC: drm panel
+>> =C2=A0=C2=A0 *
+>> @@ -342,6 +350,106 @@ int drm_panel_of_backlight(struct drm_panel *pan=
+el)
+>> =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return 0;
+>> =C2=A0 }
+>> =C2=A0 EXPORT_SYMBOL(drm_panel_of_backlight);
 >> +
->>  	val =3D readl(qcom->qscratch_base + PWR_EVNT_IRQ_STAT_REG);
->>  	if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
->>  		dev_err(qcom->dev, "HS-PHY not in L2\n");
->> @@ -382,9 +389,15 @@ static int dwc3_qcom_resume(struct dwc3_qcom *qcom)
->>  	int ret;
->>  	int i;
->>=20=20
->> +	struct dwc3 *dwc =3D platform_get_drvdata(qcom->dwc3);
->> +	struct generic_pm_domain *genpd =3D pd_to_genpd(qcom->dev->pm_domain);
+>> +static int dp_aux_backlight_update_status(struct backlight_device *bd=
+)
+>> +{
+>> +=C2=A0=C2=A0=C2=A0 struct dp_aux_backlight *bl =3D bl_get_data(bd);
+>> +=C2=A0=C2=A0=C2=A0 u16 brightness =3D backlight_get_brightness(bd);
+>> +=C2=A0=C2=A0=C2=A0 int ret =3D 0;
 >> +
->>  	if (!qcom->is_suspended)
->>  		return 0;
->>=20=20
->> +	if (dwc->xhci)
->> +		genpd->flags &=3D ~GENPD_FLAG_ACTIVE_WAKEUP;
+>> +=C2=A0=C2=A0=C2=A0 if (!backlight_is_blank(bd)) {
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (!bl->enabled) {
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dr=
+m_edp_backlight_enable(bl->aux, &bl->info, brightness);
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bl=
+->enabled =3D true;
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 re=
+turn 0;
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ret =3D drm_edp_backlight_=
+set_level(bl->aux, &bl->info,=20
+>> brightness);
+>> +=C2=A0=C2=A0=C2=A0 } else {
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (bl->enabled) {
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dr=
+m_edp_backlight_disable(bl->aux, &bl->info);
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 bl=
+->enabled =3D false;
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 }
+>> +=C2=A0=C2=A0=C2=A0 }
 >> +
->>  	if (device_may_wakeup(qcom->dev))
->>  		dwc3_qcom_disable_interrupts(qcom);
->>=20=20
->
-> This is essentially the same as v7, which Felipe NAKed
-> (https://patchwork.kernel.org/project/linux-arm-msm/patch/1619586716-8687=
--6-git-send-email-sanm@codeaurora.org/)
->
-> I think Felipe wants to see the handling of the power domain in the
-> xhci-plat driver. One problem here is that the power domain is owned
+>> +=C2=A0=C2=A0=C2=A0 return ret;
+>> +}
+>> +
+>> +static const struct backlight_ops dp_aux_bl_ops =3D {
+>> +=C2=A0=C2=A0=C2=A0 .update_status =3D dp_aux_backlight_update_status,=
 
-this is not exactly what I meant to say, though. I want drivers to be
-self-contained. I.e. dwc3 doesn't modify xhci data and vice-versa. There
-are a few assummpmtions that we can make, though. The structure is
-usually like this:
+>> +};
+>> +
+>> +/**
+>> + * drm_panel_dp_aux_backlight - create and use DP AUX backlight
+>> + * @panel: DRM panel
+>> + * @aux: The DP AUX channel to use
+>> + *
+>> + * Use this function to create and handle backlight if your panel
+>> + * supports backlight control over DP AUX channel using DPCD
+>> + * registers as per VESA's standard backlight control interface.
+>> + *
+>> + * When the panel is enabled backlight will be enabled after a
+>> + * successful call to &drm_panel_funcs.enable()
+>> + *
+>> + * When the panel is disabled backlight will be disabled before the
+>> + * call to &drm_panel_funcs.disable().
+>> + *
+>> + * A typical implementation for a panel driver supporting backlight
+>> + * control over DP AUX will call this function at probe time.
+>> + * Backlight will then be handled transparently without requiring
+>> + * any intervention from the driver.
+>> + *
+>> + * drm_panel_dp_aux_backlight() must be called after the call to=20
+>> drm_panel_init().
+>> + *
+>> + * Return: 0 on success or a negative error code on failure.
+>> + */
+>> +int drm_panel_dp_aux_backlight(struct drm_panel *panel, struct=20
+>> drm_dp_aux *aux)
+>> +{
+>> +=C2=A0=C2=A0=C2=A0 struct dp_aux_backlight *bl;
+>> +=C2=A0=C2=A0=C2=A0 struct backlight_properties props =3D { 0 };
+>> +=C2=A0=C2=A0=C2=A0 u16 current_level;
+>> +=C2=A0=C2=A0=C2=A0 u8 current_mode;
+>> +=C2=A0=C2=A0=C2=A0 u8 edp_dpcd[EDP_DISPLAY_CTL_CAP_SIZE];
+>> +=C2=A0=C2=A0=C2=A0 int ret;
+>> +
+>> +=C2=A0=C2=A0=C2=A0 if (!panel || !panel->dev || !aux)
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 return -EINVAL;
+>> +
+>> +=C2=A0=C2=A0=C2=A0 ret =3D drm_dp_dpcd_read(aux, DP_EDP_DPCD_REV, edp=
+_dpcd,
+>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=
+=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 EDP_DISPLAY_CTL_CAP_SIZE);
+>=20
+> This creates a cyclic dependency between drm_kms_helper-ko and drm.ko. =
 
-glue {
-  dwc3 {
-    xhci
-  };
-};
+> drm_panel.c is in the latter, while drm_dp_dpcd_read() in=20
+> drm_dp_helper.c is in the former. Please fix.
 
-This means that in order for glue_suspend() to run, dwc3 has to suspend
-first and xhci has to suspend before dwc3.
+FYI, build DRM as modules and the error shows up during make module_insta=
+ll.
 
-For example, in the suspend call above, qcom (the glue) is directly
-accessing dwc3 core data, which is incorrect. It looks like we want to
-know if the PHY is not powered off and if it isn't, then we want to
-change the power domain ACTIVE_WAKEUP flag. Now, phy_power_off is false
-whenever any of xHCI's children enable USB wakeup.
+Best regards
+Thomas
 
-It seems like we need to way to generically propagate that knowledge up
-the parent tree. I.e., a parent needs to know if its child is wakeup
-capable, then dwc3 could, in its suspend routine:
 
-static int dwc3_suspend(struct device *dev)
-{
-	/* ... */
+--=20
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
+(HRB 36809, AG N=C3=BCrnberg)
+Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
 
-	if (device_children_wakeup_capable(dev))
-        	device_enable_wakeup(dev);
 
-	/* ... */
-}
+--DFHLtkuiMWmSrmqVbMA3p8REMY4RbpHUp--
 
-and similarly for qcom glue:
-
-static int dwc3_qcom_suspend(struct device *dev)
-{
-	/* ... */
-
-	if (device_children_wakeup_capable(dev)) {
-        	device_enable_wakeup(dev);
-		genpd->flags |=3D GENPD_FLAG_ACTIVE_WAKEUP;
-        }
-
-	/* ... */
-}
-
-It also seems plausible that this could be done at driver core and
-completely hidden away from drivers.
-
-=2D-=20
-balbi
-
---=-=-=
-Content-Type: application/pgp-signature; name="signature.asc"
+--t9eMn3jl6KwcYz0iCxm3oll8aCOnlDRLo
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQFFBAEBCAAvFiEE9DumQ60WEZ09LIErzlfNM9wDzUgFAmDsDnkRHGJhbGJpQGtl
-cm5lbC5vcmcACgkQzlfNM9wDzUidxQf/XaJ3wL82F8xWVAmW/ut6uzXgVMRCxFQu
-cplBWLqwIA4B+fes0gZ7jz1+pEoXVbAeX282TTxttOQPOJut6+HHrU2SS+5ayTES
-ppEE3ll+d923UN5GpN2xzh5dKD1/zxpeEKpIZyPmAD6f7YdOlDVKAy/VKifNIChg
-5ENdcRwyZzefHNzrYDBluiQ56kXAo7qe57mQCwL2OZExyqMoRCnzdB8iLXb7N4Kh
-bGCxWlLhN/ze+Ta7Oo9W+N/LRVCllrCDSXKl1Zr+JvGYBOgmOjBD48CtJzvQC1Xw
-xZQ9eUcVf2we6Y6VkueIswO0MdIxkE6U8YhJgSQ+GNFwZs3ZDFezoA==
-=iD1X
+wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmDsDygFAwAAAAAACgkQlh/E3EQov+AU
+kw//R7KbArU8YSyU6DQ9XelF9MKwAlhPhJXTR5BGVwrq8JiRKrc+JXxyAe1ScbUUEhIbMsgFHN3E
+X/MQ/qxycEc8A/Ud5hAOzGLdA+06WsDvDsN5TPBNmbJ/gTBIqnkj9nPWXNAhyVIm6pPjSJi7kwDZ
+j6cK8dUz3Np1W5ewQfMakllblTXHnYqD2q0fUGGNmsSnMSOc69rLataleWk70M3xZYBolAOMQpuG
+8EaVuVOXG1KyQSka15oZgpRnRsfXbfww5XKZca6hbUKZuJI7iMQtK8UHjL6ZGyL+2fQUqKKIqaxL
+Ksx6JFvA56BLDzoVokkOgx0DHw/VfqSU1w+uDIxrI7g1NtKxJaxr3wlQl94O0fVbPrzlJqp7ZxyT
+NA8FXUFB7EyyxfkpkVm/0jt2lFZfXLFS+kmcdR/j0cCwxxORnDmAL5TRLsIlz++J8Sfaj6UXtvq7
+5yvD56i7oQLCbgQFPUdlnCiziF4XVN0xQVkph43A6g5b0V9tDr2vHcIMuP2+oNq0eGJ1eBk0s7w5
+Y5LTfeugG+uXmeLxFRmEdQXQeuxGblg65r5tW5mZhEN/lvHKy9pgEk84tfueSdTYAE4UxZHNOYl/
+4xrUPztEJ8BHzL9PDSW47BgtCHht074azHLhX45a5qcMmuoFRW61OMpwSMAL+yC5vw0sN0b+7OH5
+VVE=
+=/HfC
 -----END PGP SIGNATURE-----
---=-=-=--
+
+--t9eMn3jl6KwcYz0iCxm3oll8aCOnlDRLo--
