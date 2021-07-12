@@ -2,102 +2,196 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B47643C5F7A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jul 2021 17:41:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F1E83C5FA6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 12 Jul 2021 17:45:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235400AbhGLPoW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 12 Jul 2021 11:44:22 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:20811 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235632AbhGLPoW (ORCPT
+        id S234208AbhGLPsO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 12 Jul 2021 11:48:14 -0400
+Received: from mail-il1-f179.google.com ([209.85.166.179]:38769 "EHLO
+        mail-il1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233166AbhGLPsO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 12 Jul 2021 11:44:22 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1626104494; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: References: Cc: To:
- Subject: From: Sender; bh=HfDY19Td7Yb6LP09Ydf7zDiMxK8u7WGqFqG3C/QOekU=;
- b=kzsuvX6txaDRrxCEnAVbz0U8crGYgeKqoegC4sUeMv+oEXXwPnO5bUm0D/HHHcfmKVcbeHQ6
- aM8CVie4tCdvOM18N9P4WeV/4cltlR91ij00dY/7ANtB0pWBpJI9uIBIJUVMZY5XhtLHviHN
- E5qO6yLfABg7rYWy+/4p8xY0idM=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 60ec62941938941955eb8ed0 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 12 Jul 2021 15:41:08
- GMT
-Sender: mdtipton=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id F393FC43460; Mon, 12 Jul 2021 15:41:07 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.4 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.12] (pool-96-253-99-54.rcmdva.fios.verizon.net [96.253.99.54])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mdtipton)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 05E4DC433D3;
-        Mon, 12 Jul 2021 15:41:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 05E4DC433D3
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=mdtipton@codeaurora.org
-From:   Mike Tipton <mdtipton@codeaurora.org>
-Subject: Re: [PATCH 1/4] interconnect: Zero initial BW after sync-state
-To:     okukatla@codeaurora.org
-Cc:     djakov@kernel.org, bjorn.andersson@linaro.org, agross@kernel.org,
-        saravanak@google.com, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mdtipton=codeaurora.org@codeaurora.org
-References: <20210625212839.24155-1-mdtipton@codeaurora.org>
- <20210625212839.24155-2-mdtipton@codeaurora.org>
- <14c52b496918900c9cb3bef662a9e833@codeaurora.org>
-Message-ID: <86e76352-1199-0fc6-9e5d-b7d45db37636@codeaurora.org>
-Date:   Mon, 12 Jul 2021 08:41:03 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        Mon, 12 Jul 2021 11:48:14 -0400
+Received: by mail-il1-f179.google.com with SMTP id e2so3441166ilu.5;
+        Mon, 12 Jul 2021 08:45:25 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=bjiErdISvJzz8sZViNEzz+bDHd/bqQjAqSKMHKmAddo=;
+        b=DI6UaomLpHZeEH+Xz49yYX9+vpIUfWRBc9TuGvbvAUk6I91m0apvSvUH59gwMgyVZS
+         mdQULYfoCfUvV7kSXRj/6QjE14NXBXRsuqWYFEHZL/TGXTSRiMgCmxkX96meV+B/oScL
+         TBh6IXPjN7htwVEOwkUYcRRyZcXNtuYuIUwiW+aU4L5kU1bmcWdLw4L/I3flqSrMf0H1
+         U2LSJs/WosJ8NkrvYkWBVlZUaO3BL3qzKhqZKdf78jaVdx6UF2wwXK0++C1x78tNGS6A
+         AQJll7OvSurEipM/Kg/FFn1PeMXmTfHBeZGT3PuLR66RJ66EdaLrFFGuPeApQMJ5wc6x
+         EFlQ==
+X-Gm-Message-State: AOAM530NsDCAu7vjxyxMv3GcjIDh3+0wZqFPDkcH3VQKmMVCJiv3XuIG
+        fKGoJVByeqXLXnH4qRi28w==
+X-Google-Smtp-Source: ABdhPJzTRCtdC+9FJWhpQUH8hfogXfrqm1xOLRX2Lit76DloUO2QE5jBGcamGXbkUimFLHMn8PhYCw==
+X-Received: by 2002:a92:3647:: with SMTP id d7mr38199063ilf.231.1626104724908;
+        Mon, 12 Jul 2021 08:45:24 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.248])
+        by smtp.gmail.com with ESMTPSA id b3sm8110077ilm.73.2021.07.12.08.45.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 12 Jul 2021 08:45:23 -0700 (PDT)
+Received: (nullmailer pid 1993221 invoked by uid 1000);
+        Mon, 12 Jul 2021 15:45:21 -0000
+Date:   Mon, 12 Jul 2021 09:45:21 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Sebastian Reichel <sre@kernel.org>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Subject: Re: [PATCH 1/3] dt-bindings: power: reset: Convert qcom,pon to DT
+ schema
+Message-ID: <20210712154521.GA1987910@robh.at.kernel.org>
+References: <20210705025032.12804-1-shawn.guo@linaro.org>
+ <20210705025032.12804-2-shawn.guo@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <14c52b496918900c9cb3bef662a9e833@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210705025032.12804-2-shawn.guo@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/1/2021 9:56 AM, okukatla@codeaurora.org wrote:
-> On 2021-06-26 02:58, Mike Tipton wrote:
->> The initial BW values may be used by providers to enforce floors. Zero
->> these values after sync-state so that providers know when to stop
->> enforcing them.
->>
->> Fixes: b1d681d8d324 ("interconnect: Add sync state support")
->> Signed-off-by: Mike Tipton <mdtipton@codeaurora.org>
->> ---
->>  drivers/interconnect/core.c | 2 ++
->>  1 file changed, 2 insertions(+)
->>
->> diff --git a/drivers/interconnect/core.c b/drivers/interconnect/core.c
->> index 8a1e70e00876..945121e18b5c 100644
->> --- a/drivers/interconnect/core.c
->> +++ b/drivers/interconnect/core.c
->> @@ -1106,6 +1106,8 @@ void icc_sync_state(struct device *dev)
->>          dev_dbg(p->dev, "interconnect provider is in synced state\n");
->>          list_for_each_entry(n, &p->nodes, node_list) {
->>              if (n->init_avg || n->init_peak) {
->> +                n->init_avg = 0;
->> +                n->init_peak = 0;
-> nit: It is good to reset init/floor levels back to zero, but we don't 
-> need to do this as we have sync_state flag to let providers know when to 
-> stop enforcing.
+On Mon, Jul 05, 2021 at 10:50:30AM +0800, Shawn Guo wrote:
+> It converts qcom,pon DT bindings from legacy bare text to YAML format.
+> 
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> ---
+>  .../bindings/power/reset/qcom,pon.txt         | 49 -------------------
+>  .../bindings/power/reset/qcom,pon.yaml        | 49 +++++++++++++++++++
+>  2 files changed, 49 insertions(+), 49 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/power/reset/qcom,pon.txt
+>  create mode 100644 Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/power/reset/qcom,pon.txt b/Documentation/devicetree/bindings/power/reset/qcom,pon.txt
+> deleted file mode 100644
+> index 0c0dc3a1e693..000000000000
+> --- a/Documentation/devicetree/bindings/power/reset/qcom,pon.txt
+> +++ /dev/null
+> @@ -1,49 +0,0 @@
+> -Qualcomm PON Device
+> -
+> -The Power On device for Qualcomm PM8xxx is MFD supporting pwrkey
+> -and resin along with the Android reboot-mode.
+> -
+> -This DT node has pwrkey and resin as sub nodes.
+> -
+> -Required Properties:
+> --compatible: Must be one of:
+> -	"qcom,pm8916-pon"
+> -	"qcom,pms405-pon"
+> -	"qcom,pm8998-pon"
+> -
+> --reg: Specifies the physical address of the pon register
+> -
+> -Optional subnode:
+> --pwrkey: Specifies the subnode pwrkey and should follow the
+> - qcom,pm8941-pwrkey.txt description.
+> --resin: Specifies the subnode resin and should follow the
+> - qcom,pm8xxx-pwrkey.txt description.
+> -
+> -The rest of the properties should follow the generic reboot-mode description
+> -found in reboot-mode.txt
+> -
+> -Example:
+> -
+> -	pon@800 {
+> -		compatible = "qcom,pm8916-pon";
+> -
+> -		reg = <0x800>;
+> -		mode-bootloader = <0x2>;
+> -		mode-recovery = <0x1>;
+> -
+> -		pwrkey {
+> -			compatible = "qcom,pm8941-pwrkey";
+> -			interrupts = <0x0 0x8 0 IRQ_TYPE_EDGE_BOTH>;
+> -			debounce = <15625>;
+> -			bias-pull-up;
+> -			linux,code = <KEY_POWER>;
+> -		};
+> -
+> -		resin {
+> -			compatible = "qcom,pm8941-resin";
+> -			interrupts = <0x0 0x8 1 IRQ_TYPE_EDGE_BOTH>;
+> -			debounce = <15625>;
+> -			bias-pull-up;
+> -			linux,code = <KEY_VOLUMEDOWN>;
+> -		};
+> -	};
+> diff --git a/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+> new file mode 100644
+> index 000000000000..7764c804af1d
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/power/reset/qcom,pon.yaml
+> @@ -0,0 +1,49 @@
+> +# SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/power/reset/qcom,pon.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm PON Device
+> +
+> +maintainers:
+> +  - Vinod Koul <vkoul@kernel.org>
+> +
+> +description: |
+> +  The Power On device for Qualcomm PM8xxx is MFD supporting pwrkey
+> +  and resin along with the Android reboot-mode.
 
-The synced_state variable is static to this file. It's not exposed to 
-providers. In fact, we could entirely remove synced_state with this 
-patch since it's unnecessary after zeroing the initial floors.
+allOf:
+  - $ref: /schemas/power/reset/reboot-mode.yaml#
 
->>                  aggregate_requests(n);
->>                  p->set(n, n);
->>              }
+And then...
+
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,pm8916-pon
+> +      - qcom,pms405-pon
+> +      - qcom,pm8998-pon
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +patternProperties:
+> +  "^mode-.+":
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    description: Vendor-specific mode value written to the mode register
+
+Drop this.
+
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +additionalProperties: false
+
+unevaluatedProperties: false
+
+> +
+> +examples:
+> +  - |
+> +    pmic {
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        pon@800 {
+> +            compatible = "qcom,pm8916-pon";
+> +            reg = <0x800>;
+> +            mode-bootloader = <0x2>;
+> +            mode-recovery = <0x1>;
+> +        };
+> +    };
+> -- 
+> 2.17.1
+> 
+> 
