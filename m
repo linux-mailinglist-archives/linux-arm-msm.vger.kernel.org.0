@@ -2,402 +2,310 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CA3093C6AF6
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jul 2021 09:07:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A18F53C6B6B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jul 2021 09:41:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234153AbhGMHKR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jul 2021 03:10:17 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:35944 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234138AbhGMHKR (ORCPT
+        id S234486AbhGMHoY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jul 2021 03:44:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35002 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234305AbhGMHoP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jul 2021 03:10:17 -0400
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 13 Jul 2021 00:07:27 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 13 Jul 2021 00:07:24 -0700
-X-QCInternal: smtphost
-Received: from c-sbhanu-linux.qualcomm.com ([10.242.50.201])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 13 Jul 2021 12:36:12 +0530
-Received: by c-sbhanu-linux.qualcomm.com (Postfix, from userid 2344807)
-        id 59E314EE6; Tue, 13 Jul 2021 12:36:13 +0530 (IST)
-From:   Shaik Sajida Bhanu <sbhanu@codeaurora.org>
-To:     adrian.hunter@intel.com, ulf.hansson@linaro.org, robh+dt@kernel.org
-Cc:     asutoshd@codeaurora.org, stummala@codeaurora.org,
-        vbadigan@codeaurora.org, rampraka@codeaurora.org,
-        sayalil@codeaurora.org, sartgarg@codeaurora.org,
-        rnayak@codeaurora.org, saiprakash.ranjan@codeaurora.org,
-        sibis@codeaurora.org, okukatla@codeaurora.org, djakov@kernel.org,
-        cang@codeaurora.org, pragalla@codeaurora.org,
-        nitirawa@codeaurora.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org,
-        Shaik Sajida Bhanu <sbhanu@codeaurora.org>
-Subject: [PATCH V6] arm64: dts: qcom: sc7280: Add nodes for eMMC and SD card
-Date:   Tue, 13 Jul 2021 12:36:11 +0530
-Message-Id: <1626159971-22519-1-git-send-email-sbhanu@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Tue, 13 Jul 2021 03:44:15 -0400
+Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01F30C0613E9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jul 2021 00:41:25 -0700 (PDT)
+Received: from drehscheibe.grey.stw.pengutronix.de ([2a0a:edc0:0:c01:1d::a2])
+        by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
+        (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1m3D1n-0003wU-UB; Tue, 13 Jul 2021 09:40:28 +0200
+Received: from [2a0a:edc0:0:900:1d::77] (helo=ptz.office.stw.pengutronix.de)
+        by drehscheibe.grey.stw.pengutronix.de with esmtp (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1m3D1h-0006Pq-8S; Tue, 13 Jul 2021 09:40:21 +0200
+Received: from ukl by ptz.office.stw.pengutronix.de with local (Exim 4.92)
+        (envelope-from <ukl@pengutronix.de>)
+        id 1m3D1h-0000sY-4N; Tue, 13 Jul 2021 09:40:21 +0200
+From:   =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+Cc:     kernel@pengutronix.de,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Alexandre Bounine <alex.bou9@gmail.com>,
+        Alex Dubov <oakad@yahoo.com>, Alex Elder <elder@kernel.org>,
+        Alex Williamson <alex.williamson@redhat.com>,
+        Alison Schofield <alison.schofield@intel.com>,
+        Allen Hubbe <allenbh@gmail.com>,
+        Andreas Noever <andreas.noever@gmail.com>,
+        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+        Ben Widawsky <ben.widawsky@intel.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Boris Ostrovsky <boris.ostrovsky@oracle.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Christian Borntraeger <borntraeger@de.ibm.com>,
+        Cornelia Huck <cohuck@redhat.com>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Dave Jiang <dave.jiang@intel.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        David Woodhouse <dwmw@amazon.co.uk>,
+        Dexuan Cui <decui@microsoft.com>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Dominik Brodowski <linux@dominikbrodowski.net>,
+        Eric Farman <farman@linux.ibm.com>,
+        Frank Li <lznuaa@gmail.com>,
+        Geoff Levand <geoff@infradead.org>,
+        Haiyang Zhang <haiyangz@microsoft.com>,
+        Halil Pasic <pasic@linux.ibm.com>,
+        Hannes Reinecke <hare@suse.de>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Harald Freudenberger <freude@linux.ibm.com>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Helge Deller <deller@gmx.de>, Ira Weiny <ira.weiny@intel.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        "James E.J. Bottomley" <James.Bottomley@HansenPartnership.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Jason Wang <jasowang@redhat.com>,
+        Jens Taprogge <jens.taprogge@taprogge.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Jiri Kosina <jikos@kernel.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Joey Pabalan <jpabalanb@gmail.com>,
+        Johan Hovold <johan@kernel.org>,
+        Johannes Berg <johannes@sipsolutions.net>,
+        Johannes Thumshirn <morbidrsa@gmail.com>,
+        Jon Mason <jdmason@kudzu.us>, Juergen Gross <jgross@suse.com>,
+        Julien Grall <jgrall@amazon.com>,
+        Kai-Heng Feng <kai.heng.feng@canonical.com>,
+        Kirti Wankhede <kwankhede@nvidia.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
+        "K. Y. Srinivasan" <kys@microsoft.com>,
+        Lee Jones <lee.jones@linaro.org>, Len Brown <lenb@kernel.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Manohar Vanga <manohar.vanga@gmail.com>,
+        Marc Zyngier <maz@kernel.org>, Mark Brown <broonie@kernel.org>,
+        Mark Gross <mgross@linux.intel.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Martyn Welch <martyn@welchs.me.uk>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Matt Porter <mporter@kernel.crashing.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Maxime Ripard <mripard@kernel.org>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        Maxim Levitsky <maximlevitsky@gmail.com>,
+        Michael Buesch <m@bues.ch>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Michael Jamet <michael.jamet@intel.com>,
+        "Michael S. Tsirkin" <mst@redhat.com>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        Mike Christie <michael.christie@oracle.com>,
+        Moritz Fischer <mdf@kernel.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        =?UTF-8?q?Pali=20Roh=C3=A1r?= <pali@kernel.org>,
+        Paul Mackerras <paulus@samba.org>,
+        Peter Oberparleiter <oberpar@linux.ibm.com>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        =?UTF-8?q?Rafa=C5=82=20Mi=C5=82ecki?= <zajec5@gmail.com>,
+        Rob Herring <robh@kernel.org>,
+        Russell King <linux@armlinux.org.uk>,
+        "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+        Samuel Holland <samuel@sholland.org>,
+        Samuel Iglesias Gonsalvez <siglesias@igalia.com>,
+        SeongJae Park <sjpark@amazon.de>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+        Stefano Stabellini <sstabellini@kernel.org>,
+        Stefan Richter <stefanr@s5r6.in-berlin.de>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Stephen Hemminger <sthemmin@microsoft.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Sven Van Asbroeck <TheSven73@gmail.com>,
+        Takashi Iwai <tiwai@suse.com>,
+        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+        Thorsten Scherer <t.scherer@eckelmann.de>,
+        Tomas Winkler <tomas.winkler@intel.com>,
+        Tom Rix <trix@redhat.com>,
+        Tyrel Datwyler <tyreld@linux.ibm.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Vineeth Vijayan <vneethv@linux.ibm.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Vishal Verma <vishal.l.verma@intel.com>,
+        Wei Liu <wei.liu@kernel.org>,
+        William Breathitt Gray <vilhelm.gray@gmail.com>,
+        Wolfram Sang <wsa@kernel.org>, Wu Hao <hao.wu@intel.com>,
+        Yehezkel Bernat <YehezkelShB@gmail.com>,
+        YueHaibing <yuehaibing@huawei.com>, alsa-devel@alsa-project.org,
+        dmaengine@vger.kernel.org, greybus-dev@lists.linaro.org,
+        industrypack-devel@lists.sourceforge.net, kvm@vger.kernel.org,
+        linux1394-devel@lists.sourceforge.net, linux-acpi@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-cxl@vger.kernel.org,
+        linux-fpga@vger.kernel.org, linux-hyperv@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-i3c@lists.infradead.org,
+        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, linux-mips@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-ntb@googlegroups.com,
+        linux-parisc@vger.kernel.org, linux-pci@vger.kernel.org,
+        linuxppc-dev@lists.ozlabs.org, linux-remoteproc@vger.kernel.org,
+        linux-s390@vger.kernel.org, linux-scsi@vger.kernel.org,
+        linux-serial@vger.kernel.org, linux-spi@vger.kernel.org,
+        linux-staging@lists.linux.dev, linux-sunxi@lists.linux.dev,
+        linux-usb@vger.kernel.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, nvdimm@lists.linux.dev,
+        platform-driver-x86@vger.kernel.org, target-devel@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        xen-devel@lists.xenproject.org
+Subject: [PATCH v3 0/5] bus: Make remove callback return void
+Date:   Tue, 13 Jul 2021 09:40:09 +0200
+Message-Id: <20210713074014.684791-1-u.kleine-koenig@pengutronix.de>
+X-Mailer: git-send-email 2.30.2
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+X-SA-Exim-Connect-IP: 2a0a:edc0:0:c01:1d::a2
+X-SA-Exim-Mail-From: ukl@pengutronix.de
+X-SA-Exim-Scanned: No (on metis.ext.pengutronix.de); SAEximRunCond expanded to false
+X-PTX-Original-Recipient: linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add nodes for eMMC and SD card on sc7280.
+Hello,
 
-Signed-off-by: Shaik Sajida Bhanu <sbhanu@codeaurora.org>
----
+this is the final patch set for my effort to make struct
+bus_type::remove return void.
 
-This change is depends on the below patch series:
-https://lore.kernel.org/patchwork/cover/1418814/
+The first four patches contain cleanups that make some of these
+callbacks (more obviously) always return 0. They are acked by the
+respective maintainers. Bjorn Helgaas explicitly asked to include the
+pci patch (#1) into this series, so Greg taking this is fine. I assume
+the s390 people are fine with Greg taking patches #2 to #4, too, they
+didn't explicitly said so though.
 
-Changes since V5:
-	- Modified sdhci1_opp_table: sdhc1-opp-table and sdhc2_opp_table:
-	  sdhc2-opp-table tag names as per Stephen Boyd suggestion.
+The last patch actually changes the prototype and so touches quite some
+drivers and has the potential to conflict with future developments, so I
+consider it beneficial to put these patches into next soon. I expect
+that it will be Greg who takes the complete series, he already confirmed
+via irc (for v2) to look into this series.
 
-Changes since V4:
-	- Included gpio header in proper order and moved default pins
-	  configs to soc file as suggested by Stephen Boyd.
+In the last round I failed to send the cover letter to all affected
+people, sorry for that, this should be fixed now.
 
-Changes since V3:
-	- Changed pinconfig names as suggested by Konrad Dybcio.
-	- Removed extra lines and aligned some of lines as
-	  suggested by Bjorn Andersson.
+Best regards
+Uwe
 
-Change since V2:
-	- Added leading zero's for register address and "qcom,sc7280-sdhci"
-	  string in compatible as suggested by Stephen Boyd and Doug.
-	- Removed max-frequency flag, no-mmc and no-sdio flags
-	  for Sd card as suggested by Doug and Stephen Boyd.
-	- Moved non-removable, no-sd, no-sdio and some pin config
-	  changes from soc to board dts file as suggested by Doug.
-	- Removed sleep state for CD line and drive-strength for
-	  input pins as suggested by Doug.
-	- Updated bus vote numbers for eMMC and SD card.
+Changes since v2:
+ - Add several acks/review tags
+ - Include patch #1 explicitly
+ - rebase to v5.14-rc1, build test on amd64, arm64 and s390 using
+   allmodconfig
 
-Changes since V1:
-	- Moved SDHC nodes as suggested by Bjorn Andersson.
-	- Dropped "pinconf-" prefix as suggested by Bjorn Andersson.
-	- Removed extra newlines as suggested by Konrad Dybcio.
-	- Changed sd-cd pin to bias-pull-up in sdc2_off as suggested by
-	  Veerabhadrarao Badiganti.
-	- Added bandwidth votes for eMMC and SD card.
----
- arch/arm64/boot/dts/qcom/sc7280-idp.dts |  71 ++++++++++++
- arch/arm64/boot/dts/qcom/sc7280.dtsi    | 185 ++++++++++++++++++++++++++++++++
- 2 files changed, 256 insertions(+)
+Uwe Kleine-König (5):
+  PCI: endpoint: Make struct pci_epf_driver::remove return void
+  s390/cio: Make struct css_driver::remove return void
+  s390/ccwgroup: Drop if with an always false condition
+  s390/scm: Make struct scm_driver::remove return void
+  bus: Make remove callback return void
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-index 3900cfc..1be822c 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-@@ -7,6 +7,7 @@
- 
- /dts-v1/;
- 
-+#include <dt-bindings/gpio/gpio.h>
- #include <dt-bindings/iio/qcom,spmi-adc7-pmr735a.h>
- #include <dt-bindings/iio/qcom,spmi-adc7-pmr735b.h>
- #include <dt-bindings/iio/qcom,spmi-adc7-pm8350.h>
-@@ -272,6 +273,34 @@
- 	status = "okay";
- };
- 
-+&sdhc_1 {
-+	status = "okay";
-+
-+	pinctrl-names = "default", "sleep";
-+	pinctrl-0 = <&sdc1_on>;
-+	pinctrl-1 = <&sdc1_off>;
-+
-+	non-removable;
-+	no-sd;
-+	no-sdio;
-+
-+	vmmc-supply = <&vreg_l7b_2p9>;
-+	vqmmc-supply = <&vreg_l19b_1p8>;
-+};
-+
-+&sdhc_2 {
-+	status = "okay";
-+
-+	pinctrl-names = "default", "sleep";
-+	pinctrl-0 = <&sdc2_on>;
-+	pinctrl-1 = <&sdc2_off>;
-+
-+	vmmc-supply = <&vreg_l9c_2p9>;
-+	vqmmc-supply = <&vreg_l6c_2p9>;
-+
-+	cd-gpios = <&tlmm 91 GPIO_ACTIVE_LOW>;
-+};
-+
- &uart5 {
- 	status = "okay";
- };
-@@ -291,3 +320,45 @@
- 		bias-pull-up;
- 	};
- };
-+
-+&sdc1_on {
-+	clk {
-+		bias-disable;
-+		drive-strength = <16>;
-+	};
-+
-+	cmd {
-+		bias-pull-up;
-+		drive-strength = <10>;
-+	};
-+
-+	data {
-+		bias-pull-up;
-+		drive-strength = <10>;
-+	};
-+
-+	rclk {
-+		bias-pull-down;
-+	};
-+};
-+
-+&sdc2_on {
-+	clk {
-+		bias-disable;
-+		drive-strength = <16>;
-+	};
-+
-+	cmd {
-+		bias-pull-up;
-+		drive-strength = <10>;
-+	};
-+
-+	data {
-+		bias-pull-up;
-+		drive-strength = <10>;
-+	};
-+
-+	sd-cd {
-+		bias-pull-up;
-+	};
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index a8c274a..98aca96 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -24,6 +24,11 @@
- 
- 	chosen { };
- 
-+	aliases {
-+		mmc1 = &sdhc_1;
-+		mmc2 = &sdhc_2;
-+	};
-+
- 	clocks {
- 		xo_board: xo-board {
- 			compatible = "fixed-clock";
-@@ -436,6 +441,60 @@
- 			#mbox-cells = <2>;
- 		};
- 
-+		sdhc_1: sdhci@7c4000 {
-+			compatible = "qcom,sc7280-sdhci", "qcom,sdhci-msm-v5";
-+			status = "disabled";
-+
-+			reg = <0 0x007c4000 0 0x1000>,
-+			      <0 0x007c5000 0 0x1000>;
-+			reg-names = "hc", "cqhci";
-+
-+			iommus = <&apps_smmu 0xc0 0x0>;
-+			interrupts = <GIC_SPI 652 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 656 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "hc_irq", "pwr_irq";
-+
-+			clocks = <&gcc GCC_SDCC1_APPS_CLK>,
-+				 <&gcc GCC_SDCC1_AHB_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>;
-+			clock-names = "core", "iface", "xo";
-+			interconnects = <&aggre1_noc MASTER_SDCC_1 0 &mc_virt SLAVE_EBI1 0>,
-+					<&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_SDCC_1 0>;
-+			interconnect-names = "sdhc-ddr","cpu-sdhc";
-+			power-domains = <&rpmhpd SC7280_CX>;
-+			operating-points-v2 = <&sdhc1_opp_table>;
-+
-+			bus-width = <8>;
-+			supports-cqe;
-+
-+			qcom,dll-config = <0x0007642c>;
-+			qcom,ddr-config = <0x80040868>;
-+
-+			mmc-ddr-1_8v;
-+			mmc-hs200-1_8v;
-+			mmc-hs400-1_8v;
-+			mmc-hs400-enhanced-strobe;
-+
-+			sdhc1_opp_table: opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-100000000 {
-+					opp-hz = /bits/ 64 <100000000>;
-+					required-opps = <&rpmhpd_opp_low_svs>;
-+					opp-peak-kBps = <1800000 400000>;
-+					opp-avg-kBps = <100000 0>;
-+				};
-+
-+				opp-384000000 {
-+					opp-hz = /bits/ 64 <384000000>;
-+					required-opps = <&rpmhpd_opp_nom>;
-+					opp-peak-kBps = <5400000 1600000>;
-+					opp-avg-kBps = <390000 0>;
-+				};
-+			};
-+
-+		};
-+
- 		qupv3_id_0: geniqup@9c0000 {
- 			compatible = "qcom,geni-se-qup";
- 			reg = <0 0x009c0000 0 0x2000>;
-@@ -1035,6 +1094,51 @@
- 			};
- 		};
- 
-+		sdhc_2: sdhci@8804000 {
-+			compatible = "qcom,sc7280-sdhci", "qcom,sdhci-msm-v5";
-+			status = "disabled";
-+
-+			reg = <0 0x08804000 0 0x1000>;
-+
-+			iommus = <&apps_smmu 0x100 0x0>;
-+			interrupts = <GIC_SPI 207 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 223 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "hc_irq", "pwr_irq";
-+
-+			clocks = <&gcc GCC_SDCC2_APPS_CLK>,
-+				 <&gcc GCC_SDCC2_AHB_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>;
-+			clock-names = "core", "iface", "xo";
-+			interconnects = <&aggre1_noc MASTER_SDCC_2 0 &mc_virt SLAVE_EBI1 0>,
-+					<&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_SDCC_2 0>;
-+			interconnect-names = "sdhc-ddr","cpu-sdhc";
-+			power-domains = <&rpmhpd SC7280_CX>;
-+			operating-points-v2 = <&sdhc2_opp_table>;
-+
-+			bus-width = <4>;
-+
-+			qcom,dll-config = <0x0007642c>;
-+
-+			sdhc2_opp_table: opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-100000000 {
-+					opp-hz = /bits/ 64 <100000000>;
-+					required-opps = <&rpmhpd_opp_low_svs>;
-+					opp-peak-kBps = <1800000 400000>;
-+					opp-avg-kBps = <100000 0>;
-+				};
-+
-+				opp-202000000 {
-+					opp-hz = /bits/ 64 <202000000>;
-+					required-opps = <&rpmhpd_opp_nom>;
-+					opp-peak-kBps = <5400000 1600000>;
-+					opp-avg-kBps = <200000 0>;
-+				};
-+			};
-+
-+		};
-+
- 		dc_noc: interconnect@90e0000 {
- 			reg = <0 0x090e0000 0 0x5080>;
- 			compatible = "qcom,sc7280-dc-noc";
-@@ -1185,6 +1289,87 @@
- 				pins = "gpio46", "gpio47";
- 				function = "qup13";
- 			};
-+
-+			sdc1_on: sdc1-on {
-+				clk {
-+					pins = "sdc1_clk";
-+				};
-+
-+				cmd {
-+					pins = "sdc1_cmd";
-+				};
-+
-+				data {
-+					pins = "sdc1_data";
-+				};
-+
-+				rclk {
-+					pins = "sdc1_rclk";
-+				};
-+			};
-+
-+			sdc1_off: sdc1-off {
-+				clk {
-+					pins = "sdc1_clk";
-+					drive-strength = <2>;
-+					bias-bus-hold;
-+				};
-+
-+				cmd {
-+					pins = "sdc1_cmd";
-+					drive-strength = <2>;
-+					bias-bus-hold;
-+				};
-+
-+				data {
-+					pins = "sdc1_data";
-+					drive-strength = <2>;
-+					bias-bus-hold;
-+				};
-+
-+				rclk {
-+					pins = "sdc1_rclk";
-+					bias-bus-hold;
-+				};
-+			};
-+
-+			sdc2_on: sdc2-on {
-+				clk {
-+					pins = "sdc2_clk";
-+				};
-+
-+				cmd {
-+					pins = "sdc2_cmd";
-+				};
-+
-+				data {
-+					pins = "sdc2_data";
-+				};
-+
-+				sd-cd {
-+					pins = "gpio91";
-+				};
-+			};
-+
-+			sdc2_off: sdc2-off {
-+				clk {
-+					pins = "sdc2_clk";
-+					drive-strength = <2>;
-+					bias-bus-hold;
-+				};
-+
-+				cmd {
-+					pins ="sdc2_cmd";
-+					drive-strength = <2>;
-+					bias-bus-hold;
-+				};
-+
-+				data {
-+					pins ="sdc2_data";
-+					drive-strength = <2>;
-+					bias-bus-hold;
-+				};
-+			};
- 		};
- 
- 		apps_smmu: iommu@15000000 {
+ arch/arm/common/locomo.c                  | 3 +--
+ arch/arm/common/sa1111.c                  | 4 +---
+ arch/arm/mach-rpc/ecard.c                 | 4 +---
+ arch/mips/sgi-ip22/ip22-gio.c             | 3 +--
+ arch/parisc/kernel/drivers.c              | 5 ++---
+ arch/powerpc/platforms/ps3/system-bus.c   | 3 +--
+ arch/powerpc/platforms/pseries/ibmebus.c  | 3 +--
+ arch/powerpc/platforms/pseries/vio.c      | 3 +--
+ arch/s390/include/asm/eadm.h              | 2 +-
+ drivers/acpi/bus.c                        | 3 +--
+ drivers/amba/bus.c                        | 4 +---
+ drivers/base/auxiliary.c                  | 4 +---
+ drivers/base/isa.c                        | 4 +---
+ drivers/base/platform.c                   | 4 +---
+ drivers/bcma/main.c                       | 6 ++----
+ drivers/bus/sunxi-rsb.c                   | 4 +---
+ drivers/cxl/core.c                        | 3 +--
+ drivers/dax/bus.c                         | 4 +---
+ drivers/dma/idxd/sysfs.c                  | 4 +---
+ drivers/firewire/core-device.c            | 4 +---
+ drivers/firmware/arm_scmi/bus.c           | 4 +---
+ drivers/firmware/google/coreboot_table.c  | 4 +---
+ drivers/fpga/dfl.c                        | 4 +---
+ drivers/hid/hid-core.c                    | 4 +---
+ drivers/hid/intel-ish-hid/ishtp/bus.c     | 4 +---
+ drivers/hv/vmbus_drv.c                    | 5 +----
+ drivers/hwtracing/intel_th/core.c         | 4 +---
+ drivers/i2c/i2c-core-base.c               | 5 +----
+ drivers/i3c/master.c                      | 4 +---
+ drivers/input/gameport/gameport.c         | 3 +--
+ drivers/input/serio/serio.c               | 3 +--
+ drivers/ipack/ipack.c                     | 4 +---
+ drivers/macintosh/macio_asic.c            | 4 +---
+ drivers/mcb/mcb-core.c                    | 4 +---
+ drivers/media/pci/bt8xx/bttv-gpio.c       | 3 +--
+ drivers/memstick/core/memstick.c          | 3 +--
+ drivers/mfd/mcp-core.c                    | 3 +--
+ drivers/misc/mei/bus.c                    | 4 +---
+ drivers/misc/tifm_core.c                  | 3 +--
+ drivers/mmc/core/bus.c                    | 4 +---
+ drivers/mmc/core/sdio_bus.c               | 4 +---
+ drivers/net/netdevsim/bus.c               | 3 +--
+ drivers/ntb/core.c                        | 4 +---
+ drivers/ntb/ntb_transport.c               | 4 +---
+ drivers/nvdimm/bus.c                      | 3 +--
+ drivers/pci/endpoint/pci-epf-core.c       | 7 ++-----
+ drivers/pci/pci-driver.c                  | 3 +--
+ drivers/pcmcia/ds.c                       | 4 +---
+ drivers/platform/surface/aggregator/bus.c | 4 +---
+ drivers/platform/x86/wmi.c                | 4 +---
+ drivers/pnp/driver.c                      | 3 +--
+ drivers/rapidio/rio-driver.c              | 4 +---
+ drivers/rpmsg/rpmsg_core.c                | 7 ++-----
+ drivers/s390/block/scm_drv.c              | 4 +---
+ drivers/s390/cio/ccwgroup.c               | 6 +-----
+ drivers/s390/cio/chsc_sch.c               | 3 +--
+ drivers/s390/cio/css.c                    | 7 +++----
+ drivers/s390/cio/css.h                    | 2 +-
+ drivers/s390/cio/device.c                 | 9 +++------
+ drivers/s390/cio/eadm_sch.c               | 4 +---
+ drivers/s390/cio/scm.c                    | 5 +++--
+ drivers/s390/cio/vfio_ccw_drv.c           | 3 +--
+ drivers/s390/crypto/ap_bus.c              | 4 +---
+ drivers/scsi/scsi_debug.c                 | 3 +--
+ drivers/siox/siox-core.c                  | 4 +---
+ drivers/slimbus/core.c                    | 4 +---
+ drivers/soc/qcom/apr.c                    | 4 +---
+ drivers/spi/spi.c                         | 4 +---
+ drivers/spmi/spmi.c                       | 3 +--
+ drivers/ssb/main.c                        | 4 +---
+ drivers/staging/fieldbus/anybuss/host.c   | 4 +---
+ drivers/staging/greybus/gbphy.c           | 4 +---
+ drivers/target/loopback/tcm_loop.c        | 5 ++---
+ drivers/thunderbolt/domain.c              | 4 +---
+ drivers/tty/serdev/core.c                 | 4 +---
+ drivers/usb/common/ulpi.c                 | 4 +---
+ drivers/usb/serial/bus.c                  | 4 +---
+ drivers/usb/typec/bus.c                   | 4 +---
+ drivers/vdpa/vdpa.c                       | 4 +---
+ drivers/vfio/mdev/mdev_driver.c           | 4 +---
+ drivers/virtio/virtio.c                   | 3 +--
+ drivers/vme/vme.c                         | 4 +---
+ drivers/xen/xenbus/xenbus.h               | 2 +-
+ drivers/xen/xenbus/xenbus_probe.c         | 4 +---
+ include/linux/device/bus.h                | 2 +-
+ include/linux/pci-epf.h                   | 2 +-
+ sound/aoa/soundbus/core.c                 | 4 +---
+ 87 files changed, 98 insertions(+), 241 deletions(-)
+
+base-commit: e73f0f0ee7541171d89f2e2491130c7771ba58d3
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
+2.30.2
 
