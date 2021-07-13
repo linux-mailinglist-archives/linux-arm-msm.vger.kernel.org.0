@@ -2,256 +2,174 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8BB223C70CD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jul 2021 14:59:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B4EE3C71B7
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jul 2021 16:00:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236249AbhGMNB5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jul 2021 09:01:57 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:54710 "EHLO
+        id S236696AbhGMODH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jul 2021 10:03:07 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:5016 "EHLO
         alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236205AbhGMNB5 (ORCPT
+        with ESMTP id S236681AbhGMODH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jul 2021 09:01:57 -0400
-Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 13 Jul 2021 05:59:07 -0700
+        Tue, 13 Jul 2021 10:03:07 -0400
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 13 Jul 2021 07:00:17 -0700
 X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 13 Jul 2021 05:59:05 -0700
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 13 Jul 2021 07:00:15 -0700
 X-QCInternal: smtphost
 Received: from c-mansur-linux.qualcomm.com ([10.204.90.208])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 13 Jul 2021 18:28:43 +0530
+  by ironmsg01-blr.qualcomm.com with ESMTP; 13 Jul 2021 19:29:50 +0530
 Received: by c-mansur-linux.qualcomm.com (Postfix, from userid 461723)
-        id 47A4222735; Tue, 13 Jul 2021 18:28:42 +0530 (IST)
+        id C475422735; Tue, 13 Jul 2021 19:29:48 +0530 (IST)
 From:   Mansur Alisha Shaik <mansur@codeaurora.org>
 To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         vgarodia@codeaurora.org, dikshita@codeaurora.org,
         Mansur Alisha Shaik <mansur@codeaurora.org>
-Subject: [PATCH] venus: vdec: decoded picture buffer handling during reconfig sequence
-Date:   Tue, 13 Jul 2021 18:28:36 +0530
-Message-Id: <1626181116-2650-1-git-send-email-mansur@codeaurora.org>
+Subject: [V2] venus: venc: add support for V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM control
+Date:   Tue, 13 Jul 2021 19:29:47 +0530
+Message-Id: <1626184787-25020-1-git-send-email-mansur@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In existing implementation, driver is freeing and un-mapping all the
-decoded picture buffers(DPB) as part of dynamic resolution change(DRC)
-handling. As a result, when firmware try to access the DPB buffer, from
-previous sequence, SMMU context fault is seen due to the buffer being
-already unmapped.
-
-With this change, driver defines ownership of each DPB buffer. If a buffer
-is owned by firmware, driver would skip from un-mapping the same.
+Add support for V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM control for
+H264 high profile and constrained high profile.
 
 Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
 ---
- drivers/media/platform/qcom/venus/core.h    |  3 +++
- drivers/media/platform/qcom/venus/helpers.c | 37 ++++++++++++++++++++++-------
- drivers/media/platform/qcom/venus/helpers.h | 17 +++++++++++++
- drivers/media/platform/qcom/venus/vdec.c    | 25 ++++++++++++++++++-
- 4 files changed, 72 insertions(+), 10 deletions(-)
+ drivers/media/platform/qcom/venus/core.h       |  1 +
+ drivers/media/platform/qcom/venus/hfi_cmds.c   |  8 ++++++++
+ drivers/media/platform/qcom/venus/hfi_helper.h |  5 +++++
+ drivers/media/platform/qcom/venus/venc.c       | 11 +++++++++++
+ drivers/media/platform/qcom/venus/venc_ctrls.c | 15 ++++++++++++++-
+ 5 files changed, 39 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index 8df2d49..7ecbf9e 100644
+index 8df2d49..39dfab4 100644
 --- a/drivers/media/platform/qcom/venus/core.h
 +++ b/drivers/media/platform/qcom/venus/core.h
-@@ -450,6 +450,7 @@ struct venus_inst {
- 	bool next_buf_last;
- 	bool drain_active;
- 	enum venus_inst_modes flags;
-+	u32 dpb_out_tag[VB2_MAX_FRAME];
+@@ -234,6 +234,7 @@ struct venc_controls {
+ 	u32 h264_loop_filter_mode;
+ 	s32 h264_loop_filter_alpha;
+ 	s32 h264_loop_filter_beta;
++	u32 h264_8x8_transform;
+ 
+ 	u32 hevc_i_qp;
+ 	u32 hevc_p_qp;
+diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
+index f510247..d121dcb 100644
+--- a/drivers/media/platform/qcom/venus/hfi_cmds.c
++++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
+@@ -1239,6 +1239,14 @@ pkt_session_set_property_4xx(struct hfi_session_set_property_pkt *pkt,
+ 		break;
+ 	}
+ 
++	case HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8: {
++		struct hfi_h264_8x8x_transform *in = pdata, *tm = prop_data;
++
++		tm->enable_type = in->enable_type;
++		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*tm);
++		break;
++	}
++
+ 	case HFI_PROPERTY_CONFIG_VENC_MAX_BITRATE:
+ 	case HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER:
+ 	case HFI_PROPERTY_PARAM_BUFFER_ALLOC_MODE:
+diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
+index b0a9beb..fe3e523 100644
+--- a/drivers/media/platform/qcom/venus/hfi_helper.h
++++ b/drivers/media/platform/qcom/venus/hfi_helper.h
+@@ -507,6 +507,7 @@
+ #define HFI_PROPERTY_PARAM_VENC_MAX_NUM_B_FRAMES		0x2005020
+ #define HFI_PROPERTY_PARAM_VENC_H264_VUI_BITSTREAM_RESTRC	0x2005021
+ #define HFI_PROPERTY_PARAM_VENC_PRESERVE_TEXT_QUALITY		0x2005023
++#define HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8			0x2005025
+ #define HFI_PROPERTY_PARAM_VENC_HIER_P_MAX_NUM_ENH_LAYER	0x2005026
+ #define HFI_PROPERTY_PARAM_VENC_DISABLE_RC_TIMESTAMP		0x2005027
+ #define HFI_PROPERTY_PARAM_VENC_INITIAL_QP			0x2005028
+@@ -562,6 +563,10 @@ struct hfi_bitrate {
+ 	u32 layer_id;
  };
  
- #define IS_V1(core)	((core)->res->hfi_version == HFI_VERSION_1XX)
-@@ -484,4 +485,6 @@ venus_caps_by_codec(struct venus_core *core, u32 codec, u32 domain)
- 	return NULL;
- }
- 
-+void dpb_out_tag_init(struct venus_inst *inst);
++struct hfi_h264_8x8x_transform {
++	u32 enable_type;
++};
 +
- #endif
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index 1fe6d46..ee2e26a 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -21,14 +21,6 @@
- #define NUM_MBS_720P	(((1280 + 15) >> 4) * ((720 + 15) >> 4))
- #define NUM_MBS_4K	(((4096 + 15) >> 4) * ((2304 + 15) >> 4))
+ #define HFI_CAPABILITY_FRAME_WIDTH			0x01
+ #define HFI_CAPABILITY_FRAME_HEIGHT			0x02
+ #define HFI_CAPABILITY_MBS_PER_FRAME			0x03
+diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+index 8dd49d4..948369c 100644
+--- a/drivers/media/platform/qcom/venus/venc.c
++++ b/drivers/media/platform/qcom/venus/venc.c
+@@ -567,6 +567,7 @@ static int venc_set_properties(struct venus_inst *inst)
+ 		struct hfi_h264_vui_timing_info info;
+ 		struct hfi_h264_entropy_control entropy;
+ 		struct hfi_h264_db_control deblock;
++		struct hfi_h264_8x8x_transform h264_transform;
  
--struct intbuf {
--	struct list_head list;
--	u32 type;
--	size_t size;
--	void *va;
--	dma_addr_t da;
--	unsigned long attrs;
--};
- 
- bool venus_helper_check_codec(struct venus_inst *inst, u32 v4l2_pixfmt)
- {
-@@ -95,9 +87,16 @@ int venus_helper_queue_dpb_bufs(struct venus_inst *inst)
- 		fdata.device_addr = buf->da;
- 		fdata.buffer_type = buf->type;
- 
-+		if (buf->owned_by == FIRMWARE)
-+			continue;
-+
-+		fdata.clnt_data = buf->dpb_out_tag;
-+
- 		ret = hfi_session_process_buf(inst, &fdata);
+ 		ptype = HFI_PROPERTY_PARAM_VENC_H264_VUI_TIMING_INFO;
+ 		info.enable = 1;
+@@ -597,6 +598,16 @@ static int venc_set_properties(struct venus_inst *inst)
+ 		ret = hfi_session_set_property(inst, ptype, &deblock);
  		if (ret)
- 			goto fail;
+ 			return ret;
 +
-+		buf->owned_by = FIRMWARE;
++		ptype = HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8;
++		if (ctr->profile.h264 == HFI_H264_PROFILE_HIGH ||
++		    ctr->profile.h264 == HFI_H264_PROFILE_CONSTRAINED_HIGH)
++			h264_transform.enable_type = ctr->h264_8x8_transform;
++
++		ret = hfi_session_set_property(inst, ptype, &h264_transform);
++		if (ret)
++			return ret;
++
  	}
  
- fail:
-@@ -110,18 +109,36 @@ int venus_helper_free_dpb_bufs(struct venus_inst *inst)
- 	struct intbuf *buf, *n;
- 
- 	list_for_each_entry_safe(buf, n, &inst->dpbbufs, list) {
-+		if (buf->owned_by == FIRMWARE)
-+			continue;
+ 	if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_H264 ||
+diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
+index 637c92f..62beba2 100644
+--- a/drivers/media/platform/qcom/venus/venc_ctrls.c
++++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
+@@ -319,6 +319,16 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
+ 	case V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY:
+ 		ctr->mastering = *ctrl->p_new.p_hdr10_mastering;
+ 		break;
++	case V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM:
++		if (ctr->profile.h264 != HFI_H264_PROFILE_HIGH &&
++		    ctr->profile.h264 != HFI_H264_PROFILE_CONSTRAINED_HIGH)
++			return -EINVAL;
 +
-+		inst->dpb_out_tag[buf->dpb_out_tag - VB2_MAX_FRAME] = 0;
++		if (ctrl->val == 0)
++			return -EINVAL;
 +
- 		list_del_init(&buf->list);
- 		dma_free_attrs(inst->core->dev, buf->size, buf->va, buf->da,
- 			       buf->attrs);
- 		kfree(buf);
++		ctr->h264_8x8_transform = ctrl->val;
++		break;
+ 	default:
+ 		return -EINVAL;
  	}
- 
--	INIT_LIST_HEAD(&inst->dpbbufs);
- 
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(venus_helper_free_dpb_bufs);
- 
-+int venus_helper_get_free_dpb_tag(struct venus_inst *inst)
-+{
-+	u32 i;
-+
-+	for (i = 0; i < VB2_MAX_FRAME; i++) {
-+		if (inst->dpb_out_tag[i] == 0) {
-+			inst->dpb_out_tag[i] = i + VB2_MAX_FRAME;
-+			return inst->dpb_out_tag[i];
-+		}
-+	}
-+
-+	return 0;
-+}
-+
- int venus_helper_alloc_dpb_bufs(struct venus_inst *inst)
+@@ -334,7 +344,7 @@ int venc_ctrl_init(struct venus_inst *inst)
  {
- 	struct venus_core *core = inst->core;
-@@ -171,6 +188,8 @@ int venus_helper_alloc_dpb_bufs(struct venus_inst *inst)
- 			ret = -ENOMEM;
- 			goto fail;
- 		}
-+		buf->owned_by = DRIVER;
-+		buf->dpb_out_tag = venus_helper_get_free_dpb_tag(inst);
+ 	int ret;
  
- 		list_add_tail(&buf->list, &inst->dpbbufs);
- 	}
-diff --git a/drivers/media/platform/qcom/venus/helpers.h b/drivers/media/platform/qcom/venus/helpers.h
-index e6269b4..e6ff556 100644
---- a/drivers/media/platform/qcom/venus/helpers.h
-+++ b/drivers/media/platform/qcom/venus/helpers.h
-@@ -8,6 +8,22 @@
+-	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 57);
++	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 58);
+ 	if (ret)
+ 		return ret;
  
- #include <media/videobuf2-v4l2.h>
+@@ -438,6 +448,9 @@ int venc_ctrl_init(struct venus_inst *inst)
+ 			  V4L2_CID_MPEG_VIDEO_H264_I_FRAME_MIN_QP, 1, 51, 1, 1);
  
-+enum dpb_buf_owner {
-+	DRIVER,
-+	FIRMWARE,
-+};
+ 	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
++		V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM, 0, 1, 1, 0);
 +
-+struct intbuf {
-+	struct list_head list;
-+	u32 type;
-+	size_t size;
-+	void *va;
-+	dma_addr_t da;
-+	unsigned long attrs;
-+	enum dpb_buf_owner owned_by;
-+	u32 dpb_out_tag;
-+};
-+
- struct venus_inst;
- struct venus_core;
++	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
+ 			  V4L2_CID_MPEG_VIDEO_H264_P_FRAME_MIN_QP, 1, 51, 1, 1);
  
-@@ -66,4 +82,5 @@ int venus_helper_get_profile_level(struct venus_inst *inst, u32 *profile, u32 *l
- int venus_helper_set_profile_level(struct venus_inst *inst, u32 profile, u32 level);
- int venus_helper_set_stride(struct venus_inst *inst, unsigned int aligned_width,
- 			    unsigned int aligned_height);
-+
- #endif
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index 198e47e..ba46085 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -1297,6 +1297,7 @@ static void vdec_buf_done(struct venus_inst *inst, unsigned int buf_type,
- 	struct vb2_v4l2_buffer *vbuf;
- 	struct vb2_buffer *vb;
- 	unsigned int type;
-+	struct intbuf *dpb_buf;
- 
- 	vdec_pm_touch(inst);
- 
-@@ -1306,8 +1307,18 @@ static void vdec_buf_done(struct venus_inst *inst, unsigned int buf_type,
- 		type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE;
- 
- 	vbuf = venus_helper_find_buf(inst, type, tag);
--	if (!vbuf)
-+	if (!vbuf) {
-+		if (type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE &&
-+		    buf_type == HFI_BUFFER_OUTPUT) {
-+			list_for_each_entry(dpb_buf, &inst->dpbbufs, list) {
-+				if (dpb_buf->dpb_out_tag == tag) {
-+					dpb_buf->owned_by = DRIVER;
-+					break;
-+				}
-+			}
-+		}
- 		return;
-+	}
- 
- 	vbuf->flags = flags;
- 	vbuf->field = V4L2_FIELD_NONE;
-@@ -1542,6 +1553,14 @@ static int m2m_queue_init(void *priv, struct vb2_queue *src_vq,
- 	return vb2_queue_init(dst_vq);
- }
- 
-+void dpb_out_tag_init(struct venus_inst *inst)
-+{
-+	u32 i;
-+
-+	for (i = 0; i < VB2_MAX_FRAME; i++)
-+		inst->dpb_out_tag[i] = 0;
-+}
-+
- static int vdec_open(struct file *file)
- {
- 	struct venus_core *core = video_drvdata(file);
-@@ -1580,6 +1599,8 @@ static int vdec_open(struct file *file)
- 
- 	vdec_inst_init(inst);
- 
-+	dpb_out_tag_init(inst);
-+
- 	/*
- 	 * create m2m device for every instance, the m2m context scheduling
- 	 * is made by firmware side so we do not need to care about.
-@@ -1622,6 +1643,8 @@ static int vdec_close(struct file *file)
- 
- 	vdec_pm_get(inst);
- 
-+	venus_helper_free_dpb_bufs(inst);
-+	INIT_LIST_HEAD(&inst->dpbbufs);
- 	v4l2_m2m_ctx_release(inst->m2m_ctx);
- 	v4l2_m2m_release(inst->m2m_dev);
- 	vdec_ctrl_deinit(inst);
+ 	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
 of Code Aurora Forum, hosted by The Linux Foundation
