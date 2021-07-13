@@ -2,97 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A9143C762E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jul 2021 20:07:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E88933C76BF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jul 2021 20:57:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229944AbhGMSKC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jul 2021 14:10:02 -0400
-Received: from foss.arm.com ([217.140.110.172]:48602 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229478AbhGMSKB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jul 2021 14:10:01 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 243A61FB;
-        Tue, 13 Jul 2021 11:07:11 -0700 (PDT)
-Received: from [10.57.36.240] (unknown [10.57.36.240])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C0FC43F7D8;
-        Tue, 13 Jul 2021 11:07:05 -0700 (PDT)
-Subject: Re: [PATCH v2 0/3] iommu: Enable non-strict DMA on QCom SD/MMC
-To:     Doug Anderson <dianders@chromium.org>,
-        Joerg Roedel <joro@8bytes.org>
-Cc:     Will Deacon <will@kernel.org>,
+        id S231499AbhGMTAf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jul 2021 15:00:35 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49732 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229478AbhGMTAe (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 13 Jul 2021 15:00:34 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A674C0613DD;
+        Tue, 13 Jul 2021 11:57:44 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id a13so31808836wrf.10;
+        Tue, 13 Jul 2021 11:57:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GyCxMQJ19Di1oBf2ALdveQxsYxjJQOcuG1xW4hJwHM4=;
+        b=QUFGvy/RKSLqJMDlLFCylhawwiEByP38ZJNrsETx0LoeuhFPtM7B3hBUFLU98yZMKV
+         r7/EJA6hX1QD+v4IDvybiaWOdp2YLTFQdQd/z8pufmIFmJFaAgUmoUt6At0xr26LsHad
+         vqVWCiVh9Ua0NNIorOPJTnPLQmnLoW7LoVm1ukiDNqDInMcB4x7vZgABqnuTZ65Bt2EX
+         2UoODpbIkbeEV/rxo/VO6m1mc4eqlJHKwumSjtN9/nwK8ZV7i/r1xkKBmdLxO3JU7QGx
+         F71SUOlDd67a/1Mqgmf5efR7JxR8xP+m267zow4fSTsQVaXgTfzdQW6zJ/8L09PdVZjw
+         7xew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=GyCxMQJ19Di1oBf2ALdveQxsYxjJQOcuG1xW4hJwHM4=;
+        b=jWN6VVGoPfvDr9qV5Adtfb6bRY8VXjbt7rgPDnCRJv5nqPjHCdzYNIjRDVyJ/jifqJ
+         HZZ3zhU8fVqb2T2hPlzzAyPWuW7VL/xBE58Gh7AHib2WvoP+Reb14CP2UwnmeqfAvk+D
+         WCI0jN2EjtEt1tw0BDdnUDdPUTMsgbEUjkvu4OGak8FS5nYubYncbZwoe4E4++Sp2nIL
+         z+8+o6AWOGmWB3TTm8QYunTNxrMVBgn5/cmBAYOn5QitVk+YuU4ZPWKl0CzJGJKw66CW
+         ZXyUIlx3PnpzwwRb+IpblMDZ4Ac7+WvKOwke7uUSgPYQrqA0ljPNjOXCEq3nqr05/p7R
+         pJqw==
+X-Gm-Message-State: AOAM530jTYOraW7Y49Ln26V+v9Ufpca/oOfMZ0Inha+rTuVrMcnIzDC6
+        DSGhrPMn6BsRoG6aIdY3yC/jRc6UZVzjWg==
+X-Google-Smtp-Source: ABdhPJzQFDgjeClK9bJyUnnfu0+kMUuZgTBzQ7KraHM0mcu+OVKwj6tAv6JYnIn96x5EtC4csogm+A==
+X-Received: by 2002:a5d:6501:: with SMTP id x1mr7503716wru.169.1626202663119;
+        Tue, 13 Jul 2021 11:57:43 -0700 (PDT)
+Received: from dell5510.suse.de (gw.ms-free.net. [95.85.240.250])
+        by smtp.gmail.com with ESMTPSA id l24sm3077971wmi.30.2021.07.13.11.57.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 13 Jul 2021 11:57:42 -0700 (PDT)
+From:   Petr Vorel <petr.vorel@gmail.com>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     Petr Vorel <petr.vorel@gmail.com>,
+        Konrad Dybcio <konradybcio@gmail.com>,
+        Alexey Minnekhanov <alexeymin@postmarketos.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        John Garry <john.garry@huawei.com>,
-        Rob Clark <robdclark@chromium.org>, quic_c_gdjako@quicinc.com,
-        Saravana Kannan <saravanak@google.com>,
-        Rajat Jain <rajatja@google.com>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        Linux MMC List <linux-mmc@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-pci@vger.kernel.org,
-        "list@263.net:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        iommu@lists.linux-foundation.org,
-        Sonny Rao <sonnyrao@chromium.org>,
-        Joel Fernandes <joel@joelfernandes.org>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        "Maciej W. Rozycki" <macro@orcam.me.uk>,
-        Nicolin Chen <nicoleotsuka@gmail.com>,
-        "Paul E. McKenney" <paulmck@kernel.org>,
-        Peter Zijlstra <peterz@infradead.org>,
-        Randy Dunlap <rdunlap@infradead.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Vlastimil Babka <vbabka@suse.cz>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Linux Doc Mailing List <linux-doc@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-References: <20210624171759.4125094-1-dianders@chromium.org>
- <YNXXwvuErVnlHt+s@8bytes.org>
- <CAD=FV=UFxZH7g8gH5+M=Fv4Y-e1bsLkNkPGJhNwhvVychcGQcQ@mail.gmail.com>
- <CAD=FV=W=HmgH3O3z+nThWL6U+X4Oh37COe-uTzVB9SanP2n86w@mail.gmail.com>
- <YOaymBHc4g2cIfRn@8bytes.org>
- <CAD=FV=U_mKPaGfWyN1SVi9S2hPBpG=rE_p89+Jvjr95d0TvgsA@mail.gmail.com>
-From:   Robin Murphy <robin.murphy@arm.com>
-Message-ID: <e3555c49-2978-355f-93bb-dbfa7d09cab8@arm.com>
-Date:   Tue, 13 Jul 2021 19:07:00 +0100
-User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org
+Subject: [PATCH 0/2] Nexus 5X (lg-bullhead) boot fixes
+Date:   Tue, 13 Jul 2021 20:57:32 +0200
+Message-Id: <20210713185734.380-1-petr.vorel@gmail.com>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-In-Reply-To: <CAD=FV=U_mKPaGfWyN1SVi9S2hPBpG=rE_p89+Jvjr95d0TvgsA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-07-08 15:36, Doug Anderson wrote:
-[...]
->> Or document for the users that want performance how to
->> change the setting, so that they can decide.
-> 
-> Pushing this to the users can make sense for a Linux distribution but
-> probably less sense for an embedded platform. So I'm happy to make
-> some way for a user to override this (like via kernel command line),
-> but I also strongly believe there should be a default that users don't
-> have to futz with that we think is correct.
+Petr Vorel (2):
+  arm64: dts: qcom: msm8992-bullhead: Remove PSCI
+  arm64: dts: qcom: msm8992-bullhead: Fix cont_splash_mem mapping
 
-FYI I did make progress on the "punt it to userspace" approach. I'm not 
-posting it even as an RFC yet because I still need to set up a machine 
-to try actually testing any of it (it's almost certainly broken 
-somewhere), but in the end it comes out looking surprisingly not too bad 
-overall. If you're curious to take a look in the meantime I put it here:
+ .../arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
 
-https://gitlab.arm.com/linux-arm/linux-rm/-/commits/iommu/fq
+-- 
+2.32.0
 
-Cheers,
-Robin.
