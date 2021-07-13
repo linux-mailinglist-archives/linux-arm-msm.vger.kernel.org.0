@@ -2,150 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 153B63C75D7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jul 2021 19:42:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9A9143C762E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jul 2021 20:07:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229500AbhGMRpd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jul 2021 13:45:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60986 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229478AbhGMRpc (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jul 2021 13:45:32 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76CF9C0613DD
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jul 2021 10:42:42 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id l4-20020a05600c4f04b0290220f8455631so2919015wmq.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jul 2021 10:42:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=BCKTJU2XxIO77fuxxzexkfqoVytjtNEnzHrzE4LOcyU=;
-        b=EToeT1inOWCt4oadMwT0v3PUy6du+3gSJVj+TudD76Ny/PVxYy0EbsJx93dlKTqyQI
-         pOcBVx56jFbFZZb+yPhKxYY1comJaWESJJgdsvU2fVilj7qc8D4ECl59fIxzS3Z/80My
-         eX44oUGaSwbfKF9LLVqHMtkV8DQNViQ9E79l4iOIcDDQaf+EWD7mgyY6wdMsAZcizY9a
-         2Bz5waZFphg4c06u4r5xdMCskFuYo6lO8E3IjOZEO9TBCPoHCzPIs6/GyTUs8jEVEklP
-         tBLHvoTdsBtxMx+pH3Xb2aUvv3j4BLGnAc3p0Lzt4QFz9jqCDpNYlGo6vuAzrsOkjmTs
-         ThiA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=BCKTJU2XxIO77fuxxzexkfqoVytjtNEnzHrzE4LOcyU=;
-        b=HVGj9ZF6EfIKAnIoP7D65IKkjX/4RgCBn1EaU327e6z6q3GRuzn2dMPo++e1ZjTx2s
-         /26TtY86s5aNT6KXCWaIUG9r9r6UKTZ+AdahmRORd2HkFr+jFmFyQibr2iiYpifsrNKm
-         gwI/qPrcjNaOfcvmH8ISvhtJdYAqqfrGsCBq5jDfBUilIFXWocKDAbY6AR9eaTU7qJ0A
-         cdMHyQqI7dKcDG4Mlby1cl5W6UH35YGbS5Q2Qx9cLJtmM0Qb/wIg3jcIUhbmFCDpQTo0
-         3b3fvdOX5OTBXiB7UxMpvkVOEq86In2rmVZusydU+oo5ctOOropfNZGjKl8+UKMfQGiA
-         abQg==
-X-Gm-Message-State: AOAM533PmpPEJZIupyS6niBEqlkXweY7a299KfEJcJqg51UTWt/bxtPL
-        KVrDmZue8uuEU5xEwX95rrzfGzDWE2uVQqWfsps=
-X-Google-Smtp-Source: ABdhPJxxQFSd3trk1Yz/bp+qnTaH981CyIiqxvsV1KScxRC5xJlYqtoR6lDSCKcCtzuwv3cwAQFgJfx8N9bKEDR7CH4=
-X-Received: by 2002:a1c:25c6:: with SMTP id l189mr574530wml.49.1626198161022;
- Tue, 13 Jul 2021 10:42:41 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210712175352.802687-1-daniel.vetter@ffwll.ch>
- <20210712175352.802687-15-daniel.vetter@ffwll.ch> <CAF6AEGtC0BxABJtSaOmhEt_WKiuptWCHP7g4D5wEaJ4NaEuz4w@mail.gmail.com>
- <CAKMK7uEL8dr5RT2362ehR1Gb7mvwLmcEsZV+uWDj_kpoovWKxg@mail.gmail.com>
-In-Reply-To: <CAKMK7uEL8dr5RT2362ehR1Gb7mvwLmcEsZV+uWDj_kpoovWKxg@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 13 Jul 2021 10:46:47 -0700
-Message-ID: <CAF6AEGvsQnULTKwqWu+ToX0cVt12hs4SZrZ2Ai216m=8MBaqTQ@mail.gmail.com>
-Subject: Re: [PATCH v4 14/18] drm/msm: Don't break exclusive fence ordering
-To:     Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
-        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        Sean Paul <sean@poorly.run>,
+        id S229944AbhGMSKC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jul 2021 14:10:02 -0400
+Received: from foss.arm.com ([217.140.110.172]:48602 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229478AbhGMSKB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 13 Jul 2021 14:10:01 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 243A61FB;
+        Tue, 13 Jul 2021 11:07:11 -0700 (PDT)
+Received: from [10.57.36.240] (unknown [10.57.36.240])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id C0FC43F7D8;
+        Tue, 13 Jul 2021 11:07:05 -0700 (PDT)
+Subject: Re: [PATCH v2 0/3] iommu: Enable non-strict DMA on QCom SD/MMC
+To:     Doug Anderson <dianders@chromium.org>,
+        Joerg Roedel <joro@8bytes.org>
+Cc:     Will Deacon <will@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        John Garry <john.garry@huawei.com>,
+        Rob Clark <robdclark@chromium.org>, quic_c_gdjako@quicinc.com,
+        Saravana Kannan <saravanak@google.com>,
+        Rajat Jain <rajatja@google.com>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Linux MMC List <linux-mmc@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
+        linux-pci@vger.kernel.org,
+        "list@263.net:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        iommu@lists.linux-foundation.org,
+        Sonny Rao <sonnyrao@chromium.org>,
+        Joel Fernandes <joel@joelfernandes.org>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        "Maciej W. Rozycki" <macro@orcam.me.uk>,
+        Nicolin Chen <nicoleotsuka@gmail.com>,
+        "Paul E. McKenney" <paulmck@kernel.org>,
+        Peter Zijlstra <peterz@infradead.org>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Vlastimil Babka <vbabka@suse.cz>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Linux Doc Mailing List <linux-doc@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+References: <20210624171759.4125094-1-dianders@chromium.org>
+ <YNXXwvuErVnlHt+s@8bytes.org>
+ <CAD=FV=UFxZH7g8gH5+M=Fv4Y-e1bsLkNkPGJhNwhvVychcGQcQ@mail.gmail.com>
+ <CAD=FV=W=HmgH3O3z+nThWL6U+X4Oh37COe-uTzVB9SanP2n86w@mail.gmail.com>
+ <YOaymBHc4g2cIfRn@8bytes.org>
+ <CAD=FV=U_mKPaGfWyN1SVi9S2hPBpG=rE_p89+Jvjr95d0TvgsA@mail.gmail.com>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <e3555c49-2978-355f-93bb-dbfa7d09cab8@arm.com>
+Date:   Tue, 13 Jul 2021 19:07:00 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <CAD=FV=U_mKPaGfWyN1SVi9S2hPBpG=rE_p89+Jvjr95d0TvgsA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 13, 2021 at 9:58 AM Daniel Vetter <daniel.vetter@ffwll.ch> wrote:
->
-> On Tue, Jul 13, 2021 at 6:51 PM Rob Clark <robdclark@gmail.com> wrote:
-> >
-> > On Mon, Jul 12, 2021 at 1:02 PM Daniel Vetter <daniel.vetter@ffwll.ch> wrote:
-> > >
-> > > There's only one exclusive slot, and we must not break the ordering.
-> > >
-> > > Adding a new exclusive fence drops all previous fences from the
-> > > dma_resv. To avoid violating the signalling order we err on the side of
-> > > over-synchronizing by waiting for the existing fences, even if
-> > > userspace asked us to ignore them.
-> > >
-> > > A better fix would be to us a dma_fence_chain or _array like e.g.
-> > > amdgpu now uses, but
-> > > - msm has a synchronous dma_fence_wait for anything from another
-> > >   context, so doesn't seem to care much,
-> > > - and it probably makes sense to lift this into dma-resv.c code as a
-> > >   proper concept, so that drivers don't have to hack up their own
-> > >   solution each on their own.
-> > >
-> > > v2: Improve commit message per Lucas' suggestion.
-> > >
-> > > Cc: Lucas Stach <l.stach@pengutronix.de>
-> > > Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
-> > > Cc: Rob Clark <robdclark@gmail.com>
-> > > Cc: Sean Paul <sean@poorly.run>
-> > > Cc: linux-arm-msm@vger.kernel.org
-> > > Cc: freedreno@lists.freedesktop.org
-> > > ---
-> > >  drivers/gpu/drm/msm/msm_gem_submit.c | 3 ++-
-> > >  1 file changed, 2 insertions(+), 1 deletion(-)
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-> > > index b71da71a3dd8..edd0051d849f 100644
-> > > --- a/drivers/gpu/drm/msm/msm_gem_submit.c
-> > > +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-> > > @@ -306,7 +306,8 @@ static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
-> > >                                 return ret;
-> > >                 }
-> > >
-> > > -               if (no_implicit)
-> > > +               /* exclusive fences must be ordered */
-> > > +               if (no_implicit && !write)
-> > >                         continue;
-> >
-> > In practice, modern userspace (the kind that is more likely to set the
-> > no-implicit flag on every submit) also sets MSM_SUBMIT_BO_WRITE on
-> > every bo, to shave some cpu overhead so I suppose this would not
-> > really hurt anything
-> >
-> > Do you know if this is covered in any piglit/etc test?
->
-> You need some command submission, plus buffer sharing with vgem
-> setting it's own exclusive fences, plus checking with dma_buf poll()
-> whether it signals all in the right order. That's pretty low-level, so
-> maybe something in igt, but I haven't typed that. Maybe I need to do
-> that for i915 at least.
+On 2021-07-08 15:36, Doug Anderson wrote:
+[...]
+>> Or document for the users that want performance how to
+>> change the setting, so that they can decide.
+> 
+> Pushing this to the users can make sense for a Linux distribution but
+> probably less sense for an embedded platform. So I'm happy to make
+> some way for a user to override this (like via kernel command line),
+> but I also strongly believe there should be a default that users don't
+> have to futz with that we think is correct.
 
-ok, you lost me at vgem ;-)
+FYI I did make progress on the "punt it to userspace" approach. I'm not 
+posting it even as an RFC yet because I still need to set up a machine 
+to try actually testing any of it (it's almost certainly broken 
+somewhere), but in the end it comes out looking surprisingly not too bad 
+overall. If you're curious to take a look in the meantime I put it here:
 
-(the vgem vs cache situation on arm is kinda hopeless)
+https://gitlab.arm.com/linux-arm/linux-rm/-/commits/iommu/fq
 
-BR,
--R
-
-> -Daniel
->
-> > BR,
-> > -R
-> >
-> > >
-> > >                 ret = msm_gem_sync_object(&msm_obj->base, submit->ring->fctx,
-> > > --
-> > > 2.32.0
-> > >
->
->
->
-> --
-> Daniel Vetter
-> Software Engineer, Intel Corporation
-> http://blog.ffwll.ch
+Cheers,
+Robin.
