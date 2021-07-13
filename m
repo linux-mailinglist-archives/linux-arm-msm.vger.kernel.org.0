@@ -2,187 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AAD523C75DD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jul 2021 19:44:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C8FA43C75E5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 13 Jul 2021 19:45:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229555AbhGMRrP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jul 2021 13:47:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33124 "EHLO
+        id S229478AbhGMRsp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jul 2021 13:48:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33438 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229478AbhGMRrO (ORCPT
+        with ESMTP id S231499AbhGMRsi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jul 2021 13:47:14 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACAA2C0613DD
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jul 2021 10:44:24 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id c197so1794513oib.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jul 2021 10:44:24 -0700 (PDT)
+        Tue, 13 Jul 2021 13:48:38 -0400
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 17020C0613DD
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jul 2021 10:45:48 -0700 (PDT)
+Received: by mail-oi1-x235.google.com with SMTP id w194so6169804oie.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jul 2021 10:45:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ffwll.ch; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=YM6mwOPhOFmuR5W+3oxkc/rlqYmdsrstoASxQRez5ew=;
-        b=TMhR/h7Ck+r/kjSlCs3FDr/Jau72H/rnf2EY20+WlcPBXYEmAz96D4YC6ADD/N+KvB
-         bexgK0pZhWgsv2yVpKkKsRksMVrMwn//FrS2JafQ6aTGY4rb6lRsYudb3BeAQHXm2AIa
-         OwDHf5Gv5RbCZgxDHLhrdyn3uRDuppwi7m39s=
+        bh=tmtzcyst+8OgXBI41dqYr4OHovq38Lmve+NnPNNWFaA=;
+        b=E9kH+I9A0KksyrSJYGuPUtireKMQ1h2VVRvbVTFj8eIP6xeFILzX1kJzRhrGWs6vO2
+         0GxXLljCV1mje7M4duMNSElcxU8qhCQCWnKE3E3TutR8TWp1lLyaL6PvyZo22zMJ0oku
+         7HEYM2UyRDUBzKlVlqAyP7or8ocosvwOWsNAk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=YM6mwOPhOFmuR5W+3oxkc/rlqYmdsrstoASxQRez5ew=;
-        b=hl/LlMjRRvbK114IqJrcPkH18hA+k+uKLBTJVi115IVjjkMnlMdDOFHsXbA/pE7Zvv
-         TettnlZyFBNefotNwLg6oF5pTzPd3bv+BE1q50QFtSpj/S1l318sfktpNA9ubqMytjl8
-         oaCGHetUSez4A1MKNb9KbuoIy0JIhSDP/ksjql9rTUVscNZhpK+y+cJeiADWZae1Cyft
-         yU+WpfxsZsaBQ1080Yp1ZddLzskT4NmgCnmRcunOuPb/gSsISrIdL8QDvVbyAhMguL7i
-         a75xcToi5rYWHDOkEj4NYitbvZOKYBEm4qJuKWUwJMV9qKCGBpnrLlfd+Ukkp5tD9Zip
-         za2Q==
-X-Gm-Message-State: AOAM53081D1KHqH/IgkH/Y2cybmcOyU5vW+cml3DI1oRfHkFtLTebtQn
-        z2CdELV3k35B+QKzu5JUf0mkBT6vP3Of7zO4BW2mlg==
-X-Google-Smtp-Source: ABdhPJwTA4IFS1zrTa6SZtTVF+HKn/thgr0wLyb0QfabiBxjH3coCb2AmYkg6eR9mjuDrd+K4z0014Ss9e91ZdQs5cQ=
-X-Received: by 2002:aca:d4cf:: with SMTP id l198mr441684oig.14.1626198263812;
- Tue, 13 Jul 2021 10:44:23 -0700 (PDT)
+        bh=tmtzcyst+8OgXBI41dqYr4OHovq38Lmve+NnPNNWFaA=;
+        b=J0o18RH2+nLJ6oPGbxdzGRggHGWC/6QzHhYvJby/uC/nDQ6VVvxQF2CGKpy3fNeqna
+         6pZo1tbwGAl54eTJOHi6F8QH05C/0FvjW0SENLtxebDcsLiZ0+kwfe0LuR6IijQLGe1c
+         yl6IF2dXVB/JJzHD+a2jR3QNms6k/T2AKZHb3KLgc6MivpRyDsT/J54MRlsRuU3/rZ6M
+         nl6AWlibe637xPDTUkYnzVUv/vvocft0PirLeT75hOHwf7TcsaRj5d3hRYfiP/gz9h+M
+         0ULXVgMi7+mSsZpizQ+Tsi6CFGeIlap0jcEgRf0ZoFx5fhIj1bOt6TlPRArG7JNEiCJO
+         t9TQ==
+X-Gm-Message-State: AOAM5317Wtcx0QyAZbuNL4vzcegp7hoEv3s4IOwaQ8F5X9eQokfE96Ya
+        RfFBRPsMYF4ZbLgUrXH9eBKrVs+0qvFrzEEpByIxZw==
+X-Google-Smtp-Source: ABdhPJxzpjd8fmeN5xsqQQ8/UWTplGKa3o1OKFivFnAQ9i+M2VhbfW3DpqnVr7dh4haRV9U3tHRv1DXHvWi5XsqX2z4=
+X-Received: by 2002:aca:3085:: with SMTP id w127mr398974oiw.101.1626198347467;
+ Tue, 13 Jul 2021 10:45:47 -0700 (PDT)
 MIME-Version: 1.0
-References: <1626196421-24595-1-git-send-email-gracan@codeaurora.org>
-In-Reply-To: <1626196421-24595-1-git-send-email-gracan@codeaurora.org>
-From:   Daniel Vetter <daniel@ffwll.ch>
-Date:   Tue, 13 Jul 2021 19:44:12 +0200
-Message-ID: <CAKMK7uGcwLmvyPB1Z2HyOQg3bHYev5J=ad8Cjj=AQMVTTSHPNg@mail.gmail.com>
-Subject: Re: [RFC] drm: return int error code from mode_fixup
-To:     Grace An <gracan@codeaurora.org>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+References: <20210712175352.802687-1-daniel.vetter@ffwll.ch>
+ <20210712175352.802687-15-daniel.vetter@ffwll.ch> <CAF6AEGtC0BxABJtSaOmhEt_WKiuptWCHP7g4D5wEaJ4NaEuz4w@mail.gmail.com>
+ <CAKMK7uEL8dr5RT2362ehR1Gb7mvwLmcEsZV+uWDj_kpoovWKxg@mail.gmail.com> <CAF6AEGvsQnULTKwqWu+ToX0cVt12hs4SZrZ2Ai216m=8MBaqTQ@mail.gmail.com>
+In-Reply-To: <CAF6AEGvsQnULTKwqWu+ToX0cVt12hs4SZrZ2Ai216m=8MBaqTQ@mail.gmail.com>
+From:   Daniel Vetter <daniel.vetter@ffwll.ch>
+Date:   Tue, 13 Jul 2021 19:45:36 +0200
+Message-ID: <CAKMK7uF8wZuJVON0-06xDGtuSof2m6Y-cj7qkdUSTYd1PrVt9A@mail.gmail.com>
+Subject: Re: [PATCH v4 14/18] drm/msm: Don't break exclusive fence ordering
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
+        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        Sean Paul <sean@poorly.run>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "Clark, Rob" <robdclark@gmail.com>,
-        Sean Paul <seanpaul@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>, nganji@codeaurora.org,
-        aravindh@codeaurora.org, Kuogee Hsieh <khsieh@codeaurora.org>,
-        pdhaval@codeaurora.org, Abhinav Kumar <abhinavk@codeaurora.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+        freedreno <freedreno@lists.freedesktop.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 13, 2021 at 7:14 PM Grace An <gracan@codeaurora.org> wrote:
-> When CONFIG_PROVE_LOCKING is defined, the kernel randomly injects
-> -EDEADLK errors for all the ww_mutex. This results in
-> drm_atomic_get_private_obj_state randomly returning -EDEADLK.
-> However, the mode_fixup functions do not propagate these error
-> codes and return false, causing the atomic commit to fail with
-> -EINVAL instead of retrying.
+On Tue, Jul 13, 2021 at 7:42 PM Rob Clark <robdclark@gmail.com> wrote:
+> On Tue, Jul 13, 2021 at 9:58 AM Daniel Vetter <daniel.vetter@ffwll.ch> wrote:
+> >
+> > On Tue, Jul 13, 2021 at 6:51 PM Rob Clark <robdclark@gmail.com> wrote:
+> > >
+> > > On Mon, Jul 12, 2021 at 1:02 PM Daniel Vetter <daniel.vetter@ffwll.ch> wrote:
+> > > >
+> > > > There's only one exclusive slot, and we must not break the ordering.
+> > > >
+> > > > Adding a new exclusive fence drops all previous fences from the
+> > > > dma_resv. To avoid violating the signalling order we err on the side of
+> > > > over-synchronizing by waiting for the existing fences, even if
+> > > > userspace asked us to ignore them.
+> > > >
+> > > > A better fix would be to us a dma_fence_chain or _array like e.g.
+> > > > amdgpu now uses, but
+> > > > - msm has a synchronous dma_fence_wait for anything from another
+> > > >   context, so doesn't seem to care much,
+> > > > - and it probably makes sense to lift this into dma-resv.c code as a
+> > > >   proper concept, so that drivers don't have to hack up their own
+> > > >   solution each on their own.
+> > > >
+> > > > v2: Improve commit message per Lucas' suggestion.
+> > > >
+> > > > Cc: Lucas Stach <l.stach@pengutronix.de>
+> > > > Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
+> > > > Cc: Rob Clark <robdclark@gmail.com>
+> > > > Cc: Sean Paul <sean@poorly.run>
+> > > > Cc: linux-arm-msm@vger.kernel.org
+> > > > Cc: freedreno@lists.freedesktop.org
+> > > > ---
+> > > >  drivers/gpu/drm/msm/msm_gem_submit.c | 3 ++-
+> > > >  1 file changed, 2 insertions(+), 1 deletion(-)
+> > > >
+> > > > diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+> > > > index b71da71a3dd8..edd0051d849f 100644
+> > > > --- a/drivers/gpu/drm/msm/msm_gem_submit.c
+> > > > +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+> > > > @@ -306,7 +306,8 @@ static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
+> > > >                                 return ret;
+> > > >                 }
+> > > >
+> > > > -               if (no_implicit)
+> > > > +               /* exclusive fences must be ordered */
+> > > > +               if (no_implicit && !write)
+> > > >                         continue;
+> > >
+> > > In practice, modern userspace (the kind that is more likely to set the
+> > > no-implicit flag on every submit) also sets MSM_SUBMIT_BO_WRITE on
+> > > every bo, to shave some cpu overhead so I suppose this would not
+> > > really hurt anything
+> > >
+> > > Do you know if this is covered in any piglit/etc test?
+> >
+> > You need some command submission, plus buffer sharing with vgem
+> > setting it's own exclusive fences, plus checking with dma_buf poll()
+> > whether it signals all in the right order. That's pretty low-level, so
+> > maybe something in igt, but I haven't typed that. Maybe I need to do
+> > that for i915 at least.
 >
-> Change encoder, crtc, and bridge mode_fixup functions to return
-> an int instead of a boolean to indicate success or failure. If
-> any of these functions fail, the mode_fixup function now returns
-> the provided integer error code instead of -EINVAL.
+> ok, you lost me at vgem ;-)
 >
-> This change needs modifications across drivers, but before submitting
-> the entire change, we want to get feedback on this RFC.
->
-> Signed-off-by: Grace An <gracan@codeaurora.org>
+> (the vgem vs cache situation on arm is kinda hopeless)
 
-Why don't you just use the various atomic_check hooks we have for
-this? There you get passed the state and everything, have a full int
-return value, and things actually work.
+Oh that explains a few things ... I just found out why vgem is failing
+for wc buffers on x86 (on some of our less-coherent igpu at least),
+and wondered how the heck this works on arm. Sounds like it just
+doesn't :-/
 
-->mode_fixup is for compatibility with legacy crtc modeset helpers
-from the pre-atomic times. If the kerneldoc isn't clear yet, please do
-a patch to fix that up so that @mode_fixup points at the relevant
-@atomic_check as the recommended function.
+On the testcase: You'd never actually check buffer contents, only
+fences, so the test would still work.
 -Daniel
+>
+> BR,
+> -R
+>
+> > -Daniel
+> >
+> > > BR,
+> > > -R
+> > >
+> > > >
+> > > >                 ret = msm_gem_sync_object(&msm_obj->base, submit->ring->fctx,
+> > > > --
+> > > > 2.32.0
+> > > >
+> >
+> >
+> >
+> > --
+> > Daniel Vetter
+> > Software Engineer, Intel Corporation
+> > http://blog.ffwll.ch
 
-> ---
->  drivers/gpu/drm/drm_atomic_helper.c      | 8 ++++----
->  drivers/gpu/drm/drm_bridge.c             | 4 ++--
->  include/drm/drm_bridge.h                 | 2 +-
->  include/drm/drm_modeset_helper_vtables.h | 4 ++--
->  4 files changed, 9 insertions(+), 9 deletions(-)
->
-> diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
-> index f2b3e28..d75f09a 100644
-> --- a/drivers/gpu/drm/drm_atomic_helper.c
-> +++ b/drivers/gpu/drm/drm_atomic_helper.c
-> @@ -457,10 +457,10 @@ mode_fixup(struct drm_atomic_state *state)
->                 } else if (funcs && funcs->mode_fixup) {
->                         ret = funcs->mode_fixup(encoder, &new_crtc_state->mode,
->                                                 &new_crtc_state->adjusted_mode);
-> -                       if (!ret) {
-> +                       if (ret) {
->                                 DRM_DEBUG_ATOMIC("[ENCODER:%d:%s] fixup failed\n",
->                                                  encoder->base.id, encoder->name);
-> -                               return -EINVAL;
-> +                               return ret;
->                         }
->                 }
->         }
-> @@ -481,10 +481,10 @@ mode_fixup(struct drm_atomic_state *state)
->
->                 ret = funcs->mode_fixup(crtc, &new_crtc_state->mode,
->                                         &new_crtc_state->adjusted_mode);
-> -               if (!ret) {
-> +               if (ret) {
->                         DRM_DEBUG_ATOMIC("[CRTC:%d:%s] fixup failed\n",
->                                          crtc->base.id, crtc->name);
-> -                       return -EINVAL;
-> +                       return ret;
->                 }
->         }
->
-> diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
-> index 64f0eff..3ad16b5 100644
-> --- a/drivers/gpu/drm/drm_bridge.c
-> +++ b/drivers/gpu/drm/drm_bridge.c
-> @@ -736,9 +736,9 @@ static int drm_atomic_bridge_check(struct drm_bridge *bridge,
->                 if (ret)
->                         return ret;
->         } else if (bridge->funcs->mode_fixup) {
-> -               if (!bridge->funcs->mode_fixup(bridge, &crtc_state->mode,
-> +               if (bridge->funcs->mode_fixup(bridge, &crtc_state->mode,
->                                                &crtc_state->adjusted_mode))
-> -                       return -EINVAL;
-> +                       return ret;
->         }
->
->         return 0;
-> diff --git a/include/drm/drm_bridge.h b/include/drm/drm_bridge.h
-> index 2195daa..5d02dfc 100644
-> --- a/include/drm/drm_bridge.h
-> +++ b/include/drm/drm_bridge.h
-> @@ -153,7 +153,7 @@ struct drm_bridge_funcs {
->          * True if an acceptable configuration is possible, false if the modeset
->          * operation should be rejected.
->          */
-> -       bool (*mode_fixup)(struct drm_bridge *bridge,
-> +       int (*mode_fixup)(struct drm_bridge *bridge,
->                            const struct drm_display_mode *mode,
->                            struct drm_display_mode *adjusted_mode);
->         /**
-> diff --git a/include/drm/drm_modeset_helper_vtables.h b/include/drm/drm_modeset_helper_vtables.h
-> index f3a4b47..e305c97 100644
-> --- a/include/drm/drm_modeset_helper_vtables.h
-> +++ b/include/drm/drm_modeset_helper_vtables.h
-> @@ -184,7 +184,7 @@ struct drm_crtc_helper_funcs {
->          * True if an acceptable configuration is possible, false if the modeset
->          * operation should be rejected.
->          */
-> -       bool (*mode_fixup)(struct drm_crtc *crtc,
-> +       int (*mode_fixup)(struct drm_crtc *crtc,
->                            const struct drm_display_mode *mode,
->                            struct drm_display_mode *adjusted_mode);
->
-> @@ -599,7 +599,7 @@ struct drm_encoder_helper_funcs {
->          * True if an acceptable configuration is possible, false if the modeset
->          * operation should be rejected.
->          */
-> -       bool (*mode_fixup)(struct drm_encoder *encoder,
-> +       int (*mode_fixup)(struct drm_encoder *encoder,
->                            const struct drm_display_mode *mode,
->                            struct drm_display_mode *adjusted_mode);
->
-> --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
->
 
 
 -- 
