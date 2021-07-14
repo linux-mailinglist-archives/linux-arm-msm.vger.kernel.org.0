@@ -2,100 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C5CDB3C9273
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 22:48:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BFDA3C927A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 22:50:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232402AbhGNUvU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jul 2021 16:51:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37502 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229782AbhGNUvU (ORCPT
+        id S230372AbhGNUxI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jul 2021 16:53:08 -0400
+Received: from mail-il1-f182.google.com ([209.85.166.182]:34622 "EHLO
+        mail-il1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229782AbhGNUxI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jul 2021 16:51:20 -0400
-Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0508C06175F;
-        Wed, 14 Jul 2021 13:48:27 -0700 (PDT)
-Received: by mail-ed1-x52a.google.com with SMTP id dj21so5070692edb.0;
-        Wed, 14 Jul 2021 13:48:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=VB9qeVzW5ZTD8G9o9lV5Rx+cA3rqjHRpw3e+hnvVfbA=;
-        b=BmqdGFdRyn1zQnaArA9LAcaEVY4Qc7m2qZxWD7gyRCV1C4cOWhQlXYM5PVqlogvlq5
-         JzKmJkoJZuQS/gfQJPU3eGuToSsDfxncmnek53tkHXXITuM8X+ZKx8U+/++T9wEFWJhT
-         MsQNXczNsaC9J7rKuqT4r2GcBWVC0DrjDIMnnywWGUP320UjiOJ/cJ6dV0tC9+ng3UZX
-         mybOKReSFzRGukdaX1cvQp2h8L1Kx/J9DeVFqs4hfMtAaU4PrdqMPhd/TeW6V+vAqfHJ
-         JDhil6LlSLaJsDie1H1cus6celLlrHuDerxdp6JqJHRQPf6YinPMcwG4rqCFz70s7uwP
-         almg==
+        Wed, 14 Jul 2021 16:53:08 -0400
+Received: by mail-il1-f182.google.com with SMTP id e13so2945002ilc.1;
+        Wed, 14 Jul 2021 13:50:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=VB9qeVzW5ZTD8G9o9lV5Rx+cA3rqjHRpw3e+hnvVfbA=;
-        b=S3TYguxNTiJATkfsBqruLAIRpPRvbA5ryIdK9ElU4opa+Bc2b5eOPq+V3Zfkkwnmf/
-         SlJGbY4Gz+331IUUZbfEBBYeb8thbc/DRmnD8aazGmLve3BWR0arEwQOTBoFzCWueB0w
-         ZlqmMwZItRovFLfXc7EpvLT7S56Z5t8mnJHcVi3LuDW++26a4FrZkF9oVWxBtaTSQjl3
-         LCSWfwIUiLB98ddei9Apt5y7/Nf0sqziXMAuPvypzuD49fdPEVTa/4QNLV7LWv/aRicq
-         lpLwjVisRE4SSS0Pqzxflm1WCTwwYNhPZMu0Q42r/TX7mW2+c34ZaEmUw7rjUjXfTbb9
-         E3MA==
-X-Gm-Message-State: AOAM533ZseNufQfWT8ExJdxc460IY4b8PSgRAw7jg/3LCyQjQdCyJ09I
-        dAc+S6fEiDhp5QcS+xwT8gE=
-X-Google-Smtp-Source: ABdhPJxaPUz/pVNwc71fze3quHj5hQPybKUR9THlmd5U9VpU08zPruFLfUDC8E91ifeHbHkH8ji8eA==
-X-Received: by 2002:a05:6402:34d3:: with SMTP id w19mr282779edc.53.1626295706651;
-        Wed, 14 Jul 2021 13:48:26 -0700 (PDT)
-Received: from [192.168.74.110] (178-169-161-196.razgrad.ddns.bulsat.com. [178.169.161.196])
-        by smtp.gmail.com with ESMTPSA id ck25sm1487793edb.96.2021.07.14.13.48.25
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Jul 2021 13:48:26 -0700 (PDT)
-Subject: Re: [PATCH v1 1/2] dt-bindings: mailbox: qcom: Add SM6115, SM4250
- APCS compatible
-To:     Rob Herring <robh@kernel.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=xCdS+pd+oqZTwY0QnXLhGz1dPTl4CKLKedkVikROQ+g=;
+        b=euhY2eQ48gYp5GLwKrmCms+miTMy6+RlzBIKz6ro822t600M+AMqer3o4yQXjH8Mka
+         /g6XsoDEQAX/g5zQC+CY7wRBeMajvHWxt3nL5vjqJzNamzyvCR15rinGM53dNglRJqg1
+         SvBAGmaZv3/F7jpdg68iloMQg30+AcskdE2LVDFKfFraEakCdPVDtn2uQrgkDwgYm/DD
+         m8xJI/16DXcr2Lhx8BNllWB6LslJFvhmIsDO7+ZyGwEW9fyTExQfEwPVYIjy7wuLiL++
+         JebgKe4t5+1SluoWgesWKPt2syw3NT2xvLi/WpbtOhUCt/n1MqJWFReNeG64lI54mcLa
+         Xpug==
+X-Gm-Message-State: AOAM5322KrQPXjDtJY1dKc3UIc/vXGiNFbvhNUbB8w9Iekkw6zrG4+cr
+        ZRtTxin5vq0H/tGbtZY+eg==
+X-Google-Smtp-Source: ABdhPJxQwGvMEkFYajAJUIyivfiRf7BlgQI3ce+ysj6h13I0Ly7h/3FYfSec4W4fxYcV8fuR9aMgdw==
+X-Received: by 2002:a92:1802:: with SMTP id 2mr7422891ily.139.1626295816188;
+        Wed, 14 Jul 2021 13:50:16 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.248])
+        by smtp.gmail.com with ESMTPSA id m24sm1834459ion.3.2021.07.14.13.50.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Jul 2021 13:50:15 -0700 (PDT)
+Received: (nullmailer pid 3497655 invoked by uid 1000);
+        Wed, 14 Jul 2021 20:50:13 -0000
+Date:   Wed, 14 Jul 2021 14:50:13 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Iskren Chernev <iskren.chernev@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Sivaprakash Murugesan <sivaprak@codeaurora.org>
-References: <20210622203759.566716-1-iskren.chernev@gmail.com>
- <20210714180554.GA2855492@robh.at.kernel.org>
-From:   Iskren Chernev <iskren.chernev@gmail.com>
-Message-ID: <1bfa7490-2d00-15b0-0096-0fd9a27a491e@gmail.com>
-Date:   Wed, 14 Jul 2021 23:48:24 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        Kathiravan T <kathirav@codeaurora.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Stephen Boyd <sboyd@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH v2 2/5] dt-bindings: clock: qcom: rpmcc: Document SM6115
+ compatible
+Message-ID: <20210714205013.GA3493680@robh.at.kernel.org>
+References: <20210627185927.695411-1-iskren.chernev@gmail.com>
+ <20210627185927.695411-3-iskren.chernev@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20210714180554.GA2855492@robh.at.kernel.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210627185927.695411-3-iskren.chernev@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/14/21 9:05 PM, Rob Herring wrote:
-> On Tue, 22 Jun 2021 23:37:58 +0300, Iskren Chernev wrote:
->> Add compatible for the Qualcomm SM6115 and SM4250 APCS block to the
->> Qualcomm APCS binding.
->>
->> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
->> ---
->>  .../devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml      | 2 ++
->>  1 file changed, 2 insertions(+)
->>
+On Sun, Jun 27, 2021 at 09:59:24PM +0300, Iskren Chernev wrote:
+> Add the dt-binding for the RPM Clock Controller on the SM4250/6115 SoCs.
 > 
-> Acked-by: Rob Herring <robh@kernel.org>
+> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
+> ---
+>  Documentation/devicetree/bindings/clock/qcom,rpmcc.txt |  1 +
+>  include/dt-bindings/clock/qcom,rpmcc.h                 | 10 ++++++++++
+>  2 files changed, 11 insertions(+)
 > 
+> diff --git a/Documentation/devicetree/bindings/clock/qcom,rpmcc.txt b/Documentation/devicetree/bindings/clock/qcom,rpmcc.txt
+> index 6cf5a7ec2b4c..0045583f02b5 100644
+> --- a/Documentation/devicetree/bindings/clock/qcom,rpmcc.txt
+> +++ b/Documentation/devicetree/bindings/clock/qcom,rpmcc.txt
+> @@ -25,6 +25,7 @@ Required properties :
+>  			"qcom,rpmcc-msm8998", "qcom,rpmcc"
+>  			"qcom,rpmcc-qcs404", "qcom,rpmcc"
+>  			"qcom,rpmcc-sdm660", "qcom,rpmcc"
+> +			"qcom,rpmcc-sm6115", "qcom,rpmcc"
 
-As was discussed in the pinctrl series [1], the two compatibles are actually
-different bins of the same SoC (codename bengal), so there would be only one
-SoC dtsi, so I made v2 of all of my series, the v2 for this one is here [2]
+This is going to conflict with sm6125 addition...
 
-
-Let me know what the right thing to do is (keep just sm6115 or have both around).
-
-
-[1] https://lkml.org/lkml/2021/6/25/918
-[2] https://lkml.org/lkml/2021/6/27/167
+>  
+>  - #clock-cells : shall contain 1
+>  
+> diff --git a/include/dt-bindings/clock/qcom,rpmcc.h b/include/dt-bindings/clock/qcom,rpmcc.h
+> index 8aaba7cd9589..aa834d516234 100644
+> --- a/include/dt-bindings/clock/qcom,rpmcc.h
+> +++ b/include/dt-bindings/clock/qcom,rpmcc.h
+> @@ -149,5 +149,15 @@
+>  #define RPM_SMD_CE2_A_CLK			103
+>  #define RPM_SMD_CE3_CLK				104
+>  #define RPM_SMD_CE3_A_CLK			105
+> +#define RPM_SMD_QUP_CLK				106
+> +#define RPM_SMD_QUP_A_CLK			107
+> +#define RPM_SMD_MMRT_CLK			108
+> +#define RPM_SMD_MMRT_A_CLK			109
+> +#define RPM_SMD_MMNRT_CLK			110
+> +#define RPM_SMD_MMNRT_A_CLK			111
+> +#define RPM_SMD_SNOC_PERIPH_CLK			112
+> +#define RPM_SMD_SNOC_PERIPH_A_CLK		113
+> +#define RPM_SMD_SNOC_LPASS_CLK			114
+> +#define RPM_SMD_SNOC_LPASS_A_CLK		115
+>  
+>  #endif
+> -- 
+> 2.32.0
+> 
+> 
