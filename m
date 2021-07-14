@@ -2,127 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AA2F23C798E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 00:21:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 456E53C7A6B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 02:07:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236463AbhGMWYG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jul 2021 18:24:06 -0400
-Received: from mail-io1-f51.google.com ([209.85.166.51]:39639 "EHLO
-        mail-io1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236158AbhGMWYF (ORCPT
+        id S237112AbhGNAKG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jul 2021 20:10:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34760 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237098AbhGNAKF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jul 2021 18:24:05 -0400
-Received: by mail-io1-f51.google.com with SMTP id h6so29238832iok.6;
-        Tue, 13 Jul 2021 15:21:14 -0700 (PDT)
+        Tue, 13 Jul 2021 20:10:05 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CC4DC0613DD
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jul 2021 17:07:14 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id a18so330793lfs.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jul 2021 17:07:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=IEtc6WN0JMkgA1X93JOHMXDth957tk+vFhRSm4MpLAM=;
+        b=kjXNNfOnOZfSXBl9SvNCTU7DVpgzZWIJVg9FqMS+1JX+6OMWWH9CLz877AqiHOprT/
+         /lsKfkuIYEXI5WFMO1UydRgKvGakHia0Zef/k9HPAsht+GzeUkroxtZWMCQ2STLroRkq
+         FbqTR01kbBnrLWRZIyDwPLNuRZw8bHlvVIeiols+N3IWOXnQTDwnr76itERqCDK3hsXZ
+         ftqKLC+BlDomCfes9K25/WuyzNNNMkx43ZllqSA63P/fqo0Y8nrvLk14aMTDmLSU3tmX
+         DEurRNdYe9gDg4EtE+LjmrSjSrKtx9TtcvisAvYwwvXgU6rLgKJAohSbtf0H2B/+yt/o
+         Sq6A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=hLVdUN1UwvH0UN4Bs5MAda7vt/GR42DmdAJ7QT+a24k=;
-        b=gkNfCBTkKw+QQYdO/LceAsoaw8mQzPCQGtt1jZlG7LGRkUQeqJvnZUcgYJanAEu7yG
-         Gii+v/cIcsTl7D42PemIwWLr/tzl87CXc8EVk3rdk54DaOZ/W/lGxkPueUeI18MpILcL
-         zLAZ6sjBpfX3eEiOfXyGwh9o2mF6oWSatcT48V+CSYzS1iF1B+LlAVk4L16R4MV1M/dK
-         cjo1OS8Y1+WG5apcjrHtyFllCp7O1kfAhQy0M66jO5HJmTM5fBNEQlse8+zSp4kHGNb6
-         0Fg8Z9yED/tOsJXeAJ66aT/Qv4lSK+x6vuAvIn14Wh5XHObNURVHWfk7Pu+FwKNMn7BT
-         va/A==
-X-Gm-Message-State: AOAM530/iZzMG2TakbZfijhx2jKX7tLrAupN+bAGYQQB91VdMvKChtsX
-        2LxSJvpse5PIwMGVirMeiA==
-X-Google-Smtp-Source: ABdhPJwlGEofuNLKzJJJWZcUrXO565dIqlFSdBmCx0qO0Hr6vT2Mc5VtlurgxXzBD1cGX1NdoOw7iw==
-X-Received: by 2002:a02:90cb:: with SMTP id c11mr6084280jag.53.1626214873978;
-        Tue, 13 Jul 2021 15:21:13 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id e17sm152176ilr.51.2021.07.13.15.21.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jul 2021 15:21:13 -0700 (PDT)
-Received: (nullmailer pid 952126 invoked by uid 1000);
-        Tue, 13 Jul 2021 22:21:11 -0000
-Date:   Tue, 13 Jul 2021 16:21:11 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
-        daniel.lezcano@linaro.org, rjw@rjwysocki.net,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
-        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
-        martin.botka@somainline.org, jeffrey.l.hugo@gmail.com,
-        jami.kettunen@somainline.org,
-        ~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
-        stephan@gerhold.net
-Subject: Re: [PATCH v7 5/5] dt-bindings: soc: qcom: spm: Document SDM660 and
- MSM8998 compatibles
-Message-ID: <20210713222111.GA944952@robh.at.kernel.org>
-References: <20210622141117.358893-1-angelogioacchino.delregno@somainline.org>
- <20210622141117.358893-6-angelogioacchino.delregno@somainline.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=IEtc6WN0JMkgA1X93JOHMXDth957tk+vFhRSm4MpLAM=;
+        b=a96iSGwp1lpaj0ZUYl5/zTZGhsfwNadYFKkVdKC4224xN3Cm/Zxt9Q+dLo2Kar4BK2
+         SbYPyOyo71Du8FlfTvJ9hYrRqgXeC/ndmuZNyb72MknpH52ilahVKlDTED8+mEypwy4z
+         JawOsiwCEItv/9OrB9A9mclkpNEkDKwwqZbbNAJDMP7VPKaXPrrbjw/ENxpHTk6N5B/x
+         RduwPeSC1WDIPpHr+EGn5bDeoPXjd98mMcgNjDYwrE0xnlF9i5GMU0G/0DuhmTnpeVqd
+         m6voIdfmKQM4QVHhG9RedCq4+MmoFxRc5XvEKfyeEejWbwvaOf31sY0TyzuEc9CUlHxG
+         X2sw==
+X-Gm-Message-State: AOAM531f5PprkApxKqOvqgGrer7vX0gZnRaKIC+VGVLRw/j00wJhaCOc
+        SaOpK2zjinqN1+JoOlcgBhSuglT28ocXMFBKjB/VWA==
+X-Google-Smtp-Source: ABdhPJz8YKla708wW5apcE2e48dD+UxOPlSdmQcDXhRj1YqgSttTekZln8X6HfzXhD+WqceB5w0KiAl65c8UEeH/5gw=
+X-Received: by 2002:a05:6512:22cc:: with SMTP id g12mr5427042lfu.535.1626221232412;
+ Tue, 13 Jul 2021 17:07:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210622141117.358893-6-angelogioacchino.delregno@somainline.org>
+References: <20201020115959.2658-1-Sergey.Semin@baikalelectronics.ru> <20201020115959.2658-30-Sergey.Semin@baikalelectronics.ru>
+In-Reply-To: <20201020115959.2658-30-Sergey.Semin@baikalelectronics.ru>
+From:   John Stultz <john.stultz@linaro.org>
+Date:   Tue, 13 Jul 2021 17:07:00 -0700
+Message-ID: <CALAqxLX_FNvFndEDWtGbFPjSzuAbfqxQE07diBJFZtftwEJX5A@mail.gmail.com>
+Subject: Re: [PATCH 29/29] arm64: dts: qcom: Harmonize DWC USB3 DT nodes name
+To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>
+Cc:     Felipe Balbi <balbi@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux USB List <linux-usb@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Serge Semin <fancer.lancer@gmail.com>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        Amit Pundir <amit.pundir@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jun 22, 2021 at 04:11:17PM +0200, AngeloGioacchino Del Regno wrote:
-> The driver was updated to add SAW2 v4.1 support for new SoCs: document
-> the new compatibles.
+On Tue, Oct 20, 2020 at 5:10 AM Serge Semin
+<Sergey.Semin@baikalelectronics.ru> wrote:
+>
+> In accordance with the DWC USB3 bindings the corresponding node
+> name is suppose to comply with the Generic USB HCD DT schema, which
+> requires the USB nodes to have the name acceptable by the regexp:
+> "^usb(@.*)?" . Make sure the "snps,dwc3"-compatible nodes are correctly
+> named.
+>
+> Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 
-Can't take patches without a S-o-b. Run checkpatch.pl, it points this 
-out for you.
+I know folks like to ignore this, but this patch breaks AOSP on db845c. :(
 
-> ---
->  .../bindings/soc/qcom/qcom,spm.yaml           | 21 +++++++++++++++++++
->  1 file changed, 21 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml
-> index 4aaa319b2932..0faf52700dec 100644
-> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml
-> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml
-> @@ -17,6 +17,10 @@ description: |
->  properties:
->    compatible:
->      enum:
-> +      - qcom,sdm660-gold-saw2-v4.1-l2
-> +      - qcom,sdm660-silver-saw2-v4.1-l2
-> +      - qcom,msm8998-gold-saw2-v4.1-l2
-> +      - qcom,msm8998-silver-saw2-v4.1-l2
+In the exact same way an earlier patch broke HiKey960:
+  https://lore.kernel.org/lkml/CALAqxLWGujgR7p8Vb5S_RimRVYxwm5XF-c4NkKgMH-43wEBaWg@mail.gmail.com/
 
-What's the difference between gold and silver? Are the h/w instances 
-different (I realize the CPUs are) in some way? How does the OS use the 
-different compatible strings?
+(which I still have to carry a revert for).
 
->        - qcom,msm8974-saw2-v2.1-cpu
->        - qcom,apq8084-saw2-v2.1-cpu
->        - qcom,apq8064-saw2-v1.1-cpu
-> @@ -33,6 +37,8 @@ additionalProperties: false
->  
->  examples:
->    - |
-> +
-> +    /* Example 1: SoC using SAW2 and kpss-acc-v2 CPUIdle */
->      cpus {
->          #address-cells = <1>;
->          #size-cells = <0>;
-> @@ -52,4 +58,19 @@ examples:
->          reg = <0xf9089000 0x1000>;
->      };
->  
-> +  - |
-> +
-> +    /* Example 2: New-gen multi cluster SoC using SAW only for L2;
-> +     * This does not require any cpuidle driver, nor any cpu phandle.
-> +     */
-> +    power-controller@17812000 {
-> +        compatible = "qcom,msm8998-gold-saw2-v4.1-l2", "qcom,saw2";
-> +        reg = <0x17812000 0x1000>;
-> +    };
-> +
-> +    power-controller@17912000 {
-> +        compatible = "qcom,msm8998-silver-saw2-v4.1-l2", "qcom,saw2";
-> +        reg = <0x17912000 0x1000>;
-> +    };
-> +
->  ...
-> -- 
-> 2.32.0
-> 
-> 
+I get that this change is useful so more dynamic userland can find
+devices using consistent naming with future kernels (but doesn't the
+dynamic userland have to handle the case for older kernels as well?)
+But for userland that uses static configs, its painful as updating
+userland to use the new node ids then causes older kernels to fail.
+
+I'm looking into how we might be able to probe and set the property
+dynamically, but AOSP's init system is far more aligned to static
+configs.
+
+This will probably be ignored again, but it would be nice if we could
+have a release where DTS changes don't break userland for one of my
+boards. As it feels like its been awhile.
+
+thanks
+-john
