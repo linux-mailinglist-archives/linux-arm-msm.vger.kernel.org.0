@@ -2,110 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B0FE53C8485
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 14:37:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E53B3C84D4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 14:55:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231415AbhGNMkN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jul 2021 08:40:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35416 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231288AbhGNMkN (ORCPT
+        id S231391AbhGNM6B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jul 2021 08:58:01 -0400
+Received: from mail.baikalelectronics.com ([87.245.175.226]:47070 "EHLO
+        mail.baikalelectronics.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231384AbhGNM6B (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jul 2021 08:40:13 -0400
-Received: from mail-qk1-x72d.google.com (mail-qk1-x72d.google.com [IPv6:2607:f8b0:4864:20::72d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CC37FC06175F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jul 2021 05:37:21 -0700 (PDT)
-Received: by mail-qk1-x72d.google.com with SMTP id j184so1355027qkd.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jul 2021 05:37:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=zqg/oXXnwPi1uirxFlAxSo1xe+utXrq9i3VULjmSOuQ=;
-        b=J3Kfa4RrBgV0eTAzR82Lviy/WfIGFLcshXMyEUFbjaa5EhzrrX4uANQk/YTbCOQYTc
-         VpAWY55etdOw4IZGnUDrg4uUZOiU28Jc04Yk7q171breIPRm856q8iUuen7DfZobQvqv
-         mw9TTXdIyGQn0vuHuj4n60ptEu7LIZSbwMDY8+vwg85H2o1QhooORCU94q6nwNUw1AzJ
-         j86jEObFpAnbainPyN+NTLl9Oux2LcpnD8lOcDBZP1WlZuiXj8mQyh4ErbBj7B0krrDw
-         adKjuFhsa65ccroVHnVikPl+Mx0EqJ59Vxj0Y8/G5G9rSDK3qW+4ksN0hBlEb2fNiDIb
-         Yrxg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=zqg/oXXnwPi1uirxFlAxSo1xe+utXrq9i3VULjmSOuQ=;
-        b=t4bXczPUMeDq5pMF6moZdD2KAooncDOua/Je42bbRy1Hbuf5B6kUWukSnlwPXaVvgc
-         iH5sSU4kso8NOZBNJfB4uZN5F16qUkNrpIp7x2bM/aNEhcFTuRQHqA1ajXe0or85j0oU
-         HcxwHu+3BStVqaCucIuMwewDKhfBI6+gaseGSJ+/D61CmndIdMO0l4LNZQLEFOYqco9H
-         tczQ/BU/TfS8Q4prkeHmlPySxyOqfqFEIgtOkN+ZzrrSuqvzJvyQi0DOfP2gi1XLhxM2
-         0zeGEex/ZWWCZsP9Mo9zIqbZ8gV5OWaY49tJEwOJNduTE/1WhWCsM6c5FdG6UoTFZPJq
-         Lq/A==
-X-Gm-Message-State: AOAM531Y+ZrDL//V7hVk0N3jheFipqW2aTRYOhm6aBqBblzC3TMW9Tk1
-        jgv3B7bqWWcFr3WBloCMVvRcPA==
-X-Google-Smtp-Source: ABdhPJw2hS+EQ/pmbbFvCECMAwr7HSRkZ7n2WJXIGZ7zxABRIKXCoD5kLjmjaqy8n1JWBjYuGKAjhw==
-X-Received: by 2002:a37:5b47:: with SMTP id p68mr9666364qkb.73.1626266240969;
-        Wed, 14 Jul 2021 05:37:20 -0700 (PDT)
-Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id h68sm955221qkf.126.2021.07.14.05.37.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Jul 2021 05:37:20 -0700 (PDT)
-Subject: Re: [Patch v3 3/6] cpufreq: qcom-cpufreq-hw: Add dcvs interrupt
- support
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, rui.zhang@intel.com,
-        daniel.lezcano@linaro.org, rjw@rjwysocki.net, robh+dt@kernel.org,
-        tdas@codeaurora.org, mka@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20210708120656.663851-1-thara.gopinath@linaro.org>
- <20210708120656.663851-4-thara.gopinath@linaro.org>
- <20210709064646.7vjgiba2o7beudly@vireshk-i7>
- <5a98ef2a-d170-f52d-cc48-b838cddaa5c2@linaro.org>
- <20210712044112.svhlagrktcfvyj35@vireshk-i7>
- <b05e9c76-c0ed-9ecb-8225-9504e226677b@linaro.org>
- <20210713031848.sp5fpjg36uthnmuq@vireshk-i7>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <6de43ee8-e3f4-f09e-1076-7746e44dd19a@linaro.org>
-Date:   Wed, 14 Jul 2021 08:37:19 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        Wed, 14 Jul 2021 08:58:01 -0400
+X-Greylist: delayed 416 seconds by postgrey-1.27 at vger.kernel.org; Wed, 14 Jul 2021 08:58:00 EDT
+Date:   Wed, 14 Jul 2021 15:48:07 +0300
+From:   Serge Semin <Sergey.Semin@baikalelectronics.ru>
+To:     John Stultz <john.stultz@linaro.org>
+CC:     Serge Semin <fancer.lancer@gmail.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux USB List <linux-usb@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        Amit Pundir <amit.pundir@linaro.org>
+Subject: Re: [PATCH 29/29] arm64: dts: qcom: Harmonize DWC USB3 DT nodes name
+Message-ID: <20210714124807.o22mottsrg3tv6nt@mobilestation>
+References: <20201020115959.2658-1-Sergey.Semin@baikalelectronics.ru>
+ <20201020115959.2658-30-Sergey.Semin@baikalelectronics.ru>
+ <CALAqxLX_FNvFndEDWtGbFPjSzuAbfqxQE07diBJFZtftwEJX5A@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20210713031848.sp5fpjg36uthnmuq@vireshk-i7>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <CALAqxLX_FNvFndEDWtGbFPjSzuAbfqxQE07diBJFZtftwEJX5A@mail.gmail.com>
+X-ClientProxiedBy: MAIL.baikal.int (192.168.51.25) To mail (192.168.51.25)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hello John,
 
-
-On 7/12/21 11:18 PM, Viresh Kumar wrote:
-> On 12-07-21, 21:18, Thara Gopinath wrote:
->> So I really need the interrupt to fire and then the timer to kick in and
->> take up the monitoring. I can think of introducing a variable is_disabled
->> which is updated and read under a spinlock. qcom_cpufreq_hw_cpu_exit can
->> hold the spinlock and set is_disabled to true prior to cancelling the work
->> queue or disabling the interrupt. Before re-enabling the interrupt or
->> re-queuing the work in qcom_lmh_dcvs_notify, is_disabled can be read and
->> checked.
-> 
-> Or you can make the lmh_dcvs_poll_work item a pointer and mark it NULL in exit,
-> with proper locking etc.
-
-Yes it could work. I will spin the next version with either this or 
-introducing a new variable with locking.
-
-> 
->> But does this problem not exist in target_index , fast_switch etc also ? One
->> cpu can be disabling and the other one can be updating the target right?
-> 
-> The race doesn't happen there as cpufreq_unregister_driver() takes care of
-> stopping everything before removing the policy. To be more precise, governor's
-> ->stop() function is responsible for making sure that frequency won't be updated
-> any further.
+On Tue, Jul 13, 2021 at 05:07:00PM -0700, John Stultz wrote:
+> On Tue, Oct 20, 2020 at 5:10 AM Serge Semin
+> <Sergey.Semin@baikalelectronics.ru> wrote:
+> >
+> > In accordance with the DWC USB3 bindings the corresponding node
+> > name is suppose to comply with the Generic USB HCD DT schema, which
+> > requires the USB nodes to have the name acceptable by the regexp:
+> > "^usb(@.*)?" . Make sure the "snps,dwc3"-compatible nodes are correctly
+> > named.
+> >
+> > Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
 > 
 
--- 
-Warm Regards
-Thara (She/Her/Hers)
+> I know folks like to ignore this, but this patch breaks AOSP on db845c. :(
+
+Sorry to hear that. Alas there is no much can be done about it.
+DT-nodes name is a subject of DT-schema convention and as we've finally
+unified USB-controller nodes it shouldn't be reverted back. You can
+find the final USB-controller bindings in:
+Documentation/devicetree/bindings/usb/usb.yaml
+It strictly defines to have USB-nodes with names like "usb(@.*)".
+Reverting this patch will cause the DT-bindings check procedure
+failure. You can also find the naming convention defined in the
+latest DT spec:
+https://github.com/devicetree-org/devicetree-specification/releases/tag/v0.3
+
+See also device-tree bindings requirements listed in the file:
+Documentation/devicetree/bindings/writing-bindings.rst
+It says: "DO use node names matching the class of the device. Many
+standard names are defined in the DT Spec. If there isn't one,
+consider adding it."
+
+> 
+> In the exact same way an earlier patch broke HiKey960:
+>   https://lore.kernel.org/lkml/CALAqxLWGujgR7p8Vb5S_RimRVYxwm5XF-c4NkKgMH-43wEBaWg@mail.gmail.com/
+> 
+> (which I still have to carry a revert for).
+> 
+> I get that this change is useful so more dynamic userland can find
+> devices using consistent naming with future kernels (but doesn't the
+> dynamic userland have to handle the case for older kernels as well?)
+> But for userland that uses static configs, its painful as updating
+> userland to use the new node ids then causes older kernels to fail.
+> 
+> I'm looking into how we might be able to probe and set the property
+> dynamically, but AOSP's init system is far more aligned to static
+> configs.
+> 
+
+As Krzysztof said in
+https://lore.kernel.org/lkml/20201221210423.GA2504@kozik-lap/
+and Bjorn noted in his response to your email, the only way to solve
+the problem is to fix the user-land app so one would be able to deal
+with both old and new DT-nodes name. Alternatively you can just
+replace the dts with older one, where the name still have
+the "dwc3"-prefix.
+
+-Sergey
+
+> This will probably be ignored again, but it would be nice if we could
+> have a release where DTS changes don't break userland for one of my
+> boards. As it feels like its been awhile.
+> 
+> thanks
+> -john
