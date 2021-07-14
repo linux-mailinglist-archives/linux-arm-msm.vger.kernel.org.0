@@ -2,83 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 75DBD3C881A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 17:56:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F8B63C8878
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 18:14:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239748AbhGNP7C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jul 2021 11:59:02 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41996 "EHLO mail.kernel.org"
+        id S232273AbhGNQRP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jul 2021 12:17:15 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:48313 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S239778AbhGNP66 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jul 2021 11:58:58 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 915DB613CB;
-        Wed, 14 Jul 2021 15:56:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1626278167;
-        bh=euWLJF8O1gpFql8jqo5Afw+yAqgIphMrVOqkBThYSkE=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=rTQXGGEpKAJ7B4H1hLq7js0qIbbKYecfd2QRqaLzVjDnJXDmlpZoPkaskkt/ApIdg
-         MkjRrQmInTNu5rXdpHY4lWAsbbkP7pAje8ulPrj3p97uUzZRc5BQrPmdNMdHsL7lRp
-         /sVelUswkyJWqZyybGzT6qwfj66RdQE8eknvyqdwYnRFG1XFQM3yFw/1faG2biaQfO
-         9R18GfbwwYmW8VHu1yAPQ8SOTw4zCKIVEv5HH+8QVLcl6Z2xrxTMFxDeKvVBepHyS2
-         QBVJhtjuB9EFDwTk02bJuzNB7ye585upGZCNLN79PF8jKTjOoPeZM8sj6PzLUEnKuh
-         VF3IcR0a0s7Bg==
-From:   Mark Brown <broonie@kernel.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Mark Brown <broonie@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        swboyd@chromium.org, vkoul@kernel.org, akashast@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-spi@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] spi: spi-geni-qcom: Remove confusing comment about setting the watermark
-Date:   Wed, 14 Jul 2021 16:55:16 +0100
-Message-Id: <162627784667.55213.15626451683083900981.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20210712085010.1.Ie3bb9f9d30d6475bb75251d32635194c1c72b9ee@changeid>
-References: <20210712085010.1.Ie3bb9f9d30d6475bb75251d32635194c1c72b9ee@changeid>
+        id S232383AbhGNQRM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Jul 2021 12:17:12 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1626279261; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=3m3ujPPUr/nzfZFzuGmZxwg1jheYBx6zT3o3L19ELMs=;
+ b=iMv63fa/CugUTRrfOJjDGx+kn/WjaVYfD1Y79in4d1d6Auz8W/QgvqAsF7ReoWNKxdSVRQdx
+ x4R/x2XPih2L9Yaodty45Kn/gn+vmsZLwcctXGUXhz2XKr8IFnq5ukhPN4QxsuPvqUzIWzi9
+ b4KZuf+7tSv5anBUShY3FyTg1jY=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 60ef0d4696a66e66b2bb2365 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 14 Jul 2021 16:13:58
+ GMT
+Sender: kathirav=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1B18BC4323A; Wed, 14 Jul 2021 16:13:58 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kathirav)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E31AAC433F1;
+        Wed, 14 Jul 2021 16:13:55 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 14 Jul 2021 21:43:55 +0530
+From:   Kathiravan T <kathirav@codeaurora.org>
+To:     Baruch Siach <baruch@tkos.co.il>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        =?UTF-8?Q?Uwe_Kleine-K?= =?UTF-8?Q?=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Balaji Prakash J <bjagadee@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Robert Marko <robert.marko@sartura.hr>,
+        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v5 1/4] arm64: dts: ipq6018: correct TCSR block area
+In-Reply-To: <f79128fa287e37ee59cb03ae04b319ecb3d68c29.1626176145.git.baruch@tkos.co.il>
+References: <f79128fa287e37ee59cb03ae04b319ecb3d68c29.1626176145.git.baruch@tkos.co.il>
+Message-ID: <6c28d9dbf5d3a4d7c543fc7b0308eb20@codeaurora.org>
+X-Sender: kathirav@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 12 Jul 2021 08:50:17 -0700, Douglas Anderson wrote:
-> The comment in setup_fifo_xfer() about setting the watermark wasn't
-> quite proper grammar and also stopped making sense around commit
-> 6d66507d9b55 ("spi: spi-geni-qcom: Don't wait to start 1st transfer if
-> transmitting"). After that commit we actually start the transfer
-> _before_ the watermark interrupt comes.
+On 2021-07-13 17:05, Baruch Siach wrote:
+> According to Bjorn Andersson[1], &tcsr_q6 base is 0x01937000 with size
+> 0x21000. Adjust qcom,halt-regs offsets (add 0x8000) to match the new
+> syscon base.
 > 
-> I don't think the comment really has any value anymore. We've already
-> got a comment when we grab the spinlock saying that our interrupt can
-> come any time as a result of the things in the locked section. Let's
-> just remove it.
+> [1] https://lore.kernel.org/r/YLgO0Aj1d4w9EcPv@yoga
+> 
+> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+> ---
+> v5: New patch in this series
+> ---
+>  arch/arm64/boot/dts/qcom/ipq6018.dtsi | 6 +++---
+>  1 file changed, 3 insertions(+), 3 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+> b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+> index 6ee7b99c21ec..72ac36c1be57 100644
+> --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
+> @@ -270,9 +270,9 @@ tcsr_mutex_regs: syscon@1905000 {
+>  			reg = <0x0 0x01905000 0x0 0x8000>;
+>  		};
+> 
+> -		tcsr_q6: syscon@1945000 {
+> +		tcsr_q6: syscon@1937000 {
 
-Applied to
+We can remove the q6 reference and make it as just 'tcsr'?
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
+>  			compatible = "syscon";
+> -			reg = <0x0 0x01945000 0x0 0xe000>;
+> +			reg = <0x0 0x01937000 0x0 0x21000>;
+>  		};
+> 
+>  		blsp_dma: dma-controller@7884000 {
+> @@ -615,7 +615,7 @@ q6v5_wcss: remoteproc@cd00000 {
+>  			clocks = <&gcc GCC_PRNG_AHB_CLK>;
+>  			clock-names = "prng";
+> 
+> -			qcom,halt-regs = <&tcsr_q6 0xa000 0xd000 0x0>;
+> +			qcom,halt-regs = <&tcsr_q6 0x12000 0x15000 0x8000>;
 
-Thanks!
+This seems to be not correct. 0x01945000 - 0x01937000 = 0xE000 but here 
+the values are adjusted with 0x8000 not with 0xE000.
 
-[1/1] spi: spi-geni-qcom: Remove confusing comment about setting the watermark
-      commit: 57f1c12e455fc6c4c0db2c9f14e57b95822c2321
+> 
+>  			qcom,smem-states = <&wcss_smp2p_out 0>,
+>  					   <&wcss_smp2p_out 1>;
 
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member of Code Aurora Forum, hosted by The Linux Foundation
