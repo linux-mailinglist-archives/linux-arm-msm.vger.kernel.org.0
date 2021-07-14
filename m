@@ -2,103 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 160C53C8686
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 16:59:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD9D33C872A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 17:14:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232334AbhGNPCi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jul 2021 11:02:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39664 "EHLO
+        id S239570AbhGNPRa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jul 2021 11:17:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43258 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232230AbhGNPCh (ORCPT
+        with ESMTP id S239533AbhGNPR2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jul 2021 11:02:37 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06EFDC06175F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jul 2021 07:59:45 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id l26so2562744oic.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jul 2021 07:59:44 -0700 (PDT)
+        Wed, 14 Jul 2021 11:17:28 -0400
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 405F6C06175F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jul 2021 08:14:37 -0700 (PDT)
+Received: by mail-qk1-x731.google.com with SMTP id 23so1934195qke.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jul 2021 08:14:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=nTz18Jk122sS3DksvsV26XHaiOTs4W7MgSnZfV6Ve8w=;
-        b=cAhFYtUFFghd3ORohdXDzi+zJ9cgiPev8KqUU9qg5EuMo/4ZyT/PjlYBv/C7KUT2a6
-         2lDpCbDxs0mf30o0XwaJyhkp8PtKRhJX8geGdVz8tVEccGHzPRHN5XkyzOO0GZC85MJv
-         TipVjVCCbhMNxWOLkIdc+V3MSbg+j2O6SZ0Ftto8xgcd//fV6OjmlejEk/qrAnXxOuBU
-         EJDtdVH+9v/hzb0J/kW2CG4LCnUfCeePqiSjR5yhMcKgE+pQRCh8higXJ0jF5ATuDrs/
-         W2D885YFFfu4G0+zyjtoDuiHhrxeaUQ4W1K2dabd2WXgYRABwKwfNN9hxP0IJykPWYhO
-         mANA==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=nA/s4q3xWQ1MrD5GGKsmBhEEWIQqKBBxr9yke92X18k=;
+        b=mASXKz3d4VxWdnOhtRGY9xdrq/pnCp4byEIzOE6gDPLvnRfO+Yqrkf1jTieiwkodkW
+         lFdpPmwssfHbKute20ufcT2hcU02WypCA1mZDs+33eSDPrKZlsQYs4fEQWY9YTV3uj5m
+         oXPDRyB6DxUGa4iH1DK+CseeVPprdDb49bAbg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=nTz18Jk122sS3DksvsV26XHaiOTs4W7MgSnZfV6Ve8w=;
-        b=kDdPLNgbYAyiCSIQjazIbKVoz1mO/1YFoZZhcz1SlG+8iiBs8kYBERYfVgGNWFk9ns
-         zfeZAfIS6nvvyFeEOkhcYmaYxIAer/9/qIw+O1Ge2ydU+544sSfh2bP3CTPpexwcnoBQ
-         0hh6Krb9uV5ZI+EwiPR3kerNtJk4VTT3Rl8bwSvSzWOpsIJmvjfuWd5jTxrIVMbH222q
-         XU9COEkR3sTvscSm2MIvPeOpxfi1P3u46daq2P6w+UDmuDS/wGbgL6BGF+enswkQqYzb
-         6hZcZ3iM3bWRcJTP4B5nuKO6a1lmMzox6NOlCzy+xMzw82e+H6oRL8gYmXThWZQMNA8s
-         AWTw==
-X-Gm-Message-State: AOAM532NLKsJN54lLxm3Z/aVn+j+3Ak8Cp2ieYXdkW6zGR/pfa2ZtXco
-        MhBiBoBdKx8LQYV3mBYGWotb1w==
-X-Google-Smtp-Source: ABdhPJzpWIEmodrbCajE5SWtgbSG8/UkT7KoEn+NDfJjdtMeySYmd9SbwyGak1dfUWnVpWcliCBvxQ==
-X-Received: by 2002:aca:bb41:: with SMTP id l62mr7638839oif.113.1626274784340;
-        Wed, 14 Jul 2021 07:59:44 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id c34sm516369otu.42.2021.07.14.07.59.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jul 2021 07:59:43 -0700 (PDT)
-Date:   Wed, 14 Jul 2021 09:59:41 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Serge Semin <Sergey.Semin@baikalelectronics.ru>
-Cc:     John Stultz <john.stultz@linaro.org>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux USB List <linux-usb@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        Amit Pundir <amit.pundir@linaro.org>
-Subject: Re: [PATCH 29/29] arm64: dts: qcom: Harmonize DWC USB3 DT nodes name
-Message-ID: <YO773RXaezcLNREX@yoga>
-References: <20201020115959.2658-1-Sergey.Semin@baikalelectronics.ru>
- <20201020115959.2658-30-Sergey.Semin@baikalelectronics.ru>
- <CALAqxLX_FNvFndEDWtGbFPjSzuAbfqxQE07diBJFZtftwEJX5A@mail.gmail.com>
- <20210714124807.o22mottsrg3tv6nt@mobilestation>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=nA/s4q3xWQ1MrD5GGKsmBhEEWIQqKBBxr9yke92X18k=;
+        b=J70CFhTh7WE5QNVqTbky+t2DQahZ0uxhnZ/rRLWz9jNmSZxHyDIof+HLZZGa9jZGfu
+         CjxJl2eqTw0/Qqvq49t4XOnO1PFMFbgAVYc38q3uabejyFsFtFGzqj6oQKmnkzHcfkC9
+         lIQHf0NzUDeAFROVNxjri5i3e83RijhXdwMvw5FIZOKeQ1qLvRdMBJak/CiMMJ4GxyL7
+         bTZDlk/Ow5rpaSw3M0VREdgBzyWwLC4/n+vKGUxQjaypVCx2RgEmuqtFcwpSK2y9gfWY
+         KtRz6Na4+sPFf4orIsAzSWZKXW7b+ugzYvC0pGVSa3Pbf9TlOWa4il66KQ1DhVn0xSSa
+         fmPA==
+X-Gm-Message-State: AOAM533A7P9ESITJtp1+EjkriLwqgksE4ciOi7KbWF+SDdE+64HB4nuE
+        XMQ/c/bWcG7p4Um9gSqOFnZXHutj4MnBWQ==
+X-Google-Smtp-Source: ABdhPJzy7PLG+ZyvE3pELRiF/wLqJRm+Rdmd5HxyeV2+e6azC9AxFXTmzF51UwY3geHx+8KkpgDelA==
+X-Received: by 2002:a05:620a:15b9:: with SMTP id f25mr10639375qkk.242.1626275676473;
+        Wed, 14 Jul 2021 08:14:36 -0700 (PDT)
+Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com. [209.85.219.180])
+        by smtp.gmail.com with ESMTPSA id x22sm897124qto.34.2021.07.14.08.14.36
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 14 Jul 2021 08:14:36 -0700 (PDT)
+Received: by mail-yb1-f180.google.com with SMTP id k184so3685595ybf.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jul 2021 08:14:36 -0700 (PDT)
+X-Received: by 2002:a25:8082:: with SMTP id n2mr13261292ybk.79.1626275675582;
+ Wed, 14 Jul 2021 08:14:35 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210714124807.o22mottsrg3tv6nt@mobilestation>
+References: <20210624171759.4125094-1-dianders@chromium.org>
+ <YNXXwvuErVnlHt+s@8bytes.org> <CAD=FV=UFxZH7g8gH5+M=Fv4Y-e1bsLkNkPGJhNwhvVychcGQcQ@mail.gmail.com>
+ <CAD=FV=W=HmgH3O3z+nThWL6U+X4Oh37COe-uTzVB9SanP2n86w@mail.gmail.com>
+ <YOaymBHc4g2cIfRn@8bytes.org> <CAD=FV=U_mKPaGfWyN1SVi9S2hPBpG=rE_p89+Jvjr95d0TvgsA@mail.gmail.com>
+ <e3555c49-2978-355f-93bb-dbfa7d09cab8@arm.com>
+In-Reply-To: <e3555c49-2978-355f-93bb-dbfa7d09cab8@arm.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 14 Jul 2021 08:14:24 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XaTqNDn=vLEXfJ2dV+EH2UoxPfzWeiS+_sZ9hrQ274bw@mail.gmail.com>
+Message-ID: <CAD=FV=XaTqNDn=vLEXfJ2dV+EH2UoxPfzWeiS+_sZ9hrQ274bw@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] iommu: Enable non-strict DMA on QCom SD/MMC
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        John Garry <john.garry@huawei.com>,
+        Rob Clark <robdclark@chromium.org>, quic_c_gdjako@quicinc.com,
+        Saravana Kannan <saravanak@google.com>,
+        Rajat Jain <rajatja@google.com>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Linux MMC List <linux-mmc@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-pci@vger.kernel.org,
+        "list@263.net:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
+        Sonny Rao <sonnyrao@chromium.org>,
+        Joel Fernandes <joel@joelfernandes.org>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        "Maciej W. Rozycki" <macro@orcam.me.uk>,
+        Nicolin Chen <nicoleotsuka@gmail.com>,
+        "Paul E. McKenney" <paulmck@kernel.org>,
+        Peter Zijlstra <peterz@infradead.org>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Vlastimil Babka <vbabka@suse.cz>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Linux Doc Mailing List <linux-doc@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 14 Jul 07:48 CDT 2021, Serge Semin wrote:
-[..]
-> As Krzysztof said in
-> https://lore.kernel.org/lkml/20201221210423.GA2504@kozik-lap/
-> and Bjorn noted in his response to your email, the only way to solve
-> the problem is to fix the user-land app so one would be able to deal
-> with both old and new DT-nodes name.
+Hi,
 
-How do you suggest this to be done? The userspace ABI in question is
-used to bind a USB gadgets to the particular USB controller, using the
-device name of the USB controller.
+On Tue, Jul 13, 2021 at 11:07 AM Robin Murphy <robin.murphy@arm.com> wrote:
+>
+> On 2021-07-08 15:36, Doug Anderson wrote:
+> [...]
+> >> Or document for the users that want performance how to
+> >> change the setting, so that they can decide.
+> >
+> > Pushing this to the users can make sense for a Linux distribution but
+> > probably less sense for an embedded platform. So I'm happy to make
+> > some way for a user to override this (like via kernel command line),
+> > but I also strongly believe there should be a default that users don't
+> > have to futz with that we think is correct.
+>
+> FYI I did make progress on the "punt it to userspace" approach. I'm not
+> posting it even as an RFC yet because I still need to set up a machine
+> to try actually testing any of it (it's almost certainly broken
+> somewhere), but in the end it comes out looking surprisingly not too bad
+> overall. If you're curious to take a look in the meantime I put it here:
+>
+> https://gitlab.arm.com/linux-arm/linux-rm/-/commits/iommu/fq
 
-> Alternatively you can just
-> replace the dts with older one, where the name still have
-> the "dwc3"-prefix.
-> 
+Being able to change this at runtime through sysfs sounds great and it
+fills all the needs I'm aware of, thanks! In Chrome OS we can just use
+this with some udev rules and get everything we need. I'm happy to
+give this a spin when you're ready for extra testing.
 
-This is exactly what Linus has mind when he tells us not to break
-user space.
-
-Regards,
-Bjorn
+-Doug
