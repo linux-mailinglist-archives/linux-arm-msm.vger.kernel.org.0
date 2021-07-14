@@ -2,75 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 817B53C8A16
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 19:51:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B74893C8A5E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 20:03:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229701AbhGNRy1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jul 2021 13:54:27 -0400
-Received: from mail-io1-f48.google.com ([209.85.166.48]:45645 "EHLO
-        mail-io1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229553AbhGNRy1 (ORCPT
+        id S230312AbhGNSGX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jul 2021 14:06:23 -0400
+Received: from mail-il1-f176.google.com ([209.85.166.176]:46602 "EHLO
+        mail-il1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229736AbhGNSGW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jul 2021 13:54:27 -0400
-Received: by mail-io1-f48.google.com with SMTP id y16so3156228iol.12;
-        Wed, 14 Jul 2021 10:51:34 -0700 (PDT)
+        Wed, 14 Jul 2021 14:06:22 -0400
+Received: by mail-il1-f176.google.com with SMTP id y6so2457864ilj.13;
+        Wed, 14 Jul 2021 11:03:29 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=2gRDlQp1MuAFlJu92QnqeuWzzqqzSrOhJUVuS7wmyLA=;
-        b=ckY8ABCVrUvCMi/tkhduMJPbVDkCxb85zMvq5bN8K/LdoTlqjb9P8TuREXupnA6kLk
-         BlmSzbvqdod6IBcDJ8rtGEwJDScFWosuTe0p+LpDFHjdqBd0Fcxfek0GF9XqxGZB2TV7
-         U4tdBTsWmnbsH42id5WD8oODX1AnVRG/63kzyplh6TNmljhrf2hT78UdB7qoq+z7w+7I
-         uNKai4lbEILpOIVq6bT3bZ8UF7MiUrwFpzAL2jKMVvUO5l8ZesaIoml29d4vp4aB9Uvt
-         0Ht70WmV31EN9iCKFsbXPuDGHbb5ksHxlBtjih/OX4amVn8H9mhEF0GDObt8A8utaPVg
-         mxdA==
-X-Gm-Message-State: AOAM530lhN2IEXOKNU076X3MCkpDw/aJxzZkRiYUBNqL8oIr/HD4E6lu
-        q3/SYSWk8RDuskUdJdaapQ==
-X-Google-Smtp-Source: ABdhPJwOTz4yShdDPDvuRzHUrKX45LAoc/ClPXV6RlW1pZulnt5dgHTyt+IGhykIU67hkb84JbN4Qg==
-X-Received: by 2002:a02:2b27:: with SMTP id h39mr10077711jaa.62.1626285094249;
-        Wed, 14 Jul 2021 10:51:34 -0700 (PDT)
+        bh=LEmCBg2ZFVYuVXXstsnNim775J7TAUnbJ8EWRiqQFxY=;
+        b=Fc+/S3GvDIbNvIoCkrt4IEjG7YTkaPq0ykMV7RDUIxxE7yAqy9a4SifGD0q7TEWJ28
+         Bwoet2vxK31lETSocth6Wc7Y0qCtaWTSAZaJSOkU9zFY/4jlKV9SR5oy3iMVhkG8iomr
+         soDcsaUf+8p1E9j5XmW1mT7Ro5E7RWpT1wM3ZzbzlGgB5c2CD0kjgMyHMyWuXuETgN+4
+         RxrPFvGWQXl7QiPgD/OFn2JZ/YuXY30vp+yn25cHNELtD+07CDQvrZHO5jEjlLFsjnFT
+         94SLQ6rwVPDNVw44qlZMnGmRF8eHR8Asf3g+c6ovO6oOBI/yaxzBkZMRzdAJ7d2GKKKE
+         m8bg==
+X-Gm-Message-State: AOAM5309IRqB/YLBPS+HKVHKrn1jm0Bu59YQ+/mMST7QoDnI+FoWSgmc
+        gdLc+dyvDESzJ8fqxR1dYQ==
+X-Google-Smtp-Source: ABdhPJz7MmXKdIbOBmyWQDZX/3y7Sb1bdJ5UO61CJctO0JLTnoDf526DzkAy7KMARNtraPgVgId1CQ==
+X-Received: by 2002:a92:7009:: with SMTP id l9mr7533095ilc.24.1626285809628;
+        Wed, 14 Jul 2021 11:03:29 -0700 (PDT)
 Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id p21sm1680316iog.37.2021.07.14.10.51.31
+        by smtp.gmail.com with ESMTPSA id c19sm1583766ili.62.2021.07.14.11.03.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jul 2021 10:51:33 -0700 (PDT)
-Received: (nullmailer pid 2832837 invoked by uid 1000);
-        Wed, 14 Jul 2021 17:51:31 -0000
-Date:   Wed, 14 Jul 2021 11:51:31 -0600
+        Wed, 14 Jul 2021 11:03:28 -0700 (PDT)
+Received: (nullmailer pid 2851154 invoked by uid 1000);
+        Wed, 14 Jul 2021 18:03:26 -0000
+Date:   Wed, 14 Jul 2021 12:03:26 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Rajeev Nandan <rajeevny@codeaurora.org>
-Cc:     linux-kernel@vger.kernel.org, mkrishn@codeaurora.org,
-        freedreno@lists.freedesktop.org, dmitry.baryshkov@linaro.org,
-        linux-arm-msm@vger.kernel.org, sean@poorly.run,
-        devicetree@vger.kernel.org, jonathan@marek.ca, robdclark@gmail.com,
-        abhinavk@codeaurora.org, kalyan_t@codeaurora.org,
-        dri-devel@lists.freedesktop.org, robh+dt@kernel.org
-Subject: Re: [v2 1/3] dt-bindings: msm/dsi: Add sc7280 7nm dsi phy
-Message-ID: <20210714175131.GA2832803@robh.at.kernel.org>
-References: <1624365748-24224-1-git-send-email-rajeevny@codeaurora.org>
- <1624365748-24224-2-git-send-email-rajeevny@codeaurora.org>
+To:     Yassine Oudjana <y.oudjana@protonmail.com>
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: (No Subject)
+Message-ID: <20210714180326.GA2848788@robh.at.kernel.org>
+References: <p79aCzsVmgW6eKQZNSlglPvO40ulVy4id6jcm7aTk@cp7-web-044.plabs.ch>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1624365748-24224-2-git-send-email-rajeevny@codeaurora.org>
+In-Reply-To: <p79aCzsVmgW6eKQZNSlglPvO40ulVy4id6jcm7aTk@cp7-web-044.plabs.ch>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 22 Jun 2021 18:12:26 +0530, Rajeev Nandan wrote:
-> The SC7280 SoC uses the 7nm (V4.1) DSI PHY driver.
+On Tue, Jun 22, 2021 at 04:20:24PM +0000, Yassine Oudjana wrote:
+> Date: Tue, 22 Jun 2021 20:08:25 +0400
+> Subject: [PATCH] media: dt-bindings: media: venus: Add firmware-name
 > 
-> Signed-off-by: Rajeev Nandan <rajeevny@codeaurora.org>
+> Support for parsing the firmware-name property was added a while ago [1],
+> but the dt-bindings were never updated with the new property. This patch
+> adds it to all venus dt-bindings.
+> 
+> Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+> 
+> [1]: https://lore.kernel.org/linux-arm-msm/20210126084252.238078-1-stanimir.varbanov@linaro.org/
 > ---
+>  .../devicetree/bindings/media/qcom,msm8916-venus.yaml        | 5 +++++
+>  .../devicetree/bindings/media/qcom,msm8996-venus.yaml        | 5 +++++
+>  .../devicetree/bindings/media/qcom,sc7180-venus.yaml         | 5 +++++
+>  .../devicetree/bindings/media/qcom,sdm845-venus-v2.yaml      | 5 +++++
+>  .../devicetree/bindings/media/qcom,sdm845-venus.yaml         | 5 +++++
+>  5 files changed, 25 insertions(+)
 > 
-> Changes in v2:
-> - New
->   This patch depends on [1] (dt-bindings: msm: dsi: add missing 7nm bindings)
-> 
-> [1] https://lore.kernel.org/linux-arm-msm/20210617144349.28448-2-jonathan@marek.ca/
-> 
->  Documentation/devicetree/bindings/display/msm/dsi-phy-7nm.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
+> diff --git a/Documentation/devicetree/bindings/media/qcom,msm8916-venus.yaml b/Documentation/devicetree/bindings/media/qcom,msm8916-venus.yaml
+> index 59ab16ad12f1..cb1b866d9c37 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,msm8916-venus.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,msm8916-venus.yaml
+> @@ -80,6 +80,11 @@ properties:
+>      required:
+>        - iommus
+>  
+> +  firmware-name:
+> +    maxItems: 1
 
-Acked-by: Rob Herring <robh@kernel.org>
+Not an array.
+
+Is there a specific pattern and/or default name you can specify?
+
+> +    description: |
+> +      Relative firmware image path for venus.
+> +
+>  required:
+>    - compatible
+>    - reg
+> diff --git a/Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml b/Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml
+> index 199f45217b4a..b8809325138f 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml
+> @@ -107,6 +107,11 @@ properties:
+>      required:
+>        - iommus
+>  
+> +  firmware-name:
+> +    maxItems: 1
+> +    description: |
+> +      Relative firmware image path for venus.
+> +
+>  required:
+>    - compatible
+>    - reg
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
+> index 04013e5dd044..ffd3e2850366 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
+> @@ -99,6 +99,11 @@ properties:
+>      required:
+>        - iommus
+>  
+> +  firmware-name:
+> +    maxItems: 1
+> +    description: |
+> +      Relative firmware image path for venus.
+> +
+>  required:
+>    - compatible
+>    - reg
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
+> index 04b9af4db191..cd7a5e1374ce 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.yaml
+> @@ -94,6 +94,11 @@ properties:
+>      required:
+>        - iommus
+>  
+> +  firmware-name:
+> +    maxItems: 1
+> +    description: |
+> +      Relative firmware image path for venus.
+> +
+>  required:
+>    - compatible
+>    - reg
+> diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845-venus.yaml
+> index 680f37726fdf..ae256238a637 100644
+> --- a/Documentation/devicetree/bindings/media/qcom,sdm845-venus.yaml
+> +++ b/Documentation/devicetree/bindings/media/qcom,sdm845-venus.yaml
+> @@ -108,6 +108,11 @@ properties:
+>      required:
+>        - iommus
+>  
+> +  firmware-name:
+> +    maxItems: 1
+> +    description: |
+> +      Relative firmware image path for venus.
+> +
+>  required:
+>    - compatible
+>    - reg
+> -- 
+> 2.32.0
+> 
+> 
+> 
