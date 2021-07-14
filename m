@@ -2,131 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CD9D33C872A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 17:14:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0DB83C8771
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 17:29:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239570AbhGNPRa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jul 2021 11:17:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43258 "EHLO
+        id S239524AbhGNPcJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jul 2021 11:32:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46732 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239533AbhGNPR2 (ORCPT
+        with ESMTP id S232360AbhGNPcJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jul 2021 11:17:28 -0400
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 405F6C06175F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jul 2021 08:14:37 -0700 (PDT)
-Received: by mail-qk1-x731.google.com with SMTP id 23so1934195qke.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jul 2021 08:14:37 -0700 (PDT)
+        Wed, 14 Jul 2021 11:32:09 -0400
+Received: from mail-qk1-x734.google.com (mail-qk1-x734.google.com [IPv6:2607:f8b0:4864:20::734])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF353C06175F
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jul 2021 08:29:16 -0700 (PDT)
+Received: by mail-qk1-x734.google.com with SMTP id m3so1925662qkm.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jul 2021 08:29:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nA/s4q3xWQ1MrD5GGKsmBhEEWIQqKBBxr9yke92X18k=;
-        b=mASXKz3d4VxWdnOhtRGY9xdrq/pnCp4byEIzOE6gDPLvnRfO+Yqrkf1jTieiwkodkW
-         lFdpPmwssfHbKute20ufcT2hcU02WypCA1mZDs+33eSDPrKZlsQYs4fEQWY9YTV3uj5m
-         oXPDRyB6DxUGa4iH1DK+CseeVPprdDb49bAbg=
+        d=poorly.run; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=d4jCOWKK2r5jgZTbCUOYvMEXvZbDZSv0WVPwWg90rq8=;
+        b=ACReAEi4qwPkaPSxn/LOSkJXIIiEkvgczkP9gFhZdzcFsT254w8PRzentIzeUQw+Dd
+         HjWMDC/R5YSmfjgBgs5L78DR4AKrWwh9+7AwL0I4fEPpBTL8VzTWCy0Kb8gLx47FK7Fw
+         cAxRJpDKm4eR9FeJ1XRJcSG2+1gl1FqBwBYqFGHBhCpQnkRvu2/F7+lLTYdh0QWRW835
+         692Dxw9s7vk6gT0BcqTlxVWtcvM/VZxvtZ2GsuHc6PJi/df7C+mC1WLxCl+hnFwTi8dW
+         7FKZtDYzxKYZDIinUvQ5Ub2csMUoczkBa+P1bwNHIX8KddETekE1k+ADf4TAbH6teaj7
+         zbvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nA/s4q3xWQ1MrD5GGKsmBhEEWIQqKBBxr9yke92X18k=;
-        b=J70CFhTh7WE5QNVqTbky+t2DQahZ0uxhnZ/rRLWz9jNmSZxHyDIof+HLZZGa9jZGfu
-         CjxJl2eqTw0/Qqvq49t4XOnO1PFMFbgAVYc38q3uabejyFsFtFGzqj6oQKmnkzHcfkC9
-         lIQHf0NzUDeAFROVNxjri5i3e83RijhXdwMvw5FIZOKeQ1qLvRdMBJak/CiMMJ4GxyL7
-         bTZDlk/Ow5rpaSw3M0VREdgBzyWwLC4/n+vKGUxQjaypVCx2RgEmuqtFcwpSK2y9gfWY
-         KtRz6Na4+sPFf4orIsAzSWZKXW7b+ugzYvC0pGVSa3Pbf9TlOWa4il66KQ1DhVn0xSSa
-         fmPA==
-X-Gm-Message-State: AOAM533A7P9ESITJtp1+EjkriLwqgksE4ciOi7KbWF+SDdE+64HB4nuE
-        XMQ/c/bWcG7p4Um9gSqOFnZXHutj4MnBWQ==
-X-Google-Smtp-Source: ABdhPJzy7PLG+ZyvE3pELRiF/wLqJRm+Rdmd5HxyeV2+e6azC9AxFXTmzF51UwY3geHx+8KkpgDelA==
-X-Received: by 2002:a05:620a:15b9:: with SMTP id f25mr10639375qkk.242.1626275676473;
-        Wed, 14 Jul 2021 08:14:36 -0700 (PDT)
-Received: from mail-yb1-f180.google.com (mail-yb1-f180.google.com. [209.85.219.180])
-        by smtp.gmail.com with ESMTPSA id x22sm897124qto.34.2021.07.14.08.14.36
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 14 Jul 2021 08:14:36 -0700 (PDT)
-Received: by mail-yb1-f180.google.com with SMTP id k184so3685595ybf.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jul 2021 08:14:36 -0700 (PDT)
-X-Received: by 2002:a25:8082:: with SMTP id n2mr13261292ybk.79.1626275675582;
- Wed, 14 Jul 2021 08:14:35 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=d4jCOWKK2r5jgZTbCUOYvMEXvZbDZSv0WVPwWg90rq8=;
+        b=UOro/yHCOLU9uufI6SatjhZYljh+KRFcdGV1QmKn932i65LhwhBXHgq2rNlfzK+ioO
+         le4eDYCOhcrJ9ysfDN6gJAnaYpQhPfKNBqfyuuPW/ancgXrz8aZWfVRu+D0fDfLHdqm+
+         EeoayQQsczSVDxwKbltsKlVOIE93UXOi0kfh10Hfdqz/curWCTxP6cjAvYDJ0Eps8nkY
+         h05gbg7TL9RI3uzJJ5QtiEFo+wH3G+PWfZz3HoyOQlCQE2OqH4BHvPWElxVVzpvf1Z2R
+         bOuYutb32sqE3HprxXzFFtUwGmKiWQ0coM/EBN2YbLGQ4AzqJV4wvFYpIYWsjDZH9b/w
+         McmQ==
+X-Gm-Message-State: AOAM531GTt4M/m7g3iWh1q6DHddnfSDuEVUeHa5s5AUicFdQqPYv1Ryc
+        wmctwq1WMKsxT0nRnobAqknS3Q==
+X-Google-Smtp-Source: ABdhPJzk7N6e6/pcmg5UdDV7+6eO38VugrJou7wFvpBfR+nOkkRgMINXSGQQ83j13KQeouUh3evGZQ==
+X-Received: by 2002:a05:620a:410f:: with SMTP id j15mr2552344qko.434.1626276555948;
+        Wed, 14 Jul 2021 08:29:15 -0700 (PDT)
+Received: from localhost ([167.100.64.199])
+        by smtp.gmail.com with ESMTPSA id y24sm1253295qkj.4.2021.07.14.08.29.15
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 14 Jul 2021 08:29:15 -0700 (PDT)
+From:   Sean Paul <sean@poorly.run>
+To:     freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org
+Cc:     Sean Paul <seanpaul@chromium.org>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, linux-arm-msm@vger.kernel.org
+Subject: [PATCH] drm/msm/dp: Initialize dp->aux->drm_dev before registration
+Date:   Wed, 14 Jul 2021 11:28:56 -0400
+Message-Id: <20210714152910.55093-1-sean@poorly.run>
+X-Mailer: git-send-email 2.31.0
 MIME-Version: 1.0
-References: <20210624171759.4125094-1-dianders@chromium.org>
- <YNXXwvuErVnlHt+s@8bytes.org> <CAD=FV=UFxZH7g8gH5+M=Fv4Y-e1bsLkNkPGJhNwhvVychcGQcQ@mail.gmail.com>
- <CAD=FV=W=HmgH3O3z+nThWL6U+X4Oh37COe-uTzVB9SanP2n86w@mail.gmail.com>
- <YOaymBHc4g2cIfRn@8bytes.org> <CAD=FV=U_mKPaGfWyN1SVi9S2hPBpG=rE_p89+Jvjr95d0TvgsA@mail.gmail.com>
- <e3555c49-2978-355f-93bb-dbfa7d09cab8@arm.com>
-In-Reply-To: <e3555c49-2978-355f-93bb-dbfa7d09cab8@arm.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 14 Jul 2021 08:14:24 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XaTqNDn=vLEXfJ2dV+EH2UoxPfzWeiS+_sZ9hrQ274bw@mail.gmail.com>
-Message-ID: <CAD=FV=XaTqNDn=vLEXfJ2dV+EH2UoxPfzWeiS+_sZ9hrQ274bw@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] iommu: Enable non-strict DMA on QCom SD/MMC
-To:     Robin Murphy <robin.murphy@arm.com>
-Cc:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        John Garry <john.garry@huawei.com>,
-        Rob Clark <robdclark@chromium.org>, quic_c_gdjako@quicinc.com,
-        Saravana Kannan <saravanak@google.com>,
-        Rajat Jain <rajatja@google.com>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        Linux MMC List <linux-mmc@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-pci@vger.kernel.org,
-        "list@263.net:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
-        Sonny Rao <sonnyrao@chromium.org>,
-        Joel Fernandes <joel@joelfernandes.org>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        "Maciej W. Rozycki" <macro@orcam.me.uk>,
-        Nicolin Chen <nicoleotsuka@gmail.com>,
-        "Paul E. McKenney" <paulmck@kernel.org>,
-        Peter Zijlstra <peterz@infradead.org>,
-        Randy Dunlap <rdunlap@infradead.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Vlastimil Babka <vbabka@suse.cz>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Linux Doc Mailing List <linux-doc@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+From: Sean Paul <seanpaul@chromium.org>
 
-On Tue, Jul 13, 2021 at 11:07 AM Robin Murphy <robin.murphy@arm.com> wrote:
->
-> On 2021-07-08 15:36, Doug Anderson wrote:
-> [...]
-> >> Or document for the users that want performance how to
-> >> change the setting, so that they can decide.
-> >
-> > Pushing this to the users can make sense for a Linux distribution but
-> > probably less sense for an embedded platform. So I'm happy to make
-> > some way for a user to override this (like via kernel command line),
-> > but I also strongly believe there should be a default that users don't
-> > have to futz with that we think is correct.
->
-> FYI I did make progress on the "punt it to userspace" approach. I'm not
-> posting it even as an RFC yet because I still need to set up a machine
-> to try actually testing any of it (it's almost certainly broken
-> somewhere), but in the end it comes out looking surprisingly not too bad
-> overall. If you're curious to take a look in the meantime I put it here:
->
-> https://gitlab.arm.com/linux-arm/linux-rm/-/commits/iommu/fq
+Avoids the following WARN:
+[    3.009556] ------------[ cut here ]------------
+[    3.014306] WARNING: CPU: 7 PID: 109 at
+drivers/gpu/drm/drm_dp_helper.c:1796 drm_dp_aux_register+0xa4/0xac
+[    3.024209] Modules linked in:
+[    3.027351] CPU: 7 PID: 109 Comm: kworker/7:8 Not tainted 5.10.47 #69
+[    3.033958] Hardware name: Google Lazor (rev1 - 2) (DT)
+[    3.039323] Workqueue: events deferred_probe_work_func
+[    3.044596] pstate: 60c00009 (nZCv daif +PAN +UAO -TCO BTYPE=--)
+[    3.050761] pc : drm_dp_aux_register+0xa4/0xac
+[    3.055329] lr : dp_aux_register+0x40/0x88
+[    3.059538] sp : ffffffc010ad3920
+[    3.062948] x29: ffffffc010ad3920 x28: ffffffa64196ac70
+[    3.067239] mmc1: Command Queue Engine enabled
+[    3.068406] x27: ffffffa64196ac68 x26: 0000000000000001
+[    3.068407] x25: 0000000000000002 x24: 0000000000000060
+[    3.068409] x23: ffffffa642ab3400 x22: ffffffe126c10e5b
+[    3.068410] x21: ffffffa641dc3188 x20: ffffffa641963c10
+[    3.068412] x19: ffffffa642aba910 x18: 00000000ffff0a00
+[    3.068414] x17: 000000476f8e002a x16: 00000000000000b8
+[    3.073008] mmc1: new HS400 Enhanced strobe MMC card at address 0001
+[    3.078448] x15: ffffffffffffffff x14: ffffffffffffffff
+[    3.078450] x13: 0000000000000030 x12: 0000000000000030
+[    3.078452] x11: 0101010101010101 x10: ffffffe12647a914
+[    3.078453] x9 : ffffffe12647a8cc x8 : 0000000000000000
+[    3.084452] mmcblk1: mmc1:0001 DA4032 29.1 GiB
+[    3.089372]
+[    3.089372] x7 : 6c6064717372fefe x6 : ffffffa642b11494
+[    3.089374] x5 : 0000000000000000 x4 : 6d006c657869ffff
+[    3.089375] x3 : 000000006c657869 x2 : 000000000000000c
+[    3.089376] x1 : ffffffe126c3ae3c x0 : ffffffa642aba910
+[    3.089381] Call trace:
+[    3.094931] mmcblk1boot0: mmc1:0001 DA4032 partition 1 4.00 MiB
+[    3.100291]  drm_dp_aux_register+0xa4/0xac
+[    3.100292]  dp_aux_register+0x40/0x88
+[    3.100294]  dp_display_bind+0x64/0xcc
+[    3.100295]  component_bind_all+0xdc/0x210
+[    3.100298]  msm_drm_bind+0x1e8/0x5d4
+[    3.100301]  try_to_bring_up_master+0x168/0x1b0
+[    3.105861] mmcblk1boot1: mmc1:0001 DA4032 partition 2 4.00 MiB
+[    3.112282]  __component_add+0xa0/0x158
+[    3.112283]  component_add+0x1c/0x28
+[    3.112284]  dp_display_probe+0x33c/0x380
+[    3.112286]  platform_drv_probe+0x9c/0xbc
+[    3.112287]  really_probe+0x140/0x35c
+[    3.112289]  driver_probe_device+0x84/0xc0
+[    3.112292]  __device_attach_driver+0x94/0xb0
+[    3.117967] mmcblk1rpmb: mmc1:0001 DA4032 partition 3 16.0 MiB,
+chardev (239:0)
+[    3.123201]  bus_for_each_drv+0x8c/0xd8
+[    3.123202]  __device_attach+0xc4/0x150
+[    3.123204]  device_initial_probe+0x1c/0x28
+[    3.123205]  bus_probe_device+0x3c/0x9c
+[    3.123206]  deferred_probe_work_func+0x90/0xcc
+[    3.123211]  process_one_work+0x218/0x3ec
+[    3.131976]  mmcblk1: p1 p2 p3 p4 p5 p6 p7 p8 p9 p10 p11 p12
+[    3.134123]  worker_thread+0x288/0x3e8
+[    3.134124]  kthread+0x148/0x1b0
+[    3.134127]  ret_from_fork+0x10/0x30
+[    3.134128] ---[ end trace cfb9fce3f70f824d ]---
 
-Being able to change this at runtime through sysfs sounds great and it
-fills all the needs I'm aware of, thanks! In Chrome OS we can just use
-this with some udev rules and get everything we need. I'm happy to
-give this a spin when you're ready for extra testing.
+Signed-off-by: Sean Paul <seanpaul@chromium.org>
+---
+ drivers/gpu/drm/msm/dp/dp_display.c | 1 +
+ 1 file changed, 1 insertion(+)
 
--Doug
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 051c1be1de7e..987f9e330138 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -219,6 +219,7 @@ static int dp_display_bind(struct device *dev, struct device *master,
+ 		goto end;
+ 	}
+ 
++	dp->aux->drm_dev = drm;
+ 	rc = dp_aux_register(dp->aux);
+ 	if (rc) {
+ 		DRM_ERROR("DRM DP AUX register failed\n");
+-- 
+Sean Paul, Software Engineer, Google / Chromium OS
+
