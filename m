@@ -2,60 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CFFB33C8290
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 12:14:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B6153C8292
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 12:15:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238948AbhGNKRb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jul 2021 06:17:31 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59942 "EHLO mail.kernel.org"
+        id S238887AbhGNKSW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jul 2021 06:18:22 -0400
+Received: from 8bytes.org ([81.169.241.247]:37742 "EHLO theia.8bytes.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238849AbhGNKRb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jul 2021 06:17:31 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 3CD566101B;
-        Wed, 14 Jul 2021 10:14:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1626257680;
-        bh=KMdm/q4EZ7TeQOF+6nu4RACAto6lVye1VWbBT0sDDfY=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=FjRMSJLAtY3gl6hc71B0o9ZOdL/Y8MMeHa2pPC1FoPWw14vZW2jeWCjbf+L5Otjhu
-         d3gekinCJPaPkxO8rjCJYdk2dXawpWB0WCM65TuCIrKVMZDheVZY53LD4GsqsDls+P
-         xZ4YeSUp9zpdAZkojqSmeijIiYm16+xHkP7avXCFbUPwTMdC8x3tKhlRhJh99dqELc
-         PtK/L9i94iBvuJMvANEKdJMib4rdAlWYU+o226mymhFwADYiV4bR8EhPWKqYQdj455
-         CAOzD+U+p8NuV1oczbl2++X+oyC1L6ddoatbFv3Aq3kTdE8qOssGCOvIePvBg6IOsN
-         smZsBZPl3Odvw==
-Date:   Wed, 14 Jul 2021 15:44:36 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Mark Brown <broonie@kernel.org>, akashast@codeaurora.org,
-        swboyd@chromium.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-spi@vger.kernel.org
-Subject: Re: [PATCH] spi: spi-geni-qcom: Remove confusing comment about
- setting the watermark
-Message-ID: <YO65DHLzjIAV4P/D@matsya>
-References: <20210712085010.1.Ie3bb9f9d30d6475bb75251d32635194c1c72b9ee@changeid>
+        id S238728AbhGNKSW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Jul 2021 06:18:22 -0400
+Received: by theia.8bytes.org (Postfix, from userid 1000)
+        id C73C1352; Wed, 14 Jul 2021 12:15:27 +0200 (CEST)
+Date:   Wed, 14 Jul 2021 12:15:20 +0200
+From:   Joerg Roedel <joro@8bytes.org>
+To:     Robin Murphy <robin.murphy@arm.com>
+Cc:     Doug Anderson <dianders@chromium.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Linux Doc Mailing List <linux-doc@vger.kernel.org>,
+        Peter Zijlstra <peterz@infradead.org>,
+        linux-pci@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Joel Fernandes <joel@joelfernandes.org>,
+        Rajat Jain <rajatja@google.com>, Will Deacon <will@kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Jonathan Corbet <corbet@lwn.net>, quic_c_gdjako@quicinc.com,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        "Paul E. McKenney" <paulmck@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Sonny Rao <sonnyrao@chromium.org>,
+        Vlastimil Babka <vbabka@suse.cz>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        Linux MMC List <linux-mmc@vger.kernel.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "list@263.net:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        "Maciej W. Rozycki" <macro@orcam.me.uk>
+Subject: Re: [PATCH v2 0/3] iommu: Enable non-strict DMA on QCom SD/MMC
+Message-ID: <YO65OOScL5vru1Kr@8bytes.org>
+References: <20210624171759.4125094-1-dianders@chromium.org>
+ <YNXXwvuErVnlHt+s@8bytes.org>
+ <CAD=FV=UFxZH7g8gH5+M=Fv4Y-e1bsLkNkPGJhNwhvVychcGQcQ@mail.gmail.com>
+ <CAD=FV=W=HmgH3O3z+nThWL6U+X4Oh37COe-uTzVB9SanP2n86w@mail.gmail.com>
+ <YOaymBHc4g2cIfRn@8bytes.org>
+ <edd1de35-5b9e-b679-9428-23c6d5005740@arm.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210712085010.1.Ie3bb9f9d30d6475bb75251d32635194c1c72b9ee@changeid>
+In-Reply-To: <edd1de35-5b9e-b679-9428-23c6d5005740@arm.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12-07-21, 08:50, Douglas Anderson wrote:
-> The comment in setup_fifo_xfer() about setting the watermark wasn't
-> quite proper grammar and also stopped making sense around commit
-> 6d66507d9b55 ("spi: spi-geni-qcom: Don't wait to start 1st transfer if
-> transmitting"). After that commit we actually start the transfer
-> _before_ the watermark interrupt comes.
+Hi Robin,
+
+On Fri, Jul 09, 2021 at 02:56:47PM +0100, Robin Murphy wrote:
+> As I mentioned before, conceptually I think this very much belongs in sysfs
+> as a user decision. We essentially have 4 levels of "strictness":
 > 
-> I don't think the comment really has any value anymore. We've already
-> got a comment when we grab the spinlock saying that our interrupt can
-> come any time as a result of the things in the locked section. Let's
-> just remove it.
+> 1: DMA domain with bounce pages
+> 2: DMA domain
+> 3: DMA domain with flush queue
+> 4: Identity domain
 
-Reviewed-by: Vinod Koul <vkoul@kernel.org>
+Together with reasonable defaults (influenced by compile-time
+options) it seems to be a good thing to configure at runtime via
+sysfs.
 
--- 
-~Vinod
+We already have CONFIG_IOMMU_DEFAULT_PASSTHROUGH, which can probably be
+extended to be an option list:
+
+	- CONFIG_IOMMU_DEFAULT_PASSTHROUGH: Trusted devices are identity
+					    mapped
+
+	- CONFIG_IOMMU_DEFAULT_DMA_STRICT: Trusted devices are DMA
+					   mapped with strict flush
+					   behavior on unmap
+
+	- CONFIG_IOMMU_DEFAULT_DMA_LAZY: Trusted devices are DMA mapped
+					 with flush queues for performance
+
+Untrusted devices always get into the DMA domain with bounce pages by
+default.
+
+The defaults can be changed at runtime via sysfs. We already have basic
+support for runtime switching of the default domain, so that can be
+re-used.
+
+Regards,
+
+	Joerg
+
