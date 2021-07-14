@@ -2,104 +2,60 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 174EA3C8248
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 11:59:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CFFB33C8290
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 12:14:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239036AbhGNKCE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jul 2021 06:02:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55710 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239031AbhGNKCC (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jul 2021 06:02:02 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F31DCC061762
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jul 2021 02:59:10 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id n11so1243965plc.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 14 Jul 2021 02:59:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=l1bjuoaTVbYtnhNI71QZX5Bx6fnm6uPZuv4M80rHUjI=;
-        b=EM4ks1xnAhxy/oyMPK+YmsxsS8bDIyg6oX+je8bM1orlDBciQn00YRtWkJ0vI93Prn
-         U8/+BVyPocLBJLw91waPql/4SmUgMaS5kDcPbxb9Pqb56PehJDlipv5vKTuglcl4oYUB
-         BY/uh9Gt3fJZDwJL3gVTrRsLNyQoTaI3jKQxgiaUy54G3AeuLrdn8Qf931iK5E1atSz7
-         qNHHsRAmujlZBUVJfgVhXfUv9e9xKxY79+WaKIxRqyBNFZxkPFG8pmsVUXptDTdlI1o7
-         swi/NTWbePwxQwz7qTU/7E1Sqpb/Awqp8F+b9t+etHf/aiZ/PTLqyCrm9y7HhlCGp++s
-         sToQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=l1bjuoaTVbYtnhNI71QZX5Bx6fnm6uPZuv4M80rHUjI=;
-        b=cQiFeK/+Yifs3YGXNZUb8+O/Y5AghrWNN7g4f24g9dUbSM2Q1XBSkaxGuAAzo04YoT
-         hPatpL02lM/fS++JIqArtrTUVE6fRajiRgoP3qRUD4xPJpR+8kzQBV3rh4Kuh6RuzguW
-         ealTifjAIABapFdmeLfs3xSQu74Z2jNUuMXK4CsZlF65TbisIoK6yfYKxBI/dEJyxRMi
-         sZjjwVe57fze0C7MuKoNuDSONIsxdMKrYoCRL6USbyGQg2WmJ1zJy6NSnajv6FvxPHpP
-         ObcUbB73K2A++SLLY97XHZjZDX7VOUAGdZK8scVsI2/IgoCCKYecX08rj2QKezMdeqJD
-         uWGQ==
-X-Gm-Message-State: AOAM531gaD866NyEuEZRvE+VoEXd+bed5qfjlbWeHgZZ7hkNZuCHaoG+
-        UW+JjYvAB23bX3UzJhF20KBCtw==
-X-Google-Smtp-Source: ABdhPJxzCVfEsbc0mVDVQlW7BG7ySqnlExnHTBB9BPUghBKax4eq63LO/nDMtA6PqW46DrcO1K6xTA==
-X-Received: by 2002:a17:902:d217:b029:105:e265:65c7 with SMTP id t23-20020a170902d217b0290105e26565c7mr7203320ply.16.1626256750527;
-        Wed, 14 Jul 2021 02:59:10 -0700 (PDT)
-Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id g1sm2283304pgs.23.2021.07.14.02.59.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jul 2021 02:59:10 -0700 (PDT)
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Dmitry Torokhov <dmitry.torokhov@gmail.com>
-Cc:     Luca Weiss <luca@z3ntu.xyz>,
+        id S238948AbhGNKRb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jul 2021 06:17:31 -0400
+Received: from mail.kernel.org ([198.145.29.99]:59942 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S238849AbhGNKRb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Jul 2021 06:17:31 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 3CD566101B;
+        Wed, 14 Jul 2021 10:14:38 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1626257680;
+        bh=KMdm/q4EZ7TeQOF+6nu4RACAto6lVye1VWbBT0sDDfY=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=FjRMSJLAtY3gl6hc71B0o9ZOdL/Y8MMeHa2pPC1FoPWw14vZW2jeWCjbf+L5Otjhu
+         d3gekinCJPaPkxO8rjCJYdk2dXawpWB0WCM65TuCIrKVMZDheVZY53LD4GsqsDls+P
+         xZ4YeSUp9zpdAZkojqSmeijIiYm16+xHkP7avXCFbUPwTMdC8x3tKhlRhJh99dqELc
+         PtK/L9i94iBvuJMvANEKdJMib4rdAlWYU+o226mymhFwADYiV4bR8EhPWKqYQdj455
+         CAOzD+U+p8NuV1oczbl2++X+oyC1L6ddoatbFv3Aq3kTdE8qOssGCOvIePvBg6IOsN
+         smZsBZPl3Odvw==
+Date:   Wed, 14 Jul 2021 15:44:36 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Mark Brown <broonie@kernel.org>, akashast@codeaurora.org,
+        swboyd@chromium.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matteo Croce <mcroce@microsoft.com>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Petr Mladek <pmladek@suse.com>,
-        "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>,
-        linux-arm-msm@vger.kernel.org, linux-input@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>
-Subject: [PATCH v2 2/2] Input: pm8941-pwrkey - Respect reboot_mode for warm reset
-Date:   Wed, 14 Jul 2021 17:58:49 +0800
-Message-Id: <20210714095850.27185-3-shawn.guo@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20210714095850.27185-1-shawn.guo@linaro.org>
-References: <20210714095850.27185-1-shawn.guo@linaro.org>
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-spi@vger.kernel.org
+Subject: Re: [PATCH] spi: spi-geni-qcom: Remove confusing comment about
+ setting the watermark
+Message-ID: <YO65DHLzjIAV4P/D@matsya>
+References: <20210712085010.1.Ie3bb9f9d30d6475bb75251d32635194c1c72b9ee@changeid>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210712085010.1.Ie3bb9f9d30d6475bb75251d32635194c1c72b9ee@changeid>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On some devices, e.g. Sony Xperia M4 Aqua, warm reset is used to reboot
-device into bootloader and recovery mode.  Instead of always doing hard
-reset, add a check on reboot_mode for possible warm reset.
+On 12-07-21, 08:50, Douglas Anderson wrote:
+> The comment in setup_fifo_xfer() about setting the watermark wasn't
+> quite proper grammar and also stopped making sense around commit
+> 6d66507d9b55 ("spi: spi-geni-qcom: Don't wait to start 1st transfer if
+> transmitting"). After that commit we actually start the transfer
+> _before_ the watermark interrupt comes.
+> 
+> I don't think the comment really has any value anymore. We've already
+> got a comment when we grab the spinlock saying that our interrupt can
+> come any time as a result of the things in the locked section. Let's
+> just remove it.
 
-Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
----
- drivers/input/misc/pm8941-pwrkey.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
+Reviewed-by: Vinod Koul <vkoul@kernel.org>
 
-diff --git a/drivers/input/misc/pm8941-pwrkey.c b/drivers/input/misc/pm8941-pwrkey.c
-index cf8104454e74..9b14d6eb1918 100644
---- a/drivers/input/misc/pm8941-pwrkey.c
-+++ b/drivers/input/misc/pm8941-pwrkey.c
-@@ -27,6 +27,7 @@
- #define PON_PS_HOLD_RST_CTL2		0x5b
- #define  PON_PS_HOLD_ENABLE		BIT(7)
- #define  PON_PS_HOLD_TYPE_MASK		0x0f
-+#define  PON_PS_HOLD_TYPE_WARM_RESET	1
- #define  PON_PS_HOLD_TYPE_SHUTDOWN	4
- #define  PON_PS_HOLD_TYPE_HARD_RESET	7
- 
-@@ -93,7 +94,10 @@ static int pm8941_reboot_notify(struct notifier_block *nb,
- 		break;
- 	case SYS_RESTART:
- 	default:
--		reset_type = PON_PS_HOLD_TYPE_HARD_RESET;
-+		if (reboot_mode == REBOOT_WARM)
-+			reset_type = PON_PS_HOLD_TYPE_WARM_RESET;
-+		else
-+			reset_type = PON_PS_HOLD_TYPE_HARD_RESET;
- 		break;
- 	}
- 
 -- 
-2.17.1
-
+~Vinod
