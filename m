@@ -2,148 +2,388 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 49AA53C7BE6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 04:40:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8C57E3C7BFF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 04:46:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237547AbhGNCnJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jul 2021 22:43:09 -0400
-Received: from mail-il1-f174.google.com ([209.85.166.174]:46789 "EHLO
-        mail-il1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237478AbhGNCnJ (ORCPT
+        id S237707AbhGNCth (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jul 2021 22:49:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42620 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237702AbhGNCth (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jul 2021 22:43:09 -0400
-Received: by mail-il1-f174.google.com with SMTP id y6so67825ilj.13;
-        Tue, 13 Jul 2021 19:40:18 -0700 (PDT)
+        Tue, 13 Jul 2021 22:49:37 -0400
+Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5609BC0613DD
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jul 2021 19:46:46 -0700 (PDT)
+Received: by mail-oo1-xc32.google.com with SMTP id y17-20020a4ae7110000b0290262f3c22a63so237980oou.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jul 2021 19:46:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=cgV6xvF1DtRkfWmB2cqboiTr4fd4G4ciBbO2znVwTys=;
+        b=WaszFHTXdDfJLzvOlsjOazKXpGizfc7eobnCb9TXjIw2gjE+qKl1XWj+sZNIKT+Ws7
+         9ItE/DyErH3FwmUBLV3i+AkAsFnTAFRvMG4zepbyyuNZZkzGRCjYEhBQWCytP4QnXZki
+         2F+/2msLt9qa3aDE1g+srPmFCATxkuEj+ilWFWoihbOuLG9eQR0sibFAPR+umM/Clbov
+         U97cqRUj43ZpTSy46ovMvhWSCzqSDaF7gENxUQinVkA0+135uyivHLYiLqWCokmuG1IB
+         EdYEaZCFWRxDsCBkQBLFa+UZJ1xgp/QJ2nhUGMfr0KhrPQZ1Xg3HFwnwXo1Z7MgTh6GN
+         1/kQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=riDFU7JLN9rdxbZ0yha84VJqHGAQItObLh3l+N0JqmE=;
-        b=mEa55NW0kVDXs6XLun0o0XtAT6bE6CqA0JcmzkjjNy119u9HD7wv9q7QWFOaRikTMC
-         tvMbBwgWiJLH0b2vWG8jWQCB3byQwsCEdnJvdROUkZ43D1NdqGny+eBUaXLgP8YL6iaU
-         9Y1y5UmxCBhwIPkkDUTXty59rlNrtnkjVfXzo2SCvsVBr6SXGdUX0/xGNsymPDn3TCcu
-         r8nZ6+qgG7gEvJrNG9hSaLVEYC29Phwbfzp6SGufV/dUK+vdN5bSLEmmx+1yI7E1uMoH
-         XJkWIyt75V8Hm0zfHOJOAKfBpdBC13sNVXNWNJCW5hO1eOxnity/XDjI7QBgJbgDQv9C
-         sgfw==
-X-Gm-Message-State: AOAM53156VsSNZlohNCXTT8N5FAVGm12i+DcFAyG0UDrYcZWidlxNeSC
-        bghuL230FxRIxKLZWCZJew==
-X-Google-Smtp-Source: ABdhPJyYpTVJnJWr7IspJv6gkKDKsVeyNcozRDAHV5BN+pzvPlKtikW62UPo9J9JYyBz7AeGniakEg==
-X-Received: by 2002:a92:b003:: with SMTP id x3mr5176007ilh.93.1626230418602;
-        Tue, 13 Jul 2021 19:40:18 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id d8sm407613iom.49.2021.07.13.19.40.16
+        bh=cgV6xvF1DtRkfWmB2cqboiTr4fd4G4ciBbO2znVwTys=;
+        b=DcajohF6HSSsKzkZvL26QyO+rIqfy64qz4OWWoJR2nN4mK6uq4LPWy/WKMUTOY+VOf
+         zinH3k90D9wIqvWGB1F/GRHFnPW7dRCDCtAmmLYb2/TmZhNSNPiJRXDdkpmRsZaYN9V8
+         NfR49gIX1JWbmi/FCn9jm523FdGAdwPjr4P4OskNQoVY+fT8/3XuVWaf4wt0Vhujk5p2
+         xP/0p6YXiQaC89Zc1gJurt6obn3q9Xgkks3thEyqC8C1jYXgjEvvuMDfiQbXQd13An2J
+         H301PVWb2jj7vk4rvRoeb3OZHZ4J9nyDDkDY6Te1FDsN2ZGjLyise2SUg12pZT5MlC87
+         2ySg==
+X-Gm-Message-State: AOAM530i+AZahdPu0hGKpWNN7qqQblVJduB3VdZFI0f5TkmO8ItIChSp
+        aNveX8WDasrIV+jNWiHq0u7pZw==
+X-Google-Smtp-Source: ABdhPJz5mCbUHrJOoO9BdHKGbES4ztyEbvHYamznMTEFnEeAAEmFBn2VKn3zwz42x0c+U2bgKm/YAQ==
+X-Received: by 2002:a4a:18c2:: with SMTP id 185mr6167452ooo.6.1626230805694;
+        Tue, 13 Jul 2021 19:46:45 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id x20sm218720otq.62.2021.07.13.19.46.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jul 2021 19:40:17 -0700 (PDT)
-Received: (nullmailer pid 1350780 invoked by uid 1000);
-        Wed, 14 Jul 2021 02:40:14 -0000
-Date:   Tue, 13 Jul 2021 20:40:14 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Baruch Siach <baruch@tkos.co.il>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Balaji Prakash J <bjagadee@codeaurora.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v5 3/4] dt-bindings: pwm: add IPQ6018 binding
-Message-ID: <20210714024014.GA1334332@robh.at.kernel.org>
-References: <f79128fa287e37ee59cb03ae04b319ecb3d68c29.1626176145.git.baruch@tkos.co.il>
- <6d3a4483d22753ba8114304db07756620c66da41.1626176145.git.baruch@tkos.co.il>
+        Tue, 13 Jul 2021 19:46:45 -0700 (PDT)
+Date:   Tue, 13 Jul 2021 21:46:42 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     satya priya <skakit@codeaurora.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>, kgunda@codeaurora.org,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH V5 1/2] dt-bindings: pinctrl: qcom-pmic-gpio: Convert
+ qcom pmic gpio bindings to YAML
+Message-ID: <YO5QErHuGaPhU41k@yoga>
+References: <1625032241-3458-1-git-send-email-skakit@codeaurora.org>
+ <1625032241-3458-2-git-send-email-skakit@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <6d3a4483d22753ba8114304db07756620c66da41.1626176145.git.baruch@tkos.co.il>
+In-Reply-To: <1625032241-3458-2-git-send-email-skakit@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 13, 2021 at 02:35:44PM +0300, Baruch Siach wrote:
-> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
+On Wed 30 Jun 00:50 CDT 2021, satya priya wrote:
+
+> Convert Qualcomm PMIC GPIO bindings from .txt to .yaml format.
 > 
-> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
-> ---
-> v5: Use qcom,pwm-regs for phandle instead of direct regs (Bjorn
->     Andersson, Kathiravan T)
-> 
-> v4: Update the binding example node as well (Rob Herring's bot)
-> 
-> v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
-> 
-> v2: Make #pwm-cells const (Rob Herring)
-> ---
->  .../devicetree/bindings/pwm/ipq-pwm.yaml      | 55 +++++++++++++++++++
->  1 file changed, 55 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
+
+Thanks for updating this Satya, this is looking quite good now. Just got
+one issue with the definition of the state child node.
+
+> Signed-off-by: satya priya <skakit@codeaurora.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+[..]
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
 > new file mode 100644
-> index 000000000000..a07bfe63dc1a
+> index 0000000..22c58de
 > --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
-> @@ -0,0 +1,55 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
+> @@ -0,0 +1,259 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
 > +%YAML 1.2
 > +---
-> +$id: http://devicetree.org/schemas/pwm/ipq-pwm.yaml#
+> +$id: http://devicetree.org/schemas/pinctrl/qcom,pmic-gpio.yaml#
 > +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +title: Qualcomm IPQ6018 PWM controller
+> +title: Qualcomm PMIC GPIO block
 > +
 > +maintainers:
-> +  - Baruch Siach <baruch@tkos.co.il>
+> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+> +
+> +description:
+> +  This binding describes the GPIO block(s) found in the 8xxx series of
+> +  PMIC's from Qualcomm.
 > +
 > +properties:
-> +  "#pwm-cells":
+> +  compatible:
+> +    items:
+> +      - enum:
+> +          - qcom,pm660-gpio
+> +          - qcom,pm660l-gpio
+> +          - qcom,pm6150-gpio
+> +          - qcom,pm6150l-gpio
+> +          - qcom,pm7325-gpio
+> +          - qcom,pm8005-gpio
+> +          - qcom,pm8008-gpio
+> +          - qcom,pm8018-gpio
+> +          - qcom,pm8038-gpio
+> +          - qcom,pm8058-gpio
+> +          - qcom,pm8150-gpio
+> +          - qcom,pm8150b-gpio
+> +          - qcom,pm8350-gpio
+> +          - qcom,pm8350b-gpio
+> +          - qcom,pm8350c-gpio
+> +          - qcom,pm8916-gpio
+> +          - qcom,pm8917-gpio
+> +          - qcom,pm8921-gpio
+> +          - qcom,pm8941-gpio
+> +          - qcom,pm8950-gpio
+> +          - qcom,pm8994-gpio
+> +          - qcom,pm8998-gpio
+> +          - qcom,pma8084-gpio
+> +          - qcom,pmi8950-gpio
+> +          - qcom,pmi8994-gpio
+> +          - qcom,pmi8998-gpio
+> +          - qcom,pmk8350-gpio
+> +          - qcom,pmr735a-gpio
+> +          - qcom,pmr735b-gpio
+> +          - qcom,pms405-gpio
+> +          - qcom,pmx55-gpio
+> +
+> +      - enum:
+> +          - qcom,spmi-gpio
+> +          - qcom,ssbi-gpio
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    minItems: 1
+> +    maxItems: 44
+> +    description: |
+> +        Must contain an array of encoded interrupt specifiers for
+> +        each available GPIO
+> +
+> +  '#interrupt-cells':
 > +    const: 2
 > +
-> +  compatible:
-> +    const: qcom,ipq6018-pwm
+> +  interrupt-controller: true
 > +
-> +  qcom,pwm-regs:
-> +    $ref: '/schemas/types.yaml#/definitions/phandle-array'
+> +  gpio-controller: true
+> +
+> +  gpio-ranges:
 > +    maxItems: 1
+> +
+> +  '#gpio-cells':
+> +    const: 2
 > +    description: |
-> +      phandle link and offset to TCSR block
 
-This binding should be a child of the TCSR I think as Bjorn asked.
+Not need for the '|', as the formatting isn't significant.
 
-> +
-> +  clocks:
-> +    maxItems: 1
-> +
-> +  clock-names:
-> +    const: core
-> +
-> +required:
-> +  - "#pwm-cells"
-> +  - compatible
-> +  - qcom,pwm-regs
-> +  - clocks
-> +  - clock-names
+> +        The first cell will be used to define gpio number and the
+> +        second denotes the flags for this gpio
 > +
 > +additionalProperties: false
 > +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - gpio-controller
+> +  - '#gpio-cells'
+> +  - gpio-ranges
+> +
+> +patternProperties:
+> +  '.*':
+
+I would prefer this match to follow tlmm and go '-state$'
+
+> +    anyOf:
+
+Either we want the immediate child node to match gpio-pinctrl-state
+or we want one of more children matching gpio-pinctrl-state, but not
+both. So "oneOf".
+
+> +      - $ref: "pinmux-node.yaml"
+> +      - $ref: "pincfg-node.yaml"
+
+The generic definition is not sufficient, you want this to be
+
+	- $ref: "#/$defs/gpio-pinctrl-state"
+
+> +      - patternProperties:
+> +          ".*":
+
+The subnodes of the state can be named whatever, so this (the .*) is
+good.
+
+> +            $ref: "#/$defs/gpio-pinctrl-state"
+> +
+> +$defs:
+> +  gpio-pinctrl-state:
+
+This is too generic, how about qcom-pmic-gpio-state?
+
+> +    type: object
+> +    anyOf:
+
+I have this as "allOf" in the TLMM binding, not entirely sure what the
+implications of anyOf here would be though...
+
+> +      - $ref: "pinmux-node.yaml"
+> +      - $ref: "pincfg-node.yaml"
+> +    properties:
+> +      pins:
+> +        description: |
+> +            List of gpio pins affected by the properties specified in
+> +            this subnode.  Valid pins are
+> +                 - gpio1-gpio10 for pm6150
+> +                 - gpio1-gpio12 for pm6150l
+> +                 - gpio1-gpio10 for pm7325
+> +                 - gpio1-gpio4 for pm8005
+> +                 - gpio1-gpio2 for pm8008
+> +                 - gpio1-gpio6 for pm8018
+> +                 - gpio1-gpio12 for pm8038
+> +                 - gpio1-gpio40 for pm8058
+> +                 - gpio1-gpio10 for pm8150 (holes on gpio2, gpio5,
+> +                                            gpio7 and gpio8)
+> +                 - gpio1-gpio12 for pm8150b (holes on gpio3, gpio4
+> +                                             and gpio7)
+> +                 - gpio1-gpio12 for pm8150l (hole on gpio7)
+> +                 - gpio1-gpio4 for pm8916
+> +                 - gpio1-gpio10 for pm8350
+> +                 - gpio1-gpio8 for pm8350b
+> +                 - gpio1-gpio9 for pm8350c
+> +                 - gpio1-gpio38 for pm8917
+> +                 - gpio1-gpio44 for pm8921
+> +                 - gpio1-gpio36 for pm8941
+> +                 - gpio1-gpio8 for pm8950 (hole on gpio3)
+> +                 - gpio1-gpio22 for pm8994
+> +                 - gpio1-gpio26 for pm8998
+> +                 - gpio1-gpio22 for pma8084
+> +                 - gpio1-gpio2 for pmi8950
+> +                 - gpio1-gpio10 for pmi8994
+> +                 - gpio1-gpio4 for pmk8350
+> +                 - gpio1-gpio4 for pmr735a
+> +                 - gpio1-gpio4 for pmr735b
+> +                 - gpio1-gpio12 for pms405 (holes on gpio1, gpio9
+> +                                            and gpio10)
+> +                 - gpio1-gpio11 for pmx55 (holes on gpio3, gpio7, gpio10
+> +                                            and gpio11)
+> +
+> +        items:
+> +          pattern: "^gpio([0-9]+)$"
+> +
+> +      function:
+> +        items:
+> +          - enum:
+> +              - normal
+> +              - paired
+> +              - func1
+> +              - func2
+> +              - dtest1
+> +              - dtest2
+> +              - dtest3
+> +              - dtest4
+> +              - func3  # supported by LV/MV GPIO subtypes
+> +              - func4  # supported by LV/MV GPIO subtypes
+> +
+> +      bias-disable: true
+> +      bias-pull-down: true
+> +      bias-pull-up: true
+> +
+> +      qcom,pull-up-strength:
+> +        $ref: /schemas/types.yaml#/definitions/uint32
+> +        description: |
+> +            Specifies the strength to use for pull up, if selected.
+> +            Valid values are defined in
+> +            <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+> +            If this property is omitted 30uA strength will be used
+> +            if pull up is selected
+
+
+enum: [0, 1, 2, 3]
+
+> +
+> +      bias-high-impedance: true
+> +      input-enable: true
+> +      output-high: true
+> +      output-low: true
+> +      power-source: true
+> +
+> +      qcom,drive-strength:
+> +        $ref: /schemas/types.yaml#/definitions/uint32
+> +        description: |
+> +            Selects the drive strength for the specified pins
+> +            Valid drive strength values are defined in
+> +            <dt-bindings/pinctrl/qcom,pmic-gpio.h>
+> +        enum: [0, 1, 2, 3]
+> +
+> +      drive-push-pull: true
+> +      drive-open-drain: true
+> +      drive-open-source: true
+> +
+> +      qcom,analog-pass:
+> +        $ref: /schemas/types.yaml#/definitions/flag
+> +        description: |
+> +            The specified pins are configured in
+> +            analog-pass-through mode.
+> +
+> +      qcom,atest:
+> +        $ref: /schemas/types.yaml#/definitions/uint32
+> +        description: |
+> +            Selects ATEST rail to route to GPIO when it's
+> +            configured in analog-pass-through mode.
+> +        enum: [1, 2, 3, 4]
+> +
+> +      qcom,dtest-buffer:
+> +        $ref: /schemas/types.yaml#/definitions/uint32
+> +        description: |
+> +            Selects DTEST rail to route to GPIO when it's
+> +            configured as digital input.
+> +        enum: [1, 2, 3, 4]
+> +
+> +    required:
+> +      - pins
+> +      - function
+> +
+> +    additionalProperties: false
+> +
 > +examples:
 > +  - |
-> +    #include <dt-bindings/clock/qcom,gcc-ipq6018.h>
+> +    #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
 > +
-> +    soc {
-> +        #address-cells = <2>;
-> +        #size-cells = <2>;
+> +    pm8921_gpio: gpio@150 {
+> +      compatible = "qcom,pm8921-gpio", "qcom,ssbi-gpio";
+> +      reg = <0x150 0x160>;
+> +      interrupts = <192 1>, <193 1>, <194 1>,
+> +                   <195 1>, <196 1>, <197 1>,
+> +                   <198 1>, <199 1>, <200 1>,
+> +                   <201 1>, <202 1>, <203 1>,
+> +                   <204 1>, <205 1>, <206 1>,
+> +                   <207 1>, <208 1>, <209 1>,
+> +                   <210 1>, <211 1>, <212 1>,
+> +                   <213 1>, <214 1>, <215 1>,
+> +                   <216 1>, <217 1>, <218 1>,
+> +                   <219 1>, <220 1>, <221 1>,
+> +                   <222 1>, <223 1>, <224 1>,
+> +                   <225 1>, <226 1>, <227 1>,
+> +                   <228 1>, <229 1>, <230 1>,
+> +                   <231 1>, <232 1>, <233 1>,
+> +                   <234 1>, <235 1>;
 > +
-> +        pwm {
-> +            #pwm-cells = <2>;
-> +            compatible = "qcom,ipq6018-pwm";
-> +            qcom,pwm-regs = <&tcsr_q6 0xa010>;
-> +            clocks = <&gcc GCC_ADSS_PWM_CLK>;
-> +            clock-names = "core";
+> +      gpio-controller;
+> +      gpio-ranges = <&pm8921_gpio 0 0 44>;
+> +      #gpio-cells = <2>;
+> +
+> +      pm8921_gpio_keys: gpio-keys {
+
+Per my above request of changing the pattern, this would have to be
+"gpio-keys-state" instead.
+
+Regards,
+bjorn
+
+> +        volume-keys {
+> +          pins = "gpio20", "gpio21";
+> +          function = "normal";
+> +
+> +          input-enable;
+> +          bias-pull-up;
+> +          drive-push-pull;
+> +          qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
+> +          power-source = <PM8921_GPIO_S4>;
 > +        };
+> +      };
 > +    };
+> +...
 > -- 
-> 2.30.2
-> 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+> of Code Aurora Forum, hosted by The Linux Foundation
 > 
