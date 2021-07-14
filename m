@@ -2,77 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A2AC3C8CF8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 21:40:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 249923C8BF8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 21:37:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234891AbhGNTnU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jul 2021 15:43:20 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37098 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235410AbhGNTmu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jul 2021 15:42:50 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id B7F17613D0;
-        Wed, 14 Jul 2021 19:39:56 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1626291597;
-        bh=+7X0WhMUWxiad1+GTvGCFLGSc7A0FiFOGf1V/j3u2gI=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=JH8vWwumHdRCpT8WoTjb3eGvj2Kva5Nctf/dp3yZF4EU+pR/ncw195Ty+k9oSmE/8
-         ajj8gs1xhN9S5YdoTDhu6FaKGGVgjmDZbzG4Sx+GKbNS2PcXmWnU5P4yfPUYe3WJUE
-         uptUMcgAWmSMBTwLctq9FU4XNWh97oIYYhm8nz/+Nofyd2MzhX0FtEaAtSd40qCXQ/
-         lcgGZBYaTYeeDnc0NM4R5k5BV9u0WY/uyoERD7UzKZQQY8LFBVEAGoLSfhGXtytO/b
-         YMCu02flDXZAfEj1h25xKPIIg8NxcJKW4FTmuS7XfhFTeNsiNQPrQyQIOFdtPRK8lx
-         oQkLYEgHuZkEQ==
-From:   Sasha Levin <sashal@kernel.org>
-To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Judy Hsiao <judyhsiao@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.13 080/108] arm64: dts: qcom: sc7180: Add wakeup delay for adau codec
-Date:   Wed, 14 Jul 2021 15:37:32 -0400
-Message-Id: <20210714193800.52097-80-sashal@kernel.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210714193800.52097-1-sashal@kernel.org>
-References: <20210714193800.52097-1-sashal@kernel.org>
+        id S230039AbhGNTkc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jul 2021 15:40:32 -0400
+Received: from mail-io1-f50.google.com ([209.85.166.50]:41600 "EHLO
+        mail-io1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229650AbhGNTkc (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Jul 2021 15:40:32 -0400
+Received: by mail-io1-f50.google.com with SMTP id z9so3506892iob.8;
+        Wed, 14 Jul 2021 12:37:39 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=yFXysK5QOV9gybtnN9RhupuFfhn+ypkE022RTON7Xkk=;
+        b=AcZ8sdh/89HX5AimgEGcvQmxF/vpbwnwjEfn3TOZj2lLoVjckGd59FdQnXbmqUpzSe
+         VL4palhUUOe5zVQ7jquna9RmAae+BG/98EXdG88R4LDsIwEBqzdhhIof1gscS5wjTkTJ
+         OmgwFlhGQu5Gt5y2RTiWBHrBdMhqOVSzkwd2dyeyHOaZ+BOh+Jy3Tdd6IBlik4aCPaNN
+         yyXLVYAo9gVoXXsslf3scUWr2+Tn1zEbmy0A68KYJB1hs3pnYag/D8ACtbME974ShHZH
+         YS1fUFoaouwhOFRDeLjQxmONxU8aJ5n0hcuMjGvm9+W4s3Fwz09M5RSfDj5lbdAC5O/c
+         pmkQ==
+X-Gm-Message-State: AOAM5305RaoTzO0MWTs5M8FgyZB4PR1MftNHTgo+Z73gtB2IM+3PK3Qn
+        4IoTCZDCKq5HSRQGAS/Qjg==
+X-Google-Smtp-Source: ABdhPJzTVnCksi6USt4jMQ9BBc0xI6zwCtruKYr1fN/ZmcDbgZJEaOWxQ8Hm+smUBRc21truH7dzyA==
+X-Received: by 2002:a5d:858b:: with SMTP id f11mr8297275ioj.156.1626291459021;
+        Wed, 14 Jul 2021 12:37:39 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.248])
+        by smtp.gmail.com with ESMTPSA id t2sm1758841ilq.27.2021.07.14.12.37.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Jul 2021 12:37:38 -0700 (PDT)
+Received: (nullmailer pid 3160062 invoked by uid 1000);
+        Wed, 14 Jul 2021 19:37:34 -0000
+Date:   Wed, 14 Jul 2021 13:37:34 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     evgreen@chromium.org, ohad@wizery.com,
+        saiprakash.ranjan@codeaurora.org, devicetree@vger.kernel.org,
+        swboyd@chromium.org, joro@8bytes.org,
+        linux-remoteproc@vger.kernel.org, agross@kernel.org,
+        mathieu.poirier@linaro.org, bjorn.andersson@linaro.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        will@kernel.org, linux-arm-msm@vger.kernel.org, robh+dt@kernel.org,
+        robin.murphy@arm.com, dianders@chromium.org, p.zabel@pengutronix.de
+Subject: Re: [PATCH 3/9] dt-bindings: remoteproc: qcom: Add Q6V5 Modem PIL
+ binding
+Message-ID: <20210714193734.GA3159989@robh.at.kernel.org>
+References: <1624564058-24095-1-git-send-email-sibis@codeaurora.org>
+ <1624564058-24095-4-git-send-email-sibis@codeaurora.org>
 MIME-Version: 1.0
-X-stable: review
-X-Patchwork-Hint: Ignore
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1624564058-24095-4-git-send-email-sibis@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+On Fri, 25 Jun 2021 01:17:32 +0530, Sibi Sankar wrote:
+> Add a new modem compatible string for QTI SC7280 SoCs and introduce the
+> "qcom,ext-regs" and "qcom,qaccept-regs" bindings needed by the modem
+> sub-system running on SC7280 SoCs.
+> 
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> ---
+>  .../devicetree/bindings/remoteproc/qcom,q6v5.txt   | 32 ++++++++++++++++++++--
+>  1 file changed, 30 insertions(+), 2 deletions(-)
+> 
 
-[ Upstream commit ba5f9b5d7ff3452e69275080c3d59265bc1db8ea ]
-
-Add wakeup delay for fixing PoP noise during capture begin.
-
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
-Signed-off-by: Judy Hsiao <judyhsiao@chromium.org>
-Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Link: https://lore.kernel.org/r/20210513122429.25295-1-srivasam@codeaurora.org
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Sasha Levin <sashal@kernel.org>
----
- arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi | 1 +
- 1 file changed, 1 insertion(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-index 4c6e433c8226..3eb8550da1fc 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-@@ -23,6 +23,7 @@ / {
- 	adau7002: audio-codec-1 {
- 		compatible = "adi,adau7002";
- 		IOVDD-supply = <&pp1800_l15a>;
-+		wakeup-delay-ms = <15>;
- 		#sound-dai-cells = <0>;
- 	};
- };
--- 
-2.30.2
-
+Acked-by: Rob Herring <robh@kernel.org>
