@@ -2,119 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F8B63C8878
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 18:14:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB5793C88E8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 18:47:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232273AbhGNQRP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jul 2021 12:17:15 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:48313 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232383AbhGNQRM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jul 2021 12:17:12 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1626279261; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=3m3ujPPUr/nzfZFzuGmZxwg1jheYBx6zT3o3L19ELMs=;
- b=iMv63fa/CugUTRrfOJjDGx+kn/WjaVYfD1Y79in4d1d6Auz8W/QgvqAsF7ReoWNKxdSVRQdx
- x4R/x2XPih2L9Yaodty45Kn/gn+vmsZLwcctXGUXhz2XKr8IFnq5ukhPN4QxsuPvqUzIWzi9
- b4KZuf+7tSv5anBUShY3FyTg1jY=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 60ef0d4696a66e66b2bb2365 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 14 Jul 2021 16:13:58
- GMT
-Sender: kathirav=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1B18BC4323A; Wed, 14 Jul 2021 16:13:58 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: kathirav)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E31AAC433F1;
-        Wed, 14 Jul 2021 16:13:55 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 14 Jul 2021 21:43:55 +0530
-From:   Kathiravan T <kathirav@codeaurora.org>
-To:     Baruch Siach <baruch@tkos.co.il>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        =?UTF-8?Q?Uwe_Kleine-K?= =?UTF-8?Q?=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
+        id S236720AbhGNQuH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jul 2021 12:50:07 -0400
+Received: from mail-io1-f44.google.com ([209.85.166.44]:33356 "EHLO
+        mail-io1-f44.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229595AbhGNQuH (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 14 Jul 2021 12:50:07 -0400
+Received: by mail-io1-f44.google.com with SMTP id z11so2990134iow.0;
+        Wed, 14 Jul 2021 09:47:15 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=CbgkBCUa11GQ5LNU6tes0AVH4LcZ1fR3h82JApyQHQc=;
+        b=B7CJTxvlZ6tK33gz5SDdv/XSeGzy/qbfTJiL94xB4S/lu0NWk2+oGnYKvBMjoGm0kw
+         bzEXucYBzoU32RxeloWV/jq621bpVKFCy31d1ac8BIAnXQNjyBwGIsmhzmXcU6YZtYYG
+         X59zNRMaI6KLXSoYb23VyF7R8tic2lVPxXzZozjh4n7ixRLhcKRXSicLXew7J6VoEb1f
+         tJTTNO1RZdEBFrTTkzA+/x3esUC8+q/etfKXL1SHZoFvQfUFH9v2zUzeNB05eLJ3kj5L
+         s4akmjmzMrIfIR2EcmDsMlAkckfX1Qcde2uEodNv41ayrwwCBBEYtuomqjprQG/InZVj
+         pqDw==
+X-Gm-Message-State: AOAM533pyNBYqx0IF5FGSNmyie6yxlMdLF68VuZQ++BnckL1z2dANZSc
+        Cq3E5EtyIyv+vZUS1IVyxg==
+X-Google-Smtp-Source: ABdhPJy1brnVoPawsPOQ1v9Mmude0z3jpOErBcHEsG+NFTSxBYxUc9zxBMsN/DgzdS6lOUXJ+fINaQ==
+X-Received: by 2002:a6b:7514:: with SMTP id l20mr7629923ioh.96.1626281234690;
+        Wed, 14 Jul 2021 09:47:14 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.248])
+        by smtp.gmail.com with ESMTPSA id q186sm1586818ioq.1.2021.07.14.09.47.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 14 Jul 2021 09:47:13 -0700 (PDT)
+Received: (nullmailer pid 2734691 invoked by uid 1000);
+        Wed, 14 Jul 2021 16:47:10 -0000
+Date:   Wed, 14 Jul 2021 10:47:10 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
+        Peter Chen <peter.chen@kernel.org>,
+        Mark Brown <broonie@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Balaji Prakash J <bjagadee@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v5 1/4] arm64: dts: ipq6018: correct TCSR block area
-In-Reply-To: <f79128fa287e37ee59cb03ae04b319ecb3d68c29.1626176145.git.baruch@tkos.co.il>
-References: <f79128fa287e37ee59cb03ae04b319ecb3d68c29.1626176145.git.baruch@tkos.co.il>
-Message-ID: <6c28d9dbf5d3a4d7c543fc7b0308eb20@codeaurora.org>
-X-Sender: kathirav@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-bluetooth@vger.kernel.org
+Subject: Re: [PATCH v3 2/7] regulator: qca6390: add support for QCA639x
+ powerup sequence
+Message-ID: <20210714164710.GC2719790@robh.at.kernel.org>
+References: <20210621223141.1638189-1-dmitry.baryshkov@linaro.org>
+ <20210621223141.1638189-3-dmitry.baryshkov@linaro.org>
+ <CAPDyKFo6dmjw0TnaK7=35dq5Si_6YYpeeSa=gU++1od7WkQZ7A@mail.gmail.com>
+ <20210706115517.GB4529@sirena.org.uk>
+ <CAPDyKFr=8spZBD+bTe3SjS=nATL-ByFu_epnT2Z4chSuQNke2w@mail.gmail.com>
+ <CAA8EJppSV--TBjnGxGhaTHeKWdpM6uz70bg7diU3_K7OHoka4g@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJppSV--TBjnGxGhaTHeKWdpM6uz70bg7diU3_K7OHoka4g@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-07-13 17:05, Baruch Siach wrote:
-> According to Bjorn Andersson[1], &tcsr_q6 base is 0x01937000 with size
-> 0x21000. Adjust qcom,halt-regs offsets (add 0x8000) to match the new
-> syscon base.
+On Thu, Jul 08, 2021 at 02:37:44PM +0300, Dmitry Baryshkov wrote:
+> Hi,
 > 
-> [1] https://lore.kernel.org/r/YLgO0Aj1d4w9EcPv@yoga
+> On Thu, 8 Jul 2021 at 13:10, Ulf Hansson <ulf.hansson@linaro.org> wrote:
+> >
+> > - Peter (the email was bouncing)
 > 
-> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
-> ---
-> v5: New patch in this series
-> ---
->  arch/arm64/boot/dts/qcom/ipq6018.dtsi | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
+> + Peter's kernel.org address
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> index 6ee7b99c21ec..72ac36c1be57 100644
-> --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-> @@ -270,9 +270,9 @@ tcsr_mutex_regs: syscon@1905000 {
->  			reg = <0x0 0x01905000 0x0 0x8000>;
->  		};
+> >
+> > On Tue, 6 Jul 2021 at 13:55, Mark Brown <broonie@kernel.org> wrote:
+> > >
+> > > On Tue, Jul 06, 2021 at 09:54:03AM +0200, Ulf Hansson wrote:
+> > > > On Tue, 22 Jun 2021 at 00:32, Dmitry Baryshkov
+> > >
+> > > > > Qualcomm QCA6390/1 is a family of WiFi + Bluetooth SoCs, with BT part
+> > > > > being controlled through the UART and WiFi being present on PCIe
+> > > > > bus. Both blocks share common power sources. Add device driver handling
+> > > > > power sequencing of QCA6390/1.
+> > >
+> > > > Power sequencing of discoverable buses have been discussed several
+> > > > times before at LKML. The last attempt [1] I am aware of, was in 2017
+> > > > from Peter Chen. I don't think there is a common solution, yet.
+> > >
+> > > This feels a bit different to the power sequencing problem - it's not
+> > > exposing the individual inputs to the device but rather is a block that
+> > > manages everything but needs a bit of a kick to get things going (I'd
+> > > guess that with ACPI it'd be triggered via AML).  It's in the same space
+> > > but it's not quite the same issue I think, something that can handle
+> > > control of the individual resources might still struggle with this.
+> >
+> > Well, to me it looks very similar to those resouses we could manage
+> > with the mmc pwrseq, for SDIO. It's also typically the same kind of
+> > combo-chips that moved from supporting SDIO to PCIe, for improved
+> > performance I guess. More importantly, the same constraint to
+> > pre-power on the device is needed to allow it to be discovered/probed.
 > 
-> -		tcsr_q6: syscon@1945000 {
-> +		tcsr_q6: syscon@1937000 {
+> In our case we'd definitely use pwrseq for PCIe bus and we can also
+> benefit from using pwrseq for serdev and for platform busses also (for
+> the same story of WiFi+BT chips).
+> 
+> I can take a look at rewriting pwrseq code to also handle the PCIe
+> bus. Rewriting it to be a generic lib seems like an easy task,
+> plugging it into PCIe code would be more fun.
+> 
+> Platform and serdev... Definitely even more fun.
 
-We can remove the q6 reference and make it as just 'tcsr'?
+I don't want to see pwrseq (the binding) expanded to other buses. If 
+that was the answer, we wouldn't be having this discussion. It was a 
+mistake for MMC IMO. 
 
->  			compatible = "syscon";
-> -			reg = <0x0 0x01945000 0x0 0xe000>;
-> +			reg = <0x0 0x01937000 0x0 0x21000>;
->  		};
-> 
->  		blsp_dma: dma-controller@7884000 {
-> @@ -615,7 +615,7 @@ q6v5_wcss: remoteproc@cd00000 {
->  			clocks = <&gcc GCC_PRNG_AHB_CLK>;
->  			clock-names = "prng";
-> 
-> -			qcom,halt-regs = <&tcsr_q6 0xa000 0xd000 0x0>;
-> +			qcom,halt-regs = <&tcsr_q6 0x12000 0x15000 0x8000>;
-
-This seems to be not correct. 0x01945000 - 0x01937000 = 0xE000 but here 
-the values are adjusted with 0x8000 not with 0xE000.
+If pwrseq works as a kernel library/api, then I have no issue with that.
 
 > 
->  			qcom,smem-states = <&wcss_smp2p_out 0>,
->  					   <&wcss_smp2p_out 1>;
+> > Therefore, I think it would be worth having a common solution for
+> > this, rather than a solution per subsystem or even worse, per device.
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member of Code Aurora Forum, hosted by The Linux Foundation
+Power sequencing requirements are inheritently per device unless we're 
+talking about standard connectors. 
+
+This is a solved problem on MDIO. It's quite simple. If there's a DT 
+node for a device you haven't discovered, then probe it anyways.
+
+Rob
