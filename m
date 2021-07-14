@@ -2,235 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C6F7B3C7EEA
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 09:01:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B8A33C7F5C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 09:30:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238230AbhGNHEk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jul 2021 03:04:40 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:57571 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238216AbhGNHEh (ORCPT
+        id S238315AbhGNHdX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jul 2021 03:33:23 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:61187 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238317AbhGNHdX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jul 2021 03:04:37 -0400
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 14 Jul 2021 00:01:46 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 14 Jul 2021 00:01:45 -0700
-X-QCInternal: smtphost
-Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 14 Jul 2021 12:31:36 +0530
-Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
-        id DB10E21B6B; Wed, 14 Jul 2021 12:31:34 +0530 (IST)
-From:   Dikshita Agarwal <dikshita@codeaurora.org>
-To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, Dikshita Agarwal <dikshita@codeaurora.org>
-Subject: [PATCH v3 7/7] media: venus: Set buffer to FW based on FW min count requirement.
-Date:   Wed, 14 Jul 2021 12:31:08 +0530
-Message-Id: <1626246068-21023-8-git-send-email-dikshita@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1626246068-21023-1-git-send-email-dikshita@codeaurora.org>
-References: <1626246068-21023-1-git-send-email-dikshita@codeaurora.org>
+        Wed, 14 Jul 2021 03:33:23 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1626247832; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=DX9yJS7o2bMpb1CVVFubNUZ/3BTXvh7wF2HsyAzhV4E=; b=lvUg0YUmL+9r+drxD7ex7pXhYmGJbIOUtQCEu/jcY8VufN2HZ2YeTDX+9oD/msh93+eDxMeE
+ SEnMK089wh3wViDm23u98v/AM0eB6CXOozZRLWvnsJPPyOZZmq84m9o7K6uXQipaWc1cCtso
+ O0GDeAdFBa/WO0WEtcXJmFu+vH8=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 60ee9282f98d4ac755a8c675 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 14 Jul 2021 07:30:10
+ GMT
+Sender: wcheng=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A6755C433D3; Wed, 14 Jul 2021 07:30:10 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.110.2.227] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: wcheng)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7B67EC433F1;
+        Wed, 14 Jul 2021 07:30:08 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 7B67EC433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=wcheng@codeaurora.org
+Subject: Re: [PATCH v14 3/6] usb: dwc3: Resize TX FIFOs to meet EP bursting
+ requirements
+To:     Felipe Balbi <balbi@kernel.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+        "agross@kernel.org" <agross@kernel.org>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "robh+dt@kernel.org" <robh+dt@kernel.org>,
+        "frowand.list@gmail.com" <frowand.list@gmail.com>
+Cc:     "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "jackp@codeaurora.org" <jackp@codeaurora.org>
+References: <1625908395-5498-1-git-send-email-wcheng@codeaurora.org>
+ <1625908395-5498-4-git-send-email-wcheng@codeaurora.org>
+ <b65463e9-3a8d-1ee5-3e26-09990aa8ec53@synopsys.com>
+ <87czrmzjym.fsf@kernel.org>
+ <e08dac42-e999-fd97-21ab-34cd70429f03@synopsys.com>
+ <877dhtz9de.fsf@kernel.org>
+From:   Wesley Cheng <wcheng@codeaurora.org>
+Message-ID: <6bc35b95-8386-1a6b-46dd-f33035e6dee5@codeaurora.org>
+Date:   Wed, 14 Jul 2021 00:30:07 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <877dhtz9de.fsf@kernel.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-- Get the min buffer count required by FW from source event change
-  and use the same value to decide actual buffer count and for
-  buffer size calculation.
-- Setup DPB and OPB buffers after session continue incase of
-  reconfig.
 
-Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
----
- drivers/media/platform/qcom/venus/core.h             |  1 +
- drivers/media/platform/qcom/venus/helpers.c          | 11 ++++++++++-
- drivers/media/platform/qcom/venus/hfi_helper.h       |  9 +++++++++
- drivers/media/platform/qcom/venus/hfi_msgs.c         |  7 +++++++
- drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c |  6 ++++--
- drivers/media/platform/qcom/venus/vdec.c             | 20 +++++++++++++-------
- 6 files changed, 44 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index 1ff20d9..b2b023e 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -403,6 +403,7 @@ struct venus_inst {
- 	u32 width;
- 	u32 height;
- 	struct v4l2_rect crop;
-+	u32 fw_min_cnt;
- 	u32 out_width;
- 	u32 out_height;
- 	u32 colorspace;
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index ccf188a..ea82cdc 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -576,6 +576,7 @@ static int platform_get_bufreq(struct venus_inst *inst, u32 buftype,
- 	struct hfi_plat_buffers_params params;
- 	bool is_dec = inst->session_type == VIDC_SESSION_TYPE_DEC;
- 	struct venc_controls *enc_ctr = &inst->controls.enc;
-+	int ret = 0;
- 
- 	hfi_plat = hfi_platform_get(version);
- 
-@@ -610,7 +611,15 @@ static int platform_get_bufreq(struct venus_inst *inst, u32 buftype,
- 		params.enc.is_tenbit = inst->bit_depth == VIDC_BITDEPTH_10;
- 	}
- 
--	return hfi_plat->bufreq(&params, inst->session_type, buftype, req);
-+	if (buftype == HFI_BUFFER_OUTPUT || buftype == HFI_BUFFER_OUTPUT2 ||
-+	    buftype == HFI_BUFFER_INTERNAL_SCRATCH_1(version))
-+		req->count_min = inst->fw_min_cnt;
-+
-+	ret = hfi_plat->bufreq(&params, inst->session_type, buftype, req);
-+	if (buftype == HFI_BUFFER_OUTPUT || buftype == HFI_BUFFER_OUTPUT2)
-+		if (inst->fw_min_cnt != req->count_min)
-+			inst->fw_min_cnt = req->count_min;
-+	return ret;
- }
- 
- int venus_helper_get_bufreq(struct venus_inst *inst, u32 type,
-diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-index 185c302..f2e8fad 100644
---- a/drivers/media/platform/qcom/venus/hfi_helper.h
-+++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-@@ -167,6 +167,7 @@
- #define HFI_PROPERTY_PARAM_VDEC_RECOVERY_POINT_SEI_EXTRADATA	0x120300c
- #define HFI_PROPERTY_PARAM_VDEC_THUMBNAIL_MODE			0x120300d
- #define HFI_PROPERTY_PARAM_VDEC_FRAME_ASSEMBLY			0x120300e
-+#define HFI_PROPERTY_PARAM_VDEC_DPB_COUNTS				0x120300e
- #define HFI_PROPERTY_PARAM_VDEC_VC1_FRAMEDISP_EXTRADATA		0x1203011
- #define HFI_PROPERTY_PARAM_VDEC_VC1_SEQDISP_EXTRADATA		0x1203012
- #define HFI_PROPERTY_PARAM_VDEC_TIMESTAMP_EXTRADATA		0x1203013
-@@ -906,6 +907,14 @@ struct hfi_extradata_input_crop {
- 	u32 height;
- };
- 
-+struct hfi_dpb_counts {
-+	u32 max_dpb_count;
-+	u32 max_ref_frames;
-+	u32 max_dec_buffering;
-+	u32 max_reorder_frames;
-+	u32 fw_min_cnt;
-+};
-+
- #define HFI_COLOR_FORMAT_MONOCHROME		0x01
- #define HFI_COLOR_FORMAT_NV12			0x02
- #define HFI_COLOR_FORMAT_NV21			0x03
-diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
-index a2d436d..ed005d6 100644
---- a/drivers/media/platform/qcom/venus/hfi_msgs.c
-+++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
-@@ -32,6 +32,7 @@ static void event_seq_changed(struct venus_core *core, struct venus_inst *inst,
- 	struct hfi_colour_space *colour_info;
- 	struct hfi_buffer_requirements *bufreq;
- 	struct hfi_extradata_input_crop *crop;
-+	struct hfi_dpb_counts *dpb_count;
- 	u8 *data_ptr;
- 	u32 ptype;
- 
-@@ -110,6 +111,12 @@ static void event_seq_changed(struct venus_core *core, struct venus_inst *inst,
- 			event.input_crop.height = crop->height;
- 			data_ptr += sizeof(*crop);
- 			break;
-+		case HFI_PROPERTY_PARAM_VDEC_DPB_COUNTS:
-+			data_ptr += sizeof(u32);
-+			dpb_count = (struct hfi_dpb_counts *)data_ptr;
-+			event.buf_count = dpb_count->fw_min_cnt;
-+			data_ptr += sizeof(*dpb_count);
-+			break;
- 		default:
- 			break;
- 		}
-diff --git a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
-index 479178b..ea25c45 100644
---- a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
-+++ b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
-@@ -1164,7 +1164,7 @@ static int output_buffer_count(u32 session_type, u32 codec)
- 			output_min_count = 6;
- 			break;
- 		case V4L2_PIX_FMT_VP9:
--			output_min_count = 9;
-+			output_min_count = 11;
- 			break;
- 		case V4L2_PIX_FMT_H264:
- 		case V4L2_PIX_FMT_HEVC:
-@@ -1213,6 +1213,8 @@ static int bufreq_dec(struct hfi_plat_buffers_params *params, u32 buftype,
- 	}
- 
- 	out_min_count = output_buffer_count(VIDC_SESSION_TYPE_DEC, codec);
-+	/* Max of driver and FW count */
-+	out_min_count = max(out_min_count, bufreq->count_min);
- 
- 	bufreq->type = buftype;
- 	bufreq->region_size = 0;
-@@ -1237,7 +1239,7 @@ static int bufreq_dec(struct hfi_plat_buffers_params *params, u32 buftype,
- 	} else if (buftype == HFI_BUFFER_INTERNAL_SCRATCH(version)) {
- 		bufreq->size = dec_ops->scratch(width, height, is_interlaced);
- 	} else if (buftype == HFI_BUFFER_INTERNAL_SCRATCH_1(version)) {
--		bufreq->size = dec_ops->scratch1(width, height, out_min_count,
-+		bufreq->size = dec_ops->scratch1(width, height, VB2_MAX_FRAME,
- 						 is_secondary_output,
- 						 num_vpp_pipes);
- 	} else if (buftype == HFI_BUFFER_INTERNAL_PERSIST_1) {
-diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-index 892be8d..3e91d8c 100644
---- a/drivers/media/platform/qcom/venus/vdec.c
-+++ b/drivers/media/platform/qcom/venus/vdec.c
-@@ -988,23 +988,23 @@ static int vdec_start_capture(struct venus_inst *inst)
- 	if (ret)
- 		goto err;
- 
-+	venus_pm_load_scale(inst);
-+
-+	inst->next_buf_last = false;
-+
- 	ret = venus_helper_alloc_dpb_bufs(inst);
- 	if (ret)
- 		goto err;
- 
--	ret = venus_helper_queue_dpb_bufs(inst);
-+	ret = hfi_session_continue(inst);
- 	if (ret)
- 		goto free_dpb_bufs;
- 
--	ret = venus_helper_process_initial_cap_bufs(inst);
-+	ret = venus_helper_queue_dpb_bufs(inst);
- 	if (ret)
- 		goto free_dpb_bufs;
- 
--	venus_pm_load_scale(inst);
--
--	inst->next_buf_last = false;
--
--	ret = hfi_session_continue(inst);
-+	ret = venus_helper_process_initial_cap_bufs(inst);
- 	if (ret)
- 		goto free_dpb_bufs;
- 
-@@ -1411,6 +1411,11 @@ static void vdec_event_change(struct venus_inst *inst,
- 		inst->crop.height = ev_data->height;
- 	}
- 
-+	inst->fw_min_cnt = ev_data->buf_count;
-+	//overwriting this to 11 for vp9 due to fw bug
-+	if(inst->hfi_codec == HFI_VIDEO_CODEC_VP9)
-+		inst->fw_min_cnt = 11;
-+
- 	inst->out_width = ev_data->width;
- 	inst->out_height = ev_data->height;
- 
-@@ -1514,6 +1519,7 @@ static void vdec_inst_init(struct venus_inst *inst)
- 	inst->crop.top = 0;
- 	inst->crop.width = inst->width;
- 	inst->crop.height = inst->height;
-+	inst->fw_min_cnt = 8;
- 	inst->out_width = frame_width_min(inst);
- 	inst->out_height = frame_height_min(inst);
- 	inst->fps = 30;
+On 7/13/2021 11:40 PM, Felipe Balbi wrote:
+> 
+> Hi,
+> 
+> Thinh Nguyen <Thinh.Nguyen@synopsys.com> writes:
+>>> Thinh Nguyen <Thinh.Nguyen@synopsys.com> writes:
+>>>> Wesley Cheng wrote:
+>>>>> Some devices have USB compositions which may require multiple endpoints
+>>>>> that support EP bursting.  HW defined TX FIFO sizes may not always be
+>>>>> sufficient for these compositions.  By utilizing flexible TX FIFO
+>>>>> allocation, this allows for endpoints to request the required FIFO depth to
+>>>>> achieve higher bandwidth.  With some higher bMaxBurst configurations, using
+>>>>> a larger TX FIFO size results in better TX throughput.
+>>>>>
+>>>>> By introducing the check_config() callback, the resizing logic can fetch
+>>>>> the maximum number of endpoints used in the USB composition (can contain
+>>>>> multiple configurations), which helps ensure that the resizing logic can
+>>>>> fulfill the configuration(s), or return an error to the gadget layer
+>>>>> otherwise during bind time.
+>>>>>
+>>>>> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
+>>>>> ---
+>>>>>  drivers/usb/dwc3/core.c   |  15 +++
+>>>>>  drivers/usb/dwc3/core.h   |  16 ++++
+>>>>>  drivers/usb/dwc3/ep0.c    |   2 +
+>>>>>  drivers/usb/dwc3/gadget.c | 232 ++++++++++++++++++++++++++++++++++++++++++++++
+>>>>>  4 files changed, 265 insertions(+)
+>>>>>
+>>>>> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+>>>>> index ba74ad7..b194aecd 100644
+>>>>> --- a/drivers/usb/dwc3/core.c
+>>>>> +++ b/drivers/usb/dwc3/core.c
+>>>>> @@ -1267,6 +1267,7 @@ static void dwc3_get_properties(struct dwc3 *dwc)
+>>>>>  	u8			rx_max_burst_prd;
+>>>>>  	u8			tx_thr_num_pkt_prd;
+>>>>>  	u8			tx_max_burst_prd;
+>>>>> +	u8			tx_fifo_resize_max_num;
+>>>>>  	const char		*usb_psy_name;
+>>>>>  	int			ret;
+>>>>>  
+>>>>> @@ -1282,6 +1283,13 @@ static void dwc3_get_properties(struct dwc3 *dwc)
+>>>>>  	 */
+>>>>>  	hird_threshold = 12;
+>>>>>  
+>>>>> +	/*
+>>>>> +	 * default to a TXFIFO size large enough to fit 6 max packets.  This
+>>>>> +	 * allows for systems with larger bus latencies to have some headroom
+>>>>> +	 * for endpoints that have a large bMaxBurst value.
+>>>>> +	 */
+>>>>> +	tx_fifo_resize_max_num = 6;
+>>>>> +
+>>>>>  	dwc->maximum_speed = usb_get_maximum_speed(dev);
+>>>>>  	dwc->max_ssp_rate = usb_get_maximum_ssp_rate(dev);
+>>>>>  	dwc->dr_mode = usb_get_dr_mode(dev);
+>>>>> @@ -1325,6 +1333,11 @@ static void dwc3_get_properties(struct dwc3 *dwc)
+>>>>>  				&tx_thr_num_pkt_prd);
+>>>>>  	device_property_read_u8(dev, "snps,tx-max-burst-prd",
+>>>>>  				&tx_max_burst_prd);
+>>>>> +	dwc->do_fifo_resize = device_property_read_bool(dev,
+>>>>> +							"tx-fifo-resize");
+>>>>> +	if (dwc->do_fifo_resize)
+>>>>> +		device_property_read_u8(dev, "tx-fifo-max-num",
+>>>>> +					&tx_fifo_resize_max_num);
+>>>>
+>>>> Why is this check here? The dwc->tx_fifo_resize_max_num should store
+>>>> whatever property the user sets. Whether the driver wants to use this
+>>>
+>>> Ack!
+>>>
+>>>> property should depend on "dwc->do_fifo_resize". Also why don't we have
+>>>> "snps," prefix to be consistent with the other properties?
+>>>
+>>> Ack!
+>>>
+>>>> Can we enforce to a single property? If the designer wants to enable
+>>>> this feature, he/she can to provide the tx-fifo-max-num. This would
+>>>> simplify the driver a bit. Since this is to optimize for performance,
+>>>> the user should know/want/test the specific value if they want to set
+>>>> for their setup and not hoping that the default setting not break their
+>>>> setup. So we can remove the "do_fifo_resize" property and just check
+>>>> whether tx_fifo_resize_max_num is set.
+>>>
+>>> Ack!
+>>>
+>>> All very valid points :-)
+>>>
+
+Hi Thinh/Felipe,
+
+>>
+>> Looks like this series already landed in Greg's testing branch. Not sure
+>> how we usually handle this to address some of our concerns. Add fix
+>> patches on top of Greg's testing branch?
+> 
+> yup, no choice anymore :-(
+> 
+
+Let me review your feedback, which had some good points.  We can add a
+change addressing everything on top of what is merged on Greg's branch.
+ Thanks for all the input!
+
+Thanks
+Wesley Cheng
+
 -- 
-2.7.4
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
