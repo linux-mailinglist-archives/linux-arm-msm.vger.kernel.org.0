@@ -2,132 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DB593C7BC9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 04:27:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 49AA53C7BE6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 04:40:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237613AbhGNCae (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 13 Jul 2021 22:30:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38362 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237457AbhGNCae (ORCPT
+        id S237547AbhGNCnJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 13 Jul 2021 22:43:09 -0400
+Received: from mail-il1-f174.google.com ([209.85.166.174]:46789 "EHLO
+        mail-il1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237478AbhGNCnJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 13 Jul 2021 22:30:34 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD335C0613E9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jul 2021 19:27:43 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id w194so614391oie.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 13 Jul 2021 19:27:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=FKr65vfR2TdVe8GBpKpEMCo3zswr0/dtqzTR9ciGq6A=;
-        b=uoBMWDRKB2h5zkZgtNGjB5PUPYoGSOLtb3zF4sUvR2vepVPa1PFSMQpuOZMtsNSMF5
-         Hzt5PAC4Ae4rtH3smb6oPZAjFy7mh1HuAQ8xAB79NBCW54xVS0DQMIV0mPtbvwlqJXGj
-         ztHfmUKpK4Pr+PryEJH3QJWnCmFdsZUoM3TbuD+XrmZmzNG7Ryz6nkKixeQYSallRYsn
-         BmV7MG1ULrw8rNkFguVubx17Sf4FNw0XqVwmqVFmClOc6/Lm2Js6fgMMXmLT9GXkXKHl
-         3cbmOrvpLvXMDQVEDlISNIlIaLHB5Fj4qBjWSOKwBJKvXjLuE8R3MsUzp5hS3MQNzsVF
-         R1bw==
+        Tue, 13 Jul 2021 22:43:09 -0400
+Received: by mail-il1-f174.google.com with SMTP id y6so67825ilj.13;
+        Tue, 13 Jul 2021 19:40:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=FKr65vfR2TdVe8GBpKpEMCo3zswr0/dtqzTR9ciGq6A=;
-        b=NiznfKWB/UszgLAJrGSJysNTNPygTgiTRpGMiKP81hlPpk2Lg1Qdn7KBybRvEeqjxA
-         58dpTawaj+uup87icg6//HpRJoOG1FPjm0T6Vj2cW0nsJ5ITleeldI14IJ5FRt1fBD2S
-         5PIsHl9dNfgqVZL6kwTtpHz1khM6gvV1ZMKkj35G/8b4g88u6KzyFo0OPUTqsNn/BVRG
-         tK6jUAqN2V3QgUSipCsGQ1wLnqycHW1wTXHehcnJU9TFSrum5sD05I2JrI7ELAtA4JP/
-         aoi9Eeao2YX1eiHLnkZQWNSuW/a8tP90UekfuRdXR2TawcnFHp92OkWdxPW46AzlR+ns
-         W1SA==
-X-Gm-Message-State: AOAM532ss53+HV2FwXdKaAYoqSpsndNX3kjMr4yeQZpvZWNVb8VwfZ9y
-        7ytKRkue+Z+5KZX4+KvvjBiw/g==
-X-Google-Smtp-Source: ABdhPJz/ytXCZ8BRBiVtna/vi/6ubcxZ+G6RnZaRINMM7ogFKSWmRMxswDIcrHAlc372iWrarNnkiQ==
-X-Received: by 2002:aca:3d8a:: with SMTP id k132mr1058697oia.120.1626229663063;
-        Tue, 13 Jul 2021 19:27:43 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id v7sm172544ooj.46.2021.07.13.19.27.41
+        bh=riDFU7JLN9rdxbZ0yha84VJqHGAQItObLh3l+N0JqmE=;
+        b=mEa55NW0kVDXs6XLun0o0XtAT6bE6CqA0JcmzkjjNy119u9HD7wv9q7QWFOaRikTMC
+         tvMbBwgWiJLH0b2vWG8jWQCB3byQwsCEdnJvdROUkZ43D1NdqGny+eBUaXLgP8YL6iaU
+         9Y1y5UmxCBhwIPkkDUTXty59rlNrtnkjVfXzo2SCvsVBr6SXGdUX0/xGNsymPDn3TCcu
+         r8nZ6+qgG7gEvJrNG9hSaLVEYC29Phwbfzp6SGufV/dUK+vdN5bSLEmmx+1yI7E1uMoH
+         XJkWIyt75V8Hm0zfHOJOAKfBpdBC13sNVXNWNJCW5hO1eOxnity/XDjI7QBgJbgDQv9C
+         sgfw==
+X-Gm-Message-State: AOAM53156VsSNZlohNCXTT8N5FAVGm12i+DcFAyG0UDrYcZWidlxNeSC
+        bghuL230FxRIxKLZWCZJew==
+X-Google-Smtp-Source: ABdhPJyYpTVJnJWr7IspJv6gkKDKsVeyNcozRDAHV5BN+pzvPlKtikW62UPo9J9JYyBz7AeGniakEg==
+X-Received: by 2002:a92:b003:: with SMTP id x3mr5176007ilh.93.1626230418602;
+        Tue, 13 Jul 2021 19:40:18 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.248])
+        by smtp.gmail.com with ESMTPSA id d8sm407613iom.49.2021.07.13.19.40.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 13 Jul 2021 19:27:42 -0700 (PDT)
-Date:   Tue, 13 Jul 2021 21:27:39 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     John Stultz <john.stultz@linaro.org>
-Cc:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-        Felipe Balbi <balbi@kernel.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Tue, 13 Jul 2021 19:40:17 -0700 (PDT)
+Received: (nullmailer pid 1350780 invoked by uid 1000);
+        Wed, 14 Jul 2021 02:40:14 -0000
+Date:   Tue, 13 Jul 2021 20:40:14 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Baruch Siach <baruch@tkos.co.il>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux USB List <linux-usb@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        Serge Semin <fancer.lancer@gmail.com>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        Amit Pundir <amit.pundir@linaro.org>
-Subject: Re: [PATCH 29/29] arm64: dts: qcom: Harmonize DWC USB3 DT nodes name
-Message-ID: <YO5Lm0zMEEP5uSSl@yoga>
-References: <20201020115959.2658-1-Sergey.Semin@baikalelectronics.ru>
- <20201020115959.2658-30-Sergey.Semin@baikalelectronics.ru>
- <CALAqxLX_FNvFndEDWtGbFPjSzuAbfqxQE07diBJFZtftwEJX5A@mail.gmail.com>
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Balaji Prakash J <bjagadee@codeaurora.org>,
+        Robert Marko <robert.marko@sartura.hr>,
+        Kathiravan T <kathirav@codeaurora.org>,
+        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v5 3/4] dt-bindings: pwm: add IPQ6018 binding
+Message-ID: <20210714024014.GA1334332@robh.at.kernel.org>
+References: <f79128fa287e37ee59cb03ae04b319ecb3d68c29.1626176145.git.baruch@tkos.co.il>
+ <6d3a4483d22753ba8114304db07756620c66da41.1626176145.git.baruch@tkos.co.il>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CALAqxLX_FNvFndEDWtGbFPjSzuAbfqxQE07diBJFZtftwEJX5A@mail.gmail.com>
+In-Reply-To: <6d3a4483d22753ba8114304db07756620c66da41.1626176145.git.baruch@tkos.co.il>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 13 Jul 19:07 CDT 2021, John Stultz wrote:
-
-> On Tue, Oct 20, 2020 at 5:10 AM Serge Semin
-> <Sergey.Semin@baikalelectronics.ru> wrote:
-> >
-> > In accordance with the DWC USB3 bindings the corresponding node
-> > name is suppose to comply with the Generic USB HCD DT schema, which
-> > requires the USB nodes to have the name acceptable by the regexp:
-> > "^usb(@.*)?" . Make sure the "snps,dwc3"-compatible nodes are correctly
-> > named.
-> >
-> > Signed-off-by: Serge Semin <Sergey.Semin@baikalelectronics.ru>
+On Tue, Jul 13, 2021 at 02:35:44PM +0300, Baruch Siach wrote:
+> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
 > 
-> I know folks like to ignore this, but this patch breaks AOSP on db845c. :(
+> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+> ---
+> v5: Use qcom,pwm-regs for phandle instead of direct regs (Bjorn
+>     Andersson, Kathiravan T)
 > 
-
-Sorry, I totally forgot that the name of that node is part of the USB
-gadget configfs interface.
-
-> In the exact same way an earlier patch broke HiKey960:
->   https://lore.kernel.org/lkml/CALAqxLWGujgR7p8Vb5S_RimRVYxwm5XF-c4NkKgMH-43wEBaWg@mail.gmail.com/
+> v4: Update the binding example node as well (Rob Herring's bot)
 > 
-> (which I still have to carry a revert for).
+> v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
 > 
-> I get that this change is useful so more dynamic userland can find
-> devices using consistent naming with future kernels (but doesn't the
-> dynamic userland have to handle the case for older kernels as well?)
-> But for userland that uses static configs, its painful as updating
-> userland to use the new node ids then causes older kernels to fail.
+> v2: Make #pwm-cells const (Rob Herring)
+> ---
+>  .../devicetree/bindings/pwm/ipq-pwm.yaml      | 55 +++++++++++++++++++
+>  1 file changed, 55 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
 > 
+> diff --git a/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
+> new file mode 100644
+> index 000000000000..a07bfe63dc1a
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
+> @@ -0,0 +1,55 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pwm/ipq-pwm.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm IPQ6018 PWM controller
+> +
+> +maintainers:
+> +  - Baruch Siach <baruch@tkos.co.il>
+> +
+> +properties:
+> +  "#pwm-cells":
+> +    const: 2
+> +
+> +  compatible:
+> +    const: qcom,ipq6018-pwm
+> +
+> +  qcom,pwm-regs:
+> +    $ref: '/schemas/types.yaml#/definitions/phandle-array'
+> +    maxItems: 1
+> +    description: |
+> +      phandle link and offset to TCSR block
 
-It won't help you, but having a mechanism to provide user friendly names
-would certainly be welcome. I always struggle with the question of what
-"6a00000.dwc3" (now .usb) actually is...
+This binding should be a child of the TCSR I think as Bjorn asked.
 
-> I'm looking into how we might be able to probe and set the property
-> dynamically, but AOSP's init system is far more aligned to static
-> configs.
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +  clock-names:
+> +    const: core
+> +
+> +required:
+> +  - "#pwm-cells"
+> +  - compatible
+> +  - qcom,pwm-regs
+> +  - clocks
+> +  - clock-names
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-ipq6018.h>
+> +
+> +    soc {
+> +        #address-cells = <2>;
+> +        #size-cells = <2>;
+> +
+> +        pwm {
+> +            #pwm-cells = <2>;
+> +            compatible = "qcom,ipq6018-pwm";
+> +            qcom,pwm-regs = <&tcsr_q6 0xa010>;
+> +            clocks = <&gcc GCC_ADSS_PWM_CLK>;
+> +            clock-names = "core";
+> +        };
+> +    };
+> -- 
+> 2.30.2
 > 
-> This will probably be ignored again, but it would be nice if we could
-> have a release where DTS changes don't break userland for one of my
-> boards. As it feels like its been awhile.
 > 
-
-I don't have any preference to this being names "dwc3" or "usb" and we
-could back out the change in time for v5.14. But you will still have the
-problem for Hikey iiuc and the dts would then violate the binding - so
-we need to fix that, and all the other Qualcomm boards defined by the
-same binding.
-
-Regards,
-Bjorn
