@@ -2,70 +2,228 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F7DB3C8A6F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 20:06:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FBC93C8A8E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 14 Jul 2021 20:14:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229742AbhGNSIv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 14 Jul 2021 14:08:51 -0400
-Received: from mail-io1-f43.google.com ([209.85.166.43]:44827 "EHLO
-        mail-io1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229651AbhGNSIv (ORCPT
+        id S229736AbhGNSRB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 14 Jul 2021 14:17:01 -0400
+Received: from mail-0201.mail-europe.com ([51.77.79.158]:38041 "EHLO
+        mail-0201.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229738AbhGNSRB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 14 Jul 2021 14:08:51 -0400
-Received: by mail-io1-f43.google.com with SMTP id v26so3229970iom.11;
-        Wed, 14 Jul 2021 11:05:58 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=tOUUujimy6tu2WN4ctcSgxC5Dujf/VQuL7UZPKd+o08=;
-        b=c2PMire/aBGKb/8OjGVGNCbq75XANWdYh6CujGlI9g61EbvEFQetozjbRFflT4I2GS
-         8NDIWDhTW/DNdS59pGW0l5Ox5vQqaneM4bmtXxRE4kslQcaIQKhGHoe5pHzijm1GzxzJ
-         5JhYdWcOT0lXQXL/pzeDZlTLLFZrVLcoWBvBDyCHoVfLi2aKH8fLewgmLJ0cWcPn2omL
-         89BTlkZhstbXMl+6nrVsMuJLEhVxErLDBbDINLa+XOXNIT961dU2hM2gBTCSVGZgP9nY
-         TdDH5BnFqZvdVgaBAwTtY7bpsKXokn4sN7E5HCeNDUyevMOsMAFKUN3tM2OxUSozwkXg
-         2yFA==
-X-Gm-Message-State: AOAM531BSvF1BFraJePaRgjV29AfDzpGwJBLK3i/7wAmgtWJngkq5oPs
-        88R1wzhihQBVnwOVXBeAoA==
-X-Google-Smtp-Source: ABdhPJzNd4BWuGRurt7unIpBLP9QS69wGAugqEyrZgya0uR+hQZ+85LGLbo6Onc1bEXhPDOVXbJmUQ==
-X-Received: by 2002:a05:6638:2390:: with SMTP id q16mr9938163jat.59.1626285957962;
-        Wed, 14 Jul 2021 11:05:57 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id t2sm1642188ilq.27.2021.07.14.11.05.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 14 Jul 2021 11:05:57 -0700 (PDT)
-Received: (nullmailer pid 2855533 invoked by uid 1000);
-        Wed, 14 Jul 2021 18:05:54 -0000
-Date:   Wed, 14 Jul 2021 12:05:54 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Iskren Chernev <iskren.chernev@gmail.com>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
+        Wed, 14 Jul 2021 14:17:01 -0400
+Date:   Wed, 14 Jul 2021 18:13:33 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail; t=1626286415;
+        bh=EG9s5cdMOG7EmUExUP0PZhifhepV9YS4Df7DmQpR5Cg=;
+        h=Date:To:From:Cc:Reply-To:Subject:From;
+        b=PHZYwtmuTLKCorL5dGE1q1194Yp6y/WzEdAg5vh9VBCs4LrJQ+D7AqjkS/X7QXbHt
+         ifFfiXRANUF9O/Eym/4cbZsy8u/+6XIE5WNyJlhiAboUcUO3FuAqrwA3c5J38wHYbH
+         xA+h28VLZb9Z19lHyxEnxPd+hVvv3efoHuAddvgA=
+To:     Rob Herring <robh@kernel.org>
+From:   Yassine Oudjana <y.oudjana@protonmail.com>
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Sivaprakash Murugesan <sivaprak@codeaurora.org>
-Subject: Re: [PATCH v1 1/2] dt-bindings: mailbox: qcom: Add SM6115, SM4250
- APCS compatible
-Message-ID: <20210714180554.GA2855492@robh.at.kernel.org>
-References: <20210622203759.566716-1-iskren.chernev@gmail.com>
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-media@vger.kernel.org,
+        linux-kernel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
+Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
+Subject: Re:  [PATCH] media: dt-bindings: media: venus: Add firmware-name
+Message-ID: <w_oXpbK_lWn1_5cR6AJDWVC_MW4ykO44yTR61UCxS-ifxbyjTmlqksj1DJYERqVyvQBAnxLgJ5-7JEDC8CjgUnuLq7kJbTYVrIVsdxt_D-w=@protonmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210622203759.566716-1-iskren.chernev@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 22 Jun 2021 23:37:58 +0300, Iskren Chernev wrote:
-> Add compatible for the Qualcomm SM6115 and SM4250 APCS block to the
-> Qualcomm APCS binding.
-> 
-> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
-> ---
->  .../devicetree/bindings/mailbox/qcom,apcs-kpss-global.yaml      | 2 ++
->  1 file changed, 2 insertions(+)
-> 
+On Wednesday, July 14th, 2021 at 10:03 PM, Rob Herring <robh@kernel.org> wr=
+ote:
 
-Acked-by: Rob Herring <robh@kernel.org>
+> On Tue, Jun 22, 2021 at 04:20:24PM +0000, Yassine Oudjana wrote:
+>
+> > Date: Tue, 22 Jun 2021 20:08:25 +0400
+> >
+> > Subject: [PATCH] media: dt-bindings: media: venus: Add firmware-name
+> >
+> > Support for parsing the firmware-name property was added a while ago 1,
+> >
+> > but the dt-bindings were never updated with the new property. This patc=
+h
+> >
+> > adds it to all venus dt-bindings.
+> >
+> > Signed-off-by: Yassine Oudjana y.oudjana@protonmail.com
+> >
+> > .../devicetree/bindings/media/qcom,msm8916-venus.yaml | 5 +++++
+> >
+> > .../devicetree/bindings/media/qcom,msm8996-venus.yaml | 5 +++++
+> >
+> > .../devicetree/bindings/media/qcom,sc7180-venus.yaml | 5 +++++
+> >
+> > .../devicetree/bindings/media/qcom,sdm845-venus-v2.yaml | 5 +++++
+> >
+> > .../devicetree/bindings/media/qcom,sdm845-venus.yaml | 5 +++++
+> >
+> > 5 files changed, 25 insertions(+)
+> >
+> > diff --git a/Documentation/devicetree/bindings/media/qcom,msm8916-venus=
+.yaml b/Documentation/devicetree/bindings/media/qcom,msm8916-venus.yaml
+> >
+> > index 59ab16ad12f1..cb1b866d9c37 100644
+> >
+> > --- a/Documentation/devicetree/bindings/media/qcom,msm8916-venus.yaml
+> >
+> > +++ b/Documentation/devicetree/bindings/media/qcom,msm8916-venus.yaml
+> >
+> > @@ -80,6 +80,11 @@ properties:
+> >
+> > required:
+> >
+> > - iommus
+> >
+> > -   firmware-name:
+> > -   maxItems: 1
+>
+> Not an array.
+>
+Noted.
+
+> Is there a specific pattern and/or default name you can specify?
+>
+The pattern is usually something like "qcom/<soc>/<device>/venus.mbn", but =
+it can be any path really.
+The default would be to not set this property.
+
+> > -   description: |
+> > -        Relative firmware image path for venus.
+> >
+> >
+> >
+> > required:
+> >
+> > -   compatible
+> > -   reg
+> >
+> >     diff --git a/Documentation/devicetree/bindings/media/qcom,msm8996-v=
+enus.yaml b/Documentation/devicetree/bindings/media/qcom,msm8996-venus.yaml
+> >
+> >     index 199f45217b4a..b8809325138f 100644
+> >
+> >     --- a/Documentation/devicetree/bindings/media/qcom,msm8996-venus.ya=
+ml
+> >
+> >     +++ b/Documentation/devicetree/bindings/media/qcom,msm8996-venus.ya=
+ml
+> >
+> >     @@ -107,6 +107,11 @@ properties:
+> >
+> >     required:
+> >     -   iommus
+> >
+> > -   firmware-name:
+> > -   maxItems: 1
+> > -   description: |
+> > -        Relative firmware image path for venus.
+> >
+> >
+> >
+> > required:
+> >
+> > -   compatible
+> > -   reg
+> >
+> >     diff --git a/Documentation/devicetree/bindings/media/qcom,sc7180-ve=
+nus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yaml
+> >
+> >     index 04013e5dd044..ffd3e2850366 100644
+> >
+> >     --- a/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yam=
+l
+> >
+> >     +++ b/Documentation/devicetree/bindings/media/qcom,sc7180-venus.yam=
+l
+> >
+> >     @@ -99,6 +99,11 @@ properties:
+> >
+> >     required:
+> >     -   iommus
+> >
+> > -   firmware-name:
+> > -   maxItems: 1
+> > -   description: |
+> > -        Relative firmware image path for venus.
+> >
+> >
+> >
+> > required:
+> >
+> > -   compatible
+> > -   reg
+> >
+> >     diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-ve=
+nus-v2.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.=
+yaml
+> >
+> >     index 04b9af4db191..cd7a5e1374ce 100644
+> >
+> >     --- a/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.=
+yaml
+> >
+> >     +++ b/Documentation/devicetree/bindings/media/qcom,sdm845-venus-v2.=
+yaml
+> >
+> >     @@ -94,6 +94,11 @@ properties:
+> >
+> >     required:
+> >     -   iommus
+> >
+> > -   firmware-name:
+> > -   maxItems: 1
+> > -   description: |
+> > -        Relative firmware image path for venus.
+> >
+> >
+> >
+> > required:
+> >
+> > -   compatible
+> > -   reg
+> >
+> >     diff --git a/Documentation/devicetree/bindings/media/qcom,sdm845-ve=
+nus.yaml b/Documentation/devicetree/bindings/media/qcom,sdm845-venus.yaml
+> >
+> >     index 680f37726fdf..ae256238a637 100644
+> >
+> >     --- a/Documentation/devicetree/bindings/media/qcom,sdm845-venus.yam=
+l
+> >
+> >     +++ b/Documentation/devicetree/bindings/media/qcom,sdm845-venus.yam=
+l
+> >
+> >     @@ -108,6 +108,11 @@ properties:
+> >
+> >     required:
+> >     -   iommus
+> >
+> > -   firmware-name:
+> > -   maxItems: 1
+> > -   description: |
+> > -        Relative firmware image path for venus.
+> >
+> >
+> >
+> > required:
+> >
+> > -   compatible
+> > -   reg
+> >
+> >     --
+> >
+> >     2.32.0
