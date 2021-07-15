@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 26E3F3C9907
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jul 2021 08:52:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CFE383C990F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jul 2021 08:52:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236677AbhGOGzd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jul 2021 02:55:33 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57720 "EHLO mail.kernel.org"
+        id S239275AbhGOGzj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jul 2021 02:55:39 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57868 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236519AbhGOGzd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jul 2021 02:55:33 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 7A8ED6117A;
-        Thu, 15 Jul 2021 06:52:36 +0000 (UTC)
+        id S239062AbhGOGzi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 15 Jul 2021 02:55:38 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 7D4B661362;
+        Thu, 15 Jul 2021 06:52:41 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1626331960;
-        bh=/PV3wN6sUlirZsizfYMWyjujG54WyuUyugANf3Z4nAA=;
+        s=k20201202; t=1626331965;
+        bh=a+mNFMjjqFt7dXv9hTeS3+zdFKT2pg+Uw0o4LY2Z9ms=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=UGjmbTq40pOIBu6V2A5nhipM/t9SWGW8nA2VEZ1LRhv27O6qSzlUNIu8rWZ5562/Z
-         KoKf0+LuhJAoLASKqQ8jGXBNYlP9rnZPqe2LRM81SDWqzYwellbiRkLjtf256NLNfU
-         tkj7l386jiqMCc+oYDRRrjN2HRzlCl6nMlaUdB54WXOBnS42W4mS1V0cZC3il3ym/r
-         H3b/i0ei8Iv2/+1beykjQELw+Ed0zS+ip3nBq6u7KCyY96kwGdmRAGbBQSrb/B3XZB
-         XaZEexqQRMJ31WWMnWi1aCta4bESLj0uXzAhISC6OKdznU5otIDjj2FcKdi7vAaUEr
-         kEwzRw2SHT5Lw==
+        b=gsEjiu1n+fyR6iWMpO+7KZPudHghrzZ5QozxUfn6sPwrHuzCrKmsQcziECySKZrkK
+         VFPh9bGqMElNu6dzSANRqEoiEn8V28NJmvFv2EeOHRqrqlY90azgKZQQr16XV8yWjK
+         FqWpi7tJSqwpglW1uOtt6CC5IizzqoNSpUXDtn7Y0GbMXsvlgPHvZukvT3e7mudv+S
+         pEDpiaoiJ8DG7Kq+uN0J8ts2dLacfUU+KjVUMOUpZru/m8FMOxfHrdzdgqBkvYC0Np
+         deM2fPwaqlCJyFf7fA35eGkUAIJoYczU6+sek8qbQkWpof9lqLsB480P1tvhP4A88A
+         9nv1HbOFS/i9g==
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Rob Clark <robdclark@gmail.com>
 Cc:     linux-arm-msm@vger.kernel.org,
@@ -36,9 +36,9 @@ Cc:     linux-arm-msm@vger.kernel.org,
         Sumit Semwal <sumit.semwal@linaro.org>,
         linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH 03/11] drm/msm/disp/dpu1: Add support for DSC in pingpong block
-Date:   Thu, 15 Jul 2021 12:21:55 +0530
-Message-Id: <20210715065203.709914-4-vkoul@kernel.org>
+Subject: [PATCH 04/11] drm/msm/disp/dpu1: Add DSC support in RM
+Date:   Thu, 15 Jul 2021 12:21:56 +0530
+Message-Id: <20210715065203.709914-5-vkoul@kernel.org>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210715065203.709914-1-vkoul@kernel.org>
 References: <20210715065203.709914-1-vkoul@kernel.org>
@@ -48,97 +48,117 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In SDM845, DSC can be enabled by writing to pingpong block registers, so
-add support for DSC in hw_pp
+This add the bits in RM to enable the DSC blocks
 
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 ---
- .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   | 32 +++++++++++++++++++
- .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h   | 14 ++++++++
- 2 files changed, 46 insertions(+)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h |  1 +
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c  | 32 +++++++++++++++++++++++++
+ drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h  |  1 +
+ 3 files changed, 34 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-index 245a7a62b5c6..07fc131ca9aa 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
-@@ -28,6 +28,9 @@
- #define PP_FBC_MODE                     0x034
- #define PP_FBC_BUDGET_CTL               0x038
- #define PP_FBC_LOSSY_MODE               0x03C
-+#define PP_DSC_MODE                     0x0a0
-+#define PP_DCE_DATA_IN_SWAP             0x0ac
-+#define PP_DCE_DATA_OUT_SWAP            0x0c8
- 
- #define PP_DITHER_EN			0x000
- #define PP_DITHER_BITDEPTH		0x004
-@@ -245,6 +248,32 @@ static u32 dpu_hw_pp_get_line_count(struct dpu_hw_pingpong *pp)
- 	return line;
- }
- 
-+static int dpu_hw_pp_dsc_enable(struct dpu_hw_pingpong *pp)
-+{
-+	struct dpu_hw_blk_reg_map *c = &pp->hw;
-+
-+	DPU_REG_WRITE(c, PP_DSC_MODE, 1);
-+	return 0;
-+}
-+
-+static void dpu_hw_pp_dsc_disable(struct dpu_hw_pingpong *pp)
-+{
-+	struct dpu_hw_blk_reg_map *c = &pp->hw;
-+
-+	DPU_REG_WRITE(c, PP_DSC_MODE, 0);
-+}
-+
-+static int dpu_hw_pp_setup_dsc(struct dpu_hw_pingpong *pp)
-+{
-+	struct dpu_hw_blk_reg_map *pp_c = &pp->hw;
-+	int data;
-+
-+	data = DPU_REG_READ(pp_c, PP_DCE_DATA_OUT_SWAP);
-+	data |= BIT(18); /* endian flip */
-+	DPU_REG_WRITE(pp_c, PP_DCE_DATA_OUT_SWAP, data);
-+	return 0;
-+}
-+
- static void _setup_pingpong_ops(struct dpu_hw_pingpong *c,
- 				unsigned long features)
- {
-@@ -256,6 +285,9 @@ static void _setup_pingpong_ops(struct dpu_hw_pingpong *c,
- 	c->ops.get_autorefresh = dpu_hw_pp_get_autorefresh_config;
- 	c->ops.poll_timeout_wr_ptr = dpu_hw_pp_poll_timeout_wr_ptr;
- 	c->ops.get_line_count = dpu_hw_pp_get_line_count;
-+	c->ops.setup_dsc = dpu_hw_pp_setup_dsc;
-+	c->ops.enable_dsc = dpu_hw_pp_dsc_enable;
-+	c->ops.disable_dsc = dpu_hw_pp_dsc_disable;
- 
- 	if (test_bit(DPU_PINGPONG_DITHER, &features))
- 		c->ops.setup_dither = dpu_hw_pp_setup_dither;
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
-index 845b9ce80e31..5058e41ffbc0 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
-@@ -124,6 +124,20 @@ struct dpu_hw_pingpong_ops {
- 	 */
- 	void (*setup_dither)(struct dpu_hw_pingpong *pp,
- 			struct dpu_hw_dither_cfg *cfg);
-+	/**
-+	 * Enable DSC
-+	 */
-+	int (*enable_dsc)(struct dpu_hw_pingpong *pp);
-+
-+	/**
-+	 * Disable DSC
-+	 */
-+	void (*disable_dsc)(struct dpu_hw_pingpong *pp);
-+
-+	/**
-+	 * Setup DSC
-+	 */
-+	int (*setup_dsc)(struct dpu_hw_pingpong *pp);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+index d6717d6672f7..d56c05146dfe 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+@@ -165,6 +165,7 @@ struct dpu_global_state {
+ 	uint32_t ctl_to_enc_id[CTL_MAX - CTL_0];
+ 	uint32_t intf_to_enc_id[INTF_MAX - INTF_0];
+ 	uint32_t dspp_to_enc_id[DSPP_MAX - DSPP_0];
++	uint32_t dsc_to_enc_id[DSC_MAX - DSC_0];
  };
  
- struct dpu_hw_pingpong {
+ struct dpu_global_state
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+index fd2d104f0a91..4da6d72b7996 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c
+@@ -11,6 +11,7 @@
+ #include "dpu_hw_intf.h"
+ #include "dpu_hw_dspp.h"
+ #include "dpu_hw_merge3d.h"
++#include "dpu_hw_dsc.h"
+ #include "dpu_encoder.h"
+ #include "dpu_trace.h"
+ 
+@@ -75,6 +76,14 @@ int dpu_rm_destroy(struct dpu_rm *rm)
+ 			dpu_hw_intf_destroy(hw);
+ 		}
+ 	}
++	for (i = 0; i < ARRAY_SIZE(rm->dsc_blks); i++) {
++		struct dpu_hw_dsc *hw;
++
++		if (rm->intf_blks[i]) {
++			hw = to_dpu_hw_dsc(rm->dsc_blks[i]);
++			dpu_hw_dsc_destroy(hw);
++		}
++	}
+ 
+ 	return 0;
+ }
+@@ -221,6 +230,19 @@ int dpu_rm_init(struct dpu_rm *rm,
+ 		rm->dspp_blks[dspp->id - DSPP_0] = &hw->base;
+ 	}
+ 
++	for (i = 0; i < cat->dsc_count; i++) {
++		struct dpu_hw_dsc *hw;
++		const struct dpu_dsc_cfg *dsc = &cat->dsc[i];
++
++		hw = dpu_hw_dsc_init(dsc->id, mmio, cat);
++		if (IS_ERR_OR_NULL(hw)) {
++			rc = PTR_ERR(hw);
++			DPU_ERROR("failed dsc object creation: err %d\n", rc);
++			goto fail;
++		}
++		rm->dsc_blks[dsc->id - DSC_0] = &hw->base;
++	}
++
+ 	return 0;
+ 
+ fail:
+@@ -476,6 +498,9 @@ static int _dpu_rm_reserve_intf(
+ 	}
+ 
+ 	global_state->intf_to_enc_id[idx] = enc_id;
++
++	global_state->dsc_to_enc_id[0] = enc_id;
++	global_state->dsc_to_enc_id[1] = enc_id;
+ 	return 0;
+ }
+ 
+@@ -567,6 +592,8 @@ void dpu_rm_release(struct dpu_global_state *global_state,
+ 		ARRAY_SIZE(global_state->ctl_to_enc_id), enc->base.id);
+ 	_dpu_rm_clear_mapping(global_state->intf_to_enc_id,
+ 		ARRAY_SIZE(global_state->intf_to_enc_id), enc->base.id);
++	_dpu_rm_clear_mapping(global_state->dsc_to_enc_id,
++		ARRAY_SIZE(global_state->dsc_to_enc_id), enc->base.id);
+ }
+ 
+ int dpu_rm_reserve(
+@@ -640,6 +667,11 @@ int dpu_rm_get_assigned_resources(struct dpu_rm *rm,
+ 		hw_to_enc_id = global_state->dspp_to_enc_id;
+ 		max_blks = ARRAY_SIZE(rm->dspp_blks);
+ 		break;
++	case DPU_HW_BLK_DSC:
++		hw_blks = rm->dsc_blks;
++		hw_to_enc_id = global_state->dsc_to_enc_id;
++		max_blks = ARRAY_SIZE(rm->dsc_blks);
++		break;
+ 	default:
+ 		DPU_ERROR("blk type %d not managed by rm\n", type);
+ 		return 0;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+index 1f12c8d5b8aa..278d2a510b80 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h
+@@ -30,6 +30,7 @@ struct dpu_rm {
+ 	struct dpu_hw_blk *intf_blks[INTF_MAX - INTF_0];
+ 	struct dpu_hw_blk *dspp_blks[DSPP_MAX - DSPP_0];
+ 	struct dpu_hw_blk *merge_3d_blks[MERGE_3D_MAX - MERGE_3D_0];
++	struct dpu_hw_blk *dsc_blks[DSC_MAX - DSC_0];
+ 
+ 	uint32_t lm_max_width;
+ };
 -- 
 2.31.1
 
