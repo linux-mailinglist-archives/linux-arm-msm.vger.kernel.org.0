@@ -2,237 +2,466 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4CFE23CAD81
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jul 2021 22:02:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6297B3CAEA4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jul 2021 23:33:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242291AbhGOUFK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jul 2021 16:05:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44700 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239621AbhGOUFD (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jul 2021 16:05:03 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 343A1C0613EF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jul 2021 12:50:05 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id 75-20020a9d08510000b02904acfe6bcccaso7391339oty.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 15 Jul 2021 12:50:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=1YLndUxOOPY8Sr1BrjsF6xRwJEfXRqU5cb5ChMJ5I0o=;
-        b=ilM60R3oL3fDNSoPOqAJo5H35jI1pAxERRGZ5FINwozVhTWmMylm937FoNsNZTIjiS
-         30eNAyBpalxY4OOTjNnkD99GOF/6FWeBndVDgRvCR2xzb9sTVCjQGhbGAlf+/DCCGc0W
-         NvPxl0gogn2ggL2LlYKjxdhLbhm14N78sa2wv+kc0J/ch7Eao8UME4PAEC+cMPxlaP42
-         khyDc356azAy6rU8fsgmnmijQCNRd53mEEWVNZSVBwyIV/KNgP+jfFaYYXA5vFiuWn6T
-         ms8Dr4nZmkCotxEFSfFDLU8OJOSa3Vc/J4dYsfv/bjCfqZp5bIv2SnMGn5xSMQaaGxJx
-         6Y8w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=1YLndUxOOPY8Sr1BrjsF6xRwJEfXRqU5cb5ChMJ5I0o=;
-        b=QpzZXwtxYGaX2CCgswSVKEmpH6qXp9k+GbXs2eQk4ijz/A2uuWSbVYJjXlOy+FFoLm
-         0cAfPOfDZ/zOXhin/A7s18RiXluGVOkdBLWVZiTSi+lF66kfPdYeHeLDk7meYtUNW1LO
-         Z2tvMN2XXGKYkNGT/Xiejr7Ngnh1KPvbWWNWmI7nmxCEgd2JQC7iOqlC6suOsVdh7wJF
-         eoow5MqLnDISr2E2ohBGXxkUpMmbyDYcoJ94lO2Y1GZ4oa+A0dLcM3BiroFLUrgGRgWz
-         KZMtuBUqmme3VsB+Fj6Auag4axYn5o5NhnK1UKWnmEE0fU1B/BC7EUO5zT83Z94j1EwV
-         8URg==
-X-Gm-Message-State: AOAM532My9h0Tj/tPZjP0UPNhaHL43CFaxVFpWwhtL3ecvwGYH3eo/Fo
-        j9u1VnrdumJOmThOH6PK28hGTg==
-X-Google-Smtp-Source: ABdhPJyZwjUMocwsEorC/bB3r5mo2VUVVLxjfj5HSITW72ekMa51Ktj/ONyzjy5RdWjjIN7e3VghaQ==
-X-Received: by 2002:a05:6830:2366:: with SMTP id r6mr5013660oth.188.1626378604584;
-        Thu, 15 Jul 2021 12:50:04 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id c11sm1279191oot.25.2021.07.15.12.50.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Jul 2021 12:50:04 -0700 (PDT)
-Date:   Thu, 15 Jul 2021 14:50:01 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
-Cc:     agross@kernel.org, linus.walleij@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, manivannan.sadhasivam@linaro.org
-Subject: Re: [PATCH 2/5] clk: qcom: Add SDX65 GCC support
-Message-ID: <YPCRadKzQRZdtOfO@yoga>
-References: <20210709200339.17638-1-quic_vamslank@quicinc.com>
- <20210709200339.17638-3-quic_vamslank@quicinc.com>
- <YOkTVXcZpSRUE+Wy@yoga>
- <20210715184325.GB6897@quicinc.com>
+        id S230354AbhGOVgs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jul 2021 17:36:48 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:64270 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230293AbhGOVgs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 15 Jul 2021 17:36:48 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1626384834; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=FD0Ju4J/GBLUeu2VAiPcz9jWx5bvYygJ9OozslM0Pqo=;
+ b=u2TtohMS+56K7GZSIajpEnngZbRXFUePiH3yNKb6VKrFSfxC5F3pSyUjO8iUxu8W0dZPYt5E
+ Ws8u4Mri5Up5ISux1rUV0kpfdbzBW5rAX9JXUm9Zn3qNXmirqDH0//QFETMBZ5/2p+kQBfKG
+ 08EI/7Vxdz/aCm59tgN1lhtakgE=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 60f0a9c29771b05b244c01d6 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 15 Jul 2021 21:33:54
+ GMT
+Sender: maitreye=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1F27DC43217; Thu, 15 Jul 2021 21:33:54 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: maitreye)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D253DC433F1;
+        Thu, 15 Jul 2021 21:33:51 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210715184325.GB6897@quicinc.com>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 15 Jul 2021 14:33:51 -0700
+From:   maitreye@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        abhinavk@codeaurora.org, khsieh@codeaurora.org,
+        seanpaul@chromium.org, aravindh@codeaurora.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2] drm/msm/dp: add logs across DP driver for ease of
+ debugging
+In-Reply-To: <CAE-0n51Guzi+3tTVJeN-TQrZwe+3NL4dXW4-keaFKe-hZ0xxHA@mail.gmail.com>
+References: =?UTF-8?B?POKAmUNBRS0wbjUxVUN2eENiQjBNVHpueUFpWitxb2kzX2ZlNkZKb1czK05aMFFMLQ==?=
+ =?UTF-8?B?UCs2dTR3QG1haWwuZ21haWwuY29t4oCZLS1zdWJqZWN0LXByZWZpeD1QQVRDSCBSRVNFTkQ+IDwxNjI1?=
+ =?UTF-8?B?NzcxNjI0LTExOTk3LTEtZ2l0LXNlbmQtZW1haWwtbWFpdHJleWVAY29kZWF1cm9yYS5vcmc+?=
+ <CAE-0n51Guzi+3tTVJeN-TQrZwe+3NL4dXW4-keaFKe-hZ0xxHA@mail.gmail.com>
+Message-ID: <faf7dae01476ff7e32313cfbd85251e2@codeaurora.org>
+X-Sender: maitreye@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 15 Jul 13:43 CDT 2021, Vamsi Krishna Lanka wrote:
+Hi Stephen,
+Thanks for reviewing my code.
 
-> On Fri, Jul 09, 2021 at 10:26:13PM -0500, Bjorn Andersson wrote:
-> > On Fri 09 Jul 15:03 CDT 2021, quic_vamslank@quicinc.com wrote:
-> > 
-> > > From: Vamsi krishna Lanka <quic_vamslank@quicinc.com>
-> > > 
-> > > Add Global Clock Controller (GCC) support for SDX65 SoCs from Qualcomm.
-> > > 
-> > 
-> > This doesn't mention the fact that you add a new PLL type. I do however
-> > think you should do that in a separate commit, preceding the gcc driver
-> > patch.
+On 2021-07-08 18:27, Stephen Boyd wrote:
+> Quoting maitreye (2021-07-08 12:13:44)
+>> From: Maitreyee Rao <maitreye@codeaurora.org>
+>> 
+>> Add trace points across the MSM DP driver to help debug
+>> interop issues.
+>> 
+>> Changes in v2:
+>>  - Got rid of redundant log messages.
+>>  - Added %#x instead of 0x%x wherever required.
+>>  - Got rid of __func__ calls in debug messages.
+>>  - Added newline wherever missing.
 > 
-> Sure, will do.
+> I think this is the new thing in v3? Adding one missing newline?
 > 
-> > 
-> > > Signed-off-by: Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
-> > > ---
-> > >  drivers/clk/qcom/Kconfig         |    8 +
-> > >  drivers/clk/qcom/Makefile        |    1 +
-> > >  drivers/clk/qcom/clk-alpha-pll.c |  170 +++
-> > >  drivers/clk/qcom/clk-alpha-pll.h |    4 +
-> > >  drivers/clk/qcom/clk-rcg.h       |    4 +
-> > >  drivers/clk/qcom/gcc-sdx65.c     | 1648 ++++++++++++++++++++++++++++++
-> > >  6 files changed, 1835 insertions(+)
-> > >  create mode 100644 drivers/clk/qcom/gcc-sdx65.c
-> > [..]
-> > > diff --git a/drivers/clk/qcom/clk-rcg.h b/drivers/clk/qcom/clk-rcg.h
-> > > index 99efcc7f8d88..33a7fe992207 100644
-> > > --- a/drivers/clk/qcom/clk-rcg.h
-> > > +++ b/drivers/clk/qcom/clk-rcg.h
-> > > @@ -149,6 +149,10 @@ struct clk_rcg2 {
-> > >  	const struct freq_tbl	*freq_tbl;
-> > >  	struct clk_regmap	clkr;
-> > >  	u8			cfg_off;
-> > > +	u8                      flags;
-> > > +#define FORCE_ENABLE_RCG        BIT(0)
-> > 
-> > Unused.
-> 
-> Will remove.
-> 
-> > 
-> > > +#define HW_CLK_CTRL_MODE        BIT(1)
-> > 
-> > We don't implement HW_CLK_CTRL_MODE upstream yet, so you shouldn't
-> > specify it for your clocks - or just add the definefor it.
-> > 
-> > > +#define DFS_SUPPORT             BIT(2)
-> > 
-> > Unused.
-> 
-> Will remove.
-> 
-> > 
-> > >  };
-> > >  
-> > >  #define to_clk_rcg2(_hw) container_of(to_clk_regmap(_hw), struct clk_rcg2, clkr)
-> > > diff --git a/drivers/clk/qcom/gcc-sdx65.c b/drivers/clk/qcom/gcc-sdx65.c
-> > [..]
-> > > +static struct clk_alpha_pll_postdiv gpll0_out_even = {
-> > > +	.offset = 0x0,
-> > > +	.post_div_shift = 10,
-> > > +	.post_div_table = post_div_table_gpll0_out_even,
-> > > +	.num_post_div = ARRAY_SIZE(post_div_table_gpll0_out_even),
-> > > +	.width = 4,
-> > > +	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_LUCID_EVO],
-> > > +	.clkr.hw.init = &(struct clk_init_data){
-> > > +		.name = "gpll0_out_even",
-> > > +		.parent_data = &(const struct clk_parent_data){
-> > 
-> > A parent_data with a single .hw is better specified using parent_hws.
-> 
-> Sure, will use parent_hws.
-> 
-> > 
-> > > +			.hw = &gpll0.clkr.hw,
-> > > +		},
-> > > +		.num_parents = 1,
-> > > +		.ops = &clk_alpha_pll_postdiv_lucid_evo_ops,
-> > > +	},
-> > > +};
-> > > +
-> > > +static const struct parent_map gcc_parent_map_0[] = {
-> > > +	{ P_BI_TCXO, 0 },
-> > > +	{ P_GPLL0_OUT_MAIN, 1 },
-> > > +	{ P_GPLL0_OUT_EVEN, 6 },
-> > > +	{ P_CORE_BI_PLL_TEST_SE, 7 },
-> > > +};
-> > > +
-> > > +static const struct clk_parent_data gcc_parent_data_0[] = {
-> > > +	{ .fw_name = "bi_tcxo" },
-> > > +	{ .hw = &gpll0.clkr.hw },
-> > > +	{ .hw = &gpll0_out_even.clkr.hw },
-> > > +	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
-> > > +};
-> > 
-> > Nice to see that you use clk_parent_data, fw_name and hw right from the
-> > start.
-> > 
-> > We typically remove core_bi_pll_test_se from the various parent lists,
-> > as this is not something that's expected to be ever used. Please do the
-> > same.
-> 
-> Sorry, I couldn't completely follow. Should I remove core_bi_pll_test_se from
-> both fw_name and name ? 
-> 
+This was actually v2, I forgot to add the resend-patch tag.
 
-Yes, please drop "core_bi_pll_test_se" (and hence P_CORE_BI_PLL_TEST_SE)
-throughout the driver.
+>> 
+>> Signed-off-by: Maitreyee Rao <maitreye@codeaurora.org>
+>> ---
+>>  drivers/gpu/drm/msm/dp/dp_catalog.c |  8 ++++++--
+>>  drivers/gpu/drm/msm/dp/dp_ctrl.c    |  5 ++++-
+>>  drivers/gpu/drm/msm/dp/dp_display.c | 14 ++++++++++++++
+>>  drivers/gpu/drm/msm/dp/dp_link.c    | 17 ++++++++++-------
+>>  drivers/gpu/drm/msm/dp/dp_panel.c   |  2 ++
+>>  drivers/gpu/drm/msm/dp/dp_power.c   |  3 +++
+>>  6 files changed, 39 insertions(+), 10 deletions(-)
+>> 
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c 
+>> b/drivers/gpu/drm/msm/dp/dp_catalog.c
+>> index 32f3575..292ec2c 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_catalog.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
+>> @@ -372,6 +372,7 @@ void dp_catalog_ctrl_mainlink_ctrl(struct 
+>> dp_catalog *dp_catalog,
+>>         struct dp_catalog_private *catalog = container_of(dp_catalog,
+>>                                 struct dp_catalog_private, 
+>> dp_catalog);
+>> 
+>> +       DRM_DEBUG_DP("enable=%d\n", enable);
+>>         if (enable) {
+>>                 /*
+>>                  * To make sure link reg writes happens before other 
+>> operation,
+>> @@ -580,6 +581,7 @@ void dp_catalog_hpd_config_intr(struct dp_catalog 
+>> *dp_catalog,
+>> 
+>>         config = (en ? config | intr_mask : config & ~intr_mask);
+>> 
+>> +       DRM_DEBUG_DP("intr_mask=%#x config=%#x\n", intr_mask, config);
+>>         dp_write_aux(catalog, REG_DP_DP_HPD_INT_MASK,
+>>                                 config & DP_DP_HPD_INT_MASK);
+>>  }
+>> @@ -610,6 +612,7 @@ u32 dp_catalog_link_is_connected(struct dp_catalog 
+>> *dp_catalog)
+>>         u32 status;
+>> 
+>>         status = dp_read_aux(catalog, REG_DP_DP_HPD_INT_STATUS);
+>> +       DRM_DEBUG_DP("aux status:%#x\n", status);
+> 
+> Unstick colon from printf specifier?
+> 
+Yup, will do that.
 
-Thanks,
-Bjorn
+>>         status >>= DP_DP_HPD_STATE_STATUS_BITS_SHIFT;
+>>         status &= DP_DP_HPD_STATE_STATUS_BITS_MASK;
+>> 
+>> @@ -685,6 +688,7 @@ void dp_catalog_ctrl_send_phy_pattern(struct 
+>> dp_catalog *dp_catalog,
+>>         /* Make sure to clear the current pattern before starting a 
+>> new one */
+>>         dp_write_link(catalog, REG_DP_STATE_CTRL, 0x0);
+>> 
+>> +       DRM_DEBUG_DP("pattern:%#x\n", pattern);
+> 
+> Unstick colon from printf specifier?
+> 
+>>         switch (pattern) {
+>>         case DP_PHY_TEST_PATTERN_D10_2:
+>>                 dp_write_link(catalog, REG_DP_STATE_CTRL,
+>> @@ -745,7 +749,7 @@ void dp_catalog_ctrl_send_phy_pattern(struct 
+>> dp_catalog *dp_catalog,
+>>                                 DP_STATE_CTRL_LINK_TRAINING_PATTERN4);
+>>                 break;
+>>         default:
+>> -               DRM_DEBUG_DP("No valid test pattern requested:0x%x\n", 
+>> pattern);
+>> +               DRM_DEBUG_DP("No valid test pattern requested:%#x\n", 
+>> pattern);
+> 
+> Unstick colon from printf specifier?
+> 
+Yes, Thank you will fix this.
 
-> > 
-> > > +
-> > > +static const struct clk_parent_data gcc_parent_data_0_ao[] = {
-> > > +	{ .fw_name = "bi_tcxo_ao" },
-> > > +	{ .hw = &gpll0.clkr.hw },
-> > > +	{ .hw = &gpll0_out_even.clkr.hw },
-> > > +	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
-> > > +};
-> > [..]
-> > > +static struct clk_regmap *gcc_sdx65_clocks[] = {
-> > > +	[GCC_AHB_PCIE_LINK_CLK] = &gcc_ahb_pcie_link_clk.clkr,
-> > > +	[GCC_BLSP1_AHB_CLK] = &gcc_blsp1_ahb_clk.clkr,
-> > > +	[GCC_BLSP1_QUP1_I2C_APPS_CLK] = &gcc_blsp1_qup1_i2c_apps_clk.clkr,
-> > > +	[GCC_BLSP1_QUP1_I2C_APPS_CLK_SRC] =
-> > > +		&gcc_blsp1_qup1_i2c_apps_clk_src.clkr,
-> > 
-> > Skip the line wrap.
+>>                 break;
+>>         }
+>>  }
+>> @@ -928,7 +932,7 @@ void dp_catalog_audio_config_acr(struct dp_catalog 
+>> *dp_catalog)
+>>         select = dp_catalog->audio_data;
+>>         acr_ctrl = select << 4 | BIT(31) | BIT(8) | BIT(14);
+>> 
+>> -       DRM_DEBUG_DP("select = 0x%x, acr_ctrl = 0x%x\n", select, 
+>> acr_ctrl);
+>> +       DRM_DEBUG_DP("select =0x%x, acr_ctrl =0x%x\n", select, 
+>> acr_ctrl);
 > 
-> Done.
+> This doesn't use %#x? And then it sticks it to the equals sign but
+> doesn't move select and acr_ctrl to them?
 > 
-> > 
-> > > +	[GCC_BLSP1_QUP1_SPI_APPS_CLK] = &gcc_blsp1_qup1_spi_apps_clk.clkr,
-> > > +	[GCC_BLSP1_QUP1_SPI_APPS_CLK_SRC] =
-> > > +		&gcc_blsp1_qup1_spi_apps_clk_src.clkr,
-> > > +	[GCC_BLSP1_QUP2_I2C_APPS_CLK] = &gcc_blsp1_qup2_i2c_apps_clk.clkr,
-> > > +	[GCC_BLSP1_QUP2_I2C_APPS_CLK_SRC] =
-> > > +		&gcc_blsp1_qup2_i2c_apps_clk_src.clkr,
-> > > +	[GCC_BLSP1_QUP2_SPI_APPS_CLK] = &gcc_blsp1_qup2_spi_apps_clk.clkr,
-> > > +	[GCC_BLSP1_QUP2_SPI_APPS_CLK_SRC] =
-> > [..]
-> > > +static int gcc_sdx65_probe(struct platform_device *pdev)
-> > > +{
-> > > +	struct regmap *regmap;
-> > > +	int ret;
-> > > +
-> > > +	regmap = qcom_cc_map(pdev, &gcc_sdx65_desc);
-> > > +	if (IS_ERR(regmap))
-> > > +		return PTR_ERR(regmap);
-> > > +	/*
-> > > +	 * Keep the clocks always-ON as they are critical to the functioning
-> > > +	 * of the system:
-> > > +	 * GCC_SYS_NOC_CPUSS_AHB_CLK, GCC_CPUSS_AHB_CLK, GCC_CPUSS_GNOC_CLK
-> > > +	 */
-> > > +	regmap_update_bits(regmap, 0x6d008, BIT(0), BIT(0));
-> > > +	regmap_update_bits(regmap, 0x6d008, BIT(21), BIT(21));
-> > > +	regmap_update_bits(regmap, 0x6d008, BIT(22), BIT(22));
-> > > +
-> > > +	ret = qcom_cc_really_probe(pdev, &gcc_sdx65_desc, regmap);
-> > 
-> > Just "return qcom_cc_really_probe()"
+You are right , will fix this.
+
+>> 
+>>         dp_write_link(catalog, MMSS_DP_AUDIO_ACR_CTRL, acr_ctrl);
+>>  }
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c 
+>> b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+>> index 2a8955c..21ad7d3 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+>> @@ -122,7 +122,7 @@ void dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl)
+>>                         IDLE_PATTERN_COMPLETION_TIMEOUT_JIFFIES))
+>>                 pr_warn("PUSH_IDLE pattern timedout\n");
+>> 
+>> -       pr_debug("mainlink off done\n");
+>> +       DRM_DEBUG_DP("PUSH IDLE, mainlink off done\n");
 > 
-> Done.
+> I think we already get the func name as dp_ctrl_push_idle in the print
+> so is having PUSH IDLE in all caps really useful?
 > 
+You are right, will remove it.
+
+>>  }
+>> 
+>>  static void dp_ctrl_config_ctrl(struct dp_ctrl_private *ctrl)
+>> @@ -1013,6 +1013,8 @@ static int dp_ctrl_update_vx_px(struct 
+>> dp_ctrl_private *ctrl)
+>>         u32 voltage_swing_level = link->phy_params.v_level;
+>>         u32 pre_emphasis_level = link->phy_params.p_level;
+>> 
+>> +       DRM_DEBUG_DP("voltage level: %d emphasis level: %d\n", 
+>> voltage_swing_level,
+>> +                       pre_emphasis_level);
+>>         ret = dp_catalog_ctrl_update_vx_px(ctrl->catalog,
+>>                 voltage_swing_level, pre_emphasis_level);
+>> 
+>> @@ -1384,6 +1386,7 @@ int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, 
+>> bool flip, bool reset)
+>>         if (reset)
+>>                 dp_catalog_ctrl_reset(ctrl->catalog);
+>> 
+>> +       DRM_DEBUG_DP("flip=%d\n", flip);
+>>         dp_catalog_ctrl_phy_reset(ctrl->catalog);
+>>         phy_init(phy);
+>>         dp_catalog_ctrl_enable_irq(ctrl->catalog, true);
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
+>> b/drivers/gpu/drm/msm/dp/dp_display.c
+>> index cf9c645..45301c5 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>> @@ -275,6 +275,8 @@ static bool dp_display_is_ds_bridge(struct 
+>> dp_panel *panel)
+>> 
+>>  static bool dp_display_is_sink_count_zero(struct dp_display_private 
+>> *dp)
+>>  {
+>> +       DRM_DEBUG_DP("present=%#x sink_count=%d\n", 
+>> dp->panel->dpcd[DP_DOWNSTREAMPORT_PRESENT],
+>> +                       dp->link->sink_count);
+>>         return dp_display_is_ds_bridge(dp->panel) &&
+>>                 (dp->link->sink_count == 0);
+>>  }
+>> @@ -320,6 +322,7 @@ static int dp_display_send_hpd_notification(struct 
+>> dp_display_private *dp,
+>> 
+>>         dp->dp_display.is_connected = hpd;
+>> 
+>> +       DRM_DEBUG_DP("hpd=%d\n", hpd);
+>>         dp_display_send_hpd_event(&dp->dp_display);
+>> 
+>>         return 0;
+>> @@ -369,6 +372,7 @@ static void dp_display_host_init(struct 
+>> dp_display_private *dp, int reset)
+>>  {
+>>         bool flip = false;
+>> 
+>> +       DRM_DEBUG_DP("core_initialized=%d\n", dp->core_initialized);
+>>         if (dp->core_initialized) {
+>>                 DRM_DEBUG_DP("DP core already initialized\n");
+>>                 return;
+>> @@ -483,8 +487,10 @@ static int dp_display_handle_irq_hpd(struct 
+>> dp_display_private *dp)
+>>  {
+>>         u32 sink_request = dp->link->sink_request;
+>> 
+>> +       DRM_DEBUG_DP("%d\n", sink_request);
+>>         if (dp->hpd_state == ST_DISCONNECTED) {
+>>                 if (sink_request & DP_LINK_STATUS_UPDATED) {
+>> +                       DRM_DEBUG_DP("Disconnected sink_count:%d\n", 
+>> sink_request);
+>>                         DRM_ERROR("Disconnected, no 
+>> DP_LINK_STATUS_UPDATED\n");
+>>                         return -EINVAL;
+>>                 }
+>> @@ -509,6 +515,7 @@ static int dp_display_usbpd_attention_cb(struct 
+>> device *dev)
+>>                 DRM_ERROR("invalid dev\n");
+>>                 return -EINVAL;
+>>         }
+>> +       DRM_DEBUG_DP("sink_request:%d\n", sink_request);
+> 
+> Unstick from colon?
+> 
+Yeah, will do it.
+>> 
+>>         dp = container_of(g_dp_display,
+>>                         struct dp_display_private, dp_display);
+>> @@ -523,6 +530,7 @@ static int dp_display_usbpd_attention_cb(struct 
+>> device *dev)
+>>         rc = dp_link_process_request(dp->link);
+>>         if (!rc) {
+>>                 sink_request = dp->link->sink_request;
+>> +               DRM_DEBUG_DP("hpd_state=%d sink_count=%d\n", 
+>> dp->hpd_state, sink_request);
+>>                 if (sink_request & DS_PORT_STATUS_CHANGED)
+>>                         rc = 
+>> dp_display_handle_port_ststus_changed(dp);
+>>                 else
+>> @@ -545,6 +553,7 @@ static int dp_hpd_plug_handle(struct 
+>> dp_display_private *dp, u32 data)
+>>         mutex_lock(&dp->event_mutex);
+>> 
+>>         state =  dp->hpd_state;
+>> +       DRM_DEBUG_DP("hpd_state=%d\n", state);
+>>         if (state == ST_DISPLAY_OFF || state == ST_SUSPENDED) {
+>>                 mutex_unlock(&dp->event_mutex);
+>>                 return 0;
+>> @@ -680,6 +689,7 @@ static int dp_hpd_unplug_handle(struct 
+>> dp_display_private *dp, u32 data)
+>>         /* start sentinel checking in case of missing uevent */
+>>         dp_add_event(dp, EV_DISCONNECT_PENDING_TIMEOUT, 0, 
+>> DP_TIMEOUT_5_SECOND);
+>> 
+>> +       DRM_DEBUG_DP("hpd_state=%d\n", state);
+>>         /* signal the disconnect event early to ensure proper teardown 
+>> */
+>>         dp_display_handle_plugged_change(g_dp_display, false);
+>> 
+>> @@ -738,6 +748,7 @@ static int dp_irq_hpd_handle(struct 
+>> dp_display_private *dp, u32 data)
+>>         if (ret == -ECONNRESET) { /* cable unplugged */
+>>                 dp->core_initialized = false;
+>>         }
+>> +       DRM_DEBUG_DP("hpd_state=%d\n", state);
+>> 
+>>         mutex_unlock(&dp->event_mutex);
+>> 
+>> @@ -882,6 +893,7 @@ static int dp_display_enable(struct 
+>> dp_display_private *dp, u32 data)
+>> 
+>>         dp_display = g_dp_display;
+>> 
+>> +       DRM_DEBUG_DP("sink_count=%d\n", dp->link->sink_count);
+>>         if (dp_display->power_on) {
+>>                 DRM_DEBUG_DP("Link already setup, return\n");
+>>                 return 0;
+>> @@ -943,6 +955,7 @@ static int dp_display_disable(struct 
+>> dp_display_private *dp, u32 data)
+>> 
+>>         dp_display->power_on = false;
+>> 
+>> +       DRM_DEBUG_DP("sink count:%d\n", dp->link->sink_count);
+>>         return 0;
+>>  }
+>> 
+>> @@ -1190,6 +1203,7 @@ static irqreturn_t dp_display_irq_handler(int 
+>> irq, void *dev_id)
+>> 
+>>         hpd_isr_status = dp_catalog_hpd_get_intr_status(dp->catalog);
+>> 
+>> +       DRM_DEBUG_DP("hpd isr status=%#x\n", hpd_isr_status);
+>>         if (hpd_isr_status & 0x0F) {
+>>                 /* hpd related interrupts */
+>>                 if (hpd_isr_status & DP_DP_HPD_PLUG_INT_MASK ||
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_link.c 
+>> b/drivers/gpu/drm/msm/dp/dp_link.c
+>> index be986da..316e8e6 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_link.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_link.c
+>> @@ -1036,43 +1036,46 @@ int dp_link_process_request(struct dp_link 
+>> *dp_link)
+>> 
+>>         if (link->request.test_requested == DP_TEST_LINK_EDID_READ) {
+>>                 dp_link->sink_request |= DP_TEST_LINK_EDID_READ;
+>> -               return ret;
+>> +               goto out;
+>>         }
+>> 
+>>         ret = dp_link_process_ds_port_status_change(link);
+>>         if (!ret) {
+>>                 dp_link->sink_request |= DS_PORT_STATUS_CHANGED;
+>> -               return ret;
+>> +               goto out;
+>>         }
+>> 
+>>         ret = dp_link_process_link_training_request(link);
+>>         if (!ret) {
+>>                 dp_link->sink_request |= DP_TEST_LINK_TRAINING;
+>> -               return ret;
+>> +               goto out;
+>>         }
+>> 
+>>         ret = dp_link_process_phy_test_pattern_request(link);
+>>         if (!ret) {
+>>                 dp_link->sink_request |= 
+>> DP_TEST_LINK_PHY_TEST_PATTERN;
+>> -               return ret;
+>> +               goto out;
+>>         }
+>> 
+>>         ret = dp_link_process_link_status_update(link);
+>>         if (!ret) {
+>>                 dp_link->sink_request |= DP_LINK_STATUS_UPDATED;
+>> -               return ret;
+>> +               goto out;
+>>         }
+>> 
+>>         if (dp_link_is_video_pattern_requested(link)) {
+>> -               ret = 0;
+>>                 dp_link->sink_request |= DP_TEST_LINK_VIDEO_PATTERN;
+>> +               goto out;
+>>         }
+>> 
+>>         if (dp_link_is_audio_pattern_requested(link)) {
+>>                 dp_link->sink_request |= DP_TEST_LINK_AUDIO_PATTERN;
+>> -               return -EINVAL;
+>> +               ret = -EINVAL;
+>> +               goto out;
+>>         }
+>> 
+>> +out:
+>> +       DRM_DEBUG_DP("sink request=%#x", dp_link->sink_request);
+>>         return ret;
+> 
+> I suspect this could be more readable by using if/else-if instead of
+> goto out pattern. Can you make that change instead so we get down to 
+> the
+> bottom of this function without using a label?
+> 
+So after reviewing it again, It seems changing to if-else is more 
+complicated because dp_link_process_*** functions, each have different 
+return values and changing it to if-else and handling other cases seems 
+more complicated.
+
+>>  }
+>> 
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c 
+>> b/drivers/gpu/drm/msm/dp/dp_panel.c
+>> index 88196f7..71db071 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
+>> @@ -66,6 +66,8 @@ static int dp_panel_read_dpcd(struct dp_panel 
+>> *dp_panel)
+>>                 goto end;
+>>         }
+>> 
+>> +       DRM_DEBUG_DP("%s 0x%x 0x%x 0x%x 0x%x 0x%x\n", __func__, 
+>> dpcd[0],
+> 
+> Drop __func__? Is this needed at all?
+> 
+You are right this print message isn't required at all. Will get rid of 
+it.
+
+>> +                       dpcd[1], dpcd[2], dpcd[3], dpcd[4]);
+>>         link_info->revision = dpcd[DP_DPCD_REV];
+>>         major = (link_info->revision >> 4) & 0x0f;
+>>         minor = link_info->revision & 0x0f;
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_power.c 
+>> b/drivers/gpu/drm/msm/dp/dp_power.c
+>> index 3961ba4..37c214b 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_power.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_power.c
+>> @@ -208,6 +208,9 @@ static int dp_power_clk_set_rate(struct 
+>> dp_power_private *power,
+>> 
+>>  int dp_power_clk_status(struct dp_power *dp_power, enum dp_pm_type 
+>> pm_type)
+>>  {
+>> +       DRM_DEBUG_DP("core_clk_on=%d link_clk_on=%d 
+>> stream_clk_on=%d\n",
+>> +                       dp_power->core_clks_on, 
+>> dp_power->link_clks_on, dp_power->stream_clks_on);
+>> +
+>>         if (pm_type == DP_CORE_PM)
+>>                 return dp_power->core_clks_on;
+>> 
