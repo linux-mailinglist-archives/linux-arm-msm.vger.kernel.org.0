@@ -2,71 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 689423CA465
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jul 2021 19:30:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 544A13CA58D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jul 2021 20:31:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229899AbhGORdh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jul 2021 13:33:37 -0400
-Received: from mail-il1-f176.google.com ([209.85.166.176]:37558 "EHLO
-        mail-il1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229900AbhGORdh (ORCPT
+        id S229620AbhGOSea (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jul 2021 14:34:30 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:59291 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229506AbhGOSea (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jul 2021 13:33:37 -0400
-Received: by mail-il1-f176.google.com with SMTP id o8so5699510ilf.4;
-        Thu, 15 Jul 2021 10:30:42 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=y6zmu1eYIV7Dk6l7YaFt2tTWke/nunx7ye4KjXElS4Q=;
-        b=gbs//lpkPEHyTDv3kxLR3UP5UB36q7KLsz5ZC2gnb3heNhSmKAjupvCjZAwSz6dRD1
-         ayRcCgcliYUdrFdpaug5LrFjxBABJVz5E4ZuITvXoyC370ThzGLp0jvFIjeXJzULEXJ+
-         fklDV/Lcd2IEfv9UPSEUnxHtmjr08C0Kkg5bwMVA+acwMD6NcjvYI+UXO1AXLcCO3odI
-         VnMd2rNSWbOOCow3S0upcHvz5NbPhf9C9Xa1MylBDQfhDhcJT1etjH2JJg5joabT68fH
-         xn1Up9a7NWfGOSaQkQkRLg/r+t/i9Z2oDJGyzaP3q7UtFrDTJ/XQpK642G4+8q1jF+oM
-         Z2bQ==
-X-Gm-Message-State: AOAM533F3WFzINxPYHYQRiQDEilDjLbeZ5J2+8ksAOQWtxbn1hoZ0a99
-        zk3/l8nL8fJm+LL/Xp7cTg==
-X-Google-Smtp-Source: ABdhPJxfN/yskXpSuF1ppqKEB1G0e+KeMTMRHWQwQjZb2ksbXcurPqLTNHnNVD8w1cFZ1L9Fhqscpg==
-X-Received: by 2002:a92:3004:: with SMTP id x4mr3412989ile.269.1626370242392;
-        Thu, 15 Jul 2021 10:30:42 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id r4sm3313735ilb.42.2021.07.15.10.30.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 15 Jul 2021 10:30:41 -0700 (PDT)
-Received: (nullmailer pid 1289475 invoked by uid 1000);
-        Thu, 15 Jul 2021 17:30:38 -0000
-Date:   Thu, 15 Jul 2021 11:30:38 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Taniya Das <tdas@codeaurora.org>
-Cc:     devicetree@vger.kernel.org, Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        robh+dt@kernel.org, Rajendra Nayak <rnayak@codeaurora.org>,
-        linux-soc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v3 6/7] dt-bindings: clock: Add SC7280 VideoCC clock
- binding
-Message-ID: <20210715173038.GA1289417@robh.at.kernel.org>
-References: <1626189143-12957-1-git-send-email-tdas@codeaurora.org>
- <1626189143-12957-7-git-send-email-tdas@codeaurora.org>
+        Thu, 15 Jul 2021 14:34:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1626373897; x=1657909897;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=xpeO1UlOfz03vCZPOKMaLcC15cHuHWekXiIrFd2h630=;
+  b=KtplTw6nTScT0R54FA9FlNgafCeQQ4rBNhbpGa1r2pQdWTvS6smlN086
+   B/0qOyFFXFF+8LfVR8Y4/p3JnX6gu5ulWfRn9k9eJhCJgKeeEkrVQsuRu
+   71yOrV9lCG3U2CEBtbh3hkJ02WE2/kJmZtWGvFNmQz2r2lb64PIwudQCF
+   Y=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 15 Jul 2021 11:31:36 -0700
+X-QCInternal: smtphost
+Received: from nalasexr03e.na.qualcomm.com ([10.49.195.114])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 15 Jul 2021 11:31:35 -0700
+Received: from quicinc.com (10.80.80.8) by nalasexr03e.na.qualcomm.com
+ (10.49.195.114) with Microsoft SMTP Server (TLS) id 15.0.1497.18; Thu, 15 Jul
+ 2021 11:31:34 -0700
+Date:   Thu, 15 Jul 2021 11:31:33 -0700
+From:   Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+CC:     <agross@kernel.org>, <linus.walleij@linaro.org>,
+        <linux-arm-msm@vger.kernel.org>, <linux-clk@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <manivannan.sadhasivam@linaro.org>
+Subject: Re: [PATCH 5/5] dt-bindings: clock: Introduce pdc bindings for SDX65
+Message-ID: <20210715183126.GA6897@quicinc.com>
+References: <20210709200339.17638-1-quic_vamslank@quicinc.com>
+ <20210709200339.17638-6-quic_vamslank@quicinc.com>
+ <YOkUd3B0vvclk7un@yoga>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset="us-ascii"
 Content-Disposition: inline
-In-Reply-To: <1626189143-12957-7-git-send-email-tdas@codeaurora.org>
+In-Reply-To: <YOkUd3B0vvclk7un@yoga>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasexr03e.na.qualcomm.com (10.49.195.114)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 13 Jul 2021 20:42:22 +0530, Taniya Das wrote:
-> Add device tree bindings for video clock subsystem clock
-> controller for Qualcomm Technology Inc's SC7280 SoCs.
+On Fri, Jul 09, 2021 at 10:31:03PM -0500, Bjorn Andersson wrote:
+> On Fri 09 Jul 15:03 CDT 2021, quic_vamslank@quicinc.com wrote:
 > 
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
-> ---
->  .../devicetree/bindings/clock/qcom,videocc.yaml    |  6 +++--
->  include/dt-bindings/clock/qcom,videocc-sc7280.h    | 27 ++++++++++++++++++++++
->  2 files changed, 31 insertions(+), 2 deletions(-)
->  create mode 100644 include/dt-bindings/clock/qcom,videocc-sc7280.h
+> > From: Vamsi krishna Lanka <quic_vamslank@quicinc.com>
+> > 
+> > Add compatible for SDX65 pdc.
+> > 
 > 
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> 
+> That said, this patch is independent from the clock patches and would be
+> picked up by a different maintainer than the clock patches, so including
+> it in the same series only risk complicating the pickup of the patch.
+> 
+> And with that in mind, looking at the recipients of all your patches you
+> forgot toadd Stephen to the clock patches, Linus is not involved in
+> the clock patches and you completely missed the irq maintainer.
+> 
+> Please use scripts/get_maintainer.pl to list the appropriate recipients
+> for each patch(series), to ensure that your patches will get the
+> attention they deserve.
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Thanks for the review comments Bjorn. I'll run get_maintainer.pl like you
+suggested.
+
+Thanks,
+Vamsi
