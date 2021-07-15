@@ -2,186 +2,266 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 04B873C9E8D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jul 2021 14:24:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 504BC3C9EBE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jul 2021 14:36:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237123AbhGOM1q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jul 2021 08:27:46 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:56942 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236901AbhGOM1q (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jul 2021 08:27:46 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1626351893; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=KbEfl+JCR13d38NjxaP+otlRTuFQfroBDJSMJbPLkqs=; b=gjTKztGIlBq7wsveJcxw1yypThmJGid/hx3TD10ojv6lE7nQAcSZLgBBA5bRLg3QMQlssnZ8
- xGT9dSkyp5nn9osTr3x7IK9MXOP5ELdIhobv3V3T7Pp/N0nu5yrE2wx3TziTP+eIAPx3hdwA
- GLhqbR6ovq9IZpXH3cO8MpY4tZ4=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 60f028fc17c2b4047df87a72 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 15 Jul 2021 12:24:28
- GMT
-Sender: rnayak=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 62035C433F1; Thu, 15 Jul 2021 12:24:27 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [10.50.2.235] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 078A9C433F1;
-        Thu, 15 Jul 2021 12:24:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 078A9C433F1
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [RESEND PATCH 2/2] soc: qcom: rpmhpd: Make power_on actually
- enable the domain
-To:     Sibi Sankar <sibis@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20210703025449.2687201-1-bjorn.andersson@linaro.org>
- <902f7665ab9045e87fb07f848b994316@codeaurora.org>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <b1e1cd90-f7fb-5284-26df-3496d560dea7@codeaurora.org>
-Date:   Thu, 15 Jul 2021 17:54:21 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S229742AbhGOMjQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jul 2021 08:39:16 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:6793 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229635AbhGOMjQ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 15 Jul 2021 08:39:16 -0400
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 15 Jul 2021 05:36:22 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 15 Jul 2021 05:36:20 -0700
+X-QCInternal: smtphost
+Received: from c-mansur-linux.qualcomm.com ([10.204.90.208])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 15 Jul 2021 18:05:58 +0530
+Received: by c-mansur-linux.qualcomm.com (Postfix, from userid 461723)
+        id 4D61322696; Thu, 15 Jul 2021 18:05:57 +0530 (IST)
+From:   Mansur Alisha Shaik <mansur@codeaurora.org>
+To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, dikshita@codeaurora.org,
+        Mansur Alisha Shaik <mansur@codeaurora.org>
+Subject: [V2] venus: vdec: decoded picture buffer handling during reconfig sequence
+Date:   Thu, 15 Jul 2021 18:05:55 +0530
+Message-Id: <20210715123555.26763-1-mansur@codeaurora.org>
+X-Mailer: git-send-email 2.29.0
 MIME-Version: 1.0
-In-Reply-To: <902f7665ab9045e87fb07f848b994316@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+In existing implementation, driver is freeing and un-mapping all the
+decoded picture buffers(DPB) as part of dynamic resolution change(DRC)
+handling. As a result, when firmware try to access the DPB buffer, from
+previous sequence, SMMU context fault is seen due to the buffer being
+already unmapped.
 
-On 7/15/2021 5:46 PM, Sibi Sankar wrote:
-> Hey Bjorn,
-> 
-> Thanks for the patch.
-> 
-> On 2021-07-03 08:24, Bjorn Andersson wrote:
->> The general expectation is that powering on a power-domain should make
->> the power domain deliver some power, and if a specific performace state
-> 
-> s/performace/performance/
-> 
->> is needed further requests has to be made.
->>
->> But in contrast with other power-domain implementations (e.g. rpmpd) the
->> RPMh does not have an interface to enable the power, so the driver has
->> to vote for a particular corner (performance level) in rpmh_power_on().
->>
->> But the corner is never initialized, so a typical request to simply
->> enable the power domain would not actually turn on the hardware. Further
->> more, when no more clients vote for a performance state (i.e. the
->> aggregated vote is 0) the power domain would be turn off.
->>
->> Fix both of these issues by always voting for a corner with non-zero
->> value, when the power domain is enabled.
->>
->> The tracking of the lowest non-zero corner is performed to handle the
->> corner case if there's ever a domain with a non-zero lowest corner, in
->> which case both rpmh_power_on() and rpmh_rpmhpd_set_performance_state()
->> would be allowed to use this lowest corner.
->>
->> Fixes: 279b7e8a62cc ("soc: qcom: rpmhpd: Add RPMh power domain driver")
->> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->> ---
->>
->> Resending because the hunk in rpmhpd_update_level_mapping() was left in the
->> index.
->>
->>  drivers/soc/qcom/rpmhpd.c | 18 ++++++++++++++----
->>  1 file changed, 14 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
->> index fa209b479ab3..76ea6b053ef0 100644
->> --- a/drivers/soc/qcom/rpmhpd.c
->> +++ b/drivers/soc/qcom/rpmhpd.c
->> @@ -30,6 +30,7 @@
->>   * @active_only:    True if it represents an Active only peer
->>   * @corner:        current corner
->>   * @active_corner:    current active corner
->> + * @enable_corner:    lowest non-zero corner
->>   * @level:        An array of level (vlvl) to corner (hlvl) mappings
->>   *            derived from cmd-db
->>   * @level_count:    Number of levels supported by the power domain. max
->> @@ -47,6 +48,7 @@ struct rpmhpd {
->>      const bool    active_only;
->>      unsigned int    corner;
->>      unsigned int    active_corner;
->> +    unsigned int    enable_corner;
->>      u32        level[RPMH_ARC_MAX_LEVELS];
->>      size_t        level_count;
->>      bool        enabled;
->> @@ -385,13 +387,13 @@ static int rpmhpd_aggregate_corner(struct rpmhpd
->> *pd, unsigned int corner)
->>  static int rpmhpd_power_on(struct generic_pm_domain *domain)
->>  {
->>      struct rpmhpd *pd = domain_to_rpmhpd(domain);
->> -    int ret = 0;
->> +    unsigned int corner;
->> +    int ret;
->>
->>      mutex_lock(&rpmhpd_lock);
->>
->> -    if (pd->corner)
->> -        ret = rpmhpd_aggregate_corner(pd, pd->corner);
->> -
->> +    corner = max(pd->corner, pd->enable_corner);
->> +    ret = rpmhpd_aggregate_corner(pd, corner);
->>      if (!ret)
->>          pd->enabled = true;
->>
->> @@ -436,6 +438,10 @@ static int rpmhpd_set_performance_state(struct
->> generic_pm_domain *domain,
->>          i--;
->>
->>      if (pd->enabled) {
->> +        /* Ensure that the domain isn't turn off */
->> +        if (i < pd->enable_corner)
->> +            i = pd->enable_corner;
->> +
->>          ret = rpmhpd_aggregate_corner(pd, i);
->>          if (ret)
->>              goto out;
->> @@ -472,6 +478,10 @@ static int rpmhpd_update_level_mapping(struct
->> rpmhpd *rpmhpd)
->>      for (i = 0; i < rpmhpd->level_count; i++) {
->>          rpmhpd->level[i] = buf[i];
->>
->> +        /* Remember the first non-zero corner */
-> 
-> Shouldn't we be tracking the corner that
-> corresponds to the first non-zero level
-> instead?
+With this change, driver defines ownership of each DPB buffer. If a buffer
+is owned by firmware, driver would skip from un-mapping the same.
 
-Thats correct, thanks for spotting this, the first non-zero
-corner is always 1 :)
+Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
 
-> 
->> +        if (!rpmhpd->enable_corner)
->> +            rpmhpd->enable_corner = i;
->> +
->>          /*
->>           * The AUX data may be zero padded.  These 0 valued entries at
->>           * the end of the map must be ignored.
-> 
+Changes in V2:
+- Fixed proto type warnings reported by kernel test robot
+---
+ drivers/media/platform/qcom/venus/core.h    |  3 ++
+ drivers/media/platform/qcom/venus/helpers.c | 38 ++++++++++++++++-----
+ drivers/media/platform/qcom/venus/helpers.h | 18 ++++++++++
+ drivers/media/platform/qcom/venus/vdec.c    | 25 +++++++++++++-
+ 4 files changed, 74 insertions(+), 10 deletions(-)
 
+diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+index 8df2d497d706..7ecbf9ed1acb 100644
+--- a/drivers/media/platform/qcom/venus/core.h
++++ b/drivers/media/platform/qcom/venus/core.h
+@@ -450,6 +450,7 @@ struct venus_inst {
+ 	bool next_buf_last;
+ 	bool drain_active;
+ 	enum venus_inst_modes flags;
++	u32 dpb_out_tag[VB2_MAX_FRAME];
+ };
+ 
+ #define IS_V1(core)	((core)->res->hfi_version == HFI_VERSION_1XX)
+@@ -484,4 +485,6 @@ venus_caps_by_codec(struct venus_core *core, u32 codec, u32 domain)
+ 	return NULL;
+ }
+ 
++void dpb_out_tag_init(struct venus_inst *inst);
++
+ #endif
+diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+index 1fe6d463dc99..4d308be712d7 100644
+--- a/drivers/media/platform/qcom/venus/helpers.c
++++ b/drivers/media/platform/qcom/venus/helpers.c
+@@ -21,14 +21,6 @@
+ #define NUM_MBS_720P	(((1280 + 15) >> 4) * ((720 + 15) >> 4))
+ #define NUM_MBS_4K	(((4096 + 15) >> 4) * ((2304 + 15) >> 4))
+ 
+-struct intbuf {
+-	struct list_head list;
+-	u32 type;
+-	size_t size;
+-	void *va;
+-	dma_addr_t da;
+-	unsigned long attrs;
+-};
+ 
+ bool venus_helper_check_codec(struct venus_inst *inst, u32 v4l2_pixfmt)
+ {
+@@ -95,9 +87,16 @@ int venus_helper_queue_dpb_bufs(struct venus_inst *inst)
+ 		fdata.device_addr = buf->da;
+ 		fdata.buffer_type = buf->type;
+ 
++		if (buf->owned_by == FIRMWARE)
++			continue;
++
++		fdata.clnt_data = buf->dpb_out_tag;
++
+ 		ret = hfi_session_process_buf(inst, &fdata);
+ 		if (ret)
+ 			goto fail;
++
++		buf->owned_by = FIRMWARE;
+ 	}
+ 
+ fail:
+@@ -110,18 +109,37 @@ int venus_helper_free_dpb_bufs(struct venus_inst *inst)
+ 	struct intbuf *buf, *n;
+ 
+ 	list_for_each_entry_safe(buf, n, &inst->dpbbufs, list) {
++		if (buf->owned_by == FIRMWARE)
++			continue;
++
++		inst->dpb_out_tag[buf->dpb_out_tag - VB2_MAX_FRAME] = 0;
++
+ 		list_del_init(&buf->list);
+ 		dma_free_attrs(inst->core->dev, buf->size, buf->va, buf->da,
+ 			       buf->attrs);
+ 		kfree(buf);
+ 	}
+ 
+-	INIT_LIST_HEAD(&inst->dpbbufs);
+ 
+ 	return 0;
+ }
+ EXPORT_SYMBOL_GPL(venus_helper_free_dpb_bufs);
+ 
++int venus_helper_get_free_dpb_tag(struct venus_inst *inst)
++{
++	u32 i;
++
++	for (i = 0; i < VB2_MAX_FRAME; i++) {
++		if (inst->dpb_out_tag[i] == 0) {
++			inst->dpb_out_tag[i] = i + VB2_MAX_FRAME;
++			return inst->dpb_out_tag[i];
++		}
++	}
++
++	return 0;
++}
++EXPORT_SYMBOL_GPL(venus_helper_get_free_dpb_tag);
++
+ int venus_helper_alloc_dpb_bufs(struct venus_inst *inst)
+ {
+ 	struct venus_core *core = inst->core;
+@@ -171,6 +189,8 @@ int venus_helper_alloc_dpb_bufs(struct venus_inst *inst)
+ 			ret = -ENOMEM;
+ 			goto fail;
+ 		}
++		buf->owned_by = DRIVER;
++		buf->dpb_out_tag = venus_helper_get_free_dpb_tag(inst);
+ 
+ 		list_add_tail(&buf->list, &inst->dpbbufs);
+ 	}
+diff --git a/drivers/media/platform/qcom/venus/helpers.h b/drivers/media/platform/qcom/venus/helpers.h
+index e6269b4be3af..ea87a552c3ca 100644
+--- a/drivers/media/platform/qcom/venus/helpers.h
++++ b/drivers/media/platform/qcom/venus/helpers.h
+@@ -8,6 +8,22 @@
+ 
+ #include <media/videobuf2-v4l2.h>
+ 
++enum dpb_buf_owner {
++	DRIVER,
++	FIRMWARE,
++};
++
++struct intbuf {
++	struct list_head list;
++	u32 type;
++	size_t size;
++	void *va;
++	dma_addr_t da;
++	unsigned long attrs;
++	enum dpb_buf_owner owned_by;
++	u32 dpb_out_tag;
++};
++
+ struct venus_inst;
+ struct venus_core;
+ 
+@@ -66,4 +82,6 @@ int venus_helper_get_profile_level(struct venus_inst *inst, u32 *profile, u32 *l
+ int venus_helper_set_profile_level(struct venus_inst *inst, u32 profile, u32 level);
+ int venus_helper_set_stride(struct venus_inst *inst, unsigned int aligned_width,
+ 			    unsigned int aligned_height);
++int venus_helper_get_free_dpb_tag(struct venus_inst *inst);
++
+ #endif
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index 198e47eb63f4..ba46085301ee 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -1297,6 +1297,7 @@ static void vdec_buf_done(struct venus_inst *inst, unsigned int buf_type,
+ 	struct vb2_v4l2_buffer *vbuf;
+ 	struct vb2_buffer *vb;
+ 	unsigned int type;
++	struct intbuf *dpb_buf;
+ 
+ 	vdec_pm_touch(inst);
+ 
+@@ -1306,8 +1307,18 @@ static void vdec_buf_done(struct venus_inst *inst, unsigned int buf_type,
+ 		type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE;
+ 
+ 	vbuf = venus_helper_find_buf(inst, type, tag);
+-	if (!vbuf)
++	if (!vbuf) {
++		if (type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE &&
++		    buf_type == HFI_BUFFER_OUTPUT) {
++			list_for_each_entry(dpb_buf, &inst->dpbbufs, list) {
++				if (dpb_buf->dpb_out_tag == tag) {
++					dpb_buf->owned_by = DRIVER;
++					break;
++				}
++			}
++		}
+ 		return;
++	}
+ 
+ 	vbuf->flags = flags;
+ 	vbuf->field = V4L2_FIELD_NONE;
+@@ -1542,6 +1553,14 @@ static int m2m_queue_init(void *priv, struct vb2_queue *src_vq,
+ 	return vb2_queue_init(dst_vq);
+ }
+ 
++void dpb_out_tag_init(struct venus_inst *inst)
++{
++	u32 i;
++
++	for (i = 0; i < VB2_MAX_FRAME; i++)
++		inst->dpb_out_tag[i] = 0;
++}
++
+ static int vdec_open(struct file *file)
+ {
+ 	struct venus_core *core = video_drvdata(file);
+@@ -1580,6 +1599,8 @@ static int vdec_open(struct file *file)
+ 
+ 	vdec_inst_init(inst);
+ 
++	dpb_out_tag_init(inst);
++
+ 	/*
+ 	 * create m2m device for every instance, the m2m context scheduling
+ 	 * is made by firmware side so we do not need to care about.
+@@ -1622,6 +1643,8 @@ static int vdec_close(struct file *file)
+ 
+ 	vdec_pm_get(inst);
+ 
++	venus_helper_free_dpb_bufs(inst);
++	INIT_LIST_HEAD(&inst->dpbbufs);
+ 	v4l2_m2m_ctx_release(inst->m2m_ctx);
+ 	v4l2_m2m_release(inst->m2m_dev);
+ 	vdec_ctrl_deinit(inst);
+
+base-commit: c1a6d08348fc729e59776fe22878d4ce8fb97cde
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
 of Code Aurora Forum, hosted by The Linux Foundation
+
