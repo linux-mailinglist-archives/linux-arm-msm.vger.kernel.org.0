@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ACD5F3C9912
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jul 2021 08:52:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E26043C9917
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 15 Jul 2021 08:52:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238904AbhGOGzo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jul 2021 02:55:44 -0400
-Received: from mail.kernel.org ([198.145.29.99]:58006 "EHLO mail.kernel.org"
+        id S232564AbhGOGzs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jul 2021 02:55:48 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58156 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S239114AbhGOGzn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jul 2021 02:55:43 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 839CB61380;
-        Thu, 15 Jul 2021 06:52:46 +0000 (UTC)
+        id S234567AbhGOGzs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 15 Jul 2021 02:55:48 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 89BFB61370;
+        Thu, 15 Jul 2021 06:52:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1626331970;
-        bh=bCxEk+MSo9wujPwvoctDXKBvPOMJR+fDgZGHLTgZliA=;
+        s=k20201202; t=1626331975;
+        bh=LFdupZIcAp4gzbWBj3acmeg8NOUOs8LePDCjoa/EMXk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=JAR8u0I6PYix53OhysU4g/dwkST+Tq4JYtiutIRlgVc4ilqNolMW3X+dr2gIExya5
-         shb4eAQr29HREq+qj+UuvlYY99eih965xB1V0MXHJ/OYoLCS5mmjNPqhhan7roqHZs
-         ytNvI9mH0LO/tFAJNsMjHlOcIho7HL6/cBUd9wnwXfFJMoQYwh5Mkjf6hVMXhH6kKI
-         pTvQ3LVtlDcFBGqV5UCOTvyut43PfjqY728U/yfFRrnqbMED0hUEVOZWoRtaPmzI/p
-         neiGEfK/Ng3h2vn/N6Vlr8TC+uJpa990jySKzXOy6Trqm8hL8+3Fpo0Up6xBiia6Cq
-         uxTI2BBbCnlEA==
+        b=OFD2XTj1egWiuRNuV2gwRwZBJzoBEv0z4exH08tn2m6PqOCHorTmXwDpdpv3zThzg
+         Zi9GNOtv5ARkmTx6IVxJaJeqUw1S1I4tKU+CuatbYDW9B9XGV4DUrx8ZU95Vd7m0Yd
+         4LTsIataqHlFccKu2Tjio2B3C4ELM1PUA8ZdkBKU1sr6f1iZYj4YN/0irHAUC1TpEn
+         SD738U2FMDiDFHeNU+CDT/cn4cb3Uxvy99E8bpSq9dTOIhjz2Zi0DTjDCNDaViFKxm
+         dkDvnd4bRT5GyiAf1s/wL+OipE6XuiOILaynyZPLrImzCreTTTg8RI//gMxVxpt9Xd
+         0d9doeRgN6M0g==
 From:   Vinod Koul <vkoul@kernel.org>
 To:     Rob Clark <robdclark@gmail.com>
 Cc:     linux-arm-msm@vger.kernel.org,
@@ -36,9 +36,9 @@ Cc:     linux-arm-msm@vger.kernel.org,
         Sumit Semwal <sumit.semwal@linaro.org>,
         linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org
-Subject: [PATCH 05/11] drm/msm/disp/dpu1: Add DSC for SDM845 to hw_catalog
-Date:   Thu, 15 Jul 2021 12:21:57 +0530
-Message-Id: <20210715065203.709914-6-vkoul@kernel.org>
+Subject: [PATCH 06/11] drm/msm/disp/dpu1: Add DSC support in hw_ctl
+Date:   Thu, 15 Jul 2021 12:21:58 +0530
+Message-Id: <20210715065203.709914-7-vkoul@kernel.org>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210715065203.709914-1-vkoul@kernel.org>
 References: <20210715065203.709914-1-vkoul@kernel.org>
@@ -48,63 +48,60 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This add SDM845 DSC blocks into hw_catalog
+Later gens of hardware have DSC bits moved to hw_ctl, so configure these
+bits so that DSC would work there as well
 
 Signed-off-by: Vinod Koul <vkoul@kernel.org>
 ---
-Changes since RFC:
- - use BIT values from MASK
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
 
- .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 22 +++++++++++++++++++
- 1 file changed, 22 insertions(+)
-
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index b569030a0847..b45a08303c99 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -40,6 +40,8 @@
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+index 2d4645e01ebf..aeea6add61ee 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+@@ -25,6 +25,8 @@
+ #define   CTL_MERGE_3D_ACTIVE           0x0E4
+ #define   CTL_INTF_ACTIVE               0x0F4
+ #define   CTL_MERGE_3D_FLUSH            0x100
++#define   CTL_DSC_ACTIVE                0x0E8
++#define   CTL_DSC_FLUSH                0x104
+ #define   CTL_INTF_FLUSH                0x110
+ #define   CTL_INTF_MASTER               0x134
+ #define   CTL_FETCH_PIPE_ACTIVE         0x0FC
+@@ -34,6 +36,7 @@
  
- #define PINGPONG_SDM845_MASK BIT(DPU_PINGPONG_DITHER)
+ #define DPU_REG_RESET_TIMEOUT_US        2000
+ #define  MERGE_3D_IDX   23
++#define  DSC_IDX        22
+ #define  INTF_IDX       31
+ #define CTL_INVALID_BIT                 0xffff
  
-+#define DSC_SDM845_MASK BIT(1)
-+
- #define PINGPONG_SDM845_SPLIT_MASK \
- 	(PINGPONG_SDM845_MASK | BIT(DPU_PINGPONG_TE2))
+@@ -120,6 +123,7 @@ static u32 dpu_hw_ctl_get_pending_flush(struct dpu_hw_ctl *ctx)
  
-@@ -751,6 +753,24 @@ static const struct dpu_pingpong_cfg sc7280_pp[] = {
- 	PP_BLK("pingpong_2", PINGPONG_2, 0x6b000, 0, sc7280_pp_sblk),
- 	PP_BLK("pingpong_3", PINGPONG_3, 0x6c000, 0, sc7280_pp_sblk),
- };
-+
-+/*************************************************************
-+ * DSC sub blocks config
-+ *************************************************************/
-+#define DSC_BLK(_name, _id, _base) \
-+	{\
-+	.name = _name, .id = _id, \
-+	.base = _base, .len = 0x140, \
-+	.features = DSC_SDM845_MASK, \
-+	}
-+
-+static struct dpu_dsc_cfg sdm845_dsc[] = {
-+	DSC_BLK("dsc_0", DSC_0, 0x80000),
-+	DSC_BLK("dsc_1", DSC_1, 0x80400),
-+	DSC_BLK("dsc_2", DSC_2, 0x80800),
-+	DSC_BLK("dsc_3", DSC_3, 0x80c00),
-+};
-+
- /*************************************************************
-  * INTF sub blocks config
-  *************************************************************/
-@@ -1053,6 +1073,8 @@ static void sdm845_cfg_init(struct dpu_mdss_cfg *dpu_cfg)
- 		.mixer = sdm845_lm,
- 		.pingpong_count = ARRAY_SIZE(sdm845_pp),
- 		.pingpong = sdm845_pp,
-+		.dsc_count = ARRAY_SIZE(sdm845_dsc),
-+		.dsc = sdm845_dsc,
- 		.intf_count = ARRAY_SIZE(sdm845_intf),
- 		.intf = sdm845_intf,
- 		.vbif_count = ARRAY_SIZE(sdm845_vbif),
+ static inline void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
+ {
++	DPU_REG_WRITE(&ctx->hw, CTL_DSC_FLUSH, BIT(0) | BIT(1) | BIT(2) | BIT(3));
+ 
+ 	if (ctx->pending_flush_mask & BIT(MERGE_3D_IDX))
+ 		DPU_REG_WRITE(&ctx->hw, CTL_MERGE_3D_FLUSH,
+@@ -128,7 +132,7 @@ static inline void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
+ 		DPU_REG_WRITE(&ctx->hw, CTL_INTF_FLUSH,
+ 				ctx->pending_intf_flush_mask);
+ 
+-	DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, ctx->pending_flush_mask);
++	DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, ctx->pending_flush_mask |  BIT(DSC_IDX));
+ }
+ 
+ static inline void dpu_hw_ctl_trigger_flush(struct dpu_hw_ctl *ctx)
+@@ -507,6 +511,7 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
+ 	if (cfg->merge_3d)
+ 		DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
+ 			      BIT(cfg->merge_3d - MERGE_3D_0));
++	DPU_REG_WRITE(c, CTL_DSC_ACTIVE, BIT(0) | BIT(1) | BIT(2) | BIT(3));
+ }
+ 
+ static void dpu_hw_ctl_intf_cfg(struct dpu_hw_ctl *ctx,
 -- 
 2.31.1
 
