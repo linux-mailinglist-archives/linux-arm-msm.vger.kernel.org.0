@@ -2,84 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D4F1A3CB00F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jul 2021 02:28:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A99C3CB016
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jul 2021 02:35:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231856AbhGPAb3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 15 Jul 2021 20:31:29 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:17646 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231724AbhGPAbV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 15 Jul 2021 20:31:21 -0400
+        id S230447AbhGPAip (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 15 Jul 2021 20:38:45 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:51685 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230317AbhGPAip (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 15 Jul 2021 20:38:45 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1626395307; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=I6iEUuC50EPXZOKteNojFUYvKDGkjt2YcZKBPZdfk0o=; b=IBcdVFCQ5SUY1Dz20HE+ILH4RKrc2ACFP3+7LP5tRPbn11uayRjDcuBlPBTZcT4nuFWhHFVS
- 3h15aIchYP2vKB8E7sOw9mtgvYfsxKi7FJRy6SD+N/3+tLPvnY7HNRTnOodlD1b8v6Tq/mxc
- Q8rF+atHf2YkgViNN0/5DcXl2cg=
-X-Mailgun-Sending-Ip: 69.72.43.7
+ s=smtp; t=1626395751; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=Hg4UHJ6k0BkePlXHMCIMP/orYnASJUN8pewnaW0YCJU=;
+ b=jHxlXl5caTcF/uKMOHPyzLf5SQMc4Iq4cFfx5lPaatvEtmsshV6YRBxeJi02aLDPWo47iuCk
+ HJnKcBHhWhKr4fB4IHFBhPyQfbnQ54Jij6bIVYwdVYEqG4O+oKkBJ9kJUBU72mMxImz7ADef
+ dtpSjeBCOYqbYAlRapkVCdbLfkk=
+X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 60f0d29a38fa9bfe9c7479f3 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Jul 2021 00:28:10
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 60f0d45d17c2b4047d6e6a5b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Jul 2021 00:35:41
  GMT
 Sender: bbhatt=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BF5C5C4338A; Fri, 16 Jul 2021 00:28:09 +0000 (UTC)
+        id 5917BC43217; Fri, 16 Jul 2021 00:35:40 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 05243C4323A;
-        Fri, 16 Jul 2021 00:28:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 05243C4323A
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id F1763C433D3;
+        Fri, 16 Jul 2021 00:35:38 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
+Content-Transfer-Encoding: 8bit
+Date:   Thu, 15 Jul 2021 17:35:38 -0700
 From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        quic_jhugo@quicinc.com, linux-kernel@vger.kernel.org,
-        loic.poulain@linaro.org, Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH v1 2/2] bus: mhi: core: Depict serial number in hexadecimals
-Date:   Thu, 15 Jul 2021 17:27:56 -0700
-Message-Id: <1626395276-24171-3-git-send-email-bbhatt@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1626395276-24171-1-git-send-email-bbhatt@codeaurora.org>
-References: <1626395276-24171-1-git-send-email-bbhatt@codeaurora.org>
+To:     Hemant Kumar <hemantk@codeaurora.org>,
+        Paul Davey <paul.davey@alliedtelesis.co.nz>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        hemantk=codeaurora.org@codeaurora.org
+Subject: Re: [PATCH v3 2/2] bus: mhi: Fix MHI DMA structure endianness
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <1625104371.10055.21.camel@codeaurora.org>
+References: <20210629035357.11091-1-paul.davey@alliedtelesis.co.nz>
+ <20210629035357.11091-3-paul.davey@alliedtelesis.co.nz>
+ <1625104371.10055.21.camel@codeaurora.org>
+Message-ID: <f396b676cf96a7b7e5e26edf9f45e9ae@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In order to maintain consistency with the way OEM PK hash is
-displayed and improve the current way, depict serial number in
-upper case hexadecimals.
+Hi Paul,
 
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+On 2021-06-30 06:52 PM, Hemant Kumar wrote:
+> Hi Paul,
+> On Tue, 2021-06-29 at 15:53 +1200, Paul Davey wrote:
+>> The MHI driver does not work on big endian architectures.  The
+>> controller never transitions into mission mode.  This appears to be
+>> due
+>> to the modem device expecting the various contexts and transfer rings
+>> to
+>> have fields in little endian order in memory, but the driver
+>> constructs
+>> them in native endianness.
+>> 
+>> Fix MHI event, channel and command contexts and TRE handling macros
+>> to
+>> use explicit conversion to little endian.  Mark fields in relevant
+>> structures as little endian to document this requirement.
+>> 
+>> Signed-off-by: Paul Davey <paul.davey@alliedtelesis.co.nz>
+>> ---
+>> Removed Tested-by as patch has changed somewhat from v2.
+> Bhaumik is going to help testing V2 on x86 platform. Change looks good
+> to me. Will ack it once testing is done.
+>>  [..]
+>> 
+> 
+> Thanks,
+> Hemant
+
+Just following up on this one. I have been seeing problems with my setup 
+and
+will try to get to this test next week.
+
+Thanks,
+Bhaumik
 ---
- drivers/bus/mhi/core/init.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-index 8b4336e..d825a06 100644
---- a/drivers/bus/mhi/core/init.c
-+++ b/drivers/bus/mhi/core/init.c
-@@ -94,7 +94,7 @@ static ssize_t serial_number_show(struct device *dev,
- 	struct mhi_device *mhi_dev = to_mhi_device(dev);
- 	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
- 
--	return snprintf(buf, PAGE_SIZE, "Serial Number: %u\n",
-+	return snprintf(buf, PAGE_SIZE, "Serial Number: 0x%X\n",
- 			mhi_cntrl->serial_number);
- }
- static DEVICE_ATTR_RO(serial_number);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
 a Linux Foundation Collaborative Project
-
