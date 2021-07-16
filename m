@@ -2,72 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 004403CB861
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jul 2021 16:04:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4C4D53CB8AD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jul 2021 16:29:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240188AbhGPOHC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jul 2021 10:07:02 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:57536 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232915AbhGPOHC (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jul 2021 10:07:02 -0400
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 16 Jul 2021 07:04:07 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 16 Jul 2021 07:04:06 -0700
-X-QCInternal: smtphost
-Received: from minint-dvc2thc.qualcomm.com (HELO sartgarg-linux.qualcomm.com) ([10.206.24.245])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 16 Jul 2021 19:33:58 +0530
-Received: by sartgarg-linux.qualcomm.com (Postfix, from userid 2339771)
-        id EBD0A34DF; Fri, 16 Jul 2021 19:33:53 +0530 (IST)
-From:   Sarthak Garg <sartgarg@codeaurora.org>
-To:     adrian.hunter@intel.com, ulf.hansson@linaro.org
-Cc:     stummala@codeaurora.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Sarthak Garg <sartgarg@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: [PATCH V1 2/2] mmc: sdhci-msm: Use maximum possible data timeout value
-Date:   Fri, 16 Jul 2021 19:33:02 +0530
-Message-Id: <1626444182-2187-3-git-send-email-sartgarg@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1626444182-2187-1-git-send-email-sartgarg@codeaurora.org>
-References: <1626444182-2187-1-git-send-email-sartgarg@codeaurora.org>
+        id S233122AbhGPOcp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jul 2021 10:32:45 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60058 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232988AbhGPOco (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 16 Jul 2021 10:32:44 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 92222608FE;
+        Fri, 16 Jul 2021 14:29:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1626445789;
+        bh=VPwtDfFzlw2mMjhZCIjf8rYJAIRLSJ0qqv+tfTiMLqQ=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=L+iju3E9TjfAX40sCXr1w6l/1yhGm39A5FS/30uSaeW+Lsq2rZnATy/faAaI4Kg8X
+         xAkgX1Y1p0mPS9uEfa/w7+9kHyEoJYSSOtJXGRdEZVF9UnUSkq18TmtGQAkrBEWvqg
+         86Vmyc2ZYHn99ZraEakry6E1C95TOLwCVv41apVGUg+0qq46jQL1haF7ewlajB6Mzx
+         HtOjG8VbLvrXkR9n9nZeoKW/LuqYXA0mbInPJj9uKB3xFoyOhkrv2+8i89jST2NyBX
+         P49d4jE8pbMzeA/lM2o0mIyKrxwXoeIXlfaQo9GEYTt40Juxw3CnF3AMiVom58ksud
+         4SF1jo27uR/2g==
+Date:   Fri, 16 Jul 2021 09:29:48 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Prasad Malisetty <pmaliset@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, bhelgaas@google.com,
+        robh+dt@kernel.org, swboyd@chromium.org, lorenzo.pieralisi@arm.com,
+        svarbanov@mm-sol.com, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dianders@chromium.org,
+        mka@chromium.org, vbadigan@codeaurora.org, sallenki@codeaurora.org,
+        linux-pci@vger.kernel.org
+Subject: Re: [PATCH v4 0/4] Add DT bindings and DT nodes for PCIe and PHY in
+ SC7280
+Message-ID: <20210716142948.GA2098168@bjorn-Precision-5520>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1626443927-32028-1-git-send-email-pmaliset@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Qcom SD controller defines the usage of 0xF in data
-timeout counter register (0x2E) which is actually a reserved
-bit as per specification. This would result in maximum of 21.26 secs
-timeout value.
+[+cc linux-pci]
 
-Some SDcard taking more time than 2.67secs (timeout value corresponding
-to 0xE) and with that observed data timeout errors.
-So increasing the timeout value to max possible timeout.
+On Fri, Jul 16, 2021 at 07:28:43PM +0530, Prasad Malisetty wrote:
+> Changes in v4 as suggested by Bjorn:
+> 
+> 	* Changed pipe clk mux name as gcc_pcie_1_pipe_clk_src.
+> 	* Changed pipe_ext_src as phy_pipe_clk.
+> 	* Updated commit message for [PATCH v4 4/4]. 
+> 		
+> 
+> Changes in v3:
+> 	* Changed pipe clock names in dt bindings as pipe_mux and phy_pipe.
+> 	* Moved reset and NVMe GPIO pin configs into board specific file.
+> 	* Updated pipe clk mux commit message.
+> 	
+> Changes in v2:
+> 	* Moved pcie pin control settings into IDP file.
+> 	* Replaced pipe_clk_src with pipe_clk_mux in pcie driver 
+> 	* Included pipe clk mux setting change set in this series
+> 
+> Prasad Malisetty (4):
+>   dt-bindings: pci: qcom: Document PCIe bindings for SC720
+>   arm64: dts: qcom: sc7280: Add PCIe and PHY related nodes
+>   arm64: dts: qcom: sc7280: Add PCIe nodes for IDP board
+>   PCIe: qcom: Add support to control pipe clk src
+> 
+>  .../devicetree/bindings/pci/qcom,pcie.txt          |  17 +++
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dts            |  38 +++++++
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi               | 125 +++++++++++++++++++++
+>  drivers/pci/controller/dwc/pcie-qcom.c             |  22 ++++
 
-Signed-off-by: Sahitya Tummala <stummala@codeaurora.org>
-Signed-off-by: Sarthak Garg <sartgarg@codeaurora.org>
----
- drivers/mmc/host/sdhci-msm.c | 3 +++
- 1 file changed, 3 insertions(+)
+  $ ./scripts/get_maintainer.pl -f drivers/pci/controller/dwc/pcie-qcom.c
 
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index e44b7a6..19e4673 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -2696,6 +2696,9 @@ static int sdhci_msm_probe(struct platform_device *pdev)
- 
- 	msm_host->mmc->caps |= MMC_CAP_WAIT_WHILE_BUSY | MMC_CAP_NEED_RSP_BUSY;
- 
-+	/* Set the timeout value to max possible */
-+	host->max_timeout_count = 0xF;
-+
- 	pm_runtime_get_noresume(&pdev->dev);
- 	pm_runtime_set_active(&pdev->dev);
- 	pm_runtime_enable(&pdev->dev);
--- 
-2.7.4
-
+tells you that linux-pci should be included.  One reason that's
+important is because patchwork watches linux-pci for incoming patches,
+and I use patchwork as my to-do list.  
