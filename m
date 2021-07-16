@@ -2,215 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FFC03CB59F
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jul 2021 12:02:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 928073CB6E7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jul 2021 13:47:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237586AbhGPKFD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jul 2021 06:05:03 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:44385 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237734AbhGPKFA (ORCPT
+        id S232262AbhGPLuK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jul 2021 07:50:10 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:46090 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232088AbhGPLuK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jul 2021 06:05:00 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1626429726; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=2PoXPzW7yXjsJ+4bkTg6l8/HF+OOEW6Uf7kuyQWFRvs=; b=sodvhhjb9V8EaofYItsPi7DJR3PM+RK49NJPzuzj3bYZZ95k+j4uMlfJZnIWs863jL9Y/iEH
- +EN17AlChfUM+ENbM0lCkydp9vMGAuI3RQbOF1vuVtyHMWJpg1nZagoNI9I1ttXInSdqiWLo
- KanS3BU0YiAthVKL8XZ7xXpzJYI=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 60f158f417c2b4047d747b66 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Jul 2021 10:01:24
- GMT
-Sender: rnayak=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id AD26DC43460; Fri, 16 Jul 2021 10:01:23 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id DA649C433D3;
-        Fri, 16 Jul 2021 10:01:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DA649C433D3
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-To:     ulf.hansson@linaro.org, bjorn.andersson@linaro.org,
-        viresh.kumar@linaro.org
-Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        swboyd@chromium.org, rojay@codeaurora.org, stephan@gerhold.net,
-        Rajendra Nayak <rnayak@codeaurora.org>
-Subject: [PATCH v4 2/2] arm64: dts: sc7180: Add required-opps for i2c
-Date:   Fri, 16 Jul 2021 15:30:58 +0530
-Message-Id: <1626429658-18961-3-git-send-email-rnayak@codeaurora.org>
+        Fri, 16 Jul 2021 07:50:10 -0400
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 16 Jul 2021 04:47:15 -0700
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 16 Jul 2021 04:47:13 -0700
+X-QCInternal: smtphost
+Received: from c-sbhanu-linux.qualcomm.com ([10.242.50.201])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 16 Jul 2021 17:16:17 +0530
+Received: by c-sbhanu-linux.qualcomm.com (Postfix, from userid 2344807)
+        id A7EC950E5; Fri, 16 Jul 2021 17:16:16 +0530 (IST)
+From:   Shaik Sajida Bhanu <sbhanu@codeaurora.org>
+To:     adrian.hunter@intel.com, ulf.hansson@linaro.org
+Cc:     asutoshd@codeaurora.org, stummala@codeaurora.org,
+        vbadigan@codeaurora.org, rampraka@codeaurora.org,
+        sayalil@codeaurora.org, sartgarg@codeaurora.org,
+        rnayak@codeaurora.org, cang@codeaurora.org,
+        pragalla@codeaurora.org, nitirawa@codeaurora.org,
+        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        Shaik Sajida Bhanu <sbhanu@codeaurora.org>
+Subject: [PATCH V4] mmc: sdhci-msm: Update the software timeout value for sdhc
+Date:   Fri, 16 Jul 2021 17:16:14 +0530
+Message-Id: <1626435974-14462-1-git-send-email-sbhanu@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1626429658-18961-1-git-send-email-rnayak@codeaurora.org>
-References: <1626429658-18961-1-git-send-email-rnayak@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-qup-i2c devices on sc7180 are clocked with a fixed clock (19.2 MHz)
-Though qup-i2c does not support DVFS, it still needs to vote for a
-performance state on 'CX' to satisfy the 19.2 Mhz clock frequency
-requirement.
+Whenever SDHC run at clock rate 50MHZ or below, the hardware data
+timeout value will be 21.47secs, which is approx. 22secs and we have
+a current software timeout value as 10secs. We have to set software
+timeout value more than the hardware data timeout value to avioid seeing
+the below register dumps.
 
-Use 'required-opps' to pass this information from
-device tree, and also add the power-domains property to specify
-the CX power-domain.
+[  332.953670] mmc2: Timeout waiting for hardware interrupt.
+[  332.959608] mmc2: sdhci: ============ SDHCI REGISTER DUMP ===========
+[  332.966450] mmc2: sdhci: Sys addr:  0x00000000 | Version:  0x00007202
+[  332.973256] mmc2: sdhci: Blk size:  0x00000200 | Blk cnt:  0x00000001
+[  332.980054] mmc2: sdhci: Argument:  0x00000000 | Trn mode: 0x00000027
+[  332.986864] mmc2: sdhci: Present:   0x01f801f6 | Host ctl: 0x0000001f
+[  332.993671] mmc2: sdhci: Power:     0x00000001 | Blk gap:  0x00000000
+[  333.000583] mmc2: sdhci: Wake-up:   0x00000000 | Clock:    0x00000007
+[  333.007386] mmc2: sdhci: Timeout:   0x0000000e | Int stat: 0x00000000
+[  333.014182] mmc2: sdhci: Int enab:  0x03ff100b | Sig enab: 0x03ff100b
+[  333.020976] mmc2: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
+[  333.027771] mmc2: sdhci: Caps:      0x322dc8b2 | Caps_1:   0x0000808f
+[  333.034561] mmc2: sdhci: Cmd:       0x0000183a | Max curr: 0x00000000
+[  333.041359] mmc2: sdhci: Resp[0]:   0x00000900 | Resp[1]:  0x00000000
+[  333.048157] mmc2: sdhci: Resp[2]:   0x00000000 | Resp[3]:  0x00000000
+[  333.054945] mmc2: sdhci: Host ctl2: 0x00000000
+[  333.059657] mmc2: sdhci: ADMA Err:  0x00000000 | ADMA Ptr:
+0x0000000ffffff218
+[  333.067178] mmc2: sdhci_msm: ----------- VENDOR REGISTER DUMP
+-----------
+[  333.074343] mmc2: sdhci_msm: DLL sts: 0x00000000 | DLL cfg:
+0x6000642c | DLL cfg2: 0x0020a000
+[  333.083417] mmc2: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl:
+0x00000000 | DDR cfg: 0x80040873
+[  333.092850] mmc2: sdhci_msm: Vndr func: 0x00008a9c | Vndr func2 :
+0xf88218a8 Vndr func3: 0x02626040
+[  333.102371] mmc2: sdhci: ============================================
 
-Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+So, set software timeout value more than hardware timeout value.
+
+Signed-off-by: Shaik Sajida Bhanu <sbhanu@codeaurora.org>
+Acked-by: Adrian Hunter <adrian.hunter@intel.com>
 ---
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index a5d58eb..cd30185 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -785,8 +785,10 @@
- 						<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_0 0>,
- 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7180_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				status = "disabled";
- 			};
+Changes since V3:
+	- Addressed minor comments from Adrain Hunter and retained his
+	  Acked-by Signed-off.
+
+Changes since V2:
+	- Updated 22 with 22LL to avoid compiler warning as
+	  suggested by Adrian Hunter.
+	- Added a check to update software data timeout value if its value
+	  is less than the calculated hardware data timeout value as suggested
+	  by Veerabhadrarao Badiganti.
+Changes since V1:
+	- Moved software data timeout update part to qcom specific file
+	  as suggested by Veerabhadrarao Badiganti.
+---
+ drivers/mmc/host/sdhci-msm.c | 18 ++++++++++++++++++
+ 1 file changed, 18 insertions(+)
+
+diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
+index e44b7a6..290a14c 100644
+--- a/drivers/mmc/host/sdhci-msm.c
++++ b/drivers/mmc/host/sdhci-msm.c
+@@ -2089,6 +2089,23 @@ static void sdhci_msm_cqe_disable(struct mmc_host *mmc, bool recovery)
+ 	sdhci_cqe_disable(mmc, recovery);
+ }
  
- 			spi0: spi@880000 {
-@@ -837,8 +839,10 @@
- 						<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_0 0>,
- 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7180_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				status = "disabled";
- 			};
++static void sdhci_msm_set_timeout(struct sdhci_host *host, struct mmc_command *cmd)
++{
++	u32 count, start = 15;
++
++	__sdhci_set_timeout(host, cmd);
++	count = sdhci_readb(host, SDHCI_TIMEOUT_CONTROL);
++	/*
++	 * Update software timeout value if its value is less than hardware data
++	 * timeout value. Qcom SoC hardware data timeout value was calculated
++	 * using 4 * MCLK * 2^(count + 13). where MCLK = 1 / host->clock.
++	 */
++	if (cmd && cmd->data && host->clock > 400000 &&
++	    host->clock <= 50000000 &&
++	    ((1 << (count + start)) > (10 * host->clock)))
++		host->data_timeout = 22LL * NSEC_PER_SEC;
++}
++
+ static const struct cqhci_host_ops sdhci_msm_cqhci_ops = {
+ 	.enable		= sdhci_msm_cqe_enable,
+ 	.disable	= sdhci_msm_cqe_disable,
+@@ -2438,6 +2455,7 @@ static const struct sdhci_ops sdhci_msm_ops = {
+ 	.irq	= sdhci_msm_cqe_irq,
+ 	.dump_vendor_regs = sdhci_msm_dump_vendor_regs,
+ 	.set_power = sdhci_set_power_noreg,
++	.set_timeout = sdhci_msm_set_timeout,
+ };
  
- 			spi1: spi@884000 {
-@@ -889,8 +893,10 @@
- 						<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_0 0>,
- 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7180_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				status = "disabled";
- 			};
- 
- 			uart2: serial@888000 {
-@@ -923,8 +929,10 @@
- 						<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_0 0>,
- 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7180_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				status = "disabled";
- 			};
- 
- 			spi3: spi@88c000 {
-@@ -975,8 +983,10 @@
- 						<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_0 0>,
- 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7180_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				status = "disabled";
- 			};
- 
- 			uart4: serial@890000 {
-@@ -1009,8 +1019,10 @@
- 						<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_0 0>,
- 						<&aggre1_noc MASTER_QUP_0 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7180_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				status = "disabled";
- 			};
- 
- 			spi5: spi@894000 {
-@@ -1074,8 +1086,10 @@
- 						<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_1 0>,
- 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7180_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				status = "disabled";
- 			};
- 
- 			spi6: spi@a80000 {
-@@ -1126,8 +1140,10 @@
- 						<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_1 0>,
- 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7180_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				status = "disabled";
- 			};
- 
- 			uart7: serial@a84000 {
-@@ -1160,8 +1176,10 @@
- 						<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_1 0>,
- 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7180_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				status = "disabled";
- 			};
- 
- 			spi8: spi@a88000 {
-@@ -1212,8 +1230,10 @@
- 						<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_1 0>,
- 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7180_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				status = "disabled";
- 			};
- 
- 			uart9: serial@a8c000 {
-@@ -1246,8 +1266,10 @@
- 						<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_1 0>,
- 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7180_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				status = "disabled";
- 			};
- 
- 			spi10: spi@a90000 {
-@@ -1298,8 +1320,10 @@
- 						<&gem_noc MASTER_APPSS_PROC 0 &config_noc SLAVE_QUP_1 0>,
- 						<&aggre2_noc MASTER_QUP_1 0 &mc_virt SLAVE_EBI1 0>;
- 				interconnect-names = "qup-core", "qup-config",
- 							"qup-memory";
-+				power-domains = <&rpmhpd SC7180_CX>;
-+				required-opps = <&rpmhpd_opp_low_svs>;
- 				status = "disabled";
- 			};
- 
- 			spi11: spi@a94000 {
+ static const struct sdhci_pltfm_data sdhci_msm_pdata = {
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
 of Code Aurora Forum, hosted by The Linux Foundation
 
