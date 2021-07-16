@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5ABFE3CB703
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jul 2021 13:52:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F00CC3CB70A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jul 2021 13:54:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232235AbhGPLzD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jul 2021 07:55:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35342 "EHLO
+        id S236187AbhGPL53 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jul 2021 07:57:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35902 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232146AbhGPLzC (ORCPT
+        with ESMTP id S235353AbhGPL52 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jul 2021 07:55:02 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10E4DC061760
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jul 2021 04:52:08 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id u3so5200124plf.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jul 2021 04:52:08 -0700 (PDT)
+        Fri, 16 Jul 2021 07:57:28 -0400
+Received: from mail-pg1-x52d.google.com (mail-pg1-x52d.google.com [IPv6:2607:f8b0:4864:20::52d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00AD5C06175F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jul 2021 04:54:32 -0700 (PDT)
+Received: by mail-pg1-x52d.google.com with SMTP id t9so9747202pgn.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jul 2021 04:54:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=VDefuX9cEDK75TFnzNU2Hd/lg27JjRAaKGcjKhdtToQ=;
-        b=G8+jOyiQA6T5N2G5cGgtQoX2h1p2088vU8BOsYoKbY0583FxUtVULh4W0tMkROxCwZ
-         fOhNE6uqw6TgG4gijWyGhanc/z+CFrU3U76Hgjue+ZaZiFvhvklaLoRu+TRmtr3dsh1K
-         PxTyi+xNzGqi657O8fHCKsIcR0Cwimd6N/BFyKIeMNYoAhq8kldX3kn+zNM6skInuK9I
-         aOhgnT+VaiA12gGtHTiqaOYML/kHp+G96CGIILr99Ozo6t6uun5TbjdNX6Eqb01RC6Rw
-         Pf6F9dks38BiQnAJ9Urr4zm4jzNX4/EQLSMCkJjAmdWKWHyTrip2yhiI3zKTCZpgK/Hc
-         DYjw==
+        bh=McLq8C0l/ty7XCMoCzUHlUD6T7P73PiH5/4RXUmovZI=;
+        b=TgjsfiSEZ6ps6RWzuquLwUjuG52UbMDGu8yxVEJ/p49SSC7j/4vU4aFSZXSDOl09HI
+         6kZ8rjjMb6JUOwfJKAQyl3nkzs89xJZbfGKYWGsUdJrGlACUOvHOTKoteAFN33tNippz
+         mMlJNfQqse+9g4eacSIApEx+JxMHICnA05YBLTQANnLCzP8oieOsGW7kbQt9U24tjQBV
+         zNNMTvX0yKvDfN/vUy+o6nQCT6ToeH2AC7HjS72kNLrcS4WRNDfKMe3BK2lQ0bcRvZ0i
+         wDbIUOIMDroCL84KNW/OQ+m0i/JJhVLZ47Yim4+SVMIemiK2Pp4wtX8iCXDZXEw9HyaS
+         Wk8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=VDefuX9cEDK75TFnzNU2Hd/lg27JjRAaKGcjKhdtToQ=;
-        b=fL2IdzY/n4e3tAB6nS2ufIJ1ShNePzIeVa8fEaMEEwX4hnAvcnESvn+EQj7aY3Qqek
-         FMxyPt7boeZPOyaMLDRfWy36xAGn6hnL2wr2tDMDLhXIfDOwCXTYCCoKBPfnQPQ3fCSM
-         nQJQXT+EExgMQWltAxloGAzdNpxzyvG4Hpm299QzFtRg5qtAAGBkCe98bl3/qC0of5tq
-         H0ACr+dPyBRKONedQGk4Uz/ojLVx7SYvoDndcXnAVc43PM0TgdBCrxq9ZYzlinqWoJY6
-         AOGfMiWaP5oty6tCv4dXrksby2+WjKFWGqwyafiQb0uAWq87H0P2uHN2fy2yC3GiIcnT
-         Izdw==
-X-Gm-Message-State: AOAM531llr3BhZJHjJWJE4U9xhdGp/gFlDsesjoBUMYnb/KCJqoJK/2h
-        tM12X8F2bPL9ozMqIo7g7yIb
-X-Google-Smtp-Source: ABdhPJyLc1gWCSQNnkCwYQ8I20Q6a+lTagOVlymlFNPd1JvDmUBgDgYGZbZDtJNvfiP0+IpFKYCm1Q==
-X-Received: by 2002:a17:90b:4ac9:: with SMTP id mh9mr15652509pjb.226.1626436327474;
-        Fri, 16 Jul 2021 04:52:07 -0700 (PDT)
+        bh=McLq8C0l/ty7XCMoCzUHlUD6T7P73PiH5/4RXUmovZI=;
+        b=bmUFYNcD/qlBzM3W0HDE0+oicXD872lmzFeKjs/zmraORQiMnATdliH6VHoTNCITpg
+         FUAtNESCV5FclIbN5nxiH5rz9Tm6qep3M2lvFk3WxNtdbTjJb0KO3ln1zUV/yDZxwP6Z
+         0dkXHmbU6EdU+Rq7zt8hwv8/BKty/DOdMSVsG0+Qql7/7maO7QOIoADYsrEEUeWFz3Gz
+         NJqPvR5iHZ3kCXp/DYBgOOdJtmC9Z8mpCyqlfLu+BNDAPB8daOwznZNVnhzkx8s8Cybq
+         jLKyZCHp3rFf8ud0o2YHV9glR0pa1/NhTvpLxSncQ9PPvhbaYjcmII2NZqyabDGLdvib
+         NVpQ==
+X-Gm-Message-State: AOAM530hKG3MCsuFZkw9ivWtzfq9rs+YMmaI0zM06m6z20VU4rs3YDvM
+        dovBjxZ3vVOJTjrKlWnryrwy
+X-Google-Smtp-Source: ABdhPJy4RT8Y9XLct06JtdclYukX3QVoaUCu4qwyRZdQ1GyuAO0ogilVMJB6X746eErf+N9S1j4D+A==
+X-Received: by 2002:a62:bd15:0:b029:31c:a584:5f97 with SMTP id a21-20020a62bd150000b029031ca5845f97mr9904415pff.33.1626436472363;
+        Fri, 16 Jul 2021 04:54:32 -0700 (PDT)
 Received: from workstation ([120.138.12.214])
-        by smtp.gmail.com with ESMTPSA id y16sm10202593pfe.70.2021.07.16.04.52.05
+        by smtp.gmail.com with ESMTPSA id w186sm10367185pfw.106.2021.07.16.04.54.30
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 16 Jul 2021 04:52:06 -0700 (PDT)
-Date:   Fri, 16 Jul 2021 17:22:03 +0530
+        Fri, 16 Jul 2021 04:54:31 -0700 (PDT)
+Date:   Fri, 16 Jul 2021 17:24:28 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
 Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
@@ -56,7 +56,7 @@ Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
         loic.poulain@linaro.org
 Subject: Re: [PATCH] bus: mhi: core: Replace DMA allocation wrappers with
  original APIs
-Message-ID: <20210716115203.GI3323@workstation>
+Message-ID: <20210716115428.GJ3323@workstation>
 References: <1624392428-9328-1-git-send-email-bbhatt@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -73,13 +73,10 @@ On Tue, Jun 22, 2021 at 01:07:08PM -0700, Bhaumik Bhatt wrote:
 > call the equivalent DMA allocation functions. Replace them with
 > the original function calls such that the implementation is clear
 > and direct.
-
-There you go :) I was tempted to do this for a while...
-
 > 
 > Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Applied to mhi-next!
 
 Thanks,
 Mani
