@@ -2,94 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 902FA3CB53D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jul 2021 11:30:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE88A3CB546
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jul 2021 11:30:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233427AbhGPJ0x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jul 2021 05:26:53 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43392 "EHLO mail.kernel.org"
+        id S233822AbhGPJdE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jul 2021 05:33:04 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:64598 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232486AbhGPJ0w (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jul 2021 05:26:52 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id E2022613D4;
-        Fri, 16 Jul 2021 09:23:54 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1626427437;
-        bh=SSF2J5AJFadv8lcFZJGE8EsRfI4LjO0tmzEj5iYkobI=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=NGMn551XD5tSKGn21pbkfq41wRs5x9vdcTeIj802PSKFGPQUA+V++I9JFpHZ0js36
-         qxoiOZ7z0B9dlW6yYMu7yE5QoygNKMJimPHc5woHTP3V8BiVevxX+uLo9KkpjSW5+0
-         xfW/sj3qlY0cQQxYoeNNQ8pW+3DrzxFBN4rJyY+6R32f01OlQ9ef1uJD7aaDd+tmLu
-         rRjji/y8V+FNPkmE+98jtykil3eiJNJvmADoHkCkS35GF1xiLgGrxVGb2spwFbk43G
-         vUKt7OwnUYr279kRvh7IxrNq3ZyRL9HlmZESnY2ZrzdgY5xVcKK/QnkY3TGZlbrjLW
-         nyO6gY2CXni/Q==
-Date:   Fri, 16 Jul 2021 14:53:50 +0530
-From:   Manivannan Sadhasivam <mani@kernel.org>
-To:     Amit Pundir <amit.pundir@linaro.org>
-Cc:     Jassi Brar <jassisinghbrar@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] mailbox: qcom-ipcc: Enable loading QCOM_IPCC as a module
-Message-ID: <20210716092350.GG3323@workstation>
-References: <20210716074946.4093-1-amit.pundir@linaro.org>
+        id S233769AbhGPJdA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 16 Jul 2021 05:33:00 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1626427805; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=QfX1cy6BRq8atEmaeOQYNQ5ZME2FA2z59j0zFsixeDI=; b=NnZu2hw7JchNjluXKqJGgcIusEzYCrMh4N7UUVUhRRV+4/hcGfuvuOoJ+LV7dr9d8kiWhVjx
+ NL5oiNi9eKwDAy8iONORmJOR8iTt0jRhlo9au8MvqME7zisEwTq0nslfKdsp1mZzF2cjf2eQ
+ DK6roMF4RRpGkCTLnUtePLsFkMM=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 60f1519c4815712f3a982b46 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Jul 2021 09:30:04
+ GMT
+Sender: rnayak=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 18BCBC43460; Fri, 16 Jul 2021 09:30:04 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [10.50.2.235] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2947CC433D3;
+        Fri, 16 Jul 2021 09:29:59 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2947CC433D3
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH v3 1/2] PM / Domains: Add support for 'required-opps' to
+ set default perf state
+To:     ulf.hansson@linaro.org, bjorn.andersson@linaro.org,
+        viresh.kumar@linaro.org
+Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        swboyd@chromium.org, rojay@codeaurora.org, stephan@gerhold.net
+References: <1626412425-30715-1-git-send-email-rnayak@codeaurora.org>
+ <1626412425-30715-2-git-send-email-rnayak@codeaurora.org>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <60c91d5b-21d3-fed8-853d-c89bc08160d2@codeaurora.org>
+Date:   Fri, 16 Jul 2021 14:59:57 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210716074946.4093-1-amit.pundir@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <1626412425-30715-2-git-send-email-rnayak@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 16, 2021 at 01:19:46PM +0530, Amit Pundir wrote:
-> This patch enables the qcom_ipcc driver to be loaded as a
-> module. IPCC is fairly core to system, so as such it should
-> never be unloaded. It registers as a mailbox + irq controller
-> and the irq controller drivers in kernel are not supposed to
-> be unloaded as they don't have the visibility over the clients
-> consuming the irqs. Hence adding supress_bind_attrs to disable
-> bind/unbind via sysfs.
+
+On 7/16/2021 10:43 AM, Rajendra Nayak wrote:
+> Some devics within power domains with performance states do not
+> support DVFS, but still need to vote on a default/static state
+> while they are active. They can express this using the 'required-opps'
+> property in device tree, which points to the phandle of the OPP
+> supported by the corresponding power-domains.
 > 
-> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
-
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-Thanks,
-Mani
-
+> Add support to parse this information from DT and then set the
+> specified performance state during attach and drop it on detach.
+> Also drop/set as part of runtime suspend/resume callbacks.
+> 
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
 > ---
->  drivers/mailbox/Kconfig     | 2 +-
->  drivers/mailbox/qcom-ipcc.c | 1 +
->  2 files changed, 2 insertions(+), 1 deletion(-)
+>   drivers/base/power/domain.c | 29 ++++++++++++++++++++++++++++-
+>   include/linux/pm_domain.h   |  1 +
+>   2 files changed, 29 insertions(+), 1 deletion(-)
 > 
-> diff --git a/drivers/mailbox/Kconfig b/drivers/mailbox/Kconfig
-> index b4b780ea2ac8..c9fc06c7e685 100644
-> --- a/drivers/mailbox/Kconfig
-> +++ b/drivers/mailbox/Kconfig
-> @@ -264,7 +264,7 @@ config SPRD_MBOX
->  	  you want to build the Spreatrum mailbox controller driver.
->  
->  config QCOM_IPCC
-> -	bool "Qualcomm Technologies, Inc. IPCC driver"
-> +	tristate "Qualcomm Technologies, Inc. IPCC driver"
->  	depends on ARCH_QCOM || COMPILE_TEST
->  	help
->  	  Qualcomm Technologies, Inc. Inter-Processor Communication Controller
-> diff --git a/drivers/mailbox/qcom-ipcc.c b/drivers/mailbox/qcom-ipcc.c
-> index 584700cd1585..f1d4f4679b17 100644
-> --- a/drivers/mailbox/qcom-ipcc.c
-> +++ b/drivers/mailbox/qcom-ipcc.c
-> @@ -277,6 +277,7 @@ static struct platform_driver qcom_ipcc_driver = {
->  	.driver = {
->  		.name = "qcom-ipcc",
->  		.of_match_table = qcom_ipcc_of_match,
-> +		.suppress_bind_attrs = true,
->  	},
->  };
->  
-> -- 
-> 2.25.1
+> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
+> index a934c67..eef5507 100644
+> --- a/drivers/base/power/domain.c
+> +++ b/drivers/base/power/domain.c
+> @@ -917,6 +917,10 @@ static int genpd_runtime_suspend(struct device *dev)
+>   	if (irq_safe_dev_in_no_sleep_domain(dev, genpd))
+>   		return 0;
+>   
+> +	/* Drop the default performance state */
+> +	if (dev_gpd_data(dev)->default_pstate)
+> +		dev_pm_genpd_set_performance_state(dev, 0);
+> +
+>   	genpd_lock(genpd);
+>   	gpd_data->rpm_pstate = genpd_drop_performance_state(dev);
+>   	genpd_power_off(genpd, true, 0);
+> @@ -937,6 +941,7 @@ static int genpd_runtime_resume(struct device *dev)
+>   {
+>   	struct generic_pm_domain *genpd;
+>   	struct generic_pm_domain_data *gpd_data = dev_gpd_data(dev);
+> +	unsigned int default_pstate = gpd_data->default_pstate;
+>   	struct gpd_timing_data *td = &gpd_data->td;
+>   	bool runtime_pm = pm_runtime_enabled(dev);
+>   	ktime_t time_start;
+> @@ -968,6 +973,9 @@ static int genpd_runtime_resume(struct device *dev)
+>   	if (ret)
+>   		return ret;
+>   
+> +	/* Set the default performance state */
+> +	if (default_pstate)
+> +		dev_pm_genpd_set_performance_state(dev, default_pstate);
+>    out:
+>   	/* Measure resume latency. */
+>   	time_start = 0;
+> @@ -1000,6 +1008,8 @@ static int genpd_runtime_resume(struct device *dev)
+>   	genpd_stop_dev(genpd, dev);
+>   err_poweroff:
+>   	if (!pm_runtime_is_irq_safe(dev) || genpd_is_irq_safe(genpd)) {
+> +		if (default_pstate)
+> +			dev_pm_genpd_set_performance_state(dev, 0);
+>   		genpd_lock(genpd);
+>   		gpd_data->rpm_pstate = genpd_drop_performance_state(dev);
+>   		genpd_power_off(genpd, true, 0);
+> @@ -2598,6 +2608,12 @@ static void genpd_dev_pm_detach(struct device *dev, bool power_off)
+>   
+>   	dev_dbg(dev, "removing from PM domain %s\n", pd->name);
+>   
+> +	/* Drop the default performance state */
+> +	if (dev_gpd_data(dev)->default_pstate) {
+> +		dev_pm_genpd_set_performance_state(dev, 0);
+> +		dev_gpd_data(dev)->default_pstate = 0;
+> +	}
+> +
+>   	for (i = 1; i < GENPD_RETRY_MAX_MS; i <<= 1) {
+>   		ret = genpd_remove_device(pd, dev);
+>   		if (ret != -EAGAIN)
+> @@ -2635,9 +2651,10 @@ static void genpd_dev_pm_sync(struct device *dev)
+>   static int __genpd_dev_pm_attach(struct device *dev, struct device *base_dev,
+>   				 unsigned int index, bool power_on)
+>   {
+> +	struct device_node *np;
+>   	struct of_phandle_args pd_args;
+>   	struct generic_pm_domain *pd;
+> -	int ret;
+> +	int ret, pstate;
+>   
+>   	ret = of_parse_phandle_with_args(dev->of_node, "power-domains",
+>   				"#power-domain-cells", index, &pd_args);
+> @@ -2678,6 +2695,16 @@ static int __genpd_dev_pm_attach(struct device *dev, struct device *base_dev,
+>   	if (ret)
+>   		genpd_remove_device(pd, dev);
+>   
+> +	/* Set the default performance state */
+> +	np = base_dev->of_node;
+> +	if (of_parse_phandle(np, "required-opps", index)) {
+> +		pstate = of_get_required_opp_performance_state(np, index);
+> +		if (pstate > 0) {
+> +			dev_pm_genpd_set_performance_state(dev, pstate);
+> +			dev_gpd_data(dev)->default_pstate = pstate;
+> +		}
+> +	}
+
+I realized this needs better error handling after I sent it out,
+I'll fix and respin.
+
+> +
+>   	return ret ? -EPROBE_DEFER : 1;
+>   }
+>   
+> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
+> index 21a0577..67017c9 100644
+> --- a/include/linux/pm_domain.h
+> +++ b/include/linux/pm_domain.h
+> @@ -198,6 +198,7 @@ struct generic_pm_domain_data {
+>   	struct notifier_block *power_nb;
+>   	int cpu;
+>   	unsigned int performance_state;
+> +	unsigned int default_pstate;
+>   	unsigned int rpm_pstate;
+>   	ktime_t	next_wakeup;
+>   	void *data;
 > 
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
