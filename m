@@ -2,336 +2,333 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B3583CB6F9
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jul 2021 13:49:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5ABFE3CB703
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jul 2021 13:52:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238468AbhGPLw2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jul 2021 07:52:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34734 "EHLO
+        id S232235AbhGPLzD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jul 2021 07:55:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35342 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238234AbhGPLw0 (ORCPT
+        with ESMTP id S232146AbhGPLzC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jul 2021 07:52:26 -0400
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FEC0C061767
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jul 2021 04:49:30 -0700 (PDT)
-Received: by mail-pj1-x102d.google.com with SMTP id me13-20020a17090b17cdb0290173bac8b9c9so8727145pjb.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jul 2021 04:49:30 -0700 (PDT)
+        Fri, 16 Jul 2021 07:55:02 -0400
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 10E4DC061760
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jul 2021 04:52:08 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id u3so5200124plf.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jul 2021 04:52:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=VsSGhRGmgR0aRURUSRAT2I7f85rIEbHU6ArxttRtGAw=;
-        b=bqXcj1g0kp9sOr9ItNJL4RDqjEYL+LoN+8oEU+f5MjR1w6PLwsKRpQyjVd2T26ObHq
-         2fqBmGLOhgXxrRci8/yi4LezDDU6GkbokcMxsFD62P20vZ6yZ2Lvvwc0zpH8qp0bjx4f
-         G14NQZWBoxiwgIilMpQWyZtg3kGXbqz91dSUbdVhSlL0JuSg90bLKcc939eziXNj4lp3
-         PIPlNdzPsHI9600zsmYlrwvQJJT8ZTNtzcmqrPT6hIuiNezRhJ1fmQguiw91mNcj6qlf
-         6jIJc7BjJi+Jky/pVkhL8HU6LbNDN5npaPeCACTTQ2HjCw9xmcYZecENhc0lMdFksNfO
-         6lnQ==
+        bh=VDefuX9cEDK75TFnzNU2Hd/lg27JjRAaKGcjKhdtToQ=;
+        b=G8+jOyiQA6T5N2G5cGgtQoX2h1p2088vU8BOsYoKbY0583FxUtVULh4W0tMkROxCwZ
+         fOhNE6uqw6TgG4gijWyGhanc/z+CFrU3U76Hgjue+ZaZiFvhvklaLoRu+TRmtr3dsh1K
+         PxTyi+xNzGqi657O8fHCKsIcR0Cwimd6N/BFyKIeMNYoAhq8kldX3kn+zNM6skInuK9I
+         aOhgnT+VaiA12gGtHTiqaOYML/kHp+G96CGIILr99Ozo6t6uun5TbjdNX6Eqb01RC6Rw
+         Pf6F9dks38BiQnAJ9Urr4zm4jzNX4/EQLSMCkJjAmdWKWHyTrip2yhiI3zKTCZpgK/Hc
+         DYjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=VsSGhRGmgR0aRURUSRAT2I7f85rIEbHU6ArxttRtGAw=;
-        b=cHUhAmisVRKriN45S1QaUPbBQigyf1hy8HWtiVtSmMwCqcqD574qhtQCuBNlkZn+PZ
-         QrIP8YcG3ctV5Nl+SEmtc3TWdVYpyGXGOobnY2YBqA1DnAHv42ZjwXBZFJF3hl6Vb6my
-         8tnddjO82YjDH2/5GMXGjE4VQTJHoIwaavpXsgMswjEsSD4LPCJxIbWxjeTMjZZkJfm1
-         R+ARP+fMjglIdqc/Jekkx3YnO78WSPNJWRnUQQx+snxamB7fzDVKPfItmuB8gL4Vd6aD
-         FOH/C7ZbWCbVT0IUDbIINGpDYou8DfkoHroo4e5ZQ1Tw9S3CnLYT2Olgb99eAhYiEakb
-         jSnQ==
-X-Gm-Message-State: AOAM532Lx3ElSgrzXLVh18cA3BS+A2GltQ+LSwoF3aBquoMiQmOF6MOo
-        ibg9Rooiurhcj61Mfzc2fCCQ
-X-Google-Smtp-Source: ABdhPJwgaMD1Wb7bOy68aKqGWrdcK6UwUyrmVIPHAJU2wFlizDGSvAdkOTZS6hLxFMuoBnhdwzyrew==
-X-Received: by 2002:a17:902:d916:b029:11e:3249:4a17 with SMTP id c22-20020a170902d916b029011e32494a17mr7491498plz.0.1626436169841;
-        Fri, 16 Jul 2021 04:49:29 -0700 (PDT)
+        bh=VDefuX9cEDK75TFnzNU2Hd/lg27JjRAaKGcjKhdtToQ=;
+        b=fL2IdzY/n4e3tAB6nS2ufIJ1ShNePzIeVa8fEaMEEwX4hnAvcnESvn+EQj7aY3Qqek
+         FMxyPt7boeZPOyaMLDRfWy36xAGn6hnL2wr2tDMDLhXIfDOwCXTYCCoKBPfnQPQ3fCSM
+         nQJQXT+EExgMQWltAxloGAzdNpxzyvG4Hpm299QzFtRg5qtAAGBkCe98bl3/qC0of5tq
+         H0ACr+dPyBRKONedQGk4Uz/ojLVx7SYvoDndcXnAVc43PM0TgdBCrxq9ZYzlinqWoJY6
+         AOGfMiWaP5oty6tCv4dXrksby2+WjKFWGqwyafiQb0uAWq87H0P2uHN2fy2yC3GiIcnT
+         Izdw==
+X-Gm-Message-State: AOAM531llr3BhZJHjJWJE4U9xhdGp/gFlDsesjoBUMYnb/KCJqoJK/2h
+        tM12X8F2bPL9ozMqIo7g7yIb
+X-Google-Smtp-Source: ABdhPJyLc1gWCSQNnkCwYQ8I20Q6a+lTagOVlymlFNPd1JvDmUBgDgYGZbZDtJNvfiP0+IpFKYCm1Q==
+X-Received: by 2002:a17:90b:4ac9:: with SMTP id mh9mr15652509pjb.226.1626436327474;
+        Fri, 16 Jul 2021 04:52:07 -0700 (PDT)
 Received: from workstation ([120.138.12.214])
-        by smtp.gmail.com with ESMTPSA id b19sm8300332pjh.29.2021.07.16.04.49.27
+        by smtp.gmail.com with ESMTPSA id y16sm10202593pfe.70.2021.07.16.04.52.05
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 16 Jul 2021 04:49:29 -0700 (PDT)
-Date:   Fri, 16 Jul 2021 17:19:26 +0530
+        Fri, 16 Jul 2021 04:52:06 -0700 (PDT)
+Date:   Fri, 16 Jul 2021 17:22:03 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
 To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
 Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5] bus: mhi: core: Add support for processing priority
- of event ring
-Message-ID: <20210716114926.GH3323@workstation>
-References: <1624641728-3886-1-git-send-email-bbhatt@codeaurora.org>
+        jhugo@codeaurora.org, linux-kernel@vger.kernel.org,
+        loic.poulain@linaro.org
+Subject: Re: [PATCH] bus: mhi: core: Replace DMA allocation wrappers with
+ original APIs
+Message-ID: <20210716115203.GI3323@workstation>
+References: <1624392428-9328-1-git-send-email-bbhatt@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1624641728-3886-1-git-send-email-bbhatt@codeaurora.org>
+In-Reply-To: <1624392428-9328-1-git-send-email-bbhatt@codeaurora.org>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jun 25, 2021 at 10:22:08AM -0700, Bhaumik Bhatt wrote:
-> From: Hemant Kumar <hemantk@codeaurora.org>
+On Tue, Jun 22, 2021 at 01:07:08PM -0700, Bhaumik Bhatt wrote:
+> There is nothing special done within the mhi_alloc_coherent() and
+> the mhi_free_coherent() wrapper functions. They only directly
+> call the equivalent DMA allocation functions. Replace them with
+> the original function calls such that the implementation is clear
+> and direct.
+
+There you go :) I was tempted to do this for a while...
+
 > 
-> Event ring priorities are currently set to 1 and are unused.
-> Default processing priority for event rings is set to regular
-> tasklet. Controllers can choose to use high priority tasklet
-> scheduling for certain event rings critical for processing such
-> as ones transporting control information if they wish to avoid
-> system scheduling delays for those packets. In order to support
-> these use cases, allow controllers to set event ring priority to
-> high.
-> 
+> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 
 Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-
-Just curious, what are the event rings you are going to make as high
-priority? If you are going to do that for existing controllers, please
-submit a patch now itself.
 
 Thanks,
 Mani
 
-> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
-> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 > ---
-> v5:
-> -Add controller changes and enable usage of event ring configuration priorities
-> -Fix nitpick, use high instead of hi in kdoc
+>  drivers/bus/mhi/core/boot.c     | 17 +++++++++--------
+>  drivers/bus/mhi/core/init.c     | 32 ++++++++++++++++----------------
+>  drivers/bus/mhi/core/internal.h | 20 --------------------
+>  drivers/bus/mhi/core/main.c     |  6 +++---
+>  4 files changed, 28 insertions(+), 47 deletions(-)
 > 
-> v4:
-> -Update fixed priority for all events to default to fix bug in v3
-> -Supply changelog
-> 
-> v3:
-> -Revert to enum approach
-> -Use 0 as default and 1 as high in enum
-> -Do not use config values for event rings
-> 
-> v2:
-> -Use boolean approach for easy maintenance as controllers do not need updates
-> 
-> 
-> 
->  drivers/bus/mhi/core/init.c           |  3 +-
->  drivers/bus/mhi/core/internal.h       |  2 +-
->  drivers/bus/mhi/core/main.c           | 19 ++++++++--
->  drivers/bus/mhi/pci_generic.c         | 66 +++++++++++++++++------------------
->  drivers/net/wireless/ath/ath11k/mhi.c |  4 +--
->  include/linux/mhi.h                   | 14 ++++++--
->  6 files changed, 65 insertions(+), 43 deletions(-)
-> 
+> diff --git a/drivers/bus/mhi/core/boot.c b/drivers/bus/mhi/core/boot.c
+> index 8100cf5..0a97262 100644
+> --- a/drivers/bus/mhi/core/boot.c
+> +++ b/drivers/bus/mhi/core/boot.c
+> @@ -302,8 +302,8 @@ void mhi_free_bhie_table(struct mhi_controller *mhi_cntrl,
+>  	struct mhi_buf *mhi_buf = image_info->mhi_buf;
+>  
+>  	for (i = 0; i < image_info->entries; i++, mhi_buf++)
+> -		mhi_free_coherent(mhi_cntrl, mhi_buf->len, mhi_buf->buf,
+> -				  mhi_buf->dma_addr);
+> +		dma_free_coherent(mhi_cntrl->cntrl_dev, mhi_buf->len,
+> +				  mhi_buf->buf, mhi_buf->dma_addr);
+>  
+>  	kfree(image_info->mhi_buf);
+>  	kfree(image_info);
+> @@ -339,8 +339,8 @@ int mhi_alloc_bhie_table(struct mhi_controller *mhi_cntrl,
+>  			vec_size = sizeof(struct bhi_vec_entry) * i;
+>  
+>  		mhi_buf->len = vec_size;
+> -		mhi_buf->buf = mhi_alloc_coherent(mhi_cntrl, vec_size,
+> -						  &mhi_buf->dma_addr,
+> +		mhi_buf->buf = dma_alloc_coherent(mhi_cntrl->cntrl_dev,
+> +						  vec_size, &mhi_buf->dma_addr,
+>  						  GFP_KERNEL);
+>  		if (!mhi_buf->buf)
+>  			goto error_alloc_segment;
+> @@ -354,8 +354,8 @@ int mhi_alloc_bhie_table(struct mhi_controller *mhi_cntrl,
+>  
+>  error_alloc_segment:
+>  	for (--i, --mhi_buf; i >= 0; i--, mhi_buf--)
+> -		mhi_free_coherent(mhi_cntrl, mhi_buf->len, mhi_buf->buf,
+> -				  mhi_buf->dma_addr);
+> +		dma_free_coherent(mhi_cntrl->cntrl_dev, mhi_buf->len,
+> +				  mhi_buf->buf, mhi_buf->dma_addr);
+>  
+>  error_alloc_mhi_buf:
+>  	kfree(img_info);
+> @@ -442,7 +442,8 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
+>  	if (size > firmware->size)
+>  		size = firmware->size;
+>  
+> -	buf = mhi_alloc_coherent(mhi_cntrl, size, &dma_addr, GFP_KERNEL);
+> +	buf = dma_alloc_coherent(mhi_cntrl->cntrl_dev, size, &dma_addr,
+> +				 GFP_KERNEL);
+>  	if (!buf) {
+>  		release_firmware(firmware);
+>  		goto error_fw_load;
+> @@ -451,7 +452,7 @@ void mhi_fw_load_handler(struct mhi_controller *mhi_cntrl)
+>  	/* Download image using BHI */
+>  	memcpy(buf, firmware->data, size);
+>  	ret = mhi_fw_load_bhi(mhi_cntrl, dma_addr, size);
+> -	mhi_free_coherent(mhi_cntrl, size, buf, dma_addr);
+> +	dma_free_coherent(mhi_cntrl->cntrl_dev, size, buf, dma_addr);
+>  
+>  	/* Error or in EDL mode, we're done */
+>  	if (ret) {
 > diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-> index c81b377..4446760 100644
+> index 4446760..c7ba715 100644
 > --- a/drivers/bus/mhi/core/init.c
 > +++ b/drivers/bus/mhi/core/init.c
-> @@ -673,8 +673,7 @@ static int parse_ev_cfg(struct mhi_controller *mhi_cntrl,
->  				&mhi_cntrl->mhi_chan[mhi_event->chan];
->  		}
+> @@ -129,7 +129,7 @@ static int mhi_alloc_aligned_ring(struct mhi_controller *mhi_cntrl,
+>  				  u64 len)
+>  {
+>  	ring->alloc_size = len + (len - 1);
+> -	ring->pre_aligned = mhi_alloc_coherent(mhi_cntrl, ring->alloc_size,
+> +	ring->pre_aligned = dma_alloc_coherent(mhi_cntrl->cntrl_dev, ring->alloc_size,
+>  					       &ring->dma_handle, GFP_KERNEL);
+>  	if (!ring->pre_aligned)
+>  		return -ENOMEM;
+> @@ -221,13 +221,13 @@ void mhi_deinit_dev_ctxt(struct mhi_controller *mhi_cntrl)
+>  	mhi_cmd = mhi_cntrl->mhi_cmd;
+>  	for (i = 0; i < NR_OF_CMD_RINGS; i++, mhi_cmd++) {
+>  		ring = &mhi_cmd->ring;
+> -		mhi_free_coherent(mhi_cntrl, ring->alloc_size,
+> +		dma_free_coherent(mhi_cntrl->cntrl_dev, ring->alloc_size,
+>  				  ring->pre_aligned, ring->dma_handle);
+>  		ring->base = NULL;
+>  		ring->iommu_base = 0;
+>  	}
 >  
-> -		/* Priority is fixed to 1 for now */
-> -		mhi_event->priority = 1;
-> +		mhi_event->priority = event_cfg->priority;
+> -	mhi_free_coherent(mhi_cntrl,
+> +	dma_free_coherent(mhi_cntrl->cntrl_dev,
+>  			  sizeof(*mhi_ctxt->cmd_ctxt) * NR_OF_CMD_RINGS,
+>  			  mhi_ctxt->cmd_ctxt, mhi_ctxt->cmd_ctxt_addr);
 >  
->  		mhi_event->db_cfg.brstmode = event_cfg->mode;
->  		if (MHI_INVALID_BRSTMODE(mhi_event->db_cfg.brstmode))
+> @@ -237,17 +237,17 @@ void mhi_deinit_dev_ctxt(struct mhi_controller *mhi_cntrl)
+>  			continue;
+>  
+>  		ring = &mhi_event->ring;
+> -		mhi_free_coherent(mhi_cntrl, ring->alloc_size,
+> +		dma_free_coherent(mhi_cntrl->cntrl_dev, ring->alloc_size,
+>  				  ring->pre_aligned, ring->dma_handle);
+>  		ring->base = NULL;
+>  		ring->iommu_base = 0;
+>  	}
+>  
+> -	mhi_free_coherent(mhi_cntrl, sizeof(*mhi_ctxt->er_ctxt) *
+> +	dma_free_coherent(mhi_cntrl->cntrl_dev, sizeof(*mhi_ctxt->er_ctxt) *
+>  			  mhi_cntrl->total_ev_rings, mhi_ctxt->er_ctxt,
+>  			  mhi_ctxt->er_ctxt_addr);
+>  
+> -	mhi_free_coherent(mhi_cntrl, sizeof(*mhi_ctxt->chan_ctxt) *
+> +	dma_free_coherent(mhi_cntrl->cntrl_dev, sizeof(*mhi_ctxt->chan_ctxt) *
+>  			  mhi_cntrl->max_chan, mhi_ctxt->chan_ctxt,
+>  			  mhi_ctxt->chan_ctxt_addr);
+>  
+> @@ -275,7 +275,7 @@ int mhi_init_dev_ctxt(struct mhi_controller *mhi_cntrl)
+>  		return -ENOMEM;
+>  
+>  	/* Setup channel ctxt */
+> -	mhi_ctxt->chan_ctxt = mhi_alloc_coherent(mhi_cntrl,
+> +	mhi_ctxt->chan_ctxt = dma_alloc_coherent(mhi_cntrl->cntrl_dev,
+>  						 sizeof(*mhi_ctxt->chan_ctxt) *
+>  						 mhi_cntrl->max_chan,
+>  						 &mhi_ctxt->chan_ctxt_addr,
+> @@ -307,7 +307,7 @@ int mhi_init_dev_ctxt(struct mhi_controller *mhi_cntrl)
+>  	}
+>  
+>  	/* Setup event context */
+> -	mhi_ctxt->er_ctxt = mhi_alloc_coherent(mhi_cntrl,
+> +	mhi_ctxt->er_ctxt = dma_alloc_coherent(mhi_cntrl->cntrl_dev,
+>  					       sizeof(*mhi_ctxt->er_ctxt) *
+>  					       mhi_cntrl->total_ev_rings,
+>  					       &mhi_ctxt->er_ctxt_addr,
+> @@ -354,7 +354,7 @@ int mhi_init_dev_ctxt(struct mhi_controller *mhi_cntrl)
+>  
+>  	/* Setup cmd context */
+>  	ret = -ENOMEM;
+> -	mhi_ctxt->cmd_ctxt = mhi_alloc_coherent(mhi_cntrl,
+> +	mhi_ctxt->cmd_ctxt = dma_alloc_coherent(mhi_cntrl->cntrl_dev,
+>  						sizeof(*mhi_ctxt->cmd_ctxt) *
+>  						NR_OF_CMD_RINGS,
+>  						&mhi_ctxt->cmd_ctxt_addr,
+> @@ -389,10 +389,10 @@ int mhi_init_dev_ctxt(struct mhi_controller *mhi_cntrl)
+>  	for (--i, --mhi_cmd; i >= 0; i--, mhi_cmd--) {
+>  		struct mhi_ring *ring = &mhi_cmd->ring;
+>  
+> -		mhi_free_coherent(mhi_cntrl, ring->alloc_size,
+> +		dma_free_coherent(mhi_cntrl->cntrl_dev, ring->alloc_size,
+>  				  ring->pre_aligned, ring->dma_handle);
+>  	}
+> -	mhi_free_coherent(mhi_cntrl,
+> +	dma_free_coherent(mhi_cntrl->cntrl_dev,
+>  			  sizeof(*mhi_ctxt->cmd_ctxt) * NR_OF_CMD_RINGS,
+>  			  mhi_ctxt->cmd_ctxt, mhi_ctxt->cmd_ctxt_addr);
+>  	i = mhi_cntrl->total_ev_rings;
+> @@ -405,15 +405,15 @@ int mhi_init_dev_ctxt(struct mhi_controller *mhi_cntrl)
+>  		if (mhi_event->offload_ev)
+>  			continue;
+>  
+> -		mhi_free_coherent(mhi_cntrl, ring->alloc_size,
+> +		dma_free_coherent(mhi_cntrl->cntrl_dev, ring->alloc_size,
+>  				  ring->pre_aligned, ring->dma_handle);
+>  	}
+> -	mhi_free_coherent(mhi_cntrl, sizeof(*mhi_ctxt->er_ctxt) *
+> +	dma_free_coherent(mhi_cntrl->cntrl_dev, sizeof(*mhi_ctxt->er_ctxt) *
+>  			  mhi_cntrl->total_ev_rings, mhi_ctxt->er_ctxt,
+>  			  mhi_ctxt->er_ctxt_addr);
+>  
+>  error_alloc_er_ctxt:
+> -	mhi_free_coherent(mhi_cntrl, sizeof(*mhi_ctxt->chan_ctxt) *
+> +	dma_free_coherent(mhi_cntrl->cntrl_dev, sizeof(*mhi_ctxt->chan_ctxt) *
+>  			  mhi_cntrl->max_chan, mhi_ctxt->chan_ctxt,
+>  			  mhi_ctxt->chan_ctxt_addr);
+>  
+> @@ -567,7 +567,7 @@ void mhi_deinit_chan_ctxt(struct mhi_controller *mhi_cntrl,
+>  	if (!chan_ctxt->rbase) /* Already uninitialized */
+>  		return;
+>  
+> -	mhi_free_coherent(mhi_cntrl, tre_ring->alloc_size,
+> +	dma_free_coherent(mhi_cntrl->cntrl_dev, tre_ring->alloc_size,
+>  			  tre_ring->pre_aligned, tre_ring->dma_handle);
+>  	vfree(buf_ring->base);
+>  
+> @@ -610,7 +610,7 @@ int mhi_init_chan_ctxt(struct mhi_controller *mhi_cntrl,
+>  	buf_ring->base = vzalloc(buf_ring->len);
+>  
+>  	if (!buf_ring->base) {
+> -		mhi_free_coherent(mhi_cntrl, tre_ring->alloc_size,
+> +		dma_free_coherent(mhi_cntrl->cntrl_dev, tre_ring->alloc_size,
+>  				  tre_ring->pre_aligned, tre_ring->dma_handle);
+>  		return -ENOMEM;
+>  	}
 > diff --git a/drivers/bus/mhi/core/internal.h b/drivers/bus/mhi/core/internal.h
-> index 672052f..666e102 100644
+> index 672052f..b5594fa 100644
 > --- a/drivers/bus/mhi/core/internal.h
 > +++ b/drivers/bus/mhi/core/internal.h
-> @@ -535,7 +535,7 @@ struct mhi_event {
->  	u32 intmod;
->  	u32 irq;
->  	int chan; /* this event ring is dedicated to a channel (optional) */
-> -	u32 priority;
-> +	enum mhi_er_priority priority;
->  	enum mhi_er_data_type data_type;
->  	struct mhi_ring ring;
->  	struct db_cfg db_cfg;
+> @@ -690,26 +690,6 @@ void mhi_deinit_chan_ctxt(struct mhi_controller *mhi_cntrl,
+>  void mhi_reset_chan(struct mhi_controller *mhi_cntrl,
+>  		    struct mhi_chan *mhi_chan);
+>  
+> -/* Memory allocation methods */
+> -static inline void *mhi_alloc_coherent(struct mhi_controller *mhi_cntrl,
+> -				       size_t size,
+> -				       dma_addr_t *dma_handle,
+> -				       gfp_t gfp)
+> -{
+> -	void *buf = dma_alloc_coherent(mhi_cntrl->cntrl_dev, size, dma_handle,
+> -				       gfp);
+> -
+> -	return buf;
+> -}
+> -
+> -static inline void mhi_free_coherent(struct mhi_controller *mhi_cntrl,
+> -				     size_t size,
+> -				     void *vaddr,
+> -				     dma_addr_t dma_handle)
+> -{
+> -	dma_free_coherent(mhi_cntrl->cntrl_dev, size, vaddr, dma_handle);
+> -}
+> -
+>  /* Event processing methods */
+>  void mhi_ctrl_ev_task(unsigned long data);
+>  void mhi_ev_task(unsigned long data);
 > diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-> index 8ac73f9..bfc9776 100644
+> index 02c8c09..409c68bc 100644
 > --- a/drivers/bus/mhi/core/main.c
 > +++ b/drivers/bus/mhi/core/main.c
-> @@ -425,10 +425,11 @@ void mhi_create_devices(struct mhi_controller *mhi_cntrl)
->  	}
+> @@ -193,7 +193,7 @@ int mhi_map_single_no_bb(struct mhi_controller *mhi_cntrl,
+>  int mhi_map_single_use_bb(struct mhi_controller *mhi_cntrl,
+>  			  struct mhi_buf_info *buf_info)
+>  {
+> -	void *buf = mhi_alloc_coherent(mhi_cntrl, buf_info->len,
+> +	void *buf = dma_alloc_coherent(mhi_cntrl->cntrl_dev, buf_info->len,
+>  				       &buf_info->p_addr, GFP_ATOMIC);
+>  
+>  	if (!buf)
+> @@ -220,8 +220,8 @@ void mhi_unmap_single_use_bb(struct mhi_controller *mhi_cntrl,
+>  	if (buf_info->dir == DMA_FROM_DEVICE)
+>  		memcpy(buf_info->v_addr, buf_info->bb_addr, buf_info->len);
+>  
+> -	mhi_free_coherent(mhi_cntrl, buf_info->len, buf_info->bb_addr,
+> -			  buf_info->p_addr);
+> +	dma_free_coherent(mhi_cntrl->cntrl_dev, buf_info->len,
+> +			  buf_info->bb_addr, buf_info->p_addr);
 >  }
 >  
-> -irqreturn_t mhi_irq_handler(int irq_number, void *dev)
-> +irqreturn_t mhi_irq_handler(int irq_number, void *priv)
->  {
-> -	struct mhi_event *mhi_event = dev;
-> +	struct mhi_event *mhi_event = priv;
->  	struct mhi_controller *mhi_cntrl = mhi_event->mhi_cntrl;
-> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->  	struct mhi_event_ctxt *er_ctxt =
->  		&mhi_cntrl->mhi_ctxt->er_ctxt[mhi_event->er_index];
->  	struct mhi_ring *ev_ring = &mhi_event->ring;
-> @@ -454,8 +455,20 @@ irqreturn_t mhi_irq_handler(int irq_number, void *dev)
->  
->  		if (mhi_dev)
->  			mhi_notify(mhi_dev, MHI_CB_PENDING_DATA);
-> -	} else {
-> +
-> +		return IRQ_HANDLED;
-> +	}
-> +
-> +	switch (mhi_event->priority) {
-> +	case MHI_ER_PRIORITY_HI:
-> +		tasklet_hi_schedule(&mhi_event->task);
-> +		break;
-> +	case MHI_ER_PRIORITY_DEFAULT:
->  		tasklet_schedule(&mhi_event->task);
-> +		break;
-> +	default:
-> +		dev_err(dev, "Skip event of unknown priority\n");
-> +		break;
->  	}
->  
->  	return IRQ_HANDLED;
-> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-> index 31360a2..5886547 100644
-> --- a/drivers/bus/mhi/pci_generic.c
-> +++ b/drivers/bus/mhi/pci_generic.c
-> @@ -74,17 +74,17 @@ struct mhi_pci_dev_info {
->  		.doorbell_mode_switch = false,		\
->  	}
->  
-> -#define MHI_EVENT_CONFIG_CTRL(ev_ring, el_count) \
-> -	{					\
-> -		.num_elements = el_count,	\
-> -		.irq_moderation_ms = 0,		\
-> -		.irq = (ev_ring) + 1,		\
-> -		.priority = 1,			\
-> -		.mode = MHI_DB_BRST_DISABLE,	\
-> -		.data_type = MHI_ER_CTRL,	\
-> -		.hardware_event = false,	\
-> -		.client_managed = false,	\
-> -		.offload_channel = false,	\
-> +#define MHI_EVENT_CONFIG_CTRL(ev_ring, el_count)	\
-> +	{						\
-> +		.num_elements = el_count,		\
-> +		.irq_moderation_ms = 0,			\
-> +		.irq = (ev_ring) + 1,			\
-> +		.priority = MHI_ER_PRIORITY_DEFAULT,	\
-> +		.mode = MHI_DB_BRST_DISABLE,		\
-> +		.data_type = MHI_ER_CTRL,		\
-> +		.hardware_event = false,		\
-> +		.client_managed = false,		\
-> +		.offload_channel = false,		\
->  	}
->  
->  #define MHI_CHANNEL_CONFIG_HW_UL(ch_num, ch_name, el_count, ev_ring) \
-> @@ -177,31 +177,31 @@ struct mhi_pci_dev_info {
->  		.doorbell_mode_switch = false,		\
->  	}
->  
-> -#define MHI_EVENT_CONFIG_DATA(ev_ring, el_count) \
-> -	{					\
-> -		.num_elements = el_count,	\
-> -		.irq_moderation_ms = 5,		\
-> -		.irq = (ev_ring) + 1,		\
-> -		.priority = 1,			\
-> -		.mode = MHI_DB_BRST_DISABLE,	\
-> -		.data_type = MHI_ER_DATA,	\
-> -		.hardware_event = false,	\
-> -		.client_managed = false,	\
-> -		.offload_channel = false,	\
-> +#define MHI_EVENT_CONFIG_DATA(ev_ring, el_count)	\
-> +	{						\
-> +		.num_elements = el_count,		\
-> +		.irq_moderation_ms = 5,			\
-> +		.irq = (ev_ring) + 1,			\
-> +		.priority = MHI_ER_PRIORITY_DEFAULT,	\
-> +		.mode = MHI_DB_BRST_DISABLE,		\
-> +		.data_type = MHI_ER_DATA,		\
-> +		.hardware_event = false,		\
-> +		.client_managed = false,		\
-> +		.offload_channel = false,		\
->  	}
->  
->  #define MHI_EVENT_CONFIG_HW_DATA(ev_ring, el_count, ch_num) \
-> -	{					\
-> -		.num_elements = el_count,	\
-> -		.irq_moderation_ms = 1,		\
-> -		.irq = (ev_ring) + 1,		\
-> -		.priority = 1,			\
-> -		.mode = MHI_DB_BRST_DISABLE,	\
-> -		.data_type = MHI_ER_DATA,	\
-> -		.hardware_event = true,		\
-> -		.client_managed = false,	\
-> -		.offload_channel = false,	\
-> -		.channel = ch_num,		\
-> +	{						\
-> +		.num_elements = el_count,		\
-> +		.irq_moderation_ms = 1,			\
-> +		.irq = (ev_ring) + 1,			\
-> +		.priority = MHI_ER_PRIORITY_DEFAULT,	\
-> +		.mode = MHI_DB_BRST_DISABLE,		\
-> +		.data_type = MHI_ER_DATA,		\
-> +		.hardware_event = true,			\
-> +		.client_managed = false,		\
-> +		.offload_channel = false,		\
-> +		.channel = ch_num,			\
->  	}
->  
->  static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = {
-> diff --git a/drivers/net/wireless/ath/ath11k/mhi.c b/drivers/net/wireless/ath/ath11k/mhi.c
-> index 27b394d..b7864fc 100644
-> --- a/drivers/net/wireless/ath/ath11k/mhi.c
-> +++ b/drivers/net/wireless/ath/ath11k/mhi.c
-> @@ -86,7 +86,7 @@ static struct mhi_event_config ath11k_mhi_events_qca6390[] = {
->  		.irq_moderation_ms = 1,
->  		.irq = 2,
->  		.mode = MHI_DB_BRST_DISABLE,
-> -		.priority = 1,
-> +		.priority = MHI_ER_PRIORITY_DEFAULT,
->  		.hardware_event = false,
->  		.client_managed = false,
->  		.offload_channel = false,
-> @@ -179,7 +179,7 @@ static struct mhi_event_config ath11k_mhi_events_qcn9074[] = {
->  		.irq_moderation_ms = 1,
->  		.irq = 2,
->  		.mode = MHI_DB_BRST_DISABLE,
-> -		.priority = 1,
-> +		.priority = MHI_ER_PRIORITY_DEFAULT,
->  		.hardware_event = false,
->  		.client_managed = false,
->  		.offload_channel = false,
-> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-> index 86cea52..3e92e85 100644
-> --- a/include/linux/mhi.h
-> +++ b/include/linux/mhi.h
-> @@ -198,6 +198,16 @@ enum mhi_er_data_type {
->  };
->  
->  /**
-> + * enum mhi_er_priority - Event ring processing priority
-> + * @MHI_ER_PRIORITY_DEFAULT: processed by regular tasklet
-> + * @MHI_ER_PRIORITY_HI: processed by high priority tasklet
-> + */
-> +enum mhi_er_priority {
-> +	MHI_ER_PRIORITY_DEFAULT,
-> +	MHI_ER_PRIORITY_HI,
-> +};
-> +
-> +/**
->   * enum mhi_db_brst_mode - Doorbell mode
->   * @MHI_DB_BRST_DISABLE: Burst mode disable
->   * @MHI_DB_BRST_ENABLE: Burst mode enable
-> @@ -250,7 +260,7 @@ struct mhi_channel_config {
->   * @irq_moderation_ms: Delay irq for additional events to be aggregated
->   * @irq: IRQ associated with this ring
->   * @channel: Dedicated channel number. U32_MAX indicates a non-dedicated ring
-> - * @priority: Priority of this ring. Use 1 for now
-> + * @priority: Processing priority of this ring.
->   * @mode: Doorbell mode
->   * @data_type: Type of data this ring will process
->   * @hardware_event: This ring is associated with hardware channels
-> @@ -262,7 +272,7 @@ struct mhi_event_config {
->  	u32 irq_moderation_ms;
->  	u32 irq;
->  	u32 channel;
-> -	u32 priority;
-> +	enum mhi_er_priority priority;
->  	enum mhi_db_brst_mode mode;
->  	enum mhi_er_data_type data_type;
->  	bool hardware_event;
+>  static int get_nr_avail_ring_elements(struct mhi_controller *mhi_cntrl,
 > -- 
 > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 > a Linux Foundation Collaborative Project
