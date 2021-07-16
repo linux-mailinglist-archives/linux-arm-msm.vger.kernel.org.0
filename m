@@ -2,380 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C77E83CBBCB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jul 2021 20:22:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 334B43CBC86
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 16 Jul 2021 21:27:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231803AbhGPSZk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jul 2021 14:25:40 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:36420 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229803AbhGPSZj (ORCPT
+        id S232895AbhGPTav (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 16 Jul 2021 15:30:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53768 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232885AbhGPTau (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jul 2021 14:25:39 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1626459764; h=Message-ID: References: In-Reply-To: Reply-To:
- Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=fgE5HNDZXrNY5Z1iPLufE0hKUwpky7zidYtgoFc/QP8=;
- b=bnOBuJjHEbC//pM1UIagTVSDwm9j1Z7ouoWyTnR9//glhMl9gTKY//YkhSAqjmX3uRDHn1I1
- MmXImeaqUEyqUh83mjSMu10JaCEUqAMPIJgSEmLSp6K8trlH8tl1U9NC4uN90I+pW2uKchI2
- +SiHN3I8rsiwtUjI21jiVH+H1cI=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 60f1ce724815712f3a68f49f (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 16 Jul 2021 18:22:42
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C4C9EC433D3; Fri, 16 Jul 2021 18:22:41 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CC3FDC43460;
-        Fri, 16 Jul 2021 18:22:37 +0000 (UTC)
+        Fri, 16 Jul 2021 15:30:50 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BDF72C06175F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jul 2021 12:27:54 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id t4-20020a05683014c4b02904cd671b911bso2921152otq.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jul 2021 12:27:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=WvfR1EWSjDcJ24IvuaATgTh4IU7RndSDBvf6tZ6dESk=;
+        b=ZGYrMn2K0Zen2/chitsaSiJybVqzxLtV7eGnqeJEXBnSeiFR4Eoowli7W6TIDTjT66
+         px1T2IThviECAxK3vJhbUqdEwZPgaFL4sVn43I6UeG9M4ILbA3leE+/BFILEKqjaXdH9
+         Gb+9juv4u4OUVaWRtRpyeCOYSh7WA9v88d8C8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=WvfR1EWSjDcJ24IvuaATgTh4IU7RndSDBvf6tZ6dESk=;
+        b=sU+wPu2sRiuQPHCtjdA7V6cgCm4AnvkZMPqhK9I0jdJXhdN4YnijlkF21MPmY/qFtk
+         Tddq+KOLM97l085vO4T/4YVAQKmNTd+/JMcTU8aTdUhFWUdV9hg6LTJFL8EkbvFg8w7S
+         4KsAdWYkZDrmRUOMQkCSMfRFCYLRFFustrGORzOhmKi5fYSqYYqDNzc2AUnHY1oFTNWC
+         CZCUMUuwa1ZMGuxpaGpF2P4v43VoUDulvVh2IBg7Lq4Az45YNVaDRRlKtgwX7KKCQWMQ
+         4vvSMNaE2frpQanJtlI7aZ/UOqd+CPyquhRNtEaKgMkaepLsrAIiYKz0mGIw+B0UleMf
+         RGgQ==
+X-Gm-Message-State: AOAM532YzytJhQN0zTk3XX+2bKIokquW7KKW8YSYFa3p3BmYL5XuOXK9
+        oQDwj6uhIDIOLg2FXn17hOBBp6nVICUozlfRWiAmSQ==
+X-Google-Smtp-Source: ABdhPJybePdTQVheSU7I4BGrZN5KWLlkqMofOQCp3PADsNt5bK8OYflJN4jUdORZRMfwv2tvQMtdZYqRafi3L6wNdqA=
+X-Received: by 2002:a9d:8c7:: with SMTP id 65mr9472592otf.25.1626463674176;
+ Fri, 16 Jul 2021 12:27:54 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 16 Jul 2021 21:27:53 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 16 Jul 2021 11:22:37 -0700
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        kvalo@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v5] bus: mhi: core: Add support for processing priority of
- event ring
-Organization: Qualcomm Innovation Center, Inc.
-Reply-To: bbhatt@codeaurora.org
-Mail-Reply-To: bbhatt@codeaurora.org
-In-Reply-To: <20210716114926.GH3323@workstation>
-References: <1624641728-3886-1-git-send-email-bbhatt@codeaurora.org>
- <20210716114926.GH3323@workstation>
-Message-ID: <9300cf49a498521f471d6106131bd675@codeaurora.org>
-X-Sender: bbhatt@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+In-Reply-To: <1626443927-32028-2-git-send-email-pmaliset@codeaurora.org>
+References: <1626443927-32028-1-git-send-email-pmaliset@codeaurora.org> <1626443927-32028-2-git-send-email-pmaliset@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Fri, 16 Jul 2021 21:27:53 +0200
+Message-ID: <CAE-0n51g66F7A7Kuz+GQwnYfEX_BXKQR7YD=4PhJAEGkBu6AsQ@mail.gmail.com>
+Subject: Re: [PATCH v4 1/4] dt-bindings: pci: qcom: Document PCIe bindings for SC720
+To:     Prasad Malisetty <pmaliset@codeaurora.org>, agross@kernel.org,
+        bhelgaas@google.com, bjorn.andersson@linaro.org,
+        lorenzo.pieralisi@arm.com, robh+dt@kernel.org, svarbanov@mm-sol.com
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dianders@chromium.org, mka@chromium.org, vbadigan@codeaurora.org,
+        sallenki@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mani,
+Quoting Prasad Malisetty (2021-07-16 06:58:44)
+> Document the PCIe DT bindings for SC7280 SoC.The PCIe IP is similar
+> to the one used on SM8250. Add the compatible for SC7280.
+>
+> Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
+> Acked-by: Rob Herring <robh@kernel.org>
+> ---
 
-On 2021-07-16 04:49 AM, Manivannan Sadhasivam wrote:
-> On Fri, Jun 25, 2021 at 10:22:08AM -0700, Bhaumik Bhatt wrote:
->> From: Hemant Kumar <hemantk@codeaurora.org>
->> 
->> Event ring priorities are currently set to 1 and are unused.
->> Default processing priority for event rings is set to regular
->> tasklet. Controllers can choose to use high priority tasklet
->> scheduling for certain event rings critical for processing such
->> as ones transporting control information if they wish to avoid
->> system scheduling delays for those packets. In order to support
->> these use cases, allow controllers to set event ring priority to
->> high.
->> 
-> 
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> 
-> Just curious, what are the event rings you are going to make as high
-> priority? If you are going to do that for existing controllers, please
-> submit a patch now itself.
-> 
-> Thanks,
-> Mani
-> 
-Idea for this patch came from 914b72a6948b ("bus: mhi: Wait for M2 state 
-during system resume").
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
-If WLAN ath11k controller driver wants to avoid the scenario mentioned 
-in
-the above patch, it will help them to have a high priority for their 
-dedicated
-control events ring.
-
-I would defer to Kalle and others in ath11k, whether or not they are OK 
-to take that route.
-as an update to priority will just help return from resume faster.
-It will also depend on system load/reproducibility rate of the scenario.
-
-I can provide a patch for them to review/test since I do not have the 
-setup for it.
-
->> Signed-off-by: Hemant Kumar <hemantk@codeaurora.org>
->> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
->> ---
->> v5:
->> -Add controller changes and enable usage of event ring configuration 
->> priorities
->> -Fix nitpick, use high instead of hi in kdoc
->> 
->> v4:
->> -Update fixed priority for all events to default to fix bug in v3
->> -Supply changelog
->> 
->> v3:
->> -Revert to enum approach
->> -Use 0 as default and 1 as high in enum
->> -Do not use config values for event rings
->> 
->> v2:
->> -Use boolean approach for easy maintenance as controllers do not need 
->> updates
->> 
->> 
->> 
->>  drivers/bus/mhi/core/init.c           |  3 +-
->>  drivers/bus/mhi/core/internal.h       |  2 +-
->>  drivers/bus/mhi/core/main.c           | 19 ++++++++--
->>  drivers/bus/mhi/pci_generic.c         | 66 
->> +++++++++++++++++------------------
->>  drivers/net/wireless/ath/ath11k/mhi.c |  4 +--
->>  include/linux/mhi.h                   | 14 ++++++--
->>  6 files changed, 65 insertions(+), 43 deletions(-)
->> 
->> diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
->> index c81b377..4446760 100644
->> --- a/drivers/bus/mhi/core/init.c
->> +++ b/drivers/bus/mhi/core/init.c
->> @@ -673,8 +673,7 @@ static int parse_ev_cfg(struct mhi_controller 
->> *mhi_cntrl,
->>  				&mhi_cntrl->mhi_chan[mhi_event->chan];
->>  		}
->> 
->> -		/* Priority is fixed to 1 for now */
->> -		mhi_event->priority = 1;
->> +		mhi_event->priority = event_cfg->priority;
->> 
->>  		mhi_event->db_cfg.brstmode = event_cfg->mode;
->>  		if (MHI_INVALID_BRSTMODE(mhi_event->db_cfg.brstmode))
->> diff --git a/drivers/bus/mhi/core/internal.h 
->> b/drivers/bus/mhi/core/internal.h
->> index 672052f..666e102 100644
->> --- a/drivers/bus/mhi/core/internal.h
->> +++ b/drivers/bus/mhi/core/internal.h
->> @@ -535,7 +535,7 @@ struct mhi_event {
->>  	u32 intmod;
->>  	u32 irq;
->>  	int chan; /* this event ring is dedicated to a channel (optional) */
->> -	u32 priority;
->> +	enum mhi_er_priority priority;
->>  	enum mhi_er_data_type data_type;
->>  	struct mhi_ring ring;
->>  	struct db_cfg db_cfg;
->> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
->> index 8ac73f9..bfc9776 100644
->> --- a/drivers/bus/mhi/core/main.c
->> +++ b/drivers/bus/mhi/core/main.c
->> @@ -425,10 +425,11 @@ void mhi_create_devices(struct mhi_controller 
->> *mhi_cntrl)
->>  	}
->>  }
->> 
->> -irqreturn_t mhi_irq_handler(int irq_number, void *dev)
->> +irqreturn_t mhi_irq_handler(int irq_number, void *priv)
->>  {
->> -	struct mhi_event *mhi_event = dev;
->> +	struct mhi_event *mhi_event = priv;
->>  	struct mhi_controller *mhi_cntrl = mhi_event->mhi_cntrl;
->> +	struct device *dev = &mhi_cntrl->mhi_dev->dev;
->>  	struct mhi_event_ctxt *er_ctxt =
->>  		&mhi_cntrl->mhi_ctxt->er_ctxt[mhi_event->er_index];
->>  	struct mhi_ring *ev_ring = &mhi_event->ring;
->> @@ -454,8 +455,20 @@ irqreturn_t mhi_irq_handler(int irq_number, void 
->> *dev)
->> 
->>  		if (mhi_dev)
->>  			mhi_notify(mhi_dev, MHI_CB_PENDING_DATA);
->> -	} else {
->> +
->> +		return IRQ_HANDLED;
->> +	}
->> +
->> +	switch (mhi_event->priority) {
->> +	case MHI_ER_PRIORITY_HI:
->> +		tasklet_hi_schedule(&mhi_event->task);
->> +		break;
->> +	case MHI_ER_PRIORITY_DEFAULT:
->>  		tasklet_schedule(&mhi_event->task);
->> +		break;
->> +	default:
->> +		dev_err(dev, "Skip event of unknown priority\n");
->> +		break;
->>  	}
->> 
->>  	return IRQ_HANDLED;
->> diff --git a/drivers/bus/mhi/pci_generic.c 
->> b/drivers/bus/mhi/pci_generic.c
->> index 31360a2..5886547 100644
->> --- a/drivers/bus/mhi/pci_generic.c
->> +++ b/drivers/bus/mhi/pci_generic.c
->> @@ -74,17 +74,17 @@ struct mhi_pci_dev_info {
->>  		.doorbell_mode_switch = false,		\
->>  	}
->> 
->> -#define MHI_EVENT_CONFIG_CTRL(ev_ring, el_count) \
->> -	{					\
->> -		.num_elements = el_count,	\
->> -		.irq_moderation_ms = 0,		\
->> -		.irq = (ev_ring) + 1,		\
->> -		.priority = 1,			\
->> -		.mode = MHI_DB_BRST_DISABLE,	\
->> -		.data_type = MHI_ER_CTRL,	\
->> -		.hardware_event = false,	\
->> -		.client_managed = false,	\
->> -		.offload_channel = false,	\
->> +#define MHI_EVENT_CONFIG_CTRL(ev_ring, el_count)	\
->> +	{						\
->> +		.num_elements = el_count,		\
->> +		.irq_moderation_ms = 0,			\
->> +		.irq = (ev_ring) + 1,			\
->> +		.priority = MHI_ER_PRIORITY_DEFAULT,	\
->> +		.mode = MHI_DB_BRST_DISABLE,		\
->> +		.data_type = MHI_ER_CTRL,		\
->> +		.hardware_event = false,		\
->> +		.client_managed = false,		\
->> +		.offload_channel = false,		\
->>  	}
->> 
->>  #define MHI_CHANNEL_CONFIG_HW_UL(ch_num, ch_name, el_count, ev_ring) 
->> \
->> @@ -177,31 +177,31 @@ struct mhi_pci_dev_info {
->>  		.doorbell_mode_switch = false,		\
->>  	}
->> 
->> -#define MHI_EVENT_CONFIG_DATA(ev_ring, el_count) \
->> -	{					\
->> -		.num_elements = el_count,	\
->> -		.irq_moderation_ms = 5,		\
->> -		.irq = (ev_ring) + 1,		\
->> -		.priority = 1,			\
->> -		.mode = MHI_DB_BRST_DISABLE,	\
->> -		.data_type = MHI_ER_DATA,	\
->> -		.hardware_event = false,	\
->> -		.client_managed = false,	\
->> -		.offload_channel = false,	\
->> +#define MHI_EVENT_CONFIG_DATA(ev_ring, el_count)	\
->> +	{						\
->> +		.num_elements = el_count,		\
->> +		.irq_moderation_ms = 5,			\
->> +		.irq = (ev_ring) + 1,			\
->> +		.priority = MHI_ER_PRIORITY_DEFAULT,	\
->> +		.mode = MHI_DB_BRST_DISABLE,		\
->> +		.data_type = MHI_ER_DATA,		\
->> +		.hardware_event = false,		\
->> +		.client_managed = false,		\
->> +		.offload_channel = false,		\
->>  	}
->> 
->>  #define MHI_EVENT_CONFIG_HW_DATA(ev_ring, el_count, ch_num) \
->> -	{					\
->> -		.num_elements = el_count,	\
->> -		.irq_moderation_ms = 1,		\
->> -		.irq = (ev_ring) + 1,		\
->> -		.priority = 1,			\
->> -		.mode = MHI_DB_BRST_DISABLE,	\
->> -		.data_type = MHI_ER_DATA,	\
->> -		.hardware_event = true,		\
->> -		.client_managed = false,	\
->> -		.offload_channel = false,	\
->> -		.channel = ch_num,		\
->> +	{						\
->> +		.num_elements = el_count,		\
->> +		.irq_moderation_ms = 1,			\
->> +		.irq = (ev_ring) + 1,			\
->> +		.priority = MHI_ER_PRIORITY_DEFAULT,	\
->> +		.mode = MHI_DB_BRST_DISABLE,		\
->> +		.data_type = MHI_ER_DATA,		\
->> +		.hardware_event = true,			\
->> +		.client_managed = false,		\
->> +		.offload_channel = false,		\
->> +		.channel = ch_num,			\
->>  	}
->> 
->>  static const struct mhi_channel_config modem_qcom_v1_mhi_channels[] = 
->> {
->> diff --git a/drivers/net/wireless/ath/ath11k/mhi.c 
->> b/drivers/net/wireless/ath/ath11k/mhi.c
->> index 27b394d..b7864fc 100644
->> --- a/drivers/net/wireless/ath/ath11k/mhi.c
->> +++ b/drivers/net/wireless/ath/ath11k/mhi.c
->> @@ -86,7 +86,7 @@ static struct mhi_event_config 
->> ath11k_mhi_events_qca6390[] = {
->>  		.irq_moderation_ms = 1,
->>  		.irq = 2,
->>  		.mode = MHI_DB_BRST_DISABLE,
->> -		.priority = 1,
->> +		.priority = MHI_ER_PRIORITY_DEFAULT,
->>  		.hardware_event = false,
->>  		.client_managed = false,
->>  		.offload_channel = false,
->> @@ -179,7 +179,7 @@ static struct mhi_event_config 
->> ath11k_mhi_events_qcn9074[] = {
->>  		.irq_moderation_ms = 1,
->>  		.irq = 2,
->>  		.mode = MHI_DB_BRST_DISABLE,
->> -		.priority = 1,
->> +		.priority = MHI_ER_PRIORITY_DEFAULT,
->>  		.hardware_event = false,
->>  		.client_managed = false,
->>  		.offload_channel = false,
->> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
->> index 86cea52..3e92e85 100644
->> --- a/include/linux/mhi.h
->> +++ b/include/linux/mhi.h
->> @@ -198,6 +198,16 @@ enum mhi_er_data_type {
->>  };
->> 
->>  /**
->> + * enum mhi_er_priority - Event ring processing priority
->> + * @MHI_ER_PRIORITY_DEFAULT: processed by regular tasklet
->> + * @MHI_ER_PRIORITY_HI: processed by high priority tasklet
->> + */
->> +enum mhi_er_priority {
->> +	MHI_ER_PRIORITY_DEFAULT,
->> +	MHI_ER_PRIORITY_HI,
->> +};
->> +
->> +/**
->>   * enum mhi_db_brst_mode - Doorbell mode
->>   * @MHI_DB_BRST_DISABLE: Burst mode disable
->>   * @MHI_DB_BRST_ENABLE: Burst mode enable
->> @@ -250,7 +260,7 @@ struct mhi_channel_config {
->>   * @irq_moderation_ms: Delay irq for additional events to be 
->> aggregated
->>   * @irq: IRQ associated with this ring
->>   * @channel: Dedicated channel number. U32_MAX indicates a 
->> non-dedicated ring
->> - * @priority: Priority of this ring. Use 1 for now
->> + * @priority: Processing priority of this ring.
->>   * @mode: Doorbell mode
->>   * @data_type: Type of data this ring will process
->>   * @hardware_event: This ring is associated with hardware channels
->> @@ -262,7 +272,7 @@ struct mhi_event_config {
->>  	u32 irq_moderation_ms;
->>  	u32 irq;
->>  	u32 channel;
->> -	u32 priority;
->> +	enum mhi_er_priority priority;
->>  	enum mhi_db_brst_mode mode;
->>  	enum mhi_er_data_type data_type;
->>  	bool hardware_event;
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
->> Forum,
->> a Linux Foundation Collaborative Project
->> 
-
-Thanks,
-Bhaumik
----
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum,
-a Linux Foundation Collaborative Project
+Any chance this file can be converted to YAML?
