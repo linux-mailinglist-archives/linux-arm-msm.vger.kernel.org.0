@@ -2,437 +2,277 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7796F3CC1AF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jul 2021 09:33:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E2D203CC345
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jul 2021 14:35:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231228AbhGQHgl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Jul 2021 03:36:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43458 "EHLO
+        id S233680AbhGQMiZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Jul 2021 08:38:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230419AbhGQHgk (ORCPT
+        with ESMTP id S233754AbhGQMiZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Jul 2021 03:36:40 -0400
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5C56C06175F
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jul 2021 00:33:44 -0700 (PDT)
-Received: by mail-qk1-x729.google.com with SMTP id q190so11181274qkd.2
-        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jul 2021 00:33:44 -0700 (PDT)
+        Sat, 17 Jul 2021 08:38:25 -0400
+Received: from mail-lj1-x236.google.com (mail-lj1-x236.google.com [IPv6:2a00:1450:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE1D4C06175F
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jul 2021 05:35:25 -0700 (PDT)
+Received: by mail-lj1-x236.google.com with SMTP id bn5so17573635ljb.10
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jul 2021 05:35:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=azMEpLf7aWNZhUtboA/PAANf5wrHSqPwOi1720U3HMA=;
-        b=qifAS0gWjKt872h30Y8rv2xtydbJ+y2/r/KDHjnuVsptxsdQ6Zyjq/7dlnZzQvqLcy
-         GFwPdLt3xv4aQNfoSw0ofMQCDIJBN6OCMlWjdBsTV4HHBavPgvjzqK4lUzggqFeiVZye
-         GCtzjMyzkAB9BK19oXFgRoRUX3K6nnRhjR1V+tm8vgp3PhbeYDzWTiOjt9PtTMR2l49A
-         ortMsTb8nbRKQEY3DZyp38SgyDGs75Z3Xown4qBzeK4RLvggSCuTLA2CD9fDpW90ckJK
-         AjbRdTOVxka+QPXoX4lD04u2y1BocLo538pjK2hKoE6jtIk4ulVEkYBj5gj9rVguDZZa
-         4HJw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=ia1xzWT4KhGSv8qCQehEQkQNFLQTfOEQwhMS9rF8Ybg=;
+        b=UFoF43Obg/+V0kUhjLntmeybI2F0TeZ+KeVSrqi6nbKk8h2RRA6d7AhFVdYXJ18By7
+         7StDDT1kt+XaUJg8Q4ufeCC2gQ0g+IODonCLKgz/jZmtNXsXzlvftwfqCxOlnOLGmP3k
+         6b4xdVNEneDY+K3F5AsYnKM2LYYvXnWvULkSkgRVEoTpw9vtLQMJCnOjqWrY4ojBgxCk
+         Sr5eLXiKxJLzT63YAOHadXqv+BgowvmzMHngtq5SsVTBIItC+ErLHd8QclFHFu396Mue
+         2iZ2LLB82j58Hz4fCBa+Qfv6nFpdJ5tItE4GDNqNzQLZlFFFGulAM7nqgI3FTtmjnm1g
+         OjPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=azMEpLf7aWNZhUtboA/PAANf5wrHSqPwOi1720U3HMA=;
-        b=QlA3UYn++uoYdgjfmpVpoJbIxLQDcxFmAaQf4NVDoyKzJoGArRHkXwDjfRWBL14xbx
-         V/zUWos6Oqc0sAyiYN6Q3OjLJSvz+CDlSfxY/wewkWlEbeWBEswdBwqoqA+qCPtiQKLh
-         8ExwRA/S0m1HoHiFiFuAsIiTW5O68eLLueA0yiAUdiLIwdDv6mSroYCvwBapTf90+oDU
-         LlwuyGyKx8gvs1gYgKOST165hItE6n6W9IYPAEH/AvwqnabMwbP/EojcXjK4pYntPDRU
-         ZhjlGFr3LZlV+NKhmcWbdfgxNwaszqFkYb2T6BGVugB0xni6bcP+zd62FdalwnZpFjkx
-         e0zw==
-X-Gm-Message-State: AOAM533Y0tfb7+6gBl6WsaQxYap38Wcb2K2T6J3g+Fd72ESe3Vi8wXa8
-        /fGUBGTgdwtRRpVonDtzqbjMFX0QJUe3ZIznE6WPIw==
-X-Google-Smtp-Source: ABdhPJxTsmNohBWRkHmue6ROVCTM07S7/HjA3rW1NDPpfPaNgAietFiK2+kN2vezU7wkSDb/IWLoVIpMLPyNMg/SnMc=
-X-Received: by 2002:ae9:e309:: with SMTP id v9mr13989354qkf.138.1626507223759;
- Sat, 17 Jul 2021 00:33:43 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210710140130.1176657-1-dmitry.baryshkov@linaro.org>
- <20210710140130.1176657-3-dmitry.baryshkov@linaro.org> <YPIVwgAjb/JdTowQ@yoga>
-In-Reply-To: <YPIVwgAjb/JdTowQ@yoga>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=ia1xzWT4KhGSv8qCQehEQkQNFLQTfOEQwhMS9rF8Ybg=;
+        b=YnwKnvHCjGAOFj99tyQ6V1UbSaJmDHJhfnqKecjRGBIR7XUh0QqGF53qwrjwOsaGcY
+         LgFq1ym0hBp/8tqDQjKykq57YJ/ixTwbqzDxDFeOPYRkP0ysNt3ITKusiyx2b0mJ/QQL
+         2hwVAUKMTMSBZTel38xdI8FBcxychrLGK0LGPN6kNnatQZZQJmTWawh9QM5uGxJ2x4OP
+         lYuActpgO0dcGKOkkx9rbVGkKC9uUmtmJe9Ck6Z5VDEdfNoOizoX90fhACLITe9BK5cH
+         faUpjS5JT3sHpcTTrP2hjTBBHV07zIzzKhh3WhqbotHJobhO2vsIwlbLf+8bCgeS12lZ
+         /qFw==
+X-Gm-Message-State: AOAM532hXxotPtC8IHt8SLZBkUxJRcEHeXx9mCifHYubYfSKTu/GPrlj
+        QNPU9MnZgQGDBfQvfV1a29JpnQ==
+X-Google-Smtp-Source: ABdhPJzVYmn5UUThlgtbQptZUBstx2oGZjaG6P4YYYLporKgItFUqEyHmRXYoJGi0UcRjtGAOKDmig==
+X-Received: by 2002:a05:651c:547:: with SMTP id q7mr13307669ljp.509.1626525324181;
+        Sat, 17 Jul 2021 05:35:24 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id d8sm859027lfi.129.2021.07.17.05.35.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 17 Jul 2021 05:35:23 -0700 (PDT)
+Subject: Re: [PATCH v3 3/7] drm/msm/dpu: support setting up two independent
+ DSI connectors
+To:     abhinavk@codeaurora.org
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+References: <20210710222005.1334734-1-dmitry.baryshkov@linaro.org>
+ <20210710222005.1334734-4-dmitry.baryshkov@linaro.org>
+ <2b7677a4acfa1ab8ba5d67a69fea9e07@codeaurora.org>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Sat, 17 Jul 2021 10:33:32 +0300
-Message-ID: <CAA8EJpood3wOGdS-uK=E0gGg17V-GinO-ypoGggbmanK6H9KaA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] clk: qcom: move pm_clk functionality into common code
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Message-ID: <f92eb756-bb34-38fb-9b2b-4669e675730f@linaro.org>
+Date:   Sat, 17 Jul 2021 15:35:21 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <2b7677a4acfa1ab8ba5d67a69fea9e07@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 17 Jul 2021 at 02:27, Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Sat 10 Jul 09:01 CDT 2021, Dmitry Baryshkov wrote:
->
-> > Several Qualcomm clock controller drivers use pm_clk functionality.
-> > Instead of having common code in all the drivers, move the pm_clk
-> > handling to the qcom_cc_map/qcom_cc_probe.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  drivers/clk/qcom/camcc-sc7180.c       |  44 ++--------
-> >  drivers/clk/qcom/common.c             | 113 +++++++++++++++++++++++---
-> >  drivers/clk/qcom/common.h             |   6 ++
-> >  drivers/clk/qcom/lpasscorecc-sc7180.c |  56 +++----------
-> >  drivers/clk/qcom/mss-sc7180.c         |  40 ++-------
-> >  drivers/clk/qcom/q6sstop-qcs404.c     |  36 ++------
-> >  drivers/clk/qcom/turingcc-qcs404.c    |  34 ++------
-> >  7 files changed, 142 insertions(+), 187 deletions(-)
-> >
-> > diff --git a/drivers/clk/qcom/camcc-sc7180.c b/drivers/clk/qcom/camcc-sc7180.c
-> > index 9bcf2f8ed4de..1c6c1b7fab51 100644
-> > --- a/drivers/clk/qcom/camcc-sc7180.c
-> > +++ b/drivers/clk/qcom/camcc-sc7180.c
-> > @@ -9,7 +9,6 @@
-> >  #include <linux/of.h>
-> >  #include <linux/of_device.h>
-> >  #include <linux/pm_clock.h>
-> > -#include <linux/pm_runtime.h>
-> >  #include <linux/regmap.h>
-> >
-> >  #include <dt-bindings/clock/qcom,camcc-sc7180.h>
-> > @@ -1631,8 +1630,12 @@ static const struct regmap_config cam_cc_sc7180_regmap_config = {
-> >       .fast_io = true,
-> >  };
-> >
-> > +static const char * const cam_cc_sc7180_pm_clks[] = { "xo", "iface" };
-> > +
-> >  static const struct qcom_cc_desc cam_cc_sc7180_desc = {
-> >       .config = &cam_cc_sc7180_regmap_config,
-> > +     .pm_clks = cam_cc_sc7180_pm_clks,
-> > +     .num_pm_clks = ARRAY_SIZE(cam_cc_sc7180_pm_clks),
-> >       .clk_hws = cam_cc_sc7180_hws,
-> >       .num_clk_hws = ARRAY_SIZE(cam_cc_sc7180_hws),
-> >       .clks = cam_cc_sc7180_clocks,
-> > @@ -1652,33 +1655,9 @@ static int cam_cc_sc7180_probe(struct platform_device *pdev)
-> >       struct regmap *regmap;
-> >       int ret;
-> >
-> > -     pm_runtime_enable(&pdev->dev);
-> > -     ret = pm_clk_create(&pdev->dev);
-> > -     if (ret < 0)
-> > -             return ret;
-> > -
-> > -     ret = pm_clk_add(&pdev->dev, "xo");
-> > -     if (ret < 0) {
-> > -             dev_err(&pdev->dev, "Failed to acquire XO clock\n");
-> > -             goto disable_pm_runtime;
-> > -     }
-> > -
-> > -     ret = pm_clk_add(&pdev->dev, "iface");
-> > -     if (ret < 0) {
-> > -             dev_err(&pdev->dev, "Failed to acquire iface clock\n");
-> > -             goto disable_pm_runtime;
-> > -     }
-> > -
-> > -     ret = pm_runtime_get(&pdev->dev);
-> > -     if (ret)
-> > -             goto destroy_pm_clk;
-> > -
-> >       regmap = qcom_cc_map(pdev, &cam_cc_sc7180_desc);
-> > -     if (IS_ERR(regmap)) {
-> > -             ret = PTR_ERR(regmap);
-> > -             pm_runtime_put(&pdev->dev);
-> > -             goto destroy_pm_clk;
-> > -     }
-> > +     if (IS_ERR(regmap))
-> > +             return PTR_ERR(regmap);
-> >
-> >       clk_fabia_pll_configure(&cam_cc_pll0, regmap, &cam_cc_pll0_config);
-> >       clk_fabia_pll_configure(&cam_cc_pll1, regmap, &cam_cc_pll1_config);
-> > @@ -1686,21 +1665,12 @@ static int cam_cc_sc7180_probe(struct platform_device *pdev)
-> >       clk_fabia_pll_configure(&cam_cc_pll3, regmap, &cam_cc_pll3_config);
-> >
-> >       ret = qcom_cc_really_probe(pdev, &cam_cc_sc7180_desc, regmap);
-> > -     pm_runtime_put(&pdev->dev);
-> >       if (ret < 0) {
-> >               dev_err(&pdev->dev, "Failed to register CAM CC clocks\n");
-> > -             goto destroy_pm_clk;
-> > +             return 0;
-> >       }
-> >
-> >       return 0;
-> > -
-> > -destroy_pm_clk:
-> > -     pm_clk_destroy(&pdev->dev);
-> > -
-> > -disable_pm_runtime:
-> > -     pm_runtime_disable(&pdev->dev);
-> > -
-> > -     return ret;
-> >  }
-> >
-> >  static const struct dev_pm_ops cam_cc_pm_ops = {
-> > diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
-> > index ed7c516a597a..e1d34561cab7 100644
-> > --- a/drivers/clk/qcom/common.c
-> > +++ b/drivers/clk/qcom/common.c
-> > @@ -7,6 +7,8 @@
-> >  #include <linux/module.h>
-> >  #include <linux/regmap.h>
-> >  #include <linux/platform_device.h>
-> > +#include <linux/pm_clock.h>
-> > +#include <linux/pm_runtime.h>
-> >  #include <linux/clk-provider.h>
-> >  #include <linux/reset-controller.h>
-> >  #include <linux/of.h>
-> > @@ -69,12 +71,86 @@ int qcom_find_src_index(struct clk_hw *hw, const struct parent_map *map, u8 src)
-> >  }
-> >  EXPORT_SYMBOL_GPL(qcom_find_src_index);
-> >
-> > +static void qcom_cc_pm_runtime_disable(void *data)
-> > +{
-> > +     pm_runtime_disable(data);
-> > +}
-> > +
-> > +static void qcom_cc_pm_clk_destroy(void *data)
-> > +{
-> > +     pm_clk_destroy(data);
-> > +}
-> > +
-> > +static int
-> > +qcom_cc_add_pm_clks(struct platform_device *pdev, const struct qcom_cc_desc *desc)
-> > +{
-> > +     struct device *dev = &pdev->dev;
-> > +     int ret;
-> > +     int i;
-> > +
-> > +     if (!desc->num_pm_clks)
-> > +             return 0;
-> > +
-> > +     ret = pm_clk_create(dev);
-> > +     if (ret < 0)
-> > +             return ret;
-> > +     ret = devm_add_action_or_reset(dev, qcom_cc_pm_clk_destroy, dev);
-> > +     if (ret)
-> > +             return ret;
-> > +
-> > +     for (i = 0; i < desc->num_pm_clks; i++) {
-> > +             ret = pm_clk_add(dev, desc->pm_clks[i]);
-> > +             if (ret < 0) {
-> > +                     dev_err(dev, "Failed to acquire %s pm clk\n", desc->pm_clks[i]);
-> > +                     return ret;
-> > +             }
-> > +     }
-> > +
-> > +     return 0;
-> > +}
-> > +
-> > +static int
-> > +qcom_cc_manage_pm(struct platform_device *pdev, const struct qcom_cc_desc *desc)
-> > +{
-> > +     struct device *dev = &pdev->dev;
-> > +     int ret;
-> > +
-> > +     /* For now enable runtime PM only if we have PM clocks in use */
-> > +     if (desc->num_pm_clks && !pm_runtime_enabled(dev)) {
-> > +             pm_runtime_enable(dev);
-> > +
-> > +             ret = devm_add_action_or_reset(dev, qcom_cc_pm_runtime_disable, dev);
-> > +             if (ret)
-> > +                     return ret;
-> > +     }
-> > +
-> > +     ret = qcom_cc_add_pm_clks(pdev, desc);
-> > +     if (ret)
-> > +             return ret;
-> > +
-> > +     /* Other code might have enabled runtime PM, resume device here */
-> > +     if (pm_runtime_enabled(dev)) {
-> > +             ret = pm_runtime_get_sync(dev);
->
-> As I said previously, don't do this. Look at how clk_pm_runtime_get()
-> and clk_pm_runtime_put() are invoked throughout the clock framework.
+On 13/07/2021 00:15, abhinavk@codeaurora.org wrote:
+> On 2021-07-10 15:20, Dmitry Baryshkov wrote:
+>> Move setting up encoders from set_encoder_mode to
+>> _dpu_kms_initialize_dsi() / _dpu_kms_initialize_displayport(). This
+>> allows us to support not only "single DSI" and "bonded DSI" but also "two
+>> independent DSI" configurations. In future this would also help adding
+>> support for multiple DP connectors.
+>>
+> 
+> This looks quite neat now,so i am okay with this version of it:
+> 
+> Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
+> 
+> Just a suggestion, since we are only supporting two dsis so far, do we need
+> an extra variable to get the other DSI? Can't we just do priv->dsi[DSI_1]?
+> as usually DSI_0 is the master
 
-Please, check what I'm changing here. sc7180/qcs404 Do call
-pm_runtime_get/_put in the _probe function. Like most other drivers
-do. Do you dislike the pm_runtime_enabled() call? Or the idea of
-calling pm_runtime_get_foo()/_put_foo()? I don't think we can get w/o
-the latter.
+I still hope to fix "swap links in bonded DSI mode" (in other words DSI 
+0 being clock master, but driving right half of the screen) one day. 
+Thus I don't think we should enforce DSI_0/DSI_1 here.
 
-> At best this would be an optimization to ensure that the pm_runtime
-> state isn't toggled back and forth between every operation, but this is
-> typically not how we deal with that and this is certainly unrelated to
-> the rest of what the patch does.
->
-> > +             if (ret) {
-> > +                     pm_runtime_put_noidle(dev);
-> > +                     return ret;
-> > +             }
-> > +     }
-> > +
-> > +     return 0;
-> > +}
-> > +
-> >  static struct regmap *
-> >  qcom_cc_map_by_index(struct platform_device *pdev, const struct qcom_cc_desc *desc, int index)
->
-> I really don't like the idea of having a function with a name that
-> indicates that it's mapping hardware blocks to under the hood also play
-> pm_runtime.
->
-> Afaict the reason for this patch is to avoid having to sprinkle
-> pm_runtime_enable(), pm_clk_create(), pm_clk_destroy() and
-> pm_runtime_disable() in the various clock drivers that needs this.
->
-> But as I said previously, there's a lot of drivers in the kernel that
-> does exactly and only that, so there's definitely motivation to create
-> devm_pm_runtime_enable() and devm_pm_clk_create() and then go back and
-> clean up these and a lot of other drivers.
-
-I like the idea of these helpers. Will try adding the devres-managed
-helpers and using them from the qcom cc code. I will remove it from
-the qcom_cc_map().
-
->
-> Perhaps I'm overly optimistic about getting those interfaces landed, if
-> that's the case I would like to have some explicit
-> devres-pm_runtime_enable/pm_clk_create/pm_clk_add added in the common
-> code, rather than piggy backing the existing map function.
->
-> But either way, I would much rather see you land the subdomain setup in
-> gdsc_register(), the pm_runtime_enable/disable we need in the
-> dispcc-sm8250 and the pm_runtime_get()/put() we need in gdsc_init(),
-> gdsc_enable() and gdsc_disable() - before refactoring all this.
-
-Well, after you pointed me to the turingcc driver(and other pm-enabled
-qcom cc drivers), it was quite natural to rework this to come up with
-the code that would be common to qcs404, sc7180 and sm8250 in terms of
-setting up runtime pm. Otherwise we can land the sm8250 code and then
-have to rewrite it again to support both gdsc-subdomains and pm_clk
-usage.
-
->
-> >  {
-> >       void __iomem *base;
-> >       struct resource *res;
-> >       struct device *dev = &pdev->dev;
-> > +     int ret;
-> > +
-> > +     ret = qcom_cc_manage_pm(pdev, desc);
-> > +     if (ret)
-> > +             return ERR_PTR(ret);
-> >
-> >       res = platform_get_resource(pdev, IORESOURCE_MEM, index);
-> >       base = devm_ioremap_resource(dev, res);
-> > @@ -244,8 +320,10 @@ int qcom_cc_really_probe(struct platform_device *pdev,
-> >       struct clk_hw **clk_hws = desc->clk_hws;
-> >
-> >       cc = devm_kzalloc(dev, sizeof(*cc), GFP_KERNEL);
-> > -     if (!cc)
-> > -             return -ENOMEM;
-> > +     if (!cc) {
-> > +             ret = -ENOMEM;
-> > +             goto err;
-> > +     }
-> >
-> >       reset = &cc->reset;
-> >       reset->rcdev.of_node = dev->of_node;
-> > @@ -257,22 +335,25 @@ int qcom_cc_really_probe(struct platform_device *pdev,
-> >
-> >       ret = devm_reset_controller_register(dev, &reset->rcdev);
-> >       if (ret)
-> > -             return ret;
-> > +             goto err;
-> >
-> >       if (desc->gdscs && desc->num_gdscs) {
-> >               scd = devm_kzalloc(dev, sizeof(*scd), GFP_KERNEL);
-> > -             if (!scd)
-> > -                     return -ENOMEM;
-> > +             if (!scd) {
-> > +                     ret = -ENOMEM;
-> > +                     goto err;
-> > +             }
-> > +
-> >               scd->dev = dev;
-> >               scd->scs = desc->gdscs;
-> >               scd->num = desc->num_gdscs;
-> >               ret = gdsc_register(scd, &reset->rcdev, regmap);
-> >               if (ret)
-> > -                     return ret;
-> > +                     goto err;
-> >               ret = devm_add_action_or_reset(dev, qcom_cc_gdsc_unregister,
-> >                                              scd);
-> >               if (ret)
-> > -                     return ret;
-> > +                     goto err;
-> >       }
-> >
-> >       cc->rclks = rclks;
-> > @@ -283,7 +364,7 @@ int qcom_cc_really_probe(struct platform_device *pdev,
-> >       for (i = 0; i < num_clk_hws; i++) {
-> >               ret = devm_clk_hw_register(dev, clk_hws[i]);
-> >               if (ret)
-> > -                     return ret;
-> > +                     goto err;
-> >       }
-> >
-> >       for (i = 0; i < num_clks; i++) {
-> > @@ -292,14 +373,26 @@ int qcom_cc_really_probe(struct platform_device *pdev,
-> >
-> >               ret = devm_clk_register_regmap(dev, rclks[i]);
-> >               if (ret)
-> > -                     return ret;
-> > +                     goto err;
-> >       }
-> >
-> >       ret = devm_of_clk_add_hw_provider(dev, qcom_cc_clk_hw_get, cc);
-> >       if (ret)
-> > -             return ret;
-> > +             goto err;
-> > +
-> > +     if (pm_runtime_enabled(dev)) {
-> > +             /* for the LPASS on sc7180, which uses autosuspend */
-> > +             pm_runtime_mark_last_busy(dev);
-> > +             pm_runtime_put(dev);
-> > +     }
-> >
-> >       return 0;
-> > +
-> > +err:
-> > +     if (pm_runtime_enabled(dev))
-> > +             pm_runtime_put(dev);
-> > +
-> > +     return ret;
-> >  }
-> >  EXPORT_SYMBOL_GPL(qcom_cc_really_probe);
-> >
-> > diff --git a/drivers/clk/qcom/common.h b/drivers/clk/qcom/common.h
-> > index bb39a7e106d8..5b45e2033a92 100644
-> > --- a/drivers/clk/qcom/common.h
-> > +++ b/drivers/clk/qcom/common.h
-> > @@ -19,8 +19,14 @@ struct clk_hw;
-> >  #define PLL_VOTE_FSM_ENA     BIT(20)
-> >  #define PLL_VOTE_FSM_RESET   BIT(21)
-> >
-> > +/*
-> > + * Note: if pm_clks are used, pm_clk_suspend/resume should be called manually
-> > + * from runtime pm callbacks (or just passed to SET_RUNTIME_PM_OPS).
-> > + */
->
-> I don't like the fact that you're hiding most of the pm_runtime boiler
-> plate code, but each driver still needs to do this.
-
-I did not like that too. I have some ideas (like using device_type),
-but this can wait.
-
->
-> Perhaps there is merit to have a qcom_cc_pm_enable_and_add_clocks() and
-> qcom_cc_pm_ops exposed by common.c, but please let's add the pieces we
-> need first.
-
-Ack.
-
->
-> Regards,
-> Bjorn
-
+> 
+>> +        int other = (i + 1) % 2;
+> 
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> ---
+>>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 102 +++++++++++++-----------
+>>  1 file changed, 57 insertions(+), 45 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> index 1d3a4f395e74..3cd2011e18d4 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+>> @@ -471,30 +471,68 @@ static int _dpu_kms_initialize_dsi(struct 
+>> drm_device *dev,
+>>                      struct dpu_kms *dpu_kms)
+>>  {
+>>      struct drm_encoder *encoder = NULL;
+>> +    struct msm_display_info info;
+>>      int i, rc = 0;
+>>
+>>      if (!(priv->dsi[0] || priv->dsi[1]))
+>>          return rc;
+>>
+>> -    /*TODO: Support two independent DSI connectors */
+>> -    encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_DSI);
+>> -    if (IS_ERR(encoder)) {
+>> -        DPU_ERROR("encoder init failed for dsi display\n");
+>> -        return PTR_ERR(encoder);
+>> -    }
+>> -
+>> -    priv->encoders[priv->num_encoders++] = encoder;
+>> -
+>> +    /*
+>> +     * We support following confiurations:
+>> +     * - Single DSI host (dsi0 or dsi1)
+>> +     * - Two independent DSI hosts
+>> +     * - Bonded DSI0 and DSI1 hosts
+>> +     *
+>> +     * TODO: Support swapping DSI0 and DSI1 in the bonded setup.
+>> +     */
+>>      for (i = 0; i < ARRAY_SIZE(priv->dsi); i++) {
+>> +        int other = (i + 1) % 2;
+>> +
+>>          if (!priv->dsi[i])
+>>              continue;
+>>
+>> +        if (msm_dsi_is_bonded_dsi(priv->dsi[i]) &&
+>> +            !msm_dsi_is_master_dsi(priv->dsi[i]))
+>> +            continue;
+>> +
+>> +        encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_DSI);
+>> +        if (IS_ERR(encoder)) {
+>> +            DPU_ERROR("encoder init failed for dsi display\n");
+>> +            return PTR_ERR(encoder);
+>> +        }
+>> +
+>> +        priv->encoders[priv->num_encoders++] = encoder;
+>> +
+>> +        memset(&info, 0, sizeof(info));
+>> +        info.intf_type = encoder->encoder_type;
+>> +
+>>          rc = msm_dsi_modeset_init(priv->dsi[i], dev, encoder);
+>>          if (rc) {
+>>              DPU_ERROR("modeset_init failed for dsi[%d], rc = %d\n",
+>>                  i, rc);
+>>              break;
+>>          }
+>> +
+>> +        info.h_tile_instance[info.num_of_h_tiles++] = i;
+>> +        info.capabilities = msm_dsi_is_cmd_mode(priv->dsi[i]) ?
+>> +            MSM_DISPLAY_CAP_CMD_MODE :
+>> +            MSM_DISPLAY_CAP_VID_MODE;
+>> +
+>> +        if (msm_dsi_is_bonded_dsi(priv->dsi[i]) && priv->dsi[other]) {
+>> +            rc = msm_dsi_modeset_init(priv->dsi[other], dev, encoder);
+>> +            if (rc) {
+>> +                DPU_ERROR("modeset_init failed for dsi[%d], rc = %d\n",
+>> +                    other, rc);
+>> +                break;
+>> +            }
+>> +
+>> +            info.h_tile_instance[info.num_of_h_tiles++] = other;
+>> +        }
+>> +
+>> +        rc = dpu_encoder_setup(dev, encoder, &info);
+>> +        if (rc)
+>> +            DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
+>> +                  encoder->base.id, rc);
+>>      }
+>>
+>>      return rc;
+>> @@ -505,6 +543,7 @@ static int _dpu_kms_initialize_displayport(struct
+>> drm_device *dev,
+>>                          struct dpu_kms *dpu_kms)
+>>  {
+>>      struct drm_encoder *encoder = NULL;
+>> +    struct msm_display_info info;
+>>      int rc = 0;
+>>
+>>      if (!priv->dp)
+>> @@ -516,6 +555,7 @@ static int _dpu_kms_initialize_displayport(struct
+>> drm_device *dev,
+>>          return PTR_ERR(encoder);
+>>      }
+>>
+>> +    memset(&info, 0, sizeof(info));
+>>      rc = msm_dp_modeset_init(priv->dp, dev, encoder);
+>>      if (rc) {
+>>          DPU_ERROR("modeset_init failed for DP, rc = %d\n", rc);
+>> @@ -524,6 +564,14 @@ static int _dpu_kms_initialize_displayport(struct
+>> drm_device *dev,
+>>      }
+>>
+>>      priv->encoders[priv->num_encoders++] = encoder;
+>> +
+>> +    info.num_of_h_tiles = 1;
+>> +    info.capabilities = MSM_DISPLAY_CAP_VID_MODE;
+>> +    info.intf_type = encoder->encoder_type;
+>> +    rc = dpu_encoder_setup(dev, encoder, &info);
+>> +    if (rc)
+>> +        DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
+>> +              encoder->base.id, rc);
+>>      return rc;
+>>  }
+>>
+>> @@ -726,41 +774,6 @@ static void dpu_kms_destroy(struct msm_kms *kms)
+>>      msm_kms_destroy(&dpu_kms->base);
+>>  }
+>>
+>> -static void _dpu_kms_set_encoder_mode(struct msm_kms *kms,
+>> -                 struct drm_encoder *encoder,
+>> -                 bool cmd_mode)
+>> -{
+>> -    struct msm_display_info info;
+>> -    struct msm_drm_private *priv = encoder->dev->dev_private;
+>> -    int i, rc = 0;
+>> -
+>> -    memset(&info, 0, sizeof(info));
+>> -
+>> -    info.intf_type = encoder->encoder_type;
+>> -    info.capabilities = cmd_mode ? MSM_DISPLAY_CAP_CMD_MODE :
+>> -            MSM_DISPLAY_CAP_VID_MODE;
+>> -
+>> -    switch (info.intf_type) {
+>> -    case DRM_MODE_ENCODER_DSI:
+>> -        /* TODO: No support for DSI swap */
+>> -        for (i = 0; i < ARRAY_SIZE(priv->dsi); i++) {
+>> -            if (priv->dsi[i]) {
+>> -                info.h_tile_instance[info.num_of_h_tiles] = i;
+>> -                info.num_of_h_tiles++;
+>> -            }
+>> -        }
+>> -        break;
+>> -    case DRM_MODE_ENCODER_TMDS:
+>> -        info.num_of_h_tiles = 1;
+>> -        break;
+>> -    }
+>> -
+>> -    rc = dpu_encoder_setup(encoder->dev, encoder, &info);
+>> -    if (rc)
+>> -        DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
+>> -            encoder->base.id, rc);
+>> -}
+>> -
+>>  static irqreturn_t dpu_irq(struct msm_kms *kms)
+>>  {
+>>      struct dpu_kms *dpu_kms = to_dpu_kms(kms);
+>> @@ -863,7 +876,6 @@ static const struct msm_kms_funcs kms_funcs = {
+>>      .get_format      = dpu_get_msm_format,
+>>      .round_pixclk    = dpu_kms_round_pixclk,
+>>      .destroy         = dpu_kms_destroy,
+>> -    .set_encoder_mode = _dpu_kms_set_encoder_mode,
+>>      .snapshot        = dpu_kms_mdp_snapshot,
+>>  #ifdef CONFIG_DEBUG_FS
+>>      .debugfs_init    = dpu_kms_debugfs_init,
 
 
 -- 
