@@ -2,225 +2,439 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1EBB33CC150
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jul 2021 07:01:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7796F3CC1AF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jul 2021 09:33:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229982AbhGQFEM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 17 Jul 2021 01:04:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38910 "EHLO
+        id S231228AbhGQHgl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Jul 2021 03:36:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43458 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229778AbhGQFEM (ORCPT
+        with ESMTP id S230419AbhGQHgk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 17 Jul 2021 01:04:12 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B175C06175F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jul 2021 22:01:15 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id h9so13587708oih.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jul 2021 22:01:15 -0700 (PDT)
+        Sat, 17 Jul 2021 03:36:40 -0400
+Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5C56C06175F
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jul 2021 00:33:44 -0700 (PDT)
+Received: by mail-qk1-x729.google.com with SMTP id q190so11181274qkd.2
+        for <linux-arm-msm@vger.kernel.org>; Sat, 17 Jul 2021 00:33:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=tO7v/jiDZA9pK4soZtcjDfack9qaYbeOrYeQ+83PgxA=;
-        b=oM7cTlTGTfCnTxR3IIxviM8SUDiKRxATrVQXYlVMXangvFPozYcwG8YfkQy2saViPI
-         Si7McqcD/vJkVCcD/PnnsjHSNZTTGsYb31R7/+Rs+J1i847qF99Ku978nol0AwInhmWo
-         xwrYSnywp2OUORrjgxUkaMJ74gL0X0ArkqEA/Cpx3dGNQrN66CFs1/yB7MCiF9CU/cCv
-         njdZJ6EtmJUCrf5fXyOKuGEHs67mhtESvA5//D0wpCEhlIndRyNtGfYjDeA+Q4x8aaMn
-         VWKUcuEyXQcQy9HbI3kjW6lxlTNB1V8Itl/0CQ+nkVV/4OefU07nzBsoGV0qS0f6QDQM
-         NOYg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=azMEpLf7aWNZhUtboA/PAANf5wrHSqPwOi1720U3HMA=;
+        b=qifAS0gWjKt872h30Y8rv2xtydbJ+y2/r/KDHjnuVsptxsdQ6Zyjq/7dlnZzQvqLcy
+         GFwPdLt3xv4aQNfoSw0ofMQCDIJBN6OCMlWjdBsTV4HHBavPgvjzqK4lUzggqFeiVZye
+         GCtzjMyzkAB9BK19oXFgRoRUX3K6nnRhjR1V+tm8vgp3PhbeYDzWTiOjt9PtTMR2l49A
+         ortMsTb8nbRKQEY3DZyp38SgyDGs75Z3Xown4qBzeK4RLvggSCuTLA2CD9fDpW90ckJK
+         AjbRdTOVxka+QPXoX4lD04u2y1BocLo538pjK2hKoE6jtIk4ulVEkYBj5gj9rVguDZZa
+         4HJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=tO7v/jiDZA9pK4soZtcjDfack9qaYbeOrYeQ+83PgxA=;
-        b=JY8EEVj34kukIq+0oI6O+ICyFI/u+b/qyAsU7oYEaMXbm22j8NJSMFRStWTT5SbBff
-         3J8vDoQVOnX9AwASyh+yDol6SBOGlL2tm8AYw9LxPO3oyngkwAaemtJoTHFJkXKO3XRj
-         pf7d4TVD+s9fP4efldKYsNdK+++5V2i+aCONSgeDtm8OzhYQmtfoIilV/HkhnUsTKp7y
-         4IvyrTdKKtcQFSX5mEUGFdwuSvwqOcgG35xQEJOX64Dh+6VUy97FQ2I02gv9JoLL8ag+
-         JxgZINSMiZwAxY5ytjqGapYllRQKzwmL7w3O3OezxOYsAvVXwX59DhsLawO6TidcyEAl
-         Vaig==
-X-Gm-Message-State: AOAM532Ft/uOwGisXwuDS/+qprQXYZ6jErwvAldPaaMlBQo4OhNXbWhx
-        nFeAjJMsk0ceuQOuO+0FVhtSJw==
-X-Google-Smtp-Source: ABdhPJxyXgA295NXV3VbckZ0LIjmGP+mh2GywCT72CDbvBkp+4fh3bZsPvxv4L3arGMbPAFRKD10Vg==
-X-Received: by 2002:a05:6808:14c8:: with SMTP id f8mr10427694oiw.7.1626498074588;
-        Fri, 16 Jul 2021 22:01:14 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id s16sm2404675otg.51.2021.07.16.22.01.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Jul 2021 22:01:14 -0700 (PDT)
-Date:   Sat, 17 Jul 2021 00:01:11 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     John Stultz <john.stultz@linaro.org>
-Cc:     lkml <linux-kernel@vger.kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <maz@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
-        linux-gpio@vger.kernel.org
-Subject: Re: [PATCH] firmware: QCOM_SCM: Allow qcom_scm driver to be loadable
- as a permenent module
-Message-ID: <YPJkF21ItYlKODyq@yoga>
-References: <20210707045320.529186-1-john.stultz@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=azMEpLf7aWNZhUtboA/PAANf5wrHSqPwOi1720U3HMA=;
+        b=QlA3UYn++uoYdgjfmpVpoJbIxLQDcxFmAaQf4NVDoyKzJoGArRHkXwDjfRWBL14xbx
+         V/zUWos6Oqc0sAyiYN6Q3OjLJSvz+CDlSfxY/wewkWlEbeWBEswdBwqoqA+qCPtiQKLh
+         8ExwRA/S0m1HoHiFiFuAsIiTW5O68eLLueA0yiAUdiLIwdDv6mSroYCvwBapTf90+oDU
+         LlwuyGyKx8gvs1gYgKOST165hItE6n6W9IYPAEH/AvwqnabMwbP/EojcXjK4pYntPDRU
+         ZhjlGFr3LZlV+NKhmcWbdfgxNwaszqFkYb2T6BGVugB0xni6bcP+zd62FdalwnZpFjkx
+         e0zw==
+X-Gm-Message-State: AOAM533Y0tfb7+6gBl6WsaQxYap38Wcb2K2T6J3g+Fd72ESe3Vi8wXa8
+        /fGUBGTgdwtRRpVonDtzqbjMFX0QJUe3ZIznE6WPIw==
+X-Google-Smtp-Source: ABdhPJxTsmNohBWRkHmue6ROVCTM07S7/HjA3rW1NDPpfPaNgAietFiK2+kN2vezU7wkSDb/IWLoVIpMLPyNMg/SnMc=
+X-Received: by 2002:ae9:e309:: with SMTP id v9mr13989354qkf.138.1626507223759;
+ Sat, 17 Jul 2021 00:33:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210707045320.529186-1-john.stultz@linaro.org>
+References: <20210710140130.1176657-1-dmitry.baryshkov@linaro.org>
+ <20210710140130.1176657-3-dmitry.baryshkov@linaro.org> <YPIVwgAjb/JdTowQ@yoga>
+In-Reply-To: <YPIVwgAjb/JdTowQ@yoga>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sat, 17 Jul 2021 10:33:32 +0300
+Message-ID: <CAA8EJpood3wOGdS-uK=E0gGg17V-GinO-ypoGggbmanK6H9KaA@mail.gmail.com>
+Subject: Re: [PATCH 2/2] clk: qcom: move pm_clk functionality into common code
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Taniya Das <tdas@codeaurora.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 06 Jul 23:53 CDT 2021, John Stultz wrote:
+On Sat, 17 Jul 2021 at 02:27, Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Sat 10 Jul 09:01 CDT 2021, Dmitry Baryshkov wrote:
+>
+> > Several Qualcomm clock controller drivers use pm_clk functionality.
+> > Instead of having common code in all the drivers, move the pm_clk
+> > handling to the qcom_cc_map/qcom_cc_probe.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  drivers/clk/qcom/camcc-sc7180.c       |  44 ++--------
+> >  drivers/clk/qcom/common.c             | 113 +++++++++++++++++++++++---
+> >  drivers/clk/qcom/common.h             |   6 ++
+> >  drivers/clk/qcom/lpasscorecc-sc7180.c |  56 +++----------
+> >  drivers/clk/qcom/mss-sc7180.c         |  40 ++-------
+> >  drivers/clk/qcom/q6sstop-qcs404.c     |  36 ++------
+> >  drivers/clk/qcom/turingcc-qcs404.c    |  34 ++------
+> >  7 files changed, 142 insertions(+), 187 deletions(-)
+> >
+> > diff --git a/drivers/clk/qcom/camcc-sc7180.c b/drivers/clk/qcom/camcc-sc7180.c
+> > index 9bcf2f8ed4de..1c6c1b7fab51 100644
+> > --- a/drivers/clk/qcom/camcc-sc7180.c
+> > +++ b/drivers/clk/qcom/camcc-sc7180.c
+> > @@ -9,7 +9,6 @@
+> >  #include <linux/of.h>
+> >  #include <linux/of_device.h>
+> >  #include <linux/pm_clock.h>
+> > -#include <linux/pm_runtime.h>
+> >  #include <linux/regmap.h>
+> >
+> >  #include <dt-bindings/clock/qcom,camcc-sc7180.h>
+> > @@ -1631,8 +1630,12 @@ static const struct regmap_config cam_cc_sc7180_regmap_config = {
+> >       .fast_io = true,
+> >  };
+> >
+> > +static const char * const cam_cc_sc7180_pm_clks[] = { "xo", "iface" };
+> > +
+> >  static const struct qcom_cc_desc cam_cc_sc7180_desc = {
+> >       .config = &cam_cc_sc7180_regmap_config,
+> > +     .pm_clks = cam_cc_sc7180_pm_clks,
+> > +     .num_pm_clks = ARRAY_SIZE(cam_cc_sc7180_pm_clks),
+> >       .clk_hws = cam_cc_sc7180_hws,
+> >       .num_clk_hws = ARRAY_SIZE(cam_cc_sc7180_hws),
+> >       .clks = cam_cc_sc7180_clocks,
+> > @@ -1652,33 +1655,9 @@ static int cam_cc_sc7180_probe(struct platform_device *pdev)
+> >       struct regmap *regmap;
+> >       int ret;
+> >
+> > -     pm_runtime_enable(&pdev->dev);
+> > -     ret = pm_clk_create(&pdev->dev);
+> > -     if (ret < 0)
+> > -             return ret;
+> > -
+> > -     ret = pm_clk_add(&pdev->dev, "xo");
+> > -     if (ret < 0) {
+> > -             dev_err(&pdev->dev, "Failed to acquire XO clock\n");
+> > -             goto disable_pm_runtime;
+> > -     }
+> > -
+> > -     ret = pm_clk_add(&pdev->dev, "iface");
+> > -     if (ret < 0) {
+> > -             dev_err(&pdev->dev, "Failed to acquire iface clock\n");
+> > -             goto disable_pm_runtime;
+> > -     }
+> > -
+> > -     ret = pm_runtime_get(&pdev->dev);
+> > -     if (ret)
+> > -             goto destroy_pm_clk;
+> > -
+> >       regmap = qcom_cc_map(pdev, &cam_cc_sc7180_desc);
+> > -     if (IS_ERR(regmap)) {
+> > -             ret = PTR_ERR(regmap);
+> > -             pm_runtime_put(&pdev->dev);
+> > -             goto destroy_pm_clk;
+> > -     }
+> > +     if (IS_ERR(regmap))
+> > +             return PTR_ERR(regmap);
+> >
+> >       clk_fabia_pll_configure(&cam_cc_pll0, regmap, &cam_cc_pll0_config);
+> >       clk_fabia_pll_configure(&cam_cc_pll1, regmap, &cam_cc_pll1_config);
+> > @@ -1686,21 +1665,12 @@ static int cam_cc_sc7180_probe(struct platform_device *pdev)
+> >       clk_fabia_pll_configure(&cam_cc_pll3, regmap, &cam_cc_pll3_config);
+> >
+> >       ret = qcom_cc_really_probe(pdev, &cam_cc_sc7180_desc, regmap);
+> > -     pm_runtime_put(&pdev->dev);
+> >       if (ret < 0) {
+> >               dev_err(&pdev->dev, "Failed to register CAM CC clocks\n");
+> > -             goto destroy_pm_clk;
+> > +             return 0;
+> >       }
+> >
+> >       return 0;
+> > -
+> > -destroy_pm_clk:
+> > -     pm_clk_destroy(&pdev->dev);
+> > -
+> > -disable_pm_runtime:
+> > -     pm_runtime_disable(&pdev->dev);
+> > -
+> > -     return ret;
+> >  }
+> >
+> >  static const struct dev_pm_ops cam_cc_pm_ops = {
+> > diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
+> > index ed7c516a597a..e1d34561cab7 100644
+> > --- a/drivers/clk/qcom/common.c
+> > +++ b/drivers/clk/qcom/common.c
+> > @@ -7,6 +7,8 @@
+> >  #include <linux/module.h>
+> >  #include <linux/regmap.h>
+> >  #include <linux/platform_device.h>
+> > +#include <linux/pm_clock.h>
+> > +#include <linux/pm_runtime.h>
+> >  #include <linux/clk-provider.h>
+> >  #include <linux/reset-controller.h>
+> >  #include <linux/of.h>
+> > @@ -69,12 +71,86 @@ int qcom_find_src_index(struct clk_hw *hw, const struct parent_map *map, u8 src)
+> >  }
+> >  EXPORT_SYMBOL_GPL(qcom_find_src_index);
+> >
+> > +static void qcom_cc_pm_runtime_disable(void *data)
+> > +{
+> > +     pm_runtime_disable(data);
+> > +}
+> > +
+> > +static void qcom_cc_pm_clk_destroy(void *data)
+> > +{
+> > +     pm_clk_destroy(data);
+> > +}
+> > +
+> > +static int
+> > +qcom_cc_add_pm_clks(struct platform_device *pdev, const struct qcom_cc_desc *desc)
+> > +{
+> > +     struct device *dev = &pdev->dev;
+> > +     int ret;
+> > +     int i;
+> > +
+> > +     if (!desc->num_pm_clks)
+> > +             return 0;
+> > +
+> > +     ret = pm_clk_create(dev);
+> > +     if (ret < 0)
+> > +             return ret;
+> > +     ret = devm_add_action_or_reset(dev, qcom_cc_pm_clk_destroy, dev);
+> > +     if (ret)
+> > +             return ret;
+> > +
+> > +     for (i = 0; i < desc->num_pm_clks; i++) {
+> > +             ret = pm_clk_add(dev, desc->pm_clks[i]);
+> > +             if (ret < 0) {
+> > +                     dev_err(dev, "Failed to acquire %s pm clk\n", desc->pm_clks[i]);
+> > +                     return ret;
+> > +             }
+> > +     }
+> > +
+> > +     return 0;
+> > +}
+> > +
+> > +static int
+> > +qcom_cc_manage_pm(struct platform_device *pdev, const struct qcom_cc_desc *desc)
+> > +{
+> > +     struct device *dev = &pdev->dev;
+> > +     int ret;
+> > +
+> > +     /* For now enable runtime PM only if we have PM clocks in use */
+> > +     if (desc->num_pm_clks && !pm_runtime_enabled(dev)) {
+> > +             pm_runtime_enable(dev);
+> > +
+> > +             ret = devm_add_action_or_reset(dev, qcom_cc_pm_runtime_disable, dev);
+> > +             if (ret)
+> > +                     return ret;
+> > +     }
+> > +
+> > +     ret = qcom_cc_add_pm_clks(pdev, desc);
+> > +     if (ret)
+> > +             return ret;
+> > +
+> > +     /* Other code might have enabled runtime PM, resume device here */
+> > +     if (pm_runtime_enabled(dev)) {
+> > +             ret = pm_runtime_get_sync(dev);
+>
+> As I said previously, don't do this. Look at how clk_pm_runtime_get()
+> and clk_pm_runtime_put() are invoked throughout the clock framework.
 
-> Allow the qcom_scm driver to be loadable as a permenent module.
-> 
-> This still uses the "depends on QCOM_SCM || !QCOM_SCM" bit to
-> ensure that drivers that call into the qcom_scm driver are
-> also built as modules. While not ideal in some cases its the
-> only safe way I can find to avoid build errors without having
-> those drivers select QCOM_SCM and have to force it on (as
-> QCOM_SCM=n can be valid for those drivers).
-> 
-> Reviving this now that Saravana's fw_devlink defaults to on,
-> which should avoid loading troubles seen before.
-> 
+Please, check what I'm changing here. sc7180/qcs404 Do call
+pm_runtime_get/_put in the _probe function. Like most other drivers
+do. Do you dislike the pm_runtime_enabled() call? Or the idea of
+calling pm_runtime_get_foo()/_put_foo()? I don't think we can get w/o
+the latter.
 
-Are you (in this last paragraph) saying that all those who have been
-burnt by fw_devlink during the last months and therefor run with it
-disabled will have a less fun experience once this is merged?
+> At best this would be an optimization to ensure that the pm_runtime
+> state isn't toggled back and forth between every operation, but this is
+> typically not how we deal with that and this is certainly unrelated to
+> the rest of what the patch does.
+>
+> > +             if (ret) {
+> > +                     pm_runtime_put_noidle(dev);
+> > +                     return ret;
+> > +             }
+> > +     }
+> > +
+> > +     return 0;
+> > +}
+> > +
+> >  static struct regmap *
+> >  qcom_cc_map_by_index(struct platform_device *pdev, const struct qcom_cc_desc *desc, int index)
+>
+> I really don't like the idea of having a function with a name that
+> indicates that it's mapping hardware blocks to under the hood also play
+> pm_runtime.
+>
+> Afaict the reason for this patch is to avoid having to sprinkle
+> pm_runtime_enable(), pm_clk_create(), pm_clk_destroy() and
+> pm_runtime_disable() in the various clock drivers that needs this.
+>
+> But as I said previously, there's a lot of drivers in the kernel that
+> does exactly and only that, so there's definitely motivation to create
+> devm_pm_runtime_enable() and devm_pm_clk_create() and then go back and
+> clean up these and a lot of other drivers.
+
+I like the idea of these helpers. Will try adding the devres-managed
+helpers and using them from the qcom cc code. I will remove it from
+the qcom_cc_map().
+
+>
+> Perhaps I'm overly optimistic about getting those interfaces landed, if
+> that's the case I would like to have some explicit
+> devres-pm_runtime_enable/pm_clk_create/pm_clk_add added in the common
+> code, rather than piggy backing the existing map function.
+>
+> But either way, I would much rather see you land the subdomain setup in
+> gdsc_register(), the pm_runtime_enable/disable we need in the
+> dispcc-sm8250 and the pm_runtime_get()/put() we need in gdsc_init(),
+> gdsc_enable() and gdsc_disable() - before refactoring all this.
+
+Well, after you pointed me to the turingcc driver(and other pm-enabled
+qcom cc drivers), it was quite natural to rework this to come up with
+the code that would be common to qcs404, sc7180 and sm8250 in terms of
+setting up runtime pm. Otherwise we can land the sm8250 code and then
+have to rewrite it again to support both gdsc-subdomains and pm_clk
+usage.
+
+>
+> >  {
+> >       void __iomem *base;
+> >       struct resource *res;
+> >       struct device *dev = &pdev->dev;
+> > +     int ret;
+> > +
+> > +     ret = qcom_cc_manage_pm(pdev, desc);
+> > +     if (ret)
+> > +             return ERR_PTR(ret);
+> >
+> >       res = platform_get_resource(pdev, IORESOURCE_MEM, index);
+> >       base = devm_ioremap_resource(dev, res);
+> > @@ -244,8 +320,10 @@ int qcom_cc_really_probe(struct platform_device *pdev,
+> >       struct clk_hw **clk_hws = desc->clk_hws;
+> >
+> >       cc = devm_kzalloc(dev, sizeof(*cc), GFP_KERNEL);
+> > -     if (!cc)
+> > -             return -ENOMEM;
+> > +     if (!cc) {
+> > +             ret = -ENOMEM;
+> > +             goto err;
+> > +     }
+> >
+> >       reset = &cc->reset;
+> >       reset->rcdev.of_node = dev->of_node;
+> > @@ -257,22 +335,25 @@ int qcom_cc_really_probe(struct platform_device *pdev,
+> >
+> >       ret = devm_reset_controller_register(dev, &reset->rcdev);
+> >       if (ret)
+> > -             return ret;
+> > +             goto err;
+> >
+> >       if (desc->gdscs && desc->num_gdscs) {
+> >               scd = devm_kzalloc(dev, sizeof(*scd), GFP_KERNEL);
+> > -             if (!scd)
+> > -                     return -ENOMEM;
+> > +             if (!scd) {
+> > +                     ret = -ENOMEM;
+> > +                     goto err;
+> > +             }
+> > +
+> >               scd->dev = dev;
+> >               scd->scs = desc->gdscs;
+> >               scd->num = desc->num_gdscs;
+> >               ret = gdsc_register(scd, &reset->rcdev, regmap);
+> >               if (ret)
+> > -                     return ret;
+> > +                     goto err;
+> >               ret = devm_add_action_or_reset(dev, qcom_cc_gdsc_unregister,
+> >                                              scd);
+> >               if (ret)
+> > -                     return ret;
+> > +                     goto err;
+> >       }
+> >
+> >       cc->rclks = rclks;
+> > @@ -283,7 +364,7 @@ int qcom_cc_really_probe(struct platform_device *pdev,
+> >       for (i = 0; i < num_clk_hws; i++) {
+> >               ret = devm_clk_hw_register(dev, clk_hws[i]);
+> >               if (ret)
+> > -                     return ret;
+> > +                     goto err;
+> >       }
+> >
+> >       for (i = 0; i < num_clks; i++) {
+> > @@ -292,14 +373,26 @@ int qcom_cc_really_probe(struct platform_device *pdev,
+> >
+> >               ret = devm_clk_register_regmap(dev, rclks[i]);
+> >               if (ret)
+> > -                     return ret;
+> > +                     goto err;
+> >       }
+> >
+> >       ret = devm_of_clk_add_hw_provider(dev, qcom_cc_clk_hw_get, cc);
+> >       if (ret)
+> > -             return ret;
+> > +             goto err;
+> > +
+> > +     if (pm_runtime_enabled(dev)) {
+> > +             /* for the LPASS on sc7180, which uses autosuspend */
+> > +             pm_runtime_mark_last_busy(dev);
+> > +             pm_runtime_put(dev);
+> > +     }
+> >
+> >       return 0;
+> > +
+> > +err:
+> > +     if (pm_runtime_enabled(dev))
+> > +             pm_runtime_put(dev);
+> > +
+> > +     return ret;
+> >  }
+> >  EXPORT_SYMBOL_GPL(qcom_cc_really_probe);
+> >
+> > diff --git a/drivers/clk/qcom/common.h b/drivers/clk/qcom/common.h
+> > index bb39a7e106d8..5b45e2033a92 100644
+> > --- a/drivers/clk/qcom/common.h
+> > +++ b/drivers/clk/qcom/common.h
+> > @@ -19,8 +19,14 @@ struct clk_hw;
+> >  #define PLL_VOTE_FSM_ENA     BIT(20)
+> >  #define PLL_VOTE_FSM_RESET   BIT(21)
+> >
+> > +/*
+> > + * Note: if pm_clks are used, pm_clk_suspend/resume should be called manually
+> > + * from runtime pm callbacks (or just passed to SET_RUNTIME_PM_OPS).
+> > + */
+>
+> I don't like the fact that you're hiding most of the pm_runtime boiler
+> plate code, but each driver still needs to do this.
+
+I did not like that too. I have some ideas (like using device_type),
+but this can wait.
+
+>
+> Perhaps there is merit to have a qcom_cc_pm_enable_and_add_clocks() and
+> qcom_cc_pm_ops exposed by common.c, but please let's add the pieces we
+> need first.
+
+Ack.
+
+>
+> Regards,
+> Bjorn
 
 
-(I'm picking this up, but I don't fancy the idea that some people are
-turning the boot process into a lottery)
 
-Regards,
-Bjorn
-
-> Cc: Catalin Marinas <catalin.marinas@arm.com>
-> Cc: Will Deacon <will@kernel.org>
-> Cc: Andy Gross <agross@kernel.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Cc: Joerg Roedel <joro@8bytes.org>
-> Cc: Thomas Gleixner <tglx@linutronix.de>
-> Cc: Marc Zyngier <maz@kernel.org>
-> Cc: Linus Walleij <linus.walleij@linaro.org>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Cc: Kalle Valo <kvalo@codeaurora.org>
-> Cc: Maulik Shah <mkshah@codeaurora.org>
-> Cc: Saravana Kannan <saravanak@google.com>
-> Cc: Todd Kjos <tkjos@google.com>
-> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: iommu@lists.linux-foundation.org
-> Cc: linux-gpio@vger.kernel.org
-> Acked-by: Kalle Valo <kvalo@codeaurora.org>
-> Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-> Acked-by: Will Deacon <will@kernel.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Signed-off-by: John Stultz <john.stultz@linaro.org>
-> ---
-> v3:
-> * Fix __arm_smccc_smc build issue reported by
->   kernel test robot <lkp@intel.com>
-> v4:
-> * Add "depends on QCOM_SCM || !QCOM_SCM" bit to ath10k
->   config that requires it.
-> v5:
-> * Fix QCOM_QCM typo in Kconfig, it should be QCOM_SCM
-> ---
->  drivers/firmware/Kconfig                | 2 +-
->  drivers/firmware/Makefile               | 3 ++-
->  drivers/firmware/qcom_scm.c             | 4 ++++
->  drivers/iommu/Kconfig                   | 2 ++
->  drivers/net/wireless/ath/ath10k/Kconfig | 1 +
->  5 files changed, 10 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
-> index db0ea2d2d75a..af53778edc7e 100644
-> --- a/drivers/firmware/Kconfig
-> +++ b/drivers/firmware/Kconfig
-> @@ -235,7 +235,7 @@ config INTEL_STRATIX10_RSU
->  	  Say Y here if you want Intel RSU support.
->  
->  config QCOM_SCM
-> -	bool
-> +	tristate "Qcom SCM driver"
->  	depends on ARM || ARM64
->  	depends on HAVE_ARM_SMCCC
->  	select RESET_CONTROLLER
-> diff --git a/drivers/firmware/Makefile b/drivers/firmware/Makefile
-> index 5e013b6a3692..523173cbff33 100644
-> --- a/drivers/firmware/Makefile
-> +++ b/drivers/firmware/Makefile
-> @@ -17,7 +17,8 @@ obj-$(CONFIG_ISCSI_IBFT)	+= iscsi_ibft.o
->  obj-$(CONFIG_FIRMWARE_MEMMAP)	+= memmap.o
->  obj-$(CONFIG_RASPBERRYPI_FIRMWARE) += raspberrypi.o
->  obj-$(CONFIG_FW_CFG_SYSFS)	+= qemu_fw_cfg.o
-> -obj-$(CONFIG_QCOM_SCM)		+= qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
-> +obj-$(CONFIG_QCOM_SCM)		+= qcom-scm.o
-> +qcom-scm-objs += qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
->  obj-$(CONFIG_TI_SCI_PROTOCOL)	+= ti_sci.o
->  obj-$(CONFIG_TRUSTED_FOUNDATIONS) += trusted_foundations.o
->  obj-$(CONFIG_TURRIS_MOX_RWTM)	+= turris-mox-rwtm.o
-> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
-> index ee9cb545e73b..bb9ce3f92931 100644
-> --- a/drivers/firmware/qcom_scm.c
-> +++ b/drivers/firmware/qcom_scm.c
-> @@ -1296,6 +1296,7 @@ static const struct of_device_id qcom_scm_dt_match[] = {
->  	{ .compatible = "qcom,scm" },
->  	{}
->  };
-> +MODULE_DEVICE_TABLE(of, qcom_scm_dt_match);
->  
->  static struct platform_driver qcom_scm_driver = {
->  	.driver = {
-> @@ -1312,3 +1313,6 @@ static int __init qcom_scm_init(void)
->  	return platform_driver_register(&qcom_scm_driver);
->  }
->  subsys_initcall(qcom_scm_init);
-> +
-> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. SCM driver");
-> +MODULE_LICENSE("GPL v2");
-> diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
-> index 07b7c25cbed8..f61516c17589 100644
-> --- a/drivers/iommu/Kconfig
-> +++ b/drivers/iommu/Kconfig
-> @@ -253,6 +253,7 @@ config SPAPR_TCE_IOMMU
->  config ARM_SMMU
->  	tristate "ARM Ltd. System MMU (SMMU) Support"
->  	depends on ARM64 || ARM || (COMPILE_TEST && !GENERIC_ATOMIC64)
-> +	depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
->  	select IOMMU_API
->  	select IOMMU_IO_PGTABLE_LPAE
->  	select ARM_DMA_USE_IOMMU if ARM
-> @@ -382,6 +383,7 @@ config QCOM_IOMMU
->  	# Note: iommu drivers cannot (yet?) be built as modules
->  	bool "Qualcomm IOMMU Support"
->  	depends on ARCH_QCOM || (COMPILE_TEST && !GENERIC_ATOMIC64)
-> +	depends on QCOM_SCM=y
->  	select IOMMU_API
->  	select IOMMU_IO_PGTABLE_LPAE
->  	select ARM_DMA_USE_IOMMU
-> diff --git a/drivers/net/wireless/ath/ath10k/Kconfig b/drivers/net/wireless/ath/ath10k/Kconfig
-> index 40f91bc8514d..741289e385d5 100644
-> --- a/drivers/net/wireless/ath/ath10k/Kconfig
-> +++ b/drivers/net/wireless/ath/ath10k/Kconfig
-> @@ -44,6 +44,7 @@ config ATH10K_SNOC
->  	tristate "Qualcomm ath10k SNOC support"
->  	depends on ATH10K
->  	depends on ARCH_QCOM || COMPILE_TEST
-> +	depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
->  	select QCOM_QMI_HELPERS
->  	help
->  	  This module adds support for integrated WCN3990 chip connected
-> -- 
-> 2.25.1
-> 
+-- 
+With best wishes
+Dmitry
