@@ -2,117 +2,225 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BED193CBFDE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jul 2021 01:55:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1EBB33CC150
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 17 Jul 2021 07:01:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229984AbhGPX5v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 16 Jul 2021 19:57:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57354 "EHLO
+        id S229982AbhGQFEM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 17 Jul 2021 01:04:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229934AbhGPX5u (ORCPT
+        with ESMTP id S229778AbhGQFEM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 16 Jul 2021 19:57:50 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A847C061762
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jul 2021 16:54:55 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id w194so12916996oie.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jul 2021 16:54:55 -0700 (PDT)
+        Sat, 17 Jul 2021 01:04:12 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B175C06175F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jul 2021 22:01:15 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id h9so13587708oih.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 16 Jul 2021 22:01:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=VJGdspG2J1Lj8nevb/Lj+7rawdMA9S4WQ8v9/yvZMvo=;
-        b=OkAzUjq+SaObhfByR+nUx5mgIQ3Mj2gMLVbecs/XMcl0FGNc538qnz06xKozYcDCH+
-         T2G34oXtNn6K04Y3tJ/tzc7PAdF9ohrL/VszWgflvy/59nrcZM586yOU9z2qwdFfSxoz
-         4rk+f/B2DvrfjOHw/2DRWu8foTSqwez0nexmMgwvUX65nMDUUOljQtPVEw1W9PqI6ixE
-         uznwYPTE3PqGoglVJ3dT1PRSWyK40h86fx7eCXlJDVoUh4MiYQtlU7+rJSkLsB6WuQIX
-         nb89ZRwBzc8ZP5sHAnolgZ4W7sX2x8Gm6XH2a9mu82raDwbjxpywlhcj7DuniAbxeSgJ
-         oaQw==
+        bh=tO7v/jiDZA9pK4soZtcjDfack9qaYbeOrYeQ+83PgxA=;
+        b=oM7cTlTGTfCnTxR3IIxviM8SUDiKRxATrVQXYlVMXangvFPozYcwG8YfkQy2saViPI
+         Si7McqcD/vJkVCcD/PnnsjHSNZTTGsYb31R7/+Rs+J1i847qF99Ku978nol0AwInhmWo
+         xwrYSnywp2OUORrjgxUkaMJ74gL0X0ArkqEA/Cpx3dGNQrN66CFs1/yB7MCiF9CU/cCv
+         njdZJ6EtmJUCrf5fXyOKuGEHs67mhtESvA5//D0wpCEhlIndRyNtGfYjDeA+Q4x8aaMn
+         VWKUcuEyXQcQy9HbI3kjW6lxlTNB1V8Itl/0CQ+nkVV/4OefU07nzBsoGV0qS0f6QDQM
+         NOYg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=VJGdspG2J1Lj8nevb/Lj+7rawdMA9S4WQ8v9/yvZMvo=;
-        b=Uyx//GeGqVMUKLom8vWmqpbJhQEFPO5KpjuqZBsYRe8xHTkwirA/fDc72Bmv1KdmfI
-         m3fj+ZaKArtlN9eIIwG6+nXacPBuxY3CI9But8XKiheU2IZTGGOogv9njk7hR9wxqnig
-         21+e9ZqxVDg3SS5eTiyFsYCZQmttgNiHObVT8kQ25Hha3Qqf0+vcMKs9+f2FVpzPM4hq
-         xqrEEn85Y/fg8WpAsREQiWY89xZUaIMhwcP+nTuVqTZSrFrHaonrNYbXeswsPlOtz502
-         btc2Dt7paZ2Ja9G4IubjMZ/S3GhQPxqmlB2t3cRA19JXj7hfrSrOVPsov2OvdRIrUK1L
-         z+rA==
-X-Gm-Message-State: AOAM530HWJvaJnUH/MiazlaEnsKo5zgeqf9x/yeRUNDt4uXEWSxZ8pLt
-        8L4TsUXgKYjwBHUwUJxLTRBSGQ==
-X-Google-Smtp-Source: ABdhPJzPb0xrQfYz/QsYG3LsjhsCqhhunDjTyM/p4U47JfwRJ5DQarU6cR+d2fPgJkfLT6b+EUMmLQ==
-X-Received: by 2002:aca:dc44:: with SMTP id t65mr9803129oig.76.1626479694464;
-        Fri, 16 Jul 2021 16:54:54 -0700 (PDT)
+        bh=tO7v/jiDZA9pK4soZtcjDfack9qaYbeOrYeQ+83PgxA=;
+        b=JY8EEVj34kukIq+0oI6O+ICyFI/u+b/qyAsU7oYEaMXbm22j8NJSMFRStWTT5SbBff
+         3J8vDoQVOnX9AwASyh+yDol6SBOGlL2tm8AYw9LxPO3oyngkwAaemtJoTHFJkXKO3XRj
+         pf7d4TVD+s9fP4efldKYsNdK+++5V2i+aCONSgeDtm8OzhYQmtfoIilV/HkhnUsTKp7y
+         4IvyrTdKKtcQFSX5mEUGFdwuSvwqOcgG35xQEJOX64Dh+6VUy97FQ2I02gv9JoLL8ag+
+         JxgZINSMiZwAxY5ytjqGapYllRQKzwmL7w3O3OezxOYsAvVXwX59DhsLawO6TidcyEAl
+         Vaig==
+X-Gm-Message-State: AOAM532Ft/uOwGisXwuDS/+qprQXYZ6jErwvAldPaaMlBQo4OhNXbWhx
+        nFeAjJMsk0ceuQOuO+0FVhtSJw==
+X-Google-Smtp-Source: ABdhPJxyXgA295NXV3VbckZ0LIjmGP+mh2GywCT72CDbvBkp+4fh3bZsPvxv4L3arGMbPAFRKD10Vg==
+X-Received: by 2002:a05:6808:14c8:: with SMTP id f8mr10427694oiw.7.1626498074588;
+        Fri, 16 Jul 2021 22:01:14 -0700 (PDT)
 Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id b10sm2434834oiy.4.2021.07.16.16.54.53
+        by smtp.gmail.com with ESMTPSA id s16sm2404675otg.51.2021.07.16.22.01.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 16 Jul 2021 16:54:54 -0700 (PDT)
-Date:   Fri, 16 Jul 2021 18:54:51 -0500
+        Fri, 16 Jul 2021 22:01:14 -0700 (PDT)
+Date:   Sat, 17 Jul 2021 00:01:11 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Sarthak Garg <sartgarg@codeaurora.org>
-Cc:     adrian.hunter@intel.com, ulf.hansson@linaro.org,
-        stummala@codeaurora.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Andy Gross <agross@kernel.org>
-Subject: Re: [PATCH V1 2/2] mmc: sdhci-msm: Use maximum possible data timeout
- value
-Message-ID: <YPIcSx90JqhVn3A1@yoga>
-References: <1626444182-2187-1-git-send-email-sartgarg@codeaurora.org>
- <1626444182-2187-3-git-send-email-sartgarg@codeaurora.org>
+To:     John Stultz <john.stultz@linaro.org>
+Cc:     lkml <linux-kernel@vger.kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Todd Kjos <tkjos@google.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
+        linux-gpio@vger.kernel.org
+Subject: Re: [PATCH] firmware: QCOM_SCM: Allow qcom_scm driver to be loadable
+ as a permenent module
+Message-ID: <YPJkF21ItYlKODyq@yoga>
+References: <20210707045320.529186-1-john.stultz@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1626444182-2187-3-git-send-email-sartgarg@codeaurora.org>
+In-Reply-To: <20210707045320.529186-1-john.stultz@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 16 Jul 09:03 CDT 2021, Sarthak Garg wrote:
+On Tue 06 Jul 23:53 CDT 2021, John Stultz wrote:
 
-> The Qcom SD controller defines the usage of 0xF in data
-> timeout counter register (0x2E) which is actually a reserved
-> bit as per specification. This would result in maximum of 21.26 secs
-> timeout value.
+> Allow the qcom_scm driver to be loadable as a permenent module.
 > 
-> Some SDcard taking more time than 2.67secs (timeout value corresponding
-> to 0xE) and with that observed data timeout errors.
-> So increasing the timeout value to max possible timeout.
+> This still uses the "depends on QCOM_SCM || !QCOM_SCM" bit to
+> ensure that drivers that call into the qcom_scm driver are
+> also built as modules. While not ideal in some cases its the
+> only safe way I can find to avoid build errors without having
+> those drivers select QCOM_SCM and have to force it on (as
+> QCOM_SCM=n can be valid for those drivers).
 > 
-> Signed-off-by: Sahitya Tummala <stummala@codeaurora.org>
+> Reviving this now that Saravana's fw_devlink defaults to on,
+> which should avoid loading troubles seen before.
+> 
 
-The From: of the email says you wrote the patch, but the first person to
-certify its origin is Sahitya. Did you perhaps write this together? If
-so you should have a:
+Are you (in this last paragraph) saying that all those who have been
+burnt by fw_devlink during the last months and therefor run with it
+disabled will have a less fun experience once this is merged?
 
-Co-developed-by: Sahitya
 
-If Sahitya wrote the patch, certifies its origin and then you picks it
-up and certify that you got it from Sahitya, then you should write it as
-you did - but you should have retained Sahitya as author...
+(I'm picking this up, but I don't fancy the idea that some people are
+turning the boot process into a lottery)
 
 Regards,
 Bjorn
 
-> Signed-off-by: Sarthak Garg <sartgarg@codeaurora.org>
+> Cc: Catalin Marinas <catalin.marinas@arm.com>
+> Cc: Will Deacon <will@kernel.org>
+> Cc: Andy Gross <agross@kernel.org>
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Joerg Roedel <joro@8bytes.org>
+> Cc: Thomas Gleixner <tglx@linutronix.de>
+> Cc: Marc Zyngier <maz@kernel.org>
+> Cc: Linus Walleij <linus.walleij@linaro.org>
+> Cc: Vinod Koul <vkoul@kernel.org>
+> Cc: Kalle Valo <kvalo@codeaurora.org>
+> Cc: Maulik Shah <mkshah@codeaurora.org>
+> Cc: Saravana Kannan <saravanak@google.com>
+> Cc: Todd Kjos <tkjos@google.com>
+> Cc: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: iommu@lists.linux-foundation.org
+> Cc: linux-gpio@vger.kernel.org
+> Acked-by: Kalle Valo <kvalo@codeaurora.org>
+> Acked-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+> Acked-by: Will Deacon <will@kernel.org>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: John Stultz <john.stultz@linaro.org>
 > ---
->  drivers/mmc/host/sdhci-msm.c | 3 +++
->  1 file changed, 3 insertions(+)
+> v3:
+> * Fix __arm_smccc_smc build issue reported by
+>   kernel test robot <lkp@intel.com>
+> v4:
+> * Add "depends on QCOM_SCM || !QCOM_SCM" bit to ath10k
+>   config that requires it.
+> v5:
+> * Fix QCOM_QCM typo in Kconfig, it should be QCOM_SCM
+> ---
+>  drivers/firmware/Kconfig                | 2 +-
+>  drivers/firmware/Makefile               | 3 ++-
+>  drivers/firmware/qcom_scm.c             | 4 ++++
+>  drivers/iommu/Kconfig                   | 2 ++
+>  drivers/net/wireless/ath/ath10k/Kconfig | 1 +
+>  5 files changed, 10 insertions(+), 2 deletions(-)
 > 
-> diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> index e44b7a6..19e4673 100644
-> --- a/drivers/mmc/host/sdhci-msm.c
-> +++ b/drivers/mmc/host/sdhci-msm.c
-> @@ -2696,6 +2696,9 @@ static int sdhci_msm_probe(struct platform_device *pdev)
+> diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
+> index db0ea2d2d75a..af53778edc7e 100644
+> --- a/drivers/firmware/Kconfig
+> +++ b/drivers/firmware/Kconfig
+> @@ -235,7 +235,7 @@ config INTEL_STRATIX10_RSU
+>  	  Say Y here if you want Intel RSU support.
 >  
->  	msm_host->mmc->caps |= MMC_CAP_WAIT_WHILE_BUSY | MMC_CAP_NEED_RSP_BUSY;
+>  config QCOM_SCM
+> -	bool
+> +	tristate "Qcom SCM driver"
+>  	depends on ARM || ARM64
+>  	depends on HAVE_ARM_SMCCC
+>  	select RESET_CONTROLLER
+> diff --git a/drivers/firmware/Makefile b/drivers/firmware/Makefile
+> index 5e013b6a3692..523173cbff33 100644
+> --- a/drivers/firmware/Makefile
+> +++ b/drivers/firmware/Makefile
+> @@ -17,7 +17,8 @@ obj-$(CONFIG_ISCSI_IBFT)	+= iscsi_ibft.o
+>  obj-$(CONFIG_FIRMWARE_MEMMAP)	+= memmap.o
+>  obj-$(CONFIG_RASPBERRYPI_FIRMWARE) += raspberrypi.o
+>  obj-$(CONFIG_FW_CFG_SYSFS)	+= qemu_fw_cfg.o
+> -obj-$(CONFIG_QCOM_SCM)		+= qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
+> +obj-$(CONFIG_QCOM_SCM)		+= qcom-scm.o
+> +qcom-scm-objs += qcom_scm.o qcom_scm-smc.o qcom_scm-legacy.o
+>  obj-$(CONFIG_TI_SCI_PROTOCOL)	+= ti_sci.o
+>  obj-$(CONFIG_TRUSTED_FOUNDATIONS) += trusted_foundations.o
+>  obj-$(CONFIG_TURRIS_MOX_RWTM)	+= turris-mox-rwtm.o
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index ee9cb545e73b..bb9ce3f92931 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -1296,6 +1296,7 @@ static const struct of_device_id qcom_scm_dt_match[] = {
+>  	{ .compatible = "qcom,scm" },
+>  	{}
+>  };
+> +MODULE_DEVICE_TABLE(of, qcom_scm_dt_match);
 >  
-> +	/* Set the timeout value to max possible */
-> +	host->max_timeout_count = 0xF;
+>  static struct platform_driver qcom_scm_driver = {
+>  	.driver = {
+> @@ -1312,3 +1313,6 @@ static int __init qcom_scm_init(void)
+>  	return platform_driver_register(&qcom_scm_driver);
+>  }
+>  subsys_initcall(qcom_scm_init);
 > +
->  	pm_runtime_get_noresume(&pdev->dev);
->  	pm_runtime_set_active(&pdev->dev);
->  	pm_runtime_enable(&pdev->dev);
+> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. SCM driver");
+> +MODULE_LICENSE("GPL v2");
+> diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
+> index 07b7c25cbed8..f61516c17589 100644
+> --- a/drivers/iommu/Kconfig
+> +++ b/drivers/iommu/Kconfig
+> @@ -253,6 +253,7 @@ config SPAPR_TCE_IOMMU
+>  config ARM_SMMU
+>  	tristate "ARM Ltd. System MMU (SMMU) Support"
+>  	depends on ARM64 || ARM || (COMPILE_TEST && !GENERIC_ATOMIC64)
+> +	depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
+>  	select IOMMU_API
+>  	select IOMMU_IO_PGTABLE_LPAE
+>  	select ARM_DMA_USE_IOMMU if ARM
+> @@ -382,6 +383,7 @@ config QCOM_IOMMU
+>  	# Note: iommu drivers cannot (yet?) be built as modules
+>  	bool "Qualcomm IOMMU Support"
+>  	depends on ARCH_QCOM || (COMPILE_TEST && !GENERIC_ATOMIC64)
+> +	depends on QCOM_SCM=y
+>  	select IOMMU_API
+>  	select IOMMU_IO_PGTABLE_LPAE
+>  	select ARM_DMA_USE_IOMMU
+> diff --git a/drivers/net/wireless/ath/ath10k/Kconfig b/drivers/net/wireless/ath/ath10k/Kconfig
+> index 40f91bc8514d..741289e385d5 100644
+> --- a/drivers/net/wireless/ath/ath10k/Kconfig
+> +++ b/drivers/net/wireless/ath/ath10k/Kconfig
+> @@ -44,6 +44,7 @@ config ATH10K_SNOC
+>  	tristate "Qualcomm ath10k SNOC support"
+>  	depends on ATH10K
+>  	depends on ARCH_QCOM || COMPILE_TEST
+> +	depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
+>  	select QCOM_QMI_HELPERS
+>  	help
+>  	  This module adds support for integrated WCN3990 chip connected
 > -- 
-> 2.7.4
+> 2.25.1
 > 
