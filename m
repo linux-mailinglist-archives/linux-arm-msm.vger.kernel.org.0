@@ -2,159 +2,243 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4027A3CEDB6
+	by mail.lfdr.de (Postfix) with ESMTP id 896223CEDB7
 	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jul 2021 22:31:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358590AbhGSTaV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jul 2021 15:30:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41444 "EHLO
+        id S1358628AbhGSTaX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jul 2021 15:30:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44124 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1385319AbhGSS45 (ORCPT
+        with ESMTP id S1385717AbhGSTHx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jul 2021 14:56:57 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE366C0613A6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 12:28:02 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id r80so8205645oie.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 12:36:06 -0700 (PDT)
+        Mon, 19 Jul 2021 15:07:53 -0400
+Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1447DC0613EE
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 12:37:41 -0700 (PDT)
+Received: by mail-oo1-xc2a.google.com with SMTP id r14-20020a4ad4ce0000b029024b4146e2f5so4757514oos.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 12:45:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=AsVttpaIz6o+7rFOVPCQbe/BzglpTdJrFiNYOm9U9B4=;
-        b=xwBMdYLctnwna9IrwiJvv/IFdbPquUVCJaJF02XKLjARg7WlxJB/ZVtGmpR6HAwm0B
-         DAlHudRafT5FK7eCPyfAYclwILvV18U9HWuu2hZRtoN9T+Bw77VtgScRYrx1vCdYlljg
-         Iwkn0CtuZQHomiyQ0XeFefYfEq8KrIE0MKe0xvF9Tk4uob+ziMZ5iANeS3APKqwZTqBL
-         TOTExV4mKvdgaUSAOiUfnI2rc3QQ2HFMHuiK4+BzFBTfRyzhtilJeMf7h/0DDv2p1abI
-         MmF7SoQw7rmLOEZyWTtQUX/prQbprT9Gvc3gUPlbBtx+ehl7grqisfervRPvs/PmOmMX
-         ijQw==
+        bh=mQSEq7q+wxePH17WHb+2Y12YcuWTNetJZSsUU2m7H7E=;
+        b=N2B5cVOSFDnDhk7ZJikp57cYFtbff3OoOQABXLEuxfHd9w5r4YaazAcc8eRncMl+i9
+         CdTXPuNSjfJ+fAwAqjqmLVQTUKmjxMrLtxadKzernVCPQvvZtMHw+PfN2YcVoFRpOJVn
+         DO7kJXAMKW3uaCY8zg26hm+6/JN4SP0jKVMmYMwDnfqyuQw5+bpDBrJjC73C4be2Mazz
+         ZrwERWVVJ3yvNk51DT0mBrWPRKdhmtqxpBsxxlEcsISSz7PLLV4MeZgq2wir9Dcz6etg
+         xwTHQtPTxQMtjxgV1F5iZMxsUfm1ZThAV94QSeui+YSjZ+jd1hHx9N5U8/JBdGTb6QBW
+         jvRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=AsVttpaIz6o+7rFOVPCQbe/BzglpTdJrFiNYOm9U9B4=;
-        b=KAzD4yd1hJoCD7/yFBQ7XfhyRmOoMLpbN+g9KhcwG30eMtodoppwz4fxLFZVvd5W4w
-         MCM81COTckGQ2tHUDpCBP0FYlnn1PYrNyuClj38rEMbVCVOvhNaLkRMMdpbd36D/kLqi
-         ExPVpnxa1f121dojK9Wo4yphHrZnXYGfbIedmJ6hOAgXDG7ZTKUUc90qYKUb2g6+1hmx
-         /g22/6CKnI3tjUEcS57O0rpnd7bsRHuH6rn6OdwGxXEMRFKV7cUWEDtwG3QRMS3c2J93
-         dWnDD0UqFx1lalJ5EM1fWJhnaKJX11kkcHQW2TrjntvtPYn5u/Cd8VqXPJls+xajMwXF
-         jxgA==
-X-Gm-Message-State: AOAM530rbhdAurYtzlkJEn82jKjgZ3InH5+WBmxg3LPktBs1SlwdwV2q
-        lT0ijUS+PU5GBptpywvMBgofMA==
-X-Google-Smtp-Source: ABdhPJyja+h2hxOE+bpleMjs4kTNsVmCuEisdwIwTMDk7g7JkvErSsBCBiNgF7ZV7Ud5r3tIKV98WQ==
-X-Received: by 2002:aca:4406:: with SMTP id r6mr13822205oia.50.1626723365906;
-        Mon, 19 Jul 2021 12:36:05 -0700 (PDT)
+        bh=mQSEq7q+wxePH17WHb+2Y12YcuWTNetJZSsUU2m7H7E=;
+        b=rxJz2gN6qi1DoB3A6bG5VFZYzA1oaUsY/yF4fM6pgSpgVvNgjJX2yA4t2VKRKqGOy3
+         MFNGizFnoJYQzGLcLMFwQ3QN5ofreM3qIzcbCza6qhmF2gH7inQI6+rvzf+6sYTvFaLm
+         IztNavNKm28Xky6TpzLSSWS1OueObCqNoZ7lRLsddgCzMk7gXhjcBnSi0QmKkTcdVNCC
+         mL9ap0WNj6RtmH3d1B/hpaNLg+um6SFUtX+xHfhYnINLrGh+u80SAnr25nOt9BqDKJYY
+         /1QpNiQa1jZDP6L9vCKdKvu8jQ4ts+LIh+DW4158Ly7TPK9VMAB7+6+xnR4aMg6hu0f3
+         JS2Q==
+X-Gm-Message-State: AOAM530Z7seNkxj+gZF1kDgNdmX4yMsp2JNgk3uemizwAW4MB0qWQM/+
+        hu6SMoCndHY3PZXdpWycGOQbTg==
+X-Google-Smtp-Source: ABdhPJyEgmEJXTA8pZhCE4A7kaDgxCC+tSYYlL5iU+L2BArlNQdV1CQLgfGgR5PaI1xtBZvOvuEvbQ==
+X-Received: by 2002:a4a:e14f:: with SMTP id p15mr1215289oot.42.1626723899832;
+        Mon, 19 Jul 2021 12:44:59 -0700 (PDT)
 Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id c8sm820849oto.17.2021.07.19.12.36.04
+        by smtp.gmail.com with ESMTPSA id v5sm1855606oor.33.2021.07.19.12.44.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jul 2021 12:36:05 -0700 (PDT)
-Date:   Mon, 19 Jul 2021 14:36:03 -0500
+        Mon, 19 Jul 2021 12:44:59 -0700 (PDT)
+Date:   Mon, 19 Jul 2021 14:44:57 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     John Stultz <john.stultz@linaro.org>
-Cc:     lkml <linux-kernel@vger.kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <maz@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>
-Subject: Re: [PATCH] firmware: QCOM_SCM: Allow qcom_scm driver to be loadable
- as a permenent module
-Message-ID: <YPXUI0VzpxYO56BU@yoga>
-References: <20210707045320.529186-1-john.stultz@linaro.org>
- <YPJkF21ItYlKODyq@yoga>
- <CALAqxLUzTNiA7u=4_y9pkrh=Q_+vpPgFrhf_6F8-U0XPQU9crQ@mail.gmail.com>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     robh+dt@kernel.org, swboyd@chromium.org, ulf.hansson@linaro.org,
+        rjw@rjwysocki.net, agross@kernel.org, ohad@wizery.com,
+        mathieu.poirier@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dianders@chromium.org,
+        rishabhb@codeaurora.org, sidgup@codeaurora.org
+Subject: Re: [PATCH v3 02/13] dt-bindings: remoteproc: qcom: pas: Add QMP
+ bindings
+Message-ID: <YPXWOeq++TdwH1r4@yoga>
+References: <1624560727-6870-1-git-send-email-sibis@codeaurora.org>
+ <1624560727-6870-3-git-send-email-sibis@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <CALAqxLUzTNiA7u=4_y9pkrh=Q_+vpPgFrhf_6F8-U0XPQU9crQ@mail.gmail.com>
+In-Reply-To: <1624560727-6870-3-git-send-email-sibis@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 19 Jul 14:00 CDT 2021, John Stultz wrote:
+On Thu 24 Jun 13:51 CDT 2021, Sibi Sankar wrote:
 
-> On Fri, Jul 16, 2021 at 10:01 PM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> > On Tue 06 Jul 23:53 CDT 2021, John Stultz wrote:
-> > > Allow the qcom_scm driver to be loadable as a permenent module.
-> > >
-> > > This still uses the "depends on QCOM_SCM || !QCOM_SCM" bit to
-> > > ensure that drivers that call into the qcom_scm driver are
-> > > also built as modules. While not ideal in some cases its the
-> > > only safe way I can find to avoid build errors without having
-> > > those drivers select QCOM_SCM and have to force it on (as
-> > > QCOM_SCM=n can be valid for those drivers).
-> > >
-> > > Reviving this now that Saravana's fw_devlink defaults to on,
-> > > which should avoid loading troubles seen before.
-> > >
-> >
-> > Are you (in this last paragraph) saying that all those who have been
-> > burnt by fw_devlink during the last months and therefor run with it
-> > disabled will have a less fun experience once this is merged?
-> >
-> 
-> I guess potentially. So way back when this was originally submitted,
-> some folks had trouble booting if it was set as a module due to it
-> loading due to the deferred_probe_timeout expiring.
-> My attempts to change the default timeout value to be larger ran into
-> trouble, but Saravana's fw_devlink does manage to resolve things
-> properly for this case.
+> Add Qualcomm Mailbox Protocol (QMP) binding to replace the power domains
+> exposed by the AOSS QMP node.
 > 
 
-Unfortunately I see really weird things coming out of that, e.g. display
-on my db845c is waiting for the USB hub on PCIe to load its firmware,
-which typically times out after 60 seconds.
+I think this would be a good opportunity to describe why you need to
+make this change to the binding.
 
-I've stared at it quite a bit and I don't understand how they are
-related.
-
-> But if folks are having issues w/ fw_devlink, and have it disabled,
-> and set QCOM_SCM=m they could still trip over the issue with the
-> timeout firing before it is loaded (especially if they are loading
-> modules from late mounted storage rather than ramdisk).
-> 
-
-I guess we'll have to force QCOM_SCM=y in the defconfig and hope people
-don't make it =m.
-
-> > (I'm picking this up, but I don't fancy the idea that some people are
-> > turning the boot process into a lottery)
-> 
-> Me neither, and I definitely think the deferred_probe_timeout logic is
-> way too fragile, which is why I'm eager for fw_devlink as it's a much
-> less racy approach to handling module loading dependencies.
-
-Right, deferred_probe_timeout is the main issue here. Without it we
-might get some weird probe deferral runs, but either some driver is
-missing or it settles eventually.
-
-With deferred_probe_timeout it's rather common for me to see things
-end up probe out of order (even more now with fw_devlink finding cyclic
-dependencies) and deferred_probe_timeout just breaking things.
-
-> So if you
-> want to hold on this, while any remaining fw_devlink issues get
-> sorted, that's fine.  But I'd also not cast too much ire at
-> fw_devlink, as the global probe timeout approach for handling optional
-> links isn't great, and we need a better solution.
-> 
-
-There's no end to the possible and valid ways you can setup your
-defconfig and run into the probe deferral issues, so I see no point in
-holding this one back any longer. I just hope that one day it will be
-possible to boot the upstream kernel in a reliable fashion.
-
-Thanks,
+Regards,
 Bjorn
+
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> ---
+> 
+> v3:
+>  * Misc. documentation fixes:
+>   - Reduce power-domain maxItems due to load_state pd removal
+>   - Combine compatibles where possible with the load_state pd removal
+>   - Fixup the qcom,qmp ref to phandle type
+> 
+>  .../devicetree/bindings/remoteproc/qcom,adsp.yaml  | 62 +++++++++++-----------
+>  1 file changed, 30 insertions(+), 32 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
+> index 9ea05e608bc1..ad85617b43fa 100644
+> --- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
+> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
+> @@ -75,11 +75,11 @@ properties:
+>  
+>    power-domains:
+>      minItems: 1
+> -    maxItems: 3
+> +    maxItems: 2
+>  
+>    power-domain-names:
+>      minItems: 1
+> -    maxItems: 3
+> +    maxItems: 2
+>  
+>    firmware-name:
+>      $ref: /schemas/types.yaml#/definitions/string
+> @@ -89,6 +89,10 @@ properties:
+>      maxItems: 1
+>      description: Reference to the reserved-memory for the Hexagon core
+>  
+> +  qcom,qmp:
+> +    $ref: /schemas/types.yaml#/definitions/phandle
+> +    description: Reference to the AOSS side-channel message RAM.
+> +
+>    qcom,smem-states:
+>      $ref: /schemas/types.yaml#/definitions/phandle-array
+>      description: States used by the AP to signal the Hexagon core
+> @@ -359,13 +363,11 @@ allOf:
+>        properties:
+>          power-domains:
+>            items:
+> -            - description: Load State power domain
+>              - description: CX power domain
+>              - description: MX power domain
+>              - description: MSS power domain
+>          power-domain-names:
+>            items:
+> -            - const: load_state
+>              - const: cx
+>              - const: mx
+>              - const: mss
+> @@ -381,43 +383,20 @@ allOf:
+>        properties:
+>          power-domains:
+>            items:
+> -            - description: Load State power domain
+>              - description: CX power domain
+> -        power-domain-names:
+> -          items:
+> -            - const: load_state
+> -            - const: cx
+>  
+>    - if:
+>        properties:
+>          compatible:
+>            contains:
+>              enum:
+> +              - qcom,sdx55-mpss-pas
+>                - qcom,sm8150-mpss-pas
+>                - qcom,sm8350-mpss-pas
+>      then:
+>        properties:
+>          power-domains:
+>            items:
+> -            - description: Load State power domain
+> -            - description: CX power domain
+> -            - description: MSS power domain
+> -        power-domain-names:
+> -          items:
+> -            - const: load_state
+> -            - const: cx
+> -            - const: mss
+> -
+> -  - if:
+> -      properties:
+> -        compatible:
+> -          contains:
+> -            enum:
+> -              - qcom,sdx55-mpss-pas
+> -    then:
+> -      properties:
+> -        power-domains:
+> -          items:
+>              - description: CX power domain
+>              - description: MSS power domain
+>          power-domain-names:
+> @@ -439,12 +418,10 @@ allOf:
+>        properties:
+>          power-domains:
+>            items:
+> -            - description: Load State power domain
+>              - description: LCX power domain
+>              - description: LMX power domain
+>          power-domain-names:
+>            items:
+> -            - const: load_state
+>              - const: lcx
+>              - const: lmx
+>  
+> @@ -458,12 +435,10 @@ allOf:
+>        properties:
+>          power-domains:
+>            items:
+> -            - description: Load State power domain
+>              - description: CX power domain
+>              - description: MXC power domain
+>          power-domain-names:
+>            items:
+> -            - const: load_state
+>              - const: cx
+>              - const: mxc
+>  
+> @@ -499,6 +474,29 @@ allOf:
+>              - const: mss_restart
+>              - const: pdc_reset
+>  
+> +  - if:
+> +      properties:
+> +        compatible:
+> +          contains:
+> +            enum:
+> +              - qcom,sc7180-mpss-pas
+> +              - qcom,sm8150-adsp-pas
+> +              - qcom,sm8150-cdsp-pas
+> +              - qcom,sm8150-mpss-pas
+> +              - qcom,sm8150-slpi-pas
+> +              - qcom,sm8250-adsp-pas
+> +              - qcom,sm8250-cdsp-pas
+> +              - qcom,sm8250-slpi-pas
+> +              - qcom,sm8350-adsp-pas
+> +              - qcom,sm8350-cdsp-pas
+> +              - qcom,sm8350-mpss-pas
+> +              - qcom,sm8350-slpi-pas
+> +    then:
+> +      properties:
+> +        qcom,qmp:
+> +          items:
+> +            - description: Reference to the AOSS side-channel message RAM.
+> +
+>  examples:
+>    - |
+>      #include <dt-bindings/clock/qcom,rpmcc.h>
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
