@@ -2,53 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ACEF93CD0B5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jul 2021 11:28:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 83F533CD0FC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jul 2021 11:37:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235965AbhGSIqW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jul 2021 04:46:22 -0400
-Received: from mga02.intel.com ([134.134.136.20]:23932 "EHLO mga02.intel.com"
+        id S234946AbhGSIzi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jul 2021 04:55:38 -0400
+Received: from mga04.intel.com ([192.55.52.120]:40446 "EHLO mga04.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235890AbhGSIqK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jul 2021 04:46:10 -0400
-X-IronPort-AV: E=McAfee;i="6200,9189,10049"; a="198223904"
+        id S229474AbhGSIzh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 19 Jul 2021 04:55:37 -0400
+X-IronPort-AV: E=McAfee;i="6200,9189,10049"; a="209112438"
 X-IronPort-AV: E=Sophos;i="5.84,251,1620716400"; 
-   d="gz'50?scan'50,208,50";a="198223904"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Jul 2021 02:26:49 -0700
+   d="gz'50?scan'50,208,50";a="209112438"
+Received: from fmsmga006.fm.intel.com ([10.253.24.20])
+  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Jul 2021 01:29:13 -0700
 X-ExtLoop1: 1
 X-IronPort-AV: E=Sophos;i="5.84,251,1620716400"; 
-   d="gz'50?scan'50,208,50";a="499849016"
+   d="gz'50?scan'50,208,50";a="656770625"
 Received: from lkp-server01.sh.intel.com (HELO a467b34d8c10) ([10.239.97.150])
-  by FMSMGA003.fm.intel.com with ESMTP; 19 Jul 2021 02:26:46 -0700
+  by fmsmga006.fm.intel.com with ESMTP; 19 Jul 2021 01:29:10 -0700
 Received: from kbuild by a467b34d8c10 with local (Exim 4.92)
         (envelope-from <lkp@intel.com>)
-        id 1m5PXx-0000cz-IN; Mon, 19 Jul 2021 09:26:45 +0000
-Date:   Mon, 19 Jul 2021 17:26:10 +0800
+        id 1m5OeD-0000bm-EF; Mon, 19 Jul 2021 08:29:09 +0000
+Date:   Mon, 19 Jul 2021 16:28:07 +0800
 From:   kernel test robot <lkp@intel.com>
 To:     Vinod Koul <vkoul@kernel.org>, Rob Clark <robdclark@gmail.com>
-Cc:     kbuild-all@lists.01.org, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+Cc:     kbuild-all@lists.01.org, Jonathan Marek <jonathan@marek.ca>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
         Abhinav Kumar <abhinavk@codeaurora.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: Re: [PATCH 10/11] drm/msm/dsi: Add support for DSC configuration
-Message-ID: <202107191741.a5prDJ26-lkp@intel.com>
-References: <20210715065203.709914-11-vkoul@kernel.org>
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>, dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH 02/11] drm/msm/disp/dpu1: Add support for DSC
+Message-ID: <202107191617.GTgifw9l-lkp@intel.com>
+References: <20210715065203.709914-3-vkoul@kernel.org>
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="TB36FDmn/VVEgNH/"
+Content-Type: multipart/mixed; boundary="T4sUOijqQbZv57TR"
 Content-Disposition: inline
-In-Reply-To: <20210715065203.709914-11-vkoul@kernel.org>
+In-Reply-To: <20210715065203.709914-3-vkoul@kernel.org>
 User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---TB36FDmn/VVEgNH/
+--T4sUOijqQbZv57TR
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 
@@ -57,7 +56,8 @@ Hi Vinod,
 I love your patch! Perhaps something to improve:
 
 [auto build test WARNING on v5.13]
-[cannot apply to linus/master v5.14-rc1 next-20210716]
+[also build test WARNING on next-20210716]
+[cannot apply to linus/master v5.14-rc1]
 [If your patch is applied to the wrong git tree, kindly drop us a note.
 And when submitting patch, we suggest to use '--base' as documented in
 https://git-scm.com/docs/git-format-patch]
@@ -69,10 +69,10 @@ compiler: arm-linux-gnueabi-gcc (GCC) 10.3.0
 reproduce (this is a W=1 build):
         wget https://raw.githubusercontent.com/intel/lkp-tests/master/sbin/make.cross -O ~/bin/make.cross
         chmod +x ~/bin/make.cross
-        # https://github.com/0day-ci/linux/commit/67410f51d0cd25256b7926c30f27071291244ef3
+        # https://github.com/0day-ci/linux/commit/032a82b57221a13f65c55870ae3f64d0e5a07390
         git remote add linux-review https://github.com/0day-ci/linux
         git fetch --no-tags linux-review Vinod-Koul/drm-msm-Add-Display-Stream-Compression-Support/20210715-145540
-        git checkout 67410f51d0cd25256b7926c30f27071291244ef3
+        git checkout 032a82b57221a13f65c55870ae3f64d0e5a07390
         # save the attached .config to linux build tree
         COMPILER_INSTALL_PATH=$HOME/0day COMPILER=gcc-10.3.0 make.cross ARCH=arm 
 
@@ -81,191 +81,61 @@ Reported-by: kernel test robot <lkp@intel.com>
 
 All warnings (new ones prefixed by >>):
 
-   drivers/gpu/drm/msm/dsi/dsi_host.c: In function 'dsi_timing_setup':
->> drivers/gpu/drm/msm/dsi/dsi_host.c:1022:41: warning: variable 'width' set but not used [-Wunused-but-set-variable]
-    1022 |    u32 reg, intf_width, slice_per_intf, width;
-         |                                         ^~~~~
+   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c: In function 'dpu_hw_dsc_config_thresh':
+>> drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c:128:7: warning: variable 'lp' set but not used [-Wunused-but-set-variable]
+     128 |  u16 *lp;
+         |       ^~
 
 
-vim +/width +1022 drivers/gpu/drm/msm/dsi/dsi_host.c
+vim +/lp +128 drivers/gpu/drm/msm/disp/dpu1/dpu_hw_dsc.c
 
-   964	
-   965	static void dsi_timing_setup(struct msm_dsi_host *msm_host, bool is_dual_dsi)
-   966	{
-   967		struct drm_display_mode *mode = msm_host->mode;
-   968		u32 hs_start = 0, vs_start = 0; /* take sync start as 0 */
-   969		u32 h_total = mode->htotal;
-   970		u32 v_total = mode->vtotal;
-   971		u32 hs_end = mode->hsync_end - mode->hsync_start;
-   972		u32 vs_end = mode->vsync_end - mode->vsync_start;
-   973		u32 ha_start = h_total - mode->hsync_start;
-   974		u32 ha_end = ha_start + mode->hdisplay;
-   975		u32 va_start = v_total - mode->vsync_start;
-   976		u32 va_end = va_start + mode->vdisplay;
-   977		u32 hdisplay = mode->hdisplay;
-   978		u32 wc;
-   979		u32 data;
-   980	
-   981		DBG("");
-   982	
-   983		/*
-   984		 * For dual DSI mode, the current DRM mode has
-   985		 * the complete width of the panel. Since, the complete
-   986		 * panel is driven by two DSI controllers, the horizontal
-   987		 * timings have to be split between the two dsi controllers.
-   988		 * Adjust the DSI host timing values accordingly.
-   989		 */
-   990		if (is_dual_dsi) {
-   991			h_total /= 2;
-   992			hs_end /= 2;
-   993			ha_start /= 2;
-   994			ha_end /= 2;
-   995			hdisplay /= 2;
-   996		}
-   997	
-   998		if (msm_host->dsc) {
-   999			struct msm_display_dsc_config *dsc = msm_host->dsc;
-  1000	
-  1001			/* update dsc params with timing params */
-  1002			dsi_dsc_update_pic_dim(dsc, mode->hdisplay, mode->vdisplay);
-  1003			DBG("Mode Width- %d x Height %d\n", dsc->drm->pic_width, dsc->drm->pic_height);
-  1004	
-  1005			/* we do the calculations for dsc parameters here so that
-  1006			 * panel can use these parameters
-  1007			 */
-  1008			dsi_populate_dsc_params(dsc);
-  1009	
-  1010			/* Divide the display by 3 but keep back/font porch and
-  1011			 * pulse width same
-  1012			 */
-  1013			h_total -= hdisplay;
-  1014			hdisplay /= 3;
-  1015			h_total += hdisplay;
-  1016			ha_end = ha_start + hdisplay;
-  1017		}
-  1018	
-  1019		if (msm_host->mode_flags & MIPI_DSI_MODE_VIDEO) {
-  1020			if (msm_host->dsc) {
-  1021				struct msm_display_dsc_config *dsc = msm_host->dsc;
-> 1022				u32 reg, intf_width, slice_per_intf, width;
-  1023				u32 total_bytes_per_intf;
-  1024	
-  1025				/* first calculate dsc parameters and then program
-  1026				 * compress mode registers
-  1027				 */
-  1028				intf_width = hdisplay;
-  1029				slice_per_intf = DIV_ROUND_UP(intf_width, dsc->drm->slice_width);
-  1030	
-  1031				/* If slice_count > slice_per_intf, then use 1
-  1032				 * This can happen during partial update
-  1033				 */
-  1034					dsc->drm->slice_count = 1;
-  1035	
-  1036				dsc->bytes_in_slice = DIV_ROUND_UP(dsc->drm->slice_width * 8, 8);
-  1037				total_bytes_per_intf = dsc->bytes_in_slice * slice_per_intf;
-  1038	
-  1039				dsc->eol_byte_num = total_bytes_per_intf % 3;
-  1040				dsc->pclk_per_line =  DIV_ROUND_UP(total_bytes_per_intf, 3);
-  1041				dsc->bytes_per_pkt = dsc->bytes_in_slice * dsc->drm->slice_count;
-  1042				dsc->pkt_per_line = slice_per_intf / dsc->drm->slice_count;
-  1043	
-  1044				width = dsc->pclk_per_line;
-  1045				reg = dsc->bytes_per_pkt << 16;
-  1046				reg |= (0x0b << 8);    /* dtype of compressed image */
-  1047	
-  1048				/* pkt_per_line:
-  1049				 * 0 == 1 pkt
-  1050				 * 1 == 2 pkt
-  1051				 * 2 == 4 pkt
-  1052				 * 3 pkt is not supported
-  1053				 * above translates to ffs() - 1
-  1054				 */
-  1055				reg |= (ffs(dsc->pkt_per_line) - 1) << 6;
-  1056	
-  1057				dsc->eol_byte_num = total_bytes_per_intf % 3;
-  1058				reg |= dsc->eol_byte_num << 4;
-  1059				reg |= 1;
-  1060	
-  1061				dsi_write(msm_host,
-  1062					  REG_DSI_VIDEO_COMPRESSION_MODE_CTRL, reg);
-  1063			}
-  1064	
-  1065			dsi_write(msm_host, REG_DSI_ACTIVE_H,
-  1066				DSI_ACTIVE_H_START(ha_start) |
-  1067				DSI_ACTIVE_H_END(ha_end));
-  1068			dsi_write(msm_host, REG_DSI_ACTIVE_V,
-  1069				DSI_ACTIVE_V_START(va_start) |
-  1070				DSI_ACTIVE_V_END(va_end));
-  1071			dsi_write(msm_host, REG_DSI_TOTAL,
-  1072				DSI_TOTAL_H_TOTAL(h_total - 1) |
-  1073				DSI_TOTAL_V_TOTAL(v_total - 1));
-  1074	
-  1075			dsi_write(msm_host, REG_DSI_ACTIVE_HSYNC,
-  1076				DSI_ACTIVE_HSYNC_START(hs_start) |
-  1077				DSI_ACTIVE_HSYNC_END(hs_end));
-  1078			dsi_write(msm_host, REG_DSI_ACTIVE_VSYNC_HPOS, 0);
-  1079			dsi_write(msm_host, REG_DSI_ACTIVE_VSYNC_VPOS,
-  1080				DSI_ACTIVE_VSYNC_VPOS_START(vs_start) |
-  1081				DSI_ACTIVE_VSYNC_VPOS_END(vs_end));
-  1082		} else {		/* command mode */
-  1083			if (msm_host->dsc) {
-  1084				struct msm_display_dsc_config *dsc = msm_host->dsc;
-  1085				u32 reg, reg_ctrl, reg_ctrl2;
-  1086				u32 slice_per_intf, bytes_in_slice, total_bytes_per_intf;
-  1087	
-  1088				reg_ctrl = dsi_read(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL);
-  1089				reg_ctrl2 = dsi_read(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2);
-  1090	
-  1091				slice_per_intf = DIV_ROUND_UP(hdisplay, dsc->drm->slice_width);
-  1092				bytes_in_slice = DIV_ROUND_UP(dsc->drm->slice_width *
-  1093							      dsc->drm->bits_per_pixel, 8);
-  1094				dsc->drm->slice_chunk_size = bytes_in_slice;
-  1095				total_bytes_per_intf = dsc->bytes_in_slice * slice_per_intf;
-  1096				dsc->pkt_per_line = slice_per_intf / dsc->drm->slice_count;
-  1097	
-  1098				reg = 0x39 << 8;
-  1099				reg |= ffs(dsc->pkt_per_line) << 6;
-  1100	
-  1101				dsc->eol_byte_num = total_bytes_per_intf % 3;
-  1102				reg |= dsc->eol_byte_num << 4;
-  1103				reg |= 1;
-  1104	
-  1105				reg_ctrl |= reg;
-  1106				reg_ctrl2 |= bytes_in_slice;
-  1107	
-  1108				dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL, reg);
-  1109				dsi_write(msm_host, REG_DSI_COMMAND_COMPRESSION_MODE_CTRL2, reg_ctrl2);
-  1110			}
-  1111	
-  1112			/* image data and 1 byte write_memory_start cmd */
-  1113			if (!msm_host->dsc)
-  1114				wc = hdisplay * dsi_get_bpp(msm_host->format) / 8 + 1;
-  1115			else
-  1116				wc = mode->hdisplay / 2 + 1;
-  1117	
-  1118			data = DSI_CMD_MDP_STREAM0_CTRL_WORD_COUNT(wc) |
-  1119			       DSI_CMD_MDP_STREAM0_CTRL_VIRTUAL_CHANNEL(msm_host->channel) |
-  1120				DSI_CMD_MDP_STREAM0_CTRL_DATA_TYPE(MIPI_DSI_DCS_LONG_WRITE);
-  1121	
-  1122			dsi_write(msm_host, REG_DSI_CMD_MDP_STREAM0_CTRL, data);
-  1123	
-  1124			data = DSI_CMD_MDP_STREAM0_TOTAL_H_TOTAL(hdisplay) |
-  1125				DSI_CMD_MDP_STREAM0_TOTAL_V_TOTAL(mode->vdisplay);
-  1126			dsi_write(msm_host, REG_DSI_CMD_MDP_STREAM0_TOTAL, data);
-  1127		}
-  1128	}
-  1129	
+   121	
+   122	static void dpu_hw_dsc_config_thresh(struct dpu_hw_dsc *hw_dsc,
+   123					     struct msm_display_dsc_config *dsc)
+   124	{
+   125		struct drm_dsc_rc_range_parameters *rc = dsc->drm->rc_range_params;
+   126		struct dpu_hw_blk_reg_map *c = &hw_dsc->hw;
+   127		u32 off;
+ > 128		u16 *lp;
+   129		int i;
+   130	
+   131		lp = dsc->drm->rc_buf_thresh;
+   132		off = DSC_RC_BUF_THRESH;
+   133		for (i = 0; i < DSC_NUM_BUF_RANGES - 1 ; i++) {
+   134			DPU_REG_WRITE(c, off, dsc->drm->rc_buf_thresh[i]);
+   135			off += 4;
+   136		}
+   137	
+   138		off = DSC_RANGE_MIN_QP;
+   139		for (i = 0; i < DSC_NUM_BUF_RANGES; i++) {
+   140			DPU_REG_WRITE(c, off, rc[i].range_min_qp);
+   141			off += 4;
+   142		}
+   143	
+   144		off = DSC_RANGE_MAX_QP;
+   145		for (i = 0; i < 15; i++) {
+   146			DPU_REG_WRITE(c, off, rc[i].range_max_qp);
+   147			off += 4;
+   148		}
+   149	
+   150		off = DSC_RANGE_BPG_OFFSET;
+   151		for (i = 0; i < 15; i++) {
+   152			DPU_REG_WRITE(c, off, rc[i].range_bpg_offset);
+   153			off += 4;
+   154		}
+   155	}
+   156	
 
 ---
 0-DAY CI Kernel Test Service, Intel Corporation
 https://lists.01.org/hyperkitty/list/kbuild-all@lists.01.org
 
---TB36FDmn/VVEgNH/
+--T4sUOijqQbZv57TR
 Content-Type: application/gzip
 Content-Disposition: attachment; filename=".config.gz"
 Content-Transfer-Encoding: base64
 
-H4sICPc/9WAAAy5jb25maWcAlFxbk9s2sn7Pr2AlL8lDYom6Tp2aB4gEJawIkgZASTMvKGUs
+H4sICOct9WAAAy5jb25maWcAlFxbk9s2sn7Pr2AlL8lDYom6Tp2aB4gEJawIkgZASTMvKGUs
 e6d2Lj4aTdb+96cB3gAQlH22tirW141bo9HobjTnt19+C9D75fX5eHl8OD49fQ++nF5O5+Pl
 9Cn4/Ph0+p8gzoMsFwGOifgLmNPHl/dvH47n52D213jy1yjYns4vp6cgen35/PjlHVo+vr78
 8tsvUZ4lZC2jSO4w4yTPpMAHcfsrtPzzSfXx55eX99Px78c/vzw8BL+vo+iPYDz6C3r81WhL
@@ -1280,4 +1150,4 @@ vESuJge9HNiwB6qNamjy0WptXUoeakvTFSDw2M/3rl6sLUnrHGTegYlUEV8HxsM/xHXbUUZp
 YGNXqC2ZlwM7Bq7SELjKwbMhLeYYqqwrGUaQQQpQxc6m6ERTM6gGsU2q2RWRl8zgjeLFNlBv
 tf8fdESV5Te0AwA=
 
---TB36FDmn/VVEgNH/--
+--T4sUOijqQbZv57TR--
