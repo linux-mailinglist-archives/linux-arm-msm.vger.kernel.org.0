@@ -2,123 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 23CDE3CE3E2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jul 2021 18:30:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 98DDD3CE64B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jul 2021 18:45:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236444AbhGSPkt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jul 2021 11:40:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49976 "EHLO
+        id S237046AbhGSQDr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jul 2021 12:03:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348904AbhGSPff (ORCPT
+        with ESMTP id S1351425AbhGSP7u (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jul 2021 11:35:35 -0400
-Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9C70C0A88CF
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 08:24:50 -0700 (PDT)
-Received: by mail-pg1-x536.google.com with SMTP id 37so19469456pgq.0
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 08:51:37 -0700 (PDT)
+        Mon, 19 Jul 2021 11:59:50 -0400
+Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3601EC0733AA
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 08:47:11 -0700 (PDT)
+Received: by mail-ot1-x336.google.com with SMTP id s2-20020a0568301e02b02904ce2c1a843eso8184044otr.13
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 09:12:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MkKhttHk1f1NxvEjszFkNPRaTR2uQK8NNQrR3I9+ckM=;
-        b=lMJZcOx6oA7r1fitEX6eCxK880OIlVRr2rH/LT49CPkL3ITNjZ/NPY6N6YmEwBHwT3
-         FvHe3PgnV5SmlS1oG+8cBvE4+Ow59gFX5xochDQ0tRZVdhxPkXYAGcvV+V2yUQ9RJ0mn
-         rYE0k/MGE6B7F8wRUS0zf/CmcLnsn058kUgZ9piS6aoX9r9HqLAdmLXb+CJFcpkHJbB+
-         92gVu13ylQzRpowsNN5al1KOXpfCMNxK01aZYtS/LArebMSTZuAuxu4kgMY2mbJsQ3oG
-         2nw2HqhJ3AOly/2NQwRte8o2k+GcV3HlcpyrAZpCRq+GS5E5VtevVrYO6A+Y6Y9FVGPf
-         B2yQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=K9U1G+fYwgbItG9ePuqHimuSDkMCh9q2v+fd/TSnMYU=;
+        b=yVbMUkqoG8aAUUMp+h8u8fkVLxlbQh2P7hhgc2rd70abF9xihK07p4zltiom2eF/PY
+         SE40g70iY+RjZtnAPWUbLEjTiEO2PZkir7AgjvcupxFm4+hGAlaup822ZABbN/EKYuYQ
+         /KJLXdcID/sFq/96pZn8YroCHUTSu5quUX88hlfUgZSt2H2Xhyrpnkh9rvjbh1uTOaAK
+         hDsB33/waOvg0Gsaw8PHM4LMoGmZpnuayXwXJIvilErskWJOsSBBmTJp5T+8N2NhPuJD
+         TMmzYnT4XpbbtUke1Jk3UMbvm5ug0LFchNTZl6hDVLj9Xz+kkuWXpAQDFI5+ZdxO9ipo
+         Hwsw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MkKhttHk1f1NxvEjszFkNPRaTR2uQK8NNQrR3I9+ckM=;
-        b=FqVYeHYue5wyEHy8YjPUG169pj8RyaWjIh5d89fbB5FC5yzy2Ac3B88KXgdaTcuNXE
-         jffJUSINv1l2EJnRyfqZZZ2zLB5p5nP1RsNGRtlpSd1mz8I3l6jAasbqK2pVjLfNw7TU
-         B+6ecOebkjv9UzLBALslWPjLpduJ8Seuh1qJR+Cy2+CndFtGb1cXb0/UP1CeQPdqFZh1
-         qI1y0EEXwIqEO6Epv/io9Ie6MhTfyh10UmE1uPo15h0/Ji04eniiORa1tF2xaVIEcABs
-         8zKWqbnMfTuG6ukYYemTzLVZca9hdOC+wIDvLSs5FZJI6rU+k8zGHDuQy8pZX+kPmGOw
-         t1eA==
-X-Gm-Message-State: AOAM532iciIXzmubMoTnQa5EvKLJMizjQRupp4O+2M+oPxHObeEomPYe
-        kF/Gq369g7qMwEEkLFNp9QIigtPeHBXRVJUCK1KscA==
-X-Google-Smtp-Source: ABdhPJwbPHFgosVLoCqok1vM0WItXj22KFp9TT5+FAelCfh+WtA7xCqRRbbFZHLQm+9yVwk+v+LDH1QIUgp0c6MCGLs=
-X-Received: by 2002:a63:3107:: with SMTP id x7mr17715236pgx.303.1626709896370;
- Mon, 19 Jul 2021 08:51:36 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210719145317.79692-1-stephan@gerhold.net> <20210719145317.79692-5-stephan@gerhold.net>
-In-Reply-To: <20210719145317.79692-5-stephan@gerhold.net>
-From:   Loic Poulain <loic.poulain@linaro.org>
-Date:   Mon, 19 Jul 2021 18:01:33 +0200
-Message-ID: <CAMZdPi8oxRMo0erfd0wrUPzD2UsbexoR=86u2N75Fd9RpXHoKg@mail.gmail.com>
-Subject: Re: [RFC PATCH net-next 4/4] net: wwan: Add Qualcomm BAM-DMUX WWAN
- network driver
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Sergey Ryazanov <ryazanov.s.a@gmail.com>,
-        Johannes Berg <johannes@sipsolutions.net>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=K9U1G+fYwgbItG9ePuqHimuSDkMCh9q2v+fd/TSnMYU=;
+        b=tMtsW1Sc5lvJmjHwDlLh01S4W5JgdieaY2TrnGLTvQjUzpecsdGD+PfWGRh27Rv8Zr
+         wRlqc73IJAyKfeJ5cARZ4Kz2tFBVxup9VXvgSlb/VnJgVMn3pPphborExfLVbXOtDR9M
+         06TUCpaRKLI/K4rRSZnIyXOJvmmQhp2ity5uBr7VsHIMrIeUKnYlOBSG93lIavF4ksOu
+         L8yd6E68yev7LBC+iEwgaW2uEHrckyqvETSEApJyve4FAM2lb1pYzqYhZknDpEWgZS8y
+         YQlqZu3D2xOtNiOqUPtreeN/2XMNuXD/5kxzuqUDJkB/7Fu2qRLDizeb++yr6EPqvOvK
+         mcLg==
+X-Gm-Message-State: AOAM533E/0WTme8DpvYZot3Za58QHgqGpHFsqsqZ1z/u9hsVrBEvkL98
+        ciWpWlQWFJ4uD+DTQE0ZV0ggow==
+X-Google-Smtp-Source: ABdhPJzb/CgKbdI3li12NH3nn29kjW7PGT1abVu7Y6tH+jXpOrVTdDpt9hB3r+u3fd4vyo1YiSPDmA==
+X-Received: by 2002:a05:6830:1d88:: with SMTP id y8mr18300222oti.95.1626711133687;
+        Mon, 19 Jul 2021 09:12:13 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id a83sm3433975oii.13.2021.07.19.09.12.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 19 Jul 2021 09:12:13 -0700 (PDT)
+Date:   Mon, 19 Jul 2021 11:12:11 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     satya priya <skakit@codeaurora.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Aleksander Morgado <aleksander@aleksander.es>,
-        Network Development <netdev@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dmaengine@vger.kernel.org, devicetree <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        Andy Gross <agross@kernel.org>, kgunda@codeaurora.org,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH V6 2/2] dt-bindings: pinctrl: qcom-pmic-gpio: Remove the
+ interrupts property
+Message-ID: <YPWkW5f2akHntBJS@yoga>
+References: <1626692855-10194-1-git-send-email-skakit@codeaurora.org>
+ <1626692855-10194-3-git-send-email-skakit@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1626692855-10194-3-git-send-email-skakit@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephan,
+On Mon 19 Jul 06:07 CDT 2021, satya priya wrote:
 
+> Remove the interrupts property as we no longer specify it.
+> 
+> Signed-off-by: satya priya <skakit@codeaurora.org>
+> Acked-by: Rob Herring <robh@kernel.org>
 
-On Mon, 19 Jul 2021 at 17:01, Stephan Gerhold <stephan@gerhold.net> wrote:
->
-> I'm not sure how to integrate the driver with the WWAN subsystem yet.
-> At the moment the driver creates network interfaces for all channels
-> announced by the modem, it does not make use of the WWAN link management
-> yet. Unfortunately, this is a bit complicated:
->
-> Both QMAP and the built-in multiplexing layer might be needed at some point.
-> There are firmware versions that do not support QMAP and the other way around
-> (the built-in multiplexing was disabled on very recent firmware versions).
-> Only userspace can check if QMAP is supported in the firmware (via QMI).
->
-> I could ignore QMAP completely for now but I think someone will show up
-> who will need this eventually. And if there is going to be common code for
-> QMAP/rmnet link management it would be nice if BAM-DMUX could also make
-> use of it.
-
-I have this on my TODO list for mhi-net QMAP.
-
-> But the question is, how could this look like? How do we know if we should
-> create a link for QMAP or a BAM-DMUX channel? Does it even make sense
-> to manage the 1-8 channels via the WWAN link management?
-
-Couldn't it be specified via dts (property or different compatible
-string)? would it make sense to have two drivers (with common core) to
-manage either the multi-bam channel or newer QMAP based single
-bam-channel modems.
-
->
-> Another problem is that the WWAN subsystem currently creates all network
-> interfaces below the common WWAN device. This means that userspace like
-> ModemManager has no way to check which driver provides them. This is
-> necessary though to decide how to set it up via QMI (ModemManager uses it).
-
-Well, I have quite a similar concern since I'm currently porting
-mhi-net mbim to wwan framework, and I was thinking about not making
-wwan device parent of the network link/netdev (in the same way as
-wlan0 is not child of ieee80211 device), but not sure if it's a good
-idea or not since we can not really consider driver name part of the
-uapi.
-
-The way links are created is normally abstracted, so if you know which
-bam variant you have from wwan network driver side (e.g. via dts), you
-should have nothing to check on the user side, except the session id.
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
 Regards,
-Loic
+Bjorn
+
+> ---
+> Changes in V5:
+>  - This is newly added in V5.As per Bjorn's comments on [1]
+>    removed the interrupts property as it is no longer used.
+> 
+>  [1] https://lore.kernel.org/patchwork/patch/1434144/
+> 
+> Changes in V6:
+>  - No changes.
+> 
+>  .../bindings/pinctrl/qcom,pmic-gpio.yaml           | 28 ++++------------------
+>  1 file changed, 4 insertions(+), 24 deletions(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
+> index 7a0d2d8..9bd01db 100644
+> --- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
+> @@ -56,18 +56,11 @@ properties:
+>    reg:
+>      maxItems: 1
+>  
+> -  interrupts:
+> -    minItems: 1
+> -    maxItems: 44
+> -    description:
+> -      Must contain an array of encoded interrupt specifiers for
+> -      each available GPIO
+> +  interrupt-controller: true
+>  
+>    '#interrupt-cells':
+>      const: 2
+>  
+> -  interrupt-controller: true
+> -
+>    gpio-controller: true
+>  
+>    gpio-ranges:
+> @@ -87,6 +80,7 @@ required:
+>    - gpio-controller
+>    - '#gpio-cells'
+>    - gpio-ranges
+> +  - interrupt-controller
+>  
+>  patternProperties:
+>    '-state$':
+> @@ -223,22 +217,8 @@ examples:
+>      pm8921_gpio: gpio@150 {
+>        compatible = "qcom,pm8921-gpio", "qcom,ssbi-gpio";
+>        reg = <0x150 0x160>;
+> -      interrupts = <192 1>, <193 1>, <194 1>,
+> -                   <195 1>, <196 1>, <197 1>,
+> -                   <198 1>, <199 1>, <200 1>,
+> -                   <201 1>, <202 1>, <203 1>,
+> -                   <204 1>, <205 1>, <206 1>,
+> -                   <207 1>, <208 1>, <209 1>,
+> -                   <210 1>, <211 1>, <212 1>,
+> -                   <213 1>, <214 1>, <215 1>,
+> -                   <216 1>, <217 1>, <218 1>,
+> -                   <219 1>, <220 1>, <221 1>,
+> -                   <222 1>, <223 1>, <224 1>,
+> -                   <225 1>, <226 1>, <227 1>,
+> -                   <228 1>, <229 1>, <230 1>,
+> -                   <231 1>, <232 1>, <233 1>,
+> -                   <234 1>, <235 1>;
+> -
+> +      interrupt-controller;
+> +      #interrupt-cells = <2>;
+>        gpio-controller;
+>        gpio-ranges = <&pm8921_gpio 0 0 44>;
+>        #gpio-cells = <2>;
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+> of Code Aurora Forum, hosted by The Linux Foundation
+> 
