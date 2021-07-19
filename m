@@ -2,159 +2,316 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 63B8B3CF02E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 01:48:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B8B63CF030
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 01:48:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1359359AbhGSXAE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jul 2021 19:00:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58738 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1441835AbhGSWN7 (ORCPT
+        id S1359524AbhGSXAS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jul 2021 19:00:18 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:56582 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1381883AbhGSWdD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jul 2021 18:13:59 -0400
-Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FE5AC061787
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 15:44:31 -0700 (PDT)
-Received: by mail-qv1-xf33.google.com with SMTP id c15so9215617qvw.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 15:44:31 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=KsSqPnOKXzUDkjkKz916uS2F4jfUfpSikrt0gPU4ujs=;
-        b=FnDo6BSq5ek6KNmpUa/nNGm0q1xDQdeYnwwcltGagTCUujdDC4OC/gf2xNNinEgrzw
-         4bCtjeq+McwFHwzzbk4VOP8fXyp+rxC1zfo82Rhu7d5UsDr1BrfksI6zId6t1f0X7a1m
-         n6jqBW/PeTHX6ukZoJW7usONW3IP4jEGJGD+B36Iby57j3YjdJ4vwoATivQTorSBe/0u
-         75pLS62JNWtYD5obEQyxV4dBQQHIQpqPzCaIT0RakyEMn6i1ro1b/k7rQIC/PkGzIl6A
-         O+oqFyhFPwCsScGy3HRbPT4Mc1fMFb2OKqtrqxzhGesDFTShHC/25VZX2Vlnptt4JNnO
-         j/Wg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=KsSqPnOKXzUDkjkKz916uS2F4jfUfpSikrt0gPU4ujs=;
-        b=PTZ6FOrVM+kmUR6l7ayfAM/P0PM2sA2Z+//6l7WaRp0FThtesqTlF4DVp0yKvh+oU1
-         WgmCHWFHifQJlc3dVj5zIFmyHkRY/xGQlHT/2cA/ZEJR1CqhQvxSBQEabhB2oAvUgfFv
-         6wKJ8pQZMHE34T0a+XPLDWLD0BSjxfXx7putWnuwOTE7pBX7rSTbzuHw7Y0Hg+NVLhuV
-         qlU61VUajS7ngiFO6DmjBxksQO0xVhEWZo8XiVj3RQV8/VrhLc4Q19L+eC9K4GlqedAW
-         vj1wRGMlF0EqKVh+nBg86pvKDs6a0sVxpMNl9CV7z7sGhnFzVwiITVEeadLEpE11URSY
-         oiKA==
-X-Gm-Message-State: AOAM533wgVseKkFJkLP6gIS9IqI+W4cp2gRY0WcvAn55dvreaYLsRQVc
-        aXQFrh28qdUJ3a2wkyA6+lfP2w==
-X-Google-Smtp-Source: ABdhPJxSKGYNHpkUmKywBNW+LP3z28nthNwVLk+4YBXqefO2jufOKFoWN8phbw3HWG8HcfBr6Df64A==
-X-Received: by 2002:a0c:fa08:: with SMTP id q8mr21918403qvn.8.1626734670372;
-        Mon, 19 Jul 2021 15:44:30 -0700 (PDT)
-Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id o2sm6625742qkm.109.2021.07.19.15.44.29
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Jul 2021 15:44:29 -0700 (PDT)
-Subject: Re: [Patch v3 4/6] arm64: boot: dts: qcom: sdm45: Add support for LMh
- node
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     agross@kernel.org, rui.zhang@intel.com, daniel.lezcano@linaro.org,
-        viresh.kumar@linaro.org, rjw@rjwysocki.net, robh+dt@kernel.org,
-        tdas@codeaurora.org, mka@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20210708120656.663851-1-thara.gopinath@linaro.org>
- <20210708120656.663851-5-thara.gopinath@linaro.org> <YPWpPt+EfTtAUEOH@yoga>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <4ae91093-625a-f2fa-f0ce-79ec391f6463@linaro.org>
-Date:   Mon, 19 Jul 2021 18:44:29 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+        Mon, 19 Jul 2021 18:33:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1626736422; x=1658272422;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=3TLyIqZ2qOOjigHJkXfv0aAq4lL34uZabzOemPuveSE=;
+  b=sb5UBIJ7D5GT+5FpvlXTLeR/cmhvTbV5QjkVIDeE30nPvsNmiNm4NIRf
+   0U6c1DkpVkYk5C/j6Y4U+v8RgQXsrOUEZUeprQIGG+2RSC0tBua1za9Kj
+   YCKje5ta9wbInd9h/QlVi5+/fTeH823jRb73k2Y6OElm4oH26iFm7/GrC
+   4=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 19 Jul 2021 16:13:38 -0700
+X-QCInternal: smtphost
+Received: from nalasexr03e.na.qualcomm.com ([10.49.195.114])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 19 Jul 2021 16:13:34 -0700
+Received: from [10.226.59.216] (10.80.80.8) by nalasexr03e.na.qualcomm.com
+ (10.49.195.114) with Microsoft SMTP Server (TLS) id 15.0.1497.18; Mon, 19 Jul
+ 2021 16:13:33 -0700
+Subject: Re: [RFC PATCH net-next 0/4] net: wwan: Add Qualcomm BAM-DMUX WWAN
+ network driver
+To:     Stephan Gerhold <stephan@gerhold.net>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+CC:     "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Sergey Ryazanov <ryazanov.s.a@gmail.com>,
+        Johannes Berg <johannes@sipsolutions.net>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Aleksander Morgado <aleksander@aleksander.es>,
+        "open list:NETWORKING DRIVERS" <netdev@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        <phone-devel@vger.kernel.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>
+References: <20210719145317.79692-1-stephan@gerhold.net>
+ <CAOCk7NonuOKWrpr-MwdjAwF1F4jviEMf=c04vVBxQ-OmfY2b-g@mail.gmail.com>
+ <YPXC7PDCUopdCdTV@gerhold.net>
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+Message-ID: <e37868ee-2bd0-3b50-eb95-8eb2bf32d956@quicinc.com>
+Date:   Mon, 19 Jul 2021 17:13:32 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <YPWpPt+EfTtAUEOH@yoga>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <YPXC7PDCUopdCdTV@gerhold.net>
+Content-Type: text/plain; charset="utf-8"; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanexm03d.na.qualcomm.com (10.85.0.91) To
+ nalasexr03e.na.qualcomm.com (10.49.195.114)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 7/19/21 12:33 PM, Bjorn Andersson wrote:
-> On Thu 08 Jul 07:06 CDT 2021, Thara Gopinath wrote:
-> 
->> Add LMh nodes for cpu cluster0 and cpu cluster1. Also add interrupt
->> support in cpufreq node to capture the LMh interrupt and let the scheduler
->> know of the max frequency throttling.
+On 7/19/2021 12:23 PM, Stephan Gerhold wrote:
+> On Mon, Jul 19, 2021 at 09:43:27AM -0600, Jeffrey Hugo wrote:
+>> On Mon, Jul 19, 2021 at 9:01 AM Stephan Gerhold <stephan@gerhold.net> wrote:
+>>>
+>>> The BAM Data Multiplexer provides access to the network data channels
+>>> of modems integrated into many older Qualcomm SoCs, e.g. Qualcomm MSM8916
+>>> or MSM8974. This series adds a driver that allows using it.
+>>>
+>>> For more information about BAM-DMUX, see PATCH 4/4.
+>>>
+>>> Shortly said, BAM-DMUX is built using a simple protocol layer on top of
+>>> a DMA engine (Qualcomm BAM DMA). For BAM-DMUX, the BAM DMA engine runs in
+>>> a quite strange mode that I call "remote power collapse", where the
+>>> modem/remote side is responsible for powering on the BAM when needed but we
+>>> are responsible to initialize it. The BAM is power-collapsed when unneeded
+>>> by coordinating power control via bidirectional interrupts from the
+>>> BAM-DMUX driver.
+>>
+>> The hardware is physically located on the modem, and tied to the modem
+>> regulators, etc.  The modem has the ultimate "off" switch.  However,
+>> due to the BAM architecture (which is complicated), configuration uses
+>> cooperation on both ends.
 >>
 > 
-> Just noticed, could you please drop "boot: " from $subject and add the
-> missing '8', as you're resubmitting the series.
-
-Sure..
-
-Warm Regards
-Thara
+> What I find strange is that it wasn't done similarly to e.g. Slimbus
+> which has a fairly similar setup. (I used that driver as inspiration for
+> how to use the mainline qcom_bam driver instead of the "SPS" from
+> downstream.)
 > 
-> Regards,
-> Bjorn
-> 
->> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
->> ---
->>
->> v2->v3:
->> 	- Changed the LMh low and high trip to 94500 and 95000 mC from
->> 	  74500 and 75000 mC. This was a bug that got introduced in v2.
->> v1->v2:
->> 	- Dropped dt property qcom,support-lmh as per Bjorn's review comments.
->> 	- Changed lmh compatible from generic to platform specific.
->> 	- Introduced properties specifying arm, low and high temp thresholds for LMh
->> 	  as per Daniel's suggestion.
->>
->>   arch/arm64/boot/dts/qcom/sdm845.dtsi | 26 ++++++++++++++++++++++++++
->>   1 file changed, 26 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
->> index 0a86fe71a66d..4da6b8f3dd7b 100644
->> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
->> @@ -3646,6 +3646,30 @@ swm: swm@c85 {
->>   			};
->>   		};
->>   
->> +		lmh_cluster1: lmh@17d70800 {
->> +			compatible = "qcom,sdm845-lmh";
->> +			reg = <0 0x17d70800 0 0x401>;
->> +			interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
->> +			qcom,lmh-cpu-id = <0x4>;
->> +			qcom,lmh-temperature-arm = <65000>;
->> +			qcom,lmh-temperature-low = <94500>;
->> +			qcom,lmh-temperature-high = <95000>;
->> +			interrupt-controller;
->> +			#interrupt-cells = <1>;
->> +		};
->> +
->> +		lmh_cluster0: lmh@17d78800 {
->> +			compatible = "qcom,sdm845-lmh";
->> +			reg = <0 0x17d78800 0 0x401>;
->> +			interrupts = <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
->> +			qcom,lmh-cpu-id = <0x0>;
->> +			qcom,lmh-temperature-arm = <65000>;
->> +			qcom,lmh-temperature-low = <94500>;
->> +			qcom,lmh-temperature-high = <95000>;
->> +			interrupt-controller;
->> +			#interrupt-cells = <1>;
->> +		};
->> +
->>   		sound: sound {
->>   		};
->>   
->> @@ -4911,6 +4935,8 @@ cpufreq_hw: cpufreq@17d43000 {
->>   			reg = <0 0x17d43000 0 0x1400>, <0 0x17d45800 0 0x1400>;
->>   			reg-names = "freq-domain0", "freq-domain1";
->>   
->> +			interrupts-extended = <&lmh_cluster0 0>, <&lmh_cluster1 0>;
->> +
->>   			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GPLL0>;
->>   			clock-names = "xo", "alternate";
->>   
->> -- 
->> 2.25.1
->>
+> Slimbus uses qcom,controlled-remotely together with the LPASS
+> remoteproc, so it looks like there LPASS does both power-collapse
+> and initialization of the BAM. Whereas here the modem does the
+> power-collapse but we're supposed to do the initialization.
 
+I suspect I don't have a satisfactory answer for you.  The teams that 
+did slimbus were not the teams involved in the bam_dmux, and the two 
+didn't talk to each-other.  The bam_dmux side wasn't aware of the 
+slimbus situation, at the time.  I don't know if the slimbus folks knew 
+about bam_dmux.  If you have two silos working independently, its 
+unlikely they will create exactly the same solution.
+
+> 
+>>>
+>>> The series first adds one possible solution for handling this "remote power
+>>> collapse" mode in the bam_dma driver, then it adds the BAM-DMUX driver to
+>>> the WWAN subsystem. Note that the BAM-DMUX driver does not actually make
+>>> use of the WWAN subsystem yet, since I'm not sure how to fit it in there
+>>> yet (see PATCH 4/4).
+>>>
+>>> Please note that all of the changes in this patch series are based on
+>>> a fairly complicated driver from Qualcomm [1].
+>>> I do not have access to any documentation about "BAM-DMUX". :(
+>>
+>> I'm pretty sure I still have the internal docs.
+>>
+>> Are there specific things you want to know?
+> 
+> Oh, thanks a lot for asking! I mainly mentioned this here to avoid
+> in-depth questions about the hardware (since I can't answer those).
+> 
+> I can probably think of many, many questions, but I'll try to limit
+> myself to the two I'm most confused about. :-)
+> 
+> 
+> It's somewhat unrelated to this initial patch set since I'm not using
+> QMAP at the moment, but I'm quite confused about the "MTU negotiation
+> feature" that you added support for in [1]. (I *think* that is you,
+> right?) :)
+
+Yes.  Do I owe you for some brain damage?  :)
+
+> 
+> The part that I somewhat understand is the "signal" sent in the "OPEN"
+> command from the modem. It tells us the maximum buffer size the modem
+> is willing to accept for TX packets ("ul_mtu" in that commit).
+> 
+> Similarly, if we send "OPEN" to the modem we make the modem aware
+> of our maximum RX buffer size plus the number of RX buffers.
+> (create_open_signal() function).
+> 
+> The part that is confusing me is the way the "dynamic MTU" is
+> enabled/disabled based on the "signal" in "DATA" commands as well.
+> (process_dynamic_mtu() function). When would that happen? The code
+> suggests that the modem might just suddenly announce that the large
+> MTU should be used from now on. But the "buffer_size" is only changed
+> for newly queued RX buffers so I'm not even sure how the modem knows
+> that it can now send more data at once.
+> 
+> Any chance you could clarify how this should work exactly?
+
+So, I think some of this might make more sense after my response to 
+question #2.
+
+I don't know how much of this translates to modern platforms.  I don't 
+really work on MSMs anymore, but I can convey what I recall and how 
+things were "back then"
+
+So, essentially the change you are looking at is the bam_dmux portion of 
+an overall feature for improving the performance of what was known as 
+"tethered rmnet".
+
+Per my understanding (which the documentation of this feature 
+reinforces), teathered rmnet was chiefly a test feature.  Your "data" 
+(websites, email, etc) could be consumed by the device itself, or 
+exported off, if you teathered your phone to a laptop so that the laptop 
+could use the phone's data connection.  There ends up being 3 
+implementations for this.
+
+Consuming the data on the phone would route it to the IP stack via the 
+rmnet driver.
+
+Consuming the data on an external device could take one of 2 routes.
+
+Android would use the "native" routing of the Linux IP stack to 
+essentially NAT the laptop.  The data would go to the rmnet driver, to 
+the IP stack, and the IP stack would route it to USB.
+
+The other route is that the data could be routed directly to USB.  This 
+is "teathered rmnet".  In the case of bam_dmux platforms, the USB stack 
+is a client of bam_dmux.
+
+Teathered rmnet was never an end-user usecase.  It was essentially a 
+validation feature for both internal testing, and also qualifying the 
+device with the carriers.  The carriers knew that Android teathering 
+involved NAT based routing on the phone, and wanted to figure out if the 
+phone could meet the raw performance specs of the RF technology (LTE 
+Category 4 in this case) in a tethered scenario, without the routing.
+
+For tethered rmnet, USB (at the time) was having issues consistently 
+meeting those data rates (50mbps UL, 100mbps DL concurrently, if I 
+recall correctly).  So, the decided solution was to implement QMAP 
+aggregation.
+
+A QMAP "call" over tethered rmnet would be negotiated between the app on 
+the PC, and "dataservices" or "DS" on the modem.  One of the initial 
+steps of that negotitation causes DS to tell A2 software that QMAP over 
+tethered rmnet is being activated.  That would trigger A2 to activate 
+the process_dynamic_mtu() code path.  Now bam_dmux would allocate future 
+RX buffers of the increased size which could handle the aggregated 
+packets.  I think the part that is confusing you is, what about the 
+already queued buffers that are of the old size?  Well, essentially 
+those get consumed by the rest of the QMAP call negotiation, so by the 
+time actual aggregated data is going to be sent from Modem to bam_dmux, 
+the pool has been consumed and refilled.
+
+When the tethered rmnet connection is "brought down", DS notifies A2, 
+and A2 stops requesting the larger buffers.
+
+Since this not something an end user should ever exercise, you may want 
+to consider dropping it.
+
+> And a second question if you don't mind: What kind of hardware block
+> am I actually talking to here? I say "modem" above but I just know about
+> the BAM and the DMUX protocol layer. I have also seen assertion failures
+> of the modem DSP firmware if I implement something incorrectly.
+> 
+> Is the DMUX protocol just some firmware concept or actually something
+> understood by some hardware block? I've also often seen mentions of some
+> "A2" hardware block but I have no idea what that actually is. What's
+> even worse, in a really old kernel A2/BAM-DMUX also appears as part of
+> the IPA driver [2], and I thought IPA is the new thing after BAM-DMUX...
+
+A2 predates IPA.  IPA is essentially an evolution of A2.
+
+Sit down son, let me tell you the history of the world  :)
+
+A long time ago, there was only a single processor that did both the 
+"modem" and the "apps".  We generally would call these the 6K days as 
+that was the number of the chips (6XXX).  Then it was decided that the 
+roles of Apps and Modem should be separated into two different cores. 
+The modem, handling more "real time" things, and apps, being more 
+"general purpose".  This started with the 7K series.
+
+However, this created a problem as data from a data call may need to be 
+consumed by the modem, or the apps, and it wouldn't be clear until the 
+packet headers were inspected, where the packet needed to be routed to. 
+  Sometimes this was handled on apps, sometimes on modem.  Usually via a 
+fully featured IP stack.
+
+With LTE, software couldn't really keep up, and so a hardware engine to 
+parse the fields and route the package based on programmed filters was 
+implemented.  This is the "Algorithm Accelerator", aka AA, aka A2.
+
+The A2 first appeared on the 9600 chip, which was originally intended 
+for Gobi- those dongles you could plug into your laptop to give it a 
+data connection on the go when there was no wifi.  It was then coupled 
+with both 7x30 and 8660 in what we would call "fusion" to create the 
+first LTE capable phones (HTC thunderbolt is the product I recall) until 
+an integrated solution could come along.
+
+That integrated solution was 8960.
+
+Back to the fusion solution for a second, the 9600 was connected to the 
+7x30/8660 via SDIO.  Prior to this, the data call control and data path 
+was all in chip via SMD.  Each rmnet instance had its own SMD channel, 
+so essentially its own physical pipe.  With SDIO and 9600, there were 
+not enough lanes, so we invented SDIO_CMUX and SDIO_DMUX - the Control 
+and Data multiplexers over SDIO.
+
+With 8960, everything was integrated again, so we could run the control 
+path over SMD and didn't need a mux.  However, the A2 moved from the 
+9600 modem to the 8960 integrated modem, and now we had a direct 
+connection to its BAM.  Again, the BAM had a limited number of physical 
+pipes, so we needed a data multiplexer again.  Thus SDIO_DMUX evolved 
+into BAM_DMUX.
+
+The A2 is a hardware block with an attached BAM, that "hangs off" the 
+modem.  There is a software component that also runs on the modem, but 
+in general is limited to configuration.  Processing of data is expected 
+to be all in hardware.  As I think I mentioned, the A2 is a hardware 
+engine that routes IP packets based on programmed filters.
+
+BAM instances (as part of the smart peripheral subsystem or SPS) can 
+either be out in the system, or attached to a peripheral.  The A2 BAM is 
+attached to the A2 peripheral.  BAM instances can run in one of 3 modes 
+- BAM-to-BAM, BAM-to-System, or System-to-System.  BAM-to-BAM is two BAM 
+instances talking to eachother.  If the USB controller has a BAM, and 
+the A2 has a BAM, those two BAMS could talk directly to copy data 
+between the A2 and USB hardware blocks without software interaction 
+(after some configuration).  "System" means system memory, or DDR. 
+Bam-to-System is the mode the A2 BAM runs in where it takes data to/from 
+DDR and gives/takes that data with the A2.  System-to-System would be 
+used by a BAM instance not associated with any peripheral to transfer 
+data say from Apps DDR to Modem DDR.
+
+The A2 can get data from the RF interface, and determine if that needs 
+to go to some modem consumer, the apps processor, or on some chips to 
+the wifi processor.  All in hardware, much faster than software for 
+multiple reasons, but mainly because multiple filters can be evaluated 
+in parallel, each filter looking at multiple fields in parallel.  In a 
+nutshell, the IPA is a revised A2 that is not associated with any 
+processor (like the modem), which allows it to route data better (think 
+wifi and audio usecases).
+
+Hope that all helps.  I'm "around" for more questions.
+
+> 
+> Not sure how much you can reveal about this. :)
+> 
+> Thanks a lot!
+> Stephan
+> 
+> [1]: https://source.codeaurora.org/quic/la/kernel/msm-3.10/commit/?h=LA.BR.1.2.9.1-02310-8x16.0&id=c7001b82388129ee02ac9ae1a1ef9993eafbcb26
+> [2]: https://source.codeaurora.org/quic/la/kernel/msm/tree/drivers/platform/msm/ipa/a2_service.c?h=LA.BF.1.1.3-01610-8x74.0
+> 
 
