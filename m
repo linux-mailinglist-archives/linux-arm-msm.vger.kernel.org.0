@@ -2,161 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 117633CEDA5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jul 2021 22:30:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 474933CEDAB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jul 2021 22:31:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1358363AbhGST0B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jul 2021 15:26:01 -0400
-Received: from mo4-p02-ob.smtp.rzone.de ([85.215.255.80]:16127 "EHLO
-        mo4-p02-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1382878AbhGSRnN (ORCPT
+        id S1358419AbhGSTaP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jul 2021 15:30:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33078 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1384090AbhGSSTo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jul 2021 13:43:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1626719024;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=ClQ4hFI2ri15r2D64MGjX/QT1jx5PAs/tCwhga7iJjs=;
-    b=IfpoGtfUWZUgkhl31pCMfcSD7eSFez5Y9J2OP18mqcnZ+K4xFCDoYUKFoDtTEQOAJi
-    HEb7AUfp8DPUGnRlp3vK0FVstqXbr1glWCDgOqCvwonCed08bZ1jI72793zE4jmHQwdD
-    IvYWx164Lc7O/uPNlcCcyC3hB+hC8GKh9SyGkAmov0gNqNp3LuryV4+Ew45zqZozjzXT
-    NCS2MuSgZUkxcxCP9uUw/lJsaTiNLuc4bpOM+rSo2PLdOk2mw1fMj+hwRW6I5YudkdeW
-    ijqilUc/SEQQTzoFWvaLU9eT40pDSvPXEyQ6/viWpCd68j/Y5weTOnnNX+BRsxhBauMI
-    tGjw==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u26zEodhPgRDZ8j4Icup"
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.28.1 DYNA|AUTH)
-    with ESMTPSA id g02a44x6JINg63q
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Mon, 19 Jul 2021 20:23:42 +0200 (CEST)
-Date:   Mon, 19 Jul 2021 20:23:29 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Sergey Ryazanov <ryazanov.s.a@gmail.com>,
-        Johannes Berg <johannes@sipsolutions.net>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Aleksander Morgado <aleksander@aleksander.es>,
-        "open list:NETWORKING DRIVERS" <netdev@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>, dmaengine@vger.kernel.org,
-        DTML <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [RFC PATCH net-next 0/4] net: wwan: Add Qualcomm BAM-DMUX WWAN
- network driver
-Message-ID: <YPXC7PDCUopdCdTV@gerhold.net>
-References: <20210719145317.79692-1-stephan@gerhold.net>
- <CAOCk7NonuOKWrpr-MwdjAwF1F4jviEMf=c04vVBxQ-OmfY2b-g@mail.gmail.com>
+        Mon, 19 Jul 2021 14:19:44 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 44F56C061766
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 11:49:14 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id v6so31963369lfp.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 12:00:17 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+jdLZvJN21CTu/nU9p3zM/7iZ/xDd3v4ptR1eHb187U=;
+        b=GAA2TFcqcWKOiNo7WTflTgsUtZoVN+Sr0pFrALy8uy/woqt17QIoJqfYp3Tuf8NwtD
+         jMiXlHSGBKJkq9CnBheHrhObo675Jc2Ua5Rd03WylMJj4URR+qAs5aEfbtR8twNDiUCq
+         nxPCeUDKG8iUp9iK9SKc40K8Mljh6vKLRfOR0sz1fFweRa3X30nbCQJcwNA4f7pXWhs3
+         B4R4+85bflBh80tdunaKPpbFV7h39mGQfhA94+U/bsyVicM5BZgtkOUpbNc1KIRbqTvS
+         sF6tcpFTV1R0Pu4eIYZdf5XHr88AeJWG3VEIbp0uj1SDhe3DRa2rxXZPJfECGCM2yVaL
+         rQkA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+jdLZvJN21CTu/nU9p3zM/7iZ/xDd3v4ptR1eHb187U=;
+        b=uP1jOytOzeTBa7mgULp+XNPNpvqbGd/+g+/3dDD/AAtmgIPXPnlvNWbhFPGVYvu6tK
+         YsGnARMg6FtmufNLWkH+hKoJyY4+fHLip7bRJBK5Aal49E1I3+NdjqSkNHh80QKjgp+6
+         3pKsWPo+5GiabyYThrJkIdufa7i1CfcaGiJojeMf3komXD1nhUPVoRkxKe3FRthGle/l
+         KQN/F0VJ/citMSvZH8OMwQ+7uMVFk5wxJmHG25DROheptShE1buZcl57j8xjhVaQ/9xQ
+         MpnqblKAKT/VjrIKqfboOF/mo9FBqEPinNYuwOEGjxQ0yoF1aJP2rA+Z3ymh5Cya03Q9
+         oALg==
+X-Gm-Message-State: AOAM532kftEWvgqPLFN8qN/BmPXNwz6sRdqb6RD2mGjYViqu6KLAkGaV
+        i6v6Is1jLcASTqdaKbg8Mv3xxnS5f3g3Ftwfvq/FYw==
+X-Google-Smtp-Source: ABdhPJzfaiUMhEtqkQ8scwUqGoeeaz2XvfjZbPLzAoB9375A2Qo9QDi+PUY9EVT8e3XQhXZTEWfjw+m4kUjCVu+SYWs=
+X-Received: by 2002:a19:7408:: with SMTP id v8mr19183878lfe.508.1626721216181;
+ Mon, 19 Jul 2021 12:00:16 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAOCk7NonuOKWrpr-MwdjAwF1F4jviEMf=c04vVBxQ-OmfY2b-g@mail.gmail.com>
+References: <20210707045320.529186-1-john.stultz@linaro.org> <YPJkF21ItYlKODyq@yoga>
+In-Reply-To: <YPJkF21ItYlKODyq@yoga>
+From:   John Stultz <john.stultz@linaro.org>
+Date:   Mon, 19 Jul 2021 12:00:05 -0700
+Message-ID: <CALAqxLUzTNiA7u=4_y9pkrh=Q_+vpPgFrhf_6F8-U0XPQU9crQ@mail.gmail.com>
+Subject: Re: [PATCH] firmware: QCOM_SCM: Allow qcom_scm driver to be loadable
+ as a permenent module
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     lkml <linux-kernel@vger.kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Saravana Kannan <saravanak@google.com>,
+        Todd Kjos <tkjos@google.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 19, 2021 at 09:43:27AM -0600, Jeffrey Hugo wrote:
-> On Mon, Jul 19, 2021 at 9:01 AM Stephan Gerhold <stephan@gerhold.net> wrote:
+On Fri, Jul 16, 2021 at 10:01 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+> On Tue 06 Jul 23:53 CDT 2021, John Stultz wrote:
+> > Allow the qcom_scm driver to be loadable as a permenent module.
 > >
-> > The BAM Data Multiplexer provides access to the network data channels
-> > of modems integrated into many older Qualcomm SoCs, e.g. Qualcomm MSM8916
-> > or MSM8974. This series adds a driver that allows using it.
+> > This still uses the "depends on QCOM_SCM || !QCOM_SCM" bit to
+> > ensure that drivers that call into the qcom_scm driver are
+> > also built as modules. While not ideal in some cases its the
+> > only safe way I can find to avoid build errors without having
+> > those drivers select QCOM_SCM and have to force it on (as
+> > QCOM_SCM=n can be valid for those drivers).
 > >
-> > For more information about BAM-DMUX, see PATCH 4/4.
+> > Reviving this now that Saravana's fw_devlink defaults to on,
+> > which should avoid loading troubles seen before.
 > >
-> > Shortly said, BAM-DMUX is built using a simple protocol layer on top of
-> > a DMA engine (Qualcomm BAM DMA). For BAM-DMUX, the BAM DMA engine runs in
-> > a quite strange mode that I call "remote power collapse", where the
-> > modem/remote side is responsible for powering on the BAM when needed but we
-> > are responsible to initialize it. The BAM is power-collapsed when unneeded
-> > by coordinating power control via bidirectional interrupts from the
-> > BAM-DMUX driver.
-> 
-> The hardware is physically located on the modem, and tied to the modem
-> regulators, etc.  The modem has the ultimate "off" switch.  However,
-> due to the BAM architecture (which is complicated), configuration uses
-> cooperation on both ends.
-> 
+>
+> Are you (in this last paragraph) saying that all those who have been
+> burnt by fw_devlink during the last months and therefor run with it
+> disabled will have a less fun experience once this is merged?
+>
 
-What I find strange is that it wasn't done similarly to e.g. Slimbus
-which has a fairly similar setup. (I used that driver as inspiration for
-how to use the mainline qcom_bam driver instead of the "SPS" from
-downstream.)
+I guess potentially. So way back when this was originally submitted,
+some folks had trouble booting if it was set as a module due to it
+loading due to the deferred_probe_timeout expiring.
+My attempts to change the default timeout value to be larger ran into
+trouble, but Saravana's fw_devlink does manage to resolve things
+properly for this case.
 
-Slimbus uses qcom,controlled-remotely together with the LPASS
-remoteproc, so it looks like there LPASS does both power-collapse
-and initialization of the BAM. Whereas here the modem does the
-power-collapse but we're supposed to do the initialization.
+But if folks are having issues w/ fw_devlink, and have it disabled,
+and set QCOM_SCM=m they could still trip over the issue with the
+timeout firing before it is loaded (especially if they are loading
+modules from late mounted storage rather than ramdisk).
 
-> >
-> > The series first adds one possible solution for handling this "remote power
-> > collapse" mode in the bam_dma driver, then it adds the BAM-DMUX driver to
-> > the WWAN subsystem. Note that the BAM-DMUX driver does not actually make
-> > use of the WWAN subsystem yet, since I'm not sure how to fit it in there
-> > yet (see PATCH 4/4).
-> >
-> > Please note that all of the changes in this patch series are based on
-> > a fairly complicated driver from Qualcomm [1].
-> > I do not have access to any documentation about "BAM-DMUX". :(
-> 
-> I'm pretty sure I still have the internal docs.
-> 
-> Are there specific things you want to know?
+> (I'm picking this up, but I don't fancy the idea that some people are
+> turning the boot process into a lottery)
 
-Oh, thanks a lot for asking! I mainly mentioned this here to avoid
-in-depth questions about the hardware (since I can't answer those).
+Me neither, and I definitely think the deferred_probe_timeout logic is
+way too fragile, which is why I'm eager for fw_devlink as it's a much
+less racy approach to handling module loading dependencies.  So if you
+want to hold on this, while any remaining fw_devlink issues get
+sorted, that's fine.  But I'd also not cast too much ire at
+fw_devlink, as the global probe timeout approach for handling optional
+links isn't great, and we need a better solution.
 
-I can probably think of many, many questions, but I'll try to limit
-myself to the two I'm most confused about. :-)
-
-
-It's somewhat unrelated to this initial patch set since I'm not using
-QMAP at the moment, but I'm quite confused about the "MTU negotiation
-feature" that you added support for in [1]. (I *think* that is you,
-right?) :)
-
-The part that I somewhat understand is the "signal" sent in the "OPEN"
-command from the modem. It tells us the maximum buffer size the modem
-is willing to accept for TX packets ("ul_mtu" in that commit).
-
-Similarly, if we send "OPEN" to the modem we make the modem aware
-of our maximum RX buffer size plus the number of RX buffers.
-(create_open_signal() function).
-
-The part that is confusing me is the way the "dynamic MTU" is
-enabled/disabled based on the "signal" in "DATA" commands as well.
-(process_dynamic_mtu() function). When would that happen? The code
-suggests that the modem might just suddenly announce that the large
-MTU should be used from now on. But the "buffer_size" is only changed
-for newly queued RX buffers so I'm not even sure how the modem knows
-that it can now send more data at once.
-
-Any chance you could clarify how this should work exactly?
-
-
-And a second question if you don't mind: What kind of hardware block
-am I actually talking to here? I say "modem" above but I just know about
-the BAM and the DMUX protocol layer. I have also seen assertion failures
-of the modem DSP firmware if I implement something incorrectly.
-
-Is the DMUX protocol just some firmware concept or actually something
-understood by some hardware block? I've also often seen mentions of some
-"A2" hardware block but I have no idea what that actually is. What's
-even worse, in a really old kernel A2/BAM-DMUX also appears as part of
-the IPA driver [2], and I thought IPA is the new thing after BAM-DMUX...
-
-Not sure how much you can reveal about this. :)
-
-Thanks a lot!
-Stephan
-
-[1]: https://source.codeaurora.org/quic/la/kernel/msm-3.10/commit/?h=LA.BR.1.2.9.1-02310-8x16.0&id=c7001b82388129ee02ac9ae1a1ef9993eafbcb26
-[2]: https://source.codeaurora.org/quic/la/kernel/msm/tree/drivers/platform/msm/ipa/a2_service.c?h=LA.BF.1.1.3-01610-8x74.0
+thanks
+-john
