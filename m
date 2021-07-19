@@ -2,95 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FC0B3CF019
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 01:39:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C74563CF026
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 01:48:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350863AbhGSW6C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jul 2021 18:58:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39362 "EHLO
+        id S242021AbhGSW6K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jul 2021 18:58:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46560 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1388293AbhGSUtN (ORCPT
+        with ESMTP id S1359706AbhGSVW1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jul 2021 16:49:13 -0400
-Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 870CAC0613E6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 14:25:02 -0700 (PDT)
-Received: by mail-io1-xd2f.google.com with SMTP id d9so21640479ioo.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 14:25:02 -0700 (PDT)
+        Mon, 19 Jul 2021 17:22:27 -0400
+Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E358C05BD16
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 14:54:25 -0700 (PDT)
+Received: by mail-yb1-xb2c.google.com with SMTP id t186so30002428ybf.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 14:54:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=+NFov+irJOIAcAXFIXqWWjTSP6xxxi6btrU5/J/bm+U=;
-        b=gi4a1X6zqWbU6JFTYdIkrKwXsadmfVQjQZXc4UAu79Xuo9uVaQs5mF1Qh4oVNAFf+J
-         uxqTMXWI3d/HGcnI8or4S9FGv7y/VkGY8sHJSRD+V4fJv/rPU3BykqwduAUTyCLWdR+t
-         7HIh5+I9OrLLOfnyM2bEFVVWiL0zgmR3sqnOecfKEz/YdsHxd0ATFV59Vnct0shrncnA
-         hRT69ZweUPn9c7zCDgy21zgSv9eT605dkhtfk+BdmzX3HFPQrVtftap7h9hxj+QopF2O
-         sFgozzJGV27O7gxuOoHLqYwVR0UCe286B4cn5/7acdqmTLthgSXNXktx93ZmDHMNAVea
-         Qa5g==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Mgewm5mjx+FRnoLmab+NYqOB950vpM/jLC7o5sa2XM8=;
+        b=l0R7mPgHhU+9/Prsowfdj7Q2tQ1PxSoUyzKyHKVvNc724HS7Q2DlFv99s3OP2TG/Zq
+         lwEOjLRSF21f2rIl6xbmlp+HtCrfmG/rtgg50IMgNNhdd7MvHme0UH+zssIKkD4DysIV
+         9n03+QQKXy8uuwmkJD8Mr+uOSE/yA0i2iVtHLv/9GUxl+FSGRkhTePgD8pYCukp4Dyz7
+         nqQ6P12jnkTl+CUhabJGja6HSNCHhD9KeRBFuzhgnM8w1DbZ2CXLE0Q7Ci39eg+sf+vv
+         GsJnL5QEKafmdGXCglA+rJ9522ssx6xe5cbdRqM+wnuZ2Iz4xFxlQvezVkADeXN2P62Z
+         xTTg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=+NFov+irJOIAcAXFIXqWWjTSP6xxxi6btrU5/J/bm+U=;
-        b=IZGz5JzeLvT7R1gasqpFk9XbuiFYQODFHROs++ah8dU3NCEYZuXbrxqoOMuzy2QWjc
-         UU0Miw4SdlVWzqwJX4Oeafn1m2RVQVaXHNbQRRFoGaEpGmn+jrEQfOUgTNa9VVDJW80Q
-         WQ9OjBir8+KVzFjQVQCOtxe65o8dwswvjjtxm5NSYyHxWsMpe4Hr5fxyxbQZkRW7mVSx
-         E0BrU8C+47Clr5rGpkVV2QoaVS2MvPqPkeQkj46LA+hxl1DppiztAuj0eRMKpjszfZqT
-         ZYi4S6RUcCgEqOdCVhs0SfBhgVlRm0VdBAOhXnyM2FTnzm+vGEFZCakiN30JjmDHFBUM
-         vXHw==
-X-Gm-Message-State: AOAM533tmdGvg3bs5fd7ZZlzNdiTWPa8JCwBeOGNSpXYHjLOvQDTaM9D
-        xCcgEX1WeKPfGWq16/36IOvEPw==
-X-Google-Smtp-Source: ABdhPJzNvhuaAmL+Pyh3lSgRYQEiK4aWTYjhrhV1OG2OYHesViN3CWmce6hYG94TSGQmqTftLEZ1kQ==
-X-Received: by 2002:a02:90d0:: with SMTP id c16mr23483597jag.106.1626729901944;
-        Mon, 19 Jul 2021 14:25:01 -0700 (PDT)
-Received: from presto.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.gmail.com with ESMTPSA id f16sm10365634ilc.53.2021.07.19.14.25.01
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jul 2021 14:25:01 -0700 (PDT)
-From:   Alex Elder <elder@linaro.org>
-To:     bjorn.andersson@linaro.org, agross@kernel.org
-Cc:     robh+dt@kernel.org, davem@davemloft.net, kuba@kernel.org,
-        evgreen@chromium.org, cpratapa@codeaurora.org,
-        subashab@codeaurora.org, elder@kernel.org,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 3/3] arm64: dts: qcom: sc7180: define ipa_fw_mem node
-Date:   Mon, 19 Jul 2021 16:24:56 -0500
-Message-Id: <20210719212456.3176086-4-elder@linaro.org>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20210719212456.3176086-1-elder@linaro.org>
-References: <20210719212456.3176086-1-elder@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Mgewm5mjx+FRnoLmab+NYqOB950vpM/jLC7o5sa2XM8=;
+        b=Mwa3YLHeVB/WSAOEOSh7b3Uq3ASjPMMo4aCdt/4IiuX4o19tKpgQvjKf+2YUmC0mpC
+         U3bWx76igmVhGWpCWog8PgN+yoxLmW+/taMAPxRHmtYve1XqS2NQcvFupnure/g6Pvls
+         qMaQiZ7MpznccOH/uv/t6hPhHhFrZETxvgwG4Wy4HIUjegWIh9edZDciJ8IuM4vEkjhW
+         G3d4RlCiz5yrQkEB2lRNCx/IzdTFLOQ0EuuBB/Su/GQGkjceMryqov2oJLDmlTlLE5ya
+         Gv08RF6Ucr12mFyASnoN5mXq1xmQ1HipGAhUAEjInoBPgl7vwno0UYD4nhlOYGsTE4Gj
+         yTCQ==
+X-Gm-Message-State: AOAM533jHCcC37DX33e4NZDZNQBqXR2WFwoFtUmrO/W6lIsihFuN16+q
+        K9BuI/w9Tp3mmyl5ElYuq0ITlnMB6UJygh7qHK9V9w==
+X-Google-Smtp-Source: ABdhPJzzk8LrlzrvE22blW8gQTFo/PFlSTmtqN8jtyX4Dwh9d+eIRQ31WAGLf0IV9Ru2kTwRL7h6I1jaXreQrxJjSnI=
+X-Received: by 2002:a25:8b91:: with SMTP id j17mr33097786ybl.228.1626731663924;
+ Mon, 19 Jul 2021 14:54:23 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210707045320.529186-1-john.stultz@linaro.org>
+ <YPJkF21ItYlKODyq@yoga> <CALAqxLUzTNiA7u=4_y9pkrh=Q_+vpPgFrhf_6F8-U0XPQU9crQ@mail.gmail.com>
+ <YPXUI0VzpxYO56BU@yoga>
+In-Reply-To: <YPXUI0VzpxYO56BU@yoga>
+From:   Saravana Kannan <saravanak@google.com>
+Date:   Mon, 19 Jul 2021 14:53:47 -0700
+Message-ID: <CAGETcx90xNFzEB9yfWvLg=X+ptrgNaQg9Ncxi-U_Z0vXHrUcgw@mail.gmail.com>
+Subject: Re: [PATCH] firmware: QCOM_SCM: Allow qcom_scm driver to be loadable
+ as a permenent module
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     John Stultz <john.stultz@linaro.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Todd Kjos <tkjos@google.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Android Kernel Team <kernel-team@android.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Define the reserved memory space used for IPA firmware for the
-Qualcomm SC7180 SoC.
+On Mon, Jul 19, 2021 at 12:36 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Mon 19 Jul 14:00 CDT 2021, John Stultz wrote:
+>
+> > On Fri, Jul 16, 2021 at 10:01 PM Bjorn Andersson
+> > <bjorn.andersson@linaro.org> wrote:
+> > > On Tue 06 Jul 23:53 CDT 2021, John Stultz wrote:
+> > > > Allow the qcom_scm driver to be loadable as a permenent module.
+> > > >
+> > > > This still uses the "depends on QCOM_SCM || !QCOM_SCM" bit to
+> > > > ensure that drivers that call into the qcom_scm driver are
+> > > > also built as modules. While not ideal in some cases its the
+> > > > only safe way I can find to avoid build errors without having
+> > > > those drivers select QCOM_SCM and have to force it on (as
+> > > > QCOM_SCM=n can be valid for those drivers).
+> > > >
+> > > > Reviving this now that Saravana's fw_devlink defaults to on,
+> > > > which should avoid loading troubles seen before.
+> > > >
+> > >
+> > > Are you (in this last paragraph) saying that all those who have been
+> > > burnt by fw_devlink during the last months and therefor run with it
+> > > disabled will have a less fun experience once this is merged?
+> > >
 
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 5 +++++
- 1 file changed, 5 insertions(+)
+Bjorn,
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index a5d58eb928960..7af551a1fd904 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -110,6 +110,11 @@ tz_mem: memory@80b00000 {
- 			no-map;
- 		};
- 
-+		ipa_fw_mem: memory@8b700000 {
-+			reg = <0 0x8b700000 0 0x10000>;
-+			no-map;
-+		};
-+
- 		rmtfs_mem: memory@94600000 {
- 			compatible = "qcom,rmtfs-mem";
- 			reg = <0x0 0x94600000 0x0 0x200000>;
--- 
-2.27.0
+I jump in and help with any reports of issues with fw_devlink if I'm
+cc'ed. Please feel free to add me and I'll help fix any issues you
+have with fw_devlink=on.
 
+> >
+> > I guess potentially. So way back when this was originally submitted,
+> > some folks had trouble booting if it was set as a module due to it
+> > loading due to the deferred_probe_timeout expiring.
+> > My attempts to change the default timeout value to be larger ran into
+> > trouble, but Saravana's fw_devlink does manage to resolve things
+> > properly for this case.
+> >
+>
+> Unfortunately I see really weird things coming out of that, e.g. display
+> on my db845c is waiting for the USB hub on PCIe to load its firmware,
+> which typically times out after 60 seconds.
+>
+> I've stared at it quite a bit and I don't understand how they are
+> related.
+
+Can you please add me to any email thread with the details? I'd be
+happy to help.
+
+First step is to make sure all the devices probe as with
+fw_devlink=permissive. After that if you are still seeing issues, it's
+generally timing issues in the driver. But if the actual timing issue
+is identified (by you or whoever knows the driver seeing the issue),
+then I can help with fixes or suggestions for fixes.
+
+> > But if folks are having issues w/ fw_devlink, and have it disabled,
+> > and set QCOM_SCM=m they could still trip over the issue with the
+> > timeout firing before it is loaded (especially if they are loading
+> > modules from late mounted storage rather than ramdisk).
+> >
+>
+> I guess we'll have to force QCOM_SCM=y in the defconfig and hope people
+> don't make it =m.
+>
+> > > (I'm picking this up, but I don't fancy the idea that some people are
+> > > turning the boot process into a lottery)
+> >
+> > Me neither, and I definitely think the deferred_probe_timeout logic is
+> > way too fragile, which is why I'm eager for fw_devlink as it's a much
+> > less racy approach to handling module loading dependencies.
+>
+> Right, deferred_probe_timeout is the main issue here. Without it we
+> might get some weird probe deferral runs, but either some driver is
+> missing or it settles eventually.
+>
+> With deferred_probe_timeout it's rather common for me to see things
+> end up probe out of order (even more now with fw_devlink finding cyclic
+> dependencies) and deferred_probe_timeout just breaking things.
+
+Again, please CC me on these threads and I'd be happy to help.
+
+>
+> > So if you
+> > want to hold on this, while any remaining fw_devlink issues get
+> > sorted, that's fine.  But I'd also not cast too much ire at
+> > fw_devlink, as the global probe timeout approach for handling optional
+> > links isn't great, and we need a better solution.
+> >
+>
+> There's no end to the possible and valid ways you can setup your
+> defconfig and run into the probe deferral issues, so I see no point in
+> holding this one back any longer. I just hope that one day it will be
+> possible to boot the upstream kernel in a reliable fashion.
+
+Might not be believable, but I'm hoping fw_devlink helps you meet this goal :)
+
+-Saravana
