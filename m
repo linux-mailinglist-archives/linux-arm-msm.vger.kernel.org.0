@@ -2,256 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 757343CF02B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 01:48:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 184DB3CF02D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 01:48:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355079AbhGSW65 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jul 2021 18:58:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52854 "EHLO
+        id S1355565AbhGSW73 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jul 2021 18:59:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359530AbhGSVqF (ORCPT
+        with ESMTP id S1441834AbhGSWN7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jul 2021 17:46:05 -0400
-Received: from mail-pg1-x534.google.com (mail-pg1-x534.google.com [IPv6:2607:f8b0:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79DDAC061225
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 15:21:47 -0700 (PDT)
-Received: by mail-pg1-x534.google.com with SMTP id j4so4052489pgk.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 15:21:47 -0700 (PDT)
+        Mon, 19 Jul 2021 18:13:59 -0400
+Received: from mail-qv1-xf2a.google.com (mail-qv1-xf2a.google.com [IPv6:2607:f8b0:4864:20::f2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90D83C0613E4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 15:44:00 -0700 (PDT)
+Received: by mail-qv1-xf2a.google.com with SMTP id i4so9219357qvq.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 15:44:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=tTFCKMO8k2TaTynqoJkm6Y6DCBZwYLxkxo1sNfSJ2mQ=;
-        b=oHZshIOojkRdSCbUCBqLcZ+97ZQFaWNL+TkRwnTgYtGHYeW+YRqvIfSGhyxxj3Ysfr
-         jlrriZRrdER0HQj9nlOqcb9URdiSdNDOv/DUamqGn3Kg6nZw+w8i+Sr7wCkJz7/sseCd
-         4a1MfMOq9pZSLn7Bd7zVV0NgmvsbfcEQBkllg=
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=BexLyXxqNgeH8/vtZRd1j76orcTrxVviC3YXV+o0bIU=;
+        b=rUKY6dgXGsT9UEM8m0qXqyXgqg3Jvssnctaum8JQUHTTxXI8ZFNftfT3Ac5KN/GUYR
+         CLIgTPXqEXTzC7W2v3r4/X/plmYq/pp0UlUqfQPBrUBIDyId9ahQZUXUdLoAuUb2Hgdz
+         Jkrqra6S/86H+6zdTn9JfnCpFmvBRoeJbcnAbCRzGOh5nUzdJsadBNOJjT/C9GX+Rr3e
+         Vlw4LKevADefwIj/pGEzSJqQoE9FhfNqMdWWV8qJBUMali+mS4eZl1ApAUM0aDYxY/32
+         n4JGVQ5nMtmxNnbmPvOOST0d5J49owen5t47D3Ed60PR4JkC9E+bxwRHUMxGgUZAVI2U
+         jkPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=tTFCKMO8k2TaTynqoJkm6Y6DCBZwYLxkxo1sNfSJ2mQ=;
-        b=dZYo4Avjc2gC8ZjKlRh+G98rjAudXV6ige9W+XB/n05zOoj1WaGqhtQvTvqp5urwWw
-         cvLnKuXqzfuiPf9LM16lR7hzNyYzICK9dpcIBBlbne93aCCDeq3q6sH97LuXnNToEXf2
-         +yr0fhT+DFm9uhf4ylCHjaudplON6DZIMRWniIwTnL7n07iWAU9e3Ui4zBNlWxeX3wYz
-         aOkL184LdMb86e8gnoxwMb+48KWWCmujEsXFuNgs8ezYkEXH0DHoL9e17gKNjO2+iSde
-         bKEImSLwAXdEkzuRsVABVJR85ydroHscqlVxA6VvRyH2lX1O5wgS0GS3xnHHqEFNwlsJ
-         Hwlg==
-X-Gm-Message-State: AOAM532xwgMAjgv051AzjBQKYktrZIDIgvf3RkUpB4DO9t5x/VwjJqmv
-        tqrWWkMZ9Lfonz7M3l9sc1bY4Q==
-X-Google-Smtp-Source: ABdhPJzloLO+kz+86O/rt1Was+NfXs8iZWsLdWepHuMbo/wf47V62hPU+OiXKJXoDD3oJUou8k/i1A==
-X-Received: by 2002:a65:56ca:: with SMTP id w10mr27137753pgs.107.1626733307101;
-        Mon, 19 Jul 2021 15:21:47 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:4d0:bf5f:b8cd:2d67])
-        by smtp.gmail.com with UTF8SMTPSA id d5sm1477777pjo.25.2021.07.19.15.21.45
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=BexLyXxqNgeH8/vtZRd1j76orcTrxVviC3YXV+o0bIU=;
+        b=ACTZt9lN1qRJs/oZGA3JD40kDA0B3aqwM/GiR4KiJTgOZMcIwctYN19F4Nujb8D9O3
+         /vJ0CoDx10p9reTpx8G4iOlNbYJdysDbFQa/xoc76zvBtZn7CmPhMAsBK/SuzQ/ik78E
+         IwTrGXUCfY+FS7BqOdg4yHiVbMRomy5pCScnnBm7wgGXut1Q/ic5XK/hujQ82Ln7QZxr
+         p+iMdiW5LxXqAdrr7DDPnfYMTjRzB3Gpl36QN4J8zU+u3gFgtlWKCQ8qpH3jKspwWtTC
+         QJ6ZgefRLBmGKMy5ykKBbDtnznykNsk5aj6sT8HeDGvGg+XHqvvtEZ9zx5i/QObU7Nhq
+         743A==
+X-Gm-Message-State: AOAM532ZRSwkcG5wOUjkpiO3xToXBD3QruEJLllPhmVaJsiW4Nqgh59l
+        sfmufVcVLojWO//ImL4kzhW4BtCUp1sVTA==
+X-Google-Smtp-Source: ABdhPJysNyiNCLBggwYBSqT5tdYTt6rxSTZj+yTVDevRWw2of9y2Rhyra1Xn/hSZQ8F3riYqEyeR1g==
+X-Received: by 2002:a0c:f48d:: with SMTP id i13mr26725618qvm.24.1626734639691;
+        Mon, 19 Jul 2021 15:43:59 -0700 (PDT)
+Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.gmail.com with ESMTPSA id r16sm8710241qke.73.2021.07.19.15.43.58
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 19 Jul 2021 15:21:46 -0700 (PDT)
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Felipe Balbi <balbi@kernel.org>
-Cc:     Michal Simek <michal.simek@xilinx.com>, linux-usb@vger.kernel.org,
-        Peter Chen <peter.chen@kernel.org>,
-        Bastien Nocera <hadess@hadess.net>,
-        Douglas Anderson <dianders@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>, devicetree@vger.kernel.org,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-kernel@vger.kernel.org,
-        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v14 6/6] arm64: dts: qcom: sc7180-trogdor: Add nodes for onboard USB hub
-Date:   Mon, 19 Jul 2021 15:21:28 -0700
-Message-Id: <20210719152055.v14.6.Ie0d2c1214b767bb5551dd4cad38398bd40e4466f@changeid>
-X-Mailer: git-send-email 2.32.0.402.g57bb445576-goog
-In-Reply-To: <20210719222128.4122837-1-mka@chromium.org>
-References: <20210719222128.4122837-1-mka@chromium.org>
+        Mon, 19 Jul 2021 15:43:59 -0700 (PDT)
+Subject: Re: [PATCH] arm64: boot: dts: qcom: sm8150: Add CPU opp tables
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20210714182610.92972-1-thara.gopinath@linaro.org>
+ <YPWlXRDsU59LZsVb@yoga>
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Message-ID: <3803b17f-47b3-ed99-eb90-d7998ea5c996@linaro.org>
+Date:   Mon, 19 Jul 2021 18:43:59 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <YPWlXRDsU59LZsVb@yoga>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add nodes for the onboard USB hub on trogdor devices. Remove the
-'always-on' property from the hub regulator, since the regulator
-is now managed by the onboard_usb_hub driver.
 
-Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
----
 
-Changes in v14:
-- none
+On 7/19/21 12:16 PM, Bjorn Andersson wrote:
+> On Wed 14 Jul 13:26 CDT 2021, Thara Gopinath wrote:
+> 
+>> Add OPP tables to scale DDR and L3 with CPUs for SM8150 SoCs.
+>> This gives a significant performance boost for cpu-ddr loads.
+>> Below is the results for mbw benchmark with and without the opp tables.
+>>
+>> /mbw 1500
+>> 		Without l3/ddr scaling		With l3 ddr/scaling
+>> MEMCPY(MiB/s)		3574				10448
+>> DUMB(MiB/s)		3500				11721
+>> MCBLOCK(MiB/s)		8976				23595
+>>
+> 
+> Nice!
+> 
+> 
+> Took the liberty of dropping "boot: " from $subject before applying the
+> patch.
 
-Changes in v13:
-- none
+Thanks!
 
-Changes in v12:
-- none
 
-Changes in v11:
-- rebased on qcom/arm64-for-5.14 (with the rest of the series)
 
-Changes in v10:
-- keep 'regulator-boot-on' property
-- updated commit message
-
-Changes in v9:
-- none
-
-Changes in v8:
-- none
-
-Changes in v7:
-- rebased on qcom/arm64-for-5.13 (with the rest of the series)
-
-Changes in v6:
-- added 'companion-hub' entry to both USB devices
-- added 'vdd-supply' also to hub@2
-
-Changes in v5:
-- patch added to the series
-
- .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts | 19 ++++++++-----------
- .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts | 12 +++++-------
- .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts | 19 ++++++++-----------
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 19 ++++++++++++++++++-
- 4 files changed, 39 insertions(+), 30 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-index 30e3e769d2b4..5fb8e12af1a0 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r0.dts
-@@ -14,17 +14,6 @@ / {
- 	compatible = "google,lazor-rev0", "qcom,sc7180";
- };
- 
--&pp3300_hub {
--	/* pp3300_l7c is used to power the USB hub */
--	/delete-property/regulator-always-on;
--	/delete-property/regulator-boot-on;
--};
--
--&pp3300_l7c {
--	regulator-always-on;
--	regulator-boot-on;
--};
--
- &sn65dsi86_out {
- 	/*
- 	 * Lane 0 was incorrectly mapped on the cable, but we've now decided
-@@ -33,3 +22,11 @@ &sn65dsi86_out {
- 	 */
- 	lane-polarities = <1 0>;
- };
-+
-+&usb_hub_2_0 {
-+	 vdd-supply = <&pp3300_l7c>;
-+};
-+
-+&usb_hub_3_0 {
-+	 vdd-supply = <&pp3300_l7c>;
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-index c2ef06367baf..1dae714250f5 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor-r1.dts
-@@ -14,13 +14,11 @@ / {
- 	compatible = "google,lazor-rev1", "google,lazor-rev2", "qcom,sc7180";
- };
- 
--&pp3300_hub {
--	/* pp3300_l7c is used to power the USB hub */
--	/delete-property/regulator-always-on;
--	/delete-property/regulator-boot-on;
-+
-+&usb_hub_2_0 {
-+	 vdd-supply = <&pp3300_l7c>;
- };
- 
--&pp3300_l7c {
--	regulator-always-on;
--	regulator-boot-on;
-+&usb_hub_3_0 {
-+	 vdd-supply = <&pp3300_l7c>;
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-index 2b522f9e0d8f..2f5263e3d1b9 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-r1.dts
-@@ -42,17 +42,6 @@ &panel {
- 	compatible = "auo,b116xa01";
- };
- 
--&pp3300_hub {
--	/* pp3300_l7c is used to power the USB hub */
--	/delete-property/regulator-always-on;
--	/delete-property/regulator-boot-on;
--};
--
--&pp3300_l7c {
--	regulator-always-on;
--	regulator-boot-on;
--};
--
- &sdhc_2 {
- 	status = "okay";
- };
-@@ -61,6 +50,14 @@ &trackpad {
- 	interrupts = <58 IRQ_TYPE_EDGE_FALLING>;
- };
- 
-+&usb_hub_2_0 {
-+	 vdd-supply = <&pp3300_l7c>;
-+};
-+
-+&usb_hub_3_0 {
-+	 vdd-supply = <&pp3300_l7c>;
-+};
-+
- /* PINCTRL - modifications to sc7180-trogdor.dtsi */
- 
- &trackpad_int_1v8_odl {
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index 77ae7561d436..f89c6a7045e5 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -202,7 +202,6 @@ pp3300_hub: pp3300-hub {
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&en_pp3300_hub>;
- 
--		regulator-always-on;
- 		regulator-boot-on;
- 
- 		vin-supply = <&pp3300_a>;
-@@ -898,6 +897,24 @@ &usb_1 {
- 
- &usb_1_dwc3 {
- 	dr_mode = "host";
-+	#address-cells = <1>;
-+	#size-cells = <0>;
-+
-+	/* 2.0 hub on port 1 */
-+	usb_hub_2_0: hub@1 {
-+		compatible = "usbbda,5411";
-+		reg = <1>;
-+		vdd-supply = <&pp3300_hub>;
-+		companion-hub = <&usb_hub_3_0>;
-+	};
-+
-+	/* 3.0 hub on port 2 */
-+	usb_hub_3_0: hub@2 {
-+		compatible = "usbbda,411";
-+		reg = <2>;
-+		vdd-supply = <&pp3300_hub>;
-+		companion-hub = <&usb_hub_2_0>;
-+	};
- };
- 
- &usb_1_hsphy {
 -- 
-2.32.0.402.g57bb445576-goog
-
+Warm Regards
+Thara (She/Her/Hers)
