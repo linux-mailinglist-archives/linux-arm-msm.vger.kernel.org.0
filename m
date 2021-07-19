@@ -2,61 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 34FCB3CF013
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 01:38:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DAFEB3CF018
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 01:39:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354709AbhGSW5V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jul 2021 18:57:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39198 "EHLO
+        id S1350817AbhGSW5b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jul 2021 18:57:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40188 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1388274AbhGSUsj (ORCPT
+        with ESMTP id S1388285AbhGSUs5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jul 2021 16:48:39 -0400
-Received: from mail-io1-xd2d.google.com (mail-io1-xd2d.google.com [IPv6:2607:f8b0:4864:20::d2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B30DAC0613DE
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 14:25:00 -0700 (PDT)
-Received: by mail-io1-xd2d.google.com with SMTP id w22so13542341ioc.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 14:25:00 -0700 (PDT)
+        Mon, 19 Jul 2021 16:48:57 -0400
+Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8F7DC0613E4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 14:25:01 -0700 (PDT)
+Received: by mail-il1-x133.google.com with SMTP id h3so17321599ilc.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 14:25:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=r7IIwcEFnbBJbVXSjVGGdfTr8FW2F9zozHrzizCnu6k=;
-        b=jvBTIiql8PFue/rA4X4a5i0OBg/MWU98DiyH2cQFL3yXPuMamFrPc9D3/BAf7qd0o2
-         AzECrBNxvgTZ1TxSKR9ja2rgBEWWsa2bi2jafFIvjyi90ko7WIFbpE9aOql4s811XfRW
-         PWNxYthe6qX+XNvyPU/DEkUS2P3ktojibjOTP0BD2NvE1HBzYilFue8gSS3UNIPubikx
-         +73cwSy+X39VK7FY9vqb3GMvgb2gM1f1LfciCQAnAy4m7oykkTsymP4pzE5IpmIoRdw7
-         HIAx/5VaTpcTy1MiIjpUaEfeGgLOlOZQHpn7hAct6K8kqshZ9N0Vv0wtP5m086G5ZOdI
-         9OHQ==
+        bh=46RsDietiFjiFAmxHIYkL76FeOwDdqdmSCbTGG461UY=;
+        b=u0YJcFOFHDFPhKL9n6v8T/fbiThMvb5VJ6ffhsL620e5jzPAZUV/Eov+IK3LPGgsKb
+         sxS8HETu5mv093AOYUgGHq66GXQrufK5aAjGBwjIgnYZfqlRJxQReyMWrEV8R9rbpEJD
+         KnPA6GaZN2ATQ0SN7Fq2LdHZpFaCD9elKkwlfFzn1EdvlrccIVxTNWj23qVAEs5dtbGW
+         ouo8n/+Uyq74CogfkvXXRHZVwGkWksNxWJ5p77IfOp24wQgXvdZM2W9QS0v9LRJlq3tR
+         Kr64yw2ZlE4nCLdK7wuTLyof7bDxQOLsU+9+STUGvCOSbaMtdiHCgHndpQrow6eWW/c9
+         PqBQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=r7IIwcEFnbBJbVXSjVGGdfTr8FW2F9zozHrzizCnu6k=;
-        b=h29cjd2VW1VAEZ0NWqvvMbT2kwz/vk6M2aOe9p5bCqf3IoOJn+rHZaLT2i9f5Dm1ya
-         fo6tW9AiPexcWpqcFX2NLkuBoLT2JydebOVK0l/F+GAbCItFhdK2RRBtSdzHXeqppMg3
-         KHV9YGi+GnvOHogQo8XYbo4RPrXuoqoisDRhAa4sD69DhBr+3E2N3gzkLkdDyIufr6NG
-         xxp+qRCEotMVAnIR5jFQdQxZjwjvJk3HR3Gnu5+Qyh2S6Mbapgxpa9eStG7lSmMvQbDT
-         bkWZqrX93ZVlI7hYZFzcNjpl4tFfEZ6C2rYAYgSCLgWLj3BZob1gQM2DozkNLdBjtoWM
-         Wa3w==
-X-Gm-Message-State: AOAM532MpxQZlESBp9MpPliaVCxBsqyhOPE6JFtwowNcY+QRsPo/VWKr
-        ksMHC2uplYmcBj29Q96Egy+BEg==
-X-Google-Smtp-Source: ABdhPJxjooy5oyUmH2Eg0hJixGIRqk+cFsPWqI+M6jfWjabbRTuqLzKKPdfWMoUBRr9SktiAQv5DIw==
-X-Received: by 2002:a02:9626:: with SMTP id c35mr8345598jai.84.1626729900198;
-        Mon, 19 Jul 2021 14:25:00 -0700 (PDT)
+        bh=46RsDietiFjiFAmxHIYkL76FeOwDdqdmSCbTGG461UY=;
+        b=jR2235/Q9nbPdFDbx+JPGzYe7UXI0e/CmAdgJYx7etJTHjy80lPNtuBghrHXcrMCMn
+         /yg+jM7YmP/ni5mUKcG5ppteehr7eKAgiWlxtaiA3yB/9EdLOTH7DjT1O8ktN+/FrvTW
+         0okHjtKNg9PW7SPiX/y1hFHA2TOlOCgqSM8QbIEI8rNIO+OFiTMbbBzpdNpY/WceGAqT
+         ZzdUD2tfPkEafhIGv41CFxRmvEkNUYi1jGA+fYzWgUFZiSEeUOyGgQRSvutoX9Jip8Lf
+         DfxWGyyCjlBmBG2wRypP4POAMjX3ghv/rr6NfI5FlhLtosXQloirHbG/6CuF4vD+cb3k
+         nLMg==
+X-Gm-Message-State: AOAM532g4ajhiKuSj8oj8J0Gs1GofVEOWgAS4U4lca9BlxCUO4Uz5T3M
+        Wjt0X4Tr+JPs3G9BLyRNcWoOgA==
+X-Google-Smtp-Source: ABdhPJwe45lcNNsXefD+ynyXkZd7c/eXVEUWvmyXLjRAhMEYNKZVfQ0ly/KZysHqRz5+mqBezGqJEg==
+X-Received: by 2002:a92:c10c:: with SMTP id p12mr17775712ile.92.1626729901039;
+        Mon, 19 Jul 2021 14:25:01 -0700 (PDT)
 Received: from presto.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.gmail.com with ESMTPSA id f16sm10365634ilc.53.2021.07.19.14.24.59
+        by smtp.gmail.com with ESMTPSA id f16sm10365634ilc.53.2021.07.19.14.25.00
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jul 2021 14:24:59 -0700 (PDT)
+        Mon, 19 Jul 2021 14:25:00 -0700 (PDT)
 From:   Alex Elder <elder@linaro.org>
-To:     robh+dt@kernel.org, bjorn.andersson@linaro.org, agross@kernel.org
-Cc:     davem@davemloft.net, kuba@kernel.org, evgreen@chromium.org,
-        cpratapa@codeaurora.org, subashab@codeaurora.org, elder@kernel.org,
+To:     bjorn.andersson@linaro.org, agross@kernel.org
+Cc:     robh+dt@kernel.org, davem@davemloft.net, kuba@kernel.org,
+        evgreen@chromium.org, cpratapa@codeaurora.org,
+        subashab@codeaurora.org, elder@kernel.org,
         linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH net-next 1/3] dt-bindings: net: qcom,ipa: make imem interconnect optional
-Date:   Mon, 19 Jul 2021 16:24:54 -0500
-Message-Id: <20210719212456.3176086-2-elder@linaro.org>
+Subject: [PATCH net-next 2/3] arm64: dts: qcom: sc7280: add IPA information
+Date:   Mon, 19 Jul 2021 16:24:55 -0500
+Message-Id: <20210719212456.3176086-3-elder@linaro.org>
 X-Mailer: git-send-email 2.27.0
 In-Reply-To: <20210719212456.3176086-1-elder@linaro.org>
 References: <20210719212456.3176086-1-elder@linaro.org>
@@ -66,60 +67,82 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On some newer SoCs, the interconnect between IPA and SoC internal
-memory (imem) is not used.  Reflect this in the binding by moving
-the definition of the "imem" interconnect to the end and defining
-minItems to be 2 for both the interconnects and interconnect-names
-properties.
+Add IPA-related nodes and definitions to "sc7280.dtsi", including
+the reserved memory area used for AP-based IPA firmware loading.
 
 Signed-off-by: Alex Elder <elder@linaro.org>
 ---
- .../devicetree/bindings/net/qcom,ipa.yaml      | 18 ++++++++++--------
- 1 file changed, 10 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 43 ++++++++++++++++++++++++++++
+ 1 file changed, 43 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/net/qcom,ipa.yaml b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-index ed88ba4b94df5..4853ab7017bd9 100644
---- a/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-+++ b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-@@ -87,16 +87,18 @@ properties:
-       - const: ipa-setup-ready
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index a8c274ad74c47..5eb2b58ea23be 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -7,6 +7,7 @@
  
-   interconnects:
-+    minItems: 2
-     items:
--      - description: Interconnect path between IPA and main memory
--      - description: Interconnect path between IPA and internal memory
--      - description: Interconnect path between IPA and the AP subsystem
-+      - description: Path leading to system memory
-+      - description: Path between the AP and IPA config space
-+      - description: Path leading to internal memory
+ #include <dt-bindings/clock/qcom,gcc-sc7280.h>
+ #include <dt-bindings/clock/qcom,rpmh.h>
++#include <dt-bindings/interconnect/qcom,sc7280.h>
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
+ #include <dt-bindings/mailbox/qcom-ipcc.h>
+ #include <dt-bindings/power/qcom-aoss-qmp.h>
+@@ -63,6 +64,11 @@ cpucp_mem: memory@80b00000 {
+ 			no-map;
+ 			reg = <0x0 0x80b00000 0x0 0x100000>;
+ 		};
++
++		ipa_fw_mem: memory@8b700000 {
++			reg = <0 0x8b700000 0 0x10000>;
++			no-map;
++		};
+ 	};
  
-   interconnect-names:
-+    minItems: 2
-     items:
-       - const: memory
--      - const: imem
-       - const: config
-+      - const: imem
+ 	cpus {
+@@ -508,6 +514,43 @@ mmss_noc: interconnect@1740000 {
+ 			qcom,bcm-voters = <&apps_bcm_voter>;
+ 		};
  
-   qcom,smem-states:
-     $ref: /schemas/types.yaml#/definitions/phandle-array
-@@ -207,11 +209,11 @@ examples:
- 
-                 interconnects =
-                         <&rsc_hlos MASTER_IPA &rsc_hlos SLAVE_EBI1>,
--                        <&rsc_hlos MASTER_IPA &rsc_hlos SLAVE_IMEM>,
--                        <&rsc_hlos MASTER_APPSS_PROC &rsc_hlos SLAVE_IPA_CFG>;
-+                        <&rsc_hlos MASTER_APPSS_PROC &rsc_hlos SLAVE_IPA_CFG>,
-+                        <&rsc_hlos MASTER_IPA &rsc_hlos SLAVE_IMEM>;
-                 interconnect-names = "memory",
--                                     "imem",
--                                     "config";
-+                                     "config",
-+                                     "imem";
- 
-                 qcom,smem-states = <&ipa_smp2p_out 0>,
-                                    <&ipa_smp2p_out 1>;
++		ipa: ipa@1e40000 {
++			compatible = "qcom,sc7280-ipa";
++
++			iommus = <&apps_smmu 0x480 0x0>,
++				 <&apps_smmu 0x482 0x0>;
++			reg = <0 0x1e40000 0 0x8000>,
++			      <0 0x1e50000 0 0x4ad0>,
++			      <0 0x1e04000 0 0x23000>;
++			reg-names = "ipa-reg",
++				    "ipa-shared",
++				    "gsi";
++
++			interrupts-extended = <&intc 0 654 IRQ_TYPE_EDGE_RISING>,
++					      <&intc 0 432 IRQ_TYPE_LEVEL_HIGH>,
++					      <&ipa_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
++					      <&ipa_smp2p_in 1 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "ipa",
++					  "gsi",
++					  "ipa-clock-query",
++					  "ipa-setup-ready";
++
++			clocks = <&rpmhcc RPMH_IPA_CLK>;
++			clock-names = "core";
++
++			interconnects = <&aggre2_noc MASTER_IPA 0 &mc_virt SLAVE_EBI1 0>,
++					<&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_IPA_CFG 0>;
++			interconnect-names = "memory",
++					     "config";
++
++			qcom,smem-states = <&ipa_smp2p_out 0>,
++					   <&ipa_smp2p_out 1>;
++			qcom,smem-state-names = "ipa-clock-enabled-valid",
++						"ipa-clock-enabled";
++
++			status = "disabled";
++		};
++
+ 		tcsr_mutex: hwlock@1f40000 {
+ 			compatible = "qcom,tcsr-mutex", "syscon";
+ 			reg = <0 0x01f40000 0 0x40000>;
 -- 
 2.27.0
 
