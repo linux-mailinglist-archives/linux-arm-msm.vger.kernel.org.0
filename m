@@ -2,178 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C74563CF026
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 01:48:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 63DFC3CF029
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 01:48:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242021AbhGSW6K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jul 2021 18:58:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46560 "EHLO
+        id S1346539AbhGSW6W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jul 2021 18:58:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51740 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359706AbhGSVW1 (ORCPT
+        with ESMTP id S244923AbhGSVmA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jul 2021 17:22:27 -0400
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E358C05BD16
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 14:54:25 -0700 (PDT)
-Received: by mail-yb1-xb2c.google.com with SMTP id t186so30002428ybf.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 14:54:25 -0700 (PDT)
+        Mon, 19 Jul 2021 17:42:00 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 744ACC0613EF
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 15:21:33 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id j3so10471009plx.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 19 Jul 2021 15:21:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Mgewm5mjx+FRnoLmab+NYqOB950vpM/jLC7o5sa2XM8=;
-        b=l0R7mPgHhU+9/Prsowfdj7Q2tQ1PxSoUyzKyHKVvNc724HS7Q2DlFv99s3OP2TG/Zq
-         lwEOjLRSF21f2rIl6xbmlp+HtCrfmG/rtgg50IMgNNhdd7MvHme0UH+zssIKkD4DysIV
-         9n03+QQKXy8uuwmkJD8Mr+uOSE/yA0i2iVtHLv/9GUxl+FSGRkhTePgD8pYCukp4Dyz7
-         nqQ6P12jnkTl+CUhabJGja6HSNCHhD9KeRBFuzhgnM8w1DbZ2CXLE0Q7Ci39eg+sf+vv
-         GsJnL5QEKafmdGXCglA+rJ9522ssx6xe5cbdRqM+wnuZ2Iz4xFxlQvezVkADeXN2P62Z
-         xTTg==
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=g/dOV28w65pxh5ZmEzT6pr+7G27OdOAmfP8aDoqZ7uM=;
+        b=AhLgpr5yBSQHcGrcgVSeffBdLqhhiTLHq6yDABoOKwG02fOJewBUfDQ2/EmGUYUHOu
+         D48vq0kGXE5lcoEItRHyqL+m6e6qzJlTsvI3tePcufoaW1VVcMi9sWo+j3Cy8rXQ6JjW
+         XrMgRuyUQuHSasNE7tsI8p/a1paQ6SUdJFArA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Mgewm5mjx+FRnoLmab+NYqOB950vpM/jLC7o5sa2XM8=;
-        b=Mwa3YLHeVB/WSAOEOSh7b3Uq3ASjPMMo4aCdt/4IiuX4o19tKpgQvjKf+2YUmC0mpC
-         U3bWx76igmVhGWpCWog8PgN+yoxLmW+/taMAPxRHmtYve1XqS2NQcvFupnure/g6Pvls
-         qMaQiZ7MpznccOH/uv/t6hPhHhFrZETxvgwG4Wy4HIUjegWIh9edZDciJ8IuM4vEkjhW
-         G3d4RlCiz5yrQkEB2lRNCx/IzdTFLOQ0EuuBB/Su/GQGkjceMryqov2oJLDmlTlLE5ya
-         Gv08RF6Ucr12mFyASnoN5mXq1xmQ1HipGAhUAEjInoBPgl7vwno0UYD4nhlOYGsTE4Gj
-         yTCQ==
-X-Gm-Message-State: AOAM533jHCcC37DX33e4NZDZNQBqXR2WFwoFtUmrO/W6lIsihFuN16+q
-        K9BuI/w9Tp3mmyl5ElYuq0ITlnMB6UJygh7qHK9V9w==
-X-Google-Smtp-Source: ABdhPJzzk8LrlzrvE22blW8gQTFo/PFlSTmtqN8jtyX4Dwh9d+eIRQ31WAGLf0IV9Ru2kTwRL7h6I1jaXreQrxJjSnI=
-X-Received: by 2002:a25:8b91:: with SMTP id j17mr33097786ybl.228.1626731663924;
- Mon, 19 Jul 2021 14:54:23 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210707045320.529186-1-john.stultz@linaro.org>
- <YPJkF21ItYlKODyq@yoga> <CALAqxLUzTNiA7u=4_y9pkrh=Q_+vpPgFrhf_6F8-U0XPQU9crQ@mail.gmail.com>
- <YPXUI0VzpxYO56BU@yoga>
-In-Reply-To: <YPXUI0VzpxYO56BU@yoga>
-From:   Saravana Kannan <saravanak@google.com>
-Date:   Mon, 19 Jul 2021 14:53:47 -0700
-Message-ID: <CAGETcx90xNFzEB9yfWvLg=X+ptrgNaQg9Ncxi-U_Z0vXHrUcgw@mail.gmail.com>
-Subject: Re: [PATCH] firmware: QCOM_SCM: Allow qcom_scm driver to be loadable
- as a permenent module
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     John Stultz <john.stultz@linaro.org>,
-        lkml <linux-kernel@vger.kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=g/dOV28w65pxh5ZmEzT6pr+7G27OdOAmfP8aDoqZ7uM=;
+        b=Zu6+TRLhWOmAQ6Bw2bb6CmfaI9WpJO/uMhdR89iHlbnjXt8FKBxfg+7//Rjq5xwc5c
+         PE14IqE+LLJJYPDWM5oYZIA36RcGOUZkanwD60sRRkwJsI/dzj/+w8ycknFZh1n9rS+m
+         bHdEI04W+BPOga+pjItF1WgcbK1UgElult2g/GxlqXq467whNPxJRpciee/OGHA/woG5
+         fLelxMTwFoJ6SdwkkYFLwnLqg8wGEbgGeNe9cEyoWtAOVMN8mZ1ztC596t2+wDyWQFR8
+         2rp352O4bjT298vRSTz/1TCThpW6lJFDkx89ypXBMh8Sb5KqvZPNembJN8mrLsuDrOG2
+         preQ==
+X-Gm-Message-State: AOAM533cGK9MInYVtAebx1KQIRoXoeDeP6GbhQLeLnuYrsE7xwXFfl6g
+        Lsar6KB9KeqT2NH8e7DckrQ1UQ==
+X-Google-Smtp-Source: ABdhPJzwqcUb44VC1v8yykJ4jZuanOJGbArWh13iII5p2GKfZ+5qRQ4gk263ws9+YVvXDaq0KWaOQA==
+X-Received: by 2002:a17:90a:7e18:: with SMTP id i24mr25916128pjl.130.1626733292973;
+        Mon, 19 Jul 2021 15:21:32 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:4d0:bf5f:b8cd:2d67])
+        by smtp.gmail.com with UTF8SMTPSA id w16sm23566431pgi.41.2021.07.19.15.21.30
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 19 Jul 2021 15:21:32 -0700 (PDT)
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Felipe Balbi <balbi@kernel.org>
+Cc:     Michal Simek <michal.simek@xilinx.com>, linux-usb@vger.kernel.org,
+        Peter Chen <peter.chen@kernel.org>,
+        Bastien Nocera <hadess@hadess.net>,
+        Douglas Anderson <dianders@chromium.org>,
+        Stephen Boyd <swboyd@chromium.org>, devicetree@vger.kernel.org,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        linux-kernel@vger.kernel.org,
+        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Al Cooper <alcooperx@gmail.com>,
+        "Alexander A. Klimov" <grandmaster@al2klimov.de>,
+        Andrey Zhizhikin <andrey.zhizhikin@leica-geosystems.com>,
+        Andy Gross <agross@kernel.org>,
+        Aswath Govindraju <a-govindraju@ti.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <maz@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Todd Kjos <tkjos@google.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Android Kernel Team <kernel-team@android.com>
-Content-Type: text/plain; charset="UTF-8"
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        =?UTF-8?q?Guido=20G=C3=BCnther?= <agx@sigxcpu.org>,
+        Jagan Teki <jagan@amarulasolutions.com>,
+        Nishanth Menon <nm@ti.com>,
+        Pawel Laszczak <pawell@cadence.com>,
+        Roger Quadros <rogerq@kernel.org>,
+        Shawn Guo <shawnguo@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Will Deacon <will@kernel.org>,
+        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
+Subject: [PATCH v14 0/6] usb: misc: Add onboard_usb_hub driver
+Date:   Mon, 19 Jul 2021 15:21:22 -0700
+Message-Id: <20210719222128.4122837-1-mka@chromium.org>
+X-Mailer: git-send-email 2.32.0.402.g57bb445576-goog
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 19, 2021 at 12:36 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Mon 19 Jul 14:00 CDT 2021, John Stultz wrote:
->
-> > On Fri, Jul 16, 2021 at 10:01 PM Bjorn Andersson
-> > <bjorn.andersson@linaro.org> wrote:
-> > > On Tue 06 Jul 23:53 CDT 2021, John Stultz wrote:
-> > > > Allow the qcom_scm driver to be loadable as a permenent module.
-> > > >
-> > > > This still uses the "depends on QCOM_SCM || !QCOM_SCM" bit to
-> > > > ensure that drivers that call into the qcom_scm driver are
-> > > > also built as modules. While not ideal in some cases its the
-> > > > only safe way I can find to avoid build errors without having
-> > > > those drivers select QCOM_SCM and have to force it on (as
-> > > > QCOM_SCM=n can be valid for those drivers).
-> > > >
-> > > > Reviving this now that Saravana's fw_devlink defaults to on,
-> > > > which should avoid loading troubles seen before.
-> > > >
-> > >
-> > > Are you (in this last paragraph) saying that all those who have been
-> > > burnt by fw_devlink during the last months and therefor run with it
-> > > disabled will have a less fun experience once this is merged?
-> > >
+This series adds:
+- the onboard_usb_hub_driver
+- glue in the xhci-plat driver to create and destroy the
+  onboard_usb_hub platform devices if needed
+- a device tree binding for the Realtek RTS5411 USB hub controller
+- device tree changes that add RTS5411 entries for the QCA SC7180
+  based boards trogdor and lazor
+- a couple of stubs for platform device functions to avoid
+  unresolved symbols with certain kernel configs
 
-Bjorn,
+The main issue the driver addresses is that a USB hub needs to be
+powered before it can be discovered. For discrete onboard hubs (an
+example for such a hub is the Realtek RTS5411) this is often solved
+by supplying the hub with an 'always-on' regulator, which is kind
+of a hack. Some onboard hubs may require further initialization
+steps, like changing the state of a GPIO or enabling a clock, which
+requires even more hacks. This driver creates a platform device
+representing the hub which performs the necessary initialization.
+Currently it only supports switching on a single regulator, support
+for multiple regulators or other actions can be added as needed.
+Different initialization sequences can be supported based on the
+compatible string.
 
-I jump in and help with any reports of issues with fw_devlink if I'm
-cc'ed. Please feel free to add me and I'll help fix any issues you
-have with fw_devlink=on.
+Besides performing the initialization the driver can be configured
+to power the hub off during system suspend. This can help to extend
+battery life on battery powered devices which have no requirements
+to keep the hub powered during suspend. The driver can also be
+configured to leave the hub powered when a wakeup capable USB device
+is connected when suspending, and power it off otherwise.
 
-> >
-> > I guess potentially. So way back when this was originally submitted,
-> > some folks had trouble booting if it was set as a module due to it
-> > loading due to the deferred_probe_timeout expiring.
-> > My attempts to change the default timeout value to be larger ran into
-> > trouble, but Saravana's fw_devlink does manage to resolve things
-> > properly for this case.
-> >
->
-> Unfortunately I see really weird things coming out of that, e.g. display
-> on my db845c is waiting for the USB hub on PCIe to load its firmware,
-> which typically times out after 60 seconds.
->
-> I've stared at it quite a bit and I don't understand how they are
-> related.
+Changes in v14:
+- rebased on top of v5.14-rc1
+- dropped DT binding patch which landed in v5.13
 
-Can you please add me to any email thread with the details? I'd be
-happy to help.
+Changes in v13:
+- added patch "usb: Specify dependency on USB_XHCI_PLATFORM with
+  'depends on'" to the series to avoid Kconfig conflicts
+- added patch "arm64: defconfig: Explicitly enable USB_XHCI_PLATFORM"
+  to the series to keep effective defconfig unchanged
 
-First step is to make sure all the devices probe as with
-fw_devlink=permissive. After that if you are still seeing issues, it's
-generally timing issues in the driver. But if the actual timing issue
-is identified (by you or whoever knows the driver seeing the issue),
-then I can help with fixes or suggestions for fixes.
+Changes in v12:
+- onboard_hub driver: use IS_ENABLED(CONFIG_USB_ONBOARD_HUB_MODULE)
+  in onboard_hub.h to also check for the driver built as module
+- onboard_hub_driver: include onboard_hub.h again to make sure there
+  are prototype declarations for the public functions
 
-> > But if folks are having issues w/ fw_devlink, and have it disabled,
-> > and set QCOM_SCM=m they could still trip over the issue with the
-> > timeout firing before it is loaded (especially if they are loading
-> > modules from late mounted storage rather than ramdisk).
-> >
->
-> I guess we'll have to force QCOM_SCM=y in the defconfig and hope people
-> don't make it =m.
->
-> > > (I'm picking this up, but I don't fancy the idea that some people are
-> > > turning the boot process into a lottery)
-> >
-> > Me neither, and I definitely think the deferred_probe_timeout logic is
-> > way too fragile, which is why I'm eager for fw_devlink as it's a much
-> > less racy approach to handling module loading dependencies.
->
-> Right, deferred_probe_timeout is the main issue here. Without it we
-> might get some weird probe deferral runs, but either some driver is
-> missing or it settles eventually.
->
-> With deferred_probe_timeout it's rather common for me to see things
-> end up probe out of order (even more now with fw_devlink finding cyclic
-> dependencies) and deferred_probe_timeout just breaking things.
+Changes in v11:
+- support multiple onboard hubs connected to the same parent
+- don't include ‘onboard_hub.h’ from the onboard hub driver
 
-Again, please CC me on these threads and I'd be happy to help.
+Changes in v10:
+- always use of_is_onboard_usb_hub() stub unless ONBOARD_USB_HUB=y/m
+- keep 'regulator-boot-on' property for pp3300_hub
 
->
-> > So if you
-> > want to hold on this, while any remaining fw_devlink issues get
-> > sorted, that's fine.  But I'd also not cast too much ire at
-> > fw_devlink, as the global probe timeout approach for handling optional
-> > links isn't great, and we need a better solution.
-> >
->
-> There's no end to the possible and valid ways you can setup your
-> defconfig and run into the probe deferral issues, so I see no point in
-> holding this one back any longer. I just hope that one day it will be
-> possible to boot the upstream kernel in a reliable fashion.
+Changes in v9:
+- added dependency on ONBOARD_USB_HUB (or !!ONBOARD_USB_HUB) to
+  USB_PLATFORM_XHCI
 
-Might not be believable, but I'm hoping fw_devlink helps you meet this goal :)
+Changes in v7:
+- updated DT binding
+- series rebased on qcom/arm64-for-5.13
 
--Saravana
+Changes in v6:
+- updated summary
+
+Changes in v5:
+- cover letter added
+
+Matthias Kaehlcke (6):
+  usb: misc: Add onboard_usb_hub driver
+  of/platform: Add stubs for of_platform_device_create/destroy()
+  arm64: defconfig: Explicitly enable USB_XHCI_PLATFORM
+  usb: Specify dependencies on USB_XHCI_PLATFORM with 'depends on'
+  usb: host: xhci-plat: Create platform device for onboard hubs in
+    probe()
+  arm64: dts: qcom: sc7180-trogdor: Add nodes for onboard USB hub
+
+ .../sysfs-bus-platform-onboard-usb-hub        |   8 +
+ MAINTAINERS                                   |   7 +
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts |  19 +-
+ .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts |  12 +-
+ .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts |  19 +-
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  |  19 +-
+ arch/arm64/configs/defconfig                  |   1 +
+ drivers/usb/cdns3/Kconfig                     |   2 +-
+ drivers/usb/dwc3/Kconfig                      |   3 +-
+ drivers/usb/host/Kconfig                      |   5 +-
+ drivers/usb/host/xhci-plat.c                  |   6 +
+ drivers/usb/host/xhci.h                       |   2 +
+ drivers/usb/misc/Kconfig                      |  17 +
+ drivers/usb/misc/Makefile                     |   1 +
+ drivers/usb/misc/onboard_usb_hub.c            | 497 ++++++++++++++++++
+ include/linux/of_platform.h                   |  22 +-
+ include/linux/usb/onboard_hub.h               |  18 +
+ 17 files changed, 620 insertions(+), 38 deletions(-)
+ create mode 100644 Documentation/ABI/testing/sysfs-bus-platform-onboard-usb-hub
+ create mode 100644 drivers/usb/misc/onboard_usb_hub.c
+ create mode 100644 include/linux/usb/onboard_hub.h
+
+-- 
+2.32.0.402.g57bb445576-goog
+
