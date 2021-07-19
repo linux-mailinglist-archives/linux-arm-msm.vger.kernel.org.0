@@ -2,123 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 414983CDC4A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jul 2021 17:32:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B7FE3CE2BE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 19 Jul 2021 18:15:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243800AbhGSOv6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jul 2021 10:51:58 -0400
-Received: from mail-io1-f51.google.com ([209.85.166.51]:40841 "EHLO
-        mail-io1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245560AbhGSOry (ORCPT
+        id S235636AbhGSPbe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jul 2021 11:31:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47480 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1348614AbhGSPY4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jul 2021 10:47:54 -0400
-Received: by mail-io1-f51.google.com with SMTP id l5so20427626iok.7;
-        Mon, 19 Jul 2021 08:28:01 -0700 (PDT)
+        Mon, 19 Jul 2021 11:24:56 -0400
+Received: from mail-io1-xd2f.google.com (mail-io1-xd2f.google.com [IPv6:2607:f8b0:4864:20::d2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CCE6C08EBAF;
+        Mon, 19 Jul 2021 08:16:13 -0700 (PDT)
+Received: by mail-io1-xd2f.google.com with SMTP id p186so20451759iod.13;
+        Mon, 19 Jul 2021 08:43:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=dUp4KizKkP62bfFIACj5yluSFgs6t9ggjz821ypftuc=;
+        b=jZbpjPH/YL1hwylpNEwlxY5hzP5L6oHb3pyS8NiP9moyWvagD1TomMT7TgM+zGE9ec
+         ZerWRUwBwX9u6vT6kRSlqnP/a01/6Up+hZS+6kSY0apliE0qCjGXjYULO9udk5orHd0g
+         px8UyQCux6xKJSLG1lmBDFIqOsfXDgzKCbfLv7xpQyMVGNNkijJq+opLQXGAylZkej44
+         zN+8ncoLmiPuu6oquEJ/Yw/7J8t6ysmprvrQOuCRSHVazniaXzkcRH0F2x8J+BJVJCVy
+         dvTZCIq2ZCUzIFdmAxRUJWF9WW/JL+OS/FS9X+wAMnq1I+45LHY1pNOplFkBFi6++zeS
+         qBEg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=IosNWJDIFYVHvcY5CJfC2XiWhHfG0Sj3FdGBaUCDHHY=;
-        b=PnH27gLN7uckgiLrWUAHscWTsvDoQdrXKFKNDy5EHuwsihZWtU3NmrZDFLKMLlPnYZ
-         vbb4ufO52Q+IKZUgXFB/4fErz1MKwuGfnbSt87fl2ru4PyUcNqUepRQAvTpTBcPJdIi0
-         61MPiB47o7ujk6dAg+eEwKIQmdSDrVzS5BU7Oo6MqgX4VuI93IcBNKPwP3HmByAmDSX3
-         YCWphLJWg980GC1iww3aQHcMoKpMZwzjYqvYAZ+SJ5DdhTKX/HGd806qWoGm9/0qCkd9
-         xSGxJwolX4Um8uSSvTwGUCXfgMnQQZh3kYQnspBIt9bC6GJVU/mPYkgnskWXiM4FxR7C
-         A2nQ==
-X-Gm-Message-State: AOAM530vwfLgmKXyh/jMDsnQpMJC99UCvx2X53jpm7Oq7It5AzYufaSY
-        EFKyqXlXYfNexrQYZ/jU6g==
-X-Google-Smtp-Source: ABdhPJzUYml1EzjuWcIHNIjVXKUGRR/w3ocJdsVTxcX8xIoPgtg5b79mUrh/8Dfn0Zn0MpUFraDkiw==
-X-Received: by 2002:a6b:7619:: with SMTP id g25mr18914482iom.151.1626708481552;
-        Mon, 19 Jul 2021 08:28:01 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id r8sm10821214iov.39.2021.07.19.08.28.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jul 2021 08:28:00 -0700 (PDT)
-Received: (nullmailer pid 1967262 invoked by uid 1000);
-        Mon, 19 Jul 2021 15:27:59 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     satya priya <skakit@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org,
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=dUp4KizKkP62bfFIACj5yluSFgs6t9ggjz821ypftuc=;
+        b=cwl5Tv6ztATNGkSDSJ5cJxnaIkhOPCUbJUmvGdss7mODm5cy4uyDhL2IzRzvJCpEvh
+         RyI8+1rtURWSIyoGYt1r4uD2VDT6e9NWZx2R8mMTzNDvFiB9uTHDAOi5Aa/k9KyDzd7x
+         ULSsHBGTbV2pSQaxKQ/W2mwtnq9CCOd8I+Bm6H+UPoj35Ger88jxvNmV1F4BnIcQEszg
+         0wV5rCla6001xxm3StBZeRTVoGaXYLGV8S3qmSzvo9ZCO9U0VYSrsNHbULGl0vcbMGEj
+         6A5W76Pjo4D4HUSg4VwpHlzgpcz9CtiPNy6GFqXiHwPNLo+FctEwdnPtLKpw7O41Hsxx
+         AoYA==
+X-Gm-Message-State: AOAM532/mDl3PLqjGqzRZXv8dXRlQdvFGIopHb8Lp8/0pNdHpFgx+qEK
+        9gQsSiMLdslLFfRMPKNZhlB6+NgB/S2k48jiBmdFOA9b
+X-Google-Smtp-Source: ABdhPJyJqrjcpWe5TPapi2Eds7LS8V0tadPUoiHu7RtPGgJ3cUggLnDgcfpMvXoK517tFEhelNc8o7I/y004WnYAfsM=
+X-Received: by 2002:a05:6638:14d6:: with SMTP id l22mr22055489jak.99.1626709418618;
+ Mon, 19 Jul 2021 08:43:38 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210719145317.79692-1-stephan@gerhold.net>
+In-Reply-To: <20210719145317.79692-1-stephan@gerhold.net>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Mon, 19 Jul 2021 09:43:27 -0600
+Message-ID: <CAOCk7NonuOKWrpr-MwdjAwF1F4jviEMf=c04vVBxQ-OmfY2b-g@mail.gmail.com>
+Subject: Re: [RFC PATCH net-next 0/4] net: wwan: Add Qualcomm BAM-DMUX WWAN
+ network driver
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Sergey Ryazanov <ryazanov.s.a@gmail.com>,
+        Johannes Berg <johannes@sipsolutions.net>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        kgunda@codeaurora.org, devicetree@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>, linux-gpio@vger.kernel.org,
-        Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-kernel@vger.kernel.org
-In-Reply-To: <1626692855-10194-2-git-send-email-skakit@codeaurora.org>
-References: <1626692855-10194-1-git-send-email-skakit@codeaurora.org> <1626692855-10194-2-git-send-email-skakit@codeaurora.org>
-Subject: Re: [PATCH V6 1/2] dt-bindings: pinctrl: qcom-pmic-gpio: Convert qcom pmic gpio bindings to YAML
-Date:   Mon, 19 Jul 2021 09:27:59 -0600
-Message-Id: <1626708479.383201.1967261.nullmailer@robh.at.kernel.org>
+        Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Aleksander Morgado <aleksander@aleksander.es>,
+        "open list:NETWORKING DRIVERS" <netdev@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>, dmaengine@vger.kernel.org,
+        DTML <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 19 Jul 2021 16:37:34 +0530, satya priya wrote:
-> Convert Qualcomm PMIC GPIO bindings from .txt to .yaml format.
-> 
-> Signed-off-by: satya priya <skakit@codeaurora.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> ---
-> Changes in V2:
->  - As per Rob's comments fixed bot erros.
->  - Moved this patch to end of the series so that other patches are not
->    blocked on this.
-> 
-> Changes in V3:
->  - As per Rob's comments, added maxItems for reg and interrupts.
->    Added reference of "pinmux-node.yaml" and "pincfg-node.yaml".
->    Made 'additionalProperties' as false.
-> 
-> Changes in V4:
->  - As per Rob's comments, added description for interrupts, defined
->    constraints for "qcom,drive-strength", dropped description for function
->    property.
-> 
-> Changes in RESEND V4:
->  - Rebased on linux-next and sent.
-> 
-> Changes in V5:
->  - Fixed Bjorn's comments on [1]
-> 
->  [1] https://lore.kernel.org/patchwork/patch/1434144/
-> 
-> Changes in V6:
->  - As per Bjorn's comments, removed formatting for description, changed
->    node name to be more specific to qcom pmic, and fixed few other minor
->    things as suggested here [2].
-> 
->  [2] https://lore.kernel.org/patchwork/patch/1452812/#1654560
-> 
->  .../devicetree/bindings/pinctrl/qcom,pmic-gpio.txt | 288 ---------------------
->  .../bindings/pinctrl/qcom,pmic-gpio.yaml           | 259 ++++++++++++++++++
->  2 files changed, 259 insertions(+), 288 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
-> 
+On Mon, Jul 19, 2021 at 9:01 AM Stephan Gerhold <stephan@gerhold.net> wrote:
+>
+> The BAM Data Multiplexer provides access to the network data channels
+> of modems integrated into many older Qualcomm SoCs, e.g. Qualcomm MSM8916
+> or MSM8974. This series adds a driver that allows using it.
+>
+> For more information about BAM-DMUX, see PATCH 4/4.
+>
+> Shortly said, BAM-DMUX is built using a simple protocol layer on top of
+> a DMA engine (Qualcomm BAM DMA). For BAM-DMUX, the BAM DMA engine runs in
+> a quite strange mode that I call "remote power collapse", where the
+> modem/remote side is responsible for powering on the BAM when needed but we
+> are responsible to initialize it. The BAM is power-collapsed when unneeded
+> by coordinating power control via bidirectional interrupts from the
+> BAM-DMUX driver.
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+The hardware is physically located on the modem, and tied to the modem
+regulators, etc.  The modem has the ultimate "off" switch.  However,
+due to the BAM architecture (which is complicated), configuration uses
+cooperation on both ends.
 
-yamllint warnings/errors:
+>
+> The series first adds one possible solution for handling this "remote power
+> collapse" mode in the bam_dma driver, then it adds the BAM-DMUX driver to
+> the WWAN subsystem. Note that the BAM-DMUX driver does not actually make
+> use of the WWAN subsystem yet, since I'm not sure how to fit it in there
+> yet (see PATCH 4/4).
+>
+> Please note that all of the changes in this patch series are based on
+> a fairly complicated driver from Qualcomm [1].
+> I do not have access to any documentation about "BAM-DMUX". :(
 
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/mfd/qcom,pm8008.example.dt.yaml: gpio@c000: compatible: ['qcom,pm8008-gpio'] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/mfd/qcom,pm8008.example.dt.yaml: gpio@c000: 'gpio-ranges' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
-\ndoc reference errors (make refcheckdocs):
+I'm pretty sure I still have the internal docs.
 
-See https://patchwork.ozlabs.org/patch/1506906
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+Are there specific things you want to know?
