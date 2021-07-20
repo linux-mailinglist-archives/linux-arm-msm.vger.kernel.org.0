@@ -2,135 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A807B3CF7A0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 12:15:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C91883CF7FA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 12:36:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236423AbhGTJfA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jul 2021 05:35:00 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:62970 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236430AbhGTJdx (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jul 2021 05:33:53 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1626776068; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=iaqWHZmgS8Lu3MlAqmI7Z55aQR1Dhk3as4p++438MG0=; b=G4vCOpERZYBhLq0kX6nQPbNRDIw1mw3rTNI9zClIOfZsOnYrGbFVIaNNIwVlN5TYlKKsMjXO
- oLtPTM6ju5Ayxwen4MWgt44jR3boujpqWJANs2Q+W2SDuOBbJ+8URKSBFAdhqff+y2nWP/lS
- DBoV8jMDLiJgKKGsc5hqEWs8vqk=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 60f6a2001d1afe585eee94bf (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 20 Jul 2021 10:14:24
- GMT
-Sender: sibis=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8BDFFC43460; Tue, 20 Jul 2021 10:14:24 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9DBCEC4360C;
-        Tue, 20 Jul 2021 10:14:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 9DBCEC4360C
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=sibis@codeaurora.org
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     bjorn.andersson@linaro.org, robh+dt@kernel.org, will@kernel.org,
-        saiprakash.ranjan@codeaurora.org, mka@chromium.org
-Cc:     ohad@wizery.com, agross@kernel.org, mathieu.poirier@linaro.org,
-        robin.murphy@arm.com, joro@8bytes.org, p.zabel@pengutronix.de,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, evgreen@chromium.org,
-        dianders@chromium.org, swboyd@chromium.org,
-        Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH v2 10/10] arm64: dts: qcom: sc7280: Update Q6V5 MSS node
-Date:   Tue, 20 Jul 2021 15:43:00 +0530
-Message-Id: <1626775980-28637-11-git-send-email-sibis@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1626775980-28637-1-git-send-email-sibis@codeaurora.org>
-References: <1626775980-28637-1-git-send-email-sibis@codeaurora.org>
+        id S236550AbhGTJzp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jul 2021 05:55:45 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60838 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237352AbhGTJy5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 20 Jul 2021 05:54:57 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 00943610F7;
+        Tue, 20 Jul 2021 10:35:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1626777324;
+        bh=RYG5u04jOFhHEELWkGlORZlrGjhovJ3g71bY1CkTWOE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=TLNPMZ4GtPBXI0Soxg5cR+bV9o8znecg8edikg64Had5iRpJhZnTYGw9RBUO17s/W
+         Df7BYeAtuFZhRex6RnDbIIb6bzU7rGpleaNLevaRi/63ZJf8Gvn/ihrRwUlojnmp6x
+         6AvoKn6w9+zNi44oCXNSgVdoq7+wXAHVQH49AdGBtW7x+/qTM9+HzkAOHywx5Otvvk
+         0aDDuV+ngrSgsenYbtMc4UfkQYyDxfpkeWlDEeuyRtK33X4RxJcfHa+w2DjI/XFb1Q
+         xVlYndOidhVxm+AC9m/k/NRbDIQucqbcwJDwZzoy0LjLG+oBCdK2zKxVBJZ5w1eJUa
+         HZjvjJHNf+hCw==
+Date:   Tue, 20 Jul 2021 16:05:20 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: phy: qcom,qmp: Add sc8180x PCIe
+ compatible
+Message-ID: <YPam6Bmvmj/4H0rQ@matsya>
+References: <20210629004509.1788286-1-bjorn.andersson@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210629004509.1788286-1-bjorn.andersson@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update MSS node to support MSA based modem boot on SC7280 SoCs.
+On 28-06-21, 17:45, Bjorn Andersson wrote:
+> Add a compatible for the sc8180x PCIe PHY.
 
-Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sc7280-idp.dts |  7 +++++++
- arch/arm64/boot/dts/qcom/sc7280.dtsi    | 19 ++++++++++++++++---
- 2 files changed, 23 insertions(+), 3 deletions(-)
+Applied both, thanks
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-index 191e8a92d153..d66e3ca42ad5 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-@@ -343,3 +343,10 @@
- 		bias-pull-up;
- 	};
- };
-+
-+&remoteproc_mpss {
-+	status = "okay";
-+	compatible = "qcom,sc7280-mss-pil";
-+	iommus = <&apps_smmu 0x124 0x0>, <&apps_smmu 0x488 0x7>;
-+	memory-region = <&mba_mem &mpss_mem>;
-+};
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 56ea172f641f..6d3687744440 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -586,7 +586,8 @@
- 
- 		remoteproc_mpss: remoteproc@4080000 {
- 			compatible = "qcom,sc7280-mpss-pas";
--			reg = <0 0x04080000 0 0x10000>;
-+			reg = <0 0x04080000 0 0x10000>, <0 0x04180000 0 0x48>;
-+			reg-names = "qdsp6", "rmb";
- 
- 			interrupts-extended = <&intc GIC_SPI 264 IRQ_TYPE_EDGE_RISING>,
- 					      <&modem_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
-@@ -597,8 +598,11 @@
- 			interrupt-names = "wdog", "fatal", "ready", "handover",
- 					  "stop-ack", "shutdown-ack";
- 
--			clocks = <&rpmhcc RPMH_CXO_CLK>;
--			clock-names = "xo";
-+			clocks = <&gcc GCC_MSS_CFG_AHB_CLK>,
-+				 <&gcc GCC_MSS_OFFLINE_AXI_CLK>,
-+				 <&gcc GCC_MSS_SNOC_AXI_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>;
-+			clock-names = "iface", "offline", "snoc_axi", "xo";
- 
- 			power-domains = <&rpmhpd SC7280_CX>,
- 					<&rpmhpd SC7280_MSS>;
-@@ -611,6 +615,15 @@
- 			qcom,smem-states = <&modem_smp2p_out 0>;
- 			qcom,smem-state-names = "stop";
- 
-+			resets = <&aoss_reset AOSS_CC_MSS_RESTART>,
-+				 <&pdc_reset PDC_MODEM_SYNC_RESET>;
-+			reset-names = "mss_restart", "pdc_reset";
-+
-+			qcom,halt-regs = <&tcsr_mutex 0x23000 0x25000 0x28000 0x33000>;
-+			qcom,ext-regs = <&tcsr_regs 0x10000 0x10004
-+					 &tcsr_mutex 0x26004 0x26008>;
-+			qcom,qaccept-regs = <&tcsr_mutex 0x23030 0x23040 0x23020>;
-+
- 			status = "disabled";
- 
- 			glink-edge {
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+~Vinod
