@@ -2,212 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EB2113CF8D3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 13:29:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 679543CF8FF
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 13:43:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237643AbhGTKsW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jul 2021 06:48:22 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:55598 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236743AbhGTKsN (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jul 2021 06:48:13 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1626780531; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=4qeavdXtXyl2WU+HnaSqzbijV0jvPvZSQil59/8Hj3g=;
- b=tgsto8FW2D90WVNlBCGr56oK+9kJ96ZhFcPYXQUUNjx+bYHTlQq6RgnTTSTtFu0/EIUuyv8z
- jzbHlyl96GXSRNQmbEPukeHfreLeRvby2FZ4kyWtKDzEvhytOmzNujhacwU9IH+zVtpWdDWU
- OrnRi+mKOYJFA7bTNsKWSiC1Tsk=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 60f6b36ac923fb7e09eb73ff (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 20 Jul 2021 11:28:42
- GMT
-Sender: pmaliset=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id ABF49C4323A; Tue, 20 Jul 2021 11:28:41 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: pmaliset)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7117EC433D3;
-        Tue, 20 Jul 2021 11:28:39 +0000 (UTC)
+        id S237569AbhGTLCK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jul 2021 07:02:10 -0400
+Received: from mail.kernel.org ([198.145.29.99]:46686 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237255AbhGTLB7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 20 Jul 2021 07:01:59 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 7D52C61029;
+        Tue, 20 Jul 2021 11:41:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1626781283;
+        bh=PG0tu/4uqGOvHH15ANqr2Muvuf7Y5q6HFJHr/FyecDs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Zscox8jNph++6sZDK4wA5sYW6EGSRVtVL+LSZ2d753xAmHd2qQI9uIWkhRBs+kRwR
+         nOX5NWibEBaal6O5c0krrwez4RUai6ENwBI6mnLoqteSd6JCKsUSs5rx8YiSwtAPYy
+         fXNPygPlphRy5W3Tma6OlXurRqBnOnQAxFItmtNQ=
+Date:   Tue, 20 Jul 2021 13:41:20 +0200
+From:   "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>
+To:     Wesley Cheng <wcheng@codeaurora.org>
+Cc:     Felipe Balbi <balbi@kernel.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        "agross@kernel.org" <agross@kernel.org>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "robh+dt@kernel.org" <robh+dt@kernel.org>,
+        "frowand.list@gmail.com" <frowand.list@gmail.com>,
+        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "jackp@codeaurora.org" <jackp@codeaurora.org>
+Subject: Re: [PATCH v14 3/6] usb: dwc3: Resize TX FIFOs to meet EP bursting
+ requirements
+Message-ID: <YPa2YL2mfffiz4i4@kroah.com>
+References: <1625908395-5498-1-git-send-email-wcheng@codeaurora.org>
+ <1625908395-5498-4-git-send-email-wcheng@codeaurora.org>
+ <b65463e9-3a8d-1ee5-3e26-09990aa8ec53@synopsys.com>
+ <87czrmzjym.fsf@kernel.org>
+ <e08dac42-e999-fd97-21ab-34cd70429f03@synopsys.com>
+ <877dhtz9de.fsf@kernel.org>
+ <6bc35b95-8386-1a6b-46dd-f33035e6dee5@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 20 Jul 2021 16:58:39 +0530
-From:   Prasad Malisetty <pmaliset@codeaurora.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Bjorn Helgaas <helgaas@kernel.org>, agross@kernel.org,
-        bhelgaas@google.com, robh+dt@kernel.org, swboyd@chromium.org,
-        lorenzo.pieralisi@arm.com, svarbanov@mm-sol.com,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dianders@chromium.org, mka@chromium.org, vbadigan@codeaurora.org,
-        sallenki@codeaurora.org
-Subject: Re: [PATCH v4 4/4] PCIe: qcom: Add support to control pipe clk src
-In-Reply-To: <YPHuWudai/FO6SMN@yoga>
-References: <1626443927-32028-5-git-send-email-pmaliset@codeaurora.org>
- <20210716150646.GA2098485@bjorn-Precision-5520> <YPHuWudai/FO6SMN@yoga>
-Message-ID: <f5defd3c9f710d3b52d51657467367ac@codeaurora.org>
-X-Sender: pmaliset@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <6bc35b95-8386-1a6b-46dd-f33035e6dee5@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-07-17 02:08, Bjorn Andersson wrote:
-> On Fri 16 Jul 10:06 CDT 2021, Bjorn Helgaas wrote:
+On Wed, Jul 14, 2021 at 12:30:07AM -0700, Wesley Cheng wrote:
 > 
->> Run this:
->> 
->>   $ git log --oneline drivers/pci/controller/dwc/pcie-qcom.c
->> 
->> and make your subject match the style and structure (in particular,
->> s/PCIe/PCI/).  In this case, maybe something like this?
->> 
->>   PCI: qcom: Switch sc7280 gcc_pcie_1_pipe_clk_src after PHY init
->> 
->> On Fri, Jul 16, 2021 at 07:28:47PM +0530, Prasad Malisetty wrote:
->> > This is a new requirement for sc7280 SoC.
->> > To enable gdsc gcc_pcie_1_pipe_clk_src should be TCXO.
->> > after PHY initialization gcc_pcie_1_pipe_clk_src needs
->> > to switch from TCXO to gcc_pcie_1_pipe_clk.
->> 
->> This says what *needs* to happen, but it doesn't actually say what
->> this patch *does*.  I think it's something like:
->> 
->>   On the sc7280 SoC, the clock source for pcie_1_pipe must be the TCXO
->>   while gdsc is enabled.  But after the PHY is initialized, the clock
->>   source must be switched to gcc_pcie_1_pipe_clk.
->> 
->>   On sc7280, switch gcc_pcie_1_pipe_clk_src from TCXO to
->>   gcc_pcie_1_pipe_clk after the PHY has been initialized.
->> 
->> Nits: Rewrap to fill 75 columns or so.  Add blank lines between
->> paragraphs.  Start sentences with capital letter.
->> 
-Agree, looks good. will add more details and update the commit message 
-in next version.
+> 
+> On 7/13/2021 11:40 PM, Felipe Balbi wrote:
+> > 
+> > Hi,
+> > 
+> > Thinh Nguyen <Thinh.Nguyen@synopsys.com> writes:
+> >>> Thinh Nguyen <Thinh.Nguyen@synopsys.com> writes:
+> >>>> Wesley Cheng wrote:
+> >>>>> Some devices have USB compositions which may require multiple endpoints
+> >>>>> that support EP bursting.  HW defined TX FIFO sizes may not always be
+> >>>>> sufficient for these compositions.  By utilizing flexible TX FIFO
+> >>>>> allocation, this allows for endpoints to request the required FIFO depth to
+> >>>>> achieve higher bandwidth.  With some higher bMaxBurst configurations, using
+> >>>>> a larger TX FIFO size results in better TX throughput.
+> >>>>>
+> >>>>> By introducing the check_config() callback, the resizing logic can fetch
+> >>>>> the maximum number of endpoints used in the USB composition (can contain
+> >>>>> multiple configurations), which helps ensure that the resizing logic can
+> >>>>> fulfill the configuration(s), or return an error to the gadget layer
+> >>>>> otherwise during bind time.
+> >>>>>
+> >>>>> Signed-off-by: Wesley Cheng <wcheng@codeaurora.org>
+> >>>>> ---
+> >>>>>  drivers/usb/dwc3/core.c   |  15 +++
+> >>>>>  drivers/usb/dwc3/core.h   |  16 ++++
+> >>>>>  drivers/usb/dwc3/ep0.c    |   2 +
+> >>>>>  drivers/usb/dwc3/gadget.c | 232 ++++++++++++++++++++++++++++++++++++++++++++++
+> >>>>>  4 files changed, 265 insertions(+)
+> >>>>>
+> >>>>> diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+> >>>>> index ba74ad7..b194aecd 100644
+> >>>>> --- a/drivers/usb/dwc3/core.c
+> >>>>> +++ b/drivers/usb/dwc3/core.c
+> >>>>> @@ -1267,6 +1267,7 @@ static void dwc3_get_properties(struct dwc3 *dwc)
+> >>>>>  	u8			rx_max_burst_prd;
+> >>>>>  	u8			tx_thr_num_pkt_prd;
+> >>>>>  	u8			tx_max_burst_prd;
+> >>>>> +	u8			tx_fifo_resize_max_num;
+> >>>>>  	const char		*usb_psy_name;
+> >>>>>  	int			ret;
+> >>>>>  
+> >>>>> @@ -1282,6 +1283,13 @@ static void dwc3_get_properties(struct dwc3 *dwc)
+> >>>>>  	 */
+> >>>>>  	hird_threshold = 12;
+> >>>>>  
+> >>>>> +	/*
+> >>>>> +	 * default to a TXFIFO size large enough to fit 6 max packets.  This
+> >>>>> +	 * allows for systems with larger bus latencies to have some headroom
+> >>>>> +	 * for endpoints that have a large bMaxBurst value.
+> >>>>> +	 */
+> >>>>> +	tx_fifo_resize_max_num = 6;
+> >>>>> +
+> >>>>>  	dwc->maximum_speed = usb_get_maximum_speed(dev);
+> >>>>>  	dwc->max_ssp_rate = usb_get_maximum_ssp_rate(dev);
+> >>>>>  	dwc->dr_mode = usb_get_dr_mode(dev);
+> >>>>> @@ -1325,6 +1333,11 @@ static void dwc3_get_properties(struct dwc3 *dwc)
+> >>>>>  				&tx_thr_num_pkt_prd);
+> >>>>>  	device_property_read_u8(dev, "snps,tx-max-burst-prd",
+> >>>>>  				&tx_max_burst_prd);
+> >>>>> +	dwc->do_fifo_resize = device_property_read_bool(dev,
+> >>>>> +							"tx-fifo-resize");
+> >>>>> +	if (dwc->do_fifo_resize)
+> >>>>> +		device_property_read_u8(dev, "tx-fifo-max-num",
+> >>>>> +					&tx_fifo_resize_max_num);
+> >>>>
+> >>>> Why is this check here? The dwc->tx_fifo_resize_max_num should store
+> >>>> whatever property the user sets. Whether the driver wants to use this
+> >>>
+> >>> Ack!
+> >>>
+> >>>> property should depend on "dwc->do_fifo_resize". Also why don't we have
+> >>>> "snps," prefix to be consistent with the other properties?
+> >>>
+> >>> Ack!
+> >>>
+> >>>> Can we enforce to a single property? If the designer wants to enable
+> >>>> this feature, he/she can to provide the tx-fifo-max-num. This would
+> >>>> simplify the driver a bit. Since this is to optimize for performance,
+> >>>> the user should know/want/test the specific value if they want to set
+> >>>> for their setup and not hoping that the default setting not break their
+> >>>> setup. So we can remove the "do_fifo_resize" property and just check
+> >>>> whether tx_fifo_resize_max_num is set.
+> >>>
+> >>> Ack!
+> >>>
+> >>> All very valid points :-)
+> >>>
+> 
+> Hi Thinh/Felipe,
+> 
+> >>
+> >> Looks like this series already landed in Greg's testing branch. Not sure
+> >> how we usually handle this to address some of our concerns. Add fix
+> >> patches on top of Greg's testing branch?
+> > 
+> > yup, no choice anymore :-(
+> > 
+> 
+> Let me review your feedback, which had some good points.  We can add a
+> change addressing everything on top of what is merged on Greg's branch.
 
->> > Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
->> > ---
->> >  drivers/pci/controller/dwc/pcie-qcom.c | 22 ++++++++++++++++++++++
->> >  1 file changed, 22 insertions(+)
->> >
->> > diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
->> > index 8a7a300..9e0e4ab 100644
->> > --- a/drivers/pci/controller/dwc/pcie-qcom.c
->> > +++ b/drivers/pci/controller/dwc/pcie-qcom.c
->> > @@ -166,6 +166,9 @@ struct qcom_pcie_resources_2_7_0 {
->> >  	struct regulator_bulk_data supplies[2];
->> >  	struct reset_control *pci_reset;
->> >  	struct clk *pipe_clk;
->> > +	struct clk *gcc_pcie_1_pipe_clk_src;
->> > +	struct clk *phy_pipe_clk;
->> > +	struct clk *ref_clk_src;
->> >  };
->> >
->> >  union qcom_pcie_resources {
->> > @@ -1167,6 +1170,20 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
->> >  	if (ret < 0)
->> >  		return ret;
->> >
->> > +	if (of_device_is_compatible(dev->of_node, "qcom,pcie-sc7280")) {
->> > +		res->gcc_pcie_1_pipe_clk_src = devm_clk_get(dev, "pipe_mux");
->> > +		if (IS_ERR(res->gcc_pcie_1_pipe_clk_src))
->> > +			return PTR_ERR(res->gcc_pcie_1_pipe_clk_src);
->> > +
->> > +		res->phy_pipe_clk = devm_clk_get(dev, "phy_pipe");
->> > +		if (IS_ERR(res->phy_pipe_clk))
->> > +			return PTR_ERR(res->phy_pipe_clk);
->> > +
->> > +		res->ref_clk_src = devm_clk_get(dev, "ref");
->> > +		if (IS_ERR(res->ref_clk_src))
->> > +			return PTR_ERR(res->ref_clk_src);
->> 
->> Not clear why ref_clk_src is here, since it's not used anywhere.  If
->> it's not necessary here, drop it and add it in a future patch that
->> uses it.
->> 
-Its more useful in suspend /resume patch set. as of now we will move to 
-suspend/resume patch set.
->> > +	}
->> > +
->> >  	res->pipe_clk = devm_clk_get(dev, "pipe");
->> >  	return PTR_ERR_OR_ZERO(res->pipe_clk);
->> >  }
->> > @@ -1255,6 +1272,11 @@ static void qcom_pcie_deinit_2_7_0(struct qcom_pcie *pcie)
->> >  static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
->> >  {
->> >  	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
->> > +	struct dw_pcie *pci = pcie->pci;
->> > +	struct device *dev = pci->dev;
->> > +
->> > +	if (of_device_is_compatible(dev->of_node, "qcom,pcie-sc7280"))
->> 
->> Using of_device_is_compatible() follows existing style in the driver,
->> which is good.  But I'm not sure that's good style in general because
->> it's a little repetitious and wasteful.
->> 
-> 
-> Following the style is good, but up until the recent sm8250 addition it
-> was just a hack to deal with legacy platforms that we don't know the
-> exact details about.
-> 
-> But, all platforms I know of has the pipe_clk from the PHY fed into the
-> pipe_clk_src mux in the gcc block and then ends up in the PCIe
-> controller. As such, I suspect that the pipe_clk handling should be 
-> moved
-> to the common code path of the driver and there's definitely no harm in
-> making sure that the pipe_clk_src mux is explicitly configured on
-> existing platforms (at least all 2.7.0 based ones).
-> 
->> qcom_pcie_probe() already calls of_device_get_match_data(), which does
->> basically the same thing as of_device_is_compatible(), so I think we
->> could take better advantage of that by augmenting struct qcom_pcie_ops
->> with these device-specific details.
->> 
-> 
-> I agree.
-> 
-> Regards,
-> Bjorn
-> 
->> Some drivers that use this strategy:
->> 
->>   drivers/pci/controller/cadence/pci-j721e.c
->>   drivers/pci/controller/dwc/pci-imx6.c
->>   drivers/pci/controller/dwc/pci-layerscape.c
->>   drivers/pci/controller/dwc/pci-layerscape-ep.c
->>   drivers/pci/controller/dwc/pcie-tegra194.c
->>   drivers/pci/controller/pci-ftpci100.c
->>   drivers/pci/controller/pcie-brcmstb.c
->>   drivers/pci/controller/pcie-mediatek.c
->> 
->> > +		clk_set_parent(res->gcc_pcie_1_pipe_clk_src, res->phy_pipe_clk);
->> >
->> >  	return clk_prepare_enable(res->pipe_clk);
->> >  }
+Any hint as to when these fixups will be sent?
 
-Sure, we will make use of struct qcom_pcie_ops and add a new callback to 
-configure pipe clk src.
-In coming platforms, if the platform doesn't need to configure pipe clk 
-src, it will return as callback not defined.
+thanks,
 
-We will incorporate the changes in next release.
-
->> > --
->> > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
->> > a Linux Foundation Collaborative Project
->> >
+greg k-h
