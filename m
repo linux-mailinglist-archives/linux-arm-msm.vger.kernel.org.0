@@ -2,198 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E51E53CFC49
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 16:28:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 148823CFE0B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 17:45:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239462AbhGTNri (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jul 2021 09:47:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41806 "EHLO
+        id S231563AbhGTPEl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jul 2021 11:04:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239736AbhGTNqD (ORCPT
+        with ESMTP id S240273AbhGTOYt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jul 2021 09:46:03 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C8BEC0613B5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jul 2021 07:24:08 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id i94so26216691wri.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jul 2021 07:24:08 -0700 (PDT)
+        Tue, 20 Jul 2021 10:24:49 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CD45C061794;
+        Tue, 20 Jul 2021 08:03:09 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id v14so11548788plg.9;
+        Tue, 20 Jul 2021 08:03:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=SFxqvandCjDRl0fUYEBNMfLKMtMBK/moBSvmGeLpe8A=;
-        b=EDIWfob19WX9iUQJe1J5IXSmMhr8mlTZCU8guENY5JLlCWZ9hE8lw0Sh7rBstRSgOU
-         /oxpS26rh8sbRuu6q5YmVHA7rd91a+uJgJZENH2FbZywAmR05gQQR01e6rwjkGwZO+4F
-         aw1+W1Bwbpd+ggmfvL7ILmlGMfyqzbhgavun4=
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YjsQqg/cyLrvH6AHlxUB+OYVHKKVa13wNGyeIOclLuU=;
+        b=Bwya6iL1RBmmeGnDLmxE++cJ04phd36pitzI5Fg/6+79njD2oyBhzaQONWmikFuB3v
+         sWOWXVU3XANaWQj6Mi6PD79h7wIzAVu1HT5fHWRFBtYKzK/VsiyBK8irALWIFOIiPfxe
+         SumHHYYFE/6VlsrVL32MklAzmYQxlvTV8x+UX/RKxN55gzSmbxS8xlL4D7T69pZKCxbR
+         3hYVNceHlNyb9ju3HO0FaWK5vUkOa2sK4hDRDzVTPA6C74H9YQRSKcZpzQ6vKkwD7Vc1
+         wKRMpVzAniHaoAw89XEZFEc1YserHm/AzRtW2TvB5ztJbmXl6LqeWx5XcSyxPYcY6teZ
+         VvQg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to;
-        bh=SFxqvandCjDRl0fUYEBNMfLKMtMBK/moBSvmGeLpe8A=;
-        b=H5wPINylm8OJk1rFs4dH04v4qKxtN+UKELfVAMHIHkUiQzz0HqdkhA+dbTQsaGgjS7
-         81EkXqzhXTV090DX+X4OKaBivFoNx5Wz/Fxcf+x8hKjQ1+axwBRzG1RuVK70kOzbnDw7
-         o5g18dbk9bFk9PoCdC/b8TDh112chf3YY5Kcevuw/u6frJVtdoez7MnbkvNqa13RmEtE
-         9GTOtXYgNUeEJmul4Bn0YlyD6PMotHR6tFJ8Y5kCe855n76MCez7MjGryhqJ1LUBosMg
-         Ce2bdlPgnLV7QTGTcQloQohZUlmr/W65prMdkCUaH/S1cQWACjt5yhS98QcoRpAdBbPw
-         VBNA==
-X-Gm-Message-State: AOAM5337CWL0BGip7xhUzVLqEUPwjfYR1tc7xXYklvhsz9FKELC98Shv
-        yENyAMDiad2tEC2ZviovpdLsBw==
-X-Google-Smtp-Source: ABdhPJyTvrKheJwNGUheDAAcCGTY+qv3s7J8bwr7G61A1ywBBEj71bQ7C/3g+gWu5XPyZIRFsUasCQ==
-X-Received: by 2002:a5d:63ca:: with SMTP id c10mr36112316wrw.163.1626791047204;
-        Tue, 20 Jul 2021 07:24:07 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id p9sm12391582wrj.54.2021.07.20.07.24.06
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=YjsQqg/cyLrvH6AHlxUB+OYVHKKVa13wNGyeIOclLuU=;
+        b=Kkw3/vWGJwy0H/qFNM4WtuMvBvSrY19P4zmkaJL3aD4XW32nh+Sl9IgvPxgruRxBCs
+         7Jxv20YBxxIqBFQI1fImR6buDrkLk5XVH2mhW3Jetu8e7MJi8vjUiyANHTky4fa4B6yz
+         LQY+BC3XXxauCQxXrQwYsdwmxkx8qK5nGqUmtwVc7C7fcFEDw8X9BKkfHC1oAAJNk6XY
+         Ee9ExCb/xya0U7gtfOjeeQ6jnKenBFYObgTOHsrFQEv/SolA2MrCLm2rFWplhApZeV6g
+         fCHT+gC8X9I1WcqvmOSWazZmXqHZxYiIoe2cIqpa6gP2Z38v+HOHEMmP/HnM9YgdZANK
+         C5qg==
+X-Gm-Message-State: AOAM532GkekWl9I7KYK5+JHs4t7Nv6wEiKpQmrWGpbTfPs+xsJRg6uah
+        gjG6Az5xBM3zl4m8f8saPlA=
+X-Google-Smtp-Source: ABdhPJwocdDotiRQoMrd8AmM4D5t8eT0K3LGBIo2EKCjfzv73zaEHoy2PrNocwn0na8156wCs4B80g==
+X-Received: by 2002:a17:903:2309:b029:12a:965b:333 with SMTP id d9-20020a1709032309b029012a965b0333mr23822909plh.31.1626793388619;
+        Tue, 20 Jul 2021 08:03:08 -0700 (PDT)
+Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
+        by smtp.gmail.com with ESMTPSA id k19sm20330779pji.32.2021.07.20.08.03.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jul 2021 07:24:06 -0700 (PDT)
-Date:   Tue, 20 Jul 2021 16:24:04 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Christian =?iso-8859-1?Q?K=F6nig?= 
-        <ckoenig.leichtzumerken@gmail.com>
-Cc:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        freedreno@lists.freedesktop.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Emma Anholt <emma@anholt.net>, Bernard Zhao <bernard@vivo.com>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
-        <linaro-mm-sig@lists.linaro.org>,
-        Zhenzhong Duan <zhenzhong.duan@gmail.com>,
-        "Kristian H. Kristensen" <hoegsberg@google.com>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Dave Airlie <airlied@redhat.com>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" 
-        <linux-media@vger.kernel.org>
-Subject: Re: [Linaro-mm-sig] [PATCH 00/11] drm/msm: drm scheduler conversion
- and cleanups
-Message-ID: <YPbchJy4PIwZnhGE@phenom.ffwll.local>
-Mail-Followup-To: Christian =?iso-8859-1?Q?K=F6nig?= <ckoenig.leichtzumerken@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>, freedreno@lists.freedesktop.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>, Emma Anholt <emma@anholt.net>,
-        Bernard Zhao <bernard@vivo.com>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        "moderated list:DMA BUFFER SHARING FRAMEWORK" <linaro-mm-sig@lists.linaro.org>,
-        Zhenzhong Duan <zhenzhong.duan@gmail.com>,
-        "Kristian H. Kristensen" <hoegsberg@google.com>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" <linux-arm-msm@vger.kernel.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Lee Jones <lee.jones@linaro.org>, Dave Airlie <airlied@redhat.com>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" <linux-media@vger.kernel.org>
-References: <20210717202924.987514-1-robdclark@gmail.com>
- <582b8869-f370-3803-60a8-df31088f8088@gmail.com>
- <YPbYnLBin9N4weiC@phenom.ffwll.local>
- <bbc4f7fc-9d51-695e-2bb7-62558d7523e2@gmail.com>
+        Tue, 20 Jul 2021 08:03:06 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), linux-kernel@vger.kernel.org (open list),
+        linux-media@vger.kernel.org (open list:DMA BUFFER SHARING FRAMEWORK),
+        linaro-mm-sig@lists.linaro.org (moderated list:DMA BUFFER SHARING
+        FRAMEWORK)
+Subject: [PATCH] drm/msm: Add fence->wait() op
+Date:   Tue, 20 Jul 2021 08:07:15 -0700
+Message-Id: <20210720150716.1213775-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <bbc4f7fc-9d51-695e-2bb7-62558d7523e2@gmail.com>
-X-Operating-System: Linux phenom 5.10.0-7-amd64 
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 20, 2021 at 04:16:56PM +0200, Christian König wrote:
-> Am 20.07.21 um 16:07 schrieb Daniel Vetter:
-> > On Mon, Jul 19, 2021 at 10:40:57AM +0200, Christian König wrote:
-> > > Am 17.07.21 um 22:29 schrieb Rob Clark:
-> > > > From: Rob Clark <robdclark@chromium.org>
-> > > > 
-> > > > Conversion to gpu_scheduler, and bonus removal of
-> > > > drm_gem_object_put_locked()
-> > > Oh yes please!
-> > > 
-> > > If I'm not completely mistaken that was the last puzzle piece missing to
-> > > unify TTMs and GEMs refcount of objects.
-> > Why does drm/msm, a driver not using ttm at all, block ttm refactorings?
-> > We can just check whether the TTM using driver is potentially using locked
-> > final unref and have a special version of
-> > drm_gem_object_put_guaranteed_unlocked or whatever the bikeshed will look
-> > like, which doesn't have the migth_lock.
-> 
-> Because we now don't have any unrealistic lock inversion between
-> dev->struct_mutex and obj->resv lockdep can complain any more.
+From: Rob Clark <robdclark@chromium.org>
 
-Yeah I know, but we didn't have that since a while ago if you're limiting
-the audit to ttm using drivers. Which are the only ones that matter for
-this, the only thing that caused issues was object_put still being
-dev->struct_mutex infested for backwards compat. But even that changed a
-while ago I think.
--Daniel
+Somehow we had neither ->wait() nor dma_fence_signal() calls, and no
+one noticed.  Oops.
 
-> 
-> Cheers,
-> Christian.
-> 
-> > 
-> > Anyway, deed is done now :-)
-> > -Daniel
-> > 
-> > > Only problem is that I only see patch 7 and 9 in my inbox. Where is the
-> > > rest?
-> > > 
-> > > Thanks,
-> > > Christian.
-> > > 
-> > > > Rob Clark (11):
-> > > >     drm/msm: Docs and misc cleanup
-> > > >     drm/msm: Small submitqueue creation cleanup
-> > > >     drm/msm: drop drm_gem_object_put_locked()
-> > > >     drm: Drop drm_gem_object_put_locked()
-> > > >     drm/msm/submit: Simplify out-fence-fd handling
-> > > >     drm/msm: Consolidate submit bo state
-> > > >     drm/msm: Track "seqno" fences by idr
-> > > >     drm/msm: Return ERR_PTR() from submit_create()
-> > > >     drm/msm: Conversion to drm scheduler
-> > > >     drm/msm: Drop struct_mutex in submit path
-> > > >     drm/msm: Utilize gpu scheduler priorities
-> > > > 
-> > > >    drivers/gpu/drm/drm_gem.c                   |  22 --
-> > > >    drivers/gpu/drm/msm/Kconfig                 |   1 +
-> > > >    drivers/gpu/drm/msm/adreno/a5xx_debugfs.c   |   4 +-
-> > > >    drivers/gpu/drm/msm/adreno/a5xx_gpu.c       |   6 +-
-> > > >    drivers/gpu/drm/msm/adreno/a5xx_power.c     |   2 +-
-> > > >    drivers/gpu/drm/msm/adreno/a5xx_preempt.c   |   7 +-
-> > > >    drivers/gpu/drm/msm/adreno/a6xx_gmu.c       |  12 +-
-> > > >    drivers/gpu/drm/msm/adreno/a6xx_gpu.c       |   2 +-
-> > > >    drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c |   4 +-
-> > > >    drivers/gpu/drm/msm/adreno/adreno_gpu.c     |   6 +-
-> > > >    drivers/gpu/drm/msm/msm_drv.c               |  30 +-
-> > > >    drivers/gpu/drm/msm/msm_fence.c             |  39 ---
-> > > >    drivers/gpu/drm/msm/msm_fence.h             |   2 -
-> > > >    drivers/gpu/drm/msm/msm_gem.c               |  91 +-----
-> > > >    drivers/gpu/drm/msm/msm_gem.h               |  37 ++-
-> > > >    drivers/gpu/drm/msm/msm_gem_submit.c        | 300 ++++++++++++--------
-> > > >    drivers/gpu/drm/msm/msm_gpu.c               |  50 +---
-> > > >    drivers/gpu/drm/msm/msm_gpu.h               |  41 ++-
-> > > >    drivers/gpu/drm/msm/msm_ringbuffer.c        |  70 ++++-
-> > > >    drivers/gpu/drm/msm/msm_ringbuffer.h        |  12 +
-> > > >    drivers/gpu/drm/msm/msm_submitqueue.c       |  49 +++-
-> > > >    include/drm/drm_gem.h                       |   2 -
-> > > >    include/uapi/drm/msm_drm.h                  |  10 +-
-> > > >    23 files changed, 440 insertions(+), 359 deletions(-)
-> > > > 
-> 
+Note that this removes the !timeout case, which has not been used in
+a long time.
 
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/msm_fence.c | 59 +++++++++++++++++++--------------
+ 1 file changed, 34 insertions(+), 25 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_fence.c b/drivers/gpu/drm/msm/msm_fence.c
+index cd59a5918038..8ee96b90ded6 100644
+--- a/drivers/gpu/drm/msm/msm_fence.c
++++ b/drivers/gpu/drm/msm/msm_fence.c
+@@ -38,11 +38,10 @@ static inline bool fence_completed(struct msm_fence_context *fctx, uint32_t fenc
+ 	return (int32_t)(fctx->completed_fence - fence) >= 0;
+ }
+ 
+-/* legacy path for WAIT_FENCE ioctl: */
+-int msm_wait_fence(struct msm_fence_context *fctx, uint32_t fence,
+-		ktime_t *timeout, bool interruptible)
++static signed long wait_fence(struct msm_fence_context *fctx, uint32_t fence,
++		signed long remaining_jiffies, bool interruptible)
+ {
+-	int ret;
++	signed long ret;
+ 
+ 	if (fence > fctx->last_fence) {
+ 		DRM_ERROR_RATELIMITED("%s: waiting on invalid fence: %u (of %u)\n",
+@@ -50,33 +49,34 @@ int msm_wait_fence(struct msm_fence_context *fctx, uint32_t fence,
+ 		return -EINVAL;
+ 	}
+ 
+-	if (!timeout) {
+-		/* no-wait: */
+-		ret = fence_completed(fctx, fence) ? 0 : -EBUSY;
++	if (interruptible) {
++		ret = wait_event_interruptible_timeout(fctx->event,
++			fence_completed(fctx, fence),
++			remaining_jiffies);
+ 	} else {
+-		unsigned long remaining_jiffies = timeout_to_jiffies(timeout);
+-
+-		if (interruptible)
+-			ret = wait_event_interruptible_timeout(fctx->event,
+-				fence_completed(fctx, fence),
+-				remaining_jiffies);
+-		else
+-			ret = wait_event_timeout(fctx->event,
+-				fence_completed(fctx, fence),
+-				remaining_jiffies);
+-
+-		if (ret == 0) {
+-			DBG("timeout waiting for fence: %u (completed: %u)",
+-					fence, fctx->completed_fence);
+-			ret = -ETIMEDOUT;
+-		} else if (ret != -ERESTARTSYS) {
+-			ret = 0;
+-		}
++		ret = wait_event_timeout(fctx->event,
++			fence_completed(fctx, fence),
++			remaining_jiffies);
++	}
++
++	if (ret == 0) {
++		DBG("timeout waiting for fence: %u (completed: %u)",
++				fence, fctx->completed_fence);
++		ret = -ETIMEDOUT;
++	} else if (ret != -ERESTARTSYS) {
++		ret = 0;
+ 	}
+ 
+ 	return ret;
+ }
+ 
++/* legacy path for WAIT_FENCE ioctl: */
++int msm_wait_fence(struct msm_fence_context *fctx, uint32_t fence,
++		ktime_t *timeout, bool interruptible)
++{
++	return wait_fence(fctx, fence, timeout_to_jiffies(timeout), interruptible);
++}
++
+ /* called from workqueue */
+ void msm_update_fence(struct msm_fence_context *fctx, uint32_t fence)
+ {
+@@ -114,10 +114,19 @@ static bool msm_fence_signaled(struct dma_fence *fence)
+ 	return fence_completed(f->fctx, f->base.seqno);
+ }
+ 
++static signed long msm_fence_wait(struct dma_fence *fence, bool intr,
++		signed long timeout)
++{
++	struct msm_fence *f = to_msm_fence(fence);
++
++	return wait_fence(f->fctx, fence->seqno, timeout, intr);
++}
++
+ static const struct dma_fence_ops msm_fence_ops = {
+ 	.get_driver_name = msm_fence_get_driver_name,
+ 	.get_timeline_name = msm_fence_get_timeline_name,
+ 	.signaled = msm_fence_signaled,
++	.wait = msm_fence_wait,
+ };
+ 
+ struct dma_fence *
 -- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+2.31.1
+
