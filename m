@@ -2,114 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BBC573CFEB5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 18:07:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 31B5C3CFEB6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 18:07:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237830AbhGTP0h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jul 2021 11:26:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34514 "EHLO
+        id S235764AbhGTP0s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jul 2021 11:26:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35968 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240159AbhGTPSv (ORCPT
+        with ESMTP id S240572AbhGTPYQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jul 2021 11:18:51 -0400
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46552C061766
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jul 2021 08:59:28 -0700 (PDT)
-Received: by mail-oi1-x233.google.com with SMTP id t143so24992233oie.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jul 2021 08:59:28 -0700 (PDT)
+        Tue, 20 Jul 2021 11:24:16 -0400
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 769EBC061786
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jul 2021 09:03:06 -0700 (PDT)
+Received: by mail-ot1-x32b.google.com with SMTP id b18-20020a0568303112b02904cf73f54f4bso8424659ots.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jul 2021 09:03:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=3bYYSvolabqesH6HHzk8H0SMsuQoJjQhMgS236zxUEQ=;
-        b=AvTz0BF73p7p7q+iRZ6q+1CbYpehl5FXWoRXcFlyd2NXzKLW8WWVq38f6M8n+E1bDW
-         npnGidT02q0MPXKnbEfQgPd0dlOW3iuMFfVmYUuytTXxgKPaAIRvM48UkySf8ktoCTmS
-         3B1AW8idb6ilSO3l1Vo1nAqKknvqmzWvyKBIR7HWr2xPL2QiIG+sJPwimq3GWj231k2f
-         L7HdeSuE3uVdqTMCJtPCFLnL9TFUzVwlsAZhbcu+9tFV3tgt8TiZbC2gO9wUZuWh1xEu
-         RFe/4UyJFpFnjcsJ/5ZdBdY2qjiZ2hDO2M/xFXKKYdVvE4uFwt3eHJ7cc4LheszoeMwh
-         l5GQ==
+        bh=/vkJe7iPu6rsdTrj/rwJVM+Dly5WduuMAkiM0NoVcRs=;
+        b=tkehq4kLm6OU0/ZCklwHz62NOXlObQgW8EWUpyNQ2S0Q8YbPGeFrp+aL64AyMwAsP0
+         TYKEoAxG+iBDEJGeN1+SgfEd6i/MUh3ZH8ch22GfXoK/Sq9ndDX0RmX47cNdYgSoUQmA
+         RILjD04PqiwU/I8D67WsqbocBFHTNomMApzp1TwKLtWQbhpOb9yWuNNvBjFkaTt9rPbf
+         Nt7OWfj9GmQX/4mG1aDIopaQTy2GBwiaTppNHwBRckuPh1it6uhGvBJ4AP8drg/ltygL
+         i3scYALFfjB0bxl8bSrU8M09UiqaSaV/4EVsCgJrHVbIrtWsF/Us1eSa7qUzZ2N4FFOz
+         N2Zw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=3bYYSvolabqesH6HHzk8H0SMsuQoJjQhMgS236zxUEQ=;
-        b=fQ+aDlKAAOaIV8x3VohGjL5Skso1UHB2oV7ai+4Xq+CtdwVt9860cFdg/G04VdS4P8
-         3pVJmel9nwqLf6wrpPFlw+mX3ZlZQoKpDkiRj7Auvw8cCx5CJCa214EZbuuKOzCcCzVv
-         k8c0XDBcZsvPWxebV/z8xEbGvNFi2mdt3ssjLwq78808k27y0t0bMPH01K09EUOofqPP
-         EMvYub3uU5FRdGriWL3Od9ggje+pkGAxnqNVAxXrJP325PWAj2AXAv7YxCj5r2rmSIn+
-         8pdl7sRMxbPdYO1gfCUkJZGZCRF6onPsw1EZaQxOzN1YeffQCyiUK6R1KopiQOyGQRrJ
-         b6zA==
-X-Gm-Message-State: AOAM531dSRW5Lu7m51C+nHVZMnYEH1L1y9pEt6bhkvD3TzA1v7FuB9Fk
-        TjgacnMNUrt1Y321fdORH7Qm/w==
-X-Google-Smtp-Source: ABdhPJxDvfL0NyoM90fcGCn8H+ACZoTlz62ASCTNkVWnQ5pADpi8QHChB5kbAY5iOVJ8knWxzsbjYw==
-X-Received: by 2002:aca:fdc1:: with SMTP id b184mr21581758oii.101.1626796767607;
-        Tue, 20 Jul 2021 08:59:27 -0700 (PDT)
+        bh=/vkJe7iPu6rsdTrj/rwJVM+Dly5WduuMAkiM0NoVcRs=;
+        b=EZLfAPyBhEap9B3QobaIWajXoZnZRdrPvJ7NfQu4Pxyto9qMUGh9CKEHhQfYoP2yrW
+         Df2fyffU2Px1IwG1+VsPrgdQfENcCo4vrqQpgGj/SC3Trqi+AjkoCKNH66Ihdt2YYmKI
+         T1yZhrAT4OjJBSOBWN9IT22sjqdruHN/3dq9uXpDdk4cH4+3UmN4ssX3MinpWNWCSD8v
+         T2Y1LQOOsJ09QrFikLXTvnXYcXexBl+DaQvKqLFZQH/fXMnscaA6yHOxNZXbSGMbZCqI
+         qQvMnkJSSFcxfoApG9oJAZh2gu+draqDioKZz1sx+4Qe00Dv08xWtHJDHopMJ+lreGCL
+         /I6A==
+X-Gm-Message-State: AOAM532eByCanIn7C7OGJYFkB41DpXptPhhMZUEWQtx+S3mAkJe1qHrI
+        EMx1+NnmxSnDkWzJbuvRLuIKjQ==
+X-Google-Smtp-Source: ABdhPJyrqDKwsECRQVkzMXTYg0ATE6Lh1vcU0X1FvoL4VMrd25wJ7w3JR+MmjJ1WsmmDQCPVUhGS3A==
+X-Received: by 2002:a9d:6c1:: with SMTP id 59mr14779236otx.318.1626796985486;
+        Tue, 20 Jul 2021 09:03:05 -0700 (PDT)
 Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id o26sm4252216otk.77.2021.07.20.08.59.26
+        by smtp.gmail.com with ESMTPSA id 12sm1228504oij.40.2021.07.20.09.03.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jul 2021 08:59:27 -0700 (PDT)
-Date:   Tue, 20 Jul 2021 10:59:25 -0500
+        Tue, 20 Jul 2021 09:03:05 -0700 (PDT)
+Date:   Tue, 20 Jul 2021 11:03:03 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     davem@davemloft.net, kuba@kernel.org
-Cc:     Alex Elder <elder@linaro.org>, agross@kernel.org,
-        robh+dt@kernel.org, evgreen@chromium.org, cpratapa@codeaurora.org,
-        subashab@codeaurora.org, elder@kernel.org,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH net-next 0/3] arm64: dts: qcom: DTS updates
-Message-ID: <YPby3eJmDmNlESC8@yoga>
-References: <20210719212456.3176086-1-elder@linaro.org>
- <162679080524.18101.16626774349145809936.git-patchwork-notify@kernel.org>
+To:     Caleb Connolly <caleb@connolly.tech>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org
+Subject: Re: [PATCH 3/5] drm/panel/samsung-sofef00: make gpio optional
+Message-ID: <YPbztxBh4cCJF8p3@yoga>
+References: <20210720153125.43389-1-caleb@connolly.tech>
+ <20210720153125.43389-4-caleb@connolly.tech>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <162679080524.18101.16626774349145809936.git-patchwork-notify@kernel.org>
+In-Reply-To: <20210720153125.43389-4-caleb@connolly.tech>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 20 Jul 09:20 CDT 2021, patchwork-bot+netdevbpf@kernel.org wrote:
+On Tue 20 Jul 10:33 CDT 2021, Caleb Connolly wrote:
 
-> Hello:
+> The OnePlus 6T panel fails to initialise if it has been reset,
+> workaround this by allowing panels to not specify a reset GPIO.
 > 
-> This series was applied to netdev/net-next.git (refs/heads/master):
+> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+> ---
+>  drivers/gpu/drm/panel/panel-samsung-sofef00.c | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
 > 
+> diff --git a/drivers/gpu/drm/panel/panel-samsung-sofef00.c b/drivers/gpu/drm/panel/panel-samsung-sofef00.c
+> index 8cb1853574bb..a20a5af14653 100644
+> --- a/drivers/gpu/drm/panel/panel-samsung-sofef00.c
+> +++ b/drivers/gpu/drm/panel/panel-samsung-sofef00.c
+> @@ -44,6 +44,8 @@ struct sofef00_panel *to_sofef00_panel(struct drm_panel *panel)
+> 
+>  static void sofef00_panel_reset(struct sofef00_panel *ctx)
+>  {
+> +	if (!ctx->reset_gpio)
 
-David, Jakub, can you please revert/drop the two "arm64: dts" patches
-from the net-next tree?
+gpiod_set_value_cansleep(NULL, 1) is a perfectly valid nop, so I don't
+think you need to make this conditional.
 
-DTS patches are generally merged through the qcom and ultimately soc
-tree and I have a number of patches queued up in both sc7180 and sc7280
-that will cause merge conflicts down the road, so I would prefer to pick
-these up as well.
+That said, don't you need this to get the panel out of reset once you
+apply power after it being powered off?
+
+> +		return;
+>  	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
+>  	usleep_range(5000, 6000);
+>  	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
+> @@ -137,7 +139,8 @@ static int sofef00_panel_prepare(struct drm_panel *panel)
+>  	ret = sofef00_panel_on(ctx);
+>  	if (ret < 0) {
+>  		dev_err(dev, "Failed to initialize panel: %d\n", ret);
+> -		gpiod_set_value_cansleep(ctx->reset_gpio, 1);
+> +		if (ctx->reset_gpio)
+
+Ditto.
+
 
 Regards,
 Bjorn
 
-> On Mon, 19 Jul 2021 16:24:53 -0500 you wrote:
-> > This series updates some IPA-related DT nodes.
-> > 
-> > Newer versions of IPA do not require an interconnect between IPA
-> > and SoC internal memory.  The first patch updates the DT binding
-> > to reflect this.
-> > 
-> > The second patch adds IPA information to "sc7280.dtsi", using only
-> > two interconnects.  It includes the definition of the reserved
-> > memory area used to hold IPA firmware.
-> > 
-> > [...]
+> +			gpiod_set_value_cansleep(ctx->reset_gpio, 1);
+>  		return ret;
+>  	}
 > 
-> Here is the summary with links:
->   - [net-next,1/3] dt-bindings: net: qcom,ipa: make imem interconnect optional
->     https://git.kernel.org/netdev/net-next/c/6a0eb6c9d934
->   - [net-next,2/3] arm64: dts: qcom: sc7280: add IPA information
->     https://git.kernel.org/netdev/net-next/c/f8bd3c82bf7d
->   - [net-next,3/3] arm64: dts: qcom: sc7180: define ipa_fw_mem node
->     https://git.kernel.org/netdev/net-next/c/fd0f72c34bd9
+> @@ -276,7 +279,7 @@ static int sofef00_panel_probe(struct mipi_dsi_device *dsi)
+>  		return ret;
+>  	}
 > 
-> You are awesome, thank you!
+> -	ctx->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
+> +	ctx->reset_gpio = devm_gpiod_get_optional(dev, "reset", GPIOD_OUT_HIGH);
+>  	if (IS_ERR(ctx->reset_gpio)) {
+>  		ret = PTR_ERR(ctx->reset_gpio);
+>  		dev_warn(dev, "Failed to get reset-gpios: %d\n", ret);
 > --
-> Deet-doot-dot, I am a bot.
-> https://korg.docs.kernel.org/patchwork/pwbot.html
+> 2.32.0
 > 
 > 
