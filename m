@@ -2,24 +2,24 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A80B73CFE0C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 17:45:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D73803CFE0D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 17:45:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235517AbhGTPEm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jul 2021 11:04:42 -0400
-Received: from mail-40136.protonmail.ch ([185.70.40.136]:32149 "EHLO
-        mail-40136.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241721AbhGTOxF (ORCPT
+        id S238104AbhGTPEn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jul 2021 11:04:43 -0400
+Received: from mail-0201.mail-europe.com ([51.77.79.158]:34168 "EHLO
+        mail-0201.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241743AbhGTOxT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jul 2021 10:53:05 -0400
-Date:   Tue, 20 Jul 2021 15:33:34 +0000
+        Tue, 20 Jul 2021 10:53:19 -0400
+Date:   Tue, 20 Jul 2021 15:33:38 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1626795219;
-        bh=szBIPFUr6CqEljCYQ32/qAOWp1c+Iy40CcFm212YhCQ=;
-        h=Date:To:From:Cc:Reply-To:Subject:From;
-        b=H6UaAWJa1yDEuy4fEFsuMMrwULeQsJvzjkHM39TS1VGBNg1IGfwxZLwPGKt3kM57X
-         RUZW9JFHMX0BJvSqVMJ8eH8hCo9I4nFmwT3pjZHa9qTStCk0WnmC4S94N2WdYLPo6u
-         jHfrJ9CUCPGx5GDanRO8561RS1UACOKRKjzt/2wQ=
+        s=protonmail; t=1626795223;
+        bh=a/cXIJple0tXhCo8wBmyM+liGV06lwy6xissR4KIOBE=;
+        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
+        b=e5PSRNYVIfDTCyWKFDdtWRV/a1CHmQ6s52JrLyxXS9rbHzfboI5GOSvtNzvZnBWcV
+         VCtwbsy8K5xipPFOva8gx7eiSn8BNhQ5xQQq5zzs6BlYwOF35MdXmrIdQsjpEhxOkH
+         KUCJjs5/nplTVb5VpmyJpLmCUZSvkNe21BMEdoYo=
 To:     Caleb Connolly <caleb@connolly.tech>
 From:   Caleb Connolly <caleb@connolly.tech>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -31,8 +31,10 @@ Cc:     Andy Gross <agross@kernel.org>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org
 Reply-To: Caleb Connolly <caleb@connolly.tech>
-Subject: [PATCH 0/5] OnePlus 6 fixes
-Message-ID: <20210720153125.43389-1-caleb@connolly.tech>
+Subject: [PATCH 1/5] arm64: dts: qcom: sdm845-oneplus: fix reserved-mem
+Message-ID: <20210720153125.43389-2-caleb@connolly.tech>
+In-Reply-To: <20210720153125.43389-1-caleb@connolly.tech>
+References: <20210720153125.43389-1-caleb@connolly.tech>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -45,35 +47,41 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This series is another collection of small fixes for the OnePlus 6 and 6T.
-Notably we finally have finally tracked down and fixed the reserved memory
-related crashes!
-We also enable UART as well as take Bjorns approach to working around the p=
-anel
-reset GPIO issue making the reset GPIO optional in the panel driver. Lastly=
- we
-fix up the ipa firmware path now that firmware-names is supported for it in
-5.14.
+Fix the upper guard and the "removed_region", this fixes the random
+crashes which used to occur in memory intensive loads. I'm not sure WHY
+the upper guard being 0x2000 instead of 0x1000 doesn't fix this, but it
+HAS to be 0x1000.
 
-The patch ("drm/panel/samsung-sofef00: make gpio optional") is a reworked
-version of a patch from a previous series which was not accepted: ("drm: pa=
-nel:
-sofef00: remove reset GPIO handling")
-https://lore.kernel.org/linux-arm-msm/20210502014146.85642-3-caleb@connolly=
-.tech/
+Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+Fixes: e60fd5ac1f68 ("arm64: dts: qcom: sdm845-oneplus-common: guard
+rmtfs-mem")
+---
+ arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-Caleb Connolly (5):
-  arm64: dts: qcom: sdm845-oneplus: fix reserved-mem
-  dts: arm64: sdm845-oneplus-common: enable debug UART
-  drm/panel/samsung-sofef00: make gpio optional
-  arm64: dts: qcom: sdm845-oneplus-fajita: remove panel reset gpio
-  arm64: dts: qcom: sdm845-oneplus: add ipa firmware names
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm=
+64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+index 4d052e39b348..eb6b1d15293d 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+@@ -69,7 +69,7 @@ rmtfs_mem: memory@f5b01000 {
+ =09=09};
+ =09=09rmtfs_upper_guard: memory@f5d01000 {
+ =09=09=09no-map;
+-=09=09=09reg =3D <0 0xf5d01000 0 0x2000>;
++=09=09=09reg =3D <0 0xf5d01000 0 0x1000>;
+ =09=09};
 
- .../boot/dts/qcom/sdm845-oneplus-common.dtsi  | 19 ++++++++++++++-----
- .../dts/qcom/sdm845-oneplus-enchilada.dts     |  2 ++
- drivers/gpu/drm/panel/panel-samsung-sofef00.c |  7 +++++--
- 3 files changed, 21 insertions(+), 7 deletions(-)
+ =09=09/*
+@@ -78,7 +78,7 @@ rmtfs_upper_guard: memory@f5d01000 {
+ =09=09 */
+ =09=09removed_region: memory@88f00000 {
+ =09=09=09no-map;
+-=09=09=09reg =3D <0 0x88f00000 0 0x200000>;
++=09=09=09reg =3D <0 0x88f00000 0 0x1c00000>;
+ =09=09};
 
+ =09=09ramoops: ramoops@ac300000 {
 --
 2.32.0
 
