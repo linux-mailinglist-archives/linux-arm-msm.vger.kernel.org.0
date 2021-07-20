@@ -2,40 +2,41 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CABC63CF224
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 04:42:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A4433CF220
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 04:42:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344652AbhGTCBd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jul 2021 22:01:33 -0400
-Received: from mail.kernel.org ([198.145.29.99]:34110 "EHLO mail.kernel.org"
+        id S1345344AbhGTCB3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jul 2021 22:01:29 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34106 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238037AbhGTBuS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1344653AbhGTBuS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 19 Jul 2021 21:50:18 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id 8EEA561166;
+Received: by mail.kernel.org (Postfix) with ESMTPS id 7FBF460FF3;
         Tue, 20 Jul 2021 02:30:50 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1626748250;
-        bh=4y1NktRqA9aNSgJKxmhS9QZshOI1BhOPHGDk9RyojpU=;
+        bh=0uYBKCXTHjIWAqMpvHXM9Hf/ZA4EOjcvLvSJAvshJZ0=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=ljeZ1nHTRLbbVuHM23uvPEn1XopXAFbK6dtiE0YLN1PeVafuLv8FBNwTfrho7rIVj
-         HQlf0vl9XYJNiYXbo8PqpcdH7Ei75NJ+ICRAWX6JDZWUOPZTefYlN6k/SudER2FbmQ
-         fFlQ4EoizsFjdWxV04NLQmF8IKjwVqRcBp/rI1T6cRspqlg1SSndzKuchP7sJcRNZD
-         ImY5Nu6cb6pExo3FkSXoG7UuNi+OHpnv7GjnvPjj+n8insQg5gL4ZbOrm3/fuf/JVj
-         q7TFi061vTygOlrVOtA2ZGazT3tAA4D4aHTVLhWC7b2xCPB/oy9NKewjil9qJdJTgD
-         F+dAwjc0C7QBQ==
+        b=OqyRrYJa6Ul1EpJ4dpZ6md7DGiVageqjmdnjV8LZEFlywXBjg5gMfkgIK0eKNNo6H
+         l6NOtx1XsOQ5OIsXYst1UIud7F1RHlyjCgvy3Xsotr3bvtf54BE1uoyjDSq+NPlIMH
+         NZJ8gpXC6QtBqtJIi7G/KLyn6cMettgM+TKCYb3OCbRJFYJTnDIiHDQBQayzT98Q4y
+         GtxK8UvL7FkYCa9eFrIpM47kdWopIUqlzykvhdlHV08ysquSo16AQvDiCMatV8snQk
+         zbbBkX+Nj/Ygoy5/iJw1SgPHePWZSMYzt2eiuNewsisGpT2CGPAoXeuwj1DdzQggM2
+         gfK537szD56+Q==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 8511460CE0;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 72BC960C2A;
         Tue, 20 Jul 2021 02:30:50 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2] bus: mhi: Wait for M2 state during system resume
+Subject: Re: [PATCH 1/2] irqchip/qcom-pdc: Switch to IRQCHIP_PLATFORM_DRIVER and
+ allow as a module
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <162674825054.10695.1840155897118929054.git-patchwork-notify@kernel.org>
+Message-Id: <162674825046.10695.11840447551670517421.git-patchwork-notify@kernel.org>
 Date:   Tue, 20 Jul 2021 02:30:50 +0000
-References: <20210524040312.14409-1-bqiang@codeaurora.org>
-In-Reply-To: <20210524040312.14409-1-bqiang@codeaurora.org>
-To:     Baochen Qiang <bqiang@codeaurora.org>
+References: <20210518211922.3474368-1-john.stultz@linaro.org>
+In-Reply-To: <20210518211922.3474368-1-john.stultz@linaro.org>
+To:     John Stultz <john.stultz@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -43,36 +44,26 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hello:
 
-This patch was applied to qcom/linux.git (refs/heads/for-next):
+This series was applied to qcom/linux.git (refs/heads/for-next):
 
-On Mon, 24 May 2021 12:03:12 +0800 you wrote:
-> During system resume, MHI host triggers M3->M0 transition and then waits
-> for target device to enter M0 state. Once done, the device queues a state
-> change event into ctrl event ring and notifies MHI host by raising an
-> interrupt, where a tasklet is scheduled to process this event. In most cases,
-> the tasklet is served timely and wait operation succeeds.
+On Tue, 18 May 2021 21:19:21 +0000 you wrote:
+> From: Saravana Kannan <saravanak@google.com>
 > 
-> However, there are cases where CPU is busy and cannot serve this tasklet
-> for some time. Once delay goes long enough, the device moves itself to M1
-> state and also interrupts MHI host after inserting a new state change
-> event to ctrl ring. Later CPU finally has time to process the ring, however
-> there are two events in it now:
-> 	1. for M3->M0 event, which is processed first as queued first,
-> 	   tasklet handler updates device state to M0 and wakes up the task,
-> 	   i.e., the MHI host.
-> 	2. for M0->M1 event, which is processed later, tasklet handler
-> 	   triggers M1->M2 transition and updates device state to M2 directly,
-> 	   then wakes up the MHI host(if still sleeping on this wait queue).
-> Note that although MHI host has been woken up while processing the first
-> event, it may still has no chance to run before the second event is processed.
-> In other words, MHI host has to keep waiting till timeout cause the M0 state
-> has been missed.
+> This patch revives changes from Saravana Kannan to switch the
+> qcom-pdc driver to use IRQCHIP_PLATFORM_DRIVER helper macros,
+> and allows qcom-pdc driver to be loaded as a permanent module.
+> 
+> Earlier attempts at this ran into trouble with loading
+> dependencies, but with Saravana's fw_devlink=on set by default
+> now we should avoid those.
 > 
 > [...]
 
 Here is the summary with links:
-  - [v2] bus: mhi: Wait for M2 state during system resume
-    https://git.kernel.org/qcom/c/02b49cd11745
+  - [1/2] irqchip/qcom-pdc: Switch to IRQCHIP_PLATFORM_DRIVER and allow as a module
+    https://git.kernel.org/qcom/c/4acd8a4be614
+  - [2/2] firmware: QCOM_SCM: Allow qcom_scm driver to be loadable as a permenent module
+    https://git.kernel.org/qcom/c/b42000e4b874
 
 You are awesome, thank you!
 --
