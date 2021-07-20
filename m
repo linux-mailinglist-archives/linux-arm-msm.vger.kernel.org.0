@@ -2,117 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7CEF23CFEB3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 18:07:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BBC573CFEB5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 18:07:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236594AbhGTP0b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 20 Jul 2021 11:26:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33166 "EHLO
+        id S237830AbhGTP0h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 20 Jul 2021 11:26:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242841AbhGTPMs (ORCPT
+        with ESMTP id S240159AbhGTPSv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 20 Jul 2021 11:12:48 -0400
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BEC0AC061766
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jul 2021 08:52:46 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id b24-20020a9d60d80000b02904d14e47202cso4556677otk.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jul 2021 08:52:46 -0700 (PDT)
+        Tue, 20 Jul 2021 11:18:51 -0400
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46552C061766
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jul 2021 08:59:28 -0700 (PDT)
+Received: by mail-oi1-x233.google.com with SMTP id t143so24992233oie.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 20 Jul 2021 08:59:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=Walcc93S0Gr05g0IhulInQ/Cw8QbGOXukB2N6LJ3+Tk=;
-        b=xEJ1qDxDIzGBjx0jNFiWHrs9TNJ4UHztUudPOL5sF2K8e5d/w6TJi0I4CfREwXGWQE
-         AZOw1XITpr//UuJiLOqGocyI+LWqOyO8ZWlSQa/bmUzdMUj+VKxCB5MOLU/kiRoQK6y3
-         /HY0kDJn1X2NOhZXFsc8n28eGro1lMwjLsD58u1uLyBVaykWJr6DmGld3FNkPmbFdsLa
-         xlf3coWQOS0vfBAfxF2VsmXSlJ3sHg8ZRovmGmdAIgZY+uSL0fEO7tDaYyRCY3ixz3/8
-         zALjuoLKwVaULZaziMzWTeSjQeTUIyOwIJCCTfRZSRKVHC7I6OyLfuX90oFwJbfaVT4Q
-         nDdQ==
+        bh=3bYYSvolabqesH6HHzk8H0SMsuQoJjQhMgS236zxUEQ=;
+        b=AvTz0BF73p7p7q+iRZ6q+1CbYpehl5FXWoRXcFlyd2NXzKLW8WWVq38f6M8n+E1bDW
+         npnGidT02q0MPXKnbEfQgPd0dlOW3iuMFfVmYUuytTXxgKPaAIRvM48UkySf8ktoCTmS
+         3B1AW8idb6ilSO3l1Vo1nAqKknvqmzWvyKBIR7HWr2xPL2QiIG+sJPwimq3GWj231k2f
+         L7HdeSuE3uVdqTMCJtPCFLnL9TFUzVwlsAZhbcu+9tFV3tgt8TiZbC2gO9wUZuWh1xEu
+         RFe/4UyJFpFnjcsJ/5ZdBdY2qjiZ2hDO2M/xFXKKYdVvE4uFwt3eHJ7cc4LheszoeMwh
+         l5GQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Walcc93S0Gr05g0IhulInQ/Cw8QbGOXukB2N6LJ3+Tk=;
-        b=h3/L8s1GsIb4GrJe4nkFoBNXpVH0Ix4ygGOayX4ipKqJdm2oN98clueiIoBwGca46a
-         GTvx3gCaSL0uuM2YAXSvQyERe7dFDi2gE3gVEb6JQ8gEjZTjPV0VNprZQ3U/9Xw+QAOf
-         HVIO6r5U73a6/Dm5nW6bsxwyer91iiAlwdx4dA5N7ZOsF3lw9W3+jYiWBCMPEe8B8oX8
-         Xb0ArRmHzFxyEwmUv9F/Drcl2IsqhIiQJxcXh2ZFoGDTTiri1clCNCnBFn8E5wNWflFC
-         bIHKZ++2/Dq9nn8MZni/7ClxlA1Ig6pOQ9ywoFVHp3jKKdj4bNPPEPoezHdZhy8tzqjp
-         IWpg==
-X-Gm-Message-State: AOAM530XKfxHsJqIVsuiB3N0n9MMDjXgszAtxEBgfi8D3cX1eaus+Lab
-        ywJWd79CjngWnWFYvxvP/pThzw==
-X-Google-Smtp-Source: ABdhPJyb4yFdL9Q4uvdT65qV5B7tMOJW3NpSLII118Ct3t+4szV/WE3LyJqYygW/2V40uJFEYtG+LA==
-X-Received: by 2002:a9d:6750:: with SMTP id w16mr7136785otm.177.1626796366037;
-        Tue, 20 Jul 2021 08:52:46 -0700 (PDT)
+        bh=3bYYSvolabqesH6HHzk8H0SMsuQoJjQhMgS236zxUEQ=;
+        b=fQ+aDlKAAOaIV8x3VohGjL5Skso1UHB2oV7ai+4Xq+CtdwVt9860cFdg/G04VdS4P8
+         3pVJmel9nwqLf6wrpPFlw+mX3ZlZQoKpDkiRj7Auvw8cCx5CJCa214EZbuuKOzCcCzVv
+         k8c0XDBcZsvPWxebV/z8xEbGvNFi2mdt3ssjLwq78808k27y0t0bMPH01K09EUOofqPP
+         EMvYub3uU5FRdGriWL3Od9ggje+pkGAxnqNVAxXrJP325PWAj2AXAv7YxCj5r2rmSIn+
+         8pdl7sRMxbPdYO1gfCUkJZGZCRF6onPsw1EZaQxOzN1YeffQCyiUK6R1KopiQOyGQRrJ
+         b6zA==
+X-Gm-Message-State: AOAM531dSRW5Lu7m51C+nHVZMnYEH1L1y9pEt6bhkvD3TzA1v7FuB9Fk
+        TjgacnMNUrt1Y321fdORH7Qm/w==
+X-Google-Smtp-Source: ABdhPJxDvfL0NyoM90fcGCn8H+ACZoTlz62ASCTNkVWnQ5pADpi8QHChB5kbAY5iOVJ8knWxzsbjYw==
+X-Received: by 2002:aca:fdc1:: with SMTP id b184mr21581758oii.101.1626796767607;
+        Tue, 20 Jul 2021 08:59:27 -0700 (PDT)
 Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id q15sm233294otf.70.2021.07.20.08.52.45
+        by smtp.gmail.com with ESMTPSA id o26sm4252216otk.77.2021.07.20.08.59.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 20 Jul 2021 08:52:45 -0700 (PDT)
-Date:   Tue, 20 Jul 2021 10:52:43 -0500
+        Tue, 20 Jul 2021 08:59:27 -0700 (PDT)
+Date:   Tue, 20 Jul 2021 10:59:25 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Tang Bin <tangbin@cmss.chinamobile.com>
-Cc:     agross@kernel.org, sre@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Zhang Shengju <zhangshengju@cmss.chinamobile.com>
-Subject: Re: [PATCH] power: supply: qcom_smbb: Remove superfluous error
- message
-Message-ID: <YPbxS4KV+Fx01p7G@yoga>
-References: <20210720141539.7716-1-tangbin@cmss.chinamobile.com>
+To:     davem@davemloft.net, kuba@kernel.org
+Cc:     Alex Elder <elder@linaro.org>, agross@kernel.org,
+        robh+dt@kernel.org, evgreen@chromium.org, cpratapa@codeaurora.org,
+        subashab@codeaurora.org, elder@kernel.org,
+        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH net-next 0/3] arm64: dts: qcom: DTS updates
+Message-ID: <YPby3eJmDmNlESC8@yoga>
+References: <20210719212456.3176086-1-elder@linaro.org>
+ <162679080524.18101.16626774349145809936.git-patchwork-notify@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210720141539.7716-1-tangbin@cmss.chinamobile.com>
+In-Reply-To: <162679080524.18101.16626774349145809936.git-patchwork-notify@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 20 Jul 09:15 CDT 2021, Tang Bin wrote:
+On Tue 20 Jul 09:20 CDT 2021, patchwork-bot+netdevbpf@kernel.org wrote:
 
-> In the probe function, when get irq failed, the function
-> platform_get_irq_byname() logs an error message, so remove
-> redundant message here.
+> Hello:
 > 
-> Signed-off-by: Zhang Shengju <zhangshengju@cmss.chinamobile.com>
-> Signed-off-by: Tang Bin <tangbin@cmss.chinamobile.com>
+> This series was applied to netdev/net-next.git (refs/heads/master):
+> 
 
-This says "Zhang certified this patch's origin, then you took the patch
-and you certified it's origin" - per Documentation/process/submitting-patches.rst
+David, Jakub, can you please revert/drop the two "arm64: dts" patches
+from the net-next tree?
 
-But you, Tang, is the author or the patch, so how can Zhang have touched
-it before you wrote it?
-
-Perhaps you worked on it together? In which case you should include a
-Co-developed-by to indicate this.
-
-
-Both commit message and patch looks good though!
+DTS patches are generally merged through the qcom and ultimately soc
+tree and I have a number of patches queued up in both sc7180 and sc7280
+that will cause merge conflicts down the road, so I would prefer to pick
+these up as well.
 
 Regards,
 Bjorn
 
-> ---
->  drivers/power/supply/qcom_smbb.c | 5 +----
->  1 file changed, 1 insertion(+), 4 deletions(-)
+> On Mon, 19 Jul 2021 16:24:53 -0500 you wrote:
+> > This series updates some IPA-related DT nodes.
+> > 
+> > Newer versions of IPA do not require an interconnect between IPA
+> > and SoC internal memory.  The first patch updates the DT binding
+> > to reflect this.
+> > 
+> > The second patch adds IPA information to "sc7280.dtsi", using only
+> > two interconnects.  It includes the definition of the reserved
+> > memory area used to hold IPA firmware.
+> > 
+> > [...]
 > 
-> diff --git a/drivers/power/supply/qcom_smbb.c b/drivers/power/supply/qcom_smbb.c
-> index c890e1cec..84cc9fba0 100644
-> --- a/drivers/power/supply/qcom_smbb.c
-> +++ b/drivers/power/supply/qcom_smbb.c
-> @@ -929,11 +929,8 @@ static int smbb_charger_probe(struct platform_device *pdev)
->  		int irq;
->  
->  		irq = platform_get_irq_byname(pdev, smbb_charger_irqs[i].name);
-> -		if (irq < 0) {
-> -			dev_err(&pdev->dev, "failed to get irq '%s'\n",
-> -				smbb_charger_irqs[i].name);
-> +		if (irq < 0)
->  			return irq;
-> -		}
->  
->  		smbb_charger_irqs[i].handler(irq, chg);
->  
-> -- 
-> 2.20.1.windows.1
+> Here is the summary with links:
+>   - [net-next,1/3] dt-bindings: net: qcom,ipa: make imem interconnect optional
+>     https://git.kernel.org/netdev/net-next/c/6a0eb6c9d934
+>   - [net-next,2/3] arm64: dts: qcom: sc7280: add IPA information
+>     https://git.kernel.org/netdev/net-next/c/f8bd3c82bf7d
+>   - [net-next,3/3] arm64: dts: qcom: sc7180: define ipa_fw_mem node
+>     https://git.kernel.org/netdev/net-next/c/fd0f72c34bd9
 > 
+> You are awesome, thank you!
+> --
+> Deet-doot-dot, I am a bot.
+> https://korg.docs.kernel.org/patchwork/pwbot.html
 > 
 > 
