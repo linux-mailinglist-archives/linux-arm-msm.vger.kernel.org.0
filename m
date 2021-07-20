@@ -2,115 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 64BD13CF25E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 05:07:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3FE683CF34E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 20 Jul 2021 06:29:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241647AbhGTC0z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 19 Jul 2021 22:26:55 -0400
-Received: from mail-il1-f169.google.com ([209.85.166.169]:35609 "EHLO
-        mail-il1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1359656AbhGSVWA (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 19 Jul 2021 17:22:00 -0400
-Received: by mail-il1-f169.google.com with SMTP id a11so17437935ilf.2;
-        Mon, 19 Jul 2021 15:02:38 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=f1jPjrRlaCoGW6NcDg+XE1Qycqf9T6zQzCIsLWnTwZQ=;
-        b=GE7hs4aKssR+tkCZ2JdLeIsRsAPN6hDYNRJ3NaB0O/YuXKBJMzW4flKrJJoNVbAu+c
-         gKiH/95MU5l93sLt9JX2CiGKSTHfL0YjmoTAdUgofZY5rPcj4onCmufaErvN4hd8ghNh
-         rWVfvTiPBW93WBwbgEK1fC+Q+opfj94Ms0Rorzq/g/f0chqSgbBcV5f/XknYfq9CsLex
-         8xy4wh+J9JLR/unBHeH6l8Y7l24kA1z6v635284N0hVsx1fwF2IXrHnsdgs/Rmv010/p
-         f+ENTIQY7CD5WD7wWnJ/R8MztAawlhYWHz6+1yvUxCalT6cFAultsPQ+SbvaV2UmAYGC
-         Mq+Q==
-X-Gm-Message-State: AOAM533Nod60KTqSkrIhjmv1RiNmeLfBxfjZ5pBZdATuBnyUt5ZBr63d
-        UST1dpMhhuF7kEPOvKAEfw==
-X-Google-Smtp-Source: ABdhPJw7EeICoNwI7faYsy/ynAxnzY/CYjaXAly9aLu6w9Sr0yXeF9bmNozCXqaxmtS1LZg+Uz4WKw==
-X-Received: by 2002:a92:d706:: with SMTP id m6mr17728297iln.78.1626732154753;
-        Mon, 19 Jul 2021 15:02:34 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id o13sm10372829ilq.58.2021.07.19.15.02.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 19 Jul 2021 15:02:34 -0700 (PDT)
-Received: (nullmailer pid 2677074 invoked by uid 1000);
-        Mon, 19 Jul 2021 22:02:27 -0000
-Date:   Mon, 19 Jul 2021 16:02:27 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-Cc:     linux-samsung-soc@vger.kernel.org,
-        Paul Walmsley <paul.walmsley@sifive.com>,
-        linux-kernel@vger.kernel.org, Palmer Dabbelt <palmer@dabbelt.com>,
-        Xiaowei Song <songxiaowei@hisilicon.com>,
-        mauro.chehab@huawei.com, Jonathan Hunter <jonathanh@nvidia.com>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        linux-amlogic@lists.infradead.org,
-        linux-arm-kernel@lists.infradead.org,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Binghui Wang <wangbinghui@hisilicon.com>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        linux-omap@vger.kernel.org, Bjorn Helgaas <bhelgaas@google.com>,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        linux-arm-kernel@axis.com, Rob Herring <robh+dt@kernel.org>,
-        linux-tegra@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        linux-riscv@lists.infradead.org,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Jesper Nilsson <jesper.nilsson@axis.com>,
-        linux-arm-msm@vger.kernel.org,
-        Greentime Hu <greentime.hu@sifive.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Richard Zhu <hongxing.zhu@nxp.com>,
-        Masami Hiramatsu <mhiramat@kernel.org>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Jonathan Chocron <jonnyc@amazon.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        devicetree@vger.kernel.org, Shawn Guo <shawnguo@kernel.org>,
-        linux-pci@vger.kernel.org,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linuxarm@huawei.com, Thierry Reding <thierry.reding@gmail.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Jaehoon Chung <jh80.chung@samsung.com>
-Subject: Re: [PATCH v5 3/5] dt-bindings: PCI: update references to Designware
- schema
-Message-ID: <20210719220227.GA2676918@robh.at.kernel.org>
-References: <cover.1626608375.git.mchehab+huawei@kernel.org>
- <dfff4d94631546c53450d1baeddc694dd26b5c36.1626608375.git.mchehab+huawei@kernel.org>
+        id S232100AbhGTDsm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 19 Jul 2021 23:48:42 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:63549 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231237AbhGTDsk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 19 Jul 2021 23:48:40 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1626755359; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=msSy1SY6hbAs1o6cBCTFy9D9LB4qWd97QuLc6JXLcQ8=; b=OXgk7kgxmvKapglUbGDj/F+c2blCNIFqYM4GDGWV6J32DWASyHOJ+O+iReZGgbDSdl+ImOUY
+ myp+m/qagFkGizkl/Oe+5Uz0Gu2sfHiEcz/9AFjJBZcXSnMxb297JSC3JQpBrm8MQ0jnfKNf
+ M9E0w/VJDHt7ldOWBIvw2i9hcJM=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 60f6511d4815712f3a5a6c82 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 20 Jul 2021 04:29:17
+ GMT
+Sender: rnayak=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B6A39C43217; Tue, 20 Jul 2021 04:29:16 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [10.50.42.221] (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A2B06C433D3;
+        Tue, 20 Jul 2021 04:29:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A2B06C433D3
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH v4 2/2] arm64: dts: sc7180: Add required-opps for i2c
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>, ulf.hansson@linaro.org,
+        viresh.kumar@linaro.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, rojay@codeaurora.org,
+        stephan@gerhold.net
+References: <1626429658-18961-1-git-send-email-rnayak@codeaurora.org>
+ <1626429658-18961-3-git-send-email-rnayak@codeaurora.org>
+ <YPHpsO5LlQRQxj9y@yoga>
+ <CAE-0n53CHD8c7C4ETWRgzmZmFSCcBw46wSs4pKbYMRjA_tD3yg@mail.gmail.com>
+ <YPHxfHPC/faq/y+J@yoga>
+ <CAE-0n50qx80cMFPJ1x9rc+EMR1L+j2CUMyDjWAbnE9mPHjf-TQ@mail.gmail.com>
+ <YPIBK/NJgBNZVI8Y@yoga> <12711a61-e16c-d2bc-6e04-ab94c7551abe@codeaurora.org>
+ <YPXQNFYKfH/xZxFY@yoga>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <bc79ea3e-4981-8f9b-f9a7-59cb972047a7@codeaurora.org>
+Date:   Tue, 20 Jul 2021 09:59:09 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <dfff4d94631546c53450d1baeddc694dd26b5c36.1626608375.git.mchehab+huawei@kernel.org>
+In-Reply-To: <YPXQNFYKfH/xZxFY@yoga>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 18 Jul 2021 13:40:50 +0200, Mauro Carvalho Chehab wrote:
-> Now that its contents were converted to a DT schema, replace
-> the references for the old file on existing properties.
-> 
-> Signed-off-by: Mauro Carvalho Chehab <mchehab+huawei@kernel.org>
-> ---
->  .../devicetree/bindings/pci/amlogic,meson-pcie.txt |  4 ++--
->  .../devicetree/bindings/pci/axis,artpec6-pcie.txt  |  2 +-
->  .../devicetree/bindings/pci/fsl,imx6q-pcie.txt     |  2 +-
->  .../bindings/pci/hisilicon-histb-pcie.txt          |  2 +-
->  .../devicetree/bindings/pci/kirin-pcie.txt         |  2 +-
->  .../devicetree/bindings/pci/layerscape-pci.txt     |  2 +-
->  .../bindings/pci/nvidia,tegra194-pcie.txt          |  5 +++--
->  .../devicetree/bindings/pci/pci-armada8k.txt       |  2 +-
->  Documentation/devicetree/bindings/pci/pcie-al.txt  |  2 +-
->  .../devicetree/bindings/pci/qcom,pcie.txt          | 14 +++++++-------
->  .../bindings/pci/samsung,exynos-pcie.yaml          |  4 ++--
->  .../devicetree/bindings/pci/sifive,fu740-pcie.yaml |  4 ++--
->  .../bindings/pci/socionext,uniphier-pcie-ep.yaml   |  4 ++--
->  Documentation/devicetree/bindings/pci/ti-pci.txt   |  4 ++--
->  .../devicetree/bindings/pci/uniphier-pcie.txt      |  2 +-
->  15 files changed, 28 insertions(+), 27 deletions(-)
-> 
 
-Applied, thanks!
+
+On 7/20/2021 12:49 AM, Bjorn Andersson wrote:
+> On Mon 19 Jul 04:37 CDT 2021, Rajendra Nayak wrote:
+> 
+>>
+>>
+>> On 7/17/2021 3:29 AM, Bjorn Andersson wrote:
+>>> On Fri 16 Jul 16:49 CDT 2021, Stephen Boyd wrote:
+>>>
+>>>> Quoting Bjorn Andersson (2021-07-16 13:52:12)
+>>>>> On Fri 16 Jul 15:21 CDT 2021, Stephen Boyd wrote:
+>>>>>
+>>>>>> Quoting Bjorn Andersson (2021-07-16 13:18:56)
+>>>>>>> On Fri 16 Jul 05:00 CDT 2021, Rajendra Nayak wrote:
+>>>>>>>
+>>>>>>>> qup-i2c devices on sc7180 are clocked with a fixed clock (19.2 MHz)
+>>>>>>>> Though qup-i2c does not support DVFS, it still needs to vote for a
+>>>>>>>> performance state on 'CX' to satisfy the 19.2 Mhz clock frequency
+>>>>>>>> requirement.
+>>>>>>>>
+>>>>>>>
+>>>>>>> Sounds good, but...
+>>>>>>>
+>>>>>>>> Use 'required-opps' to pass this information from
+>>>>>>>> device tree, and also add the power-domains property to specify
+>>>>>>>> the CX power-domain.
+>>>>>>>>
+>>>>>>>
+>>>>>>> ..is the required-opps really needed with my rpmhpd patch in place?
+>>>>>>>
+>>>>>>
+>>>>>> Yes? Because rpmhpd_opp_low_svs is not the lowest performance state for
+>>>>>> CX.
+>>>>>
+>>>>> On e.g. sm8250 the first available non-zero corner presented in cmd-db
+>>>>> is low_svs.
+>>
+>> what rail is this? the mmcx? Perhaps it does not support RET.
+>> cx usually supports both collapse state and RET.
+>>
+> 
+> That was the one I was specifically looking at for the MDSS_GDSC->MMCX
+> issue, so it's likely I didn't look elsewhere.
+> 
+>>>>
+>>>> Indeed. On sc7180 it's not the first non-zero corner. I suppose
+>>>> retention for CX isn't actually used when the SoC is awake so your
+>>>> rpmhpd patch is putting in a vote for something that doesn't do anything
+>>>> at runtime for CX? I imagine that rpmh only sets the aggregate corner to
+>>>> retention when the whole SoC is suspended/sleeping, otherwise things
+>>>> wouldn't go very well. Similarly, min_svs may be VDD minimization? If
+>>>> so, those first two states are basically states that shouldn't be used
+>>>> at runtime, almost like sleep states.
+>>>>
+>>>
+>>> But if that's the case, I don't think it's appropriate for the "enabled
+>>> state" of the domain to use any of those corners.
+>>
+>> I rechecked the downstream kernels where all this voting happens from within
+>> the clock drivers, and I do see votes to min_svs for some clocks, but Stephen is
+>> right that RET is not something that's voted on while in active state.
+>>
+>> But always going with something just above the ret level while active will also
+>> not work for all devices, for instance for i2c on 7180, it needs a cx vote of
+>> low svs while the rail (cx) does support something lower than that which is min svs.
+>> (why can't it just work with min svs?, I don't know, these values and recommendations
+>> come in from the voltage plans published by HW teams for every SoC and we just end up
+>> using them in SW, perhaps something to dig further and understand which I will try and
+>> do but these are the values in voltage plans and downstream kernels which work for now)
+>>
+> 
+> So to some degree this invalidates my argumentation about the
+> enabled_corner in rpmhpd, given that "enabled" means a different corner
+> for each rail - not just the one with lowest non-zero value.
+
+Right, it might work in some cases but might not work for all.
+
+> 
+> So perhaps instead of introducing the enabled_corner we need to
+> introduce your patch and slap a WARN_ON(corner == 0) in
+> rpmhpd_power_on() - to ensure that all clients that uses a rpmhpd domain
+> actually do vote for a high enough corner?
+
+So this would mean the expectation is that the clients set the perf state/corner
+before they call power_on? I don;t think that's the case today with most clients,
+infact its the opposite, we power on first and then make a call to set the perf
+state of the domain.
+
+> 
+> Regards,
+> Bjorn
+> 
+>>>
+>>> As this means that anyone who needs any of the rpmhpd domains active
+>>> also needs to specify required-opps, which wouldn't be needed for any
+>>> other power domain provider.
+>>>
+>>> And more importantly it means that a device sitting in a GDSC, which
+>>> would be parented by a rpmhpd domain has no way to specify the GDSC and
+>>> trickle the minimum-vote up to the rpmhpd domain. (And I know that we
+>>> don't describe the parentship of the GDSCs today, but this patch
+>>> tells me that it's around the corner - for more than MMCX)
+>>>
+>>> Regards,
+>>> Bjorn
+>>>
+>>>>>
+>>>>> And if this (which?) clock requires a higher corner than the lowest
+>>>>> possible in order to tick at this "lowest" frequency, I'm certainly
+>>>>> interested in some more details.
+>>>>>
+>>
+>> -- 
+>> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+>> of Code Aurora Forum, hosted by The Linux Foundation
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
