@@ -2,43 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D20CE3D0D37
+	by mail.lfdr.de (Postfix) with ESMTP id 64A733D0D36
 	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jul 2021 13:12:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236551AbhGUKb0 convert rfc822-to-8bit (ORCPT
+        id S238480AbhGUKbM convert rfc822-to-8bit (ORCPT
         <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Jul 2021 06:31:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55868 "EHLO
+        Wed, 21 Jul 2021 06:31:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55862 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239041AbhGUJlC (ORCPT
+        with ESMTP id S239038AbhGUJlC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Wed, 21 Jul 2021 05:41:02 -0400
 Received: from metis.ext.pengutronix.de (metis.ext.pengutronix.de [IPv6:2001:67c:670:201:290:27ff:fe1d:cc33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 417DDC061766
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jul 2021 03:21:30 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 55C44C061762
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jul 2021 03:21:29 -0700 (PDT)
 Received: from lupine.hi.pengutronix.de ([2001:67c:670:100:3ad5:47ff:feaf:1a17] helo=lupine)
         by metis.ext.pengutronix.de with esmtps (TLS1.3:ECDHE_RSA_AES_256_GCM_SHA384:256)
         (Exim 4.92)
         (envelope-from <p.zabel@pengutronix.de>)
-        id 1m69Lv-0004IC-NI; Wed, 21 Jul 2021 12:21:23 +0200
+        id 1m69Lz-0004IP-Rt; Wed, 21 Jul 2021 12:21:27 +0200
 Received: from pza by lupine with local (Exim 4.92)
         (envelope-from <p.zabel@pengutronix.de>)
-        id 1m69Lv-0005Dv-6W; Wed, 21 Jul 2021 12:21:23 +0200
-Message-ID: <4a6a248080524a193a0b9fd7fef8156934f3a2cb.camel@pengutronix.de>
-Subject: Re: [PATCH v2 4/5] reset: qcom: Add PDC Global reset signals for
- WPSS
+        id 1m69Lz-0005EK-Iu; Wed, 21 Jul 2021 12:21:27 +0200
+Message-ID: <61f678dc579f24f7eca763afe3034313eccb455f.camel@pengutronix.de>
+Subject: Re: [PATCH v3 0/5] Enable miscellaneous hardware blocks to boot WPSS
 From:   Philipp Zabel <p.zabel@pengutronix.de>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Sibi Sankar <sibis@codeaurora.org>, robh+dt@kernel.org,
-        sboyd@kernel.org, agross@kernel.org, mani@kernel.org,
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org, mani@kernel.org,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Date:   Wed, 21 Jul 2021 12:21:23 +0200
-In-Reply-To: <YLVdhU3Zz/TWtwCX@builder.lan>
-References: <1619508824-14413-1-git-send-email-sibis@codeaurora.org>
-         <1619508824-14413-5-git-send-email-sibis@codeaurora.org>
-         <0c5f747fe0a3f757a4160e4fd28cc2b56a57a39d.camel@pengutronix.de>
-         <YLVdhU3Zz/TWtwCX@builder.lan>
+        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
+        sboyd@kernel.org
+Date:   Wed, 21 Jul 2021 12:21:27 +0200
+In-Reply-To: <19cc1c3cceaedd1e899732d874e6160a@codeaurora.org>
+References: <1619693465-5724-1-git-send-email-sibis@codeaurora.org>
+         <19cc1c3cceaedd1e899732d874e6160a@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Content-Transfer-Encoding: 8BIT
 User-Agent: Evolution 3.30.5-1.1 
@@ -51,26 +48,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+Hi Sibi,
 
-On Mon, 2021-05-31 at 17:04 -0500, Bjorn Andersson wrote:
-> On Tue 27 Apr 02:58 CDT 2021, Philipp Zabel wrote:
+On Mon, 2021-07-19 at 21:57 +0530, Sibi Sankar wrote:
+> On 2021-04-29 16:21, Sibi Sankar wrote:
+> > This series enables miscellaneous hardware blocks to boot Wireless
+> > Processor Subsystem (WPSS) on SC7280 SoC.
+> > 
+> > V3:
+> >  * member placement and style changes [Philipp]
+> > 
+> > V2:
+> >  * place resets and num_resets adjacent to each other [Stephen]
+> >  * drop incorrect useage of tcsr_mutex_regs [Bjorn]
+> >  * Qualcomm is expected to drop master/slave naming from its mproc 
+> > nodes
+> >    in future SoCs.
+> > 
+> > Sibi Sankar (5):
+> >   dt-bindings: mailbox: Add WPSS client index to IPCC
+> >   dt-bindings: reset: aoss: Add AOSS reset controller binding
+> >   dt-bindings: reset: pdc: Add PDC Global bindings
+> >   reset: qcom: Add PDC Global reset signals for WPSS
 > 
-> > Hi Sibi,
-> > 
-> > On Tue, 2021-04-27 at 13:03 +0530, Sibi Sankar wrote:
-> [..]
-> > Acked-by: Philipp Zabel <p.zabel@pengutronix.de>
-> > 
-> > for the whole series to go through the qcom tree, or let me know if you
-> > want me to pick up patches 2-4 next round.
-> > 
+> Philipp,
 > 
-> Philipp, please do take patch 2-4 through your tree, that way we avoid
-> any potential conflicts in the driver - and things will come together
-> nicely for validation in linux-next anyways.
+> Can you pick the reset bindings
+> and the reset driver changes
+> through your tree, Bjorn has
+> picked up the remainder of the
+> series.
 
-FTR, Patches 2-4 of v3 are now applied to reset/next.
+Done, thank you.
 
 regards
 Philipp
