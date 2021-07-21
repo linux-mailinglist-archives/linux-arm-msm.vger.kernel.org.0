@@ -2,127 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C764A3D15A2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jul 2021 19:55:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C18633D15B2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jul 2021 19:56:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230509AbhGURO2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Jul 2021 13:14:28 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:60772 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230293AbhGURO1 (ORCPT
+        id S236809AbhGURPO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Jul 2021 13:15:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47736 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230501AbhGURPO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Jul 2021 13:14:27 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1626890104; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=pJQVTKLxIe0Fn9msKrGPa7GRTW4HbzJ0ouMJuFmUpVs=; b=oik3U5SbPgPkugXcD8fM4OgFuAShgFlRmXnZrk5lGQCEIrAM5IMb8cdfJv5oiAjOXbo4Ur6I
- LvGzRZ2Vci9n7VkhLcf4iX19NCdxu6+jzggQKvMQiv2R+6trFGylXSfxb2xX5TPcIaJ3M5pt
- pBAqb6c5uhO/wT32hxMxdqRzCNw=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 60f85f62290ea35ee67b3c7e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 21 Jul 2021 17:54:42
- GMT
-Sender: mdtipton=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9DEE7C43217; Wed, 21 Jul 2021 17:54:41 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from hu-mdtipton-lv.qualcomm.com (Global_NAT1.qualcomm.com [129.46.96.20])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mdtipton)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AF8FCC433F1;
-        Wed, 21 Jul 2021 17:54:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org AF8FCC433F1
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=mdtipton@codeaurora.org
-From:   Mike Tipton <mdtipton@codeaurora.org>
-To:     djakov@kernel.org
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
-        saravanak@google.com, okukatla@codeaurora.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Mike Tipton <mdtipton@codeaurora.org>
-Subject: [PATCH v2 4/4] interconnect: qcom: icc-rpmh: Add BCMs to commit list in pre_aggregate
-Date:   Wed, 21 Jul 2021 10:54:32 -0700
-Message-Id: <20210721175432.2119-5-mdtipton@codeaurora.org>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210721175432.2119-1-mdtipton@codeaurora.org>
-References: <20210721175432.2119-1-mdtipton@codeaurora.org>
+        Wed, 21 Jul 2021 13:15:14 -0400
+Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB86DC061575
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jul 2021 10:55:50 -0700 (PDT)
+Received: by mail-qv1-xf2e.google.com with SMTP id h9so1375293qvs.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jul 2021 10:55:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=poorly.run; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=0pycXB2ultmLkKc35aeNj2U+LPhWXxWP52T2qDeRhjs=;
+        b=VQnE8G+T99lqj+jpc8gjTrDIq60JvIspB210ozZeqOOMmMWKPswtglKyQ/zpgkH8xf
+         nSzdznQC/pcNlTb+rokrH057TouO69ecT3IdtH4UMAttClC7sNr660xpBHvAE0AIXAjR
+         xGj3wmsOPr3Iy23GWqOeN2yjeLnpugyXQDEs/TM10uBJUuXbqQQRB2MOQhR9gc2S0yZ6
+         ieMFY38yfiEuI3efFX25D9oEN0kxhojGFGP6MQ7iLMoK2Lp5uxhiFV5GbBvf36oO3sbx
+         e/WRldFNXL8dyuTodbz8ocXxzsjHcGIGW1ADfUiDnv5p6eTBMHtAkv5d8YSKh8Hk86H8
+         v+YA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=0pycXB2ultmLkKc35aeNj2U+LPhWXxWP52T2qDeRhjs=;
+        b=TmNomV5bmncDnbbA+ChehvHyVEyGwN2Shk0aC+jSrp82QyuID9209eLhH+I6LpXhny
+         RkfOfxbs9SKikAdtA2k0PeJ1Mgtod67P2TTBRHNqPEf3WujxWZHBlx5q/MLCdwL2s/Br
+         UlYBL1X7vHskOup9IFIv0o8hlkTuE2yuieDOKX5yJLrGIpK5oVFlMaxtclqhnb+hz+rz
+         rVBWFBsPQFXoMcIDPk8/xpz7nXP9e/07vCG2CBy+sKmQAlHNB7cCsvKvued2vP2eJb34
+         lBe+yekWE12XhLqqHLkJWj67qNieazwgCCF0Bk67DK1g5SPGjllQmTzIH187r8RwroPQ
+         TZgA==
+X-Gm-Message-State: AOAM532OQssR4adiaexXd0/RzqeH1kmfhSfjQxxlPRqYMQKVQ3WApzmZ
+        BT8ShdSF3JB5QTTBOxsKlxh20w==
+X-Google-Smtp-Source: ABdhPJz/2XnWjDEIVkqQXiPb5u4xelAKiOrD8F4Pkyijtn6fTUroFWIgLbFDelftl6codkhebYsC4Q==
+X-Received: by 2002:ad4:538c:: with SMTP id i12mr37924550qvv.51.1626890149955;
+        Wed, 21 Jul 2021 10:55:49 -0700 (PDT)
+Received: from localhost ([167.100.64.199])
+        by smtp.gmail.com with ESMTPSA id j8sm9492446qti.20.2021.07.21.10.55.49
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 21 Jul 2021 10:55:49 -0700 (PDT)
+From:   Sean Paul <sean@poorly.run>
+To:     dri-devel@lists.freedesktop.org, ppaalanen@gmail.com,
+        maarten.lankhorst@linux.intel.com, tzimmermann@suse.de,
+        airlied@linux.ie, daniel.vetter@ffwll.ch
+Cc:     Sean Paul <seanpaul@chromium.org>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+Subject: [RESEND PATCH v6 04/14] drm/msm/dpu: Replace definitions for dpu debug macros
+Date:   Wed, 21 Jul 2021 13:55:11 -0400
+Message-Id: <20210721175526.22020-5-sean@poorly.run>
+X-Mailer: git-send-email 2.31.0
+In-Reply-To: <20210721175526.22020-1-sean@poorly.run>
+References: <20210721175526.22020-1-sean@poorly.run>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We're only adding BCMs to the commit list in aggregate(), but there are
-cases where pre_aggregate() is called without subsequently calling
-aggregate(). In particular, in icc_sync_state() when a node with initial
-BW has zero requests. Since BCMs aren't added to the commit list in
-these cases, we don't actually send the zero BW request to HW. So the
-resources remain on unnecessarily.
+From: Sean Paul <seanpaul@chromium.org>
 
-Add BCMs to the commit list in pre_aggregate() instead, which is always
-called even when there are no requests.
+The debug messages shouldn't be logged as errors when debug categories
+are enabled. Use the drm logging helpers to do the right thing
 
-Fixes: 976daac4a1c5 ("interconnect: qcom: Consolidate interconnect RPMh support")
-Signed-off-by: Mike Tipton <mdtipton@codeaurora.org>
+Signed-off-by: Sean Paul <seanpaul@chromium.org>
+Link: https://patchwork.freedesktop.org/patch/msgid/20200608210505.48519-5-sean@poorly.run #v5
+
+Changes in v5:
+-Added to the set
+Changes in v6:
+-None
 ---
- drivers/interconnect/qcom/icc-rpmh.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h | 20 ++++----------------
+ 1 file changed, 4 insertions(+), 16 deletions(-)
 
-diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
-index f118f57eae37..b26fda0588e0 100644
---- a/drivers/interconnect/qcom/icc-rpmh.c
-+++ b/drivers/interconnect/qcom/icc-rpmh.c
-@@ -20,13 +20,18 @@ void qcom_icc_pre_aggregate(struct icc_node *node)
- {
- 	size_t i;
- 	struct qcom_icc_node *qn;
-+	struct qcom_icc_provider *qp;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+index 323a6bce9e64..c33164d3944a 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+@@ -31,27 +31,15 @@
+  * DPU_DEBUG - macro for kms/plane/crtc/encoder/connector logs
+  * @fmt: Pointer to format string
+  */
+-#define DPU_DEBUG(fmt, ...)                                                \
+-	do {                                                               \
+-		if (drm_debug_enabled(DRM_UT_KMS))                         \
+-			DRM_DEBUG(fmt, ##__VA_ARGS__); \
+-		else                                                       \
+-			pr_debug(fmt, ##__VA_ARGS__);                      \
+-	} while (0)
++#define DPU_DEBUG(fmt, ...) DRM_DEBUG_KMS(fmt, ##__VA_ARGS__)
  
- 	qn = node->data;
-+	qp = to_qcom_provider(node->provider);
- 
- 	for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
- 		qn->sum_avg[i] = 0;
- 		qn->max_peak[i] = 0;
- 	}
-+
-+	for (i = 0; i < qn->num_bcms; i++)
-+		qcom_icc_bcm_voter_add(qp->voter, qn->bcms[i]);
- }
- EXPORT_SYMBOL_GPL(qcom_icc_pre_aggregate);
- 
-@@ -44,10 +49,8 @@ int qcom_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
- {
- 	size_t i;
- 	struct qcom_icc_node *qn;
--	struct qcom_icc_provider *qp;
- 
- 	qn = node->data;
--	qp = to_qcom_provider(node->provider);
- 
- 	if (!tag)
- 		tag = QCOM_ICC_TAG_ALWAYS;
-@@ -67,9 +70,6 @@ int qcom_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
- 	*agg_avg += avg_bw;
- 	*agg_peak = max_t(u32, *agg_peak, peak_bw);
- 
--	for (i = 0; i < qn->num_bcms; i++)
--		qcom_icc_bcm_voter_add(qp->voter, qn->bcms[i]);
+ /**
+  * DPU_DEBUG_DRIVER - macro for hardware driver logging
+  * @fmt: Pointer to format string
+  */
+-#define DPU_DEBUG_DRIVER(fmt, ...)                                         \
+-	do {                                                               \
+-		if (drm_debug_enabled(DRM_UT_DRIVER))                      \
+-			DRM_ERROR(fmt, ##__VA_ARGS__); \
+-		else                                                       \
+-			pr_debug(fmt, ##__VA_ARGS__);                      \
+-	} while (0)
 -
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(qcom_icc_aggregate);
+-#define DPU_ERROR(fmt, ...) pr_err("[dpu error]" fmt, ##__VA_ARGS__)
++#define DPU_DEBUG_DRIVER(fmt, ...) DRM_DEBUG_DRIVER(fmt, ##__VA_ARGS__)
++
++#define DPU_ERROR(fmt, ...) DRM_ERROR(fmt, ##__VA_ARGS__)
+ 
+ /**
+  * ktime_compare_safe - compare two ktime structures
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Sean Paul, Software Engineer, Google / Chromium OS
 
