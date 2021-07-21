@@ -2,125 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E4423D1A24
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jul 2021 01:03:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD1673D1A3A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jul 2021 01:10:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230261AbhGUWVp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Jul 2021 18:21:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33316 "EHLO
+        id S230453AbhGUW3X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Jul 2021 18:29:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230363AbhGUWVo (ORCPT
+        with ESMTP id S230440AbhGUW3W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Jul 2021 18:21:44 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 775FAC061757
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jul 2021 16:02:19 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id e11so4617831oii.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jul 2021 16:02:19 -0700 (PDT)
+        Wed, 21 Jul 2021 18:29:22 -0400
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A899C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jul 2021 16:09:58 -0700 (PDT)
+Received: by mail-oi1-x236.google.com with SMTP id s23so4609707oiw.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jul 2021 16:09:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=N06ng52JS7qg8uo3w1ksPWxe7Wr34Eu2lk2OlkrZI6o=;
-        b=BRfaxn1P6i+9wKL1KjJbKKut19JdgwMAYWbgbHG76PMdVUGczVUxqjnXP0UaUnlBSZ
-         Rqh6yQ5K5XNUSAaN8l5gf1jwd8xcFCJmzbPBkqfQRKBq7iEhKN4XeJa50OYur6unatdx
-         UtJbIxACTJwfemEdoZKcsBX/LcbauDUo7XfufXxB3AlDwJ3rorXo2ZKA96TogVxfqPAc
-         sM3t0VOTLORMNB5OR+GvzNYBA62Jym2EagE/GTkmeAwvwM94OGEcOYIbbEoMC/1INjmj
-         eQCB8OVJion9/ozshkedqRqgMOURtEq87DfCY+d1gYdHnoqXcFQYHKB7eOgcU2CG+Zu0
-         k1fw==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=Gihwn3u1CA//Y2FYO8sjHJoK0E6zkWWxZ3vwSmM/v80=;
+        b=aJRfQbI/2/h8CVGj+mkdHCYttV3qiqpfue/bLp7pwQd09k1Wc8dV5R1FdMbgJZ4syW
+         2LWPtD2HMiCtno1IaEKN+y/hHcpifhqPKCIAieTdWo4sex5pWN417mHwF+VeycneYPCc
+         Gdd0IDu2YDEKHIOvx+dbo7Ulb/wR/5mbcWip4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=N06ng52JS7qg8uo3w1ksPWxe7Wr34Eu2lk2OlkrZI6o=;
-        b=mbzLmy4qvhTz6ArtKznY2YCCL2qePxmPpDQoonHd43lHAHsJpL7oXuU2wbAqUsT0EL
-         5GpxFdgyk18iwS+DHc7bIpjB76omGDNGHx6IR6CGxK0NWU4APz1sc6Da3XclhgdZkGFj
-         fLYwAqJPQ8fAL3QozhHv95JG9pQvAL3dyajo7Rfe7tcB04RQtFIsPmcYV7c1zzSEYhfv
-         rTPsbs0z+tFoGrRSv04cb5X5tOqf9/i5/lPy7EfBG5HbrrnbJCQerQXkH143gUFGdMhg
-         nIm/nQHFWjEic+xcUkfZJs5u/YSo/9G5HQSra7rGy6ptwber/XucODlEOv0kEvjFi1Bc
-         ip7Q==
-X-Gm-Message-State: AOAM53354nl2h647DmBWLp7HmD56B67noHAvZYfN9z4GK+g7k8cjWCqF
-        XSzMuHH07YNe2RgYA7XYZTc/eQ==
-X-Google-Smtp-Source: ABdhPJyqmfkQjbeEB3X9JBwnpNHhZPhQk4KR9IoY7ddHsh/+817ru8556wQUfjtJ15m7q7jFyZb/FA==
-X-Received: by 2002:aca:5889:: with SMTP id m131mr4056505oib.140.1626908538867;
-        Wed, 21 Jul 2021 16:02:18 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id b11sm4879541oti.30.2021.07.21.16.02.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jul 2021 16:02:18 -0700 (PDT)
-Date:   Wed, 21 Jul 2021 18:02:16 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] pinctrl: qcom: spmi-gpio: Add pmc8180 & pmc8180c
-Message-ID: <YPineKnke+zd42gC@yoga>
-References: <20210629003851.1787673-1-bjorn.andersson@linaro.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=Gihwn3u1CA//Y2FYO8sjHJoK0E6zkWWxZ3vwSmM/v80=;
+        b=cxJONC/bG3ifN450mVq0bHdTvoQozQx02XNfAUtMBd0LyiYA53f+9iLdRXY06nU4C+
+         tb52id4/4/RWAu1onkeivbwWQuJrCJUxGjp4roGrkbqiy/eWW3bpCTvu/trnPa+tas6n
+         vOOHnHerWK4TjWfaBTYXVCfYQG6zGHnHEpZhCFZXXIyylBH0EvE6vRGGivBiLxjM7Xmk
+         Hl4vvHvDMFqskUbJ/4sf2/wgSWEANo55+r+RyCIA7adFyMClCSyaLde4YXsWpZKMXeLK
+         FHK/eKV94jCZvbhTqdO15Gd/EgC1ciFUlDTqpiwb2f+tmZnsYBKpM3oEhZ+JSyjlrjWd
+         hdzw==
+X-Gm-Message-State: AOAM5312pE9D0CaZ6UjshO0g4ZsEcKIuyAH3jrO4jHrBFON9TylPZyT6
+        7caBVTmov9J3dZ6piYwn/26OntLTSgn6hdWMfv/9tw==
+X-Google-Smtp-Source: ABdhPJw8OL85ER3w5f08dIQEicAAKoExCiSYkzd/2jMw4Yf82GfH2ONsrDXtaqrVRIu15hsL51z9+WRkyKsvws816aM=
+X-Received: by 2002:a05:6808:114a:: with SMTP id u10mr7388998oiu.19.1626908997559;
+ Wed, 21 Jul 2021 16:09:57 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 21 Jul 2021 23:09:57 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210629003851.1787673-1-bjorn.andersson@linaro.org>
+In-Reply-To: <1620800053-26405-2-git-send-email-skakit@codeaurora.org>
+References: <1620800053-26405-1-git-send-email-skakit@codeaurora.org> <1620800053-26405-2-git-send-email-skakit@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Wed, 21 Jul 2021 23:09:57 +0000
+Message-ID: <CAE-0n5315FfpLBp3X1AGunHExTeJ3dE6YN=gRUCv+p10dpGDpA@mail.gmail.com>
+Subject: Re: [PATCH V4 1/5] input: pm8941-pwrkey: add support for PMK8350
+ PON_HLOS PMIC peripheral
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sebastian Reichel <sre@kernel.org>,
+        satya priya <skakit@codeaurora.org>
+Cc:     David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
+        linux-input@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Vinod Koul <vkoul@kernel.org>,
+        Andy Yan <andy.yan@rock-chips.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 28 Jun 19:38 CDT 2021, Bjorn Andersson wrote:
-
-> The SC8180x platform comes with PMC8180 and PMC8180c, add support for
-> the GPIO controller in these PMICs.
-> 
-
-Linus, would you be willing to pick this up? Got some dts patches that
-uses these compatibles.
-
-Regards,
-Bjorn
-
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Quoting satya priya (2021-05-11 23:14:09)
+> From: David Collins <collinsd@codeaurora.org>
+>
+> On Qualcomm Technologies, Inc. PMIC PMK8350, the PON peripheral
+> is split into two peripherals: PON_HLOS and PON_PBS.  The
+> application processor only has write access to PON_HLOS which
+> limits it to only receiving PON interrupts.
+>
+> Add support for the PMK8350 PON_HLOS peripheral so that its
+> KPDPWR_N and RESIN_N interrupts can be used to detect key
+> presses.
+>
+> Signed-off-by: David Collins <collinsd@codeaurora.org>
+> Signed-off-by: satya priya <skakit@codeaurora.org>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
->  Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt | 4 ++++
->  drivers/pinctrl/qcom/pinctrl-spmi-gpio.c                     | 2 ++
->  2 files changed, 6 insertions(+)
-> 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-> index 161216daf463..412613c80e9e 100644
-> --- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-> @@ -30,6 +30,8 @@ PMIC's from Qualcomm.
->  		    "qcom,pm8350-gpio"
->  		    "qcom,pm8350b-gpio"
->  		    "qcom,pm8350c-gpio"
-> +		    "qcom,pmc8180-gpio"
-> +		    "qcom,pmc8180c-gpio"
->  		    "qcom,pmk8350-gpio"
->  		    "qcom,pm7325-gpio"
->  		    "qcom,pmr735a-gpio"
-> @@ -120,6 +122,8 @@ to specify in a pin configuration subnode:
->  		    gpio1-gpio10 for pm8350
->  		    gpio1-gpio8 for pm8350b
->  		    gpio1-gpio9 for pm8350c
-> +		    gpio1-gpio10 for pmc8180
-> +		    gpio1-gpio12 for pmc8180c
->  		    gpio1-gpio4 for pmk8350
->  		    gpio1-gpio10 for pm7325
->  		    gpio1-gpio4 for pmr735a
-> diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-> index a89d24a040af..9251fb5153e7 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
-> @@ -1123,10 +1123,12 @@ static const struct of_device_id pmic_gpio_of_match[] = {
->  	{ .compatible = "qcom,pm660l-gpio", .data = (void *) 12 },
->  	/* pm8150 has 10 GPIOs with holes on 2, 5, 7 and 8 */
->  	{ .compatible = "qcom,pm8150-gpio", .data = (void *) 10 },
-> +	{ .compatible = "qcom,pmc8180-gpio", .data = (void *) 10 },
->  	/* pm8150b has 12 GPIOs with holes on 3, r and 7 */
->  	{ .compatible = "qcom,pm8150b-gpio", .data = (void *) 12 },
->  	/* pm8150l has 12 GPIOs with holes on 7 */
->  	{ .compatible = "qcom,pm8150l-gpio", .data = (void *) 12 },
-> +	{ .compatible = "qcom,pmc8180c-gpio", .data = (void *) 12 },
->  	{ .compatible = "qcom,pm8350-gpio", .data = (void *) 10 },
->  	{ .compatible = "qcom,pm8350b-gpio", .data = (void *) 8 },
->  	{ .compatible = "qcom,pm8350c-gpio", .data = (void *) 9 },
-> -- 
-> 2.29.2
-> 
+
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
