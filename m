@@ -2,122 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 117F43D15C8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jul 2021 20:01:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6798F3D15E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jul 2021 20:07:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229948AbhGURUY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Jul 2021 13:20:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48920 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231702AbhGURUX (ORCPT
+        id S230523AbhGUR03 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Jul 2021 13:26:29 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:15731 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230253AbhGUR02 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Jul 2021 13:20:23 -0400
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86A8EC061575
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jul 2021 11:00:59 -0700 (PDT)
-Received: by mail-yb1-xb29.google.com with SMTP id g19so4397815ybe.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jul 2021 11:00:59 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=p55HWTaC5dpMadxxZA1E7+qzD3OpeEPoXK9rz/EuCCs=;
-        b=VKgoCKHjjpFlb8dMXuXUAgOoQYJ3Mbnrm6/8qx4IsUefGakwA3IGEEr0CxwNVsnR0r
-         RyfUGx1agkrTHn27tIBpoNtSqHuQIrO4FyGElTusIg9o9RmLBO7FkzuQthByFgbU6N8Y
-         JezczchD0E6nSwFpbW8Wfl7RpqflPfgmmeESl0jFVbpcOVfbsj3iiGTbr35EbCaIhQLd
-         +qZv+Y0LjBjmprpNCgVby1ICXtdpYSBOqbSSJRJbkaVXma2Aj2qTOobmNUVgfUDa19vr
-         7ybpE/C0bS8Dt5I+VXMpwsa+xtbTlG2BZf44XVR2lX0WCvHAENYExpgoiy/ccdAmuV3Q
-         wiuQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=p55HWTaC5dpMadxxZA1E7+qzD3OpeEPoXK9rz/EuCCs=;
-        b=kIQcUelgCyQwJSlA0YUAeb9OBGlyL06dj619Odkc5uRbk5QU5S9ZodpfYgD+mDAYzZ
-         dORbEsyT23K+UvKUXYesZEPOZLeF0UZUXVR2uERXm61a1mLRmdw18Gve+/s8jse3CuPe
-         ATI0IrJAL/mrHbN3Weu8bjuvJoSTnvO55zF6QH5uQysehn/ot1lv1chX9Airnx75MUd8
-         xIUQklEz2YbtkC8mZsom6tTpixCYjqC9/yT4FJXgd3PhuCrsn3isEUF/LYyUA4m4U0L3
-         o2g5W8/EY0y1FSN68w6SV4dyhaj04YqBCqvKyrZmB9rt9mTqyfCxHjhrxsAxC7Z9+qBM
-         m4ew==
-X-Gm-Message-State: AOAM530RGSrFsYZbDki9ik2DE7WD0RBsAenwWFa8H9+zLg3GIVqEPEmz
-        uJsuKNtia5XPDgHvrCqAWk6uBErRm59TeVVkQWjUQw==
-X-Google-Smtp-Source: ABdhPJwbIrbhhVYNYobPTcneIblXUvvyWcuD63Tzux+fXk8oy4TabvNhfXszej/xrPC8W06ZGSSznRT/A7sB9Z46Za8=
-X-Received: by 2002:a25:8b91:: with SMTP id j17mr45175948ybl.228.1626890452055;
- Wed, 21 Jul 2021 11:00:52 -0700 (PDT)
+        Wed, 21 Jul 2021 13:26:28 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1626890825; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=1ecCHoTqii1kF3SXZuY2ai/ct4AwH6Dvx7aFp6vb+2M=;
+ b=W1a9UFFfKaVUdu6FuaEPqfOMf29lPQBirmTwXgUBRnkt+lJk3bbU96qFKj1IrmM7xaHQKHrm
+ 3j1FdFn/7HtqwfqBtOR/4bBuHTbK2/g/JaSkJ0sAyP95znexGsDlkjPos/iBtApxsvKr22Ox
+ U/mz+gDqGCL9lV49V0XWy3wnGjc=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 60f862481dd16c878844d519 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 21 Jul 2021 18:07:04
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C54A7C43460; Wed, 21 Jul 2021 18:07:03 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 04DC7C433F1;
+        Wed, 21 Jul 2021 18:07:02 +0000 (UTC)
 MIME-Version: 1.0
-References: <20210707045320.529186-1-john.stultz@linaro.org>
- <YPgK50dmV7Z69WsL@kroah.com> <CALAqxLUVgUT+1DyDGsFbF0138S0OYzpKADk__PsYbR4B4mbMhw@mail.gmail.com>
-In-Reply-To: <CALAqxLUVgUT+1DyDGsFbF0138S0OYzpKADk__PsYbR4B4mbMhw@mail.gmail.com>
-From:   Saravana Kannan <saravanak@google.com>
-Date:   Wed, 21 Jul 2021 11:00:15 -0700
-Message-ID: <CAGETcx91URbHCYMoGt_cCgvMXNkVyJb4Ek-ng8jwR+eQhvZN1A@mail.gmail.com>
-Subject: Re: [PATCH] firmware: QCOM_SCM: Allow qcom_scm driver to be loadable
- as a permenent module
-To:     John Stultz <john.stultz@linaro.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <maz@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Maulik Shah <mkshah@codeaurora.org>,
-        Todd Kjos <tkjos@google.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 21 Jul 2021 11:07:02 -0700
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     hemantk@codeaurora.org
+Cc:     manivannan.sadhasivam@linaro.org, bqiang@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, clew@codeaurora.org,
+        linux-kernel@vger.kernel.org, bbhatt=codeaurora.org@codeaurora.org,
+        hemantk=codeaurora.org@codeaurora.org
+Subject: Re: [PATCH] net: qrtr: mhi: synchronize qrtr and mhi preparation
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <4214f00fa8cbcced4f389125b392f3b3@codeaurora.org>
+References: <1626831778-31796-1-git-send-email-bbhatt@codeaurora.org>
+ <4214f00fa8cbcced4f389125b392f3b3@codeaurora.org>
+Message-ID: <0da23f32f4313c0b701bafc078942a4e@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 21, 2021 at 10:24 AM John Stultz <john.stultz@linaro.org> wrote:
->
-> On Wed, Jul 21, 2021 at 4:54 AM Greg Kroah-Hartman
-> <gregkh@linuxfoundation.org> wrote:
-> >
-> > On Wed, Jul 07, 2021 at 04:53:20AM +0000, John Stultz wrote:
-> > > Allow the qcom_scm driver to be loadable as a permenent module.
-> >
-> > This feels like a regression, it should be allowed to be a module.
->
-> I'm sorry, I'm not sure I'm following you, Greg.  This patch is trying
-> to enable the driver to be able to be loaded as a module.
+On 2021-07-21 10:52 AM, hemantk@codeaurora.org wrote:
+> On 2021-07-20 18:42, Bhaumik Bhatt wrote:
+>> A dl callback can be received anytime after mhi_prepare_for_transfer
+>> has been called. There is a window where the callback may happen
+>> before the probe initializes the qrtr_mhi_dev state. Move the
+>> mhi_prepare_for_transfer call after the registering the endpoint.
+>> 
+>> Once moved, the reverse can happen where qrtr will try to send a 
+>> packet
+>> before the channels are prepared. Add a wait in the sending path to
+>> ensure the channels are prepared before trying to do a ul transfer.
+>> 
+>> Fixes: a2e2cc0dbb11 ("net: qrtr: Start MHI channels during init")
+>> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+>> ---
+>>  net/qrtr/mhi.c | 20 +++++++++++++++-----
+>>  1 file changed, 15 insertions(+), 5 deletions(-)
+>> 
+>> diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
+>> index 29b4fa3..22b0395 100644
+>> --- a/net/qrtr/mhi.c
+>> +++ b/net/qrtr/mhi.c
+>> @@ -15,6 +15,7 @@ struct qrtr_mhi_dev {
+>>  	struct qrtr_endpoint ep;
+>>  	struct mhi_device *mhi_dev;
+>>  	struct device *dev;
+>> +	struct completion ready;
+>>  };
+>> 
+>>  /* From MHI to QRTR */
+>> @@ -50,6 +51,10 @@ static int qcom_mhi_qrtr_send(struct qrtr_endpoint
+>> *ep, struct sk_buff *skb)
+>>  	struct qrtr_mhi_dev *qdev = container_of(ep, struct qrtr_mhi_dev, 
+>> ep);
+>>  	int rc;
+>> 
+>> +	rc = wait_for_completion_interruptible(&qdev->ready);
+>> +	if (rc)
+>> +		goto free_skb;
+>> +
+>>  	if (skb->sk)
+>>  		sock_hold(skb->sk);
+>> 
+>> @@ -78,11 +83,6 @@ static int qcom_mhi_qrtr_probe(struct mhi_device 
+>> *mhi_dev,
+>>  	struct qrtr_mhi_dev *qdev;
+>>  	int rc;
+>> 
+>> -	/* start channels */
+>> -	rc = mhi_prepare_for_transfer(mhi_dev, MHI_CH_INBOUND_ALLOC_BUFS);
+>> -	if (rc)
+>> -		return rc;
+>> -
+>>  	qdev = devm_kzalloc(&mhi_dev->dev, sizeof(*qdev), GFP_KERNEL);
+>>  	if (!qdev)
+>>  		return -ENOMEM;
+> would it be good to init completion variable here (call 
+> init_completion) ?
+You mean just before setting qdev->mhi_dev? I don't see why that would 
+make a difference
+mainly because the qcom_mhi_qrtr_send() will only happen after endpoint 
+is
+registered and DL xfer cb will also only come in after we have prepared 
+the
+channels and completed ready with dev_data already set.
 
-I think the mix up might be that Greg mentally read "permanent module"
-as "builtin"?
+>> @@ -90,12 +90,22 @@ static int qcom_mhi_qrtr_probe(struct mhi_device 
+>> *mhi_dev,
+>>  	qdev->mhi_dev = mhi_dev;
+>>  	qdev->dev = &mhi_dev->dev;
+>>  	qdev->ep.xmit = qcom_mhi_qrtr_send;
+>> +	init_completion(&qdev->ready);
+>> 
+> 
+>> 
+>>  	return 0;
 
-"permanent module" is just something that can't be unloaded once it's
-loaded. It's not "builtin".
-
--Saravana
-
->
-> > > This still uses the "depends on QCOM_SCM || !QCOM_SCM" bit to
-> > > ensure that drivers that call into the qcom_scm driver are
-> > > also built as modules. While not ideal in some cases its the
-> > > only safe way I can find to avoid build errors without having
-> > > those drivers select QCOM_SCM and have to force it on (as
-> > > QCOM_SCM=n can be valid for those drivers).
-> > >
-> > > Reviving this now that Saravana's fw_devlink defaults to on,
-> > > which should avoid loading troubles seen before.
-> >
-> > fw_devlink was supposed to resolve these issues and _allow_ code to be
-> > built as modules and not forced to be built into the kernel.
->
-> Right. I'm re-submitting this patch to enable a driver to work as a
-> module, because earlier attempts to submit it ran into boot trouble
-> because fw_devlink wasn't yet enabled.
->
-> I worry something in my description made it seem otherwise, so let me
-> know how you read it and I'll try to avoid such confusion in the
-> future.
->
-> thanks
-> -john
+Thanks,
+Bhaumik
+---
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
