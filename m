@@ -2,34 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 65BDE3D14B7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jul 2021 18:58:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CA393D14CA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jul 2021 19:05:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236092AbhGUQSB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Jul 2021 12:18:01 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:26146 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233375AbhGUQSA (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Jul 2021 12:18:00 -0400
+        id S229772AbhGUQYc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Jul 2021 12:24:32 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:45481 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229703AbhGUQYa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 21 Jul 2021 12:24:30 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1626886717; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1626887107; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=w/HMXtzgE+0xI3zDkR795AF2McOV6W/T1YvFy1bK/nk=;
- b=inz79mQklkvNc5Kz+pdAttR4mxiG+Kun4kffl7JGbflQ66IPE1RIK9H/Byo10pujBXM/NzPR
- s+4gIqyiwkrje/W72xRr71HOi8WbeAE7roKixBEyDatNwiwnHjNpXynIrlajky/CP8leRwRU
- 98FdEjv9GKi9Z3obsA5Hh4LnHL4=
-X-Mailgun-Sending-Ip: 198.61.254.9
+ MIME-Version: Sender; bh=nB2p2NTeR79nuMtOtOgm6ajzTwXzSQzw8laJhE1thq8=;
+ b=mUa0sj0Foe2EjysnS2n55GQp6fJDRmaRHQw7B2/BX7wO7t0cYqSdPCUm7vTwmrHM8kPpfHKX
+ iUhLri2Z/v3XdoQEVklUXwwojES91+hcG1y6vWyWLQTNGvi7XfCtumM18D2kV9h8fX0samSo
+ u/k2nDRulHStDgSh/YUQtFQ9KtY=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 60f8523be81205dd0a84a145 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 21 Jul 2021 16:58:35
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 60f8539a4815712f3aaba7ff (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 21 Jul 2021 17:04:26
  GMT
 Sender: sibis=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E278FC43217; Wed, 21 Jul 2021 16:58:34 +0000 (UTC)
+        id 37B23C43143; Wed, 21 Jul 2021 17:04:25 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -39,114 +38,76 @@ Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 146DFC433D3;
-        Wed, 21 Jul 2021 16:58:33 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5CC7DC433D3;
+        Wed, 21 Jul 2021 17:04:24 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Wed, 21 Jul 2021 22:28:33 +0530
+Date:   Wed, 21 Jul 2021 22:34:24 +0530
 From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     swboyd@chromium.org, bjorn.andersson@linaro.org,
-        robh+dt@kernel.org, ulf.hansson@linaro.org, rjw@rjwysocki.net,
-        agross@kernel.org, ohad@wizery.com, mathieu.poirier@linaro.org,
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     bjorn.andersson@linaro.org, mka@chromium.org, robh+dt@kernel.org,
+        saiprakash.ranjan@codeaurora.org, will@kernel.org, ohad@wizery.com,
+        agross@kernel.org, mathieu.poirier@linaro.org,
+        robin.murphy@arm.com, joro@8bytes.org, p.zabel@pengutronix.de,
         linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dianders@chromium.org, rishabhb@codeaurora.org,
-        sidgup@codeaurora.org
-Subject: Re: [PATCH v4 02/13] dt-bindings: remoteproc: qcom: pas: Add QMP
- property
-In-Reply-To: <YPdXz1T89GcIYmJO@google.com>
-References: <1626755807-11865-1-git-send-email-sibis@codeaurora.org>
- <1626755807-11865-3-git-send-email-sibis@codeaurora.org>
- <YPdXz1T89GcIYmJO@google.com>
-Message-ID: <9ba5feb96fac6486c3f1aa19444864c2@codeaurora.org>
+        linux-arm-kernel@lists.infradead.org, evgreen@chromium.org,
+        dianders@chromium.org
+Subject: Re: [PATCH v2 03/10] dt-bindings: remoteproc: qcom: Update Q6V5 Modem
+ PIL binding
+In-Reply-To: <CAE-0n51ujsHp+S9v2yTWVdFcWJswFyVyme8Bqp5i4w9Qv6GB6g@mail.gmail.com>
+References: <1626775980-28637-1-git-send-email-sibis@codeaurora.org>
+ <1626775980-28637-4-git-send-email-sibis@codeaurora.org>
+ <CAE-0n51ujsHp+S9v2yTWVdFcWJswFyVyme8Bqp5i4w9Qv6GB6g@mail.gmail.com>
+Message-ID: <a5e7af00a468166f3cff790f76c41fd7@codeaurora.org>
 X-Sender: sibis@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Matthias,
+Hey Stephen,
 
 Thanks for taking time to review
 the series.
 
-On 2021-07-21 04:40, Matthias Kaehlcke wrote:
-> On Tue, Jul 20, 2021 at 10:06:36AM +0530, Sibi Sankar wrote:
->> The load state power-domain, used by the co-processors to notify the
->> Always on Subsystem (AOSS) that a particular co-processor is up/down,
->> suffers from the side-effect of changing states during suspend/resume.
->> However the co-processors enter low-power modes independent to that of
->> the application processor and their states are expected to remain
->> unaltered across system suspend/resume cycles. To achieve this 
->> behavior
->> let's drop the load state power-domain and replace them with the qmp
->> property for all SoCs supporting low power mode signalling.
->> 
->> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
->> ---
->> 
->> v4:
->>  * Commit message change and sc8180x co-processor addition. 
->> [Rob/Bjorn]
->> 
->>  .../devicetree/bindings/remoteproc/qcom,adsp.yaml  | 65 
->> +++++++++++-----------
->>  1 file changed, 33 insertions(+), 32 deletions(-)
->> 
+On 2021-07-21 11:09, Stephen Boyd wrote:
+> Quoting Sibi Sankar (2021-07-20 03:12:53)
 >> diff --git 
->> a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml 
->> b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
->> index c597ccced623..1182afb5f593 100644
->> --- a/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
->> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,adsp.yaml
->> @@ -78,11 +78,11 @@ properties:
->> 
->>    power-domains:
->>      minItems: 1
->> -    maxItems: 3
->> +    maxItems: 2
->> 
->>    power-domain-names:
->>      minItems: 1
->> -    maxItems: 3
->> +    maxItems: 2
+>> a/Documentation/devicetree/bindings/remoteproc/qcom,q6v5.txt 
+>> b/Documentation/devicetree/bindings/remoteproc/qcom,q6v5.txt
+>> index 494257010629..bc1394f5d677 100644
+>> --- a/Documentation/devicetree/bindings/remoteproc/qcom,q6v5.txt
+>> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,q6v5.txt
+>> @@ -198,6 +205,9 @@ For the compatible string below the following 
+>> supplies are required:
+>>         Definition: a phandle reference to a syscon representing TCSR 
+>> followed
+>>                     by the three offsets within syscon for q6, modem 
+>> and nc
+>>                     halt registers.
+>> +                   a phandle reference to a syscon representing TCSR 
+>> followed
+>> +                   by the four offsets within syscon for q6, modem, 
+>> nc and vq6
+>> +                   halt registers on SC7280 SoCs.
 > 
-> It seems maxItems should have been 4 in the first place and should 
-> remain
-> unchanged after removing the load state power domain. With this patch:
+> This seems to be duplicated? Maybe it should be combined with the
+> previous sentence and sc7280 called out?
 
-sc7180-mpss-pas actually uses only
-cx and mss. The mpss-pas compatible
-is overridden by the mss-pil compatible
-for all the platforms present upstream
-for sc7180, that's the reason we probably
-haven't run into any binding check failures.
-I'll keep the max-items to 2 and fix-up
-the sc7180 power-domain requirements
-instead.
+yeah noticed ^^ but that's the style
+we've maintained till now. This
+would get cleanup up when I do the
+yaml conversion after the series
+lands.
 
 > 
->   - if:
->       properties:
->         compatible:
->           contains:
->             enum:
->               - qcom,sc7180-mpss-pas
->     then:
->       properties:
->         power-domains:
->           items:
->             - description: CX power domain
->             - description: MX power domain
->             - description: MSS power domain
->         power-domain-names:
->           items:
->             - const: cx
->             - const: mx
->             - const: mss
+>> 
+>>  For the compatible strings below the following phandle references are 
+>> required:
+>>    "qcom,sc7180-mss-pil"
 
 -- 
 Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
