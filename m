@@ -2,153 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5DA063D1A0A
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jul 2021 00:58:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9E4423D1A24
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jul 2021 01:03:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229931AbhGUWRj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Jul 2021 18:17:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60508 "EHLO
+        id S230261AbhGUWVp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Jul 2021 18:21:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230353AbhGUWRi (ORCPT
+        with ESMTP id S230363AbhGUWVo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Jul 2021 18:17:38 -0400
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B8AAC061757
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jul 2021 15:58:14 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id a17-20020a9d3e110000b02904ce97efee36so1631791otd.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jul 2021 15:58:14 -0700 (PDT)
+        Wed, 21 Jul 2021 18:21:44 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 775FAC061757
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jul 2021 16:02:19 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id e11so4617831oii.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jul 2021 16:02:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=7g+i+w4u53CyM8L4HKCjxO+eyCNUNLkuoMzloAm4KQI=;
-        b=ZwYiGPaZ6LwP/2mmJmuoYa4dCUWha+220rfFKh5KWHSz1Ybdx1BQUhFS00Ojfwxhgo
-         91OS1Umn2EDgDnrhiQtlBzAjK5BN5BX2G1eAoJNM+1T/cvPazG3GtO4UQarZPm4qSwAD
-         WFgYCw2Q3FE47Q2C/4CFBV0QyxrPwsFemEbf1erDw/SjclvAxbE+4+1LhNTnYYBslots
-         Ez/KTpCcq6kbOO3fIbVHyQNFZi+RTLjTF2sowQATJ2hCWoU6HxuVRJddeWtr2hbHk7iW
-         +MVadYSa6EUHZXUixBzUlonRb6iewtaDO1VntbWVjrdS0xtcG895oZMPiUopw+H79Sr8
-         KC7Q==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=N06ng52JS7qg8uo3w1ksPWxe7Wr34Eu2lk2OlkrZI6o=;
+        b=BRfaxn1P6i+9wKL1KjJbKKut19JdgwMAYWbgbHG76PMdVUGczVUxqjnXP0UaUnlBSZ
+         Rqh6yQ5K5XNUSAaN8l5gf1jwd8xcFCJmzbPBkqfQRKBq7iEhKN4XeJa50OYur6unatdx
+         UtJbIxACTJwfemEdoZKcsBX/LcbauDUo7XfufXxB3AlDwJ3rorXo2ZKA96TogVxfqPAc
+         sM3t0VOTLORMNB5OR+GvzNYBA62Jym2EagE/GTkmeAwvwM94OGEcOYIbbEoMC/1INjmj
+         eQCB8OVJion9/ozshkedqRqgMOURtEq87DfCY+d1gYdHnoqXcFQYHKB7eOgcU2CG+Zu0
+         k1fw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=7g+i+w4u53CyM8L4HKCjxO+eyCNUNLkuoMzloAm4KQI=;
-        b=TtzjSpNnX2G6W1Aaiw3+1y+xJWTIX0oo6vG0aVHL7hT8Ht5YZOPogZYRjvftDRE4RU
-         drhD+doWSa4gp4JVDgzyOz82EaXNEmwkvFUIUSotaJDBA0bO07lREYJE00CItOxTYqTt
-         VFOJcagd5xTj41E18MjWvdWKF9wyu4SJCYfwbNPjQoEbSVs6s+gDtGSVmq4GXXJLL8IE
-         m919NoeyOoAmC7ZB795X7hLN1HEdvyyZlmNMKKesSCZGIpOtSa0ABWecBZHtb4CiPqTI
-         bJ84NCtXcHU2YCnDZvVi2CHZwPFVTMV3edt7deE2tjIOX67WcIEF7xic8jeFzR9n2rqf
-         Qj7g==
-X-Gm-Message-State: AOAM532oHYzhkl8Btw0Yc/TXUi9LPKUiNHWHaX0d3UJxHhYqu5EyJR8I
-        SRU9TsZrRPftuYPKn7Uj6Y6LfQ==
-X-Google-Smtp-Source: ABdhPJwZwrPv5a2WWTgoPZaQ7i9PzKCzyolQ/8+MSNsX66kU4vMdZ3lKibqZ47NLTg5TOydplnIxYg==
-X-Received: by 2002:a9d:3a34:: with SMTP id j49mr27870764otc.102.1626908293828;
-        Wed, 21 Jul 2021 15:58:13 -0700 (PDT)
-Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id h24sm5035388otl.41.2021.07.21.15.58.13
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=N06ng52JS7qg8uo3w1ksPWxe7Wr34Eu2lk2OlkrZI6o=;
+        b=mbzLmy4qvhTz6ArtKznY2YCCL2qePxmPpDQoonHd43lHAHsJpL7oXuU2wbAqUsT0EL
+         5GpxFdgyk18iwS+DHc7bIpjB76omGDNGHx6IR6CGxK0NWU4APz1sc6Da3XclhgdZkGFj
+         fLYwAqJPQ8fAL3QozhHv95JG9pQvAL3dyajo7Rfe7tcB04RQtFIsPmcYV7c1zzSEYhfv
+         rTPsbs0z+tFoGrRSv04cb5X5tOqf9/i5/lPy7EfBG5HbrrnbJCQerQXkH143gUFGdMhg
+         nIm/nQHFWjEic+xcUkfZJs5u/YSo/9G5HQSra7rGy6ptwber/XucODlEOv0kEvjFi1Bc
+         ip7Q==
+X-Gm-Message-State: AOAM53354nl2h647DmBWLp7HmD56B67noHAvZYfN9z4GK+g7k8cjWCqF
+        XSzMuHH07YNe2RgYA7XYZTc/eQ==
+X-Google-Smtp-Source: ABdhPJyqmfkQjbeEB3X9JBwnpNHhZPhQk4KR9IoY7ddHsh/+817ru8556wQUfjtJ15m7q7jFyZb/FA==
+X-Received: by 2002:aca:5889:: with SMTP id m131mr4056505oib.140.1626908538867;
+        Wed, 21 Jul 2021 16:02:18 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id b11sm4879541oti.30.2021.07.21.16.02.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 21 Jul 2021 15:58:13 -0700 (PDT)
+        Wed, 21 Jul 2021 16:02:18 -0700 (PDT)
+Date:   Wed, 21 Jul 2021 18:02:16 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Manu Gautam <mgautam@codeaurora.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] phy: qcom: qmp: Add SC8180x USB/DP combo
-Date:   Wed, 21 Jul 2021 15:56:30 -0700
-Message-Id: <20210721225630.3035861-2-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210721225630.3035861-1-bjorn.andersson@linaro.org>
-References: <20210721225630.3035861-1-bjorn.andersson@linaro.org>
+To:     Linus Walleij <linus.walleij@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] pinctrl: qcom: spmi-gpio: Add pmc8180 & pmc8180c
+Message-ID: <YPineKnke+zd42gC@yoga>
+References: <20210629003851.1787673-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210629003851.1787673-1-bjorn.andersson@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The two USB QMPs are USB/DP compbo PHYs, add the compatible for this
-combination to allow DP output.
+On Mon 28 Jun 19:38 CDT 2021, Bjorn Andersson wrote:
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/phy/qualcomm/phy-qcom-qmp.c | 47 +++++++++++++++++++++++++++++
- 1 file changed, 47 insertions(+)
+> The SC8180x platform comes with PMC8180 and PMC8180c, add support for
+> the GPIO controller in these PMICs.
+> 
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-index 2195f8ac393b..5e302830d061 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -3536,6 +3536,46 @@ static const struct qmp_phy_cfg sc8180x_pciephy_cfg = {
- 	.pwrdn_delay_max	= 1005,		/* us */
- };
- 
-+static const struct qmp_phy_cfg sc8180x_dpphy_cfg = {
-+	.type			= PHY_TYPE_DP,
-+	.nlanes			= 1,
-+
-+	.serdes_tbl		= qmp_v4_dp_serdes_tbl,
-+	.serdes_tbl_num		= ARRAY_SIZE(qmp_v4_dp_serdes_tbl),
-+	.tx_tbl			= qmp_v4_dp_tx_tbl,
-+	.tx_tbl_num		= ARRAY_SIZE(qmp_v4_dp_tx_tbl),
-+
-+	.serdes_tbl_rbr		= qmp_v4_dp_serdes_tbl_rbr,
-+	.serdes_tbl_rbr_num	= ARRAY_SIZE(qmp_v4_dp_serdes_tbl_rbr),
-+	.serdes_tbl_hbr		= qmp_v4_dp_serdes_tbl_hbr,
-+	.serdes_tbl_hbr_num	= ARRAY_SIZE(qmp_v4_dp_serdes_tbl_hbr),
-+	.serdes_tbl_hbr2	= qmp_v4_dp_serdes_tbl_hbr2,
-+	.serdes_tbl_hbr2_num	= ARRAY_SIZE(qmp_v4_dp_serdes_tbl_hbr2),
-+	.serdes_tbl_hbr3	= qmp_v4_dp_serdes_tbl_hbr3,
-+	.serdes_tbl_hbr3_num	= ARRAY_SIZE(qmp_v4_dp_serdes_tbl_hbr3),
-+
-+	.clk_list		= qmp_v3_phy_clk_l,
-+	.num_clks		= ARRAY_SIZE(qmp_v3_phy_clk_l),
-+	.reset_list		= sc7180_usb3phy_reset_l,
-+	.num_resets		= ARRAY_SIZE(sc7180_usb3phy_reset_l),
-+	.vreg_list		= qmp_phy_vreg_l,
-+	.num_vregs		= ARRAY_SIZE(qmp_phy_vreg_l),
-+	.regs			= qmp_v3_usb3phy_regs_layout,
-+
-+	.has_phy_dp_com_ctrl	= true,
-+	.is_dual_lane_phy	= true,
-+
-+	.dp_aux_init = qcom_qmp_v4_phy_dp_aux_init,
-+	.configure_dp_tx = qcom_qmp_v4_phy_configure_dp_tx,
-+	.configure_dp_phy = qcom_qmp_v4_phy_configure_dp_phy,
-+	.calibrate_dp_phy = qcom_qmp_v4_dp_phy_calibrate,
-+};
-+
-+static const struct qmp_phy_combo_cfg sc8180x_usb3dpphy_cfg = {
-+	.usb_cfg		= &sm8150_usb3phy_cfg,
-+	.dp_cfg			= &sc8180x_dpphy_cfg,
-+};
-+
- static const struct qmp_phy_cfg sm8150_usb3_uniphy_cfg = {
- 	.type			= PHY_TYPE_USB3,
- 	.nlanes			= 1,
-@@ -5377,6 +5417,9 @@ static const struct of_device_id qcom_qmp_phy_of_match_table[] = {
- 	}, {
- 		.compatible = "qcom,sc8180x-qmp-usb3-phy",
- 		.data = &sm8150_usb3phy_cfg,
-+	}, {
-+		.compatible = "qcom,sc8180x-qmp-usb3-dp-phy",
-+		/* It's a combo phy */
- 	}, {
- 		.compatible = "qcom,sdm845-qhp-pcie-phy",
- 		.data = &sdm845_qhp_pciephy_cfg,
-@@ -5454,6 +5497,10 @@ static const struct of_device_id qcom_qmp_combo_phy_of_match_table[] = {
- 		.compatible = "qcom,sm8250-qmp-usb3-dp-phy",
- 		.data = &sm8250_usb3dpphy_cfg,
- 	},
-+	{
-+		.compatible = "qcom,sc8180x-qmp-usb3-dp-phy",
-+		.data = &sc8180x_usb3dpphy_cfg,
-+	},
- 	{ }
- };
- 
--- 
-2.29.2
+Linus, would you be willing to pick this up? Got some dts patches that
+uses these compatibles.
 
+Regards,
+Bjorn
+
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt | 4 ++++
+>  drivers/pinctrl/qcom/pinctrl-spmi-gpio.c                     | 2 ++
+>  2 files changed, 6 insertions(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+> index 161216daf463..412613c80e9e 100644
+> --- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+> @@ -30,6 +30,8 @@ PMIC's from Qualcomm.
+>  		    "qcom,pm8350-gpio"
+>  		    "qcom,pm8350b-gpio"
+>  		    "qcom,pm8350c-gpio"
+> +		    "qcom,pmc8180-gpio"
+> +		    "qcom,pmc8180c-gpio"
+>  		    "qcom,pmk8350-gpio"
+>  		    "qcom,pm7325-gpio"
+>  		    "qcom,pmr735a-gpio"
+> @@ -120,6 +122,8 @@ to specify in a pin configuration subnode:
+>  		    gpio1-gpio10 for pm8350
+>  		    gpio1-gpio8 for pm8350b
+>  		    gpio1-gpio9 for pm8350c
+> +		    gpio1-gpio10 for pmc8180
+> +		    gpio1-gpio12 for pmc8180c
+>  		    gpio1-gpio4 for pmk8350
+>  		    gpio1-gpio10 for pm7325
+>  		    gpio1-gpio4 for pmr735a
+> diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+> index a89d24a040af..9251fb5153e7 100644
+> --- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+> +++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+> @@ -1123,10 +1123,12 @@ static const struct of_device_id pmic_gpio_of_match[] = {
+>  	{ .compatible = "qcom,pm660l-gpio", .data = (void *) 12 },
+>  	/* pm8150 has 10 GPIOs with holes on 2, 5, 7 and 8 */
+>  	{ .compatible = "qcom,pm8150-gpio", .data = (void *) 10 },
+> +	{ .compatible = "qcom,pmc8180-gpio", .data = (void *) 10 },
+>  	/* pm8150b has 12 GPIOs with holes on 3, r and 7 */
+>  	{ .compatible = "qcom,pm8150b-gpio", .data = (void *) 12 },
+>  	/* pm8150l has 12 GPIOs with holes on 7 */
+>  	{ .compatible = "qcom,pm8150l-gpio", .data = (void *) 12 },
+> +	{ .compatible = "qcom,pmc8180c-gpio", .data = (void *) 12 },
+>  	{ .compatible = "qcom,pm8350-gpio", .data = (void *) 10 },
+>  	{ .compatible = "qcom,pm8350b-gpio", .data = (void *) 8 },
+>  	{ .compatible = "qcom,pm8350c-gpio", .data = (void *) 9 },
+> -- 
+> 2.29.2
+> 
