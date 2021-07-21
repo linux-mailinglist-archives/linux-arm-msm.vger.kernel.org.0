@@ -2,73 +2,183 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2DBE83D19DB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jul 2021 00:41:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 328363D19E3
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jul 2021 00:42:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230210AbhGUWAS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Jul 2021 18:00:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56524 "EHLO
+        id S230248AbhGUWCE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Jul 2021 18:02:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230204AbhGUWAR (ORCPT
+        with ESMTP id S230222AbhGUWCD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Jul 2021 18:00:17 -0400
-Received: from mail-oo1-xc33.google.com (mail-oo1-xc33.google.com [IPv6:2607:f8b0:4864:20::c33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E847C061575
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jul 2021 15:40:53 -0700 (PDT)
-Received: by mail-oo1-xc33.google.com with SMTP id t46-20020a4a96f10000b02902618ad2ea55so918585ooi.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jul 2021 15:40:53 -0700 (PDT)
+        Wed, 21 Jul 2021 18:02:03 -0400
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6237C0613CF
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jul 2021 15:42:39 -0700 (PDT)
+Received: by mail-oi1-x236.google.com with SMTP id a132so4577461oib.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jul 2021 15:42:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=KEVgavtFokaJseyLsj85tRS/d/rmuvKUZEz1jbsigY0=;
-        b=YWntnAY45UIkoNTLLa74vviHMxh/jaVtTmvHPSSDb5RD2eo3rsagGUGXof2ePUT7dg
-         kKHv+kyJqjE10h5nvKoL0VVytFjVHwqiPAAu7aB4hIw31vGX5D9/2Rp6FzkVLE+V4Vmr
-         IbfnZswljUpK9UkXzyJ/jhjsELUfJxxMtjUJg=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=w+LgJYfusI5YMGYPMF7cuC+Cq9HtcH15BzfhaRWAMPw=;
+        b=fsUKMEBheNnp9SKgGqK4T9dpmFOcdhpECJI7i+Xu9IOVLc38AT8UGMOHwsrsniOj6/
+         31EN3k9VrUWwibSlt6hGI/vpAhB4TcHE74KonoGmExtcYqFF/eT3K5b1E5OQ94yjqaVd
+         J28MNjwsWZQnPQMlhKTQ12eRUNfqiBMUHr+ryacLQ2BycjYZXhWs4vSX3muLQYUs9bbo
+         IQG+6FR7UIsR5gS3P8JXAQ9Ai5DAK+TpyoOmoXkn/VdEugR8TSLqNPezTra4SWlXeIlf
+         +9auSoMbKspsio3Isf2aKwlE9pAmt8uZrnZ3/ObBJpj1UOihEwqG1EcFickrVwpQzLDk
+         0mLQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=KEVgavtFokaJseyLsj85tRS/d/rmuvKUZEz1jbsigY0=;
-        b=RyIycFWupWgA2DcTnv/vjIsSjX8Hr08HIDKui5K8bRXTYcGebW+UYUgn2UlQtPLtsN
-         LBZAoA2nI/P5D02fjF+9IVso4IQiKB1IC9bU7qZ+7LN1CN9X/JIyS8gY/9ch6qLIzI42
-         kAsp0VPLrtcUpuatanBLL8c/lrr7aCnr2ZhJd4G8UMhucCi/9A9/6xnZ1o8uTv2PxH0c
-         7633b/uG238VIK0hvxBbkv019nkTK2XrfD34BoNzQaSUObgGneO9ivvZnlpqlzeIaRs7
-         orVxkdHSWFYfVRuscO4yIlQkC0dnNEHX0czUvzwd99bh8wFpSpfa4cgTs8/mpXQIpmBZ
-         qHHg==
-X-Gm-Message-State: AOAM533BrR9NHjDMisA+bDCcxzyQ4YWGWiGz7qGQpKq9W4z3Wvk3ZD2T
-        2Xnn0fYLZW/hiJ7UaNhyzRW/G3rSK+tEHi0oV7LKdA==
-X-Google-Smtp-Source: ABdhPJxntp+G+9rokY2CN2MxKmxY0rpDa6yDFX1UvyHoclObrnzcw8afQvfO/r7cISRj3JfakWdZ3O8HM3QzIH0aqwA=
-X-Received: by 2002:a4a:e206:: with SMTP id b6mr25761720oot.16.1626907252629;
- Wed, 21 Jul 2021 15:40:52 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 21 Jul 2021 22:40:52 +0000
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=w+LgJYfusI5YMGYPMF7cuC+Cq9HtcH15BzfhaRWAMPw=;
+        b=MGQomIdR3iV20RhWbz4LhdGV5DcDIgKg+705eAVYnmC2Z7OEU5aqLFZYYyJqHD/eUy
+         V6AIYoqj0nhEN+QcsmiFpjCVtA0axsi2YRDF33BPxai82cmH7J2eOlT3pVfjAVY4+unZ
+         uSv3d3lU0al1406ky5EtCSqQJ07Unji3TtKu2YbFEdTuExpL62RtQMudXu+Ldzdt8Bka
+         7YDpUL77oWPExWktvzy902DXwDDnQN8brITP57DyRq6vMzDmdliWVDawlc0VkIEN4+Df
+         qsOLM3THhc/GXg7eW3RPpAfLHD3+VihQPUlcnvOcGMWAfC53uwQrJUSRToXsZV0Wy6sj
+         XNkQ==
+X-Gm-Message-State: AOAM5313W+gyxE+u2xOzavXGTiGtqvzljgTwU+BKKNlvWMJQUnYfK569
+        wEVkGShUp7PBWfxzEB75px9Gpf6LwmCvRQ==
+X-Google-Smtp-Source: ABdhPJyFtVg8a68ZAb06ris9iMEnze3GgxlE59WKwT6UQRQhOSncl+Vd0JPjbnKBTL8/zJy7i4kWtw==
+X-Received: by 2002:a05:6808:8e5:: with SMTP id d5mr17741046oic.51.1626907359037;
+        Wed, 21 Jul 2021 15:42:39 -0700 (PDT)
+Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id a193sm3870712oob.45.2021.07.21.15.42.38
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 21 Jul 2021 15:42:38 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Mike Tipton <mdtipton@codeaurora.org>,
+        Taniya Das <tdas@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Subject: [PATCH v2] clk: qcom: gdsc: Ensure regulator init state matches GDSC state
+Date:   Wed, 21 Jul 2021 15:40:56 -0700
+Message-Id: <20210721224056.3035016-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-In-Reply-To: <1624365748-24224-3-git-send-email-rajeevny@codeaurora.org>
-References: <1624365748-24224-1-git-send-email-rajeevny@codeaurora.org> <1624365748-24224-3-git-send-email-rajeevny@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Wed, 21 Jul 2021 22:40:52 +0000
-Message-ID: <CAE-0n536DwZhxb6M1HvJHAiaChtq2vg1HfiYV+ntrjMVfpRxdQ@mail.gmail.com>
-Subject: Re: [v2 2/3] drm/msm/dsi: Add PHY configuration for SC7280
-To:     Rajeev Nandan <rajeevny@codeaurora.org>,
-        devicetree@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, sean@poorly.run, robdclark@gmail.com,
-        robh+dt@kernel.org, robh@kernel.org, abhinavk@codeaurora.org,
-        kalyan_t@codeaurora.org, mkrishn@codeaurora.org, jonathan@marek.ca,
-        dmitry.baryshkov@linaro.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Rajeev Nandan (2021-06-22 05:42:27)
-> The SC7280 SoC uses the 7nm (V4.1) DSI PHY driver with
-> different enable|disable regulator loads.
->
-> Signed-off-by: Rajeev Nandan <rajeevny@codeaurora.org>
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
+As GDSCs are registered and found to be already enabled gdsc_init()
+ensures that 1) the kernel state matches the hardware state, and 2)
+votable GDSCs are properly enabled from this master as well.
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+But as the (optional) supply regulator is enabled deep into
+gdsc_toggle_logic(), which is only executed for votable GDSCs the
+kernel's state of the regulator might not match the hardware. The
+regulator might be automatically turned off if no other users are
+present or the next call to gdsc_disable() would cause an unbalanced
+regulator_disable().
+
+But as the votable case deals with an already enabled GDSC, most of
+gdsc_enable() and gdsc_toggle_logic() can be skipped. Reducing it to
+just clearing the SW_COLLAPSE_MASK and enabling hardware control allow
+us to simply call regulator_enable() in both cases.
+
+The enablement of hardware control seems to be an independent property
+from the GDSC being enabled, so this is moved outside that conditional
+segment.
+
+Lastly, as the propagation of ALWAY_ON to GENPD_FLAG_ALWAYS_ON needs to
+happen regardless of the initial state this is grouped together with the
+other sc->pd updates at the end of the function.
+
+Cc: stable@vger.kernel.org
+Fixes: 37416e554961 ("clk: qcom: gdsc: Handle GDSC regulator supplies")
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
+
+Changes since v1:
+- Refactored into if (on) else if (ALWAYS_ON) style
+- Extracted relevant parts of gdsc_enable() to call under VOTABLE
+- Turn on hwctrl if requested for non-votable gdscs
+
+ drivers/clk/qcom/gdsc.c | 54 +++++++++++++++++++++++++++--------------
+ 1 file changed, 36 insertions(+), 18 deletions(-)
+
+diff --git a/drivers/clk/qcom/gdsc.c b/drivers/clk/qcom/gdsc.c
+index 51ed640e527b..4ece326ea233 100644
+--- a/drivers/clk/qcom/gdsc.c
++++ b/drivers/clk/qcom/gdsc.c
+@@ -357,27 +357,43 @@ static int gdsc_init(struct gdsc *sc)
+ 	if (on < 0)
+ 		return on;
+ 
+-	/*
+-	 * Votable GDSCs can be ON due to Vote from other masters.
+-	 * If a Votable GDSC is ON, make sure we have a Vote.
+-	 */
+-	if ((sc->flags & VOTABLE) && on)
+-		gdsc_enable(&sc->pd);
++	if (on) {
++		/* The regulator must be on, sync the kernel state */
++		if (sc->rsupply) {
++			ret = regulator_enable(sc->rsupply);
++			if (ret < 0)
++				return ret;
++		}
+ 
+-	/*
+-	 * Make sure the retain bit is set if the GDSC is already on, otherwise
+-	 * we end up turning off the GDSC and destroying all the register
+-	 * contents that we thought we were saving.
+-	 */
+-	if ((sc->flags & RETAIN_FF_ENABLE) && on)
+-		gdsc_retain_ff_on(sc);
++		/*
++		 * Votable GDSCs can be ON due to Vote from other masters.
++		 * If a Votable GDSC is ON, make sure we have a Vote.
++		 */
++		if (sc->flags & VOTABLE) {
++			ret = regmap_update_bits(sc->regmap, sc->gdscr,
++						 SW_COLLAPSE_MASK, val);
++			if (ret)
++				return ret;
++		}
++
++		/* Turn on HW trigger mode if supported */
++		if (sc->flags & HW_CTRL) {
++			ret = gdsc_hwctrl(sc, true);
++			if (ret < 0)
++				return ret;
++		}
+ 
+-	/* If ALWAYS_ON GDSCs are not ON, turn them ON */
+-	if (sc->flags & ALWAYS_ON) {
+-		if (!on)
+-			gdsc_enable(&sc->pd);
++		/*
++		 * Make sure the retain bit is set if the GDSC is already on,
++		 * otherwise we end up turning off the GDSC and destroying all
++		 * the register contents that we thought we were saving.
++		 */
++		if (sc->flags & RETAIN_FF_ENABLE)
++			gdsc_retain_ff_on(sc);
++	} else if (sc->flags & ALWAYS_ON) {
++		/* If ALWAYS_ON GDSCs are not ON, turn them ON */
++		gdsc_enable(&sc->pd);
+ 		on = true;
+-		sc->pd.flags |= GENPD_FLAG_ALWAYS_ON;
+ 	}
+ 
+ 	if (on || (sc->pwrsts & PWRSTS_RET))
+@@ -385,6 +401,8 @@ static int gdsc_init(struct gdsc *sc)
+ 	else
+ 		gdsc_clear_mem_on(sc);
+ 
++	if (sc->flags & ALWAYS_ON)
++		sc->pd.flags |= GENPD_FLAG_ALWAYS_ON;
+ 	if (!sc->pd.power_off)
+ 		sc->pd.power_off = gdsc_disable;
+ 	if (!sc->pd.power_on)
+-- 
+2.29.2
+
