@@ -2,123 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C18633D15B2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jul 2021 19:56:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 117F43D15C8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 21 Jul 2021 20:01:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236809AbhGURPO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 21 Jul 2021 13:15:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47736 "EHLO
+        id S229948AbhGURUY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 21 Jul 2021 13:20:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48920 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230501AbhGURPO (ORCPT
+        with ESMTP id S231702AbhGURUX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 21 Jul 2021 13:15:14 -0400
-Received: from mail-qv1-xf2e.google.com (mail-qv1-xf2e.google.com [IPv6:2607:f8b0:4864:20::f2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB86DC061575
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jul 2021 10:55:50 -0700 (PDT)
-Received: by mail-qv1-xf2e.google.com with SMTP id h9so1375293qvs.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jul 2021 10:55:50 -0700 (PDT)
+        Wed, 21 Jul 2021 13:20:23 -0400
+Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 86A8EC061575
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jul 2021 11:00:59 -0700 (PDT)
+Received: by mail-yb1-xb29.google.com with SMTP id g19so4397815ybe.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 21 Jul 2021 11:00:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=poorly.run; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=0pycXB2ultmLkKc35aeNj2U+LPhWXxWP52T2qDeRhjs=;
-        b=VQnE8G+T99lqj+jpc8gjTrDIq60JvIspB210ozZeqOOMmMWKPswtglKyQ/zpgkH8xf
-         nSzdznQC/pcNlTb+rokrH057TouO69ecT3IdtH4UMAttClC7sNr660xpBHvAE0AIXAjR
-         xGj3wmsOPr3Iy23GWqOeN2yjeLnpugyXQDEs/TM10uBJUuXbqQQRB2MOQhR9gc2S0yZ6
-         ieMFY38yfiEuI3efFX25D9oEN0kxhojGFGP6MQ7iLMoK2Lp5uxhiFV5GbBvf36oO3sbx
-         e/WRldFNXL8dyuTodbz8ocXxzsjHcGIGW1ADfUiDnv5p6eTBMHtAkv5d8YSKh8Hk86H8
-         v+YA==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=p55HWTaC5dpMadxxZA1E7+qzD3OpeEPoXK9rz/EuCCs=;
+        b=VKgoCKHjjpFlb8dMXuXUAgOoQYJ3Mbnrm6/8qx4IsUefGakwA3IGEEr0CxwNVsnR0r
+         RyfUGx1agkrTHn27tIBpoNtSqHuQIrO4FyGElTusIg9o9RmLBO7FkzuQthByFgbU6N8Y
+         JezczchD0E6nSwFpbW8Wfl7RpqflPfgmmeESl0jFVbpcOVfbsj3iiGTbr35EbCaIhQLd
+         +qZv+Y0LjBjmprpNCgVby1ICXtdpYSBOqbSSJRJbkaVXma2Aj2qTOobmNUVgfUDa19vr
+         7ybpE/C0bS8Dt5I+VXMpwsa+xtbTlG2BZf44XVR2lX0WCvHAENYExpgoiy/ccdAmuV3Q
+         wiuQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=0pycXB2ultmLkKc35aeNj2U+LPhWXxWP52T2qDeRhjs=;
-        b=TmNomV5bmncDnbbA+ChehvHyVEyGwN2Shk0aC+jSrp82QyuID9209eLhH+I6LpXhny
-         RkfOfxbs9SKikAdtA2k0PeJ1Mgtod67P2TTBRHNqPEf3WujxWZHBlx5q/MLCdwL2s/Br
-         UlYBL1X7vHskOup9IFIv0o8hlkTuE2yuieDOKX5yJLrGIpK5oVFlMaxtclqhnb+hz+rz
-         rVBWFBsPQFXoMcIDPk8/xpz7nXP9e/07vCG2CBy+sKmQAlHNB7cCsvKvued2vP2eJb34
-         lBe+yekWE12XhLqqHLkJWj67qNieazwgCCF0Bk67DK1g5SPGjllQmTzIH187r8RwroPQ
-         TZgA==
-X-Gm-Message-State: AOAM532OQssR4adiaexXd0/RzqeH1kmfhSfjQxxlPRqYMQKVQ3WApzmZ
-        BT8ShdSF3JB5QTTBOxsKlxh20w==
-X-Google-Smtp-Source: ABdhPJz/2XnWjDEIVkqQXiPb5u4xelAKiOrD8F4Pkyijtn6fTUroFWIgLbFDelftl6codkhebYsC4Q==
-X-Received: by 2002:ad4:538c:: with SMTP id i12mr37924550qvv.51.1626890149955;
-        Wed, 21 Jul 2021 10:55:49 -0700 (PDT)
-Received: from localhost ([167.100.64.199])
-        by smtp.gmail.com with ESMTPSA id j8sm9492446qti.20.2021.07.21.10.55.49
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 21 Jul 2021 10:55:49 -0700 (PDT)
-From:   Sean Paul <sean@poorly.run>
-To:     dri-devel@lists.freedesktop.org, ppaalanen@gmail.com,
-        maarten.lankhorst@linux.intel.com, tzimmermann@suse.de,
-        airlied@linux.ie, daniel.vetter@ffwll.ch
-Cc:     Sean Paul <seanpaul@chromium.org>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: [RESEND PATCH v6 04/14] drm/msm/dpu: Replace definitions for dpu debug macros
-Date:   Wed, 21 Jul 2021 13:55:11 -0400
-Message-Id: <20210721175526.22020-5-sean@poorly.run>
-X-Mailer: git-send-email 2.31.0
-In-Reply-To: <20210721175526.22020-1-sean@poorly.run>
-References: <20210721175526.22020-1-sean@poorly.run>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=p55HWTaC5dpMadxxZA1E7+qzD3OpeEPoXK9rz/EuCCs=;
+        b=kIQcUelgCyQwJSlA0YUAeb9OBGlyL06dj619Odkc5uRbk5QU5S9ZodpfYgD+mDAYzZ
+         dORbEsyT23K+UvKUXYesZEPOZLeF0UZUXVR2uERXm61a1mLRmdw18Gve+/s8jse3CuPe
+         ATI0IrJAL/mrHbN3Weu8bjuvJoSTnvO55zF6QH5uQysehn/ot1lv1chX9Airnx75MUd8
+         xIUQklEz2YbtkC8mZsom6tTpixCYjqC9/yT4FJXgd3PhuCrsn3isEUF/LYyUA4m4U0L3
+         o2g5W8/EY0y1FSN68w6SV4dyhaj04YqBCqvKyrZmB9rt9mTqyfCxHjhrxsAxC7Z9+qBM
+         m4ew==
+X-Gm-Message-State: AOAM530RGSrFsYZbDki9ik2DE7WD0RBsAenwWFa8H9+zLg3GIVqEPEmz
+        uJsuKNtia5XPDgHvrCqAWk6uBErRm59TeVVkQWjUQw==
+X-Google-Smtp-Source: ABdhPJwbIrbhhVYNYobPTcneIblXUvvyWcuD63Tzux+fXk8oy4TabvNhfXszej/xrPC8W06ZGSSznRT/A7sB9Z46Za8=
+X-Received: by 2002:a25:8b91:: with SMTP id j17mr45175948ybl.228.1626890452055;
+ Wed, 21 Jul 2021 11:00:52 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210707045320.529186-1-john.stultz@linaro.org>
+ <YPgK50dmV7Z69WsL@kroah.com> <CALAqxLUVgUT+1DyDGsFbF0138S0OYzpKADk__PsYbR4B4mbMhw@mail.gmail.com>
+In-Reply-To: <CALAqxLUVgUT+1DyDGsFbF0138S0OYzpKADk__PsYbR4B4mbMhw@mail.gmail.com>
+From:   Saravana Kannan <saravanak@google.com>
+Date:   Wed, 21 Jul 2021 11:00:15 -0700
+Message-ID: <CAGETcx91URbHCYMoGt_cCgvMXNkVyJb4Ek-ng8jwR+eQhvZN1A@mail.gmail.com>
+Subject: Re: [PATCH] firmware: QCOM_SCM: Allow qcom_scm driver to be loadable
+ as a permenent module
+To:     John Stultz <john.stultz@linaro.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Will Deacon <will@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Joerg Roedel <joro@8bytes.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Marc Zyngier <maz@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Vinod Koul <vkoul@kernel.org>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        Maulik Shah <mkshah@codeaurora.org>,
+        Todd Kjos <tkjos@google.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Sean Paul <seanpaul@chromium.org>
+On Wed, Jul 21, 2021 at 10:24 AM John Stultz <john.stultz@linaro.org> wrote:
+>
+> On Wed, Jul 21, 2021 at 4:54 AM Greg Kroah-Hartman
+> <gregkh@linuxfoundation.org> wrote:
+> >
+> > On Wed, Jul 07, 2021 at 04:53:20AM +0000, John Stultz wrote:
+> > > Allow the qcom_scm driver to be loadable as a permenent module.
+> >
+> > This feels like a regression, it should be allowed to be a module.
+>
+> I'm sorry, I'm not sure I'm following you, Greg.  This patch is trying
+> to enable the driver to be able to be loaded as a module.
 
-The debug messages shouldn't be logged as errors when debug categories
-are enabled. Use the drm logging helpers to do the right thing
+I think the mix up might be that Greg mentally read "permanent module"
+as "builtin"?
 
-Signed-off-by: Sean Paul <seanpaul@chromium.org>
-Link: https://patchwork.freedesktop.org/patch/msgid/20200608210505.48519-5-sean@poorly.run #v5
+"permanent module" is just something that can't be unloaded once it's
+loaded. It's not "builtin".
 
-Changes in v5:
--Added to the set
-Changes in v6:
--None
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h | 20 ++++----------------
- 1 file changed, 4 insertions(+), 16 deletions(-)
+-Saravana
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-index 323a6bce9e64..c33164d3944a 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
-@@ -31,27 +31,15 @@
-  * DPU_DEBUG - macro for kms/plane/crtc/encoder/connector logs
-  * @fmt: Pointer to format string
-  */
--#define DPU_DEBUG(fmt, ...)                                                \
--	do {                                                               \
--		if (drm_debug_enabled(DRM_UT_KMS))                         \
--			DRM_DEBUG(fmt, ##__VA_ARGS__); \
--		else                                                       \
--			pr_debug(fmt, ##__VA_ARGS__);                      \
--	} while (0)
-+#define DPU_DEBUG(fmt, ...) DRM_DEBUG_KMS(fmt, ##__VA_ARGS__)
- 
- /**
-  * DPU_DEBUG_DRIVER - macro for hardware driver logging
-  * @fmt: Pointer to format string
-  */
--#define DPU_DEBUG_DRIVER(fmt, ...)                                         \
--	do {                                                               \
--		if (drm_debug_enabled(DRM_UT_DRIVER))                      \
--			DRM_ERROR(fmt, ##__VA_ARGS__); \
--		else                                                       \
--			pr_debug(fmt, ##__VA_ARGS__);                      \
--	} while (0)
--
--#define DPU_ERROR(fmt, ...) pr_err("[dpu error]" fmt, ##__VA_ARGS__)
-+#define DPU_DEBUG_DRIVER(fmt, ...) DRM_DEBUG_DRIVER(fmt, ##__VA_ARGS__)
-+
-+#define DPU_ERROR(fmt, ...) DRM_ERROR(fmt, ##__VA_ARGS__)
- 
- /**
-  * ktime_compare_safe - compare two ktime structures
--- 
-Sean Paul, Software Engineer, Google / Chromium OS
-
+>
+> > > This still uses the "depends on QCOM_SCM || !QCOM_SCM" bit to
+> > > ensure that drivers that call into the qcom_scm driver are
+> > > also built as modules. While not ideal in some cases its the
+> > > only safe way I can find to avoid build errors without having
+> > > those drivers select QCOM_SCM and have to force it on (as
+> > > QCOM_SCM=n can be valid for those drivers).
+> > >
+> > > Reviving this now that Saravana's fw_devlink defaults to on,
+> > > which should avoid loading troubles seen before.
+> >
+> > fw_devlink was supposed to resolve these issues and _allow_ code to be
+> > built as modules and not forced to be built into the kernel.
+>
+> Right. I'm re-submitting this patch to enable a driver to work as a
+> module, because earlier attempts to submit it ran into boot trouble
+> because fw_devlink wasn't yet enabled.
+>
+> I worry something in my description made it seem otherwise, so let me
+> know how you read it and I'll try to avoid such confusion in the
+> future.
+>
+> thanks
+> -john
