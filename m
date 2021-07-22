@@ -2,307 +2,354 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DFD923D1FEE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jul 2021 10:42:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C1E3F3D2007
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jul 2021 10:46:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231154AbhGVIBz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jul 2021 04:01:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50472 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230330AbhGVIBx (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jul 2021 04:01:53 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2EB9C061575;
-        Thu, 22 Jul 2021 01:42:28 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id m2so5044705wrq.2;
-        Thu, 22 Jul 2021 01:42:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-transfer-encoding:content-language;
-        bh=Nu+z5QFs0Fm8/O70BmZv+YFuIofij4u2XkNCungi3Mk=;
-        b=BVwnLSA9xIYql+xgfXToAJ3jjM30a/FiE0+Eb41L4A2H4W2A1w5Us55fFcft8gLMvU
-         Wn+S39z2Aw2pZxYFMZhkr2L8FooqejcvJY43bIAbs6Sq5nmowgp9u056SDju60ajqZk+
-         brD5X1/pO9biHszZXGx8NDodTFHzFewJCN5ze/YsI4kqJw/lGuT2tJ1Yp7K/LA+UIRzN
-         HVO3AqCvk4G4JHK7UW/qlB5X4d8wH73KCX9QJEb7GwxfThToVHhQSLtCL7+lXrRfEW+R
-         1nbQevO1EXodx5Wh+QXrLsvkPXKkyJK0WZrIYGk8QhqhHS/L2LGlc0afyCBG5Hb+2JrH
-         jMXw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=Nu+z5QFs0Fm8/O70BmZv+YFuIofij4u2XkNCungi3Mk=;
-        b=pvTc2dw1UNCdpxFJbf3rh1I5Jand49e8wiJ2uj/eU7YxhcyB5+n6YkmWR30kSTRRaL
-         3iBbarEUgCi263BOX1dg16oI60vbXds0iVILc9xFbUXRYfPuNaPo9PaQ1P7VR/ntILYd
-         UTsJuQwBkDPbp8jyJRWbArRzSFrpoWNan63fHG2Gn1m5Z8btvMxQwqN3ZVlqrIGKNmqh
-         rlhA4MEzx2RX4lWcAVCtff414qbGfcIkzRw+fWxSzbAqam/tTUBTU7NYfSyx16SAEq6+
-         fmh2PD5eJhV+mF7Lr/4Om5aM0g6L+GVXzAiT7qvOa4HyzVKThV5XeTzkZ/KKdZpBeOdk
-         6dEA==
-X-Gm-Message-State: AOAM532n9YOcaYkQIONxM+zXkeVdXD7wuu0H1GMGhTJ7sG6rfo2cLA+b
-        mf7D4Y9uU03WQQfm+ZckOvCWn0tXBU8=
-X-Google-Smtp-Source: ABdhPJyqe981e+qZ55+DC8CEtC6YUqose6SaJjnH7rf+ZE+VaalwVAVdaOllMkd3SKLHhH5tWUt9ow==
-X-Received: by 2002:a05:6000:11c5:: with SMTP id i5mr48016388wrx.268.1626943347365;
-        Thu, 22 Jul 2021 01:42:27 -0700 (PDT)
-Received: from ?IPv6:2a02:908:1252:fb60:b706:b115:9c6f:aeee? ([2a02:908:1252:fb60:b706:b115:9c6f:aeee])
-        by smtp.gmail.com with ESMTPSA id i15sm31536406wro.3.2021.07.22.01.42.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 22 Jul 2021 01:42:26 -0700 (PDT)
-Subject: Re: [Linaro-mm-sig] [PATCH] drm/msm: Add fence->wait() op
-To:     Rob Clark <robdclark@gmail.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>, David Airlie <airlied@linux.ie>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>,
-        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
-        <linaro-mm-sig@lists.linaro.org>, Sean Paul <sean@poorly.run>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" 
-        <linux-media@vger.kernel.org>
-References: <20210720150716.1213775-1-robdclark@gmail.com>
- <60ffb6f3-e932-d9af-3b90-81adf0c15250@gmail.com>
- <CAF6AEGtOW3EjZWo36ij8U1om=gAqvg8CSkJJq2GkyHFGWUH4kQ@mail.gmail.com>
- <CAKMK7uF1=Y6_9znGoWG8GrteXBBRmyW8C3bFE+eJQqOj0A1buA@mail.gmail.com>
- <CAF6AEGsOVPdMkXwU9C+nDfQpPThveJ2A0jbXi43RRkkJKtnz3w@mail.gmail.com>
- <CAKMK7uHMXFqic=9APJrSf6totB8nGZTDe4x8+sv-drmV4Q+4Bg@mail.gmail.com>
- <CAF6AEGsKoucxt4a2pcdQM9+L0+YU-6TcAt8eF=3ur169646Jhw@mail.gmail.com>
- <YPhvein5e8do2AR+@phenom.ffwll.local>
-From:   =?UTF-8?Q?Christian_K=c3=b6nig?= <ckoenig.leichtzumerken@gmail.com>
-Message-ID: <113b5858-9020-d1c1-292b-96b7f9cc717a@gmail.com>
-Date:   Thu, 22 Jul 2021 10:42:26 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S231300AbhGVIF0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jul 2021 04:05:26 -0400
+Received: from mail.kernel.org ([198.145.29.99]:55882 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231189AbhGVIFZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 22 Jul 2021 04:05:25 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id A43AE6128C;
+        Thu, 22 Jul 2021 08:45:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1626943559;
+        bh=iHEKpKP05yPtSDo0WVw13tR4OsPIw3x7iurEQu7Pc7Q=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=d2l4V14jYNVya/romP2w2ezg4x2LnX47K9dLSJmCxQOKyIqkdonEoIsuSyzycFfD4
+         aHamBXJweC7B8K4Qi3lPBaud6oc7vHctb7fViEzj6oXWZWpeL9VSuOZpThr23TyNei
+         Kh7xAATxCTMeB2NBX21iFqK668swZChaCi9FSwpo=
+Date:   Thu, 22 Jul 2021 10:45:55 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+        <u.kleine-koenig@pengutronix.de>
+Cc:     kernel@pengutronix.de,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Alexandre Bounine <alex.bou9@gmail.com>,
+        Alex Dubov <oakad@yahoo.com>, Alex Elder <elder@kernel.org>,
+        Alex Williamson <alex.williamson@redhat.com>,
+        Alison Schofield <alison.schofield@intel.com>,
+        Allen Hubbe <allenbh@gmail.com>,
+        Andreas Noever <andreas.noever@gmail.com>,
+        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Benjamin Herrenschmidt <benh@kernel.crashing.org>,
+        Benjamin Tissoires <benjamin.tissoires@redhat.com>,
+        Ben Widawsky <ben.widawsky@intel.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Bodo Stroesser <bostroesser@gmail.com>,
+        Boris Ostrovsky <boris.ostrovsky@oracle.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Christian Borntraeger <borntraeger@de.ibm.com>,
+        Cornelia Huck <cohuck@redhat.com>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Dan Williams <dan.j.williams@intel.com>,
+        Dave Jiang <dave.jiang@intel.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        David Woodhouse <dwmw@amazon.co.uk>,
+        Dexuan Cui <decui@microsoft.com>,
+        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
+        Dominik Brodowski <linux@dominikbrodowski.net>,
+        Eric Farman <farman@linux.ibm.com>,
+        Finn Thain <fthain@linux-m68k.org>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Frank Li <lznuaa@gmail.com>,
+        Geert Uytterhoeven <geert@linux-m68k.org>,
+        Geoff Levand <geoff@infradead.org>,
+        Haiyang Zhang <haiyangz@microsoft.com>,
+        Halil Pasic <pasic@linux.ibm.com>,
+        Hannes Reinecke <hare@suse.de>,
+        Hans de Goede <hdegoede@redhat.com>,
+        Harald Freudenberger <freude@linux.ibm.com>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Heiko Carstens <hca@linux.ibm.com>,
+        Helge Deller <deller@gmx.de>, Ira Weiny <ira.weiny@intel.com>,
+        Jakub Kicinski <kuba@kernel.org>,
+        "James E.J. Bottomley" <James.Bottomley@hansenpartnership.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Jason Wang <jasowang@redhat.com>,
+        Jens Taprogge <jens.taprogge@taprogge.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Jiri Kosina <jikos@kernel.org>,
+        Jiri Slaby <jirislaby@kernel.org>,
+        Joey Pabalan <jpabalanb@gmail.com>,
+        Johan Hovold <johan@kernel.org>,
+        Johannes Berg <johannes@sipsolutions.net>,
+        Johannes Thumshirn <morbidrsa@gmail.com>,
+        Jon Mason <jdmason@kudzu.us>, Juergen Gross <jgross@suse.com>,
+        Julien Grall <jgrall@amazon.com>,
+        Kai-Heng Feng <kai.heng.feng@canonical.com>,
+        Kirti Wankhede <kwankhede@nvidia.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        "K. Y. Srinivasan" <kys@microsoft.com>,
+        Lee Jones <lee.jones@linaro.org>, Len Brown <lenb@kernel.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Manohar Vanga <manohar.vanga@gmail.com>,
+        Marc Zyngier <maz@kernel.org>, Mark Brown <broonie@kernel.org>,
+        Mark Gross <mgross@linux.intel.com>,
+        "Martin K. Petersen" <martin.petersen@oracle.com>,
+        Martyn Welch <martyn@welchs.me.uk>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Matthew Rosato <mjrosato@linux.ibm.com>,
+        Matt Porter <mporter@kernel.crashing.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Maxime Ripard <mripard@kernel.org>,
+        Maximilian Luz <luzmaximilian@gmail.com>,
+        Maxim Levitsky <maximlevitsky@gmail.com>,
+        Michael Buesch <m@bues.ch>,
+        Michael Ellerman <mpe@ellerman.id.au>,
+        Michael Jamet <michael.jamet@intel.com>,
+        "Michael S. Tsirkin" <mst@redhat.com>,
+        Mika Westerberg <mika.westerberg@linux.intel.com>,
+        Mike Christie <michael.christie@oracle.com>,
+        Moritz Fischer <mdf@kernel.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>,
+        Pali =?iso-8859-1?Q?Roh=E1r?= <pali@kernel.org>,
+        Paul Mackerras <paulus@samba.org>,
+        Peter Oberparleiter <oberpar@linux.ibm.com>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        =?utf-8?B?UmFmYcWCIE1pxYJlY2tp?= <zajec5@gmail.com>,
+        Rich Felker <dalias@libc.org>,
+        Rikard Falkeborn <rikard.falkeborn@gmail.com>,
+        Rob Herring <robh@kernel.org>,
+        Russell King <linux@armlinux.org.uk>,
+        "Russell King (Oracle)" <rmk+kernel@armlinux.org.uk>,
+        Samuel Holland <samuel@sholland.org>,
+        Samuel Iglesias Gonsalvez <siglesias@igalia.com>,
+        SeongJae Park <sjpark@amazon.de>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Srinivas Pandruvada <srinivas.pandruvada@linux.intel.com>,
+        Stefano Stabellini <sstabellini@kernel.org>,
+        Stefan Richter <stefanr@s5r6.in-berlin.de>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Stephen Hemminger <sthemmin@microsoft.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Sven Van Asbroeck <TheSven73@gmail.com>,
+        Takashi Iwai <tiwai@suse.com>,
+        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
+        Thorsten Scherer <t.scherer@eckelmann.de>,
+        Tomas Winkler <tomas.winkler@intel.com>,
+        Tom Rix <trix@redhat.com>,
+        Tyrel Datwyler <tyreld@linux.ibm.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Vasily Gorbik <gor@linux.ibm.com>,
+        Vineeth Vijayan <vneethv@linux.ibm.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Vishal Verma <vishal.l.verma@intel.com>,
+        Wei Liu <wei.liu@kernel.org>,
+        William Breathitt Gray <vilhelm.gray@gmail.com>,
+        Wolfram Sang <wsa@kernel.org>, Wu Hao <hao.wu@intel.com>,
+        Yehezkel Bernat <YehezkelShB@gmail.com>,
+        Yoshinori Sato <ysato@users.sourceforge.jp>,
+        YueHaibing <yuehaibing@huawei.com>,
+        Yufen Yu <yuyufen@huawei.com>, alsa-devel@alsa-project.org,
+        dmaengine@vger.kernel.org, greybus-dev@lists.linaro.org,
+        industrypack-devel@lists.sourceforge.net, kvm@vger.kernel.org,
+        linux1394-devel@lists.sourceforge.net, linux-acpi@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-cxl@vger.kernel.org,
+        linux-fpga@vger.kernel.org, linux-hyperv@vger.kernel.org,
+        linux-i2c@vger.kernel.org, linux-i3c@lists.infradead.org,
+        linux-input@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-m68k@lists.linux-m68k.org, linux-media@vger.kernel.org,
+        linux-mips@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-ntb@googlegroups.com, linux-parisc@vger.kernel.org,
+        linux-pci@vger.kernel.org, linuxppc-dev@lists.ozlabs.org,
+        linux-remoteproc@vger.kernel.org, linux-s390@vger.kernel.org,
+        linux-scsi@vger.kernel.org, linux-serial@vger.kernel.org,
+        linux-sh@vger.kernel.org, linux-spi@vger.kernel.org,
+        linux-staging@lists.linux.dev, linux-sunxi@lists.linux.dev,
+        linux-usb@vger.kernel.org, linux-wireless@vger.kernel.org,
+        netdev@vger.kernel.org, nvdimm@lists.linux.dev,
+        platform-driver-x86@vger.kernel.org, sparclinux@vger.kernel.org,
+        target-devel@vger.kernel.org,
+        virtualization@lists.linux-foundation.org,
+        xen-devel@lists.xenproject.org
+Subject: Re: [PATCH v4 0/5] bus: Make remove callback return void
+Message-ID: <YPkwQwf0dUKnGA7L@kroah.com>
+References: <20210713193522.1770306-1-u.kleine-koenig@pengutronix.de>
+ <YPfyZen4Y0uDKqDT@kroah.com>
 MIME-Version: 1.0
-In-Reply-To: <YPhvein5e8do2AR+@phenom.ffwll.local>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+In-Reply-To: <YPfyZen4Y0uDKqDT@kroah.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Am 21.07.21 um 21:03 schrieb Daniel Vetter:
-> On Wed, Jul 21, 2021 at 09:34:43AM -0700, Rob Clark wrote:
->> On Wed, Jul 21, 2021 at 12:59 AM Daniel Vetter <daniel@ffwll.ch> wrote:
->>> On Wed, Jul 21, 2021 at 12:32 AM Rob Clark <robdclark@gmail.com> wrote:
->>>> On Tue, Jul 20, 2021 at 1:55 PM Daniel Vetter <daniel@ffwll.ch> wrote:
->>>>> On Tue, Jul 20, 2021 at 8:26 PM Rob Clark <robdclark@gmail.com> wrote:
->>>>>> On Tue, Jul 20, 2021 at 11:03 AM Christian KÃ¶nig
->>>>>> <ckoenig.leichtzumerken@gmail.com> wrote:
->>>>>>> Hi Rob,
->>>>>>>
->>>>>>> Am 20.07.21 um 17:07 schrieb Rob Clark:
->>>>>>>> From: Rob Clark <robdclark@chromium.org>
->>>>>>>>
->>>>>>>> Somehow we had neither ->wait() nor dma_fence_signal() calls, and no
->>>>>>>> one noticed.  Oops.
->>>>>>>
->>>>>>> I'm not sure if that is a good idea.
->>>>>>>
->>>>>>> The dma_fence->wait() callback is pretty much deprecated and should not
->>>>>>> be used any more.
->>>>>>>
->>>>>>> What exactly do you need that for?
->>>>>> Well, the alternative is to track the set of fences which have
->>>>>> signalling enabled, and then figure out which ones to signal, which
->>>>>> seems like a lot more work, vs just re-purposing the wait
->>>>>> implementation we already have for non-dma_fence cases ;-)
->>>>>>
->>>>>> Why is the ->wait() callback (pretty much) deprecated?
->>>>> Because if you need it that means for your driver dma_fence_add_cb is
->>>>> broken, which means a _lot_ of things don't work. Like dma_buf poll
->>>>> (compositors have patches to start using that), and I think
->>>>> drm/scheduler also becomes rather unhappy.
->>>> I'm starting to page back in how this works.. fence cb's aren't broken
->>>> (which is also why dma_fence_wait() was not completely broken),
->>>> because in retire_submits() we call
->>>> dma_fence_is_signaled(submit->hw_fence).
->>>>
->>>> But the reason that the custom wait function cleans up a tiny bit of
->>>> jank is that the wait_queue_head_t gets signaled earlier, before we
->>>> start iterating the submits and doing all that retire_submit() stuff
->>>> (unpin/unref bo's, etc).  I suppose I could just split things up to
->>>> call dma_fence_signal() earlier, and *then* do the retire_submits()
->>>> stuff.
->>> Yeah reducing the latency there sounds like a good idea.
->>> -Daniel
->>>
->> Hmm, no, turns out that isn't the problem.. or, well, it is probably a
->> good idea to call drm_fence_signal() earlier.  But it seems like
->> waking up from wait_event_* is faster than wake_up_state(wait->task,
->> TASK_NORMAL).  I suppose the wake_up_state() approach still needs for
->> the scheduler to get around to schedule the runnable task.
+On Wed, Jul 21, 2021 at 12:09:41PM +0200, Greg Kroah-Hartman wrote:
+> On Tue, Jul 13, 2021 at 09:35:17PM +0200, Uwe Kleine-König wrote:
+> > Hello,
+> > 
+> > this is v4 of the final patch set for my effort to make struct
+> > bus_type::remove return void.
+> > 
+> > The first four patches contain cleanups that make some of these
+> > callbacks (more obviously) always return 0. They are acked by the
+> > respective maintainers. Bjorn Helgaas explicitly asked to include the
+> > pci patch (#1) into this series, so Greg taking this is fine. I assume
+> > the s390 people are fine with Greg taking patches #2 to #4, too, they
+> > didn't explicitly said so though.
+> > 
+> > The last patch actually changes the prototype and so touches quite some
+> > drivers and has the potential to conflict with future developments, so I
+> > consider it beneficial to put these patches into next soon. I expect
+> > that it will be Greg who takes the complete series, he already confirmed
+> > via irc (for v2) to look into this series.
+> > 
+> > The only change compared to v3 is in the fourth patch where I modified a
+> > few more drivers to fix build failures. Some of them were found by build
+> > bots (thanks!), some of them I found myself using a regular expression
+> > search. The newly modified files are:
+> > 
+> >  arch/sparc/kernel/vio.c
+> >  drivers/nubus/bus.c
+> >  drivers/sh/superhyway/superhyway.c
+> >  drivers/vlynq/vlynq.c
+> >  drivers/zorro/zorro-driver.c
+> >  sound/ac97/bus.c
+> > 
+> > Best regards
+> > Uwe
+> 
+> Now queued up.  I can go make a git tag that people can pull from after
+> 0-day is finished testing this to verify all is good, if others need it.
 
-As far as I know wake_up_state() tries to run the thread on the CPU it 
-was scheduled last, while wait_event_* makes the thread run on the CPU 
-who issues the wake by default.
+Ok, here's a tag that any other subsystem can pull from if they want
+these changes in their tree before 5.15-rc1 is out.  I might pull it
+into my char-misc-next tree as well just to keep that tree sane as it
+seems to pick up new busses on a regular basis...
 
-And yes I've also noticed this already and it was one of the reason why 
-I suggested to use a wait_queue instead of the hand wired dma_fence_wait 
-implementation.
+thanks,
 
->>
->> So for now, I'm going back to my own wait function (plus earlier
->> drm_fence_signal())
->>
->> Before removing dma_fence_opps::wait(), I guess we want to re-think
->> dma_fence_default_wait().. but I think that would require a
->> dma_fence_context base class (rather than just a raw integer).
-> Uh that's not great ... can't we fix this instead of papering over it in
-> drivers? Aside from maybe different wakeup flags it all is supposed to
-> work exactly the same underneath, and whether using a wait queue or not
-> really shouldn't matter.
+greg k-h
 
-Well it would have been nicer if we used the existing infrastructure 
-instead of re-inventing stuff for dma_fence, but that chance is long gone.
+-----------------------------------
 
-And you don't need a dma_fence_context base class, but rather just a 
-flag in the dma_fence_ops if you want to change the behavior.
 
-Regards,
-Christian.
+The following changes since commit 2734d6c1b1a089fb593ef6a23d4b70903526fe0c:
 
-> -Daniel
->
->> BR,
->> -R
->>
->>>> BR,
->>>> -R
->>>>
->>>>> It essentially exists only for old drivers where ->enable_signalling
->>>>> is unreliable and we paper over that with a retry loop in ->wait and
->>>>> pray no one notices that it's too butchered. The proper fix is to have
->>>>> a driver thread to guarantee that ->enable_signalling works reliable,
->>>>> so you don't need a ->wait.
->>>>>
->>>>> Can you type up a kerneldoc patch for dma_fence_ops->wait to hammer
->>>>> this in please?
->>>>> -Daniel
->>>>>
->>>>>> BR,
->>>>>> -R
->>>>>>
->>>>>>> Regards,
->>>>>>> Christian.
->>>>>>>
->>>>>>>> Note that this removes the !timeout case, which has not been used in
->>>>>>>> a long time.
->>>>>>>
->>>>>>>> Signed-off-by: Rob Clark <robdclark@chromium.org>
->>>>>>>> ---
->>>>>>>>    drivers/gpu/drm/msm/msm_fence.c | 59 +++++++++++++++++++--------------
->>>>>>>>    1 file changed, 34 insertions(+), 25 deletions(-)
->>>>>>>>
->>>>>>>> diff --git a/drivers/gpu/drm/msm/msm_fence.c b/drivers/gpu/drm/msm/msm_fence.c
->>>>>>>> index cd59a5918038..8ee96b90ded6 100644
->>>>>>>> --- a/drivers/gpu/drm/msm/msm_fence.c
->>>>>>>> +++ b/drivers/gpu/drm/msm/msm_fence.c
->>>>>>>> @@ -38,11 +38,10 @@ static inline bool fence_completed(struct msm_fence_context *fctx, uint32_t fenc
->>>>>>>>        return (int32_t)(fctx->completed_fence - fence) >= 0;
->>>>>>>>    }
->>>>>>>>
->>>>>>>> -/* legacy path for WAIT_FENCE ioctl: */
->>>>>>>> -int msm_wait_fence(struct msm_fence_context *fctx, uint32_t fence,
->>>>>>>> -             ktime_t *timeout, bool interruptible)
->>>>>>>> +static signed long wait_fence(struct msm_fence_context *fctx, uint32_t fence,
->>>>>>>> +             signed long remaining_jiffies, bool interruptible)
->>>>>>>>    {
->>>>>>>> -     int ret;
->>>>>>>> +     signed long ret;
->>>>>>>>
->>>>>>>>        if (fence > fctx->last_fence) {
->>>>>>>>                DRM_ERROR_RATELIMITED("%s: waiting on invalid fence: %u (of %u)\n",
->>>>>>>> @@ -50,33 +49,34 @@ int msm_wait_fence(struct msm_fence_context *fctx, uint32_t fence,
->>>>>>>>                return -EINVAL;
->>>>>>>>        }
->>>>>>>>
->>>>>>>> -     if (!timeout) {
->>>>>>>> -             /* no-wait: */
->>>>>>>> -             ret = fence_completed(fctx, fence) ? 0 : -EBUSY;
->>>>>>>> +     if (interruptible) {
->>>>>>>> +             ret = wait_event_interruptible_timeout(fctx->event,
->>>>>>>> +                     fence_completed(fctx, fence),
->>>>>>>> +                     remaining_jiffies);
->>>>>>>>        } else {
->>>>>>>> -             unsigned long remaining_jiffies = timeout_to_jiffies(timeout);
->>>>>>>> -
->>>>>>>> -             if (interruptible)
->>>>>>>> -                     ret = wait_event_interruptible_timeout(fctx->event,
->>>>>>>> -                             fence_completed(fctx, fence),
->>>>>>>> -                             remaining_jiffies);
->>>>>>>> -             else
->>>>>>>> -                     ret = wait_event_timeout(fctx->event,
->>>>>>>> -                             fence_completed(fctx, fence),
->>>>>>>> -                             remaining_jiffies);
->>>>>>>> -
->>>>>>>> -             if (ret == 0) {
->>>>>>>> -                     DBG("timeout waiting for fence: %u (completed: %u)",
->>>>>>>> -                                     fence, fctx->completed_fence);
->>>>>>>> -                     ret = -ETIMEDOUT;
->>>>>>>> -             } else if (ret != -ERESTARTSYS) {
->>>>>>>> -                     ret = 0;
->>>>>>>> -             }
->>>>>>>> +             ret = wait_event_timeout(fctx->event,
->>>>>>>> +                     fence_completed(fctx, fence),
->>>>>>>> +                     remaining_jiffies);
->>>>>>>> +     }
->>>>>>>> +
->>>>>>>> +     if (ret == 0) {
->>>>>>>> +             DBG("timeout waiting for fence: %u (completed: %u)",
->>>>>>>> +                             fence, fctx->completed_fence);
->>>>>>>> +             ret = -ETIMEDOUT;
->>>>>>>> +     } else if (ret != -ERESTARTSYS) {
->>>>>>>> +             ret = 0;
->>>>>>>>        }
->>>>>>>>
->>>>>>>>        return ret;
->>>>>>>>    }
->>>>>>>>
->>>>>>>> +/* legacy path for WAIT_FENCE ioctl: */
->>>>>>>> +int msm_wait_fence(struct msm_fence_context *fctx, uint32_t fence,
->>>>>>>> +             ktime_t *timeout, bool interruptible)
->>>>>>>> +{
->>>>>>>> +     return wait_fence(fctx, fence, timeout_to_jiffies(timeout), interruptible);
->>>>>>>> +}
->>>>>>>> +
->>>>>>>>    /* called from workqueue */
->>>>>>>>    void msm_update_fence(struct msm_fence_context *fctx, uint32_t fence)
->>>>>>>>    {
->>>>>>>> @@ -114,10 +114,19 @@ static bool msm_fence_signaled(struct dma_fence *fence)
->>>>>>>>        return fence_completed(f->fctx, f->base.seqno);
->>>>>>>>    }
->>>>>>>>
->>>>>>>> +static signed long msm_fence_wait(struct dma_fence *fence, bool intr,
->>>>>>>> +             signed long timeout)
->>>>>>>> +{
->>>>>>>> +     struct msm_fence *f = to_msm_fence(fence);
->>>>>>>> +
->>>>>>>> +     return wait_fence(f->fctx, fence->seqno, timeout, intr);
->>>>>>>> +}
->>>>>>>> +
->>>>>>>>    static const struct dma_fence_ops msm_fence_ops = {
->>>>>>>>        .get_driver_name = msm_fence_get_driver_name,
->>>>>>>>        .get_timeline_name = msm_fence_get_timeline_name,
->>>>>>>>        .signaled = msm_fence_signaled,
->>>>>>>> +     .wait = msm_fence_wait,
->>>>>>>>    };
->>>>>>>>
->>>>>>>>    struct dma_fence *
->>>>>
->>>>>
->>>>> --
->>>>> Daniel Vetter
->>>>> Software Engineer, Intel Corporation
->>>>> http://blog.ffwll.ch
->>>
->>>
->>> --
->>> Daniel Vetter
->>> Software Engineer, Intel Corporation
->>> http://blog.ffwll.ch
+  Linux 5.14-rc2 (2021-07-18 14:13:49 -0700)
 
+are available in the Git repository at:
+
+  git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/driver-core.git tags/bus_remove_return_void-5.15
+
+for you to fetch changes up to fc7a6209d5710618eb4f72a77cd81b8d694ecf89:
+
+  bus: Make remove callback return void (2021-07-21 11:53:42 +0200)
+
+----------------------------------------------------------------
+Bus: Make remove callback return void tag
+
+Tag for other trees/branches to pull from in order to have a stable
+place to build off of if they want to add new busses for 5.15.
+
+Signed-off-by: Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+
+----------------------------------------------------------------
+Uwe Kleine-König (5):
+      PCI: endpoint: Make struct pci_epf_driver::remove return void
+      s390/cio: Make struct css_driver::remove return void
+      s390/ccwgroup: Drop if with an always false condition
+      s390/scm: Make struct scm_driver::remove return void
+      bus: Make remove callback return void
+
+ arch/arm/common/locomo.c                  | 3 +--
+ arch/arm/common/sa1111.c                  | 4 +---
+ arch/arm/mach-rpc/ecard.c                 | 4 +---
+ arch/mips/sgi-ip22/ip22-gio.c             | 3 +--
+ arch/parisc/kernel/drivers.c              | 5 ++---
+ arch/powerpc/platforms/ps3/system-bus.c   | 3 +--
+ arch/powerpc/platforms/pseries/ibmebus.c  | 3 +--
+ arch/powerpc/platforms/pseries/vio.c      | 3 +--
+ arch/s390/include/asm/eadm.h              | 2 +-
+ arch/sparc/kernel/vio.c                   | 4 +---
+ drivers/acpi/bus.c                        | 3 +--
+ drivers/amba/bus.c                        | 4 +---
+ drivers/base/auxiliary.c                  | 4 +---
+ drivers/base/isa.c                        | 4 +---
+ drivers/base/platform.c                   | 4 +---
+ drivers/bcma/main.c                       | 6 ++----
+ drivers/bus/sunxi-rsb.c                   | 4 +---
+ drivers/cxl/core.c                        | 3 +--
+ drivers/dax/bus.c                         | 4 +---
+ drivers/dma/idxd/sysfs.c                  | 4 +---
+ drivers/firewire/core-device.c            | 4 +---
+ drivers/firmware/arm_scmi/bus.c           | 4 +---
+ drivers/firmware/google/coreboot_table.c  | 4 +---
+ drivers/fpga/dfl.c                        | 4 +---
+ drivers/hid/hid-core.c                    | 4 +---
+ drivers/hid/intel-ish-hid/ishtp/bus.c     | 4 +---
+ drivers/hv/vmbus_drv.c                    | 5 +----
+ drivers/hwtracing/intel_th/core.c         | 4 +---
+ drivers/i2c/i2c-core-base.c               | 5 +----
+ drivers/i3c/master.c                      | 4 +---
+ drivers/input/gameport/gameport.c         | 3 +--
+ drivers/input/serio/serio.c               | 3 +--
+ drivers/ipack/ipack.c                     | 4 +---
+ drivers/macintosh/macio_asic.c            | 4 +---
+ drivers/mcb/mcb-core.c                    | 4 +---
+ drivers/media/pci/bt8xx/bttv-gpio.c       | 3 +--
+ drivers/memstick/core/memstick.c          | 3 +--
+ drivers/mfd/mcp-core.c                    | 3 +--
+ drivers/misc/mei/bus.c                    | 4 +---
+ drivers/misc/tifm_core.c                  | 3 +--
+ drivers/mmc/core/bus.c                    | 4 +---
+ drivers/mmc/core/sdio_bus.c               | 4 +---
+ drivers/net/netdevsim/bus.c               | 3 +--
+ drivers/ntb/core.c                        | 4 +---
+ drivers/ntb/ntb_transport.c               | 4 +---
+ drivers/nubus/bus.c                       | 6 ++----
+ drivers/nvdimm/bus.c                      | 3 +--
+ drivers/pci/endpoint/pci-epf-core.c       | 7 ++-----
+ drivers/pci/pci-driver.c                  | 3 +--
+ drivers/pcmcia/ds.c                       | 4 +---
+ drivers/platform/surface/aggregator/bus.c | 4 +---
+ drivers/platform/x86/wmi.c                | 4 +---
+ drivers/pnp/driver.c                      | 3 +--
+ drivers/rapidio/rio-driver.c              | 4 +---
+ drivers/rpmsg/rpmsg_core.c                | 7 ++-----
+ drivers/s390/block/scm_drv.c              | 4 +---
+ drivers/s390/cio/ccwgroup.c               | 6 +-----
+ drivers/s390/cio/chsc_sch.c               | 3 +--
+ drivers/s390/cio/css.c                    | 7 +++----
+ drivers/s390/cio/css.h                    | 2 +-
+ drivers/s390/cio/device.c                 | 9 +++------
+ drivers/s390/cio/eadm_sch.c               | 4 +---
+ drivers/s390/cio/scm.c                    | 5 +++--
+ drivers/s390/cio/vfio_ccw_drv.c           | 3 +--
+ drivers/s390/crypto/ap_bus.c              | 4 +---
+ drivers/scsi/scsi_debug.c                 | 3 +--
+ drivers/sh/superhyway/superhyway.c        | 8 ++------
+ drivers/siox/siox-core.c                  | 4 +---
+ drivers/slimbus/core.c                    | 4 +---
+ drivers/soc/qcom/apr.c                    | 4 +---
+ drivers/spi/spi.c                         | 4 +---
+ drivers/spmi/spmi.c                       | 3 +--
+ drivers/ssb/main.c                        | 4 +---
+ drivers/staging/fieldbus/anybuss/host.c   | 4 +---
+ drivers/staging/greybus/gbphy.c           | 4 +---
+ drivers/target/loopback/tcm_loop.c        | 5 ++---
+ drivers/thunderbolt/domain.c              | 4 +---
+ drivers/tty/serdev/core.c                 | 4 +---
+ drivers/usb/common/ulpi.c                 | 4 +---
+ drivers/usb/serial/bus.c                  | 4 +---
+ drivers/usb/typec/bus.c                   | 4 +---
+ drivers/vdpa/vdpa.c                       | 4 +---
+ drivers/vfio/mdev/mdev_driver.c           | 4 +---
+ drivers/virtio/virtio.c                   | 3 +--
+ drivers/vlynq/vlynq.c                     | 4 +---
+ drivers/vme/vme.c                         | 4 +---
+ drivers/xen/xenbus/xenbus.h               | 2 +-
+ drivers/xen/xenbus/xenbus_probe.c         | 4 +---
+ drivers/zorro/zorro-driver.c              | 3 +--
+ include/linux/device/bus.h                | 2 +-
+ include/linux/pci-epf.h                   | 2 +-
+ sound/ac97/bus.c                          | 6 ++----
+ sound/aoa/soundbus/core.c                 | 4 +---
+ 93 files changed, 107 insertions(+), 263 deletions(-)
