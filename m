@@ -2,358 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A62FC3D2637
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jul 2021 16:51:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CACA83D2642
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jul 2021 16:53:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232493AbhGVOLF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jul 2021 10:11:05 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.52]:35200 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232375AbhGVOLF (ORCPT
+        id S232465AbhGVONK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jul 2021 10:13:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51332 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232552AbhGVOMG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jul 2021 10:11:05 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1626965496;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=uP4TsvpFx9nQKeKPbR8DKd9/Fuky9++kCPOybE2K3L0=;
-    b=q/fuMHssTtaUQ5MwO1Nivxs9RaTCt8rQbAexWXTta7ec1lCGilYSyWEHaKxnETzjfF
-    oHUpujefYSynw/ibCelbw+yTDjrJWcZUt3azGq7oipbszwX7iNXhqUXMVfSCJuR6SYW1
-    iamKKSzlcRqNuQo+ke1zMbVwHUTHA6I1+yxueyt/WcXlW99zWwUlyMbCtAlGepA4hT48
-    khK2f32H14AjsGJ7J9ALGEJnfPPcFX/BlEC0YNUA6D+k9onA4eMENAbT9MjnJD+YXXiu
-    cB2SAoDao1QGJLVkd+5hpAohZp+QSm2CwOeMFAZZAad299h3BN0L7E6BDWmBthHJx+Ng
-    P+2A==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4paA8ZuO1A=="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.28.1 DYNA|AUTH)
-    with ESMTPSA id g02a44x6MEpYPn2
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Thu, 22 Jul 2021 16:51:34 +0200 (CEST)
-Date:   Thu, 22 Jul 2021 16:51:29 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
-Cc:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Sergey Ryazanov <ryazanov.s.a@gmail.com>,
-        Johannes Berg <johannes@sipsolutions.net>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Aleksander Morgado <aleksander@aleksander.es>,
-        "open list:NETWORKING DRIVERS" <netdev@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>, dmaengine@vger.kernel.org,
-        DTML <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [RFC PATCH net-next 0/4] net: wwan: Add Qualcomm BAM-DMUX WWAN
- network driver
-Message-ID: <YPmF8bzevuabO2K9@gerhold.net>
-References: <20210719145317.79692-1-stephan@gerhold.net>
- <CAOCk7NonuOKWrpr-MwdjAwF1F4jviEMf=c04vVBxQ-OmfY2b-g@mail.gmail.com>
- <YPXC7PDCUopdCdTV@gerhold.net>
- <e37868ee-2bd0-3b50-eb95-8eb2bf32d956@quicinc.com>
+        Thu, 22 Jul 2021 10:12:06 -0400
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B6BEC061760
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jul 2021 07:52:35 -0700 (PDT)
+Received: by mail-qk1-x731.google.com with SMTP id bm6so5652440qkb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jul 2021 07:52:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=8F9aS2bitLy3DUQnf7TGV/UhbX2TURQDr3klee2mdNE=;
+        b=TCEmHUnDQ6gGKtpkcfMY8QA+PP7hwAJM99sdFy1TpD6Zxd36UhPg7wDLUpKFOYRFka
+         0qgEao99I/oIqcyIhKjAf8RelxNRSKMZLoK5FaVBJAaHw42dmESsP5LHMJN17TSXjyAr
+         zgPN521fVJt0ikVchspk6Sik+X+XS/6eHboUc=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=8F9aS2bitLy3DUQnf7TGV/UhbX2TURQDr3klee2mdNE=;
+        b=AKW0K/jHKcc0HU2XjEjiAbNCHmOeLdEg1CcL2AZjoi+DtoER0yN7HBzKaT/5gaezq9
+         aM/sO87F0H+le5d+S46BzO9P2fleMpcQr45Z30723Z663yh0vwqGmhlQXUA2RtOfNZfx
+         E0c9qWhFsFIMDO1XHiBzzBqVoPCPNqrsI4Z3m7Uw/8J0KtjGdT46XL5VZ8Q3ZDoSEoMv
+         G1xAxIKWUfQq+U4MedomL3DamGcmRbo6dx7bUXyGP3zi1MWm1tMIiAx43NHgtzQLaO7h
+         pgOKr93Ouor4aoBieAdiNHOOXM2giZZzM/W2Cm8xDyldiCNepFvW9S6uPV+VdIs1TNuO
+         w9sQ==
+X-Gm-Message-State: AOAM533r8WtMG3twZEmvC2G8Fb2obqrjc3l1TUHkbCQMcfxqLnb6CCk9
+        QaI/GrJnqlV4jkakzOAWF7sXJHLV45ldhg==
+X-Google-Smtp-Source: ABdhPJwPMgvqt0EsZwAxZ922j3ihyaAge0ovchY5mGQxQjP9rGxn3oEgW2MGxNw6pjrYvECxHPS0Qg==
+X-Received: by 2002:a37:ba03:: with SMTP id k3mr95150qkf.220.1626965554086;
+        Thu, 22 Jul 2021 07:52:34 -0700 (PDT)
+Received: from mail-yb1-f173.google.com (mail-yb1-f173.google.com. [209.85.219.173])
+        by smtp.gmail.com with ESMTPSA id j18sm5694081qkk.78.2021.07.22.07.52.32
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 22 Jul 2021 07:52:32 -0700 (PDT)
+Received: by mail-yb1-f173.google.com with SMTP id x192so8717832ybe.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jul 2021 07:52:32 -0700 (PDT)
+X-Received: by 2002:a25:dc50:: with SMTP id y77mr53799516ybe.405.1626965552146;
+ Thu, 22 Jul 2021 07:52:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <e37868ee-2bd0-3b50-eb95-8eb2bf32d956@quicinc.com>
+References: <20210721084126.14035-1-srivasam@codeaurora.org>
+ <20210721084126.14035-3-srivasam@codeaurora.org> <CAD=FV=W3X8W90vPdrDAymzTKj-J7QPyn4ukaLSOhEkCme3+r_Q@mail.gmail.com>
+ <c26ac462-6253-3806-0739-7c5149beaaa3@codeaurora.org>
+In-Reply-To: <c26ac462-6253-3806-0739-7c5149beaaa3@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 22 Jul 2021 07:52:18 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=UySPvQCaBL81UTUgCN8ukYv=XcqPDinNN_JBfVAW_Q3g@mail.gmail.com>
+Message-ID: <CAD=FV=UySPvQCaBL81UTUgCN8ukYv=XcqPDinNN_JBfVAW_Q3g@mail.gmail.com>
+Subject: Re: [PATCH v5 2/2] arm64: dts: qcom: sc7180-trogdor: Add lpass dai
+ link for HDMI
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Rohit kumar <rohitkr@codeaurora.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Judy Hsiao <judyhsiao@chromium.org>,
+        V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 19, 2021 at 05:13:32PM -0600, Jeffrey Hugo wrote:
-> On 7/19/2021 12:23 PM, Stephan Gerhold wrote:
-> > On Mon, Jul 19, 2021 at 09:43:27AM -0600, Jeffrey Hugo wrote:
-> > > On Mon, Jul 19, 2021 at 9:01 AM Stephan Gerhold <stephan@gerhold.net> wrote:
-> > > > 
-> > > > The BAM Data Multiplexer provides access to the network data channels
-> > > > of modems integrated into many older Qualcomm SoCs, e.g. Qualcomm MSM8916
-> > > > or MSM8974. This series adds a driver that allows using it.
-> > > > 
-> > > > For more information about BAM-DMUX, see PATCH 4/4.
-> > > > 
-> > > > Shortly said, BAM-DMUX is built using a simple protocol layer on top of
-> > > > a DMA engine (Qualcomm BAM DMA). For BAM-DMUX, the BAM DMA engine runs in
-> > > > a quite strange mode that I call "remote power collapse", where the
-> > > > modem/remote side is responsible for powering on the BAM when needed but we
-> > > > are responsible to initialize it. The BAM is power-collapsed when unneeded
-> > > > by coordinating power control via bidirectional interrupts from the
-> > > > BAM-DMUX driver.
-> > > 
-> > > The hardware is physically located on the modem, and tied to the modem
-> > > regulators, etc.  The modem has the ultimate "off" switch.  However,
-> > > due to the BAM architecture (which is complicated), configuration uses
-> > > cooperation on both ends.
-> > > 
-> > 
-> > What I find strange is that it wasn't done similarly to e.g. Slimbus
-> > which has a fairly similar setup. (I used that driver as inspiration for
-> > how to use the mainline qcom_bam driver instead of the "SPS" from
-> > downstream.)
-> > 
-> > Slimbus uses qcom,controlled-remotely together with the LPASS
-> > remoteproc, so it looks like there LPASS does both power-collapse
-> > and initialization of the BAM. Whereas here the modem does the
-> > power-collapse but we're supposed to do the initialization.
-> 
-> I suspect I don't have a satisfactory answer for you.  The teams that did
-> slimbus were not the teams involved in the bam_dmux, and the two didn't talk
-> to each-other.  The bam_dmux side wasn't aware of the slimbus situation, at
-> the time.  I don't know if the slimbus folks knew about bam_dmux.  If you
-> have two silos working independently, its unlikely they will create exactly
-> the same solution.
-> 
+Hi,
 
-Fair enough :)
 
-> > 
-> > It's somewhat unrelated to this initial patch set since I'm not using
-> > QMAP at the moment, but I'm quite confused about the "MTU negotiation
-> > feature" that you added support for in [1]. (I *think* that is you,
-> > right?) :)
-> 
-> Yes.  Do I owe you for some brain damage?  :)
-> 
-
-A bit to be absolutely honest. :D
-But I was able to ignore this feature so far so it was not much of
-a problem. ;)
-
-> > 
-> > The part that I somewhat understand is the "signal" sent in the "OPEN"
-> > command from the modem. It tells us the maximum buffer size the modem
-> > is willing to accept for TX packets ("ul_mtu" in that commit).
-> > 
-> > Similarly, if we send "OPEN" to the modem we make the modem aware
-> > of our maximum RX buffer size plus the number of RX buffers.
-> > (create_open_signal() function).
-> > 
-> > The part that is confusing me is the way the "dynamic MTU" is
-> > enabled/disabled based on the "signal" in "DATA" commands as well.
-> > (process_dynamic_mtu() function). When would that happen? The code
-> > suggests that the modem might just suddenly announce that the large
-> > MTU should be used from now on. But the "buffer_size" is only changed
-> > for newly queued RX buffers so I'm not even sure how the modem knows
-> > that it can now send more data at once.
-> > 
-> > Any chance you could clarify how this should work exactly?
-> 
-> So, I think some of this might make more sense after my response to question
-> #2.
-> 
-
-Indeed, I was worried that you wouldn't be able to answer the second
-one, otherwise I would probably have asked it first. I'll reorder the
-mail because it's clearer:
-
-> > And a second question if you don't mind: What kind of hardware block
-> > am I actually talking to here? I say "modem" above but I just know about
-> > the BAM and the DMUX protocol layer. I have also seen assertion failures
-> > of the modem DSP firmware if I implement something incorrectly.
-> > 
-> > Is the DMUX protocol just some firmware concept or actually something
-> > understood by some hardware block? I've also often seen mentions of some
-> > "A2" hardware block but I have no idea what that actually is. What's
-> > even worse, in a really old kernel A2/BAM-DMUX also appears as part of
-> > the IPA driver [2], and I thought IPA is the new thing after BAM-DMUX...
-> 
-> A2 predates IPA.  IPA is essentially an evolution of A2.
-> 
-> Sit down son, let me tell you the history of the world  :)
-> 
-> A long time ago, there was only a single processor that did both the "modem"
-> and the "apps".  We generally would call these the 6K days as that was the
-> number of the chips (6XXX).  Then it was decided that the roles of Apps and
-> Modem should be separated into two different cores. The modem, handling more
-> "real time" things, and apps, being more "general purpose".  This started
-> with the 7K series.
-> 
-> However, this created a problem as data from a data call may need to be
-> consumed by the modem, or the apps, and it wouldn't be clear until the
-> packet headers were inspected, where the packet needed to be routed to.
-> Sometimes this was handled on apps, sometimes on modem.  Usually via a fully
-> featured IP stack.
-> 
-> With LTE, software couldn't really keep up, and so a hardware engine to
-> parse the fields and route the package based on programmed filters was
-> implemented.  This is the "Algorithm Accelerator", aka AA, aka A2.
-> 
-> The A2 first appeared on the 9600 chip, which was originally intended for
-> Gobi- those dongles you could plug into your laptop to give it a data
-> connection on the go when there was no wifi.  It was then coupled with both
-> 7x30 and 8660 in what we would call "fusion" to create the first LTE capable
-> phones (HTC thunderbolt is the product I recall) until an integrated
-> solution could come along.
-> 
-> That integrated solution was 8960.
-> 
-> Back to the fusion solution for a second, the 9600 was connected to the
-> 7x30/8660 via SDIO.  Prior to this, the data call control and data path was
-> all in chip via SMD.  Each rmnet instance had its own SMD channel, so
-> essentially its own physical pipe.  With SDIO and 9600, there were not
-> enough lanes, so we invented SDIO_CMUX and SDIO_DMUX - the Control and Data
-> multiplexers over SDIO.
-> 
-> With 8960, everything was integrated again, so we could run the control path
-> over SMD and didn't need a mux.  However, the A2 moved from the 9600 modem
-> to the 8960 integrated modem, and now we had a direct connection to its BAM.
-> Again, the BAM had a limited number of physical pipes, so we needed a data
-> multiplexer again.  Thus SDIO_DMUX evolved into BAM_DMUX.
-> 
-> The A2 is a hardware block with an attached BAM, that "hangs off" the modem.
-> There is a software component that also runs on the modem, but in general is
-> limited to configuration.  Processing of data is expected to be all in
-> hardware.  As I think I mentioned, the A2 is a hardware engine that routes
-> IP packets based on programmed filters.
-> 
-> BAM instances (as part of the smart peripheral subsystem or SPS) can either
-> be out in the system, or attached to a peripheral.  The A2 BAM is attached
-> to the A2 peripheral.  BAM instances can run in one of 3 modes - BAM-to-BAM,
-> BAM-to-System, or System-to-System.  BAM-to-BAM is two BAM instances talking
-> to eachother.  If the USB controller has a BAM, and the A2 has a BAM, those
-> two BAMS could talk directly to copy data between the A2 and USB hardware
-> blocks without software interaction (after some configuration).  "System"
-> means system memory, or DDR. Bam-to-System is the mode the A2 BAM runs in
-> where it takes data to/from DDR and gives/takes that data with the A2.
-> System-to-System would be used by a BAM instance not associated with any
-> peripheral to transfer data say from Apps DDR to Modem DDR.
-> 
-> The A2 can get data from the RF interface, and determine if that needs to go
-> to some modem consumer, the apps processor, or on some chips to the wifi
-> processor.  All in hardware, much faster than software for multiple reasons,
-> but mainly because multiple filters can be evaluated in parallel, each
-> filter looking at multiple fields in parallel.  In a nutshell, the IPA is a
-> revised A2 that is not associated with any processor (like the modem), which
-> allows it to route data better (think wifi and audio usecases).
-> 
-> Hope that all helps.  I'm "around" for more questions.
-> 
-
-Wow, I can't thank you enough for all the detailed explanations!
-I've seen many small hints of this in various places but I could never
-really understand how they all relate to each other.
-This is much clearer now. :)
-
-> I don't know how much of this translates to modern platforms.  I don't
-> really work on MSMs anymore, but I can convey what I recall and how things
-> were "back then"
-> 
-> So, essentially the change you are looking at is the bam_dmux portion of an
-> overall feature for improving the performance of what was known as "tethered
-> rmnet".
-> 
-> Per my understanding (which the documentation of this feature reinforces),
-> teathered rmnet was chiefly a test feature.  Your "data" (websites, email,
-> etc) could be consumed by the device itself, or exported off, if you
-> teathered your phone to a laptop so that the laptop could use the phone's
-> data connection.  There ends up being 3 implementations for this.
-> 
-> Consuming the data on the phone would route it to the IP stack via the rmnet
-> driver.
-> 
-> Consuming the data on an external device could take one of 2 routes.
-> 
-> Android would use the "native" routing of the Linux IP stack to essentially
-> NAT the laptop.  The data would go to the rmnet driver, to the IP stack, and
-> the IP stack would route it to USB.
-> 
-> The other route is that the data could be routed directly to USB.  This is
-> "teathered rmnet".  In the case of bam_dmux platforms, the USB stack is a
-> client of bam_dmux.
-> 
-> Teathered rmnet was never an end-user usecase.
+On Thu, Jul 22, 2021 at 7:49 AM Srinivasa Rao Mandadapu
+<srivasam@codeaurora.org> wrote:
 >
+> Thanks for your time Doug!!
+>
+> On 7/21/2021 9:50 PM, Doug Anderson wrote:
+> > Hi,
+> >
+> > On Wed, Jul 21, 2021 at 1:42 AM Srinivasa Rao Mandadapu
+> > <srivasam@codeaurora.org> wrote:
+> >> From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+> >>
+> >> Add dai link in sc7180-trogdor.dtsi for supporting audio over DP
+> >>
+> >> Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+> >> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> >> Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> >> ---
+> >>   arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 17 +++++++++++++++++
+> >>   1 file changed, 17 insertions(+)
+> >>
+> >> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> >> index 31bf7c698b8f..a4cb9ee567ff 100644
+> >> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> >> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> >> @@ -288,6 +288,7 @@ sound: sound {
+> >>                          "Headphone Jack", "HPOL",
+> >>                          "Headphone Jack", "HPOR";
+> >>
+> >> +               #sound-dai-cells = <0>;
+> > The `#sound-dai-cells` is not in the bindings. The bindings also say
+> > `additionalProperties: false`. So either your patch is wrong for
+> > including this or the bindings are wrong for omitting it. Which is it?
+> > I notice that downstream we don't have this.
+> >
+> Yes it's wrongly placed Here. Will remove it.
+> >> @@ -314,6 +315,18 @@ sound_multimedia1_codec: codec {
+> >>                                  sound-dai = <&max98357a>;
+> > Ideally you'll want to rebase to make context clean since the above
+> > got changed from `max98357a` to `max98360a`.
+> >
+> >
+> >>                          };
+> >>                  };
+> >> +
+> >> +               dai-link@2 {
+> >> +                       link-name = "MultiMedia2";
+> >> +                       reg = <2>;
+> > I am certainly not an expert, but I notice that downstream we have reg
+> > as <LPASS_DP_RX>, which makes the node name dai-link@5 instead of @2.
+> > Does that matter?
+> >
+> Yes,Here reg as <LPASS_DP_RX> is correct option. Will change
+> accordingly.  But It seems dai-link@2 is appropriate as in this platform
 
-I'm pretty sure it's actively used now on typical USB modems based on
-MDM9607. As far as I know that one has BAM-DMUX and "forwards" it via
-USB (without NAT).
+I think you misunderstand. The "@num" is _required_ to match the value
+for "reg". So if reg is 5 then you need "@5", not "@2"
 
-> It was essentially a validation feature for both internal testing, and
-> also qualifying the device with the carriers.  The carriers knew that
-> Android teathering involved NAT based routing on the phone, and wanted
-> to figure out if the phone could meet the raw performance specs of the
-> RF technology (LTE Category 4 in this case) in a tethered scenario,
-> without the routing.
-> 
-> For tethered rmnet, USB (at the time) was having issues consistently meeting
-> those data rates (50mbps UL, 100mbps DL concurrently, if I recall
-> correctly).  So, the decided solution was to implement QMAP aggregation.
-> 
-> A QMAP "call" over tethered rmnet would be negotiated between the app on the
-> PC, and "dataservices" or "DS" on the modem.  One of the initial steps of
-> that negotitation causes DS to tell A2 software that QMAP over tethered
-> rmnet is being activated.  That would trigger A2 to activate the
-> process_dynamic_mtu() code path.  Now bam_dmux would allocate future RX
-> buffers of the increased size which could handle the aggregated packets.  I
-> think the part that is confusing you is, what about the already queued
-> buffers that are of the old size?  Well, essentially those get consumed by
-> the rest of the QMAP call negotiation, so by the time actual aggregated data
-> is going to be sent from Modem to bam_dmux, the pool has been consumed and
-> refilled.
-> 
-> When the tethered rmnet connection is "brought down", DS notifies A2, and A2
-> stops requesting the larger buffers.
-> 
 
-Hmm, is this "DS" on the modem something special I don't know about?
-It sounds like the part of the modem that I talk to via QMI to establish
-new connections. However, since QMI does not go through BAM-DMUX
-(RPMSG/SMD or QRTR instead) there should be only very few packets sent
-via BAM-DMUX during negotation of QMAP.
+> we are using only 3 nodes. i.e. I2S primary, I2S secondary and DP node.
+>
+> >> @@ -768,6 +781,10 @@ secondary_mi2s: mi2s@1 {
+> >>                  reg = <MI2S_SECONDARY>;
+> >>                  qcom,playback-sd-lines = <0>;
+> >>          };
+> >> +
+> >> +       hdmi-primary@0 {
+> >> +               reg = <LPASS_DP_RX>;
+> > Your node name and `reg` don't match. `LPASS_DP_RX` is 5 so the node
+> > name should include @5, not @0. I also notice that downstream the node
+> > name is called `hdmi`, not `hdmi-primary`. The downstream `hdmi` seems
+> > more parallel to the sibling nodes, like `mi2s@0` and `mi2s@1`.
+> Yes hdmi@2 is appropriate. will change accordingly.
 
-To be sure I just tried QMAP with my BAM-DMUX driver again. It's been
-quite some time since I tried it and it turns out this causes even more
-"brain damage" than I could even remember. :D For reference:
+Same here. Since LPASS_DP_RX is actually the number 5 then you need
+@5. I think there was discussion about allowing it to be @LPASS_DP_RX
+but last I remember the decision was to keep it as a number.
 
- 1. First I need to set the modem to QMAP mode, this works e.g. with
-    qmicli -pd /dev/wwan0qmi0 \
-    --wda-set-data-format="link-layer-protocol=raw-ip,ul-protocol=qmap,dl-protocol=qmap,dl-datagram-max-size=4096"
-
-    However, it's important that my BAM-DMUX driver OPENs the channel
-    before doing this (together with announcing support for the "dynamic
-    MTU" feature). Otherwise the modem hangs forever and stops responding
-    to any QMI messages. This doesn't happen when switching to Raw-IP mode.
-
- 2. With QMAP, the struct bam_dmux_hdr->len is always set to 0xffff (65535)
-    instead of the actual packet length, which means my current driver
-    just drops those packets ("Data larger than buffer? (65535 > 4088)").
-
-    This is also handled in your commit (you get the size from the SPS
-    driver instead), but the bam_dma driver in mainline currently does
-    not have this feature. :/
-
- 3. I sent some ping packets but never got the signal to "enable large
-    MTU" from the modem. Something is still strange here. :/
-
-Given all these complications (that are not present when ignoring QMAP)
-I would generally agree with you that it's not worth supporting this:
-
-> Since this not something an end user should ever exercise, you may want to
-> consider dropping it.
-> 
-
-Personally, I have indeed no need for it. I just suspect someone might
-want this eventually for one of the following two use cases:
-
-  1. Multiplexing on new firmwares: AFAICT there is only one BAM-DMUX
-     channel on recent firmware versions (e.g. MSM8937/MDM9607). In that
-     case multiple connections are only possible through the multiplexing
-     layer in QMAP. I've been told the multiplexing is actually useful and
-     necessary in some cases (maybe it was for some MMS configurations,
-     I don't remember exactly).
-
-  2. USB tethering: I know some people are working on mainline Linux
-     for some MDM9607-based USB modems and they will probably want the
-     weird USB tethering feature at some point.
-
-But all in all given all the trouble involved when making QMAP work
-I think I will just ignore that feature for now and wait until someone
-shows up who absolutely needs this feature...
-
-Thanks again for all the explanations!
-Stephan
+-Doug
