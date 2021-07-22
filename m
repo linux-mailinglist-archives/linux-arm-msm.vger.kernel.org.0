@@ -2,32 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2EB153D1D63
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jul 2021 07:29:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 877783D1D64
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jul 2021 07:29:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230170AbhGVEsf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jul 2021 00:48:35 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:30859 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230117AbhGVEse (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jul 2021 00:48:34 -0400
+        id S230234AbhGVEsh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jul 2021 00:48:37 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:23125 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230187AbhGVEsg (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 22 Jul 2021 00:48:36 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1626931750; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1626931752; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=PqhubX5EBrw64Jsy99/2+0xy+95Gr/39fk6mq8i2weE=; b=dTj9xaorVVAIpgMVNoFWx1whf0JweXe/4r45NwZmL0+HoiAfARnzb9rDuZa/erStDL89zKAR
- /8wWN8P61RQ0zxpa7vNS0fcMde0Sxvwn0H6s0YVqu2N5S/noVy+OV333qlJVTSkU6ibQl4rv
- 6UDtQgmtkDUJvEVu8uxtTd+uSdY=
-X-Mailgun-Sending-Ip: 69.72.43.7
+ bh=NMzBBtYS6mPKSsDJSCvICZcI50wTwRIIqwTtE75ybxg=; b=cp9v6h+gQQXX75JDUB+w0glNHY61TZSZXtEWd76PmjgmSJTNtPj3KFZUmYAsSU5KsnL7ON9C
+ gmhax+rFLG5s4Zo7S0E51goMjop6W0TJCXJ8o+Y9dXOVGg5uPMDCgumvzwLvHNJ0dQ8zaqdi
+ vKBofd1bm9K08Ag2LWTpfuYrbyo=
+X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 60f90216b653fbdadd0651d7 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 22 Jul 2021 05:28:54
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 60f9021ae81205dd0acd48e5 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 22 Jul 2021 05:28:58
  GMT
 Sender: rnayak=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B911AC433F1; Thu, 22 Jul 2021 05:28:53 +0000 (UTC)
+        id 2C019C43460; Thu, 22 Jul 2021 05:28:58 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +38,9 @@ Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Out
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D9683C433D3;
-        Thu, 22 Jul 2021 05:28:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org D9683C433D3
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 31C66C433D3;
+        Thu, 22 Jul 2021 05:28:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 31C66C433D3
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
 From:   Rajendra Nayak <rnayak@codeaurora.org>
@@ -48,9 +49,9 @@ To:     agross@kernel.org, bjorn.andersson@linaro.org,
 Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org, rbokka@codeaurora.org,
         Rajendra Nayak <rnayak@codeaurora.org>
-Subject: [PATCH 1/3] dt-bindings: nvmem: qfprom: Add optional power-domains property
-Date:   Thu, 22 Jul 2021 10:58:34 +0530
-Message-Id: <1626931716-10591-2-git-send-email-rnayak@codeaurora.org>
+Subject: [PATCH 2/3] nvmem: qfprom: sc7280: Handle the additional power-domains vote
+Date:   Thu, 22 Jul 2021 10:58:35 +0530
+Message-Id: <1626931716-10591-3-git-send-email-rnayak@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1626931716-10591-1-git-send-email-rnayak@codeaurora.org>
 References: <1626931716-10591-1-git-send-email-rnayak@codeaurora.org>
@@ -58,29 +59,77 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-qfprom devices on some SoCs need to vote on the performance state
-of a power-domain, so add the power-domains optional property to the
-bindings
+On sc7280, to reliably blow fuses, we need an additional vote
+on max performance state of 'MX' power-domain.
+Add support for power-domain performance state voting in the
+driver.
 
 Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
 ---
- Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml | 3 +++
- 1 file changed, 3 insertions(+)
+ drivers/nvmem/qfprom.c | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
-index 861b205..a498a08 100644
---- a/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
-+++ b/Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml
-@@ -51,6 +51,9 @@ properties:
-   vcc-supply:
-     description: Our power supply.
+diff --git a/drivers/nvmem/qfprom.c b/drivers/nvmem/qfprom.c
+index 81fbad5..4d0a576 100644
+--- a/drivers/nvmem/qfprom.c
++++ b/drivers/nvmem/qfprom.c
+@@ -12,6 +12,8 @@
+ #include <linux/mod_devicetable.h>
+ #include <linux/nvmem-provider.h>
+ #include <linux/platform_device.h>
++#include <linux/pm_domain.h>
++#include <linux/pm_runtime.h>
+ #include <linux/property.h>
+ #include <linux/regulator/consumer.h>
  
-+  power-domains:
-+    description: A phandle to a power domain node.
+@@ -149,6 +151,11 @@ static void qfprom_disable_fuse_blowing(const struct qfprom_priv *priv,
+ 	if (ret)
+ 		dev_warn(priv->dev, "Failed to set 0 voltage (ignoring)\n");
+ 
++	if (priv->dev->pm_domain) {
++		dev_pm_genpd_set_performance_state(priv->dev, 0);
++		pm_runtime_put(priv->dev);
++	}
 +
-   # Needed if any child nodes are present.
-   "#address-cells":
-     const: 1
+ 	ret = regulator_disable(priv->vcc);
+ 	if (ret)
+ 		dev_warn(priv->dev, "Failed to disable regulator (ignoring)\n");
+@@ -212,6 +219,16 @@ static int qfprom_enable_fuse_blowing(const struct qfprom_priv *priv,
+ 		goto err_clk_rate_set;
+ 	}
+ 
++	if (priv->dev->pm_domain) {
++		ret = pm_runtime_get_sync(priv->dev);
++		if (ret < 0) {
++			pm_runtime_put_noidle(priv->dev);
++			dev_err(priv->dev, "Failed to enable power-domain\n");
++			goto err_reg_enable;
++		}
++		dev_pm_genpd_set_performance_state(priv->dev, INT_MAX);
++	}
++
+ 	old->timer_val = readl(priv->qfpconf + QFPROM_BLOW_TIMER_OFFSET);
+ 	old->accel_val = readl(priv->qfpconf + QFPROM_ACCEL_OFFSET);
+ 	writel(priv->soc_data->qfprom_blow_timer_value,
+@@ -221,6 +238,8 @@ static int qfprom_enable_fuse_blowing(const struct qfprom_priv *priv,
+ 
+ 	return 0;
+ 
++err_reg_enable:
++	regulator_disable(priv->vcc);
+ err_clk_rate_set:
+ 	clk_set_rate(priv->secclk, old->clk_rate);
+ err_clk_prepared:
+@@ -420,6 +439,9 @@ static int qfprom_probe(struct platform_device *pdev)
+ 			econfig.reg_write = qfprom_reg_write;
+ 	}
+ 
++	if (dev->pm_domain)
++		pm_runtime_enable(dev);
++
+ 	nvmem = devm_nvmem_register(dev, &econfig);
+ 
+ 	return PTR_ERR_OR_ZERO(nvmem);
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
