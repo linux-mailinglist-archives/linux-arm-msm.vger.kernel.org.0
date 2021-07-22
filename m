@@ -2,54 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0A3903D2F91
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jul 2021 00:12:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 624B33D2FA5
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jul 2021 00:16:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231814AbhGVVcS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jul 2021 17:32:18 -0400
-Received: from mail.kernel.org ([198.145.29.99]:52514 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231536AbhGVVcR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jul 2021 17:32:17 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 8427C60E9C;
-        Thu, 22 Jul 2021 22:12:51 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1626991971;
-        bh=nJS9TxZk48LUjS6XEUSs3f10U77VVU1bhEqRVdXsDtE=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=F5dupHf7pZL8QS52sAqMikG7RxTLen5KI0F9OD5z32E+0uv+opmK4C95cpcOyBP8G
-         ao+8eYgdIxG7sR1Ej0x/FErqRyJmJe+7/BMwjpr4DOzHzbuHe6byRPwyARyS6ZUx25
-         CCGyOoftKje9wvQ9xNzuL4RFijquLeXQ3vjGuhYsNF9TWAhLGvk5oc4foHHekH/SkP
-         OXx4hcjztKqhIyWrkH64McFJ25qKNk2HHqwugQ+NQYfOj/ACwclBzsGBHCq4YpKz7c
-         z/lP34r59o1Y4gr2llLlXvfQUrvyQxhtnJ8pwiz0sy11YwO4r0wiaO3tXcq46HGziF
-         0crj1smdYF1pA==
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <1615361290-19238-1-git-send-email-pillair@codeaurora.org>
-References: <1615361290-19238-1-git-send-email-pillair@codeaurora.org>
-Subject: Re: [PATCH 0/2] Add support for sc7280 WPSS PIL loading
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     sibis@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Rakesh Pillai <pillair@codeaurora.org>
-To:     Rakesh Pillai <pillair@codeaurora.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, mathieu.poirier@linaro.org,
-        ohad@wizery.com, p.zabel@pengutronix.de, robh+dt@kernel.org
-Date:   Thu, 22 Jul 2021 15:12:50 -0700
-Message-ID: <162699197027.2679160.6825677812017791100@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+        id S231989AbhGVVf5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jul 2021 17:35:57 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:18178 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231713AbhGVVf5 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 22 Jul 2021 17:35:57 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1626992192; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=UOL/xDtchMnEVadVXI4kwef9hh/xHdKFdcB+mkAykzw=; b=Pk55cHUHzTp/KJaGaBsWp+HB8hAKN02MqJUfPrks+Ac3wmMF+S4eXKLxwDkzy1YFNc8lz4J1
+ 8H3ZPxK7xrtx0vC28N83tOw/HNzcGW6BJUR7+SyvnBhH6+iCHP8LC9QzKeJtCEpqdTBZNuI9
+ sAMFN4xWHE6UGrGRVCgUbWrBFFU=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 60f9edfed0100c7cf94147d5 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 22 Jul 2021 22:15:26
+ GMT
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2F926C4323A; Thu, 22 Jul 2021 22:15:26 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B4D5CC433F1;
+        Thu, 22 Jul 2021 22:15:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org B4D5CC433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=khsieh@codeaurora.org
+From:   Kuogee Hsieh <khsieh@codeaurora.org>
+To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
+        vkoul@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        khsieh@codeaurora.org, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm/dp: signal audio plugged change at dp_pm_resume
+Date:   Thu, 22 Jul 2021 15:15:17 -0700
+Message-Id: <1626992117-28887-1-git-send-email-khsieh@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Rakesh Pillai (2021-03-09 23:28:08)
-> Add support for PIL loading of WPSS co-processor for SC7280 SOCs.
->=20
-> Rakesh Pillai (2):
->   dt-bindings: remoteproc: qcom: Add SC7280 WPSS support
->   remoteproc: qcom: q6v5_wpss: Add support for sc7280 WPSS
->=20
+There is a scenario that dp cable is unplugged from DUT during system
+suspended  will cause audio option state does not match real connection
+state. Fix this problem by Signaling audio plugged change with realtime
+connection status at dp_pm_resume() so that audio option will be in
+correct state after system resumed.
 
-Is this patch series going to be resent?
+Fixes: bd52cfedb5a8 ("drm/msm/dp: power off DP phy at suspend")
+Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+---
+ drivers/gpu/drm/msm/dp/dp_display.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 78c5301..2b660e9 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -1339,6 +1339,10 @@ static int dp_pm_resume(struct device *dev)
+ 	else
+ 		dp->dp_display.is_connected = false;
+ 
++	dp_display_handle_plugged_change(g_dp_display,
++				dp->dp_display.is_connected);
++
++
+ 	mutex_unlock(&dp->event_mutex);
+ 
+ 	return 0;
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
