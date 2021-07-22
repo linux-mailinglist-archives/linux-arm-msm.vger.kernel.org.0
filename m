@@ -2,140 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6985C3D26F0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jul 2021 17:42:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E939B3D276C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jul 2021 18:16:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232475AbhGVPCB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jul 2021 11:02:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34470 "EHLO
+        id S229653AbhGVPf6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jul 2021 11:35:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42128 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231925AbhGVPCA (ORCPT
+        with ESMTP id S229492AbhGVPf5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jul 2021 11:02:00 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E7BCC061575;
-        Thu, 22 Jul 2021 08:42:34 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id r11so6407979wro.9;
-        Thu, 22 Jul 2021 08:42:34 -0700 (PDT)
+        Thu, 22 Jul 2021 11:35:57 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76E4CC061575;
+        Thu, 22 Jul 2021 09:16:31 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id o30-20020a05600c511eb029022e0571d1a0so3285352wms.5;
+        Thu, 22 Jul 2021 09:16:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=xwujliw37i4nL4NHiavWRXrnZYwru6cdneVGoRJHvdk=;
-        b=vONwjOWAnqwZPgVHnWoc25b8Wj1QfXGXii/0g9L8XSGIqdlNvW1l2ps1Mhs+5TOrBU
-         fCcyh9cgdUFo2ztUUsPeXaAv7Eu1z+04In4U9T8GxgjkXSxWKt/9eNACufrCSl3qRohZ
-         uwHCxAAIjIr3IZHqh43Nm3MVxSR0+Q2DgRTuqORJDOjKA/AAdgew3wFgwLFF9gz00FAq
-         8EQS4GNCSowzaFD5B0qzWSKSkeAd77OYjbitQW8GJtHPPmI4x/RutgtfQHcBYY1iLw1N
-         WBE86hNGRIqqV5ttxbhLWidcQoSbBib/xY2Kr5IQR/G9r/ndov7S24VlRtHLWXarito7
-         4Vnw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=uUijDMlwf66Vepiz2SA/l8IhtRRiKMWBDC91ym25DGY=;
+        b=BhR7+5yZHxXBFGVNMAKcnaGuntaopLXHQRE5h+q7FtTa7FyEiHhIzM3sREmZLvSNXP
+         wrSshMJcbRbb8P+kaxI5JV5dE1hBNz/0GCtHNvYJYjY5reiQ2vRQWs7U/HJND5FmoR7G
+         jEQQIJGtmrTtPwP7ZaUexmph+D7ab/L1zE+ljcp2PH1Q78zIiZPf87AKtKIfXrWd30GK
+         5esKC9+qccKWW0djwtZ+LtLgW+VNz94tmbUdP01B9iMc4i+EyV8EsxWX5sbWm43r6WIl
+         KwDAj3I0DuTghhZ/R+zlyLVeEnLDXqZ1lMiVHanqet0P1F1iBqNoQudgGwOHKj1L+LaY
+         G64Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=xwujliw37i4nL4NHiavWRXrnZYwru6cdneVGoRJHvdk=;
-        b=OSR6rQLlPhHbix6IDWvo0GhRa4UBsTHcQO8WxighDPTG3y/zLh1wdR5C6zevhiFIvJ
-         Z5swljO6IPn45ZB5OWtspnTqxbvgpItXkU9D6us0eRKje77ZLtgFjtIiq6vhY0cxWLlk
-         PMDoMdjDlh9nZj3U2LkpmgobG0+oheD36hp9T02kAtUVnkpirMD0AzwGzEUXtGemb4Ga
-         SkGB9QackPPLK24NciU/tckfvwrea0AMyqkK3o/Zip+Vla5qTqaOclduGJrdMzAUVXU+
-         98HiO2mHAq0g0NgX++ADGsq7K754OqDgFQlbq3Z/nlAVHCuZncBbeCl/b6B3MB6xOjA3
-         rRWA==
-X-Gm-Message-State: AOAM5306YPfwPCsA1C0RwLd844pxnMXTnsFEoD8RtwzRV+BBzkWV/7Ll
-        28dkKiLX9iCE4DfnOvsTrQGrKoxk/UrxETwxQ/s=
-X-Google-Smtp-Source: ABdhPJwDJ6g1ZzXe281PvcjiwofPNPXNvT1fjPlHUsBiLkV88ymkjK6u/j0w4wiQy9QGguzSTEKkEgrjIKZJ4Yo751E=
-X-Received: by 2002:a5d:488a:: with SMTP id g10mr561619wrq.327.1626968552928;
- Thu, 22 Jul 2021 08:42:32 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=uUijDMlwf66Vepiz2SA/l8IhtRRiKMWBDC91ym25DGY=;
+        b=l22c7K7hHYMJJpi9SSboubsTW2efatjSIs8da/4lFOOoYms1N3D3qIB4/fya+2Hqkj
+         iMDsuBo0XLSWE4btYIOtXtqipQfd6nOJSh0Y0va5As71yfm2gjCZ35c6+YFj1ru5+UWd
+         4jOV9v7Pcc54zb1eUhi0hTAO6FBvGshH87Dkdi8+zStcqLlNfPVARWGSMydsaDgxWLFY
+         wE47nzV6lD/7JKNlbVWMZLx2A//06jq6yRF3Bk8m8Fgk4kYuvhBMHyO6CE08gb9KKCtA
+         WagFxCfFY0rzYTvGRbht1Uvc7vzbdMdluCaf260XZJJVczJuZuaF5vGBrMmGpgpHEzf3
+         87Ug==
+X-Gm-Message-State: AOAM533DJp8zApUVGT3spT3Rk0Emr+CogZ0B7hd2WlkM/ZfUi0IoWr0V
+        kl2LTKIWJsrVhN0EPbZUHf0=
+X-Google-Smtp-Source: ABdhPJyvxfPmN771LA53eyYvC2w1VleRrv7+iyYmnrWPyZJqpmkQvtdm04VZ+XgZ12btuYoBrpfUbg==
+X-Received: by 2002:a7b:ce82:: with SMTP id q2mr9913989wmj.60.1626970589996;
+        Thu, 22 Jul 2021 09:16:29 -0700 (PDT)
+Received: from localhost.localdomain ([176.30.243.91])
+        by smtp.gmail.com with ESMTPSA id w15sm4697060wmi.3.2021.07.22.09.16.28
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 22 Jul 2021 09:16:29 -0700 (PDT)
+From:   Pavel Skripkin <paskripkin@gmail.com>
+To:     mani@kernel.org, davem@davemloft.net, kuba@kernel.org,
+        bjorn.andersson@sonymobile.com, courtney.cavin@sonymobile.com
+Cc:     linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Pavel Skripkin <paskripkin@gmail.com>,
+        syzbot+35a511c72ea7356cdcf3@syzkaller.appspotmail.com
+Subject: [PATCH] net: qrtr: fix memory leak in qrtr_local_enqueue
+Date:   Thu, 22 Jul 2021 19:16:25 +0300
+Message-Id: <20210722161625.6956-1-paskripkin@gmail.com>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-References: <20210720150716.1213775-1-robdclark@gmail.com> <60ffb6f3-e932-d9af-3b90-81adf0c15250@gmail.com>
- <CAF6AEGtOW3EjZWo36ij8U1om=gAqvg8CSkJJq2GkyHFGWUH4kQ@mail.gmail.com>
- <CAKMK7uF1=Y6_9znGoWG8GrteXBBRmyW8C3bFE+eJQqOj0A1buA@mail.gmail.com>
- <CAF6AEGsOVPdMkXwU9C+nDfQpPThveJ2A0jbXi43RRkkJKtnz3w@mail.gmail.com>
- <CAKMK7uHMXFqic=9APJrSf6totB8nGZTDe4x8+sv-drmV4Q+4Bg@mail.gmail.com>
- <CAF6AEGsKoucxt4a2pcdQM9+L0+YU-6TcAt8eF=3ur169646Jhw@mail.gmail.com>
- <YPhvein5e8do2AR+@phenom.ffwll.local> <113b5858-9020-d1c1-292b-96b7f9cc717a@gmail.com>
- <YPk1izQFR+tRV8js@phenom.ffwll.local> <9c1e797b-8860-d1f5-e6f2-e06380ec9012@gmail.com>
-In-Reply-To: <9c1e797b-8860-d1f5-e6f2-e06380ec9012@gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 22 Jul 2021 08:46:41 -0700
-Message-ID: <CAF6AEGuHLPtJ99VOSaJEFqbSum_yWHn3cMPrwcNfRn2RU3ZB5g@mail.gmail.com>
-Subject: Re: [Linaro-mm-sig] [PATCH] drm/msm: Add fence->wait() op
-To:     =?UTF-8?Q?Christian_K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>, David Airlie <airlied@linux.ie>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
-        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
-        <linaro-mm-sig@lists.linaro.org>, Sean Paul <sean@poorly.run>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" 
-        <linux-media@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 22, 2021 at 2:28 AM Christian K=C3=B6nig
-<ckoenig.leichtzumerken@gmail.com> wrote:
->
-> Am 22.07.21 um 11:08 schrieb Daniel Vetter:
-> > [SNIP]
-> >> As far as I know wake_up_state() tries to run the thread on the CPU it=
- was
-> >> scheduled last, while wait_event_* makes the thread run on the CPU who
-> >> issues the wake by default.
-> >>
-> >> And yes I've also noticed this already and it was one of the reason wh=
-y I
-> >> suggested to use a wait_queue instead of the hand wired dma_fence_wait
-> >> implementation.
-> > The first versions had used wait_queue, but iirc we had some issues wit=
-h
-> > the callbacks and stuff and that was the reasons for hand-rolling. Or
-> > maybe it was the integration of the lockless fastpath for
-> > dma_fence_is_signalled().
-> >
-> >> [SNIP]
-> >> Well it would have been nicer if we used the existing infrastructure i=
-nstead
-> >> of re-inventing stuff for dma_fence, but that chance is long gone.
-> >>
-> >> And you don't need a dma_fence_context base class, but rather just a f=
-lag in
-> >> the dma_fence_ops if you want to change the behavior.
-> > If there's something broken we should just fix it, not force everyone t=
-o
-> > set a random flag. dma_fence work like special wait_queues, so if we
-> > differ then we should go back to that.
->
-> Wait a second with that, this is not broken. It's just different
-> behavior and there are good arguments for both sides.
->
-> If a wait is short you can have situations where you want to start the
-> thread on the original CPU.
->      This is because you can assume that the caches on that CPU are
-> still hot and heating up the caches on the local CPU would take longer
-> than an inter CPU interrupt.
->
-> But if the wait is long it makes more sense to run the thread on the CPU
-> where you noticed the wake up event.
->      This is because you can assume that the caches are cold anyway and
-> starting the thread on the current CPU (most likely from an interrupt
-> handler) gives you the absolutely best latency.
->      In other words you usually return from the interrupt handler and
-> just directly switch to the now running thread.
->
-> I'm not sure if all drivers want the same behavior. Rob here seems to
-> prefer number 2, but we have used 1 for dma_fence for a rather long time
-> now and it could be that some people start to complain when we switch
-> unconditionally.
->
+Syzbot reported memory leak in qrtr. The problem was in unputted
+struct sock. qrtr_local_enqueue() function calls qrtr_port_lookup()
+which takes sock reference if port was found. Then there is the following
+check:
 
-Hmm, I wonder if it would make sense to have a dma_wait_fence() flag
-to control the behavior, since it is maybe more about the waiter (and
-perhaps how long the waiter expects to wait) than the signaler..
+if (!ipc || &ipc->sk == skb->sk) {
+	...
+	return -ENODEV;
+}
 
-BR,
--R
+Since we should drop the reference before returning from this function and
+ipc can be non-NULL inside this if, we should add qrtr_port_put() inside
+this if.
+
+Fixes: bdabad3e363d ("net: Add Qualcomm IPC router")
+Reported-and-tested-by: syzbot+35a511c72ea7356cdcf3@syzkaller.appspotmail.com
+Signed-off-by: Pavel Skripkin <paskripkin@gmail.com>
+---
+ net/qrtr/qrtr.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/net/qrtr/qrtr.c b/net/qrtr/qrtr.c
+index e6f4a6202f82..d5ce428d0b25 100644
+--- a/net/qrtr/qrtr.c
++++ b/net/qrtr/qrtr.c
+@@ -839,6 +839,8 @@ static int qrtr_local_enqueue(struct qrtr_node *node, struct sk_buff *skb,
+ 
+ 	ipc = qrtr_port_lookup(to->sq_port);
+ 	if (!ipc || &ipc->sk == skb->sk) { /* do not send to self */
++		if (ipc)
++			qrtr_port_put(ipc);
+ 		kfree_skb(skb);
+ 		return -ENODEV;
+ 	}
+-- 
+2.32.0
+
