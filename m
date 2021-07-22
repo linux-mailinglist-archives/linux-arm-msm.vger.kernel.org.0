@@ -2,87 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 49F543D21BF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jul 2021 12:08:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0C8E43D2211
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 22 Jul 2021 12:27:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230479AbhGVJ2V convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 22 Jul 2021 05:28:21 -0400
-Received: from guitar.tcltek.co.il ([192.115.133.116]:39339 "EHLO
-        mx.tkos.co.il" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230365AbhGVJ2U (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 22 Jul 2021 05:28:20 -0400
-Received: from tarshish (unknown [10.0.8.2])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mx.tkos.co.il (Postfix) with ESMTPS id 5C872440E85;
-        Thu, 22 Jul 2021 13:08:38 +0300 (IDT)
-References: <f79128fa287e37ee59cb03ae04b319ecb3d68c29.1626176145.git.baruch@tkos.co.il>
- <1173e7b0b58730fd187871d9e14a02cab85158cc.1626176145.git.baruch@tkos.co.il>
- <20210714201839.kfyqcyvowekc4ejs@pengutronix.de> <87eebyst5z.fsf@tarshish>
- <20210716070427.kv7w6imp2zoxhyz5@pengutronix.de>
-User-agent: mu4e 1.4.15; emacs 27.1
-From:   Baruch Siach <baruch@tkos.co.il>
-To:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= <u.kleine-koenig@pengutronix.de>
-Cc:     linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        kernel@pengutronix.de, Robert Marko <robert.marko@sartura.hr>,
-        Lee Jones <lee.jones@linaro.org>,
-        linux-arm-kernel@lists.infradead.org,
-        Balaji Prakash J <bjagadee@codeaurora.org>
-Subject: Re: [PATCH v5 2/4] pwm: driver for qualcomm ipq6018 pwm block
-In-reply-to: <20210716070427.kv7w6imp2zoxhyz5@pengutronix.de>
-Date:   Thu, 22 Jul 2021 13:08:47 +0300
-Message-ID: <87k0lizmmo.fsf@tarshish>
+        id S230418AbhGVJrD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 22 Jul 2021 05:47:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46698 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230365AbhGVJrC (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 22 Jul 2021 05:47:02 -0400
+Received: from mail-vs1-xe35.google.com (mail-vs1-xe35.google.com [IPv6:2607:f8b0:4864:20::e35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C0E3C061760
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jul 2021 03:27:37 -0700 (PDT)
+Received: by mail-vs1-xe35.google.com with SMTP id e9so3020963vsk.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 22 Jul 2021 03:27:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=D6NsNjR1zauQMuXAr/8MkgipURqkWQcL5tWcTpW2GWw=;
+        b=lTl71YmyLm/E8pzCx+pNYFhrr5Gnj2EwPJhWh4eAUUXOY5fHBF1iYEi+Q6u58lKi7O
+         cnenhxnMlEoTdgT947mx2ZMLiwUy1SymwnTFAL/N+oLwD2njh4NgV4wiolv0idmuSFTc
+         /iO/POWIHBcvWh7mn71FoT87QbrciHZCHH0wmNUMv/KtG4lT0LzcHCgY3G14quq/Bs7Y
+         M09ZLlRrkDgh8eFAC80PhYta6V0WM9fZ5FfPd2si1WwGY4KsEZX2ya1R4zkkn6TuKWGC
+         cUIiqd2Wxig5suzFwR/1kwqanE2JVWjNUxzojb7n/lOKMrKlWhhw5LnOeYNMOiWm4pJt
+         mtrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=D6NsNjR1zauQMuXAr/8MkgipURqkWQcL5tWcTpW2GWw=;
+        b=On3kHkJ3Kg0f7xCWOaeXW3DUiWkLdxq2bNW+8vuUxoB/5sOt77up5fyA89E1le8aPV
+         cXr1EUcgRp3LrTBOrB0HVa74yA/BSndiIaOaPew/WgXcyvqjXNf58Ty6ZhYZOnQGbcNz
+         SPXUCjaEOA8NJxtU0QIdm5az8oxWsujLn6yAFm08AoJMLFVhfOewCkVfPyt/1DmdmaZC
+         3P8Ulp/wxohow8ImtNoEQ6wp8j2IquRblPT9X5Wl9MUoLM5JObcfU3sqxoOhzcg8CgqJ
+         OuvPIUwq20qvxE3cLNWh3InWR3NbsfA1yLRwpGBd1+QyLmKfPaMONyuZ5ha5H5eI62UW
+         0m5g==
+X-Gm-Message-State: AOAM531SmYB/YOo2mT3UlABbuY1v/c4K2H2FNLoEx6SpnU5rt9is/i3z
+        k3s1TT0CViJ0SbYeDv+5iSNqPKuM8uQPGA4LJYGjkg==
+X-Google-Smtp-Source: ABdhPJzpWkC9FA77SkwYQtOd/pIwnXgFDCAPg1oIGoBUk/5VNZqC5MQDte+YPKv9/8XdXUvLgvPvS0i78BqM57ytKcc=
+X-Received: by 2002:a67:ebd8:: with SMTP id y24mr38617533vso.19.1626949656227;
+ Thu, 22 Jul 2021 03:27:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+References: <20210718104901.454843-1-dmitry.baryshkov@linaro.org> <20210718104901.454843-4-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20210718104901.454843-4-dmitry.baryshkov@linaro.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Thu, 22 Jul 2021 12:26:59 +0200
+Message-ID: <CAPDyKFqws1iC+PtQ3iRzzFF1NQZ=huRbA3wNBbS2gmyVqgmhxQ@mail.gmail.com>
+Subject: Re: [PATCH v5 3/9] PM: runtime: add devm_pm_runtime_enable helper
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Uwe,
-
-On Fri, Jul 16 2021, Uwe Kleine-König wrote:
-> On Fri, Jul 16, 2021 at 08:51:20AM +0300, Baruch Siach wrote:
->> On Wed, Jul 14 2021, Uwe Kleine-König wrote:
->> > On Tue, Jul 13, 2021 at 02:35:43PM +0300, Baruch Siach wrote:
->> >> +	val = FIELD_PREP(IPQ_PWM_REG0_HI_DURATION, hi_dur) |
->> >> +		FIELD_PREP(IPQ_PWM_REG0_PWM_DIV, pwm_div);
->> >> +	ipq_pwm_reg_write(pwm, IPQ_PWM_CFG_REG0, val);
->> >> +
->> >> +	val = FIELD_PREP(IPQ_PWM_REG1_PRE_DIV, pre_div);
->> >> +	ipq_pwm_reg_write(pwm, IPQ_PWM_CFG_REG1, val);
->> >> +
->> >> +	/* Enable needs a separate write to REG1 */
->> >> +	val |= IPQ_PWM_REG1_UPDATE;
->> >
->> > Setting this bit results in the two writes above being configured
->> > atomically so that no mixed settings happen to the output, right?
->> 
->> I guess so. I have no access to hardware documentation, mind you. I
->> first tried to do only one write to REG1, but it had no effect. The
->> existence of the UPDATE bit also indicates that hardware works as you
->> suggest.
+On Sun, 18 Jul 2021 at 12:49, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 >
-> I wouldn't trust HW documentation here. If you have some means to
-> inspect the waveform this is easy to test. Depending on how long you can
-> make the periods an LED is enough. If you start with a slower parent
-> clk, a big pre_div and hi_dur = 0 the LED is supposed to be off. Then
-> set hi_dur = pwm_div/2 which either make the LED blink slowly or keeps
-> off. Then setting pre_div = 2 either increased the blink frequency or it
-> doesn't. ...
+> Add helper function handling typical driver action: call
+> pm_runtime_enable at the probe() time and disable it during remove().
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/base/power/runtime.c | 17 +++++++++++++++++
+>  include/linux/pm_runtime.h   |  4 ++++
+>  2 files changed, 21 insertions(+)
 
-I currently have only access to DVM to measure the PWM effect. I'll try
-to do more measures when I have access to better equipment.
+First, this needs to be sent to the correct maintainers (Rafael) and
+also the mailing list (linux-pm).
 
-baruch
+Second, to not stall the series by $subject patch as it will likely
+need to be funneled through Rafael's tree, perhaps it's just better to
+do the "open coding" in the qcom drivers for now.
 
--- 
-                                                     ~. .~   Tk Open Systems
-=}------------------------------------------------ooO--U--Ooo------------{=
-   - baruch@tkos.co.il - tel: +972.52.368.4656, http://www.tkos.co.il -
+Kind regards
+Uffe
+
+>
+> diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
+> index 8a66eaf731e4..ec94049442b9 100644
+> --- a/drivers/base/power/runtime.c
+> +++ b/drivers/base/power/runtime.c
+> @@ -1447,6 +1447,23 @@ void pm_runtime_enable(struct device *dev)
+>  }
+>  EXPORT_SYMBOL_GPL(pm_runtime_enable);
+>
+> +static void pm_runtime_disable_action(void *data)
+> +{
+> +       pm_runtime_disable(data);
+> +}
+> +
+> +/**
+> + * devm_pm_runtime_enable - devres-enabled version of pm_runtime_enable.
+> + * @dev: Device to handle.
+> + */
+> +int devm_pm_runtime_enable(struct device *dev)
+> +{
+> +       pm_runtime_enable(dev);
+> +
+> +       return devm_add_action_or_reset(dev, pm_runtime_disable_action, dev);
+> +}
+> +EXPORT_SYMBOL_GPL(devm_pm_runtime_enable);
+> +
+>  /**
+>   * pm_runtime_forbid - Block runtime PM of a device.
+>   * @dev: Device to handle.
+> diff --git a/include/linux/pm_runtime.h b/include/linux/pm_runtime.h
+> index aab8b35e9f8a..222da43b7096 100644
+> --- a/include/linux/pm_runtime.h
+> +++ b/include/linux/pm_runtime.h
+> @@ -59,6 +59,8 @@ extern void pm_runtime_put_suppliers(struct device *dev);
+>  extern void pm_runtime_new_link(struct device *dev);
+>  extern void pm_runtime_drop_link(struct device_link *link);
+>
+> +extern int devm_pm_runtime_enable(struct device *dev);
+> +
+>  /**
+>   * pm_runtime_get_if_in_use - Conditionally bump up runtime PM usage counter.
+>   * @dev: Target device.
+> @@ -253,6 +255,8 @@ static inline void __pm_runtime_disable(struct device *dev, bool c) {}
+>  static inline void pm_runtime_allow(struct device *dev) {}
+>  static inline void pm_runtime_forbid(struct device *dev) {}
+>
+> +static inline int devm_pm_runtime_enable(struct device *dev) { return 0; }
+> +
+>  static inline void pm_suspend_ignore_children(struct device *dev, bool enable) {}
+>  static inline void pm_runtime_get_noresume(struct device *dev) {}
+>  static inline void pm_runtime_put_noidle(struct device *dev) {}
+> --
+> 2.30.2
+>
