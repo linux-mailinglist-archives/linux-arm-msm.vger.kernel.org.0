@@ -2,134 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 25B0F3D3C2C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jul 2021 17:08:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 468AA3D3C81
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jul 2021 17:38:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235506AbhGWO1o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jul 2021 10:27:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43852 "EHLO
+        id S235578AbhGWO6A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jul 2021 10:58:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235503AbhGWO1n (ORCPT
+        with ESMTP id S235557AbhGWO57 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jul 2021 10:27:43 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD2EAC061575;
-        Fri, 23 Jul 2021 08:08:13 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id r17so2636964lfe.2;
-        Fri, 23 Jul 2021 08:08:13 -0700 (PDT)
+        Fri, 23 Jul 2021 10:57:59 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8350C061757
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jul 2021 08:38:31 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id h2so2780257lfu.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jul 2021 08:38:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ry9ClILUnukJVzAZ0gclK3iIRVnY0FQvfvVPEP1QkQs=;
-        b=o4+ii2+yfQsTVRmy1j87kv3S6zaCmIjO9/qtDL5SXUEbqK14Rwim3jE7z+7nnR+Gds
-         swLsVQpQTGCf7I0cDZ1fQoxp/iMRqemj6aPVbZ3zU16cvk7imJ1i2cYwUCbjTV5juv5O
-         raX8a9d0ik7VvKyYtjMkAk7+J3BQG0LvNbEGbhrInqjC5EQbXWZ8eFbgKWKzjPheO2Mu
-         bI8qTrL8FsVsAPoGMu4HOjiAJlMgsJ7U71kmg57F9w068rv1u8g24TTiWQxE0/Yaw7tz
-         YNg/+NaYC8qLrXskcsX/4wgq3r/sJFn7jw9jlriJkjW0CUEJuZ1NQjvbH6qkYs5oZE48
-         hKHA==
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=b5fKS0W78jBgl+mIxB7Xm3uGD8b8IxeNIeStjZ0bgIs=;
+        b=evLuO9t2y1KdY+CTSGy4BwPos3Vq4zxanoA1hWD9X7Hbicscye1STEqtbg/Sdvkv5C
+         djdQvdh6R9hwgJYEyJMx+uTqi7m8c6OBtGwK0GWXoRd8tfJZw7matlNo2DPmpuF2aHUk
+         DN6Z9qin5+4zvK0UJ6/hqgdLKyYnQrMPO9Daag/g/7r+D+GsVOh0HnaYoZLoYeYKpOG9
+         WsapjxStnD2hyGkzN7Sa3W1CQKpfV8ZxnTwEst9FtevCwZ/8WqwAd2q9p23pIbW6kVAW
+         6JD8VsZ6+32CqGkL6EpMhj6/Ker1hspQRoepWg0g46AoC9zoYnxJU/lufv155kTTjuab
+         uofQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ry9ClILUnukJVzAZ0gclK3iIRVnY0FQvfvVPEP1QkQs=;
-        b=Jvbx069lBjlIqoLGD073dX9WZw4e9jzc1sONCbYzshcQjb6T8LwPp/scFlI/V4ndrR
-         P6bpMShwcMlrVf8phUqw9XaBPBpVXI7xzlPtIheraQMbIpnKLyn+FmflqivLh1Sexq95
-         QINWcqXxdLLd3xzNIBDLNyxcS+qiioAgOcNHpXi4+At3K8WJ1UpveKBgP7nMLoRWjIJM
-         h/6u1Yoqi3s1st5loXa3S+j2R3IgitRm7nOG7W3xjkO3eZ8PzQpLXjkdIl3z+Rya56Dg
-         asbjMD761T0mUfAqmeaF2ztpl8qey/52NuFOWN29r5+0r8ItPOpl62Xmcwh3s6XCOt2k
-         yQDw==
-X-Gm-Message-State: AOAM532ELHOTo1z3Vl3XXy2scLvRh7FPhAKkBh9XEeVIO8UXxCvDeUwR
-        8XYnsj7WqItHN95zlHhFPkg=
-X-Google-Smtp-Source: ABdhPJwsq45CeZ6RZ0YPzmhXnIpHPC/JFlRhdEshw1unMyw6hbFvkuzio/CVkJwyEs3OXuvzzHEOfw==
-X-Received: by 2002:a05:6512:139a:: with SMTP id p26mr3251734lfa.376.1627052891059;
-        Fri, 23 Jul 2021 08:08:11 -0700 (PDT)
-Received: from localhost.localdomain ([94.103.227.213])
-        by smtp.gmail.com with ESMTPSA id f10sm2256789lfu.121.2021.07.23.08.08.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Jul 2021 08:08:10 -0700 (PDT)
-Date:   Fri, 23 Jul 2021 18:08:05 +0300
-From:   Pavel Skripkin <paskripkin@gmail.com>
-To:     Manivannan Sadhasivam <mani@kernel.org>
-Cc:     davem@davemloft.net, kuba@kernel.org,
-        bjorn.andersson@sonymobile.com, courtney.cavin@sonymobile.com,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        syzbot+35a511c72ea7356cdcf3@syzkaller.appspotmail.com
-Subject: Re: [PATCH] net: qrtr: fix memory leak in qrtr_local_enqueue
-Message-ID: <20210723180805.0f961fbc@gmail.com>
-In-Reply-To: <20210723122753.GA3739@thinkpad>
-References: <20210722161625.6956-1-paskripkin@gmail.com>
-        <20210723122753.GA3739@thinkpad>
-X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-suse-linux-gnu)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=b5fKS0W78jBgl+mIxB7Xm3uGD8b8IxeNIeStjZ0bgIs=;
+        b=IzhY3JoxMm4TxZ9QPV+NWfNPQLhoodMYujNshOC4RGXwKWuoZvDeqmOW4vo2In6FYx
+         ERvbuJ679pdHKr0llq2+KRy+tQ7ugthpuv8gWSIqepABBEyIlw7qh6HEEN0YmY1+S7pX
+         uvTTNwY1eKjWenCj3M/yaz8t5j2mTtA6t2H8p1IWEeTwFpR4eBP059Y3QQU1Oq6RtNyO
+         5FOt0RJIpnYinerOlZEe1loEcwgtOk8wAGgbtP71hj8MWistn5JRr8JpCfqpSFZC1lRm
+         Ko6HRbP4yttkP7v0ygIA8zTlUYHriOZlQ0ChSNVJknMsr3zCMQuodHZo2WydLRU9g5kw
+         IzeA==
+X-Gm-Message-State: AOAM5306UliQbSTcIEbza7sgd0r641eCUVHcGOQq8KQddrnP1IZRFt05
+        ND/bKUOGVGCyouNB+Hr3ycuREz/OgDw+XVgJaMn3BA==
+X-Google-Smtp-Source: ABdhPJydD4EvUxZjN8jfbePd6NexZtDbTJWMSw9gG1tEl0IrnQUz8uu1ccPNLmvpaMBm4zlx+ZGvhjPSF5bNqDsr5T0=
+X-Received: by 2002:ac2:5e71:: with SMTP id a17mr3344716lfr.465.1627054710287;
+ Fri, 23 Jul 2021 08:38:30 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+References: <20210627185628.691435-1-iskren.chernev@gmail.com>
+In-Reply-To: <20210627185628.691435-1-iskren.chernev@gmail.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Fri, 23 Jul 2021 17:38:19 +0200
+Message-ID: <CACRpkdZa1apQtmwxMeFxA=Mh2DNV_ggX8JtO8AoZ5eR0pWHEEw@mail.gmail.com>
+Subject: Re: [PATCH v5 0/2] Add Pinctrl for SM4250/6115
+To:     Iskren Chernev <iskren.chernev@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        phone-devel@vger.kernel.org,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS
+        <devicetree@vger.kernel.org>, Hans de Goede <hdegoede@redhat.com>, Andy
+        Shevchenko <andy.shevchenko@gmail.com>," 
+        <~postmarketos/upstreaming@lists.sr.ht>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 23 Jul 2021 17:57:53 +0530
-Manivannan Sadhasivam <mani@kernel.org> wrote:
+On Sun, Jun 27, 2021 at 8:56 PM Iskren Chernev <iskren.chernev@gmail.com> wrote:
 
-> On Thu, Jul 22, 2021 at 07:16:25PM +0300, Pavel Skripkin wrote:
-> > Syzbot reported memory leak in qrtr. The problem was in unputted
-> > struct sock. qrtr_local_enqueue() function calls qrtr_port_lookup()
-> > which takes sock reference if port was found. Then there is the
-> > following check:
-> > 
-> > if (!ipc || &ipc->sk == skb->sk) {
-> > 	...
-> > 	return -ENODEV;
-> > }
-> > 
-> > Since we should drop the reference before returning from this
-> > function and ipc can be non-NULL inside this if, we should add
-> > qrtr_port_put() inside this if.
-> > 
-> > Fixes: bdabad3e363d ("net: Add Qualcomm IPC router")
-> > Reported-and-tested-by:
-> > syzbot+35a511c72ea7356cdcf3@syzkaller.appspotmail.com
-> > Signed-off-by: Pavel Skripkin <paskripkin@gmail.com>
-> 
-> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
-> 
-> It'd be good if this patch can be extended to fix one more corner
-> case here:
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/net/qrtr/qrtr.c#n522
-> 
-> Thanks,
-> Mani
+> This patch adds support for the TLMM block on QCom SM4250 and SM6115, codename
+> bengal. The code is taken from OnePlus repo [1]. The two platforms are
+> identical so there is only one compat string.
+>
+> [1]: https://github.com/OnePlusOSS/android_kernel_oneplus_sm4250
+>
+> v1: https://lkml.org/lkml/2021/6/22/1163
+> v2: https://lkml.org/lkml/2021/6/25/28
+> v3: https://lkml.org/lkml/2021/6/25/72
+> v4: https://lkml.org/lkml/2021/6/25/351
 
-Hi, Manivannan!
+I wanted to apply this v5 version but it doesn't apply cleanly on v5.14-rc1
+and I am worried about making mistakes.
 
-I will fix leak there too in v2, thank you! 
+Can you collect the final review tags, rebase this on a clean
+v5.14-rc1 and resend as v6?
 
-
-
-With regards,
-Pavel Skripkin
-
-> 
-> > ---
-> >  net/qrtr/qrtr.c | 2 ++
-> >  1 file changed, 2 insertions(+)
-> > 
-> > diff --git a/net/qrtr/qrtr.c b/net/qrtr/qrtr.c
-> > index e6f4a6202f82..d5ce428d0b25 100644
-> > --- a/net/qrtr/qrtr.c
-> > +++ b/net/qrtr/qrtr.c
-> > @@ -839,6 +839,8 @@ static int qrtr_local_enqueue(struct qrtr_node
-> > *node, struct sk_buff *skb, 
-> >  	ipc = qrtr_port_lookup(to->sq_port);
-> >  	if (!ipc || &ipc->sk == skb->sk) { /* do not send to self
-> > */
-> > +		if (ipc)
-> > +			qrtr_port_put(ipc);
-> >  		kfree_skb(skb);
-> >  		return -ENODEV;
-> >  	}
-> > -- 
-> > 2.32.0
-> > 
-
+Thanks!
+Linus Walleij
