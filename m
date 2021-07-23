@@ -2,83 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 96D583D3CF3
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jul 2021 17:55:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CBCC23D3D77
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jul 2021 18:21:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235781AbhGWPOd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jul 2021 11:14:33 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51646 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235702AbhGWPOX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jul 2021 11:14:23 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 592D260725;
-        Fri, 23 Jul 2021 15:54:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1627055696;
-        bh=gGq+nFNtYhXh8+LTHNU1d09X9anaFb/jJcdQ6OGEm6w=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=w7TXf5P/3VOLNqa3IGJS+/tL1WqsO3lubM2fNseWUGtviwChA0JbxioddqK5Xebzu
-         VBKcT7W2dFhFjKmcOBccaxPRa5CzvwMBY/+1zUDb1IQTjrxjksklcYYYeIcEmsMOL3
-         /z4TEJgfF9/B/bm0KWjIW9F/WJgTnJpsvFiJnY0U=
-Date:   Fri, 23 Jul 2021 17:54:53 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Serge Semin <fancer.lancer@gmail.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-        John Stultz <john.stultz@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux USB List <linux-usb@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        Amit Pundir <amit.pundir@linaro.org>
-Subject: Re: [PATCH 29/29] arm64: dts: qcom: Harmonize DWC USB3 DT nodes name
-Message-ID: <YPrmTYQJ33AIxcwP@kroah.com>
-References: <20201020115959.2658-1-Sergey.Semin@baikalelectronics.ru>
- <20201020115959.2658-30-Sergey.Semin@baikalelectronics.ru>
- <CALAqxLX_FNvFndEDWtGbFPjSzuAbfqxQE07diBJFZtftwEJX5A@mail.gmail.com>
- <20210714124807.o22mottsrg3tv6nt@mobilestation>
- <YPfPDqJhfzbvDLvB@kroah.com>
- <20210721100220.ddfxwugivsndsedv@mobilestation>
- <YPf29+ewbrYgHxRP@kroah.com>
- <YPh/AS5svBk+gddY@yoga>
- <YPp7Q4IofUYQlrqd@kroah.com>
- <YPrTbC7fNOY3qCcJ@yoga>
+        id S230479AbhGWPlJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jul 2021 11:41:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32890 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230420AbhGWPlI (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 23 Jul 2021 11:41:08 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D6F6C061575
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jul 2021 09:21:41 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id d17so3060550lfv.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jul 2021 09:21:41 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=SliTX8Iw8l9nFjbx/gRlB+2uInDqKw48vi+rU2al8Nc=;
+        b=z2CkY6HOoSWT8+R5fkxgZ069VX+3PJN1Nvq/DmH1sahvH73bCUdm7/j6kXiDunpTps
+         cUSxVODN7M+P8LW7IBoaBbne7Xspvb0LzLvB0Kq7/uHI8Q6QXuW0IoT6RaGfGaaRUPpf
+         tBEKmvdDfRRvyq7poBebhbAx8eGV0FJGBGNgyJJS7SBlgjtwL3PRWg/k35p5fsvYgj9B
+         oQJ7GOjmdDMlYnXHWjdX1BvfssKceNTv/onAJz6FBzOoXqLAWFB2akrZ7JiNtZn905Sb
+         IJ6tLfZ2F+z2AmtsSST04NUyrHQxHmIqwAxTrOmTa2BJRsSVSFtZX3o2QRBinJ+0Bts5
+         YIaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=SliTX8Iw8l9nFjbx/gRlB+2uInDqKw48vi+rU2al8Nc=;
+        b=P+wIbGfiUjgUXI+CbGq1RJFfP83NQODEBsILQCT/i/6EfclQAhQG12sWPmuFRlND7V
+         cT9e6x+g+QUBhrX/vTgnK+I9lt60pSoftjYIH021Bs3i4Oggi0RS1oXmefEbjRUmUqO8
+         K222Rt02lk9fWH3BzNqGtMQDKG0AG8UUvZzi4/Gbr/9NI7lrEoj7Xc1oShFzFegc/9Ga
+         socEJ3r5DQz7zillgPQQSfhB2y6WViNc19w+Pti0BaW05n7QHFBPavRmzikdBbi0AYcP
+         EsW6I6Rz2oByYe1qSUehD9J3ItqvWStolU6zBiO+l+gUyuwIZSNz/ZN9scfL950gDZ47
+         GuYQ==
+X-Gm-Message-State: AOAM530R33AS6L4gDzxqCrjwse4wjwouzSQR/z8QXgsvABS0S0PptDBr
+        yCIPTFJmHFAO4odpDTEjiwoKZUQ/CbjvEph3Ns3EJg==
+X-Google-Smtp-Source: ABdhPJwyeo7rGBpxoxiquAEUXMh8R1GJJMHfyFuO8ePzx4uDJagKcKEm/Zrtnh+n4Oi7Tcg2iBTeqT0sI+9NsaX9hM0=
+X-Received: by 2002:a05:6512:169e:: with SMTP id bu30mr3470614lfb.291.1627057299505;
+ Fri, 23 Jul 2021 09:21:39 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YPrTbC7fNOY3qCcJ@yoga>
+References: <20210629123407.82561-1-bhupesh.sharma@linaro.org>
+In-Reply-To: <20210629123407.82561-1-bhupesh.sharma@linaro.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Fri, 23 Jul 2021 18:21:28 +0200
+Message-ID: <CACRpkdacTi-9YzhOqpfFkNhzSATmbWHs=wMoJcsXwG8pBeW7Mg@mail.gmail.com>
+Subject: Re: [PATCH v4 0/4] pinctrl: qcom/pinctrl-spmi-gpio: Add support for
+ pmic-gpio on SA8155p-adp
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     MSM <linux-arm-msm@vger.kernel.org>, bhupesh.linux@gmail.com,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Liam Girdwood <lgirdwood@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 23, 2021 at 09:34:20AM -0500, Bjorn Andersson wrote:
-> On Fri 23 Jul 03:18 CDT 2021, Greg Kroah-Hartman wrote:
-> 
-> > On Wed, Jul 21, 2021 at 03:09:37PM -0500, Bjorn Andersson wrote:
-> > > Which tree did you revert this in? 5.13.stable?)
-> > 
-> > My usb-linus branch which will go to Linus later today.  Then we can
-> > backport the revert to older kernels as needed.
-> > 
-> 
-> I'm not worried about the backports, I'm worried about conflicts you're
-> causing because you're taking a non-usb patch through the usb tree.
-> 
-> I was about to push a revert (to this and the other Qualcomm platforms),
-> but as you're taking some set of reverts through the usb tree we're just
-> in for a bunch of merge conflicts.
+On Tue, Jun 29, 2021 at 2:34 PM Bhupesh Sharma
+<bhupesh.sharma@linaro.org> wrote:
 
-It shouldn't be a merge conflict as you can apply the same revert to
-your tree now and keep on merging.  When you pick up 5.14-rc3 from Linus
-it should merge "correctly", right?
+> Changes since v3:
+> -----------------
+> - v3 series can be found here: https://lore.kernel.org/linux-arm-msm/20210617053432.350486-1-bhupesh.sharma@linaro.org/T/#m2b1bf2d32dfdde3196dc5342722e356ee1f87456
+> - Rebased patchset on pinctrl/devel branch.
+> - Added Reviewed-by from Bjorn for patches 1 to 4 and Ack from Rob for
+>   patches 1 and 2.
 
-thanks,
+This v4 patch set applied!
 
-greg k-h
+Sorry for taking so long, I had a bit too much to do.
+
+Excellent work on the patches Bhupesh!
+
+Yours,
+Linus Walleij
