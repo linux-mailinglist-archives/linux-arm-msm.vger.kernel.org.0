@@ -2,159 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 635EA3D4169
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jul 2021 22:17:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F256A3D416F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jul 2021 22:22:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229575AbhGWTge (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jul 2021 15:36:34 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:33256 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229648AbhGWTge (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jul 2021 15:36:34 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1627071427; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=HRN/UDX2HXLKNeRvuGxP4vsevVc7LCnZM359D66adWU=;
- b=TNn8IU8EkTVGRJ4IFuTU68C45EJejrOCwcbVyz+D6fagCfVLeEyu3FxpKWchz7DhfEeJ5FYP
- weTLBNMWWjQVwHwZFLCpa8a49fp3wcBxhfwDTeOYEVEpm3A/ylKF0clwEmB+/pGnQQe2q6L8
- okZ6123Ziii/rP0FLir+uJ6+9JM=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 60fb23b34815712f3ade4dad (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 23 Jul 2021 20:16:51
- GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3BC2DC43460; Fri, 23 Jul 2021 20:16:51 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 63712C433D3;
-        Fri, 23 Jul 2021 20:16:49 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 23 Jul 2021 13:16:49 -0700
-From:   abhinavk@codeaurora.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
+        id S229461AbhGWTlm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jul 2021 15:41:42 -0400
+Received: from mout01.posteo.de ([185.67.36.65]:55995 "EHLO mout01.posteo.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229535AbhGWTll (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 23 Jul 2021 15:41:41 -0400
+Received: from submission (posteo.de [89.146.220.130]) 
+        by mout01.posteo.de (Postfix) with ESMTPS id 1D78B24002B
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jul 2021 22:22:13 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=posteo.de; s=2017;
+        t=1627071733; bh=4CbUy4rNMD3BYvfyaGS3gTaifeZzNzWCTH5e5SlwvuI=;
+        h=From:To:Cc:Subject:Date:From;
+        b=VLND2wRF61Wb9+S4/yu3FneWYNUXsuAwRM4+HKITPPH6ceRW4mrAf3a0fFjL2qkJk
+         XbqzpJDnAXoLaKSA5/By3P00ui4EOvj0afIvvgmt8pQc4jSyb68aoD1vnRl1P4/Enb
+         MnZcauMA8W+WfOlVZ6ANFQJMPfjnlCPfVHtN1bS/T3Foxvt5dsJsAeCjj5uHjFhd1E
+         5jZTnNL7yeCPrvZm+LKAZqWydhD7otF6L1OQy12faTWdbHB301oElhzKxY0kEDPTV6
+         L6CojVF3ICn5ZNUPEh7h32ifWHtOYpr1RsS8iIce2aeWdrexnECoFvDSM9zQ8XD9wa
+         R3vH+/vBjnQYg==
+Received: from customer (localhost [127.0.0.1])
+        by submission (posteo.de) with ESMTPSA id 4GWghz2ZhBz9rxY;
+        Fri, 23 Jul 2021 22:22:11 +0200 (CEST)
+From:   Julian Weigt <juw@posteo.de>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dri-devel@lists.freedesktop.org,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        Tanmay Shah <tanmay@codeaurora.org>,
-        freedreno@lists.freedesktop.org,
-        Chandan Uddaraju <chandanu@codeaurora.org>
-Subject: Re: [Freedreno] [PATCH 3/5] drm/msm/dp: Refactor ioremap wrapper
-In-Reply-To: <20210722024227.3313096-4-bjorn.andersson@linaro.org>
-References: <20210722024227.3313096-1-bjorn.andersson@linaro.org>
- <20210722024227.3313096-4-bjorn.andersson@linaro.org>
-Message-ID: <a9136a5ecdda1a60e9b6ea03fece6150@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
+        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
+        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        Craig Tatlor <ctatlor97@gmail.com>,
+        Julian Weigt <juw@posteo.de>
+Subject: [PATCH 1/2] ARM: dts: qcom-msm8974: Add blsp2_uart7 for bluetooth on sirius
+Date:   Fri, 23 Jul 2021 20:21:00 +0000
+Message-Id: <20210723202101.65371-1-juw@posteo.de>
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-07-21 19:42, Bjorn Andersson wrote:
-> In order to deal with multiple memory ranges in the following commit
-> change the ioremap wrapper to not poke directly into the dss_io_data
-> struct.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-I think we can squash this one and the next patch into one.
-Because the APIs and structs you are modifying here are again getting 
-touched in the next one too.
-> ---
->  drivers/gpu/drm/msm/dp/dp_parser.c | 28 ++++++++++++++--------------
->  drivers/gpu/drm/msm/dp/dp_parser.h |  2 +-
->  2 files changed, 15 insertions(+), 15 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c
-> b/drivers/gpu/drm/msm/dp/dp_parser.c
-> index c064ced78278..e68dacef547c 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_parser.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
-> @@ -19,39 +19,39 @@ static const struct dp_regulator_cfg 
-> sdm845_dp_reg_cfg = {
->  	},
->  };
-> 
-> -static int msm_dss_ioremap(struct platform_device *pdev,
-> -				struct dss_io_data *io_data)
-> +static void __iomem *dp_ioremap(struct platform_device *pdev, int
-> idx, size_t *len)
->  {
->  	struct resource *res = NULL;
-> +	void __iomem *base;
-> 
-> -	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> +	res = platform_get_resource(pdev, IORESOURCE_MEM, idx);
->  	if (!res) {
->  		DRM_ERROR("%pS->%s: msm_dss_get_res failed\n",
->  			__builtin_return_address(0), __func__);
-> -		return -ENODEV;
-> +		return ERR_PTR(-ENODEV);
->  	}
-> 
-> -	io_data->len = (u32)resource_size(res);
-> -	io_data->base = devm_ioremap(&pdev->dev, res->start, io_data->len);
-> -	if (!io_data->base) {
-> +	base = devm_ioremap_resource(&pdev->dev, res);
-> +	if (!base) {
->  		DRM_ERROR("%pS->%s: ioremap failed\n",
->  			__builtin_return_address(0), __func__);
-> -		return -EIO;
-> +		return ERR_PTR(-EIO);
->  	}
-> 
-> -	return 0;
-> +	*len = resource_size(res);
-> +	return base;
->  }
-> 
->  static int dp_parser_ctrl_res(struct dp_parser *parser)
->  {
-> -	int rc = 0;
->  	struct platform_device *pdev = parser->pdev;
->  	struct dp_io *io = &parser->io;
-> +	struct dss_io_data *dss = &io->dp_controller;
-> 
-> -	rc = msm_dss_ioremap(pdev, &io->dp_controller);
-> -	if (rc) {
-> -		DRM_ERROR("unable to remap dp io resources, rc=%d\n", rc);
-> -		return rc;
-> +	dss->base = dp_ioremap(pdev, 0, &dss->len);
-> +	if (IS_ERR(dss->base)) {
-> +		DRM_ERROR("unable to remap dp io region: %pe\n", dss->base);
-> +		return PTR_ERR(dss->base);
->  	}
-> 
->  	io->phy = devm_phy_get(&pdev->dev, "dp");
-> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h
-> b/drivers/gpu/drm/msm/dp/dp_parser.h
-> index 34b49628bbaf..dc62e70b1640 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_parser.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_parser.h
-> @@ -26,7 +26,7 @@ enum dp_pm_type {
->  };
-> 
->  struct dss_io_data {
-> -	u32 len;
-> +	size_t len;
->  	void __iomem *base;
->  };
+From: Craig Tatlor <ctatlor97@gmail.com>
+
+Signed-off-by: Craig Tatlor <ctatlor97@gmail.com>
+Signed-off-by: Julian Weigt <juw@posteo.de>
+---
+ arch/arm/boot/dts/qcom-msm8974.dtsi | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
+index eb398ddab003..27c22dc235c1 100644
+--- a/arch/arm/boot/dts/qcom-msm8974.dtsi
++++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
+@@ -715,6 +715,15 @@ blsp1_uart2: serial@f991e000 {
+ 			status = "disabled";
+ 		};
+ 
++		blsp2_uart7: serial@f995d000 {
++			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
++			reg = <0xf995d000 0x1000>;
++			interrupts = <GIC_SPI 113 IRQ_TYPE_NONE>;
++			clocks = <&gcc GCC_BLSP2_UART1_APPS_CLK>, <&gcc GCC_BLSP2_AHB_CLK>;
++			clock-names = "core", "iface";
++			status = "disabled";
++		};
++
+ 		blsp2_uart8: serial@f995e000 {
+ 			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
+ 			reg = <0xf995e000 0x1000>;
+-- 
+2.32.0
+
