@@ -2,34 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 31CEC3D4152
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jul 2021 22:12:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 635EA3D4169
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jul 2021 22:17:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231126AbhGWTb1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jul 2021 15:31:27 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:22624 "EHLO
+        id S229575AbhGWTge (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jul 2021 15:36:34 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:33256 "EHLO
         so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229461AbhGWTb1 (ORCPT
+        with ESMTP id S229648AbhGWTge (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jul 2021 15:31:27 -0400
+        Fri, 23 Jul 2021 15:36:34 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1627071120; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1627071427; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=z6QEHbzcWaJW5HVjSSDuWiycF/xowMUpC7M51JZaVKk=;
- b=t9A3+6FpDs6gutrbfSA8lf2RXjj5wEAMg85ZYdzObiNJx5YE3BM81icQrgwX0dxa7No5DXgd
- /K3Zyw3V0V7oKfB7jLeyx26I+oRy5vdDtuz5Vag58MCnzhnH5sIcb9ity+7CEEcMYiaZukJS
- apZH+H7dS6Ne44jQCAP3Q7Pax5Q=
+ MIME-Version: Sender; bh=HRN/UDX2HXLKNeRvuGxP4vsevVc7LCnZM359D66adWU=;
+ b=TNn8IU8EkTVGRJ4IFuTU68C45EJejrOCwcbVyz+D6fagCfVLeEyu3FxpKWchz7DhfEeJ5FYP
+ weTLBNMWWjQVwHwZFLCpa8a49fp3wcBxhfwDTeOYEVEpm3A/ylKF0clwEmB+/pGnQQe2q6L8
+ okZ6123Ziii/rP0FLir+uJ6+9JM=
 X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 60fb228ffcf9fe7b78dcc58a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 23 Jul 2021 20:11:59
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 60fb23b34815712f3ade4dad (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 23 Jul 2021 20:16:51
  GMT
 Sender: abhinavk=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id ECB7DC4323A; Fri, 23 Jul 2021 20:11:58 +0000 (UTC)
+        id 3BC2DC43460; Fri, 23 Jul 2021 20:16:51 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -39,13 +39,13 @@ Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 020BFC433F1;
-        Fri, 23 Jul 2021 20:11:58 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 63712C433D3;
+        Fri, 23 Jul 2021 20:16:49 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Fri, 23 Jul 2021 13:11:57 -0700
+Date:   Fri, 23 Jul 2021 13:16:49 -0700
 From:   abhinavk@codeaurora.org
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
@@ -59,11 +59,11 @@ Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Tanmay Shah <tanmay@codeaurora.org>,
         freedreno@lists.freedesktop.org,
         Chandan Uddaraju <chandanu@codeaurora.org>
-Subject: Re: [Freedreno] [PATCH 2/5] drm/msm/dp: Use devres for ioremap()
-In-Reply-To: <20210722024227.3313096-3-bjorn.andersson@linaro.org>
+Subject: Re: [Freedreno] [PATCH 3/5] drm/msm/dp: Refactor ioremap wrapper
+In-Reply-To: <20210722024227.3313096-4-bjorn.andersson@linaro.org>
 References: <20210722024227.3313096-1-bjorn.andersson@linaro.org>
- <20210722024227.3313096-3-bjorn.andersson@linaro.org>
-Message-ID: <612495cded56d0ec6abe502a296ebd6b@codeaurora.org>
+ <20210722024227.3313096-4-bjorn.andersson@linaro.org>
+Message-ID: <a9136a5ecdda1a60e9b6ea03fece6150@codeaurora.org>
 X-Sender: abhinavk@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
@@ -71,76 +71,90 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 2021-07-21 19:42, Bjorn Andersson wrote:
-> The non-devres version of ioremap is used, which requires manual
-> cleanup. But the code paths leading here is mixed with other devres
-> users, so rely on this for ioremap as well to simplify the code.
+> In order to deal with multiple memory ranges in the following commit
+> change the ioremap wrapper to not poke directly into the dss_io_data
+> struct.
 > 
 > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
+I think we can squash this one and the next patch into one.
+Because the APIs and structs you are modifying here are again getting 
+touched in the next one too.
 > ---
->  drivers/gpu/drm/msm/dp/dp_parser.c | 29 ++++-------------------------
->  1 file changed, 4 insertions(+), 25 deletions(-)
+>  drivers/gpu/drm/msm/dp/dp_parser.c | 28 ++++++++++++++--------------
+>  drivers/gpu/drm/msm/dp/dp_parser.h |  2 +-
+>  2 files changed, 15 insertions(+), 15 deletions(-)
 > 
 > diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c
 > b/drivers/gpu/drm/msm/dp/dp_parser.c
-> index 0519dd3ac3c3..c064ced78278 100644
+> index c064ced78278..e68dacef547c 100644
 > --- a/drivers/gpu/drm/msm/dp/dp_parser.c
 > +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
-> @@ -32,7 +32,7 @@ static int msm_dss_ioremap(struct platform_device 
-> *pdev,
+> @@ -19,39 +19,39 @@ static const struct dp_regulator_cfg 
+> sdm845_dp_reg_cfg = {
+>  	},
+>  };
+> 
+> -static int msm_dss_ioremap(struct platform_device *pdev,
+> -				struct dss_io_data *io_data)
+> +static void __iomem *dp_ioremap(struct platform_device *pdev, int
+> idx, size_t *len)
+>  {
+>  	struct resource *res = NULL;
+> +	void __iomem *base;
+> 
+> -	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +	res = platform_get_resource(pdev, IORESOURCE_MEM, idx);
+>  	if (!res) {
+>  		DRM_ERROR("%pS->%s: msm_dss_get_res failed\n",
+>  			__builtin_return_address(0), __func__);
+> -		return -ENODEV;
+> +		return ERR_PTR(-ENODEV);
 >  	}
 > 
->  	io_data->len = (u32)resource_size(res);
-> -	io_data->base = ioremap(res->start, io_data->len);
-> +	io_data->base = devm_ioremap(&pdev->dev, res->start, io_data->len);
->  	if (!io_data->base) {
+> -	io_data->len = (u32)resource_size(res);
+> -	io_data->base = devm_ioremap(&pdev->dev, res->start, io_data->len);
+> -	if (!io_data->base) {
+> +	base = devm_ioremap_resource(&pdev->dev, res);
+> +	if (!base) {
 >  		DRM_ERROR("%pS->%s: ioremap failed\n",
 >  			__builtin_return_address(0), __func__);
-> @@ -42,22 +42,6 @@ static int msm_dss_ioremap(struct platform_device 
-> *pdev,
->  	return 0;
+> -		return -EIO;
+> +		return ERR_PTR(-EIO);
+>  	}
+> 
+> -	return 0;
+> +	*len = resource_size(res);
+> +	return base;
 >  }
 > 
-> -static void msm_dss_iounmap(struct dss_io_data *io_data)
-> -{
-> -	if (io_data->base) {
-> -		iounmap(io_data->base);
-> -		io_data->base = NULL;
-> -	}
-> -	io_data->len = 0;
-> -}
-> -
-> -static void dp_parser_unmap_io_resources(struct dp_parser *parser)
-> -{
-> -	struct dp_io *io = &parser->io;
-> -
-> -	msm_dss_iounmap(&io->dp_controller);
-> -}
-> -
 >  static int dp_parser_ctrl_res(struct dp_parser *parser)
 >  {
->  	int rc = 0;
-> @@ -67,19 +51,14 @@ static int dp_parser_ctrl_res(struct dp_parser 
-> *parser)
->  	rc = msm_dss_ioremap(pdev, &io->dp_controller);
->  	if (rc) {
->  		DRM_ERROR("unable to remap dp io resources, rc=%d\n", rc);
-> -		goto err;
-> +		return rc;
+> -	int rc = 0;
+>  	struct platform_device *pdev = parser->pdev;
+>  	struct dp_io *io = &parser->io;
+> +	struct dss_io_data *dss = &io->dp_controller;
+> 
+> -	rc = msm_dss_ioremap(pdev, &io->dp_controller);
+> -	if (rc) {
+> -		DRM_ERROR("unable to remap dp io resources, rc=%d\n", rc);
+> -		return rc;
+> +	dss->base = dp_ioremap(pdev, 0, &dss->len);
+> +	if (IS_ERR(dss->base)) {
+> +		DRM_ERROR("unable to remap dp io region: %pe\n", dss->base);
+> +		return PTR_ERR(dss->base);
 >  	}
 > 
 >  	io->phy = devm_phy_get(&pdev->dev, "dp");
-> -	if (IS_ERR(io->phy)) {
-> -		rc = PTR_ERR(io->phy);
-> -		goto err;
-> -	}
-> +	if (IS_ERR(io->phy))
-> +		return PTR_ERR(io->phy);
+> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h
+> b/drivers/gpu/drm/msm/dp/dp_parser.h
+> index 34b49628bbaf..dc62e70b1640 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_parser.h
+> +++ b/drivers/gpu/drm/msm/dp/dp_parser.h
+> @@ -26,7 +26,7 @@ enum dp_pm_type {
+>  };
 > 
->  	return 0;
-> -err:
-> -	dp_parser_unmap_io_resources(parser);
-> -	return rc;
->  }
-> 
->  static int dp_parser_misc(struct dp_parser *parser)
+>  struct dss_io_data {
+> -	u32 len;
+> +	size_t len;
+>  	void __iomem *base;
+>  };
