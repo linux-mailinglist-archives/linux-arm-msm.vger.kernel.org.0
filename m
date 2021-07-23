@@ -2,281 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 540943D34D4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jul 2021 08:52:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 36E763D34F1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jul 2021 08:59:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234053AbhGWGLe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jul 2021 02:11:34 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:45727 "EHLO m43-7.mailgun.net"
+        id S234140AbhGWGTT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jul 2021 02:19:19 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57102 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232401AbhGWGLe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jul 2021 02:11:34 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1627023128; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=mhGTziIiW6WOD6A69omTzhtLWQHqYlyKpdcfV+WbaTs=; b=JCN1fU1WectTxcjKCQxcs7G88aCYXY+Mhn2xg0nNsCZlhZZv0MW89PGwvBLtGfS4MzQQG9HH
- 1DC2dof1/5Q59S4L2KkHjUGK8hBOSbdEVnKooRQPkU+j7hrjrWmnEixMEnLRYT2J6G249hv7
- HjKjOV8QecYt1udcLcK7/JTDXUY=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 60fa6715e81205dd0a87a870 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 23 Jul 2021 06:52:05
- GMT
-Sender: akhilpo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9699EC43460; Fri, 23 Jul 2021 06:52:05 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.1 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.105] (unknown [59.89.229.109])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A589FC433D3;
-        Fri, 23 Jul 2021 06:52:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A589FC433D3
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
-Subject: Re: [PATCH 3/3] drm/msm: Devfreq tuning
-To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>, David Airlie <airlied@linux.ie>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Sean Paul <sean@poorly.run>
-References: <20210722222145.1759900-1-robdclark@gmail.com>
- <20210722222145.1759900-4-robdclark@gmail.com>
-From:   Akhil P Oommen <akhilpo@codeaurora.org>
-Message-ID: <f0040cae-94d7-8409-ac9e-8034dd4fd530@codeaurora.org>
-Date:   Fri, 23 Jul 2021 12:21:58 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S234104AbhGWGTT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 23 Jul 2021 02:19:19 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 3471B60EE2;
+        Fri, 23 Jul 2021 06:59:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1627023593;
+        bh=XYXQf54lUe46euwLN+ychiYT/41gupoCm+Yy3SMr++o=;
+        h=From:To:Cc:Subject:In-Reply-To:References:Date:From;
+        b=qbcZApT3+5FbOvXnlYHTrFqZr3N3Cuf9+FeQ3FSheY/40atppQ0s2oW0mtHp+Rxca
+         nh6krXtoyK6eMO7jcvbnBIiiSh+QRuroPUoKFVJyc2Ogbsxv6w3JgyRk+ITOa31aQ+
+         qPdzfOrjvr9MgWSP5wHDbJgyiISNIQv3we2mqj/DW14tKQ0PaWdfpTTwSXnNuSMOrP
+         JYXAhSw3QUElXdhyKBkznGrVCrqbHkOtK4OkbaFjl3lgwiNE5JeIjPAiRxF61GeKl7
+         62tIEhQg02v+sn3VeKkDEZCJ7R+PMFd61XuAO8HA3XfFyjmLN9hFwjVNHrcDQl169T
+         UUAmyIrAtaPKQ==
+From:   Felipe Balbi <balbi@kernel.org>
+To:     Ferry Toth <fntoth@gmail.com>,
+        Wesley Cheng <wcheng@codeaurora.org>,
+        gregkh@linuxfoundation.org, robh+dt@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, frowand.list@gmail.com
+Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        jackp@codeaurora.org, heikki.krogerus@linux.intel.com,
+        andy.shevchenko@gmail.com
+Subject: Re: [PATCH v10 0/6] Re-introduce TX FIFO resize for larger EP bursting
+In-Reply-To: <bafa93bb-11e3-c8a5-e14a-b0a6d5695055@gmail.com>
+References: <1623923899-16759-1-git-send-email-wcheng@codeaurora.org>
+ <cfb83fe4-369c-ec72-7887-3bcb0f20fe15@gmail.com>
+ <ec8050c5-c013-4af6-b39e-69779c009a9c@codeaurora.org>
+ <f5ed0ee7-e333-681f-0f1a-d0227562204b@gmail.com>
+ <2e01c435-9ecc-4e3b-f55c-612a86667020@codeaurora.org>
+ <2ae9fa6a-3bb1-3742-0dd3-59678bdd8643@gmail.com>
+ <ebea75fe-5334-197b-f67a-cb6e1e30b39e@codeaurora.org>
+ <bafa93bb-11e3-c8a5-e14a-b0a6d5695055@gmail.com>
+Date:   Fri, 23 Jul 2021 09:59:42 +0300
+Message-ID: <87v951ldlt.fsf@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <20210722222145.1759900-4-robdclark@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; boundary="=-=-=";
+        micalg=pgp-sha256; protocol="application/pgp-signature"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/23/2021 3:51 AM, Rob Clark wrote:
-> From: Rob Clark <robdclark@chromium.org>
-> 
-> This adds a few things to try and make frequency scaling better match
-> the workload:
-> 
-> 1) Longer polling interval to avoid whip-lashing between too-high and
->     too-low frequencies in certain workloads, like mobile games which
->     throttle themselves to 30fps.
-> 
->     Previously our polling interval was short enough to let things
->     ramp down to minimum freq in the "off" frame, but long enough to
->     not react quickly enough when rendering started on the next frame,
->     leading to uneven frame times.  (Ie. rather than a consistent 33ms
->     it would alternate between 16/33/48ms.)
-> 
-> 2) Awareness of when the GPU is active vs idle.  Since we know when
->     the GPU is active vs idle, we can clamp the frequency down to the
->     minimum while it is idle.  (If it is idle for long enough, then
->     the autosuspend delay will eventually kick in and power down the
->     GPU.)
-> 
->     Since devfreq has no knowledge of powered-but-idle, this takes a
->     small bit of trickery to maintain a "fake" frequency while idle.
->     This, combined with the longer polling period allows devfreq to
->     arrive at a reasonable "active" frequency, while still clamping
->     to minimum freq when idle to reduce power draw.
-> 
-> 3) Boost.  Because simple_ondemand needs to see a certain threshold
->     of busyness to ramp up, we could end up needing multiple polling
->     cycles before it reacts appropriately on interactive workloads
->     (ex. scrolling a web page after reading for some time), on top
->     of the already lengthened polling interval, when we see a idle
->     to active transition after a period of idle time we boost the
->     frequency that we return to.
-> 
-> Signed-off-by: Rob Clark <robdclark@chromium.org>
-> ---
->   drivers/gpu/drm/msm/msm_gpu.c         |  8 +++
->   drivers/gpu/drm/msm/msm_gpu.h         |  9 ++++
->   drivers/gpu/drm/msm/msm_gpu_devfreq.c | 73 ++++++++++++++++++++++++++-
->   3 files changed, 89 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-> index 70d8610b1b73..68d2df590054 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu.c
-> +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> @@ -667,6 +667,10 @@ static void retire_submit(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
->   	list_del(&submit->node);
->   	spin_unlock(&ring->submit_lock);
->   
-> +	/* Update devfreq on transition from active->idle: */
-> +	if (atomic_dec_return(&gpu->active_submits) == 0)
-This will race with the submit path. To avoid that, this test and the 
-msm_devfreq_idle should be under the same lock. Same applies for the 
-submit path.
+--=-=-=
+Content-Type: text/plain
+Content-Transfer-Encoding: quoted-printable
 
--Akhil
-> +		msm_devfreq_idle(gpu);
-> +
->   	msm_gem_submit_put(submit);
->   }
->   
-> @@ -747,6 +751,10 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
->   	list_add_tail(&submit->node, &ring->submits);
->   	spin_unlock(&ring->submit_lock);
->   
-> +	/* Update devfreq on transition from idle->active: */
-> +	if (atomic_inc_return(&gpu->active_submits) == 1)
-> +		msm_devfreq_active(gpu);
-> +
->   	gpu->funcs->submit(gpu, submit);
->   	priv->lastctx = submit->queue->ctx;
->   
-> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-> index ada15e28f251..e14edda3d778 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu.h
-> +++ b/drivers/gpu/drm/msm/msm_gpu.h
-> @@ -84,6 +84,10 @@ struct msm_gpu_devfreq {
->   	struct devfreq *devfreq;
->   	u64 busy_cycles;
->   	ktime_t time;
-> +
-> +	/* Time and freq of last transition to idle: */
-> +	ktime_t idle_time;
-> +	unsigned long idle_freq;
->   };
->   
->   struct msm_gpu {
-> @@ -115,6 +119,9 @@ struct msm_gpu {
->   	 */
->   	struct list_head active_list;
->   
-> +	/* number of in-flight submits: */
-> +	atomic_t active_submits;
-> +
->   	/* does gpu need hw_init? */
->   	bool needs_hw_init;
->   
-> @@ -384,6 +391,8 @@ void msm_devfreq_init(struct msm_gpu *gpu);
->   void msm_devfreq_cleanup(struct msm_gpu *gpu);
->   void msm_devfreq_resume(struct msm_gpu *gpu);
->   void msm_devfreq_suspend(struct msm_gpu *gpu);
-> +void msm_devfreq_active(struct msm_gpu *gpu);
-> +void msm_devfreq_idle(struct msm_gpu *gpu);
->   
->   int msm_gpu_hw_init(struct msm_gpu *gpu);
->   
-> diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-> index 2e24a97be624..0a1ee20296a2 100644
-> --- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-> +++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-> @@ -22,6 +22,15 @@ static int msm_devfreq_target(struct device *dev, unsigned long *freq,
->   
->   	opp = devfreq_recommended_opp(dev, freq, flags);
->   
-> +	/*
-> +	 * If the GPU is idle, devfreq is not aware, so just ignore
-> +	 * it's requests
-> +	 */
-> +	if (gpu->devfreq.idle_freq) {
-> +		gpu->devfreq.idle_freq = *freq;
-> +		return 0;
-> +	}
-> +
->   	if (IS_ERR(opp))
->   		return PTR_ERR(opp);
->   
-> @@ -39,6 +48,9 @@ static int msm_devfreq_target(struct device *dev, unsigned long *freq,
->   
->   static unsigned long get_freq(struct msm_gpu *gpu)
->   {
-> +	if (gpu->devfreq.idle_freq)
-> +		return gpu->devfreq.idle_freq;
-> +
->   	if (gpu->funcs->gpu_get_freq)
->   		return gpu->funcs->gpu_get_freq(gpu);
->   
-> @@ -69,7 +81,8 @@ static int msm_devfreq_get_cur_freq(struct device *dev, unsigned long *freq)
->   }
->   
->   static struct devfreq_dev_profile msm_devfreq_profile = {
-> -	.polling_ms = 10,
-> +	.timer = DEVFREQ_TIMER_DELAYED,
-> +	.polling_ms = 50,
->   	.target = msm_devfreq_target,
->   	.get_dev_status = msm_devfreq_get_dev_status,
->   	.get_cur_freq = msm_devfreq_get_cur_freq,
-> @@ -130,3 +143,61 @@ void msm_devfreq_suspend(struct msm_gpu *gpu)
->   {
->   	devfreq_suspend_device(gpu->devfreq.devfreq);
->   }
-> +
-> +void msm_devfreq_active(struct msm_gpu *gpu)
-> +{
-> +	struct msm_gpu_devfreq *df = &gpu->devfreq;
-> +	struct devfreq_dev_status status;
-> +	unsigned int idle_time;
-> +	unsigned long target_freq = df->idle_freq;
-> +
-> +	/*
-> +	 * Hold devfreq lock to synchronize with get_dev_status()/
-> +	 * target() callbacks
-> +	 */
-> +	mutex_lock(&df->devfreq->lock);
-> +
-> +	idle_time = ktime_to_ms(ktime_sub(ktime_get(), df->idle_time));
-> +
-> +	/*
-> +	 * If we've been idle for a significant fraction of a polling
-> +	 * interval, then we won't meet the threshold of busyness for
-> +	 * the governor to ramp up the freq.. so give some boost
-> +	 */
-> +	if (idle_time > msm_devfreq_profile.polling_ms/2) {
-> +		target_freq *= 2;
-> +	}
-> +
-> +	df->idle_freq = 0;
-> +
-> +	msm_devfreq_target(&gpu->pdev->dev, &target_freq, 0);
-> +
-> +	/*
-> +	 * Reset the polling interval so we aren't inconsistent
-> +	 * about freq vs busy/total cycles
-> +	 */
-> +	msm_devfreq_get_dev_status(&gpu->pdev->dev, &status);
-> +
-> +	mutex_unlock(&df->devfreq->lock);
-> +}
-> +
-> +void msm_devfreq_idle(struct msm_gpu *gpu)
-> +{
-> +	struct msm_gpu_devfreq *df = &gpu->devfreq;
-> +	unsigned long idle_freq, target_freq = 0;
-> +
-> +	/*
-> +	 * Hold devfreq lock to synchronize with get_dev_status()/
-> +	 * target() callbacks
-> +	 */
-> +	mutex_lock(&df->devfreq->lock);
-> +
-> +	idle_freq = get_freq(gpu);
-> +
-> +	msm_devfreq_target(&gpu->pdev->dev, &target_freq, 0);
-> +
-> +	df->idle_time = ktime_get();
-> +	df->idle_freq = idle_freq;
-> +
-> +	mutex_unlock(&df->devfreq->lock);
-> +}
-> 
 
+Hi,
+
+Ferry Toth <fntoth@gmail.com> writes:
+>>> kernel: configfs-gadget gadget: u_audio_start_playback:451 Error!
+>>> kernel: configfs-gadget gadget: u_audio_start_playback:451 Error!
+>>> kernel: dwc3 dwc3.0.auto: request 00000000fbc71244 was not queued to ep=
+5in
+>>> kernel: dwc3 dwc3.0.auto: request 00000000ad1b8c18 was not queued to ep=
+5in
+>>> kernel: dwc3 dwc3.0.auto: Fifosize(2154) > RAM size(2022) ep5in
+>>> depth:115540359
+>>> kernel: configfs-gadget gadget: u_audio_start_playback:451 Error!
+>>> kernel: configfs-gadget gadget: u_audio_start_playback:451 Error!
+>>> kernel: dwc3 dwc3.0.auto: request 000000003c32dcc5 was not queued to ep=
+5in
+>>> kernel: dwc3 dwc3.0.auto: request 00000000b2512aa9 was not queued to ep=
+5in
+>>>
+>>> Removing uac2 from the config makes the call trace go away, but the R/W
+>>> speed does not change.
+>
+> I am testing with 5.14.0-rc2 and now related error appears (not in rc1).=
+=20
+> Disabling uac2 solves it still. Any idea what it could be?
+>
+> BUG: unable to handle page fault for address: 0000000500000000
+> #PF: supervisor instruction fetch in kernel mode
+> #PF: error_code(0x0010) - not-present page
+> PGD 0 P4D 0
+> Oops: 0010 [#1] SMP PTI
+> CPU: 0 PID: 494 Comm: irq/14-dwc3 Not tainted=20
+> 5.14.0-rc2-edison-acpi-standard #1
+
+(cool that you're running on ACPI heh)
+
+> Hardware name: Intel Corporation Merrifield/BODEGA BAY, BIOS 542=20
+> 2015.01.21:18.19.48
+> RIP: 0010:0x500000000
+> Code: Unable to access opcode bytes at RIP 0x4ffffffd6.
+> RSP: 0018:ffffa4d00045fc28 EFLAGS: 00010046
+> RAX: 0000000500000000 RBX: ffff8cd546aed200 RCX: 0000000000000000
+> RDX: 0000000000000000 RSI: ffff8cd547bfcae0 RDI: ffff8cd546aed200
+> RBP: ffff8cd547bfcae0 R08: 0000000000000000 R09: 0000000000000001
+> R10: ffff8cd541fd28c0 R11: 0000000000000000 R12: ffff8cd547342828
+> R13: ffff8cd546aed248 R14: 0000000000000000 R15: ffff8cd548b1d000
+> FS:  0000000000000000(0000) GS:ffff8cd57e200000(0000) knlGS:0000000000000=
+000
+> CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+> CR2: 0000000500000000 CR3: 000000000311e000 CR4: 00000000001006f0
+> Call Trace:
+>   ? dwc3_remove_requests.constprop.0+0x14d/0x170
+>   ? __dwc3_gadget_ep_disable+0x7a/0x160
+>   ? dwc3_gadget_ep_disable+0x3d/0xd0
+>   ? usb_ep_disable+0x1c/0x70
+>   ? u_audio_stop_capture+0x79/0x120 [u_audio]
+>   ? afunc_set_alt+0x73/0x80 [usb_f_uac2]
+>   ? composite_setup+0x224/0x1b90 [libcomposite]
+>   ? __dwc3_gadget_kick_transfer+0x160/0x400
+>   ? dwc3_gadget_ep_queue+0xf3/0x1a0
+>   ? configfs_composite_setup+0x6b/0x90 [libcomposite]
+>   ? configfs_composite_setup+0x6b/0x90 [libcomposite]
+>   ? dwc3_ep0_interrupt+0x459/0xa40
+>   ? dwc3_thread_interrupt+0x8ee/0xf40
+>   ? __schedule+0x235/0x6c0
+>   ? disable_irq_nosync+0x10/0x10
+>   ? irq_thread_fn+0x1b/0x60
+>   ? irq_thread+0xc0/0x160
+>   ? irq_thread_check_affinity+0x70/0x70
+>   ? irq_forced_thread_fn+0x70/0x70
+>   ? kthread+0x122/0x140
+>   ? set_kthread_struct+0x40/0x40
+>   ? ret_from_fork+0x22/0x30
+
+Do you mind enabling dwc3 traces and collecting them? Trying to figure
+out how we got here.
+
+=2D-=20
+balbi
+
+--=-=-=
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQFFBAEBCAAvFiEE9DumQ60WEZ09LIErzlfNM9wDzUgFAmD6aN4RHGJhbGJpQGtl
+cm5lbC5vcmcACgkQzlfNM9wDzUi3NQf6AqLgWuOZCCcgUr2dWldDdGcKPZS9EQVq
+ybt4YcNSonpVM8/E7znv/MjHG3nQFdGlA97oxE6KUPYjRKyiW7QMuCAEZQ3uPZPA
+6dvewAZkO9zlV1gBd7GTZjuluTU2idc9ee0KwlAN08xIkwV0/ZhDhg21NtwInw56
+BKNONvmAKkJCTshzQAIc6/4ONLhb8oggreJMlCmb7MSaVkfz2BSn6NzoayoyaCjK
+TXq0omJjggBm0gC26eD1xW2wftFdxfqJ28dTWtMPM4gdb41e9izENa18JytD0lkR
+HXNXm0V8AxHgF7HOUQ2TP8crCFsMTn4zVRm3YLVhR0iYlddO627vMA==
+=nekZ
+-----END PGP SIGNATURE-----
+--=-=-=--
