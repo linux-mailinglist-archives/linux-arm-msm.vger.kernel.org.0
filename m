@@ -2,104 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 82DD63D3BD2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jul 2021 16:34:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 25B0F3D3C2C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jul 2021 17:08:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235368AbhGWNxz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jul 2021 09:53:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36258 "EHLO
+        id S235506AbhGWO1o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jul 2021 10:27:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43852 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235302AbhGWNxv (ORCPT
+        with ESMTP id S235503AbhGWO1n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jul 2021 09:53:51 -0400
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1383FC061757
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jul 2021 07:34:25 -0700 (PDT)
-Received: by mail-oi1-x22a.google.com with SMTP id o20so1968230oiw.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jul 2021 07:34:25 -0700 (PDT)
+        Fri, 23 Jul 2021 10:27:43 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD2EAC061575;
+        Fri, 23 Jul 2021 08:08:13 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id r17so2636964lfe.2;
+        Fri, 23 Jul 2021 08:08:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=XAinfP2rs3am3N6tj2c+h5vadTCnbhTDK2b4aCECSE4=;
-        b=u+cadcfhA+j6aHp6BGy9ZUtZxONYh+7Cgj5HKJYLkI/ZqZFcXyRyBkWNm4atPw2l4L
-         YObLRM8IDWnlFrBQ+1dDDuUJAFzPwLq+D3C3DodvczZw8cG4Gexm/+4QYrnUPkUygtNA
-         hM0Ktvz/VTciCKBMovzabl0RaoZtM8NJzK2F68R1Be4bFyLP9dGNrRIGQUplaaY+owpu
-         M2h/C4gMig5HQbe24sbD7d/31fRS8EptxemUdnjJED2vObEwaMOT5LiCIpg7Jqli+sZL
-         F4hcUsnGXVL1yZLaYgPR8xA7kbpKYTWM+nkW9MkJ2HDR+mJYRLBJAwz9repEuw59MwN2
-         BLcw==
+        d=gmail.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=ry9ClILUnukJVzAZ0gclK3iIRVnY0FQvfvVPEP1QkQs=;
+        b=o4+ii2+yfQsTVRmy1j87kv3S6zaCmIjO9/qtDL5SXUEbqK14Rwim3jE7z+7nnR+Gds
+         swLsVQpQTGCf7I0cDZ1fQoxp/iMRqemj6aPVbZ3zU16cvk7imJ1i2cYwUCbjTV5juv5O
+         raX8a9d0ik7VvKyYtjMkAk7+J3BQG0LvNbEGbhrInqjC5EQbXWZ8eFbgKWKzjPheO2Mu
+         bI8qTrL8FsVsAPoGMu4HOjiAJlMgsJ7U71kmg57F9w068rv1u8g24TTiWQxE0/Yaw7tz
+         YNg/+NaYC8qLrXskcsX/4wgq3r/sJFn7jw9jlriJkjW0CUEJuZ1NQjvbH6qkYs5oZE48
+         hKHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=XAinfP2rs3am3N6tj2c+h5vadTCnbhTDK2b4aCECSE4=;
-        b=tY+unh15mBd8qdFYlmMyNbMRju1esvc61ohZW0j/noPsYsSGrG8IBUJjbal5OoRr81
-         yhJMJ8jvTxKlLmn2oVAs81OBh/pNGFLopFs4jsnabrYFgEkry4bPREg8F6FKCCykSKlA
-         mXqCMOdC+Wz3DVcyeuBRjMo39j+GPBOsFL2J/M9JOnhELD+cveUS+K7Be3iRW/pUBDMl
-         ZuSP/bvsf2WhdxMy1DG1Fq1ay6BwcA6BfKKeIKUrZVmHhYy3BLiwcWhF9/bwWYs0y0xb
-         /E94wunsHyBn0U9h8WpTofIQpXtVpfsygteGoNr22PXFqOJdnojEA8cirs3qlBORt/OC
-         Mc1w==
-X-Gm-Message-State: AOAM531H5SYhqcay0gDpM3EC/X/PzC8RC2Dw4GolmSmx+EVKg2nEPCZ9
-        JzDPE67prRznO89UW3z/L+PSLg==
-X-Google-Smtp-Source: ABdhPJxX86aBV8kuG7xzOwBTqRN+j8bd4Ak482LKf14NiNigPOtJzDnbi3hkRrQbTnoUDdwjoudU6Q==
-X-Received: by 2002:aca:d11:: with SMTP id 17mr8785630oin.19.1627050864349;
-        Fri, 23 Jul 2021 07:34:24 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id q63sm3747743ooq.4.2021.07.23.07.34.22
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=ry9ClILUnukJVzAZ0gclK3iIRVnY0FQvfvVPEP1QkQs=;
+        b=Jvbx069lBjlIqoLGD073dX9WZw4e9jzc1sONCbYzshcQjb6T8LwPp/scFlI/V4ndrR
+         P6bpMShwcMlrVf8phUqw9XaBPBpVXI7xzlPtIheraQMbIpnKLyn+FmflqivLh1Sexq95
+         QINWcqXxdLLd3xzNIBDLNyxcS+qiioAgOcNHpXi4+At3K8WJ1UpveKBgP7nMLoRWjIJM
+         h/6u1Yoqi3s1st5loXa3S+j2R3IgitRm7nOG7W3xjkO3eZ8PzQpLXjkdIl3z+Rya56Dg
+         asbjMD761T0mUfAqmeaF2ztpl8qey/52NuFOWN29r5+0r8ItPOpl62Xmcwh3s6XCOt2k
+         yQDw==
+X-Gm-Message-State: AOAM532ELHOTo1z3Vl3XXy2scLvRh7FPhAKkBh9XEeVIO8UXxCvDeUwR
+        8XYnsj7WqItHN95zlHhFPkg=
+X-Google-Smtp-Source: ABdhPJwsq45CeZ6RZ0YPzmhXnIpHPC/JFlRhdEshw1unMyw6hbFvkuzio/CVkJwyEs3OXuvzzHEOfw==
+X-Received: by 2002:a05:6512:139a:: with SMTP id p26mr3251734lfa.376.1627052891059;
+        Fri, 23 Jul 2021 08:08:11 -0700 (PDT)
+Received: from localhost.localdomain ([94.103.227.213])
+        by smtp.gmail.com with ESMTPSA id f10sm2256789lfu.121.2021.07.23.08.08.10
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Jul 2021 07:34:23 -0700 (PDT)
-Date:   Fri, 23 Jul 2021 09:34:20 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Serge Semin <fancer.lancer@gmail.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-        John Stultz <john.stultz@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux USB List <linux-usb@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        Amit Pundir <amit.pundir@linaro.org>
-Subject: Re: [PATCH 29/29] arm64: dts: qcom: Harmonize DWC USB3 DT nodes name
-Message-ID: <YPrTbC7fNOY3qCcJ@yoga>
-References: <20201020115959.2658-1-Sergey.Semin@baikalelectronics.ru>
- <20201020115959.2658-30-Sergey.Semin@baikalelectronics.ru>
- <CALAqxLX_FNvFndEDWtGbFPjSzuAbfqxQE07diBJFZtftwEJX5A@mail.gmail.com>
- <20210714124807.o22mottsrg3tv6nt@mobilestation>
- <YPfPDqJhfzbvDLvB@kroah.com>
- <20210721100220.ddfxwugivsndsedv@mobilestation>
- <YPf29+ewbrYgHxRP@kroah.com>
- <YPh/AS5svBk+gddY@yoga>
- <YPp7Q4IofUYQlrqd@kroah.com>
+        Fri, 23 Jul 2021 08:08:10 -0700 (PDT)
+Date:   Fri, 23 Jul 2021 18:08:05 +0300
+From:   Pavel Skripkin <paskripkin@gmail.com>
+To:     Manivannan Sadhasivam <mani@kernel.org>
+Cc:     davem@davemloft.net, kuba@kernel.org,
+        bjorn.andersson@sonymobile.com, courtney.cavin@sonymobile.com,
+        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        syzbot+35a511c72ea7356cdcf3@syzkaller.appspotmail.com
+Subject: Re: [PATCH] net: qrtr: fix memory leak in qrtr_local_enqueue
+Message-ID: <20210723180805.0f961fbc@gmail.com>
+In-Reply-To: <20210723122753.GA3739@thinkpad>
+References: <20210722161625.6956-1-paskripkin@gmail.com>
+        <20210723122753.GA3739@thinkpad>
+X-Mailer: Claws Mail 3.17.8 (GTK+ 2.24.33; x86_64-suse-linux-gnu)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YPp7Q4IofUYQlrqd@kroah.com>
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 23 Jul 03:18 CDT 2021, Greg Kroah-Hartman wrote:
+On Fri, 23 Jul 2021 17:57:53 +0530
+Manivannan Sadhasivam <mani@kernel.org> wrote:
 
-> On Wed, Jul 21, 2021 at 03:09:37PM -0500, Bjorn Andersson wrote:
-> > Which tree did you revert this in? 5.13.stable?)
+> On Thu, Jul 22, 2021 at 07:16:25PM +0300, Pavel Skripkin wrote:
+> > Syzbot reported memory leak in qrtr. The problem was in unputted
+> > struct sock. qrtr_local_enqueue() function calls qrtr_port_lookup()
+> > which takes sock reference if port was found. Then there is the
+> > following check:
+> > 
+> > if (!ipc || &ipc->sk == skb->sk) {
+> > 	...
+> > 	return -ENODEV;
+> > }
+> > 
+> > Since we should drop the reference before returning from this
+> > function and ipc can be non-NULL inside this if, we should add
+> > qrtr_port_put() inside this if.
+> > 
+> > Fixes: bdabad3e363d ("net: Add Qualcomm IPC router")
+> > Reported-and-tested-by:
+> > syzbot+35a511c72ea7356cdcf3@syzkaller.appspotmail.com
+> > Signed-off-by: Pavel Skripkin <paskripkin@gmail.com>
 > 
-> My usb-linus branch which will go to Linus later today.  Then we can
-> backport the revert to older kernels as needed.
+> Reviewed-by: Manivannan Sadhasivam <mani@kernel.org>
 > 
+> It'd be good if this patch can be extended to fix one more corner
+> case here:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/net/qrtr/qrtr.c#n522
+> 
+> Thanks,
+> Mani
 
-I'm not worried about the backports, I'm worried about conflicts you're
-causing because you're taking a non-usb patch through the usb tree.
+Hi, Manivannan!
 
-I was about to push a revert (to this and the other Qualcomm platforms),
-but as you're taking some set of reverts through the usb tree we're just
-in for a bunch of merge conflicts.
+I will fix leak there too in v2, thank you! 
 
-Regards,
-Bjorn
+
+
+With regards,
+Pavel Skripkin
+
+> 
+> > ---
+> >  net/qrtr/qrtr.c | 2 ++
+> >  1 file changed, 2 insertions(+)
+> > 
+> > diff --git a/net/qrtr/qrtr.c b/net/qrtr/qrtr.c
+> > index e6f4a6202f82..d5ce428d0b25 100644
+> > --- a/net/qrtr/qrtr.c
+> > +++ b/net/qrtr/qrtr.c
+> > @@ -839,6 +839,8 @@ static int qrtr_local_enqueue(struct qrtr_node
+> > *node, struct sk_buff *skb, 
+> >  	ipc = qrtr_port_lookup(to->sq_port);
+> >  	if (!ipc || &ipc->sk == skb->sk) { /* do not send to self
+> > */
+> > +		if (ipc)
+> > +			qrtr_port_put(ipc);
+> >  		kfree_skb(skb);
+> >  		return -ENODEV;
+> >  	}
+> > -- 
+> > 2.32.0
+> > 
+
