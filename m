@@ -2,122 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9371C3D412E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jul 2021 21:55:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D3E53D4146
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jul 2021 22:06:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231350AbhGWTO1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jul 2021 15:14:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53510 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231337AbhGWTO0 (ORCPT
+        id S231158AbhGWTZb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jul 2021 15:25:31 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:52571 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231187AbhGWTZb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jul 2021 15:14:26 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42B97C061757
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jul 2021 12:54:58 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id 21so3032931oin.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jul 2021 12:54:58 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=fAZFNKtfJy2tBmSXGgFB+64YhzMY2sE6d9fBKVXjEgU=;
-        b=IgsdNh8hpYiR0E6gJloGDtA3nuwQzZaw1e3IzVvDKDNACdDncmDRIpVuXlq4aYu6V5
-         z7fBW3mxaygpa/LOYmAxADp+AmmdJsjtaHkxdQCtN+TR3wxv+tOXprvn9gWVlVHqSd4U
-         LM5YMxXrcGuXZk72+L9Wr1c2dJ4R6PDG01KcTdwhaQHz2+9X5zgMytH6aipPss4VEEBG
-         HphWWvnWSy3qt9gHlck4HNue5RSXesITFxr2zbw/Bu2vPBJoitmrSm3nkjreYqzSVCLm
-         zTB7SGVCPkFCVfduL9dgIBlBYXmoeG3KyNkKT04S5r5geFhX+vBMXe685i/fUzd2DDTP
-         i4BA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=fAZFNKtfJy2tBmSXGgFB+64YhzMY2sE6d9fBKVXjEgU=;
-        b=mG7wwsBQJzfdQtIducIyB+PRtnwN0pMZNxgEmlbwX5jneIqBCTW9oKCt0QIxxi7Vnh
-         K6ZVFSjk+M31vk8KTTG5SDGVMlX8gh5ib8fzAMuu4NNSIOP5e6fewn33NQmoKGnD6bE2
-         dCcBquwax/HTfKhbD+o+QaaLun8QYKLXKq8HdFjoDo9w9pvLyw4yvgczS7EFfq9y4U9J
-         nbRPOqroTSn7BSiKyl7NbaNdPqTZ298GFS5ZTvQI4oEHo2TWbJVXF3jJKcRVIsZbsmjs
-         8OAYmVZ+HQMmiTMafSV9ToHPzrv9yNKxlcITvnn4L+p97L18R7OOr8KS4RGLGRmk4E1/
-         k1Zg==
-X-Gm-Message-State: AOAM533Sdw+3aPmOFCgrxJrs9pK4IKFJmqX0pD9szMCB8ds6lVGxfUI6
-        NUeW4ydu7qOOsUz4LPYnrZX15w==
-X-Google-Smtp-Source: ABdhPJzhHqN66w+C/2xjphTeEC2y3ut4LgJecMAc08lmKvS3Pi7OZOlW2DDNpbkaHWOqg09wpxzkCw==
-X-Received: by 2002:aca:f58e:: with SMTP id t136mr9596506oih.33.1627070097639;
-        Fri, 23 Jul 2021 12:54:57 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id u7sm1427999oop.11.2021.07.23.12.54.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Jul 2021 12:54:57 -0700 (PDT)
-Date:   Fri, 23 Jul 2021 14:54:54 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Serge Semin <fancer.lancer@gmail.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-        John Stultz <john.stultz@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux USB List <linux-usb@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        Amit Pundir <amit.pundir@linaro.org>
-Subject: Re: [PATCH 29/29] arm64: dts: qcom: Harmonize DWC USB3 DT nodes name
-Message-ID: <YPsejtV31WrYJX7e@yoga>
-References: <20201020115959.2658-30-Sergey.Semin@baikalelectronics.ru>
- <CALAqxLX_FNvFndEDWtGbFPjSzuAbfqxQE07diBJFZtftwEJX5A@mail.gmail.com>
- <20210714124807.o22mottsrg3tv6nt@mobilestation>
- <YPfPDqJhfzbvDLvB@kroah.com>
- <20210721100220.ddfxwugivsndsedv@mobilestation>
- <YPf29+ewbrYgHxRP@kroah.com>
- <YPh/AS5svBk+gddY@yoga>
- <YPp7Q4IofUYQlrqd@kroah.com>
- <YPrTbC7fNOY3qCcJ@yoga>
- <YPrmTYQJ33AIxcwP@kroah.com>
+        Fri, 23 Jul 2021 15:25:31 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1627070764; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=R6B44KvNJoUb62PuGtXARkIntmCEbpuSvDX2oWLc0ew=;
+ b=H9b7TkTPl020zMNI6Jhnbye4jSxR6uOlZ8uTtrt3Jl0KX/R30YheFSI3cNY/MLzwLaX/A3KF
+ auImQXfha5xOQdwQ4sxgCmdJ0eoUrAZKLKiCv+kcmiNmCFiwNmjluNDEAgQF8fgigmURoxN4
+ ugMoRy6s4oDA/zUG8+MqBtTDcgY=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 60fb21144815712f3ad1d3f6 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 23 Jul 2021 20:05:40
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2A078C43143; Fri, 23 Jul 2021 20:05:40 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 179F8C433F1;
+        Fri, 23 Jul 2021 20:05:39 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YPrmTYQJ33AIxcwP@kroah.com>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 23 Jul 2021 13:05:38 -0700
+From:   abhinavk@codeaurora.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Kuogee Hsieh <khsieh@codeaurora.org>,
+        Tanmay Shah <tanmay@codeaurora.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/5] dt-bindings: msm/dp: Change reg definition
+In-Reply-To: <20210722024227.3313096-2-bjorn.andersson@linaro.org>
+References: <20210722024227.3313096-1-bjorn.andersson@linaro.org>
+ <20210722024227.3313096-2-bjorn.andersson@linaro.org>
+Message-ID: <6318d5abc7f1ed9622218bf29394ec64@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 23 Jul 10:54 CDT 2021, Greg Kroah-Hartman wrote:
-
-> On Fri, Jul 23, 2021 at 09:34:20AM -0500, Bjorn Andersson wrote:
-> > On Fri 23 Jul 03:18 CDT 2021, Greg Kroah-Hartman wrote:
-> > 
-> > > On Wed, Jul 21, 2021 at 03:09:37PM -0500, Bjorn Andersson wrote:
-> > > > Which tree did you revert this in? 5.13.stable?)
-> > > 
-> > > My usb-linus branch which will go to Linus later today.  Then we can
-> > > backport the revert to older kernels as needed.
-> > > 
-> > 
-> > I'm not worried about the backports, I'm worried about conflicts you're
-> > causing because you're taking a non-usb patch through the usb tree.
-> > 
-> > I was about to push a revert (to this and the other Qualcomm platforms),
-> > but as you're taking some set of reverts through the usb tree we're just
-> > in for a bunch of merge conflicts.
+On 2021-07-21 19:42, Bjorn Andersson wrote:
+> reg was defined as one region covering the entire DP block, but the
+> memory map is actually split in 4 regions and obviously the size of
+> these regions differs between platforms.
 > 
-> It shouldn't be a merge conflict as you can apply the same revert to
-> your tree now and keep on merging.  When you pick up 5.14-rc3 from Linus
-> it should merge "correctly", right?
+> Switch the reg to require that all four regions are specified instead.
+> It is expected that the implementation will handle existing DTBs, even
+> though the schema defines the new layout.
 > 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-I typically don't merge back the -rcs into my -next branch, is that
-common practice?
+> ---
+>  .../bindings/display/msm/dp-controller.yaml           | 11 +++++++++--
+>  1 file changed, 9 insertions(+), 2 deletions(-)
+> 
+> diff --git
+> a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> index 64d8d9e5e47a..a6e41be038fc 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> @@ -19,7 +19,11 @@ properties:
+>        - qcom,sc7180-dp
+> 
+>    reg:
+> -    maxItems: 1
+> +    items:
+> +      - description: ahb register block
+> +      - description: aux register block
+> +      - description: link register block
+> +      - description: p0 register block
+Do you also want to add the p1 register block here?
+> 
+>    interrupts:
+>      maxItems: 1
+> @@ -100,7 +104,10 @@ examples:
+> 
+>      displayport-controller@ae90000 {
+>          compatible = "qcom,sc7180-dp";
+> -        reg = <0xae90000 0x1400>;
+> +        reg = <0xae90000 0x200>,
+> +              <0xae90200 0x200>,
+> +              <0xae90400 0xc00>,
+> +              <0xae91000 0x400>;
+here too?
+>          interrupt-parent = <&mdss>;
+>          interrupts = <12>;
+>          clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
 
 
-But I still don't understand why you insist on driving this through your
-tree. I've asked you several times to show me on the patch so I at least
-can Ack it. I made a mistake, but why do you insist on keeping me - the
-maintainer - out of the loop?
-
-Regards,
-Bjorn
