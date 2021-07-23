@@ -2,66 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A15EA3D3683
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jul 2021 10:19:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 57CDC3D36C3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 23 Jul 2021 10:33:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234263AbhGWHhr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jul 2021 03:37:47 -0400
-Received: from mail.kernel.org ([198.145.29.99]:56714 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234030AbhGWHhp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jul 2021 03:37:45 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 928DB60E8E;
-        Fri, 23 Jul 2021 08:18:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1627028298;
-        bh=4CRiX38YF4u1jCf0x64vQjLHd/VXeQ1lk6/OfofjY+s=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=wAXTZFP+GiFb2vs71y03nVi9jRaIjPimc/BQSrqWc63m9Uc/cJFftmGw9nH/bRrci
-         D+TIJMxumtcsSXlSBtZI5LckuWFgCpdbd0oB1VGiOjsx7bBERHHu8kOEb1b0zUvpC/
-         7mP5MheA8crYymeACfB+KSVMbgoHL4RMTWXwS+Y4=
-Date:   Fri, 23 Jul 2021 10:18:11 +0200
-From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Serge Semin <fancer.lancer@gmail.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
+        id S234384AbhGWHvj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jul 2021 03:51:39 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:24585 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234313AbhGWHvj (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 23 Jul 2021 03:51:39 -0400
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 23 Jul 2021 01:32:11 -0700
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 23 Jul 2021 01:32:08 -0700
+X-QCInternal: smtphost
+Received: from c-skakit-linux.ap.qualcomm.com (HELO c-skakit-linux.qualcomm.com) ([10.242.51.242])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 23 Jul 2021 14:01:33 +0530
+Received: by c-skakit-linux.qualcomm.com (Postfix, from userid 2344709)
+        id 3872C52A3; Fri, 23 Jul 2021 14:01:32 +0530 (IST)
+From:   satya priya <skakit@codeaurora.org>
+To:     Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-        John Stultz <john.stultz@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
         Andy Gross <agross@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux USB List <linux-usb@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        Amit Pundir <amit.pundir@linaro.org>
-Subject: Re: [PATCH 29/29] arm64: dts: qcom: Harmonize DWC USB3 DT nodes name
-Message-ID: <YPp7Q4IofUYQlrqd@kroah.com>
-References: <20201020115959.2658-1-Sergey.Semin@baikalelectronics.ru>
- <20201020115959.2658-30-Sergey.Semin@baikalelectronics.ru>
- <CALAqxLX_FNvFndEDWtGbFPjSzuAbfqxQE07diBJFZtftwEJX5A@mail.gmail.com>
- <20210714124807.o22mottsrg3tv6nt@mobilestation>
- <YPfPDqJhfzbvDLvB@kroah.com>
- <20210721100220.ddfxwugivsndsedv@mobilestation>
- <YPf29+ewbrYgHxRP@kroah.com>
- <YPh/AS5svBk+gddY@yoga>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YPh/AS5svBk+gddY@yoga>
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>
+Cc:     Das Srinagesh <gurus@codeaurora.org>, kgunda@codeaurora.org,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        satya priya <skakit@codeaurora.org>
+Subject: [PATCH V7 0/3] Convert qcom pmic gpio bindings to YAML
+Date:   Fri, 23 Jul 2021 14:01:11 +0530
+Message-Id: <1627029074-23449-1-git-send-email-skakit@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jul 21, 2021 at 03:09:37PM -0500, Bjorn Andersson wrote:
-> Which tree did you revert this in? 5.13.stable?)
+satya priya (3):
+  dt-bindings: mfd: pm8008: Add gpio-ranges and spmi-gpio compatible
+  dt-bindings: pinctrl: qcom-pmic-gpio: Convert qcom pmic gpio bindings
+    to YAML
+  dt-bindings: pinctrl: qcom-pmic-gpio: Remove the interrupts property
 
-My usb-linus branch which will go to Linus later today.  Then we can
-backport the revert to older kernels as needed.
+ .../devicetree/bindings/mfd/qcom,pm8008.yaml       |  13 +-
+ .../devicetree/bindings/pinctrl/qcom,pmic-gpio.txt | 288 ---------------------
+ .../bindings/pinctrl/qcom,pmic-gpio.yaml           | 239 +++++++++++++++++
+ 3 files changed, 249 insertions(+), 291 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
 
-thanks,
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
 
-greg k-h
