@@ -2,80 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4CDC93D4330
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jul 2021 00:58:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E8843D4339
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jul 2021 01:03:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233019AbhGWWR6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jul 2021 18:17:58 -0400
-Received: from mail-il1-f176.google.com ([209.85.166.176]:46786 "EHLO
-        mail-il1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232550AbhGWWR5 (ORCPT
+        id S232825AbhGWWXG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jul 2021 18:23:06 -0400
+Received: from mail-io1-f48.google.com ([209.85.166.48]:37877 "EHLO
+        mail-io1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231954AbhGWWXG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jul 2021 18:17:57 -0400
-Received: by mail-il1-f176.google.com with SMTP id r5so2912981ilc.13;
-        Fri, 23 Jul 2021 15:58:29 -0700 (PDT)
+        Fri, 23 Jul 2021 18:23:06 -0400
+Received: by mail-io1-f48.google.com with SMTP id r18so4416411iot.4;
+        Fri, 23 Jul 2021 16:03:38 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=4EjJJoODvkdc6CyvJ8WnupnabiMRBiCfSTR5snkfIfA=;
-        b=btmv6ifSFtNvbu9IbUJSyFHDYaJNvoHVLuUnfDidaEkNlOS26RjbOeh55GGHhE4m5p
-         a9sQao2ZtOPoUZgO6NM5IlmcDE19llap7TBgB2SMMhrGfDhc/6v7eHHLggBZIyJN4eKL
-         lHZ9+HDq3PIvJ4qeHD6cHPpPlpGwG9KPNz4LX465onOsp/ANJxEeTLAPaRXMZDMbHkQJ
-         iqNc2LIinZQA3GN4pKqePcs5dXfuMMNt8BkvTpwWA3d0dYbDPg+VQ/fhgCgZJIgbUM6/
-         pioxtwSUH6RQEX40IQFtdj4IBZbLPOcGWSykCz+mB5IXfhB3ojzjOh7zRsPzvrwMfDpK
-         0p9w==
-X-Gm-Message-State: AOAM531C3iQJqERAxACXHM4D7kjwBCVz3XO/FEqFUWJBvJvhACncSaen
-        fQSuB0qtxund92F6eGSK0A==
-X-Google-Smtp-Source: ABdhPJwcFoHfdcoop1JvGeCqIgCqWNTlquHcUuqyvVVXqNRkOG0TE2VGciMjSdTlkkuMMi9O6lEh/A==
-X-Received: by 2002:a92:c5c2:: with SMTP id s2mr4981797ilt.180.1627081109494;
-        Fri, 23 Jul 2021 15:58:29 -0700 (PDT)
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=DW4bQw9bBu1BhDL+EWMhBLTiwn6MVnii4A/u2r0uOO4=;
+        b=ihIKncyVTDq4wTE8FoYN9zK3HA34IhaxvttAOwvSf4dlt/dfr8OoqDgWVyRduLDRAZ
+         uSz/c63/3fcK5gaGBMgFTaf8/eD0KrhapTJcn6D6dq51sA9pK/0bHPXie7JzzDQIrXP7
+         /uYGXaE9J5GoytxRo92FuvFBtkMen7rDgIMuFv7l+XNp2/WWosHCBDaIm8IdHSwGW5j8
+         cf7h/8dDDrgbOj3JONe+8tMj5UwE//HFIh1f9obD9kKOHnLYmE5RSPzphqNIgBkaZu8W
+         Xcx9bdrPE0PlXIRQRoW4/c5exb2Xxzam2S2pZiARHA2axmus93FQzuO6pqavC8GVzWH9
+         Yoiw==
+X-Gm-Message-State: AOAM530Fa2lZxduIwuxZwY+2VNQIolTHvn+AzrAPMx2oeUBDKHd029bq
+        k51KOrUE28UqlIJfGguk3Q==
+X-Google-Smtp-Source: ABdhPJzkKRM3SdTpwR7KsVQI2xc7VD6bxG1O9jkUH3Cu4HixVa3X3vQH5/ZVGWU5h977KexrakHw8w==
+X-Received: by 2002:a05:6638:25c7:: with SMTP id u7mr6034251jat.26.1627081418604;
+        Fri, 23 Jul 2021 16:03:38 -0700 (PDT)
 Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id o8sm17107239ils.24.2021.07.23.15.58.27
+        by smtp.gmail.com with ESMTPSA id v18sm17161933iln.49.2021.07.23.16.03.37
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Jul 2021 15:58:28 -0700 (PDT)
-Received: (nullmailer pid 2762026 invoked by uid 1000);
-        Fri, 23 Jul 2021 22:58:26 -0000
-Date:   Fri, 23 Jul 2021 16:58:26 -0600
+        Fri, 23 Jul 2021 16:03:38 -0700 (PDT)
+Received: (nullmailer pid 2770149 invoked by uid 1000);
+        Fri, 23 Jul 2021 23:03:36 -0000
+Date:   Fri, 23 Jul 2021 17:03:36 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     satya priya <skakit@codeaurora.org>
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Lee Jones <lee.jones@linaro.org>, linux-gpio@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, kgunda@codeaurora.org,
-        linux-kernel@vger.kernel.org,
+To:     Baruch Siach <baruch@tkos.co.il>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Das Srinagesh <gurus@codeaurora.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Subject: Re: [PATCH V7 1/3] dt-bindings: mfd: pm8008: Add gpio-ranges and
- spmi-gpio compatible
-Message-ID: <20210723225826.GA2761969@robh.at.kernel.org>
-References: <1627029074-23449-1-git-send-email-skakit@codeaurora.org>
- <1627029074-23449-2-git-send-email-skakit@codeaurora.org>
+        Balaji Prakash J <bjagadee@codeaurora.org>,
+        Robert Marko <robert.marko@sartura.hr>,
+        Kathiravan T <kathirav@codeaurora.org>,
+        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v6 3/4] dt-bindings: pwm: add IPQ6018 binding
+Message-ID: <20210723230336.GA2764383@robh.at.kernel.org>
+References: <889aae1b88f120cb6281919d27164a959fbe69d0.1626948070.git.baruch@tkos.co.il>
+ <70f0522a9394e9da2f31871442d47f6ad0ff41aa.1626948070.git.baruch@tkos.co.il>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=iso-8859-1
 Content-Disposition: inline
-In-Reply-To: <1627029074-23449-2-git-send-email-skakit@codeaurora.org>
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <70f0522a9394e9da2f31871442d47f6ad0ff41aa.1626948070.git.baruch@tkos.co.il>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 23 Jul 2021 14:01:12 +0530, satya priya wrote:
-> Add gpio-ranges and "qcom,spmi-gpio" compatible to match with the
-> parent qcom,pmic-gpio.yaml binding.
+On Thu, Jul 22, 2021 at 01:01:09PM +0300, Baruch Siach wrote:
+> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
 > 
-> Signed-off-by: satya priya <skakit@codeaurora.org>
+> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
 > ---
-> Changes in V7:
->  - This is newly added in V7 to resolve below error.
->  dtschema/dtc warnings/errors:
->  /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/mfd/qcom,pm8008.example.dt.yaml: gpio@c000: compatible: ['qcom,pm8008-gpio'] is too short
-> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
->  /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/mfd/qcom,pm8008.example.dt.yaml: gpio@c000: 'gpio-ranges' is a required property
-> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
+> v6:
 > 
->  Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml | 13 ++++++++++---
->  1 file changed, 10 insertions(+), 3 deletions(-)
+>   Device node is child of TCSR; remove phandle (Rob Herring)
 > 
+>   Add assigned-clocks/assigned-clock-rates (Uwe Kleine-König)
+> 
+> v5: Use qcom,pwm-regs for phandle instead of direct regs (Bjorn
+>     Andersson, Kathiravan T)
+> 
+> v4: Update the binding example node as well (Rob Herring's bot)
+> 
+> v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
+> 
+> v2: Make #pwm-cells const (Rob Herring)
+> ---
+>  .../devicetree/bindings/pwm/ipq-pwm.yaml      | 69 +++++++++++++++++++
+>  1 file changed, 69 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
+> new file mode 100644
+> index 000000000000..ee2bb03a1223
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
+> @@ -0,0 +1,69 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/pwm/ipq-pwm.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm IPQ6018 PWM controller
+> +
+> +maintainers:
+> +  - Baruch Siach <baruch@tkos.co.il>
+> +
+> +properties:
+> +  "#pwm-cells":
+> +    const: 2
+> +
+> +  compatible:
+> +    const: qcom,ipq6018-pwm
+> +
+> +  offset:
+> +    description: |
+> +      Offset of PWM register in the TCSR block.
+> +    maxItems: 1
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Use 'reg' here instead.
+
+> +
+> +  clocks:
+> +    maxItems: 1
+> +
+> +  clock-names:
+> +    const: core
+> +
+> +  assigned-clocks:
+> +    maxItems: 1
+> +
+> +  assigned-clock-rates:
+> +    maxItems: 1
+> +
+> +required:
+> +  - "#pwm-cells"
+> +  - compatible
+> +  - clocks
+> +  - clock-names
+> +  - assigned-clocks
+> +  - assigned-clock-rates
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/clock/qcom,gcc-ipq6018.h>
+> +
+> +    soc {
+> +        #address-cells = <2>;
+> +        #size-cells = <2>;
+> +
+> +        tcsr: syscon@1937000 {
+> +            compatible = "syscon", "simple-mfd";
+
+This should really have a specific compatible string, but we don't warn 
+for that (yet).
+
+> +            reg = <0x0 0x01937000 0x0 0x21000>;
+> +
+> +            pwm: pwm {
+> +                #pwm-cells = <2>;
+> +                compatible = "qcom,ipq6018-pwm";
+> +                offset = <0xa010>;
+> +                clocks = <&gcc GCC_ADSS_PWM_CLK>;
+> +                clock-names = "core";
+> +                assigned-clocks = <&gcc GCC_ADSS_PWM_CLK>;
+> +                assigned-clock-rates = <100000000>;
+> +                status = "disabled";
+
+Drop 'status'
+
+> +            };
+> +        };
+> +    };
+> -- 
+> 2.30.2
+> 
+> 
