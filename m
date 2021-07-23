@@ -2,177 +2,105 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8E8843D4339
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jul 2021 01:03:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 400423D4341
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jul 2021 01:06:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232825AbhGWWXG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jul 2021 18:23:06 -0400
-Received: from mail-io1-f48.google.com ([209.85.166.48]:37877 "EHLO
-        mail-io1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231954AbhGWWXG (ORCPT
+        id S233120AbhGWWZ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jul 2021 18:25:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40142 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232550AbhGWWZ0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jul 2021 18:23:06 -0400
-Received: by mail-io1-f48.google.com with SMTP id r18so4416411iot.4;
-        Fri, 23 Jul 2021 16:03:38 -0700 (PDT)
+        Fri, 23 Jul 2021 18:25:26 -0400
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFB9CC061757
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jul 2021 16:05:58 -0700 (PDT)
+Received: by mail-qk1-x735.google.com with SMTP id k7so2918325qki.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jul 2021 16:05:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=TXXHRlqkn1UKOJrEoCU/1CKsPV1IVFDrHXzP0rexpUc=;
+        b=kVhKTV2jwfU3UL2TDVAx6Od2VUtF8PD0tgQKJyramFzwij7jMAQUysiBLabG1p2Llz
+         Ep8C6gJX7kRzIEA1Nu3ClCym8TQf+DSjQflhNSgcme7OBA0D1izAakUn+2PFJbgt5Q4I
+         IujYcYZTx1uXzWQVUaqC5JLKexzzgMlgzil4k=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=DW4bQw9bBu1BhDL+EWMhBLTiwn6MVnii4A/u2r0uOO4=;
-        b=ihIKncyVTDq4wTE8FoYN9zK3HA34IhaxvttAOwvSf4dlt/dfr8OoqDgWVyRduLDRAZ
-         uSz/c63/3fcK5gaGBMgFTaf8/eD0KrhapTJcn6D6dq51sA9pK/0bHPXie7JzzDQIrXP7
-         /uYGXaE9J5GoytxRo92FuvFBtkMen7rDgIMuFv7l+XNp2/WWosHCBDaIm8IdHSwGW5j8
-         cf7h/8dDDrgbOj3JONe+8tMj5UwE//HFIh1f9obD9kKOHnLYmE5RSPzphqNIgBkaZu8W
-         Xcx9bdrPE0PlXIRQRoW4/c5exb2Xxzam2S2pZiARHA2axmus93FQzuO6pqavC8GVzWH9
-         Yoiw==
-X-Gm-Message-State: AOAM530Fa2lZxduIwuxZwY+2VNQIolTHvn+AzrAPMx2oeUBDKHd029bq
-        k51KOrUE28UqlIJfGguk3Q==
-X-Google-Smtp-Source: ABdhPJzkKRM3SdTpwR7KsVQI2xc7VD6bxG1O9jkUH3Cu4HixVa3X3vQH5/ZVGWU5h977KexrakHw8w==
-X-Received: by 2002:a05:6638:25c7:: with SMTP id u7mr6034251jat.26.1627081418604;
-        Fri, 23 Jul 2021 16:03:38 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id v18sm17161933iln.49.2021.07.23.16.03.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 23 Jul 2021 16:03:38 -0700 (PDT)
-Received: (nullmailer pid 2770149 invoked by uid 1000);
-        Fri, 23 Jul 2021 23:03:36 -0000
-Date:   Fri, 23 Jul 2021 17:03:36 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Baruch Siach <baruch@tkos.co.il>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Balaji Prakash J <bjagadee@codeaurora.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v6 3/4] dt-bindings: pwm: add IPQ6018 binding
-Message-ID: <20210723230336.GA2764383@robh.at.kernel.org>
-References: <889aae1b88f120cb6281919d27164a959fbe69d0.1626948070.git.baruch@tkos.co.il>
- <70f0522a9394e9da2f31871442d47f6ad0ff41aa.1626948070.git.baruch@tkos.co.il>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=TXXHRlqkn1UKOJrEoCU/1CKsPV1IVFDrHXzP0rexpUc=;
+        b=lSx7k8jZU7SEpRKJg55mm/osryo20zE5M/52zQfoEJYyKrEnVCtdGOHaSP6wYlcIX/
+         E6I5952xuyY9ImdGjMvZzEXdVElKmhB91d5mlLnnuSKt4IdbNRG8kl2du6bLeCL1jeoE
+         QbGH9YNICZ4EFOqHQoRGbaKMIDkZ/VZ56B/k7glI68wL20V3qLKgF2O+JljDjEr8ptD2
+         g0svrSxfecohuC92snKGK0jNJW0LaXpANsARe3J3jqhJ6ZZDVHMZ+MoQouktSz//zRNk
+         AEMDjHPLWGteTzynwLkR90AcIBDIjthg9eqEkCPNXrTjr9D0ASEPDBOKgiion3ZpyBKx
+         ybuA==
+X-Gm-Message-State: AOAM530tffqx12Wv5IFO8ABU7dr5m8TO3rdLgYoa1FvRxKpHsLCQVkPR
+        1RnAr7EdN2GBs60Q+c45YNG+oArYCFlmSw==
+X-Google-Smtp-Source: ABdhPJziXX2WqD6VoV34sfjrs1XVQMEiq4Y5J3Xbmh0R95EsMfi/xYAy6HsPYrdriyMbVZBAv0SXaQ==
+X-Received: by 2002:a05:620a:4d0:: with SMTP id 16mr7029775qks.430.1627081557424;
+        Fri, 23 Jul 2021 16:05:57 -0700 (PDT)
+Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com. [209.85.219.174])
+        by smtp.gmail.com with ESMTPSA id z68sm15096942qke.86.2021.07.23.16.05.56
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 23 Jul 2021 16:05:56 -0700 (PDT)
+Received: by mail-yb1-f174.google.com with SMTP id x192so4774295ybe.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jul 2021 16:05:56 -0700 (PDT)
+X-Received: by 2002:a25:6088:: with SMTP id u130mr9735827ybb.257.1627081555988;
+ Fri, 23 Jul 2021 16:05:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <70f0522a9394e9da2f31871442d47f6ad0ff41aa.1626948070.git.baruch@tkos.co.il>
+References: <20210521134437.v2.1.Id1c70158722750aec0673d60c12e46a9c66bbfed@changeid>
+In-Reply-To: <20210521134437.v2.1.Id1c70158722750aec0673d60c12e46a9c66bbfed@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 23 Jul 2021 16:05:44 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=X8xgn=ueyryFZVA-VNLEU_sk8H29D08JaEpw2Qh2OFqQ@mail.gmail.com>
+Message-ID: <CAD=FV=X8xgn=ueyryFZVA-VNLEU_sk8H29D08JaEpw2Qh2OFqQ@mail.gmail.com>
+Subject: Re: [PATCH v2] PM: AVS: qcom-cpr: Use nvmem_cell_read_variable_le_u32()
+To:     "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Niklas Cassel <niklas.cassel@linaro.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Niklas Cassel <nks@flawful.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 22, 2021 at 01:01:09PM +0300, Baruch Siach wrote:
-> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
-> 
-> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+Rafael / Bjorn,
+
+On Fri, May 21, 2021 at 1:45 PM Douglas Anderson <dianders@chromium.org> wrote:
+>
+> Let's delete the private function cpr_read_efuse() since it does the
+> basically the same thing as the new API call
+> nvmem_cell_read_variable_le_u32().
+>
+> Differences between the new API call and the old private function:
+> * less error printing (I assume this is OK).
+> * will give an error if the value doesn't fit in 32-bits (the old code
+>   would have truncated silently).
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 > ---
-> v6:
-> 
->   Device node is child of TCSR; remove phandle (Rob Herring)
-> 
->   Add assigned-clocks/assigned-clock-rates (Uwe Kleine-König)
-> 
-> v5: Use qcom,pwm-regs for phandle instead of direct regs (Bjorn
->     Andersson, Kathiravan T)
-> 
-> v4: Update the binding example node as well (Rob Herring's bot)
-> 
-> v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
-> 
-> v2: Make #pwm-cells const (Rob Herring)
-> ---
->  .../devicetree/bindings/pwm/ipq-pwm.yaml      | 69 +++++++++++++++++++
->  1 file changed, 69 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
-> new file mode 100644
-> index 000000000000..ee2bb03a1223
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
-> @@ -0,0 +1,69 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pwm/ipq-pwm.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm IPQ6018 PWM controller
-> +
-> +maintainers:
-> +  - Baruch Siach <baruch@tkos.co.il>
-> +
-> +properties:
-> +  "#pwm-cells":
-> +    const: 2
-> +
-> +  compatible:
-> +    const: qcom,ipq6018-pwm
-> +
-> +  offset:
-> +    description: |
-> +      Offset of PWM register in the TCSR block.
-> +    maxItems: 1
+> I haven't done any more than compile-test this. Mostly I'm just
+> writing this patch because it helped provide inspiration for the
+> general API function.
+>
+> Changes in v2:
+> - Resending v1 as a singleton patch; dependency is merged in mainline.
+>
+>  drivers/soc/qcom/cpr.c | 43 +++++-------------------------------------
+>  1 file changed, 5 insertions(+), 38 deletions(-)
 
-Use 'reg' here instead.
+Are either of you interested in landing this? I guess Rafael landed
+most of the recent changes to this driver, but it used to be under the
+'power' directory. Now that it's under 'drivers/soc/qcom' maybe it
+should go through Bjorn's tree?
 
-> +
-> +  clocks:
-> +    maxItems: 1
-> +
-> +  clock-names:
-> +    const: core
-> +
-> +  assigned-clocks:
-> +    maxItems: 1
-> +
-> +  assigned-clock-rates:
-> +    maxItems: 1
-> +
-> +required:
-> +  - "#pwm-cells"
-> +  - compatible
-> +  - clocks
-> +  - clock-names
-> +  - assigned-clocks
-> +  - assigned-clock-rates
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,gcc-ipq6018.h>
-> +
-> +    soc {
-> +        #address-cells = <2>;
-> +        #size-cells = <2>;
-> +
-> +        tcsr: syscon@1937000 {
-> +            compatible = "syscon", "simple-mfd";
-
-This should really have a specific compatible string, but we don't warn 
-for that (yet).
-
-> +            reg = <0x0 0x01937000 0x0 0x21000>;
-> +
-> +            pwm: pwm {
-> +                #pwm-cells = <2>;
-> +                compatible = "qcom,ipq6018-pwm";
-> +                offset = <0xa010>;
-> +                clocks = <&gcc GCC_ADSS_PWM_CLK>;
-> +                clock-names = "core";
-> +                assigned-clocks = <&gcc GCC_ADSS_PWM_CLK>;
-> +                assigned-clock-rates = <100000000>;
-> +                status = "disabled";
-
-Drop 'status'
-
-> +            };
-> +        };
-> +    };
-> -- 
-> 2.30.2
-> 
-> 
+-Doug
