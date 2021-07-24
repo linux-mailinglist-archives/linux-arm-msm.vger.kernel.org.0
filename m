@@ -2,62 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 18A4E3D4A0D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jul 2021 23:20:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5703B3D4A89
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jul 2021 00:56:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229535AbhGXUj2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Jul 2021 16:39:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49212 "EHLO
+        id S229588AbhGXWPj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Jul 2021 18:15:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229510AbhGXUj1 (ORCPT
+        with ESMTP id S229549AbhGXWPj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Jul 2021 16:39:27 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E2B6C061575;
-        Sat, 24 Jul 2021 14:19:58 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id u9-20020a17090a1f09b029017554809f35so14102625pja.5;
-        Sat, 24 Jul 2021 14:19:58 -0700 (PDT)
+        Sat, 24 Jul 2021 18:15:39 -0400
+Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 662B4C061575;
+        Sat, 24 Jul 2021 15:56:10 -0700 (PDT)
+Received: by mail-ej1-x632.google.com with SMTP id ga41so9308652ejc.10;
+        Sat, 24 Jul 2021 15:56:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=QrQTgfYxb4sMEFndiic56YM5fd/XmWPBVVZiCJmDU3A=;
-        b=AyIzaGkv/Im541g4Qsf/Lc79csVXe4x76K8EOMHzMBCL010i9LWMIYEfVbHFbLGZMD
-         t500Ie70Co8F4/KxPiJFRCQWxlmhd6yw6Lih5krnGqNtgCtYqtkF6MPbRUh2Sfzr64Jh
-         DcaiVIJRg7bubACzCgXFJwbVV2BgRnhTZlAGyLxLSzYFm4w30T+fDiqgHgQsYakI8Q7m
-         /YVz587LQ3E6pel6X4n+qwGzXe0QPlaP3RI1r4Wi+wygU7o0NP8BeVMyKdaHI/DNF9HA
-         ySDjtIF8hk8ViSVmM5vl8SF48Y/b3zul3BOw0oBmiGwnJ3Ho5XHEFPVts9RFMMCvcNVN
-         Dsww==
+        h=from:subject:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=2YkOr/SOjc8e1D7v+UhUxdLCEbTLFclJesQWR+kwwU4=;
+        b=jPyeQ8mCSCGcS4f5mZtBfqomTp4MTHmxo9HWg11n//qazKN+3QvEBHKY5jHbvMIkDH
+         t/OsPKUdaBBm8Yu81QZdxzq62a2IIT0bKomf+wAvNjIK9grlcxUr4PxpwC5DkVFStrx2
+         4LkIl8ULRHMVq1g/ZkbpG/j/YYYp6Xn4v4zkTvheiCOPSpDATsSI/1K5G9oYnDuVBHVA
+         zZKJmPQ0umryo1fiGCIWxzmQMcnfMHWp3jXbFr4MOmyTIi7RM+OGcu94+d6fd9jH42KR
+         UM3r/wLiqkro4MR66T4YiqBO925oijtN5eMYrCqmuefI78j3YxKx76gWO/UIMmiFvxUB
+         i/jg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=QrQTgfYxb4sMEFndiic56YM5fd/XmWPBVVZiCJmDU3A=;
-        b=qNHM1CS92GrFBIE5qEWpFG7Bci2dzSaCt5urJJ7PFhhtuYK82D/dlAMtsAIvO52CmB
-         Fo2/1VZAlQn2GpXH6yscQo/5F/ZzYAvmnF8NQBaLTgBHpsrgvaHRNxGPwQ7WREyLd8+I
-         BdFCUqxigLzYkvuMuV+9kqU7gWyXdAwTjaGAZdt1lFSlZBtp4V+0s8zMg1ApT2X0/tSV
-         JRKa2YuFz6HoxYfv6yBWUZqx150m5qufpkNcwaPW++vuDGW8HoRQsawPVeE3bgFgpKMs
-         X+TSgDvXinpVtzVSVAPYaxdAQefSVklhNCQ7IphHSkU14G0DfxBtV8upI5ym5aVGG2PB
-         V4qw==
-X-Gm-Message-State: AOAM5338N94iefsanMA/ICHIhRFBY2HcByh+jLwArVB76JQnPMztZ4Gp
-        NxBRHr9zkzlfcZmQHFfJMFxUp12L3k//qRU8yjE=
-X-Google-Smtp-Source: ABdhPJx4rwJVqGHGGbgkoc2L04hJbRDpZcoXvzIax3ntAJ+T8I+mAH8F8qV1PPPP80UpoEPr4GBbVWsdAE6x4uWXaFw=
-X-Received: by 2002:a17:902:ac90:b029:12c:e7a:c183 with SMTP id
- h16-20020a170902ac90b029012c0e7ac183mr1082659plr.21.1627161597928; Sat, 24
- Jul 2021 14:19:57 -0700 (PDT)
-MIME-Version: 1.0
-References: <1623923899-16759-1-git-send-email-wcheng@codeaurora.org>
- <cfb83fe4-369c-ec72-7887-3bcb0f20fe15@gmail.com> <ec8050c5-c013-4af6-b39e-69779c009a9c@codeaurora.org>
- <f5ed0ee7-e333-681f-0f1a-d0227562204b@gmail.com> <2e01c435-9ecc-4e3b-f55c-612a86667020@codeaurora.org>
- <2ae9fa6a-3bb1-3742-0dd3-59678bdd8643@gmail.com> <ebea75fe-5334-197b-f67a-cb6e1e30b39e@codeaurora.org>
- <bafa93bb-11e3-c8a5-e14a-b0a6d5695055@gmail.com> <87v951ldlt.fsf@kernel.org>
- <d9aef50c-4bd1-4957-13d8-0b6a14b9fcd0@gmail.com> <87pmv9l1dv.fsf@kernel.org> <9dc6cd83-17b9-7075-0934-6b9d41b6875d@gmail.com>
-In-Reply-To: <9dc6cd83-17b9-7075-0934-6b9d41b6875d@gmail.com>
-From:   Andy Shevchenko <andy.shevchenko@gmail.com>
-Date:   Sun, 25 Jul 2021 00:19:21 +0300
-Message-ID: <CAHp75Vc7HDvCiT9Fp2hRsPTzNpRmm0E5yRHSuhpyD1Gqkf2FfA@mail.gmail.com>
-Subject: Re: [PATCH v10 0/6] Re-introduce TX FIFO resize for larger EP bursting
-To:     Ferry Toth <fntoth@gmail.com>
+        h=x-gm-message-state:from:subject:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=2YkOr/SOjc8e1D7v+UhUxdLCEbTLFclJesQWR+kwwU4=;
+        b=q5BqcEZKHIIQwZrhHhHcOOYSl0S+5FiJonH5r0851MJKh55vcD2oiZyABYfCe6P711
+         IH48Z4UDZwsPMPKcHIQRgmtq9v1Etzr20Uu68m0hXti6CUXLazD6VcTpamHaD+UDk39o
+         lwcQPzDwD11iq5bth0aLfIb5hbr54IiRDfa8lEGPZDf9mNlTvqPjqQN4aoOu9r988J54
+         A0dtMA7J7rKe8hfoKbCweLSPdS+Jj85TXRj9S7rjxh5y0N6pe9vDdqG10cBshdpixPcb
+         EZdvMw+a5+mUIHR0vQ2NLC6uKsh/kKUfZ+c6HKhF9RWgZFwmVJOi25s7iAdQav1NpURx
+         6C+g==
+X-Gm-Message-State: AOAM531/uD2Mp4nZJ3AyQ5xx+n8hCuQ45BYKGnmS4Lx2MymtFijMFYhZ
+        OXX0F9vY7xch6Mvk21hK/Rw=
+X-Google-Smtp-Source: ABdhPJyF2fwAlFNkbLur3s36viBfsxpoawYSmYWz6s8vGu2O8tNtfqRcY5iKh/GkAR7FdIVbELP3jQ==
+X-Received: by 2002:a17:906:c29a:: with SMTP id r26mr11064629ejz.235.1627167368957;
+        Sat, 24 Jul 2021 15:56:08 -0700 (PDT)
+Received: from ?IPv6:2001:981:6fec:1:7f54:b3a5:1f2:dfcf? ([2001:981:6fec:1:7f54:b3a5:1f2:dfcf])
+        by smtp.gmail.com with ESMTPSA id q8sm14442106edd.43.2021.07.24.15.56.08
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 24 Jul 2021 15:56:08 -0700 (PDT)
+From:   Ferry Toth <fntoth@gmail.com>
+Subject: Re: [PATCH v10 0/6] Re-introduce TX FIFO resize for larger EP
+ bursting
+To:     Andy Shevchenko <andy.shevchenko@gmail.com>
 Cc:     Felipe Balbi <balbi@kernel.org>,
         Wesley Cheng <wcheng@codeaurora.org>,
         Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
@@ -70,18 +65,43 @@ Cc:     Felipe Balbi <balbi@kernel.org>,
         devicetree <devicetree@vger.kernel.org>,
         linux-arm-msm@vger.kernel.org, Jack Pham <jackp@codeaurora.org>,
         "Krogerus, Heikki" <heikki.krogerus@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+References: <1623923899-16759-1-git-send-email-wcheng@codeaurora.org>
+ <cfb83fe4-369c-ec72-7887-3bcb0f20fe15@gmail.com>
+ <ec8050c5-c013-4af6-b39e-69779c009a9c@codeaurora.org>
+ <f5ed0ee7-e333-681f-0f1a-d0227562204b@gmail.com>
+ <2e01c435-9ecc-4e3b-f55c-612a86667020@codeaurora.org>
+ <2ae9fa6a-3bb1-3742-0dd3-59678bdd8643@gmail.com>
+ <ebea75fe-5334-197b-f67a-cb6e1e30b39e@codeaurora.org>
+ <bafa93bb-11e3-c8a5-e14a-b0a6d5695055@gmail.com> <87v951ldlt.fsf@kernel.org>
+ <d9aef50c-4bd1-4957-13d8-0b6a14b9fcd0@gmail.com> <87pmv9l1dv.fsf@kernel.org>
+ <9dc6cd83-17b9-7075-0934-6b9d41b6875d@gmail.com>
+ <CAHp75Vc7HDvCiT9Fp2hRsPTzNpRmm0E5yRHSuhpyD1Gqkf2FfA@mail.gmail.com>
+Message-ID: <4955687e-1015-37d6-9905-2b68aa9a85a0@gmail.com>
+Date:   Sun, 25 Jul 2021 00:56:07 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <CAHp75Vc7HDvCiT9Fp2hRsPTzNpRmm0E5yRHSuhpyD1Gqkf2FfA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jul 24, 2021 at 11:59 PM Ferry Toth <fntoth@gmail.com> wrote:
+Hi
 
-> BTW there is a secondary problem not related to dwc3: the console is not
-> working well and loosing chars. I can connect through wifi/ssh though.
+Op 24-07-2021 om 23:19 schreef Andy Shevchenko:
+> On Sat, Jul 24, 2021 at 11:59 PM Ferry Toth<fntoth@gmail.com>  wrote:
+>
+>> BTW there is a secondary problem not related to dwc3: the console is not
+>> working well and loosing chars. I can connect through wifi/ssh though.
+> You mean even on the kernel before any crash happened due to DWC3 stuff?
 
-You mean even on the kernel before any crash happened due to DWC3 stuff?
+Exactly.
 
--- 
-With Best Regards,
-Andy Shevchenko
+And this was working fine with rc1.
+
+I do have patches (as you know) for improving dma for the hsu. But, for 
+the console afaik dma is disabled.
+
