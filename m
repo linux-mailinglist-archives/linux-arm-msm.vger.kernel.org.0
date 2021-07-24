@@ -2,130 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 60A603D494C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jul 2021 20:56:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1050A3D4A00
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jul 2021 22:59:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229530AbhGXSQC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Jul 2021 14:16:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45886 "EHLO
+        id S229510AbhGXUTJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Jul 2021 16:19:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44790 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229510AbhGXSQA (ORCPT
+        with ESMTP id S229508AbhGXUTI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Jul 2021 14:16:00 -0400
-Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 66A13C061575;
-        Sat, 24 Jul 2021 11:56:31 -0700 (PDT)
-Received: by mail-wr1-x432.google.com with SMTP id y8so5928500wrt.10;
-        Sat, 24 Jul 2021 11:56:31 -0700 (PDT)
+        Sat, 24 Jul 2021 16:19:08 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0613C061575;
+        Sat, 24 Jul 2021 13:59:38 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id hb6so9129768ejc.8;
+        Sat, 24 Jul 2021 13:59:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:reply-to:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=3cToLkhxue4mfM4vekP8IOnb/EcTEEpzWIpkfDq5mZM=;
-        b=EfNz22WT9hsyfy4lxaHxbKtF6MxDQIbNejOE8jWoic7rWyv3ExSvGOnf6vhJVzi5Xp
-         rbMSuUIfVVHzGterc8p6kt4cdHvCiBAlEX+7FP887lht2p1qXf/4U4//flTaqOsSHwyE
-         s+j4CEQRpRdXClW5y9XOFl0ZascBuxysBWsKQ8F/ySdSklWZbQxZfYvwcMeSDNNKnhNS
-         WvYHUA3SyKkDq81NuDi5h5U14oo8A4lK27iPLBze24hNSKkkMtGolBY6+6JLN6XJj88i
-         rLx+OqfNq/GfTNm+dSxSB40K1Nao8hfB1IjUTY67kXxQa/nqYO7cM3j0l3eE9/0xs57A
-         rQRQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=rvvUJyaCqBkbqv9/eHX0uGjXEOtX3B96Btw/zLrT0/I=;
+        b=VYIIAsBUT/ZfNGsBLFnI+6dNgC4tQmNnValZ/on7IGnpaciLUMiKKgy5v25/Boyhy8
+         9wI+Y2+IxgRcMYbeD0r83kZS2SFocOK63zhgY9Nw0A895LCYMdu9D30iHSCVH0uIcb1K
+         7m2zwqaZmbyavgvLtwHnyI899YXIrPfIC+HoxX0h5Qm2Z5iJVf8D0vUEPhSRVYJ7bhH+
+         qqi1q0qNp3DHATJIkLxBVz5EabrCyRUimYf4ce7tIdei8Fe4sKjip7ffhaLG52AsRJ9K
+         hiN/682Q+BDjILfz+7Zf6iO02HCix6E1ySsRjthKzz2uYLYbXqc+Z86xicBd3YQdpHcT
+         5hcA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:reply-to
-         :references:mime-version:content-disposition:in-reply-to;
-        bh=3cToLkhxue4mfM4vekP8IOnb/EcTEEpzWIpkfDq5mZM=;
-        b=KiuWYldtbRPz477vDoTiq5Seibwd51LVbwA71yskwhhKLY9EyrZ6OtzcEZ9dqLmk0D
-         3fLLDJHDMeK5JTmDbTeWoV3WIiAKxroB/XVvdEAoFIn4grxML7dnX2qLiVuAdVu8r4y4
-         9wIYyvlIng+zPi6rFmdbexmGQa9YJWRhrQCs/B/JW4CJeJPywaDCypd7CGanTd8+AiMo
-         x8DaY2gxT+q80qLuXpYNT6Wvine7qKXAr/mypwkGauEsw+ppLc/ToS1QTTXQ2Bif4Cb4
-         Zet3p1+ejt7VIsgRGTddIdnsGG/8f9Z5W0Xjca204cfzAeLuVDlGCUpSOmzi1VRVv4G7
-         EIdQ==
-X-Gm-Message-State: AOAM530gk7+fLmYVhmwEkGtvCvnY7PAOw3oINpJRSo61CUChhtVdlbwJ
-        BOMNfnscMiF/8gFp8Op9Vc9XbA3Y7593Ow==
-X-Google-Smtp-Source: ABdhPJyoxa2Etz0mZamZmCmnNW/4T6kabG89+pvOzH2gvDfA9rerFkrQekw8xxiJIc3GXny7W0Lziw==
-X-Received: by 2002:a05:6000:1b0c:: with SMTP id f12mr11053984wrz.225.1627152989926;
-        Sat, 24 Jul 2021 11:56:29 -0700 (PDT)
-Received: from pevik (gw.ms-free.net. [95.85.240.250])
-        by smtp.gmail.com with ESMTPSA id c125sm9995059wme.36.2021.07.24.11.56.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Jul 2021 11:56:29 -0700 (PDT)
-Date:   Sat, 24 Jul 2021 20:56:26 +0200
-From:   Petr Vorel <petr.vorel@gmail.com>
-To:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Konrad Dybcio <konradybcio@gmail.com>,
-        Alexey Minnekhanov <alexeymin@postmarketos.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org
-Subject: Re: [PATCH v4 1/1] arm64: dts: qcom: msm8994-angler: Disable
- cont_splash_mem
-Message-ID: <YPxiWvUasvLFjG8e@pevik>
-Reply-To: Petr Vorel <petr.vorel@gmail.com>
-References: <20210622191019.23771-1-petr.vorel@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=rvvUJyaCqBkbqv9/eHX0uGjXEOtX3B96Btw/zLrT0/I=;
+        b=p7wDjjS4YP0/WJeUmJOTN55AeBjX499c3tgNSWY7NQzrDRKAR91cQgP8KAnTP9uO7g
+         Sg6MpSWLCvyJLrqOBW0TLTYkzvW52YDqfuuR1e4ZLbmUtoJMZ6rNsXLWZgn+uAwUPiaA
+         ovQpOOxoNG1BYeHt9uWc3xDg17ShU5VDCM8meOpwPY9QsUrg7RPCPaGITz578cTqJy3C
+         JPYuNY0h8VC6WzBNMoYeUwY0QM/l+/e/5ifgtgWCrVDQMFh7kTHnLnBTsAO+Vqw+BPis
+         mXhpc0DQQ7MBodQZciOTMh09RL2SdAyf0778rjy0Fpbb2TObForfDeSALOteQmWYSlYn
+         Uddw==
+X-Gm-Message-State: AOAM533NCLZvkMk+z3yQ/3MRUjKyzTwFlxaC12uvNex61FM/ij49OgjW
+        Uh8xpH8q+SEeuCnRz8kXYrbUUAUj1oJofg==
+X-Google-Smtp-Source: ABdhPJweFwWlEG8Sty+xt0dNxBTckuIYUEZ33E0Q15IaKnn1zBWiGOV0Wo7HZg98zXLZNaDUmvvnPw==
+X-Received: by 2002:a17:906:fb12:: with SMTP id lz18mr10679875ejb.324.1627160377517;
+        Sat, 24 Jul 2021 13:59:37 -0700 (PDT)
+Received: from ?IPv6:2001:981:6fec:1:652f:ed8b:8adb:341b? ([2001:981:6fec:1:652f:ed8b:8adb:341b])
+        by smtp.gmail.com with ESMTPSA id bd24sm2578385edb.56.2021.07.24.13.59.36
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 24 Jul 2021 13:59:37 -0700 (PDT)
+Subject: Re: [PATCH v10 0/6] Re-introduce TX FIFO resize for larger EP
+ bursting
+To:     Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <wcheng@codeaurora.org>,
+        gregkh@linuxfoundation.org, robh+dt@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, frowand.list@gmail.com
+Cc:     linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        jackp@codeaurora.org, heikki.krogerus@linux.intel.com,
+        andy.shevchenko@gmail.com
+References: <1623923899-16759-1-git-send-email-wcheng@codeaurora.org>
+ <cfb83fe4-369c-ec72-7887-3bcb0f20fe15@gmail.com>
+ <ec8050c5-c013-4af6-b39e-69779c009a9c@codeaurora.org>
+ <f5ed0ee7-e333-681f-0f1a-d0227562204b@gmail.com>
+ <2e01c435-9ecc-4e3b-f55c-612a86667020@codeaurora.org>
+ <2ae9fa6a-3bb1-3742-0dd3-59678bdd8643@gmail.com>
+ <ebea75fe-5334-197b-f67a-cb6e1e30b39e@codeaurora.org>
+ <bafa93bb-11e3-c8a5-e14a-b0a6d5695055@gmail.com> <87v951ldlt.fsf@kernel.org>
+ <d9aef50c-4bd1-4957-13d8-0b6a14b9fcd0@gmail.com> <87pmv9l1dv.fsf@kernel.org>
+From:   Ferry Toth <fntoth@gmail.com>
+Message-ID: <9dc6cd83-17b9-7075-0934-6b9d41b6875d@gmail.com>
+Date:   Sat, 24 Jul 2021 22:59:36 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210622191019.23771-1-petr.vorel@gmail.com>
+In-Reply-To: <87pmv9l1dv.fsf@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+Hi,
 
-could you please queue also this fix? Angler needs it for booting.
+Op 23-07-2021 om 13:23 schreef Felipe Balbi:
+> Ferry Toth <fntoth@gmail.com> writes:
+>
+>> Hi
+>>
+>> Op 23-07-2021 om 08:59 schreef Felipe Balbi:
+>>> Hi,
+>>>
+>>> Ferry Toth <fntoth@gmail.com> writes:
+>>>>>> kernel: configfs-gadget gadget: u_audio_start_playback:451 Error!
+>>>>>> kernel: configfs-gadget gadget: u_audio_start_playback:451 Error!
+>>>>>> kernel: dwc3 dwc3.0.auto: request 00000000fbc71244 was not queued to ep5in
+>>>>>> kernel: dwc3 dwc3.0.auto: request 00000000ad1b8c18 was not queued to ep5in
+>>>>>> kernel: dwc3 dwc3.0.auto: Fifosize(2154) > RAM size(2022) ep5in
+>>>>>> depth:115540359
+>>>>>> kernel: configfs-gadget gadget: u_audio_start_playback:451 Error!
+>>>>>> kernel: configfs-gadget gadget: u_audio_start_playback:451 Error!
+>>>>>> kernel: dwc3 dwc3.0.auto: request 000000003c32dcc5 was not queued to ep5in
+>>>>>> kernel: dwc3 dwc3.0.auto: request 00000000b2512aa9 was not queued to ep5in
+>>>>>>
+>>>>>> Removing uac2 from the config makes the call trace go away, but the R/W
+>>>>>> speed does not change.
+>>>> I am testing with 5.14.0-rc2 and now related error appears (not in rc1).
+>>>> Disabling uac2 solves it still. Any idea what it could be?
+>>>>
+>>>> BUG: unable to handle page fault for address: 0000000500000000
+>>>> #PF: supervisor instruction fetch in kernel mode
+>>>> #PF: error_code(0x0010) - not-present page
+>>>> PGD 0 P4D 0
+>>>> Oops: 0010 [#1] SMP PTI
+>>>> CPU: 0 PID: 494 Comm: irq/14-dwc3 Not tainted
+>>>> 5.14.0-rc2-edison-acpi-standard #1
+>>> (cool that you're running on ACPI heh)
+>> Thanks to Andy this is Edison-Arduino board with ACPI.
+>>>> Hardware name: Intel Corporation Merrifield/BODEGA BAY, BIOS 542
+>>>> 2015.01.21:18.19.48
+>>>> RIP: 0010:0x500000000
+>>>> Code: Unable to access opcode bytes at RIP 0x4ffffffd6.
+>>>> RSP: 0018:ffffa4d00045fc28 EFLAGS: 00010046
+>>>> RAX: 0000000500000000 RBX: ffff8cd546aed200 RCX: 0000000000000000
+>>>> RDX: 0000000000000000 RSI: ffff8cd547bfcae0 RDI: ffff8cd546aed200
+>>>> RBP: ffff8cd547bfcae0 R08: 0000000000000000 R09: 0000000000000001
+>>>> R10: ffff8cd541fd28c0 R11: 0000000000000000 R12: ffff8cd547342828
+>>>> R13: ffff8cd546aed248 R14: 0000000000000000 R15: ffff8cd548b1d000
+>>>> FS:  0000000000000000(0000) GS:ffff8cd57e200000(0000) knlGS:0000000000000000
+>>>> CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+>>>> CR2: 0000000500000000 CR3: 000000000311e000 CR4: 00000000001006f0
+>>>> Call Trace:
+>>>>     ? dwc3_remove_requests.constprop.0+0x14d/0x170
+>>>>     ? __dwc3_gadget_ep_disable+0x7a/0x160
+>>>>     ? dwc3_gadget_ep_disable+0x3d/0xd0
+>>>>     ? usb_ep_disable+0x1c/0x
+>>>>     ? u_audio_stop_capture+0x79/0x120 [u_audio]
+>>>>     ? afunc_set_alt+0x73/0x80 [usb_f_uac2]
+>>>>     ? composite_setup+0x224/0x1b90 [libcomposite]
+>>>>     ? __dwc3_gadget_kick_transfer+0x160/0x400
+>>>>     ? dwc3_gadget_ep_queue+0xf3/0x1a0
+>>>>     ? configfs_composite_setup+0x6b/0x90 [libcomposite]
+>>>>     ? configfs_composite_setup+0x6b/0x90 [libcomposite]
+>>>>     ? dwc3_ep0_interrupt+0x459/0xa40
+>>>>     ? dwc3_thread_interrupt+0x8ee/0xf40
+>>>>     ? __schedule+0x235/0x6c0
+>>>>     ? disable_irq_nosync+0x10/0x10
+>>>>     ? irq_thread_fn+0x1b/0x60
+>>>>     ? irq_thread+0xc0/0x160
+>>>>     ? irq_thread_check_affinity+0x70/0x70
+>>>>     ? irq_forced_thread_fn+0x70/0x70
+>>>>     ? kthread+0x122/0x140
+>>>>     ? set_kthread_struct+0x40/0x40
+>>>>     ? ret_from_fork+0x22/0x30
+>>> Do you mind enabling dwc3 traces and collecting them? Trying to figure
+>>> out how we got here.
+>>>
+>> I'll try if I can get the same error by booting with USB in host mode
+>> and then switch to device mode. If so I can enable traces and collect as
+>> you explained me before.
+>>
+>> I'll try before monday, as then I fly for a holiday and will not be
+>> available before rc5.
+> you can enable all of those with kernel cmdline :-)
+>
+> https://www.kernel.org/doc/html/latest/admin-guide/kernel-parameters.html
+>
+> you need ftrace_dump_on_oops=1 and also need the correct options on
+> trace_buf_size and trace_event.
+>
+On Edison-Arduino I have a switch to go to device mode, after which udev 
+triggers a script configure gadgets through configfs.
 
-Kind regards,
-Petr
+I tried to log following these instructions:
 
-> As the default definition breaks booting angler:
-> [    1.862561] printk: console [ttyMSM0] enabled
-> [    1.872260] msm_serial: driver initialized
-> D -     15524 - pm_driver_init, Delta
+https://www.kernel.org/doc/html/latest/driver-api/usb/dwc3.html#reporting-bugs  <https://www.kernel.org/doc/html/latest/driver-api/usb/dwc3.html#reporting-bugs>
 
-> cont_splash_mem was introduced in 74d6d0a145835, but the problem
-> manifested after 86588296acbf ("fdt: Properly handle "no-map" field
-> in the memory region").
+Unfortunately the kernel crashes so badly I can not get to the ` cp 
+/t/trace /root/trace.txt` line (after a while the watchdog kicks).
 
-> Disabling it because Angler's firmware does not report where the memory
-> is allocated (dmesg from downstream kernel):
-> [    0.000000] cma: Found cont_splash_mem@0, memory base 0x0000000000000000, size 16 MiB, limit 0x0000000000000000
-> [    0.000000] cma: CMA: reserved 16 MiB at 0x0000000000000000 for cont_splash_mem
+What to do next?
 
-> Similar issue might be on Google Nexus 5X (lg-bullhead). Other MSM8992/4
-> are known to report correct address.
 
-> Fixes: 74d6d0a145835 ("arm64: dts: qcom: msm8994/8994-kitakami: Fix up
-> the memory map")
+BTW there is a secondary problem not related to dwc3: the console is not 
+working well and loosing chars. I can connect through wifi/ssh though.
 
-> Suggested-by: Konrad Dybcio <konradybcio@gmail.com>
-> Signed-off-by: Petr Vorel <petr.vorel@gmail.com>
-> ---
-> Changes v3->v4:
-> * add a comment in dts (asked by Konrad)
-
-> Kind regards,
-> Petr
-
->  arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts | 4 ++++
->  1 file changed, 4 insertions(+)
-
-> diff --git a/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts b/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
-> index ffe1a9bd8f70..c096b7758aa0 100644
-> --- a/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
-> +++ b/arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts
-> @@ -1,12 +1,16 @@
->  // SPDX-License-Identifier: GPL-2.0-only
->  /* Copyright (c) 2015, Huawei Inc. All rights reserved.
->   * Copyright (c) 2016, The Linux Foundation. All rights reserved.
-> + * Copyright (c) 2021, Petr Vorel <petr.vorel@gmail.com>
->   */
-
->  /dts-v1/;
-
->  #include "msm8994.dtsi"
-
-> +/* Angler's firmware does not report where the memory is allocated */
-> +/delete-node/ &cont_splash_mem;
-> +
->  / {
->  	model = "Huawei Nexus 6P";
->  	compatible = "huawei,angler", "qcom,msm8994";
