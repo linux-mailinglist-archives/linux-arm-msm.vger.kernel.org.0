@@ -2,105 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 400423D4341
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jul 2021 01:06:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E3B53D4437
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jul 2021 03:31:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233120AbhGWWZ0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 23 Jul 2021 18:25:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40142 "EHLO
+        id S233403AbhGXAuN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 23 Jul 2021 20:50:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43494 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232550AbhGWWZ0 (ORCPT
+        with ESMTP id S233366AbhGXAuN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 23 Jul 2021 18:25:26 -0400
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DFB9CC061757
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jul 2021 16:05:58 -0700 (PDT)
-Received: by mail-qk1-x735.google.com with SMTP id k7so2918325qki.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jul 2021 16:05:58 -0700 (PDT)
+        Fri, 23 Jul 2021 20:50:13 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AAFBCC061575
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jul 2021 18:30:45 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id h63-20020a9d14450000b02904ce97efee36so3836583oth.7
+        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jul 2021 18:30:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=TXXHRlqkn1UKOJrEoCU/1CKsPV1IVFDrHXzP0rexpUc=;
-        b=kVhKTV2jwfU3UL2TDVAx6Od2VUtF8PD0tgQKJyramFzwij7jMAQUysiBLabG1p2Llz
-         Ep8C6gJX7kRzIEA1Nu3ClCym8TQf+DSjQflhNSgcme7OBA0D1izAakUn+2PFJbgt5Q4I
-         IujYcYZTx1uXzWQVUaqC5JLKexzzgMlgzil4k=
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=tjbmf6QXY2W+Nbmim38kusmymcjWfC+qA2fJ0iXz/KI=;
+        b=TvMAXp3spDk29OHAgsCRBMxgaNUv7OxrmCsvfJ+ETQoSwRwlR2ZUtSUKDs8vKW9/a5
+         eyNIiNN3DmeHQ4jAREQS5+IneCe1j9UcoRkzyJMkkH8llJVXTW25v4Gr7WcNIMEVPua5
+         CuUBpI0pgpUfrptIpyJFOpaTyh+mPcY7LqAXw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=TXXHRlqkn1UKOJrEoCU/1CKsPV1IVFDrHXzP0rexpUc=;
-        b=lSx7k8jZU7SEpRKJg55mm/osryo20zE5M/52zQfoEJYyKrEnVCtdGOHaSP6wYlcIX/
-         E6I5952xuyY9ImdGjMvZzEXdVElKmhB91d5mlLnnuSKt4IdbNRG8kl2du6bLeCL1jeoE
-         QbGH9YNICZ4EFOqHQoRGbaKMIDkZ/VZ56B/k7glI68wL20V3qLKgF2O+JljDjEr8ptD2
-         g0svrSxfecohuC92snKGK0jNJW0LaXpANsARe3J3jqhJ6ZZDVHMZ+MoQouktSz//zRNk
-         AEMDjHPLWGteTzynwLkR90AcIBDIjthg9eqEkCPNXrTjr9D0ASEPDBOKgiion3ZpyBKx
-         ybuA==
-X-Gm-Message-State: AOAM530tffqx12Wv5IFO8ABU7dr5m8TO3rdLgYoa1FvRxKpHsLCQVkPR
-        1RnAr7EdN2GBs60Q+c45YNG+oArYCFlmSw==
-X-Google-Smtp-Source: ABdhPJziXX2WqD6VoV34sfjrs1XVQMEiq4Y5J3Xbmh0R95EsMfi/xYAy6HsPYrdriyMbVZBAv0SXaQ==
-X-Received: by 2002:a05:620a:4d0:: with SMTP id 16mr7029775qks.430.1627081557424;
-        Fri, 23 Jul 2021 16:05:57 -0700 (PDT)
-Received: from mail-yb1-f174.google.com (mail-yb1-f174.google.com. [209.85.219.174])
-        by smtp.gmail.com with ESMTPSA id z68sm15096942qke.86.2021.07.23.16.05.56
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 23 Jul 2021 16:05:56 -0700 (PDT)
-Received: by mail-yb1-f174.google.com with SMTP id x192so4774295ybe.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 23 Jul 2021 16:05:56 -0700 (PDT)
-X-Received: by 2002:a25:6088:: with SMTP id u130mr9735827ybb.257.1627081555988;
- Fri, 23 Jul 2021 16:05:55 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=tjbmf6QXY2W+Nbmim38kusmymcjWfC+qA2fJ0iXz/KI=;
+        b=Ycpw8nCJJp767UZSLzQ6vS/s17EVhOel41dMfmh/dtX/byKlm0UMnehdN4P6sCKwzA
+         X/T4PTdFoS8+gpuMPfYbcG2bk0vSLRlbwCwJI4XBCCuAhxzjZENDJDY7saG2yjJYEqfU
+         4gENaMacieACSWSz/DcIN5xhWnL+hRf+ore7OCFlHeePjNxXqLMhoc2pzRqcUB3uHEmh
+         5MWJJW6qSZ/U2kTgKruufqJa/M1FVed0JmAjMzC4ZvLvTe87BIWfNj+mkcZw4Fe512Rm
+         JItvWUxSdKUo+5alST4SDUirUa1VRaxsSt9sq+lxy7cjcZu8jyXw2MKPavz2VFahnulU
+         qPJA==
+X-Gm-Message-State: AOAM533BHEwV8ON68a0I9YsBU+9/vc2tvGWxnxbLCJwvYaMTCKFry63E
+        TCXIyKoFhzZpwLNw8niVueuGthkg2KAmwFEUGzI5vA==
+X-Google-Smtp-Source: ABdhPJyMMeaqCnCa3wyaRvlhO9ED0pMArlJie8NNlQ/fzjJggDf1wrB8rH/daTcBCqUMYrRcXJU5OfMQ5B84Q+o0PeM=
+X-Received: by 2002:a9d:8c7:: with SMTP id 65mr4898349otf.25.1627090244863;
+ Fri, 23 Jul 2021 18:30:44 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 23 Jul 2021 18:30:44 -0700
 MIME-Version: 1.0
-References: <20210521134437.v2.1.Id1c70158722750aec0673d60c12e46a9c66bbfed@changeid>
-In-Reply-To: <20210521134437.v2.1.Id1c70158722750aec0673d60c12e46a9c66bbfed@changeid>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 23 Jul 2021 16:05:44 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=X8xgn=ueyryFZVA-VNLEU_sk8H29D08JaEpw2Qh2OFqQ@mail.gmail.com>
-Message-ID: <CAD=FV=X8xgn=ueyryFZVA-VNLEU_sk8H29D08JaEpw2Qh2OFqQ@mail.gmail.com>
-Subject: Re: [PATCH v2] PM: AVS: qcom-cpr: Use nvmem_cell_read_variable_le_u32()
-To:     "Rafael J . Wysocki" <rafael.j.wysocki@intel.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Niklas Cassel <niklas.cassel@linaro.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Niklas Cassel <nks@flawful.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>
+In-Reply-To: <1627039254-13083-1-git-send-email-akhilpo@codeaurora.org>
+References: <1627039254-13083-1-git-send-email-akhilpo@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Fri, 23 Jul 2021 18:30:44 -0700
+Message-ID: <CAE-0n51+165pgZ5tgxmw_+7i2uYLXxAazYYkCKce0UuhfSHxbQ@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Add gpu support
+To:     Akhil P Oommen <akhilpo@codeaurora.org>,
+        bjorn.andersson@linaro.org, freedreno@lists.freedesktop.org,
+        georgi.djakov@linaro.org, robh+dt@kernel.org, robh@kernel.org
+Cc:     dri-devel@freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, jordan@cosmicpenguin.net,
+        mka@chromium.org, jonathan@marek.ca, robdclark@gmail.com,
+        dianders@chromium.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Rafael / Bjorn,
-
-On Fri, May 21, 2021 at 1:45 PM Douglas Anderson <dianders@chromium.org> wrote:
+Quoting Akhil P Oommen (2021-07-23 04:20:54)
+> Add the necessary dt nodes for gpu support in sc7280.
 >
-> Let's delete the private function cpr_read_efuse() since it does the
-> basically the same thing as the new API call
-> nvmem_cell_read_variable_le_u32().
->
-> Differences between the new API call and the old private function:
-> * less error printing (I assume this is OK).
-> * will give an error if the value doesn't fit in 32-bits (the old code
->   would have truncated silently).
->
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
 > ---
-> I haven't done any more than compile-test this. Mostly I'm just
-> writing this patch because it helped provide inspiration for the
-> general API function.
+> This patch has dependency on the GPUCC bindings patch here:
+> https://patchwork.kernel.org/project/linux-arm-msm/patch/1619519590-3019-4-git-send-email-tdas@codeaurora.org/
 >
-> Changes in v2:
-> - Resending v1 as a singleton patch; dependency is merged in mainline.
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 107 +++++++++++++++++++++++++++++++++++
+>  1 file changed, 107 insertions(+)
 >
->  drivers/soc/qcom/cpr.c | 43 +++++-------------------------------------
->  1 file changed, 5 insertions(+), 38 deletions(-)
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 029723a..beb313c 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -16,6 +16,8 @@
+>  #include <dt-bindings/reset/qcom,sdm845-pdc.h>
+>  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+>  #include <dt-bindings/thermal/thermal.h>
+> +#include <dt-bindings/interconnect/qcom,sc7280.h>
+> +#include <dt-bindings/clock/qcom,gpucc-sc7280.h>
 
-Are either of you interested in landing this? I guess Rafael landed
-most of the recent changes to this driver, but it used to be under the
-'power' directory. Now that it's under 'drivers/soc/qcom' maybe it
-should go through Bjorn's tree?
+Please sort this alphabetically.
 
--Doug
+>
+>  / {
+>         interrupt-parent = <&intc>;
+> @@ -592,6 +594,111 @@
+>                         qcom,bcm-voters = <&apps_bcm_voter>;
+>                 };
+>
+> +               gpu: gpu@3d00000 {
+
+Will this label be used? If not, please don't add it.
+
+> +                       compatible = "qcom,adreno-635.0", "qcom,adreno";
+> +                       #stream-id-cells = <16>;
+> +                       reg = <0 0x03d00000 0 0x40000>, <0 0x03d9e000 0 0x1000>,
+> +                               <0 0x03d61000 0 0x800>;
+> +                       reg-names = "kgsl_3d0_reg_memory", "cx_mem", "cx_dbgc";
+
+I'd prefer to see one reg and reg-names per line if the list is longer
+than one line.
+
+		reg = < >,
+		      < >,
+		      < >;
+		reg-names = " ",
+		            " ",
+			    " ";
+
+It makes is much easier to figure out which property lines up with which
+name.
+
+> +                       interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
+> +                       iommus = <&adreno_smmu 0 0x401>;
+> +                       operating-points-v2 = <&gpu_opp_table>;
+> +                       qcom,gmu = <&gmu>;
+> +                       interconnects = <&gem_noc MASTER_GFX3D 0 &mc_virt SLAVE_EBI1 0>;
+> +                       interconnect-names = "gfx-mem";
+> +
+> +                       gpu_opp_table: opp-table {
+> +                               compatible = "operating-points-v2";
+> +
+> +                               opp-550000000 {
+> +                                       opp-hz = /bits/ 64 <550000000>;
+> +                                       opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
+> +                                       opp-peak-kBps = <6832000>;
+> +                               };
+> +
+> +                               opp-450000000 {
+> +                                       opp-hz = /bits/ 64 <450000000>;
+> +                                       opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
+> +                                       opp-peak-kBps = <4068000>;
+> +                               };
+> +
+> +                               opp-315000000 {
+> +                                       opp-hz = /bits/ 64 <315000000>;
+> +                                       opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
+> +                                       opp-peak-kBps = <1804000>;
+> +                               };
+> +                       };
+> +               };
+> +
+> +               adreno_smmu: iommu@3da0000 {
+
+3da0000 comes after 3d69000, please sort this by unit address.
+
+> +                       compatible = "qcom,sc7280-smmu-500", "qcom,adreno-smmu", "arm,mmu-500";
+> +                       reg = <0 0x03da0000 0 0x20000>;
+> +                       #iommu-cells = <2>;
+> +                       #global-interrupts = <2>;
+> +                       interrupts = <GIC_SPI 673 IRQ_TYPE_LEVEL_HIGH>,
+> +                                       <GIC_SPI 675 IRQ_TYPE_LEVEL_HIGH>,
+> +                                       <GIC_SPI 678 IRQ_TYPE_LEVEL_HIGH>,
+> +                                       <GIC_SPI 679 IRQ_TYPE_LEVEL_HIGH>,
+> +                                       <GIC_SPI 680 IRQ_TYPE_LEVEL_HIGH>,
+> +                                       <GIC_SPI 681 IRQ_TYPE_LEVEL_HIGH>,
+> +                                       <GIC_SPI 682 IRQ_TYPE_LEVEL_HIGH>,
+> +                                       <GIC_SPI 683 IRQ_TYPE_LEVEL_HIGH>,
+> +                                       <GIC_SPI 684 IRQ_TYPE_LEVEL_HIGH>,
+> +                                       <GIC_SPI 685 IRQ_TYPE_LEVEL_HIGH>,
+> +                                       <GIC_SPI 686 IRQ_TYPE_LEVEL_HIGH>,
+> +                                       <GIC_SPI 687 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +                       clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
+> +                                       <&gcc GCC_GPU_SNOC_DVM_GFX_CLK>,
+> +                                       <&gpucc GPU_CC_AHB_CLK>,
+> +                                       <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>,
+> +                                       <&gpucc GPU_CC_CX_GMU_CLK>,
+> +                                       <&gpucc GPU_CC_HUB_CX_INT_CLK>,
+> +                                       <&gpucc GPU_CC_HUB_AON_CLK>;
+> +                       clock-names = "gcc_gpu_memnoc_gfx_clk",
+> +                                       "gcc_gpu_snoc_dvm_gfx_clk",
+> +                                       "gpu_cc_ahb_clk",
+> +                                       "gpu_cc_hlos1_vote_gpu_smmu_clk",
+> +                                       "gpu_cc_cx_gmu_clk",
+> +                                       "gpu_cc_hub_cx_int_clk",
+> +                                       "gpu_cc_hub_aon_clk";
+> +
+> +                       power-domains = <&gpucc GPU_CC_CX_GDSC>;
+> +               };
+> +
+> +               gmu: gmu@3d69000 {
+> +                       compatible="qcom,adreno-gmu-635.0", "qcom,adreno-gmu";
+> +                       reg = <0 0x03d6a000 0 0x34000>,
+> +                               <0 0x3de0000 0 0x10000>,
+> +                               <0 0x0b290000 0 0x10000>;
+> +                       reg-names = "gmu", "rscc", "gmu_pdc";
+> +                       interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
+> +                                       <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
+> +                       interrupt-names = "hfi", "gmu";
+> +                       clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
+> +                                       <&gpucc GPU_CC_CXO_CLK>,
+> +                                       <&gcc GCC_DDRSS_GPU_AXI_CLK>,
+> +                                       <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
+> +                                       <&gpucc GPU_CC_AHB_CLK>,
+> +                                       <&gpucc GPU_CC_HUB_CX_INT_CLK>,
+> +                                       <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>;
+> +                       clock-names = "gmu", "cxo", "axi", "memnoc", "ahb",
+> +                                       "hub", "smmu_vote";
+
+Same comment about one line per clock for clock-names so we can easily
+match them up.
+
+> +                       power-domains = <&gpucc GPU_CC_CX_GDSC>, <&gpucc GPU_CC_GX_GDSC>;
+> +                       power-domain-names = "cx", "gx";
+> +                       iommus = <&adreno_smmu 5 0x400>;
+> +                       operating-points-v2 = <&gmu_opp_table>;
+> +
