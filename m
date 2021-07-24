@@ -2,216 +2,355 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 391983D48E5
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jul 2021 19:29:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 666243D490C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jul 2021 20:08:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229813AbhGXQs7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Jul 2021 12:48:59 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:51009 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229461AbhGXQs7 (ORCPT
+        id S229667AbhGXR1k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Jul 2021 13:27:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35386 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229655AbhGXR1j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Jul 2021 12:48:59 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1627147770; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=Ktj1i3AlaWGew5NfuLfcGEy2Chnk/dvK1HpNHbnFwgA=; b=QqauvPxG26UGdYgjjE5/QZ3SJSs/mteKQftaW84Hsm5rBgqJI3nMVN90htm7zMGrakOquIg7
- SIz1lQx7Rwz92QgFOIk8X15OH4Irmff35OeVNKPNoARTkp3Ccxe13XGiecW/KepLg7EgdTJv
- y1c+wQpigzHldOClacz3MbcQRfk=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 60fc4df4e31d882d180b0095 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 24 Jul 2021 17:29:24
- GMT
-Sender: akhilpo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 26A82C4323A; Sat, 24 Jul 2021 17:29:24 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from hyd-lnxbld559.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A3176C433D3;
-        Sat, 24 Jul 2021 17:29:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A3176C433D3
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
-From:   Akhil P Oommen <akhilpo@codeaurora.org>
-To:     freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel@lists.freedesktop.org,
-        OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS 
-        <devicetree@vger.kernel.org>, linux-arm-msm@vger.kernel.org,
-        Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Jonathan Marek <jonathan@marek.ca>,
+        Sat, 24 Jul 2021 13:27:39 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69A08C061575;
+        Sat, 24 Jul 2021 11:08:10 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id a80-20020a1c98530000b0290245467f26a4so3635727wme.0;
+        Sat, 24 Jul 2021 11:08:10 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=MiQpeDS/bOdbcucYOh8ALaob0EUSxGeoUAmNnRu5KIw=;
+        b=Z7/vRFeMC8P++O7/RZkBHsMZ1S1J/Kk/bvQAA56l28KEnna/VLLCCG70iAKvkBv+gH
+         4gun0YuCAgeQ2zcMJuqAFlzsMbj3N3Ti+5I90iD/EOz2PhwHbuy402GR/4bMF4qZM8FO
+         LVeM4ChsAH2jU1mMkENW070byRODKtFlEPcc0xXJ2vBTrfOqDBTnx+bp09i5UyEcu7Tq
+         bKImnBngmoTzHjAPGvU/xo0/j8H/7hD62uu9AWJ5CyKjx0Cd0fpfegS5VK28mBkX73Q/
+         4ScG4SNGqNwK7le0vqB3m93D9IwCQsgHOL22A+iY2feexBvRbL3jcJtxHT/ap/qVUJ4s
+         i0OQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=MiQpeDS/bOdbcucYOh8ALaob0EUSxGeoUAmNnRu5KIw=;
+        b=CJiMu1rvo3H5pEuXmC+LtDR/UHd+zCEmiF6grHemyucYJN1dU4ktpeVPdXGwlmCay3
+         waQmQoFkQU65pVYdcUEu2BkT+EfKUQW3HIxIx4AiCSwxAx+ek21FPZAzuySGFoD4ZDSp
+         8IB9Z3YQy7Q9lExyIOZeOefYI6cJME56zOBef9liz/b0az/XqyYdA1gKnI2aFuLukgmn
+         Tiuke8c2K79MyayH4g3S4jqIeBiUG3y2/ttqW+0mpIAA/yK6R25vr0E/k6lN+a+DY8VX
+         V5Px1T7M+FwLhJpDO1Zxfzxwb9Hjd/+HzotX2/zbMsu4Db3uRv7Mfslow8XWER8KHxDZ
+         asow==
+X-Gm-Message-State: AOAM531nSubCdlhP1iOxxQVkisd6YNpD0khIpCGN1tc5jfj2f2NcWTck
+        58WgzYMkOmwxwiWgaFeT3XJE+jfMLJEGNuLWyVs=
+X-Google-Smtp-Source: ABdhPJwrhLZVEEgV4rK8VyCIepljzXGPeQHv6t3bOH/ECjyHC23eVO7r5YJuGjHPHJgDjsbDUtW726xKDsntFIL2d3s=
+X-Received: by 2002:a1c:f414:: with SMTP id z20mr19935294wma.94.1627150088851;
+ Sat, 24 Jul 2021 11:08:08 -0700 (PDT)
+MIME-Version: 1.0
+References: <1627036688-1426-1-git-send-email-akhilpo@codeaurora.org> <1627036688-1426-2-git-send-email-akhilpo@codeaurora.org>
+In-Reply-To: <1627036688-1426-2-git-send-email-akhilpo@codeaurora.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Sat, 24 Jul 2021 11:12:17 -0700
+Message-ID: <CAF6AEGvn3BEJDS_8jDqVNfV6Z5GKdtETkFyMnBoG5ONsMZi5Xg@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH 2/2] drm/msm/a6xx: Add support for Adreno 7c
+ Gen 3 gpu
+To:     Akhil P Oommen <akhilpo@codeaurora.org>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
         Douglas Anderson <dianders@chromium.org>,
+        Jonathan <jonathan@marek.ca>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
         Jordan Crouse <jordan@cosmicpenguin.net>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
-Subject: [PATCH v2] arm64: dts: qcom: sc7280: Add gpu support
-Date:   Sat, 24 Jul 2021 22:59:00 +0530
-Message-Id: <1627147740-11590-1-git-send-email-akhilpo@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Matthias Kaehlcke <mka@chromium.org>, dri-devel@freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add the necessary dt nodes for gpu support in sc7280.
+()
 
-Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
----
-This patch has dependency on the GPUCC bindings patch here:
-https://patchwork.kernel.org/project/linux-arm-msm/patch/1619519590-3019-4-git-send-email-tdas@codeaurora.org/
+On Fri, Jul 23, 2021 at 3:38 AM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
+>
+> This patch adds support for the gpu found in the Snapdragon 7c Gen 3
+> compute platform. This gpu is similar to the exisiting a660 gpu with
+> minor delta in the programing sequence. As the Adreno GPUs are moving
+> away from a numeric chipid based naming scheme to a string, it was
+> decided to use 0x06030500 as the gpu id of this gpu to communicate
+> to the userspace driver.
+>
+> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
+> ---
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.c      | 20 ++++++++++++++++++-
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.h      |  1 +
+>  drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h  |  2 ++
+>  drivers/gpu/drm/msm/adreno/a6xx_gpu.c      | 21 ++++++++++++++------
+>  drivers/gpu/drm/msm/adreno/a6xx_hfi.c      | 32 ++++++++++++++++++++++++++++++
+>  drivers/gpu/drm/msm/adreno/adreno_device.c | 12 +++++++++++
+>  drivers/gpu/drm/msm/adreno/adreno_gpu.h    | 11 ++++++++--
+>  7 files changed, 90 insertions(+), 9 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> index b349692..332301f 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+> @@ -933,6 +933,7 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
+>
+>         /* Use a known rate to bring up the GMU */
+>         clk_set_rate(gmu->core_clk, 200000000);
+> +       clk_set_rate(gmu->hub_clk, 150000000);
+>         ret = clk_bulk_prepare_enable(gmu->nr_clocks, gmu->clocks);
+>         if (ret) {
+>                 pm_runtime_put(gmu->gxpd);
+> @@ -1094,6 +1095,7 @@ static void a6xx_gmu_shutdown(struct a6xx_gmu *gmu)
+>
+>  int a6xx_gmu_stop(struct a6xx_gpu *a6xx_gpu)
+>  {
+> +       struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
+>         struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
+>         struct msm_gpu *gpu = &a6xx_gpu->base.base;
+>
+> @@ -1117,9 +1119,22 @@ int a6xx_gmu_stop(struct a6xx_gpu *a6xx_gpu)
+>          * domain. Usually the GMU does this but only if the shutdown sequence
+>          * was successful
+>          */
+> -       if (!IS_ERR_OR_NULL(gmu->gxpd))
+> +       if (!IS_ERR_OR_NULL(gmu->gxpd)) {
+> +               /*
+> +                * Toggle the loop_en bit, across disabling the gx gdsc,
+> +                * with a delay of 10 XO cycles before disabling gx
+> +                * gdsc. This is to prevent CPR measurements from
+> +                * failing.
+> +                */
+> +               if (adreno_is_a660(adreno_gpu))
+> +                       gmu_rmw(gmu, REG_A6XX_GPU_CPR_FSM_CTL, 1, 0);
+> +
+>                 pm_runtime_put_sync(gmu->gxpd);
+>
+> +               if (adreno_is_a660(adreno_gpu))
+> +                       gmu_rmw(gmu, REG_A6XX_GPU_CPR_FSM_CTL, 1, 1);
 
-Changes in v2:
-- formatting update and removed a duplicate header (Stephan)
+This kinda seems like it should be a separate patch.. but I noticed
+you silently turned adreno_is_a660() into what should probably be
+adreno_is_a660_family()
 
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 116 +++++++++++++++++++++++++++++++++++
- 1 file changed, 116 insertions(+)
+I'd suggest to break this out into it's own patch, so it is clear that
+it effects a660 as well, and then a next patch to rename
+adreno_is_a660_family()
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 029723a..524a5e0 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -6,6 +6,7 @@
-  */
- 
- #include <dt-bindings/clock/qcom,gcc-sc7280.h>
-+#include <dt-bindings/clock/qcom,gpucc-sc7280.h>
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/interconnect/qcom,sc7280.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
-@@ -585,6 +586,121 @@
- 			#clock-cells = <1>;
- 		};
- 
-+		gpu@3d00000 {
-+			compatible = "qcom,adreno-635.0", "qcom,adreno";
-+			#stream-id-cells = <16>;
-+			reg = <0 0x03d00000 0 0x40000>,
-+			      <0 0x03d9e000 0 0x1000>,
-+			      <0 0x03d61000 0 0x800>;
-+			reg-names = "kgsl_3d0_reg_memory",
-+				    "cx_mem",
-+				    "cx_dbgc";
-+			interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
-+			iommus = <&adreno_smmu 0 0x401>;
-+			operating-points-v2 = <&gpu_opp_table>;
-+			qcom,gmu = <&gmu>;
-+			interconnects = <&gem_noc MASTER_GFX3D 0 &mc_virt SLAVE_EBI1 0>;
-+			interconnect-names = "gfx-mem";
-+
-+			gpu_opp_table: opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-550000000 {
-+					opp-hz = /bits/ 64 <550000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
-+					opp-peak-kBps = <6832000>;
-+				};
-+
-+				opp-450000000 {
-+					opp-hz = /bits/ 64 <450000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
-+					opp-peak-kBps = <4068000>;
-+				};
-+
-+				opp-315000000 {
-+					opp-hz = /bits/ 64 <315000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
-+					opp-peak-kBps = <1804000>;
-+				};
-+			};
-+		};
-+
-+		gmu: gmu@3d69000 {
-+			compatible="qcom,adreno-gmu-635.0", "qcom,adreno-gmu";
-+			reg = <0 0x03d6a000 0 0x34000>,
-+				<0 0x3de0000 0 0x10000>,
-+				<0 0x0b290000 0 0x10000>;
-+			reg-names = "gmu", "rscc", "gmu_pdc";
-+			interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "hfi", "gmu";
-+			clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
-+					<&gpucc GPU_CC_CXO_CLK>,
-+					<&gcc GCC_DDRSS_GPU_AXI_CLK>,
-+					<&gcc GCC_GPU_MEMNOC_GFX_CLK>,
-+					<&gpucc GPU_CC_AHB_CLK>,
-+					<&gpucc GPU_CC_HUB_CX_INT_CLK>,
-+					<&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>;
-+			clock-names = "gmu",
-+				      "cxo",
-+				      "axi",
-+				      "memnoc",
-+				      "ahb",
-+				      "hub",
-+				      "smmu_vote";
-+			power-domains = <&gpucc GPU_CC_CX_GDSC>,
-+					<&gpucc GPU_CC_GX_GDSC>;
-+			power-domain-names = "cx",
-+					     "gx";
-+			iommus = <&adreno_smmu 5 0x400>;
-+			operating-points-v2 = <&gmu_opp_table>;
-+
-+			gmu_opp_table: opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-200000000 {
-+					opp-hz = /bits/ 64 <200000000>;
-+					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
-+				};
-+			};
-+		};
-+
-+		adreno_smmu: iommu@3da0000 {
-+			compatible = "qcom,sc7280-smmu-500", "qcom,adreno-smmu", "arm,mmu-500";
-+			reg = <0 0x03da0000 0 0x20000>;
-+			#iommu-cells = <2>;
-+			#global-interrupts = <2>;
-+			interrupts = <GIC_SPI 673 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 675 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 678 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 679 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 680 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 681 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 682 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 683 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 684 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 685 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 686 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 687 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
-+					<&gcc GCC_GPU_SNOC_DVM_GFX_CLK>,
-+					<&gpucc GPU_CC_AHB_CLK>,
-+					<&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>,
-+					<&gpucc GPU_CC_CX_GMU_CLK>,
-+					<&gpucc GPU_CC_HUB_CX_INT_CLK>,
-+					<&gpucc GPU_CC_HUB_AON_CLK>;
-+			clock-names = "gcc_gpu_memnoc_gfx_clk",
-+					"gcc_gpu_snoc_dvm_gfx_clk",
-+					"gpu_cc_ahb_clk",
-+					"gpu_cc_hlos1_vote_gpu_smmu_clk",
-+					"gpu_cc_cx_gmu_clk",
-+					"gpu_cc_hub_cx_int_clk",
-+					"gpu_cc_hub_aon_clk";
-+
-+			power-domains = <&gpucc GPU_CC_CX_GDSC>;
-+		};
-+
- 		lpass_ag_noc: interconnect@3c40000 {
- 			reg = <0 0x03c40000 0 0xf080>;
- 			compatible = "qcom,sc7280-lpass-ag-noc";
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation.
+Longer term, we might want to think about refactoring all the
+if(adreno_is_xyz()) into a features table (see i915_pci.c for ideas)
 
+> +       }
+> +
+>         clk_bulk_disable_unprepare(gmu->nr_clocks, gmu->clocks);
+>
+>         pm_runtime_put_sync(gmu->dev);
+> @@ -1393,6 +1408,9 @@ static int a6xx_gmu_clocks_probe(struct a6xx_gmu *gmu)
+>         gmu->core_clk = msm_clk_bulk_get_clock(gmu->clocks,
+>                 gmu->nr_clocks, "gmu");
+>
+> +       gmu->hub_clk = msm_clk_bulk_get_clock(gmu->clocks,
+> +               gmu->nr_clocks, "hub");
+> +
+>         return 0;
+>  }
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> index 71dfa600..3c74f64 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+> @@ -66,6 +66,7 @@ struct a6xx_gmu {
+>         int nr_clocks;
+>         struct clk_bulk_data *clocks;
+>         struct clk *core_clk;
+> +       struct clk *hub_clk;
+>
+>         /* current performance index set externally */
+>         int current_perf_index;
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h
+> index 8115892..d46733f 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h
+> @@ -479,5 +479,7 @@ static inline uint32_t A6XX_GMU_GPU_NAP_CTRL_SID(uint32_t val)
+>
+>  #define REG_A6XX_RSCC_TCS3_DRV0_STATUS                         0x0000053e
+>
+> +#define REG_A6XX_GPU_CPR_FSM_CTL                               0x0000c001
+> +
+>
+>  #endif /* A6XX_GMU_XML */
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 183b9f9..c0882536 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -694,6 +694,13 @@ static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
+>                 uavflagprd_inv = 2;
+>         }
+>
+> +       if (adreno_is_7c3(adreno_gpu)) {
+> +               lower_bit = 1;
+> +               amsbc = 1;
+> +               rgb565_predicator = 1;
+> +               uavflagprd_inv = 2;
+> +       }
+> +
+>         gpu_write(gpu, REG_A6XX_RB_NC_MODE_CNTL,
+>                 rgb565_predicator << 11 | amsbc << 4 | lower_bit << 1);
+>         gpu_write(gpu, REG_A6XX_TPL1_NC_MODE_CNTL, lower_bit << 1);
+> @@ -950,10 +957,10 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
+>         /* Setting the primFifo thresholds default values,
+>          * and vccCacheSkipDis=1 bit (0x200) for A640 and newer
+>         */
+> -       if (adreno_is_a650(adreno_gpu) || adreno_is_a660(adreno_gpu))
+> -               gpu_write(gpu, REG_A6XX_PC_DBG_ECO_CNTL, 0x00300200);
+> -       else if (adreno_is_a640(adreno_gpu))
+> +       if (adreno_is_a640(adreno_gpu) || adreno_is_7c3(adreno_gpu))
+>                 gpu_write(gpu, REG_A6XX_PC_DBG_ECO_CNTL, 0x00200200);
+> +       else if (adreno_is_a650(adreno_gpu) || adreno_is_a660(adreno_gpu))
+> +               gpu_write(gpu, REG_A6XX_PC_DBG_ECO_CNTL, 0x00300200);
+>         else
+>                 gpu_write(gpu, REG_A6XX_PC_DBG_ECO_CNTL, 0x00180000);
+>
+> @@ -993,8 +1000,9 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
+>         if (adreno_is_a660(adreno_gpu)) {
+>                 gpu_write(gpu, REG_A6XX_CP_CHICKEN_DBG, 0x1);
+>                 gpu_write(gpu, REG_A6XX_RBBM_GBIF_CLIENT_QOS_CNTL, 0x0);
+> -               /* Set dualQ + disable afull for A660 GPU but not for A635 */
+> -               gpu_write(gpu, REG_A6XX_UCHE_CMDQ_CONFIG, 0x66906);
+> +               /* Set dualQ + disable afull for A660 GPU but not for 7c3 */
+> +               if (!adreno_is_7c3(adreno_gpu))
+> +                       gpu_write(gpu, REG_A6XX_UCHE_CMDQ_CONFIG, 0x66906);
+>         }
+>
+>         /* Enable expanded apriv for targets that support it */
+> @@ -1780,7 +1788,8 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
+>          */
+>         info = adreno_info(config->rev);
+>
+> -       if (info && (info->revn == 650 || info->revn == 660))
+> +       if (info && (info->revn == 650 || info->revn == 660
+> +                       || info->revn == ADRENO_REV_7C3))
+>                 adreno_gpu->base.hw_apriv = true;
+>
+>         a6xx_llc_slices_init(pdev, a6xx_gpu);
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+> index 9194337..1451c2b 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+> @@ -382,6 +382,36 @@ static void a660_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+>         msg->cnoc_cmds_data[1][0] =  0x60000001;
+>  }
+>
+> +static void adreno_7c3_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+> +{
+> +       /*
+> +        * Send a single "off" entry just to get things running
+> +        * TODO: bus scaling
+> +        */
+> +       msg->bw_level_num = 1;
+> +
+> +       msg->ddr_cmds_num = 3;
+> +       msg->ddr_wait_bitmask = 0x07;
+> +
+> +       msg->ddr_cmds_addrs[0] = 0x50004;
+> +       msg->ddr_cmds_addrs[1] = 0x50000;
+> +       msg->ddr_cmds_addrs[2] = 0x50088;
+> +
+> +       msg->ddr_cmds_data[0][0] =  0x40000000;
+> +       msg->ddr_cmds_data[0][1] =  0x40000000;
+> +       msg->ddr_cmds_data[0][2] =  0x40000000;
+> +
+> +       /*
+> +        * These are the CX (CNOC) votes - these are used by the GMU but the
+> +        * votes are known and fixed for the target
+> +        */
+> +       msg->cnoc_cmds_num = 1;
+> +       msg->cnoc_wait_bitmask = 0x01;
+> +
+> +       msg->cnoc_cmds_addrs[0] = 0x5006c;
+> +       msg->cnoc_cmds_data[0][0] =  0x40000000;
+> +       msg->cnoc_cmds_data[1][0] =  0x60000001;
+> +}
+>  static void a6xx_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
+>  {
+>         /* Send a single "off" entry since the 630 GMU doesn't do bus scaling */
+> @@ -432,6 +462,8 @@ static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
+>                 a640_build_bw_table(&msg);
+>         else if (adreno_is_a650(adreno_gpu))
+>                 a650_build_bw_table(&msg);
+> +       else if (adreno_is_7c3(adreno_gpu))
+> +               adreno_7c3_build_bw_table(&msg);
+>         else if (adreno_is_a660(adreno_gpu))
+>                 a660_build_bw_table(&msg);
+>         else
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> index 6dad801..063b847 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+> @@ -300,6 +300,18 @@ static const struct adreno_info gpulist[] = {
+>                 .init = a6xx_gpu_init,
+>                 .zapfw = "a660_zap.mdt",
+>                 .hwcg = a660_hwcg,
+> +       }, {
+> +               .rev = ADRENO_REV(6, 3, 5, ANY_ID),
+> +               .revn = ADRENO_REV_7C3,
+
+So rather than adding an ARENO_REV_7C3 define, I was thinking to just
+not set .revn (leave it zero) and identify based on .rev .. that (ie.
+GPU_ID being zero) would also be the signal to userspace to identify
+the GPU via CHIP_ID instead
+
+You could extract out the version comparison in adreno_info() into a
+helper that can be re-used in things like adreno_is_a660_family() and
+adreno_is_7c3().
+
+BR,
+-R
+
+> +               .name = "Adreno 7c Gen 3",
+> +               .fw = {
+> +                       [ADRENO_FW_SQE] = "a660_sqe.fw",
+> +                       [ADRENO_FW_GMU] = "a660_gmu.bin",
+> +               },
+> +               .gmem = SZ_512K,
+> +               .inactive_period = DRM_MSM_INACTIVE_PERIOD,
+> +               .init = a6xx_gpu_init,
+> +               .hwcg = a660_hwcg,
+>         },
+>  };
+>
+> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> index 8dbe0d1..679bc59 100644
+> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+> @@ -247,15 +247,22 @@ static inline int adreno_is_a650(struct adreno_gpu *gpu)
+>         return gpu->revn == 650;
+>  }
+>
+> +#define ADRENO_REV_7C3 0x06030500
+> +static inline int adreno_is_7c3(struct adreno_gpu *gpu)
+> +{
+> +       return gpu->revn == ADRENO_REV_7C3;
+> +}
+> +
+>  static inline int adreno_is_a660(struct adreno_gpu *gpu)
+>  {
+> -       return gpu->revn == 660;
+> +       return gpu->revn == 660 || gpu->revn == ADRENO_REV_7C3;
+>  }
+>
+>  /* check for a650, a660, or any derivatives */
+>  static inline int adreno_is_a650_family(struct adreno_gpu *gpu)
+>  {
+> -       return gpu->revn == 650 || gpu->revn == 620 || gpu->revn == 660;
+> +       return gpu->revn == 650 || gpu->revn == 620 || gpu->revn == 660
+> +              || gpu->revn == ADRENO_REV_7C3;
+>  }
+>
+>  int adreno_get_param(struct msm_gpu *gpu, uint32_t param, uint64_t *value);
+> --
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation.
+>
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
