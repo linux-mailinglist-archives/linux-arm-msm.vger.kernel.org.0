@@ -2,232 +2,216 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 46F323D4766
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jul 2021 13:25:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 391983D48E5
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 24 Jul 2021 19:29:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232239AbhGXKpS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Jul 2021 06:45:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60396 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231922AbhGXKpS (ORCPT
+        id S229813AbhGXQs7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Jul 2021 12:48:59 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:51009 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229461AbhGXQs7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Jul 2021 06:45:18 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 99151C061575;
-        Sat, 24 Jul 2021 04:25:49 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id f20-20020a9d6c140000b02904bb9756274cso4733159otq.6;
-        Sat, 24 Jul 2021 04:25:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Wmho9+Wg/RJHAISJdsior3XXLcEk7YEvFee8MxRP09k=;
-        b=sBD4JZJyWmX6lsJDfGpjMimE5kudyumm+g9ej2RbDy+wldPtx+AOWP1CP9pzLNSnCt
-         fniZmpcjSyXySqZMR+CI7yIbOq6xNSpN7pz71BmiK4TJfTF8hKm9GVP8buPkk4nWuimA
-         yvgd5GfIp6GEfVcYkg5tSUf2i+2jpOXoLqhMox93HF0V528bcDtlaG4/cE2Zshf5tdfW
-         88Som5LckR0nEdi+wwwVL2uo5KYN7CPpZRgVvuxM6c8QEu/FVXW2BhZOnB5HpwqYqndy
-         uVvluUxjBI53gK+1dPEDmKefXtkMymgMoacRCF1AwItOycd0FteeVK1bTVXxAkR8pHo3
-         Bd+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Wmho9+Wg/RJHAISJdsior3XXLcEk7YEvFee8MxRP09k=;
-        b=f3oCgdAygLb+G/KJjZFHCKJ4sBuMqpJcL5FkCHlrmjGD6zQ+Xh3DDV7K8yZ3J2CSD9
-         A8Nk/KhdCC2EWmtah3v79EE3Wn/CL0JuOxqaLIOwXhAYQ3SGcWRIyu08XTAL4P0k1g+2
-         A+ISeSIrVkVB6b+RnEDO7Ig21grdpSDabW5WmbFzFKihoXwPMZI1myzEIwRem5Egb1OK
-         B2lzwXOpSdFuculpqetfHVKocmyEiIG8Cl6zFhWlhBvmcvjhBaEErxAk8NdDAKNBFDnp
-         US3gCbp4PNPDr+EZNk76TX6euLPupl7v2Sos4/ZatZ1mjwSI4tOg1jCd8kIBjoXUivxy
-         +09w==
-X-Gm-Message-State: AOAM532eWDBXqWDevStAaBJcebfbthX0DSjVbUXCruoTEDIZmXY9n85T
-        95OYMCA3UJ/uYfeIcZcQeKpoOapnkXhrgnMvFNk=
-X-Google-Smtp-Source: ABdhPJxWgrDKgFnxb3wKdHMq7ugLW3b0qOd75IBA+QSiFRt4LAmH1DY21+1lfsI6y1v/C7JczAcLz3MBghtlQjbR88E=
-X-Received: by 2002:a9d:6d83:: with SMTP id x3mr5656396otp.110.1627125949017;
- Sat, 24 Jul 2021 04:25:49 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210719145317.79692-1-stephan@gerhold.net> <20210719145317.79692-5-stephan@gerhold.net>
- <CAMZdPi8oxRMo0erfd0wrUPzD2UsbexoR=86u2N75Fd9RpXHoKg@mail.gmail.com> <YPmRcBXpRtKKSDl8@gerhold.net>
-In-Reply-To: <YPmRcBXpRtKKSDl8@gerhold.net>
-From:   Sergey Ryazanov <ryazanov.s.a@gmail.com>
-Date:   Sat, 24 Jul 2021 14:25:59 +0300
-Message-ID: <CAHNKnsQr4Ys8q3Ctru-H=L3ZDwb__2D3E08mMZchDLAs1KetAg@mail.gmail.com>
-Subject: Re: [RFC PATCH net-next 4/4] net: wwan: Add Qualcomm BAM-DMUX WWAN
- network driver
-To:     Stephan Gerhold <stephan@gerhold.net>,
-        Loic Poulain <loic.poulain@linaro.org>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Johannes Berg <johannes@sipsolutions.net>,
+        Sat, 24 Jul 2021 12:48:59 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1627147770; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=Ktj1i3AlaWGew5NfuLfcGEy2Chnk/dvK1HpNHbnFwgA=; b=QqauvPxG26UGdYgjjE5/QZ3SJSs/mteKQftaW84Hsm5rBgqJI3nMVN90htm7zMGrakOquIg7
+ SIz1lQx7Rwz92QgFOIk8X15OH4Irmff35OeVNKPNoARTkp3Ccxe13XGiecW/KepLg7EgdTJv
+ y1c+wQpigzHldOClacz3MbcQRfk=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 60fc4df4e31d882d180b0095 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sat, 24 Jul 2021 17:29:24
+ GMT
+Sender: akhilpo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 26A82C4323A; Sat, 24 Jul 2021 17:29:24 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from hyd-lnxbld559.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akhilpo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A3176C433D3;
+        Sat, 24 Jul 2021 17:29:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A3176C433D3
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
+From:   Akhil P Oommen <akhilpo@codeaurora.org>
+To:     freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel@lists.freedesktop.org,
+        OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS 
+        <devicetree@vger.kernel.org>, linux-arm-msm@vger.kernel.org,
+        Stephen Boyd <swboyd@chromium.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Aleksander Morgado <aleksander@aleksander.es>,
-        Network Development <netdev@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dmaengine@vger.kernel.org, devicetree <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Jonathan Marek <jonathan@marek.ca>,
+        Douglas Anderson <dianders@chromium.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org
+Subject: [PATCH v2] arm64: dts: qcom: sc7280: Add gpu support
+Date:   Sat, 24 Jul 2021 22:59:00 +0530
+Message-Id: <1627147740-11590-1-git-send-email-akhilpo@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 22, 2021 at 6:40 PM Stephan Gerhold <stephan@gerhold.net> wrote:
-> On Mon, Jul 19, 2021 at 06:01:33PM +0200, Loic Poulain wrote:
->> On Mon, 19 Jul 2021 at 17:01, Stephan Gerhold <stephan@gerhold.net> wrote:
->>> I'm not sure how to integrate the driver with the WWAN subsystem yet.
->>> At the moment the driver creates network interfaces for all channels
->>> announced by the modem, it does not make use of the WWAN link management
->>> yet. Unfortunately, this is a bit complicated:
->>>
->>> Both QMAP and the built-in multiplexing layer might be needed at some point.
->>> There are firmware versions that do not support QMAP and the other way around
->>> (the built-in multiplexing was disabled on very recent firmware versions).
->>> Only userspace can check if QMAP is supported in the firmware (via QMI).
->>>
->>> I could ignore QMAP completely for now but I think someone will show up
->>> who will need this eventually. And if there is going to be common code for
->>> QMAP/rmnet link management it would be nice if BAM-DMUX could also make
->>> use of it.
->>
->> I have this on my TODO list for mhi-net QMAP.
->
-> Great, thanks!
->
->>> But the question is, how could this look like? How do we know if we should
->>> create a link for QMAP or a BAM-DMUX channel? Does it even make sense
->>> to manage the 1-8 channels via the WWAN link management?
->>
->> Couldn't it be specified via dts (property or different compatible
->> string)?
->
-> It would probably work in most cases, but I have to admit that I would
-> prefer to avoid this for the following reason: This driver is used on
-> some smartphones that have different variants for different parts of the
-> world. As far as Linux is concerned the hardware is pretty much
-> identical, but the modem firmware is often somewhat device-specific.
->
-> This means that the same device tree is often used with different
-> firmware versions. Perhaps we are lucky enough that the firmware
-> versions have the same capabilities, but I'm not fully sure about that.
->
-> I think at the end the situation is fairly similar to qmi_wwan/USB.
-> There the kernel also does not know if the modem supports QMAP or not.
-> The way it's solved there at the moment is that ModemManager tries to
-> enable it from user space and then the mode of the network interface
-> can be switched through a sysfs file ("qmi/pass_through").
->
-> Something like this should probably also work in my case. This should
-> also allow me to ignore QMAP for now and deal with it if someone really
-> needs it at some point since it's quite complicated for BAM-DMUX.
-> (I tried QMAP again today and listed the problems in [1] for reference,
->  but it's all BAM-DMUX specific...)
->
-> [1] https://lore.kernel.org/netdev/YPmF8bzevuabO2K9@gerhold.net/
->
->> would it make sense to have two drivers (with common core) to
->> manage either the multi-bam channel or newer QMAP based single
->> bam-channel modems.
->
-> There should be fairly little difference between those two usage modes,
-> so I don't think it's worth splitting the driver for this. Actually
-> right now (ignoring the link management of the WWAN subsystem),
-> it's already possible to use both.
->
-> I can use the network interfaces as-is in Raw-IP mode or I do
-> "sudo ip link add link rmnet0 name rmnet0_qmap type rmnet mux_id 1"
-> on top and use QMAP. The BAM-DMUX driver does not care, because it
-> just hands over sent/received packets as-is and the modem data format
-> must be always configured via QMI from user space.
->
->>> Another problem is that the WWAN subsystem currently creates all network
->>> interfaces below the common WWAN device. This means that userspace like
->>> ModemManager has no way to check which driver provides them. This is
->>> necessary though to decide how to set it up via QMI (ModemManager uses it).
->>
->> Well, I have quite a similar concern since I'm currently porting
->> mhi-net mbim to wwan framework, and I was thinking about not making
->> wwan device parent of the network link/netdev (in the same way as
->> wlan0 is not child of ieee80211 device), but not sure if it's a good
->> idea or not since we can not really consider driver name part of the
->> uapi.
->
-> Hm, I think the main disadvantage of that would be that the network
-> interface is no longer directly related to the WWAN device, right?
-> Userspace would then need some special matching to find the network
-> interfaces that belong to a certain control port.
->
-> With the current setup, e.g. ModemManager can simply match the WWAN
-> device and then look at its children and find the control port and
-> network interfaces. How would it find the network interfaces if they are
-> no longer below the WWAN device?
->
-> > The way links are created is normally abstracted, so if you know which
-> > bam variant you have from wwan network driver side (e.g. via dts), you
-> > should have nothing to check on the user side, except the session id.
->
-> In a perfect world it would probably be like this, but I'm afraid the
-> Qualcomm firmware situation isn't as simple. User space needs to know
-> which setup it is dealing with because all the setup happens via QMI.
->
-> Let's take the BAM-DMUX channels vs QMAP mux-IDs for example:
->
-> First, user space needs to configure the data format. This happens with
-> the QMI WDA (Wireless Data Administrative Service) "Set Data Format"
-> message. Parameter would be link layer format (Raw-IP in both cases)
-> but also the uplink/downlink data aggregation protocol. This is either
-> one of many QMAP versions (qmap|qmapv2|qmapv3|qmapv4|qmapv5), or simply
-> "none" when using BAM-DMUX without QMAP.
->
-> Then, the "session ID" (= BAM-DMUX channel or QMAP mux-ID) must be bound
-> to a WDS (Wireless Data Service) session. The QMI message for that is
-> different for BAM-DMUX and QMAP:
->
->   - BAM-DMUX: WDS "Bind Data Port"
->       (Parameter: SIO port number, can be derived from channel ID)
->
->   - QMAP: WDS "Bind MUX Data Port" (note the "MUX", different message!)
->       (Parameter: MUX ID, port type (USB/embedded/...), port number)
->
-> My point here: Since userspace is responsible for QMI at the moment
-> we will definitely need to make it aware of the setup that it needs to
-> apply. Just having an abstract "session ID" won't be enough to set up
-> the connection properly. :/
+Add the necessary dt nodes for gpu support in sc7280.
 
-Stephan, Loic, I have a polemic question related to a drivers model
-that we should build to smoothly support qualcomm hardware by the
-kernel. I would depict the situation as I see it and then ask the
-question. Please correct me if I am misunderstanding something or
-simply wrong. Or maybe you will be gracious once more and point me to
-earlier discussions :)
+Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
+---
+This patch has dependency on the GPUCC bindings patch here:
+https://patchwork.kernel.org/project/linux-arm-msm/patch/1619519590-3019-4-git-send-email-tdas@codeaurora.org/
 
-We always talk that a userspace software should take care of
-multiplexing configuration to make data communication possible at all.
-The motivation here is simple - management protocol (QMI) is complex,
-userspace software must implement it anyway to manage network
-connectivity, so why not implement the multiplexing management there
-too?
+Changes in v2:
+- formatting update and removed a duplicate header (Stephan)
 
-This way the userspace software that should simply command a "modem"
-to establish a data connection and poll a "modem" for a signal level
-became a self contained device manager that knows all modem-to-host
-interconnection details and even must to perform an initial
-modem-to-host interfaces negotiation and configuration. The last task
-is what userspace software usually expects to be performed by an OS
-kernel.
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 116 +++++++++++++++++++++++++++++++++++
+ 1 file changed, 116 insertions(+)
 
-But what if we implement the QMI multiplexing management part in the
-kernel? This way the kernel will take care about modem-to-host
-communication protocols and interfaces, and provides userspace with a
-single WWAN device (possibly with multiple network and network
-management interfaces).
-
-I do not propose to fully implement QMI protocol inside the kernel,
-but implement only a mux management part, while passing all other
-messages between a "modem" and a userspace software as-is.
-
-What pros and cons of such a design do you see?
-
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 029723a..524a5e0 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -6,6 +6,7 @@
+  */
+ 
+ #include <dt-bindings/clock/qcom,gcc-sc7280.h>
++#include <dt-bindings/clock/qcom,gpucc-sc7280.h>
+ #include <dt-bindings/clock/qcom,rpmh.h>
+ #include <dt-bindings/interconnect/qcom,sc7280.h>
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
+@@ -585,6 +586,121 @@
+ 			#clock-cells = <1>;
+ 		};
+ 
++		gpu@3d00000 {
++			compatible = "qcom,adreno-635.0", "qcom,adreno";
++			#stream-id-cells = <16>;
++			reg = <0 0x03d00000 0 0x40000>,
++			      <0 0x03d9e000 0 0x1000>,
++			      <0 0x03d61000 0 0x800>;
++			reg-names = "kgsl_3d0_reg_memory",
++				    "cx_mem",
++				    "cx_dbgc";
++			interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
++			iommus = <&adreno_smmu 0 0x401>;
++			operating-points-v2 = <&gpu_opp_table>;
++			qcom,gmu = <&gmu>;
++			interconnects = <&gem_noc MASTER_GFX3D 0 &mc_virt SLAVE_EBI1 0>;
++			interconnect-names = "gfx-mem";
++
++			gpu_opp_table: opp-table {
++				compatible = "operating-points-v2";
++
++				opp-550000000 {
++					opp-hz = /bits/ 64 <550000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
++					opp-peak-kBps = <6832000>;
++				};
++
++				opp-450000000 {
++					opp-hz = /bits/ 64 <450000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
++					opp-peak-kBps = <4068000>;
++				};
++
++				opp-315000000 {
++					opp-hz = /bits/ 64 <315000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
++					opp-peak-kBps = <1804000>;
++				};
++			};
++		};
++
++		gmu: gmu@3d69000 {
++			compatible="qcom,adreno-gmu-635.0", "qcom,adreno-gmu";
++			reg = <0 0x03d6a000 0 0x34000>,
++				<0 0x3de0000 0 0x10000>,
++				<0 0x0b290000 0 0x10000>;
++			reg-names = "gmu", "rscc", "gmu_pdc";
++			interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
++					<GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "hfi", "gmu";
++			clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
++					<&gpucc GPU_CC_CXO_CLK>,
++					<&gcc GCC_DDRSS_GPU_AXI_CLK>,
++					<&gcc GCC_GPU_MEMNOC_GFX_CLK>,
++					<&gpucc GPU_CC_AHB_CLK>,
++					<&gpucc GPU_CC_HUB_CX_INT_CLK>,
++					<&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>;
++			clock-names = "gmu",
++				      "cxo",
++				      "axi",
++				      "memnoc",
++				      "ahb",
++				      "hub",
++				      "smmu_vote";
++			power-domains = <&gpucc GPU_CC_CX_GDSC>,
++					<&gpucc GPU_CC_GX_GDSC>;
++			power-domain-names = "cx",
++					     "gx";
++			iommus = <&adreno_smmu 5 0x400>;
++			operating-points-v2 = <&gmu_opp_table>;
++
++			gmu_opp_table: opp-table {
++				compatible = "operating-points-v2";
++
++				opp-200000000 {
++					opp-hz = /bits/ 64 <200000000>;
++					opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
++				};
++			};
++		};
++
++		adreno_smmu: iommu@3da0000 {
++			compatible = "qcom,sc7280-smmu-500", "qcom,adreno-smmu", "arm,mmu-500";
++			reg = <0 0x03da0000 0 0x20000>;
++			#iommu-cells = <2>;
++			#global-interrupts = <2>;
++			interrupts = <GIC_SPI 673 IRQ_TYPE_LEVEL_HIGH>,
++					<GIC_SPI 675 IRQ_TYPE_LEVEL_HIGH>,
++					<GIC_SPI 678 IRQ_TYPE_LEVEL_HIGH>,
++					<GIC_SPI 679 IRQ_TYPE_LEVEL_HIGH>,
++					<GIC_SPI 680 IRQ_TYPE_LEVEL_HIGH>,
++					<GIC_SPI 681 IRQ_TYPE_LEVEL_HIGH>,
++					<GIC_SPI 682 IRQ_TYPE_LEVEL_HIGH>,
++					<GIC_SPI 683 IRQ_TYPE_LEVEL_HIGH>,
++					<GIC_SPI 684 IRQ_TYPE_LEVEL_HIGH>,
++					<GIC_SPI 685 IRQ_TYPE_LEVEL_HIGH>,
++					<GIC_SPI 686 IRQ_TYPE_LEVEL_HIGH>,
++					<GIC_SPI 687 IRQ_TYPE_LEVEL_HIGH>;
++
++			clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
++					<&gcc GCC_GPU_SNOC_DVM_GFX_CLK>,
++					<&gpucc GPU_CC_AHB_CLK>,
++					<&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>,
++					<&gpucc GPU_CC_CX_GMU_CLK>,
++					<&gpucc GPU_CC_HUB_CX_INT_CLK>,
++					<&gpucc GPU_CC_HUB_AON_CLK>;
++			clock-names = "gcc_gpu_memnoc_gfx_clk",
++					"gcc_gpu_snoc_dvm_gfx_clk",
++					"gpu_cc_ahb_clk",
++					"gpu_cc_hlos1_vote_gpu_smmu_clk",
++					"gpu_cc_cx_gmu_clk",
++					"gpu_cc_hub_cx_int_clk",
++					"gpu_cc_hub_aon_clk";
++
++			power-domains = <&gpucc GPU_CC_CX_GDSC>;
++		};
++
+ 		lpass_ag_noc: interconnect@3c40000 {
+ 			reg = <0 0x03c40000 0 0xf080>;
+ 			compatible = "qcom,sc7280-lpass-ag-noc";
 -- 
-Sergey
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation.
+
