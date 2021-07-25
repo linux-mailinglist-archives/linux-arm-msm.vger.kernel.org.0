@@ -2,110 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A55AE3D4BBB
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jul 2021 06:26:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA8263D4C44
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jul 2021 08:06:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230393AbhGYDqM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Jul 2021 23:46:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57244 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230389AbhGYDqI (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Jul 2021 23:46:08 -0400
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C371C061799
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jul 2021 21:26:30 -0700 (PDT)
-Received: by mail-ot1-x334.google.com with SMTP id h63-20020a9d14450000b02904ce97efee36so6435704oth.7
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jul 2021 21:26:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=2lr0HLKbGMfhvgQzbBYGum6ThIOLWrTxgc/XRrqS7TI=;
-        b=T4ZvBinIYvzQj0wWKnaURygYFC2E8hXmRZ1ZtD4KlsPvtaZ0cFoZfK0iRpA8KWTzLF
-         CIbCxifoBvbYOZVB97EkjwgnLgzyC+SwnJKlzG0JDrqag/Ri8ZAO1YgIe0MInyV0rBBQ
-         AgO5NCpTP1bTaBjQUienFQi8F9Tdqt9Zqoup4M7jy/4tNtdQ4x6dZw2ZGjcmVGdm2gzU
-         ZAEx8G3ft3CUzTeoUHLzsJZEcqxrcD2Fa5M4Ia8Pz2QS8D3I1Bwm3U6M1t/TrbtLEMZ9
-         2V2i+KpfabqUX5eh9vinXE8LjV//GvsaLvmISWVyFnpalEri1aC4/JXOD5nAVQQRr3Q8
-         JqJg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=2lr0HLKbGMfhvgQzbBYGum6ThIOLWrTxgc/XRrqS7TI=;
-        b=ikNnLaoR+DhDh/djkPb6MzEy8oGYndOChpc37WMxPafNDqG2EiSxc2tHaPB/4x9mDx
-         COH0ysNUmCbFNpE1BOeG/vF2DyaajkKZy6Z9hlzXso9g+XiWCuV1LDV8uqtVXh+PFVRz
-         /JGAjyLvxzj9jodBDILd6cjE6ntJRK2GITgQ+hW2WQCIxkBo2fr3L83utbXv98Pc3ia7
-         VKUNPNgiiKasxUzVtUGMaqAc+V0yq60X5TpRfoBc9ytO7Wy/MoKuM1b7lFuPHnaSZ45u
-         qPQwoUwr4tctAFsXqRLjhX7K4ThgylDTcrpgtIr94cyj1tB+qmwpkwKd78TkAh11EX8L
-         ZUUg==
-X-Gm-Message-State: AOAM533oY4UC3ktWTUJvx4IztdfD6Mqww8zTkA4n8ujn6vm+9saSKGOg
-        6CPiJWzgszvB5pBTNYyMOzN25A==
-X-Google-Smtp-Source: ABdhPJwzlSIVW2aW5cAHty03J7MuoqU0oXzGi7uz1brYzycm4HpPSCcTzEv7utPTS/ArSjZlgLegPw==
-X-Received: by 2002:a9d:27a4:: with SMTP id c33mr8032327otb.281.1627187189689;
-        Sat, 24 Jul 2021 21:26:29 -0700 (PDT)
-Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id t144sm6986200oih.57.2021.07.24.21.26.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Jul 2021 21:26:29 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Kuogee Hsieh <khsieh@codeaurora.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 5/5] drm/msm/dp: Add sc8180x DP controllers
-Date:   Sat, 24 Jul 2021 21:24:36 -0700
-Message-Id: <20210725042436.3967173-7-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210725042436.3967173-1-bjorn.andersson@linaro.org>
-References: <20210725042436.3967173-1-bjorn.andersson@linaro.org>
+        id S229538AbhGYFZe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Jul 2021 01:25:34 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39924 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229460AbhGYFZe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 25 Jul 2021 01:25:34 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 1F24660F11;
+        Sun, 25 Jul 2021 06:06:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1627193164;
+        bh=ZwACYUIuv3VQ3Zylln4xFkQ+c4zLUmOSSX/7oAfYllI=;
+        h=References:From:To:Cc:Subject:In-reply-to:Date:From;
+        b=aXX31zvkZ/ZwRtrJ3CgF6K3/zuHt5yQO2YeSv/tJ/DR+fOp6ZMReR+VNh3ZYF5HnU
+         RaNG+olL1p6swrh0aV8wmrB4R57fUbAQHwAvow+G5lqm6TLHb3b9oFHipbEkzKUJhc
+         Wf6tdusC/te0KJOoNTy7juJyeCmZYUNQCu0OhHunIGiUl85Kf8NdnWzP/aXSepfyWx
+         5bzaRtu6vo4zaIxS4hUPGvJrknWPlTjUlMz2+qc17d0fGgPGFIdbqcYaldE5aGglrb
+         6qv7w8IyLelLmXtQbxPeCj7F7qfIkWHYaZb5VgNEMHnUkR2t4UCEu57te1A2B7ZHzS
+         pd/KUfAmlIqMQ==
+References: <1623923899-16759-1-git-send-email-wcheng@codeaurora.org>
+ <cfb83fe4-369c-ec72-7887-3bcb0f20fe15@gmail.com>
+ <ec8050c5-c013-4af6-b39e-69779c009a9c@codeaurora.org>
+ <f5ed0ee7-e333-681f-0f1a-d0227562204b@gmail.com>
+ <2e01c435-9ecc-4e3b-f55c-612a86667020@codeaurora.org>
+ <2ae9fa6a-3bb1-3742-0dd3-59678bdd8643@gmail.com>
+ <ebea75fe-5334-197b-f67a-cb6e1e30b39e@codeaurora.org>
+ <bafa93bb-11e3-c8a5-e14a-b0a6d5695055@gmail.com>
+ <87v951ldlt.fsf@kernel.org>
+ <d9aef50c-4bd1-4957-13d8-0b6a14b9fcd0@gmail.com>
+ <87pmv9l1dv.fsf@kernel.org>
+ <9dc6cd83-17b9-7075-0934-6b9d41b6875d@gmail.com>
+User-agent: mu4e 1.4.15; emacs 27.2
+From:   Felipe Balbi <balbi@kernel.org>
+To:     Ferry Toth <fntoth@gmail.com>
+Cc:     Wesley Cheng <wcheng@codeaurora.org>, gregkh@linuxfoundation.org,
+        robh+dt@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
+        frowand.list@gmail.com, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, jackp@codeaurora.org,
+        heikki.krogerus@linux.intel.com, andy.shevchenko@gmail.com
+Subject: Re: [PATCH v10 0/6] Re-introduce TX FIFO resize for larger EP bursting
+In-reply-to: <9dc6cd83-17b9-7075-0934-6b9d41b6875d@gmail.com>
+Date:   Sun, 25 Jul 2021 09:05:59 +0300
+Message-ID: <87a6mbudvc.fsf@kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The sc8180x has 2 DP and 1 eDP controllers, add support for these to the
-DP driver.
 
-Link: https://lore.kernel.org/linux-arm-msm/20210511042043.592802-5-bjorn.andersson@linaro.org/
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 12 ++++++++++++
- 1 file changed, 12 insertions(+)
+Hi,
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 92b7646a1bb7..c26805cfcdd1 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -129,8 +129,20 @@ static const struct msm_dp_config sc7180_dp_cfg = {
- 	.num_dp = 1,
- };
- 
-+static const struct msm_dp_config sc8180x_dp_cfg = {
-+	.io_start = { 0xae90000, 0xae98000, 0 },
-+	.num_dp = 3,
-+};
-+
-+static const struct msm_dp_config sc8180x_edp_cfg = {
-+	.io_start = { 0, 0, 0xae9a000 },
-+	.num_dp = 3,
-+};
-+
- static const struct of_device_id dp_dt_match[] = {
- 	{ .compatible = "qcom,sc7180-dp", .data = &sc7180_dp_cfg },
-+	{ .compatible = "qcom,sc8180x-dp", .data = &sc8180x_dp_cfg },
-+	{ .compatible = "qcom,sc8180x-edp", .data = &sc8180x_edp_cfg },
- 	{}
- };
- 
+Ferry Toth <fntoth@gmail.com> writes:
+>>>>> Hardware name: Intel Corporation Merrifield/BODEGA BAY, BIOS 542
+>>>>> 2015.01.21:18.19.48
+>>>>> RIP: 0010:0x500000000
+>>>>> Code: Unable to access opcode bytes at RIP 0x4ffffffd6.
+>>>>> RSP: 0018:ffffa4d00045fc28 EFLAGS: 00010046
+>>>>> RAX: 0000000500000000 RBX: ffff8cd546aed200 RCX: 0000000000000000
+>>>>> RDX: 0000000000000000 RSI: ffff8cd547bfcae0 RDI: ffff8cd546aed200
+>>>>> RBP: ffff8cd547bfcae0 R08: 0000000000000000 R09: 0000000000000001
+>>>>> R10: ffff8cd541fd28c0 R11: 0000000000000000 R12: ffff8cd547342828
+>>>>> R13: ffff8cd546aed248 R14: 0000000000000000 R15: ffff8cd548b1d000
+>>>>> FS:  0000000000000000(0000) GS:ffff8cd57e200000(0000) knlGS:0000000000000000
+>>>>> CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+>>>>> CR2: 0000000500000000 CR3: 000000000311e000 CR4: 00000000001006f0
+>>>>> Call Trace:
+>>>>>     ? dwc3_remove_requests.constprop.0+0x14d/0x170
+>>>>>     ? __dwc3_gadget_ep_disable+0x7a/0x160
+>>>>>     ? dwc3_gadget_ep_disable+0x3d/0xd0
+>>>>>     ? usb_ep_disable+0x1c/0x
+>>>>>     ? u_audio_stop_capture+0x79/0x120 [u_audio]
+>>>>>     ? afunc_set_alt+0x73/0x80 [usb_f_uac2]
+>>>>>     ? composite_setup+0x224/0x1b90 [libcomposite]
+>>>>>     ? __dwc3_gadget_kick_transfer+0x160/0x400
+>>>>>     ? dwc3_gadget_ep_queue+0xf3/0x1a0
+>>>>>     ? configfs_composite_setup+0x6b/0x90 [libcomposite]
+>>>>>     ? configfs_composite_setup+0x6b/0x90 [libcomposite]
+>>>>>     ? dwc3_ep0_interrupt+0x459/0xa40
+>>>>>     ? dwc3_thread_interrupt+0x8ee/0xf40
+>>>>>     ? __schedule+0x235/0x6c0
+>>>>>     ? disable_irq_nosync+0x10/0x10
+>>>>>     ? irq_thread_fn+0x1b/0x60
+>>>>>     ? irq_thread+0xc0/0x160
+>>>>>     ? irq_thread_check_affinity+0x70/0x70
+>>>>>     ? irq_forced_thread_fn+0x70/0x70
+>>>>>     ? kthread+0x122/0x140
+>>>>>     ? set_kthread_struct+0x40/0x40
+>>>>>     ? ret_from_fork+0x22/0x30
+>>>> Do you mind enabling dwc3 traces and collecting them? Trying to figure
+>>>> out how we got here.
+>>>>
+>>> I'll try if I can get the same error by booting with USB in host mode
+>>> and then switch to device mode. If so I can enable traces and collect as
+>>> you explained me before.
+>>>
+>>> I'll try before monday, as then I fly for a holiday and will not be
+>>> available before rc5.
+>> you can enable all of those with kernel cmdline :-)
+>>
+>> https://www.kernel.org/doc/html/latest/admin-guide/kernel-parameters.html
+>>
+>> you need ftrace_dump_on_oops=1 and also need the correct options on
+>> trace_buf_size and trace_event.
+>>
+> On Edison-Arduino I have a switch to go to device mode, after which
+> udev triggers a script configure gadgets through configfs.
+>
+> I tried to log following these instructions:
+>
+> https://www.kernel.org/doc/html/latest/driver-api/usb/dwc3.html#reporting-bugs  <https://www.kernel.org/doc/html/latest/driver-api/usb/dwc3.html#reporting-bugs>
+>
+> Unfortunately the kernel crashes so badly I can not get to the ` cp
+> /t/trace /root/trace.txt` line (after a while the watchdog kicks).
+>
+> What to do next?
+
+Pass ftrace_dump_on_oops to kernel cmdline.
+
 -- 
-2.29.2
-
+balbi
