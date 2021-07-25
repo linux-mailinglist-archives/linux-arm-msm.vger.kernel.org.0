@@ -2,127 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AA8263D4C44
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jul 2021 08:06:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 515BD3D4C7C
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jul 2021 08:55:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229538AbhGYFZe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 25 Jul 2021 01:25:34 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39924 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229460AbhGYFZe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 25 Jul 2021 01:25:34 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 1F24660F11;
-        Sun, 25 Jul 2021 06:06:01 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1627193164;
-        bh=ZwACYUIuv3VQ3Zylln4xFkQ+c4zLUmOSSX/7oAfYllI=;
-        h=References:From:To:Cc:Subject:In-reply-to:Date:From;
-        b=aXX31zvkZ/ZwRtrJ3CgF6K3/zuHt5yQO2YeSv/tJ/DR+fOp6ZMReR+VNh3ZYF5HnU
-         RaNG+olL1p6swrh0aV8wmrB4R57fUbAQHwAvow+G5lqm6TLHb3b9oFHipbEkzKUJhc
-         Wf6tdusC/te0KJOoNTy7juJyeCmZYUNQCu0OhHunIGiUl85Kf8NdnWzP/aXSepfyWx
-         5bzaRtu6vo4zaIxS4hUPGvJrknWPlTjUlMz2+qc17d0fGgPGFIdbqcYaldE5aGglrb
-         6qv7w8IyLelLmXtQbxPeCj7F7qfIkWHYaZb5VgNEMHnUkR2t4UCEu57te1A2B7ZHzS
-         pd/KUfAmlIqMQ==
-References: <1623923899-16759-1-git-send-email-wcheng@codeaurora.org>
- <cfb83fe4-369c-ec72-7887-3bcb0f20fe15@gmail.com>
- <ec8050c5-c013-4af6-b39e-69779c009a9c@codeaurora.org>
- <f5ed0ee7-e333-681f-0f1a-d0227562204b@gmail.com>
- <2e01c435-9ecc-4e3b-f55c-612a86667020@codeaurora.org>
- <2ae9fa6a-3bb1-3742-0dd3-59678bdd8643@gmail.com>
- <ebea75fe-5334-197b-f67a-cb6e1e30b39e@codeaurora.org>
- <bafa93bb-11e3-c8a5-e14a-b0a6d5695055@gmail.com>
- <87v951ldlt.fsf@kernel.org>
- <d9aef50c-4bd1-4957-13d8-0b6a14b9fcd0@gmail.com>
- <87pmv9l1dv.fsf@kernel.org>
- <9dc6cd83-17b9-7075-0934-6b9d41b6875d@gmail.com>
-User-agent: mu4e 1.4.15; emacs 27.2
-From:   Felipe Balbi <balbi@kernel.org>
-To:     Ferry Toth <fntoth@gmail.com>
-Cc:     Wesley Cheng <wcheng@codeaurora.org>, gregkh@linuxfoundation.org,
-        robh+dt@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
-        frowand.list@gmail.com, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, jackp@codeaurora.org,
-        heikki.krogerus@linux.intel.com, andy.shevchenko@gmail.com
-Subject: Re: [PATCH v10 0/6] Re-introduce TX FIFO resize for larger EP bursting
-In-reply-to: <9dc6cd83-17b9-7075-0934-6b9d41b6875d@gmail.com>
-Date:   Sun, 25 Jul 2021 09:05:59 +0300
-Message-ID: <87a6mbudvc.fsf@kernel.org>
+        id S230236AbhGYGPJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Jul 2021 02:15:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33110 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230195AbhGYGPH (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 25 Jul 2021 02:15:07 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3942CC06175F
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jul 2021 23:55:37 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id z6-20020a9d24860000b02904d14e47202cso6629682ota.4
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jul 2021 23:55:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kali.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=BGn+EjMqq99Bj04hcp2WO+QUSqyG5NK9Xv1j68OtcH0=;
+        b=BcLvcUE6Fwt13XrkUHN/uz/j8woPZS1aYLDsNjLOmdnms6EFWkIR7tihdK7Cgu+W4f
+         CtRNrqXqCFzAiJg/Hqw/gw/88rA9P3SZn8N+aa9UMAtwRO7XBB+lfQo19TTuEnIVm/HW
+         ql28wyYFMjwuDLG3zxczw8JfDhu/B2hIQzKh7E4jxu4lr5GQBlLXaESVfCYGg65NDNdM
+         FigSk0gsyw2IsCg8l6mMZd2DvGanx4Iwc+tBg3lzMXprgIUTJHWMR70btuO12b04QUFP
+         mYdlaAcP9/TOZUy6e45RKfClfSv/qL7a94Dt37dx3Iq4k/o0BU3xLfpYOSUN0CmISJN7
+         o46A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=BGn+EjMqq99Bj04hcp2WO+QUSqyG5NK9Xv1j68OtcH0=;
+        b=pEmTKGR5k13A4OPlCT2TphW2amiaUR54jva/H1NM2hL5eSfFjswm3gFw1qj8pVJGW5
+         gdoWVMkmuOHL1u8YXLZh77d/XZ1wkdx/ymadX6qV4J7xW2UUEwJw24Q7dc63VDdb1Mez
+         qXFCO2BMAyMobRzS8evLhZktsmvEj83qfcUfxFZRWY4l/jW/lqw7Ote1oF4pKFMQ5chw
+         ZRXC6KpNuOqyz9y7VWU/BH06oozvgSwenWUKHVdNIPITuUcKiHzrok43uPZUj9+46Ium
+         /XZjBW2yqHPcUXooZm5I30tQLB/YMaNRFEqDgFeLU54TCRoCTFnmIXEbhvl58K9xy7/5
+         NQqg==
+X-Gm-Message-State: AOAM5313/Aq3xSOwVjR+0JY4eg9IioPZAMBoABUxMtd8KmqHAcEwExgK
+        jJHPdiS0skN0uepS3OfOkfmktw==
+X-Google-Smtp-Source: ABdhPJynVQWZnbcHqSx6DNemrpNukJu/Vnj0fuSC7MDxJlHlvE364cXzRFvZwCEOS69yYR8t0McbnQ==
+X-Received: by 2002:a9d:7f98:: with SMTP id t24mr8484242otp.366.1627196136433;
+        Sat, 24 Jul 2021 23:55:36 -0700 (PDT)
+Received: from MacBook-Pro.hackershack.net (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
+        by smtp.gmail.com with ESMTPSA id r26sm4288163ooh.32.2021.07.24.23.55.35
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 24 Jul 2021 23:55:35 -0700 (PDT)
+Subject: Re: [PATCH] arm64: dts: qcom: sdm850-yoga: Enable IPA
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, Alex Elder <elder@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20210615232816.835325-1-bjorn.andersson@linaro.org>
+From:   Steev Klimaszewski <steev@kali.org>
+Message-ID: <fd2222e9-e3ba-b54d-43ac-e52a04ad82c5@kali.org>
+Date:   Sun, 25 Jul 2021 01:55:34 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <20210615232816.835325-1-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+On 6/15/21 6:28 PM, Bjorn Andersson wrote:
+> Shuffle memory regions to make firmware loading succeed and then enable
+> the ipa device.
+>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sdm845.dtsi          | 21 +++++++------------
+>  .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts |  5 +++++
+>  2 files changed, 13 insertions(+), 13 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> index 1796ae8372be..49624eadce84 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+> @@ -128,28 +128,23 @@ camera_mem: memory@8bf00000 {
+>  			no-map;
+>  		};
+>  
+> -		ipa_fw_mem: memory@8c400000 {
+> -			reg = <0 0x8c400000 0 0x10000>;
+> +		wlan_msa_mem: memory@8c400000 {
+> +			reg = <0 0x8c400000 0 0x100000>;
+>  			no-map;
+>  		};
+>  
+> -		ipa_gsi_mem: memory@8c410000 {
+> -			reg = <0 0x8c410000 0 0x5000>;
+> +		gpu_mem: memory@8c515000 {
+> +			reg = <0 0x8c515000 0 0x2000>;
+>  			no-map;
+>  		};
+>  
+> -		gpu_mem: memory@8c415000 {
+> -			reg = <0 0x8c415000 0 0x2000>;
+> +		ipa_fw_mem: memory@8c517000 {
+> +			reg = <0 0x8c517000 0 0x5a000>;
+>  			no-map;
+>  		};
+>  
+> -		adsp_mem: memory@8c500000 {
+> -			reg = <0 0x8c500000 0 0x1a00000>;
+> -			no-map;
+> -		};
+> -
+> -		wlan_msa_mem: memory@8df00000 {
+> -			reg = <0 0x8df00000 0 0x100000>;
+> +		adsp_mem: memory@8c600000 {
+> +			reg = <0 0x8c600000 0 0x1a00000>;
+>  			no-map;
+>  		};
+>  
+> diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+> index c2a709a384e9..3eaa42dc3794 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+> @@ -415,6 +415,11 @@ ecsh: hid@5c {
+>  	};
+>  };
+>  
+> +&ipa {
+> +	status = "okay";
+> +	memory-region = <&ipa_fw_mem>;
+> +};
+> +
+>  &mdss {
+>  	status = "okay";
+>  };
+
+
 Hi,
 
-Ferry Toth <fntoth@gmail.com> writes:
->>>>> Hardware name: Intel Corporation Merrifield/BODEGA BAY, BIOS 542
->>>>> 2015.01.21:18.19.48
->>>>> RIP: 0010:0x500000000
->>>>> Code: Unable to access opcode bytes at RIP 0x4ffffffd6.
->>>>> RSP: 0018:ffffa4d00045fc28 EFLAGS: 00010046
->>>>> RAX: 0000000500000000 RBX: ffff8cd546aed200 RCX: 0000000000000000
->>>>> RDX: 0000000000000000 RSI: ffff8cd547bfcae0 RDI: ffff8cd546aed200
->>>>> RBP: ffff8cd547bfcae0 R08: 0000000000000000 R09: 0000000000000001
->>>>> R10: ffff8cd541fd28c0 R11: 0000000000000000 R12: ffff8cd547342828
->>>>> R13: ffff8cd546aed248 R14: 0000000000000000 R15: ffff8cd548b1d000
->>>>> FS:  0000000000000000(0000) GS:ffff8cd57e200000(0000) knlGS:0000000000000000
->>>>> CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
->>>>> CR2: 0000000500000000 CR3: 000000000311e000 CR4: 00000000001006f0
->>>>> Call Trace:
->>>>>     ? dwc3_remove_requests.constprop.0+0x14d/0x170
->>>>>     ? __dwc3_gadget_ep_disable+0x7a/0x160
->>>>>     ? dwc3_gadget_ep_disable+0x3d/0xd0
->>>>>     ? usb_ep_disable+0x1c/0x
->>>>>     ? u_audio_stop_capture+0x79/0x120 [u_audio]
->>>>>     ? afunc_set_alt+0x73/0x80 [usb_f_uac2]
->>>>>     ? composite_setup+0x224/0x1b90 [libcomposite]
->>>>>     ? __dwc3_gadget_kick_transfer+0x160/0x400
->>>>>     ? dwc3_gadget_ep_queue+0xf3/0x1a0
->>>>>     ? configfs_composite_setup+0x6b/0x90 [libcomposite]
->>>>>     ? configfs_composite_setup+0x6b/0x90 [libcomposite]
->>>>>     ? dwc3_ep0_interrupt+0x459/0xa40
->>>>>     ? dwc3_thread_interrupt+0x8ee/0xf40
->>>>>     ? __schedule+0x235/0x6c0
->>>>>     ? disable_irq_nosync+0x10/0x10
->>>>>     ? irq_thread_fn+0x1b/0x60
->>>>>     ? irq_thread+0xc0/0x160
->>>>>     ? irq_thread_check_affinity+0x70/0x70
->>>>>     ? irq_forced_thread_fn+0x70/0x70
->>>>>     ? kthread+0x122/0x140
->>>>>     ? set_kthread_struct+0x40/0x40
->>>>>     ? ret_from_fork+0x22/0x30
->>>> Do you mind enabling dwc3 traces and collecting them? Trying to figure
->>>> out how we got here.
->>>>
->>> I'll try if I can get the same error by booting with USB in host mode
->>> and then switch to device mode. If so I can enable traces and collect as
->>> you explained me before.
->>>
->>> I'll try before monday, as then I fly for a holiday and will not be
->>> available before rc5.
->> you can enable all of those with kernel cmdline :-)
->>
->> https://www.kernel.org/doc/html/latest/admin-guide/kernel-parameters.html
->>
->> you need ftrace_dump_on_oops=1 and also need the correct options on
->> trace_buf_size and trace_event.
->>
-> On Edison-Arduino I have a switch to go to device mode, after which
-> udev triggers a script configure gadgets through configfs.
->
-> I tried to log following these instructions:
->
-> https://www.kernel.org/doc/html/latest/driver-api/usb/dwc3.html#reporting-bugs  <https://www.kernel.org/doc/html/latest/driver-api/usb/dwc3.html#reporting-bugs>
->
-> Unfortunately the kernel crashes so badly I can not get to the ` cp
-> /t/trace /root/trace.txt` line (after a while the watchdog kicks).
->
-> What to do next?
+Thank you for this!
 
-Pass ftrace_dump_on_oops to kernel cmdline.
+Tested - one thing that end users/distro packagers may need to be aware
+of, if the module is loaded in an initramfs, the firmware file also
+needs to be loaded in the initramfs.  If the module is in an initramfs
+and the firmware is not, the module will need to be removed and
+re-inserted for the device to come up.
 
--- 
-balbi
+Tested-by: Steev Klimaszewski <steev@kali.org>
+
