@@ -2,59 +2,63 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B34543D4B1F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jul 2021 05:17:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CFB2A3D4B22
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 25 Jul 2021 05:21:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230149AbhGYCfd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 24 Jul 2021 22:35:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41814 "EHLO
+        id S229853AbhGYClU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 24 Jul 2021 22:41:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230089AbhGYCfb (ORCPT
+        with ESMTP id S229665AbhGYClT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 24 Jul 2021 22:35:31 -0400
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78448C061757
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jul 2021 20:16:01 -0700 (PDT)
-Received: by mail-oi1-x233.google.com with SMTP id x15so6772285oic.9
-        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jul 2021 20:16:01 -0700 (PDT)
+        Sat, 24 Jul 2021 22:41:19 -0400
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D5DEC061757
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jul 2021 20:21:49 -0700 (PDT)
+Received: by mail-ot1-x331.google.com with SMTP id v8-20020a0568301bc8b02904d5b4e5ca3aso5529607ota.13
+        for <linux-arm-msm@vger.kernel.org>; Sat, 24 Jul 2021 20:21:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=qU1AQGUnzAw+tR9LiitVOozStwaZW7Fxl3hPiKdznLY=;
-        b=z22benouZj6zj2bR2WhXxpmi7bvoS4Ig6vypL4a/j6+n94aaZRe1dSeZUnmSo6ymo4
-         flmG2UP5uPJ77u1OAoGViyqNbk+o/CUVVHXJaWqxKplIz3RkwwERD1JxaMB30l2R323q
-         jMM2ex9P//goFPBHrMYuXvQ0mFbXX9qTCFC8HtL0C4K1f8x5zvQ5DoEVxbiUY6HP/OY2
-         6SZDNfJB0qGH7cSthG8TKvDX1RfqrrsP25GoY87OBkJTuEzS4dlI74RQqvzhWuPLeCZM
-         psv8zTqYwgYu7JsTpEG+qnkkZCIJLGyFmwbYwmLe2JLthgo66tL4K16uL4b4+Z3990rj
-         pg1A==
+        bh=gsTOc+rL6lEAEpQSXvea66h2ZWJwfuK8xvAPUmJAZQI=;
+        b=gnvBYzhUm3ydgVsFyglm2kP+QZCot55q8iUAD6sPh1zLPLsTe5RrT09O0uoMvoaCwn
+         Rj84VKCzuUEIOhVWi4c0WFyeXr586GKnbosCCKQ+tJeIf+edJy1ocX3uZsLBTJ5lNVw7
+         aAYH6D4f/izOD1eXU1hUUwQlhA8SbO3lBdbiAB63jvbTtuA2nPAOJeRR2bjSEUwv/Jwt
+         qxMBpmPRlIKjXrl1CQvK7km3kdqDsqCPpV/6Egm02Mzb4fo5vyAZhkP82E8TxE3uotLq
+         HDpdWCBbgJVbmLdk1RoMMhKpj7yrSUvDToMAJ8FZrUQLvfPLzQMKAL5JlRVLWoY0ygIE
+         k9DA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=qU1AQGUnzAw+tR9LiitVOozStwaZW7Fxl3hPiKdznLY=;
-        b=uBvQ80EYWwPV3gPGm1bQYCcfCrfgboVVT9A0gf5rywXImm6tBsM0Zezz6iOdIhuD97
-         d19FqapHKpXg7+ZXN6xcqk6kWtuHDp4Jsmz7JC9u2vgUin92McFBBaNNFBS9nZt4s/3R
-         LKHwivFMTpjmeypFD8pKPBllQtj4GRsgwtFjjlMQ1Jbb/r0OvRxNqOHEsQ9uDHI7Bq07
-         uBjqVw5nKUmZxZiLGhxsA7+jdCSRG97QtznVfsSSji4mTFIxy/4n8CqRLb/4FwduSJ6J
-         IV4cR0xOYH05J3zLWUbicRZPk/LV1fWRvzrbsoQ8gcn6XQsrfbw3I0Fq3ycf3J1KRpBk
-         W/5Q==
-X-Gm-Message-State: AOAM532mDRUId8uvdxpAqz1Z6uaFveBZCF0hFLaDqHJYcxnUCXk0clmT
-        f8Y41xjidkdRUtEM+UMyOiRr6w==
-X-Google-Smtp-Source: ABdhPJxIjL2FbGXn7dCQTRhU811vMnH9qJvn0LLvhRdN6cso4k3B7jbTmEc7dwQlHPysKa1p6eyQww==
-X-Received: by 2002:aca:fc12:: with SMTP id a18mr7208886oii.85.1627182960828;
-        Sat, 24 Jul 2021 20:16:00 -0700 (PDT)
+        bh=gsTOc+rL6lEAEpQSXvea66h2ZWJwfuK8xvAPUmJAZQI=;
+        b=Cj2LN2KYQ+3RqXpLGhBiKj8xfk9smApjnW1RYeJenPPdA6sEqjdLPHoumbCimV9/Bx
+         MRU21gSm5Y1HYG/RAbLe4FpYDu9n1QILpJ/oo1HsRozB9UYVa25jAX8A2ddhItSq9fMI
+         ng+MkECAf1U0U0kOy3LiQjfPrJfWXIbYfCrwHHQ0dFa8T1AYxa5uhj6NrXbvT+8yPrJl
+         prHN+wfcCGG559INdWhe5TydxBjOmwycaMQtf6x4ZpgmW8bMgf0IrdSYAV+9dPEtt9zy
+         9JesMFL5RGa7J9bTx6Udo81VJbXSVszHdNDbVmcEvxAW7TXNT+ssEZuANVaPAbwVivQ7
+         Xm+w==
+X-Gm-Message-State: AOAM531uM6aHXx/AF2Fiqc2rNkG3652tXV/Kd4N2Bin9tua0sleEO3EH
+        TsbAWJjirwhxkP1WbyeJ2XCmjuUxyBxewA==
+X-Google-Smtp-Source: ABdhPJyf6p654Mek1ReOJlfg/V8CNaHDfEO820VLd2UQ6EH5SIlguppVKmBbPmT4H6S7ltrx0+VhYQ==
+X-Received: by 2002:a9d:600a:: with SMTP id h10mr7593133otj.144.1627183308943;
+        Sat, 24 Jul 2021 20:21:48 -0700 (PDT)
 Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id k7sm6210660otn.60.2021.07.24.20.15.59
+        by smtp.gmail.com with ESMTPSA id r16sm5567139otu.26.2021.07.24.20.21.48
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 24 Jul 2021 20:16:00 -0700 (PDT)
+        Sat, 24 Jul 2021 20:21:48 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Georgi Djakov <djakov@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] interconnect: qcom: osm-l3: Use driver-specific naming
-Date:   Sat, 24 Jul 2021 20:14:14 -0700
-Message-Id: <20210725031414.3961227-1-bjorn.andersson@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     Jonathan Marek <jonathan@marek.ca>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: [PATCH] drm: msm: Add 680 gpu to the adreno gpu list
+Date:   Sat, 24 Jul 2021 20:20:02 -0700
+Message-Id: <20210725032002.3961691-1-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
@@ -62,206 +66,144 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In situations were the developer screws up by e.g. not giving the OSM
-nodes unique identifiers the interconnect framework might mix up nodes
-between the OSM L3 provider and e.g. the RPMh provider.
-
-The resulting callstack containts "qcom_icc_set", which is not unique to
-the OSM L3 provider driver. Once the faulting qcom_icc_set() is
-identified it's further confusing that "qcom_icc_node" is different
-between the different drivers.
-
-To avoid this confusion, rename the node struct and the setter in the
-OSM L3 driver to include "osm_l3" in their names.
+This patch adds a Adreno 680 entry to the gpulist.
 
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c      |  5 +++--
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c      | 12 +++++++-----
+ drivers/gpu/drm/msm/adreno/a6xx_hfi.c      |  2 +-
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 13 +++++++++++++
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  5 +++++
+ 5 files changed, 29 insertions(+), 8 deletions(-)
 
-This was written after the sc8180x patch and as such applies ontop of:
-https://lore.kernel.org/linux-arm-msm/20210725025834.3941777-2-bjorn.andersson@linaro.org/
-
- drivers/interconnect/qcom/osm-l3.c | 46 +++++++++++++++---------------
- 1 file changed, 23 insertions(+), 23 deletions(-)
-
-diff --git a/drivers/interconnect/qcom/osm-l3.c b/drivers/interconnect/qcom/osm-l3.c
-index 13e41b932567..c7af143980de 100644
---- a/drivers/interconnect/qcom/osm-l3.c
-+++ b/drivers/interconnect/qcom/osm-l3.c
-@@ -38,7 +38,7 @@
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index b349692219b7..1c0d75e1189f 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -521,7 +521,8 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
  
- #define OSM_L3_MAX_LINKS		1
+ 	if (adreno_is_a650(adreno_gpu) || adreno_is_a660(adreno_gpu))
+ 		pdc_in_aop = true;
+-	else if (adreno_is_a618(adreno_gpu) || adreno_is_a640(adreno_gpu))
++	else if (adreno_is_a618(adreno_gpu) || adreno_is_a640(adreno_gpu) ||
++		 adreno_is_a680(adreno_gpu))
+ 		pdc_address_offset = 0x30090;
+ 	else
+ 		pdc_address_offset = 0x30080;
+@@ -1522,7 +1523,7 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ 			SZ_16M - SZ_16K, 0x04000);
+ 		if (ret)
+ 			goto err_memory;
+-	} else if (adreno_is_a640(adreno_gpu)) {
++	} else if (adreno_is_a640(adreno_gpu) || adreno_is_a680(adreno_gpu)) {
+ 		ret = a6xx_gmu_memory_alloc(gmu, &gmu->icache,
+ 			SZ_256K - SZ_16K, 0x04000);
+ 		if (ret)
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 9c5e4618aa0a..5cdafc6c8bb0 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -683,7 +683,7 @@ static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
+ 	if (adreno_is_a618(adreno_gpu))
+ 		return;
  
--#define to_qcom_provider(_provider) \
-+#define to_osm_l3_provider(_provider) \
- 	container_of(_provider, struct qcom_osm_l3_icc_provider, provider)
+-	if (adreno_is_a640(adreno_gpu))
++	if (adreno_is_a640(adreno_gpu) || adreno_is_a680(adreno_gpu))
+ 		amsbc = 1;
  
- struct qcom_osm_l3_icc_provider {
-@@ -50,14 +50,14 @@ struct qcom_osm_l3_icc_provider {
+ 	if (adreno_is_a650(adreno_gpu) || adreno_is_a660(adreno_gpu)) {
+@@ -757,7 +757,7 @@ static bool a6xx_ucode_check_version(struct a6xx_gpu *a6xx_gpu,
+ 	 * a660 targets have all the critical security fixes from the start
+ 	 */
+ 	if (adreno_is_a618(adreno_gpu) || adreno_is_a630(adreno_gpu) ||
+-		adreno_is_a640(adreno_gpu)) {
++	    adreno_is_a640(adreno_gpu) || adreno_is_a680(adreno_gpu)) {
+ 		/*
+ 		 * If the lowest nibble is 0xa that is an indication that this
+ 		 * microcode has been patched. The actual version is in dword
+@@ -897,7 +897,8 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
+ 	a6xx_set_hwcg(gpu, true);
+ 
+ 	/* VBIF/GBIF start*/
+-	if (adreno_is_a640(adreno_gpu) || adreno_is_a650_family(adreno_gpu)) {
++	if (adreno_is_a640(adreno_gpu) || adreno_is_a650_family(adreno_gpu) ||
++	    adreno_is_a680(adreno_gpu)) {
+ 		gpu_write(gpu, REG_A6XX_GBIF_QSB_SIDE0, 0x00071620);
+ 		gpu_write(gpu, REG_A6XX_GBIF_QSB_SIDE1, 0x00071620);
+ 		gpu_write(gpu, REG_A6XX_GBIF_QSB_SIDE2, 0x00071620);
+@@ -935,7 +936,8 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
+ 	gpu_write(gpu, REG_A6XX_UCHE_FILTER_CNTL, 0x804);
+ 	gpu_write(gpu, REG_A6XX_UCHE_CACHE_WAYS, 0x4);
+ 
+-	if (adreno_is_a640(adreno_gpu) || adreno_is_a650_family(adreno_gpu))
++	if (adreno_is_a640(adreno_gpu) || adreno_is_a650_family(adreno_gpu) ||
++	    adreno_is_a680(adreno_gpu))
+ 		gpu_write(gpu, REG_A6XX_CP_ROQ_THRESHOLDS_2, 0x02000140);
+ 	else
+ 		gpu_write(gpu, REG_A6XX_CP_ROQ_THRESHOLDS_2, 0x010000c0);
+@@ -952,7 +954,7 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
+ 	*/
+ 	if (adreno_is_a650(adreno_gpu) || adreno_is_a660(adreno_gpu))
+ 		gpu_write(gpu, REG_A6XX_PC_DBG_ECO_CNTL, 0x00300200);
+-	else if (adreno_is_a640(adreno_gpu))
++	else if (adreno_is_a640(adreno_gpu) || adreno_is_a680(adreno_gpu))
+ 		gpu_write(gpu, REG_A6XX_PC_DBG_ECO_CNTL, 0x00200200);
+ 	else
+ 		gpu_write(gpu, REG_A6XX_PC_DBG_ECO_CNTL, 0x00180000);
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+index 919433732b43..df8af237cf6a 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+@@ -428,7 +428,7 @@ static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
+ 
+ 	if (adreno_is_a618(adreno_gpu))
+ 		a618_build_bw_table(&msg);
+-	else if (adreno_is_a640(adreno_gpu))
++	else if (adreno_is_a640(adreno_gpu) || adreno_is_a680(adreno_gpu))
+ 		a640_build_bw_table(&msg);
+ 	else if (adreno_is_a650(adreno_gpu))
+ 		a650_build_bw_table(&msg);
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+index 6dad8015c9a1..799e4a35ca44 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_device.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+@@ -300,6 +300,19 @@ static const struct adreno_info gpulist[] = {
+ 		.init = a6xx_gpu_init,
+ 		.zapfw = "a660_zap.mdt",
+ 		.hwcg = a660_hwcg,
++	}, {
++		.rev = ADRENO_REV(6, 8, 0, ANY_ID),
++		.revn = 680,
++		.name = "A680",
++		.fw = {
++			[ADRENO_FW_SQE] = "a630_sqe.fw",
++			[ADRENO_FW_GMU] = "a640_gmu.bin",
++		},
++		.gmem = SZ_2M,
++		.inactive_period = DRM_MSM_INACTIVE_PERIOD,
++		.init = a6xx_gpu_init,
++		.zapfw = "a640_zap.mdt",
++		.hwcg = a640_hwcg,
+ 	},
  };
  
- /**
-- * struct qcom_icc_node - Qualcomm specific interconnect nodes
-+ * struct qcom_osm_l3_node - Qualcomm specific interconnect nodes
-  * @name: the node name used in debugfs
-  * @links: an array of nodes where we can go next while traversing
-  * @id: a unique node identifier
-  * @num_links: the total number of @links
-  * @buswidth: width of the interconnect between a node and the bus
-  */
--struct qcom_icc_node {
-+struct qcom_osm_l3_node {
- 	const char *name;
- 	u16 links[OSM_L3_MAX_LINKS];
- 	u16 id;
-@@ -65,8 +65,8 @@ struct qcom_icc_node {
- 	u16 buswidth;
- };
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+index 8dbe0d157520..a7e843e81b1e 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+@@ -258,6 +258,11 @@ static inline int adreno_is_a650_family(struct adreno_gpu *gpu)
+        return gpu->revn == 650 || gpu->revn == 620 || gpu->revn == 660;
+ }
  
--struct qcom_icc_desc {
--	const struct qcom_icc_node **nodes;
-+struct qcom_osm_l3_desc {
-+	const struct qcom_osm_l3_node **nodes;
- 	size_t num_nodes;
- 	unsigned int lut_row_size;
- 	unsigned int reg_freq_lut;
-@@ -74,7 +74,7 @@ struct qcom_icc_desc {
- };
- 
- #define DEFINE_QNODE(_name, _id, _buswidth, ...)			\
--	static const struct qcom_icc_node _name = {			\
-+	static const struct qcom_osm_l3_node _name = {			\
- 		.name = #_name,						\
- 		.id = _id,						\
- 		.buswidth = _buswidth,					\
-@@ -85,12 +85,12 @@ struct qcom_icc_desc {
- DEFINE_QNODE(sdm845_osm_apps_l3, SDM845_MASTER_OSM_L3_APPS, 16, SDM845_SLAVE_OSM_L3);
- DEFINE_QNODE(sdm845_osm_l3, SDM845_SLAVE_OSM_L3, 16);
- 
--static const struct qcom_icc_node *sdm845_osm_l3_nodes[] = {
-+static const struct qcom_osm_l3_node *sdm845_osm_l3_nodes[] = {
- 	[MASTER_OSM_L3_APPS] = &sdm845_osm_apps_l3,
- 	[SLAVE_OSM_L3] = &sdm845_osm_l3,
- };
- 
--static const struct qcom_icc_desc sdm845_icc_osm_l3 = {
-+static const struct qcom_osm_l3_desc sdm845_icc_osm_l3 = {
- 	.nodes = sdm845_osm_l3_nodes,
- 	.num_nodes = ARRAY_SIZE(sdm845_osm_l3_nodes),
- 	.lut_row_size = OSM_LUT_ROW_SIZE,
-@@ -101,12 +101,12 @@ static const struct qcom_icc_desc sdm845_icc_osm_l3 = {
- DEFINE_QNODE(sc7180_osm_apps_l3, SC7180_MASTER_OSM_L3_APPS, 16, SC7180_SLAVE_OSM_L3);
- DEFINE_QNODE(sc7180_osm_l3, SC7180_SLAVE_OSM_L3, 16);
- 
--static const struct qcom_icc_node *sc7180_osm_l3_nodes[] = {
-+static const struct qcom_osm_l3_node *sc7180_osm_l3_nodes[] = {
- 	[MASTER_OSM_L3_APPS] = &sc7180_osm_apps_l3,
- 	[SLAVE_OSM_L3] = &sc7180_osm_l3,
- };
- 
--static const struct qcom_icc_desc sc7180_icc_osm_l3 = {
-+static const struct qcom_osm_l3_desc sc7180_icc_osm_l3 = {
- 	.nodes = sc7180_osm_l3_nodes,
- 	.num_nodes = ARRAY_SIZE(sc7180_osm_l3_nodes),
- 	.lut_row_size = OSM_LUT_ROW_SIZE,
-@@ -117,12 +117,12 @@ static const struct qcom_icc_desc sc7180_icc_osm_l3 = {
- DEFINE_QNODE(sc8180x_osm_apps_l3, SC8180X_MASTER_OSM_L3_APPS, 32, SC8180X_SLAVE_OSM_L3);
- DEFINE_QNODE(sc8180x_osm_l3, SC8180X_SLAVE_OSM_L3, 32);
- 
--static const struct qcom_icc_node *sc8180x_osm_l3_nodes[] = {
-+static const struct qcom_osm_l3_node *sc8180x_osm_l3_nodes[] = {
- 	[MASTER_OSM_L3_APPS] = &sc8180x_osm_apps_l3,
- 	[SLAVE_OSM_L3] = &sc8180x_osm_l3,
- };
- 
--static const struct qcom_icc_desc sc8180x_icc_osm_l3 = {
-+static const struct qcom_osm_l3_desc sc8180x_icc_osm_l3 = {
- 	.nodes = sc8180x_osm_l3_nodes,
- 	.num_nodes = ARRAY_SIZE(sc8180x_osm_l3_nodes),
- 	.lut_row_size = OSM_LUT_ROW_SIZE,
-@@ -133,12 +133,12 @@ static const struct qcom_icc_desc sc8180x_icc_osm_l3 = {
- DEFINE_QNODE(sm8150_osm_apps_l3, SM8150_MASTER_OSM_L3_APPS, 32, SM8150_SLAVE_OSM_L3);
- DEFINE_QNODE(sm8150_osm_l3, SM8150_SLAVE_OSM_L3, 32);
- 
--static const struct qcom_icc_node *sm8150_osm_l3_nodes[] = {
-+static const struct qcom_osm_l3_node *sm8150_osm_l3_nodes[] = {
- 	[MASTER_OSM_L3_APPS] = &sm8150_osm_apps_l3,
- 	[SLAVE_OSM_L3] = &sm8150_osm_l3,
- };
- 
--static const struct qcom_icc_desc sm8150_icc_osm_l3 = {
-+static const struct qcom_osm_l3_desc sm8150_icc_osm_l3 = {
- 	.nodes = sm8150_osm_l3_nodes,
- 	.num_nodes = ARRAY_SIZE(sm8150_osm_l3_nodes),
- 	.lut_row_size = OSM_LUT_ROW_SIZE,
-@@ -149,12 +149,12 @@ static const struct qcom_icc_desc sm8150_icc_osm_l3 = {
- DEFINE_QNODE(sm8250_epss_apps_l3, SM8250_MASTER_EPSS_L3_APPS, 32, SM8250_SLAVE_EPSS_L3);
- DEFINE_QNODE(sm8250_epss_l3, SM8250_SLAVE_EPSS_L3, 32);
- 
--static const struct qcom_icc_node *sm8250_epss_l3_nodes[] = {
-+static const struct qcom_osm_l3_node *sm8250_epss_l3_nodes[] = {
- 	[MASTER_EPSS_L3_APPS] = &sm8250_epss_apps_l3,
- 	[SLAVE_EPSS_L3_SHARED] = &sm8250_epss_l3,
- };
- 
--static const struct qcom_icc_desc sm8250_icc_epss_l3 = {
-+static const struct qcom_osm_l3_desc sm8250_icc_epss_l3 = {
- 	.nodes = sm8250_epss_l3_nodes,
- 	.num_nodes = ARRAY_SIZE(sm8250_epss_l3_nodes),
- 	.lut_row_size = EPSS_LUT_ROW_SIZE,
-@@ -162,11 +162,11 @@ static const struct qcom_icc_desc sm8250_icc_epss_l3 = {
- 	.reg_perf_state = EPSS_REG_PERF_STATE,
- };
- 
--static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
-+static int qcom_osm_l3_set(struct icc_node *src, struct icc_node *dst)
- {
- 	struct qcom_osm_l3_icc_provider *qp;
- 	struct icc_provider *provider;
--	const struct qcom_icc_node *qn;
-+	const struct qcom_osm_l3_node *qn;
- 	struct icc_node *n;
- 	unsigned int index;
- 	u32 agg_peak = 0;
-@@ -175,7 +175,7 @@ static int qcom_icc_set(struct icc_node *src, struct icc_node *dst)
- 
- 	qn = src->data;
- 	provider = src->provider;
--	qp = to_qcom_provider(provider);
-+	qp = to_osm_l3_provider(provider);
- 
- 	list_for_each_entry(n, &provider->nodes, node_list)
- 		provider->aggregate(n, 0, n->avg_bw, n->peak_bw,
-@@ -208,10 +208,10 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
- 	u32 info, src, lval, i, prev_freq = 0, freq;
- 	static unsigned long hw_rate, xo_rate;
- 	struct qcom_osm_l3_icc_provider *qp;
--	const struct qcom_icc_desc *desc;
-+	const struct qcom_osm_l3_desc *desc;
- 	struct icc_onecell_data *data;
- 	struct icc_provider *provider;
--	const struct qcom_icc_node **qnodes;
-+	const struct qcom_osm_l3_node **qnodes;
- 	struct icc_node *node;
- 	size_t num_nodes;
- 	struct clk *clk;
-@@ -281,7 +281,7 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
- 
- 	provider = &qp->provider;
- 	provider->dev = &pdev->dev;
--	provider->set = qcom_icc_set;
-+	provider->set = qcom_osm_l3_set;
- 	provider->aggregate = icc_std_aggregate;
- 	provider->xlate = of_icc_xlate_onecell;
- 	INIT_LIST_HEAD(&provider->nodes);
-@@ -303,7 +303,7 @@ static int qcom_osm_l3_probe(struct platform_device *pdev)
- 		}
- 
- 		node->name = qnodes[i]->name;
--		/* Cast away const and add it back in qcom_icc_set() */
-+		/* Cast away const and add it back in qcom_osm_l3_set() */
- 		node->data = (void *)qnodes[i];
- 		icc_node_add(node, provider);
- 
++static inline int adreno_is_a680(struct adreno_gpu *gpu)
++{
++       return gpu->revn == 680;
++}
++
+ int adreno_get_param(struct msm_gpu *gpu, uint32_t param, uint64_t *value);
+ const struct firmware *adreno_request_fw(struct adreno_gpu *adreno_gpu,
+ 		const char *fwname);
 -- 
 2.29.2
 
