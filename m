@@ -2,143 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 002B83D683C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jul 2021 22:39:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 643873D6858
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jul 2021 23:00:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232392AbhGZT6n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jul 2021 15:58:43 -0400
-Received: from mail.kernel.org ([198.145.29.99]:56098 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232169AbhGZT6n (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jul 2021 15:58:43 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id D5C6A60F93;
-        Mon, 26 Jul 2021 20:39:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1627331951;
-        bh=jwo7kjnHqUbR60c5VoxUCqCoqYO9MoJQlrQi+4fW4nw=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=IM1Cyw+uHcMqpcFwB5U40N1+xhiaMW+QGgy8y88TD4v54U/cYQTjnicq9o5a2t5qd
-         Huqtohyx1ES7ADhbV+hXCmpd2FfwEUf7nnqYi2eKd1v00GtAWuBe6WFhTSp71Hngz4
-         Ac5P7NQRd0mEY6CmBbbDl2U0Z5r7DGJuQhnGADH65RKX1Vl74teoVJXMGtykOJtQEY
-         4eMJ3dvlQjMssn2PBx6NIApqmS0j7amH6ipSdLgYNBgaVYcBxt3qHG2TeQpsF1Yx11
-         DxBf/ov8CcLuJC062sr5/xJkxB258vf6ezv4ab/J9hmxmf5SfEDSTQ6BH1C28I4IKs
-         +ptqSeBkla+xg==
-Received: by mail-ej1-f52.google.com with SMTP id gt31so18307817ejc.12;
-        Mon, 26 Jul 2021 13:39:11 -0700 (PDT)
-X-Gm-Message-State: AOAM531u5mn9+q8Rbhr1marjXeY7Wthzo72S5Sdj05vfaNavpxXEYE/C
-        +bNhCkUra9LJ6zR040hL3e817bBK1kRA3udE4g==
-X-Google-Smtp-Source: ABdhPJyDv+fNM15O8FW0ikww+Gu4xZZSpQZ6R3qbgI+h6Cc4kEmc6zdHsuCgR+UDTohh/3hVsE7ncmERZ84okNEPzy0=
-X-Received: by 2002:a17:906:4917:: with SMTP id b23mr35654ejq.468.1627331950408;
- Mon, 26 Jul 2021 13:39:10 -0700 (PDT)
+        id S233023AbhGZUTx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jul 2021 16:19:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35644 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233056AbhGZUTw (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 26 Jul 2021 16:19:52 -0400
+Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCE19C061757
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jul 2021 14:00:18 -0700 (PDT)
+Received: by mail-oo1-xc36.google.com with SMTP id z3-20020a4a98430000b029025f4693434bso2510587ooi.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jul 2021 14:00:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=8KXP5owN8flF/sx0WAhinix7DviMfrTpDVl4MvdT/qU=;
+        b=HbROtzQclhAZaw6tKB6J5+ue2Sm3504YhCrv7xxAah586ueHzw9siRliaIBchTdxIl
+         17nZyrmj7S/rk1NjOqqxK/6MZyZ0mIoIzqcPClRFJuacF3X/OaG7PPH9zUHZz5t1i2FB
+         WSSSGOTkuVGh1YovB3A5NAKN8kfzzbScuvxmI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=8KXP5owN8flF/sx0WAhinix7DviMfrTpDVl4MvdT/qU=;
+        b=O3Uw5TWAWqI8T3o6CKoabafuOUiyKAZ+76oHyLXLodn1W6gla1YqGR7FzNMsW+JIz0
+         AnuyxbINSo/P0gFmngrV9X15GmT2/6e4J7ZK1JrFgdCDodH3SxgY1tv/aa/MX/TeEvyS
+         BQ0IeJOTHx8lR+9OSHKiZ2aYH3itdWry9rJjiTYEF5xdAfke22VxoAPRqsKVgTjymLwZ
+         gEb6nm6grxMjsosD2eIstZqt4U/bFIrmvi2OW3bSepke67G1eTWfycSvoH8udp8SptsY
+         tRxxhEPYrWZBqy89+QhdbpEQ9w/Hpdi/oV7GPhlHvZeuHoVRBDdgZPBTP31dqNu2GiXC
+         4PuQ==
+X-Gm-Message-State: AOAM531dTgxLutrc2tswJI+nK9b1Z+TuwnsJ4g9ECl6tcBwCdWCYYuaC
+        uDxVxPztKtLQrg7/7bAQ0fH2s5mD3NvimS70oI5Icw==
+X-Google-Smtp-Source: ABdhPJzd2FudvCDeOTS0IgcQEAWpsYFnWx0o1aDDH36H6oJiWE8V5Z+7WofQB8S8Lf86XrpE3v2FqYhsKsBUGAcIIJo=
+X-Received: by 2002:a4a:a6c2:: with SMTP id i2mr11661227oom.92.1627333217883;
+ Mon, 26 Jul 2021 14:00:17 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 26 Jul 2021 17:00:17 -0400
 MIME-Version: 1.0
-References: <889aae1b88f120cb6281919d27164a959fbe69d0.1626948070.git.baruch@tkos.co.il>
- <70f0522a9394e9da2f31871442d47f6ad0ff41aa.1626948070.git.baruch@tkos.co.il> <YP2tAR+zZgJZQOgG@yoga>
-In-Reply-To: <YP2tAR+zZgJZQOgG@yoga>
-From:   Rob Herring <robh+dt@kernel.org>
-Date:   Mon, 26 Jul 2021 14:38:58 -0600
-X-Gmail-Original-Message-ID: <CAL_Jsq+a__sQoKLahH3zu9hd2f4fCqaOQ6S82yua38om0D8raA@mail.gmail.com>
-Message-ID: <CAL_Jsq+a__sQoKLahH3zu9hd2f4fCqaOQ6S82yua38om0D8raA@mail.gmail.com>
-Subject: Re: [PATCH v6 3/4] dt-bindings: pwm: add IPQ6018 binding
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Baruch Siach <baruch@tkos.co.il>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        "Uwe Kleine-K?nig" <u.kleine-koenig@pengutronix.de>,
-        Lee Jones <lee.jones@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Balaji Prakash J <bjagadee@codeaurora.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        Linux PWM List <linux-pwm@vger.kernel.org>,
-        devicetree@vger.kernel.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>
+In-Reply-To: <1627320986-25436-1-git-send-email-maitreye@codeaurora.org>
+References: <1627320986-25436-1-git-send-email-maitreye@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Mon, 26 Jul 2021 17:00:17 -0400
+Message-ID: <CAE-0n53+YChS9sNVg-SB8ZKVqSMbTJfm28KPvFsZk48cC2WqWw@mail.gmail.com>
+Subject: Re: [PATCH v5] drm/msm/dp: add logs across DP driver for ease of debugging
+To:     dri-devel@lists.freedesktop.org, maitreye <maitreye@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        robdclark@gmail.com, seanpaul@chromium.org, nganji@codeaurora.org,
+        aravindh@codeaurora.org, khsieh@codeaurora.org,
+        abhinavk@codeaurora.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jul 25, 2021 at 12:27 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
+Quoting maitreye (2021-07-26 10:36:26)
+> From: Maitreyee Rao <maitreye@codeaurora.org>
 >
-> On Thu 22 Jul 05:01 CDT 2021, Baruch Siach wrote:
+> Add trace points across the MSM DP driver to help debug
+> interop issues.
 >
-> > DT binding for the PWM block in Qualcomm IPQ6018 SoC.
-> >
-> > Signed-off-by: Baruch Siach <baruch@tkos.co.il>
-> > ---
-> > v6:
-> >
-> >   Device node is child of TCSR; remove phandle (Rob Herring)
-> >
-> >   Add assigned-clocks/assigned-clock-rates (Uwe Kleine-K=C3=B6nig)
-> >
-> > v5: Use qcom,pwm-regs for phandle instead of direct regs (Bjorn
-> >     Andersson, Kathiravan T)
-> >
-> > v4: Update the binding example node as well (Rob Herring's bot)
-> >
-> > v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
-> >
-> > v2: Make #pwm-cells const (Rob Herring)
-> > ---
-> >  .../devicetree/bindings/pwm/ipq-pwm.yaml      | 69 +++++++++++++++++++
-> >  1 file changed, 69 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
-> >
-> > diff --git a/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml b/Docum=
-entation/devicetree/bindings/pwm/ipq-pwm.yaml
-> > new file mode 100644
-> > index 000000000000..ee2bb03a1223
-> > --- /dev/null
-> > +++ b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
-> > @@ -0,0 +1,69 @@
-> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> > +%YAML 1.2
-> > +---
-> > +$id: http://devicetree.org/schemas/pwm/ipq-pwm.yaml#
-> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> > +
-> > +title: Qualcomm IPQ6018 PWM controller
-> > +
-> > +maintainers:
-> > +  - Baruch Siach <baruch@tkos.co.il>
-> > +
-> > +properties:
-> > +  "#pwm-cells":
-> > +    const: 2
-> > +
-> > +  compatible:
-> > +    const: qcom,ipq6018-pwm
-> > +
-> > +  offset:
-> > +    description: |
+> Changes in v2:
+>  - Got rid of redundant log messages.
+>  - Added %#x instead of 0x%x wherever required.
+>  - Got rid of __func__ calls in debug messages.
+>  - Added newline wherever missing.
 >
-> '|' maintains the formatting of the text, you don't need that.
+> Changes in v3:
+>  - Got rid of redundant log messages.
+>  - Unstuck colon from printf specifier in various places.
 >
-> > +      Offset of PWM register in the TCSR block.
-> > +    maxItems: 1
-> > +
-> > +  clocks:
-> > +    maxItems: 1
-> > +
-> > +  clock-names:
-> > +    const: core
+> Changes in v4:
+>  - Changed goto statement and used if else-if
 >
-> With a single clock, it's nice to skip the -names.
+> Changes in v5:
+>  - Changed if else if statement,
+>    to not overwrite the ret variable multiple times.
 >
-> > +
-> > +  assigned-clocks:
-> > +    maxItems: 1
-> > +
-> > +  assigned-clock-rates:
-> > +    maxItems: 1
->
-> These (assigned-*) are generic properties that may be used on a lot of
-> nodes, should they really be part of the individual binding, Rob?
+> Signed-off-by: Maitreyee Rao <maitreye@codeaurora.org>
+> ---
 
-They are allowed on any node with 'clocks', so you don't need them.
-However, if you know there's 1 entry only, then I'd keep that. Or was
-'maxItems: 1' just copied because I see that alot.
-
-Rob
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
