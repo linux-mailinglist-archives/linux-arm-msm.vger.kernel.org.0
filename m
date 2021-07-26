@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 08A2F3D5934
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jul 2021 14:10:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4807E3D5932
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jul 2021 14:10:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233940AbhGZL3o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jul 2021 07:29:44 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:13651 "EHLO m43-7.mailgun.net"
+        id S233764AbhGZL3m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jul 2021 07:29:42 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:16666 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233911AbhGZL3n (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jul 2021 07:29:43 -0400
+        id S233905AbhGZL3l (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 26 Jul 2021 07:29:41 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1627301412; h=Content-Transfer-Encoding: MIME-Version:
+ s=smtp; t=1627301410; h=Content-Transfer-Encoding: MIME-Version:
  References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=vy1Ep55RnVZsoreoViCqRd7hhetJtneBz8aeTzwXrNM=; b=vzyt3ZqV8rWGMMVhmJtNofZVsvtLmvzIUX4LdMLrj0d1QgoJtHR9pKzmT4QHyoisxZLvM68b
- oJVNm2CswiB+q87n3TboGkVnfZE4e9v/ueugnglNHR7EjkJnR41ScrSB5z+K1U+DqsSFWuiz
- RAj91vG6qZXn5NT523s9ItXdRDY=
+ Sender; bh=3/gmCHMGkJM6P5MYZ8rOcK36PcqAgmXsbRRFLqUIVq8=; b=Q4HbYXkoOpvs0t2E6YuVdpbmg4QqHZAnbWXFkp5rruXs5ZgsE+YBwlvJb6TfPXJ6uJaXv91O
+ xAbhBDbfNJG3JG7uj/EfRs8MY1o8IyTwzMF/LKA2mmjN37AY0hY0e5JihsajdC0+ZX+pHowQ
+ LFocU+3SJhQlyvC35pq8N2URV8I=
 X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 60fea60538fa9bfe9c088546 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 26 Jul 2021 12:09:41
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 60fea609290ea35ee601eba3 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 26 Jul 2021 12:09:45
  GMT
 Sender: srivasam=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 883AEC4338A; Mon, 26 Jul 2021 12:09:40 +0000 (UTC)
+        id B8984C433D3; Mon, 26 Jul 2021 12:09:44 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +37,9 @@ Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id F00DBC433D3;
-        Mon, 26 Jul 2021 12:09:35 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F00DBC433D3
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 78238C433F1;
+        Mon, 26 Jul 2021 12:09:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 78238C433F1
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=srivasam@codeaurora.org
 From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
@@ -50,9 +50,9 @@ To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
         swboyd@chromium.org, judyhsiao@chromium.org
 Cc:     V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
         Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Subject: [PATCH v7 1/2] arm64: dts: qcom: sc7180: Update lpass cpu node for audio over dp
-Date:   Mon, 26 Jul 2021 17:39:09 +0530
-Message-Id: <20210726120910.20335-2-srivasam@codeaurora.org>
+Subject: [PATCH v7 2/2] arm64: dts: qcom: sc7180-trogdor: Add lpass dai link for HDMI
+Date:   Mon, 26 Jul 2021 17:39:10 +0530
+Message-Id: <20210726120910.20335-3-srivasam@codeaurora.org>
 X-Mailer: git-send-email 2.29.0
 In-Reply-To: <20210726120910.20335-1-srivasam@codeaurora.org>
 References: <20210726120910.20335-1-srivasam@codeaurora.org>
@@ -64,57 +64,49 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
 
-Updaate lpass dts node with HDMI reg, interrupt and iommu
-for supporting audio over dp.
+Add dai link in sc7180-trogdor.dtsi for supporting audio over DP
 
 Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
 Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
 Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 16 ++++++++++------
- 1 file changed, 10 insertions(+), 6 deletions(-)
+ arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 16 ++++++++++++++++
+ 1 file changed, 16 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index ad21a872be85..e6f6ebb2a9ac 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -3534,17 +3534,20 @@ lpasscc: clock-controller@62d00000 {
- 			#power-domain-cells = <1>;
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+index 31bf7c698b8f..472710165b32 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+@@ -314,6 +314,18 @@ sound_multimedia1_codec: codec {
+ 				sound-dai = <&max98357a>;
+ 			};
  		};
- 
--		lpass_cpu: lpass@62f00000 {
-+		lpass_cpu: lpass@62d87000 {
- 			compatible = "qcom,sc7180-lpass-cpu";
- 
--			reg = <0 0x62f00000 0 0x29000>;
--			reg-names = "lpass-lpaif";
-+			reg = <0 0x62d87000 0 0x68000>, <0 0x62f00000 0 0x29000>;
-+			reg-names =  "lpass-hdmiif", "lpass-lpaif";
- 
- 			iommus = <&apps_smmu 0x1020 0>,
--				<&apps_smmu 0x1021 0>;
-+				<&apps_smmu 0x1021 0>,
-+				<&apps_smmu 0x1032 0>;
- 
- 			power-domains = <&lpass_hm LPASS_CORE_HM_GDSCR>;
- 
-+			status = "disabled";
 +
- 			clocks = <&gcc GCC_LPASS_CFG_NOC_SWAY_CLK>,
- 				 <&lpasscc LPASS_AUDIO_CORE_CORE_CLK>,
- 				 <&lpasscc LPASS_AUDIO_CORE_EXT_MCLK0_CLK>,
-@@ -3561,8 +3564,9 @@ lpass_cpu: lpass@62f00000 {
- 			#address-cells = <1>;
- 			#size-cells = <0>;
++		dai-link@5 {
++			link-name = "MultiMedia2";
++			reg = <LPASS_DP_RX>;
++			cpu {
++				sound-dai = <&lpass_cpu 2>;
++			};
++
++			codec {
++				sound-dai = <&mdss_dp>;
++			};
++		};
+ 	};
+ };
  
--			interrupts = <GIC_SPI 160 IRQ_TYPE_LEVEL_HIGH>;
--			interrupt-names = "lpass-irq-lpaif";
-+			interrupts = <GIC_SPI 160 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 268 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "lpass-irq-lpaif", "lpass-irq-hdmi";
- 		};
+@@ -768,6 +780,10 @@ secondary_mi2s: mi2s@1 {
+ 		reg = <MI2S_SECONDARY>;
+ 		qcom,playback-sd-lines = <0>;
+ 	};
++
++	hdmi@5 {
++		reg = <LPASS_DP_RX>;
++	};
+ };
  
- 		lpass_hm: clock-controller@63000000 {
+ &mdp {
 -- 
 Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
 is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
