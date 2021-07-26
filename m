@@ -2,283 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A7D303D68FA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jul 2021 23:51:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00FEE3D6979
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jul 2021 00:26:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232854AbhGZVLD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jul 2021 17:11:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47292 "EHLO
+        id S233056AbhGZVpt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jul 2021 17:45:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55288 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231839AbhGZVLD (ORCPT
+        with ESMTP id S232876AbhGZVpt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jul 2021 17:11:03 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A235C061757;
-        Mon, 26 Jul 2021 14:51:30 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id y12so4518144edo.6;
-        Mon, 26 Jul 2021 14:51:30 -0700 (PDT)
+        Mon, 26 Jul 2021 17:45:49 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4153BC061757
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jul 2021 15:26:16 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id w6so12784288oiv.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jul 2021 15:26:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=9g/NpP0iSPxII3vyNXpsmmoxO7sl237nBGK7L9tO74A=;
-        b=UmQPtuHm+pNyHSGBz+j+P66SWCu7oC2dmTYKsdGqZqNgmKdI9v7T6DZilsDk+px9MZ
-         Jy+Yltel9d76FKRyNk3tqx2DmduNOPGpsMxrxGZTs4kmqTosgr27lyQogCy4Ez3Sy2ao
-         AlkMRSOLXszQBbZAzddxaft3YjjYkTPggdt82YYlV04h/c+Zk2fKrTirDnLyvY7/JOKz
-         fad3OP6vLy7tsHK/9qcOStkrOsIbbAqAO14FYHEN9lE2ZGFZ2Dw/nCGipzSjlAiUw/zS
-         HB4mGS5nrIw0vyE9nnt6T6/KZe4P8qr4eKEj/QFiSk/f2zAYiF0frBMDgcQEl4ZeYsK7
-         K33A==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=xSput0mTBokah6l9L7iDEvqfAkDOlqRBcOYWvnWkg8w=;
+        b=LfwtnFUQXnxD511/yo8ZxT7kqVeQ5iq8HSIl5m20gkTW6T0Qkdl6/YKYSfh6Wg+jJ6
+         BVHEyEqVeaKC3wAxxgnAvLe5smnz+HzTy3YReyXEx5tFaLqXnSBKEfdVNnXdD8cqo04P
+         CRJIj4l0Hvrlxs+2DmNC+Wff1vR7xeJGqcAA8=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=9g/NpP0iSPxII3vyNXpsmmoxO7sl237nBGK7L9tO74A=;
-        b=lSLrBChrIExJuGFRBq9qz+Bkp8HeMY6YaPVg+WD9VzSJdSNHwuhifZG1yWZ0kvmSiv
-         YhOSkTEyh5rJTveFZ9onR5pvc7A5zdcasPkMuh0B75rYnYmAUtFbs+eXfXkjnC0YmWgL
-         WoPl6tENxqKSazZ9dSaZeNXebuWf6Ts0Ka620w96bUAWNJILJLUnDvcZbHDdunI5w8Hq
-         BodElB6kOo1gALMGKQnLie/pDykRyRnzYTLA1AH3hfNxDRNyjqb0qZpt7OJV7Mpdbthv
-         q8KDXLOw+4trd9UV6iGOeBh4wwKCepeBTCqI8jk9QTNV1xd4kUnkNIS82lu2vmouQzWo
-         ls2A==
-X-Gm-Message-State: AOAM533eSGeFMj6/2nhbkBjXdL7+yc+aKachwwqNLMzQ5qtoqAvmTpnz
-        Qh+wgBGk5ecu/iXaPk21znw=
-X-Google-Smtp-Source: ABdhPJz9IYJVI+YgaTUhcXG/eiK23le63toY7SoHlDqt5nAKIaw1j4PhuuKWEitvwBjnCpWm2DWn0A==
-X-Received: by 2002:a05:6402:175a:: with SMTP id v26mr22717557edx.342.1627336288776;
-        Mon, 26 Jul 2021 14:51:28 -0700 (PDT)
-Received: from ?IPv6:2a02:587:80a2:e900:a16d:e735:8d3b:adb? ([2a02:587:80a2:e900:a16d:e735:8d3b:adb])
-        by smtp.gmail.com with ESMTPSA id x42sm416089edy.86.2021.07.26.14.51.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 26 Jul 2021 14:51:28 -0700 (PDT)
-Subject: Re: [PATCH v10 0/6] Re-introduce TX FIFO resize for larger EP
- bursting
-To:     Wesley Cheng <wcheng@codeaurora.org>,
-        Felipe Balbi <balbi@kernel.org>
-Cc:     gregkh@linuxfoundation.org, robh+dt@kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, frowand.list@gmail.com,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        jackp@codeaurora.org, heikki.krogerus@linux.intel.com,
-        andy.shevchenko@gmail.com
-References: <1623923899-16759-1-git-send-email-wcheng@codeaurora.org>
- <cfb83fe4-369c-ec72-7887-3bcb0f20fe15@gmail.com>
- <ec8050c5-c013-4af6-b39e-69779c009a9c@codeaurora.org>
- <f5ed0ee7-e333-681f-0f1a-d0227562204b@gmail.com>
- <2e01c435-9ecc-4e3b-f55c-612a86667020@codeaurora.org>
- <2ae9fa6a-3bb1-3742-0dd3-59678bdd8643@gmail.com>
- <ebea75fe-5334-197b-f67a-cb6e1e30b39e@codeaurora.org>
- <bafa93bb-11e3-c8a5-e14a-b0a6d5695055@gmail.com> <87v951ldlt.fsf@kernel.org>
- <d9aef50c-4bd1-4957-13d8-0b6a14b9fcd0@gmail.com> <87pmv9l1dv.fsf@kernel.org>
- <9dc6cd83-17b9-7075-0934-6b9d41b6875d@gmail.com> <87a6mbudvc.fsf@kernel.org>
- <6e8bb4ad-fe68-ad36-7416-2b8e10b6ae96@gmail.com> <877dhev68a.fsf@kernel.org>
- <cca69e90-b0ef-00b8-75d3-3bf959a93b45@gmail.com> <874kchvcq0.fsf@kernel.org>
- <e8c4bc81-85f7-93d5-dbd9-af8ee4ebbe43@codeaurora.org>
-From:   Ferry Toth <fntoth@gmail.com>
-Message-ID: <6a2848fa-d2ab-5071-5a0e-1bdde1464d43@gmail.com>
-Date:   Mon, 26 Jul 2021 23:51:08 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=xSput0mTBokah6l9L7iDEvqfAkDOlqRBcOYWvnWkg8w=;
+        b=BnDooUg/U9FXr2QeJtJLttnTdIvnFzlPZHcwoO6dOcccOSI4JOSohSIeq+tP3LwMDW
+         wWRzSVszPems66KrXDkFV9YKRioDzrwdSUFfUos7YNrCCMT4vk45/K21PcbN8fRZmtt2
+         lzE5vQGUgxlwNQScvRURr3/ieb26EMJIhx8CtBfqs2+00GT4JnmXXyI0cSRMniAH5Us+
+         3XryD3W8ml1MTbK9QD7npc0vle33BSrenr5ylYfDzJ90uTgj5GkC9EzJzAVte7UKNh/p
+         0RhXWBeeP5PMb/2PiyRCuUvKi3CCLtWXep3jYJjzf7KCcOcUVaVTlMuk3AD/gNf3qZ5k
+         oPPw==
+X-Gm-Message-State: AOAM533y2yD//2AOeHavJ1EUrQDJKtWe9zUcbye9hDpc/z37eP0xCRJM
+        Ifgb5rOzTprtlXMLFA83M4nue++Lu6nGk7WTYfRkpA==
+X-Google-Smtp-Source: ABdhPJxAPKNqUePhUnMW58bIZi6hbUqGSsjTwese7bc2NMQxiVuWSTHpmEV0RaR2jSgi+QJ8pzhBS+gPZyxSMbVyqtk=
+X-Received: by 2002:aca:4dc6:: with SMTP id a189mr917454oib.166.1627338375634;
+ Mon, 26 Jul 2021 15:26:15 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 26 Jul 2021 18:26:15 -0400
 MIME-Version: 1.0
-In-Reply-To: <e8c4bc81-85f7-93d5-dbd9-af8ee4ebbe43@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <1627059339-12142-1-git-send-email-khsieh@codeaurora.org>
+References: <1627059339-12142-1-git-send-email-khsieh@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Mon, 26 Jul 2021 18:26:15 -0400
+Message-ID: <CAE-0n50TV8j24x02VqVd0c6+zEr5Q++GN5xq_urQW3PiJ16QHQ@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/msm/dp: signal audio plugged change at dp_pm_resume
+To:     Kuogee Hsieh <khsieh@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robdclark@gmail.com, sean@poorly.run,
+        vkoul@kernel.org
+Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi
+Quoting Kuogee Hsieh (2021-07-23 09:55:39)
+> There is a scenario that dp cable is unplugged from DUT during system
+> suspended  will cause audio option state does not match real connection
+> state. Fix this problem by Signaling audio plugged change with realtime
+> connection status at dp_pm_resume() so that audio option will be in
+> correct state after system resumed.
+>
+> Changes in V2:
+> -- correct Fixes tag commit id.
+>
+> Fixes: f591dbb5fb8c ("drm/msm/dp: power off DP phy at suspend")
+> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  drivers/gpu/drm/msm/dp/dp_display.c | 4 ++++
+>  1 file changed, 4 insertions(+)
 
-Op 26-07-2021 om 16:33 schreef Wesley Cheng:
-> Hi Ferry,
-> 
-> On 7/25/2021 10:57 PM, Felipe Balbi wrote:
->>
->> Hi,
->>
->> Ferry Toth <fntoth@gmail.com> writes:
->>>>>> Ferry Toth <fntoth@gmail.com> writes:
->>>>>>>>>>> Hardware name: Intel Corporation Merrifield/BODEGA BAY, BIOS 542
->>>>>>>>>>> 2015.01.21:18.19.48
->>>>>>>>>>> RIP: 0010:0x500000000
->>>>>>>>>>> Code: Unable to access opcode bytes at RIP 0x4ffffffd6.
->>>>>>>>>>> RSP: 0018:ffffa4d00045fc28 EFLAGS: 00010046
->>>>>>>>>>> RAX: 0000000500000000 RBX: ffff8cd546aed200 RCX: 0000000000000000
->>>>>>>>>>> RDX: 0000000000000000 RSI: ffff8cd547bfcae0 RDI: ffff8cd546aed200
->>>>>>>>>>> RBP: ffff8cd547bfcae0 R08: 0000000000000000 R09: 0000000000000001
->>>>>>>>>>> R10: ffff8cd541fd28c0 R11: 0000000000000000 R12: ffff8cd547342828
->>>>>>>>>>> R13: ffff8cd546aed248 R14: 0000000000000000 R15: ffff8cd548b1d000
->>>>>>>>>>> FS:  0000000000000000(0000) GS:ffff8cd57e200000(0000) knlGS:0000000000000000
->>>>>>>>>>> CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
->>>>>>>>>>> CR2: 0000000500000000 CR3: 000000000311e000 CR4: 00000000001006f0
->>>>>>>>>>> Call Trace:
->>>>>>>>>>>        ? dwc3_remove_requests.constprop.0+0x14d/0x170
->>>>>>>>>>>        ? __dwc3_gadget_ep_disable+0x7a/0x160
->>>>>>>>>>>        ? dwc3_gadget_ep_disable+0x3d/0xd0
->>>>>>>>>>>        ? usb_ep_disable+0x1c/0x
->>>>>>>>>>>        ? u_audio_stop_capture+0x79/0x120 [u_audio]
->>>>>>>>>>>        ? afunc_set_alt+0x73/0x80 [usb_f_uac2]
->>>> So this is triggered by a SetInterface request...
->>>>
->>>>>>>>>>>        ? composite_setup+0x224/0x1b90 [libcomposite]
->>>>>>>>>>>        ? __dwc3_gadget_kick_transfer+0x160/0x400
->>>>>>>>>>>        ? dwc3_gadget_ep_queue+0xf3/0x1a0
->>>>>>>>>>>        ? configfs_composite_setup+0x6b/0x90 [libcomposite]
->>>>>>>>>>>        ? configfs_composite_setup+0x6b/0x90 [libcomposite]
->>>>>>>>>>>        ? dwc3_ep0_interrupt+0x459/0xa40
->>>>>>>>>>>        ? dwc3_thread_interrupt+0x8ee/0xf40
->>>>>>>>>>>        ? __schedule+0x235/0x6c0
->>>>>>>>>>>        ? disable_irq_nosync+0x10/0x10
->>>>>>>>>>>        ? irq_thread_fn+0x1b/0x60
->>>>>>>>>>>        ? irq_thread+0xc0/0x160
->>>>>>>>>>>        ? irq_thread_check_affinity+0x70/0x70
->>>>>>>>>>>        ? irq_forced_thread_fn+0x70/0x70
->>>>>>>>>>>        ? kthread+0x122/0x140
->>>>>>>>>>>        ? set_kthread_struct+0x40/0x40
->>>>>>>>>>>        ? ret_from_fork+0x22/0x30
->>>>>>>>>> Do you mind enabling dwc3 traces and collecting them? Trying to figure
->>>>>>>>>> out how we got here.
->>>>>>>>>>
->>>>>>>>> I'll try if I can get the same error by booting with USB in host mode
->>>>>>>>> and then switch to device mode. If so I can enable traces and collect as
->>>>>>>>> you explained me before.
->>>>>>>>>
->>>>>>>>> I'll try before monday, as then I fly for a holiday and will not be
->>>>>>>>> available before rc5.
->>>>>>>> you can enable all of those with kernel cmdline :-)
->>>>>>>>
->>>>>>>> https://www.kernel.org/doc/html/latest/admin-guide/kernel-parameters.html
->>>>>>>>
->>>>>>>> you need ftrace_dump_on_oops=1 and also need the correct options on
->>>>>>>> trace_buf_size and trace_event.
->>>>>>>>
->>>>>>> On Edison-Arduino I have a switch to go to device mode, after which
->>>>>>> udev triggers a script configure gadgets through configfs.
->>>>>>>
->>>>>>> I tried to log following these instructions:
->>>>>>>
->>>>>>> https://www.kernel.org/doc/html/latest/driver-api/usb/dwc3.html#reporting-bugs  <https://www.kernel.org/doc/html/latest/driver-api/usb/dwc3.html#reporting-bugs>
->>>>>>>
->>>>>>> Unfortunately the kernel crashes so badly I can not get to the ` cp
->>>>>>> /t/trace /root/trace.txt` line (after a while the watchdog kicks).
->>>>>>>
->>>>>>> What to do next?
->>>>>> Pass ftrace_dump_on_oops to kernel cmdline.
->>>>>>
->>>>> No sure if I did this right, on oops everything is pushed to console
->>>>> (115k2 serial), I hope nothing essential is lost.
->>>>>
->>>>> I copied the screen buffer to file see attached.
->>>> Thank you, I bet it took quite a some time :-) Anyway, looking at
->>>> the logs around Set Interface requests, we can track every endpoint
->>>> that's disabled. I'll take a guess and assume we're failing at the last
->>>> Set Interface, that means we should have something odd with ep6in, but
->>>> everything looks fine in the trace output:
->>>>
->>>> [   75.823107] irq/14-d-596       0d... 42789194us : dwc3_gadget_ep_enable: ep6in: mps 192/346 streams 16 burst 0 ring 0/0 flags E:swbp:<
->>>> [   75.835472] irq/14-d-596       0d... 42789198us : dwc3_alloc_request: ep6in: req 0000000002c71409 length 0/0 zsI ==> 0
->>>> [   75.846416] irq/14-d-596       0d... 42789202us : dwc3_ep_queue: ep6in: req 0000000002c71409 length 0/192 zsI ==> -115
->>>> [   75.857360] irq/14-d-596       0d... 42789204us : dwc3_alloc_request: ep6in: req 00000000a324f5d0 length 0/0 zsI ==> 0
->>>> [   75.868301] irq/14-d-596       0d... 42789206us : dwc3_ep_queue: ep6in: req 00000000a324f5d0 length 0/192 zsI ==> -115
->>>> [   75.879244] irq/14-d-596       0d... 42789209us : dwc3_event: event (000020c2): ep0in: Transfer Not Ready [0] (Not Active) [Status Phase]
->>>> [   75.891880] irq/14-d-596       0d... 42789211us : dwc3_prepare_trb: ep0in: trb 000000004c0ae319 (E0:D0) buf 000000001bded000 size 0 ctrl 00000c33 (HLcs:SC:status2)
->>>> [   75.989131] irq/14-d-596       0d... 42789224us : dwc3_gadget_ep_cmd: ep0in: cmd 'Start Transfer' [406] params 00000000 1bded000 00000000 --> status: Successful
->>>> [   76.096261] irq/14-d-596       0d... 42789272us : dwc3_event: event (0000c042): ep0in: Transfer Complete (sIL) [Status Phase]
->>>> [   76.107834] irq/14-d-596       0d... 42789275us : dwc3_complete_trb: ep0out: trb 000000004c0ae319 (E0:D0) buf 000000001bded000 size 0 ctrl 00000c32 (hLcs:SC:status2)
->>>> [   76.122944] irq/14-d-596       0d... 42789277us : dwc3_gadget_giveback: ep0out: req 00000000cb1bd3cd length 0/0 zsI ==> 0
->>>> [   76.134160] irq/14-d-596       0d... 42789280us : dwc3_prepare_trb: ep0out: trb 000000004c0ae319 (E0:D0) buf 000000001bded000 size 8 ctrl 00000c23 (HLcs:SC:setup)
->>>> [   76.231322] irq/14-d-596       0d... 42789292us : dwc3_gadget_ep_cmd: ep0out: cmd 'Start Transfer' [406] params 00000000 1bded000 00000000 --> status: Successful
->>>> [   76.297418] kworker/-23        0d... 42789670us : dwc3_ep_queue: ep3in: req 0000000029586135 length 0/96 ZsI ==> -115
->>>> [   76.308278] kworker/-23        0d... 42789695us : dwc3_prepare_trb: ep3in: trb 00000000b81213d6 (E1:D0) buf 0000000003b7a800 size 96 ctrl 00000811 (Hlcs:sC:normal)
->>>> [   76.395294] kworker/-23        0d... 42789707us : dwc3_gadget_ep_cmd: ep3in: cmd 'Update Transfer' [60007] params 00000000 00000000 00000000 --> status: Successful
->>>> [   76.471900] irq/14-d-596       0d... 42789842us : dwc3_event: event (0000c040): ep0out: Transfer Complete (sIL) [Setup Phase]
->>>> [   76.489308] irq/14-d-596       0d... 42789845us : dwc3_ctrl_req: Set Interface(Intf = 5, Alt.Setting = 0)
->>>> [   76.505650] irq/14-d-596       0d... 42789851us : dwc3_ep_dequeue: ep6in: req 0000000002c71409 length 0/192 zsI ==> -115
->>>> [   76.523315] irq/14-d-596       0d... 42789854us : dwc3_gadget_giveback: ep6in: req 0000000002c71409 length 0/192 zsI ==> -104
->>>> [   76.541427] irq/14-d-596       0d... 42789857us : dwc3_free_request: ep6in: req 0000000002c71409 length 0/192 zsI ==> -104
->>>> [   76.559267] irq/14-d-596       0d... 42789859us : dwc3_ep_dequeue: ep6in: req 00000000a324f5d0 length 0/192 zsI ==> -115
->>>> [   76.576937] irq/14-d-596       0d... 42789861us : dwc3_gadget_giveback: ep6in: req 00000000a324f5d0 length 0/192 zsI ==> -104
->>>> [   76.595046] irq/14-d-596       0d... 42789862us : dwc3_free_request: ep6in: req 00000000a324f5d0 length 0/192 zsI ==> -104
->>>> [   76.612892] irq/14-d-596       0d... 42789865us : dwc3_gadget_ep_disable: ep6in: mps 192/346 streams 16 burst 0 ring 0/0 flags E:swbp:<
->>>> [   76.665535] irq/14-d-596       0d... 42789873us : dwc3_event: event (000020c2): ep0in: Transfer Not Ready [0] (Not Active) [Status Phase]
->>>> [   76.684716] irq/14-d-596       0d... 42789875us : dwc3_prepare_trb: ep0in: trb 000000004c0ae319 (E0:D0) buf 000000001bded000 size 0 ctrl 00000c33 (HLcs:SC:status2)
->>>> [   76.819195] irq/14-d-596       0d... 42789886us : dwc3_gadget_ep_cmd: ep0in: cmd 'Start Transfer' [406] params 00000000 1bded000 00000000 --> status: Successful
->>>> [   76.926324] irq/14-d-596       0d... 42789930us : dwc3_event: event (0000c042): ep0in: Transfer Complete (sIL) [Status Phase]
->>>> [   76.937892] irq/14-d-596       0d... 42789933us : dwc3_complete_trb: ep0out: trb 000000004c0ae319 (E0:D0) buf 000000001bded000 size 0 ctrl 00000c32 (hLcs:SC:status2)
->>>> [   76.953003] irq/14-d-596       0d... 42789935us : dwc3_gadget_giveback: ep0out: req 00000000cb1bd3cd length 0/0 zsI ==> 0
->>>> [   76.964217] irq/14-d-596       0d... 42789938us : dwc3_prepare_trb: ep0out: trb 000000004c0ae319 (E0:D0) buf 000000001bded000 size 8 ctrl 00000c23 (HLcs:SC:setup)
->>>> [   77.061379] irq/14-d-596       0d... 42789950us : dwc3_gadget_ep_cmd: ep0out: cmd 'Start Transfer' [406] params 00000000 1bded000 00000000 --> status: Successful
->>>> [   77.168595] irq/14-d-596       0d... 42790509us : dwc3_event: event (0000c040): ep0out: Transfer Complete (sIL) [Setup Phase]
->>>> [   77.180159] irq/14-d-596       0d... 42790512us : dwc3_ctrl_req: Get String Descriptor(Index = 18, Length = 255)
->>>> [   77.190578] irq/14-d-596       0d... 42790537us : dwc3_prepare_trb: ep0in: trb 000000004c0ae319 (E0:D0) buf 0000000003b68000 size 36 ctrl 00000c53 (HLcs:SC:data)
->>>> [   77.287648] irq/14-d-596       0d... 42790550us : dwc3_gadget_ep_cmd: ep0in: cmd 'Start Transfer' [406] params 00000000 1bded000 00000000 --> status: Successful
->>>> [   77.333107] irq/14-d-596       0d... 42790557us : dwc3_event: event (000010c2): ep0in: Transfer Not Ready [0] (Not Active) [Data Phase]
->>>> [   77.407223] irq/14-d-596       0d... 42790575us : dwc3_event: event (000090c2): ep0in: Transfer Not Ready [0] (Active) [Data Phase]
->>>> [   77.480985] irq/14-d-596       0d... 42790588us : dwc3_event: event (0000c042): ep0in: Transfer Complete (sIL) [Data Phase]
->>>> [   77.492376] irq/14-d-596       0d... 42790590us : dwc3_complete_trb: ep0out: trb 000000004c0ae319 (E0:D0) buf 0000000003b68000 size 0 ctrl 00000c52 (hLcs:SC:data)
->>>> [   77.507221] irq/14-d-596       0d... 42790595us : dwc3_gadget_giveback: ep0out: req 00000000cb1bd3cd length 36/36 ZsI ==> 0
->>>> [   77.518609] irq/14-d-596       0d... 42790597us : dwc3_event: event (000020c0): ep0out: Transfer Not Ready [0] (Not Active) [Status Phase]
->>>> [   77.531332] irq/14-d-596       0d... 42790598us : dwc3_prepare_trb: ep0out: trb 000000004c0ae319 (E0:D0) buf 000000001bded000 size 0 ctrl 00000c43 (HLcs:SC:status3)
->>>> [   77.628669] irq/14-d-596       0d... 42790609us : dwc3_gadget_ep_cmd: ep0out: cmd 'Start Transfer' [406] params 00000000 1bded000 00000000 --> status: Successful
->>>>
->>>> Do you mind adding a few prints in dwc3_remove_requests to tell us which
->>>> endpoint is being processed? Then we'll know for sure which one caused
->>>> the crash.
->>>>
->>> I wouldn't mind but am leaving on a holiday, won't have time until 6 aug.
->>
->> not a problem, we'll still be here when you're back :-)
->>
->>> But as I am using configfs (excerpt follows) and just disabling the
->>> last 2 line resolves the issue, I'm guessing uac2 is the issue. Or
->>> exceeding the available resources.
->>>
->>> # Create directory structure
->>> mkdir "${GADGET_BASE_DIR}"
->>> cd "${GADGET_BASE_DIR}"
->>> mkdir -p configs/c.1/strings/0x409
->>> mkdir -p strings/0x409
->>>
->>> # Serial device
->>> mkdir functions/gser.usb0
->>> ln -s functions/gser.usb0 configs/c.1/
->>> ###
->>>
->>> # Ethernet device
->>> mkdir functions/eem.usb0
->>> echo "${DEV_ETH_ADDR}" > functions/eem.usb0/dev_addr
->>> echo "${HOST_ETH_ADDR}" > functions/eem.usb0/host_addr
->>> ln -s functions/eem.usb0 configs/c.1/
->>>
->>> # Mass Storage device
->>> mkdir functions/mass_storage.usb0
->>> echo 1 > functions/mass_storage.usb0/stall
->>> echo 0 > functions/mass_storage.usb0/lun.0/cdrom
->>> echo 0 > functions/mass_storage.usb0/lun.0/ro
->>> echo 0 > functions/mass_storage.usb0/lun.0/nofua
->>> echo "${USBDISK}" > functions/mass_storage.usb0/lun.0/file
->>> ln -s functions/mass_storage.usb0 configs/c.1/
->>>
->>> # UAC2 device
->>> mkdir functions/uac2.usb0
->>> ln -s functions/uac2.usb0 configs/c.1
->>
->> Right, either there's an actual bug in uac2, or we're running out of
->> FIFO space.
->>
-> 
-> Are you enabling the TXFIFO flag here again?  If we suspect that we're
-> running out of FIFO space, then:
-> - First, making sure we're explicitly enabling the TXFIFO resize flag.
-> - Second, we should see the same warning we saw previously:
-> 	dwc3 dwc3.0.auto: Fifosize(2154) > RAM size(2022) ep5in
-> depth:115540359
+I noticed that with or without this patch I still have a problem with an
+apple dongle where if I leave the dongle connected but unplug the HDMI
+cable during suspend the audio device is still there when I resume. The
+display looks to be connected in that case too, according to modetest. I
+don't know if you want to roll that into this patch or make another
+follow-up patch to fix it, but it seems like the sink count isn't
+updated on resume? Did commit f591dbb5fb8c break a bunch of logic in
+here because now the link is powered down properly and so sink_count
+isn't updated properly?
 
-No, I'm building using a Yocto recipe:
-https://github.com/htot/meta-intel-edison/blob/gatesgarth/meta-intel-edison-bsp/recipes-kernel/linux/linux-yocto_5.14-rc2.bb
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 78c5301..2b660e9 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -1339,6 +1339,10 @@ static int dp_pm_resume(struct device *dev)
+>         else
+>                 dp->dp_display.is_connected = false;
+>
+> +       dp_display_handle_plugged_change(g_dp_display,
+> +                               dp->dp_display.is_connected);
+> +
+> +
 
-patches are line #64 and on, just one old dwc3 related (edison) patch.
+There's also a double newline here that we should probably remove.
 
-> 
-> Thanks
-> Wesley Cheng
-> 
+>         mutex_unlock(&dp->event_mutex);
+>
+>         return 0;
