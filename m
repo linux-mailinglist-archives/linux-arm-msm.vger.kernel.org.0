@@ -2,228 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2D7E83D54CD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jul 2021 10:02:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F64C3D54D7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jul 2021 10:04:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232854AbhGZHVK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jul 2021 03:21:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52808 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232832AbhGZHVH (ORCPT
+        id S232820AbhGZHXD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jul 2021 03:23:03 -0400
+Received: from mail-vs1-f53.google.com ([209.85.217.53]:38487 "EHLO
+        mail-vs1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232684AbhGZHXC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jul 2021 03:21:07 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76FF3C061764
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jul 2021 01:01:36 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id l18so2278040wrv.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jul 2021 01:01:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:subject:date:message-id:in-reply-to:references:mime-version
-         :content-transfer-encoding;
-        bh=upzwPoATA2+BpeywH9BXoLQjHHRdyqwMIY4xqkio9lQ=;
-        b=PW3Pk8YRIyJNU7VgYYVV2fBp4io9wtDsiPiQRpwCkCQ30K0IVxpiYsY/Eox1dZWyhH
-         i7QIT1JO9AI6cV9lyE5IABZRZ+bdG2rmu9pmswkSa8AzW3Qb0cHrkBY73ZO3btkM8KXj
-         OKZ54ftbG+fu2qPkG8QF/Fx+/8jIVfwkhhdtH7bioSzEN2Z8q0UrpLFBcLAJWTtE3DLO
-         E7IyYivgaQAJt4ZJAoUetzttgfuXGoJD5bCK+1nusHFS2Y2uqtPVQR4rwyJuDXUhDW7K
-         Thq0eqUG/nwUn7INZg8UW1G3iMLxas3FASLDee8cBEAi45lhvMVrVUrjHCtlHnDkeUrb
-         yCxw==
+        Mon, 26 Jul 2021 03:23:02 -0400
+Received: by mail-vs1-f53.google.com with SMTP id x21so4768195vsx.5;
+        Mon, 26 Jul 2021 01:03:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=upzwPoATA2+BpeywH9BXoLQjHHRdyqwMIY4xqkio9lQ=;
-        b=MUm1NUYs2eWsnlB9pSV6Qi881afyPinGAMQsNo/wlb20ECMatauiWLv2jTlIDkaIJq
-         mQackap5ZzvGW8VEeVgoXOXQMgKa6pprQS66dMvyhuvhlwz6y0FhPM3g4RH8uu935VKG
-         l7fJpLOG3PoZxyA3ayDKBdWZ38yNTC0T2Q5GSlfyZA407WD7xEz4kUPaobkJQqRz1qTe
-         hPjJKWpaTMvRanPONlbwZV22t6mhde0stp2sdnnm0AdIx2ftOKAKBl7zof2Oi1S6Kn5f
-         9TO8/y89WFW5ydCwWYGZiV8Ek2CwE4WwdFu1K389bl/r0xOimwqv6+PozyriBZtpyVVy
-         Kjvw==
-X-Gm-Message-State: AOAM533nheao8n7BVoOnqkF17ylHY9dSW+YFdgMWj8yU5aTjD0ZTYkXS
-        0L5w1EIgSlwDKoQ5yx15EadX0udEINF8dw==
-X-Google-Smtp-Source: ABdhPJxryYLJzN6ra6Q6lvG27FVaBbl38pW8NW3STR5BtW8/UUoEpEs3NykpRMFOFcrhPeCdAPiBgg==
-X-Received: by 2002:adf:dd07:: with SMTP id a7mr4002764wrm.377.1627286495050;
-        Mon, 26 Jul 2021 01:01:35 -0700 (PDT)
-Received: from qcom-hackbox.linaro.org.net (163-172-5-244.rev.poneytelecom.eu. [163.172.5.244])
-        by smtp.gmail.com with ESMTPSA id n8sm460600wrx.46.2021.07.26.01.01.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Jul 2021 01:01:34 -0700 (PDT)
-From:   Robert Foss <robert.foss@linaro.org>
-To:     robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, mchehab@kernel.org,
-        linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Andrey Konovalov <andrey.konovalov@linaro.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>
-Subject: [PATCH v1 4/4] media: camss: vfe: Rework vfe_hw_version_read() function definition
-Date:   Mon, 26 Jul 2021 10:01:13 +0200
-Message-Id: <20210726080113.8378-4-robert.foss@linaro.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210726080113.8378-1-robert.foss@linaro.org>
-References: <20210726080113.8378-1-robert.foss@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/noyZVTkaQHv6vOLUtBghVzxTPdSaltUw4+X2m/ShNY=;
+        b=celWk8qjEwrLbUP2WGsqMakjwfggMHGp8XXZun+4hgKfAFXPVIM7aDjwWDCirzecfz
+         55KhmHyZAh8/GFNV7iiaD3TPy2xn3LTsvBaO4T1nsF2iveFq0osFJNZXNLyqxj6w18Cx
+         /NGObxKW4GQkARMVLG1TeD001WGwNivWyBgl5lmiquRd1I9tThXm++IIPf3zCwe/J85B
+         6E4h2/uyBZYTfXnBpgPj0V/7mMJjDi3MwjPU7C4Z2RzqDxiA0kIVoOxRMhVok0XJjQkC
+         oeWRhQulDMgYI6RinUAotZXWqMGNbMj9exwE0aLKb+K63Ons9MugZHj7D5IBk74RYjLb
+         yTnA==
+X-Gm-Message-State: AOAM5309qKR53cWCXVWHiUQUt1ROw3bxkHGqvLf9Trm2leePORcEpS/5
+        cachTVuampAYtkUhOVy6K3NUPJpvodpxVemMFz4=
+X-Google-Smtp-Source: ABdhPJzf+Z6S4cuujdybUhVIxuK2plpAsbI4m9JBxyuIUXfPLjSJnu6lZhHstcUseJO/BJfLNFr8+CQuFiThWHDaX5M=
+X-Received: by 2002:a67:7789:: with SMTP id s131mr8212743vsc.40.1627286609931;
+ Mon, 26 Jul 2021 01:03:29 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210725151434.7122-1-len.baker@gmx.com>
+In-Reply-To: <20210725151434.7122-1-len.baker@gmx.com>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Mon, 26 Jul 2021 10:03:18 +0200
+Message-ID: <CAMuHMdUdmv+YmdtjGJV2Lp_Rvar4kN4uSgSTYqXX9CtCJ+qoRw@mail.gmail.com>
+Subject: Re: [PATCH] drivers/soc: Remove all strcpy() uses in favor of strscpy()
+To:     Len Baker <len.baker@gmx.com>
+Cc:     Kees Cook <keescook@chromium.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Santosh Shilimkar <ssantosh@kernel.org>,
+        linux-hardening@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Expose the VFE version by returning the value read from the HW_VERSION
-register.
+Hi Len,
 
-Secondly, change the name of this function to conform with the CSID
-equivalent.
+On Sun, Jul 25, 2021 at 5:15 PM Len Baker <len.baker@gmx.com> wrote:
+> strcpy() performs no bounds checking on the destination buffer. This
+> could result in linear overflows beyond the end of the buffer, leading
+> to all kinds of misbehaviors. The safe replacement is strscpy().
+>
+> Signed-off-by: Len Baker <len.baker@gmx.com>
 
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
----
- drivers/media/platform/qcom/camss/camss-vfe-170.c | 6 ++++--
- drivers/media/platform/qcom/camss/camss-vfe-4-1.c | 6 ++++--
- drivers/media/platform/qcom/camss/camss-vfe-4-7.c | 6 ++++--
- drivers/media/platform/qcom/camss/camss-vfe-4-8.c | 6 ++++--
- drivers/media/platform/qcom/camss/camss-vfe.c     | 2 +-
- drivers/media/platform/qcom/camss/camss-vfe.h     | 2 +-
- 6 files changed, 18 insertions(+), 10 deletions(-)
+Thanks for your patch!
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe-170.c b/drivers/media/platform/qcom/camss/camss-vfe-170.c
-index 8ef4e80a62a2..5c083d70d495 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe-170.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe-170.c
-@@ -177,7 +177,7 @@
- #define VFE_BUS_WM_FRAME_INC(n)			(0x2258 + (n) * 0x100)
- #define VFE_BUS_WM_BURST_LIMIT(n)		(0x225c + (n) * 0x100)
- 
--static void vfe_hw_version_read(struct vfe_device *vfe)
-+static u32 vfe_hw_version(struct vfe_device *vfe)
- {
- 	u32 hw_version = readl_relaxed(vfe->base + VFE_HW_VERSION);
- 
-@@ -187,6 +187,8 @@ static void vfe_hw_version_read(struct vfe_device *vfe)
- 
- 	dev_dbg(vfe->camss->dev, "VFE HW Version = %u.%u.%u\n",
- 		gen, rev, step);
-+
-+	return hw_version;
- }
- 
- static inline void vfe_reg_clr(struct vfe_device *vfe, u32 reg, u32 clr_bits)
-@@ -772,7 +774,7 @@ static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
- 
- const struct vfe_hw_ops vfe_ops_170 = {
- 	.global_reset = vfe_global_reset,
--	.hw_version_read = vfe_hw_version_read,
-+	.hw_version = vfe_hw_version,
- 	.isr_read = vfe_isr_read,
- 	.isr = vfe_isr,
- 	.pm_domain_off = vfe_pm_domain_off,
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
-index 614c266e8cd1..7b7c9a0aaab2 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
-@@ -210,11 +210,13 @@
- #define MSM_VFE_VFE0_UB_SIZE 1023
- #define MSM_VFE_VFE0_UB_SIZE_RDI (MSM_VFE_VFE0_UB_SIZE / 3)
- 
--static void vfe_hw_version_read(struct vfe_device *vfe)
-+static u32 vfe_hw_version(struct vfe_device *vfe)
- {
- 	u32 hw_version = readl_relaxed(vfe->base + VFE_0_HW_VERSION);
- 
- 	dev_dbg(vfe->camss->dev, "VFE HW Version = 0x%08x\n", hw_version);
-+
-+	return hw_version;
- }
- 
- static u16 vfe_get_ub_size(u8 vfe_id)
-@@ -1004,7 +1006,7 @@ static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
- 
- const struct vfe_hw_ops vfe_ops_4_1 = {
- 	.global_reset = vfe_global_reset,
--	.hw_version_read = vfe_hw_version_read,
-+	.hw_version = vfe_hw_version,
- 	.isr_read = vfe_isr_read,
- 	.isr = vfe_isr,
- 	.pm_domain_off = vfe_pm_domain_off,
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
-index aa175e0f6331..2836b12ec989 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
-@@ -254,11 +254,13 @@
- #define MSM_VFE_VFE1_UB_SIZE 1535
- #define MSM_VFE_VFE1_UB_SIZE_RDI (MSM_VFE_VFE1_UB_SIZE / 3)
- 
--static void vfe_hw_version_read(struct vfe_device *vfe)
-+static u32 vfe_hw_version(struct vfe_device *vfe)
- {
- 	u32 hw_version = readl_relaxed(vfe->base + VFE_0_HW_VERSION);
- 
- 	dev_dbg(vfe->camss->dev, "VFE HW Version = 0x%08x\n", hw_version);
-+
-+	return hw_version;
- }
- 
- static u16 vfe_get_ub_size(u8 vfe_id)
-@@ -1196,7 +1198,7 @@ static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
- 
- const struct vfe_hw_ops vfe_ops_4_7 = {
- 	.global_reset = vfe_global_reset,
--	.hw_version_read = vfe_hw_version_read,
-+	.hw_version = vfe_hw_version,
- 	.isr_read = vfe_isr_read,
- 	.isr = vfe_isr,
- 	.pm_domain_off = vfe_pm_domain_off,
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-8.c b/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
-index b897f5163c5d..19519234f727 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
-@@ -247,11 +247,13 @@
- #define MSM_VFE_VFE1_UB_SIZE 1535
- #define MSM_VFE_VFE1_UB_SIZE_RDI (MSM_VFE_VFE1_UB_SIZE / 3)
- 
--static void vfe_hw_version_read(struct vfe_device *vfe)
-+static u32 vfe_hw_version(struct vfe_device *vfe)
- {
- 	u32 hw_version = readl_relaxed(vfe->base + VFE_0_HW_VERSION);
- 
- 	dev_dbg(vfe->camss->dev, "VFE HW Version = 0x%08x\n", hw_version);
-+
-+	return hw_version;
- }
- 
- static inline void vfe_reg_clr(struct vfe_device *vfe, u32 reg, u32 clr_bits)
-@@ -1180,7 +1182,7 @@ static void vfe_subdev_init(struct device *dev, struct vfe_device *vfe)
- 
- const struct vfe_hw_ops vfe_ops_4_8 = {
- 	.global_reset = vfe_global_reset,
--	.hw_version_read = vfe_hw_version_read,
-+	.hw_version = vfe_hw_version,
- 	.isr_read = vfe_isr_read,
- 	.isr = vfe_isr,
- 	.pm_domain_off = vfe_pm_domain_off,
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-index 9b4f8136759c..6b2f33fc9be2 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -1299,7 +1299,7 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
- 		return -EINVAL;
- 	}
- 	vfe->ops->subdev_init(dev, vfe);
--	vfe->ops->hw_version_read(vfe);
-+	vfe->ops->hw_version(vfe);
- 
- 	/* Memory */
- 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.h b/drivers/media/platform/qcom/camss/camss-vfe.h
-index cca251816d28..f166d176cb77 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.h
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.h
-@@ -103,7 +103,7 @@ struct vfe_device;
- struct vfe_hw_ops {
- 	void (*enable_irq_common)(struct vfe_device *vfe);
- 	void (*global_reset)(struct vfe_device *vfe);
--	void (*hw_version_read)(struct vfe_device *vfe);
-+	u32 (*hw_version)(struct vfe_device *vfe);
- 	irqreturn_t (*isr)(int irq, void *dev);
- 	void (*isr_read)(struct vfe_device *vfe, u32 *value0, u32 *value1);
- 	void (*pm_domain_off)(struct vfe_device *vfe);
+> ---
+> This is a task of the KSPP [1]
+>
+> [1] https://github.com/KSPP/linux/issues/88
+
+Any chance the almost one year old question in that ticket can be
+answered?
+
+>  drivers/soc/renesas/rcar-sysc.c     |  6 ++++--
+
+Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+
+But please see my comments below...
+
+> --- a/drivers/soc/renesas/r8a779a0-sysc.c
+> +++ b/drivers/soc/renesas/r8a779a0-sysc.c
+> @@ -404,19 +404,21 @@ static int __init r8a779a0_sysc_pd_init(void)
+>         for (i = 0; i < info->num_areas; i++) {
+>                 const struct r8a779a0_sysc_area *area = &info->areas[i];
+>                 struct r8a779a0_sysc_pd *pd;
+> +               size_t area_name_size;
+
+I wouldn't mind a shorter name, like "n".
+
+>
+>                 if (!area->name) {
+>                         /* Skip NULLified area */
+>                         continue;
+>                 }
+>
+> -               pd = kzalloc(sizeof(*pd) + strlen(area->name) + 1, GFP_KERNEL);
+> +               area_name_size = strlen(area->name) + 1;
+> +               pd = kzalloc(sizeof(*pd) + area_name_size, GFP_KERNEL);
+>                 if (!pd) {
+>                         error = -ENOMEM;
+>                         goto out_put;
+>                 }
+>
+> -               strcpy(pd->name, area->name);
+> +               strscpy(pd->name, area->name, area_name_size);
+>                 pd->genpd.name = pd->name;
+>                 pd->pdr = area->pdr;
+>                 pd->flags = area->flags;
+> diff --git a/drivers/soc/renesas/rcar-sysc.c b/drivers/soc/renesas/rcar-sysc.c
+> index 53387a72ca00..0eae5ce0eeb0 100644
+> --- a/drivers/soc/renesas/rcar-sysc.c
+> +++ b/drivers/soc/renesas/rcar-sysc.c
+> @@ -396,19 +396,21 @@ static int __init rcar_sysc_pd_init(void)
+>         for (i = 0; i < info->num_areas; i++) {
+>                 const struct rcar_sysc_area *area = &info->areas[i];
+>                 struct rcar_sysc_pd *pd;
+> +               size_t area_name_size;
+
+Likewise.
+
+>
+>                 if (!area->name) {
+>                         /* Skip NULLified area */
+>                         continue;
+>                 }
+>
+> -               pd = kzalloc(sizeof(*pd) + strlen(area->name) + 1, GFP_KERNEL);
+> +               area_name_size = strlen(area->name) + 1;
+> +               pd = kzalloc(sizeof(*pd) + area_name_size, GFP_KERNEL);
+>                 if (!pd) {
+>                         error = -ENOMEM;
+>                         goto out_put;
+>                 }
+>
+> -               strcpy(pd->name, area->name);
+> +               strscpy(pd->name, area->name, area_name_size);
+>                 pd->genpd.name = pd->name;
+>                 pd->ch.chan_offs = area->chan_offs;
+>                 pd->ch.chan_bit = area->chan_bit;
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
 -- 
-2.29.2
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
