@@ -2,80 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 17B6D3D69E4
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jul 2021 01:02:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 744293D69FE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jul 2021 01:10:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233733AbhGZWVj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jul 2021 18:21:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35268 "EHLO
+        id S233859AbhGZW3m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jul 2021 18:29:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37112 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232938AbhGZWVj (ORCPT
+        with ESMTP id S233841AbhGZW3m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jul 2021 18:21:39 -0400
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7190DC061760
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jul 2021 16:02:06 -0700 (PDT)
-Received: by mail-ot1-x32f.google.com with SMTP id c7-20020a9d27870000b02904d360fbc71bso11547302otb.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jul 2021 16:02:06 -0700 (PDT)
+        Mon, 26 Jul 2021 18:29:42 -0400
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 167EFC061757
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jul 2021 16:10:09 -0700 (PDT)
+Received: by mail-oi1-x235.google.com with SMTP id z26so12905168oih.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jul 2021 16:10:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=YQOUs6IHKvgmEEaJoamgZLDtUOOWcnZjqqyzNqPHtgA=;
-        b=X7ukQguYL+MKBPkBFhO7H5nfKnc70OCDuiDFR7YSf6QZLoLc4ReLFF6oY/7WEAPpeS
-         PFJCBGADy/cvzKcTOc1MuVUHe+mO9raKPlB3JjjxQuitmjuPBprCfWobERLCeG8YR46C
-         HBZgujM21DWWX2fFg3Zb81ftslEqmBez79Y5o=
+        bh=xr0OBaCUg1lxQVZHduo3c61UxOOaowAxR3nQvbPDaoY=;
+        b=QwVfGNt7gpX6PM91jokNd1t6eoJKDUoFjR6ns0yBFwv02M0IASxWzmMO2p3H5OiEGd
+         Wh5N352seodJsgCNNXzQToD1USgX+FAOtPMWPYJ40FyAvBw0ZCrHQxufbC7nPDBkrjsQ
+         0rKmaPXPudwqpi/FK45eHKVJDOF2A5NuWzZBg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=YQOUs6IHKvgmEEaJoamgZLDtUOOWcnZjqqyzNqPHtgA=;
-        b=bmI4mBalsilFFXdq/OxkcQ8rWy4DHx9MbY57BqVADJnynQ6xbejcSaiEP3b/4K8RBQ
-         4hOrSWYdtqvwsgj9mmgq2fs1AJNTTE0sIPjMSZnC4Sd5v16EuY5Btcuh2lXzxPSlkrjz
-         7YVZgRPdqLRMI81lt4dDGQBisBy1QJk7JMdoJ/1eMFiWj3T8685FaUCY44e1PIfszp0m
-         en8opCNBzrP7jVecB0Z6e6gaufA5zJR/qSnHiGoKgQI9FtFVURFluV2W5e4WXNbUZHl5
-         jjhtzvZCzMH4f6xvlApnQRPlgjxpRb1fmVREamVbUlEa1cP0tsKe59smC0IP/ChNkPGl
-         Sx9w==
-X-Gm-Message-State: AOAM531/0X3+hj0alTWtSMjyRgPJVC72gPu503gmF+/tNVqtMd8ykBm8
-        QN/JzXwD4ivh0MyltgnWYn/dLigKGQtO3BzCW+M8Sw==
-X-Google-Smtp-Source: ABdhPJz5jt91J7s64KRcgC3G/srUYZuXPZrU0BBg8ga7AFXoIHLQ4iQUzviPocNr4D2zmNt8R5pRz0hfblCs9cIwm10=
-X-Received: by 2002:a9d:1b6e:: with SMTP id l101mr13153554otl.34.1627340525819;
- Mon, 26 Jul 2021 16:02:05 -0700 (PDT)
+        bh=xr0OBaCUg1lxQVZHduo3c61UxOOaowAxR3nQvbPDaoY=;
+        b=TXHB0lHx/GAwWLjKZ+/RRx1Xl7hKs1YCWMxIJqNzgfnJcKr9ikBdDJ3X5BBRDFzJnj
+         DzpRqYdts4tqtCO5RJUDsxRS92ULUOtdGpj0yhg4ZDboktAJASo1qaZx9SV3abgsciRn
+         R3qNzmOnSEfqwRt+l4CVdeE8J4I5QO91zLsZD8sDaSFj6cpnFO5IUl0+s/LkSOzC3dtD
+         f/9+BQs7yEW34uchLxF8jnh67h1BbDtahtFVMkEfwvf+/hFp3Q9hfjykv4uaHcxCMkbB
+         oJV3HNtk2iyeKst+vNza7qsKTV9vBMIs3GXoy7aY0i7kho4I10DSpKQwX8TIV4oTsa9k
+         4RzQ==
+X-Gm-Message-State: AOAM533fz2/T95Y8BUTnA+cw2mGBEICikh3Rjnwjf2YssgKFJylwug++
+        qIzlKpjXmSc2YXsy2Pr5Qp8Nz8YfiT+wMuESrYF72w==
+X-Google-Smtp-Source: ABdhPJzhOR7wBEMb7tO2EFPOHPqSOdE1r/dNy7lCBVwnAnv1ifXRtKEBUbv8pmKc7JZKomqIgA9fYXI3uJFwoEnhJCQ=
+X-Received: by 2002:a54:468d:: with SMTP id k13mr955643oic.125.1627341008513;
+ Mon, 26 Jul 2021 16:10:08 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 26 Jul 2021 19:02:05 -0400
+ HTTPREST; Mon, 26 Jul 2021 19:10:08 -0400
 MIME-Version: 1.0
-In-Reply-To: <20210725031414.3961227-1-bjorn.andersson@linaro.org>
-References: <20210725031414.3961227-1-bjorn.andersson@linaro.org>
+In-Reply-To: <1627029074-23449-1-git-send-email-skakit@codeaurora.org>
+References: <1627029074-23449-1-git-send-email-skakit@codeaurora.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.9.1
-Date:   Mon, 26 Jul 2021 19:02:05 -0400
-Message-ID: <CAE-0n51vBEUY4A0ed+sBDd1tWX2oBqW9PeeAttLordaBw174rg@mail.gmail.com>
-Subject: Re: [PATCH] interconnect: qcom: osm-l3: Use driver-specific naming
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+Date:   Mon, 26 Jul 2021 19:10:08 -0400
+Message-ID: <CAE-0n53bqJ8iBwBRwwf=-Fob5AObe+Nscz5RqN5G7rM8JDXv8Q@mail.gmail.com>
+Subject: Re: [PATCH V7 0/3] Convert qcom pmic gpio bindings to YAML
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        satya priya <skakit@codeaurora.org>
+Cc:     Das Srinagesh <gurus@codeaurora.org>, kgunda@codeaurora.org,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2021-07-24 20:14:14)
-> In situations were the developer screws up by e.g. not giving the OSM
-> nodes unique identifiers the interconnect framework might mix up nodes
-> between the OSM L3 provider and e.g. the RPMh provider.
+Quoting satya priya (2021-07-23 01:31:11)
+> satya priya (3):
+>   dt-bindings: mfd: pm8008: Add gpio-ranges and spmi-gpio compatible
+>   dt-bindings: pinctrl: qcom-pmic-gpio: Convert qcom pmic gpio bindings
+>     to YAML
+>   dt-bindings: pinctrl: qcom-pmic-gpio: Remove the interrupts property
 >
-> The resulting callstack containts "qcom_icc_set", which is not unique to
-> the OSM L3 provider driver. Once the faulting qcom_icc_set() is
-> identified it's further confusing that "qcom_icc_node" is different
-> between the different drivers.
->
-> To avoid this confusion, rename the node struct and the setter in the
-> OSM L3 driver to include "osm_l3" in their names.
->
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
 
-Thanks
-
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Which tree is this series going to be merged through? bindings, gpio?
