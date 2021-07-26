@@ -2,76 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E9D63D689D
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jul 2021 23:27:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 005BC3D68B2
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jul 2021 23:31:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231759AbhGZUqe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jul 2021 16:46:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41798 "EHLO
+        id S231959AbhGZUuq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jul 2021 16:50:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231502AbhGZUqd (ORCPT
+        with ESMTP id S229489AbhGZUuo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jul 2021 16:46:33 -0400
+        Mon, 26 Jul 2021 16:50:44 -0400
 Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 21914C061764
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jul 2021 14:27:00 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id v8-20020a0568301bc8b02904d5b4e5ca3aso10521654ota.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jul 2021 14:27:00 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF93AC061757
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jul 2021 14:31:11 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id o2-20020a9d22020000b0290462f0ab0800so6693495ota.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jul 2021 14:31:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=Ll1nnihmkvO/gDgrcKX4fXvl2evxr2Vg6Gb68Gj0wG0=;
-        b=ihMWf0papZJ3e5ptypD11uSums4DQvLI6Rd5Kcf2TmQGc6oi67UKouIgPfMRuPlGYu
-         hnF3xY5Rs+YdaEeHPrOqHGrBGeBqL+Wpk+so4YJ89YyiYGPX47ekf/yaERpgoaEcNW5q
-         0QltfkjiF3QMrtIEEZies9VeWYO9XosMMbt3A=
+        bh=2nXaLs/a4QnWZ6CsBprHQUZ0PT34FLzVCZM7MpduHa4=;
+        b=gQGAGt9eEIgv8OU25omKBzR8PLkHSLWDrPryqtU60qn5PueYnFkrrRF5sZmw8zvbW8
+         VNvqSxzJKU4JHj3qQjp0n6PyQtHvjicciYGeODKdQPIQW3jy2u5oycvxVco1k8n0Ln2x
+         voLvNquo5k+uiomYEnvZohtgMYMykoPKM0dHM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=Ll1nnihmkvO/gDgrcKX4fXvl2evxr2Vg6Gb68Gj0wG0=;
-        b=mYQbJVRYpgkavXg9jALXC8huAHvngS1GWalE4R8N+xE/JBR4BBFLZM3JFmaT6O/N9o
-         46aHizcKmdyzUKsHEKLCl7SIfVQ9Gr7KFezjj7006IM9LmMeEAA/JjX2kfFcvcWZ3yId
-         qiTOPLEUjWsym0jfRlqpGf9YhuqBI1VBbW0k129hE0Reb0GvurWOpfoHHNRczES44VCW
-         YijiRje3jyjurMMyOdEcfp080MG/m3QnqqE30sC9v/vk0Oqf3bqOtUAmjXiNWePglht0
-         FzIS0iL5QJRFHibnX2H3+VrN38bE8jUxkHgQbOH7MKaUCC7nap3jSeZVlUhhZbpYdw8X
-         POMQ==
-X-Gm-Message-State: AOAM532+F7yOTXeHFbAPwBdDMlw5gbUNBVvYsSln7FWUOeX+2GkVWS7o
-        Ev546ol5YklWJIUIUlEXhY36GNB1z2+XFUP1Y/4W+Q==
-X-Google-Smtp-Source: ABdhPJyeVPc/zQaISTdfnsGJwNKl/FAcxTE6z02/xi9ZLUtj1ROscPre2KooDOK0yN0dsiG8qy8SZ8ZOkXzxCT1+1g8=
-X-Received: by 2002:a9d:650e:: with SMTP id i14mr13307303otl.233.1627334819551;
- Mon, 26 Jul 2021 14:26:59 -0700 (PDT)
+        bh=2nXaLs/a4QnWZ6CsBprHQUZ0PT34FLzVCZM7MpduHa4=;
+        b=VPKRYHGbf6V3MqzPrjRY8pknkGDaei8kRXSUqFAPF8b4IJJ4JikhaT6n8rL7yMdFxv
+         drC+Px6G3bav+3kczJ3DbWEUm1L+Ey4EUROAHPGoCMa2snOXHdk5A+37CZXtBeelsG5Q
+         kaMOTuuHKo8Ifjf7vrp4CGFlJk+k7QibgMmgI7FJ0CbpnQxW+oMneaVtZHHl+6ud/UZZ
+         16m2bIwBXsduhHUjYAcgJ91ypDPMJdO8F7b6pcKpPyR5rGKrZYBOaFJ0JneTjUEAJeBC
+         qcGdMJJGiJ3JZZ3RHgtNeUNL8fvrBWhrda0WW22Bo+PpqN1fEhYDf2sVV+20gXDW3Bpb
+         5ZAA==
+X-Gm-Message-State: AOAM531V1Wk2BiE09QMV7Ptwb1aqd2ZK7DZOIJ4TsBXXH6V29thbywiY
+        Jo6VIyYUNVFXKkWfpwWbfQ5K9aS6FsroM/opFCZ49Q==
+X-Google-Smtp-Source: ABdhPJxwnRHClL4PJXQ2kAmJVcUKbc5TCfHvRyXzHShrdN8UAJDxajrWEr88V72kZPeMp9GmmNEQVKgYIcGEH0FLNgQ=
+X-Received: by 2002:a9d:650e:: with SMTP id i14mr13316575otl.233.1627335071314;
+ Mon, 26 Jul 2021 14:31:11 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 26 Jul 2021 17:26:59 -0400
+ HTTPREST; Mon, 26 Jul 2021 17:31:10 -0400
 MIME-Version: 1.0
-In-Reply-To: <20210726120910.20335-3-srivasam@codeaurora.org>
-References: <20210726120910.20335-1-srivasam@codeaurora.org> <20210726120910.20335-3-srivasam@codeaurora.org>
+In-Reply-To: <1627320986-25436-1-git-send-email-maitreye@codeaurora.org>
+References: <1627320986-25436-1-git-send-email-maitreye@codeaurora.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.9.1
-Date:   Mon, 26 Jul 2021 17:26:59 -0400
-Message-ID: <CAE-0n52hziOfFo0JEoF8Xy1CvMChOqHxXmSw+c2=DahPRScR1w@mail.gmail.com>
-Subject: Re: [PATCH v7 2/2] arm64: dts: qcom: sc7180-trogdor: Add lpass dai
- link for HDMI
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, dianders@chromium.org,
-        judyhsiao@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        rohitkr@codeaurora.org, srinivas.kandagatla@linaro.org
-Cc:     V Sujith Kumar Reddy <vsujithk@codeaurora.org>
+Date:   Mon, 26 Jul 2021 17:31:10 -0400
+Message-ID: <CAE-0n50gGT8nfQ0KEnCG=g2DiQdCPpQZsFOVB_8iROmHXXjNFg@mail.gmail.com>
+Subject: Re: [PATCH v5] drm/msm/dp: add logs across DP driver for ease of debugging
+To:     dri-devel@lists.freedesktop.org, maitreye <maitreye@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        robdclark@gmail.com, seanpaul@chromium.org, nganji@codeaurora.org,
+        aravindh@codeaurora.org, khsieh@codeaurora.org,
+        abhinavk@codeaurora.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Srinivasa Rao Mandadapu (2021-07-26 05:09:10)
-> From: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
->
-> Add dai link in sc7180-trogdor.dtsi for supporting audio over DP
->
-> Signed-off-by: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-> Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> ---
+Quoting maitreye (2021-07-26 10:36:26)
+> @@ -509,6 +515,7 @@ static int dp_display_usbpd_attention_cb(struct device *dev)
+>                 DRM_ERROR("invalid dev\n");
+>                 return -EINVAL;
+>         }
+> +       DRM_DEBUG_DP("sink_request: %d\n", sink_request);
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+This one is bad. sink_request isn't assigned yet.
+
+>
+>         dp = container_of(g_dp_display,
+>                         struct dp_display_private, dp_display);
+> @@ -523,6 +530,7 @@ static int dp_display_usbpd_attention_cb(struct device *dev)
+>         rc = dp_link_process_request(dp->link);
+>         if (!rc) {
+>                 sink_request = dp->link->sink_request;
+> +               DRM_DEBUG_DP("hpd_state=%d sink_count=%d\n", dp->hpd_state, sink_request);
+
+Should that say sink_request?
+
+>                 if (sink_request & DS_PORT_STATUS_CHANGED)
+>                         rc = dp_display_handle_port_ststus_changed(dp);
+>                 else
