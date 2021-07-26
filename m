@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9D2723D5C46
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jul 2021 16:56:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 44BE13D5C4B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jul 2021 16:56:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234828AbhGZOQA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jul 2021 10:16:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35400 "EHLO
+        id S234856AbhGZOQE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jul 2021 10:16:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35416 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234824AbhGZOQA (ORCPT
+        with ESMTP id S234841AbhGZOQB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jul 2021 10:16:00 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0417C061757;
-        Mon, 26 Jul 2021 07:56:27 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id m1so13244430pjv.2;
-        Mon, 26 Jul 2021 07:56:27 -0700 (PDT)
+        Mon, 26 Jul 2021 10:16:01 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 935BAC061757;
+        Mon, 26 Jul 2021 07:56:30 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id q17-20020a17090a2e11b02901757deaf2c8so420303pjd.0;
+        Mon, 26 Jul 2021 07:56:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=e/9kD03R/I14WeS9EvRH7N0IZXDfhlSexdVdh0n2rZY=;
-        b=eEAiAKgjaHmZxwolent+wg3QattYfdkp1B0CmBm/n40uP0adslIMDfuPojzmUsbdyf
-         AJDhZD2T9HzZzplabGfqo8gQPP9dME4H6pveaKZqKwobsfdPE8Y9OZYV3DC0p7/jsYPb
-         YOxuwU+69NC2rkX1MN1uOs/XdYgs0dlDSGtqlBENN/5+Gj8eAVuRwLXex2mtVWEJ2KiE
-         WtwNOkH3OTI1F5cxvTt0paNXzDkEUw/UmBl9iTo+DSoazqsv8Drb9dipj0XNLQoTo/H3
-         ZUfPI5+sODHce6y1VBxcn9xfdPGo9dLvloP6ahN5m1HrZMDVssFSMndb71D66EeKJLqI
-         Ofcg==
+        bh=Js4SVN2QJpsuQ3B87ULYILXZZSJ6LhH5VH51TEc9C1M=;
+        b=JiIaaMCMbRm9mnJqUkFsfhJqfx6YQtWOcgTgsY7B0MQSf2dCUJ6fDDh2OdEKoM29XW
+         QE+0jeQMIxKphuKIDCJEOqXn4g1B53buWNFtI5BkjhpBXV6OQP+gMbAR8C2ryOJYkoze
+         y97CGRS3CFKLf7T/6IXO/NPSLPSlDBGTDhKQxHUMtAbvZaPl0j0EXA/38rjqUGvVGMeu
+         NU2HHPINv2C8My3S0ihjsrW7uxgV62D6Zn650OWpTcTsZNzlWkO/6Kal3lx8L/k1dnTL
+         wUCZqmMfk+FiY/cdwpOOnAR2WD2UcH5H2/pexZt3DsNJSOgV6bOtXc4Iw5mprG/7zPtv
+         FsIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=e/9kD03R/I14WeS9EvRH7N0IZXDfhlSexdVdh0n2rZY=;
-        b=mroBC7XxPam+d/97SAO+6hsiVDLHvDwrRSZfFEn0cCsxul0Xn9Te9LnLhtxyefVH5/
-         CbDEBjEjp2fkwCcBxbF0iBvbf3Zf9Rx+8kiHTeF4edgH5Jp/BxffZz3/VXYVLxCj825y
-         XVNLK5NfSH7AvSPS39psZq9nayu9OmV0y2LYG98JPER+By+PutMc+uz6gQPJUF8S376C
-         ehhFA1JMez0dc9oxe/9vawCWe7KQCNq3m1Pj5OwNxSTFTK48ynEGxQV884GVixU2j50S
-         yT2ZZbC0mzVXtrWmPzE3eQjLRkVvujHyw0Fn6h5wn7bLNv/wrM39/jFdLaFahmvuHwb1
-         tR8w==
-X-Gm-Message-State: AOAM532ZMStuV84HLiYwDJV8M8n7rCmapRxc+MKjhhAhVoQ/S79gF6OX
-        FKXzKq5IyRmRsihc9cdFKts=
-X-Google-Smtp-Source: ABdhPJzYzbwPC/fDpYJzGIRqBQhd3hO0AKLAC7XEJkJ8Quu2UsD6LRtVtgG9bMycjZdnKMhEwKgTuw==
-X-Received: by 2002:a63:490e:: with SMTP id w14mr11480400pga.93.1627311387489;
-        Mon, 26 Jul 2021 07:56:27 -0700 (PDT)
+        bh=Js4SVN2QJpsuQ3B87ULYILXZZSJ6LhH5VH51TEc9C1M=;
+        b=cXjI6lpFJgIpthbwfLYztc0yANu6LJKc+kWKmCzyqs7UgRHNgiMCjxOEQaD3FexT70
+         vxzGthrZ5NeCZO7eaaBbRrSUlqk2bJzKCMGPet/NgrcYbIAPbvSNtSRqYxiY4g9x1Nfq
+         U/eRL14c//JxVhg1EdG1ba3ImPymOfxYMndqV4uMHfQPWUCnnqolxsYLxYidg699Kby+
+         zrgKQHN5FXDJ6ywUf5EMSdKf1qCfNxbNgu+wl5JMN5kQ3hnh7r/9jioflvXWWE1GnjVt
+         NEaG6yuhSPRMkiQnjUgEYvf37HyP6+pvwcs8r/5CMDR1skn0Jf7M/O3d326OOwonPmCf
+         WCNg==
+X-Gm-Message-State: AOAM531bGCCTxK95he7M9qS1IADMEiqHBCgOXW+4q23klqpUoBxngxk5
+        NkAJR32zltJ14iq6WI/KxoE=
+X-Google-Smtp-Source: ABdhPJz86h6PCUyD51DoJndCL8qycP19c2HgrDfDXD+QrXL7gt+CAfAJRBeyCjnSVSAo7Xas4LT+qw==
+X-Received: by 2002:a05:6a00:1503:b029:395:f05c:e073 with SMTP id q3-20020a056a001503b0290395f05ce073mr6929303pfu.80.1627311390171;
+        Mon, 26 Jul 2021 07:56:30 -0700 (PDT)
 Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
-        by smtp.gmail.com with ESMTPSA id x14sm262652pfq.143.2021.07.26.07.56.26
+        by smtp.gmail.com with ESMTPSA id h30sm242101pfr.191.2021.07.26.07.56.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Jul 2021 07:56:26 -0700 (PDT)
+        Mon, 26 Jul 2021 07:56:29 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org
 Cc:     Rob Clark <robdclark@chromium.org>,
@@ -58,9 +58,9 @@ Cc:     Rob Clark <robdclark@chromium.org>,
         linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
         freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
         GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 01/12] drm/msm: Docs and misc cleanup
-Date:   Mon, 26 Jul 2021 08:00:15 -0700
-Message-Id: <20210726150038.2187631-2-robdclark@gmail.com>
+Subject: [PATCH v2 02/12] drm/msm: Small submitqueue creation cleanup
+Date:   Mon, 26 Jul 2021 08:00:16 -0700
+Message-Id: <20210726150038.2187631-3-robdclark@gmail.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210726150038.2187631-1-robdclark@gmail.com>
 References: <20210726150038.2187631-1-robdclark@gmail.com>
@@ -73,111 +73,66 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-Fix a couple incorrect or misspelt comments, and add submitqueue doc
-comment.
+If we don't have a gpu, there is no need to create a submitqueue, which
+lets us simplify the error handling and submitqueue creation.
 
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 Acked-by: Christian König <christian.koenig@amd.com>
 ---
- drivers/gpu/drm/msm/msm_gem.h         |  3 +--
- drivers/gpu/drm/msm/msm_gem_submit.c  |  1 +
- drivers/gpu/drm/msm/msm_gpu.h         | 15 +++++++++++++++
- drivers/gpu/drm/msm/msm_ringbuffer.c  |  2 +-
- drivers/gpu/drm/msm/msm_submitqueue.c |  9 +++++----
- 5 files changed, 23 insertions(+), 7 deletions(-)
+ drivers/gpu/drm/msm/msm_submitqueue.c | 22 +++++++++++-----------
+ 1 file changed, 11 insertions(+), 11 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
-index 405f8411e395..d69fcb37ce17 100644
---- a/drivers/gpu/drm/msm/msm_gem.h
-+++ b/drivers/gpu/drm/msm/msm_gem.h
-@@ -313,8 +313,7 @@ void msm_gem_vunmap(struct drm_gem_object *obj);
- 
- /* Created per submit-ioctl, to track bo's and cmdstream bufs, etc,
-  * associated with the cmdstream submission for synchronization (and
-- * make it easier to unwind when things go wrong, etc).  This only
-- * lasts for the duration of the submit-ioctl.
-+ * make it easier to unwind when things go wrong, etc).
-  */
- struct msm_gem_submit {
- 	struct kref ref;
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index 44f84bfd0c0e..6d46f9275a40 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -655,6 +655,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 	bool has_ww_ticket = false;
- 	unsigned i;
- 	int ret, submitid;
-+
- 	if (!gpu)
- 		return -ENXIO;
- 
-diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index 710c3fedfbf3..96efcb31e502 100644
---- a/drivers/gpu/drm/msm/msm_gpu.h
-+++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -250,6 +250,21 @@ struct msm_gpu_perfcntr {
- 	const char *name;
- };
- 
-+/**
-+ * A submitqueue is associated with a gl context or vk queue (or equiv)
-+ * in userspace.
-+ *
-+ * @id:        userspace id for the submitqueue, unique within the drm_file
-+ * @flags:     userspace flags for the submitqueue, specified at creation
-+ *             (currently unusued)
-+ * @prio:      the submitqueue priority
-+ * @faults:    the number of GPU hangs associated with this submitqueue
-+ * @ctx:       the per-drm_file context associated with the submitqueue (ie.
-+ *             which set of pgtables do submits jobs associated with the
-+ *             submitqueue use)
-+ * @node:      node in the context's list of submitqueues
-+ * @ref:       reference count
-+ */
- struct msm_gpu_submitqueue {
- 	int id;
- 	u32 flags;
-diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/msm_ringbuffer.c
-index 7e92d9532454..054461662af5 100644
---- a/drivers/gpu/drm/msm/msm_ringbuffer.c
-+++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
-@@ -32,7 +32,7 @@ struct msm_ringbuffer *msm_ringbuffer_new(struct msm_gpu *gpu, int id,
- 
- 	if (IS_ERR(ring->start)) {
- 		ret = PTR_ERR(ring->start);
--		ring->start = 0;
-+		ring->start = NULL;
- 		goto fail;
- 	}
- 
 diff --git a/drivers/gpu/drm/msm/msm_submitqueue.c b/drivers/gpu/drm/msm/msm_submitqueue.c
-index c3d206105d28..e5eef11ed014 100644
+index e5eef11ed014..9e9fec61d629 100644
 --- a/drivers/gpu/drm/msm/msm_submitqueue.c
 +++ b/drivers/gpu/drm/msm/msm_submitqueue.c
-@@ -98,17 +98,18 @@ int msm_submitqueue_create(struct drm_device *drm, struct msm_file_private *ctx,
- 	return 0;
- }
+@@ -66,6 +66,12 @@ int msm_submitqueue_create(struct drm_device *drm, struct msm_file_private *ctx,
+ 	if (!ctx)
+ 		return -ENODEV;
  
-+/*
-+ * Create the default submit-queue (id==0), used for backwards compatibility
-+ * for userspace that pre-dates the introduction of submitqueues.
-+ */
- int msm_submitqueue_init(struct drm_device *drm, struct msm_file_private *ctx)
- {
++	if (!priv->gpu)
++		return -ENODEV;
++
++	if (prio >= priv->gpu->nr_rings)
++		return -EINVAL;
++
+ 	queue = kzalloc(sizeof(*queue), GFP_KERNEL);
+ 
+ 	if (!queue)
+@@ -73,15 +79,7 @@ int msm_submitqueue_create(struct drm_device *drm, struct msm_file_private *ctx,
+ 
+ 	kref_init(&queue->ref);
+ 	queue->flags = flags;
+-
+-	if (priv->gpu) {
+-		if (prio >= priv->gpu->nr_rings) {
+-			kfree(queue);
+-			return -EINVAL;
+-		}
+-
+-		queue->prio = prio;
+-	}
++	queue->prio = prio;
+ 
+ 	write_lock(&ctx->queuelock);
+ 
+@@ -107,12 +105,14 @@ int msm_submitqueue_init(struct drm_device *drm, struct msm_file_private *ctx)
  	struct msm_drm_private *priv = drm->dev_private;
  	int default_prio;
  
--	if (!ctx)
--		return 0;
--
++	if (!priv->gpu)
++		return -ENODEV;
++
  	/*
  	 * Select priority 2 as the "default priority" unless nr_rings is less
--	 * than 2 and then pick the lowest pirority
-+	 * than 2 and then pick the lowest priority
+ 	 * than 2 and then pick the lowest priority
  	 */
- 	default_prio = priv->gpu ?
- 		clamp_t(uint32_t, 2, 0, priv->gpu->nr_rings - 1) : 0;
+-	default_prio = priv->gpu ?
+-		clamp_t(uint32_t, 2, 0, priv->gpu->nr_rings - 1) : 0;
++	default_prio = clamp_t(uint32_t, 2, 0, priv->gpu->nr_rings - 1);
+ 
+ 	INIT_LIST_HEAD(&ctx->submitqueues);
+ 
 -- 
 2.31.1
 
