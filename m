@@ -2,157 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 50B8D3D69A9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jul 2021 00:40:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17B6D3D69E4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jul 2021 01:02:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233853AbhGZV7d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jul 2021 17:59:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58448 "EHLO
+        id S233733AbhGZWVj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jul 2021 18:21:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35268 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233817AbhGZV7d (ORCPT
+        with ESMTP id S232938AbhGZWVj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jul 2021 17:59:33 -0400
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 60761C061757;
-        Mon, 26 Jul 2021 15:40:00 -0700 (PDT)
-Received: by mail-ot1-x32a.google.com with SMTP id 19-20020a9d08930000b02904b98d90c82cso11572453otf.5;
-        Mon, 26 Jul 2021 15:40:00 -0700 (PDT)
+        Mon, 26 Jul 2021 18:21:39 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7190DC061760
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jul 2021 16:02:06 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id c7-20020a9d27870000b02904d360fbc71bso11547302otb.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jul 2021 16:02:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=fyYS83TJhhxVOfsNmu5c001LjoG5UgZ/hJ8MDBaDVrk=;
-        b=ax0x11gYfKsrv5i8QpmztTa8rW81guRfm6vJ9GoNpNGMhjpJlwvWlmkjrykyNYd4qt
-         CDC8rgfh//cXjINJ1Rsnh553J+QQOHDiBlxr1fTQsbT6ufjzDWUae93YxOLwoXL1KdW4
-         pVybN4jHUxkCZeLnE3lPAL+jsUe9pDRIgYoxRUrvbfTk3fPPThzwtztr8npwTxsXjsMa
-         9UXdRWsV9KmTLHKVGL1Wg8whYZQWNxPHrHS0jY4a5su8RbiR9PcBbdQid9HcbqX9du9n
-         K518pKRvgSLU5SjOMdjehY3TDotw7dnTth0K2euObdN/NoQGSWYctjHdyJXrsdeCH9EH
-         K9zA==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=YQOUs6IHKvgmEEaJoamgZLDtUOOWcnZjqqyzNqPHtgA=;
+        b=X7ukQguYL+MKBPkBFhO7H5nfKnc70OCDuiDFR7YSf6QZLoLc4ReLFF6oY/7WEAPpeS
+         PFJCBGADy/cvzKcTOc1MuVUHe+mO9raKPlB3JjjxQuitmjuPBprCfWobERLCeG8YR46C
+         HBZgujM21DWWX2fFg3Zb81ftslEqmBez79Y5o=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fyYS83TJhhxVOfsNmu5c001LjoG5UgZ/hJ8MDBaDVrk=;
-        b=radkGYOQtCzDpc9QD7CwgtyFR/Yc5qsOvk1hiHRmvttudkF2VgH/TqzrwByi1Mhkch
-         /cmwUTBZwO8SfRPbNUJZPoUtwY2axkWQnTHOrcBtiPVUykOxbZZ/SSIvBMDFiwVK/Ol4
-         DM8EPFjnDY++NVjgzPvyXc//7irvq+bDmU0bxDK1GWtxfye7Nj4eGZyEzAq9PKj04nf0
-         PBO6JFuS6uqmeAusBSCC4Ne3s4wKhYXZA9MJLvzKOHa8cGTiLyWoiexajIkLr6nELNXR
-         2VPLGKUMuZXSHJJSmQwTSdBfcBoEEaIOV9koz/rAybmljC73zkp8aIf30v5TVvuQdN5+
-         CcLg==
-X-Gm-Message-State: AOAM533PnQXB0zrl74gvt9psPxaT9imZ8FkY7zAwH9nOy3WododdRVVh
-        kCqkZ1NFFtWJw292goE1R6rCD7HxBemMKGlKA54=
-X-Google-Smtp-Source: ABdhPJwDiHLckB0JbibpoC/Qkq6c662oX2jEeuzB25zfWmbxwwssxd71D586oKFQCzcpzw5AqtAookmewbmv48f+oEg=
-X-Received: by 2002:a9d:6d83:: with SMTP id x3mr12761570otp.110.1627339199143;
- Mon, 26 Jul 2021 15:39:59 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=YQOUs6IHKvgmEEaJoamgZLDtUOOWcnZjqqyzNqPHtgA=;
+        b=bmI4mBalsilFFXdq/OxkcQ8rWy4DHx9MbY57BqVADJnynQ6xbejcSaiEP3b/4K8RBQ
+         4hOrSWYdtqvwsgj9mmgq2fs1AJNTTE0sIPjMSZnC4Sd5v16EuY5Btcuh2lXzxPSlkrjz
+         7YVZgRPdqLRMI81lt4dDGQBisBy1QJk7JMdoJ/1eMFiWj3T8685FaUCY44e1PIfszp0m
+         en8opCNBzrP7jVecB0Z6e6gaufA5zJR/qSnHiGoKgQI9FtFVURFluV2W5e4WXNbUZHl5
+         jjhtzvZCzMH4f6xvlApnQRPlgjxpRb1fmVREamVbUlEa1cP0tsKe59smC0IP/ChNkPGl
+         Sx9w==
+X-Gm-Message-State: AOAM531/0X3+hj0alTWtSMjyRgPJVC72gPu503gmF+/tNVqtMd8ykBm8
+        QN/JzXwD4ivh0MyltgnWYn/dLigKGQtO3BzCW+M8Sw==
+X-Google-Smtp-Source: ABdhPJz5jt91J7s64KRcgC3G/srUYZuXPZrU0BBg8ga7AFXoIHLQ4iQUzviPocNr4D2zmNt8R5pRz0hfblCs9cIwm10=
+X-Received: by 2002:a9d:1b6e:: with SMTP id l101mr13153554otl.34.1627340525819;
+ Mon, 26 Jul 2021 16:02:05 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 26 Jul 2021 19:02:05 -0400
 MIME-Version: 1.0
-References: <20210719145317.79692-1-stephan@gerhold.net> <20210719145317.79692-5-stephan@gerhold.net>
- <CAMZdPi8oxRMo0erfd0wrUPzD2UsbexoR=86u2N75Fd9RpXHoKg@mail.gmail.com>
- <YPmRcBXpRtKKSDl8@gerhold.net> <CAHNKnsQr4Ys8q3Ctru-H=L3ZDwb__2D3E08mMZchDLAs1KetAg@mail.gmail.com>
- <CAAP7ucLDEoJzwNvWLCWyCNE+kKBDn4aBU-9XT_Uv_yetnX4h-g@mail.gmail.com>
-In-Reply-To: <CAAP7ucLDEoJzwNvWLCWyCNE+kKBDn4aBU-9XT_Uv_yetnX4h-g@mail.gmail.com>
-From:   Sergey Ryazanov <ryazanov.s.a@gmail.com>
-Date:   Tue, 27 Jul 2021 01:40:10 +0300
-Message-ID: <CAHNKnsSeX00+oL7uuKw83fRb0zSJWndQXyQH8PvoKf59mFUYgg@mail.gmail.com>
-Subject: Re: [RFC PATCH net-next 4/4] net: wwan: Add Qualcomm BAM-DMUX WWAN
- network driver
-To:     Aleksander Morgado <aleksander@aleksander.es>
-Cc:     =?UTF-8?Q?Bj=C3=B8rn_Mork?= <bjorn@mork.no>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Johannes Berg <johannes@sipsolutions.net>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Network Development <netdev@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dmaengine@vger.kernel.org, devicetree <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+In-Reply-To: <20210725031414.3961227-1-bjorn.andersson@linaro.org>
+References: <20210725031414.3961227-1-bjorn.andersson@linaro.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Mon, 26 Jul 2021 19:02:05 -0400
+Message-ID: <CAE-0n51vBEUY4A0ed+sBDd1tWX2oBqW9PeeAttLordaBw174rg@mail.gmail.com>
+Subject: Re: [PATCH] interconnect: qcom: osm-l3: Use driver-specific naming
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Aleksander,
-
-On Mon, Jul 26, 2021 at 11:11 AM Aleksander Morgado
-<aleksander@aleksander.es> wrote:
->> But what if we implement the QMI multiplexing management part in the
->> kernel? This way the kernel will take care about modem-to-host
->> communication protocols and interfaces, and provides userspace with a
->> single WWAN device (possibly with multiple network and network
->> management interfaces).
->>
->> I do not propose to fully implement QMI protocol inside the kernel,
->> but implement only a mux management part, while passing all other
->> messages between a "modem" and a userspace software as-is.
->>
->> What pros and cons of such a design do you see?
+Quoting Bjorn Andersson (2021-07-24 20:14:14)
+> In situations were the developer screws up by e.g. not giving the OSM
+> nodes unique identifiers the interconnect framework might mix up nodes
+> between the OSM L3 provider and e.g. the RPMh provider.
 >
-> The original GobiNet driver already provided some QMI protocol
-> implementation in the driver itself. In addition to initial device
-> setup as you suggest, it also allowed userspace applications to
-> allocate and release QMI clients for the different services that could
-> be used independently by different processes. Not going to say that
-> was the wrong way to do it, but the implementation is definitely not
-> simple. The decision taken in qmi_wwan to make the driver as simple as
-> possible and leave all the QMI management to userspace was quite an
-> important one; it made the driver extremely simple, leaving all the
-> complexity of managing the protocol to userspace, and while it had
-> some initial drawbacks (e.g. only one process could talk QMI at a
-> time) the userspace tools have evolved to avoid them (e.g. the
-> qmi-proxy).
+> The resulting callstack containts "qcom_icc_set", which is not unique to
+> the OSM L3 provider driver. Once the faulting qcom_icc_set() is
+> identified it's further confusing that "qcom_icc_node" is different
+> between the different drivers.
 >
-> I wrote some time ago about this, maybe it's still relevant today:
-> Blogpost https://sigquit.wordpress.com/2014/06/11/qmiwwan-or-gobinet/,
-> Article in PDF https://aleksander.es/data/Qualcomm%20Gobi%20devices%20on%20Linux.pdf
+> To avoid this confusion, rename the node struct and the setter in the
+> OSM L3 driver to include "osm_l3" in their names.
 >
-> Making the driver talk QMI just for device setup would require the
-> kernel to know how the QMI protocol works, how QMI client allocations
-> and releases are done, how errors are reported, how is the format of
-> the requests and responses involved; it would require the kernel to
-> wait until the QMI protocol endpoint in the modem is capable of
-> returning QMI responses (this could be up to 20 or 30 secs after the
-> device is available in the bus), it would require to have possibly
-> some specific rules on how the QMI clients are managed after a
-> suspend/resume operation. It would also require to sync the access to
-> the CTL service, which is the one running QMI service allocations and
-> releases, so that both kernel and userspace can perform operations
-> with that service at the same time. It would need to know how
-> different QMI capable devices behave, because not all devices support
-> the same services, and some don't even support the WDA service that
-> would be the one needed to setup data aggregation. There is definitely
-> some overlap on what the kernel could do and what userspace could do,
-> and I'd say that we have much more flexibility in userspace to do all
-> this leaving all the complexity out of the kernel driver.
->
-> ModemManager already provides a unified API to e.g. setup multiplexed
-> data sessions, regardless of what the underlying kernel implementation
-> is (qmi_wwan only, qmi_wwan+rmnet, ipa+rmnet, bam-dmux, cdc_mbim...) .
-> The logic doing all that is extremely complex and possibly full of
-> errors, I would definitely not want to have all that logic in the
-> kernel itself, let the errors be in userspace! Unifying stuff in the
-> kernel is a good idea, but if you ask me, it should be done in a way
-> that is as simple as possible, leaving complexity to userspace, even
-> if that means that userspace still needs to know what type of device
-> we have behind the wwan subsystem, because userspace will anyway need
-> to know all that.
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
 
-Ouch! All these QMI internals are like a can of worms. Each time I
-start thinking that I learned something I face another complexity.
-Many thanks for your detailed reply and for your blogpost, for me it
-was quite helpful for understanding to see a side by side comparison
-of approaches!
+Thanks
 
-The argument for keeping drivers minimalistic to keep the system
-stable sounds reasonable. But I am still feeling uncomfortable when a
-userspace software manages a device at such a low level. Maybe it is a
-matter of taste, or maybe I still do not realize the whole complexity.
-Anyway, in the context of your clarification, I should be more careful
-in the future with calls to implement QMI in the kernel :)
-
---
-Sergey
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
