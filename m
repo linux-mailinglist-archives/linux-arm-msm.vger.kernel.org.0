@@ -2,109 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B5763D50DC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jul 2021 03:16:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D837A3D5235
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jul 2021 06:08:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231374AbhGZAgN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 25 Jul 2021 20:36:13 -0400
-Received: from cmccmta2.chinamobile.com ([221.176.66.80]:7979 "EHLO
-        cmccmta2.chinamobile.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230075AbhGZAgN (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 25 Jul 2021 20:36:13 -0400
-Received: from spf.mail.chinamobile.com (unknown[172.16.121.1]) by rmmx-syy-dmz-app05-12005 (RichMail) with SMTP id 2ee560fe0cd2f1f-8179d; Mon, 26 Jul 2021 09:16:02 +0800 (CST)
-X-RM-TRANSID: 2ee560fe0cd2f1f-8179d
-X-RM-TagInfo: emlType=0                                       
-X-RM-SPAM-FLAG: 00000000
-Received: from [192.168.26.114] (unknown[10.42.68.12])
-        by rmsmtp-syy-appsvr01-12001 (RichMail) with SMTP id 2ee160fe0cc2ed1-07f73;
-        Mon, 26 Jul 2021 09:16:02 +0800 (CST)
-X-RM-TRANSID: 2ee160fe0cc2ed1-07f73
-Subject: Re: [PATCH] power: supply: qcom_smbb: Remove superfluous errormessage
+        id S231280AbhGZD2L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 25 Jul 2021 23:28:11 -0400
+Received: from guitar.tcltek.co.il ([192.115.133.116]:46620 "EHLO
+        mx.tkos.co.il" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230321AbhGZD2K (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 25 Jul 2021 23:28:10 -0400
+Received: from tarshish (unknown [10.0.8.2])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mx.tkos.co.il (Postfix) with ESMTPS id 38D2A440E57;
+        Mon, 26 Jul 2021 07:08:24 +0300 (IDT)
+References: <889aae1b88f120cb6281919d27164a959fbe69d0.1626948070.git.baruch@tkos.co.il>
+ <70f0522a9394e9da2f31871442d47f6ad0ff41aa.1626948070.git.baruch@tkos.co.il>
+ <YP2tAR+zZgJZQOgG@yoga>
+User-agent: mu4e 1.4.15; emacs 27.1
+From:   Baruch Siach <baruch@tkos.co.il>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     agross@kernel.org, sre@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Zhang Shengju <zhangshengju@cmss.chinamobile.com>
-References: <20210720141539.7716-1-tangbin@cmss.chinamobile.com>
- <YPbxS4KV+Fx01p7G@yoga>
-From:   tangbin <tangbin@cmss.chinamobile.com>
-Message-ID: <f6a40fef-deac-e898-7cac-d9d246c84a24@cmss.chinamobile.com>
-Date:   Mon, 26 Jul 2021 09:16:15 +0800
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101
- Thunderbird/68.7.0
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
+        Lee Jones <lee.jones@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Balaji Prakash J <bjagadee@codeaurora.org>,
+        Robert Marko <robert.marko@sartura.hr>,
+        Kathiravan T <kathirav@codeaurora.org>,
+        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v6 3/4] dt-bindings: pwm: add IPQ6018 binding
+In-reply-to: <YP2tAR+zZgJZQOgG@yoga>
+Date:   Mon, 26 Jul 2021 07:08:36 +0300
+Message-ID: <87h7ghwwcb.fsf@tarshish>
 MIME-Version: 1.0
-In-Reply-To: <YPbxS4KV+Fx01p7G@yoga>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi, Bjorn Andersson:
+Hi Bjorn,
 
-On 2021/7/20 23:52, Bjorn Andersson wrote:
-> On Tue 20 Jul 09:15 CDT 2021, Tang Bin wrote:
+On Sun, Jul 25 2021, Bjorn Andersson wrote:
+> On Thu 22 Jul 05:01 CDT 2021, Baruch Siach wrote:
+>> +  clocks:
+>> +    maxItems: 1
+>> +
+>> +  clock-names:
+>> +    const: core
 >
->> In the probe function, when get irq failed, the function
->> platform_get_irq_byname() logs an error message, so remove
->> redundant message here.
->>
->> Signed-off-by: Zhang Shengju <zhangshengju@cmss.chinamobile.com>
->> Signed-off-by: Tang Bin <tangbin@cmss.chinamobile.com>
-> This says "Zhang certified this patch's origin, then you took the patch
-> and you certified it's origin" - per Documentation/process/submitting-patches.rst
->
-> But you, Tang, is the author or the patch, so how can Zhang have touched
-> it before you wrote it?
->
-> Perhaps you worked on it together? In which case you should include a
-> Co-developed-by to indicate this.
+> With a single clock, it's nice to skip the -names.
 
-I am sorry for the late reply to your email due to some reasons. The 
-correct way to write it should be as follows:
+I find it nicer and better for forward compatibility with hardware
+variants the might introduce more clocks.
 
-     Co-developed-by: Zhang Shengju <zhangshengju@cmss.chinamobile.com>
+Are there any downsides to -names?
 
-     Signed-off-by: Zhang Shengju <zhangshengju@cmss.chinamobile.com>
+Thanks,
+baruch
 
-     Signed-off-by: Tang Bin <tangbin@cmss.chinamobile.com>
-
->
->
-> Both commit message and patch looks good though!
->
-whether should I send v2 for this patch？
-
-Thanks
-
-Tang Bin
-
->> ---
->>   drivers/power/supply/qcom_smbb.c | 5 +----
->>   1 file changed, 1 insertion(+), 4 deletions(-)
->>
->> diff --git a/drivers/power/supply/qcom_smbb.c b/drivers/power/supply/qcom_smbb.c
->> index c890e1cec..84cc9fba0 100644
->> --- a/drivers/power/supply/qcom_smbb.c
->> +++ b/drivers/power/supply/qcom_smbb.c
->> @@ -929,11 +929,8 @@ static int smbb_charger_probe(struct platform_device *pdev)
->>   		int irq;
->>   
->>   		irq = platform_get_irq_byname(pdev, smbb_charger_irqs[i].name);
->> -		if (irq < 0) {
->> -			dev_err(&pdev->dev, "failed to get irq '%s'\n",
->> -				smbb_charger_irqs[i].name);
->> +		if (irq < 0)
->>   			return irq;
->> -		}
->>   
->>   		smbb_charger_irqs[i].handler(irq, chg);
->>   
->> -- 
->> 2.20.1.windows.1
->>
->>
->>
-
-
+-- 
+                                                     ~. .~   Tk Open Systems
+=}------------------------------------------------ooO--U--Ooo------------{=
+   - baruch@tkos.co.il - tel: +972.52.368.4656, http://www.tkos.co.il -
