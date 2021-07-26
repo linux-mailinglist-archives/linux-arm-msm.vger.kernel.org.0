@@ -2,312 +2,379 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A20B23D5BFE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jul 2021 16:42:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 75A0D3D5C7E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jul 2021 16:58:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234706AbhGZOCW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jul 2021 10:02:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60550 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234682AbhGZOCW (ORCPT
+        id S235047AbhGZORj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jul 2021 10:17:39 -0400
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:29915 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S234827AbhGZORi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jul 2021 10:02:22 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADFEBC061757;
-        Mon, 26 Jul 2021 07:42:50 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id e2-20020a17090a4a02b029016f3020d867so297953pjh.3;
-        Mon, 26 Jul 2021 07:42:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Rlta0NEovcclpaPJpD2xtS9yg3zCeqF6l6C6xl/bEnk=;
-        b=MXQvlm5f7NTlQFcq3MkDZlFoTbSB2ULWsD6K+q14oA0GkYqM4+ZHwtjr/XT0wPmsN9
-         58obxREMteJ8Y05M6NgoXSKtfShL+iWJcy+YYGMXgokoSLKT9161DNf/+ylDyM0dJixe
-         maG6+qAjJa0pMkhlMfISxJRYx8cBtwLnmnCHP7B2jT0rqXXlGVZUaqi9UreTy543Zgz+
-         A78ucVm7QM46p4KW9Hgpa+QcEt7vYEL8FsqCNRTt1WXbWQh8i75qXPWYqQxMQqVT7hhk
-         L7Gf/4CmAXhe7UGG5hRsRfRrJPNgPBtEJEqlPZXL048WzRIF67SL67Fm82fU3vfiSrnO
-         JWwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Rlta0NEovcclpaPJpD2xtS9yg3zCeqF6l6C6xl/bEnk=;
-        b=lGVkri8hD2qrP5XyhKQwsXV1dP25EMneL1sl81/6o7c1FHuazo62NUptNrr6Zee32j
-         pFZgCCyCvSpeWqvF1KSPbnIyQbc32M9eCEAPZb7OdKjRmMn/djSAnJBlyegWDgAjMhqi
-         LGlRFve5lEiiipmhyjtuTq+ksKd7RZZ85k/2Yl1RgYxgngfb54HBgToM95IwMdlWb0Wl
-         f/Sn+g2CoWkoY285nuzdYJ7PPOLE79UqpI7wmb3E+2vwDAxSUDHRa5A+/Ju+YECR/r9B
-         utUqO0vMgiXSfbp3G1uAY16GlAHvvItI8eadZxeqrZsjo8fcxMCojHh6r738ISJjAgex
-         XmSw==
-X-Gm-Message-State: AOAM531KzivkrDJdHkfBaJIjmVylVtdjlcKIi3MuwF/jQPxCsCPnFITy
-        eLu+MECVFmTpqUm3LYdQZ0E=
-X-Google-Smtp-Source: ABdhPJwvV+Ta7Aed4EqK/5ZlO07y7a/xBo8shDf26JWpJt+WXH9hmPeAdzDtih6ushddXac2m2SrdQ==
-X-Received: by 2002:a63:354:: with SMTP id 81mr18503749pgd.369.1627310570186;
-        Mon, 26 Jul 2021 07:42:50 -0700 (PDT)
-Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
-        by smtp.gmail.com with ESMTPSA id i13sm230613pfr.79.2021.07.26.07.42.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 26 Jul 2021 07:42:49 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 3/3] drm/msm: Devfreq tuning
-Date:   Mon, 26 Jul 2021 07:46:50 -0700
-Message-Id: <20210726144653.2180096-4-robdclark@gmail.com>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210726144653.2180096-1-robdclark@gmail.com>
-References: <20210726144653.2180096-1-robdclark@gmail.com>
+        Mon, 26 Jul 2021 10:17:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1627311487; x=1658847487;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=gUDEGROrBLkAh2LwKF6dp3yPXCf3q3I4cKv4sQRS76w=;
+  b=lmarkVwTzoCStminaqfQ/tejyREwlRFZWULdgsVC8h/F2zqqKuRdaVPr
+   DIMF+OfGnGydgc3nnOngFjD78rFuVvZ6O/8cly34OeHTQssX7HUTyK7yR
+   HQYdWsKkqCBj2N7JcQgwgbEdsey2AJJbxnebdS4QmeH8U531n6/4KX8gL
+   k=;
+Received: from unknown (HELO ironmsg04-sd.qualcomm.com) ([10.53.140.144])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 26 Jul 2021 07:58:07 -0700
+X-QCInternal: smtphost
+Received: from nasanexm03e.na.qualcomm.com ([10.85.0.48])
+  by ironmsg04-sd.qualcomm.com with ESMTP/TLS/AES256-SHA; 26 Jul 2021 07:58:06 -0700
+Received: from [10.226.59.216] (10.80.80.8) by nasanexm03e.na.qualcomm.com
+ (10.85.0.48) with Microsoft SMTP Server (TLS) id 15.0.1497.23; Mon, 26 Jul
+ 2021 07:58:04 -0700
+Subject: Re: [RFC PATCH net-next 0/4] net: wwan: Add Qualcomm BAM-DMUX WWAN
+ network driver
+To:     Stephan Gerhold <stephan@gerhold.net>
+CC:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Sergey Ryazanov <ryazanov.s.a@gmail.com>,
+        Johannes Berg <johannes@sipsolutions.net>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Aleksander Morgado <aleksander@aleksander.es>,
+        "open list:NETWORKING DRIVERS" <netdev@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>, <dmaengine@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        <phone-devel@vger.kernel.org>,
+        <~postmarketos/upstreaming@lists.sr.ht>
+References: <20210719145317.79692-1-stephan@gerhold.net>
+ <CAOCk7NonuOKWrpr-MwdjAwF1F4jviEMf=c04vVBxQ-OmfY2b-g@mail.gmail.com>
+ <YPXC7PDCUopdCdTV@gerhold.net>
+ <e37868ee-2bd0-3b50-eb95-8eb2bf32d956@quicinc.com>
+ <YPmF8bzevuabO2K9@gerhold.net>
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+Message-ID: <32d92843-c8ae-e2a7-9cc7-12144e97f4a1@quicinc.com>
+Date:   Mon, 26 Jul 2021 08:58:04 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <YPmF8bzevuabO2K9@gerhold.net>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanexm03c.na.qualcomm.com (10.85.0.106) To
+ nasanexm03e.na.qualcomm.com (10.85.0.48)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On 7/22/2021 8:51 AM, Stephan Gerhold wrote:
+> On Mon, Jul 19, 2021 at 05:13:32PM -0600, Jeffrey Hugo wrote:
+>> On 7/19/2021 12:23 PM, Stephan Gerhold wrote:
+>>> On Mon, Jul 19, 2021 at 09:43:27AM -0600, Jeffrey Hugo wrote:
+>>>> On Mon, Jul 19, 2021 at 9:01 AM Stephan Gerhold <stephan@gerhold.net> wrote:
+>>>>>
+>>>>> The BAM Data Multiplexer provides access to the network data channels
+>>>>> of modems integrated into many older Qualcomm SoCs, e.g. Qualcomm MSM8916
+>>>>> or MSM8974. This series adds a driver that allows using it.
+>>>>>
+>>>>> For more information about BAM-DMUX, see PATCH 4/4.
+>>>>>
+>>>>> Shortly said, BAM-DMUX is built using a simple protocol layer on top of
+>>>>> a DMA engine (Qualcomm BAM DMA). For BAM-DMUX, the BAM DMA engine runs in
+>>>>> a quite strange mode that I call "remote power collapse", where the
+>>>>> modem/remote side is responsible for powering on the BAM when needed but we
+>>>>> are responsible to initialize it. The BAM is power-collapsed when unneeded
+>>>>> by coordinating power control via bidirectional interrupts from the
+>>>>> BAM-DMUX driver.
+>>>>
+>>>> The hardware is physically located on the modem, and tied to the modem
+>>>> regulators, etc.  The modem has the ultimate "off" switch.  However,
+>>>> due to the BAM architecture (which is complicated), configuration uses
+>>>> cooperation on both ends.
+>>>>
+>>>
+>>> What I find strange is that it wasn't done similarly to e.g. Slimbus
+>>> which has a fairly similar setup. (I used that driver as inspiration for
+>>> how to use the mainline qcom_bam driver instead of the "SPS" from
+>>> downstream.)
+>>>
+>>> Slimbus uses qcom,controlled-remotely together with the LPASS
+>>> remoteproc, so it looks like there LPASS does both power-collapse
+>>> and initialization of the BAM. Whereas here the modem does the
+>>> power-collapse but we're supposed to do the initialization.
+>>
+>> I suspect I don't have a satisfactory answer for you.  The teams that did
+>> slimbus were not the teams involved in the bam_dmux, and the two didn't talk
+>> to each-other.  The bam_dmux side wasn't aware of the slimbus situation, at
+>> the time.  I don't know if the slimbus folks knew about bam_dmux.  If you
+>> have two silos working independently, its unlikely they will create exactly
+>> the same solution.
+>>
+> 
+> Fair enough :)
+> 
+>>>
+>>> It's somewhat unrelated to this initial patch set since I'm not using
+>>> QMAP at the moment, but I'm quite confused about the "MTU negotiation
+>>> feature" that you added support for in [1]. (I *think* that is you,
+>>> right?) :)
+>>
+>> Yes.  Do I owe you for some brain damage?  :)
+>>
+> 
+> A bit to be absolutely honest. :D
+> But I was able to ignore this feature so far so it was not much of
+> a problem. ;)
+> 
+>>>
+>>> The part that I somewhat understand is the "signal" sent in the "OPEN"
+>>> command from the modem. It tells us the maximum buffer size the modem
+>>> is willing to accept for TX packets ("ul_mtu" in that commit).
+>>>
+>>> Similarly, if we send "OPEN" to the modem we make the modem aware
+>>> of our maximum RX buffer size plus the number of RX buffers.
+>>> (create_open_signal() function).
+>>>
+>>> The part that is confusing me is the way the "dynamic MTU" is
+>>> enabled/disabled based on the "signal" in "DATA" commands as well.
+>>> (process_dynamic_mtu() function). When would that happen? The code
+>>> suggests that the modem might just suddenly announce that the large
+>>> MTU should be used from now on. But the "buffer_size" is only changed
+>>> for newly queued RX buffers so I'm not even sure how the modem knows
+>>> that it can now send more data at once.
+>>>
+>>> Any chance you could clarify how this should work exactly?
+>>
+>> So, I think some of this might make more sense after my response to question
+>> #2.
+>>
+> 
+> Indeed, I was worried that you wouldn't be able to answer the second
+> one, otherwise I would probably have asked it first. I'll reorder the
+> mail because it's clearer:
+> 
+>>> And a second question if you don't mind: What kind of hardware block
+>>> am I actually talking to here? I say "modem" above but I just know about
+>>> the BAM and the DMUX protocol layer. I have also seen assertion failures
+>>> of the modem DSP firmware if I implement something incorrectly.
+>>>
+>>> Is the DMUX protocol just some firmware concept or actually something
+>>> understood by some hardware block? I've also often seen mentions of some
+>>> "A2" hardware block but I have no idea what that actually is. What's
+>>> even worse, in a really old kernel A2/BAM-DMUX also appears as part of
+>>> the IPA driver [2], and I thought IPA is the new thing after BAM-DMUX...
+>>
+>> A2 predates IPA.  IPA is essentially an evolution of A2.
+>>
+>> Sit down son, let me tell you the history of the world  :)
+>>
+>> A long time ago, there was only a single processor that did both the "modem"
+>> and the "apps".  We generally would call these the 6K days as that was the
+>> number of the chips (6XXX).  Then it was decided that the roles of Apps and
+>> Modem should be separated into two different cores. The modem, handling more
+>> "real time" things, and apps, being more "general purpose".  This started
+>> with the 7K series.
+>>
+>> However, this created a problem as data from a data call may need to be
+>> consumed by the modem, or the apps, and it wouldn't be clear until the
+>> packet headers were inspected, where the packet needed to be routed to.
+>> Sometimes this was handled on apps, sometimes on modem.  Usually via a fully
+>> featured IP stack.
+>>
+>> With LTE, software couldn't really keep up, and so a hardware engine to
+>> parse the fields and route the package based on programmed filters was
+>> implemented.  This is the "Algorithm Accelerator", aka AA, aka A2.
+>>
+>> The A2 first appeared on the 9600 chip, which was originally intended for
+>> Gobi- those dongles you could plug into your laptop to give it a data
+>> connection on the go when there was no wifi.  It was then coupled with both
+>> 7x30 and 8660 in what we would call "fusion" to create the first LTE capable
+>> phones (HTC thunderbolt is the product I recall) until an integrated
+>> solution could come along.
+>>
+>> That integrated solution was 8960.
+>>
+>> Back to the fusion solution for a second, the 9600 was connected to the
+>> 7x30/8660 via SDIO.  Prior to this, the data call control and data path was
+>> all in chip via SMD.  Each rmnet instance had its own SMD channel, so
+>> essentially its own physical pipe.  With SDIO and 9600, there were not
+>> enough lanes, so we invented SDIO_CMUX and SDIO_DMUX - the Control and Data
+>> multiplexers over SDIO.
+>>
+>> With 8960, everything was integrated again, so we could run the control path
+>> over SMD and didn't need a mux.  However, the A2 moved from the 9600 modem
+>> to the 8960 integrated modem, and now we had a direct connection to its BAM.
+>> Again, the BAM had a limited number of physical pipes, so we needed a data
+>> multiplexer again.  Thus SDIO_DMUX evolved into BAM_DMUX.
+>>
+>> The A2 is a hardware block with an attached BAM, that "hangs off" the modem.
+>> There is a software component that also runs on the modem, but in general is
+>> limited to configuration.  Processing of data is expected to be all in
+>> hardware.  As I think I mentioned, the A2 is a hardware engine that routes
+>> IP packets based on programmed filters.
+>>
+>> BAM instances (as part of the smart peripheral subsystem or SPS) can either
+>> be out in the system, or attached to a peripheral.  The A2 BAM is attached
+>> to the A2 peripheral.  BAM instances can run in one of 3 modes - BAM-to-BAM,
+>> BAM-to-System, or System-to-System.  BAM-to-BAM is two BAM instances talking
+>> to eachother.  If the USB controller has a BAM, and the A2 has a BAM, those
+>> two BAMS could talk directly to copy data between the A2 and USB hardware
+>> blocks without software interaction (after some configuration).  "System"
+>> means system memory, or DDR. Bam-to-System is the mode the A2 BAM runs in
+>> where it takes data to/from DDR and gives/takes that data with the A2.
+>> System-to-System would be used by a BAM instance not associated with any
+>> peripheral to transfer data say from Apps DDR to Modem DDR.
+>>
+>> The A2 can get data from the RF interface, and determine if that needs to go
+>> to some modem consumer, the apps processor, or on some chips to the wifi
+>> processor.  All in hardware, much faster than software for multiple reasons,
+>> but mainly because multiple filters can be evaluated in parallel, each
+>> filter looking at multiple fields in parallel.  In a nutshell, the IPA is a
+>> revised A2 that is not associated with any processor (like the modem), which
+>> allows it to route data better (think wifi and audio usecases).
+>>
+>> Hope that all helps.  I'm "around" for more questions.
+>>
+> 
+> Wow, I can't thank you enough for all the detailed explanations!
+> I've seen many small hints of this in various places but I could never
+> really understand how they all relate to each other.
+> This is much clearer now. :)
+> 
+>> I don't know how much of this translates to modern platforms.  I don't
+>> really work on MSMs anymore, but I can convey what I recall and how things
+>> were "back then"
+>>
+>> So, essentially the change you are looking at is the bam_dmux portion of an
+>> overall feature for improving the performance of what was known as "tethered
+>> rmnet".
+>>
+>> Per my understanding (which the documentation of this feature reinforces),
+>> teathered rmnet was chiefly a test feature.  Your "data" (websites, email,
+>> etc) could be consumed by the device itself, or exported off, if you
+>> teathered your phone to a laptop so that the laptop could use the phone's
+>> data connection.  There ends up being 3 implementations for this.
+>>
+>> Consuming the data on the phone would route it to the IP stack via the rmnet
+>> driver.
+>>
+>> Consuming the data on an external device could take one of 2 routes.
+>>
+>> Android would use the "native" routing of the Linux IP stack to essentially
+>> NAT the laptop.  The data would go to the rmnet driver, to the IP stack, and
+>> the IP stack would route it to USB.
+>>
+>> The other route is that the data could be routed directly to USB.  This is
+>> "teathered rmnet".  In the case of bam_dmux platforms, the USB stack is a
+>> client of bam_dmux.
+>>
+>> Teathered rmnet was never an end-user usecase.
+>>
+> 
+> I'm pretty sure it's actively used now on typical USB modems based on
+> MDM9607. As far as I know that one has BAM-DMUX and "forwards" it via
+> USB (without NAT).
+> 
+>> It was essentially a validation feature for both internal testing, and
+>> also qualifying the device with the carriers.  The carriers knew that
+>> Android teathering involved NAT based routing on the phone, and wanted
+>> to figure out if the phone could meet the raw performance specs of the
+>> RF technology (LTE Category 4 in this case) in a tethered scenario,
+>> without the routing.
+>>
+>> For tethered rmnet, USB (at the time) was having issues consistently meeting
+>> those data rates (50mbps UL, 100mbps DL concurrently, if I recall
+>> correctly).  So, the decided solution was to implement QMAP aggregation.
+>>
+>> A QMAP "call" over tethered rmnet would be negotiated between the app on the
+>> PC, and "dataservices" or "DS" on the modem.  One of the initial steps of
+>> that negotitation causes DS to tell A2 software that QMAP over tethered
+>> rmnet is being activated.  That would trigger A2 to activate the
+>> process_dynamic_mtu() code path.  Now bam_dmux would allocate future RX
+>> buffers of the increased size which could handle the aggregated packets.  I
+>> think the part that is confusing you is, what about the already queued
+>> buffers that are of the old size?  Well, essentially those get consumed by
+>> the rest of the QMAP call negotiation, so by the time actual aggregated data
+>> is going to be sent from Modem to bam_dmux, the pool has been consumed and
+>> refilled.
+>>
+>> When the tethered rmnet connection is "brought down", DS notifies A2, and A2
+>> stops requesting the larger buffers.
+>>
+> 
+> Hmm, is this "DS" on the modem something special I don't know about?
+> It sounds like the part of the modem that I talk to via QMI to establish
+> new connections. 
 
-This adds a few things to try and make frequency scaling better match
-the workload:
+You have the gist of it.  Kinda need to dance around here  :(
 
-1) Longer polling interval to avoid whip-lashing between too-high and
-   too-low frequencies in certain workloads, like mobile games which
-   throttle themselves to 30fps.
+> However, since QMI does not go through BAM-DMUX
+> (RPMSG/SMD or QRTR instead) there should be only very few packets sent
+> via BAM-DMUX during negotation of QMAP.
+> 
+> To be sure I just tried QMAP with my BAM-DMUX driver again. It's been
+> quite some time since I tried it and it turns out this causes even more
+> "brain damage" than I could even remember. :D For reference:
+> 
+>   1. First I need to set the modem to QMAP mode, this works e.g. with
+>      qmicli -pd /dev/wwan0qmi0 \
+>      --wda-set-data-format="link-layer-protocol=raw-ip,ul-protocol=qmap,dl-protocol=qmap,dl-datagram-max-size=4096"
+> 
+>      However, it's important that my BAM-DMUX driver OPENs the channel
+>      before doing this (together with announcing support for the "dynamic
+>      MTU" feature). Otherwise the modem hangs forever and stops responding
+>      to any QMI messages. This doesn't happen when switching to Raw-IP mode.
+> 
+>   2. With QMAP, the struct bam_dmux_hdr->len is always set to 0xffff (65535)
+>      instead of the actual packet length, which means my current driver
+>      just drops those packets ("Data larger than buffer? (65535 > 4088)").
+> 
+>      This is also handled in your commit (you get the size from the SPS
+>      driver instead), but the bam_dma driver in mainline currently does
+>      not have this feature. :/
 
-   Previously our polling interval was short enough to let things
-   ramp down to minimum freq in the "off" frame, but long enough to
-   not react quickly enough when rendering started on the next frame,
-   leading to uneven frame times.  (Ie. rather than a consistent 33ms
-   it would alternate between 16/33/48ms.)
+Huh.  It seems really odd to me that the client doesn't get "notified" 
+of the actual length of data transferred.  That could easily be less 
+than the buffer provided, so there isn't a way for the client to derive 
+that info.
 
-2) Awareness of when the GPU is active vs idle.  Since we know when
-   the GPU is active vs idle, we can clamp the frequency down to the
-   minimum while it is idle.  (If it is idle for long enough, then
-   the autosuspend delay will eventually kick in and power down the
-   GPU.)
+> 
+>   3. I sent some ping packets but never got the signal to "enable large
+>      MTU" from the modem. Something is still strange here. :/
+> 
+> Given all these complications (that are not present when ignoring QMAP)
+> I would generally agree with you that it's not worth supporting this:
+> 
+>> Since this not something an end user should ever exercise, you may want to
+>> consider dropping it.
+>>
+> 
+> Personally, I have indeed no need for it. I just suspect someone might
+> want this eventually for one of the following two use cases:
+> 
+>    1. Multiplexing on new firmwares: AFAICT there is only one BAM-DMUX
+>       channel on recent firmware versions (e.g. MSM8937/MDM9607). In that
+>       case multiple connections are only possible through the multiplexing
+>       layer in QMAP. I've been told the multiplexing is actually useful and
+>       necessary in some cases (maybe it was for some MMS configurations,
+>       I don't remember exactly).
+> 
+>    2. USB tethering: I know some people are working on mainline Linux
+>       for some MDM9607-based USB modems and they will probably want the
+>       weird USB tethering feature at some point.
+> 
+> But all in all given all the trouble involved when making QMAP work
+> I think I will just ignore that feature for now and wait until someone
+> shows up who absolutely needs this feature...
 
-   Since devfreq has no knowledge of powered-but-idle, this takes a
-   small bit of trickery to maintain a "fake" frequency while idle.
-   This, combined with the longer polling period allows devfreq to
-   arrive at a reasonable "active" frequency, while still clamping
-   to minimum freq when idle to reduce power draw.
+QMAP is useful.  It finally gets rid of the need to have multiple 
+physical pipes that exist because of "reasons".  Sadly, it came about a 
+decade late IMO.  Regardless, I think I agree.  Focus on what you really 
+care about, and leave everything else until later.  Thankfully layering 
+makes that easier.  Otherwise, nothing gets done.
 
-3) Boost.  Because simple_ondemand needs to see a certain threshold
-   of busyness to ramp up, we could end up needing multiple polling
-   cycles before it reacts appropriately on interactive workloads
-   (ex. scrolling a web page after reading for some time), on top
-   of the already lengthened polling interval, when we see a idle
-   to active transition after a period of idle time we boost the
-   frequency that we return to.
-
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_gpu.c         | 16 ++++++
- drivers/gpu/drm/msm/msm_gpu.h         | 29 +++++++++++
- drivers/gpu/drm/msm/msm_gpu_devfreq.c | 73 ++++++++++++++++++++++++++-
- 3 files changed, 117 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index fedbd785e42f..c4ed8694f721 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -680,6 +680,14 @@ static void retire_submit(struct msm_gpu *gpu, struct msm_ringbuffer *ring,
- 	list_del(&submit->node);
- 	spin_unlock_irqrestore(&ring->submit_lock, flags);
- 
-+	/* Update devfreq on transition from active->idle: */
-+	mutex_lock(&gpu->active_lock);
-+	gpu->active_submits--;
-+	WARN_ON(gpu->active_submits < 0);
-+	if (!gpu->active_submits)
-+		msm_devfreq_idle(gpu);
-+	mutex_unlock(&gpu->active_lock);
-+
- 	msm_gem_submit_put(submit);
- }
- 
-@@ -781,6 +789,13 @@ void msm_gpu_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
- 	list_add_tail(&submit->node, &ring->submits);
- 	spin_unlock_irqrestore(&ring->submit_lock, flags);
- 
-+	/* Update devfreq on transition from idle->active: */
-+	mutex_lock(&gpu->active_lock);
-+	if (!gpu->active_submits)
-+		msm_devfreq_active(gpu);
-+	gpu->active_submits++;
-+	mutex_unlock(&gpu->active_lock);
-+
- 	gpu->funcs->submit(gpu, submit);
- 	priv->lastctx = submit->queue->ctx;
- 
-@@ -866,6 +881,7 @@ int msm_gpu_init(struct drm_device *drm, struct platform_device *pdev,
- 	sched_set_fifo_low(gpu->worker->task);
- 
- 	INIT_LIST_HEAD(&gpu->active_list);
-+	mutex_init(&gpu->active_lock);
- 	kthread_init_work(&gpu->retire_work, retire_worker);
- 	kthread_init_work(&gpu->recover_work, recover_worker);
- 	kthread_init_work(&gpu->fault_work, fault_worker);
-diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-index 2e61d05293e6..710c3fedfbf3 100644
---- a/drivers/gpu/drm/msm/msm_gpu.h
-+++ b/drivers/gpu/drm/msm/msm_gpu.h
-@@ -98,6 +98,20 @@ struct msm_gpu_devfreq {
- 
- 	/** time: Time of last sampling period. */
- 	ktime_t time;
-+
-+	/** idle_time: Time of last transition to idle: */
-+	ktime_t idle_time;
-+
-+	/**
-+	 * idle_freq:
-+	 *
-+	 * Shadow frequency used while the GPU is idle.  From the PoV of
-+	 * the devfreq governor, we are continuing to sample busyness and
-+	 * adjust frequency while the GPU is idle, but we use this shadow
-+	 * value as the GPU is actually clamped to minimum frequency while
-+	 * it is inactive.
-+	 */
-+	unsigned long idle_freq;
- };
- 
- struct msm_gpu {
-@@ -129,6 +143,19 @@ struct msm_gpu {
- 	 */
- 	struct list_head active_list;
- 
-+	/**
-+	 * active_submits:
-+	 *
-+	 * The number of submitted but not yet retired submits, used to
-+	 * determine transitions between active and idle.
-+	 *
-+	 * Protected by lock
-+	 */
-+	int active_submits;
-+
-+	/** lock: protects active_submits and idle/active transitions */
-+	struct mutex active_lock;
-+
- 	/* does gpu need hw_init? */
- 	bool needs_hw_init;
- 
-@@ -322,6 +349,8 @@ void msm_devfreq_init(struct msm_gpu *gpu);
- void msm_devfreq_cleanup(struct msm_gpu *gpu);
- void msm_devfreq_resume(struct msm_gpu *gpu);
- void msm_devfreq_suspend(struct msm_gpu *gpu);
-+void msm_devfreq_active(struct msm_gpu *gpu);
-+void msm_devfreq_idle(struct msm_gpu *gpu);
- 
- int msm_gpu_hw_init(struct msm_gpu *gpu);
- 
-diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-index 2e24a97be624..0a1ee20296a2 100644
---- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-+++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-@@ -22,6 +22,15 @@ static int msm_devfreq_target(struct device *dev, unsigned long *freq,
- 
- 	opp = devfreq_recommended_opp(dev, freq, flags);
- 
-+	/*
-+	 * If the GPU is idle, devfreq is not aware, so just ignore
-+	 * it's requests
-+	 */
-+	if (gpu->devfreq.idle_freq) {
-+		gpu->devfreq.idle_freq = *freq;
-+		return 0;
-+	}
-+
- 	if (IS_ERR(opp))
- 		return PTR_ERR(opp);
- 
-@@ -39,6 +48,9 @@ static int msm_devfreq_target(struct device *dev, unsigned long *freq,
- 
- static unsigned long get_freq(struct msm_gpu *gpu)
- {
-+	if (gpu->devfreq.idle_freq)
-+		return gpu->devfreq.idle_freq;
-+
- 	if (gpu->funcs->gpu_get_freq)
- 		return gpu->funcs->gpu_get_freq(gpu);
- 
-@@ -69,7 +81,8 @@ static int msm_devfreq_get_cur_freq(struct device *dev, unsigned long *freq)
- }
- 
- static struct devfreq_dev_profile msm_devfreq_profile = {
--	.polling_ms = 10,
-+	.timer = DEVFREQ_TIMER_DELAYED,
-+	.polling_ms = 50,
- 	.target = msm_devfreq_target,
- 	.get_dev_status = msm_devfreq_get_dev_status,
- 	.get_cur_freq = msm_devfreq_get_cur_freq,
-@@ -130,3 +143,61 @@ void msm_devfreq_suspend(struct msm_gpu *gpu)
- {
- 	devfreq_suspend_device(gpu->devfreq.devfreq);
- }
-+
-+void msm_devfreq_active(struct msm_gpu *gpu)
-+{
-+	struct msm_gpu_devfreq *df = &gpu->devfreq;
-+	struct devfreq_dev_status status;
-+	unsigned int idle_time;
-+	unsigned long target_freq = df->idle_freq;
-+
-+	/*
-+	 * Hold devfreq lock to synchronize with get_dev_status()/
-+	 * target() callbacks
-+	 */
-+	mutex_lock(&df->devfreq->lock);
-+
-+	idle_time = ktime_to_ms(ktime_sub(ktime_get(), df->idle_time));
-+
-+	/*
-+	 * If we've been idle for a significant fraction of a polling
-+	 * interval, then we won't meet the threshold of busyness for
-+	 * the governor to ramp up the freq.. so give some boost
-+	 */
-+	if (idle_time > msm_devfreq_profile.polling_ms/2) {
-+		target_freq *= 2;
-+	}
-+
-+	df->idle_freq = 0;
-+
-+	msm_devfreq_target(&gpu->pdev->dev, &target_freq, 0);
-+
-+	/*
-+	 * Reset the polling interval so we aren't inconsistent
-+	 * about freq vs busy/total cycles
-+	 */
-+	msm_devfreq_get_dev_status(&gpu->pdev->dev, &status);
-+
-+	mutex_unlock(&df->devfreq->lock);
-+}
-+
-+void msm_devfreq_idle(struct msm_gpu *gpu)
-+{
-+	struct msm_gpu_devfreq *df = &gpu->devfreq;
-+	unsigned long idle_freq, target_freq = 0;
-+
-+	/*
-+	 * Hold devfreq lock to synchronize with get_dev_status()/
-+	 * target() callbacks
-+	 */
-+	mutex_lock(&df->devfreq->lock);
-+
-+	idle_freq = get_freq(gpu);
-+
-+	msm_devfreq_target(&gpu->pdev->dev, &target_freq, 0);
-+
-+	df->idle_time = ktime_get();
-+	df->idle_freq = idle_freq;
-+
-+	mutex_unlock(&df->devfreq->lock);
-+}
--- 
-2.31.1
 
