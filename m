@@ -2,370 +2,234 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E47C73D52E8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jul 2021 07:47:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E72C3D52F6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jul 2021 07:58:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229851AbhGZFGi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jul 2021 01:06:38 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:55662 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229654AbhGZFGi (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jul 2021 01:06:38 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1627278427; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=+YYshN0Fg+rdtEFVDKY1g2/gdCqUBEKT3aEs8StFQBQ=; b=AjOpDGPzELxynbA1n8dcIb90dYg10deu0LLzUjyJiuOWA4sMYuQeWWwV62gmklARfzlGzZsF
- VUjDAej0BPYd8q7ZQUHgPPdwB2ShgPi167n/fPl5ChiKvH9vVBNWQ8fKOqIJOE6OVseJmhKm
- PSWfkqGRPVWvPJ8uzSok7riEY64=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 60fe4c5838fa9bfe9c3d185f (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 26 Jul 2021 05:47:04
- GMT
-Sender: akhilpo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B20B5C43460; Mon, 26 Jul 2021 05:47:03 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.0 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.105] (unknown [59.89.230.111])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id F1D94C433D3;
-        Mon, 26 Jul 2021 05:46:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F1D94C433D3
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
-Subject: Re: [Freedreno] [PATCH 2/2] drm/msm/a6xx: Add support for Adreno 7c
- Gen 3 gpu
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Jonathan <jonathan@marek.ca>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        dri-devel@freedesktop.org,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-References: <1627036688-1426-1-git-send-email-akhilpo@codeaurora.org>
- <1627036688-1426-2-git-send-email-akhilpo@codeaurora.org>
- <CAF6AEGvn3BEJDS_8jDqVNfV6Z5GKdtETkFyMnBoG5ONsMZi5Xg@mail.gmail.com>
-From:   Akhil P Oommen <akhilpo@codeaurora.org>
-Message-ID: <abcaf350-77ea-7ce8-8854-67a25a02211b@codeaurora.org>
-Date:   Mon, 26 Jul 2021 11:16:56 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S229658AbhGZFRT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jul 2021 01:17:19 -0400
+Received: from mail.kernel.org ([198.145.29.99]:41600 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229654AbhGZFRT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 26 Jul 2021 01:17:19 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 8B4D160249;
+        Mon, 26 Jul 2021 05:57:45 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1627279068;
+        bh=t9Hcu2jDuc2To5Rp0zMCpDxyX2lTv2t24hYmAJCz09Y=;
+        h=References:From:To:Cc:Subject:In-reply-to:Date:From;
+        b=GGpdv5FdfnXsOaRSBUncHCv5lPqseu0cmhY9xGXbkXow9xmcBTpMIoUtp58v7zZha
+         /kgEj/4x0upr0ntjXqH2woX29rLjQySlKoKRJahs+Vsu9xou246h9TNcRnHaxv6Pdv
+         gqlewpf3SKW0lq9AdQ7/B0Hwcwc7DloBFPz0/TwvgRxiO1auzO0ysAEHnq3cmEDiA2
+         IixYlXqGaHrd4Np9BEVpVBl37RlXOTf/EbTzZWk1VSCB39VMHqTNcZolRE5mK3iNLt
+         FlQo0d9e/U2H6KfVvOlvUXWa5VUlBH6KJl2vs18p1QRj4SnNpiKanb21zoEP6VGJcE
+         sO9l/Q8VaX+Zw==
+References: <1623923899-16759-1-git-send-email-wcheng@codeaurora.org>
+ <cfb83fe4-369c-ec72-7887-3bcb0f20fe15@gmail.com>
+ <ec8050c5-c013-4af6-b39e-69779c009a9c@codeaurora.org>
+ <f5ed0ee7-e333-681f-0f1a-d0227562204b@gmail.com>
+ <2e01c435-9ecc-4e3b-f55c-612a86667020@codeaurora.org>
+ <2ae9fa6a-3bb1-3742-0dd3-59678bdd8643@gmail.com>
+ <ebea75fe-5334-197b-f67a-cb6e1e30b39e@codeaurora.org>
+ <bafa93bb-11e3-c8a5-e14a-b0a6d5695055@gmail.com>
+ <87v951ldlt.fsf@kernel.org>
+ <d9aef50c-4bd1-4957-13d8-0b6a14b9fcd0@gmail.com>
+ <87pmv9l1dv.fsf@kernel.org>
+ <9dc6cd83-17b9-7075-0934-6b9d41b6875d@gmail.com>
+ <87a6mbudvc.fsf@kernel.org>
+ <6e8bb4ad-fe68-ad36-7416-2b8e10b6ae96@gmail.com>
+ <877dhev68a.fsf@kernel.org>
+ <cca69e90-b0ef-00b8-75d3-3bf959a93b45@gmail.com>
+User-agent: mu4e 1.4.15; emacs 27.2
+From:   Felipe Balbi <balbi@kernel.org>
+To:     Ferry Toth <fntoth@gmail.com>
+Cc:     Wesley Cheng <wcheng@codeaurora.org>, gregkh@linuxfoundation.org,
+        robh+dt@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
+        frowand.list@gmail.com, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, jackp@codeaurora.org,
+        heikki.krogerus@linux.intel.com, andy.shevchenko@gmail.com
+Subject: Re: [PATCH v10 0/6] Re-introduce TX FIFO resize for larger EP bursting
+In-reply-to: <cca69e90-b0ef-00b8-75d3-3bf959a93b45@gmail.com>
+Date:   Mon, 26 Jul 2021 08:57:43 +0300
+Message-ID: <874kchvcq0.fsf@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <CAF6AEGvn3BEJDS_8jDqVNfV6Z5GKdtETkFyMnBoG5ONsMZi5Xg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/24/2021 11:42 PM, Rob Clark wrote:
-> ()
-> 
-> On Fri, Jul 23, 2021 at 3:38 AM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
->>
->> This patch adds support for the gpu found in the Snapdragon 7c Gen 3
->> compute platform. This gpu is similar to the exisiting a660 gpu with
->> minor delta in the programing sequence. As the Adreno GPUs are moving
->> away from a numeric chipid based naming scheme to a string, it was
->> decided to use 0x06030500 as the gpu id of this gpu to communicate
->> to the userspace driver.
->>
->> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
->> ---
->>   drivers/gpu/drm/msm/adreno/a6xx_gmu.c      | 20 ++++++++++++++++++-
->>   drivers/gpu/drm/msm/adreno/a6xx_gmu.h      |  1 +
->>   drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h  |  2 ++
->>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c      | 21 ++++++++++++++------
->>   drivers/gpu/drm/msm/adreno/a6xx_hfi.c      | 32 ++++++++++++++++++++++++++++++
->>   drivers/gpu/drm/msm/adreno/adreno_device.c | 12 +++++++++++
->>   drivers/gpu/drm/msm/adreno/adreno_gpu.h    | 11 ++++++++--
->>   7 files changed, 90 insertions(+), 9 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->> index b349692..332301f 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->> @@ -933,6 +933,7 @@ int a6xx_gmu_resume(struct a6xx_gpu *a6xx_gpu)
->>
->>          /* Use a known rate to bring up the GMU */
->>          clk_set_rate(gmu->core_clk, 200000000);
->> +       clk_set_rate(gmu->hub_clk, 150000000);
->>          ret = clk_bulk_prepare_enable(gmu->nr_clocks, gmu->clocks);
->>          if (ret) {
->>                  pm_runtime_put(gmu->gxpd);
->> @@ -1094,6 +1095,7 @@ static void a6xx_gmu_shutdown(struct a6xx_gmu *gmu)
->>
->>   int a6xx_gmu_stop(struct a6xx_gpu *a6xx_gpu)
->>   {
->> +       struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
->>          struct a6xx_gmu *gmu = &a6xx_gpu->gmu;
->>          struct msm_gpu *gpu = &a6xx_gpu->base.base;
->>
->> @@ -1117,9 +1119,22 @@ int a6xx_gmu_stop(struct a6xx_gpu *a6xx_gpu)
->>           * domain. Usually the GMU does this but only if the shutdown sequence
->>           * was successful
->>           */
->> -       if (!IS_ERR_OR_NULL(gmu->gxpd))
->> +       if (!IS_ERR_OR_NULL(gmu->gxpd)) {
->> +               /*
->> +                * Toggle the loop_en bit, across disabling the gx gdsc,
->> +                * with a delay of 10 XO cycles before disabling gx
->> +                * gdsc. This is to prevent CPR measurements from
->> +                * failing.
->> +                */
->> +               if (adreno_is_a660(adreno_gpu))
->> +                       gmu_rmw(gmu, REG_A6XX_GPU_CPR_FSM_CTL, 1, 0);
->> +
->>                  pm_runtime_put_sync(gmu->gxpd);
->>
->> +               if (adreno_is_a660(adreno_gpu))
->> +                       gmu_rmw(gmu, REG_A6XX_GPU_CPR_FSM_CTL, 1, 1);
-> 
-> This kinda seems like it should be a separate patch.. but I noticed
-> you silently turned adreno_is_a660() into what should probably be
-> adreno_is_a660_family()
-> 
-> I'd suggest to break this out into it's own patch, so it is clear that
-> it effects a660 as well, and then a next patch to rename
-> adreno_is_a660_family()
-> 
-> Longer term, we might want to think about refactoring all the
-> if(adreno_is_xyz()) into a features table (see i915_pci.c for ideas)
 
-I agree. This should have been a seperate patch.
+Hi,
 
-> 
->> +       }
->> +
->>          clk_bulk_disable_unprepare(gmu->nr_clocks, gmu->clocks);
+Ferry Toth <fntoth@gmail.com> writes:
+>>>> Ferry Toth <fntoth@gmail.com> writes:
+>>>>>>>>> Hardware name: Intel Corporation Merrifield/BODEGA BAY, BIOS 542
+>>>>>>>>> 2015.01.21:18.19.48
+>>>>>>>>> RIP: 0010:0x500000000
+>>>>>>>>> Code: Unable to access opcode bytes at RIP 0x4ffffffd6.
+>>>>>>>>> RSP: 0018:ffffa4d00045fc28 EFLAGS: 00010046
+>>>>>>>>> RAX: 0000000500000000 RBX: ffff8cd546aed200 RCX: 0000000000000000
+>>>>>>>>> RDX: 0000000000000000 RSI: ffff8cd547bfcae0 RDI: ffff8cd546aed200
+>>>>>>>>> RBP: ffff8cd547bfcae0 R08: 0000000000000000 R09: 0000000000000001
+>>>>>>>>> R10: ffff8cd541fd28c0 R11: 0000000000000000 R12: ffff8cd547342828
+>>>>>>>>> R13: ffff8cd546aed248 R14: 0000000000000000 R15: ffff8cd548b1d000
+>>>>>>>>> FS:  0000000000000000(0000) GS:ffff8cd57e200000(0000) knlGS:0000000000000000
+>>>>>>>>> CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+>>>>>>>>> CR2: 0000000500000000 CR3: 000000000311e000 CR4: 00000000001006f0
+>>>>>>>>> Call Trace:
+>>>>>>>>>       ? dwc3_remove_requests.constprop.0+0x14d/0x170
+>>>>>>>>>       ? __dwc3_gadget_ep_disable+0x7a/0x160
+>>>>>>>>>       ? dwc3_gadget_ep_disable+0x3d/0xd0
+>>>>>>>>>       ? usb_ep_disable+0x1c/0x
+>>>>>>>>>       ? u_audio_stop_capture+0x79/0x120 [u_audio]
+>>>>>>>>>       ? afunc_set_alt+0x73/0x80 [usb_f_uac2]
+>> So this is triggered by a SetInterface request...
 >>
->>          pm_runtime_put_sync(gmu->dev);
->> @@ -1393,6 +1408,9 @@ static int a6xx_gmu_clocks_probe(struct a6xx_gmu *gmu)
->>          gmu->core_clk = msm_clk_bulk_get_clock(gmu->clocks,
->>                  gmu->nr_clocks, "gmu");
+>>>>>>>>>       ? composite_setup+0x224/0x1b90 [libcomposite]
+>>>>>>>>>       ? __dwc3_gadget_kick_transfer+0x160/0x400
+>>>>>>>>>       ? dwc3_gadget_ep_queue+0xf3/0x1a0
+>>>>>>>>>       ? configfs_composite_setup+0x6b/0x90 [libcomposite]
+>>>>>>>>>       ? configfs_composite_setup+0x6b/0x90 [libcomposite]
+>>>>>>>>>       ? dwc3_ep0_interrupt+0x459/0xa40
+>>>>>>>>>       ? dwc3_thread_interrupt+0x8ee/0xf40
+>>>>>>>>>       ? __schedule+0x235/0x6c0
+>>>>>>>>>       ? disable_irq_nosync+0x10/0x10
+>>>>>>>>>       ? irq_thread_fn+0x1b/0x60
+>>>>>>>>>       ? irq_thread+0xc0/0x160
+>>>>>>>>>       ? irq_thread_check_affinity+0x70/0x70
+>>>>>>>>>       ? irq_forced_thread_fn+0x70/0x70
+>>>>>>>>>       ? kthread+0x122/0x140
+>>>>>>>>>       ? set_kthread_struct+0x40/0x40
+>>>>>>>>>       ? ret_from_fork+0x22/0x30
+>>>>>>>> Do you mind enabling dwc3 traces and collecting them? Trying to figure
+>>>>>>>> out how we got here.
+>>>>>>>>
+>>>>>>> I'll try if I can get the same error by booting with USB in host mode
+>>>>>>> and then switch to device mode. If so I can enable traces and collect as
+>>>>>>> you explained me before.
+>>>>>>>
+>>>>>>> I'll try before monday, as then I fly for a holiday and will not be
+>>>>>>> available before rc5.
+>>>>>> you can enable all of those with kernel cmdline :-)
+>>>>>>
+>>>>>> https://www.kernel.org/doc/html/latest/admin-guide/kernel-parameters.html
+>>>>>>
+>>>>>> you need ftrace_dump_on_oops=1 and also need the correct options on
+>>>>>> trace_buf_size and trace_event.
+>>>>>>
+>>>>> On Edison-Arduino I have a switch to go to device mode, after which
+>>>>> udev triggers a script configure gadgets through configfs.
+>>>>>
+>>>>> I tried to log following these instructions:
+>>>>>
+>>>>> https://www.kernel.org/doc/html/latest/driver-api/usb/dwc3.html#reporting-bugs  <https://www.kernel.org/doc/html/latest/driver-api/usb/dwc3.html#reporting-bugs>
+>>>>>
+>>>>> Unfortunately the kernel crashes so badly I can not get to the ` cp
+>>>>> /t/trace /root/trace.txt` line (after a while the watchdog kicks).
+>>>>>
+>>>>> What to do next?
+>>>> Pass ftrace_dump_on_oops to kernel cmdline.
+>>>>
+>>> No sure if I did this right, on oops everything is pushed to console
+>>> (115k2 serial), I hope nothing essential is lost.
+>>>
+>>> I copied the screen buffer to file see attached.
+>> Thank you, I bet it took quite a some time :-) Anyway, looking at
+>> the logs around Set Interface requests, we can track every endpoint
+>> that's disabled. I'll take a guess and assume we're failing at the last
+>> Set Interface, that means we should have something odd with ep6in, but
+>> everything looks fine in the trace output:
 >>
->> +       gmu->hub_clk = msm_clk_bulk_get_clock(gmu->clocks,
->> +               gmu->nr_clocks, "hub");
->> +
->>          return 0;
->>   }
+>> [   75.823107] irq/14-d-596       0d... 42789194us : dwc3_gadget_ep_enable: ep6in: mps 192/346 streams 16 burst 0 ring 0/0 flags E:swbp:<
+>> [   75.835472] irq/14-d-596       0d... 42789198us : dwc3_alloc_request: ep6in: req 0000000002c71409 length 0/0 zsI ==> 0
+>> [   75.846416] irq/14-d-596       0d... 42789202us : dwc3_ep_queue: ep6in: req 0000000002c71409 length 0/192 zsI ==> -115
+>> [   75.857360] irq/14-d-596       0d... 42789204us : dwc3_alloc_request: ep6in: req 00000000a324f5d0 length 0/0 zsI ==> 0
+>> [   75.868301] irq/14-d-596       0d... 42789206us : dwc3_ep_queue: ep6in: req 00000000a324f5d0 length 0/192 zsI ==> -115
+>> [   75.879244] irq/14-d-596       0d... 42789209us : dwc3_event: event (000020c2): ep0in: Transfer Not Ready [0] (Not Active) [Status Phase]
+>> [   75.891880] irq/14-d-596       0d... 42789211us : dwc3_prepare_trb: ep0in: trb 000000004c0ae319 (E0:D0) buf 000000001bded000 size 0 ctrl 00000c33 (HLcs:SC:status2)
+>> [   75.989131] irq/14-d-596       0d... 42789224us : dwc3_gadget_ep_cmd: ep0in: cmd 'Start Transfer' [406] params 00000000 1bded000 00000000 --> status: Successful
+>> [   76.096261] irq/14-d-596       0d... 42789272us : dwc3_event: event (0000c042): ep0in: Transfer Complete (sIL) [Status Phase]
+>> [   76.107834] irq/14-d-596       0d... 42789275us : dwc3_complete_trb: ep0out: trb 000000004c0ae319 (E0:D0) buf 000000001bded000 size 0 ctrl 00000c32 (hLcs:SC:status2)
+>> [   76.122944] irq/14-d-596       0d... 42789277us : dwc3_gadget_giveback: ep0out: req 00000000cb1bd3cd length 0/0 zsI ==> 0
+>> [   76.134160] irq/14-d-596       0d... 42789280us : dwc3_prepare_trb: ep0out: trb 000000004c0ae319 (E0:D0) buf 000000001bded000 size 8 ctrl 00000c23 (HLcs:SC:setup)
+>> [   76.231322] irq/14-d-596       0d... 42789292us : dwc3_gadget_ep_cmd: ep0out: cmd 'Start Transfer' [406] params 00000000 1bded000 00000000 --> status: Successful
+>> [   76.297418] kworker/-23        0d... 42789670us : dwc3_ep_queue: ep3in: req 0000000029586135 length 0/96 ZsI ==> -115
+>> [   76.308278] kworker/-23        0d... 42789695us : dwc3_prepare_trb: ep3in: trb 00000000b81213d6 (E1:D0) buf 0000000003b7a800 size 96 ctrl 00000811 (Hlcs:sC:normal)
+>> [   76.395294] kworker/-23        0d... 42789707us : dwc3_gadget_ep_cmd: ep3in: cmd 'Update Transfer' [60007] params 00000000 00000000 00000000 --> status: Successful
+>> [   76.471900] irq/14-d-596       0d... 42789842us : dwc3_event: event (0000c040): ep0out: Transfer Complete (sIL) [Setup Phase]
+>> [   76.489308] irq/14-d-596       0d... 42789845us : dwc3_ctrl_req: Set Interface(Intf = 5, Alt.Setting = 0)
+>> [   76.505650] irq/14-d-596       0d... 42789851us : dwc3_ep_dequeue: ep6in: req 0000000002c71409 length 0/192 zsI ==> -115
+>> [   76.523315] irq/14-d-596       0d... 42789854us : dwc3_gadget_giveback: ep6in: req 0000000002c71409 length 0/192 zsI ==> -104
+>> [   76.541427] irq/14-d-596       0d... 42789857us : dwc3_free_request: ep6in: req 0000000002c71409 length 0/192 zsI ==> -104
+>> [   76.559267] irq/14-d-596       0d... 42789859us : dwc3_ep_dequeue: ep6in: req 00000000a324f5d0 length 0/192 zsI ==> -115
+>> [   76.576937] irq/14-d-596       0d... 42789861us : dwc3_gadget_giveback: ep6in: req 00000000a324f5d0 length 0/192 zsI ==> -104
+>> [   76.595046] irq/14-d-596       0d... 42789862us : dwc3_free_request: ep6in: req 00000000a324f5d0 length 0/192 zsI ==> -104
+>> [   76.612892] irq/14-d-596       0d... 42789865us : dwc3_gadget_ep_disable: ep6in: mps 192/346 streams 16 burst 0 ring 0/0 flags E:swbp:<
+>> [   76.665535] irq/14-d-596       0d... 42789873us : dwc3_event: event (000020c2): ep0in: Transfer Not Ready [0] (Not Active) [Status Phase]
+>> [   76.684716] irq/14-d-596       0d... 42789875us : dwc3_prepare_trb: ep0in: trb 000000004c0ae319 (E0:D0) buf 000000001bded000 size 0 ctrl 00000c33 (HLcs:SC:status2)
+>> [   76.819195] irq/14-d-596       0d... 42789886us : dwc3_gadget_ep_cmd: ep0in: cmd 'Start Transfer' [406] params 00000000 1bded000 00000000 --> status: Successful
+>> [   76.926324] irq/14-d-596       0d... 42789930us : dwc3_event: event (0000c042): ep0in: Transfer Complete (sIL) [Status Phase]
+>> [   76.937892] irq/14-d-596       0d... 42789933us : dwc3_complete_trb: ep0out: trb 000000004c0ae319 (E0:D0) buf 000000001bded000 size 0 ctrl 00000c32 (hLcs:SC:status2)
+>> [   76.953003] irq/14-d-596       0d... 42789935us : dwc3_gadget_giveback: ep0out: req 00000000cb1bd3cd length 0/0 zsI ==> 0
+>> [   76.964217] irq/14-d-596       0d... 42789938us : dwc3_prepare_trb: ep0out: trb 000000004c0ae319 (E0:D0) buf 000000001bded000 size 8 ctrl 00000c23 (HLcs:SC:setup)
+>> [   77.061379] irq/14-d-596       0d... 42789950us : dwc3_gadget_ep_cmd: ep0out: cmd 'Start Transfer' [406] params 00000000 1bded000 00000000 --> status: Successful
+>> [   77.168595] irq/14-d-596       0d... 42790509us : dwc3_event: event (0000c040): ep0out: Transfer Complete (sIL) [Setup Phase]
+>> [   77.180159] irq/14-d-596       0d... 42790512us : dwc3_ctrl_req: Get String Descriptor(Index = 18, Length = 255)
+>> [   77.190578] irq/14-d-596       0d... 42790537us : dwc3_prepare_trb: ep0in: trb 000000004c0ae319 (E0:D0) buf 0000000003b68000 size 36 ctrl 00000c53 (HLcs:SC:data)
+>> [   77.287648] irq/14-d-596       0d... 42790550us : dwc3_gadget_ep_cmd: ep0in: cmd 'Start Transfer' [406] params 00000000 1bded000 00000000 --> status: Successful
+>> [   77.333107] irq/14-d-596       0d... 42790557us : dwc3_event: event (000010c2): ep0in: Transfer Not Ready [0] (Not Active) [Data Phase]
+>> [   77.407223] irq/14-d-596       0d... 42790575us : dwc3_event: event (000090c2): ep0in: Transfer Not Ready [0] (Active) [Data Phase]
+>> [   77.480985] irq/14-d-596       0d... 42790588us : dwc3_event: event (0000c042): ep0in: Transfer Complete (sIL) [Data Phase]
+>> [   77.492376] irq/14-d-596       0d... 42790590us : dwc3_complete_trb: ep0out: trb 000000004c0ae319 (E0:D0) buf 0000000003b68000 size 0 ctrl 00000c52 (hLcs:SC:data)
+>> [   77.507221] irq/14-d-596       0d... 42790595us : dwc3_gadget_giveback: ep0out: req 00000000cb1bd3cd length 36/36 ZsI ==> 0
+>> [   77.518609] irq/14-d-596       0d... 42790597us : dwc3_event: event (000020c0): ep0out: Transfer Not Ready [0] (Not Active) [Status Phase]
+>> [   77.531332] irq/14-d-596       0d... 42790598us : dwc3_prepare_trb: ep0out: trb 000000004c0ae319 (E0:D0) buf 000000001bded000 size 0 ctrl 00000c43 (HLcs:SC:status3)
+>> [   77.628669] irq/14-d-596       0d... 42790609us : dwc3_gadget_ep_cmd: ep0out: cmd 'Start Transfer' [406] params 00000000 1bded000 00000000 --> status: Successful
 >>
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
->> index 71dfa600..3c74f64 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
->> @@ -66,6 +66,7 @@ struct a6xx_gmu {
->>          int nr_clocks;
->>          struct clk_bulk_data *clocks;
->>          struct clk *core_clk;
->> +       struct clk *hub_clk;
+>> Do you mind adding a few prints in dwc3_remove_requests to tell us which
+>> endpoint is being processed? Then we'll know for sure which one caused
+>> the crash.
 >>
->>          /* current performance index set externally */
->>          int current_perf_index;
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h
->> index 8115892..d46733f 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.xml.h
->> @@ -479,5 +479,7 @@ static inline uint32_t A6XX_GMU_GPU_NAP_CTRL_SID(uint32_t val)
->>
->>   #define REG_A6XX_RSCC_TCS3_DRV0_STATUS                         0x0000053e
->>
->> +#define REG_A6XX_GPU_CPR_FSM_CTL                               0x0000c001
->> +
->>
->>   #endif /* A6XX_GMU_XML */
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> index 183b9f9..c0882536 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->> @@ -694,6 +694,13 @@ static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
->>                  uavflagprd_inv = 2;
->>          }
->>
->> +       if (adreno_is_7c3(adreno_gpu)) {
->> +               lower_bit = 1;
->> +               amsbc = 1;
->> +               rgb565_predicator = 1;
->> +               uavflagprd_inv = 2;
->> +       }
->> +
->>          gpu_write(gpu, REG_A6XX_RB_NC_MODE_CNTL,
->>                  rgb565_predicator << 11 | amsbc << 4 | lower_bit << 1);
->>          gpu_write(gpu, REG_A6XX_TPL1_NC_MODE_CNTL, lower_bit << 1);
->> @@ -950,10 +957,10 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
->>          /* Setting the primFifo thresholds default values,
->>           * and vccCacheSkipDis=1 bit (0x200) for A640 and newer
->>          */
->> -       if (adreno_is_a650(adreno_gpu) || adreno_is_a660(adreno_gpu))
->> -               gpu_write(gpu, REG_A6XX_PC_DBG_ECO_CNTL, 0x00300200);
->> -       else if (adreno_is_a640(adreno_gpu))
->> +       if (adreno_is_a640(adreno_gpu) || adreno_is_7c3(adreno_gpu))
->>                  gpu_write(gpu, REG_A6XX_PC_DBG_ECO_CNTL, 0x00200200);
->> +       else if (adreno_is_a650(adreno_gpu) || adreno_is_a660(adreno_gpu))
->> +               gpu_write(gpu, REG_A6XX_PC_DBG_ECO_CNTL, 0x00300200);
->>          else
->>                  gpu_write(gpu, REG_A6XX_PC_DBG_ECO_CNTL, 0x00180000);
->>
->> @@ -993,8 +1000,9 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
->>          if (adreno_is_a660(adreno_gpu)) {
->>                  gpu_write(gpu, REG_A6XX_CP_CHICKEN_DBG, 0x1);
->>                  gpu_write(gpu, REG_A6XX_RBBM_GBIF_CLIENT_QOS_CNTL, 0x0);
->> -               /* Set dualQ + disable afull for A660 GPU but not for A635 */
->> -               gpu_write(gpu, REG_A6XX_UCHE_CMDQ_CONFIG, 0x66906);
->> +               /* Set dualQ + disable afull for A660 GPU but not for 7c3 */
->> +               if (!adreno_is_7c3(adreno_gpu))
->> +                       gpu_write(gpu, REG_A6XX_UCHE_CMDQ_CONFIG, 0x66906);
->>          }
->>
->>          /* Enable expanded apriv for targets that support it */
->> @@ -1780,7 +1788,8 @@ struct msm_gpu *a6xx_gpu_init(struct drm_device *dev)
->>           */
->>          info = adreno_info(config->rev);
->>
->> -       if (info && (info->revn == 650 || info->revn == 660))
->> +       if (info && (info->revn == 650 || info->revn == 660
->> +                       || info->revn == ADRENO_REV_7C3))
->>                  adreno_gpu->base.hw_apriv = true;
->>
->>          a6xx_llc_slices_init(pdev, a6xx_gpu);
->> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
->> index 9194337..1451c2b 100644
->> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
->> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
->> @@ -382,6 +382,36 @@ static void a660_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
->>          msg->cnoc_cmds_data[1][0] =  0x60000001;
->>   }
->>
->> +static void adreno_7c3_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
->> +{
->> +       /*
->> +        * Send a single "off" entry just to get things running
->> +        * TODO: bus scaling
->> +        */
->> +       msg->bw_level_num = 1;
->> +
->> +       msg->ddr_cmds_num = 3;
->> +       msg->ddr_wait_bitmask = 0x07;
->> +
->> +       msg->ddr_cmds_addrs[0] = 0x50004;
->> +       msg->ddr_cmds_addrs[1] = 0x50000;
->> +       msg->ddr_cmds_addrs[2] = 0x50088;
->> +
->> +       msg->ddr_cmds_data[0][0] =  0x40000000;
->> +       msg->ddr_cmds_data[0][1] =  0x40000000;
->> +       msg->ddr_cmds_data[0][2] =  0x40000000;
->> +
->> +       /*
->> +        * These are the CX (CNOC) votes - these are used by the GMU but the
->> +        * votes are known and fixed for the target
->> +        */
->> +       msg->cnoc_cmds_num = 1;
->> +       msg->cnoc_wait_bitmask = 0x01;
->> +
->> +       msg->cnoc_cmds_addrs[0] = 0x5006c;
->> +       msg->cnoc_cmds_data[0][0] =  0x40000000;
->> +       msg->cnoc_cmds_data[1][0] =  0x60000001;
->> +}
->>   static void a6xx_build_bw_table(struct a6xx_hfi_msg_bw_table *msg)
->>   {
->>          /* Send a single "off" entry since the 630 GMU doesn't do bus scaling */
->> @@ -432,6 +462,8 @@ static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
->>                  a640_build_bw_table(&msg);
->>          else if (adreno_is_a650(adreno_gpu))
->>                  a650_build_bw_table(&msg);
->> +       else if (adreno_is_7c3(adreno_gpu))
->> +               adreno_7c3_build_bw_table(&msg);
->>          else if (adreno_is_a660(adreno_gpu))
->>                  a660_build_bw_table(&msg);
->>          else
->> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
->> index 6dad801..063b847 100644
->> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
->> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
->> @@ -300,6 +300,18 @@ static const struct adreno_info gpulist[] = {
->>                  .init = a6xx_gpu_init,
->>                  .zapfw = "a660_zap.mdt",
->>                  .hwcg = a660_hwcg,
->> +       }, {
->> +               .rev = ADRENO_REV(6, 3, 5, ANY_ID),
->> +               .revn = ADRENO_REV_7C3,
-> 
-> So rather than adding an ARENO_REV_7C3 define, I was thinking to just
-> not set .revn (leave it zero) and identify based on .rev .. that (ie.
-> GPU_ID being zero) would also be the signal to userspace to identify
-> the GPU via CHIP_ID instead
-> 
-> You could extract out the version comparison in adreno_info() into a
-> helper that can be re-used in things like adreno_is_a660_family() and
-> adreno_is_7c3().
-> 
-> BR,
-> -R
-Sure. Will update this patch.
+> I wouldn't mind but am leaving on a holiday, won't have time until 6 aug.
 
--Akhil.
-> 
->> +               .name = "Adreno 7c Gen 3",
->> +               .fw = {
->> +                       [ADRENO_FW_SQE] = "a660_sqe.fw",
->> +                       [ADRENO_FW_GMU] = "a660_gmu.bin",
->> +               },
->> +               .gmem = SZ_512K,
->> +               .inactive_period = DRM_MSM_INACTIVE_PERIOD,
->> +               .init = a6xx_gpu_init,
->> +               .hwcg = a660_hwcg,
->>          },
->>   };
->>
->> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
->> index 8dbe0d1..679bc59 100644
->> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
->> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
->> @@ -247,15 +247,22 @@ static inline int adreno_is_a650(struct adreno_gpu *gpu)
->>          return gpu->revn == 650;
->>   }
->>
->> +#define ADRENO_REV_7C3 0x06030500
->> +static inline int adreno_is_7c3(struct adreno_gpu *gpu)
->> +{
->> +       return gpu->revn == ADRENO_REV_7C3;
->> +}
->> +
->>   static inline int adreno_is_a660(struct adreno_gpu *gpu)
->>   {
->> -       return gpu->revn == 660;
->> +       return gpu->revn == 660 || gpu->revn == ADRENO_REV_7C3;
->>   }
->>
->>   /* check for a650, a660, or any derivatives */
->>   static inline int adreno_is_a650_family(struct adreno_gpu *gpu)
->>   {
->> -       return gpu->revn == 650 || gpu->revn == 620 || gpu->revn == 660;
->> +       return gpu->revn == 650 || gpu->revn == 620 || gpu->revn == 660
->> +              || gpu->revn == ADRENO_REV_7C3;
->>   }
->>
->>   int adreno_get_param(struct msm_gpu *gpu, uint32_t param, uint64_t *value);
->> --
->> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
->> of Code Aurora Forum, hosted by The Linux Foundation.
->>
->> _______________________________________________
->> Freedreno mailing list
->> Freedreno@lists.freedesktop.org
->> https://lists.freedesktop.org/mailman/listinfo/freedreno
+not a problem, we'll still be here when you're back :-)
 
+> But as I am using configfs (excerpt follows) and just disabling the
+> last 2 line resolves the issue, I'm guessing uac2 is the issue. Or
+> exceeding the available resources.
+>
+> # Create directory structure
+> mkdir "${GADGET_BASE_DIR}"
+> cd "${GADGET_BASE_DIR}"
+> mkdir -p configs/c.1/strings/0x409
+> mkdir -p strings/0x409
+>
+> # Serial device
+> mkdir functions/gser.usb0
+> ln -s functions/gser.usb0 configs/c.1/
+> ###
+>
+> # Ethernet device
+> mkdir functions/eem.usb0
+> echo "${DEV_ETH_ADDR}" > functions/eem.usb0/dev_addr
+> echo "${HOST_ETH_ADDR}" > functions/eem.usb0/host_addr
+> ln -s functions/eem.usb0 configs/c.1/
+>
+> # Mass Storage device
+> mkdir functions/mass_storage.usb0
+> echo 1 > functions/mass_storage.usb0/stall
+> echo 0 > functions/mass_storage.usb0/lun.0/cdrom
+> echo 0 > functions/mass_storage.usb0/lun.0/ro
+> echo 0 > functions/mass_storage.usb0/lun.0/nofua
+> echo "${USBDISK}" > functions/mass_storage.usb0/lun.0/file
+> ln -s functions/mass_storage.usb0 configs/c.1/
+>
+> # UAC2 device
+> mkdir functions/uac2.usb0
+> ln -s functions/uac2.usb0 configs/c.1
+
+Right, either there's an actual bug in uac2, or we're running out of
+FIFO space.
+
+-- 
+balbi
