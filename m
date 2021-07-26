@@ -2,361 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 96C883D65DF
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jul 2021 19:36:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 59B273D6607
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 26 Jul 2021 19:50:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232173AbhGZQ4X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 26 Jul 2021 12:56:23 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:63839 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232068AbhGZQ4X (ORCPT
+        id S231694AbhGZRJx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 26 Jul 2021 13:09:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48176 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231502AbhGZRJx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 26 Jul 2021 12:56:23 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1627321012; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=+pXXp4yHE9oFESo9J41GUl+NgMlwhQweXBGws/wGI9U=; b=MuFwbv8Oftxj+4zXy7BjycyE21sUMXyLX+8NGHFAOq0XZ0MlfO1vt/NIR5XtBnbu2vGBc3WI
- QECAcdFMVLCRMnVs6TNsUoyBovl4+Mh9minRzBzPDKKu1Cb6ruAyRNH9JY9yWQCR12Sio3nQ
- R7vnhnuVz8VrhZymXeQRQmEnqbM=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 60fef2a4e31d882d18aa9505 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 26 Jul 2021 17:36:36
- GMT
-Sender: maitreye=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 29C6EC43460; Mon, 26 Jul 2021 17:36:36 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from nganji-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: maitreye)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CC527C433D3;
-        Mon, 26 Jul 2021 17:36:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CC527C433D3
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=maitreye@codeaurora.org
-From:   maitreye <maitreye@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Maitreyee Rao <maitreye@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
-        nganji@codeaurora.org, aravindh@codeaurora.org,
-        khsieh@codeaurora.org, abhinavk@codeaurora.org
-Subject: [PATCH v5] drm/msm/dp: add logs across DP driver for ease of debugging
-Date:   Mon, 26 Jul 2021 10:36:26 -0700
-Message-Id: <1627320986-25436-1-git-send-email-maitreye@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Mon, 26 Jul 2021 13:09:53 -0400
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CADBDC061765
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jul 2021 10:50:21 -0700 (PDT)
+Received: by mail-oi1-x22a.google.com with SMTP id x15so11833592oic.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 26 Jul 2021 10:50:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=db48y/ovq+/R24P2kuhwOLAKu+icrzjTHuCcSHS86vg=;
+        b=w1uqw0eZtgt4oeg8v9LZI7uXoVEIOkGhBTsjhDru5QNLljSUpMgtcxH9f+3VbGkoYV
+         hJP1nNBhc6oQIjO1dZd6jFOoLYmfT5vM1qnC6Ffx1bc/ny6L3xG2rPcJ5mGeGj90ZeTV
+         JVxgMgz8/du2yQv2Az0128DkCblfYB7wwh2/7hJF2BJusX5wv13SSZPChhuzr/PI8QKZ
+         zrdrOUdEi7Wo7h2RZcduQkOvSp3kua+ivw3AQ4JlHEOdDsMhKCmMHlI3+WvowjtlpxR7
+         cJ6YzL/XAaAhi0I3bmrkp5mHjGs5JfXiItLz67tvOqBeoi4KL16VdFmwM5tSDm5XqdSm
+         a3ng==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=db48y/ovq+/R24P2kuhwOLAKu+icrzjTHuCcSHS86vg=;
+        b=m/54WUyRNUuAzgh9qIItoQZFkiJCgweUW83w5K2juKuvt3qU+bI/i2SKvATUCpo1S4
+         rp2FAK1nilCXT/Yg/IxhdD7jUiJoRExGUbO9g3Dv+TmyfgY8a5LB94QfZ2mO+GqB4hxO
+         8zukXEytLFjJsQ7fR8ICwSD1Fl7IwYjt/3r0ijBxdOfyRkE6AytIuabMKqmHjn/8NR0s
+         0PDplsNsdeWIVXutgbkHYiROVmuOb4p9Fuf4SeY33FNPXekmnp6ACq8PbhD+2ObCkbvV
+         D9f6/X4/AEtZkUo94QITxJqFxKDSdo14I8TC482B7o+V19NYF3DNFgpB1xa5lX26/zuT
+         4nSg==
+X-Gm-Message-State: AOAM532fYv2+UaT4vfqTWxuTmGtTWmdLApaKz52tY2donhZIOPZgow/l
+        Xy/2kSsFPL1MyYCedHMqLVJzQA==
+X-Google-Smtp-Source: ABdhPJx/nGg701JhccQq4lqQVoXFFP3F3OPPYRM5w+P3u/t+MNBSirVAf1yX4j6qSp94l2IEEXDSng==
+X-Received: by 2002:aca:4d55:: with SMTP id a82mr12164918oib.100.1627321821170;
+        Mon, 26 Jul 2021 10:50:21 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id l17sm107177ota.20.2021.07.26.10.50.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 26 Jul 2021 10:50:20 -0700 (PDT)
+Date:   Mon, 26 Jul 2021 10:48:32 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Baruch Siach <baruch@tkos.co.il>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
+        Lee Jones <lee.jones@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Balaji Prakash J <bjagadee@codeaurora.org>,
+        Robert Marko <robert.marko@sartura.hr>,
+        Kathiravan T <kathirav@codeaurora.org>,
+        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v6 3/4] dt-bindings: pwm: add IPQ6018 binding
+Message-ID: <YP71cMSjuvmiREda@ripper>
+References: <889aae1b88f120cb6281919d27164a959fbe69d0.1626948070.git.baruch@tkos.co.il>
+ <70f0522a9394e9da2f31871442d47f6ad0ff41aa.1626948070.git.baruch@tkos.co.il>
+ <YP2tAR+zZgJZQOgG@yoga>
+ <87h7ghwwcb.fsf@tarshish>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <87h7ghwwcb.fsf@tarshish>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Maitreyee Rao <maitreye@codeaurora.org>
+On Sun 25 Jul 21:08 PDT 2021, Baruch Siach wrote:
 
-Add trace points across the MSM DP driver to help debug
-interop issues.
+> Hi Bjorn,
+> 
+> On Sun, Jul 25 2021, Bjorn Andersson wrote:
+> > On Thu 22 Jul 05:01 CDT 2021, Baruch Siach wrote:
+> >> +  clocks:
+> >> +    maxItems: 1
+> >> +
+> >> +  clock-names:
+> >> +    const: core
+> >
+> > With a single clock, it's nice to skip the -names.
+> 
+> I find it nicer and better for forward compatibility with hardware
+> variants the might introduce more clocks.
+> 
 
-Changes in v2:
- - Got rid of redundant log messages.
- - Added %#x instead of 0x%x wherever required.
- - Got rid of __func__ calls in debug messages.
- - Added newline wherever missing.
+Do you foresee any need for forward compatibility? What other clocks
+would this binding have to refer to?
 
-Changes in v3:
- - Got rid of redundant log messages.
- - Unstuck colon from printf specifier in various places.
+That said, you'd achieve the same forward compatibility by just
+making sure that the current clock is the first on in the amended
+binding (which you have to do with or without -names).
 
-Changes in v4:
- - Changed goto statement and used if else-if
+> Are there any downsides to -names?
+> 
 
-Changes in v5:
- - Changed if else if statement,
-   to not overwrite the ret variable multiple times.
+Look at the number of places in a typical dts that we could have added
+clock-names, reg-names, interrupt-names, power-domain-names etc for a
+single cell.
 
-Signed-off-by: Maitreyee Rao <maitreye@codeaurora.org>
----
- drivers/gpu/drm/msm/dp/dp_catalog.c |  8 ++++--
- drivers/gpu/drm/msm/dp/dp_ctrl.c    |  5 +++-
- drivers/gpu/drm/msm/dp/dp_display.c | 14 +++++++++++
- drivers/gpu/drm/msm/dp/dp_link.c    | 50 +++++++++++++------------------------
- drivers/gpu/drm/msm/dp/dp_power.c   |  3 +++
- 5 files changed, 45 insertions(+), 35 deletions(-)
+I do find it beneficial to keep things cleaner and sticking with the
+design of "single resource has no -names".
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_catalog.c b/drivers/gpu/drm/msm/dp/dp_catalog.c
-index 32f3575..958d3fa3 100644
---- a/drivers/gpu/drm/msm/dp/dp_catalog.c
-+++ b/drivers/gpu/drm/msm/dp/dp_catalog.c
-@@ -372,6 +372,7 @@ void dp_catalog_ctrl_mainlink_ctrl(struct dp_catalog *dp_catalog,
- 	struct dp_catalog_private *catalog = container_of(dp_catalog,
- 				struct dp_catalog_private, dp_catalog);
- 
-+	DRM_DEBUG_DP("enable=%d\n", enable);
- 	if (enable) {
- 		/*
- 		 * To make sure link reg writes happens before other operation,
-@@ -580,6 +581,7 @@ void dp_catalog_hpd_config_intr(struct dp_catalog *dp_catalog,
- 
- 	config = (en ? config | intr_mask : config & ~intr_mask);
- 
-+	DRM_DEBUG_DP("intr_mask=%#x config=%#x\n", intr_mask, config);
- 	dp_write_aux(catalog, REG_DP_DP_HPD_INT_MASK,
- 				config & DP_DP_HPD_INT_MASK);
- }
-@@ -610,6 +612,7 @@ u32 dp_catalog_link_is_connected(struct dp_catalog *dp_catalog)
- 	u32 status;
- 
- 	status = dp_read_aux(catalog, REG_DP_DP_HPD_INT_STATUS);
-+	DRM_DEBUG_DP("aux status: %#x\n", status);
- 	status >>= DP_DP_HPD_STATE_STATUS_BITS_SHIFT;
- 	status &= DP_DP_HPD_STATE_STATUS_BITS_MASK;
- 
-@@ -685,6 +688,7 @@ void dp_catalog_ctrl_send_phy_pattern(struct dp_catalog *dp_catalog,
- 	/* Make sure to clear the current pattern before starting a new one */
- 	dp_write_link(catalog, REG_DP_STATE_CTRL, 0x0);
- 
-+	DRM_DEBUG_DP("pattern: %#x\n", pattern);
- 	switch (pattern) {
- 	case DP_PHY_TEST_PATTERN_D10_2:
- 		dp_write_link(catalog, REG_DP_STATE_CTRL,
-@@ -745,7 +749,7 @@ void dp_catalog_ctrl_send_phy_pattern(struct dp_catalog *dp_catalog,
- 				DP_STATE_CTRL_LINK_TRAINING_PATTERN4);
- 		break;
- 	default:
--		DRM_DEBUG_DP("No valid test pattern requested:0x%x\n", pattern);
-+		DRM_DEBUG_DP("No valid test pattern requested: %#x\n", pattern);
- 		break;
- 	}
- }
-@@ -928,7 +932,7 @@ void dp_catalog_audio_config_acr(struct dp_catalog *dp_catalog)
- 	select = dp_catalog->audio_data;
- 	acr_ctrl = select << 4 | BIT(31) | BIT(8) | BIT(14);
- 
--	DRM_DEBUG_DP("select = 0x%x, acr_ctrl = 0x%x\n", select, acr_ctrl);
-+	DRM_DEBUG_DP("select: %#x, acr_ctrl: %#x\n", select, acr_ctrl);
- 
- 	dp_write_link(catalog, MMSS_DP_AUDIO_ACR_CTRL, acr_ctrl);
- }
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index 2a8955c..72de71a 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -122,7 +122,7 @@ void dp_ctrl_push_idle(struct dp_ctrl *dp_ctrl)
- 			IDLE_PATTERN_COMPLETION_TIMEOUT_JIFFIES))
- 		pr_warn("PUSH_IDLE pattern timedout\n");
- 
--	pr_debug("mainlink off done\n");
-+	DRM_DEBUG_DP("mainlink off done\n");
- }
- 
- static void dp_ctrl_config_ctrl(struct dp_ctrl_private *ctrl)
-@@ -1013,6 +1013,8 @@ static int dp_ctrl_update_vx_px(struct dp_ctrl_private *ctrl)
- 	u32 voltage_swing_level = link->phy_params.v_level;
- 	u32 pre_emphasis_level = link->phy_params.p_level;
- 
-+	DRM_DEBUG_DP("voltage level: %d emphasis level: %d\n", voltage_swing_level,
-+			pre_emphasis_level);
- 	ret = dp_catalog_ctrl_update_vx_px(ctrl->catalog,
- 		voltage_swing_level, pre_emphasis_level);
- 
-@@ -1384,6 +1386,7 @@ int dp_ctrl_host_init(struct dp_ctrl *dp_ctrl, bool flip, bool reset)
- 	if (reset)
- 		dp_catalog_ctrl_reset(ctrl->catalog);
- 
-+	DRM_DEBUG_DP("flip=%d\n", flip);
- 	dp_catalog_ctrl_phy_reset(ctrl->catalog);
- 	phy_init(phy);
- 	dp_catalog_ctrl_enable_irq(ctrl->catalog, true);
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index cf9c645..f0a81f7 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -275,6 +275,8 @@ static bool dp_display_is_ds_bridge(struct dp_panel *panel)
- 
- static bool dp_display_is_sink_count_zero(struct dp_display_private *dp)
- {
-+	DRM_DEBUG_DP("present=%#x sink_count=%d\n", dp->panel->dpcd[DP_DOWNSTREAMPORT_PRESENT],
-+		dp->link->sink_count);
- 	return dp_display_is_ds_bridge(dp->panel) &&
- 		(dp->link->sink_count == 0);
- }
-@@ -320,6 +322,7 @@ static int dp_display_send_hpd_notification(struct dp_display_private *dp,
- 
- 	dp->dp_display.is_connected = hpd;
- 
-+	DRM_DEBUG_DP("hpd=%d\n", hpd);
- 	dp_display_send_hpd_event(&dp->dp_display);
- 
- 	return 0;
-@@ -369,6 +372,7 @@ static void dp_display_host_init(struct dp_display_private *dp, int reset)
- {
- 	bool flip = false;
- 
-+	DRM_DEBUG_DP("core_initialized=%d\n", dp->core_initialized);
- 	if (dp->core_initialized) {
- 		DRM_DEBUG_DP("DP core already initialized\n");
- 		return;
-@@ -483,8 +487,10 @@ static int dp_display_handle_irq_hpd(struct dp_display_private *dp)
- {
- 	u32 sink_request = dp->link->sink_request;
- 
-+	DRM_DEBUG_DP("%d\n", sink_request);
- 	if (dp->hpd_state == ST_DISCONNECTED) {
- 		if (sink_request & DP_LINK_STATUS_UPDATED) {
-+			DRM_DEBUG_DP("Disconnected sink_count: %d\n", sink_request);
- 			DRM_ERROR("Disconnected, no DP_LINK_STATUS_UPDATED\n");
- 			return -EINVAL;
- 		}
-@@ -509,6 +515,7 @@ static int dp_display_usbpd_attention_cb(struct device *dev)
- 		DRM_ERROR("invalid dev\n");
- 		return -EINVAL;
- 	}
-+	DRM_DEBUG_DP("sink_request: %d\n", sink_request);
- 
- 	dp = container_of(g_dp_display,
- 			struct dp_display_private, dp_display);
-@@ -523,6 +530,7 @@ static int dp_display_usbpd_attention_cb(struct device *dev)
- 	rc = dp_link_process_request(dp->link);
- 	if (!rc) {
- 		sink_request = dp->link->sink_request;
-+		DRM_DEBUG_DP("hpd_state=%d sink_count=%d\n", dp->hpd_state, sink_request);
- 		if (sink_request & DS_PORT_STATUS_CHANGED)
- 			rc = dp_display_handle_port_ststus_changed(dp);
- 		else
-@@ -545,6 +553,7 @@ static int dp_hpd_plug_handle(struct dp_display_private *dp, u32 data)
- 	mutex_lock(&dp->event_mutex);
- 
- 	state =  dp->hpd_state;
-+	DRM_DEBUG_DP("hpd_state=%d\n", state);
- 	if (state == ST_DISPLAY_OFF || state == ST_SUSPENDED) {
- 		mutex_unlock(&dp->event_mutex);
- 		return 0;
-@@ -680,6 +689,7 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
- 	/* start sentinel checking in case of missing uevent */
- 	dp_add_event(dp, EV_DISCONNECT_PENDING_TIMEOUT, 0, DP_TIMEOUT_5_SECOND);
- 
-+	DRM_DEBUG_DP("hpd_state=%d\n", state);
- 	/* signal the disconnect event early to ensure proper teardown */
- 	dp_display_handle_plugged_change(g_dp_display, false);
- 
-@@ -738,6 +748,7 @@ static int dp_irq_hpd_handle(struct dp_display_private *dp, u32 data)
- 	if (ret == -ECONNRESET) { /* cable unplugged */
- 		dp->core_initialized = false;
- 	}
-+	DRM_DEBUG_DP("hpd_state=%d\n", state);
- 
- 	mutex_unlock(&dp->event_mutex);
- 
-@@ -882,6 +893,7 @@ static int dp_display_enable(struct dp_display_private *dp, u32 data)
- 
- 	dp_display = g_dp_display;
- 
-+	DRM_DEBUG_DP("sink_count=%d\n", dp->link->sink_count);
- 	if (dp_display->power_on) {
- 		DRM_DEBUG_DP("Link already setup, return\n");
- 		return 0;
-@@ -943,6 +955,7 @@ static int dp_display_disable(struct dp_display_private *dp, u32 data)
- 
- 	dp_display->power_on = false;
- 
-+	DRM_DEBUG_DP("sink count: %d\n", dp->link->sink_count);
- 	return 0;
- }
- 
-@@ -1190,6 +1203,7 @@ static irqreturn_t dp_display_irq_handler(int irq, void *dev_id)
- 
- 	hpd_isr_status = dp_catalog_hpd_get_intr_status(dp->catalog);
- 
-+	DRM_DEBUG_DP("hpd isr status=%#x\n", hpd_isr_status);
- 	if (hpd_isr_status & 0x0F) {
- 		/* hpd related interrupts */
- 		if (hpd_isr_status & DP_DP_HPD_PLUG_INT_MASK ||
-diff --git a/drivers/gpu/drm/msm/dp/dp_link.c b/drivers/gpu/drm/msm/dp/dp_link.c
-index be986da..ac53c06 100644
---- a/drivers/gpu/drm/msm/dp/dp_link.c
-+++ b/drivers/gpu/drm/msm/dp/dp_link.c
-@@ -1036,43 +1036,29 @@ int dp_link_process_request(struct dp_link *dp_link)
- 
- 	if (link->request.test_requested == DP_TEST_LINK_EDID_READ) {
- 		dp_link->sink_request |= DP_TEST_LINK_EDID_READ;
--		return ret;
--	}
--
--	ret = dp_link_process_ds_port_status_change(link);
--	if (!ret) {
-+	} else if (!dp_link_process_ds_port_status_change(link)) {
- 		dp_link->sink_request |= DS_PORT_STATUS_CHANGED;
--		return ret;
--	}
--
--	ret = dp_link_process_link_training_request(link);
--	if (!ret) {
-+	} else if (!dp_link_process_link_training_request(link)) {
- 		dp_link->sink_request |= DP_TEST_LINK_TRAINING;
--		return ret;
--	}
--
--	ret = dp_link_process_phy_test_pattern_request(link);
--	if (!ret) {
-+	} else if (!dp_link_process_phy_test_pattern_request(link)) {
- 		dp_link->sink_request |= DP_TEST_LINK_PHY_TEST_PATTERN;
--		return ret;
--	}
--
--	ret = dp_link_process_link_status_update(link);
--	if (!ret) {
--		dp_link->sink_request |= DP_LINK_STATUS_UPDATED;
--		return ret;
--	}
--
--	if (dp_link_is_video_pattern_requested(link)) {
--		ret = 0;
--		dp_link->sink_request |= DP_TEST_LINK_VIDEO_PATTERN;
--	}
--
--	if (dp_link_is_audio_pattern_requested(link)) {
--		dp_link->sink_request |= DP_TEST_LINK_AUDIO_PATTERN;
--		return -EINVAL;
-+	} else {
-+		ret = dp_link_process_link_status_update(link);
-+		if (!ret) {
-+			dp_link->sink_request |= DP_LINK_STATUS_UPDATED;
-+		} else {
-+			if (dp_link_is_video_pattern_requested(link)) {
-+				ret = 0;
-+				dp_link->sink_request |= DP_TEST_LINK_VIDEO_PATTERN;
-+			}
-+			if (dp_link_is_audio_pattern_requested(link)) {
-+				dp_link->sink_request |= DP_TEST_LINK_AUDIO_PATTERN;
-+				ret = -EINVAL;
-+			}
-+		}
- 	}
- 
-+	DRM_DEBUG_DP("sink request=%#x", dp_link->sink_request);
- 	return ret;
- }
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_power.c b/drivers/gpu/drm/msm/dp/dp_power.c
-index 3961ba4..b48b45e 100644
---- a/drivers/gpu/drm/msm/dp/dp_power.c
-+++ b/drivers/gpu/drm/msm/dp/dp_power.c
-@@ -208,6 +208,9 @@ static int dp_power_clk_set_rate(struct dp_power_private *power,
- 
- int dp_power_clk_status(struct dp_power *dp_power, enum dp_pm_type pm_type)
- {
-+	DRM_DEBUG_DP("core_clk_on=%d link_clk_on=%d stream_clk_on=%d\n",
-+		dp_power->core_clks_on, dp_power->link_clks_on, dp_power->stream_clks_on);
-+
- 	if (pm_type == DP_CORE_PM)
- 		return dp_power->core_clks_on;
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+Regards,
+Bjorn
