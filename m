@@ -2,161 +2,193 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C7073D7C0B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jul 2021 19:19:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7A3F83D7C72
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jul 2021 19:44:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229851AbhG0RTF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jul 2021 13:19:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59676 "EHLO
+        id S231820AbhG0Rn7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jul 2021 13:43:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37174 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229729AbhG0RTE (ORCPT
+        with ESMTP id S231603AbhG0Rnz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jul 2021 13:19:04 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7284C0613C1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jul 2021 10:19:03 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id e5so16888627ljp.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jul 2021 10:19:03 -0700 (PDT)
+        Tue, 27 Jul 2021 13:43:55 -0400
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1507DC0613D5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jul 2021 10:43:54 -0700 (PDT)
+Received: by mail-oi1-x233.google.com with SMTP id o20so189632oiw.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jul 2021 10:43:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=kali.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=EMKWXZtE5RzPWua1cq/oXCQ10pVyhkDWH2JkBv8IzRE=;
-        b=WDylNfEoqUnBJgtw5pd2YnP89bIdjwjaAHabyeAKLlcxUC35meTxrsF9izCvbb5Icw
-         7VPug7fz6lRT5Q2DPJRTS4rqbbAd/whmzeu0r6ho8LHAUHjN5m8DO1EmORbCTQXGF7cf
-         vJoeBKx1gi63AHPmkm4/4TwsArRZ5NP6TtQLpH4HTM2nxgN6MOBj/VIqFSBug1sCGK69
-         zxl0NuvTI+g0EOt9VSIMVje0CxHI570XIeqt/nouCUSF9X+oHkTUykWu6GbiijAEJQoL
-         2s84nezCRx+bjmt6OAcKVdryjdZvni4JTVQ7+X+QpfppmCLiO1TFEt9n/ImLAjydxX8u
-         wz8g==
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=r4QUHu4frIdHijvzTmPRFAGSy3R7tZiWw1IQcm22Anc=;
+        b=UMnNJV3G+NYhLLNbxE9PaEg/eL5MyESXCP2BC+EwC7YNfafABXfSQbVyKbgThddrPf
+         6NDDAsh/KdxobbVf1b3einnCMzyWjSr5djb5JSO9dzZsFr1oEByvNwWTKmrPvPHccyNG
+         dk+tp5An4sLTyN6+XkmQFOsLX3P+MmSS/fTS/r96B20qKm3DuuJk3Fz6VRvhahVEMjvL
+         u2eTLggdkveT8dvZq8ytAJKEsrKCaogzuuRDaK9YnQa3n3QGxcsyZNkr0Sk5JGwGzkzE
+         /vJ801AxYYCbfNfPkvEzRxX/1acXXjS/S99s3z3MH2RdYTgenG7UpUS7XCzYa83GITIK
+         T0Tw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=EMKWXZtE5RzPWua1cq/oXCQ10pVyhkDWH2JkBv8IzRE=;
-        b=UtXLiCDZHvsxsxMLasZ9sHvh2f1bjw9Z9KPK4JgggmUYXLt4RhkgbPWvcLcM9LRNm4
-         K0s3uRf5qrFTwQD7mUlZ2pcm+5TslKYEr/I6SLqGzTLu2eQmPG4qUJwgFyCOrDNxtki6
-         irzofQrGXJnL9brkd/hp+vWVEKlqKC+fXOHUdDzL7/0ZnWAS6esUMPyruii9mtp7L/vg
-         w7XHli5yA+ztbrP1vTJlKzgwrh8KZUhp7FiZ+0Vo9Eav9StJTsBe3Se7xLrPrIaP4jYJ
-         QMD79MHPsFGJ8th9Fy/RR7NwRFNc6g2wS7+K8kj6bJWpZ2OzN1fC1IzP1rD7Jhl0XqcM
-         Rg1Q==
-X-Gm-Message-State: AOAM533K0hXl+wJThsSqWJ+AsagXQDwI2tsnyax8LJ3YSH4H7R8bmK0N
-        zeFJkB+kTJYJ/oI1CXfNWEWt9g==
-X-Google-Smtp-Source: ABdhPJyRpUWScg+dO+hqpBI6/lrusL5mh299ENzytzR1KCmx8DwDzev4pUnPm/k7xL1JggxRjD7BOg==
-X-Received: by 2002:a05:651c:10a2:: with SMTP id k2mr16075335ljn.89.1627406342156;
-        Tue, 27 Jul 2021 10:19:02 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id g1sm373727lfb.300.2021.07.27.10.19.01
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=r4QUHu4frIdHijvzTmPRFAGSy3R7tZiWw1IQcm22Anc=;
+        b=is4tR7gcG7yERWkJFAwGXnhWXBkuHSa8N57N7O55hYV87mXVAgLRdLihxlDPD7XnxH
+         GQH615+DjhFqyLRzib3WDhQmsP74fRuKyHgyEu+NgCELjAwqAvVl85jfkcWFoW2IlbQW
+         DKONFSBTaoGU7nTdv+VjKK6ywxTFcNVAZfkK+3zcUF7juW1oqVBLbKMyKSdXcD2t4SXC
+         IeYe3/alSUShMNfE9WrrK7jfej5W58UOxkg/BZdbQN5kC1mn7fpJsKea2uu97zvE36yT
+         vGVTACK2nkTbckxBBkUu6JQ3iUbE2al60KMUADwJO2yh0EIX/m1q47XLAMTMA6wDysVY
+         bCqQ==
+X-Gm-Message-State: AOAM533AAQAVbt5fKZyfo8GNuho519MCihRFIORzAbpcBzusF0eiQ4ne
+        xsZtW/vXFRZm+/pQAZcnPQNMqQ==
+X-Google-Smtp-Source: ABdhPJzlJJJxB3rHg+lqAM2nOyBdKpN2vY1CxhcgGGstQXNBb0+yec80VRFGc9CQedbE3ObLC7ytkg==
+X-Received: by 2002:aca:31d8:: with SMTP id x207mr3738097oix.144.1627407832573;
+        Tue, 27 Jul 2021 10:43:52 -0700 (PDT)
+Received: from MacBook-Pro.hackershack.net (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
+        by smtp.gmail.com with ESMTPSA id n21sm599926ooj.22.2021.07.27.10.43.50
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 27 Jul 2021 10:19:01 -0700 (PDT)
-Subject: Re: [PATCH] clk: qcom: dispcc-sm8250: Add additional parent clocks
- for DP
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Jonathan Marek <jonathan@marek.ca>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20210721224610.3035258-1-bjorn.andersson@linaro.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <963af972-5061-5375-aee3-34c0571975d8@linaro.org>
-Date:   Tue, 27 Jul 2021 20:19:01 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        Tue, 27 Jul 2021 10:43:51 -0700 (PDT)
+Subject: Re: [Patch v3 0/6] Introduce LMh driver for Qualcomm SoCs
+To:     Thara Gopinath <thara.gopinath@linaro.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, rui.zhang@intel.com,
+        daniel.lezcano@linaro.org, viresh.kumar@linaro.org,
+        rjw@rjwysocki.net, robh+dt@kernel.org
+Cc:     tdas@codeaurora.org, mka@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20210708120656.663851-1-thara.gopinath@linaro.org>
+ <c630a7a0-d1d0-d04c-8abf-2490c0932661@kali.org>
+ <adfe4d6d-7433-23f2-bc57-d6fba2d8725b@linaro.org>
+From:   Steev Klimaszewski <steev@kali.org>
+Message-ID: <ff6fc8d4-38e9-86ea-f689-609668c53196@kali.org>
+Date:   Tue, 27 Jul 2021 12:43:49 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.12.0
 MIME-Version: 1.0
-In-Reply-To: <20210721224610.3035258-1-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <adfe4d6d-7433-23f2-bc57-d6fba2d8725b@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 22/07/2021 01:46, Bjorn Andersson wrote:
-> The clock controller has two additional clock source pairs, in order to
-> support more than a single DisplayPort PHY. List these, so it's possible
-> to describe them all.
-> 
-> Also drop the unnecessary freq_tbl for the link clock sources, to allow
-> these parents to be used.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On 7/27/21 10:29 AM, Thara Gopinath wrote:
+>
+>
+> On 7/21/21 11:14 PM, Steev Klimaszewski wrote:
+>> Hi Thara!
+>>
+>> On 7/8/21 7:06 AM, Thara Gopinath wrote:
+>>> Limits Management Hardware(LMh) is a hardware infrastructure on some
+>>> Qualcomm SoCs that can enforce temperature and current limits as
+>>> programmed
+>>> by software for certain IPs like CPU. On many newer SoCs LMh is
+>>> configured
+>>> by firmware/TZ and no programming is needed from the kernel side.
+>>> But on
+>>> certain SoCs like sdm845 the firmware does not do a complete
+>>> programming of
+>>> the h/w block. On such SoCs kernel software has to explicitly set up
+>>> the
+>>> temperature limits and turn on various monitoring and enforcing
+>>> algorithms
+>>> on the hardware.
+>>>
+>>> Introduce support for enabling and programming various limit
+>>> settings and
+>>> monitoring capabilities of Limits Management Hardware(LMh)
+>>> associated with
+>>> cpu clusters. Also introduce support in cpufreq hardware driver to
+>>> monitor
+>>> the interrupt associated with cpu frequency throttling so that this
+>>> information can be conveyed to the schdeuler via thermal pressure
+>>> interface.
+>>>
+>>> With this patch series following cpu performance improvement(30-70%) is
+>>> observed on sdm845. The reasoning here is that without LMh being
+>>> programmed
+>>> properly from the kernel, the default settings were enabling thermal
+>>> mitigation for CPUs at too low a temperature (around 70-75 degree
+>>> C).  This
+>>> in turn meant that many a time CPUs were never actually allowed to
+>>> hit the
+>>> maximum possible/required frequencies.
+>>>
+>>> UnixBench whets and dhry (./Run whets dhry)
+>>> System Benchmarks Index Score
+>>>
+>>>                  Without LMh Support             With LMh Support
+>>> 1 copy test     1353.7                          1773.2
+>>>
+>>> 8 copy tests    4473.6                          7402.3
+>>>
+>>> Sysbench cpu
+>>> sysbench cpu --threads=8 --time=60 --cpu-max-prime=100000 run
+>>>
+>>>                  Without LMh Support             With LMh Support
+>>> Events per
+>>> second                  355                             614
+>>>
+>>> Avg Latency(ms)         21.84                           13.02
+>>>
+>>> v2->v3:
+>>>     - Included patch adding dt binding documentation for LMh nodes.
+>>>     - Rebased to v5.13
+>>>
+>>> Thara Gopinath (6):
+>>>    firmware: qcom_scm: Introduce SCM calls to access LMh
+>>>    thermal: qcom: Add support for LMh driver
+>>>    cpufreq: qcom-cpufreq-hw: Add dcvs interrupt support
+>>>    arm64: boot: dts: qcom: sdm45: Add support for LMh node
+>>>    arm64: boot: dts: qcom: sdm845: Remove cpufreq cooling devices
+>>> for CPU
+>>>      thermal zones
+>>>    dt-bindings: thermal: Add dt binding for QCOM LMh
+>>>
+>>>   .../devicetree/bindings/thermal/qcom-lmh.yaml | 100 ++++++++
+>>>   arch/arm64/boot/dts/qcom/sdm845.dtsi          | 162 ++----------
+>>>   drivers/cpufreq/qcom-cpufreq-hw.c             | 118 +++++++++
+>>>   drivers/firmware/qcom_scm.c                   |  58 +++++
+>>>   drivers/firmware/qcom_scm.h                   |   4 +
+>>>   drivers/thermal/qcom/Kconfig                  |  10 +
+>>>   drivers/thermal/qcom/Makefile                 |   1 +
+>>>   drivers/thermal/qcom/lmh.c                    | 239
+>>> ++++++++++++++++++
+>>>   include/linux/qcom_scm.h                      |  14 +
+>>>   9 files changed, 570 insertions(+), 136 deletions(-)
+>>>   create mode 100644
+>>> Documentation/devicetree/bindings/thermal/qcom-lmh.yaml
+>>>   create mode 100644 drivers/thermal/qcom/lmh.c
+>>>
+>> I've been using these patches on a 5.13 kernel
+>> (https://github.com/steev/linux/tree/linux-5.13.y - while trying to
+>> track down a different issue, while playing a video on youtube, as well
+>> as compressing a 9.2GB file with xz, I got the following
+>
+> Hi Steev,
+>
+> Thanks for testing this. I was unable to reproduce this. I have posted
+> v4 moving the interrupt handling in qcom-cpufreq-hw to threaded
+> interrupt handler and hopefully this should fix the issue. It will be
+> great if you can test and let me know.
+>
+Hi Thara,
 
-> ---
->   drivers/clk/qcom/dispcc-sm8250.c | 22 ++++++++++++----------
->   1 file changed, 12 insertions(+), 10 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
-> index 601c7c0ba483..bf9ffe1a1cf4 100644
-> --- a/drivers/clk/qcom/dispcc-sm8250.c
-> +++ b/drivers/clk/qcom/dispcc-sm8250.c
-> @@ -26,6 +26,10 @@ enum {
->   	P_DISP_CC_PLL1_OUT_MAIN,
->   	P_DP_PHY_PLL_LINK_CLK,
->   	P_DP_PHY_PLL_VCO_DIV_CLK,
-> +	P_DPTX1_PHY_PLL_LINK_CLK,
-> +	P_DPTX1_PHY_PLL_VCO_DIV_CLK,
-> +	P_DPTX2_PHY_PLL_LINK_CLK,
-> +	P_DPTX2_PHY_PLL_VCO_DIV_CLK,
->   	P_EDP_PHY_PLL_LINK_CLK,
->   	P_EDP_PHY_PLL_VCO_DIV_CLK,
->   	P_DSI0_PHY_PLL_OUT_BYTECLK,
-> @@ -98,12 +102,20 @@ static const struct parent_map disp_cc_parent_map_0[] = {
->   	{ P_BI_TCXO, 0 },
->   	{ P_DP_PHY_PLL_LINK_CLK, 1 },
->   	{ P_DP_PHY_PLL_VCO_DIV_CLK, 2 },
-> +	{ P_DPTX1_PHY_PLL_LINK_CLK, 3 },
-> +	{ P_DPTX1_PHY_PLL_VCO_DIV_CLK, 4 },
-> +	{ P_DPTX2_PHY_PLL_LINK_CLK, 5 },
-> +	{ P_DPTX2_PHY_PLL_VCO_DIV_CLK, 6 },
->   };
->   
->   static const struct clk_parent_data disp_cc_parent_data_0[] = {
->   	{ .fw_name = "bi_tcxo" },
->   	{ .fw_name = "dp_phy_pll_link_clk" },
->   	{ .fw_name = "dp_phy_pll_vco_div_clk" },
-> +	{ .fw_name = "dptx1_phy_pll_link_clk" },
-> +	{ .fw_name = "dptx1_phy_pll_vco_div_clk" },
-> +	{ .fw_name = "dptx2_phy_pll_link_clk" },
-> +	{ .fw_name = "dptx2_phy_pll_vco_div_clk" },
->   };
->   
->   static const struct parent_map disp_cc_parent_map_1[] = {
-> @@ -269,20 +281,11 @@ static struct clk_rcg2 disp_cc_mdss_dp_aux_clk_src = {
->   	},
->   };
->   
-> -static const struct freq_tbl ftbl_disp_cc_mdss_dp_link1_clk_src[] = {
-> -	F(162000000, P_DP_PHY_PLL_LINK_CLK, 1, 0, 0),
-> -	F(270000000, P_DP_PHY_PLL_LINK_CLK, 1, 0, 0),
-> -	F(540000000, P_DP_PHY_PLL_LINK_CLK, 1, 0, 0),
-> -	F(810000000, P_DP_PHY_PLL_LINK_CLK, 1, 0, 0),
-> -	{ }
-> -};
-> -
->   static struct clk_rcg2 disp_cc_mdss_dp_link1_clk_src = {
->   	.cmd_rcgr = 0x220c,
->   	.mnd_width = 0,
->   	.hid_width = 5,
->   	.parent_map = disp_cc_parent_map_0,
-> -	.freq_tbl = ftbl_disp_cc_mdss_dp_link1_clk_src,
->   	.clkr.hw.init = &(struct clk_init_data){
->   		.name = "disp_cc_mdss_dp_link1_clk_src",
->   		.parent_data = disp_cc_parent_data_0,
-> @@ -296,7 +299,6 @@ static struct clk_rcg2 disp_cc_mdss_dp_link_clk_src = {
->   	.mnd_width = 0,
->   	.hid_width = 5,
->   	.parent_map = disp_cc_parent_map_0,
-> -	.freq_tbl = ftbl_disp_cc_mdss_dp_link1_clk_src,
->   	.clkr.hw.init = &(struct clk_init_data){
->   		.name = "disp_cc_mdss_dp_link_clk_src",
->   		.parent_data = disp_cc_parent_data_0,
-> 
+I've been testing v4 for a little bit here, and so far I can't seem to
+get it to reproduce anymore.  I will keep trying but fingers crossed
+that that did the trick.
 
+For setup, I'm using https://github.com/steev/linux/tree/linux-5.13.y
+with the "distro_defconfig" configuration here on my c630s.  I'm also
+running https://github.com/steev/scheduler as a systemd service.  So far
+I've been able to sleep/suspend without issue while running "make
+-j$(nproc) deb-pkg" in those kernel sources as well as `xz
+--memlimit-compress=50 -T 4 imagefile.img" on a 9.2GB file at the same
+time.  One system is running the Budgie desktop on top of Xorg, and the
+other is running Gnome 3.38 on top of Wayland.
 
--- 
-With best wishes
-Dmitry
+-- steev
+
