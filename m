@@ -2,188 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AEE483D7BD8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jul 2021 19:08:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C7073D7C0B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jul 2021 19:19:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231997AbhG0RI1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jul 2021 13:08:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57078 "EHLO
+        id S229851AbhG0RTF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jul 2021 13:19:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59676 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231927AbhG0RIO (ORCPT
+        with ESMTP id S229729AbhG0RTE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jul 2021 13:08:14 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E8A5C0613C1;
-        Tue, 27 Jul 2021 10:08:14 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id b6so135172pji.4;
-        Tue, 27 Jul 2021 10:08:14 -0700 (PDT)
+        Tue, 27 Jul 2021 13:19:04 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7284C0613C1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jul 2021 10:19:03 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id e5so16888627ljp.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jul 2021 10:19:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=BVHgu7P3jLeGAr6c6jiQnBbjUeZUVb7sIei9a5S3h4I=;
-        b=WlJF/vK63/XIsVPFZZbU8flmm44UA1jL314rnLW262EpDVoPB9cTQj6Z4RfXNNLhDh
-         UfKVkUV/CYv+zSH/zFfA27/zxJu3yw5NSqyUZXoe5QMLRuA0ZHe18NHtxElNv0DnxPNO
-         N2vPh0m0Br9AyEGzjZdMs6oZU6Dq5zPdnK2iONG0uy/89OmDWbzQUv11xpjddkqIa67C
-         C07pXdBgccE246MVnZJGqbLi6t7lpMZWTg9bwBl3Et58UqCrPbv67UILbNN/iMxPfmDX
-         IkhqJgV/qkoOPElbFvC/qJLQm2FLSpyZK8TQ0fKmrV6j1gDm37k9e3G4i3ekQCHIvTYS
-         rM7Q==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=EMKWXZtE5RzPWua1cq/oXCQ10pVyhkDWH2JkBv8IzRE=;
+        b=WDylNfEoqUnBJgtw5pd2YnP89bIdjwjaAHabyeAKLlcxUC35meTxrsF9izCvbb5Icw
+         7VPug7fz6lRT5Q2DPJRTS4rqbbAd/whmzeu0r6ho8LHAUHjN5m8DO1EmORbCTQXGF7cf
+         vJoeBKx1gi63AHPmkm4/4TwsArRZ5NP6TtQLpH4HTM2nxgN6MOBj/VIqFSBug1sCGK69
+         zxl0NuvTI+g0EOt9VSIMVje0CxHI570XIeqt/nouCUSF9X+oHkTUykWu6GbiijAEJQoL
+         2s84nezCRx+bjmt6OAcKVdryjdZvni4JTVQ7+X+QpfppmCLiO1TFEt9n/ImLAjydxX8u
+         wz8g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=BVHgu7P3jLeGAr6c6jiQnBbjUeZUVb7sIei9a5S3h4I=;
-        b=Wqh99LH6tyXwapperrFLREdnepVxkPV8Al7wMQGFK0g2XOFBB9KndsViQZajOwuiCR
-         wGLiPAXuc9u9RcKpdYImvs/8WGv2/0KlXOAcBy4JRHNeWSKYAdQu4exGXbihcNQTl9YT
-         LNkJXaNdjE4uVAOmvNHwJkvi1xLOUAtLDRB80WGSuOR9CtYMpv/pKntfcJgGZ7Qkb9EO
-         y98X/PZyfWhqaot4/rAFwP1Z8XZp/5pyIh8H3CwrKKOBk1qx+Xd37WKBxzc5Sax3lTkl
-         pniub+GyzopbowbKeKxFNBkukhUQIQ2DTWfOWwxop8xgKwNkPtn310Zj0XYzZVmOM5TI
-         6w0A==
-X-Gm-Message-State: AOAM531s8IBa6XMcziSaGUwVHByODJ9hG4ZK66flQ4C2KBBA0Ik3PiR+
-        fPwyiHFgY8vRuG2Qs5o2RLQ=
-X-Google-Smtp-Source: ABdhPJwgh/neo2jmD1LpwIXqSJvOglGqEJmFMXn3xH8aasrwoX8uvjwSl79+t+wVSv7dm/Tr37MTng==
-X-Received: by 2002:a17:90b:203:: with SMTP id fy3mr1447375pjb.115.1627405693767;
-        Tue, 27 Jul 2021 10:08:13 -0700 (PDT)
-Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
-        by smtp.gmail.com with ESMTPSA id bj15sm3483420pjb.6.2021.07.27.10.08.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Jul 2021 10:08:12 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
-        GPU), linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v3 13/13] drm/msm/gem: Mark active before pinning
-Date:   Tue, 27 Jul 2021 10:11:29 -0700
-Message-Id: <20210727171143.2549475-14-robdclark@gmail.com>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210727171143.2549475-1-robdclark@gmail.com>
-References: <20210727171143.2549475-1-robdclark@gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=EMKWXZtE5RzPWua1cq/oXCQ10pVyhkDWH2JkBv8IzRE=;
+        b=UtXLiCDZHvsxsxMLasZ9sHvh2f1bjw9Z9KPK4JgggmUYXLt4RhkgbPWvcLcM9LRNm4
+         K0s3uRf5qrFTwQD7mUlZ2pcm+5TslKYEr/I6SLqGzTLu2eQmPG4qUJwgFyCOrDNxtki6
+         irzofQrGXJnL9brkd/hp+vWVEKlqKC+fXOHUdDzL7/0ZnWAS6esUMPyruii9mtp7L/vg
+         w7XHli5yA+ztbrP1vTJlKzgwrh8KZUhp7FiZ+0Vo9Eav9StJTsBe3Se7xLrPrIaP4jYJ
+         QMD79MHPsFGJ8th9Fy/RR7NwRFNc6g2wS7+K8kj6bJWpZ2OzN1fC1IzP1rD7Jhl0XqcM
+         Rg1Q==
+X-Gm-Message-State: AOAM533K0hXl+wJThsSqWJ+AsagXQDwI2tsnyax8LJ3YSH4H7R8bmK0N
+        zeFJkB+kTJYJ/oI1CXfNWEWt9g==
+X-Google-Smtp-Source: ABdhPJyRpUWScg+dO+hqpBI6/lrusL5mh299ENzytzR1KCmx8DwDzev4pUnPm/k7xL1JggxRjD7BOg==
+X-Received: by 2002:a05:651c:10a2:: with SMTP id k2mr16075335ljn.89.1627406342156;
+        Tue, 27 Jul 2021 10:19:02 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id g1sm373727lfb.300.2021.07.27.10.19.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Jul 2021 10:19:01 -0700 (PDT)
+Subject: Re: [PATCH] clk: qcom: dispcc-sm8250: Add additional parent clocks
+ for DP
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Jonathan Marek <jonathan@marek.ca>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20210721224610.3035258-1-bjorn.andersson@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <963af972-5061-5375-aee3-34c0571975d8@linaro.org>
+Date:   Tue, 27 Jul 2021 20:19:01 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210721224610.3035258-1-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On 22/07/2021 01:46, Bjorn Andersson wrote:
+> The clock controller has two additional clock source pairs, in order to
+> support more than a single DisplayPort PHY. List these, so it's possible
+> to describe them all.
+> 
+> Also drop the unnecessary freq_tbl for the link clock sources, to allow
+> these parents to be used.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-Mark all the bos in the submit as active, before pinning, to prevent
-evicting a buffer in the same submit to make room for a buffer earlier
-in the table.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_gem.c        |  2 --
- drivers/gpu/drm/msm/msm_gem_submit.c | 28 ++++++++++++++++++++--------
- 2 files changed, 20 insertions(+), 10 deletions(-)
+> ---
+>   drivers/clk/qcom/dispcc-sm8250.c | 22 ++++++++++++----------
+>   1 file changed, 12 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
+> index 601c7c0ba483..bf9ffe1a1cf4 100644
+> --- a/drivers/clk/qcom/dispcc-sm8250.c
+> +++ b/drivers/clk/qcom/dispcc-sm8250.c
+> @@ -26,6 +26,10 @@ enum {
+>   	P_DISP_CC_PLL1_OUT_MAIN,
+>   	P_DP_PHY_PLL_LINK_CLK,
+>   	P_DP_PHY_PLL_VCO_DIV_CLK,
+> +	P_DPTX1_PHY_PLL_LINK_CLK,
+> +	P_DPTX1_PHY_PLL_VCO_DIV_CLK,
+> +	P_DPTX2_PHY_PLL_LINK_CLK,
+> +	P_DPTX2_PHY_PLL_VCO_DIV_CLK,
+>   	P_EDP_PHY_PLL_LINK_CLK,
+>   	P_EDP_PHY_PLL_VCO_DIV_CLK,
+>   	P_DSI0_PHY_PLL_OUT_BYTECLK,
+> @@ -98,12 +102,20 @@ static const struct parent_map disp_cc_parent_map_0[] = {
+>   	{ P_BI_TCXO, 0 },
+>   	{ P_DP_PHY_PLL_LINK_CLK, 1 },
+>   	{ P_DP_PHY_PLL_VCO_DIV_CLK, 2 },
+> +	{ P_DPTX1_PHY_PLL_LINK_CLK, 3 },
+> +	{ P_DPTX1_PHY_PLL_VCO_DIV_CLK, 4 },
+> +	{ P_DPTX2_PHY_PLL_LINK_CLK, 5 },
+> +	{ P_DPTX2_PHY_PLL_VCO_DIV_CLK, 6 },
+>   };
+>   
+>   static const struct clk_parent_data disp_cc_parent_data_0[] = {
+>   	{ .fw_name = "bi_tcxo" },
+>   	{ .fw_name = "dp_phy_pll_link_clk" },
+>   	{ .fw_name = "dp_phy_pll_vco_div_clk" },
+> +	{ .fw_name = "dptx1_phy_pll_link_clk" },
+> +	{ .fw_name = "dptx1_phy_pll_vco_div_clk" },
+> +	{ .fw_name = "dptx2_phy_pll_link_clk" },
+> +	{ .fw_name = "dptx2_phy_pll_vco_div_clk" },
+>   };
+>   
+>   static const struct parent_map disp_cc_parent_map_1[] = {
+> @@ -269,20 +281,11 @@ static struct clk_rcg2 disp_cc_mdss_dp_aux_clk_src = {
+>   	},
+>   };
+>   
+> -static const struct freq_tbl ftbl_disp_cc_mdss_dp_link1_clk_src[] = {
+> -	F(162000000, P_DP_PHY_PLL_LINK_CLK, 1, 0, 0),
+> -	F(270000000, P_DP_PHY_PLL_LINK_CLK, 1, 0, 0),
+> -	F(540000000, P_DP_PHY_PLL_LINK_CLK, 1, 0, 0),
+> -	F(810000000, P_DP_PHY_PLL_LINK_CLK, 1, 0, 0),
+> -	{ }
+> -};
+> -
+>   static struct clk_rcg2 disp_cc_mdss_dp_link1_clk_src = {
+>   	.cmd_rcgr = 0x220c,
+>   	.mnd_width = 0,
+>   	.hid_width = 5,
+>   	.parent_map = disp_cc_parent_map_0,
+> -	.freq_tbl = ftbl_disp_cc_mdss_dp_link1_clk_src,
+>   	.clkr.hw.init = &(struct clk_init_data){
+>   		.name = "disp_cc_mdss_dp_link1_clk_src",
+>   		.parent_data = disp_cc_parent_data_0,
+> @@ -296,7 +299,6 @@ static struct clk_rcg2 disp_cc_mdss_dp_link_clk_src = {
+>   	.mnd_width = 0,
+>   	.hid_width = 5,
+>   	.parent_map = disp_cc_parent_map_0,
+> -	.freq_tbl = ftbl_disp_cc_mdss_dp_link1_clk_src,
+>   	.clkr.hw.init = &(struct clk_init_data){
+>   		.name = "disp_cc_mdss_dp_link_clk_src",
+>   		.parent_data = disp_cc_parent_data_0,
+> 
 
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index af199ef53d2f..15b1804fa64e 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -131,7 +131,6 @@ static struct page **get_pages(struct drm_gem_object *obj)
- 		if (msm_obj->flags & (MSM_BO_WC|MSM_BO_UNCACHED))
- 			sync_for_device(msm_obj);
- 
--		GEM_WARN_ON(msm_obj->active_count);
- 		update_inactive(msm_obj);
- 	}
- 
-@@ -815,7 +814,6 @@ void msm_gem_active_get(struct drm_gem_object *obj, struct msm_gpu *gpu)
- 	GEM_WARN_ON(!msm_gem_is_locked(obj));
- 	GEM_WARN_ON(msm_obj->madv != MSM_MADV_WILLNEED);
- 	GEM_WARN_ON(msm_obj->dontneed);
--	GEM_WARN_ON(!msm_obj->sgt);
- 
- 	if (msm_obj->active_count++ == 0) {
- 		mutex_lock(&priv->mm_lock);
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index c2ecec5b11c4..fc25a85eb1ca 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -24,7 +24,8 @@
- /* make sure these don't conflict w/ MSM_SUBMIT_BO_x */
- #define BO_VALID    0x8000   /* is current addr in cmdstream correct/valid? */
- #define BO_LOCKED   0x4000   /* obj lock is held */
--#define BO_PINNED   0x2000   /* obj is pinned and on active list */
-+#define BO_ACTIVE   0x2000   /* active refcnt is held */
-+#define BO_PINNED   0x1000   /* obj is pinned and on active list */
- 
- static struct msm_gem_submit *submit_create(struct drm_device *dev,
- 		struct msm_gpu *gpu,
-@@ -239,10 +240,11 @@ static void submit_cleanup_bo(struct msm_gem_submit *submit, int i,
- 	struct drm_gem_object *obj = &submit->bos[i].obj->base;
- 	unsigned flags = submit->bos[i].flags & cleanup_flags;
- 
--	if (flags & BO_PINNED) {
-+	if (flags & BO_PINNED)
- 		msm_gem_unpin_iova_locked(obj, submit->aspace);
-+
-+	if (flags & BO_ACTIVE)
- 		msm_gem_active_put(obj);
--	}
- 
- 	if (flags & BO_LOCKED)
- 		dma_resv_unlock(obj->resv);
-@@ -252,7 +254,7 @@ static void submit_cleanup_bo(struct msm_gem_submit *submit, int i,
- 
- static void submit_unlock_unpin_bo(struct msm_gem_submit *submit, int i)
- {
--	submit_cleanup_bo(submit, i, BO_PINNED | BO_LOCKED);
-+	submit_cleanup_bo(submit, i, BO_PINNED | BO_ACTIVE | BO_LOCKED);
- 
- 	if (!(submit->bos[i].flags & BO_VALID))
- 		submit->bos[i].iova = 0;
-@@ -356,6 +358,18 @@ static int submit_pin_objects(struct msm_gem_submit *submit)
- 
- 	submit->valid = true;
- 
-+	/*
-+	 * Increment active_count first, so if under memory pressure, we
-+	 * don't inadvertently evict a bo needed by the submit in order
-+	 * to pin an earlier bo in the same submit.
-+	 */
-+	for (i = 0; i < submit->nr_bos; i++) {
-+		struct drm_gem_object *obj = &submit->bos[i].obj->base;
-+
-+		msm_gem_active_get(obj, submit->gpu);
-+		submit->bos[i].flags |= BO_ACTIVE;
-+	}
-+
- 	for (i = 0; i < submit->nr_bos; i++) {
- 		struct drm_gem_object *obj = &submit->bos[i].obj->base;
- 		uint64_t iova;
-@@ -367,8 +381,6 @@ static int submit_pin_objects(struct msm_gem_submit *submit)
- 		if (ret)
- 			break;
- 
--		msm_gem_active_get(obj, submit->gpu);
--
- 		submit->bos[i].flags |= BO_PINNED;
- 
- 		if (iova == submit->bos[i].iova) {
-@@ -502,7 +514,7 @@ static void submit_cleanup(struct msm_gem_submit *submit, bool error)
- 	unsigned i;
- 
- 	if (error)
--		cleanup_flags |= BO_PINNED;
-+		cleanup_flags |= BO_PINNED | BO_ACTIVE;
- 
- 	for (i = 0; i < submit->nr_bos; i++) {
- 		struct msm_gem_object *msm_obj = submit->bos[i].obj;
-@@ -520,7 +532,7 @@ void msm_submit_retire(struct msm_gem_submit *submit)
- 		struct drm_gem_object *obj = &submit->bos[i].obj->base;
- 
- 		msm_gem_lock(obj);
--		submit_cleanup_bo(submit, i, BO_PINNED);
-+		submit_cleanup_bo(submit, i, BO_PINNED | BO_ACTIVE);
- 		msm_gem_unlock(obj);
- 		drm_gem_object_put(obj);
- 	}
+
 -- 
-2.31.1
-
+With best wishes
+Dmitry
