@@ -2,58 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 63FF03D8219
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jul 2021 23:48:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5555D3D826B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 00:19:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232261AbhG0VsW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jul 2021 17:48:22 -0400
-Received: from mail.kernel.org ([198.145.29.99]:45190 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231668AbhG0VsW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jul 2021 17:48:22 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 67EE360F6E;
-        Tue, 27 Jul 2021 21:48:21 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1627422501;
-        bh=8LKEBG4jsItD6+/7Ls5h/7i/KgXlhXEjlYmjO6GKFn0=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=awTMMMgiprVIwRJpypdqfSFF5DawWhWP7PgkTE/RiL7F2Ihrl7bYEYvV1rtVw4JJq
-         1zEmSZjN3IjV4VcCa7K5lpij0cF9VwcOyaeXj7A7TNPWKUyLHLIkkH+/l2yszkQ7HQ
-         ABwaY/zcPpft7eWlUNxzGuYy3UISm/6IHXundpZcQgiMGERzVMyNTuCppVzgtY8QjI
-         NupROoKGbjPBTKZoUA1pyICFR8mzz1mANRQ5jnRZUNrG85xXBv4be2sW5CEvRoLwPF
-         gX5o+KTu/s10RiZezGsJrXLPk/wwNYAw9xMvDAGvF2tiXMmexBxa7YWkwjV8gZg3qj
-         YlPa5Fg+da1iA==
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20210629102624.194378-3-martin.botka@somainline.org>
-References: <20210629102624.194378-1-martin.botka@somainline.org> <20210629102624.194378-3-martin.botka@somainline.org>
-Subject: Re: [RESEND PATCH v2 2/3] dt-bindings: clk: qcom: smd-rpm: Document SM6125 compatible
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        konrad.dybcio@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        paul.bouchara@somainline.org,
-        Martin Botka <martin.botka@somainline.org>,
+        id S232327AbhG0WTi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jul 2021 18:19:38 -0400
+Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:51201 "EHLO
+        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231706AbhG0WTh (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 27 Jul 2021 18:19:37 -0400
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-02.qualcomm.com with ESMTP; 27 Jul 2021 15:19:37 -0700
+X-QCInternal: smtphost
+Received: from hu-gurus-sd.qualcomm.com (HELO hu-devc-sd-c.qualcomm.com) ([10.56.230.15])
+  by ironmsg01-sd.qualcomm.com with ESMTP; 27 Jul 2021 15:19:36 -0700
+Received: by hu-devc-sd-c.qualcomm.com (Postfix, from userid 383780)
+        id E102921089; Tue, 27 Jul 2021 15:19:36 -0700 (PDT)
+Date:   Tue, 27 Jul 2021 15:19:36 -0700
+From:   Guru Das Srinagesh <gurus@codeaurora.org>
+To:     satya priya <skakit@codeaurora.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Martin Botka <martin.botka@somainline.org>, martin.botka1@gmail.com
-Date:   Tue, 27 Jul 2021 14:48:20 -0700
-Message-ID: <162742250022.2368309.6386650243971693584@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+        Lee Jones <lee.jones@linaro.org>, kgunda@codeaurora.org,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH V7 1/3] dt-bindings: mfd: pm8008: Add gpio-ranges and
+ spmi-gpio compatible
+Message-ID: <20210727221936.GA10322@codeaurora.org>
+References: <1627029074-23449-1-git-send-email-skakit@codeaurora.org>
+ <1627029074-23449-2-git-send-email-skakit@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1627029074-23449-2-git-send-email-skakit@codeaurora.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Martin Botka (2021-06-29 03:26:22)
-> Document the newly added compatible for sm6125 rpmcc.
->=20
-> Signed-off-by: Martin Botka <martin.botka@somainline.org>
+On Fri, Jul 23, 2021 at 02:01:12PM +0530, satya priya wrote:
+> Add gpio-ranges and "qcom,spmi-gpio" compatible to match with the
+> parent qcom,pmic-gpio.yaml binding.
+> 
+> Signed-off-by: satya priya <skakit@codeaurora.org>
 > ---
+> Changes in V7:
+>  - This is newly added in V7 to resolve below error.
+>  dtschema/dtc warnings/errors:
+>  /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/mfd/qcom,pm8008.example.dt.yaml: gpio@c000: compatible: ['qcom,pm8008-gpio'] is too short
+> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
+>  /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/mfd/qcom,pm8008.example.dt.yaml: gpio@c000: 'gpio-ranges' is a required property
+> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
+> 
+>  Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml | 13 ++++++++++---
+>  1 file changed, 10 insertions(+), 3 deletions(-)
 
-Applied to clk-next
+Reviewed-by: Guru Das Srinagesh <gurus@codeaurora.org>
