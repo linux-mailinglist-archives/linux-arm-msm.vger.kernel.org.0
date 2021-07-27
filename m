@@ -2,137 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1F6493D7335
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jul 2021 12:29:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5416E3D734D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jul 2021 12:33:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236186AbhG0K3X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jul 2021 06:29:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49314 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236195AbhG0K3U (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jul 2021 06:29:20 -0400
-Received: from mail-ua1-x92d.google.com (mail-ua1-x92d.google.com [IPv6:2607:f8b0:4864:20::92d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48114C061764
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jul 2021 03:29:20 -0700 (PDT)
-Received: by mail-ua1-x92d.google.com with SMTP id t26so4690780uao.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jul 2021 03:29:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=BNXOQOHHvkyOlpYQvBOMgkkH26gWwGd0okW8oi8QdqI=;
-        b=VA9XBSq4CQhlCAZrPbTm3nskntRBag7xfqyt0l5ZRi4tj4r7Nwmj7cH8Q//ULvZ68Y
-         5rx6ds4fUh1cKyKjtK9DlDLoCmoMTBGuBTVGak7TJbutzKps51Gx+PW0a4zDeLzgCVRA
-         7v+taAWoRMIo4GLW7W31F6kuP0wNC9VL3N8Xk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=BNXOQOHHvkyOlpYQvBOMgkkH26gWwGd0okW8oi8QdqI=;
-        b=ImrFqOATqBQQgbO0RqBzA6F4bRFmnSk7XkAthtiRFjD323zAnoqbeTBaCS0H1srHlB
-         c94DouAuZNGiTKbgMz47wktatuz4SjhtHnCxlMI1HlG67eh2WOkjBOunziyZGGfHuYWd
-         eRkoyXEl33ns1QKYZBvKNpklaG96WijBbApV4R59IJ7GRTHyYCI8uiH30Quxzth29plI
-         w3ox9ZjidAR1XdMs1uWvsbMVZOkRAbPe+NmGMSCsXQz5M3nmE9T0E9Tj9yDIxRFTiPx4
-         H/5neITMBWjOhUGuEePjy81K5e+Q1YvDDeppK/ou2UZEBZhNvYbCI+RT9kcW6jxCZy1f
-         AO4Q==
-X-Gm-Message-State: AOAM533JPeOz4Shz7r4rrmwuvV8X2NxGtYe87mZCkGglgwT4t1rhzalX
-        KP+Xz2ySBCbP/2VGEZYI5zsQdsFveQfdP5eBZ9xIiw==
-X-Google-Smtp-Source: ABdhPJyx7sQwhJ8UE8NDg2Kx4YHR88sGvEf5AH10FBKUxfscAE8LJuhcwnvw8wjRTLPiqyBoy6zqtE4uvHrV7c6EPNE=
-X-Received: by 2002:ab0:2641:: with SMTP id q1mr16151134uao.82.1627381759398;
- Tue, 27 Jul 2021 03:29:19 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210727094435.v3.1.I629b2366a6591410359c7fcf6d385b474b705ca2@changeid>
- <YP/FMblLCPpR7Tgf@ravnborg.org>
-In-Reply-To: <YP/FMblLCPpR7Tgf@ravnborg.org>
-From:   Nicolas Boichat <drinkcat@chromium.org>
-Date:   Tue, 27 Jul 2021 18:29:08 +0800
-Message-ID: <CANMq1KAVA3LRXzcKrVoj30KtvwuA0hQ12JdMLu32-RD8h=UjFw@mail.gmail.com>
-Subject: Re: [PATCH v3] drm/dsi: Add _NO_ to MIPI_DSI_* flags disabling features
-To:     Sam Ravnborg <sam@ravnborg.org>
-Cc:     Neil Armstrong <narmstrong@baylibre.com>,
-        David Airlie <airlied@linux.ie>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Andrzej Hajda <a.hajda@samsung.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Andrzej Hajda <andrzej.hajda@samsung.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Tzung-Bi Shih <tzungbi@google.com>,
-        Adrien Grassein <adrien.grassein@gmail.com>,
-        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Yangtao Li <tiny.windzz@gmail.com>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        "moderated list:ARM/Mediatek SoC support" 
-        <linux-mediatek@lists.infradead.org>,
-        Pi-Hsun Shih <pihsun@chromium.org>,
-        Hsin-Yi Wang <hsinyi@chromium.org>,
-        Matthias Brugger <matthias.bgg@gmail.com>,
-        Sean Paul <sean@poorly.run>, Xin Ji <xji@analogixsemi.com>,
-        linux-arm Mailing List <linux-arm-kernel@lists.infradead.org>,
+        id S236131AbhG0KdI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jul 2021 06:33:08 -0400
+Received: from foss.arm.com ([217.140.110.172]:37352 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231745AbhG0KdI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 27 Jul 2021 06:33:08 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 079541FB;
+        Tue, 27 Jul 2021 03:33:08 -0700 (PDT)
+Received: from [10.57.36.146] (unknown [10.57.36.146])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 50E263F70D;
+        Tue, 27 Jul 2021 03:33:06 -0700 (PDT)
+Subject: Re: [PATCH] iommu/arm-smmu: Add clk_bulk_{prepare/unprepare} to
+ system pm callbacks
+From:   Robin Murphy <robin.murphy@arm.com>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Will Deacon <will@kernel.org>, Joerg Roedel <joro@8bytes.org>,
         Rajendra Nayak <rnayak@codeaurora.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        lkml <linux-kernel@vger.kernel.org>,
-        Robert Foss <robert.foss@linaro.org>,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        Yu Jiahua <yujiahua1@huawei.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
+        Taniya Das <tdas@codeaurora.org>,
+        srimuc <srimuc@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, iommu@lists.linux-foundation.org,
+        linux-kernel@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+References: <20210727093322.13202-1-saiprakash.ranjan@codeaurora.org>
+ <955a3034-f7e7-f8f9-4abd-b65efbfbb404@arm.com>
+Message-ID: <c23a16d8-e39c-253f-5631-cffa94a1d532@arm.com>
+Date:   Tue, 27 Jul 2021 11:33:04 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
+MIME-Version: 1.0
+In-Reply-To: <955a3034-f7e7-f8f9-4abd-b65efbfbb404@arm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Jul 27, 2021 at 4:35 PM Sam Ravnborg <sam@ravnborg.org> wrote:
->
-> Hi Nicolas,
-> On Tue, Jul 27, 2021 at 09:45:21AM +0800, Nicolas Boichat wrote:
-> > Many of the DSI flags have names opposite to their actual effects,
-> > e.g. MIPI_DSI_MODE_EOT_PACKET means that EoT packets will actually
-> > be disabled. Fix this by including _NO_ in the flag names, e.g.
-> > MIPI_DSI_MODE_NO_EOT_PACKET.
-> >
-> > Signed-off-by: Nicolas Boichat <drinkcat@chromium.org>
-> > Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-> > Reviewed-by: Robert Foss <robert.foss@linaro.org>
-> > Reviewed-by: Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-> > Reviewed-by: Andrzej Hajda <andrzej.hajda@samsung.com>
-> > Reviewed-by: Xin Ji <xji@analogixsemi.com> # anx7625.c
-> > Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org> # msm/dsi
-> > ---
-> > I considered adding _DISABLE_ instead, but that'd make the
-> > flag names a big too long.
-> >
-> > Generated with:
-> > flag=MIPI_DSI_MODE_VIDEO_HFP; git grep $flag | cut -f1 -d':' | \
-> >   xargs -I{} sed -i -e "s/$flag/MIPI_DSI_MODE_VIDEO_NO_HFP/" {}
-> > flag=MIPI_DSI_MODE_VIDEO_HBP; git grep $flag | cut -f1 -d':' | \
-> >   xargs -I{} sed -i -e "s/$flag/MIPI_DSI_MODE_VIDEO_NO_HBP/" {}
-> > flag=MIPI_DSI_MODE_VIDEO_HSA; git grep $flag | cut -f1 -d':' | \
-> >   xargs -I{} sed -i -e "s/$flag/MIPI_DSI_MODE_VIDEO_NO_HSA/" {}
-> > flag=MIPI_DSI_MODE_EOT_PACKET; git grep $flag | cut -f1 -d':' | \
-> >   xargs -I{} sed -i -e "s/$flag/MIPI_DSI_MODE_NO_EOT_PACKET/" {}
-> > (then minor format changes)
-> >
-> > Changes in v3:
-> >  - Added all R-b tags from v1 and v2 (hopefully didn't miss any).
-> >
-> > Changes in v2:
-> >  - Rebased on latest linux-next, after some of the flags got fixed
-> >    (Linus Walleij).
->
-> Thanks for the update, applied to drm-misc-next.
+On 2021-07-27 11:25, Robin Murphy wrote:
+> On 2021-07-27 10:33, Sai Prakash Ranjan wrote:
+>> Some clocks for SMMU can have parent as XO such as gpu_cc_hub_cx_int_clk
+>> of GPU SMMU in QTI SC7280 SoC and in order to enter deep sleep states in
+>> such cases, we would need to drop the XO clock vote in unprepare call and
+>> this unprepare callback for XO is in RPMh (Resource Power 
+>> Manager-Hardened)
+>> clock driver which controls RPMh managed clock resources for new QTI SoCs
+>> and is a blocking call.
+>>
+>> Given we cannot have a sleeping calls such as clk_bulk_prepare() and
+>> clk_bulk_unprepare() in arm-smmu runtime pm callbacks since the iommu
+>> operations like map and unmap can be in atomic context and are in fast
+>> path, add this prepare and unprepare call to drop the XO vote only for
+>> system pm callbacks since it is not a fast path and we expect the system
+>> to enter deep sleep states with system pm as opposed to runtime pm.
+>>
+>> This is a similar sequence of clock requests (prepare,enable and
+>> disable,unprepare) in arm-smmu probe and remove.
+> 
+> Nope. We call arm_smmu_rpm_get(), which may resume the device, from 
+> atomic contexts. clk_prepare() may sleep. This doesn't work.
 
-Thanks Sam!
+Urgh, or maybe I skimmed the commit message too lightly *and* managed to 
+totally misread the patch, sorry :(
 
->
->         Sam
+I'll wake up some more and try again later...
+
+Robin.
+
+>> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+>> Co-developed-by: Rajendra Nayak <rnayak@codeaurora.org>
+>> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+>> ---
+>>   drivers/iommu/arm/arm-smmu/arm-smmu.c | 20 ++++++++++++++++++--
+>>   1 file changed, 18 insertions(+), 2 deletions(-)
+>>
+>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c 
+>> b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+>> index d3c6f54110a5..9561ba4c5d39 100644
+>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+>> @@ -2277,6 +2277,13 @@ static int __maybe_unused 
+>> arm_smmu_runtime_suspend(struct device *dev)
+>>   static int __maybe_unused arm_smmu_pm_resume(struct device *dev)
+>>   {
+>> +    int ret;
+>> +    struct arm_smmu_device *smmu = dev_get_drvdata(dev);
+>> +
+>> +    ret = clk_bulk_prepare(smmu->num_clks, smmu->clks);
+>> +    if (ret)
+>> +        return ret;
+>> +
+>>       if (pm_runtime_suspended(dev))
+>>           return 0;
+>> @@ -2285,10 +2292,19 @@ static int __maybe_unused 
+>> arm_smmu_pm_resume(struct device *dev)
+>>   static int __maybe_unused arm_smmu_pm_suspend(struct device *dev)
+>>   {
+>> +    int ret = 0;
+>> +    struct arm_smmu_device *smmu = dev_get_drvdata(dev);
+>> +
+>>       if (pm_runtime_suspended(dev))
+>> -        return 0;
+>> +        goto clk_unprepare;
+>> -    return arm_smmu_runtime_suspend(dev);
+>> +    ret = arm_smmu_runtime_suspend(dev);
+>> +    if (ret)
+>> +        return ret;
+>> +
+>> +clk_unprepare:
+>> +    clk_bulk_unprepare(smmu->num_clks, smmu->clks);
+>> +    return ret;
+>>   }
+>>   static const struct dev_pm_ops arm_smmu_pm_ops = {
+>>
+> _______________________________________________
+> iommu mailing list
+> iommu@lists.linux-foundation.org
+> https://lists.linuxfoundation.org/mailman/listinfo/iommu
