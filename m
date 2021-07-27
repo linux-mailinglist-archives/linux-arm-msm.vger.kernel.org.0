@@ -2,101 +2,157 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 87B863D7D60
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jul 2021 20:26:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2824E3D7D64
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jul 2021 20:27:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230288AbhG0S0v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jul 2021 14:26:51 -0400
-Received: from mail-il1-f182.google.com ([209.85.166.182]:38663 "EHLO
-        mail-il1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231200AbhG0S0t (ORCPT
+        id S230186AbhG0S1Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jul 2021 14:27:25 -0400
+Received: from smtp-out1.suse.de ([195.135.220.28]:58182 "EHLO
+        smtp-out1.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229453AbhG0S1Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jul 2021 14:26:49 -0400
-Received: by mail-il1-f182.google.com with SMTP id h18so195241ilc.5;
-        Tue, 27 Jul 2021 11:26:48 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=2ZN+Os4KcblXwXlTL5vzGACuV2+/v2kG3feRmGVKyCo=;
-        b=BRzHPIoDVKNnF+bu6IZ/d3FagDEFXVA0zSgzabCx4LooKpQX3bTf+mR4KdcAzI1FYy
-         bnpoVL4KEZiZa8H+9D7PslSOtTiqTiYF9IEa1A0z+E35hBlsaKHMFo7R18rxweDKZHqa
-         whOhD54HRVGeg+Wv5WTwOJwIkU8P44QkCs+g0A4j2R/fEZnGiHC+mfwAJgZvjAfK/Qez
-         RNjoqjCsNNVvUF/hJPo/crFdz2JFpA0a9dM38H3Fgnks76s72TknnN8Mb4GG3hAcMdeC
-         KADI1pgXxqXR933G804S/e7NnssuZPDgX6x++vNBq38rQ0erhewmrPSEoyT5imLUOe7o
-         1u0w==
-X-Gm-Message-State: AOAM533KHYu2IKBCdmQSCuqRd059x+pgRXFgsFHVIpY1CUfXXGdpRdk8
-        alhJMwZobAtFDaAfTE+D2w==
-X-Google-Smtp-Source: ABdhPJxJ2NYaxQ1nbNMMl3dkF0KXaLypDNB2gEo4iR1RWB0PAxHYmIYgSOJlEvITbTdqjse0NV4VtA==
-X-Received: by 2002:a92:dc8a:: with SMTP id c10mr17390858iln.48.1627410408071;
-        Tue, 27 Jul 2021 11:26:48 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id h13sm2066103ila.44.2021.07.27.11.26.45
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Jul 2021 11:26:47 -0700 (PDT)
-Received: (nullmailer pid 3210656 invoked by uid 1000);
-        Tue, 27 Jul 2021 18:26:35 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
-        daniel.lezcano@linaro.org, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        steev@kali.org, robh+dt@kernel.org, viresh.kumar@linaro.org,
-        devicetree@vger.kernel.org, rui.zhang@intel.com, rjw@rjwysocki.net
-In-Reply-To: <20210727152512.1098329-7-thara.gopinath@linaro.org>
-References: <20210727152512.1098329-1-thara.gopinath@linaro.org> <20210727152512.1098329-7-thara.gopinath@linaro.org>
-Subject: Re: [Patch v4 6/6] dt-bindings: thermal: Add dt binding for QCOM LMh
-Date:   Tue, 27 Jul 2021 12:26:35 -0600
-Message-Id: <1627410395.886153.3210655.nullmailer@robh.at.kernel.org>
+        Tue, 27 Jul 2021 14:27:24 -0400
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out1.suse.de (Postfix) with ESMTPS id 7B13F22232;
+        Tue, 27 Jul 2021 18:27:23 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1627410443; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+        bh=sQ6ZV92dJ08qx/qugWtkh00/YBKXreku+jL667Muqu0=;
+        b=D0cLMEU9NsuCfTXvqQtEbX1HDtbx7wN14JyvEMEAicN/lujXZsMRpaMmHmozuySGPEJ1Uc
+        +69RTnQEkpLP/arxjF2vEaZXcAHsp2fphBALU2b6A8hVafYHVRfazH1OMxNQGrIqoGn+rL
+        F/hPnngabcThN20zbcKn02itDRhVtBU=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1627410443;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:  content-transfer-encoding:content-transfer-encoding;
+        bh=sQ6ZV92dJ08qx/qugWtkh00/YBKXreku+jL667Muqu0=;
+        b=kRlL1QTjVdWAi74feH3SDtwagrTqK/hY9VDUZ4wLDMoVDiGyXLHa17V1fp4fSe589gMwL3
+        4JeEzQqDDzsY/IDA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id E529F13B86;
+        Tue, 27 Jul 2021 18:27:22 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id MJLeNgpQAGGwGQAAMHmgww
+        (envelope-from <tzimmermann@suse.de>); Tue, 27 Jul 2021 18:27:22 +0000
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+To:     daniel@ffwll.ch, airlied@linux.ie, alexander.deucher@amd.com,
+        christian.koenig@amd.com, liviu.dudau@arm.com,
+        brian.starkey@arm.com, sam@ravnborg.org, bbrezillon@kernel.org,
+        nicolas.ferre@microchip.com, maarten.lankhorst@linux.intel.com,
+        mripard@kernel.org, stefan@agner.ch, alison.wang@nxp.com,
+        patrik.r.jakobsson@gmail.com, anitha.chrisanthus@intel.com,
+        robdclark@gmail.com, edmund.j.dea@intel.com, sean@poorly.run,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
+        jyri.sarha@iki.fi, tomba@kernel.org
+Cc:     amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH 00/14] drm: Make DRM's IRQ helpers legacy
+Date:   Tue, 27 Jul 2021 20:27:07 +0200
+Message-Id: <20210727182721.17981-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.32.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 27 Jul 2021 11:25:12 -0400, Thara Gopinath wrote:
-> Add dt binding documentation to describe Qualcomm
-> Limits Management Hardware node.
-> 
-> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
-> ---
-> 
-> v3->v4:
-> 	- Changed dt property qcom,lmh-cpu-id to qcom,lmh-cpu and made it
-> 	  a phandle pointing to the cpu node instead of a number as per
-> 	  Rob Herring's review comments.
-> 	- Added suffix -millicelsius to all temperature properties as per
-> 	  Rob Herring's review comments.
-> 	- Dropped unnecessary #includes in the example as pointed out by Bjorn.
-> 	- Other minor fixes.
-> 
->  .../devicetree/bindings/thermal/qcom-lmh.yaml | 100 ++++++++++++++++++
->  1 file changed, 100 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/thermal/qcom-lmh.yaml
-> 
+DRM's IRQ helpers are only helpful for old, non-KMS drivers. Move
+the code behind CONFIG_DRM_LEGACY. Convert KMS drivers to Linux
+IRQ interfaces.
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+DRM provides IRQ helpers for setting up, receiving and removing IRQ
+handlers. It's an abstraction over plain Linux functions. The code
+is mid-layerish with several callbacks to hook into the rsp drivers.
+Old UMS driver have their interrupts enabled via ioctl, so these
+abstractions makes some sense. Modern KMS manage all their interrupts
+internally. Using the DRM helpers adds indirection without benefits.
 
-yamllint warnings/errors:
+Most KMs drivers already use Linux IRQ functions instead of DRM's
+abstraction layer. Patches 1 to 12 convert the remaining ones.
+The patches also resolve a bug for devices without assigned interrupt
+number. DRM helpers don't test for IRQ_NOTCONNECTED, so drivers do
+not detect if the device has no interrupt assigned.
 
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/thermal/qcom-lmh.yaml: required:3: None is not of type 'string'
-	from schema $id: http://json-schema.org/draft-07/schema#
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/thermal/qcom-lmh.yaml: ignoring, error in schema: required: 3
-warning: no schema found in file: ./Documentation/devicetree/bindings/thermal/qcom-lmh.yaml
-Documentation/devicetree/bindings/thermal/qcom-lmh.example.dt.yaml:0:0: /example-0/lmh@17d70800: failed to match any schema with compatible: ['qcom,sdm845-lmh']
-Documentation/devicetree/bindings/thermal/qcom-lmh.example.dt.yaml:0:0: /example-1/lmh@17d78800: failed to match any schema with compatible: ['qcom,sdm845-lmh']
-\ndoc reference errors (make refcheckdocs):
+Patch 13 removes an unused function.
 
-See https://patchwork.ozlabs.org/patch/1510556
+Patch 14 moves the DRM IRQ helpers behind CONFIG_DRM_LEGACY. Only
+the old non-KMS drivers still use the functionality.
 
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
+Thomas Zimmermann (14):
+  drm/amdgpu: Convert to Linux IRQ interfaces
+  drm/arm/hdlcd: Convert to Linux IRQ interfaces
+  drm/atmel-hlcdc: Convert to Linux IRQ interfaces
+  drm/fsl-dcu: Convert to Linux IRQ interfaces
+  drm/gma500: Convert to Linux IRQ interfaces
+  drm/kmb: Convert to Linux IRQ interfaces
+  drm/msm: Convert to Linux IRQ interfaces
+  drm/mxsfb: Convert to Linux IRQ interfaces
+  drm/radeon: Convert to Linux IRQ interfaces
+  drm/tidss: Convert to Linux IRQ interfaces
+  drm/tilcdc: Convert to Linux IRQ interfaces
+  drm/vc4: Convert to Linux IRQ interfaces
+  drm: Remove unused devm_drm_irq_install()
+  drm: IRQ midlayer is now legacy
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c      |   1 -
+ drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c      |  21 ++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_irq.h      |   2 +-
+ drivers/gpu/drm/arm/hdlcd_drv.c              | 174 ++++++++++---------
+ drivers/gpu/drm/arm/hdlcd_drv.h              |   1 +
+ drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_dc.c |  85 +++++----
+ drivers/gpu/drm/drm_irq.c                    |  95 +---------
+ drivers/gpu/drm/drm_legacy_misc.c            |   3 +-
+ drivers/gpu/drm/drm_vblank.c                 |   8 +-
+ drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.c    |  78 +++++----
+ drivers/gpu/drm/gma500/power.c               |   1 +
+ drivers/gpu/drm/gma500/psb_drv.c             |   8 +-
+ drivers/gpu/drm/gma500/psb_drv.h             |   5 -
+ drivers/gpu/drm/gma500/psb_irq.c             |  26 ++-
+ drivers/gpu/drm/gma500/psb_irq.h             |   4 +-
+ drivers/gpu/drm/i810/i810_dma.c              |   3 +-
+ drivers/gpu/drm/kmb/kmb_drv.c                |  26 ++-
+ drivers/gpu/drm/mga/mga_dma.c                |   2 +-
+ drivers/gpu/drm/mga/mga_drv.h                |   1 -
+ drivers/gpu/drm/msm/msm_drv.c                | 113 +++++++-----
+ drivers/gpu/drm/msm/msm_kms.h                |   2 +-
+ drivers/gpu/drm/mxsfb/mxsfb_drv.c            |  81 +++++----
+ drivers/gpu/drm/mxsfb/mxsfb_drv.h            |   2 +
+ drivers/gpu/drm/r128/r128_cce.c              |   3 +-
+ drivers/gpu/drm/radeon/radeon_drv.c          |   4 -
+ drivers/gpu/drm/radeon/radeon_irq_kms.c      |  44 ++++-
+ drivers/gpu/drm/radeon/radeon_kms.h          |   4 -
+ drivers/gpu/drm/tidss/tidss_drv.c            |  15 +-
+ drivers/gpu/drm/tidss/tidss_drv.h            |   2 +
+ drivers/gpu/drm/tidss/tidss_irq.c            |  27 ++-
+ drivers/gpu/drm/tidss/tidss_irq.h            |   4 +-
+ drivers/gpu/drm/tilcdc/tilcdc_drv.c          |  51 ++++--
+ drivers/gpu/drm/tilcdc/tilcdc_drv.h          |   3 +
+ drivers/gpu/drm/vc4/vc4_drv.c                |   4 -
+ drivers/gpu/drm/vc4/vc4_drv.h                |   8 +-
+ drivers/gpu/drm/vc4/vc4_irq.c                |  48 +++--
+ drivers/gpu/drm/vc4/vc4_v3d.c                |  17 +-
+ drivers/gpu/drm/via/via_mm.c                 |   3 +-
+ include/drm/drm_device.h                     |  18 +-
+ include/drm/drm_drv.h                        |  44 +----
+ include/drm/drm_irq.h                        |  32 ----
+ include/drm/drm_legacy.h                     |   3 +
+ 42 files changed, 572 insertions(+), 504 deletions(-)
+ delete mode 100644 include/drm/drm_irq.h
 
-pip3 install dtschema --upgrade
 
-Please check and re-submit.
+base-commit: 2bda1ca4d4acb4892556fec3a7ea1f02afcd40bb
+prerequisite-patch-id: c2b2f08f0eccc9f5df0c0da49fa1d36267deb11d
+prerequisite-patch-id: c67e5d886a47b7d0266d81100837557fda34cb24
+--
+2.32.0
 
