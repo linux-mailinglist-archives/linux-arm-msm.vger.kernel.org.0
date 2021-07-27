@@ -2,103 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B3AC3D7A5C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jul 2021 18:01:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D2CA3D7B98
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jul 2021 19:07:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229569AbhG0QBL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jul 2021 12:01:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41300 "EHLO
+        id S229899AbhG0RHb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jul 2021 13:07:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229537AbhG0QBK (ORCPT
+        with ESMTP id S229687AbhG0RHb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jul 2021 12:01:10 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4005DC061757
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jul 2021 09:01:09 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id k4so7901468wms.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jul 2021 09:01:09 -0700 (PDT)
+        Tue, 27 Jul 2021 13:07:31 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15179C061757;
+        Tue, 27 Jul 2021 10:07:30 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id o44-20020a17090a0a2fb0290176ca3e5a2fso5766295pjo.1;
+        Tue, 27 Jul 2021 10:07:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=mime-version:from:date:message-id:subject:to:cc;
-        bh=fWpsiDeQTO8Umc8Q7ThOZBRvsvug1xPlx+gEHjpKDo8=;
-        b=NhSFf8RALH6r8ytAzyNnJjlDi7K3ZO2hoQov4SieOYP7hnmw/e9ee7qfc/BcRkisHV
-         w+LXRefabeKfixiOZ49LJ2Gq9TS7gLeQn3H3BvhQeJMi5Eco9Epn6n+ibO8enowAT9en
-         zCkdjNkk9ZKc9sWDfI6vaxLd4nvthjJR7FOi4WkHLDfm3Spe/7cDw7nV9fKf8UXsbD1r
-         9+e3nr2B5lT8rll0WXlHtW2Dn4IkYvNYxNce6+ljmBzaESd1RtbymOWcyLVAR1v4uGmd
-         N+Q3c7lGS8/EpA5mK3aYsSSZ6lTMKJts3qTmWIqMe7oYF7o8K1DG2RiMh7louHmwyITd
-         9wgQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Ye2Guv3cXyOW7ZfoRGmuIBwYadeC5LeAizWaptWnxQU=;
+        b=Z1bSFDe3kgYH5p2nFBUDVWm77dAOEJGPWxkCUql96WLMiFEoYeBTKvFTbx/umcJQU5
+         UbINaTymOqgZdwPpsTOurZuohAYKULs2ULtg9XWzObURUMHo1I0xrnuLDy3acuK9r0sg
+         qD3rcO2in+sgej6DPxdZ8dSJerd4ChdqW/U2abBjqcFkhDPwiUWu9QUs9YXxoDea2BVK
+         kNB21wWs7MkY2YMHQYPe/+hQO5+l3TNYqhzbaQWFoXcyOXKu4WmYQYJ+ksix/Rj6riTE
+         ELskoNf+c3o/W4UZSDxE0kpixzXSE7nxse8OR5lyWg4p+JKqG5vHnDW01/Av7JappEZV
+         xPLA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
-        bh=fWpsiDeQTO8Umc8Q7ThOZBRvsvug1xPlx+gEHjpKDo8=;
-        b=biySoRqzO7Hgdu/ilatZ64oQK/xoyGvo0+VIVptomhB7HM9lhJEG1Q7AkAwfvErYfp
-         gA13NrqfE30EJyA7WkqbtwYLWkVLtdEwnWVmxxeFOHMVovMiaJfAsprk+HRSxHcwDqgq
-         VTklf88AcADgEiQmLGL8qCyKHuZkxQcjmmCawH34RkW7x1SYVIzM83EbUcMPYbq2TYIk
-         QEKtSna+zG8RLszqNfvEQMShJ/RA106kHF++8Y8MITjWwn+Z/43ZFn7d0JX3tG8G9sAa
-         gafsy04G/6/REfKOYx6UIPWmRJJYlom2MKuS+6L533UwvLl85CEre0qsWNON2rRdZ5tJ
-         2ZBA==
-X-Gm-Message-State: AOAM530lsmOIEc56Um6IvhcvxgEsXyHhK09oa9KmXIv7Mqul7EkBZcFM
-        DtBuy6CM6GJMVKY097I41Y2VzqudNuQfbA4u+V8=
-X-Google-Smtp-Source: ABdhPJxN2KtavHy/pdkhzu3eo2D9p8fkth7CptRD+0XpNLWfxXlcUGZNjiZbbC6EfWX1xl8ICrC13JS3KrlzMfjGrlI=
-X-Received: by 2002:a05:600c:19cb:: with SMTP id u11mr13331594wmq.175.1627401667801;
- Tue, 27 Jul 2021 09:01:07 -0700 (PDT)
-MIME-Version: 1.0
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Ye2Guv3cXyOW7ZfoRGmuIBwYadeC5LeAizWaptWnxQU=;
+        b=JBLX/rgBApbQhZmfasASUtLqPuf2flYpzraWU6ZGFR+/oLoJo8wRdidn/3lDUXdVQs
+         B5amdvux0VcA0OCdBuLikx1v9b763G3xVF5nxB6zElal1FxKAfCwuwjxMh5nV4tQxXh9
+         5WAAAGmBvwSt1B1TQzi60WiVwucJeg+gYWe6Bi3MQ4l0n8LFImz8NPk6zbOLi0w+N2Jc
+         2F40qhS4pXOsdoSAkZmb8vYBhEdGIJqQBCXaS6S8K6f0/qRzdxAc4HW35tMwv9lQYoJL
+         QJHFFLZnjT/EGku/gkJFD8vxKyy6S0CxV+1BOCelokvixysqNWbOJnK+Aq5yanVaCK7F
+         BzcQ==
+X-Gm-Message-State: AOAM531cXkLrbF8+YpdRDw9WwoaEMKKVezvFOkUM1xGtETtoaFEJvFkd
+        /Y1olboqPhso/TMDiiNlTsc=
+X-Google-Smtp-Source: ABdhPJxAcX4DxFLgF/ksbBt+WjNMVAoKTXfaxSyzS6VCyHl7EdFbMun2/NlE3Fjd2qIVHa8LYP+jsA==
+X-Received: by 2002:a17:90b:1109:: with SMTP id gi9mr5141879pjb.61.1627405649496;
+        Tue, 27 Jul 2021 10:07:29 -0700 (PDT)
+Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
+        by smtp.gmail.com with ESMTPSA id z6sm4677930pgs.4.2021.07.27.10.07.27
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 27 Jul 2021 10:07:28 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 27 Jul 2021 09:05:17 -0700
-Message-ID: <CAF6AEGubeV_uzWhsqp_+EmQmPcPatnqWOQnARoing2YvQOHbyg@mail.gmail.com>
-Subject: [pull] drm/msm: drm-msm-fixes-2021-07-27 for v5.14-rc4
-To:     Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
-Cc:     freedreno <freedreno@lists.freedesktop.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+To:     dri-devel@lists.freedesktop.org
+Cc:     Rob Clark <robdclark@chromium.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Bernard Zhao <bernard@vivo.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Eric Anholt <eric@anholt.net>,
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), Jonathan Marek <jonathan@marek.ca>,
         Jordan Crouse <jordan@cosmicpenguin.net>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        John Stultz <john.stultz@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        "Kristian H. Kristensen" <hoegsberg@google.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        linaro-mm-sig@lists.linaro.org (moderated list:DMA BUFFER SHARING
+        FRAMEWORK),
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        linux-kernel@vger.kernel.org (open list),
+        linux-media@vger.kernel.org (open list:DMA BUFFER SHARING FRAMEWORK),
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Zhenzhong Duan <zhenzhong.duan@gmail.com>
+Subject: [PATCH v3 00/13] drm/msm: drm scheduler conversion and cleanups
+Date:   Tue, 27 Jul 2021 10:11:16 -0700
+Message-Id: <20210727171143.2549475-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.31.1
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dave & Daniel,
+From: Rob Clark <robdclark@chromium.org>
 
-A few fixes for v5.14, including a fix for a crash if display triggers
-an iommu fault (which tends to happen at probe time on devices with
-bootloader fw that leaves display enabled as kernel starts)
+Conversion to gpu_scheduler, and bonus removal of
+drm_gem_object_put_locked()
 
-The following changes since commit ff1176468d368232b684f75e82563369208bc371:
+v2: Fix priority mixup (msm UAPI has lower numeric priority value as
+    higher priority, inverse of drm/scheduler) and add some comments
+    in the UAPI header to clarify.
 
-  Linux 5.14-rc3 (2021-07-25 15:35:14 -0700)
+    Now that we move active refcnt get into msm_gem_submit, add a
+    patch to mark all bos busy before pinning, to avoid evicting bos
+    used in same batch.
 
-are available in the Git repository at:
+    Fix bo locking for cmdstream dumping ($debugfs/n/{rd,hangrd})
 
-  https://gitlab.freedesktop.org/drm/msm.git drm-msm-fixes-2021-07-27
+v3: Add a patch to drop submit bo_list and instead use -EALREADY
+    to detect errors with same obj appearing multiple times in the
+    submit ioctl bos table.  Otherwise, with struct_mutex locking
+    dropped, we'd need to move insertion into and removal from
+    bo_list under the obj lock.
 
-for you to fetch changes up to fc71c9e6f41f9912d22a75dfa76bc10811af7e22:
+Rob Clark (13):
+  drm/msm: Docs and misc cleanup
+  drm/msm: Small submitqueue creation cleanup
+  drm/msm: drop drm_gem_object_put_locked()
+  drm: Drop drm_gem_object_put_locked()
+  drm/msm/submit: Simplify out-fence-fd handling
+  drm/msm: Consolidate submit bo state
+  drm/msm: Track "seqno" fences by idr
+  drm/msm: Return ERR_PTR() from submit_create()
+  drm/msm: Conversion to drm scheduler
+  drm/msm: Drop submit bo_list
+  drm/msm: Drop struct_mutex in submit path
+  drm/msm: Utilize gpu scheduler priorities
+  drm/msm/gem: Mark active before pinning
 
-  drm/msm/dp: Initialize dp->aux->drm_dev before registration
-(2021-07-27 08:14:58 -0700)
+ drivers/gpu/drm/drm_gem.c                   |  22 --
+ drivers/gpu/drm/msm/Kconfig                 |   1 +
+ drivers/gpu/drm/msm/adreno/a5xx_debugfs.c   |   4 +-
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c       |   6 +-
+ drivers/gpu/drm/msm/adreno/a5xx_power.c     |   2 +-
+ drivers/gpu/drm/msm/adreno/a5xx_preempt.c   |   7 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c       |  12 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c       |   2 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c |   4 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c     |   6 +-
+ drivers/gpu/drm/msm/msm_drv.c               |  30 +-
+ drivers/gpu/drm/msm/msm_fence.c             |  39 ---
+ drivers/gpu/drm/msm/msm_fence.h             |   2 -
+ drivers/gpu/drm/msm/msm_gem.c               |  94 +-----
+ drivers/gpu/drm/msm/msm_gem.h               |  47 +--
+ drivers/gpu/drm/msm/msm_gem_submit.c        | 344 ++++++++++++--------
+ drivers/gpu/drm/msm/msm_gpu.c               |  46 +--
+ drivers/gpu/drm/msm/msm_gpu.h               |  78 ++++-
+ drivers/gpu/drm/msm/msm_rd.c                |   6 +-
+ drivers/gpu/drm/msm/msm_ringbuffer.c        |  70 +++-
+ drivers/gpu/drm/msm/msm_ringbuffer.h        |  12 +
+ drivers/gpu/drm/msm/msm_submitqueue.c       |  53 ++-
+ include/drm/drm_gem.h                       |   2 -
+ include/uapi/drm/msm_drm.h                  |  14 +-
+ 24 files changed, 516 insertions(+), 387 deletions(-)
 
-----------------------------------------------------------------
-Bjorn Andersson (1):
-      drm/msm/dp: Initialize the INTF_CONFIG register
+-- 
+2.31.1
 
-Kuogee Hsieh (2):
-      drm/msm/dp: use dp_ctrl_off_link_stream during PHY compliance test run
-      drm/msm/dp: signal audio plugged change at dp_pm_resume
-
-Rob Clark (1):
-      drm/msm: Fix display fault handling
-
-Robert Foss (1):
-      drm/msm/dpu: Fix sm8250_mdp register length
-
-Sean Paul (1):
-      drm/msm/dp: Initialize dp->aux->drm_dev before registration
-
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  2 +-
- drivers/gpu/drm/msm/dp/dp_catalog.c            |  1 +
- drivers/gpu/drm/msm/dp/dp_ctrl.c               |  2 +-
- drivers/gpu/drm/msm/dp/dp_display.c            |  5 +++++
- drivers/gpu/drm/msm/msm_iommu.c                | 11 ++++++++++-
- 5 files changed, 18 insertions(+), 3 deletions(-)
