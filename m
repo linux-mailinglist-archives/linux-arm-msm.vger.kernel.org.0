@@ -2,24 +2,24 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 51AC93D7081
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jul 2021 09:42:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA88B3D70AE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jul 2021 09:57:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235829AbhG0HmS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jul 2021 03:42:18 -0400
-Received: from mail-0301.mail-europe.com ([188.165.51.139]:45327 "EHLO
+        id S235679AbhG0H5b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jul 2021 03:57:31 -0400
+Received: from mail-0301.mail-europe.com ([188.165.51.139]:54786 "EHLO
         mail-0301.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235675AbhG0HmR (ORCPT
+        with ESMTP id S235629AbhG0H5b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jul 2021 03:42:17 -0400
-Date:   Tue, 27 Jul 2021 07:42:06 +0000
+        Tue, 27 Jul 2021 03:57:31 -0400
+Date:   Tue, 27 Jul 2021 07:57:19 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1627371734;
-        bh=HiZPZfrpeXDNpkWKRFr9rPzKk6vLeH+/6Vh/isEMjz0=;
+        s=protonmail; t=1627372647;
+        bh=u3G2fqXXeibWLhXcsZ5/K1ahfoesTPk2yC7KcHsatq8=;
         h=Date:To:From:Cc:Reply-To:Subject:From;
-        b=PKTYaCQ5sXNMylG/ql9dF/fScBSqVDnjze4z3aNKjvnXRM7irdkuv9WsezL2YXrs+
-         tBxCmeAamVY4HUq2KUVW4OQphZ0xPyoC0TVVps5Il9Hu+Nc/HqrW99rAc7xX/Nh3vt
-         dzX2qc7JE0JJzFK4XR/enGA2tSC/inZzSQtyLKGE=
+        b=P7aHOGJuRFe6GY24c87woPSnvd4dK2TzwKgBAkzI5DlnSn4HlQErw0S62KFUnjUdE
+         Z/BLKqMOItmzsp4Z9nL1JMCi+7dkeGwmE3yd0o1gzFmlrwmECuWtXRKmHWY+p9Ni4l
+         mqi5+RIw+6XCIkueSeUIe73P3R/ZrIOJnmznnwVQ=
 To:     linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>
 From:   Yassine Oudjana <y.oudjana@protonmail.com>
@@ -27,8 +27,8 @@ Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
         devicetree@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
         linux-kernel@vger.kernel.org
 Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
-Subject: [PATCH] arm64: dts: qcom: msm8996: Add CPU cooling support
-Message-ID: <jmayJcXoExAK2G7UBIXMz5CDN0BYgYkFZguHlPNRFOU@cp4-web-038.plabs.ch>
+Subject: [PATCH] arm64: dts: qcom: msm8996: Change power domain for mdp_smmu
+Message-ID: <ziJMQ8GqduRgb0M8oiP0NHbAQYTdBU2gFjzyQxhmts@cp3-web-029.plabs.ch>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -41,166 +41,27 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add second trip points and cooling maps for all CPUs.
+The MDP SMMU is powered by MMAGIC_MDSS_GDSC. Change power-domains to match.
 
 Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 84 +++++++++++++++++++++++++--
- 1 file changed, 80 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qc=
 om/msm8996.dtsi
-index bfd0acfcce7e..0327e6f19fcb 100644
+index 78c55ca10ba9..dd241dc7c124 100644
 --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
 +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -3591,7 +3591,13 @@ cpu0-thermal {
+@@ -1998,7 +1998,7 @@ mdp_smmu: iommu@d00000 {
+ =09=09=09=09 <&mmcc SMMU_MDP_AXI_CLK>;
+ =09=09=09clock-names =3D "iface", "bus";
 =20
- =09=09=09trips {
- =09=09=09=09cpu0_alert0: trip-point0 {
--=09=09=09=09=09temperature =3D <75000>;
-+=09=09=09=09=09temperature =3D <85000>;
-+=09=09=09=09=09hysteresis =3D <2000>;
-+=09=09=09=09=09type =3D "passive";
-+=09=09=09=09};
-+
-+=09=09=09=09cpu0_alert1: trip-point1 {
-+=09=09=09=09=09temperature =3D <90000>;
- =09=09=09=09=09hysteresis =3D <2000>;
- =09=09=09=09=09type =3D "passive";
- =09=09=09=09};
-@@ -3602,6 +3608,19 @@ cpu0_crit: cpu_crit {
- =09=09=09=09=09type =3D "critical";
- =09=09=09=09};
- =09=09=09};
-+
-+=09=09=09cooling-maps {
-+=09=09=09=09map0 {
-+=09=09=09=09=09trip =3D <&cpu0_alert0>;
-+=09=09=09=09=09cooling-device =3D <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT=
->,
-+=09=09=09=09=09=09=09 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+=09=09=09=09};
-+=09=09=09=09map1 {
-+=09=09=09=09=09trip =3D <&cpu0_alert1>;
-+=09=09=09=09=09cooling-device =3D <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT=
->,
-+=09=09=09=09=09=09=09 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+=09=09=09=09};
-+=09=09=09};
+-=09=09=09power-domains =3D <&mmcc MDSS_GDSC>;
++=09=09=09power-domains =3D <&mmcc MMAGIC_MDSS_GDSC>;
  =09=09};
 =20
- =09=09cpu1-thermal {
-@@ -3612,7 +3631,13 @@ cpu1-thermal {
-=20
- =09=09=09trips {
- =09=09=09=09cpu1_alert0: trip-point0 {
--=09=09=09=09=09temperature =3D <75000>;
-+=09=09=09=09=09temperature =3D <85000>;
-+=09=09=09=09=09hysteresis =3D <2000>;
-+=09=09=09=09=09type =3D "passive";
-+=09=09=09=09};
-+
-+=09=09=09=09cpu1_alert1: trip-point1 {
-+=09=09=09=09=09temperature =3D <90000>;
- =09=09=09=09=09hysteresis =3D <2000>;
- =09=09=09=09=09type =3D "passive";
- =09=09=09=09};
-@@ -3623,6 +3648,19 @@ cpu1_crit: cpu_crit {
- =09=09=09=09=09type =3D "critical";
- =09=09=09=09};
- =09=09=09};
-+
-+=09=09=09cooling-maps {
-+=09=09=09=09map0 {
-+=09=09=09=09=09trip =3D <&cpu1_alert0>;
-+=09=09=09=09=09cooling-device =3D <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT=
->,
-+=09=09=09=09=09=09=09 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+=09=09=09=09};
-+=09=09=09=09map1 {
-+=09=09=09=09=09trip =3D <&cpu1_alert1>;
-+=09=09=09=09=09cooling-device =3D <&CPU0 THERMAL_NO_LIMIT THERMAL_NO_LIMIT=
->,
-+=09=09=09=09=09=09=09 <&CPU1 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+=09=09=09=09};
-+=09=09=09};
- =09=09};
-=20
- =09=09cpu2-thermal {
-@@ -3633,7 +3671,13 @@ cpu2-thermal {
-=20
- =09=09=09trips {
- =09=09=09=09cpu2_alert0: trip-point0 {
--=09=09=09=09=09temperature =3D <75000>;
-+=09=09=09=09=09temperature =3D <85000>;
-+=09=09=09=09=09hysteresis =3D <2000>;
-+=09=09=09=09=09type =3D "passive";
-+=09=09=09=09};
-+
-+=09=09=09=09cpu2_alert1: trip-point1 {
-+=09=09=09=09=09temperature =3D <90000>;
- =09=09=09=09=09hysteresis =3D <2000>;
- =09=09=09=09=09type =3D "passive";
- =09=09=09=09};
-@@ -3644,6 +3688,19 @@ cpu2_crit: cpu_crit {
- =09=09=09=09=09type =3D "critical";
- =09=09=09=09};
- =09=09=09};
-+
-+=09=09=09cooling-maps {
-+=09=09=09=09map0 {
-+=09=09=09=09=09trip =3D <&cpu2_alert0>;
-+=09=09=09=09=09cooling-device =3D <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT=
->,
-+=09=09=09=09=09=09=09 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+=09=09=09=09};
-+=09=09=09=09map1 {
-+=09=09=09=09=09trip =3D <&cpu2_alert1>;
-+=09=09=09=09=09cooling-device =3D <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT=
->,
-+=09=09=09=09=09=09=09 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+=09=09=09=09};
-+=09=09=09};
- =09=09};
-=20
- =09=09cpu3-thermal {
-@@ -3654,7 +3711,13 @@ cpu3-thermal {
-=20
- =09=09=09trips {
- =09=09=09=09cpu3_alert0: trip-point0 {
--=09=09=09=09=09temperature =3D <75000>;
-+=09=09=09=09=09temperature =3D <85000>;
-+=09=09=09=09=09hysteresis =3D <2000>;
-+=09=09=09=09=09type =3D "passive";
-+=09=09=09=09};
-+
-+=09=09=09=09cpu3_alert1: trip-point1 {
-+=09=09=09=09=09temperature =3D <90000>;
- =09=09=09=09=09hysteresis =3D <2000>;
- =09=09=09=09=09type =3D "passive";
- =09=09=09=09};
-@@ -3665,6 +3728,19 @@ cpu3_crit: cpu_crit {
- =09=09=09=09=09type =3D "critical";
- =09=09=09=09};
- =09=09=09};
-+
-+=09=09=09cooling-maps {
-+=09=09=09=09map0 {
-+=09=09=09=09=09trip =3D <&cpu3_alert0>;
-+=09=09=09=09=09cooling-device =3D <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT=
->,
-+=09=09=09=09=09=09=09 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+=09=09=09=09};
-+=09=09=09=09map1 {
-+=09=09=09=09=09trip =3D <&cpu3_alert1>;
-+=09=09=09=09=09cooling-device =3D <&CPU2 THERMAL_NO_LIMIT THERMAL_NO_LIMIT=
->,
-+=09=09=09=09=09=09=09 <&CPU3 THERMAL_NO_LIMIT THERMAL_NO_LIMIT>;
-+=09=09=09=09};
-+=09=09=09};
- =09=09};
-=20
- =09=09gpu-thermal-top {
+ =09=09venus_smmu: iommu@d40000 {
 --=20
 2.32.0
 
