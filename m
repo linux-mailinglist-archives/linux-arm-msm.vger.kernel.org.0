@@ -2,130 +2,308 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 896D33D7D3A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jul 2021 20:14:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B5A03D7D3C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 27 Jul 2021 20:15:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229797AbhG0SOg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jul 2021 14:14:36 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55702 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229729AbhG0SOg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jul 2021 14:14:36 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 083F760238;
-        Tue, 27 Jul 2021 18:14:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1627409676;
-        bh=nn9R7wVKtzsVNQaCXM+thlxjjbgQUZyYdGa8T/TxtpI=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=RgkHJxIrDEnFiRnJT387ZWHYx37YvH32Je11nYiuGCoy1AUPkXS/xfw/qpqgLVpox
-         WBwD+QBmJ/BrOoxoX6VtheBWZouy/vP+5QRSOP0o4/DWhXvQpPEA23tyn/37VJuwjX
-         JSuzjH9S6RdGieKk65F0pyB1MHCxYb+WrWDTHGphVzbU697YcKgD0kj3DUW4TRntwc
-         e61treKXiDImGf39DzGJsl+NIXN3dLLjigpeVeBF0KnvBaiJFzdEVP/4Foy4rxUYQi
-         g8v4EgpfDcNunxLLsCPJSObph2fmijIZ9gopmcmHk8zA8CTwpjLs1bZBzi/MY1RXr8
-         CbTOCilxPPDSw==
-Content-Type: text/plain; charset="utf-8"
+        id S229826AbhG0SPg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jul 2021 14:15:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44994 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229453AbhG0SPf (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 27 Jul 2021 14:15:35 -0400
+Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7393CC061757
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jul 2021 11:15:34 -0700 (PDT)
+Received: by mail-lj1-x22d.google.com with SMTP id m9so17064163ljp.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jul 2021 11:15:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=yfV0E1rFabhIiXO9mindIm1FyA1NTfSqirbLb3xTqOM=;
+        b=DlQr/72gW8MiFQvMBhpXLWKModG5pDJz2nzPZrcdGRnR88A89nMLgO4ndvwzrVq7MP
+         j7gZFNytWI/9VYzjv4xheudGu5EJWnvxo2bhB9HsbpID6s4B3XBM7PZZgMisTJk6JcD5
+         hlmu7KANSwGCvc8sLV8gGPfifnt0qfeeV4uWn/NrH02WERF/w43wzyNVfrdDWf3mF6wR
+         TyacZiX1f8ZeAm35CRunH0HK6dmaWmaHR5doB98IY/vyYVh62bFc25iDHqhr7OxGHZ/i
+         LU83saIa6jUFvE36kcfdIDc+fg4neF0E52ZNZ910DsrczrIWTvRZwibsgaffHpeAmcHd
+         lTrA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=yfV0E1rFabhIiXO9mindIm1FyA1NTfSqirbLb3xTqOM=;
+        b=t92YS21GI3YzlFyn7W3wZEkT66vxQNr9eNg0nb5L5mGjwQJRaLT9ARWCl3rdJSWYD+
+         7bd9uHJ77taxgfdRYpQij/GjKcJ/tn2ZNoL/3zF3giXVYpGzL3IYzUxFqZUoOo5f+vDi
+         42vPKlggJVyVbLbN+8bnkAUwrN/jiAzsIcwsAJYkNKS7vgaNIbIUreMWROfdWNOAQRkg
+         HJvOZQx04SKkF8UDKkZ+6U5/4PhoJy8KzVQ1o5/IHIJnd1QVAr6yND6AZOJwSCaBoKxW
+         U9bylI9SnmyVCtpkQt++5cebQe1QDOH4GiD/g9YG//xhxV+e9ztNLGqB0UjWnVsn0avk
+         pEsg==
+X-Gm-Message-State: AOAM532r5zz66MeIG2VHTRvdcVABqYxP0O4qS6Y4AuRHc1ifk3HfhGZw
+        dXX+7D15qSCG84uK+ZaTTvuv978BBOVvsg==
+X-Google-Smtp-Source: ABdhPJyD/9m/5S9B1FvDkmMVokgEniXNgjTh2QqES4iZRHkZQDQxjd6Ec63exkhRYlvRkShkmwa9lw==
+X-Received: by 2002:a2e:b541:: with SMTP id a1mr16208316ljn.445.1627409732683;
+        Tue, 27 Jul 2021 11:15:32 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id k10sm355234lfg.35.2021.07.27.11.15.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 27 Jul 2021 11:15:32 -0700 (PDT)
+Subject: Re: [PATCH 1/5] drm/msm/dp: Remove global g_dp_display variable
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Kuogee Hsieh <khsieh@codeaurora.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+References: <20210725042436.3967173-1-bjorn.andersson@linaro.org>
+ <20210725042436.3967173-2-bjorn.andersson@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <026a84c3-c2d2-0ea7-0bf6-a6580abad0ef@linaro.org>
+Date:   Tue, 27 Jul 2021 21:15:31 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20210727092613.23056-1-shawn.guo@linaro.org>
-References: <20210727092613.23056-1-shawn.guo@linaro.org>
-Subject: Re: [PATCH] clk: qcom: smd-rpm: Fix MSM8936 RPM_SMD_PCNOC_A_CLK
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        Shawn Guo <shawn.guo@linaro.org>
-To:     Michael Turquette <mturquette@baylibre.com>,
-        Shawn Guo <shawn.guo@linaro.org>
-Date:   Tue, 27 Jul 2021 11:14:34 -0700
-Message-ID: <162740967472.2368309.11298377107562326191@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+In-Reply-To: <20210725042436.3967173-2-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Shawn Guo (2021-07-27 02:26:13)
-> Commit a0384ecfe2aa ("clk: qcom: smd-rpm: De-duplicate identical
-> entries") introduces the following regression on MSM8936/MSM8939, as
-> RPM_SMD_PCNOC_A_CLK gets pointed to pcnoc_clk by mistake.  Fix it by
-> correcting the clock to pcnoc_a_clk.
->=20
-> [    1.307363] Unable to handle kernel NULL pointer dereference at virtua=
-l address 0000000000000000
-> [    1.313593] Mem abort info:
-> [    1.322512]   ESR =3D 0x96000004
-> [    1.325132]   EC =3D 0x25: DABT (current EL), IL =3D 32 bits
-> [    1.338872]   SET =3D 0, FnV =3D 0
-> [    1.355483]   EA =3D 0, S1PTW =3D 0
-> [    1.368702]   FSC =3D 0x04: level 0 translation fault
-> [    1.383294] Data abort info:
-> [    1.398292]   ISV =3D 0, ISS =3D 0x00000004
-> [    1.398297]   CM =3D 0, WnR =3D 0
-> [    1.398301] [0000000000000000] user address but active_mm is swapper
-> [    1.404193] Internal error: Oops: 96000004 [#1] PREEMPT SMP
-> [    1.420596] Modules linked in:
-> [    1.420604] CPU: 0 PID: 5 Comm: kworker/0:0 Not tainted 5.14.0-rc3+ #1=
-98
-> [    1.441010] pc : __clk_register+0x48/0x780
-> [    1.446045] lr : __clk_register+0x3c/0x780
-> [    1.449953] sp : ffff800010063440
-> [    1.454031] x29: ffff800010063440 x28: 0000000000000004 x27: 000000000=
-0000066
-> [    1.457423] x26: 0000000000000001 x25: 000000007fffffff x24: ffff80001=
-0f9f388
-> [    1.464540] x23: ffff00007fc12a90 x22: ffff0000034b2010 x21: 000000000=
-0000000
-> [    1.471658] x20: ffff800010f9fff8 x19: ffff00000152a700 x18: 000000000=
-0000001
-> [    1.478778] x17: ffff00007fbd40c8 x16: 0000000000000460 x15: 000000000=
-0000465
-> [    1.485895] x14: ffffffffffffffff x13: 746e756f635f7265 x12: 696669746=
-f6e5f6b
-> [    1.493013] x11: 0000000000000006 x10: 0000000000000000 x9 : 000000000=
-0000000
-> [    1.500131] x8 : ffff00000152a800 x7 : 0000000000000000 x6 : 000000000=
-000003f
-> [    1.507249] x5 : 0000000000000040 x4 : 0000000000000000 x3 : 000000000=
-0000004
-> [    1.514367] x2 : 0000000000000000 x1 : 0000000000000cc0 x0 : ffff00000=
-152a700
-> [    1.521486] Call trace:
-> [    1.528598]  __clk_register+0x48/0x780
-> [    1.530855]  clk_hw_register+0x20/0x60
-> [    1.534674]  devm_clk_hw_register+0x50/0xa8
-> [    1.538408]  rpm_smd_clk_probe+0x1a4/0x260
-> [    1.542488]  platform_probe+0x68/0xd8
-> [    1.546653]  really_probe+0x140/0x2f8
-> [    1.550386]  __driver_probe_device+0x78/0xe0
-> [    1.554033]  driver_probe_device+0x80/0x110
-> [    1.558373]  __device_attach_driver+0x90/0xe0
-> [    1.562280]  bus_for_each_drv+0x78/0xc8
-> [    1.566793]  __device_attach+0xf0/0x150
-> [    1.570438]  device_initial_probe+0x14/0x20
-> [    1.574259]  bus_probe_device+0x9c/0xa8
-> [    1.578425]  device_add+0x378/0x870
-> [    1.582243]  of_device_add+0x44/0x60
-> [    1.585716]  of_platform_device_create_pdata+0xc0/0x110
-> [    1.589538]  of_platform_bus_create+0x17c/0x388
-> [    1.594485]  of_platform_populate+0x50/0xf0
-> [    1.598998]  qcom_smd_rpm_probe+0xd4/0x128
-> [    1.603164]  rpmsg_dev_probe+0xbc/0x1a8
-> [    1.607330]  really_probe+0x140/0x2f8
-> [    1.611063]  __driver_probe_device+0x78/0xe0
-> [    1.614883]  driver_probe_device+0x80/0x110
-> [    1.619224]  __device_attach_driver+0x90/0xe0
-> [    1.623131]  bus_for_each_drv+0x78/0xc8
-> [    1.627643]  __device_attach+0xf0/0x150
-> [    1.631289]  device_initial_probe+0x14/0x20
-> [    1.635109]  bus_probe_device+0x9c/0xa8
-> [    1.639275]  device_add+0x378/0x870
-> [    1.643095]  device_register+0x20/0x30
-> [    1.646567]  rpmsg_register_device+0x54/0x90
-> [    1.650387]  qcom_channel_state_worker+0x168/0x288
-> [    1.654814]  process_one_work+0x1a0/0x328
-> [    1.659415]  worker_thread+0x4c/0x420
-> [    1.663494]  kthread+0x150/0x160
-> [    1.667138]  ret_from_fork+0x10/0x18
-> [    1.670442] Code: 97f56b92 b40034a0 aa0003f3 52819801 (f94002a0)
-> [    1.674004] ---[ end trace 412fa6f47384cdfe ]---
+On 25/07/2021 07:24, Bjorn Andersson wrote:
+> As the Qualcomm DisplayPort driver only supports a single instance of
+> the driver the commonly used struct dp_display is kept in a global
+> variable. As we introduce additional instances this obviously doesn't
+> work.
+> 
+> Replace this with a combination of existing references to adjacent
+> objects and drvdata.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>   drivers/gpu/drm/msm/dp/dp_display.c | 78 ++++++++++++++---------------
+>   1 file changed, 37 insertions(+), 41 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 70b319a8fe83..8696b36d30e4 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -27,7 +27,6 @@
+>   #include "dp_audio.h"
+>   #include "dp_debug.h"
+>   
+> -static struct msm_dp *g_dp_display;
+>   #define HPD_STRING_SIZE 30
+>   
+>   enum {
+> @@ -122,6 +121,13 @@ static const struct of_device_id dp_dt_match[] = {
+>   	{}
+>   };
+>   
+> +static struct dp_display_private *dev_to_dp_display_private(struct device *dev)
 
-Applied to clk-fixes
+dev_get_dp_display_private() ?
+
+> +{
+> +	struct msm_dp *dp = dev_get_drvdata(dev);
+> +
+> +	return container_of(dp, struct dp_display_private, dp_display);
+> +}
+> +
+
+As a matter of preference, it might be cleaner to inline dev_get_drvdata 
+and then define msm_dp_get_private to convert from msm_dp to 
+dp_display_private, see below.
+
+>   static int dp_add_event(struct dp_display_private *dp_priv, u32 event,
+>   						u32 data, u32 delay)
+>   {
+> @@ -198,14 +204,16 @@ static int dp_display_bind(struct device *dev, struct device *master,
+>   			   void *data)
+>   {
+>   	int rc = 0;
+> -	struct dp_display_private *dp;
+> +	struct dp_display_private *dp = dev_to_dp_display_private(dev);
+>   	struct drm_device *drm;
+>   	struct msm_drm_private *priv;
+>   
+>   	drm = dev_get_drvdata(master);
+>   
+> -	dp = container_of(g_dp_display,
+> -			struct dp_display_private, dp_display);
+> +	if (!dp) {
+
+This is not correct, if I'm not mistaken. you wanted to check if dev's 
+private data is NULL (correct check), but ended up checking whether the 
+result of container_of is NULL (incorrect).
+
+> +		DRM_ERROR("DP driver bind failed. Invalid driver data\n");
+> +		return -EINVAL;
+> +	}
+>   
+>   	dp->dp_display.drm_dev = drm;
+>   	priv = drm->dev_private;
+> @@ -240,12 +248,14 @@ static int dp_display_bind(struct device *dev, struct device *master,
+>   static void dp_display_unbind(struct device *dev, struct device *master,
+>   			      void *data)
+>   {
+> -	struct dp_display_private *dp;
+> +	struct dp_display_private *dp = dev_to_dp_display_private(dev);
+>   	struct drm_device *drm = dev_get_drvdata(master);
+>   	struct msm_drm_private *priv = drm->dev_private;
+>   
+> -	dp = container_of(g_dp_display,
+> -			struct dp_display_private, dp_display);
+> +	if (!dp) {
+> +		DRM_ERROR("Invalid DP driver data\n");
+> +		return;
+> +	}
+>   
+>   	dp_power_client_deinit(dp->power);
+>   	dp_aux_unregister(dp->aux);
+> @@ -376,17 +386,14 @@ static void dp_display_host_deinit(struct dp_display_private *dp)
+>   static int dp_display_usbpd_configure_cb(struct device *dev)
+>   {
+>   	int rc = 0;
+> -	struct dp_display_private *dp;
+> +	struct dp_display_private *dp = dev_to_dp_display_private(dev);
+>   
+> -	if (!dev) {
+> -		DRM_ERROR("invalid dev\n");
+> -		rc = -EINVAL;
+> +	if (!dp) {
+> +		DRM_ERROR("no driver data found\n");
+> +		rc = -ENODEV;
+>   		goto end;
+>   	}
+>   
+> -	dp = container_of(g_dp_display,
+> -			struct dp_display_private, dp_display);
+> -
+>   	dp_display_host_init(dp, false);
+>   
+>   	rc = dp_display_process_hpd_high(dp);
+> @@ -397,17 +404,14 @@ static int dp_display_usbpd_configure_cb(struct device *dev)
+>   static int dp_display_usbpd_disconnect_cb(struct device *dev)
+>   {
+>   	int rc = 0;
+> -	struct dp_display_private *dp;
+> +	struct dp_display_private *dp = dev_to_dp_display_private(dev);
+>   
+> -	if (!dev) {
+> -		DRM_ERROR("invalid dev\n");
+> -		rc = -EINVAL;
+
+`!dev` check should remain in place. And dp should be fetched 
+afterwards. This applies to all the checks in the patch.
+
+> +	if (!dp) {
+> +		DRM_ERROR("no driver data found\n");
+> +		rc = -ENODEV;
+>   		return rc;
+>   	}
+>   
+> -	dp = container_of(g_dp_display,
+> -			struct dp_display_private, dp_display);
+> -
+>   	dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
+>   
+>   	return rc;
+> @@ -466,15 +470,15 @@ static int dp_display_usbpd_attention_cb(struct device *dev)
+>   {
+>   	int rc = 0;
+>   	u32 sink_request;
+> -	struct dp_display_private *dp;
+> +	struct dp_display_private *dp = dev_to_dp_display_private(dev);
+> +	struct dp_usbpd *hpd;
+>   
+> -	if (!dev) {
+> -		DRM_ERROR("invalid dev\n");
+> -		return -EINVAL;
+> +	if (!dp) {
+> +		DRM_ERROR("no driver data found\n");
+> +		return -ENODEV;
+>   	}
+>   
+> -	dp = container_of(g_dp_display,
+> -			struct dp_display_private, dp_display);
+> +	hpd = dp->usbpd;
+>   
+>   	/* check for any test request issued by sink */
+>   	rc = dp_link_process_request(dp->link);
+> @@ -638,7 +642,7 @@ static int dp_hpd_unplug_handle(struct dp_display_private *dp, u32 data)
+>   	dp_add_event(dp, EV_DISCONNECT_PENDING_TIMEOUT, 0, DP_TIMEOUT_5_SECOND);
+>   
+>   	/* signal the disconnect event early to ensure proper teardown */
+> -	dp_display_handle_plugged_change(g_dp_display, false);
+> +	dp_display_handle_plugged_change(&dp->dp_display, false);
+>   
+>   	/* enable HDP plug interrupt to prepare for next plugin */
+>   	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK, true);
+> @@ -832,9 +836,7 @@ static int dp_display_prepare(struct msm_dp *dp)
+>   static int dp_display_enable(struct dp_display_private *dp, u32 data)
+>   {
+>   	int rc = 0;
+> -	struct msm_dp *dp_display;
+> -
+> -	dp_display = g_dp_display;
+> +	struct msm_dp *dp_display = &dp->dp_display;
+>   
+>   	if (dp_display->power_on) {
+>   		DRM_DEBUG_DP("Link already setup, return\n");
+> @@ -869,9 +871,7 @@ static int dp_display_post_enable(struct msm_dp *dp_display)
+>   
+>   static int dp_display_disable(struct dp_display_private *dp, u32 data)
+>   {
+> -	struct msm_dp *dp_display;
+> -
+> -	dp_display = g_dp_display;
+> +	struct msm_dp *dp_display = &dp->dp_display;
+>   
+>   	if (!dp_display->power_on)
+>   		return 0;
+> @@ -1229,14 +1229,13 @@ static int dp_display_probe(struct platform_device *pdev)
+>   	}
+>   
+>   	mutex_init(&dp->event_mutex);
+> -	g_dp_display = &dp->dp_display;
+>   
+>   	/* Store DP audio handle inside DP display */
+> -	g_dp_display->dp_audio = dp->audio;
+> +	dp->dp_display.dp_audio = dp->audio;
+>   
+>   	init_completion(&dp->audio_comp);
+>   
+> -	platform_set_drvdata(pdev, g_dp_display);
+> +	platform_set_drvdata(pdev, &dp->dp_display);
+>   
+>   	rc = component_add(&pdev->dev, &dp_display_comp_ops);
+>   	if (rc) {
+> @@ -1249,10 +1248,7 @@ static int dp_display_probe(struct platform_device *pdev)
+>   
+>   static int dp_display_remove(struct platform_device *pdev)
+>   {
+> -	struct dp_display_private *dp;
+> -
+> -	dp = container_of(g_dp_display,
+> -			struct dp_display_private, dp_display);
+> +	struct dp_display_private *dp = platform_get_drvdata(pdev);
+
+dev_to_dp_display_private() rather than just get_drvdata?
+
+>   
+>   	dp_display_deinit_sub_modules(dp);
+>   
+> 
+
+
+-- 
+With best wishes
+Dmitry
