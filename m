@@ -2,204 +2,210 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DD3F63D957A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 20:46:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 68E733D9587
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 20:49:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229690AbhG1Sqq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jul 2021 14:46:46 -0400
-Received: from esa.microchip.iphmx.com ([68.232.153.233]:17578 "EHLO
-        esa.microchip.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229686AbhG1Sqp (ORCPT
+        id S230083AbhG1Stj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jul 2021 14:49:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43412 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229874AbhG1Sti (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jul 2021 14:46:45 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
-  t=1627498004; x=1659034004;
-  h=from:to:cc:subject:date:message-id:references:
-   in-reply-to:content-id:content-transfer-encoding:
-   mime-version;
-  bh=pmJF+/uHpVqA4oMdO1PJ+zIv8c6YPf9wnMmlNTS1Cws=;
-  b=TlROldWzWjwH6ewe4C12wnJt6t6rh5SHfM6exx+LpO0OMa5IX5aHrt/H
-   zZ6rjksoT4y8+7dknGgQP/lMUjWgeXrXQ/X5Wr5ccZUvY5kvwgcO9yjVR
-   lNCyyU/Ul+VsE4LHv6M0PG5PaJfsl46ai2Rfk75Lg1ho7knjHBFemoK0M
-   cXxaCxMlxmMWKvgqvyBRfPgHIKPNyV/Y21td+8EHLaEEn2yG4U/1dLR2y
-   sNqcADXpNxlKErCsO5QzFouffb1Ilkkcb7KCBz8BcFF2ZwTeIJScSvCvO
-   g0i5cxlkQk9qwwdqPDyc+rJ6xS/s/Mp0aniovUWGYIdYmPfYMB9viCiYW
-   A==;
-IronPort-SDR: JdJg7u6I3L4rfOpltO2UcDZtZRo8F1BRMS+tWQNxJ4Kfz15REHpCkO5QzpNvFwEgWySRph6Euk
- z4PUMvobGR9/9Mtn6zMe+SrEiCT8wLJ4QgUEaqSUjMGg8SJnAMNQYP3nWehPwQ0CrleSgn6fNw
- jCABStcvKhfsuTNAR/+cY3wMfpNswi/wuWblzVOKxix9skaZ9HP54SwEgOcHXy2eS1SL1wMpyE
- +jaZxFdeGwyE4kOXswjRytCbpiwqLOQXWZwQfCq+oemReOs+W3kImevcSVm2c6u9wZqT7s5Kka
- spGeQa7B8V774noQLQOnaRKh
-X-IronPort-AV: E=Sophos;i="5.84,276,1620716400"; 
-   d="scan'208";a="130726175"
-Received: from smtpout.microchip.com (HELO email.microchip.com) ([198.175.253.82])
-  by esa3.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 28 Jul 2021 11:46:42 -0700
-Received: from chn-vm-ex01.mchp-main.com (10.10.85.143) by
- chn-vm-ex01.mchp-main.com (10.10.85.143) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2176.2; Wed, 28 Jul 2021 11:46:41 -0700
-Received: from NAM04-MW2-obe.outbound.protection.outlook.com (10.10.215.89) by
- email.microchip.com (10.10.87.71) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.2 via Frontend
- Transport; Wed, 28 Jul 2021 11:46:41 -0700
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=QnmJY2MD04Ed9RTIt+cWgkl1CLKLeW6IGCQdE9jy1OixRwJsncclu65YQvUsMxJ0l3RN/xhnNaBLPOltr1XZfmDtth6e9u7ZXrjrecC+0vlWS0TA5gQBY6iW38jdNP+m+foBLAcai748/xm/PSgol5pRevafLzM1TNx057plNGUY9qd250BK9JtXsNVsmVx/+ZNzHL9/Cp2kJHuyoRrQ2NroxvdA1DtDAyDUKg2Fpwn4CLkWEIhNFuUQGDmLpuW5abM0hoTdccclHyvkJFARv+XlBpdLL5JU6VJeIzgc4CmMkwpZ8docDcoYtDYd3UYUkR3QRYo35lcaBd8kja8gjw==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pmJF+/uHpVqA4oMdO1PJ+zIv8c6YPf9wnMmlNTS1Cws=;
- b=GfW0aTyMN2/KUFZPueYv9GxS8k6jmyWj0/GOX/hC/qbd8iGk8u4GrpyocI5gOQZ37HxVwtI0VWamuXoaB+0/JzD0tiz58WPPeHvpG0tj+EhAZpZNVkDr2XsFQpcDm/SfA2T2mNE/s1jADtioNEtt1t4QTt5e5QSZ8wgv8aKyH92X+tWmtRWIE9UBl7hWolnERT84ZiEfx2NZNA6Kocgswy3bFevt9Jsz9A7QRI6LqsxbHWtdiQgGtmM73UkHbbueCRydCIgIvfrjniAB21mEYjKsHErsms6ElAJ8UmpgsmNEP3mIwg42+bT7r0rT+hLAcf8jd1RTd+vDjF3FMuKfRw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
- smtp.mailfrom=microchip.com; dmarc=pass action=none
- header.from=microchip.com; dkim=pass header.d=microchip.com; arc=none
+        Wed, 28 Jul 2021 14:49:38 -0400
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2573C0613C1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 11:49:36 -0700 (PDT)
+Received: by mail-oi1-x233.google.com with SMTP id u10so4958980oiw.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 11:49:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
- d=microchiptechnology.onmicrosoft.com;
- s=selector2-microchiptechnology-onmicrosoft-com;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=pmJF+/uHpVqA4oMdO1PJ+zIv8c6YPf9wnMmlNTS1Cws=;
- b=vfGgXiSld3kKBJzpdhlvB3jR4YO0DG7jK4ojIcdhGuBOYmE/dReY4T2qbhJBiOjkyip2qATKySaXfUHG+78HLFDpCSemHZHqCP8evqDgsmsynFrfAozK6Ug7nihs8ZzFhZ6GIkEqdCBncLQQF8jDb/tcmAQ/2144Lfq0iZkCcg4=
-Received: from BY5PR11MB4007.namprd11.prod.outlook.com (2603:10b6:a03:189::28)
- by SJ0PR11MB5167.namprd11.prod.outlook.com (2603:10b6:a03:2d9::15) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4373.18; Wed, 28 Jul
- 2021 18:46:39 +0000
-Received: from BY5PR11MB4007.namprd11.prod.outlook.com
- ([fe80::e478:6b2c:f71e:65bf]) by BY5PR11MB4007.namprd11.prod.outlook.com
- ([fe80::e478:6b2c:f71e:65bf%5]) with mapi id 15.20.4373.018; Wed, 28 Jul 2021
- 18:46:39 +0000
-From:   <Dan.Sneddon@microchip.com>
-To:     <tzimmermann@suse.de>, <sam@ravnborg.org>,
-        <Dan.Sneddon@microchip.com>
-CC:     <daniel@ffwll.ch>, <airlied@linux.ie>, <alexander.deucher@amd.com>,
-        <christian.koenig@amd.com>, <liviu.dudau@arm.com>,
-        <brian.starkey@arm.com>, <bbrezillon@kernel.org>,
-        <Nicolas.Ferre@microchip.com>, <maarten.lankhorst@linux.intel.com>,
-        <mripard@kernel.org>, <stefan@agner.ch>, <alison.wang@nxp.com>,
-        <patrik.r.jakobsson@gmail.com>, <anitha.chrisanthus@intel.com>,
-        <robdclark@gmail.com>, <edmund.j.dea@intel.com>, <sean@poorly.run>,
-        <shawnguo@kernel.org>, <s.hauer@pengutronix.de>,
-        <kernel@pengutronix.de>, <jyri.sarha@iki.fi>, <tomba@kernel.org>,
-        <amd-gfx@lists.freedesktop.org>, <dri-devel@lists.freedesktop.org>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>
-Subject: Re: Re: [PATCH 03/14] drm/atmel-hlcdc: Convert to Linux IRQ
- interfaces
-Thread-Topic: Re: [PATCH 03/14] drm/atmel-hlcdc: Convert to Linux IRQ
- interfaces
-Thread-Index: AQHXg7j3kajdLBgx2U2WcmMzDSjJJqtYfiKAgAAJZACAACMogIAABcwAgAAByICAAAgXAA==
-Date:   Wed, 28 Jul 2021 18:46:39 +0000
-Message-ID: <793514f6-0270-771b-fe36-f82edf4e5fd2@microchip.com>
-References: <20210727182721.17981-1-tzimmermann@suse.de>
- <20210727182721.17981-4-tzimmermann@suse.de> <YQFi96yaYbTG4OO7@ravnborg.org>
- <e28b1a2f-015c-c81b-eb64-5323df9ed35d@microchip.com>
- <YQF7bKyeup8n3awU@ravnborg.org>
- <3d2f6b84-dd07-d925-a8b8-2bfd5fc736d9@microchip.com>
- <YQGdxtV0BGZ8VOpm@ravnborg.org>
- <2f04b986-6b41-62f9-1587-23818b841655@suse.de>
-In-Reply-To: <2f04b986-6b41-62f9-1587-23818b841655@suse.de>
-Accept-Language: en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-user-agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
- Thunderbird/68.10.0
-authentication-results: suse.de; dkim=none (message not signed)
- header.d=none;suse.de; dmarc=none action=none header.from=microchip.com;
-x-ms-publictraffictype: Email
-x-ms-office365-filtering-correlation-id: 807082c7-e26c-479e-f93a-08d951f808ff
-x-ms-traffictypediagnostic: SJ0PR11MB5167:
-x-ms-exchange-transport-forked: True
-x-microsoft-antispam-prvs: <SJ0PR11MB5167E88218124F8BCEE47315E1EA9@SJ0PR11MB5167.namprd11.prod.outlook.com>
-x-ms-oob-tlc-oobclassifiers: OLM:9508;
-x-ms-exchange-senderadcheck: 1
-x-ms-exchange-antispam-relay: 0
-x-microsoft-antispam: BCL:0;
-x-microsoft-antispam-message-info: 7pQ5Xi8N/VxoilYjcyoxq1zQm2E6QuLjulrbxNJqAh4mQhSZzxg+Z1uVeBFHFPt4ZVS0SwE8g7T6lcaPT8C3fvY6JRJOxhoyxIcwsICcqLy4lvrNenTfigkGbEVh7Ym3FGZJmI+ZY6lskpeJk7VAjhVEIlUA02XS/MumeCTY3x9WPkJUY7K9SeYXh+kZpRsX6jHFvZRB8Zgfx0U6Z/k35g1u/kMksJypnqEU9xOJA7jRfVI3MF3BEzsuMoBwFwcN3dknWxUPcyxEDZktyhrYzukPLZiW9bc9bRRplSCHxWQsqYMmXKzQr2ocbmRZi0i1xstL+RP6Aohu51DnzqoZa28jygrfVj6rXz62KokMfuS2j4wkTVGqwEcaD3qZ3s6XI7sNqtEn9RE2SUgjiFVAmLKF2aL9FC2qg90lWQEgTqo+I4twvfOeuCpm2CjXUMiuOs/q02THQNLP+PSf2rU0DtO5HUAIvA3+DinCfgy9BT8o0E8ErTkpNfFAm29xfIWHuNtGL+4OEp28AYODsdCTU7eJooIbTZNfRDiP2aGFw0/E0rb4D/6p5EaPMnbaBSNONR7kwq6qZLXg8bhYwWDXsQ3930T3G7NvrwEqPcp4GZh4wMEGEbDdiR+waSzF86MO1GhOT1UDYSrj3icRo9YpvnovPAUV2f7ixiVk+bcIFySQLRVCArTVr3xB+DETI4xdkpPoJd3GKPp910FqjbV+8dJnIgpndWupxlmUUyEtWlMd5X415qi6Cpuu9N6IemOfMLz5+gVJnKybbgPofU3UBB9hBkWk8u1ojZkWdZacIgsWGkOSi4a9TP4yAZIW0oqE
-x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BY5PR11MB4007.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(39860400002)(396003)(376002)(346002)(136003)(366004)(31696002)(6512007)(2906002)(2616005)(86362001)(966005)(478600001)(6486002)(36756003)(53546011)(6506007)(26005)(83380400001)(186003)(71200400001)(110136005)(54906003)(66476007)(122000001)(316002)(38100700002)(7416002)(8936002)(8676002)(66556008)(64756008)(66446008)(76116006)(4326008)(91956017)(66946007)(31686004)(5660300002)(38070700005)(45980500001)(43740500002)(10090945008);DIR:OUT;SFP:1101;
-x-ms-exchange-antispam-messagedata-chunkcount: 1
-x-ms-exchange-antispam-messagedata-0: =?utf-8?B?VHB2V2pvVnNIazV2clFLRUpoRGp2NWc0UGNjZVF0RzN1enE1VEJ4YkNTL0E5?=
- =?utf-8?B?TWNISjNIRm5VUE9xdk1nU0NKemdaUzFyZy9JNXJ6L1hyU2ZKVVRnb3RNeVBM?=
- =?utf-8?B?VTJFRDVSeWE5RTRnQmNudENacVViNTVSNTlWeTlMaTdwcTNUVkxNRGhOaFBW?=
- =?utf-8?B?UTNiYlJ0d3J2eG5DZmRia05TcFVJYjVRWGFvZURyaklLK2xkT0czV2MySTJI?=
- =?utf-8?B?VlZaZVE4cWJLM2pzTEY1MnFIZDdHVDBiajBickxheGJGQzRxUTR6c3VtZmdO?=
- =?utf-8?B?ajRlLzVnWFhvdVZzWEJYL1BMZEx6RWh2U1pwQ3JRV01QM0pxU09lWHEwaHlr?=
- =?utf-8?B?dkUyMzBDeDl0dUxrRk5idlBRa2VDd0U4azlVaHpOaWxFTmhyOVZMOWgyRERw?=
- =?utf-8?B?TUFBd1ZReTJpYmxJc0g3Skc1dG9NdEhvY041MTV5cGgrK1JnYTBjQUs0UGww?=
- =?utf-8?B?ckFHejFVaTFyQS9DYXQwMk9UTXRKRmFXSC93a0VRaHo3eUNNbkVJQUx5bkYx?=
- =?utf-8?B?REpSaG5HOTlNNlRPdnVXd0JhUk15TEdSbzNETG5Zbng0ZHhKR1VZVHJHRzIz?=
- =?utf-8?B?NmoxOGlvZzNQdG1ld2dKUERSUmJ4UFBUSHZGMTBQa2JTZDFqZGs4WUM2dWM5?=
- =?utf-8?B?OStvUnFIb3RwQlduNFpYcnBlKzdhaXBVWnU0MWVoZElNSHpZUktyWlVhU0hV?=
- =?utf-8?B?cjNobjgyY0tHRFJFYmx4cUNwOHNkNjJKTEY0emcyWlJpUGM4dm80aXZybTdh?=
- =?utf-8?B?MVBjbmV0STVLTTJwMTQ4bDlid1RPY3J0MlRGb0hiQzd6VWtaczBTL2Y5a21E?=
- =?utf-8?B?Z09NeE5xM3ZSSTBIMmk0SWJIZzM3Nmg3WTVpWXppcDRPSHV4Mkh5a0R1Rmxq?=
- =?utf-8?B?MEErNDZjNW1iSWVsSVZJdnpmVFdocXIvNHpCaEtHSGxYQWdCei9kZ1pMYjdV?=
- =?utf-8?B?MG1GZWY2WUNVV2E0NXZSWUNEcnNtTDJoT1E4S0FmRUpXV01ncmpMR1ZkMVBH?=
- =?utf-8?B?dnpQcU5RYnZOQ2NZV3RjalNsRW5sVlUyRit4Zmt0TTJ3YkFrYjB3RWJZOUsr?=
- =?utf-8?B?YjB2dENoLzNuOWJjQnN2blpZazJ3R1Z0UU1ybngremVKMlBHYVcrbE94NTJT?=
- =?utf-8?B?SVlGTVdxZjNXd0YwbUd2RDUzZjUzajJhNWZVZjVGazVlZFRQTFBZTmFKMnhF?=
- =?utf-8?B?RHNFbkxHNlM3TzdmaVI5dFVUR3F2QzVsR285eTg2K2pnNDFMcm9UWTZXbFhM?=
- =?utf-8?B?TGtmQjhNd0VhOVRDd1pVOXp5a0RKUGQyQ0dQK3JLUlQ1dkJNeDBOc2lsVWph?=
- =?utf-8?B?R2JvL09ITXVOY0Zmb21uYkxaYmxRU0NLaDgrY0dGWjh3NTlmczlNWE9CNTcr?=
- =?utf-8?B?Y090K04yYnFJL3hWamZ4cFlmejhpOTRZWE0wcFVEM0dPT3FGeTY2VXRkamtB?=
- =?utf-8?B?aVRHdWd3MjJISzN4YzJoZG5YUWFXOFpnOXljUk1HOENLdGhDT0h6aHZ4U3c2?=
- =?utf-8?B?VndYYm4zZU93TFc0T01YVFFNL1ErSDVLWjNYUGJXQlY3dEVRUTViOStqV0kr?=
- =?utf-8?B?Y2V0ZXlEZitET1JybmhrbWNBMitGcHFBQks4MEF6bU8vd2xnRGxFaXZtWUZX?=
- =?utf-8?B?ZkhSUjduL1lnVnRGSlFaYVh4Zk9paUtoWk0vMTdEcElpanlPcnc2M2ptdjNT?=
- =?utf-8?B?RGVHbmkyNzRwcE5kaGNrWk1MZTFHdEVTL3FyY09SdGpUTkxjOW45OXMwZXhW?=
- =?utf-8?Q?YD39IvkLfmPSHH51uZiRxR0KJcP0XTL7VkUR/Om?=
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <DE37A93B1AE28041823BF11DB1C91138@namprd11.prod.outlook.com>
-Content-Transfer-Encoding: base64
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=U7vNPIko5GOjWbPYkaIByKIDTKv6SGLaM0HuUzXJ7Do=;
+        b=IWX2ITiBL6y1vEe0ozMojPakXQ01o2k+aYejjRl4zE0021Ay7iEGsZUh31vLZY0Jym
+         AOJRN8JGcT1MKHxDPwcHpbt69C31nkw+qyFcB+Z3sRSXX0v2z4vXlfzL46ZzUPi53rb5
+         iwIgFzidujHad32g5L9CypUC0bjt30ch/DQ6wUzuS451o+Wn/dX7E+oxoZ3msZfSAKhE
+         MDeboJH25jqc2RnIMB687Kfh2Rj8OgA+jYJHJdnBy6aaPqJw/cV4wYWBi5cc2rBgRcMH
+         VRSko1PV8GqQxa5l63HsgWd8hYjb40bHmCKsNjENNfVoFjzpGU5RiPScAxLzYAIKLzg0
+         NZ7g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=U7vNPIko5GOjWbPYkaIByKIDTKv6SGLaM0HuUzXJ7Do=;
+        b=BoaKcVzZvsfHhWYTOaMToHMp6Hrhoq4gbDg3CCD8iSIp4rBt28hJrD+drwH0kVMcWp
+         /+HuiP5c75wRiDly5bmMsHiGTr1fL+sMHnFqFfqi92B6aAYLhCuYEWTw5xtd0O1e3u0Y
+         lOSUbV/Bv2qS6hRHc+1zJUP9964rAwznsctx4gz4vLa8c68sM/7I6FE/IT4uvkRmTKN0
+         E6ctxexjrcbgpkyL+12PhMFDRkjtq90xeSbnF/1JfCLlQhSRymMtFKY79DVEmH3ceZUR
+         0f93uZgvLS4rjwgEvHLQdUDyWdtxIEh81amrkA/xPX8JqbCuNRtVdnugTfSkxo97qO+n
+         7vuA==
+X-Gm-Message-State: AOAM530k5gdOGPV6PKBxujAlFOwOh2d1bQfD5vgsSxP13M7iSKGpjy5U
+        lGR3djkMIYKDjvU3VQIGVIFvcw==
+X-Google-Smtp-Source: ABdhPJwxcGRr32B2c1xZaRJ3khgROrE350We7kDTSR0NZxjlPl6eo+gEwRdkmWxv3Tw1zkx794iADg==
+X-Received: by 2002:aca:5f8b:: with SMTP id t133mr7259687oib.15.1627498176010;
+        Wed, 28 Jul 2021 11:49:36 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id b6sm149201oib.51.2021.07.28.11.49.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Jul 2021 11:49:35 -0700 (PDT)
+Date:   Wed, 28 Jul 2021 11:47:45 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>, ulf.hansson@linaro.org,
+        viresh.kumar@linaro.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, rojay@codeaurora.org,
+        stephan@gerhold.net
+Subject: Re: [PATCH v4 2/2] arm64: dts: sc7180: Add required-opps for i2c
+Message-ID: <YQGmUWE8quTVMV6+@ripper>
+References: <YPHxfHPC/faq/y+J@yoga>
+ <CAE-0n50qx80cMFPJ1x9rc+EMR1L+j2CUMyDjWAbnE9mPHjf-TQ@mail.gmail.com>
+ <YPIBK/NJgBNZVI8Y@yoga>
+ <12711a61-e16c-d2bc-6e04-ab94c7551abe@codeaurora.org>
+ <YPXQNFYKfH/xZxFY@yoga>
+ <bc79ea3e-4981-8f9b-f9a7-59cb972047a7@codeaurora.org>
+ <YP2Y6qs5P5mb2jzE@yoga>
+ <b6b315ae-ee68-6ba8-7453-f28dace3d8d2@codeaurora.org>
+ <YQDTImwRhp8juvKh@yoga>
+ <f73f1c31-dc31-32f9-d7d8-1aa3233b0040@linaro.org>
 MIME-Version: 1.0
-X-MS-Exchange-CrossTenant-AuthAs: Internal
-X-MS-Exchange-CrossTenant-AuthSource: BY5PR11MB4007.namprd11.prod.outlook.com
-X-MS-Exchange-CrossTenant-Network-Message-Id: 807082c7-e26c-479e-f93a-08d951f808ff
-X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Jul 2021 18:46:39.3538
- (UTC)
-X-MS-Exchange-CrossTenant-fromentityheader: Hosted
-X-MS-Exchange-CrossTenant-id: 3f4057f3-b418-4d4e-ba84-d55b4e897d88
-X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
-X-MS-Exchange-CrossTenant-userprincipalname: 6BBVnwvkViUCz+KQI4QkP+FbQY2pHdfR19bJlP3Lqi0ePLYbRdOHaPRh7uG9AX18d0GmzBM2FxZN7KusNWbS5LGxXtMdHWVVYm93oau9ysw=
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: SJ0PR11MB5167
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <f73f1c31-dc31-32f9-d7d8-1aa3233b0040@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-SGkgVGhvbWFzLA0KDQpPbiA3LzI4LzIxIDExOjE3IEFNLCBUaG9tYXMgWmltbWVybWFubiB3cm90
-ZToNCj4gSGkNCj4gDQo+IEFtIDI4LjA3LjIxIHVtIDIwOjExIHNjaHJpZWIgU2FtIFJhdm5ib3Jn
-Og0KPj4gSGkgRGFuLA0KPj4NCj4+IHRoYW5rcyBmb3IgdGhlIHF1aWNrIGZlZWRiYWNrIQ0KPj4N
-Cj4+IE9uIFdlZCwgSnVsIDI4LCAyMDIxIGF0IDA1OjUwOjM0UE0gKzAwMDAsIERhbi5TbmVkZG9u
-QG1pY3JvY2hpcC5jb20gDQo+PiB3cm90ZToNCj4+PiBPbiA3LzI4LzIxIDg6NDQgQU0sIFNhbSBS
-YXZuYm9yZyB3cm90ZToNCj4+Pj4gRVhURVJOQUwgRU1BSUw6IERvIG5vdCBjbGljayBsaW5rcyBv
-ciBvcGVuIGF0dGFjaG1lbnRzIHVubGVzcyB5b3UgDQo+Pj4+IGtub3cgdGhlIGNvbnRlbnQgaXMg
-c2FmZQ0KPj4+Pg0KPj4+PiBIaSBEYW4sDQo+Pj4+DQo+Pj4+IE9uIFdlZCwgSnVsIDI4LCAyMDIx
-IGF0IDAzOjExOjA4UE0gKzAwMDAsIERhbi5TbmVkZG9uQG1pY3JvY2hpcC5jb20gDQo+Pj4+IHdy
-b3RlOg0KPj4+Pj4gT24gNy8yOC8yMSA3OjAwIEFNLCBTYW0gUmF2bmJvcmcgd3JvdGU6DQo+Pj4+
-Pj4gW1lvdSBkb24ndCBvZnRlbiBnZXQgZW1haWwgZnJvbSBzYW1AcmF2bmJvcmcub3JnLiBMZWFy
-biB3aHkgdGhpcyANCj4+Pj4+PiBpcyBpbXBvcnRhbnQgYXQgaHR0cDovL2FrYS5tcy9MZWFybkFi
-b3V0U2VuZGVySWRlbnRpZmljYXRpb24uXQ0KPj4+Pj4+DQo+Pj4+Pj4gRVhURVJOQUwgRU1BSUw6
-IERvIG5vdCBjbGljayBsaW5rcyBvciBvcGVuIGF0dGFjaG1lbnRzIHVubGVzcyB5b3UgDQo+Pj4+
-Pj4ga25vdyB0aGUgY29udGVudCBpcyBzYWZlDQo+Pj4+Pj4NCj4+Pj4+PiBIaSBEYW4sDQo+Pj4+
-Pj4NCj4+Pj4+PiBJIGhvcGUgeW91IGNhbiBmaW5lIHRvIHRlc3QgdGhpcyBwYXRjaCBmcm9tIFRo
-b21hcy4NCj4+Pj4+PiBJZiB0aGlzIHdvcmtzIHRoZW4gd2UgY2FuIGZvcmdldCBhYm91dCBteSBh
-dHRlbXB0IHRvIGRvIHRoZSBzYW1lLg0KPj4+Pj4NCj4+Pj4+IEknbGwgdGVzdCB0aGlzIGFzIHNv
-b24gYXMgSSBjYW4gYW5kIGxldCB5b3Uga25vdy4NCj4+Pj4NCj4+Pj4gVGhhbmtzLCBjcm9zc2lu
-ZyBteSBmaW5nZXJzLi4uICh3aGljaCBleHBsYWlucyB0aGUgZnVubnkgc3BlbGxpbmcgZnJvbQ0K
-Pj4+PiB0aW1lIHRvIHRpbWUpDQo+Pj4+DQo+Pj4+IMKgwqDCoMKgwqDCoMKgwqDCoCBTYW0NCj4+
-Pj4gU28gSSByYW4gdGhlIHRlc3Qgb24gYW4gQTVEMjcgWFVMVCBib2FyZCB3aXRoIGEgUERBNSBk
-aXNwbGF5LsKgIE91cg0KPj4+IGdyYXBoaWNzIGRlbW9zIHRoYXQgY29tZSB3aXRoIG91ciBsaW51
-eDRzYW0gcmVsZWFzZXMgc2VlbSB0byBydW4ganVzdA0KPj4+IGZpbmUuwqAgbW9kZXRlc3QgLXYg
-c2VlbXMgdG8gcnVuIGp1c3QgZmluZS7CoCBIb3dldmVyLCB2Ymx0ZXN0IHJldHVybnMNCj4+PiAi
-ZHJtV2FpdFZCbGFuayAocmVsYXRpdmUpIGZhaWxlZCByZXQ6IC0xIi7CoCBJIGRvbid0IHVuZGVy
-c3RhbmQgd2h5DQo+Pj4gbW9kZXRlc3QgLXYgaXMgd29ya2luZyBhbmQgdmJsdGVzdCBpc24ndCwg
-YnV0IHRoYXQncyB3aGF0IEknbSBzZWVpbmcuDQo+IA0KPiBUaGFua3MgZm9yIHRlc3RpbmcuDQo+
-IA0KPj4NCj4+IFN0cmFuZ2UgaW5kZWVkLg0KPj4NCj4+DQo+PiBKdXN0IHRvIGJlIHN1cmUuLi4N
-Cj4+IENhbiB5b3UgY29uZmlybSB0aGF0IHZibHRlc3QgaXMgd29ya2luZyBPSyAqYmVmb3JlKiB0
-aGlzIHBhdGNoPw0KPiANCj4gWWVzLCBjYW4geW91IHBsZWFzZSB2ZXJpZnkgdGhhdCBpdCByZWdy
-ZXNzZWQuIElmIHNvLCB0aGlzIHdvdWxkIG1lYW4gDQo+IHRoYXQgdGhlIGRyaXZlciBtaXNzZXMg
-dmJsYW5rIGludGVycnVwdHMgd2l0aCB0aGUgcGF0Y2ggYXBwbGllZC4NCg0KWWVzLCB1bmZvcnR1
-bmF0ZWx5IHRoZSB2Ymx0ZXN0IHdvcmtzIGJlZm9yZSB0aGlzIHBhdGNoLCBidXQgZmFpbHMgYWZ0
-ZXIgDQp0aGlzIHBhdGNoIGlzIGFwcGxpZWQuDQoNCkJlc3QgUmVnYXJkcywNCkRhbg0KDQo+IA0K
-PiBCZXN0IHJlZ2FyZHMNCj4gVGhvbWFzDQo+IA0KPj4NCj4+IMKgwqDCoMKgU2FtDQo+Pg0KPiAN
-Cg0K
+On Wed 28 Jul 07:01 PDT 2021, Dmitry Baryshkov wrote:
+
+> On 28/07/2021 06:46, Bjorn Andersson wrote:
+> > On Tue 27 Jul 02:35 CDT 2021, Rajendra Nayak wrote:
+> > 
+> > > 
+> > > On 7/25/2021 10:31 PM, Bjorn Andersson wrote:
+> > > > On Mon 19 Jul 23:29 CDT 2021, Rajendra Nayak wrote:
+> > > > 
+> > > > > 
+> > > > > 
+> > > > > On 7/20/2021 12:49 AM, Bjorn Andersson wrote:
+> > > > > > On Mon 19 Jul 04:37 CDT 2021, Rajendra Nayak wrote:
+> > > > > > 
+> > > > > > > 
+> > > > > > > 
+> > > > > > > On 7/17/2021 3:29 AM, Bjorn Andersson wrote:
+> > > > > > > > On Fri 16 Jul 16:49 CDT 2021, Stephen Boyd wrote:
+> > > > > > > > 
+> > > > > > > > > Quoting Bjorn Andersson (2021-07-16 13:52:12)
+> > > > > > > > > > On Fri 16 Jul 15:21 CDT 2021, Stephen Boyd wrote:
+> > > > > > > > > > 
+> > > > > > > > > > > Quoting Bjorn Andersson (2021-07-16 13:18:56)
+> > > > > > > > > > > > On Fri 16 Jul 05:00 CDT 2021, Rajendra Nayak wrote:
+> > > > > > > > > > > > 
+> > > > > > > > > > > > > qup-i2c devices on sc7180 are clocked with a fixed clock (19.2 MHz)
+> > > > > > > > > > > > > Though qup-i2c does not support DVFS, it still needs to vote for a
+> > > > > > > > > > > > > performance state on 'CX' to satisfy the 19.2 Mhz clock frequency
+> > > > > > > > > > > > > requirement.
+> > > > > > > > > > > > > 
+> > > > > > > > > > > > 
+> > > > > > > > > > > > Sounds good, but...
+> > > > > > > > > > > > 
+> > > > > > > > > > > > > Use 'required-opps' to pass this information from
+> > > > > > > > > > > > > device tree, and also add the power-domains property to specify
+> > > > > > > > > > > > > the CX power-domain.
+> > > > > > > > > > > > > 
+> > > > > > > > > > > > 
+> > > > > > > > > > > > ..is the required-opps really needed with my rpmhpd patch in place?
+> > > > > > > > > > > > 
+> > > > > > > > > > > 
+> > > > > > > > > > > Yes? Because rpmhpd_opp_low_svs is not the lowest performance state for
+> > > > > > > > > > > CX.
+> > > > > > > > > > 
+> > > > > > > > > > On e.g. sm8250 the first available non-zero corner presented in cmd-db
+> > > > > > > > > > is low_svs.
+> > > > > > > 
+> > > > > > > what rail is this? the mmcx? Perhaps it does not support RET.
+> > > > > > > cx usually supports both collapse state and RET.
+> > > > > > > 
+> > > > > > 
+> > > > > > That was the one I was specifically looking at for the MDSS_GDSC->MMCX
+> > > > > > issue, so it's likely I didn't look elsewhere.
+> > > > > > 
+> > > > > > > > > 
+> > > > > > > > > Indeed. On sc7180 it's not the first non-zero corner. I suppose
+> > > > > > > > > retention for CX isn't actually used when the SoC is awake so your
+> > > > > > > > > rpmhpd patch is putting in a vote for something that doesn't do anything
+> > > > > > > > > at runtime for CX? I imagine that rpmh only sets the aggregate corner to
+> > > > > > > > > retention when the whole SoC is suspended/sleeping, otherwise things
+> > > > > > > > > wouldn't go very well. Similarly, min_svs may be VDD minimization? If
+> > > > > > > > > so, those first two states are basically states that shouldn't be used
+> > > > > > > > > at runtime, almost like sleep states.
+> > > > > > > > > 
+> > > > > > > > 
+> > > > > > > > But if that's the case, I don't think it's appropriate for the "enabled
+> > > > > > > > state" of the domain to use any of those corners.
+> > > > > > > 
+> > > > > > > I rechecked the downstream kernels where all this voting happens from within
+> > > > > > > the clock drivers, and I do see votes to min_svs for some clocks, but Stephen is
+> > > > > > > right that RET is not something that's voted on while in active state.
+> > > > > > > 
+> > > > > > > But always going with something just above the ret level while active will also
+> > > > > > > not work for all devices, for instance for i2c on 7180, it needs a cx vote of
+> > > > > > > low svs while the rail (cx) does support something lower than that which is min svs.
+> > > > > > > (why can't it just work with min svs?, I don't know, these values and recommendations
+> > > > > > > come in from the voltage plans published by HW teams for every SoC and we just end up
+> > > > > > > using them in SW, perhaps something to dig further and understand which I will try and
+> > > > > > > do but these are the values in voltage plans and downstream kernels which work for now)
+> > > > > > > 
+> > > > > > 
+> > > > > > So to some degree this invalidates my argumentation about the
+> > > > > > enabled_corner in rpmhpd, given that "enabled" means a different corner
+> > > > > > for each rail - not just the one with lowest non-zero value.
+> > > > > 
+> > > > > Right, it might work in some cases but might not work for all.
+> > > > > 
+> > > > 
+> > > > Which makes it way less desirable.
+> > > > 
+> > > > The enable state for rpmhpd power domains doesn't meet my expectations
+> > > > for how a power domain should behave,
+> > > 
+> > > Right and that's perhaps because these are not the usual power-domains,
+> > > which have one "on/active" state and one or more "off/inactive" states (off/ret/clock-stop)
+> > > Rpmhpd has multiple "on/active" states, and whats "on/active" for one consumer
+> > > might not be "on/active" for another, so this information is hard to be managed
+> > > at a generic level and these requests in some way or the other need to come
+> > > in explicitly from the resp. consumers.
+> > > 
+> > 
+> > I think it's fine if we just acknowledge that this is how the rpmhpd
+> > domains works.
+> > 
+> > But I am worried about how we're going to handle the case where the
+> > consumer is indirectly referencing one of these power-domains using a
+> > subdomain (gdsc).
+> 
+> With the proper subdomain relationship in place and with Ulf's patches, this
+> seems to be handled correctly. gdsc sets proper level for the parent power
+> domain, which gets voted and unvoted by the core pm code when gdsc's power
+> domain is powered on or off.
+> 
+
+Right, but this works only in our case because "on" for MMCX happens to
+be the first non-zero corner.
+
+What this patch points out is that for some of the other power domains
+my patch in the rpmhpd driver isn't sufficient - and presumably wouldn't
+work for other gdsc's (that are parented by CX or MX).
+
+Regards,
+Bjorn
+
+> > And the open question is if a solution to that problem will solve this
+> > problem as well, or if we need to have this and some mechanism to
+> > describe the "on state" for the parent of a subdomain.
+> 
+> 
+> -- 
+> With best wishes
+> Dmitry
