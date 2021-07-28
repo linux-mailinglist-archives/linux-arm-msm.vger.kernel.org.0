@@ -2,19 +2,19 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B7013D98BE
+	by mail.lfdr.de (Postfix) with ESMTP id 2C3AC3D98BD
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 00:27:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233234AbhG1W1V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jul 2021 18:27:21 -0400
-Received: from m-r1.th.seeweb.it ([5.144.164.170]:40155 "EHLO
-        m-r1.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233158AbhG1W0i (ORCPT
+        id S233840AbhG1W1U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jul 2021 18:27:20 -0400
+Received: from relay03.th.seeweb.it ([5.144.164.164]:54569 "EHLO
+        relay03.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232967AbhG1W0p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jul 2021 18:26:38 -0400
+        Wed, 28 Jul 2021 18:26:45 -0400
 Received: from localhost.localdomain (83.6.168.174.neoplus.adsl.tpnet.pl [83.6.168.174])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id CB41C20074;
-        Thu, 29 Jul 2021 00:26:34 +0200 (CEST)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id EAB911FAEC;
+        Thu, 29 Jul 2021 00:26:35 +0200 (CEST)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     ~postmarketos/upstreaming@lists.sr.ht
 Cc:     martin.botka@somainline.org,
@@ -26,9 +26,9 @@ Cc:     martin.botka@somainline.org,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 38/39] arm64: dts: qcom: sdm630: Add I2C functions to I2C pins
-Date:   Thu, 29 Jul 2021 00:25:41 +0200
-Message-Id: <20210728222542.54269-39-konrad.dybcio@somainline.org>
+Subject: [PATCH 39/39] arm64: dts: qcom: sdm630: Add DMA to I2C hosts
+Date:   Thu, 29 Jul 2021 00:25:42 +0200
+Message-Id: <20210728222542.54269-40-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210728222542.54269-1-konrad.dybcio@somainline.org>
 References: <20210728222542.54269-1-konrad.dybcio@somainline.org>
@@ -38,8 +38,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This was overlooked earlier, fix it to ensure the busses can
-work properly.
+Add DMA properties to I2C hosts to allow for DMA transfers.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
@@ -47,122 +46,81 @@ Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
  1 file changed, 16 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index 1247140b6ac1..004df7a6eb6c 100644
+index 004df7a6eb6c..312f16efd91d 100644
 --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -938,96 +938,112 @@ rx-cts-rts {
+@@ -1802,6 +1802,8 @@ blsp_i2c1: i2c@c175000 {
+ 					<&gcc GCC_BLSP1_AHB_CLK>;
+ 			clock-names = "core", "iface";
+ 			clock-frequency = <400000>;
++			dmas = <&blsp1_dma 4>, <&blsp1_dma 5>;
++			dma-names = "tx", "rx";
  
- 			i2c1_default: i2c1-default {
- 				pins = "gpio2", "gpio3";
-+				function = "blsp_i2c1";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
+ 			pinctrl-names = "default", "sleep";
+ 			pinctrl-0 = <&i2c1_default>;
+@@ -1820,6 +1822,8 @@ blsp_i2c2: i2c@c176000 {
+ 				 <&gcc GCC_BLSP1_AHB_CLK>;
+ 			clock-names = "core", "iface";
+ 			clock-frequency = <400000>;
++			dmas = <&blsp1_dma 6>, <&blsp1_dma 7>;
++			dma-names = "tx", "rx";
  
- 			i2c1_sleep: i2c1-sleep {
- 				pins = "gpio2", "gpio3";
-+				function = "blsp_i2c1";
- 				drive-strength = <2>;
- 				bias-pull-up;
- 			};
+ 			pinctrl-names = "default", "sleep";
+ 			pinctrl-0 = <&i2c2_default>;
+@@ -1838,6 +1842,8 @@ blsp_i2c3: i2c@c177000 {
+ 				 <&gcc GCC_BLSP1_AHB_CLK>;
+ 			clock-names = "core", "iface";
+ 			clock-frequency = <400000>;
++			dmas = <&blsp1_dma 8>, <&blsp1_dma 9>;
++			dma-names = "tx", "rx";
  
- 			i2c2_default: i2c2-default {
- 				pins = "gpio6", "gpio7";
-+				function = "blsp_i2c2";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
+ 			pinctrl-names = "default", "sleep";
+ 			pinctrl-0 = <&i2c3_default>;
+@@ -1856,6 +1862,8 @@ blsp_i2c4: i2c@c178000 {
+ 				 <&gcc GCC_BLSP1_AHB_CLK>;
+ 			clock-names = "core", "iface";
+ 			clock-frequency = <400000>;
++			dmas = <&blsp1_dma 10>, <&blsp1_dma 11>;
++			dma-names = "tx", "rx";
  
- 			i2c2_sleep: i2c2-sleep {
- 				pins = "gpio6", "gpio7";
-+				function = "blsp_i2c2";
- 				drive-strength = <2>;
- 				bias-pull-up;
- 			};
+ 			pinctrl-names = "default", "sleep";
+ 			pinctrl-0 = <&i2c4_default>;
+@@ -1902,6 +1910,8 @@ blsp_i2c5: i2c@c1b5000 {
+ 				 <&gcc GCC_BLSP2_AHB_CLK>;
+ 			clock-names = "core", "iface";
+ 			clock-frequency = <400000>;
++			dmas = <&blsp2_dma 4>, <&blsp2_dma 5>;
++			dma-names = "tx", "rx";
  
- 			i2c3_default: i2c3-default {
- 				pins = "gpio10", "gpio11";
-+				function = "blsp_i2c3";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
+ 			pinctrl-names = "default", "sleep";
+ 			pinctrl-0 = <&i2c5_default>;
+@@ -1920,6 +1930,8 @@ blsp_i2c6: i2c@c1b6000 {
+ 				 <&gcc GCC_BLSP2_AHB_CLK>;
+ 			clock-names = "core", "iface";
+ 			clock-frequency = <400000>;
++			dmas = <&blsp2_dma 6>, <&blsp2_dma 7>;
++			dma-names = "tx", "rx";
  
- 			i2c3_sleep: i2c3-sleep {
- 				pins = "gpio10", "gpio11";
-+				function = "blsp_i2c3";
- 				drive-strength = <2>;
- 				bias-pull-up;
- 			};
+ 			pinctrl-names = "default", "sleep";
+ 			pinctrl-0 = <&i2c6_default>;
+@@ -1938,6 +1950,8 @@ blsp_i2c7: i2c@c1b7000 {
+ 				 <&gcc GCC_BLSP2_AHB_CLK>;
+ 			clock-names = "core", "iface";
+ 			clock-frequency = <400000>;
++			dmas = <&blsp2_dma 8>, <&blsp2_dma 9>;
++			dma-names = "tx", "rx";
  
- 			i2c4_default: i2c4-default {
- 				pins = "gpio14", "gpio15";
-+				function = "blsp_i2c4";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
+ 			pinctrl-names = "default", "sleep";
+ 			pinctrl-0 = <&i2c7_default>;
+@@ -1956,6 +1970,8 @@ blsp_i2c8: i2c@c1b8000 {
+ 				 <&gcc GCC_BLSP2_AHB_CLK>;
+ 			clock-names = "core", "iface";
+ 			clock-frequency = <400000>;
++			dmas = <&blsp2_dma 10>, <&blsp2_dma 11>;
++			dma-names = "tx", "rx";
  
- 			i2c4_sleep: i2c4-sleep {
- 				pins = "gpio14", "gpio15";
-+				function = "blsp_i2c4";
- 				drive-strength = <2>;
- 				bias-pull-up;
- 			};
- 
- 			i2c5_default: i2c5-default {
- 				pins = "gpio18", "gpio19";
-+				function = "blsp_i2c5";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
- 			i2c5_sleep: i2c5-sleep {
- 				pins = "gpio18", "gpio19";
-+				function = "blsp_i2c5";
- 				drive-strength = <2>;
- 				bias-pull-up;
- 			};
- 
- 			i2c6_default: i2c6-default {
- 				pins = "gpio22", "gpio23";
-+				function = "blsp_i2c6";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
- 			i2c6_sleep: i2c6-sleep {
- 				pins = "gpio22", "gpio23";
-+				function = "blsp_i2c6";
- 				drive-strength = <2>;
- 				bias-pull-up;
- 			};
- 
- 			i2c7_default: i2c7-default {
- 				pins = "gpio26", "gpio27";
-+				function = "blsp_i2c7";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
- 			i2c7_sleep: i2c7-sleep {
- 				pins = "gpio26", "gpio27";
-+				function = "blsp_i2c7";
- 				drive-strength = <2>;
- 				bias-pull-up;
- 			};
- 
- 			i2c8_default: i2c8-default {
- 				pins = "gpio30", "gpio31";
-+				function = "blsp_i2c8";
- 				drive-strength = <2>;
- 				bias-disable;
- 			};
- 
- 			i2c8_sleep: i2c8-sleep {
- 				pins = "gpio30", "gpio31";
-+				function = "blsp_i2c8";
- 				drive-strength = <2>;
- 				bias-pull-up;
- 			};
+ 			pinctrl-names = "default", "sleep";
+ 			pinctrl-0 = <&i2c8_default>;
 -- 
 2.32.0
 
