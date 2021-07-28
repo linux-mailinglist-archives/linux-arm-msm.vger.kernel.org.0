@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BD7BD3D905E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 16:25:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00EC93D9074
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 16:26:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236694AbhG1OZM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jul 2021 10:25:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37884 "EHLO
+        id S236640AbhG1O0m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jul 2021 10:26:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37932 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235466AbhG1OYy (ORCPT
+        with ESMTP id S236425AbhG1OZD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jul 2021 10:24:54 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EA91C0613C1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 07:24:52 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id y34so4304478lfa.8
+        Wed, 28 Jul 2021 10:25:03 -0400
+Received: from mail-lj1-x22b.google.com (mail-lj1-x22b.google.com [IPv6:2a00:1450:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CD36C0613D5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 07:24:53 -0700 (PDT)
+Received: by mail-lj1-x22b.google.com with SMTP id f12so3338267ljn.1
         for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 07:24:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=xUxyuUpAzGtx/RioOCJoivmaYXnb4C+vrnKsIL1DHAw=;
-        b=PxzYQZcLaU1zSXsJ6lVXBja/2GtDB13jiNJrAD8UJBUFlW1JfyWiNMtDJ/CLwiBNWM
-         ywKav7AzihGTjK8ruc+s4jCAI7XwvMUnEa1+Y1fz2y0CCD4FAOeu0aMQs4dRYITdmeEY
-         hBduZctUHCPbWmzv02lfqnryQw/H23Fu9G4xtsKEm3yFaVmh+Adu2N49s5aVNJXQnRnz
-         yXLxil5rtKGyIQkVFP4z6CyUJh0TdWBA+nobd/J/vz3FFRLEyPBOobXOk/mjUc/+MFfR
-         h5G6SRQYLinMKPnObS1jB3M9ibJNkrqECY8i7H7johpt2cRSHN/69r0ddwj9Tu2vnlh/
-         106w==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=GJaDlSnC/hNhPjnByAZZc7+i+wuzXCs6r81DcH7ZrtQ=;
+        b=oRstao6gbKMmICYaC3SKWepRzcJHA4aEDbhQHTeyGN6rf1b8bh2me+VljUa8FRFrLm
+         uvHpxG2nhxOt9I8zQvpK2HBQSvBv/ErY3sCeYPTexZAVtdmJu78wXqpvk4hfCHv2NWcK
+         FEWoMmbYYiybDd5QcGhnDFlGCF9jzd84ryWCTf4pyocd50ggkSRMd2D8U4LE1HeGbWgE
+         8YMNOaEvgOyH4rmkr2EBXJ+sSJxxu8qAJECT/L7JqqerdiUWdD7TmyiLeuDIQ+a0KmYt
+         0YpJulR9+eollRE2a8RM+po6TbHYWv3F1AHnnoqjncdL9SH6xCNUgVOUyOQGf0/dZI53
+         Djpg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=xUxyuUpAzGtx/RioOCJoivmaYXnb4C+vrnKsIL1DHAw=;
-        b=uAQcNWUEFBQUz3m7SaHOCz0NBZ+nByLPgsXApTO11Mq0P/yj8LvaCKhSrSom+9SmK5
-         yJ+G2ZjZH8zVZd9FjLVPNavWLZ/B/OBKHPXv2ripmZsv4fQsbUa6S6YP1BCSAcLuYM5G
-         31+UFJRo1SvrnydwuXt/gadvAym5diHUFAFRsfybDPdyGdUVcKAQniIIg1HIj9Nfwf21
-         fjhJs9FWz2ZvKhFVXNdM/8Vx92YC67w0bVbGvR+LuvD0OK3Xtq9Ud9e8WZQoFyzX9IMx
-         nve6y+3f7cgLE5unTMtQC1RhGHak+RnZVRekAW5dOiUWZYOQlQ+rHxaaoVIdzHM/xCjs
-         oYXA==
-X-Gm-Message-State: AOAM531TQ7L0r1FYgZBpBViLuBJTzAIinGUutGa/SJLJCoXVrJ7A7ApA
-        s4L149NTLuPWbwVySTJvtJLb9w==
-X-Google-Smtp-Source: ABdhPJwA/ZK36+alcmFKQQIYE+YXlPER8b2QVo/BQ7dEpH72qj/dhS3lmJyQ670rMkfIazbGbuclfg==
-X-Received: by 2002:a19:4893:: with SMTP id v141mr15974595lfa.199.1627482290559;
-        Wed, 28 Jul 2021 07:24:50 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=GJaDlSnC/hNhPjnByAZZc7+i+wuzXCs6r81DcH7ZrtQ=;
+        b=pAyTGZ9K58lKLqAFg1rZifKfratdy2J0XnLZ3nGo3L8gFJfXRJ8wjT7AVMwzrjUWSq
+         nSR15+NzV0yRt+ISEyr8jL0aqMrw148EEwMsc+4RKLAB612MOLwT70/8hwfEZGJRg41U
+         x2fEApmD73gC7xhqKw2hnmx5w9mLNQgVm69FWiQZmH/V1kUpvYOGr18OekaYhwus1LJ1
+         Bov5oA/xfbbIlmyifbx1DlSlZSpU9jqscHCur3AXO8gLuVFYmF1hmK6P9ScbdC3QT/iL
+         UtGuaBfQowQugoHPspoqNzUfEK6uDuClVaE90eYtX33F93ieYXALvW5WQi3fg1CuMz+G
+         W6lA==
+X-Gm-Message-State: AOAM531s/FCco4nKJ0Bxx3hpe9JMAu9S+ZjdiBVVbCtsg1nipHaG8Czd
+        dPu6bF07kC/yQg1STlliDDbnkA==
+X-Google-Smtp-Source: ABdhPJx682H/mmR+mfH2Y1lEcXI3nATjRem0dqGtzAlXzB8PgkRBrJyjJCXwb4hDvTGS4TIMWPd/0w==
+X-Received: by 2002:a2e:2ac5:: with SMTP id q188mr93567ljq.168.1627482291321;
+        Wed, 28 Jul 2021 07:24:51 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id h4sm15610lft.184.2021.07.28.07.24.49
+        by smtp.gmail.com with ESMTPSA id h4sm15610lft.184.2021.07.28.07.24.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Wed, 28 Jul 2021 07:24:50 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -59,43 +59,77 @@ To:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
         Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 0/5] PM: add two devres helpers and use them in qcom cc
-Date:   Wed, 28 Jul 2021 17:24:40 +0300
-Message-Id: <20210728142445.774158-1-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v2 1/5] PM: runtime: add devm_pm_runtime_enable helper
+Date:   Wed, 28 Jul 2021 17:24:41 +0300
+Message-Id: <20210728142445.774158-2-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20210728142445.774158-1-dmitry.baryshkov@linaro.org>
+References: <20210728142445.774158-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Qualcomm clock controller code (and most probably other drivers) would
-benefit from having devres helpers for pm_runtime_enable() and
-pm_clk_create(). Add those two helpers.
+Add helper function handling typical driver action: call
+pm_runtime_enable at the probe() time and disable it during remove().
 
-Modify Qualcomm clock controller code to use new helpers and separate
-common pm code into common.c.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/base/power/runtime.c | 17 +++++++++++++++++
+ include/linux/pm_runtime.h   |  4 ++++
+ 2 files changed, 21 insertions(+)
 
-----------------------------------------------------------------
-Dmitry Baryshkov (5):
-      PM: runtime: add devm_pm_runtime_enable helper
-      PM: clk: add devm_pm_clk_create helper
-      clk: qcom: use devm_pm_runtime_enable and devm_pm_clk_create
-      clk: qcom: use common code for qcom_cc_probe_by_index
-      clk: qcom: move pm_clk functionality into common code
-
- drivers/base/power/clock_ops.c        | 17 +++++++++++
- drivers/base/power/runtime.c          | 17 +++++++++++
- drivers/clk/qcom/camcc-sc7180.c       | 39 +++++++++----------------
- drivers/clk/qcom/common.c             | 55 ++++++++++++++++++++++++++++-------
- drivers/clk/qcom/common.h             | 17 +++++++++++
- drivers/clk/qcom/lpass-gfm-sm8250.c   | 21 ++++++-------
- drivers/clk/qcom/lpasscorecc-sc7180.c | 55 +++++++++--------------------------
- drivers/clk/qcom/mss-sc7180.c         | 45 ++++++----------------------
- drivers/clk/qcom/q6sstop-qcs404.c     | 40 +++++++------------------
- drivers/clk/qcom/turingcc-qcs404.c    | 45 ++++++----------------------
- include/linux/pm_clock.h              |  5 ++++
- include/linux/pm_runtime.h            |  4 +++
- 12 files changed, 169 insertions(+), 191 deletions(-)
-
+diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
+index 8a66eaf731e4..ec94049442b9 100644
+--- a/drivers/base/power/runtime.c
++++ b/drivers/base/power/runtime.c
+@@ -1447,6 +1447,23 @@ void pm_runtime_enable(struct device *dev)
+ }
+ EXPORT_SYMBOL_GPL(pm_runtime_enable);
+ 
++static void pm_runtime_disable_action(void *data)
++{
++	pm_runtime_disable(data);
++}
++
++/**
++ * devm_pm_runtime_enable - devres-enabled version of pm_runtime_enable.
++ * @dev: Device to handle.
++ */
++int devm_pm_runtime_enable(struct device *dev)
++{
++	pm_runtime_enable(dev);
++
++	return devm_add_action_or_reset(dev, pm_runtime_disable_action, dev);
++}
++EXPORT_SYMBOL_GPL(devm_pm_runtime_enable);
++
+ /**
+  * pm_runtime_forbid - Block runtime PM of a device.
+  * @dev: Device to handle.
+diff --git a/include/linux/pm_runtime.h b/include/linux/pm_runtime.h
+index aab8b35e9f8a..222da43b7096 100644
+--- a/include/linux/pm_runtime.h
++++ b/include/linux/pm_runtime.h
+@@ -59,6 +59,8 @@ extern void pm_runtime_put_suppliers(struct device *dev);
+ extern void pm_runtime_new_link(struct device *dev);
+ extern void pm_runtime_drop_link(struct device_link *link);
+ 
++extern int devm_pm_runtime_enable(struct device *dev);
++
+ /**
+  * pm_runtime_get_if_in_use - Conditionally bump up runtime PM usage counter.
+  * @dev: Target device.
+@@ -253,6 +255,8 @@ static inline void __pm_runtime_disable(struct device *dev, bool c) {}
+ static inline void pm_runtime_allow(struct device *dev) {}
+ static inline void pm_runtime_forbid(struct device *dev) {}
+ 
++static inline int devm_pm_runtime_enable(struct device *dev) { return 0; }
++
+ static inline void pm_suspend_ignore_children(struct device *dev, bool enable) {}
+ static inline void pm_runtime_get_noresume(struct device *dev) {}
+ static inline void pm_runtime_put_noidle(struct device *dev) {}
+-- 
+2.30.2
 
