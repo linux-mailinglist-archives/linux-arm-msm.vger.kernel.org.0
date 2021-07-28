@@ -2,125 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C3AC3D98BD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 00:27:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B74B33D99C6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 01:54:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233840AbhG1W1U (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jul 2021 18:27:20 -0400
-Received: from relay03.th.seeweb.it ([5.144.164.164]:54569 "EHLO
-        relay03.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232967AbhG1W0p (ORCPT
+        id S232727AbhG1Xya (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jul 2021 19:54:30 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:18563 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232641AbhG1Xya (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jul 2021 18:26:45 -0400
-Received: from localhost.localdomain (83.6.168.174.neoplus.adsl.tpnet.pl [83.6.168.174])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id EAB911FAEC;
-        Thu, 29 Jul 2021 00:26:35 +0200 (CEST)
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-To:     ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 39/39] arm64: dts: qcom: sdm630: Add DMA to I2C hosts
-Date:   Thu, 29 Jul 2021 00:25:42 +0200
-Message-Id: <20210728222542.54269-40-konrad.dybcio@somainline.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210728222542.54269-1-konrad.dybcio@somainline.org>
-References: <20210728222542.54269-1-konrad.dybcio@somainline.org>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Wed, 28 Jul 2021 19:54:30 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1627516468; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=rG5MyP/cD6Lu3423Hm61sSZ+MdCpGFjzTE2RP88KNMY=; b=kwgFkqaI3Uy+tCnfV8CM/yJ1gi863pYwliCY6oKdIcTI5jusfRI6ejPM/RomT2ME2WzZife6
+ mhynF8GhIQOJJjTF7K9e7etH6IHZjh9Y/qgxXmqpZVdGWwxQNSLzCys/xHCzLj1qD5vTohQC
+ wtF4H5WDlVBa5B1aBNIeNDPW2ro=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 6101ee2c9771b05b2441e0e1 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 28 Jul 2021 23:54:20
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8944BC4323A; Wed, 28 Jul 2021 23:54:20 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id EAB38C4338A;
+        Wed, 28 Jul 2021 23:54:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EAB38C4338A
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org, davem@davemloft.net,
+        kuba@kernel.org
+Cc:     bqiang@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        hemantk@codeaurora.org, clew@codeaurora.org,
+        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: [RESEND PATCH] net: qrtr: mhi: synchronize qrtr and mhi preparation
+Date:   Wed, 28 Jul 2021 16:54:11 -0700
+Message-Id: <1627516451-35294-1-git-send-email-bbhatt@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add DMA properties to I2C hosts to allow for DMA transfers.
+A dl callback can be received anytime after mhi_prepare_for_transfer
+has been called. There is a window where the callback may happen
+before the probe initializes the qrtr_mhi_dev state. Move the
+mhi_prepare_for_transfer call after the registering the endpoint.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Once moved, the reverse can happen where qrtr will try to send a packet
+before the channels are prepared. Add a wait in the sending path to
+ensure the channels are prepared before trying to do a ul transfer.
+
+Fixes: a2e2cc0dbb11 ("net: qrtr: Start MHI channels during init")
+Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
 ---
- arch/arm64/boot/dts/qcom/sdm630.dtsi | 16 ++++++++++++++++
- 1 file changed, 16 insertions(+)
+Tested-on: X86_64 architecture
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index 004df7a6eb6c..312f16efd91d 100644
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -1802,6 +1802,8 @@ blsp_i2c1: i2c@c175000 {
- 					<&gcc GCC_BLSP1_AHB_CLK>;
- 			clock-names = "core", "iface";
- 			clock-frequency = <400000>;
-+			dmas = <&blsp1_dma 4>, <&blsp1_dma 5>;
-+			dma-names = "tx", "rx";
+ net/qrtr/mhi.c | 20 +++++++++++++++-----
+ 1 file changed, 15 insertions(+), 5 deletions(-)
+
+diff --git a/net/qrtr/mhi.c b/net/qrtr/mhi.c
+index 29b4fa3..88f046b 100644
+--- a/net/qrtr/mhi.c
++++ b/net/qrtr/mhi.c
+@@ -15,6 +15,7 @@ struct qrtr_mhi_dev {
+ 	struct qrtr_endpoint ep;
+ 	struct mhi_device *mhi_dev;
+ 	struct device *dev;
++	struct completion ready;
+ };
  
- 			pinctrl-names = "default", "sleep";
- 			pinctrl-0 = <&i2c1_default>;
-@@ -1820,6 +1822,8 @@ blsp_i2c2: i2c@c176000 {
- 				 <&gcc GCC_BLSP1_AHB_CLK>;
- 			clock-names = "core", "iface";
- 			clock-frequency = <400000>;
-+			dmas = <&blsp1_dma 6>, <&blsp1_dma 7>;
-+			dma-names = "tx", "rx";
+ /* From MHI to QRTR */
+@@ -50,6 +51,10 @@ static int qcom_mhi_qrtr_send(struct qrtr_endpoint *ep, struct sk_buff *skb)
+ 	struct qrtr_mhi_dev *qdev = container_of(ep, struct qrtr_mhi_dev, ep);
+ 	int rc;
  
- 			pinctrl-names = "default", "sleep";
- 			pinctrl-0 = <&i2c2_default>;
-@@ -1838,6 +1842,8 @@ blsp_i2c3: i2c@c177000 {
- 				 <&gcc GCC_BLSP1_AHB_CLK>;
- 			clock-names = "core", "iface";
- 			clock-frequency = <400000>;
-+			dmas = <&blsp1_dma 8>, <&blsp1_dma 9>;
-+			dma-names = "tx", "rx";
++	rc = wait_for_completion_interruptible(&qdev->ready);
++	if (rc)
++		goto free_skb;
++
+ 	if (skb->sk)
+ 		sock_hold(skb->sk);
  
- 			pinctrl-names = "default", "sleep";
- 			pinctrl-0 = <&i2c3_default>;
-@@ -1856,6 +1862,8 @@ blsp_i2c4: i2c@c178000 {
- 				 <&gcc GCC_BLSP1_AHB_CLK>;
- 			clock-names = "core", "iface";
- 			clock-frequency = <400000>;
-+			dmas = <&blsp1_dma 10>, <&blsp1_dma 11>;
-+			dma-names = "tx", "rx";
+@@ -78,17 +83,13 @@ static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
+ 	struct qrtr_mhi_dev *qdev;
+ 	int rc;
  
- 			pinctrl-names = "default", "sleep";
- 			pinctrl-0 = <&i2c4_default>;
-@@ -1902,6 +1910,8 @@ blsp_i2c5: i2c@c1b5000 {
- 				 <&gcc GCC_BLSP2_AHB_CLK>;
- 			clock-names = "core", "iface";
- 			clock-frequency = <400000>;
-+			dmas = <&blsp2_dma 4>, <&blsp2_dma 5>;
-+			dma-names = "tx", "rx";
+-	/* start channels */
+-	rc = mhi_prepare_for_transfer(mhi_dev, MHI_CH_INBOUND_ALLOC_BUFS);
+-	if (rc)
+-		return rc;
+-
+ 	qdev = devm_kzalloc(&mhi_dev->dev, sizeof(*qdev), GFP_KERNEL);
+ 	if (!qdev)
+ 		return -ENOMEM;
  
- 			pinctrl-names = "default", "sleep";
- 			pinctrl-0 = <&i2c5_default>;
-@@ -1920,6 +1930,8 @@ blsp_i2c6: i2c@c1b6000 {
- 				 <&gcc GCC_BLSP2_AHB_CLK>;
- 			clock-names = "core", "iface";
- 			clock-frequency = <400000>;
-+			dmas = <&blsp2_dma 6>, <&blsp2_dma 7>;
-+			dma-names = "tx", "rx";
+ 	qdev->mhi_dev = mhi_dev;
+ 	qdev->dev = &mhi_dev->dev;
++	init_completion(&qdev->ready);
+ 	qdev->ep.xmit = qcom_mhi_qrtr_send;
  
- 			pinctrl-names = "default", "sleep";
- 			pinctrl-0 = <&i2c6_default>;
-@@ -1938,6 +1950,8 @@ blsp_i2c7: i2c@c1b7000 {
- 				 <&gcc GCC_BLSP2_AHB_CLK>;
- 			clock-names = "core", "iface";
- 			clock-frequency = <400000>;
-+			dmas = <&blsp2_dma 8>, <&blsp2_dma 9>;
-+			dma-names = "tx", "rx";
+ 	dev_set_drvdata(&mhi_dev->dev, qdev);
+@@ -96,6 +97,15 @@ static int qcom_mhi_qrtr_probe(struct mhi_device *mhi_dev,
+ 	if (rc)
+ 		return rc;
  
- 			pinctrl-names = "default", "sleep";
- 			pinctrl-0 = <&i2c7_default>;
-@@ -1956,6 +1970,8 @@ blsp_i2c8: i2c@c1b8000 {
- 				 <&gcc GCC_BLSP2_AHB_CLK>;
- 			clock-names = "core", "iface";
- 			clock-frequency = <400000>;
-+			dmas = <&blsp2_dma 10>, <&blsp2_dma 11>;
-+			dma-names = "tx", "rx";
++	/* start channels */
++	rc = mhi_prepare_for_transfer(mhi_dev, MHI_CH_INBOUND_ALLOC_BUFS);
++	if (rc) {
++		qrtr_endpoint_unregister(&qdev->ep);
++		dev_set_drvdata(&mhi_dev->dev, NULL);
++		return rc;
++	}
++
++	complete_all(&qdev->ready);
+ 	dev_dbg(qdev->dev, "Qualcomm MHI QRTR driver probed\n");
  
- 			pinctrl-names = "default", "sleep";
- 			pinctrl-0 = <&i2c8_default>;
+ 	return 0;
 -- 
-2.32.0
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
