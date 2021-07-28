@@ -2,42 +2,42 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 895FF3D86C3
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 06:30:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 83EA73D86C4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 06:30:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234065AbhG1Eau (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jul 2021 00:30:50 -0400
-Received: from alexa-out-sd-02.qualcomm.com ([199.106.114.39]:13787 "EHLO
-        alexa-out-sd-02.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S234133AbhG1Eat (ORCPT
+        id S234048AbhG1Eay (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jul 2021 00:30:54 -0400
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:35713 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S234401AbhG1Eaw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jul 2021 00:30:49 -0400
+        Wed, 28 Jul 2021 00:30:52 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
   d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1627446648; x=1658982648;
+  t=1627446651; x=1658982651;
   h=from:to:cc:subject:date:message-id:in-reply-to:
    references:mime-version;
-  bh=Ovw9WoZ0YrotwnPUK4JwpO7mOXRMGw27QHpFWOln15I=;
-  b=zjHvxLuS1hbHoMjS4m5xZZHBzAQF3dTN/BJ8swyKZXOBHQQdy2LE+kDZ
-   A5iMt9tYGrzDDs/b6Ym+V4u4Lxr7x8ZaMNd6kApM5eMwVrqDcIenL4IeG
-   JeYQQHirH3mfzA9chL+REICgqzuiHhfXFvvCbhfjobau6sI7f+2+KwqON
-   M=;
-Received: from unknown (HELO ironmsg-SD-alpha.qualcomm.com) ([10.53.140.30])
-  by alexa-out-sd-02.qualcomm.com with ESMTP; 27 Jul 2021 21:30:48 -0700
+  bh=n/S+LJRQQv3dedKcJxXMUgsmPE3AiNWUiTT/M7t323w=;
+  b=FPNGzrdVhFlxmQw66WETlvhAfRNQwUGCzbhzVjFItD/FGCTWHvIELlvd
+   XqFxTlV42gb0Hn6ovwHKF8gYx3EK1T9BW2vLVCkBHtb/CBrJ4scOs6Yv5
+   7MGCkcnLld64t1IMXoiAw7GRF9zKwyOpUOnR7z6GDAWnzQC9lXvNa9Oql
+   8=;
+Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 27 Jul 2021 21:30:51 -0700
 X-QCInternal: smtphost
 Received: from nasanexm03e.na.qualcomm.com ([10.85.0.48])
-  by ironmsg-SD-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 27 Jul 2021 21:30:48 -0700
+  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/AES256-SHA; 27 Jul 2021 21:30:51 -0700
 Received: from fenglinw-gv.qualcomm.com (10.80.80.8) by
  nasanexm03e.na.qualcomm.com (10.85.0.48) with Microsoft SMTP Server (TLS) id
- 15.0.1497.23; Tue, 27 Jul 2021 21:30:46 -0700
+ 15.0.1497.23; Tue, 27 Jul 2021 21:30:49 -0700
 From:   Fenglin Wu <quic_fenglinw@quicinc.com>
 To:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
         "Stephen Boyd" <sboyd@kernel.org>
 CC:     <collinsd@codeaurora.org>, <subbaram@codeaurora.org>,
-        <quic_fenglinw@quicinc.com>, Ashay Jaiswal <ashayj@codeaurora.org>
-Subject: [spmi-pmic-arb fixes and optimization patches V1 4/9] spmi: pmic-arb: add support to dispatch interrupt based on IRQ status
-Date:   Wed, 28 Jul 2021 12:30:04 +0800
-Message-ID: <1627446609-9064-5-git-send-email-quic_fenglinw@quicinc.com>
+        <quic_fenglinw@quicinc.com>
+Subject: [spmi-pmic-arb fixes and optimization patches V1 5/9] spmi: pmic-arb: correct duplicate APID to PPID mapping logic
+Date:   Wed, 28 Jul 2021 12:30:05 +0800
+Message-ID: <1627446609-9064-6-git-send-email-quic_fenglinw@quicinc.com>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1627446609-9064-1-git-send-email-quic_fenglinw@quicinc.com>
 References: <1627446609-9064-1-git-send-email-quic_fenglinw@quicinc.com>
@@ -50,72 +50,55 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Ashay Jaiswal <ashayj@codeaurora.org>
+From: David Collins <collinsd@codeaurora.org>
 
-Current implementation of SPMI arbiter dispatches interrupt based on the
-Arbiter's accumulator status, in some cases the accumulator status may
-remain zero and the interrupt remains un-handled. Add logic to dispatch
-interrupts based Arbiter's IRQ status if the accumulator status is zero.
+Correct the way that duplicate PPID mappings are handled for PMIC
+arbiter v5.  The final APID mapped to a given PPID should be the
+one which has write owner = APPS EE, if it exists, or if not
+that, then the first APID mapped to the PPID, if it exists.
 
-Signed-off-by: Ashay Jaiswal <ashayj@codeaurora.org>
 Signed-off-by: David Collins <collinsd@codeaurora.org>
 Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
 ---
- drivers/spmi/spmi-pmic-arb.c | 28 ++++++++++++++++++++++++++++
- 1 file changed, 28 insertions(+)
+ drivers/spmi/spmi-pmic-arb.c | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
 
 diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
-index c4adc06..59c445b 100644
+index 59c445b..f1b72d8 100644
 --- a/drivers/spmi/spmi-pmic-arb.c
 +++ b/drivers/spmi/spmi-pmic-arb.c
-@@ -525,12 +525,18 @@ static void pmic_arb_chained_irq(struct irq_desc *desc)
- 	u8 ee = pmic_arb->ee;
- 	u32 status, enable;
- 	int i, id, apid;
-+	/* status based dispatch */
-+	bool acc_valid = false;
-+	u32 irq_status = 0;
+@@ -918,7 +918,8 @@ static int pmic_arb_read_apid_map_v5(struct spmi_pmic_arb *pmic_arb)
+ 	 * version 5, there is more than one APID mapped to each PPID.
+ 	 * The owner field for each of these mappings specifies the EE which is
+ 	 * allowed to write to the APID.  The owner of the last (highest) APID
+-	 * for a given PPID will receive interrupts from the PPID.
++	 * which has the IRQ owner bit set for a given PPID will receive
++	 * interrupts from the PPID.
+ 	 */
+ 	for (i = 0; ; i++, apidd++) {
+ 		offset = pmic_arb->ver_ops->apid_map_offset(i);
+@@ -941,16 +942,16 @@ static int pmic_arb_read_apid_map_v5(struct spmi_pmic_arb *pmic_arb)
+ 		apid = pmic_arb->ppid_to_apid[ppid] & ~PMIC_ARB_APID_VALID;
+ 		prev_apidd = &pmic_arb->apid_data[apid];
  
- 	chained_irq_enter(chip, desc);
- 
- 	for (i = first; i <= last; ++i) {
- 		status = readl_relaxed(
- 				ver_ops->owner_acc_status(pmic_arb, ee, i));
-+		if (status)
-+			acc_valid = true;
-+
- 		while (status) {
- 			id = ffs(status) - 1;
- 			status &= ~BIT(id);
-@@ -548,6 +554,28 @@ static void pmic_arb_chained_irq(struct irq_desc *desc)
+-		if (valid && is_irq_ee &&
+-				prev_apidd->write_ee == pmic_arb->ee) {
++		if (!valid || apidd->write_ee == pmic_arb->ee) {
++			/* First PPID mapping or one for this EE */
++			pmic_arb->ppid_to_apid[ppid] = i | PMIC_ARB_APID_VALID;
++		} else if (valid && is_irq_ee &&
++			   prev_apidd->write_ee == pmic_arb->ee) {
+ 			/*
+ 			 * Duplicate PPID mapping after the one for this EE;
+ 			 * override the irq owner
+ 			 */
+ 			prev_apidd->irq_ee = apidd->irq_ee;
+-		} else if (!valid || is_irq_ee) {
+-			/* First PPID mapping or duplicate for another EE */
+-			pmic_arb->ppid_to_apid[ppid] = i | PMIC_ARB_APID_VALID;
  		}
- 	}
  
-+	/* ACC_STATUS is empty but IRQ fired check IRQ_STATUS */
-+	if (!acc_valid) {
-+		for (i = pmic_arb->min_apid; i <= pmic_arb->max_apid; i++) {
-+			/* skip if APPS is not irq owner */
-+			if (pmic_arb->apid_data[i].irq_ee != pmic_arb->ee)
-+				continue;
-+
-+			irq_status = readl_relaxed(
-+					     ver_ops->irq_status(pmic_arb, i));
-+			if (irq_status) {
-+				enable = readl_relaxed(
-+					     ver_ops->acc_enable(pmic_arb, i));
-+				if (enable & SPMI_PIC_ACC_ENABLE_BIT) {
-+					dev_dbg(&pmic_arb->spmic->dev,
-+						"Dispatching IRQ for apid=%d status=%x\n",
-+						i, irq_status);
-+					periph_interrupt(pmic_arb, i);
-+				}
-+			}
-+		}
-+	}
-+
- 	chained_irq_exit(chip, desc);
- }
- 
+ 		apidd->ppid = ppid;
 -- 
 Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project.
