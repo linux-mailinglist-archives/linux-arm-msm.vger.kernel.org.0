@@ -2,478 +2,305 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8AFEE3D906A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 16:25:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B369B3D90F0
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 16:53:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235427AbhG1OZT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jul 2021 10:25:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37982 "EHLO
+        id S236901AbhG1OxG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jul 2021 10:53:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44514 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236701AbhG1OZN (ORCPT
+        with ESMTP id S236711AbhG1OxG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jul 2021 10:25:13 -0400
-Received: from mail-lj1-x234.google.com (mail-lj1-x234.google.com [IPv6:2a00:1450:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D833C0617B9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 07:24:56 -0700 (PDT)
-Received: by mail-lj1-x234.google.com with SMTP id l17so3340663ljn.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 07:24:56 -0700 (PDT)
+        Wed, 28 Jul 2021 10:53:06 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D8D1C061764
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 07:53:04 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id p5so2910077wro.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 07:53:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=1UBua13F+A5CHYAXTN2Yvc4txUC3tULAs/8cg48q4YI=;
-        b=usaAQKG9gjs/HixLkYbmV5Vg78JLuU2FwjS5WYkfbd4XmH8nDemPzFjILlRRYV+O9h
-         wHK0WfSnIeUW5ZSr2nDOCQEIdW+dChyBkB3B90V6M4h5+PXZy2CyCphL4TPR5H/G1NmY
-         Xdv6qKScWzIDwuhcuSNTTzYjsvtaVILD1VDm/vslU9KCuz6POPVJz/J9JmkWVMouAXp1
-         EiXk2929yPlRhAxHScl8EA/IfwjpIfDYC/7bRJYJ9bjwzWygVs2cF/ItKIEufZR3dfNn
-         UosY3By9VQA/lqTIWA/f2zj2IzseVJWSoLaMobWowsxxoU5V7+01wP/tmAQC34qPltL1
-         9SXw==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=FLa9JkYsnVFYuAh0m/VrdgEnPoab+4HrUUbPIcU3ZTA=;
+        b=CC0Ae83R+scTToRCxibUQ8g+cU1jUC3z6GWqbkDyXyKA15xFyl9QHfcCX2vLRbs7E6
+         Mh1i/5pzLZXLHxcn6ZZRyeMy7tDsKNFwygmEpFcut8aXUN0ltJ+ECAfZ/15Clfrcuajm
+         jyehU/F59MDDt4gLhb8UcbNhmm9hmKCTsRV4qS187cfpGWgwq6L9LpybOowMYpszwoLj
+         6oJpuYdiBPyYB5tJz9lUXosf2Xkk6y3HehQ0bd0t4d3Rd1dJKMLWg4pyGC/hdGWfmc3j
+         AlN4psPs4uaRUi0PHUomQpZ6+Rq2eoHpWXtqPmxB2DbM+9DzmMkGud49TxjSUGA3rxPB
+         /ELQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=1UBua13F+A5CHYAXTN2Yvc4txUC3tULAs/8cg48q4YI=;
-        b=sD7zapRKX/vbPuSj77zjJdsosPng4O0iLkZKBT+7ekRyHhkv1W6+MTqSfOSyMunKM0
-         qCMAJMgjYhC0E4V82ZeCO1I6cIFRFKPUhwU9o5cR7wtq6xh73nymR1fIACBF3KEgIiLS
-         8WnbFuKIP1dkh0ooyo0qeHXEEUcCcbR8/O7tFovrxCIflv2IZOrXOAMnPCoNfZPJdCky
-         xNExtoGSj/7wnFIjqwqjwCLNIRhANWKdeCTZLMsWn3G5lnHiX4497Csn/kW++fMopdR1
-         UPpp3KHoLnjheEGmMCkf7Z14loocX/z8bMsszUFbX8Cc6ZUi+ZWE6vZrtKChoCWM5YI9
-         SRuQ==
-X-Gm-Message-State: AOAM533f0vPZwqcJ7P17GxRdW2FmL0o2kSOFFkmI7KG8zXEp3g6lezrh
-        1ZLZLNx27sEZ55pX9NEtoP0nLQ==
-X-Google-Smtp-Source: ABdhPJxn2Z8txgg95TaIucUtPGJPNjcEmX4ILaMTN9aL/eyREY/1WXLyAoMLpCIWmewCNp2ibPE40w==
-X-Received: by 2002:a05:651c:110f:: with SMTP id d15mr67991ljo.275.1627482294412;
-        Wed, 28 Jul 2021 07:24:54 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id h4sm15610lft.184.2021.07.28.07.24.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Jul 2021 07:24:54 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Pavel Machek <pavel@ucw.cz>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 5/5] clk: qcom: move pm_clk functionality into common code
-Date:   Wed, 28 Jul 2021 17:24:45 +0300
-Message-Id: <20210728142445.774158-6-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210728142445.774158-1-dmitry.baryshkov@linaro.org>
-References: <20210728142445.774158-1-dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=FLa9JkYsnVFYuAh0m/VrdgEnPoab+4HrUUbPIcU3ZTA=;
+        b=aLqCA6ULHvaPOkE8igzbwxla8VT147Vo1g5M8TnKNoXPf0oDQem+xtg1CwXDob9dME
+         CNpTZwyG+NjoDcEgyI1taevZNc4CP6HuoGnZs+oCdRIX7MDFnLhpDgXmJKu/nqiXHY9t
+         WCvbRQkR0fuGsiTfdQ0yaOcEZecK3aWYKOoudaLwyAHTZoFb4hqiomVpPyDcdYMDzz2j
+         CR4/PFr/xI2WcfaOH9bF5WW+EUnVGI7oRP6wvcClAJtb2e9Pqv0t1cQn/YlyeiqOR/U2
+         1Z8DaXfOG9/28ICWOYhPSXFTytJCcqoscJsCuGc99HmQWr+aO6yGnVQa8yVzBqRmHct9
+         HMQA==
+X-Gm-Message-State: AOAM5321hYVxLm3d5qttWOaFriD5ucwdS6mb1bMZwS2gP+NJnw94tLqU
+        MTOunsuNu1iKoVoUDpVKyxN0yQ==
+X-Google-Smtp-Source: ABdhPJwRlLF7HdOtB6/tmNwW4HJhWd7IOR3djacIZTmwFK5zwHJw32e9Gp52b6W5ox0Z7OSO/SeFrw==
+X-Received: by 2002:adf:dd05:: with SMTP id a5mr7815662wrm.214.1627483982539;
+        Wed, 28 Jul 2021 07:53:02 -0700 (PDT)
+Received: from [10.10.6.131] ([109.120.209.55])
+        by smtp.googlemail.com with ESMTPSA id s1sm6211270wmj.8.2021.07.28.07.53.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Jul 2021 07:53:02 -0700 (PDT)
+Subject: Re: [PATCH v3 7/7] media: venus: Set buffer to FW based on FW min
+ count requirement.
+To:     Dikshita Agarwal <dikshita@codeaurora.org>,
+        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org
+References: <1626246068-21023-1-git-send-email-dikshita@codeaurora.org>
+ <1626246068-21023-8-git-send-email-dikshita@codeaurora.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <e85515cc-6213-cdc3-dab8-46ea5eb58011@linaro.org>
+Date:   Wed, 28 Jul 2021 17:53:01 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <1626246068-21023-8-git-send-email-dikshita@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Several Qualcomm clock controller drivers use pm_clk functionality.
-Instead of having common code in all the drivers, move the pm_clk
-handling to the qcom_cc_map/qcom_cc_probe.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/clk/qcom/camcc-sc7180.c       | 28 +++++++-----------
- drivers/clk/qcom/common.c             | 36 +++++++++++++++++++++++
- drivers/clk/qcom/common.h             | 17 +++++++++++
- drivers/clk/qcom/lpasscorecc-sc7180.c | 41 +++++++++------------------
- drivers/clk/qcom/mss-sc7180.c         | 31 ++++++--------------
- drivers/clk/qcom/q6sstop-qcs404.c     | 22 ++++++--------
- drivers/clk/qcom/turingcc-qcs404.c    | 31 ++++++--------------
- 7 files changed, 103 insertions(+), 103 deletions(-)
 
-diff --git a/drivers/clk/qcom/camcc-sc7180.c b/drivers/clk/qcom/camcc-sc7180.c
-index ce73ee9037cb..cb213b8473a5 100644
---- a/drivers/clk/qcom/camcc-sc7180.c
-+++ b/drivers/clk/qcom/camcc-sc7180.c
-@@ -1631,8 +1631,16 @@ static const struct regmap_config cam_cc_sc7180_regmap_config = {
- 	.fast_io = true,
- };
- 
-+static const char * const cam_cc_sc7180_pm_clks[] = { "xo", "iface" };
-+
-+static const struct qcom_cc_pm cam_cc_sc7180_pm = {
-+	.pm_clks = cam_cc_sc7180_pm_clks,
-+	.num_pm_clks = ARRAY_SIZE(cam_cc_sc7180_pm_clks),
-+};
-+
- static const struct qcom_cc_desc cam_cc_sc7180_desc = {
- 	.config = &cam_cc_sc7180_regmap_config,
-+	.pm = &cam_cc_sc7180_pm,
- 	.clk_hws = cam_cc_sc7180_hws,
- 	.num_clk_hws = ARRAY_SIZE(cam_cc_sc7180_hws),
- 	.clks = cam_cc_sc7180_clocks,
-@@ -1652,25 +1660,9 @@ static int cam_cc_sc7180_probe(struct platform_device *pdev)
- 	struct regmap *regmap;
- 	int ret;
- 
--	ret = devm_pm_runtime_enable(&pdev->dev);
--	if (ret < 0)
--		return ret;
--
--	ret = devm_pm_clk_create(&pdev->dev);
--	if (ret < 0)
--		return ret;
--
--	ret = pm_clk_add(&pdev->dev, "xo");
--	if (ret < 0) {
--		dev_err(&pdev->dev, "Failed to acquire XO clock\n");
--		return ret;
--	}
--
--	ret = pm_clk_add(&pdev->dev, "iface");
--	if (ret < 0) {
--		dev_err(&pdev->dev, "Failed to acquire iface clock\n");
-+	ret = qcom_cc_setup_pm(pdev, &cam_cc_sc7180_desc);
-+	if (ret)
- 		return ret;
--	}
- 
- 	ret = pm_runtime_get(&pdev->dev);
- 	if (ret)
-diff --git a/drivers/clk/qcom/common.c b/drivers/clk/qcom/common.c
-index ed7c516a597a..def01be085ba 100644
---- a/drivers/clk/qcom/common.c
-+++ b/drivers/clk/qcom/common.c
-@@ -7,6 +7,8 @@
- #include <linux/module.h>
- #include <linux/regmap.h>
- #include <linux/platform_device.h>
-+#include <linux/pm_clock.h>
-+#include <linux/pm_runtime.h>
- #include <linux/clk-provider.h>
- #include <linux/reset-controller.h>
- #include <linux/of.h>
-@@ -307,6 +309,8 @@ int qcom_cc_probe(struct platform_device *pdev, const struct qcom_cc_desc *desc)
- {
- 	struct regmap *regmap;
- 
-+	qcom_cc_setup_pm(pdev, desc);
-+
- 	regmap = qcom_cc_map(pdev, desc);
- 	if (IS_ERR(regmap))
- 		return PTR_ERR(regmap);
-@@ -320,6 +324,8 @@ int qcom_cc_probe_by_index(struct platform_device *pdev, int index,
- {
- 	struct regmap *regmap;
- 
-+	qcom_cc_setup_pm(pdev, desc);
-+
- 	regmap = qcom_cc_map_by_index(pdev, desc, index);
- 	if (IS_ERR(regmap))
- 		return PTR_ERR(regmap);
-@@ -328,4 +334,34 @@ int qcom_cc_probe_by_index(struct platform_device *pdev, int index,
- }
- EXPORT_SYMBOL_GPL(qcom_cc_probe_by_index);
- 
-+int qcom_cc_really_setup_pm(struct platform_device *pdev, const struct qcom_cc_pm *pm)
-+{
-+	int ret;
-+	int i;
-+
-+	if (!pm)
-+		return -EINVAL;
-+
-+	ret = devm_pm_runtime_enable(&pdev->dev);
-+	if (ret)
-+		return ret;
-+
-+	if (pm->num_pm_clks) {
-+		ret = devm_pm_clk_create(&pdev->dev);
-+		if (ret)
-+			return ret;
-+	}
-+
-+	for (i = 0; i < pm->num_pm_clks; i++) {
-+		ret = pm_clk_add(&pdev->dev, pm->pm_clks[i]);
-+		if (ret < 0) {
-+			dev_err(&pdev->dev, "Failed to acquire %s pm clk\n", pm->pm_clks[i]);
-+			return ret;
-+		}
-+	}
-+
-+	return 0;
-+}
-+EXPORT_SYMBOL_GPL(qcom_cc_really_setup_pm);
-+
- MODULE_LICENSE("GPL v2");
-diff --git a/drivers/clk/qcom/common.h b/drivers/clk/qcom/common.h
-index bb39a7e106d8..ea4394439712 100644
---- a/drivers/clk/qcom/common.h
-+++ b/drivers/clk/qcom/common.h
-@@ -19,8 +19,15 @@ struct clk_hw;
- #define PLL_VOTE_FSM_ENA	BIT(20)
- #define PLL_VOTE_FSM_RESET	BIT(21)
- 
-+/* This can be used from within the qcom_cc_desc or separately */
-+struct qcom_cc_pm {
-+	const char *const *pm_clks;
-+	size_t num_pm_clks;
-+};
-+
- struct qcom_cc_desc {
- 	const struct regmap_config *config;
-+	const struct qcom_cc_pm *pm;
- 	struct clk_regmap **clks;
- 	size_t num_clks;
- 	const struct qcom_reset_map *resets;
-@@ -54,6 +61,16 @@ extern int qcom_cc_register_board_clk(struct device *dev, const char *path,
- 				      const char *name, unsigned long rate);
- extern int qcom_cc_register_sleep_clk(struct device *dev);
- 
-+extern int qcom_cc_really_setup_pm(struct platform_device *pdev, const struct qcom_cc_pm *pm);
-+
-+static inline int qcom_cc_setup_pm(struct platform_device *pdev, const struct qcom_cc_desc *desc)
-+{
-+	if (!desc->pm)
-+		return 0;
-+
-+	return qcom_cc_really_setup_pm(pdev, desc->pm);
-+}
-+
- extern struct regmap *qcom_cc_map(struct platform_device *pdev,
- 				  const struct qcom_cc_desc *desc);
- extern int qcom_cc_really_probe(struct platform_device *pdev,
-diff --git a/drivers/clk/qcom/lpasscorecc-sc7180.c b/drivers/clk/qcom/lpasscorecc-sc7180.c
-index ac09b7b840ab..af1b04615d1d 100644
---- a/drivers/clk/qcom/lpasscorecc-sc7180.c
-+++ b/drivers/clk/qcom/lpasscorecc-sc7180.c
-@@ -338,8 +338,16 @@ static struct regmap_config lpass_core_cc_sc7180_regmap_config = {
- 	.fast_io = true,
- };
- 
-+static const char * const lpass_core_sc7180_pm_clks[] = { "iface" };
-+
-+static const struct qcom_cc_pm lpass_core_sc7180_pm = {
-+	.pm_clks = lpass_core_sc7180_pm_clks,
-+	.num_pm_clks = ARRAY_SIZE(lpass_core_sc7180_pm_clks),
-+};
-+
- static const struct qcom_cc_desc lpass_core_hm_sc7180_desc = {
- 	.config = &lpass_core_cc_sc7180_regmap_config,
-+	.pm = &lpass_core_sc7180_pm,
- 	.gdscs = lpass_core_hm_sc7180_gdscs,
- 	.num_gdscs = ARRAY_SIZE(lpass_core_hm_sc7180_gdscs),
- };
-@@ -356,35 +364,16 @@ static const struct qcom_cc_desc lpass_audio_hm_sc7180_desc = {
- 	.num_gdscs = ARRAY_SIZE(lpass_audio_hm_sc7180_gdscs),
- };
- 
--static int lpass_create_pm_clks(struct platform_device *pdev)
--{
--	int ret;
--
--	pm_runtime_use_autosuspend(&pdev->dev);
--	pm_runtime_set_autosuspend_delay(&pdev->dev, 500);
--
--	ret = devm_pm_runtime_enable(&pdev->dev);
--	if (ret)
--		return ret;
--
--	ret = devm_pm_clk_create(&pdev->dev);
--	if (ret)
--		return ret;
--
--	ret = pm_clk_add(&pdev->dev, "iface");
--	if (ret < 0)
--		dev_err(&pdev->dev, "failed to acquire iface clock\n");
--
--	return ret;
--}
--
- static int lpass_core_cc_sc7180_probe(struct platform_device *pdev)
- {
- 	const struct qcom_cc_desc *desc;
- 	struct regmap *regmap;
- 	int ret;
- 
--	ret = lpass_create_pm_clks(pdev);
-+	pm_runtime_use_autosuspend(&pdev->dev);
-+	pm_runtime_set_autosuspend_delay(&pdev->dev, 500);
-+
-+	ret = qcom_cc_really_setup_pm(pdev, &lpass_core_sc7180_pm);
- 	if (ret)
- 		return ret;
- 
-@@ -423,11 +412,9 @@ static int lpass_core_cc_sc7180_probe(struct platform_device *pdev)
- static int lpass_hm_core_probe(struct platform_device *pdev)
- {
- 	const struct qcom_cc_desc *desc;
--	int ret;
- 
--	ret = lpass_create_pm_clks(pdev);
--	if (ret)
--		return ret;
-+	pm_runtime_use_autosuspend(&pdev->dev);
-+	pm_runtime_set_autosuspend_delay(&pdev->dev, 500);
- 
- 	lpass_core_cc_sc7180_regmap_config.name = "lpass_hm_core";
- 	desc = &lpass_core_hm_sc7180_desc;
-diff --git a/drivers/clk/qcom/mss-sc7180.c b/drivers/clk/qcom/mss-sc7180.c
-index 5a1407440662..47feca261985 100644
---- a/drivers/clk/qcom/mss-sc7180.c
-+++ b/drivers/clk/qcom/mss-sc7180.c
-@@ -7,7 +7,6 @@
- #include <linux/platform_device.h>
- #include <linux/module.h>
- #include <linux/pm_clock.h>
--#include <linux/pm_runtime.h>
- #include <linux/regmap.h>
- 
- #include <dt-bindings/clock/qcom,mss-sc7180.h>
-@@ -63,35 +62,23 @@ static struct clk_regmap *mss_sc7180_clocks[] = {
- 	[MSS_AXI_NAV_CLK] = &mss_axi_nav_clk.clkr,
- };
- 
-+static const char * const mss_sc7180_pm_clks[] = { "cfg_ahb" };
-+
-+static const struct qcom_cc_pm mss_sc7180_pm = {
-+	.pm_clks = mss_sc7180_pm_clks,
-+	.num_pm_clks = ARRAY_SIZE(mss_sc7180_pm_clks),
-+};
-+
- static const struct qcom_cc_desc mss_sc7180_desc = {
- 	.config = &mss_regmap_config,
-+	.pm = &mss_sc7180_pm,
- 	.clks = mss_sc7180_clocks,
- 	.num_clks = ARRAY_SIZE(mss_sc7180_clocks),
- };
- 
- static int mss_sc7180_probe(struct platform_device *pdev)
- {
--	int ret;
--
--	ret = devm_pm_runtime_enable(&pdev->dev);
--	if (ret)
--		return ret;
--
--	ret = devm_pm_clk_create(&pdev->dev);
--	if (ret)
--		return ret;
--
--	ret = pm_clk_add(&pdev->dev, "cfg_ahb");
--	if (ret < 0) {
--		dev_err(&pdev->dev, "failed to acquire iface clock\n");
--		return ret;
--	}
--
--	ret = qcom_cc_probe(pdev, &mss_sc7180_desc);
--	if (ret < 0)
--		return ret;
--
--	return 0;
-+	return qcom_cc_probe(pdev, &mss_sc7180_desc);
- }
- 
- static const struct dev_pm_ops mss_sc7180_pm_ops = {
-diff --git a/drivers/clk/qcom/q6sstop-qcs404.c b/drivers/clk/qcom/q6sstop-qcs404.c
-index 507386bee07d..e19ee2b047ac 100644
---- a/drivers/clk/qcom/q6sstop-qcs404.c
-+++ b/drivers/clk/qcom/q6sstop-qcs404.c
-@@ -8,7 +8,6 @@
- #include <linux/module.h>
- #include <linux/platform_device.h>
- #include <linux/pm_clock.h>
--#include <linux/pm_runtime.h>
- #include <linux/regmap.h>
- 
- #include <dt-bindings/clock/qcom,q6sstopcc-qcs404.h>
-@@ -117,6 +116,13 @@ static struct regmap_config q6sstop_regmap_config = {
- 	.fast_io	= true,
- };
- 
-+static const char * const q6sstop_qcs404_pm_clks[] = { NULL };
-+
-+static const struct qcom_cc_pm q6sstop_qcs404_pm = {
-+	.pm_clks = q6sstop_qcs404_pm_clks,
-+	.num_pm_clks = ARRAY_SIZE(q6sstop_qcs404_pm_clks),
-+};
-+
- static struct clk_regmap *q6sstop_qcs404_clocks[] = {
- 	[LCC_AHBFABRIC_CBC_CLK] = &lcc_ahbfabric_cbc_clk.clkr,
- 	[LCC_Q6SS_AHBS_CBC_CLK] = &lcc_q6ss_ahbs_cbc_clk.clkr,
-@@ -159,19 +165,7 @@ static int q6sstopcc_qcs404_probe(struct platform_device *pdev)
- 	const struct qcom_cc_desc *desc;
- 	int ret;
- 
--	ret = devm_pm_runtime_enable(&pdev->dev);
--	if (ret)
--		return ret;
--
--	ret = devm_pm_clk_create(&pdev->dev);
--	if (ret)
--		return ret;
--
--	ret = pm_clk_add(&pdev->dev, NULL);
--	if (ret < 0) {
--		dev_err(&pdev->dev, "failed to acquire iface clock\n");
--		return ret;
--	}
-+	ret = qcom_cc_really_setup_pm(pdev, &q6sstop_qcs404_pm);
- 
- 	q6sstop_regmap_config.name = "q6sstop_tcsr";
- 	desc = &tcsr_qcs404_desc;
-diff --git a/drivers/clk/qcom/turingcc-qcs404.c b/drivers/clk/qcom/turingcc-qcs404.c
-index 4543bda793f4..a2ac9e6da13c 100644
---- a/drivers/clk/qcom/turingcc-qcs404.c
-+++ b/drivers/clk/qcom/turingcc-qcs404.c
-@@ -9,7 +9,6 @@
- #include <linux/module.h>
- #include <linux/of_address.h>
- #include <linux/pm_clock.h>
--#include <linux/pm_runtime.h>
- #include <linux/regmap.h>
- 
- #include <dt-bindings/clock/qcom,turingcc-qcs404.h>
-@@ -100,35 +99,23 @@ static const struct regmap_config turingcc_regmap_config = {
- 	.fast_io	= true,
- };
- 
-+static const char * const turingcc_pm_clks[] = { NULL };
-+
-+static const struct qcom_cc_pm turingcc_pm = {
-+	.pm_clks = turingcc_pm_clks,
-+	.num_pm_clks = ARRAY_SIZE(turingcc_pm_clks),
-+};
-+
- static const struct qcom_cc_desc turingcc_desc = {
- 	.config = &turingcc_regmap_config,
-+	.pm = &turingcc_pm,
- 	.clks = turingcc_clocks,
- 	.num_clks = ARRAY_SIZE(turingcc_clocks),
- };
- 
- static int turingcc_probe(struct platform_device *pdev)
- {
--	int ret;
--
--	ret = devm_pm_runtime_enable(&pdev->dev);
--	if (ret)
--		return ret;
--
--	ret = devm_pm_clk_create(&pdev->dev);
--	if (ret)
--		return ret;
--
--	ret = pm_clk_add(&pdev->dev, NULL);
--	if (ret < 0) {
--		dev_err(&pdev->dev, "failed to acquire iface clock\n");
--		return ret;
--	}
--
--	ret = qcom_cc_probe(pdev, &turingcc_desc);
--	if (ret < 0)
--		return ret;
--
--	return 0;
-+	return qcom_cc_probe(pdev, &turingcc_desc);
- }
- 
- static const struct dev_pm_ops turingcc_pm_ops = {
+On 7/14/21 10:01 AM, Dikshita Agarwal wrote:
+> - Get the min buffer count required by FW from source event change
+>   and use the same value to decide actual buffer count and for
+>   buffer size calculation.
+> - Setup DPB and OPB buffers after session continue incase of
+>   reconfig.
+> 
+> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+> ---
+>  drivers/media/platform/qcom/venus/core.h             |  1 +
+>  drivers/media/platform/qcom/venus/helpers.c          | 11 ++++++++++-
+>  drivers/media/platform/qcom/venus/hfi_helper.h       |  9 +++++++++
+>  drivers/media/platform/qcom/venus/hfi_msgs.c         |  7 +++++++
+>  drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c |  6 ++++--
+>  drivers/media/platform/qcom/venus/vdec.c             | 20 +++++++++++++-------
+>  6 files changed, 44 insertions(+), 10 deletions(-)
+> 
+> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+> index 1ff20d9..b2b023e 100644
+> --- a/drivers/media/platform/qcom/venus/core.h
+> +++ b/drivers/media/platform/qcom/venus/core.h
+> @@ -403,6 +403,7 @@ struct venus_inst {
+>  	u32 width;
+>  	u32 height;
+>  	struct v4l2_rect crop;
+> +	u32 fw_min_cnt;
+>  	u32 out_width;
+>  	u32 out_height;
+>  	u32 colorspace;
+> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+> index ccf188a..ea82cdc 100644
+> --- a/drivers/media/platform/qcom/venus/helpers.c
+> +++ b/drivers/media/platform/qcom/venus/helpers.c
+> @@ -576,6 +576,7 @@ static int platform_get_bufreq(struct venus_inst *inst, u32 buftype,
+>  	struct hfi_plat_buffers_params params;
+>  	bool is_dec = inst->session_type == VIDC_SESSION_TYPE_DEC;
+>  	struct venc_controls *enc_ctr = &inst->controls.enc;
+> +	int ret = 0;
+
+No need to initialize ret to zero.
+
+>  
+>  	hfi_plat = hfi_platform_get(version);
+>  
+> @@ -610,7 +611,15 @@ static int platform_get_bufreq(struct venus_inst *inst, u32 buftype,
+>  		params.enc.is_tenbit = inst->bit_depth == VIDC_BITDEPTH_10;
+>  	}
+>  
+> -	return hfi_plat->bufreq(&params, inst->session_type, buftype, req);
+> +	if (buftype == HFI_BUFFER_OUTPUT || buftype == HFI_BUFFER_OUTPUT2 ||
+> +	    buftype == HFI_BUFFER_INTERNAL_SCRATCH_1(version))
+
+Could you add a comment why HFI_BUFFER_INTERNAL_SCRATCH_1 is included in
+condition and not included in below 'if' condition?
+
+> +		req->count_min = inst->fw_min_cnt;
+> +
+> +	ret = hfi_plat->bufreq(&params, inst->session_type, buftype, req);
+> +	if (buftype == HFI_BUFFER_OUTPUT || buftype == HFI_BUFFER_OUTPUT2)
+
+^^^^
+
+> +		if (inst->fw_min_cnt != req->count_min)
+> +			inst->fw_min_cnt = req->count_min;
+> +	return ret;
+>  }
+
+Also in regards to inst->fw_min_cnt, can we pass fw_min_cnt as input to
+get_bufreq via 'req' structure, i.e.
+
+req.count_min = inst->fw_min_cnt;
+
+ret = venus_helper_get_bufreq(inst, type, &req);
+
+inst->fw_min_cnt = req.count_min
+
+?
+
+>  
+>  int venus_helper_get_bufreq(struct venus_inst *inst, u32 type,
+> diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
+> index 185c302..f2e8fad 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_helper.h
+> +++ b/drivers/media/platform/qcom/venus/hfi_helper.h
+> @@ -167,6 +167,7 @@
+>  #define HFI_PROPERTY_PARAM_VDEC_RECOVERY_POINT_SEI_EXTRADATA	0x120300c
+>  #define HFI_PROPERTY_PARAM_VDEC_THUMBNAIL_MODE			0x120300d
+>  #define HFI_PROPERTY_PARAM_VDEC_FRAME_ASSEMBLY			0x120300e
+> +#define HFI_PROPERTY_PARAM_VDEC_DPB_COUNTS				0x120300e
+>  #define HFI_PROPERTY_PARAM_VDEC_VC1_FRAMEDISP_EXTRADATA		0x1203011
+>  #define HFI_PROPERTY_PARAM_VDEC_VC1_SEQDISP_EXTRADATA		0x1203012
+>  #define HFI_PROPERTY_PARAM_VDEC_TIMESTAMP_EXTRADATA		0x1203013
+> @@ -906,6 +907,14 @@ struct hfi_extradata_input_crop {
+>  	u32 height;
+>  };
+>  
+> +struct hfi_dpb_counts {
+> +	u32 max_dpb_count;
+> +	u32 max_ref_frames;
+> +	u32 max_dec_buffering;
+> +	u32 max_reorder_frames;
+> +	u32 fw_min_cnt;
+> +};
+> +
+>  #define HFI_COLOR_FORMAT_MONOCHROME		0x01
+>  #define HFI_COLOR_FORMAT_NV12			0x02
+>  #define HFI_COLOR_FORMAT_NV21			0x03
+> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
+> index a2d436d..ed005d6 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_msgs.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
+> @@ -32,6 +32,7 @@ static void event_seq_changed(struct venus_core *core, struct venus_inst *inst,
+>  	struct hfi_colour_space *colour_info;
+>  	struct hfi_buffer_requirements *bufreq;
+>  	struct hfi_extradata_input_crop *crop;
+> +	struct hfi_dpb_counts *dpb_count;
+>  	u8 *data_ptr;
+>  	u32 ptype;
+>  
+> @@ -110,6 +111,12 @@ static void event_seq_changed(struct venus_core *core, struct venus_inst *inst,
+>  			event.input_crop.height = crop->height;
+>  			data_ptr += sizeof(*crop);
+>  			break;
+> +		case HFI_PROPERTY_PARAM_VDEC_DPB_COUNTS:
+> +			data_ptr += sizeof(u32);
+> +			dpb_count = (struct hfi_dpb_counts *)data_ptr;
+> +			event.buf_count = dpb_count->fw_min_cnt;
+> +			data_ptr += sizeof(*dpb_count);
+> +			break;
+>  		default:
+>  			break;
+>  		}
+> diff --git a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
+> index 479178b..ea25c45 100644
+> --- a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
+> +++ b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
+> @@ -1164,7 +1164,7 @@ static int output_buffer_count(u32 session_type, u32 codec)
+>  			output_min_count = 6;
+>  			break;
+>  		case V4L2_PIX_FMT_VP9:
+> -			output_min_count = 9;
+> +			output_min_count = 11;
+>  			break;
+>  		case V4L2_PIX_FMT_H264:
+>  		case V4L2_PIX_FMT_HEVC:
+> @@ -1213,6 +1213,8 @@ static int bufreq_dec(struct hfi_plat_buffers_params *params, u32 buftype,
+>  	}
+>  
+>  	out_min_count = output_buffer_count(VIDC_SESSION_TYPE_DEC, codec);
+> +	/* Max of driver and FW count */
+> +	out_min_count = max(out_min_count, bufreq->count_min);
+>  
+>  	bufreq->type = buftype;
+>  	bufreq->region_size = 0;
+> @@ -1237,7 +1239,7 @@ static int bufreq_dec(struct hfi_plat_buffers_params *params, u32 buftype,
+>  	} else if (buftype == HFI_BUFFER_INTERNAL_SCRATCH(version)) {
+>  		bufreq->size = dec_ops->scratch(width, height, is_interlaced);
+>  	} else if (buftype == HFI_BUFFER_INTERNAL_SCRATCH_1(version)) {
+> -		bufreq->size = dec_ops->scratch1(width, height, out_min_count,
+> +		bufreq->size = dec_ops->scratch1(width, height, VB2_MAX_FRAME,
+>  						 is_secondary_output,
+>  						 num_vpp_pipes);
+>  	} else if (buftype == HFI_BUFFER_INTERNAL_PERSIST_1) {
+> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+> index 892be8d..3e91d8c 100644
+> --- a/drivers/media/platform/qcom/venus/vdec.c
+> +++ b/drivers/media/platform/qcom/venus/vdec.c
+> @@ -988,23 +988,23 @@ static int vdec_start_capture(struct venus_inst *inst)
+>  	if (ret)
+>  		goto err;
+>  
+> +	venus_pm_load_scale(inst);
+> +
+> +	inst->next_buf_last = false;
+> +
+>  	ret = venus_helper_alloc_dpb_bufs(inst);
+>  	if (ret)
+>  		goto err;
+>  
+> -	ret = venus_helper_queue_dpb_bufs(inst);
+> +	ret = hfi_session_continue(inst);
+>  	if (ret)
+>  		goto free_dpb_bufs;
+>  
+> -	ret = venus_helper_process_initial_cap_bufs(inst);
+> +	ret = venus_helper_queue_dpb_bufs(inst);
+>  	if (ret)
+>  		goto free_dpb_bufs;
+>  
+> -	venus_pm_load_scale(inst);
+> -
+> -	inst->next_buf_last = false;
+> -
+> -	ret = hfi_session_continue(inst);
+> +	ret = venus_helper_process_initial_cap_bufs(inst);
+>  	if (ret)
+>  		goto free_dpb_bufs;
+>  
+> @@ -1411,6 +1411,11 @@ static void vdec_event_change(struct venus_inst *inst,
+>  		inst->crop.height = ev_data->height;
+>  	}
+>  
+> +	inst->fw_min_cnt = ev_data->buf_count;
+> +	//overwriting this to 11 for vp9 due to fw bug
+
+Please use C style for comments
+
+> +	if(inst->hfi_codec == HFI_VIDEO_CODEC_VP9)
+
+Space after if:
+
+if (condition)
+
+> +		inst->fw_min_cnt = 11;
+> +
+>  	inst->out_width = ev_data->width;
+>  	inst->out_height = ev_data->height;
+>  
+> @@ -1514,6 +1519,7 @@ static void vdec_inst_init(struct venus_inst *inst)
+>  	inst->crop.top = 0;
+>  	inst->crop.width = inst->width;
+>  	inst->crop.height = inst->height;
+> +	inst->fw_min_cnt = 8;
+>  	inst->out_width = frame_width_min(inst);
+>  	inst->out_height = frame_height_min(inst);
+>  	inst->fps = 30;
+> 
+
 -- 
-2.30.2
-
+regards,
+Stan
