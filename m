@@ -2,19 +2,22 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 870983D9892
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 00:26:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 24B6D3D98C1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 00:27:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232855AbhG1W0f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jul 2021 18:26:35 -0400
-Received: from relay01.th.seeweb.it ([5.144.164.162]:54177 "EHLO
-        relay01.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232487AbhG1W0T (ORCPT
+        id S233910AbhG1W1Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jul 2021 18:27:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35618 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233365AbhG1W0y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jul 2021 18:26:19 -0400
+        Wed, 28 Jul 2021 18:26:54 -0400
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45E66C06179E
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 15:26:19 -0700 (PDT)
 Received: from localhost.localdomain (83.6.168.174.neoplus.adsl.tpnet.pl [83.6.168.174])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id D91471FA14;
-        Thu, 29 Jul 2021 00:26:15 +0200 (CEST)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 296441FAEC;
+        Thu, 29 Jul 2021 00:26:17 +0200 (CEST)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     ~postmarketos/upstreaming@lists.sr.ht
 Cc:     martin.botka@somainline.org,
@@ -26,9 +29,9 @@ Cc:     martin.botka@somainline.org,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 23/39] arm64: dts: qcom: pm660(l): Add VADC and temp alarm nodes
-Date:   Thu, 29 Jul 2021 00:25:26 +0200
-Message-Id: <20210728222542.54269-24-konrad.dybcio@somainline.org>
+Subject: [PATCH 24/39] arm64: dts: qcom: sdm660: Make the DTS an overlay on top of 630
+Date:   Thu, 29 Jul 2021 00:25:27 +0200
+Message-Id: <20210728222542.54269-25-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210728222542.54269-1-konrad.dybcio@somainline.org>
 References: <20210728222542.54269-1-konrad.dybcio@somainline.org>
@@ -38,214 +41,522 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add VADC, temperature alarm and thermal zones for pm660(l)
-to allow for temperature and voltage readouts and prevent
-PMIC overheating.
+There is SO MUCH common code between these two SoCs that it makes
+no sense to keep what is essentially a duplicate of 630.dtsi. Instead,
+it's better to just change the things that differ.
 
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- arch/arm64/boot/dts/qcom/pm660.dtsi  | 122 +++++++++++++++++++++++++++
- arch/arm64/boot/dts/qcom/pm660l.dtsi |  33 ++++++++
- 2 files changed, 155 insertions(+)
+ .../boot/dts/qcom/sdm660-xiaomi-lavender.dts  |   2 -
+ arch/arm64/boot/dts/qcom/sdm660.dtsi          | 448 +++++-------------
+ 2 files changed, 117 insertions(+), 333 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/pm660.dtsi b/arch/arm64/boot/dts/qcom/pm660.dtsi
-index c6c57fe626e3..e847d7209afc 100644
---- a/arch/arm64/boot/dts/qcom/pm660.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm660.dtsi
-@@ -3,9 +3,35 @@
-  * Copyright (c) 2020, Konrad Dybcio
+diff --git a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
+index 76533e8b2092..3e677fb7cfea 100644
+--- a/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
++++ b/arch/arm64/boot/dts/qcom/sdm660-xiaomi-lavender.dts
+@@ -37,8 +37,6 @@ ramoops@a0000000 {
+ 
+ &blsp1_uart2 {
+ 	status = "okay";
+-	pinctrl-names = "default";
+-	pinctrl-0 = <&uart_console_active>;
+ };
+ 
+ &tlmm {
+diff --git a/arch/arm64/boot/dts/qcom/sdm660.dtsi b/arch/arm64/boot/dts/qcom/sdm660.dtsi
+index 4abbdd03d1e7..13467e2c708a 100644
+--- a/arch/arm64/boot/dts/qcom/sdm660.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm660.dtsi
+@@ -2,371 +2,157 @@
+ /*
+  * Copyright (c) 2018, Craig Tatlor.
+  * Copyright (c) 2020, Alexey Minnekhanov <alexey.min@gmail.com>
++ * Copyright (c) 2020, AngeloGioacchino Del Regno <kholk11@gmail.com>
++ * Copyright (c) 2020, Konrad Dybcio <konradybcio@gmail.com>
++ * Copyright (c) 2020, Martin Botka <martin.botka1@gmail.com>
   */
  
-+#include <dt-bindings/iio/qcom,spmi-vadc.h>
- #include <dt-bindings/input/linux-event-codes.h>
- #include <dt-bindings/interrupt-controller/irq.h>
- #include <dt-bindings/spmi/spmi.h>
-+#include <dt-bindings/thermal/thermal.h>
-+
-+/ {
-+	thermal-zones {
-+		pm660 {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&pm660_temp>;
-+
-+			trips {
-+				pm660_alert0: pm660-alert0 {
-+					temperature = <95000>;
-+					hysteresis = <2000>;
-+					type = "passive";
-+				};
-+				pm660_crit: pm660-crit {
-+					temperature = <125000>;
-+					hysteresis = <2000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+	};
-+};
+-#include <dt-bindings/interrupt-controller/arm-gic.h>
+-#include <dt-bindings/clock/qcom,gcc-sdm660.h>
++#include "sdm630.dtsi"
  
- &spmi_bus {
+-/ {
+-	interrupt-parent = <&intc>;
++&adreno_gpu {
++	compatible = "qcom,adreno-512.0", "qcom,adreno";
++	operating-points-v2 = <&gpu_sdm660_opp_table>;
  
-@@ -37,6 +63,102 @@ pwrkey {
+-	#address-cells = <2>;
+-	#size-cells = <2>;
++	gpu_sdm660_opp_table: opp-table {
++		compatible  = "operating-points-v2";
  
+-	chosen { };
++		/*
++		 * 775MHz is only available on the highest speed bin
++		 * Though it cannot be used for now due to interconnect
++		 * framework not supporting multiple frequencies
++		 * at the same opp-level
+ 
+-	clocks {
+-		xo_board: xo_board {
+-			compatible = "fixed-clock";
+-			#clock-cells = <0>;
+-			clock-frequency = <19200000>;
+-			clock-output-names = "xo_board";
++		opp-750000000 {
++			opp-hz = /bits/ 64 <750000000>;
++			opp-level = <RPM_SMD_LEVEL_TURBO>;
++			opp-peak-kBps = <5412000>;
++			opp-supported-hw = <0xCHECKME>;
  		};
  
-+		pm660_temp: temp-alarm@2400 {
-+			compatible = "qcom,spmi-temp-alarm";
-+			reg = <0x2400>;
-+			interrupts = <0x0 0x24 0x0 IRQ_TYPE_EDGE_RISING>;
-+			io-channels = <&pm660_adc ADC5_DIE_TEMP>;
-+			io-channel-names = "thermal";
-+			#thermal-sensor-cells = <0>;
-+		};
-+
-+		pm660_adc: adc@3100 {
-+			compatible = "qcom,spmi-adc-rev2";
-+			reg = <0x3100>;
-+			interrupts = <0x0 0x31 0x0 IRQ_TYPE_EDGE_RISING>;
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+			#io-channel-cells = <1>;
-+
-+			ref_gnd: ref_gnd@0 {
-+				reg = <ADC5_REF_GND>;
-+				qcom,decimation = <1024>;
-+				qcom,pre-scaling = <1 1>;
-+			};
-+
-+			vref_1p25: vref_1p25@1 {
-+				reg = <ADC5_1P25VREF>;
-+				qcom,decimation = <1024>;
-+				qcom,pre-scaling = <1 1>;
-+			};
-+
-+			die_temp: die_temp@6 {
-+				reg = <ADC5_DIE_TEMP>;
-+				qcom,decimation = <1024>;
-+				qcom,pre-scaling = <1 1>;
-+			};
-+
-+			xo_therm: xo_therm@4c {
-+				reg = <ADC5_XO_THERM_100K_PU>;
-+				qcom,pre-scaling = <1 1>;
-+				qcom,decimation = <1024>;
-+				qcom,hw-settle-time = <200>;
-+				qcom,ratiometric;
-+			};
-+
-+			msm_therm: msm_therm@4d {
-+				reg = <ADC5_AMUX_THM1_100K_PU>;
-+				qcom,pre-scaling = <1 1>;
-+				qcom,decimation = <1024>;
-+				qcom,hw-settle-time = <200>;
-+				qcom,ratiometric;
-+			};
-+
-+			emmc_therm: emmc_therm@4e {
-+				reg = <ADC5_AMUX_THM2_100K_PU>;
-+				qcom,pre-scaling = <1 1>;
-+				qcom,decimation = <1024>;
-+				qcom,hw-settle-time = <200>;
-+				qcom,ratiometric;
-+			};
-+
-+			pa_therm0: thermistor0@4f {
-+				reg = <ADC5_AMUX_THM3_100K_PU>;
-+				qcom,pre-scaling = <1 1>;
-+				qcom,decimation = <1024>;
-+				qcom,hw-settle-time = <200>;
-+				qcom,ratiometric;
-+			};
-+
-+			pa_therm1: thermistor1@50 {
-+				reg = <ADC5_AMUX_THM4_100K_PU>;
-+				qcom,pre-scaling = <1 1>;
-+				qcom,decimation = <1024>;
-+				qcom,hw-settle-time = <200>;
-+				qcom,ratiometric;
-+			};
-+
-+			quiet_therm: quiet_therm@51 {
-+				reg = <ADC5_AMUX_THM5_100K_PU>;
-+				qcom,pre-scaling = <1 1>;
-+				qcom,decimation = <1024>;
-+				qcom,hw-settle-time = <200>;
-+				qcom,ratiometric;
-+			};
-+
-+			vadc_vph_pwr: vph_pwr@83 {
-+				reg = <ADC5_VPH_PWR>;
-+				qcom,decimation = <1024>;
-+				qcom,pre-scaling = <1 3>;
-+			};
-+
-+			vcoin: vcoin@83 {
-+				reg = <ADC5_VCOIN>;
-+				qcom,decimation = <1024>;
-+				qcom,pre-scaling = <1 3>;
-+			};
-+		};
-+
- 		pm660_gpios: gpios@c000 {
- 			compatible = "qcom,pm660-gpio";
- 			reg = <0xc000>;
-diff --git a/arch/arm64/boot/dts/qcom/pm660l.dtsi b/arch/arm64/boot/dts/qcom/pm660l.dtsi
-index 64a8e9b9afbe..05086cbe573b 100644
---- a/arch/arm64/boot/dts/qcom/pm660l.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm660l.dtsi
-@@ -3,9 +3,35 @@
-  * Copyright (c) 2020, Konrad Dybcio
-  */
+-		sleep_clk: sleep_clk {
+-			compatible = "fixed-clock";
+-			#clock-cells = <0>;
+-			clock-frequency = <32764>;
+-			clock-output-names = "sleep_clk";
+-		};
+-	};
+-
+-	cpus {
+-		#address-cells = <2>;
+-		#size-cells = <0>;
++		* These OPPs are correct, but we are lacking support for the
++		* GPU regulator. Hence, disable them for now to prevent the
++		* platform from hanging on high graphics loads.
  
-+#include <dt-bindings/iio/qcom,spmi-vadc.h>
- #include <dt-bindings/input/linux-event-codes.h>
- #include <dt-bindings/interrupt-controller/irq.h>
- #include <dt-bindings/spmi/spmi.h>
-+#include <dt-bindings/thermal/thermal.h>
-+
-+/ {
-+	thermal-zones {
-+		pm660l {
-+			polling-delay-passive = <250>;
-+			polling-delay = <1000>;
-+
-+			thermal-sensors = <&pm660l_temp>;
-+
-+			trips {
-+				pm660l_alert0: pm660l-alert0 {
-+					temperature = <95000>;
-+					hysteresis = <2000>;
-+					type = "passive";
-+				};
-+				pm660l_crit: pm660l-crit {
-+					temperature = <125000>;
-+					hysteresis = <2000>;
-+					type = "critical";
-+				};
-+			};
-+		};
-+	};
+-		CPU0: cpu@100 {
+-			device_type = "cpu";
+-			compatible = "qcom,kryo260";
+-			reg = <0x0 0x100>;
+-			enable-method = "psci";
+-			capacity-dmips-mhz = <1024>;
+-			next-level-cache = <&L2_1>;
+-			L2_1: l2-cache {
+-				compatible = "cache";
+-				cache-level = <2>;
+-			};
+-			L1_I_100: l1-icache {
+-				compatible = "cache";
+-			};
+-			L1_D_100: l1-dcache {
+-				compatible = "cache";
+-			};
++		opp-700000000 {
++			opp-hz = /bits/ 64 <700000000>;
++			opp-level = <RPM_SMD_LEVEL_TURBO>;
++			opp-peak-kBps = <5184000>;
++			opp-supported-hw = <0xFF>;
+ 		};
+ 
+-		CPU1: cpu@101 {
+-			device_type = "cpu";
+-			compatible = "qcom,kryo260";
+-			reg = <0x0 0x101>;
+-			enable-method = "psci";
+-			capacity-dmips-mhz = <1024>;
+-			next-level-cache = <&L2_1>;
+-			L1_I_101: l1-icache {
+-				compatible = "cache";
+-			};
+-			L1_D_101: l1-dcache {
+-				compatible = "cache";
+-			};
++		opp-647000000 {
++			opp-hz = /bits/ 64 <647000000>;
++			opp-level = <RPM_SMD_LEVEL_NOM_PLUS>;
++			opp-peak-kBps = <4068000>;
++			opp-supported-hw = <0xFF>;
+ 		};
+ 
+-		CPU2: cpu@102 {
+-			device_type = "cpu";
+-			compatible = "qcom,kryo260";
+-			reg = <0x0 0x102>;
+-			enable-method = "psci";
+-			capacity-dmips-mhz = <1024>;
+-			next-level-cache = <&L2_1>;
+-			L1_I_102: l1-icache {
+-				compatible = "cache";
+-			};
+-			L1_D_102: l1-dcache {
+-				compatible = "cache";
+-			};
++		opp-588000000 {
++			opp-hz = /bits/ 64 <588000000>;
++			opp-level = <RPM_SMD_LEVEL_NOM>;
++			opp-peak-kBps = <3072000>;
++			opp-supported-hw = <0xFF>;
+ 		};
+ 
+-		CPU3: cpu@103 {
+-			device_type = "cpu";
+-			compatible = "qcom,kryo260";
+-			reg = <0x0 0x103>;
+-			enable-method = "psci";
+-			capacity-dmips-mhz = <1024>;
+-			next-level-cache = <&L2_1>;
+-			L1_I_103: l1-icache {
+-				compatible = "cache";
+-			};
+-			L1_D_103: l1-dcache {
+-				compatible = "cache";
+-			};
++		opp-465000000 {
++			opp-hz = /bits/ 64 <465000000>;
++			opp-level = <RPM_SMD_LEVEL_SVS_PLUS>;
++			opp-peak-kBps = <2724000>;
++			opp-supported-hw = <0xFF>;
+ 		};
+ 
+-		CPU4: cpu@0 {
+-			device_type = "cpu";
+-			compatible = "qcom,kryo260";
+-			reg = <0x0 0x0>;
+-			enable-method = "psci";
+-			capacity-dmips-mhz = <640>;
+-			next-level-cache = <&L2_0>;
+-			L2_0: l2-cache {
+-				compatible = "cache";
+-				cache-level = <2>;
+-			};
+-			L1_I_0: l1-icache {
+-				compatible = "cache";
+-			};
+-			L1_D_0: l1-dcache {
+-				compatible = "cache";
+-			};
++		opp-370000000 {
++			opp-hz = /bits/ 64 <370000000>;
++			opp-level = <RPM_SMD_LEVEL_SVS>;
++			opp-peak-kBps = <2188000>;
++			opp-supported-hw = <0xFF>;
+ 		};
++		*/
+ 
+-		CPU5: cpu@1 {
+-			device_type = "cpu";
+-			compatible = "qcom,kryo260";
+-			reg = <0x0 0x1>;
+-			enable-method = "psci";
+-			capacity-dmips-mhz = <640>;
+-			next-level-cache = <&L2_0>;
+-			L1_I_1: l1-icache {
+-				compatible = "cache";
+-			};
+-			L1_D_1: l1-dcache {
+-				compatible = "cache";
+-			};
++		opp-266000000 {
++			opp-hz = /bits/ 64 <266000000>;
++			opp-level = <RPM_SMD_LEVEL_LOW_SVS>;
++			opp-peak-kBps = <1648000>;
++			opp-supported-hw = <0xFF>;
+ 		};
+ 
+-		CPU6: cpu@2 {
+-			device_type = "cpu";
+-			compatible = "qcom,kryo260";
+-			reg = <0x0 0x2>;
+-			enable-method = "psci";
+-			capacity-dmips-mhz = <640>;
+-			next-level-cache = <&L2_0>;
+-			L1_I_2: l1-icache {
+-				compatible = "cache";
+-			};
+-			L1_D_2: l1-dcache {
+-				compatible = "cache";
+-			};
++		opp-160000000 {
++			opp-hz = /bits/ 64 <160000000>;
++			opp-level = <RPM_SMD_LEVEL_MIN_SVS>;
++			opp-peak-kBps = <1200000>;
++			opp-supported-hw = <0xFF>;
+ 		};
+-
+-		CPU7: cpu@3 {
+-			device_type = "cpu";
+-			compatible = "qcom,kryo260";
+-			reg = <0x0 0x3>;
+-			enable-method = "psci";
+-			capacity-dmips-mhz = <640>;
+-			next-level-cache = <&L2_0>;
+-			L1_I_3: l1-icache {
+-				compatible = "cache";
+-			};
+-			L1_D_3: l1-dcache {
+-				compatible = "cache";
+-			};
+-		};
+-
+-		cpu-map {
+-			cluster0 {
+-				core0 {
+-					cpu = <&CPU4>;
+-				};
+-
+-				core1 {
+-					cpu = <&CPU5>;
+-				};
+-
+-				core2 {
+-					cpu = <&CPU6>;
+-				};
+-
+-				core3 {
+-					cpu = <&CPU7>;
+-				};
+-			};
+-
+-			cluster1 {
+-				core0 {
+-					cpu = <&CPU0>;
+-				};
+-
+-				core1 {
+-					cpu = <&CPU1>;
+-				};
+-
+-				core2 {
+-					cpu = <&CPU2>;
+-				};
+-
+-				core3 {
+-					cpu = <&CPU3>;
+-				};
+-			};
+-		};
+-	};
+-
+-	firmware {
+-		scm {
+-			compatible = "qcom,scm";
+-		};
+-	};
+-
+-	memory {
+-		device_type = "memory";
+-		/* We expect the bootloader to fill in the reg */
+-		reg = <0 0 0 0>;
+-	};
+-
+-	psci {
+-		compatible = "arm,psci-1.0";
+-		method = "smc";
+-	};
+-
+-	timer {
+-		compatible = "arm,armv8-timer";
+-		interrupts = <GIC_PPI 1 IRQ_TYPE_LEVEL_LOW>,
+-			     <GIC_PPI 2 IRQ_TYPE_LEVEL_LOW>,
+-			     <GIC_PPI 3 IRQ_TYPE_LEVEL_LOW>,
+-			     <GIC_PPI 0 IRQ_TYPE_LEVEL_LOW>;
+ 	};
 +};
  
- &spmi_bus {
+-	soc: soc {
+-		#address-cells = <1>;
+-		#size-cells = <1>;
+-		ranges = <0 0 0 0xffffffff>;
+-		compatible = "simple-bus";
+-
+-		gcc: clock-controller@100000 {
+-			compatible = "qcom,gcc-sdm660";
+-			#clock-cells = <1>;
+-			#reset-cells = <1>;
+-			#power-domain-cells = <1>;
+-			reg = <0x00100000 0x94000>;
+-		};
+-
+-		tlmm: pinctrl@3100000 {
+-			compatible = "qcom,sdm660-pinctrl";
+-			reg = <0x03100000 0x400000>,
+-			      <0x03500000 0x400000>,
+-			      <0x03900000 0x400000>;
+-			reg-names = "south", "center", "north";
+-			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
+-			gpio-controller;
+-			gpio-ranges = <&tlmm 0 0 114>;
+-			#gpio-cells = <2>;
+-			interrupt-controller;
+-			#interrupt-cells = <2>;
+-
+-			uart_console_active: uart_console_active {
+-				pinmux {
+-					pins = "gpio4", "gpio5";
+-					function = "blsp_uart2";
+-				};
++&CPU0 {
++	compatible = "qcom,kryo260";
++	capacity-dmips-mhz = <1024>;
++	/delete-property/ operating-points-v2;
++};
  
-@@ -15,6 +41,13 @@ pmic@2 {
- 		#address-cells = <1>;
- 		#size-cells = <0>;
+-				pinconf {
+-					pins = "gpio4", "gpio5";
+-					drive-strength = <2>;
+-					bias-disable;
+-				};
+-			};
+-		};
++&CPU1 {
++	compatible = "qcom,kryo260";
++	capacity-dmips-mhz = <1024>;
++	/delete-property/ operating-points-v2;
++};
  
-+		pm660l_temp: temp-alarm@2400 {
-+			compatible = "qcom,spmi-temp-alarm";
-+			reg = <0x2400>;
-+			interrupts = <0x2 0x24 0x0 IRQ_TYPE_EDGE_BOTH>;
-+			#thermal-sensor-cells = <0>;
-+		};
-+
- 		pm660l_gpios: gpios@c000 {
- 			compatible = "qcom,pm660l-gpio", "qcom,spmi-gpio";
- 			reg = <0xc000>;
+-		spmi_bus: spmi@800f000 {
+-			compatible = "qcom,spmi-pmic-arb";
+-			reg = <0x0800f000 0x1000>,
+-			      <0x08400000 0x1000000>,
+-			      <0x09400000 0x1000000>,
+-			      <0x0a400000 0x220000>,
+-			      <0x0800a000 0x3000>;
+-			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
+-			interrupt-names = "periph_irq";
+-			interrupts = <GIC_SPI 326 IRQ_TYPE_LEVEL_HIGH>;
+-			qcom,ee = <0>;
+-			qcom,channel = <0>;
+-			#address-cells = <2>;
+-			#size-cells = <0>;
+-			interrupt-controller;
+-			#interrupt-cells = <4>;
+-			cell-index = <0>;
+-		};
++&CPU2 {
++	compatible = "qcom,kryo260";
++	capacity-dmips-mhz = <1024>;
++	/delete-property/ operating-points-v2;
++};
+ 
+-		blsp1_uart2: serial@c170000 {
+-			compatible = "qcom,msm-uartdm-v1.4", "qcom,msm-uartdm";
+-			reg = <0x0c170000 0x1000>;
+-			interrupts = <GIC_SPI 108 IRQ_TYPE_LEVEL_HIGH>;
+-			clocks = <&gcc GCC_BLSP1_UART2_APPS_CLK>,
+-				 <&gcc GCC_BLSP1_AHB_CLK>;
+-			clock-names = "core", "iface";
+-			status = "disabled";
+-		};
++&CPU3 {
++	compatible = "qcom,kryo260";
++	capacity-dmips-mhz = <1024>;
++	/delete-property/ operating-points-v2;
++};
+ 
+-		timer@17920000 {
+-			#address-cells = <1>;
+-			#size-cells = <1>;
+-			ranges;
+-			compatible = "arm,armv7-timer-mem";
+-			reg = <0x17920000 0x1000>;
++&CPU4 {
++	compatible = "qcom,kryo260";
++	capacity-dmips-mhz = <640>;
++	/delete-property/ operating-points-v2;
++};
+ 
+-			frame@17921000 {
+-				frame-number = <0>;
+-				interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>,
+-					     <GIC_SPI 7 IRQ_TYPE_LEVEL_HIGH>;
+-				reg = <0x17921000 0x1000>,
+-				      <0x17922000 0x1000>;
+-			};
++&CPU5 {
++	compatible = "qcom,kryo260";
++	capacity-dmips-mhz = <640>;
++	/delete-property/ operating-points-v2;
++};
+ 
+-			frame@17923000 {
+-				frame-number = <1>;
+-				interrupts = <GIC_SPI 9 IRQ_TYPE_LEVEL_HIGH>;
+-				reg = <0x17923000 0x1000>;
+-				status = "disabled";
+-			};
++&CPU6 {
++	compatible = "qcom,kryo260";
++	capacity-dmips-mhz = <640>;
++	/delete-property/ operating-points-v2;
++};
+ 
+-			frame@17924000 {
+-				frame-number = <2>;
+-				interrupts = <GIC_SPI 10 IRQ_TYPE_LEVEL_HIGH>;
+-				reg = <0x17924000 0x1000>;
+-				status = "disabled";
+-			};
++&CPU7 {
++	compatible = "qcom,kryo260";
++	capacity-dmips-mhz = <640>;
++	/delete-property/ operating-points-v2;
++};
+ 
+-			frame@17925000 {
+-				frame-number = <3>;
+-				interrupts = <GIC_SPI 11 IRQ_TYPE_LEVEL_HIGH>;
+-				reg = <0x17925000 0x1000>;
+-				status = "disabled";
+-			};
++&gcc {
++	compatible = "qcom,gcc-sdm660";
++};
+ 
+-			frame@17926000 {
+-				frame-number = <4>;
+-				interrupts = <GIC_SPI 12 IRQ_TYPE_LEVEL_HIGH>;
+-				reg = <0x17926000 0x1000>;
+-				status = "disabled";
+-			};
++&gpucc {
++	compatible = "qcom,gpucc-sdm660";
++};
+ 
+-			frame@17927000 {
+-				frame-number = <5>;
+-				interrupts = <GIC_SPI 13 IRQ_TYPE_LEVEL_HIGH>;
+-				reg = <0x17927000 0x1000>;
+-				status = "disabled";
+-			};
++&mmcc {
++	compatible = "qcom,mmcc-sdm660";
++	/*
++	 * 660 has one more dsi host/phy, which - when implemented
++	 * and tested - should be added to the clocks property.
++	 */
++};
+ 
+-			frame@17928000 {
+-				frame-number = <6>;
+-				interrupts = <GIC_SPI 14 IRQ_TYPE_LEVEL_HIGH>;
+-				reg = <0x17928000 0x1000>;
+-				status = "disabled";
+-			};
+-		};
++&tlmm {
++	compatible = "qcom,sdm660-pinctrl";
++};
+ 
+-		intc: interrupt-controller@17a00000 {
+-			compatible = "arm,gic-v3";
+-			reg = <0x17a00000 0x10000>,
+-			      <0x17b00000 0x100000>;
+-			#interrupt-cells = <3>;
+-			#address-cells = <1>;
+-			#size-cells = <1>;
+-			ranges;
+-			interrupt-controller;
+-			#redistributor-regions = <1>;
+-			redistributor-stride = <0x0 0x20000>;
+-			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
+-		};
+-	};
++&tsens {
++	#qcom,sensors = <14>;
+ };
 -- 
 2.32.0
 
