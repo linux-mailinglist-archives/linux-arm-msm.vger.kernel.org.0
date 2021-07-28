@@ -2,19 +2,19 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 95DA23D989A
+	by mail.lfdr.de (Postfix) with ESMTP id DEE993D989B
 	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 00:26:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232948AbhG1W0n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S232272AbhG1W0n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Wed, 28 Jul 2021 18:26:43 -0400
-Received: from m-r1.th.seeweb.it ([5.144.164.170]:40687 "EHLO
-        m-r1.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232749AbhG1W0W (ORCPT
+Received: from relay02.th.seeweb.it ([5.144.164.163]:54853 "EHLO
+        relay02.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232951AbhG1W0Y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jul 2021 18:26:22 -0400
+        Wed, 28 Jul 2021 18:26:24 -0400
 Received: from localhost.localdomain (83.6.168.174.neoplus.adsl.tpnet.pl [83.6.168.174])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id DA7611FF08;
-        Thu, 29 Jul 2021 00:26:18 +0200 (CEST)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 0B4A51FFEA;
+        Thu, 29 Jul 2021 00:26:19 +0200 (CEST)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     ~postmarketos/upstreaming@lists.sr.ht
 Cc:     martin.botka@somainline.org,
@@ -26,9 +26,9 @@ Cc:     martin.botka@somainline.org,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 25/39] arm64: dts: qcom: Add device tree for SDM636
-Date:   Thu, 29 Jul 2021 00:25:28 +0200
-Message-Id: <20210728222542.54269-26-konrad.dybcio@somainline.org>
+Subject: [PATCH 26/39] arm64: dts: qcom: sdm630: Add IMEM node
+Date:   Thu, 29 Jul 2021 00:25:29 +0200
+Message-Id: <20210728222542.54269-27-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.32.0
 In-Reply-To: <20210728222542.54269-1-konrad.dybcio@somainline.org>
 References: <20210728222542.54269-1-konrad.dybcio@somainline.org>
@@ -38,45 +38,39 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This SoC is almost identical to its older brother,
-SDM660, with a few minor exceptions like the
-different GPU.
+Add IMEM node and PIL reloc info as its child.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- arch/arm64/boot/dts/qcom/sdm636.dtsi | 23 +++++++++++++++++++++++
- 1 file changed, 23 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sdm636.dtsi
+ arch/arm64/boot/dts/qcom/sdm630.dtsi | 15 +++++++++++++++
+ 1 file changed, 15 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm636.dtsi b/arch/arm64/boot/dts/qcom/sdm636.dtsi
-new file mode 100644
-index 000000000000..ae15d81fa3f9
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sdm636.dtsi
-@@ -0,0 +1,23 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2020, AngeloGioacchino Del Regno <kholk11@gmail.com>
-+ * Copyright (c) 2020, Konrad Dybcio <konradybcio@gmail.com>
-+ * Copyright (c) 2020, Martin Botka <martin.botka1@gmail.com>
-+ */
+diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+index c7d39fea8254..5b31b594e787 100644
+--- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+@@ -1923,6 +1923,21 @@ blsp_i2c8: i2c@c1b8000 {
+ 			status = "disabled";
+ 		};
+ 
++		imem@146bf000 {
++			compatible = "simple-mfd";
++			reg = <0x146bf000 0x1000>;
 +
-+#include "sdm660.dtsi"
++			#address-cells = <1>;
++			#size-cells = <1>;
 +
-+/*
-+ * According to the downstream DTS,
-+ * 636 is basically a 660 except for
-+ * different CPU frequencies, Adreno
-+ * 509 instead of 512 and lack of
-+ * turing IP. These differences will
-+ * be addressed when the aforementioned
-+ * peripherals will be enabled upstream.
-+ */
++			ranges = <0 0x146bf000 0x1000>;
 +
-+&adreno_gpu {
-+	compatible = "qcom,adreno-509.0", "qcom,adreno";
-+	/* Adreno 509 shares the frequency table with 512 */
-+};
++			pil-reloc@94c {
++				compatible = "qcom,pil-reloc-info";
++				reg = <0x94c 0xc8>;
++			};
++		};
++
+ 		mmss_smmu: iommu@cd00000 {
+ 			compatible = "qcom,sdm630-smmu-v2", "qcom,smmu-v2";
+ 			reg = <0x0cd00000 0x40000>;
 -- 
 2.32.0
 
