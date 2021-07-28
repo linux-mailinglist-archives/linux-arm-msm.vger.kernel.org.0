@@ -2,68 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4398E3D8B30
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 11:57:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 031643D8B48
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 11:59:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235748AbhG1J52 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jul 2021 05:57:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60650 "EHLO
+        id S235731AbhG1J7F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jul 2021 05:59:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32870 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231770AbhG1J51 (ORCPT
+        with ESMTP id S235520AbhG1J7E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jul 2021 05:57:27 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 825E7C061757
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 02:57:26 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id d8so1777520wrm.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 02:57:26 -0700 (PDT)
+        Wed, 28 Jul 2021 05:59:04 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CE6FC061757
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 02:59:03 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id l18so1770015wrv.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 02:59:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=wsImX0QCKZ1a8ZsZDJcjcgOC51nSy6JYTDJeExquDdw=;
-        b=wI24ddW+o7m9CfmveCoei5saTwmvZmLzn8kYOeThOCd8JsribeKelLrfzUVY+4MvbF
-         IooGSDuKJZzxFqONKRGZQ6OByO7nL+m+t8KmjPjwJIBTjsuQk4GgvTH4bjJkZ2mrqcAC
-         HDRBeeSTakhNaPs7f2/5o7TXDRP5VmTbYUu9reUYnLDOkt4r7o878kV65u+lDWBUoCaR
-         2lYQFYUnZdDlmXVduxGxRP1GMLVkzNqldWx2T5NRICzQDx9InyKYtm4PUv48RCbtxMlb
-         DdYtdtYXXQ55UvkHMdlDvAE9WnDJUlanfQkOyfmxM9kbQylUC7RpIZzw472WQ5Jxb11w
-         ii2Q==
+        bh=MvgxeqS+HaNEMobeFZP5WA95GeptTcq9rnLkrwhIlVM=;
+        b=PM6QlPgsr8IposamgI4WB5COeh/xDcr9ATMbDA2Dd4wRs5KSwHmbalTJllsKMJqM+0
+         GDtVquL4G0DduiUTM6rh2DnnFr74LbinaXDuvc8SQEpTi04iXI9d3sgTZKmfngdUo/jv
+         iPKqNea0aMKJq3ZOu0o9sWtT+9Y5QnRrWD+fNjBFea1IdXYXi26ZusvymOmzKFdPaUUf
+         Gw+c311o8ZrV5KyBC7eMm/rBsvkGmo/DMqIW8UGT4JSh3u0IO16huU6UUGAPYxE5BiCi
+         y2oIn5YLRqvYUtRBFx07ouCdrDNNV8XYOJB99SauDS4MfBTlB61waYP4BT59aQJyYqdR
+         niyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=wsImX0QCKZ1a8ZsZDJcjcgOC51nSy6JYTDJeExquDdw=;
-        b=CKYtHr6ZXv69viRwzzOzjBBOa359+L7IeCYO5hW4Y62PXznpIMfhtJITjuB/s8TZLk
-         LVF4Yii6+V6JYRYHWlL76DIy2irpE+EEoB6g7ZPJ4p3qpiEqtTJPVdCBD4I80ACnXWKH
-         pQ9WpEijbTXpOlpgc1OaxV/o09lZ0dS69xaUlXPP+msVCIy9EX/ejzW+OT/WYlcHBQyA
-         6qcJMkQ1Qkb6UzTcnCbVxEklzuMcg72eR1KHjwc2g1S3dJv3OkNXVEF6BpTfNvkp7pML
-         n4gsAVxlvrpS+KqkYVN0BILafpQ7QXZtL8nswQSrTMJCOH0fjFV/HgPUhEOIo7tHwTjy
-         2H+w==
-X-Gm-Message-State: AOAM531QX4gDy+bHYsXCu1T3OgFcjk3+l4KVQ7BZ670urz87dDryOFqa
-        Li9e1SgccFHgI3ErSRH/doq/8g==
-X-Google-Smtp-Source: ABdhPJxCpOb9sdXUE6ib46KA5RuGDnCQ7NiCqQWjvFQEvzVoQuIUQTmYeBml9yHtemOMVPBUwJwPiA==
-X-Received: by 2002:a5d:522a:: with SMTP id i10mr7632890wra.280.1627466245194;
-        Wed, 28 Jul 2021 02:57:25 -0700 (PDT)
+        bh=MvgxeqS+HaNEMobeFZP5WA95GeptTcq9rnLkrwhIlVM=;
+        b=deELNGcGjQqrLd4P1Wxe6IGEwIEt+XJmwdd+4pxZaJoefQngeUTijf95FT2ps87Npn
+         /Mt1aEjEsiTrGPsgaXADB7aBXs3zEaHtZ1auRiDMKaOCgWxdHZc5E403TZw3gygIn0xc
+         Q544U44soq08lv01J5wHUavCuIe38+O39Rasg9S+Z3ecadOgk823jcCDIvKpcDwbZaU3
+         DENDf5jc5O2punKyUIgqaTibIDLy3kRIXCiTrcBhOX9eCVHYFHjdrP6QoeEZSsHLfYtg
+         D/4vqfUkOf+EhwvFnk6x9FVzjD48zDJOwJe3nFBPL1nunLlqBToj4bzKNilbK+R6aso9
+         r2GQ==
+X-Gm-Message-State: AOAM533UgeJMshbHAGC+jJszMmqd/z2VngYHahOmkQ1NQOcwLVPL1y25
+        Fv1S3dIdtfL9Qpv66D/O0bYmFg==
+X-Google-Smtp-Source: ABdhPJzw9wZ661UYODGhQsJBzpN0GOzYVIRHpR9IMyHfWkN/3VFO+RS3Knf9UGECNY7xg56NRMZ1Fg==
+X-Received: by 2002:a05:6000:189:: with SMTP id p9mr1300213wrx.137.1627466341898;
+        Wed, 28 Jul 2021 02:59:01 -0700 (PDT)
 Received: from [10.10.6.131] ([109.120.209.55])
-        by smtp.googlemail.com with ESMTPSA id a2sm4157939wrn.95.2021.07.28.02.57.24
+        by smtp.googlemail.com with ESMTPSA id 19sm5605207wmj.2.2021.07.28.02.59.00
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Jul 2021 02:57:24 -0700 (PDT)
-Subject: Re: [PATCH v5 0/3] Intra-refresh period control
+        Wed, 28 Jul 2021 02:59:01 -0700 (PDT)
+Subject: Re: [PATCH v2 0/5] Qualcomm custom compressed pixfmt
 To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
         linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     Ezequiel Garcia <ezequiel@collabora.com>,
-        nicolas.dufresne@collabora.com,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>
-References: <20210622113958.809173-1-stanimir.varbanov@linaro.org>
+        linux-arm-msm@vger.kernel.org, linux-api@vger.kernel.org
+Cc:     Hans Verkuil <hverkuil-cisco@xs4all.nl>
+References: <20210706124034.773503-1-stanimir.varbanov@linaro.org>
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <7f0ac52c-25c0-cd03-253a-f6fa4aeb9dcc@linaro.org>
-Date:   Wed, 28 Jul 2021 12:57:25 +0300
+Message-ID: <1e07d249-fd55-6c23-c36f-e10fbdeeaca7@linaro.org>
+Date:   Wed, 28 Jul 2021 12:59:02 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <20210622113958.809173-1-stanimir.varbanov@linaro.org>
+In-Reply-To: <20210706124034.773503-1-stanimir.varbanov@linaro.org>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -73,29 +71,38 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi Hans,
 
-Could you please review this v5.
+Gentle ping.
 
-On 6/22/21 2:39 PM, Stanimir Varbanov wrote:
-> Changes since v4:
->  * added new patch to document control zero value meaning (1/3)
->  * updated document for intra-refresh period (2/3)
+On 7/6/21 3:40 PM, Stanimir Varbanov wrote:
+> Hello,
 > 
-> regards,
+> Changes since v1:
+>  * rename QC8C to QC08C
+>  * rewrite the documentation part
+>  * handle correctly QC10C compressed format in the driver
+>  * correct compressed 10-bit formats for Venus v4 and v6
+> 
+> Regards,
 > Stan
 > 
-> Stanimir Varbanov (3):
->   docs: ext-ctrls-codec: Document cyclic intra-refresh zero control
->     value
->   media: v4l2-ctrls: Add intra-refresh period control
->   venus: venc: Add support for intra-refresh period
+> v1: https://patchwork.linuxtv.org/project/linux-media/list/?series=5331
 > 
->  .../media/v4l/ext-ctrls-codec.rst             | 19 +++++++++++++-
->  drivers/media/platform/qcom/venus/core.h      |  1 +
->  drivers/media/platform/qcom/venus/venc.c      | 26 +++++++++++++++++++
->  .../media/platform/qcom/venus/venc_ctrls.c    | 14 +++++-----
->  drivers/media/v4l2-core/v4l2-ctrls-defs.c     |  2 ++
->  include/uapi/linux/v4l2-controls.h            |  1 +
->  6 files changed, 55 insertions(+), 8 deletions(-)
+> Stanimir Varbanov (5):
+>   v4l: Add Qualcomm custom compressed pixel formats
+>   venus: helpers: Add helper to check supported pixel formats
+>   venus: Add a handling of QC08C compressed format
+>   venus: hfi_platform: Correct supported compressed format
+>   venus: Add a handling of QC10C compressed format
+> 
+>  .../media/v4l/pixfmt-reserved.rst             | 18 +++++++
+>  drivers/media/platform/qcom/venus/helpers.c   | 48 +++++++++++--------
+>  drivers/media/platform/qcom/venus/helpers.h   |  1 +
+>  .../platform/qcom/venus/hfi_platform_v4.c     |  4 +-
+>  .../platform/qcom/venus/hfi_platform_v6.c     |  4 +-
+>  drivers/media/platform/qcom/venus/vdec.c      | 31 ++++++++++--
+>  drivers/media/v4l2-core/v4l2-ioctl.c          |  2 +
+>  include/uapi/linux/videodev2.h                |  2 +
+>  8 files changed, 82 insertions(+), 28 deletions(-)
 > 
 
 -- 
