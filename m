@@ -2,142 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BA60B3D9214
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 17:33:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 44DF73D92D1
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 18:10:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236968AbhG1Pdz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jul 2021 11:33:55 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47326 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235622AbhG1Pdz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jul 2021 11:33:55 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 7330F60FE7;
-        Wed, 28 Jul 2021 15:33:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1627486433;
-        bh=gXRvKj/jTXShHTI3Z2KiQV2JwSAuffLFbU956dQZa0o=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=UOoTLTlLbSaltUBPTRmse1nFfSKsz1rMvbo8AAOqruXPOcJo93Agciu83TFYqS9h+
-         SI3eTJ91UYapkq3hCC/B1vVRUcM+BQQX8dBY6O/qonVAX54NRPd7P7t9PAwBArKa/q
-         zm3sDmOMr69aTfHI7LNF9t1zgmVDjsVqwbohee9Ltwt/+03RDOM+5rg23a9gNCBhtL
-         kWvZZdICDSaFV9gKCdV3DOKDypOtSAUkOlQweVfL7wXgjGrapNG+pn9+VfXG1C8D7i
-         LCyzFxToEPYoNKqe9Y9gI95wgzKTwbAFYu7PBdeSlwyG1jSQfc0SQphANKzM9NvMEn
-         oYk2gmuOysK5Q==
-Received: by mail-ed1-f44.google.com with SMTP id f13so3749642edq.13;
-        Wed, 28 Jul 2021 08:33:53 -0700 (PDT)
-X-Gm-Message-State: AOAM5322sYs7D9ZOKZGa6FsUlBT+D86sfwRxt9yZ4CzjyntxDrw17VV2
-        DVnWfzOILCtnqLM1FAH0nUwmMbkEoQ2CcdFFcg==
-X-Google-Smtp-Source: ABdhPJzr+OOKQnEGhCp40Qp8isRJj+KNO+AYVQNwWLTcIczd67+YlzldV0glqwoOCUky671peYvE7CwlQmC2L2XQEJM=
-X-Received: by 2002:aa7:c603:: with SMTP id h3mr456690edq.165.1627486431954;
- Wed, 28 Jul 2021 08:33:51 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210719212456.3176086-1-elder@linaro.org> <20210719212456.3176086-2-elder@linaro.org>
- <20210723205252.GA2550230@robh.at.kernel.org> <6c1779aa-c90c-2160-f8b9-497fb8c32dc5@ieee.org>
-In-Reply-To: <6c1779aa-c90c-2160-f8b9-497fb8c32dc5@ieee.org>
+        id S235737AbhG1QKw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jul 2021 12:10:52 -0400
+Received: from mail-il1-f173.google.com ([209.85.166.173]:33617 "EHLO
+        mail-il1-f173.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237436AbhG1QKJ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 28 Jul 2021 12:10:09 -0400
+Received: by mail-il1-f173.google.com with SMTP id y4so3100860ilp.0;
+        Wed, 28 Jul 2021 09:10:06 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=OCZVThIbf1ShScmnxV7KW8mpeH/qB15sH5W8oxF9Flw=;
+        b=n+fYXVnV7oXIOhsQYV9+CYPwdmB2ROubz9dhaf5IK+doqYRj79Kk5zy1ak6Hf3sMFF
+         ZYgqg6Qp7aynv13sehSJ74dr1MTvxD2j56d9YOFzEokgbk2af0kHrcb3isBq5ZaQwfJM
+         4yZrVPn6qyNJoKLQki/UWiAsB/6FuFZ5S/l18mici7lUCWIcxoBKl38NaEZTizqN0N1i
+         oKrhbTCM1fLMk61q9BGwcUqTPFaPMFl3riYDObL/CBWf9gTUpeMB5G1NGJ/5s2PfA90k
+         LOIO7uZlUjelEZSIJC0ZpmoxPhytvB29evr4zr1cASMZbvzGc3+WR6HEZNC8yUU9fcEl
+         agHg==
+X-Gm-Message-State: AOAM533saelKZsFtNXDo6AE4NJcrk6xBeye1Ew9P0PUQA4yj16VwjoZB
+        0RfrXKmYBUxVc3bnlhM6FQ==
+X-Google-Smtp-Source: ABdhPJxE3veSdmQ48nFHmou/1qK1TVA+w3ifTI7TRG6TpSuzPDoCqvN7s815GG+nzZ+cUao0iCffOQ==
+X-Received: by 2002:a92:3207:: with SMTP id z7mr386220ile.288.1627488606095;
+        Wed, 28 Jul 2021 09:10:06 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.248])
+        by smtp.gmail.com with ESMTPSA id b14sm194545ilr.45.2021.07.28.09.10.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Jul 2021 09:10:04 -0700 (PDT)
+Received: (nullmailer pid 1161592 invoked by uid 1000);
+        Wed, 28 Jul 2021 16:10:00 -0000
+Date:   Wed, 28 Jul 2021 10:10:00 -0600
 From:   Rob Herring <robh@kernel.org>
-Date:   Wed, 28 Jul 2021 09:33:40 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqKTdUxro-tgCQBzhudaUFQ5GejJL2EMuX2ArcP0JTiG3g@mail.gmail.com>
-Message-ID: <CAL_JsqKTdUxro-tgCQBzhudaUFQ5GejJL2EMuX2ArcP0JTiG3g@mail.gmail.com>
-Subject: Re: [PATCH net-next 1/3] dt-bindings: net: qcom,ipa: make imem
- interconnect optional
-To:     Alex Elder <elder@ieee.org>
-Cc:     Alex Elder <elder@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "Gross, Andy" <agross@kernel.org>,
-        David Miller <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Evan Green <evgreen@chromium.org>, cpratapa@codeaurora.org,
-        subashab@codeaurora.org, Alex Elder <elder@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        netdev <netdev@vger.kernel.org>, devicetree@vger.kernel.org,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+To:     Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, rui.zhang@intel.com,
+        daniel.lezcano@linaro.org, viresh.kumar@linaro.org,
+        rjw@rjwysocki.net, steev@kali.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [Patch v4 6/6] dt-bindings: thermal: Add dt binding for QCOM LMh
+Message-ID: <20210728161000.GA1153621@robh.at.kernel.org>
+References: <20210727152512.1098329-1-thara.gopinath@linaro.org>
+ <20210727152512.1098329-7-thara.gopinath@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210727152512.1098329-7-thara.gopinath@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Jul 26, 2021 at 9:59 AM Alex Elder <elder@ieee.org> wrote:
->
-> On 7/23/21 3:52 PM, Rob Herring wrote:
-> > On Mon, Jul 19, 2021 at 04:24:54PM -0500, Alex Elder wrote:
-> >> On some newer SoCs, the interconnect between IPA and SoC internal
-> >> memory (imem) is not used.  Reflect this in the binding by moving
-> >> the definition of the "imem" interconnect to the end and defining
-> >> minItems to be 2 for both the interconnects and interconnect-names
-> >> properties.
-> >>
-> >> Signed-off-by: Alex Elder <elder@linaro.org>
-> >> ---
-> >>   .../devicetree/bindings/net/qcom,ipa.yaml      | 18 ++++++++++--------
-> >>   1 file changed, 10 insertions(+), 8 deletions(-)
-> >>
-> >> diff --git a/Documentation/devicetree/bindings/net/qcom,ipa.yaml b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-> >> index ed88ba4b94df5..4853ab7017bd9 100644
-> >> --- a/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-> >> +++ b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-> >> @@ -87,16 +87,18 @@ properties:
-> >>         - const: ipa-setup-ready
-> >>
-> >>     interconnects:
-> >> +    minItems: 2
-> >>       items:
-> >> -      - description: Interconnect path between IPA and main memory
-> >> -      - description: Interconnect path between IPA and internal memory
-> >> -      - description: Interconnect path between IPA and the AP subsystem
-> >> +      - description: Path leading to system memory
-> >> +      - description: Path between the AP and IPA config space
-> >> +      - description: Path leading to internal memory
-> >>
-> >>     interconnect-names:
-> >> +    minItems: 2
-> >>       items:
-> >>         - const: memory
-> >> -      - const: imem
-> >>         - const: config
-> >> +      - const: imem
-> >
-> > What about existing users? This will generate warnings. Doing this for
-> > the 2nd item would avoid the need for .dts updates:
-> >
-> > - enum: [ imem, config ]
->
-> If I understand correctly, the effect of this would be that
-> the second item can either be "imem" or "config", and the third
-> (if present) could only be "imem"?
+On Tue, Jul 27, 2021 at 11:25:12AM -0400, Thara Gopinath wrote:
+> Add dt binding documentation to describe Qualcomm
+> Limits Management Hardware node.
+> 
+> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+> ---
+> 
+> v3->v4:
+> 	- Changed dt property qcom,lmh-cpu-id to qcom,lmh-cpu and made it
+> 	  a phandle pointing to the cpu node instead of a number as per
+> 	  Rob Herring's review comments.
+> 	- Added suffix -millicelsius to all temperature properties as per
+> 	  Rob Herring's review comments.
+> 	- Dropped unnecessary #includes in the example as pointed out by Bjorn.
+> 	- Other minor fixes.
+> 
+>  .../devicetree/bindings/thermal/qcom-lmh.yaml | 100 ++++++++++++++++++
+>  1 file changed, 100 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/thermal/qcom-lmh.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/thermal/qcom-lmh.yaml b/Documentation/devicetree/bindings/thermal/qcom-lmh.yaml
+> new file mode 100644
+> index 000000000000..0978f458b9ec
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/thermal/qcom-lmh.yaml
+> @@ -0,0 +1,100 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +# Copyright 2021 Linaro Ltd.
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/thermal/qcom-lmh.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Limits Management Hardware(LMh)
+> +
+> +maintainers:
+> +  - Thara Gopinath <thara.gopinath@linaro.org>
+> +
+> +description:
+> +  Limits Management Hardware(LMh) is a hardware infrastructure on some
+> +  Qualcomm SoCs that can enforce temperature and current limits as
+> +  programmed by software for certain IPs like CPU.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,sdm845-lmh
+> +
+> +  reg:
+> +    items:
+> +      - description: core registers
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  '#interrupt-cells':
+> +    const: 1
+> +
+> +  interrupt-controller: true
+> +
+> +  qcom,lmh-cpu:
+> +    description:
+> +      phandle of the first cpu in the LMh cluster
+> +    $ref: /schemas/types.yaml#/definitions/phandle
 
-Yes for the 2nd, but the 3rd item could only be 'config'.
+'cpus' property is the somewhat standard way to reference a cpu.
 
->
-> And you're saying that otherwise, existing users (the only
-> one it applies to at the moment is "sdm845.dtsi") would
-> produce warnings, because the interconnects are listed
-> in an order different from what the binding specifies.
->
-> Is that correct?
+But you should already have cpu topology information, why do you need 
+this?
 
-Yes.
+> +
+> +  qcom,lmh-temp-arm-millicelsius:
+> +    description:
+> +      An integer expressing temperature threshold at which the LMh thermal
+> +      FSM is engaged.
+> +    $ref: /schemas/types.yaml#/definitions/int32
 
-> If so, what you propose suggests "imem" could be listed twice.
-> It doesn't make sense, and maybe it's precluded in other ways
-> so that's OK.
+Standard unit-suffixes already have a type.
 
-Good observation. There are generic checks that the strings are unique.
+> +
+> +  qcom,lmh-temp-low-millicelsius:
+> +    description:
+> +      An integer expressing temperature threshold at which the state machine
+> +      will attempt to remove frequency throttling.
+> +    $ref: /schemas/types.yaml#/definitions/int32
+> +
+> +  qcom,lmh-temp-high-millicelsius:
+> +    description:
+> +      An integer expressing temperature threshold at which the state machine
+> +      will attempt to throttle the frequency.
+> +    $ref: /schemas/types.yaml#/definitions/int32
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - #interrupt-cells
+> +  - interrupt-controller
+> +  - qcom,lmh-cpu
+> +  - qcom,lmh-temp-arm-millicelsius
+> +  - qcom,lmh-temp-low-millicelsius
+> +  - qcom,lmh-temp-high-millicelsius
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +
+> +    lmh_cluster1: lmh@17d70800 {
 
->  But I'd be happy to update "sdm845.dtsi" to
-> address your concern.  (Maybe that's something you would rather
-> avoid?)
+Drop unused labels.
 
-Better to not change DT if you don't have to. You're probably okay if
-all clients (consumers of the dtb) used names and didn't care about
-the order. And I have no idea if all users of SDM845 are okay with a
-DTB change being required. That's up to QCom maintainers. I only care
-that ABI breakages are documented as such.
+> +      compatible = "qcom,sdm845-lmh";
+> +      reg = <0x17d70800 0x401>;
 
-> Also, I need to make a separate update to "sm8350.dtsi" because
-> that was defined before I understood what I do now about the
-> interconnects.  It uses the wrong names, and should combine
-> its first two interconnects into just one.
+0x401 is an odd size...
 
-If the interconnects was ignored in that case, then the change doesn't matter.
+> +      interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
+> +      qcom,lmh-cpu = <&CPU4>;
+> +      qcom,lmh-temp-arm-millicelsius = <65000>;
+> +      qcom,lmh-temp-low-millicelsius = <94500>;
+> +      qcom,lmh-temp-high-millicelsius = <95000>;
+> +      interrupt-controller;
+> +      #interrupt-cells = <1>;
+> +    };
+> +  - |
 
-Rob
+Seems like this is 1 example, not 2.
+
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +
+> +    lmh_cluster0: lmh@17d78800 {
+> +      compatible = "qcom,sdm845-lmh";
+> +      reg = <0x17d78800 0x401>;
+> +      interrupts = <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
+> +      qcom,lmh-cpu = <&CPU0>;
+> +      qcom,lmh-temp-arm-millicelsius = <65000>;
+> +      qcom,lmh-temp-low-millicelsius = <94500>;
+> +      qcom,lmh-temp-high-millicelsius = <95000>;
+> +      interrupt-controller;
+> +      #interrupt-cells = <1>;
+> +    };
+> +  - |
+> -- 
+> 2.25.1
+> 
+> 
