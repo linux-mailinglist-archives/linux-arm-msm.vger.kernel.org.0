@@ -2,149 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 90B893D9661
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 22:07:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D9643D970B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 22:48:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230526AbhG1UHw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jul 2021 16:07:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60996 "EHLO
+        id S231521AbhG1Ush (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jul 2021 16:48:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230289AbhG1UHw (ORCPT
+        with ESMTP id S231520AbhG1Usg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jul 2021 16:07:52 -0400
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D425C0613C1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 13:07:50 -0700 (PDT)
-Received: by mail-oi1-x233.google.com with SMTP id t128so5290687oig.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 13:07:50 -0700 (PDT)
+        Wed, 28 Jul 2021 16:48:36 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D73AC061757
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 13:48:33 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id k4so2267940wms.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 13:48:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=97hQfQK7XavPSltv9pN4yF2y5jNc7cIdloHZZGHQCvY=;
-        b=Z7jTTKBFGpWIxboKqwgJRsOZp1J+aWDmjni8p5+XEVDRVJmY29+ni5XltyAcjXJrPd
-         VKRiyGY2cxhdfvhTRdTJXxMi8S4rhnmsf7fgxGaIh3UvIFWi4IDtUyJAop5wHOt23ZWF
-         4DS/rBN4kxsmc5k3UIkqOFWLnzdGHlERYnLb/rN8QlBNhMpET6iELjrDWctsQitUPXGL
-         2sckHJR93BoAb3Tm7MNt5hGZ34d1TvqTBveiQqtTZfbncswKMzJrgB6ult5Anul6wbBt
-         IngUJZkLp/kFIdNqQ4EVmz2DH5drGaBqdJBFNlZL/yfplvskUs3XOZoFU1YNCvGzVSnO
-         EDgA==
+        d=gmail.com; s=20161025;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=551JLf4qkCIkFNPA0Ob7V07KiCMSizDSmiG+dlVt4JM=;
+        b=kfQE7nB8u8dzYzo+hiTJbRyWXFI/3gCqNjtJSQ10P4RMrxzqUeOlyYi7/ni7LLFaAu
+         a4BGADbORUT7BIR0lnkbwosqRYGVv8kmQziHKuGxk7lRL6Zwcd0OggZXbJwKVI+8G4ai
+         +Pu8lqF3Wdnw9FiJcN+4DKAM5R5jOzwydeRj7yY9az8gqus9GTZEARLlT9Cid3Qy1rO8
+         eD/qdzFYnaIDgCazhCb7oy4xnjpmZPCzlm5ufSanRZEhp2FV/SEV5PiN74a3CsqZXZGa
+         E2TkokZrDGDruLrx6Mrcgfdl0SzhqUwyQTbeAQTBVUtlFC7Aw1OOz4cMkDRx8s8EyYKK
+         j4dg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=97hQfQK7XavPSltv9pN4yF2y5jNc7cIdloHZZGHQCvY=;
-        b=qGO0nYDv3ZRrzNW+M79AUapkItXygEDuuAeDw+yqnEe1jWpNYWyjFAcgLXhATLpePL
-         89X+iBZOtgnM/8KgfbJz3up1Ugx4fRJgBNg+zBKdE4zD2lEbM6TEXwGfwRbPCURAs5l5
-         Jyos5OeboNjEiL4e8ICIJaNTh2t1lSSRgoSVW+cHWhVMozg/P/KokKhil81T/s1lA7Hx
-         Y37PLqV9Eeg1qZadcGjE/OOH1IjvnKjiopADr4bj2HqUy+Uo5cS1oAniqrIgxBeHJKAu
-         Hldfx7XeBAnTwewogVE6adHtCBncJLvmAQmZyY5R0fiHwqSd42Tf+3HFUtHeHejQi6/Z
-         a59w==
-X-Gm-Message-State: AOAM532PF3+WkeWkh9zocsN67tgzQE4WNKsDWZCqd/MI7nNtwHk7SNqo
-        otQrWMxMfYK9g2QyasRQ7gGQJw==
-X-Google-Smtp-Source: ABdhPJwD7U8+qAvbZ4kuKnlj7p/+LPIrjaNSnetymU4fcJ2ltcIGDeO08kf0oVPEIdx8JqShaVs4sA==
-X-Received: by 2002:aca:1e12:: with SMTP id m18mr7648287oic.95.1627502869900;
-        Wed, 28 Jul 2021 13:07:49 -0700 (PDT)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id n1sm182047otk.34.2021.07.28.13.07.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Jul 2021 13:07:49 -0700 (PDT)
-Date:   Wed, 28 Jul 2021 13:05:59 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Pavel Machek <pavel@ucw.cz>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Andy Gross <agross@kernel.org>, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v2 2/5] PM: clk: add devm_pm_clk_create helper
-Message-ID: <YQG4pz/z2nBNA+tJ@ripper>
-References: <20210728142445.774158-1-dmitry.baryshkov@linaro.org>
- <20210728142445.774158-3-dmitry.baryshkov@linaro.org>
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=551JLf4qkCIkFNPA0Ob7V07KiCMSizDSmiG+dlVt4JM=;
+        b=bCyfTKCdFRUNQZy7jae/6nBBmYDb7dz2IMo8wTG5AhbqteYxAAahdYMpa6JveW1WS+
+         A2MbQ3XhSo8QSSr6xwbdEMaJkV2Yzx3peHO5kMdLI2k7/6G6TFw7KHx0HqzY9n8VvNdE
+         uJkAd9IIHJPpnyJe8wCXI2n7/AtxJBzCP0aW1FpLp16Ko9ao/9CfvjEHNdQrbq1urpit
+         gHVlUyKOjVkvctPUabrG7or0+KPb5jAtXogq6qBxnMfPnSsXyPbdQZacXMynftGQ0fls
+         FckZi/5Dd6Pdxo92+ND2jH9IYQhZ5zoGJw3h858zXwWRiiBc+CgT0Oz/mHkfHhUo8w8n
+         ceMA==
+X-Gm-Message-State: AOAM532UbNTOTnL48kpGIs2vEn2BKT/avCegHN/PYoUL8ZOHHq5vg/Uz
+        vJjn5DO+8Jw+2RxK+RNM2rYtthD7C3/o6JKikCM=
+X-Google-Smtp-Source: ABdhPJwouLvhME8/x0uZtoF54DhLPEB9DXJ10yPUymnb4k09k+KAbp5Zsrws2GUQ7HnHVAkgkgXWRnBFA//zK0futiE=
+X-Received: by 2002:a05:600c:19cb:: with SMTP id u11mr1356981wmq.175.1627505312189;
+ Wed, 28 Jul 2021 13:48:32 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210728142445.774158-3-dmitry.baryshkov@linaro.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Wed, 28 Jul 2021 13:52:42 -0700
+Message-ID: <CAF6AEGumRk7H88bqV=H9Fb1SM0zPBo5B7NsCU3jFFKBYxf5k+Q@mail.gmail.com>
+Subject: [early pull] drm/msm: drm-msm-next-2021-07-28 for v5.15
+To:     Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 28 Jul 07:24 PDT 2021, Dmitry Baryshkov wrote:
+Hi Dave & Daniel,
 
-> Add devm_pm_clk_create helper, devres-enabled version of the
-> pm_clk_create(), which will call pm_clk_destroy at the correct time.
-> 
+An early pull for v5.15 (there'll be more coming in a week or two),
+consisting of the drm/scheduler conversion and a couple other small
+series that one was based one.  Mostly sending this now because IIUC
+danvet wanted it in drm-next so he could rebase on it.  (Daniel, if
+you disagree then speak up, and I'll instead include this in the main
+pull request once that is ready.)
 
-As with path 1, please describe why this is a good thing. (I definitely
-think it is, but I've been part of the discussion leading up to this
-patch)
+This also has a core patch to drop drm_gem_object_put_locked() now
+that the last use of it is removed.
 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/base/power/clock_ops.c | 17 +++++++++++++++++
->  include/linux/pm_clock.h       |  5 +++++
->  2 files changed, 22 insertions(+)
-> 
-> diff --git a/drivers/base/power/clock_ops.c b/drivers/base/power/clock_ops.c
-> index 0251f3e6e61d..4110c19c08dc 100644
-> --- a/drivers/base/power/clock_ops.c
-> +++ b/drivers/base/power/clock_ops.c
-> @@ -519,6 +519,23 @@ void pm_clk_destroy(struct device *dev)
->  }
->  EXPORT_SYMBOL_GPL(pm_clk_destroy);
->  
-> +static void pm_clk_destroy_action(void *data)
-> +{
-> +	pm_clk_destroy(data);
-> +}
-> +
+The following changes since commit ff1176468d368232b684f75e82563369208bc371:
 
-As this is an addition to the API, it deserves some kerneldoc.
+  Linux 5.14-rc3 (2021-07-25 15:35:14 -0700)
 
-Regards,
-Bjorn
+are available in the Git repository at:
 
-> +int devm_pm_clk_create(struct device *dev)
-> +{
-> +	int ret;
-> +
-> +	ret = pm_clk_create(dev);
-> +	if (ret)
-> +		return ret;
-> +
-> +	return devm_add_action_or_reset(dev, pm_clk_destroy_action, dev);
-> +}
-> +EXPORT_SYMBOL_GPL(devm_pm_clk_create);
-> +
->  /**
->   * pm_clk_suspend - Disable clocks in a device's PM clock list.
->   * @dev: Device to disable the clocks for.
-> diff --git a/include/linux/pm_clock.h b/include/linux/pm_clock.h
-> index 8ddc7860e131..ada3a0ab10bf 100644
-> --- a/include/linux/pm_clock.h
-> +++ b/include/linux/pm_clock.h
-> @@ -47,6 +47,7 @@ extern void pm_clk_remove(struct device *dev, const char *con_id);
->  extern void pm_clk_remove_clk(struct device *dev, struct clk *clk);
->  extern int pm_clk_suspend(struct device *dev);
->  extern int pm_clk_resume(struct device *dev);
-> +extern int devm_pm_clk_create(struct device *dev);
->  #else
->  static inline bool pm_clk_no_clocks(struct device *dev)
->  {
-> @@ -83,6 +84,10 @@ static inline void pm_clk_remove(struct device *dev, const char *con_id)
->  static inline void pm_clk_remove_clk(struct device *dev, struct clk *clk)
->  {
->  }
-> +static inline int devm_pm_clk_create(struct device *dev)
-> +{
-> +	return -EINVAL;
-> +}
->  #endif
->  
->  #ifdef CONFIG_HAVE_CLK
-> -- 
-> 2.30.2
-> 
+  https://gitlab.freedesktop.org/drm/msm.git drm-msm-next-2021-07-28
+
+for you to fetch changes up to 4541e4f2225c30b0e9442be9eb2fb8b7086cdd1f:
+
+  drm/msm/gem: Mark active before pinning (2021-07-28 09:19:00 -0700)
+
+----------------------------------------------------------------
+Rob Clark (18):
+      drm/msm: Let fences read directly from memptrs
+      drm/msm: Signal fences sooner
+      drm/msm: Split out devfreq handling
+      drm/msm: Split out get_freq() helper
+      drm/msm: Devfreq tuning
+      drm/msm: Docs and misc cleanup
+      drm/msm: Small submitqueue creation cleanup
+      drm/msm: drop drm_gem_object_put_locked()
+      drm: Drop drm_gem_object_put_locked()
+      drm/msm/submit: Simplify out-fence-fd handling
+      drm/msm: Consolidate submit bo state
+      drm/msm: Track "seqno" fences by idr
+      drm/msm: Return ERR_PTR() from submit_create()
+      drm/msm: Conversion to drm scheduler
+      drm/msm: Drop submit bo_list
+      drm/msm: Drop struct_mutex in submit path
+      drm/msm: Utilize gpu scheduler priorities
+      drm/msm/gem: Mark active before pinning
+
+ drivers/gpu/drm/drm_gem.c                   |  22 --
+ drivers/gpu/drm/msm/Kconfig                 |   1 +
+ drivers/gpu/drm/msm/Makefile                |   1 +
+ drivers/gpu/drm/msm/adreno/a5xx_debugfs.c   |   4 +-
+ drivers/gpu/drm/msm/adreno/a5xx_gpu.c       |   6 +-
+ drivers/gpu/drm/msm/adreno/a5xx_power.c     |   2 +-
+ drivers/gpu/drm/msm/adreno/a5xx_preempt.c   |   7 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c       |  12 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c       |   6 +-
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c |   4 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c     |   6 +-
+ drivers/gpu/drm/msm/msm_drv.c               |  30 ++-
+ drivers/gpu/drm/msm/msm_fence.c             |  53 +----
+ drivers/gpu/drm/msm/msm_fence.h             |  44 +++-
+ drivers/gpu/drm/msm/msm_gem.c               |  94 +-------
+ drivers/gpu/drm/msm/msm_gem.h               |  47 ++--
+ drivers/gpu/drm/msm/msm_gem_submit.c        | 344 +++++++++++++++++-----------
+ drivers/gpu/drm/msm/msm_gpu.c               | 220 ++++--------------
+ drivers/gpu/drm/msm/msm_gpu.h               | 139 ++++++++++-
+ drivers/gpu/drm/msm/msm_gpu_devfreq.c       | 203 ++++++++++++++++
+ drivers/gpu/drm/msm/msm_rd.c                |   6 +-
+ drivers/gpu/drm/msm/msm_ringbuffer.c        |  69 +++++-
+ drivers/gpu/drm/msm/msm_ringbuffer.h        |  12 +
+ drivers/gpu/drm/msm/msm_submitqueue.c       |  53 +++--
+ include/drm/drm_gem.h                       |   2 -
+ include/uapi/drm/msm_drm.h                  |  14 +-
+ 26 files changed, 865 insertions(+), 536 deletions(-)
+ create mode 100644 drivers/gpu/drm/msm/msm_gpu_devfreq.c
