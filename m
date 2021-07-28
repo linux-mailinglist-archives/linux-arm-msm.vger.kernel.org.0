@@ -2,188 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EADFF3D852C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 03:03:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AF6D43D8630
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 05:46:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234095AbhG1BDY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 27 Jul 2021 21:03:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53018 "EHLO
+        id S233679AbhG1Dqt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 27 Jul 2021 23:46:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60880 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234561AbhG1BDJ (ORCPT
+        with ESMTP id S233608AbhG1Dqt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 27 Jul 2021 21:03:09 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B9699C061757;
-        Tue, 27 Jul 2021 18:03:07 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id ds11-20020a17090b08cbb0290172f971883bso7506538pjb.1;
-        Tue, 27 Jul 2021 18:03:07 -0700 (PDT)
+        Tue, 27 Jul 2021 23:46:49 -0400
+Received: from mail-oo1-xc30.google.com (mail-oo1-xc30.google.com [IPv6:2607:f8b0:4864:20::c30])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69CE0C061760
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jul 2021 20:46:47 -0700 (PDT)
+Received: by mail-oo1-xc30.google.com with SMTP id z3-20020a4a98430000b029025f4693434bso348481ooi.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 27 Jul 2021 20:46:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=BVHgu7P3jLeGAr6c6jiQnBbjUeZUVb7sIei9a5S3h4I=;
-        b=dmWlM3T2LTqYy+3H7Q8IfXYrQN8RtqxpPMlevHLVCKuFDRXvD+T+ZwM1TEK8pW+Prr
-         6We5ubyhg7wYLfcKM7vgq1QwH2ynVHcNz42fMHHpdb85J4mJ4H8MiDEFrPSlr3+SZi10
-         g2bJG+tjik8SeuWOlGdOMhTMaS87qaCYNZCNQt5n/KRc6+fac0XyP9OxDXJiNY1m/KoX
-         qF9/C0/hzfJlUUS1jWDSsdmxhIPBM5vHNwaoM73gz+i37bWb8PUg25S6Fldj3T8URgi2
-         bDCoi6Fth0RGOqR1e2dkngEMW42co8gvjqn+xhqXBo2BQucSSedGkvhbJO0TlwV3t4R6
-         tv9g==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=X9/Ttley1HiyBx6xJyZs3xHP3lRgNd9DQtcFshUv0Ww=;
+        b=s0q4lFbJtw1BDyfhfL4JP6N4B5nitFldtGIYE2Ay6jg/+PlevFWeqww+5Qg0m+OPo/
+         03TTPs5LI/bHEoEyKfU1FNYmSoqGuhBm4NABdfClbTNQZqP+qvb2tBZOFVHUy2mO8fGl
+         UbS3kXBQ1jM/h3IeAZNBlVpigtFl23ali5QF+oh1ofJCo90J4Ges4MSQRmBjvobU+aBR
+         AOZuQmVvgOP61TA9x8T9TeqK9wyD9aRMSZiJ0ZU3ydR93KMTGwIf2Piu5q8tE2IMYhWx
+         5KBrajlUVdUmMe4mnFb/Jk/RlPUGylwNPh5LqHyms/h1/3tsLaeSiSvhz0104BOPEiLP
+         LC4Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=BVHgu7P3jLeGAr6c6jiQnBbjUeZUVb7sIei9a5S3h4I=;
-        b=gFSSRHCAwD+mav1nzeRfkqAFILtrik3pTEAzImdpePztzKIW91Ey+twCIq10VQGO/V
-         jBXEI9lay0jyvo9HXEV/bRhqQRr79QHCgeapm8eUtw7bf4O4xyNF5q51/BvN3Wkrygf2
-         pChq/79YXiGy3h+xGB5nfs7yImx9rwkskMvLHmPfNcwvkRmVcMGBmunrxvnfvl5z6pXy
-         ObtupOfVHy6UwL42vh/BIwWEffKGmYh8nnGzTwh6BL/f7PnXRrDxVwrmQbAwEUqK179k
-         yrnF+7hmjs7A7RCJxKrr9oEhReUKWccPjcPAIcuXPaSk2afJdJYWneDfmDIpSA4Lxsps
-         x1Gw==
-X-Gm-Message-State: AOAM530EHn3SC+igVdI2LDwoQE9cg6yzjJucEXcKWtLPnT06h7Lhy6Nd
-        J+1Q1RkR/cBxaobOlqdpyPQ=
-X-Google-Smtp-Source: ABdhPJwLyM6C8RCSNxp9Lhz/fnnARR2n+2V3Q+Mr/oYE0qAQEOLNDhvtsm35CD5Ys48fSh0eT5pTGA==
-X-Received: by 2002:a17:902:8bc3:b029:124:919f:6213 with SMTP id r3-20020a1709028bc3b0290124919f6213mr21425743plo.51.1627434187298;
-        Tue, 27 Jul 2021 18:03:07 -0700 (PDT)
-Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id 1sm4926456pfv.138.2021.07.27.18.03.06
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=X9/Ttley1HiyBx6xJyZs3xHP3lRgNd9DQtcFshUv0Ww=;
+        b=s2pj0D7f5JH2gcC20upe1W4UrPNPNmvxvaUL7n4PHN2iVhSitc9Z4cKpF0xJPeoMrT
+         L4Nmxutld96X2/Px5FvmhBGzrE9idLfu9zADSTkoC8VR9yf5S8d5iY+WZtWcfRR1cBeD
+         j83THY7KJiAxMUW6icaYVzHTqdL3KkFVb0EN9duc/cHRs0X+yqlvJLfK0r4GaL96o+mQ
+         zGkju/aB3iKa+hPvVtKznxbT2Hi2VkjD3dB39np/82hesYjoGJsjrCRjWjdhd5SuX2pw
+         WKE3f4Op66blYQ65dYv+70ybUt0UHl3R9xWoeb38naC4SewmVJ17pwqK9Xh+9IR126Op
+         RGsg==
+X-Gm-Message-State: AOAM531LRY4EPrpsYq7RkZ8diOKC6KZyQ/ySR78H/uDC5pn5Gj21rvBo
+        N18fm8Fn71eFH0xOaoBymPcGyA==
+X-Google-Smtp-Source: ABdhPJxnK+Awvd9p/hgL7jvGhR8ApUYTH+icENX6THkmZAQZQ1o0lkTtt0FxKku6L5PV3fWh3bjjNg==
+X-Received: by 2002:a4a:a542:: with SMTP id s2mr15783273oom.78.1627444005665;
+        Tue, 27 Jul 2021 20:46:45 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id x22sm935256oie.28.2021.07.27.20.46.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 27 Jul 2021 18:03:06 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v4 13/13] drm/msm/gem: Mark active before pinning
-Date:   Tue, 27 Jul 2021 18:06:18 -0700
-Message-Id: <20210728010632.2633470-14-robdclark@gmail.com>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210728010632.2633470-1-robdclark@gmail.com>
-References: <20210728010632.2633470-1-robdclark@gmail.com>
+        Tue, 27 Jul 2021 20:46:44 -0700 (PDT)
+Date:   Tue, 27 Jul 2021 22:46:42 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>, ulf.hansson@linaro.org,
+        viresh.kumar@linaro.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, rojay@codeaurora.org,
+        stephan@gerhold.net
+Subject: Re: [PATCH v4 2/2] arm64: dts: sc7180: Add required-opps for i2c
+Message-ID: <YQDTImwRhp8juvKh@yoga>
+References: <YPHpsO5LlQRQxj9y@yoga>
+ <CAE-0n53CHD8c7C4ETWRgzmZmFSCcBw46wSs4pKbYMRjA_tD3yg@mail.gmail.com>
+ <YPHxfHPC/faq/y+J@yoga>
+ <CAE-0n50qx80cMFPJ1x9rc+EMR1L+j2CUMyDjWAbnE9mPHjf-TQ@mail.gmail.com>
+ <YPIBK/NJgBNZVI8Y@yoga>
+ <12711a61-e16c-d2bc-6e04-ab94c7551abe@codeaurora.org>
+ <YPXQNFYKfH/xZxFY@yoga>
+ <bc79ea3e-4981-8f9b-f9a7-59cb972047a7@codeaurora.org>
+ <YP2Y6qs5P5mb2jzE@yoga>
+ <b6b315ae-ee68-6ba8-7453-f28dace3d8d2@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <b6b315ae-ee68-6ba8-7453-f28dace3d8d2@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+On Tue 27 Jul 02:35 CDT 2021, Rajendra Nayak wrote:
 
-Mark all the bos in the submit as active, before pinning, to prevent
-evicting a buffer in the same submit to make room for a buffer earlier
-in the table.
+> 
+> On 7/25/2021 10:31 PM, Bjorn Andersson wrote:
+> > On Mon 19 Jul 23:29 CDT 2021, Rajendra Nayak wrote:
+> > 
+> > > 
+> > > 
+> > > On 7/20/2021 12:49 AM, Bjorn Andersson wrote:
+> > > > On Mon 19 Jul 04:37 CDT 2021, Rajendra Nayak wrote:
+> > > > 
+> > > > > 
+> > > > > 
+> > > > > On 7/17/2021 3:29 AM, Bjorn Andersson wrote:
+> > > > > > On Fri 16 Jul 16:49 CDT 2021, Stephen Boyd wrote:
+> > > > > > 
+> > > > > > > Quoting Bjorn Andersson (2021-07-16 13:52:12)
+> > > > > > > > On Fri 16 Jul 15:21 CDT 2021, Stephen Boyd wrote:
+> > > > > > > > 
+> > > > > > > > > Quoting Bjorn Andersson (2021-07-16 13:18:56)
+> > > > > > > > > > On Fri 16 Jul 05:00 CDT 2021, Rajendra Nayak wrote:
+> > > > > > > > > > 
+> > > > > > > > > > > qup-i2c devices on sc7180 are clocked with a fixed clock (19.2 MHz)
+> > > > > > > > > > > Though qup-i2c does not support DVFS, it still needs to vote for a
+> > > > > > > > > > > performance state on 'CX' to satisfy the 19.2 Mhz clock frequency
+> > > > > > > > > > > requirement.
+> > > > > > > > > > > 
+> > > > > > > > > > 
+> > > > > > > > > > Sounds good, but...
+> > > > > > > > > > 
+> > > > > > > > > > > Use 'required-opps' to pass this information from
+> > > > > > > > > > > device tree, and also add the power-domains property to specify
+> > > > > > > > > > > the CX power-domain.
+> > > > > > > > > > > 
+> > > > > > > > > > 
+> > > > > > > > > > ..is the required-opps really needed with my rpmhpd patch in place?
+> > > > > > > > > > 
+> > > > > > > > > 
+> > > > > > > > > Yes? Because rpmhpd_opp_low_svs is not the lowest performance state for
+> > > > > > > > > CX.
+> > > > > > > > 
+> > > > > > > > On e.g. sm8250 the first available non-zero corner presented in cmd-db
+> > > > > > > > is low_svs.
+> > > > > 
+> > > > > what rail is this? the mmcx? Perhaps it does not support RET.
+> > > > > cx usually supports both collapse state and RET.
+> > > > > 
+> > > > 
+> > > > That was the one I was specifically looking at for the MDSS_GDSC->MMCX
+> > > > issue, so it's likely I didn't look elsewhere.
+> > > > 
+> > > > > > > 
+> > > > > > > Indeed. On sc7180 it's not the first non-zero corner. I suppose
+> > > > > > > retention for CX isn't actually used when the SoC is awake so your
+> > > > > > > rpmhpd patch is putting in a vote for something that doesn't do anything
+> > > > > > > at runtime for CX? I imagine that rpmh only sets the aggregate corner to
+> > > > > > > retention when the whole SoC is suspended/sleeping, otherwise things
+> > > > > > > wouldn't go very well. Similarly, min_svs may be VDD minimization? If
+> > > > > > > so, those first two states are basically states that shouldn't be used
+> > > > > > > at runtime, almost like sleep states.
+> > > > > > > 
+> > > > > > 
+> > > > > > But if that's the case, I don't think it's appropriate for the "enabled
+> > > > > > state" of the domain to use any of those corners.
+> > > > > 
+> > > > > I rechecked the downstream kernels where all this voting happens from within
+> > > > > the clock drivers, and I do see votes to min_svs for some clocks, but Stephen is
+> > > > > right that RET is not something that's voted on while in active state.
+> > > > > 
+> > > > > But always going with something just above the ret level while active will also
+> > > > > not work for all devices, for instance for i2c on 7180, it needs a cx vote of
+> > > > > low svs while the rail (cx) does support something lower than that which is min svs.
+> > > > > (why can't it just work with min svs?, I don't know, these values and recommendations
+> > > > > come in from the voltage plans published by HW teams for every SoC and we just end up
+> > > > > using them in SW, perhaps something to dig further and understand which I will try and
+> > > > > do but these are the values in voltage plans and downstream kernels which work for now)
+> > > > > 
+> > > > 
+> > > > So to some degree this invalidates my argumentation about the
+> > > > enabled_corner in rpmhpd, given that "enabled" means a different corner
+> > > > for each rail - not just the one with lowest non-zero value.
+> > > 
+> > > Right, it might work in some cases but might not work for all.
+> > > 
+> > 
+> > Which makes it way less desirable.
+> > 
+> > The enable state for rpmhpd power domains doesn't meet my expectations
+> > for how a power domain should behave,
+> 
+> Right and that's perhaps because these are not the usual power-domains,
+> which have one "on/active" state and one or more "off/inactive" states (off/ret/clock-stop)
+> Rpmhpd has multiple "on/active" states, and whats "on/active" for one consumer
+> might not be "on/active" for another, so this information is hard to be managed
+> at a generic level and these requests in some way or the other need to come
+> in explicitly from the resp. consumers.
+> 
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- drivers/gpu/drm/msm/msm_gem.c        |  2 --
- drivers/gpu/drm/msm/msm_gem_submit.c | 28 ++++++++++++++++++++--------
- 2 files changed, 20 insertions(+), 10 deletions(-)
+I think it's fine if we just acknowledge that this is how the rpmhpd
+domains works.
 
-diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-index af199ef53d2f..15b1804fa64e 100644
---- a/drivers/gpu/drm/msm/msm_gem.c
-+++ b/drivers/gpu/drm/msm/msm_gem.c
-@@ -131,7 +131,6 @@ static struct page **get_pages(struct drm_gem_object *obj)
- 		if (msm_obj->flags & (MSM_BO_WC|MSM_BO_UNCACHED))
- 			sync_for_device(msm_obj);
- 
--		GEM_WARN_ON(msm_obj->active_count);
- 		update_inactive(msm_obj);
- 	}
- 
-@@ -815,7 +814,6 @@ void msm_gem_active_get(struct drm_gem_object *obj, struct msm_gpu *gpu)
- 	GEM_WARN_ON(!msm_gem_is_locked(obj));
- 	GEM_WARN_ON(msm_obj->madv != MSM_MADV_WILLNEED);
- 	GEM_WARN_ON(msm_obj->dontneed);
--	GEM_WARN_ON(!msm_obj->sgt);
- 
- 	if (msm_obj->active_count++ == 0) {
- 		mutex_lock(&priv->mm_lock);
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index c2ecec5b11c4..fc25a85eb1ca 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -24,7 +24,8 @@
- /* make sure these don't conflict w/ MSM_SUBMIT_BO_x */
- #define BO_VALID    0x8000   /* is current addr in cmdstream correct/valid? */
- #define BO_LOCKED   0x4000   /* obj lock is held */
--#define BO_PINNED   0x2000   /* obj is pinned and on active list */
-+#define BO_ACTIVE   0x2000   /* active refcnt is held */
-+#define BO_PINNED   0x1000   /* obj is pinned and on active list */
- 
- static struct msm_gem_submit *submit_create(struct drm_device *dev,
- 		struct msm_gpu *gpu,
-@@ -239,10 +240,11 @@ static void submit_cleanup_bo(struct msm_gem_submit *submit, int i,
- 	struct drm_gem_object *obj = &submit->bos[i].obj->base;
- 	unsigned flags = submit->bos[i].flags & cleanup_flags;
- 
--	if (flags & BO_PINNED) {
-+	if (flags & BO_PINNED)
- 		msm_gem_unpin_iova_locked(obj, submit->aspace);
-+
-+	if (flags & BO_ACTIVE)
- 		msm_gem_active_put(obj);
--	}
- 
- 	if (flags & BO_LOCKED)
- 		dma_resv_unlock(obj->resv);
-@@ -252,7 +254,7 @@ static void submit_cleanup_bo(struct msm_gem_submit *submit, int i,
- 
- static void submit_unlock_unpin_bo(struct msm_gem_submit *submit, int i)
- {
--	submit_cleanup_bo(submit, i, BO_PINNED | BO_LOCKED);
-+	submit_cleanup_bo(submit, i, BO_PINNED | BO_ACTIVE | BO_LOCKED);
- 
- 	if (!(submit->bos[i].flags & BO_VALID))
- 		submit->bos[i].iova = 0;
-@@ -356,6 +358,18 @@ static int submit_pin_objects(struct msm_gem_submit *submit)
- 
- 	submit->valid = true;
- 
-+	/*
-+	 * Increment active_count first, so if under memory pressure, we
-+	 * don't inadvertently evict a bo needed by the submit in order
-+	 * to pin an earlier bo in the same submit.
-+	 */
-+	for (i = 0; i < submit->nr_bos; i++) {
-+		struct drm_gem_object *obj = &submit->bos[i].obj->base;
-+
-+		msm_gem_active_get(obj, submit->gpu);
-+		submit->bos[i].flags |= BO_ACTIVE;
-+	}
-+
- 	for (i = 0; i < submit->nr_bos; i++) {
- 		struct drm_gem_object *obj = &submit->bos[i].obj->base;
- 		uint64_t iova;
-@@ -367,8 +381,6 @@ static int submit_pin_objects(struct msm_gem_submit *submit)
- 		if (ret)
- 			break;
- 
--		msm_gem_active_get(obj, submit->gpu);
--
- 		submit->bos[i].flags |= BO_PINNED;
- 
- 		if (iova == submit->bos[i].iova) {
-@@ -502,7 +514,7 @@ static void submit_cleanup(struct msm_gem_submit *submit, bool error)
- 	unsigned i;
- 
- 	if (error)
--		cleanup_flags |= BO_PINNED;
-+		cleanup_flags |= BO_PINNED | BO_ACTIVE;
- 
- 	for (i = 0; i < submit->nr_bos; i++) {
- 		struct msm_gem_object *msm_obj = submit->bos[i].obj;
-@@ -520,7 +532,7 @@ void msm_submit_retire(struct msm_gem_submit *submit)
- 		struct drm_gem_object *obj = &submit->bos[i].obj->base;
- 
- 		msm_gem_lock(obj);
--		submit_cleanup_bo(submit, i, BO_PINNED);
-+		submit_cleanup_bo(submit, i, BO_PINNED | BO_ACTIVE);
- 		msm_gem_unlock(obj);
- 		drm_gem_object_put(obj);
- 	}
--- 
-2.31.1
+But I am worried about how we're going to handle the case where the
+consumer is indirectly referencing one of these power-domains using a
+subdomain (gdsc).
 
+And the open question is if a solution to that problem will solve this
+problem as well, or if we need to have this and some mechanism to
+describe the "on state" for the parent of a subdomain.
+
+Regards,
+Bjorn
