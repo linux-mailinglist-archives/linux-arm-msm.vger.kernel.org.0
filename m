@@ -2,32 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B74B33D99C6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 01:54:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F29773D99CD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 01:56:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232727AbhG1Xya (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jul 2021 19:54:30 -0400
+        id S232609AbhG1X4c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jul 2021 19:56:32 -0400
 Received: from so254-9.mailgun.net ([198.61.254.9]:18563 "EHLO
         so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232641AbhG1Xya (ORCPT
+        with ESMTP id S232384AbhG1X4b (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jul 2021 19:54:30 -0400
+        Wed, 28 Jul 2021 19:56:31 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1627516468; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=rG5MyP/cD6Lu3423Hm61sSZ+MdCpGFjzTE2RP88KNMY=; b=kwgFkqaI3Uy+tCnfV8CM/yJ1gi863pYwliCY6oKdIcTI5jusfRI6ejPM/RomT2ME2WzZife6
- mhynF8GhIQOJJjTF7K9e7etH6IHZjh9Y/qgxXmqpZVdGWwxQNSLzCys/xHCzLj1qD5vTohQC
- wtF4H5WDlVBa5B1aBNIeNDPW2ro=
+ s=smtp; t=1627516589; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=rG5MyP/cD6Lu3423Hm61sSZ+MdCpGFjzTE2RP88KNMY=; b=vJ3MhO0pIiusCdA63aQh1wrlKjnnbTFlYhlxoRxYz6WtJ3KaibpSq5lsYN66QuKe3Hbtu0hM
+ sY3W1BIVPlVNr0Q65ODvmqr1GZxzPckAmePyOyop1iOIVQz0pp38k4aeeku9SVpr/ChAUcKc
+ YjToeM09Vqt7jpvqyZBcME7Zjpw=
 X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 6101ee2c9771b05b2441e0e1 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 28 Jul 2021 23:54:20
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 6101eeabe81205dd0aa0be13 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 28 Jul 2021 23:56:27
  GMT
 Sender: bbhatt=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8944BC4323A; Wed, 28 Jul 2021 23:54:20 +0000 (UTC)
+        id 28546C433F1; Wed, 28 Jul 2021 23:56:27 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +37,9 @@ Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EAB38C4338A;
-        Wed, 28 Jul 2021 23:54:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org EAB38C4338A
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2F643C433D3;
+        Wed, 28 Jul 2021 23:56:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 2F643C433D3
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
 From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
@@ -48,10 +48,10 @@ To:     manivannan.sadhasivam@linaro.org, davem@davemloft.net,
 Cc:     bqiang@codeaurora.org, linux-arm-msm@vger.kernel.org,
         hemantk@codeaurora.org, clew@codeaurora.org,
         netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>
+        stable@vger.kernel.org, Bhaumik Bhatt <bbhatt@codeaurora.org>
 Subject: [RESEND PATCH] net: qrtr: mhi: synchronize qrtr and mhi preparation
-Date:   Wed, 28 Jul 2021 16:54:11 -0700
-Message-Id: <1627516451-35294-1-git-send-email-bbhatt@codeaurora.org>
+Date:   Wed, 28 Jul 2021 16:56:19 -0700
+Message-Id: <1627516579-35603-1-git-send-email-bbhatt@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
