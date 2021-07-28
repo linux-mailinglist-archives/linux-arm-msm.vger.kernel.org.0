@@ -2,504 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D9B6A3D9382
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 18:46:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2A0B3D948D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 19:50:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231186AbhG1Qqn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jul 2021 12:46:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43084 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230387AbhG1Qqi (ORCPT
+        id S229577AbhG1Rur (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jul 2021 13:50:47 -0400
+Received: from esa.microchip.iphmx.com ([68.232.154.123]:45140 "EHLO
+        esa.microchip.iphmx.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229542AbhG1Ruq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jul 2021 12:46:38 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E79CC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 09:46:36 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id o44-20020a17090a0a2fb0290176ca3e5a2fso4991977pjo.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 09:46:36 -0700 (PDT)
+        Wed, 28 Jul 2021 13:50:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=microchip.com; i=@microchip.com; q=dns/txt; s=mchp;
+  t=1627494644; x=1659030644;
+  h=from:to:cc:subject:date:message-id:references:
+   in-reply-to:content-id:content-transfer-encoding:
+   mime-version;
+  bh=hLnwlnH76OWtNhIleJuayNy0b4PWiCL68vpzC4GgvPU=;
+  b=DSoikVo2QhdqgYmmrEITitrJ71VB9SADwmMOyk7y4gtQtTQiBhIxc3ae
+   AfwqDipFXjiL+mnx8F6JIayAlS5NUP+Krf/rCJNRFT5pBlobrJbMpFp8e
+   boM57VWLH0ohwAfcewcsMatNL0Hy49qsvKMZGWtigpJWSriRKBwRb/EwY
+   VAQ7Ht/hhAwjVs8OEnSKVG42gOohWM4WjIXPfn8IO7w3wZvno4ms5RcoP
+   ahn76Y7hC4ksE0Ha/zYlfvPd6K5uKPYQ+ISYjWrqFLN754azP2bWqMIYd
+   yxN+J9RS+YfV7dyWfsE1PhmlQUsd0en48zv+GgDCishNPYMTH0FeDkCxz
+   w==;
+IronPort-SDR: F4Sj3vF0v6zyr4Lb1YhXdtzF8sMtz74YrlrKIG30c2groid4LBedozqOkGkTz11tA9ovpGaJi4
+ jVzByOqCBTVxfsiKu1RV5OEwbtH3NT/Wkb9GUlWN5QX7jiYiL3Ti6WVdyzmCfYXIhtgkscBXBe
+ RbghNM1VRvXddmtLtNG2l7TXUeRyibLKn+wCQ8a5PPqSnN0v2c1pqetaFJLpXPdf5I1Lw+CbjH
+ SG38gQHev7HjVTgA8wIgD9T7Zp0EKeTWwKWlZ4J1MphkPd2DBN4glstc03W/Bhl908VcckUfRA
+ A4Tahc9zcezGj29tCXxAvOAQ
+X-IronPort-AV: E=Sophos;i="5.84,276,1620716400"; 
+   d="scan'208";a="123795897"
+Received: from smtpout.microchip.com (HELO email.microchip.com) ([198.175.253.82])
+  by esa4.microchip.iphmx.com with ESMTP/TLS/AES256-SHA256; 28 Jul 2021 10:50:39 -0700
+Received: from chn-vm-ex02.mchp-main.com (10.10.85.144) by
+ chn-vm-ex01.mchp-main.com (10.10.85.143) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
+ 15.1.2176.2; Wed, 28 Jul 2021 10:50:37 -0700
+Received: from NAM02-BN1-obe.outbound.protection.outlook.com (10.10.215.89) by
+ email.microchip.com (10.10.87.72) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2176.2 via Frontend
+ Transport; Wed, 28 Jul 2021 10:50:37 -0700
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=SPFrA81/7LWcNBhZKwPfNQQWAUl3laaBHT1OPeZatECZsj/o5DpEQxlOqN09/bUxWYqu8yd2F6g4M7LFClxOikaOa4MpsTaWIliEzCB6xC3UeHBmrfhyUvpgZFoRUFP9zgtEhUCMiFk8DotytdXtYhcTmMBt/0ths2+r71AV11OuL9LPmprYJQr7k+IpbLlNN31+nIrzD1lCvxoe5e46dq0PuiqZPOqpnsCZe30LSLhKXv1W9N3qoCJZu0M4HF7FUIc/OmntA2l9lNVV2VClSb6ifbpxnTYoZFiW1JbQl9KEVtE4owQK7ZOq+ZrohUqvdDhTK/KUtPudXvLHFU7RVA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hLnwlnH76OWtNhIleJuayNy0b4PWiCL68vpzC4GgvPU=;
+ b=Skuyl1lbJQMPvjni7l+KiIylo044eArtb1LwexocTl8y4CyI7UgGiMJcrucwFPqO8WFqfkNpHe8aQHaR71jSl3z9zFjIg7v3izCLXyP5tg/GC06vTjE4Y4SDijSmOlhWj3cV3+Ln8zZxlgkFYqZhH1GEacs2ldGdjq3hrNITgi9eIlCooJYHFcuNtqcl2UgT16Ermc6bePB0ZM3xQQHvQ7z8FZsVBJqWGUBVT6dyn6C3Wa0ce3UV+DjtYkXr09fjs64dtyWLF7DOtruJnoQiM1qYNMOx3yIBwmChfFt0ckUZ4+CdsxHV1NEwvQjPO/fgEsj4BI/G4HW2677y2HEotw==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=microchip.com; dmarc=pass action=none
+ header.from=microchip.com; dkim=pass header.d=microchip.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=vp12py2/8mj0BNAjc+ESYEx8cpiM5TY7qf+ZVm4dk1A=;
-        b=iiPP/OBesxwYEfuzYtVfwadGe2z/AEx4k5pydpsyqHrjgWGTgN1VERxi8oMwd6Jkx5
-         wtLp9vnE12dDeYu8xXKQUtxj1psPZG3nDgrjd6F+U5pa4MVZZf9+bktQvTL5f5Munp0L
-         ntCh7DNPlH+HT9DO142Q6zoHV0ksMEmW/h1FM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=vp12py2/8mj0BNAjc+ESYEx8cpiM5TY7qf+ZVm4dk1A=;
-        b=LW/VVxP3IjTht/SgnIo+KlajdBWZW7Lc4TmnJrVWo8VUkvFnpLr4bTlZQL9RIOesP2
-         tThQGiEMs+6YFrMVnjxYr199yvUS0FwPiMBmmCwjxf9PNu8dJps24yDX4kVgDn6LaN8T
-         yuG5jbQzAgEfxv2vwiRpMfCtDOlPg1LYJ/ltYQDEQYrhxeVwQA4RirV+fqadnOEYbRtn
-         OgTefqdejZfh6PrS8C/fC+dI7HpkZ4V/FUYVlve4rRxlyT/4KqQI3R8SgysaqOt9pCYI
-         cMOyNzKyCbYKNdnWrb+jWrSOSzAxFK5oLqxz7HAvx+ySd3D5YiBbXO/NiShozr4HYKOE
-         NnwA==
-X-Gm-Message-State: AOAM533Ikdsp4Izv0KjcyPBtpce8MqC3AKiXvdgcb+v7rnSIFr0vwZ8q
-        l5HdR4O/AOIaIjuYuknmQF0URQ==
-X-Google-Smtp-Source: ABdhPJwk4H3ZbQFv56zGkCHTQHJTNerQUTZmOkjjwCqCL+owi3sGmMwZtPx7ppzIgLeCIIC4zVQQmA==
-X-Received: by 2002:a17:90b:3809:: with SMTP id mq9mr648463pjb.7.1627490795858;
-        Wed, 28 Jul 2021 09:46:35 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:9f1e:e713:1a5e:89dc])
-        by smtp.gmail.com with ESMTPSA id l12sm474075pff.182.2021.07.28.09.46.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 28 Jul 2021 09:46:35 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     dri-devel@lists.freedesktop.org
-Cc:     tzimmermann@suse.de, linux-arm-msm@vger.kernel.org,
-        a.hajda@samsung.com, sam@ravnborg.org, airlied@linux.ie,
-        bjorn.andersson@linaro.org, daniel@ffwll.ch,
-        devicetree@vger.kernel.org, rodrigo.vivi@intel.com,
-        jonas@kwiboo.se, narmstrong@baylibre.com,
-        Laurent.pinchart@ideasonboard.com, robert.foss@linaro.org,
-        jernej.skrabec@gmail.com, mripard@kernel.org,
-        linus.walleij@linaro.org, maarten.lankhorst@linux.intel.com,
-        rajeevny@codeaurora.org, lyude@redhat.com,
-        thierry.reding@gmail.com, steev@kali.org,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 6/6] drm/panel: atna33xc20: Introduce the Samsung ATNA33XC20 panel
-Date:   Wed, 28 Jul 2021 09:45:57 -0700
-Message-Id: <20210728094511.6.I3a2900080f8749d2bb4baf49ca902db4b0e1df7d@changeid>
-X-Mailer: git-send-email 2.32.0.432.gabb21c7263-goog
-In-Reply-To: <20210728164557.1882787-1-dianders@chromium.org>
-References: <20210728164557.1882787-1-dianders@chromium.org>
+ d=microchiptechnology.onmicrosoft.com;
+ s=selector2-microchiptechnology-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=hLnwlnH76OWtNhIleJuayNy0b4PWiCL68vpzC4GgvPU=;
+ b=SBzgr1bnZSIFsb8LxoQd4hh5b+zOo8d9iC/cSjrIXW13InlJWfL2wbAGgE9ZedIpVGtYYs2NV2kV1AGMLMW+/bN1QztCNe5oDYEaaexbo8RZJrLM9piyAUvqvVMSfE9XTKAHwiQYxkeT6SjizBh5d2wmhMZc6XC5kjz91FHCIUc=
+Received: from BY5PR11MB4007.namprd11.prod.outlook.com (2603:10b6:a03:189::28)
+ by BYAPR11MB3063.namprd11.prod.outlook.com (2603:10b6:a03:89::11) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4352.29; Wed, 28 Jul
+ 2021 17:50:34 +0000
+Received: from BY5PR11MB4007.namprd11.prod.outlook.com
+ ([fe80::e478:6b2c:f71e:65bf]) by BY5PR11MB4007.namprd11.prod.outlook.com
+ ([fe80::e478:6b2c:f71e:65bf%5]) with mapi id 15.20.4373.018; Wed, 28 Jul 2021
+ 17:50:34 +0000
+From:   <Dan.Sneddon@microchip.com>
+To:     <sam@ravnborg.org>, <Dan.Sneddon@microchip.com>
+CC:     <tzimmermann@suse.de>, <daniel@ffwll.ch>, <airlied@linux.ie>,
+        <alexander.deucher@amd.com>, <christian.koenig@amd.com>,
+        <liviu.dudau@arm.com>, <brian.starkey@arm.com>,
+        <bbrezillon@kernel.org>, <Nicolas.Ferre@microchip.com>,
+        <maarten.lankhorst@linux.intel.com>, <mripard@kernel.org>,
+        <stefan@agner.ch>, <alison.wang@nxp.com>,
+        <patrik.r.jakobsson@gmail.com>, <anitha.chrisanthus@intel.com>,
+        <robdclark@gmail.com>, <edmund.j.dea@intel.com>, <sean@poorly.run>,
+        <shawnguo@kernel.org>, <s.hauer@pengutronix.de>,
+        <kernel@pengutronix.de>, <jyri.sarha@iki.fi>, <tomba@kernel.org>,
+        <amd-gfx@lists.freedesktop.org>, <dri-devel@lists.freedesktop.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>, <freedreno@lists.freedesktop.org>
+Subject: Re: [PATCH 03/14] drm/atmel-hlcdc: Convert to Linux IRQ interfaces
+Thread-Topic: [PATCH 03/14] drm/atmel-hlcdc: Convert to Linux IRQ interfaces
+Thread-Index: AQHXg7j3kajdLBgx2U2WcmMzDSjJJqtYfiKAgAAJZACAACMogA==
+Date:   Wed, 28 Jul 2021 17:50:34 +0000
+Message-ID: <3d2f6b84-dd07-d925-a8b8-2bfd5fc736d9@microchip.com>
+References: <20210727182721.17981-1-tzimmermann@suse.de>
+ <20210727182721.17981-4-tzimmermann@suse.de> <YQFi96yaYbTG4OO7@ravnborg.org>
+ <e28b1a2f-015c-c81b-eb64-5323df9ed35d@microchip.com>
+ <YQF7bKyeup8n3awU@ravnborg.org>
+In-Reply-To: <YQF7bKyeup8n3awU@ravnborg.org>
+Accept-Language: en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+user-agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
+authentication-results: ravnborg.org; dkim=none (message not signed)
+ header.d=none;ravnborg.org; dmarc=none action=none header.from=microchip.com;
+x-ms-publictraffictype: Email
+x-ms-office365-filtering-correlation-id: 1cdae643-6589-4590-6d01-08d951f03345
+x-ms-traffictypediagnostic: BYAPR11MB3063:
+x-ms-exchange-transport-forked: True
+x-microsoft-antispam-prvs: <BYAPR11MB30632BED29974E744D8D075FE1EA9@BYAPR11MB3063.namprd11.prod.outlook.com>
+x-ms-oob-tlc-oobclassifiers: OLM:6108;
+x-ms-exchange-senderadcheck: 1
+x-ms-exchange-antispam-relay: 0
+x-microsoft-antispam: BCL:0;
+x-microsoft-antispam-message-info: WCxkMEsV6krL78ZYR04WR93AsxxF3NiP9hh955tIJLl6ZAZSwTA/IdIx3n91tmi7atwpbWqsCBWpk+jDuaj9Ej8yg8uTC8d5v3TWvc0N7wWFbvjxyTaxg6OLlF9vVx96l/axE/Bb9Ft8c5IQvzDNkljpUiwgHELbyEqembEtVLGFRqikW7ygoAh5ZFyHUOvGRT8PU7sa1FSMwDx93RhFv64h2Aos6cPdLL0jfSnqsNuWc0/8jwCpbm6i/u42BiZFXu6/RMShkFDqubifOxTPdiN073DFryWMAPnfjZ0Ff5VL51MQ94a6LLy2vT7GXLpLoXNmR0P49JZLITr94qt+tDjnzqCefNeRkHJAotI2dwJ+ZsboPHVzrMdXK6EzHFwy8zJ+uTnAkT72tjfFORXyrAnensNXInJTthoAf1nmvL4gxIIxH6pCydnVb3/7+O2i0nSKPewfkqAal+GxhHHeL7gjqr28tNYaCNXE3CgyPTIXTnnVFqiAKyElRNfzCJuiEbV47aFCiib95ZiVahpIWfPx1J/Wv4b4jm8/sM4qe4lxn4bRqrz9RYbcX1DotCi9p/XTIsargfJ4ZBrBwtPhZBGzo6pNjDSO9xZ10wAkH3mDWqsXK0A6xZDPLNPt/ZeFsh5DBstdzBeXyFmxz3b5ZdeXVv+VNKkGsyL+8UAhJWZhaD22BbgGuVWJ5Q+BYtOsn6+utjDlOeuiC+wZBPSzJj12DE47H0yxXiyrt41bh0J87k4IdexNPvFoUM9+HY/k3uB3IGUMqJ1FcBFyFRkR3gEFkEaWiljC2FfLjSTXL6Lyx2vnWnGYEJMO4/GhHXBs
+x-forefront-antispam-report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:BY5PR11MB4007.namprd11.prod.outlook.com;PTR:;CAT:NONE;SFS:(39860400002)(136003)(346002)(376002)(396003)(366004)(66556008)(2616005)(26005)(53546011)(6506007)(83380400001)(71200400001)(7416002)(4326008)(2906002)(31686004)(5660300002)(6486002)(91956017)(110136005)(8936002)(31696002)(66476007)(38100700002)(54906003)(316002)(186003)(478600001)(966005)(86362001)(66946007)(8676002)(6512007)(122000001)(64756008)(38070700005)(36756003)(66446008)(76116006)(45980500001)(43740500002)(10090945008);DIR:OUT;SFP:1101;
+x-ms-exchange-antispam-messagedata-chunkcount: 1
+x-ms-exchange-antispam-messagedata-0: =?utf-8?B?Unc4NG1ORE9OV3ZXaFRvTXBRUk5VU3ZGMXY2T0dnU05XaEJSZEg1cGMrMWZP?=
+ =?utf-8?B?Q1RkblVhN0Q5M3pGSGJOK1BZU2JEb25oUkZDdkIxaFV5RTgxRWZNdkIwY0VQ?=
+ =?utf-8?B?dHpWYVlkSG05NXJ1b1FHM1V2L0xxS3lHdnN6NHpEMVVhS3lNRzBrQXlZMEt6?=
+ =?utf-8?B?OEU0R3R3Wk43NUJJc1VveEc5a05iMFFibWJ5WldhUFJFcUtYSk1ySDhDUWtC?=
+ =?utf-8?B?ZllNOC8vbElmL21MdDFva05PVlJKRW1NNVlNaFd6NXFnMjUvWTZlY2RDaGRQ?=
+ =?utf-8?B?a2V0UHVkTXZTc2ZSSFgwVFAwdmpmZ003WjBQS2NxdEZUOVlCV2JLbktPSnkz?=
+ =?utf-8?B?RHhHWWZ0ek5kd1hnK2ROYzFtL0JVaHNTN2JpaTQ3RzA1OWRxdXRpSkdhOW14?=
+ =?utf-8?B?WWM4UXZiZFdQemlKUmdnbjFxdk81dlFZT0pWUzNGTG11aldEcEYwUUpZSWhU?=
+ =?utf-8?B?NldEZW5xVUJra3hPbytISkNKQmIvRy8zTCs4SDlYNjg2Mld4Vy9RSWlHYUZW?=
+ =?utf-8?B?MDdQY3pZaWdydnJpMjJlNGprMHA1VC8zQTJ5andXNmw2MW5TTmhSbTl4VUw2?=
+ =?utf-8?B?Vmx4L202SkRaQTA2M3RlLy9QQWdxaW5LRFB0NXhEb1RjS0ZKR0xWSlRpUHh5?=
+ =?utf-8?B?M3JKZEdPMTlkdnM3UEREeVhFUVdqeWtOL2RkMHBwaTNldHVIQnhicTVkQytW?=
+ =?utf-8?B?Ukc2bjhjRTZ3amtGaWo4c3FpWUs1Mno3eVhXWUM2ejdPd01SUEh3NEVsNm9r?=
+ =?utf-8?B?WFpldTF4WHFYUTZlSHd0Q2FoZE95REdCaFppdk5wck9vdzNtSFY1MGNpbzBx?=
+ =?utf-8?B?SWdFdEVLNWVpazJuY2ZkRkVxSWNpQnovazhqVDBvWnRMZHE4ODdhenRSUGxa?=
+ =?utf-8?B?d29DN2g5dzNSdzgyYStreXR3VEVRWlc1VGhPOU0zU255T1lsNGRTRm5IYmpn?=
+ =?utf-8?B?U05sV0xQbGhmNHIvRVMrdldRcW9JYTk4WDd5c3JJc21xVHpMNi9tcUZFYjd2?=
+ =?utf-8?B?V1VybUJWTkprRlBMK2swRVJpcTlEQjZ0Y1dTZGRERDBJMmxQa3I0Y01IYTNS?=
+ =?utf-8?B?TWhDSXNMTldVVDhmV1duT1FWRmxKMGhhdy8xcWhZL3VwSysvOXBWN1Zyb1Vv?=
+ =?utf-8?B?Z1F5MHVxZXpCeENwMTM4aG84N3ZEYzMxZE94YnVrblZrU0psOVdHOTdtMmZJ?=
+ =?utf-8?B?NEpEU2pVL05panZGWlNueTAwTFBNMEk3WVdwcktZQjR5VDZBWVZBajk5V05r?=
+ =?utf-8?B?VmNKblgxaGwwaE0zTENxQ2NnNHFWaVdxMVJrQU1Nd29ZR1B5UDB2dGVwb2tP?=
+ =?utf-8?B?ZllCRGpraC80ZkFJTVoyc2tMR29DL2dmTy9QaFUwSEZZbkkzN1ZwblBodncx?=
+ =?utf-8?B?alEvSEVTZjVUWGhHcmRNMitDVng4WjJlaFphUzZqR3NhZlZIQkQyM09kMlM5?=
+ =?utf-8?B?cmlrcDBFVGRnbWV4QnRabDJ2ZFhSajFVL0NCdjVscUpBNU5YK3dGeVI2VkZv?=
+ =?utf-8?B?OGk0VmdIUUxnOEdyQjcwdWZCS0F2d2xWWFdoT0pRSVBDd25kcDhrbURSK3Fr?=
+ =?utf-8?B?aXJNRDlFbkFhZTEyNzJYRWM1WjJuMTdxRXVTdkZzZHE0eEl4UEo5c0NMK1dD?=
+ =?utf-8?B?bk9YVzNBbkxFZ1lWUmhObXk1RUtCaDZuM1J5anVDRVlZUVc4OUJZTHBFOWcx?=
+ =?utf-8?B?L01BRjJUcUJPTHFiZTQxY2dlWCtFWnhzWU00cHZXNWVsR0VMVVMrWloxakI5?=
+ =?utf-8?Q?wpSyi1WWwFM9LDi9ytxYVKcnyuAKVs5+5ddm4PR?=
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <69D78A6CC2A6F54B8092FEDD3DB2BA94@namprd11.prod.outlook.com>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-AuthSource: BY5PR11MB4007.namprd11.prod.outlook.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 1cdae643-6589-4590-6d01-08d951f03345
+X-MS-Exchange-CrossTenant-originalarrivaltime: 28 Jul 2021 17:50:34.2025
+ (UTC)
+X-MS-Exchange-CrossTenant-fromentityheader: Hosted
+X-MS-Exchange-CrossTenant-id: 3f4057f3-b418-4d4e-ba84-d55b4e897d88
+X-MS-Exchange-CrossTenant-mailboxtype: HOSTED
+X-MS-Exchange-CrossTenant-userprincipalname: 6S2uV548POlDXLyX2UJeR32xLw0J6WNw8gWKJrEKKAXiVnAU5ypkndGK2ijuzvFpBykJxBg92QWa81iHfMkLNQITbWqPTWN7/TCKgIkcZmw=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: BYAPR11MB3063
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Samsung ATNA33XC20 panel is an AMOLED eDP panel that has backlight
-control over the DP AUX channel.
-
-This panel is _almost_ able to be controlled in a "simple" way (and it
-originally was implemented in panel-simple.c), but it's really
-impossible to get the backlight semantics right there without adding
-wacky special-case code to panel-simple. Let's give up and clone the
-parts of panel-simple that we need and implement the power sequence
-that this panel needs.
-
-NOTE: we'll still leave the devicetree bindings alone. Even though the
-power-sequencing is non-standard the bindings are still "simple".
-
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
----
-
- drivers/gpu/drm/panel/Kconfig                 |  12 +
- drivers/gpu/drm/panel/Makefile                |   1 +
- .../gpu/drm/panel/panel-samsung-atna33xc20.c  | 366 ++++++++++++++++++
- 3 files changed, 379 insertions(+)
- create mode 100644 drivers/gpu/drm/panel/panel-samsung-atna33xc20.c
-
-diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
-index 6b3eb041182c..58430d358489 100644
---- a/drivers/gpu/drm/panel/Kconfig
-+++ b/drivers/gpu/drm/panel/Kconfig
-@@ -353,6 +353,18 @@ config DRM_PANEL_RONBO_RB070D30
- 	  Say Y here if you want to enable support for Ronbo Electronics
- 	  RB070D30 1024x600 DSI panel.
- 
-+config DRM_PANEL_SAMSUNG_ATNA33XC20
-+	tristate "Samsung ATNA33XC20 eDP panel"
-+	depends on OF
-+	depends on BACKLIGHT_CLASS_DEVICE
-+	depends on PM
-+	select VIDEOMODE_HELPERS
-+	select DRM_DP_AUX_BUS
-+	help
-+	  DRM panel driver for the Samsung ATNA33XC20 panel. This panel can't
-+	  be handled by the DRM_PANEL_SIMPLE driver because its power
-+	  sequencing is non-standard.
-+
- config DRM_PANEL_SAMSUNG_DB7430
- 	tristate "Samsung DB7430-based DPI panels"
- 	depends on OF && SPI && GPIOLIB
-diff --git a/drivers/gpu/drm/panel/Makefile b/drivers/gpu/drm/panel/Makefile
-index 08debae9b314..1b6fe2008861 100644
---- a/drivers/gpu/drm/panel/Makefile
-+++ b/drivers/gpu/drm/panel/Makefile
-@@ -34,6 +34,7 @@ obj-$(CONFIG_DRM_PANEL_RASPBERRYPI_TOUCHSCREEN) += panel-raspberrypi-touchscreen
- obj-$(CONFIG_DRM_PANEL_RAYDIUM_RM67191) += panel-raydium-rm67191.o
- obj-$(CONFIG_DRM_PANEL_RAYDIUM_RM68200) += panel-raydium-rm68200.o
- obj-$(CONFIG_DRM_PANEL_RONBO_RB070D30) += panel-ronbo-rb070d30.o
-+obj-$(CONFIG_DRM_PANEL_SAMSUNG_ATNA33XC20) += panel-samsung-atna33xc20.o
- obj-$(CONFIG_DRM_PANEL_SAMSUNG_DB7430) += panel-samsung-db7430.o
- obj-$(CONFIG_DRM_PANEL_SAMSUNG_LD9040) += panel-samsung-ld9040.o
- obj-$(CONFIG_DRM_PANEL_SAMSUNG_S6D16D0) += panel-samsung-s6d16d0.o
-diff --git a/drivers/gpu/drm/panel/panel-samsung-atna33xc20.c b/drivers/gpu/drm/panel/panel-samsung-atna33xc20.c
-new file mode 100644
-index 000000000000..221db6512859
---- /dev/null
-+++ b/drivers/gpu/drm/panel/panel-samsung-atna33xc20.c
-@@ -0,0 +1,366 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright 2021 Google Inc.
-+ *
-+ * Panel driver for the Samsung ATNA33XC20 panel. This panel can't be handled
-+ * by the DRM_PANEL_SIMPLE driver because its power sequencing is non-standard.
-+ */
-+
-+#include <linux/backlight.h>
-+#include <linux/delay.h>
-+#include <linux/gpio/consumer.h>
-+#include <linux/iopoll.h>
-+#include <linux/module.h>
-+#include <linux/pm_runtime.h>
-+#include <linux/regulator/consumer.h>
-+
-+#include <drm/drm_dp_aux_bus.h>
-+#include <drm/drm_dp_helper.h>
-+#include <drm/drm_edid.h>
-+#include <drm/drm_panel.h>
-+
-+struct atana33xc20_panel {
-+	struct drm_panel base;
-+	bool prepared;
-+	bool enabled;
-+	bool el3_was_on;
-+
-+	bool no_hpd;
-+	struct gpio_desc *hpd_gpio;
-+
-+	struct regulator *supply;
-+	struct gpio_desc *el_on3_gpio;
-+
-+	struct edid *edid;
-+
-+	ktime_t powered_off_time;
-+	ktime_t powered_on_time;
-+	ktime_t el_on3_off_time;
-+};
-+
-+static inline struct atana33xc20_panel *to_atana33xc20(struct drm_panel *panel)
-+{
-+	return container_of(panel, struct atana33xc20_panel, base);
-+}
-+
-+static void atana33xc20_wait(ktime_t start_ktime, unsigned int min_ms)
-+{
-+	ktime_t now_ktime, min_ktime;
-+
-+	min_ktime = ktime_add(start_ktime, ms_to_ktime(min_ms));
-+	now_ktime = ktime_get();
-+
-+	if (ktime_before(now_ktime, min_ktime))
-+		msleep(ktime_to_ms(ktime_sub(min_ktime, now_ktime)) + 1);
-+}
-+
-+static int atana33xc20_suspend(struct device *dev)
-+{
-+	struct atana33xc20_panel *p = dev_get_drvdata(dev);
-+	int ret;
-+
-+	/*
-+	 * Note 3 (Example of power off sequence in detail) in spec
-+	 * specifies to wait 150 ms after deasserting EL3_ON before
-+	 * powering off.
-+	 */
-+	if (p->el3_was_on)
-+		atana33xc20_wait(p->el_on3_off_time, 150);
-+
-+	ret = regulator_disable(p->supply);
-+	if (ret)
-+		return ret;
-+	p->powered_off_time = ktime_get();
-+	p->el3_was_on = false;
-+
-+	return 0;
-+}
-+
-+static int atana33xc20_resume(struct device *dev)
-+{
-+	struct atana33xc20_panel *p = dev_get_drvdata(dev);
-+	bool hpd_asserted = false;
-+	int ret;
-+
-+	/* T12 (Power off time) is min 500 ms */
-+	atana33xc20_wait(p->powered_off_time, 500);
-+
-+	ret = regulator_enable(p->supply);
-+	if (ret)
-+		return ret;
-+	p->powered_on_time = ktime_get();
-+
-+	/*
-+	 * Handle HPD. Note: if HPD is hooked up to a dedicated pin on the
-+	 * eDP controller then "no_hpd" will be false _and_ "hpd_gpio" will be
-+	 * NULL. It's up to the controller driver to wait for HPD after
-+	 * preparing the panel in that case.
-+	 */
-+	if (p->no_hpd) {
-+		/* T3 VCC to HPD high is max 200 ms */
-+		msleep(200);
-+	} else if (p->hpd_gpio) {
-+		ret = readx_poll_timeout(gpiod_get_value_cansleep, p->hpd_gpio,
-+					 hpd_asserted, hpd_asserted,
-+					 1000, 200000);
-+		if (!hpd_asserted)
-+			dev_warn(dev, "Timeout waiting for HPD\n");
-+	}
-+
-+	return 0;
-+}
-+
-+static int atana33xc20_disable(struct drm_panel *panel)
-+{
-+	struct atana33xc20_panel *p = to_atana33xc20(panel);
-+
-+	/* Disabling when already disabled is a no-op */
-+	if (!p->enabled)
-+		return 0;
-+
-+	gpiod_set_value_cansleep(p->el_on3_gpio, 0);
-+	p->el_on3_off_time = ktime_get();
-+	p->enabled = false;
-+
-+	/*
-+	 * Keep track of the fact that EL_ON3 was on but we haven't power
-+	 * cycled yet. This lets us know that "el_on3_off_time" is recent (we
-+	 * don't need to worry about ktime wraparounds) and also makes it
-+	 * obvious if we try to enable again without a power cycle (see the
-+	 * warning in atana33xc20_enable()).
-+	 */
-+	p->el3_was_on = true;
-+
-+	/*
-+	 * Sleeping 20 ms here (after setting the GPIO) avoids a glitch when
-+	 * powering off.
-+	 */
-+	msleep(20);
-+
-+	return 0;
-+}
-+
-+static int atana33xc20_enable(struct drm_panel *panel)
-+{
-+	struct atana33xc20_panel *p = to_atana33xc20(panel);
-+
-+	/* Enabling when already enabled is a no-op */
-+	if (p->enabled)
-+		return 0;
-+
-+	/*
-+	 * Once EL_ON3 drops we absolutely need a power cycle before the next
-+	 * enable or the backlight will never come on again. The code ensures
-+	 * this because disable() is _always_ followed by unprepare() and
-+	 * unprepare() forces a suspend with pm_runtime_put_sync_suspend(),
-+	 * but let's track just to make sure since the requirement is so
-+	 * non-obvious.
-+	 */
-+	if (WARN_ON(p->el3_was_on))
-+		return -EIO;
-+
-+	/*
-+	 * Note 2 (Example of power on sequence in detail) in spec specifies
-+	 * to wait 400 ms after powering on before asserting EL3_on.
-+	 */
-+	atana33xc20_wait(p->powered_on_time, 400);
-+
-+	gpiod_set_value_cansleep(p->el_on3_gpio, 1);
-+	p->enabled = true;
-+
-+	return 0;
-+}
-+
-+static int atana33xc20_unprepare(struct drm_panel *panel)
-+{
-+	struct atana33xc20_panel *p = to_atana33xc20(panel);
-+	int ret;
-+
-+	/* Unpreparing when already unprepared is a no-op */
-+	if (!p->prepared)
-+		return 0;
-+
-+	/*
-+	 * Purposely do a put_sync, don't use autosuspend. The panel's tcon
-+	 * seems to sometimes crash when you stop giving it data and this is
-+	 * the best way to ensure it will come back.
-+	 *
-+	 * NOTE: we still want autosuspend for cases where we only turn on
-+	 * to get the EDID or otherwise send DP AUX commands to the panel.
-+	 */
-+	ret = pm_runtime_put_sync_suspend(panel->dev);
-+	if (ret < 0)
-+		return ret;
-+	p->prepared = false;
-+
-+	return 0;
-+}
-+
-+static int atana33xc20_prepare(struct drm_panel *panel)
-+{
-+	struct atana33xc20_panel *p = to_atana33xc20(panel);
-+	int ret;
-+
-+	/* Preparing when already prepared is a no-op */
-+	if (p->prepared)
-+		return 0;
-+
-+	ret = pm_runtime_get_sync(panel->dev);
-+	if (ret < 0) {
-+		pm_runtime_put_autosuspend(panel->dev);
-+		return ret;
-+	}
-+	p->prepared = true;
-+
-+	return 0;
-+}
-+
-+static int atana33xc20_get_modes(struct drm_panel *panel,
-+				 struct drm_connector *connector)
-+{
-+	struct atana33xc20_panel *p = to_atana33xc20(panel);
-+	struct dp_aux_ep_device *aux_ep = to_dp_aux_ep_dev(panel->dev);
-+	int num = 0;
-+
-+	pm_runtime_get_sync(panel->dev);
-+
-+	if (!p->edid)
-+		p->edid = drm_get_edid(connector, &aux_ep->aux->ddc);
-+	num = drm_add_edid_modes(connector, p->edid);
-+
-+	pm_runtime_mark_last_busy(panel->dev);
-+	pm_runtime_put_autosuspend(panel->dev);
-+
-+	return num;
-+}
-+
-+static const struct drm_panel_funcs atana33xc20_funcs = {
-+	.disable = atana33xc20_disable,
-+	.enable = atana33xc20_enable,
-+	.unprepare = atana33xc20_unprepare,
-+	.prepare = atana33xc20_prepare,
-+	.get_modes = atana33xc20_get_modes,
-+};
-+
-+static void atana33xc20_runtime_disable(void *data)
-+{
-+	pm_runtime_disable(data);
-+}
-+
-+static void atana33xc20_dont_use_autosuspend(void *data)
-+{
-+	pm_runtime_dont_use_autosuspend(data);
-+}
-+
-+static int atana33xc20_probe(struct dp_aux_ep_device *aux_ep)
-+{
-+	struct atana33xc20_panel *panel;
-+	struct device *dev = &aux_ep->dev;
-+	int ret;
-+
-+	panel = devm_kzalloc(dev, sizeof(*panel), GFP_KERNEL);
-+	if (!panel)
-+		return -ENOMEM;
-+	dev_set_drvdata(dev, panel);
-+
-+	panel->supply = devm_regulator_get(dev, "power");
-+	if (IS_ERR(panel->supply))
-+		return dev_err_probe(dev, PTR_ERR(panel->supply),
-+				     "Failed to get power supply\n");
-+
-+	panel->el_on3_gpio = devm_gpiod_get(dev, "enable", GPIOD_OUT_LOW);
-+	if (IS_ERR(panel->el_on3_gpio))
-+		return dev_err_probe(dev, PTR_ERR(panel->el_on3_gpio),
-+				     "Failed to get enable GPIO\n");
-+
-+	panel->no_hpd = of_property_read_bool(dev->of_node, "no-hpd");
-+	if (!panel->no_hpd) {
-+		panel->hpd_gpio = devm_gpiod_get_optional(dev, "hpd", GPIOD_IN);
-+		if (IS_ERR(panel->hpd_gpio))
-+			return dev_err_probe(dev, PTR_ERR(panel->hpd_gpio),
-+					     "Failed to get HPD GPIO\n");
-+	}
-+
-+	pm_runtime_enable(dev);
-+	ret = devm_add_action_or_reset(dev,  atana33xc20_runtime_disable, dev);
-+	if (ret)
-+		return ret;
-+	pm_runtime_set_autosuspend_delay(dev, 1000);
-+	pm_runtime_use_autosuspend(dev);
-+	ret = devm_add_action_or_reset(dev,  atana33xc20_dont_use_autosuspend, dev);
-+	if (ret)
-+		return ret;
-+
-+	drm_panel_init(&panel->base, dev, &atana33xc20_funcs, DRM_MODE_CONNECTOR_eDP);
-+
-+	pm_runtime_get_sync(dev);
-+	ret = drm_panel_dp_aux_backlight(&panel->base, aux_ep->aux);
-+	pm_runtime_mark_last_busy(dev);
-+	pm_runtime_put_autosuspend(dev);
-+	if (ret)
-+		return dev_err_probe(dev, ret,
-+				     "failed to register dp aux backlight\n");
-+
-+	drm_panel_add(&panel->base);
-+
-+	return 0;
-+}
-+
-+static void atana33xc20_remove(struct dp_aux_ep_device *aux_ep)
-+{
-+	struct device *dev = &aux_ep->dev;
-+	struct atana33xc20_panel *panel = dev_get_drvdata(dev);
-+
-+	drm_panel_remove(&panel->base);
-+	drm_panel_disable(&panel->base);
-+	drm_panel_unprepare(&panel->base);
-+
-+	kfree(panel->edid);
-+}
-+
-+static void atana33xc20_shutdown(struct dp_aux_ep_device *aux_ep)
-+{
-+	struct device *dev = &aux_ep->dev;
-+	struct atana33xc20_panel *panel = dev_get_drvdata(dev);
-+
-+	drm_panel_disable(&panel->base);
-+	drm_panel_unprepare(&panel->base);
-+}
-+
-+static const struct of_device_id atana33xc20_dt_match[] = {
-+	{ .compatible = "samsung,atna33xc20", },
-+	{ /* sentinal */ }
-+};
-+MODULE_DEVICE_TABLE(of, atana33xc20_dt_match);
-+
-+static const struct dev_pm_ops atana33xc20_pm_ops = {
-+	SET_RUNTIME_PM_OPS(atana33xc20_suspend, atana33xc20_resume, NULL)
-+	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
-+				pm_runtime_force_resume)
-+};
-+
-+static struct dp_aux_ep_driver atana33xc20_driver = {
-+	.driver = {
-+		.name		= "samsung_atana33xc20",
-+		.of_match_table = atana33xc20_dt_match,
-+		.pm		= &atana33xc20_pm_ops,
-+	},
-+	.probe = atana33xc20_probe,
-+	.remove = atana33xc20_remove,
-+	.shutdown = atana33xc20_shutdown,
-+};
-+
-+static int __init atana33xc20_init(void)
-+{
-+	return dp_aux_dp_driver_register(&atana33xc20_driver);
-+}
-+module_init(atana33xc20_init);
-+
-+static void __exit atana33xc20_exit(void)
-+{
-+	dp_aux_dp_driver_unregister(&atana33xc20_driver);
-+}
-+module_exit(atana33xc20_exit);
-+
-+MODULE_DESCRIPTION("Samsung ATANA33XC20 Panel Driver");
-+MODULE_LICENSE("GPL v2");
--- 
-2.32.0.432.gabb21c7263-goog
-
+T24gNy8yOC8yMSA4OjQ0IEFNLCBTYW0gUmF2bmJvcmcgd3JvdGU6DQo+IEVYVEVSTkFMIEVNQUlM
+OiBEbyBub3QgY2xpY2sgbGlua3Mgb3Igb3BlbiBhdHRhY2htZW50cyB1bmxlc3MgeW91IGtub3cg
+dGhlIGNvbnRlbnQgaXMgc2FmZQ0KPiANCj4gSGkgRGFuLA0KPiANCj4gT24gV2VkLCBKdWwgMjgs
+IDIwMjEgYXQgMDM6MTE6MDhQTSArMDAwMCwgRGFuLlNuZWRkb25AbWljcm9jaGlwLmNvbSB3cm90
+ZToNCj4+IE9uIDcvMjgvMjEgNzowMCBBTSwgU2FtIFJhdm5ib3JnIHdyb3RlOg0KPj4+IFtZb3Ug
+ZG9uJ3Qgb2Z0ZW4gZ2V0IGVtYWlsIGZyb20gc2FtQHJhdm5ib3JnLm9yZy4gTGVhcm4gd2h5IHRo
+aXMgaXMgaW1wb3J0YW50IGF0IGh0dHA6Ly9ha2EubXMvTGVhcm5BYm91dFNlbmRlcklkZW50aWZp
+Y2F0aW9uLl0NCj4+Pg0KPj4+IEVYVEVSTkFMIEVNQUlMOiBEbyBub3QgY2xpY2sgbGlua3Mgb3Ig
+b3BlbiBhdHRhY2htZW50cyB1bmxlc3MgeW91IGtub3cgdGhlIGNvbnRlbnQgaXMgc2FmZQ0KPj4+
+DQo+Pj4gSGkgRGFuLA0KPj4+DQo+Pj4gSSBob3BlIHlvdSBjYW4gZmluZSB0byB0ZXN0IHRoaXMg
+cGF0Y2ggZnJvbSBUaG9tYXMuDQo+Pj4gSWYgdGhpcyB3b3JrcyB0aGVuIHdlIGNhbiBmb3JnZXQg
+YWJvdXQgbXkgYXR0ZW1wdCB0byBkbyB0aGUgc2FtZS4NCj4+DQo+PiBJJ2xsIHRlc3QgdGhpcyBh
+cyBzb29uIGFzIEkgY2FuIGFuZCBsZXQgeW91IGtub3cuDQo+IA0KPiBUaGFua3MsIGNyb3NzaW5n
+IG15IGZpbmdlcnMuLi4gKHdoaWNoIGV4cGxhaW5zIHRoZSBmdW5ueSBzcGVsbGluZyBmcm9tDQo+
+IHRpbWUgdG8gdGltZSkNCj4gDQo+ICAgICAgICAgIFNhbQ0KPiBTbyBJIHJhbiB0aGUgdGVzdCBv
+biBhbiBBNUQyNyBYVUxUIGJvYXJkIHdpdGggYSBQREE1IGRpc3BsYXkuICBPdXIgDQpncmFwaGlj
+cyBkZW1vcyB0aGF0IGNvbWUgd2l0aCBvdXIgbGludXg0c2FtIHJlbGVhc2VzIHNlZW0gdG8gcnVu
+IGp1c3QgDQpmaW5lLiAgbW9kZXRlc3QgLXYgc2VlbXMgdG8gcnVuIGp1c3QgZmluZS4gIEhvd2V2
+ZXIsIHZibHRlc3QgcmV0dXJucyANCiJkcm1XYWl0VkJsYW5rIChyZWxhdGl2ZSkgZmFpbGVkIHJl
+dDogLTEiLiAgSSBkb24ndCB1bmRlcnN0YW5kIHdoeSANCm1vZGV0ZXN0IC12IGlzIHdvcmtpbmcg
+YW5kIHZibHRlc3QgaXNuJ3QsIGJ1dCB0aGF0J3Mgd2hhdCBJJ20gc2VlaW5nLg0KDQpUaGFua3Ms
+DQpEYW4NCg==
