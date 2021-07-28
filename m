@@ -2,305 +2,452 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B369B3D90F0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 16:53:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E8203D9177
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 17:00:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236901AbhG1OxG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jul 2021 10:53:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44514 "EHLO
+        id S236968AbhG1PAi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jul 2021 11:00:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236711AbhG1OxG (ORCPT
+        with ESMTP id S236901AbhG1PAh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jul 2021 10:53:06 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5D8D1C061764
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 07:53:04 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id p5so2910077wro.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 07:53:04 -0700 (PDT)
+        Wed, 28 Jul 2021 11:00:37 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 718C4C0613C1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 08:00:35 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id f20-20020a9d6c140000b02904bb9756274cso2374406otq.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 08:00:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=FLa9JkYsnVFYuAh0m/VrdgEnPoab+4HrUUbPIcU3ZTA=;
-        b=CC0Ae83R+scTToRCxibUQ8g+cU1jUC3z6GWqbkDyXyKA15xFyl9QHfcCX2vLRbs7E6
-         Mh1i/5pzLZXLHxcn6ZZRyeMy7tDsKNFwygmEpFcut8aXUN0ltJ+ECAfZ/15Clfrcuajm
-         jyehU/F59MDDt4gLhb8UcbNhmm9hmKCTsRV4qS187cfpGWgwq6L9LpybOowMYpszwoLj
-         6oJpuYdiBPyYB5tJz9lUXosf2Xkk6y3HehQ0bd0t4d3Rd1dJKMLWg4pyGC/hdGWfmc3j
-         AlN4psPs4uaRUi0PHUomQpZ6+Rq2eoHpWXtqPmxB2DbM+9DzmMkGud49TxjSUGA3rxPB
-         /ELQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=44cWBDNmlE3XRNAiUqm4OQeaIT6gWvRzOp12MsROAO0=;
+        b=OaSuMqz+kMKnssLaqAIdv7yyaE7U98oqcN573cflmS055t5Y7vuLLC2dEiJZePJs19
+         OasPqmYCc7V8loajJLZaT3x2ZOTRzp4oJMoqVS9IzqjVOS6RDCleUBOgSt5HynRPiLd7
+         csLfRZWPQujJkKPZQmh+MMeBo7hhV2Lb6xxYh0k6J/7hiVw7+7aNJNcYdCZWQ2G+YBh3
+         KMc3Wsgpgaj3GftECaM0jcrfFyne9qsBgzWJ5b2Q61tV4qHmCRoni9Xlxuy9WsmBnpl5
+         96Z4YMqt8so8gyTfhWX78aJrx9yieiaYFnB4Kg6J43jox3MaepW8Jri6Wy25P6SmDHHr
+         IPug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=FLa9JkYsnVFYuAh0m/VrdgEnPoab+4HrUUbPIcU3ZTA=;
-        b=aLqCA6ULHvaPOkE8igzbwxla8VT147Vo1g5M8TnKNoXPf0oDQem+xtg1CwXDob9dME
-         CNpTZwyG+NjoDcEgyI1taevZNc4CP6HuoGnZs+oCdRIX7MDFnLhpDgXmJKu/nqiXHY9t
-         WCvbRQkR0fuGsiTfdQ0yaOcEZecK3aWYKOoudaLwyAHTZoFb4hqiomVpPyDcdYMDzz2j
-         CR4/PFr/xI2WcfaOH9bF5WW+EUnVGI7oRP6wvcClAJtb2e9Pqv0t1cQn/YlyeiqOR/U2
-         1Z8DaXfOG9/28ICWOYhPSXFTytJCcqoscJsCuGc99HmQWr+aO6yGnVQa8yVzBqRmHct9
-         HMQA==
-X-Gm-Message-State: AOAM5321hYVxLm3d5qttWOaFriD5ucwdS6mb1bMZwS2gP+NJnw94tLqU
-        MTOunsuNu1iKoVoUDpVKyxN0yQ==
-X-Google-Smtp-Source: ABdhPJwRlLF7HdOtB6/tmNwW4HJhWd7IOR3djacIZTmwFK5zwHJw32e9Gp52b6W5ox0Z7OSO/SeFrw==
-X-Received: by 2002:adf:dd05:: with SMTP id a5mr7815662wrm.214.1627483982539;
-        Wed, 28 Jul 2021 07:53:02 -0700 (PDT)
-Received: from [10.10.6.131] ([109.120.209.55])
-        by smtp.googlemail.com with ESMTPSA id s1sm6211270wmj.8.2021.07.28.07.53.01
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 28 Jul 2021 07:53:02 -0700 (PDT)
-Subject: Re: [PATCH v3 7/7] media: venus: Set buffer to FW based on FW min
- count requirement.
-To:     Dikshita Agarwal <dikshita@codeaurora.org>,
-        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org
-References: <1626246068-21023-1-git-send-email-dikshita@codeaurora.org>
- <1626246068-21023-8-git-send-email-dikshita@codeaurora.org>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <e85515cc-6213-cdc3-dab8-46ea5eb58011@linaro.org>
-Date:   Wed, 28 Jul 2021 17:53:01 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=44cWBDNmlE3XRNAiUqm4OQeaIT6gWvRzOp12MsROAO0=;
+        b=cdag/8/2oPqPmoU4zerzxHmWiGJBpFZHWNV+921LYVfP9ZMGSV3e1Nf9eOQnayFJoN
+         BbxQ7ha50O99D7M+CPaWuu9BOKHYY+G7DpHsKF9gxJUFrRy1jIJ1YjCTwVldCXiJs7xQ
+         FjwEHF+9rKkRw+/W0R7UnnY42gi2xO9pKHQgZ9jED0lKO7F9zE7KhLNfiyWa9xgCvc92
+         6CGvfWpVffFxLSJnyiz4iQ97mkqrY/o1y437g40lsE3MIUWaz8M7tPtc4SQIg1srkSwz
+         WFCR3oRJf2HeoX9XTKseX89aK1WIUxCsMobWUznYqVOiD9VqYOEXck1Ay/gm+JJVhi5e
+         mN0g==
+X-Gm-Message-State: AOAM531t4jB2rKXN9gufJ+KpLm1d6jlZMBeda4Hh830z92mLH9K7ijXt
+        AGUBIRnIuaCVJWEb71U/3Mf5Ug==
+X-Google-Smtp-Source: ABdhPJy1INOOs0P9H3H7Unaiol2hhT40TNgrjmxU1D4gK3aD9BPQkdOv3CBI9N3C1gp8t6mh2nEB9w==
+X-Received: by 2002:a9d:628:: with SMTP id 37mr337979otn.120.1627484434692;
+        Wed, 28 Jul 2021 08:00:34 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id b26sm38830otq.78.2021.07.28.08.00.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 28 Jul 2021 08:00:34 -0700 (PDT)
+Date:   Wed, 28 Jul 2021 10:00:32 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Pavel Machek <pavel@ucw.cz>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Andy Gross <agross@kernel.org>, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 3/5] clk: qcom: use devm_pm_runtime_enable and
+ devm_pm_clk_create
+Message-ID: <YQFxEIRWRZscPgJl@yoga>
+References: <20210728142445.774158-1-dmitry.baryshkov@linaro.org>
+ <20210728142445.774158-4-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <1626246068-21023-8-git-send-email-dikshita@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210728142445.774158-4-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed 28 Jul 09:24 CDT 2021, Dmitry Baryshkov wrote:
 
-
-On 7/14/21 10:01 AM, Dikshita Agarwal wrote:
-> - Get the min buffer count required by FW from source event change
->   and use the same value to decide actual buffer count and for
->   buffer size calculation.
-> - Setup DPB and OPB buffers after session continue incase of
->   reconfig.
+> Use two new helpers instead of pm_runtime_enable() and pm_clk_create(),
+> removing the need for calling pm_runtime_disable and pm_clk_destroy().
 > 
-> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+It's quite reasonable to expect that Rafael wants to take the two first
+patches through his tree, but I expect that these clock patches will
+conflict with your other changes resulting in a less smooth path into
+mainline.
+
+Grepping the tree for candidates I find many better examples, that
+we don't foresee any conflicting changes..
+
+So may I suggest that you fix drivers/hwspinlock/omap_hwspinlock.c and
+drivers/hwspinlock/stm32_hwspinlock.c, then I (as maintainer) can Ack
+those changes and Rafael can take the series in his tree for v5.15.
+
+
+Then as v5.15-rc1 lands, we have the API and we can follow up changing
+these more complex drivers - and those patches can go through the
+individual maintainer trees.
+
+Regards,
+Bjorn
+
 > ---
->  drivers/media/platform/qcom/venus/core.h             |  1 +
->  drivers/media/platform/qcom/venus/helpers.c          | 11 ++++++++++-
->  drivers/media/platform/qcom/venus/hfi_helper.h       |  9 +++++++++
->  drivers/media/platform/qcom/venus/hfi_msgs.c         |  7 +++++++
->  drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c |  6 ++++--
->  drivers/media/platform/qcom/venus/vdec.c             | 20 +++++++++++++-------
->  6 files changed, 44 insertions(+), 10 deletions(-)
+>  drivers/clk/qcom/camcc-sc7180.c       | 25 +++++++++------------
+>  drivers/clk/qcom/lpass-gfm-sm8250.c   | 21 ++++++++----------
+>  drivers/clk/qcom/lpasscorecc-sc7180.c | 18 ++-------------
+>  drivers/clk/qcom/mss-sc7180.c         | 30 +++++++------------------
+>  drivers/clk/qcom/q6sstop-qcs404.c     | 32 ++++++++-------------------
+>  drivers/clk/qcom/turingcc-qcs404.c    | 30 +++++++------------------
+>  6 files changed, 46 insertions(+), 110 deletions(-)
 > 
-> diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-> index 1ff20d9..b2b023e 100644
-> --- a/drivers/media/platform/qcom/venus/core.h
-> +++ b/drivers/media/platform/qcom/venus/core.h
-> @@ -403,6 +403,7 @@ struct venus_inst {
->  	u32 width;
->  	u32 height;
->  	struct v4l2_rect crop;
-> +	u32 fw_min_cnt;
->  	u32 out_width;
->  	u32 out_height;
->  	u32 colorspace;
-> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-> index ccf188a..ea82cdc 100644
-> --- a/drivers/media/platform/qcom/venus/helpers.c
-> +++ b/drivers/media/platform/qcom/venus/helpers.c
-> @@ -576,6 +576,7 @@ static int platform_get_bufreq(struct venus_inst *inst, u32 buftype,
->  	struct hfi_plat_buffers_params params;
->  	bool is_dec = inst->session_type == VIDC_SESSION_TYPE_DEC;
->  	struct venc_controls *enc_ctr = &inst->controls.enc;
-> +	int ret = 0;
-
-No need to initialize ret to zero.
-
+> diff --git a/drivers/clk/qcom/camcc-sc7180.c b/drivers/clk/qcom/camcc-sc7180.c
+> index 9bcf2f8ed4de..ce73ee9037cb 100644
+> --- a/drivers/clk/qcom/camcc-sc7180.c
+> +++ b/drivers/clk/qcom/camcc-sc7180.c
+> @@ -1652,32 +1652,35 @@ static int cam_cc_sc7180_probe(struct platform_device *pdev)
+>  	struct regmap *regmap;
+>  	int ret;
 >  
->  	hfi_plat = hfi_platform_get(version);
+> -	pm_runtime_enable(&pdev->dev);
+> -	ret = pm_clk_create(&pdev->dev);
+> +	ret = devm_pm_runtime_enable(&pdev->dev);
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	ret = devm_pm_clk_create(&pdev->dev);
+>  	if (ret < 0)
+>  		return ret;
 >  
-> @@ -610,7 +611,15 @@ static int platform_get_bufreq(struct venus_inst *inst, u32 buftype,
->  		params.enc.is_tenbit = inst->bit_depth == VIDC_BITDEPTH_10;
+>  	ret = pm_clk_add(&pdev->dev, "xo");
+>  	if (ret < 0) {
+>  		dev_err(&pdev->dev, "Failed to acquire XO clock\n");
+> -		goto disable_pm_runtime;
+> +		return ret;
 >  	}
 >  
-> -	return hfi_plat->bufreq(&params, inst->session_type, buftype, req);
-> +	if (buftype == HFI_BUFFER_OUTPUT || buftype == HFI_BUFFER_OUTPUT2 ||
-> +	    buftype == HFI_BUFFER_INTERNAL_SCRATCH_1(version))
-
-Could you add a comment why HFI_BUFFER_INTERNAL_SCRATCH_1 is included in
-condition and not included in below 'if' condition?
-
-> +		req->count_min = inst->fw_min_cnt;
-> +
-> +	ret = hfi_plat->bufreq(&params, inst->session_type, buftype, req);
-> +	if (buftype == HFI_BUFFER_OUTPUT || buftype == HFI_BUFFER_OUTPUT2)
-
-^^^^
-
-> +		if (inst->fw_min_cnt != req->count_min)
-> +			inst->fw_min_cnt = req->count_min;
-> +	return ret;
->  }
-
-Also in regards to inst->fw_min_cnt, can we pass fw_min_cnt as input to
-get_bufreq via 'req' structure, i.e.
-
-req.count_min = inst->fw_min_cnt;
-
-ret = venus_helper_get_bufreq(inst, type, &req);
-
-inst->fw_min_cnt = req.count_min
-
-?
-
+>  	ret = pm_clk_add(&pdev->dev, "iface");
+>  	if (ret < 0) {
+>  		dev_err(&pdev->dev, "Failed to acquire iface clock\n");
+> -		goto disable_pm_runtime;
+> +		return ret;
+>  	}
 >  
->  int venus_helper_get_bufreq(struct venus_inst *inst, u32 type,
-> diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
-> index 185c302..f2e8fad 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_helper.h
-> +++ b/drivers/media/platform/qcom/venus/hfi_helper.h
-> @@ -167,6 +167,7 @@
->  #define HFI_PROPERTY_PARAM_VDEC_RECOVERY_POINT_SEI_EXTRADATA	0x120300c
->  #define HFI_PROPERTY_PARAM_VDEC_THUMBNAIL_MODE			0x120300d
->  #define HFI_PROPERTY_PARAM_VDEC_FRAME_ASSEMBLY			0x120300e
-> +#define HFI_PROPERTY_PARAM_VDEC_DPB_COUNTS				0x120300e
->  #define HFI_PROPERTY_PARAM_VDEC_VC1_FRAMEDISP_EXTRADATA		0x1203011
->  #define HFI_PROPERTY_PARAM_VDEC_VC1_SEQDISP_EXTRADATA		0x1203012
->  #define HFI_PROPERTY_PARAM_VDEC_TIMESTAMP_EXTRADATA		0x1203013
-> @@ -906,6 +907,14 @@ struct hfi_extradata_input_crop {
->  	u32 height;
+>  	ret = pm_runtime_get(&pdev->dev);
+>  	if (ret)
+> -		goto destroy_pm_clk;
+> +		return ret;
+>  
+>  	regmap = qcom_cc_map(pdev, &cam_cc_sc7180_desc);
+>  	if (IS_ERR(regmap)) {
+>  		ret = PTR_ERR(regmap);
+>  		pm_runtime_put(&pdev->dev);
+> -		goto destroy_pm_clk;
+> +		return ret;
+>  	}
+>  
+>  	clk_fabia_pll_configure(&cam_cc_pll0, regmap, &cam_cc_pll0_config);
+> @@ -1689,18 +1692,10 @@ static int cam_cc_sc7180_probe(struct platform_device *pdev)
+>  	pm_runtime_put(&pdev->dev);
+>  	if (ret < 0) {
+>  		dev_err(&pdev->dev, "Failed to register CAM CC clocks\n");
+> -		goto destroy_pm_clk;
+> +		return ret;
+>  	}
+>  
+>  	return 0;
+> -
+> -destroy_pm_clk:
+> -	pm_clk_destroy(&pdev->dev);
+> -
+> -disable_pm_runtime:
+> -	pm_runtime_disable(&pdev->dev);
+> -
+> -	return ret;
+>  }
+>  
+>  static const struct dev_pm_ops cam_cc_pm_ops = {
+> diff --git a/drivers/clk/qcom/lpass-gfm-sm8250.c b/drivers/clk/qcom/lpass-gfm-sm8250.c
+> index f5e31e692b9b..96f476f24eb2 100644
+> --- a/drivers/clk/qcom/lpass-gfm-sm8250.c
+> +++ b/drivers/clk/qcom/lpass-gfm-sm8250.c
+> @@ -251,15 +251,18 @@ static int lpass_gfm_clk_driver_probe(struct platform_device *pdev)
+>  	if (IS_ERR(cc->base))
+>  		return PTR_ERR(cc->base);
+>  
+> -	pm_runtime_enable(dev);
+> -	err = pm_clk_create(dev);
+> +	err = devm_pm_runtime_enable(dev);
+>  	if (err)
+> -		goto pm_clk_err;
+> +		return err;
+> +
+> +	err = devm_pm_clk_create(dev);
+> +	if (err)
+> +		return err;
+>  
+>  	err = of_pm_clk_add_clks(dev);
+>  	if (err < 0) {
+>  		dev_dbg(dev, "Failed to get lpass core voting clocks\n");
+> -		goto clk_reg_err;
+> +		return err;
+>  	}
+>  
+>  	for (i = 0; i < data->onecell_data->num; i++) {
+> @@ -273,22 +276,16 @@ static int lpass_gfm_clk_driver_probe(struct platform_device *pdev)
+>  
+>  		err = devm_clk_hw_register(dev, &data->gfm_clks[i]->hw);
+>  		if (err)
+> -			goto clk_reg_err;
+> +			return err;
+>  
+>  	}
+>  
+>  	err = devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get,
+>  					  data->onecell_data);
+>  	if (err)
+> -		goto clk_reg_err;
+> +		return err;
+>  
+>  	return 0;
+> -
+> -clk_reg_err:
+> -	pm_clk_destroy(dev);
+> -pm_clk_err:
+> -	pm_runtime_disable(dev);
+> -	return err;
+>  }
+>  
+>  static const struct of_device_id lpass_gfm_clk_match_table[] = {
+> diff --git a/drivers/clk/qcom/lpasscorecc-sc7180.c b/drivers/clk/qcom/lpasscorecc-sc7180.c
+> index 2e0ecc38efdd..ac09b7b840ab 100644
+> --- a/drivers/clk/qcom/lpasscorecc-sc7180.c
+> +++ b/drivers/clk/qcom/lpasscorecc-sc7180.c
+> @@ -356,32 +356,18 @@ static const struct qcom_cc_desc lpass_audio_hm_sc7180_desc = {
+>  	.num_gdscs = ARRAY_SIZE(lpass_audio_hm_sc7180_gdscs),
 >  };
 >  
-> +struct hfi_dpb_counts {
-> +	u32 max_dpb_count;
-> +	u32 max_ref_frames;
-> +	u32 max_dec_buffering;
-> +	u32 max_reorder_frames;
-> +	u32 fw_min_cnt;
-> +};
-> +
->  #define HFI_COLOR_FORMAT_MONOCHROME		0x01
->  #define HFI_COLOR_FORMAT_NV12			0x02
->  #define HFI_COLOR_FORMAT_NV21			0x03
-> diff --git a/drivers/media/platform/qcom/venus/hfi_msgs.c b/drivers/media/platform/qcom/venus/hfi_msgs.c
-> index a2d436d..ed005d6 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_msgs.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_msgs.c
-> @@ -32,6 +32,7 @@ static void event_seq_changed(struct venus_core *core, struct venus_inst *inst,
->  	struct hfi_colour_space *colour_info;
->  	struct hfi_buffer_requirements *bufreq;
->  	struct hfi_extradata_input_crop *crop;
-> +	struct hfi_dpb_counts *dpb_count;
->  	u8 *data_ptr;
->  	u32 ptype;
+> -static void lpass_pm_runtime_disable(void *data)
+> -{
+> -	pm_runtime_disable(data);
+> -}
+> -
+> -static void lpass_pm_clk_destroy(void *data)
+> -{
+> -	pm_clk_destroy(data);
+> -}
+> -
+>  static int lpass_create_pm_clks(struct platform_device *pdev)
+>  {
+>  	int ret;
 >  
-> @@ -110,6 +111,12 @@ static void event_seq_changed(struct venus_core *core, struct venus_inst *inst,
->  			event.input_crop.height = crop->height;
->  			data_ptr += sizeof(*crop);
->  			break;
-> +		case HFI_PROPERTY_PARAM_VDEC_DPB_COUNTS:
-> +			data_ptr += sizeof(u32);
-> +			dpb_count = (struct hfi_dpb_counts *)data_ptr;
-> +			event.buf_count = dpb_count->fw_min_cnt;
-> +			data_ptr += sizeof(*dpb_count);
-> +			break;
->  		default:
->  			break;
->  		}
-> diff --git a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
-> index 479178b..ea25c45 100644
-> --- a/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
-> +++ b/drivers/media/platform/qcom/venus/hfi_plat_bufs_v6.c
-> @@ -1164,7 +1164,7 @@ static int output_buffer_count(u32 session_type, u32 codec)
->  			output_min_count = 6;
->  			break;
->  		case V4L2_PIX_FMT_VP9:
-> -			output_min_count = 9;
-> +			output_min_count = 11;
->  			break;
->  		case V4L2_PIX_FMT_H264:
->  		case V4L2_PIX_FMT_HEVC:
-> @@ -1213,6 +1213,8 @@ static int bufreq_dec(struct hfi_plat_buffers_params *params, u32 buftype,
+>  	pm_runtime_use_autosuspend(&pdev->dev);
+>  	pm_runtime_set_autosuspend_delay(&pdev->dev, 500);
+> -	pm_runtime_enable(&pdev->dev);
+>  
+> -	ret = devm_add_action_or_reset(&pdev->dev, lpass_pm_runtime_disable, &pdev->dev);
+> +	ret = devm_pm_runtime_enable(&pdev->dev);
+>  	if (ret)
+>  		return ret;
+>  
+> -	ret = pm_clk_create(&pdev->dev);
+> -	if (ret)
+> -		return ret;
+> -	ret = devm_add_action_or_reset(&pdev->dev, lpass_pm_clk_destroy, &pdev->dev);
+> +	ret = devm_pm_clk_create(&pdev->dev);
+>  	if (ret)
+>  		return ret;
+>  
+> diff --git a/drivers/clk/qcom/mss-sc7180.c b/drivers/clk/qcom/mss-sc7180.c
+> index 673fa1a4f734..5a1407440662 100644
+> --- a/drivers/clk/qcom/mss-sc7180.c
+> +++ b/drivers/clk/qcom/mss-sc7180.c
+> @@ -73,36 +73,23 @@ static int mss_sc7180_probe(struct platform_device *pdev)
+>  {
+>  	int ret;
+>  
+> -	pm_runtime_enable(&pdev->dev);
+> -	ret = pm_clk_create(&pdev->dev);
+> +	ret = devm_pm_runtime_enable(&pdev->dev);
+>  	if (ret)
+> -		goto disable_pm_runtime;
+> +		return ret;
+> +
+> +	ret = devm_pm_clk_create(&pdev->dev);
+> +	if (ret)
+> +		return ret;
+>  
+>  	ret = pm_clk_add(&pdev->dev, "cfg_ahb");
+>  	if (ret < 0) {
+>  		dev_err(&pdev->dev, "failed to acquire iface clock\n");
+> -		goto destroy_pm_clk;
+> +		return ret;
 >  	}
 >  
->  	out_min_count = output_buffer_count(VIDC_SESSION_TYPE_DEC, codec);
-> +	/* Max of driver and FW count */
-> +	out_min_count = max(out_min_count, bufreq->count_min);
->  
->  	bufreq->type = buftype;
->  	bufreq->region_size = 0;
-> @@ -1237,7 +1239,7 @@ static int bufreq_dec(struct hfi_plat_buffers_params *params, u32 buftype,
->  	} else if (buftype == HFI_BUFFER_INTERNAL_SCRATCH(version)) {
->  		bufreq->size = dec_ops->scratch(width, height, is_interlaced);
->  	} else if (buftype == HFI_BUFFER_INTERNAL_SCRATCH_1(version)) {
-> -		bufreq->size = dec_ops->scratch1(width, height, out_min_count,
-> +		bufreq->size = dec_ops->scratch1(width, height, VB2_MAX_FRAME,
->  						 is_secondary_output,
->  						 num_vpp_pipes);
->  	} else if (buftype == HFI_BUFFER_INTERNAL_PERSIST_1) {
-> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-> index 892be8d..3e91d8c 100644
-> --- a/drivers/media/platform/qcom/venus/vdec.c
-> +++ b/drivers/media/platform/qcom/venus/vdec.c
-> @@ -988,23 +988,23 @@ static int vdec_start_capture(struct venus_inst *inst)
->  	if (ret)
->  		goto err;
->  
-> +	venus_pm_load_scale(inst);
-> +
-> +	inst->next_buf_last = false;
-> +
->  	ret = venus_helper_alloc_dpb_bufs(inst);
->  	if (ret)
->  		goto err;
->  
-> -	ret = venus_helper_queue_dpb_bufs(inst);
-> +	ret = hfi_session_continue(inst);
->  	if (ret)
->  		goto free_dpb_bufs;
->  
-> -	ret = venus_helper_process_initial_cap_bufs(inst);
-> +	ret = venus_helper_queue_dpb_bufs(inst);
->  	if (ret)
->  		goto free_dpb_bufs;
->  
-> -	venus_pm_load_scale(inst);
+>  	ret = qcom_cc_probe(pdev, &mss_sc7180_desc);
+>  	if (ret < 0)
+> -		goto destroy_pm_clk;
 > -
-> -	inst->next_buf_last = false;
+> -	return 0;
 > -
-> -	ret = hfi_session_continue(inst);
-> +	ret = venus_helper_process_initial_cap_bufs(inst);
->  	if (ret)
->  		goto free_dpb_bufs;
+> -destroy_pm_clk:
+> -	pm_clk_destroy(&pdev->dev);
+> -
+> -disable_pm_runtime:
+> -	pm_runtime_disable(&pdev->dev);
+> -
+> -	return ret;
+> -}
+> -
+> -static int mss_sc7180_remove(struct platform_device *pdev)
+> -{
+> -	pm_clk_destroy(&pdev->dev);
+> -	pm_runtime_disable(&pdev->dev);
+> +		return ret;
 >  
-> @@ -1411,6 +1411,11 @@ static void vdec_event_change(struct venus_inst *inst,
->  		inst->crop.height = ev_data->height;
+>  	return 0;
+>  }
+> @@ -119,7 +106,6 @@ MODULE_DEVICE_TABLE(of, mss_sc7180_match_table);
+>  
+>  static struct platform_driver mss_sc7180_driver = {
+>  	.probe		= mss_sc7180_probe,
+> -	.remove		= mss_sc7180_remove,
+>  	.driver		= {
+>  		.name		= "sc7180-mss",
+>  		.of_match_table = mss_sc7180_match_table,
+> diff --git a/drivers/clk/qcom/q6sstop-qcs404.c b/drivers/clk/qcom/q6sstop-qcs404.c
+> index 723f932fbf7d..507386bee07d 100644
+> --- a/drivers/clk/qcom/q6sstop-qcs404.c
+> +++ b/drivers/clk/qcom/q6sstop-qcs404.c
+> @@ -159,15 +159,18 @@ static int q6sstopcc_qcs404_probe(struct platform_device *pdev)
+>  	const struct qcom_cc_desc *desc;
+>  	int ret;
+>  
+> -	pm_runtime_enable(&pdev->dev);
+> -	ret = pm_clk_create(&pdev->dev);
+> +	ret = devm_pm_runtime_enable(&pdev->dev);
+>  	if (ret)
+> -		goto disable_pm_runtime;
+> +		return ret;
+> +
+> +	ret = devm_pm_clk_create(&pdev->dev);
+> +	if (ret)
+> +		return ret;
+>  
+>  	ret = pm_clk_add(&pdev->dev, NULL);
+>  	if (ret < 0) {
+>  		dev_err(&pdev->dev, "failed to acquire iface clock\n");
+> -		goto destroy_pm_clk;
+> +		return ret;
 >  	}
 >  
-> +	inst->fw_min_cnt = ev_data->buf_count;
-> +	//overwriting this to 11 for vp9 due to fw bug
-
-Please use C style for comments
-
-> +	if(inst->hfi_codec == HFI_VIDEO_CODEC_VP9)
-
-Space after if:
-
-if (condition)
-
-> +		inst->fw_min_cnt = 11;
-> +
->  	inst->out_width = ev_data->width;
->  	inst->out_height = ev_data->height;
+>  	q6sstop_regmap_config.name = "q6sstop_tcsr";
+> @@ -175,30 +178,14 @@ static int q6sstopcc_qcs404_probe(struct platform_device *pdev)
 >  
-> @@ -1514,6 +1519,7 @@ static void vdec_inst_init(struct venus_inst *inst)
->  	inst->crop.top = 0;
->  	inst->crop.width = inst->width;
->  	inst->crop.height = inst->height;
-> +	inst->fw_min_cnt = 8;
->  	inst->out_width = frame_width_min(inst);
->  	inst->out_height = frame_height_min(inst);
->  	inst->fps = 30;
+>  	ret = qcom_cc_probe_by_index(pdev, 1, desc);
+>  	if (ret)
+> -		goto destroy_pm_clk;
+> +		return ret;
+>  
+>  	q6sstop_regmap_config.name = "q6sstop_cc";
+>  	desc = &q6sstop_qcs404_desc;
+>  
+>  	ret = qcom_cc_probe_by_index(pdev, 0, desc);
+>  	if (ret)
+> -		goto destroy_pm_clk;
+> -
+> -	return 0;
+> -
+> -destroy_pm_clk:
+> -	pm_clk_destroy(&pdev->dev);
+> -
+> -disable_pm_runtime:
+> -	pm_runtime_disable(&pdev->dev);
+> -
+> -	return ret;
+> -}
+> -
+> -static int q6sstopcc_qcs404_remove(struct platform_device *pdev)
+> -{
+> -	pm_clk_destroy(&pdev->dev);
+> -	pm_runtime_disable(&pdev->dev);
+> +		return ret;
+>  
+>  	return 0;
+>  }
+> @@ -209,7 +196,6 @@ static const struct dev_pm_ops q6sstopcc_pm_ops = {
+>  
+>  static struct platform_driver q6sstopcc_qcs404_driver = {
+>  	.probe		= q6sstopcc_qcs404_probe,
+> -	.remove		= q6sstopcc_qcs404_remove,
+>  	.driver		= {
+>  		.name	= "qcs404-q6sstopcc",
+>  		.of_match_table = q6sstopcc_qcs404_match_table,
+> diff --git a/drivers/clk/qcom/turingcc-qcs404.c b/drivers/clk/qcom/turingcc-qcs404.c
+> index 4cfbbf5bf4d9..4543bda793f4 100644
+> --- a/drivers/clk/qcom/turingcc-qcs404.c
+> +++ b/drivers/clk/qcom/turingcc-qcs404.c
+> @@ -110,36 +110,23 @@ static int turingcc_probe(struct platform_device *pdev)
+>  {
+>  	int ret;
+>  
+> -	pm_runtime_enable(&pdev->dev);
+> -	ret = pm_clk_create(&pdev->dev);
+> +	ret = devm_pm_runtime_enable(&pdev->dev);
+>  	if (ret)
+> -		goto disable_pm_runtime;
+> +		return ret;
+> +
+> +	ret = devm_pm_clk_create(&pdev->dev);
+> +	if (ret)
+> +		return ret;
+>  
+>  	ret = pm_clk_add(&pdev->dev, NULL);
+>  	if (ret < 0) {
+>  		dev_err(&pdev->dev, "failed to acquire iface clock\n");
+> -		goto destroy_pm_clk;
+> +		return ret;
+>  	}
+>  
+>  	ret = qcom_cc_probe(pdev, &turingcc_desc);
+>  	if (ret < 0)
+> -		goto destroy_pm_clk;
+> -
+> -	return 0;
+> -
+> -destroy_pm_clk:
+> -	pm_clk_destroy(&pdev->dev);
+> -
+> -disable_pm_runtime:
+> -	pm_runtime_disable(&pdev->dev);
+> -
+> -	return ret;
+> -}
+> -
+> -static int turingcc_remove(struct platform_device *pdev)
+> -{
+> -	pm_clk_destroy(&pdev->dev);
+> -	pm_runtime_disable(&pdev->dev);
+> +		return ret;
+>  
+>  	return 0;
+>  }
+> @@ -156,7 +143,6 @@ MODULE_DEVICE_TABLE(of, turingcc_match_table);
+>  
+>  static struct platform_driver turingcc_driver = {
+>  	.probe		= turingcc_probe,
+> -	.remove		= turingcc_remove,
+>  	.driver		= {
+>  		.name	= "qcs404-turingcc",
+>  		.of_match_table = turingcc_match_table,
+> -- 
+> 2.30.2
 > 
-
--- 
-regards,
-Stan
