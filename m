@@ -2,205 +2,434 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 442B53D94E9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 20:03:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE8AB3D9517
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 20:15:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229603AbhG1SDT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jul 2021 14:03:19 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:43716 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229565AbhG1SDS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jul 2021 14:03:18 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1627495396; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=n8zu2+yyYfKoRSknIfHiAcFCRFragvnkngkp+ZsvrDo=; b=Kbxd2dWbyO+TBhzGttNxAhLS3wX0uIO6otY9ED8yaTWiJ0AtH4bebrdlKVOSjWPAHdTWjX7w
- CV9sn7c7gAEH3FKwr79qhLY2fx/kFJVQw7VhP4It+t0I0f1b8qSGjVd/UPoUR7hjDDdZsIuX
- MDgSYeUJioRDb4xBbEm/Hp+arKc=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 61019bcf17c2b4047d3fee23 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 28 Jul 2021 18:02:55
- GMT
-Sender: collinsd=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 80A93C433F1; Wed, 28 Jul 2021 18:02:54 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from codeaurora.org (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S229789AbhG1SPJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jul 2021 14:15:09 -0400
+Received: from smtp-out2.suse.de ([195.135.220.29]:56638 "EHLO
+        smtp-out2.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229542AbhG1SPI (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 28 Jul 2021 14:15:08 -0400
+Received: from imap1.suse-dmz.suse.de (imap1.suse-dmz.suse.de [192.168.254.73])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
         (No client certificate requested)
-        (Authenticated sender: collinsd)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0620DC4338A;
-        Wed, 28 Jul 2021 18:02:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0620DC4338A
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=collinsd@codeaurora.org
-From:   David Collins <collinsd@codeaurora.org>
-To:     Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org
-Cc:     David Collins <collinsd@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, Kiran Gunda <kgunda@codeaurora.org>,
-        Anirudh Ghayal <aghayal@codeaurora.org>,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-Subject: [RESEND PATCH] spmi: spmi-pmic-arb: fix irq_set_type race condition
-Date:   Wed, 28 Jul 2021 11:02:09 -0700
-Message-Id: <20210728180209.14764-1-collinsd@codeaurora.org>
-X-Mailer: git-send-email 2.17.1
+        by smtp-out2.suse.de (Postfix) with ESMTPS id 1F0F81FFE5;
+        Wed, 28 Jul 2021 18:15:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1627496106; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=Y28AIFkhWiderK8PJhfuYxgNWDXDJQHw+OqLmv7b+GQ=;
+        b=J46UeUzPBwj4BzWn50sFbARKqoy241eBPIF0+wWnoNNzo/77+2rZb2Ht7DIMKaHOEzO+FB
+        EEjgCqYm//gUa5JRL4ohyj1GQTIToJGE1k0ZwMlwntLd6YM/+URwnUOYjlgoSVIvNNVptg
+        7Mv+l0xMOrHDRqEEtL2lAtE2x1i+j64=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1627496106;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=Y28AIFkhWiderK8PJhfuYxgNWDXDJQHw+OqLmv7b+GQ=;
+        b=WXItOCUJ/Qm+BocjIExYDyVZqeWoV1RtjxLLmFXrw3EV6U4DM0Au3AVWVDaRVjJ6tEKfk2
+        olEOHAielUkMyDAw==
+Received: from imap1.suse-dmz.suse.de (imap1.suse-dmz.suse.de [192.168.254.73])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap1.suse-dmz.suse.de (Postfix) with ESMTPS id 87FA513AAE;
+        Wed, 28 Jul 2021 18:15:05 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap1.suse-dmz.suse.de with ESMTPSA
+        id I1fIH6meAWHNOgAAGKfGzw
+        (envelope-from <tzimmermann@suse.de>); Wed, 28 Jul 2021 18:15:05 +0000
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     daniel@ffwll.ch, airlied@linux.ie, alexander.deucher@amd.com,
+        christian.koenig@amd.com, liviu.dudau@arm.com,
+        brian.starkey@arm.com, bbrezillon@kernel.org,
+        nicolas.ferre@microchip.com, maarten.lankhorst@linux.intel.com,
+        mripard@kernel.org, stefan@agner.ch, alison.wang@nxp.com,
+        patrik.r.jakobsson@gmail.com, anitha.chrisanthus@intel.com,
+        robdclark@gmail.com, edmund.j.dea@intel.com, sean@poorly.run,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
+        jyri.sarha@iki.fi, tomba@kernel.org, amd-gfx@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
+References: <20210727182721.17981-1-tzimmermann@suse.de>
+ <20210727182721.17981-3-tzimmermann@suse.de> <YQFcOU79/lpbt1VW@ravnborg.org>
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+Subject: Re: [PATCH 02/14] drm/arm/hdlcd: Convert to Linux IRQ interfaces
+Message-ID: <0f9569f8-18ce-485b-7d02-62a4bca45a5d@suse.de>
+Date:   Wed, 28 Jul 2021 20:15:04 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
+MIME-Version: 1.0
+In-Reply-To: <YQFcOU79/lpbt1VW@ravnborg.org>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="mFY4koTf4cpSBUbJltMEI2GlIpOaZ1U6l"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The qpnpint_irq_set_type() callback function configures the type
-(edge vs level) and polarity (high, low, or both) of a particular
-PMIC interrupt within a given peripheral.  To do this, it reads
-the three consecutive IRQ configuration registers, modifies the
-specified IRQ bit within the register values, and finally writes
-the three modified register values back to the PMIC.  While a
-spinlock is used to provide mutual exclusion on the SPMI bus
-during the register read and write calls, there is no locking
-around the overall read, modify, write sequence.  This opens up
-the possibility of a race condition if two tasks set the type of
-a PMIC IRQ within the same peripheral simultaneously.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--mFY4koTf4cpSBUbJltMEI2GlIpOaZ1U6l
+Content-Type: multipart/mixed; boundary="IRquQ23pnTk82MxUVYVwIk8gHNTDMLFNo";
+ protected-headers="v1"
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: Sam Ravnborg <sam@ravnborg.org>
+Cc: daniel@ffwll.ch, airlied@linux.ie, alexander.deucher@amd.com,
+ christian.koenig@amd.com, liviu.dudau@arm.com, brian.starkey@arm.com,
+ bbrezillon@kernel.org, nicolas.ferre@microchip.com,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org, stefan@agner.ch,
+ alison.wang@nxp.com, patrik.r.jakobsson@gmail.com,
+ anitha.chrisanthus@intel.com, robdclark@gmail.com, edmund.j.dea@intel.com,
+ sean@poorly.run, shawnguo@kernel.org, s.hauer@pengutronix.de,
+ kernel@pengutronix.de, jyri.sarha@iki.fi, tomba@kernel.org,
+ amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+ linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+ freedreno@lists.freedesktop.org
+Message-ID: <0f9569f8-18ce-485b-7d02-62a4bca45a5d@suse.de>
+Subject: Re: [PATCH 02/14] drm/arm/hdlcd: Convert to Linux IRQ interfaces
+References: <20210727182721.17981-1-tzimmermann@suse.de>
+ <20210727182721.17981-3-tzimmermann@suse.de> <YQFcOU79/lpbt1VW@ravnborg.org>
+In-Reply-To: <YQFcOU79/lpbt1VW@ravnborg.org>
 
-When the race condition is encountered, both tasks will read the
-old value of the registers and IRQ bits set by one of the tasks
-will be dropped upon the register write of the other task.  This
-then leads to PMIC IRQs being enabled with an incorrect type and
-polarity configured.  Such misconfiguration can lead to an IRQ
-storm that overwhelms the system and causes it to crash.
+--IRquQ23pnTk82MxUVYVwIk8gHNTDMLFNo
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-This race condition and IRQ storm have been observed when using
-a pair of pm8941-pwrkey devices to handle PMK8350 pwrkey and
-resin interrupts.  The independent devices probe asynchronously
-in parallel and can simultaneously request and configure PMIC
-IRQs in the same PMIC peripheral.
+Hi Sam
 
-For a good case, the IRQ configuration calls end up serialized
-due to timing deltas and the register read/write sequence looks
-like this:
+Am 28.07.21 um 15:31 schrieb Sam Ravnborg:
+> Hi Thomas,
+>=20
+> On Tue, Jul 27, 2021 at 08:27:09PM +0200, Thomas Zimmermann wrote:
+>> Drop the DRM IRQ midlayer in favor of Linux IRQ interfaces. DRM's
+>> IRQ helpers are mostly useful for UMS drivers. Modern KMS drivers
+>> don't benefit from using it.
+>>
+>> DRM IRQ callbacks are now being called directly or inlined.
+>>
+>> Calls to platform_get_irq() can fail with a negative errno code.
+>> Abort initialization in this case. The DRM IRQ midlayer does not
+>> handle this case correctly.
+>>
+>> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
+>> ---
+>>   drivers/gpu/drm/arm/hdlcd_drv.c | 174 ++++++++++++++++++------------=
+--
+>>   drivers/gpu/drm/arm/hdlcd_drv.h |   1 +
+>>   2 files changed, 97 insertions(+), 78 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/arm/hdlcd_drv.c b/drivers/gpu/drm/arm/hdl=
+cd_drv.c
+>> index 81ae92390736..b9998fe3982f 100644
+>> --- a/drivers/gpu/drm/arm/hdlcd_drv.c
+>> +++ b/drivers/gpu/drm/arm/hdlcd_drv.c
+>> @@ -29,7 +29,6 @@
+>>   #include <drm/drm_fb_helper.h>
+>>   #include <drm/drm_gem_cma_helper.h>
+>>   #include <drm/drm_gem_framebuffer_helper.h>
+>> -#include <drm/drm_irq.h>
+>>   #include <drm/drm_modeset_helper.h>
+>>   #include <drm/drm_of.h>
+>>   #include <drm/drm_probe_helper.h>
+>> @@ -38,6 +37,94 @@
+>>   #include "hdlcd_drv.h"
+>>   #include "hdlcd_regs.h"
+>>  =20
+>> +static irqreturn_t hdlcd_irq(int irq, void *arg)
+>> +{
+>> +	struct drm_device *drm =3D arg;
+>> +	struct hdlcd_drm_private *hdlcd =3D drm->dev_private;
+>> +	unsigned long irq_status;
+>> +
+>> +	irq_status =3D hdlcd_read(hdlcd, HDLCD_REG_INT_STATUS);
+>> +
+>> +#ifdef CONFIG_DEBUG_FS
+>> +	if (irq_status & HDLCD_INTERRUPT_UNDERRUN)
+>> +		atomic_inc(&hdlcd->buffer_underrun_count);
+>> +
+>> +	if (irq_status & HDLCD_INTERRUPT_DMA_END)
+>> +		atomic_inc(&hdlcd->dma_end_count);
+>> +
+>> +	if (irq_status & HDLCD_INTERRUPT_BUS_ERROR)
+>> +		atomic_inc(&hdlcd->bus_error_count);
+>> +
+>> +	if (irq_status & HDLCD_INTERRUPT_VSYNC)
+>> +		atomic_inc(&hdlcd->vsync_count);
+>> +
+>> +#endif
+>> +	if (irq_status & HDLCD_INTERRUPT_VSYNC)
+>> +		drm_crtc_handle_vblank(&hdlcd->crtc);
+>> +
+>> +	/* acknowledge interrupt(s) */
+>> +	hdlcd_write(hdlcd, HDLCD_REG_INT_CLEAR, irq_status);
+>> +
+>> +	return IRQ_HANDLED;
+>> +}
+>> +
+>> +static void hdlcd_irq_preinstall(struct drm_device *drm)
+>> +{
+>> +	struct hdlcd_drm_private *hdlcd =3D drm->dev_private;
+>> +	/* Ensure interrupts are disabled */
+>> +	hdlcd_write(hdlcd, HDLCD_REG_INT_MASK, 0);
+>> +	hdlcd_write(hdlcd, HDLCD_REG_INT_CLEAR, ~0);
+>> +}
+>> +
+>> +static void hdlcd_irq_postinstall(struct drm_device *drm)
+>> +{
+>> +#ifdef CONFIG_DEBUG_FS
+>> +	struct hdlcd_drm_private *hdlcd =3D drm->dev_private;
+>> +	unsigned long irq_mask =3D hdlcd_read(hdlcd, HDLCD_REG_INT_MASK);
+>> +
+>> +	/* enable debug interrupts */
+>> +	irq_mask |=3D HDLCD_DEBUG_INT_MASK;
+>> +
+>> +	hdlcd_write(hdlcd, HDLCD_REG_INT_MASK, irq_mask);
+>> +#endif
+>> +}
+>> +
+>> +static int hdlcd_irq_install(struct drm_device *dev, int irq)
+> It is inconsistent that the drm_device * is named "dev", as similar
+> functions in this patch uses the name "drm".
+>=20
+>> +{
+>> +	int ret;
+>> +
+>> +	if (irq =3D=3D IRQ_NOTCONNECTED)
+>> +		return -ENOTCONN;
+> The code above is almost redundandt as request_irq has the same check.
+> The only benefit of this check is that we avoid calling
+> hdlcd_irq_preinstall().
 
-1. pwrkey probe: SPMI  read(0x1311): 0x00, 0x00, 0x00
-2. pwrkey probe: SPMI write(0x1311): 0x80, 0x80, 0x80
-3. resin probe:  SPMI  read(0x1311): 0x80, 0x80, 0x80
-4. resin probe:  SPMI write(0x1311): 0xC0, 0xC0, 0xC0
+I'd expect that there's a reason that the code is in _preinstall(). So=20
+testing for IRQF_NOTCONNECTED in request_irq() might be too late. I'd=20
+really like to here from driver maintainers that this can be changed.
 
-The final register states after both devices have requested and
-enabled their respective IRQs is thus:
+I agree that the logic is duplicated and the whole thing could be=20
+simpler. But I rather stick with the original logic as used in=20
+drm_irq_install(). That function get's it totally wrong BTW.
 
-0x1311: 0xC0
-0x1312: 0xC0
-0x1313: 0xC0
-0x1314: 0x00
-0x1315: 0xC0
+>=20
+> And IRQ_NOTCONNECTED is only set for PCI devices which this is not.
 
-For a bad case, the IRQ configuration calls end up occurring
-simultaneously and the race condition is encountered.  The
-register read/write sequence then looks like this:
+Is that guaranteed?
 
-1. pwrkey probe: SPMI  read(0x1311): 0x00, 0x00, 0x00
-2. resin probe:  SPMI  read(0x1311): 0x00, 0x00, 0x00
-3. pwrkey probe: SPMI write(0x1311): 0x80, 0x80, 0x80
-4. resin probe:  SPMI write(0x1311): 0x40, 0x40, 0x40
+Best regards
+Thomas
 
-In this case, the final register states after both devices have
-requested and enabled their respective IRQs is thus:
+> So I would thing the if () should be dropped here. ??
+>=20
+> With the inputs considered/addressed:
+> Acked-by: Sam Ravnborg <sam@ravnborg.org>
+>=20
+>=20
+>> +
+>> +	hdlcd_irq_preinstall(dev);
+>> +
+>> +	ret =3D request_irq(irq, hdlcd_irq, 0, dev->driver->name, dev);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	hdlcd_irq_postinstall(dev);
+>> +
+>> +	return 0;
+>> +}
+>> +
+>> +static void hdlcd_irq_uninstall(struct drm_device *drm)
+>> +{
+>> +	struct hdlcd_drm_private *hdlcd =3D drm->dev_private;
+>> +	/* disable all the interrupts that we might have enabled */
+>> +	unsigned long irq_mask =3D hdlcd_read(hdlcd, HDLCD_REG_INT_MASK);
+>> +
+>> +#ifdef CONFIG_DEBUG_FS
+>> +	/* disable debug interrupts */
+>> +	irq_mask &=3D ~HDLCD_DEBUG_INT_MASK;
+>> +#endif
+>> +
+>> +	/* disable vsync interrupts */
+>> +	irq_mask &=3D ~HDLCD_INTERRUPT_VSYNC;
+>> +	hdlcd_write(hdlcd, HDLCD_REG_INT_MASK, irq_mask);
+>> +
+>> +	free_irq(hdlcd->irq, drm);
+>> +}
+>> +
+>>   static int hdlcd_load(struct drm_device *drm, unsigned long flags)
+>>   {
+>>   	struct hdlcd_drm_private *hdlcd =3D drm->dev_private;
+>> @@ -90,7 +177,12 @@ static int hdlcd_load(struct drm_device *drm, unsi=
+gned long flags)
+>>   		goto setup_fail;
+>>   	}
+>>  =20
+>> -	ret =3D drm_irq_install(drm, platform_get_irq(pdev, 0));
+>> +	ret =3D platform_get_irq(pdev, 0);
+>> +	if (ret < 0)
+>> +		goto irq_fail;
+>> +	hdlcd->irq =3D ret;
+>> +
+>> +	ret =3D hdlcd_irq_install(drm, hdlcd->irq);
+>>   	if (ret < 0) {
+>>   		DRM_ERROR("failed to install IRQ handler\n");
+>>   		goto irq_fail;
+>> @@ -122,76 +214,6 @@ static void hdlcd_setup_mode_config(struct drm_de=
+vice *drm)
+>>   	drm->mode_config.funcs =3D &hdlcd_mode_config_funcs;
+>>   }
+>>  =20
+>> -static irqreturn_t hdlcd_irq(int irq, void *arg)
+>> -{
+>> -	struct drm_device *drm =3D arg;
+>> -	struct hdlcd_drm_private *hdlcd =3D drm->dev_private;
+>> -	unsigned long irq_status;
+>> -
+>> -	irq_status =3D hdlcd_read(hdlcd, HDLCD_REG_INT_STATUS);
+>> -
+>> -#ifdef CONFIG_DEBUG_FS
+>> -	if (irq_status & HDLCD_INTERRUPT_UNDERRUN)
+>> -		atomic_inc(&hdlcd->buffer_underrun_count);
+>> -
+>> -	if (irq_status & HDLCD_INTERRUPT_DMA_END)
+>> -		atomic_inc(&hdlcd->dma_end_count);
+>> -
+>> -	if (irq_status & HDLCD_INTERRUPT_BUS_ERROR)
+>> -		atomic_inc(&hdlcd->bus_error_count);
+>> -
+>> -	if (irq_status & HDLCD_INTERRUPT_VSYNC)
+>> -		atomic_inc(&hdlcd->vsync_count);
+>> -
+>> -#endif
+>> -	if (irq_status & HDLCD_INTERRUPT_VSYNC)
+>> -		drm_crtc_handle_vblank(&hdlcd->crtc);
+>> -
+>> -	/* acknowledge interrupt(s) */
+>> -	hdlcd_write(hdlcd, HDLCD_REG_INT_CLEAR, irq_status);
+>> -
+>> -	return IRQ_HANDLED;
+>> -}
+>> -
+>> -static void hdlcd_irq_preinstall(struct drm_device *drm)
+>> -{
+>> -	struct hdlcd_drm_private *hdlcd =3D drm->dev_private;
+>> -	/* Ensure interrupts are disabled */
+>> -	hdlcd_write(hdlcd, HDLCD_REG_INT_MASK, 0);
+>> -	hdlcd_write(hdlcd, HDLCD_REG_INT_CLEAR, ~0);
+>> -}
+>> -
+>> -static int hdlcd_irq_postinstall(struct drm_device *drm)
+>> -{
+>> -#ifdef CONFIG_DEBUG_FS
+>> -	struct hdlcd_drm_private *hdlcd =3D drm->dev_private;
+>> -	unsigned long irq_mask =3D hdlcd_read(hdlcd, HDLCD_REG_INT_MASK);
+>> -
+>> -	/* enable debug interrupts */
+>> -	irq_mask |=3D HDLCD_DEBUG_INT_MASK;
+>> -
+>> -	hdlcd_write(hdlcd, HDLCD_REG_INT_MASK, irq_mask);
+>> -#endif
+>> -	return 0;
+>> -}
+>> -
+>> -static void hdlcd_irq_uninstall(struct drm_device *drm)
+>> -{
+>> -	struct hdlcd_drm_private *hdlcd =3D drm->dev_private;
+>> -	/* disable all the interrupts that we might have enabled */
+>> -	unsigned long irq_mask =3D hdlcd_read(hdlcd, HDLCD_REG_INT_MASK);
+>> -
+>> -#ifdef CONFIG_DEBUG_FS
+>> -	/* disable debug interrupts */
+>> -	irq_mask &=3D ~HDLCD_DEBUG_INT_MASK;
+>> -#endif
+>> -
+>> -	/* disable vsync interrupts */
+>> -	irq_mask &=3D ~HDLCD_INTERRUPT_VSYNC;
+>> -
+>> -	hdlcd_write(hdlcd, HDLCD_REG_INT_MASK, irq_mask);
+>> -}
+>> -
+>>   #ifdef CONFIG_DEBUG_FS
+>>   static int hdlcd_show_underrun_count(struct seq_file *m, void *arg)
+>>   {
+>> @@ -236,10 +258,6 @@ DEFINE_DRM_GEM_CMA_FOPS(fops);
+>>  =20
+>>   static const struct drm_driver hdlcd_driver =3D {
+>>   	.driver_features =3D DRIVER_GEM | DRIVER_MODESET | DRIVER_ATOMIC,
+>> -	.irq_handler =3D hdlcd_irq,
+>> -	.irq_preinstall =3D hdlcd_irq_preinstall,
+>> -	.irq_postinstall =3D hdlcd_irq_postinstall,
+>> -	.irq_uninstall =3D hdlcd_irq_uninstall,
+>>   	DRM_GEM_CMA_DRIVER_OPS,
+>>   #ifdef CONFIG_DEBUG_FS
+>>   	.debugfs_init =3D hdlcd_debugfs_init,
+>> @@ -316,7 +334,7 @@ static int hdlcd_drm_bind(struct device *dev)
+>>   err_unload:
+>>   	of_node_put(hdlcd->crtc.port);
+>>   	hdlcd->crtc.port =3D NULL;
+>> -	drm_irq_uninstall(drm);
+>> +	hdlcd_irq_uninstall(drm);
+>>   	of_reserved_mem_device_release(drm->dev);
+>>   err_free:
+>>   	drm_mode_config_cleanup(drm);
+>> @@ -338,7 +356,7 @@ static void hdlcd_drm_unbind(struct device *dev)
+>>   	hdlcd->crtc.port =3D NULL;
+>>   	pm_runtime_get_sync(dev);
+>>   	drm_atomic_helper_shutdown(drm);
+>> -	drm_irq_uninstall(drm);
+>> +	hdlcd_irq_uninstall(drm);
+>>   	pm_runtime_put(dev);
+>>   	if (pm_runtime_enabled(dev))
+>>   		pm_runtime_disable(dev);
+>> diff --git a/drivers/gpu/drm/arm/hdlcd_drv.h b/drivers/gpu/drm/arm/hdl=
+cd_drv.h
+>> index fd438d177b64..909c39c28487 100644
+>> --- a/drivers/gpu/drm/arm/hdlcd_drv.h
+>> +++ b/drivers/gpu/drm/arm/hdlcd_drv.h
+>> @@ -11,6 +11,7 @@ struct hdlcd_drm_private {
+>>   	struct clk			*clk;
+>>   	struct drm_crtc			crtc;
+>>   	struct drm_plane		*plane;
+>> +	unsigned int			irq;
+>>   #ifdef CONFIG_DEBUG_FS
+>>   	atomic_t buffer_underrun_count;
+>>   	atomic_t bus_error_count;
+>> --=20
+>> 2.32.0
 
-0x1311: 0x40
-0x1312: 0x40
-0x1313: 0x40
-0x1314: 0x00
-0x1315: 0xC0
+--=20
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
+(HRB 36809, AG N=C3=BCrnberg)
+Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
 
-This corresponds to the resin IRQ being configured for both
-rising and falling edges, as expected.  However, the pwrkey IRQ
-is misconfigured as level type with both polarity high and low
-set to disabled.  The PMIC IRQ triggering hardware treats this
-particular register configuration as if level low triggering is
-enabled.
 
-The raw pwrkey IRQ signal is low when the power key is not being
-pressed.  Thus, the pwrkey IRQ begins firing continuously in an
-IRQ storm.
+--IRquQ23pnTk82MxUVYVwIk8gHNTDMLFNo--
 
-Fix the race condition by locking a spinlock for the duration of
-the read, modify, write sequence in the qpnpint_irq_set_type()
-function.
+--mFY4koTf4cpSBUbJltMEI2GlIpOaZ1U6l
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
 
-Fixes: 67b563f1f258 ("spmi: pmic_arb: add support for interrupt handling")
-Signed-off-by: David Collins <collinsd@codeaurora.org>
----
- drivers/spmi/spmi-pmic-arb.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+-----BEGIN PGP SIGNATURE-----
 
-diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
-index bbbd311eda03..379ad6c1c14a 100644
---- a/drivers/spmi/spmi-pmic-arb.c
-+++ b/drivers/spmi/spmi-pmic-arb.c
-@@ -127,6 +127,7 @@ struct apid_data {
-  * @intr:		address of the SPMI interrupt control registers.
-  * @cnfg:		address of the PMIC Arbiter configuration registers.
-  * @lock:		lock to synchronize accesses.
-+ * @irq_lock:		lock to ensure mutual exclusion for IRQ type setting
-  * @channel:		execution environment channel to use for accesses.
-  * @irq:		PMIC ARB interrupt.
-  * @ee:			the current Execution Environment
-@@ -146,6 +147,7 @@ struct spmi_pmic_arb {
- 	void __iomem		*core;
- 	resource_size_t		core_size;
- 	raw_spinlock_t		lock;
-+	raw_spinlock_t		irq_lock;
- 	u8			channel;
- 	int			irq;
- 	u8			ee;
-@@ -600,10 +602,13 @@ static void qpnpint_irq_unmask(struct irq_data *d)
- 
- static int qpnpint_irq_set_type(struct irq_data *d, unsigned int flow_type)
- {
-+	struct spmi_pmic_arb *pmic_arb = irq_data_get_irq_chip_data(d);
- 	struct spmi_pmic_arb_qpnpint_type type;
- 	irq_flow_handler_t flow_handler;
- 	u8 irq = hwirq_to_irq(d->hwirq);
-+	unsigned long flags;
- 
-+	raw_spin_lock_irqsave(&pmic_arb->irq_lock, flags);
- 	qpnpint_spmi_read(d, QPNPINT_REG_SET_TYPE, &type, sizeof(type));
- 
- 	if (flow_type & (IRQF_TRIGGER_RISING | IRQF_TRIGGER_FALLING)) {
-@@ -616,8 +621,10 @@ static int qpnpint_irq_set_type(struct irq_data *d, unsigned int flow_type)
- 		flow_handler = handle_edge_irq;
- 	} else {
- 		if ((flow_type & (IRQF_TRIGGER_HIGH)) &&
--		    (flow_type & (IRQF_TRIGGER_LOW)))
-+		    (flow_type & (IRQF_TRIGGER_LOW))) {
-+			raw_spin_unlock_irqrestore(&pmic_arb->irq_lock, flags);
- 			return -EINVAL;
-+		}
- 
- 		type.type &= ~BIT(irq); /* level trig */
- 		if (flow_type & IRQF_TRIGGER_HIGH)
-@@ -629,6 +636,8 @@ static int qpnpint_irq_set_type(struct irq_data *d, unsigned int flow_type)
- 	}
- 
- 	qpnpint_spmi_write(d, QPNPINT_REG_SET_TYPE, &type, sizeof(type));
-+	raw_spin_unlock_irqrestore(&pmic_arb->irq_lock, flags);
-+
- 	irq_set_handler_locked(d, flow_handler);
- 
- 	return 0;
-@@ -1285,6 +1294,7 @@ static int spmi_pmic_arb_probe(struct platform_device *pdev)
- 
- 	platform_set_drvdata(pdev, ctrl);
- 	raw_spin_lock_init(&pmic_arb->lock);
-+	raw_spin_lock_init(&pmic_arb->irq_lock);
- 
- 	ctrl->cmd = pmic_arb_cmd;
- 	ctrl->read_cmd = pmic_arb_read_cmd;
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmEBnqgFAwAAAAAACgkQlh/E3EQov+BR
+3Q/9H11I+VG2jMIb5wT1Tszl1jbA+a8GQJkMoKvsAWjMwNqID5C0oFOsMEhoVZU6TqI7Nzz5bvcO
+Qeb6LKuJUjAY2zwGkxYmiOxlL6CW1jcqCXoS+BIvqa1dixXuoIkPqQW0/hfFxl9zJil9+m4A3OYH
+ldEDnVnKtQ4SrD4+NrEYFHY3j/OLvfQcUqYyMh61wRII40GGRA91D9cxPFQvMxGkAAqWrPYxzQMS
+fAjgiiXwzrfLGkd3M6ZAwmYzuT1vAwLaaJsQunoib/fZPPDBvj29gl3lh0hfxiSJv7+y4nL9r4bG
+FWAj48lNK5Kv/kVeoAznCl8LfYnabLXDNCkmv9ZNgeQeroph3Kl1aTxpxVTvb8eyRdvoseDxweSb
+csgW0I3Hd4x/PNTZgYk6k3XgcbZn2JfsuHtxVXUQ0ZMwTAPjHHZXglblXm7nAjU7WiUvIQPB7uuw
+WVUQoae15Iwa1PLfmIxqDgiVlbDg7bVRSOuGC/DKU6aWEN7yAGDmNi+/U5trvE2m/57hSUf4SrlN
+83EjcNaG2UMYX9N7q7bFkNiTi3A5brHXQXGzuGuNc2ZreRuw2iJdpjzirJTBkOZrNDzODA0gTbRZ
+3x+4xduPOdjhejEKdBBe6T8bxhhaHM/5fl3fqjlVC4f59ZT7uBDT6fZk7QHQZx4TA4ZC//QyXHGJ
+lrQ=
+=hZt0
+-----END PGP SIGNATURE-----
 
+--mFY4koTf4cpSBUbJltMEI2GlIpOaZ1U6l--
