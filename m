@@ -2,232 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 930313D88B2
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 09:17:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3D363D89D9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 28 Jul 2021 10:36:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234924AbhG1HR5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jul 2021 03:17:57 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:64928 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234056AbhG1HR5 (ORCPT
+        id S235025AbhG1Igu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jul 2021 04:36:50 -0400
+Received: from eu-smtp-delivery-151.mimecast.com ([185.58.86.151]:20020 "EHLO
+        eu-smtp-delivery-151.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S234508AbhG1Igu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jul 2021 03:17:57 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1627456676; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=uTWyTqMs+PRR6Vr7fo7QE9aqKJhA7o/4CIJbMLl7ewQ=; b=xaWwd00xOR3WTwy735j44Fh53J2EtW/ukWMLhy4lcoeg9waiPXDpw8P330wfMyjwI43TkB5z
- X6D7w8s/OVU4CPbq3TmVJSq8/SDK5kRgDEakZ//Mn25hpSmw8MblDtQLHevooNDE/4c8KON1
- 8oDdxvKt/iELyeWjSoyMwQ8BuKE=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 610104a24815712f3a159e69 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 28 Jul 2021 07:17:53
- GMT
-Sender: akhilpo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 194B5C433F1; Wed, 28 Jul 2021 07:17:53 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-3.2 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.105] (unknown [59.89.229.93])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id F0052C433D3;
-        Wed, 28 Jul 2021 07:17:47 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org F0052C433D3
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
-Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: Add gpu support
-To:     Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS 
-        <devicetree@vger.kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        dri-devel@lists.freedesktop.org,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm@vger.kernel.org
-Cc:     Jonathan Marek <jonathan@marek.ca>, linux-kernel@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Andy Gross <agross@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-References: <1627147740-11590-1-git-send-email-akhilpo@codeaurora.org>
- <CAE-0n52mEy1GReYwcVrffT2KOy4EHMHH-RyCJ_mmxhaeXwGdYA@mail.gmail.com>
-From:   Akhil P Oommen <akhilpo@codeaurora.org>
-Message-ID: <e1a28bed-a2a9-2bf2-d0f0-3f608a538f69@codeaurora.org>
-Date:   Wed, 28 Jul 2021 12:47:45 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        Wed, 28 Jul 2021 04:36:50 -0400
+Received: from AcuMS.aculab.com (156.67.243.121 [156.67.243.121]) (Using
+ TLS) by relay.mimecast.com with ESMTP id
+ uk-mta-175-gJF64QSnPY6TlszXg-ZCaA-1; Wed, 28 Jul 2021 09:36:46 +0100
+X-MC-Unique: gJF64QSnPY6TlszXg-ZCaA-1
+Received: from AcuMS.Aculab.com (fd9f:af1c:a25b:0:994c:f5c2:35d6:9b65) by
+ AcuMS.aculab.com (fd9f:af1c:a25b:0:994c:f5c2:35d6:9b65) with Microsoft SMTP
+ Server (TLS) id 15.0.1497.23; Wed, 28 Jul 2021 09:36:44 +0100
+Received: from AcuMS.Aculab.com ([fe80::994c:f5c2:35d6:9b65]) by
+ AcuMS.aculab.com ([fe80::994c:f5c2:35d6:9b65%12]) with mapi id
+ 15.00.1497.023; Wed, 28 Jul 2021 09:36:44 +0100
+From:   David Laight <David.Laight@ACULAB.COM>
+To:     'Geert Uytterhoeven' <geert@linux-m68k.org>,
+        Len Baker <len.baker@gmx.com>
+CC:     Kees Cook <keescook@chromium.org>, Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Santosh Shilimkar <ssantosh@kernel.org>,
+        "linux-hardening@vger.kernel.org" <linux-hardening@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>
+Subject: RE: [PATCH] drivers/soc: Remove all strcpy() uses in favor of
+ strscpy()
+Thread-Topic: [PATCH] drivers/soc: Remove all strcpy() uses in favor of
+ strscpy()
+Thread-Index: AQHXgfS6PeASd7OmzkqPc7xYqoccEatYEvhA
+Date:   Wed, 28 Jul 2021 08:36:44 +0000
+Message-ID: <80f4574c9f6c4c6780735b0fffd83363@AcuMS.aculab.com>
+References: <20210725151434.7122-1-len.baker@gmx.com>
+ <CAMuHMdUdmv+YmdtjGJV2Lp_Rvar4kN4uSgSTYqXX9CtCJ+qoRw@mail.gmail.com>
+In-Reply-To: <CAMuHMdUdmv+YmdtjGJV2Lp_Rvar4kN4uSgSTYqXX9CtCJ+qoRw@mail.gmail.com>
+Accept-Language: en-GB, en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.202.205.107]
 MIME-Version: 1.0
-In-Reply-To: <CAE-0n52mEy1GReYwcVrffT2KOy4EHMHH-RyCJ_mmxhaeXwGdYA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Authentication-Results: relay.mimecast.com;
+        auth=pass smtp.auth=C51A453 smtp.mailfrom=david.laight@aculab.com
+X-Mimecast-Spam-Score: 0
+X-Mimecast-Originator: aculab.com
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: base64
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 7/27/2021 5:46 AM, Stephen Boyd wrote:
-> Quoting Akhil P Oommen (2021-07-24 10:29:00)
->> Add the necessary dt nodes for gpu support in sc7280.
->>
->> Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
->> ---
->> This patch has dependency on the GPUCC bindings patch here:
->> https://patchwork.kernel.org/project/linux-arm-msm/patch/1619519590-3019-4-git-send-email-tdas@codeaurora.org/
-> 
-> To avoid the dependency the plain numbers can be used.
-
-But, won't that reduce readability and make things prone to error? If 
-the other patch doesn't get picked up soon, we should try this option. 
-We like to get this patch merged in v5.15.
-
-> 
->>
->> Changes in v2:
->> - formatting update and removed a duplicate header (Stephan)
->>
->>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 116 +++++++++++++++++++++++++++++++++++
->>   1 file changed, 116 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> index 029723a..524a5e0 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> @@ -585,6 +586,121 @@
->>                          #clock-cells = <1>;
->>                  };
->>
->> +               gpu@3d00000 {
->> +                       compatible = "qcom,adreno-635.0", "qcom,adreno";
->> +                       #stream-id-cells = <16>;
->> +                       reg = <0 0x03d00000 0 0x40000>,
->> +                             <0 0x03d9e000 0 0x1000>,
->> +                             <0 0x03d61000 0 0x800>;
->> +                       reg-names = "kgsl_3d0_reg_memory",
->> +                                   "cx_mem",
->> +                                   "cx_dbgc";
->> +                       interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
->> +                       iommus = <&adreno_smmu 0 0x401>;
->> +                       operating-points-v2 = <&gpu_opp_table>;
->> +                       qcom,gmu = <&gmu>;
->> +                       interconnects = <&gem_noc MASTER_GFX3D 0 &mc_virt SLAVE_EBI1 0>;
->> +                       interconnect-names = "gfx-mem";
->> +
->> +                       gpu_opp_table: opp-table {
->> +                               compatible = "operating-points-v2";
->> +
->> +                               opp-550000000 {
->> +                                       opp-hz = /bits/ 64 <550000000>;
->> +                                       opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
->> +                                       opp-peak-kBps = <6832000>;
->> +                               };
->> +
->> +                               opp-450000000 {
->> +                                       opp-hz = /bits/ 64 <450000000>;
->> +                                       opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
->> +                                       opp-peak-kBps = <4068000>;
->> +                               };
->> +
->> +                               opp-315000000 {
->> +                                       opp-hz = /bits/ 64 <315000000>;
->> +                                       opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
->> +                                       opp-peak-kBps = <1804000>;
->> +                               };
->> +                       };
->> +               };
->> +
->> +               gmu: gmu@3d69000 {
->> +                       compatible="qcom,adreno-gmu-635.0", "qcom,adreno-gmu";
->> +                       reg = <0 0x03d6a000 0 0x34000>,
->> +                               <0 0x3de0000 0 0x10000>,
->> +                               <0 0x0b290000 0 0x10000>;
->> +                       reg-names = "gmu", "rscc", "gmu_pdc";
->> +                       interrupts = <GIC_SPI 304 IRQ_TYPE_LEVEL_HIGH>,
->> +                                       <GIC_SPI 305 IRQ_TYPE_LEVEL_HIGH>;
->> +                       interrupt-names = "hfi", "gmu";
->> +                       clocks = <&gpucc GPU_CC_CX_GMU_CLK>,
->> +                                       <&gpucc GPU_CC_CXO_CLK>,
->> +                                       <&gcc GCC_DDRSS_GPU_AXI_CLK>,
->> +                                       <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
->> +                                       <&gpucc GPU_CC_AHB_CLK>,
->> +                                       <&gpucc GPU_CC_HUB_CX_INT_CLK>,
->> +                                       <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>;
->> +                       clock-names = "gmu",
->> +                                     "cxo",
->> +                                     "axi",
->> +                                     "memnoc",
->> +                                     "ahb",
->> +                                     "hub",
->> +                                     "smmu_vote";
->> +                       power-domains = <&gpucc GPU_CC_CX_GDSC>,
->> +                                       <&gpucc GPU_CC_GX_GDSC>;
->> +                       power-domain-names = "cx",
->> +                                            "gx";
->> +                       iommus = <&adreno_smmu 5 0x400>;
->> +                       operating-points-v2 = <&gmu_opp_table>;
->> +
->> +                       gmu_opp_table: opp-table {
->> +                               compatible = "operating-points-v2";
->> +
->> +                               opp-200000000 {
->> +                                       opp-hz = /bits/ 64 <200000000>;
->> +                                       opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
->> +                               };
->> +                       };
->> +               };
->> +
->> +               adreno_smmu: iommu@3da0000 {
->> +                       compatible = "qcom,sc7280-smmu-500", "qcom,adreno-smmu", "arm,mmu-500";
->> +                       reg = <0 0x03da0000 0 0x20000>;
->> +                       #iommu-cells = <2>;
->> +                       #global-interrupts = <2>;
->> +                       interrupts = <GIC_SPI 673 IRQ_TYPE_LEVEL_HIGH>,
->> +                                       <GIC_SPI 675 IRQ_TYPE_LEVEL_HIGH>,
->> +                                       <GIC_SPI 678 IRQ_TYPE_LEVEL_HIGH>,
->> +                                       <GIC_SPI 679 IRQ_TYPE_LEVEL_HIGH>,
->> +                                       <GIC_SPI 680 IRQ_TYPE_LEVEL_HIGH>,
->> +                                       <GIC_SPI 681 IRQ_TYPE_LEVEL_HIGH>,
->> +                                       <GIC_SPI 682 IRQ_TYPE_LEVEL_HIGH>,
->> +                                       <GIC_SPI 683 IRQ_TYPE_LEVEL_HIGH>,
->> +                                       <GIC_SPI 684 IRQ_TYPE_LEVEL_HIGH>,
->> +                                       <GIC_SPI 685 IRQ_TYPE_LEVEL_HIGH>,
->> +                                       <GIC_SPI 686 IRQ_TYPE_LEVEL_HIGH>,
->> +                                       <GIC_SPI 687 IRQ_TYPE_LEVEL_HIGH>;
->> +
->> +                       clocks = <&gcc GCC_GPU_MEMNOC_GFX_CLK>,
->> +                                       <&gcc GCC_GPU_SNOC_DVM_GFX_CLK>,
->> +                                       <&gpucc GPU_CC_AHB_CLK>,
->> +                                       <&gpucc GPU_CC_HLOS1_VOTE_GPU_SMMU_CLK>,
->> +                                       <&gpucc GPU_CC_CX_GMU_CLK>,
->> +                                       <&gpucc GPU_CC_HUB_CX_INT_CLK>,
->> +                                       <&gpucc GPU_CC_HUB_AON_CLK>;
->> +                       clock-names = "gcc_gpu_memnoc_gfx_clk",
->> +                                       "gcc_gpu_snoc_dvm_gfx_clk",
->> +                                       "gpu_cc_ahb_clk",
->> +                                       "gpu_cc_hlos1_vote_gpu_smmu_clk",
->> +                                       "gpu_cc_cx_gmu_clk",
->> +                                       "gpu_cc_hub_cx_int_clk",
->> +                                       "gpu_cc_hub_aon_clk";
->> +
->> +                       power-domains = <&gpucc GPU_CC_CX_GDSC>;
->> +               };
->> +
->>                  lpass_ag_noc: interconnect@3c40000 {
-> 
-> This node is 3c40000 and the one above is 3da0000. 3c comes before 3d.
-> Please order nodes properly.
-
-Yeah, I messed up the order at a couple of places. Will fix.
-
--Akhil.
-> 
->>                          reg = <0 0x03c40000 0 0xf080>;
->>                          compatible = "qcom,sc7280-lpass-ag-noc";
+RnJvbTogR2VlcnQgVXl0dGVyaG9ldmVuDQo+IFNlbnQ6IDI2IEp1bHkgMjAyMSAwOTowMw0KPiAN
+Cj4gSGkgTGVuLA0KPiANCj4gT24gU3VuLCBKdWwgMjUsIDIwMjEgYXQgNToxNSBQTSBMZW4gQmFr
+ZXIgPGxlbi5iYWtlckBnbXguY29tPiB3cm90ZToNCj4gPiBzdHJjcHkoKSBwZXJmb3JtcyBubyBi
+b3VuZHMgY2hlY2tpbmcgb24gdGhlIGRlc3RpbmF0aW9uIGJ1ZmZlci4gVGhpcw0KPiA+IGNvdWxk
+IHJlc3VsdCBpbiBsaW5lYXIgb3ZlcmZsb3dzIGJleW9uZCB0aGUgZW5kIG9mIHRoZSBidWZmZXIs
+IGxlYWRpbmcNCj4gPiB0byBhbGwga2luZHMgb2YgbWlzYmVoYXZpb3JzLiBUaGUgc2FmZSByZXBs
+YWNlbWVudCBpcyBzdHJzY3B5KCkuDQo+ID4NCj4gPiBTaWduZWQtb2ZmLWJ5OiBMZW4gQmFrZXIg
+PGxlbi5iYWtlckBnbXguY29tPg0KPiANCj4gVGhhbmtzIGZvciB5b3VyIHBhdGNoIQ0KPiANCj4g
+PiAtLS0NCj4gPiBUaGlzIGlzIGEgdGFzayBvZiB0aGUgS1NQUCBbMV0NCj4gPg0KPiA+IFsxXSBo
+dHRwczovL2dpdGh1Yi5jb20vS1NQUC9saW51eC9pc3N1ZXMvODgNCj4gDQo+IEFueSBjaGFuY2Ug
+dGhlIGFsbW9zdCBvbmUgeWVhciBvbGQgcXVlc3Rpb24gaW4gdGhhdCB0aWNrZXQgY2FuIGJlDQo+
+IGFuc3dlcmVkPw0KPiANCj4gPiAgZHJpdmVycy9zb2MvcmVuZXNhcy9yY2FyLXN5c2MuYyAgICAg
+fCAgNiArKysrLS0NCj4gDQo+IFJldmlld2VkLWJ5OiBHZWVydCBVeXR0ZXJob2V2ZW4gPGdlZXJ0
+K3JlbmVzYXNAZ2xpZGVyLmJlPg0KPiANCj4gQnV0IHBsZWFzZSBzZWUgbXkgY29tbWVudHMgYmVs
+b3cuLi4NCj4gDQo+ID4gLS0tIGEvZHJpdmVycy9zb2MvcmVuZXNhcy9yOGE3NzlhMC1zeXNjLmMN
+Cj4gPiArKysgYi9kcml2ZXJzL3NvYy9yZW5lc2FzL3I4YTc3OWEwLXN5c2MuYw0KPiA+IEBAIC00
+MDQsMTkgKzQwNCwyMSBAQCBzdGF0aWMgaW50IF9faW5pdCByOGE3NzlhMF9zeXNjX3BkX2luaXQo
+dm9pZCkNCj4gPiAgICAgICAgIGZvciAoaSA9IDA7IGkgPCBpbmZvLT5udW1fYXJlYXM7IGkrKykg
+ew0KPiA+ICAgICAgICAgICAgICAgICBjb25zdCBzdHJ1Y3QgcjhhNzc5YTBfc3lzY19hcmVhICph
+cmVhID0gJmluZm8tPmFyZWFzW2ldOw0KPiA+ICAgICAgICAgICAgICAgICBzdHJ1Y3QgcjhhNzc5
+YTBfc3lzY19wZCAqcGQ7DQo+ID4gKyAgICAgICAgICAgICAgIHNpemVfdCBhcmVhX25hbWVfc2l6
+ZTsNCj4gDQo+IEkgd291bGRuJ3QgbWluZCBhIHNob3J0ZXIgbmFtZSwgbGlrZSAibiIuDQo+IA0K
+PiA+DQo+ID4gICAgICAgICAgICAgICAgIGlmICghYXJlYS0+bmFtZSkgew0KPiA+ICAgICAgICAg
+ICAgICAgICAgICAgICAgIC8qIFNraXAgTlVMTGlmaWVkIGFyZWEgKi8NCj4gPiAgICAgICAgICAg
+ICAgICAgICAgICAgICBjb250aW51ZTsNCj4gPiAgICAgICAgICAgICAgICAgfQ0KPiA+DQo+ID4g
+LSAgICAgICAgICAgICAgIHBkID0ga3phbGxvYyhzaXplb2YoKnBkKSArIHN0cmxlbihhcmVhLT5u
+YW1lKSArIDEsIEdGUF9LRVJORUwpOw0KPiA+ICsgICAgICAgICAgICAgICBhcmVhX25hbWVfc2l6
+ZSA9IHN0cmxlbihhcmVhLT5uYW1lKSArIDE7DQo+ID4gKyAgICAgICAgICAgICAgIHBkID0ga3ph
+bGxvYyhzaXplb2YoKnBkKSArIGFyZWFfbmFtZV9zaXplLCBHRlBfS0VSTkVMKTsNCj4gPiAgICAg
+ICAgICAgICAgICAgaWYgKCFwZCkgew0KPiA+ICAgICAgICAgICAgICAgICAgICAgICAgIGVycm9y
+ID0gLUVOT01FTTsNCj4gPiAgICAgICAgICAgICAgICAgICAgICAgICBnb3RvIG91dF9wdXQ7DQo+
+ID4gICAgICAgICAgICAgICAgIH0NCj4gPg0KPiA+IC0gICAgICAgICAgICAgICBzdHJjcHkocGQt
+Pm5hbWUsIGFyZWEtPm5hbWUpOw0KPiA+ICsgICAgICAgICAgICAgICBzdHJzY3B5KHBkLT5uYW1l
+LCBhcmVhLT5uYW1lLCBhcmVhX25hbWVfc2l6ZSk7DQoNCllvdSBjYW4ganVzdCB1c2UgbWVtY3B5
+KCkuDQoNCglEYXZpZA0KDQotDQpSZWdpc3RlcmVkIEFkZHJlc3MgTGFrZXNpZGUsIEJyYW1sZXkg
+Um9hZCwgTW91bnQgRmFybSwgTWlsdG9uIEtleW5lcywgTUsxIDFQVCwgVUsNClJlZ2lzdHJhdGlv
+biBObzogMTM5NzM4NiAoV2FsZXMpDQo=
 
