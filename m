@@ -2,149 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BA5243DAEBD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 00:15:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C8B463DAEC9
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 00:25:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230039AbhG2WPT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jul 2021 18:15:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33174 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234268AbhG2WPS (ORCPT
+        id S229707AbhG2WZr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jul 2021 18:25:47 -0400
+Received: from mail-il1-f169.google.com ([209.85.166.169]:43547 "EHLO
+        mail-il1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229510AbhG2WZq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jul 2021 18:15:18 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9397BC0613C1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jul 2021 15:15:12 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id g13so13708026lfj.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jul 2021 15:15:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=cMLNPPri6qLYLmbcVjGDPuvyqtHljwKPt/Kw2945Q8E=;
-        b=gPVrciZQ0H8OrEVgkRGpPXwmnlXGi7IWOCVNplY7URViIvt6MrB0kGudrK2Rk5TNc+
-         ZcVQyfxpcAPc3nx1OlPimwZBQanmsrWD3TCAbWJ8wtmeenHGiR60rDWiJbOFqpe9RAGd
-         XhUvkfca3FOIF/QVPFCHWWoboKq82Y6QK36tVzauhDzGBIHYR5G3StQ8DKjg3gOmkyn1
-         0dYct0XQJQbYA2J0BgabP/EmLcqPIJ2An8UQX/AU/IIblCqcNCFfiBQwbELmzU1kMbey
-         480no7OxS/qbxI1QyNSwu85Z6VZ99JWTdQJhnZ4Vg0ITHvnf0dVnWo+TlwyhapRvLmFN
-         UhQg==
+        Thu, 29 Jul 2021 18:25:46 -0400
+Received: by mail-il1-f169.google.com with SMTP id x7so4118132ilh.10;
+        Thu, 29 Jul 2021 15:25:43 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=cMLNPPri6qLYLmbcVjGDPuvyqtHljwKPt/Kw2945Q8E=;
-        b=tKW3GOda8kwEQ7vCs2382ZAIEIIg+egMk2vF+p7F0cu4hu5qP6tgjTr2a25AYaOFNz
-         FmjmsjoMBiaCCFL5wkPpfedqb6fFVgbxCQIRV2YLxlnb1XslE8O6GDQYVaI3yamYC8Y0
-         tdYpLVN081HOuM6IIyhwryyQf1LPbfuFxLtbfSK3ATFyjKBVCYhYPQUnrykWI/R7Gbuw
-         3D9ZfTMiW0/6H5iADiiBagVqXsmnqIf1sQNvclhsUyPoamu1SZ8UolFngLecetGIcHvq
-         wGnbWBARdNrozE/YCDHi1M2IHe3hun9bTJVWh69i67RJDGtf1faVk1lg4IIZh1k1wjLI
-         3c1Q==
-X-Gm-Message-State: AOAM530wrkwwApERtP4sG9VPcydml7xl79rRwUQPjMcojkRVwJ2BXAqx
-        ++0oq8nt4xFWlXDsGUv7OK2VBg==
-X-Google-Smtp-Source: ABdhPJxntgaYB/1tvYMlU6ktcdkPNVEahQjjruAi4HU1XiR/oTZsvA4LvveewHUduXk6h9s+8nKR3g==
-X-Received: by 2002:a05:6512:118c:: with SMTP id g12mr4806358lfr.143.1627596910850;
-        Thu, 29 Jul 2021 15:15:10 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id j14sm455041lfc.20.2021.07.29.15.15.10
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Jul 2021 15:15:10 -0700 (PDT)
-Subject: Re: [PATCH 06/11] drm/msm/disp/dpu1: Add DSC support in hw_ctl
-To:     Vinod Koul <vkoul@kernel.org>, Rob Clark <robdclark@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20210715065203.709914-1-vkoul@kernel.org>
- <20210715065203.709914-7-vkoul@kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <79e693c8-ff9c-d4a8-d4a8-8a1f075f77c7@linaro.org>
-Date:   Fri, 30 Jul 2021 01:15:09 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=/aC99Iu0Lbk5aCpNG1EP7BkY/PlQCFTDv6tZFmoT4to=;
+        b=taflZroEbgqdCNt6u3acyu6z47k5u6MWJYOlmOxrbIly3JtJy3g5UUlHpiqJLl6W53
+         bh8yYTLGg9Hncb3ny5Fko1jbLLv7z23q8AGtOI+K+cXdJ/UHOAkFUduVwTwu/ct2Vjy/
+         8hhhPM7kT6faRNq3v8iARpZwkuyLgtWafFC+oD/J8032kqx5aYKcuBCoxjuz7Qh3M7AN
+         i6j2wOs58vzeRXTLJO638xHgL0qhiyYuhD/KjURsXtaLetFFlFhTXLyV9g2U8EiML8BT
+         +X6XG3Sv4iQat/LhcKG9MZz4ufEv9DYxGdHQqM5JZsYHzQVu4ESxlDUx7fo3hgurgtYg
+         HgSQ==
+X-Gm-Message-State: AOAM532vPdinbhOGTjujgquReyVMYDupPvy2RnU9bdKcC/zbpOGtjiOH
+        t91D46zS+Y6w0GVdnXRSyw==
+X-Google-Smtp-Source: ABdhPJygF+DGb0ov5OEhfhmd/o0r6FJ5+aiZ3DxlC6htdV2NzPesAASgz05K1tfkyG0Y7Y+lZrWTiw==
+X-Received: by 2002:a05:6e02:190e:: with SMTP id w14mr5049395ilu.61.1627597542869;
+        Thu, 29 Jul 2021 15:25:42 -0700 (PDT)
+Received: from robh.at.kernel.org ([64.188.179.248])
+        by smtp.gmail.com with ESMTPSA id h24sm3240751ioj.32.2021.07.29.15.25.41
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Jul 2021 15:25:42 -0700 (PDT)
+Received: (nullmailer pid 1013223 invoked by uid 1000);
+        Thu, 29 Jul 2021 22:25:40 -0000
+Date:   Thu, 29 Jul 2021 16:25:40 -0600
+From:   Rob Herring <robh@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Bjorn Helgaas <bhelgaas@google.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] PCI: qcom: Introduce enable/disable resource ops
+Message-ID: <YQMq5OsmskE64w0i@robh.at.kernel.org>
+References: <20210725040038.3966348-1-bjorn.andersson@linaro.org>
+ <20210725040038.3966348-2-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <20210715065203.709914-7-vkoul@kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210725040038.3966348-2-bjorn.andersson@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 15/07/2021 09:51, Vinod Koul wrote:
-> Later gens of hardware have DSC bits moved to hw_ctl, so configure these
-> bits so that DSC would work there as well
+On Sat, Jul 24, 2021 at 09:00:36PM -0700, Bjorn Andersson wrote:
+> The current model of doing resource enablement and controller
+> initialization in a single "init" function invoked after
+> dw_pcie_host_init() is invoked might result in clocks not being enabled
+> at the time the "msi" interrupt fires.
+
+This seems like working around DWC ops...
+
+> One such case happens reliably on the SC8180x (8cx) Snapdragon laptops,
+> where it's seems like the bootloader touches PCIe and leaves things in a
+> state that the "msi" interrupt will fire before we have a change to
+
+s/change/chance/
+
+> enable the clocks, resulting in an access of unclocked hardware.
+
+How does the MSI fire without the clocks or a link? Can't you quiesce 
+things?
+
+> Introduce a two new callbacks, allowing the individual resource handling
+> functions to be split between enable/init and deinit/disable.
 > 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> Helper functions for enable, disable and deinit are introduced to handle
+> the fact that these functions may now be left without implementation.
+> init is given a wrapper for symmetry.
+
+I think you can simply flip the order the MSI init and host_init() in 
+dw_pcie_host_init().
+
+In general, I want to move some of the resource setup (clks, phys, 
+perst#, etc.) into the DWC core and make the DWC ops more specific in 
+what they do and touch. That should simplify at least the simple cases. 
+For Qcom, maybe some of the ops can be moved to new DWC ops.
+
+Rob
+
+
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > ---
->   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 7 ++++++-
->   1 file changed, 6 insertions(+), 1 deletion(-)
+>  drivers/pci/controller/dwc/pcie-qcom.c | 42 +++++++++++++++++++++++---
+>  1 file changed, 38 insertions(+), 4 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> index 2d4645e01ebf..aeea6add61ee 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> @@ -25,6 +25,8 @@
->   #define   CTL_MERGE_3D_ACTIVE           0x0E4
->   #define   CTL_INTF_ACTIVE               0x0F4
->   #define   CTL_MERGE_3D_FLUSH            0x100
-> +#define   CTL_DSC_ACTIVE                0x0E8
-> +#define   CTL_DSC_FLUSH                0x104
->   #define   CTL_INTF_FLUSH                0x110
->   #define   CTL_INTF_MASTER               0x134
->   #define   CTL_FETCH_PIPE_ACTIVE         0x0FC
-> @@ -34,6 +36,7 @@
->   
->   #define DPU_REG_RESET_TIMEOUT_US        2000
->   #define  MERGE_3D_IDX   23
-> +#define  DSC_IDX        22
->   #define  INTF_IDX       31
->   #define CTL_INVALID_BIT                 0xffff
->   
-> @@ -120,6 +123,7 @@ static u32 dpu_hw_ctl_get_pending_flush(struct dpu_hw_ctl *ctx)
->   
->   static inline void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
->   {
-> +	DPU_REG_WRITE(&ctx->hw, CTL_DSC_FLUSH, BIT(0) | BIT(1) | BIT(2) | BIT(3));
-
-Please pass DSC indices using intf cfg and use them to configure 
-register writes.
-
->   
->   	if (ctx->pending_flush_mask & BIT(MERGE_3D_IDX))
->   		DPU_REG_WRITE(&ctx->hw, CTL_MERGE_3D_FLUSH,
-> @@ -128,7 +132,7 @@ static inline void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
->   		DPU_REG_WRITE(&ctx->hw, CTL_INTF_FLUSH,
->   				ctx->pending_intf_flush_mask);
->   
-> -	DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, ctx->pending_flush_mask);
-> +	DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, ctx->pending_flush_mask |  BIT(DSC_IDX));
-
-Only if DSCs are used
-
->   }
->   
->   static inline void dpu_hw_ctl_trigger_flush(struct dpu_hw_ctl *ctx)
-> @@ -507,6 +511,7 @@ static void dpu_hw_ctl_intf_cfg_v1(struct dpu_hw_ctl *ctx,
->   	if (cfg->merge_3d)
->   		DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
->   			      BIT(cfg->merge_3d - MERGE_3D_0));
-> +	DPU_REG_WRITE(c, CTL_DSC_ACTIVE, BIT(0) | BIT(1) | BIT(2) | BIT(3));
-
-And here
-
->   }
->   
->   static void dpu_hw_ctl_intf_cfg(struct dpu_hw_ctl *ctx,
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 8a7a300163e5..8a64a126de2b 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -181,9 +181,11 @@ struct qcom_pcie;
+>  
+>  struct qcom_pcie_ops {
+>  	int (*get_resources)(struct qcom_pcie *pcie);
+> +	int (*enable_resources)(struct qcom_pcie *pcie);
+>  	int (*init)(struct qcom_pcie *pcie);
+>  	int (*post_init)(struct qcom_pcie *pcie);
+>  	void (*deinit)(struct qcom_pcie *pcie);
+> +	void (*disable_resources)(struct qcom_pcie *pcie);
+>  	void (*post_deinit)(struct qcom_pcie *pcie);
+>  	void (*ltssm_enable)(struct qcom_pcie *pcie);
+>  	int (*config_sid)(struct qcom_pcie *pcie);
+> @@ -1345,6 +1347,31 @@ static int qcom_pcie_config_sid_sm8250(struct qcom_pcie *pcie)
+>  	return 0;
+>  }
+>  
+> +static int qcom_pcie_enable_resources(struct qcom_pcie *pcie)
+> +{
+> +	if (pcie->ops->enable_resources)
+> +		return pcie->ops->enable_resources(pcie);
+> +
+> +	return 0;
+> +}
+> +
+> +static int qcom_pcie_init(struct qcom_pcie *pcie)
+> +{
+> +	return pcie->ops->init(pcie);
+> +}
+> +
+> +static void qcom_pcie_deinit(struct qcom_pcie *pcie)
+> +{
+> +	if (pcie->ops->deinit)
+> +		pcie->ops->deinit(pcie);
+> +}
+> +
+> +static void qcom_pcie_disable_resources(struct qcom_pcie *pcie)
+> +{
+> +	if (pcie->ops->disable_resources)
+> +		pcie->ops->disable_resources(pcie);
+> +}
+> +
+>  static int qcom_pcie_host_init(struct pcie_port *pp)
+>  {
+>  	struct dw_pcie *pci = to_dw_pcie_from_pp(pp);
+> @@ -1353,7 +1380,7 @@ static int qcom_pcie_host_init(struct pcie_port *pp)
+>  
+>  	qcom_ep_reset_assert(pcie);
+>  
+> -	ret = pcie->ops->init(pcie);
+> +	ret = qcom_pcie_init(pcie);
+>  	if (ret)
+>  		return ret;
+>  
+> @@ -1384,7 +1411,7 @@ static int qcom_pcie_host_init(struct pcie_port *pp)
+>  err_disable_phy:
+>  	phy_power_off(pcie->phy);
+>  err_deinit:
+> -	pcie->ops->deinit(pcie);
+> +	qcom_pcie_deinit(pcie);
+>  
+>  	return ret;
+>  }
+> @@ -1520,10 +1547,14 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  
+>  	pp->ops = &qcom_pcie_dw_ops;
+>  
+> +	ret = qcom_pcie_enable_resources(pcie);
+> +	if (ret)
+> +		goto err_pm_runtime_put;
+> +
+>  	ret = phy_init(pcie->phy);
+>  	if (ret) {
+>  		pm_runtime_disable(&pdev->dev);
+> -		goto err_pm_runtime_put;
+> +		goto err_disable_resources;
+>  	}
+>  
+>  	platform_set_drvdata(pdev, pcie);
+> @@ -1532,11 +1563,14 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  	if (ret) {
+>  		dev_err(dev, "cannot initialize host\n");
+>  		pm_runtime_disable(&pdev->dev);
+> -		goto err_pm_runtime_put;
+> +		goto err_disable_resources;
+>  	}
+>  
+>  	return 0;
+>  
+> +err_disable_resources:
+> +	qcom_pcie_disable_resources(pcie);
+> +
+>  err_pm_runtime_put:
+>  	pm_runtime_put(dev);
+>  	pm_runtime_disable(dev);
+> -- 
+> 2.29.2
 > 
-
-
--- 
-With best wishes
-Dmitry
+> 
