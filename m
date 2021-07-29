@@ -2,84 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BA3D83D9A0C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 02:18:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1B9923D9A1E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 02:35:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232890AbhG2ASO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 28 Jul 2021 20:18:14 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:17068 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232942AbhG2ASM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 28 Jul 2021 20:18:12 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1627517890; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=/kFc7Dc9L1APxeMW2zY4rfL2AWuj8nO1Fm7wZoTDa8g=; b=H/0PIaXe4V0jl0rMM+MKxauH7dM8YI75z71BRci6W6mr03PMMhQ6qk//iiIyOobnhoWw5F1a
- DaD7f+vrDHJpoMVmZxVWPjcdyv+mLxTf87C7ALs0gVm4B8YJ7m2C5ng8D+nnrMATj5Iq++2k
- 1xEAUUcbJDUnTcLfD5YzNE7W1sk=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 6101f3b017c2b4047dd527e0 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 29 Jul 2021 00:17:52
- GMT
-Sender: bbhatt=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4996EC43217; Thu, 29 Jul 2021 00:17:51 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: bbhatt)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 006D2C43145;
-        Thu, 29 Jul 2021 00:17:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 006D2C43145
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=bbhatt@codeaurora.org
-From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
-To:     manivannan.sadhasivam@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        linux-kernel@vger.kernel.org, loic.poulain@linaro.org,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>
-Subject: [PATCH v2 2/2] bus: mhi: core: Depict serial number in hexadecimals
-Date:   Wed, 28 Jul 2021 17:17:40 -0700
-Message-Id: <1627517860-39417-3-git-send-email-bbhatt@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1627517860-39417-1-git-send-email-bbhatt@codeaurora.org>
-References: <1627517860-39417-1-git-send-email-bbhatt@codeaurora.org>
+        id S232837AbhG2Afr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 28 Jul 2021 20:35:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36502 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232727AbhG2Afq (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 28 Jul 2021 20:35:46 -0400
+Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 603ACC061757
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 17:35:44 -0700 (PDT)
+Received: by mail-wm1-x332.google.com with SMTP id d131-20020a1c1d890000b02902516717f562so2816692wmd.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 28 Jul 2021 17:35:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=A91VsRhxCCDIXtkfswtebSEJGkGdWMGW8PkmZnFfEqA=;
+        b=SvncO4Q5IeNq+bdgnrabIUmkNm8M0cS+oXjh52oWxM6ucE1MgJgrpPpRzS6DfOWLhK
+         +UMuvIZp8L1pAIpoWX3lcrSdQL7TGpie938D0Kjg2uk3YBltmP4EnEYvWXhbAuFEPL90
+         UW28LH6i40CmJ1nj7nzsyo6pVgJ8l0Qwtb/R5I8vJ76DZy/cHvkZaTFRtcC5636j+ZF/
+         kyn5krxJNmHzfoFc8O7PcVLenwCgWvpQc5f3dTWnZZb9M5FjqsK/ULvV/X8lxOSI0Uwa
+         +7yWsSJwVSQ/WxXuBuD7EXFCFbHWsUWPYRXVsV4g4XnygTCYCMq2uGgRLMG4JtxaErII
+         ysDQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=A91VsRhxCCDIXtkfswtebSEJGkGdWMGW8PkmZnFfEqA=;
+        b=LeEPOg5/4RF1XlgHOL3jzaZhJwbFRDL26F3n1Lng4ZvUAws8tOgbAeFMGCy9b8pLQ1
+         TXDZt570cHHDeX22Qy+16BB5MRcFge4+PKSs0wjPYXJ85To38zE61m4+qi95ZSFx5OJR
+         3nr0u5uY85BknneU8waTsqZZfXkU98kYPHhJvk23SnH4kEJLENbWqzjjtMfRDFxYbi/1
+         fbI9PcvM2pgE/5PyQ0lnchgq7hmOMR8dCQFb13dG7VXc6dB/Lh6n6DfTdug8T7kWXD64
+         wf5cN9s06AfnXPJA7Pl2IfP0dtzhG2v7K+beL8p7lsxQ7DYFbWop+KVAO8nv7IxZz16o
+         f8OA==
+X-Gm-Message-State: AOAM532+91ewgH0VRDAnB807szA6+o5hk+GwviJPFwMHBo4nlRU0qClQ
+        TQsANpnLiCddDbzlRx/5gBLKGg==
+X-Google-Smtp-Source: ABdhPJxNnhr67/krO6Od73KqvFm2SWsrllggrEWrmt1dtZmyIJrwfJHmKsNApbDqElBq2VnfEKWdXw==
+X-Received: by 2002:a1c:f40a:: with SMTP id z10mr2073824wma.119.1627518942865;
+        Wed, 28 Jul 2021 17:35:42 -0700 (PDT)
+Received: from [192.168.1.12] (host-80-41-121-59.as13285.net. [80.41.121.59])
+        by smtp.gmail.com with ESMTPSA id p5sm1628396wrd.25.2021.07.28.17.35.41
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 28 Jul 2021 17:35:42 -0700 (PDT)
+Subject: Re: [early pull] drm/msm: drm-msm-next-2021-07-28 for v5.15
+To:     Rob Clark <robdclark@gmail.com>, Dave Airlie <airlied@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <SKuAxGshCZFzlguCiEJOU0kAFCJ9WDGK_qCmPESnrghqei0-VIp4DD5vL58OEJCq2B-AkvF1az0EedzkGjSNLQ==@protonmail.internalid>
+ <CAF6AEGumRk7H88bqV=H9Fb1SM0zPBo5B7NsCU3jFFKBYxf5k+Q@mail.gmail.com>
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+Message-ID: <7553f3cd-61c8-3ece-14ec-6c0cf4ae0296@linaro.org>
+Date:   Thu, 29 Jul 2021 01:35:41 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <CAF6AEGumRk7H88bqV=H9Fb1SM0zPBo5B7NsCU3jFFKBYxf5k+Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In order to better reflect usage of serial number, it is prudent
-to depict it in hexadecimals.
+Hi Rob,
 
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/bus/mhi/core/init.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+This series causes a fatal crash on my Oneplus 6, the device goes to 
+Qualcomm crashdump mode shortly after reaching UI with the following errors:
 
-diff --git a/drivers/bus/mhi/core/init.c b/drivers/bus/mhi/core/init.c
-index d98a14b..7ea1f01 100644
---- a/drivers/bus/mhi/core/init.c
-+++ b/drivers/bus/mhi/core/init.c
-@@ -94,7 +94,7 @@ static ssize_t serial_number_show(struct device *dev,
- 	struct mhi_device *mhi_dev = to_mhi_device(dev);
- 	struct mhi_controller *mhi_cntrl = mhi_dev->mhi_cntrl;
- 
--	return snprintf(buf, PAGE_SIZE, "Serial Number: %u\n",
-+	return snprintf(buf, PAGE_SIZE, "Serial Number: 0x%x\n",
- 			mhi_cntrl->serial_number);
- }
- static DEVICE_ATTR_RO(serial_number);
+https://paste.ubuntu.com/p/HvjmzZYtgw/
+
+I did a git bisect and the patch ("drm/msm: Devfreq tuning") seems to be 
+the cause of the crash, reverting it resolves the issue.
+
+
+On 28/07/2021 21:52, Rob Clark wrote:
+> Hi Dave & Daniel,
+> 
+> An early pull for v5.15 (there'll be more coming in a week or two),
+> consisting of the drm/scheduler conversion and a couple other small
+> series that one was based one.  Mostly sending this now because IIUC
+> danvet wanted it in drm-next so he could rebase on it.  (Daniel, if
+> you disagree then speak up, and I'll instead include this in the main
+> pull request once that is ready.)
+> 
+> This also has a core patch to drop drm_gem_object_put_locked() now
+> that the last use of it is removed.
+> 
+> The following changes since commit ff1176468d368232b684f75e82563369208bc371:
+> 
+>    Linux 5.14-rc3 (2021-07-25 15:35:14 -0700)
+> 
+> are available in the Git repository at:
+> 
+>    https://gitlab.freedesktop.org/drm/msm.git drm-msm-next-2021-07-28
+> 
+> for you to fetch changes up to 4541e4f2225c30b0e9442be9eb2fb8b7086cdd1f:
+> 
+>    drm/msm/gem: Mark active before pinning (2021-07-28 09:19:00 -0700)
+> 
+> ----------------------------------------------------------------
+> Rob Clark (18):
+>        drm/msm: Let fences read directly from memptrs
+>        drm/msm: Signal fences sooner
+>        drm/msm: Split out devfreq handling
+>        drm/msm: Split out get_freq() helper
+>        drm/msm: Devfreq tuning
+>        drm/msm: Docs and misc cleanup
+>        drm/msm: Small submitqueue creation cleanup
+>        drm/msm: drop drm_gem_object_put_locked()
+>        drm: Drop drm_gem_object_put_locked()
+>        drm/msm/submit: Simplify out-fence-fd handling
+>        drm/msm: Consolidate submit bo state
+>        drm/msm: Track "seqno" fences by idr
+>        drm/msm: Return ERR_PTR() from submit_create()
+>        drm/msm: Conversion to drm scheduler
+>        drm/msm: Drop submit bo_list
+>        drm/msm: Drop struct_mutex in submit path
+>        drm/msm: Utilize gpu scheduler priorities
+>        drm/msm/gem: Mark active before pinning
+> 
+>   drivers/gpu/drm/drm_gem.c                   |  22 --
+>   drivers/gpu/drm/msm/Kconfig                 |   1 +
+>   drivers/gpu/drm/msm/Makefile                |   1 +
+>   drivers/gpu/drm/msm/adreno/a5xx_debugfs.c   |   4 +-
+>   drivers/gpu/drm/msm/adreno/a5xx_gpu.c       |   6 +-
+>   drivers/gpu/drm/msm/adreno/a5xx_power.c     |   2 +-
+>   drivers/gpu/drm/msm/adreno/a5xx_preempt.c   |   7 +-
+>   drivers/gpu/drm/msm/adreno/a6xx_gmu.c       |  12 +-
+>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c       |   6 +-
+>   drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c |   4 +-
+>   drivers/gpu/drm/msm/adreno/adreno_gpu.c     |   6 +-
+>   drivers/gpu/drm/msm/msm_drv.c               |  30 ++-
+>   drivers/gpu/drm/msm/msm_fence.c             |  53 +----
+>   drivers/gpu/drm/msm/msm_fence.h             |  44 +++-
+>   drivers/gpu/drm/msm/msm_gem.c               |  94 +-------
+>   drivers/gpu/drm/msm/msm_gem.h               |  47 ++--
+>   drivers/gpu/drm/msm/msm_gem_submit.c        | 344 +++++++++++++++++-----------
+>   drivers/gpu/drm/msm/msm_gpu.c               | 220 ++++--------------
+>   drivers/gpu/drm/msm/msm_gpu.h               | 139 ++++++++++-
+>   drivers/gpu/drm/msm/msm_gpu_devfreq.c       | 203 ++++++++++++++++
+>   drivers/gpu/drm/msm/msm_rd.c                |   6 +-
+>   drivers/gpu/drm/msm/msm_ringbuffer.c        |  69 +++++-
+>   drivers/gpu/drm/msm/msm_ringbuffer.h        |  12 +
+>   drivers/gpu/drm/msm/msm_submitqueue.c       |  53 +++--
+>   include/drm/drm_gem.h                       |   2 -
+>   include/uapi/drm/msm_drm.h                  |  14 +-
+>   26 files changed, 865 insertions(+), 536 deletions(-)
+>   create mode 100644 drivers/gpu/drm/msm/msm_gpu_devfreq.c
+> 
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+Kind Regards,
+Caleb (they/them)
