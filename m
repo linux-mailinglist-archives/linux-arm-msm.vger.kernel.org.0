@@ -2,259 +2,200 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2FF023DABDA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 21:32:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 50B383DABE4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 21:34:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229724AbhG2Tcq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jul 2021 15:32:46 -0400
-Received: from smtp-out2.suse.de ([195.135.220.29]:57136 "EHLO
-        smtp-out2.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229616AbhG2Tcp (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jul 2021 15:32:45 -0400
-Received: from imap1.suse-dmz.suse.de (imap1.suse-dmz.suse.de [192.168.254.73])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out2.suse.de (Postfix) with ESMTPS id 5F708201FC;
-        Thu, 29 Jul 2021 19:32:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1627587161; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=yMApIiGMG6Myml+CNb4bDMJE6fnvp6dlDpv32lulUXQ=;
-        b=nHa23fgqPq+HOolbbYZzlAh6N0tsuZVV7ncddvwiC2xFKkHKV7MDeeliwst36Q6dGb443F
-        Dykzo9rZkWFaIjz9zHb1Ndz0gJI6+0AeWoG7kYP5HoAg2eWWa5I//GB2hs/enjRDooN0/7
-        Wf6g3pOawFIaUO9Ti0MZFSetmR+/TqY=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1627587161;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=yMApIiGMG6Myml+CNb4bDMJE6fnvp6dlDpv32lulUXQ=;
-        b=PwwkJvh3ZgJmyJELNziBQW0sn1FdNCNmYNUCaYAZ+YqweJSJSYoNTndr05LrUwEXRy/W1f
-        mUA5X7O5rPKNDpCA==
-Received: from imap1.suse-dmz.suse.de (imap1.suse-dmz.suse.de [192.168.254.73])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap1.suse-dmz.suse.de (Postfix) with ESMTPS id A469F13756;
-        Thu, 29 Jul 2021 19:32:40 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap1.suse-dmz.suse.de with ESMTPSA
-        id ZGoeJlgCA2GqawAAGKfGzw
-        (envelope-from <tzimmermann@suse.de>); Thu, 29 Jul 2021 19:32:40 +0000
-Subject: Re: [PATCH 03/14] drm/atmel-hlcdc: Convert to Linux IRQ interfaces
-To:     Dan.Sneddon@microchip.com, sam@ravnborg.org
-Cc:     daniel@ffwll.ch, airlied@linux.ie, alexander.deucher@amd.com,
-        christian.koenig@amd.com, liviu.dudau@arm.com,
-        brian.starkey@arm.com, bbrezillon@kernel.org,
-        Nicolas.Ferre@microchip.com, maarten.lankhorst@linux.intel.com,
-        mripard@kernel.org, stefan@agner.ch, alison.wang@nxp.com,
-        patrik.r.jakobsson@gmail.com, anitha.chrisanthus@intel.com,
-        robdclark@gmail.com, edmund.j.dea@intel.com, sean@poorly.run,
-        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
-        jyri.sarha@iki.fi, tomba@kernel.org, amd-gfx@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-References: <20210727182721.17981-4-tzimmermann@suse.de>
- <YQFi96yaYbTG4OO7@ravnborg.org>
- <e28b1a2f-015c-c81b-eb64-5323df9ed35d@microchip.com>
- <YQF7bKyeup8n3awU@ravnborg.org>
- <3d2f6b84-dd07-d925-a8b8-2bfd5fc736d9@microchip.com>
- <YQGdxtV0BGZ8VOpm@ravnborg.org>
- <2f04b986-6b41-62f9-1587-23818b841655@suse.de>
- <793514f6-0270-771b-fe36-f82edf4e5fd2@microchip.com>
- <YQGrMH36Udg3eKQY@ravnborg.org>
- <dcc5cd1e-d0de-bdda-32f3-623b85085756@microchip.com>
- <YQG5+/9lPexU3Dn3@ravnborg.org>
- <1df22406-2e91-c15a-49dc-1cf33522a142@suse.de>
- <cf070795-a660-535a-0bb4-65c01710f280@microchip.com>
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-Message-ID: <7b73d0c5-491b-56f7-7e05-17e3412571a2@suse.de>
-Date:   Thu, 29 Jul 2021 21:32:39 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        id S231974AbhG2Tee (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jul 2021 15:34:34 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35994 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229606AbhG2Tee (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 29 Jul 2021 15:34:34 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id B2E9B60E76;
+        Thu, 29 Jul 2021 19:34:30 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1627587270;
+        bh=4AE8gySMnmw4ukw7WiP/vi7kSExtOyQED99CxMrW4aY=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=F0dn6pqLLxt8U3AFzExMEoXrzzdy5UoPXiAhyFTWi3fWLq8/tSDXl/JEssxNcK8+p
+         jiLObenKDCuUo8ok6W1UGS1F5Wtt63p2NY57+JcWM5PcoFs+e1PRVKb+7tqTRkgepS
+         pi1d58N5SJB0YDqXyEHcPuWd1B/RR0k0snIOnikcQ8veB2o0NsCOPNmZqQKHYYXETK
+         5GT7zRfg2GWYgsNPSzQzaQdqrd5VgG7q46smVp9ce7FjpX6gq7xX0CYtqNaS+o+bzM
+         6n33c9gB1zdB9RY4GF1nPaGh9UVcxupSnvQpJBW9Td3nEaxF5rhAzB9X/3MtC1ZQxW
+         QdpJmadgH5fUQ==
+Received: by mail-ed1-f43.google.com with SMTP id p21so9664216edi.9;
+        Thu, 29 Jul 2021 12:34:30 -0700 (PDT)
+X-Gm-Message-State: AOAM531Af1tGMfvkESSlgmUPsg2Qk4GHYVP2LUXT0sWjY4iybqJ0UdTw
+        0wfwzs52CYkCbUqJNO1GupyxU0OtflS3vsE5Zg==
+X-Google-Smtp-Source: ABdhPJzW42FQ84WoTXyLSP20bPgulZO3lChpHA4mx21rS0OBJSN1BS+qHjGAUCwD7/f1CJJMLq3vUg8n/UH8xvh19vw=
+X-Received: by 2002:aa7:c603:: with SMTP id h3mr7723900edq.165.1627587269262;
+ Thu, 29 Jul 2021 12:34:29 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <cf070795-a660-535a-0bb4-65c01710f280@microchip.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="akny04UaG7GJcDpPPeCijsU2V0ccRjN5Z"
+References: <20210519143700.27392-1-bhupesh.sharma@linaro.org>
+ <20210519143700.27392-2-bhupesh.sharma@linaro.org> <20210521014316.GA2462277@robh.at.kernel.org>
+ <CAH=2NtwzFMre_+6LRM_JL+itbG09UuKLtH+Awbv_zK++qns49w@mail.gmail.com>
+In-Reply-To: <CAH=2NtwzFMre_+6LRM_JL+itbG09UuKLtH+Awbv_zK++qns49w@mail.gmail.com>
+From:   Rob Herring <robh@kernel.org>
+Date:   Thu, 29 Jul 2021 13:34:17 -0600
+X-Gmail-Original-Message-ID: <CAL_Jsq+AoAs_4-LBVoP_vzNF0Unn3jU2KRXMoJv8A7TJC_v+xg@mail.gmail.com>
+Message-ID: <CAL_Jsq+AoAs_4-LBVoP_vzNF0Unn3jU2KRXMoJv8A7TJC_v+xg@mail.gmail.com>
+Subject: Re: [PATCH v3 01/17] dt-bindings: qcom-bam: Convert binding to YAML
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Herbert Xu <herbert@gondor.apana.org.au>,
+        "David S . Miller" <davem@davemloft.net>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        "open list:DMA GENERIC OFFLOAD ENGINE SUBSYSTEM" 
+        <dmaengine@vger.kernel.org>, linux-clk <linux-clk@vger.kernel.org>,
+        "open list:HARDWARE RANDOM NUMBER GENERATOR CORE" 
+        <linux-crypto@vger.kernel.org>, devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        Bhupesh Sharma <bhupesh.linux@gmail.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---akny04UaG7GJcDpPPeCijsU2V0ccRjN5Z
-Content-Type: multipart/mixed; boundary="vgWnVgaac2W3OMacz8EgEOzBzhvHSkh3D";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: Dan.Sneddon@microchip.com, sam@ravnborg.org
-Cc: daniel@ffwll.ch, airlied@linux.ie, alexander.deucher@amd.com,
- christian.koenig@amd.com, liviu.dudau@arm.com, brian.starkey@arm.com,
- bbrezillon@kernel.org, Nicolas.Ferre@microchip.com,
- maarten.lankhorst@linux.intel.com, mripard@kernel.org, stefan@agner.ch,
- alison.wang@nxp.com, patrik.r.jakobsson@gmail.com,
- anitha.chrisanthus@intel.com, robdclark@gmail.com, edmund.j.dea@intel.com,
- sean@poorly.run, shawnguo@kernel.org, s.hauer@pengutronix.de,
- kernel@pengutronix.de, jyri.sarha@iki.fi, tomba@kernel.org,
- amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
- linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org,
- freedreno@lists.freedesktop.org
-Message-ID: <7b73d0c5-491b-56f7-7e05-17e3412571a2@suse.de>
-Subject: Re: [PATCH 03/14] drm/atmel-hlcdc: Convert to Linux IRQ interfaces
-References: <20210727182721.17981-4-tzimmermann@suse.de>
- <YQFi96yaYbTG4OO7@ravnborg.org>
- <e28b1a2f-015c-c81b-eb64-5323df9ed35d@microchip.com>
- <YQF7bKyeup8n3awU@ravnborg.org>
- <3d2f6b84-dd07-d925-a8b8-2bfd5fc736d9@microchip.com>
- <YQGdxtV0BGZ8VOpm@ravnborg.org>
- <2f04b986-6b41-62f9-1587-23818b841655@suse.de>
- <793514f6-0270-771b-fe36-f82edf4e5fd2@microchip.com>
- <YQGrMH36Udg3eKQY@ravnborg.org>
- <dcc5cd1e-d0de-bdda-32f3-623b85085756@microchip.com>
- <YQG5+/9lPexU3Dn3@ravnborg.org>
- <1df22406-2e91-c15a-49dc-1cf33522a142@suse.de>
- <cf070795-a660-535a-0bb4-65c01710f280@microchip.com>
-In-Reply-To: <cf070795-a660-535a-0bb4-65c01710f280@microchip.com>
+On Thu, Jun 3, 2021 at 9:27 PM Bhupesh Sharma <bhupesh.sharma@linaro.org> wrote:
+>
+> Hello Rob,
+>
+> Thanks for the review and sorry for the late reply.
+>
+> On Fri, 21 May 2021 at 07:13, Rob Herring <robh@kernel.org> wrote:
+> >
+> > On Wed, May 19, 2021 at 08:06:44PM +0530, Bhupesh Sharma wrote:
+> > > Convert Qualcomm BAM DMA devicetree binding to YAML.
+> > >
+> > > Cc: Thara Gopinath <thara.gopinath@linaro.org>
+> > > Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > > Cc: Rob Herring <robh+dt@kernel.org>
+> > > Cc: Andy Gross <agross@kernel.org>
+> > > Cc: Herbert Xu <herbert@gondor.apana.org.au>
+> > > Cc: David S. Miller <davem@davemloft.net>
+> > > Cc: Stephen Boyd <sboyd@kernel.org>
+> > > Cc: Michael Turquette <mturquette@baylibre.com>
+> > > Cc: Vinod Koul <vkoul@kernel.org>
+> > > Cc: dmaengine@vger.kernel.org
+> > > Cc: linux-clk@vger.kernel.org
+> > > Cc: linux-crypto@vger.kernel.org
+> > > Cc: devicetree@vger.kernel.org
+> > > Cc: linux-kernel@vger.kernel.org
+> > > Cc: bhupesh.linux@gmail.com
+> > > Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> > > ---
+> > >  .../devicetree/bindings/dma/qcom_bam_dma.txt  | 50 ----------
+> > >  .../devicetree/bindings/dma/qcom_bam_dma.yaml | 91 +++++++++++++++++++
+> > >  2 files changed, 91 insertions(+), 50 deletions(-)
+> > >  delete mode 100644 Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
+> > >  create mode 100644 Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml
+> > >
+> > > diff --git a/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt b/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
+> > > deleted file mode 100644
+> > > index cf5b9e44432c..000000000000
+> > > --- a/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
+> > > +++ /dev/null
+> > > @@ -1,50 +0,0 @@
+> > > -QCOM BAM DMA controller
+> > > -
+> > > -Required properties:
+> > > -- compatible: must be one of the following:
+> > > - * "qcom,bam-v1.4.0" for MSM8974, APQ8074 and APQ8084
+> > > - * "qcom,bam-v1.3.0" for APQ8064, IPQ8064 and MSM8960
+> > > - * "qcom,bam-v1.7.0" for MSM8916
+> > > -- reg: Address range for DMA registers
+> > > -- interrupts: Should contain the one interrupt shared by all channels
+> > > -- #dma-cells: must be <1>, the cell in the dmas property of the client device
+> > > -  represents the channel number
+> > > -- clocks: required clock
+> > > -- clock-names: must contain "bam_clk" entry
+> > > -- qcom,ee : indicates the active Execution Environment identifier (0-7) used in
+> > > -  the secure world.
+> > > -- qcom,controlled-remotely : optional, indicates that the bam is controlled by
+> > > -  remote proccessor i.e. execution environment.
+> > > -- num-channels : optional, indicates supported number of DMA channels in a
+> > > -  remotely controlled bam.
+> > > -- qcom,num-ees : optional, indicates supported number of Execution Environments
+> > > -  in a remotely controlled bam.
+> > > -
+> > > -Example:
+> > > -
+> > > -     uart-bam: dma@f9984000 = {
+> > > -             compatible = "qcom,bam-v1.4.0";
+> > > -             reg = <0xf9984000 0x15000>;
+> > > -             interrupts = <0 94 0>;
+> > > -             clocks = <&gcc GCC_BAM_DMA_AHB_CLK>;
+> > > -             clock-names = "bam_clk";
+> > > -             #dma-cells = <1>;
+> > > -             qcom,ee = <0>;
+> > > -     };
+> > > -
+> > > -DMA clients must use the format described in the dma.txt file, using a two cell
+> > > -specifier for each channel.
+> > > -
+> > > -Example:
+> > > -     serial@f991e000 {
+> > > -             compatible = "qcom,msm-uart";
+> > > -             reg = <0xf991e000 0x1000>
+> > > -                     <0xf9944000 0x19000>;
+> > > -             interrupts = <0 108 0>;
+> > > -             clocks = <&gcc GCC_BLSP1_UART2_APPS_CLK>,
+> > > -                     <&gcc GCC_BLSP1_AHB_CLK>;
+> > > -             clock-names = "core", "iface";
+> > > -
+> > > -             dmas = <&uart-bam 0>, <&uart-bam 1>;
+> > > -             dma-names = "rx", "tx";
+> > > -     };
+> > > diff --git a/Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml b/Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml
+> > > new file mode 100644
+> > > index 000000000000..173e4d7508a6
+> > > --- /dev/null
+> > > +++ b/Documentation/devicetree/bindings/dma/qcom_bam_dma.yaml
+> > > @@ -0,0 +1,91 @@
+> > > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > > +%YAML 1.2
+> > > +---
+> > > +$id: http://devicetree.org/schemas/dma/qcom_bam_dma.yaml#
+> > > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > > +
+> > > +title: QCOM BAM DMA controller binding
+> > > +
+> > > +maintainers:
+> > > +  - Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> > > +
+> > > +description: |
+> > > +  This document defines the binding for the BAM DMA controller
+> > > +  found on Qualcomm parts.
+> > > +
+> > > +allOf:
+> > > +  - $ref: "dma-controller.yaml#"
+> > > +
+> > > +properties:
+> > > +  compatible:
+> > > +    enum:
+> > > +      - qcom,bam-v1.4.0
+> > > +      - qcom,bam-v1.3.0
+> > > +      - qcom,bam-v1.7.0
+> >
+> > Can we keep the SoC association please.
+>
+> The original bam dma bindings are as per the underlying bam IP
+> version, so I would prefer that we keep it this way for this series.
+>
+> Later on I can send a patchset to convert the bam DMA dt-bindings, dts
+> and driver to work with 'SoC association' instead.
 
---vgWnVgaac2W3OMacz8EgEOzBzhvHSkh3D
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+I just mean keep a comment with the mapping of versions to SoC:
 
-Hi
+> > > - * "qcom,bam-v1.4.0" for MSM8974, APQ8074 and APQ8084
+> > > - * "qcom,bam-v1.3.0" for APQ8064, IPQ8064 and MSM8960
+> > > - * "qcom,bam-v1.7.0" for MSM8916
 
-Am 29.07.21 um 21:24 schrieb Dan.Sneddon@microchip.com:
-> Hi Thomas,
->=20
-> On 7/29/21 12:18 PM, Thomas Zimmermann wrote:
->> Hi
->>
->> Am 28.07.21 um 22:11 schrieb Sam Ravnborg:
->>> Hi Dan,
->>>
->>>>>
->>>>> I think I got it - we need to set irq_enabled to true.
->>>>> The documentation says so:
->>>>> "
->>>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * @ir=
-q_enabled:
->>>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 *
->>>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * Ind=
-icates that interrupt handling is enabled,
->>>>> specifically vblank
->>>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * han=
-dling. Drivers which don't use drm_irq_install()
->>>>> need to set this
->>>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 * to =
-true manually.
->>>>> "
->>>>>
->>>>> Can you try to add the following line:
->>>>>
->>>>>
->>>>> +static int atmel_hlcdc_dc_irq_install(struct drm_device *dev,
->>>>> unsigned int irq)
->>>>> +{
->>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 int ret;
->>>>> +
->>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (irq =3D=3D IRQ_NOTCONNECT=
-ED)
->>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 return -ENOTCONN;
->>>>> +
->>>>>
->>>>>  =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 dev->irq_en=
-abled =3D true;=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 <=3D THIS LINE
->>>>>
->>>>>
->>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 atmel_hlcdc_dc_irq_disable(de=
-v);
->>>>> +
->>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 ret =3D request_irq(irq, atme=
-l_hlcdc_dc_irq_handler, 0,
->>>>> dev->driver->name, dev);
->>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0 if (ret)
->>>>> +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=
-=C2=A0=C2=A0=C2=A0 return ret;
->>>>>
->>>>> I hope this fixes it.
->>>>
->>>> It does!=C2=A0 With the irq_enabled line added everything is looking=
- good.
->>
->> Are you sure, you're testing with the latest drm-misc-next or drm-tip?=
+Otherwise, we are losing that information.
 
->> Because using irq_enabled is deprecated and the flag was recently
->> replaced by commit 1e4cd78ed493 ("drm: Don't test for IRQ support in
->> VBLANK ioctls").
->>
->> Best regards
->> Thomas
->>
->=20
-> I was testing with 5.14-rc3.  I can test with drm-tip or drm-misc-next.=
-
-> There a preferred branch to test from?
-
-I use drm-tip for development, but all the relevant patches go through=20
-drm-misc-next. So either is fine.
-
-Best regards
-Thomas
-
->=20
-> Thanks and regards,
-> Dan
->=20
->>>
->>> Great, thanks for testing.
->>>
->>> Thomas - I assume you will do a re-spin and there is likely some fixe=
-s
->>> for the applied IRQ conversions too.
->>>
->>> Note - irq_enabled must be cleared if request_irq fails. I did not
->>> include this in the testing here.
->>>
->>>  =C2=A0=C2=A0=C2=A0=C2=A0Sam
->>>
->>
->=20
-
---=20
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
-(HRB 36809, AG N=C3=BCrnberg)
-Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
-
-
---vgWnVgaac2W3OMacz8EgEOzBzhvHSkh3D--
-
---akny04UaG7GJcDpPPeCijsU2V0ccRjN5Z
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
-
------BEGIN PGP SIGNATURE-----
-
-wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmEDAlcFAwAAAAAACgkQlh/E3EQov+B4
-Bg/7BLiemqO6VCR12JNz5SMtk+p4LmaM45E437XpQtStNuRcDZGiesbnQvULZ5MjHtfXImMaFCuN
-98javZXJ0OmwUGjjU1M4voLcm3rlnhTiG5mWRCUy6qMjZzyPnDlP/QrUCSODkdY0RjIxlzlbeUFW
-SUaUPIJeTPXELKs/ceXNvRrcqmRyq0pYquWHb8FfvVHxyq/D2BKVfdv0CWHgsjXwRpz2UFsecs2l
-VygSxyZg0ytjUiGCwV8l47wnJ272j8PQr+5HxPpi4UtWRDorp0MbESJL0v1vQTJUOBHiBtQ1sKmZ
-DZV0c+XZe0z21in2fhl7Jf7Sh/4viMt2bE8l32YTxssHzIimeS1HOtNFkY7kRSZiFa4TjYzT+bAo
-C4N+27Y1jPlNjsAiNg17Thqa96T63oPIP+nQkCVJN+x75JQQ35uSQkzF1Yd0h66+kxgRzVkj0TW0
-CpyGnj+DnYWQ64k/1zcdo6crEubxT1dqKKU+Nr9eiZxMLqsLLmn+HpmZ9SiYVKpoH7XE1t8/pKx/
-bWcukyCfH9peFxzL5lltToHQYT/OAGb/BmBtXPaLHgALawi6Y3v67mOXBDjH3ymsXgqeFukHRQXJ
-ncgUMFBkTDA1GZreSevQtl0QEWzWZFAQ7nZivHMaPONSbgyh0Lv1QEY3OgCmgRkSilNyD/wH8ePn
-oOo=
-=wJGN
------END PGP SIGNATURE-----
-
---akny04UaG7GJcDpPPeCijsU2V0ccRjN5Z--
+Rob
