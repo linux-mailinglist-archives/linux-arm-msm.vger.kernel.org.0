@@ -2,90 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BCEA3DA1E2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 13:15:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D61C3DA227
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 13:31:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236486AbhG2LPV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jul 2021 07:15:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42170 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236264AbhG2LPU (ORCPT
+        id S236197AbhG2LbL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jul 2021 07:31:11 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:44534 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234595AbhG2LbK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jul 2021 07:15:20 -0400
-Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C128FC061765
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jul 2021 04:15:16 -0700 (PDT)
-Received: by mail-pl1-x62a.google.com with SMTP id i10so6586078pla.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jul 2021 04:15:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=P6JR4MD1nZbCGyDxWwepp0jK3WYk6Zdj/y8iVAiPBSg=;
-        b=VRBt+bKi0cAN8LEpK12OBHB9u6otmlMK+7o1OLzTBvni5crrZTjXwpNVW5dexaYG1w
-         FgRxil3VgmNL9n+uZowDsbDezsOfH+vE9Tg7wQWr+a0IIujQuIi4Xyqq+ItaCs/zwlI4
-         yUN869w1dy0UJc0U5D4IwLj1+jbXGnpenZZqvuTC2fFC07UgBdB4VBwJvA//TB6W80I+
-         rrW20kwjKSeXXklIS0yUuTWjNjpyKolULkl6TmXLnB+F8hb33PswdW5QAzSfV5spKsk7
-         tJqVivwIBrvSo2QQVBYnULt4HHdYr6EcUWwZgh6jfnBJrEHh9ui0rW+tMt+e322XH0Vd
-         fuHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=P6JR4MD1nZbCGyDxWwepp0jK3WYk6Zdj/y8iVAiPBSg=;
-        b=XxA5vPTAbnVQpXpddcUN1KOmNrYvdEwQdi12Ohc1RxRcrd+cmJkyuC6cvbZWALwIhN
-         mQOLptEKKtbgHr5Tf/143WU5S6gLTMnXcb60IXbKC0yuhkEdRY4AdCKRUVfQ6YT0QyMm
-         HhRghMPdNhEw5/RW3aijcHqS8IE17tkbcMW+5BI5l7I2uaEw8YHkZx14TRFYVqQm1XG+
-         S+61yD1Z9MY7HloNp584uRGk1aiMK+KLG+pRpdIuskz18YPheWHj810uCml7F9fXtu46
-         miYTJXh5TzfFmMwV9APY1dz3Rf3CW2NPK7kHEssTnV3MgqFA4OzWqaxAxczvfk5RnMkh
-         bIrg==
-X-Gm-Message-State: AOAM533SfTIcBpxW2PKiYzaegejcHuib4qesRtShDfBczH0GH5yCjCY9
-        MhyGWryHFUgd47VIUBC9eDPKQg==
-X-Google-Smtp-Source: ABdhPJzmMzQgwR7cNNoSaOWusGUG+LNYHF0AXsO6MC5So3X+yMZ49KPS3MosOkJ4nGK7PFFOvq3uSQ==
-X-Received: by 2002:a17:902:a9c6:b029:129:8fdb:698f with SMTP id b6-20020a170902a9c6b02901298fdb698fmr4296847plr.15.1627557316246;
-        Thu, 29 Jul 2021 04:15:16 -0700 (PDT)
-Received: from localhost ([122.172.201.85])
-        by smtp.gmail.com with ESMTPSA id 20sm663000pgg.36.2021.07.29.04.15.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 29 Jul 2021 04:15:15 -0700 (PDT)
-Date:   Thu, 29 Jul 2021 16:45:13 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, rui.zhang@intel.com,
-        daniel.lezcano@linaro.org, rjw@rjwysocki.net, robh+dt@kernel.org,
-        steev@kali.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [Patch v4 3/6] cpufreq: qcom-cpufreq-hw: Add dcvs interrupt
- support
-Message-ID: <20210729111513.djd5hrbz6jb453xp@vireshk-i7>
-References: <20210727152512.1098329-1-thara.gopinath@linaro.org>
- <20210727152512.1098329-4-thara.gopinath@linaro.org>
- <20210728035014.25mgvrpnraxfslq7@vireshk-i7>
- <9a257605-d282-cd06-cc44-5ad5a5f8484d@linaro.org>
- <20210729061713.kzhka7nymo53zw2o@vireshk-i7>
- <4d80594c-9088-5d36-44cd-19a98145095c@linaro.org>
+        Thu, 29 Jul 2021 07:31:10 -0400
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 29 Jul 2021 04:31:08 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 29 Jul 2021 04:31:05 -0700
+X-QCInternal: smtphost
+Received: from c-mansur-linux.qualcomm.com ([10.204.90.208])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 29 Jul 2021 17:00:43 +0530
+Received: by c-mansur-linux.qualcomm.com (Postfix, from userid 461723)
+        id 7D49322705; Thu, 29 Jul 2021 17:00:42 +0530 (IST)
+From:   Mansur Alisha Shaik <mansur@codeaurora.org>
+To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, dikshita@codeaurora.org,
+        Mansur Alisha Shaik <mansur@codeaurora.org>
+Subject: [V3] venus: venc: add support for V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM control
+Date:   Thu, 29 Jul 2021 17:00:40 +0530
+Message-Id: <20210729113040.21386-1-mansur@codeaurora.org>
+X-Mailer: git-send-email 2.29.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <4d80594c-9088-5d36-44cd-19a98145095c@linaro.org>
-User-Agent: NeoMutt/20180716-391-311a52
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29-07-21, 07:13, Thara Gopinath wrote:
-> So the interrupt handler is a threaded handler. I moved it in v4 since one
-> of the "_opp" api has an underlying mutex and was causing issues. So using a
-> mutex should be pretty safe in this case.
+Add support for V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM control for
+H264 high profile and constrained high profile.
 
-Ahh I see.
+Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
 
-> IIUC, the main change you are suggesting below is to include enable_irq() /
-> mod_delayed_work() under the spin_lock as well. Is that right ? In which
-> case isn't a mutex better than spinlock?
+Changes in V3:
+- Corrected structure names
+- Added the detailed comment for why 8x8 transform can't disable for HP
 
-Yeah, sure.
+---
+ drivers/media/platform/qcom/venus/core.h      |  1 +
+ drivers/media/platform/qcom/venus/hfi_cmds.c  |  8 +++++++
+ .../media/platform/qcom/venus/hfi_helper.h    |  5 ++++
+ drivers/media/platform/qcom/venus/venc.c      | 12 ++++++++++
+ .../media/platform/qcom/venus/venc_ctrls.c    | 24 ++++++++++++++++++-
+ 5 files changed, 49 insertions(+), 1 deletion(-)
 
+diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
+index 8df2d497d706..39dfab4da749 100644
+--- a/drivers/media/platform/qcom/venus/core.h
++++ b/drivers/media/platform/qcom/venus/core.h
+@@ -234,6 +234,7 @@ struct venc_controls {
+ 	u32 h264_loop_filter_mode;
+ 	s32 h264_loop_filter_alpha;
+ 	s32 h264_loop_filter_beta;
++	u32 h264_8x8_transform;
+ 
+ 	u32 hevc_i_qp;
+ 	u32 hevc_p_qp;
+diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
+index f51024786991..60f4b8e4b8d0 100644
+--- a/drivers/media/platform/qcom/venus/hfi_cmds.c
++++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
+@@ -1239,6 +1239,14 @@ pkt_session_set_property_4xx(struct hfi_session_set_property_pkt *pkt,
+ 		break;
+ 	}
+ 
++	case HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8: {
++		struct hfi_h264_8x8_transform *in = pdata, *tm = prop_data;
++
++		tm->enable_type = in->enable_type;
++		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*tm);
++		break;
++	}
++
+ 	case HFI_PROPERTY_CONFIG_VENC_MAX_BITRATE:
+ 	case HFI_PROPERTY_CONFIG_VDEC_POST_LOOP_DEBLOCKER:
+ 	case HFI_PROPERTY_PARAM_BUFFER_ALLOC_MODE:
+diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
+index b0a9beb4163c..bec4feb63ceb 100644
+--- a/drivers/media/platform/qcom/venus/hfi_helper.h
++++ b/drivers/media/platform/qcom/venus/hfi_helper.h
+@@ -507,6 +507,7 @@
+ #define HFI_PROPERTY_PARAM_VENC_MAX_NUM_B_FRAMES		0x2005020
+ #define HFI_PROPERTY_PARAM_VENC_H264_VUI_BITSTREAM_RESTRC	0x2005021
+ #define HFI_PROPERTY_PARAM_VENC_PRESERVE_TEXT_QUALITY		0x2005023
++#define HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8			0x2005025
+ #define HFI_PROPERTY_PARAM_VENC_HIER_P_MAX_NUM_ENH_LAYER	0x2005026
+ #define HFI_PROPERTY_PARAM_VENC_DISABLE_RC_TIMESTAMP		0x2005027
+ #define HFI_PROPERTY_PARAM_VENC_INITIAL_QP			0x2005028
+@@ -562,6 +563,10 @@ struct hfi_bitrate {
+ 	u32 layer_id;
+ };
+ 
++struct hfi_h264_8x8_transform {
++	u32 enable_type;
++};
++
+ #define HFI_CAPABILITY_FRAME_WIDTH			0x01
+ #define HFI_CAPABILITY_FRAME_HEIGHT			0x02
+ #define HFI_CAPABILITY_MBS_PER_FRAME			0x03
+diff --git a/drivers/media/platform/qcom/venus/venc.c b/drivers/media/platform/qcom/venus/venc.c
+index 8dd49d4f124c..18c36958342e 100644
+--- a/drivers/media/platform/qcom/venus/venc.c
++++ b/drivers/media/platform/qcom/venus/venc.c
+@@ -567,6 +567,7 @@ static int venc_set_properties(struct venus_inst *inst)
+ 		struct hfi_h264_vui_timing_info info;
+ 		struct hfi_h264_entropy_control entropy;
+ 		struct hfi_h264_db_control deblock;
++		struct hfi_h264_8x8_transform h264_transform;
+ 
+ 		ptype = HFI_PROPERTY_PARAM_VENC_H264_VUI_TIMING_INFO;
+ 		info.enable = 1;
+@@ -597,6 +598,17 @@ static int venc_set_properties(struct venus_inst *inst)
+ 		ret = hfi_session_set_property(inst, ptype, &deblock);
+ 		if (ret)
+ 			return ret;
++
++		ptype = HFI_PROPERTY_PARAM_VENC_H264_TRANSFORM_8X8;
++		h264_transform.enable_type = 0;
++		if (ctr->profile.h264 == HFI_H264_PROFILE_HIGH ||
++		    ctr->profile.h264 == HFI_H264_PROFILE_CONSTRAINED_HIGH)
++			h264_transform.enable_type = ctr->h264_8x8_transform;
++
++		ret = hfi_session_set_property(inst, ptype, &h264_transform);
++		if (ret)
++			return ret;
++
+ 	}
+ 
+ 	if (inst->fmt_cap->pixfmt == V4L2_PIX_FMT_H264 ||
+diff --git a/drivers/media/platform/qcom/venus/venc_ctrls.c b/drivers/media/platform/qcom/venus/venc_ctrls.c
+index 637c92f6c5be..f39784f8aa3a 100644
+--- a/drivers/media/platform/qcom/venus/venc_ctrls.c
++++ b/drivers/media/platform/qcom/venus/venc_ctrls.c
+@@ -319,6 +319,25 @@ static int venc_op_s_ctrl(struct v4l2_ctrl *ctrl)
+ 	case V4L2_CID_COLORIMETRY_HDR10_MASTERING_DISPLAY:
+ 		ctr->mastering = *ctrl->p_new.p_hdr10_mastering;
+ 		break;
++	case V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM:
++		if (ctr->profile.h264 != HFI_H264_PROFILE_HIGH &&
++		    ctr->profile.h264 != HFI_H264_PROFILE_CONSTRAINED_HIGH)
++			return -EINVAL;
++
++		/*
++		 * In video firmware, 8x8 transform is supported only for
++		 * high profile(HP) and constrained high profile(CHP).
++		 * If client wants to disable 8x8 transform for HP/CHP,
++		 * it is better to set profile as main profile(MP).
++		 * Because there is no difference between HP and MP
++		 * if we disable 8x8 transform for HP.
++		 */
++
++		if (ctrl->val == 0)
++			return -EINVAL;
++
++		ctr->h264_8x8_transform = ctrl->val;
++		break;
+ 	default:
+ 		return -EINVAL;
+ 	}
+@@ -334,7 +353,7 @@ int venc_ctrl_init(struct venus_inst *inst)
+ {
+ 	int ret;
+ 
+-	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 57);
++	ret = v4l2_ctrl_handler_init(&inst->ctrl_handler, 58);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -437,6 +456,9 @@ int venc_ctrl_init(struct venus_inst *inst)
+ 	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
+ 			  V4L2_CID_MPEG_VIDEO_H264_I_FRAME_MIN_QP, 1, 51, 1, 1);
+ 
++	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
++			  V4L2_CID_MPEG_VIDEO_H264_8X8_TRANSFORM, 0, 1, 1, 0);
++
+ 	v4l2_ctrl_new_std(&inst->ctrl_handler, &venc_ctrl_ops,
+ 			  V4L2_CID_MPEG_VIDEO_H264_P_FRAME_MIN_QP, 1, 51, 1, 1);
+ 
 -- 
-viresh
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
+
