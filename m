@@ -2,113 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D7C213DAC17
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 21:51:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 780533DAC22
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 21:51:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229798AbhG2TvM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jul 2021 15:51:12 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.53]:29746 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229606AbhG2TvL (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jul 2021 15:51:11 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1627588261;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=a1f/4Mzvy91uylKaEBSa+SbUv2oypgU64QN38rZ/W1A=;
-    b=BhFcK3pVObxgbgbV6J1xl7tDYIcvcsOU6ZLYorGXAWqwHPUe2gEwIbvGh/j5F63rvm
-    XZudNTAUZFotrbXXFDcjDo7N9schc9DbXE0dH+dYZldo0aCHzeob3yid8SmfRXCIWJzf
-    KJTRsqB+Z8kZZJbucHz3eYSSMYEh79Y0Y6me2QB2PJzXC6bDG1Mleo5vTcwAvt/Q3nvU
-    ax6+Fz5bqesHLub+E37q4wkquBD1Nt2BMZmoca33kxypXWrPsFyLeq60GrpY9DeBLMTJ
-    T4zdtqrjxfy6u/zGiY42LM1HPSOAR43XHwViPsYFy9AM6FJYHvOV2Bi78eGArf/VHitk
-    Tgnw==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8paM1A=="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.28.1 DYNA|AUTH)
-    with ESMTPSA id g02a44x6TJp06W6
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Thu, 29 Jul 2021 21:51:00 +0200 (CEST)
-Date:   Thu, 29 Jul 2021 21:50:54 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Rob Herring <robh@kernel.org>
-Cc:     "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Sergey Ryazanov <ryazanov.s.a@gmail.com>,
-        Johannes Berg <johannes@sipsolutions.net>,
+        id S232384AbhG2TwB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jul 2021 15:52:01 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:12538 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232346AbhG2TwA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 29 Jul 2021 15:52:00 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1627588317; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=iM1KdIaqnabu/y7ApCsLdG5yOlR2tEATwMcy7eTsEI0=; b=GcBEbYPs6mAR9ZzfPySAW96dMNrgCf/1GWl+u3ROxJ4Wr9jzfuB/Xkff1upJcmIuvkq5tG2e
+ MpPVjJ4PJlnzFKPCPJ8IIN25ijpFq3ZYnmMEGnkWAefP7WfdtzlCELO+ok6MIg9w7AZHltl3
+ PMKSwebW/d6EBFmw5dflsBOUm6w=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 610306ca96a66e66b2d71a80 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 29 Jul 2021 19:51:38
+ GMT
+Sender: akhilpo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 377E8C43151; Thu, 29 Jul 2021 19:51:38 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from hyd-lnxbld559.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akhilpo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 44EE7C4338A;
+        Thu, 29 Jul 2021 19:51:30 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 44EE7C4338A
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
+From:   Akhil P Oommen <akhilpo@codeaurora.org>
+To:     freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>
+Cc:     Douglas Anderson <dianders@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Jonathan Marek <jonathan@marek.ca>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Aleksander Morgado <aleksander@aleksander.es>,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dmaengine@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Subject: Re: [RFC PATCH net-next 1/4] dt-bindings: dmaengine: bam_dma: Add
- remote power collapse mode
-Message-ID: <YQMGnmXEOCmCzKnr@gerhold.net>
-References: <20210719145317.79692-1-stephan@gerhold.net>
- <20210719145317.79692-2-stephan@gerhold.net>
- <YQMDP6+ft/iRJQQr@robh.at.kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YQMDP6+ft/iRJQQr@robh.at.kernel.org>
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>, Eric Anholt <eric@anholt.net>,
+        Iskren Chernev <iskren.chernev@gmail.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sean Paul <sean@poorly.run>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v4 0/3] Support Adreno 7c Gen 3 gpu
+Date:   Fri, 30 Jul 2021 01:21:22 +0530
+Message-Id: <1627588286-30520-1-git-send-email-akhilpo@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 29, 2021 at 01:36:31PM -0600, Rob Herring wrote:
-> On Mon, Jul 19, 2021 at 04:53:14PM +0200, Stephan Gerhold wrote:
-> > In some configurations, the BAM DMA controller is set up by a remote
-> > processor and the local processor can simply start making use of it
-> > without setting up the BAM. This is already supported using the
-> > "qcom,controlled-remotely" property.
-> > 
-> > However, for some reason another possible configuration is that the
-> > remote processor is responsible for powering up the BAM, but we are
-> > still responsible for initializing it (e.g. resetting it etc). Add
-> > a "qcom,remote-power-collapse" property to describe that configuration.
-> > 
-> > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> > ---
-> > NOTE: This is *not* a compile-time requirement for the BAM-DMUX driver
-> >       so this could also go through the dmaengine tree.
-> > 
-> > Also note that there is an ongoing effort to convert these bindings
-> > to DT schema but sadly there were not any updates for a while. :/
-> > https://lore.kernel.org/linux-arm-msm/20210519143700.27392-2-bhupesh.sharma@linaro.org/
-> > ---
-> >  Documentation/devicetree/bindings/dma/qcom_bam_dma.txt | 2 ++
-> >  1 file changed, 2 insertions(+)
-> > 
-> > diff --git a/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt b/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
-> > index cf5b9e44432c..362a4f0905a8 100644
-> > --- a/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
-> > +++ b/Documentation/devicetree/bindings/dma/qcom_bam_dma.txt
-> > @@ -15,6 +15,8 @@ Required properties:
-> >    the secure world.
-> >  - qcom,controlled-remotely : optional, indicates that the bam is controlled by
-> >    remote proccessor i.e. execution environment.
-> > +- qcom,remote-power-collapse : optional, indicates that the bam is powered up by
-> > +  a remote processor but must be initialized by the local processor.
-> 
-> Wouldn't 'qcom,remote-power' or 'qcom,remote-powered' be sufficient? I 
-> don't understand what 'collapse' means here. Doesn't sound good though.
-> 
+This series adds support for the gpu found in the Snapdragon 7c Gen 3
+compute platform. This gpu is similar to the exisiting a660 gpu with
+minor delta in the programing sequence. As the Adreno GPUs are moving
+away from a numeric chipid based naming scheme to a string, it was
+decided to use 0x06030500 as the chip id of this gpu to communicate
+to the userspace driver.
 
-Yeah I can't think of any significant meaning of the "collapse" part
-for the bindings, I probably just picked it up somewhere while trying to
-find some information about how the BAM DMUX setup works. :)
+Changes in v4:
+- Move adreno_cmp_rev() to patch-2/3 to fix compilation
+- Minor updates to commit msg (Rob)
 
-Just one question, would you prefer "qcom,remote-powered" or rather
-"qcom,powered-remotely" for consistency with the existing
-"qcom,controlled-remotely"? Both sounds fine to me.
+Changes in v3:
+- Add a cover letter.
 
-Thanks!
-Stephan
+Changes in v2:
+- Use rev to identify SKU
+- Introduce adreno_is_a660_family() (Rob)
+- Remove revn for 7c3 (Rob)
+- Remove CPR register programing since they are not required for 7c3
+
+Akhil P Oommen (3):
+  drm/msm/a6xx: Fix llcc configuration for a660 gpu
+  drm/msm/a6xx: Use rev to identify SKU
+  drm/msm/a6xx: Add support for Adreno 7c Gen 3 gpu
+
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c      |  8 ++-
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.h      |  1 +
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c      | 87 ++++++++++++++++++------------
+ drivers/gpu/drm/msm/adreno/a6xx_hfi.c      | 32 +++++++++++
+ drivers/gpu/drm/msm/adreno/adreno_device.c | 27 +++++++---
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h    | 18 ++++++-
+ 6 files changed, 129 insertions(+), 44 deletions(-)
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation.
+
