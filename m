@@ -2,151 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D93943DA1DB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 13:14:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1BCEA3DA1E2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 13:15:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236686AbhG2LOp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jul 2021 07:14:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42004 "EHLO
+        id S236486AbhG2LPV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jul 2021 07:15:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42170 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236642AbhG2LOp (ORCPT
+        with ESMTP id S236264AbhG2LPU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jul 2021 07:14:45 -0400
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72E1BC0613C1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jul 2021 04:14:42 -0700 (PDT)
-Received: by mail-qt1-x82b.google.com with SMTP id a19so3643188qtx.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jul 2021 04:14:42 -0700 (PDT)
+        Thu, 29 Jul 2021 07:15:20 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C128FC061765
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jul 2021 04:15:16 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id i10so6586078pla.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jul 2021 04:15:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=2K9Otu8LW9SDTcXYYe2i+NmHsFiLd0L5gZwCfWSKEmo=;
-        b=ph0P5vCb0OFIqgeqV14YecFS4sAcx7v1LDkjpxvpx7VtzA6H2FeZks2PCB2rjJKhRX
-         kLhKCbXdc5goS+AdVlhEsnetACl2h0f5owIWTAEgmg3qAoX1BPI5qKBCgRzjYY3TWEE8
-         ap3iJH2pOO1jZIL5BP9xn84HJ5I+j1ydD2+a6LXoDIBVhZXOQcz3MEjsEvct+h/bm6xM
-         gnplsF4FOoT8dTcNlnMELEExf92mE7CBje0LlNJKpk7+qZ+E6tNgyvh8V8ONZmyEUTpg
-         se0Bpo7uSiruq79wFoz3MGg70+MQQOeWPjGdYhZi9vMdfMxab/ZcGI6L01PEAkZcQUwZ
-         /9tw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=P6JR4MD1nZbCGyDxWwepp0jK3WYk6Zdj/y8iVAiPBSg=;
+        b=VRBt+bKi0cAN8LEpK12OBHB9u6otmlMK+7o1OLzTBvni5crrZTjXwpNVW5dexaYG1w
+         FgRxil3VgmNL9n+uZowDsbDezsOfH+vE9Tg7wQWr+a0IIujQuIi4Xyqq+ItaCs/zwlI4
+         yUN869w1dy0UJc0U5D4IwLj1+jbXGnpenZZqvuTC2fFC07UgBdB4VBwJvA//TB6W80I+
+         rrW20kwjKSeXXklIS0yUuTWjNjpyKolULkl6TmXLnB+F8hb33PswdW5QAzSfV5spKsk7
+         tJqVivwIBrvSo2QQVBYnULt4HHdYr6EcUWwZgh6jfnBJrEHh9ui0rW+tMt+e322XH0Vd
+         fuHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=2K9Otu8LW9SDTcXYYe2i+NmHsFiLd0L5gZwCfWSKEmo=;
-        b=ghSd5fkfs7u289KdThgwnuoR9NGtsgn2ZPpSDdafyUbpE4t4wkwHRKvJQOiNScNpgq
-         dMLSJ7MFxcLrtTJY4AnYfzrXCS9/5rfdHlgPStb1wfXyDd5/ev9q5D+mgb76trS63TRk
-         Z+1ShSvfM53vohp+0MC7LiSu8Sn+THdSbiZ37jC54nPtyv5iIdBoYWoaUFhITzUapiky
-         RhBEoax9DLOKw4nnXJBjKA7RkPBQGEWLniYAGCI978EgAfDrymstchG2snqiXzl1SYUZ
-         E4saw49RLnBtyaNtpY36J6j5a0j/55P8vsZ3rtt+f9cRbFiTnp+03tDt6jfpaUCIhcrx
-         qNCA==
-X-Gm-Message-State: AOAM533OIP+r8iHMwzW5wqob0A9CSvfC9I6374nO0yFTIlBgDZS53DXn
-        zAVRtk+Nf2VvC6uWQeLXb04SbQ==
-X-Google-Smtp-Source: ABdhPJwAn3IRMTD72AerbI9G7j4vBNcMivwHurVclQz1qrLLqObsXzzh3n/4sqCOpuRq/b1tT4J2LA==
-X-Received: by 2002:ac8:41c2:: with SMTP id o2mr3599898qtm.237.1627557281670;
-        Thu, 29 Jul 2021 04:14:41 -0700 (PDT)
-Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id j127sm1596873qkf.20.2021.07.29.04.14.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Jul 2021 04:14:41 -0700 (PDT)
-Subject: Re: [PATCH 14/39] arm64: dts: qcom: sdm630: Add TSENS node
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20210728222542.54269-1-konrad.dybcio@somainline.org>
- <20210728222542.54269-15-konrad.dybcio@somainline.org>
- <860f1120-c5a4-f531-3ea9-aa90c6b063dc@linaro.org>
- <2318377c-959a-a42b-81b5-44e2629570d5@somainline.org>
- <afee55a8-d7d3-709a-ea4f-0306698c9976@linaro.org>
- <b16d8000-85a7-d957-77d2-d921e5b09829@somainline.org>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <a7f90fe0-ee24-a47d-089d-e716a5766fcd@linaro.org>
-Date:   Thu, 29 Jul 2021 07:14:40 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=P6JR4MD1nZbCGyDxWwepp0jK3WYk6Zdj/y8iVAiPBSg=;
+        b=XxA5vPTAbnVQpXpddcUN1KOmNrYvdEwQdi12Ohc1RxRcrd+cmJkyuC6cvbZWALwIhN
+         mQOLptEKKtbgHr5Tf/143WU5S6gLTMnXcb60IXbKC0yuhkEdRY4AdCKRUVfQ6YT0QyMm
+         HhRghMPdNhEw5/RW3aijcHqS8IE17tkbcMW+5BI5l7I2uaEw8YHkZx14TRFYVqQm1XG+
+         S+61yD1Z9MY7HloNp584uRGk1aiMK+KLG+pRpdIuskz18YPheWHj810uCml7F9fXtu46
+         miYTJXh5TzfFmMwV9APY1dz3Rf3CW2NPK7kHEssTnV3MgqFA4OzWqaxAxczvfk5RnMkh
+         bIrg==
+X-Gm-Message-State: AOAM533SfTIcBpxW2PKiYzaegejcHuib4qesRtShDfBczH0GH5yCjCY9
+        MhyGWryHFUgd47VIUBC9eDPKQg==
+X-Google-Smtp-Source: ABdhPJzmMzQgwR7cNNoSaOWusGUG+LNYHF0AXsO6MC5So3X+yMZ49KPS3MosOkJ4nGK7PFFOvq3uSQ==
+X-Received: by 2002:a17:902:a9c6:b029:129:8fdb:698f with SMTP id b6-20020a170902a9c6b02901298fdb698fmr4296847plr.15.1627557316246;
+        Thu, 29 Jul 2021 04:15:16 -0700 (PDT)
+Received: from localhost ([122.172.201.85])
+        by smtp.gmail.com with ESMTPSA id 20sm663000pgg.36.2021.07.29.04.15.15
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 29 Jul 2021 04:15:15 -0700 (PDT)
+Date:   Thu, 29 Jul 2021 16:45:13 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, rui.zhang@intel.com,
+        daniel.lezcano@linaro.org, rjw@rjwysocki.net, robh+dt@kernel.org,
+        steev@kali.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [Patch v4 3/6] cpufreq: qcom-cpufreq-hw: Add dcvs interrupt
+ support
+Message-ID: <20210729111513.djd5hrbz6jb453xp@vireshk-i7>
+References: <20210727152512.1098329-1-thara.gopinath@linaro.org>
+ <20210727152512.1098329-4-thara.gopinath@linaro.org>
+ <20210728035014.25mgvrpnraxfslq7@vireshk-i7>
+ <9a257605-d282-cd06-cc44-5ad5a5f8484d@linaro.org>
+ <20210729061713.kzhka7nymo53zw2o@vireshk-i7>
+ <4d80594c-9088-5d36-44cd-19a98145095c@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <b16d8000-85a7-d957-77d2-d921e5b09829@somainline.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <4d80594c-9088-5d36-44cd-19a98145095c@linaro.org>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 29-07-21, 07:13, Thara Gopinath wrote:
+> So the interrupt handler is a threaded handler. I moved it in v4 since one
+> of the "_opp" api has an underlying mutex and was causing issues. So using a
+> mutex should be pretty safe in this case.
 
+Ahh I see.
 
-On 7/29/21 6:55 AM, Konrad Dybcio wrote:
-> 
-> On 29.07.2021 12:54, Thara Gopinath wrote:
->>
->>
->> On 7/29/21 6:52 AM, Konrad Dybcio wrote:
->>>
->>> On 29.07.2021 12:50, Thara Gopinath wrote:
->>>> Hi Konrad,
->>>>
->>>> On 7/28/21 6:25 PM, Konrad Dybcio wrote:
->>>>> This will enable temperature reporting for various SoC
->>>>> components.
->>>>>
->>>>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
->>>>> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
->>>>> ---
->>>>>     .../devicetree/bindings/thermal/qcom-tsens.yaml       |  1 +
->>>>>     arch/arm64/boot/dts/qcom/sdm630.dtsi                  | 11 +++++++++++
->>>>>     2 files changed, 12 insertions(+)
->>>>>
->>>>> diff --git a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
->>>>> index 4a2eaf28e3fd..d3b9e9b600a2 100644
->>>>> --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
->>>>> +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
->>>>> @@ -48,6 +48,7 @@ properties:
->>>>>                   - qcom,sc7180-tsens
->>>>>                   - qcom,sc7280-tsens
->>>>>                   - qcom,sc8180x-tsens
->>>>> +              - qcom,sdm630-tsens
->>>>>                   - qcom,sdm845-tsens
->>>>>                   - qcom,sm8150-tsens
->>>>>                   - qcom,sm8250-tsens
->>>>> diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
->>>>> index 1e54828817d5..7e9c80e35fba 100644
->>>>> --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
->>>>> +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
->>>>> @@ -627,6 +627,17 @@ mnoc: interconnect@1745000 {
->>>>>                      <&mmcc AHB_CLK_SRC>;
->>>>>             };
->>>>>     +        tsens: thermal-sensor@10ae000 {
->>>>> +            compatible = "qcom,sdm630-tsens", "qcom,tsens-v2";
->>>>> +            reg = <0x010ae000 0x1000>, /* TM */
->>>>> +                  <0x010ad000 0x1000>; /* SROT */
->>>>> +            #qcom,sensors = <12>;
->>>>
->>>> Are all 12 sensors used ? I see that in a later patch "arm64: dts: qcom: sdm630: Add thermal-zones configuration" only 9 are used.
->>>
->>> Hi,
->>>
->>> if I recall correctly, they all give output but not all of the mappings were documented in the downstream sources and we have no documentation whatsoever :(
->>
->> Right. In that case, why not change #qcom,sensors to 9 and add rest of the sensors if and when needed ?
->>
-> I don't think it makes sense to describe the hardware incorrectly, even if some of it is unused.
+> IIUC, the main change you are suggesting below is to include enable_irq() /
+> mod_delayed_work() under the spin_lock as well. Is that right ? In which
+> case isn't a mutex better than spinlock?
 
-My thinking was more along the lines of don't expose unused h/w bits.
-
-> 
-> 
-> 
+Yeah, sure.
 
 -- 
-Warm Regards
-Thara (She/Her/Hers)
+viresh
