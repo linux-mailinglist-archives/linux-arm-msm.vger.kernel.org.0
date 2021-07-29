@@ -2,465 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 99F0F3DA65F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 16:28:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 253CA3DA67E
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 16:33:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237252AbhG2O2b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jul 2021 10:28:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32864 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229750AbhG2O2b (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jul 2021 10:28:31 -0400
-Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35351C061765
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jul 2021 07:28:28 -0700 (PDT)
-Received: by mail-qt1-x82d.google.com with SMTP id h10so4038533qth.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jul 2021 07:28:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=wLj2QK1R5utvd4vrSnwikE1e+hVxBjjxq1nXuXjo4gI=;
-        b=AbSYxlJb8Smx3Z/+e5otONwijclrDAkIj7xU+PKleTPInFmOC2OjWYR8Zbr1a4R6wE
-         G4nrTw2njuNTe7uf/a+XwwtE91dp1ZhFLSaArKUjwYjgOIrkEPv138OTymtmkVB/1gKb
-         JUPYN0Zt+tyivETVlSQS61nEIJ4yOg+b/ZMYHlKuRPv0W6jt6DjrjNJuiW7Ciok62ddt
-         LQeHIPH0r1L1iHwoUsXM/m9/9OFhT5QORWbx7xlKdcl7xsB+77Ii0nJcPnhVqz63rxYt
-         4PzpbeVOlcbeD8qYORf9g9cQF2vilK4r7WmE20EUwYqYT9qNnKxFAWFVVoHsZJs2MTP1
-         UOaQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=wLj2QK1R5utvd4vrSnwikE1e+hVxBjjxq1nXuXjo4gI=;
-        b=XvqjY9Z05odlqa8Ota7g1Kkni5fbExO/UyrYnbKHqBiCNjMGxlATr6Vq5EPSp9kUVN
-         YFtlYbOYvfypTOkSlXlmHZndyXQfliy0zmf5fr6X+DUzqzpxNy4kK2liUjTbUfFdat3a
-         fluYTA3b4u0KgvRcIOVJ2PV97Q6RQOwlFkTZ3pGAQDGE4jn38quyK6ffOOsb+rcL3f43
-         XPCuCZ3DI9qcKFAgPF+NmwM946JGrDwu4V/8NNHNECng9gsNL75+ySm0uYyx5h/k2WXO
-         /mhUfMni3B5+ZkAG6pB/0m9WGTjuulSPmzDN9pi3YwifexD3qfzlRQ1M7bh/1+SShPsX
-         kX4Q==
-X-Gm-Message-State: AOAM533L+O2JJ0SPRTrQHDoPrzJ2GeqAwqZaY3rMVmw/R1nFZjUKi43f
-        sfASX+jJI8YqQBTvgIRzbyOPu3VG2vOmpklkeP039Q==
-X-Google-Smtp-Source: ABdhPJxyJ/rYH79KnYLvQd4hmKuqktWzGYbo36HWzJnr8rUgZyn2syDgkgiytXEsZjV7bxNJWR5h0+R/kOT2EQh5qvQ=
-X-Received: by 2002:ac8:6697:: with SMTP id d23mr4367324qtp.135.1627568907353;
- Thu, 29 Jul 2021 07:28:27 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210728142445.774158-1-dmitry.baryshkov@linaro.org>
- <20210728142445.774158-4-dmitry.baryshkov@linaro.org> <YQFxEIRWRZscPgJl@yoga>
-In-Reply-To: <YQFxEIRWRZscPgJl@yoga>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 29 Jul 2021 17:28:16 +0300
-Message-ID: <CAA8EJpqzcuctWaOeqq2-mqW3o-DSNPNEmoiDWEcry+SQ+2-uDg@mail.gmail.com>
-Subject: Re: [PATCH v2 3/5] clk: qcom: use devm_pm_runtime_enable and devm_pm_clk_create
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Pavel Machek <pavel@ucw.cz>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Andy Gross <agross@kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S237142AbhG2Ods (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jul 2021 10:33:48 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:34220 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237018AbhG2Ods (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 29 Jul 2021 10:33:48 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1627569225; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=+jKQCMrkI6SnfJLefy3To/tENpXlXiE65yiHBQB3XR0=; b=RXinlA4KRy6XDez8aImuKmYiDXku8aJNqoNulpo5+NG+ZWJlUM+u6ZD2As9IIi0aZzKVXLiS
+ weiWHLzNr2pM0o4khBWEj8Dr/ehGkYcuJF6sTmD4hRFN19ppeXl/0ILJIZFEez93daRvSKIQ
+ P90j8cWhuUDfhiuJQPQ5Peu0NzY=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 6102bc28290ea35ee65dd69b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 29 Jul 2021 14:33:12
+ GMT
+Sender: akhilpo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id DFB5BC43149; Thu, 29 Jul 2021 14:33:11 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from hyd-lnxbld559.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akhilpo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8B12AC43460;
+        Thu, 29 Jul 2021 14:33:06 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8B12AC43460
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
+From:   Akhil P Oommen <akhilpo@codeaurora.org>
+To:     freedreno <freedreno@lists.freedesktop.org>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>
+Cc:     Jordan Crouse <jordan@cosmicpenguin.net>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Douglas Anderson <dianders@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sean Paul <sean@poorly.run>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 1/3] drm/msm/a6xx: Fix llcc configuration for a660 gpu
+Date:   Thu, 29 Jul 2021 20:02:58 +0530
+Message-Id: <20210729200230.v2.1.I110b87677ef16d97397fb7c81c07a16e1f5d211e@changeid>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 28 Jul 2021 at 18:00, Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Wed 28 Jul 09:24 CDT 2021, Dmitry Baryshkov wrote:
->
-> > Use two new helpers instead of pm_runtime_enable() and pm_clk_create(),
-> > removing the need for calling pm_runtime_disable and pm_clk_destroy().
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
-> It's quite reasonable to expect that Rafael wants to take the two first
-> patches through his tree, but I expect that these clock patches will
-> conflict with your other changes resulting in a less smooth path into
-> mainline.
+Add the missing scache_cntl0 register programing which is required for
+a660 gpu.
 
-I do not expect any conflicts in the clock code. The gdsc fixes do not
-touch these parts.
+Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
+---
 
-> Grepping the tree for candidates I find many better examples, that
-> we don't foresee any conflicting changes..
->
-> So may I suggest that you fix drivers/hwspinlock/omap_hwspinlock.c and
-> drivers/hwspinlock/stm32_hwspinlock.c, then I (as maintainer) can Ack
-> those changes and Rafael can take the series in his tree for v5.15.
+(no changes since v1)
 
-These two would use devm_pm_runtime_enable, but not the
-devm_pm_clk_create. Thus I'd still prefer to modify these few drivers
-(note, the generification is a separate patch and I can safely drop it
-for now).
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 46 ++++++++++++++++++++---------------
+ 1 file changed, 27 insertions(+), 19 deletions(-)
 
-> Then as v5.15-rc1 lands, we have the API and we can follow up changing
-> these more complex drivers - and those patches can go through the
-> individual maintainer trees.
->
-> Regards,
-> Bjorn
->
-> > ---
-> >  drivers/clk/qcom/camcc-sc7180.c       | 25 +++++++++------------
-> >  drivers/clk/qcom/lpass-gfm-sm8250.c   | 21 ++++++++----------
-> >  drivers/clk/qcom/lpasscorecc-sc7180.c | 18 ++-------------
-> >  drivers/clk/qcom/mss-sc7180.c         | 30 +++++++------------------
-> >  drivers/clk/qcom/q6sstop-qcs404.c     | 32 ++++++++-------------------
-> >  drivers/clk/qcom/turingcc-qcs404.c    | 30 +++++++------------------
-> >  6 files changed, 46 insertions(+), 110 deletions(-)
-> >
-> > diff --git a/drivers/clk/qcom/camcc-sc7180.c b/drivers/clk/qcom/camcc-sc7180.c
-> > index 9bcf2f8ed4de..ce73ee9037cb 100644
-> > --- a/drivers/clk/qcom/camcc-sc7180.c
-> > +++ b/drivers/clk/qcom/camcc-sc7180.c
-> > @@ -1652,32 +1652,35 @@ static int cam_cc_sc7180_probe(struct platform_device *pdev)
-> >       struct regmap *regmap;
-> >       int ret;
-> >
-> > -     pm_runtime_enable(&pdev->dev);
-> > -     ret = pm_clk_create(&pdev->dev);
-> > +     ret = devm_pm_runtime_enable(&pdev->dev);
-> > +     if (ret < 0)
-> > +             return ret;
-> > +
-> > +     ret = devm_pm_clk_create(&pdev->dev);
-> >       if (ret < 0)
-> >               return ret;
-> >
-> >       ret = pm_clk_add(&pdev->dev, "xo");
-> >       if (ret < 0) {
-> >               dev_err(&pdev->dev, "Failed to acquire XO clock\n");
-> > -             goto disable_pm_runtime;
-> > +             return ret;
-> >       }
-> >
-> >       ret = pm_clk_add(&pdev->dev, "iface");
-> >       if (ret < 0) {
-> >               dev_err(&pdev->dev, "Failed to acquire iface clock\n");
-> > -             goto disable_pm_runtime;
-> > +             return ret;
-> >       }
-> >
-> >       ret = pm_runtime_get(&pdev->dev);
-> >       if (ret)
-> > -             goto destroy_pm_clk;
-> > +             return ret;
-> >
-> >       regmap = qcom_cc_map(pdev, &cam_cc_sc7180_desc);
-> >       if (IS_ERR(regmap)) {
-> >               ret = PTR_ERR(regmap);
-> >               pm_runtime_put(&pdev->dev);
-> > -             goto destroy_pm_clk;
-> > +             return ret;
-> >       }
-> >
-> >       clk_fabia_pll_configure(&cam_cc_pll0, regmap, &cam_cc_pll0_config);
-> > @@ -1689,18 +1692,10 @@ static int cam_cc_sc7180_probe(struct platform_device *pdev)
-> >       pm_runtime_put(&pdev->dev);
-> >       if (ret < 0) {
-> >               dev_err(&pdev->dev, "Failed to register CAM CC clocks\n");
-> > -             goto destroy_pm_clk;
-> > +             return ret;
-> >       }
-> >
-> >       return 0;
-> > -
-> > -destroy_pm_clk:
-> > -     pm_clk_destroy(&pdev->dev);
-> > -
-> > -disable_pm_runtime:
-> > -     pm_runtime_disable(&pdev->dev);
-> > -
-> > -     return ret;
-> >  }
-> >
-> >  static const struct dev_pm_ops cam_cc_pm_ops = {
-> > diff --git a/drivers/clk/qcom/lpass-gfm-sm8250.c b/drivers/clk/qcom/lpass-gfm-sm8250.c
-> > index f5e31e692b9b..96f476f24eb2 100644
-> > --- a/drivers/clk/qcom/lpass-gfm-sm8250.c
-> > +++ b/drivers/clk/qcom/lpass-gfm-sm8250.c
-> > @@ -251,15 +251,18 @@ static int lpass_gfm_clk_driver_probe(struct platform_device *pdev)
-> >       if (IS_ERR(cc->base))
-> >               return PTR_ERR(cc->base);
-> >
-> > -     pm_runtime_enable(dev);
-> > -     err = pm_clk_create(dev);
-> > +     err = devm_pm_runtime_enable(dev);
-> >       if (err)
-> > -             goto pm_clk_err;
-> > +             return err;
-> > +
-> > +     err = devm_pm_clk_create(dev);
-> > +     if (err)
-> > +             return err;
-> >
-> >       err = of_pm_clk_add_clks(dev);
-> >       if (err < 0) {
-> >               dev_dbg(dev, "Failed to get lpass core voting clocks\n");
-> > -             goto clk_reg_err;
-> > +             return err;
-> >       }
-> >
-> >       for (i = 0; i < data->onecell_data->num; i++) {
-> > @@ -273,22 +276,16 @@ static int lpass_gfm_clk_driver_probe(struct platform_device *pdev)
-> >
-> >               err = devm_clk_hw_register(dev, &data->gfm_clks[i]->hw);
-> >               if (err)
-> > -                     goto clk_reg_err;
-> > +                     return err;
-> >
-> >       }
-> >
-> >       err = devm_of_clk_add_hw_provider(dev, of_clk_hw_onecell_get,
-> >                                         data->onecell_data);
-> >       if (err)
-> > -             goto clk_reg_err;
-> > +             return err;
-> >
-> >       return 0;
-> > -
-> > -clk_reg_err:
-> > -     pm_clk_destroy(dev);
-> > -pm_clk_err:
-> > -     pm_runtime_disable(dev);
-> > -     return err;
-> >  }
-> >
-> >  static const struct of_device_id lpass_gfm_clk_match_table[] = {
-> > diff --git a/drivers/clk/qcom/lpasscorecc-sc7180.c b/drivers/clk/qcom/lpasscorecc-sc7180.c
-> > index 2e0ecc38efdd..ac09b7b840ab 100644
-> > --- a/drivers/clk/qcom/lpasscorecc-sc7180.c
-> > +++ b/drivers/clk/qcom/lpasscorecc-sc7180.c
-> > @@ -356,32 +356,18 @@ static const struct qcom_cc_desc lpass_audio_hm_sc7180_desc = {
-> >       .num_gdscs = ARRAY_SIZE(lpass_audio_hm_sc7180_gdscs),
-> >  };
-> >
-> > -static void lpass_pm_runtime_disable(void *data)
-> > -{
-> > -     pm_runtime_disable(data);
-> > -}
-> > -
-> > -static void lpass_pm_clk_destroy(void *data)
-> > -{
-> > -     pm_clk_destroy(data);
-> > -}
-> > -
-> >  static int lpass_create_pm_clks(struct platform_device *pdev)
-> >  {
-> >       int ret;
-> >
-> >       pm_runtime_use_autosuspend(&pdev->dev);
-> >       pm_runtime_set_autosuspend_delay(&pdev->dev, 500);
-> > -     pm_runtime_enable(&pdev->dev);
-> >
-> > -     ret = devm_add_action_or_reset(&pdev->dev, lpass_pm_runtime_disable, &pdev->dev);
-> > +     ret = devm_pm_runtime_enable(&pdev->dev);
-> >       if (ret)
-> >               return ret;
-> >
-> > -     ret = pm_clk_create(&pdev->dev);
-> > -     if (ret)
-> > -             return ret;
-> > -     ret = devm_add_action_or_reset(&pdev->dev, lpass_pm_clk_destroy, &pdev->dev);
-> > +     ret = devm_pm_clk_create(&pdev->dev);
-> >       if (ret)
-> >               return ret;
-> >
-> > diff --git a/drivers/clk/qcom/mss-sc7180.c b/drivers/clk/qcom/mss-sc7180.c
-> > index 673fa1a4f734..5a1407440662 100644
-> > --- a/drivers/clk/qcom/mss-sc7180.c
-> > +++ b/drivers/clk/qcom/mss-sc7180.c
-> > @@ -73,36 +73,23 @@ static int mss_sc7180_probe(struct platform_device *pdev)
-> >  {
-> >       int ret;
-> >
-> > -     pm_runtime_enable(&pdev->dev);
-> > -     ret = pm_clk_create(&pdev->dev);
-> > +     ret = devm_pm_runtime_enable(&pdev->dev);
-> >       if (ret)
-> > -             goto disable_pm_runtime;
-> > +             return ret;
-> > +
-> > +     ret = devm_pm_clk_create(&pdev->dev);
-> > +     if (ret)
-> > +             return ret;
-> >
-> >       ret = pm_clk_add(&pdev->dev, "cfg_ahb");
-> >       if (ret < 0) {
-> >               dev_err(&pdev->dev, "failed to acquire iface clock\n");
-> > -             goto destroy_pm_clk;
-> > +             return ret;
-> >       }
-> >
-> >       ret = qcom_cc_probe(pdev, &mss_sc7180_desc);
-> >       if (ret < 0)
-> > -             goto destroy_pm_clk;
-> > -
-> > -     return 0;
-> > -
-> > -destroy_pm_clk:
-> > -     pm_clk_destroy(&pdev->dev);
-> > -
-> > -disable_pm_runtime:
-> > -     pm_runtime_disable(&pdev->dev);
-> > -
-> > -     return ret;
-> > -}
-> > -
-> > -static int mss_sc7180_remove(struct platform_device *pdev)
-> > -{
-> > -     pm_clk_destroy(&pdev->dev);
-> > -     pm_runtime_disable(&pdev->dev);
-> > +             return ret;
-> >
-> >       return 0;
-> >  }
-> > @@ -119,7 +106,6 @@ MODULE_DEVICE_TABLE(of, mss_sc7180_match_table);
-> >
-> >  static struct platform_driver mss_sc7180_driver = {
-> >       .probe          = mss_sc7180_probe,
-> > -     .remove         = mss_sc7180_remove,
-> >       .driver         = {
-> >               .name           = "sc7180-mss",
-> >               .of_match_table = mss_sc7180_match_table,
-> > diff --git a/drivers/clk/qcom/q6sstop-qcs404.c b/drivers/clk/qcom/q6sstop-qcs404.c
-> > index 723f932fbf7d..507386bee07d 100644
-> > --- a/drivers/clk/qcom/q6sstop-qcs404.c
-> > +++ b/drivers/clk/qcom/q6sstop-qcs404.c
-> > @@ -159,15 +159,18 @@ static int q6sstopcc_qcs404_probe(struct platform_device *pdev)
-> >       const struct qcom_cc_desc *desc;
-> >       int ret;
-> >
-> > -     pm_runtime_enable(&pdev->dev);
-> > -     ret = pm_clk_create(&pdev->dev);
-> > +     ret = devm_pm_runtime_enable(&pdev->dev);
-> >       if (ret)
-> > -             goto disable_pm_runtime;
-> > +             return ret;
-> > +
-> > +     ret = devm_pm_clk_create(&pdev->dev);
-> > +     if (ret)
-> > +             return ret;
-> >
-> >       ret = pm_clk_add(&pdev->dev, NULL);
-> >       if (ret < 0) {
-> >               dev_err(&pdev->dev, "failed to acquire iface clock\n");
-> > -             goto destroy_pm_clk;
-> > +             return ret;
-> >       }
-> >
-> >       q6sstop_regmap_config.name = "q6sstop_tcsr";
-> > @@ -175,30 +178,14 @@ static int q6sstopcc_qcs404_probe(struct platform_device *pdev)
-> >
-> >       ret = qcom_cc_probe_by_index(pdev, 1, desc);
-> >       if (ret)
-> > -             goto destroy_pm_clk;
-> > +             return ret;
-> >
-> >       q6sstop_regmap_config.name = "q6sstop_cc";
-> >       desc = &q6sstop_qcs404_desc;
-> >
-> >       ret = qcom_cc_probe_by_index(pdev, 0, desc);
-> >       if (ret)
-> > -             goto destroy_pm_clk;
-> > -
-> > -     return 0;
-> > -
-> > -destroy_pm_clk:
-> > -     pm_clk_destroy(&pdev->dev);
-> > -
-> > -disable_pm_runtime:
-> > -     pm_runtime_disable(&pdev->dev);
-> > -
-> > -     return ret;
-> > -}
-> > -
-> > -static int q6sstopcc_qcs404_remove(struct platform_device *pdev)
-> > -{
-> > -     pm_clk_destroy(&pdev->dev);
-> > -     pm_runtime_disable(&pdev->dev);
-> > +             return ret;
-> >
-> >       return 0;
-> >  }
-> > @@ -209,7 +196,6 @@ static const struct dev_pm_ops q6sstopcc_pm_ops = {
-> >
-> >  static struct platform_driver q6sstopcc_qcs404_driver = {
-> >       .probe          = q6sstopcc_qcs404_probe,
-> > -     .remove         = q6sstopcc_qcs404_remove,
-> >       .driver         = {
-> >               .name   = "qcs404-q6sstopcc",
-> >               .of_match_table = q6sstopcc_qcs404_match_table,
-> > diff --git a/drivers/clk/qcom/turingcc-qcs404.c b/drivers/clk/qcom/turingcc-qcs404.c
-> > index 4cfbbf5bf4d9..4543bda793f4 100644
-> > --- a/drivers/clk/qcom/turingcc-qcs404.c
-> > +++ b/drivers/clk/qcom/turingcc-qcs404.c
-> > @@ -110,36 +110,23 @@ static int turingcc_probe(struct platform_device *pdev)
-> >  {
-> >       int ret;
-> >
-> > -     pm_runtime_enable(&pdev->dev);
-> > -     ret = pm_clk_create(&pdev->dev);
-> > +     ret = devm_pm_runtime_enable(&pdev->dev);
-> >       if (ret)
-> > -             goto disable_pm_runtime;
-> > +             return ret;
-> > +
-> > +     ret = devm_pm_clk_create(&pdev->dev);
-> > +     if (ret)
-> > +             return ret;
-> >
-> >       ret = pm_clk_add(&pdev->dev, NULL);
-> >       if (ret < 0) {
-> >               dev_err(&pdev->dev, "failed to acquire iface clock\n");
-> > -             goto destroy_pm_clk;
-> > +             return ret;
-> >       }
-> >
-> >       ret = qcom_cc_probe(pdev, &turingcc_desc);
-> >       if (ret < 0)
-> > -             goto destroy_pm_clk;
-> > -
-> > -     return 0;
-> > -
-> > -destroy_pm_clk:
-> > -     pm_clk_destroy(&pdev->dev);
-> > -
-> > -disable_pm_runtime:
-> > -     pm_runtime_disable(&pdev->dev);
-> > -
-> > -     return ret;
-> > -}
-> > -
-> > -static int turingcc_remove(struct platform_device *pdev)
-> > -{
-> > -     pm_clk_destroy(&pdev->dev);
-> > -     pm_runtime_disable(&pdev->dev);
-> > +             return ret;
-> >
-> >       return 0;
-> >  }
-> > @@ -156,7 +143,6 @@ MODULE_DEVICE_TABLE(of, turingcc_match_table);
-> >
-> >  static struct platform_driver turingcc_driver = {
-> >       .probe          = turingcc_probe,
-> > -     .remove         = turingcc_remove,
-> >       .driver         = {
-> >               .name   = "qcs404-turingcc",
-> >               .of_match_table = turingcc_match_table,
-> > --
-> > 2.30.2
-> >
-
-
-
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 9c5e461..183b9f9 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1383,13 +1383,13 @@ static void a6xx_llc_activate(struct a6xx_gpu *a6xx_gpu)
+ {
+ 	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
+ 	struct msm_gpu *gpu = &adreno_gpu->base;
+-	u32 cntl1_regval = 0;
++	u32 gpu_scid, cntl1_regval = 0;
+ 
+ 	if (IS_ERR(a6xx_gpu->llc_mmio))
+ 		return;
+ 
+ 	if (!llcc_slice_activate(a6xx_gpu->llc_slice)) {
+-		u32 gpu_scid = llcc_get_slice_id(a6xx_gpu->llc_slice);
++		gpu_scid = llcc_get_slice_id(a6xx_gpu->llc_slice);
+ 
+ 		gpu_scid &= 0x1f;
+ 		cntl1_regval = (gpu_scid << 0) | (gpu_scid << 5) | (gpu_scid << 10) |
+@@ -1409,26 +1409,34 @@ static void a6xx_llc_activate(struct a6xx_gpu *a6xx_gpu)
+ 		}
+ 	}
+ 
+-	if (cntl1_regval) {
++	if (!cntl1_regval)
++		return;
++
++	/*
++	 * Program the slice IDs for the various GPU blocks and GPU MMU
++	 * pagetables
++	 */
++	if (!a6xx_gpu->have_mmu500) {
++		a6xx_llc_write(a6xx_gpu,
++			REG_A6XX_CX_MISC_SYSTEM_CACHE_CNTL_1, cntl1_regval);
++
+ 		/*
+-		 * Program the slice IDs for the various GPU blocks and GPU MMU
+-		 * pagetables
++		 * Program cacheability overrides to not allocate cache
++		 * lines on a write miss
+ 		 */
+-		if (a6xx_gpu->have_mmu500)
+-			gpu_rmw(gpu, REG_A6XX_GBIF_SCACHE_CNTL1, GENMASK(24, 0),
+-				cntl1_regval);
+-		else {
+-			a6xx_llc_write(a6xx_gpu,
+-				REG_A6XX_CX_MISC_SYSTEM_CACHE_CNTL_1, cntl1_regval);
+-
+-			/*
+-			 * Program cacheability overrides to not allocate cache
+-			 * lines on a write miss
+-			 */
+-			a6xx_llc_rmw(a6xx_gpu,
+-				REG_A6XX_CX_MISC_SYSTEM_CACHE_CNTL_0, 0xF, 0x03);
+-		}
++		a6xx_llc_rmw(a6xx_gpu,
++			REG_A6XX_CX_MISC_SYSTEM_CACHE_CNTL_0, 0xF, 0x03);
++		return;
+ 	}
++
++	gpu_rmw(gpu, REG_A6XX_GBIF_SCACHE_CNTL1, GENMASK(24, 0), cntl1_regval);
++
++	/* On A660, the SCID programming for UCHE traffic is done in
++	 * A6XX_GBIF_SCACHE_CNTL0[14:10]
++	 */
++	if (adreno_is_a660(adreno_gpu))
++		gpu_rmw(gpu, REG_A6XX_GBIF_SCACHE_CNTL0, (0x1f << 10) |
++			(1 << 8), (gpu_scid << 10) | (1 << 8));
+ }
+ 
+ static void a6xx_llc_slices_destroy(struct a6xx_gpu *a6xx_gpu)
 -- 
-With best wishes
-Dmitry
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation.
+
