@@ -2,65 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E29D13DA01D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 11:14:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CBB13DA044
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 11:31:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235260AbhG2JOD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jul 2021 05:14:03 -0400
-Received: from relay02.th.seeweb.it ([5.144.164.163]:50639 "EHLO
-        relay02.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235141AbhG2JOD (ORCPT
+        id S235382AbhG2JbR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jul 2021 05:31:17 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:10689 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235244AbhG2JbR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jul 2021 05:14:03 -0400
-Received: from [192.168.1.101] (83.6.168.174.neoplus.adsl.tpnet.pl [83.6.168.174])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 3EC2C200D2;
-        Thu, 29 Jul 2021 11:13:57 +0200 (CEST)
-Subject: Re: [PATCH] drivers: usb: dwc3-qcom: Add sdm660 compatible
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Manu Gautam <mgautam@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20210728221921.52068-1-konrad.dybcio@somainline.org>
- <YQJDboMpZ+C7F2fz@kroah.com>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-Message-ID: <81c1cc03-43a6-79d4-7cfb-7645d1eef665@somainline.org>
-Date:   Thu, 29 Jul 2021 11:13:56 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        Thu, 29 Jul 2021 05:31:17 -0400
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 29 Jul 2021 02:31:14 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 29 Jul 2021 02:31:12 -0700
+X-QCInternal: smtphost
+Received: from c-mansur-linux.qualcomm.com ([10.204.90.208])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 29 Jul 2021 15:00:49 +0530
+Received: by c-mansur-linux.qualcomm.com (Postfix, from userid 461723)
+        id C762F226D4; Thu, 29 Jul 2021 15:00:48 +0530 (IST)
+From:   Mansur Alisha Shaik <mansur@codeaurora.org>
+To:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, dikshita@codeaurora.org,
+        Mansur Alisha Shaik <mansur@codeaurora.org>
+Subject: [PATCH] venus: helper: change log level for false warning message
+Date:   Thu, 29 Jul 2021 15:00:44 +0530
+Message-Id: <20210729093044.5896-1-mansur@codeaurora.org>
+X-Mailer: git-send-email 2.29.0
 MIME-Version: 1.0
-In-Reply-To: <YQJDboMpZ+C7F2fz@kroah.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+In current video driver implementation in calculate_inst_freq()
+frequency is calculated based on filled_len. The filled_len may
+vary frame to frame, because of this in load_scale_v4() since
+frequency is calculated for all instances, driver is throwing
+false warning like "HW is overloaded".
 
-On 29.07.2021 07:58, Greg Kroah-Hartman wrote:
-> On Thu, Jul 29, 2021 at 12:19:21AM +0200, Konrad Dybcio wrote:
->> Add a new compatible for SDM660's DWC3.
->>
->> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> Odd mailing list you sent this to, what tree do you expect this to go
-> through?
->
-> thanks,
->
-> greg k-h
+Hence to handle this, changed log level to low log message. Since the
+actual session rejection is happening in decide_core() based on
+load.
 
-I just went with whatever get_maintainer.pl suggested. Unless you mean the postmarketOS one, which I always include so that folks from this project interested in qcom soc+phone enablement can see them in one place.
+Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+---
+ drivers/media/platform/qcom/venus/pm_helpers.c | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-
-Konrad
+diff --git a/drivers/media/platform/qcom/venus/pm_helpers.c b/drivers/media/platform/qcom/venus/pm_helpers.c
+index 3e2345eb47f7..679177e7ad22 100644
+--- a/drivers/media/platform/qcom/venus/pm_helpers.c
++++ b/drivers/media/platform/qcom/venus/pm_helpers.c
+@@ -1139,9 +1139,10 @@ static int load_scale_v4(struct venus_inst *inst)
+ 	freq = max(freq_core1, freq_core2);
+ 
+ 	if (freq > table[0].freq) {
++		dev_dbg(dev, VDBGL "requested clock rate: %lu scaling clock rate : %lu\n",
++			freq, table[0].freq);
++
+ 		freq = table[0].freq;
+-		dev_warn(dev, "HW is overloaded, needed: %lu max: %lu\n",
+-			 freq, table[0].freq);
+ 		goto set_freq;
+ 	}
+ 
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
 
