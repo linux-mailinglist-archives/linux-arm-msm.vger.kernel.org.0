@@ -2,199 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 667753DAD5F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 22:20:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EEE553DAD85
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 22:25:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229735AbhG2UUV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jul 2021 16:20:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34734 "EHLO
+        id S232360AbhG2UZ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jul 2021 16:25:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35994 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229695AbhG2UUV (ORCPT
+        with ESMTP id S229667AbhG2UZ2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jul 2021 16:20:21 -0400
-Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ACC6FC061765;
-        Thu, 29 Jul 2021 13:20:17 -0700 (PDT)
-Received: by mail-wm1-x32a.google.com with SMTP id u15-20020a05600c19cfb02902501bdb23cdso7648813wmq.0;
-        Thu, 29 Jul 2021 13:20:17 -0700 (PDT)
+        Thu, 29 Jul 2021 16:25:28 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 37C8AC061765
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jul 2021 13:25:25 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id r23so9156820lji.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jul 2021 13:25:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=4mYJxtg2BzV1dCKk+R2O33QKQKgHpoQrEfnqJMGvoOU=;
-        b=s47z2Leq1dyPdLAOq5E3e7JmSQJqfawmN1oDTLcJkmlivlUVGpPThl6ZwINEh8ShrG
-         cmfcPeV+5UtuG/sD7hA6uD/WYcnFkiye8UMwMQDzWmwugU5X1iuaongLKNibULZe/Ggu
-         NNt0ZD/9Q6Ky9nTB+1+vnoKwjmBldVnWZbnLiHjYiCDmVdvZMEOHFkCXPg5l9LV/Syzo
-         kFkQu/p6XPBSKkrvUipooKYnDIlDeR7NkevGvKqNQoVoXa9Bhn2BYfZ24kiAM2tmxg7H
-         PtK9eHAMNZx04wDhwaPyk2lCic78i+2kqn90epzPILHDQZXe4sJJjg1bUGtKyKpF0YDL
-         8DvQ==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Pr0DaHa/zY3zZ7CWN2sL39UmzN4TMNfowFEuDM2tCjs=;
+        b=gx3Fwfl0kR+A+jdmsZn+Cideu/W+gxBz1EunOngbrIyTKw1jqFAKeF5zpFr7lNh7hj
+         2ZXxi/1mN27bS9Q4FbBg4JrVsWyN8pwTNH6aVIO/uwm3xJTlYC80kHrMd5tZjbhi6WG3
+         3JYraHp6i+RNXlVCibdKUBCswW5HGwyZQqEwUeS17n7QV5cpf8A6njVRkeFN8Yw1TAL2
+         sx4ZxZ5atm8+5Gd5Yq2O11iocL//9LTHwQC1YhcfQ8TRtbWTuB4AHx3l21ef3hjUjQS3
+         2fj4n0pKghMbBhKZNGy4sx635NpTF3G06COaCPvHAc9dZZFpGJEoD9HbQrqsYh10fo7M
+         l5gQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=4mYJxtg2BzV1dCKk+R2O33QKQKgHpoQrEfnqJMGvoOU=;
-        b=hcvQbgm3jrQnYEQHliWytWnDOXJrkrKJR4/yqWYedHqBzP/orPdpiq/ZPOstFX4Rqt
-         uh+hoLbaDO9kcMkSFUr6ZYCitDUW+Qy43EN/qGiyKvA4OKf0C9dcwQvEauDlfbPPKifx
-         j/YMJwOTlAzDMRxdZiqZJWHvoTfzR0ESGECOU4jfkrN4cZrvdeV7DDIlyIzLvdDohm7S
-         KhQtVtFSPEQOxy7Qg2DQAm2vQAMIDZS/jKGnFl/OzL7Hu+PUAi4zATR2zrKl7Hq3Ztqf
-         Wjtk9NeT0Rhak0pow5zRuX9velDWksoPj5JBNyAk0/U5madVyGmosuY/pklXtl24y0jc
-         CcdQ==
-X-Gm-Message-State: AOAM530Jn8MdyMQ80enEuV7ZlLc8GLVObtltuwGoUM+B0tiXsls78Xxt
-        q5gNoUI8fGdQa/rgREJZy0xtl6OXvjYNgqG/48k=
-X-Google-Smtp-Source: ABdhPJyH11WK0huXceMHfYyDe2v1deyA1P4BwAJFHZNK9evo7CLvUqRxBUAorguOtL5HcEoQ0/ZfCR5Ek9eNrooZjx0=
-X-Received: by 2002:a05:600c:19cb:: with SMTP id u11mr6492155wmq.175.1627590016161;
- Thu, 29 Jul 2021 13:20:16 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210729183942.2839925-1-robdclark@gmail.com> <1a38a590-a64e-58ef-1bbf-0ae49c004d05@linaro.org>
-In-Reply-To: <1a38a590-a64e-58ef-1bbf-0ae49c004d05@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 29 Jul 2021 13:24:25 -0700
-Message-ID: <CAF6AEGs5dzA7kfO89Uqbh3XmorXoEa=fpW+unk5_oaihHm479Q@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm: Disable frequency clamping on a630
-To:     Caleb Connolly <caleb.connolly@linaro.org>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Pr0DaHa/zY3zZ7CWN2sL39UmzN4TMNfowFEuDM2tCjs=;
+        b=XieXxRxg0Z4eLQuJJh1/w/nrutIRx5fgNEPOK6IKT+c+MKEDxb7N2pEpQ+hbPqPo9s
+         8mRlZhke9E6vJq5e3+RR328uhS1PEHDwZEJhPYHracc6HNAn3+LTJSBkkS5pFZ732IG1
+         Lqh4snVrYMx5lL0U/jsT1su3wHa8d383wMSOndw4JCxytyYtoNdzp3llG69Wg50bDVi5
+         We4lsVgLBqM5PcGws5+z2d6FZQMIfaBDivmHcIBQkqaT72+iSdq4s8Qa63wmR1z2mC/d
+         VR3p5biiioIb1Dno9AEtk3Y3CXMZYLbqa2xsBdtf/M6THUyt2QOHb2nmwFla1t8TEVSV
+         InFw==
+X-Gm-Message-State: AOAM530zVrCRHCNDRAh4ogBrW2u7XYVgD3XD9H97qWmHVBmzNYoti3jR
+        RZqgL2wm4bawyrRCiYMgXIab3Q==
+X-Google-Smtp-Source: ABdhPJwyM2eZLESycIDVkF/4Q765O0et6SvtERZZzVMCg0jlcdmg9fr7pyjU7i3soWJJCAKPbBlUXQ==
+X-Received: by 2002:a05:651c:d5:: with SMTP id 21mr3885237ljr.135.1627590323582;
+        Thu, 29 Jul 2021 13:25:23 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id u26sm387852lfi.305.2021.07.29.13.25.23
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 29 Jul 2021 13:25:23 -0700 (PDT)
+Subject: Re: [PATCH 05/11] drm/msm/disp/dpu1: Add DSC for SDM845 to hw_catalog
+To:     Vinod Koul <vkoul@kernel.org>, Rob Clark <robdclark@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20210715065203.709914-1-vkoul@kernel.org>
+ <20210715065203.709914-6-vkoul@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <927826ce-eae5-0089-6874-eb14d8e16169@linaro.org>
+Date:   Thu, 29 Jul 2021 23:25:22 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
+MIME-Version: 1.0
+In-Reply-To: <20210715065203.709914-6-vkoul@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 29, 2021 at 1:06 PM Caleb Connolly
-<caleb.connolly@linaro.org> wrote:
->
-> Hi Rob,
->
-> I've done some more testing! It looks like before that patch ("drm/msm: Devfreq tuning") the GPU would never get above
-> the second frequency in the OPP table (342MHz) (at least, not in glxgears). With the patch applied it would more
-> aggressively jump up to the max frequency which seems to be unstable at the default regulator voltages.
+On 15/07/2021 09:51, Vinod Koul wrote:
+> This add SDM845 DSC blocks into hw_catalog
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> ---
+> Changes since RFC:
+>   - use BIT values from MASK
+> 
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c    | 22 +++++++++++++++++++
+>   1 file changed, 22 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index b569030a0847..b45a08303c99 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -40,6 +40,8 @@
+>   
+>   #define PINGPONG_SDM845_MASK BIT(DPU_PINGPONG_DITHER)
+>   
+> +#define DSC_SDM845_MASK BIT(1)
+> +
 
-*ohh*, yeah, ok, that would explain it
+This does not seem used. You can pass (0) as the feature mask.
 
-> Hacking the pm8005 s1 regulator (which provides VDD_GFX) up to 0.988v (instead of the stock 0.516v) makes the GPU stable
-> at the higher frequencies.
->
-> Applying this patch reverts the behaviour, and the GPU never goes above 342MHz in glxgears, losing ~30% performance in
-> glxgear.
->
-> I think (?) that enabling CPR support would be the proper solution to this - that would ensure that the regulators run
-> at the voltage the hardware needs to be stable.
->
-> Is hacking the voltage higher (although ideally not quite that high) an acceptable short term solution until we have
-> CPR? Or would it be safer to just not make use of the higher frequencies on a630 for now?
->
+>   #define PINGPONG_SDM845_SPLIT_MASK \
+>   	(PINGPONG_SDM845_MASK | BIT(DPU_PINGPONG_TE2))
+>   
+> @@ -751,6 +753,24 @@ static const struct dpu_pingpong_cfg sc7280_pp[] = {
+>   	PP_BLK("pingpong_2", PINGPONG_2, 0x6b000, 0, sc7280_pp_sblk),
+>   	PP_BLK("pingpong_3", PINGPONG_3, 0x6c000, 0, sc7280_pp_sblk),
+>   };
+> +
+> +/*************************************************************
+> + * DSC sub blocks config
+> + *************************************************************/
+> +#define DSC_BLK(_name, _id, _base) \
+> +	{\
+> +	.name = _name, .id = _id, \
+> +	.base = _base, .len = 0x140, \
+> +	.features = DSC_SDM845_MASK, \
+> +	}
+> +
+> +static struct dpu_dsc_cfg sdm845_dsc[] = {
+> +	DSC_BLK("dsc_0", DSC_0, 0x80000),
+> +	DSC_BLK("dsc_1", DSC_1, 0x80400),
+> +	DSC_BLK("dsc_2", DSC_2, 0x80800),
+> +	DSC_BLK("dsc_3", DSC_3, 0x80c00),
+> +};
+> +
+>   /*************************************************************
+>    * INTF sub blocks config
+>    *************************************************************/
+> @@ -1053,6 +1073,8 @@ static void sdm845_cfg_init(struct dpu_mdss_cfg *dpu_cfg)
+>   		.mixer = sdm845_lm,
+>   		.pingpong_count = ARRAY_SIZE(sdm845_pp),
+>   		.pingpong = sdm845_pp,
+> +		.dsc_count = ARRAY_SIZE(sdm845_dsc),
+> +		.dsc = sdm845_dsc,
+>   		.intf_count = ARRAY_SIZE(sdm845_intf),
+>   		.intf = sdm845_intf,
+>   		.vbif_count = ARRAY_SIZE(sdm845_vbif),
+> 
 
-tbh, I'm not sure about the regulator stuff and CPR.. Bjorn is already
-on CC and I added sboyd, maybe one of them knows better.
 
-In the short term, removing the higher problematic OPPs from dts might
-be a better option than this patch (which I'm dropping), since there
-is nothing stopping other workloads from hitting higher OPPs.
-
-I'm slightly curious why I didn't have problems at higher OPPs on my
-c630 laptop (sdm850)
-
-BR,
--R
-
->
-> On 29/07/2021 19:39, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > The more frequent frequency transitions resulting from clamping freq to
-> > minimum when the GPU is idle seems to be causing some issue with the bus
-> > getting voted off when it should be on.  (An enable racing with an async
-> > disable?)  This might be a problem outside of the GPU, as I can't
-> > reproduce this on a618 which uses the same GMU fw and same mechanism to
-> > communicate with GMU to set opp.  For now, just revert to previous
-> > devfreq behavior on a630 until the issue is understood.
-> >
-> > Reported-by: Caleb Connolly <caleb.connolly@linaro.org>
-> > Fixes: 9bc95570175a ("drm/msm: Devfreq tuning")
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> > ---
-> >   drivers/gpu/drm/msm/adreno/adreno_gpu.c |  3 +++
-> >   drivers/gpu/drm/msm/msm_gpu.h           |  2 ++
-> >   drivers/gpu/drm/msm/msm_gpu_devfreq.c   | 12 ++++++++++++
-> >   3 files changed, 17 insertions(+)
-> >
-> > diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > index 748665232d29..9fd08b413010 100644
-> > --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
-> > @@ -945,6 +945,9 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
-> >       pm_runtime_use_autosuspend(dev);
-> >       pm_runtime_enable(dev);
-> >
-> > +     if (adreno_is_a630(adreno_gpu))
-> > +             gpu->devfreq.disable_freq_clamping = true;
-> > +
-> >       return msm_gpu_init(drm, pdev, &adreno_gpu->base, &funcs->base,
-> >                       adreno_gpu->info->name, &adreno_gpu_config);
-> >   }
-> > diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
-> > index 0e4b45bff2e6..7e11b667f939 100644
-> > --- a/drivers/gpu/drm/msm/msm_gpu.h
-> > +++ b/drivers/gpu/drm/msm/msm_gpu.h
-> > @@ -112,6 +112,8 @@ struct msm_gpu_devfreq {
-> >        * it is inactive.
-> >        */
-> >       unsigned long idle_freq;
-> > +
-> > +     bool disable_freq_clamping;
-> >   };
-> >
-> >   struct msm_gpu {
-> > diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-> > index 0a1ee20296a2..a832af436251 100644
-> > --- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-> > +++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-> > @@ -94,6 +94,12 @@ void msm_devfreq_init(struct msm_gpu *gpu)
-> >       if (!gpu->funcs->gpu_busy)
-> >               return;
-> >
-> > +     /* Revert to previous polling interval if we aren't using freq clamping
-> > +      * to preserve previous behavior
-> > +      */
-> > +     if (gpu->devfreq.disable_freq_clamping)
-> > +             msm_devfreq_profile.polling_ms = 10;
-> > +
-> >       msm_devfreq_profile.initial_freq = gpu->fast_rate;
-> >
-> >       /*
-> > @@ -151,6 +157,9 @@ void msm_devfreq_active(struct msm_gpu *gpu)
-> >       unsigned int idle_time;
-> >       unsigned long target_freq = df->idle_freq;
-> >
-> > +     if (gpu->devfreq.disable_freq_clamping)
-> > +             return;
-> > +
-> >       /*
-> >        * Hold devfreq lock to synchronize with get_dev_status()/
-> >        * target() callbacks
-> > @@ -186,6 +195,9 @@ void msm_devfreq_idle(struct msm_gpu *gpu)
-> >       struct msm_gpu_devfreq *df = &gpu->devfreq;
-> >       unsigned long idle_freq, target_freq = 0;
-> >
-> > +     if (gpu->devfreq.disable_freq_clamping)
-> > +             return;
-> > +
-> >       /*
-> >        * Hold devfreq lock to synchronize with get_dev_status()/
-> >        * target() callbacks
-> >
->
-> --
-> Kind Regards,
-> Caleb (they/them)
+-- 
+With best wishes
+Dmitry
