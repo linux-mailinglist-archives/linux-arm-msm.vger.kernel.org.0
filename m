@@ -2,77 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D1F2F3DA3C3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 15:18:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0415A3DA40A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 15:26:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237539AbhG2NST (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jul 2021 09:18:19 -0400
-Received: from vps0.lunn.ch ([185.16.172.187]:51742 "EHLO vps0.lunn.ch"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237475AbhG2NSI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jul 2021 09:18:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-        s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-        References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-        Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-        Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-        bh=o6gDh22Ro6ovNEhQvwZBx+WNuMjXayJvQyfw3IGhpLs=; b=mIEmM9k9u+fpHO9PVfmWz7W3vj
-        NAV+9xbJ5o2VdKOLo0MhDk8tGz9cXFe85Ygj4M97KR6v32mMpEDs7/A28oLAIC2yfnOUnFcFCYxZG
-        2T4k2BjbVk3+fXxBi7QsLBtDsYgm6LlwgV3krNZ33Set7f+Si6h/6Yi+3NnSsKGNv1gQ=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-        (envelope-from <andrew@lunn.ch>)
-        id 1m95vC-00FJYn-MF; Thu, 29 Jul 2021 15:17:58 +0200
-Date:   Thu, 29 Jul 2021 15:17:58 +0200
-From:   Andrew Lunn <andrew@lunn.ch>
-To:     Luo Jie <luoj@codeaurora.org>
-Cc:     hkallweit1@gmail.com, davem@davemloft.net, kuba@kernel.org,
-        p.zabel@pengutronix.de, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        robert.marko@sartura.hr, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, sricharan@codeaurora.org
-Subject: Re: [PATCH 3/3] dt-bindings: net: rename Qualcomm IPQ MDIO bindings
-Message-ID: <YQKqhoJ4iPOTiGHZ@lunn.ch>
-References: <20210729125358.5227-1-luoj@codeaurora.org>
- <20210729125358.5227-3-luoj@codeaurora.org>
+        id S237585AbhG2N0Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jul 2021 09:26:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45574 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237550AbhG2N0O (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 29 Jul 2021 09:26:14 -0400
+Received: from relay07.th.seeweb.it (relay07.th.seeweb.it [IPv6:2001:4b7a:2000:18::168])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9187FC061765;
+        Thu, 29 Jul 2021 06:26:11 -0700 (PDT)
+Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 61D393F359;
+        Thu, 29 Jul 2021 15:26:08 +0200 (CEST)
+Subject: Re: [PATCH v7 5/5] dt-bindings: soc: qcom: spm: Document SDM660 and
+ MSM8998 compatibles
+To:     Rob Herring <robh@kernel.org>
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
+        daniel.lezcano@linaro.org, rjw@rjwysocki.net,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
+        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
+        martin.botka@somainline.org, jeffrey.l.hugo@gmail.com,
+        jami.kettunen@somainline.org,
+        ~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
+        stephan@gerhold.net
+References: <20210622141117.358893-1-angelogioacchino.delregno@somainline.org>
+ <20210622141117.358893-6-angelogioacchino.delregno@somainline.org>
+ <20210713222111.GA944952@robh.at.kernel.org>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Message-ID: <285d7b38-da08-e263-d664-1cdf73d7c0d1@somainline.org>
+Date:   Thu, 29 Jul 2021 15:26:08 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210729125358.5227-3-luoj@codeaurora.org>
+In-Reply-To: <20210713222111.GA944952@robh.at.kernel.org>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> @@ -23,7 +25,29 @@ properties:
->      const: 0
->  
->    reg:
-> -    maxItems: 1
-> +    maxItems: 2
-> +
-> +  clocks:
-> +    items:
-> +      - description: MDIO clock
-> +
-> +  clock-names:
-> +    items:
-> +      - const: gcc_mdio_ahb_clk
-> +
-> +  resets:
-> +    items:
-> +      - description: MDIO reset & GEPHY hardware reset
-> +
-> +  reset-names:
-> +    items:
-> +      - const: gephy_mdc_rst
-> +
-> +  phy-reset-gpios:
-> +    maxItems: 3
-> +    description:
-> +      The phandle and specifier for the GPIO that controls the RESET
-> +      lines of PHY devices on that MDIO bus.
+Il 14/07/21 00:21, Rob Herring ha scritto:
+> On Tue, Jun 22, 2021 at 04:11:17PM +0200, AngeloGioacchino Del Regno wrote:
+>> The driver was updated to add SAW2 v4.1 support for new SoCs: document
+>> the new compatibles.
+> 
+> Can't take patches without a S-o-b. Run checkpatch.pl, it points this
+> out for you.
+> 
 
-This is clearly not a rename. It is great you are adding missing
-properties, but please do it as a separate patch.
+I am truly sorry for missing my S-o-b.
 
-	    Andrew
+>> ---
+>>   .../bindings/soc/qcom/qcom,spm.yaml           | 21 +++++++++++++++++++
+>>   1 file changed, 21 insertions(+)
+>>
+>> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml
+>> index 4aaa319b2932..0faf52700dec 100644
+>> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml
+>> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml
+>> @@ -17,6 +17,10 @@ description: |
+>>   properties:
+>>     compatible:
+>>       enum:
+>> +      - qcom,sdm660-gold-saw2-v4.1-l2
+>> +      - qcom,sdm660-silver-saw2-v4.1-l2
+>> +      - qcom,msm8998-gold-saw2-v4.1-l2
+>> +      - qcom,msm8998-silver-saw2-v4.1-l2
+> 
+> What's the difference between gold and silver? Are the h/w instances
+> different (I realize the CPUs are) in some way? How does the OS use the
+> different compatible strings?
+> 
+
+They have different configuration parameters and the HW instances should
+be different indeed (at least from what I remember), plus they're always
+at different iostart.
+
+The driver is using the different compatible strings to choose which
+configuration gets written. You can also avoid writing the configuration
+to one of them or both (if you wish to lose capabilities given by this
+driver, perhaps also if you want to simply never use the gold cluster, for
+example).
+
+
+>>         - qcom,msm8974-saw2-v2.1-cpu
+>>         - qcom,apq8084-saw2-v2.1-cpu
+>>         - qcom,apq8064-saw2-v1.1-cpu
+>> @@ -33,6 +37,8 @@ additionalProperties: false
+>>   
+>>   examples:
+>>     - |
+>> +
+>> +    /* Example 1: SoC using SAW2 and kpss-acc-v2 CPUIdle */
+>>       cpus {
+>>           #address-cells = <1>;
+>>           #size-cells = <0>;
+>> @@ -52,4 +58,19 @@ examples:
+>>           reg = <0xf9089000 0x1000>;
+>>       };
+>>   
+>> +  - |
+>> +
+>> +    /* Example 2: New-gen multi cluster SoC using SAW only for L2;
+>> +     * This does not require any cpuidle driver, nor any cpu phandle.
+>> +     */
+>> +    power-controller@17812000 {
+>> +        compatible = "qcom,msm8998-gold-saw2-v4.1-l2", "qcom,saw2";
+>> +        reg = <0x17812000 0x1000>;
+>> +    };
+>> +
+>> +    power-controller@17912000 {
+>> +        compatible = "qcom,msm8998-silver-saw2-v4.1-l2", "qcom,saw2";
+>> +        reg = <0x17912000 0x1000>;
+>> +    };
+>> +
+>>   ...
+>> -- 
+>> 2.32.0
+>>
+>>
+
