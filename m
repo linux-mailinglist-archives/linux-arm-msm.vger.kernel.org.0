@@ -2,55 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A7FD3DAD95
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 22:28:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 04ABE3DADE5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 22:49:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232672AbhG2U24 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jul 2021 16:28:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36798 "EHLO
+        id S229875AbhG2UtP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jul 2021 16:49:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229707AbhG2U24 (ORCPT
+        with ESMTP id S229648AbhG2UtO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jul 2021 16:28:56 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 593C9C061765
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jul 2021 13:28:52 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id o7-20020a05600c5107b0290257f956e02dso1211937wms.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 29 Jul 2021 13:28:52 -0700 (PDT)
+        Thu, 29 Jul 2021 16:49:14 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA527C061765;
+        Thu, 29 Jul 2021 13:49:09 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id b128so4538093wmb.4;
+        Thu, 29 Jul 2021 13:49:09 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=yjvy0nNjdoVdeBRrNfPDRD8M9hukWpC6XSosKuNv5ME=;
-        b=uXQbJc9YN7jcauyWcxa/AhQHH/ohDJah+P0h3TjE+ye9WEGAKdpNOiKwp67zax537M
-         F43p5oywXQXzW7asCsVSZPRdoUPuNWn65XyxofHmG7aWxMGp+tJIyLgWAxAsx0xX4+BP
-         83Mv2s4tjdzEoYFWep02aUKE+e0dh7ik6Pl6EJrAobwEdsQ2e0XYKw7xZ6NrHw42FtBb
-         4KGArkAiSRGW1h0aCCjkK3PUpAakI9OvAOvzm8rg27FRIaYu+kLYVv7wp7HIrkpm3e6H
-         lMm+UbmOX7hCOrlUJ1tRpU1ILGxcun833XNajyZNblK46IgBhP0Y8bxu0l5k15NUag+l
-         n9Gw==
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=w7rlS789IwgWOu8sIYtR7tqkgkaO1gIx+9/djlmIsjw=;
+        b=hePKOPuIIlnAtoZEz8val+chOEf8rJ7kzDrFbr157HgnPoDVRtY059x6N91MtMpQiN
+         i3MqE5tvyQ5TAyTg9vM6mw/qSOYzsd64vgehdXnhKJbddyoOBIKDmlSBN2ac4AFGM0md
+         vfISX61P1x2bWXSzCmxafEDFt66XYhpjkINkU9Z455HUDmfwuko9p63/HAUp/bwgiHtV
+         IMQPamLEriq+766cvyptqUAYmoC3x0HifCe/YVWKcSv4v3SetAx8o83afYhdy61wJOsS
+         1FLHySZ7pOEur5JsLlXjylFwr/MNuqIHx2d0b4yoR8dExNw5gxakvCgPN0ldJK4BfIiF
+         kTaw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=yjvy0nNjdoVdeBRrNfPDRD8M9hukWpC6XSosKuNv5ME=;
-        b=DmlhavgWMI4JwvB+wmSu/1IIddJJQIWZ0pCKssVLiq1WlryFBqztfgbyppuJZLy3+a
-         ewy4wqR3f3c/Y9GS/t7absIHbke5CiA1Gn1J6efnoQMDRFVYaSQockQZZXWzuFeSXSLn
-         nw+1fKo5d8cfWZgIy05aFpk7YLZ0f2mOEuTh+gMxEo1ECD//2mQFyz4qwxWTC15DtaN9
-         PQ911ONlZvx24crqMeuwAOYI/L6ZjsJ0uIg0ntgOQFKe5RC/2MNadIYfEP0ckUpYzvP5
-         IhNJW995H7zyF9nt/6UW7jyMPzjUOui765mjJMpNTw8RLcDr4VhL8D7NwO8RHfTUeoGN
-         h+dQ==
-X-Gm-Message-State: AOAM530ecZy5ZlFOzynEufPPo0fGl3bvagADQ35ZniWJLlvDUfBaLG16
-        CCjFV+lEa87lZvW3k6tDuqkrgQ==
-X-Google-Smtp-Source: ABdhPJzkzIH6AZrxd5zBBNCDr+3o/XoHDyD63OWg5X4bm6XBxl9fD1BIEF0IQ1s/N/Tdsj+GfXWN5w==
-X-Received: by 2002:a05:600c:19d3:: with SMTP id u19mr224549wmq.115.1627590530830;
-        Thu, 29 Jul 2021 13:28:50 -0700 (PDT)
-Received: from [192.168.1.12] (host-80-41-121-59.as13285.net. [80.41.121.59])
-        by smtp.gmail.com with ESMTPSA id v6sm4474677wru.50.2021.07.29.13.28.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 29 Jul 2021 13:28:50 -0700 (PDT)
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=w7rlS789IwgWOu8sIYtR7tqkgkaO1gIx+9/djlmIsjw=;
+        b=SMtrso0D5Ol+Izz7MwR8cYxvQM03vrMnULhfTZa04AxTJZSbsXgn/IsLEqKwMo9S+d
+         qGBJ6CzH+3+nRK/8LHy1RMzhtPWrcEKOL3BC3WPzl6ai6ip6wHRVGdSrnPfdAudcgKqz
+         EKHzmHRlX/ylJqc/5BN38nusj44nI4b9NSuPzwYLX/7sAtHsf3IpVB+r91YUOYHB9cfj
+         HuWpZL+yO9kDZarHo5lyXUkGFn5Gbc7EuHDO9OlyrC8E5lwaNXO4wJkGcjyk2YUxgYA1
+         wJVtNI69QuLmI0TBw/nYIH8JrE0lgB+nKEaUAAAivd+vUs6xystC63tJ6JpQuaNBFg68
+         ZWCA==
+X-Gm-Message-State: AOAM530cZP4rvBeoeaXmBPCZZNNU8N4KecPsgS5UYjUMfVUmcN94NvQY
+        S2VtjnXl9mrQKU++vl0nVdKo96eXIVqx9zzezds=
+X-Google-Smtp-Source: ABdhPJwrrK8qfqv4dkeGpyNXWI9QqAVnY/HT978HGofFkhk6FkqxWZ2UrgZfiUdhYpi3+dyXWle5jXmbiZpkpyKssrA=
+X-Received: by 2002:a7b:cc8b:: with SMTP id p11mr296283wma.164.1627591748230;
+ Thu, 29 Jul 2021 13:49:08 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210729183942.2839925-1-robdclark@gmail.com> <1a38a590-a64e-58ef-1bbf-0ae49c004d05@linaro.org>
+ <CAF6AEGs5dzA7kfO89Uqbh3XmorXoEa=fpW+unk5_oaihHm479Q@mail.gmail.com> <e2cebf65-012d-f818-8202-eb511c996e28@linaro.org>
+In-Reply-To: <e2cebf65-012d-f818-8202-eb511c996e28@linaro.org>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 29 Jul 2021 13:53:17 -0700
+Message-ID: <CAF6AEGs11aYnkL30kp79pMqLTg3_4otFwG2Oc890Of2ndLbELw@mail.gmail.com>
 Subject: Re: [PATCH] drm/msm: Disable frequency clamping on a630
-To:     Rob Clark <robdclark@gmail.com>
+To:     Caleb Connolly <caleb.connolly@linaro.org>
 Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
         freedreno <freedreno@lists.freedesktop.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
@@ -65,159 +67,61 @@ Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
         Akhil P Oommen <akhilpo@codeaurora.org>,
         open list <linux-kernel@vger.kernel.org>,
         Stephen Boyd <sboyd@kernel.org>
-References: <20210729183942.2839925-1-robdclark@gmail.com>
- <1a38a590-a64e-58ef-1bbf-0ae49c004d05@linaro.org>
- <CAF6AEGs5dzA7kfO89Uqbh3XmorXoEa=fpW+unk5_oaihHm479Q@mail.gmail.com>
-From:   Caleb Connolly <caleb.connolly@linaro.org>
-Message-ID: <e2cebf65-012d-f818-8202-eb511c996e28@linaro.org>
-Date:   Thu, 29 Jul 2021 21:28:49 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
-MIME-Version: 1.0
-In-Reply-To: <CAF6AEGs5dzA7kfO89Uqbh3XmorXoEa=fpW+unk5_oaihHm479Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Jul 29, 2021 at 1:28 PM Caleb Connolly
+<caleb.connolly@linaro.org> wrote:
+>
+>
+>
+> On 29/07/2021 21:24, Rob Clark wrote:
+> > On Thu, Jul 29, 2021 at 1:06 PM Caleb Connolly
+> > <caleb.connolly@linaro.org> wrote:
+> >>
+> >> Hi Rob,
+> >>
+> >> I've done some more testing! It looks like before that patch ("drm/msm: Devfreq tuning") the GPU would never get above
+> >> the second frequency in the OPP table (342MHz) (at least, not in glxgears). With the patch applied it would more
+> >> aggressively jump up to the max frequency which seems to be unstable at the default regulator voltages.
+> >
+> > *ohh*, yeah, ok, that would explain it
+> >
+> >> Hacking the pm8005 s1 regulator (which provides VDD_GFX) up to 0.988v (instead of the stock 0.516v) makes the GPU stable
+> >> at the higher frequencies.
+> >>
+> >> Applying this patch reverts the behaviour, and the GPU never goes above 342MHz in glxgears, losing ~30% performance in
+> >> glxgear.
+> >>
+> >> I think (?) that enabling CPR support would be the proper solution to this - that would ensure that the regulators run
+> >> at the voltage the hardware needs to be stable.
+> >>
+> >> Is hacking the voltage higher (although ideally not quite that high) an acceptable short term solution until we have
+> >> CPR? Or would it be safer to just not make use of the higher frequencies on a630 for now?
+> >>
+> >
+> > tbh, I'm not sure about the regulator stuff and CPR.. Bjorn is already
+> > on CC and I added sboyd, maybe one of them knows better.
+> >
+> > In the short term, removing the higher problematic OPPs from dts might
+> > be a better option than this patch (which I'm dropping), since there
+> > is nothing stopping other workloads from hitting higher OPPs.
+> Oh yeah that sounds like a more sensible workaround than mine .
+> >
+> > I'm slightly curious why I didn't have problems at higher OPPs on my
+> > c630 laptop (sdm850)
+> Perhaps you won the sillicon lottery - iirc sdm850 is binned for higher clocks as is out of the factory.
+>
+> Would it be best to drop the OPPs for all devices? Or just those affected? I guess it's possible another c630 might
+> crash where yours doesn't?
 
+I've not heard any reports of similar issues from the handful of other
+folks with c630's on #aarch64-laptops.. but I can't really say if that
+is luck or not.
 
-On 29/07/2021 21:24, Rob Clark wrote:
-> On Thu, Jul 29, 2021 at 1:06 PM Caleb Connolly
-> <caleb.connolly@linaro.org> wrote:
->>
->> Hi Rob,
->>
->> I've done some more testing! It looks like before that patch ("drm/msm: Devfreq tuning") the GPU would never get above
->> the second frequency in the OPP table (342MHz) (at least, not in glxgears). With the patch applied it would more
->> aggressively jump up to the max frequency which seems to be unstable at the default regulator voltages.
-> 
-> *ohh*, yeah, ok, that would explain it
-> 
->> Hacking the pm8005 s1 regulator (which provides VDD_GFX) up to 0.988v (instead of the stock 0.516v) makes the GPU stable
->> at the higher frequencies.
->>
->> Applying this patch reverts the behaviour, and the GPU never goes above 342MHz in glxgears, losing ~30% performance in
->> glxgear.
->>
->> I think (?) that enabling CPR support would be the proper solution to this - that would ensure that the regulators run
->> at the voltage the hardware needs to be stable.
->>
->> Is hacking the voltage higher (although ideally not quite that high) an acceptable short term solution until we have
->> CPR? Or would it be safer to just not make use of the higher frequencies on a630 for now?
->>
-> 
-> tbh, I'm not sure about the regulator stuff and CPR.. Bjorn is already
-> on CC and I added sboyd, maybe one of them knows better.
-> 
-> In the short term, removing the higher problematic OPPs from dts might
-> be a better option than this patch (which I'm dropping), since there
-> is nothing stopping other workloads from hitting higher OPPs.
-Oh yeah that sounds like a more sensible workaround than mine 😅.
-> 
-> I'm slightly curious why I didn't have problems at higher OPPs on my
-> c630 laptop (sdm850)
-Perhaps you won the sillicon lottery - iirc sdm850 is binned for higher clocks as is out of the factory.
+Maybe just remove it for affected devices?  But I'll defer to Bjorn.
 
-Would it be best to drop the OPPs for all devices? Or just those affected? I guess it's possible another c630 might 
-crash where yours doesn't?
-> 
-> BR,
-> -R
-> 
->>
->> On 29/07/2021 19:39, Rob Clark wrote:
->>> From: Rob Clark <robdclark@chromium.org>
->>>
->>> The more frequent frequency transitions resulting from clamping freq to
->>> minimum when the GPU is idle seems to be causing some issue with the bus
->>> getting voted off when it should be on.  (An enable racing with an async
->>> disable?)  This might be a problem outside of the GPU, as I can't
->>> reproduce this on a618 which uses the same GMU fw and same mechanism to
->>> communicate with GMU to set opp.  For now, just revert to previous
->>> devfreq behavior on a630 until the issue is understood.
->>>
->>> Reported-by: Caleb Connolly <caleb.connolly@linaro.org>
->>> Fixes: 9bc95570175a ("drm/msm: Devfreq tuning")
->>> Signed-off-by: Rob Clark <robdclark@chromium.org>
->>> ---
->>>    drivers/gpu/drm/msm/adreno/adreno_gpu.c |  3 +++
->>>    drivers/gpu/drm/msm/msm_gpu.h           |  2 ++
->>>    drivers/gpu/drm/msm/msm_gpu_devfreq.c   | 12 ++++++++++++
->>>    3 files changed, 17 insertions(+)
->>>
->>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->>> index 748665232d29..9fd08b413010 100644
->>> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
->>> @@ -945,6 +945,9 @@ int adreno_gpu_init(struct drm_device *drm, struct platform_device *pdev,
->>>        pm_runtime_use_autosuspend(dev);
->>>        pm_runtime_enable(dev);
->>>
->>> +     if (adreno_is_a630(adreno_gpu))
->>> +             gpu->devfreq.disable_freq_clamping = true;
->>> +
->>>        return msm_gpu_init(drm, pdev, &adreno_gpu->base, &funcs->base,
->>>                        adreno_gpu->info->name, &adreno_gpu_config);
->>>    }
->>> diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
->>> index 0e4b45bff2e6..7e11b667f939 100644
->>> --- a/drivers/gpu/drm/msm/msm_gpu.h
->>> +++ b/drivers/gpu/drm/msm/msm_gpu.h
->>> @@ -112,6 +112,8 @@ struct msm_gpu_devfreq {
->>>         * it is inactive.
->>>         */
->>>        unsigned long idle_freq;
->>> +
->>> +     bool disable_freq_clamping;
->>>    };
->>>
->>>    struct msm_gpu {
->>> diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
->>> index 0a1ee20296a2..a832af436251 100644
->>> --- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
->>> +++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
->>> @@ -94,6 +94,12 @@ void msm_devfreq_init(struct msm_gpu *gpu)
->>>        if (!gpu->funcs->gpu_busy)
->>>                return;
->>>
->>> +     /* Revert to previous polling interval if we aren't using freq clamping
->>> +      * to preserve previous behavior
->>> +      */
->>> +     if (gpu->devfreq.disable_freq_clamping)
->>> +             msm_devfreq_profile.polling_ms = 10;
->>> +
->>>        msm_devfreq_profile.initial_freq = gpu->fast_rate;
->>>
->>>        /*
->>> @@ -151,6 +157,9 @@ void msm_devfreq_active(struct msm_gpu *gpu)
->>>        unsigned int idle_time;
->>>        unsigned long target_freq = df->idle_freq;
->>>
->>> +     if (gpu->devfreq.disable_freq_clamping)
->>> +             return;
->>> +
->>>        /*
->>>         * Hold devfreq lock to synchronize with get_dev_status()/
->>>         * target() callbacks
->>> @@ -186,6 +195,9 @@ void msm_devfreq_idle(struct msm_gpu *gpu)
->>>        struct msm_gpu_devfreq *df = &gpu->devfreq;
->>>        unsigned long idle_freq, target_freq = 0;
->>>
->>> +     if (gpu->devfreq.disable_freq_clamping)
->>> +             return;
->>> +
->>>        /*
->>>         * Hold devfreq lock to synchronize with get_dev_status()/
->>>         * target() callbacks
->>>
->>
->> --
->> Kind Regards,
->> Caleb (they/them)
-
--- 
-Kind Regards,
-Caleb (they/them)
+BR,
+-R
