@@ -2,137 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B4DF53DA36E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 14:54:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 25B123DA3B4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 29 Jul 2021 15:15:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237275AbhG2Myv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jul 2021 08:54:51 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:41159 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237344AbhG2Myk (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jul 2021 08:54:40 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1627563278; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=iMK8FI0oEPFlRjYP5P/2YGSoZeIKf/5Pdthi5xora9I=; b=t+zIhOEbs7RaiEDWsoWbgXNHKraPsbV9ABA73G/gJ5us9lTvYxodVJ21OAt3sMIXdxCdxQRA
- R2Fj7MTX5eLVvp+V7Wy/uHVt4jXbplEEdAGgqat6K3JVv4RRpxiDxvXc+G7lnQTwEL7cJrE4
- vpoC/nBWxkRENtrYHr59gxExJ7E=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 6102a50a17c2b4047d44b4d6 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 29 Jul 2021 12:54:34
- GMT
-Sender: luoj=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1B4E9C4338A; Thu, 29 Jul 2021 12:54:34 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from akronite-sh-dev02.qualcomm.com (unknown [180.166.53.21])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: luoj)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 91D1BC4338A;
-        Thu, 29 Jul 2021 12:54:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 91D1BC4338A
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=luoj@codeaurora.org
-From:   Luo Jie <luoj@codeaurora.org>
-To:     andrew@lunn.ch, hkallweit1@gmail.com, davem@davemloft.net,
-        kuba@kernel.org, p.zabel@pengutronix.de, agross@kernel.org,
+        id S237381AbhG2NPr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jul 2021 09:15:47 -0400
+Received: from vps0.lunn.ch ([185.16.172.187]:51718 "EHLO vps0.lunn.ch"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237236AbhG2NPq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 29 Jul 2021 09:15:46 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+        s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+        References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+        Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+        Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+        bh=szPN/IUb4a+Mhtg0in2BOoWLdWFrCWgNEz1rf5rVRSc=; b=g+UaSTqBrLYgUXsX7qNj30vi3O
+        oU5DJzh1/d3hSVyQQdnAtMHlTpdjC0EiWvlMDv1ujH7OxWZXPw0CCoyjMgvtW22TFQT9/At66e6IY
+        7B+URLhr4cNRG1fByKI4ADH0zcerOlV9Q30mTApkv9cNyGkGwaTwqYmDou4oolarVAN4=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+        (envelope-from <andrew@lunn.ch>)
+        id 1m95ss-00FJXN-B2; Thu, 29 Jul 2021 15:15:34 +0200
+Date:   Thu, 29 Jul 2021 15:15:34 +0200
+From:   Andrew Lunn <andrew@lunn.ch>
+To:     Luo Jie <luoj@codeaurora.org>
+Cc:     hkallweit1@gmail.com, davem@davemloft.net, kuba@kernel.org,
+        p.zabel@pengutronix.de, agross@kernel.org,
         bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        robert.marko@sartura.hr
-Cc:     netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        sricharan@codeaurora.org, Luo Jie <luoj@codeaurora.org>
-Subject: [PATCH 3/3] dt-bindings: net: rename Qualcomm IPQ MDIO bindings
-Date:   Thu, 29 Jul 2021 20:53:58 +0800
-Message-Id: <20210729125358.5227-3-luoj@codeaurora.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20210729125358.5227-1-luoj@codeaurora.org>
+        robert.marko@sartura.hr, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, sricharan@codeaurora.org
+Subject: Re: [PATCH 2/3] net: mdio-ipq4019: rename mdio_ipq4019 to mdio_ipq
+Message-ID: <YQKp9gsnjBNmXYIc@lunn.ch>
 References: <20210729125358.5227-1-luoj@codeaurora.org>
+ <20210729125358.5227-2-luoj@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210729125358.5227-2-luoj@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-rename ipq4019-mdio.yaml to ipq-mdio.yaml for supporting more
-ipq boards such as ipq40xx, ipq807x, ipq60xx and ipq50xx.
+On Thu, Jul 29, 2021 at 08:53:57PM +0800, Luo Jie wrote:
+> mdio_ipq driver supports more SOCs such as ipq40xx, ipq807x,
+> ipq60xx and ipq50xx.
+> 
+> Signed-off-by: Luo Jie <luoj@codeaurora.org>
+> ---
+>  drivers/net/mdio/Kconfig                      |  6 +-
+>  drivers/net/mdio/Makefile                     |  2 +-
+>  .../net/mdio/{mdio-ipq4019.c => mdio-ipq.c}   | 66 +++++++++----------
+>  3 files changed, 37 insertions(+), 37 deletions(-)
+>  rename drivers/net/mdio/{mdio-ipq4019.c => mdio-ipq.c} (81%)
 
-Signed-off-by: Luo Jie <luoj@codeaurora.org>
----
- ...m,ipq4019-mdio.yaml => qcom,ipq-mdio.yaml} | 32 ++++++++++++++++---
- 1 file changed, 28 insertions(+), 4 deletions(-)
- rename Documentation/devicetree/bindings/net/{qcom,ipq4019-mdio.yaml => qcom,ipq-mdio.yaml} (58%)
+Hi Luo
 
-diff --git a/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml b/Documentation/devicetree/bindings/net/qcom,ipq-mdio.yaml
-similarity index 58%
-rename from Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
-rename to Documentation/devicetree/bindings/net/qcom,ipq-mdio.yaml
-index 0c973310ada0..5bdeb461523b 100644
---- a/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
-+++ b/Documentation/devicetree/bindings/net/qcom,ipq-mdio.yaml
-@@ -1,10 +1,10 @@
- # SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
- %YAML 1.2
- ---
--$id: http://devicetree.org/schemas/net/qcom,ipq4019-mdio.yaml#
-+$id: http://devicetree.org/schemas/net/qcom,ipq-mdio.yaml#
- $schema: http://devicetree.org/meta-schemas/core.yaml#
- 
--title: Qualcomm IPQ40xx MDIO Controller Device Tree Bindings
-+title: Qualcomm IPQ MDIO Controller Device Tree Bindings
- 
- maintainers:
-   - Robert Marko <robert.marko@sartura.hr>
-@@ -14,7 +14,9 @@ allOf:
- 
- properties:
-   compatible:
--    const: qcom,ipq4019-mdio
-+    oneOf:
-+      - const: qcom,ipq4019-mdio
-+      - const: qcom,ipq-mdio
- 
-   "#address-cells":
-     const: 1
-@@ -23,7 +25,29 @@ properties:
-     const: 0
- 
-   reg:
--    maxItems: 1
-+    maxItems: 2
-+
-+  clocks:
-+    items:
-+      - description: MDIO clock
-+
-+  clock-names:
-+    items:
-+      - const: gcc_mdio_ahb_clk
-+
-+  resets:
-+    items:
-+      - description: MDIO reset & GEPHY hardware reset
-+
-+  reset-names:
-+    items:
-+      - const: gephy_mdc_rst
-+
-+  phy-reset-gpios:
-+    maxItems: 3
-+    description:
-+      The phandle and specifier for the GPIO that controls the RESET
-+      lines of PHY devices on that MDIO bus.
- 
- required:
-   - compatible
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+We don't rename files unless there is a very good reason. It makes
+back porting of fixes harder in stable. There are plenty of examples
+of files with device specific names, but supporting a broad range of
+devices. Take for example lm75, at24.
 
+> -config MDIO_IPQ4019
+> -	tristate "Qualcomm IPQ4019 MDIO interface support"
+> +config MDIO_IPQ
+> +	tristate "Qualcomm IPQ MDIO interface support"
+>  	depends on HAS_IOMEM && OF_MDIO
+>  	depends on GPIOLIB && COMMON_CLK && RESET_CONTROLLER
+>  	help
+>  	  This driver supports the MDIO interface found in Qualcomm
+> -	  IPQ40xx series Soc-s.
+> +	  IPQ40xx, IPQ60XX, IPQ807X and IPQ50XX series Soc-s.
+
+Please leave the MDIO_IPQ4019 unchanged, so we don't break backwards
+compatibility, but the changes to the text are O.K.
+
+> @@ -31,38 +31,38 @@
+>  /* 0 = Clause 22, 1 = Clause 45 */
+>  #define MDIO_MODE_C45				BIT(8)
+>  
+> -#define IPQ4019_MDIO_TIMEOUT	10000
+> -#define IPQ4019_MDIO_SLEEP		10
+> +#define IPQ_MDIO_TIMEOUT	10000
+> +#define IPQ_MDIO_SLEEP		10
+
+This sort of mass rename will also make back porting fixes
+harder. Please don't do it.
+
+> -static const struct of_device_id ipq4019_mdio_dt_ids[] = {
+> +static const struct of_device_id ipq_mdio_dt_ids[] = {
+>  	{ .compatible = "qcom,ipq4019-mdio" },
+> +	{ .compatible = "qcom,ipq-mdio" },
+>  	{ }
+>  };
+
+Such a generic name is not a good idea. It appears this driver is not
+compatible with the IPQ8064? It is O.K. to add more specific
+compatibles. So you could add
+
+qcom,ipq40xx, qcom,ipq60xx, qcom,ipq807x and qcom,ipq50xx.
+
+But really, there is no need. Take for example snps,dwmac-mdio, which
+is used in all sorts of devices.
+
+   Andrew
