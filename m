@@ -2,78 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 30DA13DB353
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 08:13:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E6F3D3DB3C8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 08:46:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237404AbhG3GNV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jul 2021 02:13:21 -0400
-Received: from smtpbg704.qq.com ([203.205.195.105]:49185 "EHLO
-        smtpproxy21.qq.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S237420AbhG3GNU (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jul 2021 02:13:20 -0400
-X-QQ-mid: bizesmtp35t1627625584tl3ok1bc
-Received: from localhost.localdomain (unknown [111.207.172.18])
-        by esmtp6.qq.com (ESMTP) with 
-        id ; Fri, 30 Jul 2021 14:13:03 +0800 (CST)
-X-QQ-SSF: 0140000000200020B000B00C0000000
-X-QQ-FEAT: mAJfWfDYrJMFKo/smnihNzXYVpGbb8bW+e935fclzJ2KY6EBRKw7JkDbpyZRm
-        VwqvqvQj2mecuSB8MgH5l0E1Vx+CG969aCl7N6AW0xYw0Cscns66xVLv10mEMfDX9k7H9mE
-        x1ozpXglwIt6lcaaHmdSvL56aYLxby/cNg7miouF/LfNr5bJ28b7r2GQyGabPD+jv2pCKSn
-        MKvMbnFo9t/Ggt5/28JNhkoH4ERA5NQ3Ht7hPvtztmeUBGtjEjshT5+sKZcnDGZlHod8HKk
-        gHjU5Raq+HbjzhUHO8UHIA3zZYsBFzSvGAcwBjiiS0veBszl2hLlXuZq/WVTZR0dQ3LmebD
-        xgdTYP+bVxedfzAH/g=
-X-QQ-GoodBg: 2
-From:   zhaoxiao <zhaoxiao@uniontech.com>
-To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        zhaoxiao <zhaoxiao@uniontech.com>
-Subject: [PATCH] drm:This patch fixes the checkpatch.pl error to msm_drv.c
-Date:   Fri, 30 Jul 2021 14:13:01 +0800
-Message-Id: <20210730061301.32492-1-zhaoxiao@uniontech.com>
-X-Mailer: git-send-email 2.20.1
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-QQ-SENDSIZE: 520
-Feedback-ID: bizesmtp:uniontech.com:qybgforeign:qybgforeign7
-X-QQ-Bgrelay: 1
+        id S237607AbhG3Gqo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jul 2021 02:46:44 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:46409 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237604AbhG3Gqo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 30 Jul 2021 02:46:44 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1627627600; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=IFl9D1FTUR50lNt/xruo5NKP3MfR2CWffZI/KUbWDCU=; b=MOVcSklAXNU60fWl76vwmh+ydPCP0YYNe5Z4UyUk1gD4QF1NQBklL87NpMk0C2vv+LSYFLva
+ Qm2mdnTz7Alfpaw+ZwNwN+p72vH0UcM2c8S7TWffvBIOkDqNLp5onZBkf3h7pm0aZuSdUqtm
+ Ras6Z34Y5qovVwmvZIaNi+wjNgY=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 6103a04d96a66e66b27596d3 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 30 Jul 2021 06:46:37
+ GMT
+Sender: rnayak=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id F109AC4360C; Fri, 30 Jul 2021 06:46:36 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4FC01C433F1;
+        Fri, 30 Jul 2021 06:46:33 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 4FC01C433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org,
+        srinivas.kandagatla@linaro.org, robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, rbokka@codeaurora.org,
+        dianders@chromium.org, Rajendra Nayak <rnayak@codeaurora.org>
+Subject: [PATCH v3 0/4] nvmem: qfprom: Add binding updates and power-domain handling
+Date:   Fri, 30 Jul 2021 12:16:09 +0530
+Message-Id: <1627627573-32454-1-git-send-email-rnayak@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-ERROR: do not initialise statics to false
+v3:
+* Dropped the description in bindings patch
+* Added a patch to fix ordering in qfprom_disable_fuse_blowing()
+* Fixed devm_add_action_or_reset() order
 
-Signed-off-by: zhaoxiao <zhaoxiao@uniontech.com>
----
- drivers/gpu/drm/msm/msm_drv.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+v2:
+* pm_runtime calls made unconditionally, should work even without the power-domains property in DT
+* Added the missing pm_runtime_disable() handling
+* DT patch rebased on msm/for-next
 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 9b8fa2ad0d84..d9ca4bc9620b 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -59,7 +59,7 @@ static const struct drm_mode_config_helper_funcs mode_config_helper_funcs = {
- };
- 
- #ifdef CONFIG_DRM_MSM_REGISTER_LOGGING
--static bool reglog = false;
-+static bool reglog;
- MODULE_PARM_DESC(reglog, "Enable register read/write logging");
- module_param(reglog, bool, 0600);
- #else
-@@ -76,7 +76,7 @@ static char *vram = "16m";
- MODULE_PARM_DESC(vram, "Configure VRAM size (for devices without IOMMU/GPUMMU)");
- module_param(vram, charp, 0);
- 
--bool dumpstate = false;
-+bool dumpstate;
- MODULE_PARM_DESC(dumpstate, "Dump KMS state on errors");
- module_param(dumpstate, bool, 0600);
- 
+--
+qfprom devices on sc7280 have an additional requirement to vote on a power-domain
+performance state to reliably blow fuses. Add the binding updates and handle this in
+the driver, also add the DT node for sc7280 platform.
+
+Rajendra Nayak (4):
+  dt-bindings: nvmem: qfprom: Add optional power-domains property
+  nvmem: qfprom: Fix up qfprom_disable_fuse_blowing() ordering
+  nvmem: qfprom: sc7280: Handle the additional power-domains vote
+  arm64: dts: qcom: sc7280: Add qfprom node
+
+ .../devicetree/bindings/nvmem/qcom,qfprom.yaml     |  3 +++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               | 13 +++++++++
+ drivers/nvmem/qfprom.c                             | 31 +++++++++++++++++++---
+ 3 files changed, 44 insertions(+), 3 deletions(-)
+
 -- 
-2.20.1
-
-
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
