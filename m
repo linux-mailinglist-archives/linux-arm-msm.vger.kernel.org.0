@@ -2,101 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C69E3DB686
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 11:58:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0AFAB3DB6AB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 12:04:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238274AbhG3J6W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jul 2021 05:58:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56880 "EHLO
+        id S238374AbhG3KEC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jul 2021 06:04:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58000 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238089AbhG3J6V (ORCPT
+        with ESMTP id S238414AbhG3KDo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jul 2021 05:58:21 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0940C061765
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 02:58:16 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id h2so16816508lfu.4
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 02:58:16 -0700 (PDT)
+        Fri, 30 Jul 2021 06:03:44 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADF6AC06179E
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 03:02:25 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id t9so3819682lfc.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 03:02:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=EyrbkmHOA0DIVtaygrrXFXeSWnHWmi9ZxmLgrolpzQU=;
-        b=Cao3LkkbkgZIVVzitNJjFZvjA5O2oYwvjcnjOQgcqVmkzMtf6i/GhZNE09z14UUt3t
-         DpsNxx7JVqaz4Rrnqkhqbqz/xr5WjTPEqAbLBa4pER6jv2+w/S4V6ri2gtuhUZBpEOos
-         hDjNC+BA+83Vffw5itToU0Wnr/WqsKcwi8peBWY5zPupKm7/7z62Nuw0skYjDWdmYDU1
-         dB9BVaDQsLlnmKsvPTFVzzLqVvhaR34KiBYFiYCuO7204mAYpYF7u9qeDGwdZUNYF9Zs
-         kERbVRfJOQ07AxXRZ8Uc+SlDCoSGek5oAftn2pyfSIQ29E6lH/rb359nGkbL5zQQTQbZ
-         uOkw==
+        bh=yrQFmPSsOocu2SRwmrh+oMoqHYk78zWUjrW9sn+KFu8=;
+        b=oYxd3h6+XDaGKJsgHhkayzoJMa7ogz8odwMrcV4t1ibAg04dNdvJLETsYmmfrkSseV
+         fxC/+cc/g5SPKMCajUrG9GAdrHha0IDA+oh25ufXCtSGPbhjJgS/lHTfN+PWvDaNZbAd
+         YnUOJSt/covDyIQWEoSx7UeltkeZ1gsyidlXfXeH+PC/MV90c2nV+3LPejmS+xIfmF5X
+         j6bKumV6Vc1tQ98o7B/06dQH9eO80WArYKzCamWiSFuOQSDmSDIToN9zLD405Invsy4z
+         YT88a57yRD9YucDPaTPDdG8Kr3ogscFeED3zOjI7M7nSrQz585OFskj4YIGXGgezNdZU
+         LTXA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=EyrbkmHOA0DIVtaygrrXFXeSWnHWmi9ZxmLgrolpzQU=;
-        b=swc+BzF4XzdEC5BkfAiM/pHFuuLcJXSplNRn3DT4EwCR+35Uac8Qfw2AaMeNZ3nbMN
-         kW5C5yOobFCusqpAEu5LVV4LILbfjQuFRjlGuE5h5cg+KfUC3qQFHCwvwrZhTFdjFmmp
-         DDfWsyTDpO33fbxKe/DCgbCeFfjXU8WUHH3k2UlFk9n0k66nHQBJNF8h+jjdEZGU0rA4
-         WPzQG7rySPJ+c7LlAXw5ELC0q7xZutvujhBjoQSe5S+U8RwegMpsKgYQcx2xH/8bpqa4
-         AhSDwGpVxuC6vGEnbDFHhCGwUoj2bfdsNJ02LNnExNeJ/plQL/QRPs/9WLfVtsaUmR2G
-         BWig==
-X-Gm-Message-State: AOAM532y0XZmTnGv0D+UuYxmIoZ28BDrSTgSWgwmowdAtX+Lkw+EZW1V
-        OKClwrIgs9uGDpJuLCXIgoThnThZhHwC/hL/PQ3Ld2vpsFDpzQ==
-X-Google-Smtp-Source: ABdhPJwdzJR0AVnEwRE8QIJSIeBOPQQpqcJoSOXQyWmGuQLYn1tiSkNoxa89W+BStyntqZDWqamudEvQCXJV+or9OPg=
-X-Received: by 2002:a05:6512:3696:: with SMTP id d22mr1335599lfs.586.1627639095287;
- Fri, 30 Jul 2021 02:58:15 -0700 (PDT)
+        bh=yrQFmPSsOocu2SRwmrh+oMoqHYk78zWUjrW9sn+KFu8=;
+        b=Jpozuv6S6qV+v3oiwDfJWWGDE0JHwdNf3ZerIRIVTmRnCCY6ARYFemQna24Fy9L+AA
+         oxNZSLdtugnvz39qGE0RoOnxxCGXJEsQN/fDmd7wD5xWp7bvethwAkVE3tq/mMEkdSWh
+         JJ+QGEr8I6O4wo47lzFW+99vBCKTcEZ/m6/guSNFmwGQdHNFfNFCtxV9C3xQDcsuUGkQ
+         HnrrB6KfRMck5yHlAL4icP7tVXb8iGp1j5Cw0iQrAZ/cRfUKwj/AxP0aBuzw1PQBiC7c
+         N/RHmuy5tzS9xX65icrI2wD2qJ+WWueeecMguPbzG1bCgyU1dZbWTN0/hrgpKC9fNzmj
+         UAgg==
+X-Gm-Message-State: AOAM532g/ko1zmFBNXy1L0VXqa43MSB89/2PvBfdxcRK8XaBkGq1WGpN
+        Yhzf7oOoGF48EkMG57nqWK3USmaUu45IS/zoAYs6jRGbwBQ=
+X-Google-Smtp-Source: ABdhPJx3kzOTrIVzHNFiv5EZ/V73fXl2Hn/oaV3vs0g/lVAyoet+DXaSEX4BPoAvgqkaX+OYaNJkKMx3tMkX3MJDMq8=
+X-Received: by 2002:ac2:5312:: with SMTP id c18mr1253533lfh.649.1627639343457;
+ Fri, 30 Jul 2021 03:02:23 -0700 (PDT)
 MIME-Version: 1.0
-References: <1627029074-23449-1-git-send-email-skakit@codeaurora.org>
-In-Reply-To: <1627029074-23449-1-git-send-email-skakit@codeaurora.org>
+References: <cover.1626987605.git.quic_vamslank@quicinc.com>
+In-Reply-To: <cover.1626987605.git.quic_vamslank@quicinc.com>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Fri, 30 Jul 2021 11:58:04 +0200
-Message-ID: <CACRpkdYsDNDcCYWOygN+V=1LFBZ6-PHYaePy5truR9ybVzkMUg@mail.gmail.com>
-Subject: Re: [PATCH V7 0/3] Convert qcom pmic gpio bindings to YAML
-To:     satya priya <skakit@codeaurora.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+Date:   Fri, 30 Jul 2021 12:02:12 +0200
+Message-ID: <CACRpkdbqyi93Ncr4ANCV4ZVeZzNMMxumTJ4byu2vFZa=_0WhRg@mail.gmail.com>
+Subject: Re: [PATCH v2 0/2] Add pinctrl support for SDX65
+To:     quic_vamslank@quicinc.com
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Das Srinagesh <gurus@codeaurora.org>,
-        Kiran Gunda <kgunda@codeaurora.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
         linux-kernel <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, MSM <linux-arm-msm@vger.kernel.org>
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Satya,
+On Thu, Jul 22, 2021 at 11:19 PM <quic_vamslank@quicinc.com> wrote:
 
-On Fri, Jul 23, 2021 at 10:32 AM satya priya <skakit@codeaurora.org> wrote:
+> From: Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
 >
-> satya priya (3):
->   dt-bindings: mfd: pm8008: Add gpio-ranges and spmi-gpio compatible
->   dt-bindings: pinctrl: qcom-pmic-gpio: Convert qcom pmic gpio bindings
->     to YAML
->   dt-bindings: pinctrl: qcom-pmic-gpio: Remove the interrupts property
+> Changes from v1:
+>  - Addressed all Bjorn's comments
 >
->  .../devicetree/bindings/mfd/qcom,pm8008.yaml       |  13 +-
->  .../devicetree/bindings/pinctrl/qcom,pmic-gpio.txt | 288 ---------------------
->  .../bindings/pinctrl/qcom,pmic-gpio.yaml           | 239 +++++++++++++++++
->  3 files changed, 249 insertions(+), 291 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
+> This patch series adds pinctrl bindings and tlmm support for SDX65.
 
-I tried to apply these patches to the pinctrl tree but there is a conflict
-because I merged these patches (I think):
-0ac2c2aebf82 dt-bindings: pinctrl: qcom,pmic-gpio: Add compatible for
-SA8155p-adp
-ffdf4cecac07 dt-bindings: pinctrl: qcom,pmic-gpio: Arrange compatibles
-alphabetically
+Looks good to me but waiting for Bjorn's review!
 
-Can you please rebase the patches on top of this branch:
-https://git.kernel.org/pub/scm/linux/kernel/git/linusw/linux-pinctrl.git/log/?h=devel
-
-then resend so I can apply them?
-
-Include Bhupesh on Cc so we get confirmation that this ends up as intended.
-
-Thanks,
+Yours,
 Linus Walleij
