@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A1F63DBC92
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 17:46:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 974503DBC9D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 17:47:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233099AbhG3Pqz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jul 2021 11:46:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33746 "EHLO
+        id S233155AbhG3PrB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jul 2021 11:47:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233330AbhG3Pqu (ORCPT
+        with ESMTP id S233735AbhG3Pqx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jul 2021 11:46:50 -0400
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD9E0C061796
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 08:46:44 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id g23-20020a17090a5797b02901765d605e14so14844187pji.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 08:46:44 -0700 (PDT)
+        Fri, 30 Jul 2021 11:46:53 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 07202C0617A3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 08:46:47 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id o44-20020a17090a0a2fb0290176ca3e5a2fso14882323pjo.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 08:46:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=NXWj3SiFugbCWCRSzVX+8Iy1ihJkRj/jg7iX1eJPuek=;
-        b=LOyEwhl8I0HGdsPqwNONLr04k49BqJ8Zqb0xibyWEH+5coCeIHqfqJul+fJ0na4T5V
-         bL5hmYeBWDpI2gmOivOpSxhmV9qVDEY0I1Yj2jnYHgFllLK1ADp08rjzMwnHZ8dThZLU
-         fUI/xJ7OrAN2Ra0vPQ4I80K+MctPGf+37Tg0U=
+        bh=kl6+GkZ/OKkP0xJnn1y99V9xopk73LCBvTHbkA/Bkd0=;
+        b=BMKp3Z7fNd+oGrTH2hjbLyOQ4KTpld6JQO9wD9sUs0MP8uIdv0lbiHDVaSd1rIe9P0
+         Jh6NwnKZVsN4zORtpKIU1/8wcm7QKWwK5uV/0u/v2Qvif4se5khYD5YniHtsv7vteMAM
+         mwd8YBrjYIcqI5cmIY7uAkjuJd4yQZ5qJftWQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=NXWj3SiFugbCWCRSzVX+8Iy1ihJkRj/jg7iX1eJPuek=;
-        b=NJQ5CbkfPyIXDNCLa9H9A9A+w2AHslMRrt7U82O7moD0HS5xjWxxkDqEA9c0go7CVb
-         VBbsSf49aHFcVA/C3oQ1UGGwERf3dM/lf1Cu+QZbGCmxpNv4atp2MBNenV3UnviROami
-         GSRP0/E0VktJGCMYmauiF80VWbpbamvBj/AUPsWu/H3c/DPjdFsWyT5J1A/Ohm1xMLlS
-         RoZ9NpHELTi15XgJUCa+wUKf70BDf0x76AUchjdau63JjBbpHEJPqZivi/n7L6cqQGLy
-         lAhR0t/RwrwMImesX1V4CVnmoLrfhuUeCZrQSUuX8fflTVWV7QU4xrlP3DlrfnEFBXT0
-         jfww==
-X-Gm-Message-State: AOAM5329Jm2arZWLYuJNFCuMMUbReGMq1ICK+W6qXToRCAuYOSXS4IWa
-        S4w4ONX1enhR2u9IUXGbYK/UJQ==
-X-Google-Smtp-Source: ABdhPJyBu9kVnKQSpFGpMuW3TcgADicSicEG7RyFmRXSR8ISFZOPp5RUwFrvwuR2LDvVfASoYIbjBA==
-X-Received: by 2002:a62:92d7:0:b029:32c:8c46:9491 with SMTP id o206-20020a6292d70000b029032c8c469491mr3308985pfd.2.1627660004406;
-        Fri, 30 Jul 2021 08:46:44 -0700 (PDT)
+        bh=kl6+GkZ/OKkP0xJnn1y99V9xopk73LCBvTHbkA/Bkd0=;
+        b=s3G7nX3EvKiDR2qVc9eqVmiBtCYAd8O3N+E2GhzcrjsscB069nUfY/kL3Rx5ORRt1S
+         Ch3Q2jwklovRFE8U6CbR+mcXXi2MAw5ceQvqYVXLX9Wu00WMP1ZmV54ep1y50wCWgHTh
+         c7MjuYqc6xeRSxm+3XkkprBTR9XPHY/jmdUZvuO4BfCbP8fH/zYEVyvAmEU+JtOeayxp
+         pZyqdyOFN8+1a5hgJ40cRu3YDKzp6AH8KNSFG3r4uh4H5q7wOMOXwdlFk4K/n06oBi9r
+         +37K9cDrUo+F1q+14wQsm/UHAvHSMuRWKbRI06poHX310/CW1kpBayLT/JZ3cD0XE2E8
+         szlA==
+X-Gm-Message-State: AOAM530MD+TuiNulix9EIkp7wN85TXEQacv5a4/MxXUvCshfqoikcGHF
+        0QLyyeItelZLbcWtonhlV5quow==
+X-Google-Smtp-Source: ABdhPJxVmKC0pz06PCqHIYT8Ni8XG5vasskSnhyHFguG3nqlN3vvbWQ4/R5UzFpvf3J7FH9R3lBjmA==
+X-Received: by 2002:a17:903:308b:b029:12b:c7ec:998d with SMTP id u11-20020a170903308bb029012bc7ec998dmr2901646plc.78.1627660006592;
+        Fri, 30 Jul 2021 08:46:46 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:3424:e0ac:5a92:d061])
-        by smtp.gmail.com with ESMTPSA id u188sm3175621pfc.115.2021.07.30.08.46.42
+        by smtp.gmail.com with ESMTPSA id u188sm3175621pfc.115.2021.07.30.08.46.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Jul 2021 08:46:44 -0700 (PDT)
+        Fri, 30 Jul 2021 08:46:46 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     dri-devel@lists.freedesktop.org
 Cc:     devicetree@vger.kernel.org, steev@kali.org, robert.foss@linaro.org,
@@ -57,12 +57,10 @@ Cc:     devicetree@vger.kernel.org, steev@kali.org, robert.foss@linaro.org,
         linux-arm-msm@vger.kernel.org, a.hajda@samsung.com,
         tzimmermann@suse.de, narmstrong@baylibre.com,
         Douglas Anderson <dianders@chromium.org>,
-        Sean Paul <seanpaul@chromium.org>,
-        Sandeep Panda <spanda@codeaurora.org>,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2 3/6] drm/bridge: ti-sn65dsi86: Add some 100 us delays
-Date:   Fri, 30 Jul 2021 08:46:02 -0700
-Message-Id: <20210730084534.v2.3.I842d483139531aa4651da8338512fdf0171ff23c@changeid>
+        Sean Paul <seanpaul@chromium.org>, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 4/6] Revert "drm/panel-simple: Add Samsung ATNA33XC20"
+Date:   Fri, 30 Jul 2021 08:46:03 -0700
+Message-Id: <20210730084534.v2.4.Id9f076ec5f35633f8ce931051af268a04c45c075@changeid>
 X-Mailer: git-send-email 2.32.0.554.ge1b32706d8-goog
 In-Reply-To: <20210730154605.2843418-1-dianders@chromium.org>
 References: <20210730154605.2843418-1-dianders@chromium.org>
@@ -72,48 +70,74 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The manual has always said that we need 100 us delays in a few
-places. Though it hasn't seemed to be a big deal to skip these, let's
-add them in case it makes something happier.
+This reverts commit 4bfe6c8f7c23b01719671b69fd29b87a35ccd9d6.
 
-NOTE: this fixes no known issues but it seems good to make it right.
+This panel's power sequencing really can't be handled properly by
+panel-simple because of the special sequencing needed for the EL_ON3
+GPIO. The only way it was sorta working in the past was by trying to
+jam that signal into the "enable-gpio", but that really wasn't a good
+fit. We'll add a custom panel driver for this panel to do it right.
 
-Fixes: a095f15c00e2 ("drm/bridge: add support for sn65dsi86 bridge driver")
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Acked-by: Robert Foss <robert.foss@linaro.org>
 Reviewed-by: Sean Paul <seanpaul@chromium.org>
 ---
 
-Changes in v2:
-- Added Fixes tag as requested by Sam.
+(no changes since v1)
 
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+ drivers/gpu/drm/panel/panel-simple.c | 33 ----------------------------
+ 1 file changed, 33 deletions(-)
 
-diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-index 5e932070a1c3..cd0fccdd8dfd 100644
---- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-+++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-@@ -307,6 +307,9 @@ static int __maybe_unused ti_sn65dsi86_resume(struct device *dev)
- 		return ret;
- 	}
+diff --git a/drivers/gpu/drm/panel/panel-simple.c b/drivers/gpu/drm/panel/panel-simple.c
+index 9b286bd4444f..c8694f7f8e0f 100644
+--- a/drivers/gpu/drm/panel/panel-simple.c
++++ b/drivers/gpu/drm/panel/panel-simple.c
+@@ -3621,36 +3621,6 @@ static const struct panel_desc rocktech_rk101ii01d_ct = {
+ 	.connector_type = DRM_MODE_CONNECTOR_LVDS,
+ };
  
-+	/* td2: min 100 us after regulators before enabling the GPIO */
-+	usleep_range(100, 110);
-+
- 	gpiod_set_value(pdata->enable_gpio, 1);
- 
- 	/*
-@@ -1096,6 +1099,9 @@ static void ti_sn_bridge_pre_enable(struct drm_bridge *bridge)
- 
- 	if (!pdata->refclk)
- 		ti_sn65dsi86_enable_comms(pdata);
-+
-+	/* td7: min 100 us after enable before DSI data */
-+	usleep_range(100, 110);
- }
- 
- static void ti_sn_bridge_post_disable(struct drm_bridge *bridge)
+-static const struct drm_display_mode samsung_atna33xc20_mode = {
+-	.clock = 138770,
+-	.hdisplay = 1920,
+-	.hsync_start = 1920 + 48,
+-	.hsync_end = 1920 + 48 + 32,
+-	.htotal = 1920 + 48 + 32 + 80,
+-	.vdisplay = 1080,
+-	.vsync_start = 1080 + 8,
+-	.vsync_end = 1080 + 8 + 8,
+-	.vtotal = 1080 + 8 + 8 + 16,
+-	.flags = DRM_MODE_FLAG_PHSYNC | DRM_MODE_FLAG_NVSYNC,
+-};
+-
+-static const struct panel_desc samsung_atna33xc20 = {
+-	.modes = &samsung_atna33xc20_mode,
+-	.num_modes = 1,
+-	.bpc = 10,
+-	.size = {
+-		.width = 294,
+-		.height = 165,
+-	},
+-	.delay = {
+-		.disable_to_power_off = 200,
+-		.power_to_enable = 400,
+-		.hpd_absent_delay = 200,
+-		.unprepare = 500,
+-	},
+-	.connector_type = DRM_MODE_CONNECTOR_eDP,
+-};
+-
+ static const struct drm_display_mode samsung_lsn122dl01_c01_mode = {
+ 	.clock = 271560,
+ 	.hdisplay = 2560,
+@@ -4657,9 +4627,6 @@ static const struct of_device_id platform_of_match[] = {
+ 	}, {
+ 		.compatible = "rocktech,rk101ii01d-ct",
+ 		.data = &rocktech_rk101ii01d_ct,
+-	}, {
+-		.compatible = "samsung,atna33xc20",
+-		.data = &samsung_atna33xc20,
+ 	}, {
+ 		.compatible = "samsung,lsn122dl01-c01",
+ 		.data = &samsung_lsn122dl01_c01,
 -- 
 2.32.0.554.ge1b32706d8-goog
 
