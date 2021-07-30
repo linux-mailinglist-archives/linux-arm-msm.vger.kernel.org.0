@@ -2,272 +2,232 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C4FD53DB135
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 04:39:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 081A43DB20A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 05:53:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236087AbhG3CjO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 29 Jul 2021 22:39:14 -0400
-Received: from mail.kernel.org ([198.145.29.99]:38246 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229949AbhG3CjM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 29 Jul 2021 22:39:12 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 0B1DE60F4A;
-        Fri, 30 Jul 2021 02:39:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1627612748;
-        bh=6B3cVhx4nV2A6xXvK3y3d2QgXJRAdj2dPPUe5a3+gR0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=YvR6wk3vhV0GEB5HSt4Hv9ev7AY7CtQVerfzNu4BbRtfcYBZvOfomHCO4C8Sav45r
-         H51hdMv2RXso7C/PTknw9rbSltwZHK3wjX8F9e9qOtbkRN2VO1Bsh4PqA8R/gTlrFA
-         /u+uv/T957dYErrqAuSjAo7p6wZTxhky0ZWmIkUk5/6h/zdn4aHVeOJT/IRZ5iF1b/
-         h+95gimEfe1hzLnVdC2O5BTosamqmjEkMLQcovyb6xsuJvWR/ArhaydtmuFJBrwFEa
-         DlsvAwh5MC7OwQSB7o14QRn9UfvqM6Bsu52qWsphHS0uMTRqVJKLbo9E840/AAXGmP
-         995J1gGEBhJzw==
-Date:   Fri, 30 Jul 2021 08:09:03 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     quic_vamslank@quicinc.com
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        mturquette@baylibre.com, sboyd@kernel.org, robh+dt@kernel.org,
-        tglx@linutronix.de, maz@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 2/6] clk: qcom: Add new PLL type for SDX65
-Message-ID: <YQNmR27CQnN1snyK@matsya>
-References: <cover.1626986805.git.quic_vamslank@quicinc.com>
- <223a1d8020d50c35ff2621f95d69b4a626b6893b.1626986805.git.quic_vamslank@quicinc.com>
+        id S235022AbhG3Dxj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 29 Jul 2021 23:53:39 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:24067 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234733AbhG3Dxj (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 29 Jul 2021 23:53:39 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1627617215; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=h3QRUbjY3/MYcxFAA6X5fTV80RY62f6e6ae8EIvlifc=; b=kcwmMWt7jslEjim9VAi21i5ojNaPy0n86vnnN8GvvudkKVqFuyExZXWXJlIHQ4AXDtQiPHlT
+ kEMWuxS6vq6A6d3cLbQs50h5lbRRUH2lp8D618imEyHWlKa6xsrfd38XgNBw0tThV1a6d8nn
+ b2t+4hYJzuuOFiz4Ag3O2GVuU10=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 610377b74815712f3aa6fd30 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 30 Jul 2021 03:53:27
+ GMT
+Sender: akhilpo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 51C32C43460; Fri, 30 Jul 2021 03:53:26 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.0 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.1.105] (unknown [59.89.227.50])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akhilpo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0CD6CC433D3;
+        Fri, 30 Jul 2021 03:53:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 0CD6CC433D3
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
+Subject: Re: [PATCH] drm: msm: Add 680 gpu to the adreno gpu list
+To:     Rob Clark <robdclark@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        David Airlie <airlied@linux.ie>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Sean Paul <sean@poorly.run>
+References: <20210725032002.3961691-1-bjorn.andersson@linaro.org>
+ <CAF6AEGvADHz7YmOZQTX8g+ZRG1rp7sk9wevgBQsknQytH+eFSA@mail.gmail.com>
+From:   Akhil P Oommen <akhilpo@codeaurora.org>
+Message-ID: <20412cce-df2f-6271-9284-611f6b2ef1c5@codeaurora.org>
+Date:   Fri, 30 Jul 2021 09:23:18 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <223a1d8020d50c35ff2621f95d69b4a626b6893b.1626986805.git.quic_vamslank@quicinc.com>
+In-Reply-To: <CAF6AEGvADHz7YmOZQTX8g+ZRG1rp7sk9wevgBQsknQytH+eFSA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello Vamsi,
+On 7/30/2021 5:38 AM, Rob Clark wrote:
+> On Sat, Jul 24, 2021 at 8:21 PM Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+>>
+>> This patch adds a Adreno 680 entry to the gpulist.
+> 
+> Looks reasonable, but I wonder if we should just go ahead and add
+> adreno_is_a640_family() in a similar vein to
+> adreno_is_a650_familiy()/adreno_is_a660_family().. I think most of the
+> 'if (a640) ...' should also apply to a680?
 
-On 22-07-21, 14:09, quic_vamslank@quicinc.com wrote:
-> From: Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
+If there is no delta, wouldn't it be better to simply add a680 to 
+adreno_is_a640?
 
-Can you please add the type of pll in patch title. Something like Add
-LUCID_EVO pll
+-Akhil.
 
 > 
-> Add a new PLL type for SDX65 SoC from Qualcomm.
+> BR,
+> -R
 > 
-> Signed-off-by: Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
-> ---
->  drivers/clk/qcom/clk-alpha-pll.c | 170 +++++++++++++++++++++++++++++++
->  drivers/clk/qcom/clk-alpha-pll.h |   4 +
->  2 files changed, 174 insertions(+)
-> 
-> diff --git a/drivers/clk/qcom/clk-alpha-pll.c b/drivers/clk/qcom/clk-alpha-pll.c
-> index c6eb99169ddc..93c8917b7273 100644
-> --- a/drivers/clk/qcom/clk-alpha-pll.c
-> +++ b/drivers/clk/qcom/clk-alpha-pll.c
-> @@ -1,5 +1,6 @@
->  // SPDX-License-Identifier: GPL-2.0
->  /*
-> + * Copyright (c) 2021, Qualcomm Innovation Center, Inc. All rights reserved.
->   * Copyright (c) 2015, 2018, The Linux Foundation. All rights reserved.
->   */
->  
-> @@ -126,6 +127,20 @@ const u8 clk_alpha_pll_regs[][PLL_OFF_MAX_REGS] = {
->  		[PLL_OFF_TEST_CTL_U] = 0x1c,
->  		[PLL_OFF_STATUS] = 0x2c,
->  	},
-> +        [CLK_ALPHA_PLL_TYPE_LUCID_EVO] = {
-> +                [PLL_OFF_OPMODE] = 0x04,
-> +                [PLL_OFF_STATUS] = 0x0c,
-> +                [PLL_OFF_L_VAL] = 0x10,
-> +                [PLL_OFF_ALPHA_VAL] = 0x14,
-> +                [PLL_OFF_USER_CTL] = 0x18,
-> +                [PLL_OFF_USER_CTL_U] = 0x1c,
-> +                [PLL_OFF_CONFIG_CTL] = 0x20,
-> +                [PLL_OFF_CONFIG_CTL_U] = 0x24,
-> +                [PLL_OFF_CONFIG_CTL_U1] = 0x28,
-> +                [PLL_OFF_TEST_CTL] = 0x2c,
-> +                [PLL_OFF_TEST_CTL_U] = 0x30,
-> +                [PLL_OFF_TEST_CTL_U1] = 0x34,
-> +        },
->  };
->  EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
->  
-> @@ -155,12 +170,14 @@ EXPORT_SYMBOL_GPL(clk_alpha_pll_regs);
->  
->  /* LUCID PLL specific settings and offsets */
->  #define LUCID_PCAL_DONE		BIT(27)
-> +#define LUCID_EVO_PLL_L_VAL_MASK        GENMASK(15, 0)
->  
->  /* LUCID 5LPE PLL specific settings and offsets */
->  #define LUCID_5LPE_PCAL_DONE		BIT(11)
->  #define LUCID_5LPE_ALPHA_PLL_ACK_LATCH	BIT(13)
->  #define LUCID_5LPE_PLL_LATCH_INPUT	BIT(14)
->  #define LUCID_5LPE_ENABLE_VOTE_RUN	BIT(21)
-> +#define LUCID_EVO_ENABLE_VOTE_RUN       BIT(25)
->  
->  #define pll_alpha_width(p)					\
->  		((PLL_ALPHA_VAL_U(p) - PLL_ALPHA_VAL(p) == 4) ?	\
-> @@ -1777,3 +1794,156 @@ const struct clk_ops clk_alpha_pll_postdiv_lucid_5lpe_ops = {
->  	.set_rate = clk_lucid_5lpe_pll_postdiv_set_rate,
->  };
->  EXPORT_SYMBOL(clk_alpha_pll_postdiv_lucid_5lpe_ops);
-> +
-> +static int alpha_pll_lucid_evo_enable(struct clk_hw *hw)
-> +{
-> +	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
+>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>> ---
+>>   drivers/gpu/drm/msm/adreno/a6xx_gmu.c      |  5 +++--
+>>   drivers/gpu/drm/msm/adreno/a6xx_gpu.c      | 12 +++++++-----
+>>   drivers/gpu/drm/msm/adreno/a6xx_hfi.c      |  2 +-
+>>   drivers/gpu/drm/msm/adreno/adreno_device.c | 13 +++++++++++++
+>>   drivers/gpu/drm/msm/adreno/adreno_gpu.h    |  5 +++++
+>>   5 files changed, 29 insertions(+), 8 deletions(-)
+>>
+>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>> index b349692219b7..1c0d75e1189f 100644
+>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+>> @@ -521,7 +521,8 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
+>>
+>>          if (adreno_is_a650(adreno_gpu) || adreno_is_a660(adreno_gpu))
+>>                  pdc_in_aop = true;
+>> -       else if (adreno_is_a618(adreno_gpu) || adreno_is_a640(adreno_gpu))
+>> +       else if (adreno_is_a618(adreno_gpu) || adreno_is_a640(adreno_gpu) ||
+>> +                adreno_is_a680(adreno_gpu))
+>>                  pdc_address_offset = 0x30090;
+>>          else
+>>                  pdc_address_offset = 0x30080;
+>> @@ -1522,7 +1523,7 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+>>                          SZ_16M - SZ_16K, 0x04000);
+>>                  if (ret)
+>>                          goto err_memory;
+>> -       } else if (adreno_is_a640(adreno_gpu)) {
+>> +       } else if (adreno_is_a640(adreno_gpu) || adreno_is_a680(adreno_gpu)) {
+>>                  ret = a6xx_gmu_memory_alloc(gmu, &gmu->icache,
+>>                          SZ_256K - SZ_16K, 0x04000);
+>>                  if (ret)
+>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>> index 9c5e4618aa0a..5cdafc6c8bb0 100644
+>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+>> @@ -683,7 +683,7 @@ static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
+>>          if (adreno_is_a618(adreno_gpu))
+>>                  return;
+>>
+>> -       if (adreno_is_a640(adreno_gpu))
+>> +       if (adreno_is_a640(adreno_gpu) || adreno_is_a680(adreno_gpu))
+>>                  amsbc = 1;
+>>
+>>          if (adreno_is_a650(adreno_gpu) || adreno_is_a660(adreno_gpu)) {
+>> @@ -757,7 +757,7 @@ static bool a6xx_ucode_check_version(struct a6xx_gpu *a6xx_gpu,
+>>           * a660 targets have all the critical security fixes from the start
+>>           */
+>>          if (adreno_is_a618(adreno_gpu) || adreno_is_a630(adreno_gpu) ||
+>> -               adreno_is_a640(adreno_gpu)) {
+>> +           adreno_is_a640(adreno_gpu) || adreno_is_a680(adreno_gpu)) {
+>>                  /*
+>>                   * If the lowest nibble is 0xa that is an indication that this
+>>                   * microcode has been patched. The actual version is in dword
+>> @@ -897,7 +897,8 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
+>>          a6xx_set_hwcg(gpu, true);
+>>
+>>          /* VBIF/GBIF start*/
+>> -       if (adreno_is_a640(adreno_gpu) || adreno_is_a650_family(adreno_gpu)) {
+>> +       if (adreno_is_a640(adreno_gpu) || adreno_is_a650_family(adreno_gpu) ||
+>> +           adreno_is_a680(adreno_gpu)) {
+>>                  gpu_write(gpu, REG_A6XX_GBIF_QSB_SIDE0, 0x00071620);
+>>                  gpu_write(gpu, REG_A6XX_GBIF_QSB_SIDE1, 0x00071620);
+>>                  gpu_write(gpu, REG_A6XX_GBIF_QSB_SIDE2, 0x00071620);
+>> @@ -935,7 +936,8 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
+>>          gpu_write(gpu, REG_A6XX_UCHE_FILTER_CNTL, 0x804);
+>>          gpu_write(gpu, REG_A6XX_UCHE_CACHE_WAYS, 0x4);
+>>
+>> -       if (adreno_is_a640(adreno_gpu) || adreno_is_a650_family(adreno_gpu))
+>> +       if (adreno_is_a640(adreno_gpu) || adreno_is_a650_family(adreno_gpu) ||
+>> +           adreno_is_a680(adreno_gpu))
+>>                  gpu_write(gpu, REG_A6XX_CP_ROQ_THRESHOLDS_2, 0x02000140);
+>>          else
+>>                  gpu_write(gpu, REG_A6XX_CP_ROQ_THRESHOLDS_2, 0x010000c0);
+>> @@ -952,7 +954,7 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
+>>          */
+>>          if (adreno_is_a650(adreno_gpu) || adreno_is_a660(adreno_gpu))
+>>                  gpu_write(gpu, REG_A6XX_PC_DBG_ECO_CNTL, 0x00300200);
+>> -       else if (adreno_is_a640(adreno_gpu))
+>> +       else if (adreno_is_a640(adreno_gpu) || adreno_is_a680(adreno_gpu))
+>>                  gpu_write(gpu, REG_A6XX_PC_DBG_ECO_CNTL, 0x00200200);
+>>          else
+>>                  gpu_write(gpu, REG_A6XX_PC_DBG_ECO_CNTL, 0x00180000);
+>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+>> index 919433732b43..df8af237cf6a 100644
+>> --- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+>> @@ -428,7 +428,7 @@ static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
+>>
+>>          if (adreno_is_a618(adreno_gpu))
+>>                  a618_build_bw_table(&msg);
+>> -       else if (adreno_is_a640(adreno_gpu))
+>> +       else if (adreno_is_a640(adreno_gpu) || adreno_is_a680(adreno_gpu))
+>>                  a640_build_bw_table(&msg);
+>>          else if (adreno_is_a650(adreno_gpu))
+>>                  a650_build_bw_table(&msg);
+>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_device.c b/drivers/gpu/drm/msm/adreno/adreno_device.c
+>> index 6dad8015c9a1..799e4a35ca44 100644
+>> --- a/drivers/gpu/drm/msm/adreno/adreno_device.c
+>> +++ b/drivers/gpu/drm/msm/adreno/adreno_device.c
+>> @@ -300,6 +300,19 @@ static const struct adreno_info gpulist[] = {
+>>                  .init = a6xx_gpu_init,
+>>                  .zapfw = "a660_zap.mdt",
+>>                  .hwcg = a660_hwcg,
+>> +       }, {
+>> +               .rev = ADRENO_REV(6, 8, 0, ANY_ID),
+>> +               .revn = 680,
+>> +               .name = "A680",
+>> +               .fw = {
+>> +                       [ADRENO_FW_SQE] = "a630_sqe.fw",
+>> +                       [ADRENO_FW_GMU] = "a640_gmu.bin",
+>> +               },
+>> +               .gmem = SZ_2M,
+>> +               .inactive_period = DRM_MSM_INACTIVE_PERIOD,
+>> +               .init = a6xx_gpu_init,
+>> +               .zapfw = "a640_zap.mdt",
+>> +               .hwcg = a640_hwcg,
+>>          },
+>>   };
+>>
+>> diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+>> index 8dbe0d157520..a7e843e81b1e 100644
+>> --- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+>> +++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+>> @@ -258,6 +258,11 @@ static inline int adreno_is_a650_family(struct adreno_gpu *gpu)
+>>          return gpu->revn == 650 || gpu->revn == 620 || gpu->revn == 660;
+>>   }
+>>
+>> +static inline int adreno_is_a680(struct adreno_gpu *gpu)
+>> +{
+>> +       return gpu->revn == 680;
+>> +}
+>> +
+>>   int adreno_get_param(struct msm_gpu *gpu, uint32_t param, uint64_t *value);
+>>   const struct firmware *adreno_request_fw(struct adreno_gpu *adreno_gpu,
+>>                  const char *fwname);
+>> --
+>> 2.29.2
+>>
 
-Use a regmap ptr like we do for other functions here?
-
-> +	u32 val;
-> +	int ret;
-> +
-> +	ret = regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &val);
-> +	if (ret)
-> +		return ret;
-> +
-> +	/* If in FSM mode, just vote for it */
-> +	if (val & LUCID_EVO_ENABLE_VOTE_RUN) {
-> +		ret = clk_enable_regmap(hw);
-> +		if (ret)
-> +			return ret;
-> +		return wait_for_pll_enable_lock(pll);
-> +	}
-> +
-> +	/* Check if PLL is already enabled */
-> +	ret = trion_pll_is_enabled(pll, pll->clkr.regmap);
-> +	if (ret < 0)
-> +		return ret;
-> +	else if (ret) {
-> +		pr_warn("%s PLL is already enabled\n",
-> +				clk_hw_get_name(&pll->clkr.hw));
-> +		return 0;
-> +	}
-> +
-> +	ret = regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll),
-> +			PLL_RESET_N, PLL_RESET_N);
-
-this and others should fit in a single line (with regmap ptr)
-
-> +	if (ret)
-> +		return ret;
-> +
-> +	/* Set operation mode to RUN */
-> +	regmap_write(pll->clkr.regmap, PLL_OPMODE(pll), PLL_RUN);
-> +
-> +	ret = wait_for_pll_enable_lock(pll);
-> +	if (ret)
-> +		return ret;
-> +
-> +	/* Enable the PLL outputs */
-> +	ret = regmap_update_bits(pll->clkr.regmap, PLL_USER_CTL(pll),
-> +			PLL_OUT_MASK, PLL_OUT_MASK);
-> +	if (ret)
-> +		return ret;
-> +
-> +	/* Enable the global PLL outputs */
-> +	ret = regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll),
-> +			PLL_OUTCTRL, PLL_OUTCTRL);
-> +	if (ret)
-> +		return ret;
-> +
-> +	/* Ensure that the write above goes through before returning. */
-> +	mb();
-
-why is this required?
-
-> +	return ret;
-> +}
-> +
-> +static void alpha_pll_lucid_evo_disable(struct clk_hw *hw)
-> +{
-> +	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-
-regmap here too
-
-> +	u32 val;
-> +	int ret;
-> +
-> +	ret = regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &val);
-> +	if (ret)
-> +		return;
-> +
-> +	/* If in FSM mode, just unvote it */
-> +	if (val & LUCID_EVO_ENABLE_VOTE_RUN) {
-> +		clk_disable_regmap(hw);
-> +		return;
-> +	}
-> +
-> +	/* Disable the global PLL output */
-> +	ret = regmap_update_bits(pll->clkr.regmap, PLL_MODE(pll),
-> +			PLL_OUTCTRL, 0);
-> +	if (ret)
-> +		return;
-> +
-> +	/* Disable the PLL outputs */
-> +	ret = regmap_update_bits(pll->clkr.regmap, PLL_USER_CTL(pll),
-> +			PLL_OUT_MASK, 0);
-> +	if (ret)
-> +		return;
-> +
-> +	/* Place the PLL mode in STANDBY */
-> +	regmap_write(pll->clkr.regmap, PLL_OPMODE(pll),
-> +			PLL_STANDBY);
-> +}
-> +
-> +static unsigned long alpha_pll_lucid_evo_recalc_rate(struct clk_hw *hw, unsigned long parent_rate)
-
-too long pls split to two lines!
-
-> +{
-> +	struct clk_alpha_pll *pll = to_clk_alpha_pll(hw);
-> +	u32 l, frac;
-> +
-> +	regmap_read(pll->clkr.regmap, PLL_L_VAL(pll), &l);
-> +	l &= LUCID_EVO_PLL_L_VAL_MASK;
-> +	regmap_read(pll->clkr.regmap, PLL_ALPHA_VAL(pll), &frac);
-> +
-> +	return alpha_pll_calc_rate(parent_rate, l, frac, ALPHA_REG_16BIT_WIDTH);
-> +}
-
-looks like you should reuse clk_trion_pll_recalc_rate() instead...
-
-> +
-> +static int clk_lucid_evo_pll_postdiv_set_rate(struct clk_hw *hw,
-> +		unsigned long rate, unsigned long parent_rate)
-> +{
-> +	struct clk_alpha_pll_postdiv *pll = to_clk_alpha_pll_postdiv(hw);
-> +	int i, val = 0, div, ret;
-> +
-> +	/*
-> +	 * If the PLL is in FSM mode, then treat set_rate callback as a
-> +	 * no-operation.
-> +	 */
-> +	ret = regmap_read(pll->clkr.regmap, PLL_USER_CTL(pll), &val);
-> +	if (ret)
-> +		return ret;
-> +
-> +	if (val & LUCID_EVO_ENABLE_VOTE_RUN)
-> +		return 0;
-> +
-> +	if (!pll->post_div_table) {
-> +		pr_err("Missing the post_div_table for the PLL\n");
-> +		return -EINVAL;
-> +	}
-> +
-> +	div = DIV_ROUND_UP_ULL((u64)parent_rate, rate);
-> +	for (i = 0; i < pll->num_post_div; i++) {
-> +		if (pll->post_div_table[i].div == div) {
-> +			val = pll->post_div_table[i].val;
-> +			break;
-> +		}
-> +	}
-> +
-> +	return regmap_update_bits(pll->clkr.regmap, PLL_USER_CTL(pll),
-> +			(BIT(pll->width) - 1) << pll->post_div_shift,
-> +			val << pll->post_div_shift);
-> +}
-
-clk_lucid_5lpe_pll_postdiv_set_rate() looks similar?
-
--- 
-~Vinod
