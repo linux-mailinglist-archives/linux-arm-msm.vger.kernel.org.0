@@ -2,77 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AFAB3DB6AB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 12:04:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0445A3DB835
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 14:06:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238374AbhG3KEC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jul 2021 06:04:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58000 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238414AbhG3KDo (ORCPT
+        id S238720AbhG3MG4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jul 2021 08:06:56 -0400
+Received: from mail-0201.mail-europe.com ([51.77.79.158]:38742 "EHLO
+        mail-0201.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238663AbhG3MGz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jul 2021 06:03:44 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADF6AC06179E
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 03:02:25 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id t9so3819682lfc.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 03:02:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=yrQFmPSsOocu2SRwmrh+oMoqHYk78zWUjrW9sn+KFu8=;
-        b=oYxd3h6+XDaGKJsgHhkayzoJMa7ogz8odwMrcV4t1ibAg04dNdvJLETsYmmfrkSseV
-         fxC/+cc/g5SPKMCajUrG9GAdrHha0IDA+oh25ufXCtSGPbhjJgS/lHTfN+PWvDaNZbAd
-         YnUOJSt/covDyIQWEoSx7UeltkeZ1gsyidlXfXeH+PC/MV90c2nV+3LPejmS+xIfmF5X
-         j6bKumV6Vc1tQ98o7B/06dQH9eO80WArYKzCamWiSFuOQSDmSDIToN9zLD405Invsy4z
-         YT88a57yRD9YucDPaTPDdG8Kr3ogscFeED3zOjI7M7nSrQz585OFskj4YIGXGgezNdZU
-         LTXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=yrQFmPSsOocu2SRwmrh+oMoqHYk78zWUjrW9sn+KFu8=;
-        b=Jpozuv6S6qV+v3oiwDfJWWGDE0JHwdNf3ZerIRIVTmRnCCY6ARYFemQna24Fy9L+AA
-         oxNZSLdtugnvz39qGE0RoOnxxCGXJEsQN/fDmd7wD5xWp7bvethwAkVE3tq/mMEkdSWh
-         JJ+QGEr8I6O4wo47lzFW+99vBCKTcEZ/m6/guSNFmwGQdHNFfNFCtxV9C3xQDcsuUGkQ
-         HnrrB6KfRMck5yHlAL4icP7tVXb8iGp1j5Cw0iQrAZ/cRfUKwj/AxP0aBuzw1PQBiC7c
-         N/RHmuy5tzS9xX65icrI2wD2qJ+WWueeecMguPbzG1bCgyU1dZbWTN0/hrgpKC9fNzmj
-         UAgg==
-X-Gm-Message-State: AOAM532g/ko1zmFBNXy1L0VXqa43MSB89/2PvBfdxcRK8XaBkGq1WGpN
-        Yhzf7oOoGF48EkMG57nqWK3USmaUu45IS/zoAYs6jRGbwBQ=
-X-Google-Smtp-Source: ABdhPJx3kzOTrIVzHNFiv5EZ/V73fXl2Hn/oaV3vs0g/lVAyoet+DXaSEX4BPoAvgqkaX+OYaNJkKMx3tMkX3MJDMq8=
-X-Received: by 2002:ac2:5312:: with SMTP id c18mr1253533lfh.649.1627639343457;
- Fri, 30 Jul 2021 03:02:23 -0700 (PDT)
-MIME-Version: 1.0
-References: <cover.1626987605.git.quic_vamslank@quicinc.com>
-In-Reply-To: <cover.1626987605.git.quic_vamslank@quicinc.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Fri, 30 Jul 2021 12:02:12 +0200
-Message-ID: <CACRpkdbqyi93Ncr4ANCV4ZVeZzNMMxumTJ4byu2vFZa=_0WhRg@mail.gmail.com>
-Subject: Re: [PATCH v2 0/2] Add pinctrl support for SDX65
-To:     quic_vamslank@quicinc.com
-Cc:     Andy Gross <agross@kernel.org>,
+        Fri, 30 Jul 2021 08:06:55 -0400
+Date:   Fri, 30 Jul 2021 12:06:09 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail; t=1627646777;
+        bh=DnTVkMNQyN7PF/kN3hZUf5ZArPpdOn2CWrXvEvbbJ0o=;
+        h=Date:To:From:Cc:Reply-To:Subject:From;
+        b=Ek+XMqgmxpioWv9+WLQRr9W6kHOgU7YBsYgkdtTsDz79ZmMXaQNWaY8h6zwMJglBH
+         V1fmvNDdjONJOr+EN0tCbYm7+QZxNtQ75qKee1vRS4ks0t+4H2qxd8tTEDrKdD3orw
+         Z9Zvl1ThmdNm52jQLWYvCrCZgSfy10pLEYJCrTpE=
+To:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+From:   Yassine Oudjana <y.oudjana@protonmail.com>
+Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Georgi Djakov <djakov@kernel.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
+Subject: [PATCH 0/5] interconnect: qcom: Add MSM8996 interconnect driver
+Message-ID: <6JHqObH1HYWVEuXCDMTC0NMw0Uz7kXUT0mxvgR23I@cp4-web-030.plabs.ch>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Jul 22, 2021 at 11:19 PM <quic_vamslank@quicinc.com> wrote:
+This series adds a driver for interconnects on MSM8996. This fixes some rar=
+e display underflows
+and causes a slight heat reduction.
 
-> From: Vamsi Krishna Lanka <quic_vamslank@quicinc.com>
->
-> Changes from v1:
->  - Addressed all Bjorn's comments
->
-> This patch series adds pinctrl bindings and tlmm support for SDX65.
+The driver currently supports all NoCs on MSM8996 except a0noc, due to some=
+ issues with writing
+to its registers.
 
-Looks good to me but waiting for Bjorn's review!
+Yassine Oudjana (5):
+  interconnect: qcom: sdm660: Commonize RPM-QoS
+  dt-bindings: interconnect: Move SDM660 to a new RPM-QoS file
+  interconnect: qcom: Add MSM8996 interconnect provider driver
+  dt-bindings: interconnect: Add Qualcomm MSM8996 DT bindings
+  arm64: dts: qcom: msm8996: Add interconnect support
 
-Yours,
-Linus Walleij
+ .../{qcom,sdm660.yaml =3D> qcom,rpm-qos.yaml}   |  23 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |  84 +++
+ drivers/interconnect/qcom/Kconfig             |  14 +-
+ drivers/interconnect/qcom/Makefile            |   4 +
+ drivers/interconnect/qcom/icc-rpm-qos.c       | 237 ++++++++
+ drivers/interconnect/qcom/icc-rpm-qos.h       | 133 ++++
+ drivers/interconnect/qcom/icc-rpmh.c          |   6 +-
+ drivers/interconnect/qcom/icc-rpmh.h          |   2 +-
+ drivers/interconnect/qcom/msm8996.c           | 574 ++++++++++++++++++
+ drivers/interconnect/qcom/msm8996.h           | 149 +++++
+ drivers/interconnect/qcom/sc7180.c            |   2 +-
+ drivers/interconnect/qcom/sc7280.c            |   2 +-
+ drivers/interconnect/qcom/sdm660.c            | 346 +----------
+ drivers/interconnect/qcom/sdm845.c            |   2 +-
+ drivers/interconnect/qcom/sdx55.c             |   2 +-
+ drivers/interconnect/qcom/sm8150.c            |   2 +-
+ drivers/interconnect/qcom/sm8250.c            |   2 +-
+ drivers/interconnect/qcom/sm8350.c            |   2 +-
+ .../dt-bindings/interconnect/qcom,msm8996.h   | 163 +++++
+ 19 files changed, 1391 insertions(+), 358 deletions(-)
+ rename Documentation/devicetree/bindings/interconnect/{qcom,sdm660.yaml =
+=3D> qcom,rpm-qos.yaml} (82%)
+ create mode 100644 drivers/interconnect/qcom/icc-rpm-qos.c
+ create mode 100644 drivers/interconnect/qcom/icc-rpm-qos.h
+ create mode 100644 drivers/interconnect/qcom/msm8996.c
+ create mode 100644 drivers/interconnect/qcom/msm8996.h
+ create mode 100644 include/dt-bindings/interconnect/qcom,msm8996.h
+
+--=20
+2.32.0
+
+
