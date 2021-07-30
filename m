@@ -2,112 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FBDA3DBE52
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 20:25:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D436A3DBE91
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 20:57:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230467AbhG3SZI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jul 2021 14:25:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46924 "EHLO
+        id S230402AbhG3S5c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jul 2021 14:57:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54720 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230184AbhG3SZH (ORCPT
+        with ESMTP id S230386AbhG3S5c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jul 2021 14:25:07 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5CFDBC061765
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 11:25:02 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id v8-20020a0568301bc8b02904d5b4e5ca3aso1257270ota.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 11:25:02 -0700 (PDT)
+        Fri, 30 Jul 2021 14:57:32 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E97D3C0613C1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 11:57:25 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id t128so14549106oig.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 11:57:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=XpB+LNmPBgnS5Lf6x+b5cG5d1sMq85HwbCnNpZE2zYo=;
-        b=FLU28j8+ohjlgupR219GFzrIl9IH9/YzqxQJSUxHtE5VtGLhrgsFSje8to6mUj/aga
-         x8nInA/4b1SZwqh/E285vMfeKvkbUkoZiHeV5oxS8JUVQLxRozEbb1HUzzi845CHrDBt
-         bH1RLWLP2fGKQKmFMPdNozclJavXJ1RtQ9W1Ruat6YfxfmKna0mnbxpgJnpnz+MApimw
-         JFI1/pM187pK04w61eo5JjNf2ZlDqDzDfs7YLwOWOmHFCAK24b6vFe2/nSOx/nPPc7fP
-         IASY8hUWbtG53IMu3z7y0g2dS8huQ1EQq2BfmjIjTt84iWoT2Jk2MUoYLWoy37YbYT79
-         fwaA==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=R52SkjmgEOTUBqEHYa4AfMHcfuuZbXxc9uqTeblsMI4=;
+        b=cHDqg/JVMq/KqDermTQjYQh3zJXJCgTPV0eNVwov0YhCZHuLgysibPpi3PiXwC8AL/
+         r7BYwYGHH616M3q6D5LlbG06SRra2HKOgobDs6tHNk6qKcizFKqbOz2O8tuMAjVa0e98
+         AFfaruS7lNYtXfYX7BcUXNpVasZSMNkgguCmo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=XpB+LNmPBgnS5Lf6x+b5cG5d1sMq85HwbCnNpZE2zYo=;
-        b=ri7in0HB6PjjZO0FDIfgODDI5bY87ZD/OgG2uB9diuF4KmpbCMFbBkNas3B4nCVKsY
-         791/P6u5tgbEM0iDKai4/UDX/uAtQptwpU+VlUXiDqLIdIhn3feM0LP1wykZ+Y9mv871
-         kXoI9MBFzfCdJLWyld0sIal46s0hMLKl/RXqNkNAgzSrhNdXXKAitPK6z9F26IUzhaqx
-         onK53mf6gadVg4+xzZmbkIHV/U3Rsldej38A1M4Z0WDjk84qKGmu1C9jblclFGag37tn
-         iQXhVdgUrGZpam55qlmM2+ACfu10UrLvQkbR/TNFMsUSInyjUWPZvIkK4xajPHkXymu+
-         mmWQ==
-X-Gm-Message-State: AOAM5326cn+jX7oGvRpSvuGZ+rf6Re1nJC2U/LLy/uUoxynlUB5MHsmb
-        6b+O4V1bqGWezqqQbWsBks6puQ==
-X-Google-Smtp-Source: ABdhPJx4vNZHT6X7wQKRFb2JUuvmKANycbmxpNeZfUiQDWntbLArDTfaRDIDFIss/nuk9dA3LyoMKw==
-X-Received: by 2002:a05:6830:25c6:: with SMTP id d6mr3126063otu.226.1627669501571;
-        Fri, 30 Jul 2021 11:25:01 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id i10sm357103ood.48.2021.07.30.11.25.00
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Jul 2021 11:25:01 -0700 (PDT)
-Date:   Fri, 30 Jul 2021 13:24:58 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     Matthias Kaehlcke <mka@chromium.org>, robh+dt@kernel.org,
-        will@kernel.org, saiprakash.ranjan@codeaurora.org, ohad@wizery.com,
-        agross@kernel.org, mathieu.poirier@linaro.org,
-        robin.murphy@arm.com, joro@8bytes.org, p.zabel@pengutronix.de,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, evgreen@chromium.org,
-        dianders@chromium.org, swboyd@chromium.org
-Subject: Re: [PATCH 6/9] arm64: dts: qcom: sc7280: Update reserved memory map
-Message-ID: <YQRD+va2mn9e+QKJ@builder.lan>
-References: <1624564058-24095-1-git-send-email-sibis@codeaurora.org>
- <1624564058-24095-7-git-send-email-sibis@codeaurora.org>
- <YNoQ1d1hUyIh/qxz@google.com>
- <f74c03b939dfd83a1013906e1c771666@codeaurora.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=R52SkjmgEOTUBqEHYa4AfMHcfuuZbXxc9uqTeblsMI4=;
+        b=VYQrEzxN/XwQQgFIdkaAXRR/VTw+SSEwDFgUyJ6HfdH6HemFbHt0xEM4PduQ8IyZSb
+         q7eQB/R3QlotxviBJ8tChKBn5/p8hILCrW7MLORToipIQd5ehXlPweVpXGhJeTqVpSym
+         c5lQA1WQ0tAvwYftz66t0P+KFrk21QXIUsKuUfABUIDUvRRYdPXWqrqYz5ou+ca5khU4
+         kS3koKBVS2Rc7vq5KASYPe2HmZyfbi1RzZYiHCGJiteaq/f04xYH0hl2Q9LOfd7OPrlD
+         zpbLu2I10vsNnlFue6Ujx4lEL16ENUtVXbW2h5Rz8dBv1e8CYVxH70uXRFj1rhewQvym
+         peqw==
+X-Gm-Message-State: AOAM531unLwjUcVNbIQAg3SXwHIjtyTb9KGk4d5jZxFm5KlqoY0a0yZk
+        X4bNHZAxeBZKSZr3juD62cDd2ijBTs+gkYWFEg6hzQ==
+X-Google-Smtp-Source: ABdhPJxNDgMIs+i6xUVmTNkHBOhTrdiS70/qH/dNqao4vmx6KI2snPhoSDEX5E4jN4uKjzYEP/Dq7jJoDsUvXCG78qo=
+X-Received: by 2002:a05:6808:619:: with SMTP id y25mr3062792oih.166.1627671445211;
+ Fri, 30 Jul 2021 11:57:25 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Fri, 30 Jul 2021 11:57:24 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f74c03b939dfd83a1013906e1c771666@codeaurora.org>
+In-Reply-To: <1627507854-16733-1-git-send-email-khsieh@codeaurora.org>
+References: <1627507854-16733-1-git-send-email-khsieh@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Fri, 30 Jul 2021 11:57:24 -0700
+Message-ID: <CAE-0n51cNywB2ThQxqS4iX-d7wR+rYXt8P33o9cUq9J6tT915A@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dp: update is_connected status base on sink count
+ at dp_pm_resume()
+To:     Kuogee Hsieh <khsieh@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robdclark@gmail.com, sean@poorly.run,
+        vkoul@kernel.org
+Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 30 Jun 15:02 CDT 2021, Sibi Sankar wrote:
+Quoting Kuogee Hsieh (2021-07-28 14:30:54)
+> Currently at dp_pm_resume() is_connected state is decided base on hpd connection
+> status only. This will put is_connected in wrongly "true" state at the scenario
+> that dongle attached to DUT but without hmdi cable connecting to it. Fix this
+> problem by adding read sink count from dongle and decided is_connected state base
+> on both sink count and hpd connection status.
+>
 
-> On 2021-06-28 23:41, Matthias Kaehlcke wrote:
-> > On Fri, Jun 25, 2021 at 01:17:35AM +0530, Sibi Sankar wrote:
-> > 
-> > > Subject: arm64: dts: qcom: sc7280: Update reserved memory map
-> > 
-> > That's very vague. Also personally I'm not a fan of patches that touch
-> > SoC and board files with a commit message that only mentions the SoC, as
-> > is frequently done for IDP boards. Why not split this in (at least) two,
-> > one for adding the missing memory regions to the SoC, and one for the
-> > IDP.
-> > 
-> 
-> sure will split this up.
-> 
-> > > Add missing regions and remove unused regions from the reserved memory
-> > > map, as described in version 1.
-> > 
-> > What is this 'version 1'?
-> 
-> lol, it's the memory map version number
-> and it's not entirely internal to qc so
-> we have been mentioning them in commit
-> messages from older SoCs. I'll just drop
-> it when I re-spin the series since it
-> doesn't add much value.
-> 
+Please add a Fixes tag.
 
-Every now and then we run into issues with the reserved-memory layout,
-where knowing were the numbers comes from is useful information to have
-in order to characterize the issue and come up with a fix.
+> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+> ---
+>  drivers/gpu/drm/msm/dp/dp_display.c | 23 +++++++++++++++++++++--
+>  1 file changed, 21 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 2b660e9..9bcb261 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -1308,6 +1308,17 @@ static int dp_display_remove(struct platform_device *pdev)
+>         return 0;
+>  }
+>
+> +static int dp_get_sink_count(struct dp_display_private *dp)
+> +{
+> +       u8 sink_count;
+> +
+> +       sink_count = drm_dp_read_sink_count(dp->aux);
 
-So including information about where those numbers came from is useful,
-even if it's referencing a version of a document that's not public.
+drm_dp_read_sink_count() returns an int, not a u8. Comparing a u8 to
+less than zero doesn't make any sense as it isn't signed.
 
-Regards,
-Bjorn
+> +       if (sink_count < 0)
+> +               return 0;
+> +
+> +       return sink_count;
+> +}
+
+We can drop this function and just have an int count in dp_pm_resume()
+that is compared to < 0 and then ignored.
+
+> +
+>  static int dp_pm_resume(struct device *dev)
+>  {
+>         struct platform_device *pdev = to_platform_device(dev);
+> @@ -1327,14 +1338,22 @@ static int dp_pm_resume(struct device *dev)
+>
+>         dp_catalog_ctrl_hpd_config(dp->catalog);
+>
+> -       status = dp_catalog_link_is_connected(dp->catalog);
+> +       /*
+> +        * set sink to normal operation mode -- D0
+> +        * before dpcd read
+> +        */
+> +       dp_link_psm_config(dp->link, &dp->panel->link_info, false);
+>
+> +       if ((status = dp_catalog_link_is_connected(dp->catalog)))
+> +               dp->link->sink_count = dp_get_sink_count(dp);
+
+Do we need to call drm_dp_read_sink_count_cap() as well?
+
+> +       else
+> +               dp->link->sink_count = 0;
+>         /*
+>          * can not declared display is connected unless
+>          * HDMI cable is plugged in and sink_count of
+>          * dongle become 1
+>          */
+> -       if (status && dp->link->sink_count)
+
+Is 'status' used anymore? If not, please remove it.
+
+> +       if (dp->link->sink_count)
+>                 dp->dp_display.is_connected = true;
+>         else
+>                 dp->dp_display.is_connected = false;
