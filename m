@@ -2,188 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 659143DBFBE
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 22:24:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 539503DC030
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 23:26:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231444AbhG3UYK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jul 2021 16:24:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48310 "EHLO
+        id S230483AbhG3V0v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jul 2021 17:26:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231163AbhG3UYJ (ORCPT
+        with ESMTP id S230430AbhG3V0v (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jul 2021 16:24:09 -0400
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6AD6DC0613C1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 13:24:04 -0700 (PDT)
-Received: from [192.168.1.59] (bband-dyn19.178-41-181.t-com.sk [178.41.181.19])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 4BBEF3EA5A;
-        Fri, 30 Jul 2021 22:24:01 +0200 (CEST)
-Date:   Fri, 30 Jul 2021 22:23:55 +0200
-From:   Martin Botka <martin.botka@somainline.org>
-Subject: Re: [RESEND PATCH v2 3/3] rpmcc: Add support for SM6125
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     martin.botka1@gmail.com, ~postmarketos/upstreaming@lists.sr.ht,
-        konrad.dybcio@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        paul.bouchara@somainline.org, Andy Gross <agross@kernel.org>,
+        Fri, 30 Jul 2021 17:26:51 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2157DC06175F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 14:26:45 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id l19so17146608pjz.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 14:26:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hsE2hgS9GrAHQOTt+kQkvTKMH3S+dU9Sqt4Efar72O8=;
+        b=F94dZsWNp2iD40tvsWV6uiF7yWgplZgsP650SHVBhpAQCZw+A6rvwC+FejZ8CUt91m
+         +Ushm9351aHKdXBTr63h0SeMBBrJsZbrrN6aV6ZAJuIvvGY68YzgGQHF2g/c76+Np5b3
+         CMjpjiR7Uah2pHGACbOL308OO+isR9+xvXRTs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hsE2hgS9GrAHQOTt+kQkvTKMH3S+dU9Sqt4Efar72O8=;
+        b=Tq9JPnHZSL/uZkteQZ2V2qZYMz0k1ikrZuLw8jqhWeRrHs6y13XKlbRQ9gM+B5LVdU
+         Ko7nxvWukzgryIFD9mHLKEfxRLxakA/rMzX/sCL0FJgNA4kQ0uzKe6Wi5FQAnT8uK9k8
+         z5SaZ6NfqpGUrVetnBdOh5e20IFc9A6fxjsIe9h2jgMTlkHLTScSSy+vcAd/bNfNxJFL
+         cL503CVKWHsE+YS+Z4iSSP6pd37T5omaw/tDhLIJzw8hQn+uSGhewE6AxCW/0l++hB+G
+         JPD1Tkysr9tTbm0ukM+5UohJVFPsYF5ylQOawWrKqCQXrjaj0oBukSBq7iNKhIXdUWtL
+         Cc5A==
+X-Gm-Message-State: AOAM532BZAIPs/OhJrnLedpoI4Y73oaFCzaSt3Y97glEZXOMheXPSWwi
+        cdu7AMo2GYzSWYN9LO1KxIbTkg==
+X-Google-Smtp-Source: ABdhPJyzhHgl514JGa2ylBsI0JdjPCwuzopo8sRSF3F8GkDWE1rz8ntgfMMTqMJ08hYEZjlEvE1pBQ==
+X-Received: by 2002:a17:90b:1b06:: with SMTP id nu6mr5215394pjb.192.1627680404625;
+        Fri, 30 Jul 2021 14:26:44 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:3424:e0ac:5a92:d061])
+        by smtp.gmail.com with ESMTPSA id u21sm3484625pfh.163.2021.07.30.14.26.43
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Jul 2021 14:26:44 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Thierry Reding <thierry.reding@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     Sam Ravnborg <sam@ravnborg.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        devicetree@vger.kernel.org, David Airlie <airlied@linux.ie>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Message-Id: <VBR2XQ.FOVZA5CIE6Z12@somainline.org>
-In-Reply-To: <N5R2XQ.AHZHRMRZKWYV1@somainline.org>
-References: <20210629102624.194378-1-martin.botka@somainline.org>
-        <20210629102624.194378-4-martin.botka@somainline.org>
-        <162742239972.2368309.5551349117052770211@swboyd.mtv.corp.google.com>
-        <N5R2XQ.AHZHRMRZKWYV1@somainline.org>
-X-Mailer: geary/40.0
+        Maxime Ripard <mripard@kernel.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Linus W <linus.walleij@linaro.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/6] eDP: Support probing eDP panels dynamically instead of hardcoding
+Date:   Fri, 30 Jul 2021 14:26:19 -0700
+Message-Id: <20210730212625.3071831-1-dianders@chromium.org>
+X-Mailer: git-send-email 2.32.0.554.ge1b32706d8-goog
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Completely ignore it. Brain fart.
+The goal of this patch series is to move away from hardcoding exact
+eDP panels in device tree files. As discussed in the various patches
+in this series (I'm not repeating everything here), most eDP panels
+are 99% probable and we can get that last 1% by allowing two "power
+up" delays to be specified in the device tree file and then using the
+panel ID (found in the EDID) to look up additional power sequencing
+delays for the panel.
 
-On Fri, Jul 30 2021 at 10:20:11 PM +0200, Martin Botka 
-<martin.botka@somainline.org> wrote:
-> Actually not all.
-> 
-> On Tue, Jul 27 2021 at 02:46:39 PM -0700, Stephen Boyd 
-> <sboyd@kernel.org> wrote:
->> Quoting Martin Botka (2021-06-29 03:26:23)
->>>  diff --git a/drivers/clk/qcom/clk-smd-rpm.c 
->>> b/drivers/clk/qcom/clk-smd-rpm.c
->>>  index 8200c26b968c..51458f740ba0 100644
->>>  --- a/drivers/clk/qcom/clk-smd-rpm.c
->>>  +++ b/drivers/clk/qcom/clk-smd-rpm.c
->>>  @@ -1059,6 +1059,61 @@ static const struct rpm_smd_clk_desc 
->>> rpm_clk_sdm660 = {
->>>          .num_clks = ARRAY_SIZE(sdm660_clks),
->>>   };
->>> 
->>>  +/* SM6125 */
->>>  +DEFINE_CLK_SMD_RPM_BRANCH(sm6125, bi_tcxo, bi_tcxo_ao,
->>>  +                                       QCOM_SMD_RPM_MISC_CLK, 0, 
->>> 19200000);
->>>  +DEFINE_CLK_SMD_RPM(sm6125, cnoc_clk, cnoc_a_clk, 
->>> QCOM_SMD_RPM_BUS_CLK, 1);
->>>  +DEFINE_CLK_SMD_RPM(sm6125, bimc_clk, bimc_a_clk, 
->>> QCOM_SMD_RPM_MEM_CLK, 0);
->> 
->> Can we use msm8916_bimc_clk?
->> 
->>>  +DEFINE_CLK_SMD_RPM(sm6125, snoc_clk, snoc_a_clk, 
->>> QCOM_SMD_RPM_BUS_CLK, 2);
->>>  +DEFINE_CLK_SMD_RPM_BRANCH(sm6125, qdss_clk, qdss_a_clk,
->>>  +                                       QCOM_SMD_RPM_MISC_CLK, 1, 
->>> 19200000);
->>>  +DEFINE_CLK_SMD_RPM(sm6125, ce1_clk, ce1_a_clk, 
->>> QCOM_SMD_RPM_CE_CLK, 0);
->> 
->> Can we use msm8992_ce1_clk?
->> 
->>>  +DEFINE_CLK_SMD_RPM(sm6125, ipa_clk, ipa_a_clk, 
->>> QCOM_SMD_RPM_IPA_CLK, 0);
->> 
->> Can we use msm8976_ipa_clk?
->> 
->>>  +DEFINE_CLK_SMD_RPM(sm6125, qup_clk, qup_a_clk, 
->>> QCOM_SMD_RPM_QUP_CLK, 0);
->>>  +DEFINE_CLK_SMD_RPM(sm6125, mmnrt_clk, mmnrt_a_clk, 
->>> QCOM_SMD_RPM_MMAXI_CLK, 0);
->>>  +DEFINE_CLK_SMD_RPM(sm6125, mmrt_clk, mmrt_a_clk, 
->>> QCOM_SMD_RPM_MMAXI_CLK, 1);
->>>  +DEFINE_CLK_SMD_RPM(sm6125, snoc_periph_clk, snoc_periph_a_clk,
->>>  +                                               
->>> QCOM_SMD_RPM_BUS_CLK, 0);
->>>  +DEFINE_CLK_SMD_RPM(sm6125, snoc_lpass_clk, snoc_lpass_a_clk,
->>>  +                                               
->>> QCOM_SMD_RPM_BUS_CLK, 5);
->>>  +
->>>  +/* SMD_XO_BUFFER */
->>>  +DEFINE_CLK_SMD_RPM_XO_BUFFER(sm6125, ln_bb_clk1, ln_bb_clk1_a, 1);
->> 
->> msm8916?
-> 
-> msm8916 one is not ln_.
-> 
->> 
->>>  +DEFINE_CLK_SMD_RPM_XO_BUFFER(sm6125, ln_bb_clk2, ln_bb_clk2_a, 2);
->> 
->> msm8916?
-> 
-> Same reason.
-> 
->> 
->>>  +DEFINE_CLK_SMD_RPM_XO_BUFFER(sm6125, ln_bb_clk3, ln_bb_clk3_a, 3);
->> 
->> sdm660?
->> 
->>>  +DEFINE_CLK_SMD_RPM_XO_BUFFER(sm6125, rf_clk1, rf_clk1_a, 4);
->> 
->> msm8916?
->> 
->>>  +DEFINE_CLK_SMD_RPM_XO_BUFFER(sm6125, rf_clk2, rf_clk2_a, 5);
->> 
->> msm8916?
->> 
->>>  +
->>>  +static struct clk_smd_rpm *sm6125_clks[] = {
->>>  +       [RPM_SMD_XO_CLK_SRC] = &sm6125_bi_tcxo,
->>>  +       [RPM_SMD_XO_A_CLK_SRC] = &sm6125_bi_tcxo_ao,
->>>  +       [RPM_SMD_SNOC_CLK] = &sm6125_snoc_clk,
->>>  +       [RPM_SMD_SNOC_A_CLK] = &sm6125_snoc_a_clk,
->>>  +       [RPM_SMD_BIMC_CLK] = &sm6125_bimc_clk,
->>>  +       [RPM_SMD_BIMC_A_CLK] = &sm6125_bimc_a_clk,
->>>  +       [RPM_SMD_QDSS_CLK] = &sm6125_qdss_clk,
->>>  +       [RPM_SMD_QDSS_A_CLK] = &sm6125_qdss_a_clk,
->>>  +       [RPM_SMD_RF_CLK1] = &sm6125_rf_clk1,
->>>  +       [RPM_SMD_RF_CLK1_A] = &sm6125_rf_clk1_a,
->>>  +       [RPM_SMD_RF_CLK2] = &sm6125_rf_clk2,
->>>  +       [RPM_SMD_RF_CLK2_A] = &sm6125_rf_clk2_a,
->>>  +       [RPM_SMD_LN_BB_CLK1] = &sm6125_ln_bb_clk1,
->>>  +       [RPM_SMD_LN_BB_CLK1_A] = &sm6125_ln_bb_clk1_a,
->>>  +       [RPM_SMD_LN_BB_CLK2] = &sm6125_ln_bb_clk2,
->>>  +       [RPM_SMD_LN_BB_CLK2_A] = &sm6125_ln_bb_clk2_a,
->>>  +       [RPM_SMD_LN_BB_CLK3] = &sm6125_ln_bb_clk3,
->>>  +       [RPM_SMD_LN_BB_CLK3_A] = &sm6125_ln_bb_clk3_a,
->>>  +       [RPM_SMD_CNOC_CLK] = &sm6125_cnoc_clk,
->>>  +       [RPM_SMD_CNOC_A_CLK] = &sm6125_cnoc_a_clk,
->>>  +       [RPM_SMD_CE1_CLK] = &sm6125_ce1_clk,
->>>  +       [RPM_SMD_CE1_A_CLK] = &sm6125_ce1_a_clk,
->>>  +};
->>>  +
->>>  +static const struct rpm_smd_clk_desc rpm_clk_sm6125 = {
->>>  +       .clks = sm6125_clks,
->>>  +       .num_clks = ARRAY_SIZE(sm6125_clks),
->>>  +};
->>>  +
->>>   static const struct of_device_id rpm_smd_clk_match_table[] = {
->>>          { .compatible = "qcom,rpmcc-msm8916", .data = 
->>> &rpm_clk_msm8916 },
->>>          { .compatible = "qcom,rpmcc-msm8936", .data = 
->>> &rpm_clk_msm8936 },
->>>  diff --git a/include/linux/soc/qcom/smd-rpm.h 
->>> b/include/linux/soc/qcom/smd-rpm.h
->>>  index f2645ec52520..b737d7e456e4 100644
->>>  --- a/include/linux/soc/qcom/smd-rpm.h
->>>  +++ b/include/linux/soc/qcom/smd-rpm.h
->>>  @@ -28,6 +28,7 @@ struct qcom_smd_rpm;
->>>   #define QCOM_SMD_RPM_NCPA      0x6170636E
->>>   #define QCOM_SMD_RPM_NCPB      0x6270636E
->>>   #define QCOM_SMD_RPM_OCMEM_PWR 0x706d636f
->>>  +#define QCOM_SMD_RPM_QUP_CLK   0x00707571
->>>   #define QCOM_SMD_RPM_QPIC_CLK  0x63697071
->>>   #define QCOM_SMD_RPM_SMPA      0x61706d73
->>>   #define QCOM_SMD_RPM_SMPB      0x62706d73
->> 
->> Two patches are adding this in different places.
-> 
+This patch series is the logical contiunation of a previous patch
+series where I proposed solving this problem by adding a
+board-specific compatible string [1]. In the discussion that followed
+it sounded like people were open to something like the solution
+proposed in this new series.
 
+In version 2 I got rid of the idea that we could have a "fallback"
+compatible string that we'd use if we didn't recognize the ID in the
+EDID. This simplifies the bindings a lot and the implementation
+somewhat. As a result of not having a "fallback", though, I'm not
+confident in transitioning any existing boards over to this since the
+panel will totally fail to work if we don't recognize the ID from the
+EDID and I can't guarantee that I've seen every panel that might have
+shipped on an existing product. The plan is to use "edp-panel" only on
+new boards or new revisions of old boards where we can guarantee that
+every EDID that ships out of the factory has an ID in the table.
+
+Version 2 of this series is also rebased upon my other series for the
+Samsung ATNA33XC20 panel [2] since they both touch the "delay"
+structure and it seems likely that the Samsung panel series will land
+first.
+
+[1] https://lore.kernel.org/r/YFKQaXOmOwYyeqvM@google.com/
+[2] https://lore.kernel.org/r/20210730154605.2843418-1-dianders@chromium.org/
+
+Changes in v2:
+- No longer allow fallback to panel-simple.
+- Add "-ms" suffix to delays.
+- Rebased atop revert of delays between GPIO & regulator
+- Don't support a "fallback" panel. Probed panels must be probed.
+- Not based on patch to copy "desc"--just allocate for probed panels.
+- Add "-ms" suffix to delays.
+
+Douglas Anderson (6):
+  dt-bindings: drm/panel-simple: Introduce generic eDP panels
+  drm/edid: Break out reading block 0 of the EDID
+  drm/edid: Allow the querying/working with the panel ID from the EDID
+  drm/panel-simple: Don't re-read the EDID every time we power off the
+    panel
+  drm/panel-simple: Split the delay structure out of the panel
+    description
+  drm/panel-simple: Implement generic "edp-panel"s probed by EDID
+
+ .../bindings/display/panel/panel-edp.yaml     | 188 ++++++++++
+ drivers/gpu/drm/drm_edid.c                    | 113 +++++-
+ drivers/gpu/drm/panel/panel-simple.c          | 352 +++++++++++++-----
+ include/drm/drm_edid.h                        |  47 +++
+ 4 files changed, 586 insertions(+), 114 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/display/panel/panel-edp.yaml
+
+-- 
+2.32.0.554.ge1b32706d8-goog
 
