@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 21F1B3DBE07
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 20:00:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33AD43DBE0C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 20:01:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230374AbhG3SAy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jul 2021 14:00:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40710 "EHLO
+        id S230094AbhG3SBg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jul 2021 14:01:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40938 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230327AbhG3SAx (ORCPT
+        with ESMTP id S230160AbhG3SBg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jul 2021 14:00:53 -0400
+        Fri, 30 Jul 2021 14:01:36 -0400
 Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B353C06175F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 11:00:48 -0700 (PDT)
-Received: by mail-ot1-x32c.google.com with SMTP id c2-20020a0568303482b029048bcf4c6bd9so10383716otu.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 11:00:48 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 015C5C0613C1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 11:01:29 -0700 (PDT)
+Received: by mail-ot1-x32c.google.com with SMTP id f20-20020a9d6c140000b02904bb9756274cso10375827otq.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 11:01:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=wKcp94SXlzIL+rKCJfhPFUl8LwJ46IN+eIJM4QxPZ7Y=;
-        b=EIHXCA0v5HstLP8hONQu8hfyiem8F2OPnEU12vCIXh/sEG7ViYP2/eNlFr4qce/DvY
-         opBMGdlt5DgiSconUiX4fUNfVtnhFxxMOeOtk0D16LIjqHr3WAjtOBtXaPpk7qlHlZvy
-         Zl7NKWloBgA6t0FMJK4jJTMo4Q5KycaUkVVsNqPi5VsysqdtP3UEroZANW3nEVYgWb0v
-         EEVcZ5k+y11FysJUAJJLjiP68P0SNdVYMm2note2FhgLoUDg0TH4mihG8Z+NDW6GiyKP
-         7m2kbVSWI0zKYntLcB+qREW5oqPt1wdQKHthhZ0cdvMiJs8gjEQI59q1so2vyNrsofRP
-         Zy3g==
+        bh=Evxari8pyz24e9FIUREJeCKN2EWIhSQAii1TFXJzCCY=;
+        b=pWmzybgP2uH6Xct/bn8VKXPNUZiel+66+a10yMo9Yn/cJ8M0EQS7jwwnAuhvGX2G9X
+         ggGe847SFyPYasmJjqKZix0adboS+6nuToqhqGcvC14+ewLIIpQUNuPdeScqX0Xy84yi
+         6GRQbGoC6lIPpYPJZjNUTUSd9plIKZgoUVnPDSLLh6k9HFCPbYraqFY3fIsdlMbZw1zQ
+         HmOQgqQX8faAM6L/wj+BfpvqDZtOE8qKWWMxJk3oyLeAGMEORlCnc2+wnAhi3Eak0SWr
+         KOJKRniimkig2YGVO2tFLkhUYKfQzQC+a27Xr79FyQpzyodqCoqoKDCxB3//ISBu+OV/
+         bDVg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=wKcp94SXlzIL+rKCJfhPFUl8LwJ46IN+eIJM4QxPZ7Y=;
-        b=gTLsXc7/cv7ZDr5ukiYNaYzbxqZc8caPyDI+2gum+WrEGs1y5IQQifHNGjFuoFnnne
-         UgqqyvCNQh3PDORYCnc1Am+GM+VRMsIDRz4euMn1kH4RlwUbacLhmgZFDn3LHwHQe8TR
-         GG9t5k4wsRMqGYMbnfqpvxIOyfWBxxcvZWB/WXXASDBNjQbjK1w4FKqfLmsZXLWmlMoa
-         Ziz6yUIK01Kgbv5QGRJbgPCrj00CTvQAerJp3OMCMsDnNQXAtFCmlp5ClLhw4v2rXcG/
-         mpolIdjcuit8Lb6urrOJ6xz+bCvmna7DlKcAgWD6osRl0wsMMB6sXUFdcFQleKOtkWMy
-         nlbA==
-X-Gm-Message-State: AOAM530+Cf5kWYbTnh2skTcUSn+Os7ZqPiB0Jv0EGzNLO9eNKokoD9uk
-        TpV/L58Pl45AQ6OLDNiXTuZR3Q==
-X-Google-Smtp-Source: ABdhPJyXm3/c/DZWJx3M2wBcbj3susmf4EJpEeDHUy1dhDVv4ayHUWMRlCgXopkCSWt+HrWBQd08cg==
-X-Received: by 2002:a05:6830:114f:: with SMTP id x15mr2924468otq.356.1627668047529;
-        Fri, 30 Jul 2021 11:00:47 -0700 (PDT)
+        bh=Evxari8pyz24e9FIUREJeCKN2EWIhSQAii1TFXJzCCY=;
+        b=DEP6qN0kxnW5e+ILTEYfw8KdtgDdSuon1QUQMkQE5/FW03UTdQK3MAN+Kbt2GgErvI
+         hvxDqOaZU9rM7OrgffAANTsZ4h8/bZbZnsisx5Gipi7CAEK7gvNxGh4JASwJhpSOD43U
+         iV+iH1eOjx/0nwW+T8yPVLbROZYwwSisVkWeYVleUuOfh4PGVmKQpIzC2e8YAleCDMle
+         5KsREQdpAXi/CFDExPZEPoCGTYmTIuL7mlSeBrV2iKbdJH7CQuoa7uUrvEBvWU/wPQpy
+         ItP+5UwwsLF4oUzusQhUeD8bzFyqyTW44GNJqDCvRnSVSPUJNGyxhpM08dat6WCtv2I9
+         +Wlg==
+X-Gm-Message-State: AOAM533uTQI2xpuqKBqVL6PU0oGqG6Nxnjw5WZef+WNYEo1U3aiUo3BU
+        WFCM5vdF4oYVYOS/fQW82En7og==
+X-Google-Smtp-Source: ABdhPJyM20sXYUTWFCFT41x2cBXeSIY5u5HP5ptz2I1dplE37EBEWz2jsC/Tk56mQfPv4HM9TdjBpg==
+X-Received: by 2002:a9d:67c8:: with SMTP id c8mr2937898otn.80.1627668088370;
+        Fri, 30 Jul 2021 11:01:28 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id b16sm402742otl.59.2021.07.30.11.00.45
+        by smtp.gmail.com with ESMTPSA id b21sm343431oov.26.2021.07.30.11.01.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Jul 2021 11:00:46 -0700 (PDT)
-Date:   Fri, 30 Jul 2021 13:00:44 -0500
+        Fri, 30 Jul 2021 11:01:27 -0700 (PDT)
+Date:   Fri, 30 Jul 2021 13:01:25 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Sibi Sankar <sibis@codeaurora.org>
 Cc:     robh+dt@kernel.org, will@kernel.org,
@@ -59,84 +59,84 @@ Cc:     robh+dt@kernel.org, will@kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, evgreen@chromium.org,
         dianders@chromium.org, swboyd@chromium.org
-Subject: Re: [PATCH 7/9] arm64: dts: qcom: sc7280: Add nodes to boot modem
-Message-ID: <YQQ+TIpB6zQYrzBq@builder.lan>
+Subject: Re: [PATCH 8/9] arm64: dts: qcom: sc7280: Add Q6V5 MSS node
+Message-ID: <YQQ+dV08CBERVTEK@builder.lan>
 References: <1624564058-24095-1-git-send-email-sibis@codeaurora.org>
- <1624564058-24095-8-git-send-email-sibis@codeaurora.org>
+ <1624564058-24095-9-git-send-email-sibis@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1624564058-24095-8-git-send-email-sibis@codeaurora.org>
+In-Reply-To: <1624564058-24095-9-git-send-email-sibis@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On Thu 24 Jun 14:47 CDT 2021, Sibi Sankar wrote:
 
-> Add miscellaneous nodes to boot the modem and support post-mortem debug
-> on SC7280 SoCs.
+> This patch adds Q6V5 MSS PAS remoteproc node for SC7280 SoCs.
 > 
 > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7280.dtsi | 20 ++++++++++++++++++++
->  1 file changed, 20 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 5ed7a511bfc9..3fb6a6ef39f8 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -547,6 +547,11 @@
->  			#hwlock-cells = <1>;
->  		};
->  
-> +		tcsr_regs: syscon@1fc0000 {
 
-Is there a different "tcsr"? Does the "_regs" suffix add any value?
-
-> +			compatible = "syscon";
-
-Rob has pointed out a few times that a lone "syscon" isn't going to be
-accepted going forward. Could you also add a qualifying
-"qcom,sc7280-tcsr" or something like that?
-
-> +			reg = <0 0x01fc0000 0 0x30000>;
-> +		};
-> +
->  		lpasscc: lpasscc@3000000 {
->  			compatible = "qcom,sc7280-lpasscc";
->  			reg = <0 0x03000000 0 0x40>,
-> @@ -1219,6 +1224,21 @@
->  			};
->  		};
->  
-> +		imem@146aa000 {
-> +			compatible = "syscon", "simple-mfd";
-
-As above "qcom,sc7280-imem"?
-
-I presume we need some new binding documents for these two though,
-perhaps you can add the specific compatibles and we agree that one of us
-will write these two bindings soon?
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
 Regards,
 Bjorn
 
-> +			reg = <0 0x146aa000 0 0x2000>;
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 40 ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 40 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 3fb6a6ef39f8..56ea172f641f 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -584,6 +584,46 @@
+>  			#power-domain-cells = <1>;
+>  		};
+>  
+> +		remoteproc_mpss: remoteproc@4080000 {
+> +			compatible = "qcom,sc7280-mpss-pas";
+> +			reg = <0 0x04080000 0 0x10000>;
 > +
-> +			#address-cells = <2>;
-> +			#size-cells = <2>;
+> +			interrupts-extended = <&intc GIC_SPI 264 IRQ_TYPE_EDGE_RISING>,
+> +					      <&modem_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+> +					      <&modem_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
+> +					      <&modem_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
+> +					      <&modem_smp2p_in 3 IRQ_TYPE_EDGE_RISING>,
+> +					      <&modem_smp2p_in 7 IRQ_TYPE_EDGE_RISING>;
+> +			interrupt-names = "wdog", "fatal", "ready", "handover",
+> +					  "stop-ack", "shutdown-ack";
 > +
-> +			ranges = <0 0x0 0 0x146aa000 0 0x2000>;
+> +			clocks = <&rpmhcc RPMH_CXO_CLK>;
+> +			clock-names = "xo";
 > +
-> +			pil-reloc@94c {
-> +				compatible = "qcom,pil-reloc-info";
-> +				reg = <0 0x94c 0 0xc8>;
+> +			power-domains = <&rpmhpd SC7280_CX>,
+> +					<&rpmhpd SC7280_MSS>;
+> +			power-domain-names = "cx", "mss";
+> +
+> +			memory-region = <&mpss_mem>;
+> +
+> +			qcom,qmp = <&aoss_qmp>;
+> +
+> +			qcom,smem-states = <&modem_smp2p_out 0>;
+> +			qcom,smem-state-names = "stop";
+> +
+> +			status = "disabled";
+> +
+> +			glink-edge {
+> +				interrupts-extended = <&ipcc IPCC_CLIENT_MPSS
+> +							     IPCC_MPROC_SIGNAL_GLINK_QMP
+> +							     IRQ_TYPE_EDGE_RISING>;
+> +				mboxes = <&ipcc IPCC_CLIENT_MPSS
+> +						IPCC_MPROC_SIGNAL_GLINK_QMP>;
+> +				label = "modem";
+> +				qcom,remote-pid = <1>;
 > +			};
 > +		};
 > +
->  		apps_smmu: iommu@15000000 {
->  			compatible = "qcom,sc7280-smmu-500", "arm,mmu-500";
->  			reg = <0 0x15000000 0 0x100000>;
+>  		stm@6002000 {
+>  			compatible = "arm,coresight-stm", "arm,primecell";
+>  			reg = <0 0x06002000 0 0x1000>,
 > -- 
 > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 > a Linux Foundation Collaborative Project
