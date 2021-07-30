@@ -2,109 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B142D3DBDF5
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 19:52:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21F1B3DBE07
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 20:00:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230193AbhG3Rw2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jul 2021 13:52:28 -0400
-Received: from relay3-d.mail.gandi.net ([217.70.183.195]:39205 "EHLO
-        relay3-d.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229921AbhG3RwZ (ORCPT
+        id S230374AbhG3SAy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jul 2021 14:00:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40710 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230327AbhG3SAx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jul 2021 13:52:25 -0400
-Received: (Authenticated sender: thomas.perrot@bootlin.com)
-        by relay3-d.mail.gandi.net (Postfix) with ESMTPSA id 77E456000B;
-        Fri, 30 Jul 2021 17:52:19 +0000 (UTC)
-Message-ID: <1e288e5bee3f2a18e0ddb8b7a50158ecb793822d.camel@bootlin.com>
-Subject: MHI driver issue with Sierra Wireless AirPrime EM919X
-From:   Thomas Perrot <thomas.perrot@bootlin.com>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     manivannan.sadhasivam@linaro.org, manivannan.sadhasivam@linaro.org,
-        bbhatt@codeaurora.org
-Date:   Fri, 30 Jul 2021 19:52:18 +0200
-Content-Type: multipart/signed; micalg="pgp-sha256";
-        protocol="application/pgp-signature"; boundary="=-8DKB89IXFh3l8FSd1Y11"
-User-Agent: Evolution 3.38.4 (3.38.4-1.fc33) 
+        Fri, 30 Jul 2021 14:00:53 -0400
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2B353C06175F
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 11:00:48 -0700 (PDT)
+Received: by mail-ot1-x32c.google.com with SMTP id c2-20020a0568303482b029048bcf4c6bd9so10383716otu.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 11:00:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=wKcp94SXlzIL+rKCJfhPFUl8LwJ46IN+eIJM4QxPZ7Y=;
+        b=EIHXCA0v5HstLP8hONQu8hfyiem8F2OPnEU12vCIXh/sEG7ViYP2/eNlFr4qce/DvY
+         opBMGdlt5DgiSconUiX4fUNfVtnhFxxMOeOtk0D16LIjqHr3WAjtOBtXaPpk7qlHlZvy
+         Zl7NKWloBgA6t0FMJK4jJTMo4Q5KycaUkVVsNqPi5VsysqdtP3UEroZANW3nEVYgWb0v
+         EEVcZ5k+y11FysJUAJJLjiP68P0SNdVYMm2note2FhgLoUDg0TH4mihG8Z+NDW6GiyKP
+         7m2kbVSWI0zKYntLcB+qREW5oqPt1wdQKHthhZ0cdvMiJs8gjEQI59q1so2vyNrsofRP
+         Zy3g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=wKcp94SXlzIL+rKCJfhPFUl8LwJ46IN+eIJM4QxPZ7Y=;
+        b=gTLsXc7/cv7ZDr5ukiYNaYzbxqZc8caPyDI+2gum+WrEGs1y5IQQifHNGjFuoFnnne
+         UgqqyvCNQh3PDORYCnc1Am+GM+VRMsIDRz4euMn1kH4RlwUbacLhmgZFDn3LHwHQe8TR
+         GG9t5k4wsRMqGYMbnfqpvxIOyfWBxxcvZWB/WXXASDBNjQbjK1w4FKqfLmsZXLWmlMoa
+         Ziz6yUIK01Kgbv5QGRJbgPCrj00CTvQAerJp3OMCMsDnNQXAtFCmlp5ClLhw4v2rXcG/
+         mpolIdjcuit8Lb6urrOJ6xz+bCvmna7DlKcAgWD6osRl0wsMMB6sXUFdcFQleKOtkWMy
+         nlbA==
+X-Gm-Message-State: AOAM530+Cf5kWYbTnh2skTcUSn+Os7ZqPiB0Jv0EGzNLO9eNKokoD9uk
+        TpV/L58Pl45AQ6OLDNiXTuZR3Q==
+X-Google-Smtp-Source: ABdhPJyXm3/c/DZWJx3M2wBcbj3susmf4EJpEeDHUy1dhDVv4ayHUWMRlCgXopkCSWt+HrWBQd08cg==
+X-Received: by 2002:a05:6830:114f:: with SMTP id x15mr2924468otq.356.1627668047529;
+        Fri, 30 Jul 2021 11:00:47 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id b16sm402742otl.59.2021.07.30.11.00.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Jul 2021 11:00:46 -0700 (PDT)
+Date:   Fri, 30 Jul 2021 13:00:44 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     robh+dt@kernel.org, will@kernel.org,
+        saiprakash.ranjan@codeaurora.org, ohad@wizery.com,
+        agross@kernel.org, mathieu.poirier@linaro.org,
+        robin.murphy@arm.com, joro@8bytes.org, p.zabel@pengutronix.de,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, evgreen@chromium.org,
+        dianders@chromium.org, swboyd@chromium.org
+Subject: Re: [PATCH 7/9] arm64: dts: qcom: sc7280: Add nodes to boot modem
+Message-ID: <YQQ+TIpB6zQYrzBq@builder.lan>
+References: <1624564058-24095-1-git-send-email-sibis@codeaurora.org>
+ <1624564058-24095-8-git-send-email-sibis@codeaurora.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1624564058-24095-8-git-send-email-sibis@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu 24 Jun 14:47 CDT 2021, Sibi Sankar wrote:
 
---=-8DKB89IXFh3l8FSd1Y11
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+> Add miscellaneous nodes to boot the modem and support post-mortem debug
+> on SC7280 SoCs.
+> 
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 20 ++++++++++++++++++++
+>  1 file changed, 20 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 5ed7a511bfc9..3fb6a6ef39f8 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -547,6 +547,11 @@
+>  			#hwlock-cells = <1>;
+>  		};
+>  
+> +		tcsr_regs: syscon@1fc0000 {
 
-Hello,
+Is there a different "tcsr"? Does the "_regs" suffix add any value?
 
-I=E2=80=99m trying to use the MHI driver with a Sierra Wireless AirPrime EM=
-919X
-connected to an NXP i.MX6DL through a PCIe gen2 bus, on 5.13.6, but the
-device initialisation fails, as follows:
+> +			compatible = "syscon";
 
-[    3.029401] mhi-pci-generic 0000:01:00.0: BAR 0: assigned [mem
-0x01100000-0x01100fff 64bit]
-[    3.041095] mhi-pci-generic 0000:01:00.0: enabling device (0140 ->
-0142)
-[    3.118299] mhi mhi0: Requested to power ON
-[   11.370361] mhi mhi0: Power on setup success
-[   11.372503] mhi mhi0: Wait for device to enter SBL or Mission mode
-[   15.664068] mhi-pci-generic 0000:01:00.0: failed to suspend device:
--16
-[   22.619948] mhi-pci-generic 0000:01:00.0: refused to change power
-state from D3hot to D0
-[   57.289998] mhi-pci-generic 0000:01:00.0: can't change power state
-from D3hot to D0 (config space inaccessible)
-[   73.769675] mhi-pci-generic 0000:01:00.0: can't change power state
-from D3cold to D0 (config space inaccessible)
-[   73.780188] mhi-pci-generic 0000:01:00.0: can't change power state
-from D3hot to D0 (config space inaccessible)
-[   73.836150] PC is at mhi_pci_read_reg+0xc/0x14
-[   73.840642] LR is at mhi_get_mhi_state+0x2c/0x5c
-[   74.121120] [<c05dcaf4>] (mhi_pci_read_reg) from [<c05d754c>]
-(mhi_get_mhi_state+0x2c/0x5c)
-[   74.129529] [<c05d754c>] (mhi_get_mhi_state) from [<c05da440>]
-(mhi_pm_resume+0x38/0x298)
-[   74.137754] [<c05da440>] (mhi_pm_resume) from [<c05dcbd0>]
-(mhi_pci_runtime_resume+0x70/0xe0)
-[   74.146326] [<c05dcbd0>] (mhi_pci_runtime_resume) from [<c0604da0>]
-(pci_pm_runtime_resume+0x84/0xa0)
+Rob has pointed out a few times that a lone "syscon" isn't going to be
+accepted going forward. Could you also add a qualifying
+"qcom,sc7280-tcsr" or something like that?
 
-Do you have any idea where the issue might come from?
+> +			reg = <0 0x01fc0000 0 0x30000>;
+> +		};
+> +
+>  		lpasscc: lpasscc@3000000 {
+>  			compatible = "qcom,sc7280-lpasscc";
+>  			reg = <0 0x03000000 0 0x40>,
+> @@ -1219,6 +1224,21 @@
+>  			};
+>  		};
+>  
+> +		imem@146aa000 {
+> +			compatible = "syscon", "simple-mfd";
 
-MHI seems to enter in READY state and waiting to enter in SBL or
-Mission mode when the issue occurs, the host can start MHI
-initialization by programming MMIO registers and sets the device into
-MHI_M0 state.
+As above "qcom,sc7280-imem"?
 
-Best regards,
-Thomas
+I presume we need some new binding documents for these two though,
+perhaps you can add the specific compatibles and we agree that one of us
+will write these two bindings soon?
 
---=20
-Thomas Perrot, Bootlin
-Embedded Linux and kernel engineering
-https://bootlin.com
+Regards,
+Bjorn
 
-
---=-8DKB89IXFh3l8FSd1Y11
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-
-iQGzBAABCAAdFiEEh0B3xqajCiMDqBIhn8ALBXH+Cu0FAmEEPFIACgkQn8ALBXH+
-Cu2cKwwAiPgCtoYbh1Cj9fq42Dbjw4vQCG9wmqUXMOxNMeHDxQ4DVYJjMOgoaSdg
-p+DPDyDnLqSq99e30dUbfQrgwWrQF+lfwvVNAZIGzFJf7nb9sSt3o7WSP1Mgc6c8
-lg2M1dbVDrmRDMrQjQ3l0/CDyRPHWE41Hk0g62R9fF3/E9XswFF6u/it4rCtHABf
-I1Wo8Lg9cajdRAz4ECEkdgFMvgoTC4xyO7hqkpAxMxKhfL7jwHMjxMPmAJnnG7wq
-WPbUDcvULuQ0PcwooGwhtvf6+j/q+AYEOrha6fBpxs7NZWineeEEebgYlDydxL+r
-NbeGu8Hl+w79nObfm4llTxH347OPsPBkqRdCdnfv14+Ci7/EYR/vbzKQ2ceDpGUM
-rL9nFMr2wPYdSowqeC1D2r6Q2lNkTyW0u+j3oNJ/K9B5Wn6uhEpFuxO+Qxg4k3Wi
-PNygqpWOSwmEhk4EecOugWPoWkPwp4DXU8uw34i/hjIOPI0zkvldiUT+7ypgcnnS
-rToXBN2C
-=YnHE
------END PGP SIGNATURE-----
-
---=-8DKB89IXFh3l8FSd1Y11--
-
+> +			reg = <0 0x146aa000 0 0x2000>;
+> +
+> +			#address-cells = <2>;
+> +			#size-cells = <2>;
+> +
+> +			ranges = <0 0x0 0 0x146aa000 0 0x2000>;
+> +
+> +			pil-reloc@94c {
+> +				compatible = "qcom,pil-reloc-info";
+> +				reg = <0 0x94c 0 0xc8>;
+> +			};
+> +		};
+> +
+>  		apps_smmu: iommu@15000000 {
+>  			compatible = "qcom,sc7280-smmu-500", "arm,mmu-500";
+>  			reg = <0 0x15000000 0 0x100000>;
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
