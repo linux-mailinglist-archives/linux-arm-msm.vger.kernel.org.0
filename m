@@ -2,224 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 887603DB850
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 14:08:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B06453DB945
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 15:23:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238877AbhG3MI0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jul 2021 08:08:26 -0400
-Received: from mail-40135.protonmail.ch ([185.70.40.135]:44719 "EHLO
-        mail-40135.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238848AbhG3MIR (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jul 2021 08:08:17 -0400
-Date:   Fri, 30 Jul 2021 12:08:07 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1627646889;
-        bh=Ye8m1NWwWSK0eHIqEyclNrNQuZW20AtjbkfpZAEQf5I=;
-        h=Date:To:From:Cc:Reply-To:Subject:From;
-        b=Cqv7IBkkSwKOuzx0vEUYa7bshooEcO+nZoLjizMhI5fQSj57fnG9m/m86s3147PrJ
-         Af+V7fAqQzg8LHTvhzL6JJgK1UiPKDlxi4tGsoyY48AARgn2ItoNldM94ZFLibwOZZ
-         FXf5c1+aZCuxY1qgra1hmSox4HMaxjGuC13kCwq8=
-To:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
-From:   Yassine Oudjana <y.oudjana@protonmail.com>
-Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
-Subject: [PATCH 5/5] arm64: dts: qcom: msm8996: Add interconnect support
-Message-ID: <91c2s2yzYuzsGY2WXU3Vg6Ai6ijO2Rpel2ssUIghNU@cp4-web-028.plabs.ch>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+        id S231173AbhG3NXe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jul 2021 09:23:34 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:42916 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230480AbhG3NXd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 30 Jul 2021 09:23:33 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1627651409; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=g1LIqeq8dIBjRdXEj0V0n2bb4vQ4QikSF0Ljhxz7LBI=; b=tCITcrTvVis96IcEoxyQ/1vRv26L39ygkxuTg1edvcesDRqPVYSfotNQ4EHGsAADtNCOa+AS
+ p1zFbD5ByPhl8gd3XzG5CViN+lSGqrBAEftzkdJOzk7h702J2dftgqzlhjIjSJLG7RHuMum0
+ k0JuCrwZ+48jmFMjRyQrHdppqt0=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 6103fd4b96a66e66b28b9b41 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 30 Jul 2021 13:23:23
+ GMT
+Sender: kamaagra=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E9875C4338A; Fri, 30 Jul 2021 13:23:22 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from kamaagra-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: kamaagra)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8F917C433F1;
+        Fri, 30 Jul 2021 13:23:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8F917C433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=kamaagra@codeaurora.org
+From:   Kamal Agrawal <kamaagra@codeaurora.org>
+To:     rostedt@goodmis.org, mingo@redhat.com,
+        linux-kernel@vger.kernel.org, mhiramat@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org
+Subject: [PATCH] tracing: Fix NULL pointer dereference in start_creating
+Date:   Fri, 30 Jul 2021 18:53:06 +0530
+Message-Id: <1627651386-21315-1-git-send-email-kamaagra@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add interconnect providers for the multiple NoCs available on the platform,
-and assign interconnects used by some blocks.
+The event_trace_add_tracer() can fail. In this case, it leads to a crash
+in start_creating with below call stack. Handle the error scenario
+properly in trace_array_create_dir.
 
-Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+Call trace:
+down_write+0x7c/0x204
+start_creating.25017+0x6c/0x194
+tracefs_create_file+0xc4/0x2b4
+init_tracer_tracefs+0x5c/0x940
+trace_array_create_dir+0x58/0xb4
+trace_array_create+0x1bc/0x2b8
+trace_array_get_by_name+0xdc/0x18c
+
+Fixes: 4114fbfd
+Signed-off-by: Kamal Agrawal <kamaagra@codeaurora.org>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 84 +++++++++++++++++++++++++++
- 1 file changed, 84 insertions(+)
+ kernel/trace/trace.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qc=
-om/msm8996.dtsi
-index ce3d7e5367c6..44eaa7e7c764 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -7,6 +7,7 @@
- #include <dt-bindings/clock/qcom,mmcc-msm8996.h>
- #include <dt-bindings/clock/qcom,rpmcc.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
-+#include <dt-bindings/interconnect/qcom,msm8996.h>
- #include <dt-bindings/soc/qcom,apr.h>
- #include <dt-bindings/thermal/thermal.h>
-=20
-@@ -47,6 +48,7 @@ CPU0: cpu@0 {
- =09=09=09capacity-dmips-mhz =3D <1024>;
- =09=09=09clocks =3D <&kryocc 0>;
- =09=09=09operating-points-v2 =3D <&cluster0_opp>;
-+=09=09=09interconnects =3D <&bimc MASTER_AMPSS_M0 &bimc SLAVE_EBI_CH0>;
- =09=09=09#cooling-cells =3D <2>;
- =09=09=09next-level-cache =3D <&L2_0>;
- =09=09=09L2_0: l2-cache {
-@@ -64,6 +66,7 @@ CPU1: cpu@1 {
- =09=09=09capacity-dmips-mhz =3D <1024>;
- =09=09=09clocks =3D <&kryocc 0>;
- =09=09=09operating-points-v2 =3D <&cluster0_opp>;
-+=09=09=09interconnects =3D <&bimc MASTER_AMPSS_M0 &bimc SLAVE_EBI_CH0>;
- =09=09=09#cooling-cells =3D <2>;
- =09=09=09next-level-cache =3D <&L2_0>;
- =09=09};
-@@ -77,6 +80,7 @@ CPU2: cpu@100 {
- =09=09=09capacity-dmips-mhz =3D <1024>;
- =09=09=09clocks =3D <&kryocc 1>;
- =09=09=09operating-points-v2 =3D <&cluster1_opp>;
-+=09=09=09interconnects =3D <&bimc MASTER_AMPSS_M0 &bimc SLAVE_EBI_CH0>;
- =09=09=09#cooling-cells =3D <2>;
- =09=09=09next-level-cache =3D <&L2_1>;
- =09=09=09L2_1: l2-cache {
-@@ -94,6 +98,7 @@ CPU3: cpu@101 {
- =09=09=09capacity-dmips-mhz =3D <1024>;
- =09=09=09clocks =3D <&kryocc 1>;
- =09=09=09operating-points-v2 =3D <&cluster1_opp>;
-+=09=09=09interconnects =3D <&bimc MASTER_AMPSS_M0 &bimc SLAVE_EBI_CH0>;
- =09=09=09#cooling-cells =3D <2>;
- =09=09=09next-level-cache =3D <&L2_1>;
- =09=09};
-@@ -904,6 +909,15 @@ gcc: clock-controller@300000 {
- =09=09=09clock-names =3D "cxo2";
- =09=09};
-=20
-+=09=09bimc: interconnect@408000 {
-+=09=09=09compatible =3D "qcom,msm8996-bimc";
-+=09=09=09reg =3D <0x00408000 0x5a000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_BIMC_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_BIMC_A_CLK>;
-+=09=09};
-+
- =09=09tsens0: thermal-sensor@4a9000 {
- =09=09=09compatible =3D "qcom,msm8996-tsens", "qcom,tsens-v2";
- =09=09=09reg =3D <0x004a9000 0x1000>, /* TM */
-@@ -926,6 +940,61 @@ tsens1: thermal-sensor@4ad000 {
- =09=09=09#thermal-sensor-cells =3D <1>;
- =09=09};
-=20
-+=09=09cnoc: interconnect@500000 {
-+=09=09=09compatible =3D "qcom,msm8996-cnoc";
-+=09=09=09reg =3D <0x00500000 0x1000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_CNOC_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_CNOC_A_CLK>;
-+=09=09};
-+
-+=09=09snoc: interconnect@524000 {
-+=09=09=09compatible =3D "qcom,msm8996-snoc";
-+=09=09=09reg =3D <0x00524000 0x1c000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_SNOC_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_SNOC_A_CLK>;
-+=09=09};
-+
-+=09=09a1noc: interconnect@562000 {
-+=09=09=09compatible =3D "qcom,msm8996-a1noc";
-+=09=09=09reg =3D <0x00562000 0x5000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_AGGR1_NOC_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_AGGR1_NOC_A_CLK>;
-+=09=09};
-+
-+=09=09a2noc: interconnect@583000 {
-+=09=09=09compatible =3D "qcom,msm8996-a2noc";
-+=09=09=09reg =3D <0x00583000 0x7000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_AGGR2_NOC_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_AGGR2_NOC_A_CLK>;
-+=09=09};
-+
-+=09=09mnoc: interconnect@5a4000 {
-+=09=09=09compatible =3D "qcom,msm8996-mnoc";
-+=09=09=09reg =3D <0x005a4000 0x1c000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a", "iface";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_MMAXI_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_MMAXI_A_CLK>,
-+=09=09=09=09 <&mmcc AHB_CLK_SRC>;
-+=09=09};
-+
-+=09=09pnoc: interconnect@5c0000 {
-+=09=09=09compatible =3D "qcom,msm8996-pnoc";
-+=09=09=09reg =3D <0x005c0000 0x3000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_PCNOC_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_PCNOC_A_CLK>;
-+=09=09};
-+
- =09=09tcsr_mutex_regs: syscon@740000 {
- =09=09=09compatible =3D "syscon";
- =09=09=09reg =3D <0x00740000 0x40000>;
-@@ -1005,6 +1074,11 @@ mdp: mdp@901000 {
- =09=09=09=09assigned-clock-rates =3D <300000000>,
- =09=09=09=09=09 <19200000>;
-=20
-+=09=09=09=09interconnects =3D <&mnoc MASTER_MDP_PORT0 &bimc SLAVE_EBI_CH0>=
-,
-+=09=09=09=09=09=09<&mnoc MASTER_MDP_PORT1 &bimc SLAVE_EBI_CH0>,
-+=09=09=09=09=09=09<&mnoc MASTER_ROTATOR &bimc SLAVE_EBI_CH0>;
-+=09=09=09=09interconnect-names =3D "mdp0-mem", "mdp1-mem", "rotator-mem";
-+
- =09=09=09=09ports {
- =09=09=09=09=09#address-cells =3D <1>;
- =09=09=09=09=09#size-cells =3D <0>;
-@@ -1266,6 +1340,9 @@ gpu: gpu@b00000 {
- =09=09=09=09"mem",
- =09=09=09=09"mem_iface";
-=20
-+=09=09=09interconnects =3D <&bimc MASTER_GRAPHICS_3D &bimc SLAVE_EBI_CH0>;
-+=09=09=09interconnect-names =3D "gfx-mem";
-+
- =09=09=09power-domains =3D <&mmcc GPU_GX_GDSC>;
- =09=09=09iommus =3D <&adreno_smmu 0>;
-=20
-@@ -2293,6 +2370,9 @@ venus: video-codec@c00000 {
- =09=09=09=09 <&mmcc VIDEO_AXI_CLK>,
- =09=09=09=09 <&mmcc VIDEO_MAXI_CLK>;
- =09=09=09clock-names =3D "core", "iface", "bus", "mbus";
-+=09=09=09interconnects =3D <&mnoc MASTER_VIDEO_P0 &bimc SLAVE_EBI_CH0>,
-+=09=09=09=09=09<&bimc MASTER_AMPSS_M0 &mnoc SLAVE_VENUS_CFG>;
-+=09=09=09interconnect-names =3D "video-mem", "cpu-cfg";
- =09=09=09iommus =3D <&venus_smmu 0x00>,
- =09=09=09=09 <&venus_smmu 0x01>,
- =09=09=09=09 <&venus_smmu 0x0a>,
-@@ -3008,6 +3088,10 @@ usb3: usb@6af8800 {
- =09=09=09=09=09  <&gcc GCC_USB30_MASTER_CLK>;
- =09=09=09assigned-clock-rates =3D <19200000>, <120000000>;
-=20
-+=09=09=09interconnects =3D <&a2noc MASTER_USB3 &bimc SLAVE_EBI_CH0>,
-+=09=09=09=09=09<&bimc MASTER_AMPSS_M0 &snoc SLAVE_USB3>;
-+=09=09=09interconnect-names =3D "usb-ddr", "apps-usb";
-+
- =09=09=09power-domains =3D <&gcc USB30_GDSC>;
- =09=09=09status =3D "disabled";
-=20
---=20
-2.32.0
-
+diff --git a/kernel/trace/trace.c b/kernel/trace/trace.c
+index c59dd35..33899a7 100644
+--- a/kernel/trace/trace.c
++++ b/kernel/trace/trace.c
+@@ -9135,8 +9135,10 @@ static int trace_array_create_dir(struct trace_array *tr)
+ 		return -EINVAL;
+ 
+ 	ret = event_trace_add_tracer(tr->dir, tr);
+-	if (ret)
++	if (ret) {
+ 		tracefs_remove(tr->dir);
++		return ret;
++	}
+ 
+ 	init_tracer_tracefs(tr, tr->dir);
+ 	__update_tracer_options(tr);
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation.
 
