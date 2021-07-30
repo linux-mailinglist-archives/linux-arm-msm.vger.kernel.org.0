@@ -2,506 +2,287 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5037B3DBC9A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 17:47:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3D59A3DBD2A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 18:36:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239506AbhG3PrA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jul 2021 11:47:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33720 "EHLO
+        id S229788AbhG3Qg4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jul 2021 12:36:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46898 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234569AbhG3Pq4 (ORCPT
+        with ESMTP id S229708AbhG3Qg4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jul 2021 11:46:56 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E68BC061798
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 08:46:51 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id mt6so15822415pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 08:46:51 -0700 (PDT)
+        Fri, 30 Jul 2021 12:36:56 -0400
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64E6FC0613C1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 09:36:50 -0700 (PDT)
+Received: by mail-oi1-x236.google.com with SMTP id n16so7346549oij.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 09:36:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=hJD7zLGj9G92TEZ66S1vXIej3eJbyh+F8KK+STRB8wc=;
-        b=FhyAXSCSw2obJi7hGW2x16pP5ChUaedH1wnKHvlZbjJMNxVJ2b1miNHuzxjxRK1HA1
-         dfBAmpHwSU0kjo6VznppVYCzHfiy2etNi2nm0Sf/IzvTQDJ0O2E20F3FuIJA8URgbjSX
-         MPI7PknWAib2vvI0xu/S+m4c//1Arocw6cnq8=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=+VAdv+WeR1jvOvgcgnqcYxpRfRpHfv5qO3GWKK9dmZw=;
+        b=LMBohOITePzc4wVsTkFVhKygBXZW4iqgqr2pshr0IqV5u30sIL8eN1nNetsNSxtslD
+         lXY9rHs5iWFhNBa36KgiFggL/E2bEc/L8pGCNbdfg5n5ujjQBUPZcBtvrw/HipQOqqy3
+         Rphy/TGaj1NfoXlRQKp8Bc4McAATWnXDGrWIVHkz+NHASH3PqVvlEk0SqeWV3NzUTqbm
+         FgFfUetOtWSOCy+eEHRQRXo2tLraleRZ92zu3BDHRO2LoXBwTcu3+WEZv5NvKVYIQGrP
+         QaOBRSHoD9iI3iFSoYye911ZQngN9QIpB84gvYZxoZ2R+IR7XxwyRiEjWLf+ScM01e/+
+         eAyg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=hJD7zLGj9G92TEZ66S1vXIej3eJbyh+F8KK+STRB8wc=;
-        b=YezVS1HrXwn7sz55faaQN3VqWOUX05s+zYetfOLrDPxiiCT43hw/mqatpssQ9H7cri
-         CcGiJ6SIlm1oO7DxdAPl7g3xvL9VpnE9qzJ8/I0R4/JHWF9x+v2FajbtNEy+pX3PPxLC
-         B6zQ8ksmYVzxQ2a1vLKms8CHPrIYsjGPOq9O5z8yNrmRdyCaZxKj79LwqXkTv2apmgBw
-         CSqMEOCVPy+Wgan7ASu8yhlzgqC/MIy7phcZZjCf7yLFR6Y67v53EB1XyEaoDKu93vLv
-         Zoh5ndnYhgENxk8G41F5EhC9CRhzWMTRbxGSnymLfGcmd/qpFGdF231vbxekvhVXWB0C
-         vo3g==
-X-Gm-Message-State: AOAM532bo4lI66+Wk9JTwwUot1FEKGVAbEHQEThpU/8BMwRlsN4KUMtu
-        ytbeoHxhtakhNTYcRwsqrIidiQ==
-X-Google-Smtp-Source: ABdhPJwAXsUdugmbJ2wc85ZJ4dJ3GbSRqgXm4qoje3a/AUBJ2J86YCfb+ZLLT87SCNOpIi495sCxQg==
-X-Received: by 2002:aa7:8550:0:b029:32b:963f:f53b with SMTP id y16-20020aa785500000b029032b963ff53bmr3587724pfn.0.1627660010564;
-        Fri, 30 Jul 2021 08:46:50 -0700 (PDT)
-Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:3424:e0ac:5a92:d061])
-        by smtp.gmail.com with ESMTPSA id u188sm3175621pfc.115.2021.07.30.08.46.48
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=+VAdv+WeR1jvOvgcgnqcYxpRfRpHfv5qO3GWKK9dmZw=;
+        b=FE0FvKgi0VFBLx0Zv71wn3omBEc+W2YLffRh5pd4z6khyaWfwCsFsmBFYdbw1YZsQf
+         XOLuaVzRXinHjWdQPlNpdARai7vPYv3b9JvEoo7Y/0n7QGYF1JF2F2LMtEfgj4V1wEZe
+         VkPcRMfRmD+xTddi6F/gUCNPs1tRDKPoGrAhzzoPmla9eJkVQCMbpGf/+PXFwX42Ug5h
+         PxXLAmW2BVLDBsQFSHHyQ47pP/rq6QvcpYiJZhdw9kgKe/8myAvwGaTy3sss/DGjiCOX
+         dkwm4ayjciL+MpHKtp/aIOIb4YPo4xYOHBJN1+OaD/JIu6mto/efvTMB2Nap4fRyvYQe
+         OzxQ==
+X-Gm-Message-State: AOAM5324XFQJkHIDIk85a/jGMbn0TCUzLMZOaF8+1oCBuPIXXiTK/lg+
+        kdVRFkasW5B+xdCotxSnjHYOgQ==
+X-Google-Smtp-Source: ABdhPJy9S4ERYG+NYbJHmT2b4l+CRSgIl/ARguLUHnMpNudWlcP48MLgOOQajgy8+J2pt07NuVzEjQ==
+X-Received: by 2002:aca:f54c:: with SMTP id t73mr2367532oih.175.1627663009726;
+        Fri, 30 Jul 2021 09:36:49 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id w24sm372033otp.28.2021.07.30.09.36.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Jul 2021 08:46:50 -0700 (PDT)
-From:   Douglas Anderson <dianders@chromium.org>
-To:     dri-devel@lists.freedesktop.org
-Cc:     devicetree@vger.kernel.org, steev@kali.org, robert.foss@linaro.org,
-        Laurent.pinchart@ideasonboard.com, bjorn.andersson@linaro.org,
-        daniel@ffwll.ch, airlied@linux.ie, jernej.skrabec@gmail.com,
-        maarten.lankhorst@linux.intel.com, rodrigo.vivi@intel.com,
-        sam@ravnborg.org, jonas@kwiboo.se, mripard@kernel.org,
-        thierry.reding@gmail.com, lyude@redhat.com,
-        linus.walleij@linaro.org, rajeevny@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, a.hajda@samsung.com,
-        tzimmermann@suse.de, narmstrong@baylibre.com,
-        Douglas Anderson <dianders@chromium.org>,
-        Sean Paul <seanpaul@chromium.org>, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 6/6] drm/panel: atna33xc20: Introduce the Samsung ATNA33XC20 panel
-Date:   Fri, 30 Jul 2021 08:46:05 -0700
-Message-Id: <20210730084534.v2.6.I3a2900080f8749d2bb4baf49ca902db4b0e1df7d@changeid>
-X-Mailer: git-send-email 2.32.0.554.ge1b32706d8-goog
-In-Reply-To: <20210730154605.2843418-1-dianders@chromium.org>
-References: <20210730154605.2843418-1-dianders@chromium.org>
+        Fri, 30 Jul 2021 09:36:49 -0700 (PDT)
+Date:   Fri, 30 Jul 2021 11:36:46 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     mka@chromium.org, swboyd@chromium.org, robh+dt@kernel.org,
+        ulf.hansson@linaro.org, rjw@rjwysocki.net, agross@kernel.org,
+        ohad@wizery.com, mathieu.poirier@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dianders@chromium.org, rishabhb@codeaurora.org,
+        sidgup@codeaurora.org
+Subject: Re: [PATCH v4 04/13] remoteproc: qcom: q6v5: Use qmp_send to update
+ co-processor load state
+Message-ID: <YQQqnoOJLP9ixWn1@builder.lan>
+References: <1626755807-11865-1-git-send-email-sibis@codeaurora.org>
+ <1626755807-11865-5-git-send-email-sibis@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1626755807-11865-5-git-send-email-sibis@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Samsung ATNA33XC20 panel is an AMOLED eDP panel that has backlight
-control over the DP AUX channel.
+On Mon 19 Jul 23:36 CDT 2021, Sibi Sankar wrote:
 
-This panel is _almost_ able to be controlled in a "simple" way (and it
-originally was implemented in panel-simple.c), but it's really
-impossible to get the backlight semantics right there without adding
-wacky special-case code to panel-simple. Let's give up and clone the
-parts of panel-simple that we need and implement the power sequence
-that this panel needs.
+> The power domains exposed by the AOSS QMP driver control the load state
+> resources linked to modem, adsp, cdsp remoteprocs. These are used to
+> notify the Always on Subsystem (AOSS) that a particular co-processor is
+> up/down. AOSS uses this information to wait for the co-processors to
+> suspend before starting its sleep sequence.
+> 
+> These co-processors enter low-power modes independent to that of the
+> application processor and the load state resources linked to them are
+> expected to remain unaltered across system suspend/resume cycles. To
+> achieve this behavior lets stop using the power-domains exposed by the
+> AOSS QMP node and replace them with generic qmp_send interface instead.
+> 
+> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> ---
+> 
+> v4:
+>  * Drop unused pdev and kfree the load state string in q6v5_deinit
+>    /probe path for patch 4. [Matthias]
+> 
+>  drivers/remoteproc/qcom_q6v5.c      | 57 ++++++++++++++++++++++++-
+>  drivers/remoteproc/qcom_q6v5.h      |  7 ++-
+>  drivers/remoteproc/qcom_q6v5_adsp.c |  7 ++-
+>  drivers/remoteproc/qcom_q6v5_mss.c  | 44 ++++---------------
+>  drivers/remoteproc/qcom_q6v5_pas.c  | 85 +++++++++----------------------------
+>  drivers/remoteproc/qcom_q6v5_wcss.c |  4 +-
+>  6 files changed, 96 insertions(+), 108 deletions(-)
+> 
+> diff --git a/drivers/remoteproc/qcom_q6v5.c b/drivers/remoteproc/qcom_q6v5.c
+> index 7e9244c748da..997ff21271f7 100644
+> --- a/drivers/remoteproc/qcom_q6v5.c
+> +++ b/drivers/remoteproc/qcom_q6v5.c
+> @@ -16,8 +16,28 @@
+>  #include "qcom_common.h"
+>  #include "qcom_q6v5.h"
+>  
+> +#define Q6V5_LOAD_STATE_MSG_LEN	64
+>  #define Q6V5_PANIC_DELAY_MS	200
+>  
+> +static int q6v5_load_state_toggle(struct qcom_q6v5 *q6v5, bool enable)
+> +{
+> +	char buf[Q6V5_LOAD_STATE_MSG_LEN] = {};
+> +	int ret;
+> +
+> +	if (IS_ERR(q6v5->qmp))
 
-NOTE: we'll still leave the devicetree bindings alone. Even though the
-power-sequencing is non-standard the bindings are still "simple".
+I would prefer that you keep it NULL when there's no qmp.
 
-Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Sean Paul <seanpaul@chromium.org>
----
+> +		return 0;
+> +
+> +	snprintf(buf, sizeof(buf),
+> +		 "{class: image, res: load_state, name: %s, val: %s}",
+> +		 q6v5->load_state, enable ? "on" : "off");
+> +
+> +	ret = qmp_send(q6v5->qmp, buf, sizeof(buf));
+> +	if (ret)
+> +		dev_err(q6v5->dev, "failed to toggle load state\n");
+> +
+> +	return ret;
+> +}
+> +
+>  /**
+>   * qcom_q6v5_prepare() - reinitialize the qcom_q6v5 context before start
+>   * @q6v5:	reference to qcom_q6v5 context to be reinitialized
+> @@ -26,6 +46,12 @@
+>   */
+>  int qcom_q6v5_prepare(struct qcom_q6v5 *q6v5)
+>  {
+> +	int ret;
+> +
+> +	ret = q6v5_load_state_toggle(q6v5, true);
+> +	if (ret)
+> +		return ret;
+> +
+>  	reinit_completion(&q6v5->start_done);
+>  	reinit_completion(&q6v5->stop_done);
+>  
+> @@ -47,6 +73,7 @@ EXPORT_SYMBOL_GPL(qcom_q6v5_prepare);
+>  int qcom_q6v5_unprepare(struct qcom_q6v5 *q6v5)
+>  {
+>  	disable_irq(q6v5->handover_irq);
+> +	q6v5_load_state_toggle(q6v5, false);
+>  
+>  	return !q6v5->handover_issued;
+>  }
+> @@ -196,12 +223,13 @@ EXPORT_SYMBOL_GPL(qcom_q6v5_panic);
+>   * @pdev:	platform_device reference for acquiring resources
+>   * @rproc:	associated remoteproc instance
+>   * @crash_reason: SMEM id for crash reason string, or 0 if none
+> + * @load_state: load state resource string
+>   * @handover:	function to be called when proxy resources should be released
+>   *
+>   * Return: 0 on success, negative errno on failure
+>   */
+>  int qcom_q6v5_init(struct qcom_q6v5 *q6v5, struct platform_device *pdev,
+> -		   struct rproc *rproc, int crash_reason,
+> +		   struct rproc *rproc, int crash_reason, const char *load_state,
+>  		   void (*handover)(struct qcom_q6v5 *q6v5))
+>  {
+>  	int ret;
+> @@ -286,9 +314,36 @@ int qcom_q6v5_init(struct qcom_q6v5 *q6v5, struct platform_device *pdev,
+>  		return PTR_ERR(q6v5->state);
+>  	}
+>  
+> +	q6v5->load_state = kstrdup_const(load_state, GFP_KERNEL);
 
-(no changes since v1)
+Can't you use devm_kstrdup_const(&pdev->dev, ...) for this?
 
- drivers/gpu/drm/panel/Kconfig                 |  12 +
- drivers/gpu/drm/panel/Makefile                |   1 +
- .../gpu/drm/panel/panel-samsung-atna33xc20.c  | 366 ++++++++++++++++++
- 3 files changed, 379 insertions(+)
- create mode 100644 drivers/gpu/drm/panel/panel-samsung-atna33xc20.c
+> +	q6v5->qmp = qmp_get(&pdev->dev);
+> +	if (IS_ERR(q6v5->qmp)) {
+> +		if (PTR_ERR(q6v5->qmp) != -ENODEV) {
+> +			if (PTR_ERR(q6v5->qmp) != -EPROBE_DEFER)
+> +				dev_err(&pdev->dev, "failed to acquire load state\n");
+> +			kfree_const(q6v5->load_state);
 
-diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
-index 6b3eb041182c..58430d358489 100644
---- a/drivers/gpu/drm/panel/Kconfig
-+++ b/drivers/gpu/drm/panel/Kconfig
-@@ -353,6 +353,18 @@ config DRM_PANEL_RONBO_RB070D30
- 	  Say Y here if you want to enable support for Ronbo Electronics
- 	  RB070D30 1024x600 DSI panel.
- 
-+config DRM_PANEL_SAMSUNG_ATNA33XC20
-+	tristate "Samsung ATNA33XC20 eDP panel"
-+	depends on OF
-+	depends on BACKLIGHT_CLASS_DEVICE
-+	depends on PM
-+	select VIDEOMODE_HELPERS
-+	select DRM_DP_AUX_BUS
-+	help
-+	  DRM panel driver for the Samsung ATNA33XC20 panel. This panel can't
-+	  be handled by the DRM_PANEL_SIMPLE driver because its power
-+	  sequencing is non-standard.
-+
- config DRM_PANEL_SAMSUNG_DB7430
- 	tristate "Samsung DB7430-based DPI panels"
- 	depends on OF && SPI && GPIOLIB
-diff --git a/drivers/gpu/drm/panel/Makefile b/drivers/gpu/drm/panel/Makefile
-index 08debae9b314..1b6fe2008861 100644
---- a/drivers/gpu/drm/panel/Makefile
-+++ b/drivers/gpu/drm/panel/Makefile
-@@ -34,6 +34,7 @@ obj-$(CONFIG_DRM_PANEL_RASPBERRYPI_TOUCHSCREEN) += panel-raspberrypi-touchscreen
- obj-$(CONFIG_DRM_PANEL_RAYDIUM_RM67191) += panel-raydium-rm67191.o
- obj-$(CONFIG_DRM_PANEL_RAYDIUM_RM68200) += panel-raydium-rm68200.o
- obj-$(CONFIG_DRM_PANEL_RONBO_RB070D30) += panel-ronbo-rb070d30.o
-+obj-$(CONFIG_DRM_PANEL_SAMSUNG_ATNA33XC20) += panel-samsung-atna33xc20.o
- obj-$(CONFIG_DRM_PANEL_SAMSUNG_DB7430) += panel-samsung-db7430.o
- obj-$(CONFIG_DRM_PANEL_SAMSUNG_LD9040) += panel-samsung-ld9040.o
- obj-$(CONFIG_DRM_PANEL_SAMSUNG_S6D16D0) += panel-samsung-s6d16d0.o
-diff --git a/drivers/gpu/drm/panel/panel-samsung-atna33xc20.c b/drivers/gpu/drm/panel/panel-samsung-atna33xc20.c
-new file mode 100644
-index 000000000000..221db6512859
---- /dev/null
-+++ b/drivers/gpu/drm/panel/panel-samsung-atna33xc20.c
-@@ -0,0 +1,366 @@
-+// SPDX-License-Identifier: GPL-2.0
-+/*
-+ * Copyright 2021 Google Inc.
-+ *
-+ * Panel driver for the Samsung ATNA33XC20 panel. This panel can't be handled
-+ * by the DRM_PANEL_SIMPLE driver because its power sequencing is non-standard.
-+ */
-+
-+#include <linux/backlight.h>
-+#include <linux/delay.h>
-+#include <linux/gpio/consumer.h>
-+#include <linux/iopoll.h>
-+#include <linux/module.h>
-+#include <linux/pm_runtime.h>
-+#include <linux/regulator/consumer.h>
-+
-+#include <drm/drm_dp_aux_bus.h>
-+#include <drm/drm_dp_helper.h>
-+#include <drm/drm_edid.h>
-+#include <drm/drm_panel.h>
-+
-+struct atana33xc20_panel {
-+	struct drm_panel base;
-+	bool prepared;
-+	bool enabled;
-+	bool el3_was_on;
-+
-+	bool no_hpd;
-+	struct gpio_desc *hpd_gpio;
-+
-+	struct regulator *supply;
-+	struct gpio_desc *el_on3_gpio;
-+
-+	struct edid *edid;
-+
-+	ktime_t powered_off_time;
-+	ktime_t powered_on_time;
-+	ktime_t el_on3_off_time;
-+};
-+
-+static inline struct atana33xc20_panel *to_atana33xc20(struct drm_panel *panel)
-+{
-+	return container_of(panel, struct atana33xc20_panel, base);
-+}
-+
-+static void atana33xc20_wait(ktime_t start_ktime, unsigned int min_ms)
-+{
-+	ktime_t now_ktime, min_ktime;
-+
-+	min_ktime = ktime_add(start_ktime, ms_to_ktime(min_ms));
-+	now_ktime = ktime_get();
-+
-+	if (ktime_before(now_ktime, min_ktime))
-+		msleep(ktime_to_ms(ktime_sub(min_ktime, now_ktime)) + 1);
-+}
-+
-+static int atana33xc20_suspend(struct device *dev)
-+{
-+	struct atana33xc20_panel *p = dev_get_drvdata(dev);
-+	int ret;
-+
-+	/*
-+	 * Note 3 (Example of power off sequence in detail) in spec
-+	 * specifies to wait 150 ms after deasserting EL3_ON before
-+	 * powering off.
-+	 */
-+	if (p->el3_was_on)
-+		atana33xc20_wait(p->el_on3_off_time, 150);
-+
-+	ret = regulator_disable(p->supply);
-+	if (ret)
-+		return ret;
-+	p->powered_off_time = ktime_get();
-+	p->el3_was_on = false;
-+
-+	return 0;
-+}
-+
-+static int atana33xc20_resume(struct device *dev)
-+{
-+	struct atana33xc20_panel *p = dev_get_drvdata(dev);
-+	bool hpd_asserted = false;
-+	int ret;
-+
-+	/* T12 (Power off time) is min 500 ms */
-+	atana33xc20_wait(p->powered_off_time, 500);
-+
-+	ret = regulator_enable(p->supply);
-+	if (ret)
-+		return ret;
-+	p->powered_on_time = ktime_get();
-+
-+	/*
-+	 * Handle HPD. Note: if HPD is hooked up to a dedicated pin on the
-+	 * eDP controller then "no_hpd" will be false _and_ "hpd_gpio" will be
-+	 * NULL. It's up to the controller driver to wait for HPD after
-+	 * preparing the panel in that case.
-+	 */
-+	if (p->no_hpd) {
-+		/* T3 VCC to HPD high is max 200 ms */
-+		msleep(200);
-+	} else if (p->hpd_gpio) {
-+		ret = readx_poll_timeout(gpiod_get_value_cansleep, p->hpd_gpio,
-+					 hpd_asserted, hpd_asserted,
-+					 1000, 200000);
-+		if (!hpd_asserted)
-+			dev_warn(dev, "Timeout waiting for HPD\n");
-+	}
-+
-+	return 0;
-+}
-+
-+static int atana33xc20_disable(struct drm_panel *panel)
-+{
-+	struct atana33xc20_panel *p = to_atana33xc20(panel);
-+
-+	/* Disabling when already disabled is a no-op */
-+	if (!p->enabled)
-+		return 0;
-+
-+	gpiod_set_value_cansleep(p->el_on3_gpio, 0);
-+	p->el_on3_off_time = ktime_get();
-+	p->enabled = false;
-+
-+	/*
-+	 * Keep track of the fact that EL_ON3 was on but we haven't power
-+	 * cycled yet. This lets us know that "el_on3_off_time" is recent (we
-+	 * don't need to worry about ktime wraparounds) and also makes it
-+	 * obvious if we try to enable again without a power cycle (see the
-+	 * warning in atana33xc20_enable()).
-+	 */
-+	p->el3_was_on = true;
-+
-+	/*
-+	 * Sleeping 20 ms here (after setting the GPIO) avoids a glitch when
-+	 * powering off.
-+	 */
-+	msleep(20);
-+
-+	return 0;
-+}
-+
-+static int atana33xc20_enable(struct drm_panel *panel)
-+{
-+	struct atana33xc20_panel *p = to_atana33xc20(panel);
-+
-+	/* Enabling when already enabled is a no-op */
-+	if (p->enabled)
-+		return 0;
-+
-+	/*
-+	 * Once EL_ON3 drops we absolutely need a power cycle before the next
-+	 * enable or the backlight will never come on again. The code ensures
-+	 * this because disable() is _always_ followed by unprepare() and
-+	 * unprepare() forces a suspend with pm_runtime_put_sync_suspend(),
-+	 * but let's track just to make sure since the requirement is so
-+	 * non-obvious.
-+	 */
-+	if (WARN_ON(p->el3_was_on))
-+		return -EIO;
-+
-+	/*
-+	 * Note 2 (Example of power on sequence in detail) in spec specifies
-+	 * to wait 400 ms after powering on before asserting EL3_on.
-+	 */
-+	atana33xc20_wait(p->powered_on_time, 400);
-+
-+	gpiod_set_value_cansleep(p->el_on3_gpio, 1);
-+	p->enabled = true;
-+
-+	return 0;
-+}
-+
-+static int atana33xc20_unprepare(struct drm_panel *panel)
-+{
-+	struct atana33xc20_panel *p = to_atana33xc20(panel);
-+	int ret;
-+
-+	/* Unpreparing when already unprepared is a no-op */
-+	if (!p->prepared)
-+		return 0;
-+
-+	/*
-+	 * Purposely do a put_sync, don't use autosuspend. The panel's tcon
-+	 * seems to sometimes crash when you stop giving it data and this is
-+	 * the best way to ensure it will come back.
-+	 *
-+	 * NOTE: we still want autosuspend for cases where we only turn on
-+	 * to get the EDID or otherwise send DP AUX commands to the panel.
-+	 */
-+	ret = pm_runtime_put_sync_suspend(panel->dev);
-+	if (ret < 0)
-+		return ret;
-+	p->prepared = false;
-+
-+	return 0;
-+}
-+
-+static int atana33xc20_prepare(struct drm_panel *panel)
-+{
-+	struct atana33xc20_panel *p = to_atana33xc20(panel);
-+	int ret;
-+
-+	/* Preparing when already prepared is a no-op */
-+	if (p->prepared)
-+		return 0;
-+
-+	ret = pm_runtime_get_sync(panel->dev);
-+	if (ret < 0) {
-+		pm_runtime_put_autosuspend(panel->dev);
-+		return ret;
-+	}
-+	p->prepared = true;
-+
-+	return 0;
-+}
-+
-+static int atana33xc20_get_modes(struct drm_panel *panel,
-+				 struct drm_connector *connector)
-+{
-+	struct atana33xc20_panel *p = to_atana33xc20(panel);
-+	struct dp_aux_ep_device *aux_ep = to_dp_aux_ep_dev(panel->dev);
-+	int num = 0;
-+
-+	pm_runtime_get_sync(panel->dev);
-+
-+	if (!p->edid)
-+		p->edid = drm_get_edid(connector, &aux_ep->aux->ddc);
-+	num = drm_add_edid_modes(connector, p->edid);
-+
-+	pm_runtime_mark_last_busy(panel->dev);
-+	pm_runtime_put_autosuspend(panel->dev);
-+
-+	return num;
-+}
-+
-+static const struct drm_panel_funcs atana33xc20_funcs = {
-+	.disable = atana33xc20_disable,
-+	.enable = atana33xc20_enable,
-+	.unprepare = atana33xc20_unprepare,
-+	.prepare = atana33xc20_prepare,
-+	.get_modes = atana33xc20_get_modes,
-+};
-+
-+static void atana33xc20_runtime_disable(void *data)
-+{
-+	pm_runtime_disable(data);
-+}
-+
-+static void atana33xc20_dont_use_autosuspend(void *data)
-+{
-+	pm_runtime_dont_use_autosuspend(data);
-+}
-+
-+static int atana33xc20_probe(struct dp_aux_ep_device *aux_ep)
-+{
-+	struct atana33xc20_panel *panel;
-+	struct device *dev = &aux_ep->dev;
-+	int ret;
-+
-+	panel = devm_kzalloc(dev, sizeof(*panel), GFP_KERNEL);
-+	if (!panel)
-+		return -ENOMEM;
-+	dev_set_drvdata(dev, panel);
-+
-+	panel->supply = devm_regulator_get(dev, "power");
-+	if (IS_ERR(panel->supply))
-+		return dev_err_probe(dev, PTR_ERR(panel->supply),
-+				     "Failed to get power supply\n");
-+
-+	panel->el_on3_gpio = devm_gpiod_get(dev, "enable", GPIOD_OUT_LOW);
-+	if (IS_ERR(panel->el_on3_gpio))
-+		return dev_err_probe(dev, PTR_ERR(panel->el_on3_gpio),
-+				     "Failed to get enable GPIO\n");
-+
-+	panel->no_hpd = of_property_read_bool(dev->of_node, "no-hpd");
-+	if (!panel->no_hpd) {
-+		panel->hpd_gpio = devm_gpiod_get_optional(dev, "hpd", GPIOD_IN);
-+		if (IS_ERR(panel->hpd_gpio))
-+			return dev_err_probe(dev, PTR_ERR(panel->hpd_gpio),
-+					     "Failed to get HPD GPIO\n");
-+	}
-+
-+	pm_runtime_enable(dev);
-+	ret = devm_add_action_or_reset(dev,  atana33xc20_runtime_disable, dev);
-+	if (ret)
-+		return ret;
-+	pm_runtime_set_autosuspend_delay(dev, 1000);
-+	pm_runtime_use_autosuspend(dev);
-+	ret = devm_add_action_or_reset(dev,  atana33xc20_dont_use_autosuspend, dev);
-+	if (ret)
-+		return ret;
-+
-+	drm_panel_init(&panel->base, dev, &atana33xc20_funcs, DRM_MODE_CONNECTOR_eDP);
-+
-+	pm_runtime_get_sync(dev);
-+	ret = drm_panel_dp_aux_backlight(&panel->base, aux_ep->aux);
-+	pm_runtime_mark_last_busy(dev);
-+	pm_runtime_put_autosuspend(dev);
-+	if (ret)
-+		return dev_err_probe(dev, ret,
-+				     "failed to register dp aux backlight\n");
-+
-+	drm_panel_add(&panel->base);
-+
-+	return 0;
-+}
-+
-+static void atana33xc20_remove(struct dp_aux_ep_device *aux_ep)
-+{
-+	struct device *dev = &aux_ep->dev;
-+	struct atana33xc20_panel *panel = dev_get_drvdata(dev);
-+
-+	drm_panel_remove(&panel->base);
-+	drm_panel_disable(&panel->base);
-+	drm_panel_unprepare(&panel->base);
-+
-+	kfree(panel->edid);
-+}
-+
-+static void atana33xc20_shutdown(struct dp_aux_ep_device *aux_ep)
-+{
-+	struct device *dev = &aux_ep->dev;
-+	struct atana33xc20_panel *panel = dev_get_drvdata(dev);
-+
-+	drm_panel_disable(&panel->base);
-+	drm_panel_unprepare(&panel->base);
-+}
-+
-+static const struct of_device_id atana33xc20_dt_match[] = {
-+	{ .compatible = "samsung,atna33xc20", },
-+	{ /* sentinal */ }
-+};
-+MODULE_DEVICE_TABLE(of, atana33xc20_dt_match);
-+
-+static const struct dev_pm_ops atana33xc20_pm_ops = {
-+	SET_RUNTIME_PM_OPS(atana33xc20_suspend, atana33xc20_resume, NULL)
-+	SET_SYSTEM_SLEEP_PM_OPS(pm_runtime_force_suspend,
-+				pm_runtime_force_resume)
-+};
-+
-+static struct dp_aux_ep_driver atana33xc20_driver = {
-+	.driver = {
-+		.name		= "samsung_atana33xc20",
-+		.of_match_table = atana33xc20_dt_match,
-+		.pm		= &atana33xc20_pm_ops,
-+	},
-+	.probe = atana33xc20_probe,
-+	.remove = atana33xc20_remove,
-+	.shutdown = atana33xc20_shutdown,
-+};
-+
-+static int __init atana33xc20_init(void)
-+{
-+	return dp_aux_dp_driver_register(&atana33xc20_driver);
-+}
-+module_init(atana33xc20_init);
-+
-+static void __exit atana33xc20_exit(void)
-+{
-+	dp_aux_dp_driver_unregister(&atana33xc20_driver);
-+}
-+module_exit(atana33xc20_exit);
-+
-+MODULE_DESCRIPTION("Samsung ATANA33XC20 Panel Driver");
-+MODULE_LICENSE("GPL v2");
--- 
-2.32.0.554.ge1b32706d8-goog
+Then you don't need to free it here.
 
+> +			return PTR_ERR(q6v5->qmp);
+> +		}
+> +	} else {
+> +		if (!q6v5->load_state) {
+> +			dev_err(&pdev->dev, "load state resource string empty\n");
+> +			return -EINVAL;
+
+I see two cases here:
+
+1) kstrdup_const() failed to allocate memory, the error print is
+unnecessary and misleading and it would be more appropriate to return
+-ENOMEM.
+
+2) kstrdup_const() failed because you passed load_state == NULL, in
+which case the error message could be more helpful by saying "unexpected
+qcom,qmp property found" or something like that.
+
+> +		}
+> +	}
+> +
+>  	return 0;
+>  }
+>  EXPORT_SYMBOL_GPL(qcom_q6v5_init);
+>  
+> +/**
+> + * qcom_q6v5_deinit() - deinitialize the q6v5 common struct
+> + * @q6v5:	reference to qcom_q6v5 context to be deinitialized
+> + */
+> +void qcom_q6v5_deinit(struct qcom_q6v5 *q6v5)
+> +{
+> +	kfree_const(q6v5->load_state);
+> +	qmp_put(q6v5->qmp);
+> +}
+> +EXPORT_SYMBOL_GPL(qcom_q6v5_deinit);
+> +
+>  MODULE_LICENSE("GPL v2");
+>  MODULE_DESCRIPTION("Qualcomm Peripheral Image Loader for Q6V5");
+> diff --git a/drivers/remoteproc/qcom_q6v5.h b/drivers/remoteproc/qcom_q6v5.h
+> index 1c212f670cbc..f35e04471ed7 100644
+> --- a/drivers/remoteproc/qcom_q6v5.h
+> +++ b/drivers/remoteproc/qcom_q6v5.h
+> @@ -5,6 +5,7 @@
+>  
+>  #include <linux/kernel.h>
+>  #include <linux/completion.h>
+> +#include <linux/soc/qcom/qcom_aoss.h>
+>  
+>  struct rproc;
+>  struct qcom_smem_state;
+> @@ -15,6 +16,8 @@ struct qcom_q6v5 {
+>  	struct rproc *rproc;
+>  
+>  	struct qcom_smem_state *state;
+> +	struct qmp *qmp;
+> +
+>  	unsigned stop_bit;
+>  
+>  	int wdog_irq;
+> @@ -32,12 +35,14 @@ struct qcom_q6v5 {
+>  
+>  	bool running;
+>  
+> +	const char *load_state;
+>  	void (*handover)(struct qcom_q6v5 *q6v5);
+>  };
+>  
+>  int qcom_q6v5_init(struct qcom_q6v5 *q6v5, struct platform_device *pdev,
+> -		   struct rproc *rproc, int crash_reason,
+> +		   struct rproc *rproc, int crash_reason, const char *load_state,
+>  		   void (*handover)(struct qcom_q6v5 *q6v5));
+> +void qcom_q6v5_deinit(struct qcom_q6v5 *q6v5);
+>  
+>  int qcom_q6v5_prepare(struct qcom_q6v5 *q6v5);
+>  int qcom_q6v5_unprepare(struct qcom_q6v5 *q6v5);
+> diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
+> index 8b0d8bbacd2e..098362e6e233 100644
+> --- a/drivers/remoteproc/qcom_q6v5_adsp.c
+> +++ b/drivers/remoteproc/qcom_q6v5_adsp.c
+> @@ -185,7 +185,9 @@ static int adsp_start(struct rproc *rproc)
+>  	int ret;
+>  	unsigned int val;
+>  
+> -	qcom_q6v5_prepare(&adsp->q6v5);
+> +	ret = qcom_q6v5_prepare(&adsp->q6v5);
+> +	if (ret)
+> +		return ret;
+
+In the (hopefully unlikely) case that we have instances of
+qcom_q6v5_prepare() failing today, the switch to the new qmp interface
+would also introduce a regression in the same commit.
+
+Could you please add the error handling in a separate commit? Just so
+that we can pinpoint which of the two changes caused any issues if we
+need to bisect this?
+
+Regards,
+Bjorn
