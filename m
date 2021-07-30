@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 018613DBC8A
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 17:46:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E14393DBC8F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 17:46:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232356AbhG3Pqr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jul 2021 11:46:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33704 "EHLO
+        id S234196AbhG3Pqy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jul 2021 11:46:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33716 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232741AbhG3Pqo (ORCPT
+        with ESMTP id S233230AbhG3Pqs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jul 2021 11:46:44 -0400
-Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E597C06175F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 08:46:40 -0700 (PDT)
-Received: by mail-pl1-x632.google.com with SMTP id k1so11529568plt.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 08:46:40 -0700 (PDT)
+        Fri, 30 Jul 2021 11:46:48 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E3D9DC0613D3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 08:46:42 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id k1so11529711plt.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 08:46:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=7ohaLOrFvMPYOwPHkhrUlARVRgT2ljmNxajBb/yxaac=;
-        b=J17LyUDE8Yo2nHUiCmMlgZq8I3yLfIyU4twrisKA0rzzwG5t6FV4RZQIyXG0BoYFBl
-         N+mtUoq7163QOaK3A22SACsDbBIGm4bw16OVBqsP2kkPjlPaYFG4cUPIFM8SQp5GADbb
-         Qzenjya7ny6KUpmgHX5UjFRJE7WFHDJpGzMsQ=
+        bh=HGNj9GKkPcNlrQ3u81KWmc1E6wLr3PhoH6cMUoSxMIY=;
+        b=aFkHg2l6yaOdtV8Ca6Onrbf74caIFdI1DKRYCrMMfbe0xGMSMWUNHQ4PiC2Xz+tAkK
+         dFnu5/uRUjjZXlmmpBrzCG1skLJiZEb43HD8O+P7iqHf+jDgRtvaGx+ms/elJxST3cVZ
+         lNHsdsBrtQMtOVLrLmb0BtNeapnEzZ8LT8nuE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=7ohaLOrFvMPYOwPHkhrUlARVRgT2ljmNxajBb/yxaac=;
-        b=TyLGJ6Iw+DIJFBVD04F8pVfmRlFcPaPAU9nZ6uAwREkKI935rTDtevMcyeLfjHsa44
-         RXQqlLaa8lZ38ER5dPsyOI3fsKHdHxIvwxms85bEzOVX/nf9IFXkwkW3gXmWELA24yrC
-         iBxsMwBCzM68MAXqeOJgr51mOUCcQjPSPHgKnYigCAI6Omr0YbWipleYxa8x6AcY3REx
-         3Xpow30h3O1meM8CCnwWPChVEIU9YKw7DlYjPgHyZnQliZJ1SZg28gZBLvLGoWx1vRBT
-         A1XZBezhhjuEySlx1evhyKNB9VO3rWu7QeqFq3eCNAqJalSxOB2Bx/FTlYvBjFa246IS
-         EqvQ==
-X-Gm-Message-State: AOAM531rW2S4gG4FrNnYLnATre8sLycv2WytcM6ZNU8OigP9//HwTsj7
-        0ORptluovHMSffvQoS8c96f+dQ==
-X-Google-Smtp-Source: ABdhPJwckcuTwdneMgghpL15NaD/GuPlvbqz6vYecQaLZqzjDqWyfvp0IjrQshK6FMvhYBYWrCvR8Q==
-X-Received: by 2002:a17:902:e04f:b029:eb:66b0:6d08 with SMTP id x15-20020a170902e04fb02900eb66b06d08mr3115614plx.50.1627659999704;
-        Fri, 30 Jul 2021 08:46:39 -0700 (PDT)
+        bh=HGNj9GKkPcNlrQ3u81KWmc1E6wLr3PhoH6cMUoSxMIY=;
+        b=hYv7DT85baesBBXMYpdFFBnK38/AaIsFY4sKBDLhTEeAHrNbAnIVyHU7g9EqiQvED3
+         ESR1A0i8/vEDQgz30bwil5cSKHE/wxrseLPf1JDCn062J84I5JvGeoz5qyFaHUb1HLU6
+         1AawbtpQxLYFcwHn0IF8diHyWUyqwdR3TQYPDlIScNjtx5CEXP1P86kGO8A5gyHaP05u
+         k2RyXkMeFeU2WOA+k929Yt0jLsQVU/Ox7WXEC7j9PVSjumSYpleent20rURjB63gXG6s
+         shp0apmbH4BbMFAySgl1V0QFJGZD/wqzQgubgS7AYrzdYdYCmHrkDxb41hrrgwoJFnrk
+         rkqg==
+X-Gm-Message-State: AOAM533b6Oclzh+S/6WXl90MUYDS39GtL5g14DDpg55E0Z+0Mj2kZTUY
+        FaSpEtUYWFL8exBKkXEzH0v1Nw==
+X-Google-Smtp-Source: ABdhPJx+3y28Ce4LyY9cSNNhWVuXUoPdutEn+sS5mEWeDERMUSHe6T3XxxsIUu92Fq4H0NEbRcTjBQ==
+X-Received: by 2002:a17:90a:d595:: with SMTP id v21mr3832821pju.50.1627660002461;
+        Fri, 30 Jul 2021 08:46:42 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:3424:e0ac:5a92:d061])
-        by smtp.gmail.com with ESMTPSA id u188sm3175621pfc.115.2021.07.30.08.46.38
+        by smtp.gmail.com with ESMTPSA id u188sm3175621pfc.115.2021.07.30.08.46.39
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 30 Jul 2021 08:46:39 -0700 (PDT)
+        Fri, 30 Jul 2021 08:46:41 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     dri-devel@lists.freedesktop.org
 Cc:     devicetree@vger.kernel.org, steev@kali.org, robert.foss@linaro.org,
@@ -57,10 +57,12 @@ Cc:     devicetree@vger.kernel.org, steev@kali.org, robert.foss@linaro.org,
         linux-arm-msm@vger.kernel.org, a.hajda@samsung.com,
         tzimmermann@suse.de, narmstrong@baylibre.com,
         Douglas Anderson <dianders@chromium.org>,
-        Sean Paul <seanpaul@chromium.org>, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 1/6] drm/dp: Don't zero PWMGEN_BIT_COUNT when driver_pwm_freq_hz not specified
-Date:   Fri, 30 Jul 2021 08:46:00 -0700
-Message-Id: <20210730084534.v2.1.If017efce7116ae8ba015ed7def840c390a0e0c77@changeid>
+        Sean Paul <seanpaul@chromium.org>,
+        Sandeep Panda <spanda@codeaurora.org>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 2/6] drm/bridge: ti-sn65dsi86: Fix power off sequence
+Date:   Fri, 30 Jul 2021 08:46:01 -0700
+Message-Id: <20210730084534.v2.2.If8a8ec3bf1855cf0dbb62c005a71d6698c99c125@changeid>
 X-Mailer: git-send-email 2.32.0.554.ge1b32706d8-goog
 In-Reply-To: <20210730154605.2843418-1-dianders@chromium.org>
 References: <20210730154605.2843418-1-dianders@chromium.org>
@@ -70,50 +72,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The function drm_edp_backlight_init() is defined such that the
-"driver_pwm_freq_hz" parameter is optional--it's 0 if you don't want
-to futz with it. If you follow this variable through, you'll find out
-that if it's 0 we won't ever set the "bl->pwmgen_bit_count", leaving
-it as 0.
+When testing with a panel that's apparently a little more persnickety
+about the correct power sequence (specifically Samsung ATNA33XC20), we
+found that the ti-sn65dsi86 was doing things just slightly wrong.
 
-That means that before using it in drm_edp_backlight_enable() we need
-to check to see if it's non-zero.
+Looking closely at the ti-sn65dsi86's datasheet, the power off
+sequence is supposed to be:
+1. Clear VSTREAM_ENABLE bit
+2. Stop DSI stream from GPU. DSI lanes must be placed in LP11 state.
+3. Program the ML_TX_MODE to 0x0 (OFF)
+4. Program the DP_NUM_LANES register to 0x0
+5. Clear the DP_PLL_EN bit.
+6. Deassert the EN pin.
+7. Remove power from supply pins
 
-Programming this field to zero was confusing the panel I tested with
-(Samsung ATNA33XC20). The backlight still worked somewhat but the
-brightness values didn't correspond to what they should have been.
+Since we were doing the whole sequence in the "disable", I believe
+that step #2 (stopping the DSI stream from the GPU) wasn't
+happening. We also weren't setting DP_NUM_LANES to 0.
 
-Fixes: 867cf9cd73c3 ("drm/dp: Extract i915's eDP backlight code into DRM helpers")
+Let's fix this.
+
+NOTE: things are a little asymmetric now. For instance, we turn the
+PLL on in "enable" but now we're not turning it off until
+"post_disable". It would seem to make sense to move the PLL turning on
+to "pre_enable" to match. Unfortunately, I don't believe that's
+allowed. It looks as if (in the non-refclk mode which probably nobody
+is using) we have to wait until the MIPI clock is there before we can
+enable the PLL. In any case, the way it is here won't really
+hurt--it'll just leave the PLL on a little longer.
+
+Fixes: a095f15c00e2 ("drm/bridge: add support for sn65dsi86 bridge driver")
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
+Acked-by: Robert Foss <robert.foss@linaro.org>
 Reviewed-by: Sean Paul <seanpaul@chromium.org>
 ---
 
 (no changes since v1)
 
- drivers/gpu/drm/drm_dp_helper.c | 10 ++++++----
- 1 file changed, 6 insertions(+), 4 deletions(-)
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/drm_dp_helper.c b/drivers/gpu/drm/drm_dp_helper.c
-index b5f75ca05774..b8a5c5e49d74 100644
---- a/drivers/gpu/drm/drm_dp_helper.c
-+++ b/drivers/gpu/drm/drm_dp_helper.c
-@@ -3229,10 +3229,12 @@ int drm_edp_backlight_enable(struct drm_dp_aux *aux, const struct drm_edp_backli
- 		new_dpcd_buf &= ~DP_EDP_BACKLIGHT_CONTROL_MODE_MASK;
- 		new_dpcd_buf |= DP_EDP_BACKLIGHT_CONTROL_MODE_DPCD;
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index 9bf889302bcc..5e932070a1c3 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -766,10 +766,6 @@ static void ti_sn_bridge_disable(struct drm_bridge *bridge)
  
--		ret = drm_dp_dpcd_writeb(aux, DP_EDP_PWMGEN_BIT_COUNT, bl->pwmgen_bit_count);
--		if (ret != 1)
--			drm_dbg_kms(aux->drm_dev, "%s: Failed to write aux pwmgen bit count: %d\n",
--				    aux->name, ret);
-+		if (bl->pwmgen_bit_count) {
-+			ret = drm_dp_dpcd_writeb(aux, DP_EDP_PWMGEN_BIT_COUNT, bl->pwmgen_bit_count);
-+			if (ret != 1)
-+				drm_dbg_kms(aux->drm_dev, "%s: Failed to write aux pwmgen bit count: %d\n",
-+					aux->name, ret);
-+		}
- 	}
+ 	/* disable video stream */
+ 	regmap_update_bits(pdata->regmap, SN_ENH_FRAME_REG, VSTREAM_ENABLE, 0);
+-	/* semi auto link training mode OFF */
+-	regmap_write(pdata->regmap, SN_ML_TX_MODE_REG, 0);
+-	/* disable DP PLL */
+-	regmap_write(pdata->regmap, SN_PLL_ENABLE_REG, 0);
+ }
  
- 	if (bl->pwm_freq_pre_divider) {
+ static void ti_sn_bridge_set_dsi_rate(struct ti_sn65dsi86 *pdata)
+@@ -1106,6 +1102,13 @@ static void ti_sn_bridge_post_disable(struct drm_bridge *bridge)
+ {
+ 	struct ti_sn65dsi86 *pdata = bridge_to_ti_sn65dsi86(bridge);
+ 
++	/* semi auto link training mode OFF */
++	regmap_write(pdata->regmap, SN_ML_TX_MODE_REG, 0);
++	/* Num lanes to 0 as per power sequencing in data sheet */
++	regmap_update_bits(pdata->regmap, SN_SSC_CONFIG_REG, DP_NUM_LANES_MASK, 0);
++	/* disable DP PLL */
++	regmap_write(pdata->regmap, SN_PLL_ENABLE_REG, 0);
++
+ 	if (!pdata->refclk)
+ 		ti_sn65dsi86_disable_comms(pdata);
+ 
 -- 
 2.32.0.554.ge1b32706d8-goog
 
