@@ -2,121 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DD2A53DB997
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 15:49:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B78923DBC85
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 30 Jul 2021 17:46:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231247AbhG3Nt2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 30 Jul 2021 09:49:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58334 "EHLO
+        id S230371AbhG3Pqn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 30 Jul 2021 11:46:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33696 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231139AbhG3Nt2 (ORCPT
+        with ESMTP id S232206AbhG3Pqm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 30 Jul 2021 09:49:28 -0400
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8F65EC06175F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 06:49:23 -0700 (PDT)
-Received: by mail-qk1-x733.google.com with SMTP id o13so9429451qkk.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 06:49:23 -0700 (PDT)
+        Fri, 30 Jul 2021 11:46:42 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D6C0C0613C1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 08:46:38 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id k4-20020a17090a5144b02901731c776526so21379015pjm.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 08:46:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MKFVB3IPR9lkSCEivG2PKNtFQz06R+D8dqrPSZQVhIs=;
-        b=MEbABptqXJglM26bxbD6CXo+dI7tsy8Ef6mKgr0+/TMZtm6CaLpLI83wRe6CtDssMY
-         cGrKlT8wH4v18FxmQJ5UKSyQwjt7aPP5UxUNzNEQLXCLZk8BsgyYxmJcfjJSSJcjTnhh
-         +qe1EKdSoyzxiUawP0TyNaR3uCQQRcxX+DYLE=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Al3zU95t+cRa9Xq+Cnwa4MjCtmJk0IfPGeKxkOfMrWw=;
+        b=iFotTX5SQKrJqgrwj8NQQHxLjvjibMx5KyTlOaO0pgcCGYtt1T3OHLphg/L7EF/w8/
+         a5lv3WFBO3h40xIp8c5aKfET9wRqDcQ3rInjlocgz5wIxr84A5R7ZP0kB3Q1NN+6H34C
+         6Dn3YqoEzPjI8Y0c40v/veZ+zWDZI8gPKoUHg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MKFVB3IPR9lkSCEivG2PKNtFQz06R+D8dqrPSZQVhIs=;
-        b=aN1yWaTvyV7WiDTerx5NsoynvL/AQNGzzXqQOFw/XrtmIC2XW0/vS8CkdBhX5la3lv
-         NF9uWzLc+Qja3CntYosXWYarBjQMMqt9RZuaoPWlZMWNGv97yFIVw0Y/GM9BZ6sRe33l
-         4cdtaxsigsJx5f9bBTl+pJRRS6XPBv7kCNEyOPc+PP2X7sprY/X26jtuh8FB6rGoY/2i
-         VQLDOMNSjnzLSS7q/xbWKk1YWm38WcVH9C/WBAqnnyx+gcKFpqMWxFMBC593MS2JOvqL
-         4HqnBCng4Yte14ssmC7EG1FU6BqQ3ZEVuWQM4e0YWX3Nu5VOTUvSu/D9yG0JcdIQCSJL
-         +Xtw==
-X-Gm-Message-State: AOAM531bJfMBswRYVm1npZe/wADCD42ZspEqpP+8AOmQPfTpR5CSeu6D
-        EMvDt3vPtep/YU0t+xaTLjmggMX3k37xWg==
-X-Google-Smtp-Source: ABdhPJz+vg99paXqmXEdQlETeV+k9dlqA/RPPZJk6kQRmepEj3VrCUrgGXY7oVbiA4hGA89gR1vJXw==
-X-Received: by 2002:a37:b6c1:: with SMTP id g184mr2366797qkf.270.1627652962536;
-        Fri, 30 Jul 2021 06:49:22 -0700 (PDT)
-Received: from mail-yb1-f178.google.com (mail-yb1-f178.google.com. [209.85.219.178])
-        by smtp.gmail.com with ESMTPSA id e10sm947413qkg.18.2021.07.30.06.49.22
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 30 Jul 2021 06:49:22 -0700 (PDT)
-Received: by mail-yb1-f178.google.com with SMTP id j77so14113689ybj.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 30 Jul 2021 06:49:22 -0700 (PDT)
-X-Received: by 2002:a25:6088:: with SMTP id u130mr3375680ybb.257.1627652961581;
- Fri, 30 Jul 2021 06:49:21 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Al3zU95t+cRa9Xq+Cnwa4MjCtmJk0IfPGeKxkOfMrWw=;
+        b=XnA1aVeAOExP7NWWW592+gSttEUXgwjFAKv1vzYCgBLfadq6JO19BSfLRfV/FLps0g
+         R5fgYECBFoyGcicFYKr9aktpY2xystQeQ4uK1pXox+96vFShqT70w6MF+UfEU7JRirlN
+         blcQnDofwM3nK6puzgA6gIHGB8YcQRLDIJuga4+wvAy8A/RzaixRQjvBFm8J1I8pRlbN
+         NWOHz1cQxKsGq2pg79NwWXGajclU2kV9McHNsFkEDrhOsRa9I22Xj1KrI6Kt6llgqqbJ
+         m07jONZz/zr/EggDj64jL92yYGQ2kKtxmZ87r/M3EFY3mQ+QeKAj/mc90UCLw6uk63YX
+         McOw==
+X-Gm-Message-State: AOAM533I/leVOZZocMGTaLMvdDomJ3LNQTLHi/6aKLJK0CttHwsVg3+Y
+        m2AcLvu8IB5cVW5GUYyrV+v9vw==
+X-Google-Smtp-Source: ABdhPJwfuNDfy7TwpDboUrkCy7S3fyCYpsKNYqiJcOmuCzyAD6S7KqF81wmUUp2kSa64MFFimzZKlA==
+X-Received: by 2002:a17:90a:5b18:: with SMTP id o24mr3870789pji.230.1627659997829;
+        Fri, 30 Jul 2021 08:46:37 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:3424:e0ac:5a92:d061])
+        by smtp.gmail.com with ESMTPSA id u188sm3175621pfc.115.2021.07.30.08.46.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 30 Jul 2021 08:46:37 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     dri-devel@lists.freedesktop.org
+Cc:     devicetree@vger.kernel.org, steev@kali.org, robert.foss@linaro.org,
+        Laurent.pinchart@ideasonboard.com, bjorn.andersson@linaro.org,
+        daniel@ffwll.ch, airlied@linux.ie, jernej.skrabec@gmail.com,
+        maarten.lankhorst@linux.intel.com, rodrigo.vivi@intel.com,
+        sam@ravnborg.org, jonas@kwiboo.se, mripard@kernel.org,
+        thierry.reding@gmail.com, lyude@redhat.com,
+        linus.walleij@linaro.org, rajeevny@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, a.hajda@samsung.com,
+        tzimmermann@suse.de, narmstrong@baylibre.com,
+        Douglas Anderson <dianders@chromium.org>,
+        Sandeep Panda <spanda@codeaurora.org>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/6] drm/panel: atna33xc20: Fix the Samsung ATNA33XC20 panel
+Date:   Fri, 30 Jul 2021 08:45:59 -0700
+Message-Id: <20210730154605.2843418-1-dianders@chromium.org>
+X-Mailer: git-send-email 2.32.0.554.ge1b32706d8-goog
 MIME-Version: 1.0
-References: <1627627573-32454-1-git-send-email-rnayak@codeaurora.org> <1627627573-32454-3-git-send-email-rnayak@codeaurora.org>
-In-Reply-To: <1627627573-32454-3-git-send-email-rnayak@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 30 Jul 2021 06:49:10 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=X9wzRu20xydjt3c6682rWocd6dik6qRc9N1t_Dq97ODw@mail.gmail.com>
-Message-ID: <CAD=FV=X9wzRu20xydjt3c6682rWocd6dik6qRc9N1t_Dq97ODw@mail.gmail.com>
-Subject: Re: [PATCH v3 2/4] nvmem: qfprom: Fix up qfprom_disable_fuse_blowing()
- ordering
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
-        "Ravi Kumar Bokka (Temp)" <rbokka@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-On Thu, Jul 29, 2021 at 11:46 PM Rajendra Nayak <rnayak@codeaurora.org> wrote:
->
-> qfprom_disable_fuse_blowing() disables a bunch of resources,
-> and then does a few register writes in the 'conf' address
-> space.
-> It works perhaps because the resources are needed only for the
-> 'raw' register space writes, and that the 'conf' space allows
-> read/writes regardless.
-> However that makes the code look confusing, so just move the
-> register writes before turning off the resources in the
-> function.
->
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> ---
->  drivers/nvmem/qfprom.c | 6 +++---
->  1 file changed, 3 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/nvmem/qfprom.c b/drivers/nvmem/qfprom.c
-> index 81fbad5..b0ca4c6 100644
-> --- a/drivers/nvmem/qfprom.c
-> +++ b/drivers/nvmem/qfprom.c
-> @@ -139,6 +139,9 @@ static void qfprom_disable_fuse_blowing(const struct qfprom_priv *priv,
->  {
->         int ret;
->
-> +       writel(old->timer_val, priv->qfpconf + QFPROM_BLOW_TIMER_OFFSET);
-> +       writel(old->accel_val, priv->qfpconf + QFPROM_ACCEL_OFFSET);
-> +
->         /*
->          * This may be a shared rail and may be able to run at a lower rate
->          * when we're not blowing fuses.  At the moment, the regulator framework
-> @@ -159,9 +162,6 @@ static void qfprom_disable_fuse_blowing(const struct qfprom_priv *priv,
->                          "Failed to set clock rate for disable (ignoring)\n");
->
->         clk_disable_unprepare(priv->secclk);
-> -
-> -       writel(old->timer_val, priv->qfpconf + QFPROM_BLOW_TIMER_OFFSET);
-> -       writel(old->accel_val, priv->qfpconf + QFPROM_ACCEL_OFFSET);
->  }
+The overall goal of this series is to make the Samsung ATNA33XC20
+panel work more properly. As part of this, we have:
+* A bugfix for the recently abstracted DP AUX backlight code.
+* A bugfix for the sequencing of the ti-sn65dsi86 bridge driver.
+* Removal of the panel from panel-simple and moving it to its own
+  driver.
 
-I think it doesn't matter since all of these resources are just needed
-for burning fuses, but I agree that what you have here makes more
-logical sense and makes the function less confusing.
+If the bugfixes look good but the rest of the series needs work then
+those could land early on their own. There's no real compile time
+dependency on the bugfixes, things are just glitchier without them.
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+NOTE: this series will (slightly) conflict with my other recent series
+making eDP panels probable [1]. I'll re-post that one atop this
+one. It should be noted that the fact that the Samsung ATNA33XC20
+needs its own panel driver means that it _can't_ handled as a probed
+driver. I think this is fine, at least for now. I don't think it would
+be easy to make a unified design with this panel and other panels
+given that it's an AMOLED panel and has a whole bunch of different
+components on board.
+
+As discussed in IRC, the only difference in v2 is the addition of a
+"Fixes" tag to patch #3 and the collection of Reviews/Acks from Sean
+and Robert.
+
+If people feel that this is ready to land today then I can help land
+it (please let me know). Otherwise I'm happy for someone else to
+actually do the commit next week (I'm on vacation) or I can take it
+when I get back.
+
+[1] https://lore.kernel.org/r/20210723002146.1962910-1-dianders@chromium.org/
+
+Changes in v2:
+- Added Fixes tag as requested by Sam.
+
+Douglas Anderson (6):
+  drm/dp: Don't zero PWMGEN_BIT_COUNT when driver_pwm_freq_hz not
+    specified
+  drm/bridge: ti-sn65dsi86: Fix power off sequence
+  drm/bridge: ti-sn65dsi86: Add some 100 us delays
+  Revert "drm/panel-simple: Add Samsung ATNA33XC20"
+  Revert "drm/panel-simple: Support for delays between GPIO & regulator"
+  drm/panel: atna33xc20: Introduce the Samsung ATNA33XC20 panel
+
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c         |  17 +-
+ drivers/gpu/drm/drm_dp_helper.c               |  10 +-
+ drivers/gpu/drm/panel/Kconfig                 |  12 +
+ drivers/gpu/drm/panel/Makefile                |   1 +
+ .../gpu/drm/panel/panel-samsung-atna33xc20.c  | 366 ++++++++++++++++++
+ drivers/gpu/drm/panel/panel-simple.c          |  61 ---
+ 6 files changed, 398 insertions(+), 69 deletions(-)
+ create mode 100644 drivers/gpu/drm/panel/panel-samsung-atna33xc20.c
+
+-- 
+2.32.0.554.ge1b32706d8-goog
+
