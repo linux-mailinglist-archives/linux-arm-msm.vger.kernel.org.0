@@ -2,103 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D21D3DC66B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Jul 2021 16:54:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 612673DC700
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Jul 2021 18:48:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233231AbhGaOy0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 31 Jul 2021 10:54:26 -0400
-Received: from mout.gmx.net ([212.227.15.19]:33831 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233228AbhGaOyZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 31 Jul 2021 10:54:25 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1627743243;
-        bh=zY96gBywycZ3DkNeGCbLFMqyecwq4irLjId53UZ4Zf8=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=Ganr3Z8MpqDXwLQU1ajZQdu1jXzt1nzmNe7rSSrq26cKszyGo5a8Ip/m0nQHQA9I4
-         7zOz9eeAaB9UA6ET3eZRakKZAb71Jpo35ILPw6dAfYS5+YQsnpDe2tkyxweGpT3Wkt
-         EhE/mTTRJlwvgMsMs8AAkSiDeMfjRX5PIP0TOnD8=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from titan ([79.150.72.99]) by mail.gmx.net (mrgmx005
- [212.227.17.184]) with ESMTPSA (Nemesis) id 1N0FxV-1n4IiS04Rz-00xOSP; Sat, 31
- Jul 2021 16:54:03 +0200
-Date:   Sat, 31 Jul 2021 16:53:59 +0200
-From:   Len Baker <len.baker@gmx.com>
-To:     Robin Murphy <robin.murphy@arm.com>,
-        David Laight <David.Laight@ACULAB.COM>,
-        'Geert Uytterhoeven' <geert@linux-m68k.org>
-Cc:     Len Baker <len.baker@gmx.com>, Kees Cook <keescook@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Santosh Shilimkar <ssantosh@kernel.org>,
-        "linux-hardening@vger.kernel.org" <linux-hardening@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>
-Subject: Re: [PATCH] drivers/soc: Remove all strcpy() uses in favor of
- strscpy()
-Message-ID: <20210731140620.GC1979@titan>
-References: <20210725151434.7122-1-len.baker@gmx.com>
- <CAMuHMdUdmv+YmdtjGJV2Lp_Rvar4kN4uSgSTYqXX9CtCJ+qoRw@mail.gmail.com>
- <80f4574c9f6c4c6780735b0fffd83363@AcuMS.aculab.com>
- <fa2fd44d-8cd7-b700-2e7b-d88c9c52507d@arm.com>
+        id S229694AbhGaQsl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 31 Jul 2021 12:48:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38342 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229475AbhGaQsl (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 31 Jul 2021 12:48:41 -0400
+Received: from mail-ed1-x531.google.com (mail-ed1-x531.google.com [IPv6:2a00:1450:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC96FC0613CF;
+        Sat, 31 Jul 2021 09:48:34 -0700 (PDT)
+Received: by mail-ed1-x531.google.com with SMTP id h8so18062338ede.4;
+        Sat, 31 Jul 2021 09:48:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=g+/WvroY3PIFNYPRGJf9aU2bVR5iaIzP7EkefW4JssY=;
+        b=gwQLXzEhqvk9xcQNpRtpSPxaqRLho7gkijR+JABsSI0Nrms+zFgHbn35mSbEdRaCi1
+         bFTfYKcLCgsQLjbRUyLV/rNOhgMrrMF/j95jVdva6tgECUHC1ZE9xGTM1PHjX9L3eBbe
+         40zjAxoLbjbciFP5ETggnPdgjqVLX6eWLZBkp5UL/Jc0tCB17klvJxIFdheAv1HnWQtG
+         wCZCmbBcKpWWXcHQss93sxlLqAnSOEY6d9TYbW1Tph0N33xKXlI/dS3daiiwWnLm7wIV
+         qSb8VwZXAfJ/80Kg/mhXmVNl3V2krzkhsZ6ASxK9XobUurVWfTfF0aVAgh8xZs2HINJe
+         Moqw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=g+/WvroY3PIFNYPRGJf9aU2bVR5iaIzP7EkefW4JssY=;
+        b=Ba0220v0XQTDrFEBiWmxLYmMk64TvcNo0ZHazm4zw4VjaZxQgLDG7kefD6Wb77YVF/
+         ukcCIIQkOK/vZ0aXpuEeApQk7k1+PRhL33Vyh5DMglEWTdWxhWWopzfj+zUIIfICGduq
+         3ltO+H+EUiq7Syt/Iqn3NogYok74DSNOjzFJTfvs5FC8nKFm5X8hhjYNkRGdj6MAKIzt
+         NDJHgbXYhmFzCbqHMqCyGSVREoliMtVqEfV5mW1qMaKQJL8dOjmpbJb+N/cXhuhFp4S1
+         4UYE1R1Z77T2aQzecJH4qL9JM80kzoDQ/Wzb+KbieieGdQkPcuTFd7GwOocsv8glsZWl
+         7LXA==
+X-Gm-Message-State: AOAM530Bv76gOT5WhgMlP9zH/PTJsTXFvaOhc2VR6cp72IqwX/xq7FmQ
+        vS/aTKaEazCSANqlh20TFmw=
+X-Google-Smtp-Source: ABdhPJwQqk6S1iCEpbNHfESVHF+l4BQ/+BYU1bQnpN0CmL7Zwunibnj3cpnY7loMnTlWjRs6+Ptfbg==
+X-Received: by 2002:a05:6402:3089:: with SMTP id de9mr9559983edb.167.1627750113326;
+        Sat, 31 Jul 2021 09:48:33 -0700 (PDT)
+Received: from localhost (178-169-161-196.razgrad.ddns.bulsat.com. [178.169.161.196])
+        by smtp.gmail.com with ESMTPSA id s10sm1898169ejc.39.2021.07.31.09.48.31
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 31 Jul 2021 09:48:32 -0700 (PDT)
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Iskren Chernev <iskren.chernev@gmail.com>
+Subject: [PATCH v3 0/2] Add rpmcc and rpmpd for SM4250/6115
+Date:   Sat, 31 Jul 2021 19:48:25 +0300
+Message-Id: <20210731164827.2756798-1-iskren.chernev@gmail.com>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <fa2fd44d-8cd7-b700-2e7b-d88c9c52507d@arm.com>
-X-Provags-ID: V03:K1:CPIGMjcOPSVTZO7Gzwh9hg7OmO3+oHEOG/0hwDtVK02HC8v0C/H
- VZtjWWWA7ZfqdoNIu89W/7fLWalj2kCOTQKhAxS6lFF7AoLoeM0lcDEuqjYIj+iDuALWlr/
- e3w2i4JYbm+getruIVMJJX4rXzTrv9aobAHUAs0KWlJnXuZM0dUDqdXEBq34FlTZeIDneQi
- IY/Xc6Mh+O9qwxxy5/a2A==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:KDOOqXKprFU=:aKLa3NCS3Zzhe89gSTB7xm
- S5gbutCNag4xoaxDSSedPJyiapV+RHqXoXWOVHnzxjYUqTVPUWOOwNtWAZU+fJzeJORs/1SIP
- 1OoRhLNgfQkGczk6bUZdlH2HOoIntYsgaEo2I8dYaa315q5tymP0d6v35fBmn7r0rqi3yyIvD
- fnRyTbhf4CpNTGkwzqL/GNynOwbwPOCiYepKBmYGjoPs5/OWOi2DkB4eniekMTX939uyE5FRp
- hb9igUS8h0EzaDJBHtT3jvgRo7I814KSRArIfYkr8PKUi3CPx+7nz1GV3dDJQzfDEyW2tvDVN
- 16j6laKhMmY7HJot8t8/3fuO9pjJ1Uqv3vAeB4m63iki7BcSqAVZdICPm4qDzsypfDOifWsZn
- njKRzbVxf/DJz4SSXxTLG7NvKG6q9luBbLuLMTqb68BAhuTStnCXPHLMOQ6Anb/hTqux8TBgK
- 5zyLmFxWrVW/fym5geK0gR/HmPJKyPb5iPV7aPv35WRqzIMOHYBtm1j4Usow5DIc74U+cPtBu
- LPyYMZv2bmFdTN1UhsPfjWzqioQbqIp02W53VhzsGLXFptkIATwTRZybyrRVgC0UaEjjrRvY8
- RJm8jUx8q5cRCc7SZ0ez8w/CbjUUfmQs37vC91tRCE2uleFh6I7kadGtttDvyzSQpMAmoiEBo
- YhgqS68ZYcpBfcNPhkj7ExTUx27Gg9Z3KUa5MHb5UveIjFTToZgINcXiAoY7pRUTppTMIp+eV
- T1sVwKiIbd0jCO6TN5v8Pp4bIXTimprkGOY7BCcIzux04RKjoeUBx+sOeiUt74TVKVccLK/Fm
- Oy3VJzdCuUUUpC2cxwxs2XODerg1L/8q6rQ4oLM068fqyfqi0tZ1b4JFNUryfZF6oUkS6ivwc
- aBTvLmQDpJmvInRrFoyusUI4JicfOQhGX+/MzBxDIZfAJ5m19UtUJNpB9rL4DZaVne0g+Il+g
- WChV2VUBnwM4CkHcXL+dTdeopZoSeqRb6qH53Ym39g/HAdOYTnQxxVgwLgYppTc31pupCyI2l
- 8xy18lw1WuX4wUCFHbzoEX2h7WPeQh3USpSqNvD49Kl1SZpuHlKajG1pzSniqADZDtCgHFQMs
- 65fiqzh7iwOd1lv68wDU0pl4hVOG9CnvXln
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+This patch adds support for the RPM clocks and power domains on QCom SM4250 and
+SM6115, codename bengal. The rpmcc code is converted from downstream code
+(OnePlus repo [1]), and the rpmpd is converted from downstream DT extracted
+from OnePlus Nord N100.
 
-On Wed, Jul 28, 2021 at 10:36:09AM +0100, Robin Murphy wrote:
-> On 2021-07-28 09:36, David Laight wrote:
+The downstream code has additional voter clocks, which let consumers vote and
+the driver to select the highest desired clock rate for a given (real) parent
+clock [2]. I might port that as well in the near future, let me know if there
+is a more elegant solution.
 
-> > > > -               strcpy(pd->name, area->name);
-> > > > +               strscpy(pd->name, area->name, area_name_size);
-> >
-> > You can just use memcpy().
->
-> Indeed. In fact I'd go as far as saying that it might be worth teaching
-> static checkers to recognise patterns that boil down to strscpy(dst, src=
-,
-> strlen(src) + 1) and flag them as suspect, because AFAICS that would alw=
-ays
-> represent either an unnecessarily elaborate memcpy(), or far worse just =
-an
-> obfuscated strcpy().
+[1]: https://github.com/OnePlusOSS/android_kernel_oneplus_sm4250
+[2]: https://source.codeaurora.org/quic/server/kernel/commit/?h=v4.9.137&id=6a4951a8308c5729ae8e502787cb705477c94251
 
-Ok, I will use the memcpy function instead of strscpy. Thanks for the
-feedback.
+v1: https://lkml.org/lkml/2021/6/22/1171
+v2: https://lkml.org/lkml/2021/6/27/169
 
->
-> Robin.
+Changes from v2:
+- note that all except patch 3/5 of the v2 patches were merged in next, and
+  patch 3/5 was split in 2
+- split smd-rpm compat string addition in it's own patch
 
-Regards,
-Len
+Changes from v1:
+- remove 4250 compatible, both platforms will share one dtsi
+- reuse existing clocks as per a0384ecfe2aa ("clk: qcom: smd-rpm: De-duplicate identical entries")
+
+Iskren Chernev (2):
+  clk: qcom: smd: Add support for SM6115 rpm clocks
+  soc: qcom: smd-rpm: Add SM6115 compatible
+
+ drivers/clk/qcom/clk-smd-rpm.c   | 54 ++++++++++++++++++++++++++++++++
+ drivers/soc/qcom/smd-rpm.c       |  1 +
+ include/linux/soc/qcom/smd-rpm.h |  1 +
+ 3 files changed, 56 insertions(+)
+
+
+base-commit: 8d4b477da1a807199ca60e0829357ce7aa6758d5
+--
+2.32.0
+
