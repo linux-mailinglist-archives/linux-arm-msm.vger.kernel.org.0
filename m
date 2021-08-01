@@ -2,85 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 368B93DCACD
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Aug 2021 10:48:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 18FBC3DCB29
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Aug 2021 12:35:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231461AbhHAIsJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 1 Aug 2021 04:48:09 -0400
-Received: from mout.gmx.net ([212.227.17.22]:59883 "EHLO mout.gmx.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231462AbhHAIsJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 1 Aug 2021 04:48:09 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
-        s=badeba3b8450; t=1627807664;
-        bh=KAtB/hkXnGtyzqimkfmScVvNL7Znds0dqHpt67ZuZ94=;
-        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
-        b=JhK7D/cZMyBelejeTyyBjOOLqAOmTwexdKB/l1WObBYy7aoEzJYKciXd0q+13LJN5
-         K/76ON/zeYuMZjBEEmLIbQMakmkZpD8KOcR7KSimtdOBerjBeasmCswoUrhfo0OgWW
-         tv5vgCfdWWIaHiT4ntEJJW2qdySwUKWUyysQeLiQ=
-X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
-Received: from titan ([79.150.72.99]) by mail.gmx.net (mrgmx104
- [212.227.17.174]) with ESMTPSA (Nemesis) id 1M3lcJ-1m9psx0nHX-000wjz; Sun, 01
- Aug 2021 10:47:44 +0200
-Date:   Sun, 1 Aug 2021 10:47:31 +0200
-From:   Len Baker <len.baker@gmx.com>
-To:     Kees Cook <keescook@chromium.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Santosh Shilimkar <ssantosh@kernel.org>
-Cc:     Len Baker <len.baker@gmx.com>,
-        David Laight <David.Laight@ACULAB.COM>,
-        Robin Murphy <robin.murphy@arm.com>,
-        linux-hardening@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v2] drivers/soc: Remove all strcpy() uses
-Message-ID: <20210801084731.GA2588@titan>
-References: <20210731171825.12865-1-len.baker@gmx.com>
+        id S231778AbhHAKfM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 1 Aug 2021 06:35:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41704 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231765AbhHAKfK (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 1 Aug 2021 06:35:10 -0400
+Received: from mail-ej1-x62f.google.com (mail-ej1-x62f.google.com [IPv6:2a00:1450:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE4DFC0613CF;
+        Sun,  1 Aug 2021 03:35:02 -0700 (PDT)
+Received: by mail-ej1-x62f.google.com with SMTP id o5so25966643ejy.2;
+        Sun, 01 Aug 2021 03:35:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dW9enhfJrllCelpsKYJGBNZiqnu2wZkLbVkcvB/C17s=;
+        b=Hhfn0YDBmJJwRgNS5s2VyXZr8YgPjQQNAxYU65yM0gFbVh3EuDpFhB0zJ8bRmC5YKB
+         ypU13WQRpxXP4CaiU0VI21VSCTuUPXw/u0z1k2wGWU5RpkLO6CZmsvRgYutBGVf0EAxm
+         eanKjo3RgpaMEN1oxDL32WkJA+SgSRx3qQkpfy7Nn8WJWYMh/fLp/9iVK+yCTjkRbdAq
+         2m3mw2ASeL4xeZPOSgASEBiGOYhIIKVxdJEomHYHZMVEup3CuvMtS0PC8jxuGoerASrm
+         7LC0TssJeqsnDEa7KTzZbpGc2qFQA8utcQ3sQUb/4sdAZ90rlrcsGCQQ/2iNNbN3rT9U
+         hSTA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=dW9enhfJrllCelpsKYJGBNZiqnu2wZkLbVkcvB/C17s=;
+        b=oUuq7AdPeAe+NjoDb/BO6v/JefID6LBAnCiJwigCfIY3SkjZnTYyqp3uW6IZ3iu/V3
+         IMsX7ISbhI4z1Dz8SU7lq3EsVDmKtS+zOXh0oA7TcrbdYVYeOwK6CzOIrX/R4MKbNIHv
+         K1NufNPci5t0sNY1/FVlbebETFrapU0HYr9a+136qdzGUt2Kkq8ewjTbelSJ2scovcGa
+         PrCnwJKwDdEdc1sD/SSvrr3/T/1R6PH23FHoSz26rl6y2pIQ8fOKcsYE9viEg+NWMM4o
+         neIbYKhk9lFrBa1ENIKDhHArFYbbVDPjigj157yibsAFExekYWCT1skOCe8S/9Iw9JAt
+         mbCg==
+X-Gm-Message-State: AOAM530DVDa+09OVK2rLBpMEO9J35aHzvGrE2FbhCqf2nUeBiHdXmoH4
+        i/QhEGwHnu3ZYt/zIqjhHjHoXi7ItPM07Q==
+X-Google-Smtp-Source: ABdhPJy0SKgrEXetlOisF4GWqB2BGBMhWco35AWKpSH5pEZx9O12tPLqVL2xT6SmCYNUBY+GiD7icg==
+X-Received: by 2002:a17:906:4784:: with SMTP id cw4mr10641567ejc.160.1627814101415;
+        Sun, 01 Aug 2021 03:35:01 -0700 (PDT)
+Received: from localhost (178-169-161-196.razgrad.ddns.bulsat.com. [178.169.161.196])
+        by smtp.gmail.com with ESMTPSA id x13sm2892573ejv.64.2021.08.01.03.34.59
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 01 Aug 2021 03:35:00 -0700 (PDT)
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Iskren Chernev <iskren.chernev@gmail.com>
+Subject: [PATCH v3 0/2] Add GCC for SM4250/6115
+Date:   Sun,  1 Aug 2021 13:34:46 +0300
+Message-Id: <20210801103448.3329333-1-iskren.chernev@gmail.com>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210731171825.12865-1-len.baker@gmx.com>
-X-Provags-ID: V03:K1:bDsnKas5NAlqNeK8T8Vsqc2f6q2LMWVBcpZAT8PxxpAUSH3wpob
- echByALkbiO5G5lU8JFjlDTCj3+8eyZj86S32cF1QX0QtisZeAfkgg13AeSQw89Vs3z/brO
- ZHD1sx8/mqeToomyl7gkEF9ZywiklBfIqTdLfHrx8xZthat1ahCIgOeQpkDUgHjy2V3E9Ns
- IFLXsaksWOWTZo5mAjVRw==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:sQFtGwbxGog=:RbelOC5WafgvKeUwUBZFe8
- 9As/og4QkRWlU0e9wQ0+UQH2+qROIuVCe0NMlrSqVFFt44wVMXmjmscnmFuYjtD4/sL28o5s8
- sxpDClhxgcwvJ89g22gw8VgTMMfuBbnvjea+dKw0UP4n72oEmMgtOKMohxFYsCrScjVpnkrgw
- IFH7CP8exEYRLzmVTXJiB8C9odUQz22rBFVxSPNBor/6TgsErmW3xEUv1UIYwlUpYKJ/sEqa3
- HWhsdoHZs7Gl4trQ2RCwJ9QzIkcUcmEqnBlx+quMmAfKwASLdwW8WMF+bKz1jdyxZz3ehYW/1
- u0O0B4J7oXUAwROop3jtIhQ+Ops60jZ5OO1H7mhPcKG2+22ujOpd9ZJMnLA3zDZReFo74tvlq
- UL0kYkVVkJCe/Mhht7QRy9XRjv3IUrh5tnrjLJrugwduxpyIYEuhEBPHNEu7eMacThMPlFHwO
- bX7mWmc9W8DBcnfI04iRH4Zkt6NAdSg8LSALuhKdW8+YASzWzq3ZfKo4re9o/0VHKkFZFnwqW
- kmmtpot3BJl5vJAOufIIlIx+ulvFg0byrKGyTHJdJFFqUQ6/szdzkGpL5nZbH5Urgb4ieGg2x
- 6boHtnimWvEoXnEYAgRGRqNp6Ez6yyQ+4z+8h4hk9orMrKRc7pPYeHtF0qu3x20s9rj/qo/Hd
- 1uMTqn0vMIa6cvGHfBHPh/9ymMK1E8rd6gWyKyroJ5PehuzPAgZKrpakaGji8jqDKo/c2Rkvm
- F86r133HGjvl/m4P4WDB2CzBZVSihs8hCCz7ZlGjKRMsfvkJnxk1JNxFrbTbKUjZ9kwNv7hue
- DhQWWLPErlTPbBrIf3z9+qZiBKPAgjKuMWBKdQSV6SYAszWDdsWXKqiQDAXM3e6roQ0P7sV7a
- FexVfyST7D2yu6roHS8riPPzY0bTG+DTqmRfT+nVCUGE0cBb3tKhQi448eVASL9P11p4du+Hp
- lK7mLUr8GA5Q6gCAPnfon72+pUAUpdfqXLB1cdO3pCIuw3PvO7YIN2gfTVPgh3a+uW76pU+UA
- w1aGTVIFeK/nfIJVPwvGWxP8nifGQHlgenxF0zzfBLyIOZ0dzEs7RNPRYYigvaaKJHsvQSGnf
- P6l7gz3gzYn6FsKTY9sOFsM1Bx03eFrIs+m
-Content-Transfer-Encoding: quoted-printable
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, Jul 31, 2021 at 07:18:25PM +0200, Len Baker wrote:
-> strcpy() performs no bounds checking on the destination buffer. This
-> could result in linear overflows beyond the end of the buffer, leading
-> to all kinds of misbehaviors. The safe replacement is strscpy().
->
-> Moreover, when the size of the destination buffer cannot be obtained
-> using "sizeof", use the memcpy function instead of strscpy.
->
-> Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
-> Signed-off-by: Len Baker <len.baker@gmx.com>
+This patch adds support for the Global Clock Controller on QCom SM4250 and
+SM6115, codename bengal. The code is taken from OnePlus repo [1]. The two
+platforms are identical so there is only one compat string.
 
-Drop this patch. It has errors. Sorry for the noise.
+[1]: https://github.com/OnePlusOSS/android_kernel_oneplus_sm4250
 
-Apologies,
-Len
+v1: https://lkml.org/lkml/2021/6/22/1131
+v2: https://lkml.org/lkml/2021/6/27/157
+
+Changes from v2:
+- Suggested by Stephen Boyd
+  - switch to parent_data in place of parent_names
+- other
+  - drop parent refs to invalid clocks
+  - use pll-alpha regs when possible
+  - drop unused parent defs
+  - add pll test clock to bindings
+
+Changes from v1:
+- remove sm4250 compat, there will be a single sm6115.dtsi for both platforms
+
+Iskren Chernev (2):
+  dt-bindings: clk: qcom: gcc-sm6115: Document SM6115 GCC
+  clk: qcom: Add Global Clock controller (GCC) driver for SM6115
+
+ .../bindings/clock/qcom,gcc-sm6115.yaml       |   74 +
+ drivers/clk/qcom/Kconfig                      |    7 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/gcc-sm6115.c                 | 3582 +++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-sm6115.h   |  201 +
+ 5 files changed, 3865 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sm6115.yaml
+ create mode 100644 drivers/clk/qcom/gcc-sm6115.c
+ create mode 100644 include/dt-bindings/clock/qcom,gcc-sm6115.h
+
+
+base-commit: 8d4b477da1a807199ca60e0829357ce7aa6758d5
+-- 
+2.32.0
+
