@@ -2,82 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DBBA83DC841
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 31 Jul 2021 23:24:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 368B93DCACD
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Aug 2021 10:48:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231395AbhGaVX6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 31 Jul 2021 17:23:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53252 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229560AbhGaVX6 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 31 Jul 2021 17:23:58 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68D5BC06175F
-        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Jul 2021 14:23:50 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id b6so2932422lff.10
-        for <linux-arm-msm@vger.kernel.org>; Sat, 31 Jul 2021 14:23:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=UFuagbB68OTvddF9Xywx7UrDN/I21A6uFb3ydrSsaG8=;
-        b=CRqwWc7QBYs7ycsAgYE5p59uP5JVARslAuqr+wmJA6jVq8VD76RE/xwkyEuczrL7y/
-         qYSvp1fOFmy8Nx+lYlnUKnZLLwK9WdJ77KXwxtjV8b4TLO7LGkEQ3cqidhda96VJomgh
-         P9ON+IGk+7tfgw/4t6+joWkbp0yXfGa7NORIxMegHLyEXWrHxTFf5nXnA9PVZ6LVKcC0
-         tkpjQqi+m/+t5CygOoFF9YlqixGOBWaQemI5sZnwY8qSHelPfj5HAOcx+nYtkJxVp++Z
-         2/Z+et95YgDXFLfI+9N5Yc57rewWnvBMlJCJSvT9uKuW7RF7Z53fakh72OQsEsypGe8M
-         jOxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UFuagbB68OTvddF9Xywx7UrDN/I21A6uFb3ydrSsaG8=;
-        b=CuALpI9fvG5qeb6yex59v3NA4LXFmi81jOUdIepSclWGO4Wd1Flk8v3LsYy98vOQAf
-         jCoQKEF3NCD6LSdsXAPD0CWloMmyFwTIU/WTiUgg6MWmVtPvNAsIfWlP2d5X3wCFNST+
-         0iO1uaeQ5lKXU4bf7xi1bnZfrxBbvhkY0AMUPzxBI31B02wmT2+4ejEIjwlAZUIPjLfn
-         KtCgQlmqPWv+5FYHse1v4slD95fa0bzbMM/z59iqKzjjXYa5ANUYe43lmsut5B1Ac4kt
-         91F3CXv+mqu2y+Sm7Mx/iKR5bKH/VwWYD/ZCuztyXjpNqku4QlaUGliyl/eaQZiRiE98
-         WtJg==
-X-Gm-Message-State: AOAM533iZIVqfwLCw+pt7f/Cchj8pF/7hvMUy4lRBfFjG/3K5Cuvc2hk
-        v8FQx1OVQ2YacbXt73fO/oN5ylhtUrNh6zeYiU5CaQ==
-X-Google-Smtp-Source: ABdhPJx7Q9x1W9R0NDVhm+5e93isK61FmR6LCKivpcqNcKWU0TYWxJ+S9YQgwYa7UlNcmN4iPwiV5tUP5zTz9VvOfOc=
-X-Received: by 2002:a19:c7cd:: with SMTP id x196mr5925413lff.465.1627766628769;
- Sat, 31 Jul 2021 14:23:48 -0700 (PDT)
+        id S231461AbhHAIsJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 1 Aug 2021 04:48:09 -0400
+Received: from mout.gmx.net ([212.227.17.22]:59883 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231462AbhHAIsJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 1 Aug 2021 04:48:09 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1627807664;
+        bh=KAtB/hkXnGtyzqimkfmScVvNL7Znds0dqHpt67ZuZ94=;
+        h=X-UI-Sender-Class:Date:From:To:Cc:Subject:References:In-Reply-To;
+        b=JhK7D/cZMyBelejeTyyBjOOLqAOmTwexdKB/l1WObBYy7aoEzJYKciXd0q+13LJN5
+         K/76ON/zeYuMZjBEEmLIbQMakmkZpD8KOcR7KSimtdOBerjBeasmCswoUrhfo0OgWW
+         tv5vgCfdWWIaHiT4ntEJJW2qdySwUKWUyysQeLiQ=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from titan ([79.150.72.99]) by mail.gmx.net (mrgmx104
+ [212.227.17.174]) with ESMTPSA (Nemesis) id 1M3lcJ-1m9psx0nHX-000wjz; Sun, 01
+ Aug 2021 10:47:44 +0200
+Date:   Sun, 1 Aug 2021 10:47:31 +0200
+From:   Len Baker <len.baker@gmx.com>
+To:     Kees Cook <keescook@chromium.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Santosh Shilimkar <ssantosh@kernel.org>
+Cc:     Len Baker <len.baker@gmx.com>,
+        David Laight <David.Laight@ACULAB.COM>,
+        Robin Murphy <robin.murphy@arm.com>,
+        linux-hardening@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v2] drivers/soc: Remove all strcpy() uses
+Message-ID: <20210801084731.GA2588@titan>
+References: <20210731171825.12865-1-len.baker@gmx.com>
 MIME-Version: 1.0
-References: <20210723192352.546902-1-iskren.chernev@gmail.com>
-In-Reply-To: <20210723192352.546902-1-iskren.chernev@gmail.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Sat, 31 Jul 2021 23:23:37 +0200
-Message-ID: <CACRpkdYVX+AZWto15Buq023cPSodQuyYXr8Fq64-RP8SQ2b0bg@mail.gmail.com>
-Subject: Re: [PATCH v6 0/2] Add Pinctrl for SM4250/6115
-To:     Iskren Chernev <iskren.chernev@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        phone-devel@vger.kernel.org,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS
-        <devicetree@vger.kernel.org>, Hans de Goede <hdegoede@redhat.com>, Andy
-        Shevchenko <andy.shevchenko@gmail.com>," 
-        <~postmarketos/upstreaming@lists.sr.ht>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210731171825.12865-1-len.baker@gmx.com>
+X-Provags-ID: V03:K1:bDsnKas5NAlqNeK8T8Vsqc2f6q2LMWVBcpZAT8PxxpAUSH3wpob
+ echByALkbiO5G5lU8JFjlDTCj3+8eyZj86S32cF1QX0QtisZeAfkgg13AeSQw89Vs3z/brO
+ ZHD1sx8/mqeToomyl7gkEF9ZywiklBfIqTdLfHrx8xZthat1ahCIgOeQpkDUgHjy2V3E9Ns
+ IFLXsaksWOWTZo5mAjVRw==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:sQFtGwbxGog=:RbelOC5WafgvKeUwUBZFe8
+ 9As/og4QkRWlU0e9wQ0+UQH2+qROIuVCe0NMlrSqVFFt44wVMXmjmscnmFuYjtD4/sL28o5s8
+ sxpDClhxgcwvJ89g22gw8VgTMMfuBbnvjea+dKw0UP4n72oEmMgtOKMohxFYsCrScjVpnkrgw
+ IFH7CP8exEYRLzmVTXJiB8C9odUQz22rBFVxSPNBor/6TgsErmW3xEUv1UIYwlUpYKJ/sEqa3
+ HWhsdoHZs7Gl4trQ2RCwJ9QzIkcUcmEqnBlx+quMmAfKwASLdwW8WMF+bKz1jdyxZz3ehYW/1
+ u0O0B4J7oXUAwROop3jtIhQ+Ops60jZ5OO1H7mhPcKG2+22ujOpd9ZJMnLA3zDZReFo74tvlq
+ UL0kYkVVkJCe/Mhht7QRy9XRjv3IUrh5tnrjLJrugwduxpyIYEuhEBPHNEu7eMacThMPlFHwO
+ bX7mWmc9W8DBcnfI04iRH4Zkt6NAdSg8LSALuhKdW8+YASzWzq3ZfKo4re9o/0VHKkFZFnwqW
+ kmmtpot3BJl5vJAOufIIlIx+ulvFg0byrKGyTHJdJFFqUQ6/szdzkGpL5nZbH5Urgb4ieGg2x
+ 6boHtnimWvEoXnEYAgRGRqNp6Ez6yyQ+4z+8h4hk9orMrKRc7pPYeHtF0qu3x20s9rj/qo/Hd
+ 1uMTqn0vMIa6cvGHfBHPh/9ymMK1E8rd6gWyKyroJ5PehuzPAgZKrpakaGji8jqDKo/c2Rkvm
+ F86r133HGjvl/m4P4WDB2CzBZVSihs8hCCz7ZlGjKRMsfvkJnxk1JNxFrbTbKUjZ9kwNv7hue
+ DhQWWLPErlTPbBrIf3z9+qZiBKPAgjKuMWBKdQSV6SYAszWDdsWXKqiQDAXM3e6roQ0P7sV7a
+ FexVfyST7D2yu6roHS8riPPzY0bTG+DTqmRfT+nVCUGE0cBb3tKhQi448eVASL9P11p4du+Hp
+ lK7mLUr8GA5Q6gCAPnfon72+pUAUpdfqXLB1cdO3pCIuw3PvO7YIN2gfTVPgh3a+uW76pU+UA
+ w1aGTVIFeK/nfIJVPwvGWxP8nifGQHlgenxF0zzfBLyIOZ0dzEs7RNPRYYigvaaKJHsvQSGnf
+ P6l7gz3gzYn6FsKTY9sOFsM1Bx03eFrIs+m
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 23, 2021 at 9:24 PM Iskren Chernev <iskren.chernev@gmail.com> wrote:
-
-> This patch adds support for the TLMM block on QCom SM4250 and SM6115, codename
-> bengal. The code is taken from OnePlus repo [1]. The two platforms are
-> identical so there is only one compat string.
+On Sat, Jul 31, 2021 at 07:18:25PM +0200, Len Baker wrote:
+> strcpy() performs no bounds checking on the destination buffer. This
+> could result in linear overflows beyond the end of the buffer, leading
+> to all kinds of misbehaviors. The safe replacement is strscpy().
 >
-> [1]: https://github.com/OnePlusOSS/android_kernel_oneplus_sm4250
+> Moreover, when the size of the destination buffer cannot be obtained
+> using "sizeof", use the memcpy function instead of strscpy.
+>
+> Reviewed-by: Geert Uytterhoeven <geert+renesas@glider.be>
+> Signed-off-by: Len Baker <len.baker@gmx.com>
 
-Patches applied!
+Drop this patch. It has errors. Sorry for the noise.
 
-Yours,
-Linus Walleij
+Apologies,
+Len
