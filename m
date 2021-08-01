@@ -2,226 +2,236 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B38C23DCC63
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Aug 2021 17:26:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A24F3DCD7F
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  1 Aug 2021 21:56:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232117AbhHAP01 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 1 Aug 2021 11:26:27 -0400
-Received: from mail-0201.mail-europe.com ([51.77.79.158]:45137 "EHLO
-        mail-0201.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231940AbhHAP00 (ORCPT
+        id S229497AbhHAT43 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 1 Aug 2021 15:56:29 -0400
+Received: from smtp-out2.suse.de ([195.135.220.29]:34698 "EHLO
+        smtp-out2.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229759AbhHAT42 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 1 Aug 2021 11:26:26 -0400
-Date:   Sun, 01 Aug 2021 15:25:40 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1627831542;
-        bh=bjcoQKv2TwfcSY5aAE1EYs9d4DrtS5AecOza1BPOH1M=;
-        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=unXaghBuhnjL4ngqJ5Q20BmdNO3PsVRWb1TDB1oEL1uxZUu7iU0BNIlk2pJ7A6s5s
-         fBqv8dZmBF+UJPGMZ7n7Eus82lYcbGwgF26TUv1zdjEdRU7QXI3k8MBW3cAqKKpMah
-         jCqU61fXDADs3Zjy0jlC4gP5Okax6ijbARFklaiw=
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-From:   Yassine Oudjana <y.oudjana@protonmail.com>
-Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
-Subject: [PATCH v2 6/6] arm64: dts: qcom: msm8996: Add interconnect support
-Message-ID: <20210801152427.475547-7-y.oudjana@protonmail.com>
-In-Reply-To: <20210801152427.475547-1-y.oudjana@protonmail.com>
-References: <20210801152427.475547-1-y.oudjana@protonmail.com>
+        Sun, 1 Aug 2021 15:56:28 -0400
+Received: from imap1.suse-dmz.suse.de (imap1.suse-dmz.suse.de [192.168.254.73])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out2.suse.de (Postfix) with ESMTPS id 002381FEA9;
+        Sun,  1 Aug 2021 19:56:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1627847779; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=U+NnGC7CJLacokVANmN7ic2V4ps6/e94vckxcS1KJcA=;
+        b=DK6buZSCQkrXdg1Vkj91UtFxATcaDM617qveaS24/kmVPLWtgaRYUDJgCC5tfoK3uLzoSE
+        Dt/Z+m4YNZTVSkOGVWuGX0a5YTGMCSbxTBpgVzVbPsJYk3MCZjzSyBBXixAwIjlJGl8+YD
+        IrU/vCzrNBTQvhlJyDiK41uZUBwi6DE=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1627847779;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=U+NnGC7CJLacokVANmN7ic2V4ps6/e94vckxcS1KJcA=;
+        b=sYTLilX4dvmt8x4XRFujnRm6HLHKa7AtwW1QByKYYb3VdDR6Ydvc4gv1hYglPV9SThePvc
+        m8c/xhKBsMzTziBw==
+Received: from imap1.suse-dmz.suse.de (imap1.suse-dmz.suse.de [192.168.254.73])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap1.suse-dmz.suse.de (Postfix) with ESMTPS id 43DAD1369B;
+        Sun,  1 Aug 2021 19:56:18 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap1.suse-dmz.suse.de with ESMTPSA
+        id 3p2UDmL8BmHgBQAAGKfGzw
+        (envelope-from <tzimmermann@suse.de>); Sun, 01 Aug 2021 19:56:18 +0000
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     daniel@ffwll.ch, airlied@linux.ie, alexander.deucher@amd.com,
+        christian.koenig@amd.com, liviu.dudau@arm.com,
+        brian.starkey@arm.com, bbrezillon@kernel.org,
+        nicolas.ferre@microchip.com, maarten.lankhorst@linux.intel.com,
+        mripard@kernel.org, stefan@agner.ch, alison.wang@nxp.com,
+        patrik.r.jakobsson@gmail.com, anitha.chrisanthus@intel.com,
+        robdclark@gmail.com, edmund.j.dea@intel.com, sean@poorly.run,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
+        jyri.sarha@iki.fi, tomba@kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, amd-gfx@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20210727182721.17981-1-tzimmermann@suse.de>
+ <YQWbWjV5TYzp+5C4@ravnborg.org>
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+Subject: Re: [PATCH 00/14] drm: Make DRM's IRQ helpers legacy
+Message-ID: <d50b3199-20fe-0ecb-ab7d-7425ad1d0f21@suse.de>
+Date:   Sun, 1 Aug 2021 21:56:17 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+In-Reply-To: <YQWbWjV5TYzp+5C4@ravnborg.org>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="MBU0Z03ywHqTmMHjoTTP5JnuitAObvxI4"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add interconnect providers for the multiple NoCs available on the platform,
-and assign interconnects used by some blocks.
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--MBU0Z03ywHqTmMHjoTTP5JnuitAObvxI4
+Content-Type: multipart/mixed; boundary="ZWB90fKUSLppcAn3zi6q0dP71wt9gJEfo";
+ protected-headers="v1"
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: Sam Ravnborg <sam@ravnborg.org>
+Cc: daniel@ffwll.ch, airlied@linux.ie, alexander.deucher@amd.com,
+ christian.koenig@amd.com, liviu.dudau@arm.com, brian.starkey@arm.com,
+ bbrezillon@kernel.org, nicolas.ferre@microchip.com,
+ maarten.lankhorst@linux.intel.com, mripard@kernel.org, stefan@agner.ch,
+ alison.wang@nxp.com, patrik.r.jakobsson@gmail.com,
+ anitha.chrisanthus@intel.com, robdclark@gmail.com, edmund.j.dea@intel.com,
+ sean@poorly.run, shawnguo@kernel.org, s.hauer@pengutronix.de,
+ kernel@pengutronix.de, jyri.sarha@iki.fi, tomba@kernel.org,
+ linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+ amd-gfx@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+ linux-arm-kernel@lists.infradead.org
+Message-ID: <d50b3199-20fe-0ecb-ab7d-7425ad1d0f21@suse.de>
+Subject: Re: [PATCH 00/14] drm: Make DRM's IRQ helpers legacy
+References: <20210727182721.17981-1-tzimmermann@suse.de>
+ <YQWbWjV5TYzp+5C4@ravnborg.org>
+In-Reply-To: <YQWbWjV5TYzp+5C4@ravnborg.org>
 
-Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
----
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 84 +++++++++++++++++++++++++++
- 1 file changed, 84 insertions(+)
+--ZWB90fKUSLppcAn3zi6q0dP71wt9gJEfo
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: quoted-printable
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qc=
-om/msm8996.dtsi
-index 017c94e88c21..85055b9dd086 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -7,6 +7,7 @@
- #include <dt-bindings/clock/qcom,mmcc-msm8996.h>
- #include <dt-bindings/clock/qcom,rpmcc.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
-+#include <dt-bindings/interconnect/qcom,msm8996.h>
- #include <dt-bindings/soc/qcom,apr.h>
- #include <dt-bindings/thermal/thermal.h>
-=20
-@@ -47,6 +48,7 @@ CPU0: cpu@0 {
- =09=09=09capacity-dmips-mhz =3D <1024>;
- =09=09=09clocks =3D <&kryocc 0>;
- =09=09=09operating-points-v2 =3D <&cluster0_opp>;
-+=09=09=09interconnects =3D <&bimc MASTER_AMPSS_M0 &bimc SLAVE_EBI_CH0>;
- =09=09=09#cooling-cells =3D <2>;
- =09=09=09next-level-cache =3D <&L2_0>;
- =09=09=09L2_0: l2-cache {
-@@ -64,6 +66,7 @@ CPU1: cpu@1 {
- =09=09=09capacity-dmips-mhz =3D <1024>;
- =09=09=09clocks =3D <&kryocc 0>;
- =09=09=09operating-points-v2 =3D <&cluster0_opp>;
-+=09=09=09interconnects =3D <&bimc MASTER_AMPSS_M0 &bimc SLAVE_EBI_CH0>;
- =09=09=09#cooling-cells =3D <2>;
- =09=09=09next-level-cache =3D <&L2_0>;
- =09=09};
-@@ -77,6 +80,7 @@ CPU2: cpu@100 {
- =09=09=09capacity-dmips-mhz =3D <1024>;
- =09=09=09clocks =3D <&kryocc 1>;
- =09=09=09operating-points-v2 =3D <&cluster1_opp>;
-+=09=09=09interconnects =3D <&bimc MASTER_AMPSS_M0 &bimc SLAVE_EBI_CH0>;
- =09=09=09#cooling-cells =3D <2>;
- =09=09=09next-level-cache =3D <&L2_1>;
- =09=09=09L2_1: l2-cache {
-@@ -94,6 +98,7 @@ CPU3: cpu@101 {
- =09=09=09capacity-dmips-mhz =3D <1024>;
- =09=09=09clocks =3D <&kryocc 1>;
- =09=09=09operating-points-v2 =3D <&cluster1_opp>;
-+=09=09=09interconnects =3D <&bimc MASTER_AMPSS_M0 &bimc SLAVE_EBI_CH0>;
- =09=09=09#cooling-cells =3D <2>;
- =09=09=09next-level-cache =3D <&L2_1>;
- =09=09};
-@@ -904,6 +909,15 @@ gcc: clock-controller@300000 {
- =09=09=09clock-names =3D "cxo2";
- =09=09};
-=20
-+=09=09bimc: interconnect@408000 {
-+=09=09=09compatible =3D "qcom,msm8996-bimc";
-+=09=09=09reg =3D <0x00408000 0x5a000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_BIMC_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_BIMC_A_CLK>;
-+=09=09};
-+
- =09=09tsens0: thermal-sensor@4a9000 {
- =09=09=09compatible =3D "qcom,msm8996-tsens", "qcom,tsens-v2";
- =09=09=09reg =3D <0x004a9000 0x1000>, /* TM */
-@@ -926,6 +940,61 @@ tsens1: thermal-sensor@4ad000 {
- =09=09=09#thermal-sensor-cells =3D <1>;
- =09=09};
-=20
-+=09=09cnoc: interconnect@500000 {
-+=09=09=09compatible =3D "qcom,msm8996-cnoc";
-+=09=09=09reg =3D <0x00500000 0x1000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_CNOC_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_CNOC_A_CLK>;
-+=09=09};
-+
-+=09=09snoc: interconnect@524000 {
-+=09=09=09compatible =3D "qcom,msm8996-snoc";
-+=09=09=09reg =3D <0x00524000 0x1c000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_SNOC_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_SNOC_A_CLK>;
-+=09=09};
-+
-+=09=09a1noc: interconnect@562000 {
-+=09=09=09compatible =3D "qcom,msm8996-a1noc";
-+=09=09=09reg =3D <0x00562000 0x5000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_AGGR1_NOC_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_AGGR1_NOC_A_CLK>;
-+=09=09};
-+
-+=09=09a2noc: interconnect@583000 {
-+=09=09=09compatible =3D "qcom,msm8996-a2noc";
-+=09=09=09reg =3D <0x00583000 0x7000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_AGGR2_NOC_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_AGGR2_NOC_A_CLK>;
-+=09=09};
-+
-+=09=09mnoc: interconnect@5a4000 {
-+=09=09=09compatible =3D "qcom,msm8996-mnoc";
-+=09=09=09reg =3D <0x005a4000 0x1c000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a", "iface";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_MMAXI_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_MMAXI_A_CLK>,
-+=09=09=09=09 <&mmcc AHB_CLK_SRC>;
-+=09=09};
-+
-+=09=09pnoc: interconnect@5c0000 {
-+=09=09=09compatible =3D "qcom,msm8996-pnoc";
-+=09=09=09reg =3D <0x005c0000 0x3000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_PCNOC_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_PCNOC_A_CLK>;
-+=09=09};
-+
- =09=09tcsr_mutex_regs: syscon@740000 {
- =09=09=09compatible =3D "syscon";
- =09=09=09reg =3D <0x00740000 0x40000>;
-@@ -1005,6 +1074,11 @@ mdp: mdp@901000 {
- =09=09=09=09assigned-clock-rates =3D <300000000>,
- =09=09=09=09=09 <19200000>;
-=20
-+=09=09=09=09interconnects =3D <&mnoc MASTER_MDP_PORT0 &bimc SLAVE_EBI_CH0>=
-,
-+=09=09=09=09=09=09<&mnoc MASTER_MDP_PORT1 &bimc SLAVE_EBI_CH0>,
-+=09=09=09=09=09=09<&mnoc MASTER_ROTATOR &bimc SLAVE_EBI_CH0>;
-+=09=09=09=09interconnect-names =3D "mdp0-mem", "mdp1-mem", "rotator-mem";
-+
- =09=09=09=09ports {
- =09=09=09=09=09#address-cells =3D <1>;
- =09=09=09=09=09#size-cells =3D <0>;
-@@ -1266,6 +1340,9 @@ gpu: gpu@b00000 {
- =09=09=09=09"mem",
- =09=09=09=09"mem_iface";
-=20
-+=09=09=09interconnects =3D <&bimc MASTER_GRAPHICS_3D &bimc SLAVE_EBI_CH0>;
-+=09=09=09interconnect-names =3D "gfx-mem";
-+
- =09=09=09power-domains =3D <&mmcc GPU_GX_GDSC>;
- =09=09=09iommus =3D <&adreno_smmu 0>;
-=20
-@@ -2289,6 +2366,9 @@ venus: video-codec@c00000 {
- =09=09=09=09 <&mmcc VIDEO_AXI_CLK>,
- =09=09=09=09 <&mmcc VIDEO_MAXI_CLK>;
- =09=09=09clock-names =3D "core", "iface", "bus", "mbus";
-+=09=09=09interconnects =3D <&mnoc MASTER_VIDEO_P0 &bimc SLAVE_EBI_CH0>,
-+=09=09=09=09=09<&bimc MASTER_AMPSS_M0 &mnoc SLAVE_VENUS_CFG>;
-+=09=09=09interconnect-names =3D "video-mem", "cpu-cfg";
- =09=09=09iommus =3D <&venus_smmu 0x00>,
- =09=09=09=09 <&venus_smmu 0x01>,
- =09=09=09=09 <&venus_smmu 0x0a>,
-@@ -3004,6 +3084,10 @@ usb3: usb@6af8800 {
- =09=09=09=09=09  <&gcc GCC_USB30_MASTER_CLK>;
- =09=09=09assigned-clock-rates =3D <19200000>, <120000000>;
-=20
-+=09=09=09interconnects =3D <&a2noc MASTER_USB3 &bimc SLAVE_EBI_CH0>,
-+=09=09=09=09=09<&bimc MASTER_AMPSS_M0 &snoc SLAVE_USB3>;
-+=09=09=09interconnect-names =3D "usb-ddr", "apps-usb";
-+
- =09=09=09power-domains =3D <&gcc USB30_GDSC>;
- =09=09=09status =3D "disabled";
-=20
+Hi Sam
+
+Am 31.07.21 um 20:50 schrieb Sam Ravnborg:
+> Hi Thomas,
+>=20
+> On Tue, Jul 27, 2021 at 08:27:07PM +0200, Thomas Zimmermann wrote:
+>> DRM's IRQ helpers are only helpful for old, non-KMS drivers. Move
+>> the code behind CONFIG_DRM_LEGACY. Convert KMS drivers to Linux
+>> IRQ interfaces.
+>>
+>> DRM provides IRQ helpers for setting up, receiving and removing IRQ
+>> handlers. It's an abstraction over plain Linux functions. The code
+>> is mid-layerish with several callbacks to hook into the rsp drivers.
+>> Old UMS driver have their interrupts enabled via ioctl, so these
+>> abstractions makes some sense. Modern KMS manage all their interrupts
+>> internally. Using the DRM helpers adds indirection without benefits.
+>>
+>> Most KMs drivers already use Linux IRQ functions instead of DRM's
+>> abstraction layer. Patches 1 to 12 convert the remaining ones.
+>> The patches also resolve a bug for devices without assigned interrupt
+>> number. DRM helpers don't test for IRQ_NOTCONNECTED, so drivers do
+>> not detect if the device has no interrupt assigned.
+>>
+>> Patch 13 removes an unused function.
+>>
+>> Patch 14 moves the DRM IRQ helpers behind CONFIG_DRM_LEGACY. Only
+>> the old non-KMS drivers still use the functionality.
+>>
+>> Thomas Zimmermann (14):
+>>    drm/amdgpu: Convert to Linux IRQ interfaces
+>>    drm/arm/hdlcd: Convert to Linux IRQ interfaces
+>>    drm/atmel-hlcdc: Convert to Linux IRQ interfaces
+>>    drm/fsl-dcu: Convert to Linux IRQ interfaces
+>>    drm/gma500: Convert to Linux IRQ interfaces
+>>    drm/kmb: Convert to Linux IRQ interfaces
+>>    drm/msm: Convert to Linux IRQ interfaces
+>>    drm/mxsfb: Convert to Linux IRQ interfaces
+>>    drm/radeon: Convert to Linux IRQ interfaces
+>>    drm/tidss: Convert to Linux IRQ interfaces
+>>    drm/tilcdc: Convert to Linux IRQ interfaces
+>>    drm/vc4: Convert to Linux IRQ interfaces
+>>    drm: Remove unused devm_drm_irq_install()
+>>    drm: IRQ midlayer is now legacy
+>=20
+> With the irq_enabled confusion out of the way I want to re-address two
+> issues here that I know you have answered but I am just not convinced.
+>=20
+> 1) IRQ_NOTCONNECTED
+>=20
+> We do not have this check in drm_irq today and we should avoid spreadin=
+g
+> it all over. We are either carrying it forever or we wil lsee patches
+> floating in to drop the check again.
+> The current use in the kernel is minimal:
+> https://elixir.bootlin.com/linux/latest/A/ident/IRQ_NOTCONNECTED
+>=20
+> So as a minimum drop it from atmel_hlcdc and preferably from the rest a=
+s
+> it is really not used. (Speaking as atmel_hlcdc maintainer)
+
+I'll drop it from atmel_hlcdc then.
+
+But saying that it's not used is not correct. At least radeon an gma500=20
+handle PCI-based devices and BIOSes often had the option of disabling=20
+the rsp graphics interrupts.
+
+>=20
+>=20
+> 2) devm_request_irq()
+>=20
+> We are moving towards managed allocation so we do not fail to free
+> resources. And an irq has a lifetime equal the device itself - so an
+> obvious cnadidate for devm_request_irq.
+> If we do not introduce it now we will see a revisit of this later.
+> I can be convinced to wait with this as we will have to do much more in=
+
+> each driver, but I cannot see any good arguments to avoid the more
+> modern way to use devm_request_irq.
+
+I'll change this in atmel_hdlcd and maybe I can find trivial cases where =
+
+devm_request_irq() can be used. But drivers that had an uninstall=20
+callback before should not have the cleanup logic altered by a patch as=20
+this one. I suspect that most of the IRQ cleanup
+is actually a vblank cleanup and should be done in response to=20
+drm_vblank_init(). But that's again not something for this patchset=20
+here. We cannot change multiple things at once and still expect any of=20
+it to work.
+
+I welcome the use of devm_ et al. But these changes are better done in a =
+
+per-driver patchset that changes all of the driver to managed release.
+
+Best regards
+Thomas
+
+>=20
+> 	Sam
+>=20
+
 --=20
-2.32.0
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
+(HRB 36809, AG N=C3=BCrnberg)
+Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
 
 
+--ZWB90fKUSLppcAn3zi6q0dP71wt9gJEfo--
+
+--MBU0Z03ywHqTmMHjoTTP5JnuitAObvxI4
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
+
+-----BEGIN PGP SIGNATURE-----
+
+wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmEG/GEFAwAAAAAACgkQlh/E3EQov+A9
+cw/+IEz+W6K/8wOb9uXueI0jm0rdu2FMaG5qIevMl+qQOSrRBnMsDPG4Hir4RQKzWH9JwyCL2es9
+qAQ2tbU/89oubj3yOHCWY6/v1nxj92/DU86PJiPpwCUw6Q3p4WNRlChbZTB1DF2KlnSoGPNCuDwk
+2r8N+PiVth2fZWsaYtGlkvVxxOKHVnUFxez5nIHujTJUDtMByL05iPXmM14MK7AEcFvbvdHDTxax
+aWhfBU0CaZsS1yxyCiwF+pb9u4IxIZy/wMXVM4VtqxX9ambseEfRyxpIWqG+xMRUbGhcn0BScHZv
+SWMr+tfebvA3xLFWlTq0F6mP4IRm2Bl0AQafOcQtDvzFplcBM9Ex0txc4tROzn10A1EXvs+TJj+O
+6ovgrs/nRlsbusHlzH/tN3EPVj+LmyHa1lSbuP3yZ+wcInTlqzjVX/ssTqxV9iCbEu4zFtI8ZR5d
+NkVungaeOZXy8Nd51G5NEEazGoAfTm0CCAqyy1h82mfRL6CsvL1MJZ0iU3Ez/EIy6zHF4mcaue+R
+s1NlmsvUCefwsytdDwsVwA8FfDMu63FKgFLk3AecQMm9CkBcQT1YqPZpedNcIfeWpJd/it2v74vZ
+guj/RtVASwTafoE/aI2TGYN7Gx+2fpztDc01ZfMjOsWrIA1Pu6Dv07lRlmnIeuftwCqsf3ZiHQbw
+B24=
+=mg4s
+-----END PGP SIGNATURE-----
+
+--MBU0Z03ywHqTmMHjoTTP5JnuitAObvxI4--
