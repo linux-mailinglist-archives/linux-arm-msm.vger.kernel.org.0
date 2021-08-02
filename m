@@ -2,251 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A42B43DE1A9
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Aug 2021 23:29:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 454D43DE236
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 00:11:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232781AbhHBV33 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Aug 2021 17:29:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41282 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232492AbhHBV32 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Aug 2021 17:29:28 -0400
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C059AC061764
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Aug 2021 14:29:18 -0700 (PDT)
-Received: by mail-qk1-x733.google.com with SMTP id f22so18063483qke.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Aug 2021 14:29:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=O8azjKnReE8xSiyBnxqqAL7gBgZx+sYiW82Vr3OzBV8=;
-        b=PKuK8Piq9Ojx7NxEt0nf3Jyi6/3cagHknsWKBHPrVPRE4fo26WU+Ef3jH9aQGjXcj8
-         F2ykxPWMlnNJAjw/VY5VZz91VqvP9eUsO6wJclFzUhTUn8Pm6jOPhFcFG0WOOuof5V2V
-         UtdwayiIf/60an0ukFs3hYkuj/3kJah6OsmSLw7s59SLacTaRsgdlw4UCNnT0Dx59W6N
-         SJ/dO1E0G4Q4FTP8kKfK9rQjJJlnMBP6ZprjtNtwajJ9VThhtcpz7+CDtxOxuK1fmfAe
-         hoV1hJdX+0SkXPxbwUg3riofycSCk24EqVFcR9FVX6R5kY/KpJv1MPR6OoLPGfm1SjYB
-         wm6g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=O8azjKnReE8xSiyBnxqqAL7gBgZx+sYiW82Vr3OzBV8=;
-        b=Qaag07JlukTTyMhspak/XBNgau2jgvPqoeFrXxj3Hr8WZbciXGO0tilQ13C59ll3Ju
-         Grxl9LG5i8f6Q/sJVuzjOoCYcent9wxCqBLpuTJfRZjTGFL4mPcaGCEGhjXjhSi/nk7d
-         kkQvLE/KZUX1i7KOECHD+dTYUd0sJ+o9yVYPn1PWpETlc+Px+gR3HMFa5zo6246Obkjw
-         5t/EjZJNAx0ROdLsEFT0fEdW/cJfZgIKtosncP/911sLScm2PH1px+93DhkRar5DGspx
-         RmwICN0tjfxbd/FE5/XY3AOio1O4TAA4i8qZo9lse216/kfUQ5/2xhSTam1rEcy5q+60
-         iTiQ==
-X-Gm-Message-State: AOAM532sDM/9lwsQG0wTKLxH0E63Etyg+iJLWykkFlxLCJJ7jJo82IQj
-        jJOZxJYzE6UIzWDKo2BzgE2fag==
-X-Google-Smtp-Source: ABdhPJynegevwH2ssks++pWFk1eGBNRCiO6YfoYhu6pvqCNq34yM9jyAcp26PMtDxLHBdd6OgLYxkA==
-X-Received: by 2002:a05:620a:248d:: with SMTP id i13mr17622100qkn.106.1627939757950;
-        Mon, 02 Aug 2021 14:29:17 -0700 (PDT)
-Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id c3sm6689675qkd.12.2021.08.02.14.29.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Aug 2021 14:29:17 -0700 (PDT)
-Subject: Re: [Patch v4 6/6] dt-bindings: thermal: Add dt binding for QCOM LMh
-To:     Rob Herring <robh@kernel.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, rui.zhang@intel.com,
-        daniel.lezcano@linaro.org, viresh.kumar@linaro.org,
-        rjw@rjwysocki.net, steev@kali.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20210727152512.1098329-1-thara.gopinath@linaro.org>
- <20210727152512.1098329-7-thara.gopinath@linaro.org>
- <20210728161000.GA1153621@robh.at.kernel.org>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <2fd4d897-4eb0-e841-f0fa-2650e1aad832@linaro.org>
-Date:   Mon, 2 Aug 2021 17:29:16 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S231987AbhHBWLy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Aug 2021 18:11:54 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58852 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231126AbhHBWLw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 2 Aug 2021 18:11:52 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 36C596018A;
+        Mon,  2 Aug 2021 22:11:42 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1627942302;
+        bh=uQ4300Zg9wVJ91sSCEg7PTrzjVOlNO5W7l7vf1E5uW0=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=IjqxaSj158DoF4zTsoOShFdE/HONMyDFi7XOx6Dsg8O5mlTDm4NjJTTlIDj8AKVFT
+         ng2kySx6BqGjrMu1A7YFt15PoipW4tgwvrkvxrxVXVdLIZIXCXoV6EkfNDRKhvcMhi
+         NLg8v5chatn22gzaOyamO1zs5i8GTwRTxT+hQ/YBl7w5X/qWNBNXOYyKF5/w4f5FCG
+         qGFB26dRykdNrjRH/XOlS3gP/JEcvov4Bck6Iwc5vtbdPAMuS8WbeXO8x9eCK+FRCS
+         t+0neKba/ea6jDt+b7csqDC8O3f2BtWU7EkiuOUau9mzWsa4e9ErUhhOoMgMo12lwf
+         Foeqm4dEyvA2g==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-In-Reply-To: <20210728161000.GA1153621@robh.at.kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <20210802153657.879499-1-bryan.odonoghue@linaro.org>
+References: <20210802153657.879499-1-bryan.odonoghue@linaro.org>
+Subject: Re: [PATCH] clk: qcom: clk-smd-rpm: Fix invalid RPM_SMD_PCNOC_A_CLK entry
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, konrad.dybcio@somainline.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        mturquette@baylibre.com
+Date:   Mon, 02 Aug 2021 15:11:40 -0700
+Message-ID: <162794230095.714452.9666166450349622061@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+Quoting Bryan O'Donoghue (2021-08-02 08:36:57)
+> MSM8936 and MSM8939 both share the same RPMCC clock tree, I've been testi=
+ng
+> on MSM8939 and I've found that RPM_SMD_PCNOC_A_CLK is currently invalid.
+>=20
+> RPM_SMD_PCNOC_A_CLK should point to msm8916_pcnoc_a_clk not to
+> msm8916_pcnoc_clk.
+>=20
+> Fixes: a0384ecfe2aa8 ("clk: qcom: smd-rpm: De-duplicate identical entries=
+")
+> Signed-off-by: Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+> ---
 
-Thanks for the reviews.
+This is superseded by
+https://lore.kernel.org/r/20210727092613.23056-1-shawn.guo@linaro.org
 
-On 7/28/21 12:10 PM, Rob Herring wrote:
-> On Tue, Jul 27, 2021 at 11:25:12AM -0400, Thara Gopinath wrote:
->> Add dt binding documentation to describe Qualcomm
->> Limits Management Hardware node.
->>
->> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
->> ---
->>
->> v3->v4:
->> 	- Changed dt property qcom,lmh-cpu-id to qcom,lmh-cpu and made it
->> 	  a phandle pointing to the cpu node instead of a number as per
->> 	  Rob Herring's review comments.
->> 	- Added suffix -millicelsius to all temperature properties as per
->> 	  Rob Herring's review comments.
->> 	- Dropped unnecessary #includes in the example as pointed out by Bjorn.
->> 	- Other minor fixes.
->>
->>   .../devicetree/bindings/thermal/qcom-lmh.yaml | 100 ++++++++++++++++++
->>   1 file changed, 100 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/thermal/qcom-lmh.yaml
->>
->> diff --git a/Documentation/devicetree/bindings/thermal/qcom-lmh.yaml b/Documentation/devicetree/bindings/thermal/qcom-lmh.yaml
->> new file mode 100644
->> index 000000000000..0978f458b9ec
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/thermal/qcom-lmh.yaml
->> @@ -0,0 +1,100 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +# Copyright 2021 Linaro Ltd.
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/thermal/qcom-lmh.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
->> +
->> +title: Qualcomm Limits Management Hardware(LMh)
->> +
->> +maintainers:
->> +  - Thara Gopinath <thara.gopinath@linaro.org>
->> +
->> +description:
->> +  Limits Management Hardware(LMh) is a hardware infrastructure on some
->> +  Qualcomm SoCs that can enforce temperature and current limits as
->> +  programmed by software for certain IPs like CPU.
->> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - qcom,sdm845-lmh
->> +
->> +  reg:
->> +    items:
->> +      - description: core registers
->> +
->> +  interrupts:
->> +    maxItems: 1
->> +
->> +  '#interrupt-cells':
->> +    const: 1
->> +
->> +  interrupt-controller: true
->> +
->> +  qcom,lmh-cpu:
->> +    description:
->> +      phandle of the first cpu in the LMh cluster
->> +    $ref: /schemas/types.yaml#/definitions/phandle
-> 
-> 'cpus' property is the somewhat standard way to reference a cpu.
-
-So are you suggesting renaming qcom,lmh-cpu to cpus ? I need the cpu-id 
-here to identify the LMh cluster. Depending on the LMh cluster, I have 
-different node ids which is a parameter in the LMh smc call.
-
-> 
-> But you should already have cpu topology information, why do you need
-> this?
-> 
->> +
->> +  qcom,lmh-temp-arm-millicelsius:
->> +    description:
->> +      An integer expressing temperature threshold at which the LMh thermal
->> +      FSM is engaged.
->> +    $ref: /schemas/types.yaml#/definitions/int32
-> 
-> Standard unit-suffixes already have a type.
-
-yep.. I will remove this
-
-> 
->> +
->> +  qcom,lmh-temp-low-millicelsius:
->> +    description:
->> +      An integer expressing temperature threshold at which the state machine
->> +      will attempt to remove frequency throttling.
->> +    $ref: /schemas/types.yaml#/definitions/int32
->> +
->> +  qcom,lmh-temp-high-millicelsius:
->> +    description:
->> +      An integer expressing temperature threshold at which the state machine
->> +      will attempt to throttle the frequency.
->> +    $ref: /schemas/types.yaml#/definitions/int32
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +  - interrupts
->> +  - #interrupt-cells
->> +  - interrupt-controller
->> +  - qcom,lmh-cpu
->> +  - qcom,lmh-temp-arm-millicelsius
->> +  - qcom,lmh-temp-low-millicelsius
->> +  - qcom,lmh-temp-high-millicelsius
->> +
->> +additionalProperties: false
->> +
->> +examples:
->> +  - |
->> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
->> +
->> +    lmh_cluster1: lmh@17d70800 {
-> 
-> Drop unused labels.
-
-sure.
-
-> 
->> +      compatible = "qcom,sdm845-lmh";
->> +      reg = <0x17d70800 0x401>;
-> 
-> 0x401 is an odd size...
-
-I double checked the spec and this is the size. But also there is no 
-register specified around this address. So I will make the size to 0x400 
-so that it looks sane.
-
-
-> 
->> +      interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
->> +      qcom,lmh-cpu = <&CPU4>;
->> +      qcom,lmh-temp-arm-millicelsius = <65000>;
->> +      qcom,lmh-temp-low-millicelsius = <94500>;
->> +      qcom,lmh-temp-high-millicelsius = <95000>;
->> +      interrupt-controller;
->> +      #interrupt-cells = <1>;
->> +    };
->> +  - |
-> 
-> Seems like this is 1 example, not 2.
-
-Will fix it.
-
-> 
->> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
->> +
->> +    lmh_cluster0: lmh@17d78800 {
->> +      compatible = "qcom,sdm845-lmh";
->> +      reg = <0x17d78800 0x401>;
->> +      interrupts = <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
->> +      qcom,lmh-cpu = <&CPU0>;
->> +      qcom,lmh-temp-arm-millicelsius = <65000>;
->> +      qcom,lmh-temp-low-millicelsius = <94500>;
->> +      qcom,lmh-temp-high-millicelsius = <95000>;
->> +      interrupt-controller;
->> +      #interrupt-cells = <1>;
->> +    };
->> +  - |
->> -- 
->> 2.25.1
->>
->>
-
--- 
-Warm Regards
-Thara (She/Her/Hers)
+>  drivers/clk/qcom/clk-smd-rpm.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+>=20
+> diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rp=
+m.c
+> index 800b2fef1887f..b2c142f3a649e 100644
+> --- a/drivers/clk/qcom/clk-smd-rpm.c
+> +++ b/drivers/clk/qcom/clk-smd-rpm.c
+> @@ -467,7 +467,7 @@ DEFINE_CLK_SMD_RPM(msm8936, sysmmnoc_clk, sysmmnoc_a_=
+clk, QCOM_SMD_RPM_BUS_CLK,
+> =20
+>  static struct clk_smd_rpm *msm8936_clks[] =3D {
+>         [RPM_SMD_PCNOC_CLK]             =3D &msm8916_pcnoc_clk,
+> -       [RPM_SMD_PCNOC_A_CLK]           =3D &msm8916_pcnoc_clk,
+> +       [RPM_SMD_PCNOC_A_CLK]           =3D &msm8916_pcnoc_a_clk,
+>         [RPM_SMD_SNOC_CLK]              =3D &msm8916_snoc_clk,
+>         [RPM_SMD_SNOC_A_CLK]            =3D &msm8916_snoc_a_clk,
+>         [RPM_SMD_BIMC_CLK]              =3D &msm8916_bimc_clk,
+> --=20
+> 2.30.1
+>
