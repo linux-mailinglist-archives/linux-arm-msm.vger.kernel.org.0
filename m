@@ -2,119 +2,251 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4CBED3DE094
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Aug 2021 22:21:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A42B43DE1A9
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Aug 2021 23:29:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231414AbhHBUVV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Aug 2021 16:21:21 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:20837 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231635AbhHBUVR (ORCPT
+        id S232781AbhHBV33 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Aug 2021 17:29:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41282 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232492AbhHBV32 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Aug 2021 16:21:17 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1627935668; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=PfQwQqGamk2yhFVMH0cYk8jlQ4TdleftFj0Bcd2uREU=; b=M2E6xx/eVvLyBtVZwH55+EIaFvq8m9Ib9M0yFN87t+2qbXv9V1AdVt8+XUSNdSoAJLQi60Yr
- b4NQ5MNS2HiCvKCpHgnK6xmZe79K3sHfzZrVae0wV76n7yyElSWxwDPb+tjZhLZWNvT7DgiB
- zhBodH9bJnDRGFaiztdJrmDQQqU=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 610853af9771b05b248a7946 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 02 Aug 2021 20:21:03
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9D273C43217; Mon,  2 Aug 2021 20:21:03 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A4D6BC433F1;
-        Mon,  2 Aug 2021 20:21:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A4D6BC433F1
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=khsieh@codeaurora.org
-From:   Kuogee Hsieh <khsieh@codeaurora.org>
-To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
-        vkoul@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
-        khsieh@codeaurora.org, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2] drm/msm/dp: update is_connected status base on sink count at dp_pm_resume()
-Date:   Mon,  2 Aug 2021 13:20:55 -0700
-Message-Id: <1627935655-4090-1-git-send-email-khsieh@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Mon, 2 Aug 2021 17:29:28 -0400
+Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C059AC061764
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Aug 2021 14:29:18 -0700 (PDT)
+Received: by mail-qk1-x733.google.com with SMTP id f22so18063483qke.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Aug 2021 14:29:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=O8azjKnReE8xSiyBnxqqAL7gBgZx+sYiW82Vr3OzBV8=;
+        b=PKuK8Piq9Ojx7NxEt0nf3Jyi6/3cagHknsWKBHPrVPRE4fo26WU+Ef3jH9aQGjXcj8
+         F2ykxPWMlnNJAjw/VY5VZz91VqvP9eUsO6wJclFzUhTUn8Pm6jOPhFcFG0WOOuof5V2V
+         UtdwayiIf/60an0ukFs3hYkuj/3kJah6OsmSLw7s59SLacTaRsgdlw4UCNnT0Dx59W6N
+         SJ/dO1E0G4Q4FTP8kKfK9rQjJJlnMBP6ZprjtNtwajJ9VThhtcpz7+CDtxOxuK1fmfAe
+         hoV1hJdX+0SkXPxbwUg3riofycSCk24EqVFcR9FVX6R5kY/KpJv1MPR6OoLPGfm1SjYB
+         wm6g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=O8azjKnReE8xSiyBnxqqAL7gBgZx+sYiW82Vr3OzBV8=;
+        b=Qaag07JlukTTyMhspak/XBNgau2jgvPqoeFrXxj3Hr8WZbciXGO0tilQ13C59ll3Ju
+         Grxl9LG5i8f6Q/sJVuzjOoCYcent9wxCqBLpuTJfRZjTGFL4mPcaGCEGhjXjhSi/nk7d
+         kkQvLE/KZUX1i7KOECHD+dTYUd0sJ+o9yVYPn1PWpETlc+Px+gR3HMFa5zo6246Obkjw
+         5t/EjZJNAx0ROdLsEFT0fEdW/cJfZgIKtosncP/911sLScm2PH1px+93DhkRar5DGspx
+         RmwICN0tjfxbd/FE5/XY3AOio1O4TAA4i8qZo9lse216/kfUQ5/2xhSTam1rEcy5q+60
+         iTiQ==
+X-Gm-Message-State: AOAM532sDM/9lwsQG0wTKLxH0E63Etyg+iJLWykkFlxLCJJ7jJo82IQj
+        jJOZxJYzE6UIzWDKo2BzgE2fag==
+X-Google-Smtp-Source: ABdhPJynegevwH2ssks++pWFk1eGBNRCiO6YfoYhu6pvqCNq34yM9jyAcp26PMtDxLHBdd6OgLYxkA==
+X-Received: by 2002:a05:620a:248d:: with SMTP id i13mr17622100qkn.106.1627939757950;
+        Mon, 02 Aug 2021 14:29:17 -0700 (PDT)
+Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.gmail.com with ESMTPSA id c3sm6689675qkd.12.2021.08.02.14.29.17
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 02 Aug 2021 14:29:17 -0700 (PDT)
+Subject: Re: [Patch v4 6/6] dt-bindings: thermal: Add dt binding for QCOM LMh
+To:     Rob Herring <robh@kernel.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, rui.zhang@intel.com,
+        daniel.lezcano@linaro.org, viresh.kumar@linaro.org,
+        rjw@rjwysocki.net, steev@kali.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20210727152512.1098329-1-thara.gopinath@linaro.org>
+ <20210727152512.1098329-7-thara.gopinath@linaro.org>
+ <20210728161000.GA1153621@robh.at.kernel.org>
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Message-ID: <2fd4d897-4eb0-e841-f0fa-2650e1aad832@linaro.org>
+Date:   Mon, 2 Aug 2021 17:29:16 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <20210728161000.GA1153621@robh.at.kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently at dp_pm_resume() is_connected state is decided base on hpd connection
-status only. This will put is_connected in wrongly "true" state at the scenario
-that dongle attached to DUT but without hmdi cable connecting to it. Fix this
-problem by adding read sink count from dongle and decided is_connected state base
-on both sink count and hpd connection status.
+Hi Rob,
 
-Changes in v2:
--- remove dp_get_sink_count() cand call drm_dp_read_sink_count()
+Thanks for the reviews.
 
-Fixes: d9aa6571b28ba ("drm/msm/dp: check sink_count before update is_connected status")
-Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 18 +++++++++++++++---
- 1 file changed, 15 insertions(+), 3 deletions(-)
+On 7/28/21 12:10 PM, Rob Herring wrote:
+> On Tue, Jul 27, 2021 at 11:25:12AM -0400, Thara Gopinath wrote:
+>> Add dt binding documentation to describe Qualcomm
+>> Limits Management Hardware node.
+>>
+>> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+>> ---
+>>
+>> v3->v4:
+>> 	- Changed dt property qcom,lmh-cpu-id to qcom,lmh-cpu and made it
+>> 	  a phandle pointing to the cpu node instead of a number as per
+>> 	  Rob Herring's review comments.
+>> 	- Added suffix -millicelsius to all temperature properties as per
+>> 	  Rob Herring's review comments.
+>> 	- Dropped unnecessary #includes in the example as pointed out by Bjorn.
+>> 	- Other minor fixes.
+>>
+>>   .../devicetree/bindings/thermal/qcom-lmh.yaml | 100 ++++++++++++++++++
+>>   1 file changed, 100 insertions(+)
+>>   create mode 100644 Documentation/devicetree/bindings/thermal/qcom-lmh.yaml
+>>
+>> diff --git a/Documentation/devicetree/bindings/thermal/qcom-lmh.yaml b/Documentation/devicetree/bindings/thermal/qcom-lmh.yaml
+>> new file mode 100644
+>> index 000000000000..0978f458b9ec
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/thermal/qcom-lmh.yaml
+>> @@ -0,0 +1,100 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +# Copyright 2021 Linaro Ltd.
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/thermal/qcom-lmh.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Limits Management Hardware(LMh)
+>> +
+>> +maintainers:
+>> +  - Thara Gopinath <thara.gopinath@linaro.org>
+>> +
+>> +description:
+>> +  Limits Management Hardware(LMh) is a hardware infrastructure on some
+>> +  Qualcomm SoCs that can enforce temperature and current limits as
+>> +  programmed by software for certain IPs like CPU.
+>> +
+>> +properties:
+>> +  compatible:
+>> +    enum:
+>> +      - qcom,sdm845-lmh
+>> +
+>> +  reg:
+>> +    items:
+>> +      - description: core registers
+>> +
+>> +  interrupts:
+>> +    maxItems: 1
+>> +
+>> +  '#interrupt-cells':
+>> +    const: 1
+>> +
+>> +  interrupt-controller: true
+>> +
+>> +  qcom,lmh-cpu:
+>> +    description:
+>> +      phandle of the first cpu in the LMh cluster
+>> +    $ref: /schemas/types.yaml#/definitions/phandle
+> 
+> 'cpus' property is the somewhat standard way to reference a cpu.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 8b69114..6dcb78e 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1403,6 +1403,7 @@ static int dp_pm_resume(struct device *dev)
- 	struct msm_dp *dp_display = platform_get_drvdata(pdev);
- 	struct dp_display_private *dp;
- 	u32 status;
-+	int sink_count = 0;
- 
- 	dp = container_of(dp_display, struct dp_display_private, dp_display);
- xlog(__func__, 1,0,0, dp->core_initialized, dp_display->power_on);
-@@ -1417,15 +1418,26 @@ xlog(__func__, 1,0,0, dp->core_initialized, dp_display->power_on);
- 
- 	dp_catalog_ctrl_hpd_config(dp->catalog);
- 
--	status = dp_catalog_link_is_connected(dp->catalog);
-+	/*
-+	 * set sink to normal operation mode -- D0
-+	 * before dpcd read
-+	 */
-+	dp_link_psm_config(dp->link, &dp->panel->link_info, false);
-+
-+	/* if sink conencted, do dpcd read sink count */
-+	if ((status = dp_catalog_link_is_connected(dp->catalog))) {
-+		sink_count = drm_dp_read_sink_count(dp->aux);
-+		if (sink_count < 0)
-+			sink_count = 0;
-+	}
- 
-+	dp->link->sink_count = sink_count;
- 	/*
- 	 * can not declared display is connected unless
- 	 * HDMI cable is plugged in and sink_count of
- 	 * dongle become 1
- 	 */
--xlog(__func__, 0x12,0,0, 0, dp->link->sink_count);
--	if (status && dp->link->sink_count)
-+	if (dp->link->sink_count)
- 		dp->dp_display.is_connected = true;
- 	else
- 		dp->dp_display.is_connected = false;
+So are you suggesting renaming qcom,lmh-cpu to cpus ? I need the cpu-id 
+here to identify the LMh cluster. Depending on the LMh cluster, I have 
+different node ids which is a parameter in the LMh smc call.
+
+> 
+> But you should already have cpu topology information, why do you need
+> this?
+> 
+>> +
+>> +  qcom,lmh-temp-arm-millicelsius:
+>> +    description:
+>> +      An integer expressing temperature threshold at which the LMh thermal
+>> +      FSM is engaged.
+>> +    $ref: /schemas/types.yaml#/definitions/int32
+> 
+> Standard unit-suffixes already have a type.
+
+yep.. I will remove this
+
+> 
+>> +
+>> +  qcom,lmh-temp-low-millicelsius:
+>> +    description:
+>> +      An integer expressing temperature threshold at which the state machine
+>> +      will attempt to remove frequency throttling.
+>> +    $ref: /schemas/types.yaml#/definitions/int32
+>> +
+>> +  qcom,lmh-temp-high-millicelsius:
+>> +    description:
+>> +      An integer expressing temperature threshold at which the state machine
+>> +      will attempt to throttle the frequency.
+>> +    $ref: /schemas/types.yaml#/definitions/int32
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +  - interrupts
+>> +  - #interrupt-cells
+>> +  - interrupt-controller
+>> +  - qcom,lmh-cpu
+>> +  - qcom,lmh-temp-arm-millicelsius
+>> +  - qcom,lmh-temp-low-millicelsius
+>> +  - qcom,lmh-temp-high-millicelsius
+>> +
+>> +additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+>> +
+>> +    lmh_cluster1: lmh@17d70800 {
+> 
+> Drop unused labels.
+
+sure.
+
+> 
+>> +      compatible = "qcom,sdm845-lmh";
+>> +      reg = <0x17d70800 0x401>;
+> 
+> 0x401 is an odd size...
+
+I double checked the spec and this is the size. But also there is no 
+register specified around this address. So I will make the size to 0x400 
+so that it looks sane.
+
+
+> 
+>> +      interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
+>> +      qcom,lmh-cpu = <&CPU4>;
+>> +      qcom,lmh-temp-arm-millicelsius = <65000>;
+>> +      qcom,lmh-temp-low-millicelsius = <94500>;
+>> +      qcom,lmh-temp-high-millicelsius = <95000>;
+>> +      interrupt-controller;
+>> +      #interrupt-cells = <1>;
+>> +    };
+>> +  - |
+> 
+> Seems like this is 1 example, not 2.
+
+Will fix it.
+
+> 
+>> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+>> +
+>> +    lmh_cluster0: lmh@17d78800 {
+>> +      compatible = "qcom,sdm845-lmh";
+>> +      reg = <0x17d78800 0x401>;
+>> +      interrupts = <GIC_SPI 32 IRQ_TYPE_LEVEL_HIGH>;
+>> +      qcom,lmh-cpu = <&CPU0>;
+>> +      qcom,lmh-temp-arm-millicelsius = <65000>;
+>> +      qcom,lmh-temp-low-millicelsius = <94500>;
+>> +      qcom,lmh-temp-high-millicelsius = <95000>;
+>> +      interrupt-controller;
+>> +      #interrupt-cells = <1>;
+>> +    };
+>> +  - |
+>> -- 
+>> 2.25.1
+>>
+>>
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+Warm Regards
+Thara (She/Her/Hers)
