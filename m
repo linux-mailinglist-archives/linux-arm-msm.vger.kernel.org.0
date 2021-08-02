@@ -2,151 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7BE6B3DDD44
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Aug 2021 18:10:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35AE03DDD50
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Aug 2021 18:12:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232127AbhHBQKy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Aug 2021 12:10:54 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:49240 "EHLO m43-7.mailgun.net"
+        id S232056AbhHBQMW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Aug 2021 12:12:22 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34802 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229946AbhHBQKy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Aug 2021 12:10:54 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1627920644; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=RcmCVefjMH6l9oNkIcTgBxKj15suM9Nyc7u4Bfq5P6s=;
- b=AU+Pefk8LNRWkvMqTIxyGXqvUxP5gM7aYdjjoLVm8/4U59bVqmVzOj33fftUZRp3Jx8iaxT0
- BXGc4u5qEbHTCpz2w4ZC+gn3ItFG6/DvlQoG+Jct9u9sHCg++F4ua0ta53ZIkgrID5YZdtzy
- ewAh8KXybix6+EQY3aG0Chp7QSs=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 610818e117c2b4047dcb83d8 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 02 Aug 2021 16:10:09
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9181FC43217; Mon,  2 Aug 2021 16:10:08 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 436C1C433D3;
-        Mon,  2 Aug 2021 16:10:06 +0000 (UTC)
+        id S229780AbhHBQMV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 2 Aug 2021 12:12:21 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 6E9EA60F9C;
+        Mon,  2 Aug 2021 16:12:10 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1627920732;
+        bh=b2Ng61RAPlMVP2k8p8ptM8+ZLyJnqh59TBkLJy5ROis=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=FB6RhytU9h1IMIKzRWu6GmLzfCEBjk6A6rHDieSWy6K/7PP1AFgKx9dq2kwTHFCzd
+         96MaL/uwcP5Fa2sUBheTQ6kHqmxsFUaNqmPubydLZvP96CB2xWespEO0qCy4S4bf1s
+         64Wn5fBpxIwpst/c9+Uue/GKmDdOf7CbaeqxCeCc7U1ZWCmNcD8Ukah0f1QYNfSNMH
+         pmVu5gX6k4DPHSTUAAbIfNp97VAE7oHns/Gz1vxI3UGZRR3x4pvo/i/vVyluLojbRb
+         44MjxhWYGFkSZkPEruKKiiwocVA2+J5Yct+2FsADX+6Y9o4Ld+VfGByp9IedbE3py5
+         LmcCM5PZdGYVA==
+Date:   Mon, 2 Aug 2021 17:12:06 +0100
+From:   Will Deacon <will@kernel.org>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        srimuc <srimuc@codeaurora.org>, iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, robdclark@chromium.org
+Subject: Re: [PATCH] iommu/arm-smmu: Add clk_bulk_{prepare/unprepare} to
+ system pm callbacks
+Message-ID: <20210802161206.GA29168@willie-the-truck>
+References: <20210727093322.13202-1-saiprakash.ranjan@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 02 Aug 2021 09:10:06 -0700
-From:   khsieh@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robdclark@gmail.com,
-        sean@poorly.run, vkoul@kernel.org, abhinavk@codeaurora.org,
-        aravindh@codeaurora.org, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] drm/msm/dp: update is_connected status base on sink count
- at dp_pm_resume()
-In-Reply-To: <CAE-0n51cNywB2ThQxqS4iX-d7wR+rYXt8P33o9cUq9J6tT915A@mail.gmail.com>
-References: <1627507854-16733-1-git-send-email-khsieh@codeaurora.org>
- <CAE-0n51cNywB2ThQxqS4iX-d7wR+rYXt8P33o9cUq9J6tT915A@mail.gmail.com>
-Message-ID: <781ad3c4973b3f8dd83933a451b266b9@codeaurora.org>
-X-Sender: khsieh@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210727093322.13202-1-saiprakash.ranjan@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-07-30 11:57, Stephen Boyd wrote:
-> Quoting Kuogee Hsieh (2021-07-28 14:30:54)
->> Currently at dp_pm_resume() is_connected state is decided base on hpd 
->> connection
->> status only. This will put is_connected in wrongly "true" state at the 
->> scenario
->> that dongle attached to DUT but without hmdi cable connecting to it. 
->> Fix this
->> problem by adding read sink count from dongle and decided is_connected 
->> state base
->> on both sink count and hpd connection status.
->> 
+On Tue, Jul 27, 2021 at 03:03:22PM +0530, Sai Prakash Ranjan wrote:
+> Some clocks for SMMU can have parent as XO such as gpu_cc_hub_cx_int_clk
+> of GPU SMMU in QTI SC7280 SoC and in order to enter deep sleep states in
+> such cases, we would need to drop the XO clock vote in unprepare call and
+> this unprepare callback for XO is in RPMh (Resource Power Manager-Hardened)
+> clock driver which controls RPMh managed clock resources for new QTI SoCs
+> and is a blocking call.
 > 
-> Please add a Fixes tag.
+> Given we cannot have a sleeping calls such as clk_bulk_prepare() and
+> clk_bulk_unprepare() in arm-smmu runtime pm callbacks since the iommu
+> operations like map and unmap can be in atomic context and are in fast
+> path, add this prepare and unprepare call to drop the XO vote only for
+> system pm callbacks since it is not a fast path and we expect the system
+> to enter deep sleep states with system pm as opposed to runtime pm.
 > 
->> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
->> ---
->>  drivers/gpu/drm/msm/dp/dp_display.c | 23 +++++++++++++++++++++--
->>  1 file changed, 21 insertions(+), 2 deletions(-)
->> 
->> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
->> b/drivers/gpu/drm/msm/dp/dp_display.c
->> index 2b660e9..9bcb261 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->> @@ -1308,6 +1308,17 @@ static int dp_display_remove(struct 
->> platform_device *pdev)
->>         return 0;
->>  }
->> 
->> +static int dp_get_sink_count(struct dp_display_private *dp)
->> +{
->> +       u8 sink_count;
->> +
->> +       sink_count = drm_dp_read_sink_count(dp->aux);
+> This is a similar sequence of clock requests (prepare,enable and
+> disable,unprepare) in arm-smmu probe and remove.
 > 
-> drm_dp_read_sink_count() returns an int, not a u8. Comparing a u8 to
-> less than zero doesn't make any sense as it isn't signed.
+> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> Co-developed-by: Rajendra Nayak <rnayak@codeaurora.org>
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> ---
+>  drivers/iommu/arm/arm-smmu/arm-smmu.c | 20 ++++++++++++++++++--
+>  1 file changed, 18 insertions(+), 2 deletions(-)
+
+[+Rob]
+
+How does this work with that funny GPU which writes to the SMMU registers
+directly? Does the SMMU need to remain independently clocked for that to
+work or is it all in the same clock domain?
+
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> index d3c6f54110a5..9561ba4c5d39 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> @@ -2277,6 +2277,13 @@ static int __maybe_unused arm_smmu_runtime_suspend(struct device *dev)
+>  
+>  static int __maybe_unused arm_smmu_pm_resume(struct device *dev)
+>  {
+> +	int ret;
+> +	struct arm_smmu_device *smmu = dev_get_drvdata(dev);
+> +
+> +	ret = clk_bulk_prepare(smmu->num_clks, smmu->clks);
+> +	if (ret)
+> +		return ret;
+> +
+>  	if (pm_runtime_suspended(dev))
+>  		return 0;
+
+If we subsequently fail to enable the clks in arm_smmu_runtime_resume()
+should we unprepare them again?
+
+Will
+
+> @@ -2285,10 +2292,19 @@ static int __maybe_unused arm_smmu_pm_resume(struct device *dev)
+>  
+>  static int __maybe_unused arm_smmu_pm_suspend(struct device *dev)
+>  {
+> +	int ret = 0;
+> +	struct arm_smmu_device *smmu = dev_get_drvdata(dev);
+> +
+>  	if (pm_runtime_suspended(dev))
+> -		return 0;
+> +		goto clk_unprepare;
+>  
+> -	return arm_smmu_runtime_suspend(dev);
+> +	ret = arm_smmu_runtime_suspend(dev);
+> +	if (ret)
+> +		return ret;
+> +
+> +clk_unprepare:
+> +	clk_bulk_unprepare(smmu->num_clks, smmu->clks);
+> +	return ret;
+>  }
+>  
+>  static const struct dev_pm_ops arm_smmu_pm_ops = {
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
 > 
->> +       if (sink_count < 0)
->> +               return 0;
->> +
->> +       return sink_count;
->> +}
-> 
-> We can drop this function and just have an int count in dp_pm_resume()
-> that is compared to < 0 and then ignored.
-> 
->> +
->>  static int dp_pm_resume(struct device *dev)
->>  {
->>         struct platform_device *pdev = to_platform_device(dev);
->> @@ -1327,14 +1338,22 @@ static int dp_pm_resume(struct device *dev)
->> 
->>         dp_catalog_ctrl_hpd_config(dp->catalog);
->> 
->> -       status = dp_catalog_link_is_connected(dp->catalog);
->> +       /*
->> +        * set sink to normal operation mode -- D0
->> +        * before dpcd read
->> +        */
->> +       dp_link_psm_config(dp->link, &dp->panel->link_info, false);
->> 
->> +       if ((status = dp_catalog_link_is_connected(dp->catalog)))
->> +               dp->link->sink_count = dp_get_sink_count(dp);
-> 
-> Do we need to call drm_dp_read_sink_count_cap() as well?
-no, we only need sink_count
-> 
->> +       else
->> +               dp->link->sink_count = 0;
->>         /*
->>          * can not declared display is connected unless
->>          * HDMI cable is plugged in and sink_count of
->>          * dongle become 1
->>          */
->> -       if (status && dp->link->sink_count)
-> 
-> Is 'status' used anymore? If not, please remove it.
-Yes, it still used which used to decided to perform dpcd read sink count 
-or not
-> 
->> +       if (dp->link->sink_count)
->>                 dp->dp_display.is_connected = true;
->>         else
->>                 dp->dp_display.is_connected = false;
