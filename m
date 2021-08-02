@@ -2,114 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2221E3DCFFF
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Aug 2021 07:14:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBE9F3DD02B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Aug 2021 07:56:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232240AbhHBFOL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Aug 2021 01:14:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55072 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232211AbhHBFOK (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Aug 2021 01:14:10 -0400
-Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 57C67C06175F
-        for <linux-arm-msm@vger.kernel.org>; Sun,  1 Aug 2021 22:14:01 -0700 (PDT)
-Received: by mail-pj1-x1036.google.com with SMTP id u9-20020a17090a1f09b029017554809f35so29793540pja.5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 01 Aug 2021 22:14:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=y3jqjblyF+bNujjzoE4Dt1sYtyoNDw930jBhejpyDsQ=;
-        b=MHi+EK7adrpO/F23uzLcoFSgWDsz4wjsWR5IPfheS7GzkIfS/CEtozyCFzE7GjSZrE
-         wYpqO99ar3MIgEnVHUsdAc2hARx4ciq/oHBs4q0Q8kSr4GoeXWoNuoNqExSOWG2+ywn+
-         hEcUFQjkQTpitrcK0O7Jh6EasK6Qkq57lzvpiYL4cQUJ0k5HEr5JQlLliHdoJ815pSet
-         E2x0Vv1PD/iHoGTPfLtChceDmTXaJRFidxuJG4dgDCzyjLk/zh01CDh7QhzmM5QSnuHj
-         ol1bNFY6JdyKqVtVK6ttsN8DBTxixwq48IEnS0oHyi3g/43mmRb7cIVcoiX3C2TxMfqh
-         3WBg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=y3jqjblyF+bNujjzoE4Dt1sYtyoNDw930jBhejpyDsQ=;
-        b=EIbuMHhIh4SyuTdsRYvekqoxEk5sH8tWOYrW3CewOWXDMLk4moGxnSvXx370DLcThV
-         7YBwmB3RdD8bilIIpsJCFM0bKUSOT+gwnSMqk2gClxrtAY3z3bh5S6XVMo9X0nrZfYuF
-         ds/+8F4t5P4efDl0/auQ+jUdKr+2Evstr3Vf2FeDxYBcZz6XNo5eLt4GFVa/PNw7vx1r
-         QRci+4WqhKIcRPlmgi8yOwbRFck+5U/Jxp/j7fHsu3CAx2FDjj+7PseRfYoVqpo2GfHG
-         O3QvrVfTxRYzO+n0W+YZNCMy+km1x1mNg2FFtPPemBM3+6H6e0ZbQbf8CKNR1C19gak4
-         faRA==
-X-Gm-Message-State: AOAM530JPa7AwoiedghPFN2AD7LeD6cre5UybDYb7Wd8y9zfTFJlJUKI
-        AXhLpCAtypPG+DMYoze0DJ8b
-X-Google-Smtp-Source: ABdhPJzqQyFPyeWjcyPOB5BsNVcswXcJgkqnNPCQLnhw89QF2s2pepwJ6OOIMJUYiCcHB6nrtAVBhw==
-X-Received: by 2002:a17:902:b116:b029:12b:84fa:8c70 with SMTP id q22-20020a170902b116b029012b84fa8c70mr12736550plr.40.1627881240898;
-        Sun, 01 Aug 2021 22:14:00 -0700 (PDT)
-Received: from localhost.localdomain ([2409:4072:6e99:242f:6391:b1b4:1ad8:fbdf])
-        by smtp.gmail.com with ESMTPSA id x26sm9947000pfm.77.2021.08.01.22.13.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 01 Aug 2021 22:14:00 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     gregkh@linuxfoundation.org
-Cc:     hemantk@codeaurora.org, bbhatt@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, jhugo@codeaurora.org,
-        linux-kernel@vger.kernel.org, loic.poulain@linaro.org,
-        Jeffrey Hugo <quic_jhugo@quicinc.com>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH 10/10] bus: mhi: core: Improve debug messages for power up
-Date:   Mon,  2 Aug 2021 10:42:55 +0530
-Message-Id: <20210802051255.5771-11-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210802051255.5771-1-manivannan.sadhasivam@linaro.org>
-References: <20210802051255.5771-1-manivannan.sadhasivam@linaro.org>
+        id S231958AbhHBF5E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Aug 2021 01:57:04 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:40415 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229881AbhHBF5D (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 2 Aug 2021 01:57:03 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1627883814; h=Message-ID: References: In-Reply-To: Subject:
+ To: From: Date: Content-Transfer-Encoding: Content-Type: MIME-Version:
+ Sender; bh=mHK5Rlos+NApTL5SucpSA2y+gG/KQyAJIDcqK/1IyRY=; b=X5Z+5ObyOErohjClwrHufmETHOIbiCdYzUD8hVDGQcVORZAXu1XrlVeM8mEFcWdV5ppW/1oB
+ A0uugBzBz7MiWt0f4bVSS3CFbjYYzYQhodt3SD3X2bMEp8fJVxs4atPvpn5a2lPLfFwyhnbp
+ uQzTZSuEMDv71hNM+uzfWhcAFYI=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 6107891ae81205dd0a66e98d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 02 Aug 2021 05:56:42
+ GMT
+Sender: luoj=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 4C55EC433D3; Mon,  2 Aug 2021 05:56:42 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: luoj)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8056DC433F1;
+        Mon,  2 Aug 2021 05:56:40 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 02 Aug 2021 13:56:40 +0800
+From:   luoj@codeaurora.org
+To:     undisclosed-recipients:;
+Subject: Re: [PATCH 2/3] net: mdio-ipq4019: rename mdio_ipq4019 to mdio_ipq
+In-Reply-To: <YQKp9gsnjBNmXYIc@lunn.ch>
+References: <20210729125358.5227-1-luoj@codeaurora.org>
+ <20210729125358.5227-2-luoj@codeaurora.org> <YQKp9gsnjBNmXYIc@lunn.ch>
+Message-ID: <7931e7a44e9af6be9b145b264b1596cf@codeaurora.org>
+X-Sender: luoj@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Bhaumik Bhatt <bbhatt@codeaurora.org>
+On 2021-07-29 21:15, Andrew Lunn wrote:
+> On Thu, Jul 29, 2021 at 08:53:57PM +0800, Luo Jie wrote:
+>> mdio_ipq driver supports more SOCs such as ipq40xx, ipq807x,
+>> ipq60xx and ipq50xx.
+>> 
+>> Signed-off-by: Luo Jie <luoj@codeaurora.org>
+>> ---
+>>  drivers/net/mdio/Kconfig                      |  6 +-
+>>  drivers/net/mdio/Makefile                     |  2 +-
+>>  .../net/mdio/{mdio-ipq4019.c => mdio-ipq.c}   | 66 
+>> +++++++++----------
+>>  3 files changed, 37 insertions(+), 37 deletions(-)
+>>  rename drivers/net/mdio/{mdio-ipq4019.c => mdio-ipq.c} (81%)
+> 
+> Hi Luo
+> 
+> We don't rename files unless there is a very good reason. It makes
+> back porting of fixes harder in stable. There are plenty of examples
+> of files with device specific names, but supporting a broad range of
+> devices. Take for example lm75, at24.
+> 
+> Hi Andrew
+> Thanks for the comments, will update the patch set to keep the name 
+> unchanged.
+> 
+>> -config MDIO_IPQ4019
+>> -	tristate "Qualcomm IPQ4019 MDIO interface support"
+>> +config MDIO_IPQ
+>> +	tristate "Qualcomm IPQ MDIO interface support"
+>>  	depends on HAS_IOMEM && OF_MDIO
+>>  	depends on GPIOLIB && COMMON_CLK && RESET_CONTROLLER
+>>  	help
+>>  	  This driver supports the MDIO interface found in Qualcomm
+>> -	  IPQ40xx series Soc-s.
+>> +	  IPQ40xx, IPQ60XX, IPQ807X and IPQ50XX series Soc-s.
+> 
+> Please leave the MDIO_IPQ4019 unchanged, so we don't break backwards
+> compatibility, but the changes to the text are O.K.
+> 
+> will correct it in the next patch set.
+> 
+>> @@ -31,38 +31,38 @@
+>>  /* 0 = Clause 22, 1 = Clause 45 */
+>>  #define MDIO_MODE_C45				BIT(8)
+>> 
+>> -#define IPQ4019_MDIO_TIMEOUT	10000
+>> -#define IPQ4019_MDIO_SLEEP		10
+>> +#define IPQ_MDIO_TIMEOUT	10000
+>> +#define IPQ_MDIO_SLEEP		10
+> 
+> This sort of mass rename will also make back porting fixes
+> harder. Please don't do it.
+> 
+> will keep it unchanged in the next patch set.
+> 
+>> -static const struct of_device_id ipq4019_mdio_dt_ids[] = {
+>> +static const struct of_device_id ipq_mdio_dt_ids[] = {
+>>  	{ .compatible = "qcom,ipq4019-mdio" },
+>> +	{ .compatible = "qcom,ipq-mdio" },
+>>  	{ }
+>>  };
+> 
+> Such a generic name is not a good idea. It appears this driver is not
+> compatible with the IPQ8064? It is O.K. to add more specific
+> compatibles. So you could add
+> 
+> qcom,ipq40xx, qcom,ipq60xx, qcom,ipq807x and qcom,ipq50xx.
+> 
+> But really, there is no need. Take for example snps,dwmac-mdio, which
+> is used in all sorts of devices.
+> 
+>    Andrew
 
-Improve error message to be more descriptive if a failure occurs
-with an invalid power up execution environment. Additionally, add
-a debug log to print the execution environment and MHI state
-before a power up is attempted to confirm if the device is in an
-expected state. This helps clarify reasons for power up failures
-such as the device being found in a PBL or Emergency Download
-Mode execution environment and the host expected a full power up
-with Pass-Through and no image loading involved.
-
-Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
-Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
-Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Link: https://lore.kernel.org/r/1620072038-36160-1-git-send-email-bbhatt@codeaurora.org
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/bus/mhi/core/pm.c | 6 +++++-
- 1 file changed, 5 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
-index ff7cdc8653ef..fb99e3727155 100644
---- a/drivers/bus/mhi/core/pm.c
-+++ b/drivers/bus/mhi/core/pm.c
-@@ -1069,12 +1069,16 @@ int mhi_async_power_up(struct mhi_controller *mhi_cntrl)
- 
- 	/* Confirm that the device is in valid exec env */
- 	if (!MHI_IN_PBL(current_ee) && current_ee != MHI_EE_AMSS) {
--		dev_err(dev, "Not a valid EE for power on\n");
-+		dev_err(dev, "%s is not a valid EE for power on\n",
-+			TO_MHI_EXEC_STR(current_ee));
- 		ret = -EIO;
- 		goto error_async_power_up;
- 	}
- 
- 	state = mhi_get_mhi_state(mhi_cntrl);
-+	dev_dbg(dev, "Attempting power on with EE: %s, state: %s\n",
-+		TO_MHI_EXEC_STR(current_ee), TO_MHI_STATE_STR(state));
-+
- 	if (state == MHI_STATE_SYS_ERR) {
- 		mhi_set_mhi_state(mhi_cntrl, MHI_STATE_RESET);
- 		ret = wait_event_timeout(mhi_cntrl->state_event,
--- 
-2.25.1
-
+> Hi Andrew, yes, this driver is not compatible with IPQ8064, but it is 
+> compatible with
+> the new chipset such as ipq807x, ipq60xx and ipq50xx, will take your 
+> suggestion in
+> the next patch set, thanks for the comments.
+> 
