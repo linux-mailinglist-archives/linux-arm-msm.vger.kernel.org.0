@@ -2,182 +2,200 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C9283DD0C0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Aug 2021 08:47:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 097FD3DD114
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Aug 2021 09:20:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232398AbhHBGrR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Aug 2021 02:47:17 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:49488 "EHLO
+        id S231649AbhHBHUV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Aug 2021 03:20:21 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:63402 "EHLO
         so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232369AbhHBGrQ (ORCPT
+        with ESMTP id S232458AbhHBHUV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Aug 2021 02:47:16 -0400
+        Mon, 2 Aug 2021 03:20:21 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1627886827; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1627888812; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=nHnB3TRmANLoEBdz40RChvj6qkLvDtqQhTQjXZu6sVY=;
- b=aSuIefzuwiYtAoY/Rh6vr9R9o/hNH0QPAWFJHqwMBiQr5Wvny0VrjBMEo44RQ0z8VUxCwNfm
- BSjEuApHHVG5Boi6omqamErqMwIJzA+lL5xrm89N124L82/SDn+kolu8T8veA6r/PxepEugW
- QiICI9AIPdY5RuC2FirvvvSHWH0=
+ MIME-Version: Sender; bh=FJaar6n31/KsrmSPJWQ9jmxpQoRbAsgaDgmJ7zbo9Ow=;
+ b=Xj3UI//IWFjGlPK3KodqolY5rH8uPm8baqc032xrUu4Eij7uU1JvC/HbwUXBv2du2GniyKtQ
+ U2KRNWkO9PXckhf3LKen80BHIUgchIiWOve53NLJ9tN/MTGSFLi+2j+A5PNm0aUL9W/0Uz3/
+ DtOTvIPC4LSDUMFmntrydk3AwFk=
 X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 610794cf290ea35ee6e72793 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 02 Aug 2021 06:46:39
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 61079c97b653fbdadd75f06a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 02 Aug 2021 07:19:51
  GMT
 Sender: luoj=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 59242C4323A; Mon,  2 Aug 2021 06:46:38 +0000 (UTC)
+        id AA122C4323A; Mon,  2 Aug 2021 07:19:49 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: luoj)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 35879C433F1;
-        Mon,  2 Aug 2021 06:46:37 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 43F96C433D3;
+        Mon,  2 Aug 2021 07:19:48 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Mon, 02 Aug 2021 14:46:37 +0800
+Date:   Mon, 02 Aug 2021 15:19:48 +0800
 From:   luoj@codeaurora.org
-To:     Andrew Lunn <andrew@lunn.ch>
-Cc:     hkallweit1@gmail.com, davem@davemloft.net, kuba@kernel.org,
-        p.zabel@pengutronix.de, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        robert.marko@sartura.hr, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, sricharan@codeaurora.org
-Subject: Re: [PATCH 1/3] net: mdio-ipq4019: Add mdio reset function
-In-Reply-To: <YQKsnqWCfoTpTuxI@lunn.ch>
+To:     Rob Herring <robh+dt@kernel.org>
+Cc:     Andrew Lunn <andrew@lunn.ch>,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        David Miller <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Gross, Andy" <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Robert Marko <robert.marko@sartura.hr>,
+        netdev <netdev@vger.kernel.org>, linux-kernel@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        devicetree@vger.kernel.org, Sricharan <sricharan@codeaurora.org>
+Subject: Re: [PATCH 3/3] dt-bindings: net: rename Qualcomm IPQ MDIO bindings
+In-Reply-To: <CAL_Jsq+=Vyy7_EQ_A7JW4ZfqpPU=6eCyUYMnPORChGvefw-yTA@mail.gmail.com>
 References: <20210729125358.5227-1-luoj@codeaurora.org>
- <YQKsnqWCfoTpTuxI@lunn.ch>
-Message-ID: <5eba90f41162cc19625025776fbdd0a2@codeaurora.org>
+ <20210729125358.5227-3-luoj@codeaurora.org>
+ <CAL_Jsq+=Vyy7_EQ_A7JW4ZfqpPU=6eCyUYMnPORChGvefw-yTA@mail.gmail.com>
+Message-ID: <7873e70dcf4fe749521bd9c985571742@codeaurora.org>
 X-Sender: luoj@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-07-29 21:26, Andrew Lunn wrote:
-> Hi Luo
-> 
-> For a patchset, netdev wants to see a patch 0/X which describes the
-> big picture. What is the patchset as a whole doing.
-> 
-> Hi Andrew,
-> Thanks for reminder, will provide it in the next patch set.
-> 
->> +static int ipq_mdio_reset(struct mii_bus *bus)
->> +{
->> +	struct ipq4019_mdio_data *priv = bus->priv;
->> +	struct device *dev = bus->parent;
->> +	struct gpio_desc *reset_gpio;
->> +	u32 val;
->> +	int i, ret;
->> +
->> +	/* To indicate CMN_PLL that ethernet_ldo has been ready if needed */
->> +	if (!IS_ERR(priv->eth_ldo_rdy)) {
->> +		val = readl(priv->eth_ldo_rdy);
->> +		val |= BIT(0);
->> +		writel(val, priv->eth_ldo_rdy);
->> +		fsleep(QCA_PHY_SET_DELAY_US);
->> +	}
->> +
->> +	/* Reset GEPHY if need */
->> +	if (!IS_ERR(priv->reset_ctrl)) {
->> +		reset_control_assert(priv->reset_ctrl);
->> +		fsleep(QCA_PHY_SET_DELAY_US);
->> +		reset_control_deassert(priv->reset_ctrl);
->> +		fsleep(QCA_PHY_SET_DELAY_US);
->> +	}
-> 
-> What exactly is being reset here? Which is GEPHY?
-> 
-> The MDIO bus master driver should not be touching any Ethernet
-> PHYs. All it provides is a bus, nothing more.
-> 
-> The GEPHY is the embedded Giga Ethernet PHY in the chipset IPQ50xx, 
-> there is a dedicated MDIO bus for this internal PHY.
-> what the reset function does here is for resetting this dedicated MDIO 
-> bus and this embedded PHY DSP hardware.
-> because this dedicated MDIO bus is only connected with this internal 
-> PHY on chip set IPQ50xx, so i put this
-> code in the MDIO reset function.
-> 
->> +
->> +	/* Configure MDIO clock frequency */
->> +	if (!IS_ERR(priv->mdio_clk)) {
->> +		ret = clk_set_rate(priv->mdio_clk, QCA_MDIO_CLK_RATE);
->> +		if (ret)
->> +			return ret;
->> +
->> +		ret = clk_prepare_enable(priv->mdio_clk);
->> +		if (ret)
->> +			return ret;
->> +	}
-> 
->> +
->> +	/* Reset PHYs by gpio pins */
->> +	for (i = 0; i < gpiod_count(dev, "phy-reset"); i++) {
->> +		reset_gpio = gpiod_get_index_optional(dev, "phy-reset", i, 
->> GPIOD_OUT_HIGH);
->> +		if (IS_ERR(reset_gpio))
->> +			continue;
->> +		gpiod_set_value_cansleep(reset_gpio, 0);
->> +		fsleep(QCA_PHY_SET_DELAY_US);
->> +		gpiod_set_value_cansleep(reset_gpio, 1);
->> +		fsleep(QCA_PHY_SET_DELAY_US);
->> +		gpiod_put(reset_gpio);
->> +	}
-> 
-> No, there is common code in phylib to do that.
-> 
-> Hi Andrew,
-> The common code in phylib for resetting PHY by GPIO pin is high active, 
-> which is not suitable for the PHY reset here.
-> for resetting the PHY, calling gpiod_set_value_cansleep(reset_gpio, 1), 
-> then gpiod_set_value_cansleep(reset_gpio, 0).
-> but as for resetting the PHY by GPIO pin in IPQ chipset, this is the 
-> opposite process(low active) from the phylib code,
-> which needs to set the GPIO output value to 0, then to 1 for reset as 
-> the code above.
-> 
->>  static int ipq4019_mdio_probe(struct platform_device *pdev)
->>  {
->>  	struct ipq4019_mdio_data *priv;
->>  	struct mii_bus *bus;
->> +	struct resource *res;
->>  	int ret;
+On 2021-07-30 01:29, Rob Herring wrote:
+> On Thu, Jul 29, 2021 at 6:54 AM Luo Jie <luoj@codeaurora.org> wrote:
 >> 
->>  	bus = devm_mdiobus_alloc_size(&pdev->dev, sizeof(*priv));
->> @@ -182,14 +244,23 @@ static int ipq4019_mdio_probe(struct 
->> platform_device *pdev)
->>  		return -ENOMEM;
+>> rename ipq4019-mdio.yaml to ipq-mdio.yaml for supporting more
+>> ipq boards such as ipq40xx, ipq807x, ipq60xx and ipq50xx.
 >> 
->>  	priv = bus->priv;
->> +	priv->eth_ldo_rdy = IOMEM_ERR_PTR(-EINVAL);
+>> Signed-off-by: Luo Jie <luoj@codeaurora.org>
+>> ---
+>>  ...m,ipq4019-mdio.yaml => qcom,ipq-mdio.yaml} | 32 
+>> ++++++++++++++++---
+>>  1 file changed, 28 insertions(+), 4 deletions(-)
+>>  rename Documentation/devicetree/bindings/net/{qcom,ipq4019-mdio.yaml 
+>> => qcom,ipq-mdio.yaml} (58%)
 >> 
->>  	priv->membase = devm_platform_ioremap_resource(pdev, 0);
->>  	if (IS_ERR(priv->membase))
->>  		return PTR_ERR(priv->membase);
+>> diff --git 
+>> a/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml 
+>> b/Documentation/devicetree/bindings/net/qcom,ipq-mdio.yaml
+>> similarity index 58%
+>> rename from 
+>> Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
+>> rename to Documentation/devicetree/bindings/net/qcom,ipq-mdio.yaml
+>> index 0c973310ada0..5bdeb461523b 100644
+>> --- a/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
+>> +++ b/Documentation/devicetree/bindings/net/qcom,ipq-mdio.yaml
+>> @@ -1,10 +1,10 @@
+>>  # SPDX-License-Identifier: GPL-2.0-only OR BSD-2-Clause
+>>  %YAML 1.2
+>>  ---
+>> -$id: http://devicetree.org/schemas/net/qcom,ipq4019-mdio.yaml#
+>> +$id: http://devicetree.org/schemas/net/qcom,ipq-mdio.yaml#
+>>  $schema: http://devicetree.org/meta-schemas/core.yaml#
 >> 
->> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
->> +	if (res)
->> +		priv->eth_ldo_rdy = devm_ioremap_resource(&pdev->dev, res);
+>> -title: Qualcomm IPQ40xx MDIO Controller Device Tree Bindings
+>> +title: Qualcomm IPQ MDIO Controller Device Tree Bindings
+>> 
+>>  maintainers:
+>>    - Robert Marko <robert.marko@sartura.hr>
+>> @@ -14,7 +14,9 @@ allOf:
+>> 
+>>  properties:
+>>    compatible:
+>> -    const: qcom,ipq4019-mdio
+>> +    oneOf:
+>> +      - const: qcom,ipq4019-mdio
+>> +      - const: qcom,ipq-mdio
+> 
+> This is more than the commit log suggests. A generic compatible by
+> itself is not sufficient. If other chips have the same block, just use
+> 'qcom,ipq4019-mdio'. They should also have a compatible for the new
+> SoC in case it's not 'the same'.
+> 
+> Also, use 'enum' rather than oneOf plus const.
+> 
+> Hi Rob
+> Thanks for the comments, will keep the compatible "qcom,ipq4019-mdio" 
+> unchanged,
+> and add the new compatible name by using 'enum' in the next patch set.
+> the commit log will be updated in the next patch set.
+>> 
+>>    "#address-cells":
+>>      const: 1
+>> @@ -23,7 +25,29 @@ properties:
+>>      const: 0
+>> 
+>>    reg:
+>> -    maxItems: 1
+>> +    maxItems: 2
+> 
+> This breaks compatibility because now 1 entry is not valid.
+> 
+> will update it by using "minItems: 1, maxItems: 2" in the next patch 
+> set.
+> 
 >> +
->> +	priv->reset_ctrl = devm_reset_control_get_exclusive(&pdev->dev, 
->> "gephy_mdc_rst");
->> +	priv->mdio_clk = devm_clk_get(&pdev->dev, "gcc_mdio_ahb_clk");
+>> +  clocks:
+>> +    items:
+>> +      - description: MDIO clock
+>> +
+>> +  clock-names:
+>> +    items:
+>> +      - const: gcc_mdio_ahb_clk
+>> +
+>> +  resets:
+>> +    items:
+>> +      - description: MDIO reset & GEPHY hardware reset
+>> +
+>> +  reset-names:
+>> +    items:
+>> +      - const: gephy_mdc_rst
 > 
-> You probably want to use devm_clk_get_optional().
+> These all now apply to 'qcom,ipq4019-mdio'. The h/w had no clocks or
+> resets and now does?
 > 
->     Andrew
+> You don't need *-names when there is only 1.
 > 
-> thanks for the comment, will update it in the next patch set.
+> Hi Rob
+> thanks for the comment, clocks is for configuring the source clock of 
+> MDIO bus,
+> which is apply to ipq4019 and the new chip set such as ipq807x, ipq50xx 
+> and ipq60xx,
+> which is not configured because of uboot configuring it, kernel should 
+> not depends on
+> the configuration of uboot, so i add it.
+> will remove the *-name in the next patch set.
+> 
+>> +  phy-reset-gpios:
+>> +    maxItems: 3
+>> +    description:
+>> +      The phandle and specifier for the GPIO that controls the RESET
+>> +      lines of PHY devices on that MDIO bus.
+> 
+> This belongs in the phy node since the reset is connected to the phy.
+> 
+> since the phylib code can't satisfy resetting PHY in IPQ chipset, 
+> phylib resets phy by
+> configuring GPIO output value to 1, then to 0. however the PHY reset in 
+> IPQ chipset need
+> to configuring GPIO output value to 0, then to 1 for the PHY reset, so 
+> i put the phy-reset-gpios here.
+> 
+>> 
+>>  required:
+>>    - compatible
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum,
+>> a Linux Foundation Collaborative Project
+>> 
