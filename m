@@ -2,74 +2,318 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C381A3DE2B8
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 00:54:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 927743DE2BC
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 00:55:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232359AbhHBWyY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Aug 2021 18:54:24 -0400
-Received: from mail-il1-f181.google.com ([209.85.166.181]:39865 "EHLO
-        mail-il1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231126AbhHBWyU (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Aug 2021 18:54:20 -0400
-Received: by mail-il1-f181.google.com with SMTP id r1so17933288iln.6;
-        Mon, 02 Aug 2021 15:54:09 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Ws7DlLtnnswMnz4Iv79PgHKEEMwGY+Hyjh4kHnupODQ=;
-        b=T9BBnnXgg7Uz3FTRybQ1tIozJMbDV6yo4ie+/LC6ENaRWaMlvZqFkIhWwstwRcUcm5
-         cpLquYBedVtJlm3VELIPMQYvgA0mFvrCH4EzvFYJuFjIZ3qj6kM4cIPIudMq6EKwXqXZ
-         U4N5DUGsPk3vjJ0bew9X/gid0EX8ikDF+CoB6iW0SUpfjtV8+BnlR9lIvnwkfL9TbbDF
-         p/3OM3ZN22AjqOla8en7aMqabWb4VXwP9oxLKP5XQCP9CRN56RMeNTCLW+/BE0ODJDbh
-         ktOtG/+TaAs7vwodcT0HWiEuKw/kSltFGe3b267g0AdPX68zE85M6pRkGmXk6dBUcJXp
-         rwEw==
-X-Gm-Message-State: AOAM532bmZevb6wfnFhMUvWChZ1ZfoUUMTKCgNrvLxTUoB6E4rPHUeFk
-        gBk1o7AKytj1v1nuhftYAA==
-X-Google-Smtp-Source: ABdhPJxR+DvEPJiW5Ohrap4Z45QueUlCz6siPp+LC7c3y/KSGP97bxFsq9mhb7deasgXjUf0AOOfrg==
-X-Received: by 2002:a92:cb52:: with SMTP id f18mr2529805ilq.97.1627944849513;
-        Mon, 02 Aug 2021 15:54:09 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id t24sm8106777ioh.24.2021.08.02.15.54.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Aug 2021 15:54:08 -0700 (PDT)
-Received: (nullmailer pid 1776439 invoked by uid 1000);
-        Mon, 02 Aug 2021 22:54:06 -0000
-Date:   Mon, 2 Aug 2021 16:54:06 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Cc:     marijn.suijten@somainline.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, rjw@rjwysocki.net,
-        bartosz.dudziak@snejp.pl, bjorn.andersson@linaro.org,
-        jeffrey.l.hugo@gmail.com, martin.botka@somainline.org,
-        agross@kernel.org, konrad.dybcio@somainline.org,
-        jami.kettunen@somainline.org, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        linux-kernel@vger.kernel.org, stephan@gerhold.net,
-        linux-arm-msm@vger.kernel.org, daniel.lezcano@linaro.org
-Subject: Re: [PATCH v8 5/5] dt-bindings: soc: qcom: spm: Document SDM660 and
- MSM8998 compatibles
-Message-ID: <YQh3jjIUTnmHyzft@robh.at.kernel.org>
-References: <20210729155609.608159-1-angelogioacchino.delregno@somainline.org>
- <20210729155609.608159-6-angelogioacchino.delregno@somainline.org>
+        id S231126AbhHBWzY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Aug 2021 18:55:24 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:39509 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231920AbhHBWzX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 2 Aug 2021 18:55:23 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1627944914; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=et8p+DAPYDSsZ9VpFh08G64kkSN965airz+DVWjDetc=;
+ b=SuwQO7A9wqO99WmBeRCRyqHFYV+1DR/K/UCs0O6fdACOXm+8JhXKWq2v5yQhh+n1d7slbzhe
+ uuFPvTeFpZc/SSU5LZqmrXh8iJ7Q+ZGZyzkEAhHQGjgBOrrl7VzI8YaeNFiZ5QYBJbJEmg7h
+ n66AGzofcTWrReEwqOSObJX95uA=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 610877d04815712f3a1f099e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 02 Aug 2021 22:55:12
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E8260C4338A; Mon,  2 Aug 2021 22:55:11 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B4D15C433D3;
+        Mon,  2 Aug 2021 22:55:10 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210729155609.608159-6-angelogioacchino.delregno@somainline.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 02 Aug 2021 15:55:10 -0700
+From:   abhinavk@codeaurora.org
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        dri-devel@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno@lists.freedesktop.org,
+        Sumit Semwal <sumit.semwal@linaro.org>
+Subject: Re: [Freedreno] [PATCH 01/11] drm/msm/dsi: add support for dsc data
+In-Reply-To: <20210715065203.709914-2-vkoul@kernel.org>
+References: <20210715065203.709914-1-vkoul@kernel.org>
+ <20210715065203.709914-2-vkoul@kernel.org>
+Message-ID: <c411e4d60efd3029b2dc6b0d899ea8a9@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 29 Jul 2021 17:56:09 +0200, AngeloGioacchino Del Regno wrote:
-> The driver was updated to add SAW2 v4.1 support for new SoCs: document
-> the new compatibles.
+On 2021-07-14 23:51, Vinod Koul wrote:
+> Display Stream Compression (DSC) parameters need to be calculated. Add
+> helpers and struct msm_display_dsc_config in msm_drv for this
+> msm_display_dsc_config uses drm_dsc_config for DSC parameters.
 > 
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 > ---
->  .../bindings/soc/qcom/qcom,spm.yaml           | 22 +++++++++++++++++++
->  1 file changed, 22 insertions(+)
+> Changes since RFC:
+>  - Drop the DT parsing code
+>  - Port dsc param calculation from downstream
 > 
-
-Reviewed-by: Rob Herring <robh@kernel.org>
+>  drivers/gpu/drm/msm/dsi/dsi_host.c | 133 +++++++++++++++++++++++++++++
+>  drivers/gpu/drm/msm/msm_drv.h      |  21 +++++
+>  2 files changed, 154 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> index 8a10e4343281..e1e5d91809b5 100644
+> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> @@ -30,6 +30,8 @@
+> 
+>  #define DSI_RESET_TOGGLE_DELAY_MS 20
+> 
+> +static int dsi_populate_dsc_params(struct msm_display_dsc_config 
+> *dsc);
+> +
+>  static int dsi_get_version(const void __iomem *base, u32 *major, u32 
+> *minor)
+>  {
+>  	u32 ver;
+> @@ -156,6 +158,7 @@ struct msm_dsi_host {
+>  	struct regmap *sfpb;
+> 
+>  	struct drm_display_mode *mode;
+> +	struct msm_display_dsc_config *dsc;
+> 
+>  	/* connected device info */
+>  	struct device_node *device_node;
+> @@ -1744,6 +1747,136 @@ static int dsi_host_parse_lane_data(struct
+> msm_dsi_host *msm_host,
+>  	return -EINVAL;
+>  }
+> 
+> +static u32 dsi_dsc_rc_buf_thresh[DSC_NUM_BUF_RANGES - 1] = {
+> +	0x0e, 0x1c, 0x2a, 0x38, 0x46, 0x54, 0x62,
+> +	0x69, 0x70, 0x77, 0x79, 0x7b, 0x7d, 0x7e
+> +};
+> +
+> +/* only 8bpc, 8bpp added */
+> +static char min_qp[DSC_NUM_BUF_RANGES] = {
+> +	0, 0, 1, 1, 3, 3, 3, 3, 3, 3, 5, 5, 5, 7, 13
+> +};
+> +
+> +static char max_qp[DSC_NUM_BUF_RANGES] = {
+> +	4, 4, 5, 6, 7, 7, 7, 8, 9, 10, 11, 12, 13, 13, 15
+> +};
+> +
+> +static char bpg_offset[DSC_NUM_BUF_RANGES] = {
+> +	2, 0, 0, -2, -4, -6, -8, -8, -8, -10, -10, -12, -12, -12, -12
+> +};
+> +
+> +static int dsi_populate_dsc_params(struct msm_display_dsc_config *dsc)
+> +{
+> +	int mux_words_size;
+> +	int groups_per_line, groups_total;
+> +	int min_rate_buffer_size;
+> +	int hrd_delay;
+> +	int pre_num_extra_mux_bits, num_extra_mux_bits;
+> +	int slice_bits;
+> +	int target_bpp_x16;
+> +	int data;
+> +	int final_value, final_scale;
+> +	int i;
+> +
+> +	dsc->drm->rc_model_size = 8192;
+> +	dsc->drm->first_line_bpg_offset = 12;
+> +	dsc->drm->rc_edge_factor = 6;
+> +	dsc->drm->rc_tgt_offset_high = 3;
+> +	dsc->drm->rc_tgt_offset_low = 3;
+> +	dsc->drm->simple_422 = 0;
+> +	dsc->drm->convert_rgb = 1;
+> +	dsc->drm->vbr_enable = 0;
+> +
+> +	/* handle only bpp = bpc = 8 */
+> +	for (i = 0; i < DSC_NUM_BUF_RANGES - 1 ; i++)
+> +		dsc->drm->rc_buf_thresh[i] = dsi_dsc_rc_buf_thresh[i];
+> +
+> +	for (i = 0; i < DSC_NUM_BUF_RANGES; i++) {
+> +		dsc->drm->rc_range_params[i].range_min_qp = min_qp[i];
+> +		dsc->drm->rc_range_params[i].range_max_qp = max_qp[i];
+> +		dsc->drm->rc_range_params[i].range_bpg_offset = bpg_offset[i];
+> +	}
+> +
+> +	dsc->drm->initial_offset = 6144; /* Not bpp 12 */
+> +	if (dsc->drm->bits_per_pixel != 8)
+> +		dsc->drm->initial_offset = 2048;	/* bpp = 12 */
+> +
+> +	mux_words_size = 48;		/* bpc == 8/10 */
+> +	if (dsc->drm->bits_per_component == 12)
+> +		mux_words_size = 64;
+> +
+> +	dsc->drm->initial_xmit_delay = 512;
+> +	dsc->drm->initial_scale_value = 32;
+> +	dsc->drm->first_line_bpg_offset = 12;
+> +	dsc->drm->line_buf_depth = dsc->drm->bits_per_component + 1;
+> +
+> +	/* bpc 8 */
+> +	dsc->drm->flatness_min_qp = 3;
+> +	dsc->drm->flatness_max_qp = 12;
+> +	dsc->det_thresh_flatness = 7 + 2 * (dsc->drm->bits_per_component - 
+> 8);
+> +	dsc->drm->rc_quant_incr_limit0 = 11;
+> +	dsc->drm->rc_quant_incr_limit1 = 11;
+> +	dsc->drm->mux_word_size = DSC_MUX_WORD_SIZE_8_10_BPC;
+> +
+> +	/* FIXME: need to call drm_dsc_compute_rc_parameters() so that rest 
+> of
+> +	 * params are calculated
+> +	 */
+> +	dsc->slice_last_group_size = 3 - (dsc->drm->slice_width % 3);
+> +	groups_per_line = DIV_ROUND_UP(dsc->drm->slice_width, 3);
+> +	dsc->drm->slice_chunk_size = dsc->drm->slice_width *
+> dsc->drm->bits_per_pixel / 8;
+> +	if ((dsc->drm->slice_width * dsc->drm->bits_per_pixel) % 8)
+> +		dsc->drm->slice_chunk_size++;
+> +
+> +	/* rbs-min */
+> +	min_rate_buffer_size =  dsc->drm->rc_model_size - 
+> dsc->drm->initial_offset +
+> +				dsc->drm->initial_xmit_delay * dsc->drm->bits_per_pixel +
+> +				groups_per_line * dsc->drm->first_line_bpg_offset;
+> +
+> +	hrd_delay = DIV_ROUND_UP(min_rate_buffer_size, 
+> dsc->drm->bits_per_pixel);
+> +
+> +	dsc->drm->initial_dec_delay = hrd_delay - 
+> dsc->drm->initial_xmit_delay;
+> +
+> +	dsc->drm->initial_scale_value = 8 * dsc->drm->rc_model_size /
+> +				       (dsc->drm->rc_model_size - dsc->drm->initial_offset);
+> +
+> +	slice_bits = 8 * dsc->drm->slice_chunk_size * dsc->drm->slice_height;
+> +
+> +	groups_total = groups_per_line * dsc->drm->slice_height;
+> +
+> +	data = dsc->drm->first_line_bpg_offset * 2048;
+> +
+> +	dsc->drm->nfl_bpg_offset = DIV_ROUND_UP(data, (dsc->drm->slice_height 
+> - 1));
+> +
+> +	pre_num_extra_mux_bits = 3 * (mux_words_size + (4 *
+> dsc->drm->bits_per_component + 4) - 2);
+> +
+> +	num_extra_mux_bits = pre_num_extra_mux_bits - (mux_words_size -
+> +			     ((slice_bits - pre_num_extra_mux_bits) % mux_words_size));
+> +
+> +	data = 2048 * (dsc->drm->rc_model_size - dsc->drm->initial_offset +
+> num_extra_mux_bits);
+> +	dsc->drm->slice_bpg_offset = DIV_ROUND_UP(data, groups_total);
+> +
+> +	/* bpp * 16 + 0.5 */
+> +	data = dsc->drm->bits_per_pixel * 16;
+> +	data *= 2;
+> +	data++;
+> +	data /= 2;
+> +	target_bpp_x16 = data;
+> +
+> +	data = (dsc->drm->initial_xmit_delay * target_bpp_x16) / 16;
+> +	final_value =  dsc->drm->rc_model_size - data + num_extra_mux_bits;
+As we discussed, can you please check why there is an additional + 8 and 
+/16 in the upstream final_offset calculation?
+If we can eliminate or root-cause the difference in the calculations, 
+either this patch can be substantially reduced or
+we will atleast know for future reference what was the delta and can 
+leave a comment.
+> +	dsc->drm->final_offset = final_value;
+> +
+> +	final_scale = 8 * dsc->drm->rc_model_size / (dsc->drm->rc_model_size
+> - final_value);
+> +
+> +
+> +	data = (final_scale - 9) * (dsc->drm->nfl_bpg_offset +
+> dsc->drm->slice_bpg_offset);
+> +	dsc->drm->scale_increment_interval = (2048 * dsc->drm->final_offset) 
+> / data;
+> +
+> +	dsc->drm->scale_decrement_interval = groups_per_line /
+> (dsc->drm->initial_scale_value - 8);
+> +
+> +	return 0;
+> +}
+> +
+>  static int dsi_host_parse_dt(struct msm_dsi_host *msm_host)
+>  {
+>  	struct device *dev = &msm_host->pdev->dev;
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h 
+> b/drivers/gpu/drm/msm/msm_drv.h
+> index 2668941df529..65bff0176b66 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -30,6 +30,7 @@
+>  #include <drm/drm_plane_helper.h>
+>  #include <drm/drm_probe_helper.h>
+>  #include <drm/drm_fb_helper.h>
+> +#include <drm/drm_dsc.h>
+>  #include <drm/msm_drm.h>
+>  #include <drm/drm_gem.h>
+> 
+> @@ -134,6 +135,23 @@ struct msm_drm_thread {
+>  	struct kthread_worker *worker;
+>  };
+> 
+> +/* DSC config */
+> +struct msm_display_dsc_config {
+> +	struct drm_dsc_config *drm;
+> +	u8 scr_rev;
+Can scr_rev also move into drm_dsc_config? SCR itself is not QC 
+specific. Its just telling there was a change request
+for that DSC revision.
+In QC side, we only use this scr_rev to have some different tables. This 
+can even be true for other vendors.
+So moving this to drm_dsc_config will only help.
+> +
+> +	u32 initial_lines;
+> +	u32 pkt_per_line;
+> +	u32 bytes_in_slice;
+> +	u32 bytes_per_pkt;
+> +	u32 eol_byte_num;
+> +	u32 pclk_per_line;
+> +	u32 slice_last_group_size;
+> +	u32 det_thresh_flatness;
+> +	u32 extra_width;
+> +	u32 pps_delay_ms;
+> +};
+> +
+>  struct msm_drm_private {
+> 
+>  	struct drm_device *dev;
+> @@ -227,6 +245,9 @@ struct msm_drm_private {
+>  	/* Properties */
+>  	struct drm_property *plane_property[PLANE_PROP_MAX_NUM];
+> 
+> +	/* DSC configuration */
+> +	struct msm_display_dsc_config *dsc;
+> +
+>  	/* VRAM carveout, used when no IOMMU: */
+>  	struct {
+>  		unsigned long size;
