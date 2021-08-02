@@ -2,215 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EAF183DDCA0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Aug 2021 17:43:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7BE6B3DDD44
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Aug 2021 18:10:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234741AbhHBPnZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Aug 2021 11:43:25 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49464 "EHLO mail.kernel.org"
+        id S232127AbhHBQKy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Aug 2021 12:10:54 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:49240 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235032AbhHBPnX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Aug 2021 11:43:23 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 0C4B9610FB;
-        Mon,  2 Aug 2021 15:43:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1627918994;
-        bh=6cailuMkhyBB9d0ZTXadcfD6Sa05EeQ6lw5qH7dMuws=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=pf9qXWt9jzUmsOIxUZMGoBwmfg6lOCMSQDgbmWNLeol5ZxayXozJxGJTpFnYXOqSc
-         9ERJiHSI9np8gNmQycu5nNPm6sBuGnpN2us3cH+y12VkfaJNP1mZT4GtmejgvcdToO
-         iT34gdRyg78rKk2bp0mR9fdfTqGH1cypfI72Eg8cZHESTI5Jn7h4oubLmijjA8ZHa5
-         XDBs7Si3CwX8mkLzErFNYIzwvOz2AinoGl8HA5FTpcRQEAQabndmk3Z+0WIOGHSpGz
-         dBwdxdlXuutyyKBnwESJv+14VPz2DFMki2hr5UwsEtK7uM+IMA6xJlrLhjuu4/+19z
-         OteQNoqO7koyA==
-Date:   Mon, 2 Aug 2021 16:43:08 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Doug Anderson <dianders@chromium.org>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Thierry Reding <treding@nvidia.com>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCHv3] iommu/arm-smmu: Optimize ->tlb_flush_walk() for qcom
- implementation
-Message-ID: <20210802154308.GG28735@willie-the-truck>
-References: <20210623134201.16140-1-saiprakash.ranjan@codeaurora.org>
+        id S229946AbhHBQKy (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 2 Aug 2021 12:10:54 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1627920644; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=RcmCVefjMH6l9oNkIcTgBxKj15suM9Nyc7u4Bfq5P6s=;
+ b=AU+Pefk8LNRWkvMqTIxyGXqvUxP5gM7aYdjjoLVm8/4U59bVqmVzOj33fftUZRp3Jx8iaxT0
+ BXGc4u5qEbHTCpz2w4ZC+gn3ItFG6/DvlQoG+Jct9u9sHCg++F4ua0ta53ZIkgrID5YZdtzy
+ ewAh8KXybix6+EQY3aG0Chp7QSs=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 610818e117c2b4047dcb83d8 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 02 Aug 2021 16:10:09
+ GMT
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9181FC43217; Mon,  2 Aug 2021 16:10:08 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 436C1C433D3;
+        Mon,  2 Aug 2021 16:10:06 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210623134201.16140-1-saiprakash.ranjan@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 02 Aug 2021 09:10:06 -0700
+From:   khsieh@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robdclark@gmail.com,
+        sean@poorly.run, vkoul@kernel.org, abhinavk@codeaurora.org,
+        aravindh@codeaurora.org, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/dp: update is_connected status base on sink count
+ at dp_pm_resume()
+In-Reply-To: <CAE-0n51cNywB2ThQxqS4iX-d7wR+rYXt8P33o9cUq9J6tT915A@mail.gmail.com>
+References: <1627507854-16733-1-git-send-email-khsieh@codeaurora.org>
+ <CAE-0n51cNywB2ThQxqS4iX-d7wR+rYXt8P33o9cUq9J6tT915A@mail.gmail.com>
+Message-ID: <781ad3c4973b3f8dd83933a451b266b9@codeaurora.org>
+X-Sender: khsieh@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 23, 2021 at 07:12:01PM +0530, Sai Prakash Ranjan wrote:
-> Currently for iommu_unmap() of large scatter-gather list with page size
-> elements, the majority of time is spent in flushing of partial walks in
-> __arm_lpae_unmap() which is a VA based TLB invalidation invalidating
-> page-by-page on iommus like arm-smmu-v2 (TLBIVA).
+On 2021-07-30 11:57, Stephen Boyd wrote:
+> Quoting Kuogee Hsieh (2021-07-28 14:30:54)
+>> Currently at dp_pm_resume() is_connected state is decided base on hpd 
+>> connection
+>> status only. This will put is_connected in wrongly "true" state at the 
+>> scenario
+>> that dongle attached to DUT but without hmdi cable connecting to it. 
+>> Fix this
+>> problem by adding read sink count from dongle and decided is_connected 
+>> state base
+>> on both sink count and hpd connection status.
+>> 
 > 
-> For example: to unmap a 32MB scatter-gather list with page size elements
-> (8192 entries), there are 16->2MB buffer unmaps based on the pgsize (2MB
-> for 4K granule) and each of 2MB will further result in 512 TLBIVAs (2MB/4K)
-> resulting in a total of 8192 TLBIVAs (512*16) for 16->2MB causing a huge
-> overhead.
+> Please add a Fixes tag.
 > 
-> On qcom implementation, there are several performance improvements for
-> TLB cache invalidations in HW like wait-for-safe (for realtime clients
-> such as camera and display) and few others to allow for cache
-> lookups/updates when TLBI is in progress for the same context bank.
-> So the cost of over-invalidation is less compared to the unmap latency
-> on several usecases like camera which deals with large buffers. So,
-> ASID based TLB invalidations (TLBIASID) can be used to invalidate the
-> entire context for partial walk flush thereby improving the unmap
-> latency.
+>> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+>> ---
+>>  drivers/gpu/drm/msm/dp/dp_display.c | 23 +++++++++++++++++++++--
+>>  1 file changed, 21 insertions(+), 2 deletions(-)
+>> 
+>> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
+>> b/drivers/gpu/drm/msm/dp/dp_display.c
+>> index 2b660e9..9bcb261 100644
+>> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>> @@ -1308,6 +1308,17 @@ static int dp_display_remove(struct 
+>> platform_device *pdev)
+>>         return 0;
+>>  }
+>> 
+>> +static int dp_get_sink_count(struct dp_display_private *dp)
+>> +{
+>> +       u8 sink_count;
+>> +
+>> +       sink_count = drm_dp_read_sink_count(dp->aux);
 > 
-> Non-strict mode can use this by default for all platforms given its
-> all about over-invalidation saving time on individual unmaps and
-> non-deterministic generally.
+> drm_dp_read_sink_count() returns an int, not a u8. Comparing a u8 to
+> less than zero doesn't make any sense as it isn't signed.
 > 
-> For this example of 32MB scatter-gather list unmap, this change results
-> in just 16 ASID based TLB invalidations (TLBIASIDs) as opposed to 8192
-> TLBIVAs thereby increasing the performance of unmaps drastically.
+>> +       if (sink_count < 0)
+>> +               return 0;
+>> +
+>> +       return sink_count;
+>> +}
 > 
-> Test on QTI SM8150 SoC for 10 iterations of iommu_{map_sg}/unmap:
-> (average over 10 iterations)
+> We can drop this function and just have an int count in dp_pm_resume()
+> that is compared to < 0 and then ignored.
 > 
-> Before this optimization:
+>> +
+>>  static int dp_pm_resume(struct device *dev)
+>>  {
+>>         struct platform_device *pdev = to_platform_device(dev);
+>> @@ -1327,14 +1338,22 @@ static int dp_pm_resume(struct device *dev)
+>> 
+>>         dp_catalog_ctrl_hpd_config(dp->catalog);
+>> 
+>> -       status = dp_catalog_link_is_connected(dp->catalog);
+>> +       /*
+>> +        * set sink to normal operation mode -- D0
+>> +        * before dpcd read
+>> +        */
+>> +       dp_link_psm_config(dp->link, &dp->panel->link_info, false);
+>> 
+>> +       if ((status = dp_catalog_link_is_connected(dp->catalog)))
+>> +               dp->link->sink_count = dp_get_sink_count(dp);
 > 
->     size        iommu_map_sg      iommu_unmap
->       4K            2.067 us         1.854 us
->      64K            9.598 us         8.802 us
->       1M          148.890 us       130.718 us
->       2M          305.864 us        67.291 us
->      12M         1793.604 us       390.838 us
->      16M         2386.848 us       518.187 us
->      24M         3563.296 us       775.989 us
->      32M         4747.171 us      1033.364 us
+> Do we need to call drm_dp_read_sink_count_cap() as well?
+no, we only need sink_count
 > 
-> After this optimization:
+>> +       else
+>> +               dp->link->sink_count = 0;
+>>         /*
+>>          * can not declared display is connected unless
+>>          * HDMI cable is plugged in and sink_count of
+>>          * dongle become 1
+>>          */
+>> -       if (status && dp->link->sink_count)
 > 
->     size        iommu_map_sg      iommu_unmap
->       4K            1.723 us         1.765 us
->      64K            9.880 us         8.869 us
->       1M          155.364 us       135.223 us
->       2M          303.906 us         5.385 us
->      12M         1786.557 us        21.250 us
->      16M         2391.890 us        27.437 us
->      24M         3570.895 us        39.937 us
->      32M         4755.234 us        51.797 us
+> Is 'status' used anymore? If not, please remove it.
+Yes, it still used which used to decided to perform dpcd read sink count 
+or not
 > 
-> This is further reduced once the map/unmap_pages() support gets in which
-> will result in just 1 TLBIASID as compared to 16 TLBIASIDs.
-> 
-> Real world data also shows big difference in unmap performance as below:
-> 
-> There were reports of camera frame drops because of high overhead in
-> iommu unmap without this optimization because of frequent unmaps issued
-> by camera of about 100MB/s taking more than 100ms thereby causing frame
-> drops.
-> 
-> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-> ---
-> 
-> Changes in v3:
->  * Move the logic to arm-smmu driver from io-pgtable (Robin)
->  * Use a new set of iommu_flush_ops->arm_smmu_s1_tlb_impl_ops and use it for qcom impl
-> 
-> Changes in v2:
->  * Add a quirk to choose tlb_flush_all in partial walk flush
->  * Set the quirk for QTI SoC implementation
-> 
-> ---
->  drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 13 +++++++++++++
->  drivers/iommu/arm/arm-smmu/arm-smmu.c      | 17 ++++++++++++++++-
->  2 files changed, 29 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> index 7771d40176de..218c71465819 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-> @@ -10,6 +10,8 @@
->  
->  #include "arm-smmu.h"
->  
-> +extern const struct iommu_flush_ops arm_smmu_s1_tlb_impl_ops;
-> +
->  struct qcom_smmu {
->  	struct arm_smmu_device smmu;
->  	bool bypass_quirk;
-> @@ -146,6 +148,8 @@ static int qcom_adreno_smmu_init_context(struct arm_smmu_domain *smmu_domain,
->  {
->  	struct adreno_smmu_priv *priv;
->  
-> +	pgtbl_cfg->tlb = &arm_smmu_s1_tlb_impl_ops;
-> +
->  	/* Only enable split pagetables for the GPU device (SID 0) */
->  	if (!qcom_adreno_smmu_is_gpu_device(dev))
->  		return 0;
-> @@ -185,6 +189,14 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
->  	{ }
->  };
->  
-> +static int qcom_smmu_init_context(struct arm_smmu_domain *smmu_domain,
-> +		struct io_pgtable_cfg *pgtbl_cfg, struct device *dev)
-> +{
-> +	pgtbl_cfg->tlb = &arm_smmu_s1_tlb_impl_ops;
-> +
-> +	return 0;
-> +}
-> +
->  static int qcom_smmu_cfg_probe(struct arm_smmu_device *smmu)
->  {
->  	unsigned int last_s2cr = ARM_SMMU_GR0_S2CR(smmu->num_mapping_groups - 1);
-> @@ -308,6 +320,7 @@ static int qcom_smmu500_reset(struct arm_smmu_device *smmu)
->  }
->  
->  static const struct arm_smmu_impl qcom_smmu_impl = {
-> +	.init_context = qcom_smmu_init_context,
->  	.cfg_probe = qcom_smmu_cfg_probe,
->  	.def_domain_type = qcom_smmu_def_domain_type,
->  	.reset = qcom_smmu500_reset,
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> index d3c6f54110a5..f3845e822565 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> @@ -341,6 +341,12 @@ static void arm_smmu_tlb_add_page_s1(struct iommu_iotlb_gather *gather,
->  				  ARM_SMMU_CB_S1_TLBIVAL);
->  }
->  
-> +static void arm_smmu_tlb_inv_walk_impl_s1(unsigned long iova, size_t size,
-> +				     size_t granule, void *cookie)
-> +{
-> +	arm_smmu_tlb_inv_context_s1(cookie);
-> +}
-> +
->  static void arm_smmu_tlb_inv_walk_s2(unsigned long iova, size_t size,
->  				     size_t granule, void *cookie)
->  {
-> @@ -388,6 +394,12 @@ static const struct iommu_flush_ops arm_smmu_s1_tlb_ops = {
->  	.tlb_add_page	= arm_smmu_tlb_add_page_s1,
->  };
->  
-> +const struct iommu_flush_ops arm_smmu_s1_tlb_impl_ops = {
-> +	.tlb_flush_all	= arm_smmu_tlb_inv_context_s1,
-> +	.tlb_flush_walk	= arm_smmu_tlb_inv_walk_impl_s1,
-> +	.tlb_add_page	= arm_smmu_tlb_add_page_s1,
-> +};
-
-Hmm, dunno about this. Wouldn't it be a lot cleaner if the tlb_flush_walk
-callbacks just did the right thing based on the smmu_domain (maybe in the
-arm_smmu_cfg?) rather than having an entirely new set of ops just because
-they're const and you can't overide the bit you want?
-
-I don't think there's really an awful lot qcom-specific about the principle
-here -- there's a trade-off between over-invalidation and invalidation
-latency. That happens on the CPU as well.
-
-Will
+>> +       if (dp->link->sink_count)
+>>                 dp->dp_display.is_connected = true;
+>>         else
+>>                 dp->dp_display.is_connected = false;
