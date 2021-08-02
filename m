@@ -2,225 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A9E33DDFF3
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Aug 2021 21:23:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4CBED3DE094
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Aug 2021 22:21:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229903AbhHBTYE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Aug 2021 15:24:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38392 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229716AbhHBTYD (ORCPT
+        id S231414AbhHBUVV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Aug 2021 16:21:21 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:20837 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231635AbhHBUVR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Aug 2021 15:24:03 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9B765C061764
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Aug 2021 12:23:52 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id e2-20020a17090a4a02b029016f3020d867so1453627pjh.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Aug 2021 12:23:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=B7DjdkPmiNfssE6oJFgPeeCfIkNhAcR7dx6Gq0zHJUo=;
-        b=TKsjy8XEtnq+lBJdZsVEulqwq61tqWTOFQdtt236SJnYWAX0N38AnkKvYcW5se91Ns
-         omBDgVmYo9H/Djau5cBepkNyUeW5Cn0HzVjVNuS7X7UZQagnPz+Q2LXUSAACe1OnFIpB
-         ci+wKDhtcoBL30x4rdnvaJj9qtn/uBUzl0a1s=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=B7DjdkPmiNfssE6oJFgPeeCfIkNhAcR7dx6Gq0zHJUo=;
-        b=L3ylvO8DgZT/hB96QcU4caFufJASZSpUvNW30GnLFOoebT11jHMBp805TgOrSooe8u
-         2w4yCZH5rt70j2POVW8EOw16izJ6ltZ6AAQKy3tOtTPNjzQ9qXtGKEfb4pQ6pVuLnElc
-         VhP1MylQfFvbTRCJrU5bVomM5lpTNtgRMLUErnntKvOtiMd92Bu9ZYoDMv2c8UDri7h9
-         DhwDQuDj2HJRtFDYkDzthPeEN12fJuYLK/pdfkPXPzvCfGODZCHe41la6XnaaZZcrfVu
-         dfSgykuzcx2wX0x3S5OI1HsULDg1H8Noug8A2PuqIKyjZ4VGOf5H4KDh2eIKMMv/SGyq
-         YxzQ==
-X-Gm-Message-State: AOAM533ZI2qKFqT0JFs0j7i2Vm4EoafWDbN1SR5f39Hx4B0txgQtxt8c
-        7M1Uyi4dDzIGOdyDKYmcT0B5Ag==
-X-Google-Smtp-Source: ABdhPJzLbHxsNfPmg1MFTunQhRAZSeJez9H4MweaRSTh8SvN7/TcPdFHn9OO7RQ7MNoTLDCsiNcTGw==
-X-Received: by 2002:a63:cf0a:: with SMTP id j10mr1642904pgg.4.1627932232140;
-        Mon, 02 Aug 2021 12:23:52 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:7a52:cd2f:35b4:3b14])
-        by smtp.gmail.com with UTF8SMTPSA id y64sm13994788pgy.32.2021.08.02.12.23.50
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 02 Aug 2021 12:23:51 -0700 (PDT)
-Date:   Mon, 2 Aug 2021 12:23:48 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Prasad Malisetty <pmaliset@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, bhelgaas@google.com,
-        robh+dt@kernel.org, swboyd@chromium.org, lorenzo.pieralisi@arm.com,
-        svarbanov@mm-sol.com, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dianders@chromium.org,
-        vbadigan@codeaurora.org, sallenki@codeaurora.org
-Subject: Re: [PATCH v4 2/4] arm64: dts: qcom: sc7280: Add PCIe and PHY
- related nodes
-Message-ID: <YQhGRB3wBgQ1Kw9E@google.com>
-References: <1626443927-32028-1-git-send-email-pmaliset@codeaurora.org>
- <1626443927-32028-3-git-send-email-pmaliset@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1626443927-32028-3-git-send-email-pmaliset@codeaurora.org>
+        Mon, 2 Aug 2021 16:21:17 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1627935668; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=PfQwQqGamk2yhFVMH0cYk8jlQ4TdleftFj0Bcd2uREU=; b=M2E6xx/eVvLyBtVZwH55+EIaFvq8m9Ib9M0yFN87t+2qbXv9V1AdVt8+XUSNdSoAJLQi60Yr
+ b4NQ5MNS2HiCvKCpHgnK6xmZe79K3sHfzZrVae0wV76n7yyElSWxwDPb+tjZhLZWNvT7DgiB
+ zhBodH9bJnDRGFaiztdJrmDQQqU=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 610853af9771b05b248a7946 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 02 Aug 2021 20:21:03
+ GMT
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9D273C43217; Mon,  2 Aug 2021 20:21:03 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A4D6BC433F1;
+        Mon,  2 Aug 2021 20:21:01 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org A4D6BC433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=khsieh@codeaurora.org
+From:   Kuogee Hsieh <khsieh@codeaurora.org>
+To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
+        vkoul@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        khsieh@codeaurora.org, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2] drm/msm/dp: update is_connected status base on sink count at dp_pm_resume()
+Date:   Mon,  2 Aug 2021 13:20:55 -0700
+Message-Id: <1627935655-4090-1-git-send-email-khsieh@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Jul 16, 2021 at 07:28:45PM +0530, Prasad Malisetty wrote:
-> Add PCIe controller and PHY nodes for sc7280 SOC.
-> 
-> Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7280.dtsi | 125 +++++++++++++++++++++++++++++++++++
->  1 file changed, 125 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index a8c274a..06baf88 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -15,6 +15,7 @@
->  #include <dt-bindings/reset/qcom,sdm845-pdc.h>
->  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->  #include <dt-bindings/thermal/thermal.h>
-> +#include <dt-bindings/gpio/gpio.h>
->  
->  / {
->  	interrupt-parent = <&intc>;
-> @@ -546,6 +547,118 @@
->  			#power-domain-cells = <1>;
->  		};
->  
-> +		pcie1: pci@1c08000 {
-> +			compatible = "qcom,pcie-sc7280", "qcom,pcie-sm8250", "snps,dw-pcie";
-> +			reg = <0 0x01c08000 0 0x3000>,
-> +			      <0 0x40000000 0 0xf1d>,
-> +			      <0 0x40000f20 0 0xa8>,
-> +			      <0 0x40001000 0 0x1000>,
-> +			      <0 0x40100000 0 0x100000>;
-> +
-> +			reg-names = "parf", "dbi", "elbi", "atu", "config";
-> +			device_type = "pci";
-> +			linux,pci-domain = <1>;
-> +			bus-range = <0x00 0xff>;
-> +			num-lanes = <2>;
-> +
-> +			#address-cells = <3>;
-> +			#size-cells = <2>;
-> +
-> +			ranges = <0x01000000 0x0 0x40200000 0x0 0x40200000 0x0 0x100000>,
-> +				 <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x1fd00000>;
-> +
-> +			interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>;
-> +			interrupt-names = "msi";
-> +			#interrupt-cells = <1>;
-> +			interrupt-map-mask = <0 0 0 0x7>;
-> +			interrupt-map = <0 0 0 1 &intc 0 434 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 2 &intc 0 435 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 3 &intc 0 438 IRQ_TYPE_LEVEL_HIGH>,
-> +					<0 0 0 4 &intc 0 439 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +			clocks = <&gcc GCC_PCIE_1_PIPE_CLK>,
-> +				 <&gcc GCC_PCIE_1_PIPE_CLK_SRC>,
-> +				 <&pcie1_lane 0>,
-> +				 <&rpmhcc RPMH_CXO_CLK>,
-> +				 <&gcc GCC_PCIE_1_AUX_CLK>,
-> +				 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
-> +				 <&gcc GCC_PCIE_1_MSTR_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_1_SLV_AXI_CLK>,
-> +				 <&gcc GCC_PCIE_1_SLV_Q2A_AXI_CLK>,
-> +				 <&gcc GCC_AGGRE_NOC_PCIE_TBU_CLK>,
-> +				 <&gcc GCC_DDRSS_PCIE_SF_CLK>;
-> +
-> +			clock-names = "pipe",
-> +				      "pipe_mux",
-> +				      "phy_pipe",
-> +				      "ref",
-> +				      "aux",
-> +				      "cfg",
-> +				      "bus_master",
-> +				      "bus_slave",
-> +				      "slave_q2a",
-> +				      "tbu",
-> +				      "ddrss_sf_tbu";
-> +
-> +			assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
-> +			assigned-clock-rates = <19200000>;
-> +
-> +			resets = <&gcc GCC_PCIE_1_BCR>;
-> +			reset-names = "pci";
-> +
-> +			power-domains = <&gcc GCC_PCIE_1_GDSC>;
-> +
-> +			phys = <&pcie1_lane>;
-> +			phy-names = "pciephy";
-> +
-> +			perst-gpio = <&tlmm 2 GPIO_ACTIVE_LOW>;
-> +			pinctrl-names = "default";
-> +			pinctrl-0 = <&pcie1_default_state>;
-> +
-> +			iommus = <&apps_smmu 0x1c80 0x1>;
-> +
-> +			iommu-map = <0x0 &apps_smmu 0x1c80 0x1>,
-> +				    <0x100 &apps_smmu 0x1c81 0x1>;
-> +
-> +			status = "disabled";
-> +		};
-> +
-> +		pcie1_phy: phy@1c0e000 {
-> +			compatible = "qcom,sm8250-qmp-gen3x2-pcie-phy";
-> +			reg = <0 0x01c0e000 0 0x1c0>;
-> +			#address-cells = <2>;
-> +			#size-cells = <2>;
-> +			ranges;
-> +			clocks = <&gcc GCC_PCIE_1_AUX_CLK>,
-> +				 <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
-> +				 <&gcc GCC_PCIE_CLKREF_EN>,
-> +				 <&gcc GCC_PCIE1_PHY_RCHNG_CLK>;
-> +			clock-names = "aux", "cfg_ahb", "ref", "refgen";
-> +
-> +			resets = <&gcc GCC_PCIE_1_PHY_BCR>;
-> +			reset-names = "phy";
-> +
-> +			assigned-clocks = <&gcc GCC_PCIE1_PHY_RCHNG_CLK>;
-> +			assigned-clock-rates = <100000000>;
-> +
-> +			status = "disabled";
-> +
-> +			pcie1_lane: lanes@1c0e200 {
-> +				reg = <0 0x01c0e200 0 0x170>,
-> +				      <0 0x01c0e400 0 0x200>,
-> +				      <0 0x01c0ea00 0 0x1f0>,
-> +				      <0 0x01c0e600 0 0x170>,
-> +				      <0 0x01c0e800 0 0x200>,
-> +				      <0 0x01c0ee00 0 0xf4>;
-> +				clocks = <&rpmhcc RPMH_CXO_CLK>;
-> +				clock-names = "pipe0";
-> +
-> +				#phy-cells = <0>;
-> +				#clock-cells = <1>;
-> +				clock-output-names = "pcie_1_pipe_clk";
-> +			};
-> +		};
-> +
->  		stm@6002000 {
->  			compatible = "arm,coresight-stm", "arm,primecell";
->  			reg = <0 0x06002000 0 0x1000>,
-> @@ -1185,6 +1298,18 @@
->  				pins = "gpio46", "gpio47";
->  				function = "qup13";
->  			};
-> +
-> +			pcie1_default_state: pcie1-default-state {
-> +				clkreq {
-> +					pins = "gpio79";
-> +					function = "pcie1_clkreqn";
-> +				};
-> +
-> +				wake-n {
-> +					pins = "gpio3";
-> +					function = "gpio";
-> +				};
+Currently at dp_pm_resume() is_connected state is decided base on hpd connection
+status only. This will put is_connected in wrongly "true" state at the scenario
+that dongle attached to DUT but without hmdi cable connecting to it. Fix this
+problem by adding read sink count from dongle and decided is_connected state base
+on both sink count and hpd connection status.
 
-This could be essentially any GPIO, right? Does it really make sense to
-have this node in the SoC file? I would say it belongs in the board file.
+Changes in v2:
+-- remove dp_get_sink_count() cand call drm_dp_read_sink_count()
+
+Fixes: d9aa6571b28ba ("drm/msm/dp: check sink_count before update is_connected status")
+Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+---
+ drivers/gpu/drm/msm/dp/dp_display.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 8b69114..6dcb78e 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -1403,6 +1403,7 @@ static int dp_pm_resume(struct device *dev)
+ 	struct msm_dp *dp_display = platform_get_drvdata(pdev);
+ 	struct dp_display_private *dp;
+ 	u32 status;
++	int sink_count = 0;
+ 
+ 	dp = container_of(dp_display, struct dp_display_private, dp_display);
+ xlog(__func__, 1,0,0, dp->core_initialized, dp_display->power_on);
+@@ -1417,15 +1418,26 @@ xlog(__func__, 1,0,0, dp->core_initialized, dp_display->power_on);
+ 
+ 	dp_catalog_ctrl_hpd_config(dp->catalog);
+ 
+-	status = dp_catalog_link_is_connected(dp->catalog);
++	/*
++	 * set sink to normal operation mode -- D0
++	 * before dpcd read
++	 */
++	dp_link_psm_config(dp->link, &dp->panel->link_info, false);
++
++	/* if sink conencted, do dpcd read sink count */
++	if ((status = dp_catalog_link_is_connected(dp->catalog))) {
++		sink_count = drm_dp_read_sink_count(dp->aux);
++		if (sink_count < 0)
++			sink_count = 0;
++	}
+ 
++	dp->link->sink_count = sink_count;
+ 	/*
+ 	 * can not declared display is connected unless
+ 	 * HDMI cable is plugged in and sink_count of
+ 	 * dongle become 1
+ 	 */
+-xlog(__func__, 0x12,0,0, 0, dp->link->sink_count);
+-	if (status && dp->link->sink_count)
++	if (dp->link->sink_count)
+ 		dp->dp_display.is_connected = true;
+ 	else
+ 		dp->dp_display.is_connected = false;
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
