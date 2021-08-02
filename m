@@ -2,103 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B47483DD751
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Aug 2021 15:39:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D03153DD75A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  2 Aug 2021 15:39:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233907AbhHBNj4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Aug 2021 09:39:56 -0400
-Received: from mail-il1-f182.google.com ([209.85.166.182]:39818 "EHLO
-        mail-il1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233742AbhHBNjz (ORCPT
+        id S234003AbhHBNkG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Aug 2021 09:40:06 -0400
+Received: from mail-il1-f179.google.com ([209.85.166.179]:43686 "EHLO
+        mail-il1-f179.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234032AbhHBNkF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Aug 2021 09:39:55 -0400
-Received: by mail-il1-f182.google.com with SMTP id r1so16429414iln.6;
-        Mon, 02 Aug 2021 06:39:46 -0700 (PDT)
+        Mon, 2 Aug 2021 09:40:05 -0400
+Received: by mail-il1-f179.google.com with SMTP id x7so13111533ilh.10;
+        Mon, 02 Aug 2021 06:39:54 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
          :message-id;
-        bh=rIgerFBPFG2F9JHKS0RXhQgm9UjUmaIoJdpDfrB/Eqg=;
-        b=otTBeVwKBaZlVRQKerRBen12EenCc/JWe+nEEfKaxFiiJ3BZOkY2fXH0wAjp9kMXxB
-         i9Y6Jy34EB74jYmczvH+DRtt+qeP2P+7J0SgT4GUh160bkHIxgQdTXmtNBigK2aAYLnA
-         3g+ILu2oBV1Lk7r1b4o8t//hpVf8TwyH/ljt1yLdRe/0Udzg48LUs74/8sGfKZBdZLf4
-         oBViYQPrpyrc/iSZVyGbcmnyhzLh+S4EU48X4SijT4EOuPiLHBITNMMfV+9bzHg6IvWO
-         BpCiwY0u4kEXNqB62OARhJkUUcdpu9NSQ97qHcSvHiC0sNZBkveP7joQc00mie4VFlLr
-         oX4w==
-X-Gm-Message-State: AOAM533XiaaX+WSvPOszUkPB493eGyWv283+GcVv9wLtLDccHef68jBk
-        afToQI58vWexAMeJ2wqc6g==
-X-Google-Smtp-Source: ABdhPJz/WMoUM2rQxLxKe8Oz1HHj/sv39dQtPlrv+f+AFL8gZ4W8A2ixxXUb1j/rukgizJUiX5ZsrA==
-X-Received: by 2002:a92:d790:: with SMTP id d16mr1160275iln.185.1627911586130;
-        Mon, 02 Aug 2021 06:39:46 -0700 (PDT)
+        bh=TENNApnA3pRK87RRsfp5wpxG2YcnGhsJlA20WbVifLk=;
+        b=HswowOqsvG5bejucUm8i5rR1YCKkLAOALcRD/UyxWYWC0C+qwwrScFgG6BjiLmdR3X
+         j58yRYfI78iLnIRZbZoZbil39ORVlTz2qKWdzb2NKiJIF4jFMwmSF0Pa13/XVFtZHLSX
+         X67h7TrjzEMB7AwuK4RM4VqIHClHiUnLVCA9MWxPA/LTNuIL/UQxCgt4exyru4gvEMbS
+         j+KiRm6wHq+c6xQcWYBgxd+mWxL3YeNSoUwnZD+Q18wLMMJeDceHMH5eBZp2HMG+3gcs
+         td29jC0BqQVseq0WodkearWjjZY2YYhUGdLWHDrUDHCkfT6j+z94zB5ui3p+2h6KeBrp
+         6Tmw==
+X-Gm-Message-State: AOAM533mnS140ohCI+HTaPtFd2mzKlwRs4ENUJv9EO0CstVDPCeePr90
+        Wf5aHIWZmnnDrshaApxPFw==
+X-Google-Smtp-Source: ABdhPJzfosP56bJdNxD4Ijzp2ZlTM+40hrVsN+FY9mSl/e1GMizabh/TW6EXI++5V3KCEafHRE7mkw==
+X-Received: by 2002:a05:6e02:1bcc:: with SMTP id x12mr1141093ilv.275.1627911594639;
+        Mon, 02 Aug 2021 06:39:54 -0700 (PDT)
 Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id 125sm7415955iow.9.2021.08.02.06.39.44
+        by smtp.gmail.com with ESMTPSA id q7sm7459028iow.12.2021.08.02.06.39.53
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 02 Aug 2021 06:39:45 -0700 (PDT)
-Received: (nullmailer pid 918759 invoked by uid 1000);
+        Mon, 02 Aug 2021 06:39:54 -0700 (PDT)
+Received: (nullmailer pid 918766 invoked by uid 1000);
         Mon, 02 Aug 2021 13:39:43 -0000
 From:   Rob Herring <robh@kernel.org>
-To:     Douglas Anderson <dianders@chromium.org>
-Cc:     Daniel Vetter <daniel@ffwll.ch>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        devicetree@vger.kernel.org, Sam Ravnborg <sam@ravnborg.org>,
-        David Airlie <airlied@linux.ie>,
-        Linus W <linus.walleij@linaro.org>,
-        linux-kernel@vger.kernel.org, Maxime Ripard <mripard@kernel.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        dri-devel@lists.freedesktop.org,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-In-Reply-To: <20210730142537.v2.1.I1116e79d34035338a45c1fc7cdd14a097909c8e0@changeid>
-References: <20210730212625.3071831-1-dianders@chromium.org> <20210730142537.v2.1.I1116e79d34035338a45c1fc7cdd14a097909c8e0@changeid>
-Subject: Re: [PATCH v2 1/6] dt-bindings: drm/panel-simple: Introduce generic eDP panels
+To:     Iskren Chernev <iskren.chernev@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-kernel@vger.kernel.org
+In-Reply-To: <20210801103448.3329333-2-iskren.chernev@gmail.com>
+References: <20210801103448.3329333-1-iskren.chernev@gmail.com> <20210801103448.3329333-2-iskren.chernev@gmail.com>
+Subject: Re: [PATCH v3 1/2] dt-bindings: clk: qcom: gcc-sm6115: Document SM6115 GCC
 Date:   Mon, 02 Aug 2021 07:39:43 -0600
-Message-Id: <1627911583.050984.918758.nullmailer@robh.at.kernel.org>
+Message-Id: <1627911583.087441.918765.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 30 Jul 2021 14:26:20 -0700, Douglas Anderson wrote:
-> eDP panels generally contain almost everything needed to control them
-> in their EDID. This comes from their DP heritage were a computer needs
-> to be able to properly control pretty much any DP display that's
-> plugged into it.
+On Sun, 01 Aug 2021 13:34:47 +0300, Iskren Chernev wrote:
+> Add device tree bindings for global clock controller on SM6115 and
+> SM4250 SoCs (pin and software compatible).
 > 
-> The one big issue with eDP panels and the reason that we need a panel
-> driver for them is that the power sequencing can be different per
-> panel.
-> 
-> While it is true that eDP panel sequencing can be arbitrarily complex,
-> in practice it turns out that many eDP panels are compatible with just
-> some slightly different delays. See the contents of the bindings file
-> introduced in this patch for some details.
-> 
-> The fact that eDP panels are 99% probable and that the power
-> sequencing (especially power up) can be compatible between many panels
-> means that there's a constant desire to plug multiple different panels
-> into the same board. This could be for second sourcing purposes or to
-> support multiple SKUs (maybe a 11" and a 13", for instance).
-> 
-> As discussed [1], it should be OK to support this by adding two
-> properties to the device tree to specify the delays needed for
-> powering up the panel the first time. We'll create a new "edp-panel"
-> bindings file and define the two delays that might need to be
-> specified. NOTE: in the vast majority of the cases (HPD is hooked up
-> and isn't glitchy or is debounced) even these delays aren't needed.
-> 
-> [1] https://lore.kernel.org/r/CAD=FV=VZYOMPwQZzWdhJGh5cjJWw_EcM-wQVEivZ-bdGXjPrEQ@mail.gmail.com
-> 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
 > ---
-> 
-> Changes in v2:
-> - No longer allow fallback to panel-simple.
-> - Add "-ms" suffix to delays.
-> 
->  .../bindings/display/panel/panel-edp.yaml     | 188 ++++++++++++++++++
->  1 file changed, 188 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/display/panel/panel-edp.yaml
+>  .../bindings/clock/qcom,gcc-sm6115.yaml       |  74 +++++++
+>  include/dt-bindings/clock/qcom,gcc-sm6115.h   | 201 ++++++++++++++++++
+>  2 files changed, 275 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-sm6115.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,gcc-sm6115.h
 > 
 
 My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
@@ -107,11 +74,13 @@ on your patch (DT_CHECKER_FLAGS is new in v5.13):
 yamllint warnings/errors:
 
 dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/panel/panel-edp.example.dt.yaml: bridge@2d: 'aux-bus' does not match any of the regexes: 'pinctrl-[0-9]+'
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/display/bridge/ti,sn65dsi86.yaml
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,gcc-sm6115.example.dt.yaml: clock-controller@1400000: clocks: [[4294967295, 0], [4294967295]] is too short
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,gcc-sm6115.yaml
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,gcc-sm6115.example.dt.yaml: clock-controller@1400000: clock-names: ['bi_tcxo', 'sleep_clk'] is too short
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,gcc-sm6115.yaml
 \ndoc reference errors (make refcheckdocs):
 
-See https://patchwork.ozlabs.org/patch/1511822
+See https://patchwork.ozlabs.org/patch/1512028
 
 This check can fail if there are any dependencies. The base for a patch
 series is generally the most recent rc1.
