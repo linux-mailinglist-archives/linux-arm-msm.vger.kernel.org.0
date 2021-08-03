@@ -2,70 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6ADE13DF5D4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 21:38:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D6E43DF61A
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 22:09:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240071AbhHCTib (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Aug 2021 15:38:31 -0400
-Received: from mail-io1-f41.google.com ([209.85.166.41]:45028 "EHLO
-        mail-io1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239894AbhHCTib (ORCPT
+        id S240395AbhHCUJc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Aug 2021 16:09:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58602 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240260AbhHCUJc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Aug 2021 15:38:31 -0400
-Received: by mail-io1-f41.google.com with SMTP id d22so2228191ioy.11;
-        Tue, 03 Aug 2021 12:38:18 -0700 (PDT)
+        Tue, 3 Aug 2021 16:09:32 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 299C6C061764
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Aug 2021 13:09:21 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id c2-20020a0568303482b029048bcf4c6bd9so21842208otu.8
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Aug 2021 13:09:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=/KZKCjnFh5BKZu2KIsfFmmFiIjkF/h9tteMntf9BJ8Y=;
+        b=hOFgqrrzW2IAV3YZCxNDNqnJZItMegMe1VI69lm8ik30j4B5rqVxr/IEGdnIQqnB4X
+         Jq1Czj/KXh433bmpZoWbEFEylw/Pn4jdK7o90p7USNjCQxfW5eQZzRYuMpAiyjbvbPxG
+         VVdEdfkw80xXk1oAS/1vOpZ1/rJpJguVg/p3w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=eb1jPGD0/E2nznm2NqtSynRzUeg03kyj4b+oSommWdA=;
-        b=L2JVydAgLutbWJ4UyLHCRYBIV65wXJKjKHvEq8aHeuFC1fxal614qOfowafANSzaSI
-         gdZ1341N93G1rb10DJXFov6tLqQtvrAe2ekHCZJnl7BebFXscMcp4mBzw8wbtja3UA0e
-         CKc3L+1LSEweQb6cv3GentU+2hsP/kxr/Ii4edBngInQVQ3f5usSmq0fP/cr6b5zE/cA
-         SY1R9bddKmSCN0ort7IJRe+cD1UDCkr9DgsShemyAhIzn9Cac09UXWZELhuoCxLaDyFI
-         ngQy8iAntwg1glY4UOnCdxUwjhXjAODJPII+3i/3/McL30dsFm+1o/XIhj/Dzztmw5UA
-         fFOA==
-X-Gm-Message-State: AOAM532uMdbSlmjXCsk47OBH2kJQ1OGk72PR8ijrvmFAssniNyivUuZy
-        BfpKsSoKnmgzycKNw9pG0Q==
-X-Google-Smtp-Source: ABdhPJxKujOHBMl4ZpSqCe+EHHagEeGuUCKbktBFDSPChxHeapzR7oXQVrMCwPuQ5UjQGw7HDxRlDg==
-X-Received: by 2002:a5d:91c2:: with SMTP id k2mr1101438ior.117.1628019498579;
-        Tue, 03 Aug 2021 12:38:18 -0700 (PDT)
-Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id q1sm6573ioi.42.2021.08.03.12.38.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Aug 2021 12:38:17 -0700 (PDT)
-Received: (nullmailer pid 3614169 invoked by uid 1000);
-        Tue, 03 Aug 2021 19:38:16 -0000
-Date:   Tue, 3 Aug 2021 13:38:16 -0600
-From:   Rob Herring <robh@kernel.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
-        agross@kernel.org, robh+dt@kernel.org, dianders@chromium.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        srinivas.kandagatla@linaro.org, rbokka@codeaurora.org
-Subject: Re: [PATCH v3 1/4] dt-bindings: nvmem: qfprom: Add optional
- power-domains property
-Message-ID: <YQmbKMq4p7OmfbHw@robh.at.kernel.org>
-References: <1627627573-32454-1-git-send-email-rnayak@codeaurora.org>
- <1627627573-32454-2-git-send-email-rnayak@codeaurora.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=/KZKCjnFh5BKZu2KIsfFmmFiIjkF/h9tteMntf9BJ8Y=;
+        b=LqU7cYyIU6H8DNu1rwqazi9o3dcrO3cs2LjGcfz1Dvs8a4cbiwdMuM1flbovOqaJvx
+         Q7GzFG/l91zWOwCRXyxtmFtVCu5lR3y5mAqgcwN7UoH/kNKNmrxpwKn40CM5hiKZ64DE
+         x1AevLMxudUoIkbp3G+FIa9zCwlRffpi+ZsXWeVhUkgnaJcqGUGzDmkYHlOLop64OEld
+         vE9t1uAKJWp/mqPjA9Byd4DlFh26KPrewq0LtulHMSqqvgKUz3oERX7zssdBVskshsV6
+         G0Yko84OAI1y1V289yebJTY75utothLYIhMqzGb+Pggn8Vkh94Nv+Z4o61RpCwoIyYlR
+         gbAA==
+X-Gm-Message-State: AOAM53026LsZvuony8Ir2kMUsn57BpFDqJU6Q0twrAusDsAs7flP2OaR
+        xhMcpmzLAZtp+0WLEkGQOV0AeUiFFE/Oq/BIKG0JtQ==
+X-Google-Smtp-Source: ABdhPJysxfT1U9uGt9nsh5yQLTpopi/8CZ5Kck3OSg9MK8KloJG9UDSWBnr//f2uQIsAgC8G1VK1gNshpiJ3C/EmUo8=
+X-Received: by 2002:a05:6830:1490:: with SMTP id s16mr447074otq.233.1628021360166;
+ Tue, 03 Aug 2021 13:09:20 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 3 Aug 2021 15:09:19 -0500
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1627627573-32454-2-git-send-email-rnayak@codeaurora.org>
+In-Reply-To: <1627995852-24505-1-git-send-email-skakit@codeaurora.org>
+References: <1627995852-24505-1-git-send-email-skakit@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Tue, 3 Aug 2021 15:09:19 -0500
+Message-ID: <CAE-0n51=GAb+B-46gH7MKwiMbP8EqNnFKNQr0X3JFeAMP4rPNg@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Remove pm8350 and pmr735b for sc7280-idp
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        satya priya <skakit@codeaurora.org>
+Cc:     rnayak@codeaurora.org, kgunda@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 30 Jul 2021 12:16:10 +0530, Rajendra Nayak wrote:
-> qfprom devices on some SoCs need to vote on the performance state
-> of a power-domain, so add the power-domains optional property to the
-> bindings
-> 
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Quoting satya priya (2021-08-03 06:04:12)
+> Remove pm8350 and pmr735b die temp nodes as these pmics are
+> not present on this board.
+>
+> Correct the tabbing for pmk8350_vadc node.
+>
+> Signed-off-by: satya priya <skakit@codeaurora.org>
 > ---
->  Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml | 3 +++
->  1 file changed, 3 insertions(+)
-> 
 
-Acked-by: Rob Herring <robh@kernel.org>
+Fixes: fbd5a1d22607 ("arm64: dts: qcom: sc7280: Add ADC channel nodes
+for PMIC temperatures to sc7280-idp")
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
