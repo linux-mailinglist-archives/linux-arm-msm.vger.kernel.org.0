@@ -2,124 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BDE983DE920
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 11:01:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E9AF23DE93B
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 11:07:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234956AbhHCJBp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Aug 2021 05:01:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33624 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234690AbhHCJBp (ORCPT
+        id S234972AbhHCJHT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Aug 2021 05:07:19 -0400
+Received: from smtp-out2.suse.de ([195.135.220.29]:58554 "EHLO
+        smtp-out2.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234750AbhHCJHT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Aug 2021 05:01:45 -0400
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 299BBC06175F
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Aug 2021 02:01:34 -0700 (PDT)
-Received: by mail-oi1-x231.google.com with SMTP id o20so27364730oiw.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Aug 2021 02:01:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=xUCQLTJHLMWIwjOk7GbpaIHrEiFMhqmAaVSQLefOhbc=;
-        b=GLArkjtdPgvCSnduTwRmjHH0GAo9b6Zfk37Ca+kYmtHHwq4RS5QnDFBfcMeehY9CEL
-         L7XvbwO2q0Gfa5/gVbzx+rh51yNdz2hqv2L1nvqrLTQeIttnjUrctF6dWXUx3aQ4fqmv
-         hlGdFxf/Ac9K84ELw8cCSCQ4T6mWyzsPFpBLs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=xUCQLTJHLMWIwjOk7GbpaIHrEiFMhqmAaVSQLefOhbc=;
-        b=JnZe14/FLJ/+Q3gbWDzu6+JX7k+prZSQrjTw6CI2p70EWhBr266OrBOQq0TIcC7JWo
-         mRe2uXINlYXJzmw2Sj1Puwq8FXCOdYIvMzVsb4TCE+9kBr0MjcydQkInl3cEaiV12LfA
-         UlFRVwdy7PngWnXaWOzd+VU5hisZZadBdoqC2CJ1BmtH4NbrbFEs+amLNO/AkFWEsIe/
-         IaODetAjlxRsV1RQNEnKi5ZeD/ycb0e/Vu/kV9KRYAcul9146OxOa2mW62kWNKSxCnMj
-         k8ioLrfFh6nfj035IjP1JBmbrcV6wdNjjr1MxL+W/jRe+Kz/OR1qS3e5gHnjbSRAIwVN
-         xsWQ==
-X-Gm-Message-State: AOAM531x4XuIRi7netorNK2IzWYXYlHMWOdw6kxXPpUIIKuHnjS6dVOU
-        esI4Iud/EidRP3ncqAQwjuvuganKfFarH7gI9N5slA==
-X-Google-Smtp-Source: ABdhPJzGuEtdB7bf7PJVfXlAaT1Nq8s0bZVsqUmh/GEvGvYp5hC0GqqhWmyijlaI9GXkCG3G08uwk6yRrfKWqP8vaYo=
-X-Received: by 2002:a05:6808:114a:: with SMTP id u10mr13972869oiu.19.1627981292067;
- Tue, 03 Aug 2021 02:01:32 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 3 Aug 2021 02:01:31 -0700
+        Tue, 3 Aug 2021 05:07:19 -0400
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out2.suse.de (Postfix) with ESMTPS id 6CB62200AD;
+        Tue,  3 Aug 2021 09:07:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1627981627; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=q3+6KEUPrv4P0GKwP+A7/qqpGBMH/Xg9bYVCDAlx7rY=;
+        b=lj2EINnNTDtFgnz3ekPIREpOQMBlLc+hGKbR6/AjY5pgs3q2xRJgTGChwBXApw/1jV4lTj
+        6VX4CJ+FgVeLzBcWDLc98q0C8jc8RrhcThZAQVdMhdFICgjHEVSBFrH1KaB7uqKbWXHRy4
+        9PObbWNX6TowjohPMRKQBOiJ1VB/JII=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1627981627;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=q3+6KEUPrv4P0GKwP+A7/qqpGBMH/Xg9bYVCDAlx7rY=;
+        b=DIlrjiYO3akc03nF/YB89hmnQ148+n+niJhuf4YsHNkfflBTxVLMjTFEjx8sqNaCKvM/fq
+        Af3/15oWWiPcciAA==
+Received: from imap2.suse-dmz.suse.de (imap2.suse-dmz.suse.de [192.168.254.74])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap2.suse-dmz.suse.de (Postfix) with ESMTPS id A096B13CC4;
+        Tue,  3 Aug 2021 09:07:06 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap2.suse-dmz.suse.de with ESMTPSA
+        id +sX6JToHCWFVJQAAMHmgww
+        (envelope-from <tzimmermann@suse.de>); Tue, 03 Aug 2021 09:07:06 +0000
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+To:     daniel@ffwll.ch, airlied@linux.ie, alexander.deucher@amd.com,
+        christian.koenig@amd.com, liviu.dudau@arm.com,
+        brian.starkey@arm.com, sam@ravnborg.org, bbrezillon@kernel.org,
+        nicolas.ferre@microchip.com, maarten.lankhorst@linux.intel.com,
+        mripard@kernel.org, stefan@agner.ch, alison.wang@nxp.com,
+        patrik.r.jakobsson@gmail.com, anitha.chrisanthus@intel.com,
+        robdclark@gmail.com, edmund.j.dea@intel.com, sean@poorly.run,
+        shawnguo@kernel.org, s.hauer@pengutronix.de, kernel@pengutronix.de,
+        jyri.sarha@iki.fi, tomba@kernel.org, Dan.Sneddon@microchip.com,
+        tomi.valkeinen@ideasonboard.com
+Cc:     amd-gfx@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Thomas Zimmermann <tzimmermann@suse.de>
+Subject: [PATCH v2 00/14] drm: Make DRM's IRQ helpers legacy
+Date:   Tue,  3 Aug 2021 11:06:50 +0200
+Message-Id: <20210803090704.32152-1-tzimmermann@suse.de>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-In-Reply-To: <1626435974-14462-1-git-send-email-sbhanu@codeaurora.org>
-References: <1626435974-14462-1-git-send-email-sbhanu@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Tue, 3 Aug 2021 02:01:31 -0700
-Message-ID: <CAE-0n53tzuU-1Gb+krJKjJ5k=hmeBex1=qmJO+zLZBCL5DBhWw@mail.gmail.com>
-Subject: Re: [PATCH V4] mmc: sdhci-msm: Update the software timeout value for sdhc
-To:     Shaik Sajida Bhanu <sbhanu@codeaurora.org>,
-        adrian.hunter@intel.com, ulf.hansson@linaro.org
-Cc:     asutoshd@codeaurora.org, stummala@codeaurora.org,
-        vbadigan@codeaurora.org, rampraka@codeaurora.org,
-        sayalil@codeaurora.org, sartgarg@codeaurora.org,
-        rnayak@codeaurora.org, cang@codeaurora.org,
-        pragalla@codeaurora.org, nitirawa@codeaurora.org,
-        linux-mmc@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Shaik Sajida Bhanu (2021-07-16 04:46:14)
-> Whenever SDHC run at clock rate 50MHZ or below, the hardware data
-> timeout value will be 21.47secs, which is approx. 22secs and we have
-> a current software timeout value as 10secs. We have to set software
-> timeout value more than the hardware data timeout value to avioid seeing
-> the below register dumps.
->
-> [  332.953670] mmc2: Timeout waiting for hardware interrupt.
-> [  332.959608] mmc2: sdhci: ============ SDHCI REGISTER DUMP ===========
-> [  332.966450] mmc2: sdhci: Sys addr:  0x00000000 | Version:  0x00007202
-> [  332.973256] mmc2: sdhci: Blk size:  0x00000200 | Blk cnt:  0x00000001
-> [  332.980054] mmc2: sdhci: Argument:  0x00000000 | Trn mode: 0x00000027
-> [  332.986864] mmc2: sdhci: Present:   0x01f801f6 | Host ctl: 0x0000001f
-> [  332.993671] mmc2: sdhci: Power:     0x00000001 | Blk gap:  0x00000000
-> [  333.000583] mmc2: sdhci: Wake-up:   0x00000000 | Clock:    0x00000007
-> [  333.007386] mmc2: sdhci: Timeout:   0x0000000e | Int stat: 0x00000000
-> [  333.014182] mmc2: sdhci: Int enab:  0x03ff100b | Sig enab: 0x03ff100b
-> [  333.020976] mmc2: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
-> [  333.027771] mmc2: sdhci: Caps:      0x322dc8b2 | Caps_1:   0x0000808f
-> [  333.034561] mmc2: sdhci: Cmd:       0x0000183a | Max curr: 0x00000000
-> [  333.041359] mmc2: sdhci: Resp[0]:   0x00000900 | Resp[1]:  0x00000000
-> [  333.048157] mmc2: sdhci: Resp[2]:   0x00000000 | Resp[3]:  0x00000000
-> [  333.054945] mmc2: sdhci: Host ctl2: 0x00000000
-> [  333.059657] mmc2: sdhci: ADMA Err:  0x00000000 | ADMA Ptr:
-> 0x0000000ffffff218
-> [  333.067178] mmc2: sdhci_msm: ----------- VENDOR REGISTER DUMP
-> -----------
-> [  333.074343] mmc2: sdhci_msm: DLL sts: 0x00000000 | DLL cfg:
-> 0x6000642c | DLL cfg2: 0x0020a000
-> [  333.083417] mmc2: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl:
-> 0x00000000 | DDR cfg: 0x80040873
-> [  333.092850] mmc2: sdhci_msm: Vndr func: 0x00008a9c | Vndr func2 :
-> 0xf88218a8 Vndr func3: 0x02626040
-> [  333.102371] mmc2: sdhci: ============================================
->
-> So, set software timeout value more than hardware timeout value.
->
+DRM's IRQ helpers are only helpful for old, non-KMS drivers. Move
+the code behind CONFIG_DRM_LEGACY. Convert KMS drivers to Linux
+IRQ interfaces.
 
-Should this be tagged for stable trees?
+DRM provides IRQ helpers for setting up, receiving and removing IRQ
+handlers. It's an abstraction over plain Linux functions. The code
+is mid-layerish with several callbacks to hook into the rsp drivers.
+Old UMS driver have their interrupts enabled via ioctl, so these
+abstractions makes some sense. Modern KMS manage all their interrupts
+internally. Using the DRM helpers adds indirection without benefits.
 
-> Signed-off-by: Shaik Sajida Bhanu <sbhanu@codeaurora.org>
-> Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-> ---
->
-> Changes since V3:
->         - Addressed minor comments from Adrain Hunter and retained his
->           Acked-by Signed-off.
->
-> Changes since V2:
->         - Updated 22 with 22LL to avoid compiler warning as
->           suggested by Adrian Hunter.
->         - Added a check to update software data timeout value if its value
->           is less than the calculated hardware data timeout value as suggested
->           by Veerabhadrarao Badiganti.
-> Changes since V1:
->         - Moved software data timeout update part to qcom specific file
->           as suggested by Veerabhadrarao Badiganti.
+Most KMS drivers already use Linux IRQ functions instead of DRM's
+abstraction layer. Patches 1 to 12 convert the remaining ones.
+The patches also resolve a bug for devices without assigned interrupt
+number. DRM helpers don't test for IRQ_NOTCONNECTED, so drivers do
+not detect if the device has no interrupt assigned.
+
+Patch 13 removes an unused function.
+
+Patch 14 moves the DRM IRQ helpers behind CONFIG_DRM_LEGACY. Only
+the old non-KMS drivers still use the functionality.
+
+v2:
+	* drop IRQ_NOTCONNECTED test from atmel-hlcdc (Sam)
+	* use devm_request_irq() in atmel-hlcdc (Sam)
+	* unify variable names in arm/hlcdc (Sam)
+
+Thomas Zimmermann (14):
+  drm/amdgpu: Convert to Linux IRQ interfaces
+  drm/arm/hdlcd: Convert to Linux IRQ interfaces
+  drm/atmel-hlcdc: Convert to Linux IRQ interfaces
+  drm/fsl-dcu: Convert to Linux IRQ interfaces
+  drm/gma500: Convert to Linux IRQ interfaces
+  drm/kmb: Convert to Linux IRQ interfaces
+  drm/msm: Convert to Linux IRQ interfaces
+  drm/mxsfb: Convert to Linux IRQ interfaces
+  drm/radeon: Convert to Linux IRQ interfaces
+  drm/tidss: Convert to Linux IRQ interfaces
+  drm/tilcdc: Convert to Linux IRQ interfaces
+  drm/vc4: Convert to Linux IRQ interfaces
+  drm: Remove unused devm_drm_irq_install()
+  drm: IRQ midlayer is now legacy
+
+ drivers/gpu/drm/amd/amdgpu/amdgpu_drv.c      |   1 -
+ drivers/gpu/drm/amd/amdgpu/amdgpu_irq.c      |  21 ++-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_irq.h      |   2 +-
+ drivers/gpu/drm/arm/hdlcd_drv.c              | 174 ++++++++++---------
+ drivers/gpu/drm/arm/hdlcd_drv.h              |   1 +
+ drivers/gpu/drm/atmel-hlcdc/atmel_hlcdc_dc.c |  80 +++++----
+ drivers/gpu/drm/drm_irq.c                    |  95 +---------
+ drivers/gpu/drm/drm_legacy_misc.c            |   3 +-
+ drivers/gpu/drm/drm_vblank.c                 |   8 +-
+ drivers/gpu/drm/fsl-dcu/fsl_dcu_drm_drv.c    |  78 +++++----
+ drivers/gpu/drm/gma500/power.c               |   1 +
+ drivers/gpu/drm/gma500/psb_drv.c             |   8 +-
+ drivers/gpu/drm/gma500/psb_drv.h             |   5 -
+ drivers/gpu/drm/gma500/psb_irq.c             |  26 ++-
+ drivers/gpu/drm/gma500/psb_irq.h             |   4 +-
+ drivers/gpu/drm/i810/i810_dma.c              |   3 +-
+ drivers/gpu/drm/kmb/kmb_drv.c                |  26 ++-
+ drivers/gpu/drm/mga/mga_dma.c                |   2 +-
+ drivers/gpu/drm/mga/mga_drv.h                |   1 -
+ drivers/gpu/drm/msm/msm_drv.c                | 113 +++++++-----
+ drivers/gpu/drm/msm/msm_kms.h                |   2 +-
+ drivers/gpu/drm/mxsfb/mxsfb_drv.c            |  81 +++++----
+ drivers/gpu/drm/mxsfb/mxsfb_drv.h            |   2 +
+ drivers/gpu/drm/r128/r128_cce.c              |   3 +-
+ drivers/gpu/drm/radeon/radeon_drv.c          |   4 -
+ drivers/gpu/drm/radeon/radeon_irq_kms.c      |  44 ++++-
+ drivers/gpu/drm/radeon/radeon_kms.h          |   4 -
+ drivers/gpu/drm/tidss/tidss_drv.c            |  15 +-
+ drivers/gpu/drm/tidss/tidss_drv.h            |   2 +
+ drivers/gpu/drm/tidss/tidss_irq.c            |  27 ++-
+ drivers/gpu/drm/tidss/tidss_irq.h            |   4 +-
+ drivers/gpu/drm/tilcdc/tilcdc_drv.c          |  51 ++++--
+ drivers/gpu/drm/tilcdc/tilcdc_drv.h          |   3 +
+ drivers/gpu/drm/vc4/vc4_drv.c                |   4 -
+ drivers/gpu/drm/vc4/vc4_drv.h                |   8 +-
+ drivers/gpu/drm/vc4/vc4_irq.c                |  48 +++--
+ drivers/gpu/drm/vc4/vc4_v3d.c                |  17 +-
+ drivers/gpu/drm/via/via_mm.c                 |   3 +-
+ include/drm/drm_device.h                     |  18 +-
+ include/drm/drm_drv.h                        |  44 +----
+ include/drm/drm_irq.h                        |  32 ----
+ include/drm/drm_legacy.h                     |   3 +
+ 42 files changed, 567 insertions(+), 504 deletions(-)
+ delete mode 100644 include/drm/drm_irq.h
+
+
+base-commit: c9d6903562aa335593daf44b4a1edeaef6bf9206
+prerequisite-patch-id: c2b2f08f0eccc9f5df0c0da49fa1d36267deb11d
+prerequisite-patch-id: c67e5d886a47b7d0266d81100837557fda34cb24
+prerequisite-patch-id: c3f32630e1d2de2eb74316c930578847d4b83fb3
+prerequisite-patch-id: b32ca0abfc255601f8a5052d3b88be09527dabcb
+prerequisite-patch-id: 22a3f264168bacb04ef65306b32b86be8dc982ef
+prerequisite-patch-id: 095a0acb604eb02956e1a7e53da41371c64eb813
+prerequisite-patch-id: 7a2417d5d8d453204bd94aa873e3faae812f26fc
+--
+2.32.0
+
