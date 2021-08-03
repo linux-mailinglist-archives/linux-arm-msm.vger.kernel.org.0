@@ -2,106 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E5C1D3DE779
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 09:49:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 542B93DE7C5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 10:00:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234232AbhHCHt6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Aug 2021 03:49:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43666 "EHLO
+        id S234313AbhHCIAx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Aug 2021 04:00:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46436 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234137AbhHCHt5 (ORCPT
+        with ESMTP id S234241AbhHCIAx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Aug 2021 03:49:57 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1495C061764
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Aug 2021 00:49:46 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id i10-20020a05600c354ab029025a0f317abfso1050755wmq.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Aug 2021 00:49:46 -0700 (PDT)
+        Tue, 3 Aug 2021 04:00:53 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CE2FC061764
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Aug 2021 01:00:42 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id m20-20020a05600c4f54b029024e75a15716so1527810wmq.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Aug 2021 01:00:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=olV9WA7qn9JXM9Zr1zOTL5eTwtsnMh9ztbodG7vQpFw=;
-        b=aEVArW1QkUe7FYeYyaPKB3VIMJoTvfuFgc1uZTiBqzJ2V5hNlfiVMVVsjEiF5cziV+
-         q8+mQCNShmms13eeDvQnq0uwsnrBa7NL+SzEsFuS2wuxsQUv5QihPm7YhA2Gx9sieOQA
-         Q3adYXZBRXhqX7HImQzcErqKgC8lEQD0FrQqy2C9WlYpL3KwR9+Gvuz0zeCNQ3GA969E
-         Snb7JajiIyUz5+4qzPRu+2A/XvNEP41F6w7As1BCAmwfM5dp2I0gwJf52Yku505CBece
-         /AX2BRvQGU8fvHVjtU+TW23mR/umKGR+aFteeZolPKjN+/KrlJlRBCemStgiSo9hyeiA
-         trlg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=xQ4m8nY0R0gdaQ2/t/epPl2Yst37jmddCHkepiSD0C4=;
+        b=Bw+xkG5sbehOUYrGhW3vuHjC0TodTkMZrfcQqx90U7cza0bBBP+1vYns95ZaSdpsaW
+         0ZejcJ4Vl0vp8xDbgM1uk3tTQkuD460xHm+MTBNVbOZuHGVyBCs0HFLhFINqMWGLY9sZ
+         SuEMjTiYAkai4RKewsDrHd/xSHe5J+lQ8yvBTh5H+nE7akdFJjAkbHi7B16zwMAeN7nP
+         it2zDi+0Jk2xm2q0urRgOdPZvXffKHfpiR2EPrBLK4pGR0givWjer6Bn3dI4vIi/DPQy
+         4ZDz/FGRU0R2IAyPvMMKAPoruwFrejYoxePAxZzNVUQDAvVgohV1+P4U56gUqpqZV7me
+         FB0w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=olV9WA7qn9JXM9Zr1zOTL5eTwtsnMh9ztbodG7vQpFw=;
-        b=Tw/nthL6UJ2RJWUd3QuNf8IkWOAj1theHKMbrz60i365cwaGlsWgsplcVKlvp+Y4PS
-         nlrliMfKqLkLmrs2Id20vs5e0HK4tWhYq9maCZ38HuK1Ys0lRgRmM990+J5yn1UD14XX
-         V6apliBLx3MF9etFReFVPQvHuqRdjMlp6hHqfU6T0lxQtQvmEjkkrExncHxtUNJehu63
-         chdRHkEpg79p/eauxJ94UL08WWlso8F2b6bujD6qkV6NZXKa0do63kG9a4SdKK/CNfEr
-         OwmcQES6faYJjpvLf5s+yUAivTA/ecm9nihm4HiHpLupsG+w1wF1zdi75+Dt0tHyKTsA
-         APDg==
-X-Gm-Message-State: AOAM532PYmlQ2svLcNMwHgXue2q/EeORRQbdJcxAwBzn41JrB0gGPeKC
-        9FETnWDfFIpVy75l98UfuvPW3w==
-X-Google-Smtp-Source: ABdhPJxDnLCFN1pccysx/SKvMPBNDxfhcCF0B0cYPAeIk61rZ06he6Pgi5l6+Ow0W5TjGSSuX0Qk2w==
-X-Received: by 2002:a1c:4b12:: with SMTP id y18mr2752711wma.67.1627976985341;
-        Tue, 03 Aug 2021 00:49:45 -0700 (PDT)
-Received: from google.com ([109.180.115.228])
-        by smtp.gmail.com with ESMTPSA id 104sm14068498wrc.4.2021.08.03.00.49.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Aug 2021 00:49:44 -0700 (PDT)
-Date:   Tue, 3 Aug 2021 08:49:43 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     satya priya <skakit@codeaurora.org>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        bhupesh.sharma@linaro.org, Das Srinagesh <gurus@codeaurora.org>,
-        kgunda@codeaurora.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [RESEND PATCH V7 1/3] dt-bindings: mfd: pm8008: Add gpio-ranges
- and spmi-gpio compatible
-Message-ID: <YQj1FwSyxpblwaxj@google.com>
-References: <1627910464-19363-1-git-send-email-skakit@codeaurora.org>
- <1627910464-19363-2-git-send-email-skakit@codeaurora.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=xQ4m8nY0R0gdaQ2/t/epPl2Yst37jmddCHkepiSD0C4=;
+        b=l5lGIKf7qoY5bLdLIrQK1Jb3/hGoyu3x2xZ4+L2SWbLf2ybWKcozuG1Tt7XVai/GJm
+         wwfumyvseY3bRSJk3RbhRAFKoSNsr6FqgqQKdZf6NkzonEt+GfSWt7RL3Jx4zsJjii8E
+         pxda5S8xW3hsbEoRgoW+Ene/tGozQrFa3kZQaPLZMBcGBM/15+5zngSw3Aiha92y2oZI
+         HnRwwrhfd/rQ27lqj1VV4Tf0Xhn7+YSeUcn4nHI9ajsXtyhT9XGYGa+H5L7u6hy509JH
+         W6DaEkRVtnafEHPWnH/kpa+sTsNjPi6vbzXdzYDWkvh3Ja0jAG28u9HanpRu+dnT51wf
+         u+iQ==
+X-Gm-Message-State: AOAM530FFcLziUrvEeSMFrnF992E47NrLKuj8dD+H+wBfw4kciM8EJ5H
+        F1pbzzPzVd0sXFLZls0wnOwRLQ==
+X-Google-Smtp-Source: ABdhPJwel4nkglJAenKOcjYpcxSacPWxMq2xkHmEmS8ycsumGKjElVh8s/Y1jXHSsXVTWplDeiJwSA==
+X-Received: by 2002:a1c:2314:: with SMTP id j20mr2951400wmj.30.1627977636036;
+        Tue, 03 Aug 2021 01:00:36 -0700 (PDT)
+Received: from [192.168.1.11] (hst-221-68.medicom.bg. [84.238.221.68])
+        by smtp.googlemail.com with ESMTPSA id m9sm13534055wrz.75.2021.08.03.01.00.33
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Aug 2021 01:00:34 -0700 (PDT)
+Subject: Re: [PATCH v3 7/7] media: venus: Set buffer to FW based on FW min
+ count requirement.
+To:     dikshita@codeaurora.org
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, vgarodia@codeaurora.org
+References: <1626246068-21023-1-git-send-email-dikshita@codeaurora.org>
+ <1626246068-21023-8-git-send-email-dikshita@codeaurora.org>
+ <e85515cc-6213-cdc3-dab8-46ea5eb58011@linaro.org>
+ <6c8f0d013be8ba6d276afe04d6e0c840@codeaurora.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <253417f1-579a-0a57-388b-7fb07fd83d9c@linaro.org>
+Date:   Tue, 3 Aug 2021 11:00:32 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
+In-Reply-To: <6c8f0d013be8ba6d276afe04d6e0c840@codeaurora.org>
 Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <1627910464-19363-2-git-send-email-skakit@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 02 Aug 2021, satya priya wrote:
 
-> Add gpio-ranges and "qcom,spmi-gpio" compatible to match with the
-> parent qcom,pmic-gpio.yaml binding.
-> 
-> Signed-off-by: satya priya <skakit@codeaurora.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Reviewed-by: Guru Das Srinagesh <gurus@codeaurora.org>
-> ---
-> Changes in V7:
->  - This is newly added in V7 to resolve below error.
->  dtschema/dtc warnings/errors:
->  /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/mfd/qcom,pm8008.example.dt.yaml: gpio@c000: compatible: ['qcom,pm8008-gpio'] is too short
-> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
->  /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/mfd/qcom,pm8008.example.dt.yaml: gpio@c000: 'gpio-ranges' is a required property
-> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
-> 
-> Changes in RESEND V7:
->  - Rebased on linux-next.
-> 
->  Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml | 13 ++++++++++---
->  1 file changed, 10 insertions(+), 3 deletions(-)
 
-Applied, thanks.
+On 8/2/21 10:50 AM, dikshita@codeaurora.org wrote:
+>>> req->count_min = inst->fw_min_cnt;
+>>> +
+>>> +    ret = hfi_plat->bufreq(&params, inst->session_type, buftype, req);
+>>> +    if (buftype == HFI_BUFFER_OUTPUT || buftype == HFI_BUFFER_OUTPUT2)
+>>
+>> ^^^^
+>>
+>>> +        if (inst->fw_min_cnt != req->count_min)
+>>> +            inst->fw_min_cnt = req->count_min;
+>>> +    return ret;
+>>>  }
+>>
+>> Also in regards to inst->fw_min_cnt, can we pass fw_min_cnt as input to
+>> get_bufreq via 'req' structure, i.e.
+>>
+>> req.count_min = inst->fw_min_cnt;
+>>
+>> ret = venus_helper_get_bufreq(inst, type, &req);
+>>
+>> inst->fw_min_cnt = req.count_min
+>>
+>> ?
+>>
+> Sorry, I didn't get it, How is this different from the current
+> implementation?
+
+The difference is that platform_get_bufreq() will not modify any of
+'struct venus_inst' members, i.e. platform_get_bufreq() is not supposed
+to change anything from input 'inst' argument.
 
 -- 
-Lee Jones [李琼斯]
-Senior Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+regards,
+Stan
