@@ -2,145 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B10553DE3EF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 03:22:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 76D453DE401
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 03:31:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233344AbhHCBWT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Aug 2021 21:22:19 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:28448 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233148AbhHCBWS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Aug 2021 21:22:18 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1627953728; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=69oMaUQoA4ReczOKXAVfPDBIj5MKdJ/GxjJmCjK/vaw=;
- b=R47yA/vrsk1fh3Uh4pF7zI7pgrT+HJcuYN2BJUUJBIiKc+e07W8nntBfqaQ47jZVTFJtwELJ
- NzO8uv4UURWhhYJ9d5G5Cz5ym/riYvcXFfE4+o3eyJwu4rVzdU1r+Xtqt7Cl4rvA347/dRrq
- dkIp+yZK6G9z3J+QSGOnENRa1d8=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 61089a3b96a66e66b293abac (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 03 Aug 2021 01:22:03
- GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A7376C433F1; Tue,  3 Aug 2021 01:22:03 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D6302C433D3;
-        Tue,  3 Aug 2021 01:22:02 +0000 (UTC)
+        id S233574AbhHCBcF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Aug 2021 21:32:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41580 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233208AbhHCBcE (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 2 Aug 2021 21:32:04 -0400
+Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE22AC06175F;
+        Mon,  2 Aug 2021 18:31:52 -0700 (PDT)
+Received: by mail-wm1-x331.google.com with SMTP id e25-20020a05600c4b99b0290253418ba0fbso1079368wmp.1;
+        Mon, 02 Aug 2021 18:31:52 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=xoYKeNMcKT9d+jkGEnzy+zqeIUVXh9cRA8f49lcGYC8=;
+        b=K4cUt6vdJtIGAoypcfbhOnCY7xrdQNo/3h5B6VyuGQC6ZNWK/BBe++Xkxp67ld0Rn0
+         Zh1pJzHrvpzYLV1x4DFyxUiEyQ46SCW4/9Oh792YF+bcXDwFnTL1anQNGnPNR12vVrKh
+         WS89KEbB9yo18n717VtF6iTXDAQi6CVZ24pgQjC7Q7vZZ0qvVDrCemM4HWR4/0t6pRvb
+         0YgX1LDLC5ekVWNwayNpI0OPAKJP7zmlBTS0tXXOEjxbgVf3n0We5wttMwz2tAfm+Yoe
+         EhkzubmCCp386nRqW3vNJdOhPwdOWwFQTkeZrUrwSgV/s+ewosTRt+Dpoy174Qz0n96d
+         atfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=xoYKeNMcKT9d+jkGEnzy+zqeIUVXh9cRA8f49lcGYC8=;
+        b=suhrVOqrSAxyZOwahJaFxIv9ke2pspyLnY79GWQq5gY6XRTMLI78EPjU7lVRUInGsU
+         kaKcQAnTFf+ZMKx7SUXxNK+XgAUQg0Uex+511wOSDG5k33F52chEJRN/ZpsBhHwWYEVr
+         m4rs7oACSHl6aykMLZ8lwZtgBNkY4LtBB+EOn3e+/1KZQ/SwiG5m48Mpo0hY4zzYL3vP
+         3WE0n+O8eM0rXfwUwfAGyrcS/DKVjLHUo2Y+tF0KT+xdyloO90/M1lyih4lV5QvRUSnl
+         CoIyy2nh9aBSEyfERfqGWyexn+osDUfkg/E86MvhtUzbVaIg+DQDxWnCsC2fRsI2cuhx
+         nbgg==
+X-Gm-Message-State: AOAM530yCc3RlzaxBzjbwA5lp6zs9NiiBxNATz5N52/Z61tgoOM+EncR
+        OknlojYxdsPyPOFs/y5xEUHVG6dR3aR+5/b1vtX0g2GV6OU=
+X-Google-Smtp-Source: ABdhPJxdMWZqPHrh+Mxx9qIF7HQSUcdRyEEsbC9X4CVXONVLsF849KG7gxpA1BIWW/BxUAjLxanM9tlNbBcIasoLz7Q=
+X-Received: by 2002:a1c:4b18:: with SMTP id y24mr1613548wma.49.1627954311450;
+ Mon, 02 Aug 2021 18:31:51 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 02 Aug 2021 18:22:02 -0700
-From:   abhinavk@codeaurora.org
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        dri-devel@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno@lists.freedesktop.org,
-        Sumit Semwal <sumit.semwal@linaro.org>
-Subject: Re: [Freedreno] [PATCH 11/11] drm/msm/dsi: Pass DSC params to
- drm_panel
-In-Reply-To: <20210715065203.709914-12-vkoul@kernel.org>
-References: <20210715065203.709914-1-vkoul@kernel.org>
- <20210715065203.709914-12-vkoul@kernel.org>
-Message-ID: <d2fd4c9b0fd9a1e67ac5372803ed3853@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <cover.1610372717.git.saiprakash.ranjan@codeaurora.org>
+ <20210728140052.GB22887@mms-0441> <8b2742c8891abe4fec3664730717a089@codeaurora.org>
+ <20210802105544.GA27657@willie-the-truck> <CAF6AEGvtpFu8st=ZFNoKjP9YsAenciLxL1zMFi_iqMCvdby73w@mail.gmail.com>
+ <20210802151409.GE28735@willie-the-truck>
+In-Reply-To: <20210802151409.GE28735@willie-the-truck>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 2 Aug 2021 18:36:04 -0700
+Message-ID: <CAF6AEGtzvyEUm0Fc8QT5t9KNK7i0FbFyi7zDM2_PMCzZBp7qbw@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH 0/3] iommu/drm/msm: Allow non-coherent masters
+ to use system cache
+To:     Will Deacon <will@kernel.org>
+Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        "Isaac J. Manjarres" <isaacm@codeaurora.org>,
+        David Airlie <airlied@linux.ie>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Sean Paul <sean@poorly.run>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Kristian H Kristensen <hoegsberg@google.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-07-14 23:52, Vinod Koul wrote:
-> When DSC is enabled, we need to pass the DSC parameters to panel driver
-> as well, so add a dsc parameter in panel and set it when DSC is enabled
-> 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+On Mon, Aug 2, 2021 at 8:14 AM Will Deacon <will@kernel.org> wrote:
+>
+> On Mon, Aug 02, 2021 at 08:08:07AM -0700, Rob Clark wrote:
+> > On Mon, Aug 2, 2021 at 3:55 AM Will Deacon <will@kernel.org> wrote:
+> > >
+> > > On Thu, Jul 29, 2021 at 10:08:22AM +0530, Sai Prakash Ranjan wrote:
+> > > > On 2021-07-28 19:30, Georgi Djakov wrote:
+> > > > > On Mon, Jan 11, 2021 at 07:45:02PM +0530, Sai Prakash Ranjan wrote:
+> > > > > > commit ecd7274fb4cd ("iommu: Remove unused IOMMU_SYS_CACHE_ONLY flag")
+> > > > > > removed unused IOMMU_SYS_CACHE_ONLY prot flag and along with it went
+> > > > > > the memory type setting required for the non-coherent masters to use
+> > > > > > system cache. Now that system cache support for GPU is added, we will
+> > > > > > need to set the right PTE attribute for GPU buffers to be sys cached.
+> > > > > > Without this, the system cache lines are not allocated for GPU.
+> > > > > >
+> > > > > > So the patches in this series introduces a new prot flag IOMMU_LLC,
+> > > > > > renames IO_PGTABLE_QUIRK_ARM_OUTER_WBWA to IO_PGTABLE_QUIRK_PTW_LLC
+> > > > > > and makes GPU the user of this protection flag.
+> > > > >
+> > > > > Thank you for the patchset! Are you planning to refresh it, as it does
+> > > > > not apply anymore?
+> > > > >
+> > > >
+> > > > I was waiting on Will's reply [1]. If there are no changes needed, then
+> > > > I can repost the patch.
+> > >
+> > > I still think you need to handle the mismatched alias, no? You're adding
+> > > a new memory type to the SMMU which doesn't exist on the CPU side. That
+> > > can't be right.
+> > >
+> >
+> > Just curious, and maybe this is a dumb question, but what is your
+> > concern about mismatched aliases?  I mean the cache hierarchy on the
+> > GPU device side (anything beyond the LLC) is pretty different and
+> > doesn't really care about the smmu pgtable attributes..
+>
+> If the CPU accesses a shared buffer with different attributes to those which
+> the device is using then you fall into the "mismatched memory attributes"
+> part of the Arm architecture. It's reasonably unforgiving (you should go and
+> read it) and in some cases can apply to speculative accesses as well, but
+> the end result is typically loss of coherency.
 
-based on the comments on prev patches in the series, this will need to 
-be reworked
-too as there wont be any priv->dsc anymore.
+Ok, I might have a few other sections to read first to decipher the
+terminology..
 
-Also, can you also post the panel changes? Would like to see how you 
-will use the
-dsc param there.
+But my understanding of LLC is that it looks just like system memory
+to the CPU and GPU (I think that would make it "the point of
+coherence" between the GPU and CPU?)  If that is true, shouldn't it be
+invisible from the point of view of different CPU mapping options?
 
-> ---
->  drivers/gpu/drm/msm/dsi/dsi_host.c | 16 +++++++++++++++-
->  include/drm/drm_panel.h            |  7 +++++++
->  2 files changed, 22 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index 4e8ab1b1df8b..ee21cda243a7 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -2193,6 +2193,7 @@ int msm_dsi_host_modeset_init(struct 
-> mipi_dsi_host *host,
->  	const struct msm_dsi_cfg_handler *cfg_hnd = msm_host->cfg_hnd;
->  	struct platform_device *pdev = msm_host->pdev;
->  	struct msm_drm_private *priv;
-> +	struct drm_panel *panel;
->  	int ret;
-> 
->  	msm_host->irq = irq_of_parse_and_map(pdev->dev.of_node, 0);
-> @@ -2212,8 +2213,21 @@ int msm_dsi_host_modeset_init(struct 
-> mipi_dsi_host *host,
->  	}
-> 
->  	msm_host->dev = dev;
-> +	panel = msm_dsi_host_get_panel(&msm_host->base);
->  	priv = dev->dev_private;
-> -	priv->dsc = msm_host->dsc;
-> +
-> +	if (panel && panel->dsc) {
-> +		struct msm_display_dsc_config *dsc = priv->dsc;
-> +
-> +		if (!dsc) {
-> +			dsc = kzalloc(sizeof(*dsc), GFP_KERNEL);
-> +			if (!dsc)
-> +				return -ENOMEM;
-> +			dsc->drm = panel->dsc;
-> +			priv->dsc = dsc;
-> +			msm_host->dsc = dsc;
-> +		}
-> +	}
-> 
->  	ret = cfg_hnd->ops->tx_buf_alloc(msm_host, SZ_4K);
->  	if (ret) {
-> diff --git a/include/drm/drm_panel.h b/include/drm/drm_panel.h
-> index 33605c3f0eba..27a7808a29f2 100644
-> --- a/include/drm/drm_panel.h
-> +++ b/include/drm/drm_panel.h
-> @@ -171,6 +171,13 @@ struct drm_panel {
->  	 * Panel entry in registry.
->  	 */
->  	struct list_head list;
-> +
-> +	/**
-> +	 * @dsc:
-> +	 *
-> +	 * Panel DSC pps payload to be sent
-> +	 */
-> +	struct drm_dsc_config *dsc;
->  };
-> 
->  void drm_panel_init(struct drm_panel *panel, struct device *dev,
+BR,
+-R
