@@ -2,199 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4ACB23DE577
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 06:38:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D8AD03DE628
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 07:27:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233810AbhHCEi7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Aug 2021 00:38:59 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:47389 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233748AbhHCEi7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Aug 2021 00:38:59 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1627965528; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=FbLhNhA4Y+LPC/c0c9AGj9/wDZXAL/8/x3Qxh+OZH8c=; b=aLBCDuDGWgHE55xdT7DUAoK10hQfu+jFPupSSe8C6w0qadBZiFCB8OS/57VRTkOFNJ+G51MS
- FOF7svaCIw2Cuw1rT1EH7zNRXj+yPwL40gtAsLKX3JyKjhAZZu/AXbVaqoiYlmNQGRs77T1e
- v1e8+h+/+8JVnv/hhIA+49rOKOE=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 6108c84996a66e66b2fbe970 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 03 Aug 2021 04:38:33
- GMT
-Sender: rnayak=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 57CBCC433F1; Tue,  3 Aug 2021 04:38:33 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [192.168.1.100] (unknown [49.207.203.214])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6A433C433F1;
-        Tue,  3 Aug 2021 04:38:29 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 6A433C433F1
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
-Subject: Re: [PATCH v5 1/2] PM / Domains: Add support for 'required-opps' to
- set default perf state
-To:     Ulf Hansson <ulf.hansson@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Roja Rani Yarubandi <rojay@codeaurora.org>,
-        Stephan Gerhold <stephan@gerhold.net>
-References: <1626764876-10229-1-git-send-email-rnayak@codeaurora.org>
- <1626764876-10229-2-git-send-email-rnayak@codeaurora.org>
- <CAPDyKFrzHD6rXP5TnqrAVnrZExc2JLFe3HoGF+yM_tsaZYwh8g@mail.gmail.com>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <35950d34-5cab-1b09-9864-49217a83f68d@codeaurora.org>
-Date:   Tue, 3 Aug 2021 10:08:26 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        id S233749AbhHCF1Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Aug 2021 01:27:25 -0400
+Received: from fllv0016.ext.ti.com ([198.47.19.142]:47176 "EHLO
+        fllv0016.ext.ti.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229507AbhHCF1Z (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 3 Aug 2021 01:27:25 -0400
+Received: from fllv0034.itg.ti.com ([10.64.40.246])
+        by fllv0016.ext.ti.com (8.15.2/8.15.2) with ESMTP id 1735R7xT081485;
+        Tue, 3 Aug 2021 00:27:07 -0500
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ti.com;
+        s=ti-com-17Q1; t=1627968427;
+        bh=3GymSx5fuQhs/15Zd9CuB3vkNv8nNT+a9AI+QPpxCyQ=;
+        h=Subject:To:CC:References:From:Date:In-Reply-To;
+        b=WDAAJ7MotOnmaj14mbtTpbefjyXXM02gXxzxgjaSz4Nf5Jdi+IABNlK3Sel0KH2AE
+         ZhwpeeRJ6HasiZQhizT0gCB6Ig2aUwjddFoR47+8xnkKZHqShMAo/B0k4EIi2Z4LRN
+         7NSqXRs3PUZfblU9CdXuHL/1Kr5+aUWOWDhniwnc=
+Received: from DLEE110.ent.ti.com (dlee110.ent.ti.com [157.170.170.21])
+        by fllv0034.itg.ti.com (8.15.2/8.15.2) with ESMTPS id 1735R7KX002559
+        (version=TLSv1.2 cipher=AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Tue, 3 Aug 2021 00:27:07 -0500
+Received: from DLEE110.ent.ti.com (157.170.170.21) by DLEE110.ent.ti.com
+ (157.170.170.21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2176.2; Tue, 3 Aug
+ 2021 00:27:07 -0500
+Received: from fllv0040.itg.ti.com (10.64.41.20) by DLEE110.ent.ti.com
+ (157.170.170.21) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id 15.1.2176.2 via
+ Frontend Transport; Tue, 3 Aug 2021 00:27:07 -0500
+Received: from [10.250.232.99] (ileax41-snat.itg.ti.com [10.172.224.153])
+        by fllv0040.itg.ti.com (8.15.2/8.15.2) with ESMTP id 1735R1V1115154;
+        Tue, 3 Aug 2021 00:27:02 -0500
+Subject: Re: [PATCH v7 0/3] Add Qualcomm PCIe Endpoint driver support
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        <lorenzo.pieralisi@arm.com>, <bhelgaas@google.com>,
+        <robh@kernel.org>
+CC:     <devicetree@vger.kernel.org>, <linux-pci@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <hemantk@codeaurora.org>, <smohanad@codeaurora.org>,
+        <bjorn.andersson@linaro.org>, <sallenki@codeaurora.org>,
+        <skananth@codeaurora.org>, <vpernami@codeaurora.org>,
+        <vbadigan@codeaurora.org>
+References: <20210722121242.47838-1-manivannan.sadhasivam@linaro.org>
+From:   Kishon Vijay Abraham I <kishon@ti.com>
+Message-ID: <2a0b7f85-dcd7-fc87-8e02-37725f66b9cf@ti.com>
+Date:   Tue, 3 Aug 2021 10:57:00 +0530
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101
+ Thunderbird/68.10.0
 MIME-Version: 1.0
-In-Reply-To: <CAPDyKFrzHD6rXP5TnqrAVnrZExc2JLFe3HoGF+yM_tsaZYwh8g@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <20210722121242.47838-1-manivannan.sadhasivam@linaro.org>
+Content-Type: text/plain; charset="utf-8"
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
+X-EXCLAIMER-MD-CONFIG: e1e8a2fd-e40a-4ac6-ac9b-f7e9cc9ee180
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Manivannan,
 
-On 8/2/2021 6:29 PM, Ulf Hansson wrote:
-> On Tue, 20 Jul 2021 at 09:12, Rajendra Nayak <rnayak@codeaurora.org> wrote:
->>
->> Some devices within power domains with performance states do not
->> support DVFS, but still need to vote on a default/static state
->> while they are active. They can express this using the 'required-opps'
->> property in device tree, which points to the phandle of the OPP
->> supported by the corresponding power-domains.
->>
->> Add support to parse this information from DT and then set the
->> specified performance state during attach and drop it on detach.
->> runtime suspend/resume callbacks already have logic to drop/set
->> the vote as needed and should take care of dropping the default
->> perf state vote on runtime suspend and restore it back on runtime
->> resume.
->>
->> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
->> ---
->>   drivers/base/power/domain.c | 28 +++++++++++++++++++++++++---
->>   include/linux/pm_domain.h   |  1 +
->>   2 files changed, 26 insertions(+), 3 deletions(-)
->>
->> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
->> index a934c67..f454031 100644
->> --- a/drivers/base/power/domain.c
->> +++ b/drivers/base/power/domain.c
->> @@ -2598,6 +2598,12 @@ static void genpd_dev_pm_detach(struct device *dev, bool power_off)
->>
->>          dev_dbg(dev, "removing from PM domain %s\n", pd->name);
->>
->> +       /* Drop the default performance state */
->> +       if (dev_gpd_data(dev)->default_pstate) {
->> +               dev_pm_genpd_set_performance_state(dev, 0);
->> +               dev_gpd_data(dev)->default_pstate = 0;
->> +       }
->> +
->>          for (i = 1; i < GENPD_RETRY_MAX_MS; i <<= 1) {
->>                  ret = genpd_remove_device(pd, dev);
->>                  if (ret != -EAGAIN)
->> @@ -2635,9 +2641,10 @@ static void genpd_dev_pm_sync(struct device *dev)
->>   static int __genpd_dev_pm_attach(struct device *dev, struct device *base_dev,
->>                                   unsigned int index, bool power_on)
->>   {
->> +       struct device_node *np;
->>          struct of_phandle_args pd_args;
->>          struct generic_pm_domain *pd;
->> -       int ret;
->> +       int ret, pstate;
->>
->>          ret = of_parse_phandle_with_args(dev->of_node, "power-domains",
->>                                  "#power-domain-cells", index, &pd_args);
->> @@ -2675,10 +2682,25 @@ static int __genpd_dev_pm_attach(struct device *dev, struct device *base_dev,
->>                  genpd_unlock(pd);
->>          }
->>
->> -       if (ret)
->> +       if (ret) {
->>                  genpd_remove_device(pd, dev);
->> +               return -EPROBE_DEFER;
->> +       }
->> +
->> +       /* Set the default performance state */
->> +       np = base_dev->of_node;
+On 22/07/21 5:42 pm, Manivannan Sadhasivam wrote:
+> Hello,
 > 
-> Please use dev->of_node instead (it is set to the same of_node as
-> base_dev by the callers of __genpd_dev_pm_attach) as it's more
-> consistent with existing code.
+> This series adds support for Qualcomm PCIe Endpoint controller found
+> in platforms like SDX55. The Endpoint controller is based on the designware
+> core with additional Qualcomm wrappers around the core.
 > 
->> +       if (of_parse_phandle(np, "required-opps", index)) {
->> +               pstate = of_get_required_opp_performance_state(np, index);
->> +               if (pstate < 0) {
->> +                       ret = pstate;
->> +                       dev_err(dev, "failed to set required performance state for power-domain %s: %d\n",
->> +                               pd->name, ret);
->> +               }
->> +               dev_pm_genpd_set_performance_state(dev, pstate);
->> +               dev_gpd_data(dev)->default_pstate = pstate;
+> The driver is added separately unlike other Designware based drivers that
+> combine RC and EP in a single driver. This is done to avoid complexity and
+> to maintain this driver autonomously.
 > 
-> This doesn't look entirely correct to me. If we fail to translate a
-> required opp to a performance state, we shouldn't try to set it.
+> The driver has been validated with an out of tree MHI function driver on
+> SDX55 based Telit FN980 EVB connected to x86 host machine over PCIe.
 
-yeah, that does not seem right at all :(
+Can you also validate it with in-kernel pci-endpoint-test?
 
-> Perhaps it's also easier to call
-> of_get_required_opp_performance_state() unconditionally of whether a
-> "required-opps" specifier exists. If it fails with the translation,
-> then we just skip setting a default state and continue with returning
-> 1.
-> 
-> Would that work?
+It would also help if you can test your patches after
+https://lore.kernel.org/r/20210803050310.27122-1-kishon@ti.com
 
-I think it should, I'll redo the error handling, hopefully right this time,
-and re-post. Thanks for the review.
+Not expecting any dependencies but just to cross check.
+
+Thanks
+Kishon
 
 > 
->> +       }
->>
->> -       return ret ? -EPROBE_DEFER : 1;
->> +       return ret ? ret : 1;
->>   }
->>
->>   /**
->> diff --git a/include/linux/pm_domain.h b/include/linux/pm_domain.h
->> index 21a0577..67017c9 100644
->> --- a/include/linux/pm_domain.h
->> +++ b/include/linux/pm_domain.h
->> @@ -198,6 +198,7 @@ struct generic_pm_domain_data {
->>          struct notifier_block *power_nb;
->>          int cpu;
->>          unsigned int performance_state;
->> +       unsigned int default_pstate;
->>          unsigned int rpm_pstate;
->>          ktime_t next_wakeup;
->>          void *data;
->> --
->> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
->> of Code Aurora Forum, hosted by The Linux Foundation
->>
+> Thanks,
+> Mani
 > 
-> Kind regards
-> Uffe
+> Changes in v7:
 > 
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+> * Used existing naming convention for callback functions
+> * Used active low state for PERST# gpio
+> 
+> Changes in v6:
+> 
+> * Removed status property in DT and added reviewed tag from Rob
+> * Switched to _relaxed variants as suggested by Rob
+> 
+> Changes in v5:
+> 
+> * Removed the DBI register settings that are not needed
+> * Used the standard definitions available in pci_regs.h
+> * Added defines for all the register fields
+> * Removed the left over code from previous iteration
+> 
+> Changes in v4:
+> 
+> * Removed the active_config settings needed for IPA integration
+> * Switched to writel for couple of relaxed versions that sneaked in
+> 
+> Changes in v3:
+> 
+> * Lot of minor cleanups to the driver patch based on review from Bjorn and Stan.
+> * Noticeable changes are:
+>   - Got rid of _relaxed calls and used readl/writel
+>   - Got rid of separate TCSR memory region and used syscon for getting the
+>     register offsets for Perst registers
+>   - Changed the wake gpio handling logic
+>   - Added remove() callback and removed "suppress_bind_attrs"
+>   - stop_link() callback now just disables PERST IRQ
+> * Added MMIO region and doorbell interrupt to the binding
+> * Added logic to write MMIO physicall address to MHI base address as it is
+>   for the function driver to work
+> 
+> Changes in v2:
+> 
+> * Addressed the comments from Rob on bindings patch
+> * Modified the driver as per binding change
+> * Fixed the warnings reported by Kbuild bot
+> * Removed the PERST# "enable_irq" call from probe()
+> 
+> Manivannan Sadhasivam (3):
+>   dt-bindings: pci: Add devicetree binding for Qualcomm PCIe EP
+>     controller
+>   PCI: qcom-ep: Add Qualcomm PCIe Endpoint controller driver
+>   MAINTAINERS: Add entry for Qualcomm PCIe Endpoint driver and binding
+> 
+>  .../devicetree/bindings/pci/qcom,pcie-ep.yaml | 158 ++++
+>  MAINTAINERS                                   |  10 +-
+>  drivers/pci/controller/dwc/Kconfig            |  10 +
+>  drivers/pci/controller/dwc/Makefile           |   1 +
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c     | 710 ++++++++++++++++++
+>  5 files changed, 888 insertions(+), 1 deletion(-)
+>  create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+>  create mode 100644 drivers/pci/controller/dwc/pcie-qcom-ep.c
+> 
