@@ -2,72 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 870D43DF586
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 21:23:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6ADE13DF5D4
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 21:38:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239713AbhHCTXb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Aug 2021 15:23:31 -0400
-Received: from mail-il1-f175.google.com ([209.85.166.175]:41748 "EHLO
-        mail-il1-f175.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239700AbhHCTX3 (ORCPT
+        id S240071AbhHCTib (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Aug 2021 15:38:31 -0400
+Received: from mail-io1-f41.google.com ([209.85.166.41]:45028 "EHLO
+        mail-io1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239894AbhHCTib (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Aug 2021 15:23:29 -0400
-Received: by mail-il1-f175.google.com with SMTP id j18so17481872ile.8;
-        Tue, 03 Aug 2021 12:23:17 -0700 (PDT)
+        Tue, 3 Aug 2021 15:38:31 -0400
+Received: by mail-io1-f41.google.com with SMTP id d22so2228191ioy.11;
+        Tue, 03 Aug 2021 12:38:18 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=dcNrqzMlwCfzPEAk0jxveiZAemfDBtg5jSgVcUhKT/k=;
-        b=LMntrGX72BxRKlQlQEgS/BsUDzc/+7gKnHOXAkF4tlbHeonUbVx1BKup0TIO+h7N5n
-         xQN4iX8htlopXV4JScALvrBQWMtt2wV2vYx05VSbMWycJ5AnGrtClPGnPZG2hShrtxzE
-         fiU6yKvSD+DAiRFPtxaCy8Nc3SGhATbzsQ5tXVtU5rC0Ov3u1WQaxPsv7YYW9rRUQkpK
-         6Af4CWZkidr/jzNXm0VeTkmtIcc+oa81+J70GS1/n0Pe48+eohO0n9a7sqroh98yZN6w
-         B4dOYOFIpV6fKqBHJoJLtWrPyGzFbDztKYI+6//TItayaAk2V+U3yztOPNr68Ez4Jhu1
-         vs7g==
-X-Gm-Message-State: AOAM533/YJ93C1DybHKC46CjgOAArovlPvSxiV8GCCapJcUq2xOw8PwX
-        OcBWSCXlo1bVZkfjWVEBjw==
-X-Google-Smtp-Source: ABdhPJxglGdS0ljuNlZ3K1k0hr4l/wTy9w6Xl+KKhZUy8PWhPtEOO+68VZwP637ma+e96FrBZAvp4A==
-X-Received: by 2002:a92:c143:: with SMTP id b3mr530334ilh.145.1628018597391;
-        Tue, 03 Aug 2021 12:23:17 -0700 (PDT)
+        bh=eb1jPGD0/E2nznm2NqtSynRzUeg03kyj4b+oSommWdA=;
+        b=L2JVydAgLutbWJ4UyLHCRYBIV65wXJKjKHvEq8aHeuFC1fxal614qOfowafANSzaSI
+         gdZ1341N93G1rb10DJXFov6tLqQtvrAe2ekHCZJnl7BebFXscMcp4mBzw8wbtja3UA0e
+         CKc3L+1LSEweQb6cv3GentU+2hsP/kxr/Ii4edBngInQVQ3f5usSmq0fP/cr6b5zE/cA
+         SY1R9bddKmSCN0ort7IJRe+cD1UDCkr9DgsShemyAhIzn9Cac09UXWZELhuoCxLaDyFI
+         ngQy8iAntwg1glY4UOnCdxUwjhXjAODJPII+3i/3/McL30dsFm+1o/XIhj/Dzztmw5UA
+         fFOA==
+X-Gm-Message-State: AOAM532uMdbSlmjXCsk47OBH2kJQ1OGk72PR8ijrvmFAssniNyivUuZy
+        BfpKsSoKnmgzycKNw9pG0Q==
+X-Google-Smtp-Source: ABdhPJxKujOHBMl4ZpSqCe+EHHagEeGuUCKbktBFDSPChxHeapzR7oXQVrMCwPuQ5UjQGw7HDxRlDg==
+X-Received: by 2002:a5d:91c2:: with SMTP id k2mr1101438ior.117.1628019498579;
+        Tue, 03 Aug 2021 12:38:18 -0700 (PDT)
 Received: from robh.at.kernel.org ([64.188.179.248])
-        by smtp.gmail.com with ESMTPSA id t11sm7905636ilp.66.2021.08.03.12.23.15
+        by smtp.gmail.com with ESMTPSA id q1sm6573ioi.42.2021.08.03.12.38.16
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Aug 2021 12:23:16 -0700 (PDT)
-Received: (nullmailer pid 3594635 invoked by uid 1000);
-        Tue, 03 Aug 2021 19:23:14 -0000
-Date:   Tue, 3 Aug 2021 13:23:14 -0600
+        Tue, 03 Aug 2021 12:38:17 -0700 (PDT)
+Received: (nullmailer pid 3614169 invoked by uid 1000);
+        Tue, 03 Aug 2021 19:38:16 -0000
+Date:   Tue, 3 Aug 2021 13:38:16 -0600
 From:   Rob Herring <robh@kernel.org>
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     mka@chromium.org, bjorn.andersson@linaro.org,
-        linux-pm@vger.kernel.org, agross@kernel.org, rjw@rjwysocki.net,
-        dianders@chromium.org, linux-arm-msm@vger.kernel.org,
-        sboyd@kernel.org, tdas@codeaurora.org, devicetree@vger.kernel.org,
-        viresh.kumar@linaro.org, linux-kernel@vger.kernel.org,
-        robh+dt@kernel.org
-Subject: Re: [PATCH 1/4] dt-bindings: cpufreq: cpufreq-qcom-hw: Add
- compatible for SM8250/8350
-Message-ID: <YQmXolN5bk+WdYNi@robh.at.kernel.org>
-References: <1627581885-32165-1-git-send-email-sibis@codeaurora.org>
- <1627581885-32165-2-git-send-email-sibis@codeaurora.org>
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        agross@kernel.org, robh+dt@kernel.org, dianders@chromium.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        srinivas.kandagatla@linaro.org, rbokka@codeaurora.org
+Subject: Re: [PATCH v3 1/4] dt-bindings: nvmem: qfprom: Add optional
+ power-domains property
+Message-ID: <YQmbKMq4p7OmfbHw@robh.at.kernel.org>
+References: <1627627573-32454-1-git-send-email-rnayak@codeaurora.org>
+ <1627627573-32454-2-git-send-email-rnayak@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1627581885-32165-2-git-send-email-sibis@codeaurora.org>
+In-Reply-To: <1627627573-32454-2-git-send-email-rnayak@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 29 Jul 2021 23:34:42 +0530, Sibi Sankar wrote:
-> Re-arranging the register regions to support per core L3 DCVS would lead
-> to bindings breakage when using an older dt with a newer kernel. So,
-> document the EPSS compatible for SM8250/SM8350 SoCs and use them in the
-> CPUFreq-hw driver to prevent such breakages.
+On Fri, 30 Jul 2021 12:16:10 +0530, Rajendra Nayak wrote:
+> qfprom devices on some SoCs need to vote on the performance state
+> of a power-domain, so add the power-domains optional property to the
+> bindings
 > 
-> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
 > ---
->  Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt | 6 +++++-
->  1 file changed, 5 insertions(+), 1 deletion(-)
+>  Documentation/devicetree/bindings/nvmem/qcom,qfprom.yaml | 3 +++
+>  1 file changed, 3 insertions(+)
 > 
 
 Acked-by: Rob Herring <robh@kernel.org>
