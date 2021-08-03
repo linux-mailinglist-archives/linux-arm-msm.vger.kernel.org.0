@@ -2,142 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D6D4C3DE351
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 02:01:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BAE593DE364
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 02:09:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232736AbhHCABa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Aug 2021 20:01:30 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:61643 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232514AbhHCAB3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Aug 2021 20:01:29 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1627948879; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=hXekGM4hs7Ucl6X0Et/hD2GvGQI/YKH6vAE033Bgy68=;
- b=wskk5xFy06rK+CMQy7oHCYMFxpht+FpZnvP7zQxhdoOgMw58VJlKYH/W6lMQR3qvMD0DlJhP
- RE8PmR4Mt673MiNb5Q9fNDfo4U07sP1uFB+NqOvFbsoCPNPr5L9x65z9g0nz0fahD0NzZHi6
- nt+VljFUzoolcI9kYmgms0EXz9A=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 61088718e81205dd0a72bd04 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 03 Aug 2021 00:00:24
- GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1E1BAC43460; Tue,  3 Aug 2021 00:00:24 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 50BB2C433F1;
-        Tue,  3 Aug 2021 00:00:22 +0000 (UTC)
+        id S232772AbhHCAJ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Aug 2021 20:09:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50994 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232940AbhHCAJ4 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 2 Aug 2021 20:09:56 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3ABDC061796
+        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Aug 2021 17:09:45 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id e2-20020a17090a4a02b029016f3020d867so2335118pjh.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Aug 2021 17:09:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=+j4BJpyfr/0bKpgqLUIWH//i3b70ShWiDMnlMOcrZc4=;
+        b=eEcbDKMNyZMv+PMgaHxZKMzSnpGt/8lW8qX0LM8mMc1QuP2Uem3YTKkMxkzZhEpFSy
+         ViAVjzj6ya5et0R6/1h6DHh6BqGEHxuEpXjs8SyGANf18SiilZkzQ7Ne2uFbgPOuWiqd
+         kMZ2hNrdwjrUgJC6mrCRv6ZMCNHRkfRiTAhsTVlcWxX6RIY4FL8K6DJcJt2jUcJh0XZJ
+         XimfGezD2Bo8/eWKrrfVTkz1RZ423OrsSRKzH9bCJOVLSQCRknWaPW//mRMiJMBJy6FB
+         eT0yhYXtzbmVnMjkwBRujoC7WUH28TflA+iWjDphpVqDhoylN3G7VoFyA9Lfe/VP7u6Q
+         P8ZQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=+j4BJpyfr/0bKpgqLUIWH//i3b70ShWiDMnlMOcrZc4=;
+        b=ORg1KnlsHNh0PdP7lZCxM79T/q6ibYpmpJjjFsL/GuwBjv+AitSo7AuJ9teyePacVq
+         exyOUZ8mjAN/NoW8qGDHQYruESnsTRgy/aReY3x9JHJISwFw/yqDVc7hPL+s63nwhY97
+         Ty3AzTdgGP3ATzJdksI4Yek2ph+c4qulIZQHLhmmSoZGgdElEn2rgBDswU1JIJW6zabS
+         0am4PkFg2e7SiLCBCeaHzAnNTs6g7sU9Bpr/xLz49METN8Nq21d1WhMYffSco5XNJu0L
+         vtX2KLbKppPHEmFymSHnzR+aiLm8qZ+TgFpgk/NF3zmk3kv6y7ROxSThT86cz867pxv9
+         OffA==
+X-Gm-Message-State: AOAM533xE/982qiezESB2/8ugqaa75mcTFJTBF3m+XjH2KArGDxx+rGn
+        1by8MKRmf02irqShhcoGCpskqr5U2f4EBICh4Y+eIw==
+X-Google-Smtp-Source: ABdhPJyXrIFW+sRaGg7Z4Xh/FAU4fOb9eNxkUqQavFW+qYQNyTNyh/csjGlerOoJZ9Ud8jPayJ7E2swcUPU2nfINbbY=
+X-Received: by 2002:a63:1857:: with SMTP id 23mr673574pgy.403.1627949384952;
+ Mon, 02 Aug 2021 17:09:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 02 Aug 2021 17:00:22 -0700
-From:   abhinavk@codeaurora.org
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
+References: <20210624171759.4125094-1-dianders@chromium.org>
+ <YNXXwvuErVnlHt+s@8bytes.org> <CAD=FV=UFxZH7g8gH5+M=Fv4Y-e1bsLkNkPGJhNwhvVychcGQcQ@mail.gmail.com>
+ <CAD=FV=W=HmgH3O3z+nThWL6U+X4Oh37COe-uTzVB9SanP2n86w@mail.gmail.com>
+ <YOaymBHc4g2cIfRn@8bytes.org> <CAD=FV=U_mKPaGfWyN1SVi9S2hPBpG=rE_p89+Jvjr95d0TvgsA@mail.gmail.com>
+ <e3555c49-2978-355f-93bb-dbfa7d09cab8@arm.com> <CAD=FV=XaTqNDn=vLEXfJ2dV+EH2UoxPfzWeiS+_sZ9hrQ274bw@mail.gmail.com>
+In-Reply-To: <CAD=FV=XaTqNDn=vLEXfJ2dV+EH2UoxPfzWeiS+_sZ9hrQ274bw@mail.gmail.com>
+From:   Rajat Jain <rajatja@google.com>
+Date:   Mon, 2 Aug 2021 17:09:08 -0700
+Message-ID: <CACK8Z6FV+QYR01=aP4AT8rNUQMkX-WwesHzf5XY8465KuUZ=_Q@mail.gmail.com>
+Subject: Re: [PATCH v2 0/3] iommu: Enable non-strict DMA on QCom SD/MMC
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        dri-devel@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno@lists.freedesktop.org,
-        Sumit Semwal <sumit.semwal@linaro.org>
-Subject: Re: [Freedreno] [PATCH 06/11] drm/msm/disp/dpu1: Add DSC support in
- hw_ctl
-In-Reply-To: <20210715065203.709914-7-vkoul@kernel.org>
-References: <20210715065203.709914-1-vkoul@kernel.org>
- <20210715065203.709914-7-vkoul@kernel.org>
-Message-ID: <7317c6b71043267ce19b7826502c9735@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Adrian Hunter <adrian.hunter@intel.com>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        John Garry <john.garry@huawei.com>,
+        Rob Clark <robdclark@chromium.org>, quic_c_gdjako@quicinc.com,
+        Saravana Kannan <saravanak@google.com>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Linux MMC List <linux-mmc@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-pci@vger.kernel.org,
+        "list@263.net:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
+        Sonny Rao <sonnyrao@chromium.org>,
+        Joel Fernandes <joel@joelfernandes.org>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        "Maciej W. Rozycki" <macro@orcam.me.uk>,
+        Nicolin Chen <nicoleotsuka@gmail.com>,
+        "Paul E. McKenney" <paulmck@kernel.org>,
+        Peter Zijlstra <peterz@infradead.org>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Vlastimil Babka <vbabka@suse.cz>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Linux Doc Mailing List <linux-doc@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-07-14 23:51, Vinod Koul wrote:
-> Later gens of hardware have DSC bits moved to hw_ctl, so configure 
-> these
-> bits so that DSC would work there as well
-> 
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Please correct me if wrong but here you seem to be flushing all the DSC 
-bits
-even the unused ones. This will end-up enabling DSC even when DSC is 
-unused on
-the newer targets.
-If so, thats wrong.
-We need to implement bit-mask based approach to avoid this change and 
-only enable
-those DSCs which are used.
+Hi Robin, Doug,
 
-> ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 7 ++++++-
->  1 file changed, 6 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> index 2d4645e01ebf..aeea6add61ee 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
-> @@ -25,6 +25,8 @@
->  #define   CTL_MERGE_3D_ACTIVE           0x0E4
->  #define   CTL_INTF_ACTIVE               0x0F4
->  #define   CTL_MERGE_3D_FLUSH            0x100
-> +#define   CTL_DSC_ACTIVE                0x0E8
-> +#define   CTL_DSC_FLUSH                0x104
->  #define   CTL_INTF_FLUSH                0x110
->  #define   CTL_INTF_MASTER               0x134
->  #define   CTL_FETCH_PIPE_ACTIVE         0x0FC
-> @@ -34,6 +36,7 @@
-> 
->  #define DPU_REG_RESET_TIMEOUT_US        2000
->  #define  MERGE_3D_IDX   23
-> +#define  DSC_IDX        22
->  #define  INTF_IDX       31
->  #define CTL_INVALID_BIT                 0xffff
-> 
-> @@ -120,6 +123,7 @@ static u32 dpu_hw_ctl_get_pending_flush(struct
-> dpu_hw_ctl *ctx)
-> 
->  static inline void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
->  {
-> +	DPU_REG_WRITE(&ctx->hw, CTL_DSC_FLUSH, BIT(0) | BIT(1) | BIT(2) | 
-> BIT(3));
-> 
->  	if (ctx->pending_flush_mask & BIT(MERGE_3D_IDX))
->  		DPU_REG_WRITE(&ctx->hw, CTL_MERGE_3D_FLUSH,
-> @@ -128,7 +132,7 @@ static inline void
-> dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
->  		DPU_REG_WRITE(&ctx->hw, CTL_INTF_FLUSH,
->  				ctx->pending_intf_flush_mask);
-> 
-> -	DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, ctx->pending_flush_mask);
-> +	DPU_REG_WRITE(&ctx->hw, CTL_FLUSH, ctx->pending_flush_mask |  
-> BIT(DSC_IDX));
->  }
-> 
->  static inline void dpu_hw_ctl_trigger_flush(struct dpu_hw_ctl *ctx)
-> @@ -507,6 +511,7 @@ static void dpu_hw_ctl_intf_cfg_v1(struct 
-> dpu_hw_ctl *ctx,
->  	if (cfg->merge_3d)
->  		DPU_REG_WRITE(c, CTL_MERGE_3D_ACTIVE,
->  			      BIT(cfg->merge_3d - MERGE_3D_0));
-> +	DPU_REG_WRITE(c, CTL_DSC_ACTIVE, BIT(0) | BIT(1) | BIT(2) | BIT(3));
->  }
-> 
->  static void dpu_hw_ctl_intf_cfg(struct dpu_hw_ctl *ctx,
+On Wed, Jul 14, 2021 at 8:14 AM Doug Anderson <dianders@chromium.org> wrote:
+>
+> Hi,
+>
+> On Tue, Jul 13, 2021 at 11:07 AM Robin Murphy <robin.murphy@arm.com> wrote:
+> >
+> > On 2021-07-08 15:36, Doug Anderson wrote:
+> > [...]
+> > >> Or document for the users that want performance how to
+> > >> change the setting, so that they can decide.
+> > >
+> > > Pushing this to the users can make sense for a Linux distribution but
+> > > probably less sense for an embedded platform. So I'm happy to make
+> > > some way for a user to override this (like via kernel command line),
+> > > but I also strongly believe there should be a default that users don't
+> > > have to futz with that we think is correct.
+> >
+> > FYI I did make progress on the "punt it to userspace" approach. I'm not
+> > posting it even as an RFC yet because I still need to set up a machine
+> > to try actually testing any of it (it's almost certainly broken
+> > somewhere), but in the end it comes out looking surprisingly not too bad
+> > overall. If you're curious to take a look in the meantime I put it here:
+> >
+> > https://gitlab.arm.com/linux-arm/linux-rm/-/commits/iommu/fq
+
+I was wondering if you got any closer to testing / sending it out? I
+looked at the patches and am trying to understand, would they also
+make it possible to convert at runtime, an existing "non-strict"
+domain (for a particular device) into a "strict" domain leaving the
+other devices/domains as-is? Please let me know when you think your
+patches are good to be tested, and I'd also be interested in trying
+them out.
+
+>
+> Being able to change this at runtime through sysfs sounds great and it
+> fills all the needs I'm aware of, thanks! In Chrome OS we can just use
+> this with some udev rules and get everything we need.
+
+I still have another (inverse) use case where this does not work:
+We have an Intel chromebook with the default domain type being
+non-strict. There is an LTE modem (an internal PCI device which cannot
+be marked external), which we'd like to be treated as a "Strict" DMA
+domain.
+
+Do I understand it right that using Rob's patches, I could potentially
+switch the domain to "strict" *after* booting (since we don't use
+initramfs), but by that time, the driver might have already attached
+to the modem device (using "non-strict" domain), and thus the damage
+may have already been done? So perhaps we still need a device property
+that the firmware could use to indicate "strictness" for certain
+devices at boot?
+
+Thanks,
+Rajat
