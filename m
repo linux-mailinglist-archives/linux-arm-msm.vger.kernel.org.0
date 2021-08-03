@@ -2,174 +2,316 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A8AD23DE39A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 02:35:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6034D3DE3B3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 02:58:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233008AbhHCAfZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Aug 2021 20:35:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56804 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232891AbhHCAfZ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Aug 2021 20:35:25 -0400
-Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45EF3C061796
-        for <linux-arm-msm@vger.kernel.org>; Mon,  2 Aug 2021 17:35:13 -0700 (PDT)
-Received: by mail-pj1-x1033.google.com with SMTP id a8so4477141pjk.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 02 Aug 2021 17:35:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5xi7k8IuxcGb5LOBYAbguxfQfTtnnwxeja/w2hdMqvk=;
-        b=BPBmBK6Oa9Fz1/ejFbBvP9PntE5M4Y/6SY4aMOApSL2NBqNeYpiuuKQDXikcP2is+8
-         KwthFSUh59S+lqmZMHGQL/iqOYk5FHP9SnNinoO4RO1xwhcM5rgxlMILuWQmOKxcAIPn
-         zJeKBCiGKcqtCYJZisFLf8biie1/ZYgMr5jveWfaC7x1qCTFlIIrCJZk1gP3QbL2B3La
-         Ki8/oXSrAOROvW1S45zSi238dvzbRFlHJnddY1BZDizVXmVMNUBr92JGVnZXe7iI0YEZ
-         CtoFFJcaY3q9gKDkWDB+mb3Sj0a3DGfi6gqy+vFZujkPJ+AkR329+XyiHF4N0jYmEkuh
-         IbTg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5xi7k8IuxcGb5LOBYAbguxfQfTtnnwxeja/w2hdMqvk=;
-        b=skoydiSf5kfPsFtSwxmHNdNq+kRPbjtPOvpNMraV4hN/AdlEW2CgZFTXedtA5pc7uc
-         W5z56gVDVEFspFVcqUwfX9N3gsjuMGo4S4oocKBkkVJkCoZ6m5MMA+rjU8nHU/YgbWHe
-         q6ZhxcxDeezRuZ6gyfIqBeKdnq1WvOLsKhyuf/pheP/RO4fiy5pJa/qEKcYuUQN5pmlI
-         gG511FReoDP9kBAT/K24sU2IQQzQHIDdHcojj3UrfF5N2BeJxFcEfHyQoihV+UYGRSFO
-         4zu8YiELyx1XTVOonEwEKUMaiwBE22jPuxSwwuW2IX7EM4wrtEVgQGNZA7wDtkLi3NNO
-         RLiA==
-X-Gm-Message-State: AOAM533OQxtbmQ6uBr4NMnayUMSBLw9LtRowXsMIAyeSh4VSHtvVJ7xZ
-        sQqopTSB+0IKqZ8xdb++IE0huzDyJwyLxtUfkFMZ+A==
-X-Google-Smtp-Source: ABdhPJyD/SoLzWfUHi1/eto0p7V/jbYQ+j7Zgt/Ff2rWqOX90CU7XVmBN71cEqRz0BEe3ypUcORU14MWzQ39UTDFVTA=
-X-Received: by 2002:a17:90b:1a92:: with SMTP id ng18mr20057710pjb.86.1627950912360;
- Mon, 02 Aug 2021 17:35:12 -0700 (PDT)
+        id S232311AbhHCA6S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Aug 2021 20:58:18 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:64408 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233273AbhHCA6S (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 2 Aug 2021 20:58:18 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1627952288; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=L91wI3wMyRh86rCU8asTtP5eHLcHNJCjnnsXcpNsE5s=;
+ b=TrqTrXrE5x/F4oq2wW3zQCRTTYBvUQXRAooH4xLM3GeG4qkdTeHQvtKrBCPMQTmpE2Dh8x/+
+ fcNxuJ4m2d2L8etMqTauhqJNqrjRdIBE3qY7V2sBdeD5MawGTa4a45sBKeX3LtvBc9PI9cQv
+ mTRAhuFPnx7KO8UZPAMqWwQPZAQ=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 610894979771b05b247670b3 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 03 Aug 2021 00:57:59
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 78698C4338A; Tue,  3 Aug 2021 00:57:59 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A4DAEC433D3;
+        Tue,  3 Aug 2021 00:57:56 +0000 (UTC)
 MIME-Version: 1.0
-References: <20210624171759.4125094-1-dianders@chromium.org>
- <YNXXwvuErVnlHt+s@8bytes.org> <CAD=FV=UFxZH7g8gH5+M=Fv4Y-e1bsLkNkPGJhNwhvVychcGQcQ@mail.gmail.com>
- <CAD=FV=W=HmgH3O3z+nThWL6U+X4Oh37COe-uTzVB9SanP2n86w@mail.gmail.com>
- <YOaymBHc4g2cIfRn@8bytes.org> <CAD=FV=U_mKPaGfWyN1SVi9S2hPBpG=rE_p89+Jvjr95d0TvgsA@mail.gmail.com>
- <e3555c49-2978-355f-93bb-dbfa7d09cab8@arm.com> <CAD=FV=XaTqNDn=vLEXfJ2dV+EH2UoxPfzWeiS+_sZ9hrQ274bw@mail.gmail.com>
- <CACK8Z6FV+QYR01=aP4AT8rNUQMkX-WwesHzf5XY8465KuUZ=_Q@mail.gmail.com>
-In-Reply-To: <CACK8Z6FV+QYR01=aP4AT8rNUQMkX-WwesHzf5XY8465KuUZ=_Q@mail.gmail.com>
-From:   Rajat Jain <rajatja@google.com>
-Date:   Mon, 2 Aug 2021 17:34:36 -0700
-Message-ID: <CACK8Z6Hzy+t05kY0VGwEnzcHZXgg9BAuS+DmRf3==J+G62qXgQ@mail.gmail.com>
-Subject: Re: [PATCH v2 0/3] iommu: Enable non-strict DMA on QCom SD/MMC
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 02 Aug 2021 17:57:56 -0700
+From:   abhinavk@codeaurora.org
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        John Garry <john.garry@huawei.com>,
-        Rob Clark <robdclark@chromium.org>, quic_c_gdjako@quicinc.com,
-        Saravana Kannan <saravanak@google.com>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        Linux MMC List <linux-mmc@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-pci@vger.kernel.org,
-        "list@263.net:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
-        Sonny Rao <sonnyrao@chromium.org>,
-        Joel Fernandes <joel@joelfernandes.org>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Jonathan Corbet <corbet@lwn.net>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        "Maciej W. Rozycki" <macro@orcam.me.uk>,
-        Nicolin Chen <nicoleotsuka@gmail.com>,
-        "Paul E. McKenney" <paulmck@kernel.org>,
-        Peter Zijlstra <peterz@infradead.org>,
-        Randy Dunlap <rdunlap@infradead.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Vlastimil Babka <vbabka@suse.cz>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Linux Doc Mailing List <linux-doc@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        dri-devel@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno@lists.freedesktop.org,
+        Sumit Semwal <sumit.semwal@linaro.org>
+Subject: Re: [Freedreno] [PATCH 08/11] drm/msm/disp/dpu1: Add support for DSC
+ in encoder
+In-Reply-To: <20210715065203.709914-9-vkoul@kernel.org>
+References: <20210715065203.709914-1-vkoul@kernel.org>
+ <20210715065203.709914-9-vkoul@kernel.org>
+Message-ID: <70d5abae07b4dbf63d8dbf47ba31262d@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+On 2021-07-14 23:52, Vinod Koul wrote:
+> When DSC is enabled in DT, we need to configure the encoder for DSC
+> configuration, calculate DSC parameters for the given timing.
+> 
+> This patch adds that support by adding dpu_encoder_prep_dsc() which is
+> invoked when DSC is enabled in DT
+correct me if wrong but this commit text is not valid anymore in my 
+opinion.
+are there any params you are getting from DT now? I thought its all 
+coming from the panel
+driver directly.
+> 
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+agree with dmitry's comment's 
+https://patchwork.freedesktop.org/patch/444078/?series=90413&rev=2
 
-On Mon, Aug 2, 2021 at 5:09 PM Rajat Jain <rajatja@google.com> wrote:
->
-> Hi Robin, Doug,
->
-> On Wed, Jul 14, 2021 at 8:14 AM Doug Anderson <dianders@chromium.org> wrote:
-> >
-> > Hi,
-> >
-> > On Tue, Jul 13, 2021 at 11:07 AM Robin Murphy <robin.murphy@arm.com> wrote:
-> > >
-> > > On 2021-07-08 15:36, Doug Anderson wrote:
-> > > [...]
-> > > >> Or document for the users that want performance how to
-> > > >> change the setting, so that they can decide.
-> > > >
-> > > > Pushing this to the users can make sense for a Linux distribution but
-> > > > probably less sense for an embedded platform. So I'm happy to make
-> > > > some way for a user to override this (like via kernel command line),
-> > > > but I also strongly believe there should be a default that users don't
-> > > > have to futz with that we think is correct.
-> > >
-> > > FYI I did make progress on the "punt it to userspace" approach. I'm not
-> > > posting it even as an RFC yet because I still need to set up a machine
-> > > to try actually testing any of it (it's almost certainly broken
-> > > somewhere), but in the end it comes out looking surprisingly not too bad
-> > > overall. If you're curious to take a look in the meantime I put it here:
-> > >
-> > > https://gitlab.arm.com/linux-arm/linux-rm/-/commits/iommu/fq
+instead of dsc being part of priv->dsc it should be per encoder.
 
-BTW, is there another mirror to this? I (and another colleague) are
-getting the following error when trying to clone it:
+On top of his comment, I also think that like on the newer chipsets, 
+moving the dsc related
+encoder configuration to a dpu_encoder_dce.c will help for future 
+expansion of other topologies
+and also for other compression algorithms.
 
-rajatja@rajat2:~/rob_iommu$ git clone
-https://git.gitlab.arm.com/linux-arm/linux-rm.git
-Cloning into 'linux-rm'...
-remote: Enumerating objects: 125712, done.
-remote: Counting objects: 100% (125712/125712), done.
-remote: Compressing objects: 100% (41203/41203), done.
-error: RPC failed; curl 18 transfer closed with outstanding read data remaining
-error: 804 bytes of body are still expected
-fetch-pack: unexpected disconnect while reading sideband packet fatal:
-early EOF
-fatal: fetch-pack: invalid index-pack output rajatja@rajat2:~/rob_iommu$
-
-We've tried both git and https methods.
-
->
-> I was wondering if you got any closer to testing / sending it out? I
-> looked at the patches and am trying to understand, would they also
-> make it possible to convert at runtime, an existing "non-strict"
-> domain (for a particular device) into a "strict" domain leaving the
-> other devices/domains as-is? Please let me know when you think your
-> patches are good to be tested, and I'd also be interested in trying
-> them out.
->
-> >
-> > Being able to change this at runtime through sysfs sounds great and it
-> > fills all the needs I'm aware of, thanks! In Chrome OS we can just use
-> > this with some udev rules and get everything we need.
->
-> I still have another (inverse) use case where this does not work:
-> We have an Intel chromebook with the default domain type being
-> non-strict. There is an LTE modem (an internal PCI device which cannot
-> be marked external), which we'd like to be treated as a "Strict" DMA
-> domain.
->
-> Do I understand it right that using Rob's patches, I could potentially
-> switch the domain to "strict" *after* booting (since we don't use
-> initramfs), but by that time, the driver might have already attached
-> to the modem device (using "non-strict" domain), and thus the damage
-> may have already been done? So perhaps we still need a device property
-> that the firmware could use to indicate "strictness" for certain
-> devices at boot?
->
-> Thanks,
-> Rajat
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 142 +++++++++++++++++++-
+>  1 file changed, 141 insertions(+), 1 deletion(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> index 8d942052db8a..41140b781e66 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
+> @@ -21,12 +21,17 @@
+>  #include "dpu_hw_intf.h"
+>  #include "dpu_hw_ctl.h"
+>  #include "dpu_hw_dspp.h"
+> +#include "dpu_hw_dsc.h"
+>  #include "dpu_formats.h"
+>  #include "dpu_encoder_phys.h"
+>  #include "dpu_crtc.h"
+>  #include "dpu_trace.h"
+>  #include "dpu_core_irq.h"
+> 
+> +#define DSC_MODE_SPLIT_PANEL		BIT(0)
+> +#define DSC_MODE_MULTIPLEX		BIT(1)
+> +#define DSC_MODE_VIDEO			BIT(2)
+> +
+>  #define DPU_DEBUG_ENC(e, fmt, ...) DPU_DEBUG("enc%d " fmt,\
+>  		(e) ? (e)->base.base.id : -1, ##__VA_ARGS__)
+> 
+> @@ -135,6 +140,7 @@ enum dpu_enc_rc_states {
+>   * @cur_slave:		As above but for the slave encoder.
+>   * @hw_pp:		Handle to the pingpong blocks used for the display. No.
+>   *			pingpong blocks can be different than num_phys_encs.
+> + * @hw_dsc		Handle to the DSC blocks used for the display.
+>   * @intfs_swapped:	Whether or not the phys_enc interfaces have been 
+> swapped
+>   *			for partial update right-only cases, such as pingpong
+>   *			split where virtual pingpong does not generate IRQs
+> @@ -180,6 +186,7 @@ struct dpu_encoder_virt {
+>  	struct dpu_encoder_phys *cur_master;
+>  	struct dpu_encoder_phys *cur_slave;
+>  	struct dpu_hw_pingpong *hw_pp[MAX_CHANNELS_PER_ENC];
+> +	struct dpu_hw_dsc *hw_dsc[MAX_CHANNELS_PER_ENC];
+> 
+>  	bool intfs_swapped;
+> 
+> @@ -1008,7 +1015,8 @@ static void dpu_encoder_virt_mode_set(struct
+> drm_encoder *drm_enc,
+>  	struct dpu_hw_blk *hw_ctl[MAX_CHANNELS_PER_ENC];
+>  	struct dpu_hw_blk *hw_lm[MAX_CHANNELS_PER_ENC];
+>  	struct dpu_hw_blk *hw_dspp[MAX_CHANNELS_PER_ENC] = { NULL };
+> -	int num_lm, num_ctl, num_pp;
+> +	struct dpu_hw_blk *hw_dsc[MAX_CHANNELS_PER_ENC];
+> +	int num_lm, num_ctl, num_pp, num_dsc;
+>  	int i, j;
+> 
+>  	if (!drm_enc) {
+> @@ -1061,11 +1069,16 @@ static void dpu_encoder_virt_mode_set(struct
+> drm_encoder *drm_enc,
+>  	dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
+>  		drm_enc->base.id, DPU_HW_BLK_DSPP, hw_dspp,
+>  		ARRAY_SIZE(hw_dspp));
+> +	num_dsc = dpu_rm_get_assigned_resources(&dpu_kms->rm, global_state,
+> +		drm_enc->base.id, DPU_HW_BLK_DSC, hw_dsc, ARRAY_SIZE(hw_dsc));
+> 
+>  	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++)
+>  		dpu_enc->hw_pp[i] = i < num_pp ? to_dpu_hw_pingpong(hw_pp[i])
+>  						: NULL;
+> 
+> +	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++)
+> +		dpu_enc->hw_dsc[i] = i < num_dsc ? to_dpu_hw_dsc(hw_dsc[i]) : NULL;
+> +
+>  	cstate = to_dpu_crtc_state(drm_crtc->state);
+> 
+>  	for (i = 0; i < num_lm; i++) {
+> @@ -1810,10 +1823,133 @@ static void
+> dpu_encoder_vsync_event_work_handler(struct kthread_work *work)
+>  			nsecs_to_jiffies(ktime_to_ns(wakeup_time)));
+>  }
+> 
+> +static void
+> +dpu_encoder_dsc_pclk_param_calc(struct msm_display_dsc_config *dsc, 
+> u32 width)
+> +{
+> +	int slice_count, slice_per_intf;
+> +	int bytes_in_slice, total_bytes_per_intf;
+> +
+> +	if (!dsc || !dsc->drm->slice_width || !dsc->drm->slice_count) {
+> +		DPU_ERROR("Invalid DSC/slices\n");
+> +		return;
+> +	}
+> +
+> +	slice_count = dsc->drm->slice_count;
+> +	slice_per_intf = DIV_ROUND_UP(width, dsc->drm->slice_width);
+> +
+> +	/*
+> +	 * If slice_count is greater than slice_per_intf then default to 1.
+> +	 * This can happen during partial update.
+> +	 */
+> +	if (slice_count > slice_per_intf)
+> +		slice_count = 1;
+> +
+> +	bytes_in_slice = DIV_ROUND_UP(dsc->drm->slice_width *
+> +				      dsc->drm->bits_per_pixel, 8);
+> +	total_bytes_per_intf = bytes_in_slice * slice_per_intf;
+> +
+> +	dsc->eol_byte_num = total_bytes_per_intf % 3;
+> +	dsc->pclk_per_line =  DIV_ROUND_UP(total_bytes_per_intf, 3);
+> +	dsc->bytes_in_slice = bytes_in_slice;
+> +	dsc->bytes_per_pkt = bytes_in_slice * slice_count;
+> +	dsc->pkt_per_line = slice_per_intf / slice_count;
+> +}
+> +
+> +static void
+> +dpu_encoder_dsc_initial_line_calc(struct msm_display_dsc_config *dsc,
+> +				  u32 enc_ip_width)
+> +{
+> +	int ssm_delay, total_pixels, soft_slice_per_enc;
+> +
+> +	soft_slice_per_enc = enc_ip_width / dsc->drm->slice_width;
+> +
+> +	/*
+> +	 * minimum number of initial line pixels is a sum of:
+> +	 * 1. sub-stream multiplexer delay (83 groups for 8bpc,
+> +	 *    91 for 10 bpc) * 3
+> +	 * 2. for two soft slice cases, add extra sub-stream multiplexer * 3
+> +	 * 3. the initial xmit delay
+> +	 * 4. total pipeline delay through the "lock step" of encoder (47)
+> +	 * 5. 6 additional pixels as the output of the rate buffer is
+> +	 *    48 bits wide
+> +	 */
+> +	ssm_delay = ((dsc->drm->bits_per_component < 10) ? 84 : 92);
+> +	total_pixels = ssm_delay * 3 + dsc->drm->initial_xmit_delay + 47;
+> +	if (soft_slice_per_enc > 1)
+> +		total_pixels += (ssm_delay * 3);
+> +	dsc->initial_lines = DIV_ROUND_UP(total_pixels, 
+> dsc->drm->slice_width);
+> +}
+> +
+> +static void dpu_encoder_dsc_pipe_cfg(struct dpu_hw_dsc *hw_dsc,
+> +				     struct dpu_hw_pingpong *hw_pp,
+> +				     struct msm_display_dsc_config *dsc,
+> +				     u32 common_mode)
+> +{
+> +	if (hw_dsc->ops.dsc_config)
+> +		hw_dsc->ops.dsc_config(hw_dsc, dsc, common_mode);
+> +
+> +	if (hw_dsc->ops.dsc_config_thresh)
+> +		hw_dsc->ops.dsc_config_thresh(hw_dsc, dsc);
+> +
+> +	if (hw_pp->ops.setup_dsc)
+> +		hw_pp->ops.setup_dsc(hw_pp);
+> +
+> +	if (hw_pp->ops.enable_dsc)
+> +		hw_pp->ops.enable_dsc(hw_pp);
+> +}
+> +
+> +static void dpu_encoder_prep_dsc(struct dpu_encoder_virt *dpu_enc,
+> +				 struct msm_display_dsc_config *dsc)
+> +{
+> +	/* coding only for 2LM, 2enc, 1 dsc config */
+> +	struct dpu_encoder_phys *enc_master = dpu_enc->cur_master;
+> +	struct dpu_hw_dsc *hw_dsc[MAX_CHANNELS_PER_ENC];
+> +	struct dpu_hw_pingpong *hw_pp[MAX_CHANNELS_PER_ENC];
+> +	int this_frame_slices;
+> +	int intf_ip_w, enc_ip_w;
+> +	int dsc_common_mode;
+> +	int pic_width, pic_height;
+> +	int i;
+> +
+> +	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++) {
+> +		hw_pp[i] = dpu_enc->hw_pp[i];
+> +		hw_dsc[i] = dpu_enc->hw_dsc[i];
+> +
+> +		if (!hw_pp[i] || !hw_dsc[i]) {
+> +			DPU_ERROR_ENC(dpu_enc, "invalid params for DSC\n");
+> +			return;
+> +		}
+> +	}
+> +
+> +	dsc_common_mode = 0;
+> +	pic_width = dsc->drm->pic_width;
+> +	pic_height = dsc->drm->pic_height;
+> +
+> +	dsc_common_mode = DSC_MODE_MULTIPLEX | DSC_MODE_SPLIT_PANEL;
+> +	if (enc_master->intf_mode == INTF_MODE_VIDEO)
+> +		dsc_common_mode |= DSC_MODE_VIDEO;
+> +
+> +	this_frame_slices = pic_width / dsc->drm->slice_width;
+> +	intf_ip_w = this_frame_slices * dsc->drm->slice_width;
+> +
+> +	dpu_encoder_dsc_pclk_param_calc(dsc, intf_ip_w);
+> +
+> +	/*
+> +	 * dsc merge case: when using 2 encoders for the same stream,
+> +	 * no. of slices need to be same on both the encoders.
+> +	 */
+> +	enc_ip_w = intf_ip_w / 2;
+> +	dpu_encoder_dsc_initial_line_calc(dsc, enc_ip_w);
+> +
+> +	for (i = 0; i < MAX_CHANNELS_PER_ENC; i++)
+> +		dpu_encoder_dsc_pipe_cfg(hw_dsc[i], hw_pp[i], dsc, dsc_common_mode);
+> +}
+> +
+>  void dpu_encoder_prepare_for_kickoff(struct drm_encoder *drm_enc)
+>  {
+>  	struct dpu_encoder_virt *dpu_enc;
+>  	struct dpu_encoder_phys *phys;
+> +	struct msm_drm_private *priv;
+>  	bool needs_hw_reset = false;
+>  	unsigned int i;
+> 
+> @@ -1841,6 +1977,10 @@ void dpu_encoder_prepare_for_kickoff(struct
+> drm_encoder *drm_enc)
+>  			dpu_encoder_helper_hw_reset(dpu_enc->phys_encs[i]);
+>  		}
+>  	}
+> +
+> +	priv = drm_enc->dev->dev_private;
+> +	if (priv->dsc)
+> +		dpu_encoder_prep_dsc(dpu_enc, priv->dsc);
+>  }
+> 
+>  void dpu_encoder_kickoff(struct drm_encoder *drm_enc)
