@@ -2,144 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1BA223DE3D3
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 03:06:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78D1A3DE3D7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 03:10:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233008AbhHCBGh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 2 Aug 2021 21:06:37 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:58730 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232768AbhHCBGg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 2 Aug 2021 21:06:36 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1627952786; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=7bOpFp7obdoq6Euoam+mDRvGfl+5Uird7in8uKDL+WM=;
- b=dZIypBSxR9cTR5eRPXz4kvu0zVKs63LfUEwCcFcsLGycnQWCjCuyXcoiiJlNPaxe+xDs98rC
- hwGbuwgXJPrPmJ2OcZ12gKDq3TIE8n41iJVFrrQ6uChR9wXmlznzv9H7IcmNCVCNR17E3NvN
- wzeChCcQXwpilfUaCH1a+9pY3MU=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 6108967138fa9bfe9c32efb1 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 03 Aug 2021 01:05:53
- GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1277DC43460; Tue,  3 Aug 2021 01:05:53 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8849EC433F1;
-        Tue,  3 Aug 2021 01:05:50 +0000 (UTC)
+        id S232891AbhHCBK1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 2 Aug 2021 21:10:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36586 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232768AbhHCBK1 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 2 Aug 2021 21:10:27 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42D96C06175F;
+        Mon,  2 Aug 2021 18:10:13 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id b11so18103104wrx.6;
+        Mon, 02 Aug 2021 18:10:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=cwfRDlhi4nw1htqUjvNDRczeQ0/VaPFUSYWqPgi8u+Y=;
+        b=ZweXXMfeU0KJi/8/pjiXrS3//QcwgI4bRE1dTQEC/En+mp2Fzl5ZY5RqvnYeRYqj18
+         7eOcAgD8yuDaoid5lmVArFNy5UD2/hYtayFhdpZX3dWx6ife6WXfdAZnyvHcumgauD6J
+         6Kxyedhg5BBMfGDZlwlnTaDGW6eetSAvcsYjRSDc3hoaARyBshyf8C7WepZ4Yq7pYk+y
+         8jyngsKBYLoHaCXHkNTDKU5PVa9kjA5uXqf9duY0bwCxJQKh9PUQ78xmpmlslphdreR9
+         ROjKMFRs95AkcIoGjjzEd+R6u8C3+AzfQclC6WihqLRMkywHPiV0qR4sskcRZhwJPhOv
+         4Hsw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=cwfRDlhi4nw1htqUjvNDRczeQ0/VaPFUSYWqPgi8u+Y=;
+        b=mp4gU0HycMZdXeReFwqApom29PwWPMdAmj46Q2s7b60cE/7zrWIEDPccR5dd1C4APF
+         GGrbyUQwAarP4rtkglPbHbc8aJ/Ra4kpItjage6dBwMpD3tOKnneRc5SC2aSrykdZ/H6
+         SH+LFhs0MgMG2jfzW2PbTunJRUiPrgTrnX+lCsLN9k4C5Fz30LbK8JHHy8pge87sfAWd
+         eAMji08ltrTOQqAaB8IHsAhf3jv6Q/NjQKE957mKLWG99dW06fj+HrTALoM8bat2oEy7
+         8ZekpwsUSLxlMOlZRKwBpphL/nhxzsajhhlo/G5eCwmdqhK4dCk/zcSvN/L9Md9OjPLl
+         s+HA==
+X-Gm-Message-State: AOAM530XutqCc/EQICp05oSBvEFzAqw8l5dckMA9TIZmB5Hey/ApbBYN
+        kuwzwA4lkUi089boBdJx/l7ANqRp+p3aPKfEMZA=
+X-Google-Smtp-Source: ABdhPJwLpmDvUbuYbcJzZuoOee6sTseIK6hg03LmLgFOFqG4+uh1U7lqcT3Qttal7+3I2dABf/jzbXRnAo/kilcgfRM=
+X-Received: by 2002:adf:e3c7:: with SMTP id k7mr19403081wrm.327.1627953011815;
+ Mon, 02 Aug 2021 18:10:11 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 02 Aug 2021 18:05:50 -0700
-From:   abhinavk@codeaurora.org
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        dri-devel@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno@lists.freedesktop.org,
-        Sumit Semwal <sumit.semwal@linaro.org>
-Subject: Re: [Freedreno] [PATCH 09/11] drm/msm/disp/dpu1: Add support for DSC
- in topology
-In-Reply-To: <20210715065203.709914-10-vkoul@kernel.org>
-References: <20210715065203.709914-1-vkoul@kernel.org>
- <20210715065203.709914-10-vkoul@kernel.org>
-Message-ID: <3fd739ca72c5704a3ca15a20492c5eac@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <20210727093322.13202-1-saiprakash.ranjan@codeaurora.org> <20210802161206.GA29168@willie-the-truck>
+In-Reply-To: <20210802161206.GA29168@willie-the-truck>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 2 Aug 2021 18:14:25 -0700
+Message-ID: <CAF6AEGueDncLYzw9ic=2wkfidOBcG_HcquH7K0ya9xEfY5oteg@mail.gmail.com>
+Subject: Re: [PATCH] iommu/arm-smmu: Add clk_bulk_{prepare/unprepare} to
+ system pm callbacks
+To:     Will Deacon <will@kernel.org>
+Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        srimuc <srimuc@codeaurora.org>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-07-14 23:52, Vinod Koul wrote:
-> For DSC to work we typically need a 2,2,1 configuration. This should
-> suffice for resolutions upto 4k. For more resolutions like 8k this 
-> won't
-> work.
-> 
-> The topology information is provided by DTS so we try to deduce the
-> topology required for DSC.
-> Furthermore, we can use 1 DSC encoder in lesser resolutions, but that 
-> is
-> not power efficient according to Abhinav, it is better to use 2 mixers
-> as that will split width/2 and is proven to be power efficient.
+On Mon, Aug 2, 2021 at 9:12 AM Will Deacon <will@kernel.org> wrote:
+>
+> On Tue, Jul 27, 2021 at 03:03:22PM +0530, Sai Prakash Ranjan wrote:
+> > Some clocks for SMMU can have parent as XO such as gpu_cc_hub_cx_int_clk
+> > of GPU SMMU in QTI SC7280 SoC and in order to enter deep sleep states in
+> > such cases, we would need to drop the XO clock vote in unprepare call and
+> > this unprepare callback for XO is in RPMh (Resource Power Manager-Hardened)
+> > clock driver which controls RPMh managed clock resources for new QTI SoCs
+> > and is a blocking call.
+> >
+> > Given we cannot have a sleeping calls such as clk_bulk_prepare() and
+> > clk_bulk_unprepare() in arm-smmu runtime pm callbacks since the iommu
+> > operations like map and unmap can be in atomic context and are in fast
+> > path, add this prepare and unprepare call to drop the XO vote only for
+> > system pm callbacks since it is not a fast path and we expect the system
+> > to enter deep sleep states with system pm as opposed to runtime pm.
+> >
+> > This is a similar sequence of clock requests (prepare,enable and
+> > disable,unprepare) in arm-smmu probe and remove.
+> >
+> > Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+> > Co-developed-by: Rajendra Nayak <rnayak@codeaurora.org>
+> > Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> > ---
+> >  drivers/iommu/arm/arm-smmu/arm-smmu.c | 20 ++++++++++++++++++--
+> >  1 file changed, 18 insertions(+), 2 deletions(-)
+>
+> [+Rob]
+>
+> How does this work with that funny GPU which writes to the SMMU registers
+> directly? Does the SMMU need to remain independently clocked for that to
+> work or is it all in the same clock domain?
 
-I think now that we have added the technical reason of why it is better 
-to use
-2-2-1 ( using 2 LMs is better than one as it will half layer width), we 
-can drop my name from the commit text
-as it holds less value than the actual reason itself :)
-You can still keep my signed-off and co-developed by tag
+AFAIU the device_link stuff should keep the SMMU clocked as long as
+the GPU is alive, so I think this should work out ok.. ie. the SMMU
+won't suspend while the GPU is not suspended.
 
-> 
-> Also, the panel has been tested only with 2,2,1 configuration, so for
-> now we blindly create 2,2,1 topology when DSC is enabled
-> 
-> Co-developed-by: Abhinav Kumar <abhinavk@codeaurora.org>
-> Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> ---
-> Changes since RFC:
->  - Add more details in changelog
-> 
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 41140b781e66..8f0a8bd9c8ff 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -573,6 +573,8 @@ static struct msm_display_topology 
-> dpu_encoder_get_topology(
->  			struct drm_display_mode *mode)
->  {
->  	struct msm_display_topology topology = {0};
-> +	struct drm_encoder *drm_enc;
-> +	struct msm_drm_private *priv;
->  	int i, intf_count = 0;
-> 
->  	for (i = 0; i < MAX_PHYS_ENCODERS_PER_VIRTUAL; i++)
-> @@ -607,8 +609,22 @@ static struct msm_display_topology
-> dpu_encoder_get_topology(
->  	topology.num_enc = 0;
->  	topology.num_intf = intf_count;
-> 
-> +	drm_enc = &dpu_enc->base;
-> +	priv = drm_enc->dev->dev_private;
-> +	if (priv && priv->dsc) {
-if dsc is moved to the encoder, this will need to be changed too
-> +		/* In case of Display Stream Compression DSC, we would use
-> +		 * 2 encoders, 2 line mixers and 1 interface
-> +		 * this is power optimal and can drive upto (including) 4k
-> +		 * screens
-> +		 */
-> +		topology.num_enc = 2;
-> +		topology.num_intf = 1;
-> +		topology.num_lm = 2;
-> +	}
-> +
->  	return topology;
->  }
-> +
->  static int dpu_encoder_virt_atomic_check(
->  		struct drm_encoder *drm_enc,
->  		struct drm_crtc_state *crtc_state,
+BR,
+-R
+
+
+> > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> > index d3c6f54110a5..9561ba4c5d39 100644
+> > --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> > @@ -2277,6 +2277,13 @@ static int __maybe_unused arm_smmu_runtime_suspend(struct device *dev)
+> >
+> >  static int __maybe_unused arm_smmu_pm_resume(struct device *dev)
+> >  {
+> > +     int ret;
+> > +     struct arm_smmu_device *smmu = dev_get_drvdata(dev);
+> > +
+> > +     ret = clk_bulk_prepare(smmu->num_clks, smmu->clks);
+> > +     if (ret)
+> > +             return ret;
+> > +
+> >       if (pm_runtime_suspended(dev))
+> >               return 0;
+>
+> If we subsequently fail to enable the clks in arm_smmu_runtime_resume()
+> should we unprepare them again?
+>
+> Will
+>
+> > @@ -2285,10 +2292,19 @@ static int __maybe_unused arm_smmu_pm_resume(struct device *dev)
+> >
+> >  static int __maybe_unused arm_smmu_pm_suspend(struct device *dev)
+> >  {
+> > +     int ret = 0;
+> > +     struct arm_smmu_device *smmu = dev_get_drvdata(dev);
+> > +
+> >       if (pm_runtime_suspended(dev))
+> > -             return 0;
+> > +             goto clk_unprepare;
+> >
+> > -     return arm_smmu_runtime_suspend(dev);
+> > +     ret = arm_smmu_runtime_suspend(dev);
+> > +     if (ret)
+> > +             return ret;
+> > +
+> > +clk_unprepare:
+> > +     clk_bulk_unprepare(smmu->num_clks, smmu->clks);
+> > +     return ret;
+> >  }
+> >
+> >  static const struct dev_pm_ops arm_smmu_pm_ops = {
+> > --
+> > QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> > of Code Aurora Forum, hosted by The Linux Foundation
+> >
+> _______________________________________________
+> iommu mailing list
+> iommu@lists.linux-foundation.org
+> https://lists.linuxfoundation.org/mailman/listinfo/iommu
