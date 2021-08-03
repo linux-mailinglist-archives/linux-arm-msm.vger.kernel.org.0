@@ -2,111 +2,205 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4C2683DEB26
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 12:42:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BEDE43DEDCE
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 14:24:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235315AbhHCKmj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Aug 2021 06:42:39 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:20922 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235306AbhHCKmi (ORCPT
+        id S235935AbhHCMYV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Aug 2021 08:24:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55618 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235573AbhHCMYT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Aug 2021 06:42:38 -0400
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 03 Aug 2021 03:42:28 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 03 Aug 2021 03:42:25 -0700
-X-QCInternal: smtphost
-Received: from kalyant-linux.qualcomm.com ([10.204.66.210])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 03 Aug 2021 16:11:50 +0530
-Received: by kalyant-linux.qualcomm.com (Postfix, from userid 94428)
-        id 904134BA3; Tue,  3 Aug 2021 03:41:48 -0700 (PDT)
-From:   Kalyan Thota <kalyan_t@codeaurora.org>
-To:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org
-Cc:     Kalyan Thota <kalyan_t@codeaurora.org>,
-        linux-kernel@vger.kernel.org, robdclark@gmail.com,
-        dianders@chromium.org, mkrishn@codeaurora.org,
-        saiprakash.ranjan@codeaurora.org, rnayak@codeaurora.org,
-        stable@vger.kernel.org
-Subject: [v2] drm/msm/disp/dpu1: add safe lut config in dpu driver
-Date:   Tue,  3 Aug 2021 03:41:47 -0700
-Message-Id: <1627987307-29347-1-git-send-email-kalyan_t@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Tue, 3 Aug 2021 08:24:19 -0400
+Received: from mail-io1-xd2c.google.com (mail-io1-xd2c.google.com [IPv6:2607:f8b0:4864:20::d2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38A7BC061757
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Aug 2021 05:24:08 -0700 (PDT)
+Received: by mail-io1-xd2c.google.com with SMTP id y200so24052997iof.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Aug 2021 05:24:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ieee.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=sSAJdBXerSiLD/jae6wSlhsV/AYk+DynXxE+wOZYVUg=;
+        b=bRVwX6iPyAZEcpuyB4yiUnUe+peBOZ6yDCqxfRHK/MWWbE8extM3sSfAt80FJslR6X
+         w7dtV2Q8CnEkU3c2O9xunDbtV6DjsudWluolBahN/iVlRWXcGhWPKHd5aioLLzH8Ee7g
+         S4xBD5bemnxGWjWWt/Sahnh3ca8DkVBQ29A70=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=sSAJdBXerSiLD/jae6wSlhsV/AYk+DynXxE+wOZYVUg=;
+        b=cyE3BXNVAmj7auifsdQO1P43qABvIpz/MMtFh6sJVFR6H1NxXwyOwKSA/rP8MP2dbT
+         59CwHY/UHr93ONeKFmB3p/GU2LitMcjXzo0N8j5mxqsZBu+S2wBLqLEoISbGPL1ci0ZX
+         0LG4Wfup0ou2BO9NhOx+HKeG96cy4SZP/NpYYg+x/gljCcL5p3IMpI/8IgO6E+078Jsp
+         UInDxmYmnmul9dFIEgX8MkMicOxSIq316yE3gqovqbhxQKx2d4g9ByM/OtD8qQTF0JJe
+         COIKAC8GXdA8oLCljdNr4fJ+FJxIUjysk/key9gpd6QsOT7y+zmT0rUd+mDEEsBSzmjT
+         liqA==
+X-Gm-Message-State: AOAM533m1/FuqJuJdHGVv/u8HjJ4x/t/nt+jlsRfAkF+0voHKhaLA+Ut
+        4hzsFr2uTibT8vVKklprzu9KAA==
+X-Google-Smtp-Source: ABdhPJzEGU9BDQUsOAVRriRZRQdWv2S8IfGFXRpD5rGJTVc1Hwa4BETVCCidP6Tqo9bvfIRHF54dBg==
+X-Received: by 2002:a5d:9284:: with SMTP id s4mr605937iom.131.1627993447634;
+        Tue, 03 Aug 2021 05:24:07 -0700 (PDT)
+Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.googlemail.com with ESMTPSA id k2sm6244589ior.40.2021.08.03.05.24.06
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 03 Aug 2021 05:24:06 -0700 (PDT)
+Subject: Re: [PATCH net-next 1/3] dt-bindings: net: qcom,ipa: make imem
+ interconnect optional
+To:     Rob Herring <robh@kernel.org>
+Cc:     Alex Elder <elder@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        "Gross, Andy" <agross@kernel.org>,
+        David Miller <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Evan Green <evgreen@chromium.org>, cpratapa@codeaurora.org,
+        subashab@codeaurora.org, Alex Elder <elder@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        netdev <netdev@vger.kernel.org>, devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+References: <20210719212456.3176086-1-elder@linaro.org>
+ <20210719212456.3176086-2-elder@linaro.org>
+ <20210723205252.GA2550230@robh.at.kernel.org>
+ <6c1779aa-c90c-2160-f8b9-497fb8c32dc5@ieee.org>
+ <CAL_JsqKTdUxro-tgCQBzhudaUFQ5GejJL2EMuX2ArcP0JTiG3g@mail.gmail.com>
+From:   Alex Elder <elder@ieee.org>
+Message-ID: <8e75f8b0-5677-42b0-54fe-06e7c69f6669@ieee.org>
+Date:   Tue, 3 Aug 2021 07:24:06 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <CAL_JsqKTdUxro-tgCQBzhudaUFQ5GejJL2EMuX2ArcP0JTiG3g@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add safe lut configuration for all the targets in dpu
-driver as per QOS recommendation.
+On 7/28/21 10:33 AM, Rob Herring wrote:
+> On Mon, Jul 26, 2021 at 9:59 AM Alex Elder <elder@ieee.org> wrote:
+>>
+>> On 7/23/21 3:52 PM, Rob Herring wrote:
+>>> On Mon, Jul 19, 2021 at 04:24:54PM -0500, Alex Elder wrote:
+>>>> On some newer SoCs, the interconnect between IPA and SoC internal
+>>>> memory (imem) is not used.  Reflect this in the binding by moving
+>>>> the definition of the "imem" interconnect to the end and defining
+>>>> minItems to be 2 for both the interconnects and interconnect-names
+>>>> properties.
+>>>>
+>>>> Signed-off-by: Alex Elder <elder@linaro.org>
+>>>> ---
+>>>>    .../devicetree/bindings/net/qcom,ipa.yaml      | 18 ++++++++++--------
+>>>>    1 file changed, 10 insertions(+), 8 deletions(-)
+>>>>
+>>>> diff --git a/Documentation/devicetree/bindings/net/qcom,ipa.yaml b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+>>>> index ed88ba4b94df5..4853ab7017bd9 100644
+>>>> --- a/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+>>>> +++ b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
+>>>> @@ -87,16 +87,18 @@ properties:
+>>>>          - const: ipa-setup-ready
+>>>>
+>>>>      interconnects:
+>>>> +    minItems: 2
+>>>>        items:
+>>>> -      - description: Interconnect path between IPA and main memory
+>>>> -      - description: Interconnect path between IPA and internal memory
+>>>> -      - description: Interconnect path between IPA and the AP subsystem
+>>>> +      - description: Path leading to system memory
+>>>> +      - description: Path between the AP and IPA config space
+>>>> +      - description: Path leading to internal memory
+>>>>
+>>>>      interconnect-names:
+>>>> +    minItems: 2
+>>>>        items:
+>>>>          - const: memory
+>>>> -      - const: imem
+>>>>          - const: config
+>>>> +      - const: imem
+>>>
+>>> What about existing users? This will generate warnings. Doing this for
+>>> the 2nd item would avoid the need for .dts updates:
+>>>
+>>> - enum: [ imem, config ]
 
-Issue reported on SC7280:
+In other words:
 
-With wait-for-safe feature in smmu enabled, RT client
-buffer levels are checked to be safe before smmu invalidation.
-Since display was always set to unsafe it was delaying the
-invalidaiton process thus impacting the performance on NRT clients
-such as eMMC and NVMe.
+   interconnect-names:
+     minItems: 2
+     items:
+       - const: memory
+       - enum: [ imem, config ]
+       - const: imem
 
-Validated this change on SC7280, With this change eMMC performance
-has improved significantly.
+What do I do with the "interconnects" descriptions in that case?
+How do I make the "interconnect-names" specified this way align
+with the described interconnect values?  Is that necessary?
 
-Changes in v1:
-- Add fixes tag (Sai)
-- CC stable kernel (Dimtry)
+>> If I understand correctly, the effect of this would be that
+>> the second item can either be "imem" or "config", and the third
+>> (if present) could only be "imem"?
+> 
+> Yes for the 2nd, but the 3rd item could only be 'config'.
 
-Fixes: cfacf946a464d4(drm/msm/disp/dpu1: add support for display for SC7280 target)
-Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
-Tested-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org> (sc7280, sc7180)
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 5 +++++
- 1 file changed, 5 insertions(+)
+Sorry, yes, that's what I meant.  I might have misread the
+diff output.
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index d01c4c9..2e482cd 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -974,6 +974,7 @@ static const struct dpu_perf_cfg sdm845_perf_data = {
- 	.amortizable_threshold = 25,
- 	.min_prefill_lines = 24,
- 	.danger_lut_tbl = {0xf, 0xffff, 0x0},
-+	.safe_lut_tbl = {0xfff0, 0xf000, 0xffff},
- 	.qos_lut_tbl = {
- 		{.nentry = ARRAY_SIZE(sdm845_qos_linear),
- 		.entries = sdm845_qos_linear
-@@ -1001,6 +1002,7 @@ static const struct dpu_perf_cfg sc7180_perf_data = {
- 	.min_dram_ib = 1600000,
- 	.min_prefill_lines = 24,
- 	.danger_lut_tbl = {0xff, 0xffff, 0x0},
-+	.safe_lut_tbl = {0xfff0, 0xff00, 0xffff},
- 	.qos_lut_tbl = {
- 		{.nentry = ARRAY_SIZE(sc7180_qos_linear),
- 		.entries = sc7180_qos_linear
-@@ -1028,6 +1030,7 @@ static const struct dpu_perf_cfg sm8150_perf_data = {
- 	.min_dram_ib = 800000,
- 	.min_prefill_lines = 24,
- 	.danger_lut_tbl = {0xf, 0xffff, 0x0},
-+	.safe_lut_tbl = {0xfff8, 0xf000, 0xffff},
- 	.qos_lut_tbl = {
- 		{.nentry = ARRAY_SIZE(sm8150_qos_linear),
- 		.entries = sm8150_qos_linear
-@@ -1056,6 +1059,7 @@ static const struct dpu_perf_cfg sm8250_perf_data = {
- 	.min_dram_ib = 800000,
- 	.min_prefill_lines = 35,
- 	.danger_lut_tbl = {0xf, 0xffff, 0x0},
-+	.safe_lut_tbl = {0xfff0, 0xff00, 0xffff},
- 	.qos_lut_tbl = {
- 		{.nentry = ARRAY_SIZE(sc7180_qos_linear),
- 		.entries = sc7180_qos_linear
-@@ -1084,6 +1088,7 @@ static const struct dpu_perf_cfg sc7280_perf_data = {
- 	.min_dram_ib = 1600000,
- 	.min_prefill_lines = 24,
- 	.danger_lut_tbl = {0xffff, 0xffff, 0x0},
-+	.safe_lut_tbl = {0xff00, 0xff00, 0xffff},
- 	.qos_lut_tbl = {
- 		{.nentry = ARRAY_SIZE(sc7180_qos_macrotile),
- 		.entries = sc7180_qos_macrotile
--- 
-2.7.4
+>> And you're saying that otherwise, existing users (the only
+>> one it applies to at the moment is "sdm845.dtsi") would
+>> produce warnings, because the interconnects are listed
+>> in an order different from what the binding specifies.
+>>
+>> Is that correct?
+> 
+> Yes.
+> 
+>> If so, what you propose suggests "imem" could be listed twice.
+>> It doesn't make sense, and maybe it's precluded in other ways
+>> so that's OK.
+> 
+> Good observation. There are generic checks that the strings are unique.
+
+I think I don't like that quite as much, because that
+"no duplicates" rule is implied.  It also avoids any
+confusion in the "respectively" relationship between
+interconnects and interconnect-names.
+
+I understand what you're suggesting though, and I would
+be happy to update the binding in the way you suggest.
+I'd like to hear what you say about my questions above
+before doing so.
+
+>>   But I'd be happy to update "sdm845.dtsi" to
+>> address your concern.  (Maybe that's something you would rather
+>> avoid?)
+> 
+> Better to not change DT if you don't have to. You're probably okay if
+> all clients (consumers of the dtb) used names and didn't care about
+
+In the IPA driver, wherever names are specified for things in DT,
+names (only) are used to look them up.  So I'm "probably okay."
+
+> the order. And I have no idea if all users of SDM845 are okay with a
+> DTB change being required. That's up to QCom maintainers. I only care
+> that ABI breakages are documented as such.
+> 
+>> Also, I need to make a separate update to "sm8350.dtsi" because
+>> that was defined before I understood what I do now about the
+>> interconnects.  It uses the wrong names, and should combine
+>> its first two interconnects into just one.
+> 
+> If the interconnects was ignored in that case, then the change doesn't matter.
+
+That platform is not yet fully supported by the IPA driver, thus
+there is (so far) no instance where it is used.  Resolving this
+is part of enabling support for that.
+
+Thanks.
+
+					-Alex
+
+
+> Rob
+> 
 
