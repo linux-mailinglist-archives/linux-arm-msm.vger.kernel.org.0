@@ -2,298 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3565C3DF0EF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 17:00:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A1293DF26C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 18:25:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236022AbhHCPAO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Aug 2021 11:00:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37826 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235632AbhHCPAN (ORCPT
+        id S233358AbhHCQZr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Aug 2021 12:25:47 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:51190 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233344AbhHCQZr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Aug 2021 11:00:13 -0400
-Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8112CC061764
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Aug 2021 08:00:01 -0700 (PDT)
-Received: by mail-wr1-x42d.google.com with SMTP id h14so25622181wrx.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Aug 2021 08:00:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Jw4wr5u/bMQ+8Mg5l7jnnjM6HvuOqoF/MPTYPqGyvN0=;
-        b=Er/5R0jxks3UChiwjzshiC7Oq4cVBmIKe/e54/BliOTPYJCj7iAEZB2SOSMNYBnfBj
-         0gIc6x3kT0KI3N8WQZGtvgnDaOSsa8zMbme4PPL5KNJl8x88/w7TbQyCjwRVgzEOWQcM
-         Jwjvg1tFUyoT4ADk6UvnT09ws4s0nNpkqPcX8p0759J570LoDQIENxF3OJEd1srDG/rn
-         zIOGA9GkOq6viWZNva8ERKjFAxFyPtn+Or8CoJycovsX3mX3CNy3vBc0z1SEMFxl9jhq
-         PJ936A22gXodubTeFvJPXbKI09Se9WWXb0BoybcB0NN69GJXx6UPC16wHLeZKs5/oIgi
-         Ykvg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Jw4wr5u/bMQ+8Mg5l7jnnjM6HvuOqoF/MPTYPqGyvN0=;
-        b=t9US4gfrkvWPxzd1+HlfWWUX2CMzdnDSMi+cJHcpo/d1teelJYC93LZCANO7p1unxf
-         L1LtBP4gFY/Jx0l4GzF5D0bnx5Wf9HOkIcSoXFT/yfDbMBeDqAlEJPRpSVVD1Pb/97Pf
-         0PKOr+Iyx06pKnzoYYzPH9ea5onDwpmppyLryBeBZq1sJ5w2n09tyenwicsZIR/JNG58
-         siT7P0Jet1BP1RpuodChJj0SWr47OkA2qpBf67+BJGeEC3UUKfKfET5UAEr0nlPN75WY
-         JaM9v5rQLtZGUmHLcZlnwC0hoaIpSGS5ZfvYtFr/Q/IECl8wCfn3pTo6e3earTNALx6F
-         YwBA==
-X-Gm-Message-State: AOAM530Y6bSnh3nbZc6GeuC0c134ofxqEaTHZDEqmoVXPMz0hheK/M05
-        9jqNKSbUzbFgBZxNtwKk3XcYJEAKixkijF8ytwY=
-X-Google-Smtp-Source: ABdhPJzQudrPX3oAwlSlqCmD/d2aB0jX8IyeqZHbMG70gD1DBriAKw16cqE1Xazzv/3Y8EGXbGTePXUSosLvk9p1zmk=
-X-Received: by 2002:a5d:504d:: with SMTP id h13mr21657703wrt.132.1628002800036;
- Tue, 03 Aug 2021 08:00:00 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210803090704.32152-1-tzimmermann@suse.de> <20210803090704.32152-8-tzimmermann@suse.de>
- <1f5f285a-b923-16ff-2ca1-6f92e22ffcab@linaro.org>
-In-Reply-To: <1f5f285a-b923-16ff-2ca1-6f92e22ffcab@linaro.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 3 Aug 2021 08:04:13 -0700
-Message-ID: <CAF6AEGuYnnZ7tcdU-9jOWn4ei36Ufc1ovvfT3KTg8_dkSfXn+w@mail.gmail.com>
-Subject: Re: [PATCH v2 07/14] drm/msm: Convert to Linux IRQ interfaces
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Thomas Zimmermann <tzimmermann@suse.de>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Alexander Deucher <alexander.deucher@amd.com>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Brian Starkey <brian.starkey@arm.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Boris Brezillon <bbrezillon@kernel.org>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Stefan Agner <stefan@agner.ch>, alison.wang@nxp.com,
-        Patrik Jakobsson <patrik.r.jakobsson@gmail.com>,
-        anitha.chrisanthus@intel.com, edmund.j.dea@intel.com,
-        Sean Paul <sean@poorly.run>, Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Sascha Hauer <kernel@pengutronix.de>, jyri.sarha@iki.fi,
-        tomba@kernel.org, Dan.Sneddon@microchip.com,
-        tomi.valkeinen@ideasonboard.com,
-        amd-gfx list <amd-gfx@lists.freedesktop.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
+        Tue, 3 Aug 2021 12:25:47 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1628007936; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=lUeOCPrR13OHTaYKCt/w/DFsAJkjHb7mUobM2Op+tQE=; b=KCM2hHf8+fLebokymdj4gh0ZsEMsqPWStJ2KFqdDpaN/iATe318CvO2sqhPjZkKF/+OZBTeT
+ mxRdNn1d1C2jVp16mqsrqI5bXHEoB1y5KD0h5OgkMTM71UUfzYBhGN+jnVJM5fL2gYV96Hqr
+ mH+GyU4OhJtnY6bzyPqrtUmQjnI=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 61096df2dc54451a533dd64f (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 03 Aug 2021 16:25:22
+ GMT
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3BBA6C43144; Tue,  3 Aug 2021 16:25:22 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 73DBBC433F1;
+        Tue,  3 Aug 2021 16:25:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 73DBBC433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=khsieh@codeaurora.org
+From:   Kuogee Hsieh <khsieh@codeaurora.org>
+To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
+        vkoul@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org
+Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        khsieh@codeaurora.org, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v3] drm/msm/dp: update is_connected status base on sink count at dp_pm_resume()
+Date:   Tue,  3 Aug 2021 09:25:13 -0700
+Message-Id: <1628007913-29892-1-git-send-email-khsieh@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 3, 2021 at 2:37 AM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> On 03/08/2021 12:06, Thomas Zimmermann wrote:
-> > Drop the DRM IRQ midlayer in favor of Linux IRQ interfaces. DRM's
-> > IRQ helpers are mostly useful for UMS drivers. Modern KMS drivers
-> > don't benefit from using it.
-> >
-> > DRM IRQ callbacks are now being called directly or inlined.
-> >
-> > Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
->
-> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->
-> Rob should probably also give his blessing on this patch though.
+Currently at dp_pm_resume() is_connected state is decided base on hpd connection
+status only. This will put is_connected in wrongly "true" state at the scenario
+that dongle attached to DUT but without hmdi cable connecting to it. Fix this
+problem by adding read sink count from dongle and decided is_connected state base
+on both sink count and hpd connection status.
 
-It looks ok.. I can't really test it this week, but it should be
-pretty obvious if it wasn't working
+Changes in v2:
+-- remove dp_get_sink_count() cand call drm_dp_read_sink_count()
 
-BR,
--R
+Changes in v3:
+-- delete status local variable from dp_pm_resume()
 
->
-> > ---
-> >   drivers/gpu/drm/msm/msm_drv.c | 113 ++++++++++++++++++++--------------
-> >   drivers/gpu/drm/msm/msm_kms.h |   2 +-
-> >   2 files changed, 69 insertions(+), 46 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-> > index 1594ae39d54f..a332b09a5a11 100644
-> > --- a/drivers/gpu/drm/msm/msm_drv.c
-> > +++ b/drivers/gpu/drm/msm/msm_drv.c
-> > @@ -14,7 +14,6 @@
-> >   #include <drm/drm_drv.h>
-> >   #include <drm/drm_file.h>
-> >   #include <drm/drm_ioctl.h>
-> > -#include <drm/drm_irq.h>
-> >   #include <drm/drm_prime.h>
-> >   #include <drm/drm_of.h>
-> >   #include <drm/drm_vblank.h>
-> > @@ -201,6 +200,71 @@ void msm_rmw(void __iomem *addr, u32 mask, u32 or)
-> >       msm_writel(val | or, addr);
-> >   }
-> >
-> > +static irqreturn_t msm_irq(int irq, void *arg)
-> > +{
-> > +     struct drm_device *dev = arg;
-> > +     struct msm_drm_private *priv = dev->dev_private;
-> > +     struct msm_kms *kms = priv->kms;
-> > +
-> > +     BUG_ON(!kms);
-> > +
-> > +     return kms->funcs->irq(kms);
-> > +}
-> > +
-> > +static void msm_irq_preinstall(struct drm_device *dev)
-> > +{
-> > +     struct msm_drm_private *priv = dev->dev_private;
-> > +     struct msm_kms *kms = priv->kms;
-> > +
-> > +     BUG_ON(!kms);
-> > +
-> > +     kms->funcs->irq_preinstall(kms);
-> > +}
-> > +
-> > +static int msm_irq_postinstall(struct drm_device *dev)
-> > +{
-> > +     struct msm_drm_private *priv = dev->dev_private;
-> > +     struct msm_kms *kms = priv->kms;
-> > +
-> > +     BUG_ON(!kms);
-> > +
-> > +     if (kms->funcs->irq_postinstall)
-> > +             return kms->funcs->irq_postinstall(kms);
-> > +
-> > +     return 0;
-> > +}
-> > +
-> > +static int msm_irq_install(struct drm_device *dev, unsigned int irq)
-> > +{
-> > +     int ret;
-> > +
-> > +     if (irq == IRQ_NOTCONNECTED)
-> > +             return -ENOTCONN;
-> > +
-> > +     msm_irq_preinstall(dev);
-> > +
-> > +     ret = request_irq(irq, msm_irq, 0, dev->driver->name, dev);
-> > +     if (ret)
-> > +             return ret;
-> > +
-> > +     ret = msm_irq_postinstall(dev);
-> > +     if (ret) {
-> > +             free_irq(irq, dev);
-> > +             return ret;
-> > +     }
-> > +
-> > +     return 0;
-> > +}
-> > +
-> > +static void msm_irq_uninstall(struct drm_device *dev)
-> > +{
-> > +     struct msm_drm_private *priv = dev->dev_private;
-> > +     struct msm_kms *kms = priv->kms;
-> > +
-> > +     kms->funcs->irq_uninstall(kms);
-> > +     free_irq(kms->irq, dev);
-> > +}
-> > +
-> >   struct msm_vblank_work {
-> >       struct work_struct work;
-> >       int crtc_id;
-> > @@ -265,7 +329,7 @@ static int msm_drm_uninit(struct device *dev)
-> >       }
-> >
-> >       /* We must cancel and cleanup any pending vblank enable/disable
-> > -      * work before drm_irq_uninstall() to avoid work re-enabling an
-> > +      * work before msm_irq_uninstall() to avoid work re-enabling an
-> >        * irq after uninstall has disabled it.
-> >        */
-> >
-> > @@ -294,7 +358,7 @@ static int msm_drm_uninit(struct device *dev)
-> >       drm_mode_config_cleanup(ddev);
-> >
-> >       pm_runtime_get_sync(dev);
-> > -     drm_irq_uninstall(ddev);
-> > +     msm_irq_uninstall(ddev);
-> >       pm_runtime_put_sync(dev);
-> >
-> >       if (kms && kms->funcs)
-> > @@ -553,7 +617,7 @@ static int msm_drm_init(struct device *dev, const struct drm_driver *drv)
-> >
-> >       if (kms) {
-> >               pm_runtime_get_sync(dev);
-> > -             ret = drm_irq_install(ddev, kms->irq);
-> > +             ret = msm_irq_install(ddev, kms->irq);
-> >               pm_runtime_put_sync(dev);
-> >               if (ret < 0) {
-> >                       DRM_DEV_ERROR(dev, "failed to install IRQ handler\n");
-> > @@ -662,43 +726,6 @@ static void msm_postclose(struct drm_device *dev, struct drm_file *file)
-> >       context_close(ctx);
-> >   }
-> >
-> > -static irqreturn_t msm_irq(int irq, void *arg)
-> > -{
-> > -     struct drm_device *dev = arg;
-> > -     struct msm_drm_private *priv = dev->dev_private;
-> > -     struct msm_kms *kms = priv->kms;
-> > -     BUG_ON(!kms);
-> > -     return kms->funcs->irq(kms);
-> > -}
-> > -
-> > -static void msm_irq_preinstall(struct drm_device *dev)
-> > -{
-> > -     struct msm_drm_private *priv = dev->dev_private;
-> > -     struct msm_kms *kms = priv->kms;
-> > -     BUG_ON(!kms);
-> > -     kms->funcs->irq_preinstall(kms);
-> > -}
-> > -
-> > -static int msm_irq_postinstall(struct drm_device *dev)
-> > -{
-> > -     struct msm_drm_private *priv = dev->dev_private;
-> > -     struct msm_kms *kms = priv->kms;
-> > -     BUG_ON(!kms);
-> > -
-> > -     if (kms->funcs->irq_postinstall)
-> > -             return kms->funcs->irq_postinstall(kms);
-> > -
-> > -     return 0;
-> > -}
-> > -
-> > -static void msm_irq_uninstall(struct drm_device *dev)
-> > -{
-> > -     struct msm_drm_private *priv = dev->dev_private;
-> > -     struct msm_kms *kms = priv->kms;
-> > -     BUG_ON(!kms);
-> > -     kms->funcs->irq_uninstall(kms);
-> > -}
-> > -
-> >   int msm_crtc_enable_vblank(struct drm_crtc *crtc)
-> >   {
-> >       struct drm_device *dev = crtc->dev;
-> > @@ -1051,10 +1078,6 @@ static const struct drm_driver msm_driver = {
-> >       .open               = msm_open,
-> >       .postclose           = msm_postclose,
-> >       .lastclose          = drm_fb_helper_lastclose,
-> > -     .irq_handler        = msm_irq,
-> > -     .irq_preinstall     = msm_irq_preinstall,
-> > -     .irq_postinstall    = msm_irq_postinstall,
-> > -     .irq_uninstall      = msm_irq_uninstall,
-> >       .dumb_create        = msm_gem_dumb_create,
-> >       .dumb_map_offset    = msm_gem_dumb_map_offset,
-> >       .prime_handle_to_fd = drm_gem_prime_handle_to_fd,
-> > diff --git a/drivers/gpu/drm/msm/msm_kms.h b/drivers/gpu/drm/msm/msm_kms.h
-> > index 086a2d59b8c8..9de7c42e1071 100644
-> > --- a/drivers/gpu/drm/msm/msm_kms.h
-> > +++ b/drivers/gpu/drm/msm/msm_kms.h
-> > @@ -150,7 +150,7 @@ struct msm_kms {
-> >       const struct msm_kms_funcs *funcs;
-> >       struct drm_device *dev;
-> >
-> > -     /* irq number to be passed on to drm_irq_install */
-> > +     /* irq number to be passed on to msm_irq_install */
-> >       int irq;
-> >
-> >       /* mapper-id used to request GEM buffer mapped for scanout: */
-> >
->
->
-> --
-> With best wishes
-> Dmitry
+Fixes: d9aa6571b28ba ("drm/msm/dp: check sink_count before update is_connected status")
+Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+---
+ drivers/gpu/drm/msm/dp/dp_display.c | 18 +++++++++++++++---
+ 1 file changed, 15 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+index 78c5301..0f39256 100644
+--- a/drivers/gpu/drm/msm/dp/dp_display.c
++++ b/drivers/gpu/drm/msm/dp/dp_display.c
+@@ -1313,7 +1313,7 @@ static int dp_pm_resume(struct device *dev)
+ 	struct platform_device *pdev = to_platform_device(dev);
+ 	struct msm_dp *dp_display = platform_get_drvdata(pdev);
+ 	struct dp_display_private *dp;
+-	u32 status;
++	int sink_count = 0;
+ 
+ 	dp = container_of(dp_display, struct dp_display_private, dp_display);
+ 
+@@ -1327,14 +1327,26 @@ static int dp_pm_resume(struct device *dev)
+ 
+ 	dp_catalog_ctrl_hpd_config(dp->catalog);
+ 
+-	status = dp_catalog_link_is_connected(dp->catalog);
++	/*
++	 * set sink to normal operation mode -- D0
++	 * before dpcd read
++	 */
++	dp_link_psm_config(dp->link, &dp->panel->link_info, false);
++
++	/* if sink conencted, do dpcd read sink count */
++	if (dp_catalog_link_is_connected(dp->catalog)) {
++		sink_count = drm_dp_read_sink_count(dp->aux);
++		if (sink_count < 0)
++			sink_count = 0;
++	}
+ 
++	dp->link->sink_count = sink_count;
+ 	/*
+ 	 * can not declared display is connected unless
+ 	 * HDMI cable is plugged in and sink_count of
+ 	 * dongle become 1
+ 	 */
+-	if (status && dp->link->sink_count)
++	if (dp->link->sink_count)
+ 		dp->dp_display.is_connected = true;
+ 	else
+ 		dp->dp_display.is_connected = false;
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
