@@ -2,76 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D6E43DF61A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 22:09:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 724783DF624
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 22:13:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240395AbhHCUJc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Aug 2021 16:09:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58602 "EHLO
+        id S239102AbhHCUNX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Aug 2021 16:13:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240260AbhHCUJc (ORCPT
+        with ESMTP id S240407AbhHCUNX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Aug 2021 16:09:32 -0400
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 299C6C061764
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Aug 2021 13:09:21 -0700 (PDT)
-Received: by mail-ot1-x32a.google.com with SMTP id c2-20020a0568303482b029048bcf4c6bd9so21842208otu.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Aug 2021 13:09:21 -0700 (PDT)
+        Tue, 3 Aug 2021 16:13:23 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14EB3C061764
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Aug 2021 13:13:11 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id o185so132594oih.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Aug 2021 13:13:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=/KZKCjnFh5BKZu2KIsfFmmFiIjkF/h9tteMntf9BJ8Y=;
-        b=hOFgqrrzW2IAV3YZCxNDNqnJZItMegMe1VI69lm8ik30j4B5rqVxr/IEGdnIQqnB4X
-         Jq1Czj/KXh433bmpZoWbEFEylw/Pn4jdK7o90p7USNjCQxfW5eQZzRYuMpAiyjbvbPxG
-         VVdEdfkw80xXk1oAS/1vOpZ1/rJpJguVg/p3w=
+        bh=mL66p7hWwJs0uODfuoDP6bwn2OF6cA0CzfTBUWUkGg4=;
+        b=XS7RdH1UoHVjTZIVBMtzi7boDGmgd74mV5qkzXfTgWhhlsz3FFJTEDA96jM66q0qkf
+         tnVqs4HREXO3oXmdzKpEJ5QPLD/vrXJKcTd6Abto1Wzs2Ai81iJHcmfPEb236VbvNpzy
+         yXHQfuIRGFlXCLBAiYSqYmJ9UCVCi1qrG8OYI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=/KZKCjnFh5BKZu2KIsfFmmFiIjkF/h9tteMntf9BJ8Y=;
-        b=LqU7cYyIU6H8DNu1rwqazi9o3dcrO3cs2LjGcfz1Dvs8a4cbiwdMuM1flbovOqaJvx
-         Q7GzFG/l91zWOwCRXyxtmFtVCu5lR3y5mAqgcwN7UoH/kNKNmrxpwKn40CM5hiKZ64DE
-         x1AevLMxudUoIkbp3G+FIa9zCwlRffpi+ZsXWeVhUkgnaJcqGUGzDmkYHlOLop64OEld
-         vE9t1uAKJWp/mqPjA9Byd4DlFh26KPrewq0LtulHMSqqvgKUz3oERX7zssdBVskshsV6
-         G0Yko84OAI1y1V289yebJTY75utothLYIhMqzGb+Pggn8Vkh94Nv+Z4o61RpCwoIyYlR
-         gbAA==
-X-Gm-Message-State: AOAM53026LsZvuony8Ir2kMUsn57BpFDqJU6Q0twrAusDsAs7flP2OaR
-        xhMcpmzLAZtp+0WLEkGQOV0AeUiFFE/Oq/BIKG0JtQ==
-X-Google-Smtp-Source: ABdhPJysxfT1U9uGt9nsh5yQLTpopi/8CZ5Kck3OSg9MK8KloJG9UDSWBnr//f2uQIsAgC8G1VK1gNshpiJ3C/EmUo8=
-X-Received: by 2002:a05:6830:1490:: with SMTP id s16mr447074otq.233.1628021360166;
- Tue, 03 Aug 2021 13:09:20 -0700 (PDT)
+        bh=mL66p7hWwJs0uODfuoDP6bwn2OF6cA0CzfTBUWUkGg4=;
+        b=DdCzRekmDs2t6MaJ6OEGghbMfD+wsBQSoiR4zXM7cee9aftrEf2/3rdTm8SKj0DrPF
+         mp7H67y35NpiXPumQ8adI2pwzg7v5csIJkjq9yTrq6f/3j205Z8qxvJ8BxsU2TJ1zvto
+         +Bu0wmc8hY5r3tntXiCn2ap6y6RZY7xbBeF8Jk0lPlAkp6rH0oshLpX5GcmhXcpdTsVr
+         wTVxKCILlJOr/n6dqbA8FLHsZGfS62yIOZIsev7I0h2PHl9i/GkL9AiSma73Wk0yyfZ+
+         xxtfOcjFfK5IcEQEWOR2ZZ2DWd+DQAnh//y243LhH9xkYsFERUspqbY/a8JhUoG3+q1j
+         aC2Q==
+X-Gm-Message-State: AOAM530ss+eC+yX4z5EbvTwIHb4aeCYV+9qp4d9+qQ8gL2Hi5vL4pm4N
+        n0OtWD5/5zeo9rDVl0fuy6GyUKV6qsNyEQxa8dzHTQ==
+X-Google-Smtp-Source: ABdhPJwHzCEof57wa5MwJlj+OLIE4A4DUTjhh66InjV2cvQnN4ABaOQLvHRfB7a7K2brpMYq1WkI3dr6mVq+wsZF35c=
+X-Received: by 2002:a05:6808:114a:: with SMTP id u10mr16109374oiu.19.1628021590448;
+ Tue, 03 Aug 2021 13:13:10 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 3 Aug 2021 15:09:19 -0500
+ HTTPREST; Tue, 3 Aug 2021 15:13:10 -0500
 MIME-Version: 1.0
-In-Reply-To: <1627995852-24505-1-git-send-email-skakit@codeaurora.org>
-References: <1627995852-24505-1-git-send-email-skakit@codeaurora.org>
+In-Reply-To: <1627987307-29347-1-git-send-email-kalyan_t@codeaurora.org>
+References: <1627987307-29347-1-git-send-email-kalyan_t@codeaurora.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.9.1
-Date:   Tue, 3 Aug 2021 15:09:19 -0500
-Message-ID: <CAE-0n51=GAb+B-46gH7MKwiMbP8EqNnFKNQr0X3JFeAMP4rPNg@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Remove pm8350 and pmr735b for sc7280-idp
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        satya priya <skakit@codeaurora.org>
-Cc:     rnayak@codeaurora.org, kgunda@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
+Date:   Tue, 3 Aug 2021 15:13:10 -0500
+Message-ID: <CAE-0n52+PvNpz5uqf3O_NsfQ4q2taeZmdSdoM3fGDLp5aQVj-A@mail.gmail.com>
+Subject: Re: [v2] drm/msm/disp/dpu1: add safe lut config in dpu driver
+To:     Kalyan Thota <kalyan_t@codeaurora.org>, devicetree@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dianders@chromium.org, mkrishn@codeaurora.org,
+        saiprakash.ranjan@codeaurora.org, rnayak@codeaurora.org,
+        stable@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting satya priya (2021-08-03 06:04:12)
-> Remove pm8350 and pmr735b die temp nodes as these pmics are
-> not present on this board.
+Quoting Kalyan Thota (2021-08-03 03:41:47)
+> Add safe lut configuration for all the targets in dpu
+> driver as per QOS recommendation.
 >
-> Correct the tabbing for pmk8350_vadc node.
+> Issue reported on SC7280:
 >
-> Signed-off-by: satya priya <skakit@codeaurora.org>
-> ---
+> With wait-for-safe feature in smmu enabled, RT client
+> buffer levels are checked to be safe before smmu invalidation.
+> Since display was always set to unsafe it was delaying the
+> invalidaiton process thus impacting the performance on NRT clients
+> such as eMMC and NVMe.
+>
+> Validated this change on SC7280, With this change eMMC performance
+> has improved significantly.
+>
+> Changes in v1:
+> - Add fixes tag (Sai)
+> - CC stable kernel (Dimtry)
+>
+> Fixes: cfacf946a464d4(drm/msm/disp/dpu1: add support for display for SC7280 target)
 
-Fixes: fbd5a1d22607 ("arm64: dts: qcom: sc7280: Add ADC channel nodes
-for PMIC temperatures to sc7280-idp")
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+This is wrong format and commit hash
+
+Fixes: 591e34a091d1 ("drm/msm/disp/dpu1: add support for display for
+SC7280 target")
+
+> Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
+> Tested-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org> (sc7280, sc7180)
