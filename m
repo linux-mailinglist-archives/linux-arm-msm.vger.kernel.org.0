@@ -2,160 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E52AC3DE8A5
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 10:45:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 68D8A3DE8FF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  3 Aug 2021 10:55:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234566AbhHCIpK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Aug 2021 04:45:10 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59920 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234505AbhHCIpJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Aug 2021 04:45:09 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 09D7760F8F;
-        Tue,  3 Aug 2021 08:44:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1627980299;
-        bh=+1nVyVAj/NNgkLbpzO8reIcPIyQyBfRlkRgtI6IAXIg=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=da+wPGzp2qu/HjZIMJcsL1fpvRay3yPs5kqJNEsiI8itBVaFKI4bwTM/HWqXAjIPZ
-         2cYoS800nB82V/MjZfpyg+eEU64jen9/PKji97pOM61SxB1N3oJ+uYVF7hfvDPBBw7
-         Cjnr/mA9vEtLIrHZS8l9EJuevXCyJb8LDpWfILoXB6dXMzQQOFS5C4d9ssO6jJevLl
-         feZLq2NTPpg3sW9++PrL2zwXdbznd3DhRmMMLr4rqi503suq75kOBhHd2owPci99fu
-         BL1ToKZ1WD058Zg5EMluOHfTGzKwtDwlVbcBDX/NFaVMarPO+AuIT2cz+hKhHleU7n
-         MFyzosYo/WRKQ==
-Content-Type: text/plain; charset="utf-8"
+        id S234681AbhHCIzh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Aug 2021 04:55:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60252 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234697AbhHCIzh (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 3 Aug 2021 04:55:37 -0400
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AE38C061764
+        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Aug 2021 01:55:26 -0700 (PDT)
+Received: by mail-oi1-x22d.google.com with SMTP id z26so27400068oih.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Aug 2021 01:55:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=EsZwJNaFBYTAyGw1Pi5XpaVhjkvXKuF34mVyc2ioH2g=;
+        b=IQMWqByHfAHErosenpOGw+Z00xebZ/uwdcJyLC9k0SMgw0Qz8mvFGTR9ZrCS7wDNJG
+         NywBXlnKE3SSvaSXH2G9q56JAlZstr+y8CkEo+eq1XJoXbBV8YbhKqvec+sD4BkA4YDP
+         ZqasbQQrUYT2J/E4jt1DxssJF1OACAU11iCZs=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=EsZwJNaFBYTAyGw1Pi5XpaVhjkvXKuF34mVyc2ioH2g=;
+        b=pT3xQ3rfhkqkmi5eZimR+Ch1xutEQM/DQ05FXYkNX8aLUo8TFRNw0fEhpjelVl1m6m
+         zzh9k2d0Kdfp4dnxxq40bOP1XBH4S8Loqx2IF7ybG8yaesEKA+1lEn7ADKWHsfbeUPSh
+         2ufKJdmXvwjzuPyCuoDsLZq7ukaUGQAk5ecYhOAjUO6p7HBPzXQiGdVh/GYn9iSiFEX9
+         mhvFtM1ZbHjU9E7I6bFvh99/bpeKyqGx55YAH0GDe7n5UNM7SM9Oz8dHAWPde7/iGPH8
+         oRBVDFyzz9WBc8RRyUhtHLkUtok4KBfxWR78+qL7V9P9+8GTSFtpDPt+TIaiNrxRN10n
+         FuQw==
+X-Gm-Message-State: AOAM531d2MeUYBZmjiT7JUEePUWKNSaps3SP0bYo1dvNUD4r+j0rTr4w
+        oJ1lQHzvtfwnnyCz4M9TBhFVWGQF8qLANm5oXOlnbA==
+X-Google-Smtp-Source: ABdhPJzwpHkcVQ7Aar0ILGc3CwQvololSXJOgi1sdQHYLOY3sdJq+SQ3C6QiLVfDbKdEgtRgfxMFN8Uc2/Gok62IF7Y=
+X-Received: by 2002:a05:6808:619:: with SMTP id y25mr2386771oih.166.1627980925750;
+ Tue, 03 Aug 2021 01:55:25 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 3 Aug 2021 01:55:25 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <53360f31-2b3e-f2ed-d894-538d2215d6c5@codeaurora.org>
-References: <20210728180209.14764-1-collinsd@codeaurora.org> <162771961962.714452.2347964437306072737@swboyd.mtv.corp.google.com> <53360f31-2b3e-f2ed-d894-538d2215d6c5@codeaurora.org>
-Subject: Re: [RESEND PATCH] spmi: spmi-pmic-arb: fix irq_set_type race condition
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, Kiran Gunda <kgunda@codeaurora.org>,
-        Anirudh Ghayal <aghayal@codeaurora.org>,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
-        Thomas Gleixner <tglx@linutronix.de>,
-        Marc Zyngier <maz@kernel.org>
-To:     David Collins <collinsd@codeaurora.org>,
-        linux-kernel@vger.kernel.org
-Date:   Tue, 03 Aug 2021 01:44:57 -0700
-Message-ID: <162798029780.3896750.11640439486576896470@swboyd.mtv.corp.google.com>
+In-Reply-To: <1627935655-4090-1-git-send-email-khsieh@codeaurora.org>
+References: <1627935655-4090-1-git-send-email-khsieh@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.9.1
+Date:   Tue, 3 Aug 2021 01:55:25 -0700
+Message-ID: <CAE-0n51qc7LX-hWiFEGWRAZqNUgQAQ3XCxO6oEYWZh7wvkxs5Q@mail.gmail.com>
+Subject: Re: [PATCH v2] drm/msm/dp: update is_connected status base on sink
+ count at dp_pm_resume()
+To:     Kuogee Hsieh <khsieh@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robdclark@gmail.com, sean@poorly.run,
+        vkoul@kernel.org
+Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting David Collins (2021-08-02 18:37:46)
-> On 7/31/21 1:20 AM, Stephen Boyd wrote:
-> >=20
-> > Could we have a qpnpint_spmi_set_bit/clear_bit() API that takes the bit
-> > we want to touch as an argument and then does it all under the originial
-> > pmic_arb->lock? Then we don't need a different lock, we can avoid that
-> > drop the lock under the else if condition above, and the area for the
-> > lock will be contained within the set/clear function instead of here.
->=20
-> pmic_arb->lock is currently used tightly around the code in the SPMI bus =
+Quoting Kuogee Hsieh (2021-08-02 13:20:55)
+> Currently at dp_pm_resume() is_connected state is decided base on hpd connection
+> status only. This will put is_connected in wrongly "true" state at the scenario
+> that dongle attached to DUT but without hmdi cable connecting to it. Fix this
+> problem by adding read sink count from dongle and decided is_connected state base
+> on both sink count and hpd connection status.
+>
+> Changes in v2:
+> -- remove dp_get_sink_count() cand call drm_dp_read_sink_count()
+>
+> Fixes: d9aa6571b28ba ("drm/msm/dp: check sink_count before update is_connected status")
+> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+> ---
+>  drivers/gpu/drm/msm/dp/dp_display.c | 18 +++++++++++++++---
+>  1 file changed, 15 insertions(+), 3 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 8b69114..6dcb78e 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -1403,6 +1403,7 @@ static int dp_pm_resume(struct device *dev)
+>         struct msm_dp *dp_display = platform_get_drvdata(pdev);
+>         struct dp_display_private *dp;
+>         u32 status;
 
-> callback functions which write to SPMI PMIC arbiter registers to trigger =
+'status' is unused now, right? The compiler should be complaining about
+unused local variables.
 
-> an SPMI transaction, poll in a loop to wait for completion, and read any =
-
-> command results.  Each of these uses correspond to a command defined in=20
-> the MIPI SPMI spec.  There is no read-modify-write command in the spec.
->=20
-> Thus, implementing qpnpint_spmi_set_bit/clear_bit() functions would=20
-> require an approach like one of these:
->=20
-> 1. Removing the locking from pmic_arb_read_cmd() and pmic_arb_write_cmd()=
-,=20
-> defining new wrapper functions around them to just contain the locking,=20
-> and adding a read-modify-write wrapper function that locks and calls both=
-=20
-> pmic_arb_read_cmd() and pmic_arb_write_cmd().
->=20
-> 2. Or, create a new function that duplicates the contents of both=20
-> pmic_arb_read_cmd() and pmic_arb_write_cmd(), allowing it to issue two=20
-> SPMI bus commands with pmic_arb->lock held.
->=20
-> Option #1 seems like it would result in less clear and messy code than is=
-=20
-> currently present.  It would also have a minor performance impact during =
-
-> simultaneous SPMI requests due to non-contentious checks, address look-up=
-s=20
-> and command formatting unnecessarily waiting for lock acquisition.
-
-Sorry I don't get it. Does pmic_arb_read_cmd() no longer do any locking
-after this change? I was thinking there would be=20
-
-	pmic_arb_read_cmd_unlocked()
-
-	pmic_arb_read_cmd()
-	 take lock
-	 pmic_arb_read_cmd_unlocked()
-	 release lock
-
-        pmic_arb_write_cmd_unlocked()
-
-	pmic_arb_write_cmd()
-	 take lock
-	 pmic_arb_write_cmd_unlocked()
-	 release lock
-
-	pmic_arb_read_modify_write()
-	 take lock
-	 pmic_arb_read_cmd_unlocked()
-	 do bit twiddle
-	 pmic_arb_write_cmd_unlocked()
-	 release lock
-
-but if the formatting is intensive then it could also be extracted to
-another function
-
-	pmic_arb_fmt_read_cmd()
-
-	pmic_arb_read_cmd_unlocked()
-
-	pmic_arb_read_cmd()
-	 pmic_arb_fmt_read_cmd()
-	 take lock
-	 pmic_arb_read_cmd_unlocked()
-	 release lock
-
-	pmic_arb_fmt_write_cmd()
-
-        pmic_arb_write_cmd_unlocked()
-
-	pmic_arb_write_cmd()
-	 pmic_arb_fmt_write_cmd()
-	 take lock
-	 pmic_arb_write_cmd_unlocked()
-	 release lock
-
-	pmic_arb_read_modify_write()
-	 r =3D pmic_arb_fmt_read_cmd()
-	 w =3D pmic_arb_fmt_write_cmd()
-	 take lock
-	 pmic_arb_read_cmd_unlocked(r)
-	 r &=3D w
-	 pmic_arb_write_cmd_unlocked(w)
-	 release lock
-
->=20
-> Option #2 would likely be less messy than option #1; however, it results =
-
-> in duplication of low-level code which is undesirable.
->=20
-> I prefer the approach used in this patch as it doesn't disrupt the=20
-> architecture of the SPMI bus and PMIC IRQ functions.  However, I'm willin=
-g=20
-> to switch to your suggestion if you think it is a better design and=20
-> cleaner/clearer solution.  Please let me know your thoughts.  Would you=20
-> want option #1, #2, or something else?
->=20
-
-It would probably become a huge patch which isn't great, but it would
-focus the critical section to the thing that actually matters. This is
-irq code so maybe we should write it in a way that keeps the spinlock as
-tight as possible. It looks like the current spinlock is placed tightly
-for this purpose, but then we use function pointers to format the
-message and wait, which isn't good for straight line code.
+> +       int sink_count = 0;
+>
+>         dp = container_of(dp_display, struct dp_display_private, dp_display);
+>  xlog(__func__, 1,0,0, dp->core_initialized, dp_display->power_on);
+> @@ -1417,15 +1418,26 @@ xlog(__func__, 1,0,0, dp->core_initialized, dp_display->power_on);
+>
+>         dp_catalog_ctrl_hpd_config(dp->catalog);
+>
+> -       status = dp_catalog_link_is_connected(dp->catalog);
+> +       /*
+> +        * set sink to normal operation mode -- D0
+> +        * before dpcd read
+> +        */
+> +       dp_link_psm_config(dp->link, &dp->panel->link_info, false);
+> +
+> +       /* if sink conencted, do dpcd read sink count */
+> +       if ((status = dp_catalog_link_is_connected(dp->catalog))) {
+> +               sink_count = drm_dp_read_sink_count(dp->aux);
+> +               if (sink_count < 0)
+> +                       sink_count = 0;
+> +       }
+>
+> +       dp->link->sink_count = sink_count;
+>         /*
+>          * can not declared display is connected unless
+>          * HDMI cable is plugged in and sink_count of
+>          * dongle become 1
+>          */
+> -xlog(__func__, 0x12,0,0, 0, dp->link->sink_count);
+> -       if (status && dp->link->sink_count)
+> +       if (dp->link->sink_count)
+>                 dp->dp_display.is_connected = true;
+>         else
+>                 dp->dp_display.is_connected = false;
