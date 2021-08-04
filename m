@@ -2,160 +2,245 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A3533E09CB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 23:03:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 261033E0A4F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Aug 2021 00:23:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240030AbhHDVDd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Aug 2021 17:03:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60774 "EHLO
+        id S233601AbhHDWYL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Aug 2021 18:24:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50498 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240045AbhHDVDX (ORCPT
+        with ESMTP id S232140AbhHDWYK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Aug 2021 17:03:23 -0400
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D07DFC06179A
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Aug 2021 14:03:07 -0700 (PDT)
-Received: by mail-qv1-xf2c.google.com with SMTP id x12so1790452qvo.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Aug 2021 14:03:07 -0700 (PDT)
+        Wed, 4 Aug 2021 18:24:10 -0400
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D78CC0613D5
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Aug 2021 15:23:57 -0700 (PDT)
+Received: by mail-ot1-x334.google.com with SMTP id a5-20020a05683012c5b029036edcf8f9a6so3153559otq.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Aug 2021 15:23:57 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Zdp6WltwdPJTiYOXAA38Zmu1ytNFtDVTLeWSJfJQUTA=;
-        b=pYDFpii+lgAAPWns/N8L4Cmo0xyRztJF7JYeWgj8oHRZZO0s6PKpyDemjtdowSWg/S
-         t/RRf2/vebxyVqxstAUzy1XQVdpo8U8CcM+yCecg6xK1+EBidwwDlR2nd79tC2teo5oe
-         ZCU+GD5GpyO+cpGLLnCG9QZHL7wgVOIa2+Z78QvHvuPFzFbA5+hmYx8TocrlDUcXnwKN
-         s7P1cVm4hI9QbQd5xaUp9Tsl9IAFgJAZBcz6tbSZ2qOmwBCbqsRGxKd7EdvtOugP08lB
-         9F/qPbRjJ9qKRp4eN5wwt4phJ1ZXLovPrW7FFMti7r/jNmc5C6U/6nY50hYv5ByHBdo+
-         rNXg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=P0CPMUoEGq9kX0RjyLZJhNu8qld5+9Q37QY3TTkajhU=;
+        b=RKgpdrx6mJl0U7X86Kem7vK58ksGiKltCbcIDfvTfll0rVb9LvwSaP8XMpHHSqFCtR
+         BoCFo6mB0rSnIHWAoNl4jWBkDYn5ymiczVJwtElEXZX0u1M2CXnSpNYC2TXmTsbC5l1P
+         ++6ZUVngztxFgANTywsu6fuirozS07dfGW09c3fzLWlIVwRZk50xgcdfFXPO52ejA3Wd
+         6AnVgpEFDtmnA3kH9DzFYl42FGS989LVxHmVRey1Ea4r+tW/P6iYqVnYfT72HG9W8sOv
+         ZdEvq76a6FeKmWpReWSum3YXP6cnPp/uhoyXuWaQWduOMRfZktqsOnW89TU8QuJ9+ZRk
+         p+ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Zdp6WltwdPJTiYOXAA38Zmu1ytNFtDVTLeWSJfJQUTA=;
-        b=uaJ5BiyG9X2O43cayOnALOsefCumkFjjzACQwEYB1eBJ3/Pi/5m+NfZkBDZHB86qK5
-         BuJ682voDnYbs8oIk7gHLGmVR9B+IHRuX3n6QiqJoV3UTH30L7LrgsW/ro4iPDNUyGA6
-         +tmvYzmUy1N5OwuWgCoEclbE//YEjHWeQO/cDp6FwivJZk1PQEAI0QrzZ8hLfUiUK1fk
-         zAJSDhm4I9GLvqYxmSpq/W4VtoXLe37vaN/iCHW8t3QUH6Pc1EdQn1977Rd7VxDvnmOv
-         uM6HiatVevdv70Gpx78jKb+lEnqXFp99c27O2rPbg5dM3eJyWcjCV/rlmIgP5EXgkeBn
-         WWTQ==
-X-Gm-Message-State: AOAM533WqPnFMd04Gh6qe9EhXBROLZud8sihrPRd/6MGXIge1T8zVAVe
-        MZTurgrwpQmfJ5jiaXvz/6el/xBw7b/lrQtRsvGfwA==
-X-Google-Smtp-Source: ABdhPJwzRxAtYtsckH8eXVYGse7q8J4o42yWbF/cUsPjzKXnvsENpPibR4PjjuetgtQCFE0DxrNZ7FJB/59wegVXnLA=
-X-Received: by 2002:a0c:aa42:: with SMTP id e2mr1547891qvb.23.1628110987030;
- Wed, 04 Aug 2021 14:03:07 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=P0CPMUoEGq9kX0RjyLZJhNu8qld5+9Q37QY3TTkajhU=;
+        b=YG+/mmvTJ+zg7Zedpf4lQhGM5CvdOm7m1+W7hAkEzVSSi8Te3/BbXabxIo7jsngPRh
+         rUcunlrxoWlyQ+RkcWJAy3RxUiRjyvs1iPoM8hvw5IzZT453wCJL3s9HfqUYg1641sBb
+         XhY9S4JTP6Q0BpqE/OcKMfubWySO4YHh9A3JJwIbCQXvjoZB5GuqaCC5oVSGyjrl34X0
+         B1xvg+GYlHvlpnj1yoKK2yaWsy/KOE+vPRMjflwWmbaGtNJngKjWXAZqb/erelv/DheV
+         aTDHNMnMXs2X/j3QIraAuMzXn25ix/qaqqT3WLfaq6IIxqDSSzHiFiGXkwF+5/Lfx+G5
+         z/DQ==
+X-Gm-Message-State: AOAM533T7ihDHRs+wz+cslvqHJAUUfoHvIWZplDKqPU4q9XHfnbViAzi
+        3MFg2i7O+yzQyVK36OurpREWGA==
+X-Google-Smtp-Source: ABdhPJy8yLBbnn0sqDPowy4CJHcQSoKCKptt0aGcYQHL01ibu3htRaVO8hHifHBmycXOD+iZlETZ1A==
+X-Received: by 2002:a9d:3e08:: with SMTP id a8mr1366425otd.91.1628115836969;
+        Wed, 04 Aug 2021 15:23:56 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id a19sm696197oic.38.2021.08.04.15.23.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Aug 2021 15:23:56 -0700 (PDT)
+Date:   Wed, 4 Aug 2021 17:23:54 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Len Baker <len.baker@gmx.com>
+Cc:     Kees Cook <keescook@chromium.org>, Andy Gross <agross@kernel.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Santosh Shilimkar <ssantosh@kernel.org>,
+        David Laight <David.Laight@aculab.com>,
+        Robin Murphy <robin.murphy@arm.com>,
+        linux-hardening@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v3] drivers/soc: Remove all strcpy() uses
+Message-ID: <YQsTesvLfAwd8z5B@builder.lan>
+References: <20210801131958.6144-1-len.baker@gmx.com>
 MIME-Version: 1.0
-References: <20210731195034.979084-1-dmitry.baryshkov@linaro.org>
- <20210731195034.979084-2-dmitry.baryshkov@linaro.org> <CAJZ5v0gWD8WSQU4oPMSdZFM9VpNpc4TAFJ=_wQLB60XFxw-Ciw@mail.gmail.com>
-In-Reply-To: <CAJZ5v0gWD8WSQU4oPMSdZFM9VpNpc4TAFJ=_wQLB60XFxw-Ciw@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Thu, 5 Aug 2021 00:02:54 +0300
-Message-ID: <CAA8EJpq5DB2a=C+eo_S7QgVMzpm=mvUcC4DkWwGoKQ1g8trmgA@mail.gmail.com>
-Subject: Re: [PATCH v3 1/3] PM: runtime: add devm_pm_runtime_enable helper
-To:     "Rafael J. Wysocki" <rafael@kernel.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Pavel Machek <pavel@ucw.cz>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-clk <linux-clk@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210801131958.6144-1-len.baker@gmx.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 4 Aug 2021 at 21:07, Rafael J. Wysocki <rafael@kernel.org> wrote:
->
-> On Sat, Jul 31, 2021 at 9:50 PM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> >
-> > A typical code pattern for pm_runtime_enable() call is to call it in the
-> > _probe function and to call pm_runtime_disable() both from _probe error
-> > path and from _remove function. For some drivers the whole remove
-> > function would consist of the call to pm_remove_disable().
-> >
-> > Add helper function to replace this bolierplate piece of code. Calling
-> > devm_pm_runtime_enable() removes the need for calling
-> > pm_runtime_disable() both in the probe()'s error path and in the
-> > remove() function.
-> >
-> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> > ---
-> >  drivers/base/power/runtime.c | 17 +++++++++++++++++
-> >  include/linux/pm_runtime.h   |  4 ++++
-> >  2 files changed, 21 insertions(+)
-> >
-> > diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
-> > index 8a66eaf731e4..ec94049442b9 100644
-> > --- a/drivers/base/power/runtime.c
-> > +++ b/drivers/base/power/runtime.c
-> > @@ -1447,6 +1447,23 @@ void pm_runtime_enable(struct device *dev)
-> >  }
-> >  EXPORT_SYMBOL_GPL(pm_runtime_enable);
-> >
-> > +static void pm_runtime_disable_action(void *data)
-> > +{
-> > +       pm_runtime_disable(data);
-> > +}
-> > +
-> > +/**
-> > + * devm_pm_runtime_enable - devres-enabled version of pm_runtime_enable.
-> > + * @dev: Device to handle.
-> > + */
-> > +int devm_pm_runtime_enable(struct device *dev)
-> > +{
-> > +       pm_runtime_enable(dev);
-> > +
-> > +       return devm_add_action_or_reset(dev, pm_runtime_disable_action, dev);
->
-> When exactly is pm_runtime_disable_action() going to run by this rule?
->  When the device goes away or when the driver is unbound from it?
+On Sun 01 Aug 08:19 CDT 2021, Len Baker wrote:
 
-When the driver is unbound (either because probe() returns an error or
-because __device_release_driver() is being called).
-This corresponds to a typical call to pm_runtime_disable() from the
-probe()'s error path or in the remove() callback.
+> strcpy() performs no bounds checking on the destination buffer. This
+> could result in linear overflows beyond the end of the buffer, leading
+> to all kinds of misbehaviors. The safe replacement is strscpy().
+> 
 
-> > +}
-> > +EXPORT_SYMBOL_GPL(devm_pm_runtime_enable);
-> > +
-> >  /**
-> >   * pm_runtime_forbid - Block runtime PM of a device.
-> >   * @dev: Device to handle.
-> > diff --git a/include/linux/pm_runtime.h b/include/linux/pm_runtime.h
-> > index aab8b35e9f8a..222da43b7096 100644
-> > --- a/include/linux/pm_runtime.h
-> > +++ b/include/linux/pm_runtime.h
-> > @@ -59,6 +59,8 @@ extern void pm_runtime_put_suppliers(struct device *dev);
-> >  extern void pm_runtime_new_link(struct device *dev);
-> >  extern void pm_runtime_drop_link(struct device_link *link);
-> >
-> > +extern int devm_pm_runtime_enable(struct device *dev);
-> > +
-> >  /**
-> >   * pm_runtime_get_if_in_use - Conditionally bump up runtime PM usage counter.
-> >   * @dev: Target device.
-> > @@ -253,6 +255,8 @@ static inline void __pm_runtime_disable(struct device *dev, bool c) {}
-> >  static inline void pm_runtime_allow(struct device *dev) {}
-> >  static inline void pm_runtime_forbid(struct device *dev) {}
-> >
-> > +static inline int devm_pm_runtime_enable(struct device *dev) { return 0; }
-> > +
-> >  static inline void pm_suspend_ignore_children(struct device *dev, bool enable) {}
-> >  static inline void pm_runtime_get_noresume(struct device *dev) {}
-> >  static inline void pm_runtime_put_noidle(struct device *dev) {}
-> > --
-> > 2.30.2
-> >
+While this is true, are any of these uses of strcpy affected by its
+shortcomings?
 
+> Moreover, when the size of the destination buffer cannot be obtained
+> using "sizeof", use the memcpy function instead of strscpy.
+> 
 
+This is not why you're using memcpy, you're using it because you _know_
+how many bytes should be copied - because you just did a strlen() and
+allocated that amount of space.
 
--- 
-With best wishes
-Dmitry
+> Signed-off-by: Len Baker <len.baker@gmx.com>
+> ---
+> This is a task of the KSPP [1]
+> 
+> [1] https://github.com/KSPP/linux/issues/88
+> 
+> Changelog v1 -> v2
+> - Change the "area_name_size" variable for a shorter name (Geert
+>   Uytterhoeven).
+> - Add the "Reviewed-by: Geert Uytterhoeven" tag.
+> - Use the memcpy function instead of strscpy function when the
+>   size of the destination buffer cannot be obtained with "sizeof"
+>   (David Laight, Robin Murphy).
+> 
+> Changelog v2 -> v3
+> - Remove the "Reviewed-by: Geert Uytterhoeven" tag since the code
+>   has changed after the v1 review (use of memcpy instead of
+>   strscpy).
+> 
+>  drivers/soc/qcom/pdr_interface.c    | 13 +++++++------
+>  drivers/soc/renesas/r8a779a0-sysc.c |  6 ++++--
+>  drivers/soc/renesas/rcar-sysc.c     |  6 ++++--
+>  drivers/soc/ti/knav_dma.c           |  2 +-
+>  4 files changed, 16 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/pdr_interface.c b/drivers/soc/qcom/pdr_interface.c
+> index 915d5bc3d46e..cf119fde749d 100644
+> --- a/drivers/soc/qcom/pdr_interface.c
+> +++ b/drivers/soc/qcom/pdr_interface.c
+> @@ -131,7 +131,7 @@ static int pdr_register_listener(struct pdr_handle *pdr,
+>  		return ret;
+> 
+>  	req.enable = enable;
+> -	strcpy(req.service_path, pds->service_path);
+> +	strscpy(req.service_path, pds->service_path, sizeof(req.service_path));
+> 
+>  	ret = qmi_send_request(&pdr->notifier_hdl, &pds->addr,
+>  			       &txn, SERVREG_REGISTER_LISTENER_REQ,
+> @@ -257,7 +257,7 @@ static int pdr_send_indack_msg(struct pdr_handle *pdr, struct pdr_service *pds,
+>  		return ret;
+> 
+>  	req.transaction_id = tid;
+> -	strcpy(req.service_path, pds->service_path);
+> +	strscpy(req.service_path, pds->service_path, sizeof(req.service_path));
+> 
+>  	ret = qmi_send_request(&pdr->notifier_hdl, &pds->addr,
+>  			       &txn, SERVREG_SET_ACK_REQ,
+> @@ -406,7 +406,7 @@ static int pdr_locate_service(struct pdr_handle *pdr, struct pdr_service *pds)
+>  		return -ENOMEM;
+> 
+>  	/* Prepare req message */
+> -	strcpy(req.service_name, pds->service_name);
+> +	strscpy(req.service_name, pds->service_name, sizeof(req.service_name));
+>  	req.domain_offset_valid = true;
+>  	req.domain_offset = 0;
+> 
+> @@ -531,8 +531,8 @@ struct pdr_service *pdr_add_lookup(struct pdr_handle *pdr,
+>  		return ERR_PTR(-ENOMEM);
+> 
+>  	pds->service = SERVREG_NOTIFIER_SERVICE;
+> -	strcpy(pds->service_name, service_name);
+> -	strcpy(pds->service_path, service_path);
+> +	strscpy(pds->service_name, service_name, sizeof(pds->service_name));
+> +	strscpy(pds->service_path, service_path, sizeof(pds->service_path));
+>  	pds->need_locator_lookup = true;
+> 
+>  	mutex_lock(&pdr->list_lock);
+> @@ -587,7 +587,8 @@ int pdr_restart_pd(struct pdr_handle *pdr, struct pdr_service *pds)
+>  			break;
+> 
+>  		/* Prepare req message */
+> -		strcpy(req.service_path, pds->service_path);
+> +		strscpy(req.service_path, pds->service_path,
+> +			sizeof(req.service_path));
+
+There's no need to break this line.
+
+Thanks,
+Bjorn
+
+>  		addr = pds->addr;
+>  		break;
+>  	}
+> diff --git a/drivers/soc/renesas/r8a779a0-sysc.c b/drivers/soc/renesas/r8a779a0-sysc.c
+> index d464ffa1be33..7410b9fa9846 100644
+> --- a/drivers/soc/renesas/r8a779a0-sysc.c
+> +++ b/drivers/soc/renesas/r8a779a0-sysc.c
+> @@ -404,19 +404,21 @@ static int __init r8a779a0_sysc_pd_init(void)
+>  	for (i = 0; i < info->num_areas; i++) {
+>  		const struct r8a779a0_sysc_area *area = &info->areas[i];
+>  		struct r8a779a0_sysc_pd *pd;
+> +		size_t n;
+> 
+>  		if (!area->name) {
+>  			/* Skip NULLified area */
+>  			continue;
+>  		}
+> 
+> -		pd = kzalloc(sizeof(*pd) + strlen(area->name) + 1, GFP_KERNEL);
+> +		n = strlen(area->name) + 1;
+> +		pd = kzalloc(sizeof(*pd) + n, GFP_KERNEL);
+>  		if (!pd) {
+>  			error = -ENOMEM;
+>  			goto out_put;
+>  		}
+> 
+> -		strcpy(pd->name, area->name);
+> +		memcpy(pd->name, area->name, n);
+>  		pd->genpd.name = pd->name;
+>  		pd->pdr = area->pdr;
+>  		pd->flags = area->flags;
+> diff --git a/drivers/soc/renesas/rcar-sysc.c b/drivers/soc/renesas/rcar-sysc.c
+> index 53387a72ca00..b0a80de34c98 100644
+> --- a/drivers/soc/renesas/rcar-sysc.c
+> +++ b/drivers/soc/renesas/rcar-sysc.c
+> @@ -396,19 +396,21 @@ static int __init rcar_sysc_pd_init(void)
+>  	for (i = 0; i < info->num_areas; i++) {
+>  		const struct rcar_sysc_area *area = &info->areas[i];
+>  		struct rcar_sysc_pd *pd;
+> +		size_t n;
+> 
+>  		if (!area->name) {
+>  			/* Skip NULLified area */
+>  			continue;
+>  		}
+> 
+> -		pd = kzalloc(sizeof(*pd) + strlen(area->name) + 1, GFP_KERNEL);
+> +		n = strlen(area->name) + 1;
+> +		pd = kzalloc(sizeof(*pd) + n, GFP_KERNEL);
+>  		if (!pd) {
+>  			error = -ENOMEM;
+>  			goto out_put;
+>  		}
+> 
+> -		strcpy(pd->name, area->name);
+> +		memcpy(pd->name, area->name, n);
+>  		pd->genpd.name = pd->name;
+>  		pd->ch.chan_offs = area->chan_offs;
+>  		pd->ch.chan_bit = area->chan_bit;
+> diff --git a/drivers/soc/ti/knav_dma.c b/drivers/soc/ti/knav_dma.c
+> index 591d14ebcb11..5f9816d317a5 100644
+> --- a/drivers/soc/ti/knav_dma.c
+> +++ b/drivers/soc/ti/knav_dma.c
+> @@ -691,7 +691,7 @@ static int dma_init(struct device_node *cloud, struct device_node *dma_node)
+>  	dma->max_rx_flow = max_rx_flow;
+>  	dma->max_tx_chan = min(max_tx_chan, max_tx_sched);
+>  	atomic_set(&dma->ref_count, 0);
+> -	strcpy(dma->name, node->name);
+> +	strscpy(dma->name, node->name, sizeof(dma->name));
+>  	spin_lock_init(&dma->lock);
+> 
+>  	for (i = 0; i < dma->max_tx_chan; i++) {
+> --
+> 2.25.1
+> 
