@@ -2,72 +2,132 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0BC213E05EC
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 18:28:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 91FED3E072B
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 20:07:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237524AbhHDQ2y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Aug 2021 12:28:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54852 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237636AbhHDQ2y (ORCPT
+        id S238302AbhHDSHN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Aug 2021 14:07:13 -0400
+Received: from mail-ot1-f49.google.com ([209.85.210.49]:34550 "EHLO
+        mail-ot1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230226AbhHDSHN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Aug 2021 12:28:54 -0400
-Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F274AC061799
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Aug 2021 09:28:40 -0700 (PDT)
-Received: by mail-oo1-xc34.google.com with SMTP id n1-20020a4ac7010000b0290262f3c22a63so619440ooq.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Aug 2021 09:28:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=YJl9Dp+HFALeJtquI91ykNZTzDaqiOMR/BEIZraugLA=;
-        b=NPi/wThKhegJOv29TATNg7YLUc62HzWzyI2P8DDoUHEVYP50DKPf0UFgqbYg04wAVa
-         mR0VWfpI4l5VUHr4rF74AcUAW/nEeFKdFNIMi313/NnkUHuRNBtNReY9S6ndzY0wm/tG
-         SSvTksJUHIqUig9jPvfe9LuPn2DebrvL9+6uw=
+        Wed, 4 Aug 2021 14:07:13 -0400
+Received: by mail-ot1-f49.google.com with SMTP id e13-20020a056830200db02904f06fa2790cso2440710otp.1;
+        Wed, 04 Aug 2021 11:07:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=YJl9Dp+HFALeJtquI91ykNZTzDaqiOMR/BEIZraugLA=;
-        b=Z7kPezIXiBvQMirKdx8eQEP6mFynOxZLWWoJkk88JMl6gvZbFH1rxbk4GZjQx6c84t
-         gqHE4e2npHruMs1ILWdEFgpHy55/2AEiqpoQPpoSaWad1re2mOJ2WmJ1oeBXzCZ/t1sB
-         5X4FCipxeMMycsDKfqOGmhsg91Vd3Z/CvFatwet4fYneJelzD4oS+IhGyWH9c/z+vtwM
-         5xlRM7KGNa4/sNhPXW7sxafolFILKVhDnPTLlcUFAZgWWEsugtaTp5kjQAHm3ef0lELJ
-         FgWJtV2kG4bl5ABXhpVufvqQvuQQPU/0PcSx/mUjj33H1EgTYrNKeyKE+FlBpNEE9BlX
-         s/2g==
-X-Gm-Message-State: AOAM531GmTqE3D7G4dNSj5qOn7GBLGQZ7/p7FqAeIpOkZlEwf8XPOHSJ
-        oTo0SZhWX8IjXKxKOXxtmN7su4SqKpJ2/bHm3eiFqg==
-X-Google-Smtp-Source: ABdhPJzyWPBPVIygrEAq4SFdclm9lnLtKV1Qk4UcANBrV40RTjaxXlxoUlMUX5rreE2sq2LD6udGEHf3JIMbKuKRrGY=
-X-Received: by 2002:a4a:9783:: with SMTP id w3mr301841ooi.80.1628094520323;
- Wed, 04 Aug 2021 09:28:40 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 4 Aug 2021 09:28:39 -0700
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=SYqG4QXoSp28eXqQGcJnRQ+yb/Mnrr/VGHid3OstWEM=;
+        b=BZt3alAl9T4ch9/PjpSbppW/C+pxLSjnuDMsWnRGqsIvYSyMTwy+ueKL4AprUJH9ks
+         u3WxW9GCPmBCw/zfYc1jp1AWJ8pYWFJ4JAu5jZ4YZVsWQ+SJlFOt9DhFLws+t3ClgghW
+         qwZxK++fgL/+dwQuYe4u10QVQRd8IsnUJUU4WZcWTBoz7eC55LPjsSdxlbSLYFyBKbvX
+         gdlOkPDhkYhBU7rhgiVWH3YbPpdI9DJYQW4PWBBFv2/dAfXzBWURUqoAZ1h7Ugwesbfe
+         law8AaGdQXyJoNMJjUF8LHpJmIDyxL8LCN5DjLdOypLblJNvmH6sPDPvohG/oPVgYbU/
+         j7FQ==
+X-Gm-Message-State: AOAM530pNU/YtjrFZrrWM3cTfYe8NBppZN1jJNM3tkCc0raYSnFb4zBy
+        aWwuaIZ16idUo2spg4GnEAWO2rxPbtjviNgFuoo=
+X-Google-Smtp-Source: ABdhPJzfkepS4uxITjIGI3lPF2wXivJvih2RRS4BkNi5QoB0chen1jcEDWhaltCu67IBdWxRsFvLP7NXLSTRKEv02hI=
+X-Received: by 2002:a05:6830:9a:: with SMTP id a26mr712161oto.260.1628100419994;
+ Wed, 04 Aug 2021 11:06:59 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1628082199-17002-2-git-send-email-rnayak@codeaurora.org>
-References: <1628082199-17002-1-git-send-email-rnayak@codeaurora.org> <1628082199-17002-2-git-send-email-rnayak@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Wed, 4 Aug 2021 09:28:39 -0700
-Message-ID: <CAE-0n53b5XEc7gctkKPKrBcZo=2rbY5Stt_FQ0E_XWRQ7RuDrg@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] dt-bindings: arm: qcom: Document qcom,sc7280-idp2 board
-To:     Rajendra Nayak <rnayak@codeaurora.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, skakit@codeaurora.org,
-        konrad.dybcio@somainline.org, dianders@chromium.org,
-        mka@chromium.org
+References: <20210731195034.979084-1-dmitry.baryshkov@linaro.org> <20210731195034.979084-2-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20210731195034.979084-2-dmitry.baryshkov@linaro.org>
+From:   "Rafael J. Wysocki" <rafael@kernel.org>
+Date:   Wed, 4 Aug 2021 20:06:49 +0200
+Message-ID: <CAJZ5v0gWD8WSQU4oPMSdZFM9VpNpc4TAFJ=_wQLB60XFxw-Ciw@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] PM: runtime: add devm_pm_runtime_enable helper
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Pavel Machek <pavel@ucw.cz>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Rajendra Nayak (2021-08-04 06:03:18)
-> Document the qcom,sc7280-idp2 board based off sc7280 SoC,
-> The board is also known as piglin in the Chrome OS builds,
-> so document the google,piglin compatible as well.
+On Sat, Jul 31, 2021 at 9:50 PM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 >
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> A typical code pattern for pm_runtime_enable() call is to call it in the
+> _probe function and to call pm_runtime_disable() both from _probe error
+> path and from _remove function. For some drivers the whole remove
+> function would consist of the call to pm_remove_disable().
+>
+> Add helper function to replace this bolierplate piece of code. Calling
+> devm_pm_runtime_enable() removes the need for calling
+> pm_runtime_disable() both in the probe()'s error path and in the
+> remove() function.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
+>  drivers/base/power/runtime.c | 17 +++++++++++++++++
+>  include/linux/pm_runtime.h   |  4 ++++
+>  2 files changed, 21 insertions(+)
+>
+> diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
+> index 8a66eaf731e4..ec94049442b9 100644
+> --- a/drivers/base/power/runtime.c
+> +++ b/drivers/base/power/runtime.c
+> @@ -1447,6 +1447,23 @@ void pm_runtime_enable(struct device *dev)
+>  }
+>  EXPORT_SYMBOL_GPL(pm_runtime_enable);
+>
+> +static void pm_runtime_disable_action(void *data)
+> +{
+> +       pm_runtime_disable(data);
+> +}
+> +
+> +/**
+> + * devm_pm_runtime_enable - devres-enabled version of pm_runtime_enable.
+> + * @dev: Device to handle.
+> + */
+> +int devm_pm_runtime_enable(struct device *dev)
+> +{
+> +       pm_runtime_enable(dev);
+> +
+> +       return devm_add_action_or_reset(dev, pm_runtime_disable_action, dev);
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+When exactly is pm_runtime_disable_action() going to run by this rule?
+ When the device goes away or when the driver is unbound from it?
+
+> +}
+> +EXPORT_SYMBOL_GPL(devm_pm_runtime_enable);
+> +
+>  /**
+>   * pm_runtime_forbid - Block runtime PM of a device.
+>   * @dev: Device to handle.
+> diff --git a/include/linux/pm_runtime.h b/include/linux/pm_runtime.h
+> index aab8b35e9f8a..222da43b7096 100644
+> --- a/include/linux/pm_runtime.h
+> +++ b/include/linux/pm_runtime.h
+> @@ -59,6 +59,8 @@ extern void pm_runtime_put_suppliers(struct device *dev);
+>  extern void pm_runtime_new_link(struct device *dev);
+>  extern void pm_runtime_drop_link(struct device_link *link);
+>
+> +extern int devm_pm_runtime_enable(struct device *dev);
+> +
+>  /**
+>   * pm_runtime_get_if_in_use - Conditionally bump up runtime PM usage counter.
+>   * @dev: Target device.
+> @@ -253,6 +255,8 @@ static inline void __pm_runtime_disable(struct device *dev, bool c) {}
+>  static inline void pm_runtime_allow(struct device *dev) {}
+>  static inline void pm_runtime_forbid(struct device *dev) {}
+>
+> +static inline int devm_pm_runtime_enable(struct device *dev) { return 0; }
+> +
+>  static inline void pm_suspend_ignore_children(struct device *dev, bool enable) {}
+>  static inline void pm_runtime_get_noresume(struct device *dev) {}
+>  static inline void pm_runtime_put_noidle(struct device *dev) {}
+> --
+> 2.30.2
+>
