@@ -2,87 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 64ECA3DFD33
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 10:44:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A8B03DFDB1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 11:10:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236688AbhHDIoV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Aug 2021 04:44:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59970 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236689AbhHDIoN (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Aug 2021 04:44:13 -0400
-Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 278EFC0613D5
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Aug 2021 01:44:01 -0700 (PDT)
-Received: by mail-wr1-x434.google.com with SMTP id h14so1296533wrx.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Aug 2021 01:44:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=x+W4hpwl9df5CB8MZzAA4b3cZ5d3FhNu9Q7vDGYVJU8=;
-        b=opy//H6TpPPBAFCpcce1A4l5KV7bZL7qbX1RWFxJ7wuIwIdB1+bX1h5gDUsTuRUdG5
-         HePB7g7RtMMECstxeb/xQrNbe6eYweNRmwmQJT+oTogjsoJHDpy+wwNl1upRcA3Qt2BF
-         C7YdD5kzFXPYpgjFW431GSaKKYRKKjKWiYi9jqlfnIq+/bhmL3EPnrJwA3rfdBbYW+df
-         s8IVvImMfo9QjiPnHdEF7NMicNiogMZ2bHeYGbtPRjcJwoOC+TRnvr+AV+7Dz4nzS6nW
-         KBYKNqGdlUbzt/U2lJL1qdC8U7ZjeFlB//39794AUgOpU2JNxUcFM4c7Eyk00BEnI85m
-         WBlg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=x+W4hpwl9df5CB8MZzAA4b3cZ5d3FhNu9Q7vDGYVJU8=;
-        b=o1/jygsJhJ+pJqHIOFuHBdhhEInzZ5CfV9D1NBGOk3j6ArJKWGbAwikTjV81nTynvL
-         EX6ri4L8uMQBpVy3jcy4i1UW4ZL+0LAZo4WG6kydU9jXXzehT+m++Xo77zwqjy5bYZSY
-         n5AqJammvA4eTLBUH/1m5a5XhI5kC3FihmLHmqPEGOGX0VjTXcEcDYJZDrTiGu/WYKWj
-         GGABzUbvmmv3VCA5WNMElpu6cyLXImTc+aiscD5f92gEm4EeIBUeNmEmMAhBTie9iePp
-         5YjtinV0DM5upRGEU7ASU8uYqQah5MeUEJVLxG5Xpxkhs2Ki6ivvjh52OlfT9Eww5nrS
-         2bTA==
-X-Gm-Message-State: AOAM530+tl4lpvNh1BnDE+Xnj/gjQvTmFZhXXZKx8rXfaIIs+NIRjb8m
-        dxYnpgU08cKoNrDF5FBXg0Jlxg==
-X-Google-Smtp-Source: ABdhPJyj/S2rP9MNjtE9z92MZS5mlgBhOx1t8pR5WugZlVV70t80Js41VHUvD66MU2VvWH4T+Gg4Gg==
-X-Received: by 2002:adf:f1c6:: with SMTP id z6mr27816676wro.207.1628066639697;
-        Wed, 04 Aug 2021 01:43:59 -0700 (PDT)
-Received: from localhost.localdomain ([2a01:e0a:82c:5f0:69b5:b274:5cfc:ef2])
-        by smtp.gmail.com with ESMTPSA id d7sm1681899wrs.39.2021.08.04.01.43.58
-        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 04 Aug 2021 01:43:59 -0700 (PDT)
-From:   Loic Poulain <loic.poulain@linaro.org>
-To:     mani@kernel.org, hemantk@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        Loic Poulain <loic.poulain@linaro.org>
-Subject: [PATCH] bus: mhi: pci-generic: Add MAINTAINER entry
-Date:   Wed,  4 Aug 2021 10:54:16 +0200
-Message-Id: <1628067256-22813-1-git-send-email-loic.poulain@linaro.org>
-X-Mailer: git-send-email 2.7.4
+        id S236987AbhHDJKZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Aug 2021 05:10:25 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53482 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236979AbhHDJKW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 4 Aug 2021 05:10:22 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 5787E60240;
+        Wed,  4 Aug 2021 09:10:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1628068209;
+        bh=9X4hL8TfLuspjEJ70He/hj+tn4fH/H3eNlS2f2ndoxM=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=rXGa+WHPnySCeMTNtLIsO/kdHKYiEZq1T6/faJZEnj+zhHUAyq7pWT+Z3fJxMBEtM
+         IHh+amcv6TJagOcUhRdnb2Uz3kx5ZH2lH8zztQF3hk1Xi0VHDkrHV5aa+GXCn++0KC
+         /9DlvY0Uw7IBsSwlM8FwcztWIceVscmOQU/BtPJE=
+Date:   Wed, 4 Aug 2021 11:10:06 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Kalyan Thota <kalyan_t@codeaurora.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        dianders@chromium.org, mkrishn@codeaurora.org,
+        saiprakash.ranjan@codeaurora.org, rnayak@codeaurora.org,
+        stable@vger.kernel.org
+Subject: Re: [v3] drm/msm/disp/dpu1: add safe lut config in dpu driver
+Message-ID: <YQpZbosqlBo9EkG6@kroah.com>
+References: <1628064990-6990-1-git-send-email-kalyan_t@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1628064990-6990-1-git-send-email-kalyan_t@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add myself as driver maintainer for pci_generic
+On Wed, Aug 04, 2021 at 01:16:30AM -0700, Kalyan Thota wrote:
+> Add safe lut configuration for all the targets in dpu
+> driver as per QOS recommendation.
+> 
+> Issue reported on SC7280:
+> 
+> With wait-for-safe feature in smmu enabled, RT client
+> buffer levels are checked to be safe before smmu invalidation.
+> Since display was always set to unsafe it was delaying the
+> invalidaiton process thus impacting the performance on NRT clients
+> such as eMMC and NVMe.
+> 
+> Validated this change on SC7280, With this change eMMC performance
+> has improved significantly.
+> 
+> Changes in v1:
+> - Add fixes tag (Sai)
+> - CC stable kernel (Dimtry)
+> 
+> Changes in v2:
+> - Correct fixes tag with appropriate hash (stephen)
+> 
+> Fixes: 591e34a091d1 (drm/msm/disp/dpu1: add support for display
+> for SC7280 target)
+> Signed-off-by: Kalyan Thota <kalyan_t@codeaurora.org>
+> Tested-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org> (sc7280, sc7180)
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 5 +++++
+>  1 file changed, 5 insertions(+)
 
-Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
----
- MAINTAINERS | 7 +++++++
- 1 file changed, 7 insertions(+)
+<formletter>
 
-diff --git a/MAINTAINERS b/MAINTAINERS
-index 4c32a9c..9759ddd 100644
---- a/MAINTAINERS
-+++ b/MAINTAINERS
-@@ -12098,6 +12098,13 @@ F:	Documentation/mhi/
- F:	drivers/bus/mhi/
- F:	include/linux/mhi.h
- 
-+MHI PCI GENERIC DRIVER
-+M:	Loic Poulain <loic.poulain@linaro.org>
-+L:	linux-arm-msm@vger.kernel.org
-+S:	Maintained
-+T:	git git://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git
-+F:	drivers/bus/mhi/pci_generic.c
-+
- MICROBLAZE ARCHITECTURE
- M:	Michal Simek <monstr@monstr.eu>
- S:	Supported
--- 
-2.7.4
+This is not the correct way to submit patches for inclusion in the
+stable kernel tree.  Please read:
+    https://www.kernel.org/doc/html/latest/process/stable-kernel-rules.html
+for how to do this properly.
 
+</formletter>
