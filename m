@@ -2,183 +2,627 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A43A63E005A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 13:40:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 20E3C3E00E2
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 14:09:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237592AbhHDLkq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Aug 2021 07:40:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44416 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237456AbhHDLkq (ORCPT
+        id S236599AbhHDMJl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Aug 2021 08:09:41 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.50]:35533 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236550AbhHDMJk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Aug 2021 07:40:46 -0400
-Received: from mail-vk1-xa2e.google.com (mail-vk1-xa2e.google.com [IPv6:2607:f8b0:4864:20::a2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9168DC06179A
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Aug 2021 04:40:33 -0700 (PDT)
-Received: by mail-vk1-xa2e.google.com with SMTP id j14so374724vkd.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Aug 2021 04:40:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=N7aTfCxAKJ2/XU/on5/jv3kZr0ZUiaYr+3A3j6P4Pxo=;
-        b=F58Cvd96+VeMEyWQZWIhBEZM7Vhgt/eKNvvl5M3d6yxCe4oWUtOM5+UiJ5F/4wyubz
-         HAbgd+EExQL8lCLg0LqPWO/RE19sOT2PtiKwzNHgp2Ag5H0YXnZbS47iQz8/ARPveUf2
-         L1begTuBFdnQ9JaDlkFITHE1gi3CKxf8d20ob4G6hMnHLiyXzyvTGzpS13LQRZZx7bz1
-         XgWA86Skwuh43dTiStAjaTUC+M7VH+w6k2IlKdAGkdwL/20XNaADZ391zeWPbvBJ40pR
-         8dXOIu7xU889d8ai1rVE45XAPWJfjrhb2LgXCo+BsvhnxHh1F2HKZntXuY/AsHoJ77fV
-         s71Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=N7aTfCxAKJ2/XU/on5/jv3kZr0ZUiaYr+3A3j6P4Pxo=;
-        b=FrfupWPWj1SRstNDRKA6M9D4FRqS5iVFdE63+l0ky/kBvbyiuV1CT7POjzpa5k/BhA
-         kYQMwxTcOg81huE9qEKBcWDMcStOEuSqXZLldrBeNntT5d5b8lbgTPaf5ANTpbf54jQ5
-         OCh/t+tVJ8jTO28OHmxzuQsSXuR2xsTWBCiKLgqTVF9bPLBvbPTmVqSUCgeksA0dbsur
-         0p7DxU9zxZgtcs49FGsiMkKWD+zkif2DMEeimO+1IHsjHiEU3nYDwmrpqCY/turRWTTS
-         jsZUtGEhg69meG3FZRx2D3D/lI2kSioXrjkuhvXPjW0/od+1yWw2STFXT9ADEOWPStX0
-         V5QA==
-X-Gm-Message-State: AOAM530zm++WbJ/yiuA9fzZSsE6DgcpkZH/mSNNN7ci0WO1pST1EqUUr
-        yIQ8Ycv/e2+DRGMTslvcGxKiNzNGU4QersSJ/HgZSw==
-X-Google-Smtp-Source: ABdhPJwd7X+yAh+jm61MAYmQnQU0NWt09TvXYK9U3lvNwCskd5VyvewblGteqgYoLsoVAlGrwuIhaqntzGyE3/mMCsk=
-X-Received: by 2002:a1f:cf47:: with SMTP id f68mr16089473vkg.7.1628077232121;
- Wed, 04 Aug 2021 04:40:32 -0700 (PDT)
+        Wed, 4 Aug 2021 08:09:40 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1628078963;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=7EdYlGhRsvT7szxYZsO5Oz4HKMO5cvQWTxMEyLge6RE=;
+    b=jtstUAEC4kErG9g+SmDSjx/KeJLp1tK1oYS8UOxfoNQWJBQlVAZuH8HykgDeJDADj0
+    SxKMMpn7K8caV1+ifTjBcsXmQ8u4ywcx7n482wqExDFKj6N0vMcpM6coiVqGJ01IIwWg
+    KeV80CYEnmVNUGY4Unvp4elY+1Ko8uZ23hK9SYKVRUuE+di6WXDOpInf4phUNKtEqrLZ
+    WrEjKM6cJZQY4SFZYa1V8AH7hTLUlNec8/wSo54T3iQCFlTM7g0mT+LJC76CEzmR3IE/
+    rDOX6Zc/3i5glFY2ARpSLkEqWlrhlNxYJL4ho1ttT34HOiLPMgpPHlOL7A4D5cfKt19t
+    JDnA==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8Z6I1A=="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.31.0 DYNA|AUTH)
+    with ESMTPSA id L01e9cx74C9N19V
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Wed, 4 Aug 2021 14:09:23 +0200 (CEST)
+Date:   Wed, 4 Aug 2021 14:09:19 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 2/2] drm/panel: Add Truly NT35521 panel driver
+Message-ID: <YQqDb5eFqIx8tvAL@gerhold.net>
+References: <20210804081352.30595-1-shawn.guo@linaro.org>
+ <20210804081352.30595-3-shawn.guo@linaro.org>
 MIME-Version: 1.0
-References: <1626764876-10229-1-git-send-email-rnayak@codeaurora.org>
- <1626764876-10229-2-git-send-email-rnayak@codeaurora.org> <CAPDyKFrzHD6rXP5TnqrAVnrZExc2JLFe3HoGF+yM_tsaZYwh8g@mail.gmail.com>
- <35950d34-5cab-1b09-9864-49217a83f68d@codeaurora.org> <6fe7d326-1822-5a49-cca7-df9a2739dca8@codeaurora.org>
-In-Reply-To: <6fe7d326-1822-5a49-cca7-df9a2739dca8@codeaurora.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Wed, 4 Aug 2021 13:39:55 +0200
-Message-ID: <CAPDyKFrTQ0jy_u_oPN3kAXkd+FYMpHmStuU2pm8FHLa_OvXzBA@mail.gmail.com>
-Subject: Re: [PATCH v5 1/2] PM / Domains: Add support for 'required-opps' to
- set default perf state
-To:     Rajendra Nayak <rnayak@codeaurora.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Roja Rani Yarubandi <rojay@codeaurora.org>,
-        Stephan Gerhold <stephan@gerhold.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210804081352.30595-3-shawn.guo@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 4 Aug 2021 at 13:08, Rajendra Nayak <rnayak@codeaurora.org> wrote:
->
->
-> On 8/3/2021 10:08 AM, Rajendra Nayak wrote:
-> >
-> > On 8/2/2021 6:29 PM, Ulf Hansson wrote:
-> >> On Tue, 20 Jul 2021 at 09:12, Rajendra Nayak <rnayak@codeaurora.org> wrote:
-> >>>
-> >>> Some devices within power domains with performance states do not
-> >>> support DVFS, but still need to vote on a default/static state
-> >>> while they are active. They can express this using the 'required-opps'
-> >>> property in device tree, which points to the phandle of the OPP
-> >>> supported by the corresponding power-domains.
-> >>>
-> >>> Add support to parse this information from DT and then set the
-> >>> specified performance state during attach and drop it on detach.
-> >>> runtime suspend/resume callbacks already have logic to drop/set
-> >>> the vote as needed and should take care of dropping the default
-> >>> perf state vote on runtime suspend and restore it back on runtime
-> >>> resume.
-> >>>
-> >>> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> >>> ---
-> >>>   drivers/base/power/domain.c | 28 +++++++++++++++++++++++++---
-> >>>   include/linux/pm_domain.h   |  1 +
-> >>>   2 files changed, 26 insertions(+), 3 deletions(-)
-> >>>
-> >>> diff --git a/drivers/base/power/domain.c b/drivers/base/power/domain.c
-> >>> index a934c67..f454031 100644
-> >>> --- a/drivers/base/power/domain.c
-> >>> +++ b/drivers/base/power/domain.c
-> >>> @@ -2598,6 +2598,12 @@ static void genpd_dev_pm_detach(struct device *dev, bool power_off)
-> >>>
-> >>>          dev_dbg(dev, "removing from PM domain %s\n", pd->name);
-> >>>
-> >>> +       /* Drop the default performance state */
-> >>> +       if (dev_gpd_data(dev)->default_pstate) {
-> >>> +               dev_pm_genpd_set_performance_state(dev, 0);
-> >>> +               dev_gpd_data(dev)->default_pstate = 0;
-> >>> +       }
-> >>> +
-> >>>          for (i = 1; i < GENPD_RETRY_MAX_MS; i <<= 1) {
-> >>>                  ret = genpd_remove_device(pd, dev);
-> >>>                  if (ret != -EAGAIN)
-> >>> @@ -2635,9 +2641,10 @@ static void genpd_dev_pm_sync(struct device *dev)
-> >>>   static int __genpd_dev_pm_attach(struct device *dev, struct device *base_dev,
-> >>>                                   unsigned int index, bool power_on)
-> >>>   {
-> >>> +       struct device_node *np;
-> >>>          struct of_phandle_args pd_args;
-> >>>          struct generic_pm_domain *pd;
-> >>> -       int ret;
-> >>> +       int ret, pstate;
-> >>>
-> >>>          ret = of_parse_phandle_with_args(dev->of_node, "power-domains",
-> >>>                                  "#power-domain-cells", index, &pd_args);
-> >>> @@ -2675,10 +2682,25 @@ static int __genpd_dev_pm_attach(struct device *dev, struct device *base_dev,
-> >>>                  genpd_unlock(pd);
-> >>>          }
-> >>>
-> >>> -       if (ret)
-> >>> +       if (ret) {
-> >>>                  genpd_remove_device(pd, dev);
-> >>> +               return -EPROBE_DEFER;
-> >>> +       }
-> >>> +
-> >>> +       /* Set the default performance state */
-> >>> +       np = base_dev->of_node;
-> >>
-> >> Please use dev->of_node instead (it is set to the same of_node as
-> >> base_dev by the callers of __genpd_dev_pm_attach) as it's more
-> >> consistent with existing code.
-> >>
-> >>> +       if (of_parse_phandle(np, "required-opps", index)) {
-> >>> +               pstate = of_get_required_opp_performance_state(np, index);
-> >>> +               if (pstate < 0) {
-> >>> +                       ret = pstate;
-> >>> +                       dev_err(dev, "failed to set required performance state for power-domain %s: %d\n",
-> >>> +                               pd->name, ret);
-> >>> +               }
-> >>> +               dev_pm_genpd_set_performance_state(dev, pstate);
-> >>> +               dev_gpd_data(dev)->default_pstate = pstate;
-> >>
-> >> This doesn't look entirely correct to me. If we fail to translate a
-> >> required opp to a performance state, we shouldn't try to set it.
-> >
-> > yeah, that does not seem right at all :(
-> >
-> >> Perhaps it's also easier to call
-> >> of_get_required_opp_performance_state() unconditionally of whether a
-> >> "required-opps" specifier exists. If it fails with the translation,
-> >> then we just skip setting a default state and continue with returning
-> >> 1.
-> >>
-> >> Would that work?
->
-> Looks like calling of_get_required_opp_performance_state() unconditionally
-> makes it spit out a pr_err() in case the node is missing "required-opps" property,
-> so I posted a v6 [1] with the check in place and adding the missing else
-> condition.
+Hi Shawn,
 
-I see.
+Thanks for the patch!
 
-Viresh, would it make sense to remove that print? I mean, the
-required-opps property could be considered as optional and it seems a
-bit silly that a pre-parsing of the property is needed to figure that
-out.
+On Wed, Aug 04, 2021 at 04:13:52PM +0800, Shawn Guo wrote:
+> It adds a drm driver for Truly NT35521 5.24" 1280x720 DSI panel, which
+> can be found on Sony Xperia M4 Aqua phone.  The panel backlight is
+> managed through DSI link.
+> 
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> ---
+>  drivers/gpu/drm/panel/Kconfig               |   9 +
+>  drivers/gpu/drm/panel/Makefile              |   1 +
+>  drivers/gpu/drm/panel/panel-truly-nt35521.c | 491 ++++++++++++++++++++
+>  3 files changed, 501 insertions(+)
+>  create mode 100644 drivers/gpu/drm/panel/panel-truly-nt35521.c
+> 
+> diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
+> index ef87d92cdf49..cdc4abd5c40c 100644
+> --- a/drivers/gpu/drm/panel/Kconfig
+> +++ b/drivers/gpu/drm/panel/Kconfig
+> @@ -537,6 +537,15 @@ config DRM_PANEL_TPO_TPG110
+>  	  400CH LTPS TFT LCD Single Chip Digital Driver for up to
+>  	  800x400 LCD panels.
+>  
+> +config DRM_PANEL_TRULY_NT35521
+> +	tristate "Truly NT35521 panel"
 
->
-> [1] https://lore.kernel.org/patchwork/project/lkml/list/?series=510727
+I think the name "Truly NT35521" is a bit too generic. AFAIK "Truly" is
+a panel vendor and the NovaTek NT35521 is the panel controller. But
+there are almost certainly other Truly panels that were also combined
+with a NT35521 but need a slightly different configuration.
 
-Kind regards
-Uffe
+If you don't know more than "Truly NT35521" based on the Sony sources,
+maybe do it similar to "asus,z00t-tm5p5-n35596" and use a compatible
+like "sony,<device>-truly-nt35521". Would be good to clarify the Kconfig
+option here too.
+
+> +	depends on OF
+> +	depends on DRM_MIPI_DSI
+> +	depends on BACKLIGHT_CLASS_DEVICE
+> +	help
+> +	  Say Y here if you want to enable support for Truly NT35521
+> +	  1280x720 DSI panel.
+> +
+>  config DRM_PANEL_TRULY_NT35597_WQXGA
+>  	tristate "Truly WQXGA"
+>  	depends on OF
+> diff --git a/drivers/gpu/drm/panel/Makefile b/drivers/gpu/drm/panel/Makefile
+> index cae4d976c069..3d3c98cb7a7b 100644
+> --- a/drivers/gpu/drm/panel/Makefile
+> +++ b/drivers/gpu/drm/panel/Makefile
+> @@ -56,6 +56,7 @@ obj-$(CONFIG_DRM_PANEL_TDO_TL070WSH30) += panel-tdo-tl070wsh30.o
+>  obj-$(CONFIG_DRM_PANEL_TPO_TD028TTEC1) += panel-tpo-td028ttec1.o
+>  obj-$(CONFIG_DRM_PANEL_TPO_TD043MTEA1) += panel-tpo-td043mtea1.o
+>  obj-$(CONFIG_DRM_PANEL_TPO_TPG110) += panel-tpo-tpg110.o
+> +obj-$(CONFIG_DRM_PANEL_TRULY_NT35521) += panel-truly-nt35521.o
+>  obj-$(CONFIG_DRM_PANEL_TRULY_NT35597_WQXGA) += panel-truly-nt35597.o
+>  obj-$(CONFIG_DRM_PANEL_VISIONOX_RM69299) += panel-visionox-rm69299.o
+>  obj-$(CONFIG_DRM_PANEL_XINPENG_XPP055C272) += panel-xinpeng-xpp055c272.o
+> diff --git a/drivers/gpu/drm/panel/panel-truly-nt35521.c b/drivers/gpu/drm/panel/panel-truly-nt35521.c
+> new file mode 100644
+> index 000000000000..ea3cfb46be7e
+> --- /dev/null
+> +++ b/drivers/gpu/drm/panel/panel-truly-nt35521.c
+> @@ -0,0 +1,491 @@
+> +// SPDX-License-Identifier: GPL-2.0
+> +/*
+> + * Copyright (c) 2021, Linaro Limited
+> + */
+> +
+> +#include <linux/backlight.h>
+> +#include <linux/delay.h>
+> +#include <linux/gpio/consumer.h>
+> +#include <linux/module.h>
+> +
+> +#include <video/mipi_display.h>
+> +
+> +#include <drm/drm_mipi_dsi.h>
+> +#include <drm/drm_modes.h>
+> +#include <drm/drm_panel.h>
+> +#include <drm/drm_print.h>
+> +
+> +struct nt35521_panel {
+> +	struct drm_panel panel;
+> +	struct device *dev;
+> +	struct gpio_desc *rst_gpio;
+> +	struct gpio_desc *pwrp5_gpio;
+> +	struct gpio_desc *pwrn5_gpio;
+> +	struct gpio_desc *en_gpio;
+> +	bool prepared;
+> +	bool enabled;
+> +};
+> +
+> +static inline struct nt35521_panel *panel_to_nt35521(struct drm_panel *panel)
+> +{
+> +	return container_of(panel, struct nt35521_panel, panel);
+> +}
+> +
+> +#define nt_dcs_write(seq...)						\
+> +({									\
+> +	const u8 d[] = { seq };						\
+> +	if (mipi_dsi_dcs_write_buffer(dsi, d, ARRAY_SIZE(d)) < 0)	\
+> +		DRM_DEV_ERROR(dev, "dcs write buffer failed\n");	\
+> +})
+> +
+> +#define nt_gen_write(seq...)						\
+> +({									\
+> +	const u8 d[] = { seq };						\
+> +	if (mipi_dsi_generic_write(dsi, d, ARRAY_SIZE(d)) < 0)		\
+> +		DRM_DEV_ERROR(dev, "generic write buffer failed\n");	\
+> +})
+> +
+> +static void nt35521_panel_on(struct nt35521_panel *nt)
+> +{
+> +	struct mipi_dsi_device *dsi = to_mipi_dsi_device(nt->dev);
+> +	struct device *dev = nt->dev;
+> +
+> +	/* Transmit data in low power mode */
+> +	dsi->mode_flags |= MIPI_DSI_MODE_LPM;
+> +
+> +	nt_dcs_write(0xf0, 0x55, 0xaa, 0x52, 0x08, 0x00);
+> +	nt_dcs_write(0xff, 0xaa, 0x55, 0xa5, 0x80);
+> +	nt_dcs_write(0x6f, 0x11, 0x00);
+> +	nt_dcs_write(0xf7, 0x20, 0x00);
+> +	nt_dcs_write(0x6f, 0x01);
+> +	nt_dcs_write(0xb1, 0x21);
+> +	nt_dcs_write(0xbd, 0x01, 0xa0, 0x10, 0x08, 0x01);
+> +	nt_dcs_write(0xb8, 0x01, 0x02, 0x0c, 0x02);
+> +	nt_dcs_write(0xbb, 0x11, 0x11);
+> +	nt_dcs_write(0xbc, 0x00, 0x00);
+> +	nt_dcs_write(0xb6, 0x02);
+> +	nt_dcs_write(0xf0, 0x55, 0xaa, 0x52, 0x08, 0x01);
+> +	nt_dcs_write(0xb0, 0x09, 0x09);
+> +	nt_dcs_write(0xb1, 0x09, 0x09);
+> +	nt_dcs_write(0xbc, 0x8c, 0x00);
+> +	nt_dcs_write(0xbd, 0x8c, 0x00);
+> +	nt_dcs_write(0xca, 0x00);
+> +	nt_dcs_write(0xc0, 0x04);
+> +	nt_dcs_write(0xbe, 0xb5);
+> +	nt_dcs_write(0xb3, 0x35, 0x35);
+> +	nt_dcs_write(0xb4, 0x25, 0x25);
+> +	nt_dcs_write(0xb9, 0x43, 0x43);
+> +	nt_dcs_write(0xba, 0x24, 0x24);
+> +	nt_dcs_write(0xf0, 0x55, 0xaa, 0x52, 0x08, 0x02);
+> +	nt_dcs_write(0xee, 0x03);
+> +	nt_dcs_write(0xb0, 0x00, 0xb2, 0x00, 0xb3, 0x00, 0xb6, 0x00,
+> +		     0xc3, 0x00, 0xce, 0x00, 0xe1, 0x00, 0xf3, 0x01,
+> +		     0x11);
+> +	nt_dcs_write(0xb1, 0x01, 0x2e, 0x01, 0x5c, 0x01, 0x82, 0x01,
+> +		     0xc3, 0x01, 0xfe, 0x02, 0x00, 0x02, 0x37, 0x02,
+> +		     0x77);
+> +	nt_dcs_write(0xb2, 0x02, 0xa1, 0x02, 0xd7, 0x02, 0xfe, 0x03,
+> +		     0x2c, 0x03, 0x4b, 0x03, 0x63, 0x03, 0x8f, 0x03,
+> +		     0x90);
+> +	nt_dcs_write(0xb3, 0x03, 0x96, 0x03, 0x98);
+> +	nt_dcs_write(0xb4, 0x00, 0x81, 0x00, 0x8b, 0x00, 0x9c, 0x00,
+> +		     0xa9, 0x00, 0xb5, 0x00, 0xcb, 0x00, 0xdf, 0x01,
+> +		     0x02);
+> +	nt_dcs_write(0xb5, 0x01, 0x1f, 0x01, 0x51, 0x01, 0x7a, 0x01,
+> +		     0xbf, 0x01, 0xfa, 0x01, 0xfc, 0x02, 0x34, 0x02, 0x76);
+> +	nt_dcs_write(0xb6, 0x02, 0x9f, 0x02, 0xd7, 0x02, 0xfc, 0x03, 0x2c,
+> +		     0x03, 0x4a, 0x03, 0x63, 0x03, 0x8f, 0x03, 0xa2);
+> +	nt_dcs_write(0xb7, 0x03, 0xb8, 0x03, 0xba);
+> +	nt_dcs_write(0xb8, 0x00, 0x01, 0x00, 0x02, 0x00, 0x0e, 0x00, 0x2a,
+> +		     0x00, 0x41, 0x00, 0x67, 0x00, 0x87, 0x00, 0xb9);
+> +	nt_dcs_write(0xb9, 0x00, 0xe2, 0x01, 0x22, 0x01, 0x54, 0x01, 0xa3,
+> +		     0x01, 0xe6, 0x01, 0xe7, 0x02, 0x24, 0x02, 0x67);
+> +	nt_dcs_write(0xba, 0x02, 0x93, 0x02, 0xcd, 0x02, 0xf6, 0x03, 0x31,
+> +		     0x03, 0x6c, 0x03, 0xe9, 0x03, 0xef, 0x03, 0xf4);
+> +	nt_dcs_write(0xbb, 0x03, 0xf6, 0x03, 0xf7);
+> +	nt_dcs_write(0xf0, 0x55, 0xaa, 0x52, 0x08, 0x03);
+> +	nt_dcs_write(0xb0, 0x22, 0x00);
+> +	nt_dcs_write(0xb1, 0x22, 0x00);
+> +	nt_dcs_write(0xb2, 0x05, 0x00, 0x60, 0x00, 0x00);
+> +	nt_dcs_write(0xb3, 0x05, 0x00, 0x60, 0x00, 0x00);
+> +	nt_dcs_write(0xb4, 0x05, 0x00, 0x60, 0x00, 0x00);
+> +	nt_dcs_write(0xb5, 0x05, 0x00, 0x60, 0x00, 0x00);
+> +	nt_dcs_write(0xba, 0x53, 0x00, 0x60, 0x00, 0x00);
+> +	nt_dcs_write(0xbb, 0x53, 0x00, 0x60, 0x00, 0x00);
+> +	nt_dcs_write(0xbc, 0x53, 0x00, 0x60, 0x00, 0x00);
+> +	nt_dcs_write(0xbd, 0x53, 0x00, 0x60, 0x00, 0x00);
+> +	nt_dcs_write(0xc0, 0x00, 0x34, 0x00, 0x00);
+> +	nt_dcs_write(0xc1, 0x00, 0x00, 0x34, 0x00);
+> +	nt_dcs_write(0xc2, 0x00, 0x00, 0x34, 0x00);
+> +	nt_dcs_write(0xc3, 0x00, 0x00, 0x34, 0x00);
+> +	nt_dcs_write(0xc4, 0x60);
+> +	nt_dcs_write(0xc5, 0xc0);
+> +	nt_dcs_write(0xc6, 0x00);
+> +	nt_dcs_write(0xc7, 0x00);
+> +	nt_dcs_write(0xf0, 0x55, 0xaa, 0x52, 0x08, 0x05);
+> +	nt_dcs_write(0xb0, 0x17, 0x06);
+> +	nt_dcs_write(0xb1, 0x17, 0x06);
+> +	nt_dcs_write(0xb2, 0x17, 0x06);
+> +	nt_dcs_write(0xb3, 0x17, 0x06);
+> +	nt_dcs_write(0xb4, 0x17, 0x06);
+> +	nt_dcs_write(0xb5, 0x17, 0x06);
+> +	nt_dcs_write(0xb6, 0x17, 0x06);
+> +	nt_dcs_write(0xb7, 0x17, 0x06);
+> +	nt_dcs_write(0xb8, 0x00);
+> +	nt_dcs_write(0xb9, 0x00, 0x03);
+> +	nt_dcs_write(0xba, 0x00, 0x00);
+> +	nt_dcs_write(0xbb, 0x02, 0x03);
+> +	nt_dcs_write(0xbc, 0x02, 0x03);
+> +	nt_dcs_write(0xbd, 0x03, 0x03, 0x00, 0x03, 0x03);
+> +	nt_dcs_write(0xc0, 0x0b);
+> +	nt_dcs_write(0xc1, 0x09);
+> +	nt_dcs_write(0xc2, 0xa6);
+> +	nt_dcs_write(0xc3, 0x05);
+> +	nt_dcs_write(0xc4, 0x00);
+> +	nt_dcs_write(0xc5, 0x02);
+> +	nt_dcs_write(0xc6, 0x22);
+> +	nt_dcs_write(0xc7, 0x03);
+> +	nt_dcs_write(0xc8, 0x07, 0x20);
+> +	nt_dcs_write(0xc9, 0x03, 0x20);
+> +	nt_dcs_write(0xca, 0x01, 0x60);
+> +	nt_dcs_write(0xcb, 0x01, 0x60);
+> +	nt_dcs_write(0xcc, 0x00, 0x00, 0x02);
+> +	nt_dcs_write(0xcd, 0x00, 0x00, 0x02);
+> +	nt_dcs_write(0xce, 0x00, 0x00, 0x02);
+> +	nt_dcs_write(0xcf, 0x00, 0x00, 0x02);
+> +	nt_dcs_write(0xd1, 0x00, 0x05, 0x01, 0x07, 0x10);
+> +	nt_dcs_write(0xd2, 0x10, 0x05, 0x05, 0x03, 0x10);
+> +	nt_dcs_write(0xd3, 0x20, 0x00, 0x43, 0x07, 0x10);
+> +	nt_dcs_write(0xd4, 0x30, 0x00, 0x43, 0x07, 0x10);
+> +	nt_dcs_write(0xd0, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00);
+> +	nt_dcs_write(0xd5, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+> +		     0x00, 0x00, 0x00, 0x00);
+> +	nt_dcs_write(0xd6, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+> +		     0x00, 0x00, 0x00, 0x00);
+> +	nt_dcs_write(0xd7, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00,
+> +		     0x00, 0x00, 0x00, 0x00);
+> +	nt_dcs_write(0xd8, 0x00, 0x00, 0x00, 0x00, 0x00);
+> +	nt_dcs_write(0xe5, 0x06);
+> +	nt_dcs_write(0xe6, 0x06);
+> +	nt_dcs_write(0xe7, 0x00);
+> +	nt_dcs_write(0xe8, 0x06);
+> +	nt_dcs_write(0xe9, 0x06);
+> +	nt_dcs_write(0xea, 0x06);
+> +	nt_dcs_write(0xeb, 0x00);
+> +	nt_dcs_write(0xec, 0x00);
+> +	nt_dcs_write(0xed, 0x30);
+> +	nt_dcs_write(0xf0, 0x55, 0xaa, 0x52, 0x08, 0x06);
+> +	nt_dcs_write(0xb0, 0x31, 0x31);
+> +	nt_dcs_write(0xb1, 0x31, 0x31);
+> +	nt_dcs_write(0xb2, 0x2d, 0x2e);
+> +	nt_dcs_write(0xb3, 0x31, 0x34);
+> +	nt_dcs_write(0xb4, 0x29, 0x2a);
+> +	nt_dcs_write(0xb5, 0x12, 0x10);
+> +	nt_dcs_write(0xb6, 0x18, 0x16);
+> +	nt_dcs_write(0xb7, 0x00, 0x02);
+> +	nt_dcs_write(0xb8, 0x08, 0x31);
+> +	nt_dcs_write(0xb9, 0x31, 0x31);
+> +	nt_dcs_write(0xba, 0x31, 0x31);
+> +	nt_dcs_write(0xbb, 0x31, 0x08);
+> +	nt_dcs_write(0xbc, 0x03, 0x01);
+> +	nt_dcs_write(0xbd, 0x17, 0x19);
+> +	nt_dcs_write(0xbe, 0x11, 0x13);
+> +	nt_dcs_write(0xbf, 0x2a, 0x29);
+> +	nt_dcs_write(0xc0, 0x34, 0x31);
+> +	nt_dcs_write(0xc1, 0x2e, 0x2d);
+> +	nt_dcs_write(0xc2, 0x31, 0x31);
+> +	nt_dcs_write(0xc3, 0x31, 0x31);
+> +	nt_dcs_write(0xc4, 0x31, 0x31);
+> +	nt_dcs_write(0xc5, 0x31, 0x31);
+> +	nt_dcs_write(0xc6, 0x2e, 0x2d);
+> +	nt_dcs_write(0xc7, 0x31, 0x34);
+> +	nt_dcs_write(0xc8, 0x29, 0x2a);
+> +	nt_dcs_write(0xc9, 0x17, 0x19);
+> +	nt_dcs_write(0xca, 0x11, 0x13);
+> +	nt_dcs_write(0xcb, 0x03, 0x01);
+> +	nt_dcs_write(0xcc, 0x08, 0x31);
+> +	nt_dcs_write(0xcd, 0x31, 0x31);
+> +	nt_dcs_write(0xce, 0x31, 0x31);
+> +	nt_dcs_write(0xcf, 0x31, 0x08);
+> +	nt_dcs_write(0xd0, 0x00, 0x02);
+> +	nt_dcs_write(0xd1, 0x12, 0x10);
+> +	nt_dcs_write(0xd2, 0x18, 0x16);
+> +	nt_dcs_write(0xd3, 0x2a, 0x29);
+> +	nt_dcs_write(0xd4, 0x34, 0x31);
+> +	nt_dcs_write(0xd5, 0x2d, 0x2e);
+> +	nt_dcs_write(0xd6, 0x31, 0x31);
+> +	nt_dcs_write(0xd7, 0x31, 0x31);
+> +	nt_dcs_write(0xe5, 0x31, 0x31);
+> +	nt_dcs_write(0xe6, 0x31, 0x31);
+> +	nt_dcs_write(0xd8, 0x00, 0x00, 0x00, 0x00, 0x00);
+> +	nt_dcs_write(0xd9, 0x00, 0x00, 0x00, 0x00, 0x00);
+> +	nt_dcs_write(0xe7, 0x00);
+> +	nt_dcs_write(0x6f, 0x02);
+> +	nt_dcs_write(0xf7, 0x47);
+> +	nt_dcs_write(0x6f, 0x0a);
+> +	nt_dcs_write(0xf7, 0x02);
+> +	nt_dcs_write(0x6f, 0x17);
+> +	nt_dcs_write(0xf4, 0x60);
+> +	nt_dcs_write(0x6f, 0x01);
+> +	nt_dcs_write(0xf9, 0x46);
+> +	nt_dcs_write(0x6f, 0x11);
+> +	nt_dcs_write(0xf3, 0x01);
+> +	nt_dcs_write(0x35, 0x00);
+> +	nt_dcs_write(0xf0, 0x55, 0xaa, 0x52, 0x08, 0x00);
+> +	nt_dcs_write(0xd9, 0x02, 0x03, 0x00);
+> +	nt_dcs_write(0xf0, 0x55, 0xaa, 0x52, 0x00, 0x00);
+> +	nt_dcs_write(0xf0, 0x55, 0xaa, 0x52, 0x08, 0x00);
+> +	nt_dcs_write(0xb1, 0x6c, 0x21);
+> +	nt_dcs_write(0xf0, 0x55, 0xaa, 0x52, 0x00, 0x00);
+> +	nt_dcs_write(0x35, 0x00);
+> +	nt_gen_write(0x11, 0x00);
+> +	msleep(120);
+> +	nt_gen_write(0x29, 0x00);
+> +	usleep_range(1000, 1500);
+> +	nt_dcs_write(0x53, 0x24);
+
+Did you mix up "nt_dcs_write" and "nt_gen_write" here?
+The nt_gen_write(0x11, 0x00); looks like MIPI_DCS_EXIT_SLEEP_MODE
+and the nt_gen_write(0x29, 0x00); looks like MIPI_DCS_SET_DISPLAY_ON.
+
+For reference you can pull your original reference DTB from Sony through
+my panel driver generator: https://github.com/msm8916-mainline/linux-mdss-dsi-panel-driver-generator
+
+It produces the following (I compiled "msm8939-kanuti_tulip.dtb"
+from https://github.com/sonyxperiadev/kernel/tree/aosp/LA.BR.1.3.3_rb2.14,
+not sure if that is right):
+
+	// ...
+	dsi_generic_write_seq(dsi, 0x35, 0x00);
+
+	ret = mipi_dsi_dcs_exit_sleep_mode(dsi);
+	if (ret < 0) {
+		dev_err(dev, "Failed to exit sleep mode: %d\n", ret);
+		return ret;
+	}
+	msleep(120);
+
+	ret = mipi_dsi_dcs_set_display_on(dsi);
+	if (ret < 0) {
+		dev_err(dev, "Failed to set display on: %d\n", ret);
+		return ret;
+	}
+	usleep_range(1000, 2000);
+
+	dsi_generic_write_seq(dsi, 0x53, 0x24);
+
+Which also suggests that generic and DCS writes are mixed up here.
+
+Note however that you could not use the generated driver as-is,
+because Sony seems to use their own display driver instead of Qualcomm's
+and some things seem to be different.
+
+> +}
+> +
+> +static void nt35521_panel_off(struct nt35521_panel *nt)
+> +{
+> +	struct mipi_dsi_device *dsi = to_mipi_dsi_device(nt->dev);
+> +	struct device *dev = nt->dev;
+> +
+> +	/* Transmit data in high speed mode */
+> +	dsi->mode_flags &= ~MIPI_DSI_MODE_LPM;
+> +
+> +	nt_dcs_write(0x28, 0x00);
+> +	msleep(50);
+> +	nt_dcs_write(0x10, 0x00);
+> +	msleep(150);
+
+A bit more deobfuscated from the panel driver generator:
+
+	dsi->mode_flags &= ~MIPI_DSI_MODE_LPM;
+
+	ret = mipi_dsi_dcs_set_display_off(dsi);
+	if (ret < 0) {
+		dev_err(dev, "Failed to set display off: %d\n", ret);
+		return ret;
+	}
+	msleep(50);
+
+	ret = mipi_dsi_dcs_enter_sleep_mode(dsi);
+	if (ret < 0) {
+		dev_err(dev, "Failed to enter sleep mode: %d\n", ret);
+		return ret;
+	}
+	msleep(150);
+
+(I'm mainly referring to the mipi_dsi_dcs_*() here instead of the
+ magic numbers...)
+
+> +}
+> +
+> +static int nt35521_prepare(struct drm_panel *panel)
+> +{
+> +	struct nt35521_panel *nt = panel_to_nt35521(panel);
+> +
+> +	if (nt->prepared)
+> +		return 0;
+> +
+> +	gpiod_set_value_cansleep(nt->pwrp5_gpio, 1);
+> +	usleep_range(1000, 1500);
+> +	gpiod_set_value_cansleep(nt->pwrn5_gpio, 1);
+> +	usleep_range(10000, 15000);
+> +	gpiod_set_value_cansleep(nt->rst_gpio, 0);
+> +	msleep(150);
+> +
+> +	nt35521_panel_on(nt);
+> +
+> +	nt->prepared = true;
+> +
+> +	return 0;
+> +}
+> +
+> +static int nt35521_unprepare(struct drm_panel *panel)
+> +{
+> +	struct nt35521_panel *nt = panel_to_nt35521(panel);
+> +
+> +	if (!nt->prepared)
+> +		return 0;
+> +
+> +	nt35521_panel_off(nt);
+> +
+> +	gpiod_set_value_cansleep(nt->rst_gpio, 1);
+> +
+> +	nt->prepared = false;
+> +
+> +	return 0;
+> +}
+> +
+> +static int nt35521_enable(struct drm_panel *panel)
+> +{
+> +	struct nt35521_panel *nt = panel_to_nt35521(panel);
+> +
+> +	if (nt->enabled)
+> +		return 0;
+> +
+> +	gpiod_set_value_cansleep(nt->en_gpio, 1);
+> +
+> +	nt->enabled = true;
+> +
+> +	return 0;
+> +}
+> +
+> +static int nt35521_disable(struct drm_panel *panel)
+> +{
+> +	struct nt35521_panel *nt = panel_to_nt35521(panel);
+> +
+> +	if (!nt->enabled)
+> +		return 0;
+> +
+> +	gpiod_set_value_cansleep(nt->en_gpio, 0);
+> +
+> +	nt->enabled = false;
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct drm_display_mode nt35521_modes = {
+> +	.clock = 133306,
+> +	.hdisplay = 720,
+> +	.hsync_start = 720 + 632,
+> +	.hsync_end = 720 + 632 + 40,
+> +	.htotal = 720 + 632 + 40 + 295,
+> +	.vdisplay = 1280,
+> +	.vsync_start = 1280 + 18,
+> +	.vsync_end = 1280 + 18 + 1,
+> +	.vtotal = 1280 + 18 + 1 + 18,
+> +};
+> +
+> +static int nt35521_get_modes(struct drm_panel *panel,
+> +			      struct drm_connector *connector)
+> +{
+> +	struct nt35521_panel *nt = panel_to_nt35521(panel);
+> +	struct drm_display_mode *mode;
+> +
+> +	mode = drm_mode_duplicate(connector->dev, &nt35521_modes);
+> +	if (!mode) {
+> +		DRM_DEV_ERROR(nt->dev, "failed to add display mode\n");
+> +		return -ENOMEM;
+> +	}
+> +
+> +	drm_mode_set_name(mode);
+> +	drm_mode_probed_add(connector, mode);
+> +
+> +	connector->display_info.width_mm = 65;
+> +	connector->display_info.height_mm = 116;
+> +
+> +	return 1;
+> +}
+> +
+> +static const struct drm_panel_funcs nt35521_drm_funcs = {
+> +	.prepare = nt35521_prepare,
+> +	.unprepare = nt35521_unprepare,
+> +	.enable = nt35521_enable,
+> +	.disable = nt35521_disable,
+> +	.get_modes = nt35521_get_modes,
+> +};
+> +
+> +static int nt35521_backlight_update_status(struct backlight_device *bd)
+> +{
+> +	struct nt35521_panel *nt = bl_get_data(bd);
+> +	struct mipi_dsi_device *dsi = to_mipi_dsi_device(nt->dev);
+> +	u8 brightness = bd->props.brightness;
+
+	u8 brightness = backlight_get_brightness(bl);
+
+Is preferred now I think(?).
+
+> +	int ret;
+> +
+> +	ret = mipi_dsi_dcs_write(dsi, MIPI_DCS_SET_DISPLAY_BRIGHTNESS,
+> +				 &brightness,
+> +				 sizeof(brightness));
+
+Does this work too?
+
+	ret = mipi_dsi_dcs_set_display_brightness(dsi, brightness);
+
+> +	if (ret < 0)
+> +		return ret;
+> +
+> +	return 0;
+> +}
+> +
+> +static const struct backlight_ops nt35521_backlight_ops = {
+> +	.update_status = nt35521_backlight_update_status,
+> +};
+> +
+> +static int nt35521_probe(struct mipi_dsi_device *dsi)
+> +{
+> +	struct backlight_properties props;
+> +	struct device *dev = &dsi->dev;
+> +	struct nt35521_panel *nt;
+> +	int ret;
+> +
+> +	nt = devm_kzalloc(dev, sizeof(*nt), GFP_KERNEL);
+> +	if (!nt)
+> +		return -ENOMEM;
+> +
+> +	nt->rst_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_LOW);
+> +	if (IS_ERR(nt->rst_gpio)) {
+> +		ret = PTR_ERR(nt->rst_gpio);
+> +		DRM_DEV_ERROR(dev, "failed to get reset GPIO: %d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	nt->pwrp5_gpio = devm_gpiod_get(dev, "pwr-positive5", GPIOD_OUT_LOW);
+> +	if (IS_ERR(nt->pwrp5_gpio)) {
+> +		ret = PTR_ERR(nt->pwrp5_gpio);
+> +		DRM_DEV_ERROR(dev, "failed to get positive5 GPIO: %d\n", ret);
+> +		return ret;
+> +	}
+> +
+> +	nt->pwrn5_gpio = devm_gpiod_get(dev, "pwr-negative5", GPIOD_OUT_LOW);
+> +	if (IS_ERR(nt->pwrn5_gpio)) {
+> +		ret = PTR_ERR(nt->pwrn5_gpio);
+> +		DRM_DEV_ERROR(dev, "failed to get negative5 GPIO: %d\n", ret);
+> +		return ret;
+> +	}
+> +
+
+These two GPIOs look a lot like typical 5V display regulators that would
+be better described through the regulator subsystem. You can declare
+them as fixed-regulator to toggle the GPIO.
+
+> +	nt->en_gpio = devm_gpiod_get(dev, "enable", GPIOD_OUT_LOW);
+> +	if (IS_ERR(nt->en_gpio)) {
+> +		ret = PTR_ERR(nt->en_gpio);
+> +		DRM_DEV_ERROR(dev, "failed to get enable GPIO: %d\n", ret);
+> +		return ret;
+> +	}
+
+Does this refer to the "platform-bklight-en-gpio" in the Sony sources?
+Perhaps calling it "backlight-gpios" or something like that would be
+more clear to show that it's related to the backlight.
+
+Thanks!
+Stephan
