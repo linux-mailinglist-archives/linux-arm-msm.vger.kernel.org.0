@@ -2,87 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 966173DFD3B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 10:47:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64ECA3DFD33
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 10:44:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235227AbhHDIrc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Aug 2021 04:47:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60712 "EHLO
+        id S236688AbhHDIoV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Aug 2021 04:44:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235694AbhHDIrc (ORCPT
+        with ESMTP id S236689AbhHDIoN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Aug 2021 04:47:32 -0400
-Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2786C061799
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Aug 2021 01:47:19 -0700 (PDT)
-Received: by mail-pj1-x102e.google.com with SMTP id ca5so1944376pjb.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Aug 2021 01:47:19 -0700 (PDT)
+        Wed, 4 Aug 2021 04:44:13 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 278EFC0613D5
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Aug 2021 01:44:01 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id h14so1296533wrx.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Aug 2021 01:44:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=InXh0ZewDnVE3/EXE/5G6vr9J7FYgjjlp8cmjVMqfuE=;
-        b=Fz917nsuQs2+mXnhOwh0eg0lyWwiqrXaG43Ph5sz6S723Hee3bPd51BqJZTVBr+7yD
-         UFUSEv2ukB7t3YueyEaPXTLQ+HTq/mQgTiNgXKGN+98w3deh4LnWEHIlFTk1Xr8WHkbc
-         xGu24cNwKBD3nTRzTbWzqqTS0b+99HADJPeORXk8lY9jzk8DZo03lMsljcNID5eANEoz
-         LXP0gglJDYae9YeM2cbxYByeJj1o6A3SPKaEc1YvARCCem8DffQv3QDNmBDDunTy6ci1
-         p2OIqloqZfPSXpKZQxKPiPwAds/dnfVRYvBANfuSPtuWLpa7koNTKunilpbzv6mYvcD4
-         wv8A==
+        h=from:to:cc:subject:date:message-id;
+        bh=x+W4hpwl9df5CB8MZzAA4b3cZ5d3FhNu9Q7vDGYVJU8=;
+        b=opy//H6TpPPBAFCpcce1A4l5KV7bZL7qbX1RWFxJ7wuIwIdB1+bX1h5gDUsTuRUdG5
+         HePB7g7RtMMECstxeb/xQrNbe6eYweNRmwmQJT+oTogjsoJHDpy+wwNl1upRcA3Qt2BF
+         C7YdD5kzFXPYpgjFW431GSaKKYRKKjKWiYi9jqlfnIq+/bhmL3EPnrJwA3rfdBbYW+df
+         s8IVvImMfo9QjiPnHdEF7NMicNiogMZ2bHeYGbtPRjcJwoOC+TRnvr+AV+7Dz4nzS6nW
+         KBYKNqGdlUbzt/U2lJL1qdC8U7ZjeFlB//39794AUgOpU2JNxUcFM4c7Eyk00BEnI85m
+         WBlg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=InXh0ZewDnVE3/EXE/5G6vr9J7FYgjjlp8cmjVMqfuE=;
-        b=ACvCZKgoy3roHkFG0OoMJ7fD09ghBTVGywLOP12NOwJT+CGPTJ5WiYszbmLJnMxQDo
-         ZD5Mctmiw5dcoibeElXlWyP6fR+7rBKnfm77OyeWOnuADOZOvo0MWcMeK6mrwtJ3TNZj
-         tNG6LjOir4xKFru1HdjhBQWxFVQ9CF/wmA95BVpS5HjUPPX3D6sUlfRdGUa+pm0XnAxv
-         UQzUiGLe8Ks9xpXZPU4bcNfFRnxpSxXcxdlsc1ndZQVCcCPdTOREkCItAc7/D0Mvk5er
-         bIk8+Cpuzn6kOtfnzP16Wr7r2eHz43xmlCJ263ZeaKASvZTajHov8jzcQ2vUypIiEI2S
-         4z2g==
-X-Gm-Message-State: AOAM531vtx4lMiUK0+VHkcdJ8dpR9EalFqQqVEy7cXb7A9RiKoLYRkAb
-        lEXedQWsICunGCTm/p9vjE5EdA==
-X-Google-Smtp-Source: ABdhPJwEsFY1wRk2/RgSw7iviymykJUOEEzK4eAELGehCHzGMl7FI1bYiaYze6O0ALeZtuQCryLOig==
-X-Received: by 2002:a65:5846:: with SMTP id s6mr211661pgr.162.1628066839309;
-        Wed, 04 Aug 2021 01:47:19 -0700 (PDT)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id c2sm1242741pfi.80.2021.08.04.01.47.17
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 04 Aug 2021 01:47:19 -0700 (PDT)
-Date:   Wed, 4 Aug 2021 16:47:13 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
-        Benjamin Li <benl@squareup.com>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org
-Subject: Re: [PATCH v2 0/4] Add MSM8939 APCS/A53PLL clock support
-Message-ID: <20210804084712.GA31145@dragon>
-References: <20210704024032.11559-1-shawn.guo@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210704024032.11559-1-shawn.guo@linaro.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=x+W4hpwl9df5CB8MZzAA4b3cZ5d3FhNu9Q7vDGYVJU8=;
+        b=o1/jygsJhJ+pJqHIOFuHBdhhEInzZ5CfV9D1NBGOk3j6ArJKWGbAwikTjV81nTynvL
+         EX6ri4L8uMQBpVy3jcy4i1UW4ZL+0LAZo4WG6kydU9jXXzehT+m++Xo77zwqjy5bYZSY
+         n5AqJammvA4eTLBUH/1m5a5XhI5kC3FihmLHmqPEGOGX0VjTXcEcDYJZDrTiGu/WYKWj
+         GGABzUbvmmv3VCA5WNMElpu6cyLXImTc+aiscD5f92gEm4EeIBUeNmEmMAhBTie9iePp
+         5YjtinV0DM5upRGEU7ASU8uYqQah5MeUEJVLxG5Xpxkhs2Ki6ivvjh52OlfT9Eww5nrS
+         2bTA==
+X-Gm-Message-State: AOAM530+tl4lpvNh1BnDE+Xnj/gjQvTmFZhXXZKx8rXfaIIs+NIRjb8m
+        dxYnpgU08cKoNrDF5FBXg0Jlxg==
+X-Google-Smtp-Source: ABdhPJyj/S2rP9MNjtE9z92MZS5mlgBhOx1t8pR5WugZlVV70t80Js41VHUvD66MU2VvWH4T+Gg4Gg==
+X-Received: by 2002:adf:f1c6:: with SMTP id z6mr27816676wro.207.1628066639697;
+        Wed, 04 Aug 2021 01:43:59 -0700 (PDT)
+Received: from localhost.localdomain ([2a01:e0a:82c:5f0:69b5:b274:5cfc:ef2])
+        by smtp.gmail.com with ESMTPSA id d7sm1681899wrs.39.2021.08.04.01.43.58
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 04 Aug 2021 01:43:59 -0700 (PDT)
+From:   Loic Poulain <loic.poulain@linaro.org>
+To:     mani@kernel.org, hemantk@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        Loic Poulain <loic.poulain@linaro.org>
+Subject: [PATCH] bus: mhi: pci-generic: Add MAINTAINER entry
+Date:   Wed,  4 Aug 2021 10:54:16 +0200
+Message-Id: <1628067256-22813-1-git-send-email-loic.poulain@linaro.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Jul 04, 2021 at 10:40:28AM +0800, Shawn Guo wrote:
-> This series adds MSM8939 APCS/A53PLL clock support.  Most outstanding
-> thing about MSM8939 is that it integrates 3 APCS instances, for Cluster0
-> (little cores), Cluster1 (big cores) and CCI (Cache Coherent Interconnect)
-> respectively.
-> 
-> Changes for v2:
-> - Reword the commit log of first patch as suggested by Stephen.
-> - Drop 'clock-output-names' bindings and use @unit-address to get unique
->   a53pll/mux clock names.
-> - Use 'operating-points-v2' bindings to pass frequency table via OPP, so
->   that we can use one single compatible for all 3 MSM8939 a53pll.
+Add myself as driver maintainer for pci_generic
 
-Hi Stephen,
+Signed-off-by: Loic Poulain <loic.poulain@linaro.org>
+---
+ MAINTAINERS | 7 +++++++
+ 1 file changed, 7 insertions(+)
 
-Any comments on this version?
+diff --git a/MAINTAINERS b/MAINTAINERS
+index 4c32a9c..9759ddd 100644
+--- a/MAINTAINERS
++++ b/MAINTAINERS
+@@ -12098,6 +12098,13 @@ F:	Documentation/mhi/
+ F:	drivers/bus/mhi/
+ F:	include/linux/mhi.h
+ 
++MHI PCI GENERIC DRIVER
++M:	Loic Poulain <loic.poulain@linaro.org>
++L:	linux-arm-msm@vger.kernel.org
++S:	Maintained
++T:	git git://git.kernel.org/pub/scm/linux/kernel/git/mani/mhi.git
++F:	drivers/bus/mhi/pci_generic.c
++
+ MICROBLAZE ARCHITECTURE
+ M:	Michal Simek <monstr@monstr.eu>
+ S:	Supported
+-- 
+2.7.4
 
-Shawn
