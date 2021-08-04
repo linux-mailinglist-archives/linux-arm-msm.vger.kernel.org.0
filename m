@@ -2,180 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BF2013E0ACC
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Aug 2021 01:20:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8973C3E0B07
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Aug 2021 01:58:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235589AbhHDXUn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Aug 2021 19:20:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35058 "EHLO
+        id S235582AbhHDX6z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Aug 2021 19:58:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43486 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235587AbhHDXUl (ORCPT
+        with ESMTP id S233915AbhHDX6y (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Aug 2021 19:20:41 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91A0EC06179A
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Aug 2021 16:20:27 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id o20so4859807oiw.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Aug 2021 16:20:27 -0700 (PDT)
+        Wed, 4 Aug 2021 19:58:54 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8917AC061799
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Aug 2021 16:58:41 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id e2-20020a17090a4a02b029016f3020d867so5956779pjh.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Aug 2021 16:58:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=+WrY9sY3xmkOkflQ06GlfCPlNC4kNQFurKfUW6O4aNQ=;
-        b=QXU5ykemFZbefDYdowS/GS93b0Hqj4WM6eDDz52B9LUhe4lZRb51Cdy4Gy4fN1Fugg
-         AlTq/UlQ1D3oCeErjCVqHk9/jVem3nYORoAV5H1lVURS/TP9CVOH8kRaRhmdGwU1JrWH
-         K45UQzWrEh9Xqnci0wTALvizIk1v2g8tXJl8UrCNNtwz73M3TThZ+5MaMoIeXCuMVu8A
-         rVahASNRQozxcNzTvTPp5DnIt4Q7n1IpBpZSJBOIoBxGqNDTaAdBIBVxTe+63zEzMOCb
-         gIvp4pkfvhdWaot0BtJ/BjDcYuPxF2v0WlICplsykEoAF4Qq3SH8v2fy1kxx7D2XwCbl
-         RsUA==
+        bh=AyH5fK9YwykBqKL3r6HFsxoexv4xoxybRmsUgoCLgm4=;
+        b=XZQ5XsFA5qv4sJ6dN85gMsh8oqN+4uierylBokXiTKthmL+ETGpBA6gUyMEmTbOWHL
+         uv4W9xO8CgDoS+PfMiIIO3IdQIrqaRbW0lTIDfdSusqOU1HfaftoK9TrZsIi+eATCNOH
+         iKiHpjNSJfmhjp1DRKl1jDdbCqtP7UhPgEypY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=+WrY9sY3xmkOkflQ06GlfCPlNC4kNQFurKfUW6O4aNQ=;
-        b=Z/SHaJxlcga3VsQm6Y3UxH6E+Y7frI9QafUY62SCA9ZjAZ6g/lDMQT6MY8JUmcOtK9
-         3P9ZlZEWQKXtCxYIRj1vAfzu1yin2wm0AH61eYnELQrvx2v5VG3UbpAsO1GOv2icS/CF
-         mD/kYhiQ9Zi7fg5D+/32E3YGfj/4Vt5Sw8yvERbqLgyBJRccQLGddQnBDa6t6kUcGxYr
-         J4AiolL8SDxvodr2hy2lq2mZtZAqoMxpUYjn6fvB547w2n4ih6z7NnwiltN6s8Fft8aG
-         eZNUycUBFmINysGLyolpOfjTtiqOvhRMtxRxVTKc7BlHKZ3idaeL6E89LunHNSRhdSuc
-         KgVQ==
-X-Gm-Message-State: AOAM533gom5b6/NJTOs6Uj8CsECIM4tUuFVVPeXaYFFbN2iDp5B3OgBd
-        4NDAO1ATQAABo1NhIMeYlXyUHA==
-X-Google-Smtp-Source: ABdhPJzuWE8wYJfSvfdZ1zfsR4m2m7P3NIyjB125PXi8DLMi21I+eMfEW3aGFPmpg16L3nnHDlPi6w==
-X-Received: by 2002:aca:180c:: with SMTP id h12mr1319358oih.60.1628119226910;
-        Wed, 04 Aug 2021 16:20:26 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id f3sm691099otc.49.2021.08.04.16.20.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Aug 2021 16:20:26 -0700 (PDT)
-Date:   Wed, 4 Aug 2021 18:20:24 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Sibi Sankar <sibis@codeaurora.org>
-Cc:     sboyd@kernel.org, robh+dt@kernel.org, mka@chromium.org,
-        viresh.kumar@linaro.org, agross@kernel.org, rjw@rjwysocki.net,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        dianders@chromium.org, tdas@codeaurora.org
-Subject: Re: [PATCH 2/4] cpufreq: qcom: Re-arrange register offsets to
- support per core L3 DCVS
-Message-ID: <YQsguOCjIFZaJSzd@builder.lan>
+        bh=AyH5fK9YwykBqKL3r6HFsxoexv4xoxybRmsUgoCLgm4=;
+        b=gXOoJV0rGX/BShaW1SQ7kFWKphsKX+gXOnh/BHX7Y/BNtOYUTzfavoHw5gcqi8OxVS
+         j2hfGGwjpwiQpWGqTEKAgue03W36tD0hcIClqcJi59smgalaUgA5R+zmOdqmNyt07pfR
+         TNDFG+7BwBSaCinr6DFkGAe89jwTYAkhK8AYMQ7Y5Wgftuv+tulhncU5tbvRxMjOT9+V
+         HhvP2PyYOfdVUEFpYOJhWZMM3+q2qi680NcOMOapJ7GK1EocUD5GrfF6HBBrZFQGdBzu
+         k5W6j3J54sD67FpMWS9A/NUnHFDhbzifZY5YCb837fu/2dOBwaSnLgC5guKBfTvj0u7X
+         Bf3w==
+X-Gm-Message-State: AOAM5304RqaIh13nFO1nQSq1tcabynVVF9gag0LI5fHqVcawtgXIQ+ym
+        Lx4njVwo49JOqQx2GuAfoGMAGA==
+X-Google-Smtp-Source: ABdhPJyHkrLrX4KNSdxcJ/Ncu3eMXjGxGupi+NcVQS/LpOIriok0qBjVJHQUGujqxAJcitUeUrgScA==
+X-Received: by 2002:a63:4c0e:: with SMTP id z14mr1517251pga.427.1628121521087;
+        Wed, 04 Aug 2021 16:58:41 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:8d26:a358:9898:4532])
+        by smtp.gmail.com with UTF8SMTPSA id s36sm4910843pgk.64.2021.08.04.16.58.39
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 04 Aug 2021 16:58:40 -0700 (PDT)
+Date:   Wed, 4 Aug 2021 16:58:38 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Sibi Sankar <sibis@codeaurora.org>, sboyd@kernel.org,
+        robh+dt@kernel.org, viresh.kumar@linaro.org, agross@kernel.org,
+        rjw@rjwysocki.net, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, dianders@chromium.org,
+        tdas@codeaurora.org
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sm8350: Fixup the cpufreq node
+Message-ID: <YQsprr4rLVPwVfqR@google.com>
 References: <1627581885-32165-1-git-send-email-sibis@codeaurora.org>
- <1627581885-32165-3-git-send-email-sibis@codeaurora.org>
- <YQsetKGjlmQRxytX@builder.lan>
+ <1627581885-32165-5-git-send-email-sibis@codeaurora.org>
+ <YQsbuN1xyAlCYRqK@builder.lan>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <YQsetKGjlmQRxytX@builder.lan>
+In-Reply-To: <YQsbuN1xyAlCYRqK@builder.lan>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 04 Aug 18:11 CDT 2021, Bjorn Andersson wrote:
-
+On Wed, Aug 04, 2021 at 05:59:04PM -0500, Bjorn Andersson wrote:
 > On Thu 29 Jul 13:04 CDT 2021, Sibi Sankar wrote:
 > 
-> > Qualcomm SoCs (starting with SM8350) support per core voting for L3 cache
-> > frequency. So, re-arrange the cpufreq register offsets to allow access for
-> > the L3 interconnect to implement per core control. Also prevent binding
-> > breakage caused by register offset shuffling by using the SM8250/SM8350
-> > EPSS compatible.
+> > Fixup the register regions used by the cpufreq node on SM8350 SoC to
+> > support per core L3 DCVS.
 > > 
-> > Fixes: 7dbd121a2c58 ("arm64: dts: qcom: sc7280: Add cpufreq hw node")
-> > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-> > ---
-> >  drivers/cpufreq/qcom-cpufreq-hw.c | 23 +++++++++++++++++++----
-> >  1 file changed, 19 insertions(+), 4 deletions(-)
-> > 
-> > diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-> > index f86859bf76f1..74ef3b38343b 100644
-> > --- a/drivers/cpufreq/qcom-cpufreq-hw.c
-> > +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-> > @@ -28,6 +28,7 @@ struct qcom_cpufreq_soc_data {
-> >  	u32 reg_volt_lut;
-> >  	u32 reg_perf_state;
-> >  	u8 lut_row_size;
-> > +	bool skip_enable;
 > 
-> This should probably be called "skip_enable_check".
-> 
-> >  };
-> >  
-> >  struct qcom_cpufreq_data {
-> > @@ -257,19 +258,31 @@ static const struct qcom_cpufreq_soc_data qcom_soc_data = {
-> >  	.reg_volt_lut = 0x114,
-> >  	.reg_perf_state = 0x920,
-> >  	.lut_row_size = 32,
-> > +	.skip_enable = false,
-> >  };
-> >  
-> >  static const struct qcom_cpufreq_soc_data epss_soc_data = {
-> > +	.reg_freq_lut = 0x0,
-> > +	.reg_volt_lut = 0x100,
-> > +	.reg_perf_state = 0x220,
-> > +	.lut_row_size = 4,
-> > +	.skip_enable = true,
-> 
-> This change is not compatible with existing DTBs.
+> That sounds good, but why are you dropping the platform-specific
+> compatible?
 > 
 
-Continued staring at this after I sent my response, and I'm confused.
+I also stared at this and the patch that changes the code for a while.
 
-You're say in the commit message that SM8350 and beyond needs access to
-some registers in the first 0x100 bytes of the register space. So
-therefor you're changing the fallback, which is only used for sc7280...
+My understanding is that removing the platform-specific compatible is part
+of not breaking 'old' DTBs. Old DTBs for SM8350 contain the larger register
+regions and must be paired with 'epss_sm8250_soc_data' (driver code) which
+has the 'old' 'reg_perf_state' offset. New SM8350 DTs only have the
+'qcom,cpufreq-epss' compatible, which pairs their smaller register regions
+with 'epss_soc_data' with the new 'reg_perf_state' offset.
 
-In other words, you break the compatibility with the existing sc7280
-dtb and leave sm8350 unchanged - after saying that this change is for
-the sake of sm8350.
-
-
-Lastly, why is "the L3 frequency" an interconnect and not a clock? (And
-why don't we make the cpufreq driver a clock-controller for the
-platforms that has this?)
-
-Regards,
-Bjorn
-
-> Regards,
-> Bjorn
-> 
-> > +};
-> > +
-> > +static const struct qcom_cpufreq_soc_data epss_sm8250_soc_data = {
-> >  	.reg_enable = 0x0,
-> >  	.reg_freq_lut = 0x100,
-> >  	.reg_volt_lut = 0x200,
-> >  	.reg_perf_state = 0x320,
-> >  	.lut_row_size = 4,
-> > +	.skip_enable = false,
-> >  };
-> >  
-> >  static const struct of_device_id qcom_cpufreq_hw_match[] = {
-> >  	{ .compatible = "qcom,cpufreq-hw", .data = &qcom_soc_data },
-> >  	{ .compatible = "qcom,cpufreq-epss", .data = &epss_soc_data },
-> > +	{ .compatible = "qcom,sm8250-cpufreq-epss", .data = &epss_sm8250_soc_data },
-> > +	{ .compatible = "qcom,sm8350-cpufreq-epss", .data = &epss_sm8250_soc_data },
-> >  	{}
-> >  };
-> >  MODULE_DEVICE_TABLE(of, qcom_cpufreq_hw_match);
-> > @@ -334,10 +347,12 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
-> >  	data->res = res;
-> >  
-> >  	/* HW should be in enabled state to proceed */
-> > -	if (!(readl_relaxed(base + data->soc_data->reg_enable) & 0x1)) {
-> > -		dev_err(dev, "Domain-%d cpufreq hardware not enabled\n", index);
-> > -		ret = -ENODEV;
-> > -		goto error;
-> > +	if (!data->soc_data->skip_enable) {
-> > +		if (!(readl_relaxed(base + data->soc_data->reg_enable) & 0x1)) {
-> > +			dev_err(dev, "Domain-%d cpufreq hardware not enabled\n", index);
-> > +			ret = -ENODEV;
-> > +			goto error;
-> > +		}
-> >  	}
-> >  
-> >  	qcom_get_related_cpus(index, policy->cpus);
-> > -- 
-> > The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> > a Linux Foundation Collaborative Project
-> > 
+It is super-confusing that the platform-specific compatible string is
+missing. The binding should probably mention that the two
+platform-specific compatible strings are for backwards compatibility
+only and should not be added to new or existing DT files that don't
+have them already. Maybe a 'qcom,sm8350-cpufreq-epss-v2' or similar
+should be added to avoid/reduce possible confusion and have to option
+to add SM8350 specific code later.
