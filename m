@@ -2,98 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1DC093E09C4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 23:02:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A3533E09CB
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 23:03:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239962AbhHDVCk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Aug 2021 17:02:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60522 "EHLO
+        id S240030AbhHDVDd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Aug 2021 17:03:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60774 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240008AbhHDVCj (ORCPT
+        with ESMTP id S240045AbhHDVDX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Aug 2021 17:02:39 -0400
-Received: from mail-il1-x12b.google.com (mail-il1-x12b.google.com [IPv6:2607:f8b0:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5FCA1C061798
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Aug 2021 14:02:22 -0700 (PDT)
-Received: by mail-il1-x12b.google.com with SMTP id z3so2913108ile.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Aug 2021 14:02:22 -0700 (PDT)
+        Wed, 4 Aug 2021 17:03:23 -0400
+Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D07DFC06179A
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Aug 2021 14:03:07 -0700 (PDT)
+Received: by mail-qv1-xf2c.google.com with SMTP id x12so1790452qvo.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Aug 2021 14:03:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=GAu8p3tjcesj9ZyybBwKeN/jK2mgfz8zSdEerPn6tnU=;
-        b=z1zArIZFGyTmlE8814DCuSz/67i54nj56oZbf8w0ApKZEXhoFwSJv6Pk1HeNsH8d4o
-         vvPlYadKMU/zjR/obYqS69yRuc6HJn9He4NY3m06vVmcVW6C1yzcYwN5a8Pl5+pjSJh0
-         PstfNXx/2IXxcd3JlfGk1yHcl3eailMZaybSZgCw8BahzHAZPiXBm19pDCAleYrXrSb6
-         WNKQimFgV6vcY7p56MrygixapbJO7/aub86P4ldYU3vcxxATo8HaLWb5oE5KZCiD+QFk
-         pX9BH6yiS675HpRSqRmu2nlStBUuv15Q5OFnq6JKf08hu94I99Ftzn+LHyWeNa3iWaXv
-         jtrA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Zdp6WltwdPJTiYOXAA38Zmu1ytNFtDVTLeWSJfJQUTA=;
+        b=pYDFpii+lgAAPWns/N8L4Cmo0xyRztJF7JYeWgj8oHRZZO0s6PKpyDemjtdowSWg/S
+         t/RRf2/vebxyVqxstAUzy1XQVdpo8U8CcM+yCecg6xK1+EBidwwDlR2nd79tC2teo5oe
+         ZCU+GD5GpyO+cpGLLnCG9QZHL7wgVOIa2+Z78QvHvuPFzFbA5+hmYx8TocrlDUcXnwKN
+         s7P1cVm4hI9QbQd5xaUp9Tsl9IAFgJAZBcz6tbSZ2qOmwBCbqsRGxKd7EdvtOugP08lB
+         9F/qPbRjJ9qKRp4eN5wwt4phJ1ZXLovPrW7FFMti7r/jNmc5C6U/6nY50hYv5ByHBdo+
+         rNXg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=GAu8p3tjcesj9ZyybBwKeN/jK2mgfz8zSdEerPn6tnU=;
-        b=l6erVegPuu5ZzOj+O/sd0asZuVbXMLaaVnOhnGwwfkOck1ka6MkJYefL6SJf5k5kND
-         bK3tIFjkMvVS5rXQXCQF3UFqwyGh9a5I56wfZsnq4abO5Hm5I24IRtYz81hgzvCLAj4z
-         ffD/fBbsKWFkOax6s5yXgvPaiUNwHBC6hiY1S8r76vrNdAszaRTspQi+x/o0FFCiViYe
-         T4ltoxBJ8rkvaP5THWCA5ZbTci/p2QVIlDVyaf+yUwUl1EKZFdZHEDmIH/ynBfgnycIg
-         2hFvVEGEmPWhRaqyoDxYcfgw0riP3nwA4TxHyuBAXaLisRf/WabMa9451DQF2AluAC0G
-         WCoQ==
-X-Gm-Message-State: AOAM5335Q6wU0FbNWGKCZHX0ktWL+wFqzDMPgVDyF4i/8ZdMm0FjdFwK
-        OV6Uhknn4XaKeBuvId+AS2DU1Q==
-X-Google-Smtp-Source: ABdhPJy98vvmzjTpgGFOJCBn3onNvtO3ZY488DPqIqJMIfHhpAjcR/EXFN6lyws1OrGSArZHa32igA==
-X-Received: by 2002:a92:6909:: with SMTP id e9mr748365ilc.231.1628110941870;
-        Wed, 04 Aug 2021 14:02:21 -0700 (PDT)
-Received: from presto.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.gmail.com with ESMTPSA id d18sm1687396ile.32.2021.08.04.14.02.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Aug 2021 14:02:21 -0700 (PDT)
-From:   Alex Elder <elder@linaro.org>
-To:     bjorn.andersson@linaro.org, agross@kernel.org
-Cc:     robh+dt@kernel.org, elder@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 4/4] arm64: dts: qcom: sm8350: fix IPA interconnects
-Date:   Wed,  4 Aug 2021 16:02:14 -0500
-Message-Id: <20210804210214.1891755-5-elder@linaro.org>
-X-Mailer: git-send-email 2.27.0
-In-Reply-To: <20210804210214.1891755-1-elder@linaro.org>
-References: <20210804210214.1891755-1-elder@linaro.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Zdp6WltwdPJTiYOXAA38Zmu1ytNFtDVTLeWSJfJQUTA=;
+        b=uaJ5BiyG9X2O43cayOnALOsefCumkFjjzACQwEYB1eBJ3/Pi/5m+NfZkBDZHB86qK5
+         BuJ682voDnYbs8oIk7gHLGmVR9B+IHRuX3n6QiqJoV3UTH30L7LrgsW/ro4iPDNUyGA6
+         +tmvYzmUy1N5OwuWgCoEclbE//YEjHWeQO/cDp6FwivJZk1PQEAI0QrzZ8hLfUiUK1fk
+         zAJSDhm4I9GLvqYxmSpq/W4VtoXLe37vaN/iCHW8t3QUH6Pc1EdQn1977Rd7VxDvnmOv
+         uM6HiatVevdv70Gpx78jKb+lEnqXFp99c27O2rPbg5dM3eJyWcjCV/rlmIgP5EXgkeBn
+         WWTQ==
+X-Gm-Message-State: AOAM533WqPnFMd04Gh6qe9EhXBROLZud8sihrPRd/6MGXIge1T8zVAVe
+        MZTurgrwpQmfJ5jiaXvz/6el/xBw7b/lrQtRsvGfwA==
+X-Google-Smtp-Source: ABdhPJwzRxAtYtsckH8eXVYGse7q8J4o42yWbF/cUsPjzKXnvsENpPibR4PjjuetgtQCFE0DxrNZ7FJB/59wegVXnLA=
+X-Received: by 2002:a0c:aa42:: with SMTP id e2mr1547891qvb.23.1628110987030;
+ Wed, 04 Aug 2021 14:03:07 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210731195034.979084-1-dmitry.baryshkov@linaro.org>
+ <20210731195034.979084-2-dmitry.baryshkov@linaro.org> <CAJZ5v0gWD8WSQU4oPMSdZFM9VpNpc4TAFJ=_wQLB60XFxw-Ciw@mail.gmail.com>
+In-Reply-To: <CAJZ5v0gWD8WSQU4oPMSdZFM9VpNpc4TAFJ=_wQLB60XFxw-Ciw@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Thu, 5 Aug 2021 00:02:54 +0300
+Message-ID: <CAA8EJpq5DB2a=C+eo_S7QgVMzpm=mvUcC4DkWwGoKQ1g8trmgA@mail.gmail.com>
+Subject: Re: [PATCH v3 1/3] PM: runtime: add devm_pm_runtime_enable helper
+To:     "Rafael J. Wysocki" <rafael@kernel.org>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Pavel Machek <pavel@ucw.cz>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There should only be two interconnects defined for IPA on the
-QUalcomm SM8350 SoC.  The names should also match those specified by
-the IPA Device Tree binding.
+On Wed, 4 Aug 2021 at 21:07, Rafael J. Wysocki <rafael@kernel.org> wrote:
+>
+> On Sat, Jul 31, 2021 at 9:50 PM Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
+> >
+> > A typical code pattern for pm_runtime_enable() call is to call it in the
+> > _probe function and to call pm_runtime_disable() both from _probe error
+> > path and from _remove function. For some drivers the whole remove
+> > function would consist of the call to pm_remove_disable().
+> >
+> > Add helper function to replace this bolierplate piece of code. Calling
+> > devm_pm_runtime_enable() removes the need for calling
+> > pm_runtime_disable() both in the probe()'s error path and in the
+> > remove() function.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > ---
+> >  drivers/base/power/runtime.c | 17 +++++++++++++++++
+> >  include/linux/pm_runtime.h   |  4 ++++
+> >  2 files changed, 21 insertions(+)
+> >
+> > diff --git a/drivers/base/power/runtime.c b/drivers/base/power/runtime.c
+> > index 8a66eaf731e4..ec94049442b9 100644
+> > --- a/drivers/base/power/runtime.c
+> > +++ b/drivers/base/power/runtime.c
+> > @@ -1447,6 +1447,23 @@ void pm_runtime_enable(struct device *dev)
+> >  }
+> >  EXPORT_SYMBOL_GPL(pm_runtime_enable);
+> >
+> > +static void pm_runtime_disable_action(void *data)
+> > +{
+> > +       pm_runtime_disable(data);
+> > +}
+> > +
+> > +/**
+> > + * devm_pm_runtime_enable - devres-enabled version of pm_runtime_enable.
+> > + * @dev: Device to handle.
+> > + */
+> > +int devm_pm_runtime_enable(struct device *dev)
+> > +{
+> > +       pm_runtime_enable(dev);
+> > +
+> > +       return devm_add_action_or_reset(dev, pm_runtime_disable_action, dev);
+>
+> When exactly is pm_runtime_disable_action() going to run by this rule?
+>  When the device goes away or when the driver is unbound from it?
 
-Signed-off-by: Alex Elder <elder@linaro.org>
----
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 8 +++-----
- 1 file changed, 3 insertions(+), 5 deletions(-)
+When the driver is unbound (either because probe() returns an error or
+because __device_release_driver() is being called).
+This corresponds to a typical call to pm_runtime_disable() from the
+probe()'s error path or in the remove() callback.
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index a631d58166b1c..01f60a3bd1c14 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -666,12 +666,10 @@ ipa: ipa@1e40000 {
- 			clocks = <&rpmhcc RPMH_IPA_CLK>;
- 			clock-names = "core";
- 
--			interconnects = <&aggre2_noc MASTER_IPA &gem_noc SLAVE_LLCC>,
--					<&mc_virt MASTER_LLCC &mc_virt SLAVE_EBI1>,
-+			interconnects = <&aggre2_noc MASTER_IPA &mc_virt SLAVE_EBI1>,
- 					<&gem_noc MASTER_APPSS_PROC &config_noc SLAVE_IPA_CFG>;
--			interconnect-names = "ipa_to_llcc",
--					     "llcc_to_ebi1",
--					     "appss_to_ipa";
-+			interconnect-names = "memory",
-+					     "config";
- 
- 			qcom,smem-states = <&ipa_smp2p_out 0>,
- 					   <&ipa_smp2p_out 1>;
+> > +}
+> > +EXPORT_SYMBOL_GPL(devm_pm_runtime_enable);
+> > +
+> >  /**
+> >   * pm_runtime_forbid - Block runtime PM of a device.
+> >   * @dev: Device to handle.
+> > diff --git a/include/linux/pm_runtime.h b/include/linux/pm_runtime.h
+> > index aab8b35e9f8a..222da43b7096 100644
+> > --- a/include/linux/pm_runtime.h
+> > +++ b/include/linux/pm_runtime.h
+> > @@ -59,6 +59,8 @@ extern void pm_runtime_put_suppliers(struct device *dev);
+> >  extern void pm_runtime_new_link(struct device *dev);
+> >  extern void pm_runtime_drop_link(struct device_link *link);
+> >
+> > +extern int devm_pm_runtime_enable(struct device *dev);
+> > +
+> >  /**
+> >   * pm_runtime_get_if_in_use - Conditionally bump up runtime PM usage counter.
+> >   * @dev: Target device.
+> > @@ -253,6 +255,8 @@ static inline void __pm_runtime_disable(struct device *dev, bool c) {}
+> >  static inline void pm_runtime_allow(struct device *dev) {}
+> >  static inline void pm_runtime_forbid(struct device *dev) {}
+> >
+> > +static inline int devm_pm_runtime_enable(struct device *dev) { return 0; }
+> > +
+> >  static inline void pm_suspend_ignore_children(struct device *dev, bool enable) {}
+> >  static inline void pm_runtime_get_noresume(struct device *dev) {}
+> >  static inline void pm_runtime_put_noidle(struct device *dev) {}
+> > --
+> > 2.30.2
+> >
+
+
+
 -- 
-2.27.0
-
+With best wishes
+Dmitry
