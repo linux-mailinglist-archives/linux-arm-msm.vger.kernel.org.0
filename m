@@ -2,131 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 421643E01BB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 15:13:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB3783E01F0
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 15:28:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237969AbhHDNOH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Aug 2021 09:14:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37358 "EHLO
+        id S238428AbhHDN3D (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Aug 2021 09:29:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40768 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233389AbhHDNOH (ORCPT
+        with ESMTP id S238108AbhHDN3C (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Aug 2021 09:14:07 -0400
-Received: from mail-il1-x131.google.com (mail-il1-x131.google.com [IPv6:2607:f8b0:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 839F4C061798
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Aug 2021 06:13:54 -0700 (PDT)
-Received: by mail-il1-x131.google.com with SMTP id y4so1659984ilp.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Aug 2021 06:13:54 -0700 (PDT)
+        Wed, 4 Aug 2021 09:29:02 -0400
+Received: from mail-qk1-x72e.google.com (mail-qk1-x72e.google.com [IPv6:2607:f8b0:4864:20::72e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E25A5C0613D5
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Aug 2021 06:28:49 -0700 (PDT)
+Received: by mail-qk1-x72e.google.com with SMTP id t68so2680093qkf.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Aug 2021 06:28:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=16q7EqqyfEhwetWb0XYAPotm+XuJAb7KckeFFuyZn6k=;
-        b=URaICnYo2fzFjMRGWMjcx7FktVrKjirxd33+rMnDvTa5e29Yg/KDItyfGl0UHCFwJh
-         /8Vh0SrA2SXk46h4aix1i4Pm8GqdE4i9KC8V8xQo0VSoahukzJGk42RU+2XwGLOx2srk
-         25ULQrAKKMTA89tgkVVUYFKRKpvNGzqqnz5R4HqeDzWjtt60+ENg5pcGS+tuqUt4rMpk
-         3QE7N2bAimMjO3Bbg2BMMfbp+uUJxIwqZJ+ESRlbs0bLiwtdIomEu46BiYCzlAW6yKTg
-         J5VmjAPy6rg5wDzBzQSI3+JEaJx6WnYfvNsYzyygO6B6J+lAJDC2oUFhyr2xMBAQHpw6
-         X4aA==
+        bh=QFLJoMXDhEHLGcdtkF5dL2y+7dGxyAlRAtgvl9mW6Tw=;
+        b=oLPA8doLkq8mTryx6byEUyfPcDftA5boAK9TdrX1I4VX30Yaif3f7cYCTYMm7hMQZi
+         mIqsYFJWNKaOrY7HAFerGVPsVDYN6f1/jHPutnsVjSLEa/xT2y/gYA/1nZ8pyFgOMq2j
+         zi0k2Csj36CNw1lw67DsWKVwj6mhpWXoViK8GpuuKWzbUS7uKxrYgMlO9hmFktSawJRz
+         QnAFgZoQsAZwiHBx85H7xeHo5fsMwkHU020uT82QosoQhlsOH2Br7opC5l3TBouKTE+r
+         pGT5e0pSWpnBU+qXxK4uv4iil2YvKbw2AXRzrONRb+7ee5S4bREEYB8X4ukL1jXPxgB5
+         NwPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=16q7EqqyfEhwetWb0XYAPotm+XuJAb7KckeFFuyZn6k=;
-        b=TapiwdxfnGyLqJYuw/VMHcGlqLLxlPxoM0sk0ebPuCz9eu5JNM71I5g40ITYajFcqH
-         ZJaSGPscktC2wz+sd1UUPH0kH7Y9hOMSAtD/A/sjuS41ecmXrvvnXqeq/FJs+qbZarqe
-         t1sfVT9KbCIQjhZ0zE7s2B0b9Ht8FenjREfefevFB6YF9Fvf2Tc0hjGiefd2wvsm0E4/
-         1/v/MDxcgEwoI2TBfu8mYyd3hHjHrlS4cwF5RSM0KCizU9mxYPIdrnBfoz/ft1mfrItJ
-         BWre1F8MzVa5nTjuxnOQzb/3eROAv9JJbK4BallyMZP7d1FEhX1qplUteD+re/tXY926
-         nFWw==
-X-Gm-Message-State: AOAM531zx7Krrel7x9Wot3oyWGFR8n8MLQEKQqkJmo7IXYjWR9pm5gn2
-        cS7g4kO2DIFNN1p9BCzp/FKaCg==
-X-Google-Smtp-Source: ABdhPJwTrepWzQ7jGOdI0Mb9wms6UHeS7O+Km+3F27wf2nrd8WPKgG2Mn3DWoUXO0NGlImWihwW7vA==
-X-Received: by 2002:a05:6e02:1561:: with SMTP id k1mr404140ilu.25.1628082833939;
-        Wed, 04 Aug 2021 06:13:53 -0700 (PDT)
-Received: from presto.localdomain (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.gmail.com with ESMTPSA id q11sm1073012ile.71.2021.08.04.06.13.52
+        bh=QFLJoMXDhEHLGcdtkF5dL2y+7dGxyAlRAtgvl9mW6Tw=;
+        b=Umq6WIoOllmyhaHhu3/o5FZGLrk3+fdpPlLtFW66Kfcnw5R/U4Q6H7+jcdKoQ7cEey
+         ivmle71/KFBWd1Zgiy9X199IMjo4ndTfCKKUcRLXSDPanrMdgvD4CCIkQqPY8S3NXJ46
+         62XtiDxW6hrGcjCt2g2ZKLhy0eqisiHvFeTrs3bvDTOUlULvY5EaMV2JYqw8kUBQ+iV+
+         ixQ/abeB6t0/+oVUWvWafmHD2137n/VjhaK4qWR1/GqSyQUEiyWsvKmkfxiPaLbYhHIa
+         bzu5st6zsr706/pLelkuocaagbxFZhrFY6F/KCVlm5rjKfH583cnHgfcpz/ZlpS4uUJT
+         fPqw==
+X-Gm-Message-State: AOAM532zUt4m4QWCc7OcHB77ObPrDmViL4eX0KsVWsD8kYoccNouXI2/
+        zNVkEakaA2xnuqWcQ3bok3634A==
+X-Google-Smtp-Source: ABdhPJwyeggZTlJqzKdDaWXJ+Ft1mPz5g6bWBjVq/b7qflnOgpdzYCVkml8dHDVDI3Z8vjShMgHYdQ==
+X-Received: by 2002:a05:620a:1398:: with SMTP id k24mr25691862qki.12.1628083729029;
+        Wed, 04 Aug 2021 06:28:49 -0700 (PDT)
+Received: from pop-os.fios-router.home (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.googlemail.com with ESMTPSA id d82sm1342054qkc.86.2021.08.04.06.28.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Aug 2021 06:13:53 -0700 (PDT)
-From:   Alex Elder <elder@linaro.org>
-To:     robh+dt@kernel.org, bjorn.andersson@linaro.org, agross@kernel.org
-Cc:     elder@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] dt-bindings: net: qcom,ipa: make imem interconnect optional
-Date:   Wed,  4 Aug 2021 08:13:49 -0500
-Message-Id: <20210804131349.1179832-1-elder@linaro.org>
-X-Mailer: git-send-email 2.27.0
+        Wed, 04 Aug 2021 06:28:48 -0700 (PDT)
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: dts: qcom: sm8150: Fix incorrect cpu opp table entry
+Date:   Wed,  4 Aug 2021 09:28:47 -0400
+Message-Id: <20210804132847.2503269-1-thara.gopinath@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On some newer SoCs, the interconnect between IPA and SoC internal
-memory (imem) is not used.  Update the binding to indicate that
-having just the memory and config interconnects is another allowed
-configuration.
+CPU0 frequency 768MHz is wrongly modeled as 576000000 hz in
+cpu0_opp_table. Use the correct value 768000000 hz.
 
-Signed-off-by: Alex Elder <elder@linaro.org>
+Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
 ---
-Rob, Bjorn, Andy:
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-This was posted as part of a small series once before, and accepted
-into the net-next/master branch by David Miller:
-  https://lore.kernel.org/netdev/20210719212456.3176086-1-elder@linaro.org/
-
-That series got reverted yesterday:
-  https://lore.kernel.org/netdev/20210802233019.800250-1-elder@linaro.org/
-
-Now I'm posting this patch again (by itself, and a little different
-this time based on input from Rob) so that this patch can be taken
-through the Qualcomm repository.  I will be posting other updates to
-DTS files in a separate series shortly.
-
-I didn't copy networking addressees this time...
-
-					-Alex
-
- .../devicetree/bindings/net/qcom,ipa.yaml     | 24 ++++++++++++-------
- 1 file changed, 16 insertions(+), 8 deletions(-)
-
-diff --git a/Documentation/devicetree/bindings/net/qcom,ipa.yaml b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-index ed88ba4b94df5..b8a0b392b24ea 100644
---- a/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-+++ b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-@@ -87,16 +87,24 @@ properties:
-       - const: ipa-setup-ready
+diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+index cbf0d8d7d76d..5e6471e5e2fc 100644
+--- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
+@@ -319,7 +319,7 @@ cpu0_opp5: opp-672000000 {
+ 		};
  
-   interconnects:
--    items:
--      - description: Interconnect path between IPA and main memory
--      - description: Interconnect path between IPA and internal memory
--      - description: Interconnect path between IPA and the AP subsystem
-+    oneOf:
-+      - items:
-+          - description: Path leading to system memory
-+          - description: Path between the AP and IPA config space
-+      - items:
-+          - description: Path leading to system memory
-+          - description: Path leading to internal memory
-+          - description: Path between the AP and IPA config space
+ 		cpu0_opp6: opp-768000000 {
+-			opp-hz = /bits/ 64 <576000000>;
++			opp-hz = /bits/ 64 <768000000>;
+ 			opp-peak-kBps = <1804000 19660800>;
+ 		};
  
-   interconnect-names:
--    items:
--      - const: memory
--      - const: imem
--      - const: config
-+    oneOf:
-+      - items:
-+          - const: memory
-+          - const: config
-+      - items:
-+          - const: memory
-+          - const: imem
-+          - const: config
- 
-   qcom,smem-states:
-     $ref: /schemas/types.yaml#/definitions/phandle-array
 -- 
-2.27.0
+2.25.1
 
