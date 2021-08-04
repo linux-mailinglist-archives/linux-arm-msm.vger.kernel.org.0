@@ -2,56 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 212D63E085F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 20:56:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9FB9A3E0863
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 20:57:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239697AbhHDS4m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Aug 2021 14:56:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60352 "EHLO
+        id S240402AbhHDS5i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Aug 2021 14:57:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60564 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239656AbhHDS4m (ORCPT
+        with ESMTP id S239650AbhHDS5f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Aug 2021 14:56:42 -0400
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06C47C06179A
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Aug 2021 11:56:28 -0700 (PDT)
-Received: by mail-ot1-x32a.google.com with SMTP id a5-20020a05683012c5b029036edcf8f9a6so2581942otq.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Aug 2021 11:56:28 -0700 (PDT)
+        Wed, 4 Aug 2021 14:57:35 -0400
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14D9BC0613D5
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Aug 2021 11:57:22 -0700 (PDT)
+Received: by mail-oi1-x233.google.com with SMTP id u10so4016582oiw.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Aug 2021 11:57:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=VcqvjU1bhq3QLbhM94VyWBNxMowkTRxB2SS37S2YMHU=;
-        b=eow6uihoHcyolO28gBNzCMo+OcLJeolWeLIfML7V5HBkrGBB2+RPREORTfmPViraQc
-         Utis+pBR22PU8tP3USQ7Vn4auPnVqU04uhgMtRgeHLloRRdcMsaJTc0wdBSyOIf7hiW0
-         jA6mZMzCH/w9Oczg1HXmHbHAvA4Dl7a6lj8Ig=
+        bh=W0RU2njrJYwNw31OX+GKz1dnas7rS+0peN2BXk2nTOM=;
+        b=XQG1pb4WN8xpvB82dpmucAJRgEyqKxa/pnqs92acP0GjyGJg6pbgmHVkt4VIIBWHZ2
+         9lg1QU4BnUj9PaX5g6rsqOV31lVBH/YiGh5Muf2InY6gVAzhbwCNcNt0M9ZT1kilr1lB
+         peNOAvCJ/Gk4wKYe3BIAV7+jN1n2GxKn9pORY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=VcqvjU1bhq3QLbhM94VyWBNxMowkTRxB2SS37S2YMHU=;
-        b=knYsiP0FnKKp6zz1X9/aydwLGDu/+JR2/2M+1Wj7FafhnNsDNq5+S2P+OuCQNIk+U2
-         qusuSll34UgEdYJU5M4A6+e9kX3YWi+EZvRu02mMocuhbhI/dD+O1OEqOKEFGh+Uk/Ah
-         +Yhvk295nbjaQN8yWw8ei0GxUZau/ULaa4zaW4k1VLfEvW/4vMJcOT8BS0q6KWuMoAb6
-         oYv04VwZOBer3vPgs1LnrELoxGpJh7w2B3g1quYoDk08NWNMRf6GyNyNkMbMIOAYtUni
-         jj8la3oGOfmqUGpH7NM3Nls7bua3K9gYZfnTufGYItMyYfl0curCY+EuElO1IzqypCmz
-         yWfg==
-X-Gm-Message-State: AOAM5337XY7yirGepI8AK7kGPBC2SP0up/rshTl/Bh8yM2sxhVCHyiw6
-        dI1D3pfX7FQfFuTRxwdnX6qW7fdTmUorzA08IzX/LQ==
-X-Google-Smtp-Source: ABdhPJzr7nO7f94SsRcOCzg0xCQZV6WBYtk8lxSr4M4jRgk8usQPXYX9eUO1QierzYm6lnMFOVeugytO9vsj9NDOexc=
-X-Received: by 2002:a05:6830:1490:: with SMTP id s16mr850033otq.233.1628103387954;
- Wed, 04 Aug 2021 11:56:27 -0700 (PDT)
+        bh=W0RU2njrJYwNw31OX+GKz1dnas7rS+0peN2BXk2nTOM=;
+        b=QM1DG3y4gwpitFKridlOGzDw1ZhjhfrRuQYmVnAUmdmKn3pecTvMJZpEmqoFxPe+fJ
+         qvTOVPhxQTXru/UrNI7dnDsB5GXZ2flJGD1aqD/yYJS5zkiILqjRpjz+eU9kbcHBOllj
+         l593lbtxXQ9hL1WA8ensoyS9upkMn7Qg93WqzFkG4Y1SlNgo5pDmWfQ2ilryTT3SRB1G
+         bsqUGHUDHbJXTuUqSzEqAgBX140I3Q+OTRBggAcrOtsRUR35dIBwg/GG3kZ/RWx5636V
+         UZFmzugi81PTYGdwI8JIhxzVUpPC1JRBkfFSnrmzX8/Yu84eRknSb1d7oXaG6FL9qqUR
+         iXbg==
+X-Gm-Message-State: AOAM5334dS3rV0rKq4KL+YcIe0Gic/yXm00WYjnIEnlRwgvfXNhVRRQf
+        JeKFrkXx94Gt6cNQpTQPpWKqyc47NrY9bbJDAtjxcA==
+X-Google-Smtp-Source: ABdhPJxnaosSbnczMAr1y6z1t5NO2fUtY+Th+88s1vPF8mmT7ZwOvdJJWTYMH3xeYdgzDiiMnXNGokR3TdHCDuJICOc=
+X-Received: by 2002:a05:6808:619:: with SMTP id y25mr3998610oih.166.1628103441478;
+ Wed, 04 Aug 2021 11:57:21 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 4 Aug 2021 11:56:27 -0700
+ HTTPREST; Wed, 4 Aug 2021 11:57:20 -0700
 MIME-Version: 1.0
-In-Reply-To: <1627581885-32165-2-git-send-email-sibis@codeaurora.org>
-References: <1627581885-32165-1-git-send-email-sibis@codeaurora.org> <1627581885-32165-2-git-send-email-sibis@codeaurora.org>
+In-Reply-To: <1627581885-32165-4-git-send-email-sibis@codeaurora.org>
+References: <1627581885-32165-1-git-send-email-sibis@codeaurora.org> <1627581885-32165-4-git-send-email-sibis@codeaurora.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.9.1
-Date:   Wed, 4 Aug 2021 11:56:27 -0700
-Message-ID: <CAE-0n53YRQamHMcb1T0oRkSO0_Shhskzpr4oX60UpiEB8ZY63A@mail.gmail.com>
-Subject: Re: [PATCH 1/4] dt-bindings: cpufreq: cpufreq-qcom-hw: Add compatible
- for SM8250/8350
+Date:   Wed, 4 Aug 2021 11:57:20 -0700
+Message-ID: <CAE-0n5249t-DCDY0-HSV5EYN5yOv02NKJwKpibpL5NdTmnCrfg@mail.gmail.com>
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: sc7280: Fixup the cpufreq node
 To:     Sibi Sankar <sibis@codeaurora.org>, bjorn.andersson@linaro.org,
         mka@chromium.org, robh+dt@kernel.org
 Cc:     viresh.kumar@linaro.org, agross@kernel.org, rjw@rjwysocki.net,
@@ -63,12 +62,11 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sibi Sankar (2021-07-29 11:04:42)
-> Re-arranging the register regions to support per core L3 DCVS would lead
-> to bindings breakage when using an older dt with a newer kernel. So,
-> document the EPSS compatible for SM8250/SM8350 SoCs and use them in the
-> CPUFreq-hw driver to prevent such breakages.
+Quoting Sibi Sankar (2021-07-29 11:04:44)
+> Fixup the register regions used by the cpufreq node on SC7280 SoC to
+> support per core L3 DCVS.
 >
+> Fixes: 7dbd121a2c58 ("arm64: dts: qcom: sc7280: Add cpufreq hw node")
 > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 > ---
 
