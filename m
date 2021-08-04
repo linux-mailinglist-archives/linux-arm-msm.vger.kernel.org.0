@@ -2,269 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 08A5F3DFBD3
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 09:10:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CC9303DFC41
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 09:43:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235223AbhHDHK5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Aug 2021 03:10:57 -0400
-Received: from smtp-out2.suse.de ([195.135.220.29]:43704 "EHLO
-        smtp-out2.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235219AbhHDHK5 (ORCPT
+        id S235941AbhHDHoB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Aug 2021 03:44:01 -0400
+Received: from mout.kundenserver.de ([212.227.17.24]:37293 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235807AbhHDHoA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Aug 2021 03:10:57 -0400
-Received: from imap1.suse-dmz.suse.de (imap1.suse-dmz.suse.de [192.168.254.73])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by smtp-out2.suse.de (Postfix) with ESMTPS id 58A9E1FDB6;
-        Wed,  4 Aug 2021 07:10:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
-        t=1628061044; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=P6Fma+4mkffDQMef6Jjk4YxVumN0JgVC+wFZCNyVS+U=;
-        b=MmAgVVXyzNmgZOd0xIxFUQDwU0idupOhxjU77otdVv92Aj6n/aknmlZ8pF/qnQ4oCwhmwF
-        Ieb5iE6N7lGymEJjhc/5pszed4TWliogCGoAzDmfc9faB3N/FLOUlxiCQr5GjrCCpEOr5b
-        X8j39hoeQJv0wczMR+lxYzOvA0bL/G4=
-DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
-        s=susede2_ed25519; t=1628061044;
-        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
-         mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=P6Fma+4mkffDQMef6Jjk4YxVumN0JgVC+wFZCNyVS+U=;
-        b=utuo1u7XkDupb4O1+qajZc9NPeWTeX7FpJO1d+NUYnwx7DbpPCyzpM20Jj+VaOeIHnW5xX
-        O0SxzGfy0QbjmpBA==
-Received: from imap1.suse-dmz.suse.de (imap1.suse-dmz.suse.de [192.168.254.73])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
-        (No client certificate requested)
-        by imap1.suse-dmz.suse.de (Postfix) with ESMTPS id 9E23B136DD;
-        Wed,  4 Aug 2021 07:10:43 +0000 (UTC)
-Received: from dovecot-director2.suse.de ([192.168.254.65])
-        by imap1.suse-dmz.suse.de with ESMTPSA
-        id wHpHJXM9CmG7RAAAGKfGzw
-        (envelope-from <tzimmermann@suse.de>); Wed, 04 Aug 2021 07:10:43 +0000
-Subject: Re: [PATCH v2 00/14] drm: Make DRM's IRQ helpers legacy
-To:     "Chrisanthus, Anitha" <anitha.chrisanthus@intel.com>,
-        Sam Ravnborg <sam@ravnborg.org>
-Cc:     "daniel@ffwll.ch" <daniel@ffwll.ch>,
-        "airlied@linux.ie" <airlied@linux.ie>,
-        "alexander.deucher@amd.com" <alexander.deucher@amd.com>,
-        "christian.koenig@amd.com" <christian.koenig@amd.com>,
-        "liviu.dudau@arm.com" <liviu.dudau@arm.com>,
-        "brian.starkey@arm.com" <brian.starkey@arm.com>,
-        "bbrezillon@kernel.org" <bbrezillon@kernel.org>,
-        "nicolas.ferre@microchip.com" <nicolas.ferre@microchip.com>,
-        "maarten.lankhorst@linux.intel.com" 
-        <maarten.lankhorst@linux.intel.com>,
-        "mripard@kernel.org" <mripard@kernel.org>,
-        "stefan@agner.ch" <stefan@agner.ch>,
-        "alison.wang@nxp.com" <alison.wang@nxp.com>,
-        "patrik.r.jakobsson@gmail.com" <patrik.r.jakobsson@gmail.com>,
-        "robdclark@gmail.com" <robdclark@gmail.com>,
-        "Dea, Edmund J" <edmund.j.dea@intel.com>,
-        "sean@poorly.run" <sean@poorly.run>,
-        "shawnguo@kernel.org" <shawnguo@kernel.org>,
-        "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>,
-        "kernel@pengutronix.de" <kernel@pengutronix.de>,
-        "jyri.sarha@iki.fi" <jyri.sarha@iki.fi>,
-        "tomba@kernel.org" <tomba@kernel.org>,
-        "Dan.Sneddon@microchip.com" <Dan.Sneddon@microchip.com>,
-        "tomi.valkeinen@ideasonboard.com" <tomi.valkeinen@ideasonboard.com>,
-        "amd-gfx@lists.freedesktop.org" <amd-gfx@lists.freedesktop.org>,
-        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>
-References: <20210803090704.32152-1-tzimmermann@suse.de>
- <YQlbFjbrnyeWv7QP@ravnborg.org>
- <BY5PR11MB41822706053ADEE927E34E628CF09@BY5PR11MB4182.namprd11.prod.outlook.com>
-From:   Thomas Zimmermann <tzimmermann@suse.de>
-Message-ID: <4dbc29d7-5f88-e3ac-5dab-e2dc5c6a703e@suse.de>
-Date:   Wed, 4 Aug 2021 09:10:43 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        Wed, 4 Aug 2021 03:44:00 -0400
+Received: from mail-wr1-f54.google.com ([209.85.221.54]) by
+ mrelayeu.kundenserver.de (mreue106 [213.165.67.113]) with ESMTPSA (Nemesis)
+ id 1MfZ9C-1mmkN10BpI-00g3KV; Wed, 04 Aug 2021 09:43:47 +0200
+Received: by mail-wr1-f54.google.com with SMTP id c9so1120354wri.8;
+        Wed, 04 Aug 2021 00:43:46 -0700 (PDT)
+X-Gm-Message-State: AOAM532RJZ/Iz//sqZxUJ/XIaRDbw0HPuR8UnFrT2eqq3041TfJuGHK5
+        2c42i/WRD82wx0bW1SL9onFpUCpUAir4Ys4i7oo=
+X-Google-Smtp-Source: ABdhPJyunqosCIflc5vvvynoT6hdGMCnplHeTZXsuPA8UnSjopVy4WA6W8LG+8a5SLNVnF2AQBvVhxHXr2nSTm0xejk=
+X-Received: by 2002:adf:fd90:: with SMTP id d16mr28680284wrr.105.1628063026717;
+ Wed, 04 Aug 2021 00:43:46 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <BY5PR11MB41822706053ADEE927E34E628CF09@BY5PR11MB4182.namprd11.prod.outlook.com>
-Content-Type: multipart/signed; micalg=pgp-sha256;
- protocol="application/pgp-signature";
- boundary="fw5ejvAfXrHJYjv7MQv9LkhEvsGVnGgf5"
+References: <20210802145321.1153989-1-arnd@kernel.org>
+In-Reply-To: <20210802145321.1153989-1-arnd@kernel.org>
+From:   Arnd Bergmann <arnd@arndb.de>
+Date:   Wed, 4 Aug 2021 09:43:30 +0200
+X-Gmail-Original-Message-ID: <CAK8P3a2R4EVY9=K3UB2+z7mssNCrSf3BrGW95BwR+qw1SLOm-w@mail.gmail.com>
+Message-ID: <CAK8P3a2R4EVY9=K3UB2+z7mssNCrSf3BrGW95BwR+qw1SLOm-w@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/gpu: fix link failure with QCOM_SCM=m
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     John Stultz <john.stultz@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Tanmay Shah <tanmay@codeaurora.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Kees Cook <keescook@chromium.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Provags-ID: V03:K1:vXMHY/nrtN/3gOBb2V7u+wSazxaz2q42Xdu8YzxXshlrtEcew1s
+ 8IHrMXLR0g1giWnqd8SffsCxIwsLE1eeh6/D0TphmpmlVVO0EQMuiqAD1+H+G/szlbtdoqA
+ m1+DUFRcw352/6cX+27iZhhyTWx+OZvq7MaKeC6dbskHpiXY7r6OWnLcCPt0QxVKaQy4Q2g
+ dZfHGVEqPtS85e5h9EWZw==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:mcRO33EVP6A=:7IJ1iRsUiciNf4re1XCpTD
+ e/aauj6zlQ+DLiSSzwMh2eyuE3xh+oFP0iYm/IboXRQX48flawU7e4dmI9eF57E7m38nYLeX/
+ 1uwWh6Yg6YVW+5ZBFmt+U5yeQCYS1B46rrCL3H2fzzCLGj1Kf9ZEVIbRNLuj8YnYJIFh6kL42
+ weuzGjHDqJcRoarV+0IPYD37Ui2/F4MKH6+IV0EW9tjMs8o+iARANAr1oADU/UfVDmRjNl20q
+ 5zTM8KJNe2huMM5dQ8wq8woUybQ4uCjZQjVF0JePG9a5p0WDG7ZwcFEJND7TGXOmq0zg4y2BN
+ N4rSlEKtwqGgsPGiTKcvitI188Hs++QFg/aHiT2AJirHPRuCeisCj/cdkKihJBHE3vbyYdGSi
+ 4A3Ag+/SKwnm+8NhoYMiM6+6Zt8RHJ8wxHoRW0z4ZBb58D/rPvAgvrYufo6sO2DW/F9QduRMx
+ G+T/UauTaT69i8SGDimAcggxPVzHeIf131pzNqOTOxyZuh5XwEBHqRaso+dlMG5Cr2YBMTbc5
+ gYEvun5ynpV2IAQg/1XFaB1VsrOzYi5pxnqXGAGDMk25hcxw6h6a7L4Aufnt005Ml9rX/pRm8
+ pyMFkq9vs46a5vjebV/VOUCIo64V1DCpb/kOkbQ+VimXlUip1fgiX37QESCNPLS989qleCVbp
+ dJ4WkvUzIKAAMfeZBIphwQWfxvo+ZeXRFh6UqoIfuZeXkf+27f8ivumtu+uMC+RKWlcE0+kBH
+ OvQgaajLuItWXMEmC+tk8Z1qlg37AG6UAGoCcMysmir871sRFVAr1PVLCENnZdXjIjsrnHXbd
+ Bm9clJUjOVoheBvHGwV66Y3RhdCZUYh25bQcJNEFAkR40ht/nC+00mAAHZ4grA/amWNY5/ulG
+ 37VgtORsSxQBGnzI++b29ZQOr3Mao/KQbNnZO8u0rf0w5RTuLUYPZ/IaYldJtxnEpe8iVR8hu
+ mzsc4w1Y4S3Ku/g2mGNetMgCfczcs7XMkvgbRISqktuv1b+qzq0o3
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
---fw5ejvAfXrHJYjv7MQv9LkhEvsGVnGgf5
-Content-Type: multipart/mixed; boundary="rRGFxDGZO3Dx2xxobza1NKfBtRtDsmBuD";
- protected-headers="v1"
-From: Thomas Zimmermann <tzimmermann@suse.de>
-To: "Chrisanthus, Anitha" <anitha.chrisanthus@intel.com>,
- Sam Ravnborg <sam@ravnborg.org>
-Cc: "daniel@ffwll.ch" <daniel@ffwll.ch>, "airlied@linux.ie"
- <airlied@linux.ie>, "alexander.deucher@amd.com" <alexander.deucher@amd.com>,
- "christian.koenig@amd.com" <christian.koenig@amd.com>,
- "liviu.dudau@arm.com" <liviu.dudau@arm.com>,
- "brian.starkey@arm.com" <brian.starkey@arm.com>,
- "bbrezillon@kernel.org" <bbrezillon@kernel.org>,
- "nicolas.ferre@microchip.com" <nicolas.ferre@microchip.com>,
- "maarten.lankhorst@linux.intel.com" <maarten.lankhorst@linux.intel.com>,
- "mripard@kernel.org" <mripard@kernel.org>, "stefan@agner.ch"
- <stefan@agner.ch>, "alison.wang@nxp.com" <alison.wang@nxp.com>,
- "patrik.r.jakobsson@gmail.com" <patrik.r.jakobsson@gmail.com>,
- "robdclark@gmail.com" <robdclark@gmail.com>,
- "Dea, Edmund J" <edmund.j.dea@intel.com>, "sean@poorly.run"
- <sean@poorly.run>, "shawnguo@kernel.org" <shawnguo@kernel.org>,
- "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>,
- "kernel@pengutronix.de" <kernel@pengutronix.de>,
- "jyri.sarha@iki.fi" <jyri.sarha@iki.fi>, "tomba@kernel.org"
- <tomba@kernel.org>, "Dan.Sneddon@microchip.com" <Dan.Sneddon@microchip.com>,
- "tomi.valkeinen@ideasonboard.com" <tomi.valkeinen@ideasonboard.com>,
- "amd-gfx@lists.freedesktop.org" <amd-gfx@lists.freedesktop.org>,
- "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
- "linux-arm-kernel@lists.infradead.org"
- <linux-arm-kernel@lists.infradead.org>,
- "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
- "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>
-Message-ID: <4dbc29d7-5f88-e3ac-5dab-e2dc5c6a703e@suse.de>
-Subject: Re: [PATCH v2 00/14] drm: Make DRM's IRQ helpers legacy
-References: <20210803090704.32152-1-tzimmermann@suse.de>
- <YQlbFjbrnyeWv7QP@ravnborg.org>
- <BY5PR11MB41822706053ADEE927E34E628CF09@BY5PR11MB4182.namprd11.prod.outlook.com>
-In-Reply-To: <BY5PR11MB41822706053ADEE927E34E628CF09@BY5PR11MB4182.namprd11.prod.outlook.com>
+On Mon, Aug 2, 2021 at 4:53 PM Arnd Bergmann <arnd@kernel.org> wrote:
+>
+> From: Arnd Bergmann <arnd@arndb.de>
+>
+> Another missed dependency when SCM is a loadable module
+> and adreno is built-in:
+>
+> drivers/gpu/drm/msm/adreno/adreno_gpu.o: In function `adreno_zap_shader_load':
+> adreno_gpu.c:(.text+0x1e8): undefined reference to `qcom_scm_is_available'
+> drivers/gpu/drm/msm/adreno/a5xx_gpu.o: In function `a5xx_hw_init':
+> a5xx_gpu.c:(.text+0x28a6): undefined reference to `qcom_scm_set_remote_state'
+>
+> Change it so the dependency on QCOM_SCM and QCOM_MDT_LOADER can be
+> ignored if we are not building for ARCH_QCOM, but prevent the
+> link error during compile testing when SCM is a loadable module
+> and ARCH_QCOM is disabled.
+>
+> Fixes: a9e2559c931d ("drm/msm/gpu: Move zap shader loading to adreno")
+> Fixes: 5ea4dba68305 ("drm/msm/a6xx: add CONFIG_QCOM_LLCC dependency")
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 
---rRGFxDGZO3Dx2xxobza1NKfBtRtDsmBuD
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: quoted-printable
+Oh, this is still wrong, for two reasons:
 
-Hi
+> ---
+>  drivers/gpu/drm/msm/Kconfig | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
+> index 52536e7adb95..69fbfe4568b2 100644
+> --- a/drivers/gpu/drm/msm/Kconfig
+> +++ b/drivers/gpu/drm/msm/Kconfig
+> @@ -9,14 +9,14 @@ config DRM_MSM
+>         depends on QCOM_OCMEM || QCOM_OCMEM=n
+>         depends on QCOM_LLCC || QCOM_LLCC=n
+>         depends on QCOM_COMMAND_DB || QCOM_COMMAND_DB=n
+> +       depends on QCOM_SCM || (QCOM_SCM=n && ARCH_QCOM=n)
+> +       depends on QCOM_MDT_LOADER || ARCH_QCOM=n
 
-Am 03.08.21 um 20:36 schrieb Chrisanthus, Anitha:
-> Hi Thomas,
-> Can you please hold off on applying the kmb patch, I am seeing some iss=
-ues while testing. Modetest works, but video playback only plays once, an=
-d it fails the second time with this patch.
+* Only QCOM_SCM has become user-selectable, but QCOM_MDT_LOADER
+   is still meant to only be selected by its users, so we cannot depend on it
+   here
 
-Sounds a bit like the testing issue at [1]. For testing, you need the=20
-latest drm-misc-next or drm-tip. Specifically, you need commit=20
-1e4cd78ed493 ("drm: Don't test for IRQ support in VBLANK ioctls").
+* There are two other drivers that have the broken 'select QCOM_SCM if
+   ARCH_QCOM', we have to fix them all at once.
 
-Let me know whether this works for you.
-
-Best regards
-Thomas
-
-[1] https://patchwork.freedesktop.org/patch/447057/?series=3D93078&rev=3D=
-1
-
->=20
-> Thanks,
-> Anitha
->=20
->=20
->> -----Original Message-----
->> From: Sam Ravnborg <sam@ravnborg.org>
->> Sent: Tuesday, August 3, 2021 8:05 AM
->> To: Thomas Zimmermann <tzimmermann@suse.de>
->> Cc: daniel@ffwll.ch; airlied@linux.ie; alexander.deucher@amd.com;
->> christian.koenig@amd.com; liviu.dudau@arm.com; brian.starkey@arm.com;
->> bbrezillon@kernel.org; nicolas.ferre@microchip.com;
->> maarten.lankhorst@linux.intel.com; mripard@kernel.org; stefan@agner.ch=
-;
->> alison.wang@nxp.com; patrik.r.jakobsson@gmail.com; Chrisanthus, Anitha=
-
->> <anitha.chrisanthus@intel.com>; robdclark@gmail.com; Dea, Edmund J
->> <edmund.j.dea@intel.com>; sean@poorly.run; shawnguo@kernel.org;
->> s.hauer@pengutronix.de; kernel@pengutronix.de; jyri.sarha@iki.fi;
->> tomba@kernel.org; Dan.Sneddon@microchip.com;
->> tomi.valkeinen@ideasonboard.com; amd-gfx@lists.freedesktop.org; dri-
->> devel@lists.freedesktop.org; linux-arm-kernel@lists.infradead.org; lin=
-ux-arm-
->> msm@vger.kernel.org; freedreno@lists.freedesktop.org
->> Subject: Re: [PATCH v2 00/14] drm: Make DRM's IRQ helpers legacy
->>
->> Hi Thomas,
->>
->> On Tue, Aug 03, 2021 at 11:06:50AM +0200, Thomas Zimmermann wrote:
->>> DRM's IRQ helpers are only helpful for old, non-KMS drivers. Move
->>> the code behind CONFIG_DRM_LEGACY. Convert KMS drivers to Linux
->>> IRQ interfaces.
->>>
->>> DRM provides IRQ helpers for setting up, receiving and removing IRQ
->>> handlers. It's an abstraction over plain Linux functions. The code
->>> is mid-layerish with several callbacks to hook into the rsp drivers.
->>> Old UMS driver have their interrupts enabled via ioctl, so these
->>> abstractions makes some sense. Modern KMS manage all their interrupts=
-
->>> internally. Using the DRM helpers adds indirection without benefits.
->>>
->>> Most KMS drivers already use Linux IRQ functions instead of DRM's
->>> abstraction layer. Patches 1 to 12 convert the remaining ones.
->>> The patches also resolve a bug for devices without assigned interrupt=
-
->>> number. DRM helpers don't test for IRQ_NOTCONNECTED, so drivers do
->>> not detect if the device has no interrupt assigned.
->>>
->>> Patch 13 removes an unused function.
->>>
->>> Patch 14 moves the DRM IRQ helpers behind CONFIG_DRM_LEGACY. Only
->>> the old non-KMS drivers still use the functionality.
->>>
->>> v2:
->>> 	* drop IRQ_NOTCONNECTED test from atmel-hlcdc (Sam)
->>> 	* use devm_request_irq() in atmel-hlcdc (Sam)
->>> 	* unify variable names in arm/hlcdc (Sam)
->>>
->>> Thomas Zimmermann (14):
->>
->> The following patches are all:
->> Acked-by: Sam Ravnborg <sam@ravnborg.org>
->>
->>>    drm/fsl-dcu: Convert to Linux IRQ interfaces
->>>    drm/gma500: Convert to Linux IRQ interfaces
->>>    drm/kmb: Convert to Linux IRQ interfaces
->>>    drm/msm: Convert to Linux IRQ interfaces
->>>    drm/mxsfb: Convert to Linux IRQ interfaces
->>>    drm/tidss: Convert to Linux IRQ interfaces
->>>    drm/vc4: Convert to Linux IRQ interfaces
->>>    drm: Remove unused devm_drm_irq_install()
->>
->> The remaining patches I either skipped or already had a feedback from
->> me or I asked a question.
->>
->> 	Sam
-
---=20
-Thomas Zimmermann
-Graphics Driver Developer
-SUSE Software Solutions Germany GmbH
-Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
-(HRB 36809, AG N=C3=BCrnberg)
-Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
-
-
---rRGFxDGZO3Dx2xxobza1NKfBtRtDsmBuD--
-
---fw5ejvAfXrHJYjv7MQv9LkhEvsGVnGgf5
-Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
-Content-Description: OpenPGP digital signature
-Content-Disposition: attachment; filename="OpenPGP_signature"
-
------BEGIN PGP SIGNATURE-----
-
-wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmEKPXMFAwAAAAAACgkQlh/E3EQov+BL
-vA/9FMcuq6uMCqAQTbojiwk+Wff+g6UvCm0U80Woyz2mQ05HAGK6vmc2fdhyjKyrdGAA1LkWe0ES
-P44igHsVIFVHDUlbVmtmoozHc6vJiyPR8u5pcA37HCUT6Z6qrvUgrIvsQ4LYjbxfImARN9N6RBRX
-GXigsbkib+NNj1u39NSz/udKa6eH3RKJcGqx3gyxhmNHx2dbgWR64YBsc51BLwr9HGDO2or2f35i
-Q54NYRbNzeFDrFXY92DO8iffUaz8o3a5kvm9y0cGC3mIcCdacte/8z+fr1OztAfFh1FJLNVnQDTM
-WguRoXq+0S700QWAzmyR8/bYyBML5qMR4Cf1rdLlck7IxHDy2kTgZYyLydxZl6qthnJhOM7GAptQ
-6fsMKIoh16KNggKn1vv/1TQyQdNyHUZphr8f0p+Y7bA9pIkhkqz0C12xS8Y5t/AGd9aMFOXxPx8k
-EJ8YfTE3L8XHnUjg6CCO3cHf4BiAmYlqaIb40RslM821VDhOWtrwW1qfpU8/E5YMXKOGgoyxAoki
-EcarYFDZrwDoWw9A4hK05JS8g6NsHLHKFyF46yE9wyeRPmNnb9h5dvFWP0tLuAoAmoPJatO+Q/eV
-TIOd12UvXGgFClMKZCB3sCcgdKyP7vZ+0RpBwtUEOCsZ/mT4PHn2VzL3c2CLKRmm740G8OFQXQe+
-DF8=
-=1EtW
------END PGP SIGNATURE-----
-
---fw5ejvAfXrHJYjv7MQv9LkhEvsGVnGgf5--
+         Arnd
