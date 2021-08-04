@@ -2,146 +2,176 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EB3E3E0874
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 21:01:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 471023E0878
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 21:06:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238721AbhHDTCG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Aug 2021 15:02:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33384 "EHLO
+        id S230521AbhHDTGu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Aug 2021 15:06:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34414 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232180AbhHDTCG (ORCPT
+        with ESMTP id S230518AbhHDTGt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Aug 2021 15:02:06 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E229C06179B
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Aug 2021 12:01:52 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id 61-20020a9d0d430000b02903eabfc221a9so2616710oti.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Aug 2021 12:01:52 -0700 (PDT)
+        Wed, 4 Aug 2021 15:06:49 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DDB56C061799
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Aug 2021 12:06:36 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id r16-20020a0568304190b02904f26cead745so2225818otu.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Aug 2021 12:06:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=4641MPkioKublOkHL4evZ5kS7fvIPpw+L1PqXgIieP8=;
-        b=GqkjpQMjn9YW6aAFi+Vp0+YrxgzlIVN3vDD/r/lSR6Zpe18H+WzZIXfnbSguXd5sKL
-         2Z3CdFOVNtk56T2xekum7tqzdP5f/8GxuJAZHNTWC73fSAMKNAcZghWnJzpMH6DFT6ND
-         23T185qFL3X/2ZYsssPjeD2+y7M6mHHG5mtOo=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=RqsWb0Ldu47aOgLTaZq0UGUWgi+Ky2bzWR3XR33Ca/g=;
+        b=JMu2DMHU46kEAaW1jaZDVDTeRBvRYDS7xDAdJavHlaRY9SwlYzbba4Tb8F5RyluTYe
+         X+cnKYMhaFwB+YD+XFQ8VtH69EyN6xu2mT3REiN2mAS9InpuCxhBSZEWnLk1MiUKsM2I
+         dkWPyFriMkcgD9/oWwu5NLp1vBEbzawbxGzn1Wxnh5iqmSs2lt8WDavdXAYa6/Lx2iXp
+         y+/PKHjAThxwWdvzl3F4of0jAFTuM2jbgyCSstZiscnbTil8BLGooWc1Ra9uUKIEAAIy
+         rZLIdPaSplOhblhcJvGx7axfuE92Hl2GwrCb6IexwoKP+2zPH+A12BQUk+SD5y7Dnk9w
+         /q5g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=4641MPkioKublOkHL4evZ5kS7fvIPpw+L1PqXgIieP8=;
-        b=k1KZxz/JFgnLjkCWS77kIRVW+FIjBebXPi2bsbvDjZ7N63kVwu1yVZyYv5Qvkpprji
-         YqOpjPA7NdLF8md2Uz34/3ZWWXII9bjWdDT+cn7dAdGPGXabdt+RyAbY9O2c5ELZZQlr
-         +mO6zNL+kDrPSzGOkrfGhSUriUYbNB3gAHaPBTrzJ1VSfWNRIPqend3jnDirndygmr6T
-         O6WctqAyXX4opmWkTmWnfleH2kwPrxwIlu9h5PaJnaBNJx0q7NX9NeG2YaX/8aBttcmS
-         7jbzTMfG2LMKQUV5jLAibwWwmtslXpqGqIpToBMLwwva4mcfS+7k7eQ5r1LKaZY2GYUH
-         Nxlg==
-X-Gm-Message-State: AOAM530joKCOBqSuF4NDL5p1s1uOPpUAFcCyOIlAlskFsvoMfSp0N7bK
-        uwmDQclPRtCS+a/YSMXfkvtXMHO0eshs8yfZeq6P5Q==
-X-Google-Smtp-Source: ABdhPJx2OkzKOmmq/s4XSPcU7nqbnZJdKgsYBlKrpDnpvRgoLEowSTouTJP69cnCrn0RYHIxfZzw76HULG++n4OxZlM=
-X-Received: by 2002:a05:6830:1490:: with SMTP id s16mr864327otq.233.1628103711737;
- Wed, 04 Aug 2021 12:01:51 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 4 Aug 2021 12:01:51 -0700
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=RqsWb0Ldu47aOgLTaZq0UGUWgi+Ky2bzWR3XR33Ca/g=;
+        b=UQ0GHoisT6EvALaHSfKU6OpkqodOgRGYzszLtafbRBukvfYafWv4MexVGwQruFb146
+         4d82Ey8WD18pexyD4rXFPgMraZ/+RhzqvGteV+9tuCSzlmTS36qAm4U1nVhzATJCwuAR
+         C9xauncbIlE5bBPx0uhcbjLAQZHYSeQVqTFPMpK+5YzD9B3xdo7D7vkuqntxtkLuZW35
+         d+H6lxgz5DyFiKVdPizkT5lTRU2UGMTwsSvoIYMF6+vrtVgrF8R2OHvUzdTCx8z2LPx7
+         mlyjHJOzbsl/IVgjtXPD6AZeLwkStV71JbJhzlDAhYb7OI74O5WSzFpF+oQZUvcXU7A1
+         NO6w==
+X-Gm-Message-State: AOAM531ZjmQjEtYovFq/fxmsIGLerF5UcTvJoqLFApwtSSQCvcO1QyeP
+        kiXN1YDTgA+hGDxPjc2tV3F4fA==
+X-Google-Smtp-Source: ABdhPJy9KjmaK5WOueEU509KVqOnHnKEw/3YJzdgqClzjgzl+3tKChYYIK1IILUAH0GxRMrRrRQbvQ==
+X-Received: by 2002:a05:6830:1451:: with SMTP id w17mr886349otp.304.1628103996036;
+        Wed, 04 Aug 2021 12:06:36 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id w35sm530115ott.80.2021.08.04.12.06.35
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Aug 2021 12:06:35 -0700 (PDT)
+Date:   Wed, 4 Aug 2021 14:06:33 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     agross@kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, swboyd@chromium.org,
+        manivannan.sadhasivam@linaro.org,
+        Deepak Kumar Singh <deesin@codeaurora.org>,
+        Chris Lew <clew@codeaurora.org>
+Subject: Re: [PATCH v4 2/2] soc: qcom: aoss: Add debugfs entry
+Message-ID: <YQrlOctFXBL4DP+Q@builder.lan>
+References: <1623237532-20829-1-git-send-email-sibis@codeaurora.org>
+ <1623237532-20829-3-git-send-email-sibis@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <1627581885-32165-3-git-send-email-sibis@codeaurora.org>
-References: <1627581885-32165-1-git-send-email-sibis@codeaurora.org> <1627581885-32165-3-git-send-email-sibis@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Wed, 4 Aug 2021 12:01:51 -0700
-Message-ID: <CAE-0n53cH749NC9JPqJvMZGBQf47AZ3qY66eoqk2CiQHvuumkg@mail.gmail.com>
-Subject: Re: [PATCH 2/4] cpufreq: qcom: Re-arrange register offsets to support
- per core L3 DCVS
-To:     Sibi Sankar <sibis@codeaurora.org>, bjorn.andersson@linaro.org,
-        mka@chromium.org, robh+dt@kernel.org
-Cc:     viresh.kumar@linaro.org, agross@kernel.org, rjw@rjwysocki.net,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        dianders@chromium.org, tdas@codeaurora.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1623237532-20829-3-git-send-email-sibis@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sibi Sankar (2021-07-29 11:04:43)
-> Qualcomm SoCs (starting with SM8350) support per core voting for L3 cache
-> frequency.
+On Wed 09 Jun 06:18 CDT 2021, Sibi Sankar wrote:
 
-And the L3 cache frequency voting code can't be put into this cpufreq
-driver?
+> From: Deepak Kumar Singh <deesin@codeaurora.org>
+> 
+> It can be useful to control the different power states of various
+> parts of hardware for device testing. Add a debugfs node for qmp so
+> messages can be sent to aoss for debugging and testing purposes.
+> 
 
-> So, re-arrange the cpufreq register offsets to allow access for
-> the L3 interconnect to implement per core control. Also prevent binding
-> breakage caused by register offset shuffling by using the SM8250/SM8350
-> EPSS compatible.
->
-> Fixes: 7dbd121a2c58 ("arm64: dts: qcom: sc7280: Add cpufreq hw node")
+I thought I replied to this patch, but can't find the reply...
+
+> Signed-off-by: Chris Lew <clew@codeaurora.org>
+> Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
 > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
 > ---
->  drivers/cpufreq/qcom-cpufreq-hw.c | 23 +++++++++++++++++++----
->  1 file changed, 19 insertions(+), 4 deletions(-)
->
-> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-> index f86859bf76f1..74ef3b38343b 100644
-> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
-> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-> @@ -28,6 +28,7 @@ struct qcom_cpufreq_soc_data {
->         u32 reg_volt_lut;
->         u32 reg_perf_state;
->         u8 lut_row_size;
-> +       bool skip_enable;
+>  drivers/soc/qcom/qcom_aoss.c | 39 +++++++++++++++++++++++++++++++++++++++
+>  1 file changed, 39 insertions(+)
+> 
+> diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
+> index e8f48760bac8..998ee7605eb2 100644
+> --- a/drivers/soc/qcom/qcom_aoss.c
+> +++ b/drivers/soc/qcom/qcom_aoss.c
+> @@ -4,6 +4,7 @@
+>   */
+>  #include <dt-bindings/power/qcom-aoss-qmp.h>
+>  #include <linux/clk-provider.h>
+> +#include <linux/debugfs.h>
+>  #include <linux/interrupt.h>
+>  #include <linux/io.h>
+>  #include <linux/mailbox_client.h>
+> @@ -89,6 +90,9 @@ struct qmp {
+>  	struct clk_hw qdss_clk;
+>  	struct genpd_onecell_data pd_data;
+>  	struct qmp_cooling_device *cooling_devs;
+> +#if IS_ENABLED(CONFIG_DEBUG_FS)
+> +	struct dentry *debugfs_file;
+> +#endif /* CONFIG_DEBUG_FS */
 >  };
->
->  struct qcom_cpufreq_data {
-> @@ -257,19 +258,31 @@ static const struct qcom_cpufreq_soc_data qcom_soc_data = {
->         .reg_volt_lut = 0x114,
->         .reg_perf_state = 0x920,
->         .lut_row_size = 32,
-> +       .skip_enable = false,
->  };
->
->  static const struct qcom_cpufreq_soc_data epss_soc_data = {
-> +       .reg_freq_lut = 0x0,
-> +       .reg_volt_lut = 0x100,
-> +       .reg_perf_state = 0x220,
-> +       .lut_row_size = 4,
-> +       .skip_enable = true,
-> +};
+>  
+>  struct qmp_pd {
+> @@ -575,6 +579,32 @@ void qmp_put(struct qmp *qmp)
+>  }
+>  EXPORT_SYMBOL(qmp_put);
+>  
+> +#if IS_ENABLED(CONFIG_DEBUG_FS)
+> +static ssize_t aoss_dbg_write(struct file *file, const char __user *userstr,
+> +			      size_t len, loff_t *pos)
+> +{
+> +	struct qmp *qmp = file->private_data;
+> +	char buf[QMP_MSG_LEN] = {};
+> +	int ret;
 > +
-> +static const struct qcom_cpufreq_soc_data epss_sm8250_soc_data = {
->         .reg_enable = 0x0,
->         .reg_freq_lut = 0x100,
->         .reg_volt_lut = 0x200,
->         .reg_perf_state = 0x320,
->         .lut_row_size = 4,
-> +       .skip_enable = false,
->  };
->
->  static const struct of_device_id qcom_cpufreq_hw_match[] = {
->         { .compatible = "qcom,cpufreq-hw", .data = &qcom_soc_data },
->         { .compatible = "qcom,cpufreq-epss", .data = &epss_soc_data },
-> +       { .compatible = "qcom,sm8250-cpufreq-epss", .data = &epss_sm8250_soc_data },
-> +       { .compatible = "qcom,sm8350-cpufreq-epss", .data = &epss_sm8250_soc_data },
->         {}
->  };
->  MODULE_DEVICE_TABLE(of, qcom_cpufreq_hw_match);
-> @@ -334,10 +347,12 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
->         data->res = res;
->
->         /* HW should be in enabled state to proceed */
+> +	if (!len || len >= QMP_MSG_LEN)
+> +		return len;
+> +
+> +	ret  = copy_from_user(buf, userstr, len);
+> +	if (ret)
+> +		return len;
+> +
+> +	ret = qmp_send(qmp, buf, QMP_MSG_LEN);
+> +
+> +	return ret ? ret : len;
+> +}
+> +
+> +static const struct file_operations aoss_dbg_fops = {
+> +	.open = simple_open,
+> +	.write = aoss_dbg_write,
+> +};
+> +#endif /* CONFIG_DEBUG_FS */
+> +
+>  static int qmp_probe(struct platform_device *pdev)
+>  {
+>  	struct resource *res;
+> @@ -632,6 +662,11 @@ static int qmp_probe(struct platform_device *pdev)
+>  
+>  	atomic_set(&qmp->orphan, 0);
+>  
+> +#if IS_ENABLED(CONFIG_DEBUG_FS)
+> +	qmp->debugfs_file = debugfs_create_file("aoss_send_message", 0220, NULL,
+> +						qmp, &aoss_dbg_fops);
+> +#endif /* CONFIG_DEBUG_FS */
 
-It looks odd that we're no longer making sure that the clk domain is
-enabled when we probe the driver. Why is that OK?
+You shouldn't need the guards, debugfs_create_file() is stubbed if
+CONFIG_DEBUG_FS isn't set, so it's better to just rely on that.
 
-> -       if (!(readl_relaxed(base + data->soc_data->reg_enable) & 0x1)) {
-> -               dev_err(dev, "Domain-%d cpufreq hardware not enabled\n", index);
-> -               ret = -ENODEV;
-> -               goto error;
-> +       if (!data->soc_data->skip_enable) {
-> +               if (!(readl_relaxed(base + data->soc_data->reg_enable) & 0x1)) {
-> +                       dev_err(dev, "Domain-%d cpufreq hardware not enabled\n", index);
-> +                       ret = -ENODEV;
-> +                       goto error;
-> +               }
->         }
->
+Regards,
+Bjorn
+
+> +
+>  	return 0;
+>  
+>  err_remove_qdss_clk:
+> @@ -649,6 +684,10 @@ static int qmp_remove(struct platform_device *pdev)
+>  {
+>  	struct qmp *qmp = platform_get_drvdata(pdev);
+>  
+> +#if IS_ENABLED(CONFIG_DEBUG_FS)
+> +	debugfs_remove(qmp->debugfs_file);
+> +#endif /* CONFIG_DEBUG_FS */
+> +
+>  	qmp_qdss_clk_remove(qmp);
+>  	qmp_pd_remove(qmp);
+>  	qmp_cooling_devices_remove(qmp);
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
