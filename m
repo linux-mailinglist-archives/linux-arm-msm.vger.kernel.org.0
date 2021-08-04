@@ -2,37 +2,31 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 479003E02E2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 16:14:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B93573E02F9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 16:22:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238662AbhHDOOX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Aug 2021 10:14:23 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37558 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238560AbhHDOOX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Aug 2021 10:14:23 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 9CCE660E09;
-        Wed,  4 Aug 2021 14:14:07 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1628086450;
-        bh=xAqC6seky5MiIrVf7pJwzmv1dqVzP/V4Nv7xWuyRHB0=;
-        h=References:From:To:Cc:Subject:Date:In-reply-to:From;
-        b=ghq+e625BvgkjatsRssojXchEuhgeMuvrUq37qEwhhgio0zsNx0roQhLaYk41ZEn1
-         O13QzEBgtUMricL5Tn7KHCYWBTFCOkkvpJ4uyqkhSbNeyqISCFg//l70bsts1HxNRn
-         Zk+2+HspS8u02ZBM3OrcqGLsCU0MBhouuRgkLpPJKAGtjsMR7BFgB9D77Hp7Zwbhr2
-         G1PvAX5Q4Pw806/Ywb3cebwZFHREOIa6Ll3A/5bh1H18goioAmMLfcWQMN7zLwkC+p
-         5lhGVgS+hmVLQ+Dapm1Nx2HZlemdb3YbyJz/sHUQrh9lKIfHC0+K10ZEnJL8ByiiQt
-         75sE4nvlqg1BA==
+        id S238659AbhHDOWn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Aug 2021 10:22:43 -0400
+Received: from guitar.tcltek.co.il ([192.115.133.116]:32812 "EHLO
+        mx.tkos.co.il" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237114AbhHDOWm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 4 Aug 2021 10:22:42 -0400
+Received: from tarshish (unknown [10.0.8.3])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mx.tkos.co.il (Postfix) with ESMTPS id 4895544011A;
+        Wed,  4 Aug 2021 17:22:08 +0300 (IDT)
 References: <3d86f45004fe2fcbae0a2cd197df81a1fd076a1e.1628085910.git.baruch@tkos.co.il>
  <0e99e3d453547ad2a8f4541090a03f3c80b80332.1628085910.git.baruch@tkos.co.il>
-User-agent: mu4e 1.6.1; emacs 27.2
-From:   Felipe Balbi <balbi@kernel.org>
-To:     Baruch Siach <baruch@tkos.co.il>
+ <87lf5h5mc2.fsf@kernel.org>
+User-agent: mu4e 1.4.15; emacs 27.1
+From:   Baruch Siach <baruch@tkos.co.il>
+To:     Felipe Balbi <balbi@kernel.org>
 Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
         Vinod Koul <vkoul@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Balaji Prakash J <bjagadee@codeaurora.org>,
+        "Balaji Prakash J" <bjagadee@codeaurora.org>,
         Kathiravan T <kathirav@codeaurora.org>,
         Jack Pham <jackp@codeaurora.org>,
         Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
@@ -41,31 +35,41 @@ Cc:     Kishon Vijay Abraham I <kishon@ti.com>,
         linux-phy@lists.infradead.org, linux-usb@vger.kernel.org,
         devicetree@vger.kernel.org
 Subject: Re: [PATCH v2 4/6] usb: dwc3: reference clock period configuration
-Date:   Wed, 04 Aug 2021 17:11:58 +0300
-In-reply-to: <0e99e3d453547ad2a8f4541090a03f3c80b80332.1628085910.git.baruch@tkos.co.il>
-Message-ID: <87lf5h5mc2.fsf@kernel.org>
+In-reply-to: <87lf5h5mc2.fsf@kernel.org>
+Date:   Wed, 04 Aug 2021 17:22:27 +0300
+Message-ID: <87v94lxpb0.fsf@tarshish>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Felipe,
 
-Hi,
+On Wed, Aug 04 2021, Felipe Balbi wrote:
+> Baruch Siach <baruch@tkos.co.il> writes:
+>> @@ -1371,6 +1398,8 @@ static void dwc3_get_properties(struct dwc3 *dwc)
+>>  				    &dwc->hsphy_interface);
+>>  	device_property_read_u32(dev, "snps,quirk-frame-length-adjustment",
+>>  				 &dwc->fladj);
+>> +	device_property_read_u32(dev, "snps,ref-clock-period",
+>> +				 &dwc->ref_clk_per);
+>
+> I wonder if it would make more sense to pass an actual clock reference
+> here. If valid, then reconfigure the period to the value returned by
+> clk_get_rate(). It would avoid yet another DT binding. If we make the
+> clock optional, then we won't affect any other platforms. The clock
+> itself could be a regular fixed clock node.
 
-Baruch Siach <baruch@tkos.co.il> writes:
-> @@ -1371,6 +1398,8 @@ static void dwc3_get_properties(struct dwc3 *dwc)
->  				    &dwc->hsphy_interface);
->  	device_property_read_u32(dev, "snps,quirk-frame-length-adjustment",
->  				 &dwc->fladj);
-> +	device_property_read_u32(dev, "snps,ref-clock-period",
-> +				 &dwc->ref_clk_per);
+Thinh Nguyen asked to add a dedicated DT property. He explained that
+clk_get_rate() does not work for PCI hosted dwc3. This is the most
+complete summary of the discussion:
 
-I wonder if it would make more sense to pass an actual clock reference
-here. If valid, then reconfigure the period to the value returned by
-clk_get_rate(). It would avoid yet another DT binding. If we make the
-clock optional, then we won't affect any other platforms. The clock
-itself could be a regular fixed clock node.
+  https://lore.kernel.org/r/c797e9cb-cae6-c0b6-5714-169c2ad79d32@synopsys.com
+
+baruch
 
 -- 
-balbi
+                                                     ~. .~   Tk Open Systems
+=}------------------------------------------------ooO--U--Ooo------------{=
+   - baruch@tkos.co.il - tel: +972.52.368.4656, http://www.tkos.co.il -
