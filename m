@@ -2,119 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 464E23E039F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 16:45:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D13B63E0491
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 17:42:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237625AbhHDOqF convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>); Wed, 4 Aug 2021 10:46:05 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:60335 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237576AbhHDOqF (ORCPT
+        id S239134AbhHDPnA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Aug 2021 11:43:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43744 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239195AbhHDPm7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Aug 2021 10:46:05 -0400
-Received: from smtpclient.apple (p5b3d23f8.dip0.t-ipconnect.de [91.61.35.248])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 25D74CECD5;
-        Wed,  4 Aug 2021 16:45:51 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.100.0.2.22\))
-Subject: Re: [PATCH v1] Bluetooth: btusb: Add support different nvm to
- distinguish different factory for WCN6855 controller
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1628071467-27190-1-git-send-email-zijuhu@codeaurora.org>
-Date:   Wed, 4 Aug 2021 16:45:50 +0200
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        BlueZ <linux-bluetooth@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        c-hbandi@codeaurora.org, Hemantg <hemantg@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rocky Liao <rjliao@codeaurora.org>, tjiang@codeaurora.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <E0AC7312-A8BD-4950-9589-E5E2A1B45A8E@holtmann.org>
-References: <1628071467-27190-1-git-send-email-zijuhu@codeaurora.org>
-To:     Zijun Hu <zijuhu@codeaurora.org>
-X-Mailer: Apple Mail (2.3654.100.0.2.22)
+        Wed, 4 Aug 2021 11:42:59 -0400
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D23D1C0613D5
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Aug 2021 08:42:46 -0700 (PDT)
+Received: by mail-ot1-x329.google.com with SMTP id 61-20020a9d0d430000b02903eabfc221a9so2048262oti.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Aug 2021 08:42:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=nerYHUdRdbYFzlQjp5pBoYJPHBZ2ZgnUm5+kWyeZxBY=;
+        b=wfdGZd9XHdfd+zP+YSLJJy7gG32dbhFR9Efzf5TPu93R2J3HjQjBtPeqdPenpYcxl4
+         4sdHcsot6An9sJ247y+29GAJu3C70lIL7Lr0gJLkRE/Q3EX8DZQkYvs70b5pBZ/tDBGL
+         5n8ibsLIRbE82UQjyVia08aPqJ84YkaEqPHeDKksMFbacZWbjQix1hNH4SDZI0zneveJ
+         pY1L+Jksj0DNcGmM0VD8DrdMe07s56PSrmpWVF2q97iYj4zjFpwXpeH1rBOpmVKHJ+ba
+         sQtWjymrSDd1DK/TVjRA049weJexV5hQsYAehJzR1B0Tk57pO+HL85+iYFQ72iiag+vf
+         pCaQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=nerYHUdRdbYFzlQjp5pBoYJPHBZ2ZgnUm5+kWyeZxBY=;
+        b=n5RZWRaUB+pdf1XqQQOQcTBwUX9NCRBQSz90Y3o38UfnVTs3rTziVO61YOUUDZ3yPE
+         +QuE3NBSugLOqOXUhvNrFiCyakaLwpSfKAJgdT13YMQ2znR34qoC9NsUC00ZYcCFnn6J
+         q0mb7SBfrawDEKhJEIiU5rZ2IlRo23DGa/izSfB46xtgU6bkQJ6tcHtDnJXD+lvuzn4R
+         Mrczp+sjAplVUCfyYvD+WyOOZP8D5zh+C04h1R44pCg79GvngP9YQcIFRlZy8Ah69d6z
+         ECUy+ravzKqsRNMpFcgpPtCO/NcSOqZRobjI5I4VrTCFgCaiX84fxdr8yvS+tGnfd9CW
+         4Q2w==
+X-Gm-Message-State: AOAM532ZKeCQ19C4zFRvlaciVp3iRjRZum8xb6WoEi+9QuZ2S1Dsj7RN
+        5P8BtfZuhWpR6LSSmkIVbhfkgQ==
+X-Google-Smtp-Source: ABdhPJwypfzyjnmpuMLC/38I3EdRmDzEz0C1h58e8QbTD79cwWkNXJVGZpXVfOiEOIwzfxQFJzcT6w==
+X-Received: by 2002:a9d:190e:: with SMTP id j14mr287443ota.48.1628091766082;
+        Wed, 04 Aug 2021 08:42:46 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id q15sm446187otf.70.2021.08.04.08.42.45
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 04 Aug 2021 08:42:45 -0700 (PDT)
+Date:   Wed, 4 Aug 2021 10:42:43 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     rjw@rjwysocki.net, viresh.kumar@linaro.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] cpufreq: blacklist Qualcomm sm8150 in cpufreq-dt-platdev
+Message-ID: <YQq1c8UYb78qJjxm@builder.lan>
+References: <20210804133451.2503674-1-thara.gopinath@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210804133451.2503674-1-thara.gopinath@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Zijun,
+On Wed 04 Aug 08:34 CDT 2021, Thara Gopinath wrote:
 
-> we have different factory to produce wcn6855 soc chip, so we should use
-> different nvm file with surfix to distinguish them.
-
-I think you mean suffix and not surfix.
-
+> The Qualcomm sm8150 platform uses the qcom-cpufreq-hw driver, so
+> add it to the cpufreq-dt-platdev driver's blocklist.
 > 
-> Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
 > ---
-> drivers/bluetooth/btusb.c | 30 +++++++++++++++++++++++++-----
-> 1 file changed, 25 insertions(+), 5 deletions(-)
+>  drivers/cpufreq/cpufreq-dt-platdev.c | 1 +
+>  1 file changed, 1 insertion(+)
 > 
-> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-> index b1a05bb9f4bf..cc9618575ab4 100644
-> --- a/drivers/bluetooth/btusb.c
-> +++ b/drivers/bluetooth/btusb.c
-> @@ -4013,6 +4013,9 @@ static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
-> #define QCA_DFU_TIMEOUT		3000
-> #define QCA_FLAG_MULTI_NVM      0x80
+> diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c b/drivers/cpufreq/cpufreq-dt-platdev.c
+> index 9d5a38a91f10..231e585f6ba2 100644
+> --- a/drivers/cpufreq/cpufreq-dt-platdev.c
+> +++ b/drivers/cpufreq/cpufreq-dt-platdev.c
+> @@ -141,6 +141,7 @@ static const struct of_device_id blocklist[] __initconst = {
+>  	{ .compatible = "qcom,sc7280", },
+>  	{ .compatible = "qcom,sc8180x", },
+>  	{ .compatible = "qcom,sdm845", },
+> +	{ .compatible = "qcom,sm8150", },
+>  
+>  	{ .compatible = "st,stih407", },
+>  	{ .compatible = "st,stih410", },
+> -- 
+> 2.25.1
 > 
-> +#define WCN6855_2_0_RAM_VERSION_GF 0x400c1200
-> +#define WCN6855_2_1_RAM_VERSION_GF 0x400c1211
-> +
-> struct qca_version {
-> 	__le32	rom_version;
-> 	__le32	patch_version;
-> @@ -4044,6 +4047,7 @@ static const struct qca_device_info qca_devices_table[] = {
-> 	{ 0x00000302, 28, 4, 16 }, /* Rome 3.2 */
-> 	{ 0x00130100, 40, 4, 16 }, /* WCN6855 1.0 */
-> 	{ 0x00130200, 40, 4, 16 }, /* WCN6855 2.0 */
-> +	{ 0x00130201, 40, 4, 16 }, /* WCN6855 2.1 */
-> };
-> 
-> static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 request,
-> @@ -4209,12 +4213,28 @@ static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
-> 	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
-> 		/* if boardid equal 0, use default nvm without surfix */
-> 		if (le16_to_cpu(ver->board_id) == 0x0) {
-> -			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
-> -				 le32_to_cpu(ver->rom_version));
-> +			/* if ram version is for gf factory, we should add surfix gf to
-> +			 * distinguish with default one .
-> +			 */
-> +			if (ver->ram_version == WCN6855_2_0_RAM_VERSION_GF ||
-> +					ver->ram_version == WCN6855_2_1_RAM_VERSION_GF) {
-
-You need fix the coding style for multi-line if-clauses.
-
-> +				snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_gf.bin",
-> +					 le32_to_cpu(ver->rom_version));
-> +			} else {
-> +				snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
-> +					 le32_to_cpu(ver->rom_version));
-> +			}
-> 		} else {
-> -			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_%04x.bin",
-> -				le32_to_cpu(ver->rom_version),
-> -				le16_to_cpu(ver->board_id));
-> +			if (ver->ram_version == WCN6855_2_0_RAM_VERSION_GF ||
-> +					ver->ram_version == WCN6855_2_1_RAM_VERSION_GF) {
-> +				snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_gf_%04x.bin",
-> +					le32_to_cpu(ver->rom_version),
-> +					le16_to_cpu(ver->board_id));
-> +			} else {
-> +				snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_%04x.bin",
-> +					le32_to_cpu(ver->rom_version),
-> +					le16_to_cpu(ver->board_id));
-> +			}
-> 		}
-
-That said, can you just sit down and re-think this code. I am pretty sure there will be another factory at some point and then this code becomes too complex. Check if you could use a table for this.
-
-Regards
-
-Marcel
-
