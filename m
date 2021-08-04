@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 261033E0A4F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Aug 2021 00:23:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9BBBA3E0A70
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Aug 2021 00:34:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233601AbhHDWYL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Aug 2021 18:24:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50498 "EHLO
+        id S229674AbhHDWe7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Aug 2021 18:34:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52958 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232140AbhHDWYK (ORCPT
+        with ESMTP id S229464AbhHDWe7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Aug 2021 18:24:10 -0400
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D78CC0613D5
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Aug 2021 15:23:57 -0700 (PDT)
-Received: by mail-ot1-x334.google.com with SMTP id a5-20020a05683012c5b029036edcf8f9a6so3153559otq.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Aug 2021 15:23:57 -0700 (PDT)
+        Wed, 4 Aug 2021 18:34:59 -0400
+Received: from mail-oo1-xc34.google.com (mail-oo1-xc34.google.com [IPv6:2607:f8b0:4864:20::c34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 11DE8C0613D5
+        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Aug 2021 15:34:46 -0700 (PDT)
+Received: by mail-oo1-xc34.google.com with SMTP id e3-20020a4ab9830000b029026ada3b6b90so863148oop.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Aug 2021 15:34:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=P0CPMUoEGq9kX0RjyLZJhNu8qld5+9Q37QY3TTkajhU=;
-        b=RKgpdrx6mJl0U7X86Kem7vK58ksGiKltCbcIDfvTfll0rVb9LvwSaP8XMpHHSqFCtR
-         BoCFo6mB0rSnIHWAoNl4jWBkDYn5ymiczVJwtElEXZX0u1M2CXnSpNYC2TXmTsbC5l1P
-         ++6ZUVngztxFgANTywsu6fuirozS07dfGW09c3fzLWlIVwRZk50xgcdfFXPO52ejA3Wd
-         6AnVgpEFDtmnA3kH9DzFYl42FGS989LVxHmVRey1Ea4r+tW/P6iYqVnYfT72HG9W8sOv
-         ZdEvq76a6FeKmWpReWSum3YXP6cnPp/uhoyXuWaQWduOMRfZktqsOnW89TU8QuJ9+ZRk
-         p+ug==
+        bh=UZJcNHJO4LQR36ixWf/ziwUjfQuMb7Mm0UXvd1Hg4gg=;
+        b=tYW3NQDOaoOAmJhieZdnjoNjyaKSHVE6lyBu/OX7HVPsqfng6qLWGieMImgOnYOTJi
+         cYngNaDNRi+IYluKEdjg2VZop0ieSPcf9B+mXmwNjeBrVp1v/38uzGbg7XC8EZm1aFpf
+         tiFQ8nlYg0YZzyumw/O9+hiqvT0Jw8ihLS6nbGMrj7vqKue0Uq1+aldnBbWl7OoZPXuz
+         kqWQZnQISxU2gZWw8cPt8ezEhjDk3bDetIIylfrpL7z3qftYHAcdSCW9pJSXTLw4UY2z
+         6YacG1MWStILNWzVOCNFqRAS0EY3KK/v9lETqF5C99PjApimrc+i7Gj6c0v1XBuA8Z++
+         0qYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=P0CPMUoEGq9kX0RjyLZJhNu8qld5+9Q37QY3TTkajhU=;
-        b=YG+/mmvTJ+zg7Zedpf4lQhGM5CvdOm7m1+W7hAkEzVSSi8Te3/BbXabxIo7jsngPRh
-         rUcunlrxoWlyQ+RkcWJAy3RxUiRjyvs1iPoM8hvw5IzZT453wCJL3s9HfqUYg1641sBb
-         XhY9S4JTP6Q0BpqE/OcKMfubWySO4YHh9A3JJwIbCQXvjoZB5GuqaCC5oVSGyjrl34X0
-         B1xvg+GYlHvlpnj1yoKK2yaWsy/KOE+vPRMjflwWmbaGtNJngKjWXAZqb/erelv/DheV
-         aTDHNMnMXs2X/j3QIraAuMzXn25ix/qaqqT3WLfaq6IIxqDSSzHiFiGXkwF+5/Lfx+G5
-         z/DQ==
-X-Gm-Message-State: AOAM533T7ihDHRs+wz+cslvqHJAUUfoHvIWZplDKqPU4q9XHfnbViAzi
-        3MFg2i7O+yzQyVK36OurpREWGA==
-X-Google-Smtp-Source: ABdhPJy8yLBbnn0sqDPowy4CJHcQSoKCKptt0aGcYQHL01ibu3htRaVO8hHifHBmycXOD+iZlETZ1A==
-X-Received: by 2002:a9d:3e08:: with SMTP id a8mr1366425otd.91.1628115836969;
-        Wed, 04 Aug 2021 15:23:56 -0700 (PDT)
+        bh=UZJcNHJO4LQR36ixWf/ziwUjfQuMb7Mm0UXvd1Hg4gg=;
+        b=mMxXX5PeXgGsOwOmISe6a/vuDL8kOBkw4X3j3JXKEUmH1lJZzYvkt5uGkSlE4mjPI/
+         RAG6PwIwqj/DhEL1xzQ113TyC8EjUW7FComp4lo4oWyoy0lgKlKozFTq5GU5Ku+x+QfS
+         187/878cPrln3L9btfsuwl+rONuKptvnROr0/mZOKrycbckt5CrGjIn8Cezx2x1DNUGE
+         27NMux+2MYHBc7DZv1NhjAqm1u6qkYYS/oiTSLEeVmTfRZxyH9H4LzsDt7xb0t/vjSfq
+         pY9pjxx+ZHvFI20CEqXCYyqizRc+SkdFpr7hLV5AWlTNkWilnTybwa1GpPMpCsqYr4O7
+         LjjQ==
+X-Gm-Message-State: AOAM533o3OrnPZofWGautthedOWu/3uDzZxr5LqvXxT/uKvHKHoqYuUe
+        v+oParYeaHBmA2h6nev1OqUOOQ==
+X-Google-Smtp-Source: ABdhPJzoI974+mp/rfGo+7Xq9nqrA8eJ6Be/tx/TkRzTQ2z3SwevKn0NJ4P732tpLcSoO/FyWG+urg==
+X-Received: by 2002:a4a:d812:: with SMTP id f18mr1073419oov.50.1628116485417;
+        Wed, 04 Aug 2021 15:34:45 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id a19sm696197oic.38.2021.08.04.15.23.56
+        by smtp.gmail.com with ESMTPSA id r15sm455538otn.33.2021.08.04.15.34.44
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 04 Aug 2021 15:23:56 -0700 (PDT)
-Date:   Wed, 4 Aug 2021 17:23:54 -0500
+        Wed, 04 Aug 2021 15:34:45 -0700 (PDT)
+Date:   Wed, 4 Aug 2021 17:34:43 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Len Baker <len.baker@gmx.com>
 Cc:     Kees Cook <keescook@chromium.org>, Andy Gross <agross@kernel.org>,
@@ -61,7 +61,7 @@ Cc:     Kees Cook <keescook@chromium.org>, Andy Gross <agross@kernel.org>,
         linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org
 Subject: Re: [PATCH v3] drivers/soc: Remove all strcpy() uses
-Message-ID: <YQsTesvLfAwd8z5B@builder.lan>
+Message-ID: <YQsWA0iyol+EWoPd@builder.lan>
 References: <20210801131958.6144-1-len.baker@gmx.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -77,19 +77,21 @@ On Sun 01 Aug 08:19 CDT 2021, Len Baker wrote:
 > could result in linear overflows beyond the end of the buffer, leading
 > to all kinds of misbehaviors. The safe replacement is strscpy().
 > 
-
-While this is true, are any of these uses of strcpy affected by its
-shortcomings?
-
 > Moreover, when the size of the destination buffer cannot be obtained
 > using "sizeof", use the memcpy function instead of strscpy.
 > 
-
-This is not why you're using memcpy, you're using it because you _know_
-how many bytes should be copied - because you just did a strlen() and
-allocated that amount of space.
-
 > Signed-off-by: Len Baker <len.baker@gmx.com>
+
+Forgot one thing, it's unclear who should pick this patch up and there's
+definitely a chance that it will cause merge conflicts regardless of
+whom of us end up picking it.
+
+Could you please split it so that the qcom, renesas and ti pieces can be
+picked up by respective maintainer?
+
+Thanks,
+Bjorn
+
 > ---
 > This is a task of the KSPP [1]
 > 
@@ -163,12 +165,6 @@ allocated that amount of space.
 > -		strcpy(req.service_path, pds->service_path);
 > +		strscpy(req.service_path, pds->service_path,
 > +			sizeof(req.service_path));
-
-There's no need to break this line.
-
-Thanks,
-Bjorn
-
 >  		addr = pds->addr;
 >  		break;
 >  	}
