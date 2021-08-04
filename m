@@ -2,124 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B8113DF882
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 01:30:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 59D503DF9BA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  4 Aug 2021 04:37:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233715AbhHCXay (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 3 Aug 2021 19:30:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49232 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233689AbhHCXax (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 3 Aug 2021 19:30:53 -0400
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 063DEC0613D5
-        for <linux-arm-msm@vger.kernel.org>; Tue,  3 Aug 2021 16:30:41 -0700 (PDT)
-Received: by mail-ot1-x334.google.com with SMTP id g5-20020a9d6b050000b02904f21e977c3eso69350otp.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 03 Aug 2021 16:30:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ZYjWA4Yy8yni7nAey7btenmGHZpQImUmJ+PCgx2CI6c=;
-        b=bVYqJBCLY4efufEFB2E8p9Y6SUVjXZJaUScEShKt71dFXvF7/GZLLCOoh1YUZ2k2P+
-         2RWIgKAzqdxMQsihrYyt+2QmR8q5Ui+rwuLSYU2wraL6QlAngaIsgnmwaXYgeOCarDRZ
-         ouC6nTYVuegkgQOV1yZypVmuVQOTNAYAgMA2B/91Gy+u+M82wNqKtiGVrSrszDm3IpVE
-         +InjYjyz7H7gwpvngvFN0PCQV3Yh0Xl4p7l7GkDx95PeH//fwHd6s09MFiLD6l4Hh4re
-         4WikR9UJukc/dH3luRoatBtut+jwCPdWb0pCANiGsQRph00h+rUNmY6Tt/TByXuUAp5b
-         TIIQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ZYjWA4Yy8yni7nAey7btenmGHZpQImUmJ+PCgx2CI6c=;
-        b=GS+hL8QJjKUMcjGRSR25sfeyTMY3osHgQpaA/ioSUQdnfl8Ea91spp3mu/1ycNSAzy
-         Gk0BU+oQ3jKG4/HHzvSequxaegQeGN/MzcBKcQQPgEsKhsVIWSIoQBsgO1QEtocSVO19
-         VhsM89S4dEnzphg9OsAyMhkyk12AEon1Iso+f76YmXuxJ4nWkfrkdJaVZ99xEJQ7/B0C
-         Nu7bh4C0ydzW68bHb4WsYtUDbjxQIayA+JUN8xKFbGkgW4Q/LcBID+rDNMcpIfXTr/d0
-         7h9H0O630BEq8ajAvf0+r3ueRObWRndiUwPkWzt/navnvWS7wtexuPE+2Ngf9VgIPGrH
-         bNcA==
-X-Gm-Message-State: AOAM530Jo5pNje6ta256LJet1VMygjHSLBgnoMfcjU905fM9fxXbJjSN
-        tuJUnhIXoHEEmdTmNA2hbHoozQ==
-X-Google-Smtp-Source: ABdhPJwMSHS5ss5KuHh+AzQJx+Ub//W7Wr3UaFgd7uxnMp+T0mzLzx/6ihujqjc0PYHJaQOfW46LHw==
-X-Received: by 2002:a05:6830:150e:: with SMTP id k14mr17217030otp.351.1628033440036;
-        Tue, 03 Aug 2021 16:30:40 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id n1sm102746otk.34.2021.08.03.16.30.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 03 Aug 2021 16:30:39 -0700 (PDT)
-Date:   Tue, 3 Aug 2021 18:30:37 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] pinctrl: pmic-mpp: Add missing dt-bindings mpp
- function defs
-Message-ID: <YQnRnUsrRfNh+WbB@builder.lan>
-References: <20210225213605.117201-1-konrad.dybcio@somainline.org>
+        id S234635AbhHDCh7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 3 Aug 2021 22:37:59 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:18939 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234506AbhHDCh7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 3 Aug 2021 22:37:59 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1628044667; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=AdSZAOo3QXrorQizvhdg24/idcUVBek6kZg6Gp4D9Vc=; b=gdqkbvH2sAPM3pRUJZmazNGON9Ba6PJftX3dsiiuHHxwdMXKGK1aGW/Z1pMCV8VkGty7sUv4
+ E3lRVKjP0m50i76Kf7KWrBAKbaInV8VBdNXNmV/nvP0ASXv0OqPECf0SuyAFwEXuiqVaWJ5a
+ 3sQeGcaV5YSmW6Wv1YnGq33AZDk=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 6109fd64ebcbc9cec91f3964 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 04 Aug 2021 02:37:24
+ GMT
+Sender: luoj=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 4CAB6C43144; Wed,  4 Aug 2021 02:37:24 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [10.253.66.187] (unknown [180.166.53.21])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: luoj)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8E5D9C433F1;
+        Wed,  4 Aug 2021 02:37:20 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8E5D9C433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=luoj@codeaurora.org
+Subject: Re: [PATCH 3/3] dt-bindings: net: rename Qualcomm IPQ MDIO bindings
+To:     Andrew Lunn <andrew@lunn.ch>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Heiner Kallweit <hkallweit1@gmail.com>,
+        David Miller <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Gross, Andy" <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Robert Marko <robert.marko@sartura.hr>,
+        netdev <netdev@vger.kernel.org>, linux-kernel@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        devicetree@vger.kernel.org, Sricharan <sricharan@codeaurora.org>
+References: <20210729125358.5227-1-luoj@codeaurora.org>
+ <20210729125358.5227-3-luoj@codeaurora.org>
+ <CAL_Jsq+=Vyy7_EQ_A7JW4ZfqpPU=6eCyUYMnPORChGvefw-yTA@mail.gmail.com>
+ <7873e70dcf4fe749521bd9c985571742@codeaurora.org> <YQf1jdsUc8S7tTBy@lunn.ch>
+From:   Jie Luo <luoj@codeaurora.org>
+Message-ID: <0eb8f82a-c03c-8ec5-7ac4-7835dd935c73@codeaurora.org>
+Date:   Wed, 4 Aug 2021 10:37:18 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210225213605.117201-1-konrad.dybcio@somainline.org>
+In-Reply-To: <YQf1jdsUc8S7tTBy@lunn.ch>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 25 Feb 15:36 CST 2021, Konrad Dybcio wrote:
 
-> From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> 
-> The pinctrl-spmi-mpp driver supports setting more mpp functions
-> than the ones defined in the dt-bindings header, specifically,
-> digital, analog and sink.
-> 
-> To follow the current way of specifying the function config
-> in Device-Tree, add the missing three definitions in the
-> appropriate dt-bindings header as:
-> GPIO_MPP_FUNC_{DIGITAL,ANALOG,SINK}.
-> 
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+On 8/2/2021 9:39 PM, Andrew Lunn wrote:
+>>> since the phylib code can't satisfy resetting PHY in IPQ chipset, phylib
+>>> resets phy by
+>>> configuring GPIO output value to 1, then to 0. however the PHY reset in
+>>> IPQ chipset need
+>>> to configuring GPIO output value to 0, then to 1 for the PHY reset, so i
+>>> put the phy-reset-gpios here.
+> Look at the active low DT property of a GPIO.
+>
+>       Andrew
 
-I noticed that this has not been picked up yet.
-
-As changes to these files typically goes through the respective
-maintainer's tree I think it would be good if you pick up the acks and
-resend them.
-
-Also patch 1 and 2 has no real relationship, and per above request would
-be picked by two different maintainers, so please post them separately
-instead.
-
-PS. I merged the Tone dts using the strings instead of the defines
-(which I still prefer over using these defines).
-
-Regards,
-Bjorn
-
-> ---
->  include/dt-bindings/pinctrl/qcom,pmic-mpp.h | 3 +++
->  1 file changed, 3 insertions(+)
-> 
-> diff --git a/include/dt-bindings/pinctrl/qcom,pmic-mpp.h b/include/dt-bindings/pinctrl/qcom,pmic-mpp.h
-> index 32e66ee7e830..3cdca7ee1b3f 100644
-> --- a/include/dt-bindings/pinctrl/qcom,pmic-mpp.h
-> +++ b/include/dt-bindings/pinctrl/qcom,pmic-mpp.h
-> @@ -98,6 +98,9 @@
->  /* To be used with "function" */
->  #define PMIC_MPP_FUNC_NORMAL		"normal"
->  #define PMIC_MPP_FUNC_PAIRED		"paired"
-> +#define PMIC_MPP_FUNC_DIGITAL		"digital"
-> +#define PMIC_MPP_FUNC_ANALOG		"analog"
-> +#define PMIC_MPP_FUNC_SINK		"sink"
->  #define PMIC_MPP_FUNC_DTEST1		"dtest1"
->  #define PMIC_MPP_FUNC_DTEST2		"dtest2"
->  #define PMIC_MPP_FUNC_DTEST3		"dtest3"
-> -- 
-> 2.30.1
-> 
+> thanks Andrew, will update it in the next patch set.
