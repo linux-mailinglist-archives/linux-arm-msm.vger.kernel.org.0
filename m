@@ -2,114 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 750F83E102E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Aug 2021 10:23:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 85DA23E1071
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Aug 2021 10:38:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237055AbhHEIXX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Aug 2021 04:23:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42508 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232358AbhHEIXX (ORCPT
+        id S237556AbhHEIiR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Aug 2021 04:38:17 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:32954 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237891AbhHEIiQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Aug 2021 04:23:23 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B923BC0613C1
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Aug 2021 01:23:08 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id g30so5235217lfv.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Aug 2021 01:23:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=+e6CGQXxPMJe6R9jF7UtUP2EM2nwkAeOu++SZ0r1h48=;
-        b=g9Fw9rp8HJt6YVrjbNKeYQ1cxVRtK7R5x5yue0bGcwObp8XT8wnN1ueN0WXsG0n46f
-         hJtSGe20wDlez9DuciC9s+qlj4cmcdzZ+oVIymjn3Q3IQhU7zhoft9qfOpmHlSZYhIxJ
-         jCN/BeTXg3D3L/XQuJdM3DSCT7/P3KFXDJcYKPza+o7lLDyn2iFtMQyThi6k1g749Go9
-         pjt2FCuQ0EwfxacwyBIZvcZqGDT2MwhoULpYjSx0CfoCY6YYZFl9Fdp0l7mlN2eTpVCn
-         h0IPLKTpJ0fMHtpT7TsyuuRGsE311a+5PgEy0+im9sj5WD1OOa+3+hKnyNEDVkQJ71Fz
-         5btQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=+e6CGQXxPMJe6R9jF7UtUP2EM2nwkAeOu++SZ0r1h48=;
-        b=IPQAKrDDMbIDNv3owkmZZVI+1T6eJBDvDXNzVgVInTcXtbMBi9KXth0nQI6GrNi1C2
-         9KbwY/luubj6SeOVfspcoEUNt5BVTIlT8T632gtVveeaIhcjPWnOIt9dsKbggACHp8nT
-         hxBYnHSGQ43+1nFlyrRGuyQNgIVedTBlrpAiuzurV1eBN/F5MxqpUwe/FW8M/51v1KsQ
-         XhVrPjBaAm9IEkozo+LFNVbtCnD7EmehC1FrMEXlL01T4NijNnguptFPPYAd9/gKd5KC
-         r9Lg2oTA4GCbVRyzZyLgwT0JwttJhLciFCUpnZ0NuHdm9JjbkjyEMbyXrc9UhJs6iVBd
-         qWXw==
-X-Gm-Message-State: AOAM531wpMpvijcNt1/NxELlYF9hFd5k4GMvR/jmNsSxge2/n/HKH+xm
-        w5zrxO8nmO471SlgeS8MOcn5Zg==
-X-Google-Smtp-Source: ABdhPJy/d8s2887ufCuc62214Nvv1BektY4zjKTu/arCogjXCRDEpuyLUIGwPdFqdI23mNRuLRdaqw==
-X-Received: by 2002:ac2:569e:: with SMTP id 30mr2756171lfr.322.1628151787049;
-        Thu, 05 Aug 2021 01:23:07 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id w10sm440434lfa.66.2021.08.05.01.23.06
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Aug 2021 01:23:06 -0700 (PDT)
-Subject: Re: [PATCH -next v2] drm/msm: Use list_move_tail instead of
- list_del/list_add_tail in msm_gem.c
-To:     Baokun Li <libaokun1@huawei.com>, linux-kernel@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?Q?Christian_K=c3=b6nig?= <christian.koenig@amd.com>
-Cc:     weiyongjun1@huawei.com, yuehaibing@huawei.com,
-        yangjihong1@huawei.com, yukuai3@huawei.com,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-media@vger.kernel.org,
-        linaro-mm-sig@lists.linaro.org, kernel-janitors@vger.kernel.org,
-        Hulk Robot <hulkci@huawei.com>
-References: <20210609072838.1369371-1-libaokun1@huawei.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <0ac0b93f-65f6-930b-a224-12ebf919ad9d@linaro.org>
-Date:   Thu, 5 Aug 2021 11:23:05 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
-MIME-Version: 1.0
-In-Reply-To: <20210609072838.1369371-1-libaokun1@huawei.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+        Thu, 5 Aug 2021 04:38:16 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1628152683; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=9j1i6zdq9v3q2hjc8uHb73v5+kXQdYw3WRLqtppFkG0=; b=kXWVo1dCgwbCss20W0zxe7u6ba8dg3D57o/v9iGzMSzoilHmlRww9ClXh2T4qDYzrDw5NDXv
+ tZUJwO33Sy2P2LMlhgr3uTrxRyS76T9t1mhswXaiAjD/TiNY/lp+bm5QGfU7l2K95uYQ1tcZ
+ IMJIc50RovRzsnEACqAclH2Uuhg=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 610ba35d8caa8fb7f5bc88cf (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 05 Aug 2021 08:37:49
+ GMT
+Sender: zijuhu=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C1D5DC4323A; Thu,  5 Aug 2021 08:37:49 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: zijuhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DC29EC433D3;
+        Thu,  5 Aug 2021 08:37:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org DC29EC433D3
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=zijuhu@codeaurora.org
+From:   Zijun Hu <zijuhu@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com
+Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
+        rjliao@codeaurora.org, zijuhu@codeaurora.org, tjiang@codeaurora.org
+Subject: [PATCH v2] Bluetooth: btusb: Add support different nvm to distinguish different factory for WCN6855 controller
+Date:   Thu,  5 Aug 2021 16:37:41 +0800
+Message-Id: <1628152661-5669-1-git-send-email-zijuhu@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/06/2021 10:28, Baokun Li wrote:
-> Using list_move_tail() instead of list_del() + list_add_tail() in msm_gem.c.
-> 
-> Reported-by: Hulk Robot <hulkci@huawei.com>
-> Signed-off-by: Baokun Li <libaokun1@huawei.com>
+From: Tim Jiang <tjiang@codeaurora.org>
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+we have different factory to produce wcn6855 soc chip, so we should
+use different nvm file with suffix to distinguish them.
 
-> ---
-> V1->V2:
-> 	CC mailist
-> 
->   drivers/gpu/drm/msm/msm_gem.c | 3 +--
->   1 file changed, 1 insertion(+), 2 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/msm_gem.c b/drivers/gpu/drm/msm/msm_gem.c
-> index 1865919368f2..5b7d63d3750a 100644
-> --- a/drivers/gpu/drm/msm/msm_gem.c
-> +++ b/drivers/gpu/drm/msm/msm_gem.c
-> @@ -854,8 +854,7 @@ void msm_gem_active_get(struct drm_gem_object *obj, struct msm_gpu *gpu)
->   		mutex_lock(&priv->mm_lock);
->   		if (msm_obj->evictable)
->   			mark_unevictable(msm_obj);
-> -		list_del(&msm_obj->mm_list);
-> -		list_add_tail(&msm_obj->mm_list, &gpu->active_list);
-> +		list_move_tail(&msm_obj->mm_list, &gpu->active_list);
->   		mutex_unlock(&priv->mm_lock);
->   	}
->   }
-> 
+Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
+---
+ drivers/bluetooth/btusb.c | 60 +++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 47 insertions(+), 13 deletions(-)
 
-
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index b1a05bb9f4bf..18b1ef2497ec 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -4013,6 +4013,9 @@ static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
+ #define QCA_DFU_TIMEOUT		3000
+ #define QCA_FLAG_MULTI_NVM      0x80
+ 
++#define WCN6855_2_0_RAM_VERSION_GF 0x400c1200
++#define WCN6855_2_1_RAM_VERSION_GF 0x400c1211
++
+ struct qca_version {
+ 	__le32	rom_version;
+ 	__le32	patch_version;
+@@ -4044,6 +4047,7 @@ static const struct qca_device_info qca_devices_table[] = {
+ 	{ 0x00000302, 28, 4, 16 }, /* Rome 3.2 */
+ 	{ 0x00130100, 40, 4, 16 }, /* WCN6855 1.0 */
+ 	{ 0x00130200, 40, 4, 16 }, /* WCN6855 2.0 */
++	{ 0x00130201, 40, 4, 16 }, /* WCN6855 2.1 */
+ };
+ 
+ static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 request,
+@@ -4198,6 +4202,42 @@ static int btusb_setup_qca_load_rampatch(struct hci_dev *hdev,
+ 	return err;
+ }
+ 
++static int btusb_setup_qca_form_nvm_name(char **fwname,
++					int max_size,
++					struct qca_version *ver,
++					char *factory)
++{
++	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
++		/* if boardid equal 0, use default nvm without suffix */
++		if (le16_to_cpu(ver->board_id) == 0x0) {
++			/* we add suffix factory to distinguish with different factory. */
++			if (factory != NULL) {
++				snprintf(*fwname, max_size, "qca/nvm_usb_%08x_%s.bin",
++					 le32_to_cpu(ver->rom_version),
++					 factory);
++			} else {
++				snprintf(*fwname, max_size, "qca/nvm_usb_%08x.bin",
++					 le32_to_cpu(ver->rom_version));
++			}
++		} else {
++			if (factory != NULL) {
++				snprintf(*fwname, max_size, "qca/nvm_usb_%08x_%s_%04x.bin",
++					le32_to_cpu(ver->rom_version),
++					factory,
++					le16_to_cpu(ver->board_id));
++			} else {
++				snprintf(*fwname, max_size, "qca/nvm_usb_%08x_%04x.bin",
++					le32_to_cpu(ver->rom_version),
++					le16_to_cpu(ver->board_id));
++			}
++		}
++	} else {
++		snprintf(*fwname, max_size, "qca/nvm_usb_%08x.bin",
++			 le32_to_cpu(ver->rom_version));
++	}
++
++}
++
+ static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
+ 				    struct qca_version *ver,
+ 				    const struct qca_device_info *info)
+@@ -4206,19 +4246,13 @@ static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
+ 	char fwname[64];
+ 	int err;
+ 
+-	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
+-		/* if boardid equal 0, use default nvm without surfix */
+-		if (le16_to_cpu(ver->board_id) == 0x0) {
+-			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
+-				 le32_to_cpu(ver->rom_version));
+-		} else {
+-			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_%04x.bin",
+-				le32_to_cpu(ver->rom_version),
+-				le16_to_cpu(ver->board_id));
+-		}
+-	} else {
+-		snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
+-			 le32_to_cpu(ver->rom_version));
++	switch (ver->ram_version) {
++	case WCN6855_2_0_RAM_VERSION_GF:
++	case WCN6855_2_1_RAM_VERSION_GF:
++		btusb_setup_qca_form_nvm_name(&fwname, sizeof(fwname), ver, "gf");
++		break;
++	default:
++		btusb_setup_qca_form_nvm_name(&fwname, sizeof(fwname), ver, NULL);
+ 	}
+ 
+ 	err = request_firmware(&fw, fwname, &hdev->dev);
 -- 
-With best wishes
-Dmitry
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+
