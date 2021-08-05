@@ -2,67 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0750B3E10C4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Aug 2021 11:05:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BD243E10C5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Aug 2021 11:05:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238882AbhHEJFU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Aug 2021 05:05:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52026 "EHLO
+        id S238889AbhHEJFs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Aug 2021 05:05:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52138 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231865AbhHEJFS (ORCPT
+        with ESMTP id S231865AbhHEJFr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Aug 2021 05:05:18 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1AA7AC061765
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Aug 2021 02:05:04 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id b6so9645426lff.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Aug 2021 02:05:04 -0700 (PDT)
+        Thu, 5 Aug 2021 05:05:47 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AB53C061765
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Aug 2021 02:05:33 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id b21so6095657ljo.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Aug 2021 02:05:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=5PRfgYn/vuEbpxsqmKFuKF8ZxLKRXFL1Tv9NQB4Z3Gc=;
-        b=ht4mgpRBFefq81TSXz4DiomH256ilky1UstTt6UK84dug3aVT3ydz2dYHnqevk/Poa
-         hrcwxxIdwtl8KuRulxeslIcjkdFHyEEYCDOqR6B0ZW0lPMPBZlq6yQaBmLFsqUILu8pu
-         vzjxY1V5ZZKMX2avicgU/5CMaLw5cgpnO8vJLdO3qcmbIynlMYIOfvu4K4m6e3GEnnRr
-         HdjuYb4+sbS8y+vXMy5ib5yL3gusGak3KtGO0EplZVMIMNhVoyloWqxG4N+L7QcPzBKf
-         SPsl/CVI5/PQ/qYDwk1aGtohc3B2v3kDoZuyhSkAmW8ctoBi/p8TfC7/pqXqf42ithkD
-         siHg==
+        bh=5vTGasZl7PnPp0SXYS1aJUXhqUIJE0dOsjTw6yM2pVs=;
+        b=pumne5xgkS/vaAiILRe0IiVIKXCWEHr8wSCCU0/DCPrsIt+K4m5IRrrL0q7tr/r8zj
+         uUL9HH1M2XzAKGYicVTLkgdP2Cu3L1xB8DTjIn/ah0H3Xa5mPKFUcP+y52zkm6YmMcrS
+         tunju7CNYHcZWI3HmYRZi4vntL40ABt+pNr1X2RDaILs/P9423QHKV3PajjmSk8RbxQk
+         aFWK3fQJhoMz0v9QYejI05W1JXDg2WJubuv5QeFUCU4vsYfi5jQF5wNzUdmx0/1p/KMX
+         Of9vIS6pfE4Zu2nByTBW/UEuNaQaUlzaRq6m6/lPP6GHvLNTRKpczfVBJGtZsgY7Is1M
+         ud7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=5PRfgYn/vuEbpxsqmKFuKF8ZxLKRXFL1Tv9NQB4Z3Gc=;
-        b=oO4Vh1qv4fRW9aBscL8uVIvLN/Gb+tfD25VjpFZreLx0wPV7HJ5booW8A0lX7I0wNP
-         Hal2v2t8DxdvXwCYdrE4P1whK5YugNcmP61JQn0nxsJeVgMdCdrMI0N355cayZ9SjFsF
-         cMaOO/gipbC0i/fFImWBFeiZx7LqIj5ORp8hH/My0qTqngsKPuBC68XWH/ecFhbdmRz1
-         Y5pT3wszEEzOCj54nrO6vv0YOK4rzmdKaSy9NDDoNK4c6SDUPY8Ri5qTp9Ho2OW29BtT
-         HzQtb8VkYAgG6rN9sE6KmEO7i10TZQBUkV8+GjKURZYNWAmC4pOVSR+Xb/XNWc2RFsR9
-         BXfw==
-X-Gm-Message-State: AOAM531+fym+akV1nx/uCw/PO48xB6+89sUSlwn2GXty5PQh6Z/dr+jV
-        GJCbJZzcNGachDKu0DoXRsXur3hzB7QYvQ==
-X-Google-Smtp-Source: ABdhPJxfSjt2wJRM+9CpldJ1w4MmICthHJ1/0XuDQy9EY3TKrsyWr8DYTe4jaM76DbjD5T7Axt+iLw==
-X-Received: by 2002:ac2:5d45:: with SMTP id w5mr2837482lfd.642.1628154300859;
-        Thu, 05 Aug 2021 02:05:00 -0700 (PDT)
+        bh=5vTGasZl7PnPp0SXYS1aJUXhqUIJE0dOsjTw6yM2pVs=;
+        b=tgTMChpPyrg5lYQEA/hAPl8NroPvu4KXczzjpJ/nvDE/oQXyV9Y5YCbJQX2XueP/+W
+         oc59+JSZnYI8eQUqZYblX4WXZndgJFmS+3JlIbD0PDK4IDxABkD5RoL5PpBaBxMUXNf6
+         3bjaJJsOBzvSa80gYo35hRMUq+LvY+7JDrBp7d0wAPbz8ejHP8Uk8UEXOkXIR6EZMhga
+         iFewMQ6IS8UfZLYXKQBZk4l+M82GjpxI5CVd+zg+NybrR+7dA6UheFJFFrgmwTtOUKG7
+         05J/foXOA9l+w2WOhbDvT/BSW7SKKh9h5LlPPIvPbLrAnsNaBMxXRZryGuJVsJj6g6n+
+         kcsQ==
+X-Gm-Message-State: AOAM530/53H8hUGF64+bLd5RjUCbFhudQ4SlNZSUFixbRVSdFT7FgMea
+        yZh+wU5BhgxZLBAz4F9OK0ADn04NBaLoug==
+X-Google-Smtp-Source: ABdhPJwAKvMp7MZAmeQqRaIZVdeMrRexXq477qnwq54YJ2lG+7ZS34CiIb6/Thf6bE9AkKFv9XM+9Q==
+X-Received: by 2002:a2e:81d1:: with SMTP id s17mr2458334ljg.272.1628154331602;
+        Thu, 05 Aug 2021 02:05:31 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id r20sm374334ljp.126.2021.08.05.02.05.00
+        by smtp.gmail.com with ESMTPSA id t30sm448320lfg.289.2021.08.05.02.05.31
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 05 Aug 2021 02:05:00 -0700 (PDT)
-Subject: Re: [PATCH 1/2] drm/msm/mdp4: refactor HW revision detection into
- read_mdp_hw_revision
+        Thu, 05 Aug 2021 02:05:31 -0700 (PDT)
+Subject: Re: [PATCH 2/2] drm/msm/mdp4: move HW revision detection to earlier
+ phase
 To:     David Heidelberg <david@ixit.cz>,
         Jonathan Marek <jonathan@marek.ca>,
         robdclark <robdclark@chromium.org>
 Cc:     linux-arm-msm@vger.kernel.org
 References: <20210705231641.315804-1-david@ixit.cz>
+ <20210705231641.315804-2-david@ixit.cz>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <270d29a8-484f-3580-edc8-37402d029cd2@linaro.org>
-Date:   Thu, 5 Aug 2021 12:04:59 +0300
+Message-ID: <3ce263c3-cda8-5070-2c32-7a3ac467853b@linaro.org>
+Date:   Thu, 5 Aug 2021 12:05:30 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.12.0
 MIME-Version: 1.0
-In-Reply-To: <20210705231641.315804-1-david@ixit.cz>
+In-Reply-To: <20210705231641.315804-2-david@ixit.cz>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
@@ -71,69 +72,109 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 06/07/2021 02:16, David Heidelberg wrote:
-> Inspired by MDP5 code.
-> Also use DRM_DEV_INFO for MDP version as MDP5 does.
+> Fixes if condition, which never worked inside mdp4_kms_init, since
+> HW detection has been done later in mdp4_hw_init.
 > 
-> Cosmetic change: uint32_t -> u32 - checkpatch suggestion.
+> Fixes: eb2b47bb9a03 ("drm/msm/mdp4: only use lut_clk on mdp4.2+")
 > 
 > Signed-off-by: David Heidelberg <david@ixit.cz>
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 > ---
->   drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 27 ++++++++++++++++--------
->   1 file changed, 18 insertions(+), 9 deletions(-)
+>   drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 45 ++++++++++++------------
+>   1 file changed, 22 insertions(+), 23 deletions(-)
 > 
 > diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-> index 4a5b518288b0..3a7a01d801aa 100644
+> index 3a7a01d801aa..0712752742f4 100644
 > --- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
 > +++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-> @@ -19,20 +19,13 @@ static int mdp4_hw_init(struct msm_kms *kms)
+> @@ -19,23 +19,12 @@ static int mdp4_hw_init(struct msm_kms *kms)
 >   {
 >   	struct mdp4_kms *mdp4_kms = to_mdp4_kms(to_mdp_kms(kms));
 >   	struct drm_device *dev = mdp4_kms->dev;
-> -	uint32_t version, major, minor, dmap_cfg, vg_cfg;
-> +	u32 major, minor, dmap_cfg, vg_cfg;
+> -	u32 major, minor, dmap_cfg, vg_cfg;
+> +	u32 dmap_cfg, vg_cfg;
 >   	unsigned long clk;
 >   	int ret = 0;
 >   
 >   	pm_runtime_get_sync(dev->dev);
 >   
-> -	mdp4_enable(mdp4_kms);
-> -	version = mdp4_read(mdp4_kms, REG_MDP4_VERSION);
-> -	mdp4_disable(mdp4_kms);
+> -	read_mdp_hw_revision(mdp4_kms, &major, &minor);
 > -
-> -	major = FIELD(version, MDP4_VERSION_MAJOR);
-> -	minor = FIELD(version, MDP4_VERSION_MINOR);
+> -	if (major != 4) {
+> -		DRM_DEV_ERROR(dev->dev, "unexpected MDP version: v%d.%d\n",
+> -				major, minor);
+> -		ret = -ENXIO;
+> -		goto out;
+> -	}
 > -
-> -	DBG("found MDP4 version v%d.%d", major, minor);
-> +	read_mdp_hw_revision(mdp4_kms, &major, &minor);
+> -	mdp4_kms->rev = minor;
+> -
+>   	if (mdp4_kms->rev > 1) {
+>   		mdp4_write(mdp4_kms, REG_MDP4_CS_CONTROLLER0, 0x0707ffff);
+>   		mdp4_write(mdp4_kms, REG_MDP4_CS_CONTROLLER1, 0x03073f3f);
+> @@ -81,7 +70,6 @@ static int mdp4_hw_init(struct msm_kms *kms)
+>   	if (mdp4_kms->rev > 1)
+>   		mdp4_write(mdp4_kms, REG_MDP4_RESET_STATUS, 1);
 >   
->   	if (major != 4) {
->   		DRM_DEV_ERROR(dev->dev, "unexpected MDP version: v%d.%d\n",
-> @@ -411,6 +404,22 @@ static int modeset_init(struct mdp4_kms *mdp4_kms)
+> -out:
+>   	pm_runtime_put_sync(dev->dev);
+>   
 >   	return ret;
->   }
+> @@ -428,6 +416,7 @@ struct msm_kms *mdp4_kms_init(struct drm_device *dev)
+>   	struct msm_kms *kms = NULL;
+>   	struct msm_gem_address_space *aspace;
+>   	int irq, ret;
+> +	u32 major, minor;
 >   
-> +static void read_mdp_hw_revision(struct mdp4_kms *mdp4_kms,
-> +				 u32 *major, u32 *minor)
-> +{
-> +	struct drm_device *dev = mdp4_kms->dev;
-> +	u32 version;
+>   	mdp4_kms = kzalloc(sizeof(*mdp4_kms), GFP_KERNEL);
+>   	if (!mdp4_kms) {
+> @@ -488,15 +477,6 @@ struct msm_kms *mdp4_kms_init(struct drm_device *dev)
+>   	if (IS_ERR(mdp4_kms->pclk))
+>   		mdp4_kms->pclk = NULL;
+>   
+> -	if (mdp4_kms->rev >= 2) {
+> -		mdp4_kms->lut_clk = devm_clk_get(&pdev->dev, "lut_clk");
+> -		if (IS_ERR(mdp4_kms->lut_clk)) {
+> -			DRM_DEV_ERROR(dev->dev, "failed to get lut_clk\n");
+> -			ret = PTR_ERR(mdp4_kms->lut_clk);
+> -			goto fail;
+> -		}
+> -	}
+> -
+>   	mdp4_kms->axi_clk = devm_clk_get(&pdev->dev, "bus_clk");
+>   	if (IS_ERR(mdp4_kms->axi_clk)) {
+>   		DRM_DEV_ERROR(dev->dev, "failed to get axi_clk\n");
+> @@ -505,8 +485,27 @@ struct msm_kms *mdp4_kms_init(struct drm_device *dev)
+>   	}
+>   
+>   	clk_set_rate(mdp4_kms->clk, config->max_clk);
+> -	if (mdp4_kms->lut_clk)
 > +
-> +	mdp4_enable(mdp4_kms);
-> +	version = mdp4_read(mdp4_kms, REG_MDP4_VERSION);
-> +	mdp4_disable(mdp4_kms);
+> +	read_mdp_hw_revision(mdp4_kms, &major, &minor);
 > +
-> +	*major = FIELD(version, MDP4_VERSION_MAJOR);
-> +	*minor = FIELD(version, MDP4_VERSION_MINOR);
+> +	if (major != 4) {
+> +		DRM_DEV_ERROR(dev->dev, "unexpected MDP version: v%d.%d\n",
+> +			      major, minor);
+> +		ret = -ENXIO;
+> +		goto fail;
+> +	}
 > +
-> +	DRM_DEV_INFO(dev->dev, "MDP4 version v%d.%d", *major, *minor);
-> +}
+> +	mdp4_kms->rev = minor;
 > +
->   struct msm_kms *mdp4_kms_init(struct drm_device *dev)
->   {
->   	struct platform_device *pdev = to_platform_device(dev->dev);
+> +	if (mdp4_kms->rev >= 2) {
+> +		mdp4_kms->lut_clk = devm_clk_get(&pdev->dev, "lut_clk");
+> +		if (IS_ERR(mdp4_kms->lut_clk)) {
+> +			DRM_DEV_ERROR(dev->dev, "failed to get lut_clk\n");
+> +			ret = PTR_ERR(mdp4_kms->lut_clk);
+> +			goto fail;
+> +		}
+>   		clk_set_rate(mdp4_kms->lut_clk, config->max_clk);
+> +	}
+>   
+>   	pm_runtime_enable(dev->dev);
+>   	mdp4_kms->rpm_enabled = true;
 > 
 
 
