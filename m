@@ -2,116 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EC3013E1A46
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Aug 2021 19:20:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A4AD3E1AB7
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Aug 2021 19:47:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239104AbhHERUi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Aug 2021 13:20:38 -0400
-Received: from mail-0201.mail-europe.com ([51.77.79.158]:53776 "EHLO
-        mail-0201.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230107AbhHERUi (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Aug 2021 13:20:38 -0400
-Date:   Thu, 05 Aug 2021 17:19:44 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1628183990;
-        bh=Q0e3u15i1PAFg63iMP+b35YREVf5I1jWy7jkFOGimb8=;
-        h=Date:To:From:Cc:Reply-To:Subject:From;
-        b=ru/jpoHZaF0+zqT+SS4ttIG34OcfeGCHPEWs0dKerxQXDLOfUuaI2hp0WozBGeJKv
-         dNzBf9gsqozxYPNyykBCvGQ3xPNikduz2Tcj2NY7X/6eiat+/pXlVpdkUSHnL9IFmd
-         wyrbLFJ0ejNonKCSS5y0XE/A6i7/iKV3KstOVdMY=
-To:     bjorn.andersson@linaro.org, sboyd@kernel.org
-From:   Sireesh Kodali <sireeshkodali@protonmail.com>
-Cc:     agross@kernel.org, mturquette@baylibre.com, robh+dt@kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Vladimir Lypak <junak.pub@gmail.com>,
-        Adam Skladowski <a_skl39@protonmail.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Sireesh Kodali <sireeshkodali@protonmail.com>
-Reply-To: Sireesh Kodali <sireeshkodali@protonmail.com>
-Subject: [PATCH 2/2] clk: qcom: rpmcc: Add support for MSM8953 RPM clocks.
-Message-ID: <QZ0fkozlubDdc7CvqjZPhAviFmjJ28ht7Y4PT3rYM@cp4-web-038.plabs.ch>
+        id S240083AbhHERrr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Aug 2021 13:47:47 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:34877 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232692AbhHERrq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 5 Aug 2021 13:47:46 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1628185652; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=twDWcYvXpXMj28plsG6TYmw0mB6jklivM6KZ+CaQRIQ=;
+ b=sdroU9j43i1AQSb/bqMCjeyj69pQ45O5xD8Kdi/1nwTTZrmHTu9EYtHjkyI5cufCAh/CWN0X
+ yb6W1sWyizrFYCYCdWaLMnsHgmw3FiveU+Hf4gDctQm+WQRy3bc5hzDbFs3MnO9vSTQ8C8Jp
+ iqW+mrzmjGhR+OFyB74XKSRCz/A=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 610c242bb4dfc4b0efcbff54 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 05 Aug 2021 17:47:23
+ GMT
+Sender: sibis=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 7D896C433F1; Thu,  5 Aug 2021 17:47:22 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 56ED7C4338A;
+        Thu,  5 Aug 2021 17:47:20 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 05 Aug 2021 23:17:20 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     bjorn.andersson@linaro.org, mka@chromium.org, robh+dt@kernel.org,
+        viresh.kumar@linaro.org, agross@kernel.org, rjw@rjwysocki.net,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        dianders@chromium.org, tdas@codeaurora.org
+Subject: Re: [PATCH 2/4] cpufreq: qcom: Re-arrange register offsets to support
+ per core L3 DCVS
+In-Reply-To: <CAE-0n53cH749NC9JPqJvMZGBQf47AZ3qY66eoqk2CiQHvuumkg@mail.gmail.com>
+References: <1627581885-32165-1-git-send-email-sibis@codeaurora.org>
+ <1627581885-32165-3-git-send-email-sibis@codeaurora.org>
+ <CAE-0n53cH749NC9JPqJvMZGBQf47AZ3qY66eoqk2CiQHvuumkg@mail.gmail.com>
+Message-ID: <352d549f40dfa2ae51589649652d2e97@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Vladimir Lypak <junak.pub@gmail.com>
+Stephen,
 
-Add definitions for RPM clocks used on MSM8953 platform.
+Thanks for taking time to review
+the series.
 
-Signed-off-by: Vladimir Lypak <junak.pub@gmail.com>
-Signed-off-by: Adam Skladowski <a_skl39@protonmail.com>
-Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Signed-off-by: Sireesh Kodali <sireeshkodali@protonmail.com>
----
- drivers/clk/qcom/clk-smd-rpm.c | 37 ++++++++++++++++++++++++++++++++++
- 1 file changed, 37 insertions(+)
+On 2021-08-05 00:31, Stephen Boyd wrote:
+> Quoting Sibi Sankar (2021-07-29 11:04:43)
+>> Qualcomm SoCs (starting with SM8350) support per core voting for L3 
+>> cache
+>> frequency.
+> 
+> And the L3 cache frequency voting code can't be put into this cpufreq
+> driver?
 
-diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.=
-c
-index 800b2fef1887..e99131016911 100644
---- a/drivers/clk/qcom/clk-smd-rpm.c
-+++ b/drivers/clk/qcom/clk-smd-rpm.c
-@@ -913,10 +913,47 @@ static const struct rpm_smd_clk_desc rpm_clk_sdm660 =
-=3D {
- =09.num_clks =3D ARRAY_SIZE(sdm660_clks),
- };
-=20
-+static struct clk_smd_rpm *msm8953_clks[] =3D {
-+=09[RPM_SMD_XO_CLK_SRC]=09=09=3D &sdm660_bi_tcxo,
-+=09[RPM_SMD_XO_A_CLK_SRC]=09=09=3D &sdm660_bi_tcxo_a,
-+=09[RPM_SMD_PCNOC_CLK]=09=09=3D &msm8916_pcnoc_clk,
-+=09[RPM_SMD_PCNOC_A_CLK]=09=09=3D &msm8916_pcnoc_a_clk,
-+=09[RPM_SMD_SNOC_CLK]=09=09=3D &msm8916_snoc_clk,
-+=09[RPM_SMD_SNOC_A_CLK]=09=09=3D &msm8916_snoc_a_clk,
-+=09[RPM_SMD_BIMC_CLK]=09=09=3D &msm8916_bimc_clk,
-+=09[RPM_SMD_BIMC_A_CLK]=09=09=3D &msm8916_bimc_a_clk,
-+=09[RPM_SMD_IPA_CLK]=09=09=3D &msm8976_ipa_clk,
-+=09[RPM_SMD_IPA_A_CLK]=09=09=3D &msm8976_ipa_a_clk,
-+=09[RPM_SMD_SYSMMNOC_CLK]=09=09=3D &msm8936_sysmmnoc_clk,
-+=09[RPM_SMD_SYSMMNOC_A_CLK]=09=3D &msm8936_sysmmnoc_a_clk,
-+=09[RPM_SMD_QDSS_CLK]=09=09=3D &msm8916_qdss_clk,
-+=09[RPM_SMD_QDSS_A_CLK]=09=09=3D &msm8916_qdss_a_clk,
-+=09[RPM_SMD_BB_CLK1]=09=09=3D &msm8916_bb_clk1,
-+=09[RPM_SMD_BB_CLK1_A]=09=09=3D &msm8916_bb_clk1_a,
-+=09[RPM_SMD_BB_CLK2]=09=09=3D &msm8916_bb_clk2,
-+=09[RPM_SMD_BB_CLK2_A]=09=09=3D &msm8916_bb_clk2_a,
-+=09[RPM_SMD_RF_CLK2]=09=09=3D &msm8916_rf_clk2,
-+=09[RPM_SMD_RF_CLK2_A]=09=09=3D &msm8916_rf_clk2_a,
-+=09[RPM_SMD_RF_CLK3]=09=09=3D &msm8992_ln_bb_clk,
-+=09[RPM_SMD_RF_CLK3_A]=09=09=3D &msm8992_ln_bb_a_clk,
-+=09[RPM_SMD_DIV_CLK2]=09=09=3D &msm8974_div_clk2,
-+=09[RPM_SMD_DIV_A_CLK2]=09=09=3D &msm8974_div_a_clk2,
-+=09[RPM_SMD_BB_CLK1_PIN]=09=09=3D &msm8916_bb_clk1_pin,
-+=09[RPM_SMD_BB_CLK1_A_PIN]=09=09=3D &msm8916_bb_clk1_a_pin,
-+=09[RPM_SMD_BB_CLK2_PIN]=09=09=3D &msm8916_bb_clk2_pin,
-+=09[RPM_SMD_BB_CLK2_A_PIN]=09=09=3D &msm8916_bb_clk2_a_pin,
-+};
-+
-+static const struct rpm_smd_clk_desc rpm_clk_msm8953 =3D {
-+=09.clks =3D msm8953_clks,
-+=09.num_clks =3D ARRAY_SIZE(msm8953_clks),
-+};
-+
- static const struct of_device_id rpm_smd_clk_match_table[] =3D {
- =09{ .compatible =3D "qcom,rpmcc-msm8226", .data =3D &rpm_clk_msm8974 },
- =09{ .compatible =3D "qcom,rpmcc-msm8916", .data =3D &rpm_clk_msm8916 },
- =09{ .compatible =3D "qcom,rpmcc-msm8936", .data =3D &rpm_clk_msm8936 },
-+=09{ .compatible =3D "qcom,rpmcc-msm8953", .data =3D &rpm_clk_msm8953 },
- =09{ .compatible =3D "qcom,rpmcc-msm8974", .data =3D &rpm_clk_msm8974 },
- =09{ .compatible =3D "qcom,rpmcc-msm8976", .data =3D &rpm_clk_msm8976 },
- =09{ .compatible =3D "qcom,rpmcc-msm8992", .data =3D &rpm_clk_msm8992 },
---=20
-2.32.0
+Yes, it could have gone either into
+the cpufreq driver or l3 interconnect
+provider driver. Taniya/Odelu preferred
+the latter, because of the need for other
+clients to vote for l3 frequencies in
+the future. The other option to prevent
+register re-arrangement would involve
+using syscons from the cpufreq node, which
+really wasn't necessary since there
+wasn't any register overlap between the
+two drivers.
 
+> 
+>> So, re-arrange the cpufreq register offsets to allow access for
+>> the L3 interconnect to implement per core control. Also prevent 
+>> binding
+>> breakage caused by register offset shuffling by using the 
+>> SM8250/SM8350
+>> EPSS compatible.
+>> 
+>> Fixes: 7dbd121a2c58 ("arm64: dts: qcom: sc7280: Add cpufreq hw node")
+>> Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+>> ---
+>>  drivers/cpufreq/qcom-cpufreq-hw.c | 23 +++++++++++++++++++----
+>>  1 file changed, 19 insertions(+), 4 deletions(-)
+>> 
+>> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c 
+>> b/drivers/cpufreq/qcom-cpufreq-hw.c
+>> index f86859bf76f1..74ef3b38343b 100644
+>> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
+>> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
+>> @@ -28,6 +28,7 @@ struct qcom_cpufreq_soc_data {
+>>         u32 reg_volt_lut;
+>>         u32 reg_perf_state;
+>>         u8 lut_row_size;
+>> +       bool skip_enable;
+>>  };
+>> 
+>>  struct qcom_cpufreq_data {
+>> @@ -257,19 +258,31 @@ static const struct qcom_cpufreq_soc_data 
+>> qcom_soc_data = {
+>>         .reg_volt_lut = 0x114,
+>>         .reg_perf_state = 0x920,
+>>         .lut_row_size = 32,
+>> +       .skip_enable = false,
+>>  };
+>> 
+>>  static const struct qcom_cpufreq_soc_data epss_soc_data = {
+>> +       .reg_freq_lut = 0x0,
+>> +       .reg_volt_lut = 0x100,
+>> +       .reg_perf_state = 0x220,
+>> +       .lut_row_size = 4,
+>> +       .skip_enable = true,
+>> +};
+>> +
+>> +static const struct qcom_cpufreq_soc_data epss_sm8250_soc_data = {
+>>         .reg_enable = 0x0,
+>>         .reg_freq_lut = 0x100,
+>>         .reg_volt_lut = 0x200,
+>>         .reg_perf_state = 0x320,
+>>         .lut_row_size = 4,
+>> +       .skip_enable = false,
+>>  };
+>> 
+>>  static const struct of_device_id qcom_cpufreq_hw_match[] = {
+>>         { .compatible = "qcom,cpufreq-hw", .data = &qcom_soc_data },
+>>         { .compatible = "qcom,cpufreq-epss", .data = &epss_soc_data },
+>> +       { .compatible = "qcom,sm8250-cpufreq-epss", .data = 
+>> &epss_sm8250_soc_data },
+>> +       { .compatible = "qcom,sm8350-cpufreq-epss", .data = 
+>> &epss_sm8250_soc_data },
+>>         {}
+>>  };
+>>  MODULE_DEVICE_TABLE(of, qcom_cpufreq_hw_match);
+>> @@ -334,10 +347,12 @@ static int qcom_cpufreq_hw_cpu_init(struct 
+>> cpufreq_policy *policy)
+>>         data->res = res;
+>> 
+>>         /* HW should be in enabled state to proceed */
+> 
+> It looks odd that we're no longer making sure that the clk domain is
+> enabled when we probe the driver. Why is that OK?
 
+On newer EPSS hw it's no longer
+required to perform the additional
+hw enable check. IIRC we don't do
+that on corresponding downstream
+kernels as well.
+
+> 
+>> -       if (!(readl_relaxed(base + data->soc_data->reg_enable) & 0x1)) 
+>> {
+>> -               dev_err(dev, "Domain-%d cpufreq hardware not 
+>> enabled\n", index);
+>> -               ret = -ENODEV;
+>> -               goto error;
+>> +       if (!data->soc_data->skip_enable) {
+>> +               if (!(readl_relaxed(base + data->soc_data->reg_enable) 
+>> & 0x1)) {
+>> +                       dev_err(dev, "Domain-%d cpufreq hardware not 
+>> enabled\n", index);
+>> +                       ret = -ENODEV;
+>> +                       goto error;
+>> +               }
+>>         }
+>> 
+
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
