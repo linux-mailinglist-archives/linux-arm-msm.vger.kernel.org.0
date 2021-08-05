@@ -2,110 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BCBE53E131D
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Aug 2021 12:47:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 628DB3E139B
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Aug 2021 13:13:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240541AbhHEKsG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Aug 2021 06:48:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47538 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240556AbhHEKrz (ORCPT
+        id S240731AbhHELNn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Aug 2021 07:13:43 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:44136 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240712AbhHELNl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Aug 2021 06:47:55 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A182C06179F
-        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Aug 2021 03:47:27 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id ec13so7769568edb.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Aug 2021 03:47:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=0nW6BUxnI6TMJMo1WltvrQ4AqMv928Ed54nT/6I6Mgc=;
-        b=kESKOMxUYcelz7HM18OazIQNnelJPkPp4bRWps3UliaFeiOxyYx1/3QCkERRsBA8wU
-         8ZavOyGiJEOH+N9YFOQnjoK3eiSnjhna91L1Nl2oVa1Im9lIvgNznhFGMzAStYwvm9d/
-         vNBehUeIQZOaKlykjrBz0eT5YNBZIyYply6MA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=0nW6BUxnI6TMJMo1WltvrQ4AqMv928Ed54nT/6I6Mgc=;
-        b=gNfk1AoZOWVV6IK4ysHAl6yT1fBRBVP/wMSutp1ALW8VANK0oPjyW2qUVaAdY36TNc
-         iG9K95Tx5DCTpx/sPsX2f5bRTQKJMV0DkapmM5UA+Qb6q6uNQjl4KYZwq/HgsNnTZoD0
-         ntgn02Vzza9qbKrvxOXRMmd3j3FJaH9+/kZdnnRJ0yifUAEj6HPnCGI+DyIHbI5DExN7
-         KFEYIDOiZJwwjpw0DEmjQcNsMupTilsMSQQal/joFWzGDJZ/u9dw5Yl+zAUICYq5Ddjp
-         cHjtdPQX3pQVqEegHeg4ToxTQDrtQNMf9mgRcaz2fvQJnlS99NGM2M8DPp4SJtx/rq5V
-         jTmg==
-X-Gm-Message-State: AOAM5321aFSMTN2VgQ4tLCesguUNYBLaJO7Ud+GUg0GNstDFbg+/zdy5
-        gktF/KXU3ec0+/lSaGxkOzcIKg==
-X-Google-Smtp-Source: ABdhPJyWr04CWCimxVfH49eigYJCVRGOcuvnO0amqFreQofVHnnHbSdvHVyVQAuSX0vwApjBSt4aKg==
-X-Received: by 2002:a05:6402:b82:: with SMTP id cf2mr5572534edb.71.1628160445836;
-        Thu, 05 Aug 2021 03:47:25 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id p5sm1578809ejl.73.2021.08.05.03.47.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 05 Aug 2021 03:47:25 -0700 (PDT)
-From:   Daniel Vetter <daniel.vetter@ffwll.ch>
-To:     DRI Development <dri-devel@lists.freedesktop.org>
-Cc:     Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: [PATCH v5 16/20] drm/msm: Don't break exclusive fence ordering
-Date:   Thu,  5 Aug 2021 12:47:01 +0200
-Message-Id: <20210805104705.862416-17-daniel.vetter@ffwll.ch>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210805104705.862416-1-daniel.vetter@ffwll.ch>
-References: <20210805104705.862416-1-daniel.vetter@ffwll.ch>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Thu, 5 Aug 2021 07:13:41 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1628162007; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=xjff8Tmc1+CdBA+c43ceQlXssXym0LJ97BXiIJyg4fw=; b=EB+MHmvnWT65sp/sUQTX/NbDFxn0ETGw+r8KRc0q63UgSbO2JulFKiJfZtz62gjKGQH/etu+
+ UpaXrV/WMtITaICHv3++GSTc8fLpK0NkkFW66QBmCIXIAgbLV6HjYsdrEDs+dP4O/qthuVmb
+ GoSIB8XWZ8lEULHkrOS9J6UuOS4=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 610bc7d73f1424817239d59c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 05 Aug 2021 11:13:27
+ GMT
+Sender: deesin=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id EDAE4C433D3; Thu,  5 Aug 2021 11:13:26 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from deesin-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: deesin)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 11DE9C433D3;
+        Thu,  5 Aug 2021 11:13:23 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 11DE9C433D3
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=deesin@codeaurora.org
+From:   Deepak Kumar Singh <deesin@codeaurora.org>
+To:     bjorn.andersson@linaro.org, swboyd@chromium.org,
+        clew@codeaurora.org, sibis@codeaurora.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org,
+        Deepak Kumar Singh <deesin@codeaurora.org>
+Subject: [PATCH V5 0/2] qcom aoss qmp_get and debugfs support patches
+Date:   Thu,  5 Aug 2021 16:42:52 +0530
+Message-Id: <1628161974-7182-1-git-send-email-deesin@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There's only one exclusive slot, and we must not break the ordering.
+[Changes from V4]
+Revert back to get_device/put_device based approach.
+Remove refcount and orphan variables in qmp handle.
+Use devres api for qmp handle allocation as removing refcount based approach
 
-Adding a new exclusive fence drops all previous fences from the
-dma_resv. To avoid violating the signalling order we err on the side of
-over-synchronizing by waiting for the existing fences, even if
-userspace asked us to ignore them.
+Deepak Kumar Singh (2):
+  soc: qcom: aoss: Expose send for generic usecase
+  soc: qcom: aoss: Add debugfs entry
 
-A better fix would be to us a dma_fence_chain or _array like e.g.
-amdgpu now uses, but
-- msm has a synchronous dma_fence_wait for anything from another
-  context, so doesn't seem to care much,
-- and it probably makes sense to lift this into dma-resv.c code as a
-  proper concept, so that drivers don't have to hack up their own
-  solution each on their own.
+ drivers/soc/qcom/qcom_aoss.c       | 86 +++++++++++++++++++++++++++++++++++++-
+ include/linux/soc/qcom/qcom_aoss.h | 38 +++++++++++++++++
+ 2 files changed, 123 insertions(+), 1 deletion(-)
+ create mode 100644 include/linux/soc/qcom/qcom_aoss.h
 
-v2: Improve commit message per Lucas' suggestion.
-
-Cc: Lucas Stach <l.stach@pengutronix.de>
-Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: freedreno@lists.freedesktop.org
----
- drivers/gpu/drm/msm/msm_gem_submit.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index fb5a2eab27a2..66633dfd58a2 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -330,7 +330,8 @@ static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
- 				return ret;
- 		}
- 
--		if (no_implicit)
-+		/* exclusive fences must be ordered */
-+		if (no_implicit && !write)
- 			continue;
- 
- 		ret = drm_sched_job_add_implicit_dependencies(&submit->base,
 -- 
-2.32.0
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
