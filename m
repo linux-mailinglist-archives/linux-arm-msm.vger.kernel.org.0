@@ -2,105 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A9683E0EBB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Aug 2021 08:59:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BC1BB3E0F03
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Aug 2021 09:19:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233428AbhHEG7l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Aug 2021 02:59:41 -0400
-Received: from guitar.tcltek.co.il ([192.115.133.116]:33813 "EHLO
-        mx.tkos.co.il" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229869AbhHEG7l (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Aug 2021 02:59:41 -0400
-Received: from tarshish (unknown [10.0.8.3])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mx.tkos.co.il (Postfix) with ESMTPS id 98680440AEE;
-        Thu,  5 Aug 2021 09:59:04 +0300 (IDT)
-References: <cover.1620203062.git.baruch@tkos.co.il>
-User-agent: mu4e 1.4.15; emacs 27.1
-From:   Baruch Siach <baruch@tkos.co.il>
-To:     Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Rob Herring <robh@kernel.org>,
-        Krzysztof =?utf-8?Q?Wilczy=C5=84ski?= <kw@linux.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Robert Marko <robert.marko@sartura.hr>,
-        devicetree@vger.kernel.org, linux-phy@lists.infradead.org,
-        linux-pci@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-tegra@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v2 0/6] arm64: IPQ6018 PCIe support
-In-reply-to: <cover.1620203062.git.baruch@tkos.co.il>
-Date:   Thu, 05 Aug 2021 09:58:57 +0300
-Message-ID: <87o8acxtqm.fsf@tarshish>
+        id S232182AbhHEHTU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Aug 2021 03:19:20 -0400
+Received: from relay12.mail.gandi.net ([217.70.178.232]:57539 "EHLO
+        relay12.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232009AbhHEHTH (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 5 Aug 2021 03:19:07 -0400
+Received: (Authenticated sender: thomas.perrot@bootlin.com)
+        by relay12.mail.gandi.net (Postfix) with ESMTPSA id 6C36420000C;
+        Thu,  5 Aug 2021 07:18:51 +0000 (UTC)
+Message-ID: <8d913179b1ec02ec20f1eece830743f1f0ffc793.camel@bootlin.com>
+Subject: Re: MHI driver issue with Sierra Wireless AirPrime EM919X
+From:   Thomas Perrot <thomas.perrot@bootlin.com>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Date:   Thu, 05 Aug 2021 09:18:50 +0200
+In-Reply-To: <CAMZdPi_+j9jDhZH7CTHWV5Hzw0X+=OCwz9F7doZpF8VH1nSHtg@mail.gmail.com>
+References: <1e288e5bee3f2a18e0ddb8b7a50158ecb793822d.camel@bootlin.com>
+         <CAMZdPi-qydatnYYLPY9pZ_4XNZOKB+GBVw2M5rqD1WuVEQLwOg@mail.gmail.com>
+         <4a9b0d64f1d7ead1f183b2ad0af32379e64d9b82.camel@bootlin.com>
+         <CAMZdPi-22FjHwUqQ-K2huaHV_9zDrZShi74w7LCUiMjf-Ss_OQ@mail.gmail.com>
+         <680ccb5730cc1724bbadb2b21638b696@codeaurora.org>
+         <a7ff4a6e65d12b35719831bdf50ce1e9ae21027b.camel@bootlin.com>
+         <CAMZdPi_+j9jDhZH7CTHWV5Hzw0X+=OCwz9F7doZpF8VH1nSHtg@mail.gmail.com>
+Content-Type: multipart/signed; micalg="pgp-sha256";
+        protocol="application/pgp-signature"; boundary="=-rGDkiFpFhcsT5Cq3BmJF"
+User-Agent: Evolution 3.38.4 (3.38.4-1.fc33) 
 MIME-Version: 1.0
-Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Lorenzo, Rob, Krzysztof,
 
-On Wed, May 05 2021, Baruch Siach wrote:
-> This series adds support for the single PCIe lane on IPQ6018 SoCs. The code is 
-> ported from downstream Codeaurora v5.4 kernel. The main difference from 
-> downstream code is the split of PCIe registers configuration from .init to 
-> .post_init, since it requires phy_power_on().
->
-> Tested on IPQ6010 based hardware.
+--=-rGDkiFpFhcsT5Cq3BmJF
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 
-It's been 3 months with no comment. Would you consider applying the dwc
-part (patches #1 and #2) for the v5.15 merge window?
+Hello Loic,
 
-I tested the patches here successfully on top of v5.14-rc4.
+On Tue, 2021-08-03 at 17:02 +0200, Loic Poulain wrote:
+> Hi Thomas,
+>=20
+> > Thanks to both of you, to increase the timeout to 24000ms, in
+> > addition
+> > to disabling the power management seems to correct the issue.
+>=20
+> Would you be able to submit a fix patch for the timeout_ms (with CC
+> stable)?
+>=20
 
-Thanks,
-baruch
+Yes, I will able to submit a fix patch for the timeout_ms.
 
->
-> Changes in v2:
->
->   * Add patch moving GEN3_RELATED macros to a common header
->
->   * Drop ATU configuration from pcie-qcom
->
->   * Remove local definition of common registers
->
->   * Use bulk clk and reset APIs
->
->   * Remove msi-parent from device-tree
->
-> Baruch Siach (3):
->   PCI: dwc: tegra: move GEN3_RELATED DBI register to common header
->   dt-bindings: phy: qcom,qmp: Add IPQ60xx PCIe PHY bindings
->   dt-bindings: pci: qcom: Document PCIe bindings for IPQ6018 SoC
->
-> Selvam Sathappan Periakaruppan (3):
->   PCI: qcom: add support for IPQ60xx PCIe controller
->   phy: qcom-qmp: add QMP V2 PCIe PHY support for ipq60xx
->   arm64: dts: ipq6018: Add pcie support
->
->  .../devicetree/bindings/pci/qcom,pcie.txt     |  24 +++
->  .../devicetree/bindings/phy/qcom,qmp-phy.yaml |  25 +++
->  arch/arm64/boot/dts/qcom/ipq6018.dtsi         |  99 ++++++++++++
->  drivers/pci/controller/dwc/pcie-designware.h  |   7 +
->  drivers/pci/controller/dwc/pcie-qcom.c        | 150 ++++++++++++++++++
->  drivers/pci/controller/dwc/pcie-tegra194.c    |   6 -
->  drivers/phy/qualcomm/phy-qcom-qmp.c           | 147 +++++++++++++++++
->  drivers/phy/qualcomm/phy-qcom-qmp.h           | 132 +++++++++++++++
->  8 files changed, 584 insertions(+), 6 deletions(-)
+Best regards,
+Thomas
+
+> I'm a bit worried about that PM issue, not sure why it does not work,
+> could you please double check you have this change:
+> "mhi: pci_generic: Fix inbound IPCR channel"
+>=20
+> Regards,
+> Loic
+
+--=20
+Thomas Perrot, Bootlin
+Embedded Linux and kernel engineering
+https://bootlin.com
 
 
--- 
-                                                     ~. .~   Tk Open Systems
-=}------------------------------------------------ooO--U--Ooo------------{=
-   - baruch@tkos.co.il - tel: +972.52.368.4656, http://www.tkos.co.il -
+--=-rGDkiFpFhcsT5Cq3BmJF
+Content-Type: application/pgp-signature; name="signature.asc"
+Content-Description: This is a digitally signed message part
+Content-Transfer-Encoding: 7bit
+
+-----BEGIN PGP SIGNATURE-----
+
+iQGzBAABCAAdFiEEh0B3xqajCiMDqBIhn8ALBXH+Cu0FAmELkNoACgkQn8ALBXH+
+Cu007gwAoC/VcYLTVibWZvJaW8fdN9dk3iRon5x+fyb3WvB9L5/CaK0f94RE8Mfp
++FJLpoSmscsFXnCfahMrsVFmCIzcPqXwKkp2Pkvt5QQGAOP0pa5S+lrF4hPYwnxs
+iTC7M7yK5ryPoHOlXcUsX1b2I41/ODFXpNfH8bH6o3uDDKU831HBkUxR+A3spAmz
+/BQ6bqwpU8GMHEIel7XDggICIGM/ARIcrFVcjVhCTajcXsH6JkJKNr46prwgED7Y
+vrQZAKem4HfpAgAerpbh3nUw99OhooWw7LTABk7/7U64MjekgdkCgHc7NaO+qEUQ
+qLnnLGqpBvyPZLA58v+gRlfx5ahBOCce8/knDYVrs2mrEtyAY7x26J7WsPUNlhwh
+X1FGs3zwvP9Wwvcf0Ih5VBq4IuB3ZRvplLh6iihEFDhY+cSLG9jPl9wSf1OD+/XM
+STzG/qmW3KzemaY0OpjBHgfgng2kzI8XoxoxD40kcVFFIohEH0V31QD6hfOG2jT1
++alhSsh6
+=IN70
+-----END PGP SIGNATURE-----
+
+--=-rGDkiFpFhcsT5Cq3BmJF--
+
