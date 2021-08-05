@@ -2,172 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 16AB13E1F10
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Aug 2021 00:58:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2488A3E1F90
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Aug 2021 01:51:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230405AbhHEW65 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Aug 2021 18:58:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46076 "EHLO
+        id S242500AbhHEXvp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Aug 2021 19:51:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57786 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229482AbhHEW65 (ORCPT
+        with ESMTP id S242550AbhHEXvo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Aug 2021 18:58:57 -0400
-Received: from mail-wr1-x42c.google.com (mail-wr1-x42c.google.com [IPv6:2a00:1450:4864:20::42c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC259C0613D5;
-        Thu,  5 Aug 2021 15:58:42 -0700 (PDT)
-Received: by mail-wr1-x42c.google.com with SMTP id c16so8559629wrp.13;
-        Thu, 05 Aug 2021 15:58:42 -0700 (PDT)
+        Thu, 5 Aug 2021 19:51:44 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5BAC8C061798
+        for <linux-arm-msm@vger.kernel.org>; Thu,  5 Aug 2021 16:51:29 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id pj14-20020a17090b4f4eb029017786cf98f9so13591683pjb.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 05 Aug 2021 16:51:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=q6beibzNrILHq2SGf9/COm2CxcmfWx9qSxPEsXfxPtw=;
-        b=uNPbQwXzK6ouX5+p8QgoDFyf/NIPsbdwWueKLuI4V9JnYMwxCFtlxOAatI83UljIzU
-         2EqTDXeUqwJHIWDUgztaATkmLbK5KEMY3vA/RR9DF3nyQmpfL6mYYw9raKkpiX910SGY
-         +bzOlnew+FAC5v4QGPN8V4suXFMEv2wja3fav3Vr6NaFnDdi2wRQsnTxvZpAbb8XHhJb
-         v27feG5SYEZc2xwnJAq/BCKKW5DG0YUn/fhyTg75Gdj9K79SHoSmGg9NSY1QArSnhep+
-         P1ikQyb0GNisUnnUCAWuYxLTFGDkQdyDSyS5v9k/bxh9W/AN5iBS8LXQY1CY5J5gFwI8
-         a8QA==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=LvXvxc4FpfdQsNTQ2uP7M38rxQUNtPKsYk8dUCbk8vw=;
+        b=RFz/Y/FntKBu086yBh8DOvEcoTbXW+UBSqeBcOSLniuR8fpBhTS4XE4KGiQqVWqTlT
+         IByvUcFYRGdsnr80Wh7XaXMnHzQ/L0RXnuUg/7TP6zKxhc5pojD8RsY3/yOiXPcoPY7I
+         Pk327FGZesE/IJlh1S2JpNE024prgZBIy+WLM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=q6beibzNrILHq2SGf9/COm2CxcmfWx9qSxPEsXfxPtw=;
-        b=ZDxdvkf50J6b4o2kDUcf03pcPyDD1JbZ8UjXMBTuBkYGNf5oK2X4PDsVEWmqI2zdhQ
-         UJfq2zcC1jt+aaKlXDyDTsCrxbLP13bnZ2GaazeHUR1jZ4z5y88qJQaAps74EOCDzobp
-         pIu+B8xMRl3X2NNxIcInmrbDk6lE1uUvnTsBHPRcuGjM5gn8F1qaPTxp15qogfJa/TCW
-         TJISBZYkFgR1h+kKJvm1PY46JeNfvoFxkxqobtxaET7c+6eY7ywBLF5HseMPhs5w0ega
-         yJ2JlwgwVUAdTEWt9Fy3F4UI7IkHEu8AS+RNz97vcST8A4KVRTY+puCSIj2Ysj5cLyns
-         uBgQ==
-X-Gm-Message-State: AOAM531Jq7hHAvmcTdiPD4V2V/apzDPUxmXyNl9oVPxmkWV04uon021J
-        PLOfeOX7UatR2p5wT+jO88hN39jH4KXPtjrH0wY=
-X-Google-Smtp-Source: ABdhPJwkqoi7Te+8IVA6FyKKRv4mbRhIKOatAn/IO6gqCZx4Kj1mou4VEJhavjSimHsrRoYATzTuNhXPQ7l4hmxuN5E=
-X-Received: by 2002:a05:6000:1ce:: with SMTP id t14mr7751825wrx.83.1628204321241;
- Thu, 05 Aug 2021 15:58:41 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=LvXvxc4FpfdQsNTQ2uP7M38rxQUNtPKsYk8dUCbk8vw=;
+        b=OCV4jmM7hqlMtJCKYR94HeZ+67k4L6OaeGuFfHngS719GuR8mbtIg4X4NfJ6nBYvWB
+         yObq6uqUbOfdI3nsOuil0tZ8QdL+xjxzSQX40qzE6KndHkEVefAQJPjv4mfBbK/vmq/F
+         fYEKTA2qYDD4j4A1fhIMlOZkid51NV/RAIV5DqkK/hrIgH48NriYjmxEGAzc+eX9rRsJ
+         CLGqOMvrw5J7HrvjakcrfYnCrN1Mtxt4Np3nos3fejNmCzyX8PhDERnVseyoDXuzPfv6
+         1uEoRxjRqCNiM+ddSFbLtND+PjMgScT+AmscZpR5IUKdHXDNnUhgwpoClvi7PirojZ7p
+         W/WQ==
+X-Gm-Message-State: AOAM532zS5h5ss6sTkww0Vvg2qd9NoVKyeFEnBtLwvdNDHOaXeye0GA6
+        nZPUWJ9TgfWt6Lqk/u1YTxFJlw==
+X-Google-Smtp-Source: ABdhPJx7XizOixq0HL7mC9NkNAJ0u2Ph2L3oW2+f1ilfNne9wrBdgsgcQQu8QVqLF9KyU4Zt1X8+1g==
+X-Received: by 2002:a17:90a:9511:: with SMTP id t17mr17926916pjo.194.1628207488974;
+        Thu, 05 Aug 2021 16:51:28 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:8944:bd:9484:29e])
+        by smtp.gmail.com with UTF8SMTPSA id t22sm9144685pgv.35.2021.08.05.16.51.28
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 05 Aug 2021 16:51:28 -0700 (PDT)
+Date:   Thu, 5 Aug 2021 16:51:27 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Alex Elder <elder@linaro.org>
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org, robh+dt@kernel.org,
+        elder@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/4] arm64: dts: qcom: sc7280: add IPA information
+Message-ID: <YQx5f9dD9KOGrXao@google.com>
+References: <20210804210214.1891755-1-elder@linaro.org>
+ <20210804210214.1891755-2-elder@linaro.org>
 MIME-Version: 1.0
-References: <20210805104705.862416-1-daniel.vetter@ffwll.ch> <20210805104705.862416-3-daniel.vetter@ffwll.ch>
-In-Reply-To: <20210805104705.862416-3-daniel.vetter@ffwll.ch>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 5 Aug 2021 16:02:56 -0700
-Message-ID: <CAF6AEGvkmZhcPWP58VnL1OXAeJ5tg7v13xkkiYBwkpBi1YiT4g@mail.gmail.com>
-Subject: Re: [PATCH v5 02/20] drm/msm: Fix drm/sched point of no return rules
-To:     Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
-        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" 
-        <linux-media@vger.kernel.org>,
-        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
-        <linaro-mm-sig@lists.linaro.org>,
-        Daniel Vetter <daniel.vetter@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20210804210214.1891755-2-elder@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 5, 2021 at 3:47 AM Daniel Vetter <daniel.vetter@ffwll.ch> wrote=
-:
->
-> Originally drm_sched_job_init was the point of no return, after which
-> drivers must submit a job. I've split that up, which allows us to fix
-> this issue pretty easily.
->
-> Only thing we have to take care of is to not skip to error paths after
-> that. Other drivers do this the same for out-fence and similar things.
->
-> Fixes: 1d8a5ca436ee ("drm/msm: Conversion to drm scheduler")
-> Cc: Rob Clark <robdclark@chromium.org>
-> Cc: Rob Clark <robdclark@gmail.com>
-> Cc: Sean Paul <sean@poorly.run>
-> Cc: Sumit Semwal <sumit.semwal@linaro.org>
-> Cc: "Christian K=C3=B6nig" <christian.koenig@amd.com>
-> Cc: linux-arm-msm@vger.kernel.org
-> Cc: dri-devel@lists.freedesktop.org
-> Cc: freedreno@lists.freedesktop.org
-> Cc: linux-media@vger.kernel.org
-> Cc: linaro-mm-sig@lists.linaro.org
-> Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
+On Wed, Aug 04, 2021 at 04:02:11PM -0500, Alex Elder wrote:
+> Add IPA-related nodes and definitions to "sc7280.dtsi", including
+> the reserved memory area used for AP-based IPA firmware loading.
+> 
+> Signed-off-by: Alex Elder <elder@linaro.org>
 > ---
->  drivers/gpu/drm/msm/msm_gem_submit.c | 15 +++++++--------
->  1 file changed, 7 insertions(+), 8 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/m=
-sm_gem_submit.c
-> index 6d6c44f0e1f3..d0ed4ddc509e 100644
-> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
-> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-> @@ -52,9 +52,6 @@ static struct msm_gem_submit *submit_create(struct drm_=
-device *dev,
->                 return ERR_PTR(ret);
->         }
->
-> -       /* FIXME: this is way too early */
-> -       drm_sched_job_arm(&job->base);
-> -
->         xa_init_flags(&submit->deps, XA_FLAGS_ALLOC);
->
->         kref_init(&submit->ref);
-> @@ -883,6 +880,9 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void=
- *data,
->
->         submit->user_fence =3D dma_fence_get(&submit->base.s_fence->finis=
-hed);
->
-> +       /* point of no return, we _have_ to submit no matter what */
-> +       drm_sched_job_arm(&submit->base);
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 42 ++++++++++++++++++++++++++++
+>  1 file changed, 42 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 029723a75edef..5764c5b5cae17 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -69,6 +69,11 @@ cpucp_mem: memory@80b00000 {
+>  			no-map;
+>  			reg = <0x0 0x80b00000 0x0 0x100000>;
+>  		};
 > +
->         /*
->          * Allocate an id which can be used by WAIT_FENCE ioctl to map ba=
-ck
->          * to the underlying fence.
-> @@ -892,17 +892,16 @@ int msm_ioctl_gem_submit(struct drm_device *dev, vo=
-id *data,
->         if (submit->fence_id < 0) {
->                 ret =3D submit->fence_id =3D 0;
->                 submit->fence_id =3D 0;
-> -               goto out;
->         }
->
-> -       if (args->flags & MSM_SUBMIT_FENCE_FD_OUT) {
-> +       if (ret =3D=3D 0 && args->flags & MSM_SUBMIT_FENCE_FD_OUT) {
->                 struct sync_file *sync_file =3D sync_file_create(submit->=
-user_fence);
->                 if (!sync_file) {
->                         ret =3D -ENOMEM;
-> -                       goto out;
-> +               } else {
-> +                       fd_install(out_fence_fd, sync_file->file);
-> +                       args->fence_fd =3D out_fence_fd;
->                 }
-> -               fd_install(out_fence_fd, sync_file->file);
-> -               args->fence_fd =3D out_fence_fd;
+> +		ipa_fw_mem: memory@8b700000 {
+> +			reg = <0 0x8b700000 0 0x10000>;
+> +			no-map;
+> +		};
+>  	};
+>  
+>  	cpus {
+> @@ -568,6 +573,43 @@ mmss_noc: interconnect@1740000 {
+>  			qcom,bcm-voters = <&apps_bcm_voter>;
+>  		};
+>  
+> +		ipa: ipa@1e40000 {
+> +			compatible = "qcom,sc7280-ipa";
+> +
+> +			iommus = <&apps_smmu 0x480 0x0>,
+> +				 <&apps_smmu 0x482 0x0>;
+> +			reg = <0 0x1e40000 0 0x8000>,
+> +			      <0 0x1e50000 0 0x4ad0>,
+> +			      <0 0x1e04000 0 0x23000>;
+> +			reg-names = "ipa-reg",
+> +				    "ipa-shared",
+> +				    "gsi";
+> +
+> +			interrupts-extended = <&intc 0 654 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc 0 432 IRQ_TYPE_LEVEL_HIGH>,
 
-I wonder if instead we should (approximately) undo "drm/msm/submit:
-Simplify out-fence-fd handling" so that the point that it could fail
-is moved up ahead of the drm_sched_job_arm()?
+nit: use GIC_SPI for the interrupt type
 
-Also, does the dma_fence_get() work before drm_sched_job_arm()?  From
-a quick look, it looks like it won't, but I'm still playing catchup
-and haven't had a chance to look at your entire series.  If it doesn't
-work before drm_sched_job_arm(), then there is really no way to
-prevent a error path between the fence-init and job-submit.
+> +					      <&ipa_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+> +					      <&ipa_smp2p_in 1 IRQ_TYPE_EDGE_RISING>;
+> +			interrupt-names = "ipa",
+> +					  "gsi",
+> +					  "ipa-clock-query",
+> +					  "ipa-setup-ready";
+> +
+> +			clocks = <&rpmhcc RPMH_IPA_CLK>;
+> +			clock-names = "core";
+> +
+> +			interconnects = <&aggre2_noc MASTER_IPA 0 &mc_virt SLAVE_EBI1 0>,
+> +					<&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_IPA_CFG 0>;
+> +			interconnect-names = "memory",
+> +					     "config";
+> +
+> +			qcom,smem-states = <&ipa_smp2p_out 0>,
+> +					   <&ipa_smp2p_out 1>;
+> +			qcom,smem-state-names = "ipa-clock-enabled-valid",
+> +						"ipa-clock-enabled";
+> +
+> +			status = "disabled";
+> +		};
+> +
 
-But, prior to your series, wouldn't a failure after
-drm_sched_job_init() but before the job is submitted just burn a
-fence-id, and otherwise carry on it's merry way?
+I know little about IPA, but besides the nit this looks sane to me.
 
-BR,
--R
-
->         }
->
->         submit_attach_object_fences(submit);
-> --
-> 2.32.0
->
+Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
