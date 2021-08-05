@@ -2,95 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8973C3E0B07
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Aug 2021 01:58:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C00833E0CC2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  5 Aug 2021 05:27:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235582AbhHDX6z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 4 Aug 2021 19:58:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43486 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233915AbhHDX6y (ORCPT
+        id S238478AbhHED1k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 4 Aug 2021 23:27:40 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:34054 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238477AbhHED1j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 4 Aug 2021 19:58:54 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8917AC061799
-        for <linux-arm-msm@vger.kernel.org>; Wed,  4 Aug 2021 16:58:41 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id e2-20020a17090a4a02b029016f3020d867so5956779pjh.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 04 Aug 2021 16:58:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=AyH5fK9YwykBqKL3r6HFsxoexv4xoxybRmsUgoCLgm4=;
-        b=XZQ5XsFA5qv4sJ6dN85gMsh8oqN+4uierylBokXiTKthmL+ETGpBA6gUyMEmTbOWHL
-         uv4W9xO8CgDoS+PfMiIIO3IdQIrqaRbW0lTIDfdSusqOU1HfaftoK9TrZsIi+eATCNOH
-         iKiHpjNSJfmhjp1DRKl1jDdbCqtP7UhPgEypY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=AyH5fK9YwykBqKL3r6HFsxoexv4xoxybRmsUgoCLgm4=;
-        b=gXOoJV0rGX/BShaW1SQ7kFWKphsKX+gXOnh/BHX7Y/BNtOYUTzfavoHw5gcqi8OxVS
-         j2hfGGwjpwiQpWGqTEKAgue03W36tD0hcIClqcJi59smgalaUgA5R+zmOdqmNyt07pfR
-         TNDFG+7BwBSaCinr6DFkGAe89jwTYAkhK8AYMQ7Y5Wgftuv+tulhncU5tbvRxMjOT9+V
-         HhvP2PyYOfdVUEFpYOJhWZMM3+q2qi680NcOMOapJ7GK1EocUD5GrfF6HBBrZFQGdBzu
-         k5W6j3J54sD67FpMWS9A/NUnHFDhbzifZY5YCb837fu/2dOBwaSnLgC5guKBfTvj0u7X
-         Bf3w==
-X-Gm-Message-State: AOAM5304RqaIh13nFO1nQSq1tcabynVVF9gag0LI5fHqVcawtgXIQ+ym
-        Lx4njVwo49JOqQx2GuAfoGMAGA==
-X-Google-Smtp-Source: ABdhPJyHkrLrX4KNSdxcJ/Ncu3eMXjGxGupi+NcVQS/LpOIriok0qBjVJHQUGujqxAJcitUeUrgScA==
-X-Received: by 2002:a63:4c0e:: with SMTP id z14mr1517251pga.427.1628121521087;
-        Wed, 04 Aug 2021 16:58:41 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:8d26:a358:9898:4532])
-        by smtp.gmail.com with UTF8SMTPSA id s36sm4910843pgk.64.2021.08.04.16.58.39
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 04 Aug 2021 16:58:40 -0700 (PDT)
-Date:   Wed, 4 Aug 2021 16:58:38 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Sibi Sankar <sibis@codeaurora.org>, sboyd@kernel.org,
-        robh+dt@kernel.org, viresh.kumar@linaro.org, agross@kernel.org,
-        rjw@rjwysocki.net, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org, dianders@chromium.org,
-        tdas@codeaurora.org
-Subject: Re: [PATCH 4/4] arm64: dts: qcom: sm8350: Fixup the cpufreq node
-Message-ID: <YQsprr4rLVPwVfqR@google.com>
-References: <1627581885-32165-1-git-send-email-sibis@codeaurora.org>
- <1627581885-32165-5-git-send-email-sibis@codeaurora.org>
- <YQsbuN1xyAlCYRqK@builder.lan>
+        Wed, 4 Aug 2021 23:27:39 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1628134046; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=83ejBFxG6PpaqEIAxOQakS7CpkA8CGMBWmlvjt7MCsA=; b=dfQCdwfCH7R9COxYwJ+Lj1oOxwFBbB6B0zudcs1COFvGvDwuja3DTqq8yatBuxa276hFUwKI
+ wGSkCvkY1rlp+6JPew2NJmNbnX/6BUgBoDwj1HM+5pNXpKReMUzUHq+8+zXXvqPxjEs8MmsC
+ iWkzmw9dVCW7+ZeOyvK6SDLHf4M=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 610b5a9e041a739c46268660 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 05 Aug 2021 03:27:26
+ GMT
+Sender: rnayak=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 5129CC4360C; Thu,  5 Aug 2021 03:27:25 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.0 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.1.102] (unknown [49.207.220.239])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 62504C433F1;
+        Thu,  5 Aug 2021 03:27:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 62504C433F1
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH v2 2/2] arm64: dts: qcom: sc7280-idp: Add device tree
+ files for IDP2
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, skakit@codeaurora.org,
+        swboyd@chromium.org, dianders@chromium.org, mka@chromium.org
+References: <1628082199-17002-1-git-send-email-rnayak@codeaurora.org>
+ <1628082199-17002-3-git-send-email-rnayak@codeaurora.org>
+ <0cb8bf79-697c-ff16-e37e-d1c783f8a207@somainline.org>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <8aaef1a2-269d-1077-7996-793045a04f7c@codeaurora.org>
+Date:   Thu, 5 Aug 2021 08:57:18 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <YQsbuN1xyAlCYRqK@builder.lan>
+In-Reply-To: <0cb8bf79-697c-ff16-e37e-d1c783f8a207@somainline.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 04, 2021 at 05:59:04PM -0500, Bjorn Andersson wrote:
-> On Thu 29 Jul 13:04 CDT 2021, Sibi Sankar wrote:
-> 
-> > Fixup the register regions used by the cpufreq node on SM8350 SoC to
-> > support per core L3 DCVS.
-> > 
-> 
-> That sounds good, but why are you dropping the platform-specific
-> compatible?
-> 
 
-I also stared at this and the patch that changes the code for a while.
+On 8/5/2021 1:17 AM, Konrad Dybcio wrote:
+> 
+> On 04.08.2021 15:03, Rajendra Nayak wrote:
+>> Move all the common device tree bits for both sc7280 IDPs into a
+>> sc7280-idp.dtsi and create 2 different dts files (sc7280-idp.dts
+>> and sc7280-idp2.dts) in order to manage differences across the
+>> IDP SKU1 and SKU2 Boards.
+>> PMR735A is present on IDP board only and is not present on IDP2.
+>>
+>> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+>> ---
+>>   arch/arm64/boot/dts/qcom/Makefile                  |   1 +
+>>   arch/arm64/boot/dts/qcom/sc7280-idp.dts            | 328 +--------------------
+> 
+> I'm still for calling this sc7280-idp-sku1/2.dts, but other than that it looks good.
 
-My understanding is that removing the platform-specific compatible is part
-of not breaking 'old' DTBs. Old DTBs for SM8350 contain the larger register
-regions and must be paired with 'epss_sm8250_soc_data' (driver code) which
-has the 'old' 'reg_perf_state' offset. New SM8350 DTs only have the
-'qcom,cpufreq-epss' compatible, which pairs their smaller register regions
-with 'epss_soc_data' with the new 'reg_perf_state' offset.
+sure, I'll just wait for others to chime in, and if that's the consensus I would be
+happy to re-spin.
+  
+> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 
-It is super-confusing that the platform-specific compatible string is
-missing. The binding should probably mention that the two
-platform-specific compatible strings are for backwards compatibility
-only and should not be added to new or existing DT files that don't
-have them already. Maybe a 'qcom,sm8350-cpufreq-epss-v2' or similar
-should be added to avoid/reduce possible confusion and have to option
-to add SM8350 specific code later.
+Thanks.
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
