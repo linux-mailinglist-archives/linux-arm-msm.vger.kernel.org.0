@@ -2,22 +2,19 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 099AD3E1E9A
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Aug 2021 00:26:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2400D3E1E98
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Aug 2021 00:26:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239457AbhHEW0v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Aug 2021 18:26:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38680 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239602AbhHEW0t (ORCPT
+        id S239551AbhHEW0u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Aug 2021 18:26:50 -0400
+Received: from relay06.th.seeweb.it ([5.144.164.167]:49175 "EHLO
+        relay06.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239434AbhHEW0t (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 5 Aug 2021 18:26:49 -0400
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E235C0613D5;
-        Thu,  5 Aug 2021 15:26:32 -0700 (PDT)
 Received: from localhost.localdomain (83.6.167.155.neoplus.adsl.tpnet.pl [83.6.167.155])
-        by m-r2.th.seeweb.it (Postfix) with ESMTPA id CA9B33F3FD;
-        Fri,  6 Aug 2021 00:26:29 +0200 (CEST)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 07B7E3F402;
+        Fri,  6 Aug 2021 00:26:30 +0200 (CEST)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     ~postmarketos/upstreaming@lists.sr.ht
 Cc:     martin.botka@somainline.org,
@@ -30,36 +27,37 @@ Cc:     martin.botka@somainline.org,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 1/2] dt-bindings: pinctrl: qcom-pmic-gpio: Add pm8019 support
-Date:   Fri,  6 Aug 2021 00:26:24 +0200
-Message-Id: <20210805222625.40236-1-konrad.dybcio@somainline.org>
+Subject: [PATCH 2/2] pinctrl: qcom-pmic-gpio: Add support for pm8019
+Date:   Fri,  6 Aug 2021 00:26:25 +0200
+Message-Id: <20210805222625.40236-2-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20210805222625.40236-1-konrad.dybcio@somainline.org>
+References: <20210805222625.40236-1-konrad.dybcio@somainline.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add compatible string for pm8019 pmic GPIO support to the
-Qualcomm PMIC GPIO binding.
+PM8019 provides 6 GPIOs. Add a compatible to support that.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt | 1 +
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 1 +
  1 file changed, 1 insertion(+)
 
-diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-index 161216daf463..4875e039ceaa 100644
---- a/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-+++ b/Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
-@@ -9,6 +9,7 @@ PMIC's from Qualcomm.
- 	Definition: must be one of:
- 		    "qcom,pm8005-gpio"
- 		    "qcom,pm8018-gpio"
-+		    "qcom,pm8019-gpio"
- 		    "qcom,pm8038-gpio"
- 		    "qcom,pm8058-gpio"
- 		    "qcom,pm8916-gpio"
+diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+index a89d24a040af..dbb3d2e3c0b0 100644
+--- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
++++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
+@@ -1105,6 +1105,7 @@ static int pmic_gpio_remove(struct platform_device *pdev)
+ 
+ static const struct of_device_id pmic_gpio_of_match[] = {
+ 	{ .compatible = "qcom,pm8005-gpio", .data = (void *) 4 },
++	{ .compatible = "qcom,pm8019-gpio", .data = (void *) 6 },
+ 	{ .compatible = "qcom,pm8916-gpio", .data = (void *) 4 },
+ 	{ .compatible = "qcom,pm8941-gpio", .data = (void *) 36 },
+ 	/* pm8950 has 8 GPIOs with holes on 3 */
 -- 
 2.32.0
 
