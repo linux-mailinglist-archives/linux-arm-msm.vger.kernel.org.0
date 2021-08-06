@@ -2,54 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D0823E213E
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Aug 2021 03:50:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E6EE03E2143
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Aug 2021 03:53:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243297AbhHFBvG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 5 Aug 2021 21:51:06 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35612 "EHLO mail.kernel.org"
+        id S232925AbhHFBx2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 5 Aug 2021 21:53:28 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35774 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230437AbhHFBvG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 5 Aug 2021 21:51:06 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 5E6E361184;
-        Fri,  6 Aug 2021 01:50:51 +0000 (UTC)
+        id S230437AbhHFBx1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 5 Aug 2021 21:53:27 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id ADF9861184;
+        Fri,  6 Aug 2021 01:53:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1628214651;
-        bh=Y20m4fzhDqO1uu3REta8tfDLdL1byQtADOr200QbLO8=;
+        s=k20201202; t=1628214792;
+        bh=u7C/ZYBp1+uE98Vmc9rEo6WQcoy2ptqGLdTnaPr/4yY=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=EX8ML/QvqmnKl/RTB52GJ5AB/+mckwevNgE1J5w8da6+ZqXEewWRGC+OUFgbLn1Sy
-         Kcpsvu8o6h/6ZwaZNydc/XidvgUHMGA+AjDOZfFQMGCV2hoA0lC/4YhgJwmtcXZFLg
-         ajllwxjiWenwAF5wz4tkZs8zMa6btnLNAMn4Kbd3RPfmhmObn7n8JRCnnj2q6AKn7d
-         UI77Kw4AG25PXNrhYvVPcsgw+ECDAa5pbNr/QX8SrWOwF21YVgodpauiINTDyKVCyJ
-         ahS/cbWmYH0PowOnx9H75TIoGVJW+0w4dWWBtCwJbR7ZIJD2VxZ0VPp9aTkrdYwNc1
-         E5tvQDhOgCxDQ==
+        b=WnbPUGZGDUC1u020fKQuOFCakYIOZRNgPFdIEynN7xRUYPF/7V7+97aTl55Dt0D49
+         1lipGpM1iypaOX7x+hcOLGvdNAyXi+7vJm16l1wv+5ct5L7QpKPt3A+Uuoigkw2a8p
+         qgrcMI9l229hkoz3D9NeWe/3ncs9xnv5RAYhIiQOxZgBU2DCx2ELmsRh0Db2AxcR+4
+         0CAISaAym+Q+7VYLlGsdJDxzlR7AotGQauiQDclwdA7xetX4HMHqwSjG/iOTKKja6D
+         Fp09GIvZtUlPTzCNTTyNC7eLCpqh/IV6EoZdIYjiCldTYJQr9+ywwozlb0P2oxpvrE
+         PVJirN8VEZnkw==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20210721225329.3035779-1-bjorn.andersson@linaro.org>
-References: <20210721225329.3035779-1-bjorn.andersson@linaro.org>
-Subject: Re: [PATCH] clk: qcom: gpucc-sm8150: Add SC8180x support
+In-Reply-To: <20210704024032.11559-2-shawn.guo@linaro.org>
+References: <20210704024032.11559-1-shawn.guo@linaro.org> <20210704024032.11559-2-shawn.guo@linaro.org>
+Subject: Re: [PATCH v2 1/4] clk: qcom: apcs-msm8916: Flag a53mux instead of a53pll as critical
 From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>
-Date:   Thu, 05 Aug 2021 18:50:50 -0700
-Message-ID: <162821465017.19113.3601448394011862755@swboyd.mtv.corp.google.com>
+        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
+        Benjamin Li <benl@squareup.com>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        Shawn Guo <shawn.guo@linaro.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Date:   Thu, 05 Aug 2021 18:53:11 -0700
+Message-ID: <162821479146.19113.12449981882393634486@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2021-07-21 15:53:29)
-> The GPU clock controller found in SC8180x is a variant of the same block
-> found in SM8150, but with one additional clock frequency for the
-> gmu_clk_src clock.
+Quoting Shawn Guo (2021-07-03 19:40:29)
+> The clock source for MSM8916 cpu cores is like below.
 >=20
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
+>                         |\
+>          a53pll --------| \ a53mux     +------+
 
 Applied to clk-next
