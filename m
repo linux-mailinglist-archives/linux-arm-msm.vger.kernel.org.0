@@ -2,285 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0AB983E2FAD
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Aug 2021 21:11:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DF873E2FD8
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Aug 2021 21:48:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233266AbhHFTLR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Aug 2021 15:11:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37362 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232548AbhHFTLQ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Aug 2021 15:11:16 -0400
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD2D9C061798
-        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Aug 2021 12:11:00 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id f20-20020a9d6c140000b02904bb9756274cso10056079otq.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Aug 2021 12:11:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=wwdLLncHcQmn8V0lQ1zikWkAtZyXR0Qt+eajA4TCzA4=;
-        b=XKyxQcIlOnuQAAkYeR6VX0Kvl3HkpnxBkVEqfVZCebg/cEsFG79uFfPr3PyZy89atW
-         LEP/WPUfqnt3pr3aPsv2H+BfZdZS27Uyda3jC/4O3TStB98BCcVzMQlowxrucMnSwSU/
-         bTjdlXsGGL8qhKGgN6yJROmPWIE+/2YbAB/ew=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=wwdLLncHcQmn8V0lQ1zikWkAtZyXR0Qt+eajA4TCzA4=;
-        b=p/oBFBB5HN0li/VE20i/zeo82sRXIuiOKPY4DvbFUHPKT8RVFkPsmZ0Gq4vD7of5pi
-         7MeQnVLOHC7UbVDxkUKNs0oz5o+zyd7SDP5tc8TvocQUyj1JLLbnQhJ3yodr8SGZPdB4
-         uWxrMu5g6i8pdebOjeDC+bqYrO4l8eIvbQl83e0wwvRaX634H2yeHfNNDgho6bouH/xB
-         KSC5NrEqGIxfjoV4aNz3TLvApeJoE1PCm2Cbqh4x0B+teutLvUG4xs6s4HeqdK0ChOmt
-         iXZLA6e7HjLCGtWarPUAIub6XFsWvd7iSGHiX3SJVu3LlkN2aeuchYxJD2tUJDJGDHIh
-         gMgg==
-X-Gm-Message-State: AOAM533RGXNmVqMfFdoZalf/EsiQ0ZuKqXzjk6rPQ5HjRecnaNKywACZ
-        J5K9Sb+XJc1uWpxdL1Iu5ip5V90u5nqPFV+KPgOcDbX9PfM=
-X-Google-Smtp-Source: ABdhPJwTzyaYRYgqMYelT348bKx7Zt4moB1xmD2AXEay6/jj3T1D9DIuQ1CF2V9UCsSlAhSbmsjMDnxFmmoGKgH/4YY=
-X-Received: by 2002:a9d:27a4:: with SMTP id c33mr8845841otb.281.1628277060095;
- Fri, 06 Aug 2021 12:11:00 -0700 (PDT)
+        id S244055AbhHFTsU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Aug 2021 15:48:20 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36414 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229748AbhHFTsT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 6 Aug 2021 15:48:19 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id A04BC611BF;
+        Fri,  6 Aug 2021 19:48:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1628279283;
+        bh=A6nLSI9mCf6mhp34t8GesHN20NVCy2XtPV0FcrWZoyY=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=aHwyEPqZQjQqD/Z98svs+HauUDSyCNlqKKe7OApL00K7PMn96Y5CvQItAIjqabxoP
+         Rpai4fhu5SM+A73eQTE2WsjX6lGvA/j8vvWkSTrnZk0O32dSMJm8/OF+L8icGy5Hbs
+         VTKWiw9rTcV3cGa03KcznUgexrj5DcehKjYTue2AVM5w2ce7IoPbpKzSewhwvm7+EI
+         2zjItvepB0O5VzjQZBAo5TM6On8jxJnjCW0EmK2wmdBwjEb7DwD8EA0wl8RXCaNHSq
+         R2FpDJTuj/ppy/Gx1eS8HEBC01HO1Z6vggmytuY8SjKRly9r1zUm2EhSys64w1AdQC
+         AVgei3lb3X/lA==
+Received: by mail-ej1-f51.google.com with SMTP id hw6so16829720ejc.10;
+        Fri, 06 Aug 2021 12:48:03 -0700 (PDT)
+X-Gm-Message-State: AOAM533ZVQzc/77zDBxyqRxnFNBk061GCYZOe6Io2tzxKYU+kneXXgAy
+        4DaNIbnuiZU4R7fZJKU6sf9O8l5yPT3h+a4WqQ==
+X-Google-Smtp-Source: ABdhPJzchWTvDeHq2trbxdxbRY5qp5nwFN4uSbf8D1NAK7KPGhs0/CO4eEDCG1J5SF8SgKAnHxpX2jEhCXIqQcnyhlU=
+X-Received: by 2002:a17:906:8cd:: with SMTP id o13mr11272506eje.341.1628279282121;
+ Fri, 06 Aug 2021 12:48:02 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210805104705.862416-1-daniel.vetter@ffwll.ch>
- <20210805104705.862416-3-daniel.vetter@ffwll.ch> <CAF6AEGvkmZhcPWP58VnL1OXAeJ5tg7v13xkkiYBwkpBi1YiT4g@mail.gmail.com>
- <CAKMK7uG3gRNfYinM51UVAUckV9ZgN3mgRnJd8E9tERani9b1JQ@mail.gmail.com>
- <CAF6AEGuqxb5jEtpQi-aNvjSfPaq0gasH2TLZ+5O836ov9qw+3w@mail.gmail.com>
- <CAKMK7uH2v2x+=Ct-v-2RCVXez4MzjMvhh4yCs_f8HPvYa+DXcA@mail.gmail.com> <CAF6AEGuX6UgXpCJqvo4kT3j5zYeuRBYTtMWM8yz0x_tOb1rm4w@mail.gmail.com>
-In-Reply-To: <CAF6AEGuX6UgXpCJqvo4kT3j5zYeuRBYTtMWM8yz0x_tOb1rm4w@mail.gmail.com>
-From:   Daniel Vetter <daniel.vetter@ffwll.ch>
-Date:   Fri, 6 Aug 2021 21:10:49 +0200
-Message-ID: <CAKMK7uF-CswLD8E8=gwLAKhKCFcD2KMwdzjjod+JmGGk2TiZUw@mail.gmail.com>
-Subject: Re: [PATCH v5 02/20] drm/msm: Fix drm/sched point of no return rules
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
-        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+References: <cover.1620203062.git.baruch@tkos.co.il> <c15ac1443ec765e32a2801241dcd8e924abc769b.1620203062.git.baruch@tkos.co.il>
+In-Reply-To: <c15ac1443ec765e32a2801241dcd8e924abc769b.1620203062.git.baruch@tkos.co.il>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Fri, 6 Aug 2021 13:47:50 -0600
+X-Gmail-Original-Message-ID: <CAL_Jsq+SBRP4n-0Q9RShxj2Od-EGpBURNUZo8fLnscOY-m7SmA@mail.gmail.com>
+Message-ID: <CAL_Jsq+SBRP4n-0Q9RShxj2Od-EGpBURNUZo8fLnscOY-m7SmA@mail.gmail.com>
+Subject: Re: [PATCH v2 1/6] PCI: dwc: tegra: move GEN3_RELATED DBI register to
+ common header
+To:     Baruch Siach <baruch@tkos.co.il>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
+        Kathiravan T <kathirav@codeaurora.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Robert Marko <robert.marko@sartura.hr>,
+        devicetree@vger.kernel.org, linux-phy@lists.infradead.org,
+        PCI <linux-pci@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" 
-        <linux-media@vger.kernel.org>,
-        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
-        <linaro-mm-sig@lists.linaro.org>,
-        Daniel Vetter <daniel.vetter@intel.com>
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        linux-tegra <linux-tegra@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 6, 2021 at 8:57 PM Rob Clark <robdclark@gmail.com> wrote:
+On Wed, May 5, 2021 at 3:18 AM Baruch Siach <baruch@tkos.co.il> wrote:
 >
-> On Fri, Aug 6, 2021 at 11:41 AM Daniel Vetter <daniel.vetter@ffwll.ch> wr=
-ote:
-> >
-> > On Fri, Aug 6, 2021 at 7:15 PM Rob Clark <robdclark@gmail.com> wrote:
-> > >
-> > > On Fri, Aug 6, 2021 at 9:42 AM Daniel Vetter <daniel.vetter@ffwll.ch>=
- wrote:
-> > > >
-> > > > On Fri, Aug 6, 2021 at 12:58 AM Rob Clark <robdclark@gmail.com> wro=
-te:
-> > > > >
-> > > > > On Thu, Aug 5, 2021 at 3:47 AM Daniel Vetter <daniel.vetter@ffwll=
-.ch> wrote:
-> > > > > >
-> > > > > > Originally drm_sched_job_init was the point of no return, after=
- which
-> > > > > > drivers must submit a job. I've split that up, which allows us =
-to fix
-> > > > > > this issue pretty easily.
-> > > > > >
-> > > > > > Only thing we have to take care of is to not skip to error path=
-s after
-> > > > > > that. Other drivers do this the same for out-fence and similar =
-things.
-> > > > > >
-> > > > > > Fixes: 1d8a5ca436ee ("drm/msm: Conversion to drm scheduler")
-> > > > > > Cc: Rob Clark <robdclark@chromium.org>
-> > > > > > Cc: Rob Clark <robdclark@gmail.com>
-> > > > > > Cc: Sean Paul <sean@poorly.run>
-> > > > > > Cc: Sumit Semwal <sumit.semwal@linaro.org>
-> > > > > > Cc: "Christian K=C3=B6nig" <christian.koenig@amd.com>
-> > > > > > Cc: linux-arm-msm@vger.kernel.org
-> > > > > > Cc: dri-devel@lists.freedesktop.org
-> > > > > > Cc: freedreno@lists.freedesktop.org
-> > > > > > Cc: linux-media@vger.kernel.org
-> > > > > > Cc: linaro-mm-sig@lists.linaro.org
-> > > > > > Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
-> > > > > > ---
-> > > > > >  drivers/gpu/drm/msm/msm_gem_submit.c | 15 +++++++--------
-> > > > > >  1 file changed, 7 insertions(+), 8 deletions(-)
-> > > > > >
-> > > > > > diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu=
-/drm/msm/msm_gem_submit.c
-> > > > > > index 6d6c44f0e1f3..d0ed4ddc509e 100644
-> > > > > > --- a/drivers/gpu/drm/msm/msm_gem_submit.c
-> > > > > > +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-> > > > > > @@ -52,9 +52,6 @@ static struct msm_gem_submit *submit_create(s=
-truct drm_device *dev,
-> > > > > >                 return ERR_PTR(ret);
-> > > > > >         }
-> > > > > >
-> > > > > > -       /* FIXME: this is way too early */
-> > > > > > -       drm_sched_job_arm(&job->base);
-> > > > > > -
-> > > > > >         xa_init_flags(&submit->deps, XA_FLAGS_ALLOC);
-> > > > > >
-> > > > > >         kref_init(&submit->ref);
-> > > > > > @@ -883,6 +880,9 @@ int msm_ioctl_gem_submit(struct drm_device =
-*dev, void *data,
-> > > > > >
-> > > > > >         submit->user_fence =3D dma_fence_get(&submit->base.s_fe=
-nce->finished);
-> > > > > >
-> > > > > > +       /* point of no return, we _have_ to submit no matter wh=
-at */
-> > > > > > +       drm_sched_job_arm(&submit->base);
-> > > > > > +
-> > > > > >         /*
-> > > > > >          * Allocate an id which can be used by WAIT_FENCE ioctl=
- to map back
-> > > > > >          * to the underlying fence.
-> > > > > > @@ -892,17 +892,16 @@ int msm_ioctl_gem_submit(struct drm_devic=
-e *dev, void *data,
-> > > > > >         if (submit->fence_id < 0) {
-> > > > > >                 ret =3D submit->fence_id =3D 0;
-> > > > > >                 submit->fence_id =3D 0;
-> > > > > > -               goto out;
-> > > > > >         }
-> > > > > >
-> > > > > > -       if (args->flags & MSM_SUBMIT_FENCE_FD_OUT) {
-> > > > > > +       if (ret =3D=3D 0 && args->flags & MSM_SUBMIT_FENCE_FD_O=
-UT) {
-> > > > > >                 struct sync_file *sync_file =3D sync_file_creat=
-e(submit->user_fence);
-> > > > > >                 if (!sync_file) {
-> > > > > >                         ret =3D -ENOMEM;
-> > > > > > -                       goto out;
-> > > > > > +               } else {
-> > > > > > +                       fd_install(out_fence_fd, sync_file->fil=
-e);
-> > > > > > +                       args->fence_fd =3D out_fence_fd;
-> > > > > >                 }
-> > > > > > -               fd_install(out_fence_fd, sync_file->file);
-> > > > > > -               args->fence_fd =3D out_fence_fd;
-> > > > >
-> > > > > I wonder if instead we should (approximately) undo "drm/msm/submi=
-t:
-> > > > > Simplify out-fence-fd handling" so that the point that it could f=
-ail
-> > > > > is moved up ahead of the drm_sched_job_arm()?
-> > > >
-> > > > Hm yeah. Up to you how you want to paint this shed, I think either =
-is fine.
-> > > >
-> > > > > Also, does the dma_fence_get() work before drm_sched_job_arm()?  =
-From
-> > > > > a quick look, it looks like it won't, but I'm still playing catch=
-up
-> > > > > and haven't had a chance to look at your entire series.  If it do=
-esn't
-> > > > > work before drm_sched_job_arm(), then there is really no way to
-> > > > > prevent a error path between the fence-init and job-submit.
-> > > >
-> > > > Yes. I thought I've checked that I put the _arm() in the right spot=
-,
-> > > > but I guess I screwed up and you need the fence before the point wh=
-ere
-> > > > I've put the job_arm()? And yes the error path cannot be avoided fo=
-r
-> > > > out-fences, that's what I tried to explain in the commit message.
-> > > >
-> > > > > But, prior to your series, wouldn't a failure after
-> > > > > drm_sched_job_init() but before the job is submitted just burn a
-> > > > > fence-id, and otherwise carry on it's merry way?
-> > > >
-> > > > Maybe? I'm not sure whether the scheduler gets confused about the g=
-ap
-> > > > and freak out abou that. I'm fairly new to that code and learning
-> > > > (which is part why I'm working on it). Since you look up in
-> > > > fences/syncobj after job_init() it should be pretty easy to whip up=
- a
-> > > > testcase and see what happens. Also as long as nothing fails you wo=
-n't
-> > > > see an issue, that's for sure.
-> > >
-> > > fair.. I'll try to come up with a test case.. pre-scheduler-conversio=
-n
-> > > it wasn't a problem to fail after the fence seqno was allocated (well=
-,
-> > > I guess you might have problems if you had 2^31 failures in a row)
-> >
-> > Yeah one thing drm/sched forces you to do is have a very clear notion
-> > about the point of no return in your submit ioctl. Which I think is a
-> > Very Good Thing, at least looking at i915 execbuf where the point of
-> > no return is a multi-stage thing with such interesting intermediate
-> > points like "we submit the ruquest but without actually running the
-> > batchbuffer". The downside is that the submit ioctl isn't perfectly
-> > transaction anymore, but I don't think that matters for tha tail
-> > stuff, which is generally just some out-fence installing. That
-> > generally never fails.
+> These are common dwc macros that will be used for other platforms.
 >
-> So I hacked up:
->
-> ------
-> diff --git a/drivers/gpu/drm/scheduler/sched_fence.c
-> b/drivers/gpu/drm/scheduler/sched_fence.c
-> index 3aa6351d2101..88e66dbc9515 100644
-> --- a/drivers/gpu/drm/scheduler/sched_fence.c
-> +++ b/drivers/gpu/drm/scheduler/sched_fence.c
-> @@ -176,6 +176,7 @@ struct drm_sched_fence
-> *drm_sched_fence_create(struct drm_sched_entity *entity,
->         fence->sched =3D entity->rq->sched;
->         spin_lock_init(&fence->lock);
->
-> +       seq =3D atomic_inc_return(&entity->fence_seq);
->         seq =3D atomic_inc_return(&entity->fence_seq);
->         dma_fence_init(&fence->scheduled, &drm_sched_fence_ops_scheduled,
->                        &fence->lock, entity->fence_context, seq);
-> diff --git a/drivers/gpu/drm/scheduler/sched_main.c
-> b/drivers/gpu/drm/scheduler/sched_main.c
-> index fcc601962e92..583e85adbbe0 100644
-> --- a/drivers/gpu/drm/scheduler/sched_main.c
-> +++ b/drivers/gpu/drm/scheduler/sched_main.c
-> @@ -593,6 +593,7 @@ int drm_sched_job_init(struct drm_sched_job *job,
->         if (!job->s_fence)
->                 return -ENOMEM;
->         job->id =3D atomic64_inc_return(&sched->job_id_count);
-> +       job->id =3D atomic64_inc_return(&sched->job_id_count);
->
->         INIT_LIST_HEAD(&job->list);
->
-> ------
->
-> (I guess the job->id part shouldn't really be needed, that looks like
-> it is only used by amdgpu)
->
-> This didn't cause any problems that I could see.  So I don't *think* a
-> failure after drm_sched_job_init() is really problematic, as long as
-> things are serialized between drm_sched_job_init() and
-> drm_sched_entity_push_job().
->
-> I also noticed that in the atomic commit path, the out-fences are
-> initialized before atomic-check.. so there should be plenty of
-> precedent for skipping fence seqno's.
+> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+> ---
+>  drivers/pci/controller/dwc/pcie-designware.h | 6 ++++++
+>  drivers/pci/controller/dwc/pcie-tegra194.c   | 6 ------
+>  2 files changed, 6 insertions(+), 6 deletions(-)
 
-Oh I think I remember now. The reason why the split into init/arm is
-so that you can keep your critical section only around job_arm() and
-push_job(). My very first version just pulled the jobs_init() of that
-for most drivers to where I needed it, and that would result in a bit
-chaos because the fences would signal out of order potentially. But
-yeah I guess bailing out is fine with the scheduler.
-
-Do you want me to tune down the commit message a bit, it's not a must
-to submit the job, but just makes a bit more sense than bailing out
-with a fence seqno reserved?
--Daniel
---=20
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+Reviewed-by: Rob Herring <robh@kernel.org>
