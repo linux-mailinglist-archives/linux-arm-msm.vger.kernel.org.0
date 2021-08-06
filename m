@@ -2,312 +2,316 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DE3E53E3005
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Aug 2021 21:59:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 401CB3E300A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Aug 2021 22:00:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244348AbhHFUAN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S244364AbhHFUAO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Aug 2021 16:00:14 -0400
+Received: from mail.kernel.org ([198.145.29.99]:38616 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S244341AbhHFUAN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Fri, 6 Aug 2021 16:00:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48106 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231137AbhHFUAN (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Aug 2021 16:00:13 -0400
-Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B8219C0613CF;
-        Fri,  6 Aug 2021 12:59:55 -0700 (PDT)
-Received: by mail-wm1-x335.google.com with SMTP id a192-20020a1c7fc90000b0290253b32e8796so7874783wmd.0;
-        Fri, 06 Aug 2021 12:59:55 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=Qx7lUZsE+6vDBN4KHgsQ1l6KPdWITR5BlB4Auh0nczE=;
-        b=gL6jle1aRoRQDFE5LfedqjJ29uVv0ozC6jQKSzDjL/i3IrJwR2jxe6kznSeklj2JjR
-         Q/gNKQK4ztfmxGULaB88a7EpABN2BCTirAfWtT4qMQXSEQGjG2DGZZarE0oRhymfa3ny
-         OjjY3yeN3JRKqSEG7dYnh92a41JDT7GxrgzmgooJ6zFu/+K5kLuk/cFXUpKzVWsJsD1T
-         bZAgkGNs2ymd+LHae+4JZhlY4B1COy+eUOWsZWLDQVGySqwl4E13DUGhcumbpu8pi/4G
-         3uV+myzmX8bcUbFnB79qipvNYoRUc8wjzx7oUVjSBMeQ5t211GVzUwtf0J0QVG/aK/Xe
-         OUqA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=Qx7lUZsE+6vDBN4KHgsQ1l6KPdWITR5BlB4Auh0nczE=;
-        b=NHTCZCy36TikHtKpx7tylibJyD0mj3kFXLF07Vaefw8jeG0R1i21/1bVQl1/Uhm2UJ
-         xSXkD4psCaSb/OEcehY8f6u6mJLABw/Y4vioQGSoYnEIufjoyuXoVz2RdGpvbd700WiW
-         FR793azGYCYCDHGO/3ljXk5KQgxiM8D/2Sdrk4JXi1KNEDjfAcuRDN3VN6HPdIoYxgxv
-         wU0xJ9Y1SY6+ZI3gvU47ZoRLMV3Gt7hSQJCMbBZ/k16XyKrpfA6tKwjMNpAh4VA9b7gi
-         6CpJ0DUC1GMOmxUQ/zd2Z2kYf6niInVCqTi2RH1vezxfVEF6boFl0e4ueJpWnDODdx9p
-         mlWA==
-X-Gm-Message-State: AOAM532jwNGLt4dZGM6XuX7RJZ2e9+X3NTf1f4zpYJTuX66nipvK4EXv
-        5lVMtHdFeqZOvwGxOUXpTu7Oc8C9w+6KEdkxALg=
-X-Google-Smtp-Source: ABdhPJwFrDOMLUGJT4LIp+lT0lAmcfWvqIG2t3NwyXZ5jNYMnFrBuTn60xClUnelfko8HR/T/Kz3zM48k9bzGorLQjE=
-X-Received: by 2002:a7b:cc8b:: with SMTP id p11mr21853326wma.164.1628279993856;
- Fri, 06 Aug 2021 12:59:53 -0700 (PDT)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 8F83061181;
+        Fri,  6 Aug 2021 19:59:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1628279997;
+        bh=UqVKLug64Y4PSY9jX3pZI+5Ny/f/MK1K8tRFuFCfIcE=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=WRfD/kZjjUvo7RJtlbHRvoYZrFlgi+kOi3Bt13z5T+6J9G+9uOW0qD5DXQsFvg0ow
+         grhKMFnbQvRmxznTEq0wpNHEqxLN1qTPdsHPeSNT9mb4gec986nDpN4/kUBlv1PjVV
+         Jw4IkpnNGw90XtP2PJ1SZK+3CTnhMOhnZbxvKXCmZxnW7xfbRIyBEUvmSdJKOzeSUn
+         ib5mmv7EGoC9ErrGyOkVRmzJnivM9d3TISMp/MPdeDl49S8sMNAAjx06FooJ+WW1Dz
+         dzL2iNZTDQKdeQMLcG9qwF6ryBL0GG2G+CGmBg2u9+M73p5oit6U5/MZxU2vekCVx1
+         NtmNIIi0ePsyw==
+Received: by mail-ed1-f45.google.com with SMTP id i6so14684826edu.1;
+        Fri, 06 Aug 2021 12:59:57 -0700 (PDT)
+X-Gm-Message-State: AOAM531+JgIKpDglFrmTvVk4cS+ohMA5kn6rxiXQ7ILVGKVQi8kYrNW6
+        hYPIdgMEhIum10jVQTioa69NUGCgiJO4b9LTkg==
+X-Google-Smtp-Source: ABdhPJz+E0OEuJndsCm2YSbEUXUzlIlGlq0qlb1skxBmctqYc2VbHUieNbcaIln7cAxq7HYGzjQeRBnuJq5qJ972iHM=
+X-Received: by 2002:a05:6402:2043:: with SMTP id bc3mr15137346edb.62.1628279996090;
+ Fri, 06 Aug 2021 12:59:56 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210805104705.862416-1-daniel.vetter@ffwll.ch>
- <20210805104705.862416-3-daniel.vetter@ffwll.ch> <CAF6AEGvkmZhcPWP58VnL1OXAeJ5tg7v13xkkiYBwkpBi1YiT4g@mail.gmail.com>
- <CAKMK7uG3gRNfYinM51UVAUckV9ZgN3mgRnJd8E9tERani9b1JQ@mail.gmail.com>
- <CAF6AEGuqxb5jEtpQi-aNvjSfPaq0gasH2TLZ+5O836ov9qw+3w@mail.gmail.com>
- <CAKMK7uH2v2x+=Ct-v-2RCVXez4MzjMvhh4yCs_f8HPvYa+DXcA@mail.gmail.com>
- <CAF6AEGuX6UgXpCJqvo4kT3j5zYeuRBYTtMWM8yz0x_tOb1rm4w@mail.gmail.com> <CAKMK7uF-CswLD8E8=gwLAKhKCFcD2KMwdzjjod+JmGGk2TiZUw@mail.gmail.com>
-In-Reply-To: <CAKMK7uF-CswLD8E8=gwLAKhKCFcD2KMwdzjjod+JmGGk2TiZUw@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Fri, 6 Aug 2021 12:59:42 -0700
-Message-ID: <CAF6AEGsiw46-CnSa4_Jfa9_hg1yTi8CS2xAw9XkY2PhXA3K2bQ@mail.gmail.com>
-Subject: Re: [PATCH v5 02/20] drm/msm: Fix drm/sched point of no return rules
-To:     Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
-        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+References: <cover.1620203062.git.baruch@tkos.co.il> <e17461407cf4bb79fed5925ec81196a0b84e7827.1620203062.git.baruch@tkos.co.il>
+In-Reply-To: <e17461407cf4bb79fed5925ec81196a0b84e7827.1620203062.git.baruch@tkos.co.il>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Fri, 6 Aug 2021 13:59:44 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqKOGo4eXKA7FZK7AQQ24MDDbg2-ngUQF9CJK=8eH_pxHQ@mail.gmail.com>
+Message-ID: <CAL_JsqKOGo4eXKA7FZK7AQQ24MDDbg2-ngUQF9CJK=8eH_pxHQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/6] PCI: qcom: add support for IPQ60xx PCIe controller
+To:     Baruch Siach <baruch@tkos.co.il>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
+        Kathiravan T <kathirav@codeaurora.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Robert Marko <robert.marko@sartura.hr>,
+        devicetree@vger.kernel.org, linux-phy@lists.infradead.org,
+        PCI <linux-pci@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" 
-        <linux-media@vger.kernel.org>,
-        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
-        <linaro-mm-sig@lists.linaro.org>,
-        Daniel Vetter <daniel.vetter@intel.com>
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        linux-tegra <linux-tegra@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 6, 2021 at 12:11 PM Daniel Vetter <daniel.vetter@ffwll.ch> wrot=
-e:
+On Wed, May 5, 2021 at 3:18 AM Baruch Siach <baruch@tkos.co.il> wrote:
 >
-> On Fri, Aug 6, 2021 at 8:57 PM Rob Clark <robdclark@gmail.com> wrote:
-> >
-> > On Fri, Aug 6, 2021 at 11:41 AM Daniel Vetter <daniel.vetter@ffwll.ch> =
-wrote:
-> > >
-> > > On Fri, Aug 6, 2021 at 7:15 PM Rob Clark <robdclark@gmail.com> wrote:
-> > > >
-> > > > On Fri, Aug 6, 2021 at 9:42 AM Daniel Vetter <daniel.vetter@ffwll.c=
-h> wrote:
-> > > > >
-> > > > > On Fri, Aug 6, 2021 at 12:58 AM Rob Clark <robdclark@gmail.com> w=
-rote:
-> > > > > >
-> > > > > > On Thu, Aug 5, 2021 at 3:47 AM Daniel Vetter <daniel.vetter@ffw=
-ll.ch> wrote:
-> > > > > > >
-> > > > > > > Originally drm_sched_job_init was the point of no return, aft=
-er which
-> > > > > > > drivers must submit a job. I've split that up, which allows u=
-s to fix
-> > > > > > > this issue pretty easily.
-> > > > > > >
-> > > > > > > Only thing we have to take care of is to not skip to error pa=
-ths after
-> > > > > > > that. Other drivers do this the same for out-fence and simila=
-r things.
-> > > > > > >
-> > > > > > > Fixes: 1d8a5ca436ee ("drm/msm: Conversion to drm scheduler")
-> > > > > > > Cc: Rob Clark <robdclark@chromium.org>
-> > > > > > > Cc: Rob Clark <robdclark@gmail.com>
-> > > > > > > Cc: Sean Paul <sean@poorly.run>
-> > > > > > > Cc: Sumit Semwal <sumit.semwal@linaro.org>
-> > > > > > > Cc: "Christian K=C3=B6nig" <christian.koenig@amd.com>
-> > > > > > > Cc: linux-arm-msm@vger.kernel.org
-> > > > > > > Cc: dri-devel@lists.freedesktop.org
-> > > > > > > Cc: freedreno@lists.freedesktop.org
-> > > > > > > Cc: linux-media@vger.kernel.org
-> > > > > > > Cc: linaro-mm-sig@lists.linaro.org
-> > > > > > > Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
-> > > > > > > ---
-> > > > > > >  drivers/gpu/drm/msm/msm_gem_submit.c | 15 +++++++--------
-> > > > > > >  1 file changed, 7 insertions(+), 8 deletions(-)
-> > > > > > >
-> > > > > > > diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/g=
-pu/drm/msm/msm_gem_submit.c
-> > > > > > > index 6d6c44f0e1f3..d0ed4ddc509e 100644
-> > > > > > > --- a/drivers/gpu/drm/msm/msm_gem_submit.c
-> > > > > > > +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-> > > > > > > @@ -52,9 +52,6 @@ static struct msm_gem_submit *submit_create=
-(struct drm_device *dev,
-> > > > > > >                 return ERR_PTR(ret);
-> > > > > > >         }
-> > > > > > >
-> > > > > > > -       /* FIXME: this is way too early */
-> > > > > > > -       drm_sched_job_arm(&job->base);
-> > > > > > > -
-> > > > > > >         xa_init_flags(&submit->deps, XA_FLAGS_ALLOC);
-> > > > > > >
-> > > > > > >         kref_init(&submit->ref);
-> > > > > > > @@ -883,6 +880,9 @@ int msm_ioctl_gem_submit(struct drm_devic=
-e *dev, void *data,
-> > > > > > >
-> > > > > > >         submit->user_fence =3D dma_fence_get(&submit->base.s_=
-fence->finished);
-> > > > > > >
-> > > > > > > +       /* point of no return, we _have_ to submit no matter =
-what */
-> > > > > > > +       drm_sched_job_arm(&submit->base);
-> > > > > > > +
-> > > > > > >         /*
-> > > > > > >          * Allocate an id which can be used by WAIT_FENCE ioc=
-tl to map back
-> > > > > > >          * to the underlying fence.
-> > > > > > > @@ -892,17 +892,16 @@ int msm_ioctl_gem_submit(struct drm_dev=
-ice *dev, void *data,
-> > > > > > >         if (submit->fence_id < 0) {
-> > > > > > >                 ret =3D submit->fence_id =3D 0;
-> > > > > > >                 submit->fence_id =3D 0;
-> > > > > > > -               goto out;
-> > > > > > >         }
-> > > > > > >
-> > > > > > > -       if (args->flags & MSM_SUBMIT_FENCE_FD_OUT) {
-> > > > > > > +       if (ret =3D=3D 0 && args->flags & MSM_SUBMIT_FENCE_FD=
-_OUT) {
-> > > > > > >                 struct sync_file *sync_file =3D sync_file_cre=
-ate(submit->user_fence);
-> > > > > > >                 if (!sync_file) {
-> > > > > > >                         ret =3D -ENOMEM;
-> > > > > > > -                       goto out;
-> > > > > > > +               } else {
-> > > > > > > +                       fd_install(out_fence_fd, sync_file->f=
-ile);
-> > > > > > > +                       args->fence_fd =3D out_fence_fd;
-> > > > > > >                 }
-> > > > > > > -               fd_install(out_fence_fd, sync_file->file);
-> > > > > > > -               args->fence_fd =3D out_fence_fd;
-> > > > > >
-> > > > > > I wonder if instead we should (approximately) undo "drm/msm/sub=
-mit:
-> > > > > > Simplify out-fence-fd handling" so that the point that it could=
- fail
-> > > > > > is moved up ahead of the drm_sched_job_arm()?
-> > > > >
-> > > > > Hm yeah. Up to you how you want to paint this shed, I think eithe=
-r is fine.
-> > > > >
-> > > > > > Also, does the dma_fence_get() work before drm_sched_job_arm()?=
-  From
-> > > > > > a quick look, it looks like it won't, but I'm still playing cat=
-chup
-> > > > > > and haven't had a chance to look at your entire series.  If it =
-doesn't
-> > > > > > work before drm_sched_job_arm(), then there is really no way to
-> > > > > > prevent a error path between the fence-init and job-submit.
-> > > > >
-> > > > > Yes. I thought I've checked that I put the _arm() in the right sp=
-ot,
-> > > > > but I guess I screwed up and you need the fence before the point =
-where
-> > > > > I've put the job_arm()? And yes the error path cannot be avoided =
-for
-> > > > > out-fences, that's what I tried to explain in the commit message.
-> > > > >
-> > > > > > But, prior to your series, wouldn't a failure after
-> > > > > > drm_sched_job_init() but before the job is submitted just burn =
-a
-> > > > > > fence-id, and otherwise carry on it's merry way?
-> > > > >
-> > > > > Maybe? I'm not sure whether the scheduler gets confused about the=
- gap
-> > > > > and freak out abou that. I'm fairly new to that code and learning
-> > > > > (which is part why I'm working on it). Since you look up in
-> > > > > fences/syncobj after job_init() it should be pretty easy to whip =
-up a
-> > > > > testcase and see what happens. Also as long as nothing fails you =
-won't
-> > > > > see an issue, that's for sure.
-> > > >
-> > > > fair.. I'll try to come up with a test case.. pre-scheduler-convers=
-ion
-> > > > it wasn't a problem to fail after the fence seqno was allocated (we=
-ll,
-> > > > I guess you might have problems if you had 2^31 failures in a row)
-> > >
-> > > Yeah one thing drm/sched forces you to do is have a very clear notion
-> > > about the point of no return in your submit ioctl. Which I think is a
-> > > Very Good Thing, at least looking at i915 execbuf where the point of
-> > > no return is a multi-stage thing with such interesting intermediate
-> > > points like "we submit the ruquest but without actually running the
-> > > batchbuffer". The downside is that the submit ioctl isn't perfectly
-> > > transaction anymore, but I don't think that matters for tha tail
-> > > stuff, which is generally just some out-fence installing. That
-> > > generally never fails.
-> >
-> > So I hacked up:
-> >
-> > ------
-> > diff --git a/drivers/gpu/drm/scheduler/sched_fence.c
-> > b/drivers/gpu/drm/scheduler/sched_fence.c
-> > index 3aa6351d2101..88e66dbc9515 100644
-> > --- a/drivers/gpu/drm/scheduler/sched_fence.c
-> > +++ b/drivers/gpu/drm/scheduler/sched_fence.c
-> > @@ -176,6 +176,7 @@ struct drm_sched_fence
-> > *drm_sched_fence_create(struct drm_sched_entity *entity,
-> >         fence->sched =3D entity->rq->sched;
-> >         spin_lock_init(&fence->lock);
-> >
-> > +       seq =3D atomic_inc_return(&entity->fence_seq);
-> >         seq =3D atomic_inc_return(&entity->fence_seq);
-> >         dma_fence_init(&fence->scheduled, &drm_sched_fence_ops_schedule=
-d,
-> >                        &fence->lock, entity->fence_context, seq);
-> > diff --git a/drivers/gpu/drm/scheduler/sched_main.c
-> > b/drivers/gpu/drm/scheduler/sched_main.c
-> > index fcc601962e92..583e85adbbe0 100644
-> > --- a/drivers/gpu/drm/scheduler/sched_main.c
-> > +++ b/drivers/gpu/drm/scheduler/sched_main.c
-> > @@ -593,6 +593,7 @@ int drm_sched_job_init(struct drm_sched_job *job,
-> >         if (!job->s_fence)
-> >                 return -ENOMEM;
-> >         job->id =3D atomic64_inc_return(&sched->job_id_count);
-> > +       job->id =3D atomic64_inc_return(&sched->job_id_count);
-> >
-> >         INIT_LIST_HEAD(&job->list);
-> >
-> > ------
-> >
-> > (I guess the job->id part shouldn't really be needed, that looks like
-> > it is only used by amdgpu)
-> >
-> > This didn't cause any problems that I could see.  So I don't *think* a
-> > failure after drm_sched_job_init() is really problematic, as long as
-> > things are serialized between drm_sched_job_init() and
-> > drm_sched_entity_push_job().
-> >
-> > I also noticed that in the atomic commit path, the out-fences are
-> > initialized before atomic-check.. so there should be plenty of
-> > precedent for skipping fence seqno's.
+> From: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
 >
-> Oh I think I remember now. The reason why the split into init/arm is
-> so that you can keep your critical section only around job_arm() and
-> push_job(). My very first version just pulled the jobs_init() of that
-> for most drivers to where I needed it, and that would result in a bit
-> chaos because the fences would signal out of order potentially. But
-> yeah I guess bailing out is fine with the scheduler.
+> IPQ60xx series of SoCs have one port of PCIe gen 3. Add support for that
+> platform.
+>
+> The code is based on downstream Codeaurora kernel v5.4. Split out the
+> DBI registers access part from .init into .post_init. DBI registers are
+> only accessible after phy_power_on().
+>
+> Signed-off-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
+> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+> ---
+> v2:
+>   * Drop ATU configuration; rely on common code instead
+>
+>   * Use more common register macros
+>
+>   * Use bulk clk and reset APIs
+> ---
+>  drivers/pci/controller/dwc/pcie-designware.h |   1 +
+>  drivers/pci/controller/dwc/pcie-qcom.c       | 150 +++++++++++++++++++
+>  2 files changed, 151 insertions(+)
+>
+> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+> index ceb359b6e6a6..346462c74a3e 100644
+> --- a/drivers/pci/controller/dwc/pcie-designware.h
+> +++ b/drivers/pci/controller/dwc/pcie-designware.h
+> @@ -76,6 +76,7 @@
+>
+>  #define GEN3_RELATED_OFF                       0x890
+>  #define GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL   BIT(0)
+> +#define GEN3_RELATED_OFF_RXEQ_RGRDLESS_RXTS    BIT(13)
+>  #define GEN3_RELATED_OFF_GEN3_EQ_DISABLE       BIT(16)
+>  #define GEN3_RELATED_OFF_RATE_SHADOW_SEL_SHIFT 24
+>  #define GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK  GENMASK(25, 24)
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 8a7a300163e5..93766aee3e7c 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -52,6 +52,10 @@
+>  #define PCIE20_PARF_DBI_BASE_ADDR              0x168
+>  #define PCIE20_PARF_SLV_ADDR_SPACE_SIZE                0x16C
+>  #define PCIE20_PARF_MHI_CLOCK_RESET_CTRL       0x174
+> +#define AHB_CLK_EN                             BIT(0)
+> +#define MSTR_AXI_CLK_EN                                BIT(1)
+> +#define BYPASS                                 BIT(4)
+> +
+>  #define PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT      0x178
+>  #define PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT_V2   0x1A8
+>  #define PCIE20_PARF_LTSSM                      0x1B0
+> @@ -94,6 +98,12 @@
+>  #define SLV_ADDR_SPACE_SZ                      0x10000000
+>
+>  #define PCIE20_LNK_CONTROL2_LINK_STATUS2       0xa0
+> +#define PCIE_CAP_CURR_DEEMPHASIS               BIT(16)
 
-ahh, that makes more sense
+Isn't this a standard register field?
 
-> Do you want me to tune down the commit message a bit, it's not a must
-> to submit the job, but just makes a bit more sense than bailing out
-> with a fence seqno reserved?
+> +#define SPEED_GEN1                             0x1
+> +#define SPEED_GEN2                             0x2
+> +#define SPEED_GEN3                             0x3
 
-yeah, and I guess drop the fixme comment in the drm/msm patch..
+And these?
 
-I wonder if it would make sense to split drm_fence_init().. most of
-the things we need the out-fence for prior to
-drm_sched_entity_push_job() is, I think, just to have a dma_fence
-reference.. which doesn't require having a seqno assigned yet.  Which
-would let us move the critical section into
-drm_sched_entity_push_job() itself.  (OTOH I suppose that opens up an
-exciting new class of bugs, to have fences floating around without an
-initialized seqno.)
+There's already some common DWC code for setting the link speed.
 
-BR,
--R
+> +#define AXI_CLK_RATE                           200000000
+> +#define RCHNG_CLK_RATE                         100000000
+>
+>  #define DEVICE_TYPE_RC                         0x4
+>
+> @@ -168,6 +178,11 @@ struct qcom_pcie_resources_2_7_0 {
+>         struct clk *pipe_clk;
+>  };
+>
+> +struct qcom_pcie_resources_2_9_0 {
+> +       struct clk_bulk_data clks[5];
+> +       struct reset_control *rst;
+> +};
+> +
+>  union qcom_pcie_resources {
+>         struct qcom_pcie_resources_1_0_0 v1_0_0;
+>         struct qcom_pcie_resources_2_1_0 v2_1_0;
+> @@ -175,6 +190,7 @@ union qcom_pcie_resources {
+>         struct qcom_pcie_resources_2_3_3 v2_3_3;
+>         struct qcom_pcie_resources_2_4_0 v2_4_0;
+>         struct qcom_pcie_resources_2_7_0 v2_7_0;
+> +       struct qcom_pcie_resources_2_9_0 v2_9_0;
+>  };
+>
+>  struct qcom_pcie;
+> @@ -1266,6 +1282,130 @@ static void qcom_pcie_post_deinit_2_7_0(struct qcom_pcie *pcie)
+>         clk_disable_unprepare(res->pipe_clk);
+>  }
+>
+> +static int qcom_pcie_get_resources_2_9_0(struct qcom_pcie *pcie)
+> +{
+> +       struct qcom_pcie_resources_2_9_0 *res = &pcie->res.v2_9_0;
+> +       struct dw_pcie *pci = pcie->pci;
+> +       struct device *dev = pci->dev;
+> +       int ret;
+> +
+> +       res->clks[0].id = "iface";
+> +       res->clks[1].id = "axi_m";
+> +       res->clks[2].id = "axi_s";
+> +       res->clks[3].id = "axi_bridge";
+> +       res->clks[4].id = "rchng";
+> +
+> +       ret = devm_clk_bulk_get(dev, ARRAY_SIZE(res->clks), res->clks);
+> +       if (ret < 0)
+> +               return ret;
+> +
+> +       res->rst = devm_reset_control_array_get_exclusive(dev);
+> +       if (IS_ERR(res->rst))
+> +               return PTR_ERR(res->rst);
+> +
+> +       return 0;
+> +}
+> +
+> +static void qcom_pcie_deinit_2_9_0(struct qcom_pcie *pcie)
+> +{
+> +       struct qcom_pcie_resources_2_9_0 *res = &pcie->res.v2_9_0;
+> +
+> +       clk_bulk_disable_unprepare(ARRAY_SIZE(res->clks), res->clks);
+> +}
+> +
+> +static int qcom_pcie_init_2_9_0(struct qcom_pcie *pcie)
+> +{
+> +       struct qcom_pcie_resources_2_9_0 *res = &pcie->res.v2_9_0;
+> +       struct device *dev = pcie->pci->dev;
+> +       int ret;
+> +
+> +       ret = reset_control_assert(res->rst);
+> +       if (ret) {
+> +               dev_err(dev, "reset assert failed (%d)\n", ret);
+> +               return ret;
+> +       }
+> +
+> +       usleep_range(2000, 2500);
+> +
+> +       ret = reset_control_deassert(res->rst);
+> +       if (ret) {
+> +               dev_err(dev, "reset deassert failed (%d)\n", ret);
+> +               return ret;
+> +       }
+> +
+> +       /*
+> +        * Don't have a way to see if the reset has completed.
+> +        * Wait for some time.
+> +        */
+> +       usleep_range(2000, 2500);
+> +
+> +       ret = clk_bulk_prepare_enable(ARRAY_SIZE(res->clks), res->clks);
+> +       if (ret)
+> +               goto err_reset;
+> +
+> +       return 0;
+> +
+> +       /*
+> +        * Not checking for failure, will anyway return
+> +        * the original failure in 'ret'.
+> +        */
+> +err_reset:
+> +       reset_control_assert(res->rst);
+> +
+> +       return ret;
+> +}
+> +
+> +static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
+> +{
+> +       struct dw_pcie *pci = pcie->pci;
+> +       u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> +       u32 val;
+> +       int i;
+> +
+> +       writel(SLV_ADDR_SPACE_SZ,
+> +               pcie->parf + PCIE20_v3_PARF_SLV_ADDR_SPACE_SIZE);
+> +
+> +       val = readl(pcie->parf + PCIE20_PARF_PHY_CTRL);
+> +       val &= ~BIT(0);
+> +       writel(val, pcie->parf + PCIE20_PARF_PHY_CTRL);
+> +
+> +       writel(0, pcie->parf + PCIE20_PARF_DBI_BASE_ADDR);
+> +
+> +       writel(DEVICE_TYPE_RC, pcie->parf + PCIE20_PARF_DEVICE_TYPE);
+> +       writel(BYPASS | MSTR_AXI_CLK_EN | AHB_CLK_EN,
+> +               pcie->parf + PCIE20_PARF_MHI_CLOCK_RESET_CTRL);
+> +       writel(GEN3_RELATED_OFF_RXEQ_RGRDLESS_RXTS
+> +               | GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL,
+> +               pci->dbi_base + GEN3_RELATED_OFF);
+> +
+> +       writel(MST_WAKEUP_EN | SLV_WAKEUP_EN | MSTR_ACLK_CGC_DIS
+> +               | SLV_ACLK_CGC_DIS | CORE_CLK_CGC_DIS |
+> +               AUX_PWR_DET | L23_CLK_RMV_DIS | L1_CLK_RMV_DIS,
+> +               pcie->parf + PCIE20_PARF_SYS_CTRL);
+> +
+> +       writel(0, pcie->parf + PCIE20_PARF_Q2A_FLUSH);
+> +
+> +       dw_pcie_dbi_ro_wr_en(pci);
+> +       writel(PCIE_CAP_LINK1_VAL, pci->dbi_base + offset + PCI_EXP_SLTCAP);
+> +
+> +       /* Configure PCIe link capabilities for ASPM */
+> +       val = readl(pci->dbi_base + offset + PCI_EXP_LNKCAP);
+> +       val &= ~PCI_EXP_LNKCAP_ASPMS;
+> +       writel(val, pci->dbi_base + offset + PCI_EXP_LNKCAP);
+> +
+> +       writel(PCI_EXP_DEVCTL2_COMP_TMOUT_DIS, pci->dbi_base + offset +
+> +                       PCI_EXP_DEVCTL2);
+> +
+> +       writel(PCIE_CAP_CURR_DEEMPHASIS | SPEED_GEN3,
+> +                       pci->dbi_base + offset + PCI_EXP_DEVCTL2);
 
+Doesn't this overwrite the prior register write?
 
-> -Daniel
+> +
+> +       for (i = 0;i < 256;i++)
+> +               writel(0x0, pcie->parf + PCIE20_PARF_BDF_TO_SID_TABLE_N
+> +                               + (4 * i));
+> +
+> +       return 0;
+> +}
+> +
+>  static int qcom_pcie_link_up(struct dw_pcie *pci)
+>  {
+>         u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> @@ -1456,6 +1596,15 @@ static const struct qcom_pcie_ops ops_1_9_0 = {
+>         .config_sid = qcom_pcie_config_sid_sm8250,
+>  };
+>
+> +/* Qcom IP rev.: 2.9.0  Synopsys IP rev.: 5.00a */
+> +static const struct qcom_pcie_ops ops_2_9_0 = {
+> +       .get_resources = qcom_pcie_get_resources_2_9_0,
+> +       .init = qcom_pcie_init_2_9_0,
+> +       .post_init = qcom_pcie_post_init_2_9_0,
+> +       .deinit = qcom_pcie_deinit_2_9_0,
+> +       .ltssm_enable = qcom_pcie_2_3_2_ltssm_enable,
+> +};
+> +
+>  static const struct dw_pcie_ops dw_pcie_ops = {
+>         .link_up = qcom_pcie_link_up,
+>         .start_link = qcom_pcie_start_link,
+> @@ -1555,6 +1704,7 @@ static const struct of_device_id qcom_pcie_match[] = {
+>         { .compatible = "qcom,pcie-qcs404", .data = &ops_2_4_0 },
+>         { .compatible = "qcom,pcie-sdm845", .data = &ops_2_7_0 },
+>         { .compatible = "qcom,pcie-sm8250", .data = &ops_1_9_0 },
+> +       { .compatible = "qcom,pcie-ipq6018", .data = &ops_2_9_0 },
+>         { }
+>  };
+>
 > --
-> Daniel Vetter
-> Software Engineer, Intel Corporation
-> http://blog.ffwll.ch
+> 2.30.2
+>
