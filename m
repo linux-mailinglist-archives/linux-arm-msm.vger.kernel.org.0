@@ -2,212 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4270A3E2EC7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Aug 2021 19:15:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F6073E2F3E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Aug 2021 20:24:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240416AbhHFRP5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Aug 2021 13:15:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39926 "EHLO
+        id S242905AbhHFSY4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 6 Aug 2021 14:24:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55190 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229632AbhHFRP5 (ORCPT
+        with ESMTP id S242870AbhHFSY4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Aug 2021 13:15:57 -0400
-Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 794B3C0613CF;
-        Fri,  6 Aug 2021 10:15:40 -0700 (PDT)
-Received: by mail-wm1-x32f.google.com with SMTP id n11so6058797wmd.2;
-        Fri, 06 Aug 2021 10:15:40 -0700 (PDT)
+        Fri, 6 Aug 2021 14:24:56 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19DBCC061799
+        for <linux-arm-msm@vger.kernel.org>; Fri,  6 Aug 2021 11:24:39 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id f20-20020a9d6c140000b02904bb9756274cso9915711otq.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 06 Aug 2021 11:24:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=dCyOt6fuT3vKd9OQ1cGqS4mQb18lfymYBVtFVf7jJ4A=;
-        b=R6XSn0FGIQXxHlZfbPMYFAIp3qZvGqnz2uO6DnOgH+NSLPgZn2dPgU3bfi7x97DrIz
-         lcCC+kYvlOo1JatvHjnXcNT+4JWqgIXUOIr8ktUaJpizb+C8bzbqy1QQ0wyeqH9qVqcP
-         80UkcftiPH6W9Ic1FaFPxCcY6CprePe1b+MMMtZEjPsh8QX3cri8U78Mb1Ki3ViN8zUI
-         q9FZ2oj7kg7k4G0V15nCS3yHxhxJ5hlqUokLVum+6W2V08cAc66ovuRWcEnY6Ii0BteU
-         BQRo17h+cVFy/oD/iBy8x0mPSkXVB77H4gqlxHrw7aZIZ0y0MMC1fue0nZT9W6x7en2L
-         Qp8w==
+        d=kali.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=BIGIcPlIeaE0SThFbEeerqemMrj65dYRWTJCVJhF4yo=;
+        b=DDx8dp2V5qXj6i+0JlOs6OmhY1Ua80Sh2NcN3a++q6yT+TxYulaPAwVFNpl/6zmA1R
+         XzBfjl/oipFFg8ZikWdyqh4fI5J+LFzSLEqfjWWHud3ps6q8+ThufI99NokK9VCrbiEz
+         YHqzKtgrrwOsfvwTHefuiV0c6JU/AgpTerOUAIHtG4IBVTAAMDUbiZ9AL4BlXW9Un4B2
+         eMDXaarkX4Fdmsni+JkAFroQgMSe4rD8OkF1XipdFsQDX3XPRbuDl4AvfArmqZAsATc2
+         CaL3wHwradChmKchv+Rx743p9gxq3nj2f1RaSwFm4ln7KDLQ0gNa1sffMGG5AV3PkgDG
+         6ywA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=dCyOt6fuT3vKd9OQ1cGqS4mQb18lfymYBVtFVf7jJ4A=;
-        b=anwRJS/lx1d/aJeBG3rW5e2IxUEEdoZUrlpSrejzbrnyY2nnZI1oPLk3uS+zIG7/PK
-         01OYG7Qypai1qHJ2GPOs6s74cva5qaFmEs7g5T+cL26YhCZTQl9JiHcR3gPdIwEFvBc9
-         ICJv4Te1btpQvOPYp0XRFf5NPGwgKxjWF4gCe7xEVTAJlsCVd2TISVJU/zCi4F5viIL/
-         mDIXz8ajMX7CCSGIAJaaCk6tE01ezP2i8G6Aak56iAXnQEE6EjeDq/+yd7nJ9CBB2MLk
-         +e4ThumUc8FWkzOmaeFttuFmv8YVYA9tvqLPdTFT5VIsr+PDycFR488q1H7I2fZ19S7i
-         NA/g==
-X-Gm-Message-State: AOAM531KBHfizgXfqgYlu2pX+EQ14hFcI3/AzJYxuKBxhrihocAidoHi
-        7V1vcsNvOVjq+oXQMqeRM6XLSXe/x4wC61nnjII=
-X-Google-Smtp-Source: ABdhPJyBrw5+F57Z9us0v2G5eQXZ3/7VCwgnovKyD3o89ran+2+rJTbzcYRU+451NTlUEvVs/nhtDxk1Orc3hl6E2vw=
-X-Received: by 2002:a1c:4b18:: with SMTP id y24mr22080784wma.49.1628270139083;
- Fri, 06 Aug 2021 10:15:39 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210805104705.862416-1-daniel.vetter@ffwll.ch>
- <20210805104705.862416-3-daniel.vetter@ffwll.ch> <CAF6AEGvkmZhcPWP58VnL1OXAeJ5tg7v13xkkiYBwkpBi1YiT4g@mail.gmail.com>
- <CAKMK7uG3gRNfYinM51UVAUckV9ZgN3mgRnJd8E9tERani9b1JQ@mail.gmail.com>
-In-Reply-To: <CAKMK7uG3gRNfYinM51UVAUckV9ZgN3mgRnJd8E9tERani9b1JQ@mail.gmail.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Fri, 6 Aug 2021 10:19:54 -0700
-Message-ID: <CAF6AEGuqxb5jEtpQi-aNvjSfPaq0gasH2TLZ+5O836ov9qw+3w@mail.gmail.com>
-Subject: Re: [PATCH v5 02/20] drm/msm: Fix drm/sched point of no return rules
-To:     Daniel Vetter <daniel.vetter@ffwll.ch>
-Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
-        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=BIGIcPlIeaE0SThFbEeerqemMrj65dYRWTJCVJhF4yo=;
+        b=srUag/AqulXrg91/urj1okOiM0g41msh2M+Z/j0I9pTH46xcYmkULcSyiZQ6zmxPYI
+         nn7sGQGwnx/kq4Rm4QzEzPHNSbAo9ln50BmNj3Up1UjuqzLrw/jjW27iXkJS9RNg8US4
+         aGGAaciLFCN0xU/RKD3dX8Cewzrq94pJf31Ddzp8WQc0+OTncE23LqkPkA6ON5Onu/iJ
+         1nVGCDQwPd1a0K/XDORTEr+5BWQMH1/Fb9rFx/AYXBCIefyFgiReOrOjENwadOW0tbvM
+         q+FRv/mfmUJ19elU3rv9/QuyNNZ946KAQresc8X1ZwGdhJ4GXoNt3n7KB0kX9NhvsA7w
+         JMaQ==
+X-Gm-Message-State: AOAM531YYSyLqfJeds7c6aKB+02KrFbXzJQ/YEVaYREDN+Kyj0hYNfe+
+        cVkFJNZ6o23/MF1t8pAyPtzbQA==
+X-Google-Smtp-Source: ABdhPJxUIBx9Jj8X5BK0eS89AxvYVNgpBf1fuWZWaUzWOZ/cjZFUo5G8EXIXQ8Lil12VvXTYVyoyhQ==
+X-Received: by 2002:a9d:3bc3:: with SMTP id k61mr8342925otc.355.1628274278516;
+        Fri, 06 Aug 2021 11:24:38 -0700 (PDT)
+Received: from MacBook-Pro.hackershack.net (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
+        by smtp.gmail.com with ESMTPSA id p2sm1813144oip.35.2021.08.06.11.24.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 06 Aug 2021 11:24:38 -0700 (PDT)
+Subject: Re: disp_cc_mdss_pclk0_clk_src: rcg didn't update its configuration
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" 
-        <linux-media@vger.kernel.org>,
-        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
-        <linaro-mm-sig@lists.linaro.org>,
-        Daniel Vetter <daniel.vetter@intel.com>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+References: <f65f219b-3f2a-63ac-5bc5-84d4f0b58f6d@kali.org>
+ <3892649f-4748-b712-c28d-477e40aa8007@linaro.org>
+ <30c5756d-790f-894b-d84b-8c4173e7fad5@kali.org>
+ <8947d8ba-bed0-aadb-084e-e03029b6fe33@linaro.org>
+ <7b334e55-5632-5e58-6742-802bffdb8fef@kali.org>
+ <CAA8EJppTtEn+HuJuMj7jUGs5KDq4H3Xv--ML4uRVxe94XP5PEA@mail.gmail.com>
+From:   Steev Klimaszewski <steev@kali.org>
+Message-ID: <4fda301e-7965-7122-92dc-9cffc91270fa@kali.org>
+Date:   Fri, 6 Aug 2021 13:24:37 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.12.0
+MIME-Version: 1.0
+In-Reply-To: <CAA8EJppTtEn+HuJuMj7jUGs5KDq4H3Xv--ML4uRVxe94XP5PEA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 6, 2021 at 9:42 AM Daniel Vetter <daniel.vetter@ffwll.ch> wrote=
-:
->
-> On Fri, Aug 6, 2021 at 12:58 AM Rob Clark <robdclark@gmail.com> wrote:
-> >
-> > On Thu, Aug 5, 2021 at 3:47 AM Daniel Vetter <daniel.vetter@ffwll.ch> w=
-rote:
-> > >
-> > > Originally drm_sched_job_init was the point of no return, after which
-> > > drivers must submit a job. I've split that up, which allows us to fix
-> > > this issue pretty easily.
-> > >
-> > > Only thing we have to take care of is to not skip to error paths afte=
-r
-> > > that. Other drivers do this the same for out-fence and similar things=
-.
-> > >
-> > > Fixes: 1d8a5ca436ee ("drm/msm: Conversion to drm scheduler")
-> > > Cc: Rob Clark <robdclark@chromium.org>
-> > > Cc: Rob Clark <robdclark@gmail.com>
-> > > Cc: Sean Paul <sean@poorly.run>
-> > > Cc: Sumit Semwal <sumit.semwal@linaro.org>
-> > > Cc: "Christian K=C3=B6nig" <christian.koenig@amd.com>
-> > > Cc: linux-arm-msm@vger.kernel.org
-> > > Cc: dri-devel@lists.freedesktop.org
-> > > Cc: freedreno@lists.freedesktop.org
-> > > Cc: linux-media@vger.kernel.org
-> > > Cc: linaro-mm-sig@lists.linaro.org
-> > > Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
-> > > ---
-> > >  drivers/gpu/drm/msm/msm_gem_submit.c | 15 +++++++--------
-> > >  1 file changed, 7 insertions(+), 8 deletions(-)
-> > >
-> > > diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/m=
-sm/msm_gem_submit.c
-> > > index 6d6c44f0e1f3..d0ed4ddc509e 100644
-> > > --- a/drivers/gpu/drm/msm/msm_gem_submit.c
-> > > +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-> > > @@ -52,9 +52,6 @@ static struct msm_gem_submit *submit_create(struct =
-drm_device *dev,
-> > >                 return ERR_PTR(ret);
-> > >         }
-> > >
-> > > -       /* FIXME: this is way too early */
-> > > -       drm_sched_job_arm(&job->base);
-> > > -
-> > >         xa_init_flags(&submit->deps, XA_FLAGS_ALLOC);
-> > >
-> > >         kref_init(&submit->ref);
-> > > @@ -883,6 +880,9 @@ int msm_ioctl_gem_submit(struct drm_device *dev, =
-void *data,
-> > >
-> > >         submit->user_fence =3D dma_fence_get(&submit->base.s_fence->f=
-inished);
-> > >
-> > > +       /* point of no return, we _have_ to submit no matter what */
-> > > +       drm_sched_job_arm(&submit->base);
-> > > +
-> > >         /*
-> > >          * Allocate an id which can be used by WAIT_FENCE ioctl to ma=
-p back
-> > >          * to the underlying fence.
-> > > @@ -892,17 +892,16 @@ int msm_ioctl_gem_submit(struct drm_device *dev=
-, void *data,
-> > >         if (submit->fence_id < 0) {
-> > >                 ret =3D submit->fence_id =3D 0;
-> > >                 submit->fence_id =3D 0;
-> > > -               goto out;
-> > >         }
-> > >
-> > > -       if (args->flags & MSM_SUBMIT_FENCE_FD_OUT) {
-> > > +       if (ret =3D=3D 0 && args->flags & MSM_SUBMIT_FENCE_FD_OUT) {
-> > >                 struct sync_file *sync_file =3D sync_file_create(subm=
-it->user_fence);
-> > >                 if (!sync_file) {
-> > >                         ret =3D -ENOMEM;
-> > > -                       goto out;
-> > > +               } else {
-> > > +                       fd_install(out_fence_fd, sync_file->file);
-> > > +                       args->fence_fd =3D out_fence_fd;
-> > >                 }
-> > > -               fd_install(out_fence_fd, sync_file->file);
-> > > -               args->fence_fd =3D out_fence_fd;
-> >
-> > I wonder if instead we should (approximately) undo "drm/msm/submit:
-> > Simplify out-fence-fd handling" so that the point that it could fail
-> > is moved up ahead of the drm_sched_job_arm()?
->
-> Hm yeah. Up to you how you want to paint this shed, I think either is fin=
-e.
->
-> > Also, does the dma_fence_get() work before drm_sched_job_arm()?  From
-> > a quick look, it looks like it won't, but I'm still playing catchup
-> > and haven't had a chance to look at your entire series.  If it doesn't
-> > work before drm_sched_job_arm(), then there is really no way to
-> > prevent a error path between the fence-init and job-submit.
->
-> Yes. I thought I've checked that I put the _arm() in the right spot,
-> but I guess I screwed up and you need the fence before the point where
-> I've put the job_arm()? And yes the error path cannot be avoided for
-> out-fences, that's what I tried to explain in the commit message.
->
-> > But, prior to your series, wouldn't a failure after
-> > drm_sched_job_init() but before the job is submitted just burn a
-> > fence-id, and otherwise carry on it's merry way?
->
-> Maybe? I'm not sure whether the scheduler gets confused about the gap
-> and freak out abou that. I'm fairly new to that code and learning
-> (which is part why I'm working on it). Since you look up in
-> fences/syncobj after job_init() it should be pretty easy to whip up a
-> testcase and see what happens. Also as long as nothing fails you won't
-> see an issue, that's for sure.
 
-fair.. I'll try to come up with a test case.. pre-scheduler-conversion
-it wasn't a problem to fail after the fence seqno was allocated (well,
-I guess you might have problems if you had 2^31 failures in a row)
-
-BR,
--R
-
-> -Daniel
+On 8/6/21 11:47 AM, Dmitry Baryshkov wrote:
+> On Fri, 6 Aug 2021 at 19:18, Steev Klimaszewski <steev@kali.org> wrote:
+>> Hi Dmitry,
+>>
+>> On 8/6/21 2:04 AM, Dmitry Baryshkov wrote:
+>>> Hi Steev,
+>>> Could you please check if the following kernel commits also show this
+>>>>> behaviour:
+>>>>>
+>>>>> - 170b763597d3a0a79f135e4d83a38462c3964fdf
+>>>>>
+>>>>> - f4b43ac0b0af1d115effd08133046a694ac33dc2
+>>>>>
+>>>> Yes, I have both of those commits, and the issue still shows up.  This
+>>>> is with 5.13.8 - additionally, I have a Lenovo Flex 5G which is running
+>>>> a tree based on 5.14.0-rc2-next-20210721 and it shows a similar issue,
+>>>> with the message being
+>>>>
+>>>> disp_cc_mdss_edp_pixel_clk_src: rcg didn't update its configuration.
+>>>>
+>>> Thus I have asked you to check if the issue shows up if you build one
+>>> of the mentioned commits (they are between 5.12 and 5.13). We are
+>>> trying to narrow down which of the changes broke your system.
+>>>
+>> Apologies for misunderstanding, I thought you meant make sure I had
+>> those commits in my tree.  I have tried reverting both individually, as
+>> well as both together and the issue still shows up.
+> Uhm. Could you please just checkout (note, checkout, not revert) each
+> of those commits, build the kernel and try the resulting kernel?
 >
-> > BR,
-> > -R
-> >
-> > >         }
-> > >
-> > >         submit_attach_object_fences(submit);
-> > > --
-> > > 2.32.0
-> > >
+> Two additional commits to try (checkout, build, try):
 >
+> - c68da22dc9cc39ced8fc30b65fca5ce2f9583735
 >
+> - b2150cab9a97c1fcc15684200a6020b6d231106d
 >
-> --
-> Daniel Vetter
-> Software Engineer, Intel Corporation
-> http://blog.ffwll.ch
+> Also just to be sure, could you please also build the v5.13-rc1 and
+> try running that kernel?
+>
+> So in the end I'm asking you to try 5 kernel builds.
+Oh!  My apologies, now I understand what you want, and I can definitely
+run those tests.  Thank you for the instructions :)
