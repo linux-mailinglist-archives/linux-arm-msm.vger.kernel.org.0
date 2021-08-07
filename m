@@ -2,145 +2,212 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 835C83E35C7
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Aug 2021 16:04:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 054DE3E3646
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Aug 2021 18:26:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232363AbhHGOE0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 7 Aug 2021 10:04:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59128 "EHLO
+        id S229470AbhHGQ0X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 7 Aug 2021 12:26:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33520 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232495AbhHGOEX (ORCPT
+        with ESMTP id S229458AbhHGQ0X (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 7 Aug 2021 10:04:23 -0400
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89549C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Sat,  7 Aug 2021 07:04:05 -0700 (PDT)
-Received: by mail-oi1-x22a.google.com with SMTP id w6so16642309oiv.11
-        for <linux-arm-msm@vger.kernel.org>; Sat, 07 Aug 2021 07:04:05 -0700 (PDT)
+        Sat, 7 Aug 2021 12:26:23 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC55CC0613CF;
+        Sat,  7 Aug 2021 09:26:05 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id s22-20020a17090a1c16b0290177caeba067so27434172pjs.0;
+        Sat, 07 Aug 2021 09:26:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=RFiPqimL7iWIcVyXsOh4zO7Sdg3GbKEKKWSuzwDE35c=;
-        b=IHIa2oou2h/M5o2s5U20yLVMuq4EQXeO4H3ldOlgHdLeYe3/3KSxnjx0hhL8IOH1Tf
-         HkJd3ZVtl7fbygKmrylLfvLejK4KZiYtlZ72VqAED1yvV3tmevkpDuJnol4Fp8/A5Ved
-         Gv6lohvRwO/+6GbJP6hYPXoPiXCCzJB0Y1/5FnxZcDZHLu3isEJQ7AVj3Nn7lU17ROo3
-         v18T6QbJ2wZm7qhEktWU40LjTpRU9qOmAyGDgGXjv4AbjpQBrOo9HUOjSkKsa8zOStfo
-         bUp6PsJZpLyHbJCI78M/fPgUGZQ211wZlXc99XjIedF7TCp0OeIY0wPmgWqFMwdvC6Io
-         x4QA==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KK6pClbRoyb7NoLCLxdt7TZo5IqArGIaNgS9FD1UJck=;
+        b=Jo7Z5SIQMndDQNZMfafxV3iHlM0HyuITIt3fo+N3zm85xbzvJysih0K3Ga+nv+wbbx
+         9QKD9Pgx+BxNT6l6fz1xPjpEvyAqTUNUYkuXVRl799mqt/2z5CkC29bqlg8BBtl1kIo+
+         hTh9KWekSDbXX0z3v9AvoO7lzdBO/1otyd+uh+Rp0EgEPaNCE90aOV/thgbe0xU9hWFk
+         vcZ+fz4mExKhkkWw1Ox8+gPSciDvz/djzj3ia0aYVQk0h+ZbEXtj2iWpNziWc2qghuBd
+         8ICFp/MHMCck6pb15cj80csk24/NnP3kK+bGnwrcsJ30DoBLRhNpjtOTMCfRS0OmUEKZ
+         gJLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=RFiPqimL7iWIcVyXsOh4zO7Sdg3GbKEKKWSuzwDE35c=;
-        b=EsUGYevSrmsIqGZmkpa16LNAhgQG2tm7dIDKBeoGCCgOZFZrTvhwuFg89Qe3hoYmLq
-         5Ir6xho3dKTLny3QwqkCUk0J53e78f/epcG1JitWX66cwHkkx5+JnsS0mVbtfpAYOkkl
-         0uP0o2UVHJBlsm2ueaH6uoc7BE1rvqVYPiIUuDok0vnBs/76JaWa4+R/7B0K5iEHhrLQ
-         iIFN+faCgfhb6aNDPYuqewFUI0VLY3DLorB8AO917jx7C1mdmGLfgWDC7En7YX1NNa3d
-         mjWVkztwwMM2pLvWl88YkB90ZCheLe7i+Anhow+2TNcg3lkmQK//u7R+rSe3//9IJZaP
-         mBww==
-X-Gm-Message-State: AOAM533+nH6Czf3dFWI0mFSLh/X3vHXrCFNxJI4JeuPH25ZuNMnVw2Ix
-        IHIVcX9a2r+y82z+qbM/BOSRfg==
-X-Google-Smtp-Source: ABdhPJzXgJO5BniZcdFBLp10Tc8l5GQ6yvRz46jun0A0lwufIQdc9E63c+UKZ2I7qnAHvqcLyLu2hg==
-X-Received: by 2002:aca:c416:: with SMTP id u22mr3934574oif.71.1628345044901;
-        Sat, 07 Aug 2021 07:04:04 -0700 (PDT)
-Received: from MacBook-Pro.hackershack.net (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
-        by smtp.gmail.com with ESMTPSA id h60sm678112oth.76.2021.08.07.07.04.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 07 Aug 2021 07:04:04 -0700 (PDT)
-Subject: Re: disp_cc_mdss_pclk0_clk_src: rcg didn't update its configuration
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KK6pClbRoyb7NoLCLxdt7TZo5IqArGIaNgS9FD1UJck=;
+        b=WpHZraK0/VKaJDJP58mwpRAbCfjTSMmx2RcV8L6lDx+4yk0in3zpz0eks3H0iH8kGG
+         Q/ckrb+9YcCPclHkq9pKLHxJND96CTD2PwXMqgVD98w9fN04q3JFBMwhiflDj/xMNEDT
+         07H5+/uoM1n/Nc1QSNfCPuxWfa742VK+mOS88Dlx6yJ5yVOvw2s6KUK0SqN01GPk3WWV
+         1s1NXMPmLbja4cPMddD9mpZkNhMJ0jQ9gj2gsHl/n51GHnXwmnjT35A2ZnSIUeEt2jMI
+         vd5DVs9ygHJFAqL2uNF8vtZaS9PnvjKRK5D4ydluwPo1lFqr530nTxUKUZWvAVwQfETL
+         +ngA==
+X-Gm-Message-State: AOAM5320XO9eGNHFKzgkalp74NOwXVwo3/Lja/KcdbapSjM3sU6k88mx
+        lghnILbtKaemb97/GxFnsHSp7rzjHW3u2g==
+X-Google-Smtp-Source: ABdhPJyZpLLZHxalF+8THlswZkTPT3+hN7LYOH8rxbXjNvAupYVKZNmiTg7h801YxUdqBteLBG9jRg==
+X-Received: by 2002:aa7:9891:0:b029:3c4:dab0:6379 with SMTP id r17-20020aa798910000b02903c4dab06379mr10289322pfl.12.1628353565007;
+        Sat, 07 Aug 2021 09:26:05 -0700 (PDT)
+Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
+        by smtp.gmail.com with ESMTPSA id bv4sm2760097pjb.27.2021.08.07.09.26.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 07 Aug 2021 09:26:03 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Eric Anholt <eric@anholt.net>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>
-References: <f65f219b-3f2a-63ac-5bc5-84d4f0b58f6d@kali.org>
- <3892649f-4748-b712-c28d-477e40aa8007@linaro.org>
- <30c5756d-790f-894b-d84b-8c4173e7fad5@kali.org>
- <8947d8ba-bed0-aadb-084e-e03029b6fe33@linaro.org>
- <7b334e55-5632-5e58-6742-802bffdb8fef@kali.org>
- <CAA8EJppTtEn+HuJuMj7jUGs5KDq4H3Xv--ML4uRVxe94XP5PEA@mail.gmail.com>
-From:   Steev Klimaszewski <steev@kali.org>
-Message-ID: <c8481c70-9b26-92ec-80f6-9d7655013346@kali.org>
-Date:   Sat, 7 Aug 2021 09:04:01 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.12.0
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH 1/2] drm/msm: Add adreno_is_a640_family()
+Date:   Sat,  7 Aug 2021 09:30:11 -0700
+Message-Id: <20210807163019.379003-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-In-Reply-To: <CAA8EJppTtEn+HuJuMj7jUGs5KDq4H3Xv--ML4uRVxe94XP5PEA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Rob Clark <robdclark@chromium.org>
 
-On 8/6/21 11:47 AM, Dmitry Baryshkov wrote:
-> On Fri, 6 Aug 2021 at 19:18, Steev Klimaszewski <steev@kali.org> wrote:
->> Hi Dmitry,
->>
->> On 8/6/21 2:04 AM, Dmitry Baryshkov wrote:
->>> Hi Steev,
->>> Could you please check if the following kernel commits also show this
->>>>> behaviour:
->>>>>
->>>>> - 170b763597d3a0a79f135e4d83a38462c3964fdf
->>>>>
->>>>> - f4b43ac0b0af1d115effd08133046a694ac33dc2
->>>>>
->>>> Yes, I have both of those commits, and the issue still shows up.  This
->>>> is with 5.13.8 - additionally, I have a Lenovo Flex 5G which is running
->>>> a tree based on 5.14.0-rc2-next-20210721 and it shows a similar issue,
->>>> with the message being
->>>>
->>>> disp_cc_mdss_edp_pixel_clk_src: rcg didn't update its configuration.
->>>>
->>> Thus I have asked you to check if the issue shows up if you build one
->>> of the mentioned commits (they are between 5.12 and 5.13). We are
->>> trying to narrow down which of the changes broke your system.
->>>
->> Apologies for misunderstanding, I thought you meant make sure I had
->> those commits in my tree.  I have tried reverting both individually, as
->> well as both together and the issue still shows up.
-> Uhm. Could you please just checkout (note, checkout, not revert) each
-> of those commits, build the kernel and try the resulting kernel?
->
-> Two additional commits to try (checkout, build, try):
->
-> - c68da22dc9cc39ced8fc30b65fca5ce2f9583735
->
-> - b2150cab9a97c1fcc15684200a6020b6d231106d
->
-> Also just to be sure, could you please also build the v5.13-rc1 and
-> try running that kernel?
->
-> So in the end I'm asking you to try 5 kernel builds.
+Combine adreno_is_a640() and adreno_is_a680().
 
-So, doing it correctly...
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c   |  5 ++---
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c   | 15 +++++++--------
+ drivers/gpu/drm/msm/adreno/a6xx_hfi.c   |  2 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.h |  9 ++-------
+ 4 files changed, 12 insertions(+), 19 deletions(-)
 
-170b763597d3a0a79f135e4d83a38462c3964fdf 
-
-- does not show the error 
-
-
-f4b43ac0b0af1d115effd08133046a694ac33dc2 
-
-- does not show the error, there is some dpu_runtime_resume spam though
-
-
-c68da22dc9cc39ced8fc30b65fca5ce2f9583735
-
-- does not show the error
-
-
-b2150cab9a97c1fcc15684200a6020b6d231106d
-
-- does not show the error
-
-
-v5.13-rc1
-
-- shows the message
-
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index ab6b22264c2b..a7c58018959f 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -521,8 +521,7 @@ static void a6xx_gmu_rpmh_init(struct a6xx_gmu *gmu)
+ 
+ 	if (adreno_is_a650(adreno_gpu) || adreno_is_a660_family(adreno_gpu))
+ 		pdc_in_aop = true;
+-	else if (adreno_is_a618(adreno_gpu) || adreno_is_a640(adreno_gpu) ||
+-		 adreno_is_a680(adreno_gpu))
++	else if (adreno_is_a618(adreno_gpu) || adreno_is_a640_family(adreno_gpu))
+ 		pdc_address_offset = 0x30090;
+ 	else
+ 		pdc_address_offset = 0x30080;
+@@ -1527,7 +1526,7 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ 			SZ_16M - SZ_16K, 0x04000);
+ 		if (ret)
+ 			goto err_memory;
+-	} else if (adreno_is_a640(adreno_gpu) || adreno_is_a680(adreno_gpu)) {
++	} else if (adreno_is_a640_family(adreno_gpu)) {
+ 		ret = a6xx_gmu_memory_alloc(gmu, &gmu->icache,
+ 			SZ_256K - SZ_16K, 0x04000);
+ 		if (ret)
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 6ddd9010cc4b..be62f492538c 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -683,7 +683,7 @@ static void a6xx_set_ubwc_config(struct msm_gpu *gpu)
+ 	if (adreno_is_a618(adreno_gpu))
+ 		return;
+ 
+-	if (adreno_is_a640(adreno_gpu) || adreno_is_a680(adreno_gpu))
++	if (adreno_is_a640_family(adreno_gpu))
+ 		amsbc = 1;
+ 
+ 	if (adreno_is_a650(adreno_gpu) || adreno_is_a660(adreno_gpu)) {
+@@ -764,7 +764,7 @@ static bool a6xx_ucode_check_version(struct a6xx_gpu *a6xx_gpu,
+ 	 * a660 targets have all the critical security fixes from the start
+ 	 */
+ 	if (adreno_is_a618(adreno_gpu) || adreno_is_a630(adreno_gpu) ||
+-	    adreno_is_a640(adreno_gpu) || adreno_is_a680(adreno_gpu)) {
++	    adreno_is_a640_family(adreno_gpu)) {
+ 		/*
+ 		 * If the lowest nibble is 0xa that is an indication that this
+ 		 * microcode has been patched. The actual version is in dword
+@@ -904,8 +904,8 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
+ 	a6xx_set_hwcg(gpu, true);
+ 
+ 	/* VBIF/GBIF start*/
+-	if (adreno_is_a640(adreno_gpu) || adreno_is_a650_family(adreno_gpu) ||
+-	    adreno_is_a680(adreno_gpu)) {
++	if (adreno_is_a640_family(adreno_gpu) ||
++	    adreno_is_a650_family(adreno_gpu)) {
+ 		gpu_write(gpu, REG_A6XX_GBIF_QSB_SIDE0, 0x00071620);
+ 		gpu_write(gpu, REG_A6XX_GBIF_QSB_SIDE1, 0x00071620);
+ 		gpu_write(gpu, REG_A6XX_GBIF_QSB_SIDE2, 0x00071620);
+@@ -943,8 +943,8 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
+ 	gpu_write(gpu, REG_A6XX_UCHE_FILTER_CNTL, 0x804);
+ 	gpu_write(gpu, REG_A6XX_UCHE_CACHE_WAYS, 0x4);
+ 
+-	if (adreno_is_a640(adreno_gpu) || adreno_is_a650_family(adreno_gpu) ||
+-	    adreno_is_a680(adreno_gpu))
++	if (adreno_is_a640_family(adreno_gpu) ||
++	    adreno_is_a650_family(adreno_gpu))
+ 		gpu_write(gpu, REG_A6XX_CP_ROQ_THRESHOLDS_2, 0x02000140);
+ 	else
+ 		gpu_write(gpu, REG_A6XX_CP_ROQ_THRESHOLDS_2, 0x010000c0);
+@@ -961,8 +961,7 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
+ 	*/
+ 	if (adreno_is_a650(adreno_gpu) || adreno_is_a660(adreno_gpu))
+ 		gpu_write(gpu, REG_A6XX_PC_DBG_ECO_CNTL, 0x00300200);
+-	else if (adreno_is_a640(adreno_gpu) || adreno_is_a680(adreno_gpu) ||
+-			adreno_is_7c3(adreno_gpu))
++	else if (adreno_is_a640_family(adreno_gpu) || adreno_is_7c3(adreno_gpu))
+ 		gpu_write(gpu, REG_A6XX_PC_DBG_ECO_CNTL, 0x00200200);
+ 	else if (adreno_is_a650(adreno_gpu) || adreno_is_a660(adreno_gpu))
+ 		gpu_write(gpu, REG_A6XX_PC_DBG_ECO_CNTL, 0x00300200);
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+index 376d0d9809fa..d4c65bf0a1b7 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_hfi.c
+@@ -458,7 +458,7 @@ static int a6xx_hfi_send_bw_table(struct a6xx_gmu *gmu)
+ 
+ 	if (adreno_is_a618(adreno_gpu))
+ 		a618_build_bw_table(&msg);
+-	else if (adreno_is_a640(adreno_gpu) || adreno_is_a680(adreno_gpu))
++	else if (adreno_is_a640_family(adreno_gpu))
+ 		a640_build_bw_table(&msg);
+ 	else if (adreno_is_a650(adreno_gpu))
+ 		a650_build_bw_table(&msg);
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.h b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+index 899cca8fc68a..225c277a6223 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.h
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.h
+@@ -241,9 +241,9 @@ static inline int adreno_is_a630(struct adreno_gpu *gpu)
+        return gpu->revn == 630;
+ }
+ 
+-static inline int adreno_is_a640(struct adreno_gpu *gpu)
++static inline int adreno_is_a640_family(struct adreno_gpu *gpu)
+ {
+-       return gpu->revn == 640;
++	return (gpu->revn == 640) || (gpu->revn == 680);
+ }
+ 
+ static inline int adreno_is_a650(struct adreno_gpu *gpu)
+@@ -274,11 +274,6 @@ static inline int adreno_is_a650_family(struct adreno_gpu *gpu)
+ 	       adreno_is_a660_family(gpu);
+ }
+ 
+-static inline int adreno_is_a680(struct adreno_gpu *gpu)
+-{
+-       return gpu->revn == 680;
+-}
+-
+ int adreno_get_param(struct msm_gpu *gpu, uint32_t param, uint64_t *value);
+ const struct firmware *adreno_request_fw(struct adreno_gpu *adreno_gpu,
+ 		const char *fwname);
+-- 
+2.31.1
 
