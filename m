@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F8EB3E36B3
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Aug 2021 20:34:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0261A3E36C3
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Aug 2021 20:34:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229995AbhHGSeU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 7 Aug 2021 14:34:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32820 "EHLO
+        id S230190AbhHGSe1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 7 Aug 2021 14:34:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32838 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229471AbhHGSeS (ORCPT
+        with ESMTP id S230096AbhHGSeX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 7 Aug 2021 14:34:18 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE0AFC0613CF;
-        Sat,  7 Aug 2021 11:34:00 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id m10-20020a17090a34cab0290176b52c60ddso23054807pjf.4;
-        Sat, 07 Aug 2021 11:34:00 -0700 (PDT)
+        Sat, 7 Aug 2021 14:34:23 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5E57C0613D3;
+        Sat,  7 Aug 2021 11:34:05 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id j18-20020a17090aeb12b029017737e6c349so15351374pjz.0;
+        Sat, 07 Aug 2021 11:34:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=aoP+p68TDzQ/y913MRdpJPhaI7fxLtI+TCimpBmC6mc=;
-        b=jxoaJLEPG/GijQHscHZ1UO+GmjWNhZDYhZJ6tBqPxEyAWLCkgQAPARNKxaiJfAIbFN
-         G3aJmExrlZMaCs0I4eqtToTAjMMmUyg4f2R60722tib4vTNV9LSOcBVSHrqHX78A6qXA
-         /JBAnotNOQ/2WOuzi+xPlqhuCwuXWRwPTNRS0A18QPLsXmqSw96wsl14iBuDl6reBH8l
-         6jruuBhoGWkcShSOMB8PCy9lxGv0peIVQe15DwtR4nbyU5t0qbSg6JhlX8jIDwhi7mtQ
-         kpa8q240f16/D5G+udjMcj1z2ElrZanF6ZK0u1psQzxtmagxfm75LoD8PUzFdAd8Bbxi
-         XkyQ==
+        bh=2NTzpCEmB11w7qS1x4MIrtVSF1reU6VbijSDEPvmpk4=;
+        b=h960OzqhuK0zQMf7LABN1/tdHcSRTExKJYRAhwSp2ta4D5lE/sI6VNkmcYCN692RYV
+         XZINe5Dx90d1Mziuc/CHg4zthm5+CJYoOG3U9seL+QPnA20LCa7Gnd7pafzEzNyoZO5j
+         Y74BTIHJWxhzwCtm56NXA+C+3qvCQXG10FOf6hs1CT8HjoTKWGfy9ql3dTTdPiIbHR9r
+         yg90BCz09HRER/zMOR8fCiQ5Tvxyp4LHgTy9CmSUVaVBJ//my3jo3AD2F0IU3rae2Nf9
+         sNarYeOM/xRNhajgytdG1MtXq0W9Qii74gJqtnrDvf/PWlwUqJF8oVCzF9HNduPDrh7i
+         Uy9w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=aoP+p68TDzQ/y913MRdpJPhaI7fxLtI+TCimpBmC6mc=;
-        b=IJfv7HoCWqMIzRWHHO3JpEJTQwFpTJc+lMwgFsiSctM1Eaz7TX6FJnTHPFo6KDcscA
-         W+ALSBTHySY/kagbu7X5Yk2z0vsToeOkjwy4wCdYhuX8xHWCB6r8e2mDumTBDaeQ24c2
-         gkSIcunFjMww8YEz/86saNlR9OA8Ba0QjY0AlQDSsutu8gUnaPnAWBL/VotEpLXO6rOe
-         T/7GNwfFCFmwXo4KI6gyuWFJmZfw+ohVb0SwI7OEYOGTh5A/lx6PnD6EXos+W8eCsaFY
-         OHANyjBsH0x51CDEFS1p/xf3tXj+QX+MO3uhbWWxabRyFog49oOmSdBqOh5Kektu4OEl
-         7PGQ==
-X-Gm-Message-State: AOAM533Vt/4a584lkjyAyGR5RcAxcCYOlvdooBBVmNV5qRpNv+kVGl5/
-        fu8Wqr8iAx+xhb06EcMVSE0=
-X-Google-Smtp-Source: ABdhPJy8umXGJYYa0wi8FlFkcBof1/15lSb7sFcNmVyHD1zyogTPX6X+34Tx4r2heDTK/LqUmCsAtQ==
-X-Received: by 2002:a17:90a:d245:: with SMTP id o5mr27625669pjw.105.1628361240572;
-        Sat, 07 Aug 2021 11:34:00 -0700 (PDT)
+        bh=2NTzpCEmB11w7qS1x4MIrtVSF1reU6VbijSDEPvmpk4=;
+        b=Qz2EkEaj4IQHEQ/VY+aVsSAZSfx5Rk7qBPnEBbBuu0k61cZav47DMXl9jYbB9XVirG
+         ie+8lXhxo9nC/VPkGAFwvcZRW+6ylm0mrKcjx5pYeO8uVKflS+j2kqXUlzU44YMt11Tv
+         2zRq+Lu2zQ8mOjB2oony5HmYar0m3qDrf13sT7ZGVogG8FcW9HDjBHak7YFikTEHwK+n
+         dMUuNjAe4+hnITkBCqgC/Hhu7CUEzID9DiuL3r+Nkd+ec5KFZ6f4IcOzdk1WgtoYsIGZ
+         t0nL7zLQukIvJoB/wc8yviTNmIM0v+kfkAZASE3wESPIy8AXr4SZPNLtBRfU32mL7iQD
+         tbIg==
+X-Gm-Message-State: AOAM533It2GXeqYq3fqNC8QUQay4IgfYXTFz2A8lK+RdCS38f4JadbT2
+        XEVf9tpLICgCO4m2sW2fn4A=
+X-Google-Smtp-Source: ABdhPJx0WCrAA8EF14LEz1SjVVcI5rAReQnjs+gJx3CGV17tAEQ4ODGd5buKJU5LzlzZNSPUQL1wkA==
+X-Received: by 2002:aa7:96fc:0:b029:3ab:8eff:ca39 with SMTP id i28-20020aa796fc0000b02903ab8effca39mr16634031pfq.62.1628361245263;
+        Sat, 07 Aug 2021 11:34:05 -0700 (PDT)
 Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id p2sm15213588pfn.141.2021.08.07.11.33.59
+        by smtp.gmail.com with ESMTPSA id f10sm15109768pfa.17.2021.08.07.11.34.04
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 07 Aug 2021 11:33:59 -0700 (PDT)
+        Sat, 07 Aug 2021 11:34:04 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org
 Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
@@ -55,14 +55,23 @@ Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
         =?UTF-8?q?Christian=20K=C3=B6nig?= 
         <ckoenig.leichtzumerken@gmail.com>,
         Rob Clark <robdclark@chromium.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
         David Airlie <airlied@linux.ie>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v2 3/5] drm/atomic-helper: Set fence deadline for vblank
-Date:   Sat,  7 Aug 2021 11:37:57 -0700
-Message-Id: <20210807183804.459850-4-robdclark@gmail.com>
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        Tian Tao <tiantao6@hisilicon.com>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Luben Tuikov <luben.tuikov@amd.com>,
+        Andrey Grodzovsky <andrey.grodzovsky@amd.com>,
+        Steven Price <steven.price@arm.com>, Roy Sun <Roy.Sun@amd.com>,
+        Lee Jones <lee.jones@linaro.org>,
+        Jack Zhang <Jack.Zhang1@amd.com>,
+        linux-kernel@vger.kernel.org (open list),
+        linux-media@vger.kernel.org (open list:DMA BUFFER SHARING FRAMEWORK),
+        linaro-mm-sig@lists.linaro.org (moderated list:DMA BUFFER SHARING
+        FRAMEWORK)
+Subject: [PATCH v2 4/5] drm/scheduler: Add fence deadline support
+Date:   Sat,  7 Aug 2021 11:37:58 -0700
+Message-Id: <20210807183804.459850-5-robdclark@gmail.com>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20210807183804.459850-1-robdclark@gmail.com>
 References: <20210807183804.459850-1-robdclark@gmail.com>
@@ -74,68 +83,92 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-For an atomic commit updating a single CRTC (ie. a pageflip) calculate
-the next vblank time, and inform the fence(s) of that deadline.
+As the finished fence is the one that is exposed to userspace, and
+therefore the one that other operations, like atomic update, would
+block on, we need to propagate the deadline from from the finished
+fence to the actual hw fence.
 
 Signed-off-by: Rob Clark <robdclark@chromium.org>
 ---
- drivers/gpu/drm/drm_atomic_helper.c | 36 +++++++++++++++++++++++++++++
- 1 file changed, 36 insertions(+)
+ drivers/gpu/drm/scheduler/sched_fence.c | 25 +++++++++++++++++++++++++
+ drivers/gpu/drm/scheduler/sched_main.c  |  3 +++
+ include/drm/gpu_scheduler.h             |  6 ++++++
+ 3 files changed, 34 insertions(+)
 
-diff --git a/drivers/gpu/drm/drm_atomic_helper.c b/drivers/gpu/drm/drm_atomic_helper.c
-index bc3487964fb5..7caa2c3cc304 100644
---- a/drivers/gpu/drm/drm_atomic_helper.c
-+++ b/drivers/gpu/drm/drm_atomic_helper.c
-@@ -1406,6 +1406,40 @@ void drm_atomic_helper_commit_modeset_enables(struct drm_device *dev,
+diff --git a/drivers/gpu/drm/scheduler/sched_fence.c b/drivers/gpu/drm/scheduler/sched_fence.c
+index 69de2c76731f..f389dca44185 100644
+--- a/drivers/gpu/drm/scheduler/sched_fence.c
++++ b/drivers/gpu/drm/scheduler/sched_fence.c
+@@ -128,6 +128,30 @@ static void drm_sched_fence_release_finished(struct dma_fence *f)
+ 	dma_fence_put(&fence->scheduled);
  }
- EXPORT_SYMBOL(drm_atomic_helper_commit_modeset_enables);
  
-+/*
-+ * For atomic updates which touch just a single CRTC, calculate the time of the
-+ * next vblank, and inform all the fences of the of the deadline.
-+ */
-+static void set_fence_deadline(struct drm_device *dev,
-+			       struct drm_atomic_state *state)
++static void drm_sched_fence_set_deadline_finished(struct dma_fence *f,
++						  ktime_t deadline)
 +{
-+	struct drm_crtc *crtc, *wait_crtc = NULL;
-+	struct drm_crtc_state *new_crtc_state;
-+	struct drm_plane *plane;
-+	struct drm_plane_state *new_plane_state;
-+	ktime_t vbltime;
-+	int i;
++	struct drm_sched_fence *fence = to_drm_sched_fence(f);
++	unsigned long flags;
 +
-+	for_each_new_crtc_in_state (state, crtc, new_crtc_state, i) {
-+		if (wait_crtc)
-+			return;
-+		wait_crtc = crtc;
++	spin_lock_irqsave(&fence->lock, flags);
++
++	/* If we already have an earlier deadline, keep it: */
++	if (test_bit(DMA_FENCE_FLAG_HAS_DEADLINE_BIT, &f->flags) &&
++	    ktime_before(fence->deadline, deadline)) {
++		spin_unlock_irqrestore(&fence->lock, flags);
++		return;
 +	}
 +
-+	/* If no CRTCs updated, then nothing to do: */
-+	if (!wait_crtc)
-+		return;
++	fence->deadline = deadline;
++	set_bit(DMA_FENCE_FLAG_HAS_DEADLINE_BIT, &f->flags);
 +
-+	if (drm_crtc_next_vblank_time(wait_crtc, &vbltime))
-+		return;
++	spin_unlock_irqrestore(&fence->lock, flags);
 +
-+	for_each_new_plane_in_state (state, plane, new_plane_state, i) {
-+		if (!new_plane_state->fence)
-+			continue;
-+		dma_fence_set_deadline(new_plane_state->fence, vbltime);
-+	}
++	if (fence->parent)
++		dma_fence_set_deadline(fence->parent, deadline);
 +}
 +
- /**
-  * drm_atomic_helper_wait_for_fences - wait for fences stashed in plane state
-  * @dev: DRM device
-@@ -1435,6 +1469,8 @@ int drm_atomic_helper_wait_for_fences(struct drm_device *dev,
- 	struct drm_plane_state *new_plane_state;
- 	int i, ret;
+ static const struct dma_fence_ops drm_sched_fence_ops_scheduled = {
+ 	.get_driver_name = drm_sched_fence_get_driver_name,
+ 	.get_timeline_name = drm_sched_fence_get_timeline_name,
+@@ -138,6 +162,7 @@ static const struct dma_fence_ops drm_sched_fence_ops_finished = {
+ 	.get_driver_name = drm_sched_fence_get_driver_name,
+ 	.get_timeline_name = drm_sched_fence_get_timeline_name,
+ 	.release = drm_sched_fence_release_finished,
++	.set_deadline = drm_sched_fence_set_deadline_finished,
+ };
  
-+	set_fence_deadline(dev, state);
+ struct drm_sched_fence *to_drm_sched_fence(struct dma_fence *f)
+diff --git a/drivers/gpu/drm/scheduler/sched_main.c b/drivers/gpu/drm/scheduler/sched_main.c
+index a2a953693b45..3ab0900d3596 100644
+--- a/drivers/gpu/drm/scheduler/sched_main.c
++++ b/drivers/gpu/drm/scheduler/sched_main.c
+@@ -818,6 +818,9 @@ static int drm_sched_main(void *param)
+ 
+ 		if (!IS_ERR_OR_NULL(fence)) {
+ 			s_fence->parent = dma_fence_get(fence);
++			if (test_bit(DMA_FENCE_FLAG_HAS_DEADLINE_BIT,
++				     &s_fence->finished.flags))
++				dma_fence_set_deadline(fence, s_fence->deadline);
+ 			r = dma_fence_add_callback(fence, &sched_job->cb,
+ 						   drm_sched_job_done_cb);
+ 			if (r == -ENOENT)
+diff --git a/include/drm/gpu_scheduler.h b/include/drm/gpu_scheduler.h
+index d18af49fd009..0f08ade614ae 100644
+--- a/include/drm/gpu_scheduler.h
++++ b/include/drm/gpu_scheduler.h
+@@ -144,6 +144,12 @@ struct drm_sched_fence {
+          */
+ 	struct dma_fence		finished;
+ 
++	/**
++	 * @deadline: deadline set on &drm_sched_fence.finished which
++	 * potentially needs to be propagated to &drm_sched_fence.parent
++	 */
++	ktime_t				deadline;
 +
- 	for_each_new_plane_in_state(state, plane, new_plane_state, i) {
- 		if (!new_plane_state->fence)
- 			continue;
+         /**
+          * @parent: the fence returned by &drm_sched_backend_ops.run_job
+          * when scheduling the job on hardware. We signal the
 -- 
 2.31.1
 
