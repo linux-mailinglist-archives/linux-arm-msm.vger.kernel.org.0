@@ -2,148 +2,327 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 34B383E3138
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  6 Aug 2021 23:38:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 80FA23E33D3
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  7 Aug 2021 08:57:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240808AbhHFVix (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 6 Aug 2021 17:38:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41972 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231865AbhHFVix (ORCPT
+        id S231126AbhHGGve (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 7 Aug 2021 02:51:34 -0400
+Received: from smtp-out2.suse.de ([195.135.220.29]:40664 "EHLO
+        smtp-out2.suse.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230297AbhHGGve (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 6 Aug 2021 17:38:53 -0400
-Received: from bhuna.collabora.co.uk (bhuna.collabora.co.uk [IPv6:2a00:1098:0:82:1000:25:2eeb:e3e3])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 032EDC0613CF;
-        Fri,  6 Aug 2021 14:38:37 -0700 (PDT)
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (Authenticated sender: sre)
-        with ESMTPSA id DA68E1F44D66
-Received: by earth.universe (Postfix, from userid 1000)
-        id EC2FC3C0C99; Fri,  6 Aug 2021 23:38:33 +0200 (CEST)
-Date:   Fri, 6 Aug 2021 23:38:33 +0200
-From:   Sebastian Reichel <sebastian.reichel@collabora.com>
-To:     tangbin <tangbin@cmss.chinamobile.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Zhang Shengju <zhangshengju@cmss.chinamobile.com>
-Subject: Re: [PATCH] power: supply: qcom_smbb: Remove superfluous errormessage
-Message-ID: <20210806213833.hsmd7syatpmn3nku@earth.universe>
-References: <20210720141539.7716-1-tangbin@cmss.chinamobile.com>
- <YPbxS4KV+Fx01p7G@yoga>
- <f6a40fef-deac-e898-7cac-d9d246c84a24@cmss.chinamobile.com>
+        Sat, 7 Aug 2021 02:51:34 -0400
+Received: from imap1.suse-dmz.suse.de (imap1.suse-dmz.suse.de [192.168.254.73])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by smtp-out2.suse.de (Postfix) with ESMTPS id EC8511FF2F;
+        Sat,  7 Aug 2021 06:51:15 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=suse.de; s=susede2_rsa;
+        t=1628319075; h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=2iWQjCcku2emV9iVUDyYBfn4Rs7El/xBHQu+pZtKB+A=;
+        b=FQ5+ZaZSKs57v/Z8xft0XI2c+jeXxpcwSXndeZ4HdB4MEWSobrbxnhztbSyUMKUV6seBiO
+        vO2SL64fuHzl9X4H/NF6gnpJs28VWlgo+WU2ZfAfBaAnnIWjwNSeXdy3ZTCg4TaOCOlHd/
+        ASa7QHYrejkEjyLDmIrtCK4cVAXfA/M=
+DKIM-Signature: v=1; a=ed25519-sha256; c=relaxed/relaxed; d=suse.de;
+        s=susede2_ed25519; t=1628319075;
+        h=from:from:reply-to:date:date:message-id:message-id:to:to:cc:cc:
+         mime-version:mime-version:content-type:content-type:
+         in-reply-to:in-reply-to:references:references;
+        bh=2iWQjCcku2emV9iVUDyYBfn4Rs7El/xBHQu+pZtKB+A=;
+        b=LiWRvOLyfrwTMRGiwX/AJEIuwT0pZGlUdVCewrP2tzxwKxzmWkJOvcQ4rJhn2wnN9BNKcs
+        fmFc54Nxtcgz3fDA==
+Received: from imap1.suse-dmz.suse.de (imap1.suse-dmz.suse.de [192.168.254.73])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature ECDSA (P-521) server-digest SHA512)
+        (No client certificate requested)
+        by imap1.suse-dmz.suse.de (Postfix) with ESMTPS id 33A5B13997;
+        Sat,  7 Aug 2021 06:51:15 +0000 (UTC)
+Received: from dovecot-director2.suse.de ([192.168.254.65])
+        by imap1.suse-dmz.suse.de with ESMTPSA
+        id A46yCmMtDmEARAAAGKfGzw
+        (envelope-from <tzimmermann@suse.de>); Sat, 07 Aug 2021 06:51:15 +0000
+Subject: Re: [PATCH v2 00/14] drm: Make DRM's IRQ helpers legacy
+To:     "Chrisanthus, Anitha" <anitha.chrisanthus@intel.com>,
+        Sam Ravnborg <sam@ravnborg.org>
+Cc:     "daniel@ffwll.ch" <daniel@ffwll.ch>,
+        "airlied@linux.ie" <airlied@linux.ie>,
+        "alexander.deucher@amd.com" <alexander.deucher@amd.com>,
+        "christian.koenig@amd.com" <christian.koenig@amd.com>,
+        "liviu.dudau@arm.com" <liviu.dudau@arm.com>,
+        "brian.starkey@arm.com" <brian.starkey@arm.com>,
+        "bbrezillon@kernel.org" <bbrezillon@kernel.org>,
+        "nicolas.ferre@microchip.com" <nicolas.ferre@microchip.com>,
+        "maarten.lankhorst@linux.intel.com" 
+        <maarten.lankhorst@linux.intel.com>,
+        "mripard@kernel.org" <mripard@kernel.org>,
+        "stefan@agner.ch" <stefan@agner.ch>,
+        "alison.wang@nxp.com" <alison.wang@nxp.com>,
+        "patrik.r.jakobsson@gmail.com" <patrik.r.jakobsson@gmail.com>,
+        "robdclark@gmail.com" <robdclark@gmail.com>,
+        "Dea, Edmund J" <edmund.j.dea@intel.com>,
+        "sean@poorly.run" <sean@poorly.run>,
+        "shawnguo@kernel.org" <shawnguo@kernel.org>,
+        "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>,
+        "kernel@pengutronix.de" <kernel@pengutronix.de>,
+        "jyri.sarha@iki.fi" <jyri.sarha@iki.fi>,
+        "tomba@kernel.org" <tomba@kernel.org>,
+        "Dan.Sneddon@microchip.com" <Dan.Sneddon@microchip.com>,
+        "tomi.valkeinen@ideasonboard.com" <tomi.valkeinen@ideasonboard.com>,
+        "amd-gfx@lists.freedesktop.org" <amd-gfx@lists.freedesktop.org>,
+        "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>
+References: <20210803090704.32152-1-tzimmermann@suse.de>
+ <YQlbFjbrnyeWv7QP@ravnborg.org>
+ <BY5PR11MB41822706053ADEE927E34E628CF09@BY5PR11MB4182.namprd11.prod.outlook.com>
+ <4dbc29d7-5f88-e3ac-5dab-e2dc5c6a703e@suse.de>
+ <BY5PR11MB4182FBA1D240321F7D9BEC7D8CF29@BY5PR11MB4182.namprd11.prod.outlook.com>
+From:   Thomas Zimmermann <tzimmermann@suse.de>
+Message-ID: <8d10b841-8960-f782-4ed3-d15fa9761dce@suse.de>
+Date:   Sat, 7 Aug 2021 08:51:14 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="srvp65x6cyhvtnnq"
-Content-Disposition: inline
-In-Reply-To: <f6a40fef-deac-e898-7cac-d9d246c84a24@cmss.chinamobile.com>
+In-Reply-To: <BY5PR11MB4182FBA1D240321F7D9BEC7D8CF29@BY5PR11MB4182.namprd11.prod.outlook.com>
+Content-Type: multipart/signed; micalg=pgp-sha256;
+ protocol="application/pgp-signature";
+ boundary="BfWkLwAIF2tnbDGIJawI2jZ0MYa9F09kk"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This is an OpenPGP/MIME signed message (RFC 4880 and 3156)
+--BfWkLwAIF2tnbDGIJawI2jZ0MYa9F09kk
+Content-Type: multipart/mixed; boundary="RN6maTAJdcwFszuGs8voIwcuLOKCG9DTE";
+ protected-headers="v1"
+From: Thomas Zimmermann <tzimmermann@suse.de>
+To: "Chrisanthus, Anitha" <anitha.chrisanthus@intel.com>,
+ Sam Ravnborg <sam@ravnborg.org>
+Cc: "daniel@ffwll.ch" <daniel@ffwll.ch>, "airlied@linux.ie"
+ <airlied@linux.ie>, "alexander.deucher@amd.com" <alexander.deucher@amd.com>,
+ "christian.koenig@amd.com" <christian.koenig@amd.com>,
+ "liviu.dudau@arm.com" <liviu.dudau@arm.com>,
+ "brian.starkey@arm.com" <brian.starkey@arm.com>,
+ "bbrezillon@kernel.org" <bbrezillon@kernel.org>,
+ "nicolas.ferre@microchip.com" <nicolas.ferre@microchip.com>,
+ "maarten.lankhorst@linux.intel.com" <maarten.lankhorst@linux.intel.com>,
+ "mripard@kernel.org" <mripard@kernel.org>, "stefan@agner.ch"
+ <stefan@agner.ch>, "alison.wang@nxp.com" <alison.wang@nxp.com>,
+ "patrik.r.jakobsson@gmail.com" <patrik.r.jakobsson@gmail.com>,
+ "robdclark@gmail.com" <robdclark@gmail.com>,
+ "Dea, Edmund J" <edmund.j.dea@intel.com>, "sean@poorly.run"
+ <sean@poorly.run>, "shawnguo@kernel.org" <shawnguo@kernel.org>,
+ "s.hauer@pengutronix.de" <s.hauer@pengutronix.de>,
+ "kernel@pengutronix.de" <kernel@pengutronix.de>,
+ "jyri.sarha@iki.fi" <jyri.sarha@iki.fi>, "tomba@kernel.org"
+ <tomba@kernel.org>, "Dan.Sneddon@microchip.com" <Dan.Sneddon@microchip.com>,
+ "tomi.valkeinen@ideasonboard.com" <tomi.valkeinen@ideasonboard.com>,
+ "amd-gfx@lists.freedesktop.org" <amd-gfx@lists.freedesktop.org>,
+ "dri-devel@lists.freedesktop.org" <dri-devel@lists.freedesktop.org>,
+ "linux-arm-kernel@lists.infradead.org"
+ <linux-arm-kernel@lists.infradead.org>,
+ "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+ "freedreno@lists.freedesktop.org" <freedreno@lists.freedesktop.org>
+Message-ID: <8d10b841-8960-f782-4ed3-d15fa9761dce@suse.de>
+Subject: Re: [PATCH v2 00/14] drm: Make DRM's IRQ helpers legacy
+References: <20210803090704.32152-1-tzimmermann@suse.de>
+ <YQlbFjbrnyeWv7QP@ravnborg.org>
+ <BY5PR11MB41822706053ADEE927E34E628CF09@BY5PR11MB4182.namprd11.prod.outlook.com>
+ <4dbc29d7-5f88-e3ac-5dab-e2dc5c6a703e@suse.de>
+ <BY5PR11MB4182FBA1D240321F7D9BEC7D8CF29@BY5PR11MB4182.namprd11.prod.outlook.com>
+In-Reply-To: <BY5PR11MB4182FBA1D240321F7D9BEC7D8CF29@BY5PR11MB4182.namprd11.prod.outlook.com>
 
---srvp65x6cyhvtnnq
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
+--RN6maTAJdcwFszuGs8voIwcuLOKCG9DTE
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: quoted-printable
 
-Hi,
+Hi
 
-On Mon, Jul 26, 2021 at 09:16:15AM +0800, tangbin wrote:
-> Hi, Bjorn Andersson:
+Am 06.08.21 um 01:59 schrieb Chrisanthus, Anitha:
+> Hi Thomas,
 >=20
-> On 2021/7/20 23:52, Bjorn Andersson wrote:
-> > On Tue 20 Jul 09:15 CDT 2021, Tang Bin wrote:
-> >=20
-> > > In the probe function, when get irq failed, the function
-> > > platform_get_irq_byname() logs an error message, so remove
-> > > redundant message here.
-> > >=20
-> > > Signed-off-by: Zhang Shengju <zhangshengju@cmss.chinamobile.com>
-> > > Signed-off-by: Tang Bin <tangbin@cmss.chinamobile.com>
-> > This says "Zhang certified this patch's origin, then you took the patch
-> > and you certified it's origin" - per Documentation/process/submitting-p=
-atches.rst
-> >=20
-> > But you, Tang, is the author or the patch, so how can Zhang have touched
-> > it before you wrote it?
-> >=20
-> > Perhaps you worked on it together? In which case you should include a
-> > Co-developed-by to indicate this.
+>> -----Original Message-----
+>> From: Thomas Zimmermann <tzimmermann@suse.de>
+>> Sent: Wednesday, August 4, 2021 12:11 AM
+>> To: Chrisanthus, Anitha <anitha.chrisanthus@intel.com>; Sam Ravnborg
+>> <sam@ravnborg.org>
+>> Cc: daniel@ffwll.ch; airlied@linux.ie; alexander.deucher@amd.com;
+>> christian.koenig@amd.com; liviu.dudau@arm.com; brian.starkey@arm.com;
+>> bbrezillon@kernel.org; nicolas.ferre@microchip.com;
+>> maarten.lankhorst@linux.intel.com; mripard@kernel.org; stefan@agner.ch=
+;
+>> alison.wang@nxp.com; patrik.r.jakobsson@gmail.com; robdclark@gmail.com=
+;
+>> Dea, Edmund J <edmund.j.dea@intel.com>; sean@poorly.run;
+>> shawnguo@kernel.org; s.hauer@pengutronix.de; kernel@pengutronix.de;
+>> jyri.sarha@iki.fi; tomba@kernel.org; Dan.Sneddon@microchip.com;
+>> tomi.valkeinen@ideasonboard.com; amd-gfx@lists.freedesktop.org; dri-
+>> devel@lists.freedesktop.org; linux-arm-kernel@lists.infradead.org; lin=
+ux-arm-
+>> msm@vger.kernel.org; freedreno@lists.freedesktop.org
+>> Subject: Re: [PATCH v2 00/14] drm: Make DRM's IRQ helpers legacy
+>>
+>> Hi
+>>
+>> Am 03.08.21 um 20:36 schrieb Chrisanthus, Anitha:
+>>> Hi Thomas,
+>>> Can you please hold off on applying the kmb patch, I am seeing some i=
+ssues
+>> while testing. Modetest works, but video playback only plays once, and=
+ it fails
+>> the second time with this patch.
+>>
+>> Sounds a bit like the testing issue at [1]. For testing, you need the
+>> latest drm-misc-next or drm-tip. Specifically, you need commit
+>> 1e4cd78ed493 ("drm: Don't test for IRQ support in VBLANK ioctls").
 >=20
-> I am sorry for the late reply to your email due to some reasons. The corr=
-ect
-> way to write it should be as follows:
 >=20
-> =C2=A0=C2=A0=C2=A0 Co-developed-by: Zhang Shengju <zhangshengju@cmss.chin=
-amobile.com>
->=20
-> =C2=A0=C2=A0=C2=A0 Signed-off-by: Zhang Shengju <zhangshengju@cmss.chinam=
-obile.com>
->=20
-> =C2=A0=C2=A0=C2=A0 Signed-off-by: Tang Bin <tangbin@cmss.chinamobile.com>
->=20
-> >=20
-> >=20
-> > Both commit message and patch looks good though!
-> >=20
-> whether should I send v2 for this patch=EF=BC=9F
+> You are right, with the above patch video plays fine. It's all good now=
+! Sorry about the confusion.
 
-Thanks, I queued the patch with the Co-developed-by tag.
+Thanks for trying. Can I add your Tested-by tag?
 
--- Sebastian
+Best regards
+Thomas
 
->=20
-> Thanks
->=20
-> Tang Bin
->=20
-> > > ---
-> > >   drivers/power/supply/qcom_smbb.c | 5 +----
-> > >   1 file changed, 1 insertion(+), 4 deletions(-)
-> > >=20
-> > > diff --git a/drivers/power/supply/qcom_smbb.c b/drivers/power/supply/=
-qcom_smbb.c
-> > > index c890e1cec..84cc9fba0 100644
-> > > --- a/drivers/power/supply/qcom_smbb.c
-> > > +++ b/drivers/power/supply/qcom_smbb.c
-> > > @@ -929,11 +929,8 @@ static int smbb_charger_probe(struct platform_de=
-vice *pdev)
-> > >   		int irq;
-> > >   		irq =3D platform_get_irq_byname(pdev, smbb_charger_irqs[i].name);
-> > > -		if (irq < 0) {
-> > > -			dev_err(&pdev->dev, "failed to get irq '%s'\n",
-> > > -				smbb_charger_irqs[i].name);
-> > > +		if (irq < 0)
-> > >   			return irq;
-> > > -		}
-> > >   		smbb_charger_irqs[i].handler(irq, chg);
-> > > --=20
-> > > 2.20.1.windows.1
-> > >=20
-> > >=20
-> > >=20
->=20
+>>
+>> Let me know whether this works for you.
+>>
+>> Best regards
+>> Thomas
+>>
+>> [1] https://patchwork.freedesktop.org/patch/447057/?series=3D93078&rev=
+=3D1
+>>
+>>>
+>>> Thanks,
+>>> Anitha
+>>>
+>>>
+>>>> -----Original Message-----
+>>>> From: Sam Ravnborg <sam@ravnborg.org>
+>>>> Sent: Tuesday, August 3, 2021 8:05 AM
+>>>> To: Thomas Zimmermann <tzimmermann@suse.de>
+>>>> Cc: daniel@ffwll.ch; airlied@linux.ie; alexander.deucher@amd.com;
+>>>> christian.koenig@amd.com; liviu.dudau@arm.com;
+>> brian.starkey@arm.com;
+>>>> bbrezillon@kernel.org; nicolas.ferre@microchip.com;
+>>>> maarten.lankhorst@linux.intel.com; mripard@kernel.org;
+>> stefan@agner.ch;
+>>>> alison.wang@nxp.com; patrik.r.jakobsson@gmail.com; Chrisanthus, Anit=
+ha
+>>>> <anitha.chrisanthus@intel.com>; robdclark@gmail.com; Dea, Edmund J
+>>>> <edmund.j.dea@intel.com>; sean@poorly.run; shawnguo@kernel.org;
+>>>> s.hauer@pengutronix.de; kernel@pengutronix.de; jyri.sarha@iki.fi;
+>>>> tomba@kernel.org; Dan.Sneddon@microchip.com;
+>>>> tomi.valkeinen@ideasonboard.com; amd-gfx@lists.freedesktop.org; dri-=
+
+>>>> devel@lists.freedesktop.org; linux-arm-kernel@lists.infradead.org; l=
+inux-
+>> arm-
+>>>> msm@vger.kernel.org; freedreno@lists.freedesktop.org
+>>>> Subject: Re: [PATCH v2 00/14] drm: Make DRM's IRQ helpers legacy
+>>>>
+>>>> Hi Thomas,
+>>>>
+>>>> On Tue, Aug 03, 2021 at 11:06:50AM +0200, Thomas Zimmermann wrote:
+>>>>> DRM's IRQ helpers are only helpful for old, non-KMS drivers. Move
+>>>>> the code behind CONFIG_DRM_LEGACY. Convert KMS drivers to Linux
+>>>>> IRQ interfaces.
+>>>>>
+>>>>> DRM provides IRQ helpers for setting up, receiving and removing IRQ=
+
+>>>>> handlers. It's an abstraction over plain Linux functions. The code
+>>>>> is mid-layerish with several callbacks to hook into the rsp drivers=
+=2E
+>>>>> Old UMS driver have their interrupts enabled via ioctl, so these
+>>>>> abstractions makes some sense. Modern KMS manage all their interrup=
+ts
+>>>>> internally. Using the DRM helpers adds indirection without benefits=
+=2E
+>>>>>
+>>>>> Most KMS drivers already use Linux IRQ functions instead of DRM's
+>>>>> abstraction layer. Patches 1 to 12 convert the remaining ones.
+>>>>> The patches also resolve a bug for devices without assigned interru=
+pt
+>>>>> number. DRM helpers don't test for IRQ_NOTCONNECTED, so drivers do
+>>>>> not detect if the device has no interrupt assigned.
+>>>>>
+>>>>> Patch 13 removes an unused function.
+>>>>>
+>>>>> Patch 14 moves the DRM IRQ helpers behind CONFIG_DRM_LEGACY. Only
+>>>>> the old non-KMS drivers still use the functionality.
+>>>>>
+>>>>> v2:
+>>>>> 	* drop IRQ_NOTCONNECTED test from atmel-hlcdc (Sam)
+>>>>> 	* use devm_request_irq() in atmel-hlcdc (Sam)
+>>>>> 	* unify variable names in arm/hlcdc (Sam)
+>>>>>
+>>>>> Thomas Zimmermann (14):
+>>>>
+>>>> The following patches are all:
+>>>> Acked-by: Sam Ravnborg <sam@ravnborg.org>
+>>>>
+>>>>>     drm/fsl-dcu: Convert to Linux IRQ interfaces
+>>>>>     drm/gma500: Convert to Linux IRQ interfaces
+>>>>>     drm/kmb: Convert to Linux IRQ interfaces
+>>>>>     drm/msm: Convert to Linux IRQ interfaces
+>>>>>     drm/mxsfb: Convert to Linux IRQ interfaces
+>>>>>     drm/tidss: Convert to Linux IRQ interfaces
+>>>>>     drm/vc4: Convert to Linux IRQ interfaces
+>>>>>     drm: Remove unused devm_drm_irq_install()
+>>>>
+>>>> The remaining patches I either skipped or already had a feedback fro=
+m
+>>>> me or I asked a question.
+>>>>
+>>>> 	Sam
+>>
+>> --
+>> Thomas Zimmermann
+>> Graphics Driver Developer
+>> SUSE Software Solutions Germany GmbH
+>> Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
+>> (HRB 36809, AG N=C3=BCrnberg)
+>> Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
 >=20
 
---srvp65x6cyhvtnnq
-Content-Type: application/pgp-signature; name="signature.asc"
+--=20
+Thomas Zimmermann
+Graphics Driver Developer
+SUSE Software Solutions Germany GmbH
+Maxfeldstr. 5, 90409 N=C3=BCrnberg, Germany
+(HRB 36809, AG N=C3=BCrnberg)
+Gesch=C3=A4ftsf=C3=BChrer: Felix Imend=C3=B6rffer
+
+
+--RN6maTAJdcwFszuGs8voIwcuLOKCG9DTE--
+
+--BfWkLwAIF2tnbDGIJawI2jZ0MYa9F09kk
+Content-Type: application/pgp-signature; name="OpenPGP_signature.asc"
+Content-Description: OpenPGP digital signature
+Content-Disposition: attachment; filename="OpenPGP_signature"
 
 -----BEGIN PGP SIGNATURE-----
 
-iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmENq9kACgkQ2O7X88g7
-+poocQ//bo8q1dQDb1qGdP1y9JTLSv8XNVY7R9vpNDZq0vmrm41M3PfMP2rMqaBG
-I0KENmhpjRbrKy5zbmSemYcu5aK8fpqHjtTN/Bzlvw1y29qf9I7Fz1ypemHi6IPl
-BYDe4RPINT3NXqatw9Rhq2cLICfxVhumRYe+OGxpn+NGB7YDe3BhGrBOqqr5C3Gk
-5Yb6Lddf12D7jGDNLqoQ8ar8+7iScVTOD0KMTUm1slmb7t2BCLzfVpYPzLjAGDQ9
-mwFemir3ydwP3bfeM5g4NeNk7pC8IXnaQ7+2bBpQiZ71/dV4UrsNw+1MkmN/csTl
-j+iLsonpzb8HvgJrpiK4/GgHr3JFo9OFe/1Nn6tNwo6JC1MOPRtpNrmKNrfitAff
-i3HSBXjvfzO9Rx1HQts6xoWChzks/e0FtTt5csuQ3G0KNBX1BfKn4Vc4fCDeK+0C
-nI2zPSBVFhrqoOOFugVOcJNxmLYbvtRtMLsF31wCP65UzZXIueKiMt1L6rU5r6tW
-jbjfuyqmdcAXWvFazhW3mtYqROaMWF6/wpYNvFmsqnpuoXcZ8ke7j5GejdwzG1zG
-U419BQTF4/HQR5HIKVfX3Dm/wgNGd+kCinP6BY7ahpcFfIo22M+v6HcbEzdYSdZ4
-U9dwNc8MuOFx6mYRbU3/Lq5f1RGw2JcPkgJKq2slrjYnryb4JAQ=
-=Fneq
+wsF5BAABCAAjFiEExndm/fpuMUdwYFFolh/E3EQov+AFAmEOLWIFAwAAAAAACgkQlh/E3EQov+A2
+VA//efpGWFRuKfguvkSaqFDi5usf++VXgIYP0Pr1yzNb0cGjTrkESh4PQzO8c+Nd1LcwlQiJTL3+
+Y/yvAuUid35YNb/srf7Mij5TLkoD+EZAiPawNEwNrHTA5dI4sqNPF2lWjymWmFSWI6lciZowNSZq
+Kh/fkkzMg3lzT5muI9lsFfRB5JPaiG5GZWeaVESyPpVKIJuoXt8+iX10MK4zh654J8OtP8HsJV8l
+X44SAOeic+TBNwG8pAwSG3aFPvttx/QmcNt7KnqYfkCY2IwDT3XOx8YSisZ90jwNbHTX9bbGuUQV
+DnLC48D9fWVAF5j6AYalRiCONULSRyBuf5TVr7FsQtsqACRy86z2G35/OrGNbt+1Y+iXa3oSKJF9
+bDwTQUbTCyWXTOMcvqmkRgRHi97esHk9PHxorfuezkMvtaknav1tFVxgXns6b9vi87+MQLgz363i
+NE4OJo0uJLdkLCizy3EvP39P+L5rhsOgXW6CnFtdSZWONwPJQGgU7QGAdV2FSvpbHbMVgI1Nfnxz
+ixJSZNdsAGwGYExhQMS8dhtRBGneaDy9PDekfzhUBW//8jinnGZEBvtEHEvi5dmDhvIMKF/6vcIb
+mbsJz52cm3qZ0P8q0iJ5tjW4PGiCuChGm2Z6KA/rgKaINvJ7ZF6QNyl/hWznKEFrrn6MQDkLUZcf
+H3s=
+=I+OL
 -----END PGP SIGNATURE-----
 
---srvp65x6cyhvtnnq--
+--BfWkLwAIF2tnbDGIJawI2jZ0MYa9F09kk--
