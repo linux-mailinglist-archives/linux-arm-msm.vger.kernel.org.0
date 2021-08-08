@@ -2,96 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3A7523E3A1F
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Aug 2021 14:04:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 63B073E3A44
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Aug 2021 14:50:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229882AbhHHMEq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Aug 2021 08:04:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60784 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231425AbhHHMEl (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Aug 2021 08:04:41 -0400
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 095B2C061760
-        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Aug 2021 05:04:20 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id w13-20020a17090aea0db029017897a5f7bcso1558062pjy.5
-        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Aug 2021 05:04:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=DzOUOaS540Cron5XlLhz1i69/y58EIYipvvUh9fco7I=;
-        b=ydBKzvhbo8Zunvu0ScJ1TBFgq+3iiG8fbjKF+gXXK3BfDi13tfU3H+XdwYGxKuavBW
-         z9Qzx+JCsLeVLWoK2AZ7pOkopIn+Bqlke4bcd2/z07t52RkRF4fDliiTdFH8gth4Zyco
-         EMXXzqP6R09M9QIeiXEtT0kci+WJE4XOOCVMfhs9OKpAUqYO/wq2LUyyqJNwytGfYUtq
-         lDfdXkciTk2m2f7mE0AsAysFr/mY8/W9wIbsmO1LCwDiks3yJb4VnRXNGrDvOkqaKHhc
-         kjzQ5wGo/IVk8vwoBKiRLDa4H/NQF8s7Mfo4y1V2sAYy7xfQYinMfswpFXRCwm/M2G6J
-         RHdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=DzOUOaS540Cron5XlLhz1i69/y58EIYipvvUh9fco7I=;
-        b=m6ggucTc9JedrUxOqAKD1h6H3C1DeM1tiCW145TMGx8TdW96HRF7y6S14WfxUVoFoH
-         hO3k6yz9lqtFXLqpqhwzciPJv+DciDG/D5wEjrcoPjeTR8G0cxYJtK68e70k/UuYPi9C
-         om6FyjZzJWUjWkBnc46ThLVGesx4V1HKd0JvBltXDcfrnHULABaYI2D3LM3SB1zeRxRF
-         f+3XIbdUzJN9UDY2pAxZ8XwOjwKa8bXO0gOtK4iuwu9vFMzAll8yYbu8PRfUWhC0HR/J
-         wptoHieqxYGf1UNokwreWseP6kv9NOAqmJhpdaFAQAZwN3twLmfDIdLYFMe3671x87D3
-         dwfQ==
-X-Gm-Message-State: AOAM5320YDGdIumePwDqWvwzo7ADAn6NiLU3aQEfuw2hpRi2wLZs48Hn
-        C3yv9PCtRs7OoMbu8esEg78F+Q==
-X-Google-Smtp-Source: ABdhPJwc2ghN3JZOLInzhYcoPLdSwuBpmKo4THl4e7PriYyB3yqvcNXd+CJwhsSPA6v8s/TJrM7Vzw==
-X-Received: by 2002:a17:90a:4812:: with SMTP id a18mr30565965pjh.40.1628424259593;
-        Sun, 08 Aug 2021 05:04:19 -0700 (PDT)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id u190sm17253360pfb.95.2021.08.08.05.04.17
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 08 Aug 2021 05:04:19 -0700 (PDT)
-Date:   Sun, 8 Aug 2021 20:04:13 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Sam Ravnborg <sam@ravnborg.org>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: display: panel: Add Truly NT35521 panel
- support
-Message-ID: <20210808120412.GA6795@dragon>
-References: <20210804081352.30595-1-shawn.guo@linaro.org>
- <20210804081352.30595-2-shawn.guo@linaro.org>
- <YQq6ascrSCtErWrf@ravnborg.org>
+        id S230155AbhHHMvD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Aug 2021 08:51:03 -0400
+Received: from mout.gmx.net ([212.227.15.19]:57145 "EHLO mout.gmx.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229504AbhHHMvD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 8 Aug 2021 08:51:03 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=gmx.net;
+        s=badeba3b8450; t=1628427023;
+        bh=SpKTBfXmINyJsM31kZW0SjsPXsZ/8Opex1XCX37rGUM=;
+        h=X-UI-Sender-Class:From:To:Cc:Subject:Date;
+        b=AdXJLX2nB8fpHK/CnUV6GK4nXAMSigY7pojSYnNtm/+14pS502QVWuDJSiK7rtwV5
+         dfyjIyCBJ1ZIopFa6ir+BCEfV0iIdexA3DsvMEqxt6BCIdkKOMu/E35zuxIwA00Cvf
+         SWiEipd2dUWnk2GI8+Y+Idj/b+VD20YYPbcupsOI=
+X-UI-Sender-Class: 01bb95c1-4bf8-414a-932a-4f6e2808ef9c
+Received: from localhost.localdomain ([79.150.72.99]) by mail.gmx.net
+ (mrgmx005 [212.227.17.184]) with ESMTPSA (Nemesis) id
+ 1MFbW0-1mM5ez13oU-00H51L; Sun, 08 Aug 2021 14:50:23 +0200
+From:   Len Baker <len.baker@gmx.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Santosh Shilimkar <ssantosh@kernel.org>
+Cc:     Len Baker <len.baker@gmx.com>, Kees Cook <keescook@chromium.org>,
+        David Laight <David.Laight@ACULAB.COM>,
+        Robin Murphy <robin.murphy@arm.com>,
+        linux-hardening@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+Subject: [PATCH v4 0/3] drivers/soc: Remove all strcpy() uses
+Date:   Sun,  8 Aug 2021 14:50:09 +0200
+Message-Id: <20210808125012.4715-1-len.baker@gmx.com>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YQq6ascrSCtErWrf@ravnborg.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: quoted-printable
+X-Provags-ID: V03:K1:JA/QpiClaw4kLUAx0jzddoPZd0qTnX2YuIOC4R22ha5D+avsrP0
+ hfD5HbwQT1i+QLyS34hUmZfbV0+OwvK/YuMtB/F1caBwH7WwiPFHnWHmhc+tEFVo+Khlx1r
+ WHVGWYNYDLaZgss8Om0xsDSf83o09RAMuOMbS7sNzaOG9klz6gQoTTXBcoFpz2wiAbAfI2X
+ x80wEaqyR3L2nftZrPsFQ==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:WIa5A0qyMYM=:WTOz2uz2Zmef01HFaumnKB
+ dd8lRmxKpnv6PWezvrwpQOLqMXJGAUAD7cfY+InnynV+v26acq9LaFbH3lGsUkV2y2ATogmUc
+ yPjNVG1H548lAKX2yZ/5/XJj3GvAmW2628muangluIHU8nfRc/6jpKF9am8/03Ep3jMLXe9qb
+ FlY7MrEJ/06ZClz2c59JDuDAI4XO4FBiTvV7equohupy1bOKCa6FKQH0otIp2Dch2A1K6uikY
+ qODwXghsnwklK5DtnJeLNRbdG5FIF3YV6+QpHcEbHCNhu/9raX+SDDsac4uFrvHeb6/wuyUcw
+ fxGPMpARX/ClXTxuGZ7dZkCD8DIgtlm2U1QNrh4mQbTvLgU12NfXt9++SDvP2Q8GCkaOGZ37T
+ sGCZwR91jhVMju8ftj8cLgwPwAZ0JRUhDrif6x2GcZKWHbPTvSsGwXsbT8/lOpQ6x9fBsZxqz
+ eyvCHmq51QKNb1Z10Ew3GLspejykA6SrrVm7IoaZp5cJVWEtHHkQ3PdW3QCV/rh/BPkj5XQfD
+ tgTehhPHgu81WJxmKD2UMKeRNz+KswgkNj80e3s/k/vx0LWITRRbibuqivTF5pnRK0MmX0yAU
+ CHe1neq8zJ4a5rk8rfqsu/S/KxnFwLFhL/EOFD4oVcjMmVS60bmm5XgVFQnYZ/PmfQEiNXpxE
+ TJTVaENQD83JFUX8y3wUHEVsqJRdfGdtjNjFstWEq0Ffu6agFq+56yGOUjgMOoADIslkS2nXb
+ CercwWcykI6eY6DWC6RuaR7V9CzuSHg8bOw+xegnxxJg1A/mNZ1qy2vDqA9L+W122pBCDHGdR
+ S93+kBvxZaw3WqV2s9Bf11vsqiB7MCSScLxYJJtqfOV3R8Ef6LyZI6eQRaJ90/cTiW2XV/YP3
+ onItyzqHvG7K2mBRMbg4poAFSzcsWFSXvGshPD9mDkufcznvhVOddguC/QYdM+eaX4JftCSAr
+ hCLPivnMkWRW0O6QaKiWJIPnydv5/DsytbCAtC/QaFBz33EVDF34dTXzmfsCBaebS+5Oy1jJ2
+ LRwx/L6dIscUnSbq3hf4eGtaqhzxCUaJoko7rbcvOXSMrYSpreGeN8ZYuZXLTlWIu3/3reKiZ
+ 9GVrbj8urkMzr3mac5Q1UDhuErin8LH2jT61mRiTZs8UhE9BUtR5n/NDA==
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 04, 2021 at 06:03:54PM +0200, Sam Ravnborg wrote:
-> Hi Shawn,
-> 
-> On Wed, Aug 04, 2021 at 04:13:51PM +0800, Shawn Guo wrote:
-> > The Truly NT35521 is a 5.24" 1280x720 DSI panel, and the backlight is
-> > managed through DSI link.
-> > 
-> > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-> 
-> Please consider adding an optional port node, so we can use this panels
-> in a setup using a graph.
+strcpy() performs no bounds checking on the destination buffer. This
+could result in linear overflows beyond the end of the buffer, leading
+to all kinds of misbehaviors. So use strscpy() or memcpy() as a safe
+replacement.
 
-Sure, will do in v2.
+This is a task of the KSPP [1].
 
-> A simple port: true would do the trick.
-> I am aware that it may not be used today, this is a preparation for
-> potential future use.
-> 
-> With this fixed,
-> Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
+Changelog v1 -> v2
+- Change the "area_name_size" variable for a shorter name (Geert
+  Uytterhoeven).
+- Add the "Reviewed-by: Geert Uytterhoeven" tag.
+- Use the memcpy function instead of strscpy function when the
+  size of the destination buffer cannot be obtained with "sizeof"
+  (David Laight, Robin Murphy).
 
-Thanks, Sam!
+Changelog v2 -> v3
+- Remove the "Reviewed-by: Geert Uytterhoeven" tag since the code
+  has changed after the v1 review (use of memcpy instead of
+  strscpy).
 
-Shawn
+Changelog v3 -> v4
+- Split the changes in 3 commits (Bjorn Andersson).
+- Don't break a long line (Bjorn Andersson).
+- Reword the commit when used the memcpy function (Bjorn Andersson)
+
+The previous version can be found here [2].
+
+[1] https://github.com/KSPP/linux/issues/88
+[2] https://lore.kernel.org/linux-hardening/20210801131958.6144-1-len.bake=
+r@gmx.com/
+
+Len Baker (3):
+  drivers/soc/qcom: Prefer strscpy over strcpy
+  drivers/soc/renesas: Prefer memcpy over strcpy
+  drivers/soc/ti: Prefer strscpy over strcpy
+
+ drivers/soc/qcom/pdr_interface.c    | 12 ++++++------
+ drivers/soc/renesas/r8a779a0-sysc.c |  6 ++++--
+ drivers/soc/renesas/rcar-sysc.c     |  6 ++++--
+ drivers/soc/ti/knav_dma.c           |  2 +-
+ 4 files changed, 15 insertions(+), 11 deletions(-)
+
+=2D-
+2.25.1
+
