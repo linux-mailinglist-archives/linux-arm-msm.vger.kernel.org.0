@@ -2,220 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EF773E3B05
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Aug 2021 17:14:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A97523E3B18
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Aug 2021 17:29:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232124AbhHHPOS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Aug 2021 11:14:18 -0400
-Received: from mail-dm6nam11on2059.outbound.protection.outlook.com ([40.107.223.59]:5601
-        "EHLO NAM11-DM6-obe.outbound.protection.outlook.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S229923AbhHHPOR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Aug 2021 11:14:17 -0400
-ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
- b=DizJXb7EOM3l+sKa4LWDjg0FnH0BxOldeQkHPIsYK1r7PjwmT0ADa9nNcHbLAvaaRmnOo0iE+micVrMMeOH/OE/1nYrQTtUlDN/ocWEk87Xl8w21/f2BeRk+f7TEc8wQSyAhcx9kFUUhW94UC2OibMjEhvfvdQdrBtusa4kEV+6lQQKzuj2dKmE33QP1RkBpuHPDtGbT4AtLnT+x3UT5qyHhD94trBdTKtiuExtKQ+SUU9vJZxyzDR21Xy03YON1/M/9WJ/YV/FkhPyX27OrfJ6GUUEpTpTnB5ZCoFsbPJL7z/NnzCvrtxrn2KDA3wDUwfS9a5cvZL3Qt5keHitGMA==
-ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
- s=arcselector9901;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ruAid/TIzXD2J/qafvX1Xj8YycY1WeuRgcAQiQGlNkQ=;
- b=npiEa6BsuVXwKEIA+l/R+xI4iu8AbpnRmVSK0uen8onK4B4g98EXvrzmzv2/YAN4SmgrTAymdgjjsNfMDG+IQO5u0fCvo9PcjgLFis/nVCcPhej5S54xn6SDf/ctLZKWqG08KCGnse6kNm9+ThwK8TOXGwq2zGW/HkPcFUEM8zvy8XXtFaV0n5ssO1nyBz2wEAoRrepoxBaKUjj4Pf/x7XIrLZrqfFgRml0U3qIBO2mhdkGcQNP/d2zH0pWXuhwDqaA3Lxzcs54IFb8hG3/dIxEMXViNUF3DWaM+o/HhZILOpnh4LdpQapqdLEqMU1JmUPh0fEJD8a32hnr9UWb8pw==
-ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass (sender ip is
- 216.228.112.34) smtp.rcpttodomain=baylibre.com smtp.mailfrom=nvidia.com;
- dmarc=pass (p=quarantine sp=none pct=100) action=none header.from=nvidia.com;
- dkim=none (message not signed); arc=none
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=Nvidia.com;
- s=selector2;
- h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
- bh=ruAid/TIzXD2J/qafvX1Xj8YycY1WeuRgcAQiQGlNkQ=;
- b=sU9lY9JXTY794wyDYUkC1lxqmeFdWrAF3+ZpLuFpyzPeBgbiMookgauqT+pbWIeoy0gs87FelLY9uS+Jdes0QnmTU9fsxgnszBGGkDnbeOYMO9BFgpkr3mhVLk4PTVz8tAgwTPouFyjapY6wWA0+yKyt7VbrgYLAOOEVXTC0fyqLrSd+QtBDBnnl898UDpHadgiO9abcVYspqhu2w3oGCEEpSQxSsd0KdwSWElJCUsyy/2NgVLEqhOPvKf/EmrcTwfKNOzhrr3JaMlSUyiTUwyP/McX38wh7IvTUmWw/rIZ7Ki39xU7hAOjRoZIT8Y8Gu4sbE6/5s27DojOcgj9Dzg==
-Received: from CO2PR04CA0140.namprd04.prod.outlook.com (2603:10b6:104::18) by
- BN9PR12MB5099.namprd12.prod.outlook.com (2603:10b6:408:118::11) with
- Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4394.16; Sun, 8 Aug
- 2021 15:13:56 +0000
-Received: from CO1NAM11FT008.eop-nam11.prod.protection.outlook.com
- (2603:10b6:104:0:cafe::e6) by CO2PR04CA0140.outlook.office365.com
- (2603:10b6:104::18) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4394.15 via Frontend
- Transport; Sun, 8 Aug 2021 15:13:56 +0000
-X-MS-Exchange-Authentication-Results: spf=pass (sender IP is 216.228.112.34)
- smtp.mailfrom=nvidia.com; baylibre.com; dkim=none (message not signed)
- header.d=none;baylibre.com; dmarc=pass action=none header.from=nvidia.com;
-Received-SPF: Pass (protection.outlook.com: domain of nvidia.com designates
- 216.228.112.34 as permitted sender) receiver=protection.outlook.com;
- client-ip=216.228.112.34; helo=mail.nvidia.com;
-Received: from mail.nvidia.com (216.228.112.34) by
- CO1NAM11FT008.mail.protection.outlook.com (10.13.175.191) with Microsoft SMTP
- Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- 15.20.4394.16 via Frontend Transport; Sun, 8 Aug 2021 15:13:56 +0000
-Received: from [10.25.99.72] (172.20.187.6) by HQMAIL107.nvidia.com
- (172.20.187.13) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Sun, 8 Aug
- 2021 15:13:45 +0000
-Subject: Re: [PATCH v2 03/40] PCI: dwc: Allow overriding bridge pci_ops
-To:     Rob Herring <robh@kernel.org>, Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-CC:     <linux-pci@vger.kernel.org>, Andy Gross <agross@kernel.org>,
-        Binghui Wang <wangbinghui@hisilicon.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dilip Kota <eswara.kota@linux.intel.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Jesper Nilsson <jesper.nilsson@axis.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Jonathan Chocron <jonnyc@amazon.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        "Kishon Vijay Abraham I" <kishon@ti.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        "Lucas Stach" <l.stach@pengutronix.de>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Murali Karicheri <m-karicheri2@ti.com>,
-        "Neil Armstrong" <narmstrong@baylibre.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Pratyush Anand <pratyush.anand@gmail.com>,
-        Richard Zhu <hongxing.zhu@nxp.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        "Thierry Reding" <thierry.reding@gmail.com>,
-        Xiaowei Song <songxiaowei@hisilicon.com>,
-        Yue Wang <yue.wang@Amlogic.com>, Marc Zyngier <maz@kernel.org>,
-        <linux-amlogic@lists.infradead.org>, <linux-arm-kernel@axis.com>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>, <linux-omap@vger.kernel.org>,
-        <linux-samsung-soc@vger.kernel.org>, <linux-tegra@vger.kernel.org>
-References: <20200821035420.380495-1-robh@kernel.org>
- <20200821035420.380495-4-robh@kernel.org>
-From:   Vidya Sagar <vidyas@nvidia.com>
-Message-ID: <68e3adfb-a79d-3b70-87ed-2e5e1bf7fc93@nvidia.com>
-Date:   Sun, 8 Aug 2021 20:43:43 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        id S231984AbhHHPaB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Aug 2021 11:30:01 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.54]:23002 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229923AbhHHPaB (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 8 Aug 2021 11:30:01 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1628436578;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=Xo5z8Fn+SltMLL04pMqFkZRQFAXy/ruqbXV6MhAwFYw=;
+    b=K2+h427U0zlskFL0emrv4Z20XmtmhcSUd7aHFYCC3+sOAPun2gRr5Ni5N7/WuZ6ShE
+    z3LXHYPrR3Ojjn8cCLmt/S1s5x5fGo2XXistkwvQ9JfpmNvEv+H+hTqz5BXHlzc0C2GP
+    +qMqE4TouttdO3Yvdej+7FR0mFNvS9Z9Evhd2TrMNaTFK/eceMKP/kkujWDyfiElQ1C+
+    nUWC+WHY2M8Y+JkfMT9bZiB313klNTTME4EM+3pZ2zykyHISMvDUf3xxaFQU/1R9B2g8
+    qMsvBQqmCx94TvJORVfurBTUJzfC6yKCJpJgYC7KOyvPt1bwXhH+4MfGTWN9JmPZ+k+x
+    sEQw==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8p6E1A=="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.31.0 DYNA|AUTH)
+    with ESMTPSA id L01e9cx78FTbLv5
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Sun, 8 Aug 2021 17:29:37 +0200 (CEST)
+Date:   Sun, 8 Aug 2021 17:29:30 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Konrad Dybcio <konradybcio@gmail.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 2/2] drm/panel: Add Truly NT35521 panel driver
+Message-ID: <YQ/4WkA9ajpQx06A@gerhold.net>
+References: <20210804081352.30595-1-shawn.guo@linaro.org>
+ <20210804081352.30595-3-shawn.guo@linaro.org>
+ <YQqDb5eFqIx8tvAL@gerhold.net>
+ <20210808134456.GB6795@dragon>
 MIME-Version: 1.0
-In-Reply-To: <20200821035420.380495-4-robh@kernel.org>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [172.20.187.6]
-X-ClientProxiedBy: HQMAIL107.nvidia.com (172.20.187.13) To
- HQMAIL107.nvidia.com (172.20.187.13)
-X-EOPAttributedMessage: 0
-X-MS-PublicTrafficType: Email
-X-MS-Office365-Filtering-Correlation-Id: d6bf1062-80fa-492d-644a-08d95a7f241e
-X-MS-TrafficTypeDiagnostic: BN9PR12MB5099:
-X-Microsoft-Antispam-PRVS: <BN9PR12MB5099CB820C4A3C1CACA85F1EB8F59@BN9PR12MB5099.namprd12.prod.outlook.com>
-X-MS-Oob-TLC-OOBClassifiers: OLM:792;
-X-MS-Exchange-SenderADCheck: 1
-X-MS-Exchange-AntiSpam-Relay: 0
-X-Microsoft-Antispam: BCL:0;
-X-Microsoft-Antispam-Message-Info: FFeRCVQMc//Dc795KC6pf1J4mXxd1qKM0xpCNvrM7kfvIeF5/mvISZctvubwflcOb3qM9+spm552QMgco5WWsUsZA33kt4hxnUaQQ6r9jkVeaPaq+K7RlkMJZ4L1CvTxms2KY5reChiDcMCbfJkLWiUSjWR3dIEKgAEJ1fTlHSOIovd1+raqOOo3on/mUvxhbB8Mp295klFZ8UZsctNHAMK7Afu7XWaWyVBvy0Px9O+MRqogooMYJ7kQQwAIDRyAEB0vHM2k1slHznBev7i59INA7cp7/qlZkxG7cL8RqX9wFwI22/rOGmYeQ0+5S5qDRHO2ccB2zjDKRIceGcvRvDpxvG5IKTkePmpFBilB8WZckwfmUzT+VrebZX9gj/DWN8pytnW+7zrbpJLmWsGSKXuHIy6gAk+uX3n3UQtT8j2PuOq7VGMAwAwK6A98XpeCg44XryOOB+eLOiMoTEVKWJT+j3dgqASR2fM6kNTfXqvb3pBS7br8U8aIhWcDxcbQME7HoXpAA5x0uQcF/0NN6cBdF0QXs/OAUy1h54prbkZg76FZgeRZ5n5yLd9a6Km6qeaUOxMaABmN4E3N3Dvkar9fv2m9WQxAnSko/4NStoOduiGOFJmQSbBylRXb84NoJFg02PD7Mt+F7Ds4awt+94Tkc48FkOuzZCmzgxmjBu0l4wAMafRDWo583unX7IkL3SVIRyK/UuC14ai5lX6FaSLdJqHjrt6aaB6A0lescJk=
-X-Forefront-Antispam-Report: CIP:216.228.112.34;CTRY:US;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:mail.nvidia.com;PTR:schybrid03.nvidia.com;CAT:NONE;SFS:(4636009)(39860400002)(136003)(376002)(346002)(396003)(36840700001)(46966006)(356005)(83380400001)(86362001)(36860700001)(4326008)(36756003)(31696002)(82310400003)(82740400003)(8936002)(478600001)(47076005)(7636003)(36906005)(7416002)(7406005)(16576012)(336012)(54906003)(16526019)(316002)(2906002)(31686004)(26005)(53546011)(426003)(186003)(70586007)(70206006)(5660300002)(110136005)(2616005)(8676002)(43740500002);DIR:OUT;SFP:1101;
-X-OriginatorOrg: Nvidia.com
-X-MS-Exchange-CrossTenant-OriginalArrivalTime: 08 Aug 2021 15:13:56.1824
- (UTC)
-X-MS-Exchange-CrossTenant-Network-Message-Id: d6bf1062-80fa-492d-644a-08d95a7f241e
-X-MS-Exchange-CrossTenant-Id: 43083d15-7273-40c1-b7db-39efd9ccc17a
-X-MS-Exchange-CrossTenant-OriginalAttributedTenantConnectingIp: TenantId=43083d15-7273-40c1-b7db-39efd9ccc17a;Ip=[216.228.112.34];Helo=[mail.nvidia.com]
-X-MS-Exchange-CrossTenant-AuthSource: CO1NAM11FT008.eop-nam11.prod.protection.outlook.com
-X-MS-Exchange-CrossTenant-AuthAs: Anonymous
-X-MS-Exchange-CrossTenant-FromEntityHeader: HybridOnPrem
-X-MS-Exchange-Transport-CrossTenantHeadersStamped: BN9PR12MB5099
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210808134456.GB6795@dragon>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 8/21/2020 9:23 AM, Rob Herring wrote:
-> In preparation to allow drivers to set their own root and child pci_ops
-> instead of using the DWC specific config space ops, we need to make
-> the pci_host_bridge pointer available and move setting the bridge->ops
-> and bridge->child_ops pointer to before the .host_init() hook.
+On Sun, Aug 08, 2021 at 09:44:57PM +0800, Shawn Guo wrote:
+> On Wed, Aug 04, 2021 at 02:09:19PM +0200, Stephan Gerhold wrote:
+> > On Wed, Aug 04, 2021 at 04:13:52PM +0800, Shawn Guo wrote:
+> > > + ...
+> > > +	nt_dcs_write(0xb1, 0x6c, 0x21);
+> > > +	nt_dcs_write(0xf0, 0x55, 0xaa, 0x52, 0x00, 0x00);
+> > > +	nt_dcs_write(0x35, 0x00);
+> > > +	nt_gen_write(0x11, 0x00);
+> > > +	msleep(120);
+> > > +	nt_gen_write(0x29, 0x00);
+> > > +	usleep_range(1000, 1500);
+> > > +	nt_dcs_write(0x53, 0x24);
+> > 
+> > Did you mix up "nt_dcs_write" and "nt_gen_write" here?
+> > The nt_gen_write(0x11, 0x00); looks like MIPI_DCS_EXIT_SLEEP_MODE
+> > and the nt_gen_write(0x29, 0x00); looks like MIPI_DCS_SET_DISPLAY_ON.
+> > 
+> > For reference you can pull your original reference DTB from Sony through
+> > my panel driver generator: https://github.com/msm8916-mainline/linux-mdss-dsi-panel-driver-generator
 > 
-> Cc: Jingoo Han <jingoohan1@gmail.com>
-> Cc: Gustavo Pimentel <gustavo.pimentel@synopsys.com>
-> Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-> Cc: Bjorn Helgaas <bhelgaas@google.com>
-> Signed-off-by: Rob Herring <robh@kernel.org>
-> ---
->   drivers/pci/controller/dwc/pcie-designware-host.c | 15 ++++++++++-----
->   drivers/pci/controller/dwc/pcie-designware.h      |  1 +
->   2 files changed, 11 insertions(+), 5 deletions(-)
+> Wow, very nice!  It really deserves wider spread!
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> index 1d98554db009..b626cc7cd43a 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> @@ -344,6 +344,8 @@ int dw_pcie_host_init(struct pcie_port *pp)
->   	if (!bridge)
->   		return -ENOMEM;
->   
-> +	pp->bridge = bridge;
-> +
->   	/* Get the I/O and memory ranges from DT */
->   	resource_list_for_each_entry(win, &bridge->windows) {
->   		switch (resource_type(win->res)) {
-> @@ -445,6 +447,10 @@ int dw_pcie_host_init(struct pcie_port *pp)
->   		}
->   	}
->   
-> +	/* Set default bus ops */
-> +	bridge->ops = &dw_pcie_ops;
-> +	bridge->child_ops = &dw_pcie_ops;
-> +
->   	if (pp->ops->host_init) {
->   		ret = pp->ops->host_init(pp);
->   		if (ret)
-> @@ -452,7 +458,6 @@ int dw_pcie_host_init(struct pcie_port *pp)
->   	}
->   
->   	bridge->sysdata = pp;
-> -	bridge->ops = &dw_pcie_ops;
->   
->   	ret = pci_scan_root_bus_bridge(bridge);
->   	if (ret)
-> @@ -654,11 +659,11 @@ void dw_pcie_setup_rc(struct pcie_port *pp)
->   	dw_pcie_writel_dbi(pci, PCI_COMMAND, val);
->   
->   	/*
-> -	 * If the platform provides ->rd_other_conf, it means the platform
-> -	 * uses its own address translation component rather than ATU, so
-> -	 * we should not program the ATU here.
-> +	 * If the platform provides its own child bus config accesses, it means
-> +	 * the platform uses its own address translation component rather than
-> +	 * ATU, so we should not program the ATU here.
-It is possible that a platform can have its own translation for 
-configuration accesses and use DWC's ATU for memory/IO address 
-translations. IMHO, ATU setup for memory/IO address translations 
-shouldn't be skipped based on platform's '->rd_other_conf' 
-implementation. Ex:- A platform can implement configuration space access 
-through the ECAM mechanism yet choose to use ATU for memory/IO address 
-translations.
+> > 
+> > It produces the following (I compiled "msm8939-kanuti_tulip.dtb"
+> > from https://github.com/sonyxperiadev/kernel/tree/aosp/LA.BR.1.3.3_rb2.14,
+> > not sure if that is right):
+> > 
+> > 	// ...
+> > 	dsi_generic_write_seq(dsi, 0x35, 0x00);
+> > 
+> > 	ret = mipi_dsi_dcs_exit_sleep_mode(dsi);
+> > 	if (ret < 0) {
+> > 		dev_err(dev, "Failed to exit sleep mode: %d\n", ret);
+> > 		return ret;
+> > 	}
+> > 	msleep(120);
+> > 
+> > 	ret = mipi_dsi_dcs_set_display_on(dsi);
+> > 	if (ret < 0) {
+> > 		dev_err(dev, "Failed to set display on: %d\n", ret);
+> > 		return ret;
+> > 	}
+> > 	usleep_range(1000, 2000);
+> > 
+> > 	dsi_generic_write_seq(dsi, 0x53, 0x24);
+> > 
+> > Which also suggests that generic and DCS writes are mixed up here.
+> > 
+> > Note however that you could not use the generated driver as-is,
+> > because Sony seems to use their own display driver instead of Qualcomm's
+> > and some things seem to be different.
+> 
+> I re-created the driver using your generator.  With modeling the 5v
+> control GPIOs with regulators and adding backlight-gpios support, the
+> driver works quite nicely, except the following two problems:
+> 
+> 1) I have to drop the MIPI_DSI_MODE_LPM configuration from .update_status
+>    hook. Otherwise brightness did not get updated to panel.
+> 
+> ---8<------
+> diff --git a/drivers/gpu/drm/panel/panel-sony-tulip-truly-nt35521.c b/drivers/gpu/drm/panel/panel-sony-tulip-truly-nt35521.c
+> index 31e5f942a039..eba926c6f722 100644
+> --- a/drivers/gpu/drm/panel/panel-sony-tulip-truly-nt35521.c
+> +++ b/drivers/gpu/drm/panel/panel-sony-tulip-truly-nt35521.c
+> @@ -420,33 +420,23 @@ static int truly_nt35521_bl_update_status(struct backlight_device *bl)
+>         u16 brightness = backlight_get_brightness(bl);
+>         int ret;
+>  
+> -       dsi->mode_flags &= ~MIPI_DSI_MODE_LPM;
+> -
+>         ret = mipi_dsi_dcs_set_display_brightness(dsi, brightness);
+>         if (ret < 0)
+>                 return ret;
+>  
+> -       dsi->mode_flags |= MIPI_DSI_MODE_LPM;
+> -
+>         return 0;
+>  }
+> ------>8---
+> 
+
+I have to admit I don't know much about Low Power Mode vs High Speed
+Mode. As long it works it is good I guess :-)
+
+> 2) The driver works good, if the kernel is launched via "fastboot boot".
+>    But if the kernel is flashed to eMMC and launched by bootloader with
+>    splash screen, kernel will fail to bring up the panel.  After kernel
+>    boots up, a blank & unblank cycle can get panel work though.
+> 
+> The problem 2) is not driver generator related.  @Konrad, did you see
+> it on asus-z00t-tm5p5-n35596 driver?
+> 
+
+Do you have CONFIG_DRM_MSM=y (built-in) instead of =m (module) maybe?
+I think a similar issue exists on MSM8916 but it does not happen
+for some reason if CONFIG_DRM_MSM=m instead of =y. Somehow having it
+load later during the boot process fixes some things there.
 
 Thanks,
-Vidya Sagar
->   	 */
-> -	if (!pp->ops->rd_other_conf) {
-> +	if (pp->bridge->child_ops == &dw_pcie_ops && !pp->ops->rd_other_conf) {
->   		dw_pcie_prog_outbound_atu(pci, PCIE_ATU_REGION_INDEX0,
->   					  PCIE_ATU_TYPE_MEM, pp->mem_base,
->   					  pp->mem_bus_addr, pp->mem_size);
-> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
-> index f911760dcc69..8b8ea5f3e7af 100644
-> --- a/drivers/pci/controller/dwc/pcie-designware.h
-> +++ b/drivers/pci/controller/dwc/pcie-designware.h
-> @@ -200,6 +200,7 @@ struct pcie_port {
->   	u32			num_vectors;
->   	u32			irq_mask[MAX_MSI_CTRLS];
->   	struct pci_bus		*root_bus;
-> +	struct pci_host_bridge  *bridge;
->   	raw_spinlock_t		lock;
->   	DECLARE_BITMAP(msi_irq_in_use, MAX_MSI_IRQS);
->   };
-> 
+Stephan
