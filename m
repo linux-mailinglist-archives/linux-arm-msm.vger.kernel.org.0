@@ -2,158 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A97523E3B18
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Aug 2021 17:29:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C22893E3B2B
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Aug 2021 17:46:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231984AbhHHPaB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Aug 2021 11:30:01 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.54]:23002 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229923AbhHHPaB (ORCPT
+        id S232108AbhHHPqy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Aug 2021 11:46:54 -0400
+Received: from esgaroth.petrovitsch.at ([78.47.184.11]:54950 "EHLO
+        esgaroth.petrovitsch.at" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229923AbhHHPqx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Aug 2021 11:30:01 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1628436578;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=Xo5z8Fn+SltMLL04pMqFkZRQFAXy/ruqbXV6MhAwFYw=;
-    b=K2+h427U0zlskFL0emrv4Z20XmtmhcSUd7aHFYCC3+sOAPun2gRr5Ni5N7/WuZ6ShE
-    z3LXHYPrR3Ojjn8cCLmt/S1s5x5fGo2XXistkwvQ9JfpmNvEv+H+hTqz5BXHlzc0C2GP
-    +qMqE4TouttdO3Yvdej+7FR0mFNvS9Z9Evhd2TrMNaTFK/eceMKP/kkujWDyfiElQ1C+
-    nUWC+WHY2M8Y+JkfMT9bZiB313klNTTME4EM+3pZ2zykyHISMvDUf3xxaFQU/1R9B2g8
-    qMsvBQqmCx94TvJORVfurBTUJzfC6yKCJpJgYC7KOyvPt1bwXhH+4MfGTWN9JmPZ+k+x
-    sEQw==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4peA8p6E1A=="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.31.0 DYNA|AUTH)
-    with ESMTPSA id L01e9cx78FTbLv5
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Sun, 8 Aug 2021 17:29:37 +0200 (CEST)
-Date:   Sun, 8 Aug 2021 17:29:30 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Konrad Dybcio <konradybcio@gmail.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/2] drm/panel: Add Truly NT35521 panel driver
-Message-ID: <YQ/4WkA9ajpQx06A@gerhold.net>
-References: <20210804081352.30595-1-shawn.guo@linaro.org>
- <20210804081352.30595-3-shawn.guo@linaro.org>
- <YQqDb5eFqIx8tvAL@gerhold.net>
- <20210808134456.GB6795@dragon>
+        Sun, 8 Aug 2021 11:46:53 -0400
+X-Greylist: delayed 617 seconds by postgrey-1.27 at vger.kernel.org; Sun, 08 Aug 2021 11:46:52 EDT
+Received: from thorin.petrovitsch.priv.at (84-115-219-158.cable.dynamic.surfer.at [84.115.219.158])
+        (authenticated bits=0)
+        by esgaroth.petrovitsch.at (8.16.1/8.16.1) with ESMTPSA id 178Fa0Qk284153
+        (version=TLSv1.3 cipher=TLS_AES_128_GCM_SHA256 bits=128 verify=NOT);
+        Sun, 8 Aug 2021 17:36:01 +0200
+DKIM-Filter: OpenDKIM Filter v2.11.0 esgaroth.petrovitsch.at 178Fa0Qk284153
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=petrovitsch.priv.at;
+        s=default; t=1628436962;
+        bh=ldKn0U8KvfBvOVhOmCB8P8LDLYD3v1sH4Y5QxM2Or08=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=jlp8OYhCcgpbUgtRgz/L7FIczgPQ+g4OgnEh7AhtKPiWSF8VoqdjJFGNmnypEW7i/
+         uVeji1HYskG3nbB0DTBTROFDGzvNvA4IugFL/e66UPrmgnTrYGJb2fQ09zX5NLLPrB
+         xQsA8R/8ExCfmCPDFzdGvWfSgsPTdIcrUBvfzx+U=
+X-Info-sendmail: I was here
+Subject: Re: [PATCH v4 2/3] drivers/soc/renesas: Prefer memcpy over strcpy
+To:     Len Baker <len.baker@gmx.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Santosh Shilimkar <ssantosh@kernel.org>
+Cc:     Kees Cook <keescook@chromium.org>,
+        David Laight <David.Laight@ACULAB.COM>,
+        Robin Murphy <robin.murphy@arm.com>,
+        linux-hardening@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org
+References: <20210808125012.4715-1-len.baker@gmx.com>
+ <20210808125012.4715-3-len.baker@gmx.com>
+From:   Bernd Petrovitsch <bernd@petrovitsch.priv.at>
+Bimi-Selector: v=BIMI1; s=default
+Message-ID: <39485c0e-511c-50a0-83be-f9ce6fc47e67@petrovitsch.priv.at>
+Date:   Sun, 8 Aug 2021 17:35:54 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210808134456.GB6795@dragon>
+In-Reply-To: <20210808125012.4715-3-len.baker@gmx.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-DCC-wuwien-Metrics: esgaroth.petrovitsch.priv.at 1290; Body=14 Fuz1=14
+        Fuz2=14
+X-Spam-Status: No, score=-1.2 required=5.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,NICE_REPLY_A
+        autolearn=unavailable autolearn_force=no version=3.4.6
+X-Spam-Report: * -1.0 ALL_TRUSTED Passed through trusted hosts only via SMTP
+        * -0.1 DKIM_VALID Message has at least one valid DKIM or DK signature
+        *  0.1 DKIM_SIGNED Message has a DKIM or DK signature, not necessarily
+        *       valid
+        * -0.1 DKIM_VALID_AU Message has a valid DKIM or DK signature from
+        *      author's domain
+        * -0.1 DKIM_VALID_EF Message has a valid DKIM or DK signature from
+        *      envelope-from domain
+        * -0.0 NICE_REPLY_A Looks like a legit reply (A)
+X-Spam-Checker-Version: SpamAssassin 3.4.6 (2021-04-09) on
+        esgaroth.petrovitsch.priv.at
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Aug 08, 2021 at 09:44:57PM +0800, Shawn Guo wrote:
-> On Wed, Aug 04, 2021 at 02:09:19PM +0200, Stephan Gerhold wrote:
-> > On Wed, Aug 04, 2021 at 04:13:52PM +0800, Shawn Guo wrote:
-> > > + ...
-> > > +	nt_dcs_write(0xb1, 0x6c, 0x21);
-> > > +	nt_dcs_write(0xf0, 0x55, 0xaa, 0x52, 0x00, 0x00);
-> > > +	nt_dcs_write(0x35, 0x00);
-> > > +	nt_gen_write(0x11, 0x00);
-> > > +	msleep(120);
-> > > +	nt_gen_write(0x29, 0x00);
-> > > +	usleep_range(1000, 1500);
-> > > +	nt_dcs_write(0x53, 0x24);
-> > 
-> > Did you mix up "nt_dcs_write" and "nt_gen_write" here?
-> > The nt_gen_write(0x11, 0x00); looks like MIPI_DCS_EXIT_SLEEP_MODE
-> > and the nt_gen_write(0x29, 0x00); looks like MIPI_DCS_SET_DISPLAY_ON.
-> > 
-> > For reference you can pull your original reference DTB from Sony through
-> > my panel driver generator: https://github.com/msm8916-mainline/linux-mdss-dsi-panel-driver-generator
-> 
-> Wow, very nice!  It really deserves wider spread!
-> 
-> > 
-> > It produces the following (I compiled "msm8939-kanuti_tulip.dtb"
-> > from https://github.com/sonyxperiadev/kernel/tree/aosp/LA.BR.1.3.3_rb2.14,
-> > not sure if that is right):
-> > 
-> > 	// ...
-> > 	dsi_generic_write_seq(dsi, 0x35, 0x00);
-> > 
-> > 	ret = mipi_dsi_dcs_exit_sleep_mode(dsi);
-> > 	if (ret < 0) {
-> > 		dev_err(dev, "Failed to exit sleep mode: %d\n", ret);
-> > 		return ret;
-> > 	}
-> > 	msleep(120);
-> > 
-> > 	ret = mipi_dsi_dcs_set_display_on(dsi);
-> > 	if (ret < 0) {
-> > 		dev_err(dev, "Failed to set display on: %d\n", ret);
-> > 		return ret;
-> > 	}
-> > 	usleep_range(1000, 2000);
-> > 
-> > 	dsi_generic_write_seq(dsi, 0x53, 0x24);
-> > 
-> > Which also suggests that generic and DCS writes are mixed up here.
-> > 
-> > Note however that you could not use the generated driver as-is,
-> > because Sony seems to use their own display driver instead of Qualcomm's
-> > and some things seem to be different.
-> 
-> I re-created the driver using your generator.  With modeling the 5v
-> control GPIOs with regulators and adding backlight-gpios support, the
-> driver works quite nicely, except the following two problems:
-> 
-> 1) I have to drop the MIPI_DSI_MODE_LPM configuration from .update_status
->    hook. Otherwise brightness did not get updated to panel.
-> 
-> ---8<------
-> diff --git a/drivers/gpu/drm/panel/panel-sony-tulip-truly-nt35521.c b/drivers/gpu/drm/panel/panel-sony-tulip-truly-nt35521.c
-> index 31e5f942a039..eba926c6f722 100644
-> --- a/drivers/gpu/drm/panel/panel-sony-tulip-truly-nt35521.c
-> +++ b/drivers/gpu/drm/panel/panel-sony-tulip-truly-nt35521.c
-> @@ -420,33 +420,23 @@ static int truly_nt35521_bl_update_status(struct backlight_device *bl)
->         u16 brightness = backlight_get_brightness(bl);
->         int ret;
->  
-> -       dsi->mode_flags &= ~MIPI_DSI_MODE_LPM;
-> -
->         ret = mipi_dsi_dcs_set_display_brightness(dsi, brightness);
->         if (ret < 0)
->                 return ret;
->  
-> -       dsi->mode_flags |= MIPI_DSI_MODE_LPM;
-> -
->         return 0;
->  }
-> ------>8---
-> 
+Hi all!
 
-I have to admit I don't know much about Low Power Mode vs High Speed
-Mode. As long it works it is good I guess :-)
-
-> 2) The driver works good, if the kernel is launched via "fastboot boot".
->    But if the kernel is flashed to eMMC and launched by bootloader with
->    splash screen, kernel will fail to bring up the panel.  After kernel
->    boots up, a blank & unblank cycle can get panel work though.
+On 08/08/2021 14:50, Len Baker wrote:
+> strcpy() performs no bounds checking on the destination buffer. This
+> could result in linear overflows beyond the end of the buffer, leading
+> to all kinds of misbehaviors. So, use memcpy() as a safe replacement.
 > 
-> The problem 2) is not driver generator related.  @Konrad, did you see
-> it on asus-z00t-tm5p5-n35596 driver?
+> This is a previous step in the path to remove the strcpy() function
+> entirely from the kernel.
 > 
+> Signed-off-by: Len Baker <len.baker@gmx.com>
+> ---
+>  drivers/soc/renesas/r8a779a0-sysc.c | 6 ++++--
+>  drivers/soc/renesas/rcar-sysc.c     | 6 ++++--
+>  2 files changed, 8 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/soc/renesas/r8a779a0-sysc.c b/drivers/soc/renesas/r8a779a0-sysc.c
+> index d464ffa1be33..7410b9fa9846 100644
+> --- a/drivers/soc/renesas/r8a779a0-sysc.c
+> +++ b/drivers/soc/renesas/r8a779a0-sysc.c
+> @@ -404,19 +404,21 @@ static int __init r8a779a0_sysc_pd_init(void)
+>  	for (i = 0; i < info->num_areas; i++) {
+>  		const struct r8a779a0_sysc_area *area = &info->areas[i];
+>  		struct r8a779a0_sysc_pd *pd;
+> +		size_t n;
+> 
+>  		if (!area->name) {
+>  			/* Skip NULLified area */
+>  			continue;
+>  		}
+> 
+> -		pd = kzalloc(sizeof(*pd) + strlen(area->name) + 1, GFP_KERNEL)> +		n = strlen(area->name) + 1;
+> +		pd = kzalloc(sizeof(*pd) + n, GFP_KERNEL);
+Zeroing the allocated bytes is not needed since it's completly
+overwritten with the strcpy()/memcpy().
+>  		if (!pd) {
+>  			error = -ENOMEM;
+>  			goto out_put;
+>  		}
+> 
+> -		strcpy(pd->name, area->name);
+> +		memcpy(pd->name, area->name, n);
+>  		pd->genpd.name = pd->name;
+>  		pd->pdr = area->pdr;
+>  		pd->flags = area->flags;
 
-Do you have CONFIG_DRM_MSM=y (built-in) instead of =m (module) maybe?
-I think a similar issue exists on MSM8916 but it does not happen
-for some reason if CONFIG_DRM_MSM=m instead of =y. Somehow having it
-load later during the boot process fixes some things there.
+And similar for the second hunk.
 
-Thanks,
-Stephan
+MfG,
+	Bernd
+-- 
+Bernd Petrovitsch                  Email : bernd@petrovitsch.priv.at
+     There is NO CLOUD, just other people's computers. - FSFE
+                     LUGA : http://www.luga.at
