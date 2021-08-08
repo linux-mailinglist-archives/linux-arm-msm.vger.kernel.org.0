@@ -2,114 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B62CF3E3BD1
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Aug 2021 19:06:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3225F3E3CC8
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Aug 2021 22:47:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232120AbhHHRHC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Aug 2021 13:07:02 -0400
-Received: from smtp13.smtpout.orange.fr ([80.12.242.135]:53198 "EHLO
-        smtp.smtpout.orange.fr" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
-        with ESMTP id S232013AbhHHRHB (ORCPT
+        id S232503AbhHHUrt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Aug 2021 16:47:49 -0400
+Received: from mxout02.lancloud.ru ([45.84.86.82]:44352 "EHLO
+        mxout02.lancloud.ru" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230201AbhHHUrs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Aug 2021 13:07:01 -0400
-Received: from [192.168.1.18] ([90.126.253.178])
-        by mwinf5d75 with ME
-        id f56W250073riaq20356WZB; Sun, 08 Aug 2021 19:06:40 +0200
-X-ME-Helo: [192.168.1.18]
-X-ME-Auth: Y2hyaXN0b3BoZS5qYWlsbGV0QHdhbmFkb28uZnI=
-X-ME-Date: Sun, 08 Aug 2021 19:06:40 +0200
-X-ME-IP: 90.126.253.178
-Subject: Re: [PATCH v4 2/3] drivers/soc/renesas: Prefer memcpy over strcpy
-To:     Bernd Petrovitsch <bernd@petrovitsch.priv.at>,
-        Len Baker <len.baker@gmx.com>, Andy Gross <agross@kernel.org>,
+        Sun, 8 Aug 2021 16:47:48 -0400
+X-Greylist: delayed 336 seconds by postgrey-1.27 at vger.kernel.org; Sun, 08 Aug 2021 16:47:48 EDT
+Received: from LanCloud
+DKIM-Filter: OpenDKIM Filter v2.11.0 mxout02.lancloud.ru 61765229B7AD
+Received: from LanCloud
+Received: from LanCloud
+Received: from LanCloud
+Subject: [PATCH 2/9] usb: dwc3: qcom: add IRQ check
+From:   Sergey Shtylyov <s.shtylyov@omp.ru>
+To:     <linux-usb@vger.kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Felipe Balbi <balbi@kernel.org>
+References: <717ddd7c-22cd-d82c-e43d-80254718c801@omp.ru>
+CC:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Santosh Shilimkar <ssantosh@kernel.org>
-Cc:     Kees Cook <keescook@chromium.org>,
-        David Laight <David.Laight@ACULAB.COM>,
-        Robin Murphy <robin.murphy@arm.com>,
-        linux-hardening@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org
-References: <20210808125012.4715-1-len.baker@gmx.com>
- <20210808125012.4715-3-len.baker@gmx.com>
- <39485c0e-511c-50a0-83be-f9ce6fc47e67@petrovitsch.priv.at>
-From:   Christophe JAILLET <christophe.jaillet@wanadoo.fr>
-Message-ID: <c33adb9e-9604-3d89-5a5b-152eb03e5b54@wanadoo.fr>
-Date:   Sun, 8 Aug 2021 19:06:30 +0200
+        <linux-arm-msm@vger.kernel.org>
+Organization: Open Mobile Platform
+Message-ID: <563b7c97-4668-3fd4-310b-0a067e805635@omp.ru>
+Date:   Sun, 8 Aug 2021 23:41:50 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+ Thunderbird/78.10.1
 MIME-Version: 1.0
-In-Reply-To: <39485c0e-511c-50a0-83be-f9ce6fc47e67@petrovitsch.priv.at>
-Content-Type: text/plain; charset=utf-8; format=flowed
+In-Reply-To: <717ddd7c-22cd-d82c-e43d-80254718c801@omp.ru>
+Content-Type: text/plain; charset="utf-8"
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [192.168.11.198]
+X-ClientProxiedBy: LFEXT01.lancloud.ru (fd00:f066::141) To
+ LFEX1907.lancloud.ru (fd00:f066::207)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+In dwc3_qcom_acpi_register_core(), the driver neglects to check the result
+of platform_get_irq()'s call and blithely assigns the negative error codes
+to the allocated child device's IRQ resource and then passing this resource
+to platform_device_add_resources() and later causing dwc3_otg_get_irq() to
+fail anyway.  Stop calling platform_device_add_resources() with the invalid
+IRQ #s, so that there's less complexity in the IRQ error checking.
 
-Le 08/08/2021 à 17:35, Bernd Petrovitsch a écrit :
-> Hi all!
-> 
-> On 08/08/2021 14:50, Len Baker wrote:
->> strcpy() performs no bounds checking on the destination buffer. This
->> could result in linear overflows beyond the end of the buffer, leading
->> to all kinds of misbehaviors. So, use memcpy() as a safe replacement.
->>
->> This is a previous step in the path to remove the strcpy() function
->> entirely from the kernel.
->>
->> Signed-off-by: Len Baker <len.baker@gmx.com>
->> ---
->>   drivers/soc/renesas/r8a779a0-sysc.c | 6 ++++--
->>   drivers/soc/renesas/rcar-sysc.c     | 6 ++++--
->>   2 files changed, 8 insertions(+), 4 deletions(-)
->>
->> diff --git a/drivers/soc/renesas/r8a779a0-sysc.c b/drivers/soc/renesas/r8a779a0-sysc.c
->> index d464ffa1be33..7410b9fa9846 100644
->> --- a/drivers/soc/renesas/r8a779a0-sysc.c
->> +++ b/drivers/soc/renesas/r8a779a0-sysc.c
->> @@ -404,19 +404,21 @@ static int __init r8a779a0_sysc_pd_init(void)
->>   	for (i = 0; i < info->num_areas; i++) {
->>   		const struct r8a779a0_sysc_area *area = &info->areas[i];
->>   		struct r8a779a0_sysc_pd *pd;
->> +		size_t n;
->>
->>   		if (!area->name) {
->>   			/* Skip NULLified area */
->>   			continue;
->>   		}
->>
->> -		pd = kzalloc(sizeof(*pd) + strlen(area->name) + 1, GFP_KERNEL);
->> +		n = strlen(area->name) + 1;
->> +		pd = kzalloc(sizeof(*pd) + n, GFP_KERNEL);
-> Zeroing the allocated bytes is not needed since it's completly
-> overwritten with the strcpy()/memcpy().
+Fixes: 2bc02355f8ba ("usb: dwc3: qcom: Add support for booting with ACPI")
+Signed-off-by: Sergey Shtylyov <s.shtylyov@omp.ru>
 
-The strcpy()/memcpy() only overwrites the pd->name field, not the whole 
-pd structure.
-I think that it is needed to keep the kzalloc.
+---
+ drivers/usb/dwc3/dwc3-qcom.c |    4 ++++
+ 1 file changed, 4 insertions(+)
 
-Just my 2c,
-CJ
-
->>   		if (!pd) {
->>   			error = -ENOMEM;
->>   			goto out_put;
->>   		}
->>
->> -		strcpy(pd->name, area->name);
->> +		memcpy(pd->name, area->name, n);
->>   		pd->genpd.name = pd->name;
->>   		pd->pdr = area->pdr;
->>   		pd->flags = area->flags;
-> 
-> And similar for the second hunk.
-> 
-> MfG,
-> 	Bernd
-> 
-
+Index: usb/drivers/usb/dwc3/dwc3-qcom.c
+===================================================================
+--- usb.orig/drivers/usb/dwc3/dwc3-qcom.c
++++ usb/drivers/usb/dwc3/dwc3-qcom.c
+@@ -614,6 +614,10 @@ static int dwc3_qcom_acpi_register_core(
+ 		qcom->acpi_pdata->dwc3_core_base_size;
+ 
+ 	irq = platform_get_irq(pdev_irq, 0);
++	if (irq < 0) {
++		ret = irq;
++		goto out;
++	}
+ 	child_res[1].flags = IORESOURCE_IRQ;
+ 	child_res[1].start = child_res[1].end = irq;
+ 
