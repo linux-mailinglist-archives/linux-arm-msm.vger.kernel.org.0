@@ -2,106 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EA1A73E3985
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Aug 2021 09:54:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3A7523E3A1F
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  8 Aug 2021 14:04:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231254AbhHHHyS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 8 Aug 2021 03:54:18 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:20416 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230301AbhHHHyS (ORCPT
+        id S229882AbhHHMEq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 8 Aug 2021 08:04:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60784 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231425AbhHHMEl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 8 Aug 2021 03:54:18 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1628409239; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=/89OpH7bCsRBSg7PGY3QGk97FxRsWj/9fRV0YEJiKD0=; b=tTfnXQ3EAwXydmtuJpDWcElBAF9ei7s8Lj4F+UGN1sYMefUmUvAi/ukoJdxjr17pKG21St6r
- 2JZXt94StToOhczi0NMgZOMEbTUf5HW9VZLdgKaLoheDTpVHh1fo6KXI5qoZiWyR9ScVwjiS
- CxxMUXAh+nVKcTBfOdG5hLWtfUs=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 610f8d86b14e7e2ecb7f884a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sun, 08 Aug 2021 07:53:42
- GMT
-Sender: luoj=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 57222C4323A; Sun,  8 Aug 2021 07:53:42 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from akronite-sh-dev02.qualcomm.com (unknown [180.166.53.21])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: luoj)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C7C76C433F1;
-        Sun,  8 Aug 2021 07:53:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C7C76C433F1
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=luoj@codeaurora.org
-From:   Luo Jie <luoj@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, davem@davemloft.net,
-        kuba@kernel.org, robh+dt@kernel.org, robert.marko@sartura.hr
-Cc:     linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sricharan@codeaurora.org, Luo Jie <luoj@codeaurora.org>
-Subject: [PATCH] dt-bindings: net: Add the properties for ipq4019 MDIO
-Date:   Sun,  8 Aug 2021 15:53:28 +0800
-Message-Id: <20210808075328.30961-1-luoj@codeaurora.org>
-X-Mailer: git-send-email 2.17.1
+        Sun, 8 Aug 2021 08:04:41 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 095B2C061760
+        for <linux-arm-msm@vger.kernel.org>; Sun,  8 Aug 2021 05:04:20 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id w13-20020a17090aea0db029017897a5f7bcso1558062pjy.5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 08 Aug 2021 05:04:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=DzOUOaS540Cron5XlLhz1i69/y58EIYipvvUh9fco7I=;
+        b=ydBKzvhbo8Zunvu0ScJ1TBFgq+3iiG8fbjKF+gXXK3BfDi13tfU3H+XdwYGxKuavBW
+         z9Qzx+JCsLeVLWoK2AZ7pOkopIn+Bqlke4bcd2/z07t52RkRF4fDliiTdFH8gth4Zyco
+         EMXXzqP6R09M9QIeiXEtT0kci+WJE4XOOCVMfhs9OKpAUqYO/wq2LUyyqJNwytGfYUtq
+         lDfdXkciTk2m2f7mE0AsAysFr/mY8/W9wIbsmO1LCwDiks3yJb4VnRXNGrDvOkqaKHhc
+         kjzQ5wGo/IVk8vwoBKiRLDa4H/NQF8s7Mfo4y1V2sAYy7xfQYinMfswpFXRCwm/M2G6J
+         RHdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=DzOUOaS540Cron5XlLhz1i69/y58EIYipvvUh9fco7I=;
+        b=m6ggucTc9JedrUxOqAKD1h6H3C1DeM1tiCW145TMGx8TdW96HRF7y6S14WfxUVoFoH
+         hO3k6yz9lqtFXLqpqhwzciPJv+DciDG/D5wEjrcoPjeTR8G0cxYJtK68e70k/UuYPi9C
+         om6FyjZzJWUjWkBnc46ThLVGesx4V1HKd0JvBltXDcfrnHULABaYI2D3LM3SB1zeRxRF
+         f+3XIbdUzJN9UDY2pAxZ8XwOjwKa8bXO0gOtK4iuwu9vFMzAll8yYbu8PRfUWhC0HR/J
+         wptoHieqxYGf1UNokwreWseP6kv9NOAqmJhpdaFAQAZwN3twLmfDIdLYFMe3671x87D3
+         dwfQ==
+X-Gm-Message-State: AOAM5320YDGdIumePwDqWvwzo7ADAn6NiLU3aQEfuw2hpRi2wLZs48Hn
+        C3yv9PCtRs7OoMbu8esEg78F+Q==
+X-Google-Smtp-Source: ABdhPJwc2ghN3JZOLInzhYcoPLdSwuBpmKo4THl4e7PriYyB3yqvcNXd+CJwhsSPA6v8s/TJrM7Vzw==
+X-Received: by 2002:a17:90a:4812:: with SMTP id a18mr30565965pjh.40.1628424259593;
+        Sun, 08 Aug 2021 05:04:19 -0700 (PDT)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id u190sm17253360pfb.95.2021.08.08.05.04.17
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Sun, 08 Aug 2021 05:04:19 -0700 (PDT)
+Date:   Sun, 8 Aug 2021 20:04:13 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: display: panel: Add Truly NT35521 panel
+ support
+Message-ID: <20210808120412.GA6795@dragon>
+References: <20210804081352.30595-1-shawn.guo@linaro.org>
+ <20210804081352.30595-2-shawn.guo@linaro.org>
+ <YQq6ascrSCtErWrf@ravnborg.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YQq6ascrSCtErWrf@ravnborg.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The new added properties resource "reg" is for configuring
-ethernet LDO in the IPQ5018 chipset, the property "clocks"
-is for configuring the MDIO clock source frequency.
+On Wed, Aug 04, 2021 at 06:03:54PM +0200, Sam Ravnborg wrote:
+> Hi Shawn,
+> 
+> On Wed, Aug 04, 2021 at 04:13:51PM +0800, Shawn Guo wrote:
+> > The Truly NT35521 is a 5.24" 1280x720 DSI panel, and the backlight is
+> > managed through DSI link.
+> > 
+> > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> 
+> Please consider adding an optional port node, so we can use this panels
+> in a setup using a graph.
 
-This patch depends on the following patch:
-Commit 2b8951cb4670 ("net: mdio: Add the reset function for IPQ MDIO
-driver")
+Sure, will do in v2.
 
-Signed-off-by: Luo Jie <luoj@codeaurora.org>
----
- .../devicetree/bindings/net/qcom,ipq4019-mdio.yaml | 14 ++++++++++++--
- 1 file changed, 12 insertions(+), 2 deletions(-)
+> A simple port: true would do the trick.
+> I am aware that it may not be used today, this is a preparation for
+> potential future use.
+> 
+> With this fixed,
+> Reviewed-by: Sam Ravnborg <sam@ravnborg.org>
 
-diff --git a/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml b/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
-index 0c973310ada0..8f53fa2a00f8 100644
---- a/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
-+++ b/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
-@@ -14,7 +14,9 @@ allOf:
- 
- properties:
-   compatible:
--    const: qcom,ipq4019-mdio
-+    enum:
-+      - qcom,ipq4019-mdio
-+      - qcom,ipq5018-mdio
- 
-   "#address-cells":
-     const: 1
-@@ -23,7 +25,15 @@ properties:
-     const: 0
- 
-   reg:
--    maxItems: 1
-+    minItems: 1
-+    maxItems: 2
-+    description:
-+      the first Address and length of the register set for the MDIO controller.
-+      the optional second Address and length of the register for ethernet LDO.
-+
-+  clocks:
-+    items:
-+      - description: MDIO clock
- 
- required:
-   - compatible
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Thanks, Sam!
 
+Shawn
