@@ -2,233 +2,165 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ABC653E47F4
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Aug 2021 16:52:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6800C3E47FA
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Aug 2021 16:52:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233366AbhHIOxF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Aug 2021 10:53:05 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:10457 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230490AbhHIOxE (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Aug 2021 10:53:04 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1628520764; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=84DInYak3ob6ws+4P8+9QbEz8S5I95euQDi0WGUvz1I=; b=Fg2rOyiWOqpIQnMG7Ld8VQvyVDGExs60H7vyxoC6WLFsN53DCqo/8RIKypvjVWpfdidaXyK7
- pvVluB4WwZ1pXiRT9D8sVkMRxgNdnHCqphGjy4TOd9jr86hxYFzktAMVFe5YkyAAhS8Y1lYj
- zk+WeavMeUP/i3OQJiwz/yv+JGk=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 6111411a76c3a9a17283506c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 09 Aug 2021 14:52:10
- GMT
-Sender: akhilpo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5E9F5C433D3; Mon,  9 Aug 2021 14:52:09 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.105] (unknown [59.89.230.160])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3B3AFC4338A;
-        Mon,  9 Aug 2021 14:52:01 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 3B3AFC4338A
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=akhilpo@codeaurora.org
-Subject: Re: [PATCH] drm/msm: Disable frequency clamping on a630
-To:     Rob Clark <robdclark@gmail.com>,
-        Caleb Connolly <caleb.connolly@linaro.org>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>
-References: <20210729183942.2839925-1-robdclark@gmail.com>
- <1a38a590-a64e-58ef-1bbf-0ae49c004d05@linaro.org>
- <CAF6AEGs5dzA7kfO89Uqbh3XmorXoEa=fpW+unk5_oaihHm479Q@mail.gmail.com>
- <e2cebf65-012d-f818-8202-eb511c996e28@linaro.org>
- <CAF6AEGs11aYnkL30kp79pMqLTg3_4otFwG2Oc890Of2ndLbELw@mail.gmail.com>
- <b7334a1a-c4ad-da90-03b4-0d19e1811b13@linaro.org>
- <CAF6AEGv0WWB3Z1hmXf8vxm1_-d7fsNBRcaQF35aE2JXcJn8-cA@mail.gmail.com>
- <8aa590be-6a9f-9343-e897-18e86ea48202@linaro.org>
- <CAF6AEGtd_5jKhixp6h+NnN8-aqjBHTLopRozASE73oT3rfnFHA@mail.gmail.com>
-From:   Akhil P Oommen <akhilpo@codeaurora.org>
-Message-ID: <6eefedb2-9e59-56d2-7703-2faf6cb0ca3a@codeaurora.org>
-Date:   Mon, 9 Aug 2021 20:21:59 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        id S234075AbhHIOxM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Aug 2021 10:53:12 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39424 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233926AbhHIOxL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 9 Aug 2021 10:53:11 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 6543D610CF;
+        Mon,  9 Aug 2021 14:52:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1628520770;
+        bh=Pxvauf7CFHRqwgrPJcBCTzOuC/lUcd4Kz0wvLQ2dWzw=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=k3WUKO9V06mZ0vQ4uCa2lAOUl3YN47JaNN2QCJjIyypAzfPv9JEIECoBjibPRMAls
+         rDKmyyc2n8fED+sdSZ8M5Y6RHWFWOaplP624T/71Aj5CBc59757HNCHYoMCJDiOFdW
+         sx8lqmPZfH9wWQPAkgaYgKnNfq54QpA03qYacOyIVk/oQxdhKT2XHCm4KwMUWYWGHq
+         yJzMD7yYA674d5zvVCMXYMq9mrKDy6pBQi6ysLN+fNwb/Lhd4rW4+j6zRanFgZgBNF
+         JH3Rt9kosR3e07Za60Rdse+IwPPMoWepCqIU+RZzbs8DDNHEIl8jn4kb0T1LhYvn9d
+         q6W6LAtgN8XNw==
+Received: by mail-ed1-f45.google.com with SMTP id n12so1158090edx.8;
+        Mon, 09 Aug 2021 07:52:50 -0700 (PDT)
+X-Gm-Message-State: AOAM530FWLv4HfElgxKYAMLEiyz7uW3cUvdmr3wH6QEoeJ7WBICPQlDz
+        P9v7Xcep7irzWmT1TB8pT0pwNdZedvVx5dZ97Q==
+X-Google-Smtp-Source: ABdhPJzc6XZ8s9ydxQHfxUS1CfauBiPrkQyjudkgpPtRe58+tK6GJ3YbxcrQpiqucK1Zl64RWkT3x4DLs+goMJdOtns=
+X-Received: by 2002:a05:6402:291d:: with SMTP id ee29mr30809324edb.289.1628520768969;
+ Mon, 09 Aug 2021 07:52:48 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAF6AEGtd_5jKhixp6h+NnN8-aqjBHTLopRozASE73oT3rfnFHA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20200821035420.380495-1-robh@kernel.org> <20200821035420.380495-4-robh@kernel.org>
+ <68e3adfb-a79d-3b70-87ed-2e5e1bf7fc93@nvidia.com>
+In-Reply-To: <68e3adfb-a79d-3b70-87ed-2e5e1bf7fc93@nvidia.com>
+From:   Rob Herring <robh@kernel.org>
+Date:   Mon, 9 Aug 2021 08:52:37 -0600
+X-Gmail-Original-Message-ID: <CAL_JsqJZ-BzxnEPeqirrd=yZFSWejP4PBYDgLNEn-kubFzvXCA@mail.gmail.com>
+Message-ID: <CAL_JsqJZ-BzxnEPeqirrd=yZFSWejP4PBYDgLNEn-kubFzvXCA@mail.gmail.com>
+Subject: Re: [PATCH v2 03/40] PCI: dwc: Allow overriding bridge pci_ops
+To:     Vidya Sagar <vidyas@nvidia.com>
+Cc:     Bjorn Helgaas <bhelgaas@google.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        PCI <linux-pci@vger.kernel.org>, Andy Gross <agross@kernel.org>,
+        Binghui Wang <wangbinghui@hisilicon.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Dilip Kota <eswara.kota@linux.intel.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Jesper Nilsson <jesper.nilsson@axis.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Jonathan Chocron <jonnyc@amazon.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Kukjin Kim <kgene@kernel.org>,
+        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Masahiro Yamada <yamada.masahiro@socionext.com>,
+        Murali Karicheri <m-karicheri2@ti.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Pratyush Anand <pratyush.anand@gmail.com>,
+        Richard Zhu <hongxing.zhu@nxp.com>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Xiaowei Song <songxiaowei@hisilicon.com>,
+        Yue Wang <yue.wang@amlogic.com>, Marc Zyngier <maz@kernel.org>,
+        "open list:ARM/Amlogic Meson..." <linux-amlogic@lists.infradead.org>,
+        linux-arm-kernel@axis.com,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-omap <linux-omap@vger.kernel.org>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
+        linux-tegra <linux-tegra@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8/8/2021 10:22 PM, Rob Clark wrote:
-> On Sun, Aug 8, 2021 at 7:33 AM Caleb Connolly <caleb.connolly@linaro.org> wrote:
->>
->>
->>
->> On 07/08/2021 21:04, Rob Clark wrote:
->>> On Sat, Aug 7, 2021 at 12:21 PM Caleb Connolly
->>> <caleb.connolly@linaro.org> wrote:
->>>>
->>>> Hi Rob, Akhil,
->>>>
->>>> On 29/07/2021 21:53, Rob Clark wrote:
->>>>> On Thu, Jul 29, 2021 at 1:28 PM Caleb Connolly
->>>>> <caleb.connolly@linaro.org> wrote:
->>>>>>
->>>>>>
->>>>>>
->>>>>> On 29/07/2021 21:24, Rob Clark wrote:
->>>>>>> On Thu, Jul 29, 2021 at 1:06 PM Caleb Connolly
->>>>>>> <caleb.connolly@linaro.org> wrote:
->>>>>>>>
->>>>>>>> Hi Rob,
->>>>>>>>
->>>>>>>> I've done some more testing! It looks like before that patch ("drm/msm: Devfreq tuning") the GPU would never get above
->>>>>>>> the second frequency in the OPP table (342MHz) (at least, not in glxgears). With the patch applied it would more
->>>>>>>> aggressively jump up to the max frequency which seems to be unstable at the default regulator voltages.
->>>>>>>
->>>>>>> *ohh*, yeah, ok, that would explain it
->>>>>>>
->>>>>>>> Hacking the pm8005 s1 regulator (which provides VDD_GFX) up to 0.988v (instead of the stock 0.516v) makes the GPU stable
->>>>>>>> at the higher frequencies.
->>>>>>>>
->>>>>>>> Applying this patch reverts the behaviour, and the GPU never goes above 342MHz in glxgears, losing ~30% performance in
->>>>>>>> glxgear.
->>>>>>>>
->>>>>>>> I think (?) that enabling CPR support would be the proper solution to this - that would ensure that the regulators run
->>>>>>>> at the voltage the hardware needs to be stable.
->>>>>>>>
->>>>>>>> Is hacking the voltage higher (although ideally not quite that high) an acceptable short term solution until we have
->>>>>>>> CPR? Or would it be safer to just not make use of the higher frequencies on a630 for now?
->>>>>>>>
->>>>>>>
->>>>>>> tbh, I'm not sure about the regulator stuff and CPR.. Bjorn is already
->>>>>>> on CC and I added sboyd, maybe one of them knows better.
->>>>>>>
->>>>>>> In the short term, removing the higher problematic OPPs from dts might
->>>>>>> be a better option than this patch (which I'm dropping), since there
->>>>>>> is nothing stopping other workloads from hitting higher OPPs.
->>>>>> Oh yeah that sounds like a more sensible workaround than mine .
->>>>>>>
->>>>>>> I'm slightly curious why I didn't have problems at higher OPPs on my
->>>>>>> c630 laptop (sdm850)
->>>>>> Perhaps you won the sillicon lottery - iirc sdm850 is binned for higher clocks as is out of the factory.
->>>>>>
->>>>>> Would it be best to drop the OPPs for all devices? Or just those affected? I guess it's possible another c630 might
->>>>>> crash where yours doesn't?
->>>>>
->>>>> I've not heard any reports of similar issues from the handful of other
->>>>> folks with c630's on #aarch64-laptops.. but I can't really say if that
->>>>> is luck or not.
->>>> It looks like this affects at least the OnePlus 6 and PocoPhone F1, I've done some more poking and the following diff
->>>> seems to fix the stability issues completely, it seems the delay is required to let the update propagate.
->>>>
->>>> This doesn't feel like the right fix, but hopefully it's enough to come up with a better solution than disabling the new
->>>> devfreq behaviour on a630.
->>>>
->>>> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->>>> index d7cec7f0dde0..69e2a5e84dae 100644
->>>> --- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->>>> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
->>>> @@ -139,6 +139,10 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
->>>>                    return;
->>>>            }
->>>>
->>>> +       dev_pm_opp_set_opp(&gpu->pdev->dev, opp);
->>>> +
->>>> +       usleep_range(300, 500);
->>>> +
->>>
+On Sun, Aug 8, 2021 at 9:13 AM Vidya Sagar <vidyas@nvidia.com> wrote:
+>
+>
+>
+> On 8/21/2020 9:23 AM, Rob Herring wrote:
+> > In preparation to allow drivers to set their own root and child pci_ops
+> > instead of using the DWC specific config space ops, we need to make
+> > the pci_host_bridge pointer available and move setting the bridge->ops
+> > and bridge->child_ops pointer to before the .host_init() hook.
+> >
+> > Cc: Jingoo Han <jingoohan1@gmail.com>
+> > Cc: Gustavo Pimentel <gustavo.pimentel@synopsys.com>
+> > Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+> > Cc: Bjorn Helgaas <bhelgaas@google.com>
+> > Signed-off-by: Rob Herring <robh@kernel.org>
+> > ---
+> >   drivers/pci/controller/dwc/pcie-designware-host.c | 15 ++++++++++-----
+> >   drivers/pci/controller/dwc/pcie-designware.h      |  1 +
+> >   2 files changed, 11 insertions(+), 5 deletions(-)
+> >
+> > diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> > index 1d98554db009..b626cc7cd43a 100644
+> > --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> > +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> > @@ -344,6 +344,8 @@ int dw_pcie_host_init(struct pcie_port *pp)
+> >       if (!bridge)
+> >               return -ENOMEM;
+> >
+> > +     pp->bridge = bridge;
+> > +
+> >       /* Get the I/O and memory ranges from DT */
+> >       resource_list_for_each_entry(win, &bridge->windows) {
+> >               switch (resource_type(win->res)) {
+> > @@ -445,6 +447,10 @@ int dw_pcie_host_init(struct pcie_port *pp)
+> >               }
+> >       }
+> >
+> > +     /* Set default bus ops */
+> > +     bridge->ops = &dw_pcie_ops;
+> > +     bridge->child_ops = &dw_pcie_ops;
+> > +
+> >       if (pp->ops->host_init) {
+> >               ret = pp->ops->host_init(pp);
+> >               if (ret)
+> > @@ -452,7 +458,6 @@ int dw_pcie_host_init(struct pcie_port *pp)
+> >       }
+> >
+> >       bridge->sysdata = pp;
+> > -     bridge->ops = &dw_pcie_ops;
+> >
+> >       ret = pci_scan_root_bus_bridge(bridge);
+> >       if (ret)
+> > @@ -654,11 +659,11 @@ void dw_pcie_setup_rc(struct pcie_port *pp)
+> >       dw_pcie_writel_dbi(pci, PCI_COMMAND, val);
+> >
+> >       /*
+> > -      * If the platform provides ->rd_other_conf, it means the platform
+> > -      * uses its own address translation component rather than ATU, so
+> > -      * we should not program the ATU here.
+> > +      * If the platform provides its own child bus config accesses, it means
+> > +      * the platform uses its own address translation component rather than
+> > +      * ATU, so we should not program the ATU here.
+> It is possible that a platform can have its own translation for
+> configuration accesses and use DWC's ATU for memory/IO address
+> translations. IMHO, ATU setup for memory/IO address translations
+> shouldn't be skipped based on platform's '->rd_other_conf'
+> implementation. Ex:- A platform can implement configuration space access
+> through the ECAM mechanism yet choose to use ATU for memory/IO address
+> translations.
 
-I am a bit confused. We don't define a power domain for gpu in dt, 
-correct? Then what exactly set_opp do here? Do you think this usleep is 
-what is helping here somehow to mask the issue?
+A platform could, but none of them upstream do that. I'm all for doing
+ECAM setup (in the kernel) if possible. That could be in the DWC core
+with a feature flag the platform can set or something to enable it if
+we do that. It could be based on the config space size as well. I'm
+not sure what else determines whether ECAM can work besides having
+enough address space and at least 3 outbound iATU windows.
 
-I feel we should just leave the new dcvs feature (shall we call it NAP?) 
-disabled for a630 (and 10ms devfreq interval), until this is root caused.
-
->>> Hmm, this is going to be in the critical path on idle -> active
->>> transition (ie. think response time to user-input).. so we defn don't
->>> want to do this unconditionally..
->>>
->>> If I understand the problem, we just want to limit how far we jump the
->>> gpu freq in one go.. maybe deleting the lowest (and perhaps highest)
->>> OPP would accomplish that?  Could that be done in the board(s)'s
->>> toplevel dts files?
->> That would be a workaround, however I'd really like to avoid limiting performance as a solution if I can help it,
->> especially as the fix might just be "set the opp first, wait for it to apply, then set the core clock".
->>
->> Is there a sensible way to get a callback from the opp notify chain? Or from rpmh directly? Or is this solution really
->> not the right way to go?
-> 
-> It does seem a bit strange to me that we are telling GMU to change
-> freq before calling dev_pm_opp_set_opp()..  if dev_pm_opp_set_opp() is
-> increasing voltage, it seems like you'd want to do that *before*
-> increasing freq (but reverse the order when decreasing freq).. But I'm
-> not an expert on the ways of the GMU..  maybe Akhil or Jordan knows
-> better how this is supposed to work.
-
-For legacy gmu, we trigger DCVS using DCVS OOB which comes later in this 
-function. But the order between regulator and clock which you mentioned 
-is correct.
-
-> 
-> But the delay seems like papering something over, and I'm trying to go
-> in the other direction and reduce latency between user input and
-> pageflip..
-> 
-> BR,
-> -R
-> 
->>>
->>> BR,
->>> -R
->>>
->>>>            gmu_write(gmu, REG_A6XX_GMU_DCVS_ACK_OPTION, 0);
->>>>
->>>>            gmu_write(gmu, REG_A6XX_GMU_DCVS_PERF_SETTING,
->>>> @@ -158,7 +162,6 @@ void a6xx_gmu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
->>>>            if (ret)
->>>>                    dev_err(gmu->dev, "GMU set GPU frequency error: %d\n", ret);
->>>>
->>>> -       dev_pm_opp_set_opp(&gpu->pdev->dev, opp);
->>>>            pm_runtime_put(gmu->dev);
->>>>     }
->>>>>
->>>>> Maybe just remove it for affected devices?  But I'll defer to Bjorn.
->>>>>
->>>>> BR,
->>>>> -R
->>>>>
->>>>
->>>> --
->>>> Kind Regards,
->>>> Caleb (they/them)
->>
->> --
->> Kind Regards,
->> Caleb (they/them)
-
+Rob
