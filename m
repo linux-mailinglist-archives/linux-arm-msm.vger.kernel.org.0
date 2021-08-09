@@ -2,165 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6800C3E47FA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Aug 2021 16:52:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D0463E4830
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  9 Aug 2021 16:56:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234075AbhHIOxM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Aug 2021 10:53:12 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39424 "EHLO mail.kernel.org"
+        id S234665AbhHIO5S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Aug 2021 10:57:18 -0400
+Received: from mail.kernel.org ([198.145.29.99]:49202 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233926AbhHIOxL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Aug 2021 10:53:11 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 6543D610CF;
-        Mon,  9 Aug 2021 14:52:50 +0000 (UTC)
+        id S234588AbhHIO5S (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 9 Aug 2021 10:57:18 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 323F660E97;
+        Mon,  9 Aug 2021 14:56:55 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1628520770;
-        bh=Pxvauf7CFHRqwgrPJcBCTzOuC/lUcd4Kz0wvLQ2dWzw=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=k3WUKO9V06mZ0vQ4uCa2lAOUl3YN47JaNN2QCJjIyypAzfPv9JEIECoBjibPRMAls
-         rDKmyyc2n8fED+sdSZ8M5Y6RHWFWOaplP624T/71Aj5CBc59757HNCHYoMCJDiOFdW
-         sx8lqmPZfH9wWQPAkgaYgKnNfq54QpA03qYacOyIVk/oQxdhKT2XHCm4KwMUWYWGHq
-         yJzMD7yYA674d5zvVCMXYMq9mrKDy6pBQi6ysLN+fNwb/Lhd4rW4+j6zRanFgZgBNF
-         JH3Rt9kosR3e07Za60Rdse+IwPPMoWepCqIU+RZzbs8DDNHEIl8jn4kb0T1LhYvn9d
-         q6W6LAtgN8XNw==
-Received: by mail-ed1-f45.google.com with SMTP id n12so1158090edx.8;
-        Mon, 09 Aug 2021 07:52:50 -0700 (PDT)
-X-Gm-Message-State: AOAM530FWLv4HfElgxKYAMLEiyz7uW3cUvdmr3wH6QEoeJ7WBICPQlDz
-        P9v7Xcep7irzWmT1TB8pT0pwNdZedvVx5dZ97Q==
-X-Google-Smtp-Source: ABdhPJzc6XZ8s9ydxQHfxUS1CfauBiPrkQyjudkgpPtRe58+tK6GJ3YbxcrQpiqucK1Zl64RWkT3x4DLs+goMJdOtns=
-X-Received: by 2002:a05:6402:291d:: with SMTP id ee29mr30809324edb.289.1628520768969;
- Mon, 09 Aug 2021 07:52:48 -0700 (PDT)
-MIME-Version: 1.0
-References: <20200821035420.380495-1-robh@kernel.org> <20200821035420.380495-4-robh@kernel.org>
- <68e3adfb-a79d-3b70-87ed-2e5e1bf7fc93@nvidia.com>
-In-Reply-To: <68e3adfb-a79d-3b70-87ed-2e5e1bf7fc93@nvidia.com>
-From:   Rob Herring <robh@kernel.org>
-Date:   Mon, 9 Aug 2021 08:52:37 -0600
-X-Gmail-Original-Message-ID: <CAL_JsqJZ-BzxnEPeqirrd=yZFSWejP4PBYDgLNEn-kubFzvXCA@mail.gmail.com>
-Message-ID: <CAL_JsqJZ-BzxnEPeqirrd=yZFSWejP4PBYDgLNEn-kubFzvXCA@mail.gmail.com>
-Subject: Re: [PATCH v2 03/40] PCI: dwc: Allow overriding bridge pci_ops
-To:     Vidya Sagar <vidyas@nvidia.com>
-Cc:     Bjorn Helgaas <bhelgaas@google.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        PCI <linux-pci@vger.kernel.org>, Andy Gross <agross@kernel.org>,
-        Binghui Wang <wangbinghui@hisilicon.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dilip Kota <eswara.kota@linux.intel.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Jesper Nilsson <jesper.nilsson@axis.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Jonathan Chocron <jonnyc@amazon.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Kukjin Kim <kgene@kernel.org>,
-        Kunihiko Hayashi <hayashi.kunihiko@socionext.com>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Masahiro Yamada <yamada.masahiro@socionext.com>,
-        Murali Karicheri <m-karicheri2@ti.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Pratyush Anand <pratyush.anand@gmail.com>,
-        Richard Zhu <hongxing.zhu@nxp.com>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Xiaowei Song <songxiaowei@hisilicon.com>,
-        Yue Wang <yue.wang@amlogic.com>, Marc Zyngier <maz@kernel.org>,
-        "open list:ARM/Amlogic Meson..." <linux-amlogic@lists.infradead.org>,
-        linux-arm-kernel@axis.com,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        s=k20201202; t=1628521017;
+        bh=G323JprWZzOyl+vO9ovexKueJS34erdid0unY4KZmOs=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=UYrRYUaUhBDq2QIa5NgjJuV38S7Y8s9Rh2CeLKEua2N95BBFmdUQnRYdttvlrSDQl
+         7by27EMvn+Af78JXPh2se0/F5KkvX4wRF0nU0QgdVCGm6EAU57k6jNTf4DEAGw08p9
+         Y35dtqPgcPScv2V0ZBO2FhT3clbJJamV9JclVpU9fzScUn2J+2OW1ET1l0kwadT/ZZ
+         pnBylF29rtzo2KdCJzlm666k24/ezFuyCZRvSUfeUOW5KPQIFXyrm+X/MzMdgnoik9
+         uE5Ud3DTK0iQELvZdsJRgTslHOIun2GlLASKiodbYQ+lm1sXG5uA2ZVrSQ+ZOi7Lwu
+         dNrmlZX44yeZA==
+Date:   Mon, 9 Aug 2021 15:56:51 +0100
+From:   Will Deacon <will@kernel.org>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        "Isaac J. Manjarres" <isaacm@codeaurora.org>,
+        David Airlie <airlied@linux.ie>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
+        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Sean Paul <sean@poorly.run>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Kristian H Kristensen <hoegsberg@google.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-omap <linux-omap@vger.kernel.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        linux-tegra <linux-tegra@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        freedreno <freedreno@lists.freedesktop.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>
+Subject: Re: [Freedreno] [PATCH 0/3] iommu/drm/msm: Allow non-coherent
+ masters to use system cache
+Message-ID: <20210809145651.GC1458@willie-the-truck>
+References: <cover.1610372717.git.saiprakash.ranjan@codeaurora.org>
+ <20210728140052.GB22887@mms-0441>
+ <8b2742c8891abe4fec3664730717a089@codeaurora.org>
+ <20210802105544.GA27657@willie-the-truck>
+ <CAF6AEGvtpFu8st=ZFNoKjP9YsAenciLxL1zMFi_iqMCvdby73w@mail.gmail.com>
+ <20210802151409.GE28735@willie-the-truck>
+ <CAF6AEGtzvyEUm0Fc8QT5t9KNK7i0FbFyi7zDM2_PMCzZBp7qbw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGtzvyEUm0Fc8QT5t9KNK7i0FbFyi7zDM2_PMCzZBp7qbw@mail.gmail.com>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Aug 8, 2021 at 9:13 AM Vidya Sagar <vidyas@nvidia.com> wrote:
->
->
->
-> On 8/21/2020 9:23 AM, Rob Herring wrote:
-> > In preparation to allow drivers to set their own root and child pci_ops
-> > instead of using the DWC specific config space ops, we need to make
-> > the pci_host_bridge pointer available and move setting the bridge->ops
-> > and bridge->child_ops pointer to before the .host_init() hook.
+On Mon, Aug 02, 2021 at 06:36:04PM -0700, Rob Clark wrote:
+> On Mon, Aug 2, 2021 at 8:14 AM Will Deacon <will@kernel.org> wrote:
 > >
-> > Cc: Jingoo Han <jingoohan1@gmail.com>
-> > Cc: Gustavo Pimentel <gustavo.pimentel@synopsys.com>
-> > Cc: Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-> > Cc: Bjorn Helgaas <bhelgaas@google.com>
-> > Signed-off-by: Rob Herring <robh@kernel.org>
-> > ---
-> >   drivers/pci/controller/dwc/pcie-designware-host.c | 15 ++++++++++-----
-> >   drivers/pci/controller/dwc/pcie-designware.h      |  1 +
-> >   2 files changed, 11 insertions(+), 5 deletions(-)
+> > On Mon, Aug 02, 2021 at 08:08:07AM -0700, Rob Clark wrote:
+> > > On Mon, Aug 2, 2021 at 3:55 AM Will Deacon <will@kernel.org> wrote:
+> > > >
+> > > > On Thu, Jul 29, 2021 at 10:08:22AM +0530, Sai Prakash Ranjan wrote:
+> > > > > On 2021-07-28 19:30, Georgi Djakov wrote:
+> > > > > > On Mon, Jan 11, 2021 at 07:45:02PM +0530, Sai Prakash Ranjan wrote:
+> > > > > > > commit ecd7274fb4cd ("iommu: Remove unused IOMMU_SYS_CACHE_ONLY flag")
+> > > > > > > removed unused IOMMU_SYS_CACHE_ONLY prot flag and along with it went
+> > > > > > > the memory type setting required for the non-coherent masters to use
+> > > > > > > system cache. Now that system cache support for GPU is added, we will
+> > > > > > > need to set the right PTE attribute for GPU buffers to be sys cached.
+> > > > > > > Without this, the system cache lines are not allocated for GPU.
+> > > > > > >
+> > > > > > > So the patches in this series introduces a new prot flag IOMMU_LLC,
+> > > > > > > renames IO_PGTABLE_QUIRK_ARM_OUTER_WBWA to IO_PGTABLE_QUIRK_PTW_LLC
+> > > > > > > and makes GPU the user of this protection flag.
+> > > > > >
+> > > > > > Thank you for the patchset! Are you planning to refresh it, as it does
+> > > > > > not apply anymore?
+> > > > > >
+> > > > >
+> > > > > I was waiting on Will's reply [1]. If there are no changes needed, then
+> > > > > I can repost the patch.
+> > > >
+> > > > I still think you need to handle the mismatched alias, no? You're adding
+> > > > a new memory type to the SMMU which doesn't exist on the CPU side. That
+> > > > can't be right.
+> > > >
+> > >
+> > > Just curious, and maybe this is a dumb question, but what is your
+> > > concern about mismatched aliases?  I mean the cache hierarchy on the
+> > > GPU device side (anything beyond the LLC) is pretty different and
+> > > doesn't really care about the smmu pgtable attributes..
 > >
-> > diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
-> > index 1d98554db009..b626cc7cd43a 100644
-> > --- a/drivers/pci/controller/dwc/pcie-designware-host.c
-> > +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
-> > @@ -344,6 +344,8 @@ int dw_pcie_host_init(struct pcie_port *pp)
-> >       if (!bridge)
-> >               return -ENOMEM;
-> >
-> > +     pp->bridge = bridge;
-> > +
-> >       /* Get the I/O and memory ranges from DT */
-> >       resource_list_for_each_entry(win, &bridge->windows) {
-> >               switch (resource_type(win->res)) {
-> > @@ -445,6 +447,10 @@ int dw_pcie_host_init(struct pcie_port *pp)
-> >               }
-> >       }
-> >
-> > +     /* Set default bus ops */
-> > +     bridge->ops = &dw_pcie_ops;
-> > +     bridge->child_ops = &dw_pcie_ops;
-> > +
-> >       if (pp->ops->host_init) {
-> >               ret = pp->ops->host_init(pp);
-> >               if (ret)
-> > @@ -452,7 +458,6 @@ int dw_pcie_host_init(struct pcie_port *pp)
-> >       }
-> >
-> >       bridge->sysdata = pp;
-> > -     bridge->ops = &dw_pcie_ops;
-> >
-> >       ret = pci_scan_root_bus_bridge(bridge);
-> >       if (ret)
-> > @@ -654,11 +659,11 @@ void dw_pcie_setup_rc(struct pcie_port *pp)
-> >       dw_pcie_writel_dbi(pci, PCI_COMMAND, val);
-> >
-> >       /*
-> > -      * If the platform provides ->rd_other_conf, it means the platform
-> > -      * uses its own address translation component rather than ATU, so
-> > -      * we should not program the ATU here.
-> > +      * If the platform provides its own child bus config accesses, it means
-> > +      * the platform uses its own address translation component rather than
-> > +      * ATU, so we should not program the ATU here.
-> It is possible that a platform can have its own translation for
-> configuration accesses and use DWC's ATU for memory/IO address
-> translations. IMHO, ATU setup for memory/IO address translations
-> shouldn't be skipped based on platform's '->rd_other_conf'
-> implementation. Ex:- A platform can implement configuration space access
-> through the ECAM mechanism yet choose to use ATU for memory/IO address
-> translations.
+> > If the CPU accesses a shared buffer with different attributes to those which
+> > the device is using then you fall into the "mismatched memory attributes"
+> > part of the Arm architecture. It's reasonably unforgiving (you should go and
+> > read it) and in some cases can apply to speculative accesses as well, but
+> > the end result is typically loss of coherency.
+> 
+> Ok, I might have a few other sections to read first to decipher the
+> terminology..
+> 
+> But my understanding of LLC is that it looks just like system memory
+> to the CPU and GPU (I think that would make it "the point of
+> coherence" between the GPU and CPU?)  If that is true, shouldn't it be
+> invisible from the point of view of different CPU mapping options?
 
-A platform could, but none of them upstream do that. I'm all for doing
-ECAM setup (in the kernel) if possible. That could be in the DWC core
-with a feature flag the platform can set or something to enable it if
-we do that. It could be based on the config space size as well. I'm
-not sure what else determines whether ECAM can work besides having
-enough address space and at least 3 outbound iATU windows.
+You could certainly build a system where mismatched attributes don't cause
+loss of coherence, but as it's not guaranteed by the architecture and the
+changes proposed here affect APIs which are exposed across SoCs, then I
+don't think it helps much.
 
-Rob
+Will
