@@ -2,107 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D8D73E546E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Aug 2021 09:37:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C2613E5688
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Aug 2021 11:16:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235999AbhHJHht (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Aug 2021 03:37:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51516 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236160AbhHJHhs (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Aug 2021 03:37:48 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A117C06179A
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 00:37:26 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id bo18so9807100pjb.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 00:37:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=L1wUGUmm+RM+WFeAm1m0YDv4o3hsF8ZYP495ftWlyX8=;
-        b=fk5tOWy2yIUEWF2V3Hv2HPVQoMpXxyOfrZoZs5z9PCvwXNRxlF3y2dGoDt0fdKZps4
-         IbMw4UJUArG/kcdJj/hQW+gC6Fjc7Uy7Q7eXxGsHSKRS58gzOIq3mtjk+r1BP8frQ+hj
-         XeJESYYtha+eG0XHEMuLWJVYKlLqw2C6DH3U0NEX8+CzlLWeqGbA89xPaGxK3NP6FPal
-         VRk9tRzQSZNXBmH7YfJnPt25AUAe3B9Rnk41CoEwyyYTyz1QPVbLxvft0t1W/HyfLMMO
-         5SOEcRbNNj2U4+4IkR860KlCkU06v04ruyoOd6jqP7hmoIYdvDN1z6+rgLomaQPLmzGq
-         SDBw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=L1wUGUmm+RM+WFeAm1m0YDv4o3hsF8ZYP495ftWlyX8=;
-        b=cqmMlcFlkTKivy2AxD5vmRpD56nUQRAIOI4+m1T2cggw//ncrw59UGOiOZxN20Jxu2
-         6jJeiUnJn2h+HMEFVyDTisWvkpf7MQ3F7xL2Xveb+su1MPZfb89Qt+YW49hZi3OHy5L8
-         vi4Gl841poen70MlkY7gnUGTUqniJ4K1w3XntOWvoL2Bce/E7aD6MmILpqnNaLBSX+hp
-         cbXyJ4GteJRyQfDB57z6vteq89rVVoB3M65pOqyIlP4mo/AmnwFa2jB2Xv0Lx1/94mKZ
-         7g5acyXr+/rga3IF4JWX/ehkkCgTlu/c9sUAuKKmch0adeG/KRXPDJNwW7zA5036rP4K
-         7qpg==
-X-Gm-Message-State: AOAM532yL5Nbs4Xoq9fBGkvqTlex732BdQYbu6aeA7ky2hARJcVBF3qT
-        4Ihn0zRKcxhnyC/Ut6IdOOvR9w==
-X-Google-Smtp-Source: ABdhPJy6odAoxRJWsRTHspaa3DWkY51nCBGS9TeOq5tf4FZvJblg2UxP5w6LQHDhzkx3BjexLyTSuQ==
-X-Received: by 2002:a17:902:e746:b029:12d:1cb0:9649 with SMTP id p6-20020a170902e746b029012d1cb09649mr9705017plf.21.1628581045913;
-        Tue, 10 Aug 2021 00:37:25 -0700 (PDT)
-Received: from localhost ([122.172.201.85])
-        by smtp.gmail.com with ESMTPSA id fh19sm1879612pjb.27.2021.08.10.00.37.25
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Aug 2021 00:37:25 -0700 (PDT)
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Rafael Wysocki <rjw@rjwysocki.net>,
-        Vincent Donnefort <vincent.donnefort@arm.com>,
-        lukasz.luba@arm.com, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     linux-pm@vger.kernel.org,
-        Vincent Guittot <vincent.guittot@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 6/8] cpufreq: qcom-cpufreq-hw: Use auto-registration for energy model
-Date:   Tue, 10 Aug 2021 13:06:53 +0530
-Message-Id: <0b0d533988c3a4318b9fdc5e10c857348e203132.1628579170.git.viresh.kumar@linaro.org>
-X-Mailer: git-send-email 2.31.1.272.g89b43f80a514
-In-Reply-To: <cover.1628579170.git.viresh.kumar@linaro.org>
-References: <cover.1628579170.git.viresh.kumar@linaro.org>
+        id S238759AbhHJJQs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Aug 2021 05:16:48 -0400
+Received: from mail.kernel.org ([198.145.29.99]:47934 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S238745AbhHJJQr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 10 Aug 2021 05:16:47 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id F3C166056B;
+        Tue, 10 Aug 2021 09:16:22 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1628586986;
+        bh=hG1PKIfUobySTRl3kToyKQWcPI+bWs/Llfdg4HtV8Lc=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=mOAHGE6mrYyzdYOiATqBh3ctWbADLleThoclue/CxW6EWM3taq8sQYiRgsVZlnr09
+         pTsO2mPLnhhPRbGIXVu+JQJ2eRglxQu799oybVa190XqsKer2qr7WDXFO6on/S0RdX
+         rcaqL3+aDwZeiOVHzyEQ/0bEATuepbIqh1CLsdxN/hNFhyRgjwfkEBZW+iEoIap9QV
+         Gx8IBDY7U01l8JCBcG53fyX1QSncT2DWzpjXp4GoKw3IIKzCKbj/Cy16Vee4V4RCDg
+         +Y0VAfWigUKKCWw/eJynPJN7yEgpHxV4zOqqDEZ+BI+3XY4Utiq060cAGEHVTTGNQv
+         PykOiqiyVk43A==
+Date:   Tue, 10 Aug 2021 10:16:19 +0100
+From:   Will Deacon <will@kernel.org>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        "Isaac J. Manjarres" <isaacm@codeaurora.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        David Airlie <airlied@linux.ie>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "list@263.net:IOMMU DRIVERS , Joerg Roedel <joro@8bytes.org>, " 
+        <iommu@lists.linux-foundation.org>,
+        Kristian H Kristensen <hoegsberg@google.com>,
+        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
+        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
+        <linux-arm-kernel@lists.infradead.org>,
+        Robin Murphy <robin.murphy@arm.com>
+Subject: Re: [Freedreno] [PATCH 0/3] iommu/drm/msm: Allow non-coherent
+ masters to use system cache
+Message-ID: <20210810091619.GA2494@willie-the-truck>
+References: <20210802105544.GA27657@willie-the-truck>
+ <CAF6AEGvtpFu8st=ZFNoKjP9YsAenciLxL1zMFi_iqMCvdby73w@mail.gmail.com>
+ <20210802151409.GE28735@willie-the-truck>
+ <CAF6AEGtzvyEUm0Fc8QT5t9KNK7i0FbFyi7zDM2_PMCzZBp7qbw@mail.gmail.com>
+ <20210809145651.GC1458@willie-the-truck>
+ <CAF6AEGsSUojA=V0n2iRWTCn++buqN=Eoxo0r3=+=PBu1O=H-AQ@mail.gmail.com>
+ <20210809170508.GB1589@willie-the-truck>
+ <CAF6AEGtmZ3LzAJdtnKDQDbEN-a6_JgdN-fZ96pkU3dZqkiW91g@mail.gmail.com>
+ <20210809174022.GA1840@willie-the-truck>
+ <76bfd0b4248148dfbf9d174ddcb4c2a2@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <76bfd0b4248148dfbf9d174ddcb4c2a2@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use the CPUFREQ_REGISTER_WITH_EM flag to allow cpufreq core to
-automatically register with the energy model.
+On Mon, Aug 09, 2021 at 11:17:40PM +0530, Sai Prakash Ranjan wrote:
+> On 2021-08-09 23:10, Will Deacon wrote:
+> > On Mon, Aug 09, 2021 at 10:18:21AM -0700, Rob Clark wrote:
+> > > On Mon, Aug 9, 2021 at 10:05 AM Will Deacon <will@kernel.org> wrote:
+> > > > On Mon, Aug 09, 2021 at 09:57:08AM -0700, Rob Clark wrote:
+> > > > > But I suppose we could call it instead IOMMU_QCOM_LLC or something
+> > > > > like that to make it more clear that it is not necessarily something
+> > > > > that would work with a different outer level cache implementation?
+> > > >
+> > > > ... or we could just deal with the problem so that other people can reuse
+> > > > the code. I haven't really understood the reluctance to solve this properly.
+> > > >
+> > > > Am I missing some reason this isn't solvable?
+> > > 
+> > > Oh, was there another way to solve it (other than foregoing setting
+> > > INC_OCACHE in the pgtables)?  Maybe I misunderstood, is there a
+> > > corresponding setting on the MMU pgtables side of things?
+> > 
+> > Right -- we just need to program the CPU's MMU with the matching memory
+> > attributes! It's a bit more fiddly if you're just using ioremap_wc()
+> > though, as it's usually the DMA API which handles the attributes under
+> > the
+> > hood.
+> > 
+> > Anyway, sorry, I should've said that explicitly earlier on. We've done
+> > this
+> > sort of thing in the Android tree so I assumed Sai knew what needed to
+> > be
+> > done and then I didn't think to explain to you :(
+> > 
+> 
+> Right I was aware of that but even in the android tree there is no user :)
 
-This allows removal of boiler plate code from the driver and fixes the
-unregistration part as well.
+I'm assuming there are vendor modules using it there, otherwise we wouldn't
+have been asked to put it in. Since you work at Qualcomm, maybe you could
+talk to your colleagues (Isaac and Patrick) directly?
 
-Signed-off-by: Viresh Kumar <viresh.kumar@linaro.org>
----
- drivers/cpufreq/qcom-cpufreq-hw.c | 5 ++---
- 1 file changed, 2 insertions(+), 3 deletions(-)
+> I think we can't have a new memory type without any user right in upstream
+> like android tree?
 
-diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-index f86859bf76f1..221433c6dcb0 100644
---- a/drivers/cpufreq/qcom-cpufreq-hw.c
-+++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-@@ -362,8 +362,6 @@ static int qcom_cpufreq_hw_cpu_init(struct cpufreq_policy *policy)
- 		goto error;
- 	}
- 
--	dev_pm_opp_of_register_em(cpu_dev, policy->cpus);
--
- 	if (policy_has_boost_freq(policy)) {
- 		ret = cpufreq_enable_boost_support();
- 		if (ret)
-@@ -406,7 +404,8 @@ static struct freq_attr *qcom_cpufreq_hw_attr[] = {
- static struct cpufreq_driver cpufreq_qcom_hw_driver = {
- 	.flags		= CPUFREQ_NEED_INITIAL_FREQ_CHECK |
- 			  CPUFREQ_HAVE_GOVERNOR_PER_POLICY |
--			  CPUFREQ_IS_COOLING_DEV,
-+			  CPUFREQ_IS_COOLING_DEV |
-+			  CPUFREQ_REGISTER_WITH_EM,
- 	.verify		= cpufreq_generic_frequency_table_verify,
- 	.target_index	= qcom_cpufreq_hw_target_index,
- 	.get		= qcom_cpufreq_hw_get,
--- 
-2.31.1.272.g89b43f80a514
+Correct. But I don't think we should be adding IOMMU_* anything upstream
+if we don't have a user.
 
+Will
