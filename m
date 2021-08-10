@@ -2,109 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 344493E5BAE
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Aug 2021 15:32:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 69A3A3E5C44
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Aug 2021 15:53:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238675AbhHJNcV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Aug 2021 09:32:21 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:62364 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239460AbhHJNcU (ORCPT
+        id S242010AbhHJNxv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Aug 2021 09:53:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55864 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242011AbhHJNxs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Aug 2021 09:32:20 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1628602318; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=KiE+rVQY46cVQ5OE7ZvIdEvKX6VtwKSVL05iVQtQQGg=; b=Jfi0Z8mboUlVqrEmbp8hZINspTJjl+P6c69qYK1ldUa+rSG1vhMkmOsESz3JIkTcvCrf5X3x
- ZSsFXqAP+NPkPSiu6QJQ30+kJMByu2nMUxCw1KEukIDrFjJ3QMH5enhONxG2dPmJYas3ah+o
- J2CSgR6fSElMhh5O97Ex9wFCJKI=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 61127fc1f746c298d9ee6c34 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 10 Aug 2021 13:31:45
- GMT
-Sender: luoj=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E219BC4323A; Tue, 10 Aug 2021 13:31:45 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from akronite-sh-dev02.qualcomm.com (unknown [180.166.53.21])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: luoj)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E26B5C433D3;
-        Tue, 10 Aug 2021 13:31:39 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E26B5C433D3
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=luoj@codeaurora.org
-From:   Luo Jie <luoj@codeaurora.org>
-To:     andrew@lunn.ch, agross@kernel.org, bjorn.andersson@linaro.org,
-        davem@davemloft.net, kuba@kernel.org, robh+dt@kernel.org,
-        hkallweit1@gmail.com, linux@armlinux.org.uk,
-        robert.marko@sartura.hr
-Cc:     linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sricharan@codeaurora.org, Luo Jie <luoj@codeaurora.org>
-Subject: [PATCH v2 3/3] dt-bindings: net: Add the properties for ipq4019 MDIO
-Date:   Tue, 10 Aug 2021 21:31:16 +0800
-Message-Id: <20210810133116.29463-4-luoj@codeaurora.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20210810133116.29463-1-luoj@codeaurora.org>
-References: <20210810133116.29463-1-luoj@codeaurora.org>
+        Tue, 10 Aug 2021 09:53:48 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D2E5C061798
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 06:53:26 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id x12so2924546wrr.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 06:53:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=KGQUuCBolB3utTNPACMz6iKuWRDIGgWJm/VpB8UjVfc=;
+        b=Lt1tyTHbI94Kgt8wK9nxBSF3jPgGselZKupAsXiBd6uILEZdcKhg5LYPO6QfrIiNvi
+         DWrV2wRXXA01ZHs26Vovn0Uojl4XIZZFox4wswtHZgW6Xuxv9jpzdV5pcfkzcnB8xjO1
+         TBhoaYhdFbcRFLb7zW+HVGuD9FiUQp4XHqAABpYgaKY4UU49KRmdSyW6Gl4SH0P13q5B
+         Y8wnQ6tNXvOlirXy8jU6Jnp8ImOSwA01aM1IFV5xhXKnjxp2c/EBgSwL8wXkddc1RRFa
+         eVi+aWY8EqcCcAi0Ux4F4hsXAxDQinpBrytVKz9rF1QrcnzQ3f3cxJ1deYdyTrUpm9FP
+         u/Tw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=KGQUuCBolB3utTNPACMz6iKuWRDIGgWJm/VpB8UjVfc=;
+        b=SCXzdt6dCyEyYEhvmu2lO7D8JLOFykWQWk3MnEAXD0nxDbVWxwYcyEIVZu0o+iUBzS
+         sc7MmogSw781Ham0Vvip98XU7aj6lIR49QogomqHIpNfBcuCPN5MUoWDylNp11pjWSBH
+         xgCQv846wHAQwMDML+C0Hz9meCREWvM655txG1dDXhBXRzotasWxFhKpVAjJT8yRXnck
+         +HqqxTRCs6V6r9kFgGKL5WgTmZNXWpxs1yXmp55/MarS6chgfQ3fOtQZCKLJrzmAZctz
+         cV16Kj8hrO3RoO61FW9tBg3x7ZcIgjwg9ai99sySrP8yJOYTfUKyhL8vJlaRLeiMXwm6
+         wsYw==
+X-Gm-Message-State: AOAM532gq0Ng8VzGsQwqmZ0Y+Gaq6W2Xwj3WhJIEJ1FLVQ1FeLfL3wA6
+        UeIEH/bokXvuZHlEGQeWvs0ZoA==
+X-Google-Smtp-Source: ABdhPJyP5/KLF9l16H0O6iAMcu4TdoATOhVCPzOX8vMqts7ssz/9ljckqMeKlqZVUnJFhD3xwJoprg==
+X-Received: by 2002:a5d:660e:: with SMTP id n14mr13818163wru.346.1628603604443;
+        Tue, 10 Aug 2021 06:53:24 -0700 (PDT)
+Received: from google.com ([2a00:79e0:d:210:e920:cedf:a082:9d02])
+        by smtp.gmail.com with ESMTPSA id 18sm3305981wmv.27.2021.08.10.06.53.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Aug 2021 06:53:24 -0700 (PDT)
+Date:   Tue, 10 Aug 2021 14:53:18 +0100
+From:   Quentin Perret <qperret@google.com>
+To:     Lukasz Luba <lukasz.luba@arm.com>
+Cc:     Viresh Kumar <viresh.kumar@linaro.org>,
+        Rafael Wysocki <rjw@rjwysocki.net>,
+        Vincent Donnefort <vincent.donnefort@arm.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Kevin Hilman <khilman@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>, linux-pm@vger.kernel.org,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-omap@vger.kernel.org
+Subject: Re: [PATCH 0/8] cpufreq: Auto-register with energy model
+Message-ID: <YRKEztjdIFU1J5/9@google.com>
+References: <cover.1628579170.git.viresh.kumar@linaro.org>
+ <YRJym+Vn4bbwQzzs@google.com>
+ <af06b333-3d8a-807c-9ccb-d491d6a54930@arm.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <af06b333-3d8a-807c-9ccb-d491d6a54930@arm.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The new added properties resource "reg" is for configuring
-ethernet LDO in the IPQ5018 chipset, the property "clocks"
-is for configuring the MDIO clock source frequency.
+On Tuesday 10 Aug 2021 at 14:25:15 (+0100), Lukasz Luba wrote:
+> The way I see this is that the flag in cpufreq avoids
+> mistakes potentially made by driver developer. It will automaticaly
+> register the *simple* EM model via dev_pm_opp_of_register_em() on behalf
+> of drivers (which is already done manually by drivers). The developer
+> would just set the flag similarly to CPUFREQ_IS_COOLING_DEV and be sure
+> it will register at the right time. Well tested flag approach should be
+> safer, easier to understand, maintain.
 
-Signed-off-by: Luo Jie <luoj@codeaurora.org>
----
- .../bindings/net/qcom,ipq4019-mdio.yaml           | 15 ++++++++++++++-
- 1 file changed, 14 insertions(+), 1 deletion(-)
-
-diff --git a/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml b/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
-index 0c973310ada0..2af304341772 100644
---- a/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
-+++ b/Documentation/devicetree/bindings/net/qcom,ipq4019-mdio.yaml
-@@ -14,7 +14,9 @@ allOf:
- 
- properties:
-   compatible:
--    const: qcom,ipq4019-mdio
-+    enum:
-+      - qcom,ipq4019-mdio
-+      - qcom,ipq5018-mdio
- 
-   "#address-cells":
-     const: 1
-@@ -23,7 +25,18 @@ properties:
-     const: 0
- 
-   reg:
-+    minItems: 1
-+    maxItems: 2
-+    description:
-+      the first Address and length of the register set for the MDIO controller.
-+      the second Address and length of the register for ethernet LDO, this second
-+      address range is only required by the platform IPQ50xx.
-+
-+  clocks:
-     maxItems: 1
-+    description: |
-+      MDIO clock source frequency fixed to 100MHZ, this clock should be specified
-+      by the platform IPQ807x, IPQ60xx and IPQ50xx.
- 
- required:
-   - compatible
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
-
+I would agree with all that if calling dev_pm_opp_of_register_em() was
+complicated, but that is not really the case. I don't think we ever call
+PM_OPP directly from cpufreq core ATM, which makes a lot of sense if you
+consider PM_OPP arch-specific. I could understand that we might accept a
+little 'violation' of the abstraction with this series if there were
+real benefits, but I just don't see them.
