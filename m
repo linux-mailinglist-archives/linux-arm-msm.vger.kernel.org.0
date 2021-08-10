@@ -2,109 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C2613E5688
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Aug 2021 11:16:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 55CC43E569D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Aug 2021 11:18:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238759AbhHJJQs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Aug 2021 05:16:48 -0400
-Received: from mail.kernel.org ([198.145.29.99]:47934 "EHLO mail.kernel.org"
+        id S238832AbhHJJS3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Aug 2021 05:18:29 -0400
+Received: from foss.arm.com ([217.140.110.172]:51682 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238745AbhHJJQr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Aug 2021 05:16:47 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id F3C166056B;
-        Tue, 10 Aug 2021 09:16:22 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1628586986;
-        bh=hG1PKIfUobySTRl3kToyKQWcPI+bWs/Llfdg4HtV8Lc=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=mOAHGE6mrYyzdYOiATqBh3ctWbADLleThoclue/CxW6EWM3taq8sQYiRgsVZlnr09
-         pTsO2mPLnhhPRbGIXVu+JQJ2eRglxQu799oybVa190XqsKer2qr7WDXFO6on/S0RdX
-         rcaqL3+aDwZeiOVHzyEQ/0bEATuepbIqh1CLsdxN/hNFhyRgjwfkEBZW+iEoIap9QV
-         Gx8IBDY7U01l8JCBcG53fyX1QSncT2DWzpjXp4GoKw3IIKzCKbj/Cy16Vee4V4RCDg
-         +Y0VAfWigUKKCWw/eJynPJN7yEgpHxV4zOqqDEZ+BI+3XY4Utiq060cAGEHVTTGNQv
-         PykOiqiyVk43A==
-Date:   Tue, 10 Aug 2021 10:16:19 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Rob Clark <robdclark@gmail.com>,
-        "Isaac J. Manjarres" <isaacm@codeaurora.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Jordan Crouse <jcrouse@codeaurora.org>,
-        David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        "list@263.net:IOMMU DRIVERS , Joerg Roedel <joro@8bytes.org>, " 
-        <iommu@lists.linux-foundation.org>,
-        Kristian H Kristensen <hoegsberg@google.com>,
-        Daniel Vetter <daniel@ffwll.ch>, Sean Paul <sean@poorly.run>,
-        "moderated list:ARM/FREESCALE IMX / MXC ARM ARCHITECTURE" 
-        <linux-arm-kernel@lists.infradead.org>,
-        Robin Murphy <robin.murphy@arm.com>
-Subject: Re: [Freedreno] [PATCH 0/3] iommu/drm/msm: Allow non-coherent
- masters to use system cache
-Message-ID: <20210810091619.GA2494@willie-the-truck>
-References: <20210802105544.GA27657@willie-the-truck>
- <CAF6AEGvtpFu8st=ZFNoKjP9YsAenciLxL1zMFi_iqMCvdby73w@mail.gmail.com>
- <20210802151409.GE28735@willie-the-truck>
- <CAF6AEGtzvyEUm0Fc8QT5t9KNK7i0FbFyi7zDM2_PMCzZBp7qbw@mail.gmail.com>
- <20210809145651.GC1458@willie-the-truck>
- <CAF6AEGsSUojA=V0n2iRWTCn++buqN=Eoxo0r3=+=PBu1O=H-AQ@mail.gmail.com>
- <20210809170508.GB1589@willie-the-truck>
- <CAF6AEGtmZ3LzAJdtnKDQDbEN-a6_JgdN-fZ96pkU3dZqkiW91g@mail.gmail.com>
- <20210809174022.GA1840@willie-the-truck>
- <76bfd0b4248148dfbf9d174ddcb4c2a2@codeaurora.org>
+        id S238813AbhHJJS0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 10 Aug 2021 05:18:26 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 78AA6D6E;
+        Tue, 10 Aug 2021 02:18:04 -0700 (PDT)
+Received: from [10.57.9.181] (unknown [10.57.9.181])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id EC2E23F718;
+        Tue, 10 Aug 2021 02:17:59 -0700 (PDT)
+Subject: Re: [PATCH 0/8] cpufreq: Auto-register with energy model
+To:     Viresh Kumar <viresh.kumar@linaro.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     Rafael Wysocki <rjw@rjwysocki.net>,
+        Vincent Donnefort <vincent.donnefort@arm.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Kevin Hilman <khilman@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>, linux-pm@vger.kernel.org,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-omap@vger.kernel.org
+References: <cover.1628579170.git.viresh.kumar@linaro.org>
+From:   Lukasz Luba <lukasz.luba@arm.com>
+Message-ID: <6449a61f-a5fc-0b81-65b2-7bf77b8a71aa@arm.com>
+Date:   Tue, 10 Aug 2021 10:17:58 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:60.0) Gecko/20100101
+ Thunderbird/60.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <76bfd0b4248148dfbf9d174ddcb4c2a2@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <cover.1628579170.git.viresh.kumar@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 09, 2021 at 11:17:40PM +0530, Sai Prakash Ranjan wrote:
-> On 2021-08-09 23:10, Will Deacon wrote:
-> > On Mon, Aug 09, 2021 at 10:18:21AM -0700, Rob Clark wrote:
-> > > On Mon, Aug 9, 2021 at 10:05 AM Will Deacon <will@kernel.org> wrote:
-> > > > On Mon, Aug 09, 2021 at 09:57:08AM -0700, Rob Clark wrote:
-> > > > > But I suppose we could call it instead IOMMU_QCOM_LLC or something
-> > > > > like that to make it more clear that it is not necessarily something
-> > > > > that would work with a different outer level cache implementation?
-> > > >
-> > > > ... or we could just deal with the problem so that other people can reuse
-> > > > the code. I haven't really understood the reluctance to solve this properly.
-> > > >
-> > > > Am I missing some reason this isn't solvable?
-> > > 
-> > > Oh, was there another way to solve it (other than foregoing setting
-> > > INC_OCACHE in the pgtables)?  Maybe I misunderstood, is there a
-> > > corresponding setting on the MMU pgtables side of things?
-> > 
-> > Right -- we just need to program the CPU's MMU with the matching memory
-> > attributes! It's a bit more fiddly if you're just using ioremap_wc()
-> > though, as it's usually the DMA API which handles the attributes under
-> > the
-> > hood.
-> > 
-> > Anyway, sorry, I should've said that explicitly earlier on. We've done
-> > this
-> > sort of thing in the Android tree so I assumed Sai knew what needed to
-> > be
-> > done and then I didn't think to explain to you :(
-> > 
+Hi Viresh,
+
+I like the idea, only small comments here in the cover letter.
+
+On 8/10/21 8:36 AM, Viresh Kumar wrote:
+> Provide a cpufreq driver flag so drivers can ask the cpufreq core to register
+> with the EM core on their behalf. This allows us to get rid of duplicated code
+> in the drivers and fix the unregistration part as well, which none of the
+> drivers have done until now.
+
+The EM is never freed for CPUs by design. The unregister function was
+introduced for devfreq devices.
+
 > 
-> Right I was aware of that but even in the android tree there is no user :)
+> This would also make the registration with EM core to happen only after policy
+> is fully initialized, and the EM core can do other stuff from in there, like
+> marking frequencies as inefficient (WIP). Though this patchset is useful without
+> that work being done and should be merged nevertheless.
+> 
+> This doesn't update scmi cpufreq driver for now as it is a special case and need
+> to be handled differently. Though we can make it work with this if required.
 
-I'm assuming there are vendor modules using it there, otherwise we wouldn't
-have been asked to put it in. Since you work at Qualcomm, maybe you could
-talk to your colleagues (Isaac and Patrick) directly?
+The scmi cpufreq driver uses direct EM API, which provides flexibility
+and should stay as is.
 
-> I think we can't have a new memory type without any user right in upstream
-> like android tree?
+Let me review the patches.
 
-Correct. But I don't think we should be adding IOMMU_* anything upstream
-if we don't have a user.
-
-Will
+Regards,
+Lukasz
