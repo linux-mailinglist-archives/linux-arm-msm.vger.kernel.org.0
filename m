@@ -2,112 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7FF1B3E839D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Aug 2021 21:25:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9369B3E83C2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Aug 2021 21:31:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232196AbhHJT0A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Aug 2021 15:26:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48830 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230056AbhHJT0A (ORCPT
+        id S232664AbhHJTbR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Aug 2021 15:31:17 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:54571 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231143AbhHJTbR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Aug 2021 15:26:00 -0400
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA46DC0613D3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 12:25:37 -0700 (PDT)
-Received: by mail-oi1-x22a.google.com with SMTP id u10so681600oiw.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 12:25:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=Qaz4xCN739RXFhIv84poX0ScDJwNuifosj/wmNYeKrI=;
-        b=Gd5MAtaiKtZayubjDqRGAyI3XDiBp5Oem/dVLOHadExJW1CH458Ic5Ck696RNY4z7R
-         Kcgb6rKMWcXpAHbi1BvRUx0qgqKUMotleU2XSfSD0qy8k+cAqzi8Q0uNyhxZ3P2Y56pM
-         NFrITyTsXdq3Zo+x+4YrcOELrdbAWfqTIp/7E=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=Qaz4xCN739RXFhIv84poX0ScDJwNuifosj/wmNYeKrI=;
-        b=DeOApLxXXWOLNQ6pm4sJJXmPO/d9WNwEcIqUxLrDPl1AYpdHErdT/iGkIOCaRznTzc
-         AqbFScjyyNPbtAkRbOD191Sf5Xu1nhFNJw/mw9tFTFqK8cYx5bPqUZ+FvoC/jjtffSYY
-         nmHh0iklw//vWaEvLrwJXG5j+8znqpKjxxA5KQLO/Oue8aOORLRYDASo04/5S/k0QhJ8
-         D4XgsKU6Yv4ViyPVZdgXPiNAubArSUSZSJGM10f5SVtqfCri71xAAbrqBWjy/Jx+wiee
-         oRI5vHelz4eeTt3PMErNO235hZSpdCHqh9uBylZJtaNJa9b7uZ69Ny39/bdsuiiknvtZ
-         6gKA==
-X-Gm-Message-State: AOAM5336eWZgzx2nORmz1aAIFbttfEqfrkyRZY9bR+2NYVDtfk/99Qxt
-        1GmXEMYKLk+DzJMOMxAFjjh4cfBTWbAtaeQZRZuT2Q==
-X-Google-Smtp-Source: ABdhPJzqQGzY1mBI3xr7FZKkIXaGjwxBnCoAClVfvG9imfTSZkgRoR57g4wmu62dncETwlAoAKYBAKxJ0ASAVABb++A=
-X-Received: by 2002:a05:6808:984:: with SMTP id a4mr4944772oic.166.1628623537400;
- Tue, 10 Aug 2021 12:25:37 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 10 Aug 2021 12:25:36 -0700
+        Tue, 10 Aug 2021 15:31:17 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1628623855; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=yEtLPU+7rsrGp6+MiBeIiNEocUtKpTm9TPGhXhGZqwg=;
+ b=JIbbpeYlhmwcdJv7OMuY6CBy/uHRPN/k61ifFyi+2Hqvwp91xZWiU2VnBnPGNskfu+qMCpQ3
+ lZ9RYXI5hB52PqTvJZgXzoeJg/Y2zypYTwbqdZShZhEhBqxuMrTAQ6uI7rPsTbIHZVe1msfV
+ 4ffNb/Z8bM8Lc2LS22m+uGpRsw0=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 6112d3c7f746c298d95e5b67 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 10 Aug 2021 19:30:15
+ GMT
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 5C04FC43460; Tue, 10 Aug 2021 19:30:15 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A88D1C433D3;
+        Tue, 10 Aug 2021 19:30:12 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <1628568516-24155-3-git-send-email-pmaliset@codeaurora.org>
-References: <1628568516-24155-1-git-send-email-pmaliset@codeaurora.org> <1628568516-24155-3-git-send-email-pmaliset@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Tue, 10 Aug 2021 12:25:36 -0700
-Message-ID: <CAE-0n532Mwe2OzhM-_UT62FpxqmpecBda7q0ciW1WzaOPm_Q5Q@mail.gmail.com>
-Subject: Re: [PATCH v5 2/4] arm64: dts: qcom: sc7280: Add PCIe and PHY related nodes
-To:     Prasad Malisetty <pmaliset@codeaurora.org>, agross@kernel.org,
-        bhelgaas@google.com, bjorn.andersson@linaro.org,
-        lorenzo.pieralisi@arm.com, robh+dt@kernel.org, svarbanov@mm-sol.com
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dianders@chromium.org, mka@chromium.org, vbadigan@codeaurora.org,
-        sallenki@codeaurora.org, manivannan.sadhasivam@linaro.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 10 Aug 2021 12:30:12 -0700
+From:   khsieh@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, robdclark@gmail.com,
+        sean@poorly.run, vkoul@kernel.org, abhinavk@codeaurora.org,
+        aravindh@codeaurora.org, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] drm/msm/dp: add drm debug logs to dp_pm_resume/suspend
+In-Reply-To: <CAE-0n51NsjfT62anGiQ7FaBgs=bThVq89j3UMp4rNj9raGkwOw@mail.gmail.com>
+References: <1628609362-2109-1-git-send-email-khsieh@codeaurora.org>
+ <CAE-0n52a8i-2oNxtqKaS+XGBE0+wcp0Jx05VgL2KnHoQLW-vDQ@mail.gmail.com>
+ <abd00c9d395473875c31379ca0288116@codeaurora.org>
+ <CAE-0n51NsjfT62anGiQ7FaBgs=bThVq89j3UMp4rNj9raGkwOw@mail.gmail.com>
+Message-ID: <fb5fb363e91fd70236674de8b6f3cf88@codeaurora.org>
+X-Sender: khsieh@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Prasad Malisetty (2021-08-09 21:08:34)
-> Add PCIe controller and PHY nodes for sc7280 SOC.
->
-> Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7280.dtsi | 126 +++++++++++++++++++++++++++++++++++
->  1 file changed, 126 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 53a21d0..4500d88 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -16,6 +16,7 @@
->  #include <dt-bindings/reset/qcom,sdm845-pdc.h>
->  #include <dt-bindings/soc/qcom,rpmh-rsc.h>
->  #include <dt-bindings/thermal/thermal.h>
-> +#include <dt-bindings/gpio/gpio.h>
-
-Please sort this alphabetically, gpio comes before reset at the least.
-
->
->  / {
->         interrupt-parent = <&intc>;
-> @@ -586,6 +587,119 @@
->                         qcom,bcm-voters = <&apps_bcm_voter>;
->                 };
->
-> +               pcie1: pci@1c08000 {
-> +                       compatible = "qcom,pcie-sc7280", "qcom,pcie-sm8250", "snps,dw-pcie";
-> +                       reg = <0 0x01c08000 0 0x3000>,
-> +                             <0 0x40000000 0 0xf1d>,
-> +                             <0 0x40000f20 0 0xa8>,
-> +                             <0 0x40001000 0 0x1000>,
-> +                             <0 0x40100000 0 0x100000>;
-> +
-> +                       reg-names = "parf", "dbi", "elbi", "atu", "config";
-> +                       device_type = "pci";
-> +                       linux,pci-domain = <1>;
-> +                       bus-range = <0x00 0xff>;
-> +                       num-lanes = <2>;
-> +                       pipe-clk-source-switch;
-
-I'd rather not have this DT property, but key it off the compatible
-string.
-
-> +
-> +                       #address-cells = <3>;
-> +                       #size-cells = <2>;
+On 2021-08-10 12:23, Stephen Boyd wrote:
+> Quoting khsieh@codeaurora.org (2021-08-10 12:18:02)
+>> On 2021-08-10 11:33, Stephen Boyd wrote:
+>> > Quoting Kuogee Hsieh (2021-08-10 08:29:22)
+>> >> Changes in V2:
+>> >> -- correct Fixes text
+>> >> -- drop commit text
+>> >>
+>> >> Fixes: 601f0479c583 ("drm/msm/dp: add logs across DP driver for ease
+>> >> of debugging")
+>> >> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+>> >> ---
+>> >>  drivers/gpu/drm/msm/dp/dp_display.c | 13 +++++++++++++
+>> >>  1 file changed, 13 insertions(+)
+>> >
+>> > BTW, this conflicts with commit
+>> > e8a767e04dbc7b201cb17ab99dca723a3488b6d4
+>> > in msm-next. The resolution is trivial but just wanted to mention it.
+>> 
+>> I Just fetched msm-next and cherry-pick this patch over, no conflict
+>> seen.
+>> Is this conflict need to be fixed?
+>> 
+> 
+> Oh sorry, I mean commit afc9b8b6bab8 ("drm/msm/dp: signal audio plugged
+> change at dp_pm_resume") which doesn't seem to be in msm-next. Maybe 
+> Rob
+> will resolve the conflict directly.
+Yes, I just found that  commit afc9b8b6bab8 ("drm/msm/dp: signal audio 
+plugged
+> change at dp_pm_resume") is not merged in msm-next.
