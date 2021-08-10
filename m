@@ -2,24 +2,24 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6A9AF3E7DB3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Aug 2021 18:44:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 274CD3E7DB9
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Aug 2021 18:45:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232954AbhHJQpL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Aug 2021 12:45:11 -0400
-Received: from mail-0301.mail-europe.com ([188.165.51.139]:47800 "EHLO
-        mail-0301.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230135AbhHJQpK (ORCPT
+        id S232656AbhHJQpt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Aug 2021 12:45:49 -0400
+Received: from mail-0201.mail-europe.com ([51.77.79.158]:53617 "EHLO
+        mail-0201.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230063AbhHJQpq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Aug 2021 12:45:10 -0400
-Date:   Tue, 10 Aug 2021 16:44:33 +0000
+        Tue, 10 Aug 2021 12:45:46 -0400
+Date:   Tue, 10 Aug 2021 16:44:39 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1628613885;
-        bh=B2PX5wvlb3kCxkvzl+Fw5xV8foetR0ZfrdHlzKAEUHk=;
+        s=protonmail; t=1628613890;
+        bh=OLeQ1PDncRXppNSDenzX0HElC/Q+Ws/lF/gnav7BV7w=;
         h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=PBLB+iTcceCVAKi0SXrIe+S7R+SRAd7SL3lAX5ln65KZpHNpuLdoHsIFKlOLfu/GP
-         lecARNeVXkb8tbmyn1X/tZeQPnFDFe+yd/njcgMvCT/lJYy5vtf/Sj8Dk5xQFR6bYe
-         pjLRUlcj0aSVkqS5I1vUcPJhg+bHtBiQd/oot1lY=
+        b=lI3FOfAKXMYfMDjpu08H09GDOTmVApgGszpRQVo5Uhv+w/b/ACABEjFnxprIEWifN
+         S56KWELwc/WgzoNb7Tk2gv1hBoj1ZzFddlBlu7YJsyCajh+V46pkNfqK8E9HxDDZTP
+         yGThqbIyB7oaGPL9xmCyW1uU1M30ncpKhRCFdpeM=
 To:     bjorn.andersson@linaro.org, agross@kernel.org,
         jassisinghbrar@gmail.com
 From:   Sireesh Kodali <sireeshkodali@protonmail.com>
@@ -29,8 +29,8 @@ Cc:     robh+dt@kernel.org, devicetree@vger.kernel.org,
         sivaprak@codeaurora.org, Vladimir Lypak <junak.pub@gmail.com>,
         Sireesh Kodali <sireeshkodali@protonmail.com>
 Reply-To: Sireesh Kodali <sireeshkodali@protonmail.com>
-Subject: [PATCH 2/4] mailbox: qcom-apcs-ipc: Add compatible for MSM8953 SoC
-Message-ID: <20210810164347.45578-3-sireeshkodali@protonmail.com>
+Subject: [PATCH 3/4] dt-bindings: firmware: qcom-scm: Document msm8953 bindings
+Message-ID: <20210810164347.45578-4-sireeshkodali@protonmail.com>
 In-Reply-To: <20210810164347.45578-1-sireeshkodali@protonmail.com>
 References: <20210810164347.45578-1-sireeshkodali@protonmail.com>
 MIME-Version: 1.0
@@ -47,36 +47,38 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Vladimir Lypak <junak.pub@gmail.com>
 
-MSM8953 has an APCS block similar to MSM8916 but with different clocks
-which are spread over 2MB IO region next to it.
+SCM driver on MSM8953 requires 3 clocks.
 
 Signed-off-by: Vladimir Lypak <junak.pub@gmail.com>
 Signed-off-by: Sireesh Kodali <sireeshkodali@protonmail.com>
 ---
- drivers/mailbox/qcom-apcs-ipc-mailbox.c | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/devicetree/bindings/firmware/qcom,scm.txt | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom=
--apcs-ipc-mailbox.c
-index 03bdc96dc457..82822b7a6230 100644
---- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-+++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
-@@ -163,6 +163,7 @@ static const struct of_device_id qcom_apcs_ipc_of_match=
-[] =3D {
- =09{ .compatible =3D "qcom,ipq8074-apcs-apps-global", .data =3D &ipq8074_a=
-pcs_data },
- =09{ .compatible =3D "qcom,msm8916-apcs-kpss-global", .data =3D &msm8916_a=
-pcs_data },
- =09{ .compatible =3D "qcom,msm8939-apcs-kpss-global", .data =3D &msm8916_a=
-pcs_data },
-+=09{ .compatible =3D "qcom,msm8953-apcs-kpss-global", .data =3D &msm8994_a=
-pcs_data },
- =09{ .compatible =3D "qcom,msm8994-apcs-kpss-global", .data =3D &msm8994_a=
-pcs_data },
- =09{ .compatible =3D "qcom,msm8996-apcs-hmss-global", .data =3D &msm8996_a=
-pcs_data },
- =09{ .compatible =3D "qcom,msm8998-apcs-hmss-global", .data =3D &msm8998_a=
-pcs_data },
+diff --git a/Documentation/devicetree/bindings/firmware/qcom,scm.txt b/Docu=
+mentation/devicetree/bindings/firmware/qcom,scm.txt
+index a7333ad938d2..284b4b7a3b60 100644
+--- a/Documentation/devicetree/bindings/firmware/qcom,scm.txt
++++ b/Documentation/devicetree/bindings/firmware/qcom,scm.txt
+@@ -15,6 +15,7 @@ Required properties:
+  * "qcom,scm-mdm9607"
+  * "qcom,scm-msm8660"
+  * "qcom,scm-msm8916"
++ * "qcom,scm-msm8953"
+  * "qcom,scm-msm8960"
+  * "qcom,scm-msm8974"
+  * "qcom,scm-msm8994"
+@@ -33,7 +34,7 @@ Required properties:
+  * core clock required for "qcom,scm-apq8064", "qcom,scm-msm8660" and
+    "qcom,scm-msm8960"
+  * core, iface and bus clocks required for "qcom,scm-apq8084",
+-   "qcom,scm-msm8916" and "qcom,scm-msm8974"
++   "qcom,scm-msm8916", "qcom,scm-msm8953" and "qcom,scm-msm8974"
+ - clock-names: Must contain "core" for the core clock, "iface" for the int=
+erface
+   clock and "bus" for the bus clock per the requirements of the compatible=
+.
+ - qcom,dload-mode: phandle to the TCSR hardware block and offset of the
 --=20
 2.32.0
 
