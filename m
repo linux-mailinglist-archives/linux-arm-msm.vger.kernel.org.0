@@ -2,93 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 63D1B3E511C
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Aug 2021 04:43:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A58003E5125
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Aug 2021 04:47:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234974AbhHJCnf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Aug 2021 22:43:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42220 "EHLO
+        id S235520AbhHJCrv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Aug 2021 22:47:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231609AbhHJCne (ORCPT
+        with ESMTP id S233833AbhHJCru (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Aug 2021 22:43:34 -0400
-Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B83AEC061796
-        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Aug 2021 19:43:13 -0700 (PDT)
-Received: by mail-pj1-x102d.google.com with SMTP id cp15-20020a17090afb8fb029017891959dcbso2178470pjb.2
-        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Aug 2021 19:43:13 -0700 (PDT)
+        Mon, 9 Aug 2021 22:47:50 -0400
+Received: from mail-pl1-x62a.google.com (mail-pl1-x62a.google.com [IPv6:2607:f8b0:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35489C0613D3
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Aug 2021 19:47:29 -0700 (PDT)
+Received: by mail-pl1-x62a.google.com with SMTP id e19so5453183pla.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Aug 2021 19:47:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=mEtO03OIc860qDPInvLz3qFGfUeCouJ7pFCU8dty4U0=;
-        b=eNbU18LmLOH3wLADwMkysokDiIfwMd9Pc2dqHuLtIEFJf75LTAJKNVd2ve1+YdL64C
-         +6BCavcHfWuIgrH+fbd/kD5XTBlN0BU9XAa60Xhb1HpO6+YG8HMQxkC+G6yW0/UD4FTh
-         3ErovM0ZfBqzEM1Uo0VzmVOgQWDgN/C++aNs0jRsyznmSGQcG3k8AzE2QBg4404aychg
-         e3C6dMdT7hVb0v9zYTwHzBiEyuMs7K7f7pVDk3GIYehZzIkOKLjt/93SAAH6YV2TPGMF
-         yRWA+3q9wdfsvTb5IHmhoHuxre8zSMGdrTDgPYwRfl5MrIEwqtfN3ghHEcwua98yW/JI
-         AjRw==
+        bh=aLz3R/PfInuBDOwjVvzSA+K2mOEipBXOGKBTYuR/UjQ=;
+        b=u82RUKq0Cu9k+cH1e/nJUGAYPe+uSr9FwNA/i2Ax5QbR7bnnC5z9Abbug2YTjQxgPQ
+         UaI9ruWDRXjrJxQ+E6kokRmM2Olb4t6VPWQiS/R+xMnOg7xskW5sHupXISw6uVhJZVQR
+         EeQaz++xbMfFDdseC+9Ya8r4VHLrJ714j/gKVemJFr23QOdzZ32E37pa3+bKyUHekFQP
+         t+aELbDGjXDOcLnSJ+YzZBmYsAbxepz1MVngI+I2YZgchl+1mZsm9ZkDFH6PyQA7bd76
+         k9RHg4S1IWkgKQ+ptJyXMlhkEOuYP4n+A2vDTRqsJbL4TItoyW+doNNtr02TIXI7gyqN
+         vXUw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=mEtO03OIc860qDPInvLz3qFGfUeCouJ7pFCU8dty4U0=;
-        b=XXqGpn4JWL64DLzkgD8iMshSNDOCEEsd4OuYCZbYda9kHq2ZpLYg1Sa0cpH1W66ZHH
-         qDrBE3a9M8XueHi6nWxcqmZxAvYR4KJBj1hsC+1iSFugx4PIH2sgHoqUaDO4W5+6NOhM
-         3vf7Zry1PctL+reyKC3pkyCr1es9yWI67c8+ytx6ln1mZyEhV22i7O3CzI4Q8kgAw2hy
-         rYvrzqj+v7C4MqlwaPeyI+8xEXFfesSRR8dQZXLQzflVm8613Fk2xvu/k6Ltya60B97L
-         e7mBQIodB9ZizNCWOVJdlKgE9O2G3Al7MUv9C+pFZvv51Hi+HiDgcnRNi5Os7SjpiqbU
-         lFxw==
-X-Gm-Message-State: AOAM531vqZzSQcPUUg4Zy3TpPRi3/BXROzpL2epFacqnZDHAvxhV5r7x
-        W9j/AaMolUupn9hO8f5XVAT8qA==
-X-Google-Smtp-Source: ABdhPJzvKKIhjbuNi3WfN/Mlyc/ZFUy4MKEae9P0opKTsgMcUjH38p9Kxd6cmuaYHjdfKvKNlowjDg==
-X-Received: by 2002:a17:90a:bb0b:: with SMTP id u11mr2412472pjr.18.1628563393258;
-        Mon, 09 Aug 2021 19:43:13 -0700 (PDT)
+        bh=aLz3R/PfInuBDOwjVvzSA+K2mOEipBXOGKBTYuR/UjQ=;
+        b=iyOnhWyzKT5luC/TCqA7MVQqpffs/apnRWiXqMWuE4IoeFRkSUPxGNPJexOe7UmLoN
+         x8SwzxTYdJCU/p+d42u/JNvABKgatbSCZNUmJRZRqzsWaImeFDN7hPPm5lAtnZ52kO54
+         +R+14CYZHHJSPGRlK0MJIs/Rx5iEI5DqFhOuKW+kXz6bT9OFq93SP4xZLfMPN4TCmKMA
+         t9jd9qoYgypwI4iphI/xmIh2h5c8uext7CdvKa00KRLZdr3TYVa9Nve+Q0hjW+ZSA7Sy
+         5Ef81Ytxa/Tgg/AJM4H2oD68vWpiqKg5n/r5cvzxAZtsSTej6GhA2GXokY+t4M2om5mf
+         TKMg==
+X-Gm-Message-State: AOAM533cWoLuyYC/St/EglAqonP8Vd5SvYbGB4FgXGW/rKWEmeP2f3HX
+        kDcasWsPcljvvDLqmd2p0yrdEQ==
+X-Google-Smtp-Source: ABdhPJw4qsk6dKbmfyAQJNyBrmv6RENs2/OaroTuk2V8kwmx42VX7YmwQechtP9JeFUoTNE8Hm7Tdw==
+X-Received: by 2002:a63:594e:: with SMTP id j14mr491424pgm.249.1628563648525;
+        Mon, 09 Aug 2021 19:47:28 -0700 (PDT)
 Received: from localhost ([122.172.201.85])
-        by smtp.gmail.com with ESMTPSA id v63sm23343203pgv.59.2021.08.09.19.43.12
+        by smtp.gmail.com with ESMTPSA id c23sm21805549pfn.140.2021.08.09.19.47.27
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 09 Aug 2021 19:43:12 -0700 (PDT)
-Date:   Tue, 10 Aug 2021 08:13:08 +0530
+        Mon, 09 Aug 2021 19:47:28 -0700 (PDT)
+Date:   Tue, 10 Aug 2021 08:17:23 +0530
 From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     Ulf Hansson <ulf.hansson@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Roja Rani Yarubandi <rojay@codeaurora.org>,
-        Stephan Gerhold <stephan@gerhold.net>
-Subject: Re: [PATCH v6 1/2] PM / Domains: Add support for 'required-opps' to
- set default perf state
-Message-ID: <20210810024308.gurvzpbe2bc2bhky@vireshk-i7>
-References: <1628074696-7979-1-git-send-email-rnayak@codeaurora.org>
- <1628074696-7979-2-git-send-email-rnayak@codeaurora.org>
- <CAPDyKFrebwt5=S7hqXvcqRvt+-EXLcVmRSRZt1uPf-9n7_pRDg@mail.gmail.com>
- <2afd0fac-ed28-c090-a345-3fd4284b4125@codeaurora.org>
+To:     Thara Gopinath <thara.gopinath@linaro.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, rui.zhang@intel.com,
+        daniel.lezcano@linaro.org, rjw@rjwysocki.net, robh+dt@kernel.org,
+        steev@kali.org, tdas@codeaurora.org, mka@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: Re: [Patch v5 3/6] cpufreq: qcom-cpufreq-hw: Add dcvs interrupt
+ support
+Message-ID: <20210810024723.qne6ntjtv5zxf576@vireshk-i7>
+References: <20210809191605.3742979-1-thara.gopinath@linaro.org>
+ <20210809191605.3742979-4-thara.gopinath@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <2afd0fac-ed28-c090-a345-3fd4284b4125@codeaurora.org>
+In-Reply-To: <20210809191605.3742979-4-thara.gopinath@linaro.org>
 User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09-08-21, 16:38, Rajendra Nayak wrote:
-> Sure, I can do that, apart from the error print, the function currently also
-> returns a -EINVAL in case of the missing 'required-opps', are we suggesting
-> we change that to not return an error also?
+On 09-08-21, 15:16, Thara Gopinath wrote:
+> Add interrupt support to notify the kernel of h/w initiated frequency
+> throttling by LMh. Convey this to scheduler via thermal presssure
+> interface.
+> 
+> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+> ---
+> 
+> v4->v5:
+> 	- Changed throttle_lock from a spinlock to mutex to take potential
+> 	  race between LMh de-init sequence and reenabling of
+> 	  interrupts/polling after a thermal throttle event.
+> 	- Other cosmetic fixes as pointed out by Viresh.
 
-No.
-
-> Since this is completely optional in the device node, we would want the function to
-> ideally not return error and only do so in case 'required-opps' exists and the
-> translation to performance state fails.
-
-Not really. The function should return failure if the property isn't
-there, but it shouldn't be EINVAL but ENODEV.
+How do you expect this to get merged ? I pick up this patch alone ?
 
 -- 
 viresh
