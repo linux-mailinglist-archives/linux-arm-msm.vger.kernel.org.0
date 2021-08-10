@@ -2,194 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C28D23E53E7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Aug 2021 08:51:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 223233E5460
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Aug 2021 09:37:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233628AbhHJGvp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Aug 2021 02:51:45 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:42271 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229739AbhHJGvo (ORCPT
+        id S234634AbhHJHh1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Aug 2021 03:37:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51406 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234038AbhHJHh0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Aug 2021 02:51:44 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1628578283; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=8oRIj7t0naG4PykQRt1+vreUOu6CouCHfSgpFKLfPUw=;
- b=k0iay+CoVAV/I/06fKrqyyyaNb4YDM2j8D7aGmSAaJfxN0ik7ZoWgx5G8yHx5zwn2ylljALI
- LeLPIkoVu7RuRJFDKCRsBhcjQXgcIzVOALobUY/0fXOHsIO2tJZML1ROHkC1pDkPfVCtXef0
- qG8nJQYs0YtyOf55m6UYqC6rMIs=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 611221d6b14e7e2ecb509048 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 10 Aug 2021 06:51:02
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 359CCC433F1; Tue, 10 Aug 2021 06:51:02 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 02DB3C433D3;
-        Tue, 10 Aug 2021 06:51:00 +0000 (UTC)
+        Tue, 10 Aug 2021 03:37:26 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D039C061798
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 00:37:04 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id mq2-20020a17090b3802b0290178911d298bso4058373pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 00:37:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Gp9yqcscf7/Q8S71rNb+DklCmCjBfuOZWtoJrdKgq14=;
+        b=IAglVf6Pn8I8I9dsDbHjIfeAkSA/yD6E0MfLksr0I3bbp7rSOQLo46sTKTKHyl9KbR
+         1/Ax/Ap4XrXSvqSfj4UKWMsMiK2Qlt+w+AwybJt6Afct7yPg8QghYKttCJvCY/xqXvkm
+         SkVBZJ83g65LBxLJZxqL82lCxNFSOhBzmTWP+VjWSx6JwYTMIlwFMEqzKCpRoO2ZHeMy
+         iLi9J2g4OA/gouk7AIivwb3wNG0F55BWN3FaLUULACXKVzJzbp8T6EZqU2AN3WsvBWuT
+         6xKHRzNBm8HKbeykYID8qlR3XXsS6uZSkgeIJMMAyf3R73Ni3U2SsNf7QyhEebDAbH1k
+         0nNA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Gp9yqcscf7/Q8S71rNb+DklCmCjBfuOZWtoJrdKgq14=;
+        b=b7UcJKCi9JHket4GPoPgreiE6v7U0USXjtPYjMVIfOQ4c2k/BsL9Tb/Lx90XXimctF
+         qeNOU70mAhQwRUl+yG809rwUGKI4jgfiCj3e1/uCr/doXdl1KjgKWYWgo0BBZSKVIGYV
+         G/3oyzaT2wQiLqAW92RWRn1t7Rm/N77OmF+Gxq0BZPu6CztI1JLePcuinE5RctHFWY99
+         68OmL6PxauWGMBonklrntvDa7dEZFvtSWoym0VN6fMqiIRLiLvsmCoe5ucyYAmQWDWKw
+         wDZUUsgjYT4qHv1cVmvfYlaM5EQ5Xr3/wuUDIhx1UvKIwNeOIEB6vO/Sg+LhR5y8SGPd
+         3O0Q==
+X-Gm-Message-State: AOAM532/h4ze3ZmUNDUZ4bRfsI9P9NTQ3nF+/01hVGxkTmKlr1kAzGCj
+        CZskgnEeXWi9cRlABmNlijCZ3w==
+X-Google-Smtp-Source: ABdhPJxILYrr525KX9FnT9P3v0D4xd0mT7Xu47cl+ZsvaVSJ3lXE+EgGIYbCSv1kqvc+zewvjPYhrA==
+X-Received: by 2002:a17:902:b601:b029:12b:d9a:894f with SMTP id b1-20020a170902b601b029012b0d9a894fmr350019pls.63.1628581023914;
+        Tue, 10 Aug 2021 00:37:03 -0700 (PDT)
+Received: from localhost ([122.172.201.85])
+        by smtp.gmail.com with ESMTPSA id v14sm1734591pjd.35.2021.08.10.00.37.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Aug 2021 00:37:03 -0700 (PDT)
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Rafael Wysocki <rjw@rjwysocki.net>,
+        Vincent Donnefort <vincent.donnefort@arm.com>,
+        lukasz.luba@arm.com, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Kevin Hilman <khilman@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     linux-pm@vger.kernel.org,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-omap@vger.kernel.org
+Subject: [PATCH 0/8] cpufreq: Auto-register with energy model
+Date:   Tue, 10 Aug 2021 13:06:47 +0530
+Message-Id: <cover.1628579170.git.viresh.kumar@linaro.org>
+X-Mailer: git-send-email 2.31.1.272.g89b43f80a514
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 10 Aug 2021 12:21:00 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Will Deacon <will@kernel.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        srimuc <srimuc@codeaurora.org>, iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, robdclark@chromium.org
-Subject: Re: [PATCH] iommu/arm-smmu: Add clk_bulk_{prepare/unprepare} to
- system pm callbacks
-In-Reply-To: <5aefcc8950ec8ced0a67815c92e985df@codeaurora.org>
-References: <20210727093322.13202-1-saiprakash.ranjan@codeaurora.org>
- <20210802161206.GA29168@willie-the-truck>
- <5aefcc8950ec8ced0a67815c92e985df@codeaurora.org>
-Message-ID: <8fd84f2580ea0e67c9143ee97e54dbaa@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-08-03 11:36, Sai Prakash Ranjan wrote:
-> On 2021-08-02 21:42, Will Deacon wrote:
->> On Tue, Jul 27, 2021 at 03:03:22PM +0530, Sai Prakash Ranjan wrote:
->>> Some clocks for SMMU can have parent as XO such as 
->>> gpu_cc_hub_cx_int_clk
->>> of GPU SMMU in QTI SC7280 SoC and in order to enter deep sleep states 
->>> in
->>> such cases, we would need to drop the XO clock vote in unprepare call 
->>> and
->>> this unprepare callback for XO is in RPMh (Resource Power 
->>> Manager-Hardened)
->>> clock driver which controls RPMh managed clock resources for new QTI 
->>> SoCs
->>> and is a blocking call.
->>> 
->>> Given we cannot have a sleeping calls such as clk_bulk_prepare() and
->>> clk_bulk_unprepare() in arm-smmu runtime pm callbacks since the iommu
->>> operations like map and unmap can be in atomic context and are in 
->>> fast
->>> path, add this prepare and unprepare call to drop the XO vote only 
->>> for
->>> system pm callbacks since it is not a fast path and we expect the 
->>> system
->>> to enter deep sleep states with system pm as opposed to runtime pm.
->>> 
->>> This is a similar sequence of clock requests (prepare,enable and
->>> disable,unprepare) in arm-smmu probe and remove.
->>> 
->>> Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
->>> Co-developed-by: Rajendra Nayak <rnayak@codeaurora.org>
->>> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
->>> ---
->>>  drivers/iommu/arm/arm-smmu/arm-smmu.c | 20 ++++++++++++++++++--
->>>  1 file changed, 18 insertions(+), 2 deletions(-)
->> 
->> [+Rob]
->> 
->> How does this work with that funny GPU which writes to the SMMU 
->> registers
->> directly? Does the SMMU need to remain independently clocked for that 
->> to
->> work or is it all in the same clock domain?
->> 
-> 
-> As Rob mentioned, device link should take care of all the dependencies 
-> between
-> SMMU and its consumers. But not sure how the question relates to this
-> patch as this
-> change is for system pm and not runtime pm, so it is exactly the 
-> sequence of
-> SMMU probe/remove which if works currently for that GPU SMMU, then it
-> should work
-> just fine for system suspend and resume as well.
-> 
->>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c 
->>> b/drivers/iommu/arm/arm-smmu/arm-smmu.c
->>> index d3c6f54110a5..9561ba4c5d39 100644
->>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
->>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
->>> @@ -2277,6 +2277,13 @@ static int __maybe_unused 
->>> arm_smmu_runtime_suspend(struct device *dev)
->>> 
->>>  static int __maybe_unused arm_smmu_pm_resume(struct device *dev)
->>>  {
->>> +	int ret;
->>> +	struct arm_smmu_device *smmu = dev_get_drvdata(dev);
->>> +
->>> +	ret = clk_bulk_prepare(smmu->num_clks, smmu->clks);
->>> +	if (ret)
->>> +		return ret;
->>> +
->>>  	if (pm_runtime_suspended(dev))
->>>  		return 0;
->> 
->> If we subsequently fail to enable the clks in 
->> arm_smmu_runtime_resume()
->> should we unprepare them again?
->> 
-> 
-> If we are unable to turn on the clks then its fatal and we will not
-> live for long.
-> 
+Provide a cpufreq driver flag so drivers can ask the cpufreq core to register
+with the EM core on their behalf. This allows us to get rid of duplicated code
+in the drivers and fix the unregistration part as well, which none of the
+drivers have done until now.
 
-Nonetheless, it won't hurt to unprepare if clk enable fails as that is
-the correct thing anyway, so I have added it and sent a v2.
+This would also make the registration with EM core to happen only after policy
+is fully initialized, and the EM core can do other stuff from in there, like
+marking frequencies as inefficient (WIP). Though this patchset is useful without
+that work being done and should be merged nevertheless.
 
-Thanks,
-Sai
+This doesn't update scmi cpufreq driver for now as it is a special case and need
+to be handled differently. Though we can make it work with this if required.
 
-> 
->> Will
->> 
->>> @@ -2285,10 +2292,19 @@ static int __maybe_unused 
->>> arm_smmu_pm_resume(struct device *dev)
->>> 
->>>  static int __maybe_unused arm_smmu_pm_suspend(struct device *dev)
->>>  {
->>> +	int ret = 0;
->>> +	struct arm_smmu_device *smmu = dev_get_drvdata(dev);
->>> +
->>>  	if (pm_runtime_suspended(dev))
->>> -		return 0;
->>> +		goto clk_unprepare;
->>> 
->>> -	return arm_smmu_runtime_suspend(dev);
->>> +	ret = arm_smmu_runtime_suspend(dev);
->>> +	if (ret)
->>> +		return ret;
->>> +
->>> +clk_unprepare:
->>> +	clk_bulk_unprepare(smmu->num_clks, smmu->clks);
->>> +	return ret;
->>>  }
->>> 
->>>  static const struct dev_pm_ops arm_smmu_pm_ops = {
->>> --
->>> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
->>> member
->>> of Code Aurora Forum, hosted by The Linux Foundation
->>> 
+This is build/boot tested by the bot for a couple of boards.
+
+https://gitlab.com/vireshk/pmko/-/pipelines/350674298
+
+--
+Viresh
+
+Viresh Kumar (8):
+  cpufreq: Auto-register with energy model if asked
+  cpufreq: dt: Use auto-registration for energy model
+  cpufreq: imx6q: Use auto-registration for energy model
+  cpufreq: mediatek: Use auto-registration for energy model
+  cpufreq: omap: Use auto-registration for energy model
+  cpufreq: qcom-cpufreq-hw: Use auto-registration for energy model
+  cpufreq: scpi: Use auto-registration for energy model
+  cpufreq: vexpress: Use auto-registration for energy model
+
+ drivers/cpufreq/cpufreq-dt.c           | 5 ++---
+ drivers/cpufreq/cpufreq.c              | 9 +++++++++
+ drivers/cpufreq/imx6q-cpufreq.c        | 4 ++--
+ drivers/cpufreq/mediatek-cpufreq.c     | 5 ++---
+ drivers/cpufreq/omap-cpufreq.c         | 4 ++--
+ drivers/cpufreq/qcom-cpufreq-hw.c      | 5 ++---
+ drivers/cpufreq/scpi-cpufreq.c         | 5 ++---
+ drivers/cpufreq/vexpress-spc-cpufreq.c | 5 ++---
+ include/linux/cpufreq.h                | 6 ++++++
+ 9 files changed, 29 insertions(+), 19 deletions(-)
 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.31.1.272.g89b43f80a514
+
