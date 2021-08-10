@@ -2,191 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CA1E3E8669
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 01:24:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA3A53E868A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 01:31:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233493AbhHJXY5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Aug 2021 19:24:57 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:24896 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233143AbhHJXY4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Aug 2021 19:24:56 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1628637873; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=zx8YddFJh59+5EnrQhywAgtFI/9rzkZOrxfXUeR4R9I=;
- b=fwUdC27vlwwrLovOZmujmuONyFRkwme4qXgnzw/B6NtV0Ahwg+sa5zlJe5owAjO5g1Z20TAf
- JYMoiRmYfp3xsm7KRAzs4p3hbmkP8tgyKlyrAprtu5Y4hg1o5yMMG+EzVe4xTJtWAVqfOGtz
- Dbi+TM7C65rqi/ZSzw1BoL5H/dI=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 61130aabf746c298d9072c3f (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 10 Aug 2021 23:24:27
- GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 471BFC4338A; Tue, 10 Aug 2021 23:24:27 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4FB33C433D3;
-        Tue, 10 Aug 2021 23:24:26 +0000 (UTC)
+        id S235358AbhHJXb5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Aug 2021 19:31:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48588 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233570AbhHJXb4 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 10 Aug 2021 19:31:56 -0400
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 213AFC061765
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 16:31:34 -0700 (PDT)
+Received: by mail-ot1-x331.google.com with SMTP id v24-20020a0568300918b02904f3d10c9742so1171192ott.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 16:31:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=DdVdn9iNnWyMUjEKky2BxxbxaluBkvajxWA2hdi0viQ=;
+        b=SJyRTDGNn25cPioEO33i9E465TFVUM3oyVwTlhDMc/02U34Y6PJudLH+ImNGYKQHij
+         ZymOHdDNXbbJyU7vyl3D8Q07kVLp+l19e9o7YEcgvDWLD/Y3ZCoMSqAik3ogP+qXFVKb
+         awn+a8WwyYujXfV6b5hFgk5tLM5b2e9Aj4d0Q=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=DdVdn9iNnWyMUjEKky2BxxbxaluBkvajxWA2hdi0viQ=;
+        b=hPS5MEWgA32vqTTPXcd0j3gq5qgtSi0oV4/W7PGZwyhDxEqxyT+duyb8tw4mmF2GZ/
+         36Y8Rsg4z4rnbbcduL0cSvxmEJ9xG/MPfd9YPQ5+vwmjUKZEitcFp3rG5qAR13UPHa9E
+         BfqM0Jnsxli8Qw4V/M347qyGRkSBV1dwqRA98wfbZQDfNzQDd4LPPNBNzW8cIpb2xv24
+         WwQo0iRikhb1BZUhc/UI57F3cU4/Eom7aCLBXu73PmKWM7hQMnkwAd3SCmbC3ojgtxfS
+         gd6mITJHrtNku5yOCLzaoo5Yg8lGZ6ya24C1Rvi95bNX8q4YmPdW8H2NwdrWj//2YtCY
+         5x7g==
+X-Gm-Message-State: AOAM532N9usKEv2oDmeo6xsb+tJKoKuBVEhETOH5Q5+sZ4EpelTB4ZiI
+        O1GRhisuowBgmDpO2AUsDXbTo1IYpq8NUZSqRPfRhg==
+X-Google-Smtp-Source: ABdhPJx2AAfQiWqyLOxU4A5451d9RiJWf3pxTqnLNNHUZFFyXlTs8W8aHceuoLd9sS3hJE9+rvOco02aXCO3VgUcCgI=
+X-Received: by 2002:a05:6830:1490:: with SMTP id s16mr23006661otq.233.1628638293521;
+ Tue, 10 Aug 2021 16:31:33 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 10 Aug 2021 16:31:33 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 10 Aug 2021 16:24:26 -0700
-From:   abhinavk@codeaurora.org
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        swboyd@chromium.org, khsieh@codeaurora.org, seanpaul@chromium.org,
-        dmitry.baryshkov@linaro.org, aravindh@codeaurora.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [Freedreno] [PATCH] drm/msm/dsi: add support for dsi test pattern
- generator
-In-Reply-To: <1cc300dc-7647-0431-fe05-d5504c337652@somainline.org>
-References: <1624993464-20447-1-git-send-email-abhinavk@codeaurora.org>
- <61cdcd07-5bff-a8ae-7156-b85b9c6c8801@somainline.org>
- <f6235d170811ad02bf6321dcb5ef3568@codeaurora.org>
- <1cc300dc-7647-0431-fe05-d5504c337652@somainline.org>
-Message-ID: <82699a2eb95fa619e772551f2a500921@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+In-Reply-To: <20210721175432.2119-5-mdtipton@codeaurora.org>
+References: <20210721175432.2119-1-mdtipton@codeaurora.org> <20210721175432.2119-5-mdtipton@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Tue, 10 Aug 2021 16:31:33 -0700
+Message-ID: <CAE-0n52iVgX0JjjnYi=NDg49xP961p=+W5R2bmO+2xwRceFhfA@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] interconnect: qcom: icc-rpmh: Add BCMs to commit
+ list in pre_aggregate
+To:     Mike Tipton <mdtipton@codeaurora.org>, djakov@kernel.org
+Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
+        saravanak@google.com, okukatla@codeaurora.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Alex Elder <elder@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Marijn
+Quoting Mike Tipton (2021-07-21 10:54:32)
+> We're only adding BCMs to the commit list in aggregate(), but there are
+> cases where pre_aggregate() is called without subsequently calling
+> aggregate(). In particular, in icc_sync_state() when a node with initial
+> BW has zero requests. Since BCMs aren't added to the commit list in
+> these cases, we don't actually send the zero BW request to HW. So the
+> resources remain on unnecessarily.
+>
+> Add BCMs to the commit list in pre_aggregate() instead, which is always
+> called even when there are no requests.
+>
+> Fixes: 976daac4a1c5 ("interconnect: qcom: Consolidate interconnect RPMh support")
+> Signed-off-by: Mike Tipton <mdtipton@codeaurora.org>
+> ---
 
-Thanks for reviewing and testing the latest patchset.
+This patch breaks reboot for me on sc7180 Lazor
 
-On 2021-08-10 15:59, Marijn Suijten wrote:
-> Hi Abhinav,
-> 
-> On 7/16/21 2:01 AM, abhinavk@codeaurora.org wrote:
->> Hi Marijn
->> 
->> Sorry for the late response.
-> 
-> 
-> Apologies from my side as well.
-> 
-> [...]
-> 
->>>> +static void msm_dsi_host_cmd_test_pattern_setup(struct msm_dsi_host
->>>> *msm_host)
->>>> +{
->>>> +	u32 reg;
->>>> +
->>>> +	reg = dsi_read(msm_host, REG_DSI_TEST_PATTERN_GEN_CTRL);
->>>> +
->>>> +	dsi_write(msm_host, REG_DSI_TEST_PATTERN_GEN_CMD_MDP_INIT_VAL0,
->>>> 0xff);
->>>> +
->>>> +	reg |= (0x3 << 0x8);
->>>> +	dsi_write(msm_host, REG_DSI_TEST_PATTERN_GEN_CTRL, reg);
->>>> +	/* draw checkered rectangle pattern */
->>>> +	dsi_write(msm_host, REG_DSI_TPG_MAIN_CONTROL2, (0x1 << 0x7));
->>> 
->>> 
->>> How about BIT(7)?
->> 
->> You mean BIT(7) of REG_DSI_TPG_MAIN_CONTROL2? Thats what this is 
->> right?
->> Did you mean some other bit?
-> 
-> 
-> I meant to replace (0x1 << 0x7) with BIT(7), but replacing it with
-> DSI_TPG_MAIN_CONTROL2_CMD_MDP0_CHECKERED_RECTANGLE_PATTERN is even
-> better, thanks.
-> 
->> 
->>> 
->>> On SM6125 this seems to change the color intensity of the pattern; it
->>> is always colored lines of a few pixels wide alternating R, B and G
->>> from left to right.  Is it possible to document the meaning and
->>> available values of these registers, especially if they differ 
->>> between
->>> SoC / DSI block?
->>> 
->> 
->> I have requested access for SM6125, will check this register on that 
->> to
->> see if there
->> is any difference.
->> 
->> Are you saying you are not seeing a rectangular checkered pattern 
->> while
->> testing?
-> 
-> 
-> Correct.  It's fixed now, and this patch already proves its
-> usefulness!  We had two minor configuration issues, and are now seeing
-> the squares just like on the other SoCs.  Meaning we can finally move
-> on to configuring the DPU, thanks!
-> 
+[  107.136454] kvm: exiting hardware virtualization
+[  107.163741] platform video-firmware.0: Removing from iommu group 13
+[  107.193412] SError Interrupt on CPU1, code 0xbe000011 -- SError
+[  107.193428] CPU: 1 PID: 4289 Comm: reboot Not tainted 5.14.0-rc1+ #12
+[  107.193432] Hardware name: Google Lazor (rev3+) with KB Backlight (DT)
+[  107.193436] pstate: 604000c9 (nZCv daIF +PAN -UAO -TCO BTYPE=--)
+[  107.193440] pc : el1_interrupt+0x20/0x60
+[  107.193443] lr : el1h_64_irq_handler+0x18/0x24
+[  107.193445] sp : ffffffc014093a10
+[  107.193448] x29: ffffffc014093a10 x28: ffffff8088295ec0 x27: 0000000000000000
+[  107.193465] x26: ffffff8080ed4c18 x25: ffffffd0beece000 x24: ffffffd0bef45000
+[  107.193476] x23: 0000000060400009 x22: ffffffd0be0bc1a0 x21: ffffffc014093b90
+[  107.193487] x20: ffffffd0bdc100f8 x19: ffffffc014093a40 x18: 000000000007d829
+[  107.193497] x17: ffffffd067412b54 x16: ffffffd0be0bc164 x15: ffffffd067413d0c
+[  107.193507] x14: ffffffd0bdd24fa4 x13: ffffffd0bdc26180 x12: ffffffd0bdc26260
+[  107.193517] x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000000
+[  107.193528] x8 : 00000000000000c0 x7 : bbbbbbbbbbbbbbbb x6 : ffffffd0bde488dc
+[  107.193539] x5 : 0000000000200017 x4 : ffffff809b5c4b40 x3 : 0000000000200018
+[  107.193549] x2 : ffffff8088295ec0 x1 : ffffffd0bdc100f8 x0 : ffffffc014093a40
+[  107.193561] Kernel panic - not syncing: Asynchronous SError Interrupt
+[  107.193564] CPU: 1 PID: 4289 Comm: reboot Not tainted 5.14.0-rc1+ #12
+[  107.193567] Hardware name: Google Lazor (rev3+) with KB Backlight (DT)
+[  107.193570] Call trace:
+[  107.193573]  dump_backtrace+0x0/0x1c8
+[  107.193577]  show_stack+0x24/0x30
+[  107.193579]  dump_stack_lvl+0x64/0x7c
+[  107.193582]  dump_stack+0x18/0x38
+[  107.193584]  panic+0x158/0x39c
+[  107.193586]  nmi_panic+0x88/0xa0
+[  107.193589]  arm64_serror_panic+0x80/0x8c
+[  107.193593]  do_serror+0x0/0x80
+[  107.193595]  do_serror+0x58/0x80
+[  107.193597]  el1h_64_error_handler+0x30/0x48
+[  107.193601]  el1h_64_error+0x78/0x7c
+[  107.193603]  el1_interrupt+0x20/0x60
+[  107.193606]  el1h_64_irq_handler+0x18/0x24
+[  107.193609]  el1h_64_irq+0x78/0x7c
+[  107.193612]  refcount_dec_and_mutex_lock+0x3c/0xb4
+[  107.193616]  ipa_clock_put+0x34/0x74 [ipa]
+[  107.193619]  ipa_deconfig+0x64/0x74 [ipa]
+[  107.193622]  ipa_remove+0xbc/0x110 [ipa]
+[  107.193625]  ipa_shutdown+0x24/0x50 [ipa]
+[  107.193628]  platform_shutdown+0x30/0x3c
+[  107.193631]  device_shutdown+0x150/0x208
+[  107.193633]  kernel_restart_prepare+0x44/0x50
+[  107.193637]  kernel_restart+0x24/0x70
+[  107.193640]  __arm64_sys_reboot+0x188/0x230
+[  107.193643]  invoke_syscall+0x4c/0x120
+[  107.193646]  el0_svc_common+0x84/0xe0
+[  107.193648]  do_el0_svc_compat+0x2c/0x38
+[  107.193651]  el0_svc_compat+0x20/0x30
+[  107.193654]  el0t_32_sync_handler+0xc0/0xf0
+[  107.193657]  el0t_32_sync+0x19c/0x1a0
 
-Thats good to know !
+Presumably some sort of interconnect is getting turned off earlier than
+before?
 
->> Also are you testing on command mode or video mode?
-> 
-> 
-> Command mode, if it's still worth anything.
-Thats good to know too, as I had not been able to test command mode.
-> 
->> As requested by Rob, I will add the bit definitions and update the
->> dsi.xml.h in the
->> next patchset for the registers and the bits which I am using here.
->> 
->> With that the meaning of these bits will be more clear.
->> 
->> I dont think I will be able to document all the bits because the goal 
->> of
->> this patch
->> was only to draw a test pattern to help with validation. Different 
->> bits
->> of the REG_DSI_TPG_MAIN_CONTROL2
->> register only draw different patterns so the goal wasnt that we can 
->> draw
->> any pattern, it was just to
->> draw some pattern on the screen.
->> 
->> When we add support for all other patterns, we can expose those bits 
->> as
->> well but it should not
->> be required in my opinion.
-> 
-> 
-> Understandable.  I'm curious if other patterns are useful in certain
-> situations, like DSC?  Other than that, knowing that the DSI and PHY
-> is correct is good enough for us.
-
-The TPG in this patch is only for the DSI block which is after the DSC 
-block.
-So any pattern we pick from the DSI_TPG_MAIN_CONTROL2 register (using 
-any other bit)
-will only look different visually but will still be from DSI and no 
-other block.
-So it will not help to validate DSC block individually.
-
-> 
->> 
->>> Kind regards,
->>> Marijn
->>> 
->>>> +	DBG("Cmd test pattern setup done\n");
->>>> +}
->>> [...]
-> 
-> 
-> Thanks!
-> Marijn
+>  drivers/interconnect/qcom/icc-rpmh.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+>
+> diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
+> index f118f57eae37..b26fda0588e0 100644
+> --- a/drivers/interconnect/qcom/icc-rpmh.c
+> +++ b/drivers/interconnect/qcom/icc-rpmh.c
+> @@ -20,13 +20,18 @@ void qcom_icc_pre_aggregate(struct icc_node *node)
+>  {
+>         size_t i;
+>         struct qcom_icc_node *qn;
+> +       struct qcom_icc_provider *qp;
+>
+>         qn = node->data;
+> +       qp = to_qcom_provider(node->provider);
+>
+>         for (i = 0; i < QCOM_ICC_NUM_BUCKETS; i++) {
+>                 qn->sum_avg[i] = 0;
+>                 qn->max_peak[i] = 0;
+>         }
+> +
+> +       for (i = 0; i < qn->num_bcms; i++)
+> +               qcom_icc_bcm_voter_add(qp->voter, qn->bcms[i]);
+>  }
+>  EXPORT_SYMBOL_GPL(qcom_icc_pre_aggregate);
+>
+> @@ -44,10 +49,8 @@ int qcom_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
+>  {
+>         size_t i;
+>         struct qcom_icc_node *qn;
+> -       struct qcom_icc_provider *qp;
+>
+>         qn = node->data;
+> -       qp = to_qcom_provider(node->provider);
+>
+>         if (!tag)
+>                 tag = QCOM_ICC_TAG_ALWAYS;
+> @@ -67,9 +70,6 @@ int qcom_icc_aggregate(struct icc_node *node, u32 tag, u32 avg_bw,
+>         *agg_avg += avg_bw;
+>         *agg_peak = max_t(u32, *agg_peak, peak_bw);
+>
+> -       for (i = 0; i < qn->num_bcms; i++)
+> -               qcom_icc_bcm_voter_add(qp->voter, qn->bcms[i]);
+> -
+>         return 0;
+>  }
+>  EXPORT_SYMBOL_GPL(qcom_icc_aggregate);
