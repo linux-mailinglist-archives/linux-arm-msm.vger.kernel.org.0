@@ -2,81 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D82653E822B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Aug 2021 20:06:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5F613E8290
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Aug 2021 20:10:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237262AbhHJSGL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Aug 2021 14:06:11 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:51390 "EHLO m43-7.mailgun.net"
+        id S232665AbhHJSKp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Aug 2021 14:10:45 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35564 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S238907AbhHJSEj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Aug 2021 14:04:39 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1628618657; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=bDO2vmOnrMiag9r3MOqOnhI26ABF0ECDJ8jRg53NeCs=;
- b=C3x/iBDqTh864CXeTzu+zlKqmz/VaYSp0CadGjpYf+nuwZt4WHGwlgygJzc1D2lVUTBzuACq
- 62AcpVEL31KE2QsXTATdSTdtBs8SHdvH+ZUOmCuMa/B72TtALEfDGwxQo1dhEt92Ok0G/JPg
- 0OEzEeCr9Sao3P3dlRTBwl575LQ=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 6112bf98b3873958f5e1ac99 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 10 Aug 2021 18:04:08
- GMT
-Sender: pillair=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 483C4C358EB; Tue, 10 Aug 2021 18:04:07 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: pillair)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6113DC2E884;
-        Tue, 10 Aug 2021 18:04:05 +0000 (UTC)
+        id S236330AbhHJSI4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 10 Aug 2021 14:08:56 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id CBEB660527;
+        Tue, 10 Aug 2021 18:08:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1628618913;
+        bh=ZLjQ+E7kEbaxwXSfj/EjKh4hS0Qf8184pyly8Dfhtm4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=oHScJLoUWHHobKc83Z0tPXc2r9y0CA/eD2Uok4ZlwwgIe4/UN910YCRxqB6nB0jm9
+         URDOjjPcubG2CCDl7foJTCOW1DTzpI1JVLpBiJ62tnRez4aNcMtQovsfsLdlhnSv++
+         rv3rqtoByIcxveM+llHj4M5U/Am5K4WjICeUGecvRJjpgoQH6zn/X92o2lfnM67dvc
+         MA1oHcn4IUgwXs23F+cF1PlSNWsZYWXgQZuoYSx8GhscV70l+ngNABd44RskpFnKYX
+         8Ock0OweYWvcDISqZzYBz9m2ZcCCBTXerF4YzRzGaMk8u2HXkhoCz4VlTwWHY2smk4
+         n/ZBHX9SV9UWA==
+Date:   Tue, 10 Aug 2021 19:08:28 +0100
+From:   Will Deacon <will@kernel.org>
+To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Doug Anderson <dianders@chromium.org>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Thierry Reding <treding@nvidia.com>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [PATCHv3] iommu/arm-smmu: Optimize ->tlb_flush_walk() for qcom
+ implementation
+Message-ID: <20210810180827.GA3296@willie-the-truck>
+References: <20210623134201.16140-1-saiprakash.ranjan@codeaurora.org>
+ <20210802154308.GG28735@willie-the-truck>
+ <584e31653ee0e01d249e414dbbc816ea@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 10 Aug 2021 23:34:04 +0530
-From:   Rakesh Pillai <pillair@codeaurora.org>
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        mathieu.poirier@linaro.org, ohad@wizery.com,
-        p.zabel@pengutronix.de, robh+dt@kernel.org, sibis@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 0/2] Add support for sc7280 WPSS PIL loading
-In-Reply-To: <162699197027.2679160.6825677812017791100@swboyd.mtv.corp.google.com>
-References: <1615361290-19238-1-git-send-email-pillair@codeaurora.org>
- <162699197027.2679160.6825677812017791100@swboyd.mtv.corp.google.com>
-Message-ID: <25c4175bca7fb2f055d8f87fa61ed487@codeaurora.org>
-X-Sender: pillair@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <584e31653ee0e01d249e414dbbc816ea@codeaurora.org>
+User-Agent: Mutt/1.10.1 (2018-07-13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-07-23 03:42, Stephen Boyd wrote:
-> Quoting Rakesh Pillai (2021-03-09 23:28:08)
->> Add support for PIL loading of WPSS co-processor for SC7280 SOCs.
->> 
->> Rakesh Pillai (2):
->>   dt-bindings: remoteproc: qcom: Add SC7280 WPSS support
->>   remoteproc: qcom: q6v5_wpss: Add support for sc7280 WPSS
->> 
+On Tue, Aug 03, 2021 at 11:09:17AM +0530, Sai Prakash Ranjan wrote:
+> On 2021-08-02 21:13, Will Deacon wrote:
+> > On Wed, Jun 23, 2021 at 07:12:01PM +0530, Sai Prakash Ranjan wrote:
+> > > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> > > b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> > > index d3c6f54110a5..f3845e822565 100644
+> > > --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> > > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+> > > @@ -341,6 +341,12 @@ static void arm_smmu_tlb_add_page_s1(struct
+> > > iommu_iotlb_gather *gather,
+> > >  				  ARM_SMMU_CB_S1_TLBIVAL);
+> > >  }
+> > > 
+> > > +static void arm_smmu_tlb_inv_walk_impl_s1(unsigned long iova,
+> > > size_t size,
+> > > +				     size_t granule, void *cookie)
+> > > +{
+> > > +	arm_smmu_tlb_inv_context_s1(cookie);
+> > > +}
+> > > +
+> > >  static void arm_smmu_tlb_inv_walk_s2(unsigned long iova, size_t size,
+> > >  				     size_t granule, void *cookie)
+> > >  {
+> > > @@ -388,6 +394,12 @@ static const struct iommu_flush_ops
+> > > arm_smmu_s1_tlb_ops = {
+> > >  	.tlb_add_page	= arm_smmu_tlb_add_page_s1,
+> > >  };
+> > > 
+> > > +const struct iommu_flush_ops arm_smmu_s1_tlb_impl_ops = {
+> > > +	.tlb_flush_all	= arm_smmu_tlb_inv_context_s1,
+> > > +	.tlb_flush_walk	= arm_smmu_tlb_inv_walk_impl_s1,
+> > > +	.tlb_add_page	= arm_smmu_tlb_add_page_s1,
+> > > +};
+> > 
+> > Hmm, dunno about this. Wouldn't it be a lot cleaner if the
+> > tlb_flush_walk
+> > callbacks just did the right thing based on the smmu_domain (maybe in
+> > the
+> > arm_smmu_cfg?) rather than having an entirely new set of ops just
+> > because
+> > they're const and you can't overide the bit you want?
+> > 
+> > I don't think there's really an awful lot qcom-specific about the
+> > principle
+> > here -- there's a trade-off between over-invalidation and invalidation
+> > latency. That happens on the CPU as well.
+> > 
 > 
-> Is this patch series going to be resent?
+> Sorry didn't understand, based on smmu_domain what? How do we make
+> this implementation specific? Do you mean something like a quirk?
+> The reason we didn't make this common was because nvidia folks weren't
+> so happy with that, you can find the discussion in this thread [1].
+> 
+> [1] https://lore.kernel.org/lkml/20210609145315.25750-1-saiprakash.ranjan@codeaurora.org/
 
-Hi Stephen,
-I posted a v2 for this patch series, with the dt-bindings converted to 
-yaml.
+The ->tlb_flush_walk() callbacks take a 'void *cookie' which, for this
+driver, is a 'struct arm_smmu_domain *'. From that, you can get to the
+'struct arm_smmu_cfg' which could have something as coarse as:
 
-Thanks,
-Rakesh Pillai.
+	bool	flush_walk_prefer_tlbiasid;
+
+which you can set when you initialise the domain (maybe in the
+->init_context callback?). It shouldn't affect anybody else.
+
+Will
