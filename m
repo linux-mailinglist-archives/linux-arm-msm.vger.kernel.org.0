@@ -2,102 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DDCC43E5868
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Aug 2021 12:33:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9307A3E58DE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Aug 2021 13:11:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239840AbhHJKeL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Aug 2021 06:34:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37358 "EHLO
+        id S238007AbhHJLMS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Aug 2021 07:12:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45984 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239837AbhHJKeL (ORCPT
+        with ESMTP id S237067AbhHJLMR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Aug 2021 06:34:11 -0400
-Received: from mail-ed1-x529.google.com (mail-ed1-x529.google.com [IPv6:2a00:1450:4864:20::529])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 494D6C061799
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 03:33:49 -0700 (PDT)
-Received: by mail-ed1-x529.google.com with SMTP id n12so5628365edx.8
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 03:33:49 -0700 (PDT)
+        Tue, 10 Aug 2021 07:12:17 -0400
+Received: from mail-ua1-x935.google.com (mail-ua1-x935.google.com [IPv6:2607:f8b0:4864:20::935])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B3913C06179A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 04:11:55 -0700 (PDT)
+Received: by mail-ua1-x935.google.com with SMTP id f25so2098671uam.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 04:11:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=2bWdJTFdBT7N/3z85xLhwFZMuV51xWxicxyG3tsUzjw=;
-        b=mvRdNz7Vkqu05ilLJvoACACdnCvcJVMLUYbUPaNL+3cTjW8wY+HilTjVlloB12hcjI
-         yNPsqL0wpi/DPfdBJaTRQSA/Z/OXF/3HRwgz8r2m8Bk2Az9xwlkYHEDEOww+autydtzl
-         LaQpPjigXb1VmNTxp/aX1ZfywweB05/o0TdJVH4lo2KYT8V5avgSKQ+/cGixrLNxrokA
-         pUyfrpxCKKQ/mY/grrCBvthFm7dIvkX6y4Zo0LezTqRRJxucIQTMIVB9UffGbkvKN36F
-         S6myo1MSwbFKIbsjwYFH8e80i98Fnjs1LgefWogL3H735N+hAHCE0dcYyVyeUB7CN5eI
-         5KZA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=kQ8oi+oE6PPUXMmBt4sVo8+CTE0W6oonn/nsHgSQPP8=;
+        b=LhvSRqq1g5xnEb55wGh1S9Krd15ZRxQeukl0e/IVgfdBSxviDcb4flhDosmIoy9MOt
+         JWT5myCThkFCOnKZ7N9OHA8aCrp6Kd/WMjJEndokcK9QBfv5bDsooCji6DQt2KxzyQsB
+         yT/jQ0RDqUVl+AdJorVaUlWGTMNn/Z6riUjsiAedN17vW8L6FSwflobjseISmrSnABI6
+         u03UgGzC4nlBrVVJh6TWjxWMnm4ie4hHSHu6M99Jp52Ze59Lli+tTHWAt7IhWJ0KcokO
+         tkQqAk281Qyh3zgBAtilXehvyuZsOZ1etpfbO5A0lFB0757Pa+P+ju61QS+bf5j6n+Q8
+         OE7Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=2bWdJTFdBT7N/3z85xLhwFZMuV51xWxicxyG3tsUzjw=;
-        b=iSMfeQLiT/OMd1oukrOdDjqjyzpbo36gDfBDKbsuW2Fp4WP58ESwoSH6Tm7dcHUQlZ
-         9wr6qWJjcAdsGVf+67S/J4C1iqSjWls29SsZShpn5WgM7kznQP/+Jwjm3gAr1dAoLlcx
-         9PYXdjLQSUe/127COrteruyC4aHqLw+2SomuKDIgJWo93VYIaZdx5hMMYGyRc/lelk5T
-         JNqENSHAjK4a4cZJ1eVhqQo/ujNpLYcQgdW3xb5JeUfrpYmVCKFdQ1JxVtCvSH/0nYaQ
-         vhuFGzjy+CBYPIpYIuR+RVwVCRvLxP1vkFxfLlJ2/2dN5WzHNeSCK9ZY/MZF7FpTL0fS
-         cSWA==
-X-Gm-Message-State: AOAM530sbwM3zLG0atYokoV3ySAOMpwGCOWYth0qr1MPfPbwN2jSoLSR
-        6n2J/kkB4Zra+MxdZvNB+YbOWA==
-X-Google-Smtp-Source: ABdhPJxiLVIU11HvVdNnI2iELiZO60AhTBUyY3vP00BKXYrVDzdn9NnZgBQmBGqb+uqTc39BQya0IQ==
-X-Received: by 2002:a05:6402:4387:: with SMTP id o7mr4085082edc.204.1628591627769;
-        Tue, 10 Aug 2021 03:33:47 -0700 (PDT)
-Received: from xps7590.fritz.box ([2a02:2454:3e5:b700:6e3b:3620:e85a:7152])
-        by smtp.gmail.com with ESMTPSA id e7sm9518357edk.3.2021.08.10.03.33.46
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Aug 2021 03:33:47 -0700 (PDT)
-From:   Robert Foss <robert.foss@linaro.org>
-To:     robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
-        bjorn.andersson@linaro.org, mchehab@kernel.org,
-        hverkuil-cisco@xs4all.nl, linux-media@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Naresh Kamboju <naresh.kamboju@linaro.org>,
-        Hans Verkuil <hverkuil@xs4all.nl>
-Cc:     Linux Kernel Functional Testing <lkft@linaro.org>
-Subject: [PATCH v1] media: camss: vfe: Don't use vfe->base before it's assigned
-Date:   Tue, 10 Aug 2021 12:33:36 +0200
-Message-Id: <20210810103336.114077-1-robert.foss@linaro.org>
-X-Mailer: git-send-email 2.30.2
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=kQ8oi+oE6PPUXMmBt4sVo8+CTE0W6oonn/nsHgSQPP8=;
+        b=FLs4c2nVhFOPmarEmoPShhAB4XOanF4b0ekXd83BgulbOVAyTnUxlDWA1f9dzq/eWX
+         fujkyO6I9E3gTFzost+BDKcAIFWms9YNRRwYR/27OSbnB8jNURZ3vKHXikh8eZRmkYdp
+         NgUQtXse0iFqb+sklePuTsmEoBq9z223OFpI0ueooBrlD/BIv7EIYdBmj4putNb6v3v1
+         hEwhHosQkSdmxvA0lz3RvM6Xop5PePMapStvqIl7airPThXc8TVsJOs+s9Ci0+0YrpWe
+         +dZGipG5sC4K4vHWwqMztEfX8G8gYNWEUplPi26wU/iLeOPgoUKpnJNhGjadwecAupTj
+         vs1g==
+X-Gm-Message-State: AOAM5321xVM+6JoRb7Nv/DKqaTw+ldchnzh94KaDSJaoGUEIEuNQocqq
+        NOMRmW4XgtxJovchdo6d80wvgV5SlzLJVjYHuy5RBQ==
+X-Google-Smtp-Source: ABdhPJwhKmFLkCUee1nqRnXB6F7pv7NhEc+p1zYHqfIMcwuJxy11DpS1gN5hW6sTVuypPApzCJg6q499nHwSH9nayLU=
+X-Received: by 2002:ab0:6695:: with SMTP id a21mr20042466uan.19.1628593914605;
+ Tue, 10 Aug 2021 04:11:54 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210727202004.712665-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20210727202004.712665-1-dmitry.baryshkov@linaro.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 10 Aug 2021 13:11:18 +0200
+Message-ID: <CAPDyKFoQRbsvV-DLxV+gPRRCB2PVDdtWo5VU-q+pgDtQnu9gFA@mail.gmail.com>
+Subject: Re: [PATCH v6 0/6] clk: qcom: use power-domain for sm8250's clock controllers
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Michael Turquette <mturquette@baylibre.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-vfe->ops->hw_version(vfe) being called before vfe->base has been assigned
-is incorrect and causes crashes.
+On Tue, 27 Jul 2021 at 22:20, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On SM8250 both the display and video clock controllers are powered up by
+> the MMCX power domain. Handle this by linking clock controllers to the
+> proper power domain, and using runtime power management to enable and
+> disable the MMCX power domain.
+>
+> Dependencies:
+> - https://lore.kernel.org/linux-arm-msm/20210703005416.2668319-1-bjorn.andersson@linaro.org/
+>   (pending)
+>
+> Changes since v5:
+>  - Dropped devm_pm_runtime_enable callback to remove extra dependency
+>
+> Changes since v4:
+>  - Dropped pm_runtime handling from drivers/clk/qcom/common.c Moved the
+>    code into dispcc-sm8250.c and videocc-sm8250.c
+>
+> Changes since v3:
+>  - Wrap gdsc_enable/gdsc_disable into pm_runtime_get/put calls rather
+>    than calling pm_runtime_get in gdsc_enabled and _put in gdsc_disable
+>  - Squash gdsc patches together to remove possible dependencies between
+>    two patches.
+>
+> Changes since v2:
+>  - Move pm_runtime calls from generic genpd code to the gdsc code for
+>    now (as suggested by Ulf & Bjorn)
+>
+> Changes since v1:
+>  - Rebase on top of Bjorn's patches, removing the need for setting
+>    performance state directly.
+>  - Move runtime PM calls from GDSC code to generic genpd code.
+>  - Always call pm_runtime_enable in the Qualcomm generic clock
+>    controller code.
+>  - Register GDSC power domains as subdomains of the domain powering the
+>    clock controller if there is one.
+>
+> ----------------------------------------------------------------
+> Dmitry Baryshkov (8):
+>       dt-bindings: clock: qcom,dispcc-sm8x50: add mmcx power domain
+>       dt-bindings: clock: qcom,videocc: add mmcx power domain
+>       clk: qcom: dispcc-sm8250: use runtime PM for the clock controller
+>       clk: qcom: videocc-sm8250: use runtime PM for the clock controller
+>       clk: qcom: gdsc: enable optional power domain support
+>       arm64: dts: qcom: sm8250: remove mmcx regulator
+>       clk: qcom: dispcc-sm8250: stop using mmcx regulator
+>       clk: qcom: videocc-sm8250: stop using mmcx regulator
+>
+>  .../bindings/clock/qcom,dispcc-sm8x50.yaml         |  7 +++
+>  .../devicetree/bindings/clock/qcom,videocc.yaml    |  7 +++
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi               | 11 +---
+>  drivers/clk/qcom/dispcc-sm8250.c                   | 28 ++++++++--
+>  drivers/clk/qcom/gdsc.c                            | 59 ++++++++++++++++++++--
+>  drivers/clk/qcom/gdsc.h                            |  2 +
+>  drivers/clk/qcom/videocc-sm8250.c                  | 31 +++++++++---
+>  7 files changed, 124 insertions(+), 21 deletions(-)
+>
 
-Fixes: b10b5334528a9 ("media: camss: vfe: Don't read hardware version needlessly")
+For the series:
 
-Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
----
- drivers/media/platform/qcom/camss/camss-vfe.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+Reviewed-by: Ulf Hansson <ulf.hansson@linaro.org>
 
-diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
-index 6b2f33fc9be22..1c8d2f0f81207 100644
---- a/drivers/media/platform/qcom/camss/camss-vfe.c
-+++ b/drivers/media/platform/qcom/camss/camss-vfe.c
-@@ -1299,7 +1299,6 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
- 		return -EINVAL;
- 	}
- 	vfe->ops->subdev_init(dev, vfe);
--	vfe->ops->hw_version(vfe);
- 
- 	/* Memory */
- 
-@@ -1309,6 +1308,8 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
- 		return PTR_ERR(vfe->base);
- 	}
- 
-+	vfe->ops->hw_version(vfe);
-+
- 	/* Interrupt */
- 
- 	r = platform_get_resource_byname(pdev, IORESOURCE_IRQ,
--- 
-2.30.2
-
+Kind regards
+Uffe
