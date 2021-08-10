@@ -2,117 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B5F613E8290
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Aug 2021 20:10:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B003C3E8297
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Aug 2021 20:12:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232665AbhHJSKp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Aug 2021 14:10:45 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35564 "EHLO mail.kernel.org"
+        id S233152AbhHJSMl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Aug 2021 14:12:41 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:21870 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236330AbhHJSI4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Aug 2021 14:08:56 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id CBEB660527;
-        Tue, 10 Aug 2021 18:08:31 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1628618913;
-        bh=ZLjQ+E7kEbaxwXSfj/EjKh4hS0Qf8184pyly8Dfhtm4=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=oHScJLoUWHHobKc83Z0tPXc2r9y0CA/eD2Uok4ZlwwgIe4/UN910YCRxqB6nB0jm9
-         URDOjjPcubG2CCDl7foJTCOW1DTzpI1JVLpBiJ62tnRez4aNcMtQovsfsLdlhnSv++
-         rv3rqtoByIcxveM+llHj4M5U/Am5K4WjICeUGecvRJjpgoQH6zn/X92o2lfnM67dvc
-         MA1oHcn4IUgwXs23F+cF1PlSNWsZYWXgQZuoYSx8GhscV70l+ngNABd44RskpFnKYX
-         8Ock0OweYWvcDISqZzYBz9m2ZcCCBTXerF4YzRzGaMk8u2HXkhoCz4VlTwWHY2smk4
-         n/ZBHX9SV9UWA==
-Date:   Tue, 10 Aug 2021 19:08:28 +0100
-From:   Will Deacon <will@kernel.org>
-To:     Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Doug Anderson <dianders@chromium.org>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Thierry Reding <treding@nvidia.com>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCHv3] iommu/arm-smmu: Optimize ->tlb_flush_walk() for qcom
- implementation
-Message-ID: <20210810180827.GA3296@willie-the-truck>
-References: <20210623134201.16140-1-saiprakash.ranjan@codeaurora.org>
- <20210802154308.GG28735@willie-the-truck>
- <584e31653ee0e01d249e414dbbc816ea@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <584e31653ee0e01d249e414dbbc816ea@codeaurora.org>
-User-Agent: Mutt/1.10.1 (2018-07-13)
+        id S234196AbhHJSMb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 10 Aug 2021 14:12:31 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1628619129; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=oL1WDsEvqvap52+RoHgws/BVmR0/7VIUAB6915T9xi0=; b=KrOUpc1xNtNB5WAOBQI2Kj4Q9M7RME9yDEGGf+bW845y2Swo3RdA5iOxThcH6fjqd8MfQy6p
+ b1KDuboG7HVNjToGcQ6BowRaZFl4Wb7ZxZ5J1VDkSY1KJOyAWvKKaTRlyu+0M39oBvfBQsXf
+ aXGBS0qxEIAtTyjbiyR+aWmSd0g=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 6112c163b14e7e2ecba9f9ab (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 10 Aug 2021 18:11:47
+ GMT
+Sender: pillair=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A481BC28D95; Tue, 10 Aug 2021 18:11:46 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from pillair-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: pillair)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 61494C41634;
+        Tue, 10 Aug 2021 18:11:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 61494C41634
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=pillair@codeaurora.org
+From:   Rakesh Pillai <pillair@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, sibis@codeaurora.org,
+        sboyd@kernel.org, mpubbise@codeaurora.org,
+        Rakesh Pillai <pillair@codeaurora.org>
+Subject: [PATCH v2] arm64: dts: qcom: sc7280: Add WPSS remoteproc node
+Date:   Tue, 10 Aug 2021 23:41:29 +0530
+Message-Id: <1628619089-12502-1-git-send-email-pillair@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 03, 2021 at 11:09:17AM +0530, Sai Prakash Ranjan wrote:
-> On 2021-08-02 21:13, Will Deacon wrote:
-> > On Wed, Jun 23, 2021 at 07:12:01PM +0530, Sai Prakash Ranjan wrote:
-> > > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> > > b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> > > index d3c6f54110a5..f3845e822565 100644
-> > > --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> > > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
-> > > @@ -341,6 +341,12 @@ static void arm_smmu_tlb_add_page_s1(struct
-> > > iommu_iotlb_gather *gather,
-> > >  				  ARM_SMMU_CB_S1_TLBIVAL);
-> > >  }
-> > > 
-> > > +static void arm_smmu_tlb_inv_walk_impl_s1(unsigned long iova,
-> > > size_t size,
-> > > +				     size_t granule, void *cookie)
-> > > +{
-> > > +	arm_smmu_tlb_inv_context_s1(cookie);
-> > > +}
-> > > +
-> > >  static void arm_smmu_tlb_inv_walk_s2(unsigned long iova, size_t size,
-> > >  				     size_t granule, void *cookie)
-> > >  {
-> > > @@ -388,6 +394,12 @@ static const struct iommu_flush_ops
-> > > arm_smmu_s1_tlb_ops = {
-> > >  	.tlb_add_page	= arm_smmu_tlb_add_page_s1,
-> > >  };
-> > > 
-> > > +const struct iommu_flush_ops arm_smmu_s1_tlb_impl_ops = {
-> > > +	.tlb_flush_all	= arm_smmu_tlb_inv_context_s1,
-> > > +	.tlb_flush_walk	= arm_smmu_tlb_inv_walk_impl_s1,
-> > > +	.tlb_add_page	= arm_smmu_tlb_add_page_s1,
-> > > +};
-> > 
-> > Hmm, dunno about this. Wouldn't it be a lot cleaner if the
-> > tlb_flush_walk
-> > callbacks just did the right thing based on the smmu_domain (maybe in
-> > the
-> > arm_smmu_cfg?) rather than having an entirely new set of ops just
-> > because
-> > they're const and you can't overide the bit you want?
-> > 
-> > I don't think there's really an awful lot qcom-specific about the
-> > principle
-> > here -- there's a trade-off between over-invalidation and invalidation
-> > latency. That happens on the CPU as well.
-> > 
-> 
-> Sorry didn't understand, based on smmu_domain what? How do we make
-> this implementation specific? Do you mean something like a quirk?
-> The reason we didn't make this common was because nvidia folks weren't
-> so happy with that, you can find the discussion in this thread [1].
-> 
-> [1] https://lore.kernel.org/lkml/20210609145315.25750-1-saiprakash.ranjan@codeaurora.org/
+Add the WPSS remoteproc node in dts for
+PIL loading.
 
-The ->tlb_flush_walk() callbacks take a 'void *cookie' which, for this
-driver, is a 'struct arm_smmu_domain *'. From that, you can get to the
-'struct arm_smmu_cfg' which could have something as coarse as:
+Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
+---
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts |  4 +++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi    | 57 +++++++++++++++++++++++++++++++++
+ 2 files changed, 61 insertions(+)
 
-	bool	flush_walk_prefer_tlbiasid;
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+index 64fc22a..2b8bbcd 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
++++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+@@ -68,3 +68,7 @@
+ 		qcom,pre-scaling = <1 1>;
+ 	};
+ };
++
++&remoteproc_wpss {
++	status = "okay";
++};
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 53a21d0..41a7826 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -74,6 +74,16 @@
+ 			reg = <0 0x8b700000 0 0x10000>;
+ 			no-map;
+ 		};
++
++		wlan_fw_mem: memory@80c00000 {
++			no-map;
++			reg = <0x0 0x80c00000 0x0 0xc00000>;
++		};
++
++		wpss_mem: memory@9ae00000 {
++			no-map;
++			reg = <0x0 0x9ae00000 0x0 0x1900000>;
++		};
+ 	};
+ 
+ 	cpus {
+@@ -1270,6 +1280,53 @@
+ 			};
+ 		};
+ 
++		remoteproc_wpss: remoteproc@8a00000 {
++			compatible = "qcom,sc7280-wpss-pil";
++			reg = <0 0x08a00000 0 0x10000>;
++
++			interrupts-extended = <&intc GIC_SPI 587 IRQ_TYPE_EDGE_RISING>,
++					      <&wpss_smp2p_in 0 IRQ_TYPE_NONE>,
++					      <&wpss_smp2p_in 1 IRQ_TYPE_NONE>,
++					      <&wpss_smp2p_in 2 IRQ_TYPE_NONE>,
++					      <&wpss_smp2p_in 3 IRQ_TYPE_NONE>,
++					      <&wpss_smp2p_in 7 IRQ_TYPE_NONE>;
++			interrupt-names = "wdog", "fatal", "ready", "handover",
++					  "stop-ack", "shutdown-ack";
++
++			clocks = <&gcc GCC_WPSS_AHB_BDG_MST_CLK>,
++				 <&gcc GCC_WPSS_AHB_CLK>,
++				 <&gcc GCC_WPSS_RSCP_CLK>,
++				 <&rpmhcc RPMH_CXO_CLK>;
++			clock-names = "gcc_wpss_ahb_bdg_mst_clk",
++				      "gcc_wpss_ahb_clk",
++				      "gcc_wpss_rscp_clk",
++				      "xo";
++
++			memory-region = <&wpss_mem>;
++
++			qcom,smem-states = <&wpss_smp2p_out 0>;
++			qcom,smem-state-names = "stop";
++
++			resets = <&aoss_reset AOSS_CC_WCSS_RESTART>,
++				 <&pdc_reset PDC_WPSS_SYNC_RESET>;
++			reset-names = "restart", "pdc_sync";
++
++			qcom,halt-regs = <&tcsr_mutex_regs 0x37000>;
++
++			status = "disabled";
++
++			glink-edge {
++				interrupts-extended = <&ipcc IPCC_CLIENT_WPSS
++							     IPCC_MPROC_SIGNAL_GLINK_QMP
++							     IRQ_TYPE_EDGE_RISING>;
++				mboxes = <&ipcc IPCC_CLIENT_WPSS
++						IPCC_MPROC_SIGNAL_GLINK_QMP>;
++
++				label = "wpss";
++				qcom,remote-pid = <13>;
++			};
++		};
++
+ 		usb_2: usb@8cf8800 {
+ 			compatible = "qcom,sc7280-dwc3", "qcom,dwc3";
+ 			reg = <0 0x08cf8800 0 0x400>;
+-- 
+2.7.4
 
-which you can set when you initialise the domain (maybe in the
-->init_context callback?). It shouldn't affect anybody else.
-
-Will
