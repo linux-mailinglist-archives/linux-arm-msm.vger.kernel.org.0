@@ -2,200 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 546783E8645
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 01:01:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0CD093E8654
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 01:11:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235192AbhHJXBx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Aug 2021 19:01:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41896 "EHLO
+        id S235314AbhHJXLg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Aug 2021 19:11:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44004 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235226AbhHJXBx (ORCPT
+        with ESMTP id S235309AbhHJXLf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Aug 2021 19:01:53 -0400
-Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35428C061765
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 16:01:30 -0700 (PDT)
-Received: from [10.0.20.6] (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 159FD1F578;
-        Wed, 11 Aug 2021 01:01:28 +0200 (CEST)
-Subject: Re: [PATCH v2 2/2] drm/msm/dsi: add support for dsi test pattern
- generator
-To:     Abhinav Kumar <abhinavk@codeaurora.org>,
-        dri-devel@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
-        nganji@codeaurora.org, aravindh@codeaurora.org,
-        khsieh@codeaurora.org, dmitry.baryshkov@linaro.org
-References: <1626922232-29105-1-git-send-email-abhinavk@codeaurora.org>
- <1626922232-29105-2-git-send-email-abhinavk@codeaurora.org>
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-Message-ID: <6f4f6a68-6da2-2cf7-4772-3947b287be10@somainline.org>
-Date:   Wed, 11 Aug 2021 01:01:27 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        Tue, 10 Aug 2021 19:11:35 -0400
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B807C0613D3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 16:11:13 -0700 (PDT)
+Received: by mail-ot1-x32c.google.com with SMTP id r17-20020a0568302371b0290504f3f418fbso1059107oth.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 16:11:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=6k/wx6m+QJ/KlUp48PSjkqVXsVZIRjT7zgrmzwo+LyQ=;
+        b=OJMoA75yQfF6nIJT4ewyNMLTnvWZOgMWN8T989A9NATkVmWkcvEHkZ//Bbn/zE9y5K
+         Z1Uispq+zjpJYh98KfUHe2JqgRI8s9r8zjUtY4VEagIcHTLQwR4ERyUWOrxTJP4lSeoN
+         CyWrshuezwqkzMkQND0H44Am2oxZs7sJ+23nOp9WHQ3Tgg4nBnUpNlorVEERJEiBxOrt
+         sr4IaD0me6krumvAf7VrApwnuiE/br4ETEzZTMqne1qiycmW6vPyQXfTvK7SfOUQB4uo
+         ulurrn3w4C/7oWPbzBP/asuwu5bgTiDbiBybFldqv5zfKX7v7h38qWUKLk/TSpyYmFYw
+         5f2A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=6k/wx6m+QJ/KlUp48PSjkqVXsVZIRjT7zgrmzwo+LyQ=;
+        b=Pe6lX2tLTdeEd86PExfc57mScy+Jz3DtwkZPLs7yo14mXBexx3MzDtHcfZsatSRRP6
+         Zco6zUYdVsIXtqqMAj9dwgT4Pdp48ENEzADkOiwg+Y4ayBoHmbJqHELbI87pCwe6Yzo8
+         FpbA4u7uPca9wdourBkrcGa8KfE45gXF1o7DJVtNNqFaplKvO3xRnj3xaDceAoRyw0M3
+         iJAMBCUCtzxt5Nb5J+QtHKYjjxxRxK4MS/CbG7DKgUuK2zpqAxJz7XDCw2M50khwTm7c
+         pZSFr0aGY+WhkkFQCSQUjE6D1vZhXkA5anON7i2t5VZRHFFan3tsQ2jaLJ8iJGWjolzv
+         2aHw==
+X-Gm-Message-State: AOAM530JOp4upYNoC09N5htAvtvGA3eE5BpaPTiYMfwWOQeUuppJfZXp
+        JY0fSfQdl8DpL8of0b1+FVyyZw==
+X-Google-Smtp-Source: ABdhPJxorQVOzl3SFtPyjfr0z3XLe0f2nbmj0FKS3FiM+slX5zDmMsJ6o4Dlo0xQzYOLfYQRmQsFIQ==
+X-Received: by 2002:a9d:7651:: with SMTP id o17mr22363483otl.205.1628637072682;
+        Tue, 10 Aug 2021 16:11:12 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id k26sm2359920otb.53.2021.08.10.16.11.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Aug 2021 16:11:12 -0700 (PDT)
+Date:   Tue, 10 Aug 2021 18:11:10 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Sibi Sankar <sibis@codeaurora.org>,
+        Deepak Kumar Singh <deesin@codeaurora.org>,
+        clew@codeaurora.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        Andy Gross <agross@kernel.org>
+Subject: Re: [PATCH V1 1/1] soc: qcom: smp2p: Add wakeup capability to SMP2P
+ IRQ
+Message-ID: <YRMHjmEG3l4SolTi@builder.lan>
+References: <1628180254-758-1-git-send-email-deesin@codeaurora.org>
+ <CAE-0n5203g4CkF5WP1fQYU57fntXbdyVBsMsTKU_xPkgvbt+7Q@mail.gmail.com>
+ <bf2b00c5-0826-00d2-ca95-b4ae6a030211@codeaurora.org>
+ <CAE-0n53ojhs+RMpsYtVjsrYbb_PRdkJOvxFhiTtJPMUDuoP_eA@mail.gmail.com>
+ <8009f5a1458468dbf0b7b20dd166911c@codeaurora.org>
+ <CAE-0n53TCo1UTVi3e18N5hF3+Y_bLiqgH1o5PEua7F9-bog_gQ@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <1626922232-29105-2-git-send-email-abhinavk@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAE-0n53TCo1UTVi3e18N5hF3+Y_bLiqgH1o5PEua7F9-bog_gQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Abhinav,
+On Tue 10 Aug 14:18 CDT 2021, Stephen Boyd wrote:
 
-On 7/22/21 4:50 AM, Abhinav Kumar wrote:
-> During board bringups its useful to have a DSI test pattern
-> generator to isolate a DPU vs a DSI issue and focus on the relevant
-> hardware block.
+> Quoting Sibi Sankar (2021-08-10 10:24:32)
+> > On 2021-08-09 23:28, Stephen Boyd wrote:
+> > > Quoting Deepak Kumar Singh (2021-08-09 04:05:08)
+> > >>
+> > >> On 8/6/2021 1:10 AM, Stephen Boyd wrote:
+> > >> > Quoting Deepak Kumar Singh (2021-08-05 09:17:33)
+> > >> >> Some use cases require SMP2P interrupts to wake up the host
+> > >> >> from suspend.
+> > >> > Please elaborate on this point so we understand what sort of scenarios
+> > >> > want to wakeup from suspend.
+> > >>
+> > >> Once such scenario is where WiFi/modem crashes and notifies crash to
+> > >> local host through smp2p
+> > >>
+> > >> if local host is in suspend it should wake up to handle the crash and
+> > >> reboot the WiFi/modem.
+> > >
+> > > Does anything go wrong if the firmware crashes during suspend and the
+> > > local host doesn't handle it until it wakes for some other reason? I'd
+> > > like to understand if the crash handling can be delayed/combined with
+> > > another wakeup.
+> >
+> > If the modem firmware crashes
+> > during suspend, the system comes
+> > out of xo-shutdown and AFAIK stays
+> > there until we handle the interrupt.
+> >
 > 
-> To facilitate this, add an API which triggers the DSI controller
-> test pattern. The expected output is a rectangular checkered pattern.
-> 
-> This has been validated on a single DSI video mode panel by calling it
-> right after drm_panel_enable() which is also the ideal location to use
-> this as the DSI host and the panel have been initialized by then.
-> 
-> Further validation on dual DSI and command mode panel is pending.
-> If there are any fix ups needed for those, it shall be applied on top
-> of this change.
-> 
-> Changes in v2:
->   - generate the new dsi.xml.h and update the bitfield names
-> 
-> Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
+> So you're saying we waste power if we don't wakeup the AP and leave the
+> SoC in a shallow low power state? That would be good to have indicated
+> in the code via a comment and in the commit text so we know that we want
+> to handle the wakeup by default.
 
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+Sounds like in a system without autosleep (or userspace equivalent) it
+would be desirable to leave the SoC in this lower state than to wake up
+the system handle the crash and then just idle?
 
-And tested on Sony phones powered by MSM8956, SDM630, and SM6125.
+But leaving the system in this state will result in you missing your
+important phone calls...
 
-> ---
->   drivers/gpu/drm/msm/dsi/dsi.h         |  3 ++
->   drivers/gpu/drm/msm/dsi/dsi_host.c    | 61 +++++++++++++++++++++++++++++++++++
->   drivers/gpu/drm/msm/dsi/dsi_manager.c | 13 ++++++++
->   3 files changed, 77 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
-> index 9b8e9b0..663ccbd 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi.h
-> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
-> @@ -84,6 +84,7 @@ void msm_dsi_manager_setup_encoder(int id);
->   int msm_dsi_manager_register(struct msm_dsi *msm_dsi);
->   void msm_dsi_manager_unregister(struct msm_dsi *msm_dsi);
->   bool msm_dsi_manager_validate_current_config(u8 id);
-> +void msm_dsi_manager_tpg_enable(void);
->   
->   /* msm dsi */
->   static inline bool msm_dsi_device_connected(struct msm_dsi *msm_dsi)
-> @@ -148,6 +149,8 @@ int dsi_clk_init_6g_v2(struct msm_dsi_host *msm_host);
->   int dsi_calc_clk_rate_v2(struct msm_dsi_host *msm_host, bool is_dual_dsi);
->   int dsi_calc_clk_rate_6g(struct msm_dsi_host *msm_host, bool is_dual_dsi);
->   void msm_dsi_host_snapshot(struct msm_disp_state *disp_state, struct mipi_dsi_host *host);
-> +void msm_dsi_host_test_pattern_en(struct mipi_dsi_host *host);
-> +
->   /* dsi phy */
->   struct msm_dsi_phy;
->   struct msm_dsi_phy_shared_timings {
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index ed504fe..e0a3581 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -2495,3 +2495,64 @@ void msm_dsi_host_snapshot(struct msm_disp_state *disp_state, struct mipi_dsi_ho
->   
->   	pm_runtime_put_sync(&msm_host->pdev->dev);
->   }
-> +
-> +static void msm_dsi_host_video_test_pattern_setup(struct msm_dsi_host *msm_host)
-> +{
-> +	u32 reg;
-> +
-> +	reg = dsi_read(msm_host, REG_DSI_TEST_PATTERN_GEN_CTRL);
-> +
-> +	dsi_write(msm_host, REG_DSI_TEST_PATTERN_GEN_VIDEO_INIT_VAL, 0xff);
-> +	/* draw checkered rectangle pattern */
-> +	dsi_write(msm_host, REG_DSI_TPG_MAIN_CONTROL,
-> +			DSI_TPG_MAIN_CONTROL_CHECKERED_RECTANGLE_PATTERN);
-> +	/* use 24-bit RGB test pttern */
-
-
-pattern*
-
-> +	dsi_write(msm_host, REG_DSI_TPG_VIDEO_CONFIG,
-> +			DSI_TPG_VIDEO_CONFIG_BPP(VIDEO_CONFIG_24BPP) |
-> +			DSI_TPG_VIDEO_CONFIG_RGB);
-> +
-> +	reg |= DSI_TEST_PATTERN_GEN_CTRL_VIDEO_PATTERN_SEL(VID_MDSS_GENERAL_PATTERN);
-> +	dsi_write(msm_host, REG_DSI_TEST_PATTERN_GEN_CTRL, reg);
-> +
-> +	DBG("Video test pattern setup done\n");
-> +}
-> +
-> +static void msm_dsi_host_cmd_test_pattern_setup(struct msm_dsi_host *msm_host)
-> +{
-> +	u32 reg;
-> +
-> +	reg = dsi_read(msm_host, REG_DSI_TEST_PATTERN_GEN_CTRL);
-> +
-> +	/* initial value for test pattern */
-> +	dsi_write(msm_host, REG_DSI_TEST_PATTERN_GEN_CMD_MDP_INIT_VAL0, 0xff);
-> +
-> +	reg |= DSI_TEST_PATTERN_GEN_CTRL_CMD_MDP_STREAM0_PATTERN_SEL(CMD_MDP_MDSS_GENERAL_PATTERN);
-> +
-> +	dsi_write(msm_host, REG_DSI_TEST_PATTERN_GEN_CTRL, reg);
-> +	/* draw checkered rectangle pattern */
-> +	dsi_write(msm_host, REG_DSI_TPG_MAIN_CONTROL2,
-> +			DSI_TPG_MAIN_CONTROL2_CMD_MDP0_CHECKERED_RECTANGLE_PATTERN);
-> +
-> +	DBG("Cmd test pattern setup done\n");
-> +}
-> +
-> +void msm_dsi_host_test_pattern_en(struct mipi_dsi_host *host)
-> +{
-> +	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
-> +	bool is_video_mode = !!(msm_host->mode_flags & MIPI_DSI_MODE_VIDEO);
-> +	u32 reg;
-> +
-> +	if (is_video_mode)
-> +		msm_dsi_host_video_test_pattern_setup(msm_host);
-> +	else
-> +		msm_dsi_host_cmd_test_pattern_setup(msm_host);
-> +
-> +	reg = dsi_read(msm_host, REG_DSI_TEST_PATTERN_GEN_CTRL);
-> +	/* enable the test pattern generator */
-> +	dsi_write(msm_host, REG_DSI_TEST_PATTERN_GEN_CTRL, (reg | DSI_TEST_PATTERN_GEN_CTRL_EN));
-> +
-> +	/* for command mode need to trigger one frame from tpg */
-> +	if (!is_video_mode)
-> +		dsi_write(msm_host, REG_DSI_TEST_PATTERN_GEN_CMD_STREAM0_TRIGGER,
-> +				DSI_TEST_PATTERN_GEN_CMD_STREAM0_TRIGGER_SW_TRIGGER);
-> +}
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> index 4ebfedc..db80de6 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> @@ -441,6 +441,19 @@ static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
->   	return;
->   }
->   
-> +void msm_dsi_manager_tpg_enable(void)
-> +{
-> +	struct msm_dsi *m_dsi = dsi_mgr_get_dsi(DSI_0);
-> +	struct msm_dsi *s_dsi = dsi_mgr_get_dsi(DSI_1);
-> +
-> +	/* if dual dsi, trigger tpg on master first then slave */
-> +	if (m_dsi) {
-> +		msm_dsi_host_test_pattern_en(m_dsi->host);
-> +		if (IS_DUAL_DSI() && s_dsi)
-> +			msm_dsi_host_test_pattern_en(s_dsi->host);
-> +	}
-> +}
-> +
->   static void dsi_mgr_bridge_enable(struct drm_bridge *bridge)
->   {
->   	int id = dsi_mgr_bridge_get_id(bridge);
-> 
-
-Marijn
+Regards,
+Bjorn
