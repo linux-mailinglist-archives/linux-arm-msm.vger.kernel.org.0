@@ -2,135 +2,72 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 864A03E5019
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Aug 2021 01:46:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5051F3E503B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 10 Aug 2021 02:06:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237048AbhHIXrI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 9 Aug 2021 19:47:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59838 "EHLO
+        id S237109AbhHJAHL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 9 Aug 2021 20:07:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36044 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232717AbhHIXrI (ORCPT
+        with ESMTP id S230317AbhHJAHK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 9 Aug 2021 19:47:08 -0400
-Received: from mail-lj1-x22f.google.com (mail-lj1-x22f.google.com [IPv6:2a00:1450:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C05D1C0613D3;
-        Mon,  9 Aug 2021 16:46:46 -0700 (PDT)
-Received: by mail-lj1-x22f.google.com with SMTP id m9so26180114ljp.7;
-        Mon, 09 Aug 2021 16:46:46 -0700 (PDT)
+        Mon, 9 Aug 2021 20:07:10 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5DD6C061796
+        for <linux-arm-msm@vger.kernel.org>; Mon,  9 Aug 2021 17:06:49 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id r17-20020a0568302371b0290504f3f418fbso5797508oth.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 09 Aug 2021 17:06:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=xiApi7G+VnFykOPRYjvLWbpQLitx31kBAvkrkjs55U4=;
-        b=hj6cjc6vEf6M1bmBMLNtoe6SXdhi0jjQcbBuoAfWb3QrIfBuZowJ/IBymxQw8deQmb
-         FNxfrP6mBH6cLjLTIbp3JOIA51xXIb99Xd9u61kZV7kJgXepwSBSdGQ8oP9unEBplgAZ
-         LxD2vTliuGcvvkHR3MPuteQ3QVkeViStJK09Vk+uEVsg9ZfY7a9U+xisUucy02KOJvzw
-         THeyJei7nvht+d/r3Y6iqf8745DrwHTeLEd/4qChHyuf33aLAr4doh5pJjZopC1eEA1K
-         J8CM8i8O8zXsewXV8iU21Mr7bhpj/U2uw+P3yx9RmvttEnf/VCuWlqxt/AzS7KtlFO00
-         hM4w==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=z7lFn/OgIbozxfPpWIL41tqWAyoo1c25CUhE+wVHy2E=;
+        b=YhtgTTL24J2Q901pxxraRzr2e6aEAsvLQkHaiYTevOHYcVNNb70cjDiaEwdsIq8BXN
+         wpYvPIjDyag/iyLToGVOJkKLG7uJdWDBeQ0RrSjIpGoUS+WRXWr4Uuc+9lFlSBwQdix3
+         ZJi1BJJhihwUbTrgXthbzJEm8hOQtXIW2ldEY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=xiApi7G+VnFykOPRYjvLWbpQLitx31kBAvkrkjs55U4=;
-        b=mQlOJSgo6KLp/6v89mnlocGrE48LTq5s4L0XM52nWd0yRgT/KCHrMuW0oGAC6ACZzG
-         r62eYn0RFNf18D9GAxu6hx2IZzeSe2S0MD2hl4HLqonAk2tB9Q2nus3R0i99FSGyLdnv
-         9V6PIIPZ3T7dbjFKulmydK+Jv9FCTsutKIGE+EUIQVwNb2biQWwmgkF9MLm1rx8hHObK
-         oA3X1KN4trK/zb9sHHe9qcTmNE0R6xMoJT/GqOyLg0vYmtkKKqHyA4ILlpsxHESo2jkD
-         79Y7zs1GGShnn++Syv5CCy3IVOSEpWCLalTu6A4YqyoPoFqUM3S1+jLeYYDtxww/H93S
-         ad3A==
-X-Gm-Message-State: AOAM532/kZkZOoA6dYZPcUmAQPKQkuNlRvLSJY1RHVCYjRD97eCzTT6u
-        U6SwM/Td++ExYpuRYHSS5WE=
-X-Google-Smtp-Source: ABdhPJx5RIySknB2pRdg4ziQQNjaT4cVz4nC+C+8kafzn7EsIH2nl0aRqJ2NE3O26Edu6kPTlrLkog==
-X-Received: by 2002:a2e:b532:: with SMTP id z18mr6586507ljm.309.1628552805027;
-        Mon, 09 Aug 2021 16:46:45 -0700 (PDT)
-Received: from [192.168.2.145] (46-138-117-53.dynamic.spd-mgts.ru. [46.138.117.53])
-        by smtp.googlemail.com with ESMTPSA id q23sm1872117lfp.169.2021.08.09.16.46.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 09 Aug 2021 16:46:44 -0700 (PDT)
-Subject: Re: [PATCH v6 1/2] PM / Domains: Add support for 'required-opps' to
- set default perf state
-From:   Dmitry Osipenko <digetx@gmail.com>
-To:     Rajendra Nayak <rnayak@codeaurora.org>, ulf.hansson@linaro.org,
-        bjorn.andersson@linaro.org, viresh.kumar@linaro.org
-Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        swboyd@chromium.org, rojay@codeaurora.org, stephan@gerhold.net
-References: <1628074696-7979-1-git-send-email-rnayak@codeaurora.org>
- <1628074696-7979-2-git-send-email-rnayak@codeaurora.org>
- <f58e631d-67a7-4981-ce59-6a4772b44564@gmail.com>
- <c43ddc6b-32ca-433d-76f2-901cb594eaf1@gmail.com>
-Message-ID: <9588f01d-1cb6-7ca3-eb41-74259f1678f6@gmail.com>
-Date:   Tue, 10 Aug 2021 02:46:43 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=z7lFn/OgIbozxfPpWIL41tqWAyoo1c25CUhE+wVHy2E=;
+        b=BzS+Ci5HQiRSctu6oFMtaDvz30AHulY4QIUx4fMySFWyO0l+9lcHsMfFpBXS6W/n/T
+         Zlnlq9BotjZi03CIDxf1i97dW1LxWIap8IVKejAs7wy6H77VqI3CvD6zJcUfSsraB2sy
+         f+HF/6Eh5l+luGIrfkI18HMatqq64Un/mXfJnWKzWvNil1/YTN9+2Ia/izNvqJl0hBmS
+         7yqdn6OSCpR0AZW65uQ1WA2p7Q/QI7CkX/4LbxhI2x9rIYAW6aRVsdgmuOqGcdHFNzXq
+         FhIen/VOiCS1gspLS2+2INR+oBvcm/muFMKcD3D7V7Hk7/9W2RmFDlayNnm+PFmu+AWc
+         eeZg==
+X-Gm-Message-State: AOAM530YJkK6qeVkfLj4oDnOHMF2JnlW0MCD06VQadk3e28G+epff2Ti
+        uoHuSkg6ZQsGS6XWdD1tvF4JlokI/m+JeRBL2sPEmw==
+X-Google-Smtp-Source: ABdhPJyHxPiz+4jZdua08WndVHVUUZwOp93vnlfR/lihn4zZ0NeOwGKE8URDZ20NU/NwrBeRkck27YsGd7/EAhlLU98=
+X-Received: by 2002:a05:6830:1490:: with SMTP id s16mr18959569otq.233.1628554009313;
+ Mon, 09 Aug 2021 17:06:49 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 9 Aug 2021 17:06:48 -0700
 MIME-Version: 1.0
-In-Reply-To: <c43ddc6b-32ca-433d-76f2-901cb594eaf1@gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <1628546337-15517-1-git-send-email-khsieh@codeaurora.org>
+References: <1628546337-15517-1-git-send-email-khsieh@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Mon, 9 Aug 2021 17:06:48 -0700
+Message-ID: <CAE-0n52+DWvcO54WJEJUaFQ9y=4sb4SeuVzQ5LSXGm24bJ-16w@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dp: add drm debug logs to dp_pm_resume/suspend
+To:     Kuogee Hsieh <khsieh@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robdclark@gmail.com, sean@poorly.run,
+        vkoul@kernel.org
+Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-10.08.2021 01:44, Dmitry Osipenko пишет:
-> 10.08.2021 01:26, Dmitry Osipenko пишет:
->> 04.08.2021 13:58, Rajendra Nayak пишет:
->>> @@ -2637,6 +2643,8 @@ static int __genpd_dev_pm_attach(struct device *dev, struct device *base_dev,
->>>  {
->>>  	struct of_phandle_args pd_args;
->>>  	struct generic_pm_domain *pd;
->>> +	struct device_node *np;
->>> +	int pstate;
->>>  	int ret;
->>>  
->>>  	ret = of_parse_phandle_with_args(dev->of_node, "power-domains",
->>> @@ -2675,10 +2683,26 @@ static int __genpd_dev_pm_attach(struct device *dev, struct device *base_dev,
->>>  		genpd_unlock(pd);
->>>  	}
->>>  
->>> -	if (ret)
->>> +	if (ret) {
->>>  		genpd_remove_device(pd, dev);
->>> +		return -EPROBE_DEFER;
->>> +	}
->>> +
->>> +	/* Set the default performance state */
->>> +	np = dev->of_node;
->>> +	if (of_parse_phandle(np, "required-opps", index)) {
+Quoting Kuogee Hsieh (2021-08-09 14:58:57)
+> Add drm debug logs to dp_pm_resume and dp_pm_suspend to help
+> debug suspend/resume issues.
+>
+> Fixes: 355ab7428f09 ("drm/msm/dp: add debug logs to dp_pm_resume/suspend")
+> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+> ---
 
-The OF node returned by of_parse_phandle() must be put.
-
->>> +		pstate = of_get_required_opp_performance_state(np, index);
-
-If you have more than one power domain, then this will override the
-pstate which was set for a previous domain. This code doesn't feel solid
-to me, at least a clarifying comment is needed about how it's supposed
-to work.
-
->>> +		if (pstate < 0) {
->>> +			ret = pstate;
->>> +			dev_err(dev, "failed to set required performance state for power-domain %s: %d\n",
->>> +				pd->name, ret);
->>> +		} else {
->>> +			dev_pm_genpd_set_performance_state(dev, pstate);
-> 
-> Where is error handling?
-> 
->>> +			dev_gpd_data(dev)->default_pstate = pstate;
->>> +		}
->>> +	}
->>
->> Why performance state is set after genpd_power_on()?
-
-Should set_performance_state() be invoked when power_on=false?
-
-I assume it should be:
-
-if (power_on) {
-	dev_pm_genpd_set_performance_state(dev, pstate);
-	dev_gpd_data(dev)->default_pstate = pstate;
-} else {
-	dev_gpd_data(dev)->rpm_pstate = pstate;
-}
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
