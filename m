@@ -2,104 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 58B963E8F6F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 13:27:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DA9033E8FF4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 13:59:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237268AbhHKL1q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Aug 2021 07:27:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41844 "EHLO
+        id S237443AbhHKL7d (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 07:59:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49090 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229836AbhHKL1p (ORCPT
+        with ESMTP id S237419AbhHKL7c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Aug 2021 07:27:45 -0400
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48570C061765
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 04:27:22 -0700 (PDT)
-Received: by mail-qk1-x735.google.com with SMTP id e14so1919460qkg.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 04:27:22 -0700 (PDT)
+        Wed, 11 Aug 2021 07:59:32 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0C5AC061798
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 04:59:08 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id c24so5083970lfi.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 04:59:08 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=M8xB0E2B1K+5eOLxbxOIv4aQXqMJ7e2Gt5MyPt4i1Sg=;
-        b=nL/Xhm/jqNW742WksYFcYXw88JayWRSdCcC7mtJuyJ+1sT0Btf03OBt7djwxwRIGKh
-         whc/Kpe4MxLoS2EGqgHgx43YrkIJwxxZwPjyYzPOx0TMJ8/dR0vw9VQUPVy1JCLmTrjc
-         FEpzCJkMZk6hWb91p3CLrMg1D9Pr2vlyvHP2/syvo6ic9yFf3ygOTFzJUn9ruBtLZmsz
-         C9XwoGI2gb1uRVv7h4BhHPBmKE0x7+VvpIm9CNhEiBaAsH0UvI2Hr1BBxAFPym5OOanS
-         8NWYKqRtHfalYAU/Bvb2dcxOEnL/q/xYLlbtUTGHVuK0bLwQigZKGlXomBIEVOO1ffR7
-         s1Pw==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=mCS3awkzA8RWLuNBik5eKT8lyl2fZPoNsKZCtZjxeHM=;
+        b=hvGuv1nPXE5fSGfW1StTPNwEqjNezSk92PHiyyiwzWfzWx7F0QIB9jS+QRo2gn28to
+         Bt64oCxPp3gWybq9VyJQI5P6eRwZEgBjuXSJJc+1E7kBWo3mN8sS88EWk9TwwiOnItDa
+         amJIUrEvP3YE23YIkI6LfcTBNzAKd6NeAfHjBDqcTZhFdfThXqGlbvcjMmAbGcrWIlmo
+         XpNL3bXIBIV9C0BofYvuV7jNV2Z7IgZFUzIj6rbEjkZHVLos3+R6gksqlU8S4+NSHXbN
+         4xrYzpcGqlVg8xY+eQ1bG7ML0svz3zlO3T1CRl0yOyjFtKvTxyH1gEEcWh5pHroP2Pmk
+         WMxw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=M8xB0E2B1K+5eOLxbxOIv4aQXqMJ7e2Gt5MyPt4i1Sg=;
-        b=FD4bUrb5canTsGSLgE3ioOfL1CYc4rg8hYkHvnmKPWU5BUtIV1YnxFHwZaQ3B5puk+
-         MmE5AgL9BtBSMqkOQy+xlUY4tGb7RehjjHJdJf56An9+Q17i/4YAFHeOBagky9WE47pV
-         E5vv/n4hAVTjqNh1C/qufg5+dw1Hwoo/C8cOrumXnJ4wPAMI/jSGxkdAnFKBB4h9b7bA
-         Zw4fdK5jFvAsrvw5UlGNG4/+IGcy3hdIfoByQ0rL7HBlytlU7FcDSH0WOmLYbO3eivZ2
-         qHwfDXvL0C6/1vMj3T+7/EUSd9ZVdbECN4eFTnwOm5hLnfxqBM7qxoYLSFT6WyQP25GK
-         y+sw==
-X-Gm-Message-State: AOAM530rFdqXT8mseoDLi0FLw0JKYppIBI08QfYkAcI+a0ZNWD6fbq7N
-        IfnXF8VW8i6phGRbY4By3ZFsBA==
-X-Google-Smtp-Source: ABdhPJww/x+iu4ttunbR4CGsUfuQLgc7BaGhPZS72OfL2EQHH4R1Z3rVtsaKuWqV03jE4AysrY8mUg==
-X-Received: by 2002:a37:a8ca:: with SMTP id r193mr30777288qke.191.1628681241460;
-        Wed, 11 Aug 2021 04:27:21 -0700 (PDT)
-Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id d4sm9153573qty.15.2021.08.11.04.27.20
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Aug 2021 04:27:20 -0700 (PDT)
-Subject: Re: [Patch v5 3/6] cpufreq: qcom-cpufreq-hw: Add dcvs interrupt
- support
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, rui.zhang@intel.com,
-        daniel.lezcano@linaro.org, rjw@rjwysocki.net, robh+dt@kernel.org,
-        steev@kali.org, tdas@codeaurora.org, mka@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20210809191605.3742979-1-thara.gopinath@linaro.org>
- <20210809191605.3742979-4-thara.gopinath@linaro.org>
- <20210810024723.qne6ntjtv5zxf576@vireshk-i7>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <2ea49a1c-5336-5a52-43ff-2000a7b0d25e@linaro.org>
-Date:   Wed, 11 Aug 2021 07:27:19 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=mCS3awkzA8RWLuNBik5eKT8lyl2fZPoNsKZCtZjxeHM=;
+        b=ueXE6f06TJfds4vbXbUP/nPmo6rRKM8mFKyDlkUkYsQJWGPc1K5MUB6Y//a2//6dKc
+         eHRJzpivolCvXMc7LaGCA1tDETIyLLoXBoHmWbTEgmtnElf9HwiWFmDzTib4OzCQn90+
+         Mir+EfK1/ITDc7wGLmP3mVRFs2U/P8zGj4tRpPs+e0omZkTcWJXmLiovbrhjqgEKHHKg
+         OcmScDy3+2y/KuwNwcixEv6q5ptF5gtlHipzgZhrK1GrEwFO6NCrrYbrPOiNML+LGCAb
+         i97bGc91y0L2wEEzGNfBW0+3opyun2TcHRTM6kWDxgPTt1GbA5g+eaD9/05lXsPwffIN
+         VhkA==
+X-Gm-Message-State: AOAM530v+CnTY/bdsUwwADSEOIV5cCVa1S9efavcpB80gpEozyMQWSgz
+        b5htBVlzgjlYb442Q3DQCEcZ/Vy89VvqZD4pCRLDkQ==
+X-Google-Smtp-Source: ABdhPJzpYp6+24xONNd2RkFQ9OJS/necpcEFr9NwCBDIxjwF+49VMogiOFbS/tQWPsgHQZdMikO98rimMH1Xw8RSdJc=
+X-Received: by 2002:a19:c7cd:: with SMTP id x196mr24889464lff.465.1628683147259;
+ Wed, 11 Aug 2021 04:59:07 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20210810024723.qne6ntjtv5zxf576@vireshk-i7>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <1627910464-19363-1-git-send-email-skakit@codeaurora.org> <1627910464-19363-3-git-send-email-skakit@codeaurora.org>
+In-Reply-To: <1627910464-19363-3-git-send-email-skakit@codeaurora.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Wed, 11 Aug 2021 13:58:55 +0200
+Message-ID: <CACRpkdYMp6d7hhKSMknsGCQLuytRwow6+5UuiLs=yh9Oh6JFaQ@mail.gmail.com>
+Subject: Re: [RESEND PATCH V7 2/3] dt-bindings: pinctrl: qcom-pmic-gpio:
+ Convert qcom pmic gpio bindings to YAML
+To:     satya priya <skakit@codeaurora.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        Das Srinagesh <gurus@codeaurora.org>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, MSM <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Aug 2, 2021 at 3:22 PM satya priya <skakit@codeaurora.org> wrote:
 
+> Convert Qualcomm PMIC GPIO bindings from .txt to .yaml format.
+>
+> Signed-off-by: satya priya <skakit@codeaurora.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
 
-On 8/9/21 10:47 PM, Viresh Kumar wrote:
-> On 09-08-21, 15:16, Thara Gopinath wrote:
->> Add interrupt support to notify the kernel of h/w initiated frequency
->> throttling by LMh. Convey this to scheduler via thermal presssure
->> interface.
->>
->> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
->> ---
->>
->> v4->v5:
->> 	- Changed throttle_lock from a spinlock to mutex to take potential
->> 	  race between LMh de-init sequence and reenabling of
->> 	  interrupts/polling after a thermal throttle event.
->> 	- Other cosmetic fixes as pointed out by Viresh.
-> 
-> How do you expect this to get merged ? I pick up this patch alone ?
+This version applied.
 
-Hi.
+It didn't work first so I had to force-apply it. I don't know why.
+Check the result.
 
-Yes, you can pick up this patch alone. This patch is standalone and has 
-no dependencies. Once you do that, I will drop it from my series.
-
-> 
-
--- 
-Warm Regards
-Thara (She/Her/Hers)
+Yours,
+Linus Walleij
