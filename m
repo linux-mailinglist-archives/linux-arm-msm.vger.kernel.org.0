@@ -2,68 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 394133E9494
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 17:35:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7F2143E9519
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 17:53:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233026AbhHKPfv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Aug 2021 11:35:51 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45574 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233010AbhHKPfu (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Aug 2021 11:35:50 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD476C061765;
-        Wed, 11 Aug 2021 08:35:25 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id k29so3648547wrd.7;
-        Wed, 11 Aug 2021 08:35:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:mime-version:content-transfer-encoding
-         :content-description:subject:to:date:reply-to;
-        bh=5NTJSky9UX3JbuB9riY3wCYfXDpCwy2c7hzO0kF4AHA=;
-        b=N7u2GWWephT+M/QIPBdSBm7A8AGXCr0qBU8/5o7psvwITvP5tbqVKMYLiLfqVUns/7
-         4HAFF3ohk3XR99P6gQJo3jnX6MasYdG9Qnuvrn085TYipzk3av6o0Sh9138SwdDKeMos
-         XWmlBV5SHbBAXEsFefobpAW9EC1xzTNTZfwBmUs81QrspU3qICt6H1xlgtlFKHGwyhq/
-         n7MtxOjqxKpokeAiKzsBk+yx8qLmzZ0cl5Thr7ebV8QcKVcTv2hsb8oHgbApsdX7Dimk
-         DHYXNynDOoyNo3a4U65icGs9naNeaZViURI3kqEcc7fREjAJ9BWwOaB82hBRclFw0yXJ
-         7evg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:mime-version
-         :content-transfer-encoding:content-description:subject:to:date
-         :reply-to;
-        bh=5NTJSky9UX3JbuB9riY3wCYfXDpCwy2c7hzO0kF4AHA=;
-        b=tU00jMrQumZLaPMGok6nlUHbi39C4ErHISPB3uwgwqmaV2qMrxcrFQCv2k91WmFlxI
-         2xumOQ9OVSwR9yME0uT3v9+CBbOfx+fbGQly7Rb/CeVDFetyqzI/9Uqe3eRNcfnxfDbz
-         9GEC618niIjKD5mPTB/XlGrd5sI+Nlpm6J82s9al4aUUtGvt82fkIHttpF9pBqE6HonV
-         4Ik0kOleeqe9AR4qycehD0zdkKGDC321mZvnwLkDQaZ3h2ruQ5xKwNmMN6OBvkVBV+Bx
-         eoNPgi6YBmFLZTwoOzfBgJVjryIXw0ldPVNiGcav5mgipcyVl4bEkBWA+lHPb6aZD/LH
-         WKIg==
-X-Gm-Message-State: AOAM530VLahqrTs89QsZCZiF1eGsGPHXnNT0x68xcv7zgdfHlRT3dIrS
-        LROkd8ZwPZE6SQCkLrPvSZ4=
-X-Google-Smtp-Source: ABdhPJwyjmax4fN8aR8h2tcRHMlUduz0eZZoQWwmvbL+02oCQeVNLoY4jqiW9KeE1DvT/NQNgTc7Pg==
-X-Received: by 2002:a05:6000:120d:: with SMTP id e13mr13308516wrx.6.1628696124534;
-        Wed, 11 Aug 2021 08:35:24 -0700 (PDT)
-Received: from [192.168.1.70] ([102.64.209.185])
-        by smtp.gmail.com with ESMTPSA id o24sm6251662wmm.37.2021.08.11.08.35.12
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Wed, 11 Aug 2021 08:35:24 -0700 (PDT)
-Message-ID: <6113ee3c.1c69fb81.925d2.e676@mx.google.com>
-From:   Vanina curth <curtisvani0038@gmail.com>
-X-Google-Original-From: Vanina  curth
-Content-Type: text/plain; charset="iso-8859-1"
+        id S233504AbhHKPyA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 11:54:00 -0400
+Received: from foss.arm.com ([217.140.110.172]:53514 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232847AbhHKPxw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 11 Aug 2021 11:53:52 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id CCA36106F;
+        Wed, 11 Aug 2021 08:53:28 -0700 (PDT)
+Received: from [10.57.36.146] (unknown [10.57.36.146])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 00EEA3F718;
+        Wed, 11 Aug 2021 08:53:26 -0700 (PDT)
+Subject: Re: [PATCHv4] iommu/arm-smmu: Optimize ->tlb_flush_walk() for qcom
+ implementation
+To:     Will Deacon <will@kernel.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Cc:     Joerg Roedel <joro@8bytes.org>, iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Doug Anderson <dianders@chromium.org>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Thierry Reding <treding@nvidia.com>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+References: <20210811060725.25221-1-saiprakash.ranjan@codeaurora.org>
+ <20210811103011.GD4426@willie-the-truck>
+From:   Robin Murphy <robin.murphy@arm.com>
+Message-ID: <7be65300-632a-8626-e5da-13bc9e276763@arm.com>
+Date:   Wed, 11 Aug 2021 16:53:25 +0100
+User-Agent: Mozilla/5.0 (Windows NT 10.0; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Description: Mail message body
-Subject: Dear
-To:     Recipients <Vanina@vger.kernel.org>
-Date:   Wed, 11 Aug 2021 15:34:52 +0000
-Reply-To: curtisvani9008@gmail.com
+In-Reply-To: <20210811103011.GD4426@willie-the-truck>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-How are you? I'm Vanina. I'm interested to know you and I would like to kno=
-w more about you and establish relationship with you. i will wait for your =
-response. thank you.
+On 2021-08-11 11:30, Will Deacon wrote:
+> On Wed, Aug 11, 2021 at 11:37:25AM +0530, Sai Prakash Ranjan wrote:
+>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+>> index f7da8953afbe..3904b598e0f9 100644
+>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+>> @@ -327,9 +327,16 @@ static void arm_smmu_tlb_inv_range_s2(unsigned long iova, size_t size,
+>>   static void arm_smmu_tlb_inv_walk_s1(unsigned long iova, size_t size,
+>>   				     size_t granule, void *cookie)
+>>   {
+>> -	arm_smmu_tlb_inv_range_s1(iova, size, granule, cookie,
+>> -				  ARM_SMMU_CB_S1_TLBIVA);
+>> -	arm_smmu_tlb_sync_context(cookie);
+>> +	struct arm_smmu_domain *smmu_domain = cookie;
+>> +	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
+>> +
+>> +	if (cfg->flush_walk_prefer_tlbiasid) {
+>> +		arm_smmu_tlb_inv_context_s1(cookie);
+> 
+> Hmm, this introduces an unconditional wmb() if tlbiasid is preferred. I
+> think that should be predicated on ARM_SMMU_FEAT_COHERENT_WALK like it is
+> for the by-VA ops. Worth doing as a separate patch.
+> 
+>> +	} else {
+>> +		arm_smmu_tlb_inv_range_s1(iova, size, granule, cookie,
+>> +					  ARM_SMMU_CB_S1_TLBIVA);
+>> +		arm_smmu_tlb_sync_context(cookie);
+>> +	}
+>>   }
+>>   
+>>   static void arm_smmu_tlb_add_page_s1(struct iommu_iotlb_gather *gather,
+>> @@ -765,8 +772,10 @@ static int arm_smmu_init_domain_context(struct iommu_domain *domain,
+>>   		.iommu_dev	= smmu->dev,
+>>   	};
+>>   
+>> -	if (!iommu_get_dma_strict(domain))
+>> +	if (!iommu_get_dma_strict(domain)) {
+>>   		pgtbl_cfg.quirks |= IO_PGTABLE_QUIRK_NON_STRICT;
+>> +		cfg->flush_walk_prefer_tlbiasid = true;
+> 
+> This is going to interact badly with Robin's series to allow dynamic
+> transition to non-strict mode, as we don't have a mechanism to switch
+> over to the by-ASID behaviour. Yes, it should _work_, but it's ugly having
+> different TLBI behaviour just because of the how the domain became
+> non-strict.
+> 
+> Robin -- I think this originated from your idea at [1]. Any idea how to make
+> it work with your other series, or shall we drop this part for now and leave
+> the TLB invalidation behaviour the same for now?
+
+Yeah, I'd say drop it - I'm currently half an hour into a first attempt 
+at removing io_pgtable_tlb_flush_walk() entirely, which would make it 
+moot for non-strict anyway.
+
+Robin.
