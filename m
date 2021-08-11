@@ -2,152 +2,226 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E4B13E8F14
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 12:53:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB3193E8F27
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 12:56:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237180AbhHKKyD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Aug 2021 06:54:03 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:39318 "EHLO m43-7.mailgun.net"
+        id S237236AbhHKK4b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 06:56:31 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37032 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231143AbhHKKyC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Aug 2021 06:54:02 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1628679219; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=qlpDNvJjcRJ+wsfFRoWvzfj53K6Rwd/daWeirz+kr0U=;
- b=LXU6hHwZC3OUmDuVEQUOimwAGk4qgaabL/FRRGpFRJBpVjAjZ3ehA4b+MM3d9L28d5YKWMpl
- HFm6pleE+xRR7GXW+3NAttCKUpFaYoaLVPO87dsr6ie9BcBI1ArIg989aCSB3aaG9p0r+Q5F
- wSrzh6jg2mnhqhomCDmIZdr/faQ=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 6113ac1e91487ad520c1b6f4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 11 Aug 2021 10:53:18
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3D8FDC433F1; Wed, 11 Aug 2021 10:53:18 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C94CEC433F1;
-        Wed, 11 Aug 2021 10:53:16 +0000 (UTC)
+        id S237233AbhHKK4a (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 11 Aug 2021 06:56:30 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 07FFA60EB9;
+        Wed, 11 Aug 2021 10:56:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1628679367;
+        bh=MNWTZ/70weNbDnunlQZ0i4+2qg5+X3dKvya4CSdq02k=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=A7vSGYZnGXQafdFrBZGL2cv8fjYl7sLZ8ONA8ZIkV7IQrz1futdxY4vFxKfVSVBIK
+         UMLyYUu6JG49GAOg2ftkojsKdIWY1FMnAIDD8NyNMifn1oK1MaWbDEe/Gf9eeH0cax
+         tJeY+D6d03mTosw1MWLUvEIYKwi9iE1xIRsngfRZUA5XTBn/gk+DTwXNdQPeWTrhOB
+         JsOeY8iGeCmPgIM52fXt4iHPGOia4uLkXvzmViqOkHys5PkKq7mRcxHrDpfEaS1qt1
+         +roiY/a/wHheVXFUChO6MSu+87TToU8VOoWHMWpzNGJrWau5mGytp704hOXFJpXDLJ
+         xDsiGDBJO9Zgg==
+Subject: Re: [PATCH v3 5/6] interconnect: qcom: Add MSM8996 interconnect
+ provider driver
+To:     Yassine Oudjana <y.oudjana@protonmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        okukatla@codeaurora.org, mdtipton@codeaurora.org
+References: <20210811043451.189776-1-y.oudjana@protonmail.com>
+ <20210811043451.189776-6-y.oudjana@protonmail.com>
+From:   Georgi Djakov <djakov@kernel.org>
+Message-ID: <a520d353-f291-4596-e21b-6bdd27fdc965@kernel.org>
+Date:   Wed, 11 Aug 2021 13:56:01 +0300
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <20210811043451.189776-6-y.oudjana@protonmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Wed, 11 Aug 2021 16:23:16 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Will Deacon <will@kernel.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Doug Anderson <dianders@chromium.org>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Thierry Reding <treding@nvidia.com>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCHv4] iommu/arm-smmu: Optimize ->tlb_flush_walk() for qcom
- implementation
-In-Reply-To: <20210811103011.GD4426@willie-the-truck>
-References: <20210811060725.25221-1-saiprakash.ranjan@codeaurora.org>
- <20210811103011.GD4426@willie-the-truck>
-Message-ID: <47c50d2010a0c8f9c21c20584fb8db5e@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Yassine,
 
-On 2021-08-11 16:00, Will Deacon wrote:
-> On Wed, Aug 11, 2021 at 11:37:25AM +0530, Sai Prakash Ranjan wrote:
->> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c 
->> b/drivers/iommu/arm/arm-smmu/arm-smmu.c
->> index f7da8953afbe..3904b598e0f9 100644
->> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
->> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
->> @@ -327,9 +327,16 @@ static void arm_smmu_tlb_inv_range_s2(unsigned 
->> long iova, size_t size,
->>  static void arm_smmu_tlb_inv_walk_s1(unsigned long iova, size_t size,
->>  				     size_t granule, void *cookie)
->>  {
->> -	arm_smmu_tlb_inv_range_s1(iova, size, granule, cookie,
->> -				  ARM_SMMU_CB_S1_TLBIVA);
->> -	arm_smmu_tlb_sync_context(cookie);
->> +	struct arm_smmu_domain *smmu_domain = cookie;
->> +	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
->> +
->> +	if (cfg->flush_walk_prefer_tlbiasid) {
->> +		arm_smmu_tlb_inv_context_s1(cookie);
-> 
-> Hmm, this introduces an unconditional wmb() if tlbiasid is preferred. I
-> think that should be predicated on ARM_SMMU_FEAT_COHERENT_WALK like it 
-> is
-> for the by-VA ops. Worth doing as a separate patch.
-> 
+Thank you for working on this!
 
-Ok I will keep this as-is for now then.
+On 11.08.21 7:37, Yassine Oudjana wrote:
+> Add a driver for the MSM8996 NoCs. This chip is similar to SDM660 where
+> some busses are controlled by RPM, while others directly by the AP with
+> writes to QoS registers.
+> 
+> This driver currently supports all NoCs except a0noc.
 
->> +	} else {
->> +		arm_smmu_tlb_inv_range_s1(iova, size, granule, cookie,
->> +					  ARM_SMMU_CB_S1_TLBIVA);
->> +		arm_smmu_tlb_sync_context(cookie);
->> +	}
->>  }
->> 
->>  static void arm_smmu_tlb_add_page_s1(struct iommu_iotlb_gather 
->> *gather,
->> @@ -765,8 +772,10 @@ static int arm_smmu_init_domain_context(struct 
->> iommu_domain *domain,
->>  		.iommu_dev	= smmu->dev,
->>  	};
->> 
->> -	if (!iommu_get_dma_strict(domain))
->> +	if (!iommu_get_dma_strict(domain)) {
->>  		pgtbl_cfg.quirks |= IO_PGTABLE_QUIRK_NON_STRICT;
->> +		cfg->flush_walk_prefer_tlbiasid = true;
-> 
-> This is going to interact badly with Robin's series to allow dynamic
-> transition to non-strict mode, as we don't have a mechanism to switch
-> over to the by-ASID behaviour. Yes, it should _work_, but it's ugly 
-> having
-> different TLBI behaviour just because of the how the domain became
-> non-strict.
-> 
-> Robin -- I think this originated from your idea at [1]. Any idea how to 
-> make
-> it work with your other series, or shall we drop this part for now and 
-> leave
-> the TLB invalidation behaviour the same for now?
-> 
-> Will
-> 
-> [1] 
-> https://lore.kernel.org/r/da62ff1c-9b49-34d3-69a1-1a674e4a30f7@arm.com
+Just curious what's the issue with a0noc. Do we need to enable some GDSC
+or clock in order to write to the QoS registers?
 
-Right, I think we can drop this non-strict change for now because it 
-also makes
-it a pain to backport it to 5.4/5.10 kernels because of large number of 
-changes
-in dma apis in recent kernels. I will let you and Robin decide if it's 
-ok to
-drop this change and introduce it later with a different patch.
+> 
+> Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+> ---
+>   drivers/interconnect/qcom/Kconfig   |   9 +
+>   drivers/interconnect/qcom/Makefile  |   2 +
+>   drivers/interconnect/qcom/msm8996.c | 574 ++++++++++++++++++++++++++++
+>   drivers/interconnect/qcom/msm8996.h | 149 ++++++++
+>   4 files changed, 734 insertions(+)
+>   create mode 100644 drivers/interconnect/qcom/msm8996.c
+>   create mode 100644 drivers/interconnect/qcom/msm8996.h
+> 
+> diff --git a/drivers/interconnect/qcom/Kconfig b/drivers/interconnect/qcom/Kconfig
+> index ad16224f1720..e30ad95e5584 100644
+> --- a/drivers/interconnect/qcom/Kconfig
+> +++ b/drivers/interconnect/qcom/Kconfig
+> @@ -35,6 +35,15 @@ config INTERCONNECT_QCOM_MSM8974
+>   	 This is a driver for the Qualcomm Network-on-Chip on msm8974-based
+>   	 platforms.
+>   
+> +config INTERCONNECT_QCOM_MSM8996
+> +	tristate "Qualcomm MSM8996 interconnect driver"
+> +	depends on INTERCONNECT_QCOM
+> +	depends on QCOM_SMD_RPM
+> +	select INTERCONNECT_QCOM_SMD_RPM_QOS
+> +	help
+> +	  This is a driver for the Qualcomm Network-on-Chip on msm8996-based
+> +	  platforms.
+> +
+>   config INTERCONNECT_QCOM_OSM_L3
+>   	tristate "Qualcomm OSM L3 interconnect driver"
+>   	depends on INTERCONNECT_QCOM || COMPILE_TEST
+> diff --git a/drivers/interconnect/qcom/Makefile b/drivers/interconnect/qcom/Makefile
+> index 2d04d024f46e..8a198b8b7a45 100644
+> --- a/drivers/interconnect/qcom/Makefile
+> +++ b/drivers/interconnect/qcom/Makefile
+> @@ -4,6 +4,7 @@ icc-bcm-voter-objs			:= bcm-voter.o
+>   qnoc-msm8916-objs			:= msm8916.o
+>   qnoc-msm8939-objs			:= msm8939.o
+>   qnoc-msm8974-objs			:= msm8974.o
+> +qnoc-msm8996-objs			:= msm8996.o
+>   icc-osm-l3-objs				:= osm-l3.o
+>   qnoc-qcs404-objs			:= qcs404.o
+>   icc-rpmh-obj				:= icc-rpmh.o
+> @@ -22,6 +23,7 @@ obj-$(CONFIG_INTERCONNECT_QCOM_BCM_VOTER) += icc-bcm-voter.o
+>   obj-$(CONFIG_INTERCONNECT_QCOM_MSM8916) += qnoc-msm8916.o
+>   obj-$(CONFIG_INTERCONNECT_QCOM_MSM8939) += qnoc-msm8939.o
+>   obj-$(CONFIG_INTERCONNECT_QCOM_MSM8974) += qnoc-msm8974.o
+> +obj-$(CONFIG_INTERCONNECT_QCOM_MSM8996) += qnoc-msm8996.o
+>   obj-$(CONFIG_INTERCONNECT_QCOM_OSM_L3) += icc-osm-l3.o
+>   obj-$(CONFIG_INTERCONNECT_QCOM_QCS404) += qnoc-qcs404.o
+>   obj-$(CONFIG_INTERCONNECT_QCOM_RPMH) += icc-rpmh.o
+> diff --git a/drivers/interconnect/qcom/msm8996.c b/drivers/interconnect/qcom/msm8996.c
+> new file mode 100644
+> index 000000000000..0cb93d743f35
+> --- /dev/null
+> +++ b/drivers/interconnect/qcom/msm8996.c
+> @@ -0,0 +1,574 @@
+> +/* SPDX-License-Identifier: GPL-2.0-only */
+
+The // style is preferred for .c files.
+
+> +/*
+> + * Qualcomm MSM8996 Network-on-Chip (NoC) QoS driver
+> + *
+> + * Copyright (c) 2021 Yassine Oudjana <y.oudjana@protonmail.com>
+> + */
+> +
+> +#include <linux/clk.h>
+> +#include <linux/device.h>
+> +#include <linux/interconnect-provider.h>
+> +#include <linux/io.h>
+> +#include <linux/module.h>
+> +#include <linux/of_device.h>
+> +#include <linux/of_platform.h>
+> +#include <linux/platform_device.h>
+> +#include <linux/regmap.h>
+> +
+> +#include <dt-bindings/interconnect/qcom,msm8996.h>
+> +
+> +#include "icc-rpm-qos.h"
+> +#include "smd-rpm.h"
+> +#include "msm8996.h"
+> +
+[..]
+> +DEFINE_QNODE(mas_mdp_p0, MSM8996_MASTER_MDP_PORT0, 32, 8, -1, true, NOC_QOS_MODE_BYPASS, 0, 1, MSM8996_SLAVE_MNOC_BIMC);
+> +DEFINE_QNODE(mas_mdp_p1, MSM8996_MASTER_MDP_PORT1, 32, 61, -1, true, NOC_QOS_MODE_BYPASS, 0, 2, MSM8996_SLAVE_MNOC_BIMC);
+> +DEFINE_QNODE(mas_rotator, MSM8996_MASTER_ROTATOR, 32, 120, -1, true, NOC_QOS_MODE_BYPASS, 0, 0, MSM8996_SLAVE_MNOC_BIMC);
+> +DEFINE_QNODE(mas_venus, MSM8996_MASTER_VIDEO_P0, 32, 9, -1, true, NOC_QOS_MODE_BYPASS, 0, 3 /* TODO: 3 4 ?? */, MSM8996_SLAVE_MNOC_BIMC);
+
+Is the TODO for multiple QoS ports?
+
+[..]
+
+> +static const struct regmap_config msm8996_mnoc_regmap_config = {
+> +	.reg_bits	= 32,
+> +	.reg_stride	= 4,
+> +	.val_bits	= 32,
+> +	.max_register	= 0x20000,
+> +	.fast_io	= true,
+> +};
+> +
+> +static const struct qcom_icc_desc msm8996_mnoc = {
+> +	.nodes = mnoc_nodes,
+> +	.num_nodes = ARRAY_SIZE(mnoc_nodes),
+> +	.regmap_cfg = &msm8996_mnoc_regmap_config,
+> +};
+> +
+> +
+
+Nit: No multiple blank lines, please.
+
+> +static struct qcom_icc_node *pnoc_nodes[] = {
+> +	[MASTER_SNOC_PNOC] = &mas_snoc_pnoc,
+> +	[MASTER_SDCC_1] = &mas_sdcc_1,
+> +	[MASTER_SDCC_2] = &mas_sdcc_2,
+> +	[MASTER_SDCC_4] = &mas_sdcc_4,
+> +	[MASTER_USB_HS] = &mas_usb_hs,
+> +	[MASTER_BLSP_1] = &mas_blsp_1,
+> +	[MASTER_BLSP_2] = &mas_blsp_2,
+> +	[MASTER_TSIF] = &mas_tsif,
+> +	[SLAVE_PNOC_A1NOC] = &slv_pnoc_a1noc,
+> +	[SLAVE_USB_HS] = &slv_usb_hs,
+> +	[SLAVE_SDCC_2] = &slv_sdcc_2,
+> +	[SLAVE_SDCC_4] = &slv_sdcc_4,
+> +	[SLAVE_TSIF] = &slv_tsif,
+> +	[SLAVE_BLSP_2] = &slv_blsp_2,
+> +	[SLAVE_SDCC_1] = &slv_sdcc_1,
+> +	[SLAVE_BLSP_1] = &slv_blsp_1,
+> +	[SLAVE_PDM] = &slv_pdm,
+> +	[SLAVE_AHB2PHY] = &slv_ahb2phy,
+> +};
+> +
+> +static const struct regmap_config msm8996_pnoc_regmap_config = {
+> +	.reg_bits	= 32,
+> +	.reg_stride	= 4,
+> +	.val_bits	= 32,
+> +	.max_register	= 0x3000,
+> +	.fast_io	= true,
+> +};
+> +
+[..]
+> +	for (i = 0; i < num_nodes; i++) {
+> +		size_t j;
+> +
+> +		node = icc_node_create(qnodes[i]->id);
+> +		if (IS_ERR(node)) {
+> +			ret = PTR_ERR(node);
+> +			goto err;
+> +		}
+> +
+> +		node->name = qnodes[i]->name;
+> +		node->data = qnodes[i];
+> +		icc_node_add(node, provider);
+> +
+> +		for (j = 0; j < qnodes[i]->num_links; j++) {
+> +			icc_link_create(node, qnodes[i]->links[j]);
+> +		}
+
+Nit: No need for braces.
+
+Also please rebase all patches onto linux-next.
 
 Thanks,
-Sai
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+Georgi
