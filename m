@@ -2,113 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 561F63E992E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 21:47:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CEDA33E9932
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 21:48:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229991AbhHKTrq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Aug 2021 15:47:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47524 "EHLO
+        id S230487AbhHKTsx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 15:48:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47784 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231330AbhHKTrp (ORCPT
+        with ESMTP id S229946AbhHKTsv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Aug 2021 15:47:45 -0400
-Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E91AC061765
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 12:47:21 -0700 (PDT)
-Received: by mail-pj1-x102b.google.com with SMTP id m24-20020a17090a7f98b0290178b1a81700so6848107pjl.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 12:47:21 -0700 (PDT)
+        Wed, 11 Aug 2021 15:48:51 -0400
+Received: from mail-lj1-x22c.google.com (mail-lj1-x22c.google.com [IPv6:2a00:1450:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3AAA7C061765;
+        Wed, 11 Aug 2021 12:48:27 -0700 (PDT)
+Received: by mail-lj1-x22c.google.com with SMTP id h11so6452379ljo.12;
+        Wed, 11 Aug 2021 12:48:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Cv8yz4ZGyAkZxwS8f4QmdO0fFGjnvFKh2Xd6lFbyeII=;
-        b=IcIV9z5hF0qit4Ita+LUqPhfrtn/DHV1QTpywKFoARxxB/9aR4h2zH6Uz7GvqUDekX
-         rCt3/0dt9WW3zGSLrEUQemTMaCshLvYUdWe408dek2PI3qgHyDfhyuTvYo+0TbtVjtBA
-         vWNYtkFy3KQJ/rXPrKyxodMlY9TMuBcBSAp0U=
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=BOF7L3BVa8QDJhfRLBEE2dkpehIt/0IbmaCR5Ju8kEQ=;
+        b=euJh4y0FhoWH6pYTnzBBsez+zcsN7wbayT7FzUMdxnBGrRPbohqA9hpTuq9SxP28HU
+         N4zqC7oI6CiWxixbAA5aWSGij7HnMAuSlr5H8LBB7bV9/Crtmga+YiwjCIp1pr01Mx0b
+         qe5v6YEvWkwuLNb6GxrESGs5C7gx+i5r6du6D0VxEu/PlkYy/5X7W6CYtRGoPHRRDNgp
+         n1u4nGiAMXjGdnsIZnsNGVqglhnacq/C7lUJnU9dDCk7bxSsG0TH/JWHaUoXvfry+s/4
+         soRCGpSvJeW3Ps/u6Osy9OYXSHkWja+GwosH/iV6NY4GPFwILJdPb0nUVsvJtyrZptdC
+         vCHw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=Cv8yz4ZGyAkZxwS8f4QmdO0fFGjnvFKh2Xd6lFbyeII=;
-        b=E93vtsxGG9KdlnqK5y2TEw76hhJWWPdv/Hjc/jMklcb7OPkgOd33WFi0t+N38BXkhZ
-         vtJ4+po/rdNkiUV7yLm8SCu1UyEnl4IZe6YYqI8sCplFv+om3I3NLPr8qDhW7BaI6U4z
-         XWsHC+CzArZB4di36hv6Ir2W9OpyJfMfPrxEDGmG58bRZw99QtWF0XauQK2M43QNyFXq
-         d29Wo8Ck8wlkcVb4qJP5oik5dD9dmVb2XDBq13y2HSiahLlUikn3RUuzDLzRsoOL+x66
-         egKsc+bKDl+ORZgg/6AK+6GiZ8ehlMxUarv/vSeD+JnIMZ1v+BRAbqzb51VhGeEmaB+b
-         Uj3g==
-X-Gm-Message-State: AOAM531s49synE0utxG06UxCIZhzVhRhk3uLaPaUBCOW5Gjw149vq9po
-        PQfI7bGS/o+N83PzATqnTZzMXQ==
-X-Google-Smtp-Source: ABdhPJxq9RyP9XgWY+JGpZllJISpNNJaXeQGljYulmBIDBvXDVyeXlPXwfqADznH/wk/+Db4y8rrIQ==
-X-Received: by 2002:a65:5c84:: with SMTP id a4mr366515pgt.264.1628711241021;
-        Wed, 11 Aug 2021 12:47:21 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:1c85:53f6:c893:55e8])
-        by smtp.gmail.com with ESMTPSA id w186sm365703pfw.78.2021.08.11.12.47.20
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Aug 2021 12:47:20 -0700 (PDT)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        V Sujith Kumar Reddy <vsujithk@codeaurora.org>,
-        Srinivasa Rao Mandadapu <srivasam@qti.qualcomm.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Subject: [PATCH] arm64: dts: qcom: sc7180-trogdor: Fix lpass dai link for HDMI
-Date:   Wed, 11 Aug 2021 12:47:19 -0700
-Message-Id: <20210811194719.856593-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.33.0.rc1.237.g0d66db33f3-goog
+        bh=BOF7L3BVa8QDJhfRLBEE2dkpehIt/0IbmaCR5Ju8kEQ=;
+        b=COTwsxHrj55jPjC+hRTFs+LX98pcqHK/8iYzCjmnq+0PYpEG7HZmUcrXx7++88hchh
+         TaUyPnVhQyfMldm4QOqQdnHm8w/vcbC6J/l/lG/514uEaDw7pAs/c2wNRjeY+qyqrCgF
+         GNUIUk1WdgKfEtO7Xm+h5mWSpq0FAKrFsccIxTIZQUZR5E14ofPAdxFrIYljCxX5eLzg
+         OIwJDLjIZAQ3m7OBoAtMEAq6/dRjt4sWRozXoJ9Y0m7gVTQGFSDdt+B1lDIe3KobDyRH
+         C3M2UTeucEGSATc9CI5xn/NTklzpbWBEs8q+xKZ2KxjlAlCO5U6vmcIRFB0ux3R69A19
+         /FJQ==
+X-Gm-Message-State: AOAM533oezPhsSpAbUq4+59j34+Js/uPS5M/CdkgDJK8F0FJrDI14dzC
+        GJ0qOyBVJ0aZFavpNWe++5+DjAHfbBw=
+X-Google-Smtp-Source: ABdhPJyx8U1sSGOrw1admCN44QzcYM8AaKJTmXMopj+xi5BUo9wtOVNg6bRIxBqitQkPM3dp32Xiyw==
+X-Received: by 2002:a2e:740d:: with SMTP id p13mr226354ljc.237.1628711305564;
+        Wed, 11 Aug 2021 12:48:25 -0700 (PDT)
+Received: from [192.168.2.145] (46-138-117-53.dynamic.spd-mgts.ru. [46.138.117.53])
+        by smtp.googlemail.com with ESMTPSA id j17sm36267ljq.136.2021.08.11.12.48.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Aug 2021 12:48:25 -0700 (PDT)
+Subject: Re: [PATCH v6 1/2] PM / Domains: Add support for 'required-opps' to
+ set default perf state
+To:     Rajendra Nayak <rnayak@codeaurora.org>, ulf.hansson@linaro.org,
+        bjorn.andersson@linaro.org, viresh.kumar@linaro.org
+Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        swboyd@chromium.org, rojay@codeaurora.org, stephan@gerhold.net
+References: <1628074696-7979-1-git-send-email-rnayak@codeaurora.org>
+ <1628074696-7979-2-git-send-email-rnayak@codeaurora.org>
+ <f58e631d-67a7-4981-ce59-6a4772b44564@gmail.com>
+ <c43ddc6b-32ca-433d-76f2-901cb594eaf1@gmail.com>
+ <9588f01d-1cb6-7ca3-eb41-74259f1678f6@gmail.com>
+ <5f676dbe-6b8a-d302-cd81-2d12fe089e5a@codeaurora.org>
+From:   Dmitry Osipenko <digetx@gmail.com>
+Message-ID: <453bdc88-95a3-3798-9a11-ca8038c024ba@gmail.com>
+Date:   Wed, 11 Aug 2021 22:48:24 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
+In-Reply-To: <5f676dbe-6b8a-d302-cd81-2d12fe089e5a@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This should be the dai for display port. Without this set properly we
-fail to get audio routed through external displays on trogdor. It looks
-like we picked up v4[1] of this patch when there was a v7[2]. The v7
-patch still had the wrong sound-dai but at least we can fix all this up
-and audio works.
+11.08.2021 12:45, Rajendra Nayak пишет:
+>>
+>> If you have more than one power domain, then this will override the
+>> pstate which was set for a previous domain. This code doesn't feel solid
+>> to me, at least a clarifying comment is needed about how it's supposed
+>> to work.
+> 
+> I don't quite understand the concern here, this should work with devices
+> having multiple power-domains as well. __genpd_dev_pm_attach gets called
+> once per power-domain, and we use the index above to identify the
+> power-domain.
 
-Cc: V Sujith Kumar Reddy <vsujithk@codeaurora.org>
-Cc: Srinivasa Rao Mandadapu <srivasam@qti.qualcomm.com>
-Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Fixes: b22d313e1772 ("arm64: dts: qcom: sc7180-trogdor: Add lpass dai link for HDMI")
-Link: https://lore.kernel.org/r/20210721080549.28822-3-srivasam@qti.qualcomm.com [1]
-Link: https://lore.kernel.org/r/20210726120910.20335-3-srivasam@codeaurora.org [2]
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
----
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 8 ++++----
- 1 file changed, 4 insertions(+), 4 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-index 0f2b3c00e434..aba0dcdf01da 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
-@@ -301,11 +301,11 @@ sound_multimedia1_codec: codec {
- 			};
- 		};
- 
--		dai-link@2 {
-+		dai-link@5 {
- 			link-name = "MultiMedia2";
--			reg = <2>;
-+			reg = <LPASS_DP_RX>;
- 			cpu {
--				sound-dai = <&lpass_cpu 2>;
-+				sound-dai = <&lpass_cpu LPASS_DP_RX>;
- 			};
- 
- 			codec {
-@@ -782,7 +782,7 @@ secondary_mi2s: mi2s@1 {
- 		qcom,playback-sd-lines = <0>;
- 	};
- 
--	hdmi-primary@0 {
-+	hdmi-primary@5 {
- 		reg = <LPASS_DP_RX>;
- 	};
- };
-
-base-commit: 97ec669dfcfa22f8a595356ceb6ce46e7b4a82e9
--- 
-https://chromeos.dev
-
+The domain core code supports only one domain per device, see what
+genpd_set_performance_state() does. This means that the second domain
+will set the state of the *first* domain, which doesn't make sense. The
+genpd_set_performance_state() will actually fail with -ENODEV for all
+domains if you will try to do that.
