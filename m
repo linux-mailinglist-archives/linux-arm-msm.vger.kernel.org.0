@@ -2,148 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 968B13E8B6F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 10:08:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 615333E8BE9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 10:38:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235137AbhHKIId (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Aug 2021 04:08:33 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:9479 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236135AbhHKIFt (ORCPT
+        id S236096AbhHKIi2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 04:38:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58448 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235935AbhHKIi1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Aug 2021 04:05:49 -0400
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 11 Aug 2021 01:05:25 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 11 Aug 2021 01:05:23 -0700
-X-QCInternal: smtphost
-Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 11 Aug 2021 13:35:02 +0530
-Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
-        id EE88021C9C; Wed, 11 Aug 2021 13:35:00 +0530 (IST)
-From:   Dikshita Agarwal <dikshita@codeaurora.org>
-To:     andy.gross@linaro.org, david.brown@linaro.org, robh+dt@kernel.org,
-        mark.rutland@arm.com, devicetree@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, stanimir.varbanov@linaro.org,
-        Dikshita Agarwal <dikshita@codeaurora.org>
-Subject: [PATCH v5] arm64: dts: qcom: sc7280: Add venus DT node
-Date:   Wed, 11 Aug 2021 13:34:50 +0530
-Message-Id: <1628669090-15648-1-git-send-email-dikshita@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Wed, 11 Aug 2021 04:38:27 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C3CAC0613D5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 01:38:04 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id f5so1862789wrm.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 01:38:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=google.com; s=20161025;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=8ctvExXHxoU7MDz0lLq/Tgi84JQatciTVAxD+Fn/jcQ=;
+        b=rEq02tPeUoTDMJlCRt+ttFdA0Jr7daFhR+2ie5RBcOI3BzWNUuUWa9Gbkn4HGOW7WY
+         4dGznTdp6VXTPNE9W13rtYzeqx7tx7wQ393pENejnQSXz9eLj1RNBFRM1k3jq7xv7egq
+         HC0wLX7Gfq1JdtcjNVDY4wLVGIFgnDphxa8SKvMeE6pZoYh5aVDsC/sruC06SYWsY3uM
+         J7cw2lg+GbQUi7uuzGE1t6Q0KYY1VP89pD3oxKNUKWXB+QlwgXjHIwdMYwDYJtjhm4GA
+         VV1DzVJB/z5IitVlWxedaVu1jjrQLyAUK9KtmHXlZnADSSCcDIKhD2TqwcqLbaym+Na8
+         XOdg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=8ctvExXHxoU7MDz0lLq/Tgi84JQatciTVAxD+Fn/jcQ=;
+        b=ca8LxoDvE6JUh/XESsU0qP/MN4AEvRDi+wdFhwoxnr58etTON7i97qoPl+IeN3tgTQ
+         rloR241EEzmLbUSTw9jzbAQGsFAdMSrjCL5jCh263mhFwnpw3Mubq7UKTZrDNwdLjHab
+         HCaQkvHdaUcSwDSdgyO07SOQRzKWl9fuVaTFSMHmsQirFmPBsHDMkTzY4lDAzd228P2j
+         0EKmqwnhHOGgJ3l2wcfdd1TpPtUMCe6R47sq/21SG7CPBsa14rEMYxiSXVc59LMTMou2
+         lkZ4OJus8lWobdI0fMbfX4chqvBLteTkajHQDbt118CaQ2ZuIiHpzSctjUD1ypxN8j/n
+         D7+A==
+X-Gm-Message-State: AOAM530UeHS6NTcsgT6IkipA8xTTPm7Q+3adCQPxpwjFUMTJD9sBPgjX
+        pQ8+gRE2v3J/U20/iiz48p568Q==
+X-Google-Smtp-Source: ABdhPJzU9YQR62yDNq9PrF7gkVKzwniyJFxIxg9cOJLgH9YZSN7yJXWq44plPsS4/Qn9sPmMW8M/QQ==
+X-Received: by 2002:a5d:490b:: with SMTP id x11mr35305440wrq.322.1628671082736;
+        Wed, 11 Aug 2021 01:38:02 -0700 (PDT)
+Received: from google.com ([2a00:79e0:d:210:43fd:e634:73d9:e10e])
+        by smtp.gmail.com with ESMTPSA id e25sm13986334wra.90.2021.08.11.01.38.02
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Aug 2021 01:38:02 -0700 (PDT)
+Date:   Wed, 11 Aug 2021 09:37:56 +0100
+From:   Quentin Perret <qperret@google.com>
+To:     Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     Rafael Wysocki <rjw@rjwysocki.net>,
+        Vincent Donnefort <vincent.donnefort@arm.com>,
+        lukasz.luba@arm.com, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Kevin Hilman <khilman@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>, linux-pm@vger.kernel.org,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-omap@vger.kernel.org
+Subject: Re: [PATCH 0/8] cpufreq: Auto-register with energy model
+Message-ID: <YROMZFHCor3pbhMr@google.com>
+References: <cover.1628579170.git.viresh.kumar@linaro.org>
+ <YRJym+Vn4bbwQzzs@google.com>
+ <20210811051859.ihjzhvrnuct2knvy@vireshk-i7>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210811051859.ihjzhvrnuct2knvy@vireshk-i7>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add DT entries for the sc7280 venus encoder/decoder.
+On Wednesday 11 Aug 2021 at 10:48:59 (+0530), Viresh Kumar wrote:
+> On 10-08-21, 13:35, Quentin Perret wrote:
+> > On Tuesday 10 Aug 2021 at 13:06:47 (+0530), Viresh Kumar wrote:
+> > > Provide a cpufreq driver flag so drivers can ask the cpufreq core to register
+> > > with the EM core on their behalf.
+> > 
+> > Hmm, that's not quite what this does. This asks the cpufreq core to
+> > use *PM_OPP* to register an EM, which I think is kinda wrong to do from
+> > there IMO. The decision to use PM_OPP or another mechanism to register
+> > an EM belongs to platform specific code (drivers), so it is odd for the
+> > PM_OPP registration to have its own cpufreq flag but not the other ways.
+> > 
+> > As mentioned in another thread, the very reason to have PM_EM is to not
+> > depend on PM_OPP, so I'm worried about the direction of travel with this
+> > series TBH.
+> 
+> I had to use the pm-opp version, since almost everyone was using that.
+> 
+> On the other hand, there isn't a lot of OPP specific stuff in
+> dev_pm_opp_of_register_em(). It just uses dev_pm_opp_get_opp_count(),
+> that's all. This ended up in the OPP core, nothing else. Maybe we can
+> now move it back to the EM core and name it differently ?
 
-Change since v4:
-	rebased on latest linux-next tree.
+Well it also uses dev_pm_opp_find_freq_ceil() and
+dev_pm_opp_get_voltage(), so not sure how easy it will be to move, but
+if it is possible no objection from me.
 
-this patch depends on [1].
+> > > This allows us to get rid of duplicated code
+> > > in the drivers and fix the unregistration part as well, which none of the
+> > > drivers have done until now.
+> > 
+> > This series adds more code than it removes,
+> 
+> Sadly yes :(
+> 
+> > and the unregistration is
+> > not a fix as we don't ever remove the EM tables by design, so not sure
+> > either of these points are valid arguments.
+> 
+> I think that design needs to be looked over again, it looks broken to
+> me everytime I land onto this code. I wonder why we don't unregister
+> stuff.
+> 
+> Lets say, I am working on the cpufreq driver and I want to test that
+> on my ARM machine. Rebooting a simpler board to test stuff out is
+> easy, but if I am working on an ARM server which is running lots of
+> other userspace stuff as well, I won't want to reboot the machine just
+> to test a different versions of the driver. I will rather want to
+> build the driver as module and insert/remove it again and again.
+> 
+> If the frequency table changes in between versions, this just breaks
+> as EM won't be updated again.
+> 
+> This breaks one of the most basic rules of Linux Kernel. Inserting a
+> module should have exactly the same final behavior every single time.
+> This model doesn't guarantee it. It simply looks broken.
 
-[1] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=529463
-
-Co-developed-by: Mansur Alisha Shaik <mansur@codeaurora.org>
-Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 75 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 75 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 3e96604..88de534 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -73,6 +73,11 @@
- 			reg = <0x0 0x80b00000 0x0 0x100000>;
- 		};
- 
-+		video_mem: memory@8b200000 {
-+			reg = <0x0 0x8b200000 0x0 0x500000>;
-+			no-map;
-+		};
-+
- 		ipa_fw_mem: memory@8b700000 {
- 			reg = <0 0x8b700000 0 0x10000>;
- 			no-map;
-@@ -1398,6 +1403,76 @@
- 			};
- 		};
- 
-+		venus: video-codec@aa00000 {
-+			compatible = "qcom,sc7280-venus";
-+			reg = <0 0x0aa00000 0 0xd0600>;
-+			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			clocks = <&videocc VIDEO_CC_MVSC_CORE_CLK>,
-+				 <&videocc VIDEO_CC_MVSC_CTL_AXI_CLK>,
-+				 <&videocc VIDEO_CC_VENUS_AHB_CLK>,
-+				 <&videocc VIDEO_CC_MVS0_CORE_CLK>,
-+				 <&videocc VIDEO_CC_MVS0_AXI_CLK>;
-+			clock-names = "core", "bus", "iface",
-+				      "vcodec_core", "vcodec_bus";
-+
-+			power-domains = <&videocc MVSC_GDSC>,
-+					<&videocc MVS0_GDSC>,
-+					<&rpmhpd SC7280_CX>;
-+			power-domain-names = "venus", "vcodec0", "cx";
-+			operating-points-v2 = <&venus_opp_table>;
-+
-+			interconnects = <&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_VENUS_CFG 0>,
-+					<&mmss_noc MASTER_VIDEO_P0 0 &mc_virt SLAVE_EBI1 0>;
-+			interconnect-names = "cpu-cfg", "video-mem";
-+
-+			iommus = <&apps_smmu 0x2180 0x20>,
-+				 <&apps_smmu 0x2184 0x20>;
-+			memory-region = <&video_mem>;
-+
-+			video-decoder {
-+				compatible = "venus-decoder";
-+			};
-+
-+			video-encoder {
-+				compatible = "venus-encoder";
-+			};
-+
-+			video-firmware {
-+				iommus = <&apps_smmu 0x21a2 0x0>;
-+			};
-+
-+			venus_opp_table: venus-opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-133330000 {
-+					opp-hz = /bits/ 64 <133330000>;
-+					required-opps = <&rpmhpd_opp_low_svs>;
-+				};
-+
-+				opp-240000000 {
-+					opp-hz = /bits/ 64 <240000000>;
-+					required-opps = <&rpmhpd_opp_svs>;
-+				};
-+
-+				opp-335000000 {
-+					opp-hz = /bits/ 64 <335000000>;
-+					required-opps = <&rpmhpd_opp_svs_l1>;
-+				};
-+
-+				opp-424000000 {
-+					opp-hz = /bits/ 64 <424000000>;
-+					required-opps = <&rpmhpd_opp_nom>;
-+				};
-+
-+				opp-460000000 {
-+					opp-hz = /bits/ 64 <460000000>;
-+					required-opps = <&rpmhpd_opp_turbo>;
-+				};
-+			};
-+
-+		};
-+
- 		videocc: clock-controller@aaf0000 {
- 			compatible = "qcom,sc7280-videocc";
- 			reg = <0 0xaaf0000 0 0x10000>;
--- 
-2.7.4
-
+Right but the EM is a description of the hardware, so it seemed fair
+to assume this wouldn't change across the lifetime of the OS, similar
+to the DT which we can't reload at run-time. Yes it can be a little odd
+if you load/unload your driver module, but note that you generally can't
+load two completely different drivers on a single system. You'll just
+load the same one again and the hardware hasn't changed in the meantime,
+so the previously loaded EM will still be correct. I hear your argument
+about cpufreq driver development, but the locking involved to allow
+'just' that is pretty involved, and nobody has complained about this
+specific issue so far, so that didn't seem worth it. If we do have good
+reasons to change the EM at runtime, then yes I think we should do it,
+it just didn't seem like that was the case until now.
