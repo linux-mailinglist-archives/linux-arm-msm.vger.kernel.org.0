@@ -2,55 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D7B493E941E
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 16:58:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 394133E9494
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 17:35:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232748AbhHKO7T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Aug 2021 10:59:19 -0400
-Received: from vps0.lunn.ch ([185.16.172.187]:45284 "EHLO vps0.lunn.ch"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232871AbhHKO7S (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Aug 2021 10:59:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
-        s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
-        References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
-        Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
-        Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
-        bh=G1+EmfpBKcPDyvMCIc7/dEMpI7YHnByfxi9Wq3B3J3o=; b=azJD3R7eiZKOLJNttUr/gTYHDh
-        qt4XCEK08Kr3FMrQPzLGWcbwi9BBX+Njdzbd/ZiCb7EZIBnnIEOwgebyt8jtAEE8zgNk4kJ0ucuhc
-        HMrb2sVexCpAM+oLfWPjx05N0ws/eO5p7/oOlqnc+6vjptXWAM+MXNsXMUiwkAMVGp00=;
-Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
-        (envelope-from <andrew@lunn.ch>)
-        id 1mDpgw-00H8My-Lk; Wed, 11 Aug 2021 16:58:50 +0200
-Date:   Wed, 11 Aug 2021 16:58:50 +0200
-From:   Andrew Lunn <andrew@lunn.ch>
-To:     Luo Jie <luoj@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, davem@davemloft.net,
-        kuba@kernel.org, robh+dt@kernel.org, hkallweit1@gmail.com,
-        linux@armlinux.org.uk, robert.marko@sartura.hr,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sricharan@codeaurora.org
-Subject: Re: [PATCH v2 3/3] dt-bindings: net: Add the properties for ipq4019
- MDIO
-Message-ID: <YRPlqgszKOtFMVt7@lunn.ch>
-References: <20210810133116.29463-1-luoj@codeaurora.org>
- <20210810133116.29463-4-luoj@codeaurora.org>
+        id S233026AbhHKPfv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 11:35:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45574 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233010AbhHKPfu (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 11 Aug 2021 11:35:50 -0400
+Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CD476C061765;
+        Wed, 11 Aug 2021 08:35:25 -0700 (PDT)
+Received: by mail-wr1-x444.google.com with SMTP id k29so3648547wrd.7;
+        Wed, 11 Aug 2021 08:35:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=message-id:from:mime-version:content-transfer-encoding
+         :content-description:subject:to:date:reply-to;
+        bh=5NTJSky9UX3JbuB9riY3wCYfXDpCwy2c7hzO0kF4AHA=;
+        b=N7u2GWWephT+M/QIPBdSBm7A8AGXCr0qBU8/5o7psvwITvP5tbqVKMYLiLfqVUns/7
+         4HAFF3ohk3XR99P6gQJo3jnX6MasYdG9Qnuvrn085TYipzk3av6o0Sh9138SwdDKeMos
+         XWmlBV5SHbBAXEsFefobpAW9EC1xzTNTZfwBmUs81QrspU3qICt6H1xlgtlFKHGwyhq/
+         n7MtxOjqxKpokeAiKzsBk+yx8qLmzZ0cl5Thr7ebV8QcKVcTv2hsb8oHgbApsdX7Dimk
+         DHYXNynDOoyNo3a4U65icGs9naNeaZViURI3kqEcc7fREjAJ9BWwOaB82hBRclFw0yXJ
+         7evg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:message-id:from:mime-version
+         :content-transfer-encoding:content-description:subject:to:date
+         :reply-to;
+        bh=5NTJSky9UX3JbuB9riY3wCYfXDpCwy2c7hzO0kF4AHA=;
+        b=tU00jMrQumZLaPMGok6nlUHbi39C4ErHISPB3uwgwqmaV2qMrxcrFQCv2k91WmFlxI
+         2xumOQ9OVSwR9yME0uT3v9+CBbOfx+fbGQly7Rb/CeVDFetyqzI/9Uqe3eRNcfnxfDbz
+         9GEC618niIjKD5mPTB/XlGrd5sI+Nlpm6J82s9al4aUUtGvt82fkIHttpF9pBqE6HonV
+         4Ik0kOleeqe9AR4qycehD0zdkKGDC321mZvnwLkDQaZ3h2ruQ5xKwNmMN6OBvkVBV+Bx
+         eoNPgi6YBmFLZTwoOzfBgJVjryIXw0ldPVNiGcav5mgipcyVl4bEkBWA+lHPb6aZD/LH
+         WKIg==
+X-Gm-Message-State: AOAM530VLahqrTs89QsZCZiF1eGsGPHXnNT0x68xcv7zgdfHlRT3dIrS
+        LROkd8ZwPZE6SQCkLrPvSZ4=
+X-Google-Smtp-Source: ABdhPJwyjmax4fN8aR8h2tcRHMlUduz0eZZoQWwmvbL+02oCQeVNLoY4jqiW9KeE1DvT/NQNgTc7Pg==
+X-Received: by 2002:a05:6000:120d:: with SMTP id e13mr13308516wrx.6.1628696124534;
+        Wed, 11 Aug 2021 08:35:24 -0700 (PDT)
+Received: from [192.168.1.70] ([102.64.209.185])
+        by smtp.gmail.com with ESMTPSA id o24sm6251662wmm.37.2021.08.11.08.35.12
+        (version=TLS1 cipher=AES128-SHA bits=128/128);
+        Wed, 11 Aug 2021 08:35:24 -0700 (PDT)
+Message-ID: <6113ee3c.1c69fb81.925d2.e676@mx.google.com>
+From:   Vanina curth <curtisvani0038@gmail.com>
+X-Google-Original-From: Vanina  curth
+Content-Type: text/plain; charset="iso-8859-1"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210810133116.29463-4-luoj@codeaurora.org>
+Content-Transfer-Encoding: quoted-printable
+Content-Description: Mail message body
+Subject: Dear
+To:     Recipients <Vanina@vger.kernel.org>
+Date:   Wed, 11 Aug 2021 15:34:52 +0000
+Reply-To: curtisvani9008@gmail.com
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 10, 2021 at 09:31:16PM +0800, Luo Jie wrote:
-> The new added properties resource "reg" is for configuring
-> ethernet LDO in the IPQ5018 chipset, the property "clocks"
-> is for configuring the MDIO clock source frequency.
-> 
-> Signed-off-by: Luo Jie <luoj@codeaurora.org>
-
-Reviewed-by: Andrew Lunn <andrew@lunn.ch>
-
-    Andrew
+How are you? I'm Vanina. I'm interested to know you and I would like to kno=
+w more about you and establish relationship with you. i will wait for your =
+response. thank you.
