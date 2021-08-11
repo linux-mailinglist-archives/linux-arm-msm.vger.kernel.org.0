@@ -2,113 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BAD4F3E8943
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 06:25:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 947553E896F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 06:35:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233657AbhHKEZZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Aug 2021 00:25:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57862 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229586AbhHKEZZ (ORCPT
+        id S233767AbhHKEgK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 00:36:10 -0400
+Received: from mail-0201.mail-europe.com ([51.77.79.158]:49562 "EHLO
+        mail-0201.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233741AbhHKEgJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Aug 2021 00:25:25 -0400
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33E15C061765
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 21:25:02 -0700 (PDT)
-Received: by mail-oi1-x22b.google.com with SMTP id s13so2682747oie.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 21:25:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=M1sSmgNNoQtvHtZ8PDHG8m3seC8ac1MZGKZ0FeNvlRE=;
-        b=QjfTC2HgE2XYDjQKSruFloDLhFtwBgKdO4NJ6MdiAKvtLwie8egxASVNDwDSfzVyv2
-         q6mWjvHWSb7ckfpuJSiEw/heccYf1aZLWU/1Tbhqg3QhOcadFbV2J9g1hvE1reVygIPr
-         LS0N9RRDRp4FTw6qpgYlkcjrAw2qPUl+pAUZY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=M1sSmgNNoQtvHtZ8PDHG8m3seC8ac1MZGKZ0FeNvlRE=;
-        b=QChia4gbFlkYu7zch5DsgGFy4Sdk92eORkuI8UHd4bvG49EOhM8BIgMsHYqSh8ae3W
-         Ay+b82bq2qjYTSvLYS6V7mMZZCUJftkmfsOCZyHQvYpuXo1gKG/ijAXWi0CU7HK6A13p
-         gdAGCN3YuL9cmEOcriZYeDfsaifNjEZMy7T1dOylLePGlah6QM12Jkjd/2ii1mKy0VPo
-         Y5qZa3KPE4g4quwIs0pBTa49+G/faIs1sLauH5v9ytsB8lIpMpyoy/0929+ykcEG+SD+
-         OrQrxq3BhnFAAbAdd3NuRzJe0TBFsVMGc3wLuFd0h3kdTIwWdEIPUwghhIrpjCYsU39U
-         jJGA==
-X-Gm-Message-State: AOAM532gzv/5Umt8hIqmDvySPr+E4cDAO3vtLieb+R2Yi0Yxr0t4VQwh
-        0pGZeKSeyWNMy7s9C4aX71EMZz+pBIIvsNNx3os2NA==
-X-Google-Smtp-Source: ABdhPJzObOIuMfn0reOOJWy5m+iJuxp3aHw0B9qKARNxTS22IDkTolDzUwIP41OajjreV0Rx6cLTjTp9cAj7k2M+Dkg=
-X-Received: by 2002:a54:468d:: with SMTP id k13mr6077146oic.125.1628655901625;
- Tue, 10 Aug 2021 21:25:01 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 10 Aug 2021 21:25:01 -0700
+        Wed, 11 Aug 2021 00:36:09 -0400
+Date:   Wed, 11 Aug 2021 04:35:28 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail; t=1628656541;
+        bh=p6OzoMEtzDt7NEqEXpiYeEgZDvjeL0XKSnirVR7O4Z8=;
+        h=Date:To:From:Cc:Reply-To:Subject:From;
+        b=sqMhd5F3Mdf0KHU8Y27g8pjo+q8APJ8hB4qhMoNuPQgbpLWrv8cibIEl7udYgWXq0
+         reLYU7cR7YVXA6n8kt8tyYZOtvIVBVz6os/0jaCEfvVAbwnIpnDP1RKUwkZBk1qK9c
+         hykyiOyAyyr7ioSRTVSiHSq9gNfh6ZUrpQFmmt7I=
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+From:   Yassine Oudjana <y.oudjana@protonmail.com>
+Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
+Subject: [PATCH v3 0/6] interconnect: qcom: Add MSM8996 interconnect driver
+Message-ID: <20210811043451.189776-1-y.oudjana@protonmail.com>
 MIME-Version: 1.0
-In-Reply-To: <YRMHjmEG3l4SolTi@builder.lan>
-References: <1628180254-758-1-git-send-email-deesin@codeaurora.org>
- <CAE-0n5203g4CkF5WP1fQYU57fntXbdyVBsMsTKU_xPkgvbt+7Q@mail.gmail.com>
- <bf2b00c5-0826-00d2-ca95-b4ae6a030211@codeaurora.org> <CAE-0n53ojhs+RMpsYtVjsrYbb_PRdkJOvxFhiTtJPMUDuoP_eA@mail.gmail.com>
- <8009f5a1458468dbf0b7b20dd166911c@codeaurora.org> <CAE-0n53TCo1UTVi3e18N5hF3+Y_bLiqgH1o5PEua7F9-bog_gQ@mail.gmail.com>
- <YRMHjmEG3l4SolTi@builder.lan>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Tue, 10 Aug 2021 21:25:01 -0700
-Message-ID: <CAE-0n51+t6ATCcDgfKeMyh0f0p0=otnUmBjChViX-r3qJYfhZg@mail.gmail.com>
-Subject: Re: [PATCH V1 1/1] soc: qcom: smp2p: Add wakeup capability to SMP2P IRQ
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Sibi Sankar <sibis@codeaurora.org>,
-        Deepak Kumar Singh <deesin@codeaurora.org>,
-        clew@codeaurora.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        Andy Gross <agross@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2021-08-10 16:11:10)
-> On Tue 10 Aug 14:18 CDT 2021, Stephen Boyd wrote:
->
-> > Quoting Sibi Sankar (2021-08-10 10:24:32)
-> > > On 2021-08-09 23:28, Stephen Boyd wrote:
-> > > > Quoting Deepak Kumar Singh (2021-08-09 04:05:08)
-> > > >>
-> > > >> On 8/6/2021 1:10 AM, Stephen Boyd wrote:
-> > > >> > Quoting Deepak Kumar Singh (2021-08-05 09:17:33)
-> > > >> >> Some use cases require SMP2P interrupts to wake up the host
-> > > >> >> from suspend.
-> > > >> > Please elaborate on this point so we understand what sort of scenarios
-> > > >> > want to wakeup from suspend.
-> > > >>
-> > > >> Once such scenario is where WiFi/modem crashes and notifies crash to
-> > > >> local host through smp2p
-> > > >>
-> > > >> if local host is in suspend it should wake up to handle the crash and
-> > > >> reboot the WiFi/modem.
-> > > >
-> > > > Does anything go wrong if the firmware crashes during suspend and the
-> > > > local host doesn't handle it until it wakes for some other reason? I'd
-> > > > like to understand if the crash handling can be delayed/combined with
-> > > > another wakeup.
-> > >
-> > > If the modem firmware crashes
-> > > during suspend, the system comes
-> > > out of xo-shutdown and AFAIK stays
-> > > there until we handle the interrupt.
-> > >
-> >
-> > So you're saying we waste power if we don't wakeup the AP and leave the
-> > SoC in a shallow low power state? That would be good to have indicated
-> > in the code via a comment and in the commit text so we know that we want
-> > to handle the wakeup by default.
->
-> Sounds like in a system without autosleep (or userspace equivalent) it
-> would be desirable to leave the SoC in this lower state than to wake up
-> the system handle the crash and then just idle?
->
-> But leaving the system in this state will result in you missing your
-> important phone calls...
->
+This series adds a driver for interconnects on MSM8996. This fixes some rar=
+e display underflows
+and causes a slight heat reduction.
 
-Yes I think we should just add a comment to the code and commit text and
-move on.
+The driver currently supports all NoCs on MSM8996 except a0noc, due to some=
+ issues with writing
+to its registers.
+
+Changes since v2:
+ - Dual-license qcom,msm8996.h and move it to the dt bindings patch
+ - Remove interconnect paths from CPUs since cpufreq driver doesn't support=
+ icc scaling yet.
+Changes since v1:
+ - Split first patch into 2 patches, one for renaming qcom_icc_set in icc-r=
+pmh, and another
+   one for the actual commonization.
+ - Revert unnecessary move of include line in sdm660.c=20
+
+Yassine Oudjana (6):
+  interconnect: qcom: icc-rpmh: Rename qcom_icc_set
+  interconnect: qcom: sdm660: Commonize RPM-QoS
+  dt-bindings: interconnect: Move SDM660 to a new RPM-QoS file
+  dt-bindings: interconnect: Add Qualcomm MSM8996 DT bindings
+  interconnect: qcom: Add MSM8996 interconnect provider driver
+  arm64: dts: qcom: msm8996: Add interconnect support
+
+ .../{qcom,sdm660.yaml =3D> qcom,rpm-qos.yaml}   |  23 +-
+ arch/arm64/boot/dts/qcom/msm8996.dtsi         |  80 +++
+ drivers/interconnect/qcom/Kconfig             |  14 +-
+ drivers/interconnect/qcom/Makefile            |   4 +
+ drivers/interconnect/qcom/icc-rpm-qos.c       | 237 ++++++++
+ drivers/interconnect/qcom/icc-rpm-qos.h       | 133 ++++
+ drivers/interconnect/qcom/icc-rpmh.c          |   6 +-
+ drivers/interconnect/qcom/icc-rpmh.h          |   2 +-
+ drivers/interconnect/qcom/msm8996.c           | 574 ++++++++++++++++++
+ drivers/interconnect/qcom/msm8996.h           | 149 +++++
+ drivers/interconnect/qcom/sc7180.c            |   2 +-
+ drivers/interconnect/qcom/sc7280.c            |   2 +-
+ drivers/interconnect/qcom/sdm660.c            | 346 +----------
+ drivers/interconnect/qcom/sdm845.c            |   2 +-
+ drivers/interconnect/qcom/sdx55.c             |   2 +-
+ drivers/interconnect/qcom/sm8150.c            |   2 +-
+ drivers/interconnect/qcom/sm8250.c            |   2 +-
+ drivers/interconnect/qcom/sm8350.c            |   2 +-
+ .../dt-bindings/interconnect/qcom,msm8996.h   | 163 +++++
+ 19 files changed, 1387 insertions(+), 358 deletions(-)
+ rename Documentation/devicetree/bindings/interconnect/{qcom,sdm660.yaml =
+=3D> qcom,rpm-qos.yaml} (82%)
+ create mode 100644 drivers/interconnect/qcom/icc-rpm-qos.c
+ create mode 100644 drivers/interconnect/qcom/icc-rpm-qos.h
+ create mode 100644 drivers/interconnect/qcom/msm8996.c
+ create mode 100644 drivers/interconnect/qcom/msm8996.h
+ create mode 100644 include/dt-bindings/interconnect/qcom,msm8996.h
+
+--=20
+2.32.0
+
+
