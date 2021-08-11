@@ -2,94 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BDD553E8D61
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 11:42:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40B243E8D70
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 11:45:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236680AbhHKJmX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Aug 2021 05:42:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45342 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236668AbhHKJmX (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Aug 2021 05:42:23 -0400
-Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0DA06C061765
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 02:42:00 -0700 (PDT)
-Received: by mail-pj1-x1034.google.com with SMTP id hv22-20020a17090ae416b0290178c579e424so3776943pjb.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 02:42:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=ET1+ZjzComT36ndSZVUKzhjE6lLi2eturMaqxLGm5O8=;
-        b=ePOqM1Pw/3iTBXH81cLS6rrfbNInK4idxR4KGzIJxEFexp0L9Fu4L0Hjqha1giq9j5
-         iF+ZxqxJv6mlVr8uZOFQiWimlcClZ2ojE7Ya9lQ5Aa1MzrqCAzdnrtkUMmJKQfK0YQrq
-         F92rMiB2PKCmYomVyVotPwnUxumq59SldIvA4nXWI0oVxfRDk1WjuEGiNvv5DScTgjPw
-         jt4ryfojp55ZSYKI/C9m4LslwkaHBhr/S/GrX3Qi81V3/kJ+Vt8lws73SDzo7ZsnxYuV
-         KZrUE72+p8qM4yyVeb3UQptDzU1ITUxaaHfdWNt16bdBQNFmGMLQ7/fbkPp/ceu6nj7h
-         KzEQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=ET1+ZjzComT36ndSZVUKzhjE6lLi2eturMaqxLGm5O8=;
-        b=e4YtmWXhx01QYdYWgwdUmB9/UofNpdlQJtBPGHogIuky7kAn6WSQL05Js9vEtYv6b6
-         yKfnW9hokJYU4RbeImTDqLTOOZwgrNYYwb/x2VWxtBHbmJvW5jpx/z9MZhu3Fk5r/OYn
-         w9Ya7XDyJwJgcwoyjBb/MFj3GFm3tGmnKSaZiqseEn38avZZtdPPXi7YBM+ifmmCm8Nc
-         wKgU1aS3kF+BsIm/wlcUjT7LmuzajQAUZELSDudGhfUqThrbZEAynb9md5JVatUwTr8R
-         0DdqSW9mrFNKgX28bVVDHALXGW4obWYUUCIPVLB69G86IS12i3YzzlQGB+dd4TxlXamM
-         KFMA==
-X-Gm-Message-State: AOAM530ingo15KVS8JjQIo8jTGz+tp0LUFqg7Qew14s5Z+18qXU+z8wm
-        IzDyFYksbLjzDRmk3wLoeicVx+X1JNCzrjb4TAuZFQ==
-X-Google-Smtp-Source: ABdhPJxYgVxxqbLY47gEt/zvPvdFQD/c+j2VIRTiXnc9r1HKIEXV3Jite9T1g1lAykdBzTwD9KpUlN6GismQCJ/lQn4=
-X-Received: by 2002:a63:f754:: with SMTP id f20mr99905pgk.385.1628674919479;
- Wed, 11 Aug 2021 02:41:59 -0700 (PDT)
+        id S236605AbhHKJqR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 05:46:17 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:37583 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236668AbhHKJqQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 11 Aug 2021 05:46:16 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1628675153; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=uSt79frfisEnQoSy8AUSjOVYQKhD134iVOQ+hRTplH0=; b=iwfpsucxqwoQ4tpR5vg8zIcIegxdn9Cyz+MQq8shF2dP9bgLC5oADTjltt6upTz3k9f0sU+u
+ 1D+LvVECukPU2C0SCVFQ0O8tjhdUpamXJhpJu6F9fHOIgSDCmwZPVISIAYZTA1hh8FtAmhRn
+ hEHBy/+gx8JshjUFKn6+NWt64GY=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 61139c4866ff107904a6b1ba (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 11 Aug 2021 09:45:44
+ GMT
+Sender: rnayak=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3CE94C43143; Wed, 11 Aug 2021 09:45:44 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [192.168.1.100] (unknown [49.207.220.239])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 515AAC4338A;
+        Wed, 11 Aug 2021 09:45:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 515AAC4338A
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=rnayak@codeaurora.org
+Subject: Re: [PATCH v6 1/2] PM / Domains: Add support for 'required-opps' to
+ set default perf state
+To:     Dmitry Osipenko <digetx@gmail.com>, ulf.hansson@linaro.org,
+        bjorn.andersson@linaro.org, viresh.kumar@linaro.org
+Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        swboyd@chromium.org, rojay@codeaurora.org, stephan@gerhold.net
+References: <1628074696-7979-1-git-send-email-rnayak@codeaurora.org>
+ <1628074696-7979-2-git-send-email-rnayak@codeaurora.org>
+ <f58e631d-67a7-4981-ce59-6a4772b44564@gmail.com>
+ <c43ddc6b-32ca-433d-76f2-901cb594eaf1@gmail.com>
+ <9588f01d-1cb6-7ca3-eb41-74259f1678f6@gmail.com>
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+Message-ID: <5f676dbe-6b8a-d302-cd81-2d12fe089e5a@codeaurora.org>
+Date:   Wed, 11 Aug 2021 15:15:37 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-References: <CGME20210811074838eucas1p2a0e8625af27c10209d9bcfc732254ae7@eucas1p2.samsung.com>
- <20210810103336.114077-1-robert.foss@linaro.org> <0b694e24-5cc8-4944-d3a2-115306ae7b89@samsung.com>
-In-Reply-To: <0b694e24-5cc8-4944-d3a2-115306ae7b89@samsung.com>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Wed, 11 Aug 2021 11:41:48 +0200
-Message-ID: <CAG3jFys+ch86Y7338-DH1+8Q4w5eK83revVsNwoVCugwXeqjmQ@mail.gmail.com>
-Subject: Re: [PATCH v1] media: camss: vfe: Don't use vfe->base before it's assigned
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        linux-media <linux-media@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        Naresh Kamboju <naresh.kamboju@linaro.org>,
-        Hans Verkuil <hverkuil@xs4all.nl>,
-        Linux Kernel Functional Testing <lkft@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <9588f01d-1cb6-7ca3-eb41-74259f1678f6@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Marek,
 
-Thanks for testing this.
+On 8/10/2021 5:16 AM, Dmitry Osipenko wrote:
+> 10.08.2021 01:44, Dmitry Osipenko пишет:
+>> 10.08.2021 01:26, Dmitry Osipenko пишет:
+>>> 04.08.2021 13:58, Rajendra Nayak пишет:
+>>>> @@ -2637,6 +2643,8 @@ static int __genpd_dev_pm_attach(struct device *dev, struct device *base_dev,
+>>>>   {
+>>>>   	struct of_phandle_args pd_args;
+>>>>   	struct generic_pm_domain *pd;
+>>>> +	struct device_node *np;
+>>>> +	int pstate;
+>>>>   	int ret;
+>>>>   
+>>>>   	ret = of_parse_phandle_with_args(dev->of_node, "power-domains",
+>>>> @@ -2675,10 +2683,26 @@ static int __genpd_dev_pm_attach(struct device *dev, struct device *base_dev,
+>>>>   		genpd_unlock(pd);
+>>>>   	}
+>>>>   
+>>>> -	if (ret)
+>>>> +	if (ret) {
+>>>>   		genpd_remove_device(pd, dev);
+>>>> +		return -EPROBE_DEFER;
+>>>> +	}
+>>>> +
+>>>> +	/* Set the default performance state */
+>>>> +	np = dev->of_node;
+>>>> +	if (of_parse_phandle(np, "required-opps", index)) {
+> 
+> The OF node returned by of_parse_phandle() must be put.
 
-On Wed, 11 Aug 2021 at 09:48, Marek Szyprowski <m.szyprowski@samsung.com> wrote:
->
-> On 10.08.2021 12:33, Robert Foss wrote:
-> > vfe->ops->hw_version(vfe) being called before vfe->base has been assigned
-> > is incorrect and causes crashes.
-> >
-> > Fixes: b10b5334528a9 ("media: camss: vfe: Don't read hardware version needlessly")
-> >
-> > Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
-> > Signed-off-by: Robert Foss <robert.foss@linaro.org>
->
-> With this patch applied on top of linux next-20210810 instead of the
-> NULL pointer dereference I get following error on DragonBoard410c while
-> loading kernel modules:
->
-> [   18.480608] qcom-venus 1d00000.video-codec: Adding to iommu group 1
-> [   18.536167] qcom-camss 1b0ac00.camss: Adding to iommu group 2
-> [   18.600373] Internal error: synchronous external abort: 96000010 [#1]
-> PREEMPT SMP
+Thanks for spotting that, I will fix it, though I might just drop
+the use of of_parse_phandle() and call of_get_required_opp_performance_state()
+unconditionally as suggested by Ulf.
 
-I'll spin a v2 asap.
+> 
+>>>> +		pstate = of_get_required_opp_performance_state(np, index);
+> 
+> If you have more than one power domain, then this will override the
+> pstate which was set for a previous domain. This code doesn't feel solid
+> to me, at least a clarifying comment is needed about how it's supposed
+> to work.
+
+I don't quite understand the concern here, this should work with devices
+having multiple power-domains as well. __genpd_dev_pm_attach gets called
+once per power-domain, and we use the index above to identify the power-domain.
+  
+>>>> +		if (pstate < 0) {
+>>>> +			ret = pstate;
+>>>> +			dev_err(dev, "failed to set required performance state for power-domain %s: %d\n",
+>>>> +				pd->name, ret);
+>>>> +		} else {
+>>>> +			dev_pm_genpd_set_performance_state(dev, pstate);
+>>
+>> Where is error handling?
+
+Sure, I'll fix that.
+
+>>
+>>>> +			dev_gpd_data(dev)->default_pstate = pstate;
+>>>> +		}
+>>>> +	}
+>>>
+>>> Why performance state is set after genpd_power_on()?
+
+The requirement is that the domain is operating at a given performance
+state before the device becomes operational. The driver should ideally wait
+for the attach to complete before expecting the device to be functional.
+So the order here should really not matter, or rather the small amount of time
+while the power-domain is on but not at the right performance state should
+not matter if that's the concern.
+
+> 
+> Should set_performance_state() be invoked when power_on=false?
+> 
+> I assume it should be:
+> 
+> if (power_on) {
+> 	dev_pm_genpd_set_performance_state(dev, pstate);
+> 	dev_gpd_data(dev)->default_pstate = pstate;
+> } else {
+> 	dev_gpd_data(dev)->rpm_pstate = pstate;
+> }
+> 
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
