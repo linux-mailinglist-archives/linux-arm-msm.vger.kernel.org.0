@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E99483E8E6F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 12:20:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0911C3E8E42
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 12:14:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237016AbhHKKVU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Aug 2021 06:21:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54792 "EHLO
+        id S236937AbhHKKPT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 06:15:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53328 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237048AbhHKKVS (ORCPT
+        with ESMTP id S236999AbhHKKPP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Aug 2021 06:21:18 -0400
-Received: from mail-wm1-x331.google.com (mail-wm1-x331.google.com [IPv6:2a00:1450:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D3B8C061799
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 03:12:55 -0700 (PDT)
-Received: by mail-wm1-x331.google.com with SMTP id m36-20020a05600c3b24b02902e67543e17aso3489350wms.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 03:12:55 -0700 (PDT)
+        Wed, 11 Aug 2021 06:15:15 -0400
+Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85A12C06179B
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 03:14:52 -0700 (PDT)
+Received: by mail-pj1-x1031.google.com with SMTP id j1so2571606pjv.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 03:14:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=p5hWIHd43oZmZdmAe/Tgt2mQU61JUn32MeibY7PUSWQ=;
-        b=E1WNTy4ZBaOXroPhEU16oAmoIb7TxHWc5vaO1clqHr5vgR4jZVhcU1nElSRfIMPsDQ
-         /UNOosQE4tYr7JXG8D4EA2OmU8SOMOQrNCnAt/Fx6jWiTS1HPx41awL3B63/DdxaulvK
-         pBj+l5XS/40ASUIdZ1z6PMtZuL0oH3Omu8WJwUou1ygTjkWHk/T3NESdtkuxBjHPL/+W
-         AE6icFv17yVdjd4ED/b/bFgmOu6PEZfSTfE4At7H0YPs9lT47OGMCBH5MDq+58w7Yl0T
-         tGTnUYD+DKPtEOCog6ax5XbBjg8gc/Dq7gZ+3PxTeyD9UGnnul7NgA2wP2jpLi/Vnn1b
-         N4eg==
+         :content-disposition:in-reply-to:user-agent;
+        bh=Rg+nfqNpN4KVS6P5Kg2kgnadiI4aRZsAUMlE7w6kB2k=;
+        b=ac4casP3kUB13OsUJQcv38FKO7pVIq50bZ6uPGU1NEdpQ0ASqnp8urXzheGfF4JgZJ
+         F0GBVqBxpnRY7eoErIyp2IabG5QIpaejNKNbwc0aQqxzw6oZgMJeXCdM+On3gP7GcwAm
+         Ze6ZM7NUk6+K3utV/jdB+12kqYzQTqBoRF8pt/wvWMKT0t0AejJqeovqCSNaOQMJbO1L
+         dD5NFrhUjhU22SWOPidIBz2QfpP5F/XNnFPgeAwhtmB5nt6HWk+7H9MN4LVZKKuaHvyE
+         KiuTQa4lU4FT+xPngVH2NJUbPObjZ/HoPrBwxQiQRHH+/uoJ61KSOscQQ3Qen6LcUrLD
+         YtkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=p5hWIHd43oZmZdmAe/Tgt2mQU61JUn32MeibY7PUSWQ=;
-        b=h4XpoyZPPnynbF8dWFd6qriAIrp+XZzm8PswKjLj+59wlQ6/+rJjxrp1dCNLxGAE2/
-         HgbfajWZM/Hz7De1UDU2QbE3n/oy3rrMLubxF6eQSKk93DKskWAvkX6DXo7mZIxqGXW+
-         sy/U0MoqndRm7jn2mcSVzPCCCkTOFQcydfotyLMCtL15CXkZ4IofB4dRj+4i+zKLUM4z
-         YiFdf0D5agRKrxaZ8tX2oGlhCXsFU6lwM4tNs4zs1Qz1Lf1fURHetkUeF1OJ3pHrM+yo
-         lt92cITA8PhVJeTgF6POPbInVpY3gQmszS4zx+jD6iL/RJVBmaZSS3cYs3/bWsarIHFB
-         ARIw==
-X-Gm-Message-State: AOAM53386V4bHgRmaYPAJZeYovVp+xtX4giE/T3+i8XK1WGKboXe5s9e
-        2dFKHnRtph5BB/CbPoWi0UtJGw==
-X-Google-Smtp-Source: ABdhPJxx/8GKFZfYfxHB5UKxM22ERPUJVsGXmqlPMwwmbrYcLQCJo+fx5ibR5G/YN51tKO70Jg3Ugw==
-X-Received: by 2002:a1c:e904:: with SMTP id q4mr26867549wmc.26.1628676773827;
-        Wed, 11 Aug 2021 03:12:53 -0700 (PDT)
-Received: from google.com ([2a00:79e0:d:210:43fd:e634:73d9:e10e])
-        by smtp.gmail.com with ESMTPSA id n10sm8172810wmq.3.2021.08.11.03.12.53
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Rg+nfqNpN4KVS6P5Kg2kgnadiI4aRZsAUMlE7w6kB2k=;
+        b=KwQn1EVrG2fnc78fAM9Z6zabKfcRPOr3093aruKnbGHoA/xUTwOHe99RzilG8dSUBN
+         RyORiP38UWT/X6mKpHaoPRnN2Qnw6FT0Es+ci51LS3tO6jwqFUYKj4SHU7XajRpEkQP3
+         uUMDNMld5N9xNZqLH9DKWtAF+99V6vhRfS9E3XGPu3Z39D3npFixvpKfXKJZQb42Zy1g
+         K64V/MdCLP9htmFItXU+5sdIXIZ6Y0GVxlCTWAJNtsDf4mRdFHY9bJrbCuDYN7giJ0ax
+         T83abvZ9lKzHpwnh3habqyu1VreqBiM/FoIGm/6Qu00tSPuvcN9psZdjUtmK5gbtiQJz
+         Iq9g==
+X-Gm-Message-State: AOAM533OKVdc+NwUhsF+37C+t8/wHmeMHzpSa0hOT6hpKwAj/ZmrzOvA
+        +l+p2pCJwHZtnJ09FTjV6GjEdg==
+X-Google-Smtp-Source: ABdhPJzXjMW9vKhvdq5O6Gt8ct98tc27N2TMRTz0kLhqKVJ5iHf/FGC7+T3yYcwqi1noPFO5FkhCyA==
+X-Received: by 2002:aa7:9f5b:0:b029:3be:2a1f:ca58 with SMTP id h27-20020aa79f5b0000b02903be2a1fca58mr27592438pfr.46.1628676892055;
+        Wed, 11 Aug 2021 03:14:52 -0700 (PDT)
+Received: from localhost ([122.172.201.85])
+        by smtp.gmail.com with ESMTPSA id j25sm27085750pfe.198.2021.08.11.03.14.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Aug 2021 03:12:53 -0700 (PDT)
-Date:   Wed, 11 Aug 2021 11:12:47 +0100
-From:   Quentin Perret <qperret@google.com>
-To:     Viresh Kumar <viresh.kumar@linaro.org>
+        Wed, 11 Aug 2021 03:14:51 -0700 (PDT)
+Date:   Wed, 11 Aug 2021 15:44:49 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Quentin Perret <qperret@google.com>
 Cc:     Rafael Wysocki <rjw@rjwysocki.net>,
         Vincent Donnefort <vincent.donnefort@arm.com>,
         lukasz.luba@arm.com, Andy Gross <agross@kernel.org>,
@@ -69,49 +69,35 @@ Cc:     Rafael Wysocki <rjw@rjwysocki.net>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-mediatek@lists.infradead.org, linux-omap@vger.kernel.org
 Subject: Re: [PATCH 0/8] cpufreq: Auto-register with energy model
-Message-ID: <YROin5WudmmEPard@google.com>
+Message-ID: <20210811101449.c2533ediwboeplqj@vireshk-i7>
 References: <cover.1628579170.git.viresh.kumar@linaro.org>
  <YRJym+Vn4bbwQzzs@google.com>
  <20210811051859.ihjzhvrnuct2knvy@vireshk-i7>
  <20210811053406.jqwextgtnxhgsjd2@vireshk-i7>
  <YROc95YKA1Y/TfYI@google.com>
  <20210811095311.e6wnma2ubkqdtuic@vireshk-i7>
+ <YROin5WudmmEPard@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210811095311.e6wnma2ubkqdtuic@vireshk-i7>
+In-Reply-To: <YROin5WudmmEPard@google.com>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wednesday 11 Aug 2021 at 15:23:11 (+0530), Viresh Kumar wrote:
-> On 11-08-21, 10:48, Quentin Perret wrote:
-> > I think this should work, but perhaps will be a bit tricky for cpufreq
-> > driver developers as they need to have a pretty good understanding of
-> > the stack to know that they should do the registration from here and not
-> > ->init() for instance. Suggested alternative: we introduce a ->register_em()
-> > callback to cpufreq_driver, and turn dev_pm_opp_of_register_em() into a
-> > valid handler for this callback. This should 'document' things a bit
-> > better, avoid some of the problems your other series tried to achieve, and
-> > allow us to call the EM registration in exactly the right place from
-> > cpufreq core. On the plus side, we could easily make this work for e.g.
-> > the SCMI driver which would only need to provide its own version of
-> > ->register_em().
-> > 
-> > Thoughts?
-> 
-> I had exactly the same thing in mind, but was thinking of two
-> callbacks, to register and unregister. But yeah, we aren't going to
-> register for now at least :)
+On 11-08-21, 11:12, Quentin Perret wrote:
+> I think using the ready() callback can work just fine as long as we
+> document clearly it is important to register the EM from there and not
+> anywhere else. The dedicated em_register() callback makes that a bit
+> clearer and should avoid a bit of boilerplate in the driver, but it's
+> not a big deal really, so I'm happy either way ;)
 
-Ack, we probably want both once we unregister things.
+Yeah, I think just the same. It is better to have register_em as a
+separate call. I was just wondering if it is the right choice :)
 
-> I wasn't sure if that should be done or not, since we also have
-> ready() callback. So was reluctant to suggest it earlier. But that can
-> work well as well.
+Anyway, I think ready() will get removed pretty soon, so register_em()
+will work well. I will redo this series and send it.
 
-I think using the ready() callback can work just fine as long as we
-document clearly it is important to register the EM from there and not
-anywhere else. The dedicated em_register() callback makes that a bit
-clearer and should avoid a bit of boilerplate in the driver, but it's
-not a big deal really, so I'm happy either way ;)
+-- 
+viresh
