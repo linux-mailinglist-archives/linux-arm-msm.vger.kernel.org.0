@@ -2,76 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AE1C33E8FFE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 14:01:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4342F3E900F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 14:06:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237320AbhHKMBk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Aug 2021 08:01:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49624 "EHLO
+        id S237508AbhHKMGj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 08:06:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232562AbhHKMBj (ORCPT
+        with ESMTP id S237499AbhHKMGi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Aug 2021 08:01:39 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E57DEC061798
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 05:01:14 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id p38so5295270lfa.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 05:01:14 -0700 (PDT)
+        Wed, 11 Aug 2021 08:06:38 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F699C0613D3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 05:06:14 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id a8so2970707pjk.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 05:06:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=l3GJTHSzcRfHRR7rYGofO7K/3tvMaQU+g+vXNUrYfNc=;
-        b=s8jSb/4Uxm7mLtCWQ2a4ZTfZNKh0PtCo+djrABMmW9bWNgE7UtV3CM2Nn+QNxReuga
-         UaW/eQhPCJP6y6RUK1U2BdjaY3497uDkyKPiZXuyDtEY9oitBvzPhnvauHAbdfWA0Mwv
-         PBW0sy6nkTx5NyMZu4n1vnT1YjISbuHLBQSfrSyiqFTmQCPqTwpEUuwldJvOObR8QPtg
-         gj0Nngb6I2Si6VNexA/DIbO8AD1h6bpUl8qlVCay2qX3If2E1Jph3ZeWi+vLsF7aGVQy
-         qm/KBlXngnTnojVwCGJc3n1phgHBkCKkXgBf9vjJGC9c+yUxu6R7h9RAaFSBmRbW5Okm
-         iZdg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FKg83oB/EOubumHMLyW/+CxlonCs6Sr8DZwUqs7o61s=;
+        b=hVsCtquq6U45kkQsI7Vj3hNlKPy4eJSsAmLAbQEn+7pXV2fOQSrxopruKn3Ijor4hJ
+         G3XsS5s9jVLqw0cMSMl5wK6FVWYmItaavWYetcFnlX4D5xn3TCcyZaVSIVPzMQQJ6I5R
+         dx1WDeV5O6HZSPu941m4uq2vC2UQNKfSo7DfOH5e2VWf4Gw+gb0cgXH7QF8UrNJHR05Q
+         ASd86ZctPo0kjcQxyD0AcAr7jotdkEb09HtawOdq2Yg9MgJ7Q7EkgYv6WJZ8hN8c7JGa
+         czQYiGXR9gLjmD+F/9aozWcLXiB4+NT46gLj7Ed2ICK9sOgrgVSsXmWHZmxmz0ZpZed1
+         iI9A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=l3GJTHSzcRfHRR7rYGofO7K/3tvMaQU+g+vXNUrYfNc=;
-        b=gkprBTB+M0pzI51GvbblYV+BDpoZ5GZ8aLjQ7zgkKRXwc3akRJziN4+PV3oFn6+euv
-         zbKLcuk0C0kzEaz4Px/JX10rEFWJI+ZB8GuKWzh6Vy3cXR1j4uSvyjNGwbAYzxBi2DuX
-         wyST4DwnB3g3vW+Gd0WRvedwFlrgpv45BouxG9aTKTq+vLQXz0DFlO6oBcvtRnQiSDuB
-         +huNHlVNxZKsFw+HK1ANILIM2KN9X4zIppC6OVTCxj/rqW4FP7+2M0e1+Gv0McfikaWr
-         gxqMUxwAyD3ndnRFpBYSSgNwjCN7H2yOhf+l8EZC/0d/qmfw+c5GcUCfeaayqe3CVdwi
-         D12w==
-X-Gm-Message-State: AOAM532UCN50Fjs5Q3Ax7VnX9GrS8snWF/qNN5GJmlbgkrnLXyglBg8t
-        aT9LNxejn5BRmn9YkCGWCpQxBWP2L4ZVzbAvgps1gA==
-X-Google-Smtp-Source: ABdhPJxASVpzZF63UvkPFlBxtwrWbbdQ5itq42p8VSocVX8aKD/TLTr8NlFYMefpF+MYtCEpIEz1YBiNJfYM7nhiEsU=
-X-Received: by 2002:a05:6512:32a3:: with SMTP id q3mr13681368lfe.157.1628683272677;
- Wed, 11 Aug 2021 05:01:12 -0700 (PDT)
-MIME-Version: 1.0
-References: <1627910464-19363-1-git-send-email-skakit@codeaurora.org> <182fc9a13b78d114bd209f9658274f0c@codeaurora.org>
-In-Reply-To: <182fc9a13b78d114bd209f9658274f0c@codeaurora.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Wed, 11 Aug 2021 14:01:01 +0200
-Message-ID: <CACRpkdYQ-r2Xw0BHt0Mu78FWemXWU0jjKixTSPpspH9wkEmtCA@mail.gmail.com>
-Subject: Re: [RESEND PATCH V7 0/3] Convert qcom pmic gpio bindings to YAML
-To:     satya priya <skakit@codeaurora.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=FKg83oB/EOubumHMLyW/+CxlonCs6Sr8DZwUqs7o61s=;
+        b=Ilwh1mQTkjHecRCNE/32uQMteK/1QcDMPVgG3vQ7qZbFe/VBxrcAlIeywIgoibOU9n
+         3UQov8m50qPkW/qe16V+owH20CKF5gD7Hp+DIu0HqLs6ym36lFwZhuIaKZTgDjxFmQ54
+         /S7aScTe+9jut43y2oAisS1upbcqbZar9ygh3TBYxG2X9yP5JqFh0Cl7QHtmqfI4OoIQ
+         ej9XBr9/hEucvgXX3Yow9pQbVSbHcsMxFRBUgKAoaV4pq6miHFReez6QY1fOFZKhc4qD
+         y88YSoBCkPji/OD9s7oRrxSAcvhDpAyE1MsTu1JYV0YcegXXE37lNKDuZNwQ5e9TdVhb
+         E6VQ==
+X-Gm-Message-State: AOAM530C014+YP4sdyzGC7r2XSS8jD4LspIRvo06cbcFxBXWMEYXGBc9
+        tfwMb1LLCdhDB4F4z89aSrhh0w==
+X-Google-Smtp-Source: ABdhPJztfFMMqUn9AEZt5iJ8AdfS9ivDU1oMjYwxS6YRWF0FK+JSOzQ526ggirfhbR8GWllwV35JIQ==
+X-Received: by 2002:a17:90a:404a:: with SMTP id k10mr37162653pjg.145.1628683574049;
+        Wed, 11 Aug 2021 05:06:14 -0700 (PDT)
+Received: from localhost ([122.172.201.85])
+        by smtp.gmail.com with ESMTPSA id v20sm2695779pgi.39.2021.08.11.05.06.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Aug 2021 05:06:13 -0700 (PDT)
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Rafael Wysocki <rjw@rjwysocki.net>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Das Srinagesh <gurus@codeaurora.org>,
-        Kiran Gunda <kgunda@codeaurora.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, MSM <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Kevin Hilman <khilman@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>
+Cc:     linux-pm@vger.kernel.org,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        Lukasz Luba <lukasz.luba@arm.com>,
+        Quentin Perret <qperret@google.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-omap@vger.kernel.org
+Subject: [PATCH V2 0/9] cpufreq: Auto-register with energy model
+Date:   Wed, 11 Aug 2021 17:28:38 +0530
+Message-Id: <cover.1628682874.git.viresh.kumar@linaro.org>
+X-Mailer: git-send-email 2.31.1.272.g89b43f80a514
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 11, 2021 at 8:17 AM <skakit@codeaurora.org> wrote:
+Many cpufreq drivers register with the energy model for each policy and
+do exactly the same thing. Follow the footsteps of thermal-cooling, to
+get it done from the cpufreq core itself.
 
-> Can you pls merge these patches? I have rebased them on linux-next.
+Provide a new callback, which will be called, if present, by the cpufreq
+core at the right moment (more on that in the code's comment). Also
+provide a generic implementation that uses dev_pm_opp_of_register_em().
 
-Yeah I tried, hope it worked. Sorry for the delay.
+This also allows us to register with the EM at a later point of time,
+compared to ->init(), from where the EM core can access cpufreq policy
+directly using cpufreq_cpu_get() type of helpers and perform other work,
+like marking few frequencies inefficient, this will be done separately.
 
-Yours,
-Linus Walleij
+This is build/boot tested by the bot for a couple of boards.
+
+https://gitlab.com/vireshk/pmko/-/pipelines/351525873
+
+Note that I haven't picked any of the Reviewed-by tags from the first version
+since the idea is very much changed here.
+
+V1->V2:
+- Add a callback instead of flag.
+- Register before governor is initialized.
+- Update scmi driver as well.
+- Don't unregister from the EM core.
+
+--
+Viresh
+
+Viresh Kumar (9):
+  cpufreq: Auto-register with energy model if asked
+  cpufreq: dt: Use auto-registration for energy model
+  cpufreq: imx6q: Use auto-registration for energy model
+  cpufreq: mediatek: Use auto-registration for energy model
+  cpufreq: omap: Use auto-registration for energy model
+  cpufreq: qcom-cpufreq-hw: Use auto-registration for energy model
+  cpufreq: scpi: Use auto-registration for energy model
+  cpufreq: vexpress: Use auto-registration for energy model
+  cpufreq: scmi: Use .register_em() callback
+
+ drivers/cpufreq/cpufreq-dt.c           |  3 +-
+ drivers/cpufreq/cpufreq.c              | 12 ++++++
+ drivers/cpufreq/imx6q-cpufreq.c        |  2 +-
+ drivers/cpufreq/mediatek-cpufreq.c     |  3 +-
+ drivers/cpufreq/omap-cpufreq.c         |  2 +-
+ drivers/cpufreq/qcom-cpufreq-hw.c      |  3 +-
+ drivers/cpufreq/scmi-cpufreq.c         | 55 +++++++++++++++-----------
+ drivers/cpufreq/scpi-cpufreq.c         |  3 +-
+ drivers/cpufreq/vexpress-spc-cpufreq.c |  3 +-
+ include/linux/cpufreq.h                | 14 +++++++
+ 10 files changed, 65 insertions(+), 35 deletions(-)
+
+-- 
+2.31.1.272.g89b43f80a514
+
