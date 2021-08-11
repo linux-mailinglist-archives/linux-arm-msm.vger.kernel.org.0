@@ -2,100 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C6F6C3E8F0C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 12:52:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E4B13E8F14
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 12:53:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237221AbhHKKxL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Aug 2021 06:53:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33944 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231143AbhHKKxJ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Aug 2021 06:53:09 -0400
-Received: from mail-vk1-xa35.google.com (mail-vk1-xa35.google.com [IPv6:2607:f8b0:4864:20::a35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8095C0613D3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 03:52:45 -0700 (PDT)
-Received: by mail-vk1-xa35.google.com with SMTP id p142so293371vkp.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 03:52:45 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=sY3RpgyWHBy4W+/+RqTX6YRD6atJotbsjKLoIW0AnuM=;
-        b=SjhJcaaQaR3bgI6mINR8blfMfqZUZQAmUCU/WQ3q81hg9P2cOxROif/hBHMm6/9ceY
-         dRziTDc9JhsHP61z3/Jxr5j4z7IAq7winn/bK3O8hhZwEddB7EXGz8OB3L6DfHOoZ3AT
-         n6zZoxUuMoth29rN8nl303/N7OnapqmZrvtYm+RD7HemcoGCoFADnCvRw70rqcb5USsj
-         uyN4mtHOby1fW5sYY5edXmV38mPNVhZKa99iyHwwPFFZKQM825yMi/LT6u48ICnn1mqJ
-         O3OTqZmGpdEiDRoNnUVAMsNpkeY4PQPd8n2FjrlJRMJtqW5OXI+/X8XebO+zNsdT31hk
-         BE8Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=sY3RpgyWHBy4W+/+RqTX6YRD6atJotbsjKLoIW0AnuM=;
-        b=fu36z+2t5sBMiM1G+CluqJ1NusVViQsXdAvZ9A8wTtfkrjJAKAfmyBjUXtI0G5UClY
-         dQnqVrEMRMdmouZl600XkeIRgUCHDfh+Ll/K+oVGvoeGibucU9nJs7GFQ+mEgCTwCQTE
-         sGlQfHVnrGRRom6HDtljUP4cy5EjFI4EB/pLueQLzJbMv9Hxgq8NQ877lkEGgb0rsN6H
-         dSV1LtrLl36s+fhoYsT/5mxxA7m1/n2Qj+p8FfRy1cjgJuqnUGq6nU7s3Sv22VuwzLcJ
-         UXGxGr7VC8oG4qcVRy02WcAgoptHd+jo5IPPR7EmpdCG4SOinhV53TCeJ8xCqjMnJwOn
-         g38g==
-X-Gm-Message-State: AOAM5318jCPHUDrapGwnZnr4kRVQKtXBm6ON3VGEQRfGWRjHwFONDYgr
-        6tyxpBA7Z+Ua9V6hKhSHKYZvlrfWvy36hdSa2WJBxQ==
-X-Google-Smtp-Source: ABdhPJw6de1+RpQzyeap5euW6di99KHadH4LfFdealqxrDMNt6WlC/H44W7aFvJAgVPTTMVBqd7cMsH+ul3pmXnd/Xc=
-X-Received: by 2002:a1f:1d94:: with SMTP id d142mr22071649vkd.6.1628679164996;
- Wed, 11 Aug 2021 03:52:44 -0700 (PDT)
+        id S237180AbhHKKyD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 06:54:03 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:39318 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231143AbhHKKyC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 11 Aug 2021 06:54:02 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1628679219; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=qlpDNvJjcRJ+wsfFRoWvzfj53K6Rwd/daWeirz+kr0U=;
+ b=LXU6hHwZC3OUmDuVEQUOimwAGk4qgaabL/FRRGpFRJBpVjAjZ3ehA4b+MM3d9L28d5YKWMpl
+ HFm6pleE+xRR7GXW+3NAttCKUpFaYoaLVPO87dsr6ie9BcBI1ArIg989aCSB3aaG9p0r+Q5F
+ wSrzh6jg2mnhqhomCDmIZdr/faQ=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 6113ac1e91487ad520c1b6f4 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 11 Aug 2021 10:53:18
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3D8FDC433F1; Wed, 11 Aug 2021 10:53:18 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C94CEC433F1;
+        Wed, 11 Aug 2021 10:53:16 +0000 (UTC)
 MIME-Version: 1.0
-References: <1628074696-7979-1-git-send-email-rnayak@codeaurora.org>
- <1628074696-7979-2-git-send-email-rnayak@codeaurora.org> <CAPDyKFrebwt5=S7hqXvcqRvt+-EXLcVmRSRZt1uPf-9n7_pRDg@mail.gmail.com>
- <2afd0fac-ed28-c090-a345-3fd4284b4125@codeaurora.org> <20210810024308.gurvzpbe2bc2bhky@vireshk-i7>
- <e452c0b5-5555-d6e2-40da-6aa21a26766d@codeaurora.org> <20210811100749.kwg6435m7xj7ulwa@vireshk-i7>
-In-Reply-To: <20210811100749.kwg6435m7xj7ulwa@vireshk-i7>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Wed, 11 Aug 2021 12:52:08 +0200
-Message-ID: <CAPDyKFp3xmx1r_2SCbrVcT-CcyUkTUoNgiUMWoyuWw5jE6WLrA@mail.gmail.com>
-Subject: Re: [PATCH v6 1/2] PM / Domains: Add support for 'required-opps' to
- set default perf state
-To:     Viresh Kumar <viresh.kumar@linaro.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        DTML <devicetree@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Roja Rani Yarubandi <rojay@codeaurora.org>,
-        Stephan Gerhold <stephan@gerhold.net>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 11 Aug 2021 16:23:16 +0530
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Will Deacon <will@kernel.org>
+Cc:     Robin Murphy <robin.murphy@arm.com>,
+        Joerg Roedel <joro@8bytes.org>,
+        iommu@lists.linux-foundation.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Doug Anderson <dianders@chromium.org>,
+        Krishna Reddy <vdumpa@nvidia.com>,
+        Thierry Reding <treding@nvidia.com>,
+        Tomasz Figa <tfiga@chromium.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: Re: [PATCHv4] iommu/arm-smmu: Optimize ->tlb_flush_walk() for qcom
+ implementation
+In-Reply-To: <20210811103011.GD4426@willie-the-truck>
+References: <20210811060725.25221-1-saiprakash.ranjan@codeaurora.org>
+ <20210811103011.GD4426@willie-the-truck>
+Message-ID: <47c50d2010a0c8f9c21c20584fb8db5e@codeaurora.org>
+X-Sender: saiprakash.ranjan@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 11 Aug 2021 at 12:07, Viresh Kumar <viresh.kumar@linaro.org> wrote:
->
-> On 11-08-21, 15:30, Rajendra Nayak wrote:
-> > In my case I don't want to error out if the property is missing, I want to error out
-> > only when the property exists but can't be translated into a performance state.
-> >
-> > So currently I check if the property exists and *only then* try to translate it, Ulf asked
-> > me to skip the check. If I do that and I call of_get_required_opp_performance_state()
-> > unconditionally, and if it errors out I will need to put in additional logic (check for
-> > return value of ENODEV) to distinguish between the property-does-not-exist vs
-> > property-exists-but-cannot-be-translated case.
-> > It just seems more straight-forward to call this only when the property exists, Ulf?
->
-> The same check will be done by OPP core as well, so it is better to
-> optimize for the success case here. I will say, don't error out on
-> ENODEV, rest you know well.
 
-This should work, while I generally favor not having to parse for
-specific return codes.
+On 2021-08-11 16:00, Will Deacon wrote:
+> On Wed, Aug 11, 2021 at 11:37:25AM +0530, Sai Prakash Ranjan wrote:
+>> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c 
+>> b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+>> index f7da8953afbe..3904b598e0f9 100644
+>> --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
+>> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
+>> @@ -327,9 +327,16 @@ static void arm_smmu_tlb_inv_range_s2(unsigned 
+>> long iova, size_t size,
+>>  static void arm_smmu_tlb_inv_walk_s1(unsigned long iova, size_t size,
+>>  				     size_t granule, void *cookie)
+>>  {
+>> -	arm_smmu_tlb_inv_range_s1(iova, size, granule, cookie,
+>> -				  ARM_SMMU_CB_S1_TLBIVA);
+>> -	arm_smmu_tlb_sync_context(cookie);
+>> +	struct arm_smmu_domain *smmu_domain = cookie;
+>> +	struct arm_smmu_cfg *cfg = &smmu_domain->cfg;
+>> +
+>> +	if (cfg->flush_walk_prefer_tlbiasid) {
+>> +		arm_smmu_tlb_inv_context_s1(cookie);
+> 
+> Hmm, this introduces an unconditional wmb() if tlbiasid is preferred. I
+> think that should be predicated on ARM_SMMU_FEAT_COHERENT_WALK like it 
+> is
+> for the by-VA ops. Worth doing as a separate patch.
+> 
 
-Another option is to add a new OPP OF helperfunction that just informs
-the caller whether the required-opps property exists (instead of
-open-coding that part), and if so, the caller can continue with
-of_get_required_opp_performance_state() and then expect it to succeed.
+Ok I will keep this as-is for now then.
 
-I have no strong opinion though! Whatever works for me.
+>> +	} else {
+>> +		arm_smmu_tlb_inv_range_s1(iova, size, granule, cookie,
+>> +					  ARM_SMMU_CB_S1_TLBIVA);
+>> +		arm_smmu_tlb_sync_context(cookie);
+>> +	}
+>>  }
+>> 
+>>  static void arm_smmu_tlb_add_page_s1(struct iommu_iotlb_gather 
+>> *gather,
+>> @@ -765,8 +772,10 @@ static int arm_smmu_init_domain_context(struct 
+>> iommu_domain *domain,
+>>  		.iommu_dev	= smmu->dev,
+>>  	};
+>> 
+>> -	if (!iommu_get_dma_strict(domain))
+>> +	if (!iommu_get_dma_strict(domain)) {
+>>  		pgtbl_cfg.quirks |= IO_PGTABLE_QUIRK_NON_STRICT;
+>> +		cfg->flush_walk_prefer_tlbiasid = true;
+> 
+> This is going to interact badly with Robin's series to allow dynamic
+> transition to non-strict mode, as we don't have a mechanism to switch
+> over to the by-ASID behaviour. Yes, it should _work_, but it's ugly 
+> having
+> different TLBI behaviour just because of the how the domain became
+> non-strict.
+> 
+> Robin -- I think this originated from your idea at [1]. Any idea how to 
+> make
+> it work with your other series, or shall we drop this part for now and 
+> leave
+> the TLB invalidation behaviour the same for now?
+> 
+> Will
+> 
+> [1] 
+> https://lore.kernel.org/r/da62ff1c-9b49-34d3-69a1-1a674e4a30f7@arm.com
 
-Kind regards
-Uffe
+Right, I think we can drop this non-strict change for now because it 
+also makes
+it a pain to backport it to 5.4/5.10 kernels because of large number of 
+changes
+in dma apis in recent kernels. I will let you and Robin decide if it's 
+ok to
+drop this change and introduce it later with a different patch.
+
+Thanks,
+Sai
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member
+of Code Aurora Forum, hosted by The Linux Foundation
