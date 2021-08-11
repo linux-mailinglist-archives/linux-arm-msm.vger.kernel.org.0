@@ -2,33 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E1E73E8A0C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 08:10:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB86C3E8A23
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 08:17:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234612AbhHKGKd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Aug 2021 02:10:33 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:51222 "EHLO
+        id S234664AbhHKGR6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 02:17:58 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:39144 "EHLO
         so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234501AbhHKGKd (ORCPT
+        with ESMTP id S234612AbhHKGR6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Aug 2021 02:10:33 -0400
+        Wed, 11 Aug 2021 02:17:58 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1628662210; h=Message-ID: Subject: Cc: To: From: Date:
- Content-Transfer-Encoding: Content-Type: MIME-Version: Sender;
- bh=6w8DE7PV8bfZUOdc7XTyHPzls7aBAT4UaE5qpmAy/X8=; b=fvFP6muKEpNdBrCrjfjhY814VdEdaP9H6ZDIF2sP9Gd8MlwEA2WbI81gyweEfuxAJXAbCEHm
- 6Jk2g4MGry4EJZNbszzC1gxAAK7BbswcCXMdhD2BbHBdma7dsz26SRfQjXoPasPZBgUyqmF3
- jbJjbAQu9ZT8QgGrE/2jqlxvNOM=
+ s=smtp; t=1628662655; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=FQZkSZe1h4Zy65xkKu3P5x1Lb3t+16QZpUVBCSFj4hs=;
+ b=m5znBkNBfNlp9xOYBCTj/aOWjgSdmD1LRALT2veVH2f7MQEjKvrS3ulHaByuvzjzIf+DDRom
+ Fn4cpaiy8j2Pm7gqLkQycimAJDRVLv/Op4jU+5brtH9CEfU1ipOHNSNq3xAOxJpO1T9lGI1A
+ iQXa5vU1YPkKLOjPQMwx/kZcDyU=
 X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 611369b3b14e7e2ecb5facf5 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 11 Aug 2021 06:09:55
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 61136b73b14e7e2ecb65e2a7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 11 Aug 2021 06:17:23
  GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Sender: skakit=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3E393C43144; Wed, 11 Aug 2021 06:09:55 +0000 (UTC)
+        id 95D7CC4338A; Wed, 11 Aug 2021 06:17:23 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,111 +38,63 @@ X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
 Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 53C17C433D3;
-        Wed, 11 Aug 2021 06:09:54 +0000 (UTC)
+        (Authenticated sender: skakit)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 93975C433D3;
+        Wed, 11 Aug 2021 06:17:22 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Wed, 11 Aug 2021 11:39:54 +0530
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Will Deacon <will@kernel.org>
-Cc:     Robin Murphy <robin.murphy@arm.com>,
-        Joerg Roedel <joro@8bytes.org>,
-        iommu@lists.linux-foundation.org,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Doug Anderson <dianders@chromium.org>,
-        Krishna Reddy <vdumpa@nvidia.com>,
-        Thierry Reding <treding@nvidia.com>,
-        Tomasz Figa <tfiga@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: Re: [PATCHv3] iommu/arm-smmu: Optimize ->tlb_flush_walk() for qcom
- implementation
-Message-ID: <6f013c7eb690d40091f7c503ef640711@codeaurora.org>
-X-Sender: saiprakash.ranjan@codeaurora.org
+Date:   Wed, 11 Aug 2021 11:47:22 +0530
+From:   skakit@codeaurora.org
+To:     Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>
+Cc:     bhupesh.sharma@linaro.org, Das Srinagesh <gurus@codeaurora.org>,
+        kgunda@codeaurora.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [RESEND PATCH V7 0/3] Convert qcom pmic gpio bindings to YAML
+In-Reply-To: <1627910464-19363-1-git-send-email-skakit@codeaurora.org>
+References: <1627910464-19363-1-git-send-email-skakit@codeaurora.org>
+Message-ID: <182fc9a13b78d114bd209f9658274f0c@codeaurora.org>
+X-Sender: skakit@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-08-10 23:38, Will Deacon wrote:
-> On Tue, Aug 03, 2021 at 11:09:17AM +0530, Sai Prakash Ranjan wrote:
->> On 2021-08-02 21:13, Will Deacon wrote:
->> > On Wed, Jun 23, 2021 at 07:12:01PM +0530, Sai Prakash Ranjan wrote:
->> > > diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu.c
->> > > b/drivers/iommu/arm/arm-smmu/arm-smmu.c
->> > > index d3c6f54110a5..f3845e822565 100644
->> > > --- a/drivers/iommu/arm/arm-smmu/arm-smmu.c
->> > > +++ b/drivers/iommu/arm/arm-smmu/arm-smmu.c
->> > > @@ -341,6 +341,12 @@ static void arm_smmu_tlb_add_page_s1(struct
->> > > iommu_iotlb_gather *gather,
->> > >  				  ARM_SMMU_CB_S1_TLBIVAL);
->> > >  }
->> > >
->> > > +static void arm_smmu_tlb_inv_walk_impl_s1(unsigned long iova,
->> > > size_t size,
->> > > +				     size_t granule, void *cookie)
->> > > +{
->> > > +	arm_smmu_tlb_inv_context_s1(cookie);
->> > > +}
->> > > +
->> > >  static void arm_smmu_tlb_inv_walk_s2(unsigned long iova, size_t size,
->> > >  				     size_t granule, void *cookie)
->> > >  {
->> > > @@ -388,6 +394,12 @@ static const struct iommu_flush_ops
->> > > arm_smmu_s1_tlb_ops = {
->> > >  	.tlb_add_page	= arm_smmu_tlb_add_page_s1,
->> > >  };
->> > >
->> > > +const struct iommu_flush_ops arm_smmu_s1_tlb_impl_ops = {
->> > > +	.tlb_flush_all	= arm_smmu_tlb_inv_context_s1,
->> > > +	.tlb_flush_walk	= arm_smmu_tlb_inv_walk_impl_s1,
->> > > +	.tlb_add_page	= arm_smmu_tlb_add_page_s1,
->> > > +};
->> >
->> > Hmm, dunno about this. Wouldn't it be a lot cleaner if the
->> > tlb_flush_walk
->> > callbacks just did the right thing based on the smmu_domain (maybe in
->> > the
->> > arm_smmu_cfg?) rather than having an entirely new set of ops just
->> > because
->> > they're const and you can't overide the bit you want?
->> >
->> > I don't think there's really an awful lot qcom-specific about the
->> > principle
->> > here -- there's a trade-off between over-invalidation and invalidation
->> > latency. That happens on the CPU as well.
->> >
->> 
->> Sorry didn't understand, based on smmu_domain what? How do we make
->> this implementation specific? Do you mean something like a quirk?
->> The reason we didn't make this common was because nvidia folks weren't
->> so happy with that, you can find the discussion in this thread [1].
->> 
->> [1] 
->> https://lore.kernel.org/lkml/20210609145315.25750-1-saiprakash.ranjan@codeaurora.org/
-> 
-> The ->tlb_flush_walk() callbacks take a 'void *cookie' which, for this
-> driver, is a 'struct arm_smmu_domain *'. From that, you can get to the
-> 'struct arm_smmu_cfg' which could have something as coarse as:
-> 
-> 	bool	flush_walk_prefer_tlbiasid;
-> 
-> which you can set when you initialise the domain (maybe in the
-> ->init_context callback?). It shouldn't affect anybody else.
-> 
+Hi Linus,
 
-Ah ok, you meant a new flag in arm_smmu_cfg, right getting it from 
-cookie
-is no big deal but nonetheless thanks for detailing it. I have made the
-changes and sent a v4 after testing.
+Can you pls merge these patches? I have rebased them on linux-next.
 
 Thanks,
-Sai
+Satya Priya
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member
-of Code Aurora Forum, hosted by The Linux Foundation
+On 2021-08-02 18:51, satya priya wrote:
+> Hi,
+> 
+>  I've rebased this series on linux-next. Patch [1/3] of this series is
+>  already applied but I'm resending it just to avoid Bot errors.
+> 
+> Thanks,
+> Satya Priya
+> 
+> satya priya (3):
+>   dt-bindings: mfd: pm8008: Add gpio-ranges and spmi-gpio compatible
+>   dt-bindings: pinctrl: qcom-pmic-gpio: Convert qcom pmic gpio bindings
+>     to YAML
+>   dt-bindings: pinctrl: qcom-pmic-gpio: Remove the interrupts property
+> 
+>  .../devicetree/bindings/mfd/qcom,pm8008.yaml       |  13 +-
+>  .../devicetree/bindings/pinctrl/qcom,pmic-gpio.txt | 290 
+> ---------------------
+>  .../bindings/pinctrl/qcom,pmic-gpio.yaml           | 239 
+> +++++++++++++++++
+>  3 files changed, 249 insertions(+), 293 deletions(-)
+>  delete mode 100644 
+> Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.txt
+>  create mode 100644
+> Documentation/devicetree/bindings/pinctrl/qcom,pmic-gpio.yaml
