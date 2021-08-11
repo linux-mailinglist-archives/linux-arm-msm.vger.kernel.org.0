@@ -2,99 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 907BB3E9763
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 20:13:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 303D43E9781
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 20:19:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230174AbhHKSOK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Aug 2021 14:14:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53900 "EHLO
+        id S229889AbhHKSTb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 14:19:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55156 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230147AbhHKSOJ (ORCPT
+        with ESMTP id S230089AbhHKSTa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Aug 2021 14:14:09 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B294C0613D5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 11:13:45 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id u10so5907828oiw.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 11:13:45 -0700 (PDT)
+        Wed, 11 Aug 2021 14:19:30 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2197C0613D5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 11:19:06 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id d17so3739899plr.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 11:19:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=V5WHglLnv0tP3zfC+yhvkwyNtvBrV/SwR0eesAKn62U=;
-        b=hwOokhJfgA8Q1NrNiSlRyMcNkPDaQB4EOe2hy39eC+AuIwd4/ggS2tEc0fHO5Qmp+Z
-         y9KPzOI8Js8v/wII6Rga28g80H9KpIOgnCfYIiW0xNwzwFoBMRvKuZYenFnoJveoQek5
-         EERsR88hfvxizbd3GcbhRX/pLyIdUJAvB2V2o=
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gKVoI857eV59yGVCpnpGmuE3eZ6QKq/ygbPwI02F10E=;
+        b=iIKu8JcDcnXwDVZ2Sbgt1DUtxcgjpRp5KmKvVaZuaRfpjwnQtZehUrZEmBUzmSoYFk
+         o2OAq1h/lQTaEQQsP5jd/nx1d4fog4ZRZpmZJ82DSeDEoAxb/dZSyZBgRJEk1OdMFq9U
+         pYquPwFdWsG3veZTCyWio7whBKm82rrXO+b8w=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=V5WHglLnv0tP3zfC+yhvkwyNtvBrV/SwR0eesAKn62U=;
-        b=Of9LCm0BOSxHpg9echaW3YVb/C5yOlRVFvTbbBmhQtod5XpA3yd9UIxjNCRfei/bnW
-         FukZoByijdQEnAQdLffF/qXWu4dbVgHiZrPmwv/zW3PBgn5VwnDOlB5NrLkMRvMRvxTU
-         l/KntCiXChG/N22mbGNLNP7zTwccmZysun9vAfepcyfjWpGrC2PAhlo4hRFdM0soZi5d
-         sDXaVz70/5NbmLuh3xFFnVhL8vxSjEgjFoq2DFMD+3O4hVLrXxGo/JIiTkgVFIZoGj6t
-         vynHmMpSKx0IuRnf0P/krK0uOTvwJbttuwvw40hQdvIhHsfeCrPa7ZKA2oUw29ri8Cdf
-         XN9Q==
-X-Gm-Message-State: AOAM533s+w5yMG3ljatmmwUeWVsRKEqYYo79X1XEUH07Igrb+h8REvkq
-        8H4BBH5r7Vdi4/xSI4f29sJiTdBevuyP5lfE62Lx0Q==
-X-Google-Smtp-Source: ABdhPJyGT8/mJMEby2FTGsJsH/3yOmOGdPLInfoFlVnHVJiCHdsAVx2+D7Us3p/+8Eau8DxvP3h7N4s5Xe7nXsmjGJo=
-X-Received: by 2002:a05:6808:114a:: with SMTP id u10mr147891oiu.19.1628705624806;
- Wed, 11 Aug 2021 11:13:44 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 11 Aug 2021 11:13:44 -0700
-MIME-Version: 1.0
-In-Reply-To: <0e659a74-ba52-2262-f7ce-eddf4a655b63@linaro.org>
-References: <20210721175432.2119-1-mdtipton@codeaurora.org>
- <20210721175432.2119-5-mdtipton@codeaurora.org> <CAE-0n52iVgX0JjjnYi=NDg49xP961p=+W5R2bmO+2xwRceFhfA@mail.gmail.com>
- <0e659a74-ba52-2262-f7ce-eddf4a655b63@linaro.org>
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gKVoI857eV59yGVCpnpGmuE3eZ6QKq/ygbPwI02F10E=;
+        b=HR9nITIjuswOSWxObSwqkrt02Vl8opZLpYsqa5xdU2QMbbgmPp9KV7SfOqBvpHXHBH
+         ZLVccBt3jOLR3e3syCTnwMqgCk8z/QBy2lCoSTI5PFPINBJ2dzAd25bjqow1H+o2BCqj
+         34M67pbXTyOyV6+AqDXWJHxrKu+YWDVE4oYzspbCxy50YA84xkYOcDkBIkI79FWr/DWw
+         VsxTsMPp9Rc/7tyPNBxvQ+kV6T4XlXy4xLiSC8pb6cAbThUXmRDv70QmDd+Sey13moqX
+         NtMt8Dz3r61mOqObM+KBBpTYcwFyxi4Sg1PF3iY9WTVbENVLCCVmgWTfEpHaEiZL6Mr2
+         T4Mg==
+X-Gm-Message-State: AOAM531fUdEcjPYVL2d+hGsgOr/o2Dq83uMNQZ2z7j57Po6VE/UJ7pu9
+        cDVtrVB+sD2UMDYOMwrFyC56TA==
+X-Google-Smtp-Source: ABdhPJxIkBUVFl1x4qjyNrZuRkWAOfGzFoLEWZR3B6lokmBF52NkFwJ8aG0iGwB0LGEOhhsvPiCtHw==
+X-Received: by 2002:a62:8042:0:b029:3cd:8339:7551 with SMTP id j63-20020a6280420000b02903cd83397551mr60343pfd.79.1628705946146;
+        Wed, 11 Aug 2021 11:19:06 -0700 (PDT)
+Received: from smtp.gmail.com ([2620:15c:202:201:1c85:53f6:c893:55e8])
+        by smtp.gmail.com with ESMTPSA id nr6sm7222027pjb.39.2021.08.11.11.19.05
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 11 Aug 2021 11:19:05 -0700 (PDT)
 From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Wed, 11 Aug 2021 11:13:44 -0700
-Message-ID: <CAE-0n53GfD-8d0NJ+Hv1wcx0DDACc5_gT3qV0NR-vLiZgtCKpg@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] interconnect: qcom: icc-rpmh: Add BCMs to commit
- list in pre_aggregate
-To:     Alex Elder <elder@linaro.org>,
-        Mike Tipton <mdtipton@codeaurora.org>, djakov@kernel.org
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
-        saravanak@google.com, okukatla@codeaurora.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Alex Elder <elder@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: sc7280: Use GIC_SPI for intc cells
+Date:   Wed, 11 Aug 2021 11:19:04 -0700
+Message-Id: <20210811181904.779316-1-swboyd@chromium.org>
+X-Mailer: git-send-email 2.33.0.rc1.237.g0d66db33f3-goog
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Alex Elder (2021-08-11 09:01:27)
-> On 8/10/21 6:31 PM, Stephen Boyd wrote:
-> > Quoting Mike Tipton (2021-07-21 10:54:32)
-> >> We're only adding BCMs to the commit list in aggregate(), but there are
-> >> cases where pre_aggregate() is called without subsequently calling
-> >> aggregate(). In particular, in icc_sync_state() when a node with initial
-> >> BW has zero requests. Since BCMs aren't added to the commit list in
-> >> these cases, we don't actually send the zero BW request to HW. So the
-> >> resources remain on unnecessarily.
-> >>
-> >> Add BCMs to the commit list in pre_aggregate() instead, which is always
-> >> called even when there are no requests.
-> >>
-> >> Fixes: 976daac4a1c5 ("interconnect: qcom: Consolidate interconnect RPMh support")
-> >> Signed-off-by: Mike Tipton <mdtipton@codeaurora.org>
-> >> ---
-> >
-> > This patch breaks reboot for me on sc7180 Lazor
->
-> If I am using the interface improperly or something in the
-> IPA driver, please let me know.  I actually plan to switch
-> to using the bulk interfaces soon (FYI).
->
+Let's use the GIC_SPI macro instead of a plain 0 here to match other
+uses of the primary interrupt controller on sc7280.
 
-I suspect I'm seeing a shutdown ordering issue, where we start dropping
-interconnect requests in driver shutdown callbacks and then some bus
-turns off and the CPU can't access a device. Maybe to fix this problem
-(if reverting isn't an option) would be to add a shutdown hook to
-rpmh-icc that effectively "props up" the bandwidth requests during
-shutdown so that we don't have to think about finding the place that the
-interconnect is turned off. We're shutting down/restarting anyway, so
-there isn't much point in trying to be power efficient for the last few
-moments of runtime.
+Suggested-by: Matthias Kaehlcke <mka@chromium.org>
+Cc: Alex Elder <elder@linaro.org>
+Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+---
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index f70ab3c5d08b..569802536321 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -598,8 +598,8 @@ ipa: ipa@1e40000 {
+ 				    "ipa-shared",
+ 				    "gsi";
+ 
+-			interrupts-extended = <&intc 0 654 IRQ_TYPE_EDGE_RISING>,
+-					      <&intc 0 432 IRQ_TYPE_LEVEL_HIGH>,
++			interrupts-extended = <&intc GIC_SPI 654 IRQ_TYPE_EDGE_RISING>,
++					      <&intc GIC_SPI 432 IRQ_TYPE_LEVEL_HIGH>,
+ 					      <&ipa_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+ 					      <&ipa_smp2p_in 1 IRQ_TYPE_EDGE_RISING>;
+ 			interrupt-names = "ipa",
+
+base-commit: 97ec669dfcfa22f8a595356ceb6ce46e7b4a82e9
+-- 
+https://chromeos.dev
+
