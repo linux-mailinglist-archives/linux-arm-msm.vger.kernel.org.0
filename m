@@ -2,100 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A55003E890B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 05:57:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 634273E8931
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 06:22:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233324AbhHKD6R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Aug 2021 23:58:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51914 "EHLO
+        id S229534AbhHKEWz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 00:22:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57308 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233319AbhHKD6O (ORCPT
+        with ESMTP id S229770AbhHKEWy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Aug 2021 23:58:14 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFD1AC0613D5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 20:57:51 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id w14so1321897pjh.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 20:57:51 -0700 (PDT)
+        Wed, 11 Aug 2021 00:22:54 -0400
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92F46C0613D5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 21:22:31 -0700 (PDT)
+Received: by mail-ot1-x332.google.com with SMTP id c23-20020a0568301af7b029050cd611fb72so1895211otd.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 21:22:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=VZDnzigX3SjnNXSD0ePWkP9LgJSp4fG8kgmss+VG9ns=;
-        b=L+R0++YNmnfCTMKhjKqOcKL4r/U7m81vQz3IrrH9KLDy//XrRshbenoNZmZvx+VIlg
-         Mq8Qc1IS2nkv1owuCTwuT/xVfJPoRLA9MwiztzGevawbNsG1jIpq1dWtcDKZEA6nFakz
-         6jW0uebiyXkhFAsTrvf8b28PT/Jm8ziY8l5R1B3utIIDLeuPh0i7j5b6WfYy1UU5wn2m
-         AV6QkLUi3fj0zsNyzUivEkcm0Yp5HUaCv1pluWDmaAcHjoAPdT3MzdvrvLTgKh69M+GY
-         5PXaWt5ahBrp/AkNB6otUyLPKOr2S9C60dve5Nwty8fLYrClkI8I/nytnDHs+c6xXBNR
-         d86w==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=M+Fy0eR1+iop2G2YtVgpRm77F8HTctO7zKKFznc4zBo=;
+        b=Fo9g5LijgBrQLPT6MYDEQNxX6viodg54hr7z4FkxTTA21xFg3ZrnNnIuV5eOFU6HpM
+         HeXLgv/LwnWd2M9n9fm3NUb6HDbfUx4E4CtwuAH2Q51QtqvgmaESGr+NmF0AXxHRXs5n
+         ewFZnhcT5+bJ+kMcpEX9LWMIvBWWSLrSYEXws=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=VZDnzigX3SjnNXSD0ePWkP9LgJSp4fG8kgmss+VG9ns=;
-        b=CaDv9AxzVMUhsThJfmL1VflN/GSYO6E76nZVAY8kpqXDcYY8GNraOWNKrR4iU0eXmw
-         zx43GXbrl90BadGD6nHltWkAQNpN6jUtPxkNI44AO2Q34a+hq+0AVz+DKZa6iAKCoElh
-         3bZxeAu0es8Z3lXifU2OQBtJIuF4wGkr9keReTf6YDeY9HdbhoVyuD9ce7Zdk6LtDugL
-         juuKFF57vaGt+J/BjsueHZeaSNWWYCkCWX8y+g7QEOQeBlirBhbJIzed3MuXu3t7mOH3
-         8xcmjcQJEBFwn1VvNc/YMSkCszp/rN9lF2UHw1Gnc/PYTWOcD3CO3p+2c28vbY+f6QVW
-         bm9A==
-X-Gm-Message-State: AOAM533URN3127EaErSEIcmG0Yj/sZphROqzsXqPoLtMMCM0n8yuz00w
-        GG+yRozj+7UZcKriZBmGTLZfdQ==
-X-Google-Smtp-Source: ABdhPJx/pJbsP0m97XQVCkEHJBz1/qpfTU3xLCXt7Z7OMeaFjN14Huy9YQ+gFbHc8StZrL0P+eTQrA==
-X-Received: by 2002:a17:90a:d702:: with SMTP id y2mr13633559pju.127.1628654270782;
-        Tue, 10 Aug 2021 20:57:50 -0700 (PDT)
-Received: from localhost ([122.172.201.85])
-        by smtp.gmail.com with ESMTPSA id fv2sm4492265pjb.53.2021.08.10.20.57.49
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 10 Aug 2021 20:57:50 -0700 (PDT)
-Date:   Wed, 11 Aug 2021 09:27:45 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Taniya Das <tdas@codeaurora.org>
-Cc:     "Rafael J . Wysocki" <rjw@rjwysocki.net>, linux-pm@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Subject: Re: [PATCH v1] cpufreq: qcom-hw: Set dvfs_possible_from_any_cpu
- cpufreq driver flag
-Message-ID: <20210811035745.j6jbufrd2pdrnqdp@vireshk-i7>
-References: <1628645918-12890-1-git-send-email-tdas@codeaurora.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=M+Fy0eR1+iop2G2YtVgpRm77F8HTctO7zKKFznc4zBo=;
+        b=qOtDplTWFm7f+ekBJX7pF6u14ZkuH+/Fgt73NnyXZhkdPyAeM1gPbiVsrYTxXgJ7mr
+         Z59SHLf9nR06UjYXR7gRvX5yvaggOxDjvgL6NrkHpKReHW7LUU9oTbd/9LZ1J5uMK7pY
+         jSzdWb6WgTJheAGdqbw/Ksb+kD3OACJC5Sq/S27UDQlKd3SvtetxLp5rH4Pr8RLxx2ge
+         DuD3Cm5y4J2MFziDs7zBsW8pF8PB+Oglc7uvztPOO2wQDrCNJjnvKDjgpM9V3op4dMYl
+         SqvnJWDjTPQME45gxGTN24Y6pdENTk3lW4OVxXpxkZAFlMN79Q7AD3/Koc1p0LjKP4pE
+         8XZQ==
+X-Gm-Message-State: AOAM532Jk35MyMMSKBJ5RhM+rMBuvMwxgJuyziTd1BHj9G5yP90uBDaI
+        uDlsBHkrJr/pXq4/Yub94wFNriPIxVb7WQm6ynENQA==
+X-Google-Smtp-Source: ABdhPJwFN1LHRL2LcpvpMcDdnpPoGURPoblDU8DwG8F5DDcdYAcQghp0zgONfhmA3uMvE4qsiAJCUK817GUSoi+F0hI=
+X-Received: by 2002:a05:6830:44a7:: with SMTP id r39mr23466057otv.25.1628655750208;
+ Tue, 10 Aug 2021 21:22:30 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 10 Aug 2021 21:22:29 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1628645918-12890-1-git-send-email-tdas@codeaurora.org>
-User-Agent: NeoMutt/20180716-391-311a52
+In-Reply-To: <YRMXOlA5a98BwT3i@builder.lan>
+References: <20210721175432.2119-1-mdtipton@codeaurora.org>
+ <20210721175432.2119-5-mdtipton@codeaurora.org> <CAE-0n52iVgX0JjjnYi=NDg49xP961p=+W5R2bmO+2xwRceFhfA@mail.gmail.com>
+ <YRMXOlA5a98BwT3i@builder.lan>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Tue, 10 Aug 2021 21:22:29 -0700
+Message-ID: <CAE-0n53L_muNfpcunPmAWh-dG1h_y8xVqUG-es2CY8jdbnM8mg@mail.gmail.com>
+Subject: Re: [PATCH v2 4/4] interconnect: qcom: icc-rpmh: Add BCMs to commit
+ list in pre_aggregate
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Mike Tipton <mdtipton@codeaurora.org>, djakov@kernel.org,
+        agross@kernel.org, saravanak@google.com, okukatla@codeaurora.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Alex Elder <elder@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 11-08-21, 07:08, Taniya Das wrote:
-> As remote cpufreq updates are supported on QCOM platforms, set
-> dvfs_possible_from_any_cpu cpufreq driver flag.
-> 
-> Signed-off-by: Taniya Das <tdas@codeaurora.org>
-> ---
->  drivers/cpufreq/qcom-cpufreq-hw.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-> index f86859b..20455aa 100644
-> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
-> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-> @@ -161,6 +161,7 @@ static int qcom_cpufreq_hw_read_lut(struct device *cpu_dev,
->  		return ret;
->  	} else {
->  		policy->fast_switch_possible = true;
-> +		policy->dvfs_possible_from_any_cpu = true;
->  		icc_scaling_enabled = false;
->  	}
+Quoting Bjorn Andersson (2021-08-10 17:18:02)
+> On Tue 10 Aug 18:31 CDT 2021, Stephen Boyd wrote:
+>
+> > Quoting Mike Tipton (2021-07-21 10:54:32)
+> > > We're only adding BCMs to the commit list in aggregate(), but there are
+> > > cases where pre_aggregate() is called without subsequently calling
+> > > aggregate(). In particular, in icc_sync_state() when a node with initial
+> > > BW has zero requests. Since BCMs aren't added to the commit list in
+> > > these cases, we don't actually send the zero BW request to HW. So the
+> > > resources remain on unnecessarily.
+> > >
+> > > Add BCMs to the commit list in pre_aggregate() instead, which is always
+> > > called even when there are no requests.
+> > >
+> > > Fixes: 976daac4a1c5 ("interconnect: qcom: Consolidate interconnect RPMh support")
+> > > Signed-off-by: Mike Tipton <mdtipton@codeaurora.org>
+> > > ---
+> >
+> > This patch breaks reboot for me on sc7180 Lazor
+> >
+>
+> FWIW, it prevents at least SM8150 from booting (need to check my other
+> boards as well), because its no longer okay to have the interconnect
+> providers defined without having all client paths specified.
 
-Why don't you set it always ?
-
-> 
-> --
-> Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
-> of the Code Aurora Forum, hosted by the  Linux Foundation.
-
--- 
-viresh
+So maybe the best course of action is to revert this patch from Linus'
+tree? It's not a super huge deal as "can't boot", but certainly makes
+reboot annoying on sc7180.
