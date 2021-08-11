@@ -2,198 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2ADCB3E8988
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 06:38:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB40F3E89A3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 07:19:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234162AbhHKEig (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Aug 2021 00:38:36 -0400
-Received: from mail-0301.mail-europe.com ([188.165.51.139]:43283 "EHLO
-        mail-0301.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233988AbhHKEid (ORCPT
+        id S234265AbhHKFTv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 01:19:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41506 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234300AbhHKFTZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Aug 2021 00:38:33 -0400
-Date:   Wed, 11 Aug 2021 04:37:50 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1628656682;
-        bh=OCiFQZnCOnUGcGj+ycOgpUC4rhDlZ6RCMWuzNwlouAM=;
-        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=RVVc+eOGNmArjtdkPGpgCUcte3lrsKJdhPNaM/V3WoG/cmBt4Nh9/JuEJaLgs0/Ja
-         9aTZXjh1fH4UDo28X6cbjJXyF3J3BFSMEQ2GYJZZqRFODttDmiJ9Gnnx3KKYqpvAU3
-         EAf/2PMQh/EJl0dzfq8iCTXiboORnxon1soDVav8=
-To:     Andy Gross <agross@kernel.org>,
+        Wed, 11 Aug 2021 01:19:25 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51E48C061798
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 22:19:02 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id j1so1574771pjv.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 22:19:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=HZD0Vc3lp/XqIPTm8s+fyeFvAaL1Bw4mNZGMJyfHjck=;
+        b=JsUzkrlDPAu8MK89pY4o2ZMqmceYFpkvBK5JN4Q3rcKt2yG6fIG7GyD/keZNyuPlO/
+         pWDGRH0qVmkLvGILreUzHaQu2FqD7yCQInNs4MJfpOiBzeWCu1wVYqJHzzWd7jjg+1lK
+         BPFkK9UOvNfF/dC32k369RJCDXvuGtx44NefqAQ8+PCbgjAa2GCfEu+hhsZOan5ymCE4
+         Ckimj6yuQU672Pnu8Th/zBuzKM9OCrQ0Z4nuzcpM71M4Ou7EoR9Xl8bFAePomrmwMIFX
+         SScfYhAV4fznqI7SG3+EA8jmNDowekCV9Zq4xhx491ewQCRU3dBLaVY249wQNytNEBdH
+         cKTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=HZD0Vc3lp/XqIPTm8s+fyeFvAaL1Bw4mNZGMJyfHjck=;
+        b=UX7Tt3fTNMq2XSXQPamG3se/u+FADj+lTjLAalJuEpfmRL9GW3fJC4x04Q6BHwal3x
+         YCE8ytYmjxHHl4T83ku5jbssr6nKVjih7a2+yqTUKkwnC+ftUg21/kzsrUTJ3vkIC4ws
+         1AF5YVzYt79tbtdI5FqkICcLPSDWc8zR/IHJL3H9KmqQmHVOiYtAdxOS5dtCa/vTdQij
+         x9EAqq2sL9oBWaInFp5NNd2ouIOkNUIlCyovEKeHcL7V9G31ODojZBcHlN7Dpt+vNaNO
+         81yhdyX6RVGjjCWgXVZb4ZM/0qvyQZWW6ePhmVQu/ouOn6X4CQ2GoUOXTcfYKTDj2/Ec
+         AGwQ==
+X-Gm-Message-State: AOAM530VjE+5U4IFfuRcncSCCqMxYt3yrkexrdV8jVj3HpJX/zSEVOuU
+        0vpDqd8Entmkqgo/6o3yHqfvQA==
+X-Google-Smtp-Source: ABdhPJzkff8ozUzWrLhACtgWHkaRe212yS2ydFbdEsIQCClF9gDAs7w5Kivh/WFFx4A/swTDLByBiw==
+X-Received: by 2002:a17:90a:ce0a:: with SMTP id f10mr35357981pju.71.1628659141754;
+        Tue, 10 Aug 2021 22:19:01 -0700 (PDT)
+Received: from localhost ([122.172.201.85])
+        by smtp.gmail.com with ESMTPSA id z13sm4816257pjd.44.2021.08.10.22.19.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Aug 2021 22:19:01 -0700 (PDT)
+Date:   Wed, 11 Aug 2021 10:48:59 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Quentin Perret <qperret@google.com>
+Cc:     Rafael Wysocki <rjw@rjwysocki.net>,
+        Vincent Donnefort <vincent.donnefort@arm.com>,
+        lukasz.luba@arm.com, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-From:   Yassine Oudjana <y.oudjana@protonmail.com>
-Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
-Subject: [PATCH v3 6/6] arm64: dts: qcom: msm8996: Add interconnect support
-Message-ID: <20210811043451.189776-7-y.oudjana@protonmail.com>
-In-Reply-To: <20210811043451.189776-1-y.oudjana@protonmail.com>
-References: <20210811043451.189776-1-y.oudjana@protonmail.com>
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Kevin Hilman <khilman@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>, linux-pm@vger.kernel.org,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-omap@vger.kernel.org
+Subject: Re: [PATCH 0/8] cpufreq: Auto-register with energy model
+Message-ID: <20210811051859.ihjzhvrnuct2knvy@vireshk-i7>
+References: <cover.1628579170.git.viresh.kumar@linaro.org>
+ <YRJym+Vn4bbwQzzs@google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YRJym+Vn4bbwQzzs@google.com>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add interconnect providers for the multiple NoCs available on the platform,
-and assign interconnects used by some blocks.
+On 10-08-21, 13:35, Quentin Perret wrote:
+> On Tuesday 10 Aug 2021 at 13:06:47 (+0530), Viresh Kumar wrote:
+> > Provide a cpufreq driver flag so drivers can ask the cpufreq core to register
+> > with the EM core on their behalf.
+> 
+> Hmm, that's not quite what this does. This asks the cpufreq core to
+> use *PM_OPP* to register an EM, which I think is kinda wrong to do from
+> there IMO. The decision to use PM_OPP or another mechanism to register
+> an EM belongs to platform specific code (drivers), so it is odd for the
+> PM_OPP registration to have its own cpufreq flag but not the other ways.
+> 
+> As mentioned in another thread, the very reason to have PM_EM is to not
+> depend on PM_OPP, so I'm worried about the direction of travel with this
+> series TBH.
 
-Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
----
-Changes since v2:
- - Remove interconnect paths from CPUs since cpufreq driver doesn't support=
- icc scaling yet.
+I had to use the pm-opp version, since almost everyone was using that.
 
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 80 +++++++++++++++++++++++++++
- 1 file changed, 80 insertions(+)
+On the other hand, there isn't a lot of OPP specific stuff in
+dev_pm_opp_of_register_em(). It just uses dev_pm_opp_get_opp_count(),
+that's all. This ended up in the OPP core, nothing else. Maybe we can
+now move it back to the EM core and name it differently ?
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qc=
-om/msm8996.dtsi
-index 78c55ca10ba9..64637b15ff14 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -7,6 +7,7 @@
- #include <dt-bindings/clock/qcom,mmcc-msm8996.h>
- #include <dt-bindings/clock/qcom,rpmcc.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
-+#include <dt-bindings/interconnect/qcom,msm8996.h>
- #include <dt-bindings/soc/qcom,apr.h>
- #include <dt-bindings/thermal/thermal.h>
-=20
-@@ -683,6 +684,15 @@ gcc: clock-controller@300000 {
- =09=09=09clock-names =3D "cxo2";
- =09=09};
-=20
-+=09=09bimc: interconnect@408000 {
-+=09=09=09compatible =3D "qcom,msm8996-bimc";
-+=09=09=09reg =3D <0x00408000 0x5a000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_BIMC_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_BIMC_A_CLK>;
-+=09=09};
-+
- =09=09tsens0: thermal-sensor@4a9000 {
- =09=09=09compatible =3D "qcom,msm8996-tsens", "qcom,tsens-v2";
- =09=09=09reg =3D <0x004a9000 0x1000>, /* TM */
-@@ -705,6 +715,61 @@ tsens1: thermal-sensor@4ad000 {
- =09=09=09#thermal-sensor-cells =3D <1>;
- =09=09};
-=20
-+=09=09cnoc: interconnect@500000 {
-+=09=09=09compatible =3D "qcom,msm8996-cnoc";
-+=09=09=09reg =3D <0x00500000 0x1000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_CNOC_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_CNOC_A_CLK>;
-+=09=09};
-+
-+=09=09snoc: interconnect@524000 {
-+=09=09=09compatible =3D "qcom,msm8996-snoc";
-+=09=09=09reg =3D <0x00524000 0x1c000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_SNOC_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_SNOC_A_CLK>;
-+=09=09};
-+
-+=09=09a1noc: interconnect@562000 {
-+=09=09=09compatible =3D "qcom,msm8996-a1noc";
-+=09=09=09reg =3D <0x00562000 0x5000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_AGGR1_NOC_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_AGGR1_NOC_A_CLK>;
-+=09=09};
-+
-+=09=09a2noc: interconnect@583000 {
-+=09=09=09compatible =3D "qcom,msm8996-a2noc";
-+=09=09=09reg =3D <0x00583000 0x7000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_AGGR2_NOC_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_AGGR2_NOC_A_CLK>;
-+=09=09};
-+
-+=09=09mnoc: interconnect@5a4000 {
-+=09=09=09compatible =3D "qcom,msm8996-mnoc";
-+=09=09=09reg =3D <0x005a4000 0x1c000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a", "iface";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_MMAXI_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_MMAXI_A_CLK>,
-+=09=09=09=09 <&mmcc AHB_CLK_SRC>;
-+=09=09};
-+
-+=09=09pnoc: interconnect@5c0000 {
-+=09=09=09compatible =3D "qcom,msm8996-pnoc";
-+=09=09=09reg =3D <0x005c0000 0x3000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_PCNOC_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_PCNOC_A_CLK>;
-+=09=09};
-+
- =09=09tcsr_mutex_regs: syscon@740000 {
- =09=09=09compatible =3D "syscon";
- =09=09=09reg =3D <0x00740000 0x40000>;
-@@ -784,6 +849,11 @@ mdp: mdp@901000 {
- =09=09=09=09assigned-clock-rates =3D <300000000>,
- =09=09=09=09=09 <19200000>;
-=20
-+=09=09=09=09interconnects =3D <&mnoc MASTER_MDP_PORT0 &bimc SLAVE_EBI_CH0>=
-,
-+=09=09=09=09=09=09<&mnoc MASTER_MDP_PORT1 &bimc SLAVE_EBI_CH0>,
-+=09=09=09=09=09=09<&mnoc MASTER_ROTATOR &bimc SLAVE_EBI_CH0>;
-+=09=09=09=09interconnect-names =3D "mdp0-mem", "mdp1-mem", "rotator-mem";
-+
- =09=09=09=09ports {
- =09=09=09=09=09#address-cells =3D <1>;
- =09=09=09=09=09#size-cells =3D <0>;
-@@ -955,6 +1025,9 @@ gpu: gpu@b00000 {
- =09=09=09=09"mem",
- =09=09=09=09"mem_iface";
-=20
-+=09=09=09interconnects =3D <&bimc MASTER_GRAPHICS_3D &bimc SLAVE_EBI_CH0>;
-+=09=09=09interconnect-names =3D "gfx-mem";
-+
- =09=09=09power-domains =3D <&mmcc GPU_GX_GDSC>;
- =09=09=09iommus =3D <&adreno_smmu 0>;
-=20
-@@ -1947,6 +2020,9 @@ venus: video-codec@c00000 {
- =09=09=09=09 <&mmcc VIDEO_AXI_CLK>,
- =09=09=09=09 <&mmcc VIDEO_MAXI_CLK>;
- =09=09=09clock-names =3D "core", "iface", "bus", "mbus";
-+=09=09=09interconnects =3D <&mnoc MASTER_VIDEO_P0 &bimc SLAVE_EBI_CH0>,
-+=09=09=09=09=09<&bimc MASTER_AMPSS_M0 &mnoc SLAVE_VENUS_CFG>;
-+=09=09=09interconnect-names =3D "video-mem", "cpu-cfg";
- =09=09=09iommus =3D <&venus_smmu 0x00>,
- =09=09=09=09 <&venus_smmu 0x01>,
- =09=09=09=09 <&venus_smmu 0x0a>,
-@@ -2563,6 +2639,10 @@ usb3: usb@6af8800 {
- =09=09=09=09=09  <&gcc GCC_USB30_MASTER_CLK>;
- =09=09=09assigned-clock-rates =3D <19200000>, <120000000>;
-=20
-+=09=09=09interconnects =3D <&a2noc MASTER_USB3 &bimc SLAVE_EBI_CH0>,
-+=09=09=09=09=09<&bimc MASTER_AMPSS_M0 &snoc SLAVE_USB3>;
-+=09=09=09interconnect-names =3D "usb-ddr", "apps-usb";
-+
- =09=09=09power-domains =3D <&gcc USB30_GDSC>;
- =09=09=09status =3D "disabled";
-=20
---=20
-2.32.0
+> > This allows us to get rid of duplicated code
+> > in the drivers and fix the unregistration part as well, which none of the
+> > drivers have done until now.
+> 
+> This series adds more code than it removes,
 
+Sadly yes :(
 
+> and the unregistration is
+> not a fix as we don't ever remove the EM tables by design, so not sure
+> either of these points are valid arguments.
+
+I think that design needs to be looked over again, it looks broken to
+me everytime I land onto this code. I wonder why we don't unregister
+stuff.
+
+Lets say, I am working on the cpufreq driver and I want to test that
+on my ARM machine. Rebooting a simpler board to test stuff out is
+easy, but if I am working on an ARM server which is running lots of
+other userspace stuff as well, I won't want to reboot the machine just
+to test a different versions of the driver. I will rather want to
+build the driver as module and insert/remove it again and again.
+
+If the frequency table changes in between versions, this just breaks
+as EM won't be updated again.
+
+This breaks one of the most basic rules of Linux Kernel. Inserting a
+module should have exactly the same final behavior every single time.
+This model doesn't guarantee it. It simply looks broken.
+
+> > This would also make the registration with EM core to happen only after policy
+> > is fully initialized, and the EM core can do other stuff from in there, like
+> > marking frequencies as inefficient (WIP). Though this patchset is useful without
+> > that work being done and should be merged nevertheless.
+> > 
+> > This doesn't update scmi cpufreq driver for now as it is a special case and need
+> > to be handled differently. Though we can make it work with this if required.
+> 
+> Note that we'll have more 'special cases' if other architectures start
+> using PM_EM, which is what we have been trying to allow since the
+> beginning, so that's worth keeping in mind.
+
+Yes, we need to take care of all such special cases as well.
+
+-- 
+viresh
