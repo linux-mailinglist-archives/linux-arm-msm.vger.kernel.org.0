@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1A7203E9B52
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Aug 2021 01:51:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C2BAB3E9B57
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Aug 2021 01:51:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232909AbhHKXvZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Aug 2021 19:51:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46212 "EHLO
+        id S232934AbhHKXv2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 19:51:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46224 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232911AbhHKXvZ (ORCPT
+        with ESMTP id S232911AbhHKXv1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Aug 2021 19:51:25 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 24B70C061765;
-        Wed, 11 Aug 2021 16:51:01 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id u13-20020a17090abb0db0290177e1d9b3f7so12341061pjr.1;
-        Wed, 11 Aug 2021 16:51:01 -0700 (PDT)
+        Wed, 11 Aug 2021 19:51:27 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFCE7C061765;
+        Wed, 11 Aug 2021 16:51:03 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id cp15-20020a17090afb8fb029017891959dcbso12324278pjb.2;
+        Wed, 11 Aug 2021 16:51:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=pOu/fILHgt+GHJ+t3LqOqvToD4GhAEtXIH4LNz022yE=;
-        b=OkYnTFE5LQCWTSV+vCVRV1ljIhlzqPvGYsIHL6dIOUfIKFcM6itQeLlu7/ryrZMI4/
-         VsJJBKl6ZLSVYBLA4jae2Vup29c616ibhlt81IbiXbAOYiIcvdFY05z7QY99dEtnxVpK
-         gJaIfwK0Wl/hua7x2ks+tHZ2fJvF15ZApFMpfK31ie1bpusWvki5U3gBh1+B3MK1YWE7
-         9RYSUA26LK8e8qYZBCL2GxmS97cv7yfdOfjDVS51Er3kHMUFJ1qGEDQXksyJyfH4jOZ2
-         m+H5eTise9xNcf2vBtqdfUM07+sC9+u3ndnH8+FTtz60FtV7XSTeGPRfzftPI2b/FoKT
-         g6rw==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=IqetlxJQH0ljhEzbSRKQFzu7rZWHhAi/EdZURPQQ3To=;
+        b=tKGMDYzvqsSm1bXhOeAsc4+dTrkzKeunk1S5y4XY4Lfq2+FDkkLNnnfdIcLClY5xG/
+         lnIODU/oy3SLUh9w0jS5WL9Em9jEtJj6NpusS2Ofet5pRAmv305sU9niN60cIpK8MgRZ
+         bxHsHj6UM9jGg89cyB0CciRN0wG3oFW96QIjNY+SfFwapsK7Ha5uGbV148pZnD/1GPr8
+         5sVzo4rljImLP8LtYhImG0QBoj2dkO5gCV4i67emkf/4Qj9+AFT0qXTbFANtaY15cPP7
+         XRSKn3QXYNh144LUZVSaqkUd2XLSBBh8oUu7OxmGSnY2T1sau6xJ9atiIra8+CximkJl
+         zEzQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=pOu/fILHgt+GHJ+t3LqOqvToD4GhAEtXIH4LNz022yE=;
-        b=iMCpuLQOpK852fY3s9BD/PtOwLRQ0rgvpJ9NE/O3v8xFYMDHZg6uyL6fOg1dThN12n
-         o+yPWmdA15/Ujx8mdLUTxL6+84G3F5R1AhYILr42MalXdSrM0NxXByIPre+jRiAcB7Aj
-         AR3HklzDwOS4wFx1s5NDjd3D3oBgTTnoCkO1usUF2gEwntYItmb6rX1HPRmWth1wlUH8
-         +G1a2R9HBV7W5dkHlWiu7YBhj2geJUxiRVC9wH5GOIOBL3xcyKiCnNf9Ndmmv8eDQFJo
-         2MUENC2sobMy8tm2Pzu5G0h/1pP81og79p3n2BBxa0EAdVQFICF/6DuSnkg7J8L2YWFZ
-         NgpQ==
-X-Gm-Message-State: AOAM532YDFkiY9HRP8AlSBW1sixNp+bZyI75CZdeA5vec8PSV37xXPVm
-        b7UKqsbGVY1vnScjpXUe52s=
-X-Google-Smtp-Source: ABdhPJxsDsAj6f4o1hLwy9wQiiHTMfq9dR2jISGP1yYFkJGtHFr8DO4z6bmlY0t9hkpcwVd5R12EZQ==
-X-Received: by 2002:a17:90a:d702:: with SMTP id y2mr1177478pju.127.1628725860621;
-        Wed, 11 Aug 2021 16:51:00 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=IqetlxJQH0ljhEzbSRKQFzu7rZWHhAi/EdZURPQQ3To=;
+        b=G8FGWQWi6sHn4LZtaci5+nruUyAer/G+uSYznrCCBj4WYLqc1nYbvAHiuK8o+xpNRJ
+         mqpEHrwmIr22oPml6PkMFHUkcmjNCNMCEng4N6eZYHgcMmMQoCnP27uNpNyKVh6tGpin
+         04fB4VMlIUF5XYSk+9x+U5XkZSmQkjeRjwtT8hJ1jIi99VDZpJ/HAs690shOqt7XE6KN
+         ZHH9E9VZqcKkv4KyefHBw1/scpQgsfHDLUxiXPdYW3GacBIgIQJKgIA9cMgp4erkmnt7
+         x2W2dwkaqWVSDC1utv6xWdX0qPDwiWi1o9Pd/OF6IumO+Jn4q4xrQzyVcpATzqyDdgx4
+         gDZw==
+X-Gm-Message-State: AOAM532zd+2TPitQaX2kFFXNuhGkZiZ96Ur2WBqQxGVv0YpSCdbRjpRp
+        +8fHY1fnakbywpka9Dl4bz0=
+X-Google-Smtp-Source: ABdhPJzRdBfwV7Mf9hAZec+YTQSgigWYzf3lb1xKO81xK8cSWjhr82Ro+zhTkBsFk5Vr9fhwW6n2Fw==
+X-Received: by 2002:a17:90a:6684:: with SMTP id m4mr13287665pjj.127.1628725863447;
+        Wed, 11 Aug 2021 16:51:03 -0700 (PDT)
 Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id l6sm724199pff.74.2021.08.11.16.50.59
+        by smtp.gmail.com with ESMTPSA id q1sm750673pfn.6.2021.08.11.16.51.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Aug 2021 16:50:59 -0700 (PDT)
+        Wed, 11 Aug 2021 16:51:02 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org
 Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
@@ -55,19 +55,22 @@ Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
         Stephen Boyd <swboyd@chromium.org>,
         Douglas Anderson <dianders@chromium.org>,
         Rob Clark <robdclark@chromium.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Jagan Teki <jagan@amarulasolutions.com>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Robert Foss <robert.foss@linaro.org>,
         Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        linux-kernel@vger.kernel.org (open list),
-        Robert Foss <robert.foss@linaro.org>
-Subject: [PATCH 0/4] drm/msm+ti-sn65dsi86: Fix NO_CONNECTOR fallout
-Date:   Wed, 11 Aug 2021 16:52:46 -0700
-Message-Id: <20210811235253.924867-1-robdclark@gmail.com>
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jagan Teki <jagan@amarulasolutions.com>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH 1/4] drm/bridge: ti-sn65dsi86: Avoid creating multiple connectors
+Date:   Wed, 11 Aug 2021 16:52:47 -0700
+Message-Id: <20210811235253.924867-2-robdclark@gmail.com>
 X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20210811235253.924867-1-robdclark@gmail.com>
+References: <20210811235253.924867-1-robdclark@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -76,25 +79,31 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-The first patch fixes breakage in drm-next for the ti eDP bridge (which
-is used on nearly all the snapdragon windows laptops and chromebooks).
-The second add drm/msm NO_CONNECTOR support, and the final two add
-NO_CONNECTOR support to the ti eDP bridge.
+If we created our own connector because the driver does not support the
+NO_CONNECTOR flag, we don't want the downstream bridge to *also* create
+a connector.  And if this driver did pass the NO_CONNECTOR flag (and we
+supported that mode) this would change nothing.
 
-Would be nice to get at least the first one into drm-next kinda soonish
-since at the moment a lot of things are broken.
+Fixes: 4e5763f03e10 ("drm/bridge: ti-sn65dsi86: Wrap panel with panel-bridge")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c | 3 +++
+ 1 file changed, 3 insertions(+)
 
-Rob Clark (4):
-  drm/bridge: ti-sn65dsi86: Avoid creating multiple connectors
-  drm/msm/dsi: Support NO_CONNECTOR bridges
-  drm/bridge: ti-sn65dsi86: Implement bridge->mode_valid()
-  drm/bridge: ti-sn65dsi86: Add NO_CONNECTOR support
-
- drivers/gpu/drm/bridge/ti-sn65dsi86.c | 61 ++++++++++++++++++++++-----
- drivers/gpu/drm/msm/Kconfig           |  2 +
- drivers/gpu/drm/msm/dsi/dsi_manager.c | 41 ++++++++++++------
- 3 files changed, 81 insertions(+), 23 deletions(-)
-
+diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+index 9bf889302bcc..5d3b30b2f547 100644
+--- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
++++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+@@ -736,6 +736,9 @@ static int ti_sn_bridge_attach(struct drm_bridge *bridge,
+ 	}
+ 	pdata->dsi = dsi;
+ 
++	/* We never want the next bridge to *also* create a connector: */
++	flags |= DRM_BRIDGE_ATTACH_NO_CONNECTOR;
++
+ 	/* Attach the next bridge */
+ 	ret = drm_bridge_attach(bridge->encoder, pdata->next_bridge,
+ 				&pdata->bridge, flags);
 -- 
 2.31.1
 
