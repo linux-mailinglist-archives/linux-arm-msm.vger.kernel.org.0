@@ -2,247 +2,268 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BEC233E9200
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 14:56:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CED853E9206
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 14:57:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230139AbhHKM4s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Aug 2021 08:56:48 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51224 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229737AbhHKM4r (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Aug 2021 08:56:47 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id BC4A8600CD;
-        Wed, 11 Aug 2021 12:56:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1628686583;
-        bh=/GWIy8bZjikjFh61+p2oRyqLKNbiIBVj4RvDyz8yXSM=;
-        h=Subject:From:To:Cc:References:Date:In-Reply-To:From;
-        b=MP755uTb6T3Odb+IQnnvTomyWmFH0USI4nWHdud3kKIHDNJs5EMb1p6Xd+SbrAL9b
-         peTVhCxrA9ajKrietkrtoNwaikyxiLznnarlLMEjP5+A/u2yfn3iUAPC8E9iFhiHfA
-         ijlzeBAD+e8aqpAsxtmitJDnRHKd5sFhoPBPl2JmeDttXFhx5L3RfEn9BHsvT0h77d
-         /E3iF3IBzVIPZbNEHZM+CozLxx7wb5m8IO8dg3sWM8sWWAxx7LqMYpr3T/WjEJx80i
-         EoZf0xFRO89g8vzlH3LXP2KGHotzL8xZrMbsHUnrU8NjnlTE05QD2Fub5bm7QGzx9W
-         QrfJiT5X6gr5A==
-Subject: Re: [PATCH v15 0/6] usb: misc: Add onboard_usb_hub driver
-From:   Roger Quadros <rogerq@kernel.org>
-To:     Matthias Kaehlcke <mka@chromium.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Alan Stern <stern@rowland.harvard.edu>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        Felipe Balbi <balbi@kernel.org>
-Cc:     Bastien Nocera <hadess@hadess.net>,
-        Peter Chen <peter.chen@kernel.org>, devicetree@vger.kernel.org,
-        Michal Simek <michal.simek@xilinx.com>,
-        linux-kernel@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        linux-usb@vger.kernel.org,
-        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Al Cooper <alcooperx@gmail.com>,
-        Andrey Zhizhikin <andrey.zhizhikin@leica-geosystems.com>,
-        Andy Gross <agross@kernel.org>,
-        Aswath Govindraju <a-govindraju@ti.com>,
+        id S230216AbhHKM5e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 08:57:34 -0400
+Received: from mail-0201.mail-europe.com ([51.77.79.158]:33235 "EHLO
+        mail-0201.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230025AbhHKM5d (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 11 Aug 2021 08:57:33 -0400
+Date:   Wed, 11 Aug 2021 12:56:57 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail; t=1628686625;
+        bh=fnwNuodEHW6jgrmLRroC0GTlmUzP7CcYZkBDo8BUNdY=;
+        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
+        b=uYoJ0dUnWmyOJWILLr3BMsYTKExKyPawzFePwVc2zT8PyJLawDZhf499ruNtt7KuX
+         kEdkec0ciPKXK9bFDnDurrkTrbgP8ON6ami/PJ6W/r82KOye3onuqzSAe7vksKDfec
+         aLGxaPvR8ckLX0LaFVrj1YvEg1U5slSz7UQ46St0=
+To:     Georgi Djakov <djakov@kernel.org>
+From:   Yassine Oudjana <y.oudjana@protonmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        =?UTF-8?Q?Guido_G=c3=bcnther?= <agx@sigxcpu.org>,
-        Jagan Teki <jagan@amarulasolutions.com>,
-        Nishanth Menon <nm@ti.com>,
-        Pawel Laszczak <pawell@cadence.com>,
-        Shawn Guo <shawnguo@kernel.org>, Vinod Koul <vkoul@kernel.org>,
-        Will Deacon <will@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-arm-msm@vger.kernel.org
-References: <20210727004118.2583774-1-mka@chromium.org>
- <YRFOnhJkB2vi/zwD@google.com>
- <8a8cae28-6617-76d3-1742-3f151a149069@kernel.org>
-Message-ID: <ddd60682-c957-2897-768e-96c9d25c148a@kernel.org>
-Date:   Wed, 11 Aug 2021 15:56:15 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        Rob Herring <robh+dt@kernel.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        okukatla@codeaurora.org, mdtipton@codeaurora.org
+Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
+Subject: Re: [PATCH v3 5/6] interconnect: qcom: Add MSM8996 interconnect provider driver
+Message-ID: <CMEOXQ.F594ZQFPV8PT2@protonmail.com>
+In-Reply-To: <a520d353-f291-4596-e21b-6bdd27fdc965@kernel.org>
+References: <20210811043451.189776-1-y.oudjana@protonmail.com> <20210811043451.189776-6-y.oudjana@protonmail.com> <a520d353-f291-4596-e21b-6bdd27fdc965@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <8a8cae28-6617-76d3-1742-3f151a149069@kernel.org>
 Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
 
-On 11/08/2021 15:38, Roger Quadros wrote:
-> Hi Matthias,
-> 
-> On 09/08/2021 18:49, Matthias Kaehlcke wrote:
->> Hi Greg,
->>
->> Just wanted to check if this series is still on your radar. Is
->> there anything that blocks it from landing (further ACKs, ...)?
->>
->> Thanks
->>
->> Matthias
->>
->> On Mon, Jul 26, 2021 at 05:41:12PM -0700, Matthias Kaehlcke wrote:
->>> This series adds:
->>> - the onboard_usb_hub_driver
->>> - glue in the xhci-plat driver to create and destroy the
->>>   onboard_usb_hub platform devices if needed
->>> - a device tree binding for the Realtek RTS5411 USB hub controller
->>> - device tree changes that add RTS5411 entries for the QCA SC7180
->>>   based boards trogdor and lazor
->>> - a couple of stubs for platform device functions to avoid
->>>   unresolved symbols with certain kernel configs
->>>
->>> The main issue the driver addresses is that a USB hub needs to be
->>> powered before it can be discovered. For discrete onboard hubs (an
->>> example for such a hub is the Realtek RTS5411) this is often solved
->>> by supplying the hub with an 'always-on' regulator, which is kind
->>> of a hack. Some onboard hubs may require further initialization
->>> steps, like changing the state of a GPIO or enabling a clock, which
->>> requires even more hacks. This driver creates a platform device
->>> representing the hub which performs the necessary initialization.
->>> Currently it only supports switching on a single regulator, support
->>> for multiple regulators or other actions can be added as needed.
->>> Different initialization sequences can be supported based on the
->>> compatible string.
->>>
->>> Besides performing the initialization the driver can be configured
->>> to power the hub off during system suspend. This can help to extend
->>> battery life on battery powered devices which have no requirements
->>> to keep the hub powered during suspend. The driver can also be
->>> configured to leave the hub powered when a wakeup capable USB device
->>> is connected when suspending, and power it off otherwise.
->>>
->>> Changes in v15:
->>> - adjusted dependencies of USB_DWC3_CORE to make sure it can only
->>>   be enabled when at least one of USB_DWC3_HOST, USB_DWC3_GADGET
->>>   or USB_DWC3_DUAL_ROLE is selectable
->>>
->>> Changes in v14:
->>> - rebased on top of v5.14-rc1
->>> - dropped DT binding patch which landed in v5.13
->>>
->>> Changes in v13:
->>> - added patch "usb: Specify dependency on USB_XHCI_PLATFORM with
->>>   'depends on'" to the series to avoid Kconfig conflicts
->>> - added patch "arm64: defconfig: Explicitly enable USB_XHCI_PLATFORM"
->>>   to the series to keep effective defconfig unchanged
->>>
->>> Changes in v12:
->>> - onboard_hub driver: use IS_ENABLED(CONFIG_USB_ONBOARD_HUB_MODULE)
->>>   in onboard_hub.h to also check for the driver built as module
->>> - onboard_hub_driver: include onboard_hub.h again to make sure there
->>>   are prototype declarations for the public functions
->>>
->>> Changes in v11:
->>> - support multiple onboard hubs connected to the same parent
->>> - don't include ‘onboard_hub.h’ from the onboard hub driver
->>>
->>> Changes in v10:
->>> - always use of_is_onboard_usb_hub() stub unless ONBOARD_USB_HUB=y/m
->>> - keep 'regulator-boot-on' property for pp3300_hub
->>>
->>> Changes in v9:
->>> - added dependency on ONBOARD_USB_HUB (or !!ONBOARD_USB_HUB) to
->>>   USB_PLATFORM_XHCI
->>>
->>> Changes in v7:
->>> - updated DT binding
->>> - series rebased on qcom/arm64-for-5.13
->>>
->>> Changes in v6:
->>> - updated summary
->>>
->>> Changes in v5:
->>> - cover letter added
->>>
->>> Matthias Kaehlcke (6):
->>>   usb: misc: Add onboard_usb_hub driver
->>>   of/platform: Add stubs for of_platform_device_create/destroy()
->>>   arm64: defconfig: Explicitly enable USB_XHCI_PLATFORM
->>>   usb: Specify dependencies on USB_XHCI_PLATFORM with 'depends on'
->>>   usb: host: xhci-plat: Create platform device for onboard hubs in
->>>     probe()
->>>   arm64: dts: qcom: sc7180-trogdor: Add nodes for onboard USB hub
->>>
->>>  .../sysfs-bus-platform-onboard-usb-hub        |   8 +
->>>  MAINTAINERS                                   |   7 +
->>>  .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts |  19 +-
->>>  .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts |  12 +-
->>>  .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts |  19 +-
->>>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  |  19 +-
->>>  arch/arm64/configs/defconfig                  |   1 +
->>>  drivers/usb/cdns3/Kconfig                     |   2 +-
->>>  drivers/usb/dwc3/Kconfig                      |   5 +-
->>>  drivers/usb/host/Kconfig                      |   5 +-
-> 
-> These Kconfig changes are causing the resulting .config to be different.
-> For example, if I start with omap2plus_defconfig, the resulting .config
-> before and after your series is different as shown below
-> 
-> :/work/linux$ diff /tmp/.config .config
-> 1902d1901
-> < # CONFIG_HISI_HIKEY_USB is not set
-> 4992c4991
-> < CONFIG_USB_XHCI_PLATFORM=m
-> ---
->> # CONFIG_USB_XHCI_PLATFORM is not set
-> 5073,5075c5072
-> < # CONFIG_USB_DWC3_HOST is not set
-> < # CONFIG_USB_DWC3_GADGET is not set
-> < CONFIG_USB_DWC3_DUAL_ROLE=y
-> ---
->> CONFIG_USB_DWC3_GADGET=y
-> 5173a5171
->> # CONFIG_USB_ONBOARD_HUB is not set
-> 5285c5283
-> < CONFIG_USB_ROLE_SWITCH=m
-> ---
->> # CONFIG_USB_ROLE_SWITCH is not set
-> 
-> I would expect the same issues for multi_v7_defconfig and multi_v8_defconfig as well.
+On Wed, Aug 11 2021 at 14:56:01 +0400, Georgi Djakov=20
+<djakov@kernel.org> wrote:
+> Hi Yassine,
+>=20
+> Thank you for working on this!
+>=20
+> On 11.08.21 7:37, Yassine Oudjana wrote:
+>>  Add a driver for the MSM8996 NoCs. This chip is similar to SDM660=20
+>> where
+>>  some busses are controlled by RPM, while others directly by the AP=20
+>> with
+>>  writes to QoS registers.
+>>=20
+>>  This driver currently supports all NoCs except a0noc.
+>=20
+> Just curious what's the issue with a0noc. Do we need to enable some=20
+> GDSC
+> or clock in order to write to the QoS registers?
 
-Sorry I meant defconfig for arm64, not multi_v8_defconfig.
+I'm not sure why, but I get a SError interrupt when writing to its=20
+registers.
+I tried enabling AGGRE0_NOC_GDSC but it didn't change anything.
 
-I checked that for arm64 defconfig it is ok.
+>=20
+>>=20
+>>  Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+>>  ---
+>>    drivers/interconnect/qcom/Kconfig   |   9 +
+>>    drivers/interconnect/qcom/Makefile  |   2 +
+>>    drivers/interconnect/qcom/msm8996.c | 574=20
+>> ++++++++++++++++++++++++++++
+>>    drivers/interconnect/qcom/msm8996.h | 149 ++++++++
+>>    4 files changed, 734 insertions(+)
+>>    create mode 100644 drivers/interconnect/qcom/msm8996.c
+>>    create mode 100644 drivers/interconnect/qcom/msm8996.h
+>>=20
+>>  diff --git a/drivers/interconnect/qcom/Kconfig=20
+>> b/drivers/interconnect/qcom/Kconfig
+>>  index ad16224f1720..e30ad95e5584 100644
+>>  --- a/drivers/interconnect/qcom/Kconfig
+>>  +++ b/drivers/interconnect/qcom/Kconfig
+>>  @@ -35,6 +35,15 @@ config INTERCONNECT_QCOM_MSM8974
+>>    =09 This is a driver for the Qualcomm Network-on-Chip on=20
+>> msm8974-based
+>>    =09 platforms.
+>>=20
+>>  +config INTERCONNECT_QCOM_MSM8996
+>>  +=09tristate "Qualcomm MSM8996 interconnect driver"
+>>  +=09depends on INTERCONNECT_QCOM
+>>  +=09depends on QCOM_SMD_RPM
+>>  +=09select INTERCONNECT_QCOM_SMD_RPM_QOS
+>>  +=09help
+>>  +=09  This is a driver for the Qualcomm Network-on-Chip on=20
+>> msm8996-based
+>>  +=09  platforms.
+>>  +
+>>    config INTERCONNECT_QCOM_OSM_L3
+>>    =09tristate "Qualcomm OSM L3 interconnect driver"
+>>    =09depends on INTERCONNECT_QCOM || COMPILE_TEST
+>>  diff --git a/drivers/interconnect/qcom/Makefile=20
+>> b/drivers/interconnect/qcom/Makefile
+>>  index 2d04d024f46e..8a198b8b7a45 100644
+>>  --- a/drivers/interconnect/qcom/Makefile
+>>  +++ b/drivers/interconnect/qcom/Makefile
+>>  @@ -4,6 +4,7 @@ icc-bcm-voter-objs=09=09=09:=3D bcm-voter.o
+>>    qnoc-msm8916-objs=09=09=09:=3D msm8916.o
+>>    qnoc-msm8939-objs=09=09=09:=3D msm8939.o
+>>    qnoc-msm8974-objs=09=09=09:=3D msm8974.o
+>>  +qnoc-msm8996-objs=09=09=09:=3D msm8996.o
+>>    icc-osm-l3-objs=09=09=09=09:=3D osm-l3.o
+>>    qnoc-qcs404-objs=09=09=09:=3D qcs404.o
+>>    icc-rpmh-obj=09=09=09=09:=3D icc-rpmh.o
+>>  @@ -22,6 +23,7 @@ obj-$(CONFIG_INTERCONNECT_QCOM_BCM_VOTER) +=3D=20
+>> icc-bcm-voter.o
+>>    obj-$(CONFIG_INTERCONNECT_QCOM_MSM8916) +=3D qnoc-msm8916.o
+>>    obj-$(CONFIG_INTERCONNECT_QCOM_MSM8939) +=3D qnoc-msm8939.o
+>>    obj-$(CONFIG_INTERCONNECT_QCOM_MSM8974) +=3D qnoc-msm8974.o
+>>  +obj-$(CONFIG_INTERCONNECT_QCOM_MSM8996) +=3D qnoc-msm8996.o
+>>    obj-$(CONFIG_INTERCONNECT_QCOM_OSM_L3) +=3D icc-osm-l3.o
+>>    obj-$(CONFIG_INTERCONNECT_QCOM_QCS404) +=3D qnoc-qcs404.o
+>>    obj-$(CONFIG_INTERCONNECT_QCOM_RPMH) +=3D icc-rpmh.o
+>>  diff --git a/drivers/interconnect/qcom/msm8996.c=20
+>> b/drivers/interconnect/qcom/msm8996.c
+>>  new file mode 100644
+>>  index 000000000000..0cb93d743f35
+>>  --- /dev/null
+>>  +++ b/drivers/interconnect/qcom/msm8996.c
+>>  @@ -0,0 +1,574 @@
+>>  +/* SPDX-License-Identifier: GPL-2.0-only */
+>=20
+> The // style is preferred for .c files.
 
-> I'm ok to update the relevant defconfigs files so that the resulting .config is identical to
-> before your series. Thanks!
+Noted.
 
-With the below patch you can fix it for omap2plus_defconfig and multi_v7_defconfig.
+>=20
+>>  +/*
+>>  + * Qualcomm MSM8996 Network-on-Chip (NoC) QoS driver
+>>  + *
+>>  + * Copyright (c) 2021 Yassine Oudjana <y.oudjana@protonmail.com>
+>>  + */
+>>  +
+>>  +#include <linux/clk.h>
+>>  +#include <linux/device.h>
+>>  +#include <linux/interconnect-provider.h>
+>>  +#include <linux/io.h>
+>>  +#include <linux/module.h>
+>>  +#include <linux/of_device.h>
+>>  +#include <linux/of_platform.h>
+>>  +#include <linux/platform_device.h>
+>>  +#include <linux/regmap.h>
+>>  +
+>>  +#include <dt-bindings/interconnect/qcom,msm8996.h>
+>>  +
+>>  +#include "icc-rpm-qos.h"
+>>  +#include "smd-rpm.h"
+>>  +#include "msm8996.h"
+>>  +
+> [..]
+>>  +DEFINE_QNODE(mas_mdp_p0, MSM8996_MASTER_MDP_PORT0, 32, 8, -1,=20
+>> true, NOC_QOS_MODE_BYPASS, 0, 1, MSM8996_SLAVE_MNOC_BIMC);
+>>  +DEFINE_QNODE(mas_mdp_p1, MSM8996_MASTER_MDP_PORT1, 32, 61, -1,=20
+>> true, NOC_QOS_MODE_BYPASS, 0, 2, MSM8996_SLAVE_MNOC_BIMC);
+>>  +DEFINE_QNODE(mas_rotator, MSM8996_MASTER_ROTATOR, 32, 120, -1,=20
+>> true, NOC_QOS_MODE_BYPASS, 0, 0, MSM8996_SLAVE_MNOC_BIMC);
+>>  +DEFINE_QNODE(mas_venus, MSM8996_MASTER_VIDEO_P0, 32, 9, -1, true,=20
+>> NOC_QOS_MODE_BYPASS, 0, 3 /* TODO: 3 4 ?? */,=20
+>> MSM8996_SLAVE_MNOC_BIMC);
+>=20
+> Is the TODO for multiple QoS ports?
 
-diff --git a/arch/arm/configs/multi_v7_defconfig b/arch/arm/configs/multi_v7_defconfig
-index d9abaae118dd..8c175ab37377 100644
---- a/arch/arm/configs/multi_v7_defconfig
-+++ b/arch/arm/configs/multi_v7_defconfig
-@@ -787,6 +787,7 @@ CONFIG_SND_AUDIO_GRAPH_CARD=m
- CONFIG_USB=y
- CONFIG_USB_OTG=y
- CONFIG_USB_XHCI_HCD=y
-+CONFIG_USB_XHCI_PLATFORM=y
- CONFIG_USB_XHCI_MVEBU=y
- CONFIG_USB_XHCI_TEGRA=m
- CONFIG_USB_EHCI_HCD=y
-diff --git a/arch/arm/configs/omap2plus_defconfig b/arch/arm/configs/omap2plus_defconfig
-index 2ac2418084ab..a015fb04fa25 100644
---- a/arch/arm/configs/omap2plus_defconfig
-+++ b/arch/arm/configs/omap2plus_defconfig
-@@ -562,6 +562,7 @@ CONFIG_USB=m
- CONFIG_USB_ANNOUNCE_NEW_DEVICES=y
- CONFIG_USB_MON=m
- CONFIG_USB_XHCI_HCD=m
-+CONFIG_USB_XHCI_PLATFORM=m
- CONFIG_USB_EHCI_HCD=m
- CONFIG_USB_OHCI_HCD=m
- CONFIG_USB_ACM=m
+I was going to better format that TODO or remove it but it seems that I=20
+forgot.
+Downstream has both ports specified.
 
---
-cheers,
--roger
+>=20
+> [..]
+>=20
+>>  +static const struct regmap_config msm8996_mnoc_regmap_config =3D {
+>>  +=09.reg_bits=09=3D 32,
+>>  +=09.reg_stride=09=3D 4,
+>>  +=09.val_bits=09=3D 32,
+>>  +=09.max_register=09=3D 0x20000,
+>>  +=09.fast_io=09=3D true,
+>>  +};
+>>  +
+>>  +static const struct qcom_icc_desc msm8996_mnoc =3D {
+>>  +=09.nodes =3D mnoc_nodes,
+>>  +=09.num_nodes =3D ARRAY_SIZE(mnoc_nodes),
+>>  +=09.regmap_cfg =3D &msm8996_mnoc_regmap_config,
+>>  +};
+>>  +
+>>  +
+>=20
+> Nit: No multiple blank lines, please.
+
+Noted.
+
+>=20
+>>  +static struct qcom_icc_node *pnoc_nodes[] =3D {
+>>  +=09[MASTER_SNOC_PNOC] =3D &mas_snoc_pnoc,
+>>  +=09[MASTER_SDCC_1] =3D &mas_sdcc_1,
+>>  +=09[MASTER_SDCC_2] =3D &mas_sdcc_2,
+>>  +=09[MASTER_SDCC_4] =3D &mas_sdcc_4,
+>>  +=09[MASTER_USB_HS] =3D &mas_usb_hs,
+>>  +=09[MASTER_BLSP_1] =3D &mas_blsp_1,
+>>  +=09[MASTER_BLSP_2] =3D &mas_blsp_2,
+>>  +=09[MASTER_TSIF] =3D &mas_tsif,
+>>  +=09[SLAVE_PNOC_A1NOC] =3D &slv_pnoc_a1noc,
+>>  +=09[SLAVE_USB_HS] =3D &slv_usb_hs,
+>>  +=09[SLAVE_SDCC_2] =3D &slv_sdcc_2,
+>>  +=09[SLAVE_SDCC_4] =3D &slv_sdcc_4,
+>>  +=09[SLAVE_TSIF] =3D &slv_tsif,
+>>  +=09[SLAVE_BLSP_2] =3D &slv_blsp_2,
+>>  +=09[SLAVE_SDCC_1] =3D &slv_sdcc_1,
+>>  +=09[SLAVE_BLSP_1] =3D &slv_blsp_1,
+>>  +=09[SLAVE_PDM] =3D &slv_pdm,
+>>  +=09[SLAVE_AHB2PHY] =3D &slv_ahb2phy,
+>>  +};
+>>  +
+>>  +static const struct regmap_config msm8996_pnoc_regmap_config =3D {
+>>  +=09.reg_bits=09=3D 32,
+>>  +=09.reg_stride=09=3D 4,
+>>  +=09.val_bits=09=3D 32,
+>>  +=09.max_register=09=3D 0x3000,
+>>  +=09.fast_io=09=3D true,
+>>  +};
+>>  +
+> [..]
+>>  +=09for (i =3D 0; i < num_nodes; i++) {
+>>  +=09=09size_t j;
+>>  +
+>>  +=09=09node =3D icc_node_create(qnodes[i]->id);
+>>  +=09=09if (IS_ERR(node)) {
+>>  +=09=09=09ret =3D PTR_ERR(node);
+>>  +=09=09=09goto err;
+>>  +=09=09}
+>>  +
+>>  +=09=09node->name =3D qnodes[i]->name;
+>>  +=09=09node->data =3D qnodes[i];
+>>  +=09=09icc_node_add(node, provider);
+>>  +
+>>  +=09=09for (j =3D 0; j < qnodes[i]->num_links; j++) {
+>>  +=09=09=09icc_link_create(node, qnodes[i]->links[j]);
+>>  +=09=09}
+>=20
+> Nit: No need for braces.
+>=20
+> Also please rebase all patches onto linux-next.
+>=20
+> Thanks,
+> Georgi
+
+Will do.
+
+Thanks,
+Yassine
+
+
+
