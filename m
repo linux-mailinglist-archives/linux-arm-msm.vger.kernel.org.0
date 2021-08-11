@@ -2,323 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E3B803E8710
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 02:12:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C64543E8726
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 02:18:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235624AbhHKANH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 10 Aug 2021 20:13:07 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:33803 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234289AbhHKANH (ORCPT
+        id S235730AbhHKASe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 10 Aug 2021 20:18:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58960 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235855AbhHKAS1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 10 Aug 2021 20:13:07 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1628640764; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=Z/494PJccCYTOlJ/bn/7QtP5uBxFdSACn3ge8hoXvIw=;
- b=A2zG9qfzCaMsIJJKqU33TDuhU0gr33YuVCS7Say3OAjEnRQnJjnnzCvXsP5egIn0SQD2++HP
- K22scLOI1/RWkqu9lqnIK8RHXitFsNDyLr2KeKVLPM6Hg1S/A8Mtvdl3IwaIv1n4QwfJ+Wtv
- R7O2Pz5K2a5i9ajWJkIZHqPIXYQ=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 611315fbf746c298d92904b0 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 11 Aug 2021 00:12:43
- GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 988A5C43460; Wed, 11 Aug 2021 00:12:43 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6608AC433D3;
-        Wed, 11 Aug 2021 00:12:38 +0000 (UTC)
+        Tue, 10 Aug 2021 20:18:27 -0400
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FE0CC06179A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 17:18:05 -0700 (PDT)
+Received: by mail-ot1-x32b.google.com with SMTP id e13-20020a9d63cd0000b02904fa42f9d275so1308954otl.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 10 Aug 2021 17:18:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=tC3Mrv9dp9wt6xL+7sHY8TagV0MgWFNV+pJOGnVORVo=;
+        b=FDn7/X54nL1aG3m/4vDJtAKvaaviRB7169EeCZwuzP0shJzDftJhls7H32FjLkR4tK
+         TY0MO1Z+yupNXglfBUjzGPkdnNUoM9reDecGvC2JBQ2aUKhIZBhJf2yC9FksyUUsC8Rq
+         i5GRR3+HOtcJ+Znq6y8W95C/6oqcPcBxeVQZLrF8nQIOI/lWu/0GlgBMh/o/DQujQvMt
+         orLScabv/n3cpxDica+yDQ+iJXHXdMYutH2DCv3IR82bgKnpfMCBjBEkKLWYNyR6cm8s
+         wCnGf+ducxIz14qCU7uLIoawYJIRAcDS+BddSJ7VLsN1rTB5lCozGt2merKrzy5YNmX9
+         fOZA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=tC3Mrv9dp9wt6xL+7sHY8TagV0MgWFNV+pJOGnVORVo=;
+        b=K7zyj3FYFr9rM/oYQamqKsOu0jSRPgirgaT2hea7G03WvGfVknnItUG8monMlBrUtV
+         z2eZ7xZcYpxW5os6wazEv3yuIkSx9clx4vf/WbPdTN8n3UNXYar4N1JcEpxlhFhwYnDF
+         sUTTdkTOkaWRCadeBcGFx2Lxgg53J/L3+wO+cbVh73JwMRkEhCuYbMw/s+OtJzvwG/xM
+         1CI4adeNM7w2VInU5YpEZk4js9o5yZyjtfEljijMOD4VCGySx6dgiJXRzjfMxJ4Fylo8
+         DZ4cGJiT+vMuwwCqx4vxHkKcIVTBkluZ1mt6E2fSC2tz6SLPYtzAk3BkDj3kAF8GQQYf
+         aBgw==
+X-Gm-Message-State: AOAM530nb//N9EU8jCkbBeelqsQfpoLKYvvsIuSHE7qLrA2OhpNYQVTh
+        9rrIPOBLD9lN8gSk6i8kzQ4OSg==
+X-Google-Smtp-Source: ABdhPJwkyONF/aUoE8sR15S4yNOA7sm6WRXOMuaxwi+kTEm/PcLMaps34StDjqMYdEhwRL4FwUMRSg==
+X-Received: by 2002:a9d:2609:: with SMTP id a9mr6767199otb.365.1628641084446;
+        Tue, 10 Aug 2021 17:18:04 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id 12sm4176912otg.14.2021.08.10.17.18.03
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 10 Aug 2021 17:18:04 -0700 (PDT)
+Date:   Tue, 10 Aug 2021 19:18:02 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Mike Tipton <mdtipton@codeaurora.org>, djakov@kernel.org,
+        agross@kernel.org, saravanak@google.com, okukatla@codeaurora.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Alex Elder <elder@linaro.org>
+Subject: Re: [PATCH v2 4/4] interconnect: qcom: icc-rpmh: Add BCMs to commit
+ list in pre_aggregate
+Message-ID: <YRMXOlA5a98BwT3i@builder.lan>
+References: <20210721175432.2119-1-mdtipton@codeaurora.org>
+ <20210721175432.2119-5-mdtipton@codeaurora.org>
+ <CAE-0n52iVgX0JjjnYi=NDg49xP961p=+W5R2bmO+2xwRceFhfA@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 10 Aug 2021 17:12:38 -0700
-From:   abhinavk@codeaurora.org
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v5] drm/msm/dsi: add continuous clock support for 7nm PHY
-In-Reply-To: <20210805170817.3337665-1-dmitry.baryshkov@linaro.org>
-References: <20210805170817.3337665-1-dmitry.baryshkov@linaro.org>
-Message-ID: <60f750e156b3b0f775e04f65d752224e@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAE-0n52iVgX0JjjnYi=NDg49xP961p=+W5R2bmO+2xwRceFhfA@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-08-05 10:08, Dmitry Baryshkov wrote:
-> Unlike previous generations, 7nm PHYs are required to collaborate with
-> the host for conitnuos clock mode. Add changes neccessary to enable
-/continuous
-/necessary
-> continuous clock mode in the 7nm DSI PHYs.
-> 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
-> Changes since v4:
->  - Fix the comment regarding msm_dsi_phy_set_continuous_clock()
-> 
-> Changes since v3:
->  - Invert the DSI_LANE_CTRL_HS_REQ_SEL_PHY bit logic, as noted by
->    Abhinav.
-> 
-> Changes since v2:
->  - Really drop msm_dsi_phy_needs_hs_phy_sel()
-> 
-> Changes since v1:
->  - Remove the need for a separate msm_dsi_phy_needs_hs_phy_sel() call
->  - Fix setting continuous clock for a dual DSI case.
-> ---
->  drivers/gpu/drm/msm/dsi/dsi.h             |  3 ++-
->  drivers/gpu/drm/msm/dsi/dsi.xml.h         |  1 +
->  drivers/gpu/drm/msm/dsi/dsi_host.c        | 12 ++++++++----
->  drivers/gpu/drm/msm/dsi/dsi_manager.c     |  4 ++--
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy.c     |  9 +++++++++
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy.h     |  1 +
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c | 17 +++++++++++++++++
->  7 files changed, 40 insertions(+), 7 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi.h 
-> b/drivers/gpu/drm/msm/dsi/dsi.h
-> index 9b8e9b07eced..58e63bf34fe9 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi.h
-> +++ b/drivers/gpu/drm/msm/dsi/dsi.h
-> @@ -109,7 +109,7 @@ int msm_dsi_host_enable(struct mipi_dsi_host 
-> *host);
->  int msm_dsi_host_disable(struct mipi_dsi_host *host);
->  int msm_dsi_host_power_on(struct mipi_dsi_host *host,
->  			struct msm_dsi_phy_shared_timings *phy_shared_timings,
-> -			bool is_dual_dsi);
-> +			bool is_dual_dsi, struct msm_dsi_phy *phy);
->  int msm_dsi_host_power_off(struct mipi_dsi_host *host);
->  int msm_dsi_host_set_display_mode(struct mipi_dsi_host *host,
->  				  const struct drm_display_mode *mode);
-> @@ -175,6 +175,7 @@ int msm_dsi_phy_get_clk_provider(struct msm_dsi_phy 
-> *phy,
->  void msm_dsi_phy_pll_save_state(struct msm_dsi_phy *phy);
->  int msm_dsi_phy_pll_restore_state(struct msm_dsi_phy *phy);
->  void msm_dsi_phy_snapshot(struct msm_disp_state *disp_state, struct
-> msm_dsi_phy *phy);
-> +bool msm_dsi_phy_set_continuous_clock(struct msm_dsi_phy *phy, bool 
-> enable);
-> 
->  #endif /* __DSI_CONNECTOR_H__ */
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi.xml.h
-> b/drivers/gpu/drm/msm/dsi/dsi.xml.h
-> index eadbcc78fd72..473c81605054 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi.xml.h
-> +++ b/drivers/gpu/drm/msm/dsi/dsi.xml.h
-> @@ -518,6 +518,7 @@ static inline uint32_t
-> DSI_CLKOUT_TIMING_CTRL_T_CLK_POST(uint32_t val)
->  #define DSI_LANE_STATUS_DLN0_DIRECTION				0x00010000
-> 
->  #define REG_DSI_LANE_CTRL					0x000000a8
-> +#define DSI_LANE_CTRL_HS_REQ_SEL_PHY				0x01000000
->  #define DSI_LANE_CTRL_CLKLN_HS_FORCE_REQUEST			0x10000000
-> 
->  #define REG_DSI_LANE_SWAP_CTRL					0x000000ac
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index ed504fe5074f..3558e5cd400f 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -834,7 +834,7 @@ static inline enum dsi_cmd_dst_format 
-> dsi_get_cmd_fmt(
->  }
-> 
->  static void dsi_ctrl_config(struct msm_dsi_host *msm_host, bool 
-> enable,
-> -			struct msm_dsi_phy_shared_timings *phy_shared_timings)
-> +			struct msm_dsi_phy_shared_timings *phy_shared_timings, struct
-> msm_dsi_phy *phy)
->  {
->  	u32 flags = msm_host->mode_flags;
->  	enum mipi_dsi_pixel_format mipi_fmt = msm_host->format;
-> @@ -929,6 +929,10 @@ static void dsi_ctrl_config(struct msm_dsi_host
-> *msm_host, bool enable,
-> 
->  	if (!(flags & MIPI_DSI_CLOCK_NON_CONTINUOUS)) {
->  		lane_ctrl = dsi_read(msm_host, REG_DSI_LANE_CTRL);
-> +
-> +		if (msm_dsi_phy_set_continuous_clock(phy, enable))
-> +			lane_ctrl &= ~DSI_LANE_CTRL_HS_REQ_SEL_PHY;
-> +
->  		dsi_write(msm_host, REG_DSI_LANE_CTRL,
->  			lane_ctrl | DSI_LANE_CTRL_CLKLN_HS_FORCE_REQUEST);
->  	}
+On Tue 10 Aug 18:31 CDT 2021, Stephen Boyd wrote:
 
-While checking downstream code and the HPG, the sequence seems to be to 
-program ctrl bits first
-and then the PHY bits. Here its reverse. I think it should still work 
-but to maintain consistency,
-can we change the order here to program controller first and then call 
-msm_dsi_phy_set_continuous_clock?
+> Quoting Mike Tipton (2021-07-21 10:54:32)
+> > We're only adding BCMs to the commit list in aggregate(), but there are
+> > cases where pre_aggregate() is called without subsequently calling
+> > aggregate(). In particular, in icc_sync_state() when a node with initial
+> > BW has zero requests. Since BCMs aren't added to the commit list in
+> > these cases, we don't actually send the zero BW request to HW. So the
+> > resources remain on unnecessarily.
+> >
+> > Add BCMs to the commit list in pre_aggregate() instead, which is always
+> > called even when there are no requests.
+> >
+> > Fixes: 976daac4a1c5 ("interconnect: qcom: Consolidate interconnect RPMh support")
+> > Signed-off-by: Mike Tipton <mdtipton@codeaurora.org>
+> > ---
+> 
+> This patch breaks reboot for me on sc7180 Lazor
+> 
 
-Unrelated to this change itself but while reviewing the sequence, I just 
-observed we never clear the continuous
-clk bits during disable(). In other words the disable sequence just 
-clears the controller and comes out.
-As a follow up, I will plan to clean up this a bit.
+FWIW, it prevents at least SM8150 from booting (need to check my other
+boards as well), because its no longer okay to have the interconnect
+providers defined without having all client paths specified.
 
-
-> @@ -2354,7 +2358,7 @@ static void msm_dsi_sfpb_config(struct
-> msm_dsi_host *msm_host, bool enable)
-> 
->  int msm_dsi_host_power_on(struct mipi_dsi_host *host,
->  			struct msm_dsi_phy_shared_timings *phy_shared_timings,
-> -			bool is_dual_dsi)
-> +			bool is_dual_dsi, struct msm_dsi_phy *phy)
->  {
->  	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
->  	const struct msm_dsi_cfg_handler *cfg_hnd = msm_host->cfg_hnd;
-> @@ -2394,7 +2398,7 @@ int msm_dsi_host_power_on(struct mipi_dsi_host 
-> *host,
-> 
->  	dsi_timing_setup(msm_host, is_dual_dsi);
->  	dsi_sw_reset(msm_host);
-> -	dsi_ctrl_config(msm_host, true, phy_shared_timings);
-> +	dsi_ctrl_config(msm_host, true, phy_shared_timings, phy);
-> 
->  	if (msm_host->disp_en_gpio)
->  		gpiod_set_value(msm_host->disp_en_gpio, 1);
-> @@ -2425,7 +2429,7 @@ int msm_dsi_host_power_off(struct mipi_dsi_host 
-> *host)
->  		goto unlock_ret;
->  	}
-> 
-> -	dsi_ctrl_config(msm_host, false, NULL);
-> +	dsi_ctrl_config(msm_host, false, NULL, NULL);
-> 
->  	if (msm_host->disp_en_gpio)
->  		gpiod_set_value(msm_host->disp_en_gpio, 0);
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> index 4ebfedc4a9ac..1b89fef8f805 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-> @@ -381,7 +381,7 @@ static void dsi_mgr_bridge_pre_enable(struct
-> drm_bridge *bridge)
->  	if (ret)
->  		goto phy_en_fail;
-> 
-> -	ret = msm_dsi_host_power_on(host, &phy_shared_timings[id], 
-> is_dual_dsi);
-> +	ret = msm_dsi_host_power_on(host, &phy_shared_timings[id],
-> is_dual_dsi, msm_dsi->phy);
->  	if (ret) {
->  		pr_err("%s: power on host %d failed, %d\n", __func__, id, ret);
->  		goto host_on_fail;
-> @@ -389,7 +389,7 @@ static void dsi_mgr_bridge_pre_enable(struct
-> drm_bridge *bridge)
-> 
->  	if (is_dual_dsi && msm_dsi1) {
->  		ret = msm_dsi_host_power_on(msm_dsi1->host,
-> -				&phy_shared_timings[DSI_1], is_dual_dsi);
-> +				&phy_shared_timings[DSI_1], is_dual_dsi, msm_dsi1->phy);
->  		if (ret) {
->  			pr_err("%s: power on host1 failed, %d\n",
->  							__func__, ret);
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> index 6ca6bfd4809b..723d2eeafa69 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-> @@ -835,6 +835,15 @@ void msm_dsi_phy_set_usecase(struct msm_dsi_phy 
-> *phy,
->  		phy->usecase = uc;
->  }
-> 
-> +/* Returns true if we have to clear DSI_LANE_CTRL.HS_REQ_SEL_PHY */
-> +bool msm_dsi_phy_set_continuous_clock(struct msm_dsi_phy *phy, bool 
-> enable)
-> +{
-> +	if (!phy || !phy->cfg->ops.set_continuous_clock)
-> +		return false;
-> +
-> +	return phy->cfg->ops.set_continuous_clock(phy, enable);
-> +}
-> +
->  int msm_dsi_phy_get_clk_provider(struct msm_dsi_phy *phy,
->  	struct clk **byte_clk_provider, struct clk **pixel_clk_provider)
->  {
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-> index 5b0feef87127..43dee28450b4 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.h
-> @@ -24,6 +24,7 @@ struct msm_dsi_phy_ops {
->  	void (*disable)(struct msm_dsi_phy *phy);
->  	void (*save_pll_state)(struct msm_dsi_phy *phy);
->  	int (*restore_pll_state)(struct msm_dsi_phy *phy);
-> +	bool (*set_continuous_clock)(struct msm_dsi_phy *phy, bool enable);
->  };
-> 
->  struct msm_dsi_phy_cfg {
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> index 7c23d4c47338..a78a0c45d101 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> @@ -932,6 +932,21 @@ static int dsi_7nm_phy_enable(struct msm_dsi_phy 
-> *phy,
->  	return 0;
->  }
-> 
-> +static bool dsi_7nm_set_continuous_clock(struct msm_dsi_phy *phy, bool 
-> enable)
-> +{
-> +	void __iomem *base = phy->base;
-> +	u32 data;
-> +
-> +	data = dsi_phy_read(base + REG_DSI_7nm_PHY_CMN_LANE_CTRL1);
-Do you want to leave one blank line here?
-> +	if (enable)
-> +		data |= BIT(5) | BIT(6);
-> +	else
-> +		data &= ~(BIT(5) | BIT(6));
-and here?
-> +	dsi_phy_write(base + REG_DSI_7nm_PHY_CMN_LANE_CTRL1, data);
-> +
-> +	return enable;
-> +}
-> +
->  static void dsi_7nm_phy_disable(struct msm_dsi_phy *phy)
->  {
->  	void __iomem *base = phy->base;
-> @@ -972,6 +987,7 @@ const struct msm_dsi_phy_cfg dsi_phy_7nm_cfgs = {
->  		.pll_init = dsi_pll_7nm_init,
->  		.save_pll_state = dsi_7nm_pll_save_state,
->  		.restore_pll_state = dsi_7nm_pll_restore_state,
-> +		.set_continuous_clock = dsi_7nm_set_continuous_clock,
->  	},
->  	.min_pll_rate = 600000000UL,
->  #ifdef CONFIG_64BIT
-> @@ -998,6 +1014,7 @@ const struct msm_dsi_phy_cfg dsi_phy_7nm_8150_cfgs 
-> = {
->  		.pll_init = dsi_pll_7nm_init,
->  		.save_pll_state = dsi_7nm_pll_save_state,
->  		.restore_pll_state = dsi_7nm_pll_restore_state,
-> +		.set_continuous_clock = dsi_7nm_set_continuous_clock,
->  	},
->  	.min_pll_rate = 1000000000UL,
->  	.max_pll_rate = 3500000000UL,
+Regards,
+Bjorn
