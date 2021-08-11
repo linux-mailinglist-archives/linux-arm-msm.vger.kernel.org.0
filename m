@@ -2,85 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1E7923E9221
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 15:03:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3F92F3E928A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 15:24:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230481AbhHKNDs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Aug 2021 09:03:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36524 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230437AbhHKNDr (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Aug 2021 09:03:47 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8042C0613D3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 06:03:23 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id a7so4406830ljq.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 06:03:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=zuMFwAVD6fY0KArmeR9wSduaNs/aEjUW6qkJa3ECyv8=;
-        b=TCpUp5F1rIsu50ljO5tUd8VYmUjjBPVQQXUGND2l8iThkPszFllIURH2d9QO5Kp3wr
-         20hdUcM+6Mq2hwT8/HawHY7iF3d23NShYFzrA0yQTxhpIVWNWG6J4+mwqwZRds7vSWkn
-         ryr9QAZapCb+OCy9ATaGG5pWUNjSb0zXfOsY4sGS9wEDMP4gMGMuPjB4EBZbhBJ4ZJau
-         qYXAq8dS5PbHEiyDb/SNZ+os+lZI8mkwHbsYaFgwJ+E7cCOvstIh2d3ZmcSjmxSrk5tr
-         XZ0kwT+zphh3jDjsZruTgmXrO7y+kZ3ssAa6Yha3uKi5GrbF+U7p13/r2FIWYwnzAxBW
-         aX1Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=zuMFwAVD6fY0KArmeR9wSduaNs/aEjUW6qkJa3ECyv8=;
-        b=q5BCyzJhXSAz7gHtnf+mcVLsUS7Se74ACGC+Fxo3gdXHJy8iNyQEjd4QiJOqb7hAT9
-         MFRJYhPNBb4j5yJHteJmUpdjmQo87ZCDCjtvaFOPwA55YLe3VUUWVFVoN61O4zuCDBRZ
-         3LOs9LRutTkl09SFtCJs17QT0NLjzwLv8CCKaFJnbn+7P1AX89UkyLymQ3mrN5Xw9aXG
-         2vPWvMa8deOwPrKP9AwJj6OrNTqMuZOH8hc8VO5YIQBorpjh/dK8BKb7Bu8vtSYYnMh7
-         zJtyUnTsQUonPAECCOleuLB8S9ERHE9m+I627NhiTU3i01Ef5f5tyLaZZptHCogpznjg
-         WzTw==
-X-Gm-Message-State: AOAM533ccV7uBkIM5CU6FVD5wheKjxyPGLUjX3xpzhqiSa6zv7FjRgh5
-        kzDh92cz80i0XLmryg7xubLIZpVrR8Y2B4Bgo5YDoA==
-X-Google-Smtp-Source: ABdhPJzx+NlgiIZnomfYiB8/G4LgCd6WP6GFsrtvbCL30ZLORab4/n85+ZBn2rA47FR1ujRI3K0kFKlULjuaBeSQo5k=
-X-Received: by 2002:a05:651c:327:: with SMTP id b7mr23695765ljp.74.1628687001676;
- Wed, 11 Aug 2021 06:03:21 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210805222625.40236-1-konrad.dybcio@somainline.org> <20210805222625.40236-2-konrad.dybcio@somainline.org>
-In-Reply-To: <20210805222625.40236-2-konrad.dybcio@somainline.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Wed, 11 Aug 2021 15:03:10 +0200
-Message-ID: <CACRpkdYm_Ky+D5=rhX9gekKYZkTXwvS-FGED_Ou+_0=nEGZUUA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] pinctrl: qcom-pmic-gpio: Add support for pm8019
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS
-        <devicetree@vger.kernel.org>, Hans de Goede <hdegoede@redhat.com>, Andy
-        Shevchenko <andy.shevchenko@gmail.com>," 
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        Martin Botka <martin.botka@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        id S231781AbhHKNZI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 09:25:08 -0400
+Received: from www.zeus03.de ([194.117.254.33]:36592 "EHLO mail.zeus03.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231757AbhHKNZG (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 11 Aug 2021 09:25:06 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=sang-engineering.com; h=
+        date:from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=k1; bh=CYsd51CWfhrDrFvcXo0fNge0rkky
+        RguhFqu5r8E8ouk=; b=Gdm4rFE2D4i6PbaPJkzZaWMGFYS4rauF+ezr5u7VQUzE
+        fSpbnotfGoYv0jwqWJD1otYLpp12olIl/t73Pd1ejjreexdCDt+4ck/rNe8zCdZd
+        LroFytiGbrp/HLFan0DbI9Y32J+LNY8m20504nwwJyBLAq4RXik7MpH1aX9G6jI=
+Received: (qmail 2664639 invoked from network); 11 Aug 2021 15:24:41 +0200
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 11 Aug 2021 15:24:41 +0200
+X-UD-Smtp-Session: l3s3148p1@q3NuikjJ9p0gARa4RTP4AfHKOCm/nqrR
+Date:   Wed, 11 Aug 2021 15:24:40 +0200
+From:   Wolfram Sang <wsa+renesas@sang-engineering.com>
+To:     linux-mmc@vger.kernel.org
+Cc:     linux-renesas-soc@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 4/7] i2c: qup: : use proper DMAENGINE API for termination
+Message-ID: <YRPPmBafupmDcav+@shikoro>
+Mail-Followup-To: Wolfram Sang <wsa+renesas@sang-engineering.com>,
+        linux-mmc@vger.kernel.org, linux-renesas-soc@vger.kernel.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        linux-arm-msm@vger.kernel.org, linux-i2c@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20210623095942.3325-1-wsa+renesas@sang-engineering.com>
+ <20210623095942.3325-5-wsa+renesas@sang-engineering.com>
+MIME-Version: 1.0
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="bNy8AuF3KmQsmVsu"
+Content-Disposition: inline
+In-Reply-To: <20210623095942.3325-5-wsa+renesas@sang-engineering.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 6, 2021 at 12:26 AM Konrad Dybcio
-<konrad.dybcio@somainline.org> wrote:
 
-> PM8019 provides 6 GPIOs. Add a compatible to support that.
->
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+--bNy8AuF3KmQsmVsu
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I will merge this as soon as the binding is fixed (please resend both)
+On Wed, Jun 23, 2021 at 11:59:38AM +0200, Wolfram Sang wrote:
+> dmaengine_terminate_all() is deprecated in favor of explicitly saying if
+> it should be sync or async. Here, we want dmaengine_terminate_sync()
+> because there is no other synchronization code in the driver to handle
+> an async case.
+>=20
+> Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
 
-Yours,
-Linus Walleij
+Applied to for-next, thanks!
+
+
+--bNy8AuF3KmQsmVsu
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQIzBAABCgAdFiEEOZGx6rniZ1Gk92RdFA3kzBSgKbYFAmETz5gACgkQFA3kzBSg
+KbYKOg//eXDqFoBIKZHdiPR+ODetzC3k/Sj68H7Bwk4mb+1WT6Oj9phM0g5LO8/j
+IkQPlEWVxPPrkWYYi1p+N4tTjzBiLAotfC3gMRWmUJkzXXPGOJ3pI/BelhL8cBgl
+EnjJtVoRUmwX59CI8eJAGe3f1KQ1vwP/oWQ1zLQZ3cyTi31LIFbOaGUadJJCJtak
+xO6U2FEWG83SSvk0CAWYJiOYwtwapNxgnxWmRMlr9kbl3+MJEnSkPV3Iyd0t44Gx
+J3BCSCzSpQtd6H66bvP+4V92/eUHTQtcL1k79kzIQvuD4x6ieNmEmcueTeFruAo0
+XI2Cs5iXzZ+5opQFnV//NfIohyVa67ZiCgUd2Xftonb613ovn1PRi+yPiJf5vMo2
+vQLVgmuyRm5O+jLx8vnUTpn9fALpcoH2GA3fA4v6C3ennC2LmqbFKUmMMacxh31p
+dFwwbd0UC8sIh/Ia7tl/dbRzO2Y8R/mkh/8bLJFTK50mNOt0n0MdnX0ssDFx0kal
+ZgqtPqNHvhfJPCCL93lKj8ttZpzKnGQ9x2RALnrmwV4L1XtKgp4yVNGj+gSV4K6b
+opRUoX/A7aKT0ZwTxCPj/chvHOvqbbdtaSLmv1p/zbNA8uQ0MQMTAti4OKjebgRc
+3fGzzh3Ot02wrc4hlIvyhmJz74YRCuIv5V7fqPEJdouHfX/XLZw=
+=JEnT
+-----END PGP SIGNATURE-----
+
+--bNy8AuF3KmQsmVsu--
