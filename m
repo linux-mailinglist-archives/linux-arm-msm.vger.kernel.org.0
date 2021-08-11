@@ -2,197 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D16F73E9603
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 18:32:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D382E3E968E
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 19:08:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229969AbhHKQcy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Aug 2021 12:32:54 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:63736 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229634AbhHKQcu (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Aug 2021 12:32:50 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1628699546; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=NhUiz5QC3KQBDifLSXQI8f1jKY1S0Ahvc8LKMho5enA=; b=JVu5fTuDBaO8HJh/WQng9aFjsdnqMxDxEcP5PZZ6z5rV5QGIhePkbSgyqe2SxgVg4etM9YJc
- xd+2MGuXeOwGuc6x+seLIJ1EPAyAwAis428raxD52h6f/+Yju0ZB66d+F0ow5sWaH3U3/QJG
- 9Il0OWmFXND3vPgNDaR9EM+ITkA=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 6113fb3c91487ad520902ce3 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 11 Aug 2021 16:30:51
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 480A3C433F1; Wed, 11 Aug 2021 16:30:51 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        id S230307AbhHKRId (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 13:08:33 -0400
+Received: from ixit.cz ([94.230.151.217]:49082 "EHLO ixit.cz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229535AbhHKRId (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 11 Aug 2021 13:08:33 -0400
+Received: from newone.lan (ixit.cz [94.230.151.217])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 44163C43143;
-        Wed, 11 Aug 2021 16:30:43 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 44163C43143
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=khsieh@codeaurora.org
-From:   Kuogee Hsieh <khsieh@codeaurora.org>
-To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org
-Cc:     Kuogee Hsieh <khsieh@codeaurora.org>, abhinavk@codeaurora.org,
-        aravindh@codeaurora.org, airlied@linux.ie, daniel@ffwll.ch,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v4 6/6] drm/msm/dp: do not end dp link training until video is ready
-Date:   Wed, 11 Aug 2021 09:30:07 -0700
-Message-Id: <1628699407-28358-7-git-send-email-khsieh@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1628699407-28358-1-git-send-email-khsieh@codeaurora.org>
-References: <1628699407-28358-1-git-send-email-khsieh@codeaurora.org>
+        by ixit.cz (Postfix) with ESMTPSA id E407824A25;
+        Wed, 11 Aug 2021 19:08:06 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1628701687;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=RTynIOCegowRvakGso+RzQODzzmcY92VKZvDOOfU8MY=;
+        b=23/BInf8vB5I5xiyTTIt4tNDQeVudHEhmPTbOtfJ8S6dzuPoDo3zUCL/zHU0ZWMT5Sl0cp
+        aj5AIxgQGDH9PHkcsN1cuWtRWCkTu157wVyAjECxw/M3F4fYpsAJoeLStCTj6Zyi3w6+rI
+        vW0WqDEX6WoeHs0zSn4xbtRfLQnGNTA=
+From:   David Heidelberg <david@ixit.cz>
+To:     Jonathan Marek <jonathan@marek.ca>,
+        robdclark <robdclark@chromium.org>
+Cc:     linux-arm-msm@vger.kernel.org, David Heidelberg <david@ixit.cz>,
+        stable@vger.kernel.org
+Subject: [PATCH] drm/msi/mdp4: populate priv->kms in mdp4_kms_init
+Date:   Wed, 11 Aug 2021 19:06:31 +0200
+Message-Id: <20210811170631.39296-1-david@ixit.cz>
+X-Mailer: git-send-email 2.30.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Initialize both pre-emphasis and voltage swing level to 0 before
-start link training and do not end link training until video is
-ready to reduce the period between end of link training and video
-start to meet Link Layer CTS requirement.  Some dongle main link
-symbol may become unlocked again if host did not end link training
-soon enough after completion of link training 2. Host have to re
-train main link if loss of symbol locked detected before end link
-training so that the coming video stream can be transmitted to sink
-properly. This fixes Link Layer CTS cases 4.3.2.1, 4.3.2.2, 4.3.2.3
-and 4.3.2.4.
+Without this fix boot throws NULL ptr exception at msm_dsi_manager_setup_encoder
+on devices like Nexus 7 2013 (MDP4 v4.4).
 
-Changes in v3:
--- merge retrain link if loss of symbol locked happen into this patch
--- replace dp_ctrl_loss_symbol_lock() with dp_ctrl_channel_eq_ok()
+Fixes: 03436e3ec69c ("drm/msm/dsi: Move setup_encoder to modeset_init")
 
-Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Cc: <stable@vger.kernel.org>
+Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
- drivers/gpu/drm/msm/dp/dp_ctrl.c | 56 +++++++++++++++++++++++++++++-----------
- 1 file changed, 41 insertions(+), 15 deletions(-)
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index 0002805..ffed523 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1484,6 +1484,9 @@ static int dp_ctrl_link_maintenance(struct dp_ctrl_private *ctrl)
- 
- 	dp_ctrl_push_idle(&ctrl->dp_ctrl);
- 
-+	ctrl->link->phy_params.p_level = 0;
-+	ctrl->link->phy_params.v_level = 0;
-+
- 	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
- 
- 	ret = dp_ctrl_setup_main_link(ctrl, &training_step);
-@@ -1636,6 +1639,16 @@ static bool dp_ctrl_clock_recovery_any_ok(
- 	return drm_dp_clock_recovery_ok(link_status, reduced_cnt);
- }
- 
-+static bool dp_ctrl_channel_eq_ok(struct dp_ctrl_private *ctrl)
-+{
-+	u8 link_status[DP_LINK_STATUS_SIZE];
-+	int num_lanes = ctrl->link->link_params.num_lanes;
-+
-+	dp_ctrl_read_link_status(ctrl, link_status);
-+
-+	return drm_dp_channel_eq_ok(link_status, num_lanes);
-+}
-+
- int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+index 1f12bccee2b8..cdcaf470f148 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+@@ -399,6 +399,7 @@ struct msm_kms *mdp4_kms_init(struct drm_device *dev)
  {
- 	int rc = 0;
-@@ -1671,6 +1684,9 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
- 		ctrl->link->link_params.rate,
- 		ctrl->link->link_params.num_lanes, ctrl->dp_ctrl.pixel_rate);
- 
-+	ctrl->link->phy_params.p_level = 0;
-+	ctrl->link->phy_params.v_level = 0;
-+
- 	rc = dp_ctrl_enable_mainlink_clocks(ctrl);
- 	if (rc)
- 		return rc;
-@@ -1736,17 +1752,19 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
- 	if (ctrl->link->sink_request & DP_TEST_LINK_PHY_TEST_PATTERN)
- 		return rc;
- 
--	/* stop txing train pattern */
--	dp_ctrl_clear_training_pattern(ctrl);
-+	if (rc == 0) {  /* link train successfully */
-+		/*
-+		 * do not stop train pattern here
-+		 * stop link training at on_stream
-+		 * to pass compliance test
-+		 */
-+	} else  {
-+		/*
-+		 * link training failed
-+		 * end txing train pattern here
-+		 */
-+		dp_ctrl_clear_training_pattern(ctrl);
- 
--	/*
--	 * keep transmitting idle pattern until video ready
--	 * to avoid main link from loss of sync
--	 */
--	if (rc == 0)  /* link train successfully */
--		dp_ctrl_push_idle(dp_ctrl);
--	else  {
--		/* link training failed */
- 		dp_ctrl_deinitialize_mainlink(ctrl);
- 		rc = -ECONNRESET;
- 	}
-@@ -1754,9 +1772,15 @@ int dp_ctrl_on_link(struct dp_ctrl *dp_ctrl)
- 	return rc;
- }
- 
-+static int dp_ctrl_link_retrain(struct dp_ctrl_private *ctrl)
-+{
-+	int training_step = DP_TRAINING_NONE;
-+
-+	return dp_ctrl_setup_main_link(ctrl, &training_step);
-+}
-+
- int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
- {
--	u32 rate = 0;
- 	int ret = 0;
- 	bool mainlink_ready = false;
- 	struct dp_ctrl_private *ctrl;
-@@ -1766,10 +1790,6 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
- 
- 	ctrl = container_of(dp_ctrl, struct dp_ctrl_private, dp_ctrl);
- 
--	rate = ctrl->panel->link_info.rate;
--
--	ctrl->link->link_params.rate = rate;
--	ctrl->link->link_params.num_lanes = ctrl->panel->link_info.num_lanes;
- 	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
- 
- 	DRM_DEBUG_DP("rate=%d, num_lanes=%d, pixel_rate=%d\n",
-@@ -1784,6 +1804,12 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
- 		}
+ 	struct platform_device *pdev = to_platform_device(dev->dev);
+ 	struct mdp4_platform_config *config = mdp4_get_config(pdev);
++	struct msm_drm_private *priv = dev->dev_private;
+ 	struct mdp4_kms *mdp4_kms;
+ 	struct msm_kms *kms = NULL;
+ 	struct msm_gem_address_space *aspace;
+@@ -418,7 +419,8 @@ struct msm_kms *mdp4_kms_init(struct drm_device *dev)
+ 		goto fail;
  	}
  
-+	if (!dp_ctrl_channel_eq_ok(ctrl))
-+		dp_ctrl_link_retrain(ctrl);
-+
-+	/* stop txing train pattern to end link training */
-+	dp_ctrl_clear_training_pattern(ctrl);
-+
- 	ret = dp_ctrl_enable_stream_clocks(ctrl);
- 	if (ret) {
- 		DRM_ERROR("Failed to start pixel clocks. ret=%d\n", ret);
+-	kms = &mdp4_kms->base.base;
++	priv->kms = &mdp4_kms->base.base;
++	kms = priv->kms;
+ 
+ 	mdp4_kms->dev = dev;
+ 
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+2.30.2
 
