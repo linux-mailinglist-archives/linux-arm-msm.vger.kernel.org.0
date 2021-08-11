@@ -2,148 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A7A3C3E97C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 20:38:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D58A23E97DB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 20:45:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229947AbhHKSjT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Aug 2021 14:39:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59650 "EHLO
+        id S229655AbhHKSqJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 14:46:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32966 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229791AbhHKSjS (ORCPT
+        with ESMTP id S230000AbhHKSqI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Aug 2021 14:39:18 -0400
-Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2638C061765
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 11:38:54 -0700 (PDT)
-Received: by mail-wm1-x330.google.com with SMTP id g138so2584070wmg.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 11:38:54 -0700 (PDT)
+        Wed, 11 Aug 2021 14:46:08 -0400
+Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4A62C061765
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 11:45:44 -0700 (PDT)
+Received: by mail-io1-xd32.google.com with SMTP id e186so4880302iof.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 11:45:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=eQhLP2HpYl3mxTssveBjr1kKyZxliJO4Ylz3sYBifvQ=;
-        b=gLXLq97An/NSHIdiFRGjpYHcahaLAOeMqlOjQ0lTs/Oy4mVwecGF13c0K9Z4sEDDMF
-         leSrj6Wpzj/UoirgeM7fbSLqOJuOI4oXLfEGbFGOfLANd/M8F7/35YJQeqYF/GqDcj9q
-         HD2u/UIT8+K+A/p/EsAVN3tncwWLRQEw7BVTZ3zGtZ6ssxgU1ugKQzF10LMHDs13Rwm4
-         SvVMB1p89BRdfLyNcG94XAzKjs+JtwQgQKpjDKtPm4+3FI4nXmPCgG5Eh56vEwzx12Fz
-         fn+LUSshcWrwiRl9TDTfctF72r/GFuIZ/TdPnTg7SqlSp2IhStANjvcqF4AFY3m8iT2s
-         MCSg==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=jKIOXVh7+eESemNLtQSRNpB524Jx1AZ4uxhD6wSNKkg=;
+        b=UjezlaSJWKlTOr/SQLO1c53eLD+F60ya71qLCLvWlcb9bmJ0hmhLcP4AGwYvYn5q+T
+         d2eMc3vifaUrVMD9biJOi801gPNZYfDV1N5GjPeGSLB5WtrTKke01fzqNtcYBFT8G76D
+         upQIos8bl7Hey1cfNits0D7tYe2LQjpJcwAApjyDknw9W1cZ1Rm+N/rWs16MkIaqq39u
+         Pzi5fVV4rzKnGy8L27DhoEIHAIaW5QOb6eQ2UGK5h4fL7u2jOogjJKI5czj4bH1r+742
+         qSO+UKFVYJH13BPlXWwPaGiofs5ukfiEs/WT4EPj7zhzp2Z+MLX0Z+OB+LmHU2XdYpPm
+         MEkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=eQhLP2HpYl3mxTssveBjr1kKyZxliJO4Ylz3sYBifvQ=;
-        b=Ey+8Ays9lV094CNn3OWxN8AQF+TRoUG5O6ZJAYXqQXmYUMkRSQFUG8oYldnZ8EqO2m
-         OjRskjyZNkj2VmppHowuodeAbe1yqL7H7Akl4wp+DuQaI2d73h9Uze/1WS2AEYmr4BP8
-         HMR4+RH+Mn1y8jFaooiYthtzEmzf+cMFDQz9fvSaXekzxFTz5BRreZC/HyebDTRt6eY0
-         c3cmy2Y9rX0/bfffShmuMevGPROU0PD6Hw0A1quHvbGMivv1Ps7jkhR2qPeJcdeidd/V
-         fCSiE8r85lb0jAT85bOpq3dnn09JbBffL9j0+5LEiuA1XuMtGnwBmMMBKbW2tIj5sP+9
-         eACg==
-X-Gm-Message-State: AOAM532LB4ikKwlq7gW79pnJN+gBVk6wOtTbAxLDcASXfA2Z7wr/pTxT
-        ic5mjXW0Uwan0OSkbH+BMzLN9gkvI1m55whvwgc=
-X-Google-Smtp-Source: ABdhPJxp/OJghjYG77CWEM0BOC7nX2DHfOVMFK6FSsbOPvoPAsWIZPqN5jxhG9kBOsxFLJVVBylnYEgwmGBfWPkcw2Q=
-X-Received: by 2002:a05:600c:2046:: with SMTP id p6mr11477927wmg.164.1628707133341;
- Wed, 11 Aug 2021 11:38:53 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=jKIOXVh7+eESemNLtQSRNpB524Jx1AZ4uxhD6wSNKkg=;
+        b=mkQm1vFS2JyMWzvdaH2Qp0LpUb2DOVOys2mtuTaurYqhuFEe2vpUUAB64via5fEncA
+         Duydxhe5ltfeMZjS377Sl3GcGcum2vxy0LvbNtBW5aEgoXg94x27tMbHDbELW2vpmzq5
+         9Jce1zp3UkK8aieU/p460EBQQbUOqo9cRAHx9Zau37lA40q1qzxKnWhHvuY3z8JTB7b7
+         t2dCmfdfCWXpRZBX1ruiTur7fZXzJzJ5Qp+o4JImzeLsEDlmdBuQ5v6U09vDrIdZ0FEi
+         uckXQ7CyyJHlpU3K2BBVH6mW4i0lKYJQAYpOgvZIHVTglqQEiwFcio/ncYrlit7eYhC1
+         AJmg==
+X-Gm-Message-State: AOAM531Z3mlTOUKCZqdgZjIqzgRXuKcOCZd2tVfLYrvndTuVFxM5O6Sd
+        V6J9dtSZ8Qh2YauKSU+YU11RIQ==
+X-Google-Smtp-Source: ABdhPJzCfjqw3nET9av/BovTeZX6jG03KpWASohmf3ylUNBHFKol1cBMyw/P4hFXe5v3xnu6eKGAxg==
+X-Received: by 2002:a05:6602:1d4:: with SMTP id w20mr11465iot.121.1628707544300;
+        Wed, 11 Aug 2021 11:45:44 -0700 (PDT)
+Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
+        by smtp.googlemail.com with ESMTPSA id j2sm40205ilr.80.2021.08.11.11.45.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Aug 2021 11:45:43 -0700 (PDT)
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Use GIC_SPI for intc cells
+To:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Matthias Kaehlcke <mka@chromium.org>
+References: <20210811181904.779316-1-swboyd@chromium.org>
+From:   Alex Elder <elder@linaro.org>
+Message-ID: <b504e53c-6f04-b749-ff95-d686539e9d70@linaro.org>
+Date:   Wed, 11 Aug 2021 13:45:42 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-References: <20210811180844.2130484-1-markyacoub@chromium.org>
-In-Reply-To: <20210811180844.2130484-1-markyacoub@chromium.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Wed, 11 Aug 2021 11:43:09 -0700
-Message-ID: <CAF6AEGveSFBOQkP=NXeRZAuAeL_yQc5Sq6LO+huf4bJO6c2yKA@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm: Read frame_count and line_count even when disabled.
-To:     Mark Yacoub <markyacoub@chromium.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>
-Cc:     Sean Paul <seanpaul@chromium.org>,
-        Rob Clark <robdclark@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Mark Yacoub <markyacoub@google.com>,
-        freedreno <freedreno@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20210811181904.779316-1-swboyd@chromium.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 11, 2021 at 11:12 AM Mark Yacoub <markyacoub@chromium.org> wrote:
->
-> From: Mark Yacoub <markyacoub@google.com>
->
-> [why]
-> Reading frame count register used to get the vblank counter, which calls
-> dpu_encoder_phys to get the frame count. Even when it's disabled, the
-> vblank counter (through frame count) should return a valid value for the
-> count. An invalid value of 0, when compared to vblank->last (in
-> drm_vblank.c::drm_update_vblank_count()) returns an invalid number that
-> throws off the vblank counter for the lifetime of the process.
->
-> Rationale:
-> In drm_vblank.c::drm_update_vblank_count(), the new diff is calculated
-> through:
-> diff = (cur_vblank - vblank->last) & max_vblank_count;
-> cur_vblank comes from: cur_vblank = __get_vblank_counter(dev, pipe);
-> When the value is 0, diff results in a negative number (a very large
-> number as it's unsigned), which inflates the vblank count when the diff
-> is added to the current vblank->count.
->
-> [How]
-> Read frame_count register whether interface timing engine is enabled or
-> not.
->
-> Fixes: IGT:kms_flip::modeset-vs-vblank-race-interruptible
-> Tested on ChromeOS Trogdor(msm)
->
-> Signed-off-by: Mark Yacoub <markyacoub@chromium.org>
+On 8/11/21 1:19 PM, Stephen Boyd wrote:
+> Let's use the GIC_SPI macro instead of a plain 0 here to match other
+> uses of the primary interrupt controller on sc7280.
+> 
+> Suggested-by: Matthias Kaehlcke <mka@chromium.org>
+> Cc: Alex Elder <elder@linaro.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
 
-Reviewed-by: Rob Clark <robdclark@chromium.org>
+Looks good, thanks.  It's done that way for IPA on other
+platforms too, or at least that's the intention...
 
-But I suspect we may have a bit more work for the display-off case..
-or at least I'm not seeing anything obviously doing a pm_runtime_get()
-in this call path.
-
-I'm also not sure if the line/frame-count registers loose state across
-a suspend->resume cycle, it might be that we need to save/restore
-these registers in the suspend/resume path?  Abhinav?
-
-BR,
--R
+Reviewed-by: Alex Elder <elder@linaro.org>
 
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c | 9 ++-------
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h | 2 +-
->  2 files changed, 3 insertions(+), 8 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> index 116e2b5b1a90f..c436d901629f3 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.c
-> @@ -266,13 +266,8 @@ static void dpu_hw_intf_get_status(
->
->         s->is_en = DPU_REG_READ(c, INTF_TIMING_ENGINE_EN);
->         s->is_prog_fetch_en = !!(DPU_REG_READ(c, INTF_CONFIG) & BIT(31));
-> -       if (s->is_en) {
-> -               s->frame_count = DPU_REG_READ(c, INTF_FRAME_COUNT);
-> -               s->line_count = DPU_REG_READ(c, INTF_LINE_COUNT);
-> -       } else {
-> -               s->line_count = 0;
-> -               s->frame_count = 0;
-> -       }
-> +       s->frame_count = DPU_REG_READ(c, INTF_FRAME_COUNT);
-> +       s->line_count = DPU_REG_READ(c, INTF_LINE_COUNT);
->  }
->
->  static u32 dpu_hw_intf_get_line_count(struct dpu_hw_intf *intf)
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-> index 3568be80dab51..877ff48bfef04 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_intf.h
-> @@ -41,7 +41,7 @@ struct intf_prog_fetch {
->  struct intf_status {
->         u8 is_en;               /* interface timing engine is enabled or not */
->         u8 is_prog_fetch_en;    /* interface prog fetch counter is enabled or not */
-> -       u32 frame_count;        /* frame count since timing engine enabled */
-> +       u32 frame_count; /* frame count since timing engine first enabled */
->         u32 line_count;         /* current line count including blanking */
->  };
->
-> --
-> 2.33.0.rc1.237.g0d66db33f3-goog
->
+>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 4 ++--
+>   1 file changed, 2 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index f70ab3c5d08b..569802536321 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -598,8 +598,8 @@ ipa: ipa@1e40000 {
+>   				    "ipa-shared",
+>   				    "gsi";
+>   
+> -			interrupts-extended = <&intc 0 654 IRQ_TYPE_EDGE_RISING>,
+> -					      <&intc 0 432 IRQ_TYPE_LEVEL_HIGH>,
+> +			interrupts-extended = <&intc GIC_SPI 654 IRQ_TYPE_EDGE_RISING>,
+> +					      <&intc GIC_SPI 432 IRQ_TYPE_LEVEL_HIGH>,
+>   					      <&ipa_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
+>   					      <&ipa_smp2p_in 1 IRQ_TYPE_EDGE_RISING>;
+>   			interrupt-names = "ipa",
+> 
+> base-commit: 97ec669dfcfa22f8a595356ceb6ce46e7b4a82e9
+> 
+
