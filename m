@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 615333E8BE9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 10:38:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 095833E8CFB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 11:13:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236096AbhHKIi2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Aug 2021 04:38:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58448 "EHLO
+        id S236679AbhHKJNt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 05:13:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38910 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235935AbhHKIi1 (ORCPT
+        with ESMTP id S236599AbhHKJNs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Aug 2021 04:38:27 -0400
-Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6C3CAC0613D5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 01:38:04 -0700 (PDT)
-Received: by mail-wr1-x42f.google.com with SMTP id f5so1862789wrm.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 01:38:04 -0700 (PDT)
+        Wed, 11 Aug 2021 05:13:48 -0400
+Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13616C0613D5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 02:13:25 -0700 (PDT)
+Received: by mail-pl1-x635.google.com with SMTP id e15so1817907plh.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 02:13:25 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
+        d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=8ctvExXHxoU7MDz0lLq/Tgi84JQatciTVAxD+Fn/jcQ=;
-        b=rEq02tPeUoTDMJlCRt+ttFdA0Jr7daFhR+2ie5RBcOI3BzWNUuUWa9Gbkn4HGOW7WY
-         4dGznTdp6VXTPNE9W13rtYzeqx7tx7wQ393pENejnQSXz9eLj1RNBFRM1k3jq7xv7egq
-         HC0wLX7Gfq1JdtcjNVDY4wLVGIFgnDphxa8SKvMeE6pZoYh5aVDsC/sruC06SYWsY3uM
-         J7cw2lg+GbQUi7uuzGE1t6Q0KYY1VP89pD3oxKNUKWXB+QlwgXjHIwdMYwDYJtjhm4GA
-         VV1DzVJB/z5IitVlWxedaVu1jjrQLyAUK9KtmHXlZnADSSCcDIKhD2TqwcqLbaym+Na8
-         XOdg==
+         :content-disposition:in-reply-to:user-agent;
+        bh=3ZkAU2QHfzdbeB6vZcR6DekWG4U8QzIxN1zOaeYHseo=;
+        b=oDomj3rRcyWzJT98WWaMn3iUHVhd213N1K7Dc6cCQNOuPXxWqAQZdSD0fDwhqTUN5H
+         bL4VRM/Iq7Wnsd4s6S13jK+Oga0ym2De4dTzSegfF9dfZet2+bbu2ZPOCAdoSEawJ8FA
+         UXppbc0qPyrJkus/W8SGWprMiFPmMrprxll6d0dRRhVC3CslE0T9qVutq9EI9huG3Iwn
+         EZLXH52csD4G2MXoVd5zYIl9SRzm3VzrvoM4OsXUpBoo/cNdomdEy5OlucKVNj2x0R2J
+         /DHNb0L4ubFFusIvvIuglUm9c8BXGcewvgnZTrXsT4nQLY9mvU80q5OyqS4C+dliiQtr
+         7XHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=8ctvExXHxoU7MDz0lLq/Tgi84JQatciTVAxD+Fn/jcQ=;
-        b=ca8LxoDvE6JUh/XESsU0qP/MN4AEvRDi+wdFhwoxnr58etTON7i97qoPl+IeN3tgTQ
-         rloR241EEzmLbUSTw9jzbAQGsFAdMSrjCL5jCh263mhFwnpw3Mubq7UKTZrDNwdLjHab
-         HCaQkvHdaUcSwDSdgyO07SOQRzKWl9fuVaTFSMHmsQirFmPBsHDMkTzY4lDAzd228P2j
-         0EKmqwnhHOGgJ3l2wcfdd1TpPtUMCe6R47sq/21SG7CPBsa14rEMYxiSXVc59LMTMou2
-         lkZ4OJus8lWobdI0fMbfX4chqvBLteTkajHQDbt118CaQ2ZuIiHpzSctjUD1ypxN8j/n
-         D7+A==
-X-Gm-Message-State: AOAM530UeHS6NTcsgT6IkipA8xTTPm7Q+3adCQPxpwjFUMTJD9sBPgjX
-        pQ8+gRE2v3J/U20/iiz48p568Q==
-X-Google-Smtp-Source: ABdhPJzU9YQR62yDNq9PrF7gkVKzwniyJFxIxg9cOJLgH9YZSN7yJXWq44plPsS4/Qn9sPmMW8M/QQ==
-X-Received: by 2002:a5d:490b:: with SMTP id x11mr35305440wrq.322.1628671082736;
-        Wed, 11 Aug 2021 01:38:02 -0700 (PDT)
-Received: from google.com ([2a00:79e0:d:210:43fd:e634:73d9:e10e])
-        by smtp.gmail.com with ESMTPSA id e25sm13986334wra.90.2021.08.11.01.38.02
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=3ZkAU2QHfzdbeB6vZcR6DekWG4U8QzIxN1zOaeYHseo=;
+        b=H0bdeTg5eqpUyn1J9PoI5YG4j7Q94vT8aD4uz8y27RVDsp3S+ENzA6+2bd5aBebeVh
+         KrpknVMmUs6ZNGpPb+JOkshN72bHSJv/FMNI8mly4ayG3kx6LnSy1ZWsljqput5wHQQc
+         EXUW5cUYnYP+QUh7rzWBwfejktT79r4OjXseIrHaG9WK4E4qptNdyOUxg/SFQK/4VRNo
+         K/Q7gYUAxr4bICL+XLiGlOT1tEeQpEMrVISCaoaRJZmlf5IRi/+8t1920+HxedOJ4ic4
+         0MCNbJCuYhF7R4UsFMaLKoQPC4TbBOZJ0M0fXvmCcjg4loNco9HcMd0EO1GP1bIhd7fX
+         vRnA==
+X-Gm-Message-State: AOAM5316YjAigJx1PrZ3EDzvXYGWPXT/NQuVGJd6ytnOMXFiRgDodDT2
+        ui6YRS0hTlw/5BtuODuv2bUHBQ==
+X-Google-Smtp-Source: ABdhPJw6gEf2Fw6iBxua2gL1EBsBW5dHh3H63IoaqHdI9KWyzvZpYGzAm266LjhE7aZjzOuSMwvjGg==
+X-Received: by 2002:a62:e914:0:b029:3dd:a1d0:be57 with SMTP id j20-20020a62e9140000b02903dda1d0be57mr2957701pfh.11.1628673204607;
+        Wed, 11 Aug 2021 02:13:24 -0700 (PDT)
+Received: from localhost ([122.172.201.85])
+        by smtp.gmail.com with ESMTPSA id mr18sm24660227pjb.39.2021.08.11.02.13.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 11 Aug 2021 01:38:02 -0700 (PDT)
-Date:   Wed, 11 Aug 2021 09:37:56 +0100
-From:   Quentin Perret <qperret@google.com>
-To:     Viresh Kumar <viresh.kumar@linaro.org>
+        Wed, 11 Aug 2021 02:13:24 -0700 (PDT)
+Date:   Wed, 11 Aug 2021 14:43:21 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Quentin Perret <qperret@google.com>
 Cc:     Rafael Wysocki <rjw@rjwysocki.net>,
         Vincent Donnefort <vincent.donnefort@arm.com>,
         lukasz.luba@arm.com, Andy Gross <agross@kernel.org>,
@@ -69,84 +69,57 @@ Cc:     Rafael Wysocki <rjw@rjwysocki.net>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-mediatek@lists.infradead.org, linux-omap@vger.kernel.org
 Subject: Re: [PATCH 0/8] cpufreq: Auto-register with energy model
-Message-ID: <YROMZFHCor3pbhMr@google.com>
+Message-ID: <20210811091321.xtb776q4t6cwyanx@vireshk-i7>
 References: <cover.1628579170.git.viresh.kumar@linaro.org>
  <YRJym+Vn4bbwQzzs@google.com>
  <20210811051859.ihjzhvrnuct2knvy@vireshk-i7>
+ <YROMZFHCor3pbhMr@google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210811051859.ihjzhvrnuct2knvy@vireshk-i7>
+In-Reply-To: <YROMZFHCor3pbhMr@google.com>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wednesday 11 Aug 2021 at 10:48:59 (+0530), Viresh Kumar wrote:
-> On 10-08-21, 13:35, Quentin Perret wrote:
-> > On Tuesday 10 Aug 2021 at 13:06:47 (+0530), Viresh Kumar wrote:
-> > > Provide a cpufreq driver flag so drivers can ask the cpufreq core to register
-> > > with the EM core on their behalf.
+On 11-08-21, 09:37, Quentin Perret wrote:
+> On Wednesday 11 Aug 2021 at 10:48:59 (+0530), Viresh Kumar wrote:
+> > I had to use the pm-opp version, since almost everyone was using that.
 > > 
-> > Hmm, that's not quite what this does. This asks the cpufreq core to
-> > use *PM_OPP* to register an EM, which I think is kinda wrong to do from
-> > there IMO. The decision to use PM_OPP or another mechanism to register
-> > an EM belongs to platform specific code (drivers), so it is odd for the
-> > PM_OPP registration to have its own cpufreq flag but not the other ways.
-> > 
-> > As mentioned in another thread, the very reason to have PM_EM is to not
-> > depend on PM_OPP, so I'm worried about the direction of travel with this
-> > series TBH.
+> > On the other hand, there isn't a lot of OPP specific stuff in
+> > dev_pm_opp_of_register_em(). It just uses dev_pm_opp_get_opp_count(),
+> > that's all. This ended up in the OPP core, nothing else. Maybe we can
+> > now move it back to the EM core and name it differently ?
 > 
-> I had to use the pm-opp version, since almost everyone was using that.
-> 
-> On the other hand, there isn't a lot of OPP specific stuff in
-> dev_pm_opp_of_register_em(). It just uses dev_pm_opp_get_opp_count(),
-> that's all. This ended up in the OPP core, nothing else. Maybe we can
-> now move it back to the EM core and name it differently ?
+> Well it also uses dev_pm_opp_find_freq_ceil() and
+> dev_pm_opp_get_voltage(), so not sure how easy it will be to move, but
+> if it is possible no objection from me.
 
-Well it also uses dev_pm_opp_find_freq_ceil() and
-dev_pm_opp_get_voltage(), so not sure how easy it will be to move, but
-if it is possible no objection from me.
+What uses these routines ? dev_pm_opp_of_register_em() ? I am not able
+to see that at least :(
 
-> > > This allows us to get rid of duplicated code
-> > > in the drivers and fix the unregistration part as well, which none of the
-> > > drivers have done until now.
-> > 
-> > This series adds more code than it removes,
-> 
-> Sadly yes :(
-> 
-> > and the unregistration is
-> > not a fix as we don't ever remove the EM tables by design, so not sure
-> > either of these points are valid arguments.
-> 
-> I think that design needs to be looked over again, it looks broken to
-> me everytime I land onto this code. I wonder why we don't unregister
-> stuff.
-> 
-> Lets say, I am working on the cpufreq driver and I want to test that
-> on my ARM machine. Rebooting a simpler board to test stuff out is
-> easy, but if I am working on an ARM server which is running lots of
-> other userspace stuff as well, I won't want to reboot the machine just
-> to test a different versions of the driver. I will rather want to
-> build the driver as module and insert/remove it again and again.
-> 
-> If the frequency table changes in between versions, this just breaks
-> as EM won't be updated again.
-> 
-> This breaks one of the most basic rules of Linux Kernel. Inserting a
-> module should have exactly the same final behavior every single time.
-> This model doesn't guarantee it. It simply looks broken.
+> Right but the EM is a description of the hardware, so it seemed fair
+> to assume this wouldn't change across the lifetime of the OS, similar
+> to the DT which we can't reload at run-time. Yes it can be a little odd
+> if you load/unload your driver module, but note that you generally can't
+> load two completely different drivers on a single system. You'll just
+> load the same one again and the hardware hasn't changed in the meantime,
+> so the previously loaded EM will still be correct.
 
-Right but the EM is a description of the hardware, so it seemed fair
-to assume this wouldn't change across the lifetime of the OS, similar
-to the DT which we can't reload at run-time. Yes it can be a little odd
-if you load/unload your driver module, but note that you generally can't
-load two completely different drivers on a single system. You'll just
-load the same one again and the hardware hasn't changed in the meantime,
-so the previously loaded EM will still be correct. I hear your argument
-about cpufreq driver development, but the locking involved to allow
-'just' that is pretty involved, and nobody has complained about this
-specific issue so far, so that didn't seem worth it. If we do have good
-reasons to change the EM at runtime, then yes I think we should do it,
-it just didn't seem like that was the case until now.
+Yeah, it will be the same driver but a different version of it, which
+may have updated the freq table. For me the EM is attached to the
+freq-table, and the freq-table is not available anymore after the
+driver is gone.
+
+Anyway, I will leave that for you guys to decide :)
+
+> I hear your argument
+> about cpufreq driver development, but the locking involved to allow
+> 'just' that is pretty involved, and nobody has complained about this
+> specific issue so far, so that didn't seem worth it. If we do have good
+> reasons to change the EM at runtime, then yes I think we should do it,
+> it just didn't seem like that was the case until now.
+
+-- 
+viresh
