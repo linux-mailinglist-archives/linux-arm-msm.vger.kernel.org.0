@@ -2,50 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 87B623E903D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 14:14:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E8463E9041
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 11 Aug 2021 14:15:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237509AbhHKMOq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Aug 2021 08:14:46 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:19372 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233655AbhHKMOo (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Aug 2021 08:14:44 -0400
+        id S237254AbhHKMPR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 08:15:17 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:17646 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233655AbhHKMPO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 11 Aug 2021 08:15:14 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1628684060; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1628684091; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=ijoNVoseA/jZPJCm8rs+TxZ/CMRAWspycUzcxdUoZKQ=;
- b=qvmpS0bMeFwF3okK1CJqeufTNWVlZKn4hRS9/j9+eWjJP6rhgxmPjCTfUdNB5RXDoNQXYeQH
- RN4blgsOAD5bvhghxHlYuZRrCVmPU6tsNtt/tQvNL/o3RjzF0KGqZ641DefkyxXCaJwXS3I2
- i08T5PCRQPYH81PZLbyQ4TT9w+0=
-X-Mailgun-Sending-Ip: 198.61.254.9
+ MIME-Version: Sender; bh=eeQDSyTuRUKPuLNTBtQ/IN9VyL6uflUZq+4lo9oZ6Ck=;
+ b=AiOUcjIL8SeWGaJJZAKt06gY18UddK72aUluR9u9q6kwoBCvQNpdz4b7n2V+8oUXRvE65//s
+ Xqhbe0Wmhn7pqJxH0GCvmtKPnK0n14W96lpD6bnsKbBEttL1x8O4CTyY0ggCgW0jLP7fMWUN
+ LhUQICgvX00IriaFYz3tijoM09o=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 6113befdf746c298d9cc89ae (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 11 Aug 2021 12:13:49
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 6113bf21b3873958f5726bc5 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 11 Aug 2021 12:14:25
  GMT
 Sender: rajpat=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4DC50C4338A; Wed, 11 Aug 2021 12:13:49 +0000 (UTC)
+        id 6E82DC43217; Wed, 11 Aug 2021 12:14:24 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=ham autolearn_force=no version=3.4.0
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: rajpat)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B9A4BC433F1;
-        Wed, 11 Aug 2021 12:13:48 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DA4F7C433F1;
+        Wed, 11 Aug 2021 12:14:21 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Wed, 11 Aug 2021 17:43:48 +0530
+Date:   Wed, 11 Aug 2021 17:44:21 +0530
 From:   rajpat@codeaurora.org
 To:     Matthias Kaehlcke <mka@chromium.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -55,31 +54,31 @@ Cc:     Andy Gross <agross@kernel.org>,
         devicetree@vger.kernel.org, rnayak@codeaurora.org,
         saiprakash.ranjan@codeaurora.org, msavaliy@qti.qualcomm.com,
         skakit@codeaurora.org, Roja Rani Yarubandi <rojay@codeaurora.org>
-Subject: Re: [PATCH V4 2/4] arm64: dts: sc7280: Add QUPv3 wrapper_0 nodes
-In-Reply-To: <YP7cmkayoajJ+1yj@google.com>
+Subject: Re: [PATCH V4 1/4] arm64: dts: sc7280: Add QSPI node
+In-Reply-To: <YP7d3gZGnfj9YqSY@google.com>
 References: <1627306847-25308-1-git-send-email-rajpat@codeaurora.org>
- <1627306847-25308-3-git-send-email-rajpat@codeaurora.org>
- <YP7cmkayoajJ+1yj@google.com>
-Message-ID: <bdfd39def9a11104c043090d920ef4df@codeaurora.org>
+ <1627306847-25308-2-git-send-email-rajpat@codeaurora.org>
+ <YP7d3gZGnfj9YqSY@google.com>
+Message-ID: <4b676cb57f0c179df56bb7681555d409@codeaurora.org>
 X-Sender: rajpat@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-07-26 21:32, Matthias Kaehlcke wrote:
-> On Mon, Jul 26, 2021 at 07:10:45PM +0530, Rajesh Patil wrote:
+On 2021-07-26 21:37, Matthias Kaehlcke wrote:
+> On Mon, Jul 26, 2021 at 07:10:44PM +0530, Rajesh Patil wrote:
 >> From: Roja Rani Yarubandi <rojay@codeaurora.org>
 >> 
->> Add QUPv3 wrapper_0 DT nodes for SC7280 SoC.
+>> Add QSPI DT node for SC7280 SoC.
 >> 
 >> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
 >> Signed-off-by: Rajesh Patil <rajpat@codeaurora.org>
 >> ---
 >> Changes in V4:
->>  - As per Bjorn's comment, added QUP Wrapper_0 nodes
->>    other than debug-uart node
->>  - Dropped interconnect votes for wrapper_0 node
+>>  - As per Stephen's comment updated spi-max-frequency to 37.5MHz, 
+>> moved
+>>    qspi_opp_table from /soc to / (root).
 >> 
 >> Changes in V3:
 >>  - Broken the huge V2 patch into 3 smaller patches.
@@ -92,137 +91,58 @@ On 2021-07-26 21:32, Matthias Kaehlcke wrote:
 >>  - As per Doug's comments split of SPI, UART nodes has been done.
 >>  - Moved QSPI node before aps_smmu as per the order.
 >> 
->>  arch/arm64/boot/dts/qcom/sc7280-idp.dts |  84 ++++
->>  arch/arm64/boot/dts/qcom/sc7280.dtsi    | 720 
->> ++++++++++++++++++++++++++++++++
->>  2 files changed, 804 insertions(+)
+>>  arch/arm64/boot/dts/qcom/sc7280-idp.dts | 27 ++++++++++++++
+>>  arch/arm64/boot/dts/qcom/sc7280.dtsi    | 62 
+>> +++++++++++++++++++++++++++++++++
+>>  2 files changed, 89 insertions(+)
 >> 
 >> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts 
 >> b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
->> index b0bfd8e..f63cf51 100644
+>> index 73225e3..b0bfd8e 100644
 >> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
 >> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
->> @@ -358,6 +358,16 @@
->>  	vdda18-supply = <&vreg_l1c_1p8>;
+>> @@ -269,6 +269,20 @@
+>>  		};
 >>  };
 >> 
->> +&uart7 {
+>> +&qspi {
 >> +	status = "okay";
+>> +	pinctrl-names = "default";
+>> +	pinctrl-0 = <&qspi_clk>, <&qspi_cs0>, <&qspi_data01>;
 >> +
->> +	/delete-property/interrupts;
->> +	interrupts-extended = <&intc GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>,
->> +				<&tlmm 31 IRQ_TYPE_EDGE_FALLING>;
->> +	pinctrl-names = "default", "sleep";
->> +	pinctrl-1 = <&qup_uart7_sleep_cts>, <&qup_uart7_sleep_rts>, 
->> <&qup_uart7_sleep_tx>, <&qup_uart7_sleep_rx>;
+>> +	flash@0 {
+>> +		compatible = "jedec,spi-nor";
+>> +		reg = <0>;
+>> +		spi-max-frequency = <37500000>;
+>> +		spi-tx-bus-width = <2>;
+>> +		spi-rx-bus-width = <2>;
+>> +	};
 >> +};
 >> +
+>>  &qupv3_id_0 {
+>>  	status = "okay";
+>>  };
+>> @@ -346,6 +360,19 @@
+>> 
 >>  /* PINCTRL - additions to nodes defined in sc7280.dtsi */
 >> 
->>  &qspi_cs0 {
->> @@ -428,3 +438,77 @@
->>  		bias-pull-up;
->>  	};
->>  };
->> +&qup_uart7_cts {
->> +	/*
->> +	 * Configure a pull-down on CTS to match the pull of
->> +	 * the Bluetooth module.
->> +	 */
->> +	bias-pull-down;
->> +};
->> +
->> +&qup_uart7_rts {
->> +	/* We'll drive RTS, so no pull */
->> +	drive-strength = <2>;
+>> +&qspi_cs0 {
 >> +	bias-disable;
 >> +};
 >> +
->> +&qup_uart7_tx {
->> +	/* We'll drive TX, so no pull */
->> +	drive-strength = <2>;
+>> +&qspi_clk {
 >> +	bias-disable;
 >> +};
 >> +
->> +&qup_uart7_rx {
->> +	/*
->> +	 * Configure a pull-up on RX. This is needed to avoid
->> +	 * garbage data when the TX pin of the Bluetooth module is
->> +	 * in tri-state (module powered off or not driving the
->> +	 * signal yet).
->> +	 */
+>> +&qspi_data01 {
+>> +	/* High-Z when no transfers; nice to park the lines */
 >> +	bias-pull-up;
 >> +};
 >> +
->> +&tlmm {
->> +	qup_uart7_sleep_cts: qup-uart7-sleep-cts {
->> +		pins = "gpio28";
->> +		function = "gpio";
->> +		/*
->> +		 * Configure a pull-down on CTS to match the pull of
->> +		 * the Bluetooth module.
->> +		 */
->> +		bias-pull-down;
->> +	};
->> +
->> +	qup_uart7_sleep_rts: qup-uart7-sleep-rts {
->> +		pins = "gpio29";
->> +		function = "gpio";
->> +		/*
->> +		 * Configure pull-down on RTS. As RTS is active low
->> +		 * signal, pull it low to indicate the BT SoC that it
->> +		 * can wakeup the system anytime from suspend state by
->> +		 * pulling RX low (by sending wakeup bytes).
->> +		 */
->> +		bias-pull-down;
->> +	};
->> +
->> +	qup_uart7_sleep_tx: qup-uart7-sleep-tx {
->> +		pins = "gpio30";
->> +		function = "gpio";
->> +		/*
->> +		 * Configure pull-up on TX when it isn't actively driven
->> +		 * to prevent BT SoC from receiving garbage during sleep.
->> +		 */
->> +		bias-pull-up;
->> +	};
->> 
->> +	qup_uart7_sleep_rx: qup-uart7-sleep-rx {
->> +		pins = "gpio31";
->> +		function = "gpio";
->> +		/*
->> +		 * Configure a pull-up on RX. This is needed to avoid
->> +		 * garbage data when the TX pin of the Bluetooth module
->> +		 * is floating which may cause spurious wakeups.
->> +		 */
->> +		bias-pull-up;
->> +	};
->> +};
 > 
-> How the patches of this series are split strikes me as a bit odd. 
-> Supposedly
-> this patch adds the QUPv3 wrapper_0 DT nodes for the SC7280, however 
-> the
-> above is the pin configuration for the Bluetooth UART of the SC7280 IDP 
-> board.
-> I don't see a good reason why that should be part of this patch. It 
-> should be
-> a separate change whose subject indicates that it configures the 
-> Bluetooth UART
-> of the SC7280 IDP.
-> 
+> This configures the SPI flash of the SC7280 IDP board, which is neither
+> mentioned in the subject nor the body of the commit message. IMO this
+> should be split out into a separate patch.
 
-Okay will split this up.
+Okay.
 
-> Without this conflation of SoC and board DT it would seem perfectly 
-> reasonable
-> to squash this patch and '[4/4] arm64: dts: sc7280: Add QUPv3 wrapper_1 
-> nodes'
-> into a single one, they are essentially doing the same thing, I see no 
-> need to
-> have different patches for the wrapper 0 and 1 nodes.
-
-Previously when QUP wrapper 0 and wrapper 1 nodes were added in single 
-patch, we faced some git issues as the patch was huge. Hence we split it 
-up.
-https://partnerissuetracker.corp.google.com/issues/177045897#comment12
