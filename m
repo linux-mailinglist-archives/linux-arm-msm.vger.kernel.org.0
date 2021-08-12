@@ -2,294 +2,181 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 901BE3E9F49
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Aug 2021 09:13:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8B3803E9F8C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Aug 2021 09:40:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234281AbhHLHNo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Aug 2021 03:13:44 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:52206 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234547AbhHLHNn (ORCPT
+        id S234182AbhHLHlF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Aug 2021 03:41:05 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:30877 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234834AbhHLHlC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Aug 2021 03:13:43 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1628752398; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=E1QdHLZ0oxrRgaZAm7gQOCDfJqgmbLn+4sMn2tfI2Uc=;
- b=qXMbi6dTXqONL3SuboZjiFDyLdxN4vl24xRRWgzuOHtm27Kaq2AKpPyF1ax6BSHnRk4z5qHx
- /qHJv5LEwGL+LBnXy6fMAURvrRpGyXfMdPFTDy6MmmUwjkr8K3GHsIk1W31eY2o9SBY4PbZS
- cNaHOqHL9ywK0jhdEC2zxVxiVyg=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 6114ca0a454b7a558fbcab19 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 12 Aug 2021 07:13:14
- GMT
-Sender: rajpat=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 955C2C43217; Thu, 12 Aug 2021 07:13:14 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: rajpat)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BD122C433F1;
-        Thu, 12 Aug 2021 07:13:11 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 12 Aug 2021 12:43:11 +0530
-From:   rajpat@codeaurora.org
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        Thu, 12 Aug 2021 03:41:02 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20210812074035euoutp01cb96f57ddf640b161c2a17397ea61ff8~afyqAvDgl1481414814euoutp01i
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Aug 2021 07:40:35 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20210812074035euoutp01cb96f57ddf640b161c2a17397ea61ff8~afyqAvDgl1481414814euoutp01i
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1628754035;
+        bh=fVknA03gNmeAJpmTPams6tLJ6o3sYX2Td79X/9jTxZs=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=ZfzM4y5eiDx9pNN+RAavirc7No4b0uJ46VhPWprKml04tJya7PDCsVu6gIZKu6KoP
+         sVM4asGoGx+zCFQMz6Yx0XElLewUmi4UISvmPKyFMgl1rSmX8uXXgHrJQXBgdU8Lw0
+         LSfLODPxXHuagrRhrAvewzsQKQp+NbV4YSAQePBM=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20210812074035eucas1p12b447b59def0ce7f422d6583cc3cd702~afypsCcWt2921529215eucas1p1a;
+        Thu, 12 Aug 2021 07:40:35 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id A4.6E.56448.370D4116; Thu, 12
+        Aug 2021 08:40:35 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20210812074034eucas1p14c128074be6bd68e745f780d4d8c2d06~afypC3yGL3125031250eucas1p1d;
+        Thu, 12 Aug 2021 07:40:34 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20210812074034eusmtrp2d35ec58eaa0efa07eb5ed3c5d0f589f7~afypCHpSJ1159111591eusmtrp2H;
+        Thu, 12 Aug 2021 07:40:34 +0000 (GMT)
+X-AuditID: cbfec7f5-d3bff7000002dc80-f3-6114d0732860
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 90.2A.20981.270D4116; Thu, 12
+        Aug 2021 08:40:34 +0100 (BST)
+Received: from [106.210.134.192] (unknown [106.210.134.192]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20210812074033eusmtip1b7915168387c51bc70a9a72e6a1edbf2~afyoN3v7-2365123651eusmtip1k;
+        Thu, 12 Aug 2021 07:40:33 +0000 (GMT)
+Subject: Re: [PATCH v1] media: camss: vfe: Don't use vfe->base before it's
+ assigned
+To:     Robert Foss <robert.foss@linaro.org>
+Cc:     Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, rnayak@codeaurora.org,
-        saiprakash.ranjan@codeaurora.org, msavaliy@qti.qualcomm.com,
-        skakit@codeaurora.org
-Subject: Re: [PATCH V4 2/4] arm64: dts: sc7280: Add QUPv3 wrapper_0 nodes
-In-Reply-To: <YRPkI8AQAjjFuXcf@google.com>
-References: <1627306847-25308-1-git-send-email-rajpat@codeaurora.org>
- <1627306847-25308-3-git-send-email-rajpat@codeaurora.org>
- <YP7cmkayoajJ+1yj@google.com>
- <bdfd39def9a11104c043090d920ef4df@codeaurora.org>
- <YRPkI8AQAjjFuXcf@google.com>
-Message-ID: <71fd47e7a83e2c56c96e2638004a7812@codeaurora.org>
-X-Sender: rajpat@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
+        linux-media <linux-media@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        Naresh Kamboju <naresh.kamboju@linaro.org>,
+        Hans Verkuil <hverkuil@xs4all.nl>,
+        Linux Kernel Functional Testing <lkft@linaro.org>
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+Message-ID: <de1df486-255f-6405-5ea9-4dddd5507006@samsung.com>
+Date:   Thu, 12 Aug 2021 09:40:33 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0)
+        Gecko/20100101 Thunderbird/78.13.0
+MIME-Version: 1.0
+In-Reply-To: <CAG3jFytOQQBnnJQU9qDdQedrrcPz=SQPeXHX1HJQ8c5U94feCg@mail.gmail.com>
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrKKsWRmVeSWpSXmKPExsWy7djPc7rFF0QSDY5eEbc49/g3i8Xp/e9Y
+        LC7OvMticWryMyaLifvPsltc3jWHzaJnw1ZWi68HuCyWbfrDZHHrE7/Fp1kPmS0OTZnG5sDj
+        sXPWXXaPTas62TzuXNvD5vF5k5zHqa+f2QNYo7hsUlJzMstSi/TtErgydk1ZxFqwWbTiYutN
+        pgbG84JdjJwcEgImEv1nDzN2MXJxCAmsYJRYvOwzC4TzhVHi85nrTBDOZ0aJDb3zWGBazn9/
+        ygyRWM4oMalvAZTzkVHi8rPrjCBVwgKhEjcWTWIHsUUENCSOP34EtoRZ4DKzxPpt61lBEmwC
+        hhJdb7vYuhg5OHgF7CQ+7QULswioStw42Q9miwokS0x8MgnM5hUQlDg58wnYFZwCgRJ3Lm0B
+        28UsIC+x/e0cZghbXOLWk/lgZ0sINHNKPOndxw5xtovEhDOzWCFsYYlXx7dAxWUk/u+Ea2CU
+        eHhuLTuE0wP0TtMMRogqa4k7536BXcosoCmxfpc+iCkh4Chx66ochMknceOtIMQNfBKTtk1n
+        hgjzSnS0CUHMUJOYdXwd3NaDFy4xT2BUmoXks1lIvpmF5JtZCGsXMLKsYhRPLS3OTU8tNs5L
+        LdcrTswtLs1L10vOz93ECExZp/8d/7qDccWrj3qHGJk4GA8xSnAwK4nw7pQTShTiTUmsrEot
+        yo8vKs1JLT7EKM3BoiTOu2vrmnghgfTEktTs1NSC1CKYLBMHp1QDk+iZWUcdBQvrlzh/nKXG
+        czJnuepjLu2PE7Q/6x/puvh1us+jqggpi/sPuSe0Lv1rk+n558IpY5/2oBsBJWXhvx4p3Jl4
+        /9c1lif/kgJMu3a6cFR0Rb5aN3fb9Mk/jboyNZeom8psC1uguOyhj8Dq/BUe+94ERAR90Dp0
+        ZM9hnz2J/9o2pU34LP8zb7qV+CwuptKzdQyub69nproGXVL7+0o/Puxg066e2coz7nod51wj
+        8zb1L59P02rOq3deHny1sPHLi1kacqlHHdf2FUr+n2IW/XQ320c5/jUnVSwkS/7tPqWe8t33
+        TkmE8noBL+ltFn/iat7Wiq84cujyh2ksOVVZVWwH5H3eiW76GuaTlK/EUpyRaKjFXFScCAAz
+        Am9hyAMAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrBIsWRmVeSWpSXmKPExsVy+t/xu7pFF0QSDR6sULU49/g3i8Xp/e9Y
+        LC7OvMticWryMyaLifvPsltc3jWHzaJnw1ZWi68HuCyWbfrDZHHrE7/Fp1kPmS0OTZnG5sDj
+        sXPWXXaPTas62TzuXNvD5vF5k5zHqa+f2QNYo/RsivJLS1IVMvKLS2yVog0tjPQMLS30jEws
+        9QyNzWOtjEyV9O1sUlJzMstSi/TtEvQydk1ZxFqwWbTiYutNpgbG84JdjJwcEgImEue/P2Xu
+        YuTiEBJYyiixfNtkJoiEjMTJaQ2sELawxJ9rXWwQRe8ZJf7/e8oGkhAWCJW4sWgSO4gtIqAh
+        cfzxI0aQImaB68wSDcsboMZeZpJY97IfrIpNwFCi6y3IKA4OXgE7iU97wTawCKhK3DjZD2aL
+        CiRLfDi9FMzmFRCUODnzCQuIzSkQKHHn0hZGEJtZwExi3uaHzBC2vMT2t3OgbHGJW0/mM01g
+        FJqFpH0WkpZZSFpmIWlZwMiyilEktbQ4Nz232EivODG3uDQvXS85P3cTIzBKtx37uWUH48pX
+        H/UOMTJxMB5ilOBgVhLh3SknlCjEm5JYWZValB9fVJqTWnyI0RTon4nMUqLJ+cA0kVcSb2hm
+        YGpoYmZpYGppZqwkzmtyZE28kEB6YklqdmpqQWoRTB8TB6dUA5P+u+pFlZ0bzr/etza1b/28
+        l8wRyWH/fWdMvnfYVcj217pXReFvOeovM9y0zZyYUbUodmqnU3B8u00zMGm0371dsKzqz9Kv
+        HzmeRqpGGXz9Y3KVY96ao1aad1/G6tX+Cpyw5xB3s89B3c3fn9dJVbeLRoqmpX6ZplmY07kq
+        6O3civjFOwwmZs+b/iVwnmiAEo/XjemXNtUK9WwNY/pnf85k4n/VzYpcN74q8h00Mqxf0rbx
+        2tOFbTkRZddnbJVminQ5MJeJ8/i/ut1rNlhV5vHM056q7v9/+i173lyJFwGB3l6LTr0RMLL+
+        Z3pZ2urA3PXJl7dufuqm6nLXj3XW/vDIi3ZveTrmC78OPzPnSbUSS3FGoqEWc1FxIgAVokWA
+        WwMAAA==
+X-CMS-MailID: 20210812074034eucas1p14c128074be6bd68e745f780d4d8c2d06
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20210811074838eucas1p2a0e8625af27c10209d9bcfc732254ae7
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20210811074838eucas1p2a0e8625af27c10209d9bcfc732254ae7
+References: <CGME20210811074838eucas1p2a0e8625af27c10209d9bcfc732254ae7@eucas1p2.samsung.com>
+        <20210810103336.114077-1-robert.foss@linaro.org>
+        <0b694e24-5cc8-4944-d3a2-115306ae7b89@samsung.com>
+        <CAG3jFys+ch86Y7338-DH1+8Q4w5eK83revVsNwoVCugwXeqjmQ@mail.gmail.com>
+        <CAG3jFytOQQBnnJQU9qDdQedrrcPz=SQPeXHX1HJQ8c5U94feCg@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-08-11 20:22, Matthias Kaehlcke wrote:
-> On Wed, Aug 11, 2021 at 05:43:48PM +0530, rajpat@codeaurora.org wrote:
->> On 2021-07-26 21:32, Matthias Kaehlcke wrote:
->> > On Mon, Jul 26, 2021 at 07:10:45PM +0530, Rajesh Patil wrote:
->> > > From: Roja Rani Yarubandi <rojay@codeaurora.org>
->> > >
->> > > Add QUPv3 wrapper_0 DT nodes for SC7280 SoC.
->> > >
->> > > Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
->> > > Signed-off-by: Rajesh Patil <rajpat@codeaurora.org>
->> > > ---
->> > > Changes in V4:
->> > >  - As per Bjorn's comment, added QUP Wrapper_0 nodes
->> > >    other than debug-uart node
->> > >  - Dropped interconnect votes for wrapper_0 node
->> > >
->> > > Changes in V3:
->> > >  - Broken the huge V2 patch into 3 smaller patches.
->> > >    1. QSPI DT nodes
->> > >    2. QUP wrapper_0 DT nodes
->> > >    3. QUP wrapper_1 DT nodes
->> > >
->> > > Changes in V2:
->> > >  - As per Doug's comments removed pinmux/pinconf subnodes.
->> > >  - As per Doug's comments split of SPI, UART nodes has been done.
->> > >  - Moved QSPI node before aps_smmu as per the order.
->> > >
->> > >  arch/arm64/boot/dts/qcom/sc7280-idp.dts |  84 ++++
->> > >  arch/arm64/boot/dts/qcom/sc7280.dtsi    | 720
->> > > ++++++++++++++++++++++++++++++++
->> > >  2 files changed, 804 insertions(+)
->> > >
->> > > diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
->> > > b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
->> > > index b0bfd8e..f63cf51 100644
->> > > --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
->> > > +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
->> > > @@ -358,6 +358,16 @@
->> > >  	vdda18-supply = <&vreg_l1c_1p8>;
->> > >  };
->> > >
->> > > +&uart7 {
->> > > +	status = "okay";
->> > > +
->> > > +	/delete-property/interrupts;
->> > > +	interrupts-extended = <&intc GIC_SPI 608 IRQ_TYPE_LEVEL_HIGH>,
->> > > +				<&tlmm 31 IRQ_TYPE_EDGE_FALLING>;
->> > > +	pinctrl-names = "default", "sleep";
->> > > +	pinctrl-1 = <&qup_uart7_sleep_cts>, <&qup_uart7_sleep_rts>,
->> > > <&qup_uart7_sleep_tx>, <&qup_uart7_sleep_rx>;
->> > > +};
->> > > +
->> > >  /* PINCTRL - additions to nodes defined in sc7280.dtsi */
->> > >
->> > >  &qspi_cs0 {
->> > > @@ -428,3 +438,77 @@
->> > >  		bias-pull-up;
->> > >  	};
->> > >  };
->> > > +&qup_uart7_cts {
->> > > +	/*
->> > > +	 * Configure a pull-down on CTS to match the pull of
->> > > +	 * the Bluetooth module.
->> > > +	 */
->> > > +	bias-pull-down;
->> > > +};
->> > > +
->> > > +&qup_uart7_rts {
->> > > +	/* We'll drive RTS, so no pull */
->> > > +	drive-strength = <2>;
->> > > +	bias-disable;
->> > > +};
->> > > +
->> > > +&qup_uart7_tx {
->> > > +	/* We'll drive TX, so no pull */
->> > > +	drive-strength = <2>;
->> > > +	bias-disable;
->> > > +};
->> > > +
->> > > +&qup_uart7_rx {
->> > > +	/*
->> > > +	 * Configure a pull-up on RX. This is needed to avoid
->> > > +	 * garbage data when the TX pin of the Bluetooth module is
->> > > +	 * in tri-state (module powered off or not driving the
->> > > +	 * signal yet).
->> > > +	 */
->> > > +	bias-pull-up;
->> > > +};
->> > > +
->> > > +&tlmm {
->> > > +	qup_uart7_sleep_cts: qup-uart7-sleep-cts {
->> > > +		pins = "gpio28";
->> > > +		function = "gpio";
->> > > +		/*
->> > > +		 * Configure a pull-down on CTS to match the pull of
->> > > +		 * the Bluetooth module.
->> > > +		 */
->> > > +		bias-pull-down;
->> > > +	};
->> > > +
->> > > +	qup_uart7_sleep_rts: qup-uart7-sleep-rts {
->> > > +		pins = "gpio29";
->> > > +		function = "gpio";
->> > > +		/*
->> > > +		 * Configure pull-down on RTS. As RTS is active low
->> > > +		 * signal, pull it low to indicate the BT SoC that it
->> > > +		 * can wakeup the system anytime from suspend state by
->> > > +		 * pulling RX low (by sending wakeup bytes).
->> > > +		 */
->> > > +		bias-pull-down;
->> > > +	};
->> > > +
->> > > +	qup_uart7_sleep_tx: qup-uart7-sleep-tx {
->> > > +		pins = "gpio30";
->> > > +		function = "gpio";
->> > > +		/*
->> > > +		 * Configure pull-up on TX when it isn't actively driven
->> > > +		 * to prevent BT SoC from receiving garbage during sleep.
->> > > +		 */
->> > > +		bias-pull-up;
->> > > +	};
->> > >
->> > > +	qup_uart7_sleep_rx: qup-uart7-sleep-rx {
->> > > +		pins = "gpio31";
->> > > +		function = "gpio";
->> > > +		/*
->> > > +		 * Configure a pull-up on RX. This is needed to avoid
->> > > +		 * garbage data when the TX pin of the Bluetooth module
->> > > +		 * is floating which may cause spurious wakeups.
->> > > +		 */
->> > > +		bias-pull-up;
->> > > +	};
->> > > +};
->> >
->> > How the patches of this series are split strikes me as a bit odd.
->> > Supposedly
->> > this patch adds the QUPv3 wrapper_0 DT nodes for the SC7280, however the
->> > above is the pin configuration for the Bluetooth UART of the SC7280 IDP
->> > board.
->> > I don't see a good reason why that should be part of this patch. It
->> > should be
->> > a separate change whose subject indicates that it configures the
->> > Bluetooth UART
->> > of the SC7280 IDP.
->> >
->> 
->> Okay will split this up.
->> 
->> > Without this conflation of SoC and board DT it would seem perfectly
->> > reasonable
->> > to squash this patch and '[4/4] arm64: dts: sc7280: Add QUPv3 wrapper_1
->> > nodes'
->> > into a single one, they are essentially doing the same thing, I see no
->> > need to
->> > have different patches for the wrapper 0 and 1 nodes.
->> 
->> Previously when QUP wrapper 0 and wrapper 1 nodes were added in single
->> patch, we faced some git issues as the patch was huge. Hence we split 
->> it up.
->> https://partnerissuetracker.corp.google.com/issues/177045897#comment12
-> 
-> That bug tracker entry isn't public, this is what the comment says:
-> 
->> I suspect that diff is just having a hard time since your patch 
->> touches so
->> much stuff. Presumably you could make it happier if you broke your 
->> patch
->> into smaller changes. For instance:
->> 
->> One patch that adds the quad SPI. After all the quad SPI isn't really
->> related to the other QUP stuff. One patch that fixes up the existing
->> "uart5" and the QUP it's on to be how it's supposed to be. One patch
->> that adds all the new stuff.
-> 
-> If I understand correctly the problem wasn't that the QUP wrappers are
-> added in a single patch (which should be pretty straightforward to
-> review), but that the previous patch(es) do too many things at once.
-> Adding both QUP wrappers is conceptionally a single thing, the problem
-> is intermingling that with adding board specific Bluetooth nodes, board
-> flash nodes, pinconf for UART, etc
+Hi Robert,
 
-Even after splitting the patches as suggested(i.e., additions and 
-modifications separately), if I add qup wrapper0 and wrapper1 nodes in 
-single patch the git diff is getting messed up. pasted the diff for 
-reference
+On 11.08.2021 15:42, Robert Foss wrote:
+> On Wed, 11 Aug 2021 at 11:41, Robert Foss <robert.foss@linaro.org> wrote:
+>> Hey Marek,
+>>
+>> Thanks for testing this.
+>>
+>> On Wed, 11 Aug 2021 at 09:48, Marek Szyprowski <m.szyprowski@samsung.com> wrote:
+>>> On 10.08.2021 12:33, Robert Foss wrote:
+>>>> vfe->ops->hw_version(vfe) being called before vfe->base has been assigned
+>>>> is incorrect and causes crashes.
+>>>>
+>>>> Fixes: b10b5334528a9 ("media: camss: vfe: Don't read hardware version needlessly")
+>>>>
+>>>> Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+>>>> Signed-off-by: Robert Foss <robert.foss@linaro.org>
+>>> With this patch applied on top of linux next-20210810 instead of the
+>>> NULL pointer dereference I get following error on DragonBoard410c while
+>>> loading kernel modules:
+>>>
+>>> [   18.480608] qcom-venus 1d00000.video-codec: Adding to iommu group 1
+>>> [   18.536167] qcom-camss 1b0ac00.camss: Adding to iommu group 2
+>>> [   18.600373] Internal error: synchronous external abort: 96000010 [#1]
+>>> PREEMPT SMP
+> After testing this patch + linux-next[1] I'm not able to replicate the
+> 'Internal error' above on the db410c. And I don't think it is related
+> to this patch.
+>
+> Are you seeing the same error on [1]? And are you seeing it before the
+> b10b5334528a9 ("media: camss: vfe: Don't read hardware version
+> needlessly") patch?
 
+I've checked once again on your branch. Yes, it is fully reproducible on 
+my DragonBoard410c. On your branch I get the above synchronous external 
+abort, while without your last patch I get Null ptr dereference.
 
-+                       qup_spi14_cs_gpio: qup-spi14-cs_gpio {
-+                               pins = "gpio59";
-+                               function = "gpio";
-+                       };
+Are you sure you have deployed the kernel modules for doing the test? 
+This issue happens when udev triggers loading kernel modules for the 
+detected hardware.
 
--                       assigned-clocks = <&gcc 
-GCC_USB30_PRIM_MOCK_UTMI_CLK>,
--                                         <&gcc 
-GCC_USB30_PRIM_MASTER_CLK>;
--                       assigned-clock-rates = <19200000>, <200000000>;
-+                       qup_spi15_data_clk: qup-spi15-data-clk {
-+                               pins = "gpio60", "gpio61", "gpio62";
-+                               function = "qup17";
-+                       };
+Here is the kernel configuration used for my tests on ARM64 based board:
 
--                       interrupts-extended = <&intc GIC_SPI 131 
-IRQ_TYPE_LEVEL_HIGH>,
--                                             <&pdc 14 
-IRQ_TYPE_EDGE_BOTH>,
--                                             <&pdc 15 
-IRQ_TYPE_EDGE_BOTH>,
--                                             <&pdc 17 
-IRQ_TYPE_LEVEL_HIGH>;
--                       interrupt-names = "hs_phy_irq", "dp_hs_phy_irq",
--                                         "dm_hs_phy_irq", "ss_phy_irq";
-+                       qup_spi15_cs: qup-spi15-cs {
-+                               pins = "gpio63";
-+                               function = "qup17";
-+                       };
+# make ARCH=arm64 defconfig && ./scripts/config --set-val 
+CMA_SIZE_MBYTES 96 -e PROVE_LOCKING -e DEBUG_ATOMIC_SLEEP -e PM_DEBUG -e 
+PM_ADVANCED_DEBUG -d ARCH_SUNXI -d ARCH_ALPINE -d DRM_NOUVEAU -d 
+ARCH_BCM_IPROC -d ARCH_BERLIN -d ARCH_BRCMSTB -d ARCH_LAYERSCAPE -d 
+ARCH_LG1K -d ARCH_HISI -d ARCH_MEDIATEK -d ARCH_MVEBU -d ARCH_ROCKCHIP 
+-d ARCH_SEATTLE -d ARCH_SYNQUACER -d ARCH_RENESAS -d ARCH_STRATIX10 -d 
+ARCH_TEGRA -d ARCH_SPRD -d ARCH_THUNDER -d ARCH_THUNDER2 -d 
+ARCH_UNIPHIER -d ARCH_XGENE -d ARCH_ZX -d ARCH_ZYNQMP -d HIBERNATION -d 
+CLK_SUNXI -e BLK_DEV_RAM --set-val BLK_DEV_RAM_COUNT 4 --set-val 
+BLK_DEV_RAM_SIZE 65536 -d CONFIG_EFI -d CONFIG_TEE
 
+Comparing to the arm64's defconfig, I've enabled some debugging options 
+and disabled some unused boards.
 
--                       power-domains = <&gcc GCC_USB30_PRIM_GDSC>;
-+                       qup_spi15_cs_gpio: qup-spi15-cs_gpio {
-+                               pins = "gpio63";
-+                               function = "gpio";
-+                       };
+Best regards
+
+-- 
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
 
