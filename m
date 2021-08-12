@@ -2,261 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 503863E9BAD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Aug 2021 02:41:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CEE8F3E9C90
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Aug 2021 04:28:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233020AbhHLAmG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Aug 2021 20:42:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57600 "EHLO
+        id S233593AbhHLC2m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 22:28:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53054 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232949AbhHLAmF (ORCPT
+        with ESMTP id S229729AbhHLC2l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Aug 2021 20:42:05 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67FFCC0613D3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 17:41:41 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id h63-20020a9d14450000b02904ce97efee36so5636380oth.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 17:41:41 -0700 (PDT)
+        Wed, 11 Aug 2021 22:28:41 -0400
+Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFA57C061765;
+        Wed, 11 Aug 2021 19:28:16 -0700 (PDT)
+Received: by mail-lj1-x235.google.com with SMTP id e11so2639840ljq.4;
+        Wed, 11 Aug 2021 19:28:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=jM+xutYWNtnqEV0s0IGhXP8JVGB/Bhk66wnci23eKj4=;
-        b=PxiNRLaJozLwNLBqEV7BuM1/mDxA/OdTcrZh9IFAsWsusIM2qnDMAOZ20Iwm4gR954
-         MiP3KowO8X8kwQDEhsIA38BIrMuj8ittf3BWeIOaq2hiMAZv5NlE9DyjC/8iHoTVizK7
-         aLPwMczvJ44xTE3/dNdMHahXWi3LeoRjOnTXw=
+        d=gmail.com; s=20161025;
+        h=subject:from:to:cc:references:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=lrsZ4rJ1ke6TJoqbLeEh/j8Z0FFWGW9U5SAbObO/Mfc=;
+        b=Cys4umoiPPyJT6ooVaSOUEB0BWEIuQ4qmvNYyoLOTvwAVceMyrweZUbsm5pTnbadue
+         MUwWmMe5P7HuYah/CseKsTVLg+qKqGYoEkKRow8inJ3HyCN1JiI81KKNCw9iIvnvU5/f
+         +KDQsAj0iIAAVis6GjgHFaZ3qiVYybMy8KNYCVIlKRDa8gFomd4ad/pcn2sxNsLb8GQ4
+         TRMoyPiH4xKltc18Bolvd/EcPO7vCel26oUjzCR/pM+lngktMh/lcJdVFsJhYTMjo+RM
+         FBxkuSeYVa4whaAoNG9g1meAK4mi3iZWcyAEo23MEhiSqjJSpad92pNy3K/TBIChXfrc
+         v7ug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=jM+xutYWNtnqEV0s0IGhXP8JVGB/Bhk66wnci23eKj4=;
-        b=cHlc1zuHMF15FGujoD0Dbe4Q4AbTtdbSgiDstVCQL/rfOfwKvJXpp0x4cNmcpewkvM
-         sPqHbAPXXQwtcOtrvOoDx5ozdUlRSk7NPoVDtHLeKeIdPCEn96/+Lmwnx6p6rco3tUwB
-         D+eQ3+nJEtOvvH9VuMCKCIa4R9PbOSuAOZbWKrLLx/xdNB/EpneiAuvZjkVI/XD239CO
-         3rTWiHFTCG+j5pW9K0I4uk/nu9Me1UX2hkLg/Tdwd168yaHkr/L2hQb0YkAD8RnykuZe
-         Tq6pGMZCr/AxRSnMI6A99IgqCQJ7ggB6xnKC5o7VScshAcAdrsMUDihABZESh19U5Hj7
-         +JGA==
-X-Gm-Message-State: AOAM5319GM2hHxyIYJL0TY0/6V+r4tDDYKf4p+c93uhgMbig1b7QgcYm
-        Ov76ea6x3AaF4oyrzhS8j5pRkYoKaQq3VY2gTdeq/A==
-X-Google-Smtp-Source: ABdhPJxAp1sBRQqhIhDhSWNPOBvBoD42tMJDnWSfW9Cdjwo+DFTF4wUF/0n1zEPIpBgLayxqaTTwbi8GAYeqEd067Ww=
-X-Received: by 2002:a05:6830:1490:: with SMTP id s16mr1308313otq.233.1628728900794;
- Wed, 11 Aug 2021 17:41:40 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 11 Aug 2021 17:41:40 -0700
+        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=lrsZ4rJ1ke6TJoqbLeEh/j8Z0FFWGW9U5SAbObO/Mfc=;
+        b=Ev40Y9k2j7lAHG5NWhWut2bisPzABqey6XIG7fA9bwuBfEpuC07YKxd8pW85b/N5Da
+         KF0k8LEEs/5updJESYGQcrVMHF8b7qX3gL5CA5Ad6oC98Sd5NdnZqqTyBXE4ehEhkVnP
+         1SvJWkKUl6Ma3Iai++RaZbTFKoJhDOW2ElaPDkdDuKri4x0ADnQz9E3IhJhUmoz6vF3Q
+         gdVmPAf+fR1KnIr+a0tC31dD4hQLZJHoqPDVhrcOmQ6opAh8KZSVZEecnRvDvjuCSk4H
+         uyMgsyX1sMH34BegsSJioMOxlxvxSGDoZgb+/xzhQuSSNnbeeZTIJygVT5y3pn3WgAch
+         ps1w==
+X-Gm-Message-State: AOAM5325tqkaHsSgSBMiVZxtInZViC9NUWTAB0rAEZFAqL0AZRzSkFku
+        l7DWl3FcTYCrpIU5ce91Bs0=
+X-Google-Smtp-Source: ABdhPJzoRVRDfSAT8m40auDl/FPWy4ltx1mT7G2jaDNXtR1e0YBmzAhx9YwF0WLHsSjqCTU0LgDEEA==
+X-Received: by 2002:a2e:991:: with SMTP id 139mr1221729ljj.188.1628735294975;
+        Wed, 11 Aug 2021 19:28:14 -0700 (PDT)
+Received: from [192.168.2.145] (46-138-117-53.dynamic.spd-mgts.ru. [46.138.117.53])
+        by smtp.googlemail.com with ESMTPSA id b4sm108196lfp.68.2021.08.11.19.28.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 11 Aug 2021 19:28:14 -0700 (PDT)
+Subject: Re: [PATCH v6 1/2] PM / Domains: Add support for 'required-opps' to
+ set default perf state
+From:   Dmitry Osipenko <digetx@gmail.com>
+To:     Rajendra Nayak <rnayak@codeaurora.org>, ulf.hansson@linaro.org,
+        bjorn.andersson@linaro.org, viresh.kumar@linaro.org
+Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        swboyd@chromium.org, rojay@codeaurora.org, stephan@gerhold.net
+References: <1628074696-7979-1-git-send-email-rnayak@codeaurora.org>
+ <1628074696-7979-2-git-send-email-rnayak@codeaurora.org>
+ <f58e631d-67a7-4981-ce59-6a4772b44564@gmail.com>
+ <c43ddc6b-32ca-433d-76f2-901cb594eaf1@gmail.com>
+ <9588f01d-1cb6-7ca3-eb41-74259f1678f6@gmail.com>
+ <5f676dbe-6b8a-d302-cd81-2d12fe089e5a@codeaurora.org>
+ <453bdc88-95a3-3798-9a11-ca8038c024ba@gmail.com>
+Message-ID: <85e207da-51ca-bb25-4de6-90b287fa31f8@gmail.com>
+Date:   Thu, 12 Aug 2021 05:28:13 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <1628726882-27841-2-git-send-email-sbillaka@codeaurora.org>
-References: <1628726882-27841-1-git-send-email-sbillaka@codeaurora.org> <1628726882-27841-2-git-send-email-sbillaka@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Wed, 11 Aug 2021 17:41:40 -0700
-Message-ID: <CAE-0n52=mR0Zt8UZ3vOM-nt0UJszcFhi-eYfzDtD0bt3zhNA_Q@mail.gmail.com>
-Subject: Re: [PATCH v1 1/2] drm/msm/dp: Add support for SC7280 eDP
-To:     Sankeerth Billakanti <sbillaka@codeaurora.org>,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Cc:     robdclark@gmail.com, seanpaul@chromium.org,
-        kalyan_t@codeaurora.org, abhinavk@codeaurora.org,
-        dianders@chromium.org, khsieh@codeaurora.org,
-        mkrishn@codeaurora.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <453bdc88-95a3-3798-9a11-ca8038c024ba@gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sankeerth Billakanti (2021-08-11 17:08:01)
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index b131fd37..1096c44 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -856,9 +856,9 @@ static const struct dpu_intf_cfg sm8150_intf[] = {
->  };
->
->  static const struct dpu_intf_cfg sc7280_intf[] = {
-> -       INTF_BLK("intf_0", INTF_0, 0x34000, INTF_DP, 0, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
-> +       INTF_BLK("intf_0", INTF_0, 0x34000, INTF_DP, 1, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
->         INTF_BLK("intf_1", INTF_1, 0x35000, INTF_DSI, 0, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 26, 27),
-> -       INTF_BLK("intf_5", INTF_5, 0x39000, INTF_EDP, 0, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 22, 23),
-> +       INTF_BLK("intf_5", INTF_5, 0x39000, INTF_DP, 0, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 22, 23),
->  };
->
->  /*************************************************************
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> index d2569da..06d5a2d 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> @@ -1244,7 +1244,9 @@ static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl,
->                 struct dp_cr_status *cr, int *training_step)
->  {
->         int ret = 0;
-> +       u8 *dpcd = ctrl->panel->dpcd;
->         u8 encoding = DP_SET_ANSI_8B10B;
-> +       u8 ssc = 0, assr = 0;
+11.08.2021 22:48, Dmitry Osipenko пишет:
+> 11.08.2021 12:45, Rajendra Nayak пишет:
+>>>
+>>> If you have more than one power domain, then this will override the
+>>> pstate which was set for a previous domain. This code doesn't feel solid
+>>> to me, at least a clarifying comment is needed about how it's supposed
+>>> to work.
+>>
+>> I don't quite understand the concern here, this should work with devices
+>> having multiple power-domains as well. __genpd_dev_pm_attach gets called
+>> once per power-domain, and we use the index above to identify the
+>> power-domain.
+> 
+> The domain core code supports only one domain per device, see what
+> genpd_set_performance_state() does. This means that the second domain
+> will set the state of the *first* domain, which doesn't make sense. The
+> genpd_set_performance_state() will actually fail with -ENODEV for all
+> domains if you will try to do that.
+> 
 
-Please don't initialize to zero and then overwrite it before using it.
-It hides usage before actual initialization bugs.
-
->         struct dp_link_info link_info = {0};
->
->         dp_ctrl_config_ctrl(ctrl);
-> @@ -1254,9 +1256,21 @@ static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl,
->         link_info.capabilities = DP_LINK_CAP_ENHANCED_FRAMING;
->
->         dp_aux_link_configure(ctrl->aux, &link_info);
-> +
-> +       if (dpcd[DP_MAX_DOWNSPREAD] & DP_MAX_DOWNSPREAD_0_5) {
-> +               ssc = DP_SPREAD_AMP_0_5;
-> +               drm_dp_dpcd_write(ctrl->aux, DP_DOWNSPREAD_CTRL, &ssc, 1);
-> +       }
-> +
->         drm_dp_dpcd_write(ctrl->aux, DP_MAIN_LINK_CHANNEL_CODING_SET,
->                                 &encoding, 1);
->
-> +       if (dpcd[DP_EDP_CONFIGURATION_CAP] & DP_ALTERNATE_SCRAMBLER_RESET_CAP) {
-> +               assr = DP_ALTERNATE_SCRAMBLER_RESET_ENABLE;
-> +               drm_dp_dpcd_write(ctrl->aux, DP_EDP_CONFIGURATION_SET,
-> +                               &assr, 1);
-> +       }
-> +
->         ret = dp_ctrl_link_train_1(ctrl, cr, training_step);
->         if (ret) {
->                 DRM_ERROR("link training #1 failed. ret=%d\n", ret);
-> @@ -1328,9 +1342,11 @@ static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl)
->         struct dp_io *dp_io = &ctrl->parser->io;
->         struct phy *phy = dp_io->phy;
->         struct phy_configure_opts_dp *opts_dp = &dp_io->phy_opts.dp;
-> +       u8 *dpcd = ctrl->panel->dpcd;
-
-const?
-
->
->         opts_dp->lanes = ctrl->link->link_params.num_lanes;
->         opts_dp->link_rate = ctrl->link->link_params.rate / 100;
-> +       opts_dp->ssc = dpcd[DP_MAX_DOWNSPREAD] & DP_MAX_DOWNSPREAD_0_5;
->         dp_ctrl_set_clock_rate(ctrl, DP_CTRL_PM, "ctrl_link",
->                                         ctrl->link->link_params.rate * 1000);
->
-> @@ -1760,6 +1776,9 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
->         ctrl->link->link_params.num_lanes = ctrl->panel->link_info.num_lanes;
->         ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
->
-> +       if (ctrl->dp_ctrl.pixel_rate == 0)
-> +               return -EINVAL;
-> +
-
-Why are we enabling the stream with a zero pixel clk?
-
->         DRM_DEBUG_DP("rate=%d, num_lanes=%d, pixel_rate=%d\n",
->                 ctrl->link->link_params.rate,
->                 ctrl->link->link_params.num_lanes, ctrl->dp_ctrl.pixel_rate);
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index ee5bf64..a772290 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -117,8 +117,36 @@ struct dp_display_private {
->         struct dp_audio *audio;
->  };
->
-> +struct msm_dp_config {
-> +       phys_addr_t io_start[3];
-> +       size_t num_dp;
-> +};
-> +
-> +static const struct msm_dp_config sc7180_dp_cfg = {
-> +       .io_start = { 0x0ae90000 },
-> +       .num_dp = 1,
-> +};
-> +
-> +static const struct msm_dp_config sc8180x_dp_cfg = {
-> +       .io_start = { 0xae90000, 0xae98000, 0 },
-> +       .num_dp = 3,
-> +};
-> +
-> +static const struct msm_dp_config sc8180x_edp_cfg = {
-> +       .io_start = { 0, 0, 0xae9a000 },
-> +       .num_dp = 3,
-> +};
-> +
-> +static const struct msm_dp_config sc7280_edp_cfg = {
-> +       .io_start = { 0xaea0000, 0 },
-> +       .num_dp = 2,
-> +};
-
-Are all of these supposed to be here?
-
-> +
->  static const struct of_device_id dp_dt_match[] = {
-> -       {.compatible = "qcom,sc7180-dp"},
-> +       { .compatible = "qcom,sc7180-dp", .data = &sc7180_dp_cfg },
-> +       { .compatible = "qcom,sc8180x-dp", .data = &sc8180x_dp_cfg },
-> +       { .compatible = "qcom,sc8180x-edp", .data = &sc8180x_edp_cfg },
-> +       { .compatible = "qcom,sc7280-edp", .data = &sc7280_edp_cfg },
-
-Please sort alphabetically on compatible string, it helps avoid
-conflicts in the future.
-
->         {}
->  };
->
-> @@ -1408,7 +1436,7 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display)
->
->         dp_hpd_event_setup(dp);
->
-> -       dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 100);
-> +       dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 1);
->  }
->
->  void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
-> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
-> index 0519dd3..c05fc0a 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_parser.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
-> @@ -248,6 +248,33 @@ static int dp_parser_clock(struct dp_parser *parser)
->         return 0;
->  }
->
-> +static int dp_parser_gpio(struct dp_parser *parser)
-> +{
-> +       struct device *dev = &parser->pdev->dev;
-> +       int ret;
-> +
-> +       parser->panel_bklt_gpio = devm_gpiod_get(dev, "panel-bklt",
-> +                       GPIOD_OUT_HIGH);
-> +       if (IS_ERR(parser->panel_bklt_gpio)) {
-> +               ret = PTR_ERR(parser->panel_bklt_gpio);
-> +               parser->panel_bklt_gpio = NULL;
-> +               DRM_ERROR("%s: cannot get panel-bklt gpio, %d\n", __func__, ret);
-> +               goto fail;
-> +       }
-> +
-> +       parser->panel_pwm_gpio = devm_gpiod_get(dev, "panel-pwm", GPIOD_OUT_HIGH);
-> +       if (IS_ERR(parser->panel_pwm_gpio)) {
-> +               ret = PTR_ERR(parser->panel_pwm_gpio);
-> +               parser->panel_pwm_gpio = NULL;
-> +               DRM_ERROR("%s: cannot get panel-pwm gpio, %d\n", __func__, ret);
-> +               goto fail;
-> +       }
-> +
-> +       DRM_INFO("gpio on");
-> +fail:
-> +       return 0;
-> +}
-
-Don't we have pwm backlight drivers like
-drivers/video/backlight/pwm_bl.c to support this? This sort of thing
-doesn't belong in the dp driver.
-
-> +
->  static int dp_parser_parse(struct dp_parser *parser)
->  {
->         int rc = 0;
-> @@ -269,6 +296,10 @@ static int dp_parser_parse(struct dp_parser *parser)
->         if (rc)
->                 return rc;
->
-> +       rc = dp_parser_gpio(parser);
-> +       if (rc)
-> +               return rc;
-> +
->         /* Map the corresponding regulator information according to
->          * version. Currently, since we only have one supported platform,
->          * mapping the regulator directly.
+I confused the base device with the virtual device there, looks like it
+should be okay then.
