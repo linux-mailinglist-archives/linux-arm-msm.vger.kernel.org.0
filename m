@@ -2,109 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2338C3EA1D6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Aug 2021 11:18:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BF57D3EA1E7
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Aug 2021 11:22:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235982AbhHLJTF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Aug 2021 05:19:05 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:57137 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236005AbhHLJTF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Aug 2021 05:19:05 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1628759920; h=Content-Transfer-Encoding: MIME-Version:
- References: In-Reply-To: Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=6DoUioO1YYcblLi7ZvqwIBjq9xPyO/yESMdoeOHtecE=; b=UwhPOwg49aDvXdVcReEWYHzIodO/wDQ7crjjz3IP5zXzY1JqqlYc7g91TNWs7esVTwaC/9a+
- e7lxtbKnPmhkkjt9SdLsL2eN9Bgz2cGy+blkXjPeqYTS5QvgxHVVx9VYtpmNe+MNQAmaCyvC
- Mr7v82LQA3748D9X2XxaQt1MfFM=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 6114e75f7ee604097727d58d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 12 Aug 2021 09:18:23
- GMT
-Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8AF8DC43217; Thu, 12 Aug 2021 09:18:22 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: saiprakash.ranjan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8544FC43146;
-        Thu, 12 Aug 2021 09:18:18 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 8544FC43146
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
-From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     devicetree@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Subject: [PATCH 3/3] arm64: dts: qcom: sc7180: Add IMEM, pil info and download mode region
-Date:   Thu, 12 Aug 2021 14:47:42 +0530
-Message-Id: <39064a2db95ccc2cb5eef003569bef2de651c8ed.1628757036.git.saiprakash.ranjan@codeaurora.org>
-X-Mailer: git-send-email 2.29.0
-In-Reply-To: <cover.1628757036.git.saiprakash.ranjan@codeaurora.org>
-References: <cover.1628757036.git.saiprakash.ranjan@codeaurora.org>
+        id S235850AbhHLJWZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Aug 2021 05:22:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34030 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235306AbhHLJWY (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 12 Aug 2021 05:22:24 -0400
+Received: from mail-wm1-x32a.google.com (mail-wm1-x32a.google.com [IPv6:2a00:1450:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91784C0613D5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Aug 2021 02:21:59 -0700 (PDT)
+Received: by mail-wm1-x32a.google.com with SMTP id l7-20020a1c2507000000b002e6be5d86b3so586279wml.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Aug 2021 02:21:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=SfSWlMNkRusRWrFgcNlK5f+Tq18JLveXJe/Yu78G3iI=;
+        b=plSLnX8ZD6s40Oveh27/GmjBzf/ucPmUjZJrNgWQI7yrpGQaw9aYJVM+/EPwmjSsbe
+         M2jb1omyczDnezm+sqCci0R/gombAiPDnzr1tRWprhlmdv7kH/t3byAF3ioWrsB6LdZK
+         Jq/wqDLHVxcxtVRd0Xgdm0+bbRkl5ZX+5kewjCXfdqMEeBN6cTvAgqm4iij+iaC4SfHX
+         stibatM6EHmZXPBzJ07XXAZIMvr4IJZk4PYd4a09gxJlgGrVxcu6yYvSWB3FL9F7N9HS
+         YHSxoaxYgB+T5ISOt4lR8Y+OpGHXie880p662vtyVO5muEGUj1zhXtzra593KDc8p5Wt
+         hIaA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=SfSWlMNkRusRWrFgcNlK5f+Tq18JLveXJe/Yu78G3iI=;
+        b=KG4zY0nnT/NNzUhpIsH9Kb0lmVVG9ogC7R1z5CmcD15XcJyU02xYsNeesklCwizpJh
+         v/+JxjS+zc6r4bzz+UCxJ+9hTSBHdNKlLtTfLvJoiau4bfmq5Ebf/EoPHucijiq5P4bY
+         0PAWm/QtZOF0WcpMCZAGfgl3i2lCUlkS7XOFNPI/5iUqgfvteSTXlDVyl9/OWRpkc8GC
+         4F1IObZdOOlL5lHr0vXiVRTOyVCAJgrfYG/dKpXKzTI8c0okZwtEYaNpYyFCyQipTWMB
+         WmFStmDm+pNUqe4EfswPIW9U67Sd5RTspxTKI9ksMEiZDdDSua1ovGAhH6m9qQw9rY89
+         lLIA==
+X-Gm-Message-State: AOAM533KxO8YhnOxTYlv6aPs6MafTb/27AlZ1+uAU+H8nnGbDQWudfvd
+        QwfUhNZuYsacnpjyvTowFfbrUw==
+X-Google-Smtp-Source: ABdhPJxz42p7tdtH6rARtZ5tspXf4Xt+v1Os/5IYZZ5LAH4xeBEtmOB6nAvaDO8JrK0QbfPExl64+Q==
+X-Received: by 2002:a7b:cd10:: with SMTP id f16mr2922862wmj.104.1628760118152;
+        Thu, 12 Aug 2021 02:21:58 -0700 (PDT)
+Received: from xps7590.fritz.box ([2a02:2454:3e5:b700:3e3:aaac:9c1f:b942])
+        by smtp.gmail.com with ESMTPSA id s10sm2720586wrv.54.2021.08.12.02.21.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Aug 2021 02:21:57 -0700 (PDT)
+From:   Robert Foss <robert.foss@linaro.org>
+To:     robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, mchehab@kernel.org,
+        hverkuil-cisco@xs4all.nl, linux-media@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Naresh Kamboju <naresh.kamboju@linaro.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     Linux Kernel Functional Testing <lkft@linaro.org>
+Subject: [PATCH v2] media: camss: vfe: Don't call hw_version() before its dependencies are met
+Date:   Thu, 12 Aug 2021 11:21:52 +0200
+Message-Id: <20210812092152.726874-1-robert.foss@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add IMEM, pil info and download mode DT nodes for SC7180 SoC which
-will help in the post-mortem debug.
+vfe->ops->hw_version(vfe) is being called before vfe->base has been
+assigned, and before the hardware has been powered up.
 
-Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Fixes: b10b5334528a9 ("media: camss: vfe: Don't read hardware version needlessly")
+
+Reported-by: Linux Kernel Functional Testing <lkft@linaro.org>
+Reported-by: Marek Szyprowski <m.szyprowski@samsung.com>
+Signed-off-by: Robert Foss <robert.foss@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 21 +++++++++++++++++++++
- 1 file changed, 21 insertions(+)
+ drivers/media/platform/qcom/camss/camss-vfe.c | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index 47b20ba69057..f2957db166e9 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -3222,6 +3222,27 @@ spmi_bus: spmi@c440000 {
- 			cell-index = <0>;
- 		};
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe.c b/drivers/media/platform/qcom/camss/camss-vfe.c
+index 6b2f33fc9be2..71f78b40e7f5 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe.c
+@@ -604,6 +604,8 @@ static int vfe_get(struct vfe_device *vfe)
+ 		vfe_reset_output_maps(vfe);
  
-+		imem@146aa000 {
-+			compatible = "simple-mfd";
-+			reg = <0 0x146aa000 0 0x2000>;
+ 		vfe_init_outputs(vfe);
 +
-+			#address-cells = <1>;
-+			#size-cells = <1>;
-+
-+			ranges = <0 0 0x146aa000 0x2000>;
-+
-+			pil-reloc@94c {
-+				compatible = "qcom,pil-reloc-info";
-+				reg = <0x94c 0xc8>;
-+			};
-+
-+			dload-mode@1c00 {
-+				compatible = "qcom,dload-mode";
-+				reg = <0x1c00 0x1000>;
-+				qcom,sdi-disable-regs = <&tcsr_regs 0x3a000 0x4>;
-+			};
-+		};
-+
- 		apps_smmu: iommu@15000000 {
- 			compatible = "qcom,sc7180-smmu-500", "arm,mmu-500";
- 			reg = <0 0x15000000 0 0x100000>;
++		vfe->ops->hw_version(vfe);
+ 	} else {
+ 		ret = vfe_check_clock_rates(vfe);
+ 		if (ret < 0)
+@@ -1299,7 +1301,6 @@ int msm_vfe_subdev_init(struct camss *camss, struct vfe_device *vfe,
+ 		return -EINVAL;
+ 	}
+ 	vfe->ops->subdev_init(dev, vfe);
+-	vfe->ops->hw_version(vfe);
+ 
+ 	/* Memory */
+ 
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.30.2
 
