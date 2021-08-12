@@ -2,100 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CEE8F3E9C90
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Aug 2021 04:28:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B1943E9C9C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Aug 2021 04:40:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233593AbhHLC2m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Aug 2021 22:28:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53054 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229729AbhHLC2l (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Aug 2021 22:28:41 -0400
-Received: from mail-lj1-x235.google.com (mail-lj1-x235.google.com [IPv6:2a00:1450:4864:20::235])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFA57C061765;
-        Wed, 11 Aug 2021 19:28:16 -0700 (PDT)
-Received: by mail-lj1-x235.google.com with SMTP id e11so2639840ljq.4;
-        Wed, 11 Aug 2021 19:28:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=lrsZ4rJ1ke6TJoqbLeEh/j8Z0FFWGW9U5SAbObO/Mfc=;
-        b=Cys4umoiPPyJT6ooVaSOUEB0BWEIuQ4qmvNYyoLOTvwAVceMyrweZUbsm5pTnbadue
-         MUwWmMe5P7HuYah/CseKsTVLg+qKqGYoEkKRow8inJ3HyCN1JiI81KKNCw9iIvnvU5/f
-         +KDQsAj0iIAAVis6GjgHFaZ3qiVYybMy8KNYCVIlKRDa8gFomd4ad/pcn2sxNsLb8GQ4
-         TRMoyPiH4xKltc18Bolvd/EcPO7vCel26oUjzCR/pM+lngktMh/lcJdVFsJhYTMjo+RM
-         FBxkuSeYVa4whaAoNG9g1meAK4mi3iZWcyAEo23MEhiSqjJSpad92pNy3K/TBIChXfrc
-         v7ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=lrsZ4rJ1ke6TJoqbLeEh/j8Z0FFWGW9U5SAbObO/Mfc=;
-        b=Ev40Y9k2j7lAHG5NWhWut2bisPzABqey6XIG7fA9bwuBfEpuC07YKxd8pW85b/N5Da
-         KF0k8LEEs/5updJESYGQcrVMHF8b7qX3gL5CA5Ad6oC98Sd5NdnZqqTyBXE4ehEhkVnP
-         1SvJWkKUl6Ma3Iai++RaZbTFKoJhDOW2ElaPDkdDuKri4x0ADnQz9E3IhJhUmoz6vF3Q
-         gdVmPAf+fR1KnIr+a0tC31dD4hQLZJHoqPDVhrcOmQ6opAh8KZSVZEecnRvDvjuCSk4H
-         uyMgsyX1sMH34BegsSJioMOxlxvxSGDoZgb+/xzhQuSSNnbeeZTIJygVT5y3pn3WgAch
-         ps1w==
-X-Gm-Message-State: AOAM5325tqkaHsSgSBMiVZxtInZViC9NUWTAB0rAEZFAqL0AZRzSkFku
-        l7DWl3FcTYCrpIU5ce91Bs0=
-X-Google-Smtp-Source: ABdhPJzoRVRDfSAT8m40auDl/FPWy4ltx1mT7G2jaDNXtR1e0YBmzAhx9YwF0WLHsSjqCTU0LgDEEA==
-X-Received: by 2002:a2e:991:: with SMTP id 139mr1221729ljj.188.1628735294975;
-        Wed, 11 Aug 2021 19:28:14 -0700 (PDT)
-Received: from [192.168.2.145] (46-138-117-53.dynamic.spd-mgts.ru. [46.138.117.53])
-        by smtp.googlemail.com with ESMTPSA id b4sm108196lfp.68.2021.08.11.19.28.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 11 Aug 2021 19:28:14 -0700 (PDT)
-Subject: Re: [PATCH v6 1/2] PM / Domains: Add support for 'required-opps' to
- set default perf state
-From:   Dmitry Osipenko <digetx@gmail.com>
-To:     Rajendra Nayak <rnayak@codeaurora.org>, ulf.hansson@linaro.org,
-        bjorn.andersson@linaro.org, viresh.kumar@linaro.org
-Cc:     linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        swboyd@chromium.org, rojay@codeaurora.org, stephan@gerhold.net
-References: <1628074696-7979-1-git-send-email-rnayak@codeaurora.org>
- <1628074696-7979-2-git-send-email-rnayak@codeaurora.org>
- <f58e631d-67a7-4981-ce59-6a4772b44564@gmail.com>
- <c43ddc6b-32ca-433d-76f2-901cb594eaf1@gmail.com>
- <9588f01d-1cb6-7ca3-eb41-74259f1678f6@gmail.com>
- <5f676dbe-6b8a-d302-cd81-2d12fe089e5a@codeaurora.org>
- <453bdc88-95a3-3798-9a11-ca8038c024ba@gmail.com>
-Message-ID: <85e207da-51ca-bb25-4de6-90b287fa31f8@gmail.com>
-Date:   Thu, 12 Aug 2021 05:28:13 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S233664AbhHLCkY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 22:40:24 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:45511 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233424AbhHLCkX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 11 Aug 2021 22:40:23 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1628735999; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=gGtLADnj2gs/ip4HZpP6uDr7CN7RCI+Ft8v06A1nAnY=; b=U4Y5olVO0egUvGe4Wt2gJMSNDR+5AAyTEtKDoeaKCItCfQlN/75LH2Q4954Xtpqj8qdRnQ1D
+ 80xanQ/PQkjhzKgaRVWP6SYDxI0JdJkYxhxUxugmdD7drK27AOlZZsMcc0GKi3qdNoBg84J5
+ 7x8uwMHzyGJ6L6sIKdZHBpcc8YU=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 611489fe66ff107904cfb3ba (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 12 Aug 2021 02:39:58
+ GMT
+Sender: luoj=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id AE1E8C43144; Thu, 12 Aug 2021 02:39:57 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [10.92.0.248] (unknown [180.166.53.36])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: luoj)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E638AC433D3;
+        Thu, 12 Aug 2021 02:39:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E638AC433D3
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=luoj@codeaurora.org
+Subject: Re: [PATCH v2 1/3] net: mdio: Add the reset function for IPQ MDIO
+ driver
+To:     Andrew Lunn <andrew@lunn.ch>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, davem@davemloft.net,
+        kuba@kernel.org, robh+dt@kernel.org, hkallweit1@gmail.com,
+        linux@armlinux.org.uk, robert.marko@sartura.hr,
+        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sricharan@codeaurora.org
+References: <20210810133116.29463-1-luoj@codeaurora.org>
+ <20210810133116.29463-2-luoj@codeaurora.org> <YRPlZGXWJGoLRSSN@lunn.ch>
+From:   Jie Luo <luoj@codeaurora.org>
+Message-ID: <fb49c1e3-c4f6-0d72-0def-8cae734fc3ff@codeaurora.org>
+Date:   Thu, 12 Aug 2021 10:39:51 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-In-Reply-To: <453bdc88-95a3-3798-9a11-ca8038c024ba@gmail.com>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <YRPlZGXWJGoLRSSN@lunn.ch>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Content-Language: en-US
-Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-11.08.2021 22:48, Dmitry Osipenko пишет:
-> 11.08.2021 12:45, Rajendra Nayak пишет:
->>>
->>> If you have more than one power domain, then this will override the
->>> pstate which was set for a previous domain. This code doesn't feel solid
->>> to me, at least a clarifying comment is needed about how it's supposed
->>> to work.
->>
->> I don't quite understand the concern here, this should work with devices
->> having multiple power-domains as well. __genpd_dev_pm_attach gets called
->> once per power-domain, and we use the index above to identify the
->> power-domain.
-> 
-> The domain core code supports only one domain per device, see what
-> genpd_set_performance_state() does. This means that the second domain
-> will set the state of the *first* domain, which doesn't make sense. The
-> genpd_set_performance_state() will actually fail with -ENODEV for all
-> domains if you will try to do that.
-> 
 
-I confused the base device with the virtual device there, looks like it
-should be okay then.
+On 8/11/2021 10:57 PM, Andrew Lunn wrote:
+>> +	ret = clk_prepare_enable(priv->mdio_clk);
+>> +	if (ret)
+>> +		return ret;
+>> +
+>> +	return 0;
+> This can be simplified to just:
+>
+>       return clk_prepare_enable(priv->mdio_clk);
+>
+>       Andrew
+Thanks Andrew for the comments, will update it in the next patch set.
