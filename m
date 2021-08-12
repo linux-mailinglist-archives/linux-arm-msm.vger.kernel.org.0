@@ -2,123 +2,211 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D3DFD3EA1EF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Aug 2021 11:22:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 408643EA26B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Aug 2021 11:48:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236203AbhHLJWz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Aug 2021 05:22:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34168 "EHLO
+        id S236379AbhHLJtF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Aug 2021 05:49:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40286 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236157AbhHLJWx (ORCPT
+        with ESMTP id S235658AbhHLJtE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Aug 2021 05:22:53 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 260C3C06179E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Aug 2021 02:22:13 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id k2so6436528plk.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Aug 2021 02:22:13 -0700 (PDT)
+        Thu, 12 Aug 2021 05:49:04 -0400
+Received: from mail-vs1-xe34.google.com (mail-vs1-xe34.google.com [IPv6:2607:f8b0:4864:20::e34])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0385EC0613D3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Aug 2021 02:48:40 -0700 (PDT)
+Received: by mail-vs1-xe34.google.com with SMTP id i1so3450757vsk.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Aug 2021 02:48:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=IyZ9EaMisnJp0qYPjFlYvR7TgQ9io17E26x/uUU+AX4=;
-        b=rPBZRIzmHR1ytF2LUa3xi/+wPdHScbdE9cx8JkucCBR/uwD5VpoJ8yAYuF1685s+62
-         KMHGWZGHETjPz0/2PVSeJ5z4Y5YufMZngghbewN+YqJUl9hhzzCfX2hqcrur1UAu+Rcn
-         7LqfFKrcmSrODcBp/hx4yPI+F4GBMyfhDVgdlvkXvaT8Sw3JJNOqFpdgxuQUuRmVYihF
-         ENwNbsOTiR356PdOicdpbbRpaZyOoEyZdg64ypDy514ZcVifnAdQ2xJk9tUhFo0gg5Zi
-         z85ye6LAYjPoosQoh0fPs8pL8xSwZg6kC+k/euYQb1DCvU3O9v9eT3+gbXfGO6KCx3WA
-         EfAw==
+        bh=IbLr+U6kbsLYPUHrhyJnM589L4UyonbadE9DVH0+ERM=;
+        b=Cb1sc9wxSCmOmvEr0naKHwOEBQxsRJPZzXPY3/30OAHVmVCC9Vd+9EgJ8M7WgwXSOY
+         EIUvz7kwNMVBTuy9adl70cTdScJP2o1dFdxsz79HUbpNXAJcLBZSdwXLEj9pNBoaW9cv
+         cRL3NljtNs9Po1aUE/SfslCaGQSm6yYHn4+bNQjgLgccop1khDwIXk1+NrP9ZJmuonbe
+         287hUz+rLBAHrOcxQEAIDDIneYpPorv3svSztRTsu2l3s+rKoRDfq1d7IkEHBkXZgJe2
+         SizruHQsupdtvrM/6zThCvvMEauOoYyzLxfZwDbsCyg3HYM0tAoj8mg0NL9+fPq4eLdf
+         QMyA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=IyZ9EaMisnJp0qYPjFlYvR7TgQ9io17E26x/uUU+AX4=;
-        b=q5Dk+UsGTT+I674MHDXwjNSqpfcLtaJZ99QNrqgrnS+U8v/jlJg8dYI2wE+pR1iIXL
-         ZeJjCaCwhjfFzdU2l0quG8CDNwPV1Pk3dOchtrK71zEpdZlbk0a9W+pkkBLIuXTcIgu4
-         AeWOi2PhYwCtfcMbFZsMyLnV/yAlk2CfukHxAAzXpA1uynt97GsRO7ZirEEgnmjT18QO
-         H7wFpl29Lj95Dw3KDv/mfl+glnjkUmwIM6LCD4gEfPQRi5AGARFO/4W2u4T+Zwq2NdnI
-         cqkF3XJgWW/Sscy8qAD+BONsCu0SsAcBmmI6TnZpbQua0ndGTow0TrSwUdysX0pjewzZ
-         ZZ8w==
-X-Gm-Message-State: AOAM532ppyRgeiwwa0mIOLKFj15W//6YeZWfyU8kWpuEcvaElCBzPjIu
-        SY2wSQyrPAlsDw4sJpsk13StIdzq10igWqoOGhgZbw==
-X-Google-Smtp-Source: ABdhPJzKK5Ah+X7xVkCoYYjZmGBjUv9nmz0IOxvf4uoubO28EVbVghxtySMxmKkrH4jDl7g1gUzkLjTOaNg8Ltlm3r8=
-X-Received: by 2002:aa7:90c8:0:b029:32c:935f:de5f with SMTP id
- k8-20020aa790c80000b029032c935fde5fmr3193360pfk.79.1628760132673; Thu, 12 Aug
- 2021 02:22:12 -0700 (PDT)
+        bh=IbLr+U6kbsLYPUHrhyJnM589L4UyonbadE9DVH0+ERM=;
+        b=EIDA1EefMMHlDXxYMljyeqSl7msRHG9zunzPItH+L69Hm5m1oCFxUayyoWBV/7vYC3
+         5kGzODdmrYLUiyZYSI5G0ZCCW0R9oZhabHTwM7wiaq8XFoUW7egeAlwEJJ+WbyAHm+MQ
+         cyI4KztKJoj6gZMB/w10Owak3v4Dhk75b0ENFWSxqgVCrSczJFuXoPIq6fMHlpnRKLgC
+         aHeQMWfTVS0hB7Iye34rur7umLphwi4Ne/SatlhcrnRYMBj+gXdVT2zQYh0Nle+dVuMG
+         KTFT8brIzh3ScWJqujSop9DWWmd4fpDpEBX+wKxvgXJuYdBlhCXkTpZtiXDii149YVpf
+         0Bug==
+X-Gm-Message-State: AOAM533GX26t20RIuJnsZhk9AC13HwfC89lVSLauloPzarCm5yFKejKt
+        SmnfjWdINx5TsY23pxVHpJt00jdnCe5KRYWgW4fK6w==
+X-Google-Smtp-Source: ABdhPJw51I5gnHwWq9GYyg15yW0e53urVKvvJQwgKLtCH00UUmyJOKAlXZJoRACLd3glOR57D91YqvUcYvoEz5EYcW4=
+X-Received: by 2002:a67:3212:: with SMTP id y18mr1412234vsy.19.1628761718985;
+ Thu, 12 Aug 2021 02:48:38 -0700 (PDT)
 MIME-Version: 1.0
-References: <CGME20210811074838eucas1p2a0e8625af27c10209d9bcfc732254ae7@eucas1p2.samsung.com>
- <20210810103336.114077-1-robert.foss@linaro.org> <0b694e24-5cc8-4944-d3a2-115306ae7b89@samsung.com>
- <CAG3jFys+ch86Y7338-DH1+8Q4w5eK83revVsNwoVCugwXeqjmQ@mail.gmail.com>
- <CAG3jFytOQQBnnJQU9qDdQedrrcPz=SQPeXHX1HJQ8c5U94feCg@mail.gmail.com> <de1df486-255f-6405-5ea9-4dddd5507006@samsung.com>
-In-Reply-To: <de1df486-255f-6405-5ea9-4dddd5507006@samsung.com>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Thu, 12 Aug 2021 11:22:01 +0200
-Message-ID: <CAG3jFyt7KB0JxTzimKA3Oi2dLU1Uj5uJ4aPFkQONbST8eFk6gg@mail.gmail.com>
-Subject: Re: [PATCH v1] media: camss: vfe: Don't use vfe->base before it's assigned
-To:     Marek Szyprowski <m.szyprowski@samsung.com>,
-        Naresh Kamboju <naresh.kamboju@linaro.org>
-Cc:     Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Hans Verkuil <hverkuil-cisco@xs4all.nl>,
-        linux-media <linux-media@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        Hans Verkuil <hverkuil@xs4all.nl>,
-        Linux Kernel Functional Testing <lkft@linaro.org>
+References: <20210621223141.1638189-1-dmitry.baryshkov@linaro.org>
+ <20210621223141.1638189-3-dmitry.baryshkov@linaro.org> <CAPDyKFo6dmjw0TnaK7=35dq5Si_6YYpeeSa=gU++1od7WkQZ7A@mail.gmail.com>
+ <20210706115517.GB4529@sirena.org.uk> <CAPDyKFr=8spZBD+bTe3SjS=nATL-ByFu_epnT2Z4chSuQNke2w@mail.gmail.com>
+ <CAA8EJppSV--TBjnGxGhaTHeKWdpM6uz70bg7diU3_K7OHoka4g@mail.gmail.com>
+ <20210714164710.GC2719790@robh.at.kernel.org> <CAPDyKFokvTFSpbnhhKeCmZzAjqvSpUiwz7QjjQNdcd3Sd3T0rQ@mail.gmail.com>
+ <YRKjQJc0yiQXFqCD@builder.lan>
+In-Reply-To: <YRKjQJc0yiQXFqCD@builder.lan>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Thu, 12 Aug 2021 11:48:02 +0200
+Message-ID: <CAPDyKFo+O34rvP7gbsC+ktd-p5QB9QAsbb+QEkWbiVqszChZJA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/7] regulator: qca6390: add support for QCA639x
+ powerup sequence
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Herring <robh@kernel.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Peter Chen <peter.chen@kernel.org>,
+        Mark Brown <broonie@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-bluetooth@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-> >>>
-> >>> [   18.480608] qcom-venus 1d00000.video-codec: Adding to iommu group 1
-> >>> [   18.536167] qcom-camss 1b0ac00.camss: Adding to iommu group 2
-> >>> [   18.600373] Internal error: synchronous external abort: 96000010 [#1]
-> >>> PREEMPT SMP
-> > After testing this patch + linux-next[1] I'm not able to replicate the
-> > 'Internal error' above on the db410c. And I don't think it is related
-> > to this patch.
+On Tue, 10 Aug 2021 at 18:03, Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Tue 10 Aug 06:55 CDT 2021, Ulf Hansson wrote:
+>
+> > On Wed, 14 Jul 2021 at 18:47, Rob Herring <robh@kernel.org> wrote:
+> > >
+> > > On Thu, Jul 08, 2021 at 02:37:44PM +0300, Dmitry Baryshkov wrote:
+> > > > Hi,
+> > > >
+> > > > On Thu, 8 Jul 2021 at 13:10, Ulf Hansson <ulf.hansson@linaro.org> wrote:
+> > > > >
+> > > > > - Peter (the email was bouncing)
+> > > >
+> > > > + Peter's kernel.org address
+> > > >
+> > > > >
+> > > > > On Tue, 6 Jul 2021 at 13:55, Mark Brown <broonie@kernel.org> wrote:
+> > > > > >
+> > > > > > On Tue, Jul 06, 2021 at 09:54:03AM +0200, Ulf Hansson wrote:
+> > > > > > > On Tue, 22 Jun 2021 at 00:32, Dmitry Baryshkov
+> > > > > >
+> > > > > > > > Qualcomm QCA6390/1 is a family of WiFi + Bluetooth SoCs, with BT part
+> > > > > > > > being controlled through the UART and WiFi being present on PCIe
+> > > > > > > > bus. Both blocks share common power sources. Add device driver handling
+> > > > > > > > power sequencing of QCA6390/1.
+> > > > > >
+> > > > > > > Power sequencing of discoverable buses have been discussed several
+> > > > > > > times before at LKML. The last attempt [1] I am aware of, was in 2017
+> > > > > > > from Peter Chen. I don't think there is a common solution, yet.
+> > > > > >
+> > > > > > This feels a bit different to the power sequencing problem - it's not
+> > > > > > exposing the individual inputs to the device but rather is a block that
+> > > > > > manages everything but needs a bit of a kick to get things going (I'd
+> > > > > > guess that with ACPI it'd be triggered via AML).  It's in the same space
+> > > > > > but it's not quite the same issue I think, something that can handle
+> > > > > > control of the individual resources might still struggle with this.
+> > > > >
+> > > > > Well, to me it looks very similar to those resouses we could manage
+> > > > > with the mmc pwrseq, for SDIO. It's also typically the same kind of
+> > > > > combo-chips that moved from supporting SDIO to PCIe, for improved
+> > > > > performance I guess. More importantly, the same constraint to
+> > > > > pre-power on the device is needed to allow it to be discovered/probed.
+> > > >
+> > > > In our case we'd definitely use pwrseq for PCIe bus and we can also
+> > > > benefit from using pwrseq for serdev and for platform busses also (for
+> > > > the same story of WiFi+BT chips).
+> > > >
+> > > > I can take a look at rewriting pwrseq code to also handle the PCIe
+> > > > bus. Rewriting it to be a generic lib seems like an easy task,
+> > > > plugging it into PCIe code would be more fun.
+> > > >
+> > > > Platform and serdev... Definitely even more fun.
+> > >
+> > > I don't want to see pwrseq (the binding) expanded to other buses. If
+> > > that was the answer, we wouldn't be having this discussion. It was a
+> > > mistake for MMC IMO.
 > >
-> > Are you seeing the same error on [1]? And are you seeing it before the
-> > b10b5334528a9 ("media: camss: vfe: Don't read hardware version
-> > needlessly") patch?
+> > Let's make sure we get your point correctly. I think we have discussed
+> > this in the past, but let's refresh our memories.
+> >
+> > If I recall correctly, you are against the mmc pwrseq DT bindings
+> > because we are using a separate pwrseq OF node, that we point to via a
+> > "mmc-pwrseq" property that contains a phandle from the mmc controller
+> > device node. Is that correct?
+> >
+> > If we would have encoded the power sequence specific properties, from
+> > within a child node for the mmc controller node, that would have been
+> > okay for you, right?
+> >
 >
-> I've checked once again on your branch. Yes, it is fully reproducible on
-> my DragonBoard410c. On your branch I get the above synchronous external
-> abort, while without your last patch I get Null ptr dereference.
+> In Dmitry's case, we have an external chip with that needs to be powered
+> on per a specific sequence, at which point the WiFi driver on PCIe and
+> BT driver on serdev will be able to communicate with the device.
+
+Thanks for sharing more details.
+
+So, not only do we have a discoverable device that needs to be powered
+on in a device specific way before probing, but in fact we have two
+consumers of that "combo chip", one (PCIe) for Wifi and one (serdev)
+for Bluetooth.
+
 >
-> Are you sure you have deployed the kernel modules for doing the test?
-> This issue happens when udev triggers loading kernel modules for the
-> detected hardware.
+> The extended case of this is where we have an SDX55 modem soldered onto
+> the pcb next to the SoC, in which case the power sequencing is even more
+> complex and additionally there are incoming gpios used to detect things
+> such as the firmware of the modem has crashed and Linux needs to toggle
+> power and rescan the PCIe bus.
+
+That sounds very similar to what we manage for the SDIO bus already.
+
+We have a mmc pwrseq node to describe what resources that are needed
+to power on/off the external chip. The driver for the functional
+device (Wifi chip for example) may then call SDIO APIs provided by the
+mmc core to power on/off the device, in case some kind of reset would
+be needed.
+
+Additionally, we have a child node below the mmc controller node,
+allowing us to describe device specific things for the SDIO functional
+device, like an out-of-band IRQ line for example.
+
+Overall, this seems to work fine, even if the DT bindings may be questionable.
+
 >
-> Here is the kernel configuration used for my tests on ARM64 based board:
+> In both of these cases it seems quite reasonable to represent that
+> external chip (and it's power needs) as a separate DT node. But we need
+> a way to link the functional devices to that thing.
+
+Don't get me wrong, I am not suggesting we should re-use the
+mmc-pwrseq DT bindings - but just trying to share our experience
+around them.
+
+In the cases you describe, it certainly sounds like we need some kind
+of minimal description in DT for these functional external devices.
+For GPIO pins, for example.
+
+How to describe this in DT is one thing, let's see if Rob can help to
+point us in some direction of what could make sense.
+
+When it comes to implementing a library/interface to manage these
+functional devices, I guess we just have to continue to explore
+various options. Perhaps just start simple with another subsystem,
+like PCIe and see where this brings us.
+
 >
-> # make ARCH=arm64 defconfig && ./scripts/config --set-val
-> CMA_SIZE_MBYTES 96 -e PROVE_LOCKING -e DEBUG_ATOMIC_SLEEP -e PM_DEBUG -e
-> PM_ADVANCED_DEBUG -d ARCH_SUNXI -d ARCH_ALPINE -d DRM_NOUVEAU -d
-> ARCH_BCM_IPROC -d ARCH_BERLIN -d ARCH_BRCMSTB -d ARCH_LAYERSCAPE -d
-> ARCH_LG1K -d ARCH_HISI -d ARCH_MEDIATEK -d ARCH_MVEBU -d ARCH_ROCKCHIP
-> -d ARCH_SEATTLE -d ARCH_SYNQUACER -d ARCH_RENESAS -d ARCH_STRATIX10 -d
-> ARCH_TEGRA -d ARCH_SPRD -d ARCH_THUNDER -d ARCH_THUNDER2 -d
-> ARCH_UNIPHIER -d ARCH_XGENE -d ARCH_ZX -d ARCH_ZYNQMP -d HIBERNATION -d
-> CLK_SUNXI -e BLK_DEV_RAM --set-val BLK_DEV_RAM_COUNT 4 --set-val
-> BLK_DEV_RAM_SIZE 65536 -d CONFIG_EFI -d CONFIG_TEE
->
-> Comparing to the arm64's defconfig, I've enabled some debugging options
-> and disabled some unused boards.
+> Regards,
+> Bjorn
 >
 
-I made a mistake when testing on the db410c earlier, but with it fixed
-I can replicate the issue. It seems to stem from the hardware not
-actually being powered up when the hw_version() call is being made.
+[...]
 
-Unfortunately there is no simple way to achieve the original intention
-of the series that reduced the frequency of the hw_version() being
-called, while avoiding the above issue. So let's revert to the
-previous behaviour for the time being.
-
-Thank you for your help Marek! I'll submit a v2 shortly.
-
-
-Rob
+Kind regards
+Uffe
