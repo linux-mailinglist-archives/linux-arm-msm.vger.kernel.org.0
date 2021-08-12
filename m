@@ -2,75 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 672FF3EAADB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Aug 2021 21:22:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 320D03EAAE8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Aug 2021 21:26:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233650AbhHLTXH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Aug 2021 15:23:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60138 "EHLO
+        id S233289AbhHLT0l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Aug 2021 15:26:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60954 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230110AbhHLTXH (ORCPT
+        with ESMTP id S229950AbhHLT0l (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Aug 2021 15:23:07 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CBB0C0617AD
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Aug 2021 12:22:41 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id d1so8619598pll.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Aug 2021 12:22:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Qb+FI0jSCsZyHH1Ia4kbzXwLXCw4sowjg/unRazGFOw=;
-        b=j8cQMpokfQuLRgHm07RR5lcnPohAYewhPt1EspVbwh4WNHr7GGQvDm3kmECAFwxwW8
-         jhbPlSAsren8SdoC+d8S8uO8TfchuQSUWI0bK9y+pjIJBSt5nSr77a9k+j+Tq1b1NGAS
-         tTE9TMfvEPFduwrbXRQDM01A2S6J85S2QCkPs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Qb+FI0jSCsZyHH1Ia4kbzXwLXCw4sowjg/unRazGFOw=;
-        b=GLBdZR6QPyTjr/3QkwnbFcH2PFN7yhK1X7n+y/ZYNDyUScB/jGY3mD/h4ea6YvuA3m
-         EELkPpNvld757E6QbnuX+xBvm63uRcsFW/tZpvdpi0jfx8d8JMZzns4dBSCUD3i/I9aE
-         isd0e7KNK9wGldwvdUREFv0jzcneeDNXgf/OJ4Qxaq7tG6QRGZMGsHL03T1oLtvHy6cj
-         ybedRm6zA4tRrJAqwVuYmcreRq8kjhFWC3w48LPm+DFHvHVdaLE6zNe25xroRkd8VWXL
-         32NiGw7/g799IuXDE2SW3TDrCf+5LiteRjYLg5EXNYRvjTWvzg41yv2wF4WwA8+5WB1Q
-         v9xw==
-X-Gm-Message-State: AOAM531q/0oqXcRiAiMSO+xOkVg/zPdxDInyu8FGYUEJlEHfsvcVFTJN
-        cT1r6FMfMyK+q6CFCRsIIMn9jQ==
-X-Google-Smtp-Source: ABdhPJwPH80t5d7F/jYCYlTC6qaJ9oXn39f+IjkD6biu7WuSZq9ZoVowWfDG6IADtOsKsh6cCUYT5A==
-X-Received: by 2002:a05:6a00:1c71:b029:3e0:4537:a1d4 with SMTP id s49-20020a056a001c71b02903e04537a1d4mr5590743pfw.1.1628796161176;
-        Thu, 12 Aug 2021 12:22:41 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:6683:43e5:ba4c:d76c])
-        by smtp.gmail.com with UTF8SMTPSA id j22sm4434963pgb.62.2021.08.12.12.22.40
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Aug 2021 12:22:40 -0700 (PDT)
-Date:   Thu, 12 Aug 2021 12:22:39 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Rajesh Patil <rajpat@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, swboyd@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, rnayak@codeaurora.org,
-        saiprakash.ranjan@codeaurora.org, msavaliy@qti.qualcomm.com,
-        skakit@codeaurora.org
-Subject: Re: [PATCH V5 6/7] arm64: dts: sc7280: Configure uart7 to support
- bluetooth on sc7280-idp
-Message-ID: <YRV0/8qtlMyVSDRI@google.com>
-References: <1628754078-29779-1-git-send-email-rajpat@codeaurora.org>
- <1628754078-29779-7-git-send-email-rajpat@codeaurora.org>
+        Thu, 12 Aug 2021 15:26:41 -0400
+Received: from perceval.ideasonboard.com (perceval.ideasonboard.com [IPv6:2001:4b98:dc2:55:216:3eff:fef7:d647])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 71C88C061756;
+        Thu, 12 Aug 2021 12:26:15 -0700 (PDT)
+Received: from pendragon.ideasonboard.com (62-78-145-57.bb.dnainternet.fi [62.78.145.57])
+        by perceval.ideasonboard.com (Postfix) with ESMTPSA id AD590EE;
+        Thu, 12 Aug 2021 21:26:13 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=ideasonboard.com;
+        s=mail; t=1628796373;
+        bh=HbBlo2yWHVQ3aoOqeeRbXctYweM1HQRkPbkGnoGkmAU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=TrLHsZ2sWHkahSyRLDuG7pk/hVeRGE3yFQwfYRlo18c9+koVOxl747/uxFdPfVFrp
+         wkPcJgLLhzKwdUtC/iLt3hWQqZmY6m+knctxWOHMdanx3Epd59w3V7PEqegbi528Xb
+         dZE0Zp2YbzLBm7VJUqt475GlADrVCLoojE6ZslIE=
+Date:   Thu, 12 Aug 2021 22:26:09 +0300
+From:   Laurent Pinchart <laurent.pinchart@ideasonboard.com>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        open list <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH 4/4] drm/bridge: ti-sn65dsi86: Add NO_CONNECTOR support
+Message-ID: <YRV10ew/Lr8GPzEv@pendragon.ideasonboard.com>
+References: <20210811235253.924867-1-robdclark@gmail.com>
+ <20210811235253.924867-5-robdclark@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1628754078-29779-7-git-send-email-rajpat@codeaurora.org>
+In-Reply-To: <20210811235253.924867-5-robdclark@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 12, 2021 at 01:11:17PM +0530, Rajesh Patil wrote:
-> Add bluetooth uart pin configuration for sc7280-idp.
-> 
-> Signed-off-by: Rajesh Patil <rajpat@codeaurora.org>
+Hi Rob,
 
-Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+Thank you for the patch.
+
+On Wed, Aug 11, 2021 at 04:52:50PM -0700, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+> 
+> Slightly awkward to fish out the display_info when we aren't creating
+> own connector.  But I don't see an obvious better way.
+
+We need a bit more than this, to support the NO_CONNECTOR case, the
+bridge has to implement a few extra operations, and set the bridge .ops
+field. I've submitted two patches to do so a while ago:
+
+- [RFC PATCH 08/11] drm/bridge: ti-sn65dsi86: Implement bridge connector operations ([1])
+- [RFC PATCH 09/11] drm/bridge: ti-sn65dsi86: Make connector creation optional ([2])
+
+The second patch is similar to the first half of this patch, but misses
+the cleanup code. I'll try to rebase this and resubmit, but it may take
+a bit of time.
+
+[1] https://lore.kernel.org/dri-devel/20210322030128.2283-9-laurent.pinchart+renesas@ideasonboard.com/
+[2] https://lore.kernel.org/dri-devel/20210322030128.2283-10-laurent.pinchart+renesas@ideasonboard.com/
+
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
+>  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 34 +++++++++++++++++++++++----
+>  1 file changed, 29 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> index 38dcc49eccaf..dc8112bab3d3 100644
+> --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
+> @@ -693,9 +693,11 @@ static int ti_sn_bridge_attach(struct drm_bridge *bridge,
+>  		return ret;
+>  	}
+>  
+> -	ret = ti_sn_bridge_connector_init(pdata);
+> -	if (ret < 0)
+> -		goto err_conn_init;
+> +	if (!(flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR)) {
+> +		ret = ti_sn_bridge_connector_init(pdata);
+> +		if (ret < 0)
+> +			goto err_conn_init;
+> +	}
+>  
+>  	/*
+>  	 * TODO: ideally finding host resource and dsi dev registration needs
+> @@ -757,7 +759,8 @@ static int ti_sn_bridge_attach(struct drm_bridge *bridge,
+>  err_dsi_attach:
+>  	mipi_dsi_device_unregister(dsi);
+>  err_dsi_host:
+> -	drm_connector_cleanup(&pdata->connector);
+> +	if (!(flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR))
+> +		drm_connector_cleanup(&pdata->connector);
+>  err_conn_init:
+>  	drm_dp_aux_unregister(&pdata->aux);
+>  	return ret;
+> @@ -806,9 +809,30 @@ static void ti_sn_bridge_set_dsi_rate(struct ti_sn65dsi86 *pdata)
+>  	regmap_write(pdata->regmap, SN_DSIA_CLK_FREQ_REG, val);
+>  }
+>  
+> +/*
+> + * Find the connector and fish out the bpc from display_info.  It would
+> + * be nice if we could get this instead from drm_bridge_state, but that
+> + * doesn't yet appear to be the case.
+> + */
+
+This should be done with
+
+	struct drm_atomic_state *state = old_bridge_state->base.state;
+	struct drm_connector *connector;
+
+	connector = drm_atomic_get_new_connector_for_encoder(state,
+							     bridge->encoder);
+
+>  static unsigned int ti_sn_bridge_get_bpp(struct ti_sn65dsi86 *pdata)
+>  {
+> -	if (pdata->connector.display_info.bpc <= 6)
+> +	struct drm_bridge *bridge = &pdata->bridge;
+> +	struct drm_connector_list_iter conn_iter;
+> +	struct drm_connector *connector;
+> +	unsigned bpc = 0;
+> +
+> +	drm_connector_list_iter_begin(bridge->dev, &conn_iter);
+> +	drm_for_each_connector_iter(connector, &conn_iter) {
+> +		if (drm_connector_has_possible_encoder(connector, bridge->encoder)) {
+> +			bpc = connector->display_info.bpc;
+> +			break;
+> +		}
+> +	}
+> +	drm_connector_list_iter_end(&conn_iter);
+> +
+> +	WARN_ON(bpc == 0);
+> +
+> +	if (bpc <= 6)
+>  		return 18;
+>  	else
+>  		return 24;
+
+-- 
+Regards,
+
+Laurent Pinchart
