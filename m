@@ -2,166 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FB203EA101
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Aug 2021 10:50:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95A903EA197
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Aug 2021 11:09:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235330AbhHLIvU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Aug 2021 04:51:20 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:30536 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235234AbhHLIvS (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Aug 2021 04:51:18 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1628758254; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=Ya9+Ha0SGv8ND1/LQ97Qs9nz9/yO8+sXj545J9GZXEQ=; b=tuP22MvE8QyAWUCTeXXndBC6n8eEqVBm6usLkXxOttLpwX6KLv2bjoh4T1ZEqUaZ4gs9dGsd
- dYJVFiwFrIhML4WvXNecbGZ2eVgtp0q4qaGax7/BVdJCh/uNndPBmHPa0D9wmYUC31AfQdQ2
- XqCOdSlAKKp1lWbkWkN6HqAJ2EM=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 6114e0d176c3a9a17204dd6f (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 12 Aug 2021 08:50:25
- GMT
-Sender: zijuhu=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 86A29C43460; Thu, 12 Aug 2021 08:50:24 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: zijuhu)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C2263C433F1;
-        Thu, 12 Aug 2021 08:50:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org C2263C433F1
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=zijuhu@codeaurora.org
-From:   Zijun Hu <zijuhu@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com
-Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
-        rjliao@codeaurora.org, zijuhu@codeaurora.org, tjiang@codeaurora.org
-Subject: [PATCH v3] Bluetooth: btusb: Add support different nvm to distinguish different factory for WCN6855 controller
-Date:   Thu, 12 Aug 2021 16:50:16 +0800
-Message-Id: <1628758216-3201-1-git-send-email-zijuhu@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S235600AbhHLJJg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Aug 2021 05:09:36 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36934 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236105AbhHLJJc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 12 Aug 2021 05:09:32 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 44D6260E97;
+        Thu, 12 Aug 2021 09:09:05 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1628759347;
+        bh=4B2v1XdtK/Af8IXQV0QioCotL0DZazMwjviys8POlhY=;
+        h=References:From:To:Cc:Subject:Date:In-reply-to:From;
+        b=MwnlcLD4TKhl7N13do1qf+IYhJ9ceVMyokcuBMZ9VZ/2W3FSJ32BCjrHdmMjwBkBm
+         vt9xtOVMK+i+pnJZvgOo6rZBBrYevi+BEM1AJ/0OG8h1MQqx4FpXhLjB7oocaN04l6
+         svPXyfZTWKPkUixw5wfWuQKprW7SWzIef2iHsjXmJy6jurYSfnVPfBo0T0ndyqMlmH
+         DYNla9C3hMEUNE2ROdhAtbrzwFqMJYeWZoaVQuei4cn0npsjlty4eZu6/m/pplkZS9
+         /kSFX28vr/6AJrzU3jp08IJoUTaUmEMvWqOAZE5Y3ObnRnyWA7680XWSAq4KmIE94g
+         +vFCJx2cOrY4w==
+References: <e34c8e16-6521-c6e4-f3ed-9d8520d4ece2@codeaurora.org>
+User-agent: mu4e 1.6.2; emacs 27.2
+From:   Felipe Balbi <balbi@kernel.org>
+To:     Sandeep Maheswaram <sanm@codeaurora.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Pratham Pratap <prathampratap@codeaurora.org>,
+        Jack Pham <jackp@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Doug Anderson <dianders@chromium.org>
+Subject: Re: Regarding usb dwc3 core shutdown callback
+Date:   Thu, 12 Aug 2021 12:07:08 +0300
+In-reply-to: <e34c8e16-6521-c6e4-f3ed-9d8520d4ece2@codeaurora.org>
+Message-ID: <87bl63yqq8.fsf@kernel.org>
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Tim Jiang <tjiang@codeaurora.org>
 
-we have different factory to produce wcn6855 soc chip, so we should
-use different nvm file with suffix to distinguish them.
+Hi,
 
-Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
----
- drivers/bluetooth/btusb.c | 60 ++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 51 insertions(+), 9 deletions(-)
+(why isn't this email plain/text? Content Type was set to multipart
+alternative, please configure your email client correctly :-)
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index b1a05bb9f4bf..d7b4e0f1c3e3 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -4013,6 +4013,9 @@ static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
- #define QCA_DFU_TIMEOUT		3000
- #define QCA_FLAG_MULTI_NVM      0x80
- 
-+#define WCN6855_2_0_RAM_VERSION_GF 0x400c1200
-+#define WCN6855_2_1_RAM_VERSION_GF 0x400c1211
-+
- struct qca_version {
- 	__le32	rom_version;
- 	__le32	patch_version;
-@@ -4044,6 +4047,7 @@ static const struct qca_device_info qca_devices_table[] = {
- 	{ 0x00000302, 28, 4, 16 }, /* Rome 3.2 */
- 	{ 0x00130100, 40, 4, 16 }, /* WCN6855 1.0 */
- 	{ 0x00130200, 40, 4, 16 }, /* WCN6855 2.0 */
-+	{ 0x00130201, 40, 4, 16 }, /* WCN6855 2.1 */
- };
- 
- static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 request,
-@@ -4198,6 +4202,39 @@ static int btusb_setup_qca_load_rampatch(struct hci_dev *hdev,
- 	return err;
- }
- 
-+static int btusb_setup_qca_form_nvm_name(char **fwname,
-+					int max_size,
-+					struct qca_version *ver,
-+					char *factory)
-+{
-+	/* if boardid equal 0, use default nvm without suffix */
-+	switch (le16_to_cpu(ver->board_id)) {
-+	case 0x0:
-+		/* we add suffix factory to distinguish with different factory. */
-+		if (factory != NULL) {
-+			snprintf(*fwname, max_size, "qca/nvm_usb_%08x_%s.bin",
-+				 le32_to_cpu(ver->rom_version),
-+				 factory);
-+		} else {
-+			snprintf(*fwname, max_size, "qca/nvm_usb_%08x.bin",
-+				 le32_to_cpu(ver->rom_version));
-+		}
-+		break;
-+	default:
-+		if (factory != NULL) {
-+			snprintf(*fwname, max_size, "qca/nvm_usb_%08x_%s_%04x.bin",
-+				le32_to_cpu(ver->rom_version),
-+				factory,
-+				le16_to_cpu(ver->board_id));
-+		} else {
-+			snprintf(*fwname, max_size, "qca/nvm_usb_%08x_%04x.bin",
-+				le32_to_cpu(ver->rom_version),
-+				le16_to_cpu(ver->board_id));
-+		}
-+		break;
-+	}
-+}
-+
- static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
- 				    struct qca_version *ver,
- 				    const struct qca_device_info *info)
-@@ -4206,19 +4243,24 @@ static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
- 	char fwname[64];
- 	int err;
- 
--	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
--		/* if boardid equal 0, use default nvm without surfix */
--		if (le16_to_cpu(ver->board_id) == 0x0) {
-+	switch (ver->ram_version) {
-+	case WCN6855_2_0_RAM_VERSION_GF:
-+	case WCN6855_2_1_RAM_VERSION_GF:
-+		if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
-+			btusb_setup_qca_form_nvm_name(&fwname, sizeof(fwname), ver, "gf");
-+		} else {
- 			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
- 				 le32_to_cpu(ver->rom_version));
-+		}
-+		break;
-+	default:
-+		if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
-+			btusb_setup_qca_form_nvm_name(&fwname, sizeof(fwname), ver, NULL);
- 		} else {
--			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_%04x.bin",
--				le32_to_cpu(ver->rom_version),
--				le16_to_cpu(ver->board_id));
-+			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
-+				 le32_to_cpu(ver->rom_version));
- 		}
--	} else {
--		snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
--			 le32_to_cpu(ver->rom_version));
-+		break;
- 	}
- 
- 	err = request_firmware(&fw, fwname, &hdev->dev);
+While at that, also make sure to break lines at 80-columns)
+
+Sandeep Maheswaram <sanm@codeaurora.org> writes:
+> Hi,
+>
+> Earlier I have posted the patch for usb dwc3 core shutdown callback
+>
+> https://lore.kernel.org/linux-arm-msm/1618380209-20114-1-git-send-email-sanm@codeaurora.org/
+>
+> and it was reverted due to issues.
+
+Right, as should be expected when we find regressions
+
+> https://lore.kernel.org/linux-usb/20210603151742.298243-1-alexandru.elisei@arm.com/
+>
+> As we already have shutdown callback in xhci plat driver where we halt
+> the controller, so there will be no transactions with usb devices.
+>
+> https://lore.kernel.org/linux-usb/20200306092328.41253-1-ran.wang_1@nxp.com/
+>
+> So I think dwc3 core shutdown may not be required at least when we are
+> using host mode. Let me know your opinion about this.
+
+If that's the case, then sure. Please validate the condition, though,
+and kindly report back on your findings
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
-
+balbi
