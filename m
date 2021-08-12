@@ -2,62 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 44EBE3EA961
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Aug 2021 19:23:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ACDED3EA965
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Aug 2021 19:23:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235642AbhHLRW4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Aug 2021 13:22:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60604 "EHLO
+        id S235447AbhHLRX6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Aug 2021 13:23:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235526AbhHLRW4 (ORCPT
+        with ESMTP id S235256AbhHLRX4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Aug 2021 13:22:56 -0400
-Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE7C3C061756
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Aug 2021 10:22:30 -0700 (PDT)
-Received: by mail-il1-x134.google.com with SMTP id i13so7780666ilm.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Aug 2021 10:22:30 -0700 (PDT)
+        Thu, 12 Aug 2021 13:23:56 -0400
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE757C0613D9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Aug 2021 10:23:30 -0700 (PDT)
+Received: by mail-io1-xd2a.google.com with SMTP id b7so336578iob.4
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Aug 2021 10:23:30 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=shNhrzerEsE2zV1N+PkQAZcTS3bJIsjxwVv+ONT+kpc=;
-        b=dthu5PluI8SIpcGHuz8JNqyfTKjTeq/PS3sko15q/c71jvM7uhnrzAmMOkoByfl71N
-         SGjlDrMO8rYb/Kmzko0/UOldzVK7JeHMMSmwx3uxViyzeVS7PjaN25w0RmOHmBxMajfo
-         kZLqVaYoQlmpVWITeDANdz+vB1B1iSCXQtLr4=
+        bh=JRwzKSay2n+yQfmhBPOFfDNxmLPMQg6PC0lXLvxAvL8=;
+        b=Bh074U0YkS72TlAp7BoXqHTJFFM+Kpvlod9cHdGDbEvZxvD/WDOg3Uc8bwHw0XuXHR
+         gR6QY2KTEoTvpqCgEQpyiOdXq/Y0PNq6zEbZywP4dsfckhwXLli67gfBLkr1fxY8sSCu
+         ZZY3+cfWMnUPqp74qIF2TVpKDoMx3ryHreSAU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=shNhrzerEsE2zV1N+PkQAZcTS3bJIsjxwVv+ONT+kpc=;
-        b=tpSR2qxk/2yZVq9Iu1UoGh3iSqqQNCtifpEhUkKnqQfnWADLwzPgwy18ze3earJBYp
-         KYQfKbgeI+2936rE/j/oaih/5uYQ673IRvAEimJU494HPVLXh7KGf1l9ixpsDJaafWtT
-         /XzyJApaDFOl/3Tq4FE0DDmt9jLCEUU4Dp6hSbeRBrJXSY7gqOoRfkMEf7wzBGdXLub5
-         1ZBg8LrNIrvAZF26EywOZWYS3nvETc6wKftNkjljJVy/H1S8pRoiRGtZOK3I9gU3gcNd
-         5S0aFzZrO3TJDcvY5Zt1KaW1Gi9n6p3GamkdzxhW1aso90uEXkGgbxcT1nf77CXpgV29
-         SoJQ==
-X-Gm-Message-State: AOAM530O7sZEnniQDmjwcIv+JbYHIJBskYT6uiluwP+n+VIeTNb4/mbv
-        6AQKdRGtRGvdFMUNWb87PdHiKkPlm4hAbA==
-X-Google-Smtp-Source: ABdhPJwwjFPRRyi1FoGh6kSf0SiICPxKihSTaDyJ4/Rqzh/Z/hTumb7UyT+Tw+NBGjLqiqfWmt0HrA==
-X-Received: by 2002:a05:6e02:12e4:: with SMTP id l4mr3857139iln.277.1628788950172;
-        Thu, 12 Aug 2021 10:22:30 -0700 (PDT)
-Received: from mail-io1-f44.google.com (mail-io1-f44.google.com. [209.85.166.44])
-        by smtp.gmail.com with ESMTPSA id z16sm1859141ile.72.2021.08.12.10.22.28
+        bh=JRwzKSay2n+yQfmhBPOFfDNxmLPMQg6PC0lXLvxAvL8=;
+        b=QOfpxrsO6GOHk/1nbn/23YoPm6Jv6lbR3PvHKiD14tWID1XwJE6si6xbZC+LaE+bGk
+         /tfOkDqauTqiPuC3LugSYWBYHQfjNiZVzpOn7m86H6qj2+hVDs9roT2LWBU0p0Nb+aeA
+         rQ5LYhoxaWqmugV2Glyka7UTak0EvfXyj6GN9yy3DZlt2YMcMvEd1HkKecBZl0huWaiH
+         nau9VO2nUDqGeajmxqEfqJVcrUXyP9kytPCkLvFVlIR+aCZfIzmwry1UsIlzxJ8YRASP
+         bzhbYmKaDHKQiPpIqthCl2U97pW8rxJaeueC9RjoUJY7EoTTwhD6v6h/dIwk87MSqyrM
+         QdyA==
+X-Gm-Message-State: AOAM533LJ8gyIztfN50f1j3Fcq8W+FnQ8qC+mkkTRj6Tcnp3hV6Ja8dl
+        x0bs0ELf5tXHeA5dU2uhAnAuS7w+Oehxkg==
+X-Google-Smtp-Source: ABdhPJwtam5js2gwzt8UyWtUaIzcQvrJlgPl4y1xxqB1uDjaABwyLSref+/dsAY3tft7ek21RexP/g==
+X-Received: by 2002:a02:970d:: with SMTP id x13mr4689213jai.57.1628789008836;
+        Thu, 12 Aug 2021 10:23:28 -0700 (PDT)
+Received: from mail-il1-f169.google.com (mail-il1-f169.google.com. [209.85.166.169])
+        by smtp.gmail.com with ESMTPSA id d9sm1934232ilu.9.2021.08.12.10.23.27
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 12 Aug 2021 10:22:29 -0700 (PDT)
-Received: by mail-io1-f44.google.com with SMTP id q16so7077271ioj.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Aug 2021 10:22:28 -0700 (PDT)
-X-Received: by 2002:a05:6602:2159:: with SMTP id y25mr3762841ioy.61.1628788948245;
- Thu, 12 Aug 2021 10:22:28 -0700 (PDT)
+        Thu, 12 Aug 2021 10:23:27 -0700 (PDT)
+Received: by mail-il1-f169.google.com with SMTP id j18so7776753ile.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Aug 2021 10:23:27 -0700 (PDT)
+X-Received: by 2002:a92:d84f:: with SMTP id h15mr3825806ilq.12.1628789006912;
+ Thu, 12 Aug 2021 10:23:26 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210811235253.924867-1-robdclark@gmail.com> <20210811235253.924867-5-robdclark@gmail.com>
-In-Reply-To: <20210811235253.924867-5-robdclark@gmail.com>
+References: <20210811235253.924867-1-robdclark@gmail.com> <20210811235253.924867-4-robdclark@gmail.com>
+In-Reply-To: <20210811235253.924867-4-robdclark@gmail.com>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 12 Aug 2021 10:22:15 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=V_bE0MfHDZn=u98UZ1eDw7vQXMpG=btwW6XGGqCF4brw@mail.gmail.com>
-Message-ID: <CAD=FV=V_bE0MfHDZn=u98UZ1eDw7vQXMpG=btwW6XGGqCF4brw@mail.gmail.com>
-Subject: Re: [PATCH 4/4] drm/bridge: ti-sn65dsi86: Add NO_CONNECTOR support
+Date:   Thu, 12 Aug 2021 10:23:15 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=U__Ge_6MkvxmcOQe49Q7NG94Bi3T2xNNiec-NF9J8tJg@mail.gmail.com>
+Message-ID: <CAD=FV=U__Ge_6MkvxmcOQe49Q7NG94Bi3T2xNNiec-NF9J8tJg@mail.gmail.com>
+Subject: Re: [PATCH 3/4] drm/bridge: ti-sn65dsi86: Implement bridge->mode_valid()
 To:     Rob Clark <robdclark@gmail.com>
 Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
@@ -84,76 +84,17 @@ On Wed, Aug 11, 2021 at 4:51 PM Rob Clark <robdclark@gmail.com> wrote:
 >
 > From: Rob Clark <robdclark@chromium.org>
 >
-> Slightly awkward to fish out the display_info when we aren't creating
-> own connector.  But I don't see an obvious better way.
+> For the brave new world of bridges not creating their own connectors, we
+> need to implement the max clock limitation via bridge->mode_valid()
+> instead of connector->mode_valid().
 >
 > Signed-off-by: Rob Clark <robdclark@chromium.org>
 > ---
->  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 34 +++++++++++++++++++++++----
->  1 file changed, 29 insertions(+), 5 deletions(-)
->
-> diff --git a/drivers/gpu/drm/bridge/ti-sn65dsi86.c b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> index 38dcc49eccaf..dc8112bab3d3 100644
-> --- a/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> +++ b/drivers/gpu/drm/bridge/ti-sn65dsi86.c
-> @@ -693,9 +693,11 @@ static int ti_sn_bridge_attach(struct drm_bridge *bridge,
->                 return ret;
->         }
->
-> -       ret = ti_sn_bridge_connector_init(pdata);
-> -       if (ret < 0)
-> -               goto err_conn_init;
-> +       if (!(flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR)) {
-> +               ret = ti_sn_bridge_connector_init(pdata);
-> +               if (ret < 0)
-> +                       goto err_conn_init;
-> +       }
->
->         /*
->          * TODO: ideally finding host resource and dsi dev registration needs
-> @@ -757,7 +759,8 @@ static int ti_sn_bridge_attach(struct drm_bridge *bridge,
->  err_dsi_attach:
->         mipi_dsi_device_unregister(dsi);
->  err_dsi_host:
-> -       drm_connector_cleanup(&pdata->connector);
-> +       if (!(flags & DRM_BRIDGE_ATTACH_NO_CONNECTOR))
-> +               drm_connector_cleanup(&pdata->connector);
->  err_conn_init:
->         drm_dp_aux_unregister(&pdata->aux);
->         return ret;
-> @@ -806,9 +809,30 @@ static void ti_sn_bridge_set_dsi_rate(struct ti_sn65dsi86 *pdata)
->         regmap_write(pdata->regmap, SN_DSIA_CLK_FREQ_REG, val);
->  }
->
-> +/*
-> + * Find the connector and fish out the bpc from display_info.  It would
-> + * be nice if we could get this instead from drm_bridge_state, but that
-> + * doesn't yet appear to be the case.
-> + */
->  static unsigned int ti_sn_bridge_get_bpp(struct ti_sn65dsi86 *pdata)
->  {
-> -       if (pdata->connector.display_info.bpc <= 6)
-> +       struct drm_bridge *bridge = &pdata->bridge;
-> +       struct drm_connector_list_iter conn_iter;
-> +       struct drm_connector *connector;
-> +       unsigned bpc = 0;
-> +
-> +       drm_connector_list_iter_begin(bridge->dev, &conn_iter);
-> +       drm_for_each_connector_iter(connector, &conn_iter) {
-> +               if (drm_connector_has_possible_encoder(connector, bridge->encoder)) {
-> +                       bpc = connector->display_info.bpc;
-> +                       break;
-> +               }
-> +       }
-> +       drm_connector_list_iter_end(&conn_iter);
+>  drivers/gpu/drm/bridge/ti-sn65dsi86.c | 24 +++++++++++++++++++-----
+>  1 file changed, 19 insertions(+), 5 deletions(-)
 
-This looks reasonable to me. I'll plan to apply it to drm-misc-next
-sometime next week to give Laurent a chance to comment on whether this
-causes any problems with his planned support for full DP using this
-bridge chip. IIUC that means it'll hit mainline 1 rev later, but as
-per IRC comments this should be fine.
+This looks good to me. I'll plan to land this together with the next
+patch into drm-misc-next sometime next week unless someone beats me to
+it.
 
 Reviewed-by: Douglas Anderson <dianders@chromium.org>
-
-
--Doug
