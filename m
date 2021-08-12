@@ -2,33 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B14E3EA2CA
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Aug 2021 12:09:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0B5D3EA2BA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Aug 2021 12:07:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236447AbhHLKIZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Aug 2021 06:08:25 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:18989 "EHLO
+        id S235727AbhHLKHo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Aug 2021 06:07:44 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:63842 "EHLO
         so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235395AbhHLKIT (ORCPT
+        with ESMTP id S235523AbhHLKHj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Aug 2021 06:08:19 -0400
+        Thu, 12 Aug 2021 06:07:39 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1628762874; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1628762834; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=mObOJ321JgsaHD8SBYg+UqOI67gOGpxj+gk/NROE8Q8=; b=GWKRciNPYKp3ilDNp5U1xnDk8scYHZrujUxA0JTj95A3qwgeBn5Lxlxxxyuofeg37y4sRjk8
- 9UQtLOx67nzR+MlyYuo/NFo1D4ybdQ8kpCLqZSG9TTJsJN/BXoIvSGjyuzP5GaUIGh7sABV8
- r0oZpxdkwrRJPPTSxsHmwbDr9Bo=
+ bh=pfs7bphLr84b60SKfpIAI0Zp8QrmUutMvnQtmN/Dwhs=; b=WbaiVOr7cXkgNFzUIKZ0qzhx9wvxp9vg2D3JcY6xREaPro7O1UOLM9eF1v3MUJAKFze5O3tv
+ 89F5Yt+2rIvz7Ob67Fa97mpPIoRUQanscIm/ruNQxcrFA38qgWF9WCfk0k0flcYmBUVrPeND
+ 6h5w6I/AbI6B13N3r/NWlZTrigc=
 X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 6114f2cb7ee6040977487083 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 12 Aug 2021 10:07:07
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 6114f2cc454b7a558f14c786 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 12 Aug 2021 10:07:08
  GMT
 Sender: luoj=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id ACCFAC43460; Thu, 12 Aug 2021 10:07:06 +0000 (UTC)
+        id 7FCD2C43460; Thu, 12 Aug 2021 10:07:08 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -38,9 +38,9 @@ Received: from akronite-sh-dev02.qualcomm.com (unknown [180.166.53.21])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: luoj)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E00BEC43460;
-        Thu, 12 Aug 2021 10:06:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org E00BEC43460
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CF12CC433D3;
+        Thu, 12 Aug 2021 10:07:03 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org CF12CC433D3
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=luoj@codeaurora.org
 From:   Luo Jie <luoj@codeaurora.org>
@@ -51,9 +51,9 @@ To:     andrew@lunn.ch, agross@kernel.org, bjorn.andersson@linaro.org,
 Cc:     linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         sricharan@codeaurora.org, Luo Jie <luoj@codeaurora.org>
-Subject: [PATCH v3 1/3] net: mdio: Add the reset function for IPQ MDIO driver
-Date:   Thu, 12 Aug 2021 18:06:40 +0800
-Message-Id: <20210812100642.1800-2-luoj@codeaurora.org>
+Subject: [PATCH v3 2/3] MDIO: Kconfig: Specify more IPQ chipset supported
+Date:   Thu, 12 Aug 2021 18:06:41 +0800
+Message-Id: <20210812100642.1800-3-luoj@codeaurora.org>
 X-Mailer: git-send-email 2.17.1
 In-Reply-To: <20210812100642.1800-1-luoj@codeaurora.org>
 References: <20210812100642.1800-1-luoj@codeaurora.org>
@@ -61,112 +61,43 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-1. configure the MDIO clock source frequency.
-2. the LDO resource is needed to configure the ethernet LDO available
-for CMN_PLL.
+The IPQ MDIO driver currently supports the chipset IPQ40xx, IPQ807x,
+IPQ60xx and IPQ50xx.
+
+Add the compatible 'qcom,ipq5018-mdio' because of ethernet LDO dedicated
+to the IPQ5018 platform.
 
 Signed-off-by: Luo Jie <luoj@codeaurora.org>
 ---
- drivers/net/mdio/Kconfig        |  1 +
- drivers/net/mdio/mdio-ipq4019.c | 43 +++++++++++++++++++++++++++++++++
- 2 files changed, 44 insertions(+)
+ drivers/net/mdio/Kconfig        | 2 +-
+ drivers/net/mdio/mdio-ipq4019.c | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/drivers/net/mdio/Kconfig b/drivers/net/mdio/Kconfig
-index 99a6c13a11af..a94d34cc7dc1 100644
+index a94d34cc7dc1..6da1fcb25847 100644
 --- a/drivers/net/mdio/Kconfig
 +++ b/drivers/net/mdio/Kconfig
-@@ -169,6 +169,7 @@ config MDIO_OCTEON
- config MDIO_IPQ4019
- 	tristate "Qualcomm IPQ4019 MDIO interface support"
- 	depends on HAS_IOMEM && OF_MDIO
-+	depends on COMMON_CLK
+@@ -172,7 +172,7 @@ config MDIO_IPQ4019
+ 	depends on COMMON_CLK
  	help
  	  This driver supports the MDIO interface found in Qualcomm
- 	  IPQ40xx series Soc-s.
+-	  IPQ40xx series Soc-s.
++	  IPQ40xx, IPQ60xx, IPQ807x and IPQ50xx series Soc-s.
+ 
+ config MDIO_IPQ8064
+ 	tristate "Qualcomm IPQ8064 MDIO interface support"
 diff --git a/drivers/net/mdio/mdio-ipq4019.c b/drivers/net/mdio/mdio-ipq4019.c
-index 9cd71d896963..e14d437e42a8 100644
+index e14d437e42a8..14e08b786334 100644
 --- a/drivers/net/mdio/mdio-ipq4019.c
 +++ b/drivers/net/mdio/mdio-ipq4019.c
-@@ -11,6 +11,7 @@
- #include <linux/of_mdio.h>
- #include <linux/phy.h>
- #include <linux/platform_device.h>
-+#include <linux/clk.h>
+@@ -258,6 +258,7 @@ static int ipq4019_mdio_remove(struct platform_device *pdev)
  
- #define MDIO_MODE_REG				0x40
- #define MDIO_ADDR_REG				0x44
-@@ -31,8 +32,15 @@
- #define IPQ4019_MDIO_TIMEOUT	10000
- #define IPQ4019_MDIO_SLEEP		10
- 
-+/* MDIO clock source frequency is fixed to 100M */
-+#define IPQ_MDIO_CLK_RATE	100000000
-+
-+#define IPQ_PHY_SET_DELAY_US	100000
-+
- struct ipq4019_mdio_data {
- 	void __iomem	*membase;
-+	void __iomem *eth_ldo_rdy;
-+	struct clk *mdio_clk;
+ static const struct of_device_id ipq4019_mdio_dt_ids[] = {
+ 	{ .compatible = "qcom,ipq4019-mdio" },
++	{ .compatible = "qcom,ipq5018-mdio" },
+ 	{ }
  };
- 
- static int ipq4019_mdio_wait_busy(struct mii_bus *bus)
-@@ -171,10 +179,35 @@ static int ipq4019_mdio_write(struct mii_bus *bus, int mii_id, int regnum,
- 	return 0;
- }
- 
-+static int ipq_mdio_reset(struct mii_bus *bus)
-+{
-+	struct ipq4019_mdio_data *priv = bus->priv;
-+	u32 val;
-+	int ret;
-+
-+	/* To indicate CMN_PLL that ethernet_ldo has been ready if platform resource 1
-+	 * is specified in the device tree.
-+	 */
-+	if (priv->eth_ldo_rdy) {
-+		val = readl(priv->eth_ldo_rdy);
-+		val |= BIT(0);
-+		writel(val, priv->eth_ldo_rdy);
-+		fsleep(IPQ_PHY_SET_DELAY_US);
-+	}
-+
-+	/* Configure MDIO clock source frequency if clock is specified in the device tree */
-+	ret = clk_set_rate(priv->mdio_clk, IPQ_MDIO_CLK_RATE);
-+	if (ret)
-+		return ret;
-+
-+	return clk_prepare_enable(priv->mdio_clk);
-+}
-+
- static int ipq4019_mdio_probe(struct platform_device *pdev)
- {
- 	struct ipq4019_mdio_data *priv;
- 	struct mii_bus *bus;
-+	struct resource *res;
- 	int ret;
- 
- 	bus = devm_mdiobus_alloc_size(&pdev->dev, sizeof(*priv));
-@@ -187,9 +220,19 @@ static int ipq4019_mdio_probe(struct platform_device *pdev)
- 	if (IS_ERR(priv->membase))
- 		return PTR_ERR(priv->membase);
- 
-+	priv->mdio_clk = devm_clk_get_optional(&pdev->dev, "gcc_mdio_ahb_clk");
-+	if (IS_ERR(priv->mdio_clk))
-+		return PTR_ERR(priv->mdio_clk);
-+
-+	/* The platform resource is provided on the chipset IPQ5018 */
-+	res = platform_get_resource(pdev, IORESOURCE_MEM, 1);
-+	if (res)
-+		priv->eth_ldo_rdy = devm_ioremap_resource(&pdev->dev, res);
-+
- 	bus->name = "ipq4019_mdio";
- 	bus->read = ipq4019_mdio_read;
- 	bus->write = ipq4019_mdio_write;
-+	bus->reset = ipq_mdio_reset;
- 	bus->parent = &pdev->dev;
- 	snprintf(bus->id, MII_BUS_ID_SIZE, "%s%d", pdev->name, pdev->id);
- 
+ MODULE_DEVICE_TABLE(of, ipq4019_mdio_dt_ids);
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
