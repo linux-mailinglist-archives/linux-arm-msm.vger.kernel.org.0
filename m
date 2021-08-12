@@ -2,208 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AAF823E9B95
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Aug 2021 02:24:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 139833E9B97
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Aug 2021 02:25:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233035AbhHLAYX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 11 Aug 2021 20:24:23 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:57235 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230072AbhHLAYX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 11 Aug 2021 20:24:23 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1628727839; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=S5P1m+2rHcJaZXtc+bwHwQAAyB1CBhwMZ3Rpzh2V//I=;
- b=wq7zQB5R8L7e++nnv1YGZhBANj51xh+d5wXxODJUgPIOdOwoOcgnT1ALiHstnNg7eM7gi/cm
- vGazpDbRb0ha576URxuzbeECgBbJTkMZOpGH905VzCQ9s+0DBE3J9XS7mGBaVvdBq/f/nnGf
- FUGBiHPM7G8lJeMR1onG8Vcuvqs=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 61146a1091487ad520867fc5 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 12 Aug 2021 00:23:45
- GMT
-Sender: sbillaka=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 344AEC43460; Thu, 12 Aug 2021 00:23:44 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sbillaka)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 20B53C433F1;
-        Thu, 12 Aug 2021 00:23:43 +0000 (UTC)
+        id S233020AbhHLAZh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 11 Aug 2021 20:25:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53930 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232934AbhHLAZg (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 11 Aug 2021 20:25:36 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B670C0613D3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 17:25:12 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id 61-20020a9d0d430000b02903eabfc221a9so5683102oti.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 11 Aug 2021 17:25:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=aBF5XsmOwLOwhoJ7V4vA+C2s7+F6s8RQ06qQNUqSroI=;
+        b=h+56UWETmWksgXZ6odjCSUhkS60nq9twTFk5O3iDfPkw9SlJ2Q9MC4k1YZ13wA9QSI
+         cz2Pc3wlRcNYEKwZ643eM+MtGzStloEbEFNy4YhjnGGkil5U0nH2pe9f1iubEMhKDwtU
+         PwWNtWc+gGsmqzXBvFg2DTN9n6mT6P+9a9T3Y=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=aBF5XsmOwLOwhoJ7V4vA+C2s7+F6s8RQ06qQNUqSroI=;
+        b=a5LQPBLj4/O5W1iWVlTth18ejeyQtJkvYTUysoX7MSXdfAbvlgXCua4zuSr7hHFrJI
+         J8QXtOdT698/NGM7kfSn92tTrEGC9chyDhwYacmXprR0fMtC2pALNx37y/AJz6CoBLQy
+         qYxeH5gxPDuBaiOi87Z429rQng23II0nw2a/Szxo398xc2F3wO/X7fX5vGw1qsBPlEHT
+         n5V2Or1A+slrm6QtIoMkmy88/J6Dje/76G6rjq72nCiFBMmjK9HSZKEjxF1U5uJA1rjV
+         X7n8PKcVQ1RCxo2li3pONMxldEnxv32Q8TeErpqefNBASzsfzK9HCEN+6/+QY0PCDuNv
+         rzkA==
+X-Gm-Message-State: AOAM533FC9Bd1/5Eq6vs4eKcNReAFOAczqvQK16+S6VSI82K208SFGc3
+        tdh+KT/38sUt/Sboo8UzjY75ocBP5A+XD5VQ0hND9Q==
+X-Google-Smtp-Source: ABdhPJx0FoYmfQ9zAKiWN4L09yMr9AcpGP2BwH3WsltDn0CSuMhuEFOx+zQVeSaXHI+pNsLrGV3maXsnDszKO/B14Ss=
+X-Received: by 2002:a9d:5542:: with SMTP id h2mr1268834oti.25.1628727911938;
+ Wed, 11 Aug 2021 17:25:11 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 11 Aug 2021 17:25:11 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 12 Aug 2021 05:53:43 +0530
-From:   sbillaka@codeaurora.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        kalyan_t@codeaurora.org, abhinavk@codeaurora.org
-Subject: Re: [PATCH 2/2] phy: qcom: Introduce new eDP PHY driver
-In-Reply-To: <YRH0WFvWmemHIHqc@builder.lan>
-References: <20210511041930.592483-1-bjorn.andersson@linaro.org>
- <20210511041930.592483-2-bjorn.andersson@linaro.org>
- <7708925ad4d973b4e5f291cdcbdbe406@codeaurora.org>
- <YRH0WFvWmemHIHqc@builder.lan>
-Message-ID: <04267264ac7904733552d6ca02a6797b@codeaurora.org>
-X-Sender: sbillaka@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+In-Reply-To: <20210811235253.924867-2-robdclark@gmail.com>
+References: <20210811235253.924867-1-robdclark@gmail.com> <20210811235253.924867-2-robdclark@gmail.com>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Wed, 11 Aug 2021 17:25:11 -0700
+Message-ID: <CAE-0n51mqTwUdT1cmL=ubcFppFZ8GwerPBWCJ2QsyRtzG9vkjw@mail.gmail.com>
+Subject: Re: [PATCH 1/4] drm/bridge: ti-sn65dsi86: Avoid creating multiple connectors
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Andrzej Hajda <a.hajda@samsung.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jagan Teki <jagan@amarulasolutions.com>,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-08-10 09:06, Bjorn Andersson wrote:
-> On Mon 09 Aug 22:15 CDT 2021, sbillaka@codeaurora.org wrote:
->> On 2021-05-11 09:49, Bjorn Andersson wrote:
->> > diff --git a/drivers/phy/qualcomm/phy-qcom-edp.c
-> [..]
->> > +#define DP_PHY_AUX_CFG0				0x0020
->> > +#define DP_PHY_AUX_CFG1				0x0024
->> > +#define DP_PHY_AUX_CFG2				0x0028
->> > +#define DP_PHY_AUX_CFG3				0x002c
->> > +#define DP_PHY_AUX_CFG4				0x0030
->> > +#define DP_PHY_AUX_CFG5				0x0034
->> > +#define DP_PHY_AUX_CFG6				0x0038
->> > +#define DP_PHY_AUX_CFG7				0x003c
->> > +#define DP_PHY_AUX_CFG8				0x0040
->> > +#define DP_PHY_AUX_CFG9				0x0044
->> 
->> The DP_PHY_AUX_CFG0 offset for sc8180x eDP phy is 0x0024.
->> Some of the eDP PHY offset addresses are shifted by 4 address 
->> locations,
->> compared to the DP QMP PHY offset addresses for sc8180x.
->> The DP_PHY_AUX_CFG* offsets for this eDP phy driver are as below:
->> 
->> #define DP_PHY_AUX_CFG0                         0x0024
->> #define DP_PHY_AUX_CFG1                         0x0028
->> #define DP_PHY_AUX_CFG2                         0x002c
->> #define DP_PHY_AUX_CFG3                         0x0030
->> #define DP_PHY_AUX_CFG4                         0x0034
->> #define DP_PHY_AUX_CFG5                         0x0038
->> #define DP_PHY_AUX_CFG6                         0x003c
->> #define DP_PHY_AUX_CFG7                         0x0040
->> #define DP_PHY_AUX_CFG8                         0x0044
->> #define DP_PHY_AUX_CFG9                         0x0048
->> 
-> 
-> I noticed this as well. During development I just used the numbers
-> directly in the code and I must have screwed up as I replaced them with
-> defined - and somehow missed this in the testing before posting.
-> 
-> Sorry about that.
-> 
-> [..]
->> > +static int qcom_edp_phy_init(struct phy *phy)
->> > +{
->> > +	struct qcom_edp *edp = phy_get_drvdata(phy);
->> > +	int ret;
->> > +
->> > +	ret = regulator_bulk_enable(ARRAY_SIZE(edp->supplies), edp->supplies);
->> > +	if (ret)
->> > +		return ret;
->> > +
->> > +	ret = clk_bulk_prepare_enable(ARRAY_SIZE(edp->clks), edp->clks);
->> > +	if (ret)
->> > +		goto out_disable_supplies;
->> 
->> I think the number of clk and regulator resources can vary based on
->> platform.
->> 
-> 
-> If that's the case we should replace the ARRAY_SIZE() with an integer.
-> But I prefer to wait with that until the number actually is variable.
-> 
-> [..]
->> > +static int qcom_edp_phy_probe(struct platform_device *pdev)
->> > +{
->> > +	struct phy_provider *phy_provider;
->> > +	struct device *dev = &pdev->dev;
->> > +	struct qcom_edp *edp;
->> > +	int ret;
->> > +
->> > +	edp = devm_kzalloc(dev, sizeof(*edp), GFP_KERNEL);
->> > +	if (!edp)
->> > +		return -ENOMEM;
->> > +
->> > +	edp->dev = dev;
->> > +
->> > +	edp->edp = devm_platform_ioremap_resource(pdev, 0);
->> > +	if (IS_ERR(edp->edp))
->> > +		return PTR_ERR(edp->edp);
->> > +
->> > +	edp->tx0 = devm_platform_ioremap_resource(pdev, 1);
->> > +	if (IS_ERR(edp->tx0))
->> > +		return PTR_ERR(edp->tx0);
->> > +
->> > +	edp->tx1 = devm_platform_ioremap_resource(pdev, 2);
->> > +	if (IS_ERR(edp->tx1))
->> > +		return PTR_ERR(edp->tx1);
->> > +
->> > +	edp->pll = devm_platform_ioremap_resource(pdev, 3);
->> > +	if (IS_ERR(edp->pll))
->> > +		return PTR_ERR(edp->pll);
->> > +
->> > +	edp->clks[0].id = "aux";
->> > +	edp->clks[1].id = "cfg_ahb";
->> > +	ret = devm_clk_bulk_get(dev, ARRAY_SIZE(edp->clks), edp->clks);
->> > +	if (ret)
->> > +		return ret;
->> > +
->> > +	edp->supplies[0].supply = "vdda-phy";
->> > +	edp->supplies[1].supply = "vdda-pll";
->> > +	ret = devm_regulator_bulk_get(dev, ARRAY_SIZE(edp->supplies),
->> > edp->supplies);
->> > +	if (ret)
->> > +		return ret;
->> 
->> I believe, the combination of the number of regulator and clk 
->> resources may
->> vary based on the platform.
->> I think we should not fail probe if all these resources are not 
->> present in
->> the device tree file.
->> I think, these resources can be optional. We can get these resources 
->> if they
->> are present in the device tree file and enable them as required.
->> 
-> 
-> It's quite helpful to the DTS writer to actually encode in the driver
-> which resources the driver expects and provide useful error messages
-> when these expectations aren't met - so I think in line with most other
-> drivers this should be decided based on the compatible.
-> 
-> What clocks and regulators do you have on sc7280?
+Quoting Rob Clark (2021-08-11 16:52:47)
+> From: Rob Clark <robdclark@chromium.org>
+>
+> If we created our own connector because the driver does not support the
+> NO_CONNECTOR flag, we don't want the downstream bridge to *also* create
+> a connector.  And if this driver did pass the NO_CONNECTOR flag (and we
+> supported that mode) this would change nothing.
+>
+> Fixes: 4e5763f03e10 ("drm/bridge: ti-sn65dsi86: Wrap panel with panel-bridge")
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
+> ---
 
-We have only one clock (edp refclk) and one regulator (phy-0p9) for 
-sc7280.
+Thanks for saving me the packaging effort.
 
-> 
-> 
-> Thanks for the feedback, I see that I have a few more pieces of 
-> feedback
-> from others that I need to incorporate. I'll make sure to do that and
-> repost this patch shortly.
-
-Okay. Thank you.
-
-> 
-> Regards,
-> Bjorn
+Reported-by: Stephen Boyd <swboyd@chromium.org>
+Tested-by: Stephen Boyd <swboyd@chromium.org>
