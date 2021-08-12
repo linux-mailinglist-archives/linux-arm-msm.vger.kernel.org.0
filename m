@@ -2,81 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 95A903EA197
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Aug 2021 11:09:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 89A913EA1CC
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 12 Aug 2021 11:18:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235600AbhHLJJg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Aug 2021 05:09:36 -0400
-Received: from mail.kernel.org ([198.145.29.99]:36934 "EHLO mail.kernel.org"
+        id S235930AbhHLJSZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Aug 2021 05:18:25 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:20876 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236105AbhHLJJc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Aug 2021 05:09:32 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 44D6260E97;
-        Thu, 12 Aug 2021 09:09:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1628759347;
-        bh=4B2v1XdtK/Af8IXQV0QioCotL0DZazMwjviys8POlhY=;
-        h=References:From:To:Cc:Subject:Date:In-reply-to:From;
-        b=MwnlcLD4TKhl7N13do1qf+IYhJ9ceVMyokcuBMZ9VZ/2W3FSJ32BCjrHdmMjwBkBm
-         vt9xtOVMK+i+pnJZvgOo6rZBBrYevi+BEM1AJ/0OG8h1MQqx4FpXhLjB7oocaN04l6
-         svPXyfZTWKPkUixw5wfWuQKprW7SWzIef2iHsjXmJy6jurYSfnVPfBo0T0ndyqMlmH
-         DYNla9C3hMEUNE2ROdhAtbrzwFqMJYeWZoaVQuei4cn0npsjlty4eZu6/m/pplkZS9
-         /kSFX28vr/6AJrzU3jp08IJoUTaUmEMvWqOAZE5Y3ObnRnyWA7680XWSAq4KmIE94g
-         +vFCJx2cOrY4w==
-References: <e34c8e16-6521-c6e4-f3ed-9d8520d4ece2@codeaurora.org>
-User-agent: mu4e 1.6.2; emacs 27.2
-From:   Felipe Balbi <balbi@kernel.org>
-To:     Sandeep Maheswaram <sanm@codeaurora.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Pratham Pratap <prathampratap@codeaurora.org>,
-        Jack Pham <jackp@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Doug Anderson <dianders@chromium.org>
-Subject: Re: Regarding usb dwc3 core shutdown callback
-Date:   Thu, 12 Aug 2021 12:07:08 +0300
-In-reply-to: <e34c8e16-6521-c6e4-f3ed-9d8520d4ece2@codeaurora.org>
-Message-ID: <87bl63yqq8.fsf@kernel.org>
+        id S235345AbhHLJSZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 12 Aug 2021 05:18:25 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1628759880; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=wvbmxHKDPqEGjRWLYlxLgyJabN51zMcKvsaUtZ2ab5s=; b=Eo6LLvJWPtoFwcJVg3C71p5r17DxWZ4fPAZSKtGUozd8M41cFRdk3f/P1ZB/Bg4spbP9F9dK
+ YfWKCdzjKUKglmn5SefTv4t/Y0rbc+GUAQqAqojC06tyzNvtWCiTtzUXUv/85WXWn4rylVLH
+ X5K9C42tJcCvi4Fqo8n4yzQ7Pu8=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 6114e74366ff10790465255b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 12 Aug 2021 09:17:55
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1AFF5C4338A; Thu, 12 Aug 2021 09:17:55 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 44FCAC433D3;
+        Thu, 12 Aug 2021 09:17:50 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.3.2 smtp.codeaurora.org 44FCAC433D3
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=saiprakash.ranjan@codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     devicetree@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCH 0/3] soc: qcom: Add download mode support for QTI platforms
+Date:   Thu, 12 Aug 2021 14:47:39 +0530
+Message-Id: <cover.1628757036.git.saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.29.0
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Collecting ramdumps on QTI platforms mainly require two things,
+SDI (System Debug Image) enabled firmware and kernel support to
+configure download mode cookies and SDI settings. Ramdumps can
+be collected once the system enters the download mode. To enter
+download mode, magic values or cookies need to be set in IMEM
+which is used by firmware to decide to enter download mode or not.
+Download mode cookies remain the same across targets and SDI disable
+register needs to be set or SDI needs to be disabled in case of normal
+reboot since ramdumps are supposed to be for crash debugging and
+not for every reboot. This series adds the kernel support required
+to enter download mode.
 
-Hi,
+Currently this series doesn't add support for android targets where
+a couple of SCM calls are required to set/unset the download mode
+cookies and SDI configuration but can be easily added gradually to
+the same driver, so as of now only chrome platforms are supported
+and tested.
 
-(why isn't this email plain/text? Content Type was set to multipart
-alternative, please configure your email client correctly :-)
+Sai Prakash Ranjan (3):
+  soc: qcom: Add download mode support
+  dt-bindings: msm: Add QTI download mode support binding
+  arm64: dts: qcom: sc7180: Add IMEM, pil info and download mode region
 
-While at that, also make sure to break lines at 80-columns)
-
-Sandeep Maheswaram <sanm@codeaurora.org> writes:
-> Hi,
->
-> Earlier I have posted the patch for usb dwc3 core shutdown callback
->
-> https://lore.kernel.org/linux-arm-msm/1618380209-20114-1-git-send-email-sanm@codeaurora.org/
->
-> and it was reverted due to issues.
-
-Right, as should be expected when we find regressions
-
-> https://lore.kernel.org/linux-usb/20210603151742.298243-1-alexandru.elisei@arm.com/
->
-> As we already have shutdown callback in xhci plat driver where we halt
-> the controller, so there will be no transactions with usb devices.
->
-> https://lore.kernel.org/linux-usb/20200306092328.41253-1-ran.wang_1@nxp.com/
->
-> So I think dwc3 core shutdown may not be required at least when we are
-> using host mode. Let me know your opinion about this.
-
-If that's the case, then sure. Please validate the condition, though,
-and kindly report back on your findings
+ .../bindings/arm/msm/qcom,dload-mode.yaml     |  53 ++++++
+ MAINTAINERS                                   |   7 +
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          |  21 +++
+ drivers/soc/qcom/Kconfig                      |  10 ++
+ drivers/soc/qcom/Makefile                     |   1 +
+ drivers/soc/qcom/download_mode.c              | 152 ++++++++++++++++++
+ 6 files changed, 244 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,dload-mode.yaml
+ create mode 100644 drivers/soc/qcom/download_mode.c
 
 -- 
-balbi
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
+
