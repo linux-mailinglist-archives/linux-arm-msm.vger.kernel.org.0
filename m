@@ -2,88 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 11FC63EAF0B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Aug 2021 05:57:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 750C73EAF55
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Aug 2021 06:31:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238648AbhHMD6X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Aug 2021 23:58:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34024 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238634AbhHMD6W (ORCPT
+        id S236136AbhHMEbh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Aug 2021 00:31:37 -0400
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:22715 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S235002AbhHMEbh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Aug 2021 23:58:22 -0400
-Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B085AC0617AD
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Aug 2021 20:57:56 -0700 (PDT)
-Received: by mail-pj1-x1030.google.com with SMTP id oa17so13441791pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Aug 2021 20:57:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=MvmuwhxcqYAbdPmkTIufV5uQRwUnrxELEdSjPA9KrXo=;
-        b=eOwiRNh4MUanAxbqTJMBRZCZfu41L9y7gdH60FKetDLsqWzSItkABZc2JszeZ82opI
-         bfkEzhtcD2es9gu2FAoDAUD+8r0bgLFFKMlRuYwEIbemol70oWZxCO31WcLOv5eMCRNa
-         CJz0KsyMOp6WuJk25J8DqIzQcqdedVyC1mhgHbhFE87rdyadBI69e49/dXtQgjr5nbwK
-         VwFZ8KAWt5PmbX1zUdzO5/uHS77AD+9oVD4cjLD1dgCyEgN0HdYt+pNQ9evzQR5Xju/D
-         A2Cbwl1uAfUjP6ecqadlbt+ewPMPfQYRiHSWmx1YWwU4/vp+unPk39FFAHC70KWSX+1c
-         sUrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=MvmuwhxcqYAbdPmkTIufV5uQRwUnrxELEdSjPA9KrXo=;
-        b=PYLIcNfAfjaYvLj0AFKoEa9TRT3rzHilZUgHL/B4vTKl/0wX58VqIdPecuUv4NfAxl
-         XJyAcQXllMzH975+lqBaS78V7vhZHZaeGomF8lER8b/x4FfQCqbkc0Sr7RRT+aiMpwYx
-         Cc462Ps3n0OyyBkHPagz74kObuY9+8DL6gIa7zmFNyd5JT3uOG5l4K3OJWbC66zGo6m7
-         OhpkhBArY9lgj9xrlT+w2YO6jqMVN5WFWUSLc261MX30z2kAWx0HqKpaloPUgmcH70nl
-         ih0xFLSibPbRfZaFx0mfl2t0gcN7ysROvSTgCQIIJ/tXTyRpnu7Q3d8fiBIkFKtXfBq0
-         tyAg==
-X-Gm-Message-State: AOAM530wbIeZFVxE/ae4eiiLZr2zCRu7pM05L0hA8zz6yjnFkATD+9W5
-        j5XYmv0O2ohDIx5vRC7j//xVKg==
-X-Google-Smtp-Source: ABdhPJxRDakJcVqHqBRWt5r47fIPr4C/oo8C0jNq80oWE8P2YNHnQVm97OlAzna+HWJyBkUGtgz+2g==
-X-Received: by 2002:a65:44c3:: with SMTP id g3mr421133pgs.233.1628827076146;
-        Thu, 12 Aug 2021 20:57:56 -0700 (PDT)
-Received: from localhost ([122.172.201.85])
-        by smtp.gmail.com with ESMTPSA id x1sm299780pfn.64.2021.08.12.20.57.55
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 12 Aug 2021 20:57:55 -0700 (PDT)
-Date:   Fri, 13 Aug 2021 09:27:53 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     ulf.hansson@linaro.org, bjorn.andersson@linaro.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        swboyd@chromium.org, rojay@codeaurora.org, stephan@gerhold.net,
-        digetx@gmail.com
-Subject: Re: [PATCH v7 1/3] opp: Don't print an error if required-opps is
- missing
-Message-ID: <20210813035753.7b6ye4yzztmp2ly7@vireshk-i7>
-References: <1628767642-4008-1-git-send-email-rnayak@codeaurora.org>
- <1628767642-4008-2-git-send-email-rnayak@codeaurora.org>
+        Fri, 13 Aug 2021 00:31:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1628829071; x=1660365071;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=2Qn8uclZhD6XPeMfCxSgFOazhwYXJ3l60HI88f+/yDc=;
+  b=nx+zmMAEQd/puFCvKJdkqVdHQ5QRn+iX7m1nZQ/kl3Z7KOOneuNCqbYO
+   1WW18YbMzpHqLTbaB1l8CpnYU8KkyKh5JHmtMnMyXem7Sd9he3NAkAv2m
+   EWQ8IisaYLJ0NvH3Vy531rdHyNMn09hCSwaipp9Pf9Yh72tr4YDP9Ltwo
+   Q=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 12 Aug 2021 21:31:10 -0700
+X-QCInternal: smtphost
+Received: from unknown (HELO nasanex01a.na.qualcomm.com) ([10.52.223.231])
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Aug 2021 21:31:10 -0700
+Received: from [10.110.12.68] (10.80.80.8) by nasanex01a.na.qualcomm.com
+ (10.52.223.231) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.858.15; Thu, 12 Aug
+ 2021 21:31:09 -0700
+Subject: Re: [PATCH 0/3] soc: qcom: Add download mode support for QTI
+ platforms
+To:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "Sai Prakash Ranjan" <saiprakash.ranjan@codeaurora.org>
+CC:     <devicetree@vger.kernel.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-kernel@vger.kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        "Rajendra Nayak" <rnayak@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>, <quic_eberman@quicinc.com>
+References: <cover.1628757036.git.saiprakash.ranjan@codeaurora.org>
+ <CAE-0n52PzadMxB_4h2DGJGLO++Bu_PCSsxS8NHe+cuhv=Mw0sA@mail.gmail.com>
+From:   Trilok Soni <quic_tsoni@quicinc.com>
+Message-ID: <0178821e-a8cd-87c8-640c-4928201a3b5a@quicinc.com>
+Date:   Thu, 12 Aug 2021 21:31:08 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1628767642-4008-2-git-send-email-rnayak@codeaurora.org>
-User-Agent: NeoMutt/20180716-391-311a52
+In-Reply-To: <CAE-0n52PzadMxB_4h2DGJGLO++Bu_PCSsxS8NHe+cuhv=Mw0sA@mail.gmail.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanexm03f.na.qualcomm.com (10.85.0.47) To
+ nasanex01a.na.qualcomm.com (10.52.223.231)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12-08-21, 16:57, Rajendra Nayak wrote:
-> The 'required-opps' property is considered optional, hence remove
-> the pr_err() in of_parse_required_opp() when we find the property is
-> missing.
-> While at it, also fix the return value of
-> of_get_required_opp_performance_state() when of_parse_required_opp()
-> fails, return a -ENODEV instead of the -EINVAL.
+Stephen,
+
+On 8/12/2021 5:16 PM, Stephen Boyd wrote:
+> Quoting Sai Prakash Ranjan (2021-08-12 02:17:39)
+>> Collecting ramdumps on QTI platforms mainly require two things,
+>> SDI (System Debug Image) enabled firmware and kernel support to
+>> configure download mode cookies and SDI settings. Ramdumps can
+>> be collected once the system enters the download mode. To enter
+>> download mode, magic values or cookies need to be set in IMEM
+>> which is used by firmware to decide to enter download mode or not.
+>> Download mode cookies remain the same across targets and SDI disable
+>> register needs to be set or SDI needs to be disabled in case of normal
+>> reboot since ramdumps are supposed to be for crash debugging and
+>> not for every reboot. This series adds the kernel support required
+>> to enter download mode.
 > 
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-> ---
->  drivers/opp/of.c | 12 ++----------
->  1 file changed, 2 insertions(+), 10 deletions(-)
+> I don't recall if we discussed this on the list, but I'd really prefer
+> that we don't make kernel changes to support this beyond implementing
+> PSCI SYSTEM_RESET2 support and then some sort of vendor specific (or if
+> ARM is willing to update the spec then ARM specific) reset command on
+> panic reboot paths. The idea is to set the cookie in the bootloader
+> before the kernel is booted, then any insta-reboots/watchdogs would go
+> into download mode, no special init code required to lay down the cookie
+>>   create mode 100644 drivers/soc/qcom/download_mode.c
 
-Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+Some discussion by Elliot on the PSCI_SYSTEM_RESET2 and vendor bits was 
+done here. You may want to check.
 
--- 
-viresh
+https://lkml.org/lkml/2020/2/24/1137
+
+---Trilok Soni
