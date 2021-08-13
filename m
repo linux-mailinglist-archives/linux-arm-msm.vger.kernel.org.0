@@ -2,316 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AFCDC3EADEF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Aug 2021 02:28:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 417AB3EAF01
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Aug 2021 05:56:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237108AbhHMA3V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Aug 2021 20:29:21 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:28513 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232772AbhHMA3V (ORCPT
+        id S238523AbhHMD4o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Aug 2021 23:56:44 -0400
+Received: from gate2.alliedtelesis.co.nz ([202.36.163.20]:55972 "EHLO
+        gate2.alliedtelesis.co.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233750AbhHMD4o (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Aug 2021 20:29:21 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1628814535; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=Wzc6c47jdJP+SX2jmJlgxTZVRxNp8P8GJXI7b5FXiDQ=;
- b=uUogvPNiebVVLRgvcp/07GDhk576c7WFlmQVgkhXcElLt0L+PNV2qWhL+yFCKkTOPN1tePFq
- vTXv0XmzoD3v4UNHUo+cs6rHohiuZIWFTuOiXGkbau3KD7WdP8mck1V508JjOEbsAtBrgdWm
- ndLRtK5KsU2cx0v06LEvTy4CXXo=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 6115bcbab14e7e2ecb15427a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 13 Aug 2021 00:28:42
- GMT
-Sender: sbillaka=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 38E59C4360C; Fri, 13 Aug 2021 00:28:42 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sbillaka)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 144CAC433F1;
-        Fri, 13 Aug 2021 00:28:41 +0000 (UTC)
+        Thu, 12 Aug 2021 23:56:44 -0400
+Received: from svr-chch-seg1.atlnz.lc (mmarshal3.atlnz.lc [10.32.18.43])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (Client did not present a certificate)
+        by gate2.alliedtelesis.co.nz (Postfix) with ESMTPS id 5C67C806B5;
+        Fri, 13 Aug 2021 15:56:14 +1200 (NZST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alliedtelesis.co.nz;
+        s=mail181024; t=1628826974;
+        bh=6RNUQUme0f8g9AQ2zLft1SoSF8LlcOn8HlAjatW3Y7s=;
+        h=From:To:CC:Subject:Date:References:In-Reply-To;
+        b=jdNHGyII3uqHCUiuHKHQonVhgrOX7fZ3iuO7g45ilJz1Y8ZqKypr29SmUCWXPOI0/
+         Vldgc3k4M3xRMwEFLCsOdz8ExqQyGwuQgdvP4daGYnqwQgmRzu4XYc5MMBmxcw2PE4
+         Zes4lixW/KgDLYYozjl6MxfrdnCt2gtKhhHnV2x8JPl21/ATuFnpwe4mw32TKyTvHl
+         99mBYlCkTMGJw8zaeA6VwiGrfs0LIPHbduawcWXUfGv4sLyi1ijVOm8i0xOlmP7x0+
+         QSGYU7rELcVTvNgL/d9lyftovcSIGYvgky3c4CeQBMXJP4NehfLWHqYZGW/z/dG0Gv
+         A2kH6R6wh+7vQ==
+Received: from svr-chch-ex1.atlnz.lc (Not Verified[2001:df5:b000:bc8::77]) by svr-chch-seg1.atlnz.lc with Trustwave SEG (v8,2,6,11305)
+        id <B6115ed5e0001>; Fri, 13 Aug 2021 15:56:14 +1200
+Received: from svr-chch-ex1.atlnz.lc (2001:df5:b000:bc8:409d:36f5:8899:92e8)
+ by svr-chch-ex1.atlnz.lc (2001:df5:b000:bc8:409d:36f5:8899:92e8) with
+ Microsoft SMTP Server (TLS) id 15.0.1497.23; Fri, 13 Aug 2021 15:56:14 +1200
+Received: from svr-chch-ex1.atlnz.lc ([fe80::409d:36f5:8899:92e8]) by
+ svr-chch-ex1.atlnz.lc ([fe80::409d:36f5:8899:92e8%12]) with mapi id
+ 15.00.1497.023; Fri, 13 Aug 2021 15:56:14 +1200
+From:   Richard Laing <Richard.Laing@alliedtelesis.co.nz>
+To:     Jakub Kicinski <kuba@kernel.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+CC:     "davem@davemloft.net" <davem@davemloft.net>,
+        "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
+Subject: Re: [RESEND] Conflict between char-misc and netdev
+Thread-Topic: [RESEND] Conflict between char-misc and netdev
+Thread-Index: AQHXj358xos8ytNW2k+HeQjlGfeGTKtvGhKAgAAD7wCAACN1AIAAxLOA
+Date:   Fri, 13 Aug 2021 03:56:13 +0000
+Message-ID: <29fe2abc-3065-444b-cc71-d1cbafa3638d@alliedtelesis.co.nz>
+References: <20210812133215.GB7897@workstation>
+ <20210812065113.04cc1a66@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+ <20210812140518.GC7897@workstation>
+ <20210812091212.0034a81c@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+In-Reply-To: <20210812091212.0034a81c@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+Accept-Language: en-NZ, en-US
+Content-Language: en-US
+X-MS-Has-Attach: 
+X-MS-TNEF-Correlator: 
+x-ms-exchange-messagesentrepresentingtype: 1
+x-ms-exchange-transport-fromentityheader: Hosted
+x-originating-ip: [10.32.16.78]
+Content-Type: text/plain; charset="utf-8"
+Content-ID: <F3C9483CBDB0A34E908D689009E2A57E@atlnz.lc>
+Content-Transfer-Encoding: base64
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 13 Aug 2021 05:58:40 +0530
-From:   sbillaka@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        robdclark@gmail.com, seanpaul@chromium.org,
-        kalyan_t@codeaurora.org, abhinavk@codeaurora.org,
-        dianders@chromium.org, khsieh@codeaurora.org,
-        mkrishn@codeaurora.org
-Subject: Re: [PATCH v1 1/2] drm/msm/dp: Add support for SC7280 eDP
-In-Reply-To: <CAE-0n52=mR0Zt8UZ3vOM-nt0UJszcFhi-eYfzDtD0bt3zhNA_Q@mail.gmail.com>
-References: <1628726882-27841-1-git-send-email-sbillaka@codeaurora.org>
- <1628726882-27841-2-git-send-email-sbillaka@codeaurora.org>
- <CAE-0n52=mR0Zt8UZ3vOM-nt0UJszcFhi-eYfzDtD0bt3zhNA_Q@mail.gmail.com>
-Message-ID: <0b2aa426c8f511a29143f2a1117fe9a2@codeaurora.org>
-X-Sender: sbillaka@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+X-SEG-SpamProfiler-Analysis: v=2.3 cv=aqTM9hRV c=1 sm=1 tr=0 a=Xf/6aR1Nyvzi7BryhOrcLQ==:117 a=xqWC_Br6kY4A:10 a=8KpF8ikWtqQA:10 a=IkcTkHD0fZMA:10 a=MhDmnRu9jo8A:10 a=dw8Ceu96Tw-G5MO2LgAA:9 a=QEXdDO2ut3YA:10
+X-SEG-SpamProfiler-Score: 0
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-08-12 06:11, Stephen Boyd wrote:
-> Quoting Sankeerth Billakanti (2021-08-11 17:08:01)
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> index b131fd37..1096c44 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
->> @@ -856,9 +856,9 @@ static const struct dpu_intf_cfg sm8150_intf[] = {
->>  };
->> 
->>  static const struct dpu_intf_cfg sc7280_intf[] = {
->> -       INTF_BLK("intf_0", INTF_0, 0x34000, INTF_DP, 0, 24, 
->> INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
->> +       INTF_BLK("intf_0", INTF_0, 0x34000, INTF_DP, 1, 24, 
->> INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
->>         INTF_BLK("intf_1", INTF_1, 0x35000, INTF_DSI, 0, 24, 
->> INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 26, 27),
->> -       INTF_BLK("intf_5", INTF_5, 0x39000, INTF_EDP, 0, 24, 
->> INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 22, 23),
->> +       INTF_BLK("intf_5", INTF_5, 0x39000, INTF_DP, 0, 24, 
->> INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 22, 23),
->>  };
->> 
->>  /*************************************************************
->> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c 
->> b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> index d2569da..06d5a2d 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
->> @@ -1244,7 +1244,9 @@ static int dp_ctrl_link_train(struct 
->> dp_ctrl_private *ctrl,
->>                 struct dp_cr_status *cr, int *training_step)
->>  {
->>         int ret = 0;
->> +       u8 *dpcd = ctrl->panel->dpcd;
->>         u8 encoding = DP_SET_ANSI_8B10B;
->> +       u8 ssc = 0, assr = 0;
-> 
-> Please don't initialize to zero and then overwrite it before using it.
-> It hides usage before actual initialization bugs.
-> 
-
-Okay. I will change it.
-
->>         struct dp_link_info link_info = {0};
->> 
->>         dp_ctrl_config_ctrl(ctrl);
->> @@ -1254,9 +1256,21 @@ static int dp_ctrl_link_train(struct 
->> dp_ctrl_private *ctrl,
->>         link_info.capabilities = DP_LINK_CAP_ENHANCED_FRAMING;
->> 
->>         dp_aux_link_configure(ctrl->aux, &link_info);
->> +
->> +       if (dpcd[DP_MAX_DOWNSPREAD] & DP_MAX_DOWNSPREAD_0_5) {
->> +               ssc = DP_SPREAD_AMP_0_5;
->> +               drm_dp_dpcd_write(ctrl->aux, DP_DOWNSPREAD_CTRL, &ssc, 
->> 1);
->> +       }
->> +
->>         drm_dp_dpcd_write(ctrl->aux, DP_MAIN_LINK_CHANNEL_CODING_SET,
->>                                 &encoding, 1);
->> 
->> +       if (dpcd[DP_EDP_CONFIGURATION_CAP] & 
->> DP_ALTERNATE_SCRAMBLER_RESET_CAP) {
->> +               assr = DP_ALTERNATE_SCRAMBLER_RESET_ENABLE;
->> +               drm_dp_dpcd_write(ctrl->aux, DP_EDP_CONFIGURATION_SET,
->> +                               &assr, 1);
->> +       }
->> +
->>         ret = dp_ctrl_link_train_1(ctrl, cr, training_step);
->>         if (ret) {
->>                 DRM_ERROR("link training #1 failed. ret=%d\n", ret);
->> @@ -1328,9 +1342,11 @@ static int 
->> dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl)
->>         struct dp_io *dp_io = &ctrl->parser->io;
->>         struct phy *phy = dp_io->phy;
->>         struct phy_configure_opts_dp *opts_dp = &dp_io->phy_opts.dp;
->> +       u8 *dpcd = ctrl->panel->dpcd;
-> 
-> const?
-> 
-
-Okay. I will change to const u8 *dpcd at all the required places.
-
->> 
->>         opts_dp->lanes = ctrl->link->link_params.num_lanes;
->>         opts_dp->link_rate = ctrl->link->link_params.rate / 100;
->> +       opts_dp->ssc = dpcd[DP_MAX_DOWNSPREAD] & 
->> DP_MAX_DOWNSPREAD_0_5;
->>         dp_ctrl_set_clock_rate(ctrl, DP_CTRL_PM, "ctrl_link",
->>                                         ctrl->link->link_params.rate * 
->> 1000);
->> 
->> @@ -1760,6 +1776,9 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
->>         ctrl->link->link_params.num_lanes = 
->> ctrl->panel->link_info.num_lanes;
->>         ctrl->dp_ctrl.pixel_rate = 
->> ctrl->panel->dp_mode.drm_mode.clock;
->> 
->> +       if (ctrl->dp_ctrl.pixel_rate == 0)
->> +               return -EINVAL;
->> +
-> 
-> Why are we enabling the stream with a zero pixel clk?
-> 
-
-This was an error condition I encountered while bringing up sc7280. HPD 
-processing was delayed and I got a commit with pixel clock = 0. I will 
-recheck why this is happening.
-
->>         DRM_DEBUG_DP("rate=%d, num_lanes=%d, pixel_rate=%d\n",
->>                 ctrl->link->link_params.rate,
->>                 ctrl->link->link_params.num_lanes, 
->> ctrl->dp_ctrl.pixel_rate);
->> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c 
->> b/drivers/gpu/drm/msm/dp/dp_display.c
->> index ee5bf64..a772290 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_display.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->> @@ -117,8 +117,36 @@ struct dp_display_private {
->>         struct dp_audio *audio;
->>  };
->> 
->> +struct msm_dp_config {
->> +       phys_addr_t io_start[3];
->> +       size_t num_dp;
->> +};
->> +
->> +static const struct msm_dp_config sc7180_dp_cfg = {
->> +       .io_start = { 0x0ae90000 },
->> +       .num_dp = 1,
->> +};
->> +
->> +static const struct msm_dp_config sc8180x_dp_cfg = {
->> +       .io_start = { 0xae90000, 0xae98000, 0 },
->> +       .num_dp = 3,
->> +};
->> +
->> +static const struct msm_dp_config sc8180x_edp_cfg = {
->> +       .io_start = { 0, 0, 0xae9a000 },
->> +       .num_dp = 3,
->> +};
->> +
->> +static const struct msm_dp_config sc7280_edp_cfg = {
->> +       .io_start = { 0xaea0000, 0 },
->> +       .num_dp = 2,
->> +};
-> 
-> Are all of these supposed to be here?
-
-No. I will remove them. Only sc7280_edp_cfg will be there.
-
-> 
->> +
->>  static const struct of_device_id dp_dt_match[] = {
->> -       {.compatible = "qcom,sc7180-dp"},
->> +       { .compatible = "qcom,sc7180-dp", .data = &sc7180_dp_cfg },
->> +       { .compatible = "qcom,sc8180x-dp", .data = &sc8180x_dp_cfg },
->> +       { .compatible = "qcom,sc8180x-edp", .data = &sc8180x_edp_cfg 
->> },
->> +       { .compatible = "qcom,sc7280-edp", .data = &sc7280_edp_cfg },
-> 
-> Please sort alphabetically on compatible string, it helps avoid
-> conflicts in the future.
-
-Okay
-
-> 
->>         {}
->>  };
->> 
->> @@ -1408,7 +1436,7 @@ void msm_dp_irq_postinstall(struct msm_dp 
->> *dp_display)
->> 
->>         dp_hpd_event_setup(dp);
->> 
->> -       dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 100);
->> +       dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 1);
->>  }
->> 
->>  void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor 
->> *minor)
->> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c 
->> b/drivers/gpu/drm/msm/dp/dp_parser.c
->> index 0519dd3..c05fc0a 100644
->> --- a/drivers/gpu/drm/msm/dp/dp_parser.c
->> +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
->> @@ -248,6 +248,33 @@ static int dp_parser_clock(struct dp_parser 
->> *parser)
->>         return 0;
->>  }
->> 
->> +static int dp_parser_gpio(struct dp_parser *parser)
->> +{
->> +       struct device *dev = &parser->pdev->dev;
->> +       int ret;
->> +
->> +       parser->panel_bklt_gpio = devm_gpiod_get(dev, "panel-bklt",
->> +                       GPIOD_OUT_HIGH);
->> +       if (IS_ERR(parser->panel_bklt_gpio)) {
->> +               ret = PTR_ERR(parser->panel_bklt_gpio);
->> +               parser->panel_bklt_gpio = NULL;
->> +               DRM_ERROR("%s: cannot get panel-bklt gpio, %d\n", 
->> __func__, ret);
->> +               goto fail;
->> +       }
->> +
->> +       parser->panel_pwm_gpio = devm_gpiod_get(dev, "panel-pwm", 
->> GPIOD_OUT_HIGH);
->> +       if (IS_ERR(parser->panel_pwm_gpio)) {
->> +               ret = PTR_ERR(parser->panel_pwm_gpio);
->> +               parser->panel_pwm_gpio = NULL;
->> +               DRM_ERROR("%s: cannot get panel-pwm gpio, %d\n", 
->> __func__, ret);
->> +               goto fail;
->> +       }
->> +
->> +       DRM_INFO("gpio on");
->> +fail:
->> +       return 0;
->> +}
-> 
-> Don't we have pwm backlight drivers like
-> drivers/video/backlight/pwm_bl.c to support this? This sort of thing
-> doesn't belong in the dp driver.
-
-Okay. I will explore it.
-
-> 
->> +
->>  static int dp_parser_parse(struct dp_parser *parser)
->>  {
->>         int rc = 0;
->> @@ -269,6 +296,10 @@ static int dp_parser_parse(struct dp_parser 
->> *parser)
->>         if (rc)
->>                 return rc;
->> 
->> +       rc = dp_parser_gpio(parser);
->> +       if (rc)
->> +               return rc;
->> +
->>         /* Map the corresponding regulator information according to
->>          * version. Currently, since we only have one supported 
->> platform,
->>          * mapping the regulator directly.
-
-Thank you,
-Sankeerth
+DQpPbiA4LzEzLzIxIDQ6MTIgQU0sIEpha3ViIEtpY2luc2tpIHdyb3RlOg0KPiBXb3VsZCB5b3Ug
+bWluZCByZW5kZXJpbmcgdGhhdCBjb21tZW50IHlvdSdyZSByZWZlcnJpbmcgdG8gYXMgYSBjb21t
+aXQNCj4gbWVzc2FnZSBhbmQgc2VuZGluZyBhIGZpeC11cCBvciBhIHJldmVydCBwYXRjaCBhZ2Fp
+bnN0IG5ldC1uZXh0Pw0KPiBJIHdvdWxkbid0IGJlIGFibGUgdG8gZG8gaXQganVzdGljZS4NCkkg
+d291bGQgYWxzbyBiZSBpbnRlcmVzdGVkIGluIHRoZSBjb21tZW50Lg0KDQpJIHdvdWxkIGJlIGhh
+cHB5IGlmIHRoZSBwYXRjaCBpcyByZXZlcnRlZCBmcm9tIG5ldC1uZXh0LCBJIGhhdmUgYmVlbiAN
+Cmxvb2tpbmcgYXQgYSBtb3JlIGZsZXhpYmxlIGFsdGVybmF0aXZlIGFsbG93aW5nIHRoZSBzaXpl
+IHRvIGJlIHNwZWNpZmllZCANCnBlciBjaGFubmVsIHJhdGhlciB0aGFuIGFzIGEgZ2xvYmFsIHZh
+bHVlLg0K
