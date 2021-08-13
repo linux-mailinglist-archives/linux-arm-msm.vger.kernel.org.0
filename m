@@ -2,153 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D6103EB5E6
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Aug 2021 15:00:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E81AC3EB667
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Aug 2021 15:59:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240167AbhHMNBA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Aug 2021 09:01:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44684 "EHLO
+        id S240325AbhHMOAS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Aug 2021 10:00:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240521AbhHMNBA (ORCPT
+        with ESMTP id S233514AbhHMOAS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Aug 2021 09:01:00 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1085C061756
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Aug 2021 06:00:32 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id j1so15121266pjv.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Aug 2021 06:00:32 -0700 (PDT)
+        Fri, 13 Aug 2021 10:00:18 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A78BC061756
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Aug 2021 06:59:51 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id bo18so15471671pjb.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Aug 2021 06:59:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=nNkuij8yUE1tIId8iqJQ6kzgmpwCYF7ujjVAfXSGs24=;
-        b=ytr74bAALHy2VuJNKNKVS3wpLJz+g9XIGMjOXTTqex2kkTCg1DM3wTPEwhaOjiSDdL
-         quGnQZK7QdiDcJtrn7gfX3j+l7RvUmrjb1RazsDWY/e9cPmVNIcUcUJQ/x9CnD91KfQI
-         LqLl5sREMreRvrUa+cZIYT7iahS0LNm1JAa5Ouk9ZPQ4eg6+6AwUeRz1sS4fmT2XOf8H
-         qzi1NFyz5+owg9q+SRpwvJGBFVlzDIiE8zk00l69vCmaodNW3lL9vR0h5IeMK0pgKaZH
-         XFwSFh8q//3axn8vFZQ/uRecLIgxVR/9cbx4CXLtfaLE1fBM9SvK/ZHL0jTFoZ5JLM6Z
-         oJog==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=MQn6cqjN8smmcTyxcoK9bZJTSPGWxwSW1fWm9idf4p8=;
+        b=bbHUzcOfc28iYmzuG1dJQA5Qa3wglzCEl3896nSfZmZ8WFP2QtXO5vfAMUDVjq3oJ0
+         KV1z2/rvmQtomipyPGLecQk2BHJrW5ZZYHuGh0PF/NyN5AnZWF8U6nHxdvnb5RHkk7bV
+         tQr7yYencus19zZQx3ztNv2JgInt1QHi2/Wu//2MOET5FtlbIu1YmYhzsRgebMogur/5
+         /LsoPJgbZJI11aLJKGmhiWVM78ymSDQlWFA2z2ScyQs7EvXR38FfdHvJ8I6QIdwfTEKy
+         fLjD9eQHoajeBTxC/ZDO+haKCPSfkA50cIlRCf7j3YjrCnL7UU7CM6rBGvfmdtv7sfpc
+         wzJw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=nNkuij8yUE1tIId8iqJQ6kzgmpwCYF7ujjVAfXSGs24=;
-        b=p6UmM7m4nK5YHjJFtE9AUIf4Jaz/nUURPaJQmimqby8WmmxYSXTd0H1Lgcp8J2N18s
-         iyJ6kG22Nk64ETy2Yr+fK2yWSw0GyyaQ7c/yh6zWWV+qlw3hzzQgPS/pLpzmrKXTj1gK
-         cxWmL+lg01BxvUh+hN/5/qMWIBaN3o3+J0/gf7exAsFJEjO4lg5Kl7aD5qCX1T2kO8y0
-         zCK38zyVI2cAx9CAIDNE87odymT7Kr5XNUh/ZGEHn5gNixBebgJsRvuJ+XvQf2K7SZwE
-         lVCCKHwoNANtkXicnTKv998MVBFNIqMH159cPNz8DQBtIhSOcCHmgWLGlD/k7Il8ej6M
-         WK5w==
-X-Gm-Message-State: AOAM533UHAkI+PJaLjm5kW/y/xOVYAXqKki87ok3HEuYRfQu1X1+Kmkz
-        GrkC6HYGEWOUWKBMXpQ57L/h
-X-Google-Smtp-Source: ABdhPJzhwS9a/AXYvM9PIXi5Ct03LWk8VWsJot4sp7f8DWpDHo/eEQmKQh268wsj5w5lenJpavrnog==
-X-Received: by 2002:aa7:8d54:0:b029:3cd:6ce7:bec6 with SMTP id s20-20020aa78d540000b02903cd6ce7bec6mr2295933pfe.69.1628859632121;
-        Fri, 13 Aug 2021 06:00:32 -0700 (PDT)
-Received: from localhost.localdomain ([2409:4072:6d88:db48:973:4d84:d444:9ae4])
-        by smtp.gmail.com with ESMTPSA id r16sm1993735pje.10.2021.08.13.06.00.26
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 13 Aug 2021 06:00:31 -0700 (PDT)
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     kuba@kernel.org, davem@davemloft.net
-Cc:     netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Richard.Laing@alliedtelesis.co.nz, loic.poulain@linaro.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: [PATCH] Revert "bus: mhi: pci-generic: configurable network interface MRU"
-Date:   Fri, 13 Aug 2021 18:30:14 +0530
-Message-Id: <20210813130014.6822-1-manivannan.sadhasivam@linaro.org>
-X-Mailer: git-send-email 2.25.1
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=MQn6cqjN8smmcTyxcoK9bZJTSPGWxwSW1fWm9idf4p8=;
+        b=H06IvED1+1Q/GuZqXAYnXtbtRDlCqH4Hv1DthC2/HeB7M7pRal4Gqscc4zBJQDG22q
+         YplzLZK/Aol89yWqfNnyC1bOEuf+7Gm8G5nU7X7ib4AxQ/WcLAVVA79NXVJq/xrgnQ+x
+         GsLAVZrwyVo1rFRt1kx4zlUoA2OLjndWGJV+zTrac1q/WstRGotew0RCW1FrG3cvMR2a
+         405BRp0DXJmzOZF7jBuUqdctw0rfrigm3qE8hEBB+4PtpnaDZ8qJETXMGYh/jShIOgkO
+         JyD6Z8qlB8ar5B8HzprGJhN9FGocTwAlkN8RkZf7LWb/qyJ2HS4J/ADGts7nQLMHwrlZ
+         JbMQ==
+X-Gm-Message-State: AOAM532FQMi1tNGE3DPtSKO3RaFXkrd22WyjJddzvlzBPnSHIdgtsKtR
+        EJZsckiBrB3cMguW9zoOqGs/wg==
+X-Google-Smtp-Source: ABdhPJwZR5on4UTDwsr7OAESZTVh5CnOYdmBdsdNm1FuFkNx+acV4zlCo1Q9eKj2prvco3VqfZsMsQ==
+X-Received: by 2002:a17:90a:930e:: with SMTP id p14mr2731460pjo.132.1628863191115;
+        Fri, 13 Aug 2021 06:59:51 -0700 (PDT)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id a185sm2511961pfa.205.2021.08.13.06.59.49
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 13 Aug 2021 06:59:50 -0700 (PDT)
+Date:   Fri, 13 Aug 2021 21:59:44 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: display: panel: Add Truly NT35521 panel
+ support
+Message-ID: <20210813135943.GE6795@dragon>
+References: <20210804081352.30595-1-shawn.guo@linaro.org>
+ <20210804081352.30595-2-shawn.guo@linaro.org>
+ <YRQcTLK1ffM1TEbX@robh.at.kernel.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YRQcTLK1ffM1TEbX@robh.at.kernel.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This reverts commit 5c2c85315948c42c6c0258cf9bad596acaa79043.
+On Wed, Aug 11, 2021 at 12:51:56PM -0600, Rob Herring wrote:
+> On Wed, Aug 04, 2021 at 04:13:51PM +0800, Shawn Guo wrote:
+> > The Truly NT35521 is a 5.24" 1280x720 DSI panel, and the backlight is
+> > managed through DSI link.
+> > 
+> > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> > ---
+> >  .../bindings/display/panel/truly,nt35521.yaml | 62 +++++++++++++++++++
+> >  1 file changed, 62 insertions(+)
+> >  create mode 100644 Documentation/devicetree/bindings/display/panel/truly,nt35521.yaml
+> > 
+> > diff --git a/Documentation/devicetree/bindings/display/panel/truly,nt35521.yaml b/Documentation/devicetree/bindings/display/panel/truly,nt35521.yaml
+> > new file mode 100644
+> > index 000000000000..4727c3df6eb8
+> > --- /dev/null
+> > +++ b/Documentation/devicetree/bindings/display/panel/truly,nt35521.yaml
+> > @@ -0,0 +1,62 @@
+> > +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> > +%YAML 1.2
+> > +---
+> > +$id: http://devicetree.org/schemas/display/panel/truly,nt35521.yaml#
+> > +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> > +
+> > +title: Truly NT35521 5.24" 1280x720 MIPI-DSI Panel
+> > +
+> > +maintainers:
+> > +  - Shawn Guo <shawn.guo@linaro.org>
+> > +
+> > +description: |
+> > +  The Truly NT35521 is a 5.24" 1280x720 MIPI-DSI panel.  The panel backlight
+> > +  is managed through DSI link.
+> > +
+> > +allOf:
+> > +  - $ref: panel-common.yaml#
+> > +
+> > +properties:
+> > +  compatible:
+> > +    const: truly,nt35521
+> > +
+> > +  reg: true
+> > +
+> > +  reset-gpios: true
+> > +
+> > +  enable-gpios: true
+> > +
+> > +  pwr-positive5-gpios:
+> > +    maxItems: 1
+> > +
+> > +  pwr-negative5-gpios:
+> > +    maxItems: 1
+> 
+> Are these +/-5V supplies? If so, they should be modeled with 
+> gpio-regulator perhaps unless the panel connection could only ever be 
+> GPIOs.
 
-First this commit should go via the MHI tree as the "pci_generic" driver
-belongs to MHI bus.
+Hi Rob,
 
-Then from the review point of view, the commit uses "mru_default"
-variable to hold the MRU size for the MHI device. The term default
-doesn't make much sense since there is no way to override this value
-anywhere. So the author should just use "mru" in mhi_pci_dev_info
-struct.
+The binding has been updated in v2 [1].  Please help review that.
+Thanks!
 
-Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
----
- drivers/bus/mhi/pci_generic.c | 4 ----
- drivers/net/mhi_net.c         | 1 -
- include/linux/mhi.h           | 2 --
- 3 files changed, 7 deletions(-)
+Shawn
 
-diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-index b33b9d75e8af..4dd1077354af 100644
---- a/drivers/bus/mhi/pci_generic.c
-+++ b/drivers/bus/mhi/pci_generic.c
-@@ -32,7 +32,6 @@
-  * @edl: emergency download mode firmware path (if any)
-  * @bar_num: PCI base address register to use for MHI MMIO register space
-  * @dma_data_width: DMA transfer word size (32 or 64 bits)
-- * @mru_default: default MRU size for MBIM network packets
-  * @sideband_wake: Devices using dedicated sideband GPIO for wakeup instead
-  *		   of inband wake support (such as sdx24)
-  */
-@@ -43,7 +42,6 @@ struct mhi_pci_dev_info {
- 	const char *edl;
- 	unsigned int bar_num;
- 	unsigned int dma_data_width;
--	unsigned int mru_default;
- 	bool sideband_wake;
- };
- 
-@@ -274,7 +272,6 @@ static const struct mhi_pci_dev_info mhi_qcom_sdx55_info = {
- 	.config = &modem_qcom_v1_mhiv_config,
- 	.bar_num = MHI_PCI_DEFAULT_BAR_NUM,
- 	.dma_data_width = 32,
--	.mru_default = 32768,
- 	.sideband_wake = false,
- };
- 
-@@ -667,7 +664,6 @@ static int mhi_pci_probe(struct pci_dev *pdev, const struct pci_device_id *id)
- 	mhi_cntrl->status_cb = mhi_pci_status_cb;
- 	mhi_cntrl->runtime_get = mhi_pci_runtime_get;
- 	mhi_cntrl->runtime_put = mhi_pci_runtime_put;
--	mhi_cntrl->mru = info->mru_default;
- 
- 	if (info->sideband_wake) {
- 		mhi_cntrl->wake_get = mhi_pci_wake_get_nop;
-diff --git a/drivers/net/mhi_net.c b/drivers/net/mhi_net.c
-index 975f7f9bdf4c..a577bff82fe1 100644
---- a/drivers/net/mhi_net.c
-+++ b/drivers/net/mhi_net.c
-@@ -312,7 +312,6 @@ static int mhi_net_newlink(struct mhi_device *mhi_dev, struct net_device *ndev)
- 	mhi_netdev->ndev = ndev;
- 	mhi_netdev->mdev = mhi_dev;
- 	mhi_netdev->skbagg_head = NULL;
--	mhi_netdev->mru = mhi_dev->mhi_cntrl->mru;
- 
- 	INIT_DELAYED_WORK(&mhi_netdev->rx_refill, mhi_net_rx_refill_work);
- 	u64_stats_init(&mhi_netdev->stats.rx_syncp);
-diff --git a/include/linux/mhi.h b/include/linux/mhi.h
-index c493a80cb453..5e08468854db 100644
---- a/include/linux/mhi.h
-+++ b/include/linux/mhi.h
-@@ -356,7 +356,6 @@ struct mhi_controller_config {
-  * @fbc_download: MHI host needs to do complete image transfer (optional)
-  * @wake_set: Device wakeup set flag
-  * @irq_flags: irq flags passed to request_irq (optional)
-- * @mru: the default MRU for the MHI device
-  *
-  * Fields marked as (required) need to be populated by the controller driver
-  * before calling mhi_register_controller(). For the fields marked as (optional)
-@@ -449,7 +448,6 @@ struct mhi_controller {
- 	bool fbc_download;
- 	bool wake_set;
- 	unsigned long irq_flags;
--	u32 mru;
- };
- 
- /**
--- 
-2.25.1
+[1] https://lore.kernel.org/linux-arm-msm/20210809051008.6172-2-shawn.guo@linaro.org/T/#m587035a602b1be6c5326dcf24af01b3e8a5d2cc9
 
+> 
+> > +
+> > +required:
+> > +  - compatible
+> > +  - reg
+> > +  - reset-gpios
+> > +  - enable-gpios
+> > +  - pwr-positive5-gpios
+> > +  - pwr-negative5-gpios
+> > +
+> > +additionalProperties: false
+> > +
+> > +examples:
+> > +  - |
+> > +    #include <dt-bindings/gpio/gpio.h>
+> > +
+> > +    dsi {
+> > +        #address-cells = <1>;
+> > +        #size-cells = <0>;
+> > +
+> > +        panel@0 {
+> > +            compatible = "truly,nt35521";
+> > +            reg = <0>;
+> > +            reset-gpios = <&msmgpio 25 GPIO_ACTIVE_LOW>;
+> > +            pwr-positive5-gpios = <&msmgpio 114 GPIO_ACTIVE_HIGH>;
+> > +            pwr-negative5-gpios = <&msmgpio 17 GPIO_ACTIVE_HIGH>;
+> > +            enable-gpios = <&msmgpio 10 GPIO_ACTIVE_HIGH>;
+> > +        };
+> > +    };
+> > +...
+> > -- 
+> > 2.17.1
+> > 
+> > 
