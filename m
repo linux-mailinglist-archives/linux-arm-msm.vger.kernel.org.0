@@ -2,97 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 832D03EB30B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Aug 2021 10:58:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 803563EB381
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Aug 2021 11:46:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239724AbhHMI6f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Aug 2021 04:58:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45862 "EHLO
+        id S238157AbhHMJq6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 13 Aug 2021 05:46:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239362AbhHMI6f (ORCPT
+        with ESMTP id S239855AbhHMJq6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Aug 2021 04:58:35 -0400
-Received: from mail-lj1-x229.google.com (mail-lj1-x229.google.com [IPv6:2a00:1450:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80DFCC0617AD
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Aug 2021 01:58:08 -0700 (PDT)
-Received: by mail-lj1-x229.google.com with SMTP id m18so14724205ljo.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Aug 2021 01:58:08 -0700 (PDT)
+        Fri, 13 Aug 2021 05:46:58 -0400
+Received: from mail-vk1-xa33.google.com (mail-vk1-xa33.google.com [IPv6:2607:f8b0:4864:20::a33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FDA6C0617AD
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Aug 2021 02:46:31 -0700 (PDT)
+Received: by mail-vk1-xa33.google.com with SMTP id 139so2405652vkx.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Aug 2021 02:46:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=4Go/2+Nr8/IPd0gMcjz2kJs/syLb1QNBBenHOoL/xe0=;
-        b=Az3XzF1K+Slxm41YO7BXtPTbH8PCX6lQvvTdftzW4AJ+LI8DRJgXFJkX8x5B0qPk83
-         MJ9yOeq5iQlm3Mv7HC6cqkVfcJaqsSQmEDgGsOD5EvPza99LRSbI5WJnCBQAdS1Vpac5
-         XEpCKVR1KLpu6RJJm1mPASkYP+ZBwsGRa0zX6d6C097S1utT3q0Mptb77LjaKIzqgge8
-         8gJ0EUkbxmCbjZJbpvGRhIrtVB6u2wcfVqZ9EiLgpGv2KKKtXfZTBz2Qp4A2XcjBPp9V
-         5ukEITiwo6t3HMeAhrpfcpD4XXDkqkv+zzDVkcQZmHOVqRSdCUvu9LxkDp2ldzogvnWy
-         j4Kg==
+        bh=GFzl/KQ2L8VW5O2jJZmcKVoInan5EFPzJ3PXngNSoek=;
+        b=ydhrXPzp0oZlMxvJoqotvWAvjAD5U7ohINwf58MKTJ+ONQmMRqEAGP5P0nU6GqVjIU
+         a44YiBFd7kdKnMF0LEbboE3CUnPha5Rf/EUSKLX4JgnfTW8qmZMikS13G/eLNg3HuG7v
+         1n3esvUdHGelQTPlst+zvPZIYlaXXZz9pvKV9jP3Ag+sYA/hoTn44sZpPsx/aMfWtmm6
+         /RLWc8C8C/sxqG9r4+NwPQkOpErabzLiQePM2pC14RdmAq4e+jSZ55cdMT2rU9Ii2vFm
+         jNZJXPPaQx0QSFsWGn4dVFRTfwIdDK5uChTsTIQlmPzZ3JSfRdePz6QISCqB9fykaUvi
+         G+UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=4Go/2+Nr8/IPd0gMcjz2kJs/syLb1QNBBenHOoL/xe0=;
-        b=hQWyLM9AkSx3P4IKb2yLmWBpaCvCD+2D70HA5eNQu+b3lHTlgi6pZCotI/A6X3wLYa
-         tcoir8hyKH2pLUA0Fj04MHCFRckynKcAFrZ0H7Oo+h/exLESJRmqZ0G0PzqrHqd5m1jB
-         QYWsJQivxC5yA+Iw9t7gx6dE8oG8yXoa4q4SSrujiFGtb20Q/PNngnEYrusb4PLfM9HV
-         ZBbCYHPgf5Pm4BpFa17RySgVs+ff2ciDjObBaUF6RWrnEp5kkAkzteSXenUxKbJYeNom
-         VUCZ7W3vzSh9b/t+LujrCZej06f+tyQrK7MV+mfkGZ8RTpq+HcXTMqltWjQiHXrWHIa0
-         zLmw==
-X-Gm-Message-State: AOAM530lPH5Ek3yOhAMafk3zsEhM5mbHz9i7wx1ew5CViDfxursZoJwK
-        GkMBCuan3j9iywCPbkEeM4JuUryQluh2c6q0DcZGrA==
-X-Google-Smtp-Source: ABdhPJyNaVTxTCBGNCrzgLPEQnUlZnlrJKZgtztD/0Ef7Ohf6blBSKOY6Thc5Lxa3SIc8Fig9WbOq4LhwcWuOaNywa8=
-X-Received: by 2002:a2e:89c1:: with SMTP id c1mr1083515ljk.273.1628845086850;
- Fri, 13 Aug 2021 01:58:06 -0700 (PDT)
+        bh=GFzl/KQ2L8VW5O2jJZmcKVoInan5EFPzJ3PXngNSoek=;
+        b=rATtATRKQdEXbxkc3iht6RsnXkPgQPlfb4ZA4uEQdeLb0jnBZ5cpMqfD8OGM8g6WUb
+         JLp+noMW2S9iHLsYzjNSlMoiOSuHrY/qp84img92F+UFiNCeoh19v9s4y6AwqYJMTPoV
+         6hYit/Qa0YPgKLe2jxOyuXfuO1nPs3y2N3R3KoUa/cKNKg0iKlZbUpiHzRsRzhp2ffnp
+         oaFh0uqEAraIqDBOE0Jfcctaoil70N0ueRIMjr0IGTU14CAW8PKlfT0TzjeX2zu2SjLw
+         P1rIsnRgiXLVLWug9kceC06s40m/f/8y17WNbqWDeTqTm+jW9bS2YowY8Kl1VuHj/hTi
+         PAwA==
+X-Gm-Message-State: AOAM532YODVRb16FxQGY4jtYpzZS8uzxEn2u9Bl29atf0L9mXsZJaPNa
+        byT5hvZ9ZuazucSASWKm4uqX8EIt4LHrBB+pF8psMg==
+X-Google-Smtp-Source: ABdhPJyA63eft/amiBmW7SOjz7zOo09Kx+BNyXIup0lD+NtLwzRQXiRQn/fPFWBE0aHEt+V43UsmsZPQqe7YXNfCJ7w=
+X-Received: by 2002:a1f:a301:: with SMTP id m1mr695286vke.6.1628847990547;
+ Fri, 13 Aug 2021 02:46:30 -0700 (PDT)
 MIME-Version: 1.0
-References: <1628830531-14648-1-git-send-email-skakit@codeaurora.org> <1628830531-14648-2-git-send-email-skakit@codeaurora.org>
-In-Reply-To: <1628830531-14648-2-git-send-email-skakit@codeaurora.org>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Fri, 13 Aug 2021 10:57:55 +0200
-Message-ID: <CACRpkdZteWY6X+prHeAF0rtPVbCk+X9=ZYgpjgAMH24LhOjhaQ@mail.gmail.com>
-Subject: Re: [PATCH 1/2] pinctrl: qcom: spmi-gpio: correct parent irqspec translation
-To:     satya priya <skakit@codeaurora.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Collins <collinsd@codeaurora.org>,
-        Kiran Gunda <kgunda@codeaurora.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, MSM <linux-arm-msm@vger.kernel.org>
+References: <20210703025449.2687201-1-bjorn.andersson@linaro.org> <45bfb6ae-d131-10d7-1924-48c98a957667@linaro.org>
+In-Reply-To: <45bfb6ae-d131-10d7-1924-48c98a957667@linaro.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Fri, 13 Aug 2021 11:45:54 +0200
+Message-ID: <CAPDyKFoxbm5ki5z0NcbcpJ6bbFntitYTiwX0Bxe01NaB6Db3uQ@mail.gmail.com>
+Subject: Re: [RESEND PATCH 2/2] soc: qcom: rpmhpd: Make power_on actually
+ enable the domain
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Satya/David,
-
-nice work on identifying this bug!
-
-On Fri, Aug 13, 2021 at 6:56 AM satya priya <skakit@codeaurora.org> wrote:
+On Thu, 12 Aug 2021 at 15:21, Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 >
-> From: David Collins <collinsd@codeaurora.org>
+> On 03/07/2021 05:54, Bjorn Andersson wrote:
+> > The general expectation is that powering on a power-domain should make
+> > the power domain deliver some power, and if a specific performace state
+> > is needed further requests has to be made.
+> >
+> > But in contrast with other power-domain implementations (e.g. rpmpd) the
+> > RPMh does not have an interface to enable the power, so the driver has
+> > to vote for a particular corner (performance level) in rpmh_power_on().
+> >
+> > But the corner is never initialized, so a typical request to simply
+> > enable the power domain would not actually turn on the hardware. Further
+> > more, when no more clients vote for a performance state (i.e. the
+> > aggregated vote is 0) the power domain would be turn off.
+> >
+> > Fix both of these issues by always voting for a corner with non-zero
+> > value, when the power domain is enabled.
+> >
+> > The tracking of the lowest non-zero corner is performed to handle the
+> > corner case if there's ever a domain with a non-zero lowest corner, in
+> > which case both rpmh_power_on() and rpmh_rpmhpd_set_performance_state()
+> > would be allowed to use this lowest corner.
+> >
+> > Fixes: 279b7e8a62cc ("soc: qcom: rpmhpd: Add RPMh power domain driver")
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> >
+> > Resending because the hunk in rpmhpd_update_level_mapping() was left in the
+> > index.
 >
-> pmic_gpio_child_to_parent_hwirq() and
-> gpiochip_populate_parent_fwspec_fourcell() translate a pinctrl-
-> spmi-gpio irqspec to an SPMI controller irqspec.  When they do
-> this, they use a fixed SPMI slave ID of 0 and a fixed GPIO
-> peripheral offset of 0xC0 (corresponding to SPMI address 0xC000).
-> This translation results in an incorrect irqspec for secondary
-> PMICs that don't have a slave ID of 0 as well as for PMIC chips
-> which have GPIO peripherals located at a base address other than
-> 0xC000.
->
-> Correct this issue by passing the slave ID of the pinctrl-spmi-
-> gpio device's parent in the SPMI controller irqspec and by
-> calculating the peripheral ID base from the device tree 'reg'
-> property of the pinctrl-spmi-gpio device.
->
-> Signed-off-by: David Collins <collinsd@codeaurora.org>
-> Signed-off-by: satya priya <skakit@codeaurora.org>
+> So, colleagues, what is the fate of this patch? Is it going to be
+> applied? Or we agree that current approach (power_on +
+> set_performance_state) is the expected behaviour? My patches on gdsc
+> rework depend on this patch, but I can rework in them in favour of
+> required-opp approach.
 
-Is this a regression or is it fine if I just apply it for v5.15?
-I was thinking v5.15 since it isn't yet used in device trees.
+Today, genpd treats performance states and power on/off states as
+orthogonal. You know this already, ofcourse.
 
-Yours,
-Linus Walleij
+Although, to clarify, this means that the genpd provider has to deal
+with the scenario when its ->set_performance_state() callback may be
+invoked, while the PM domain is turned off, for example. Similarly,
+genpd may power on the PM domain by invoking the ->power_on()
+callback, before the ->set_performance_state() has been invoked. And
+finally, the power domain may be turned off even if there are some
+active votes for a performance state.
+
+So for now, the genpd provider needs to deal with these cases. Yes, we
+have discussed changing the behaviour in genpd around this and I think
+there have been some good reasons for it, but we are not there, at
+least yet.
+
+[...]
+
+Kind regards
+Uffe
