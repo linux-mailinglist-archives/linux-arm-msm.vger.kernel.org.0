@@ -2,78 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 417AB3EAF01
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Aug 2021 05:56:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 11FC63EAF0B
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 13 Aug 2021 05:57:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238523AbhHMD4o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 12 Aug 2021 23:56:44 -0400
-Received: from gate2.alliedtelesis.co.nz ([202.36.163.20]:55972 "EHLO
-        gate2.alliedtelesis.co.nz" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233750AbhHMD4o (ORCPT
+        id S238648AbhHMD6X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 12 Aug 2021 23:58:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34024 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238634AbhHMD6W (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 12 Aug 2021 23:56:44 -0400
-Received: from svr-chch-seg1.atlnz.lc (mmarshal3.atlnz.lc [10.32.18.43])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (Client did not present a certificate)
-        by gate2.alliedtelesis.co.nz (Postfix) with ESMTPS id 5C67C806B5;
-        Fri, 13 Aug 2021 15:56:14 +1200 (NZST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=alliedtelesis.co.nz;
-        s=mail181024; t=1628826974;
-        bh=6RNUQUme0f8g9AQ2zLft1SoSF8LlcOn8HlAjatW3Y7s=;
-        h=From:To:CC:Subject:Date:References:In-Reply-To;
-        b=jdNHGyII3uqHCUiuHKHQonVhgrOX7fZ3iuO7g45ilJz1Y8ZqKypr29SmUCWXPOI0/
-         Vldgc3k4M3xRMwEFLCsOdz8ExqQyGwuQgdvP4daGYnqwQgmRzu4XYc5MMBmxcw2PE4
-         Zes4lixW/KgDLYYozjl6MxfrdnCt2gtKhhHnV2x8JPl21/ATuFnpwe4mw32TKyTvHl
-         99mBYlCkTMGJw8zaeA6VwiGrfs0LIPHbduawcWXUfGv4sLyi1ijVOm8i0xOlmP7x0+
-         QSGYU7rELcVTvNgL/d9lyftovcSIGYvgky3c4CeQBMXJP4NehfLWHqYZGW/z/dG0Gv
-         A2kH6R6wh+7vQ==
-Received: from svr-chch-ex1.atlnz.lc (Not Verified[2001:df5:b000:bc8::77]) by svr-chch-seg1.atlnz.lc with Trustwave SEG (v8,2,6,11305)
-        id <B6115ed5e0001>; Fri, 13 Aug 2021 15:56:14 +1200
-Received: from svr-chch-ex1.atlnz.lc (2001:df5:b000:bc8:409d:36f5:8899:92e8)
- by svr-chch-ex1.atlnz.lc (2001:df5:b000:bc8:409d:36f5:8899:92e8) with
- Microsoft SMTP Server (TLS) id 15.0.1497.23; Fri, 13 Aug 2021 15:56:14 +1200
-Received: from svr-chch-ex1.atlnz.lc ([fe80::409d:36f5:8899:92e8]) by
- svr-chch-ex1.atlnz.lc ([fe80::409d:36f5:8899:92e8%12]) with mapi id
- 15.00.1497.023; Fri, 13 Aug 2021 15:56:14 +1200
-From:   Richard Laing <Richard.Laing@alliedtelesis.co.nz>
-To:     Jakub Kicinski <kuba@kernel.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-CC:     "davem@davemloft.net" <davem@davemloft.net>,
-        "netdev@vger.kernel.org" <netdev@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
-Subject: Re: [RESEND] Conflict between char-misc and netdev
-Thread-Topic: [RESEND] Conflict between char-misc and netdev
-Thread-Index: AQHXj358xos8ytNW2k+HeQjlGfeGTKtvGhKAgAAD7wCAACN1AIAAxLOA
-Date:   Fri, 13 Aug 2021 03:56:13 +0000
-Message-ID: <29fe2abc-3065-444b-cc71-d1cbafa3638d@alliedtelesis.co.nz>
-References: <20210812133215.GB7897@workstation>
- <20210812065113.04cc1a66@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
- <20210812140518.GC7897@workstation>
- <20210812091212.0034a81c@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-In-Reply-To: <20210812091212.0034a81c@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
-Accept-Language: en-NZ, en-US
-Content-Language: en-US
-X-MS-Has-Attach: 
-X-MS-TNEF-Correlator: 
-x-ms-exchange-messagesentrepresentingtype: 1
-x-ms-exchange-transport-fromentityheader: Hosted
-x-originating-ip: [10.32.16.78]
-Content-Type: text/plain; charset="utf-8"
-Content-ID: <F3C9483CBDB0A34E908D689009E2A57E@atlnz.lc>
-Content-Transfer-Encoding: base64
+        Thu, 12 Aug 2021 23:58:22 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B085AC0617AD
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Aug 2021 20:57:56 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id oa17so13441791pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 12 Aug 2021 20:57:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=MvmuwhxcqYAbdPmkTIufV5uQRwUnrxELEdSjPA9KrXo=;
+        b=eOwiRNh4MUanAxbqTJMBRZCZfu41L9y7gdH60FKetDLsqWzSItkABZc2JszeZ82opI
+         bfkEzhtcD2es9gu2FAoDAUD+8r0bgLFFKMlRuYwEIbemol70oWZxCO31WcLOv5eMCRNa
+         CJz0KsyMOp6WuJk25J8DqIzQcqdedVyC1mhgHbhFE87rdyadBI69e49/dXtQgjr5nbwK
+         VwFZ8KAWt5PmbX1zUdzO5/uHS77AD+9oVD4cjLD1dgCyEgN0HdYt+pNQ9evzQR5Xju/D
+         A2Cbwl1uAfUjP6ecqadlbt+ewPMPfQYRiHSWmx1YWwU4/vp+unPk39FFAHC70KWSX+1c
+         sUrw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=MvmuwhxcqYAbdPmkTIufV5uQRwUnrxELEdSjPA9KrXo=;
+        b=PYLIcNfAfjaYvLj0AFKoEa9TRT3rzHilZUgHL/B4vTKl/0wX58VqIdPecuUv4NfAxl
+         XJyAcQXllMzH975+lqBaS78V7vhZHZaeGomF8lER8b/x4FfQCqbkc0Sr7RRT+aiMpwYx
+         Cc462Ps3n0OyyBkHPagz74kObuY9+8DL6gIa7zmFNyd5JT3uOG5l4K3OJWbC66zGo6m7
+         OhpkhBArY9lgj9xrlT+w2YO6jqMVN5WFWUSLc261MX30z2kAWx0HqKpaloPUgmcH70nl
+         ih0xFLSibPbRfZaFx0mfl2t0gcN7ysROvSTgCQIIJ/tXTyRpnu7Q3d8fiBIkFKtXfBq0
+         tyAg==
+X-Gm-Message-State: AOAM530wbIeZFVxE/ae4eiiLZr2zCRu7pM05L0hA8zz6yjnFkATD+9W5
+        j5XYmv0O2ohDIx5vRC7j//xVKg==
+X-Google-Smtp-Source: ABdhPJxRDakJcVqHqBRWt5r47fIPr4C/oo8C0jNq80oWE8P2YNHnQVm97OlAzna+HWJyBkUGtgz+2g==
+X-Received: by 2002:a65:44c3:: with SMTP id g3mr421133pgs.233.1628827076146;
+        Thu, 12 Aug 2021 20:57:56 -0700 (PDT)
+Received: from localhost ([122.172.201.85])
+        by smtp.gmail.com with ESMTPSA id x1sm299780pfn.64.2021.08.12.20.57.55
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 12 Aug 2021 20:57:55 -0700 (PDT)
+Date:   Fri, 13 Aug 2021 09:27:53 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     ulf.hansson@linaro.org, bjorn.andersson@linaro.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        swboyd@chromium.org, rojay@codeaurora.org, stephan@gerhold.net,
+        digetx@gmail.com
+Subject: Re: [PATCH v7 1/3] opp: Don't print an error if required-opps is
+ missing
+Message-ID: <20210813035753.7b6ye4yzztmp2ly7@vireshk-i7>
+References: <1628767642-4008-1-git-send-email-rnayak@codeaurora.org>
+ <1628767642-4008-2-git-send-email-rnayak@codeaurora.org>
 MIME-Version: 1.0
-X-SEG-SpamProfiler-Analysis: v=2.3 cv=aqTM9hRV c=1 sm=1 tr=0 a=Xf/6aR1Nyvzi7BryhOrcLQ==:117 a=xqWC_Br6kY4A:10 a=8KpF8ikWtqQA:10 a=IkcTkHD0fZMA:10 a=MhDmnRu9jo8A:10 a=dw8Ceu96Tw-G5MO2LgAA:9 a=QEXdDO2ut3YA:10
-X-SEG-SpamProfiler-Score: 0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1628767642-4008-2-git-send-email-rnayak@codeaurora.org>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-DQpPbiA4LzEzLzIxIDQ6MTIgQU0sIEpha3ViIEtpY2luc2tpIHdyb3RlOg0KPiBXb3VsZCB5b3Ug
-bWluZCByZW5kZXJpbmcgdGhhdCBjb21tZW50IHlvdSdyZSByZWZlcnJpbmcgdG8gYXMgYSBjb21t
-aXQNCj4gbWVzc2FnZSBhbmQgc2VuZGluZyBhIGZpeC11cCBvciBhIHJldmVydCBwYXRjaCBhZ2Fp
-bnN0IG5ldC1uZXh0Pw0KPiBJIHdvdWxkbid0IGJlIGFibGUgdG8gZG8gaXQganVzdGljZS4NCkkg
-d291bGQgYWxzbyBiZSBpbnRlcmVzdGVkIGluIHRoZSBjb21tZW50Lg0KDQpJIHdvdWxkIGJlIGhh
-cHB5IGlmIHRoZSBwYXRjaCBpcyByZXZlcnRlZCBmcm9tIG5ldC1uZXh0LCBJIGhhdmUgYmVlbiAN
-Cmxvb2tpbmcgYXQgYSBtb3JlIGZsZXhpYmxlIGFsdGVybmF0aXZlIGFsbG93aW5nIHRoZSBzaXpl
-IHRvIGJlIHNwZWNpZmllZCANCnBlciBjaGFubmVsIHJhdGhlciB0aGFuIGFzIGEgZ2xvYmFsIHZh
-bHVlLg0K
+On 12-08-21, 16:57, Rajendra Nayak wrote:
+> The 'required-opps' property is considered optional, hence remove
+> the pr_err() in of_parse_required_opp() when we find the property is
+> missing.
+> While at it, also fix the return value of
+> of_get_required_opp_performance_state() when of_parse_required_opp()
+> fails, return a -ENODEV instead of the -EINVAL.
+> 
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> ---
+>  drivers/opp/of.c | 12 ++----------
+>  1 file changed, 2 insertions(+), 10 deletions(-)
+
+Acked-by: Viresh Kumar <viresh.kumar@linaro.org>
+
+-- 
+viresh
