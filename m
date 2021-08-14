@@ -2,91 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FC453EBF91
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Aug 2021 04:06:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 753B43EC215
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Aug 2021 12:46:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236546AbhHNCGo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 13 Aug 2021 22:06:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54586 "EHLO
+        id S237828AbhHNKqe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 14 Aug 2021 06:46:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55708 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236493AbhHNCGo (ORCPT
+        with ESMTP id S237861AbhHNKqe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 13 Aug 2021 22:06:44 -0400
-Received: from mail-lj1-x231.google.com (mail-lj1-x231.google.com [IPv6:2a00:1450:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CDA4C061756
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Aug 2021 19:06:16 -0700 (PDT)
-Received: by mail-lj1-x231.google.com with SMTP id m18so18409115ljo.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 13 Aug 2021 19:06:16 -0700 (PDT)
+        Sat, 14 Aug 2021 06:46:34 -0400
+Received: from mail-wm1-x32f.google.com (mail-wm1-x32f.google.com [IPv6:2a00:1450:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5B2AC0617AF
+        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Aug 2021 03:46:05 -0700 (PDT)
+Received: by mail-wm1-x32f.google.com with SMTP id a201-20020a1c7fd2000000b002e6d33447f9so855948wmd.0
+        for <linux-arm-msm@vger.kernel.org>; Sat, 14 Aug 2021 03:46:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=7Xq9jb2sUMv3xaNw7Q5Cgt7yCkc3M0xn16Wn4AtIDKI=;
-        b=bMjFQnnAZpaPHPewg53a/655rlJcZF3F6tOCYZw1vRKDz/xIJdx97rNr27JLkW56nx
-         /iUhkVkrv2vt56YQtzEazhRgIPy/DINH4WyHeEexrKrG7liGbayL7Temc7NGvW0bB8Ad
-         jYLKY+nfNSoS1rYKoflW5LtIinkjSZBTTSJCtk74RyRz5/H1kPwLgMirqvm1jZ9Q2lvS
-         mysy6xLOxs0wYu9KWpVs3ZVzmyzuM6cY3iz+yVlGPkz3Lkb+v57sIQRRUb+ypy4gjifF
-         STYdF7upxk4m3MFQNQv0T7Zw+Yt5F/OYhuRsX60kpa6PLdNBh1LpNqMT51M2pasOSTPy
-         0wUQ==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=GifoOqx6SBFwu3FmttmT9/vPFr3vQ27vYXItoPzfJbw=;
+        b=iGKh7WrVF4MYNXHXmMuE4HGs2rA+BEqWJdnXx5ZB4V8/VbbgOA+EVrDUxNhEIqD3ou
+         ornGW1iaYUVFiU29FPznnm5EeccA8yzASP2GO1Og95jGLgHz+Fux3CiVQh/3ppoU4wCj
+         e6TXhrqpVniBVAAQhPCmNpBv327gwXRClqIw+d4GbEJubjreuydBJ0Ez2wAVAnNGlQGI
+         s0gW6WB6TEi5rFjmilKmtFyCj3STAbLcnKrZiCet9tNZLODUSkClFeSs1EcXdfvmcNOn
+         KhQSrlr4wcrwm3hvLDkDAjrL16ZM2AyYi85tdEAV/Z0lRBefuHBYKa+aSzTVOFm3/Vzo
+         ozmA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to:content-transfer-encoding;
-        bh=7Xq9jb2sUMv3xaNw7Q5Cgt7yCkc3M0xn16Wn4AtIDKI=;
-        b=LRTQmQ7VdbiIbXDfjI27cDyNDiIxiL3pWk96IaJJxd4xzFDEEAsAIbntxjkUKYG2kp
-         V2Sr9h+QkCTxntm8s3vEYW2xd+GbtAor8EyyulcKAcBcS4m+gIcLEn4JuC+fxbHW63k+
-         huKcVjk2b2TNw5rBrFJp5JjV/1BDx2kTuTo4QdHQUYFk/jkI7l20TMhxca+XOfP/Z1ZC
-         r0n/qTJE2hjPj7nchCsddtxvB1jXF3B9Tlux3+2ZnM4MCvfNpvEcf2u3UuN8sUhglxob
-         usqYoSGt0zONHXEWfHdi8epG9z4kZLA/3rinymBV9t7rgGpwnfqR2kapV5SRRZvUyhq/
-         f/IA==
-X-Gm-Message-State: AOAM5331H6pOE3/PHxeBt9EUX8mBMbKMbwxyTYW3ywPg1WR1obVqyVVm
-        Jh8EMbfuepPAZxlKaDJpIpXV5l3TM+flfx5/sqY=
-X-Google-Smtp-Source: ABdhPJynvegPmhEjUi/stm1v/NRwCcvEqe4+RCpcxOCwnF//w8aRyIcHmBxFidm29bl0vBPsC1zhmU0XtHDcktPhkc0=
-X-Received: by 2002:a2e:b1d3:: with SMTP id e19mr3920584lja.6.1628906774714;
- Fri, 13 Aug 2021 19:06:14 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=GifoOqx6SBFwu3FmttmT9/vPFr3vQ27vYXItoPzfJbw=;
+        b=JDf9AnYmMhYmNH5080bEXz91e8fmgqBq9fqlO8e2Z7UhzMUY8q9u0h+OO81XQGLbLu
+         8wHg1mmBxKvrp61Wou6Khpskebpl9KFUQgQvSncTBlUOa/sMiybrEQAIX0FEfxllplO9
+         9bBVVtJyEufHTZIUdljixt+baHQes8yImJwiFhg3Y8+fKYZ68gnbzDdqickT8sxXv7AF
+         htV9eTDZ/5TSUhi2kjM73PvnFZ0rAZE5rBTskVabYRo+wDiPOb8Prk45abOLETta/bC9
+         UQZHNcRVZKna9Rq+LlDAlwxMd55zb+sIf0zBlAZIQeHllT3X3l4vITlG2qD4S9IQRfKu
+         26nw==
+X-Gm-Message-State: AOAM532aVBoln8ggysSGmDfIfeoyvCifWs1FIHr55Caae4drIcu0iKm/
+        O0JB1CY6qfwrFBuXM9Y31sspRQ==
+X-Google-Smtp-Source: ABdhPJwD51MeaLVeBz/WK26aIMBhej+CHSLIoF//Z0NKAcKPUzPRVFdORiIYFrqgmWAsn3DfbaNlBQ==
+X-Received: by 2002:a05:600c:20f:: with SMTP id 15mr6639569wmi.176.1628937964110;
+        Sat, 14 Aug 2021 03:46:04 -0700 (PDT)
+Received: from ?IPv6:2a01:e34:ed2f:f020:5df3:d0eb:3945:640d? ([2a01:e34:ed2f:f020:5df3:d0eb:3945:640d])
+        by smtp.googlemail.com with ESMTPSA id f2sm4210847wru.31.2021.08.14.03.46.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 14 Aug 2021 03:46:03 -0700 (PDT)
+Subject: Re: [PATCH v8 1/5] cpuidle: qcom_spm: Detach state machine from main
+ SPM handling
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>, rjw@rjwysocki.net
+Cc:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
+        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
+        martin.botka@somainline.org, jeffrey.l.hugo@gmail.com,
+        jami.kettunen@somainline.org,
+        ~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
+        stephan@gerhold.net, robh@kernel.org, bartosz.dudziak@snejp.pl
+References: <20210729155609.608159-1-angelogioacchino.delregno@somainline.org>
+ <20210729155609.608159-2-angelogioacchino.delregno@somainline.org>
+ <YQsbBQAdGhX7eO+5@builder.lan>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Message-ID: <f688b8b4-4fdb-4497-22db-920bd67d255e@linaro.org>
+Date:   Sat, 14 Aug 2021 12:46:02 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Received: by 2002:a05:6520:380d:b029:132:4f79:3ded with HTTP; Fri, 13 Aug 2021
- 19:06:14 -0700 (PDT)
-Reply-To: deedeepaul@yandex.com
-From:   Deedee Paul <deedeepaul212@gmail.com>
-Date:   Sat, 14 Aug 2021 02:06:14 +0000
-Message-ID: <CADS-zP8AceijWYuKjjfFaC4WB2nM3FQqvpU1ob6Xb=P4w5FpkA@mail.gmail.com>
-Subject: Hello
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <YQsbBQAdGhX7eO+5@builder.lan>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Attention: Beneficiary,
+On 05/08/2021 00:56, Bjorn Andersson wrote:
+> On Thu 29 Jul 10:56 CDT 2021, AngeloGioacchino Del Regno wrote:
+> 
+>> In commit a871be6b8eee ("cpuidle: Convert Qualcomm SPM driver to a generic
+>> CPUidle driver") the SPM driver has been converted to a
+>> generic CPUidle driver: that was mainly made to simplify the
+>> driver and that was a great accomplishment;
+>> Though, at that time, this driver was only applicable to ARM 32-bit SoCs,
+>> lacking logic about the handling of newer generation SAW.
+>>
+>> In preparation for the enablement of SPM features on AArch64/ARM64,
+>> split the cpuidle-qcom-spm driver in two: the CPUIdle related
+>> state machine (currently used only on ARM SoCs) stays there, while
+>> the SPM communication handling lands back in soc/qcom/spm.c and
+>> also making sure to not discard the simplifications that were
+>> introduced in the aforementioned commit.
+>>
+>> Since now the "two drivers" are split, the SCM dependency in the
+>> main SPM handling is gone and for this reason it was also possible
+>> to move the SPM initialization early: this will also make sure that
+>> whenever the SAW CPUIdle driver is getting initialized, the SPM
+>> driver will be ready to do the job.
+>>
+>> Please note that the anticipation of the SPM initialization was
+>> also done to optimize the boot times on platforms that have their
+>> CPU/L2 idle states managed by other means (such as PSCI), while
+>> needing SAW initialization for other purposes, like AVS control.
+>>
+>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+>> Reviewed-by: Stephan Gerhold <stephan@gerhold.net>
+>> Tested-by: Stephan Gerhold <stephan@gerhold.net>
+> 
+> Rafael, Daniel, any objections to me picking this patch through the qcom
+> tree?
+> 
 
-This is to officially inform you that we have been having meetings for
-the past weeks now which ended Two days ago with Mr. John W. Ashe,
-President of the 68th session of the UN General Assembly, Mr. David
-R.Malpass. the World Bank President and Hon. Mrs. Christine Laggard
-(IMF) Director General, in the meeting we talked about how to
-compensate Scam victim's people and all the people that were affected
-the most by this Coronavirus pandemic.
+Acked-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 
-Your email address was successfully selected for this donation with others.
 
-The United Nations have agreed to compensate you with the sum of
-($150,000.00) One hundred and fifty thousand United States Dollars. We
-have arranged your payment through WORLD ATM MASTERCARD which is the
-latest instruction from the World Bank Group.
 
-For the collection of your WORLD ATM MASTERCARD contact our
-representative Rev. David Wood, send to him your contact address where
-you want your MASTERCARD to be sent to you, like
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
 
-1. Your Full Name: .........
-2. Your Country and Your Delivery Home Address: ........
-3. Your Telephone: ..............
-
-His e-mail address: (ddavidwood1@yandex.com) He is a Canadian (UN)
-representative Agent.
-
-Thanks.
-Tel: 1 513 452 4352.
-Mr. Michael M=C3=B8ller Director-General of the United Nations Office
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
