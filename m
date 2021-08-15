@@ -2,200 +2,271 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F0C33ECAB3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Aug 2021 21:46:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 40C1A3ECB07
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Aug 2021 22:57:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229760AbhHOTqx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 15 Aug 2021 15:46:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37508 "EHLO
+        id S229760AbhHOU53 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 15 Aug 2021 16:57:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52826 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229502AbhHOTqx (ORCPT
+        with ESMTP id S229582AbhHOU53 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 15 Aug 2021 15:46:53 -0400
-Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4CE57C061764;
-        Sun, 15 Aug 2021 12:46:22 -0700 (PDT)
-Received: by mail-lf1-x12f.google.com with SMTP id i28so3634107lfl.2;
-        Sun, 15 Aug 2021 12:46:22 -0700 (PDT)
+        Sun, 15 Aug 2021 16:57:29 -0400
+Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C032BC061764;
+        Sun, 15 Aug 2021 13:56:58 -0700 (PDT)
+Received: by mail-ed1-x52f.google.com with SMTP id cn28so11593293edb.6;
+        Sun, 15 Aug 2021 13:56:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=36NQvMA7IhQ2nmvYXvhQS10mXmbyiVfQYsSQBpwdN4E=;
-        b=o9DHSf/Z8wa31i7vC39Q7BI4PvIDUQFrp3wSqcvy6IR4pNx1h5Y75KpRgXsK4zXz97
-         AhoBauG2YTmFnVlX94jAWt8u5on1Zdat77YdcOb8r0FXvo+IB0nSHp4d2pxOPfjWOXXC
-         gCoTQQovqrXT9PFhsRvHgYsUB3lVBgH4Cl8iMiryt6IH9YR/KGAjpkiXBkoUTfuKUZ9d
-         fEIpLmESp4jDdaX4ILeE+2FmDg7MsNnxXlYEgZdj2p2gTEhQHhe+w9yNNz3Lwgnnwcfn
-         4Xc2fWO54dJomMCfJn6F1LLjNAEK65eBo5c1v7G9xXbHSA4ax3ayCCLtlyQNpu5aP/za
-         FwGQ==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=xBUb4/7onMnAlknKM3k8258LkduSxgT3yQiknJNxzb0=;
+        b=NDdCbbEDBUM/+3JOnbIOHbL1KPhEI5WUYp/OgmMcD6vlntUFzNsLcoHxnL9nWzC5Kg
+         BO4tMQHl9NaOx+hjJVwZY1T+fUz7Jha67B//s77U/PRDGaWztMYcf6/4sNvgD6BT5C6z
+         URhH38H3XrQccgNzt8ZAUXMeJRA3VMUmHp77juYTyn0SJG8i/Qx/xHOaAiGDLe98XStF
+         XvuewighRTyTBkyyQ4HTV0qdNbiFPNDcXrsxMVgMnumDoNaer6y+mXrDOYvWHI824kvS
+         7fp3x3ynMjKjn764YofaTmaDJ8/KNnZKf0XbxE2WbC4roW81ut4q3M4eNvOYN559Vmud
+         0+Aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=36NQvMA7IhQ2nmvYXvhQS10mXmbyiVfQYsSQBpwdN4E=;
-        b=VytgKsLQ0K9Ycx4D0vl3FDuYDOW4lCL6gdnizjCYgVcLJYNNtZAWE1OiTB9LKHoFa5
-         JvidmQvoojf8goBeLVoXo/52rrKRkuymCYKXPQwplb0SG8NxyT2ybi2eWCDja7YfsUfC
-         eRi6F8i30VAB58VfnrwTHL9YBT6OBj4X+pBgsC3Z91NfGYNcnmeuAl4oKTDPqlCY3129
-         wbO0hIH5pCnOREiLAshD9QraXS7+YDEN+nssmMMHhgZj0JrVPJ1Y9E8FFTAtlWd9uTyW
-         OlASsrZBBlzmPC84K59RdvUO+2rQK5MZPQepzkNUQDJeWwZv00Ow6mBihHU6esoQvs1R
-         4wBA==
-X-Gm-Message-State: AOAM530WuJU7GLWbG4x+slN6Z7G//HiC69h64oobJ2Ox6ujFu4lUnmPt
-        l17yn/Wpu9cx6kTERkGGgLo=
-X-Google-Smtp-Source: ABdhPJzares3O8HkMm6UoYb2Tt6v7dLiTqx4kl65ShpcTpWtLn4bm0L7MAaUy0Qh0nZbhc9gchSvUg==
-X-Received: by 2002:ac2:4833:: with SMTP id 19mr9273501lft.528.1629056780602;
-        Sun, 15 Aug 2021 12:46:20 -0700 (PDT)
-Received: from mobilestation ([95.79.127.110])
-        by smtp.gmail.com with ESMTPSA id s4sm932870ljp.115.2021.08.15.12.46.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 15 Aug 2021 12:46:19 -0700 (PDT)
-Date:   Sun, 15 Aug 2021 22:46:17 +0300
-From:   Serge Semin <fancer.lancer@gmail.com>
-To:     John Stultz <john.stultz@linaro.org>
-Cc:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux USB List <linux-usb@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        Amit Pundir <amit.pundir@linaro.org>
-Subject: Re: [PATCH 29/29] arm64: dts: qcom: Harmonize DWC USB3 DT nodes name
-Message-ID: <20210815194617.sbrkutxzldqbxfat@mobilestation>
-References: <0064cb2c-5ca6-e693-2e89-8f045c8f7502@kernel.org>
- <YPf+shNM6cXb3mfe@kroah.com>
- <d853df77-8d36-30b0-dd26-da1bfcb068e0@kernel.org>
- <20210721112531.xvu6ni5ksaehsrjh@mobilestation>
- <CALAqxLViEqSO17P3JGRGYJh-wDoHaJiQQV48zeoRgnar4Xd5Bg@mail.gmail.com>
- <20210722181221.xh3r5kyu7zlcojjx@mobilestation>
- <YPnEO6NVFZDS1s//@yoga>
- <CALAqxLUT0e+mHMVo685oVTxR8y76733cN0yciQ7ePS6GRE+_dg@mail.gmail.com>
- <20210722220918.l7j6zw3aaa27qato@mobilestation>
- <CALAqxLXrs0_Xs0JV5H-wS1q2CJ7XhW5Dj90eu=uazkRXXEMUxQ@mail.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=xBUb4/7onMnAlknKM3k8258LkduSxgT3yQiknJNxzb0=;
+        b=hldGNSKUDtP8NOg9Wca+7fqqc36gUCBAk1Dj5X176KyoSgy/mdxBPepoprGJw7es4f
+         7pX96EdcprybBGSOsmDrihAxxPZR1NxWttWI1Up4Dbx3w44OsetaMrjS89ukEpI3yrcy
+         2QmnYbZJ6M+0iwymGc2OF6drQh6eqBdLaiIayhAaC1RRADXHV/YdqmhMv/EaMMedEQko
+         zkY5xEtszEDAEl1yH8AqZtA5axFUojP7Widmg912uWMGnBAp/4NopZ6MQzN3uWsjrCyJ
+         cPm6UdcLxY65HtMP/AIqyWULgoIJ+gr6vcL0rYeRUX9JnjsvIIrPNH5bK40i9uv8MOep
+         H6EQ==
+X-Gm-Message-State: AOAM531zMEgX3FSsWNsNn2rOmU4SC03RWKVseXrhho/6xyAjUvBrsJml
+        0xRsGDdDxkPQy0b0CGDrETL6H8uze37egA==
+X-Google-Smtp-Source: ABdhPJwgPxyOr4+5HuBmuGNMCTaQZOVGEzUfG1WjXSK51Yre1bsRtelceP5v+zbzWdnGK8VtX0kqUA==
+X-Received: by 2002:a05:6402:1d3c:: with SMTP id dh28mr16144211edb.257.1629061017145;
+        Sun, 15 Aug 2021 13:56:57 -0700 (PDT)
+Received: from ?IPv6:2001:981:6fec:1:e04c:30:6509:3439? ([2001:981:6fec:1:e04c:30:6509:3439])
+        by smtp.gmail.com with ESMTPSA id d2sm2975119ejo.13.2021.08.15.13.56.56
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sun, 15 Aug 2021 13:56:56 -0700 (PDT)
+Subject: Re: [PATCH v10 0/6] Re-introduce TX FIFO resize for larger EP
+ bursting
+To:     Felipe Balbi <balbi@kernel.org>
+Cc:     Wesley Cheng <wcheng@codeaurora.org>, gregkh@linuxfoundation.org,
+        robh+dt@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
+        frowand.list@gmail.com, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, jackp@codeaurora.org,
+        heikki.krogerus@linux.intel.com, andy.shevchenko@gmail.com
+References: <1623923899-16759-1-git-send-email-wcheng@codeaurora.org>
+ <cfb83fe4-369c-ec72-7887-3bcb0f20fe15@gmail.com>
+ <ec8050c5-c013-4af6-b39e-69779c009a9c@codeaurora.org>
+ <f5ed0ee7-e333-681f-0f1a-d0227562204b@gmail.com>
+ <2e01c435-9ecc-4e3b-f55c-612a86667020@codeaurora.org>
+ <2ae9fa6a-3bb1-3742-0dd3-59678bdd8643@gmail.com>
+ <ebea75fe-5334-197b-f67a-cb6e1e30b39e@codeaurora.org>
+ <bafa93bb-11e3-c8a5-e14a-b0a6d5695055@gmail.com> <87v951ldlt.fsf@kernel.org>
+ <d9aef50c-4bd1-4957-13d8-0b6a14b9fcd0@gmail.com> <87pmv9l1dv.fsf@kernel.org>
+ <9dc6cd83-17b9-7075-0934-6b9d41b6875d@gmail.com> <87a6mbudvc.fsf@kernel.org>
+ <6e8bb4ad-fe68-ad36-7416-2b8e10b6ae96@gmail.com> <877dhev68a.fsf@kernel.org>
+ <cca69e90-b0ef-00b8-75d3-3bf959a93b45@gmail.com> <874kchvcq0.fsf@kernel.org>
+From:   Ferry Toth <fntoth@gmail.com>
+Message-ID: <e59f1201-2aa2-9075-1f94-a6ae7a046dc1@gmail.com>
+Date:   Sun, 15 Aug 2021 22:56:56 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CALAqxLXrs0_Xs0JV5H-wS1q2CJ7XhW5Dj90eu=uazkRXXEMUxQ@mail.gmail.com>
+In-Reply-To: <874kchvcq0.fsf@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello John
+Hi,
 
-On Fri, Aug 13, 2021 at 06:06:24PM -0700, John Stultz wrote:
-> On Thu, Jul 22, 2021 at 3:09 PM Serge Semin <fancer.lancer@gmail.com> wrote:
-> > On Thu, Jul 22, 2021 at 01:09:05PM -0700, John Stultz wrote:
-> > > On Thu, Jul 22, 2021 at 12:17 PM Bjorn Andersson
-> > > <bjorn.andersson@linaro.org> wrote:
-> > > > > On Jul 21, 2021, 1:45 PM +0200, Krzysztof Kozlowski wrote:
-> > > > > > I had impression that kernel defines interfaces which should be used and
-> > > > > > are stable (e.g. syscalls, sysfs and so on). This case is example of
-> > > > > > user-space relying on something not being marked as part of ABI. Instead
-> > > > > > they found something working for them and now it is being used in "we
-> > > > > > cannot break existing systems". Basically, AOSP unilaterally created a
-> > > > > > stable ABI and now kernel has to stick to it.
-> > > > > >
-> > > > > > Really, all normal systems depend on aliases or names and here we have
-> > > > > > dependency on device address. I proposed way how AOSP should be fixed.
-> > > > > > Anything happened? Nope.
-> > > > >
-> > > > > First time he sent a possible solution for the problem:
-> > > > > https://lore.kernel.org/lkml/20201221210423.GA2504@kozik-lap/
-> > > > >
-> > > > > To sum up you could have used one of the more portable approaches
-> > > > > 1. add an udc alias to the controller and use it then to refer to the
-> > > > > corresponding USB controller
-> > > >
-> > > > Is there such a thing as "UDC alias"? Or are you suggesting that we
-> > > > should add such feature?
-> > > >
-> > > > I think it would be wonderful if we could identify the UDCs on our
-> > > > boards as "USB1" and "USB2", or "the one and only USB-C connector". But
-> > > > unless that will fall back to the existing naming it would break John's
-> > > > _existing_ userspace.
-> > >
-> >
-> > > Well, I'd not hold up the existing userspace I'm using as sacrosanct
-> > > (AOSP devices still usually don't have to work cross-kernel versions -
-> > > devboards being the main exception). I'm fine if we can rework
-> > > userland as proposed, so that the issues can be avoided, but I
-> > > honestly don't have enough context to really understand what that
-> > > looks like (no idea what udc aliases are).
-> > >
-> > > And whatever we do, the main constraint is that userland has to be
-> > > able to work with existing LTS kernels and newer kernels.
-> >
-> > As I said in my response to Bjorn even if it is added to the kernel it
-> > won't get to the official LTSes as it would be a new kernel feature.
-> > New features aren't normally backported to the older kernels.
-> >
-> > >
-> > > > > 2. search through DT-nodes looking for a specific compatible/reg
-> > > > > DT-properties.
-> > > > >
-> > > >
-> > > > We could define that this is the way, but again we didn't yesterday so
-> > > > your proposal is not backwards compatible.
-> > >
-> >
-> > > It may be backwards compatible, but I'm still not clear exactly how it
-> > > would work.
-> > >
-> > > I guess if we look through all
-> > > sys/bus/platform/devices/*/of_node/compatbile strings for the desired
-> > > "snps,dwc3", then find which of the directories have the desired
-> > > address in the string? (The suggestion for looking at reg seems
-> > > better, but I don't get a char value out of the dwc3 of_node/reg
-> > > file).
-> >
-> > The algorithm is simple:
-> > 1) You know what USB controllers you have on your platform. They are
-> > supposed to be compatible with snps,dwc3 string and have some pre-defined
-> > base address.
-> > 2) Find all the files in the directory /sys/class/udc/.
-> > 3) Walk through all the directories in /sys/bus/platform/devices/ with
-> > names found in 2) and stop on the device with matching compatible/base
-> > address defined in 1).
-> >
-> > In my case the strings could be retrieved like this:
-> > USB_NAME_COMPAT=$(/sys/bus/platform/devices/1f100000.usb/of_node/compatible | tr '\0' '\t' | cut -f1)
-> > USB_DEVICE_ADDR="$(head -c 4 /sys/bus/platform/devices/1f100000.usb/of_node/reg | hexdump -ve '/1 "%02x"' | sed -e 's/^0*//g')"
-> 
-> 
+Op 26-07-2021 om 07:57 schreef Felipe Balbi:
+> Hi,
+>
+> Ferry Toth <fntoth@gmail.com> writes:
+>>>>> Ferry Toth <fntoth@gmail.com> writes:
+>>>>>>>>>> Hardware name: Intel Corporation Merrifield/BODEGA BAY, BIOS 542
+>>>>>>>>>> 2015.01.21:18.19.48
+>>>>>>>>>> RIP: 0010:0x500000000
+>>>>>>>>>> Code: Unable to access opcode bytes at RIP 0x4ffffffd6.
+>>>>>>>>>> RSP: 0018:ffffa4d00045fc28 EFLAGS: 00010046
+>>>>>>>>>> RAX: 0000000500000000 RBX: ffff8cd546aed200 RCX: 0000000000000000
+>>>>>>>>>> RDX: 0000000000000000 RSI: ffff8cd547bfcae0 RDI: ffff8cd546aed200
+>>>>>>>>>> RBP: ffff8cd547bfcae0 R08: 0000000000000000 R09: 0000000000000001
+>>>>>>>>>> R10: ffff8cd541fd28c0 R11: 0000000000000000 R12: ffff8cd547342828
+>>>>>>>>>> R13: ffff8cd546aed248 R14: 0000000000000000 R15: ffff8cd548b1d000
+>>>>>>>>>> FS:  0000000000000000(0000) GS:ffff8cd57e200000(0000) knlGS:0000000000000000
+>>>>>>>>>> CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
+>>>>>>>>>> CR2: 0000000500000000 CR3: 000000000311e000 CR4: 00000000001006f0
+>>>>>>>>>> Call Trace:
+>>>>>>>>>>        ? dwc3_remove_requests.constprop.0+0x14d/0x170
+>>>>>>>>>>        ? __dwc3_gadget_ep_disable+0x7a/0x160
+>>>>>>>>>>        ? dwc3_gadget_ep_disable+0x3d/0xd0
+>>>>>>>>>>        ? usb_ep_disable+0x1c/0x
+>>>>>>>>>>        ? u_audio_stop_capture+0x79/0x120 [u_audio]
+>>>>>>>>>>        ? afunc_set_alt+0x73/0x80 [usb_f_uac2]
+>>> So this is triggered by a SetInterface request...
+>>>
+>>>>>>>>>>        ? composite_setup+0x224/0x1b90 [libcomposite]
+>>>>>>>>>>        ? __dwc3_gadget_kick_transfer+0x160/0x400
+>>>>>>>>>>        ? dwc3_gadget_ep_queue+0xf3/0x1a0
+>>>>>>>>>>        ? configfs_composite_setup+0x6b/0x90 [libcomposite]
+>>>>>>>>>>        ? configfs_composite_setup+0x6b/0x90 [libcomposite]
+>>>>>>>>>>        ? dwc3_ep0_interrupt+0x459/0xa40
+>>>>>>>>>>        ? dwc3_thread_interrupt+0x8ee/0xf40
+>>>>>>>>>>        ? __schedule+0x235/0x6c0
+>>>>>>>>>>        ? disable_irq_nosync+0x10/0x10
+>>>>>>>>>>        ? irq_thread_fn+0x1b/0x60
+>>>>>>>>>>        ? irq_thread+0xc0/0x160
+>>>>>>>>>>        ? irq_thread_check_affinity+0x70/0x70
+>>>>>>>>>>        ? irq_forced_thread_fn+0x70/0x70
+>>>>>>>>>>        ? kthread+0x122/0x140
+>>>>>>>>>>        ? set_kthread_struct+0x40/0x40
+>>>>>>>>>>        ? ret_from_fork+0x22/0x30
+>>>>>>>>> Do you mind enabling dwc3 traces and collecting them? Trying to figure
+>>>>>>>>> out how we got here.
+>>>>>>>>>
+>>>>>>>> I'll try if I can get the same error by booting with USB in host mode
+>>>>>>>> and then switch to device mode. If so I can enable traces and collect as
+>>>>>>>> you explained me before.
+>>>>>>>>
+>>>>>>>> I'll try before monday, as then I fly for a holiday and will not be
+>>>>>>>> available before rc5.
+>>>>>>> you can enable all of those with kernel cmdline :-)
+>>>>>>>
+>>>>>>> https://www.kernel.org/doc/html/latest/admin-guide/kernel-parameters.html
+>>>>>>>
+>>>>>>> you need ftrace_dump_on_oops=1 and also need the correct options on
+>>>>>>> trace_buf_size and trace_event.
+>>>>>>>
+>>>>>> On Edison-Arduino I have a switch to go to device mode, after which
+>>>>>> udev triggers a script configure gadgets through configfs.
+>>>>>>
+>>>>>> I tried to log following these instructions:
+>>>>>>
+>>>>>> https://www.kernel.org/doc/html/latest/driver-api/usb/dwc3.html#reporting-bugs  <https://www.kernel.org/doc/html/latest/driver-api/usb/dwc3.html#reporting-bugs>
+>>>>>>
+>>>>>> Unfortunately the kernel crashes so badly I can not get to the ` cp
+>>>>>> /t/trace /root/trace.txt` line (after a while the watchdog kicks).
+>>>>>>
+>>>>>> What to do next?
+>>>>> Pass ftrace_dump_on_oops to kernel cmdline.
+>>>>>
+>>>> No sure if I did this right, on oops everything is pushed to console
+>>>> (115k2 serial), I hope nothing essential is lost.
+>>>>
+>>>> I copied the screen buffer to file see attached.
+>>> Thank you, I bet it took quite a some time :-) Anyway, looking at
+>>> the logs around Set Interface requests, we can track every endpoint
+>>> that's disabled. I'll take a guess and assume we're failing at the last
+>>> Set Interface, that means we should have something odd with ep6in, but
+>>> everything looks fine in the trace output:
+>>>
+>>> [   75.823107] irq/14-d-596       0d... 42789194us : dwc3_gadget_ep_enable: ep6in: mps 192/346 streams 16 burst 0 ring 0/0 flags E:swbp:<
+>>> [   75.835472] irq/14-d-596       0d... 42789198us : dwc3_alloc_request: ep6in: req 0000000002c71409 length 0/0 zsI ==> 0
+>>> [   75.846416] irq/14-d-596       0d... 42789202us : dwc3_ep_queue: ep6in: req 0000000002c71409 length 0/192 zsI ==> -115
+>>> [   75.857360] irq/14-d-596       0d... 42789204us : dwc3_alloc_request: ep6in: req 00000000a324f5d0 length 0/0 zsI ==> 0
+>>> [   75.868301] irq/14-d-596       0d... 42789206us : dwc3_ep_queue: ep6in: req 00000000a324f5d0 length 0/192 zsI ==> -115
+>>> [   75.879244] irq/14-d-596       0d... 42789209us : dwc3_event: event (000020c2): ep0in: Transfer Not Ready [0] (Not Active) [Status Phase]
+>>> [   75.891880] irq/14-d-596       0d... 42789211us : dwc3_prepare_trb: ep0in: trb 000000004c0ae319 (E0:D0) buf 000000001bded000 size 0 ctrl 00000c33 (HLcs:SC:status2)
+>>> [   75.989131] irq/14-d-596       0d... 42789224us : dwc3_gadget_ep_cmd: ep0in: cmd 'Start Transfer' [406] params 00000000 1bded000 00000000 --> status: Successful
+>>> [   76.096261] irq/14-d-596       0d... 42789272us : dwc3_event: event (0000c042): ep0in: Transfer Complete (sIL) [Status Phase]
+>>> [   76.107834] irq/14-d-596       0d... 42789275us : dwc3_complete_trb: ep0out: trb 000000004c0ae319 (E0:D0) buf 000000001bded000 size 0 ctrl 00000c32 (hLcs:SC:status2)
+>>> [   76.122944] irq/14-d-596       0d... 42789277us : dwc3_gadget_giveback: ep0out: req 00000000cb1bd3cd length 0/0 zsI ==> 0
+>>> [   76.134160] irq/14-d-596       0d... 42789280us : dwc3_prepare_trb: ep0out: trb 000000004c0ae319 (E0:D0) buf 000000001bded000 size 8 ctrl 00000c23 (HLcs:SC:setup)
+>>> [   76.231322] irq/14-d-596       0d... 42789292us : dwc3_gadget_ep_cmd: ep0out: cmd 'Start Transfer' [406] params 00000000 1bded000 00000000 --> status: Successful
+>>> [   76.297418] kworker/-23        0d... 42789670us : dwc3_ep_queue: ep3in: req 0000000029586135 length 0/96 ZsI ==> -115
+>>> [   76.308278] kworker/-23        0d... 42789695us : dwc3_prepare_trb: ep3in: trb 00000000b81213d6 (E1:D0) buf 0000000003b7a800 size 96 ctrl 00000811 (Hlcs:sC:normal)
+>>> [   76.395294] kworker/-23        0d... 42789707us : dwc3_gadget_ep_cmd: ep3in: cmd 'Update Transfer' [60007] params 00000000 00000000 00000000 --> status: Successful
+>>> [   76.471900] irq/14-d-596       0d... 42789842us : dwc3_event: event (0000c040): ep0out: Transfer Complete (sIL) [Setup Phase]
+>>> [   76.489308] irq/14-d-596       0d... 42789845us : dwc3_ctrl_req: Set Interface(Intf = 5, Alt.Setting = 0)
+>>> [   76.505650] irq/14-d-596       0d... 42789851us : dwc3_ep_dequeue: ep6in: req 0000000002c71409 length 0/192 zsI ==> -115
+>>> [   76.523315] irq/14-d-596       0d... 42789854us : dwc3_gadget_giveback: ep6in: req 0000000002c71409 length 0/192 zsI ==> -104
+>>> [   76.541427] irq/14-d-596       0d... 42789857us : dwc3_free_request: ep6in: req 0000000002c71409 length 0/192 zsI ==> -104
+>>> [   76.559267] irq/14-d-596       0d... 42789859us : dwc3_ep_dequeue: ep6in: req 00000000a324f5d0 length 0/192 zsI ==> -115
+>>> [   76.576937] irq/14-d-596       0d... 42789861us : dwc3_gadget_giveback: ep6in: req 00000000a324f5d0 length 0/192 zsI ==> -104
+>>> [   76.595046] irq/14-d-596       0d... 42789862us : dwc3_free_request: ep6in: req 00000000a324f5d0 length 0/192 zsI ==> -104
+>>> [   76.612892] irq/14-d-596       0d... 42789865us : dwc3_gadget_ep_disable: ep6in: mps 192/346 streams 16 burst 0 ring 0/0 flags E:swbp:<
+>>> [   76.665535] irq/14-d-596       0d... 42789873us : dwc3_event: event (000020c2): ep0in: Transfer Not Ready [0] (Not Active) [Status Phase]
+>>> [   76.684716] irq/14-d-596       0d... 42789875us : dwc3_prepare_trb: ep0in: trb 000000004c0ae319 (E0:D0) buf 000000001bded000 size 0 ctrl 00000c33 (HLcs:SC:status2)
+>>> [   76.819195] irq/14-d-596       0d... 42789886us : dwc3_gadget_ep_cmd: ep0in: cmd 'Start Transfer' [406] params 00000000 1bded000 00000000 --> status: Successful
+>>> [   76.926324] irq/14-d-596       0d... 42789930us : dwc3_event: event (0000c042): ep0in: Transfer Complete (sIL) [Status Phase]
+>>> [   76.937892] irq/14-d-596       0d... 42789933us : dwc3_complete_trb: ep0out: trb 000000004c0ae319 (E0:D0) buf 000000001bded000 size 0 ctrl 00000c32 (hLcs:SC:status2)
+>>> [   76.953003] irq/14-d-596       0d... 42789935us : dwc3_gadget_giveback: ep0out: req 00000000cb1bd3cd length 0/0 zsI ==> 0
+>>> [   76.964217] irq/14-d-596       0d... 42789938us : dwc3_prepare_trb: ep0out: trb 000000004c0ae319 (E0:D0) buf 000000001bded000 size 8 ctrl 00000c23 (HLcs:SC:setup)
+>>> [   77.061379] irq/14-d-596       0d... 42789950us : dwc3_gadget_ep_cmd: ep0out: cmd 'Start Transfer' [406] params 00000000 1bded000 00000000 --> status: Successful
+>>> [   77.168595] irq/14-d-596       0d... 42790509us : dwc3_event: event (0000c040): ep0out: Transfer Complete (sIL) [Setup Phase]
+>>> [   77.180159] irq/14-d-596       0d... 42790512us : dwc3_ctrl_req: Get String Descriptor(Index = 18, Length = 255)
+>>> [   77.190578] irq/14-d-596       0d... 42790537us : dwc3_prepare_trb: ep0in: trb 000000004c0ae319 (E0:D0) buf 0000000003b68000 size 36 ctrl 00000c53 (HLcs:SC:data)
+>>> [   77.287648] irq/14-d-596       0d... 42790550us : dwc3_gadget_ep_cmd: ep0in: cmd 'Start Transfer' [406] params 00000000 1bded000 00000000 --> status: Successful
+>>> [   77.333107] irq/14-d-596       0d... 42790557us : dwc3_event: event (000010c2): ep0in: Transfer Not Ready [0] (Not Active) [Data Phase]
+>>> [   77.407223] irq/14-d-596       0d... 42790575us : dwc3_event: event (000090c2): ep0in: Transfer Not Ready [0] (Active) [Data Phase]
+>>> [   77.480985] irq/14-d-596       0d... 42790588us : dwc3_event: event (0000c042): ep0in: Transfer Complete (sIL) [Data Phase]
+>>> [   77.492376] irq/14-d-596       0d... 42790590us : dwc3_complete_trb: ep0out: trb 000000004c0ae319 (E0:D0) buf 0000000003b68000 size 0 ctrl 00000c52 (hLcs:SC:data)
+>>> [   77.507221] irq/14-d-596       0d... 42790595us : dwc3_gadget_giveback: ep0out: req 00000000cb1bd3cd length 36/36 ZsI ==> 0
+>>> [   77.518609] irq/14-d-596       0d... 42790597us : dwc3_event: event (000020c0): ep0out: Transfer Not Ready [0] (Not Active) [Status Phase]
+>>> [   77.531332] irq/14-d-596       0d... 42790598us : dwc3_prepare_trb: ep0out: trb 000000004c0ae319 (E0:D0) buf 000000001bded000 size 0 ctrl 00000c43 (HLcs:SC:status3)
+>>> [   77.628669] irq/14-d-596       0d... 42790609us : dwc3_gadget_ep_cmd: ep0out: cmd 'Start Transfer' [406] params 00000000 1bded000 00000000 --> status: Successful
+>>>
+>>> Do you mind adding a few prints in dwc3_remove_requests to tell us which
+>>> endpoint is being processed? Then we'll know for sure which one caused
+>>> the crash.
+>>>
+>> I wouldn't mind but am leaving on a holiday, won't have time until 6 aug.
+> not a problem, we'll still be here when you're back :-)
 
-> Hey Serge,
->    I just wanted to follow up here.  Amit has reworked the db845c AOSP
-> userland so that it no longer uses the fixed node name, but instead
-> probes for it:
->   https://android-review.googlesource.com/c/device/linaro/dragonboard/+/1774872
-> 
-> Admittedly, it does take a short-cut.  As your algorithm above,
-> digging up the devices and finding the sys/bus path to read the reg
-> value and pipe through hexdump (which android doesn't have) seemed
-> overly obtuse when the address is in the node name itself (while the
-> only way to be sure, one normally doesn't use spectroscopy to
-> determine the value of a coin when you can read what's printed on it
-> :).  But, should the node naming be further changed at least the
-> infrastructure we have can be reworked fairly easily to adapt now.
-> 
-> In any case, as we can handle the name change now, if you want to
-> resubmit your patch, we would no longer object (but can't promise no
-> one else might be bitten).  Sorry for the delay this caused, and we
-> appreciate you working with us to find a solution.
+Well, let's go then :-)
 
-Great! Thanks for sending the notification. I'll resend the patch with a
-reference to your report and to the update made to AOSP, as soon as I
-am done with my current task.
+To get back in the mood I have retested 5.13.0, 5.14.0-rc1, 5.14.0-rc2 
+and 5.14.0-rc5.
 
-Regards
--Sergey
+I find that 5.13.0 works fine, and the issue starts from 5.14.0-rc1.
 
-> 
-> thanks
-> -john
+With 5.14.0-rc5 the problem seems worse (or different?), and just 
+disabling uac2 gadget does not prevent the crash. Even disabling gser 
+and mass_storage.usb0 as well there is still a crash.
+
+Now I'm not sure how to proceed. Bisect rc1? Or focus on rc5 (rc6?)?
+
+>> But as I am using configfs (excerpt follows) and just disabling the
+>> last 2 line resolves the issue, I'm guessing uac2 is the issue. Or
+>> exceeding the available resources.
+>>
+>> # Create directory structure
+>> mkdir "${GADGET_BASE_DIR}"
+>> cd "${GADGET_BASE_DIR}"
+>> mkdir -p configs/c.1/strings/0x409
+>> mkdir -p strings/0x409
+>>
+>> # Serial device
+>> mkdir functions/gser.usb0
+>> ln -s functions/gser.usb0 configs/c.1/
+>> ###
+>>
+>> # Ethernet device
+>> mkdir functions/eem.usb0
+>> echo "${DEV_ETH_ADDR}" > functions/eem.usb0/dev_addr
+>> echo "${HOST_ETH_ADDR}" > functions/eem.usb0/host_addr
+>> ln -s functions/eem.usb0 configs/c.1/
+>>
+>> # Mass Storage device
+>> mkdir functions/mass_storage.usb0
+>> echo 1 > functions/mass_storage.usb0/stall
+>> echo 0 > functions/mass_storage.usb0/lun.0/cdrom
+>> echo 0 > functions/mass_storage.usb0/lun.0/ro
+>> echo 0 > functions/mass_storage.usb0/lun.0/nofua
+>> echo "${USBDISK}" > functions/mass_storage.usb0/lun.0/file
+>> ln -s functions/mass_storage.usb0 configs/c.1/
+>>
+>> # UAC2 device
+>> mkdir functions/uac2.usb0
+>> ln -s functions/uac2.usb0 configs/c.1
+> Right, either there's an actual bug in uac2, or we're running out of
+> FIFO space.
+>
