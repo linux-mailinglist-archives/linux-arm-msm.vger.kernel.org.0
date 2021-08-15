@@ -2,68 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9DE293EC512
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 14 Aug 2021 22:33:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A586F3EC9AC
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 15 Aug 2021 16:49:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231137AbhHNUeE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 14 Aug 2021 16:34:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44278 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229489AbhHNUeE (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 14 Aug 2021 16:34:04 -0400
-Received: from mail-wr1-x444.google.com (mail-wr1-x444.google.com [IPv6:2a00:1450:4864:20::444])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 787A4C061764;
-        Sat, 14 Aug 2021 13:33:35 -0700 (PDT)
-Received: by mail-wr1-x444.google.com with SMTP id k29so17984029wrd.7;
-        Sat, 14 Aug 2021 13:33:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=message-id:from:mime-version:content-transfer-encoding
-         :content-description:subject:to:date:reply-to;
-        bh=5NTJSky9UX3JbuB9riY3wCYfXDpCwy2c7hzO0kF4AHA=;
-        b=Iy6T57dt1a7+5YUBZx7OKmE0Cr15qfeB4Y5asX4lL30FTVKUAF4BvisHQM+Dxuy0Ev
-         9Xl+xMdZAg3HRg8qZfuEZ5vUG+ugCO4wp5ChjX8LJ4fXWLV/W6E1ErX+/81Gn+9IwOZx
-         noyOR7QKhbKwrwS+Nip78UMr2uB8rRl3E5++RG3iAJIx6LV904eYQ1/2OTBreWo83Hoe
-         o+rlaNtR7bfcyCsEau34Wt+Uel4z9bQyFCoc3kqbklKaOwicKboUFEFUYUmfC6J3urhI
-         S3RMjpK79YR5iwS/nXS29s545QTJ8Yb9+HGL6+h+u6rN9Vmwv8elUApxo1LTTEYGnN4j
-         DfHQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:message-id:from:mime-version
-         :content-transfer-encoding:content-description:subject:to:date
-         :reply-to;
-        bh=5NTJSky9UX3JbuB9riY3wCYfXDpCwy2c7hzO0kF4AHA=;
-        b=LSatyExwHTQoiB+WVuuAaUCqO0RU2VxcCmlva6CEOv1VEuxGsE/P5kI6U+8/hPp89R
-         WkD/MmvYSPSIJSCsuBdyzXMVUA1fApGdmjdCEBHwzqvWIaepgQaGwQ3JyIhC9Ir2gId2
-         EuHKW0lT3lAlfbtMGt3ouZIPOj/h48o70F+x09wd+WjBE+IYkD2+BBNuygbhVdoc5CJX
-         FoQNdkvzopcvyEbFeniyXv5485eabmkvR6GoVks/VgMr9rya+xVvrlgOTmkuXRTdzC5Q
-         ISFGktvw9e7haqQaML02EW45ZGIkz/1USRt1c1Td13c2nD1Y5ocd8ZatRUWaEGODDakc
-         QKDA==
-X-Gm-Message-State: AOAM532phRwHjRWApWeiGK6oekVQdA5GRh6SPhwjlmsWmIaRrP141drf
-        8+qcZ7uGpzWHgGQh6Rvk7Vs=
-X-Google-Smtp-Source: ABdhPJyoRvoFIOWJsVymIuu0a5f/lAFjrCsBbfAGzYiuYwxtvLzh4ImCYMY0e+LCPXa6EHIfgSNqpQ==
-X-Received: by 2002:adf:a556:: with SMTP id j22mr3564383wrb.268.1628973214160;
-        Sat, 14 Aug 2021 13:33:34 -0700 (PDT)
-Received: from [192.168.1.70] ([102.64.221.122])
-        by smtp.gmail.com with ESMTPSA id e17sm5604100wrs.78.2021.08.14.13.33.23
-        (version=TLS1 cipher=AES128-SHA bits=128/128);
-        Sat, 14 Aug 2021 13:33:33 -0700 (PDT)
-Message-ID: <6118289d.1c69fb81.4ddf7.f246@mx.google.com>
-From:   Vanina curth <curtisvani0028@gmail.com>
-X-Google-Original-From: Vanina curth
-Content-Type: text/plain; charset="iso-8859-1"
+        id S234353AbhHOOuC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 15 Aug 2021 10:50:02 -0400
+Received: from vps0.lunn.ch ([185.16.172.187]:50668 "EHLO vps0.lunn.ch"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232179AbhHOOt6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 15 Aug 2021 10:49:58 -0400
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=lunn.ch;
+        s=20171124; h=In-Reply-To:Content-Disposition:Content-Type:MIME-Version:
+        References:Message-ID:Subject:Cc:To:From:Date:From:Sender:Reply-To:Subject:
+        Date:Message-ID:To:Cc:MIME-Version:Content-Type:Content-Transfer-Encoding:
+        Content-ID:Content-Description:Content-Disposition:In-Reply-To:References;
+        bh=6PILfRjAPIVbz7yptfJPF9IyZ40Hyv3qB6aT3DV5dp0=; b=ut2RCLnu27XQkRGthBymynOQQZ
+        Xd9ucWfi3PcTak22UjzYxGXAGt7U9J6iHthlTmr6SlbDZT39eIje4WbhY2ZEzJ6pkaJ2/pBNRKPK0
+        ON+VrolZU6G55MJ3K7AKMEb7xLbgA6AQJkfAFWdUI16lItFHaOmMy3hgObykL0iOW5t8=;
+Received: from andrew by vps0.lunn.ch with local (Exim 4.94.2)
+        (envelope-from <andrew@lunn.ch>)
+        id 1mFHRt-000FOs-IJ; Sun, 15 Aug 2021 16:49:17 +0200
+Date:   Sun, 15 Aug 2021 16:49:17 +0200
+From:   Andrew Lunn <andrew@lunn.ch>
+To:     Luo Jie <luoj@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, davem@davemloft.net,
+        kuba@kernel.org, robh+dt@kernel.org, hkallweit1@gmail.com,
+        linux@armlinux.org.uk, robert.marko@sartura.hr,
+        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        sricharan@codeaurora.org
+Subject: Re: [PATCH v3 1/3] net: mdio: Add the reset function for IPQ MDIO
+ driver
+Message-ID: <YRkpbb8e7EP1McjP@lunn.ch>
+References: <20210812100642.1800-1-luoj@codeaurora.org>
+ <20210812100642.1800-2-luoj@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-Content-Description: Mail message body
-Subject: Sir,
-To:     Recipients <Vanina@vger.kernel.org>
-Date:   Sat, 14 Aug 2021 20:33:13 +0000
-Reply-To: curtisvani9008@gmail.com
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210812100642.1800-2-luoj@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-How are you? I'm Vanina. I'm interested to know you and I would like to kno=
-w more about you and establish relationship with you. i will wait for your =
-response. thank you.
+On Thu, Aug 12, 2021 at 06:06:40PM +0800, Luo Jie wrote:
+> 1. configure the MDIO clock source frequency.
+> 2. the LDO resource is needed to configure the ethernet LDO available
+> for CMN_PLL.
+> 
+> Signed-off-by: Luo Jie <luoj@codeaurora.org>
+
+Reviewed-by: Andrew Lunn <andrew@lunn.ch>
+
+    Andrew
