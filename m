@@ -2,115 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6DCBA3ED7EA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Aug 2021 15:48:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 442963ED84E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Aug 2021 16:00:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230107AbhHPNtF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Aug 2021 09:49:05 -0400
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:4467 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S236242AbhHPNtE (ORCPT
+        id S232164AbhHPOAx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Aug 2021 10:00:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57512 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231895AbhHPOAh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Aug 2021 09:49:04 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1629121713; x=1660657713;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=leZ6zTnKIflUpL4hRqRdqqett5iC4HB+vMYv8TjNv2c=;
-  b=YusEOHM/Cti7a7G/6xRNRUhf7ZqyV32XMLY2f290vk5G0AJ3X9FQXKOd
-   LPfmfh/uH9u0xDcu4lWctdZGzGeYc7pY6KS7s4HJkGtJ0y7wbhu+F5Kcf
-   VNy/JF7NqZNFSxckPms0cam6C1VKczmnXzq/9vFi3OrgUkZY8vUeJxwzM
-   A=;
-Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 16 Aug 2021 06:48:31 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Aug 2021 06:48:31 -0700
-Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.858.15; Mon, 16 Aug 2021 06:48:30 -0700
-Received: from [10.226.59.216] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.858.15; Mon, 16 Aug
- 2021 06:48:30 -0700
-Subject: Re: bus: mhi: parse_xfer_event running transfer completion callbacks
- more than once for a given buffer
-To:     Hemant Kumar <hemantk@codeaurora.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Bhaumik Bhatt <bbhatt@codeaurora.org>
-CC:     "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "Paul Davey" <Paul.Davey@alliedtelesis.co.nz>
-References: <9a6a00acc60c676f39f89a8ce2989416bed1b24d.camel@alliedtelesis.co.nz>
- <CAMZdPi812vx7cjvLXpj_NnbZPOmcierQMFikVHwsUd9gYawHVw@mail.gmail.com>
- <544b3db2-b135-d870-8dd8-ec4450576cb7@codeaurora.org>
- <9ad7faea-544a-a070-cc00-9a24f237f4c1@codeaurora.org>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-Message-ID: <aee4fa28-76e8-8897-8abb-e6161c864577@quicinc.com>
-Date:   Mon, 16 Aug 2021 07:48:29 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        Mon, 16 Aug 2021 10:00:37 -0400
+Received: from mail-vs1-xe32.google.com (mail-vs1-xe32.google.com [IPv6:2607:f8b0:4864:20::e32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D049C0612AD
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 06:59:39 -0700 (PDT)
+Received: by mail-vs1-xe32.google.com with SMTP id j186so8350560vsc.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 06:59:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=nVKCYDMJormPExhpOghf50YWCKd/5uetFN/Swg1y9AE=;
+        b=AyTHo3XictXYsNapssdIBh0yZzQanYstNQtAKZWNMZr6nzJYpiDcoZSWw3QJ6phR3B
+         LCsQ5XarDg6jvY9Qca0DNKeAT/JoUVIymOTzBxla4hvWsZHUGoqoEPwkAoH7p9HqqwkD
+         K2Z4njb+9ewyQjAcb83/noLlRAKiQMVTox4dNTjTppAALsBvMMv+QYvwvwl0s3FNsh3j
+         qAEs37ER1l8+Rdr6EgVhQraNEuCKy0G2qU20p1Bk1kk8bGl5G75h0iGqVPx+7dCaxdT0
+         97KEmeEn5ht68tETNjQovt5F/BPHifZuUaBs8V8Bpt+LJY4r7GMecWQRnGkmNCAnnwZq
+         h0Yg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=nVKCYDMJormPExhpOghf50YWCKd/5uetFN/Swg1y9AE=;
+        b=LHcaaJSaBn3J5LVgzWgQKy26B9sc/F3k1dGRwLUhyxq5Rxp9Iu0jXL30kPRe+ZOhC7
+         oCcAJOpTb+O6l7XO/Yn0Lnf2zqGG1OgijeMsybHMdCK9VSPCKp3y/3ixr4qWA+jv9Lwr
+         zag6R7qk+n2n067ERMbOWp4J9PGIbZ5s9Wjmt4JbtWgBtLivC4U6w9JPnx0cwU8OTnwt
+         tkVt1S4mF/fUxERvBUr8IJq75Ld+bA6noMWvUCASl3yYtxi9ZQTLNct7twZCHNxGaM9s
+         3piBD/UlbF3yAr1pmlM7E2R8B1Uf7qcX/bWob/Zwlx6++tgHX0RqecRFaBKa31yT5hTY
+         H7fg==
+X-Gm-Message-State: AOAM53327ueqNpKDi+ahMFshr61WeV/9d1n6f7f2nmwYKW8ozgk88JPw
+        olEQP9PHY4+yGTlcgL4pCB3zt8sVR3Ob3oKt3wlIpg==
+X-Google-Smtp-Source: ABdhPJxH03LCvwF3n7FLPSRhMFmFSVUxkYQal+sImI6ahGhwHnNg4T2E1pse6fPH6Zhe8c/gCWm9o+F4tyfzci6Gr/w=
+X-Received: by 2002:a67:3212:: with SMTP id y18mr9746202vsy.19.1629122378196;
+ Mon, 16 Aug 2021 06:59:38 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <9ad7faea-544a-a070-cc00-9a24f237f4c1@codeaurora.org>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanexm03d.na.qualcomm.com (10.85.0.91) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+References: <1627534001-17256-2-git-send-email-sartgarg@codeaurora.org> <1628232901-30897-1-git-send-email-sartgarg@codeaurora.org>
+In-Reply-To: <1628232901-30897-1-git-send-email-sartgarg@codeaurora.org>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Mon, 16 Aug 2021 15:59:02 +0200
+Message-ID: <CAPDyKFoxCuKcOtS=J2adqpuXK6ucx5CqYvi5RbAKNr-CjFkcYA@mail.gmail.com>
+Subject: Re: [PATCH V3 0/2] Introduce max_timeout_count in sdhci_host for
+ vendor needs
+To:     Sarthak Garg <sartgarg@codeaurora.org>
+Cc:     Adrian Hunter <adrian.hunter@intel.com>,
+        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
+        Sahitya Tummala <stummala@codeaurora.org>,
+        linux-mmc <linux-mmc@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8/13/2021 5:10 PM, Hemant Kumar wrote:
-> One more thing to add
-> 
-> On 8/13/2021 3:55 PM, Hemant Kumar wrote:
->> Hi Paul,
->>
->> On 8/6/2021 2:43 AM, Loic Poulain wrote:
->>> + MHI people
->>>
->>> On Fri, 6 Aug 2021 at 06:20, Paul Davey 
->>> <Paul.Davey@alliedtelesis.co.nz> wrote:
->>>>
->>>> Hi linux-arm-msm list,
->>>>
->>>> We have been using the mhi driver with a Sierra EM9191 5G modem module
->>>> and have seen an occasional issue where the kernel would crash with
->>>> messages showing "BUG: Bad page state" which we debugged further and
->>>> found it was due to mhi_net_ul_callback freeing the same skb multiple
->>>> times, further debugging tracked this down to a case where
->>>> parse_xfer_event computed a dev_rp from the passed event's ev_tre
->>>> which does not lie within the region of valid "in flight" transfers
->>>> for the tre_ring.  See the patch below for how this was detected.
->>>>
->>>> I believe that receiving such an event results in the loop which runs
->>>> completion events for the transfers to re-run some completion
->>>> callbacks as it walks all the way around the ring again to reach the
->>>> invalid dev_rp position.
->> Do you have a log which prints the TRE being processed? Basically i am 
->> trying understand this : by the time you get double free issue, is 
->> there any pattern with respect to the TRE that is being processed. For 
->> example
->> when host processed the given TRE for the first time with RP1, stale 
->> TRE was posted by Event RP2 right after RP1
->>
->> ->RP1 [TRE1]
->> ->RP2 [TRE1]
->>
->> or occurrence of stale TRE event is random?
-> If you can log all the events you are processing, so that we can check 
-> when second event arrives for already processed TRE, is the transfer 
-> length same as originally processed TRE or it is different. In case it 
-> is different length, is the length matching to the TRE which was queue 
-> but not processed yet. You can print the mhi_queue_skb TRE content while 
-> queuing skb. How easy to reproduce this issue ? Is this showing up in 
-> high throughput use case or it is random? any specific step to reproduce 
-> this issue?
+On Fri, 6 Aug 2021 at 08:55, Sarthak Garg <sartgarg@codeaurora.org> wrote:
+>
+> Introduce max_timeout_count in sdhci_host_struct to let vendor's modify
+> the max timeout value as per their needs.
+>
+> Sahitya Tummala (1):
+>   mmc: sdhci-msm: Use maximum possible data timeout value
+>
+> Sarthak Garg (1):
+>   mmc: sdhci: Introduce max_timeout_count variable in sdhci_host
+>
+>  drivers/mmc/host/sdhci-msm.c |  3 +++
+>  drivers/mmc/host/sdhci.c     | 16 +++++++++-------
+>  drivers/mmc/host/sdhci.h     |  1 +
+>  3 files changed, 13 insertions(+), 7 deletions(-)
+>
+> --
+> 2.7.4
+>
 
-I would wonder, what is the codebase being testing?  Are the latest MHI 
-patches included?  When we saw something similar on AIC100, it was 
-addressed by the sanity check changes I upstreamed.
+Applied for next, thanks!
+
+Kind regards
+Uffe
