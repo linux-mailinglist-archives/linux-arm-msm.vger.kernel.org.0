@@ -2,108 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9911F3ECED2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Aug 2021 08:51:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5D913ED17E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Aug 2021 12:00:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233578AbhHPGvc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Aug 2021 02:51:32 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:48374 "EHLO m43-7.mailgun.net"
+        id S235543AbhHPKAi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Aug 2021 06:00:38 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37452 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233485AbhHPGvb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Aug 2021 02:51:31 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1629096660; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=gdILqRmVTD/TFVQVBfNPgHl11ZlKVgr1wHcPFQbbszM=;
- b=Ag7pMNo9NM4YEz/piukAZgstpiYn19UHawj4Se3F3q6DPcRHz7WnXE8Ptkj4I6sCoa/Cq41q
- 6c+tNgRzxUmmZwEfQmuLCPrznhPM8J3bfZkNAGbodZeEKcgNxffThPPaz7hLtLbCp9gTFacS
- NjAXusbjtjiLA/40kVcSckbCd48=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 611a0abef746c298d91898e1 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 16 Aug 2021 06:50:38
- GMT
-Sender: skakit=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2391BC43617; Mon, 16 Aug 2021 06:50:38 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: skakit)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 69BFCC4360C;
-        Mon, 16 Aug 2021 06:50:37 +0000 (UTC)
+        id S229609AbhHPKAi (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 16 Aug 2021 06:00:38 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPS id BA8B86108D;
+        Mon, 16 Aug 2021 10:00:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1629108006;
+        bh=9PW43dBvziydwvrdsNo5u6DZpPb4Wkfh/+7oYsIxLcw=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=kenoFo+zYRkP+qws6tjdzuVi5X0rgp+39BH6vKhawaXPi3v4BAUnBHaXis8a/Lqyj
+         ypyJ8FUtQEeEU0zxazyQI9mwoy/kWi1XrQ/EPVWqH1knGyhMgvztK/Kxf6uEvV20rK
+         yb74N+JCBdHRsC8QPKWR/kJKq9FD6kdp8/J5PURix/QF5l60XvRybwZ34CjX3JJbCs
+         LNbCVxRZvV6udETvxkUnCsWmxlk+w30rjJqvJzkpfkM6ONn0vRyQ1AktWbvzlvG7vr
+         AwZlMsLGTB44c4znej2iVWXEBYY9rYTvF6Hzu8B0+cH50yofv9V8+KD5aQ2WRB2aDe
+         oZ8rrmajxbVYQ==
+Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id A956660976;
+        Mon, 16 Aug 2021 10:00:06 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 16 Aug 2021 12:20:37 +0530
-From:   skakit@codeaurora.org
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Collins <collinsd@codeaurora.org>,
-        Kiran Gunda <kgunda@codeaurora.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, MSM <linux-arm-msm@vger.kernel.org>
-Subject: Re: [PATCH 1/2] pinctrl: qcom: spmi-gpio: correct parent irqspec
- translation
-In-Reply-To: <CACRpkdZteWY6X+prHeAF0rtPVbCk+X9=ZYgpjgAMH24LhOjhaQ@mail.gmail.com>
-References: <1628830531-14648-1-git-send-email-skakit@codeaurora.org>
- <1628830531-14648-2-git-send-email-skakit@codeaurora.org>
- <CACRpkdZteWY6X+prHeAF0rtPVbCk+X9=ZYgpjgAMH24LhOjhaQ@mail.gmail.com>
-Message-ID: <4af8171aefd6f0387438225666ec1ccc@codeaurora.org>
-X-Sender: skakit@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH v3 0/3] net: mdio: Add IPQ MDIO reset related function
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <162910800668.17833.16780539766199955250.git-patchwork-notify@kernel.org>
+Date:   Mon, 16 Aug 2021 10:00:06 +0000
+References: <20210812100642.1800-1-luoj@codeaurora.org>
+In-Reply-To: <20210812100642.1800-1-luoj@codeaurora.org>
+To:     Luo Jie <luoj@codeaurora.org>
+Cc:     andrew@lunn.ch, agross@kernel.org, bjorn.andersson@linaro.org,
+        davem@davemloft.net, kuba@kernel.org, robh+dt@kernel.org,
+        hkallweit1@gmail.com, linux@armlinux.org.uk,
+        robert.marko@sartura.hr, linux-arm-msm@vger.kernel.org,
+        netdev@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, sricharan@codeaurora.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Linus,
+Hello:
 
-On 2021-08-13 14:27, Linus Walleij wrote:
-> Hi Satya/David,
-> 
-> nice work on identifying this bug!
-> 
-> On Fri, Aug 13, 2021 at 6:56 AM satya priya <skakit@codeaurora.org> 
-> wrote:
->> 
->> From: David Collins <collinsd@codeaurora.org>
->> 
->> pmic_gpio_child_to_parent_hwirq() and
->> gpiochip_populate_parent_fwspec_fourcell() translate a pinctrl-
->> spmi-gpio irqspec to an SPMI controller irqspec.  When they do
->> this, they use a fixed SPMI slave ID of 0 and a fixed GPIO
->> peripheral offset of 0xC0 (corresponding to SPMI address 0xC000).
->> This translation results in an incorrect irqspec for secondary
->> PMICs that don't have a slave ID of 0 as well as for PMIC chips
->> which have GPIO peripherals located at a base address other than
->> 0xC000.
->> 
->> Correct this issue by passing the slave ID of the pinctrl-spmi-
->> gpio device's parent in the SPMI controller irqspec and by
->> calculating the peripheral ID base from the device tree 'reg'
->> property of the pinctrl-spmi-gpio device.
->> 
->> Signed-off-by: David Collins <collinsd@codeaurora.org>
->> Signed-off-by: satya priya <skakit@codeaurora.org>
-> 
-> Is this a regression or is it fine if I just apply it for v5.15?
-> I was thinking v5.15 since it isn't yet used in device trees.
-> 
+This series was applied to netdev/net-next.git (refs/heads/master):
 
-Without this fix, [2/2] Vol+ support is failing. If possible please 
-merge it on current branch.
+On Thu, 12 Aug 2021 18:06:39 +0800 you wrote:
+> This patch series add the MDIO reset features, which includes
+> configuring MDIO clock source frequency and indicating CMN_PLL that
+> ethernet LDO has been ready, this ethernet LDO is dedicated in the
+> IPQ5018 platform.
+> 
+> Specify more chipset IPQ40xx, IPQ807x, IPQ60xx and IPQ50xx supported by
+> this MDIO driver.
+> 
+> [...]
 
-> Yours,
-> Linus Walleij
+Here is the summary with links:
+  - [v3,1/3] net: mdio: Add the reset function for IPQ MDIO driver
+    https://git.kernel.org/netdev/net-next/c/23a890d493e3
+  - [v3,2/3] MDIO: Kconfig: Specify more IPQ chipset supported
+    https://git.kernel.org/netdev/net-next/c/c76ee26306b2
+  - [v3,3/3] dt-bindings: net: Add the properties for ipq4019 MDIO
+    https://git.kernel.org/netdev/net-next/c/2a4c32e767ad
+
+You are awesome, thank you!
+--
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
