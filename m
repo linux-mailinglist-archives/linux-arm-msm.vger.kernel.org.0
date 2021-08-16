@@ -2,24 +2,24 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A68B73EDFD6
+	by mail.lfdr.de (Postfix) with ESMTP id F14743EDFD7
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Aug 2021 00:20:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234208AbhHPWUv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Aug 2021 18:20:51 -0400
-Received: from mail1.protonmail.ch ([185.70.40.18]:21555 "EHLO
+        id S233906AbhHPWUw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Aug 2021 18:20:52 -0400
+Received: from mail1.protonmail.ch ([185.70.40.18]:22943 "EHLO
         mail1.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234087AbhHPWUs (ORCPT
+        with ESMTP id S234154AbhHPWUu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Aug 2021 18:20:48 -0400
-Date:   Mon, 16 Aug 2021 22:20:09 +0000
+        Mon, 16 Aug 2021 18:20:50 -0400
+Date:   Mon, 16 Aug 2021 22:20:13 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=connolly.tech;
-        s=protonmail; t=1629152414;
-        bh=h0qgj0HbOeQZsB6OsW+kcp12M6YNiIgJG6sV7vtbGpY=;
+        s=protonmail; t=1629152417;
+        bh=/kJzNtX9uX5VLvPNqLVdpy1Sm9tQvwqR3FoaD4TJ8QU=;
         h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=JbhU9p6aLkJaI1BDSxaECLS5gWQGelTkSm8oO3iV/W9m/np7Edf9SudPAjfSkUne4
-         i53WR+qqCaLSrb0tQp4q+CP33EK3FI+oGApFC4hRNll7IWQFUclb1LRl5bEr+odFAK
-         zsUNnYJJROFqBekoZi99SRRxdsLEL3v1RRqKMYHg=
+        b=ZdeEBvRais7p0tmielk5t2PZI0oQbOTQEv/8ab2nZebCxCRQ38Q+NhuGJ1T1yOad0
+         +1x/yPm/o0DuFVUMOB7Lcx1EDo+3HdqCD9UtBFwGS4QC5HA1Dwbfy7ZOUbYJRccuut
+         VT8fESeTBTdHDilhujYdLnym/XsWsbTgUD/1eV2k=
 To:     Caleb Connolly <caleb@connolly.tech>
 From:   Caleb Connolly <caleb@connolly.tech>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -32,8 +32,8 @@ Cc:     Andy Gross <agross@kernel.org>,
         Jami Kettunen <jami.kettunen@somainline.org>,
         Joel Selvaraj <jo@jsfamily.in>
 Reply-To: Caleb Connolly <caleb@connolly.tech>
-Subject: [PATCH v3 4/6] arm64: dts: qcom: sdm845-oneplus-common: add haptics
-Message-ID: <20210816221931.1998187-5-caleb@connolly.tech>
+Subject: [PATCH v3 5/6] arm64: dts: qcom: sdm845-xiaomi-beryllium: add haptics
+Message-ID: <20210816221931.1998187-6-caleb@connolly.tech>
 In-Reply-To: <20210816221931.1998187-1-caleb@connolly.tech>
 References: <20210816221931.1998187-1-caleb@connolly.tech>
 MIME-Version: 1.0
@@ -48,30 +48,32 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Joel Selvaraj <jo@jsfamily.in>
+
 Enable the pmi8998 SPMI haptics driver and configure the play rate for the
 hardware.
 
+Signed-off-by: Joel Selvaraj <jo@jsfamily.in>
 Signed-off-by: Caleb Connolly <caleb@connolly.tech>
 ---
- arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 6 ++++++
- 1 file changed, 6 insertions(+)
+ arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts | 5 +++++
+ 1 file changed, 5 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm=
-64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index 4d052e39b348..05e1f90c4f02 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -441,6 +441,12 @@ pinconf {
+diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/ar=
+m64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+index c60c8c640e17..b6ce5d0f4966 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
++++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+@@ -335,6 +335,11 @@ dai@2 {
  =09};
  };
 
 +&pmi8998_haptics {
 +=09status =3D "okay";
-+
-+=09qcom,wave-play-rate-us =3D <4255>;
++=09qcom,wave-play-rate-us =3D <4878>;
 +};
 +
- &qupv3_id_1 {
+ &qupv3_id_0 {
  =09status =3D "okay";
  };
 --
