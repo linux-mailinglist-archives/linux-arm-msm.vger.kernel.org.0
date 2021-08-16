@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C4B313EDC9A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Aug 2021 19:52:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 88A603EDCBE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Aug 2021 20:01:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229968AbhHPRwe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Aug 2021 13:52:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55850 "EHLO
+        id S231609AbhHPSCX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Aug 2021 14:02:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58094 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229835AbhHPRwd (ORCPT
+        with ESMTP id S229481AbhHPSCS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Aug 2021 13:52:33 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 353CDC0613C1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 10:52:02 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id q2so21548486plr.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 10:52:02 -0700 (PDT)
+        Mon, 16 Aug 2021 14:02:18 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B528C061764
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 11:01:46 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id w13-20020a17090aea0db029017897a5f7bcso1454674pjy.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 11:01:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=aGcVbwp7D3wcK5fZ7iZV49ZDGmdfLQXktWsw3v/VBwE=;
-        b=OCxsJXDOoFMfKwsfaAy2UCw19Hptc0ltRQafq/yUppY6Z6w6AXcaVhQCMW2nLYui5z
-         weQgraKuGK1VEGcYO+x1nZt4mqJy6nMwxk5B5r0tRq4pQMPTC3VXJKjY82TEGu9FMs4u
-         MEjPG4nvKWv4QWPau2NkJfY90IzCoVQBIiFqI=
+        bh=CQAn3RJnCnEKhUAHlpFfnDVdKYIBRS8GR6cHa78A0bI=;
+        b=OiP/jE5lIKzaI86z/cSbkWq8KS+Zn367o727+x1oyIZCvtiHty5VuI3vR9Wd9m/DKC
+         mrAvJapyrn3wsenqZ8mHt9roDOSCGfRyzs/k1mCcI1rBa1xvrOhQ1kmKQT1zcDOSS1FB
+         9jlHPQve9GjHuRcHIygklthjRruh8CAuZ7VKU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=aGcVbwp7D3wcK5fZ7iZV49ZDGmdfLQXktWsw3v/VBwE=;
-        b=GUT6ZGfwg+ZM0KO+Ib13UuzRx0j2paMiMfyf9qSa86Woh509fPzmlg9AMDi41LVM9U
-         fX3wr4XM6JSAopH1MexbqE71wZZDJzrxAouFSuPL0oy3C76YsXJhTgfAfJsBbYYX8AYW
-         yz7c2A8Pmvtp72H3mSoTZ1OHKTl8cXkxcFMmUaVs05tqKw5YUhURGsrUVjvXwW8VMorJ
-         aXscVtUvmdGdyKg+uYYKiHrRtdf8dJ5KyerheGAz8BbAySA9x0O/848aOfdmCqdyTC23
-         qayi4o+a5pMvRR8UJI56gzAmO63piclXfhN1aW3hgg2y1IxIZnB0dshO4csnVclZqJF0
-         1MLA==
-X-Gm-Message-State: AOAM533p7z/UPpfFwU89G+vhz4HyL7qlquen/OzT1eqCyll2fW4MCz2m
-        XqCHl3G4Rqk+8mu8o4tfyZFRnA==
-X-Google-Smtp-Source: ABdhPJwLz3PZJvaNlW8uPSKRihvQvE593CKTWnAmw5KlVtJqAKGeQc3gRX0SfuGiG1G1qWc6RHMxDQ==
-X-Received: by 2002:a17:90a:5994:: with SMTP id l20mr281441pji.201.1629136321637;
-        Mon, 16 Aug 2021 10:52:01 -0700 (PDT)
+        bh=CQAn3RJnCnEKhUAHlpFfnDVdKYIBRS8GR6cHa78A0bI=;
+        b=Otqy0pG9WKV+ilOcxP1443QZ5mQI3F2K5d8HUVBNiideHJmt2X1O6cmhi9HdwaZFX2
+         HvmzAhFSoqtI7fvBjW6YD+dMV1VdVCrOX7K5g8TOItw1RpiPIXtBK02896lU2FTUePk2
+         vazOOVKQD/+hC9eu1FWEPBHp0IJ0Dic7qFbbwJTUdJ3OXY3uQTnYxnIJspaRULX/JCG+
+         dNwLD4hSkpI1ZbjSykTYgIRNoZpZ8J9bVF2zMiQELvUKM2Yzat0wXe9uPAMf8wSmNj30
+         hZJvt3n556ExmW0W6tyHomtkOYJ7BLKwyNPMjHNLGrJHZxg6Ff+MpIDjkbwEXPf1MVH5
+         uv9Q==
+X-Gm-Message-State: AOAM532KITYyj0WbXPAeQJd6vYwxtRFcMd8UvoY+oTGX3HNYWr6mmBLr
+        eZq58zyMG50HJAno9n7KTkPZEQ==
+X-Google-Smtp-Source: ABdhPJwa1Xm3ePFA3SuM8XZOqgsVOXYMQm8FtguFpY+P9+T3EtyPVM2ryfi8HpcN6WgUHqWEMqbCBg==
+X-Received: by 2002:a17:902:a609:b029:12b:858e:d116 with SMTP id u9-20020a170902a609b029012b858ed116mr104173plq.25.1629136905928;
+        Mon, 16 Aug 2021 11:01:45 -0700 (PDT)
 Received: from localhost ([2620:15c:202:201:5cff:3a19:755c:1b91])
-        by smtp.gmail.com with UTF8SMTPSA id x4sm35698pff.126.2021.08.16.10.52.00
+        by smtp.gmail.com with UTF8SMTPSA id x12sm63119pfu.21.2021.08.16.11.01.44
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Aug 2021 10:52:01 -0700 (PDT)
-Date:   Mon, 16 Aug 2021 10:51:58 -0700
+        Mon, 16 Aug 2021 11:01:45 -0700 (PDT)
+Date:   Mon, 16 Aug 2021 11:01:43 -0700
 From:   Matthias Kaehlcke <mka@chromium.org>
 To:     Sankeerth Billakanti <sbillaka@codeaurora.org>
 Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
@@ -54,223 +54,44 @@ Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         kalyan_t@codeaurora.org, abhinavk@codeaurora.org,
         dianders@chromium.org, khsieh@codeaurora.org,
         mkrishn@codeaurora.org
-Subject: Re: [PATCH v1 1/2] drm/msm/dp: Add support for SC7280 eDP
-Message-ID: <YRqlvuBPlcm/0r4s@google.com>
+Subject: Re: [PATCH v1 2/2] dt-bindings: Add SC7280 compatible string
+Message-ID: <YRqoB2UEJtVcr6AN@google.com>
 References: <1628726882-27841-1-git-send-email-sbillaka@codeaurora.org>
- <1628726882-27841-2-git-send-email-sbillaka@codeaurora.org>
+ <1628726882-27841-3-git-send-email-sbillaka@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <1628726882-27841-2-git-send-email-sbillaka@codeaurora.org>
+In-Reply-To: <1628726882-27841-3-git-send-email-sbillaka@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 12, 2021 at 05:38:01AM +0530, Sankeerth Billakanti wrote:
-> The eDP controller on SC7280 is similar to the eDP/DP controllers
-> supported by the current driver implementation.
-> 
-> SC7280 supports one EDP and one DP controller which can operate
-> concurrently.
-> 
-> The following are some required changes for the sc7280 sink:
-> 1. Additional gpio configuration for backlight and pwm via pmic.
-> 2. ASSR support programming on the sink.
-> 3. SSC support programming on the sink.
+On Thu, Aug 12, 2021 at 05:38:02AM +0530, Sankeerth Billakanti wrote:
+> The Qualcomm SC7280 platform supports an eDP controller, add
+> compatible string for it to msm/binding.
 > 
 > Signed-off-by: Sankeerth Billakanti <sbillaka@codeaurora.org>
 > ---
->  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  4 ++--
->  drivers/gpu/drm/msm/dp/dp_ctrl.c               | 19 +++++++++++++++
->  drivers/gpu/drm/msm/dp/dp_display.c            | 32 ++++++++++++++++++++++++--
->  drivers/gpu/drm/msm/dp/dp_parser.c             | 31 +++++++++++++++++++++++++
->  drivers/gpu/drm/msm/dp/dp_parser.h             |  5 ++++
->  5 files changed, 87 insertions(+), 4 deletions(-)
+>  Documentation/devicetree/bindings/display/msm/dp-controller.yaml | 3 +++
+>  1 file changed, 3 insertions(+)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> index b131fd37..1096c44 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> @@ -856,9 +856,9 @@ static const struct dpu_intf_cfg sm8150_intf[] = {
->  };
->  
->  static const struct dpu_intf_cfg sc7280_intf[] = {
-> -	INTF_BLK("intf_0", INTF_0, 0x34000, INTF_DP, 0, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
-> +	INTF_BLK("intf_0", INTF_0, 0x34000, INTF_DP, 1, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
->  	INTF_BLK("intf_1", INTF_1, 0x35000, INTF_DSI, 0, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 26, 27),
-> -	INTF_BLK("intf_5", INTF_5, 0x39000, INTF_EDP, 0, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 22, 23),
-> +	INTF_BLK("intf_5", INTF_5, 0x39000, INTF_DP, 0, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 22, 23),
->  };
->  
->  /*************************************************************
-> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> index d2569da..06d5a2d 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-> @@ -1244,7 +1244,9 @@ static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl,
->  		struct dp_cr_status *cr, int *training_step)
->  {
->  	int ret = 0;
-> +	u8 *dpcd = ctrl->panel->dpcd;
->  	u8 encoding = DP_SET_ANSI_8B10B;
-> +	u8 ssc = 0, assr = 0;
->  	struct dp_link_info link_info = {0};
->  
->  	dp_ctrl_config_ctrl(ctrl);
-> @@ -1254,9 +1256,21 @@ static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl,
->  	link_info.capabilities = DP_LINK_CAP_ENHANCED_FRAMING;
->  
->  	dp_aux_link_configure(ctrl->aux, &link_info);
-> +
-> +	if (dpcd[DP_MAX_DOWNSPREAD] & DP_MAX_DOWNSPREAD_0_5) {
-> +		ssc = DP_SPREAD_AMP_0_5;
-> +		drm_dp_dpcd_write(ctrl->aux, DP_DOWNSPREAD_CTRL, &ssc, 1);
-> +	}
-> +
->  	drm_dp_dpcd_write(ctrl->aux, DP_MAIN_LINK_CHANNEL_CODING_SET,
->  				&encoding, 1);
->  
-> +	if (dpcd[DP_EDP_CONFIGURATION_CAP] & DP_ALTERNATE_SCRAMBLER_RESET_CAP) {
-> +		assr = DP_ALTERNATE_SCRAMBLER_RESET_ENABLE;
-> +		drm_dp_dpcd_write(ctrl->aux, DP_EDP_CONFIGURATION_SET,
-> +				&assr, 1);
-> +	}
-> +
->  	ret = dp_ctrl_link_train_1(ctrl, cr, training_step);
->  	if (ret) {
->  		DRM_ERROR("link training #1 failed. ret=%d\n", ret);
-> @@ -1328,9 +1342,11 @@ static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl)
->  	struct dp_io *dp_io = &ctrl->parser->io;
->  	struct phy *phy = dp_io->phy;
->  	struct phy_configure_opts_dp *opts_dp = &dp_io->phy_opts.dp;
-> +	u8 *dpcd = ctrl->panel->dpcd;
->  
->  	opts_dp->lanes = ctrl->link->link_params.num_lanes;
->  	opts_dp->link_rate = ctrl->link->link_params.rate / 100;
-> +	opts_dp->ssc = dpcd[DP_MAX_DOWNSPREAD] & DP_MAX_DOWNSPREAD_0_5;
->  	dp_ctrl_set_clock_rate(ctrl, DP_CTRL_PM, "ctrl_link",
->  					ctrl->link->link_params.rate * 1000);
->  
-> @@ -1760,6 +1776,9 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
->  	ctrl->link->link_params.num_lanes = ctrl->panel->link_info.num_lanes;
->  	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
->  
-> +	if (ctrl->dp_ctrl.pixel_rate == 0)
-> +		return -EINVAL;
-> +
->  	DRM_DEBUG_DP("rate=%d, num_lanes=%d, pixel_rate=%d\n",
->  		ctrl->link->link_params.rate,
->  		ctrl->link->link_params.num_lanes, ctrl->dp_ctrl.pixel_rate);
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index ee5bf64..a772290 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -117,8 +117,36 @@ struct dp_display_private {
->  	struct dp_audio *audio;
->  };
->  
-> +struct msm_dp_config {
-> +	phys_addr_t io_start[3];
-> +	size_t num_dp;
-> +};
-> +
-> +static const struct msm_dp_config sc7180_dp_cfg = {
-> +	.io_start = { 0x0ae90000 },
-> +	.num_dp = 1,
-> +};
-> +
-> +static const struct msm_dp_config sc8180x_dp_cfg = {
-> +	.io_start = { 0xae90000, 0xae98000, 0 },
-> +	.num_dp = 3,
-> +};
-> +
-> +static const struct msm_dp_config sc8180x_edp_cfg = {
-> +	.io_start = { 0, 0, 0xae9a000 },
-> +	.num_dp = 3,
-> +};
-> +
-> +static const struct msm_dp_config sc7280_edp_cfg = {
-> +	.io_start = { 0xaea0000, 0 },
-> +	.num_dp = 2,
-> +};
+> diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> index 64d8d9e..23b78ac 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> @@ -17,6 +17,9 @@ properties:
+>    compatible:
+>      enum:
+>        - qcom,sc7180-dp
+> +      - qcom,sc8180x-dp
+> +      - qcom,sc8180x-edp
+> +      - qcom,sc7280-edp
 
-This data isn't used anywhere, is there some patch missing?
+This adds compatible strings for sc8180x and sc7280 (e)DP, however the
+commit message only mentions sc7280. So either the commit message needs
+and update or the sc8180x compatibles should be removed.
 
-And in case it is used (at some point), shouldn't at least the 'io_start'
-addresses be specified in the device tree rather than the driver?
-
-> +
->  static const struct of_device_id dp_dt_match[] = {
-> -	{.compatible = "qcom,sc7180-dp"},
-> +	{ .compatible = "qcom,sc7180-dp", .data = &sc7180_dp_cfg },
-> +	{ .compatible = "qcom,sc8180x-dp", .data = &sc8180x_dp_cfg },
-> +	{ .compatible = "qcom,sc8180x-edp", .data = &sc8180x_edp_cfg },
-> +	{ .compatible = "qcom,sc7280-edp", .data = &sc7280_edp_cfg },
->  	{}
->  };
->  
-> @@ -1408,7 +1436,7 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display)
->  
->  	dp_hpd_event_setup(dp);
->  
-> -	dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 100);
-> +	dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 1);
->  }
->  
->  void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
-> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
-> index 0519dd3..c05fc0a 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_parser.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
-> @@ -248,6 +248,33 @@ static int dp_parser_clock(struct dp_parser *parser)
->  	return 0;
->  }
->  
-> +static int dp_parser_gpio(struct dp_parser *parser)
-> +{
-> +	struct device *dev = &parser->pdev->dev;
-> +	int ret;
-> +
-> +	parser->panel_bklt_gpio = devm_gpiod_get(dev, "panel-bklt",
-> +			GPIOD_OUT_HIGH);
-> +	if (IS_ERR(parser->panel_bklt_gpio)) {
-> +		ret = PTR_ERR(parser->panel_bklt_gpio);
-> +		parser->panel_bklt_gpio = NULL;
-> +		DRM_ERROR("%s: cannot get panel-bklt gpio, %d\n", __func__, ret);
-> +		goto fail;
-> +	}
-> +
-> +	parser->panel_pwm_gpio = devm_gpiod_get(dev, "panel-pwm", GPIOD_OUT_HIGH);
-> +	if (IS_ERR(parser->panel_pwm_gpio)) {
-> +		ret = PTR_ERR(parser->panel_pwm_gpio);
-> +		parser->panel_pwm_gpio = NULL;
-> +		DRM_ERROR("%s: cannot get panel-pwm gpio, %d\n", __func__, ret);
-> +		goto fail;
-> +	}
-
-Just setting the GPIOs to high on initialization and then leaving them
-unattended doesn't look right. I saw Stephen already pointed towards
-drivers/video/backlight/pwm_bl.c.
-
-> +
-> +	DRM_INFO("gpio on");
-> +fail:
-> +	return 0;
-
-This function always returns 0, either the return type should be void, or it
-should return a different value in the error case
-
-> +}
-> +
->  static int dp_parser_parse(struct dp_parser *parser)
->  {
->  	int rc = 0;
-> @@ -269,6 +296,10 @@ static int dp_parser_parse(struct dp_parser *parser)
->  	if (rc)
->  		return rc;
->  
-> +	rc = dp_parser_gpio(parser);
-> +	if (rc)
-> +		return rc;
-
-The function never returns a non-zero value (see above).
+The driver change (https://patchwork.kernel.org/project/linux-arm-msm/patch/1628726882-27841-2-git-send-email-sbillaka@codeaurora.org/)
+adds some (currently unused) 'io_start' addresses which are hardcoded,
+I wonder if these should be in the device tree instead (and 'num_dp'
+too?), if they are needed at all.
