@@ -2,114 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 196913EDF75
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Aug 2021 23:46:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 081803EDF7B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Aug 2021 23:48:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232067AbhHPVqx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Aug 2021 17:46:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53718 "EHLO
+        id S233062AbhHPVtX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Aug 2021 17:49:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54252 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231707AbhHPVqx (ORCPT
+        with ESMTP id S232254AbhHPVtO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Aug 2021 17:46:53 -0400
-Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E356C0613C1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 14:46:21 -0700 (PDT)
-Received: by mail-il1-x12a.google.com with SMTP id s16so11780383ilo.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 14:46:21 -0700 (PDT)
+        Mon, 16 Aug 2021 17:49:14 -0400
+Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7A14BC061764
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 14:48:42 -0700 (PDT)
+Received: by mail-oi1-x22c.google.com with SMTP id u10so28871279oiw.4
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 14:48:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5MQaecMruMo90D+KAt7ofTuU0ZRK6FZBpAa7KmNoEuE=;
-        b=BwZyjwUDzVNN1nePIhaSHaIy6fkGy8qZIefmUKq7c3URK6ED0dVpkUuJe3mE1kTeDE
-         Ocwhh1VNn03xPFmqlYI+xe+7HjgL1TZLWTrf1JuU+vSUZrCGp2r1fXhoH8IMEnX6Mv/2
-         pQGCdi3xIz735nPLv18zQqZWgQMNkRxVjmatU=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PDYxqFE/CWqy58DQxmymohk6TT+/HRY/YJqeo41m6QE=;
+        b=lq9gNB55sPPejjQ+diDADMcszFLtHT90QT1cicyG62KLrBs7sKSNycBk/A94bWwUye
+         b79HlbvDZ2enQbzAjvA2ezvGcvpKqFwmjn6xEOLNHJ7jKw/9QfX6Ag346lT23PxuoL2d
+         YUwNGkcJfaAMTePKNC+bipucoDRsbgNCGxean9P/pPISKb+n3ukiNWJM4SWdTEG3FjSi
+         Qo5lHq6ZAzl3aK30o0/4xX/eu5jF4t5R1zdRz/DScCmrjCulHlDmVeszDYP4yCC2T0rC
+         azo93V4cqHuOjRZ2kdlGxGW7cXMl9Oa+DnXDez/vMdDgfgG0JO/kP1pNhevC5lP6TbzD
+         u5/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5MQaecMruMo90D+KAt7ofTuU0ZRK6FZBpAa7KmNoEuE=;
-        b=tWZKg86qKTwFdiTB+H5VdWefmydh7meSgmQEUHptkMW5VK2AyQuT05mpMEQh2JM4tK
-         ipqd55vYQirMYAMZeslP/6cJWOCZYS5o4usUbjz2s4rVqb4HwEItyXVH8yadLJqLH2L/
-         n7NqxDw4pPo+5b9SvAqPBcr8VTrSbaUflcUPLQl4LIjSTes95QeCLDH8m5I8uAChbDxi
-         8JpweG3Nc1H0ZhZUYo0jr9KxPeQY23TqOjr+Yx8WkZen+s6b0CSjAsDIbEsie0n+PTgW
-         wo6sEI0ILLjEfujydzgER3sT1lWoXy8gYBmzJDQH6d+oj2uicMj8oJkClGo0Q6J+Yaw0
-         oDlg==
-X-Gm-Message-State: AOAM531CJeghJOfTv7XzCNvZHMWvjBxI/6LG0DRqJTAfSMwrtTR5zShZ
-        G4DnUbbM9eN9E9y9zipsmEStPgopWnV1MQ==
-X-Google-Smtp-Source: ABdhPJypjwS4KmMtLWEa787iq3zo+xFjH778/hKSvJCuZFhvsaIyLpg07YmIRm4JwXeYRfnFDW1MlA==
-X-Received: by 2002:a92:bf0c:: with SMTP id z12mr59388ilh.19.1629150380492;
-        Mon, 16 Aug 2021 14:46:20 -0700 (PDT)
-Received: from mail-il1-f173.google.com (mail-il1-f173.google.com. [209.85.166.173])
-        by smtp.gmail.com with ESMTPSA id n4sm40110ilo.66.2021.08.16.14.46.19
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 16 Aug 2021 14:46:19 -0700 (PDT)
-Received: by mail-il1-f173.google.com with SMTP id j15so7534524ila.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 14:46:19 -0700 (PDT)
-X-Received: by 2002:a92:cf4a:: with SMTP id c10mr46909ilr.269.1629150378895;
- Mon, 16 Aug 2021 14:46:18 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=PDYxqFE/CWqy58DQxmymohk6TT+/HRY/YJqeo41m6QE=;
+        b=nKltBSxH6dcM0NV451nNxrMOhlc/zZeYmcsNkTHAu0PZskhAXZHSkbJ5b6vyhYeTBP
+         bHogZH5gWJQT37oC5oGOuNltQLSfpZzpzUyNVr2aOLcnhMa6Bs1aSe8zUlApMlzjpyWx
+         dJncykAEgYpnQRjJnuTr9MByGN8sxAP7ZHDcxLx8/GnrvmMOKZEEq55dsMqi5VXavIyL
+         2Ol9tK5mDZNCDdNhD23sOpON+ltTA8MHtIhzEi/NRN4ZktZWmD448CYsf4xT0+I7Lv64
+         rXvUrC/KyVlIxPS+REP3/Ii7jBEDTI+UVfgWD45pphHOtzDhyKWSz/NjuLi99ymZ8515
+         VczA==
+X-Gm-Message-State: AOAM533kn29A4iAgAjyWpS7bmQOj51lJ/FRumOfe5i7gAZn9TvxtJ5Cm
+        6RKwc/XO3zXf72Dxfy8tvooXPQ==
+X-Google-Smtp-Source: ABdhPJzo2V8StsZGnjUwA5FIEBjMqlgcI9aMORZKOjv+r1G5beGSJVL6/m43bis0aR2MM2UsIOyqNQ==
+X-Received: by 2002:a05:6808:10d4:: with SMTP id s20mr1866ois.143.1629150521697;
+        Mon, 16 Aug 2021 14:48:41 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id c11sm56944oot.25.2021.08.16.14.48.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Aug 2021 14:48:41 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     arm@kernel.org, soc@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Olof Johansson <olof@lixom.net>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Iskren Chernev <iskren.chernev@gmail.com>,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Vinod Koul <vkoul@kernel.org>, Alex Elder <elder@linaro.org>,
+        Caleb Connolly <caleb@connolly.tech>,
+        Douglas Anderson <dianders@chromium.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Junlin Yang <yangjunlin@yulong.com>,
+        Manivannan Sadhasivam <mani@kernel.org>
+Subject: [GIT PULL] Qualcomm driver updates for v5.15
+Date:   Mon, 16 Aug 2021 16:48:40 -0500
+Message-Id: <20210816214840.581244-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-References: <20210811224141.1110495-1-swboyd@chromium.org> <CAD=FV=XKrSfinnZjPPstY0jDX4cP7adAKtCcKFOo5q2=DH+d7w@mail.gmail.com>
-In-Reply-To: <CAD=FV=XKrSfinnZjPPstY0jDX4cP7adAKtCcKFOo5q2=DH+d7w@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 16 Aug 2021 14:46:07 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WAso9gLe3+nG6N2cnOwTqQb7CDvHa1EzvF7mVhchqruw@mail.gmail.com>
-Message-ID: <CAD=FV=WAso9gLe3+nG6N2cnOwTqQb7CDvHa1EzvF7mVhchqruw@mail.gmail.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: sc7180-trogdor: Fix lpass dai link
- for HDMI
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Srinivasa Rao Mandadapu <srivasam@qti.qualcomm.com>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Bjorn,
+The following changes since commit e73f0f0ee7541171d89f2e2491130c7771ba58d3:
 
-On Wed, Aug 11, 2021 at 3:45 PM Doug Anderson <dianders@chromium.org> wrote:
->
-> Hi,
->
-> On Wed, Aug 11, 2021 at 3:41 PM Stephen Boyd <swboyd@chromium.org> wrote:
-> >
-> > This should be the dai for display port. Without this set properly we
-> > fail to get audio routed through external displays on trogdor. It looks
-> > like we picked up v4[1] of this patch when there was a v7[2]. The v7
-> > patch still had the wrong sound-dai but at least we can fix all this up
-> > and audio works.
-> >
-> > Cc: Srinivasa Rao Mandadapu <srivasam@qti.qualcomm.com>
-> > Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> > Cc: Douglas Anderson <dianders@chromium.org>
-> > Fixes: b22d313e1772 ("arm64: dts: qcom: sc7180-trogdor: Add lpass dai link for HDMI")
-> > Link: https://lore.kernel.org/r/20210721080549.28822-3-srivasam@qti.qualcomm.com [1]
-> > Link: https://lore.kernel.org/r/20210726120910.20335-3-srivasam@codeaurora.org [2]
-> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> > ---
-> >
-> > Changes from v1:
-> >  - Drop sound-dai-cells
-> >  - Replace hdmi-primary with hdmi
-> >
-> >  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 9 ++++-----
-> >  1 file changed, 4 insertions(+), 5 deletions(-)
->
-> I'm no audio expert, but this matches v7 except for the bugfix setting
-> the ID for the `sound-dai` to be LPASS_DP_RX instead of 2, which
-> matches downstream.
->
-> Reviewed-by: Douglas Anderson <dianders@chromium.org>
+  Linux 5.14-rc1 (2021-07-11 15:07:40 -0700)
 
-Since this is a "Fix" and it's my understanding that Fixes can be
-landed / pull requests sent for them anytime (regardless of the fact
-that it's currently -rc6) maybe it could still land without waiting
-for the merge window to start and end?
+are available in the Git repository at:
 
--Doug
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-drivers-for-5.15
+
+for you to fetch changes up to e3d4571955050736bbf3eda0a9538a09d9fcfce8:
+
+  soc: qcom: smsm: Fix missed interrupts if state changes while masked (2021-08-04 22:20:09 -0500)
+
+----------------------------------------------------------------
+Qualcomm driver updates for v5.15
+
+This fixes the "shared memory state machine" (SMSM) interrupt logic to
+avoid missing transitions happening while the interrupts are masked.
+
+SM6115 support is added to smd-rpm and rpmpd.
+
+The Qualcomm SCM firmware driver is once again made possible to compile
+and load as a kernel module.
+
+An out-of-bounds error related to the cooling devices of the AOSS driver
+is corrected. The binding is converted to YAML and a generic compatible
+is introduced to reduce the driver churn.
+
+The GENI wrapper gains a helper function used in I2C and SPI for
+switching the serial engine hardware to use the wrapper's DMA-engine.
+
+Lastly it contains a number of cleanups and smaller fixes for rpmhpd,
+socinfo, CPR, mdt_loader and the GENI DT binding.
+
+----------------------------------------------------------------
+Alex Elder (1):
+      soc: qcom: mdt_loader: be more informative on errors
+
+Bjorn Andersson (4):
+      dt-bindings: soc: qcom: aoss: Add SC8180X and generic compatible
+      dt-bindings: soc: qcom: aoss: Convert to YAML
+      soc: qcom: aoss: Add generic compatible
+      soc: qcom: rpmhpd: Use corner in power_off
+
+Caleb Connolly (1):
+      dt-bindings: qcom: geni-se: document iommus
+
+Douglas Anderson (1):
+      PM: AVS: qcom-cpr: Use nvmem_cell_read_variable_le_u32()
+
+Iskren Chernev (4):
+      dt-bindings: soc: qcom: smd-rpm: Add SM6115 compatible
+      dt-bindings: power: rpmpd: Add SM6115 to rpmpd binding
+      drivers: soc: qcom: rpmpd: Add SM6115 RPM Power Domains
+      soc: qcom: smd-rpm: Add SM6115 compatible
+
+John Stultz (1):
+      firmware: qcom_scm: Allow qcom_scm driver to be loadable as a permenent module
+
+Junlin Yang (1):
+      firmware: qcom_scm: remove a duplicative condition
+
+Manivannan Sadhasivam (1):
+      soc: qcom: aoss: Fix the out of bound usage of cooling_devs
+
+Stephan Gerhold (2):
+      soc: qcom: smsm: Implement support for get_irqchip_state
+      soc: qcom: smsm: Fix missed interrupts if state changes while masked
+
+Stephen Boyd (2):
+      firmware: qcom_scm: Mark string array const
+      soc: qcom: socinfo: Don't print anything if nothing found
+
+Vinod Koul (2):
+      soc: qcom: geni: move GENI_IF_DISABLE_RO to common header
+      soc: qcom: geni: Add support for gpi dma
+
+ .../devicetree/bindings/power/qcom,rpmpd.yaml      |   1 +
+ .../devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt |  87 ----------------
+ .../bindings/soc/qcom/qcom,aoss-qmp.yaml           | 114 +++++++++++++++++++++
+ .../devicetree/bindings/soc/qcom/qcom,geni-se.yaml |   3 +
+ .../devicetree/bindings/soc/qcom/qcom,smd-rpm.yaml |   1 +
+ drivers/firmware/Kconfig                           |   2 +-
+ drivers/firmware/Makefile                          |   3 +-
+ drivers/firmware/qcom_scm.c                        |   8 +-
+ drivers/iommu/Kconfig                              |   2 +
+ drivers/net/wireless/ath/ath10k/Kconfig            |   1 +
+ drivers/soc/qcom/cpr.c                             |  43 +-------
+ drivers/soc/qcom/mdt_loader.c                      |  18 ++--
+ drivers/soc/qcom/qcom-geni-se.c                    |  30 +++++-
+ drivers/soc/qcom/qcom_aoss.c                       |   9 +-
+ drivers/soc/qcom/rpmhpd.c                          |   5 +-
+ drivers/soc/qcom/rpmpd.c                           |  28 +++++
+ drivers/soc/qcom/smd-rpm.c                         |   1 +
+ drivers/soc/qcom/smsm.c                            |  28 ++++-
+ drivers/soc/qcom/socinfo.c                         |   4 +-
+ include/dt-bindings/power/qcom-rpmpd.h             |  10 ++
+ include/linux/qcom-geni-se.h                       |  19 +++-
+ 21 files changed, 269 insertions(+), 148 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.txt
+ create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,aoss-qmp.yaml
