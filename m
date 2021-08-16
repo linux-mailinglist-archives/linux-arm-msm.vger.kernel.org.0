@@ -2,161 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 35FDA3ED40A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Aug 2021 14:36:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6DCBA3ED7EA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Aug 2021 15:48:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230195AbhHPMh2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Aug 2021 08:37:28 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.52]:22331 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230208AbhHPMh2 (ORCPT
+        id S230107AbhHPNtF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Aug 2021 09:49:05 -0400
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:4467 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S236242AbhHPNtE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Aug 2021 08:37:28 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1629117399;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
-    bh=FMnCpbisgjnqvRiMJIFyGSARBxYscp309MjHAhk9AdQ=;
-    b=ezt4KLDeJ8+4ZfkMu7tWhBTagRe8TeaFYGsBRg/nQxbS9OFO50z6sRI0REYEdh3Qls
-    D2gLLlsTt9hu8OCMEpXEIV5ZkRhy6Z2ddmP0/e3F7Bnt3+LoPmcdkV+samqTorDgJAMM
-    Ngf89Eef+0HuUnwGwXneexnWihzwynmukf8URO25kUplp1Th2lyiDsfthkUtG0MPnjvG
-    XyxTD/fKZwxjV1yY8gdg8qQn9dcIgFW6Pw4tthM0Dq1qt4T2d0/cdQ+AJ8lhQT9GujVG
-    CKKEApB4mCHT86fFrxh6KJsvZo2iDX1KNLuauWhIz1tMSl0Sh414u/ydv0h4RTiUYw+3
-    YKlQ==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXTbAOHjRHIhr1eFSKSfA="
-X-RZG-CLASS-ID: mo00
-Received: from droid..
-    by smtp.strato.de (RZmta 47.31.0 DYNA|AUTH)
-    with ESMTPSA id L01e9cx7GCac0a6
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Mon, 16 Aug 2021 14:36:38 +0200 (CEST)
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Nikita Travkin <nikita@trvn.ru>
-Subject: [PATCH] arm64: dts: qcom: msm8916-longcheer-l8150: Add missing sensor interrupts
-Date:   Mon, 16 Aug 2021 14:35:44 +0200
-Message-Id: <20210816123544.14027-1-stephan@gerhold.net>
-X-Mailer: git-send-email 2.32.0
+        Mon, 16 Aug 2021 09:49:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1629121713; x=1660657713;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=leZ6zTnKIflUpL4hRqRdqqett5iC4HB+vMYv8TjNv2c=;
+  b=YusEOHM/Cti7a7G/6xRNRUhf7ZqyV32XMLY2f290vk5G0AJ3X9FQXKOd
+   LPfmfh/uH9u0xDcu4lWctdZGzGeYc7pY6KS7s4HJkGtJ0y7wbhu+F5Kcf
+   VNy/JF7NqZNFSxckPms0cam6C1VKczmnXzq/9vFi3OrgUkZY8vUeJxwzM
+   A=;
+Received: from unknown (HELO ironmsg01-sd.qualcomm.com) ([10.53.140.141])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 16 Aug 2021 06:48:31 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg01-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Aug 2021 06:48:31 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.858.15; Mon, 16 Aug 2021 06:48:30 -0700
+Received: from [10.226.59.216] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.858.15; Mon, 16 Aug
+ 2021 06:48:30 -0700
+Subject: Re: bus: mhi: parse_xfer_event running transfer completion callbacks
+ more than once for a given buffer
+To:     Hemant Kumar <hemantk@codeaurora.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>
+CC:     "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "Paul Davey" <Paul.Davey@alliedtelesis.co.nz>
+References: <9a6a00acc60c676f39f89a8ce2989416bed1b24d.camel@alliedtelesis.co.nz>
+ <CAMZdPi812vx7cjvLXpj_NnbZPOmcierQMFikVHwsUd9gYawHVw@mail.gmail.com>
+ <544b3db2-b135-d870-8dd8-ec4450576cb7@codeaurora.org>
+ <9ad7faea-544a-a070-cc00-9a24f237f4c1@codeaurora.org>
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+Message-ID: <aee4fa28-76e8-8897-8abb-e6161c864577@quicinc.com>
+Date:   Mon, 16 Aug 2021 07:48:29 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
+In-Reply-To: <9ad7faea-544a-a070-cc00-9a24f237f4c1@codeaurora.org>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanexm03d.na.qualcomm.com (10.85.0.91) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-So far there were no interrupts set up for the BMC150 accelerometer
-+ magnetometer combo because they were broken for some reason.
-It turns out Longcheer L8150 actually has a BMC156 which is very similar
-to BMC150, but only has an INT2 pin for the accelerometer part.
+On 8/13/2021 5:10 PM, Hemant Kumar wrote:
+> One more thing to add
+> 
+> On 8/13/2021 3:55 PM, Hemant Kumar wrote:
+>> Hi Paul,
+>>
+>> On 8/6/2021 2:43 AM, Loic Poulain wrote:
+>>> + MHI people
+>>>
+>>> On Fri, 6 Aug 2021 at 06:20, Paul Davey 
+>>> <Paul.Davey@alliedtelesis.co.nz> wrote:
+>>>>
+>>>> Hi linux-arm-msm list,
+>>>>
+>>>> We have been using the mhi driver with a Sierra EM9191 5G modem module
+>>>> and have seen an occasional issue where the kernel would crash with
+>>>> messages showing "BUG: Bad page state" which we debugged further and
+>>>> found it was due to mhi_net_ul_callback freeing the same skb multiple
+>>>> times, further debugging tracked this down to a case where
+>>>> parse_xfer_event computed a dev_rp from the passed event's ev_tre
+>>>> which does not lie within the region of valid "in flight" transfers
+>>>> for the tre_ring.  See the patch below for how this was detected.
+>>>>
+>>>> I believe that receiving such an event results in the loop which runs
+>>>> completion events for the transfers to re-run some completion
+>>>> callbacks as it walks all the way around the ring again to reach the
+>>>> invalid dev_rp position.
+>> Do you have a log which prints the TRE being processed? Basically i am 
+>> trying understand this : by the time you get double free issue, is 
+>> there any pattern with respect to the TRE that is being processed. For 
+>> example
+>> when host processed the given TRE for the first time with RP1, stale 
+>> TRE was posted by Event RP2 right after RP1
+>>
+>> ->RP1 [TRE1]
+>> ->RP2 [TRE1]
+>>
+>> or occurrence of stale TRE event is random?
+> If you can log all the events you are processing, so that we can check 
+> when second event arrives for already processed TRE, is the transfer 
+> length same as originally processed TRE or it is different. In case it 
+> is different length, is the length matching to the TRE which was queue 
+> but not processed yet. You can print the mhi_queue_skb TRE content while 
+> queuing skb. How easy to reproduce this issue ? Is this showing up in 
+> high throughput use case or it is random? any specific step to reproduce 
+> this issue?
 
-This requires some minor changes in the bmc150-accel driver which is now
-supported by using the more correct bosch,bmc156_accel compatible.
-Unfortunately it looks like even INT2 is not functional on most boards
-because the interrupt line is not actually connected to the BMC156.
-However, there are two pads next to the chip that can be shorted
-to make it work if needed.
-
-While at it, add the missing interrupts for the magnetometer part
-and extra BMG160 gyroscope, those seem to work without any problems.
-Also correct the magnetometer compatible to bosch,bmc156_magn for clarity
-(no functional difference for the magnetometer part).
-
-Tested-by: Nikita Travkin <nikita@trvn.ru>
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
----
- .../boot/dts/qcom/msm8916-longcheer-l8150.dts | 43 +++++++++++++++++--
- 1 file changed, 39 insertions(+), 4 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-index 1e893c0b6fbc..30716eb8fb2d 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dts
-@@ -121,9 +121,21 @@ &blsp_i2c2 {
- 	status = "okay";
- 
- 	accelerometer@10 {
--		compatible = "bosch,bmc150_accel";
-+		compatible = "bosch,bmc156_accel";
- 		reg = <0x10>;
- 
-+		/*
-+		 * For some reason the interrupt line is usually not connected
-+		 * to the BMC156. However, there are two pads next to the chip
-+		 * that can be shorted to make it work if needed.
-+		 *
-+		 * interrupt-parent = <&msmgpio>;
-+		 * interrupts = <116 IRQ_TYPE_EDGE_RISING>;
-+		 */
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&accel_int_default>;
-+
- 		vdd-supply = <&pm8916_l17>;
- 		vddio-supply = <&pm8916_l6>;
- 
-@@ -133,9 +145,15 @@ accelerometer@10 {
- 	};
- 
- 	magnetometer@12 {
--		compatible = "bosch,bmc150_magn";
-+		compatible = "bosch,bmc156_magn";
- 		reg = <0x12>;
- 
-+		interrupt-parent = <&msmgpio>;
-+		interrupts = <113 IRQ_TYPE_EDGE_RISING>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&magn_int_default>;
-+
- 		vdd-supply = <&pm8916_l17>;
- 		vddio-supply = <&pm8916_l6>;
- 	};
-@@ -145,7 +163,8 @@ gyroscope@68 {
- 		reg = <0x68>;
- 
- 		interrupt-parent = <&msmgpio>;
--		interrupts = <23 IRQ_TYPE_EDGE_RISING>;
-+		interrupts = <23 IRQ_TYPE_EDGE_RISING>,
-+			     <22 IRQ_TYPE_EDGE_RISING>;
- 
- 		pinctrl-names = "default";
- 		pinctrl-0 = <&gyro_int_default>;
-@@ -336,6 +355,14 @@ l18 {
- };
- 
- &msmgpio {
-+	accel_int_default: accel-int-default {
-+		pins = "gpio116";
-+		function = "gpio";
-+
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
- 	camera_flash_default: camera-flash-default {
- 		pins = "gpio31", "gpio32";
- 		function = "gpio";
-@@ -361,7 +388,15 @@ gpio_keys_default: gpio-keys-default {
- 	};
- 
- 	gyro_int_default: gyro-int-default {
--		pins = "gpio23";
-+		pins = "gpio22", "gpio23";
-+		function = "gpio";
-+
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	magn_int_default: magn-int-default {
-+		pins = "gpio113";
- 		function = "gpio";
- 
- 		drive-strength = <2>;
--- 
-2.32.0
-
+I would wonder, what is the codebase being testing?  Are the latest MHI 
+patches included?  When we saw something similar on AIC100, it was 
+addressed by the sanity check changes I upstreamed.
