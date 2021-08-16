@@ -2,89 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 442963ED84E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Aug 2021 16:00:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AC3253ED847
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Aug 2021 16:00:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232164AbhHPOAx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Aug 2021 10:00:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57512 "EHLO
+        id S231307AbhHPOAw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Aug 2021 10:00:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231895AbhHPOAh (ORCPT
+        with ESMTP id S231859AbhHPOA2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Aug 2021 10:00:37 -0400
-Received: from mail-vs1-xe32.google.com (mail-vs1-xe32.google.com [IPv6:2607:f8b0:4864:20::e32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D049C0612AD
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 06:59:39 -0700 (PDT)
-Received: by mail-vs1-xe32.google.com with SMTP id j186so8350560vsc.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 06:59:39 -0700 (PDT)
+        Mon, 16 Aug 2021 10:00:28 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8726BC0612A9;
+        Mon, 16 Aug 2021 06:59:37 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id z9so23713487wrh.10;
+        Mon, 16 Aug 2021 06:59:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=nVKCYDMJormPExhpOghf50YWCKd/5uetFN/Swg1y9AE=;
-        b=AyTHo3XictXYsNapssdIBh0yZzQanYstNQtAKZWNMZr6nzJYpiDcoZSWw3QJ6phR3B
-         LCsQ5XarDg6jvY9Qca0DNKeAT/JoUVIymOTzBxla4hvWsZHUGoqoEPwkAoH7p9HqqwkD
-         K2Z4njb+9ewyQjAcb83/noLlRAKiQMVTox4dNTjTppAALsBvMMv+QYvwvwl0s3FNsh3j
-         qAEs37ER1l8+Rdr6EgVhQraNEuCKy0G2qU20p1Bk1kk8bGl5G75h0iGqVPx+7dCaxdT0
-         97KEmeEn5ht68tETNjQovt5F/BPHifZuUaBs8V8Bpt+LJY4r7GMecWQRnGkmNCAnnwZq
-         h0Yg==
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KZutF4knfsOuF8Cv0WuZd4fBJstx8+dJNDUrpHSR5Vs=;
+        b=IabavD9KFls6I9KUiTe51j9br3DeNKSgVE7+mmsIZRHz0USNduyx8sMF2GS0bkAaD2
+         RqF5tIs3hm5fMte83Jy/ne0nQ6mvuaDwKx/gjNxZ6ThciabLsABGrRobFt0FbJW/j7ve
+         EopjjYZCHdUQ15qg1eI9cVfC3tWBCuECilkbZruZGpjauo5XPwo6vUrK5h/CytB8/IyZ
+         TWmSjZCpDUbt7SWGoh6ytEv+2ZdnRuaLJPkNDfOrOlUu21nlXC4kan24kQeCZK3oWF23
+         xhpfveSS+D3AuxtLgsX4H2lR4P+bNpGg9iBx77rHU3SZTDEUfxl+PWhVJfWnvxfH73Cs
+         uyLg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=nVKCYDMJormPExhpOghf50YWCKd/5uetFN/Swg1y9AE=;
-        b=LHcaaJSaBn3J5LVgzWgQKy26B9sc/F3k1dGRwLUhyxq5Rxp9Iu0jXL30kPRe+ZOhC7
-         oCcAJOpTb+O6l7XO/Yn0Lnf2zqGG1OgijeMsybHMdCK9VSPCKp3y/3ixr4qWA+jv9Lwr
-         zag6R7qk+n2n067ERMbOWp4J9PGIbZ5s9Wjmt4JbtWgBtLivC4U6w9JPnx0cwU8OTnwt
-         tkVt1S4mF/fUxERvBUr8IJq75Ld+bA6noMWvUCASl3yYtxi9ZQTLNct7twZCHNxGaM9s
-         3piBD/UlbF3yAr1pmlM7E2R8B1Uf7qcX/bWob/Zwlx6++tgHX0RqecRFaBKa31yT5hTY
-         H7fg==
-X-Gm-Message-State: AOAM53327ueqNpKDi+ahMFshr61WeV/9d1n6f7f2nmwYKW8ozgk88JPw
-        olEQP9PHY4+yGTlcgL4pCB3zt8sVR3Ob3oKt3wlIpg==
-X-Google-Smtp-Source: ABdhPJxH03LCvwF3n7FLPSRhMFmFSVUxkYQal+sImI6ahGhwHnNg4T2E1pse6fPH6Zhe8c/gCWm9o+F4tyfzci6Gr/w=
-X-Received: by 2002:a67:3212:: with SMTP id y18mr9746202vsy.19.1629122378196;
- Mon, 16 Aug 2021 06:59:38 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=KZutF4knfsOuF8Cv0WuZd4fBJstx8+dJNDUrpHSR5Vs=;
+        b=IbKe/PxNJ3WKLbP+oEoXbSzScVi/CCBcVBmfsh5nm7FBQaMRqjaaETcq4AwE5a0oWM
+         lNAYaoqqbBQm/UdLbvkmQS3SBA7dJUsI/NLvnuMJCk6RI/7eSqzOgESlFYVgZI6xeQCA
+         QY/WzVzS/5dM377NoGQfSsptt4djaV9w5L5ASGbrwGTHVxFc8sHFeHiHzO+mCbF3Nkyz
+         J983pgJFj5QTG7RlrogaPeQvX8UQEZxGSE/fUbZb4hlD74SRuQJOvkDcABpptNljZTHY
+         0WHKoA04vpavBDzi2fNrg9ix0ozG/QNSrBq1vVOq7IJnMvahMkJnb4stXtVdIt6IfZFj
+         OK3A==
+X-Gm-Message-State: AOAM532p/zlNQVyOqk3+jKDNeCphFSCOHIvkUeZ98SpJrG2IGaiX6NC0
+        dfQCR01Zn5F7H+IQiCVBQOk=
+X-Google-Smtp-Source: ABdhPJy+Q+4j8nqBRSzx6Z9tbZZ5EqsU+MprxZP86/ilnLcVEKX6wtCdxRv9oY0sEDeO94qwZrdWbg==
+X-Received: by 2002:adf:fc45:: with SMTP id e5mr18410368wrs.127.1629122376151;
+        Mon, 16 Aug 2021 06:59:36 -0700 (PDT)
+Received: from localhost.localdomain (arl-84-90-178-246.netvisao.pt. [84.90.178.246])
+        by smtp.gmail.com with ESMTPSA id r129sm10697693wmr.7.2021.08.16.06.59.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Aug 2021 06:59:35 -0700 (PDT)
+From:   Lukas Bulwahn <lukas.bulwahn@gmail.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org
+Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Lukas Bulwahn <lukas.bulwahn@gmail.com>
+Subject: [PATCH] clk: qcom: adjust selects for SM_VIDEOCC_8150 and SM_VIDEOCC_8250
+Date:   Mon, 16 Aug 2021 15:59:30 +0200
+Message-Id: <20210816135930.11810-1-lukas.bulwahn@gmail.com>
+X-Mailer: git-send-email 2.26.2
 MIME-Version: 1.0
-References: <1627534001-17256-2-git-send-email-sartgarg@codeaurora.org> <1628232901-30897-1-git-send-email-sartgarg@codeaurora.org>
-In-Reply-To: <1628232901-30897-1-git-send-email-sartgarg@codeaurora.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Mon, 16 Aug 2021 15:59:02 +0200
-Message-ID: <CAPDyKFoxCuKcOtS=J2adqpuXK6ucx5CqYvi5RbAKNr-CjFkcYA@mail.gmail.com>
-Subject: Re: [PATCH V3 0/2] Introduce max_timeout_count in sdhci_host for
- vendor needs
-To:     Sarthak Garg <sartgarg@codeaurora.org>
-Cc:     Adrian Hunter <adrian.hunter@intel.com>,
-        Veerabhadrarao Badiganti <vbadigan@codeaurora.org>,
-        Sahitya Tummala <stummala@codeaurora.org>,
-        linux-mmc <linux-mmc@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 6 Aug 2021 at 08:55, Sarthak Garg <sartgarg@codeaurora.org> wrote:
->
-> Introduce max_timeout_count in sdhci_host_struct to let vendor's modify
-> the max timeout value as per their needs.
->
-> Sahitya Tummala (1):
->   mmc: sdhci-msm: Use maximum possible data timeout value
->
-> Sarthak Garg (1):
->   mmc: sdhci: Introduce max_timeout_count variable in sdhci_host
->
->  drivers/mmc/host/sdhci-msm.c |  3 +++
->  drivers/mmc/host/sdhci.c     | 16 +++++++++-------
->  drivers/mmc/host/sdhci.h     |  1 +
->  3 files changed, 13 insertions(+), 7 deletions(-)
->
-> --
-> 2.7.4
->
+Commit 5658e8cf1a8a ("clk: qcom: add video clock controller driver for
+SM8150") and commit 0e94711a1f29 ("clk: qcom: add video clock controller
+driver for SM8250") add config SM_VIDEOCC_8150 and config SM_VIDEOCC_8250,
+which select the non-existing configs SDM_GCC_8150 and SDM_GCC_8250,
+respectively.
 
-Applied for next, thanks!
+Hence, ./scripts/checkkconfigsymbols.py warns:
 
-Kind regards
-Uffe
+SDM_GCC_8150
+Referencing files: drivers/clk/qcom/Kconfig
+
+SDM_GCC_8250
+Referencing files: drivers/clk/qcom/Kconfig
+
+It is probably just a typo (or naming confusion of using SM_GCC_xxx and
+SDM_GCC_xxx for various Qualcomm clock drivers) in the config definitions
+for config SM_VIDEOCC_8150 and SM_VIDEOCC_8250, and intends to select the
+existing SM_GCC_8150 and SM_GCC_8250, respectively.
+
+Adjust the selects to the existing configs.
+
+Signed-off-by: Lukas Bulwahn <lukas.bulwahn@gmail.com>
+---
+ drivers/clk/qcom/Kconfig | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
+index 85b090a8d9c6..6c54d810d615 100644
+--- a/drivers/clk/qcom/Kconfig
++++ b/drivers/clk/qcom/Kconfig
+@@ -579,7 +579,7 @@ config SM_GPUCC_8250
+ 
+ config SM_VIDEOCC_8150
+ 	tristate "SM8150 Video Clock Controller"
+-	select SDM_GCC_8150
++	select SM_GCC_8150
+ 	select QCOM_GDSC
+ 	help
+ 	  Support for the video clock controller on SM8150 devices.
+@@ -588,7 +588,7 @@ config SM_VIDEOCC_8150
+ 
+ config SM_VIDEOCC_8250
+ 	tristate "SM8250 Video Clock Controller"
+-	select SDM_GCC_8250
++	select SM_GCC_8250
+ 	select QCOM_GDSC
+ 	help
+ 	  Support for the video clock controller on SM8250 devices.
+-- 
+2.26.2
+
