@@ -2,119 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 52A1D3EDE91
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Aug 2021 22:23:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 31A563EDEC7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Aug 2021 22:50:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231825AbhHPUXw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Aug 2021 16:23:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34448 "EHLO
+        id S232812AbhHPUvE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Aug 2021 16:51:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40822 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231307AbhHPUXv (ORCPT
+        with ESMTP id S231698AbhHPUvE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Aug 2021 16:23:51 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CA729C061764
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 13:23:19 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id r5so28489951oiw.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 13:23:19 -0700 (PDT)
+        Mon, 16 Aug 2021 16:51:04 -0400
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E7CDC061764
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 13:50:32 -0700 (PDT)
+Received: by mail-oi1-x233.google.com with SMTP id bj40so28653356oib.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 13:50:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=xtLKLxOTgP0hZbfnKrxJuZxeJBYBtihgXnXMIaAKNcM=;
-        b=NS9zm4DWA8M5f8Pu+yOte7iHeGwmI955VvFCfdvRX0FM6D81n9hvnWPwxpJ+nsKxOm
-         Kbr9ARehMrAnrwxvRIiKJlz1Va/LH4O0nkzqq5dAQLYL3ByG7MfP4XovhzjWCWgVYGGQ
-         kwOC15KXnGlVs9aab3Rl/6EMapzkpCn04Cwpw=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Kmoyu7jA1eM6PaqAOcqPLI/aOuRdV7qLJPPT17KbiDI=;
+        b=q2X7wvK9pcvNaogEd8Ar6JEEEeqLAc7E6w0HPK+t067zJfM+lR5RYCvNa0ufdOm9U7
+         lrT7RUoj5+bRra73kvYEhHmdFZJ7NsaQaHiIMG4SyAjhY67XFWowwcAawb/oCc1YlaTe
+         0UP4uJvpykvX6JiKfjDlg1SZ4GvUgmCvwme1qvw8TJ2hGGdqDuLgYs3upXZbqXhdoJpt
+         XcVDWBsqiQqFhP3L7LJpI+4jOYImeR+1voO9JgefRjio3F4YWty+Ke5j6MLugTZakMuT
+         Va2reXB+2++OEZ7mB6WScN7RZyuiGbFID1UkDDvIiQT2YPatmpecleqFYqoWuwfbCjPy
+         J6bg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=xtLKLxOTgP0hZbfnKrxJuZxeJBYBtihgXnXMIaAKNcM=;
-        b=LgNg5IHCHL8bhILNMoRxDDr5FV3LrlE/C9b6tujorbyMQhwVuP51hxYLuM4kEBHXuz
-         8X4mlOIihonj+ZxUD6VMYhiRSXNUQ/5RIqQ1+62vRj0nnqthuelyl31VITNWfy8j9uXM
-         V0mSaVOidDMDWbz4Cx00dh8JZT814uhzb2sTvB/Xci766jbK70WFhRsztPegwLI3pGRG
-         V+onnBgXoVLkSFDKQTmUXYlYRzTtgsE9Gulmk32nqkpbYcjiAdSt+A2CuOQ/eskjU9XU
-         uX2Zd1hzoxSc+4JvjuGyP8e/Yfbmh4brjE+Nmx3xYFir/15K+Ov5Y8HPzaTou6TZB2Pa
-         jtCQ==
-X-Gm-Message-State: AOAM532+N57HKqE2m6fnrb6hBQbRM1wXCUILSxwS+3P9mHL6N+6O0bY9
-        dxz86jYtuxhOrNYH0iAQKBhYcncGQsXVSPPij+S2IA==
-X-Google-Smtp-Source: ABdhPJyxxQVYP/BT04vEnLZi2+QGv58mJ8ZBNUuFmt5uMAbp70Fb0Ffzakyq3aesYr3ao9tRB/7vOl+eVQqngOkhvis=
-X-Received: by 2002:a05:6808:114a:: with SMTP id u10mr433479oiu.19.1629145399251;
- Mon, 16 Aug 2021 13:23:19 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 16 Aug 2021 13:23:18 -0700
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=Kmoyu7jA1eM6PaqAOcqPLI/aOuRdV7qLJPPT17KbiDI=;
+        b=hUIGKQNUDmM9Uwz18K86raW7qrXhzV6qx5MGO7gkrjB3AgDtgWa2KP2ZiTWi+jMLcB
+         /6kgI6ZGY13+BfJPG8YN+nY3tyYhZeF3IeirEILR5jIfUSC5rUKmfuHp0lRa6zQA2rar
+         CigKmh+ivFZbzxgOe+VB2NUm10cUATO7Mj4Nt2U/a6E0eIVGOq87r8PpYGDGjLrTbopQ
+         5NasIZGW2TvdAhRPvwFVyJNDwuGEKqKaMJITer0UATuHsmxjcMe/EVjSahTOXmrkj+Xe
+         jl8O1ew8aadunnZGDebT7eDkwMZgfVFo5OrZVxPksVY4M5VsyLkJYS7WM7ZI15q//e+I
+         lzTg==
+X-Gm-Message-State: AOAM532km17Rntxklea47mfMLGyswhCOharBkWN2hfbwCsXmwwBxLjnD
+        3URUiPeO/g2U8a3wCz1zh4PIhg==
+X-Google-Smtp-Source: ABdhPJz10oI7Rxo2X6IakrDLahBN9gbmx3EWQdxvFF72jJraf0Rg5G3BCec9uWhOKhrnWsYakPvOFg==
+X-Received: by 2002:a05:6808:56:: with SMTP id v22mr570895oic.49.1629147031966;
+        Mon, 16 Aug 2021 13:50:31 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id i19sm26244ooe.44.2021.08.16.13.50.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 16 Aug 2021 13:50:31 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     arm@kernel.org, soc@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Olof Johansson <olof@lixom.net>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Petr Vorel <petr.vorel@gmail.com>,
+        Caleb Connolly <caleb@connolly.tech>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Subject: [GIT PULL] Qualcomm ARM64 fixes for v5.14
+Date:   Mon, 16 Aug 2021 15:50:30 -0500
+Message-Id: <20210816205030.576348-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-In-Reply-To: <1629108335-23463-1-git-send-email-deesin@codeaurora.org>
-References: <1629108335-23463-1-git-send-email-deesin@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Mon, 16 Aug 2021 13:23:18 -0700
-Message-ID: <CAE-0n528DuP4MiAOhYY+Du+L=OZaGM5YJm=NwWia3JF7hp7sAA@mail.gmail.com>
-Subject: Re: [PATCH V2 1/1] soc: qcom: smp2p: Add wakeup capability to SMP2P IRQ
-To:     Deepak Kumar Singh <deesin@codeaurora.org>,
-        bjorn.andersson@linaro.org, clew@codeaurora.org,
-        sibis@codeaurora.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, Andy Gross <agross@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Deepak Kumar Singh (2021-08-16 03:05:35)
-> Remote susbsystems notify fatal crash throught smp2p interrupt.
-> When modem/wifi crashes it can cause soc to come out of low power state
-> and may not allow again to enter in low power state until crash is handled.
->
-> Mark smp2p interrupt wakeup capable so that interrupt handler is executed
-> and remote susbsystem crash can be handled in system  resume path.
->
-> Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
-> ---
->  drivers/soc/qcom/smp2p.c | 12 ++++++++++++
->  1 file changed, 12 insertions(+)
->
-> diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
-> index 2df4883..646848b 100644
-> --- a/drivers/soc/qcom/smp2p.c
-> +++ b/drivers/soc/qcom/smp2p.c
-> @@ -18,6 +18,7 @@
->  #include <linux/soc/qcom/smem.h>
->  #include <linux/soc/qcom/smem_state.h>
->  #include <linux/spinlock.h>
-> +#include <linux/pm_wakeirq.h>
+The following changes since commit e73f0f0ee7541171d89f2e2491130c7771ba58d3:
 
-Please sort alphabetically by include name, 'p' before 's'.
+  Linux 5.14-rc1 (2021-07-11 15:07:40 -0700)
 
->
->  /*
->   * The Shared Memory Point to Point (SMP2P) protocol facilitates communication
-> @@ -538,9 +539,20 @@ static int qcom_smp2p_probe(struct platform_device *pdev)
->                 goto unwind_interfaces;
->         }
->
-> +       /* Setup smp2p interrupt as wakeup source */
+are available in the Git repository at:
 
-This comment is bad. Please don't reiterate what the code is doing.
-Instead, write something like
+  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-fixes-for-5.14
 
-	/*
-	 * Treat remoteproc crashes as wakeups by default so we handle
-	 * them sooner rather than along with the next wakeup (e.g.
-	 * power button). This avoids leaving the system in a shallower
-	 * suspend power state if a remoteproc crashes during suspend,
-	 * but requires userspace to actively suspend the device after
-	 * handling the crash, or CONFIG_PM_AUTOSLEEP to be true.
-	 */
+for you to fetch changes up to d77c95bf9a64d8620662151b2b10efd8221f4bcc:
 
-> +       ret = device_init_wakeup(&pdev->dev, true);
+  arm64: dts: qcom: sdm845-oneplus: fix reserved-mem (2021-08-05 10:36:04 -0500)
 
-I still wonder if it's better to leave this off by default and only
-enable it if the kernel is using autosuspend (PM_AUTOSLEEP). Then
-userspace is responsible to decide if it can handle the wakeup with the
-screen off, reload the remoteproc, and go back to suspend if it isn't
-using autosuspend.
+----------------------------------------------------------------
+Qualcomm ARM64 fixes for v5.14
 
-> +       if (ret)
-> +               goto unwind_interfaces;
-> +
+This fixes three regressions across Angler and Bullhead, introduced by
+advancements in the platform definition. It then corrects the powerdown
+GPIOs for the speaker amps on C630 and lastly fixes a typo that assigned
+CPU7 in SC7280 to the wrong CPUfreq domain.
+
+----------------------------------------------------------------
+Caleb Connolly (1):
+      arm64: dts: qcom: sdm845-oneplus: fix reserved-mem
+
+Petr Vorel (3):
+      arm64: dts: qcom: msm8992-bullhead: Remove PSCI
+      arm64: dts: qcom: msm8992-bullhead: Fix cont_splash_mem mapping
+      arm64: dts: qcom: msm8994-angler: Disable cont_splash_mem
+
+Sibi Sankar (1):
+      arm64: dts: qcom: sc7280: Fixup cpufreq domain info for cpu7
+
+Srinivas Kandagatla (1):
+      arm64: dts: qcom: c630: fix correct powerdown pin for WSA881x
+
+ arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dts | 12 ++++++++++++
+ arch/arm64/boot/dts/qcom/msm8994-angler-rev-101.dts   |  4 ++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi                  |  2 +-
+ arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi   |  4 ++--
+ arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts  |  4 ++--
+ 5 files changed, 21 insertions(+), 5 deletions(-)
