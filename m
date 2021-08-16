@@ -2,142 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0FB163EDF42
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Aug 2021 23:20:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 196913EDF75
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Aug 2021 23:46:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231874AbhHPVUb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Aug 2021 17:20:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47726 "EHLO
+        id S232067AbhHPVqx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Aug 2021 17:46:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53718 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231698AbhHPVUb (ORCPT
+        with ESMTP id S231707AbhHPVqx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Aug 2021 17:20:31 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C9A4C061764
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 14:19:59 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id e13-20020a9d63cd0000b02904fa42f9d275so22649179otl.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 14:19:59 -0700 (PDT)
+        Mon, 16 Aug 2021 17:46:53 -0400
+Received: from mail-il1-x12a.google.com (mail-il1-x12a.google.com [IPv6:2607:f8b0:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6E356C0613C1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 14:46:21 -0700 (PDT)
+Received: by mail-il1-x12a.google.com with SMTP id s16so11780383ilo.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 14:46:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=C721tErGQuAbfzenrLJRyttmTyU2USTMFi+mtLeCzg8=;
-        b=P9ctwR/5USxYoa5ZdUlRIRy8w5XeIyouOpmQjDRmGXMipxn4vajIvaatoCVCKGWQAa
-         kxJoZRGXXuQ/5YxWtLbbxt06Qh4PbRUW+4hkOaSryzwmrZRUtnREJI6DB2pxTwCoBZXI
-         p1O3BsDT/1D/B+i/xTPt4QZSJH6pA/U4lSgxkrZyemCp6J0sn1pkN7mmBNGLwTk0lhy2
-         D/8MvaKmqix6h0QOdfe9d0m5izFrCEV8pthKmMeOTRpELoi5AZomI19qm/fU//b8CM0v
-         y+5YGucu9C//J3HyTPeafP8qJFCJ1LJD1IwnCAOSL0MJemlz9SRtbclLtxkluJ6R/sgH
-         Xa2Q==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=5MQaecMruMo90D+KAt7ofTuU0ZRK6FZBpAa7KmNoEuE=;
+        b=BwZyjwUDzVNN1nePIhaSHaIy6fkGy8qZIefmUKq7c3URK6ED0dVpkUuJe3mE1kTeDE
+         Ocwhh1VNn03xPFmqlYI+xe+7HjgL1TZLWTrf1JuU+vSUZrCGp2r1fXhoH8IMEnX6Mv/2
+         pQGCdi3xIz735nPLv18zQqZWgQMNkRxVjmatU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=C721tErGQuAbfzenrLJRyttmTyU2USTMFi+mtLeCzg8=;
-        b=bU3LrMTXXUzIchslWgxenw1IJlQ+OqmAgANOdt/U4nYM21xdOEi42pswwWg2Z2kyO9
-         sfu4Gr2J+2j/gSml6M8iqtfyi7ENldvGEXw/Jf9/TWglQuW3ibyGOFnh1kr2zkf8K7Uy
-         NKgbY3Ew7pDQVqi6IVz6BWR+TZ/jdZqZSNhU5yZnLaEipmimzjL0e8Z8h+h3jszjtKDv
-         YBLITXlb0A7/MIlgwJNxotnsk80kJcByWCx6rNBoo761aRdybifzgVnwIMTSXLdj4PSd
-         oHMJ1t9A7pIVKN+6+fAxhy9w0hgO3joVH2mnLHiepYLKfpWkcHUtzvRHp/F3RNrYNHkf
-         ZTQA==
-X-Gm-Message-State: AOAM53276v8J5qu8eMahGopxf0lPsZfHofYiQyLNsItAEJgvIvvdoPUU
-        vAmiAR8E3eDbO6SMQ12WnAlTNw==
-X-Google-Smtp-Source: ABdhPJyFAdst6Ew1Kftpxp0TswRwmSGM7cx4k4WVEKFYtcV4zYaRakJRfx3VtFcWUn8glpceDlaPAA==
-X-Received: by 2002:a05:6830:91b:: with SMTP id v27mr134649ott.328.1629148798699;
-        Mon, 16 Aug 2021 14:19:58 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id s184sm26535oif.20.2021.08.16.14.19.57
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Aug 2021 14:19:58 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     arm@kernel.org, soc@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Olof Johansson <olof@lixom.net>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Bartosz Dudziak <bartosz.dudziak@snejp.pl>,
-        Alexey Minnekhanov <alexeymin@postmarketos.org>,
-        Craig Tatlor <ctatlor97@gmail.com>,
-        David Heidelberg <david@ixit.cz>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Matthew Hagan <mnhagan88@gmail.com>
-Subject: [GIT PULL] Qualcomm dts updates for v5.15
-Date:   Mon, 16 Aug 2021 16:19:57 -0500
-Message-Id: <20210816211957.579365-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.32.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=5MQaecMruMo90D+KAt7ofTuU0ZRK6FZBpAa7KmNoEuE=;
+        b=tWZKg86qKTwFdiTB+H5VdWefmydh7meSgmQEUHptkMW5VK2AyQuT05mpMEQh2JM4tK
+         ipqd55vYQirMYAMZeslP/6cJWOCZYS5o4usUbjz2s4rVqb4HwEItyXVH8yadLJqLH2L/
+         n7NqxDw4pPo+5b9SvAqPBcr8VTrSbaUflcUPLQl4LIjSTes95QeCLDH8m5I8uAChbDxi
+         8JpweG3Nc1H0ZhZUYo0jr9KxPeQY23TqOjr+Yx8WkZen+s6b0CSjAsDIbEsie0n+PTgW
+         wo6sEI0ILLjEfujydzgER3sT1lWoXy8gYBmzJDQH6d+oj2uicMj8oJkClGo0Q6J+Yaw0
+         oDlg==
+X-Gm-Message-State: AOAM531CJeghJOfTv7XzCNvZHMWvjBxI/6LG0DRqJTAfSMwrtTR5zShZ
+        G4DnUbbM9eN9E9y9zipsmEStPgopWnV1MQ==
+X-Google-Smtp-Source: ABdhPJypjwS4KmMtLWEa787iq3zo+xFjH778/hKSvJCuZFhvsaIyLpg07YmIRm4JwXeYRfnFDW1MlA==
+X-Received: by 2002:a92:bf0c:: with SMTP id z12mr59388ilh.19.1629150380492;
+        Mon, 16 Aug 2021 14:46:20 -0700 (PDT)
+Received: from mail-il1-f173.google.com (mail-il1-f173.google.com. [209.85.166.173])
+        by smtp.gmail.com with ESMTPSA id n4sm40110ilo.66.2021.08.16.14.46.19
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 16 Aug 2021 14:46:19 -0700 (PDT)
+Received: by mail-il1-f173.google.com with SMTP id j15so7534524ila.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 14:46:19 -0700 (PDT)
+X-Received: by 2002:a92:cf4a:: with SMTP id c10mr46909ilr.269.1629150378895;
+ Mon, 16 Aug 2021 14:46:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210811224141.1110495-1-swboyd@chromium.org> <CAD=FV=XKrSfinnZjPPstY0jDX4cP7adAKtCcKFOo5q2=DH+d7w@mail.gmail.com>
+In-Reply-To: <CAD=FV=XKrSfinnZjPPstY0jDX4cP7adAKtCcKFOo5q2=DH+d7w@mail.gmail.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Mon, 16 Aug 2021 14:46:07 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=WAso9gLe3+nG6N2cnOwTqQb7CDvHa1EzvF7mVhchqruw@mail.gmail.com>
+Message-ID: <CAD=FV=WAso9gLe3+nG6N2cnOwTqQb7CDvHa1EzvF7mVhchqruw@mail.gmail.com>
+Subject: Re: [PATCH v2] arm64: dts: qcom: sc7180-trogdor: Fix lpass dai link
+ for HDMI
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Srinivasa Rao Mandadapu <srivasam@qti.qualcomm.com>,
+        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The following changes since commit e73f0f0ee7541171d89f2e2491130c7771ba58d3:
+Bjorn,
 
-  Linux 5.14-rc1 (2021-07-11 15:07:40 -0700)
+On Wed, Aug 11, 2021 at 3:45 PM Doug Anderson <dianders@chromium.org> wrote:
+>
+> Hi,
+>
+> On Wed, Aug 11, 2021 at 3:41 PM Stephen Boyd <swboyd@chromium.org> wrote:
+> >
+> > This should be the dai for display port. Without this set properly we
+> > fail to get audio routed through external displays on trogdor. It looks
+> > like we picked up v4[1] of this patch when there was a v7[2]. The v7
+> > patch still had the wrong sound-dai but at least we can fix all this up
+> > and audio works.
+> >
+> > Cc: Srinivasa Rao Mandadapu <srivasam@qti.qualcomm.com>
+> > Cc: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+> > Cc: Douglas Anderson <dianders@chromium.org>
+> > Fixes: b22d313e1772 ("arm64: dts: qcom: sc7180-trogdor: Add lpass dai link for HDMI")
+> > Link: https://lore.kernel.org/r/20210721080549.28822-3-srivasam@qti.qualcomm.com [1]
+> > Link: https://lore.kernel.org/r/20210726120910.20335-3-srivasam@codeaurora.org [2]
+> > Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> > ---
+> >
+> > Changes from v1:
+> >  - Drop sound-dai-cells
+> >  - Replace hdmi-primary with hdmi
+> >
+> >  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi | 9 ++++-----
+> >  1 file changed, 4 insertions(+), 5 deletions(-)
+>
+> I'm no audio expert, but this matches v7 except for the bugfix setting
+> the ID for the `sound-dai` to be LPASS_DP_RX instead of 2, which
+> matches downstream.
+>
+> Reviewed-by: Douglas Anderson <dianders@chromium.org>
 
-are available in the Git repository at:
+Since this is a "Fix" and it's my understanding that Fixes can be
+landed / pull requests sent for them anytime (regardless of the fact
+that it's currently -rc6) maybe it could still land without waiting
+for the merge window to start and end?
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-dts-for-5.15
-
-for you to fetch changes up to f95c4c56d65225a537a2d88735fde7ec4d37641d:
-
-  ARM: dts: qcom: add ahb reset to ipq806x-gmac (2021-08-05 09:24:37 -0500)
-
-----------------------------------------------------------------
-Qualcomm dts updates for v5.15
-
-This introduces the MSM8226 platform and an initial dts for the Samsung
-Galaxy S III Neo phone.
-
-MSM8974 gains another UART and this is used to enable Bluetooth on the
-Sony Xperia Z2 Tablet. Samsung Galaxy S5 gains regulator definitions for
-audio and modem remoteprocs, effectively enabling these.
-
-DSI clocks on APQ8064 are updates as the old legacy clock names are no
-longer supported by the driver. And IPQ806x GMAC nodes gains AHB resets
-wired up.
-
-Lastly APQ8060 is converted to a SPDX header and the ethernet node is
-updates in accordance with the binding.
-
-----------------------------------------------------------------
-Alexey Minnekhanov (1):
-      ARM: dts: qcom: msm8974-klte: Enable remote processors
-
-Bartosz Dudziak (3):
-      ARM: dts: qcom: Add support for MSM8226 SoC
-      dt-bindings: arm: qcom: Document MSM8226 SoC binding
-      ARM: dts: qcom: Add initial DTS file for Samsung Galaxy S III Neo phone
-
-Bjorn Andersson (1):
-      ARM: dts: qcom: msm8974: castor: Add Bluetooth-related nodes
-
-Craig Tatlor (1):
-      ARM: dts: qcom: msm8974: Add blsp2_uart7 for bluetooth on sirius
-
-David Heidelberg (1):
-      ARM: dts: qcom: apq8064: correct clock names
-
-Geert Uytterhoeven (1):
-      ARM: dts: qcom: apq8060: Correct Ethernet node name and drop bogus irq property
-
-Linus Walleij (1):
-      ARM: dts: qcom: Fix up APQ8060 DragonBoard license
-
-Matthew Hagan (1):
-      ARM: dts: qcom: add ahb reset to ipq806x-gmac
-
- Documentation/devicetree/bindings/arm/qcom.yaml    |   6 +
- arch/arm/boot/dts/Makefile                         |   1 +
- arch/arm/boot/dts/qcom-apq8060-dragonboard.dts     |  27 +---
- arch/arm/boot/dts/qcom-apq8064.dtsi                |   6 +-
- arch/arm/boot/dts/qcom-ipq8064.dtsi                |  20 +--
- arch/arm/boot/dts/qcom-msm8226-samsung-s3ve3g.dts  |  25 ++++
- arch/arm/boot/dts/qcom-msm8226.dtsi                | 147 +++++++++++++++++++++
- arch/arm/boot/dts/qcom-msm8974-samsung-klte.dts    |  11 ++
- .../boot/dts/qcom-msm8974-sony-xperia-castor.dts   |  81 ++++++++++++
- arch/arm/boot/dts/qcom-msm8974.dtsi                |   9 ++
- 10 files changed, 297 insertions(+), 36 deletions(-)
- create mode 100644 arch/arm/boot/dts/qcom-msm8226-samsung-s3ve3g.dts
- create mode 100644 arch/arm/boot/dts/qcom-msm8226.dtsi
+-Doug
