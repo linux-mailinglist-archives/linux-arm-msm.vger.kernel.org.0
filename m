@@ -2,113 +2,275 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A92603EDC8C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Aug 2021 19:44:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C4B313EDC9A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 16 Aug 2021 19:52:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229590AbhHPRpU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Aug 2021 13:45:20 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:38979 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230437AbhHPRpU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Aug 2021 13:45:20 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1629135888; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=oBRpgmRfal3yOf5d6tDI7ihar3q0Qj4qbAwiCJ/VpfM=;
- b=SjlGt4V/WpybbdK88t1ZmhKxrmnAPpNo9XbZSE9lB5S9NQ+yaC9y2F1KA9seK7u43gIhrlL7
- JvaRFzAE0SvydXphazXbwuc1VONRe88f57TVNPrDg+/hJWs7zn2AocHAlCYqTFyvZYn89YzT
- +QHLmf7MRCX76XlW0cvEab/CX/s=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 611aa3feb3873958f593c9f2 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 16 Aug 2021 17:44:30
- GMT
-Sender: okukatla=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3C370C43460; Mon, 16 Aug 2021 17:44:29 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: okukatla)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 948B2C4338F;
-        Mon, 16 Aug 2021 17:44:28 +0000 (UTC)
+        id S229968AbhHPRwe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Aug 2021 13:52:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55850 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229835AbhHPRwd (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 16 Aug 2021 13:52:33 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 353CDC0613C1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 10:52:02 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id q2so21548486plr.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 10:52:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=aGcVbwp7D3wcK5fZ7iZV49ZDGmdfLQXktWsw3v/VBwE=;
+        b=OCxsJXDOoFMfKwsfaAy2UCw19Hptc0ltRQafq/yUppY6Z6w6AXcaVhQCMW2nLYui5z
+         weQgraKuGK1VEGcYO+x1nZt4mqJy6nMwxk5B5r0tRq4pQMPTC3VXJKjY82TEGu9FMs4u
+         MEjPG4nvKWv4QWPau2NkJfY90IzCoVQBIiFqI=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=aGcVbwp7D3wcK5fZ7iZV49ZDGmdfLQXktWsw3v/VBwE=;
+        b=GUT6ZGfwg+ZM0KO+Ib13UuzRx0j2paMiMfyf9qSa86Woh509fPzmlg9AMDi41LVM9U
+         fX3wr4XM6JSAopH1MexbqE71wZZDJzrxAouFSuPL0oy3C76YsXJhTgfAfJsBbYYX8AYW
+         yz7c2A8Pmvtp72H3mSoTZ1OHKTl8cXkxcFMmUaVs05tqKw5YUhURGsrUVjvXwW8VMorJ
+         aXscVtUvmdGdyKg+uYYKiHrRtdf8dJ5KyerheGAz8BbAySA9x0O/848aOfdmCqdyTC23
+         qayi4o+a5pMvRR8UJI56gzAmO63piclXfhN1aW3hgg2y1IxIZnB0dshO4csnVclZqJF0
+         1MLA==
+X-Gm-Message-State: AOAM533p7z/UPpfFwU89G+vhz4HyL7qlquen/OzT1eqCyll2fW4MCz2m
+        XqCHl3G4Rqk+8mu8o4tfyZFRnA==
+X-Google-Smtp-Source: ABdhPJwLz3PZJvaNlW8uPSKRihvQvE593CKTWnAmw5KlVtJqAKGeQc3gRX0SfuGiG1G1qWc6RHMxDQ==
+X-Received: by 2002:a17:90a:5994:: with SMTP id l20mr281441pji.201.1629136321637;
+        Mon, 16 Aug 2021 10:52:01 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:5cff:3a19:755c:1b91])
+        by smtp.gmail.com with UTF8SMTPSA id x4sm35698pff.126.2021.08.16.10.52.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 16 Aug 2021 10:52:01 -0700 (PDT)
+Date:   Mon, 16 Aug 2021 10:51:58 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Sankeerth Billakanti <sbillaka@codeaurora.org>
+Cc:     dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
+        kalyan_t@codeaurora.org, abhinavk@codeaurora.org,
+        dianders@chromium.org, khsieh@codeaurora.org,
+        mkrishn@codeaurora.org
+Subject: Re: [PATCH v1 1/2] drm/msm/dp: Add support for SC7280 eDP
+Message-ID: <YRqlvuBPlcm/0r4s@google.com>
+References: <1628726882-27841-1-git-send-email-sbillaka@codeaurora.org>
+ <1628726882-27841-2-git-send-email-sbillaka@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 16 Aug 2021 23:14:28 +0530
-From:   okukatla@codeaurora.org
-To:     Georgi Djakov <djakov@kernel.org>
-Cc:     georgi.djakov@linaro.org, bjorn.andersson@linaro.org,
-        evgreen@google.com, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, sboyd@kernel.org,
-        mdtipton@codeaurora.org, sibis@codeaurora.org,
-        saravanak@google.com, seansw@qti.qualcomm.com, elder@linaro.org,
-        linux-pm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org
-Subject: Re: [v6 3/3] arm64: dts: qcom: sc7280: Add EPSS L3 interconnect
- provider
-In-Reply-To: <544023fc-f440-53bb-3308-33a1782aac19@kernel.org>
-References: <1628577962-3995-1-git-send-email-okukatla@codeaurora.org>
- <1628577962-3995-4-git-send-email-okukatla@codeaurora.org>
- <544023fc-f440-53bb-3308-33a1782aac19@kernel.org>
-Message-ID: <8fea4d2cb86f0e6240f9559a88a7e33a@codeaurora.org>
-X-Sender: okukatla@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1628726882-27841-2-git-send-email-sbillaka@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-08-10 18:03, Georgi Djakov wrote:
-> Hi Odelu,
+On Thu, Aug 12, 2021 at 05:38:01AM +0530, Sankeerth Billakanti wrote:
+> The eDP controller on SC7280 is similar to the eDP/DP controllers
+> supported by the current driver implementation.
 > 
-> On 10.08.21 9:46, Odelu Kukatla wrote:
->> Add Epoch Subsystem (EPSS) L3 interconnect provider node on SC7280
->> SoCs.
->> 
->> Signed-off-by: Odelu Kukatla <okukatla@codeaurora.org>
->> ---
->>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 9 +++++++++
->>   1 file changed, 9 insertions(+)
->> 
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi 
->> b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> index 53a21d0..e78f055 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> @@ -586,6 +586,15 @@
->>   			qcom,bcm-voters = <&apps_bcm_voter>;
->>   		};
->>   +		epss_l3: interconnect@18590000 {
+> SC7280 supports one EDP and one DP controller which can operate
+> concurrently.
 > 
-> This DT node should be moved after apps_rsc: rsc@18200000
-> and before cpufreq@18591000
+> The following are some required changes for the sc7280 sink:
+> 1. Additional gpio configuration for backlight and pwm via pmic.
+> 2. ASSR support programming on the sink.
+> 3. SSC support programming on the sink.
 > 
-Thanks for review! will address this in next revision.
->> +			compatible = "qcom,sc7280-epss-l3";
->> +			reg = <0 0x18590000 0 1000>, <0 0x18591000 0 0x100>,
->> +				<0 0x18592000 0 0x100>, <0 0x18593000 0 0x100>;
+> Signed-off-by: Sankeerth Billakanti <sbillaka@codeaurora.org>
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  4 ++--
+>  drivers/gpu/drm/msm/dp/dp_ctrl.c               | 19 +++++++++++++++
+>  drivers/gpu/drm/msm/dp/dp_display.c            | 32 ++++++++++++++++++++++++--
+>  drivers/gpu/drm/msm/dp/dp_parser.c             | 31 +++++++++++++++++++++++++
+>  drivers/gpu/drm/msm/dp/dp_parser.h             |  5 ++++
+>  5 files changed, 87 insertions(+), 4 deletions(-)
 > 
-> Please align to the open parenthesis, to be consistent with the rest of
-> the file.
-> 
-will address this in next revision.
->> +			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GCC_GPLL0>;
->> +			clock-names = "xo", "alternate";
->> +			#interconnect-cells = <1>;
->> +		};
->> +
->>   		ipa: ipa@1e40000 {
->>   			compatible = "qcom,sc7280-ipa";
-> 
-> Thanks,
-> Georgi
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index b131fd37..1096c44 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -856,9 +856,9 @@ static const struct dpu_intf_cfg sm8150_intf[] = {
+>  };
+>  
+>  static const struct dpu_intf_cfg sc7280_intf[] = {
+> -	INTF_BLK("intf_0", INTF_0, 0x34000, INTF_DP, 0, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
+> +	INTF_BLK("intf_0", INTF_0, 0x34000, INTF_DP, 1, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
+>  	INTF_BLK("intf_1", INTF_1, 0x35000, INTF_DSI, 0, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 26, 27),
+> -	INTF_BLK("intf_5", INTF_5, 0x39000, INTF_EDP, 0, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 22, 23),
+> +	INTF_BLK("intf_5", INTF_5, 0x39000, INTF_DP, 0, 24, INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 22, 23),
+>  };
+>  
+>  /*************************************************************
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> index d2569da..06d5a2d 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> @@ -1244,7 +1244,9 @@ static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl,
+>  		struct dp_cr_status *cr, int *training_step)
+>  {
+>  	int ret = 0;
+> +	u8 *dpcd = ctrl->panel->dpcd;
+>  	u8 encoding = DP_SET_ANSI_8B10B;
+> +	u8 ssc = 0, assr = 0;
+>  	struct dp_link_info link_info = {0};
+>  
+>  	dp_ctrl_config_ctrl(ctrl);
+> @@ -1254,9 +1256,21 @@ static int dp_ctrl_link_train(struct dp_ctrl_private *ctrl,
+>  	link_info.capabilities = DP_LINK_CAP_ENHANCED_FRAMING;
+>  
+>  	dp_aux_link_configure(ctrl->aux, &link_info);
+> +
+> +	if (dpcd[DP_MAX_DOWNSPREAD] & DP_MAX_DOWNSPREAD_0_5) {
+> +		ssc = DP_SPREAD_AMP_0_5;
+> +		drm_dp_dpcd_write(ctrl->aux, DP_DOWNSPREAD_CTRL, &ssc, 1);
+> +	}
+> +
+>  	drm_dp_dpcd_write(ctrl->aux, DP_MAIN_LINK_CHANNEL_CODING_SET,
+>  				&encoding, 1);
+>  
+> +	if (dpcd[DP_EDP_CONFIGURATION_CAP] & DP_ALTERNATE_SCRAMBLER_RESET_CAP) {
+> +		assr = DP_ALTERNATE_SCRAMBLER_RESET_ENABLE;
+> +		drm_dp_dpcd_write(ctrl->aux, DP_EDP_CONFIGURATION_SET,
+> +				&assr, 1);
+> +	}
+> +
+>  	ret = dp_ctrl_link_train_1(ctrl, cr, training_step);
+>  	if (ret) {
+>  		DRM_ERROR("link training #1 failed. ret=%d\n", ret);
+> @@ -1328,9 +1342,11 @@ static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl)
+>  	struct dp_io *dp_io = &ctrl->parser->io;
+>  	struct phy *phy = dp_io->phy;
+>  	struct phy_configure_opts_dp *opts_dp = &dp_io->phy_opts.dp;
+> +	u8 *dpcd = ctrl->panel->dpcd;
+>  
+>  	opts_dp->lanes = ctrl->link->link_params.num_lanes;
+>  	opts_dp->link_rate = ctrl->link->link_params.rate / 100;
+> +	opts_dp->ssc = dpcd[DP_MAX_DOWNSPREAD] & DP_MAX_DOWNSPREAD_0_5;
+>  	dp_ctrl_set_clock_rate(ctrl, DP_CTRL_PM, "ctrl_link",
+>  					ctrl->link->link_params.rate * 1000);
+>  
+> @@ -1760,6 +1776,9 @@ int dp_ctrl_on_stream(struct dp_ctrl *dp_ctrl)
+>  	ctrl->link->link_params.num_lanes = ctrl->panel->link_info.num_lanes;
+>  	ctrl->dp_ctrl.pixel_rate = ctrl->panel->dp_mode.drm_mode.clock;
+>  
+> +	if (ctrl->dp_ctrl.pixel_rate == 0)
+> +		return -EINVAL;
+> +
+>  	DRM_DEBUG_DP("rate=%d, num_lanes=%d, pixel_rate=%d\n",
+>  		ctrl->link->link_params.rate,
+>  		ctrl->link->link_params.num_lanes, ctrl->dp_ctrl.pixel_rate);
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index ee5bf64..a772290 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -117,8 +117,36 @@ struct dp_display_private {
+>  	struct dp_audio *audio;
+>  };
+>  
+> +struct msm_dp_config {
+> +	phys_addr_t io_start[3];
+> +	size_t num_dp;
+> +};
+> +
+> +static const struct msm_dp_config sc7180_dp_cfg = {
+> +	.io_start = { 0x0ae90000 },
+> +	.num_dp = 1,
+> +};
+> +
+> +static const struct msm_dp_config sc8180x_dp_cfg = {
+> +	.io_start = { 0xae90000, 0xae98000, 0 },
+> +	.num_dp = 3,
+> +};
+> +
+> +static const struct msm_dp_config sc8180x_edp_cfg = {
+> +	.io_start = { 0, 0, 0xae9a000 },
+> +	.num_dp = 3,
+> +};
+> +
+> +static const struct msm_dp_config sc7280_edp_cfg = {
+> +	.io_start = { 0xaea0000, 0 },
+> +	.num_dp = 2,
+> +};
+
+This data isn't used anywhere, is there some patch missing?
+
+And in case it is used (at some point), shouldn't at least the 'io_start'
+addresses be specified in the device tree rather than the driver?
+
+> +
+>  static const struct of_device_id dp_dt_match[] = {
+> -	{.compatible = "qcom,sc7180-dp"},
+> +	{ .compatible = "qcom,sc7180-dp", .data = &sc7180_dp_cfg },
+> +	{ .compatible = "qcom,sc8180x-dp", .data = &sc8180x_dp_cfg },
+> +	{ .compatible = "qcom,sc8180x-edp", .data = &sc8180x_edp_cfg },
+> +	{ .compatible = "qcom,sc7280-edp", .data = &sc7280_edp_cfg },
+>  	{}
+>  };
+>  
+> @@ -1408,7 +1436,7 @@ void msm_dp_irq_postinstall(struct msm_dp *dp_display)
+>  
+>  	dp_hpd_event_setup(dp);
+>  
+> -	dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 100);
+> +	dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 1);
+>  }
+>  
+>  void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
+> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
+> index 0519dd3..c05fc0a 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_parser.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
+> @@ -248,6 +248,33 @@ static int dp_parser_clock(struct dp_parser *parser)
+>  	return 0;
+>  }
+>  
+> +static int dp_parser_gpio(struct dp_parser *parser)
+> +{
+> +	struct device *dev = &parser->pdev->dev;
+> +	int ret;
+> +
+> +	parser->panel_bklt_gpio = devm_gpiod_get(dev, "panel-bklt",
+> +			GPIOD_OUT_HIGH);
+> +	if (IS_ERR(parser->panel_bklt_gpio)) {
+> +		ret = PTR_ERR(parser->panel_bklt_gpio);
+> +		parser->panel_bklt_gpio = NULL;
+> +		DRM_ERROR("%s: cannot get panel-bklt gpio, %d\n", __func__, ret);
+> +		goto fail;
+> +	}
+> +
+> +	parser->panel_pwm_gpio = devm_gpiod_get(dev, "panel-pwm", GPIOD_OUT_HIGH);
+> +	if (IS_ERR(parser->panel_pwm_gpio)) {
+> +		ret = PTR_ERR(parser->panel_pwm_gpio);
+> +		parser->panel_pwm_gpio = NULL;
+> +		DRM_ERROR("%s: cannot get panel-pwm gpio, %d\n", __func__, ret);
+> +		goto fail;
+> +	}
+
+Just setting the GPIOs to high on initialization and then leaving them
+unattended doesn't look right. I saw Stephen already pointed towards
+drivers/video/backlight/pwm_bl.c.
+
+> +
+> +	DRM_INFO("gpio on");
+> +fail:
+> +	return 0;
+
+This function always returns 0, either the return type should be void, or it
+should return a different value in the error case
+
+> +}
+> +
+>  static int dp_parser_parse(struct dp_parser *parser)
+>  {
+>  	int rc = 0;
+> @@ -269,6 +296,10 @@ static int dp_parser_parse(struct dp_parser *parser)
+>  	if (rc)
+>  		return rc;
+>  
+> +	rc = dp_parser_gpio(parser);
+> +	if (rc)
+> +		return rc;
+
+The function never returns a non-zero value (see above).
