@@ -2,198 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 94B223EF056
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Aug 2021 18:43:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D45103EF0E4
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Aug 2021 19:27:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229716AbhHQQn5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Aug 2021 12:43:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58688 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229477AbhHQQn4 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Aug 2021 12:43:56 -0400
-Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9240FC061764;
-        Tue, 17 Aug 2021 09:43:23 -0700 (PDT)
-Received: by mail-io1-xd2e.google.com with SMTP id n24so10520331ion.10;
-        Tue, 17 Aug 2021 09:43:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=IuG/Nyy1AleYAAiC355G22Pgq/wRJ8d208hbkCZpDvc=;
-        b=Qek+7TVaVrYAJoiDwC7Lw3CWuWndq+4rvExDCpbOVfH6uBMFGcQDnYHXeoHBqxcnXQ
-         D59nZ0gLjMVRt8WsCD2NylROiCsk+Kp/F88pCajBeYksJHttqJAanCQ4jhm9bc9oSJBe
-         ziMa/q4nk9B8hG4DD4Olt6O98143JdZjXYAJ0CJEJHpwwKgebz84akz7e8oQFyye+nn1
-         cwxmV7SUiXhgDqhnNxA+7aGgAaAbx9oPLTRmQ7h6vUAr/QJfdaOJ2BwdmayqdYkdmQjU
-         /uLtEegmBGSXH4BY+XCevjbhG7HF4PdtyMUEC0iQ3tzy+DKJyiluC1JopsdF+BHp1P1K
-         NV5g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=IuG/Nyy1AleYAAiC355G22Pgq/wRJ8d208hbkCZpDvc=;
-        b=r+CWwoFJaRFRcjRC8kPq4y1QIR6VM3+Jr+VweSdlybtrjeiUToyqc44lKeATWVYnr0
-         VpCmlxnS7hpXWYs2vJYyADMHKervF3qlEeidmBuC2zZPjIs609evQLeDgv38AyA2cvpi
-         HmIofB8qCl9+C1/5Nto4mV+tbB8F8w0P4wcQJIRPHaXWP7tAm94wMAwGtf+163bnnxWh
-         3g1sE4ZC0h40USl3t5CAQw9Ylu+ak6P09fHkagghMiHZ5gTCC7UJfcTadboj2V/Fhpnn
-         B4Tmcab4EDHwDuNxq+nvKQP+RRK//clqB7QA7+tFHx9dLsaIoXOEHRIih/SAHFpijINi
-         ZRUw==
-X-Gm-Message-State: AOAM533fOCE3YoVGHiQpfbItue1uVKeb/I3bNgoE0Oq5uc+EJ7fi40Cv
-        xGnffFfnQquHtekFlAvMxpFf0TdkzXJN7DsWFfk=
-X-Google-Smtp-Source: ABdhPJzQQRmCUq3Wdvr9MNFIHp7qIrTvHDwImWQGqK5968WjJf0KlcRwpnB4V9wwjmHZWiD/zb1mRreidkPCgYAs3ww=
-X-Received: by 2002:a05:6602:2c10:: with SMTP id w16mr3559018iov.149.1629218603053;
- Tue, 17 Aug 2021 09:43:23 -0700 (PDT)
+        id S232060AbhHQR1j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Aug 2021 13:27:39 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:16790 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230354AbhHQR1j (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 17 Aug 2021 13:27:39 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1629221225; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=EfWYM7e4IPw4UxvqdMIlRmzXZnOqCrtsKfmXiL94nUE=;
+ b=Hsh+QJttUSKSbJoAcAuS0/XgrpZVlT/+6fZWLA70ZV8BmlyiaWa5MyNQqOieQnv2jVdHjrXk
+ owExty0tGA1qES0aAjISEYReVmNs3evSZw2uq22JXqctP1lkvH8V7bpX5LPFZDuBNtp3e2+A
+ 6VrlN5Y1R3wA8MlqdLQ/mkvd37A=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 611bf159105c6568db5ad798 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 17 Aug 2021 17:26:49
+ GMT
+Sender: pmaliset=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id F2DD9C4360D; Tue, 17 Aug 2021 17:26:48 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: pmaliset)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9C922C4338F;
+        Tue, 17 Aug 2021 17:26:47 +0000 (UTC)
 MIME-Version: 1.0
-References: <1629163412-157074-1-git-send-email-amartora@codeaurora.org>
-In-Reply-To: <1629163412-157074-1-git-send-email-amartora@codeaurora.org>
-From:   Miguel Ojeda <miguel.ojeda.sandonis@gmail.com>
-Date:   Tue, 17 Aug 2021 18:43:12 +0200
-Message-ID: <CANiq72ke+eoSvycmq3LFdo9n+uLqvb_t4109N+R=uY+XN-i7Kg@mail.gmail.com>
-Subject: Re: [RFC] soc: qcom: socinfo.rs: Add Rust Socinfo Driver implementation
-To:     Antonio Martorana <amartora@codeaurora.org>
-Cc:     Miguel Ojeda <ojeda@kernel.org>,
-        Alex Gaynor <alex.gaynor@gmail.com>,
-        Wedson Almeida Filho <wedsonaf@google.com>,
-        rust-for-linux <rust-for-linux@vger.kernel.org>,
-        Trilok Soni <tsoni@codeaurora.org>,
-        Elliot Berman <quic_eberman@quicinc.com>, agross@kernel.org,
-        bjorn.andersson@linaro.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 17 Aug 2021 22:56:47 +0530
+From:   Prasad Malisetty <pmaliset@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, bhelgaas@google.com,
+        robh+dt@kernel.org, swboyd@chromium.org, lorenzo.pieralisi@arm.com,
+        svarbanov@mm-sol.com
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dianders@chromium.org, mka@chromium.org, vbadigan@codeaurora.org,
+        sallenki@codeaurora.org, manivannan.sadhasivam@linaro.org
+Subject: Re: [PATCH v5 4/4] PCI: qcom: Switch pcie_1_pipe_clk_src after PHY
+ init in SC7280
+In-Reply-To: <1628568516-24155-5-git-send-email-pmaliset@codeaurora.org>
+References: <1628568516-24155-1-git-send-email-pmaliset@codeaurora.org>
+ <1628568516-24155-5-git-send-email-pmaliset@codeaurora.org>
+Message-ID: <349b1178f071407dfad8ba3050482772@codeaurora.org>
+X-Sender: pmaliset@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Antonio,
-
-Thanks a lot for giving Rust in the kernel a try!
-
-Cc'ing the socinfo maintainers.
-
-A few comments inline. In general, you should seek to avoid `unsafe`
-in the Rust module as much as possible by providing safe abstractions
-inside the `kernel` crate instead, which are the ones dealing with the
-C-Rust interface / bindings.
-
-On Tue, Aug 17, 2021 at 3:24 AM Antonio Martorana
-<amartora@codeaurora.org> wrote:
->
-> +       depends on HAS_RUST && QCOM_SMEM
-
-This should be `RUST`, not `HAS_RUST` (the former is whether it is
-actually enabled, the latter whether the toolchain was found).
-
-> @@ -0,0 +1,464 @@
-
-The SPDX identifier is missing at the top.
-
-> +#![feature(allocator_api,global_asm)]
-
-Please format the code (you can use `make rustfmt` or manually call
-the `rustfmt` tool yourself).
-
-Also, please pass the linter too if you did not do it (`CLIPPY=1`).
-
-> +module! {
-> +    type: SocInfoDriver,
-> +    name: b"socinfo_rust",
-> +    author: b"Antonio Martorana",
-> +    description: b"QCOM socinfo rust implementation",
-> +    license: b"GPL v2",
-> +}
-
-This is a proof of concept, so it is OK, but I am not sure if we
-should say "rust" in the description for actual non-proof-of-concept
-modules. My guess is that most maintainers will only want to
-maintainer a single module, whether in C or Rust.
-
-> +/*
-> + * SMEM item id, used to acquire handles to respective
-> + * SMEM region.
-> + */
-> +const SMEM_HW_SW_BUILD_ID: u32 = 137;
-
-In general, we do not use `/*`-style comments. In addition, this
-should be a documentation comment, i.e. `///`.
-
-Same for other places.
-
-> +/* C code has #ifdef */
-> +const SMEM_IMAGE_VERSION_BLOCKS_COUNT: usize = 32;
-> +const SMEM_IMAGE_VERSION_SIZE: usize = 4096;
-> +const SMEM_IMAGE_VERSION_NAME_SIZE: usize = 75;
-> +const SMEM_IMAGE_VERSION_VARIANT_SIZE: usize = 20;
-> +const SMEM_IMAGE_VERSION_OEM_SIZE: usize = 32;
-
-We have support for conditional compilation based on the kernel
-configuration via e.g. an attribute like `#[cfg(CONFIG_X)]`.
-
-Ideally you can put this inside a module, which would allow you to
-have a single condition compilation avoid having to repeat the
-attribute, as well as avoiding repeated prefixes like
-`SMEM_IMAGE_VERSION`.
-
-> +/*
-> + * SMEM Image table indices
-> + */
-> +const SMEM_IMAGE_TABLE_BOOT_INDEX: u32 = 0;
-> +const SMEM_IMAGE_TABLE_TZ_INDEX: u32 = 1;
-> +const SMEM_IMAGE_TABLE_RPM_INDEX: u32 = 3;
-> +const SMEM_IMAGE_TABLE_APPS_INDEX: u32 = 10;
-> +const SMEM_IMAGE_TABLE_MPSS_INDEX: u32 = 11;
-> +const SMEM_IMAGE_TABLE_ADSP_INDEX: u32 = 12;
-> +const SMEM_IMAGE_TABLE_CNSS_INDEX: u32 = 13;
-> +const SMEM_IMAGE_TABLE_VIDEO_INDEX: u32 = 14;
-> +const SMEM_IMAGE_VERSION_TABLE: u32 = 496;
-
-Same here -- this could be a `mod` and a doc comment on it.
-
-> +struct SocInfo{
-> +    fmt: bindings::__le32,
-
-Rust modules should not access `bindings` in general -- abstractions
-should be provided in `rust/`.
-
-Also, `__le32` is for `sparse` -- to do something similar, we could
-use a wrapper type that encodes the endianness.
-
-> +    unsafe {let ref_mut_seq_priv = seq_private.as_mut().unwrap(); }
-
-Unsafe blocks must have a `SAFETY: ` annotation, justifying all the
-requirements of `as_mut()` (alignment, no aliasing, etc.).
-
-They should also be as small as possible (to clearly indicate the part
-that is unsafe), without using a single block for several unsafe
-operations.
-
-> +    if model < 0{
-> +        return -22; //EINVAL
-> +    }
-
-We have the constants available. Also, the function should return a
-`Result`, not a naked integer.
-
-> +        unsafe{ bindings::seq_printf(seq as *mut bindings::seq_file,format,PMIC_MODELS[model as usize])};
-
-`seq_printf` should likely be a macro like `pr_info!` etc. that we have.
-
-> +/*
-> +fn qcom_show_pmic_model_array(seq: &mut bindings::seq_file, p: &mut c_types::c_void) -> u32{
+On 2021-08-10 09:38, Prasad Malisetty wrote:
+> On the SC7280, By default the clock source for pcie_1_pipe is
+> TCXO for gdsc enable. But after the PHY is initialized, the clock
+> source must be switched to gcc_pcie_1_pipe_clk from TCXO.
+> 
+> Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 18 ++++++++++++++++++
+>  1 file changed, 18 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c
+> b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 8a7a300..39e3b21 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -166,6 +166,8 @@ struct qcom_pcie_resources_2_7_0 {
+>  	struct regulator_bulk_data supplies[2];
+>  	struct reset_control *pci_reset;
+>  	struct clk *pipe_clk;
+> +	struct clk *gcc_pcie_1_pipe_clk_src;
+> +	struct clk *phy_pipe_clk;
+>  };
+> 
+>  union qcom_pcie_resources {
+> @@ -1167,6 +1169,16 @@ static int qcom_pcie_get_resources_2_7_0(struct
+> qcom_pcie *pcie)
+>  	if (ret < 0)
+>  		return ret;
+> 
+> +	if (of_device_is_compatible(dev->of_node, "qcom,pcie-sc7280")) {
+> +		res->gcc_pcie_1_pipe_clk_src = devm_clk_get(dev, "pipe_mux");
+> +		if (IS_ERR(res->gcc_pcie_1_pipe_clk_src))
+> +			return PTR_ERR(res->gcc_pcie_1_pipe_clk_src);
 > +
-> +}
+> +		res->phy_pipe_clk = devm_clk_get(dev, "phy_pipe");
+> +		if (IS_ERR(res->phy_pipe_clk))
+> +			return PTR_ERR(res->phy_pipe_clk);
+> +	}
 > +
-> +fn qcom_show_pmic_die_revision(seq: &mut bindings::seq_file, p: &mut c_types::c_void) -> u32{
-> +
-> +}
-> +
-> +fn qcom_show_chip_id(seq: &mut bindings::seq_file, p: &mut c_types::c_void) -> u32{
-> +
-> +}
-> +
-> +*/
 
-Commented out code (also in other places).
+Hi All,
 
-Cheers,
-Miguel
+Greetings!
+
+I would like to check is there any other better approach instead of 
+compatible method here as well or is it fine to use compatible method.
+
+Thanks
+-Prasad
+
+>  	res->pipe_clk = devm_clk_get(dev, "pipe");
+>  	return PTR_ERR_OR_ZERO(res->pipe_clk);
+>  }
+> @@ -1255,6 +1267,12 @@ static void qcom_pcie_deinit_2_7_0(struct
+> qcom_pcie *pcie)
+>  static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
+>  {
+>  	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
+> +	struct dw_pcie *pci = pcie->pci;
+> +	struct device *dev = pci->dev;
+> +	struct device_node *node = dev->of_node;
+> +
+> +	if (of_property_read_bool(node, "pipe-clk-source-switch"))
+> +		clk_set_parent(res->gcc_pcie_1_pipe_clk_src, res->phy_pipe_clk);
+> 
+>  	return clk_prepare_enable(res->pipe_clk);
+>  }
