@@ -2,247 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 428753EE916
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Aug 2021 11:04:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F109F3EE929
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Aug 2021 11:06:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235525AbhHQJE6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Aug 2021 05:04:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37792 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235556AbhHQJEz (ORCPT
+        id S234347AbhHQJHR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Aug 2021 05:07:17 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:33360 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235410AbhHQJHR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Aug 2021 05:04:55 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEF1BC061764
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Aug 2021 02:04:20 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id q10so27509440wro.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Aug 2021 02:04:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=j4i/x9tyzc/3LgdLRFqgQgxEO4pmJgQLsrj80WtwhVI=;
-        b=KxIpxVtWjns4F7qLg1rRcmYAW3SH1eBW9sxDxCEB/2uN9a/FcASQ4t2WjsOxmPgxmd
-         fgz5X/LnvStc/dmaZypl8I2CLhvMTPQvq6+5wSjEtiUMwMdBFl0TqJEk7e7klYUpDrkI
-         1ao2oorbeN2dN+umv0mr5W2gM8/ZhXk0b3GGM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :content-transfer-encoding:in-reply-to;
-        bh=j4i/x9tyzc/3LgdLRFqgQgxEO4pmJgQLsrj80WtwhVI=;
-        b=BFlgpgSCOynASi5vR9aDpYJkzlRu5e86Qqv57tRcOWG/yJ2yR+QoYy17SRu0/Qeotc
-         GzlaQr4JU1f7ro9UHpFolLkG4NehbFcmGYrfX3WOUvjJoMEPRSXWIe9TyY3E5JKUIzeA
-         hbQrid4VFFJ/sqL+p0rf8o4a5ZuO4fiBAKHKYXKeqNa8HXDJw1DbrWNfD/pR0rBVpnFe
-         LG3Tolfi5PwAjzLu0aVMwH6hXmhHwgqWrGr8wUhsb8BOVfExez6TvPVgvl0jMcWN4cZU
-         CvwyVAYCZ6oSCDD15I5KXM/84u0SjtpvXyBmn6j32owmdtk85cQC9KQS+hdKCDZKhgZX
-         pL6A==
-X-Gm-Message-State: AOAM533bL6rsQKuu1SpUzWaBjSyqZRBnEEidd6Llmdv1cdjdgGvYOYne
-        /xXutGGG3JuWU8GGG7GVj1gPcA==
-X-Google-Smtp-Source: ABdhPJy/Dl1NsISUcWJ7CU+4M3hb5C4YhyxhHFqeiJF0/2LxZzlK7v8qd5PIxfPQBoJAIj1gqztDvw==
-X-Received: by 2002:a05:6000:1043:: with SMTP id c3mr2732415wrx.144.1629191059584;
-        Tue, 17 Aug 2021 02:04:19 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id e17sm1625963wrs.78.2021.08.17.02.04.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Aug 2021 02:04:19 -0700 (PDT)
-Date:   Tue, 17 Aug 2021 11:04:17 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     Christian =?iso-8859-1?Q?K=F6nig?= 
-        <ckoenig.leichtzumerken@gmail.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        David Airlie <airlied@linux.ie>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-        Tian Tao <tiantao6@hisilicon.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Luben Tuikov <luben.tuikov@amd.com>,
-        Andrey Grodzovsky <andrey.grodzovsky@amd.com>,
-        Steven Price <steven.price@arm.com>, Roy Sun <Roy.Sun@amd.com>,
-        Lee Jones <lee.jones@linaro.org>,
-        Jack Zhang <Jack.Zhang1@amd.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" 
-        <linux-media@vger.kernel.org>,
-        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
-        <linaro-mm-sig@lists.linaro.org>, Daniel Vetter <daniel@ffwll.ch>
-Subject: Re: [PATCH v2 4/5] drm/scheduler: Add fence deadline support
-Message-ID: <YRt7ka8TZrjdxy/6@phenom.ffwll.local>
-Mail-Followup-To: Rob Clark <robdclark@gmail.com>,
-        Christian =?iso-8859-1?Q?K=F6nig?= <ckoenig.leichtzumerken@gmail.com>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>, David Airlie <airlied@linux.ie>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
-        Tian Tao <tiantao6@hisilicon.com>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Luben Tuikov <luben.tuikov@amd.com>,
-        Andrey Grodzovsky <andrey.grodzovsky@amd.com>,
-        Steven Price <steven.price@arm.com>, Roy Sun <Roy.Sun@amd.com>,
-        Lee Jones <lee.jones@linaro.org>, Jack Zhang <Jack.Zhang1@amd.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" <linux-media@vger.kernel.org>,
-        "moderated list:DMA BUFFER SHARING FRAMEWORK" <linaro-mm-sig@lists.linaro.org>
-References: <20210807183804.459850-1-robdclark@gmail.com>
- <20210807183804.459850-5-robdclark@gmail.com>
- <e28020c5-3da3-c721-96df-9a115f105bf7@gmail.com>
- <YRqGazgGJ2NAIzg2@phenom.ffwll.local>
- <CAF6AEGtyA2ovPcsP_3wbD-KfJFZosc=qf=SMkE2BVMq5+=cxWw@mail.gmail.com>
+        Tue, 17 Aug 2021 05:07:17 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1629191204; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=mIIW8dD+P4mwCL6MZnI4H2DUYsR6iFItwspK2nQor6E=;
+ b=dQC1WRRpNn5Osvzs8r35HiF56pxFQV38FeJzejIHNNqFMyDcYd47FDWPlt1vQRTBBtn60DLx
+ Um5Eplb8kAo60AOLM5qzEf1uHenpo49naI63DD+F+83y3exAbyJZtHaF1Sb7jcF342u4D0wb
+ yTjKybLgHH1GHcVRZi62x+oFXm0=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 611b7c23105c6568db562eb3 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 17 Aug 2021 09:06:43
+ GMT
+Sender: skakit=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1A0E0C4360C; Tue, 17 Aug 2021 09:06:43 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: skakit)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 687D6C4338F;
+        Tue, 17 Aug 2021 09:06:42 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <CAF6AEGtyA2ovPcsP_3wbD-KfJFZosc=qf=SMkE2BVMq5+=cxWw@mail.gmail.com>
-X-Operating-System: Linux phenom 5.10.0-7-amd64 
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 17 Aug 2021 14:36:42 +0530
+From:   skakit@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Collins <collinsd@codeaurora.org>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        linux-gpio@vger.kernel.org,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/2] pinctrl: qcom: spmi-gpio: correct parent irqspec
+ translation
+In-Reply-To: <CAE-0n53sR12fEa_cNPeT5eGcQVzzL57pd-tYnJbpP0NXkHMTsw@mail.gmail.com>
+References: <1628830531-14648-1-git-send-email-skakit@codeaurora.org>
+ <1628830531-14648-2-git-send-email-skakit@codeaurora.org>
+ <CACRpkdZteWY6X+prHeAF0rtPVbCk+X9=ZYgpjgAMH24LhOjhaQ@mail.gmail.com>
+ <4af8171aefd6f0387438225666ec1ccc@codeaurora.org>
+ <CAE-0n53sR12fEa_cNPeT5eGcQVzzL57pd-tYnJbpP0NXkHMTsw@mail.gmail.com>
+Message-ID: <6801879ddd0edf9a8d0e3605f3868e79@codeaurora.org>
+X-Sender: skakit@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 16, 2021 at 03:25:20PM -0700, Rob Clark wrote:
-> On Mon, Aug 16, 2021 at 8:38 AM Daniel Vetter <daniel@ffwll.ch> wrote:
-> >
-> > On Mon, Aug 16, 2021 at 12:14:35PM +0200, Christian König wrote:
-> > > Am 07.08.21 um 20:37 schrieb Rob Clark:
-> > > > From: Rob Clark <robdclark@chromium.org>
-> > > >
-> > > > As the finished fence is the one that is exposed to userspace, and
-> > > > therefore the one that other operations, like atomic update, would
-> > > > block on, we need to propagate the deadline from from the finished
-> > > > fence to the actual hw fence.
-> > > >
-> > > > Signed-off-by: Rob Clark <robdclark@chromium.org>
-> >
-> > I guess you're already letting the compositor run at a higher gpu priority
-> > so that your deadline'd drm_sched_job isn't stuck behind the app rendering
-> > the next frame?
+On 2021-08-17 02:38, Stephen Boyd wrote:
+> Quoting skakit@codeaurora.org (2021-08-15 23:50:37)
+>> Hi Linus,
+>> 
+>> On 2021-08-13 14:27, Linus Walleij wrote:
+>> > Hi Satya/David,
+>> >
+>> > nice work on identifying this bug!
+>> >
+>> > On Fri, Aug 13, 2021 at 6:56 AM satya priya <skakit@codeaurora.org>
+>> > wrote:
+>> >>
+>> >> From: David Collins <collinsd@codeaurora.org>
+>> >>
+>> >> pmic_gpio_child_to_parent_hwirq() and
+>> >> gpiochip_populate_parent_fwspec_fourcell() translate a pinctrl-
+>> >> spmi-gpio irqspec to an SPMI controller irqspec.  When they do
+>> >> this, they use a fixed SPMI slave ID of 0 and a fixed GPIO
+>> >> peripheral offset of 0xC0 (corresponding to SPMI address 0xC000).
+>> >> This translation results in an incorrect irqspec for secondary
+>> >> PMICs that don't have a slave ID of 0 as well as for PMIC chips
+>> >> which have GPIO peripherals located at a base address other than
+>> >> 0xC000.
+>> >>
+>> >> Correct this issue by passing the slave ID of the pinctrl-spmi-
+>> >> gpio device's parent in the SPMI controller irqspec and by
+>> >> calculating the peripheral ID base from the device tree 'reg'
+>> >> property of the pinctrl-spmi-gpio device.
+>> >>
+>> >> Signed-off-by: David Collins <collinsd@codeaurora.org>
+>> >> Signed-off-by: satya priya <skakit@codeaurora.org>
 > 
-> With the scheduler conversion we do have multiple priorities (provided
-> by scheduler) for all generations.. but not yet preemption for all
-> generations.
+> Can you please add an appropriate Fixes tag?
 > 
-> But the most common use-case where we need this ends up being display
-> composition (either fullscreen app/game or foreground app/game
-> composited via overlay) so I haven't thought too much about the next
-> step of boosting job priority.  I might leave that to someone who
-> already has preemption wired up ;-)
 
-Atm no-one, drm/sched isn't really aware that's a concept. I was more
-thinking of just boosting that request as a first step. Maybe within the
-same priority class we pick jobs with deadlines first, or something like
-that.
+Okay.
 
-Preempting is an entire can of worms on top.
--Daniel
-
+>> >
+>> > Is this a regression or is it fine if I just apply it for v5.15?
+>> > I was thinking v5.15 since it isn't yet used in device trees.
+>> >
+>> 
+>> Without this fix, [2/2] Vol+ support is failing. If possible please
+>> merge it on current branch.
+>> 
 > 
-> BR,
-> -R
-> 
-> > I'm not sure whether you wire that one up as part of the conversion to
-> > drm/sched. Without that I think we might need to ponder how we can do a
-> > prio-boost for these, e.g. within a scheduling class we pick the jobs with
-> > the nearest deadline first, before we pick others.
-> > -Daniel
-> >
-> > > > ---
-> > > >   drivers/gpu/drm/scheduler/sched_fence.c | 25 +++++++++++++++++++++++++
-> > > >   drivers/gpu/drm/scheduler/sched_main.c  |  3 +++
-> > > >   include/drm/gpu_scheduler.h             |  6 ++++++
-> > > >   3 files changed, 34 insertions(+)
-> > > >
-> > > > diff --git a/drivers/gpu/drm/scheduler/sched_fence.c b/drivers/gpu/drm/scheduler/sched_fence.c
-> > > > index 69de2c76731f..f389dca44185 100644
-> > > > --- a/drivers/gpu/drm/scheduler/sched_fence.c
-> > > > +++ b/drivers/gpu/drm/scheduler/sched_fence.c
-> > > > @@ -128,6 +128,30 @@ static void drm_sched_fence_release_finished(struct dma_fence *f)
-> > > >     dma_fence_put(&fence->scheduled);
-> > > >   }
-> > > > +static void drm_sched_fence_set_deadline_finished(struct dma_fence *f,
-> > > > +                                             ktime_t deadline)
-> > > > +{
-> > > > +   struct drm_sched_fence *fence = to_drm_sched_fence(f);
-> > > > +   unsigned long flags;
-> > > > +
-> > > > +   spin_lock_irqsave(&fence->lock, flags);
-> > > > +
-> > > > +   /* If we already have an earlier deadline, keep it: */
-> > > > +   if (test_bit(DMA_FENCE_FLAG_HAS_DEADLINE_BIT, &f->flags) &&
-> > > > +       ktime_before(fence->deadline, deadline)) {
-> > > > +           spin_unlock_irqrestore(&fence->lock, flags);
-> > > > +           return;
-> > > > +   }
-> > > > +
-> > > > +   fence->deadline = deadline;
-> > > > +   set_bit(DMA_FENCE_FLAG_HAS_DEADLINE_BIT, &f->flags);
-> > > > +
-> > > > +   spin_unlock_irqrestore(&fence->lock, flags);
-> > > > +
-> > > > +   if (fence->parent)
-> > > > +           dma_fence_set_deadline(fence->parent, deadline);
-> > > > +}
-> > > > +
-> > > >   static const struct dma_fence_ops drm_sched_fence_ops_scheduled = {
-> > > >     .get_driver_name = drm_sched_fence_get_driver_name,
-> > > >     .get_timeline_name = drm_sched_fence_get_timeline_name,
-> > > > @@ -138,6 +162,7 @@ static const struct dma_fence_ops drm_sched_fence_ops_finished = {
-> > > >     .get_driver_name = drm_sched_fence_get_driver_name,
-> > > >     .get_timeline_name = drm_sched_fence_get_timeline_name,
-> > > >     .release = drm_sched_fence_release_finished,
-> > > > +   .set_deadline = drm_sched_fence_set_deadline_finished,
-> > > >   };
-> > > >   struct drm_sched_fence *to_drm_sched_fence(struct dma_fence *f)
-> > > > diff --git a/drivers/gpu/drm/scheduler/sched_main.c b/drivers/gpu/drm/scheduler/sched_main.c
-> > > > index a2a953693b45..3ab0900d3596 100644
-> > > > --- a/drivers/gpu/drm/scheduler/sched_main.c
-> > > > +++ b/drivers/gpu/drm/scheduler/sched_main.c
-> > > > @@ -818,6 +818,9 @@ static int drm_sched_main(void *param)
-> > > >             if (!IS_ERR_OR_NULL(fence)) {
-> > > >                     s_fence->parent = dma_fence_get(fence);
-> > > > +                   if (test_bit(DMA_FENCE_FLAG_HAS_DEADLINE_BIT,
-> > > > +                                &s_fence->finished.flags))
-> > > > +                           dma_fence_set_deadline(fence, s_fence->deadline);
-> > >
-> > > Maybe move this into a dma_sched_fence_set_parent() function.
-> > >
-> > > Apart from that looks good to me.
-> > >
-> > > Regards,
-> > > Christian.
-> > >
-> > > >                     r = dma_fence_add_callback(fence, &sched_job->cb,
-> > > >                                                drm_sched_job_done_cb);
-> > > >                     if (r == -ENOENT)
-> > > > diff --git a/include/drm/gpu_scheduler.h b/include/drm/gpu_scheduler.h
-> > > > index d18af49fd009..0f08ade614ae 100644
-> > > > --- a/include/drm/gpu_scheduler.h
-> > > > +++ b/include/drm/gpu_scheduler.h
-> > > > @@ -144,6 +144,12 @@ struct drm_sched_fence {
-> > > >            */
-> > > >     struct dma_fence                finished;
-> > > > +   /**
-> > > > +    * @deadline: deadline set on &drm_sched_fence.finished which
-> > > > +    * potentially needs to be propagated to &drm_sched_fence.parent
-> > > > +    */
-> > > > +   ktime_t                         deadline;
-> > > > +
-> > > >           /**
-> > > >            * @parent: the fence returned by &drm_sched_backend_ops.run_job
-> > > >            * when scheduling the job on hardware. We signal the
-> > >
-> >
-> > --
-> > Daniel Vetter
-> > Software Engineer, Intel Corporation
-> > http://blog.ffwll.ch
+> Are there any boards supported upstream that have a gpio block that
+> isn't at 0xc000?
 
--- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+yes, all the pmics used in sm8350-mtp.dts board have gpio block at 
+addresses different than 0xc000.
+
+Thanks,
+Satya Priya
