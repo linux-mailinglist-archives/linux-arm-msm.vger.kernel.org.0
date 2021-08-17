@@ -2,92 +2,228 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CE3E3EEC32
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Aug 2021 14:10:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D13A23EED2D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Aug 2021 15:17:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237094AbhHQML0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Aug 2021 08:11:26 -0400
-Received: from mail-ot1-f45.google.com ([209.85.210.45]:41556 "EHLO
-        mail-ot1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236113AbhHQMLX (ORCPT
+        id S239821AbhHQNRw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Aug 2021 09:17:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39512 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239706AbhHQNRw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Aug 2021 08:11:23 -0400
-Received: by mail-ot1-f45.google.com with SMTP id w22-20020a056830411600b0048bcf4c6bd9so2005910ott.8;
-        Tue, 17 Aug 2021 05:10:50 -0700 (PDT)
+        Tue, 17 Aug 2021 09:17:52 -0400
+Received: from mail-wr1-x42d.google.com (mail-wr1-x42d.google.com [IPv6:2a00:1450:4864:20::42d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AA6BC0613CF
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Aug 2021 06:17:19 -0700 (PDT)
+Received: by mail-wr1-x42d.google.com with SMTP id v4so21436763wro.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 17 Aug 2021 06:17:19 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=+GkZlku1Bw2JCl4HvkcPQD//HnyGFQIsuXa7PcP9+u4=;
+        b=zobAv814/jIA9hveR+EkNCwDf42MUiRgvR0jepBC7V2gciaCGjUZ3styiQZrII/VGa
+         qx77TDd0skliye2OiYngq8oLgDQoXMCxlS5/59T8Cl/xOwXettAGn+YoSLCW+UGsJyZn
+         TIkq0LD3BN/+Czb9ip5I2Deej+XiqaImJxB/Mx+i0psWXBSOW2sn4rxNZihvLV50PFoL
+         v6d+WfCiza0TKEFKzFuyGmjgTBZnlACPbs1usIJdMlQTed2Fb7I2O6DEr0dnY3K3tc3O
+         ajC4oiwU9PuEuQJ7tn2zGDR40m+g9fPfDRM76GWajlGvHy0lRWgeU8eE/p6cIr0UXOAc
+         l4Ow==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=jQ2l3WXqoH22mFDQEW/1VSsXU0XAw7Dnr3dv/FtM+pE=;
-        b=T6xdRfeT2AbrU9CtB8MAGkBykyhAv5vDgrkQ76UcLWQD+7L0cKNq973+UPOrG+5+MY
-         1I7K31qrtzcE5i7g7Bp0pQ4xSSbGP1PI4MgWoXksNiLlJLEfmTidhx3gdhMqZGmxTWi/
-         Sk91wN0Pd2ESjM6izMsRzM42GQFdxUbkXYMKlrgxJKEvRbo0tDcT46JGvHzjAHPEleWj
-         zkgl95by/8U4GoXAVxeb0rlVW+kztTBeHfUGPTOVW8zXULhwu20IiyENxS+0Vrxf1+Xe
-         Q6grshsUrHsabqE3qlCdEA7x49jh0/O2bp0fHFqbJKRxFid6AzxdElGYCMq69QRpi6Mm
-         PgOw==
-X-Gm-Message-State: AOAM533NJcxWcaF6ESRNad7Z49vwM+E27P/QyE/TCzcDpByyiGCuHBeV
-        zH10oByjNPgAIO53UVw1Ng==
-X-Google-Smtp-Source: ABdhPJyx5bUXH5T9Qhnhqxeq+w14eA1RIP7smOUbOTFqJYFnmnDAEPgvnRUQRvyS1m1hxMFMT6e+Pg==
-X-Received: by 2002:a05:6830:1105:: with SMTP id w5mr2354720otq.85.1629202250091;
-        Tue, 17 Aug 2021 05:10:50 -0700 (PDT)
-Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
-        by smtp.gmail.com with ESMTPSA id u15sm424438oiu.43.2021.08.17.05.10.48
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 17 Aug 2021 05:10:49 -0700 (PDT)
-Received: (nullmailer pid 4133263 invoked by uid 1000);
-        Tue, 17 Aug 2021 12:10:48 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Caleb Connolly <caleb@connolly.tech>
-Cc:     linux-input@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Joel Selvaraj <jo@jsfamily.in>, linux-kernel@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Dmitry Torokhov <dmitry.torokhov@gmail.com>,
-        Jami Kettunen <jami.kettunen@somainline.org>
-In-Reply-To: <20210816221931.1998187-2-caleb@connolly.tech>
-References: <20210816221931.1998187-1-caleb@connolly.tech> <20210816221931.1998187-2-caleb@connolly.tech>
-Subject: Re: [PATCH v3 1/6] dt-bindings: input: add Qualcomm SPMI haptics driver
-Date:   Tue, 17 Aug 2021 07:10:48 -0500
-Message-Id: <1629202248.430426.4133262.nullmailer@robh.at.kernel.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=+GkZlku1Bw2JCl4HvkcPQD//HnyGFQIsuXa7PcP9+u4=;
+        b=Ge5wCbO0w7nNMqyZhDxKaOFbkrB7+YSp3bgzMfMertXIPPM5Pj5VJfcqyBIIvyNK6u
+         zJ9iGB3tHwvtsBeRATmpb9XIZ2gRjmfHRRyZgj4Vg/QM6cwDHr+A9NUZ2CCFX6FijiKb
+         zZvtF1nPNQDoEIbg5i0AZREWOCDCVbecqtxsFM0prJFC7PCtNdRRu4C8IVOV+UAacWXN
+         O8u4vHTsQcl3lqhsvw4I/3gbi5ga6c4XpVVR0ElsPybeIg4uN29x4hSY2Imd8b0Iup/9
+         i58KcWcxrdRbTwF0JR78I1+3jpPGUT2sQk9heduiT3hvWjJOKcdye3vpFBu8SY3JiL+j
+         BpFg==
+X-Gm-Message-State: AOAM533WMV3HPU1vMiukQRkTibz1n5MwKNmKKr1uii5fsdamFjRL4Svq
+        Y0IT3YKJXhY+bzyKRElBncqUQw==
+X-Google-Smtp-Source: ABdhPJwiEhB1GoU5iRLmZV1y4Ji/YZrd0AlU+/xLj1e9DFnO2wK155hd4GpX9VHaaZ/iIKuoh1oVjQ==
+X-Received: by 2002:adf:bb85:: with SMTP id q5mr4002312wrg.186.1629206237558;
+        Tue, 17 Aug 2021 06:17:17 -0700 (PDT)
+Received: from ?IPv6:2a01:e34:ed2f:f020:52c4:e6e5:cc9e:e70a? ([2a01:e34:ed2f:f020:52c4:e6e5:cc9e:e70a])
+        by smtp.googlemail.com with ESMTPSA id f2sm2464427wru.31.2021.08.17.06.17.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 17 Aug 2021 06:17:17 -0700 (PDT)
+Subject: Re: [Patch v5 1/6] firmware: qcom_scm: Introduce SCM calls to access
+ LMh
+To:     Thara Gopinath <thara.gopinath@linaro.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, rui.zhang@intel.com,
+        viresh.kumar@linaro.org, rjw@rjwysocki.net, robh+dt@kernel.org
+Cc:     steev@kali.org, tdas@codeaurora.org, mka@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+References: <20210809191605.3742979-1-thara.gopinath@linaro.org>
+ <20210809191605.3742979-2-thara.gopinath@linaro.org>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Message-ID: <19659756-4716-4c5b-949a-58d362dcee22@linaro.org>
+Date:   Tue, 17 Aug 2021 15:17:15 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <20210809191605.3742979-2-thara.gopinath@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 16 Aug 2021 22:19:55 +0000, Caleb Connolly wrote:
-> Add bindings for qcom PMIC SPMI haptics driver.
+On 09/08/2021 21:15, Thara Gopinath wrote:
+> Introduce SCM calls to access/configure limits management hardware(LMH).
 > 
-> Signed-off-by: Caleb Connolly <caleb@connolly.tech>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+
+Hi Bjorn, Andy,
+
+do you mind if I pick this patch along with patch 2/6 ?
+
+Thanks
+
+  -- Daniel
+
 > ---
->  .../bindings/input/qcom,spmi-haptics.yaml     | 128 ++++++++++++++++++
->  include/dt-bindings/input/qcom,spmi-haptics.h |  32 +++++
->  2 files changed, 160 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/input/qcom,spmi-haptics.yaml
->  create mode 100644 include/dt-bindings/input/qcom,spmi-haptics.h
+> 
+> v2->v3:
+> 	Added freeing of payload_buf after the scm call in qcom_scm_lmh_dcvsh as per
+> 	Matthias review comments.
+> 
+> v1->v2:
+> 	Changed the input parameters in qcom_scm_lmh_dcvsh from payload_buf and
+> 	payload_size to payload_fn, payload_reg, payload_val as per Bjorn's review
+> 	comments.
+> 
+>  drivers/firmware/qcom_scm.c | 58 +++++++++++++++++++++++++++++++++++++
+>  drivers/firmware/qcom_scm.h |  4 +++
+>  include/linux/qcom_scm.h    | 14 +++++++++
+>  3 files changed, 76 insertions(+)
+> 
+> diff --git a/drivers/firmware/qcom_scm.c b/drivers/firmware/qcom_scm.c
+> index 47ea2bd42b10..8a503753fe2a 100644
+> --- a/drivers/firmware/qcom_scm.c
+> +++ b/drivers/firmware/qcom_scm.c
+> @@ -1147,6 +1147,64 @@ int qcom_scm_qsmmu500_wait_safe_toggle(bool en)
+>  }
+>  EXPORT_SYMBOL(qcom_scm_qsmmu500_wait_safe_toggle);
+>  
+> +bool qcom_scm_lmh_dcvsh_available(void)
+> +{
+> +	return __qcom_scm_is_call_available(__scm->dev, QCOM_SCM_SVC_LMH, QCOM_SCM_LMH_LIMIT_DCVSH);
+> +}
+> +EXPORT_SYMBOL(qcom_scm_lmh_dcvsh_available);
+> +
+> +int qcom_scm_lmh_profile_change(u32 profile_id)
+> +{
+> +	struct qcom_scm_desc desc = {
+> +		.svc = QCOM_SCM_SVC_LMH,
+> +		.cmd = QCOM_SCM_LMH_LIMIT_PROFILE_CHANGE,
+> +		.arginfo = QCOM_SCM_ARGS(1, QCOM_SCM_VAL),
+> +		.args[0] = profile_id,
+> +		.owner = ARM_SMCCC_OWNER_SIP,
+> +	};
+> +
+> +	return qcom_scm_call(__scm->dev, &desc, NULL);
+> +}
+> +EXPORT_SYMBOL(qcom_scm_lmh_profile_change);
+> +
+> +int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
+> +		       u64 limit_node, u32 node_id, u64 version)
+> +{
+> +	dma_addr_t payload_phys;
+> +	u32 *payload_buf;
+> +	int ret, payload_size = 5 * sizeof(u32);
+> +
+> +	struct qcom_scm_desc desc = {
+> +		.svc = QCOM_SCM_SVC_LMH,
+> +		.cmd = QCOM_SCM_LMH_LIMIT_DCVSH,
+> +		.arginfo = QCOM_SCM_ARGS(5, QCOM_SCM_RO, QCOM_SCM_VAL, QCOM_SCM_VAL,
+> +					QCOM_SCM_VAL, QCOM_SCM_VAL),
+> +		.args[1] = payload_size,
+> +		.args[2] = limit_node,
+> +		.args[3] = node_id,
+> +		.args[4] = version,
+> +		.owner = ARM_SMCCC_OWNER_SIP,
+> +	};
+> +
+> +	payload_buf = dma_alloc_coherent(__scm->dev, payload_size, &payload_phys, GFP_KERNEL);
+> +	if (!payload_buf)
+> +		return -ENOMEM;
+> +
+> +	payload_buf[0] = payload_fn;
+> +	payload_buf[1] = 0;
+> +	payload_buf[2] = payload_reg;
+> +	payload_buf[3] = 1;
+> +	payload_buf[4] = payload_val;
+> +
+> +	desc.args[0] = payload_phys;
+> +
+> +	ret = qcom_scm_call(__scm->dev, &desc, NULL);
+> +
+> +	dma_free_coherent(__scm->dev, payload_size, payload_buf, payload_phys);
+> +	return ret;
+> +}
+> +EXPORT_SYMBOL(qcom_scm_lmh_dcvsh);
+> +
+>  static int qcom_scm_find_dload_address(struct device *dev, u64 *addr)
+>  {
+>  	struct device_node *tcsr;
+> diff --git a/drivers/firmware/qcom_scm.h b/drivers/firmware/qcom_scm.h
+> index 632fe3142462..d92156ceb3ac 100644
+> --- a/drivers/firmware/qcom_scm.h
+> +++ b/drivers/firmware/qcom_scm.h
+> @@ -114,6 +114,10 @@ extern int scm_legacy_call(struct device *dev, const struct qcom_scm_desc *desc,
+>  #define QCOM_SCM_SVC_HDCP		0x11
+>  #define QCOM_SCM_HDCP_INVOKE		0x01
+>  
+> +#define QCOM_SCM_SVC_LMH			0x13
+> +#define QCOM_SCM_LMH_LIMIT_PROFILE_CHANGE	0x01
+> +#define QCOM_SCM_LMH_LIMIT_DCVSH		0x10
+> +
+>  #define QCOM_SCM_SVC_SMMU_PROGRAM		0x15
+>  #define QCOM_SCM_SMMU_CONFIG_ERRATA1		0x03
+>  #define QCOM_SCM_SMMU_CONFIG_ERRATA1_CLIENT_ALL	0x02
+> diff --git a/include/linux/qcom_scm.h b/include/linux/qcom_scm.h
+> index 0165824c5128..c0475d1c9885 100644
+> --- a/include/linux/qcom_scm.h
+> +++ b/include/linux/qcom_scm.h
+> @@ -109,6 +109,12 @@ extern int qcom_scm_hdcp_req(struct qcom_scm_hdcp_req *req, u32 req_cnt,
+>  			     u32 *resp);
+>  
+>  extern int qcom_scm_qsmmu500_wait_safe_toggle(bool en);
+> +
+> +extern int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
+> +			      u64 limit_node, u32 node_id, u64 version);
+> +extern int qcom_scm_lmh_profile_change(u32 profile_id);
+> +extern bool qcom_scm_lmh_dcvsh_available(void);
+> +
+>  #else
+>  
+>  #include <linux/errno.h>
+> @@ -170,5 +176,13 @@ static inline int qcom_scm_hdcp_req(struct qcom_scm_hdcp_req *req, u32 req_cnt,
+>  
+>  static inline int qcom_scm_qsmmu500_wait_safe_toggle(bool en)
+>  		{ return -ENODEV; }
+> +
+> +static inline int qcom_scm_lmh_dcvsh(u32 payload_fn, u32 payload_reg, u32 payload_val,
+> +				     u64 limit_node, u32 node_id, u64 version)
+> +		{ return -ENODEV; }
+> +
+> +static inline int qcom_scm_lmh_profile_change(u32 profile_id) { return -ENODEV; }
+> +
+> +static inline bool qcom_scm_lmh_dcvsh_available(void) { return -ENODEV; }
+>  #endif
+>  #endif
 > 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-yamllint warnings/errors:
+-- 
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
 
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/input/qcom,spmi-haptics.example.dt.yaml:0:0: /example-0/pmic@3: failed to match any schema with compatible: ['qcom,pmi8998', 'qcom,spmi-pmic']
-Documentation/devicetree/bindings/input/qcom,spmi-haptics.example.dt.yaml:0:0: /example-0/pmic@3: failed to match any schema with compatible: ['qcom,pmi8998', 'qcom,spmi-pmic']
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/1517351
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
