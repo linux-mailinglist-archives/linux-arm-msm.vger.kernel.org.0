@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4D2293EE6AB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Aug 2021 08:40:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E3F03EE7F3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Aug 2021 10:03:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238301AbhHQGk7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 17 Aug 2021 02:40:59 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:37043 "EHLO m43-7.mailgun.net"
+        id S234933AbhHQIEW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 17 Aug 2021 04:04:22 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:34387 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237997AbhHQGky (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 17 Aug 2021 02:40:54 -0400
+        id S234906AbhHQIEU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 17 Aug 2021 04:04:20 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1629182422; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1629187427; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=AeeA73ZpKawSWZg+PkAg6dDlWEGmMSg3bssyiF/542M=;
- b=KYKWp0UUu73u4dkl4Zst6C+VuFtWHEVHgxb4MXPwBkS8wUtyNK7xygWRXyQYaz9F34jRBxgM
- UhILUNvTR29/yKiIiqyu/eHdfcsLQn9Ur/SJ/SLVVuORR6yR4i9B3JT/dJExuMW3ibhHS/Ue
- V+Vm0reZQjEKvkP/Kbavq8IAhoY=
+ MIME-Version: Sender; bh=F80pIu2I+RXwy7ZJxBH4JbgLg7qSwor4Bd6AsHLTWNw=;
+ b=CCOeah8EBC9m3cKZ82oTUhnE7aYPCEAGSw3BYPO3k1ZDOIym7WkneyH6/yeigfS6ne9JMG8d
+ 57bFZXfapRCqp7XX6ckRen2qRkPSPQSf+dFd8FPGQnTEE2cpZbHfGOMBLYhBF5fw1ePmSl6f
+ UeK6XuJ8n7a2rSDtH+7VD5kdL08=
 X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 611b59c6105c6568db2f584f (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 17 Aug 2021 06:40:06
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 611b6d51454b7a558fa5e69d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 17 Aug 2021 08:03:29
  GMT
 Sender: pmaliset=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 627AAC4360C; Tue, 17 Aug 2021 06:40:06 +0000 (UTC)
+        id 8EDA2C4361B; Tue, 17 Aug 2021 08:03:29 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
 Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: pmaliset)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7A5AAC4338F;
-        Tue, 17 Aug 2021 06:40:05 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D76A7C4338F;
+        Tue, 17 Aug 2021 08:03:28 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Tue, 17 Aug 2021 12:10:05 +0530
+Date:   Tue, 17 Aug 2021 13:33:28 +0530
 From:   Prasad Malisetty <pmaliset@codeaurora.org>
 To:     Stephen Boyd <swboyd@chromium.org>
 Cc:     agross@kernel.org, bhelgaas@google.com, bjorn.andersson@linaro.org,
@@ -54,93 +54,47 @@ Cc:     agross@kernel.org, bhelgaas@google.com, bjorn.andersson@linaro.org,
         linux-kernel@vger.kernel.org, dianders@chromium.org,
         mka@chromium.org, vbadigan@codeaurora.org, sallenki@codeaurora.org,
         manivannan.sadhasivam@linaro.org
-Subject: Re: [PATCH v5 4/4] PCI: qcom: Switch pcie_1_pipe_clk_src after PHY
- init in SC7280
-In-Reply-To: <CAE-0n50nYEAhpBADVWutm-SvUMpe+4Qte69iucJvXax=d_59=w@mail.gmail.com>
+Subject: Re: [PATCH v5 2/4] arm64: dts: qcom: sc7280: Add PCIe and PHY related
+ nodes
+In-Reply-To: <CAE-0n51uQJ4VDDbmpu18mJw4zcDhD-tvUDgi0LQ4-zAgBUKJ6A@mail.gmail.com>
 References: <1628568516-24155-1-git-send-email-pmaliset@codeaurora.org>
- <1628568516-24155-5-git-send-email-pmaliset@codeaurora.org>
- <CAE-0n50nYEAhpBADVWutm-SvUMpe+4Qte69iucJvXax=d_59=w@mail.gmail.com>
-Message-ID: <c742065c0469633fe4ea3a74dc42c2f9@codeaurora.org>
+ <1628568516-24155-3-git-send-email-pmaliset@codeaurora.org>
+ <CAE-0n51uQJ4VDDbmpu18mJw4zcDhD-tvUDgi0LQ4-zAgBUKJ6A@mail.gmail.com>
+Message-ID: <c13f2cad016c3ed5b7d70abdc9c7f812@codeaurora.org>
 X-Sender: pmaliset@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-08-11 01:07, Stephen Boyd wrote:
-> Quoting Prasad Malisetty (2021-08-09 21:08:36)
->> On the SC7280, By default the clock source for pcie_1_pipe is
->> TCXO for gdsc enable. But after the PHY is initialized, the clock
->> source must be switched to gcc_pcie_1_pipe_clk from TCXO.
->> 
->> Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
->> ---
->>  drivers/pci/controller/dwc/pcie-qcom.c | 18 ++++++++++++++++++
->>  1 file changed, 18 insertions(+)
->> 
->> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c 
->> b/drivers/pci/controller/dwc/pcie-qcom.c
->> index 8a7a300..39e3b21 100644
->> --- a/drivers/pci/controller/dwc/pcie-qcom.c
->> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
->> @@ -1167,6 +1169,16 @@ static int qcom_pcie_get_resources_2_7_0(struct 
->> qcom_pcie *pcie)
->>         if (ret < 0)
->>                 return ret;
->> 
->> +       if (of_device_is_compatible(dev->of_node, "qcom,pcie-sc7280")) 
->> {
->> +               res->gcc_pcie_1_pipe_clk_src = devm_clk_get(dev, 
->> "pipe_mux");
->> +               if (IS_ERR(res->gcc_pcie_1_pipe_clk_src))
->> +                       return PTR_ERR(res->gcc_pcie_1_pipe_clk_src);
+On 2021-08-11 01:01, Stephen Boyd wrote:
+> Quoting Prasad Malisetty (2021-08-09 21:08:34)
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi 
+>> b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> index 53a21d0..4500d88 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> @@ -1598,6 +1712,18 @@
+>>                                         bias-bus-hold;
+>>                                 };
+>>                         };
 >> +
->> +               res->phy_pipe_clk = devm_clk_get(dev, "phy_pipe");
->> +               if (IS_ERR(res->phy_pipe_clk))
->> +                       return PTR_ERR(res->phy_pipe_clk);
->> +       }
+>> +                       pcie1_default_state: pcie1-default-state {
+>> +                               clkreq {
+>> +                                       pins = "gpio79";
+>> +                                       function = "pcie1_clkreqn";
+>> +                               };
 >> +
->>         res->pipe_clk = devm_clk_get(dev, "pipe");
->>         return PTR_ERR_OR_ZERO(res->pipe_clk);
->>  }
->> @@ -1255,6 +1267,12 @@ static void qcom_pcie_deinit_2_7_0(struct 
->> qcom_pcie *pcie)
->>  static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
->>  {
->>         struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
->> +       struct dw_pcie *pci = pcie->pci;
->> +       struct device *dev = pci->dev;
->> +       struct device_node *node = dev->of_node;
->> +
->> +       if (of_property_read_bool(node, "pipe-clk-source-switch"))
+>> +                               wake-n {
+>> +                                       pins = "gpio3";
+>> +                                       function = "gpio";
 > 
-> This can be straightline code. If gcc_pcie_1_pipe_clk_src is NULL,
-> calling clk_set_parent() on it is a nop, return 0, so drop the property
-> check and only assign the clk pointer if it needs to be done.
-> 
->> +               clk_set_parent(res->gcc_pcie_1_pipe_clk_src, 
->> res->phy_pipe_clk);
-> 
-> Please check the return value and fail if it fails to set the parent.
-> I'd also prefer a comment indicating that we have to set the parent
-> because the GDSC must be enabled with the clk at XO speed. The DT 
-> should
-> probably also have an assigned clock parent of XO so when the driver
-> probes it is set to XO parent for gdsc enable and then this driver code
-> can change the parent to the phy pipe clk.
-> 
->> 
->>         return clk_prepare_enable(res->pipe_clk);
->>  }
+> This is function gpio, so presumably board designers could decide to
+> change the wake gpio to something else, right? I'd prefer we move 
+> wake-n
+> to the board level (idp) as well. gpio79 looks fine as it is muxed to 
+> be
+> the pcie1_clkreqn function, not gpio, so it seems to be a dedicated pin
+> for this purpose.
 
-Hi Stephen,
-
-Thanks for your review and inputs.
-
-Yes, clk_set_parent function returning NULL if src pointer is NULL. we 
-can call clk_set_parent function without any check.
-
-I will validate and incorporate the changes in next version.
-
-Thanks
--Prasad
+Sure, I will move it  IDP file in next version.
