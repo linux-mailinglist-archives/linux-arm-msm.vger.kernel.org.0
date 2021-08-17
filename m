@@ -2,96 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 16A953EE1A7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Aug 2021 02:56:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 130FC3EE46B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 17 Aug 2021 04:35:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237115AbhHQA4T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 16 Aug 2021 20:56:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40080 "EHLO
+        id S233748AbhHQCgK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 16 Aug 2021 22:36:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34536 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237018AbhHQA4N (ORCPT
+        with ESMTP id S233634AbhHQCgJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 16 Aug 2021 20:56:13 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2743C061144
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 17:55:26 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id t9so38068056lfc.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 17:55:26 -0700 (PDT)
+        Mon, 16 Aug 2021 22:36:09 -0400
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 719BEC0613C1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 19:35:37 -0700 (PDT)
+Received: by mail-oi1-x22b.google.com with SMTP id bd1so22332216oib.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 16 Aug 2021 19:35:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=Pgxc5wTtAPJJ0DGyppg9xAOqF0AZtpwhIIHZ/fU+CFw=;
-        b=HwDbiofct0TMB65omGXGchoWcB9pqFmXgylYFqrV+IPCkhhIk+Lc+xUFVyK+iwexVh
-         BaN/elu+aEntGCLUZUMK9LwbqVepb8vBqq3+KkGl5eq8ph6kQo8uBRg3iNbL9p8MQDRk
-         AGUcbP/cOzbyQR0fSHRxKQKuYlF8U3Tqb0kDQ0693qSsC1JRhX7XsgaFSljyZZND0yDD
-         daJBvqi3qdAEnp9q9MoUaMSI4eshxddlIFStgVVccRzTIoWvtzhSNPzZkYDrQNyIV1sk
-         5uteB81rUcjsgWOQpQlN8qjpaUmFXIbrjX4RVsaLWEcCoZJ7LnZpbhjwzWkAm3w2ipSa
-         fPnA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=NdyGEYcMNe8BiminkuBCItjHjvXDyAXJh8MNR3OdTVA=;
+        b=bWqdF64VY/gZ0txHUPvtOyRYx/7413DAHTyvrWOEFLI8Z5zIC+H1GkaCheBYSMLNPP
+         xz/TOUln9srtWWj0EQduVMM+M09U4WIyJwmXs34nLYTtJ6ZVKBKWNDQpVpWifKiVgzhA
+         YJFlDtXY4D0gaQ/P5BE06IsNvRnwiu4D55/Ji7ZGTXmrEF4oz/zH6/CJg5SF8CtX6Rkh
+         pqMfnbR9jNWDeBDcsr12bkxosdYXNRwZ+rAoik0IRpr6c54nL7iby0rOTBdpnAkt7eR3
+         kv5rcrTqrcijFf1jxR8NUjrRPKg9fssGBEt6ZHTtr079ub4luBvQurn3sp1Pz67ACsE/
+         43nA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=Pgxc5wTtAPJJ0DGyppg9xAOqF0AZtpwhIIHZ/fU+CFw=;
-        b=KEZLtdFRRLm5rNOQSGzDu7gEKxdwNZZOxREDyghETa4Bh6lvc1h6UHISympE8Ypmkv
-         jFEywEBBpg3raXOSLvwFwyGqi871y5cqfJ+OjbLzde5w3K95VJ6UWdf6dHUt1mzEpJ8X
-         ZwKKmDqeLDTV+w6rPdVHyyN88Mtl3QXk86CnCkB+L80h02M8g9/hSOVphloLLQotJQ9S
-         9QcJnnuWn3aB26tW+om1xY+ai0dmpYEkwVc95zJCK+yJlSW5v3muH83todrObdjumSxj
-         keJFHkAsYJBd0xRBvM8RxOwSwEMhXqIiOZvjws9JX3lkDzwADFTJDOBqotSU9+mIuR0v
-         g87w==
-X-Gm-Message-State: AOAM531Es9tNWg35LCJ4e3lJ8B9mG9bYbWHunf24ik/cLqIgepw89w4A
-        Upmeb1oNjAw5buCwXSgFZYNI9Q==
-X-Google-Smtp-Source: ABdhPJxyuF7Jousa0ekVBo+HPfYk8A5Rq4PfYVTtE7a4QI12mfqo2ijMQkjYqeBcThS28ycqDu/ONA==
-X-Received: by 2002:a05:6512:3a83:: with SMTP id q3mr420518lfu.28.1629161725069;
-        Mon, 16 Aug 2021 17:55:25 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id z6sm40719lfb.251.2021.08.16.17.55.24
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=NdyGEYcMNe8BiminkuBCItjHjvXDyAXJh8MNR3OdTVA=;
+        b=uSAIvGtrL+qWRAvehV/LQ2c9GyD6lYCzbkRplYMsNf4X2oQ7jS0eWSVg1JJ7/zsGIZ
+         RViMSfDtxZhkt1Fnv75uooIYdRFVwos8QPPmyLM84rknsCqpqnOndFfa8XtguTX2XqaA
+         zST9swJWjbLA6Awb71CxwqAqPSObEy1woq5zixpmkoGdNVTtdmni6bCeYwmjN6iAcUGs
+         xCuA2agJFsyIDaPk33/iX6IU6g5fO/huRMisvQVgAVyAjSjxLGcAunNshA+N5lvGPG9I
+         cfAAVXH/pHiCh43VzfWKe8vaBJaae1nBzLRet6X/VqVGHzJfu056UEXNOdERPSLdsLiy
+         Trlw==
+X-Gm-Message-State: AOAM53181sE56Etk6nS5gY3r024T4J/uINgvF/zM/GuBfiy8MJDHqQGD
+        WsT7eqHzEzxq6n+PW0LS3ZhhYg==
+X-Google-Smtp-Source: ABdhPJymyQJLqdiw2YDOsltDdciCYnn251jtZQLVfsywLgi83bxWlqaNn4EhafXoU05oQICTq1XjrA==
+X-Received: by 2002:aca:1014:: with SMTP id 20mr722410oiq.70.1629167736646;
+        Mon, 16 Aug 2021 19:35:36 -0700 (PDT)
+Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id d1sm128671otb.61.2021.08.16.19.35.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 16 Aug 2021 17:55:24 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org
-Subject: [RFC PATCH 15/15] WIP: arm64: dts: qcom: qrb5165-rb5: add bus-pwrseq property to pcie0
-Date:   Tue, 17 Aug 2021 03:55:07 +0300
-Message-Id: <20210817005507.1507580-16-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210817005507.1507580-1-dmitry.baryshkov@linaro.org>
-References: <20210817005507.1507580-1-dmitry.baryshkov@linaro.org>
+        Mon, 16 Aug 2021 19:35:36 -0700 (PDT)
+Date:   Mon, 16 Aug 2021 21:35:33 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Antonio Martorana <amartora@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Elliot Berman <quic_eberman@quicinc.com>,
+        Trilok Soni <tsoni@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: socinfo: Fixed argument passed to
+ platform_set_data()
+Message-ID: <YRsgdXv749tznl2i@yoga>
+References: <1629159879-95777-1-git-send-email-amartora@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1629159879-95777-1-git-send-email-amartora@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 1 +
- 1 file changed, 1 insertion(+)
+On Mon 16 Aug 19:24 CDT 2021, Antonio Martorana wrote:
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index 326330f528fc..0c347cb6f8e0 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -689,6 +689,7 @@ wifi-therm@1 {
- 
- &pcie0 {
- 	status = "okay";
-+	bus-pwrseq = <&qca_pwrseq 0>;
- };
- 
- &pcie0_phy {
--- 
-2.30.2
+> Set qcom_socinfo pointer as data being stored instead of pointer
+> to soc_device structure. Aligns with future calls to platform_get_data()
+> which expects qcom_socinfo pointer.
+> 
 
+Thanks for the patch Antonio!
+
+This should have a fixes tag, to ensure that it's appropriately
+backported.
+
+Fixes: efb448d0a3fc ("soc: qcom: Add socinfo driver")
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Regards,
+Bjorn
+
+> Signed-off-by: Antonio Martorana <amartora@codeaurora.org>
+> ---
+>  drivers/soc/qcom/socinfo.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+> index 9faf483..52e5811 100644
+> --- a/drivers/soc/qcom/socinfo.c
+> +++ b/drivers/soc/qcom/socinfo.c
+> @@ -628,7 +628,7 @@ static int qcom_socinfo_probe(struct platform_device *pdev)
+>  	/* Feed the soc specific unique data into entropy pool */
+>  	add_device_randomness(info, item_size);
+>  
+> -	platform_set_drvdata(pdev, qs->soc_dev);
+> +	platform_set_drvdata(pdev, qs);
+>  
+>  	return 0;
+>  }
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
