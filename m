@@ -2,215 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 18F793F0576
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Aug 2021 15:58:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B20373F08C7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Aug 2021 18:14:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238098AbhHRN7V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Aug 2021 09:59:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43022 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237887AbhHRN7V (ORCPT
+        id S229531AbhHRQOv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Aug 2021 12:14:51 -0400
+Received: from mail-ot1-f49.google.com ([209.85.210.49]:47062 "EHLO
+        mail-ot1-f49.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229623AbhHRQOu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Aug 2021 09:59:21 -0400
-Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75C6DC0613D9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Aug 2021 06:58:46 -0700 (PDT)
-Received: by mail-pg1-x52c.google.com with SMTP id c17so2331475pgc.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Aug 2021 06:58:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=8eTIrpUwCcoVWpiClp3PfK5lef5iVWeNyYRBUeKnbn4=;
-        b=glWQkiloBvZ44LNsEm5CSRvH4pOBlB0HBvut001xnKn+KtKmn7kPgj965E5iw+O/HD
-         TBeYHW4R283mZoo4VOZHqEyzkk10Vta4AUgrNRP7TZPj/UUMf5HwSIqEg2jpMsCWHhMK
-         9xKnDoX9bgg1vvSvVYb4a6yRt1/ecBQsq6dnA=
+        Wed, 18 Aug 2021 12:14:50 -0400
+Received: by mail-ot1-f49.google.com with SMTP id v33-20020a0568300921b0290517cd06302dso4675955ott.13;
+        Wed, 18 Aug 2021 09:14:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=8eTIrpUwCcoVWpiClp3PfK5lef5iVWeNyYRBUeKnbn4=;
-        b=OdBa7VTwT7eib/ihd9xpC8e6K6gpGPtoveFykp7lWhpYQPm3LORSxhUNwvd30yRRSb
-         0z4QDmJP9IxTcpiGC4XnAC/9bHv3au1G9WSL2J8XYwkaUCILurFOQabP8IfmDO2iSBth
-         2PAl0TUb7DuE0Js11JSDbSUwfXX3QudBgM/tY3dLfNNK9bHYHrQBxAuZdTZVewGx1L83
-         TWrQRokHs/CcLFWyHJ10culE+EAC0m+Nh8Uj4D/wGEwwvuR99Vw4sK43H3ExJecoGE+/
-         xeiwpeRB7HSh1Tt/LWP3Ow/8mjMrauye+qsWfbJEqD9pHz4mBXKS67sfknn5Aa9LzaSg
-         Ccpg==
-X-Gm-Message-State: AOAM530GF3E261erdiRLl43F4z6O/mKDJgsmtiLNaP1MclcDbMSYdWsg
-        Mic/qRs75lIS5yvfLCGVN0rMRw==
-X-Google-Smtp-Source: ABdhPJwCX91c0YhZeWnEa7qdnrBPZTZv387TJHo+PHBYowhWjOsn76mc1EmB0f4kZTtGTknH12EJBQ==
-X-Received: by 2002:a05:6a00:140e:b029:38b:c129:9f2f with SMTP id l14-20020a056a00140eb029038bc1299f2fmr9316352pfu.75.1629295125763;
-        Wed, 18 Aug 2021 06:58:45 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:413e:a1f9:e45b:4fe7])
-        by smtp.gmail.com with UTF8SMTPSA id p21sm5984266pfo.8.2021.08.18.06.58.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Aug 2021 06:58:45 -0700 (PDT)
-Date:   Wed, 18 Aug 2021 06:58:43 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Zijun Hu <zijuhu@codeaurora.org>
-Cc:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org,
-        rjliao@codeaurora.org, tjiang@codeaurora.org
-Subject: Re: [PATCH v3] Bluetooth: btusb: Add support different nvm to
- distinguish different factory for WCN6855 controller
-Message-ID: <YR0SEwGzgQaKAHYC@google.com>
-References: <1628758216-3201-1-git-send-email-zijuhu@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <1628758216-3201-1-git-send-email-zijuhu@codeaurora.org>
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=yauHXJCxHoVp5aXAAes27TDBGWrBr9jVMGaMrDiigz8=;
+        b=ft3gWFnaA/Sa9bp8mAkTvUIW3Q4VQq3A6L8Ev4i2HwsyXmZRZI0ljgCnpr3o+drVMS
+         /ny+WxTOZd04IFTP0LKhomrsFeEv28OZ8YvCngkRKsU06uh/b8Bc0PFz09OQTP3p+5qu
+         eOOh5y0ZTAn8yajOccIyXO8UgVBSWi4HXcKR3DBjUWE52gMDJOEpouNqR2csoMRUYJYS
+         DSNAgaw51GzXRwFDb777KCTKTN6EJhrjBM1j4IIMPozeb+s/Pgh8HgnWjXzov8BRhits
+         2iEj9CGdJ+7cviJNgkEytJ6KKNRorZCRFoGynLwyFF3UiydmEBk7hZ4pwNHKqldJZLGc
+         PHcA==
+X-Gm-Message-State: AOAM532v0x3tUgU/JdJZ2L4WG25MnkOhbv8xAidRDc871hzFbwUe2f9Y
+        KM1umi1xplXMj5ZxA+qvew==
+X-Google-Smtp-Source: ABdhPJzzOuQIH8PiEiqnXaNNItIPBPXASTbgrSCmxUFvf7DxF43cogknZxmC20Q63vL+nLiIp/5AIg==
+X-Received: by 2002:a05:6830:2807:: with SMTP id w7mr7528360otu.70.1629303254775;
+        Wed, 18 Aug 2021 09:14:14 -0700 (PDT)
+Received: from robh.at.kernel.org (24-155-109-49.dyn.grandenetworks.net. [24.155.109.49])
+        by smtp.gmail.com with ESMTPSA id 4sm97281oil.38.2021.08.18.09.14.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Aug 2021 09:14:14 -0700 (PDT)
+Received: (nullmailer pid 2696510 invoked by uid 1000);
+        Wed, 18 Aug 2021 16:14:13 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Krishna Manikandan <mkrishn@codeaurora.org>
+Cc:     rajeevny@codeaurora.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, bjorn.andersson@linaro.org,
+        kalyan_t@codeaurora.org, robh+dt@kernel.org,
+        abhinavk@codeaurora.org, dri-devel@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, robdclark@gmail.com,
+        linux-arm-msm@vger.kernel.org, khsieh@codeaurora.org,
+        swboyd@chromium.org, sbillaka@codeaurora.org
+In-Reply-To: <1629282424-4070-1-git-send-email-mkrishn@codeaurora.org>
+References: <1629282424-4070-1-git-send-email-mkrishn@codeaurora.org>
+Subject: Re: [PATCH v1 1/4] dt-bindings: msm: add DT bindings for sc7280
+Date:   Wed, 18 Aug 2021 11:14:13 -0500
+Message-Id: <1629303253.016460.2696509.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 12, 2021 at 04:50:16PM +0800, Zijun Hu wrote:
-> From: Tim Jiang <tjiang@codeaurora.org>
+On Wed, 18 Aug 2021 15:57:01 +0530, Krishna Manikandan wrote:
+> MSM Mobile Display Subsystem (MDSS) encapsulates sub-blocks
+> like DPU display controller, DSI, EDP etc. Add required DPU
+> device tree bindings for SC7280.
 > 
-> we have different factory to produce wcn6855 soc chip, so we should
-> use different nvm file with suffix to distinguish them.
-
-What exactly does factory mean in this context, different production
-facilities? Could this be just treated as a variant of the chip instead
-of introducing the concept of 'factory'?
-
-> 
-> Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
+> Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
 > ---
->  drivers/bluetooth/btusb.c | 60 ++++++++++++++++++++++++++++++++++++++++-------
->  1 file changed, 51 insertions(+), 9 deletions(-)
+>  .../bindings/display/msm/dpu-sc7280.yaml           | 228 +++++++++++++++++++++
+>  1 file changed, 228 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-sc7280.yaml
 > 
-> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-> index b1a05bb9f4bf..d7b4e0f1c3e3 100644
-> --- a/drivers/bluetooth/btusb.c
-> +++ b/drivers/bluetooth/btusb.c
-> @@ -4013,6 +4013,9 @@ static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
->  #define QCA_DFU_TIMEOUT		3000
->  #define QCA_FLAG_MULTI_NVM      0x80
->  
-> +#define WCN6855_2_0_RAM_VERSION_GF 0x400c1200
-> +#define WCN6855_2_1_RAM_VERSION_GF 0x400c1211
-> +
->  struct qca_version {
->  	__le32	rom_version;
->  	__le32	patch_version;
-> @@ -4044,6 +4047,7 @@ static const struct qca_device_info qca_devices_table[] = {
->  	{ 0x00000302, 28, 4, 16 }, /* Rome 3.2 */
->  	{ 0x00130100, 40, 4, 16 }, /* WCN6855 1.0 */
->  	{ 0x00130200, 40, 4, 16 }, /* WCN6855 2.0 */
-> +	{ 0x00130201, 40, 4, 16 }, /* WCN6855 2.1 */
->  };
->  
->  static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 request,
-> @@ -4198,6 +4202,39 @@ static int btusb_setup_qca_load_rampatch(struct hci_dev *hdev,
->  	return err;
->  }
->  
-> +static int btusb_setup_qca_form_nvm_name(char **fwname,
 
-How about btusb_generate/get_qca_fw_name()?
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
-> +					int max_size,
-> +					struct qca_version *ver,
-> +					char *factory)
-> +{
-> +	/* if boardid equal 0, use default nvm without suffix */
-> +	switch (le16_to_cpu(ver->board_id)) {
-> +	case 0x0:
-> +		/* we add suffix factory to distinguish with different factory. */
-> +		if (factory != NULL) {
-> +			snprintf(*fwname, max_size, "qca/nvm_usb_%08x_%s.bin",
-> +				 le32_to_cpu(ver->rom_version),
-> +				 factory);
-> +		} else {
-> +			snprintf(*fwname, max_size, "qca/nvm_usb_%08x.bin",
-> +				 le32_to_cpu(ver->rom_version));
-> +		}
+yamllint warnings/errors:
 
-how about:
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/display/msm/dpu-sc7280.example.dts:19:18: fatal error: dt-bindings/clock/qcom,dispcc-sc7280.h: No such file or directory
+   19 |         #include <dt-bindings/clock/qcom,dispcc-sc7280.h>
+      |                  ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+compilation terminated.
+make[1]: *** [scripts/Makefile.lib:380: Documentation/devicetree/bindings/display/msm/dpu-sc7280.example.dt.yaml] Error 1
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:1419: dt_binding_check] Error 2
 
-	snprintf(*fwname, max_size, "qca/nvm_usb_%08x%s.bin",
-		 le32_to_cpu(ver->rom_version),
-		 factory);
+doc reference errors (make refcheckdocs):
 
-And you either pass the 'factory' including the underscore to the function, or
-an empty string (potentially with a suitable define). That would eliminate the
-need for the if/else construct here and below.
+See https://patchwork.ozlabs.org/patch/1517976
 
-Or alternatively:
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
 
-	snprintf(*fwname, max_size, "qca/nvm_usb_%08x%s%s.bin",
-		 le32_to_cpu(ver->rom_version),
-		 separator, factory);
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
 
-With separator defaulting to an empty string and being assigned to '_' when
-'factory' is set.
+pip3 install dtschema --upgrade
 
-> +		break;
-> +	default:
-> +		if (factory != NULL) {
-> +			snprintf(*fwname, max_size, "qca/nvm_usb_%08x_%s_%04x.bin",
-> +				le32_to_cpu(ver->rom_version),
-> +				factory,
-> +				le16_to_cpu(ver->board_id));
-> +		} else {
-> +			snprintf(*fwname, max_size, "qca/nvm_usb_%08x_%04x.bin",
-> +				le32_to_cpu(ver->rom_version),
-> +				le16_to_cpu(ver->board_id));
-> +		}
-> +		break;
-> +	}
-> +}
+Please check and re-submit.
 
-In case you keep the if/else constructs you should probably use local
-variables to do the conversion of rom version and board id from LE to CPU
-format once, instead of doing it 4 times (in terms of code, not execution).
-
-> +
->  static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
->  				    struct qca_version *ver,
->  				    const struct qca_device_info *info)
-> @@ -4206,19 +4243,24 @@ static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
->  	char fwname[64];
->  	int err;
->  
-> -	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
-> -		/* if boardid equal 0, use default nvm without surfix */
-> -		if (le16_to_cpu(ver->board_id) == 0x0) {
-> +	switch (ver->ram_version) {
-> +	case WCN6855_2_0_RAM_VERSION_GF:
-> +	case WCN6855_2_1_RAM_VERSION_GF:
-> +		if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
-> +			btusb_setup_qca_form_nvm_name(&fwname, sizeof(fwname), ver, "gf");
-> +		} else {
->  			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
->  				 le32_to_cpu(ver->rom_version));
-> +		}
-
-The addition of a function to generate the firmware names makes sense IMO if
-that gets more complex, to separate it from the actual firmware loading. However
-it seems odd to only outsource part of it. Wouldn't it make more sense to hide
-the entire complexity in btusb_setup_qca_form_nvm_name()?
-
-> +		break;
-> +	default:
-> +		if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
-> +			btusb_setup_qca_form_nvm_name(&fwname, sizeof(fwname), ver, NULL);
->  		} else {
-> -			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_%04x.bin",
-> -				le32_to_cpu(ver->rom_version),
-> -				le16_to_cpu(ver->board_id));
-> +			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
-> +				 le32_to_cpu(ver->rom_version));
->  		}
-> -	} else {
-> -		snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
-> -			 le32_to_cpu(ver->rom_version));
-> +		break;
->  	}
->  
->  	err = request_firmware(&fw, fwname, &hdev->dev);
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
-> 
