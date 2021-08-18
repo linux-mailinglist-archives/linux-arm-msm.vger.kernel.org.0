@@ -2,378 +2,229 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 534EE3F0B79
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Aug 2021 21:07:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CF09C3F0BD9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Aug 2021 21:34:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233509AbhHRTIO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Aug 2021 15:08:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59102 "EHLO
+        id S232404AbhHRTfX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Aug 2021 15:35:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37034 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233370AbhHRTIG (ORCPT
+        with ESMTP id S232149AbhHRTfX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Aug 2021 15:08:06 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3108C0612E7;
-        Wed, 18 Aug 2021 12:07:30 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id by4so4817800edb.0;
-        Wed, 18 Aug 2021 12:07:30 -0700 (PDT)
+        Wed, 18 Aug 2021 15:35:23 -0400
+Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDE3AC061764
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Aug 2021 12:34:47 -0700 (PDT)
+Received: by mail-lj1-x232.google.com with SMTP id f2so7149838ljn.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Aug 2021 12:34:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=rN85VThnn64iN3UAA17TtZLzJAMJIE2GOz3i0vOt72E=;
-        b=e3KOVC3f/zMDiDDYZWx8VrkzVGkaiA/YDrtMDB4Jt130XO7bo0MD5gxAFHsrE3PaEJ
-         XcwA82d643XJti4I3zE07Qfv/VM92CGnWYMRNycNx4W2OUWR79Aw1fWYOSpTFoNaCPX0
-         Vely65YzOdxrZg5e9+RhwnspeaEqGrczqh6OhO5Ei1OMT/maWw6KyjSIdXHPIUur0Jkv
-         SWVczPUUcpPuyMG84vUtxYo0eXJN8thkifCmZabv0wqZcHBpQp6p69tEfNFt1KaWX6Lf
-         Z0Z7TRx/SfMXVxMlf2/5QPXqOvcYLCcwjiyDY//76PPdI+HIOq7Olpxl2d7xIL+u075c
-         lPvA==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=TZlXaJlwbJlKP9XZ2W5P2GZHKRhAsGJfCRtafkq42N0=;
+        b=czGYTLZlBSS0MpLF+grC/baAZmnoaauH2+vYDEPDp1X4LQDp6Ut5KRonPkauh8QBTZ
+         P/0bK23QJTUYqjE2IaQDExLdOJs8g7BI0BwP/VuaHlHEI3BNP9BMA6JTrGE867xhX2Fh
+         QtHDMZuKGNgaJUbtw91tTcYhoJmQEAIOzxpAkVcoNtAKzMNTM/aE4ZeKiFrzTWYEnVF8
+         OphFelD929rzV4CpSDjt4jVhsRw+MqMRzCvx/ZlCay7Av5kSrbyg+Lg3OsKkmUDLg7OY
+         30ulL53oLZVbkZ9T3S4mIqbxlTirg638Wf9/BBYoU4vJ4MwQeKCbmG7xoQsx5NPAS9a/
+         ZsGQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=rN85VThnn64iN3UAA17TtZLzJAMJIE2GOz3i0vOt72E=;
-        b=E49RgRlpdpa4HYeM3EautT/Ox0XpkDlXAXfdJV6UouCSau/0ze2tJOxUX/KsSHc5qS
-         LaVJBM8D/rGBZ44KqvypwOEqVoA1ec/+N6XuQHGaiH5O+p230XkW5+PjG0umGiRVM8gx
-         1S8982KIOPeerzris38hu5uLTjY6zbuoPApIfUVAX4fCVMvZsWDSKO47yrp44BsqMyha
-         wSQFS/kc4lWJS+cD1sVKtTQrbq6xKoNaZ/C+xfph+SO7jYEeFkfpdY8D62S78NQqN4a0
-         z7VrST2DmTv8LZ2UHUtQvmRFuro1wdtaCiscfAbwLTJ0QUdPEW5leBueSW9Xi9W4nsTF
-         e0+A==
-X-Gm-Message-State: AOAM533N8QMu6ZQj4vUcA6GNA6FDLaj9Y9dOuROXNkjnC02gqc6Qm4Pw
-        Oe++26RhF5YhwhXdC4adgqQECNdQafm7iA==
-X-Google-Smtp-Source: ABdhPJzGgQFABC52Bf+M68p6/Td2b/CPFEYku5U50k6VYsG+SmUhL98Ppjr7ypQSQvVP06cVBahKoQ==
-X-Received: by 2002:a05:6402:1c03:: with SMTP id ck3mr11911305edb.312.1629313648865;
-        Wed, 18 Aug 2021 12:07:28 -0700 (PDT)
-Received: from ?IPv6:2001:981:6fec:1:ee14:4fd1:fa5a:b7f6? ([2001:981:6fec:1:ee14:4fd1:fa5a:b7f6])
-        by smtp.gmail.com with ESMTPSA id h10sm480996edb.74.2021.08.18.12.07.27
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=TZlXaJlwbJlKP9XZ2W5P2GZHKRhAsGJfCRtafkq42N0=;
+        b=e1ZUqX4+udQyvsy3vuCSFKkOal2I84f/y/6yPBvkDvndel2xdVjwCUB+QyH6qGa0Qw
+         msdafSMAYYRu9OWRoJFB0GF8PfmzP8IAl0r4wV9OsDV11vFpEJua4q+JIX7X42p8mqeA
+         jSiTPFEUqFjgwQBqtZZHeRUkzsldsNDhOf16aqmL7FMy1U9AUcGXheKsbAyByxPFMuh2
+         X6UwRl/dx2Z2ksolMbASREcn72v1E9BvYALIsX4Nhb6AEDZjqGb6/H5EbyM1tJP98iKa
+         Wf8rj2U6/JcMJYE5PvXc6UsoGIUo3/EvAsZ7uvJnvtw4qrEDHYGj0KhqWoZ+Q29RkSr5
+         x+mg==
+X-Gm-Message-State: AOAM531xWqeeB6dQZLSEt22U22BvZ0BeXFJ89RuRXhEs5+iI6BkcqEq9
+        L4EbgcTa9EFtrvVXQn0/1x9DHA==
+X-Google-Smtp-Source: ABdhPJw2+c2F6EluGW6TFgDdrC99bIRcb/YQdf85++cOTvPzkUrPy/YikduJ8dq2zCdYVyugwh49RQ==
+X-Received: by 2002:a2e:9802:: with SMTP id a2mr3448720ljj.470.1629315286311;
+        Wed, 18 Aug 2021 12:34:46 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id w16sm54372lfd.295.2021.08.18.12.34.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Aug 2021 12:07:27 -0700 (PDT)
-Subject: Re: [PATCH v10 0/6] Re-introduce TX FIFO resize for larger EP
- bursting
-From:   Ferry Toth <fntoth@gmail.com>
-To:     Felipe Balbi <balbi@kernel.org>
-Cc:     Wesley Cheng <wcheng@codeaurora.org>, gregkh@linuxfoundation.org,
-        robh+dt@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
-        frowand.list@gmail.com, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, jackp@codeaurora.org,
-        heikki.krogerus@linux.intel.com, andy.shevchenko@gmail.com,
-        Ruslan Bilovol <ruslan.bilovol@gmail.com>
-References: <1623923899-16759-1-git-send-email-wcheng@codeaurora.org>
- <cfb83fe4-369c-ec72-7887-3bcb0f20fe15@gmail.com>
- <ec8050c5-c013-4af6-b39e-69779c009a9c@codeaurora.org>
- <f5ed0ee7-e333-681f-0f1a-d0227562204b@gmail.com>
- <2e01c435-9ecc-4e3b-f55c-612a86667020@codeaurora.org>
- <2ae9fa6a-3bb1-3742-0dd3-59678bdd8643@gmail.com>
- <ebea75fe-5334-197b-f67a-cb6e1e30b39e@codeaurora.org>
- <bafa93bb-11e3-c8a5-e14a-b0a6d5695055@gmail.com> <87v951ldlt.fsf@kernel.org>
- <d9aef50c-4bd1-4957-13d8-0b6a14b9fcd0@gmail.com> <87pmv9l1dv.fsf@kernel.org>
- <9dc6cd83-17b9-7075-0934-6b9d41b6875d@gmail.com> <87a6mbudvc.fsf@kernel.org>
- <6e8bb4ad-fe68-ad36-7416-2b8e10b6ae96@gmail.com> <877dhev68a.fsf@kernel.org>
- <cca69e90-b0ef-00b8-75d3-3bf959a93b45@gmail.com> <874kchvcq0.fsf@kernel.org>
- <e59f1201-2aa2-9075-1f94-a6ae7a046dc1@gmail.com> <8735raj766.fsf@kernel.org>
- <b3417c2c-613b-8ef6-2e2d-6e2cf9a5d5fd@gmail.com>
-Message-ID: <b3e820f0-9c94-7cba-a248-3b2ec5378ab0@gmail.com>
-Date:   Wed, 18 Aug 2021 21:07:27 +0200
+        Wed, 18 Aug 2021 12:34:45 -0700 (PDT)
+Subject: Re: [Freedreno] [PATCH] drm/msm/dpu: add support for alpha blending
+ properties
+To:     abhinavk@codeaurora.org
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        freedreno@lists.freedesktop.org
+References: <20210628191958.2754731-1-dmitry.baryshkov@linaro.org>
+ <34ee522aa37172099dac9f686f0196ec@codeaurora.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <9584eaee-d3ed-041e-f473-06d9a1ddb0bc@linaro.org>
+Date:   Wed, 18 Aug 2021 22:34:43 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-In-Reply-To: <b3417c2c-613b-8ef6-2e2d-6e2cf9a5d5fd@gmail.com>
+In-Reply-To: <34ee522aa37172099dac9f686f0196ec@codeaurora.org>
 Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-Op 18-08-2021 om 00:00 schreef Ferry Toth:
-> Hi,
->
-> Op 16-08-2021 om 07:18 schreef Felipe Balbi:
->> Hi,
+On 17/08/2021 20:48, abhinavk@codeaurora.org wrote:
+> On 2021-06-28 12:19, Dmitry Baryshkov wrote:
+>> Add support for alpha blending properties. Setup the plane blend state
+>> according to those properties.
 >>
->> Ferry Toth <fntoth@gmail.com> writes:
->>>> Ferry Toth <fntoth@gmail.com> writes:
->>>>>>>> Ferry Toth <fntoth@gmail.com> writes:
->>>>>>>>>>>>> Hardware name: Intel Corporation Merrifield/BODEGA BAY, 
->>>>>>>>>>>>> BIOS 542
->>>>>>>>>>>>> 2015.01.21:18.19.48
->>>>>>>>>>>>> RIP: 0010:0x500000000
->>>>>>>>>>>>> Code: Unable to access opcode bytes at RIP 0x4ffffffd6.
->>>>>>>>>>>>> RSP: 0018:ffffa4d00045fc28 EFLAGS: 00010046
->>>>>>>>>>>>> RAX: 0000000500000000 RBX: ffff8cd546aed200 RCX: 
->>>>>>>>>>>>> 0000000000000000
->>>>>>>>>>>>> RDX: 0000000000000000 RSI: ffff8cd547bfcae0 RDI: 
->>>>>>>>>>>>> ffff8cd546aed200
->>>>>>>>>>>>> RBP: ffff8cd547bfcae0 R08: 0000000000000000 R09: 
->>>>>>>>>>>>> 0000000000000001
->>>>>>>>>>>>> R10: ffff8cd541fd28c0 R11: 0000000000000000 R12: 
->>>>>>>>>>>>> ffff8cd547342828
->>>>>>>>>>>>> R13: ffff8cd546aed248 R14: 0000000000000000 R15: 
->>>>>>>>>>>>> ffff8cd548b1d000
->>>>>>>>>>>>> FS:  0000000000000000(0000) GS:ffff8cd57e200000(0000) 
->>>>>>>>>>>>> knlGS:0000000000000000
->>>>>>>>>>>>> CS:  0010 DS: 0000 ES: 0000 CR0: 0000000080050033
->>>>>>>>>>>>> CR2: 0000000500000000 CR3: 000000000311e000 CR4: 
->>>>>>>>>>>>> 00000000001006f0
->>>>>>>>>>>>> Call Trace:
->>>>>>>>>>>>>         ? dwc3_remove_requests.constprop.0+0x14d/0x170
->>>>>>>>>>>>>         ? __dwc3_gadget_ep_disable+0x7a/0x160
->>>>>>>>>>>>>         ? dwc3_gadget_ep_disable+0x3d/0xd0
->>>>>>>>>>>>>         ? usb_ep_disable+0x1c/0x
->>>>>>>>>>>>>         ? u_audio_stop_capture+0x79/0x120 [u_audio]
->>>>>>>>>>>>>         ? afunc_set_alt+0x73/0x80 [usb_f_uac2]
->>>>>> So this is triggered by a SetInterface request...
->>>>>>
->>>>>>>>>>>>>         ? composite_setup+0x224/0x1b90 [libcomposite]
->>>>>>>>>>>>>         ? __dwc3_gadget_kick_transfer+0x160/0x400
->>>>>>>>>>>>>         ? dwc3_gadget_ep_queue+0xf3/0x1a0
->>>>>>>>>>>>>         ? configfs_composite_setup+0x6b/0x90 [libcomposite]
->>>>>>>>>>>>>         ? configfs_composite_setup+0x6b/0x90 [libcomposite]
->>>>>>>>>>>>>         ? dwc3_ep0_interrupt+0x459/0xa40
->>>>>>>>>>>>>         ? dwc3_thread_interrupt+0x8ee/0xf40
->>>>>>>>>>>>>         ? __schedule+0x235/0x6c0
->>>>>>>>>>>>>         ? disable_irq_nosync+0x10/0x10
->>>>>>>>>>>>>         ? irq_thread_fn+0x1b/0x60
->>>>>>>>>>>>>         ? irq_thread+0xc0/0x160
->>>>>>>>>>>>>         ? irq_thread_check_affinity+0x70/0x70
->>>>>>>>>>>>>         ? irq_forced_thread_fn+0x70/0x70
->>>>>>>>>>>>>         ? kthread+0x122/0x140
->>>>>>>>>>>>>         ? set_kthread_struct+0x40/0x40
->>>>>>>>>>>>>         ? ret_from_fork+0x22/0x30
->>>>>>>>>>>> Do you mind enabling dwc3 traces and collecting them? 
->>>>>>>>>>>> Trying to figure
->>>>>>>>>>>> out how we got here.
->>>>>>>>>>>>
->>>>>>>>>>> I'll try if I can get the same error by booting with USB in 
->>>>>>>>>>> host mode
->>>>>>>>>>> and then switch to device mode. If so I can enable traces 
->>>>>>>>>>> and collect as
->>>>>>>>>>> you explained me before.
->>>>>>>>>>>
->>>>>>>>>>> I'll try before monday, as then I fly for a holiday and will 
->>>>>>>>>>> not be
->>>>>>>>>>> available before rc5.
->>>>>>>>>> you can enable all of those with kernel cmdline :-)
->>>>>>>>>>
->>>>>>>>>> https://www.kernel.org/doc/html/latest/admin-guide/kernel-parameters.html 
->>>>>>>>>>
->>>>>>>>>>
->>>>>>>>>> you need ftrace_dump_on_oops=1 and also need the correct 
->>>>>>>>>> options on
->>>>>>>>>> trace_buf_size and trace_event.
->>>>>>>>>>
->>>>>>>>> On Edison-Arduino I have a switch to go to device mode, after 
->>>>>>>>> which
->>>>>>>>> udev triggers a script configure gadgets through configfs.
->>>>>>>>>
->>>>>>>>> I tried to log following these instructions:
->>>>>>>>>
->>>>>>>>> https://www.kernel.org/doc/html/latest/driver-api/usb/dwc3.html#reporting-bugs 
->>>>>>>>> <https://www.kernel.org/doc/html/latest/driver-api/usb/dwc3.html#reporting-bugs> 
->>>>>>>>>
->>>>>>>>>
->>>>>>>>> Unfortunately the kernel crashes so badly I can not get to the 
->>>>>>>>> ` cp
->>>>>>>>> /t/trace /root/trace.txt` line (after a while the watchdog 
->>>>>>>>> kicks).
->>>>>>>>>
->>>>>>>>> What to do next?
->>>>>>>> Pass ftrace_dump_on_oops to kernel cmdline.
->>>>>>>>
->>>>>>> No sure if I did this right, on oops everything is pushed to 
->>>>>>> console
->>>>>>> (115k2 serial), I hope nothing essential is lost.
->>>>>>>
->>>>>>> I copied the screen buffer to file see attached.
->>>>>> Thank you, I bet it took quite a some time :-) Anyway, looking at
->>>>>> the logs around Set Interface requests, we can track every endpoint
->>>>>> that's disabled. I'll take a guess and assume we're failing at 
->>>>>> the last
->>>>>> Set Interface, that means we should have something odd with 
->>>>>> ep6in, but
->>>>>> everything looks fine in the trace output:
->>>>>>
->>>>>> [   75.823107] irq/14-d-596       0d... 42789194us : 
->>>>>> dwc3_gadget_ep_enable: ep6in: mps 192/346 streams 16 burst 0 ring 
->>>>>> 0/0 flags E:swbp:<
->>>>>> [   75.835472] irq/14-d-596       0d... 42789198us : 
->>>>>> dwc3_alloc_request: ep6in: req 0000000002c71409 length 0/0 zsI ==> 0
->>>>>> [   75.846416] irq/14-d-596       0d... 42789202us : 
->>>>>> dwc3_ep_queue: ep6in: req 0000000002c71409 length 0/192 zsI ==> -115
->>>>>> [   75.857360] irq/14-d-596       0d... 42789204us : 
->>>>>> dwc3_alloc_request: ep6in: req 00000000a324f5d0 length 0/0 zsI ==> 0
->>>>>> [   75.868301] irq/14-d-596       0d... 42789206us : 
->>>>>> dwc3_ep_queue: ep6in: req 00000000a324f5d0 length 0/192 zsI ==> -115
->>>>>> [   75.879244] irq/14-d-596       0d... 42789209us : dwc3_event: 
->>>>>> event (000020c2): ep0in: Transfer Not Ready [0] (Not Active) 
->>>>>> [Status Phase]
->>>>>> [   75.891880] irq/14-d-596       0d... 42789211us : 
->>>>>> dwc3_prepare_trb: ep0in: trb 000000004c0ae319 (E0:D0) buf 
->>>>>> 000000001bded000 size 0 ctrl 00000c33 (HLcs:SC:status2)
->>>>>> [   75.989131] irq/14-d-596       0d... 42789224us : 
->>>>>> dwc3_gadget_ep_cmd: ep0in: cmd 'Start Transfer' [406] params 
->>>>>> 00000000 1bded000 00000000 --> status: Successful
->>>>>> [   76.096261] irq/14-d-596       0d... 42789272us : dwc3_event: 
->>>>>> event (0000c042): ep0in: Transfer Complete (sIL) [Status Phase]
->>>>>> [   76.107834] irq/14-d-596       0d... 42789275us : 
->>>>>> dwc3_complete_trb: ep0out: trb 000000004c0ae319 (E0:D0) buf 
->>>>>> 000000001bded000 size 0 ctrl 00000c32 (hLcs:SC:status2)
->>>>>> [   76.122944] irq/14-d-596       0d... 42789277us : 
->>>>>> dwc3_gadget_giveback: ep0out: req 00000000cb1bd3cd length 0/0 zsI 
->>>>>> ==> 0
->>>>>> [   76.134160] irq/14-d-596       0d... 42789280us : 
->>>>>> dwc3_prepare_trb: ep0out: trb 000000004c0ae319 (E0:D0) buf 
->>>>>> 000000001bded000 size 8 ctrl 00000c23 (HLcs:SC:setup)
->>>>>> [   76.231322] irq/14-d-596       0d... 42789292us : 
->>>>>> dwc3_gadget_ep_cmd: ep0out: cmd 'Start Transfer' [406] params 
->>>>>> 00000000 1bded000 00000000 --> status: Successful
->>>>>> [   76.297418] kworker/-23        0d... 42789670us : 
->>>>>> dwc3_ep_queue: ep3in: req 0000000029586135 length 0/96 ZsI ==> -115
->>>>>> [   76.308278] kworker/-23        0d... 42789695us : 
->>>>>> dwc3_prepare_trb: ep3in: trb 00000000b81213d6 (E1:D0) buf 
->>>>>> 0000000003b7a800 size 96 ctrl 00000811 (Hlcs:sC:normal)
->>>>>> [   76.395294] kworker/-23        0d... 42789707us : 
->>>>>> dwc3_gadget_ep_cmd: ep3in: cmd 'Update Transfer' [60007] params 
->>>>>> 00000000 00000000 00000000 --> status: Successful
->>>>>> [   76.471900] irq/14-d-596       0d... 42789842us : dwc3_event: 
->>>>>> event (0000c040): ep0out: Transfer Complete (sIL) [Setup Phase]
->>>>>> [   76.489308] irq/14-d-596       0d... 42789845us : 
->>>>>> dwc3_ctrl_req: Set Interface(Intf = 5, Alt.Setting = 0)
->>>>>> [   76.505650] irq/14-d-596       0d... 42789851us : 
->>>>>> dwc3_ep_dequeue: ep6in: req 0000000002c71409 length 0/192 zsI ==> 
->>>>>> -115
->>>>>> [   76.523315] irq/14-d-596       0d... 42789854us : 
->>>>>> dwc3_gadget_giveback: ep6in: req 0000000002c71409 length 0/192 
->>>>>> zsI ==> -104
->>>>>> [   76.541427] irq/14-d-596       0d... 42789857us : 
->>>>>> dwc3_free_request: ep6in: req 0000000002c71409 length 0/192 zsI 
->>>>>> ==> -104
->>>>>> [   76.559267] irq/14-d-596       0d... 42789859us : 
->>>>>> dwc3_ep_dequeue: ep6in: req 00000000a324f5d0 length 0/192 zsI ==> 
->>>>>> -115
->>>>>> [   76.576937] irq/14-d-596       0d... 42789861us : 
->>>>>> dwc3_gadget_giveback: ep6in: req 00000000a324f5d0 length 0/192 
->>>>>> zsI ==> -104
->>>>>> [   76.595046] irq/14-d-596       0d... 42789862us : 
->>>>>> dwc3_free_request: ep6in: req 00000000a324f5d0 length 0/192 zsI 
->>>>>> ==> -104
->>>>>> [   76.612892] irq/14-d-596       0d... 42789865us : 
->>>>>> dwc3_gadget_ep_disable: ep6in: mps 192/346 streams 16 burst 0 
->>>>>> ring 0/0 flags E:swbp:<
->>>>>> [   76.665535] irq/14-d-596       0d... 42789873us : dwc3_event: 
->>>>>> event (000020c2): ep0in: Transfer Not Ready [0] (Not Active) 
->>>>>> [Status Phase]
->>>>>> [   76.684716] irq/14-d-596       0d... 42789875us : 
->>>>>> dwc3_prepare_trb: ep0in: trb 000000004c0ae319 (E0:D0) buf 
->>>>>> 000000001bded000 size 0 ctrl 00000c33 (HLcs:SC:status2)
->>>>>> [   76.819195] irq/14-d-596       0d... 42789886us : 
->>>>>> dwc3_gadget_ep_cmd: ep0in: cmd 'Start Transfer' [406] params 
->>>>>> 00000000 1bded000 00000000 --> status: Successful
->>>>>> [   76.926324] irq/14-d-596       0d... 42789930us : dwc3_event: 
->>>>>> event (0000c042): ep0in: Transfer Complete (sIL) [Status Phase]
->>>>>> [   76.937892] irq/14-d-596       0d... 42789933us : 
->>>>>> dwc3_complete_trb: ep0out: trb 000000004c0ae319 (E0:D0) buf 
->>>>>> 000000001bded000 size 0 ctrl 00000c32 (hLcs:SC:status2)
->>>>>> [   76.953003] irq/14-d-596       0d... 42789935us : 
->>>>>> dwc3_gadget_giveback: ep0out: req 00000000cb1bd3cd length 0/0 zsI 
->>>>>> ==> 0
->>>>>> [   76.964217] irq/14-d-596       0d... 42789938us : 
->>>>>> dwc3_prepare_trb: ep0out: trb 000000004c0ae319 (E0:D0) buf 
->>>>>> 000000001bded000 size 8 ctrl 00000c23 (HLcs:SC:setup)
->>>>>> [   77.061379] irq/14-d-596       0d... 42789950us : 
->>>>>> dwc3_gadget_ep_cmd: ep0out: cmd 'Start Transfer' [406] params 
->>>>>> 00000000 1bded000 00000000 --> status: Successful
->>>>>> [   77.168595] irq/14-d-596       0d... 42790509us : dwc3_event: 
->>>>>> event (0000c040): ep0out: Transfer Complete (sIL) [Setup Phase]
->>>>>> [   77.180159] irq/14-d-596       0d... 42790512us : 
->>>>>> dwc3_ctrl_req: Get String Descriptor(Index = 18, Length = 255)
->>>>>> [   77.190578] irq/14-d-596       0d... 42790537us : 
->>>>>> dwc3_prepare_trb: ep0in: trb 000000004c0ae319 (E0:D0) buf 
->>>>>> 0000000003b68000 size 36 ctrl 00000c53 (HLcs:SC:data)
->>>>>> [   77.287648] irq/14-d-596       0d... 42790550us : 
->>>>>> dwc3_gadget_ep_cmd: ep0in: cmd 'Start Transfer' [406] params 
->>>>>> 00000000 1bded000 00000000 --> status: Successful
->>>>>> [   77.333107] irq/14-d-596       0d... 42790557us : dwc3_event: 
->>>>>> event (000010c2): ep0in: Transfer Not Ready [0] (Not Active) 
->>>>>> [Data Phase]
->>>>>> [   77.407223] irq/14-d-596       0d... 42790575us : dwc3_event: 
->>>>>> event (000090c2): ep0in: Transfer Not Ready [0] (Active) [Data 
->>>>>> Phase]
->>>>>> [   77.480985] irq/14-d-596       0d... 42790588us : dwc3_event: 
->>>>>> event (0000c042): ep0in: Transfer Complete (sIL) [Data Phase]
->>>>>> [   77.492376] irq/14-d-596       0d... 42790590us : 
->>>>>> dwc3_complete_trb: ep0out: trb 000000004c0ae319 (E0:D0) buf 
->>>>>> 0000000003b68000 size 0 ctrl 00000c52 (hLcs:SC:data)
->>>>>> [   77.507221] irq/14-d-596       0d... 42790595us : 
->>>>>> dwc3_gadget_giveback: ep0out: req 00000000cb1bd3cd length 36/36 
->>>>>> ZsI ==> 0
->>>>>> [   77.518609] irq/14-d-596       0d... 42790597us : dwc3_event: 
->>>>>> event (000020c0): ep0out: Transfer Not Ready [0] (Not Active) 
->>>>>> [Status Phase]
->>>>>> [   77.531332] irq/14-d-596       0d... 42790598us : 
->>>>>> dwc3_prepare_trb: ep0out: trb 000000004c0ae319 (E0:D0) buf 
->>>>>> 000000001bded000 size 0 ctrl 00000c43 (HLcs:SC:status3)
->>>>>> [   77.628669] irq/14-d-596       0d... 42790609us : 
->>>>>> dwc3_gadget_ep_cmd: ep0out: cmd 'Start Transfer' [406] params 
->>>>>> 00000000 1bded000 00000000 --> status: Successful
->>>>>>
->>>>>> Do you mind adding a few prints in dwc3_remove_requests to tell 
->>>>>> us which
->>>>>> endpoint is being processed? Then we'll know for sure which one 
->>>>>> caused
->>>>>> the crash.
->>>>>>
->>>>> I wouldn't mind but am leaving on a holiday, won't have time until 
->>>>> 6 aug.
->>>> not a problem, we'll still be here when you're back :-)
->>> Well, let's go then :-)
->>>
->>> To get back in the mood I have retested 5.13.0, 5.14.0-rc1, 5.14.0-rc2
->>> and 5.14.0-rc5.
->>>
->>> I find that 5.13.0 works fine, and the issue starts from 5.14.0-rc1.
->> That's great finding. We have a bisection point. There are a total of
->> 13764 commits between v5.13 and v5.14-rc1
->>
->>     $ git rev-list  --count v5.13..v5.14-rc1
->>     13764
->>
->> git bisect should find the offending commit in at most 14 tries. That's
->> not too bad.
-> I correctly guesstimated that the problem got introduced by the usb 
-> merge 79160a60
->
-> "Merge tag 'usb-5.14-rc1' of 
-> git://git.kernel.org/pub/scm/linux/kernel/git/gregkh/usb"
->
-> 116 commits(7 bisects).
->
-> 24f779dac8f3efb9629adc0e486914d93dc45517 is the first bad commit
->
-> "usb: gadget: f_uac2/u_audio: add feedback endpoint support"
->
-> Ruslan's 3 patches are related to each other so I reverted all three 
-> 24f779da...e89bb428 and applied the reverts to rc1.
->
-> I can confirm this indeed resolves the problem in rc1.
->
-> Is late now, tomorrow evening I will apply the reverts to rc6.
+>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
+> I think this has already been picked up by Rob but just had a couple of 
+> comments
+> below.
+> 
+> Also, how has this been validated? On RB boards i dont think all the 
+> paths get
+> executed.
 
-With these reverts rc6 works fine as well.
+I've used modetest to set pixel blending properties. The results looked 
+logical from my point of view.
 
-So, where do we go from here?
-
->
->>> With 5.14.0-rc5 the problem seems worse (or different?), and just
->>> disabling uac2 gadget does not prevent the crash. Even disabling gser
->>> and mass_storage.usb0 as well there is still a crash.
->>>
->>> Now I'm not sure how to proceed. Bisect rc1? Or focus on rc5 (rc6?)?
->> I'd first bisect between 5.13 and v5.14-rc1. Once you find the offending
->> commit, verify if reverting that on -rc1 works, then verify if reverting
->> on -rc5 also works :-)
+> 
+>> ---
+>>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  | 43 ++++++++++++++++-------
+>>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 10 ++++--
+>>  2 files changed, 37 insertions(+), 16 deletions(-)
 >>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>> index 9a5c70c87cc8..768012243b44 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+>> @@ -30,12 +30,6 @@
+>>  #include "dpu_core_perf.h"
+>>  #include "dpu_trace.h"
+>>
+>> -#define DPU_DRM_BLEND_OP_NOT_DEFINED    0
+>> -#define DPU_DRM_BLEND_OP_OPAQUE         1
+>> -#define DPU_DRM_BLEND_OP_PREMULTIPLIED  2
+>> -#define DPU_DRM_BLEND_OP_COVERAGE       3
+>> -#define DPU_DRM_BLEND_OP_MAX            4
+>> -
+>>  /* layer mixer index on dpu_crtc */
+>>  #define LEFT_MIXER 0
+>>  #define RIGHT_MIXER 1
+>> @@ -146,20 +140,43 @@ static void _dpu_crtc_setup_blend_cfg(struct
+>> dpu_crtc_mixer *mixer,
+>>  {
+>>      struct dpu_hw_mixer *lm = mixer->hw_lm;
+>>      uint32_t blend_op;
+>> +    uint32_t fg_alpha, bg_alpha;
+>>
+>> -    /* default to opaque blending */
+>> -    blend_op = DPU_BLEND_FG_ALPHA_FG_CONST |
+>> -        DPU_BLEND_BG_ALPHA_BG_CONST;
+>> +    fg_alpha = pstate->base.alpha >> 8;
+>> +    bg_alpha = 0xff - fg_alpha;
+>>
+>> -    if (format->alpha_enable) {
+>> +    /* default to opaque blending */
+>> +    if (pstate->base.pixel_blend_mode == DRM_MODE_BLEND_PIXEL_NONE ||
+>> +        !format->alpha_enable) {
+>> +        blend_op = DPU_BLEND_FG_ALPHA_FG_CONST |
+>> +            DPU_BLEND_BG_ALPHA_BG_CONST;
+>> +    } else if (pstate->base.pixel_blend_mode == 
+>> DRM_MODE_BLEND_PREMULTI) {
+>> +        blend_op = DPU_BLEND_FG_ALPHA_FG_CONST |
+>> +            DPU_BLEND_BG_ALPHA_FG_PIXEL;
+>> +        if (fg_alpha != 0xff) {
+>> +            bg_alpha = fg_alpha;
+>> +            blend_op |= DPU_BLEND_BG_MOD_ALPHA |
+>> +                    DPU_BLEND_BG_INV_MOD_ALPHA;
+>> +        } else {
+>> +            blend_op |= DPU_BLEND_BG_INV_ALPHA;
+>> +        }
+>> +    } else {
+>>          /* coverage blending */
+>>          blend_op = DPU_BLEND_FG_ALPHA_FG_PIXEL |
+>> -            DPU_BLEND_BG_ALPHA_FG_PIXEL |
+>> -            DPU_BLEND_BG_INV_ALPHA;
+>> +            DPU_BLEND_BG_ALPHA_FG_PIXEL;
+>> +        if (fg_alpha != 0xff) {
+>> +            bg_alpha = fg_alpha;
+>> +            blend_op |= DPU_BLEND_FG_MOD_ALPHA |
+>> +                    DPU_BLEND_FG_INV_MOD_ALPHA |
+> comparing this with the blend rule downstream, is this inversion necessary?
+> I only see below rule downstream:
+> 
+> 628             if (fg_alpha != 0xff) {
+> 629                 bg_alpha = fg_alpha;
+> 630                 blend_op |= SDE_BLEND_FG_MOD_ALPHA |
+> 631                     SDE_BLEND_BG_MOD_ALPHA |
+> 632                     SDE_BLEND_BG_INV_MOD_ALPHA;
+
+I've also stumbled upon this for quite some time. If you check old 
+kernel trees, you'll see that up to 4.9 there was an inversion. But 
+during the import to 4.14 this line was silently removed. I suspect that 
+it got lost because of some mistake during the import.
+
+The same code (with the inversion) was present in the mdp5 driver.
+
+Could you please check against the manual, how these bits should work?
+See 
+https://www.kernel.org/doc/html/latest/gpu/drm-kms.html#plane-composition-properties 
+for the expected formulas.
+
+> 
+>> +                    DPU_BLEND_BG_MOD_ALPHA |
+>> +                    DPU_BLEND_BG_INV_MOD_ALPHA;
+>> +        } else {
+>> +            blend_op |= DPU_BLEND_BG_INV_ALPHA;
+>> +        }
+>>      }
+>>
+>>      lm->ops.setup_blend_config(lm, pstate->stage,
+>> -                0xFF, 0, blend_op);
+>> +                fg_alpha, bg_alpha, blend_op);
+>>
+>>      DRM_DEBUG_ATOMIC("format:%p4cc, alpha_en:%u blend_op:0x%x\n",
+>>            &format->base.pixel_format, format->alpha_enable, blend_op);
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>> b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>> index ec4a6f04394a..c989621209aa 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+>> @@ -1339,9 +1339,7 @@ static void dpu_plane_reset(struct drm_plane 
+>> *plane)
+>>          return;
+>>      }
+>>
+>> -    pstate->base.plane = plane;
+>> -
+>> -    plane->state = &pstate->base;
+>> +    __drm_atomic_helper_plane_reset(plane, &pstate->base);
+>>  }
+>>
+>>  #ifdef CONFIG_DEBUG_FS
+>> @@ -1647,6 +1645,12 @@ struct drm_plane *dpu_plane_init(struct 
+>> drm_device *dev,
+>>      if (ret)
+>>          DPU_ERROR("failed to install zpos property, rc = %d\n", ret);
+>>
+>> +    drm_plane_create_alpha_property(plane);
+>> +    drm_plane_create_blend_mode_property(plane,
+>> +            BIT(DRM_MODE_BLEND_PIXEL_NONE) |
+>> +            BIT(DRM_MODE_BLEND_PREMULTI) |
+>> +            BIT(DRM_MODE_BLEND_COVERAGE));
+>> +
+>>      drm_plane_create_rotation_property(plane,
+>>              DRM_MODE_ROTATE_0,
+>>              DRM_MODE_ROTATE_0 |
+
+
+-- 
+With best wishes
+Dmitry
