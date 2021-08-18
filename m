@@ -2,229 +2,196 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CF09C3F0BD9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Aug 2021 21:34:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35A3B3F0BFA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Aug 2021 21:41:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232404AbhHRTfX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Aug 2021 15:35:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37034 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232149AbhHRTfX (ORCPT
+        id S234130AbhHRTmL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Aug 2021 15:42:11 -0400
+Received: from us-smtp-delivery-124.mimecast.com ([170.10.133.124]:27310 "EHLO
+        us-smtp-delivery-124.mimecast.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S233517AbhHRTlx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Aug 2021 15:35:23 -0400
-Received: from mail-lj1-x232.google.com (mail-lj1-x232.google.com [IPv6:2a00:1450:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EDE3AC061764
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Aug 2021 12:34:47 -0700 (PDT)
-Received: by mail-lj1-x232.google.com with SMTP id f2so7149838ljn.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Aug 2021 12:34:47 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=TZlXaJlwbJlKP9XZ2W5P2GZHKRhAsGJfCRtafkq42N0=;
-        b=czGYTLZlBSS0MpLF+grC/baAZmnoaauH2+vYDEPDp1X4LQDp6Ut5KRonPkauh8QBTZ
-         P/0bK23QJTUYqjE2IaQDExLdOJs8g7BI0BwP/VuaHlHEI3BNP9BMA6JTrGE867xhX2Fh
-         QtHDMZuKGNgaJUbtw91tTcYhoJmQEAIOzxpAkVcoNtAKzMNTM/aE4ZeKiFrzTWYEnVF8
-         OphFelD929rzV4CpSDjt4jVhsRw+MqMRzCvx/ZlCay7Av5kSrbyg+Lg3OsKkmUDLg7OY
-         30ulL53oLZVbkZ9T3S4mIqbxlTirg638Wf9/BBYoU4vJ4MwQeKCbmG7xoQsx5NPAS9a/
-         ZsGQ==
+        Wed, 18 Aug 2021 15:41:53 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=redhat.com;
+        s=mimecast20190719; t=1629315678;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=Av+9gVDsC8feOzeiSKKB3XcVER5b9PzyTvqPasKEZ1c=;
+        b=Qhs/p+MdMbDRWIKYYUfoXF+c1R7MBAPynJx3MsocGZf119kAlAtuudyt8y4kinpy5dbkm/
+        7m8fjOyJ3UB3K1ZOJcLJnc785CSgBkPQuE73gUxHsbXd59WSw0HsAxiQQsNqPwCfdmwgeA
+        UBR8XnoB6J2ZniJ/c6IR53TWewhIPoE=
+Received: from mail-qv1-f69.google.com (mail-qv1-f69.google.com
+ [209.85.219.69]) (Using TLS) by relay.mimecast.com with ESMTP id
+ us-mta-216-HMmld6zcNHujHmvJaioM7A-1; Wed, 18 Aug 2021 15:41:16 -0400
+X-MC-Unique: HMmld6zcNHujHmvJaioM7A-1
+Received: by mail-qv1-f69.google.com with SMTP id b2-20020a0cc9820000b0290352b2c7d7e1so2931977qvk.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Aug 2021 12:41:16 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=TZlXaJlwbJlKP9XZ2W5P2GZHKRhAsGJfCRtafkq42N0=;
-        b=e1ZUqX4+udQyvsy3vuCSFKkOal2I84f/y/6yPBvkDvndel2xdVjwCUB+QyH6qGa0Qw
-         msdafSMAYYRu9OWRoJFB0GF8PfmzP8IAl0r4wV9OsDV11vFpEJua4q+JIX7X42p8mqeA
-         jSiTPFEUqFjgwQBqtZZHeRUkzsldsNDhOf16aqmL7FMy1U9AUcGXheKsbAyByxPFMuh2
-         X6UwRl/dx2Z2ksolMbASREcn72v1E9BvYALIsX4Nhb6AEDZjqGb6/H5EbyM1tJP98iKa
-         Wf8rj2U6/JcMJYE5PvXc6UsoGIUo3/EvAsZ7uvJnvtw4qrEDHYGj0KhqWoZ+Q29RkSr5
-         x+mg==
-X-Gm-Message-State: AOAM531xWqeeB6dQZLSEt22U22BvZ0BeXFJ89RuRXhEs5+iI6BkcqEq9
-        L4EbgcTa9EFtrvVXQn0/1x9DHA==
-X-Google-Smtp-Source: ABdhPJw2+c2F6EluGW6TFgDdrC99bIRcb/YQdf85++cOTvPzkUrPy/YikduJ8dq2zCdYVyugwh49RQ==
-X-Received: by 2002:a2e:9802:: with SMTP id a2mr3448720ljj.470.1629315286311;
-        Wed, 18 Aug 2021 12:34:46 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id w16sm54372lfd.295.2021.08.18.12.34.45
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Aug 2021 12:34:45 -0700 (PDT)
-Subject: Re: [Freedreno] [PATCH] drm/msm/dpu: add support for alpha blending
- properties
-To:     abhinavk@codeaurora.org
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        freedreno@lists.freedesktop.org
-References: <20210628191958.2754731-1-dmitry.baryshkov@linaro.org>
- <34ee522aa37172099dac9f686f0196ec@codeaurora.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <9584eaee-d3ed-041e-f473-06d9a1ddb0bc@linaro.org>
-Date:   Wed, 18 Aug 2021 22:34:43 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        bh=Av+9gVDsC8feOzeiSKKB3XcVER5b9PzyTvqPasKEZ1c=;
+        b=BxebS0kYG2bV7rhJbAj6+0kebxmpJA9LI7AldyrC9W+2Qyl1jBZedzHkv4hb6Bevvc
+         A7nfBb2cE3mqopG+aLnMFKCYuxSEqGPM3W6zPxRNQLmOc1OeXmfFXW45UxKNxJG7Fapz
+         c6vjGV5P52kc4UAgbMMJwwIZyDFkE705MCyyzaQOrdLfVTnGVtPN7v/JH2xKN7pahwe1
+         iLY1FIUwQJsLwjCa/F3ZEirFZctsU2EkH2f+HV1BbYeFOvZ8/ma9VkwWhwBfX0Pjwl+P
+         JbVoPQtC94WrEs1G6+wrPbBvkeOacQgkI5scWyK4jtzN1vH70Yqunrt+huuWeNqcW2b0
+         nm9g==
+X-Gm-Message-State: AOAM5326OR3ipKTkglhCMENo3Pbjq2c4WtfTbza2Q9RU71bH0DZpLWqf
+        mqvI9bfpmsDL1sSH7qhWwmr/YrfvKS7pPoSJpoAd2XLr5DoEHfNO4LGhOLKK7EPSNSyxd6gki79
+        yU6xvSDelvRr4CCkxItWahujmOA==
+X-Received: by 2002:a05:6214:410e:: with SMTP id kc14mr10860632qvb.33.1629315676477;
+        Wed, 18 Aug 2021 12:41:16 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJxDmwwleE4mo9gtz4ou48ZiVOQow5nBGgo7nnWHJ8fu8DeAGOQ3wUS3pNkWwB2skk/pSMmGBA==
+X-Received: by 2002:a05:6214:410e:: with SMTP id kc14mr10860611qvb.33.1629315676223;
+        Wed, 18 Aug 2021 12:41:16 -0700 (PDT)
+Received: from localhost.localdomain.com (075-142-250-213.res.spectrum.com. [75.142.250.213])
+        by smtp.gmail.com with ESMTPSA id c11sm387398qtx.27.2021.08.18.12.41.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 18 Aug 2021 12:41:15 -0700 (PDT)
+From:   trix@redhat.com
+To:     robert.foss@linaro.org, todor.too@gmail.com, agross@kernel.org,
+        bjorn.andersson@linaro.org, mchehab@kernel.org
+Cc:     linux-media@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Tom Rix <trix@redhat.com>
+Subject: [PATCH] media: camss: vfe: simplify vfe_get_wm_sizes()
+Date:   Wed, 18 Aug 2021 12:41:05 -0700
+Message-Id: <20210818194105.1400766-1-trix@redhat.com>
+X-Mailer: git-send-email 2.26.3
 MIME-Version: 1.0
-In-Reply-To: <34ee522aa37172099dac9f686f0196ec@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 17/08/2021 20:48, abhinavk@codeaurora.org wrote:
-> On 2021-06-28 12:19, Dmitry Baryshkov wrote:
->> Add support for alpha blending properties. Setup the plane blend state
->> according to those properties.
->>
->> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> I think this has already been picked up by Rob but just had a couple of 
-> comments
-> below.
-> 
-> Also, how has this been validated? On RB boards i dont think all the 
-> paths get
-> executed.
+From: Tom Rix <trix@redhat.com>
 
-I've used modetest to set pixel blending properties. The results looked 
-logical from my point of view.
+Static analysis reports this representative problem
+camss-vfe-4-1.c:333: The result of the left shift is undefined because
+  the left operand is negative
+  reg |= (height - 1) << 4;
+~~~~~~~~~ ^
 
-> 
->> ---
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c  | 43 ++++++++++++++++-------
->>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 10 ++++--
->>  2 files changed, 37 insertions(+), 16 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->> index 9a5c70c87cc8..768012243b44 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->> @@ -30,12 +30,6 @@
->>  #include "dpu_core_perf.h"
->>  #include "dpu_trace.h"
->>
->> -#define DPU_DRM_BLEND_OP_NOT_DEFINED    0
->> -#define DPU_DRM_BLEND_OP_OPAQUE         1
->> -#define DPU_DRM_BLEND_OP_PREMULTIPLIED  2
->> -#define DPU_DRM_BLEND_OP_COVERAGE       3
->> -#define DPU_DRM_BLEND_OP_MAX            4
->> -
->>  /* layer mixer index on dpu_crtc */
->>  #define LEFT_MIXER 0
->>  #define RIGHT_MIXER 1
->> @@ -146,20 +140,43 @@ static void _dpu_crtc_setup_blend_cfg(struct
->> dpu_crtc_mixer *mixer,
->>  {
->>      struct dpu_hw_mixer *lm = mixer->hw_lm;
->>      uint32_t blend_op;
->> +    uint32_t fg_alpha, bg_alpha;
->>
->> -    /* default to opaque blending */
->> -    blend_op = DPU_BLEND_FG_ALPHA_FG_CONST |
->> -        DPU_BLEND_BG_ALPHA_BG_CONST;
->> +    fg_alpha = pstate->base.alpha >> 8;
->> +    bg_alpha = 0xff - fg_alpha;
->>
->> -    if (format->alpha_enable) {
->> +    /* default to opaque blending */
->> +    if (pstate->base.pixel_blend_mode == DRM_MODE_BLEND_PIXEL_NONE ||
->> +        !format->alpha_enable) {
->> +        blend_op = DPU_BLEND_FG_ALPHA_FG_CONST |
->> +            DPU_BLEND_BG_ALPHA_BG_CONST;
->> +    } else if (pstate->base.pixel_blend_mode == 
->> DRM_MODE_BLEND_PREMULTI) {
->> +        blend_op = DPU_BLEND_FG_ALPHA_FG_CONST |
->> +            DPU_BLEND_BG_ALPHA_FG_PIXEL;
->> +        if (fg_alpha != 0xff) {
->> +            bg_alpha = fg_alpha;
->> +            blend_op |= DPU_BLEND_BG_MOD_ALPHA |
->> +                    DPU_BLEND_BG_INV_MOD_ALPHA;
->> +        } else {
->> +            blend_op |= DPU_BLEND_BG_INV_ALPHA;
->> +        }
->> +    } else {
->>          /* coverage blending */
->>          blend_op = DPU_BLEND_FG_ALPHA_FG_PIXEL |
->> -            DPU_BLEND_BG_ALPHA_FG_PIXEL |
->> -            DPU_BLEND_BG_INV_ALPHA;
->> +            DPU_BLEND_BG_ALPHA_FG_PIXEL;
->> +        if (fg_alpha != 0xff) {
->> +            bg_alpha = fg_alpha;
->> +            blend_op |= DPU_BLEND_FG_MOD_ALPHA |
->> +                    DPU_BLEND_FG_INV_MOD_ALPHA |
-> comparing this with the blend rule downstream, is this inversion necessary?
-> I only see below rule downstream:
-> 
-> 628             if (fg_alpha != 0xff) {
-> 629                 bg_alpha = fg_alpha;
-> 630                 blend_op |= SDE_BLEND_FG_MOD_ALPHA |
-> 631                     SDE_BLEND_BG_MOD_ALPHA |
-> 632                     SDE_BLEND_BG_INV_MOD_ALPHA;
+The is a false positive.  height is set in vfe_get_wm_sizes() which
+has a switch statement without a default.
 
-I've also stumbled upon this for quite some time. If you check old 
-kernel trees, you'll see that up to 4.9 there was an inversion. But 
-during the import to 4.14 this line was silently removed. I suspect that 
-it got lost because of some mistake during the import.
+Reviewing the switch, the cases contain redundant assignments.
+So simplify to assignments.
 
-The same code (with the inversion) was present in the mdp5 driver.
+Signed-off-by: Tom Rix <trix@redhat.com>
+---
+ .../media/platform/qcom/camss/camss-vfe-4-1.c | 20 ++++++-------------
+ .../media/platform/qcom/camss/camss-vfe-4-7.c | 10 +++-------
+ .../media/platform/qcom/camss/camss-vfe-4-8.c |  9 +++------
+ 3 files changed, 12 insertions(+), 27 deletions(-)
 
-Could you please check against the manual, how these bits should work?
-See 
-https://www.kernel.org/doc/html/latest/gpu/drm-kms.html#plane-composition-properties 
-for the expected formulas.
-
-> 
->> +                    DPU_BLEND_BG_MOD_ALPHA |
->> +                    DPU_BLEND_BG_INV_MOD_ALPHA;
->> +        } else {
->> +            blend_op |= DPU_BLEND_BG_INV_ALPHA;
->> +        }
->>      }
->>
->>      lm->ops.setup_blend_config(lm, pstate->stage,
->> -                0xFF, 0, blend_op);
->> +                fg_alpha, bg_alpha, blend_op);
->>
->>      DRM_DEBUG_ATOMIC("format:%p4cc, alpha_en:%u blend_op:0x%x\n",
->>            &format->base.pixel_format, format->alpha_enable, blend_op);
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->> index ec4a6f04394a..c989621209aa 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->> @@ -1339,9 +1339,7 @@ static void dpu_plane_reset(struct drm_plane 
->> *plane)
->>          return;
->>      }
->>
->> -    pstate->base.plane = plane;
->> -
->> -    plane->state = &pstate->base;
->> +    __drm_atomic_helper_plane_reset(plane, &pstate->base);
->>  }
->>
->>  #ifdef CONFIG_DEBUG_FS
->> @@ -1647,6 +1645,12 @@ struct drm_plane *dpu_plane_init(struct 
->> drm_device *dev,
->>      if (ret)
->>          DPU_ERROR("failed to install zpos property, rc = %d\n", ret);
->>
->> +    drm_plane_create_alpha_property(plane);
->> +    drm_plane_create_blend_mode_property(plane,
->> +            BIT(DRM_MODE_BLEND_PIXEL_NONE) |
->> +            BIT(DRM_MODE_BLEND_PREMULTI) |
->> +            BIT(DRM_MODE_BLEND_COVERAGE));
->> +
->>      drm_plane_create_rotation_property(plane,
->>              DRM_MODE_ROTATE_0,
->>              DRM_MODE_ROTATE_0 |
-
-
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
+index 7b7c9a0aaab282..42047b11ba529e 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
+@@ -290,22 +290,14 @@ static void vfe_wm_frame_based(struct vfe_device *vfe, u8 wm, u8 enable)
+ static void vfe_get_wm_sizes(struct v4l2_pix_format_mplane *pix, u8 plane,
+ 			     u16 *width, u16 *height, u16 *bytesperline)
+ {
+-	switch (pix->pixelformat) {
+-	case V4L2_PIX_FMT_NV12:
+-	case V4L2_PIX_FMT_NV21:
+-		*width = pix->width;
+-		*height = pix->height;
+-		*bytesperline = pix->plane_fmt[0].bytesperline;
++	*width = pix->width;
++	*height = pix->height;
++	*bytesperline = pix->plane_fmt[0].bytesperline;
++
++	if (pix->pixelformat == V4L2_PIX_FMT_NV12 ||
++	    pix->pixelformat == V4L2_PIX_FMT_NV21)
+ 		if (plane == 1)
+ 			*height /= 2;
+-		break;
+-	case V4L2_PIX_FMT_NV16:
+-	case V4L2_PIX_FMT_NV61:
+-		*width = pix->width;
+-		*height = pix->height;
+-		*bytesperline = pix->plane_fmt[0].bytesperline;
+-		break;
+-	}
+ }
+ 
+ static void vfe_wm_line_based(struct vfe_device *vfe, u32 wm,
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
+index 2836b12ec98915..ab2d57bdf5e71c 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
+@@ -370,30 +370,26 @@ static int vfe_word_per_line_by_bytes(u32 bytes_per_line)
+ static void vfe_get_wm_sizes(struct v4l2_pix_format_mplane *pix, u8 plane,
+ 			     u16 *width, u16 *height, u16 *bytesperline)
+ {
++	*width = pix->width;
++	*height = pix->height;
++
+ 	switch (pix->pixelformat) {
+ 	case V4L2_PIX_FMT_NV12:
+ 	case V4L2_PIX_FMT_NV21:
+-		*width = pix->width;
+-		*height = pix->height;
+ 		*bytesperline = pix->plane_fmt[0].bytesperline;
+ 		if (plane == 1)
+ 			*height /= 2;
+ 		break;
+ 	case V4L2_PIX_FMT_NV16:
+ 	case V4L2_PIX_FMT_NV61:
+-		*width = pix->width;
+-		*height = pix->height;
+ 		*bytesperline = pix->plane_fmt[0].bytesperline;
+ 		break;
+ 	case V4L2_PIX_FMT_YUYV:
+ 	case V4L2_PIX_FMT_YVYU:
+ 	case V4L2_PIX_FMT_VYUY:
+ 	case V4L2_PIX_FMT_UYVY:
+-		*width = pix->width;
+-		*height = pix->height;
+ 		*bytesperline = pix->plane_fmt[plane].bytesperline;
+ 		break;
+-
+ 	}
+ }
+ 
+diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-8.c b/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
+index 19519234f727c1..7e6b62c930ac8a 100644
+--- a/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
++++ b/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
+@@ -343,27 +343,24 @@ static int vfe_word_per_line_by_bytes(u32 bytes_per_line)
+ static void vfe_get_wm_sizes(struct v4l2_pix_format_mplane *pix, u8 plane,
+ 			     u16 *width, u16 *height, u16 *bytesperline)
+ {
++	*width = pix->width;
++	*height = pix->height;
++
+ 	switch (pix->pixelformat) {
+ 	case V4L2_PIX_FMT_NV12:
+ 	case V4L2_PIX_FMT_NV21:
+-		*width = pix->width;
+-		*height = pix->height;
+ 		*bytesperline = pix->plane_fmt[0].bytesperline;
+ 		if (plane == 1)
+ 			*height /= 2;
+ 		break;
+ 	case V4L2_PIX_FMT_NV16:
+ 	case V4L2_PIX_FMT_NV61:
+-		*width = pix->width;
+-		*height = pix->height;
+ 		*bytesperline = pix->plane_fmt[0].bytesperline;
+ 		break;
+ 	case V4L2_PIX_FMT_YUYV:
+ 	case V4L2_PIX_FMT_YVYU:
+ 	case V4L2_PIX_FMT_VYUY:
+ 	case V4L2_PIX_FMT_UYVY:
+-		*width = pix->width;
+-		*height = pix->height;
+ 		*bytesperline = pix->plane_fmt[plane].bytesperline;
+ 		break;
+ 	}
 -- 
-With best wishes
-Dmitry
+2.26.3
+
