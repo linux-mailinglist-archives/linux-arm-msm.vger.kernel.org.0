@@ -2,77 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F57F3F0C69
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 18 Aug 2021 22:07:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 357443F0ED1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Aug 2021 01:52:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233153AbhHRUIO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Aug 2021 16:08:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44670 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232149AbhHRUIN (ORCPT
+        id S235105AbhHRXvj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Aug 2021 19:51:39 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:12140 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234965AbhHRXvh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Aug 2021 16:08:13 -0400
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6587C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Aug 2021 13:07:38 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id l36-20020a0568302b24b0290517526ce5e3so5541175otv.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Aug 2021 13:07:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=cfm13iXUxECEplWQ0q6Pxak3YtFCZRWGUuhoBsOQF1o=;
-        b=FiSrUv34t+HgydbQhzRo7RHOAQFm9OxrQI98LwsaMAeyJz41igKBAGF/7khk9DESSF
-         2uo0zyzxy+hlRiFcu5axiGiY/bPo8RUcNImSiN3Kyq+BuI8hGe5+GFGRUA4J2mgdicgA
-         OE3Al9FgiJ2bfV2UIx6fosxcF57TPy/3vdZ7M=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=cfm13iXUxECEplWQ0q6Pxak3YtFCZRWGUuhoBsOQF1o=;
-        b=Doxedt2EqU+6enkXbGxDD1iKtjdoWl8/3q6PiQ7yFcHaDzYmNZNSFlix+OzyZC5a+N
-         3ImZuREZiuFXIDAqalvvhssMXbUZmJz0vGUy1RYH4BI4ldcnenh5J8sYscR/CyzTPIii
-         s2srHeCTm1ggzhX1j1P0aJ0f4oaNChZBEAlK/CevmYE6JXAGAeEsgzhPY1T7vCQsLDcV
-         IO1ryUB36n95FudW2RIbDzwOpa2ShaEh+iTqVaSdwdG5pPhTLEHLWznAk/RTd0Vo34Db
-         PDEdxa7afIj12rm0gCf+n+kWfG6xDIlPF4NPu4/phh3eno2dIA5Ysd0chDHMPyMi8lWu
-         qI7g==
-X-Gm-Message-State: AOAM531g9o6FevvNrgflgOtd8iNR3HJBf6ZdTD8LgtM1mNokZBOhRLMD
-        ZvRK+NvhF9Bm2A5C6KWahsoLOOpdEroTbXk+lG/3JA==
-X-Google-Smtp-Source: ABdhPJyELNhhchyiGz4aTzehMCOLQwh2D+h4c08VfwqU9GfrDc66h204pRTnxTXnauLt5QAn0FSePec2ZgVpt81vPKo=
-X-Received: by 2002:a05:6830:2473:: with SMTP id x51mr1798273otr.34.1629317258305;
- Wed, 18 Aug 2021 13:07:38 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 18 Aug 2021 13:07:37 -0700
-MIME-Version: 1.0
-In-Reply-To: <1629282424-4070-1-git-send-email-mkrishn@codeaurora.org>
-References: <1629282424-4070-1-git-send-email-mkrishn@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Wed, 18 Aug 2021 13:07:37 -0700
-Message-ID: <CAE-0n52r-+MjLO0o3JOWCsLHHWVOYNKnSuZYTwiarpJW-M643g@mail.gmail.com>
-Subject: Re: [PATCH v1 1/4] dt-bindings: msm: add DT bindings for sc7280
-To:     Krishna Manikandan <mkrishn@codeaurora.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     kalyan_t@codeaurora.org, sbillaka@codeaurora.org,
-        abhinavk@codeaurora.org, robdclark@gmail.com,
-        bjorn.andersson@linaro.org, khsieh@codeaurora.org,
-        rajeevny@codeaurora.org, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, robh+dt@kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Wed, 18 Aug 2021 19:51:37 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1629330662; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=dtKKhIrAycIFftfoGO6XhO2cMGewtxBU3p3mQrdub+w=; b=cc7VF9m5Feudw0ZbDjrZquu6nDUpzgtr7vwLye8jOIN05xdUZZytpuIM+lwevpt22AX3tLOU
+ VFDLARra7E07SvWKa+3/bsEk8dNnO94Gz655Z2wGw9aOvRlf1TUMt+UdwFJ3z/3jj5fsXbN3
+ TcQ4Ks5d087qHdf7u+W98nr1DN8=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 611d9cd79507ca1a34fb88bd (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 18 Aug 2021 23:50:47
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8DD8BC43618; Wed, 18 Aug 2021 23:50:46 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from malabar-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A7EC2C43460;
+        Wed, 18 Aug 2021 23:50:45 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org A7EC2C43460
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
+        linux-kernel@vger.kernel.org, loic.poulain@linaro.org,
+        quic_jhugo@quicinc.com, Bhaumik Bhatt <bbhatt@codeaurora.org>
+Subject: [PATCH v1 0/2] MHI MMIO register write updates
+Date:   Wed, 18 Aug 2021 16:50:32 -0700
+Message-Id: <1629330634-36465-1-git-send-email-bbhatt@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Krishna Manikandan (2021-08-18 03:27:01)
-> MSM Mobile Display Subsystem (MDSS) encapsulates sub-blocks
-> like DPU display controller, DSI, EDP etc. Add required DPU
-> device tree bindings for SC7280.
->
-> Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
-> ---
+In case of MHI MMIO writes, the register field write function needs to do reads
+before writes are performed. Propagate read failures such that callers are made
+aware of those and can take appropriate action instead of running blind.
 
-Please send a cover-letter next time.
+Optimizing the MMIO initialization function to use mhi_write_reg() in most cases
+should also be done to improve design.
 
-Do you have the display port dts bits and driver code ready too? Can it
-be part of this patch series?
+These patches were tested on X86_64 architecture with Ubuntu 18.04 and SDX65
+attach.
+
+Bhaumik Bhatt (2):
+  bus: mhi: core: Bail on writing register fields if read fails
+  bus: mhi: core: Optimize and update MMIO register write method
+
+ drivers/bus/mhi/core/boot.c     | 25 ++++++++++-----
+ drivers/bus/mhi/core/init.c     | 70 +++++++++++++++++++++++------------------
+ drivers/bus/mhi/core/internal.h |  7 +++--
+ drivers/bus/mhi/core/main.c     |  9 ++++--
+ 4 files changed, 67 insertions(+), 44 deletions(-)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
