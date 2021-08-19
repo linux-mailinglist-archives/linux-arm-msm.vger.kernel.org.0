@@ -2,237 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BD28D3F1894
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Aug 2021 13:53:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 33FB63F19F4
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Aug 2021 15:05:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239025AbhHSLyT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Aug 2021 07:54:19 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:62114 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238931AbhHSLyT (ORCPT
+        id S238161AbhHSNGV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Aug 2021 09:06:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51920 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235893AbhHSNGV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Aug 2021 07:54:19 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1629374023; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=i66q2zTCloki0moxZ/u6js2b36dxRdxY0yzFrFjiXLI=; b=Mz/Wj+OcTVxWoCGdO2aDCnNO4MWqpwHG6MXWfcYo9UBa/ULVXFF0Mz1pNNcugN1uKsbUl3s7
- XGLI6HEhSbp8gufu8YPk/LfyQ6YhxFucb585m31HPJE5MOD6jNaXCNHLWJrUB04S/ZJSo0s4
- /KN91XAwM2YJsBV88fDdXc6hCWg=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 611e46412892f803bcd3de26 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 19 Aug 2021 11:53:37
- GMT
-Sender: mkshah=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A9943C4338F; Thu, 19 Aug 2021 11:53:36 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from mkshah-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CFC4CC43619;
-        Thu, 19 Aug 2021 11:53:32 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org CFC4CC43619
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Maulik Shah <mkshah@codeaurora.org>
-To:     maz@kernel.org, tglx@linutronix.de
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, bjorn.andersson@linaro.org,
-        linus.walleij@linaro.org, tkjos@google.com, lsrao@codeaurora.org,
-        Maulik Shah <mkshah@codeaurora.org>
-Subject: [PATCH v2 3/3] irqchip/qcom-pdc: Start getting rid of the GPIO_NO_WAKE_IRQ
-Date:   Thu, 19 Aug 2021 17:23:13 +0530
-Message-Id: <1629373993-13370-4-git-send-email-mkshah@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1629373993-13370-1-git-send-email-mkshah@codeaurora.org>
-References: <1629373993-13370-1-git-send-email-mkshah@codeaurora.org>
+        Thu, 19 Aug 2021 09:06:21 -0400
+Received: from mail-pg1-x52c.google.com (mail-pg1-x52c.google.com [IPv6:2607:f8b0:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 409BDC061756
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Aug 2021 06:05:45 -0700 (PDT)
+Received: by mail-pg1-x52c.google.com with SMTP id t1so5847354pgv.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Aug 2021 06:05:45 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=j8qRe1VcgbKWgoFHwQvjx82rgCmqdfKPSvrqgoYqCbA=;
+        b=jdk7f1rzl3NRxVo1+xPnWg+iCvrUhWP14lkj84hbls/oNbMOmphY8w52NYVAxKp3h/
+         jUXYBmZ4cPn6QbmLihNW6zppH+1H6Evm6Wl6t99703iPjbUcosFND1eH1oAtZvVc6t+a
+         /mURa0GkFJ8Ux9Niv3UZlUx8NIa7m5w8yBQNU5DVHCIsON+KNdfDg8Sw3YRz81hBL3W7
+         1ws1vPcsoH6pAk1O+seh5qKXpuMAW8oVJMpFuA8+0D/s3coWn4BDcoEJz8anuqssKGya
+         ujsxN+9TSlSINtJrrHbYaJ+SrVLFUgENjLkDEQ+6KE1CflQTJ1NqE/3uqzyLFH/hHCFw
+         G2PA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=j8qRe1VcgbKWgoFHwQvjx82rgCmqdfKPSvrqgoYqCbA=;
+        b=VCr6ACBRucfMW+RWmhXtoIGFMCFALzJdLCHCPt4OXI1rwgZ8VmHfRJAOXjCS0rK1yp
+         cvkFEued9hOiIt1hJvLh00ys0c9uPiDXK7Iq7LcyLzEkdUjv1XQynCPbMiXvD8WbCQS1
+         nzu0iEyoZ2Svnvfh9RZ5siohjCHV4z7moPmd70Y70sKtXCh9kr4edWwGm68AFvmhlVDn
+         n58rXiG9nuAJy2slcTmJWLido+eqjpopXUdJM2Czm18M156InvPtwY0GV5sg1+DgINHG
+         UmUckOgB+cybxrQKZUvDgjfWCZX0fxGWMGdIerbVFMZNjoXRz2rPijRD68rbgu1yvX3l
+         oygw==
+X-Gm-Message-State: AOAM532sfR9MOu+zUE9VkuAghgRpFAtXCz8LyDfEY084wrmjFA9qi34x
+        tBWiKLhtJs9q9KZOULU6TgG+
+X-Google-Smtp-Source: ABdhPJwlVNkMT+7xFKhx8E+8JStufdEOlSgD/pRBJfUXBKrF7CvNcdgxlg7uDkzV3BlxwcQZUAHUig==
+X-Received: by 2002:a63:2541:: with SMTP id l62mr14330979pgl.183.1629378344655;
+        Thu, 19 Aug 2021 06:05:44 -0700 (PDT)
+Received: from thinkpad ([2409:4072:6298:4497:5a1e:ff34:9091:5bac])
+        by smtp.gmail.com with ESMTPSA id fh2sm3135830pjb.12.2021.08.19.06.05.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 19 Aug 2021 06:05:44 -0700 (PDT)
+Date:   Thu, 19 Aug 2021 18:35:37 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     kishon@ti.com, lorenzo.pieralisi@arm.com, bhelgaas@google.com,
+        robh@kernel.org
+Cc:     devicetree@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        hemantk@codeaurora.org, smohanad@codeaurora.org,
+        bjorn.andersson@linaro.org, sallenki@codeaurora.org,
+        skananth@codeaurora.org, vpernami@codeaurora.org,
+        vbadigan@codeaurora.org
+Subject: Re: [PATCH v7 0/3] Add Qualcomm PCIe Endpoint driver support
+Message-ID: <20210819130537.GA200135@thinkpad>
+References: <20210722121242.47838-1-manivannan.sadhasivam@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210722121242.47838-1-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Marc Zyngier <maz@kernel.org>
+On Thu, Jul 22, 2021 at 05:42:39PM +0530, Manivannan Sadhasivam wrote:
+> Hello,
+> 
+> This series adds support for Qualcomm PCIe Endpoint controller found
+> in platforms like SDX55. The Endpoint controller is based on the designware
+> core with additional Qualcomm wrappers around the core.
+> 
+> The driver is added separately unlike other Designware based drivers that
+> combine RC and EP in a single driver. This is done to avoid complexity and
+> to maintain this driver autonomously.
+> 
+> The driver has been validated with an out of tree MHI function driver on
+> SDX55 based Telit FN980 EVB connected to x86 host machine over PCIe.
+> 
 
-gpio_to_irq() reports error at irq_domain_trim_hierarchy() for non
-wakeup capable GPIOs that do not have dedicated interrupt at GIC.
+Ping on this series!
 
-Since PDC irqchip do not allocate irq at parent GIC domain for such
-GPIOs indicate same by using irq_domain_disconnect_hierarchy() for
-PDC and parent GIC domains.
+Thanks,
+Mani
 
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-[mkshah: Add loop to disconnect for all parents]
-Tested-by: Maulik Shah <mkshah@codeaurora.org>
----
- drivers/irqchip/qcom-pdc.c | 75 +++++++++++-----------------------------------
- 1 file changed, 18 insertions(+), 57 deletions(-)
-
-diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
-index 32d5920..696afca 100644
---- a/drivers/irqchip/qcom-pdc.c
-+++ b/drivers/irqchip/qcom-pdc.c
-@@ -53,26 +53,6 @@ static u32 pdc_reg_read(int reg, u32 i)
- 	return readl_relaxed(pdc_base + reg + i * sizeof(u32));
- }
- 
--static int qcom_pdc_gic_get_irqchip_state(struct irq_data *d,
--					  enum irqchip_irq_state which,
--					  bool *state)
--{
--	if (d->hwirq == GPIO_NO_WAKE_IRQ)
--		return 0;
--
--	return irq_chip_get_parent_state(d, which, state);
--}
--
--static int qcom_pdc_gic_set_irqchip_state(struct irq_data *d,
--					  enum irqchip_irq_state which,
--					  bool value)
--{
--	if (d->hwirq == GPIO_NO_WAKE_IRQ)
--		return 0;
--
--	return irq_chip_set_parent_state(d, which, value);
--}
--
- static void pdc_enable_intr(struct irq_data *d, bool on)
- {
- 	int pin_out = d->hwirq;
-@@ -91,38 +71,16 @@ static void pdc_enable_intr(struct irq_data *d, bool on)
- 
- static void qcom_pdc_gic_disable(struct irq_data *d)
- {
--	if (d->hwirq == GPIO_NO_WAKE_IRQ)
--		return;
--
- 	pdc_enable_intr(d, false);
- 	irq_chip_disable_parent(d);
- }
- 
- static void qcom_pdc_gic_enable(struct irq_data *d)
- {
--	if (d->hwirq == GPIO_NO_WAKE_IRQ)
--		return;
--
- 	pdc_enable_intr(d, true);
- 	irq_chip_enable_parent(d);
- }
- 
--static void qcom_pdc_gic_mask(struct irq_data *d)
--{
--	if (d->hwirq == GPIO_NO_WAKE_IRQ)
--		return;
--
--	irq_chip_mask_parent(d);
--}
--
--static void qcom_pdc_gic_unmask(struct irq_data *d)
--{
--	if (d->hwirq == GPIO_NO_WAKE_IRQ)
--		return;
--
--	irq_chip_unmask_parent(d);
--}
--
- /*
-  * GIC does not handle falling edge or active low. To allow falling edge and
-  * active low interrupts to be handled at GIC, PDC has an inverter that inverts
-@@ -159,14 +117,10 @@ enum pdc_irq_config_bits {
-  */
- static int qcom_pdc_gic_set_type(struct irq_data *d, unsigned int type)
- {
--	int pin_out = d->hwirq;
- 	enum pdc_irq_config_bits pdc_type;
- 	enum pdc_irq_config_bits old_pdc_type;
- 	int ret;
- 
--	if (pin_out == GPIO_NO_WAKE_IRQ)
--		return 0;
--
- 	switch (type) {
- 	case IRQ_TYPE_EDGE_RISING:
- 		pdc_type = PDC_EDGE_RISING;
-@@ -191,8 +145,8 @@ static int qcom_pdc_gic_set_type(struct irq_data *d, unsigned int type)
- 		return -EINVAL;
- 	}
- 
--	old_pdc_type = pdc_reg_read(IRQ_i_CFG, pin_out);
--	pdc_reg_write(IRQ_i_CFG, pin_out, pdc_type);
-+	old_pdc_type = pdc_reg_read(IRQ_i_CFG, d->hwirq);
-+	pdc_reg_write(IRQ_i_CFG, d->hwirq, pdc_type);
- 
- 	ret = irq_chip_set_type_parent(d, type);
- 	if (ret)
-@@ -216,12 +170,12 @@ static int qcom_pdc_gic_set_type(struct irq_data *d, unsigned int type)
- static struct irq_chip qcom_pdc_gic_chip = {
- 	.name			= "PDC",
- 	.irq_eoi		= irq_chip_eoi_parent,
--	.irq_mask		= qcom_pdc_gic_mask,
--	.irq_unmask		= qcom_pdc_gic_unmask,
-+	.irq_mask		= irq_chip_mask_parent,
-+	.irq_unmask		= irq_chip_unmask_parent,
- 	.irq_disable		= qcom_pdc_gic_disable,
- 	.irq_enable		= qcom_pdc_gic_enable,
--	.irq_get_irqchip_state	= qcom_pdc_gic_get_irqchip_state,
--	.irq_set_irqchip_state	= qcom_pdc_gic_set_irqchip_state,
-+	.irq_get_irqchip_state	= irq_chip_get_parent_state,
-+	.irq_set_irqchip_state	= irq_chip_set_parent_state,
- 	.irq_retrigger		= irq_chip_retrigger_hierarchy,
- 	.irq_set_type		= qcom_pdc_gic_set_type,
- 	.flags			= IRQCHIP_MASK_ON_SUSPEND |
-@@ -282,7 +236,7 @@ static int qcom_pdc_alloc(struct irq_domain *domain, unsigned int virq,
- 
- 	parent_hwirq = get_parent_hwirq(hwirq);
- 	if (parent_hwirq == PDC_NO_PARENT_IRQ)
--		return 0;
-+		return irq_domain_disconnect_hierarchy(domain->parent, virq);
- 
- 	if (type & IRQ_TYPE_EDGE_BOTH)
- 		type = IRQ_TYPE_EDGE_RISING;
-@@ -314,22 +268,29 @@ static int qcom_pdc_gpio_alloc(struct irq_domain *domain, unsigned int virq,
- 	irq_hw_number_t hwirq, parent_hwirq;
- 	unsigned int type;
- 	int ret;
-+	struct irq_domain *parent;
- 
- 	ret = qcom_pdc_translate(domain, fwspec, &hwirq, &type);
- 	if (ret)
- 		return ret;
- 
-+	if (hwirq == GPIO_NO_WAKE_IRQ) {
-+		for (parent = domain; parent; parent = parent->parent) {
-+			ret = irq_domain_disconnect_hierarchy(parent, virq);
-+			if (ret)
-+				return ret;
-+		}
-+		return 0;
-+	}
-+
- 	ret = irq_domain_set_hwirq_and_chip(domain, virq, hwirq,
- 					    &qcom_pdc_gic_chip, NULL);
- 	if (ret)
- 		return ret;
- 
--	if (hwirq == GPIO_NO_WAKE_IRQ)
--		return 0;
--
- 	parent_hwirq = get_parent_hwirq(hwirq);
- 	if (parent_hwirq == PDC_NO_PARENT_IRQ)
--		return 0;
-+		return irq_domain_disconnect_hierarchy(domain->parent, virq);
- 
- 	if (type & IRQ_TYPE_EDGE_BOTH)
- 		type = IRQ_TYPE_EDGE_RISING;
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
-
+> Thanks,
+> Mani
+> 
+> Changes in v7:
+> 
+> * Used existing naming convention for callback functions
+> * Used active low state for PERST# gpio
+> 
+> Changes in v6:
+> 
+> * Removed status property in DT and added reviewed tag from Rob
+> * Switched to _relaxed variants as suggested by Rob
+> 
+> Changes in v5:
+> 
+> * Removed the DBI register settings that are not needed
+> * Used the standard definitions available in pci_regs.h
+> * Added defines for all the register fields
+> * Removed the left over code from previous iteration
+> 
+> Changes in v4:
+> 
+> * Removed the active_config settings needed for IPA integration
+> * Switched to writel for couple of relaxed versions that sneaked in
+> 
+> Changes in v3:
+> 
+> * Lot of minor cleanups to the driver patch based on review from Bjorn and Stan.
+> * Noticeable changes are:
+>   - Got rid of _relaxed calls and used readl/writel
+>   - Got rid of separate TCSR memory region and used syscon for getting the
+>     register offsets for Perst registers
+>   - Changed the wake gpio handling logic
+>   - Added remove() callback and removed "suppress_bind_attrs"
+>   - stop_link() callback now just disables PERST IRQ
+> * Added MMIO region and doorbell interrupt to the binding
+> * Added logic to write MMIO physicall address to MHI base address as it is
+>   for the function driver to work
+> 
+> Changes in v2:
+> 
+> * Addressed the comments from Rob on bindings patch
+> * Modified the driver as per binding change
+> * Fixed the warnings reported by Kbuild bot
+> * Removed the PERST# "enable_irq" call from probe()
+> 
+> Manivannan Sadhasivam (3):
+>   dt-bindings: pci: Add devicetree binding for Qualcomm PCIe EP
+>     controller
+>   PCI: qcom-ep: Add Qualcomm PCIe Endpoint controller driver
+>   MAINTAINERS: Add entry for Qualcomm PCIe Endpoint driver and binding
+> 
+>  .../devicetree/bindings/pci/qcom,pcie-ep.yaml | 158 ++++
+>  MAINTAINERS                                   |  10 +-
+>  drivers/pci/controller/dwc/Kconfig            |  10 +
+>  drivers/pci/controller/dwc/Makefile           |   1 +
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c     | 710 ++++++++++++++++++
+>  5 files changed, 888 insertions(+), 1 deletion(-)
+>  create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+>  create mode 100644 drivers/pci/controller/dwc/pcie-qcom-ep.c
+> 
+> -- 
+> 2.25.1
+> 
