@@ -2,100 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 680DB3F19F7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Aug 2021 15:06:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 112A23F1A78
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Aug 2021 15:36:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232821AbhHSNHJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Aug 2021 09:07:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52110 "EHLO
+        id S240152AbhHSNhW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Aug 2021 09:37:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59168 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230216AbhHSNHG (ORCPT
+        with ESMTP id S240141AbhHSNhV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Aug 2021 09:07:06 -0400
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 560F5C061757
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Aug 2021 06:06:30 -0700 (PDT)
-Received: by mail-pf1-x431.google.com with SMTP id y11so5439287pfl.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Aug 2021 06:06:30 -0700 (PDT)
+        Thu, 19 Aug 2021 09:37:21 -0400
+Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C755EC061756
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Aug 2021 06:36:44 -0700 (PDT)
+Received: by mail-ej1-x62a.google.com with SMTP id x11so13137443ejv.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Aug 2021 06:36:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ZUuW6CkvogNC0GIMX+IQPONt7G2cLV90jQ7k/cU6WLo=;
-        b=tf/HLOQY/32g5RxLsMgCbrCbZDkzKVH4iF2ZSAmdbBGISvFXk9vHoSL1dg+SMbm6DU
-         K9N466tC0ovKSLD5KJUcWVpfkJLxtbwo+YRofnPuoJmXRYYMMsq4SBMaUltyo1CuQQpl
-         mcrDXXXbp4YABMQIGyEoWivERBzrMDTZ5BguFUgUz4HS/cbshGswy45BDPPCs22wDTLp
-         NsCMUe1NXh/npYtCMmJdNRs3xjVMx0yODbOwA7p7VMiIGhmJ+4ICdfqf8J4ZCsNTA7mB
-         Hdw7Cf8Gapq8zasc/36S79LXnK/9TgBtVg8TWswH4MbTMiobLZ3ed84BRCkOC3IaCbDu
-         nwHQ==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/BAopytyK/R8bUpbK+b7Q0+6GCUrOVsER44boOsZ9dQ=;
+        b=UeVsli6ZqeVfyxuDP82l6Qchdxd0SS9uCWKergbqRpdGjWukw6CdmP19lDB0j6CeHc
+         kZoC1YnwRSRcSKTrfDIP46iuVub+8E5lBPazngHEZVtCxE8Dt99wvylfuFdsJxJTKcei
+         tgQwEKfYgXVjIv1RvlErvCsIk0WxVwr8WrCI74L3F26QlW7QyC7Y5NRDLhGrdVguY501
+         hB6uoV6dn4V6XN/KCizDVURHciZZrB8Qcjs7iROlCpv14cTfzS2vaZ8BbBqS+9lSDE8U
+         6DP4dPYFalWvW/zQpp560Ne0VjzaY5T/Db8Zn2uCZAWs0Ei5wlpAYXCdvXYO30jaIqBe
+         /I0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ZUuW6CkvogNC0GIMX+IQPONt7G2cLV90jQ7k/cU6WLo=;
-        b=XWkwhhNJd53OgYG2Um4dfM0PfEV/wGY4WCRn8ig5svMIu3nr2bBzi73Qm8QdmtTJKP
-         vxJjU/OqVBrcg6C1CKAQujtZpVEnGH9N+ShijUev1NATJ/71zpw2+pr458yhMKhOUWDz
-         R9yLcbQE9romq8xjmR41ei80N9jZmpAtdYetgOld4xFXhfcnlDjKw3SJLF2ApYBGhfOx
-         ZPT7PK2IRC3vp01zTTLdJ2+ULJoXrC1MWQY0fdFr5QIn9kFxHEdPDViLVDqhvCDROO0P
-         p7qbp7hB3zmvIZi7ob6YmyfOPUpIi56JPQjq8sTv5+wumReQL7cUuWrkrYASuLuSr9Gy
-         Srhg==
-X-Gm-Message-State: AOAM533gX0IS40sgzCs1jkqtGv+1PSx5qquTEG3AviEHJoBpwk51ijCx
-        y9rELdcwQ2KuzqgwYsiv8qDn
-X-Google-Smtp-Source: ABdhPJx0Esfl/ZnW3okg0FVANmoc2rkKbzXPAvQstEHgv6gVgEP8FpM2X783udwvgLVHUTym9ud0Uw==
-X-Received: by 2002:a63:510a:: with SMTP id f10mr14064796pgb.249.1629378389545;
-        Thu, 19 Aug 2021 06:06:29 -0700 (PDT)
-Received: from thinkpad ([2409:4072:6298:4497:5a1e:ff34:9091:5bac])
-        by smtp.gmail.com with ESMTPSA id oj2sm2944717pjb.33.2021.08.19.06.06.25
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=/BAopytyK/R8bUpbK+b7Q0+6GCUrOVsER44boOsZ9dQ=;
+        b=OXBprblO6gLIKxauQDiJJj1NxAkvIHpwayUwArpROUNWS3tyT+d4SBmYc3CkNVMeXL
+         qU4pqCq3KM2P2qAoXZuuJzvHc/zrym/7Fv0sIG3nC95ge138aHMZdg47y8JU5OTq4iku
+         v+45DCy57RjxSob5PTMWxGSCYP36zWx5UjCO5Yfw4KsOk5t0nGBDXdKprJBi26BI01fX
+         o1odGdoHetddksnVcP/HprMKv54umQKzXJIv67MFS7mBydd0XiLWFJc50PaTv40vRuNP
+         ERqlLXq7epjy3JXmlRWsOxcs6CnpKM4nixMu7BqETfA0MLvr0k++jlZ0SP/MuX6GvmoG
+         e8+g==
+X-Gm-Message-State: AOAM532sM5VcvII3AQ+6CR5kYcTWh8ZuesmsZTnOZNNsixbke3f6OFWg
+        X03+rqkLPbNlbIJSPWYLvn0MFQ==
+X-Google-Smtp-Source: ABdhPJzWpeXlmAlC6oKFJXd83aDooz5YGi7xRGcALh6ivDz0hfP0Xwl6LH+PhBTG6C5khTlVBapj4Q==
+X-Received: by 2002:a17:906:ad7:: with SMTP id z23mr16114025ejf.419.1629380203406;
+        Thu, 19 Aug 2021 06:36:43 -0700 (PDT)
+Received: from xps7590.fritz.box ([2a02:2454:3e5:b700:eb3d:3695:30c3:3572])
+        by smtp.gmail.com with ESMTPSA id ay20sm1770138edb.91.2021.08.19.06.36.42
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Aug 2021 06:06:29 -0700 (PDT)
-Date:   Thu, 19 Aug 2021 18:36:23 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     kishon@ti.com, lorenzo.pieralisi@arm.com, bhelgaas@google.com
-Cc:     linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        smohanad@codeaurora.org
-Subject: Re: [PATCH 0/5] PCI: endpoint: Add support for additional notifiers
-Message-ID: <20210819130623.GB200135@thinkpad>
-References: <20210616115913.138778-1-manivannan.sadhasivam@linaro.org>
+        Thu, 19 Aug 2021 06:36:43 -0700 (PDT)
+From:   Robert Foss <robert.foss@linaro.org>
+To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch, dmitry.baryshkov@linaro.org,
+        abhinavk@codeaurora.org, angelogioacchino.delregno@somainline.org,
+        mkrishn@codeaurora.org, kalyan_t@codeaurora.org,
+        lee.jones@linaro.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Cc:     Robert Foss <robert.foss@linaro.org>
+Subject: [PATCH v1] drm/msm/dpu: Fix address of SM8150 PINGPONG5 IRQ register
+Date:   Thu, 19 Aug 2021 15:36:36 +0200
+Message-Id: <20210819133636.2045766-1-robert.foss@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210616115913.138778-1-manivannan.sadhasivam@linaro.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Jun 16, 2021 at 05:29:08PM +0530, Manivannan Sadhasivam wrote:
-> Hello,
-> 
-> This series adds support for additional notifiers in the PCI endpoint
-> framework. The notifiers LINK_DOWN, BME, PME, and D_STATE are generic
-> for all PCI endpoints but there is also a custom notifier (CUSTOM) added
-> to pass the device/vendor specific events to EPF from EPC.
-> 
-> The example usage of all notifiers is provided in the commit description.
-> 
+Both PINGPONG4 and PINGPONG5 IRQ registers are using the
+same address, which is incorrect. PINGPONG4 should use the
+register offset 30, and PINGPONG5 should use the register
+offset 31 according to the downstream driver.
 
-Ping on this series!
+Fixes: 667e9985ee24 ("drm/msm/dpu: replace IRQ lookup with the data in hw catalog")
+Signed-off-by: Robert Foss <robert.foss@linaro.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Thanks,
-Mani
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+index 2e482cdd7b3c5..420d78cfce8af 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+@@ -794,7 +794,7 @@ static const struct dpu_pingpong_cfg sm8150_pp[] = {
+ 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 30),
+ 			-1),
+ 	PP_BLK("pingpong_5", PINGPONG_5, 0x72800, MERGE_3D_2, sdm845_pp_sblk,
+-			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 30),
++			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 31),
+ 			-1),
+ };
+ 
+-- 
+2.30.2
 
-> Thanks,
-> Mani
-> 
-> Manivannan Sadhasivam (5):
->   PCI: endpoint: Add linkdown notifier support
->   PCI: endpoint: Add BME notifier support
->   PCI: endpoint: Add PME notifier support
->   PCI: endpoint: Add D_STATE notifier support
->   PCI: endpoint: Add custom notifier support
-> 
->  drivers/pci/endpoint/pci-epc-core.c | 89 +++++++++++++++++++++++++++++
->  include/linux/pci-epc.h             |  5 ++
->  include/linux/pci-epf.h             |  5 ++
->  3 files changed, 99 insertions(+)
-> 
-> -- 
-> 2.25.1
-> 
