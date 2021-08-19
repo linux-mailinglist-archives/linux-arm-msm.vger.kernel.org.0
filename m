@@ -2,83 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5BF353F113F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Aug 2021 05:09:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 77DB23F11CD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Aug 2021 05:36:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235679AbhHSDKN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Aug 2021 23:10:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55786 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235770AbhHSDKL (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Aug 2021 23:10:11 -0400
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0F647C061764
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Aug 2021 20:09:33 -0700 (PDT)
-Received: by mail-ot1-x336.google.com with SMTP id x10-20020a056830408a00b004f26cead745so6888058ott.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Aug 2021 20:09:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=SsXVSz/26EZKyGqHQ3H98C+Z+vwznDQGFVyM/rcTClE=;
-        b=oRLpRJvMBywHPqy3mP5+xHspefHDLfoPPXCmKMZGgiwYSxb4ZL7W+wPmesXjmhuXq4
-         AHMRMRyApr/SLz/94iRdy7wm4mdQua7EX6AQuK2uiYcxmPERmaJBVr96U3E08hWWntYk
-         lB8SKlcIKP9h+mB+Ozn/ywfXd7y+m7AIinh9qsXnJIFv2xRCxPs/vuME9ou1AdJrBJ9d
-         NV2vuEaZQ+pgj3rt4MLAXaOLW0U/5ZXBMhUIbm5ZVF/PHNyuB3SToMWj1Ay5Q966V+mM
-         QbIYlzPBNenCzZ550cq26p/jAQolvTHPkat/VGOigKlnGfhOVK9cjYdtBQjKg7mGJi+l
-         0qhQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=SsXVSz/26EZKyGqHQ3H98C+Z+vwznDQGFVyM/rcTClE=;
-        b=BG3lx+97E7QAfjVIh4osBp5TxUPpDRijDTVkTLIjC57npanyAby94ngzyHvOL655dI
-         SgnET12rbOwdSR4/VSOe7DYbtA3v+0V8jbZoEoSzTXRiQACueTWhir9aPPKJtmgnrf+i
-         D0SKS3GeAqQnyumexJQwq0z9zmFdLWkjNbt32Jk7sRDNsudF4SZsOUmya3ATc0k8kvXT
-         hJ02fN52UQ1iaUf6Xx8ZfTka4MbqJQkrdLK0K2TOE6bINdyRkNhQlQigjXpYh66sw9e9
-         XJJAY9rCorJxtNrZ8P26gYSNJyanX2dQIwiBV3qFfqeGtHGUW1Jp0Ljl6n7r++DhmpiV
-         yKUg==
-X-Gm-Message-State: AOAM533MZo5Im9OrFaZx+zKJufnT9F7JqT6BIgdx+uR4Dv2KkJJy7sWJ
-        2bynXr0fc1Xl4JNb7K8JGuPXlQ==
-X-Google-Smtp-Source: ABdhPJzUr7YNQNUEn92uuV9i+Siah4bxj2eJM18N02R01SKX3saiB6iP+BzbrB8LhTchbMu/QBzTPg==
-X-Received: by 2002:a9d:4d90:: with SMTP id u16mr10046192otk.226.1629342572357;
-        Wed, 18 Aug 2021 20:09:32 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id j70sm449089otj.38.2021.08.18.20.09.31
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 18 Aug 2021 20:09:31 -0700 (PDT)
-Date:   Wed, 18 Aug 2021 22:09:30 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     quic_vamslank@quicinc.com
-Cc:     agross@kernel.org, linus.walleij@linaro.org,
-        manivannan.sadhasivam@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-gpio@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] pinctrl: qcom: Add SDX65 pincontrol driver
-Message-ID: <YR3Lah3xSMnrfXSd@builder.lan>
-References: <cover.1626987605.git.quic_vamslank@quicinc.com>
- <ae414345bf85359f38895b44cb53eeb82c4f8758.1626987605.git.quic_vamslank@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ae414345bf85359f38895b44cb53eeb82c4f8758.1626987605.git.quic_vamslank@quicinc.com>
+        id S236481AbhHSDhT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Aug 2021 23:37:19 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:17277 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236448AbhHSDhS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 18 Aug 2021 23:37:18 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1629344202; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=BRlKnvIszGeVtgYU6QZFP1RjVcH510IRHsfahZ/MSvw=; b=saK2uFpuYWySo5tKPlFEGAAq/ZjhIIhOfFsCatbJsIE1nVbb7Clny/KIikP6qbHGvLItGRIa
+ pxiBOwAdtchtkAStBhaxGUsk6sTpfYubBOKshW0XQP2nrC7v/tzPPJRXOts1nWXh0af1JRDR
+ kCDDmWzayu4YoLAgzzJNWVtJgG0=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 611dd1c9454b7a558f80f29b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 19 Aug 2021 03:36:41
+ GMT
+Sender: sibis=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2E1EFC4361A; Thu, 19 Aug 2021 03:36:41 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D4535C4338F;
+        Thu, 19 Aug 2021 03:36:34 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org D4535C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     bjorn.andersson@linaro.org, robh+dt@kernel.org, will@kernel.org,
+        saiprakash.ranjan@codeaurora.org, swboyd@chromium.org,
+        mka@chromium.org
+Cc:     ohad@wizery.com, agross@kernel.org, mathieu.poirier@linaro.org,
+        robin.murphy@arm.com, joro@8bytes.org, p.zabel@pengutronix.de,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, evgreen@chromium.org,
+        dianders@chromium.org, Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH v3 00/10] Add Modem support on SC7280 SoCs
+Date:   Thu, 19 Aug 2021 09:06:15 +0530
+Message-Id: <1629344185-27368-1-git-send-email-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 22 Jul 16:18 CDT 2021, quic_vamslank@quicinc.com wrote:
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sdx65.c b/drivers/pinctrl/qcom/pinctrl-sdx65.c
-[..]
-> +enum sdx65_functions {
-> +	msm_mux_QLINK0_WMSS,
+This patch series adds support for booting the Modem Q6 DSP found on
+Qualcomm's SC7280 SoCs.
 
-I think this would be more aesthetically pleasing if it was lower case,
-like all the other entries. Can you please fix that?
+Depends on:
+qmp_send: https://patchwork.kernel.org/project/linux-arm-msm/cover/1629113954-14084-1-git-send-email-deesin@codeaurora.org/
+rproc qmp: https://patchwork.kernel.org/project/linux-arm-msm/cover/1629342136-3667-1-git-send-email-sibis@codeaurora.org/
 
+V3:
+ * Keep the memory map version in commit message (patch 6). [Bjorn]
+ * Rename tcsr node and add qualifying compatibles to tcsr and imem nodes
+   (patch 8). [Bjorn]
+ * Place remoteproc_mpss node in alphabetical order above pinctrl
+   section (patch 10). [Stephen]
 
-With that:
+V2:
+ * Misc. typos (patch 3). [Matthias]
+ * Document the q-channel takedown procedure (patch 5). [Matthias]
+ * Split reserved memory updates between SoC and platform (patch 6). [Matthias]
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Sibi Sankar (10):
+  dt-bindings: remoteproc: qcom: pas: Add SC7280 MPSS support
+  remoteproc: qcom: pas: Add SC7280 Modem support
+  dt-bindings: remoteproc: qcom: Update Q6V5 Modem PIL binding
+  iommu/arm-smmu-qcom: Request direct mapping for modem device
+  remoteproc: mss: q6v5-mss: Add modem support on SC7280
+  arm64: dts: qcom: sc7280: Update reserved memory map
+  arm64: dts: qcom: sc7280: Add/Delete/Update reserved memory nodes
+  arm64: dts: qcom: sc7280: Add nodes to boot modem
+  arm64: dts: qcom: sc7280: Add Q6V5 MSS node
+  arm64: dts: qcom: sc7280: Update Q6V5 MSS node
 
-Regards,
-Bjorn
+ .../devicetree/bindings/remoteproc/qcom,adsp.yaml  |   6 +
+ .../devicetree/bindings/remoteproc/qcom,q6v5.txt   |  32 ++-
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi           |  59 +++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               | 107 +++++++++
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c         |   1 +
+ drivers/remoteproc/qcom_q6v5_mss.c                 | 252 ++++++++++++++++++++-
+ drivers/remoteproc/qcom_q6v5_pas.c                 |   1 +
+ 7 files changed, 452 insertions(+), 6 deletions(-)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
