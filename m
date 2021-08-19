@@ -2,107 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 57AB53F1FB8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Aug 2021 20:15:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CC1DF3F203C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Aug 2021 20:55:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234161AbhHSSQC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Aug 2021 14:16:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40424 "EHLO
+        id S233673AbhHSSz6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Aug 2021 14:55:58 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49608 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233971AbhHSSPt (ORCPT
+        with ESMTP id S231500AbhHSSz5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Aug 2021 14:15:49 -0400
-Received: from mail-ej1-x631.google.com (mail-ej1-x631.google.com [IPv6:2a00:1450:4864:20::631])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 460C5C061764;
-        Thu, 19 Aug 2021 11:15:12 -0700 (PDT)
-Received: by mail-ej1-x631.google.com with SMTP id h9so14702673ejs.4;
-        Thu, 19 Aug 2021 11:15:12 -0700 (PDT)
+        Thu, 19 Aug 2021 14:55:57 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BA23C061757
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Aug 2021 11:55:21 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id y14-20020a0568302a0e00b0051acbdb2869so3160987otu.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Aug 2021 11:55:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=QZeyn80AkA3R6umXDzeR1g+4aAh8ymRt/6Rb4eSHFWs=;
-        b=r1ndwMAMQnxUrOKgNwAKYiBN7MlQDLZKEv0cewJoHvSni3A5CPwhbE6j8UBENjsRGb
-         RdsTVrOHXfHdcPp5FVeijubn5mbnt97KQApJPKlrm9UpabqBM3PRJpM6lvZetnpDcogg
-         9jXVFPtoOAdNtJErsmRDq/AUHeHruDSwRmCnPczlcp2EVz2ZpiS3dpVYVHfLFYhudgle
-         xRQBx9OLi4WGVG7FferiNubK9+1fBvcLAS4Odieuff1529RIez7V/K4baws+NuJf4SdB
-         //fVCqYQR068cwC0vcmpx6rs+HZIlO4a0qdlvztKBjN5+Ts4rAVEbIuiwXo+EfRIzZYy
-         axLQ==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=mufyADO3wzTmydMEKiodSbUdOKfwxrgUWAkkX2NXaUY=;
+        b=B5HzGRXYpErfLHRWHuRP+Zy33rYrnFdRVwP7Ah1gQGFk/i9zrg1aoABJzQa5YXItvx
+         EqacP/RnFUoXW8QpswB3ajQvpr5tFQs9SFttQFyyGepb04kC6MSW7vr04ALR7Tp6YsL6
+         2SKy8QijVzn+OMTjRbonokc8ztS6vlHAJCRJY=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=QZeyn80AkA3R6umXDzeR1g+4aAh8ymRt/6Rb4eSHFWs=;
-        b=JpX8LgXjf1FCd3UyqOreWdQoDD2gXC4nVHyZHHXvzIHpvd4MaNAtL9PqIbT2lyzgJV
-         vibpeJRx3trCy/sxxSHYjT7bJ+lwg/GWqxHPIzuXxn8iZoS6r3ZB9URrL46AdugYQcTY
-         JsMu1zPW3dpAMqfxffHAYFqfJauTMa67FSUeYmJfVuU+qsvkTKgyjTBeVyb3yjCd/jM9
-         lcPLS9c5nDfdTek5FE0rQhcZCokHe6icY/jkImmBi5KdME5xG18v/ouPeCB8EhpUoHHW
-         dCo34b+O20EvSIv4GdoWlDui5Gro1eJGmri3omUpx+5DtStGs45GK6tpO/IbQ+vgGs8b
-         4+Ng==
-X-Gm-Message-State: AOAM532FP+MSUbMah1GOOuVIPx0DFFrXmCI+IY46CQW3Z2JADuHGIYMQ
-        /TkqrKVMll/3UINv+B/D6o8=
-X-Google-Smtp-Source: ABdhPJwv3I7xzyNM8XRr6uNEKaPEy8KXIrhmMI6EC0i7o6eqmhKhpFLy6+2KFRKJB2tDVagZwNtCLg==
-X-Received: by 2002:a17:906:dff3:: with SMTP id lc19mr17391652ejc.34.1629396910919;
-        Thu, 19 Aug 2021 11:15:10 -0700 (PDT)
-Received: from localhost.localdomain (185.239.71.98.16clouds.com. [185.239.71.98])
-        by smtp.gmail.com with ESMTPSA id ks20sm1599314ejb.101.2021.08.19.11.15.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Aug 2021 11:15:10 -0700 (PDT)
-From:   butt3rflyh4ck <butterflyhuangxx@gmail.com>
-To:     mani@kernel.org, davem@davemloft.net, kuba@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        butt3rflyh4ck <butterflyhhuangxx@gmail.com>
-Subject: [PATCH] net: qrtr: fix another OOB Read in qrtr_endpoint_post
-Date:   Fri, 20 Aug 2021 02:14:58 +0800
-Message-Id: <20210819181458.623832-1-butterflyhuangxx@gmail.com>
-X-Mailer: git-send-email 2.25.1
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=mufyADO3wzTmydMEKiodSbUdOKfwxrgUWAkkX2NXaUY=;
+        b=Fg0SEo9K5NFZlr/lXnLQrHyCImiV1zI51zDDiOh1KnqUPvtR9BF/Vy/w1JrO+6eBzN
+         B5AgpnTh0EKDgbgg3ARTLzfAkeqVfyTSLbxTzLskKlPRzA2n0v+V9a09K8oRGMGeY5YG
+         gEbFOFXajdRjcng3ngzsK3y2pCMmKL3ILXpz3krKyENEcykk6tVSmV4TGOufu6raZBrK
+         LuhvlD3lOXBuuJTV9Skod0CRKsx0jpXhTCpVbYsMFqxQm2aavQyNFeii68fKJF3j6wV0
+         dU6009CDFSxNdLFK9qasygOcWfN2WYHVbIBEDlrOpGIRt++oirEGBb6angYKF03tAozv
+         I/5w==
+X-Gm-Message-State: AOAM531usiaoLr6YYReTRZSJCXQwktjBFtnB8BtKvcqvJjPBEZsYvpMh
+        h0SXz/2t+usUHZVLPa6KJdCneywmE3rwcLHDgt98Sg==
+X-Google-Smtp-Source: ABdhPJyDkjYCzIY8JFWkTKloRjmY7nhy+s5wTC7enDEQ0Fet6vpBNfNpj9Ok/m3aRJ2NEVoUarlpUJanlewegEVS/E8=
+X-Received: by 2002:a9d:5542:: with SMTP id h2mr13355291oti.25.1629399320024;
+ Thu, 19 Aug 2021 11:55:20 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 19 Aug 2021 11:55:19 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <1629342136-3667-3-git-send-email-sibis@codeaurora.org>
+References: <1629342136-3667-1-git-send-email-sibis@codeaurora.org> <1629342136-3667-3-git-send-email-sibis@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Thu, 19 Aug 2021 11:55:19 -0700
+Message-ID: <CAE-0n531EgLx-gGJswmmNAFmy-P9z=Hh1N=fkLw_uemoeQnYVg@mail.gmail.com>
+Subject: Re: [PATCH v5 02/13] dt-bindings: remoteproc: qcom: pas: Add QMP property
+To:     Sibi Sankar <sibis@codeaurora.org>, bjorn.andersson@linaro.org,
+        mka@chromium.org, robh+dt@kernel.org
+Cc:     ulf.hansson@linaro.org, rjw@rjwysocki.net, agross@kernel.org,
+        ohad@wizery.com, mathieu.poirier@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dianders@chromium.org, rishabhb@codeaurora.org,
+        sidgup@codeaurora.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: butt3rflyh4ck <butterflyhhuangxx@gmail.com>
+Quoting Sibi Sankar (2021-08-18 20:02:05)
+> The load state power-domain, used by the co-processors to notify the
+> Always on Subsystem (AOSS) that a particular co-processor is up/down,
+> suffers from the side-effect of changing states during suspend/resume.
+> However the co-processors enter low-power modes independent to that of
+> the application processor and their states are expected to remain
+> unaltered across system suspend/resume cycles. To achieve this behavior
+> let's drop the load state power-domain and replace them with the qmp
+> property for all SoCs supporting low power mode signalling.
+>
 
-This check was incomplete, did not consider size is 0:
-
-	if (len != ALIGN(size, 4) + hdrlen)
-                    goto err;
-
-if size from qrtr_hdr is 0, the result of ALIGN(size, 4)
-will be 0, In case of len == hdrlen and size == 0
-in header this check won't fail and
-
-	if (cb->type == QRTR_TYPE_NEW_SERVER) {
-                /* Remote node endpoint can bridge other distant nodes */
-                const struct qrtr_ctrl_pkt *pkt = data + hdrlen;
-
-                qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
-        }
-
-will also read out of bound from data, which is hdrlen allocated block.
-
-Fixes: 194ccc88297a ("net: qrtr: Support decoding incoming v2 packets")
-Fixes: ad9d24c9429e ("net: qrtr: fix OOB Read in qrtr_endpoint_post")
-Signed-off-by: butt3rflyh4ck <butterflyhhuangxx@gmail.com>
----
- net/qrtr/qrtr.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
-
-diff --git a/net/qrtr/qrtr.c b/net/qrtr/qrtr.c
-index 171b7f3be6ef..0c30908628ba 100644
---- a/net/qrtr/qrtr.c
-+++ b/net/qrtr/qrtr.c
-@@ -493,7 +493,7 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
- 		goto err;
- 	}
- 
--	if (len != ALIGN(size, 4) + hdrlen)
-+	if (!size || len != ALIGN(size, 4) + hdrlen)
- 		goto err;
- 
- 	if (cb->dst_port != QRTR_PORT_CTRL && cb->type != QRTR_TYPE_DATA &&
--- 
-2.25.1
-
+How do we drop the load state property without breaking existing DTBs?
+Maybe we need to leave it there and then somehow make it optional? Or do
+we not care about this problem as the driver will start ignoring it?
