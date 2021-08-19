@@ -2,228 +2,173 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AF1753F17A2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Aug 2021 13:03:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DE0393F184A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Aug 2021 13:36:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238440AbhHSLEC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Aug 2021 07:04:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51182 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236149AbhHSLEA (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Aug 2021 07:04:00 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53127C061575;
-        Thu, 19 Aug 2021 04:03:24 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id w20so12028799lfu.7;
-        Thu, 19 Aug 2021 04:03:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=/xsfEEbUef+0PhexOPJnDNgUK0wlU6L3z6qq8pex2G4=;
-        b=ou2vOnvsg1YPX9EQb8p7nIbay+72BGHtmYxJ/uCF6Axg5uLF118aqBEqWOA6z3+SP3
-         TY8M7oETmOzxGVAOiJA0Yj16TeJsaNsDwgbMFTduSw/HOI8tBDqJee+FWp9aQTAfGc0A
-         JmRyuCiM6tZL2zbQ1LwZ5bCusAent7qD6d5vO6+/6g2hHBqjznHWWJydTY9wpv1GWOvg
-         amRo6xOMJdGYN04DGaIqoAN/1+Cu2JSQ6OkgDS8p+zco8ham2dd+jLbAfzbexUVjAy1C
-         h9LeYSL9fpEaYgH5g/7CU7CdEKlM7WOiPoBb7t5K6kuwsSrimCc56VzKO6rCQgzz80rs
-         sQOQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=/xsfEEbUef+0PhexOPJnDNgUK0wlU6L3z6qq8pex2G4=;
-        b=X/nZfxbZvFEZQ8G9v5csvDabYBHH1pBeIj/541F2JBFhfEmLCi+BcncX6BfRNs3W9i
-         ftUIm13nHqRUKZqZNz3N+oTKjkzdNWuLVWAJ9rRumcPfqqWuURpxzVSbse3FOqgk6QYN
-         jLg8ELj3bdVT5z9ceF97vobTFOai7BeiOvPuuMh6iNfoRed6qmm37ZskMNXG4tKQdo6f
-         c7neTanr8GVyU2eW/5fZS16NHDQvtQ3ij7ZQMCkS6OrUEBDAt4NweLPs9lXBoScnXSNO
-         R4bs5eY1afFiqMuxhmoCdo73kNNpe48/Y5lwcscwfsE+Z1TYepecL0NAWmmIUztC++vD
-         GSuA==
-X-Gm-Message-State: AOAM533u3c76AN2XehISImDUd4NLjo87hr5fA9MLiwZWt7uVa88yob1L
-        fMu4m7p5W4A+YYcN7+XKm7s=
-X-Google-Smtp-Source: ABdhPJz9GOmb4VA9APuG0iFfX3A7edPpmM5UdbUwO671XbEIM+3sLnQRi365KuptlzISZZWDKszW/g==
-X-Received: by 2002:ac2:549c:: with SMTP id t28mr9066731lfk.412.1629371002709;
-        Thu, 19 Aug 2021 04:03:22 -0700 (PDT)
-Received: from mobilestation ([95.79.127.110])
-        by smtp.gmail.com with ESMTPSA id e8sm235905ljj.132.2021.08.19.04.03.21
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Aug 2021 04:03:22 -0700 (PDT)
-Date:   Thu, 19 Aug 2021 14:03:20 +0300
-From:   Serge Semin <fancer.lancer@gmail.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Serge Semin <Sergey.Semin@baikalelectronics.ru>,
-        John Stultz <john.stultz@linaro.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux USB List <linux-usb@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        Amit Pundir <amit.pundir@linaro.org>
-Subject: Re: [PATCH 29/29] arm64: dts: qcom: Harmonize DWC USB3 DT nodes name
-Message-ID: <20210819110320.ikri4yjkp3zfuvqx@mobilestation>
-References: <d853df77-8d36-30b0-dd26-da1bfcb068e0@kernel.org>
- <20210721112531.xvu6ni5ksaehsrjh@mobilestation>
- <CALAqxLViEqSO17P3JGRGYJh-wDoHaJiQQV48zeoRgnar4Xd5Bg@mail.gmail.com>
- <20210722181221.xh3r5kyu7zlcojjx@mobilestation>
- <YPnEO6NVFZDS1s//@yoga>
- <CALAqxLUT0e+mHMVo685oVTxR8y76733cN0yciQ7ePS6GRE+_dg@mail.gmail.com>
- <20210722220918.l7j6zw3aaa27qato@mobilestation>
- <CALAqxLXrs0_Xs0JV5H-wS1q2CJ7XhW5Dj90eu=uazkRXXEMUxQ@mail.gmail.com>
- <20210815194617.sbrkutxzldqbxfat@mobilestation>
- <YRyCFx0ZOYTMhinf@builder.lan>
+        id S238924AbhHSLgc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Aug 2021 07:36:32 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:41259 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S238749AbhHSLgb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 19 Aug 2021 07:36:31 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1629372955; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=LSA27YI11nF9almuzKmNI0Ji45SpKxB4HyfCjj3+coA=; b=pC251es5vMQ+05/FWEU/xiCaGNSFDxU9wBRHaNn+hSYRc2vlc/+G5zNlN7NDJNrzRhQ9w4Es
+ MS03q2ckEXakpSx8Y8uzyPVl0yb9q+0/tgX3xjuZuTDZYcrr6vPkk0ao7VTnETi/dwWNcRHw
+ Mvw/CZcjYOtbtZO1ifbCiBwdKeU=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 611e42119507ca1a34e80def (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 19 Aug 2021 11:35:45
+ GMT
+Sender: mkshah=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2DC8BC43460; Thu, 19 Aug 2021 11:35:45 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-5.5 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.29.129] (unknown [49.36.81.12])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 376F0C4338F;
+        Thu, 19 Aug 2021 11:35:39 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 376F0C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [PATCH 2/2] irqchip: qcom-pdc: Disconnect domain hierarchy for
+ GPIO_NO_WAKE_IRQs
+To:     Marc Zyngier <maz@kernel.org>
+Cc:     tglx@linutronix.de, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        bjorn.andersson@linaro.org, linus.walleij@linaro.org,
+        tkjos@google.com, lsrao@codeaurora.org
+References: <1629195546-27811-1-git-send-email-mkshah@codeaurora.org>
+ <1629195546-27811-2-git-send-email-mkshah@codeaurora.org>
+ <87tujnrtev.wl-maz@kernel.org>
+From:   Maulik Shah <mkshah@codeaurora.org>
+Message-ID: <34072951-db93-0fc7-9477-bda4d4afdd8a@codeaurora.org>
+Date:   Thu, 19 Aug 2021 17:05:37 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YRyCFx0ZOYTMhinf@builder.lan>
+In-Reply-To: <87tujnrtev.wl-maz@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 17, 2021 at 10:44:23PM -0500, Bjorn Andersson wrote:
-> On Sun 15 Aug 14:46 CDT 2021, Serge Semin wrote:
-> 
-> > Hello John
-> > 
-> > On Fri, Aug 13, 2021 at 06:06:24PM -0700, John Stultz wrote:
-> > > On Thu, Jul 22, 2021 at 3:09 PM Serge Semin <fancer.lancer@gmail.com> wrote:
-> > > > On Thu, Jul 22, 2021 at 01:09:05PM -0700, John Stultz wrote:
-> > > > > On Thu, Jul 22, 2021 at 12:17 PM Bjorn Andersson
-> > > > > <bjorn.andersson@linaro.org> wrote:
-> > > > > > > On Jul 21, 2021, 1:45 PM +0200, Krzysztof Kozlowski wrote:
-> > > > > > > > I had impression that kernel defines interfaces which should be used and
-> > > > > > > > are stable (e.g. syscalls, sysfs and so on). This case is example of
-> > > > > > > > user-space relying on something not being marked as part of ABI. Instead
-> > > > > > > > they found something working for them and now it is being used in "we
-> > > > > > > > cannot break existing systems". Basically, AOSP unilaterally created a
-> > > > > > > > stable ABI and now kernel has to stick to it.
-> > > > > > > >
-> > > > > > > > Really, all normal systems depend on aliases or names and here we have
-> > > > > > > > dependency on device address. I proposed way how AOSP should be fixed.
-> > > > > > > > Anything happened? Nope.
-> > > > > > >
-> > > > > > > First time he sent a possible solution for the problem:
-> > > > > > > https://lore.kernel.org/lkml/20201221210423.GA2504@kozik-lap/
-> > > > > > >
-> > > > > > > To sum up you could have used one of the more portable approaches
-> > > > > > > 1. add an udc alias to the controller and use it then to refer to the
-> > > > > > > corresponding USB controller
-> > > > > >
-> > > > > > Is there such a thing as "UDC alias"? Or are you suggesting that we
-> > > > > > should add such feature?
-> > > > > >
-> > > > > > I think it would be wonderful if we could identify the UDCs on our
-> > > > > > boards as "USB1" and "USB2", or "the one and only USB-C connector". But
-> > > > > > unless that will fall back to the existing naming it would break John's
-> > > > > > _existing_ userspace.
-> > > > >
-> > > >
-> > > > > Well, I'd not hold up the existing userspace I'm using as sacrosanct
-> > > > > (AOSP devices still usually don't have to work cross-kernel versions -
-> > > > > devboards being the main exception). I'm fine if we can rework
-> > > > > userland as proposed, so that the issues can be avoided, but I
-> > > > > honestly don't have enough context to really understand what that
-> > > > > looks like (no idea what udc aliases are).
-> > > > >
-> > > > > And whatever we do, the main constraint is that userland has to be
-> > > > > able to work with existing LTS kernels and newer kernels.
-> > > >
-> > > > As I said in my response to Bjorn even if it is added to the kernel it
-> > > > won't get to the official LTSes as it would be a new kernel feature.
-> > > > New features aren't normally backported to the older kernels.
-> > > >
-> > > > >
-> > > > > > > 2. search through DT-nodes looking for a specific compatible/reg
-> > > > > > > DT-properties.
-> > > > > > >
-> > > > > >
-> > > > > > We could define that this is the way, but again we didn't yesterday so
-> > > > > > your proposal is not backwards compatible.
-> > > > >
-> > > >
-> > > > > It may be backwards compatible, but I'm still not clear exactly how it
-> > > > > would work.
-> > > > >
-> > > > > I guess if we look through all
-> > > > > sys/bus/platform/devices/*/of_node/compatbile strings for the desired
-> > > > > "snps,dwc3", then find which of the directories have the desired
-> > > > > address in the string? (The suggestion for looking at reg seems
-> > > > > better, but I don't get a char value out of the dwc3 of_node/reg
-> > > > > file).
-> > > >
-> > > > The algorithm is simple:
-> > > > 1) You know what USB controllers you have on your platform. They are
-> > > > supposed to be compatible with snps,dwc3 string and have some pre-defined
-> > > > base address.
-> > > > 2) Find all the files in the directory /sys/class/udc/.
-> > > > 3) Walk through all the directories in /sys/bus/platform/devices/ with
-> > > > names found in 2) and stop on the device with matching compatible/base
-> > > > address defined in 1).
-> > > >
-> > > > In my case the strings could be retrieved like this:
-> > > > USB_NAME_COMPAT=$(/sys/bus/platform/devices/1f100000.usb/of_node/compatible | tr '\0' '\t' | cut -f1)
-> > > > USB_DEVICE_ADDR="$(head -c 4 /sys/bus/platform/devices/1f100000.usb/of_node/reg | hexdump -ve '/1 "%02x"' | sed -e 's/^0*//g')"
-> > > 
-> > > 
-> > 
-> > > Hey Serge,
-> > >    I just wanted to follow up here.  Amit has reworked the db845c AOSP
-> > > userland so that it no longer uses the fixed node name, but instead
-> > > probes for it:
-> > >   https://android-review.googlesource.com/c/device/linaro/dragonboard/+/1774872
-> > > 
-> > > Admittedly, it does take a short-cut.  As your algorithm above,
-> > > digging up the devices and finding the sys/bus path to read the reg
-> > > value and pipe through hexdump (which android doesn't have) seemed
-> > > overly obtuse when the address is in the node name itself (while the
-> > > only way to be sure, one normally doesn't use spectroscopy to
-> > > determine the value of a coin when you can read what's printed on it
-> > > :).  But, should the node naming be further changed at least the
-> > > infrastructure we have can be reworked fairly easily to adapt now.
-> > > 
-> > > In any case, as we can handle the name change now, if you want to
-> > > resubmit your patch, we would no longer object (but can't promise no
-> > > one else might be bitten).  Sorry for the delay this caused, and we
-> > > appreciate you working with us to find a solution.
-> > 
-> > Great! Thanks for sending the notification. I'll resend the patch with a
-> > reference to your report and to the update made to AOSP, as soon as I
-> > am done with my current task.
-> > 
-> 
+Hi Marc,
 
-> Amit's change makes future versions of AOSP able to cope with changes in
-> the UDC name, unfortunately it doesn't change the fact that renaming the
-> node breaks compatibility in non-Android user space (or any existing
-> branches/tags of AOSP).
+On 8/18/2021 3:01 PM, Marc Zyngier wrote:
+> Hi Maulik,
+>
+> In the future, please always add a cover-letter email if sending a
+> series that has more than a single patch. This considerably helps the
+> tracking, and gives you an opportunity to explain what you are doing.
+sure. i included same in v2 now.
+>
+> On Tue, 17 Aug 2021 11:19:06 +0100,
+> Maulik Shah <mkshah@codeaurora.org> wrote:
+>> gpio_to_irq() reports error at irq_domain_trim_hierarchy() for non wakeup
+>> capable GPIOs that do not have dedicated interrupt at GIC.
+>>
+>> Since PDC irqchip do not allocate irq at parent GIC domain for such GPIOs
+>> indicate same by using irq_domain_disconnect_hierarchy().
+>>
+>> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+>> ---
+>>   drivers/irqchip/qcom-pdc.c | 5 ++++-
+>>   1 file changed, 4 insertions(+), 1 deletion(-)
+>>
+>> diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
+>> index 32d5920..0ba0461 100644
+>> --- a/drivers/irqchip/qcom-pdc.c
+>> +++ b/drivers/irqchip/qcom-pdc.c
+>> @@ -324,8 +324,11 @@ static int qcom_pdc_gpio_alloc(struct irq_domain *domain, unsigned int virq,
+>>   	if (ret)
+>>   		return ret;
+>>   
+>> -	if (hwirq == GPIO_NO_WAKE_IRQ)
+>> +	if (hwirq == GPIO_NO_WAKE_IRQ) {
+>> +		if (domain->parent)
+>> +			irq_domain_disconnect_hierarchy(domain->parent, virq);
+>>   		return 0;
+>> +	}
+>>   
+>>   	parent_hwirq = get_parent_hwirq(hwirq);
+>>   	if (parent_hwirq == PDC_NO_PARENT_IRQ)
+> It feels like you are papering over the core of the problem, which is
+> that most of the GPIO_NO_WAKE_IRQ stuff should simply go away now that
+> we have a way to drop parts of the hierarchy.
+ok makes sense to disconnect from PDC domain itself instead only 
+disconnecting for parent GIC domain.
+>
+> I had a go at that a few months back, but never had the opportunity to
+> actually test the resulting code[1]. Could you please give it a go and
+> let me know what breaks?
+Thanks for the patch [1]. i tested and found below issues.
 
-After looking over the whole discussion, as I see it there is no
-compatibility breakage in this case. But there is an improper UDC
-interface usage, which has been fixed by Amit and could be ported to
-another AOSP branches/tags if needed. As [1] says user-space is
-able to create a USB gadget only with controllers listed in the
-directory /sys/class/udc/*. That ABI doesn't change. Note the ABI
-doesn't say that if someone found a file there in some kernel
-version it will be available there in the in a next version with the
-same name. A developer just need to search for the UDC controllers ach
-time when a UDC gadget needs to be created.
+1.
+For GPIO_NO_WAKE_IRQ case, The patch disconnects hierarchy for current 
+domain (PDC)
+However for parent domain (GIC) its don't call disconnect.
+This leads to irq_domain_trim_hierarchy() still complain the error at 
+parent domain.
+To fix this, whenever irqchip disconnects hierarchy at its domain, it 
+has to disconnect for all its parent domains too.
 
-Anyway as I see it the UDC gadget creation ABI IS indeed abided by
-most of the developers since we haven't heard much complains so far
-except from John. In case of AOSP the problem has been fixed so we can
-get back the modification and proceed with the rest of the patches
-review.
+something like this works in qcom_pdc_gpio_alloc()
 
-[1] Documentation/usb/gadget_configfs.rst
+         if (hwirq == GPIO_NO_WAKE_IRQ) {
+-               if (domain->parent) {
+- irq_domain_disconnect_hierarchy(domain->parent, virq);
 
--Sergey
++               for (parent = domain; parent; parent = parent->parent) {
++                       ret = irq_domain_disconnect_hierarchy(parent, virq);
++                       if (ret)
++                               return ret;
+                 }
+                 return 0;
+         }
 
-> 
-> Regards,
-> Bjorn
+2.  irq_domain_trim_hierarchy() has two issues.
+
+     The first is tail is moving along with irqd of domain.
+     so trimming do not start at correct parent domain.
+     tails has to be initialized only once, starting from which we want 
+to trim all the parent domains hierarchy.
+
+     The second is the below check is not proper to find valid irq chip.
+     say for both (PDC and GIC) domains the irqd->chip is set to -ENOTCONN.
+     then irqd->chip check will still pass for domain (even if its 
+-ENOTCONN) and if tail is set it will false complain.
+
+     /* Can't have a valid irqchip after a trim marker */
+-               if (irqd->chip && tail)
++               if (!IS_ERR(irqd->chip) && tail) {
+
+
+I have picked up your change in v2 and added above mentioned issue fixes.
+please take a look on v2.
+
+Thanks,
+Maulik
+>
+> Thanks,
+>
+> 	M.
+>
+> [1] https://git.kernel.org/pub/scm/linux/kernel/git/maz/arm-platforms.git/commit/?h=irq/qcom-pdc-nowake&id=331b2ba388a4a79b5c40b8addf56cbe35099a410
+>
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
+
