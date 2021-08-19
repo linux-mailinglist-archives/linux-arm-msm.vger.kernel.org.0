@@ -2,79 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CC1DF3F203C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Aug 2021 20:55:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 058653F2070
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Aug 2021 21:16:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233673AbhHSSz6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Aug 2021 14:55:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49608 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231500AbhHSSz5 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Aug 2021 14:55:57 -0400
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BA23C061757
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Aug 2021 11:55:21 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id y14-20020a0568302a0e00b0051acbdb2869so3160987otu.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Aug 2021 11:55:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=mufyADO3wzTmydMEKiodSbUdOKfwxrgUWAkkX2NXaUY=;
-        b=B5HzGRXYpErfLHRWHuRP+Zy33rYrnFdRVwP7Ah1gQGFk/i9zrg1aoABJzQa5YXItvx
-         EqacP/RnFUoXW8QpswB3ajQvpr5tFQs9SFttQFyyGepb04kC6MSW7vr04ALR7Tp6YsL6
-         2SKy8QijVzn+OMTjRbonokc8ztS6vlHAJCRJY=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=mufyADO3wzTmydMEKiodSbUdOKfwxrgUWAkkX2NXaUY=;
-        b=Fg0SEo9K5NFZlr/lXnLQrHyCImiV1zI51zDDiOh1KnqUPvtR9BF/Vy/w1JrO+6eBzN
-         B5AgpnTh0EKDgbgg3ARTLzfAkeqVfyTSLbxTzLskKlPRzA2n0v+V9a09K8oRGMGeY5YG
-         gEbFOFXajdRjcng3ngzsK3y2pCMmKL3ILXpz3krKyENEcykk6tVSmV4TGOufu6raZBrK
-         LuhvlD3lOXBuuJTV9Skod0CRKsx0jpXhTCpVbYsMFqxQm2aavQyNFeii68fKJF3j6wV0
-         dU6009CDFSxNdLFK9qasygOcWfN2WYHVbIBEDlrOpGIRt++oirEGBb6angYKF03tAozv
-         I/5w==
-X-Gm-Message-State: AOAM531usiaoLr6YYReTRZSJCXQwktjBFtnB8BtKvcqvJjPBEZsYvpMh
-        h0SXz/2t+usUHZVLPa6KJdCneywmE3rwcLHDgt98Sg==
-X-Google-Smtp-Source: ABdhPJyDkjYCzIY8JFWkTKloRjmY7nhy+s5wTC7enDEQ0Fet6vpBNfNpj9Ok/m3aRJ2NEVoUarlpUJanlewegEVS/E8=
-X-Received: by 2002:a9d:5542:: with SMTP id h2mr13355291oti.25.1629399320024;
- Thu, 19 Aug 2021 11:55:20 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 19 Aug 2021 11:55:19 -0700
+        id S233422AbhHSTRI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Aug 2021 15:17:08 -0400
+Received: from mail.kernel.org ([198.145.29.99]:55326 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231500AbhHSTRI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 19 Aug 2021 15:17:08 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 674BC6056B;
+        Thu, 19 Aug 2021 19:16:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1629400591;
+        bh=SJ3235q9hx12OGYIqj8/Xxy7qhG3c50+PnIJGMoSKFs=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=Jd/GRVSISKYAijQLjgoLT9KaALfVQp9430QDHKRKwIynSx+U9/h0wz6ZoPfB1GmfC
+         +z/U8IjS3mskE4paQZeFqjV4cTD/EVsf4VJyvjTdf8ILql/0qb6qOj4q8gJa0dlV0e
+         SZpFkAOfbEu/8T1AGJbh7X60bDi0lXEjzgWhJZI9xoKxk3fymAcv+s6s5hUbeSfpm2
+         ZOIBCDxxQG+EAu87xwUl2JJy7AfyESG0JkWfrcCYNymLdLf54tIUiFjMzvoPhZcfNJ
+         IdoniaeSO8Qf8AmgW4LWbF4ge7iGseLwxamnP5BL6HERxQHuzaNXl0oEg8i9pvWhEa
+         qcqbNnoU7B5qw==
+Date:   Thu, 19 Aug 2021 12:16:30 -0700
+From:   Jakub Kicinski <kuba@kernel.org>
+To:     butt3rflyh4ck <butterflyhuangxx@gmail.com>
+Cc:     mani@kernel.org, davem@davemloft.net,
+        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        butt3rflyh4ck <butterflyhhuangxx@gmail.com>,
+        bjorn.andersson@linaro.org, paskripkin@gmail.com
+Subject: Re: [PATCH] net: qrtr: fix another OOB Read in qrtr_endpoint_post
+Message-ID: <20210819121630.1223327f@kicinski-fedora-pc1c0hjn.dhcp.thefacebook.com>
+In-Reply-To: <20210819181458.623832-1-butterflyhuangxx@gmail.com>
+References: <20210819181458.623832-1-butterflyhuangxx@gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <1629342136-3667-3-git-send-email-sibis@codeaurora.org>
-References: <1629342136-3667-1-git-send-email-sibis@codeaurora.org> <1629342136-3667-3-git-send-email-sibis@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Thu, 19 Aug 2021 11:55:19 -0700
-Message-ID: <CAE-0n531EgLx-gGJswmmNAFmy-P9z=Hh1N=fkLw_uemoeQnYVg@mail.gmail.com>
-Subject: Re: [PATCH v5 02/13] dt-bindings: remoteproc: qcom: pas: Add QMP property
-To:     Sibi Sankar <sibis@codeaurora.org>, bjorn.andersson@linaro.org,
-        mka@chromium.org, robh+dt@kernel.org
-Cc:     ulf.hansson@linaro.org, rjw@rjwysocki.net, agross@kernel.org,
-        ohad@wizery.com, mathieu.poirier@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dianders@chromium.org, rishabhb@codeaurora.org,
-        sidgup@codeaurora.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sibi Sankar (2021-08-18 20:02:05)
-> The load state power-domain, used by the co-processors to notify the
-> Always on Subsystem (AOSS) that a particular co-processor is up/down,
-> suffers from the side-effect of changing states during suspend/resume.
-> However the co-processors enter low-power modes independent to that of
-> the application processor and their states are expected to remain
-> unaltered across system suspend/resume cycles. To achieve this behavior
-> let's drop the load state power-domain and replace them with the qmp
-> property for all SoCs supporting low power mode signalling.
->
+On Fri, 20 Aug 2021 02:14:58 +0800 butt3rflyh4ck wrote:
+> From: butt3rflyh4ck <butterflyhhuangxx@gmail.com>
+> 
+> This check was incomplete, did not consider size is 0:
+> 
+> 	if (len != ALIGN(size, 4) + hdrlen)
+>                     goto err;
+> 
+> if size from qrtr_hdr is 0, the result of ALIGN(size, 4)
+> will be 0, In case of len == hdrlen and size == 0
+> in header this check won't fail and
+> 
+> 	if (cb->type == QRTR_TYPE_NEW_SERVER) {
+>                 /* Remote node endpoint can bridge other distant nodes */
+>                 const struct qrtr_ctrl_pkt *pkt = data + hdrlen;
+> 
+>                 qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
+>         }
+> 
+> will also read out of bound from data, which is hdrlen allocated block.
+> 
+> Fixes: 194ccc88297a ("net: qrtr: Support decoding incoming v2 packets")
+> Fixes: ad9d24c9429e ("net: qrtr: fix OOB Read in qrtr_endpoint_post")
 
-How do we drop the load state property without breaking existing DTBs?
-Maybe we need to leave it there and then somehow make it optional? Or do
-we not care about this problem as the driver will start ignoring it?
+Please make sure to CC authors of patches which are under Fixes, they
+are usually the best people to review the patch. Adding them now.
+
+> Signed-off-by: butt3rflyh4ck <butterflyhhuangxx@gmail.com>
+
+We'll need your name. AFAIU it's because of Developer Certificate of
+Origin. You'll need to resend with this fixed (and please remember the CCs).
+
+> diff --git a/net/qrtr/qrtr.c b/net/qrtr/qrtr.c
+> index 171b7f3be6ef..0c30908628ba 100644
+> --- a/net/qrtr/qrtr.c
+> +++ b/net/qrtr/qrtr.c
+> @@ -493,7 +493,7 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
+>  		goto err;
+>  	}
+>  
+> -	if (len != ALIGN(size, 4) + hdrlen)
+> +	if (!size || len != ALIGN(size, 4) + hdrlen)
+>  		goto err;
+>  
+>  	if (cb->dst_port != QRTR_PORT_CTRL && cb->type != QRTR_TYPE_DATA &&
+
