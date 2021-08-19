@@ -2,98 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 144C13F1AD5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Aug 2021 15:44:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F6883F1B2D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Aug 2021 16:05:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240194AbhHSNpR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Aug 2021 09:45:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32844 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240137AbhHSNpR (ORCPT
+        id S240329AbhHSOGF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Aug 2021 10:06:05 -0400
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:56567 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S234281AbhHSOGE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Aug 2021 09:45:17 -0400
-Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69E99C061757
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Aug 2021 06:44:41 -0700 (PDT)
-Received: by mail-il1-x135.google.com with SMTP id h29so6016979ila.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Aug 2021 06:44:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Ug1OSGTt9qLTp56AgUL2RfL1TSKASvvRSNzqRc2tcqw=;
-        b=XfvaZ7ZW98kSfzUdcrLY4dFpOgBvtifT09w0hvXSRHNg0WtGEFaTODfTsIuOxZs7zi
-         vBeZ1DlAaHqzXB/EpOMgzPWPDgODvbSMzvLb0HVSicDgzWNojNr3tDeMY2HFyZQoBt9O
-         XlrMazdrCg8Kz5EAqXZnxUn0g5BwvYEoLQZNDIR1/Xk/QlFSSfW8DBmCoxaigl6MIkdQ
-         ICPu0Z4JFoIuVPMd/RrJomE9SqGH/B5eWSHbxytuM2S/n0XS9TvtgmJ0hT4KPqnD5ACp
-         HHjXeUW7AByGw8JQZYmzTv10iV96woEDRmibQiowyvtN15cK34kkiVx4u6b7ZiNtrm/C
-         Y1NQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Ug1OSGTt9qLTp56AgUL2RfL1TSKASvvRSNzqRc2tcqw=;
-        b=HJqvjc8DwZ+RkRdC0odOXgdAwQZVPZTSLNtGbggE1NDi7Kw1XMKuTzBDaZGHtE6lA0
-         ev+2Jnsa4P9RfJhgDy8SXthDKbEkfm0/Lrn4olyZ/bJgVITIhBeBSWu2m2197UrIl4wU
-         4nb1WHmLP71au1LfXV+ic1hjLXS5TaktuV3BwHUZuKh1zmqtOHQ7nQIc7fqsPpdSFjNE
-         IoRlFcrliW3YNYrCKRYt01bBTVEA1Vw1ZSF8oS0CMCLtdZBw5j9H0J7jmyKkcNpk5Nn/
-         wZHozM8r8cI0GQVUZC8uG1VXpp9+CxCvMrEmaMrOTFzSLICi48oRs65VCIrlEKu13PM6
-         8ZFQ==
-X-Gm-Message-State: AOAM530/4OGs0ZNUFyBoXQAQY8CDe9irlsYwqhzUMda/hMSUS2g5xD6X
-        iQCz7gFbZCW72w6ee9ZwDhsQ5Ee7+2940PWryG900w==
-X-Google-Smtp-Source: ABdhPJwmtqmWXSprK1vhwc2gg4x6OTwPqzsJkVqyF5yv9RgHlIUTV7TV6oYqT3ZY2f6S/bmRmGGnAfG82XXx36knYQw=
-X-Received: by 2002:a92:d304:: with SMTP id x4mr9982073ila.82.1629380680491;
- Thu, 19 Aug 2021 06:44:40 -0700 (PDT)
+        Thu, 19 Aug 2021 10:06:04 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1629381928; x=1660917928;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=HpW4hbTi5PSEovgBt3uxfRIvDZZhIFQAPSs4Cf7gvDk=;
+  b=ltwXqrfs9QZIYxLczCpnUUlS9qqiWBXA0fk5X/aGho92WT2KdLldL5pi
+   zqDh35TpgVKPxRmgpuMAfIPW0rT8eyYTiQBPuPWodtzHVda/+nqY4jhCx
+   S0lCmRk+5Dx1Cz5i2qiNOqgLfIwy1kfjJmY23AbPswi/NyW9U46pPlIsT
+   w=;
+Received: from unknown (HELO ironmsg03-sd.qualcomm.com) ([10.53.140.143])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 19 Aug 2021 07:05:28 -0700
+X-QCInternal: smtphost
+Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
+  by ironmsg03-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Aug 2021 07:05:28 -0700
+Received: from nalasex01a.na.qualcomm.com (10.47.209.196) by
+ nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.2.858.15; Thu, 19 Aug 2021 07:05:27 -0700
+Received: from [10.226.59.216] (10.80.80.8) by nalasex01a.na.qualcomm.com
+ (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.858.15; Thu, 19 Aug
+ 2021 07:05:27 -0700
+Subject: Re: [PATCH v1 1/2] bus: mhi: core: Bail on writing register fields if
+ read fails
+To:     Hemant Kumar <hemantk@codeaurora.org>,
+        Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        <manivannan.sadhasivam@linaro.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <loic.poulain@linaro.org>
+References: <1629330634-36465-1-git-send-email-bbhatt@codeaurora.org>
+ <1629330634-36465-2-git-send-email-bbhatt@codeaurora.org>
+ <45fbfe24-38eb-82f0-7134-a04854269247@codeaurora.org>
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+Message-ID: <48d494d8-1323-87fd-4a95-c1714bfa2ae9@quicinc.com>
+Date:   Thu, 19 Aug 2021 08:05:26 -0600
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-References: <1629132650-26277-1-git-send-email-sbhanu@codeaurora.org> <CAD=FV=UqFczZ6tLzVuXhgKG9teSNTGt_RdqAxP4eXBN_eDDAtQ@mail.gmail.com>
-In-Reply-To: <CAD=FV=UqFczZ6tLzVuXhgKG9teSNTGt_RdqAxP4eXBN_eDDAtQ@mail.gmail.com>
-From:   Doug Anderson <dianders@google.com>
-Date:   Thu, 19 Aug 2021 06:44:27 -0700
-Message-ID: <CAD=FV=Wq-+Xzjc-o9p49pvf4A_q7L-THHp_wUQce47E+yMEgvA@mail.gmail.com>
-Subject: Re: [PATCH V1] arm64: dts: qcom: sc7180: Use maximum drive strength
- values for eMMC
-To:     Shaik Sajida Bhanu <sbhanu@codeaurora.org>
-Cc:     Adrian Hunter <adrian.hunter@intel.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Asutosh Das <asutoshd@codeaurora.org>,
-        Sahitya Tummala <stummala@codeaurora.org>,
-        pragalla@codeaurora.org, nitirawa@codeaurora.org,
-        Ram Prakash Gupta <rampraka@codeaurora.org>,
-        Sayali Lokhande <sayalil@codeaurora.org>,
-        sartgarg@codeaurora.org, cang@codeaurora.org,
-        Linux MMC List <linux-mmc@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <45fbfe24-38eb-82f0-7134-a04854269247@codeaurora.org>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 8/18/2021 7:40 PM, Hemant Kumar wrote:
+> 
+> 
+> On 8/18/2021 4:50 PM, Bhaumik Bhatt wrote:
+>> Helper API to write register fields relies on successful reads
+>> of the register/address prior to the write. Bail out if a failure
+>> is seen when reading the register before the actual write is
+>> performed.
+>>
+>> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+> Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+> 
 
-On Tue, Aug 17, 2021 at 6:58 AM Doug Anderson <dianders@google.com> wrote:
->
-> >                 pinconf-data {
-> >                         pins = "sdc1_data";
-> >                         bias-pull-up;
-> > -                       drive-strength = <10>;
-> > +                       drive-strength = <16>;
->
-> I could be convinced that this is the right thing to do, but I want to
-> really make sure that it has had sufficient testing. Specifically as
-> this patch is written we'll be updating the drive strength for all
-> boards. Increasing the drive strength can sometimes introduce new
-> problems (reflections, noise, ...) so we have to be confident that
-> we're not breaking someone that used to work by increasing the drive
-> strength here. How much has this been tested?
-
-From further discussion internally, it sounds as if this should be
-fine and fixes more than just this one eMMC part. Thus:
-
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
+Reviewed-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
