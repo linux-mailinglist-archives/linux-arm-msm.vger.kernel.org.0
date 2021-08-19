@@ -2,33 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F05363F11D7
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Aug 2021 05:37:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 39D713F11E2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Aug 2021 05:37:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236152AbhHSDhp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Aug 2021 23:37:45 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:31404 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236738AbhHSDhm (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Aug 2021 23:37:42 -0400
+        id S236813AbhHSDh6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Aug 2021 23:37:58 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:54316 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236818AbhHSDhu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 18 Aug 2021 23:37:50 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1629344226; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1629344234; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=Yl5/tL7kBdPdTlcS0qN7WyMH7mbuhoN++uxl8LX0/Ds=; b=EiUKI6bWF8NoDfwywvzqenZbcnLq4uqhyDoD8uJ4IehAzCPLUh7PLMLDePInmnjgVSH3cvOa
- eeIDSaShZfhtqIlrYXZWD+USEwa+iMISx5BbTSeNwiHcARwwzVuUtAdPxknwt4THNgQg4PVy
- h9Pda//O77k5eiCYylk5RxHY1VQ=
-X-Mailgun-Sending-Ip: 198.61.254.9
+ bh=funhOU3GbgztZxQLdJT4vnvCI0ZRVrBolRinPMXasL8=; b=kvs0YiIP6z/n+FTD3wvKtrgRvV/FtKGiCRlYbf4ZJ+FgIVZRGTVm0oEa3VC+MjO9Lbf16uox
+ MBPdiMSud+BK3JZ7BUjMZqbVDLWBv2+wZIPxj49cSUmKWSGl2/SxDAlICNiwEZvZoUggsOTl
+ GbFD0WwhffsC6i9HZjyTagKdp6k=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 611dd1e266ff107904384c43 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 19 Aug 2021 03:37:06
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 611dd1ea454b7a558f81220f (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 19 Aug 2021 03:37:14
  GMT
 Sender: sibis=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BC81AC4361C; Thu, 19 Aug 2021 03:37:05 +0000 (UTC)
+        id 1E857C43616; Thu, 19 Aug 2021 03:37:13 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -38,9 +37,9 @@ Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outs
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 42EE0C4361A;
-        Thu, 19 Aug 2021 03:36:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 42EE0C4361A
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6B4A1C43460;
+        Thu, 19 Aug 2021 03:37:05 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 6B4A1C43460
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
 From:   Sibi Sankar <sibis@codeaurora.org>
@@ -53,9 +52,9 @@ Cc:     ohad@wizery.com, agross@kernel.org, mathieu.poirier@linaro.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org, evgreen@chromium.org,
         dianders@chromium.org, Sibi Sankar <sibis@codeaurora.org>
-Subject: [PATCH v3 04/10] iommu/arm-smmu-qcom: Request direct mapping for modem device
-Date:   Thu, 19 Aug 2021 09:06:19 +0530
-Message-Id: <1629344185-27368-5-git-send-email-sibis@codeaurora.org>
+Subject: [PATCH v3 05/10] remoteproc: mss: q6v5-mss: Add modem support on SC7280
+Date:   Thu, 19 Aug 2021 09:06:20 +0530
+Message-Id: <1629344185-27368-6-git-send-email-sibis@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1629344185-27368-1-git-send-email-sibis@codeaurora.org>
 References: <1629344185-27368-1-git-send-email-sibis@codeaurora.org>
@@ -63,29 +62,455 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SID configuration requirement for Modem on SC7280 is similar to the
-ones found on SC7180/SDM845 SoCs. So, add the SC7280 modem compatible to
-the list to defer the programming of the modem SIDs to the kernel.
+Add out of reset sequence support for modem sub-system on SC7280 SoCs.
+It requires access to an additional set of qaccept registers, external
+power/clk control registers and halt vq6 register to put the modem back
+into reset.
 
 Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
-Reviewed-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 ---
- drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c | 1 +
- 1 file changed, 1 insertion(+)
+ drivers/remoteproc/qcom_q6v5_mss.c | 252 ++++++++++++++++++++++++++++++++++++-
+ 1 file changed, 248 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 9b9d13ec5a88..a4b4c8013b3a 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -229,6 +229,7 @@ static const struct of_device_id qcom_smmu_client_of_match[] __maybe_unused = {
- 	{ .compatible = "qcom,sc7180-mdss" },
- 	{ .compatible = "qcom,sc7180-mss-pil" },
- 	{ .compatible = "qcom,sc7280-mdss" },
-+	{ .compatible = "qcom,sc7280-mss-pil" },
- 	{ .compatible = "qcom,sc8180x-mdss" },
- 	{ .compatible = "qcom,sdm845-mdss" },
- 	{ .compatible = "qcom,sdm845-mss-pil" },
+diff --git a/drivers/remoteproc/qcom_q6v5_mss.c b/drivers/remoteproc/qcom_q6v5_mss.c
+index 7a1422bd7925..90ff712f912c 100644
+--- a/drivers/remoteproc/qcom_q6v5_mss.c
++++ b/drivers/remoteproc/qcom_q6v5_mss.c
+@@ -77,6 +77,14 @@
+ 
+ #define HALT_ACK_TIMEOUT_US		100000
+ 
++/* QACCEPT Register Offsets */
++#define QACCEPT_ACCEPT_REG		0x0
++#define QACCEPT_ACTIVE_REG		0x4
++#define QACCEPT_DENY_REG		0x8
++#define QACCEPT_REQ_REG			0xC
++
++#define QACCEPT_TIMEOUT_US		50
++
+ /* QDSP6SS_RESET */
+ #define Q6SS_STOP_CORE			BIT(0)
+ #define Q6SS_CORE_ARES			BIT(1)
+@@ -143,6 +151,9 @@ struct rproc_hexagon_res {
+ 	bool has_alt_reset;
+ 	bool has_mba_logs;
+ 	bool has_spare_reg;
++	bool has_qaccept_regs;
++	bool has_ext_cntl_regs;
++	bool has_vq6;
+ };
+ 
+ struct q6v5 {
+@@ -158,8 +169,18 @@ struct q6v5 {
+ 	u32 halt_q6;
+ 	u32 halt_modem;
+ 	u32 halt_nc;
++	u32 halt_vq6;
+ 	u32 conn_box;
+ 
++	u32 qaccept_mdm;
++	u32 qaccept_cx;
++	u32 qaccept_axi;
++
++	u32 axim1_clk_off;
++	u32 crypto_clk_off;
++	u32 force_clk_on;
++	u32 rscc_disable;
++
+ 	struct reset_control *mss_restart;
+ 	struct reset_control *pdc_reset;
+ 
+@@ -201,6 +222,9 @@ struct q6v5 {
+ 	bool has_alt_reset;
+ 	bool has_mba_logs;
+ 	bool has_spare_reg;
++	bool has_qaccept_regs;
++	bool has_ext_cntl_regs;
++	bool has_vq6;
+ 	int mpss_perm;
+ 	int mba_perm;
+ 	const char *hexagon_mdt_image;
+@@ -213,6 +237,7 @@ enum {
+ 	MSS_MSM8996,
+ 	MSS_MSM8998,
+ 	MSS_SC7180,
++	MSS_SC7280,
+ 	MSS_SDM845,
+ };
+ 
+@@ -473,6 +498,12 @@ static int q6v5_reset_assert(struct q6v5 *qproc)
+ 		regmap_update_bits(qproc->conn_map, qproc->conn_box,
+ 				   AXI_GATING_VALID_OVERRIDE, 0);
+ 		ret = reset_control_deassert(qproc->mss_restart);
++	} else if (qproc->has_ext_cntl_regs) {
++		regmap_write(qproc->conn_map, qproc->rscc_disable, 0);
++		reset_control_assert(qproc->pdc_reset);
++		reset_control_assert(qproc->mss_restart);
++		reset_control_deassert(qproc->pdc_reset);
++		ret = reset_control_deassert(qproc->mss_restart);
+ 	} else {
+ 		ret = reset_control_assert(qproc->mss_restart);
+ 	}
+@@ -490,7 +521,7 @@ static int q6v5_reset_deassert(struct q6v5 *qproc)
+ 		ret = reset_control_reset(qproc->mss_restart);
+ 		writel(0, qproc->rmb_base + RMB_MBA_ALT_RESET);
+ 		reset_control_deassert(qproc->pdc_reset);
+-	} else if (qproc->has_spare_reg) {
++	} else if (qproc->has_spare_reg || qproc->has_ext_cntl_regs) {
+ 		ret = reset_control_reset(qproc->mss_restart);
+ 	} else {
+ 		ret = reset_control_deassert(qproc->mss_restart);
+@@ -604,7 +635,7 @@ static int q6v5proc_reset(struct q6v5 *qproc)
+ 		}
+ 
+ 		goto pbl_wait;
+-	} else if (qproc->version == MSS_SC7180) {
++	} else if (qproc->version == MSS_SC7180 || qproc->version == MSS_SC7280) {
+ 		val = readl(qproc->reg_base + QDSP6SS_SLEEP);
+ 		val |= Q6SS_CBCR_CLKEN;
+ 		writel(val, qproc->reg_base + QDSP6SS_SLEEP);
+@@ -787,6 +818,89 @@ static int q6v5proc_reset(struct q6v5 *qproc)
+ 	return ret;
+ }
+ 
++static int q6v5proc_enable_qchannel(struct q6v5 *qproc, struct regmap *map, u32 offset)
++{
++	unsigned int val;
++	int ret;
++
++	if (!qproc->has_qaccept_regs)
++		return 0;
++
++	if (qproc->has_ext_cntl_regs) {
++		regmap_write(qproc->conn_map, qproc->rscc_disable, 0);
++		regmap_write(qproc->conn_map, qproc->force_clk_on, 1);
++
++		ret = regmap_read_poll_timeout(qproc->halt_map, qproc->axim1_clk_off, val,
++					       !val, 1, Q6SS_CBCR_TIMEOUT_US);
++		if (ret) {
++			dev_err(qproc->dev, "failed to enable axim1 clock\n");
++			return -ETIMEDOUT;
++		}
++	}
++
++	regmap_write(map, offset + QACCEPT_REQ_REG, 1);
++
++	/* Wait for accept */
++	ret = regmap_read_poll_timeout(map, offset + QACCEPT_ACCEPT_REG, val, val, 5,
++				       QACCEPT_TIMEOUT_US);
++	if (ret) {
++		dev_err(qproc->dev, "qchannel enable failed\n");
++		return -ETIMEDOUT;
++	}
++
++	return 0;
++}
++
++static void q6v5proc_disable_qchannel(struct q6v5 *qproc, struct regmap *map, u32 offset)
++{
++	int ret;
++	unsigned int val, retry;
++	unsigned int nretry = 10;
++	bool takedown_complete = false;
++
++	if (!qproc->has_qaccept_regs)
++		return;
++
++	while (!takedown_complete && nretry) {
++		nretry--;
++
++		/* Wait for active transactions to complete */
++		regmap_read_poll_timeout(map, offset + QACCEPT_ACTIVE_REG, val, !val, 5,
++					 QACCEPT_TIMEOUT_US);
++
++		/* Request Q-channel transaction takedown */
++		regmap_write(map, offset + QACCEPT_REQ_REG, 0);
++
++		/*
++		 * If the request is denied, reset the Q-channel takedown request,
++		 * wait for active transactions to complete and retry takedown.
++		 */
++		retry = 10;
++		while (retry) {
++			usleep_range(5, 10);
++			retry--;
++			ret = regmap_read(map, offset + QACCEPT_DENY_REG, &val);
++			if (!ret && val) {
++				regmap_write(map, offset + QACCEPT_REQ_REG, 1);
++				break;
++			}
++
++			ret = regmap_read(map, offset + QACCEPT_ACCEPT_REG, &val);
++			if (!ret && !val) {
++				takedown_complete = true;
++				break;
++			}
++		}
++
++		if (!retry)
++			break;
++	}
++
++	/* Rely on mss_restart to clear out pending transactions on takedown failure */
++	if (!takedown_complete)
++		dev_err(qproc->dev, "qchannel takedown failed\n");
++}
++
+ static void q6v5proc_halt_axi_port(struct q6v5 *qproc,
+ 				   struct regmap *halt_map,
+ 				   u32 offset)
+@@ -950,6 +1064,12 @@ static int q6v5_mba_load(struct q6v5 *qproc)
+ 		goto assert_reset;
+ 	}
+ 
++	ret = q6v5proc_enable_qchannel(qproc, qproc->halt_map, qproc->qaccept_axi);
++	if (ret) {
++		dev_err(qproc->dev, "failed to enable axi bridge\n");
++		goto disable_active_clks;
++	}
++
+ 	/*
+ 	 * Some versions of the MBA firmware will upon boot wipe the MPSS region as well, so provide
+ 	 * the Q6 access to this region.
+@@ -996,8 +1116,13 @@ static int q6v5_mba_load(struct q6v5 *qproc)
+ 
+ halt_axi_ports:
+ 	q6v5proc_halt_axi_port(qproc, qproc->halt_map, qproc->halt_q6);
++	if (qproc->has_vq6)
++		q6v5proc_halt_axi_port(qproc, qproc->halt_map, qproc->halt_vq6);
+ 	q6v5proc_halt_axi_port(qproc, qproc->halt_map, qproc->halt_modem);
+ 	q6v5proc_halt_axi_port(qproc, qproc->halt_map, qproc->halt_nc);
++	q6v5proc_disable_qchannel(qproc, qproc->halt_map, qproc->qaccept_mdm);
++	q6v5proc_disable_qchannel(qproc, qproc->halt_map, qproc->qaccept_cx);
++	q6v5proc_disable_qchannel(qproc, qproc->halt_map, qproc->qaccept_axi);
+ 	mba_load_err = true;
+ reclaim_mba:
+ 	xfermemop_ret = q6v5_xfer_mem_ownership(qproc, &qproc->mba_perm, true,
+@@ -1047,6 +1172,8 @@ static void q6v5_mba_reclaim(struct q6v5 *qproc)
+ 	qproc->dp_size = 0;
+ 
+ 	q6v5proc_halt_axi_port(qproc, qproc->halt_map, qproc->halt_q6);
++	if (qproc->has_vq6)
++		q6v5proc_halt_axi_port(qproc, qproc->halt_map, qproc->halt_vq6);
+ 	q6v5proc_halt_axi_port(qproc, qproc->halt_map, qproc->halt_modem);
+ 	q6v5proc_halt_axi_port(qproc, qproc->halt_map, qproc->halt_nc);
+ 	if (qproc->version == MSS_MSM8996) {
+@@ -1059,6 +1186,24 @@ static void q6v5_mba_reclaim(struct q6v5 *qproc)
+ 		writel(val, qproc->reg_base + QDSP6SS_PWR_CTL_REG);
+ 	}
+ 
++	if (qproc->has_ext_cntl_regs) {
++		regmap_write(qproc->conn_map, qproc->rscc_disable, 1);
++
++		ret = regmap_read_poll_timeout(qproc->halt_map, qproc->axim1_clk_off, val,
++					       !val, 1, Q6SS_CBCR_TIMEOUT_US);
++		if (ret)
++			dev_err(qproc->dev, "failed to enable axim1 clock\n");
++
++		ret = regmap_read_poll_timeout(qproc->halt_map, qproc->crypto_clk_off, val,
++					       !val, 1, Q6SS_CBCR_TIMEOUT_US);
++		if (ret)
++			dev_err(qproc->dev, "failed to enable crypto clock\n");
++	}
++
++	q6v5proc_disable_qchannel(qproc, qproc->halt_map, qproc->qaccept_mdm);
++	q6v5proc_disable_qchannel(qproc, qproc->halt_map, qproc->qaccept_cx);
++	q6v5proc_disable_qchannel(qproc, qproc->halt_map, qproc->qaccept_axi);
++
+ 	q6v5_reset_assert(qproc);
+ 
+ 	q6v5_clk_disable(qproc->dev, qproc->reset_clks,
+@@ -1471,6 +1616,7 @@ static int q6v5_init_mem(struct q6v5 *qproc, struct platform_device *pdev)
+ {
+ 	struct of_phandle_args args;
+ 	struct resource *res;
++	int halt_cell_cnt = 3;
+ 	int ret;
+ 
+ 	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, "qdsp6");
+@@ -1483,8 +1629,11 @@ static int q6v5_init_mem(struct q6v5 *qproc, struct platform_device *pdev)
+ 	if (IS_ERR(qproc->rmb_base))
+ 		return PTR_ERR(qproc->rmb_base);
+ 
++	if (qproc->has_vq6)
++		halt_cell_cnt++;
++
+ 	ret = of_parse_phandle_with_fixed_args(pdev->dev.of_node,
+-					       "qcom,halt-regs", 3, 0, &args);
++					       "qcom,halt-regs", halt_cell_cnt, 0, &args);
+ 	if (ret < 0) {
+ 		dev_err(&pdev->dev, "failed to parse qcom,halt-regs\n");
+ 		return -EINVAL;
+@@ -1499,6 +1648,52 @@ static int q6v5_init_mem(struct q6v5 *qproc, struct platform_device *pdev)
+ 	qproc->halt_modem = args.args[1];
+ 	qproc->halt_nc = args.args[2];
+ 
++	if (qproc->has_vq6)
++		qproc->halt_vq6 = args.args[3];
++
++	if (qproc->has_qaccept_regs) {
++		ret = of_parse_phandle_with_fixed_args(pdev->dev.of_node,
++						       "qcom,qaccept-regs",
++						       3, 0, &args);
++		if (ret < 0) {
++			dev_err(&pdev->dev, "failed to parse qaccept-regs\n");
++			return -EINVAL;
++		}
++
++		qproc->qaccept_mdm = args.args[0];
++		qproc->qaccept_cx = args.args[1];
++		qproc->qaccept_axi = args.args[2];
++	}
++
++	if (qproc->has_ext_cntl_regs) {
++		ret = of_parse_phandle_with_fixed_args(pdev->dev.of_node,
++						       "qcom,ext-regs",
++						       2, 0, &args);
++		if (ret < 0) {
++			dev_err(&pdev->dev, "failed to parse ext-regs index 0\n");
++			return -EINVAL;
++		}
++
++		qproc->conn_map = syscon_node_to_regmap(args.np);
++		of_node_put(args.np);
++		if (IS_ERR(qproc->conn_map))
++			return PTR_ERR(qproc->conn_map);
++
++		qproc->force_clk_on = args.args[0];
++		qproc->rscc_disable = args.args[1];
++
++		ret = of_parse_phandle_with_fixed_args(pdev->dev.of_node,
++						       "qcom,ext-regs",
++						       2, 1, &args);
++		if (ret < 0) {
++			dev_err(&pdev->dev, "failed to parse ext-regs index 1\n");
++			return -EINVAL;
++		}
++
++		qproc->axim1_clk_off = args.args[0];
++		qproc->crypto_clk_off = args.args[1];
++	}
++
+ 	if (qproc->has_spare_reg) {
+ 		ret = of_parse_phandle_with_fixed_args(pdev->dev.of_node,
+ 						       "qcom,spare-regs",
+@@ -1590,7 +1785,7 @@ static int q6v5_init_reset(struct q6v5 *qproc)
+ 		return PTR_ERR(qproc->mss_restart);
+ 	}
+ 
+-	if (qproc->has_alt_reset || qproc->has_spare_reg) {
++	if (qproc->has_alt_reset || qproc->has_spare_reg || qproc->has_ext_cntl_regs) {
+ 		qproc->pdc_reset = devm_reset_control_get_exclusive(qproc->dev,
+ 								    "pdc_reset");
+ 		if (IS_ERR(qproc->pdc_reset)) {
+@@ -1697,6 +1892,9 @@ static int q6v5_probe(struct platform_device *pdev)
+ 
+ 	platform_set_drvdata(pdev, qproc);
+ 
++	qproc->has_qaccept_regs = desc->has_qaccept_regs;
++	qproc->has_ext_cntl_regs = desc->has_ext_cntl_regs;
++	qproc->has_vq6 = desc->has_vq6;
+ 	qproc->has_spare_reg = desc->has_spare_reg;
+ 	ret = q6v5_init_mem(qproc, pdev);
+ 	if (ret)
+@@ -1857,9 +2055,39 @@ static const struct rproc_hexagon_res sc7180_mss = {
+ 	.has_alt_reset = false,
+ 	.has_mba_logs = true,
+ 	.has_spare_reg = true,
++	.has_qaccept_regs = false,
++	.has_ext_cntl_regs = false,
++	.has_vq6 = false,
+ 	.version = MSS_SC7180,
+ };
+ 
++static const struct rproc_hexagon_res sc7280_mss = {
++	.hexagon_mba_image = "mba.mbn",
++	.proxy_clk_names = (char*[]){
++		"xo",
++		NULL
++	},
++	.active_clk_names = (char*[]){
++		"iface",
++		"offline",
++		"snoc_axi",
++		NULL
++	},
++	.proxy_pd_names = (char*[]){
++		"cx",
++		"mss",
++		NULL
++	},
++	.need_mem_protection = true,
++	.has_alt_reset = false,
++	.has_mba_logs = true,
++	.has_spare_reg = false,
++	.has_qaccept_regs = true,
++	.has_ext_cntl_regs = true,
++	.has_vq6 = true,
++	.version = MSS_SC7280,
++};
++
+ static const struct rproc_hexagon_res sdm845_mss = {
+ 	.hexagon_mba_image = "mba.mbn",
+ 	.proxy_clk_names = (char*[]){
+@@ -1889,6 +2117,9 @@ static const struct rproc_hexagon_res sdm845_mss = {
+ 	.has_alt_reset = true,
+ 	.has_mba_logs = false,
+ 	.has_spare_reg = false,
++	.has_qaccept_regs = false,
++	.has_ext_cntl_regs = false,
++	.has_vq6 = false,
+ 	.version = MSS_SDM845,
+ };
+ 
+@@ -1917,6 +2148,9 @@ static const struct rproc_hexagon_res msm8998_mss = {
+ 	.has_alt_reset = false,
+ 	.has_mba_logs = false,
+ 	.has_spare_reg = false,
++	.has_qaccept_regs = false,
++	.has_ext_cntl_regs = false,
++	.has_vq6 = false,
+ 	.version = MSS_MSM8998,
+ };
+ 
+@@ -1948,6 +2182,9 @@ static const struct rproc_hexagon_res msm8996_mss = {
+ 	.has_alt_reset = false,
+ 	.has_mba_logs = false,
+ 	.has_spare_reg = false,
++	.has_qaccept_regs = false,
++	.has_ext_cntl_regs = false,
++	.has_vq6 = false,
+ 	.version = MSS_MSM8996,
+ };
+ 
+@@ -1990,6 +2227,9 @@ static const struct rproc_hexagon_res msm8916_mss = {
+ 	.has_alt_reset = false,
+ 	.has_mba_logs = false,
+ 	.has_spare_reg = false,
++	.has_qaccept_regs = false,
++	.has_ext_cntl_regs = false,
++	.has_vq6 = false,
+ 	.version = MSS_MSM8916,
+ };
+ 
+@@ -2040,6 +2280,9 @@ static const struct rproc_hexagon_res msm8974_mss = {
+ 	.has_alt_reset = false,
+ 	.has_mba_logs = false,
+ 	.has_spare_reg = false,
++	.has_qaccept_regs = false,
++	.has_ext_cntl_regs = false,
++	.has_vq6 = false,
+ 	.version = MSS_MSM8974,
+ };
+ 
+@@ -2050,6 +2293,7 @@ static const struct of_device_id q6v5_of_match[] = {
+ 	{ .compatible = "qcom,msm8996-mss-pil", .data = &msm8996_mss},
+ 	{ .compatible = "qcom,msm8998-mss-pil", .data = &msm8998_mss},
+ 	{ .compatible = "qcom,sc7180-mss-pil", .data = &sc7180_mss},
++	{ .compatible = "qcom,sc7280-mss-pil", .data = &sc7280_mss},
+ 	{ .compatible = "qcom,sdm845-mss-pil", .data = &sdm845_mss},
+ 	{ },
+ };
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
