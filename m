@@ -2,129 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 467A43F1C25
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Aug 2021 17:03:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B0AB93F1C22
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Aug 2021 17:03:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240638AbhHSPEO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Aug 2021 11:04:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51334 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240652AbhHSPEK (ORCPT
+        id S240688AbhHSPDu convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Aug 2021 11:03:50 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:44650 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240652AbhHSPDs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Aug 2021 11:04:10 -0400
-Received: from mail-vs1-xe35.google.com (mail-vs1-xe35.google.com [IPv6:2607:f8b0:4864:20::e35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16511C061575
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Aug 2021 08:03:34 -0700 (PDT)
-Received: by mail-vs1-xe35.google.com with SMTP id b5so4217290vsq.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Aug 2021 08:03:34 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=LxeIiFGzA9+nCXREKf+MuHrFXJ4KP6fo54AIdNxUpxk=;
-        b=j2faza2Tjx8fcJI/p1fwwisw9XX4xAmB15S883aQsGplzkZKB3AW7MzbfVGTceKF4M
-         F594aJpmxGFHj80os51sZOaE838Lt2pzaCang9q0ljhhPPvMU+GRJb/6sQ98aAGWzNx+
-         HNlEUPXyDXhcy+Kle835ZsrOnEyjRlsCvOkTp+al88fVm1zoBBN9crOY61k7km734nRT
-         OgRdzq76b40E5mXMUgoSMCXIFXvKCB5QjLVc6yo0A1L87EB+gGmAnnZmIFtMzgctyz7+
-         JkLvLRasabd4yUovx0YJKxesCVKxMNY8ZqsGHF4bIUzncjocwPcp3ZRw+nvGIgzIQGY5
-         0mCA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=LxeIiFGzA9+nCXREKf+MuHrFXJ4KP6fo54AIdNxUpxk=;
-        b=S5DFp/YUnxoHNe9e8oKr102YCv4cD8kYo2MEfOJpf/3ewksJRIVfldGRmHIEUeva/e
-         AXvfO0k3IXXZsdqoML4ya55VAGuI/JOAtQxi/CeCHYTHK8QDmJ5yXI2a+3jCgsxjRs6L
-         EkromPNJO+WHIrIe2hEtfxSUOYOr7f63HH2zGaNGVnzvsKZOPC3ywn91ydXfdrmp9cDH
-         jLMjSLsYhRMkAG9EcLPi5ZzwlM0XTKNJgn5GtDgQb6mnyaBksLDPsAlarcFvLV9jh1/C
-         Z2bJC3JY4l1YJ491ASMiJYO8pjzH19K9+LftNDtIALQMtWPiAO+enELbA21ySSkbVN9m
-         Nh+A==
-X-Gm-Message-State: AOAM530/Zjf8YkN+05KTrqEwRjQwyJ0JeBjpwBBcPtyIAxmeVF18Sz51
-        BFs9ZJZZ1c+DwT8X9uQzu5wpf5TTiwUcJEygxSuIOA==
-X-Google-Smtp-Source: ABdhPJwVrPaKisYbYhaQOFuZlYwQ+Wc4l/X1XXthUJ0v9p6pBtnY63AhF3f1HII6vMkrfq//cdj/N3/jUNV/EeeNNAQ=
-X-Received: by 2002:a67:f6d8:: with SMTP id v24mr12966030vso.48.1629385413278;
- Thu, 19 Aug 2021 08:03:33 -0700 (PDT)
-MIME-Version: 1.0
-References: <010101746fc98add-45e77496-d2d6-4bc1-a1ce-0692599a9a7a-000000@us-west-2.amazonses.com>
- <CAJZ5v0hJJxxb+J5UtyZe2S_Tn7ARoGvjwDjw4dq601VJrriH9g@mail.gmail.com>
- <20200922161215.GD30658@codeaurora.org> <CAJZ5v0ipDRkPe6N9B6RzvHyCBobz8B9EoBfPh4DANrL_e86+Ww@mail.gmail.com>
- <bd62ffea-9736-f8f7-6a48-13e81f802aea@linaro.org> <2fe42a4d-469a-0424-45d4-5d7027c88263@codeaurora.org>
-In-Reply-To: <2fe42a4d-469a-0424-45d4-5d7027c88263@codeaurora.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 19 Aug 2021 17:02:57 +0200
-Message-ID: <CAPDyKFqpQSaVG63UxK9iuRnnONVD6iY2+aHZCe=cbrfuuV+dwg@mail.gmail.com>
-Subject: Re: [PATCH] cpuidle: governor: export cpuidle governor functions
-To:     Maulik Shah <mkshah@codeaurora.org>
-Cc:     Daniel Lezcano <daniel.lezcano@linaro.org>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Saravana Kannan <saravanak@google.com>,
-        Todd Kjos <tkjos@google.com>,
-        Srinivas Rao L <lsrao@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+        Thu, 19 Aug 2021 11:03:48 -0400
+Received: from smtpclient.apple (p5b3d23f8.dip0.t-ipconnect.de [91.61.35.248])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 5B6BCCED16;
+        Thu, 19 Aug 2021 17:03:10 +0200 (CEST)
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: Re: [PATCH] Bluetooth: hci_qca: Set SSR triggered flags when SSR
+ command is sent out
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <086f2add931ff541c8a6349767ae2adc@codeaurora.org>
+Date:   Thu, 19 Aug 2021 17:03:09 +0200
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        "open list:BLUETOOTH SUBSYSTEM" <linux-bluetooth@vger.kernel.org>,
+        Hemantg <hemantg@codeaurora.org>,
+        MSM <linux-arm-msm@vger.kernel.org>, pharish@codeaurora.org,
+        Rocky Liao <rjliao@codeaurora.org>, hbandi@codeaurora.org,
+        Abhishek Pandit-Subedi <abhishekpandit@chromium.org>,
+        mcchou@chromium.org
+Content-Transfer-Encoding: 8BIT
+Message-Id: <6238C7AB-32D7-4D12-A14E-24D12A862405@holtmann.org>
+References: <1629091302-7893-1-git-send-email-bgodavar@codeaurora.org>
+ <1CE27E9C-EABD-4B25-B255-8925297D11BD@holtmann.org>
+ <086f2add931ff541c8a6349767ae2adc@codeaurora.org>
+To:     Balakrishna Godavarthi <bgodavar@codeaurora.org>
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 17 Aug 2021 at 11:32, Maulik Shah <mkshah@codeaurora.org> wrote:
->
-> Hi Daniel/Rafael,
->
->  >> would it make sense to convert the governors into modules
->
-> i am not aware if this was not pursued further due to any issue.
->
-> Do you see any concerns to allow existing governors compiled as loadable
-> module?
-> if not i can work on same and post. please do let me know your thoughts
-> on this.
->
-> i have CCed Saravana and Todd for awareness.
+Hi Balakrishna,
 
-I suggest you re-submit a new patch and put some arguments of why this
-is useful for us in the commit message. Then we can discuss that
-instead, rather than this old patch.
+>>> This change sets SSR triggered flags when QCA SSR command is sent to
+>>> SoC. After the SSR command sent, driver discards the incoming data from
+>>> the upper layers. This way will ensure to read full dumps from the
+>>> BT SoC without any flow control issues due to excess of data receiving
+>>> from the HOST in audio usecases.
+>>> Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
+>>> ---
+>>> drivers/bluetooth/hci_qca.c | 10 ++++++++++
+>>> 1 file changed, 10 insertions(+)
+>>> diff --git a/drivers/bluetooth/hci_qca.c b/drivers/bluetooth/hci_qca.c
+>>> index 53deea2..5cbed6a 100644
+>>> --- a/drivers/bluetooth/hci_qca.c
+>>> +++ b/drivers/bluetooth/hci_qca.c
+>>> @@ -69,6 +69,8 @@
+>>> #define QCA_LAST_SEQUENCE_NUM		0xFFFF
+>>> #define QCA_CRASHBYTE_PACKET_LEN	1096
+>>> #define QCA_MEMDUMP_BYTE		0xFB
+>>> +#define QCA_SSR_OPCODE			0xFC0C
+>>> +#define QCA_SSR_PKT_LEN		5
+>>> enum qca_flags {
+>>> 	QCA_IBS_DISABLED,
+>>> @@ -871,6 +873,14 @@ static int qca_enqueue(struct hci_uart *hu, struct sk_buff *skb)
+>>> 	/* Prepend skb with frame type */
+>>> 	memcpy(skb_push(skb, 1), &hci_skb_pkt_type(skb), 1);
+>>> +	if (hci_skb_pkt_type(skb) == HCI_COMMAND_PKT &&
+>>> +	    skb->len == QCA_SSR_PKT_LEN &&
+>>> +	    hci_skb_opcode(skb) == QCA_SSR_OPCODE) {
+>>> +		bt_dev_info(hu->hdev, "Triggering ssr");
+>>> +		set_bit(QCA_SSR_TRIGGERED, &qca->flags);
+>>> +		set_bit(QCA_MEMDUMP_COLLECTION, &qca->flags);
+>>> +	}
+>>> +
+>> can we please stop hacking around by parsing opcodes in an enqueue
+>> function. Sounds like someone is injecting raw HCI vendor commands and
+>> then having a driver react to it.
+> [Bala]: yes this opcode is injected via hcitool to test BT SoC dump procedure or
+> to collect the dumps to debug the issue during issue cases. When audio usecases are running,
+> HOST sends ACL packets to SoC, in meantime if this command is sent to SoC using hcitool
+> to collect dumps at particular point,  With out this check HOST is pumping continues data to
+> SoC and SoC RFR line goes high, sometimes SoC become unresponsive and driver starts logging
+> command timeout error. Instead here, once a cmd with this opcode is sent, timer is started
+> to ensure that SSR is in progress. If no response from SoC for 8 seconds. Driver will be restarted.
 
-Kind regards
-Uffe
+so why would I add a kernel work-around for this?
 
->
-> Thanks,
-> Maulik
->
-> On 10/10/2020 1:56 AM, Daniel Lezcano wrote:
-> > Hi Rafael,
-> >
-> > On 22/09/2020 19:27, Rafael J. Wysocki wrote:
-> >> Hi Lina,
-> >>
-> >> On Tue, Sep 22, 2020 at 6:12 PM Lina Iyer <ilina@codeaurora.org> wrote:
-> >>> Hi Rafael,
-> >>>
-> >>> On Tue, Sep 22 2020 at 10:00 -0600, Rafael J. Wysocki wrote:
-> >>>> Sorry for the delay.
-> >>>>
-> >>>> On Wed, Sep 9, 2020 at 12:15 AM Lina Iyer <ilina@codeaurora.org> wrote:
-> >>>>> Commit 83788c0caed3 ("cpuidle: remove unused exports") removed
-> >>>>> capability of registering cpuidle governors, which was unused at that
-> >>>>> time. By exporting the symbol, let's allow platform specific modules to
-> >>>>> register cpuidle governors and use cpuidle_governor_latency_req() to get
-> >>>>> the QoS for the CPU.
-> >>>> Which platform-specific modules may want to do that and why?
-> >>>>
-> >>> We are planning a custom cpuidle governor for QCOM SoCs. With Android,
-> >>> the idea is to make them loadable modules so they can be in a separate
-> >>> partition.
-> >> Well, the $subject patch is not applicable without a mainline user
-> >> requiring this, so it needs to be posted along with that user.
-> > Putting apart the custom cpuidle governor mentioned above, would it make
-> > sense to convert the governors into modules ? It is pointless to have
-> > all of them compiled in, especially with distros doing make
-> > allmodconfig, no?
-> >
-> >
-> --
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
->
+Design a proper interface for this and don’t rely on injecting HCI commands via HCI raw channel.
+
+Regards
+
+Marcel
+
