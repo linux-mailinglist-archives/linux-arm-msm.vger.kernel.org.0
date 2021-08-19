@@ -2,139 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F0AB13F0F0D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Aug 2021 02:09:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AA5D43F1009
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Aug 2021 03:40:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233866AbhHSAKW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 18 Aug 2021 20:10:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43536 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234119AbhHSAKV (ORCPT
+        id S235459AbhHSBk7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 18 Aug 2021 21:40:59 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:62357 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235433AbhHSBk7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 18 Aug 2021 20:10:21 -0400
-Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46977C0613CF
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Aug 2021 17:09:46 -0700 (PDT)
-Received: by mail-pg1-x531.google.com with SMTP id s11so4114651pgr.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Aug 2021 17:09:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=fEapmFlBKIuSpoPu4AyxSHs+c5eRGpigOktGw17Waoc=;
-        b=RymtZDJzEG5vx1du3BYZlbKOwsHfxlhsmAW5/gxLcPrWYezAkX6atoyRb9N8Y/1V+S
-         mVPlJytPA/Ap+BOLltZGwE6n+41KOFT8mVB6GgGClW7alh/gUBLat7aSJRwZ9yyoPo1Q
-         AVqoZbTXZYbJy4uXyI25ybPOpZOUsLcWXlZVM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=fEapmFlBKIuSpoPu4AyxSHs+c5eRGpigOktGw17Waoc=;
-        b=bMyk+gUzrOVABiTp+dZfPTIOJDcyVtzjcwSoSA6CYbJ+lAf1gAsl2S5AdK77j5BKuO
-         sjFeoxcfuwC68iSMteou42MfQp65b6cg8lL8TpgpSemuRi2OuxnpwOq7E3NPErcHcQIU
-         Mlf0tZUUd0MY6Y/ZdFxGpkkGHJYS4ulgookCGE1LwsmYtFDU4q3DH+p84udeg0crRpwb
-         fPhv5RX3H6ZJ41YOT1y37AFYC5/nCgkJjEtNG5Jfije4+0bHU1IjrauiseN/oC6Sa8ZX
-         QuIhWQmHTnohEpcPG1vQnwHBaJ7kME8fMJZ9tO6GzeKBFkqV1+1nMg1E+rV7KvTVRVQ0
-         DIzg==
-X-Gm-Message-State: AOAM532t45gcfb57n/AQ9DFe51p0otsMsHCSWRIJdnwY5d36+B+nvbJ1
-        qyk5Dd/CJOcIOoM7tUkCyiWLRm1kLRjrSQ==
-X-Google-Smtp-Source: ABdhPJyLsWTjkUT0KBiXdx6nZczfANK2GG0VdKXJbwFiPeRQGxg3w8CI2UyI1d0MvR/XcEb+bNDyOA==
-X-Received: by 2002:a65:6459:: with SMTP id s25mr11405917pgv.7.1629331785510;
-        Wed, 18 Aug 2021 17:09:45 -0700 (PDT)
-Received: from mail-pf1-f178.google.com (mail-pf1-f178.google.com. [209.85.210.178])
-        by smtp.gmail.com with ESMTPSA id n22sm937667pff.57.2021.08.18.17.09.45
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 18 Aug 2021 17:09:45 -0700 (PDT)
-Received: by mail-pf1-f178.google.com with SMTP id t42so1256053pfg.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 18 Aug 2021 17:09:45 -0700 (PDT)
-X-Received: by 2002:a5d:9eda:: with SMTP id a26mr9282243ioe.166.1629331471737;
- Wed, 18 Aug 2021 17:04:31 -0700 (PDT)
+        Wed, 18 Aug 2021 21:40:59 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1629337224; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=dN4PPWWThxm3th5mS+yrD7PdQG/wZZJ+UXng9iFiYsk=; b=BLwwTJY/3Vy7TLO/1HO1dgh8g9NEJ+tLX5lpduFokHmAr+r0TQFa00FPGJUnRK55iAzgLBAK
+ DljUA3RqOUsPXOkqNMw6eYRr3UZw2gTjUY0rYc7I30VyVrepez4Ie2XtF4Bj+xa1GXkhQHYi
+ Slc+7Vj444KiHdgnCTEKPY2/AgM=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 611db6861a9008a23e419bc1 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 19 Aug 2021 01:40:22
+ GMT
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 4C74CC43617; Thu, 19 Aug 2021 01:40:22 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.110.16.65] (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 20960C4338F;
+        Thu, 19 Aug 2021 01:40:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 20960C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [PATCH v1 1/2] bus: mhi: core: Bail on writing register fields if
+ read fails
+To:     Bhaumik Bhatt <bbhatt@codeaurora.org>,
+        manivannan.sadhasivam@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        loic.poulain@linaro.org, quic_jhugo@quicinc.com
+References: <1629330634-36465-1-git-send-email-bbhatt@codeaurora.org>
+ <1629330634-36465-2-git-send-email-bbhatt@codeaurora.org>
+From:   Hemant Kumar <hemantk@codeaurora.org>
+Message-ID: <45fbfe24-38eb-82f0-7134-a04854269247@codeaurora.org>
+Date:   Wed, 18 Aug 2021 18:40:20 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-References: <1628754078-29779-1-git-send-email-rajpat@codeaurora.org> <1628754078-29779-4-git-send-email-rajpat@codeaurora.org>
-In-Reply-To: <1628754078-29779-4-git-send-email-rajpat@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 18 Aug 2021 17:04:18 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=Vb2_K7QDvdMkjPLYqbVNQMa9e=3_PqREAHYMMVX-9QVQ@mail.gmail.com>
-Message-ID: <CAD=FV=Vb2_K7QDvdMkjPLYqbVNQMa9e=3_PqREAHYMMVX-9QVQ@mail.gmail.com>
-Subject: Re: [PATCH V5 3/7] arm64: dts: sc7280: Add QUPv3 wrapper_0 nodes
-To:     Rajesh Patil <rajpat@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        msavaliy@qti.qualcomm.com, satya priya <skakit@codeaurora.org>,
-        Roja Rani Yarubandi <rojay@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <1629330634-36465-2-git-send-email-bbhatt@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-On Thu, Aug 12, 2021 at 12:42 AM Rajesh Patil <rajpat@codeaurora.org> wrote:
->
-> @@ -542,8 +561,305 @@
->                         #address-cells = <2>;
->                         #size-cells = <2>;
->                         ranges;
-> +                       iommus = <&apps_smmu 0x123 0x0>;
->                         status = "disabled";
->
-> +                       i2c0: i2c@980000 {
 
-Not a full review of your patch (I think Matthias has already looked
-in a bunch of detail), but can I also request that you add i2c and spi
-aliases in your next spin (I think you have to spin this anyway,
-right?) Add these under the "aliases" mode before the mmc ones (to
-keep sort order good):
+On 8/18/2021 4:50 PM, Bhaumik Bhatt wrote:
+> Helper API to write register fields relies on successful reads
+> of the register/address prior to the write. Bail out if a failure
+> is seen when reading the register before the actual write is
+> performed.
+> 
+> Signed-off-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
+Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
 
-i2c0 = &i2c0;
-i2c1 = &i2c1;
-i2c2 = &i2c2;
-i2c3 = &i2c3;
-i2c4 = &i2c4;
-i2c5 = &i2c5;
-i2c6 = &i2c6;
-i2c7 = &i2c7;
-i2c8 = &i2c8;
-i2c9 = &i2c9;
-i2c10 = &i2c10;
-i2c11 = &i2c11;
-i2c12 = &i2c12;
-i2c13 = &i2c13;
-i2c14 = &i2c14;
-i2c15 = &i2c15;
-
-...and these after:
-
-spi0 = &spi0;
-spi1 = &spi1;
-spi2 = &spi2;
-spi3 = &spi3;
-spi4 = &spi4;
-spi5 = &spi5;
-spi6 = &spi6;
-spi7 = &spi7;
-spi8 = &spi8;
-spi9 = &spi9;
-spi10 = &spi10;
-spi11 = &spi11;
-spi12 = &spi12;
-spi13 = &spi13;
-spi14 = &spi14;
-spi15 = &spi15;
-
-The "Quad SPI" doesn't get an alias, but that's OK. It doesn't have a
-well-defined number in the manual and it's fine to have it be
-auto-assigned. It's really just confusing when there's something with
-a well-defined number in the manual and it's a _different_ one in the
-logs. ;-)
-
--Doug
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum, a Linux Foundation Collaborative Project
