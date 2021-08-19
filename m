@@ -2,95 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 112A23F1A78
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Aug 2021 15:36:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 144C13F1AD5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 19 Aug 2021 15:44:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240152AbhHSNhW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 19 Aug 2021 09:37:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59168 "EHLO
+        id S240194AbhHSNpR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 19 Aug 2021 09:45:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240141AbhHSNhV (ORCPT
+        with ESMTP id S240137AbhHSNpR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 19 Aug 2021 09:37:21 -0400
-Received: from mail-ej1-x62a.google.com (mail-ej1-x62a.google.com [IPv6:2a00:1450:4864:20::62a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C755EC061756
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Aug 2021 06:36:44 -0700 (PDT)
-Received: by mail-ej1-x62a.google.com with SMTP id x11so13137443ejv.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Aug 2021 06:36:44 -0700 (PDT)
+        Thu, 19 Aug 2021 09:45:17 -0400
+Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 69E99C061757
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Aug 2021 06:44:41 -0700 (PDT)
+Received: by mail-il1-x135.google.com with SMTP id h29so6016979ila.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Aug 2021 06:44:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/BAopytyK/R8bUpbK+b7Q0+6GCUrOVsER44boOsZ9dQ=;
-        b=UeVsli6ZqeVfyxuDP82l6Qchdxd0SS9uCWKergbqRpdGjWukw6CdmP19lDB0j6CeHc
-         kZoC1YnwRSRcSKTrfDIP46iuVub+8E5lBPazngHEZVtCxE8Dt99wvylfuFdsJxJTKcei
-         tgQwEKfYgXVjIv1RvlErvCsIk0WxVwr8WrCI74L3F26QlW7QyC7Y5NRDLhGrdVguY501
-         hB6uoV6dn4V6XN/KCizDVURHciZZrB8Qcjs7iROlCpv14cTfzS2vaZ8BbBqS+9lSDE8U
-         6DP4dPYFalWvW/zQpp560Ne0VjzaY5T/Db8Zn2uCZAWs0Ei5wlpAYXCdvXYO30jaIqBe
-         /I0g==
+        d=google.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Ug1OSGTt9qLTp56AgUL2RfL1TSKASvvRSNzqRc2tcqw=;
+        b=XfvaZ7ZW98kSfzUdcrLY4dFpOgBvtifT09w0hvXSRHNg0WtGEFaTODfTsIuOxZs7zi
+         vBeZ1DlAaHqzXB/EpOMgzPWPDgODvbSMzvLb0HVSicDgzWNojNr3tDeMY2HFyZQoBt9O
+         XlrMazdrCg8Kz5EAqXZnxUn0g5BwvYEoLQZNDIR1/Xk/QlFSSfW8DBmCoxaigl6MIkdQ
+         ICPu0Z4JFoIuVPMd/RrJomE9SqGH/B5eWSHbxytuM2S/n0XS9TvtgmJ0hT4KPqnD5ACp
+         HHjXeUW7AByGw8JQZYmzTv10iV96woEDRmibQiowyvtN15cK34kkiVx4u6b7ZiNtrm/C
+         Y1NQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=/BAopytyK/R8bUpbK+b7Q0+6GCUrOVsER44boOsZ9dQ=;
-        b=OXBprblO6gLIKxauQDiJJj1NxAkvIHpwayUwArpROUNWS3tyT+d4SBmYc3CkNVMeXL
-         qU4pqCq3KM2P2qAoXZuuJzvHc/zrym/7Fv0sIG3nC95ge138aHMZdg47y8JU5OTq4iku
-         v+45DCy57RjxSob5PTMWxGSCYP36zWx5UjCO5Yfw4KsOk5t0nGBDXdKprJBi26BI01fX
-         o1odGdoHetddksnVcP/HprMKv54umQKzXJIv67MFS7mBydd0XiLWFJc50PaTv40vRuNP
-         ERqlLXq7epjy3JXmlRWsOxcs6CnpKM4nixMu7BqETfA0MLvr0k++jlZ0SP/MuX6GvmoG
-         e8+g==
-X-Gm-Message-State: AOAM532sM5VcvII3AQ+6CR5kYcTWh8ZuesmsZTnOZNNsixbke3f6OFWg
-        X03+rqkLPbNlbIJSPWYLvn0MFQ==
-X-Google-Smtp-Source: ABdhPJzWpeXlmAlC6oKFJXd83aDooz5YGi7xRGcALh6ivDz0hfP0Xwl6LH+PhBTG6C5khTlVBapj4Q==
-X-Received: by 2002:a17:906:ad7:: with SMTP id z23mr16114025ejf.419.1629380203406;
-        Thu, 19 Aug 2021 06:36:43 -0700 (PDT)
-Received: from xps7590.fritz.box ([2a02:2454:3e5:b700:eb3d:3695:30c3:3572])
-        by smtp.gmail.com with ESMTPSA id ay20sm1770138edb.91.2021.08.19.06.36.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 19 Aug 2021 06:36:43 -0700 (PDT)
-From:   Robert Foss <robert.foss@linaro.org>
-To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch, dmitry.baryshkov@linaro.org,
-        abhinavk@codeaurora.org, angelogioacchino.delregno@somainline.org,
-        mkrishn@codeaurora.org, kalyan_t@codeaurora.org,
-        lee.jones@linaro.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Cc:     Robert Foss <robert.foss@linaro.org>
-Subject: [PATCH v1] drm/msm/dpu: Fix address of SM8150 PINGPONG5 IRQ register
-Date:   Thu, 19 Aug 2021 15:36:36 +0200
-Message-Id: <20210819133636.2045766-1-robert.foss@linaro.org>
-X-Mailer: git-send-email 2.30.2
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Ug1OSGTt9qLTp56AgUL2RfL1TSKASvvRSNzqRc2tcqw=;
+        b=HJqvjc8DwZ+RkRdC0odOXgdAwQZVPZTSLNtGbggE1NDi7Kw1XMKuTzBDaZGHtE6lA0
+         ev+2Jnsa4P9RfJhgDy8SXthDKbEkfm0/Lrn4olyZ/bJgVITIhBeBSWu2m2197UrIl4wU
+         4nb1WHmLP71au1LfXV+ic1hjLXS5TaktuV3BwHUZuKh1zmqtOHQ7nQIc7fqsPpdSFjNE
+         IoRlFcrliW3YNYrCKRYt01bBTVEA1Vw1ZSF8oS0CMCLtdZBw5j9H0J7jmyKkcNpk5Nn/
+         wZHozM8r8cI0GQVUZC8uG1VXpp9+CxCvMrEmaMrOTFzSLICi48oRs65VCIrlEKu13PM6
+         8ZFQ==
+X-Gm-Message-State: AOAM530/4OGs0ZNUFyBoXQAQY8CDe9irlsYwqhzUMda/hMSUS2g5xD6X
+        iQCz7gFbZCW72w6ee9ZwDhsQ5Ee7+2940PWryG900w==
+X-Google-Smtp-Source: ABdhPJwmtqmWXSprK1vhwc2gg4x6OTwPqzsJkVqyF5yv9RgHlIUTV7TV6oYqT3ZY2f6S/bmRmGGnAfG82XXx36knYQw=
+X-Received: by 2002:a92:d304:: with SMTP id x4mr9982073ila.82.1629380680491;
+ Thu, 19 Aug 2021 06:44:40 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1629132650-26277-1-git-send-email-sbhanu@codeaurora.org> <CAD=FV=UqFczZ6tLzVuXhgKG9teSNTGt_RdqAxP4eXBN_eDDAtQ@mail.gmail.com>
+In-Reply-To: <CAD=FV=UqFczZ6tLzVuXhgKG9teSNTGt_RdqAxP4eXBN_eDDAtQ@mail.gmail.com>
+From:   Doug Anderson <dianders@google.com>
+Date:   Thu, 19 Aug 2021 06:44:27 -0700
+Message-ID: <CAD=FV=Wq-+Xzjc-o9p49pvf4A_q7L-THHp_wUQce47E+yMEgvA@mail.gmail.com>
+Subject: Re: [PATCH V1] arm64: dts: qcom: sc7180: Use maximum drive strength
+ values for eMMC
+To:     Shaik Sajida Bhanu <sbhanu@codeaurora.org>
+Cc:     Adrian Hunter <adrian.hunter@intel.com>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Asutosh Das <asutoshd@codeaurora.org>,
+        Sahitya Tummala <stummala@codeaurora.org>,
+        pragalla@codeaurora.org, nitirawa@codeaurora.org,
+        Ram Prakash Gupta <rampraka@codeaurora.org>,
+        Sayali Lokhande <sayalil@codeaurora.org>,
+        sartgarg@codeaurora.org, cang@codeaurora.org,
+        Linux MMC List <linux-mmc@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Both PINGPONG4 and PINGPONG5 IRQ registers are using the
-same address, which is incorrect. PINGPONG4 should use the
-register offset 30, and PINGPONG5 should use the register
-offset 31 according to the downstream driver.
+Hi,
 
-Fixes: 667e9985ee24 ("drm/msm/dpu: replace IRQ lookup with the data in hw catalog")
-Signed-off-by: Robert Foss <robert.foss@linaro.org>
----
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+On Tue, Aug 17, 2021 at 6:58 AM Doug Anderson <dianders@google.com> wrote:
+>
+> >                 pinconf-data {
+> >                         pins = "sdc1_data";
+> >                         bias-pull-up;
+> > -                       drive-strength = <10>;
+> > +                       drive-strength = <16>;
+>
+> I could be convinced that this is the right thing to do, but I want to
+> really make sure that it has had sufficient testing. Specifically as
+> this patch is written we'll be updating the drive strength for all
+> boards. Increasing the drive strength can sometimes introduce new
+> problems (reflections, noise, ...) so we have to be confident that
+> we're not breaking someone that used to work by increasing the drive
+> strength here. How much has this been tested?
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-index 2e482cdd7b3c5..420d78cfce8af 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-@@ -794,7 +794,7 @@ static const struct dpu_pingpong_cfg sm8150_pp[] = {
- 			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 30),
- 			-1),
- 	PP_BLK("pingpong_5", PINGPONG_5, 0x72800, MERGE_3D_2, sdm845_pp_sblk,
--			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 30),
-+			DPU_IRQ_IDX(MDP_SSPP_TOP0_INTR2, 31),
- 			-1),
- };
- 
--- 
-2.30.2
+From further discussion internally, it sounds as if this should be
+fine and fixes more than just this one eMMC part. Thus:
 
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
