@@ -2,141 +2,253 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E69C43F2703
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Aug 2021 08:45:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 580C63F2826
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Aug 2021 10:10:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238546AbhHTGpO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Aug 2021 02:45:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40268 "EHLO
+        id S231466AbhHTILT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Aug 2021 04:11:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60184 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238506AbhHTGpL (ORCPT
+        with ESMTP id S230363AbhHTILS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Aug 2021 02:45:11 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F30AC061757
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Aug 2021 23:44:34 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id w6so11919722oiv.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 19 Aug 2021 23:44:34 -0700 (PDT)
+        Fri, 20 Aug 2021 04:11:18 -0400
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 40224C061760
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Aug 2021 01:10:41 -0700 (PDT)
+Received: by mail-qt1-x831.google.com with SMTP id l24so6854527qtj.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Aug 2021 01:10:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc:content-transfer-encoding;
-        bh=f61uoSIm/tKTfSvriwergj8TTbSumrt6o+1ACHw5Z8o=;
-        b=JAZbuypKzGBgAJ+s2a7SVVACgDfiYPGJPeWiGaW2Z9Y8UtzbDBXPA4CnlTRJaskouX
-         dBY0xaVGfxtWwSvWsKF7kRnan2oWGa3JHlO9DywARJqkEMnm9xVkrWxRHOb/toRlT8il
-         06JeUuzQPun/WhGSL0A18glSri1g8TVtUQusY=
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=g5IS6e3Hnyb2jRAb6f1KMnSZamwQJcSDoTsblYNlRlY=;
+        b=AZ9hPtV94XSFU7TEKvhcU+et+rJ+GpExWH9lrUhoqWoy0ewHu2M34a/uO6l9DjkV3W
+         f0oJk7nxCalOBi4OJVItLOhpuaLrPNMPtOlhahFsCqEnDmrPKqvI4ExcusqN0kmf2dmm
+         X6aVP3hh5uVmOusZVgIhxqBCEvpuDtGXIU0bCJxnBEYFye8qFaFZb0rRPDeTD4tGclZw
+         r6C1JJE68Lj5FmT8KeHnhA7VE0yN5hMhHlb84zbNqFmbhPEbOEPv33O68IOJr/4+cmXs
+         8UuTDZzFcGnR83wrcms+xf3UQTABzatiaTOhd2YkS23GfoR9Q7lX2ajxwnwJ0ubC8bl1
+         XkYw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc:content-transfer-encoding;
-        bh=f61uoSIm/tKTfSvriwergj8TTbSumrt6o+1ACHw5Z8o=;
-        b=VpogYY5Hep3JSmFaZHpbA4E/VRFQqlHI3/5VRQdt/FuW1mwR1WKEanFPhqf68BkkmN
-         wRFDoxeL8TihDqu2bMqxdg8GI2V1c9KDo7AH1AHsFh4/bEdOxWdqEAQdf/7flqULtT4y
-         8QPZAhGRl/zEhh+6bt9XQT3qcH+ZLSO1yCpG/U3rMxkCrDr5cDjLdONnsIMHO02W+F5K
-         K3S55LmO/nYtWBy3zZO9rxnJjWbC2u8ChWb0Ti6nAYNlkbtdTkV9O0BZn7u02YgATdZx
-         5LU4zPxWWQzKddDisL2w1ovm0+oRvhHkPeq9xasjGG4UHX/1XGZqDvb4DtsDcjRSufVy
-         yRMg==
-X-Gm-Message-State: AOAM532suY8ID3hn8/VS22e5+OwVlwKDxwkVjBnj+akLo86LEyt29ATh
-        Pnt2CKxDdYIisRE18TkLs3xYIVGFaaCfyfoTI2z/Mw==
-X-Google-Smtp-Source: ABdhPJwl1Sl50w9I94R6TeJfhICfeuXMKa1clo3MNi5WUzWhOgL0bqnI7l6wd9okLAKUi5kPPqMJKK2+hP9OhD2+p7k=
-X-Received: by 2002:a05:6808:181a:: with SMTP id bh26mr1975912oib.166.1629441873561;
- Thu, 19 Aug 2021 23:44:33 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 19 Aug 2021 23:44:32 -0700
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=g5IS6e3Hnyb2jRAb6f1KMnSZamwQJcSDoTsblYNlRlY=;
+        b=ftmQGhzGpNwGRRxTXVExATQo0M9zOtfzi5zpbp/EfMJFIaJtG9wdhKxOuRs127kC1i
+         dCwdGHUl1G4//dl/SR7FPLk55iwK9Xm8bn+DyGWndFzx2oWrS9IkydJrdThjkD1sCknS
+         fkNQyc6ZHELesDBKSaH6VdwBhLGdw6fOxquiQZ/diQyvz4no2GhEzRBmzMUtWC9Q14i7
+         DwD9NaMWssB6NQYAkpl0EmC0MhIxZ5YBiMtrfaYIZfxi2u7HqcXFidNW+VpHWGgbE5HR
+         3tNEwYPdjCjmgKD0EUwTQzizIklVnpf/Q2OKUdN1YNzLcUCOO2HHdzqxMGA0Dxmhhmxj
+         2gjw==
+X-Gm-Message-State: AOAM532FzFl0ITRApNZZ32dPjJA2+L22VlYYLhLz6XBPFjUbcgtbJ2hZ
+        /6XDY95tqkXILQeX6sSvOFnmR00FdWTOh3onyhpmcw==
+X-Google-Smtp-Source: ABdhPJykvHLGPJLrte3XmQ+2fZnjn7MpEKijpvU45xzTfUuHaBNaF5vvWd95j2y77Xi7ngLBiT0SX8r507FJf1UymdA=
+X-Received: by 2002:a05:622a:13c8:: with SMTP id p8mr16634457qtk.238.1629447040101;
+ Fri, 20 Aug 2021 01:10:40 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <ea2380bd-734d-a835-05f0-db9d3dbcfe38@codeaurora.org>
-References: <1625576413-12324-1-git-send-email-sanm@codeaurora.org>
- <1625576413-12324-3-git-send-email-sanm@codeaurora.org> <CAE-0n52d7UOWQ+hohoyV81+aB1RnNPUEnjPCtr5=nH+a=WK35Q@mail.gmail.com>
- <ea2380bd-734d-a835-05f0-db9d3dbcfe38@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Thu, 19 Aug 2021 23:44:32 -0700
-Message-ID: <CAE-0n53gsF-U4YwZyVyjXm2_Fw6zc-FObzx1ATC4X_KXSRsJVA@mail.gmail.com>
-Subject: Re: [PATCH v5 2/3] arm64: dts: qcom: sc7280: Add USB related nodes
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Pratham Pratap <prathampratap@codeaurora.org>
+References: <20210817005507.1507580-1-dmitry.baryshkov@linaro.org>
+ <20210817005507.1507580-11-dmitry.baryshkov@linaro.org> <YR7m43mURVJ8YufC@ripper>
+In-Reply-To: <YR7m43mURVJ8YufC@ripper>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Fri, 20 Aug 2021 11:10:29 +0300
+Message-ID: <CAA8EJpr+=Yg2B_DzQWntW0GgvBfaSpAu0K+UD3NowdkusiYxrQ@mail.gmail.com>
+Subject: Re: [RFC PATCH 10/15] pwrseq: add support for QCA BT+WiFi power sequencer
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>, linux-mmc@vger.kernel.org,
+        open list <linux-kernel@vger.kernel.org>,
+        linux-bluetooth@vger.kernel.org, ath10k@lists.infradead.org,
+        linux-wireless@vger.kernel.org, netdev@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sandeep Maheswaram (2021-08-19 22:34:14)
-> On 8/18/2021 1:28 AM, Stephen Boyd wrote:
-> > Quoting Sandeep Maheswaram (2021-07-06 06:00:12)
-> >> Add nodes for DWC3 USB controller, QMP and HS USB PHYs in sc7280 SOC.
-> >>
-> >> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
-> >> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
-> >> ---
-> >> Changed qmp usb phy to usb dp phy combo node as per Stephen's comments=
-.
-> >> Changed dwc to usb and added SC7280 compatible as per Bjorn's comments=
-.
-> >>
-> >>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 164 +++++++++++++++++++++++++=
-++++++++++
-> >>   1 file changed, 164 insertions(+)
-> >>
-> >> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dt=
-s/qcom/sc7280.dtsi
-> >> index a8c274a..cd6908f 100644
-> >> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> >> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> >> @@ -1035,6 +1035,125 @@
-> >>                          };
-> >>                  };
-> >>
-> > [...]
-> >> +
-> >> +               usb_2: usb@8cf8800 {
-> >> +                       compatible =3D "qcom,sc7280-dwc3", "qcom,dwc3"=
-;
-> >> +                       reg =3D <0 0x08cf8800 0 0x400>;
-> >> +                       status =3D "disabled";
-> >> +                       #address-cells =3D <2>;
-> >> +                       #size-cells =3D <2>;
-> >> +                       ranges;
-> >> +                       dma-ranges;
-> >> +
-> >> +                       clocks =3D <&gcc GCC_CFG_NOC_USB3_SEC_AXI_CLK>=
-,
-> >> +                                <&gcc GCC_USB30_SEC_MASTER_CLK>,
-> >> +                                <&gcc GCC_AGGRE_USB3_SEC_AXI_CLK>,
-> >> +                                <&gcc GCC_USB30_SEC_MOCK_UTMI_CLK>,
-> >> +                                <&gcc GCC_USB30_SEC_SLEEP_CLK>;
-> >> +                       clock-names =3D "cfg_noc", "core", "iface","mo=
-ck_utmi",
-> >> +                                     "sleep";
-> >> +
-> >> +                       assigned-clocks =3D <&gcc GCC_USB30_SEC_MOCK_U=
-TMI_CLK>,
-> >> +                                         <&gcc GCC_USB30_SEC_MASTER_C=
-LK>;
-> >> +                       assigned-clock-rates =3D <19200000>, <20000000=
-0>;
-> >> +
-> >> +                       interrupts-extended =3D <&intc GIC_SPI 240 IRQ=
-_TYPE_LEVEL_HIGH>,
-> >> +                                    <&pdc 13 IRQ_TYPE_EDGE_RISING>,
-> >> +                                    <&pdc 12 IRQ_TYPE_EDGE_RISING>;
-> > I'm seeing this cause a warning at boot
-> >
-> > [    4.724756] irq: type mismatch, failed to map hwirq-12 for
-> > interrupt-controller@b220000!
-> > [    4.733401] irq: type mismatch, failed to map hwirq-13 for
-> > interrupt-controller@b220000!
-> I should be using=C2=A0 IRQ_TYPE_LEVEL_HIGH. Will correct in next version=
-.
+Hi,
 
-Ok. Please send a patch to fix it as this is already staged to be merged
-in the next merge window.
+On Fri, 20 Aug 2021 at 02:17, Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Mon 16 Aug 17:55 PDT 2021, Dmitry Baryshkov wrote:
+> [..]
+> > diff --git a/drivers/power/pwrseq/pwrseq_qca.c b/drivers/power/pwrseq/pwrseq_qca.c
+> > new file mode 100644
+> > index 000000000000..3421a4821126
+> > --- /dev/null
+> > +++ b/drivers/power/pwrseq/pwrseq_qca.c
+> > @@ -0,0 +1,290 @@
+> > +// SPDX-License-Identifier: GPL-2.0-only
+> > +/*
+> > + * Copyright (c) 2021, Linaro Ltd.
+> > + *
+> > + * Author: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > + *
+> > + * Power Sequencer for Qualcomm WiFi + BT SoCs
+> > + */
+> > +
+> > +#include <linux/delay.h>
+> > +#include <linux/gpio/consumer.h>
+> > +#include <linux/platform_device.h>
+> > +#include <linux/pwrseq/driver.h>
+> > +#include <linux/regulator/consumer.h>
+> > +
+> > +/*
+> > + * Voltage regulator information required for configuring the
+> > + * QCA WiFi+Bluetooth chipset
+> > + */
+> > +struct qca_vreg {
+> > +     const char *name;
+> > +     unsigned int load_uA;
+> > +};
+> > +
+> > +struct qca_device_data {
+> > +     struct qca_vreg vddio;
+>
+> Any particular reason why this isn't just the first entry in vregs and
+> operated as part of the bulk API?
+
+Because VDDIO should be up before bringing the rest of the power
+sources (at least for wcn39xx). This is usually the case since VDDIO
+is S4A, but I'd still prefer to express this in the code.
+And register_bulk_enable powers up all the supplies asynchronously,
+thus it can not guarantee that the first entry would be powered up
+first.
+
+>
+> > +     struct qca_vreg *vregs;
+> > +     size_t num_vregs;
+> > +     bool has_bt_en;
+> > +     bool has_wifi_en;
+> > +};
+> > +
+> > +struct pwrseq_qca;
+> > +struct pwrseq_qca_one {
+> > +     struct pwrseq_qca *common;
+> > +     struct gpio_desc *enable;
+> > +};
+> > +
+> > +#define PWRSEQ_QCA_WIFI 0
+> > +#define PWRSEQ_QCA_BT 1
+> > +
+> > +#define PWRSEQ_QCA_MAX 2
+> > +
+> > +struct pwrseq_qca {
+> > +     struct regulator *vddio;
+> > +     struct gpio_desc *sw_ctrl;
+> > +     struct pwrseq_qca_one pwrseq_qcas[PWRSEQ_QCA_MAX];
+> > +     int num_vregs;
+> > +     struct regulator_bulk_data vregs[];
+> > +};
+> > +
+> > +static int pwrseq_qca_power_on(struct pwrseq *pwrseq)
+> > +{
+> > +     struct pwrseq_qca_one *qca_one = pwrseq_get_data(pwrseq);
+> > +     int ret;
+> > +
+> > +     if (qca_one->common->vddio) {
+>
+> devm_regulator_get() doesn't return NULL, so this is always true.
+
+This is more of the safety guard for the cases when the qca doesn't
+have the special vddio supply.
+
+>
+> > +             ret = regulator_enable(qca_one->common->vddio);
+> > +             if (ret)
+> > +                     return ret;
+> > +     }
+> > +
+> > +     ret = regulator_bulk_enable(qca_one->common->num_vregs, qca_one->common->vregs);
+> > +     if (ret)
+> > +             goto vddio_off;
+> > +
+> > +     if (qca_one->enable) {
+> > +             gpiod_set_value_cansleep(qca_one->enable, 0);
+> > +             msleep(50);
+> > +             gpiod_set_value_cansleep(qca_one->enable, 1);
+> > +             msleep(150);
+> > +     }
+> > +
+> > +     if (qca_one->common->sw_ctrl) {
+> > +             bool sw_ctrl_state = gpiod_get_value_cansleep(qca_one->common->sw_ctrl);
+> > +             dev_dbg(&pwrseq->dev, "SW_CTRL is %d", sw_ctrl_state);
+> > +     }
+> > +
+> > +     return 0;
+> > +
+> > +vddio_off:
+> > +     regulator_disable(qca_one->common->vddio);
+> > +
+> > +     return ret;
+> > +}
+> [..]
+> > +static int pwrseq_qca_probe(struct platform_device *pdev)
+> > +{
+> > +     struct pwrseq_qca *pwrseq_qca;
+> > +     struct pwrseq *pwrseq;
+> > +     struct pwrseq_provider *provider;
+> > +     struct device *dev = &pdev->dev;
+> > +     struct pwrseq_onecell_data *onecell;
+> > +     const struct qca_device_data *data;
+> > +     int ret, i;
+> > +
+> > +     data = device_get_match_data(dev);
+> > +     if (!data)
+> > +             return -EINVAL;
+> > +
+> > +     pwrseq_qca = devm_kzalloc(dev, struct_size(pwrseq_qca, vregs, data->num_vregs), GFP_KERNEL);
+> > +     if (!pwrseq_qca)
+> > +             return -ENOMEM;
+> > +
+> > +     onecell = devm_kzalloc(dev, struct_size(onecell, pwrseqs, PWRSEQ_QCA_MAX), GFP_KERNEL);
+> > +     if (!onecell)
+> > +             return -ENOMEM;
+> > +
+> > +     ret = pwrseq_qca_regulators_init(dev, pwrseq_qca, data);
+> > +     if (ret)
+> > +             return ret;
+> > +
+> > +     if (data->has_wifi_en) {
+> > +             pwrseq_qca->pwrseq_qcas[PWRSEQ_QCA_WIFI].enable = devm_gpiod_get(dev, "wifi-enable", GPIOD_OUT_LOW);
+> > +             if (IS_ERR(pwrseq_qca->pwrseq_qcas[PWRSEQ_QCA_WIFI].enable)) {
+> > +                     return dev_err_probe(dev, PTR_ERR(pwrseq_qca->pwrseq_qcas[PWRSEQ_QCA_WIFI].enable),
+> > +                                     "failed to acquire WIFI enable GPIO\n");
+> > +             }
+> > +     }
+> > +
+> > +     if (data->has_bt_en) {
+> > +             pwrseq_qca->pwrseq_qcas[PWRSEQ_QCA_BT].enable = devm_gpiod_get(dev, "bt-enable", GPIOD_OUT_LOW);
+> > +             if (IS_ERR(pwrseq_qca->pwrseq_qcas[PWRSEQ_QCA_BT].enable)) {
+> > +                     return dev_err_probe(dev, PTR_ERR(pwrseq_qca->pwrseq_qcas[PWRSEQ_QCA_BT].enable),
+> > +                                     "failed to acquire BT enable GPIO\n");
+> > +             }
+> > +     }
+> > +
+> > +     pwrseq_qca->sw_ctrl = devm_gpiod_get_optional(dev, "swctrl", GPIOD_IN);
+> > +     if (IS_ERR(pwrseq_qca->sw_ctrl)) {
+> > +             return dev_err_probe(dev, PTR_ERR(pwrseq_qca->sw_ctrl),
+> > +                             "failed to acquire SW_CTRL gpio\n");
+> > +     } else if (!pwrseq_qca->sw_ctrl)
+> > +             dev_info(dev, "No SW_CTRL gpio\n");
+>
+> Some {} around the else as well please.
+
+ack
+
+>
+> Regards,
+> Bjorn
+
+
+
+-- 
+With best wishes
+Dmitry
