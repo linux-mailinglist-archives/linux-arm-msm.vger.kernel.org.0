@@ -2,19 +2,19 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C9B43F35AC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Aug 2021 22:50:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 835473F35B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Aug 2021 22:50:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241065AbhHTUuc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Aug 2021 16:50:32 -0400
-Received: from relay01.th.seeweb.it ([5.144.164.162]:36961 "EHLO
+        id S241050AbhHTUug (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Aug 2021 16:50:36 -0400
+Received: from relay01.th.seeweb.it ([5.144.164.162]:49571 "EHLO
         relay01.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241050AbhHTUu1 (ORCPT
+        with ESMTP id S241095AbhHTUu2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Aug 2021 16:50:27 -0400
+        Fri, 20 Aug 2021 16:50:28 -0400
 Received: from localhost.localdomain (83.6.167.97.neoplus.adsl.tpnet.pl [83.6.167.97])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 537171F545;
-        Fri, 20 Aug 2021 22:49:47 +0200 (CEST)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 646AC1F548;
+        Fri, 20 Aug 2021 22:49:48 +0200 (CEST)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     ~postmarketos/upstreaming@lists.sr.ht
 Cc:     martin.botka@somainline.org,
@@ -26,9 +26,9 @@ Cc:     martin.botka@somainline.org,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 14/17] arm64: dts: qcom: sm6350: Add SDHCI1/2 nodes
-Date:   Fri, 20 Aug 2021 22:49:23 +0200
-Message-Id: <20210820204926.235192-15-konrad.dybcio@somainline.org>
+Subject: [PATCH 15/17] arm64: dts: qcom: sm6350: Add apps_smmu
+Date:   Fri, 20 Aug 2021 22:49:24 +0200
+Message-Id: <20210820204926.235192-16-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20210820204926.235192-1-konrad.dybcio@somainline.org>
 References: <20210820204926.235192-1-konrad.dybcio@somainline.org>
@@ -38,119 +38,113 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add SDHCI1/2 nodes for eMMC and uSD card respectively.
-Do note that most SM6350 devices seem to come with UFS.
+Add a node for the APPS SMMU to allow for managing memory access to peripherals
+such as the USB controller.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- arch/arm64/boot/dts/qcom/sm6350.dtsi | 81 ++++++++++++++++++++++++++++
- 1 file changed, 81 insertions(+)
+ arch/arm64/boot/dts/qcom/sm6350.dtsi | 88 ++++++++++++++++++++++++++++
+ 1 file changed, 88 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-index 9ca14fa8324a..df99d6207f1c 100644
+index df99d6207f1c..a81e875af503 100644
 --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-@@ -7,6 +7,7 @@
- #include <dt-bindings/clock/qcom,rpmh.h>
- #include <dt-bindings/interrupt-controller/arm-gic.h>
- #include <dt-bindings/mailbox/qcom-ipcc.h>
-+#include <dt-bindings/power/qcom-rpmpd.h>
- #include <dt-bindings/soc/qcom,rpmh-rsc.h>
- 
- / {
-@@ -398,12 +399,92 @@ rng: rng@793000 {
- 			clock-names = "core";
+@@ -672,6 +672,94 @@ tlmm: pinctrl@f100000 {
+ 			gpio-ranges = <&tlmm 0 0 156>;
  		};
  
-+		sdhc_1: sdhci@7c4000 {
-+			compatible = "qcom,sm6350-sdhci", "qcom,sdhci-msm-v5";
-+			reg = <0 0x007c4000 0 0x1000>,
-+				<0 0x007c5000 0 0x1000>,
-+				<0 0x007c8000 0 0x8000>;
-+			reg-names = "hc", "cqhci", "ice";
-+
-+			interrupts = <GIC_SPI 641 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 644 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "hc_irq", "pwr_irq";
-+
-+			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
-+				 <&gcc GCC_SDCC1_APPS_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>;
-+			clock-names = "iface", "core", "xo";
-+			qcom,dll-config = <0x000f642c>;
-+			qcom,ddr-config = <0x80040868>;
-+			power-domains = <&rpmhpd SM6350_CX>;
-+			operating-points-v2 = <&sdhc1_opp_table>;
-+			bus-width = <8>;
-+			non-removable;
-+			supports-cqe;
-+
-+			status = "disabled";
-+
-+			sdhc1_opp_table: sdhc1-opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-19200000 {
-+					opp-hz = /bits/ 64 <19200000>;
-+					required-opps = <&rpmhpd_opp_min_svs>;
-+				};
-+
-+				opp-100000000 {
-+					opp-hz = /bits/ 64 <100000000>;
-+					required-opps = <&rpmhpd_opp_low_svs>;
-+				};
-+
-+				opp-384000000 {
-+					opp-hz = /bits/ 64 <384000000>;
-+					required-opps = <&rpmhpd_opp_svs_l1>;
-+				};
-+			};
++		apps_smmu: iommu@15000000 {
++			compatible = "qcom,sm6350-smmu-500", "arm,mmu-500";
++			reg = <0 0x15000000 0 0x100000>;
++			#iommu-cells = <2>;
++			#global-interrupts = <1>;
++			interrupts = <GIC_SPI 65 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 95 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 96 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 97 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 98 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 99 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 100 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 101 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 102 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 103 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 104 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 105 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 106 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 107 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 108 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 109 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 110 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 111 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 112 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 113 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 114 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 115 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 116 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 117 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 118 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 181 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 182 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 183 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 184 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 185 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 186 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 187 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 188 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 189 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 190 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 191 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 192 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 315 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 316 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 317 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 318 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 319 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 320 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 321 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 322 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 323 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 324 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 325 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 326 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 327 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 328 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 329 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 330 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 331 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 332 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 333 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 334 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 335 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 336 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 337 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 338 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 339 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 340 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 341 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 342 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 343 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 344 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 345 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 401 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 402 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 403 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 404 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 405 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 406 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 407 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 408 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 409 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 410 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 411 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 412 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 413 IRQ_TYPE_LEVEL_HIGH>;
 +		};
 +
- 		tcsr_mutex: hwlock@1f40000 {
- 			compatible = "qcom,tcsr-mutex";
- 			reg = <0x0 0x01f40000 0x0 0x40000>;
- 			#hwlock-cells = <1>;
- 		};
- 
-+		sdhc_2: sdhci@8804000 {
-+			compatible = "qcom,sm6350-sdhci", "qcom,sdhci-msm-v5";
-+			reg = <0 0x08804000 0 0x1000>;
-+
-+			interrupts = <GIC_SPI 204 IRQ_TYPE_LEVEL_HIGH>,
-+				     <GIC_SPI 222 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "hc_irq", "pwr_irq";
-+
-+			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
-+				 <&gcc GCC_SDCC2_APPS_CLK>,
-+				 <&rpmhcc RPMH_CXO_CLK>;
-+			clock-names = "iface", "core", "xo";
-+			qcom,dll-config = <0x0007642c>;
-+			qcom,ddr-config = <0x80040868>;
-+			power-domains = <&rpmhpd SM6350_CX>;
-+			operating-points-v2 = <&sdhc2_opp_table>;
-+			bus-width = <4>;
-+
-+			status = "disabled";
-+
-+			sdhc2_opp_table: sdhc2-opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-100000000 {
-+					opp-hz = /bits/ 64 <100000000>;
-+					required-opps = <&rpmhpd_opp_svs_l1>;
-+				};
-+
-+				opp-202000000 {
-+					opp-hz = /bits/ 64 <202000000>;
-+					required-opps = <&rpmhpd_opp_nom>;
-+				};
-+			};
-+		};
-+
- 		usb_1_hsphy: phy@88e3000 {
- 			compatible = "qcom,sm6350-qusb2-phy", "qcom,qusb2-v2-phy";
- 			reg = <0 0x088e3000 0 0x400>;
+ 		intc: interrupt-controller@17a00000 {
+ 			compatible = "arm,gic-v3";
+ 			#interrupt-cells = <3>;
 -- 
 2.33.0
 
