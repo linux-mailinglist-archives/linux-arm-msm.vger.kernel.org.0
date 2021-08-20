@@ -2,105 +2,221 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B5813F2E05
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Aug 2021 16:24:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D9B93F2FA3
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Aug 2021 17:38:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238451AbhHTOZ2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Aug 2021 10:25:28 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:22324 "EHLO m43-7.mailgun.net"
+        id S238154AbhHTPjc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Aug 2021 11:39:32 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60474 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S240758AbhHTOZ1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Aug 2021 10:25:27 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1629469490; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=cd51haHP+MBwD/UOdMJv/XyRlloOaggVKU0MpKh31MM=;
- b=GFFLcvyiDCoJWXqitmVkKwF6Sb6yegbVk+Bj76JE5XUz5VUnkdQ1/5EW7QyAYceU4DEE9qUY
- rhqYZf7meTtUIJfs2s4RwkOblNMONdMxSxwzJsYWoD/h9813Yb/11Im2RAmy2IzHuaO0ZJxV
- J/b0qV8iwiOFcyXFJ8NeBR9nCTI=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 611fbb040f9b337f117be7f4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 20 Aug 2021 14:24:04
- GMT
-Sender: sibis=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B7BF2C4360C; Fri, 20 Aug 2021 14:24:03 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        id S238097AbhHTPjc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 20 Aug 2021 11:39:32 -0400
+Received: from disco-boy.misterjones.org (disco-boy.misterjones.org [51.254.78.96])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0877BC4338F;
-        Fri, 20 Aug 2021 14:24:02 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 20 Aug 2021 19:54:02 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     bjorn.andersson@linaro.org, mka@chromium.org, robh+dt@kernel.org,
-        ulf.hansson@linaro.org, rjw@rjwysocki.net, agross@kernel.org,
-        ohad@wizery.com, mathieu.poirier@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dianders@chromium.org, rishabhb@codeaurora.org,
-        sidgup@codeaurora.org
-Subject: Re: [PATCH v5 02/13] dt-bindings: remoteproc: qcom: pas: Add QMP
- property
-In-Reply-To: <CAE-0n531EgLx-gGJswmmNAFmy-P9z=Hh1N=fkLw_uemoeQnYVg@mail.gmail.com>
-References: <1629342136-3667-1-git-send-email-sibis@codeaurora.org>
- <1629342136-3667-3-git-send-email-sibis@codeaurora.org>
- <CAE-0n531EgLx-gGJswmmNAFmy-P9z=Hh1N=fkLw_uemoeQnYVg@mail.gmail.com>
-Message-ID: <d733d47bc6a86fe28302943e50d02bd5@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        by mail.kernel.org (Postfix) with ESMTPSA id 7478C60F44;
+        Fri, 20 Aug 2021 15:38:54 +0000 (UTC)
+Received: from sofa.misterjones.org ([185.219.108.64] helo=why.misterjones.org)
+        by disco-boy.misterjones.org with esmtpsa  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.94.2)
+        (envelope-from <maz@kernel.org>)
+        id 1mH6bc-006Dil-85; Fri, 20 Aug 2021 16:38:52 +0100
+Date:   Fri, 20 Aug 2021 16:38:51 +0100
+Message-ID: <87k0kgqg6s.wl-maz@kernel.org>
+From:   Marc Zyngier <maz@kernel.org>
+To:     Maulik Shah <mkshah@codeaurora.org>
+Cc:     tglx@linutronix.de, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        bjorn.andersson@linaro.org, linus.walleij@linaro.org,
+        tkjos@google.com, lsrao@codeaurora.org
+Subject: Re: [PATCH v2 3/3] irqchip/qcom-pdc: Start getting rid of the GPIO_NO_WAKE_IRQ
+In-Reply-To: <1629373993-13370-4-git-send-email-mkshah@codeaurora.org>
+References: <1629373993-13370-1-git-send-email-mkshah@codeaurora.org>
+        <1629373993-13370-4-git-send-email-mkshah@codeaurora.org>
+User-Agent: Wanderlust/2.15.9 (Almost Unreal) SEMI-EPG/1.14.7 (Harue)
+ FLIM-LB/1.14.9 (=?UTF-8?B?R29qxY0=?=) APEL-LB/10.8 EasyPG/1.0.0 Emacs/27.1
+ (x86_64-pc-linux-gnu) MULE/6.0 (HANACHIRUSATO)
+MIME-Version: 1.0 (generated by SEMI-EPG 1.14.7 - "Harue")
+Content-Type: text/plain; charset=US-ASCII
+X-SA-Exim-Connect-IP: 185.219.108.64
+X-SA-Exim-Rcpt-To: mkshah@codeaurora.org, tglx@linutronix.de, linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org, bjorn.andersson@linaro.org, linus.walleij@linaro.org, tkjos@google.com, lsrao@codeaurora.org
+X-SA-Exim-Mail-From: maz@kernel.org
+X-SA-Exim-Scanned: No (on disco-boy.misterjones.org); SAEximRunCond expanded to false
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-08-20 00:25, Stephen Boyd wrote:
-> Quoting Sibi Sankar (2021-08-18 20:02:05)
->> The load state power-domain, used by the co-processors to notify the
->> Always on Subsystem (AOSS) that a particular co-processor is up/down,
->> suffers from the side-effect of changing states during suspend/resume.
->> However the co-processors enter low-power modes independent to that of
->> the application processor and their states are expected to remain
->> unaltered across system suspend/resume cycles. To achieve this 
->> behavior
->> let's drop the load state power-domain and replace them with the qmp
->> property for all SoCs supporting low power mode signalling.
->> 
+On Thu, 19 Aug 2021 12:53:13 +0100,
+Maulik Shah <mkshah@codeaurora.org> wrote:
 > 
-> How do we drop the load state property without breaking existing DTBs?
-> Maybe we need to leave it there and then somehow make it optional? Or 
-> do
-> we not care about this problem as the driver will start ignoring it?
+> From: Marc Zyngier <maz@kernel.org>
+> 
+> gpio_to_irq() reports error at irq_domain_trim_hierarchy() for non
+> wakeup capable GPIOs that do not have dedicated interrupt at GIC.
+> 
+> Since PDC irqchip do not allocate irq at parent GIC domain for such
+> GPIOs indicate same by using irq_domain_disconnect_hierarchy() for
+> PDC and parent GIC domains.
+> 
+> Signed-off-by: Marc Zyngier <maz@kernel.org>
+> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+> [mkshah: Add loop to disconnect for all parents]
+> Tested-by: Maulik Shah <mkshah@codeaurora.org>
+> ---
+>  drivers/irqchip/qcom-pdc.c | 75 +++++++++++-----------------------------------
+>  1 file changed, 18 insertions(+), 57 deletions(-)
+> 
+> diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
+> index 32d5920..696afca 100644
+> --- a/drivers/irqchip/qcom-pdc.c
+> +++ b/drivers/irqchip/qcom-pdc.c
+> @@ -53,26 +53,6 @@ static u32 pdc_reg_read(int reg, u32 i)
+>  	return readl_relaxed(pdc_base + reg + i * sizeof(u32));
+>  }
+>  
+> -static int qcom_pdc_gic_get_irqchip_state(struct irq_data *d,
+> -					  enum irqchip_irq_state which,
+> -					  bool *state)
+> -{
+> -	if (d->hwirq == GPIO_NO_WAKE_IRQ)
+> -		return 0;
+> -
+> -	return irq_chip_get_parent_state(d, which, state);
+> -}
+> -
+> -static int qcom_pdc_gic_set_irqchip_state(struct irq_data *d,
+> -					  enum irqchip_irq_state which,
+> -					  bool value)
+> -{
+> -	if (d->hwirq == GPIO_NO_WAKE_IRQ)
+> -		return 0;
+> -
+> -	return irq_chip_set_parent_state(d, which, value);
+> -}
+> -
+>  static void pdc_enable_intr(struct irq_data *d, bool on)
+>  {
+>  	int pin_out = d->hwirq;
+> @@ -91,38 +71,16 @@ static void pdc_enable_intr(struct irq_data *d, bool on)
+>  
+>  static void qcom_pdc_gic_disable(struct irq_data *d)
+>  {
+> -	if (d->hwirq == GPIO_NO_WAKE_IRQ)
+> -		return;
+> -
+>  	pdc_enable_intr(d, false);
+>  	irq_chip_disable_parent(d);
+>  }
+>  
+>  static void qcom_pdc_gic_enable(struct irq_data *d)
+>  {
+> -	if (d->hwirq == GPIO_NO_WAKE_IRQ)
+> -		return;
+> -
+>  	pdc_enable_intr(d, true);
+>  	irq_chip_enable_parent(d);
+>  }
+>  
+> -static void qcom_pdc_gic_mask(struct irq_data *d)
+> -{
+> -	if (d->hwirq == GPIO_NO_WAKE_IRQ)
+> -		return;
+> -
+> -	irq_chip_mask_parent(d);
+> -}
+> -
+> -static void qcom_pdc_gic_unmask(struct irq_data *d)
+> -{
+> -	if (d->hwirq == GPIO_NO_WAKE_IRQ)
+> -		return;
+> -
+> -	irq_chip_unmask_parent(d);
+> -}
+> -
+>  /*
+>   * GIC does not handle falling edge or active low. To allow falling edge and
+>   * active low interrupts to be handled at GIC, PDC has an inverter that inverts
+> @@ -159,14 +117,10 @@ enum pdc_irq_config_bits {
+>   */
+>  static int qcom_pdc_gic_set_type(struct irq_data *d, unsigned int type)
+>  {
+> -	int pin_out = d->hwirq;
+>  	enum pdc_irq_config_bits pdc_type;
+>  	enum pdc_irq_config_bits old_pdc_type;
+>  	int ret;
+>  
+> -	if (pin_out == GPIO_NO_WAKE_IRQ)
+> -		return 0;
+> -
+>  	switch (type) {
+>  	case IRQ_TYPE_EDGE_RISING:
+>  		pdc_type = PDC_EDGE_RISING;
+> @@ -191,8 +145,8 @@ static int qcom_pdc_gic_set_type(struct irq_data *d, unsigned int type)
+>  		return -EINVAL;
+>  	}
+>  
+> -	old_pdc_type = pdc_reg_read(IRQ_i_CFG, pin_out);
+> -	pdc_reg_write(IRQ_i_CFG, pin_out, pdc_type);
+> +	old_pdc_type = pdc_reg_read(IRQ_i_CFG, d->hwirq);
+> +	pdc_reg_write(IRQ_i_CFG, d->hwirq, pdc_type);
+>  
+>  	ret = irq_chip_set_type_parent(d, type);
+>  	if (ret)
+> @@ -216,12 +170,12 @@ static int qcom_pdc_gic_set_type(struct irq_data *d, unsigned int type)
+>  static struct irq_chip qcom_pdc_gic_chip = {
+>  	.name			= "PDC",
+>  	.irq_eoi		= irq_chip_eoi_parent,
+> -	.irq_mask		= qcom_pdc_gic_mask,
+> -	.irq_unmask		= qcom_pdc_gic_unmask,
+> +	.irq_mask		= irq_chip_mask_parent,
+> +	.irq_unmask		= irq_chip_unmask_parent,
+>  	.irq_disable		= qcom_pdc_gic_disable,
+>  	.irq_enable		= qcom_pdc_gic_enable,
+> -	.irq_get_irqchip_state	= qcom_pdc_gic_get_irqchip_state,
+> -	.irq_set_irqchip_state	= qcom_pdc_gic_set_irqchip_state,
+> +	.irq_get_irqchip_state	= irq_chip_get_parent_state,
+> +	.irq_set_irqchip_state	= irq_chip_set_parent_state,
+>  	.irq_retrigger		= irq_chip_retrigger_hierarchy,
+>  	.irq_set_type		= qcom_pdc_gic_set_type,
+>  	.flags			= IRQCHIP_MASK_ON_SUSPEND |
+> @@ -282,7 +236,7 @@ static int qcom_pdc_alloc(struct irq_domain *domain, unsigned int virq,
+>  
+>  	parent_hwirq = get_parent_hwirq(hwirq);
+>  	if (parent_hwirq == PDC_NO_PARENT_IRQ)
+> -		return 0;
+> +		return irq_domain_disconnect_hierarchy(domain->parent, virq);
+>  
+>  	if (type & IRQ_TYPE_EDGE_BOTH)
+>  		type = IRQ_TYPE_EDGE_RISING;
+> @@ -314,22 +268,29 @@ static int qcom_pdc_gpio_alloc(struct irq_domain *domain, unsigned int virq,
+>  	irq_hw_number_t hwirq, parent_hwirq;
+>  	unsigned int type;
+>  	int ret;
+> +	struct irq_domain *parent;
+>  
+>  	ret = qcom_pdc_translate(domain, fwspec, &hwirq, &type);
+>  	if (ret)
+>  		return ret;
+>  
+> +	if (hwirq == GPIO_NO_WAKE_IRQ) {
+> +		for (parent = domain; parent; parent = parent->parent) {
+> +			ret = irq_domain_disconnect_hierarchy(parent, virq);
+> +			if (ret)
+> +				return ret;
+> +		}
+> +		return 0;
+> +	}
+> +
 
-We can afford to break the bindings
-because of the following reason:
+No, this is wrong. Please read the documentation for
+irq_domain_disconnect_hierarchy(): the disconnect can only take place
+*once* per interrupt, right at the point where you need to terminate
+the hierarchy.
 
-* Load state in mainline is currently
-   broken i.e. it doesn't serve its
-   main purpose of signalling AOP of
-   the correct state of Q6 during
-   system suspend/resume. Thus we
-   can maintain current functionality
-   even without the load state votes
-   i.e. when a new kernel with load
-   state removed is used with an older
-   dtb the remoteproc functionality
-   will remain the same.
+irq_domain_trim_hierarchy() should already do the right thing by
+iterating over the domains and free the unused irq_data.
 
+	M.
 
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+Without deviation from the norm, progress is not possible.
