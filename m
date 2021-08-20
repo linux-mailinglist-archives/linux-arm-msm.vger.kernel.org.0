@@ -2,19 +2,22 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3C1C23F359D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Aug 2021 22:49:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E6B3F3F359C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Aug 2021 22:49:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241032AbhHTUuZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S240845AbhHTUuZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Fri, 20 Aug 2021 16:50:25 -0400
-Received: from m-r1.th.seeweb.it ([5.144.164.170]:47701 "EHLO
-        m-r1.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240808AbhHTUuT (ORCPT
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38884 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240861AbhHTUuU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Aug 2021 16:50:19 -0400
+        Fri, 20 Aug 2021 16:50:20 -0400
+Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0C9C4C0613CF;
+        Fri, 20 Aug 2021 13:49:42 -0700 (PDT)
 Received: from localhost.localdomain (83.6.167.97.neoplus.adsl.tpnet.pl [83.6.167.97])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id E69611F545;
-        Fri, 20 Aug 2021 22:49:38 +0200 (CEST)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 0B23A1F54F;
+        Fri, 20 Aug 2021 22:49:39 +0200 (CEST)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     ~postmarketos/upstreaming@lists.sr.ht
 Cc:     martin.botka@somainline.org,
@@ -26,9 +29,9 @@ Cc:     martin.botka@somainline.org,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH 06/17] arm64: dts: qcom: sm6350: Add TLMM block node
-Date:   Fri, 20 Aug 2021 22:49:15 +0200
-Message-Id: <20210820204926.235192-7-konrad.dybcio@somainline.org>
+Subject: [PATCH 07/17] arm64: dts: qcom: sm6350: Add USB1 nodes
+Date:   Fri, 20 Aug 2021 22:49:16 +0200
+Message-Id: <20210820204926.235192-8-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20210820204926.235192-1-konrad.dybcio@somainline.org>
 References: <20210820204926.235192-1-konrad.dybcio@somainline.org>
@@ -38,44 +41,133 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add TLMM pinctrl node to enable referencing the SoC pins in other nodes.
+Add nodes required for USB1 to function. SM6350 (thankfully) resuses SDM845 and
+SC7180 IP, so no additional code porting is required.
 
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+Acked-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- arch/arm64/boot/dts/qcom/sm6350.dtsi | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ arch/arm64/boot/dts/qcom/sm6350.dtsi | 101 +++++++++++++++++++++++++++
+ 1 file changed, 101 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-index 83c46f237f28..889dd07d3371 100644
+index 889dd07d3371..e70b1f09a488 100644
 --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-@@ -405,6 +405,25 @@ pdc: interrupt-controller@b220000 {
- 			interrupt-controller;
+@@ -389,12 +389,113 @@ tcsr_mutex: hwlock@1f40000 {
+ 			#hwlock-cells = <1>;
  		};
  
-+		tlmm: pinctrl@f100000 {
-+			compatible = "qcom,sm6350-tlmm";
-+			reg = <0 0x0f100000 0 0x300000>;
-+			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 209 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 210 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 211 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 212 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 213 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 214 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 215 IRQ_TYPE_LEVEL_HIGH>,
-+					<GIC_SPI 216 IRQ_TYPE_LEVEL_HIGH>;
-+			gpio-controller;
-+			#gpio-cells = <2>;
-+			interrupt-controller;
-+			#interrupt-cells = <2>;
-+			gpio-ranges = <&tlmm 0 0 156>;
++		usb_1_hsphy: phy@88e3000 {
++			compatible = "qcom,sm6350-qusb2-phy", "qcom,qusb2-v2-phy";
++			reg = <0 0x088e3000 0 0x400>;
++			status = "disabled";
++			#phy-cells = <0>;
++
++			clocks = <&xo_board>, <&rpmhcc RPMH_CXO_CLK>;
++			clock-names = "cfg_ahb", "ref";
++
++			resets = <&gcc GCC_QUSB2PHY_PRIM_BCR>;
 +		};
 +
- 		intc: interrupt-controller@17a00000 {
- 			compatible = "arm,gic-v3";
- 			#interrupt-cells = <3>;
++		usb_1_qmpphy: phy@88e9000 {
++			compatible = "qcom,sc7180-qmp-usb3-dp-phy";
++			reg = <0 0x088e9000 0 0x200>,
++			      <0 0x088e8000 0 0x40>,
++			      <0 0x088ea000 0 0x200>;
++			status = "disabled";
++			#address-cells = <2>;
++			#size-cells = <2>;
++			ranges;
++
++			clocks = <&gcc GCC_USB3_PRIM_PHY_AUX_CLK>,
++				 <&rpmhcc RPMH_QLINK_CLK>,
++				 <&gcc GCC_USB3_PRIM_PHY_COM_AUX_CLK>,
++				 <&xo_board>;
++			clock-names = "aux", "ref", "com_aux", "cfg_ahb";
++
++			resets = <&gcc GCC_USB3_DP_PHY_PRIM_BCR>,
++				 <&gcc GCC_USB3_PHY_PRIM_BCR>;
++			reset-names = "phy", "common";
++
++			usb_1_ssphy: usb3-phy@88e9200 {
++				reg = <0 0x088e9200 0 0x200>,
++				      <0 0x088e9400 0 0x200>,
++				      <0 0x088e9c00 0 0x400>,
++				      <0 0x088e9600 0 0x200>,
++				      <0 0x088e9800 0 0x200>,
++				      <0 0x088e9a00 0 0x100>;
++				#clock-cells = <0>;
++				#phy-cells = <0>;
++				clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
++				clock-names = "pipe0";
++				clock-output-names = "usb3_phy_pipe_clk_src";
++			};
++
++			dp_phy: dp-phy@88ea200 {
++				reg = <0 0x088ea200 0 0x200>,
++				      <0 0x088ea400 0 0x200>,
++				      <0 0x088eac00 0 0x400>,
++				      <0 0x088ea600 0 0x200>,
++				      <0 0x088ea800 0 0x200>,
++				      <0 0x088eaa00 0 0x100>;
++				#phy-cells = <0>;
++				#clock-cells = <1>;
++				clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
++				clock-names = "pipe0";
++				clock-output-names = "usb3_phy_pipe_clk_src";
++			};
++		};
++
+ 		system-cache-controller@9200000 {
+ 			compatible = "qcom,sm6350-llcc";
+ 			reg = <0 0x09200000 0 0x50000>, <0 0x09600000 0 0x50000>;
+ 			reg-names = "llcc_base", "llcc_broadcast_base";
+ 		};
+ 
++		usb_1: usb@a6f8800 {
++			compatible = "qcom,sm6350-dwc3", "qcom,dwc3";
++			reg = <0 0x0a6f8800 0 0x400>;
++			status = "disabled";
++			#address-cells = <2>;
++			#size-cells = <2>;
++			ranges;
++
++			clocks = <&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
++				 <&gcc GCC_USB30_PRIM_MASTER_CLK>,
++				 <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
++				 <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
++				 <&gcc GCC_USB30_PRIM_SLEEP_CLK>;
++			clock-names = "cfg_noc", "core", "iface", "mock_utmi",
++				      "sleep";
++
++			interrupts-extended = <&intc GIC_SPI 130 IRQ_TYPE_LEVEL_HIGH>,
++					      <&pdc 14 IRQ_TYPE_EDGE_BOTH>,
++					      <&pdc 15 IRQ_TYPE_EDGE_BOTH>,
++					      <&pdc 17 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "hs_phy_irq", "dp_hs_phy_irq",
++					  "dm_hs_phy_irq", "ss_phy_irq";
++
++			power-domains = <&gcc USB30_PRIM_GDSC>;
++
++			resets = <&gcc GCC_USB30_PRIM_BCR>;
++
++			usb_1_dwc3: dwc3@a600000 {
++				compatible = "snps,dwc3";
++				reg = <0 0x0a600000 0 0xcd00>;
++				interrupts = <GIC_SPI 133 IRQ_TYPE_LEVEL_HIGH>;
++				snps,dis_u2_susphy_quirk;
++				snps,dis_enblslpm_quirk;
++				snps,has-lpm-erratum;
++				snps,hird-threshold = /bits/ 8 <0x10>;
++				phys = <&usb_1_hsphy>, <&usb_1_ssphy>;
++				phy-names = "usb2-phy", "usb3-phy";
++			};
++		};
++
+ 		pdc: interrupt-controller@b220000 {
+ 			compatible = "qcom,sm6350-pdc", "qcom,pdc";
+ 			reg = <0 0x0b220000 0 0x30000>, <0 0x17c000f0 0 0x64>;
 -- 
 2.33.0
 
