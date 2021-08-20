@@ -2,330 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C6993F3115
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Aug 2021 18:07:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7D5643F3182
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Aug 2021 18:34:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235519AbhHTQHt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Aug 2021 12:07:49 -0400
-Received: from foss.arm.com ([217.140.110.172]:34612 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237006AbhHTQFw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Aug 2021 12:05:52 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id E785B11FB;
-        Fri, 20 Aug 2021 09:05:10 -0700 (PDT)
-Received: from e110455-lin.cambridge.arm.com (usa-sjc-imap-foss1.foss.arm.com [10.121.207.14])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id A61903F70D;
-        Fri, 20 Aug 2021 09:05:10 -0700 (PDT)
-Received: by e110455-lin.cambridge.arm.com (Postfix, from userid 1000)
-        id 66016683943; Fri, 20 Aug 2021 17:05:09 +0100 (BST)
-Date:   Fri, 20 Aug 2021 17:05:09 +0100
-From:   Liviu Dudau <liviu.dudau@arm.com>
-To:     Thomas Zimmermann <tzimmermann@suse.de>
-Cc:     daniel@ffwll.ch, airlied@linux.ie, alexander.deucher@amd.com,
-        christian.koenig@amd.com, brian.starkey@arm.com, sam@ravnborg.org,
-        bbrezillon@kernel.org, nicolas.ferre@microchip.com,
-        maarten.lankhorst@linux.intel.com, mripard@kernel.org,
-        stefan@agner.ch, alison.wang@nxp.com, patrik.r.jakobsson@gmail.com,
-        anitha.chrisanthus@intel.com, robdclark@gmail.com,
-        edmund.j.dea@intel.com, sean@poorly.run, shawnguo@kernel.org,
-        s.hauer@pengutronix.de, kernel@pengutronix.de, jyri.sarha@iki.fi,
-        tomba@kernel.org, Dan.Sneddon@microchip.com,
-        tomi.valkeinen@ideasonboard.com, amd-gfx@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Subject: Re: [PATCH v2 02/14] drm/arm/hdlcd: Convert to Linux IRQ interfaces
-Message-ID: <20210820160509.eo267b4r64v4qa3n@e110455-lin.cambridge.arm.com>
-References: <20210803090704.32152-1-tzimmermann@suse.de>
- <20210803090704.32152-3-tzimmermann@suse.de>
+        id S231583AbhHTQei (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Aug 2021 12:34:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36238 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229632AbhHTQeh (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 20 Aug 2021 12:34:37 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA38FC061575
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Aug 2021 09:33:59 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id c19-20020a9d6153000000b0051829acbfc7so15007887otk.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Aug 2021 09:33:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=/C8NeHo7GpZkUH1MXjk90wBsd8C6uuIwq8RGb1Hq5vo=;
+        b=IZP6XmBG5SL2HxTLGkkDDx0/FLxPIdyJJdRIudKqB/cJ5PKq6qEgam/BDbPyMLfM7f
+         0zg2lzUj8Xj4r6szTG6ovaYq+wgcPJhiyYiEed/J/YvFOCeyQytIO8nfzLWzRO9wn5y/
+         RYFQhWyBWqpIh7r+V2m8XKlZDol/Dz1Ls5qJGa+LUgPV74FcDLUpFTLELob79i2r4t2Z
+         7IVd9RkjubFRtkRPkv/3eOTKPUmKLUhfnfVKuUEtfupfUuv5Cc6AJD1qY2Nfu74lypAZ
+         NWx69F5Bm/YiQ14jsu+6OnJ/QvCKOiwflMtD3A/w2W2cADV+eD2Bt6hx8RqKWw3+cAD/
+         Conw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=/C8NeHo7GpZkUH1MXjk90wBsd8C6uuIwq8RGb1Hq5vo=;
+        b=aHWbrxakAgnIwAw6dTqoYLcGrVdM78WwDxjkoqN7UZd1r7+ZHNv1XYux8AuCTwuRmR
+         WVb9NkX0AM0argR5q1uRUh3JAjH+sF9RL/doGELuES3Q7LrIBJAUC4njjf43rSMFci2k
+         8f7304nRJKegUCpwzdpyD7ocb1iIv5BD/R8yP+puhG+Fn87tqGpwNMvxK+weCatULAoD
+         6ibtA/sUAkNyCP9jK4GYrGQXwMgNfXn5phTLOSS0HqH1y9tA7Hn1/+gZIV8VN2qtyRsZ
+         WmCVzT60HBSiwdDd0gruyDNaP2avG6Dfa8N32XGcg9lhOiTlLsDx34zMMeRn/FPQoKcP
+         c8Aw==
+X-Gm-Message-State: AOAM530OEWujLcJNqTbzDP9miS/xj2wNFrny6dXUAI/08FQFBt9Fi0M/
+        Me1OX81yjPVp3Qlfkn2onJS6iQ==
+X-Google-Smtp-Source: ABdhPJxBghjCh0btKNfjwzvGN2Vxx1KHZIfWf5hcsClQM0NLrJC694h/EB+IoLCQTcq+zXsFqp+5HA==
+X-Received: by 2002:a9d:7ccc:: with SMTP id r12mr17883793otn.350.1629477239291;
+        Fri, 20 Aug 2021 09:33:59 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id r20sm202737oot.16.2021.08.20.09.33.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 20 Aug 2021 09:33:58 -0700 (PDT)
+Date:   Fri, 20 Aug 2021 09:35:21 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Marcel Holtmann <marcel@holtmann.org>,
+        Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>, linux-mmc@vger.kernel.org,
+        open list <linux-kernel@vger.kernel.org>,
+        linux-bluetooth@vger.kernel.org, ath10k@lists.infradead.org,
+        linux-wireless@vger.kernel.org, netdev@vger.kernel.org
+Subject: Re: [RFC PATCH 10/15] pwrseq: add support for QCA BT+WiFi power
+ sequencer
+Message-ID: <YR/ZyVrkmfVd0a8r@ripper>
+References: <20210817005507.1507580-1-dmitry.baryshkov@linaro.org>
+ <20210817005507.1507580-11-dmitry.baryshkov@linaro.org>
+ <YR7m43mURVJ8YufC@ripper>
+ <CAA8EJpr+=Yg2B_DzQWntW0GgvBfaSpAu0K+UD3NowdkusiYxrQ@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <20210803090704.32152-3-tzimmermann@suse.de>
+In-Reply-To: <CAA8EJpr+=Yg2B_DzQWntW0GgvBfaSpAu0K+UD3NowdkusiYxrQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Aug 03, 2021 at 11:06:52AM +0200, Thomas Zimmermann wrote:
-> Drop the DRM IRQ midlayer in favor of Linux IRQ interfaces. DRM's
-> IRQ helpers are mostly useful for UMS drivers. Modern KMS drivers
-> don't benefit from using it.
-> 
-> DRM IRQ callbacks are now being called directly or inlined.
-> 
-> Calls to platform_get_irq() can fail with a negative errno code.
-> Abort initialization in this case. The DRM IRQ midlayer does not
-> handle this case correctly.
-> 
-> v2:
-> 	* name struct drm_device variables 'drm' (Sam)
-> 
-> Signed-off-by: Thomas Zimmermann <tzimmermann@suse.de>
-> Acked-by: Sam Ravnborg <sam@ravnborg.org>
+On Fri 20 Aug 01:10 PDT 2021, Dmitry Baryshkov wrote:
 
-Sorry for the delayed response due to holidays.
-
-Acked-by: Liviu Dudau <liviu.dudau@arm.com>
-
-Best regards,
-Liviu
-
-> ---
->  drivers/gpu/drm/arm/hdlcd_drv.c | 174 ++++++++++++++++++--------------
->  drivers/gpu/drm/arm/hdlcd_drv.h |   1 +
->  2 files changed, 97 insertions(+), 78 deletions(-)
+> Hi,
 > 
-> diff --git a/drivers/gpu/drm/arm/hdlcd_drv.c b/drivers/gpu/drm/arm/hdlcd_drv.c
-> index 81ae92390736..479c2422a2e0 100644
-> --- a/drivers/gpu/drm/arm/hdlcd_drv.c
-> +++ b/drivers/gpu/drm/arm/hdlcd_drv.c
-> @@ -29,7 +29,6 @@
->  #include <drm/drm_fb_helper.h>
->  #include <drm/drm_gem_cma_helper.h>
->  #include <drm/drm_gem_framebuffer_helper.h>
-> -#include <drm/drm_irq.h>
->  #include <drm/drm_modeset_helper.h>
->  #include <drm/drm_of.h>
->  #include <drm/drm_probe_helper.h>
-> @@ -38,6 +37,94 @@
->  #include "hdlcd_drv.h"
->  #include "hdlcd_regs.h"
->  
-> +static irqreturn_t hdlcd_irq(int irq, void *arg)
-> +{
-> +	struct drm_device *drm = arg;
-> +	struct hdlcd_drm_private *hdlcd = drm->dev_private;
-> +	unsigned long irq_status;
-> +
-> +	irq_status = hdlcd_read(hdlcd, HDLCD_REG_INT_STATUS);
-> +
-> +#ifdef CONFIG_DEBUG_FS
-> +	if (irq_status & HDLCD_INTERRUPT_UNDERRUN)
-> +		atomic_inc(&hdlcd->buffer_underrun_count);
-> +
-> +	if (irq_status & HDLCD_INTERRUPT_DMA_END)
-> +		atomic_inc(&hdlcd->dma_end_count);
-> +
-> +	if (irq_status & HDLCD_INTERRUPT_BUS_ERROR)
-> +		atomic_inc(&hdlcd->bus_error_count);
-> +
-> +	if (irq_status & HDLCD_INTERRUPT_VSYNC)
-> +		atomic_inc(&hdlcd->vsync_count);
-> +
-> +#endif
-> +	if (irq_status & HDLCD_INTERRUPT_VSYNC)
-> +		drm_crtc_handle_vblank(&hdlcd->crtc);
-> +
-> +	/* acknowledge interrupt(s) */
-> +	hdlcd_write(hdlcd, HDLCD_REG_INT_CLEAR, irq_status);
-> +
-> +	return IRQ_HANDLED;
-> +}
-> +
-> +static void hdlcd_irq_preinstall(struct drm_device *drm)
-> +{
-> +	struct hdlcd_drm_private *hdlcd = drm->dev_private;
-> +	/* Ensure interrupts are disabled */
-> +	hdlcd_write(hdlcd, HDLCD_REG_INT_MASK, 0);
-> +	hdlcd_write(hdlcd, HDLCD_REG_INT_CLEAR, ~0);
-> +}
-> +
-> +static void hdlcd_irq_postinstall(struct drm_device *drm)
-> +{
-> +#ifdef CONFIG_DEBUG_FS
-> +	struct hdlcd_drm_private *hdlcd = drm->dev_private;
-> +	unsigned long irq_mask = hdlcd_read(hdlcd, HDLCD_REG_INT_MASK);
-> +
-> +	/* enable debug interrupts */
-> +	irq_mask |= HDLCD_DEBUG_INT_MASK;
-> +
-> +	hdlcd_write(hdlcd, HDLCD_REG_INT_MASK, irq_mask);
-> +#endif
-> +}
-> +
-> +static int hdlcd_irq_install(struct drm_device *drm, int irq)
-> +{
-> +	int ret;
-> +
-> +	if (irq == IRQ_NOTCONNECTED)
-> +		return -ENOTCONN;
-> +
-> +	hdlcd_irq_preinstall(drm);
-> +
-> +	ret = request_irq(irq, hdlcd_irq, 0, drm->driver->name, drm);
-> +	if (ret)
-> +		return ret;
-> +
-> +	hdlcd_irq_postinstall(drm);
-> +
-> +	return 0;
-> +}
-> +
-> +static void hdlcd_irq_uninstall(struct drm_device *drm)
-> +{
-> +	struct hdlcd_drm_private *hdlcd = drm->dev_private;
-> +	/* disable all the interrupts that we might have enabled */
-> +	unsigned long irq_mask = hdlcd_read(hdlcd, HDLCD_REG_INT_MASK);
-> +
-> +#ifdef CONFIG_DEBUG_FS
-> +	/* disable debug interrupts */
-> +	irq_mask &= ~HDLCD_DEBUG_INT_MASK;
-> +#endif
-> +
-> +	/* disable vsync interrupts */
-> +	irq_mask &= ~HDLCD_INTERRUPT_VSYNC;
-> +	hdlcd_write(hdlcd, HDLCD_REG_INT_MASK, irq_mask);
-> +
-> +	free_irq(hdlcd->irq, drm);
-> +}
-> +
->  static int hdlcd_load(struct drm_device *drm, unsigned long flags)
->  {
->  	struct hdlcd_drm_private *hdlcd = drm->dev_private;
-> @@ -90,7 +177,12 @@ static int hdlcd_load(struct drm_device *drm, unsigned long flags)
->  		goto setup_fail;
->  	}
->  
-> -	ret = drm_irq_install(drm, platform_get_irq(pdev, 0));
-> +	ret = platform_get_irq(pdev, 0);
-> +	if (ret < 0)
-> +		goto irq_fail;
-> +	hdlcd->irq = ret;
-> +
-> +	ret = hdlcd_irq_install(drm, hdlcd->irq);
->  	if (ret < 0) {
->  		DRM_ERROR("failed to install IRQ handler\n");
->  		goto irq_fail;
-> @@ -122,76 +214,6 @@ static void hdlcd_setup_mode_config(struct drm_device *drm)
->  	drm->mode_config.funcs = &hdlcd_mode_config_funcs;
->  }
->  
-> -static irqreturn_t hdlcd_irq(int irq, void *arg)
-> -{
-> -	struct drm_device *drm = arg;
-> -	struct hdlcd_drm_private *hdlcd = drm->dev_private;
-> -	unsigned long irq_status;
-> -
-> -	irq_status = hdlcd_read(hdlcd, HDLCD_REG_INT_STATUS);
-> -
-> -#ifdef CONFIG_DEBUG_FS
-> -	if (irq_status & HDLCD_INTERRUPT_UNDERRUN)
-> -		atomic_inc(&hdlcd->buffer_underrun_count);
-> -
-> -	if (irq_status & HDLCD_INTERRUPT_DMA_END)
-> -		atomic_inc(&hdlcd->dma_end_count);
-> -
-> -	if (irq_status & HDLCD_INTERRUPT_BUS_ERROR)
-> -		atomic_inc(&hdlcd->bus_error_count);
-> -
-> -	if (irq_status & HDLCD_INTERRUPT_VSYNC)
-> -		atomic_inc(&hdlcd->vsync_count);
-> -
-> -#endif
-> -	if (irq_status & HDLCD_INTERRUPT_VSYNC)
-> -		drm_crtc_handle_vblank(&hdlcd->crtc);
-> -
-> -	/* acknowledge interrupt(s) */
-> -	hdlcd_write(hdlcd, HDLCD_REG_INT_CLEAR, irq_status);
-> -
-> -	return IRQ_HANDLED;
-> -}
-> -
-> -static void hdlcd_irq_preinstall(struct drm_device *drm)
-> -{
-> -	struct hdlcd_drm_private *hdlcd = drm->dev_private;
-> -	/* Ensure interrupts are disabled */
-> -	hdlcd_write(hdlcd, HDLCD_REG_INT_MASK, 0);
-> -	hdlcd_write(hdlcd, HDLCD_REG_INT_CLEAR, ~0);
-> -}
-> -
-> -static int hdlcd_irq_postinstall(struct drm_device *drm)
-> -{
-> -#ifdef CONFIG_DEBUG_FS
-> -	struct hdlcd_drm_private *hdlcd = drm->dev_private;
-> -	unsigned long irq_mask = hdlcd_read(hdlcd, HDLCD_REG_INT_MASK);
-> -
-> -	/* enable debug interrupts */
-> -	irq_mask |= HDLCD_DEBUG_INT_MASK;
-> -
-> -	hdlcd_write(hdlcd, HDLCD_REG_INT_MASK, irq_mask);
-> -#endif
-> -	return 0;
-> -}
-> -
-> -static void hdlcd_irq_uninstall(struct drm_device *drm)
-> -{
-> -	struct hdlcd_drm_private *hdlcd = drm->dev_private;
-> -	/* disable all the interrupts that we might have enabled */
-> -	unsigned long irq_mask = hdlcd_read(hdlcd, HDLCD_REG_INT_MASK);
-> -
-> -#ifdef CONFIG_DEBUG_FS
-> -	/* disable debug interrupts */
-> -	irq_mask &= ~HDLCD_DEBUG_INT_MASK;
-> -#endif
-> -
-> -	/* disable vsync interrupts */
-> -	irq_mask &= ~HDLCD_INTERRUPT_VSYNC;
-> -
-> -	hdlcd_write(hdlcd, HDLCD_REG_INT_MASK, irq_mask);
-> -}
-> -
->  #ifdef CONFIG_DEBUG_FS
->  static int hdlcd_show_underrun_count(struct seq_file *m, void *arg)
->  {
-> @@ -236,10 +258,6 @@ DEFINE_DRM_GEM_CMA_FOPS(fops);
->  
->  static const struct drm_driver hdlcd_driver = {
->  	.driver_features = DRIVER_GEM | DRIVER_MODESET | DRIVER_ATOMIC,
-> -	.irq_handler = hdlcd_irq,
-> -	.irq_preinstall = hdlcd_irq_preinstall,
-> -	.irq_postinstall = hdlcd_irq_postinstall,
-> -	.irq_uninstall = hdlcd_irq_uninstall,
->  	DRM_GEM_CMA_DRIVER_OPS,
->  #ifdef CONFIG_DEBUG_FS
->  	.debugfs_init = hdlcd_debugfs_init,
-> @@ -316,7 +334,7 @@ static int hdlcd_drm_bind(struct device *dev)
->  err_unload:
->  	of_node_put(hdlcd->crtc.port);
->  	hdlcd->crtc.port = NULL;
-> -	drm_irq_uninstall(drm);
-> +	hdlcd_irq_uninstall(drm);
->  	of_reserved_mem_device_release(drm->dev);
->  err_free:
->  	drm_mode_config_cleanup(drm);
-> @@ -338,7 +356,7 @@ static void hdlcd_drm_unbind(struct device *dev)
->  	hdlcd->crtc.port = NULL;
->  	pm_runtime_get_sync(dev);
->  	drm_atomic_helper_shutdown(drm);
-> -	drm_irq_uninstall(drm);
-> +	hdlcd_irq_uninstall(drm);
->  	pm_runtime_put(dev);
->  	if (pm_runtime_enabled(dev))
->  		pm_runtime_disable(dev);
-> diff --git a/drivers/gpu/drm/arm/hdlcd_drv.h b/drivers/gpu/drm/arm/hdlcd_drv.h
-> index fd438d177b64..909c39c28487 100644
-> --- a/drivers/gpu/drm/arm/hdlcd_drv.h
-> +++ b/drivers/gpu/drm/arm/hdlcd_drv.h
-> @@ -11,6 +11,7 @@ struct hdlcd_drm_private {
->  	struct clk			*clk;
->  	struct drm_crtc			crtc;
->  	struct drm_plane		*plane;
-> +	unsigned int			irq;
->  #ifdef CONFIG_DEBUG_FS
->  	atomic_t buffer_underrun_count;
->  	atomic_t bus_error_count;
-> -- 
-> 2.32.0
+> On Fri, 20 Aug 2021 at 02:17, Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> >
+> > On Mon 16 Aug 17:55 PDT 2021, Dmitry Baryshkov wrote:
+> > [..]
+> > > diff --git a/drivers/power/pwrseq/pwrseq_qca.c b/drivers/power/pwrseq/pwrseq_qca.c
+> > > new file mode 100644
+> > > index 000000000000..3421a4821126
+> > > --- /dev/null
+> > > +++ b/drivers/power/pwrseq/pwrseq_qca.c
+> > > @@ -0,0 +1,290 @@
+> > > +// SPDX-License-Identifier: GPL-2.0-only
+> > > +/*
+> > > + * Copyright (c) 2021, Linaro Ltd.
+> > > + *
+> > > + * Author: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> > > + *
+> > > + * Power Sequencer for Qualcomm WiFi + BT SoCs
+> > > + */
+> > > +
+> > > +#include <linux/delay.h>
+> > > +#include <linux/gpio/consumer.h>
+> > > +#include <linux/platform_device.h>
+> > > +#include <linux/pwrseq/driver.h>
+> > > +#include <linux/regulator/consumer.h>
+> > > +
+> > > +/*
+> > > + * Voltage regulator information required for configuring the
+> > > + * QCA WiFi+Bluetooth chipset
+> > > + */
+> > > +struct qca_vreg {
+> > > +     const char *name;
+> > > +     unsigned int load_uA;
+> > > +};
+> > > +
+> > > +struct qca_device_data {
+> > > +     struct qca_vreg vddio;
+> >
+> > Any particular reason why this isn't just the first entry in vregs and
+> > operated as part of the bulk API?
+> 
+> Because VDDIO should be up before bringing the rest of the power
+> sources (at least for wcn39xx). This is usually the case since VDDIO
+> is S4A, but I'd still prefer to express this in the code.
+> And register_bulk_enable powers up all the supplies asynchronously,
+> thus it can not guarantee that the first entry would be powered up
+> first.
 > 
 
--- 
-====================
-| I would like to |
-| fix the world,  |
-| but they're not |
-| giving me the   |
- \ source code!  /
-  ---------------
-    ¯\_(ツ)_/¯
+Ahh, forgot about the async nature of bulk_enable. Make the code a
+little ugly, but it needs to be done like that.
+
+Thinking about it, isn't there a required minimum time between vddio and
+the others in the wcn specification?
+
+> >
+> > > +     struct qca_vreg *vregs;
+> > > +     size_t num_vregs;
+> > > +     bool has_bt_en;
+> > > +     bool has_wifi_en;
+> > > +};
+> > > +
+> > > +struct pwrseq_qca;
+> > > +struct pwrseq_qca_one {
+> > > +     struct pwrseq_qca *common;
+> > > +     struct gpio_desc *enable;
+> > > +};
+> > > +
+> > > +#define PWRSEQ_QCA_WIFI 0
+> > > +#define PWRSEQ_QCA_BT 1
+> > > +
+> > > +#define PWRSEQ_QCA_MAX 2
+> > > +
+> > > +struct pwrseq_qca {
+> > > +     struct regulator *vddio;
+> > > +     struct gpio_desc *sw_ctrl;
+> > > +     struct pwrseq_qca_one pwrseq_qcas[PWRSEQ_QCA_MAX];
+> > > +     int num_vregs;
+> > > +     struct regulator_bulk_data vregs[];
+> > > +};
+> > > +
+> > > +static int pwrseq_qca_power_on(struct pwrseq *pwrseq)
+> > > +{
+> > > +     struct pwrseq_qca_one *qca_one = pwrseq_get_data(pwrseq);
+> > > +     int ret;
+> > > +
+> > > +     if (qca_one->common->vddio) {
+> >
+> > devm_regulator_get() doesn't return NULL, so this is always true.
+> 
+> This is more of the safety guard for the cases when the qca doesn't
+> have the special vddio supply.
+> 
+
+If you think there's such a case coming up, then it makes sense.
+On the flip side, debugging the resulting panic when someone adds a new
+compatible without vddio is very minor...
+
+
+I think this looks good then.
+
+Regards,
+Bjorn
