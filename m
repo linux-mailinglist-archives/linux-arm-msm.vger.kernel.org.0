@@ -2,70 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E5063F28EF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Aug 2021 11:10:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 730FD3F2B1C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Aug 2021 13:24:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234684AbhHTJKj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Aug 2021 05:10:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45408 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235001AbhHTJKi (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Aug 2021 05:10:38 -0400
-Received: from mail-qk1-x743.google.com (mail-qk1-x743.google.com [IPv6:2607:f8b0:4864:20::743])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2FE16C06175F
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Aug 2021 02:10:01 -0700 (PDT)
-Received: by mail-qk1-x743.google.com with SMTP id n11so10212443qkk.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 20 Aug 2021 02:10:01 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=WuDQPRa1pRZEmgy3rMsrN6WxMhN/6RZwdTFnT+vP0Q4=;
-        b=PGwMPD72LQJz9yI+FJJfnb1Bt0Pahf3XqaAzmyqON8x7neNDiaT3TtrE7JiO/IUs/F
-         GCv7bsLkM4VwV0HSWvIzW02VkoAoG0tQj7hhOGMnqpIcdPoTSt8VIbSRt+Hbx0IrsVVY
-         z9RgRx97FmUK/47EIjdVSxa2L39PryG3BPOvMYzN9lJB58p0KkBGKPnwsmQG0kr6Gt4X
-         TaY5jIpSZop1+4+wsOzXuj7km9FXk+FvEXftVp1PyW7t9RaNXCVnVBF9wMQfGAags3aH
-         6ip77QsHCwyFvAGBgJmLwmK1jm/B6l9SkLSkxEXhTvt7z9k87i4Y3iSaXxNlJxdkC0iF
-         RgDg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=WuDQPRa1pRZEmgy3rMsrN6WxMhN/6RZwdTFnT+vP0Q4=;
-        b=nwUotppOEQclGdH4PV4fuQ7U+dthGnmXK6/J8M9HUILeI2P4v4qh8ujklSpbaZzhqN
-         v5wrYQJ2TlhPXGkykyVKRUIoECJdBCZeH4FZ7CPwSn7QzhWM+vMamFVxMz1Hg3bzqnxw
-         aQxRPcHRjH3KV/X2yos+wRXAnA9RQRM/UOwRTKU7NXZTl2LNNc/4ZP4IIT5UyGIOgaNW
-         sTpfcdCiXXYzh6dtEu0hW3zzYimd+nOMrays6B8eJU5tzceoPOrrbKtIk9UVsCeC2N3l
-         64t4Clo9bwMV+xN3hK0fKh2D9Lxiwd1qfOcI+1JWaSIKZ2n+N9gEyvDQvNsDq7k0Lz9x
-         7o/A==
-X-Gm-Message-State: AOAM5336P/NCQ+TQL94vPhpXOvFk6ahAkQuv0y87ebH0aNnyR8qwO2lJ
-        RSVL/l6MxD5N3KmtDA/7Dy48LNvagy4w/HeG3pI=
-X-Google-Smtp-Source: ABdhPJyQLY6R+8Oz4oxqGtbFyfd9hV0N8AOfButBPuAA05OjmMaEH64MMZkSOqGq7J4a1OhpwvW26c7Xia6LXGf07Aw=
-X-Received: by 2002:a37:a592:: with SMTP id o140mr8006220qke.220.1629450600382;
- Fri, 20 Aug 2021 02:10:00 -0700 (PDT)
-MIME-Version: 1.0
-Received: by 2002:ac8:5184:0:0:0:0:0 with HTTP; Fri, 20 Aug 2021 02:09:59
- -0700 (PDT)
-Reply-To: geomic123@yahoo.com
-From:   George Micheal <philipowiredu77@gmail.com>
-Date:   Fri, 20 Aug 2021 10:09:59 +0100
-Message-ID: <CAGkcCGFpJN-Jgw3DxvX7bSK-aTXJ9WTbdTzyzQg7DtmHwofqVA@mail.gmail.com>
-Subject: Waiting for response
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+        id S239281AbhHTLYg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Aug 2021 07:24:36 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:26405 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S238769AbhHTLYg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 20 Aug 2021 07:24:36 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1629458638; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=96HNO+6+5D6uDknnQmnW7Y0ok1waE5yHtL/NjpojgCY=; b=s+rqgx1IROlzGwgwitdDwF/U1EKCxMmXBnAzReNmHOnjV8MQpuQTX44sXCFXnLs+GRxLuJ/G
+ 81TM9J+T3UIx9CtF35sZEyXngVD3Qw2jZeh+Fc4h9nZtOggGYSBWFdVpHtq5Wv4Sjwrg64h8
+ t+KPcVuxmrAM8Y3NyJURdI0i/UY=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 611f90cdf749dbaacd0c90e9 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 20 Aug 2021 11:23:57
+ GMT
+Sender: okukatla=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3249CC4338F; Fri, 20 Aug 2021 11:23:57 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from okukatla1-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: okukatla)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 18582C43460;
+        Fri, 20 Aug 2021 11:23:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 18582C43460
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Odelu Kukatla <okukatla@codeaurora.org>
+To:     georgi.djakov@linaro.org, bjorn.andersson@linaro.org,
+        evgreen@google.com
+Cc:     sboyd@kernel.org, mdtipton@codeaurora.org, sibis@codeaurora.org,
+        saravanak@google.com, okukatla@codeaurora.org,
+        seansw@qti.qualcomm.com, elder@linaro.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org
+Subject: [v7 0/3]  Add L3 provider support for SC7280
+Date:   Fri, 20 Aug 2021 16:53:38 +0530
+Message-Id: <1629458622-4915-1-git-send-email-okukatla@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add Epoch Subsystem (EPSS) L3 provider support on SM7280 SoCs.
+
+v7:
+ - Addressed review comments (Georgi Djakov/Alex Elder)
+ 
+Odelu Kukatla (3):
+  dt-bindings: interconnect: Add EPSS L3 DT binding on SC7280
+  interconnect: qcom: Add EPSS L3 support on SC7280
+  arm64: dts: qcom: sc7280: Add EPSS L3 interconnect provider
+
+ .../bindings/interconnect/qcom,osm-l3.yaml         |   9 +-
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               |  11 ++
+ drivers/interconnect/qcom/osm-l3.c                 | 138 +++++++++++++++++----
+ drivers/interconnect/qcom/sc7280.h                 |  10 ++
+ include/dt-bindings/interconnect/qcom,osm-l3.h     |  10 +-
+ 5 files changed, 153 insertions(+), 25 deletions(-)
+
 -- 
-Dear Sir/Madam
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-My name is Mr George Michael,i am the Personal Aid to former
-President Baba Yahya Abdul-Aziz Jemus Jammeh the Republic of Gambia in
-west Africa, who is currently in exile with his farmily. I have been
-trying on how to get in touch with you over an important issue
-concerning a project that will be profitable. I anticipate hearing
-from you for more details.
-
-Yours faithfully
-Mr George Michael
