@@ -2,85 +2,204 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 481423F263D
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Aug 2021 06:59:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DD40F3F2682
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 20 Aug 2021 07:34:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238221AbhHTFAD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 20 Aug 2021 01:00:03 -0400
-Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:43499 "EHLO
-        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S238484AbhHTE7o (ORCPT
+        id S232500AbhHTFfH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 20 Aug 2021 01:35:07 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:48851 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232732AbhHTFfC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 20 Aug 2021 00:59:44 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1629435547; x=1660971547;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=vWwEvArIAhoutDVPC+RAhs2Lierm8rahTWWjKXhsZnw=;
-  b=tlkt80tabn3k7ncLVKAb3BRijTJfHMtmD+O2CEvV9C+NT1nGK0+QepGT
-   chNFm/zmmut3N3QS+F+OZzrzHDp5WgwCcOmZzWHJ1qWK6hWN2O7xJWZDj
-   dMP17FhD2MmgRKeLm7WzFnqXo+OMMBY0qpWgOKuI9DlK/FEVomNj+z4rI
-   c=;
-Received: from unknown (HELO ironmsg05-sd.qualcomm.com) ([10.53.140.145])
-  by alexa-out-sd-01.qualcomm.com with ESMTP; 19 Aug 2021 21:58:56 -0700
-X-QCInternal: smtphost
-Received: from nasanex01c.na.qualcomm.com ([10.47.97.222])
-  by ironmsg05-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 19 Aug 2021 21:58:55 -0700
-Received: from nalasex01c.na.qualcomm.com (10.47.97.35) by
- nasanex01c.na.qualcomm.com (10.47.97.222) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
- 15.2.858.15; Thu, 19 Aug 2021 21:58:55 -0700
-Received: from fenglinw-gv.qualcomm.com (10.80.80.8) by
- nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id
- 15.2.858.15; Thu, 19 Aug 2021 21:58:53 -0700
-From:   Fenglin Wu <quic_fenglinw@quicinc.com>
-To:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <sboyd@kernel.org>
-CC:     <collinsd@codeaurora.org>, <subbaram@codeaurora.org>,
-        <quic_fenglinw@quicinc.com>
-Subject: [PATCH V1 9/9] spmi: pmic-arb: increase SPMI transaction timeout delay
-Date:   Fri, 20 Aug 2021 12:58:04 +0800
-Message-ID: <1629435488-10228-10-git-send-email-quic_fenglinw@quicinc.com>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1629435488-10228-1-git-send-email-quic_fenglinw@quicinc.com>
-References: <1629435488-10228-1-git-send-email-quic_fenglinw@quicinc.com>
+        Fri, 20 Aug 2021 01:35:02 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1629437665; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=lXsbnDvim+x7SjDi+NgiA4nb25M0s3Avl7+C9WJxIls=; b=CkC6f1opiVsLW2UgdbjF4ufSZfbGGzfMy2hC4L39MQ5N8VugUJ0NxaFOPoq4zPZIITRMjEa6
+ Dqpcwh+idF/5fa0uCttcWNefh8sBPJTsM+ngMiH2/BEBsUrp7bjUXEuyr1y4kwB1VSnyBqEO
+ OmjHVGkgUKcY93tEhw8i04n52CI=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 611f3edf1a9008a23e6e933c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 20 Aug 2021 05:34:23
+ GMT
+Sender: sanm=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 69587C4360D; Fri, 20 Aug 2021 05:34:23 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.4 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+        version=3.4.0
+Received: from [192.168.0.104] (unknown [49.206.50.189])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sanm)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A5B51C4338F;
+        Fri, 20 Aug 2021 05:34:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org A5B51C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [PATCH v5 2/3] arm64: dts: qcom: sc7280: Add USB related nodes
+To:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Pratham Pratap <prathampratap@codeaurora.org>
+References: <1625576413-12324-1-git-send-email-sanm@codeaurora.org>
+ <1625576413-12324-3-git-send-email-sanm@codeaurora.org>
+ <CAE-0n52d7UOWQ+hohoyV81+aB1RnNPUEnjPCtr5=nH+a=WK35Q@mail.gmail.com>
+From:   Sandeep Maheswaram <sanm@codeaurora.org>
+Message-ID: <ea2380bd-734d-a835-05f0-db9d3dbcfe38@codeaurora.org>
+Date:   Fri, 20 Aug 2021 11:04:14 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanexm03h.na.qualcomm.com (10.85.0.50) To
- nalasex01c.na.qualcomm.com (10.47.97.35)
+In-Reply-To: <CAE-0n52d7UOWQ+hohoyV81+aB1RnNPUEnjPCtr5=nH+a=WK35Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: David Collins <collinsd@codeaurora.org>
+Hi Stephen,
 
-Increase the SPMI transaction timeout delay from 100 us to
-1000 us in order to account for the slower execution time
-found on some simulator targets.
+On 8/18/2021 1:28 AM, Stephen Boyd wrote:
+> Quoting Sandeep Maheswaram (2021-07-06 06:00:12)
+>> Add nodes for DWC3 USB controller, QMP and HS USB PHYs in sc7280 SOC.
+>>
+>> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+>> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+>> ---
+>> Changed qmp usb phy to usb dp phy combo node as per Stephen's comments.
+>> Changed dwc to usb and added SC7280 compatible as per Bjorn's comments.
+>>
+>>   arch/arm64/boot/dts/qcom/sc7280.dtsi | 164 +++++++++++++++++++++++++++++++++++
+>>   1 file changed, 164 insertions(+)
+>>
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> index a8c274a..cd6908f 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> @@ -1035,6 +1035,125 @@
+>>                          };
+>>                  };
+>>
+> [...]
+>> +
+>> +               usb_2: usb@8cf8800 {
+>> +                       compatible = "qcom,sc7280-dwc3", "qcom,dwc3";
+>> +                       reg = <0 0x08cf8800 0 0x400>;
+>> +                       status = "disabled";
+>> +                       #address-cells = <2>;
+>> +                       #size-cells = <2>;
+>> +                       ranges;
+>> +                       dma-ranges;
+>> +
+>> +                       clocks = <&gcc GCC_CFG_NOC_USB3_SEC_AXI_CLK>,
+>> +                                <&gcc GCC_USB30_SEC_MASTER_CLK>,
+>> +                                <&gcc GCC_AGGRE_USB3_SEC_AXI_CLK>,
+>> +                                <&gcc GCC_USB30_SEC_MOCK_UTMI_CLK>,
+>> +                                <&gcc GCC_USB30_SEC_SLEEP_CLK>;
+>> +                       clock-names = "cfg_noc", "core", "iface","mock_utmi",
+>> +                                     "sleep";
+>> +
+>> +                       assigned-clocks = <&gcc GCC_USB30_SEC_MOCK_UTMI_CLK>,
+>> +                                         <&gcc GCC_USB30_SEC_MASTER_CLK>;
+>> +                       assigned-clock-rates = <19200000>, <200000000>;
+>> +
+>> +                       interrupts-extended = <&intc GIC_SPI 240 IRQ_TYPE_LEVEL_HIGH>,
+>> +                                    <&pdc 13 IRQ_TYPE_EDGE_RISING>,
+>> +                                    <&pdc 12 IRQ_TYPE_EDGE_RISING>;
+> I'm seeing this cause a warning at boot
+>
+> [    4.724756] irq: type mismatch, failed to map hwirq-12 for
+> interrupt-controller@b220000!
+> [    4.733401] irq: type mismatch, failed to map hwirq-13 for
+> interrupt-controller@b220000!
+I should be using  IRQ_TYPE_LEVEL_HIGH. Will correct in next version.
+>> +                       interrupt-names = "hs_phy_irq",
+>> +                                         "dm_hs_phy_irq", "dp_hs_phy_irq";
+>> +
+>> +                       power-domains = <&gcc GCC_USB30_SEC_GDSC>;
+>> +
+>> +                       resets = <&gcc GCC_USB30_SEC_BCR>;
+>> +
+>> +                       usb_2_dwc3: usb@8c00000 {
+>> +                               compatible = "snps,dwc3";
+>> +                               reg = <0 0x08c00000 0 0xe000>;
+>> +                               interrupts = <GIC_SPI 242 IRQ_TYPE_LEVEL_HIGH>;
+>> +                               iommus = <&apps_smmu 0xa0 0x0>;
+>> +                               snps,dis_u2_susphy_quirk;
+>> +                               snps,dis_enblslpm_quirk;
+>> +                               phys = <&usb_2_hsphy>;
+>> +                               phy-names = "usb2-phy";
+>> +                               maximum-speed = "high-speed";
+>> +                       };
+>> +               };
+>> +
+>>                  dc_noc: interconnect@90e0000 {
+>>                          reg = <0 0x090e0000 0 0x5080>;
+>>                          compatible = "qcom,sc7280-dc-noc";
+>> @@ -1063,6 +1182,51 @@
+>>                          qcom,bcm-voters = <&apps_bcm_voter>;
+>>                  };
+>>
+>> +               usb_1: usb@a6f8800 {
+>> +                       compatible = "qcom,sc7280-dwc3", "qcom,dwc3";
+>> +                       reg = <0 0x0a6f8800 0 0x400>;
+>> +                       status = "disabled";
+>> +                       #address-cells = <2>;
+>> +                       #size-cells = <2>;
+>> +                       ranges;
+>> +                       dma-ranges;
+>> +
+>> +                       clocks = <&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
+>> +                                <&gcc GCC_USB30_PRIM_MASTER_CLK>,
+>> +                                <&gcc GCC_AGGRE_USB3_PRIM_AXI_CLK>,
+>> +                                <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
+>> +                                <&gcc GCC_USB30_PRIM_SLEEP_CLK>;
+>> +                       clock-names = "cfg_noc", "core", "iface", "mock_utmi",
+>> +                                     "sleep";
+>> +
+>> +                       assigned-clocks = <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
+>> +                                         <&gcc GCC_USB30_PRIM_MASTER_CLK>;
+>> +                       assigned-clock-rates = <19200000>, <200000000>;
+>> +
+>> +                       interrupts-extended = <&intc GIC_SPI 131 IRQ_TYPE_LEVEL_HIGH>,
+>> +                                             <&pdc 14 IRQ_TYPE_EDGE_BOTH>,
+>> +                                             <&pdc 15 IRQ_TYPE_EDGE_BOTH>,
+> And this one too.
+>
+> [    4.898667] irq: type mismatch, failed to map hwirq-14 for
+> interrupt-controller@b220000!
+> [    4.907241] irq: type mismatch, failed to map hwirq-15 for
+> interrupt-controller@b220000!
+>
+> which looks like genirq code is complaining that the type is different
+> than what it is configured for. Are these trigger flags correct? If so,
+> then there' some sort of bug in the pdc driver.
 
-Signed-off-by: David Collins <collinsd@codeaurora.org>
-Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
----
- drivers/spmi/spmi-pmic-arb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I should be using  IRQ_TYPE_LEVEL_HIGH. Will correct in next version.
 
-diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
-index 55fa981..08c2566 100644
---- a/drivers/spmi/spmi-pmic-arb.c
-+++ b/drivers/spmi/spmi-pmic-arb.c
-@@ -91,7 +91,7 @@ enum pmic_arb_channel {
- 
- /* Maximum number of support PMIC peripherals */
- #define PMIC_ARB_MAX_PERIPHS		512
--#define PMIC_ARB_TIMEOUT_US		100
-+#define PMIC_ARB_TIMEOUT_US		1000
- #define PMIC_ARB_MAX_TRANS_BYTES	(8)
- 
- #define PMIC_ARB_APID_MASK		0xFF
--- 
-Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project.
 
+>
+>> +                                             <&pdc 17 IRQ_TYPE_LEVEL_HIGH>;
+>> +                       interrupt-names = "hs_phy_irq", "dp_hs_phy_irq",
+>> +                                         "dm_hs_phy_irq", "ss_phy_irq";
+>> +
+>> +                       power-domains = <&gcc GCC_USB30_PRIM_GDSC>;
+>> +
+>> +                       resets = <&gcc GCC_USB30_PRIM_BCR>;
+>> +
+>> +                       usb_1_dwc3: usb@a600000 {
