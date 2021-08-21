@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 070453F3B4D
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Aug 2021 17:57:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE50B3F3B4B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 21 Aug 2021 17:57:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232133AbhHUP5o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 21 Aug 2021 11:57:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36052 "EHLO
+        id S231690AbhHUP5r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 21 Aug 2021 11:57:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231690AbhHUP5n (ORCPT
+        with ESMTP id S232533AbhHUP5q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 21 Aug 2021 11:57:43 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D89DBC061575;
-        Sat, 21 Aug 2021 08:57:03 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id v2so18658287edq.10;
-        Sat, 21 Aug 2021 08:57:03 -0700 (PDT)
+        Sat, 21 Aug 2021 11:57:46 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19973C061575;
+        Sat, 21 Aug 2021 08:57:06 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id s25so5977500edw.0;
+        Sat, 21 Aug 2021 08:57:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=dQeI7rq5UyNj25/cgHXT21cjW1M3absAwcr0nFDGAXQ=;
-        b=fZYtJBeIc2tsEP0dXutmscR7rVvQUGZi7n6iVg6qm9xG1rP4pi4p/BnWh+LLjyF7el
-         VH0X5JUuzLMui8Nqz0/0JYmP/axGa1rnZOCbMlX7qZPNgGErUt1DIfYPvdyDmoSP9n1z
-         eyaFqm4GfgVkGLYbDqfXH48Omo1urK2MSbpGm8BvRn/Vh/TAdtaucJQ2Leu6svNs8goL
-         +GMrsDdWK7NLEqYrcOM7oevwXQ33hmxyyjaRha9a3ZStxSGdIqIOOCuJeiXfAGtDWJe9
-         FX/ww03O2gFBEgrrCyGL9YY+EGQRZJoWImjHquIEfqsPEPz/AF8x/IS8ipY7/PG1DvAL
-         bJ3Q==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=8sfYSq0QuAuGiLgWyWy2pME6Wr0TNS7JzIzhSD/njQs=;
+        b=buZokTB5fj0w8ZJTpIpmGJFW6rEwfiVGxeZaf+UR3gAuOY+tsalBWXDcwWn3djt5MS
+         TxFruofVy1VPoEFPx4QupzG/1fjdowdtbkGY6sUVT/E8T42R5j2o0khUOc4PDAGphRE0
+         NMm7ZLkaF20VIyEObCFf1Lr6egjV7U2eFx5eFzAKsLtqcqbXUziWB7GahOZ/+wlYpO8A
+         EVCekLIuB3imX4GXjg4USmKm+/2c6lY8gQVw8W00zwUMl+cjAqVAc/NM72gWUp5XExuo
+         rV3+RW+wDB6TUwFMeyG6w28mCiz5eImm1IJRSkmn+BVrNs8A5xSfDiCMZK7PbTje6Vhq
+         IO/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=dQeI7rq5UyNj25/cgHXT21cjW1M3absAwcr0nFDGAXQ=;
-        b=PeYyxmwPtD6y/znCSzhDL38v9IFV+C6oYZRHMWyMUlZhsLPQcY8S8TZywdJewO2JX5
-         p4+3K6gQv1lbINhinwL+Ck+6n1r0CnrnFdSJy4lxmO2OfHEibjSpjY586a9AM2yGrEWl
-         X4nkS+0abI4xAVlamMqmJpyBWmF+oxeW12Vrih3dML7Jv8XfDl9GFZ6KvatG0/GjhQn3
-         HS3pdwlFOYLIiImEDDSnprL9J6LxHhC7pegCYknuDNJvTWMHfSsxTRSsdYxtwXAXbDgV
-         yyuRNOhL8Ul3lUwuogmenfLRFAhLNv/hCcM3odHkHVb9j3gO4DURG5AxffYmbzEF68a4
-         hl0A==
-X-Gm-Message-State: AOAM532Noira9dSBTPPmmG35zkFVYXbvubCJGV6QZM9jOVHQdpyEF2t3
-        gvIDvdFo7/L1PuTe4Eajc/o=
-X-Google-Smtp-Source: ABdhPJzQmYjLjA+FlqyLcD31UFy2RE43X7Yv4nv+8ViR9APl56Rb7LO0JixDaD6gtbVbcIPInHLuNw==
-X-Received: by 2002:a05:6402:3099:: with SMTP id de25mr28016818edb.36.1629561422535;
-        Sat, 21 Aug 2021 08:57:02 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=8sfYSq0QuAuGiLgWyWy2pME6Wr0TNS7JzIzhSD/njQs=;
+        b=quSP2vK2dZY+Lr+t6RdHM1X4m4I+tgdlJ12TcXxAUa0u8j3zVYjmkiSZvtJVwHYhku
+         1PM4q6R+G/v+MU4pw49jgVUYzSXOyXPIGKpjJONupkr1KS3sD7mrRdk3iDG4JnDETrtS
+         PsLjmm7eoi2OsYvUm+kW532pZEjv3GWTkIuawryypic9HeTRuC8QZhctgnEnSw4AOdI3
+         w2Xa6El/3kiWFJ1q0vGqeo1Z0eMxYUn0EOXJMBMspl66mIN4Ikqxm7FUutg7SEfQUQ7t
+         ihEXrAkZi8QEpdNYwKCZZ0x6JMOhAlReJmwEynFdx8ZgmdsCRU5Azke9yseeOVyxmm4/
+         Qx5Q==
+X-Gm-Message-State: AOAM5329CMJRBCEBigHZY0K/ZM9BL1ZFfDE8YkIwzfl1eyi2lhKfEYBO
+        Y4BxgjHu/EnqGYomQ8DO4z7WtTnO4hTaCA==
+X-Google-Smtp-Source: ABdhPJwmsn579dsB7JySTVOgC0bVnx9mICFsu1H6QttWRkMOiunB40d8dFJ+FPMFe2jfET4gn7bBfw==
+X-Received: by 2002:a05:6402:215:: with SMTP id t21mr28368506edv.68.1629561424769;
+        Sat, 21 Aug 2021 08:57:04 -0700 (PDT)
 Received: from localhost (178-169-161-196.razgrad.ddns.bulsat.com. [178.169.161.196])
-        by smtp.gmail.com with ESMTPSA id g10sm4471314ejj.44.2021.08.21.08.57.00
+        by smtp.gmail.com with ESMTPSA id ne22sm3423919ejc.113.2021.08.21.08.57.03
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 21 Aug 2021 08:57:01 -0700 (PDT)
+        Sat, 21 Aug 2021 08:57:04 -0700 (PDT)
 From:   Iskren Chernev <iskren.chernev@gmail.com>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Vinod Koul <vkoul@kernel.org>
@@ -57,49 +57,41 @@ Cc:     Andy Gross <agross@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-phy@lists.infradead.org, phone-devel@vger.kernel.org,
         ~postmarketos/upstreaming@lists.sr.ht,
-        Iskren Chernev <iskren.chernev@gmail.com>
-Subject: [PATCH v3 0/2] Add UFS PHY support for SM6115/4250
-Date:   Sat, 21 Aug 2021 18:56:54 +0300
-Message-Id: <20210821155657.893165-1-iskren.chernev@gmail.com>
+        Iskren Chernev <iskren.chernev@gmail.com>,
+        Rob Herring <robh@kernel.org>,
+        Manu Gautam <mgautam@codeaurora.org>
+Subject: [PATCH v3 1/2] dt-bindings: phy: qcom,qmp: Add SM6115 UFS PHY bindings
+Date:   Sat, 21 Aug 2021 18:56:55 +0300
+Message-Id: <20210821155657.893165-2-iskren.chernev@gmail.com>
 X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20210821155657.893165-1-iskren.chernev@gmail.com>
+References: <20210821155657.893165-1-iskren.chernev@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The UFS PHY found on SM6115/4250 has a lot of common registers with ufs phy v2,
-even though in downstream it is named v3-660. Due to register similarity with
-v2, the few extra registers that are needed are added as v2 registers.
+Add the compatible strings for the UFS PHY found on SM4250/6115 SoC.
 
-The register values/sequences are taken from OnePlus repo [1].
+Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
+Acked-by: Rob Herring <robh@kernel.org>
+---
+ Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-[1] https://github.com/OnePlusOSS/android_kernel_oneplus_sm4250
-
-v1: https://lkml.org/lkml/2021/8/5/235
-v2: https://lkml.org/lkml/2021/8/13/889
-
-Changes from v2:
-- Suggested by Vinod
-  - the 6115 registers had a lot in common with v2 registers (and not v3, as
-    was initially assumed), so those were reused whenever possible, and new
-    regs were added along other v2 registers.
-
-Changes from v1:
-- Suggested by Vinod
-  - removed v3-660 constants for regs with same name and value as v3 regs
-
-Iskren Chernev (2):
-  dt-bindings: phy: qcom,qmp: Add SM6115 UFS PHY bindings
-  phy: qcom-qmp: Add support for SM6115 UFS phy
-
- .../devicetree/bindings/phy/qcom,qmp-phy.yaml |   1 +
- drivers/phy/qualcomm/phy-qcom-qmp.c           | 124 ++++++++++++++++++
- drivers/phy/qualcomm/phy-qcom-qmp.h           |  18 +++
- 3 files changed, 143 insertions(+)
-
-
-base-commit: 86ed57fd8c93fdfaabb4f58e78455180fa7d8a84
+diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+index 47d99001d2dd..75be5650a198 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+@@ -36,6 +36,7 @@ properties:
+       - qcom,sdm845-qmp-ufs-phy
+       - qcom,sdm845-qmp-usb3-phy
+       - qcom,sdm845-qmp-usb3-uni-phy
++      - qcom,sm6115-qmp-ufs-phy
+       - qcom,sm8150-qmp-ufs-phy
+       - qcom,sm8150-qmp-usb3-phy
+       - qcom,sm8150-qmp-usb3-uni-phy
 -- 
 2.32.0
 
