@@ -2,123 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 390F93F4E3E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Aug 2021 18:19:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F9A83F4EBE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Aug 2021 18:51:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229921AbhHWQUS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Aug 2021 12:20:18 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:24249 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229725AbhHWQUS (ORCPT
+        id S230261AbhHWQw2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Aug 2021 12:52:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34904 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230149AbhHWQw1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Aug 2021 12:20:18 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1629735575; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=FsdWWS5i8+Mrzr5FVS8GQ0BaF3qwXImZiY/O4K6ZXGw=;
- b=FD8uMVunIjNzSO1p0ZY3YNKPDbrpO6TqYylO1ZbOHpB4OaBNm7UDgZhmUkEPmOLTqo/1rzbF
- Pi3s8/AHsNRm/Vn73kJLOstdQja3YsYEKZAXA8nK5/sOXBCddUQwHxnLsTYLVJ51r8ihBhdC
- 7Dj2KSV5JKjhOs5uuj423/YJMhM=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 6123ca7df588e42af1f37ab1 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 23 Aug 2021 16:19:09
- GMT
-Sender: sibis=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id EAD8CC43617; Mon, 23 Aug 2021 16:19:08 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: sibis)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 41F01C4338F;
-        Mon, 23 Aug 2021 16:19:08 +0000 (UTC)
+        Mon, 23 Aug 2021 12:52:27 -0400
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC38AC061757
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Aug 2021 09:51:44 -0700 (PDT)
+Received: by mail-qt1-x82d.google.com with SMTP id d2so14345946qto.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Aug 2021 09:51:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=dDE00UpxBXJH5bTVnGFJxhddPj7ZtpRhyqPmw4zr1UM=;
+        b=B0vOREiJZtFnTO/Vh7DSrYvQiGJ4g03NJ22FSHXJFkKcsF9da79RkAKvDZ7ooixGfH
+         dWc0ETkCsHbOwAyq40IQWQWEQjzTXbHCb1+kKNRKG7rSCDonc6XWILyjf2QsEqOgkaPf
+         J7kJuvkjG0VniLqg7UxaveAY3JeIhEJPLhxQdm7zYJROxpVZL+A/PBhC7QLAC3H/VMdq
+         I6b0r8KxN2N9El20NcJz77cA1V5jWsDM8MuP64FkBVx4dhhVW2pRKmFJtZ0+xi3Cu+by
+         t2ZrfJup/swSmOC0ma43Fpu5zR29UB5HLZaNHHhIlmwnern9ml6ojE+QfCzjbw4k8Ua/
+         jV8Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=dDE00UpxBXJH5bTVnGFJxhddPj7ZtpRhyqPmw4zr1UM=;
+        b=IpAthQi9TvxPIC2HWlVZuRvOsIVHRMnCUSAY3jNryGdW+VKizHuTCPKZ7MhsxCI4JN
+         kuACu29e6TRvhf7cew2peuC5r0zRYCPHWr0GgB0oog7bZu4K395B7L9JPM39yl3SmGni
+         NQYjhaBt5fAq2UiXyQQwKwxxXTSbKbs/4wkqfTOcO4ou2GsHQiNuQ5qdRkAxvrIDv/ZQ
+         NjgvcVxAJWpWDJJjd9luxiJVJ1lZrEmxIw2kbLA/KmMshhFZsc8fjJS9F0jSm27ExlQ5
+         gJqt8B6ASc6v3FTNi/DNqhLslLVNmDO+eaNZV47dM+inN6f1K6ld9YaW1oNqSTBEi6/E
+         iB7A==
+X-Gm-Message-State: AOAM533Vg+wvkUlTufBmxeQ96zmJRhh19WZJY/TAYHkxWB3raZn4AySb
+        3IEo1wIdTPIbtR1PdOlB8BPC+SujbtvYrJlZ1stY8w==
+X-Google-Smtp-Source: ABdhPJyF8KHJlq3bUVej5HJNFAYVBOfrTJxlhvyhbtsZxt4r2kfgv67lAOdMh11Ms6SFs2NRUW+WMe/9qtEO65suJaI=
+X-Received: by 2002:ac8:66da:: with SMTP id m26mr30101290qtp.273.1629737504103;
+ Mon, 23 Aug 2021 09:51:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 23 Aug 2021 21:49:08 +0530
-From:   Sibi Sankar <sibis@codeaurora.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     bjorn.andersson@linaro.org, mka@chromium.org, robh+dt@kernel.org,
-        ulf.hansson@linaro.org, rjw@rjwysocki.net, agross@kernel.org,
-        ohad@wizery.com, mathieu.poirier@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dianders@chromium.org, rishabhb@codeaurora.org,
-        sidgup@codeaurora.org
-Subject: Re: [PATCH v5 02/13] dt-bindings: remoteproc: qcom: pas: Add QMP
- property
-In-Reply-To: <CAE-0n50z=MaEZhXRSQpN6Jo8m7nyQSS6MqikAgT5cfkH1ZvL_g@mail.gmail.com>
-References: <1629342136-3667-1-git-send-email-sibis@codeaurora.org>
- <1629342136-3667-3-git-send-email-sibis@codeaurora.org>
- <CAE-0n531EgLx-gGJswmmNAFmy-P9z=Hh1N=fkLw_uemoeQnYVg@mail.gmail.com>
- <d733d47bc6a86fe28302943e50d02bd5@codeaurora.org>
- <CAE-0n50z=MaEZhXRSQpN6Jo8m7nyQSS6MqikAgT5cfkH1ZvL_g@mail.gmail.com>
-Message-ID: <5848670f513187734d7625f242bbf67b@codeaurora.org>
-X-Sender: sibis@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <20210823095603.5538-1-shawn.guo@linaro.org> <20210823095603.5538-4-shawn.guo@linaro.org>
+In-Reply-To: <20210823095603.5538-4-shawn.guo@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 23 Aug 2021 19:51:32 +0300
+Message-ID: <CAA8EJpqPMMvtDL5NqUJTDfVEAqX9VD9Y_TWmXxh8DpS8hwDuJg@mail.gmail.com>
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sdm630: Add missing a2noc qos clocks
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Georgi Djakov <djakov@kernel.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-08-21 23:47, Stephen Boyd wrote:
-> Quoting Sibi Sankar (2021-08-20 07:24:02)
->> On 2021-08-20 00:25, Stephen Boyd wrote:
->> > Quoting Sibi Sankar (2021-08-18 20:02:05)
->> >> The load state power-domain, used by the co-processors to notify the
->> >> Always on Subsystem (AOSS) that a particular co-processor is up/down,
->> >> suffers from the side-effect of changing states during suspend/resume.
->> >> However the co-processors enter low-power modes independent to that of
->> >> the application processor and their states are expected to remain
->> >> unaltered across system suspend/resume cycles. To achieve this
->> >> behavior
->> >> let's drop the load state power-domain and replace them with the qmp
->> >> property for all SoCs supporting low power mode signalling.
->> >>
->> >
->> > How do we drop the load state property without breaking existing DTBs?
->> > Maybe we need to leave it there and then somehow make it optional? Or
->> > do
->> > we not care about this problem as the driver will start ignoring it?
->> 
->> We can afford to break the bindings
->> because of the following reason:
->> 
->> * Load state in mainline is currently
->>    broken i.e. it doesn't serve its
->>    main purpose of signalling AOP of
->>    the correct state of Q6 during
->>    system suspend/resume. Thus we
->>    can maintain current functionality
->>    even without the load state votes
->>    i.e. when a new kernel with load
->>    state removed is used with an older
->>    dtb the remoteproc functionality
->>    will remain the same.
->> 
-> 
-> Alright. Is that reflected somewhere in the commit text? I must have
-> missed it. Can you please add it?
+On Mon, 23 Aug 2021 at 12:56, Shawn Guo <shawn.guo@linaro.org> wrote:
+>
+> It adds the missing a2noc clocks required for QoS registers programming
+> per downstream kernel[1].
+>
+> [1] https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/arch/arm/boot/dts/qcom/sdm660-bus.dtsi?h=LA.UM.8.2.r1-04800-sdm660.0#n43
+>
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sdm630.dtsi | 17 ++++++++++++++---
+>  1 file changed, 14 insertions(+), 3 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> index 9153e6616ba4..b3a7f3bf1560 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> @@ -652,11 +652,22 @@
+>
+>                 a2noc: interconnect@1704000 {
+>                         compatible = "qcom,sdm660-a2noc";
+> -                       reg = <0x01704000 0xc100>;
+> +                       reg = <0x01704000 0x1c000>;
 
-Commit message throughout the series
-mention that the current load state
-implementation is broken but it is
-never mentioned explicitly that it
-is the reason why bindings can be
-broken. I'll wait for a couple of
-days to see if I get any more
-comments and will re-word it in the
-next re-spin.
+Shawn, as you are at it, do we want to keep these nocs shifted
+compared to the downstream dtsi (so that the offset of QoS registers
+is 0) or we'd better introduce QoS register offset and move noc start
+address to the same address as in downstream?
+
+>                         #interconnect-cells = <1>;
+> -                       clock-names = "bus", "bus_a";
+> +                       clock-names = "bus",
+> +                                     "bus_a",
+> +                                     "ipa",
+> +                                     "ufs_axi",
+> +                                     "aggre2_ufs_axi",
+> +                                     "aggre2_usb3_axi",
+> +                                     "cfg_noc_usb2_axi";
+>                         clocks = <&rpmcc RPM_SMD_AGGR2_NOC_CLK>,
+> -                                <&rpmcc RPM_SMD_AGGR2_NOC_A_CLK>;
+> +                                <&rpmcc RPM_SMD_AGGR2_NOC_A_CLK>,
+> +                                <&rpmcc RPM_SMD_IPA_CLK>,
+> +                                <&gcc GCC_UFS_AXI_CLK>,
+> +                                <&gcc GCC_AGGRE2_UFS_AXI_CLK>,
+> +                                <&gcc GCC_AGGRE2_USB3_AXI_CLK>,
+> +                                <&gcc GCC_CFG_NOC_USB2_AXI_CLK>;
+>                 };
+>
+>                 mnoc: interconnect@1745000 {
+> --
+> 2.17.1
+>
+
 
 -- 
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project.
+With best wishes
+Dmitry
