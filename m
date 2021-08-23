@@ -2,277 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 06F4B3F4D78
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Aug 2021 17:27:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E92E3F4D89
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Aug 2021 17:30:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231499AbhHWP1r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Aug 2021 11:27:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43554 "EHLO
+        id S231425AbhHWPbE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Aug 2021 11:31:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231533AbhHWP1n (ORCPT
+        with ESMTP id S231214AbhHWPbE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Aug 2021 11:27:43 -0400
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46F79C061575
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Aug 2021 08:26:59 -0700 (PDT)
-Received: by mail-ot1-x32f.google.com with SMTP id l7-20020a0568302b0700b0051c0181deebso5602902otv.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Aug 2021 08:26:59 -0700 (PDT)
+        Mon, 23 Aug 2021 11:31:04 -0400
+Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD0CCC061575
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Aug 2021 08:30:19 -0700 (PDT)
+Received: by mail-oo1-xc2e.google.com with SMTP id z3-20020a4a98430000b029025f4693434bso5526860ooi.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Aug 2021 08:30:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=ydN0lJMPBQznWvVfcNZ1noFygSEX/rDVntQ7OSZxUnE=;
-        b=R6VuIOSvA6Xca63sq1sLs5bqzEphhl9ON+NL8V5mEbAA3hu5kqd2bSLV1b0WlayJm+
-         KGEZLXsQzLzJNn7n3AMZMpjjCJuHA45mIYBDVWvWt4HRt5pNuXeUIg9YfyQEV3N9XdAH
-         vujVT1LbUXocDgJ0cw+heOhLL6bJCGVud2nI0LrykKD1d78UpY/CsUqpOYOypE5mFOHR
-         Eb2z26M6mcXbjWkL1lbXHs6TconVBGnPPIEUSexzRBaBn0VMSasCrUWWErS2qQH0dNJi
-         ZKEWdIrXQhsyrlo79NrSQ63FMl9uZvCZQyOAdfA+lWsW+yvhy+mjfsd6U0MZe23oM/GK
-         //Eg==
+        bh=Q1I6UIQ/dYdeGuL5vsdxomD4lXFNDoC4pbA5dcQ1sos=;
+        b=F5FOu4Uju7d1zSzqsLiaek0JWIxkanzrkfr9LImQ9tIa9/TQFsU3gqcYqib3b5lCT4
+         9FNjO3UYej2V1n+rp+smV/DUc44d7B5zGWc2c6kmu2UjxSCwDRlSfT/KphvBwFG++OLQ
+         Dibm+03F+EjgqMfNIFtl3jVREMD16OsEnNCWaW2fYGvIE8RqRQi9cJGQiDAcNdAAxWty
+         /DHwRzhNq2OF7nJtArRwMHo6Oezlua8TBWlHDU+/TvwoX/chw6NzK+WxsIDtGsnQikbw
+         MsHSkL8QAnoQt4TFCzGXajF/Dfo+nzGvLZMbHCXik39ZYzwgRg1JmwJeqoKi0xx3Mh10
+         kN2g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=ydN0lJMPBQznWvVfcNZ1noFygSEX/rDVntQ7OSZxUnE=;
-        b=iAc9zPWQrGtZf3E2KT86PLmGPX2Z0TmPTWfGKaiXldptLyY4n7yv9wPPgd6/wzAcuR
-         74rJxVrRnitECb2fa/8a5nCPU+UEjNuO0nsvEZfkxcyx4fh1f0OcINZ5cTY03HJUtsuW
-         1xxdYNZmMJD827kfi3escnTFl3CpRF8n4jfeYHH8bYMeSkk/HgyeOwUuS7bEMCTcGw9W
-         CBGLv8lEVwV9cKAzLlMa57uEBDXZCUa5DR8U2GEhEZ/EkvQA31YIAZnv3tdppLfOOkdl
-         3PJs4kPhIac4fMLKCx0+s9dbutwdmZ6jT19D870lgbkC6WWAfgliLgMauzGc8KRrhUy3
-         +Upg==
-X-Gm-Message-State: AOAM532a9FVA+Z9nlaYEV06OQA3BxoTJ6yCSSNNCN4fPnPb0EuBA8s3N
-        p2afiasmb4tFCsjnx9wEAQ8q3g==
-X-Google-Smtp-Source: ABdhPJzw59rtahoBqiQZenemcDF6BgL7l1OthPHspWZBn84xBiGEbfLWhV0qr+wPWPc9Y8cReWOC3Q==
-X-Received: by 2002:a9d:5d01:: with SMTP id b1mr10133457oti.263.1629732418617;
-        Mon, 23 Aug 2021 08:26:58 -0700 (PDT)
+        bh=Q1I6UIQ/dYdeGuL5vsdxomD4lXFNDoC4pbA5dcQ1sos=;
+        b=r9ei1r2B4KLClm6LLGkJMxVyFy/tSJCo2wVRf3Fre2KhJZQHQ8xsHJsFDhSR2eh9wT
+         mxjAkxiXzCcua1r6vyOYT6yWTjXUwYgjOItLRp5Ft7Q6LQwyck1s5BS0jR5D4oq9dgas
+         uwMzqibkvAItD3Z3d98I/eTuqqFZ8Ijag8t3Eq0jzzzNpFo6qPxVRxYQ01BMvGwCbFNi
+         SZ7s895ThiZb8KUo9aZFnwQh9rabjKEHZnffu3vjhSHpgU4FKNhdFhqy38RD9A1XOves
+         ieWWqUK2TS8OgHZYpV+Hlp1rWOJkTAafW0bF21CsneUJhILcoEIioJdwpQULj8WMZDHF
+         5kOA==
+X-Gm-Message-State: AOAM532LxTn1rKN/Yzp3UdjzJJyhowQtBP+hwRqL/VxZEYVd8fifgqD7
+        p2aXluLh2itUcloZ0K/ttkea0A==
+X-Google-Smtp-Source: ABdhPJxvxAPBPV4s/EVPjaPI6SW7gljf5tIj+ZYNiOEbumWPWZjhzi3Klk8ORxyHCSYPVCHKbi/lTA==
+X-Received: by 2002:a4a:e1a4:: with SMTP id 4mr26231000ooy.14.1629732619089;
+        Mon, 23 Aug 2021 08:30:19 -0700 (PDT)
 Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id p2sm3732086oip.35.2021.08.23.08.26.57
+        by smtp.gmail.com with ESMTPSA id a23sm1607314otp.44.2021.08.23.08.30.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Aug 2021 08:26:58 -0700 (PDT)
-Date:   Mon, 23 Aug 2021 08:28:17 -0700
+        Mon, 23 Aug 2021 08:30:18 -0700 (PDT)
+Date:   Mon, 23 Aug 2021 08:31:37 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: Add SM6350 pinctrl
- bindings
-Message-ID: <YSO+kQnDsqcaBIOg@ripper>
-References: <20210820203751.232645-1-konrad.dybcio@somainline.org>
- <20210820203751.232645-2-konrad.dybcio@somainline.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Georgi Djakov <djakov@kernel.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH] interconnect: qcom: sdm660: Fix id of slv_cnoc_mnoc_cfg
+Message-ID: <YSO/Wfq6CvO89g2V@ripper>
+References: <20210823014003.31391-1-shawn.guo@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210820203751.232645-2-konrad.dybcio@somainline.org>
+In-Reply-To: <20210823014003.31391-1-shawn.guo@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 20 Aug 13:37 PDT 2021, Konrad Dybcio wrote:
+On Sun 22 Aug 18:40 PDT 2021, Shawn Guo wrote:
 
-> Add device tree binding Documentation details for Qualcomm SM6350
-> pinctrl driver.
+> The id of slv_cnoc_mnoc_cfg node is mistakenly coded as id of
+> slv_blsp_1.  It causes the following warning on slv_blsp_1 node adding.
+> Correct the id of slv_cnoc_mnoc_cfg node.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> ---
->  .../bindings/pinctrl/qcom,sm6350-pinctrl.yaml | 156 ++++++++++++++++++
->  .../bindings/pinctrl/qcom,tlmm-common.yaml    |   2 +-
->  2 files changed, 157 insertions(+), 1 deletion(-)
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm6350-pinctrl.yaml
+> [    1.948180] ------------[ cut here ]------------
+> [    1.954122] WARNING: CPU: 2 PID: 7 at drivers/interconnect/core.c:962 icc_node_add+0xe4/0xf8
+
+Happy to see that the WARN_ON() turned out useful to others :)
+
+> [    1.958994] Modules linked in:
+> [    1.967399] CPU: 2 PID: 7 Comm: kworker/u16:0 Not tainted 5.14.0-rc6-next-20210818 #21
+> [    1.970275] Hardware name: Xiaomi Redmi Note 7 (DT)
+> [    1.978169] Workqueue: events_unbound deferred_probe_work_func
+> [    1.982945] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+> [    1.988849] pc : icc_node_add+0xe4/0xf8
+> [    1.995699] lr : qnoc_probe+0x350/0x438
+> [    1.999519] sp : ffff80001008bb10
+> [    2.003337] x29: ffff80001008bb10 x28: 000000000000001a x27: ffffb83ddc61ee28
+> [    2.006818] x26: ffff2fe341d44080 x25: ffff2fe340f3aa80 x24: ffffb83ddc98f0e8
+> [    2.013938] x23: 0000000000000024 x22: ffff2fe3408b7400 x21: 0000000000000000
+> [    2.021054] x20: ffff2fe3408b7410 x19: ffff2fe341d44080 x18: 0000000000000010
+> [    2.028173] x17: ffff2fe3bdd0aac0 x16: 0000000000000281 x15: ffff2fe3400f5528
+> [    2.035290] x14: 000000000000013f x13: ffff2fe3400f5528 x12: 00000000ffffffea
+> [    2.042410] x11: ffffb83ddc9109d0 x10: ffffb83ddc8f8990 x9 : ffffb83ddc8f89e8
+> [    2.049527] x8 : 0000000000017fe8 x7 : c0000000ffffefff x6 : 0000000000000001
+> [    2.056645] x5 : 0000000000057fa8 x4 : 0000000000000000 x3 : ffffb83ddc9903b0
+> [    2.063764] x2 : 1a1f6fde34d45500 x1 : ffff2fe340f3a880 x0 : ffff2fe340f3a880
+> [    2.070882] Call trace:
+> [    2.077989]  icc_node_add+0xe4/0xf8
+> [    2.080247]  qnoc_probe+0x350/0x438
+> [    2.083718]  platform_probe+0x68/0xd8
+> [    2.087191]  really_probe+0xb8/0x300
+> [    2.091011]  __driver_probe_device+0x78/0xe0
+> [    2.094659]  driver_probe_device+0x80/0x110
+> [    2.098911]  __device_attach_driver+0x90/0xe0
+> [    2.102818]  bus_for_each_drv+0x78/0xc8
+> [    2.107331]  __device_attach+0xf0/0x150
+> [    2.110977]  device_initial_probe+0x14/0x20
+> [    2.114796]  bus_probe_device+0x9c/0xa8
+> [    2.118963]  deferred_probe_work_func+0x88/0xc0
+> [    2.122784]  process_one_work+0x1a4/0x338
+> [    2.127296]  worker_thread+0x1f8/0x420
+> [    2.131464]  kthread+0x150/0x160
+> [    2.135107]  ret_from_fork+0x10/0x20
+> [    2.138495] ---[ end trace 5eea8768cb620e87 ]---
 > 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm6350-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm6350-pinctrl.yaml
-> new file mode 100644
-> index 000000000000..e4d8b7a044e6
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm6350-pinctrl.yaml
-> @@ -0,0 +1,156 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pinctrl/qcom,sm6350-pinctrl.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies, Inc. SM6350 TLMM block
-> +
-> +maintainers:
-> +  - Konrad Dybcio <konrad.dybcio@somainline.org>
-> +
-> +description: |
-> +  This binding describes the Top Level Mode Multiplexer (TLMM) block found
-> +  in the SM6350 platform.
-> +
-> +allOf:
-> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,sm6350-tlmm
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts: true
-> +  interrupt-controller: true
-> +  '#interrupt-cells': true
-> +  gpio-controller: true
-> +  gpio-reserved-ranges: true
-> +  '#gpio-cells': true
-> +  gpio-ranges: true
-> +  wakeup-parent: true
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +
-> +additionalProperties: false
-> +
-> +patternProperties:
-> +  '-state$':
-> +    oneOf:
-> +      - $ref: "#/$defs/qcom-sm6350-tlmm-state"
-> +      - patternProperties:
-> +          ".*":
-> +            $ref: "#/$defs/qcom-sm6350-tlmm-state"
-> +
-> +$defs:
-> +  qcom-sm6350-tlmm-state:
-> +    type: object
-> +    description:
-> +      Pinctrl node's client devices use subnodes for desired pin configuration.
-> +      Client device subnodes use below standard properties.
-> +    $ref: "qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state"
-> +
-> +    properties:
-> +      pins:
-> +        description:
-> +          List of gpio pins affected by the properties specified in this
-> +          subnode.
-> +        items:
-> +          oneOf:
-> +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-9][0-9]|20[0-3])$"
 
-"^gpio([0-9]|[1-9][0-9]|1[0-4][0-9]|15[0-7])$"
+The SDM660 provider was picked up in a previous release, so let's help
+this get backported by adding:
 
-> +            - enum: [ sdc1_clk, sdc1_cmd, sdc1_data, sdc2_clk, sdc2_cmd, sdc2_data ]
-> +        minItems: 1
-> +        maxItems: 36
-> +
-> +      function:
-> +        description:
-> +          Specify the alternative function to be configured for the specified
-> +          pins.
-> +
-> +        enum: [ adsp_ext, agera_pll, atest_char, atest_char0, atest_char1, atest_char2,
-> +                atest_char3, atest_tsens, atest_tsens2, atest_usb1, atest_usb10, atest_usb11,
-> +                atest_usb12, atest_usb13, atest_usb2, atest_usb20, atest_usb21, atest_usb22,
-> +                atest_usb23, audio_ref, btfm_slimbus, cam_mclk0, cam_mclk1, cam_mclk2, cam_mclk3,
-> +                cam_mclk4, cci_async, cci_i2c, cci_timer0, cci_timer1, cci_timer2, cci_timer3,
-> +                cci_timer4, cri_trng, dbg_out, ddr_bist, ddr_pxi0, ddr_pxi1, ddr_pxi2, ddr_pxi3,
-> +                dp_hot, edp_lcd, gcc_gp1, gcc_gp2, gcc_gp3, gp_pdm0, gp_pdm1, gp_pdm2, gpio,
-> +                gps_tx, ibi_i3c, jitter_bist, ldo_en, ldo_update, lpass_ext, m_voc, mclk,
-> +                mdp_vsync, mdp_vsync0, mdp_vsync1, mdp_vsync2, mdp_vsync3, mi2s_0, mi2s_1, mi2s_2,
-> +                mss_lte, nav_gpio, nav_pps, pa_indicator, pcie0_clk, phase_flag0, phase_flag1,
-> +                phase_flag10, phase_flag11, phase_flag12, phase_flag13, phase_flag14, phase_flag15,
-> +                phase_flag16, phase_flag17, phase_flag18, phase_flag19, phase_flag2, phase_flag20,
-> +                phase_flag21, phase_flag22, phase_flag23, phase_flag24, phase_flag25, phase_flag26,
-> +                phase_flag27, phase_flag28, phase_flag29, phase_flag3, phase_flag30, phase_flag31,
-> +                phase_flag4, phase_flag5, phase_flag6, phase_flag7, phase_flag8, phase_flag9,
-> +                pll_bist, pll_bypassnl, pll_reset, prng_rosc, qdss_cti, qdss_gpio, qdss_gpio0,
-> +                qdss_gpio1, qdss_gpio10, qdss_gpio11, qdss_gpio12, qdss_gpio13, qdss_gpio14,
-> +                qdss_gpio15, qdss_gpio2, qdss_gpio3, qdss_gpio4, qdss_gpio5, qdss_gpio6,
-> +                qdss_gpio7, qdss_gpio8, qdss_gpio9, qlink0_enable, qlink0_request, qlink0_wmss,
-> +                qlink1_enable, qlink1_request, qlink1_wmss, qup00, qup01, qup02, qup10, qup11,
-> +                qup12, qup13_f1, qup13_f2, qup14, rffe0_clk, rffe0_data, rffe1_clk, rffe1_data,
-> +                rffe2_clk, rffe2_data, rffe3_clk, rffe3_data, rffe4_clk, rffe4_data, sd_write,
-> +                sdc1_tb, sdc2_tb, sp_cmu, tgu_ch0, tgu_ch1, tgu_ch2, tgu_ch3, tsense_pwm1,
-> +                tsense_pwm2, uim1_clk, uim1_data, uim1_present, uim1_reset, uim2_clk, uim2_data,
-> +                uim2_present, uim2_reset, usb_phy, vfr_1, vsense_trigger, wlan1_adc0, wlan1_adc1,
-> +                wlan2_adc0, wlan2_adc1, ]
-> +
-> +
-> +      bias-disable: true
-> +      bias-pull-down: true
-> +      bias-pull-up: true
-> +      drive-strength: true
-> +      input-enable: true
-> +      output-high: true
-> +      output-low: true
-> +
-> +    required:
-> +      - pins
-> +      - function
-> +
-> +    additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +        pinctrl@f100000 {
-> +                compatible = "qcom,sm6350-tlmm";
-> +                reg = <0x0f100000 0x300000>;
-> +                interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>,
-> +                            <GIC_SPI 209 IRQ_TYPE_LEVEL_HIGH>,
-> +                            <GIC_SPI 210 IRQ_TYPE_LEVEL_HIGH>,
-> +                            <GIC_SPI 211 IRQ_TYPE_LEVEL_HIGH>,
-> +                            <GIC_SPI 212 IRQ_TYPE_LEVEL_HIGH>,
-> +                            <GIC_SPI 213 IRQ_TYPE_LEVEL_HIGH>,
-> +                            <GIC_SPI 214 IRQ_TYPE_LEVEL_HIGH>,
-> +                            <GIC_SPI 215 IRQ_TYPE_LEVEL_HIGH>,
-> +                            <GIC_SPI 216 IRQ_TYPE_LEVEL_HIGH>;
-> +                gpio-controller;
-> +                #gpio-cells = <2>;
-> +                interrupt-controller;
-> +                #interrupt-cells = <2>;
-> +                gpio-ranges = <&tlmm 0 0 156>;
-
-Shouldn't this be 157?
-
-> +
-> +                gpio-wo-subnode-state {
-> +                        pins = "gpio1";
-> +                        function = "gpio";
-> +                };
-> +
-> +                uart-w-subnodes-state {
-> +                        rx {
-> +                                pins = "gpio25";
-> +                                function = "qup13_f2";
-> +                                bias-disable;
-> +                        };
-> +
-> +                        tx {
-> +                                pins = "gpio26";
-> +                                function = "qup13_f2";
-> +                                bias-disable;
-> +                        };
-> +                };
-> +        };
-> +...
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,tlmm-common.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,tlmm-common.yaml
-> index 3b37cf102d41..99975122a2ce 100644
-> --- a/Documentation/devicetree/bindings/pinctrl/qcom,tlmm-common.yaml
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,tlmm-common.yaml
-> @@ -17,7 +17,7 @@ properties:
->    interrupts:
->      description:
->        Specifies the TLMM summary IRQ
-> -    maxItems: 1
-> +    maxItems: 9
-
-Is this to support direct connected interrupts?
-
-Don't you need to add minItems: 1, to permit the other bindings to not
-define these? I think that's what Rob's automatic reply complains about
-at least.
-
-
-PS. Any plans to work up support for direct connected interrupts? I
-think that and "egpio" is the only downstream delta these days... That
-said, I don't know if anyone actually uses direct connected interrupts?
+Fixes: f80a1d414328 ("interconnect: qcom: Add SDM660 interconnect provider driver")
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 
 Regards,
 Bjorn
+
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> ---
+>  drivers/interconnect/qcom/sdm660.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/interconnect/qcom/sdm660.c b/drivers/interconnect/qcom/sdm660.c
+> index 632dbdd21915..ac13046537e8 100644
+> --- a/drivers/interconnect/qcom/sdm660.c
+> +++ b/drivers/interconnect/qcom/sdm660.c
+> @@ -307,7 +307,7 @@ DEFINE_QNODE(slv_bimc_cfg, SDM660_SLAVE_BIMC_CFG, 4, -1, 56, true, -1, 0, -1, 0)
+>  DEFINE_QNODE(slv_prng, SDM660_SLAVE_PRNG, 4, -1, 44, true, -1, 0, -1, 0);
+>  DEFINE_QNODE(slv_spdm, SDM660_SLAVE_SPDM, 4, -1, 60, true, -1, 0, -1, 0);
+>  DEFINE_QNODE(slv_qdss_cfg, SDM660_SLAVE_QDSS_CFG, 4, -1, 63, true, -1, 0, -1, 0);
+> -DEFINE_QNODE(slv_cnoc_mnoc_cfg, SDM660_SLAVE_BLSP_1, 4, -1, 66, true, -1, 0, -1, SDM660_MASTER_CNOC_MNOC_CFG);
+> +DEFINE_QNODE(slv_cnoc_mnoc_cfg, SDM660_SLAVE_CNOC_MNOC_CFG, 4, -1, 66, true, -1, 0, -1, SDM660_MASTER_CNOC_MNOC_CFG);
+>  DEFINE_QNODE(slv_snoc_cfg, SDM660_SLAVE_SNOC_CFG, 4, -1, 70, true, -1, 0, -1, 0);
+>  DEFINE_QNODE(slv_qm_cfg, SDM660_SLAVE_QM_CFG, 4, -1, 212, true, -1, 0, -1, 0);
+>  DEFINE_QNODE(slv_clk_ctl, SDM660_SLAVE_CLK_CTL, 4, -1, 47, true, -1, 0, -1, 0);
+> -- 
+> 2.17.1
+> 
