@@ -2,104 +2,58 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BF99D3F43CA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Aug 2021 05:17:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E13143F44AF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Aug 2021 07:43:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231549AbhHWDSL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 22 Aug 2021 23:18:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45682 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231440AbhHWDSK (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 22 Aug 2021 23:18:10 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D222EC061757
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Aug 2021 20:17:28 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id w6so9311637plg.9
-        for <linux-arm-msm@vger.kernel.org>; Sun, 22 Aug 2021 20:17:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=qBOogX3XB4mHC8GpV87UjjRCgHNuTvok/Zf+qYgDrJU=;
-        b=rnynb/BFuTERp3DG5b3HDTRYOODWJFs8FUmWZEHn7kdOXK+v9GxGmvo0OZFlxH1mH9
-         bUV4VDB7HNP/BmT8ZUsmRKGWfDaRPpP10ne9zXhvr6lvIo5xTb0qCuDHcFMIlKp3a6Y+
-         nIuje/j7f6we6kMd+YnHIJVmTdwK689j91h0HLlrgmNhJ6PUODi/Ayd/enZltherbOOu
-         4Ohs97FD2bGwzi1sugYy35jgXHJGxs3UH591RdTa/peLxvB5t8u4UCzaTBSxqAfHe6Jb
-         MsNXRH6SgO+PT99HXwQny/85q88UbIrMeKN3rtZMifRcpsenyRmHRFWTJfK1hNio+M01
-         G3+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=qBOogX3XB4mHC8GpV87UjjRCgHNuTvok/Zf+qYgDrJU=;
-        b=CvNo2IXV4/8nHAlYmH5tsgXPWnM+2BFRaCPEWfP0mf1dRJTeJ1A0lISlf+/Tc3qWVR
-         2vb/wRynKBxrddp2eeqWJ8IQegqZ9hsWGqCay/MgywBp7k03vAVOt2tu9i75jpoe8Zzb
-         /v9oHXEjEuwF84pJgt8YlPn9vyGGV5xzH5+CaME6DCLn4TyGVUx3vllBy+212XRe+iuU
-         Ta0jXy9ono7Yg/3FCfbZuP5EvTUifOcPe8UmPxCVamK+GAwbN3VZx2pXx/H+9v+uiYEo
-         X2dMDU/2KueyMoT+OKXsGdpYxMuDkcK183beCGYpIhDURcBisD4W1wGAXKjjvHXae6+k
-         N1Kw==
-X-Gm-Message-State: AOAM533nZLeyY54kUsHY+aXiXQaKLTbgrHLUpl5q0UGoP0KI/x10DSTQ
-        kdGvjwaS8fvDiZeEv2vzw1+xGw==
-X-Google-Smtp-Source: ABdhPJzqg3ToMHCG7N81BJvsddQsivBmCGSHavIG0r6EDRSWDesCvSDugU108BZ4HKtVDXXBfvuzKQ==
-X-Received: by 2002:a17:90b:4b84:: with SMTP id lr4mr17964004pjb.32.1629688648248;
-        Sun, 22 Aug 2021 20:17:28 -0700 (PDT)
-Received: from localhost ([122.172.201.85])
-        by smtp.gmail.com with ESMTPSA id h9sm10922286pjg.9.2021.08.22.20.17.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 22 Aug 2021 20:17:27 -0700 (PDT)
-Date:   Mon, 23 Aug 2021 08:47:17 +0530
-From:   Viresh Kumar <viresh.kumar@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>
-Subject: Re: [PATCH] cpufreq: blocklist more Qualcomm platforms in
- cpufreq-dt-platdev
-Message-ID: <20210823031717.hh3pn4d2c4sughem@vireshk-i7>
-References: <20210820215700.130575-1-bjorn.andersson@linaro.org>
+        id S232724AbhHWFnw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Aug 2021 01:43:52 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57932 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231267AbhHWFnv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 23 Aug 2021 01:43:51 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 5879F61250;
+        Mon, 23 Aug 2021 05:43:08 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1629697389;
+        bh=ENt6Gvo69RkjDVOcI0av9vDd/lxfGMgyK2xcZh9yxz4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=TpugyQMn/k6vhOOy7pstrvsLC82VFA7D7mfTMSuyJbBibOHQocz4+hBWSI1tBz8Mc
+         GOkNGY2JKwQjYy3/21Be5vxSM8jcxRASL3VQu8M4OhPPD9eNmFzOaGgtA06C5tA6XG
+         CDmGyIACCUdbwiC7neGaTU1nOlCUNYje6wCy7zEI73NIFWYJirRiO5zrd5BK4nJ18P
+         2ToI9Q0kavh4/lZvc8LULEnXttWhZfA4KIIaQleVXOESejg0jjv3vxfqcoL1VtFmyT
+         gzUiLc9tRF+VHDTbSGlhA5VApDaN0/8KlkU+gqSPmwYMdXJVzY8YxHJN8OKYZ/g8ld
+         +JfLh4xW9OWcg==
+Date:   Mon, 23 Aug 2021 11:13:04 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Iskren Chernev <iskren.chernev@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-phy@lists.infradead.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+Subject: Re: [PATCH v3 0/2] Add UFS PHY support for SM6115/4250
+Message-ID: <YSM1aBktwKqMUxXe@matsya>
+References: <20210821155657.893165-1-iskren.chernev@gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210820215700.130575-1-bjorn.andersson@linaro.org>
-User-Agent: NeoMutt/20180716-391-311a52
+In-Reply-To: <20210821155657.893165-1-iskren.chernev@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 20-08-21, 14:57, Bjorn Andersson wrote:
-> The Qualcomm sa8155p, sm6350, sm8250 and sm8350 platforms also uses the
-> qcom-cpufreq-hw driver, so add them to the cpufreq-dt-platdev driver's
-> blocklist.
+On 21-08-21, 18:56, Iskren Chernev wrote:
+> The UFS PHY found on SM6115/4250 has a lot of common registers with ufs phy v2,
+> even though in downstream it is named v3-660. Due to register similarity with
+> v2, the few extra registers that are needed are added as v2 registers.
 > 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  drivers/cpufreq/cpufreq-dt-platdev.c | 4 ++++
->  1 file changed, 4 insertions(+)
-> 
-> diff --git a/drivers/cpufreq/cpufreq-dt-platdev.c b/drivers/cpufreq/cpufreq-dt-platdev.c
-> index 231e585f6ba2..ca1d103ec449 100644
-> --- a/drivers/cpufreq/cpufreq-dt-platdev.c
-> +++ b/drivers/cpufreq/cpufreq-dt-platdev.c
-> @@ -137,11 +137,15 @@ static const struct of_device_id blocklist[] __initconst = {
->  	{ .compatible = "qcom,apq8096", },
->  	{ .compatible = "qcom,msm8996", },
->  	{ .compatible = "qcom,qcs404", },
-> +	{ .compatible = "qcom,sa8155p" },
->  	{ .compatible = "qcom,sc7180", },
->  	{ .compatible = "qcom,sc7280", },
->  	{ .compatible = "qcom,sc8180x", },
->  	{ .compatible = "qcom,sdm845", },
-> +	{ .compatible = "qcom,sm6350", },
->  	{ .compatible = "qcom,sm8150", },
-> +	{ .compatible = "qcom,sm8250", },
-> +	{ .compatible = "qcom,sm8350", },
->  
->  	{ .compatible = "st,stih407", },
->  	{ .compatible = "st,stih410", },
+> The register values/sequences are taken from OnePlus repo [1].
 
-Applied. Thanks.
+This looks very good, thanks for cleaning it up
+
+Applied now
 
 -- 
-viresh
+~Vinod
