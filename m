@@ -2,145 +2,188 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E92E3F4D89
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Aug 2021 17:30:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81FBA3F4D93
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Aug 2021 17:35:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231425AbhHWPbE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Aug 2021 11:31:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44350 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231214AbhHWPbE (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Aug 2021 11:31:04 -0400
-Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AD0CCC061575
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Aug 2021 08:30:19 -0700 (PDT)
-Received: by mail-oo1-xc2e.google.com with SMTP id z3-20020a4a98430000b029025f4693434bso5526860ooi.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Aug 2021 08:30:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Q1I6UIQ/dYdeGuL5vsdxomD4lXFNDoC4pbA5dcQ1sos=;
-        b=F5FOu4Uju7d1zSzqsLiaek0JWIxkanzrkfr9LImQ9tIa9/TQFsU3gqcYqib3b5lCT4
-         9FNjO3UYej2V1n+rp+smV/DUc44d7B5zGWc2c6kmu2UjxSCwDRlSfT/KphvBwFG++OLQ
-         Dibm+03F+EjgqMfNIFtl3jVREMD16OsEnNCWaW2fYGvIE8RqRQi9cJGQiDAcNdAAxWty
-         /DHwRzhNq2OF7nJtArRwMHo6Oezlua8TBWlHDU+/TvwoX/chw6NzK+WxsIDtGsnQikbw
-         MsHSkL8QAnoQt4TFCzGXajF/Dfo+nzGvLZMbHCXik39ZYzwgRg1JmwJeqoKi0xx3Mh10
-         kN2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Q1I6UIQ/dYdeGuL5vsdxomD4lXFNDoC4pbA5dcQ1sos=;
-        b=r9ei1r2B4KLClm6LLGkJMxVyFy/tSJCo2wVRf3Fre2KhJZQHQ8xsHJsFDhSR2eh9wT
-         mxjAkxiXzCcua1r6vyOYT6yWTjXUwYgjOItLRp5Ft7Q6LQwyck1s5BS0jR5D4oq9dgas
-         uwMzqibkvAItD3Z3d98I/eTuqqFZ8Ijag8t3Eq0jzzzNpFo6qPxVRxYQ01BMvGwCbFNi
-         SZ7s895ThiZb8KUo9aZFnwQh9rabjKEHZnffu3vjhSHpgU4FKNhdFhqy38RD9A1XOves
-         ieWWqUK2TS8OgHZYpV+Hlp1rWOJkTAafW0bF21CsneUJhILcoEIioJdwpQULj8WMZDHF
-         5kOA==
-X-Gm-Message-State: AOAM532LxTn1rKN/Yzp3UdjzJJyhowQtBP+hwRqL/VxZEYVd8fifgqD7
-        p2aXluLh2itUcloZ0K/ttkea0A==
-X-Google-Smtp-Source: ABdhPJxvxAPBPV4s/EVPjaPI6SW7gljf5tIj+ZYNiOEbumWPWZjhzi3Klk8ORxyHCSYPVCHKbi/lTA==
-X-Received: by 2002:a4a:e1a4:: with SMTP id 4mr26231000ooy.14.1629732619089;
-        Mon, 23 Aug 2021 08:30:19 -0700 (PDT)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id a23sm1607314otp.44.2021.08.23.08.30.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Aug 2021 08:30:18 -0700 (PDT)
-Date:   Mon, 23 Aug 2021 08:31:37 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Georgi Djakov <djakov@kernel.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
-Subject: Re: [PATCH] interconnect: qcom: sdm660: Fix id of slv_cnoc_mnoc_cfg
-Message-ID: <YSO/Wfq6CvO89g2V@ripper>
-References: <20210823014003.31391-1-shawn.guo@linaro.org>
+        id S231272AbhHWPfs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Aug 2021 11:35:48 -0400
+Received: from cable.insite.cz ([84.242.75.189]:35716 "EHLO cable.insite.cz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229550AbhHWPfs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 23 Aug 2021 11:35:48 -0400
+Received: from localhost (localhost [127.0.0.1])
+        by cable.insite.cz (Postfix) with ESMTP id A1C22A1A3D401;
+        Mon, 23 Aug 2021 17:35:03 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=ivitera.com; s=mail;
+        t=1629732903; bh=SKl+1OU3I2/IxPmHfYtCxQ37Xk2PlE5N3RRXvJkEs9k=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=e3WtZkJ+KoyoYTb30+95n55y8UL7+1y0HPK9zxlhJM7HcdKIClUyzLEiYwklZubP7
+         DUaZpiL/tMEmrcExwKa5Q0Lc/9O4Snf9tuzMat5loXtEqsmPoAUhdCWAIgmu2wsjIJ
+         Bjmd0ZYZMwUPyKnX5yXmjmjZPhogp6dXMTsE2Skg=
+Received: from cable.insite.cz ([84.242.75.189])
+        by localhost (server.insite.cz [127.0.0.1]) (amavisd-new, port 10024)
+        with ESMTP id 88qAUBiwhYwe; Mon, 23 Aug 2021 17:34:58 +0200 (CEST)
+Received: from [192.168.105.22] (ip28.insite.cz [81.0.237.28])
+        (Authenticated sender: pavel)
+        by cable.insite.cz (Postfix) with ESMTPSA id 7B179A1A3D400;
+        Mon, 23 Aug 2021 17:34:57 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=ivitera.com; s=mail;
+        t=1629732897; bh=SKl+1OU3I2/IxPmHfYtCxQ37Xk2PlE5N3RRXvJkEs9k=;
+        h=Subject:To:Cc:References:From:Date:In-Reply-To:From;
+        b=WB5t4XblPMA9XR7Q2ZoTTox43KYsDIS9qrv6cz8xE2TIqDHaHlrZ08q3D1yIFXfpA
+         dAFHvO1TZKy88Yin2Q1KqQh/gbOhEtJrRE0F7Y997NtIllgISvMfBN9mR3GTxQ2Lvu
+         u9cG0708dc2Z/eV3FTED6XbMaLM8Sj6tlJsXhYco=
+Subject: Re: [PATCH v10 0/6] Re-introduce TX FIFO resize for larger EP
+ bursting
+To:     Andy Shevchenko <andy.shevchenko@gmail.com>
+Cc:     Ferry Toth <fntoth@gmail.com>, Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <wcheng@codeaurora.org>,
+        gregkh@linuxfoundation.org, robh+dt@kernel.org, agross@kernel.org,
+        bjorn.andersson@linaro.org, frowand.list@gmail.com,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        jackp@codeaurora.org, heikki.krogerus@linux.intel.com,
+        Ruslan Bilovol <ruslan.bilovol@gmail.com>
+References: <1623923899-16759-1-git-send-email-wcheng@codeaurora.org>
+ <bafa93bb-11e3-c8a5-e14a-b0a6d5695055@gmail.com> <87v951ldlt.fsf@kernel.org>
+ <d9aef50c-4bd1-4957-13d8-0b6a14b9fcd0@gmail.com> <87pmv9l1dv.fsf@kernel.org>
+ <9dc6cd83-17b9-7075-0934-6b9d41b6875d@gmail.com> <87a6mbudvc.fsf@kernel.org>
+ <6e8bb4ad-fe68-ad36-7416-2b8e10b6ae96@gmail.com> <877dhev68a.fsf@kernel.org>
+ <cca69e90-b0ef-00b8-75d3-3bf959a93b45@gmail.com> <874kchvcq0.fsf@kernel.org>
+ <e59f1201-2aa2-9075-1f94-a6ae7a046dc1@gmail.com> <8735raj766.fsf@kernel.org>
+ <b3417c2c-613b-8ef6-2e2d-6e2cf9a5d5fd@gmail.com>
+ <b3e820f0-9c94-7cba-a248-3b2ec5378ab0@gmail.com>
+ <d298df65-417b-f318-9374-b463a15d8308@ivitera.com>
+ <a7d7f0dd-dfbb-5eef-d1da-8cbdab5fc4a7@gmail.com>
+ <c4e29ac0-1df1-3c64-1218-3687f07e7f77@ivitera.com>
+ <1fb52c92-9319-c035-722f-695ab34723dd@gmail.com>
+ <702c72cd-40e4-e641-797a-764e7e611afb@ivitera.com>
+ <CAHp75VeZBLgf8YhEjdOV1Hva_dJh_=VHRGyVb=r44yh-9n+F4A@mail.gmail.com>
+From:   Pavel Hofman <pavel.hofman@ivitera.com>
+Message-ID: <d1fb0ad5-e304-8864-a2e4-42d5f652a6a7@ivitera.com>
+Date:   Mon, 23 Aug 2021 17:34:57 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210823014003.31391-1-shawn.guo@linaro.org>
+In-Reply-To: <CAHp75VeZBLgf8YhEjdOV1Hva_dJh_=VHRGyVb=r44yh-9n+F4A@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun 22 Aug 18:40 PDT 2021, Shawn Guo wrote:
 
-> The id of slv_cnoc_mnoc_cfg node is mistakenly coded as id of
-> slv_blsp_1.  It causes the following warning on slv_blsp_1 node adding.
-> Correct the id of slv_cnoc_mnoc_cfg node.
+
+Dne 23. 08. 21 v 17:21 Andy Shevchenko napsal(a):
+> On Mon, Aug 23, 2021 at 5:59 PM Pavel Hofman <pavel.hofman@ivitera.com> wrote:
+>> Dne 22. 08. 21 v 21:43 Ferry Toth napsal(a):
+>>> Op 19-08-2021 om 23:04 schreef Pavel Hofman:
+>>>> Dne 19. 08. 21 v 22:10 Ferry Toth napsal(a):
+>>>>> Op 19-08-2021 om 09:51 schreef Pavel Hofman:
+>>>>>> Dne 18. 08. 21 v 21:07 Ferry Toth napsal(a):
+>>>>>>> Op 18-08-2021 om 00:00 schreef Ferry Toth:
 > 
-> [    1.948180] ------------[ cut here ]------------
-> [    1.954122] WARNING: CPU: 2 PID: 7 at drivers/interconnect/core.c:962 icc_node_add+0xe4/0xf8
-
-Happy to see that the WARN_ON() turned out useful to others :)
-
-> [    1.958994] Modules linked in:
-> [    1.967399] CPU: 2 PID: 7 Comm: kworker/u16:0 Not tainted 5.14.0-rc6-next-20210818 #21
-> [    1.970275] Hardware name: Xiaomi Redmi Note 7 (DT)
-> [    1.978169] Workqueue: events_unbound deferred_probe_work_func
-> [    1.982945] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> [    1.988849] pc : icc_node_add+0xe4/0xf8
-> [    1.995699] lr : qnoc_probe+0x350/0x438
-> [    1.999519] sp : ffff80001008bb10
-> [    2.003337] x29: ffff80001008bb10 x28: 000000000000001a x27: ffffb83ddc61ee28
-> [    2.006818] x26: ffff2fe341d44080 x25: ffff2fe340f3aa80 x24: ffffb83ddc98f0e8
-> [    2.013938] x23: 0000000000000024 x22: ffff2fe3408b7400 x21: 0000000000000000
-> [    2.021054] x20: ffff2fe3408b7410 x19: ffff2fe341d44080 x18: 0000000000000010
-> [    2.028173] x17: ffff2fe3bdd0aac0 x16: 0000000000000281 x15: ffff2fe3400f5528
-> [    2.035290] x14: 000000000000013f x13: ffff2fe3400f5528 x12: 00000000ffffffea
-> [    2.042410] x11: ffffb83ddc9109d0 x10: ffffb83ddc8f8990 x9 : ffffb83ddc8f89e8
-> [    2.049527] x8 : 0000000000017fe8 x7 : c0000000ffffefff x6 : 0000000000000001
-> [    2.056645] x5 : 0000000000057fa8 x4 : 0000000000000000 x3 : ffffb83ddc9903b0
-> [    2.063764] x2 : 1a1f6fde34d45500 x1 : ffff2fe340f3a880 x0 : ffff2fe340f3a880
-> [    2.070882] Call trace:
-> [    2.077989]  icc_node_add+0xe4/0xf8
-> [    2.080247]  qnoc_probe+0x350/0x438
-> [    2.083718]  platform_probe+0x68/0xd8
-> [    2.087191]  really_probe+0xb8/0x300
-> [    2.091011]  __driver_probe_device+0x78/0xe0
-> [    2.094659]  driver_probe_device+0x80/0x110
-> [    2.098911]  __device_attach_driver+0x90/0xe0
-> [    2.102818]  bus_for_each_drv+0x78/0xc8
-> [    2.107331]  __device_attach+0xf0/0x150
-> [    2.110977]  device_initial_probe+0x14/0x20
-> [    2.114796]  bus_probe_device+0x9c/0xa8
-> [    2.118963]  deferred_probe_work_func+0x88/0xc0
-> [    2.122784]  process_one_work+0x1a4/0x338
-> [    2.127296]  worker_thread+0x1f8/0x420
-> [    2.131464]  kthread+0x150/0x160
-> [    2.135107]  ret_from_fork+0x10/0x20
-> [    2.138495] ---[ end trace 5eea8768cb620e87 ]---
+> ...
 > 
-
-The SDM660 provider was picked up in a previous release, so let's help
-this get backported by adding:
-
-Fixes: f80a1d414328 ("interconnect: qcom: Add SDM660 interconnect provider driver")
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Regards,
-Bjorn
-
-> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-> ---
->  drivers/interconnect/qcom/sdm660.c | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
+>>>>>>> So, where do we go from here?
+>>>>>>
+>>>>>> I know the patches have been tested on dwc2 (by me and others).  I
+>>>>>> do not know if Ruslan or Jerome tested them on dwc3 but probably
+>>>>>> not. Ruslan has talked about RPi (my case too) and BeagleboneBlack,
+>>>>>> both with dwc2. Perhaps the dwc2 behaves a bit differently than dwc3?
+>>>>>>
+>>>>>> The patches add a new EP-IN for async feedback. I am sorry I have
+>>>>>> not followed your long thread (it started as unrelated to uac). Does
+>>>>>> the problem appear with f_uac1 or f_uac2? Please how have you
+>>>>>> reached the above problem?
+>>>>>
+>>>>> I'm sorry too. I first believed the issue was related to the patch
+>>>>> mentioned in the subject line.
+>>>>>
+>>>>> The problem appaers with f_uac2. I bost Edison_Arduino board in host
+>>>>> mode (there is a switch allowing to select host/device mode). When
+>>>>> flipping the switch to device mode udev run a script:
+>>>>> But as I am using configfs (excerpt follows) and just disabling the
+>>>>> last 2 line resolves the issue, I'm guessing uac2 is the issue. Or
+>>>>> exceeding the available resources.
+>>>>>
+>>>>> # Create directory structure
+>>>>> mkdir "${GADGET_BASE_DIR}"
+>>>>> cd "${GADGET_BASE_DIR}"
+>>>>> mkdir -p configs/c.1/strings/0x409
+>>>>> mkdir -p strings/0x409
+>>>>>
+>>>>> # Serial device
+>>>>> mkdir functions/gser.usb0
+>>>>> ln -s functions/gser.usb0 configs/c.1/
+>>>>> ###
+>>>>>
+>>>>> # Ethernet device
+>>>>> mkdir functions/eem.usb0
+>>>>> echo "${DEV_ETH_ADDR}" > functions/eem.usb0/dev_addr
+>>>>> echo "${HOST_ETH_ADDR}" > functions/eem.usb0/host_addr
+>>>>> ln -s functions/eem.usb0 configs/c.1/
+>>>>>
+>>>>> # Mass Storage device
+>>>>> mkdir functions/mass_storage.usb0
+>>>>> echo 1 > functions/mass_storage.usb0/stall
+>>>>> echo 0 > functions/mass_storage.usb0/lun.0/cdrom
+>>>>> echo 0 > functions/mass_storage.usb0/lun.0/ro
+>>>>> echo 0 > functions/mass_storage.usb0/lun.0/nofua
+>>>>> echo "${USBDISK}" > functions/mass_storage.usb0/lun.0/file
+>>>>> ln -s functions/mass_storage.usb0 configs/c.1/
+>>>>>
+>>>>> # UAC2 device
+>>>>> mkdir functions/uac2.usb0
+>>>>> ln -s functions/uac2.usb0 configs/c.1
+>>>>> ....
+>>>>
+>>>> As you say, could perhaps the reason be that the extra EP-IN added in
+>>>> those patches (previously 1, now 2 with the default config you use)
+>>>> exceeds your EP-IN max count or available fifos somehow?  You have a
+>>>> number of functions initialized. If you change the load order of the
+>>>> functions, do you get the error later with a different function? Just
+>>>> guessing...
+>>>>
+>>>> You should be able to switch the default async EP-OUT (which
+>>>> configures the new feedback EP-IN ) to adaptive EP-OUT (which requires
+>>>> no feedback EP) with c_sync=8 parameter of f_uac2.
+>>>>
+>>>> https://elixir.bootlin.com/linux/v5.14-rc6/source/drivers/usb/gadget/function/f_uac2.c#L47
+>>>>
+>>>> https://elixir.bootlin.com/linux/v5.14-rc6/source/drivers/usb/gadget/function/f_uac2.c#L830
+>>>>
+>>>> https://elixir.bootlin.com/linux/v5.14-rc6/source/include/uapi/linux/usb/ch9.h#L453
+>>>>
+>>>> Does that fix the problem?
+>>>
+>>> Not sure how to do that. Do you mean the module should have a parameter
+>>> called c_sync? `modinfo` list no parameters for usb_f_uac2.
+>>
+>> Those are configfs params, not available in modinfo.
+>>
+>> I checked and the value is "adaptive"
+>> https://elixir.bootlin.com/linux/v5.14-rc7/source/drivers/usb/gadget/function/f_uac2.c#L1312
 > 
-> diff --git a/drivers/interconnect/qcom/sdm660.c b/drivers/interconnect/qcom/sdm660.c
-> index 632dbdd21915..ac13046537e8 100644
-> --- a/drivers/interconnect/qcom/sdm660.c
-> +++ b/drivers/interconnect/qcom/sdm660.c
-> @@ -307,7 +307,7 @@ DEFINE_QNODE(slv_bimc_cfg, SDM660_SLAVE_BIMC_CFG, 4, -1, 56, true, -1, 0, -1, 0)
->  DEFINE_QNODE(slv_prng, SDM660_SLAVE_PRNG, 4, -1, 44, true, -1, 0, -1, 0);
->  DEFINE_QNODE(slv_spdm, SDM660_SLAVE_SPDM, 4, -1, 60, true, -1, 0, -1, 0);
->  DEFINE_QNODE(slv_qdss_cfg, SDM660_SLAVE_QDSS_CFG, 4, -1, 63, true, -1, 0, -1, 0);
-> -DEFINE_QNODE(slv_cnoc_mnoc_cfg, SDM660_SLAVE_BLSP_1, 4, -1, 66, true, -1, 0, -1, SDM660_MASTER_CNOC_MNOC_CFG);
-> +DEFINE_QNODE(slv_cnoc_mnoc_cfg, SDM660_SLAVE_CNOC_MNOC_CFG, 4, -1, 66, true, -1, 0, -1, SDM660_MASTER_CNOC_MNOC_CFG);
->  DEFINE_QNODE(slv_snoc_cfg, SDM660_SLAVE_SNOC_CFG, 4, -1, 70, true, -1, 0, -1, 0);
->  DEFINE_QNODE(slv_qm_cfg, SDM660_SLAVE_QM_CFG, 4, -1, 212, true, -1, 0, -1, 0);
->  DEFINE_QNODE(slv_clk_ctl, SDM660_SLAVE_CLK_CTL, 4, -1, 47, true, -1, 0, -1, 0);
-> -- 
-> 2.17.1
+>> In your configfs script:
 > 
+> Kernel shouldn't crash with any available set of configuration
+> parameters, right? So, even if the parameter would fix the crash the
+> series is buggy and has to be reverted in my opinion.
+
+Sure, no problem with reverting. I am just trying to start up some 
+troubleshooting. A resource exhaustion was mentioned here, that's why I 
+suggested a way to test the patch with the original number of endpoints 
+allocated. I do not get any crashes on my setup which uses fewer gadget 
+functions. That's why I asked what happens if the functions load order 
+is changed. I am afraid this thread is so complex that the actual 
+problem has been burried in the history.
+
+Again, I am not the author of the patches, my USB knowledge is way 
+unsufficient for that. I am trying to make them work as they are 
+important and make the existing audio gadget actually usable.
+
+Thanks,
+
+Pavel.
