@@ -2,131 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BBCB33F4DBC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Aug 2021 17:48:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F196A3F4DDD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Aug 2021 17:57:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231734AbhHWPt1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Aug 2021 11:49:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48438 "EHLO
+        id S231789AbhHWP5u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Aug 2021 11:57:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231670AbhHWPtZ (ORCPT
+        with ESMTP id S231622AbhHWP5s (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Aug 2021 11:49:25 -0400
-Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com [IPv6:2607:f8b0:4864:20::c29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 690E5C06175F
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Aug 2021 08:48:43 -0700 (PDT)
-Received: by mail-oo1-xc29.google.com with SMTP id z3-20020a4a98430000b029025f4693434bso5545237ooi.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Aug 2021 08:48:43 -0700 (PDT)
+        Mon, 23 Aug 2021 11:57:48 -0400
+Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEA4BC061757
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Aug 2021 08:57:05 -0700 (PDT)
+Received: by mail-wr1-x436.google.com with SMTP id q11so26987992wrr.9
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Aug 2021 08:57:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=AKgdb23zVQQiYBe9YRTyia8uSzqrlES/FzcZLFz+L8M=;
-        b=QDu4K/VcDYjt1r8tIck1Xp3hIvZJjnzR5kjlmCXeKzsbzrSD2Ba7XtFJoaomDfZPUU
-         lwOyOnb2YPOeYcwrywq47FhuMf1cbrcIGysu/Wxhrxpf3MHCwyp8/SebA3P/exJnoBIn
-         G461r198vc/dYxxnRSgQTmiCowdLMLueaIFlfc8QcX1uhpt3L8Sqh1AUfhRCZDoF4Ugw
-         1E2dmbvY65IfcVfm+cfBpqXmNf+gfpMLh8bX/ZcfLMbQoVYd1TFSIJ9H1ATP5NcTDqzp
-         0NrYmbMbzWDJUpC6RIr5URMbIM0v+t4ZddCndOzwaFyEw6L3es5mCjjkvqcmRjrCvq9t
-         dTJg==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=+FLR6Z8/mDAczEMpEGS5kn4L3ds8qzE/r6tJ5Ts7c48=;
+        b=RgMiY/yz7J1NIo6n25Nsp/G0+34xdlTC3cItRtlYPa5bZ1YMR3QsyZtfgDApkvKKG4
+         OXPmDfUltBnNGrqmrFGseDz0DsKEHVtlkzkSHzjI1NeW+8rDSs5Tmz5qCiXxmoXYi++C
+         NNc6+hphK7QoqfYfqR9IP6jdk/59R43qtx54hCpp/gQ1KfIwqOS3SuHG9CTR2uByFY9N
+         Jwdvjsg7CJw95V/+2kONM0jr0T0qj6NJx2a6NAqZbtrHWuLnMFNYvZj/3T7a4tYtpwXE
+         lueV9Qy0/cRwZDDrYlxtgKoiUBO/1UuYxsStc/+BeADJWbznQ5f6qke+iS/aFBUrOFTd
+         5kIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=AKgdb23zVQQiYBe9YRTyia8uSzqrlES/FzcZLFz+L8M=;
-        b=Xevi1VKvw/MUqMSqF0Dn0MMdX6Yjn1G7/bhZAEVmWFpYEmPWdRpNDwW8ZxQNqVhqsc
-         hEhWVi/r/jml7haOX1Ww8e5obzmlr8aaPFXKHQGGkj9VfsmEq0biY/JPrwSRgGaQowml
-         QWrOYL7mj4tWYiZquMG99zpH+P9/syQENNOCt7Wm3lPnQD40Ev5xbJTGzYwsobAbU1BU
-         5JWDGyh3kYR9iJA/JQmvaRwON/1s4C1R1af2cCM0GGO4bAxs5rNWzAwQK37UohVVOv/Z
-         GZMnnPvqD91YNMSCb1cwipzcX9Fw7Asp5cl0tWXMtGZQtm7IzWvU16V13RG42qNPRTwT
-         QXwA==
-X-Gm-Message-State: AOAM532JPVW/YmrOkYJuMqHz6TBFtwTZis6HHITrazp/npZ/x2d7s8gI
-        liIJ8cQWlG692BC0bfdqmiseww==
-X-Google-Smtp-Source: ABdhPJxSoo10Ko60CXkzwxw9InfSHOFlXC8MR1nsIwYLhTY5lOrDLMeQRVu0W1kdq5sjFNUdOWjBZA==
-X-Received: by 2002:a4a:b402:: with SMTP id y2mr26343711oon.89.1629733722788;
-        Mon, 23 Aug 2021 08:48:42 -0700 (PDT)
-Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 4sm3704379oil.38.2021.08.23.08.48.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 23 Aug 2021 08:48:42 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bjorn Helgaas <bhelgaas@google.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        =?UTF-8?q?Krzysztof=20Wilczy=C5=84ski?= <kw@linux.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2 2/2] PCI: qcom: Add sc8180x compatible
-Date:   Mon, 23 Aug 2021 08:49:58 -0700
-Message-Id: <20210823154958.305677-2-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210823154958.305677-1-bjorn.andersson@linaro.org>
-References: <20210823154958.305677-1-bjorn.andersson@linaro.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=+FLR6Z8/mDAczEMpEGS5kn4L3ds8qzE/r6tJ5Ts7c48=;
+        b=SxhZQf5u+/7mAUwddm/A1JAmNcX/q8PZxiPX5+A4PHh4mAfNYrpabqljb6QZbhqoKt
+         Dxfma/ShXxjOf9WauIv0Pl0OeNt0dVuj2K+/9NOQm+JvRt+E0OLszIp3f/qWmw8Nngrs
+         7LXdQygeHCNn90eEpMNR88Xc+uekFnJb7Egt3JQSA8h2uwphrEscMji1aRrluEZ5PpiY
+         +Y0PzKebSOkmqNnr/D7/RuNsEN7v8NWAzQiEXtv8I+7mElD/Rop55CJfgqpai5g5Wtbw
+         9CRKNbDrJO03QKLSNXqg2TxnpOZI38QzSEJDHMp/Yp3PkwyPZrrKgbIqvlMRh5ePF+t2
+         nz6Q==
+X-Gm-Message-State: AOAM531PVqOBgznoO9/kNyfRbYZ411wS4urxiaaQd9neZLUOvHnNfyb1
+        3bUxKf1RRKdL/krNFUUyVpDq3Q==
+X-Google-Smtp-Source: ABdhPJyEiMZ8I45+i9M5hEIBjY9DhfcLS2W27AjdGlKqHppruxwsdc7R3k+VNNPQ1WD/5y6thnGWAg==
+X-Received: by 2002:adf:dcc5:: with SMTP id x5mr14267099wrm.385.1629734224261;
+        Mon, 23 Aug 2021 08:57:04 -0700 (PDT)
+Received: from ?IPv6:2a01:e34:ed2f:f020:fe2d:133f:1574:bbe? ([2a01:e34:ed2f:f020:fe2d:133f:1574:bbe])
+        by smtp.googlemail.com with ESMTPSA id l2sm15100915wrx.2.2021.08.23.08.57.02
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 23 Aug 2021 08:57:03 -0700 (PDT)
+Subject: Re: [Patch v5 2/6] thermal: qcom: Add support for LMh driver
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Thara Gopinath <thara.gopinath@linaro.org>, agross@kernel.org,
+        rui.zhang@intel.com, viresh.kumar@linaro.org, rjw@rjwysocki.net,
+        robh+dt@kernel.org, steev@kali.org, tdas@codeaurora.org,
+        mka@chromium.org, linux-arm-msm@vger.kernel.org,
+        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20210809191605.3742979-1-thara.gopinath@linaro.org>
+ <20210809191605.3742979-3-thara.gopinath@linaro.org>
+ <fcbb6d64-7e39-7f03-e76c-512946124777@linaro.org> <YSO5Njg3DXo64InF@ripper>
+From:   Daniel Lezcano <daniel.lezcano@linaro.org>
+Message-ID: <a216c89d-6cd5-326d-f203-f48caaf2a096@linaro.org>
+Date:   Mon, 23 Aug 2021 17:57:02 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
+In-Reply-To: <YSO5Njg3DXo64InF@ripper>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The SC8180x platform comes with 4 PCIe controllers, typically used for
-things such as NVME storage or connecting a SDX55 5G modem. Add a
-compatible for this, that just reuses the 1.9.0 ops.
 
-Link: https://lore.kernel.org/linux-arm-msm/20210725040038.3966348-4-bjorn.andersson@linaro.org/
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
+Hi Bjorn,
 
-Changes since v1:
-- None
+On 23/08/2021 17:05, Bjorn Andersson wrote:
+> On Sat 21 Aug 02:41 PDT 2021, Daniel Lezcano wrote:
+> 
+>>
+>> Hi Thara,
+>>
+>> On 09/08/2021 21:16, Thara Gopinath wrote:
+>>> Driver enabling various pieces of Limits Management Hardware(LMh) for cpu
+>>> cluster0 and cpu cluster1 namely kick starting monitoring of temperature,
+>>> current, battery current violations, enabling reliability algorithm and
+>>> setting up various temperature limits.
+>>>
+>>> The following has been explained in the cover letter. I am including this
+>>> here so that this remains in the commit message as well.
+>>>
+>>> LMh is a hardware infrastructure on some Qualcomm SoCs that can enforce
+>>> temperature and current limits as programmed by software for certain IPs
+>>> like CPU. On many newer LMh is configured by firmware/TZ and no programming
+>>> is needed from the kernel side. But on certain SoCs like sdm845 the
+>>> firmware does not do a complete programming of the h/w. On such soc's
+>>> kernel software has to explicitly set up the temperature limits and turn on
+>>> various monitoring and enforcing algorithms on the hardware.
+>>>
+>>> Tested-by: Steev Klimaszewski <steev@kali.org> # Lenovo Yoga C630
+>>> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
+>>
+>> Is it possible to have an option to disable/enable the LMh driver at
+>> runtime, for instance with a module parameter ?
+>>
+> 
+> Are you referring to being able to disable the hardware throttling, or
+> the driver's changes to thermal pressure?
 
- Documentation/devicetree/bindings/pci/qcom,pcie.txt | 5 +++--
- drivers/pci/controller/dwc/pcie-qcom.c              | 1 +
- 2 files changed, 4 insertions(+), 2 deletions(-)
+The former.
 
-diff --git a/Documentation/devicetree/bindings/pci/qcom,pcie.txt b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-index 3f646875f8c2..a0ae024c2d0c 100644
---- a/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-+++ b/Documentation/devicetree/bindings/pci/qcom,pcie.txt
-@@ -12,6 +12,7 @@
- 			- "qcom,pcie-ipq4019" for ipq4019
- 			- "qcom,pcie-ipq8074" for ipq8074
- 			- "qcom,pcie-qcs404" for qcs404
-+			- "qcom,pcie-sc8180x" for sc8180x
- 			- "qcom,pcie-sdm845" for sdm845
- 			- "qcom,pcie-sm8250" for sm8250
- 			- "qcom,pcie-ipq6018" for ipq6018
-@@ -156,7 +157,7 @@
- 			- "pipe"	PIPE clock
- 
- - clock-names:
--	Usage: required for sm8250
-+	Usage: required for sc8180x and sm8250
- 	Value type: <stringlist>
- 	Definition: Should contain the following entries
- 			- "aux"		Auxiliary clock
-@@ -245,7 +246,7 @@
- 			- "ahb"			AHB reset
- 
- - reset-names:
--	Usage: required for sdm845 and sm8250
-+	Usage: required for sc8180x, sdm845 and sm8250
- 	Value type: <stringlist>
- 	Definition: Should contain the following entries
- 			- "pci"			PCIe core reset
-diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-index 8a7a300163e5..f3d9e522cfab 100644
---- a/drivers/pci/controller/dwc/pcie-qcom.c
-+++ b/drivers/pci/controller/dwc/pcie-qcom.c
-@@ -1554,6 +1554,7 @@ static const struct of_device_id qcom_pcie_match[] = {
- 	{ .compatible = "qcom,pcie-ipq4019", .data = &ops_2_4_0 },
- 	{ .compatible = "qcom,pcie-qcs404", .data = &ops_2_4_0 },
- 	{ .compatible = "qcom,pcie-sdm845", .data = &ops_2_7_0 },
-+	{ .compatible = "qcom,pcie-sc8180x", .data = &ops_1_9_0 },
- 	{ .compatible = "qcom,pcie-sm8250", .data = &ops_1_9_0 },
- 	{ }
- };
+> I'm not aware of any way to disable the hardware. I do remember that
+> there was some experiments done (with a hacked up boot chain) early on
+> and iirc it was concluded that it's not a good idea.
+
+My objective was to test the board with the thermal framework handling
+the mitigation instead of the hardware.
+
+I guess I can set the hardware temperature higher than the thermal zone
+temperature.
+
+On which sensor the lmh does refer to ? The cluster one ?
+
+(by the way the thermal zone temperatures per core are lower by 5°C than
+the hardware mitigation ? is it done on purpose ?)
+
+> Either way, if there is a way and there is a use for it, we can always
+> add such parameter incrementally. So I suggest that we merge this as is.
+
+Yes, that was for my information. It is already merged.
+
+Thanks
+
+  -- Daniel
+
 -- 
-2.29.2
+<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
 
+Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
+<http://twitter.com/#!/linaroorg> Twitter |
+<http://www.linaro.org/linaro-blog/> Blog
