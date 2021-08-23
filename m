@@ -2,226 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 93FC43F4659
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Aug 2021 10:05:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 92CEE3F4704
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Aug 2021 10:58:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235462AbhHWIFx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Aug 2021 04:05:53 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:53858 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235487AbhHWIFx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Aug 2021 04:05:53 -0400
+        id S229699AbhHWI7V (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Aug 2021 04:59:21 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:40721 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233944AbhHWI7U (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 23 Aug 2021 04:59:20 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1629705911; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=liVXi05SB5unm8X7XLacM7I2ln2fD58WOmR6wSA0EJY=; b=DvI98GLnEi279H91ZGyWClGM2o7mkBW1RbchjHhQXtSLmOjtooznO7xxBu/euDj1yUD+aT27
- rQZbYzVq0YDRDHyx76zRkAZvDGQph09vYMvhC7C0yKMP70fbZeXfKrfombKd48KTKl60Vlb1
- sp7t9zduIfdwOupQ2LBcv+GcAyk=
-X-Mailgun-Sending-Ip: 69.72.43.7
+ s=smtp; t=1629709118; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=T55Merzr/SXckbGnhzfre8Q+hDjDewsq/TcE4N/rGG0=; b=UfCN9QkAmeh54aD3GznHPR61i96cxKWXUvc6yY9FCIafs1NLEpn9g2f3HvODK3NaSwZvPxHW
+ hcYtUMLbn08NIcbXQ94E8M9CrWMG6u3PL1G3BPLD204eR/kV6yKzF9e/PixR/nOiCvnxOcn2
+ PESIR1HW3BjN/liM/lKlbWEsrxo=
+X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 612356aff588e42af10e749b (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 23 Aug 2021 08:05:03
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 612363370f9b337f11b6e5e7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 23 Aug 2021 08:58:31
  GMT
-Sender: mkshah=codeaurora.org@mg.codeaurora.org
+Sender: zijuhu=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9E049C4361A; Mon, 23 Aug 2021 08:05:03 +0000 (UTC)
+        id 63064C4360C; Mon, 23 Aug 2021 08:58:30 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
         autolearn=no autolearn_force=no version=3.4.0
-Received: from mkshah-linux.qualcomm.com (unknown [202.46.22.19])
+Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 45191C43618;
-        Mon, 23 Aug 2021 08:04:59 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 45191C43618
+        (Authenticated sender: zijuhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9158EC4338F;
+        Mon, 23 Aug 2021 08:58:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 9158EC4338F
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Maulik Shah <mkshah@codeaurora.org>
-To:     maz@kernel.org, tglx@linutronix.de
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-gpio@vger.kernel.org, bjorn.andersson@linaro.org,
-        linus.walleij@linaro.org, tkjos@google.com, lsrao@codeaurora.org,
-        Maulik Shah <mkshah@codeaurora.org>
-Subject: [PATCH v3 2/2] irqchip/qcom-pdc: Start getting rid of the GPIO_NO_WAKE_IRQ
-Date:   Mon, 23 Aug 2021 13:34:40 +0530
-Message-Id: <1629705880-27877-3-git-send-email-mkshah@codeaurora.org>
+From:   Zijun Hu <zijuhu@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com
+Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
+        rjliao@codeaurora.org, zijuhu@codeaurora.org, tjiang@codeaurora.org
+Subject: [PATCH v4] Bluetooth: btusb: Add support using different nvm for variant WCN6855 controller
+Date:   Mon, 23 Aug 2021 16:58:20 +0800
+Message-Id: <1629709100-9099-1-git-send-email-zijuhu@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1629705880-27877-1-git-send-email-mkshah@codeaurora.org>
-References: <1629705880-27877-1-git-send-email-mkshah@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Marc Zyngier <maz@kernel.org>
+From: Tim Jiang <tjiang@codeaurora.org>
 
-gpio_to_irq() reports error at irq_domain_trim_hierarchy() for non
-wakeup capable GPIOs that do not have dedicated interrupt at GIC.
+we have variant wcn6855 soc chip from different vendors, so we should
+use different nvm file with suffix to distinguish them.
 
-Since PDC irqchip do not allocate irq at parent GIC domain for such
-GPIOs indicate same by using irq_domain_disconnect_hierarchy().
-
-Replace qcom_pdc_gic_mask/unmask() and qcom_pdc_gic_get/set_irqchip_state()
-with respective parent forward callbacks since all they were doing is to
-check for valid irq and forward to parent.
-
-Signed-off-by: Marc Zyngier <maz@kernel.org>
-Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-Tested-by: Maulik Shah <mkshah@codeaurora.org>
+Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
 ---
- drivers/irqchip/qcom-pdc.c | 68 ++++++++--------------------------------------
- 1 file changed, 11 insertions(+), 57 deletions(-)
+ drivers/bluetooth/btusb.c | 46 ++++++++++++++++++++++++++++++++++++----------
+ 1 file changed, 36 insertions(+), 10 deletions(-)
 
-diff --git a/drivers/irqchip/qcom-pdc.c b/drivers/irqchip/qcom-pdc.c
-index 32d5920..173e652 100644
---- a/drivers/irqchip/qcom-pdc.c
-+++ b/drivers/irqchip/qcom-pdc.c
-@@ -53,26 +53,6 @@ static u32 pdc_reg_read(int reg, u32 i)
- 	return readl_relaxed(pdc_base + reg + i * sizeof(u32));
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 60d2fce59a71..9b4408307138 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -3141,6 +3141,9 @@ static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
+ #define QCA_DFU_TIMEOUT		3000
+ #define QCA_FLAG_MULTI_NVM      0x80
+ 
++#define WCN6855_2_0_RAM_VERSION_GF 0x400c1200
++#define WCN6855_2_1_RAM_VERSION_GF 0x400c1211
++
+ struct qca_version {
+ 	__le32	rom_version;
+ 	__le32	patch_version;
+@@ -3172,6 +3175,7 @@ static const struct qca_device_info qca_devices_table[] = {
+ 	{ 0x00000302, 28, 4, 16 }, /* Rome 3.2 */
+ 	{ 0x00130100, 40, 4, 16 }, /* WCN6855 1.0 */
+ 	{ 0x00130200, 40, 4, 16 }, /* WCN6855 2.0 */
++	{ 0x00130201, 40, 4, 16 }, /* WCN6855 2.1 */
+ };
+ 
+ static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 request,
+@@ -3326,22 +3330,24 @@ static int btusb_setup_qca_load_rampatch(struct hci_dev *hdev,
+ 	return err;
  }
  
--static int qcom_pdc_gic_get_irqchip_state(struct irq_data *d,
--					  enum irqchip_irq_state which,
--					  bool *state)
--{
--	if (d->hwirq == GPIO_NO_WAKE_IRQ)
--		return 0;
--
--	return irq_chip_get_parent_state(d, which, state);
--}
--
--static int qcom_pdc_gic_set_irqchip_state(struct irq_data *d,
--					  enum irqchip_irq_state which,
--					  bool value)
--{
--	if (d->hwirq == GPIO_NO_WAKE_IRQ)
--		return 0;
--
--	return irq_chip_set_parent_state(d, which, value);
--}
--
- static void pdc_enable_intr(struct irq_data *d, bool on)
+-static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
+-				    struct qca_version *ver,
+-				    const struct qca_device_info *info)
++static void btusb_generate_qca_nvm_name(char **fwname,
++					int max_size,
++					struct qca_version *ver,
++					char *separator,
++					char *vendor)
  {
- 	int pin_out = d->hwirq;
-@@ -91,38 +71,16 @@ static void pdc_enable_intr(struct irq_data *d, bool on)
- 
- static void qcom_pdc_gic_disable(struct irq_data *d)
- {
--	if (d->hwirq == GPIO_NO_WAKE_IRQ)
--		return;
+-	const struct firmware *fw;
+-	char fwname[64];
+-	int err;
 -
- 	pdc_enable_intr(d, false);
- 	irq_chip_disable_parent(d);
- }
- 
- static void qcom_pdc_gic_enable(struct irq_data *d)
- {
--	if (d->hwirq == GPIO_NO_WAKE_IRQ)
--		return;
--
- 	pdc_enable_intr(d, true);
- 	irq_chip_enable_parent(d);
- }
- 
--static void qcom_pdc_gic_mask(struct irq_data *d)
--{
--	if (d->hwirq == GPIO_NO_WAKE_IRQ)
--		return;
--
--	irq_chip_mask_parent(d);
--}
--
--static void qcom_pdc_gic_unmask(struct irq_data *d)
--{
--	if (d->hwirq == GPIO_NO_WAKE_IRQ)
--		return;
--
--	irq_chip_unmask_parent(d);
--}
--
- /*
-  * GIC does not handle falling edge or active low. To allow falling edge and
-  * active low interrupts to be handled at GIC, PDC has an inverter that inverts
-@@ -159,14 +117,10 @@ enum pdc_irq_config_bits {
-  */
- static int qcom_pdc_gic_set_type(struct irq_data *d, unsigned int type)
- {
--	int pin_out = d->hwirq;
- 	enum pdc_irq_config_bits pdc_type;
- 	enum pdc_irq_config_bits old_pdc_type;
- 	int ret;
- 
--	if (pin_out == GPIO_NO_WAKE_IRQ)
--		return 0;
--
- 	switch (type) {
- 	case IRQ_TYPE_EDGE_RISING:
- 		pdc_type = PDC_EDGE_RISING;
-@@ -191,8 +145,8 @@ static int qcom_pdc_gic_set_type(struct irq_data *d, unsigned int type)
- 		return -EINVAL;
+ 	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
+ 		/* if boardid equal 0, use default nvm without surfix */
+ 		if (le16_to_cpu(ver->board_id) == 0x0) {
+-			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
+-				 le32_to_cpu(ver->rom_version));
++			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x%s%s.bin",
++				 le32_to_cpu(ver->rom_version),
++				 separator,
++				 vendor);
+ 		} else {
+-			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_%04x.bin",
++			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x%s%s%04x.bin",
+ 				le32_to_cpu(ver->rom_version),
++				separator,
++				vendor,
+ 				le16_to_cpu(ver->board_id));
+ 		}
+ 	} else {
+@@ -3349,6 +3355,26 @@ static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
+ 			 le32_to_cpu(ver->rom_version));
  	}
  
--	old_pdc_type = pdc_reg_read(IRQ_i_CFG, pin_out);
--	pdc_reg_write(IRQ_i_CFG, pin_out, pdc_type);
-+	old_pdc_type = pdc_reg_read(IRQ_i_CFG, d->hwirq);
-+	pdc_reg_write(IRQ_i_CFG, d->hwirq, pdc_type);
- 
- 	ret = irq_chip_set_type_parent(d, type);
- 	if (ret)
-@@ -216,12 +170,12 @@ static int qcom_pdc_gic_set_type(struct irq_data *d, unsigned int type)
- static struct irq_chip qcom_pdc_gic_chip = {
- 	.name			= "PDC",
- 	.irq_eoi		= irq_chip_eoi_parent,
--	.irq_mask		= qcom_pdc_gic_mask,
--	.irq_unmask		= qcom_pdc_gic_unmask,
-+	.irq_mask		= irq_chip_mask_parent,
-+	.irq_unmask		= irq_chip_unmask_parent,
- 	.irq_disable		= qcom_pdc_gic_disable,
- 	.irq_enable		= qcom_pdc_gic_enable,
--	.irq_get_irqchip_state	= qcom_pdc_gic_get_irqchip_state,
--	.irq_set_irqchip_state	= qcom_pdc_gic_set_irqchip_state,
-+	.irq_get_irqchip_state	= irq_chip_get_parent_state,
-+	.irq_set_irqchip_state	= irq_chip_set_parent_state,
- 	.irq_retrigger		= irq_chip_retrigger_hierarchy,
- 	.irq_set_type		= qcom_pdc_gic_set_type,
- 	.flags			= IRQCHIP_MASK_ON_SUSPEND |
-@@ -282,7 +236,7 @@ static int qcom_pdc_alloc(struct irq_domain *domain, unsigned int virq,
- 
- 	parent_hwirq = get_parent_hwirq(hwirq);
- 	if (parent_hwirq == PDC_NO_PARENT_IRQ)
--		return 0;
-+		return irq_domain_disconnect_hierarchy(domain->parent, virq);
- 
- 	if (type & IRQ_TYPE_EDGE_BOTH)
- 		type = IRQ_TYPE_EDGE_RISING;
-@@ -319,17 +273,17 @@ static int qcom_pdc_gpio_alloc(struct irq_domain *domain, unsigned int virq,
- 	if (ret)
- 		return ret;
- 
-+	if (hwirq == GPIO_NO_WAKE_IRQ)
-+		return irq_domain_disconnect_hierarchy(domain, virq);
++}
 +
- 	ret = irq_domain_set_hwirq_and_chip(domain, virq, hwirq,
- 					    &qcom_pdc_gic_chip, NULL);
- 	if (ret)
- 		return ret;
- 
--	if (hwirq == GPIO_NO_WAKE_IRQ)
--		return 0;
--
- 	parent_hwirq = get_parent_hwirq(hwirq);
- 	if (parent_hwirq == PDC_NO_PARENT_IRQ)
--		return 0;
-+		return irq_domain_disconnect_hierarchy(domain->parent, virq);
- 
- 	if (type & IRQ_TYPE_EDGE_BOTH)
- 		type = IRQ_TYPE_EDGE_RISING;
++static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
++				    struct qca_version *ver,
++				    const struct qca_device_info *info)
++{
++	const struct firmware *fw;
++	char fwname[64];
++	int err;
++
++	switch (ver->ram_version) {
++	case WCN6855_2_0_RAM_VERSION_GF:
++	case WCN6855_2_1_RAM_VERSION_GF:
++			btusb_generate_qca_nvm_name(&fwname, sizeof(fwname), ver, "_", "gf");
++		break;
++	default:
++			btusb_generate_qca_nvm_name(&fwname, sizeof(fwname), ver, NULL, NULL);
++		break;
++	}
++
+ 	err = request_firmware(&fw, fwname, &hdev->dev);
+ 	if (err) {
+ 		bt_dev_err(hdev, "failed to request NVM file: %s (%d)",
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
 
