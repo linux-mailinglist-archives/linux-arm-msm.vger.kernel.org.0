@@ -2,143 +2,297 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F196A3F4DDD
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Aug 2021 17:57:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7284C3F4DE4
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 23 Aug 2021 17:57:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231789AbhHWP5u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Aug 2021 11:57:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50390 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231622AbhHWP5s (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Aug 2021 11:57:48 -0400
-Received: from mail-wr1-x436.google.com (mail-wr1-x436.google.com [IPv6:2a00:1450:4864:20::436])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EEA4BC061757
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Aug 2021 08:57:05 -0700 (PDT)
-Received: by mail-wr1-x436.google.com with SMTP id q11so26987992wrr.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Aug 2021 08:57:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=+FLR6Z8/mDAczEMpEGS5kn4L3ds8qzE/r6tJ5Ts7c48=;
-        b=RgMiY/yz7J1NIo6n25Nsp/G0+34xdlTC3cItRtlYPa5bZ1YMR3QsyZtfgDApkvKKG4
-         OXPmDfUltBnNGrqmrFGseDz0DsKEHVtlkzkSHzjI1NeW+8rDSs5Tmz5qCiXxmoXYi++C
-         NNc6+hphK7QoqfYfqR9IP6jdk/59R43qtx54hCpp/gQ1KfIwqOS3SuHG9CTR2uByFY9N
-         Jwdvjsg7CJw95V/+2kONM0jr0T0qj6NJx2a6NAqZbtrHWuLnMFNYvZj/3T7a4tYtpwXE
-         lueV9Qy0/cRwZDDrYlxtgKoiUBO/1UuYxsStc/+BeADJWbznQ5f6qke+iS/aFBUrOFTd
-         5kIg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=+FLR6Z8/mDAczEMpEGS5kn4L3ds8qzE/r6tJ5Ts7c48=;
-        b=SxhZQf5u+/7mAUwddm/A1JAmNcX/q8PZxiPX5+A4PHh4mAfNYrpabqljb6QZbhqoKt
-         Dxfma/ShXxjOf9WauIv0Pl0OeNt0dVuj2K+/9NOQm+JvRt+E0OLszIp3f/qWmw8Nngrs
-         7LXdQygeHCNn90eEpMNR88Xc+uekFnJb7Egt3JQSA8h2uwphrEscMji1aRrluEZ5PpiY
-         +Y0PzKebSOkmqNnr/D7/RuNsEN7v8NWAzQiEXtv8I+7mElD/Rop55CJfgqpai5g5Wtbw
-         9CRKNbDrJO03QKLSNXqg2TxnpOZI38QzSEJDHMp/Yp3PkwyPZrrKgbIqvlMRh5ePF+t2
-         nz6Q==
-X-Gm-Message-State: AOAM531PVqOBgznoO9/kNyfRbYZ411wS4urxiaaQd9neZLUOvHnNfyb1
-        3bUxKf1RRKdL/krNFUUyVpDq3Q==
-X-Google-Smtp-Source: ABdhPJyEiMZ8I45+i9M5hEIBjY9DhfcLS2W27AjdGlKqHppruxwsdc7R3k+VNNPQ1WD/5y6thnGWAg==
-X-Received: by 2002:adf:dcc5:: with SMTP id x5mr14267099wrm.385.1629734224261;
-        Mon, 23 Aug 2021 08:57:04 -0700 (PDT)
-Received: from ?IPv6:2a01:e34:ed2f:f020:fe2d:133f:1574:bbe? ([2a01:e34:ed2f:f020:fe2d:133f:1574:bbe])
-        by smtp.googlemail.com with ESMTPSA id l2sm15100915wrx.2.2021.08.23.08.57.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 23 Aug 2021 08:57:03 -0700 (PDT)
-Subject: Re: [Patch v5 2/6] thermal: qcom: Add support for LMh driver
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Thara Gopinath <thara.gopinath@linaro.org>, agross@kernel.org,
-        rui.zhang@intel.com, viresh.kumar@linaro.org, rjw@rjwysocki.net,
-        robh+dt@kernel.org, steev@kali.org, tdas@codeaurora.org,
-        mka@chromium.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org
-References: <20210809191605.3742979-1-thara.gopinath@linaro.org>
- <20210809191605.3742979-3-thara.gopinath@linaro.org>
- <fcbb6d64-7e39-7f03-e76c-512946124777@linaro.org> <YSO5Njg3DXo64InF@ripper>
-From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-Message-ID: <a216c89d-6cd5-326d-f203-f48caaf2a096@linaro.org>
-Date:   Mon, 23 Aug 2021 17:57:02 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S231883AbhHWP6a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Aug 2021 11:58:30 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:46552 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231673AbhHWP63 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 23 Aug 2021 11:58:29 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1629734267; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=WknB8TeMHhJrnfwMX6wg3BT34rrUTZ32YkFLxT0g65Y=; b=boccUbdFvjLe2hmezqlq4LKy/54G+TiTmCKw5Na+yR/NwIUhEPaNyltQU/lxINphbjxTaaDG
+ 3C3EmH1MgWZzqLBkl0sKfy5UWlCLUjUguq9zgqtBlHOLt7VtcmZeszZJVQr7MM/yP0Bg9DAt
+ yhBwcjRJB2feGmlUm70naAGtoVk=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 6123c55ee19abc79591c2bfc (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 23 Aug 2021 15:57:18
+ GMT
+Sender: mkshah=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 22F3FC4338F; Mon, 23 Aug 2021 15:57:18 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.29.129] (unknown [49.36.85.84])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4440EC43460;
+        Mon, 23 Aug 2021 15:57:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 4440EC43460
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: Add SM6350 pinctrl
+ bindings
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20210820203751.232645-1-konrad.dybcio@somainline.org>
+ <20210820203751.232645-2-konrad.dybcio@somainline.org>
+ <YSO+kQnDsqcaBIOg@ripper>
+From:   Maulik Shah <mkshah@codeaurora.org>
+Message-ID: <82cb4d2d-f347-b823-fa4c-4c2b0c0bfb0c@codeaurora.org>
+Date:   Mon, 23 Aug 2021 21:27:09 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-In-Reply-To: <YSO5Njg3DXo64InF@ripper>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <YSO+kQnDsqcaBIOg@ripper>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Konrad,
 
-Hi Bjorn,
-
-On 23/08/2021 17:05, Bjorn Andersson wrote:
-> On Sat 21 Aug 02:41 PDT 2021, Daniel Lezcano wrote:
-> 
+On 8/23/2021 8:58 PM, Bjorn Andersson wrote:
+> On Fri 20 Aug 13:37 PDT 2021, Konrad Dybcio wrote:
+>
+>> Add device tree binding Documentation details for Qualcomm SM6350
+>> pinctrl driver.
 >>
->> Hi Thara,
+>> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+>> ---
+>>   .../bindings/pinctrl/qcom,sm6350-pinctrl.yaml | 156 ++++++++++++++++++
+>>   .../bindings/pinctrl/qcom,tlmm-common.yaml    |   2 +-
+>>   2 files changed, 157 insertions(+), 1 deletion(-)
+>>   create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm6350-pinctrl.yaml
 >>
->> On 09/08/2021 21:16, Thara Gopinath wrote:
->>> Driver enabling various pieces of Limits Management Hardware(LMh) for cpu
->>> cluster0 and cpu cluster1 namely kick starting monitoring of temperature,
->>> current, battery current violations, enabling reliability algorithm and
->>> setting up various temperature limits.
->>>
->>> The following has been explained in the cover letter. I am including this
->>> here so that this remains in the commit message as well.
->>>
->>> LMh is a hardware infrastructure on some Qualcomm SoCs that can enforce
->>> temperature and current limits as programmed by software for certain IPs
->>> like CPU. On many newer LMh is configured by firmware/TZ and no programming
->>> is needed from the kernel side. But on certain SoCs like sdm845 the
->>> firmware does not do a complete programming of the h/w. On such soc's
->>> kernel software has to explicitly set up the temperature limits and turn on
->>> various monitoring and enforcing algorithms on the hardware.
->>>
->>> Tested-by: Steev Klimaszewski <steev@kali.org> # Lenovo Yoga C630
->>> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
->>
->> Is it possible to have an option to disable/enable the LMh driver at
->> runtime, for instance with a module parameter ?
->>
-> 
-> Are you referring to being able to disable the hardware throttling, or
-> the driver's changes to thermal pressure?
+>> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm6350-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm6350-pinctrl.yaml
+>> new file mode 100644
+>> index 000000000000..e4d8b7a044e6
+>> --- /dev/null
+>> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm6350-pinctrl.yaml
+>> @@ -0,0 +1,156 @@
+>> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+>> +%YAML 1.2
+>> +---
+>> +$id: http://devicetree.org/schemas/pinctrl/qcom,sm6350-pinctrl.yaml#
+>> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> +
+>> +title: Qualcomm Technologies, Inc. SM6350 TLMM block
+>> +
+>> +maintainers:
+>> +  - Konrad Dybcio <konrad.dybcio@somainline.org>
+>> +
+>> +description: |
+>> +  This binding describes the Top Level Mode Multiplexer (TLMM) block found
+>> +  in the SM6350 platform.
+>> +
+>> +allOf:
+>> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
+>> +
+>> +properties:
+>> +  compatible:
+>> +    const: qcom,sm6350-tlmm
+>> +
+>> +  reg:
+>> +    maxItems: 1
+>> +
+>> +  interrupts: true
+>> +  interrupt-controller: true
+>> +  '#interrupt-cells': true
+>> +  gpio-controller: true
+>> +  gpio-reserved-ranges: true
+>> +  '#gpio-cells': true
+>> +  gpio-ranges: true
+>> +  wakeup-parent: true
+>> +
+>> +required:
+>> +  - compatible
+>> +  - reg
+>> +
+>> +additionalProperties: false
+>> +
+>> +patternProperties:
+>> +  '-state$':
+>> +    oneOf:
+>> +      - $ref: "#/$defs/qcom-sm6350-tlmm-state"
+>> +      - patternProperties:
+>> +          ".*":
+>> +            $ref: "#/$defs/qcom-sm6350-tlmm-state"
+>> +
+>> +$defs:
+>> +  qcom-sm6350-tlmm-state:
+>> +    type: object
+>> +    description:
+>> +      Pinctrl node's client devices use subnodes for desired pin configuration.
+>> +      Client device subnodes use below standard properties.
+>> +    $ref: "qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state"
+>> +
+>> +    properties:
+>> +      pins:
+>> +        description:
+>> +          List of gpio pins affected by the properties specified in this
+>> +          subnode.
+>> +        items:
+>> +          oneOf:
+>> +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-9][0-9]|20[0-3])$"
+> "^gpio([0-9]|[1-9][0-9]|1[0-4][0-9]|15[0-7])$"
+>
+>> +            - enum: [ sdc1_clk, sdc1_cmd, sdc1_data, sdc2_clk, sdc2_cmd, sdc2_data ]
+>> +        minItems: 1
+>> +        maxItems: 36
+>> +
+>> +      function:
+>> +        description:
+>> +          Specify the alternative function to be configured for the specified
+>> +          pins.
+>> +
+>> +        enum: [ adsp_ext, agera_pll, atest_char, atest_char0, atest_char1, atest_char2,
+>> +                atest_char3, atest_tsens, atest_tsens2, atest_usb1, atest_usb10, atest_usb11,
+>> +                atest_usb12, atest_usb13, atest_usb2, atest_usb20, atest_usb21, atest_usb22,
+>> +                atest_usb23, audio_ref, btfm_slimbus, cam_mclk0, cam_mclk1, cam_mclk2, cam_mclk3,
+>> +                cam_mclk4, cci_async, cci_i2c, cci_timer0, cci_timer1, cci_timer2, cci_timer3,
+>> +                cci_timer4, cri_trng, dbg_out, ddr_bist, ddr_pxi0, ddr_pxi1, ddr_pxi2, ddr_pxi3,
+>> +                dp_hot, edp_lcd, gcc_gp1, gcc_gp2, gcc_gp3, gp_pdm0, gp_pdm1, gp_pdm2, gpio,
+>> +                gps_tx, ibi_i3c, jitter_bist, ldo_en, ldo_update, lpass_ext, m_voc, mclk,
+>> +                mdp_vsync, mdp_vsync0, mdp_vsync1, mdp_vsync2, mdp_vsync3, mi2s_0, mi2s_1, mi2s_2,
+>> +                mss_lte, nav_gpio, nav_pps, pa_indicator, pcie0_clk, phase_flag0, phase_flag1,
+>> +                phase_flag10, phase_flag11, phase_flag12, phase_flag13, phase_flag14, phase_flag15,
+>> +                phase_flag16, phase_flag17, phase_flag18, phase_flag19, phase_flag2, phase_flag20,
+>> +                phase_flag21, phase_flag22, phase_flag23, phase_flag24, phase_flag25, phase_flag26,
+>> +                phase_flag27, phase_flag28, phase_flag29, phase_flag3, phase_flag30, phase_flag31,
+>> +                phase_flag4, phase_flag5, phase_flag6, phase_flag7, phase_flag8, phase_flag9,
+>> +                pll_bist, pll_bypassnl, pll_reset, prng_rosc, qdss_cti, qdss_gpio, qdss_gpio0,
+>> +                qdss_gpio1, qdss_gpio10, qdss_gpio11, qdss_gpio12, qdss_gpio13, qdss_gpio14,
+>> +                qdss_gpio15, qdss_gpio2, qdss_gpio3, qdss_gpio4, qdss_gpio5, qdss_gpio6,
+>> +                qdss_gpio7, qdss_gpio8, qdss_gpio9, qlink0_enable, qlink0_request, qlink0_wmss,
+>> +                qlink1_enable, qlink1_request, qlink1_wmss, qup00, qup01, qup02, qup10, qup11,
+>> +                qup12, qup13_f1, qup13_f2, qup14, rffe0_clk, rffe0_data, rffe1_clk, rffe1_data,
+>> +                rffe2_clk, rffe2_data, rffe3_clk, rffe3_data, rffe4_clk, rffe4_data, sd_write,
+>> +                sdc1_tb, sdc2_tb, sp_cmu, tgu_ch0, tgu_ch1, tgu_ch2, tgu_ch3, tsense_pwm1,
+>> +                tsense_pwm2, uim1_clk, uim1_data, uim1_present, uim1_reset, uim2_clk, uim2_data,
+>> +                uim2_present, uim2_reset, usb_phy, vfr_1, vsense_trigger, wlan1_adc0, wlan1_adc1,
+>> +                wlan2_adc0, wlan2_adc1, ]
+>> +
+>> +
+>> +      bias-disable: true
+>> +      bias-pull-down: true
+>> +      bias-pull-up: true
+>> +      drive-strength: true
+>> +      input-enable: true
+>> +      output-high: true
+>> +      output-low: true
+>> +
+>> +    required:
+>> +      - pins
+>> +      - function
+>> +
+>> +    additionalProperties: false
+>> +
+>> +examples:
+>> +  - |
+>> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
+>> +        pinctrl@f100000 {
+>> +                compatible = "qcom,sm6350-tlmm";
+>> +                reg = <0x0f100000 0x300000>;
+>> +                interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>,
+>> +                            <GIC_SPI 209 IRQ_TYPE_LEVEL_HIGH>,
+>> +                            <GIC_SPI 210 IRQ_TYPE_LEVEL_HIGH>,
+>> +                            <GIC_SPI 211 IRQ_TYPE_LEVEL_HIGH>,
+>> +                            <GIC_SPI 212 IRQ_TYPE_LEVEL_HIGH>,
+>> +                            <GIC_SPI 213 IRQ_TYPE_LEVEL_HIGH>,
+>> +                            <GIC_SPI 214 IRQ_TYPE_LEVEL_HIGH>,
+>> +                            <GIC_SPI 215 IRQ_TYPE_LEVEL_HIGH>,
+>> +                            <GIC_SPI 216 IRQ_TYPE_LEVEL_HIGH>;
+>> +                gpio-controller;
+>> +                #gpio-cells = <2>;
+>> +                interrupt-controller;
+>> +                #interrupt-cells = <2>;
+>> +                gpio-ranges = <&tlmm 0 0 156>;
+> Shouldn't this be 157?
+>
+>> +
+>> +                gpio-wo-subnode-state {
+>> +                        pins = "gpio1";
+>> +                        function = "gpio";
+>> +                };
+>> +
+>> +                uart-w-subnodes-state {
+>> +                        rx {
+>> +                                pins = "gpio25";
+>> +                                function = "qup13_f2";
+>> +                                bias-disable;
+>> +                        };
+>> +
+>> +                        tx {
+>> +                                pins = "gpio26";
+>> +                                function = "qup13_f2";
+>> +                                bias-disable;
+>> +                        };
+>> +                };
+>> +        };
+>> +...
+>> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,tlmm-common.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,tlmm-common.yaml
+>> index 3b37cf102d41..99975122a2ce 100644
+>> --- a/Documentation/devicetree/bindings/pinctrl/qcom,tlmm-common.yaml
+>> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,tlmm-common.yaml
+>> @@ -17,7 +17,7 @@ properties:
+>>     interrupts:
+>>       description:
+>>         Specifies the TLMM summary IRQ
+>> -    maxItems: 1
+>> +    maxItems: 9
+> Is this to support direct connected interrupts?
+>
+> Don't you need to add minItems: 1, to permit the other bindings to not
+> define these? I think that's what Rob's automatic reply complains about
+> at least.
+>
+>
+> PS. Any plans to work up support for direct connected interrupts? I
+> think that and "egpio" is the only downstream delta these days... That
+> said, I don't know if anyone actually uses direct connected interrupts?
 
-The former.
+Using .wakeirq_dual_edge_errata = true, in pinctrl-sm6350.c 
+(msm_pinctrl_soc_data structure) in [1] should help. The direct connect 
+interrupt were added to support dual edge in downstream driver but in 
+upstream setting this flag should help.
 
-> I'm not aware of any way to disable the hardware. I do remember that
-> there was some experiments done (with a hacked up boot chain) early on
-> and iirc it was concluded that it's not a good idea.
+This was used in sc7180 but should apply SM6350 too.
 
-My objective was to test the board with the thermal framework handling
-the mitigation instead of the hardware.
+That way you don't need other TLMM interrupts to be listed here.
 
-I guess I can set the hardware temperature higher than the thermal zone
-temperature.
+[1] 
+https://patchwork.kernel.org/project/linux-arm-msm/patch/20210820203751.232645-3-konrad.dybcio@somainline.org/
 
-On which sensor the lmh does refer to ? The cluster one ?
+Thanks,
+Maulik
 
-(by the way the thermal zone temperatures per core are lower by 5°C than
-the hardware mitigation ? is it done on purpose ?)
 
-> Either way, if there is a way and there is a use for it, we can always
-> add such parameter incrementally. So I suggest that we merge this as is.
-
-Yes, that was for my information. It is already merged.
-
-Thanks
-
-  -- Daniel
+>
+> Regards,
+> Bjorn
 
 -- 
-<http://www.linaro.org/> Linaro.org │ Open source software for ARM SoCs
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
 
-Follow Linaro:  <http://www.facebook.com/pages/Linaro> Facebook |
-<http://twitter.com/#!/linaroorg> Twitter |
-<http://www.linaro.org/linaro-blog/> Blog
