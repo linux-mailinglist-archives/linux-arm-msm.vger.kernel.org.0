@@ -2,144 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B52853F5620
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Aug 2021 04:58:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 825083F562A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Aug 2021 04:58:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234373AbhHXC7W (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Aug 2021 22:59:22 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55044 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234520AbhHXC7L (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Aug 2021 22:59:11 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 30F2161184;
-        Tue, 24 Aug 2021 02:58:26 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1629773907;
-        bh=gKurH+KeBYVhYz2EoyubMQTzKpZjKzN+c5EXeVZcaZg=;
-        h=From:To:Cc:Subject:Date:From;
-        b=at++BlpAnYZ3y4umaVyjph1bZmot1hgU5td6ZVabyqwyV8lbxbl4QReavegqb4mmw
-         wTsELCKJMYyCe2YTuXeOHMDjajgAme3ekB32vCPlnBH2fJetfGXu8S5hL9u+sFNhQZ
-         5VwntQaDH2sMdYD53+hSytypgTJOTJatQJxB0jk9q/RFsdO28Sgd+5B4DgdH5Y0X+U
-         qWc9I66eG8fwGh52GYBpbGvPfMrJ3kWZ2zPG9wddCWyrbV7Stqivr9igaRpAf8SC8U
-         iETz6/Jh91GEeLlhCX7nyUpaGa1iiE6uxt9//YcC/pHbdXZr1Vm4JBzrYCIaPoLCQT
-         Q+ci26cTn+pZw==
-From:   Sasha Levin <sashal@kernel.org>
-To:     stable@vger.kernel.org, sbhanu@codeaurora.org
-Cc:     Adrian Hunter <adrian.hunter@intel.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: FAILED: Patch "mmc: sdhci-msm: Update the software timeout value for sdhc" failed to apply to 4.14-stable tree
-Date:   Mon, 23 Aug 2021 22:58:24 -0400
-Message-Id: <20210824025825.659265-1-sashal@kernel.org>
-X-Mailer: git-send-email 2.30.2
+        id S234599AbhHXC71 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Aug 2021 22:59:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59414 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234557AbhHXC7V (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 23 Aug 2021 22:59:21 -0400
+Received: from mail-pj1-x1033.google.com (mail-pj1-x1033.google.com [IPv6:2607:f8b0:4864:20::1033])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8938C0613A3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Aug 2021 19:58:37 -0700 (PDT)
+Received: by mail-pj1-x1033.google.com with SMTP id mq3so13249580pjb.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Aug 2021 19:58:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=cR4LFc7S07bWHTemhgUSaM7+YiJk/gSHobFlY19oG8U=;
+        b=HzQlA7kVyZcfnvGLEDf69hx8YOKNKekkd58wq0xVJYZxGmMAM2QV52kvKCq2R5sPl9
+         DYXXTCSn68pbKs01tWF+IKDCWVzwu/w9ha8RwV+yBLf1qedcNX8EBdEecvijJ+qss7EM
+         8W53CiP9kAjMdgxO3XJk6nLmteK+wtfOpIwoikFpXEy3SqugiijTWBQuyjkmWc8R47/Q
+         GcvdhdthXKHfa2RUBWU9uZIT38ZrUDOdKDuz7L9MzXMVdoMAROVcOMXSZ72OBpyxVvCc
+         EqHc4J38QWTtun/HByXOhvlTWevwka42InpoxdEUhg63S9FmVaCiquRiRr/66m/u+Fkk
+         1fmg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=cR4LFc7S07bWHTemhgUSaM7+YiJk/gSHobFlY19oG8U=;
+        b=foAclDgoI3Ih6q+8RxhYAd4jEyf0lKzuYO4dBxXfHoG3/A/c82Gz+k0Qtt84kCZpUt
+         wP7wZzbu+CpPUN0BqtOmqTPcAcyYmXySP28cMg+esjhOrU1qnBvRXoKwmSvgGVGQzng0
+         SU3gosapyNn0E/ap3DaLm+pVg50Nw5ScKV+8ksooZZLciYCsjFfbRU6/JYpkXjbKE6sf
+         J4WWbh1uaempO3gknNMY8senJjqE67zEbOgvrEoG5ttWi4yaDcEvcEwM0ANs8PehbE2B
+         TQsnkZNQAkYn2/EtAXw2WBOU+HNnzTqrOI1FTVokTO/Bo6KYAUGu2YuVOPFo7gs8fJn1
+         bgDQ==
+X-Gm-Message-State: AOAM5320yFJqw0R6+/9CrQOaY8AQjHpTQEIxAhZHamZ8EGG1wZXnB8AL
+        Jj4YV1dMeLh0lp4dfdoyFBrp1g==
+X-Google-Smtp-Source: ABdhPJyHLbIOrGSNtbbJc1v7CQb/74OAs+mRskKm2Dp5/tbVuu04vcTkktt8Ab1BiXjzk218qBJi1w==
+X-Received: by 2002:a17:90a:4812:: with SMTP id a18mr1917135pjh.40.1629773917317;
+        Mon, 23 Aug 2021 19:58:37 -0700 (PDT)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id o14sm19982112pgl.85.2021.08.23.19.58.35
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 23 Aug 2021 19:58:37 -0700 (PDT)
+Date:   Tue, 24 Aug 2021 10:58:31 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Thierry Reding <thierry.reding@gmail.com>,
+        Sam Ravnborg <sam@ravnborg.org>
+Cc:     Stephan Gerhold <stephan@gerhold.net>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        dri-devel@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v2 2/2] drm/panel: Add Sony Tulip Truly NT35521 driver
+Message-ID: <20210824025831.GB22595@dragon>
+References: <20210809051008.6172-1-shawn.guo@linaro.org>
+ <20210809051008.6172-3-shawn.guo@linaro.org>
 MIME-Version: 1.0
-X-Patchwork-Hint: ignore
-X-stable: review
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210809051008.6172-3-shawn.guo@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The patch below does not apply to the 4.14-stable tree.
-If someone wants it applied there, or to any other stable or longterm
-tree, then please email the backport, including the original git commit
-id to <stable@vger.kernel.org>.
+On Mon, Aug 09, 2021 at 01:10:08PM +0800, Shawn Guo wrote:
+> It adds a DRM panel driver for Sony Tulip Truly NT35521 5.24" 1280x720
+> DSI panel, which can be found on Sony Xperia M4 Aqua phone.  The panel
+> backlight is managed through DSI link.
+> 
+> The driver is built using linux-mdss-dsi-panel-driver-generator[1], and
+> additionally modeling the 5V control GPIOs with regulators and adding
+> Backlight GPIO support.
+> 
+> [1] https://github.com/msm8916-mainline/linux-mdss-dsi-panel-driver-generator
+> 
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
 
-Thanks,
-Sasha
+Sam, Stephan,
 
------------------- original commit in Linus's tree ------------------
+Thank you for the review comments on v1!  How does v2 look to you?
 
-From 67b13f3e221ed81b46a657e2b499bf8b20162476 Mon Sep 17 00:00:00 2001
-From: Shaik Sajida Bhanu <sbhanu@codeaurora.org>
-Date: Fri, 16 Jul 2021 17:16:14 +0530
-Subject: [PATCH] mmc: sdhci-msm: Update the software timeout value for sdhc
-
-Whenever SDHC run at clock rate 50MHZ or below, the hardware data
-timeout value will be 21.47secs, which is approx. 22secs and we have
-a current software timeout value as 10secs. We have to set software
-timeout value more than the hardware data timeout value to avioid seeing
-the below register dumps.
-
-[  332.953670] mmc2: Timeout waiting for hardware interrupt.
-[  332.959608] mmc2: sdhci: ============ SDHCI REGISTER DUMP ===========
-[  332.966450] mmc2: sdhci: Sys addr:  0x00000000 | Version:  0x00007202
-[  332.973256] mmc2: sdhci: Blk size:  0x00000200 | Blk cnt:  0x00000001
-[  332.980054] mmc2: sdhci: Argument:  0x00000000 | Trn mode: 0x00000027
-[  332.986864] mmc2: sdhci: Present:   0x01f801f6 | Host ctl: 0x0000001f
-[  332.993671] mmc2: sdhci: Power:     0x00000001 | Blk gap:  0x00000000
-[  333.000583] mmc2: sdhci: Wake-up:   0x00000000 | Clock:    0x00000007
-[  333.007386] mmc2: sdhci: Timeout:   0x0000000e | Int stat: 0x00000000
-[  333.014182] mmc2: sdhci: Int enab:  0x03ff100b | Sig enab: 0x03ff100b
-[  333.020976] mmc2: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
-[  333.027771] mmc2: sdhci: Caps:      0x322dc8b2 | Caps_1:   0x0000808f
-[  333.034561] mmc2: sdhci: Cmd:       0x0000183a | Max curr: 0x00000000
-[  333.041359] mmc2: sdhci: Resp[0]:   0x00000900 | Resp[1]:  0x00000000
-[  333.048157] mmc2: sdhci: Resp[2]:   0x00000000 | Resp[3]:  0x00000000
-[  333.054945] mmc2: sdhci: Host ctl2: 0x00000000
-[  333.059657] mmc2: sdhci: ADMA Err:  0x00000000 | ADMA Ptr:
-0x0000000ffffff218
-[  333.067178] mmc2: sdhci_msm: ----------- VENDOR REGISTER DUMP
------------
-[  333.074343] mmc2: sdhci_msm: DLL sts: 0x00000000 | DLL cfg:
-0x6000642c | DLL cfg2: 0x0020a000
-[  333.083417] mmc2: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl:
-0x00000000 | DDR cfg: 0x80040873
-[  333.092850] mmc2: sdhci_msm: Vndr func: 0x00008a9c | Vndr func2 :
-0xf88218a8 Vndr func3: 0x02626040
-[  333.102371] mmc2: sdhci: ============================================
-
-So, set software timeout value more than hardware timeout value.
-
-Signed-off-by: Shaik Sajida Bhanu <sbhanu@codeaurora.org>
-Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-Cc: stable@vger.kernel.org
-Link: https://lore.kernel.org/r/1626435974-14462-1-git-send-email-sbhanu@codeaurora.org
-Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
----
- drivers/mmc/host/sdhci-msm.c | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
-
-diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-index e44b7a66b73c..290a14cdc1cf 100644
---- a/drivers/mmc/host/sdhci-msm.c
-+++ b/drivers/mmc/host/sdhci-msm.c
-@@ -2089,6 +2089,23 @@ static void sdhci_msm_cqe_disable(struct mmc_host *mmc, bool recovery)
- 	sdhci_cqe_disable(mmc, recovery);
- }
- 
-+static void sdhci_msm_set_timeout(struct sdhci_host *host, struct mmc_command *cmd)
-+{
-+	u32 count, start = 15;
-+
-+	__sdhci_set_timeout(host, cmd);
-+	count = sdhci_readb(host, SDHCI_TIMEOUT_CONTROL);
-+	/*
-+	 * Update software timeout value if its value is less than hardware data
-+	 * timeout value. Qcom SoC hardware data timeout value was calculated
-+	 * using 4 * MCLK * 2^(count + 13). where MCLK = 1 / host->clock.
-+	 */
-+	if (cmd && cmd->data && host->clock > 400000 &&
-+	    host->clock <= 50000000 &&
-+	    ((1 << (count + start)) > (10 * host->clock)))
-+		host->data_timeout = 22LL * NSEC_PER_SEC;
-+}
-+
- static const struct cqhci_host_ops sdhci_msm_cqhci_ops = {
- 	.enable		= sdhci_msm_cqe_enable,
- 	.disable	= sdhci_msm_cqe_disable,
-@@ -2438,6 +2455,7 @@ static const struct sdhci_ops sdhci_msm_ops = {
- 	.irq	= sdhci_msm_cqe_irq,
- 	.dump_vendor_regs = sdhci_msm_dump_vendor_regs,
- 	.set_power = sdhci_set_power_noreg,
-+	.set_timeout = sdhci_msm_set_timeout,
- };
- 
- static const struct sdhci_pltfm_data sdhci_msm_pdata = {
--- 
-2.30.2
-
-
-
-
+Shawn
