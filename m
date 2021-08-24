@@ -2,288 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7668E3F6BDB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 00:45:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 934923F6BEB
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 00:52:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230488AbhHXWqG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Aug 2021 18:46:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51440 "EHLO
+        id S231540AbhHXWxQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Aug 2021 18:53:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53066 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231300AbhHXWqG (ORCPT
+        with ESMTP id S231552AbhHXWxO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Aug 2021 18:46:06 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5AF85C061757
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Aug 2021 15:45:21 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id m4so2122280pll.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Aug 2021 15:45:21 -0700 (PDT)
+        Tue, 24 Aug 2021 18:53:14 -0400
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 13FFCC06179A
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Aug 2021 15:52:28 -0700 (PDT)
+Received: by mail-io1-xd2a.google.com with SMTP id n24so28434627ion.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Aug 2021 15:52:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=AIQD0/ed7PF/KiqM//O+N8hKXcL86AFA/U8Q7Sp3t2s=;
-        b=N1zibkPfV1UtZ6x/hyhOeDsGuESlkGZsI4+9LaAQFRDVOfujT9KFpZrzzx0NJ47Hxz
-         JjgCb6EwDlzIoYbI5/rXp6RG0qPCDvDFfJtp1L1krwR08//xZATeSJy3FbLET9LuBs1C
-         Lg9+kXFtXTv6czlB4njeZ6uk0KxNcRGn2EU6MPQxaHyuNgyAJWAwblqtTVjRGKV5Ql1n
-         wnE/5T/I4V4eEg7eq+qVSo7M84IXPNNvd8vaTulv3uRUPS5AcAIDxKo6LjF21rh+Hmt/
-         aYdslgZyOPP+wLR0Nnk3RSbFn4qm5skbTSw02nJKk4kmIXFyw1cvQ8cXbjmE3WshCs5Y
-         i6gg==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=gaFUFYkq0aAQb9fBgckSLrpv7E3PmSpqoTQXohZW4cw=;
+        b=IvPy+MabaZ/Bejpu9hF3104ynjKW9brt/qnAFarovpAHfVE+su5MGecyK0USm1S/TP
+         gv+Ii7noRCgKZpU+IbZOBMPtf7xGO2HOjtHNFDsuSb4qW2gy/9DiqKx5AsTsBuyYfuiJ
+         +E1hjLs3fjG3YKjZg1reMsmh46TSbvjKiIzfg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=AIQD0/ed7PF/KiqM//O+N8hKXcL86AFA/U8Q7Sp3t2s=;
-        b=N23pMk4LMjYa8HLpwEuxOtoaFgt4U3BCbVwdEQBmJBKysH2ckQ2Vb8TkCWDOYK/G3Y
-         dzUpAEgoSR7ck3ud0HvP5Oo/TfplwLOiSS0izx1AlB8K2szK1Ly5nwZ4I5Bzco3VYlET
-         owW+LuC6VMaFcwEo9Tl/abGtZJAnI96NqJq0I6uYvC+HWqC8yR9piyO4AVfBhanBeWhf
-         OPO5+bf6pi2M2iWelb0KA+nR2i9EXdYSeVHsksqd3quuvt+w00kls6f7BYO/ixxYj/Ol
-         JTsLuufDkoDoiDwZZAKmcbEvDzJqofYUyv2bClIGaUDnQZY7KastrNJnCrK6onmvD+WN
-         tP8A==
-X-Gm-Message-State: AOAM532ygsS9kRdED2/zANYE2viRbmbViUjjtHMIPn8Wnsd5tDo+xu3K
-        HW4z1mPXeZehb59ZkR6LXSw=
-X-Google-Smtp-Source: ABdhPJyGFr6UDKRqejYTXEUWTOUWKig004QMvmFR7OMWzG4fYTxdp9gyW3NOmdHQYybPUaL4nXT5mA==
-X-Received: by 2002:a17:90a:1f09:: with SMTP id u9mr6838263pja.206.1629845120833;
-        Tue, 24 Aug 2021 15:45:20 -0700 (PDT)
-Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id 11sm19814433pfl.41.2021.08.24.15.45.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Aug 2021 15:45:20 -0700 (PDT)
-From:   Rob Clark <robdclark@gmail.com>
-To:     igt-dev@lists.freedesktop.org
-Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Rob Clark <robdclark@chromium.org>
-Subject: [PATCH igt 3/3] msm: Add submit ioctl tests
-Date:   Tue, 24 Aug 2021 15:49:32 -0700
-Message-Id: <20210824224932.564352-4-robdclark@gmail.com>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210824224932.564352-1-robdclark@gmail.com>
-References: <20210824224932.564352-1-robdclark@gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=gaFUFYkq0aAQb9fBgckSLrpv7E3PmSpqoTQXohZW4cw=;
+        b=btVa3+9DlJnyykT3hcXFatVWdFs+lnN/wy4zWZ6wduOvdSFR8H6HUPwKZswlc/qTHG
+         GShVgQNRuL3JnTsJ0UtNVTiXHxB6KEcdbhrPXkxmMsX5Gph5K+cq86LE4ST4EgBVcvrw
+         rZMkTJdoP3VutxYgJm2qZ6/bbBdstmS56XfPyO8m8NxyqWLI3qZwS9aUS51ugrXUw+Jg
+         IaDCsYAfA153WfjvAn2z2qBXTgMWL6uMIUxniqV6n47q4rwMM/k4j4rIInrGDvmBzqAD
+         oGW0wh+ZSTFXI9j+EHmtvWEeWkUCGKhItuzZwa7IxQtAL+K6GtiOHnE+GtUQenSi6A8u
+         Q9OQ==
+X-Gm-Message-State: AOAM532tu8iOc0vb2iF11wxXauADOkhgYD+BdX0K0WDUXmxlP/+pFl83
+        tb3u6/49YmmygFMjb/ZeMshGNFDjimgdGA==
+X-Google-Smtp-Source: ABdhPJxXMtSDy3zDdWcRfBhTLL8JF4+ZjMN5/qeRbLHe1E7DSsHOMwKHY0NgpufJmV3LND5bXZo2Ww==
+X-Received: by 2002:a02:1d04:: with SMTP id 4mr36045951jaj.98.1629845547235;
+        Tue, 24 Aug 2021 15:52:27 -0700 (PDT)
+Received: from mail-il1-f169.google.com (mail-il1-f169.google.com. [209.85.166.169])
+        by smtp.gmail.com with ESMTPSA id b12sm10707774ilo.44.2021.08.24.15.52.26
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Aug 2021 15:52:26 -0700 (PDT)
+Received: by mail-il1-f169.google.com with SMTP id b4so12571349ilr.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Aug 2021 15:52:26 -0700 (PDT)
+X-Received: by 2002:a92:cf4a:: with SMTP id c10mr24580250ilr.269.1629845546303;
+ Tue, 24 Aug 2021 15:52:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+References: <1628642571-25383-1-git-send-email-tdas@codeaurora.org>
+In-Reply-To: <1628642571-25383-1-git-send-email-tdas@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 24 Aug 2021 15:52:14 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=U1zARov=8q9ZSOS4BRe919uFLJh56b8WKk-9LF0r5KZA@mail.gmail.com>
+Message-ID: <CAD=FV=U1zARov=8q9ZSOS4BRe919uFLJh56b8WKk-9LF0r5KZA@mail.gmail.com>
+Subject: Re: [PATCH v1] arm64: dts: qcom: sc7280: Add clock controller ID headers
+To:     Taniya Das <tdas@codeaurora.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rob Clark <robdclark@chromium.org>
+Hi,
 
-Add an initial set of tests for the submit ioctl.
+On Tue, Aug 10, 2021 at 5:43 PM Taniya Das <tdas@codeaurora.org> wrote:
+>
+> Add the GPUCC, DISPCC and VIDEOCC clock headers which were dropped
+> earlier.
+>
+> Fixes: 422a295221bb ("arm64: dts: qcom: sc7280: Add clock controller nodes")
 
-Signed-off-by: Rob Clark <robdclark@chromium.org>
----
- tests/meson.build  |   1 +
- tests/msm_submit.c | 188 +++++++++++++++++++++++++++++++++++++++++++++
- 2 files changed, 189 insertions(+)
- create mode 100644 tests/msm_submit.c
+IMO drop the "Fixes". To me having the "Fixes" there means that there
+was a bug in the old patch. This isn't really fixing a bug.
 
-diff --git a/tests/meson.build b/tests/meson.build
-index 1bdfddbb..ff7c709a 100644
---- a/tests/meson.build
-+++ b/tests/meson.build
-@@ -107,6 +107,7 @@ test_progs = [
- 	'vc4_wait_seqno',
- 	'vgem_basic',
- 	'vgem_slow',
-+	'msm_submit',
- ]
- 
- i915_progs = [
-diff --git a/tests/msm_submit.c b/tests/msm_submit.c
-new file mode 100644
-index 00000000..9c7d6d4b
---- /dev/null
-+++ b/tests/msm_submit.c
-@@ -0,0 +1,188 @@
-+/*
-+ * Copyright © 2021 Google, Inc.
-+ *
-+ * Permission is hereby granted, free of charge, to any person obtaining a
-+ * copy of this software and associated documentation files (the "Software"),
-+ * to deal in the Software without restriction, including without limitation
-+ * the rights to use, copy, modify, merge, publish, distribute, sublicense,
-+ * and/or sell copies of the Software, and to permit persons to whom the
-+ * Software is furnished to do so, subject to the following conditions:
-+ *
-+ * The above copyright notice and this permission notice (including the next
-+ * paragraph) shall be included in all copies or substantial portions of the
-+ * Software.
-+ *
-+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.  IN NO EVENT SHALL
-+ * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-+ * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS
-+ * IN THE SOFTWARE.
-+ */
-+
-+#include "igt.h"
-+#include "igt_msm.h"
-+
-+igt_main
-+{
-+	struct msm_device *dev;
-+	struct msm_pipe *pipe;
-+	struct msm_bo *a, *b;
-+	unsigned gen;
-+
-+	igt_fixture {
-+		dev = igt_msm_dev_open();
-+		pipe = igt_msm_pipe_open(dev, 0);
-+		gen = igt_msm_pipe_gen(pipe);
-+		a = igt_msm_bo_new(dev, 0x1000, MSM_BO_WC);
-+		b = igt_msm_bo_new(dev, 0x1000, MSM_BO_WC);
-+	}
-+
-+	igt_subtest("empty-submit") {
-+		struct drm_msm_gem_submit req = {
-+				.flags   = pipe->pipe,
-+				.queueid = pipe->submitqueue_id,
-+		};
-+		do_ioctl(dev->fd, DRM_IOCTL_MSM_GEM_SUBMIT, &req);
-+	}
-+
-+	igt_subtest("invalid-queue-submit") {
-+		struct drm_msm_gem_submit req = {
-+				.flags   = pipe->pipe,
-+				.queueid = 0x1234,
-+		};
-+		do_ioctl_err(dev->fd, DRM_IOCTL_MSM_GEM_SUBMIT, &req, ENOENT);
-+	}
-+
-+	igt_subtest("invalid-flags-submit") {
-+		struct drm_msm_gem_submit req = {
-+				.flags   = 0x1234,
-+				.queueid = pipe->submitqueue_id,
-+		};
-+		do_ioctl_err(dev->fd, DRM_IOCTL_MSM_GEM_SUBMIT, &req, EINVAL);
-+	}
-+
-+	igt_subtest("invalid-in-fence-submit") {
-+		struct drm_msm_gem_submit req = {
-+				.flags   = pipe->pipe | MSM_SUBMIT_FENCE_FD_IN,
-+				.queueid = pipe->submitqueue_id,
-+				.fence_fd = dev->fd,  /* This is not a fence fd! */
-+		};
-+		do_ioctl_err(dev->fd, DRM_IOCTL_MSM_GEM_SUBMIT, &req, EINVAL);
-+	}
-+
-+	igt_subtest("invalid-duplicate-bo-submit") {
-+		struct drm_msm_gem_submit_bo bos[] = {
-+			[0] = {
-+				.handle     = a->handle,
-+				.flags      = MSM_SUBMIT_BO_READ,
-+			},
-+			[1] = {
-+				.handle     = b->handle,
-+				.flags      = MSM_SUBMIT_BO_READ,
-+			},
-+			[2] = {
-+				/* this is invalid.. there should not be two entries
-+				 * for the same bo, instead a single entry w/ all
-+				 * usage flags OR'd together should be used.  Kernel
-+				 * should catch this, and return an error code after
-+				 * cleaning up properly (not leaking any bo's)
-+				 */
-+				.handle     = a->handle,
-+				.flags      = MSM_SUBMIT_BO_WRITE,
-+			},
-+		};
-+		struct drm_msm_gem_submit req = {
-+				.flags   = pipe->pipe,
-+				.queueid = pipe->submitqueue_id,
-+				.nr_bos  = ARRAY_SIZE(bos),
-+				.bos     = VOID2U64(bos),
-+		};
-+		do_ioctl_err(dev->fd, DRM_IOCTL_MSM_GEM_SUBMIT, &req, EINVAL);
-+	}
-+
-+	igt_subtest("invalid-cmd-idx-submit") {
-+		struct drm_msm_gem_submit_cmd cmds[] = {
-+			[0] = {
-+				.type       = MSM_SUBMIT_CMD_BUF,
-+				.submit_idx = 0,      /* bos[0] does not exist */
-+				.size       = 4 * 4,  /* 4 dwords in cmdbuf */
-+			},
-+		};
-+		struct drm_msm_gem_submit req = {
-+				.flags   = pipe->pipe,
-+				.queueid = pipe->submitqueue_id,
-+				.nr_cmds    = ARRAY_SIZE(cmds),
-+				.cmds       = VOID2U64(cmds),
-+		};
-+		do_ioctl_err(dev->fd, DRM_IOCTL_MSM_GEM_SUBMIT, &req, EINVAL);
-+	}
-+
-+	igt_subtest("invalid-cmd-type-submit") {
-+		struct drm_msm_gem_submit_bo bos[] = {
-+			[0] = {
-+				.handle     = a->handle,
-+				.flags      = MSM_SUBMIT_BO_READ,
-+			},
-+		};
-+		struct drm_msm_gem_submit_cmd cmds[] = {
-+			[0] = {
-+				.type       = 0x1234,
-+				.submit_idx = 0,
-+				.size       = 4 * 4,  /* 4 dwords in cmdbuf */
-+			},
-+		};
-+		struct drm_msm_gem_submit req = {
-+				.flags   = pipe->pipe,
-+				.queueid = pipe->submitqueue_id,
-+				.nr_cmds    = ARRAY_SIZE(cmds),
-+				.cmds       = VOID2U64(cmds),
-+				.nr_bos  = ARRAY_SIZE(bos),
-+				.bos     = VOID2U64(bos),
-+		};
-+		do_ioctl_err(dev->fd, DRM_IOCTL_MSM_GEM_SUBMIT, &req, EINVAL);
-+	}
-+
-+	igt_subtest("valid-submit") {
-+		struct drm_msm_gem_submit_bo bos[] = {
-+			[0] = {
-+				.handle     = a->handle,
-+				.flags      = MSM_SUBMIT_BO_READ,
-+			},
-+		};
-+		struct drm_msm_gem_submit_cmd cmds[] = {
-+			[0] = {
-+				.type       = MSM_SUBMIT_CMD_BUF,
-+				.submit_idx = 0,
-+				.size       = 4 * 4,  /* 4 dwords in cmdbuf */
-+			},
-+		};
-+		struct drm_msm_gem_submit req = {
-+				.flags   = pipe->pipe,
-+				.queueid = pipe->submitqueue_id,
-+				.nr_cmds    = ARRAY_SIZE(cmds),
-+				.cmds       = VOID2U64(cmds),
-+				.nr_bos  = ARRAY_SIZE(bos),
-+				.bos     = VOID2U64(bos),
-+		};
-+		uint32_t *cmdstream = igt_msm_bo_map(a);
-+		if (gen >= 5) {
-+			*(cmdstream++) = pm4_pkt7_hdr(CP_NOP, 3);
-+		} else {
-+			*(cmdstream++) = pm4_pkt3_hdr(CP_NOP, 3);
-+		}
-+		*(cmdstream++) = 0;
-+		*(cmdstream++) = 0;
-+		*(cmdstream++) = 0;
-+
-+		do_ioctl(dev->fd, DRM_IOCTL_MSM_GEM_SUBMIT, &req);
-+	}
-+
-+	igt_fixture {
-+		igt_msm_bo_free(a);
-+		igt_msm_bo_free(b);
-+		igt_msm_pipe_close(pipe);
-+		igt_msm_dev_close(dev);
-+	}
-+}
--- 
-2.31.1
+> Signed-off-by: Taniya Das <tdas@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 3 +++
+>  1 file changed, 3 insertions(+)
 
+Other than removing the "Fixes" then this seems like it would be nice
+to land soon after the next -rc1 comes out so that patches that start
+referring to the clocks in these controllers can take advantage of
+them. Snooze 3 weeks till (presumably) -rc1 might come out.
+
+Reviewed-by: Douglas Anderson <dianders@chromium.org>
