@@ -2,118 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 270A33F53F9
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Aug 2021 02:08:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 716EE3F5573
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Aug 2021 03:17:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233384AbhHXAJ3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Aug 2021 20:09:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50006 "EHLO
+        id S233585AbhHXBS3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Aug 2021 21:18:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37052 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233260AbhHXAJ3 (ORCPT
+        with ESMTP id S229697AbhHXBS2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Aug 2021 20:09:29 -0400
-Received: from mail-qv1-xf2c.google.com (mail-qv1-xf2c.google.com [IPv6:2607:f8b0:4864:20::f2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22F60C061575
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Aug 2021 17:08:46 -0700 (PDT)
-Received: by mail-qv1-xf2c.google.com with SMTP id f7so10750270qvt.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Aug 2021 17:08:46 -0700 (PDT)
+        Mon, 23 Aug 2021 21:18:28 -0400
+Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C0FFC061575
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Aug 2021 18:17:45 -0700 (PDT)
+Received: by mail-pg1-x52f.google.com with SMTP id x4so18272066pgh.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Aug 2021 18:17:45 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qXHgg8bh4V9/RfLoZDOv21AHCTmNqs2XAaQ2Uix6BLU=;
-        b=WRlLLaLWLWRVsmSdu/QDc1Rh7jw0BbtL7yBuVloYbQAOhCFewPibup7cK+gPbEhBXa
-         NvhXpKkSuYpoe7tO7OCFtjVcf5gMTzW5+6MOMrhkBoAHRX/SXTwZzL/zbzb5+UmjZ+F+
-         QgtBIjydKYagFMU2hZ7f9t71p2OkzysjGAzQ2gaJPMHtTu7V2jZBM1PNMPYxKWmEPGXc
-         cHhTbGo2L673WHmtQMVJoV7Nsx9T0hQSKH3yfhTIjQfh4TKIfPISlVfyUu1KS5WIIrDO
-         CeZvI3TKTahZ8iLpRLwjda7zcyyOsxj9D2WhHLu7f0QuoHAcZRG5Klb5xSeabXkzP53D
-         14nw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Hqn67LxL3lG3twDFl2dpaEiJy0jyMcHPR1Uu+GiQgVA=;
+        b=v73Zr5Q8pN7sStTrMPxEY3ITjm7HbhS4Dw7jKdD4VGbGcZG72luOiHCDKRu5C5LuEW
+         Tsyj2Ep9MJI3t/W2YLYwY8OaHQy8UbQQaHtNyjFw0yX6VO0sxXKFZ1O2ILzCnlgV0KjH
+         XMTesil4WZ9dWMCZ+zJ74rwNJrr8yvWOblfMPlGNWN+TXqhsK+0rFyNLdNbfYpr7IamA
+         zC7a4HOfxwsfSIEo/NZcuJ0zDADfBUAigPRiJwelVIGAGFTu/vVExDHk0ux1whKuDC5U
+         SuOCk9R3Na1fwlB8v8FCd022NesV626edWrG5zGhHtfGjec5Io/CJNaU/BiwCFtmn83+
+         p2Wg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qXHgg8bh4V9/RfLoZDOv21AHCTmNqs2XAaQ2Uix6BLU=;
-        b=EuMlrA/QzuucWPvLQB1C6fbe8acoRcgME1ko18A4LrC+w4His0jXTAq7NHPDz+/lNf
-         1c02ns56TTF8CnYb5e66joUBO2CbKyFtfxnk4gK0bLjxVm4l9WBIl5necSfYaJ1t1L5h
-         Wws8R5a/9bvPS2K/9eMqNMOErmNOhp/v+iyXPL9YjsHV3soUOZxHL1amsFfIkGRjy4R1
-         8Uoqu4b2p86SLeZLzx01wvI6wFp3NHOSwTvfKkTe+dIciX3nzwdWcP3dHFgfsNus+wWH
-         grMzejYhN0/8sfioiRmnV9pol6dWVjFQzlQybir8DEZ/kyPzpG/rAd12qXKSg5cQPyWk
-         5IDg==
-X-Gm-Message-State: AOAM531qWo1EarnJJagKjWlqgy81/2fHksj4BZFv1Ivlra8jFedTw3xR
-        g122P9/QzArdhzIZq5sDTREQJ9f7yLfOX6cIhg381A==
-X-Google-Smtp-Source: ABdhPJyWbfNm8Z/jZ9f9qujiZJUDa0z4Oqk0Nanie5mU4W3bucnaFpllzzx45zlKucYLuf8LltVPw4Pd+0AOn0rb0Qg=
-X-Received: by 2002:ad4:54e9:: with SMTP id k9mr4461953qvx.4.1629763725350;
- Mon, 23 Aug 2021 17:08:45 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210823134726.1.I1dd23ddf77e5b3568625d80d6827653af071ce19@changeid>
-In-Reply-To: <20210823134726.1.I1dd23ddf77e5b3568625d80d6827653af071ce19@changeid>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Tue, 24 Aug 2021 03:08:34 +0300
-Message-ID: <CAA8EJpqtuPam2b-87FC=pJidZ=df5KROxcBi8811aZm_WBwqFg@mail.gmail.com>
-Subject: Re: [PATCH] thermal: qcom: spmi-adc-tm5: Don't abort probing if a
- sensor is not used
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Hqn67LxL3lG3twDFl2dpaEiJy0jyMcHPR1Uu+GiQgVA=;
+        b=ogQO+ITvcGQ846QcY3+zjOH/22vyhgES/h84sIWZ13QP2RtiKbA4p/dSLAVNwoW6f8
+         9+AMVyGwv74IU/+o4Mwy3HZeGtpWiMmaNzJAbJLTGI73EhZpNIM9e9DdEhuv5agUYE4k
+         blIYn45FE9pZaMogBaAB2McmevMxzluo8phi3qk1WTSlHA2M4PX7zSjdvwCvDHWFb/v9
+         ryfPPGK9o0j5LkEki2Yj6t6Pgy8F4IecD/lVXubQSRRVsQAwk0wN7p3BIkAKSIspPGRw
+         CTQGARt42LY41DIDG3SExA7ltPhkgbZvhY+kmgZTLiJ3Xmotlp6CLw78b/f/ObomrvLR
+         /EKQ==
+X-Gm-Message-State: AOAM532UY0M9VIjqyrEzaJh8HP4CsvdKZtTiK6kpJWyB3bKJXemGEr27
+        rCRyevzGlBhQIraP8F9wpT9EYw==
+X-Google-Smtp-Source: ABdhPJzoptsMtsMBaGJ1f/2Nl5/lIr6SJerpLtnEjmXym1WbcktKQBRjUA2lqjy2dTRi9CQ/Qjs6pQ==
+X-Received: by 2002:a05:6a00:134e:b0:3e1:1ed:80ff with SMTP id k14-20020a056a00134e00b003e101ed80ffmr36035307pfu.34.1629767865125;
+        Mon, 23 Aug 2021 18:17:45 -0700 (PDT)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id c17sm416876pjq.16.2021.08.23.18.17.42
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 23 Aug 2021 18:17:44 -0700 (PDT)
+Date:   Tue, 24 Aug 2021 09:17:38 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Georgi Djakov <djakov@kernel.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
         "open list:DRM DRIVER FOR MSM ADRENO GPU" 
         <linux-arm-msm@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Linux PM <linux-pm@vger.kernel.org>
+Subject: Re: [PATCH 3/3] arm64: dts: qcom: sdm630: Add missing a2noc qos
+ clocks
+Message-ID: <20210824011737.GA22595@dragon>
+References: <20210823095603.5538-1-shawn.guo@linaro.org>
+ <20210823095603.5538-4-shawn.guo@linaro.org>
+ <CAA8EJpqPMMvtDL5NqUJTDfVEAqX9VD9Y_TWmXxh8DpS8hwDuJg@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAA8EJpqPMMvtDL5NqUJTDfVEAqX9VD9Y_TWmXxh8DpS8hwDuJg@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 23 Aug 2021 at 23:47, Matthias Kaehlcke <mka@chromium.org> wrote:
->
-> adc_tm5_register_tzd() registers the thermal zone sensors for all
-> channels of the thermal monitor. If the registration of one channel
-> fails the function skips the processing of the remaining channels
-> and returns an error, which results in _probe() being aborted.
->
-> One of the reasons the registration could fail is that none of the
-> thermal zones is using the channel/sensor, which hardly is a critical
-> error (if it is an error at all). If this case is detected emit a
-> warning and continue with processing the remaining channels.
->
-> Fixes: ca66dca5eda6 ("thermal: qcom: add support for adc-tm5 PMIC thermal monitor")
-> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+On Mon, Aug 23, 2021 at 07:51:32PM +0300, Dmitry Baryshkov wrote:
+> On Mon, 23 Aug 2021 at 12:56, Shawn Guo <shawn.guo@linaro.org> wrote:
+> >
+> > It adds the missing a2noc clocks required for QoS registers programming
+> > per downstream kernel[1].
+> >
+> > [1] https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/arch/arm/boot/dts/qcom/sdm660-bus.dtsi?h=LA.UM.8.2.r1-04800-sdm660.0#n43
+> >
+> > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> > ---
+> >  arch/arm64/boot/dts/qcom/sdm630.dtsi | 17 ++++++++++++++---
+> >  1 file changed, 14 insertions(+), 3 deletions(-)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> > index 9153e6616ba4..b3a7f3bf1560 100644
+> > --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> > @@ -652,11 +652,22 @@
+> >
+> >                 a2noc: interconnect@1704000 {
+> >                         compatible = "qcom,sdm660-a2noc";
+> > -                       reg = <0x01704000 0xc100>;
+> > +                       reg = <0x01704000 0x1c000>;
+> 
+> Shawn, as you are at it, do we want to keep these nocs shifted
+> compared to the downstream dtsi (so that the offset of QoS registers
+> is 0) or we'd better introduce QoS register offset and move noc start
+> address to the same address as in downstream?
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Dmitry, thanks for spotting this!  This is really an unintended leftover
+from debugging.  I will drop it in v2.  For address alignment with
+downstream, I do not really have a strong opinion and I can live with
+either of them :)
 
-> ---
->
->  drivers/thermal/qcom/qcom-spmi-adc-tm5.c | 6 ++++++
->  1 file changed, 6 insertions(+)
->
-> diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-> index 232fd0b33325..8494cc04aa21 100644
-> --- a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-> +++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-> @@ -359,6 +359,12 @@ static int adc_tm5_register_tzd(struct adc_tm5_chip *adc_tm)
->                                                            &adc_tm->channels[i],
->                                                            &adc_tm5_ops);
->                 if (IS_ERR(tzd)) {
-> +                       if (PTR_ERR(tzd) == -ENODEV) {
-> +                               dev_warn(adc_tm->dev, "thermal sensor on channel %d is not used\n",
-> +                                        adc_tm->channels[i].channel);
-> +                               continue;
-> +                       }
-> +
->                         dev_err(adc_tm->dev, "Error registering TZ zone for channel %d: %ld\n",
->                                 adc_tm->channels[i].channel, PTR_ERR(tzd));
->                         return PTR_ERR(tzd);
-> --
-> 2.33.0.rc2.250.ged5fa647cd-goog
->
+Shawn
 
-
--- 
-With best wishes
-Dmitry
+> >                         #interconnect-cells = <1>;
+> > -                       clock-names = "bus", "bus_a";
+> > +                       clock-names = "bus",
+> > +                                     "bus_a",
+> > +                                     "ipa",
+> > +                                     "ufs_axi",
+> > +                                     "aggre2_ufs_axi",
+> > +                                     "aggre2_usb3_axi",
+> > +                                     "cfg_noc_usb2_axi";
+> >                         clocks = <&rpmcc RPM_SMD_AGGR2_NOC_CLK>,
+> > -                                <&rpmcc RPM_SMD_AGGR2_NOC_A_CLK>;
+> > +                                <&rpmcc RPM_SMD_AGGR2_NOC_A_CLK>,
+> > +                                <&rpmcc RPM_SMD_IPA_CLK>,
+> > +                                <&gcc GCC_UFS_AXI_CLK>,
+> > +                                <&gcc GCC_AGGRE2_UFS_AXI_CLK>,
+> > +                                <&gcc GCC_AGGRE2_USB3_AXI_CLK>,
+> > +                                <&gcc GCC_CFG_NOC_USB2_AXI_CLK>;
+> >                 };
+> >
+> >                 mnoc: interconnect@1745000 {
+> > --
+> > 2.17.1
+> >
+> 
+> 
+> -- 
+> With best wishes
+> Dmitry
