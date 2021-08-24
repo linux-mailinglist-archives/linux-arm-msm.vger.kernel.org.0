@@ -2,125 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B08863F6ADF
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Aug 2021 23:12:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD72A3F6AF5
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Aug 2021 23:22:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234875AbhHXVNR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Aug 2021 17:13:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58504 "EHLO
+        id S234725AbhHXVWn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Aug 2021 17:22:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60600 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234317AbhHXVNO (ORCPT
+        with ESMTP id S233014AbhHXVWn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Aug 2021 17:13:14 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 617E3C061764
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Aug 2021 14:12:30 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id i8-20020a056830402800b0051afc3e373aso38554489ots.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Aug 2021 14:12:30 -0700 (PDT)
+        Tue, 24 Aug 2021 17:22:43 -0400
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 75783C0613C1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Aug 2021 14:21:58 -0700 (PDT)
+Received: by mail-ot1-x331.google.com with SMTP id c19-20020a9d6153000000b0051829acbfc7so49807537otk.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Aug 2021 14:21:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=VvJ41OUQjcIqP2/V4RRgvKQKaUvc+Q8/8VHMdF1do8Q=;
-        b=a0llSe0VINrc71feDG/BpuGjlsKvKo1iN5416uQ31/w+N0ksxUtZ2meejEL/ITGZ/d
-         bJ3OvkrKH+YluSXZMocEAT8uHOzSCUb+SdTwx5+9DPC7LsEsKDFETFXq5jnAc36l2T6Y
-         vfciSWjKmqrl9mr7EVpRx7xmCEzgFsXnO6QcM=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=KtIOJH8PBF1/iH8MyRGz0pTPExah6uG34M1IBP8eNO4=;
+        b=IJPW8hx9wZXO1P2lbLZGy2iF7pmxdjBbXoIzRccBZfoFZP+kENipRioMSQe3y0pznI
+         MbCrgpQGrn0cXAyP7Ay6ypTEobRSrdg8/KTj+kwwI8+mhZb0D0o7Xf65Cqlp2gxWAYhr
+         /a/ymkaN8ZZTrbVjI5jNWIRUop9riRgzPQrryVtnzo5geaPgegMrZKm8aO4mNWVgRN6Y
+         8CKrtnKbKbUnLG6kHvxD9yc6xfniM2+6sN/YEMKnNQJEYL7qX4heMAq8r1TKteNIAGjt
+         gFPkcI+yg1U628xpQHnqktPX8D/a5mxY0a64s1r9x8BDqbRd/+D3ua4oV3KPS+dOeIT5
+         eljQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=VvJ41OUQjcIqP2/V4RRgvKQKaUvc+Q8/8VHMdF1do8Q=;
-        b=RX/ihtAiOzRCx4CB4rowHWwgJ6wR6pWbPq5LqzXTIMEfr8tVrUaJZXi/ikHL+oxmG4
-         4sRCyQFzrBhlmJ6BfC5OTsx8n8Bkp14SyQPsf3EFlXHBZa/ezbvvhuTUM/TxCkEWp2Wa
-         qIB2tMUkOPC9qHuJ0tdsebZ/ggScRGELfJKP9nhFbc5DCR15gxSonQjyLxrf0teHAd5Q
-         JU/neqJsWOaawARXC3Im+DRR029PcUGfM6ly+MVcS+oTgdpnirEW+TdA1GF/Yqvm9v4x
-         6+NhtUzLYLC+c4wRH7QbqpBDwVpyg/dU+VHEuvIf1QNvgj8nFAtf68SUU1tz7JkoDI52
-         /Icw==
-X-Gm-Message-State: AOAM531jVOY78C6y5SSGHqSaGWPYQ/8KYL1pQgcR0zmOpZfjHt9VPGpI
-        F8YV0ONLOTIH6wTOTkn9mZFx85vg+U3hN42XJ06zmg==
-X-Google-Smtp-Source: ABdhPJx08FQcEL2UXtCAGxTVtKc6L4YcEdQ26f3P0zd41icoXQklXAOtrjA3tbBpHCVb7lXrokHsBMM4SWrlwn2irUI=
-X-Received: by 2002:a05:6808:181a:: with SMTP id bh26mr4480953oib.166.1629839549674;
- Tue, 24 Aug 2021 14:12:29 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 24 Aug 2021 14:12:29 -0700
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=KtIOJH8PBF1/iH8MyRGz0pTPExah6uG34M1IBP8eNO4=;
+        b=g4ibAF9bNDfyv4rTUoY0yrlc6o6n/nqvngQHW3W2PaC6f/oqRFWPXWK/atc7tR5OaP
+         /SB+jDystIu9fFxVqCA/qQVEkGj7mhpyGGUY61enmqsDiLeEvq6W6By5SQ4QVGnt4tkn
+         BUHxwHNIgcqcmoeY2GPbr2k/dnnFYaBRnEq0ZJWkTWZHtAJcG/E5TmNmvqv/0shSF4Hn
+         DXW8y6ebhnT6rQS0cttELHpJTHUGwTqHSmOY82U/QWgRWH0Lq+T7fCn1i1uc5Q6nzlIO
+         Q8jTdgf37REQ2tFtvLKRZfujb6HHyMNlXchSfGdFMJrUHplLJjLthWAp9yGPgKFYZdNO
+         5HZA==
+X-Gm-Message-State: AOAM532YvqrtEI6gft48pd7incHywAodP14+bSF5WGvESpJRQqHtLypV
+        fNAGg9dcn47iGNEulC6yoLRAOw==
+X-Google-Smtp-Source: ABdhPJxuJcLxPQAlEmc0AL12sf8aq7NBOiIdeVjFqiE4i9qnJS5dCWKdp2zESJmeK95e0wFsK1TOyA==
+X-Received: by 2002:a05:6830:4124:: with SMTP id w36mr25092577ott.72.1629840117620;
+        Tue, 24 Aug 2021 14:21:57 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id 2sm4692902oto.50.2021.08.24.14.21.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Aug 2021 14:21:56 -0700 (PDT)
+Date:   Tue, 24 Aug 2021 14:23:14 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bjorn Helgaas <helgaas@kernel.org>
+Cc:     Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Krzysztof Wilczy??ski <kw@linux.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] PCI: dwc: Perform host_init() before registering
+ msi
+Message-ID: <YSVjQgDmatkkCxtn@ripper>
+References: <YSVTdedrDSgSYgwm@ripper>
+ <20210824202925.GA3491441@bjorn-Precision-5520>
 MIME-Version: 1.0
-In-Reply-To: <YSU8djt765o81YiQ@google.com>
-References: <20210823134726.1.I1dd23ddf77e5b3568625d80d6827653af071ce19@changeid>
- <CAE-0n52Rp9QGUYeP==YdXEJAwbtHtZX=5b3gaR-smLMFybsf6A@mail.gmail.com> <YSU8djt765o81YiQ@google.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Tue, 24 Aug 2021 14:12:29 -0700
-Message-ID: <CAE-0n52SDVCqyp64cWd0uw1F4NRO3N8dT5LNOO+eh-zvWpffoQ@mail.gmail.com>
-Subject: Re: [PATCH] thermal: qcom: spmi-adc-tm5: Don't abort probing if a
- sensor is not used
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Amit Kucheria <amitk@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210824202925.GA3491441@bjorn-Precision-5520>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Matthias Kaehlcke (2021-08-24 11:37:42)
-> On Mon, Aug 23, 2021 at 06:50:04PM -0500, Stephen Boyd wrote:
-> > Quoting Matthias Kaehlcke (2021-08-23 13:47:30)
-> > > adc_tm5_register_tzd() registers the thermal zone sensors for all
-> > > channels of the thermal monitor. If the registration of one channel
-> > > fails the function skips the processing of the remaining channels
-> > > and returns an error, which results in _probe() being aborted.
-> > >
-> > > One of the reasons the registration could fail is that none of the
-> > > thermal zones is using the channel/sensor, which hardly is a critical
-> > > error (if it is an error at all). If this case is detected emit a
-> > > warning and continue with processing the remaining channels.
-> > >
-> > > Fixes: ca66dca5eda6 ("thermal: qcom: add support for adc-tm5 PMIC thermal monitor")
-> > > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
-> > > ---
-> >
-> > Reported-by: Stephen Boyd <swboyd@chromium.org>
-> > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
->
-> Thanks for the review!
->
-> > Should we also disable the 'charger-thermistor@0' node in
-> > sc7180-trogdor.dtsi on lazor boards, instead of the thermal zone, or in
-> > addition to the thermal zone? It isn't used so there's not much value in
-> > exposing it.
->
-> I wouldn't do it instead of disabling the thermal zone, a TZ without a
-> sensor doesn't seem very useful.
->
-> IIUC the thermistor nodes would need to be deleted, not disabled.
-> Currently the nodes don't have labels, so either the labels would need
-> to be added, or the deletion would have to look something like this:
->
-> &pm6150_adc {
->         /delete-node/ charger-thermistor@4f;
-> };
->
-> &pm6150_adc_tm {
->         /delete-node/ charger-thermistor@0;
-> };
->
-> If the change is done for Lazor it should also be done for PomPom and
-> CoachZ.
->
-> I don't see a strong need to delete the ADC nodes with the clutter it
-> adds, but I'm open to it if you prefer :)
+On Tue 24 Aug 13:29 PDT 2021, Bjorn Helgaas wrote:
 
-The driver will be present in system memory when it is never used. I was
-mostly noticing that adc_tm5_get_dt_data() calls
-of_get_available_child_count() and bails probe if there aren't any child
-nodes. In this case, the only child node is charger-thermistor, so probe
-for this driver would fail if the thermistor was removed. So at that
-point, I wonder if we should disable the thermal zone node (already
-done) and then also the adc node (sadly called adc-tm). This way we
-don't eat up kernel memory to describe a device that isn't used and a
-driver that wastes time probing and then fails to probe anyway.
+> On Tue, Aug 24, 2021 at 01:15:49PM -0700, Bjorn Andersson wrote:
+> > On Tue 24 Aug 12:05 PDT 2021, Bjorn Helgaas wrote:
+> > 
+> > > On Mon, Aug 23, 2021 at 08:49:57AM -0700, Bjorn Andersson wrote:
+> > > > On the Qualcomm sc8180x platform the bootloader does something related
+> > > > to PCI that leaves a pending "msi" interrupt, which with the current
+> > > > ordering often fires before init has a chance to enable the clocks that
+> > > > are necessary for the interrupt handler to access the hardware.
+> > > > 
+> > > > Move the host_init() call before the registration of the "msi" interrupt
+> > > > handler to ensure the host driver has a chance to enable the clocks.
+> > > 
+> > > Did you audit other drivers for similar issues?  If they do, we should
+> > > fix them all at once.
+> > 
+> > I only looked at the DesignWware drivers, in an attempt to find any
+> > issues the proposed reordering.
+> > 
+> > The set of bugs causes by drivers registering interrupts before critical
+> > resources tends to be rather visible and I don't know if there's much
+> > value in speculatively "fixing" drivers.
+> > 
+> > E.g. a quick look through the drivers I see a similar pattern in
+> > pci-tegra.c, but it's unlikely that they have the similar problem in
+> > practice and I have no way to validate that a change to the order would
+> > have a positive effect - or any side effects.
+> > 
+> > Or am I misunderstanding your request?
+> 
+> That is exactly my request.
+
+Okay.
+
+> I'm not sure if the potential issue you
+> noticed in pci-tegra.c is similar to the one I mentioned here:
+> 
+>   https://lore.kernel.org/linux-pci/20210624224040.GA3567297@bjorn-Precision-5520/
+> 
+
+As I still have the tegra driver open, I share your concern about the
+use of potentially uninitialized variables.
+
+The problem I was concerned about was however the same as in my patch
+and the rockchip one, that if the tegra hardware isn't clocked the
+pm_runtime_get_sync() (which would turn on power and clock) happens
+after setting up the msi chain handler...
+
+> but I am actually in favor of speculatively fixing drivers even though
+> they're hard to test.  Code like this tends to get copied to other
+> places, and fixing several drivers sometimes exposes opportunities for
+> refactoring and sharing code.
+> 
+
+Looking through the other cases mentioned in your reply above certainly
+gives a feeling that this problem has been inherited from driver to
+driver...
+
+I've added a ticket to my backlog to take a deeper look at this.
+
+Regards,
+Bjorn
