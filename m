@@ -2,133 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 982B93F691B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Aug 2021 20:34:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 83EE23F6924
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Aug 2021 20:37:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232969AbhHXSfc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Aug 2021 14:35:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50646 "EHLO
+        id S233909AbhHXSi3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Aug 2021 14:38:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231986AbhHXSfa (ORCPT
+        with ESMTP id S233775AbhHXSi3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Aug 2021 14:35:30 -0400
-Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51679C061764
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Aug 2021 11:34:46 -0700 (PDT)
-Received: by mail-ot1-x330.google.com with SMTP id c19-20020a9d6153000000b0051829acbfc7so48573915otk.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Aug 2021 11:34:46 -0700 (PDT)
+        Tue, 24 Aug 2021 14:38:29 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F11D9C061764
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Aug 2021 11:37:44 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id b9so8404601plx.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Aug 2021 11:37:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=MpSjVxSMjJK4OJw4oTKLD3JL0PWvQPTVS0fPqXZYl3g=;
-        b=n/JcnajTDuWMOgB1dqCLhqVz/SK9+IAgpIc6Z5Dlx0X3Bz7NVcegvqK2cpm3DNJbPQ
-         10DZqlRko41kmEobXSLmA4zrYTieEAA4vI1y7bwkO66KsdU7sMqstshTU6BpT0hdAZfy
-         i6kXOJtX6evRy9U7I6Sp6+LA4yS0fHqGvNoOA=
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=tv/nPc8c3b2qEEOTOUCkzBCA/UiZaoRBnN+t+aCQOu4=;
+        b=NKUmxzcATIKvEt/jjhKnjVZN2Cfmdjm8h5j/1Lq/MhWpLUmgL0Bkf+gpFWP6l6+1f2
+         q9PADEOVGFuBGZ8YcqmJRxYaIiahEmsY6ObaxXyltz1dBlYDnteopN0uN12HO7i3mHzF
+         R+XG9lmLbjGy1/LPQjpHEg9wUTDnkX16Jispg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=MpSjVxSMjJK4OJw4oTKLD3JL0PWvQPTVS0fPqXZYl3g=;
-        b=MGRh1ccPhSzfWfqscbKwONNwuYe0ZSiPLYgYU7I2JGfeSALKu+MStif+RDtFkuKvIN
-         UB193G6UcFjKoGmAYCwKqHuyodCceKPprglle8sswR6J4KZmMPSc4URxsCW/U5g9am9v
-         rQfh9N8MaCJUJdrrexIewF8iyzyxPH7qk3caEvLjUgWlb/6s3JwxunvWRWYRrE3VP7GH
-         Pdebv9TdEQIKtYr6rhKy6TIAqznlBpnWiaRmswPuWyNBIedZPFU2ZCwxAmf8pHKGTaih
-         8Is8OTJWHmZiDLyn3ePSMvFOr26CaJDzQUE4yE8CodQFjus6i4aVR6se6qguI5iFlnTd
-         tboQ==
-X-Gm-Message-State: AOAM531gztLp2gBMKjMycYMGD57inp4s5vn4q+qobRbenkKRR4qPiGBx
-        1l7sEL1o4NkopfGNWuF5YZ+8luY3ZL1XKA+1LK9XWQ==
-X-Google-Smtp-Source: ABdhPJzRH/Uc7RJJIpCbxFsIdbJBiPfb7rT9/hLjX1Vp9cEqoF/t87EH1mDk73cPqGvQmJ4MtwBCUJQX8YPNs8ZHDkQ=
-X-Received: by 2002:a05:6808:180e:: with SMTP id bh14mr3854642oib.19.1629830085691;
- Tue, 24 Aug 2021 11:34:45 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 24 Aug 2021 11:34:45 -0700
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=tv/nPc8c3b2qEEOTOUCkzBCA/UiZaoRBnN+t+aCQOu4=;
+        b=hWereihsrzDRebg756SokJq7sn2GOQVpcTMP5QTVfTpKJk6DCh2q4qdcJ1VrSG2Skx
+         cynTUYWKSe4MtuvL67ZC0JE4pWAVgHL6qXsRc26c2OyraoVYut9JvbGuxTmPwDvQhgX3
+         bqDNRCtqBhha0HbAYsNki/tmIXl3yQ4+AjGclxe7LJT2E58re5hUZ5FYqe81zNw8KN26
+         J4m1Mfn9hRZaTl/fTUH3M4IOtCeYKi01bFUH3MN00DVFWEci+kTjY1+oyDlbzZhQShXm
+         or7xZ3N/W21MD2ziz2zGnfsQ3dY/ln+HicxEVbjfRns8mpdk83G3/1VYKKN7iOIBlxUw
+         Zmjw==
+X-Gm-Message-State: AOAM532l6bRPjPQCHebYAKG6ax3pk4HHlYfjB4BquBK7SzvPqPNYkFku
+        2YJGC0eIk+K7GB8fDF5Zd7LuAQ==
+X-Google-Smtp-Source: ABdhPJzTmCLJO0i02apqzlEk3S7QLFHlA5GXZgG4/wXfDOzlCYW6C29KqFcaYGzh7WDyP99s9zWX/w==
+X-Received: by 2002:a17:902:b190:b029:12d:487:dddc with SMTP id s16-20020a170902b190b029012d0487dddcmr5054694plr.24.1629830264572;
+        Tue, 24 Aug 2021 11:37:44 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:7e28:476b:8ddf:c945])
+        by smtp.gmail.com with UTF8SMTPSA id y19sm19393870pfr.137.2021.08.24.11.37.43
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 24 Aug 2021 11:37:44 -0700 (PDT)
+Date:   Tue, 24 Aug 2021 11:37:42 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Amit Kucheria <amitk@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Zhang Rui <rui.zhang@intel.com>, linux-pm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] thermal: qcom: spmi-adc-tm5: Don't abort probing if a
+ sensor is not used
+Message-ID: <YSU8djt765o81YiQ@google.com>
+References: <20210823134726.1.I1dd23ddf77e5b3568625d80d6827653af071ce19@changeid>
+ <CAE-0n52Rp9QGUYeP==YdXEJAwbtHtZX=5b3gaR-smLMFybsf6A@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <1629113954-14084-2-git-send-email-deesin@codeaurora.org>
-References: <1629113954-14084-1-git-send-email-deesin@codeaurora.org> <1629113954-14084-2-git-send-email-deesin@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Tue, 24 Aug 2021 11:34:45 -0700
-Message-ID: <CAE-0n50G_OYqR6R8+K5RkrCBvdQW-E-zDoMZ-yyAoEJW2WyxcA@mail.gmail.com>
-Subject: Re: [PATCH V6 1/2] soc: qcom: aoss: Expose send for generic usecase
-To:     Deepak Kumar Singh <deesin@codeaurora.org>,
-        bjorn.andersson@linaro.org, clew@codeaurora.org,
-        sibis@codeaurora.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, Andy Gross <agross@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <CAE-0n52Rp9QGUYeP==YdXEJAwbtHtZX=5b3gaR-smLMFybsf6A@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Deepak Kumar Singh (2021-08-16 04:39:13)
-> Not all upcoming usecases will have an interface to allow the aoss
-> driver to hook onto. Expose the send api and create a get function to
-> enable drivers to send their own messages to aoss.
->
-> Signed-off-by: Chris Lew <clew@codeaurora.org>
-> Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
-> ---
+On Mon, Aug 23, 2021 at 06:50:04PM -0500, Stephen Boyd wrote:
+> Quoting Matthias Kaehlcke (2021-08-23 13:47:30)
+> > adc_tm5_register_tzd() registers the thermal zone sensors for all
+> > channels of the thermal monitor. If the registration of one channel
+> > fails the function skips the processing of the remaining channels
+> > and returns an error, which results in _probe() being aborted.
+> >
+> > One of the reasons the registration could fail is that none of the
+> > thermal zones is using the channel/sensor, which hardly is a critical
+> > error (if it is an error at all). If this case is detected emit a
+> > warning and continue with processing the remaining channels.
+> >
+> > Fixes: ca66dca5eda6 ("thermal: qcom: add support for adc-tm5 PMIC thermal monitor")
+> > Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> > ---
+> 
+> Reported-by: Stephen Boyd <swboyd@chromium.org>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
-With one nit below
+Thanks for the review!
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Should we also disable the 'charger-thermistor@0' node in
+> sc7180-trogdor.dtsi on lazor boards, instead of the thermal zone, or in
+> addition to the thermal zone? It isn't used so there's not much value in
+> exposing it.
 
-> diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
-> index 934fcc4..a43c22c 100644
-> --- a/drivers/soc/qcom/qcom_aoss.c
-> +++ b/drivers/soc/qcom/qcom_aoss.c
-> @@ -515,6 +521,48 @@ static void qmp_cooling_devices_remove(struct qmp *qmp)
->                 thermal_cooling_device_unregister(qmp->cooling_devs[i].cdev);
->  }
->
-> +/**
-> + * qmp_get() - get a qmp handle from a device
-> + * @dev: client device pointer
-> + *
-> + * Return: handle to qmp device on success, ERR_PTR() on failure
-> + */
-> +struct qmp *qmp_get(struct device *dev)
-> +{
-> +       struct platform_device *pdev;
-> +       struct device_node *np;
-> +       struct qmp *qmp;
-> +
-> +       if (!dev || !dev->of_node)
-> +               return ERR_PTR(-EINVAL);
-> +
-> +       np = of_parse_phandle(dev->of_node, "qcom,qmp", 0);
-> +       if (!np)
-> +               return ERR_PTR(-ENODEV);
-> +
-> +       pdev = of_find_device_by_node(np);
-> +       of_node_put(np);
-> +       if (!pdev)
-> +               return ERR_PTR(-EINVAL);
-> +
-> +       qmp = platform_get_drvdata(pdev);
-> +
-> +       return qmp ? qmp : ERR_PTR(-EPROBE_DEFER);
-> +}
-> +EXPORT_SYMBOL(qmp_get);
-> +
-> +/**
-> + * qmp_put() - Match get_device() inside of_find_device_by_node()
-> + *            in qmp_get()
+I wouldn't do it instead of disabling the thermal zone, a TZ without a
+sensor doesn't seem very useful.
 
-I meant to put this comment next to the put_device() call. This should
-say something like "release a qmp handle" and then the existing comment
-moved down to the if below.
+IIUC the thermistor nodes would need to be deleted, not disabled.
+Currently the nodes don't have labels, so either the labels would need
+to be added, or the deletion would have to look something like this:
 
-> + * @qmp: qmp handle obtained from qmp_get()
-> + */
-> +void qmp_put(struct qmp *qmp)
-> +{
-> +       if (!IS_ERR_OR_NULL(qmp))
-> +               put_device(qmp->dev);
-> +}
-> +EXPORT_SYMBOL(qmp_put);
-> +
->  static int qmp_probe(struct platform_device *pdev)
->  {
->         struct resource *res;
+&pm6150_adc {
+        /delete-node/ charger-thermistor@4f;
+};
+
+&pm6150_adc_tm {
+        /delete-node/ charger-thermistor@0;
+};
+
+If the change is done for Lazor it should also be done for PomPom and
+CoachZ.
+
+I don't see a strong need to delete the ADC nodes with the clutter it
+adds, but I'm open to it if you prefer :)
