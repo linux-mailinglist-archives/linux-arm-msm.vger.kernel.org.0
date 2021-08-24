@@ -2,217 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 310B03F5F61
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Aug 2021 15:44:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 530273F60D8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Aug 2021 16:44:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237266AbhHXNp2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Aug 2021 09:45:28 -0400
-Received: from smtp.radex.nl ([178.250.146.7]:34079 "EHLO radex-web.radex.nl"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229517AbhHXNp1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Aug 2021 09:45:27 -0400
-Received: from [192.168.1.35] (cust-178-250-146-69.breedbanddelft.nl [178.250.146.69])
-        by radex-web.radex.nl (Postfix) with ESMTPS id 650112406A;
-        Tue, 24 Aug 2021 15:44:41 +0200 (CEST)
-From:   Ferry Toth <fntoth@gmail.com>
-Subject: Re: [PATCH v10 0/6] Re-introduce TX FIFO resize for larger EP
- bursting
-To:     Pavel Hofman <pavel.hofman@ivitera.com>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>
-Cc:     Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <wcheng@codeaurora.org>,
-        "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
-        "robh+dt@kernel.org" <robh+dt@kernel.org>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "frowand.list@gmail.com" <frowand.list@gmail.com>,
-        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "jackp@codeaurora.org" <jackp@codeaurora.org>,
-        "heikki.krogerus@linux.intel.com" <heikki.krogerus@linux.intel.com>,
-        Ruslan Bilovol <ruslan.bilovol@gmail.com>
-References: <1623923899-16759-1-git-send-email-wcheng@codeaurora.org>
- <87pmv9l1dv.fsf@kernel.org> <9dc6cd83-17b9-7075-0934-6b9d41b6875d@gmail.com>
- <87a6mbudvc.fsf@kernel.org> <6e8bb4ad-fe68-ad36-7416-2b8e10b6ae96@gmail.com>
- <877dhev68a.fsf@kernel.org> <cca69e90-b0ef-00b8-75d3-3bf959a93b45@gmail.com>
- <874kchvcq0.fsf@kernel.org> <e59f1201-2aa2-9075-1f94-a6ae7a046dc1@gmail.com>
- <8735raj766.fsf@kernel.org> <b3417c2c-613b-8ef6-2e2d-6e2cf9a5d5fd@gmail.com>
- <b3e820f0-9c94-7cba-a248-3b2ec5378ab0@gmail.com>
- <d298df65-417b-f318-9374-b463a15d8308@ivitera.com>
- <a7d7f0dd-dfbb-5eef-d1da-8cbdab5fc4a7@gmail.com>
- <c4e29ac0-1df1-3c64-1218-3687f07e7f77@ivitera.com>
- <1fb52c92-9319-c035-722f-695ab34723dd@gmail.com>
- <702c72cd-40e4-e641-797a-764e7e611afb@ivitera.com>
- <CAHp75VeZBLgf8YhEjdOV1Hva_dJh_=VHRGyVb=r44yh-9n+F4A@mail.gmail.com>
- <d1fb0ad5-e304-8864-a2e4-42d5f652a6a7@ivitera.com>
- <7ad8b755-1fa0-3be4-3f2e-a4d95858e450@synopsys.com>
- <c84135c3-c730-208b-dde8-916c7bde1d73@ivitera.com>
-Message-ID: <84236328-750e-700a-855b-19b362362d25@gmail.com>
-Date:   Tue, 24 Aug 2021 15:44:40 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S237582AbhHXOpd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Aug 2021 10:45:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53142 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238039AbhHXOpc (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 24 Aug 2021 10:45:32 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 258EEC0613C1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Aug 2021 07:44:48 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id g66-20020a9d12c8000000b0051aeba607f1so38182146otg.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Aug 2021 07:44:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=AeRXMAsFKFtCmgO4aNf9vhF215sQMxa0Gch/8WOqfAM=;
+        b=eyWlUTkwhOd0cFWHm8X30LzO/K/KeLiPSU/BsB3sXTZChAtoqXj8FbzYThh5W19/Qe
+         CiYT8dd6zlJzDEteo+RXCzGZ+CG43gaJ+qZH/dx2EbT7Rko+mRyP+/tPf1Q4MS2eov13
+         vMM+NFJ2eIiOBugMLiAyb8DcfwP0XGdvCixVCF7ppjOngF3550ISqaeCRVkExUCiUYcT
+         1yelGthl31bS/NXyAzjy0xaIWWvhcdwpXKuA9yf8YyEZDz4kXZM2jyjHvIpzw+GqwVGH
+         lbxIk7z9Z0N/yA/s1qEAVJb3uQIfjFtjMlu2TcN2CyvRb5kScqnBxvk55F2owTs8A55B
+         Uxkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=AeRXMAsFKFtCmgO4aNf9vhF215sQMxa0Gch/8WOqfAM=;
+        b=Sv9/sjf00/ceeHf6jiW1dcoDckUdDkasd12bei23do6Q7IKic5+IGPFzit6MAjmPvK
+         y+Lzk8ED4CODb6+GlhPGgWEixhY51Zzx0t8QlLcxVppzkFzcH/rgXojSytK3t+cuQk+E
+         Caz8/yEcUFgHNvgs0soxHRdu5kC2ZblsuB0UiylUuh3RfXxbI56Qc/4fO6En/vu65tny
+         XJ1YqLfRwl3HfJW/qRk+YN/778jFGgCuLAdSVHIX2Oew5o4M1OY2Tol3JjaY6EboA4Vq
+         Pe2fYg1GBAGVy3qCOdvlzFp0R2fjq8uizGzbBuAI3Kpa0JIXLRM4/wtQX2kWEtEZqURV
+         E1og==
+X-Gm-Message-State: AOAM532/HCA+hGLJKBFgRXza6oANX0BXDzHEwDzd1jy3jHDU8/0QSFsQ
+        BerwwQqMxNMQKz8DcRGPUJM/9w==
+X-Google-Smtp-Source: ABdhPJyjK+cseOpauaCEYkJSxmOEm7lMp3SVSrhTVW0tyOit41rfYetFtw7kZrCji3qezu8PJBGa7g==
+X-Received: by 2002:a9d:5f07:: with SMTP id f7mr32002492oti.183.1629816287441;
+        Tue, 24 Aug 2021 07:44:47 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id m206sm4378456oif.23.2021.08.24.07.44.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Aug 2021 07:44:47 -0700 (PDT)
+Date:   Tue, 24 Aug 2021 07:46:04 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        An?bal Lim?n <anibal.limon@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Vinod Koul <vkoul@kernel.org>
+Subject: Re: [PATCH] arm64: dts: qcom: db410c: Update firmware-name for wcnss
+ and mpss
+Message-ID: <YSUGLFx2QST9vgIU@ripper>
+References: <20200108055735.660475-1-bjorn.andersson@linaro.org>
+ <20210217223406.1422005-1-anibal.limon@linaro.org>
+ <CAA8EJpqXyQCFGgTRk+dqxD6TdJycLeGx4EQ0OBov5_3hVogM1g@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <c84135c3-c730-208b-dde8-916c7bde1d73@ivitera.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+In-Reply-To: <CAA8EJpqXyQCFGgTRk+dqxD6TdJycLeGx4EQ0OBov5_3hVogM1g@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi
+On Tue 24 Aug 05:39 PDT 2021, Dmitry Baryshkov wrote:
 
-Op 24-08-2021 om 07:39 schreef Pavel Hofman:
->
->
-> Dne 24. 08. 21 v 0:50 Thinh Nguyen napsal(a):
->> Pavel Hofman wrote:
->>>
->>>
->>> Dne 23. 08. 21 v 17:21 Andy Shevchenko napsal(a):
->>>> On Mon, Aug 23, 2021 at 5:59 PM Pavel Hofman
->>>> <pavel.hofman@ivitera.com> wrote:
->>>>> Dne 22. 08. 21 v 21:43 Ferry Toth napsal(a):
->>>>>> Op 19-08-2021 om 23:04 schreef Pavel Hofman:
->>>>>>> Dne 19. 08. 21 v 22:10 Ferry Toth napsal(a):
->>>>>>>> Op 19-08-2021 om 09:51 schreef Pavel Hofman:
->>>>>>>>> Dne 18. 08. 21 v 21:07 Ferry Toth napsal(a):
->>>>>>>>>> Op 18-08-2021 om 00:00 schreef Ferry Toth:
->>>>
->>>> ...
->>>>
->>>>>>>>>> So, where do we go from here?
->>>>>>>>>
->>>>>>>>> I know the patches have been tested on dwc2 (by me and 
->>>>>>>>> others).Â  I
->>>>>>>>> do not know if Ruslan or Jerome tested them on dwc3 but probably
->>>>>>>>> not. Ruslan has talked about RPi (my case too) and 
->>>>>>>>> BeagleboneBlack,
->>>>>>>>> both with dwc2. Perhaps the dwc2 behaves a bit differently than
->>>>>>>>> dwc3?
->>>>>>>>>
->>>>>>>>> The patches add a new EP-IN for async feedback. I am sorry I have
->>>>>>>>> not followed your long thread (it started as unrelated to 
->>>>>>>>> uac). Does
->>>>>>>>> the problem appear with f_uac1 or f_uac2? Please how have you
->>>>>>>>> reached the above problem?
->>>>>>>>
->>>>>>>> I'm sorry too. I first believed the issue was related to the patch
->>>>>>>> mentioned in the subject line.
->>>>>>>>
->>>>>>>> The problem appaers with f_uac2. I bost Edison_Arduino board in 
->>>>>>>> host
->>>>>>>> mode (there is a switch allowing to select host/device mode). When
->>>>>>>> flipping the switch to device mode udev run a script:
->>>>>>>> But as I am using configfs (excerpt follows) and just disabling 
->>>>>>>> the
->>>>>>>> last 2 line resolves the issue, I'm guessing uac2 is the issue. Or
->>>>>>>> exceeding the available resources.
->>>>>>>>
->>>>>>>> # Create directory structure
->>>>>>>> mkdir "${GADGET_BASE_DIR}"
->>>>>>>> cd "${GADGET_BASE_DIR}"
->>>>>>>> mkdir -p configs/c.1/strings/0x409
->>>>>>>> mkdir -p strings/0x409
->>>>>>>>
->>>>>>>> # Serial device
->>>>>>>> mkdir functions/gser.usb0
->>>>>>>> ln -s functions/gser.usb0 configs/c.1/
->>>>>>>> ###
->>>>>>>>
->>>>>>>> # Ethernet device
->>>>>>>> mkdir functions/eem.usb0
->>>>>>>> echo "${DEV_ETH_ADDR}" > functions/eem.usb0/dev_addr
->>>>>>>> echo "${HOST_ETH_ADDR}" > functions/eem.usb0/host_addr
->>>>>>>> ln -s functions/eem.usb0 configs/c.1/
->>>>>>>>
->>>>>>>> # Mass Storage device
->>>>>>>> mkdir functions/mass_storage.usb0
->>>>>>>> echo 1 > functions/mass_storage.usb0/stall
->>>>>>>> echo 0 > functions/mass_storage.usb0/lun.0/cdrom
->>>>>>>> echo 0 > functions/mass_storage.usb0/lun.0/ro
->>>>>>>> echo 0 > functions/mass_storage.usb0/lun.0/nofua
->>>>>>>> echo "${USBDISK}" > functions/mass_storage.usb0/lun.0/file
->>>>>>>> ln -s functions/mass_storage.usb0 configs/c.1/
->>>>>>>>
->>>>>>>> # UAC2 device
->>>>>>>> mkdir functions/uac2.usb0
->>>>>>>> ln -s functions/uac2.usb0 configs/c.1
->>>>>>>> ....
->>>>>>>
->>>>>>> As you say, could perhaps the reason be that the extra EP-IN 
->>>>>>> added in
->>>>>>> those patches (previously 1, now 2 with the default config you use)
->>>>>>> exceeds your EP-IN max count or available fifos somehow?Â  You 
->>>>>>> have a
->>>>>>> number of functions initialized. If you change the load order of 
->>>>>>> the
->>>>>>> functions, do you get the error later with a different function? 
->>>>>>> Just
->>>>>>> guessing...
->>>>>>>
->>>>>>> You should be able to switch the default async EP-OUT (which
->>>>>>> configures the new feedback EP-IN ) to adaptive EP-OUT (which 
->>>>>>> requires
->>>>>>> no feedback EP) with c_sync=8 parameter of f_uac2.
->>>>>>>
->>>>>>> https://urldefense.com/v3/__https://elixir.bootlin.com/linux/v5.14-rc6/source/drivers/usb/gadget/function/f_uac2.c*L47__;Iw!!A4F2R9G_pg!LBySrM_zgMGV0x-zZ7nSrs54yJw1GlnpUVUVxdQE8PeszSMZ6OkFX8lSoigwRbWQzLcU$ 
->>>>>>>
->>>>>>>
->>>>>>> https://urldefense.com/v3/__https://elixir.bootlin.com/linux/v5.14-rc6/source/drivers/usb/gadget/function/f_uac2.c*L830__;Iw!!A4F2R9G_pg!LBySrM_zgMGV0x-zZ7nSrs54yJw1GlnpUVUVxdQE8PeszSMZ6OkFX8lSoigwRfP5TdZC$ 
->>>>>>>
->>>>>>>
->>>>>>> https://urldefense.com/v3/__https://elixir.bootlin.com/linux/v5.14-rc6/source/include/uapi/linux/usb/ch9.h*L453__;Iw!!A4F2R9G_pg!LBySrM_zgMGV0x-zZ7nSrs54yJw1GlnpUVUVxdQE8PeszSMZ6OkFX8lSoigwRejzMbWO$ 
->>>>>>>
->>>>>>>
->>>>>>> Does that fix the problem?
->>>>>>
->>>>>> Not sure how to do that. Do you mean the module should have a 
->>>>>> parameter
->>>>>> called c_sync? `modinfo` list no parameters for usb_f_uac2.
->>>>>
->>>>> Those are configfs params, not available in modinfo.
->>>>>
->>>>> I checked and the value is "adaptive"
->>>>> https://urldefense.com/v3/__https://elixir.bootlin.com/linux/v5.14-rc7/source/drivers/usb/gadget/function/f_uac2.c*L1312__;Iw!!A4F2R9G_pg!LBySrM_zgMGV0x-zZ7nSrs54yJw1GlnpUVUVxdQE8PeszSMZ6OkFX8lSoigwRTETcbsN$ 
->>>>>
->>>>
->>>>
->>>>> In your configfs script:
->>>>
->>>> Kernel shouldn't crash with any available set of configuration
->>>> parameters, right? So, even if the parameter would fix the crash the
->>>> series is buggy and has to be reverted in my opinion.
->>>
->>> Sure, no problem with reverting. I am just trying to start up some
->>> troubleshooting. A resource exhaustion was mentioned here, that's why I
->>> suggested a way to test the patch with the original number of endpoints
->>> allocated. I do not get any crashes on my setup which uses fewer gadget
->>> functions. That's why I asked what happens if the functions load order
->>> is changed. I am afraid this thread is so complex that the actual
->>> problem has been burried in the history.
->>>
->>
->> As I pointed out previously, the crash is probably because of f_uac2
->> prematurely freeing feedback request before its completion.
->> usb_ep_dequeue() is asynchronous. dwc2() may treat it as a synchronous
->> call so you didn't get a crash.
->
-> Thanks for your hint, it greatly helps.
->>>
->>
->> I'm not sure how easy it is for you to obtain/test a device with dwc3,
->> but it would be great to also have it as part of your testing suite. :)
->
-> Can you recommend a reasonably priced device with viable kernel 
-> updates for the testing? Optionally with SS which you mentioned last 
-> time? Thanks.
->
-Edison-Arduino kit 2nd hand with display on ebay ~$100 :-)
+> On Thu, 18 Feb 2021 at 01:38, Aníbal Limón <anibal.limon@linaro.org> wrote:
+> >
+> > From: Bjorn Andersson <bjorn.andersson@linaro.org>
+> >
+> > Enable the mpss remoteproc node and specify the firmware-name for this
+> > and the wcnss remoteproc on the Dragonboard 410c.
+> >
+> > Link: https://lore.kernel.org/r/20200108055735.660475-1-bjorn.andersson@linaro.org
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > [rebased and moved to use pronto label]
+> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> > Tested-by: Aníbal Limón <anibal.limon@linaro.org>
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
 
-> Best regards,
->
-> Pavel.
+Thanks Dmitry, not sure why this hasn't been merged yet.
+
+Taking a further look at this I noticed that we never pushed the
+firmware to linux-firmware either, which I think was because we where
+uncertain of the directory structure at the time - a discussion which
+has been settled since.
+
+> > ---
+> >  arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi | 6 ++++++
+> >  1 file changed, 6 insertions(+)
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+> > index 3c7f97539390..8f1ada75d3ed 100644
+> > --- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+> > @@ -301,6 +301,11 @@ &lpass {
+> >         status = "okay";
+> >  };
+> >
+> > +&mpss {
+> > +       status = "okay";
+> > +       firmware-name = "qcom/msm8916/mba.mbn", "qcom/msm8916/modem.mdt";
+
+But if we're pushing things to linux-firmware, does anyone object
+against following the existing style and squashing the mdt+bNN files
+into .mbn (and thereby making this modem.mbn and below wcnss.mbn)?
+
+Regards,
+Bjorn
+
+> > +};
+> > +
+> >  &pm8916_resin {
+> >         status = "okay";
+> >         linux,code = <KEY_VOLUMEDOWN>;
+> > @@ -308,6 +313,7 @@ &pm8916_resin {
+> >
+> >  &pronto {
+> >         status = "okay";
+> > +       firmware-name = "qcom/msm8916/wcnss.mdt";
+> >  };
+> >
+> >  &sdhc_1 {
+> > --
+> > 2.30.0
+> >
+> 
+> 
+> -- 
+> With best wishes
+> Dmitry
