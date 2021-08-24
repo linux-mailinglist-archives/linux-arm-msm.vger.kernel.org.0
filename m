@@ -2,427 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 56DE43F6A83
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Aug 2021 22:36:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B17433F6A49
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Aug 2021 22:14:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235719AbhHXUhQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Aug 2021 16:37:16 -0400
-Received: from mailfilter03-out40.webhostingserver.nl ([195.211.72.99]:41783
-        "EHLO mailfilter03-out40.webhostingserver.nl" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S235591AbhHXUhP (ORCPT
+        id S235003AbhHXUPS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Aug 2021 16:15:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45562 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234911AbhHXUPS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Aug 2021 16:37:15 -0400
+        Tue, 24 Aug 2021 16:15:18 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B681DC0613CF
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Aug 2021 13:14:33 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id l7-20020a0568302b0700b0051c0181deebso17643243otv.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Aug 2021 13:14:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=exalondelft.nl; s=whs1;
-        h=content-transfer-encoding:mime-version:references:in-reply-to:message-id:date:
-         subject:cc:to:from:from;
-        bh=9UyO6eEUM1lBUK2N1pebN9AZrRxXRDgSRygyhZ5nPzo=;
-        b=FBF6n4W4eW3mKJIt0EuJG3EOid/NJFWDBecsbvFpEBxfQ3vJjxEfVuLwTfLYP9CR9Opx402wqr9yp
-         0EW478gayC/WzCnDjNsKt+1zrluUAbhxh16XkFfz6cudmJ59JyH3UhjzCIDk7ZW7TJ8XgstC9R69Eh
-         HDu9kU7YM6zzR65CeLHLkrMyp5jbAw/86Js8sbGopxW4M8lxQE2kKAPwmx/vencuzJZQHyva1vlTej
-         86S06FPYBQoT2Ip7O2zzoVVkTXbMgsWJC10JdVrWNctm7Ogl5YMawo+8l1iMePtVOci65/XuNbQbwd
-         /QhEZAYIjiVpSBavrMrmgVaTJ98aAvw==
-X-Halon-ID: b573dc90-0518-11ec-9803-001a4a4cb9a5
-Received: from s198.webhostingserver.nl (s198.webhostingserver.nl [141.138.168.154])
-        by mailfilter03.webhostingserver.nl (Halon) with ESMTPSA
-        id b573dc90-0518-11ec-9803-001a4a4cb9a5;
-        Tue, 24 Aug 2021 22:20:22 +0200 (CEST)
-Received: from [2001:981:6fec:1:a2a7:9be0:8d3d:f950] (helo=localhost.localdomain)
-        by s198.webhostingserver.nl with esmtpa (Exim 4.94.2)
-        (envelope-from <ftoth@exalondelft.nl>)
-        id 1mIcuG-007aM4-Tq; Tue, 24 Aug 2021 22:20:22 +0200
-From:   Ferry Toth <ftoth@exalondelft.nl>
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Ruslan Bilovol <ruslan.bilovol@gmail.com>,
-        Oded Gabbay <oded.gabbay@gmail.com>,
-        Cezary Rojewski <cezary.rojewski@intel.com>,
-        Ferry Toth <ftoth@exalondelft.nl>,
-        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Pawel Laszczak <pawell@cadence.com>,
-        Felipe Balbi <balbi@kernel.org>,
-        Jack Pham <jackp@codeaurora.org>, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-doc@vger.kernel.org
-Cc:     Jonathan Corbet <corbet@lwn.net>,
-        Lorenzo Colitti <lorenzo@google.com>,
-        Wesley Cheng <wcheng@codeaurora.org>, robh+dt@kernel.org,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        frowand.list@gmail.com, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, heikki.krogerus@linux.intel.com,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>,
-        Pavel Hofman <pavel.hofman@ivitera.com>,
-        Ferry Toth <fntoth@gmail.com>
-Subject: [PATCH v1 3/3] Revert "usb: gadget: f_uac2/u_audio: add feedback endpoint support"
-Date:   Tue, 24 Aug 2021 22:14:34 +0200
-Message-Id: <20210824201433.11385-3-ftoth@exalondelft.nl>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210824201433.11385-1-ftoth@exalondelft.nl>
-References: <20210824201433.11385-1-ftoth@exalondelft.nl>
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=QZeCJMWa2DyYIKT8pa19hLZA7G5Ooy4YsTZZ7q3AAk0=;
+        b=o+MAEkXjUlnugHRMChx4LwieuBiIAi4mQZvjGR7fvreydNMyquGGa7fWcTDHUcBgrQ
+         gWlcqGrFAKtu2bJuKxRDqAnZ4qFfy8bUCzt6kJ8boduahrwtF+mrhVnq4XhZRAaDbjR7
+         kZYRGjhp+SnfywAk+RIOi8BN7wfJQFVgs7dfHDKoJe2/bo4TVWrVjAcSbVwcSUbFCHTf
+         6ZfhxY4W6tQFuE7roPCKS71L87X+cvFgIsxwQS3GqLIJwzK+QT5dPL3+axVYg4YyfBpz
+         n9DdbKuJHP5rogwWs3tRSuPicO1+0IwX4sXAFQGaU6XCp85W8KBI+GSBTshdie8lxPyP
+         yWcw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=QZeCJMWa2DyYIKT8pa19hLZA7G5Ooy4YsTZZ7q3AAk0=;
+        b=krOi3DXi2uaW/TsnywEpJwG1FjXTvSEApVWbFIsz/sruacsM+ChAwzYkDgXLC/3D52
+         YYtQB6YXsdIfuze9TlQnbicbMKHJwOWSc7lyJMgxnyW9J2gcdAmcDuS20W5pYbpI6xnl
+         ftLe4hQ1ZCMKpPUp3PVzSxB7If/jrlkt13B90HVaf2obtL0Znlpxi+f94zeQcAK8LBd0
+         3mx7/mhgyJddnItWdy97KRFN5VQRcZMmGGxayYQk+2RKd9zKKKEoh7qNtMdPgAkEb+XH
+         Sv2c5DGHsqZhUv1Hjc1GEHctjOWJkteppnLL2nvqRyhbx4KkObYI7o9Thrx6sTcYEwJ9
+         4IEw==
+X-Gm-Message-State: AOAM533IjYjuOGk50NHmAtOcUK6AbCTVyS8cfeJmu/1EdFFrKZd1XMZs
+        8yar95HpcgKeStCWZkKI6wqnW/E+js6CPA==
+X-Google-Smtp-Source: ABdhPJxxW96qHYBwTeBhQSeNQcMWYpoBctpNwA/ov26qmHt06vQxhPHx8QeZsks//ic1sCFa8V2zow==
+X-Received: by 2002:aca:a8c8:: with SMTP id r191mr4201299oie.144.1629836072932;
+        Tue, 24 Aug 2021 13:14:32 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id r13sm4790133oti.80.2021.08.24.13.14.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 24 Aug 2021 13:14:32 -0700 (PDT)
+Date:   Tue, 24 Aug 2021 13:15:49 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bjorn Helgaas <helgaas@kernel.org>
+Cc:     Bjorn Helgaas <bhelgaas@google.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Krzysztof Wilczy??ski <kw@linux.com>,
+        Stanimir Varbanov <svarbanov@mm-sol.com>,
+        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 1/2] PCI: dwc: Perform host_init() before registering
+ msi
+Message-ID: <YSVTdedrDSgSYgwm@ripper>
+References: <20210823154958.305677-1-bjorn.andersson@linaro.org>
+ <20210824190527.GA3486548@bjorn-Precision-5520>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-X-Antivirus-Scanner: Clean mail though you should still use an Antivirus
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210824190527.GA3486548@bjorn-Precision-5520>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This reverts commit 24f779dac8f3efb9629adc0e486914d93dc45517.
+On Tue 24 Aug 12:05 PDT 2021, Bjorn Helgaas wrote:
 
-The commit is part of a series with commit
-24f779dac8f3efb9629adc0e486914d93dc45517 causing a BUG on dwc3
-hardware, at least on Intel Merrifield platform when configured
-through configfs:
-BUG: kernel NULL pointer dereference, address: 0000000000000008
-...
-RIP: 0010:dwc3_gadget_del_and_unmap_request+0x19/0xe0
-...
-Call Trace:
- dwc3_remove_requests.constprop.0+0x12f/0x170
- __dwc3_gadget_ep_disable+0x7a/0x160
- dwc3_gadget_ep_disable+0x3d/0xd0
- usb_ep_disable+0x1c/0x70
- u_audio_stop_capture+0x79/0x120 [u_audio]
- afunc_set_alt+0x73/0x80 [usb_f_uac2]
- composite_setup+0x224/0x1b90 [libcomposite]
+> On Mon, Aug 23, 2021 at 08:49:57AM -0700, Bjorn Andersson wrote:
+> > On the Qualcomm sc8180x platform the bootloader does something related
+> > to PCI that leaves a pending "msi" interrupt, which with the current
+> > ordering often fires before init has a chance to enable the clocks that
+> > are necessary for the interrupt handler to access the hardware.
+> > 
+> > Move the host_init() call before the registration of the "msi" interrupt
+> > handler to ensure the host driver has a chance to enable the clocks.
+> 
+> Did you audit other drivers for similar issues?  If they do, we should
+> fix them all at once.
+> 
 
-Pavel's suggestion to add
-`echo "adaptive" > functions/uac2.usb0/c_sync` to the configfs script
-resolves the issue.
-Thinh suggests "the crash is probably because of f_uac2 prematurely
-freeing feedback request before its completion. usb_ep_dequeue() is
-asynchronous. dwc2() may treat it as a synchronous call so you didn't
-get a crash."
+I only looked at the DesignWware drivers, in an attempt to find any
+issues the proposed reordering.
 
-Revert as this is a regression and the kernel shouldn't crash depending
-on configuration parameters.
+The set of bugs causes by drivers registering interrupts before critical
+resources tends to be rather visible and I don't know if there's much
+value in speculatively "fixing" drivers.
 
-Reported-by: Ferry Toth <fntoth@gmail.com>
----
- drivers/usb/gadget/function/f_uac2.c  |  49 +----------
- drivers/usb/gadget/function/u_audio.c | 119 +-------------------------
- drivers/usb/gadget/function/u_audio.h |   3 -
- 3 files changed, 3 insertions(+), 168 deletions(-)
+E.g. a quick look through the drivers I see a similar pattern in
+pci-tegra.c, but it's unlikely that they have the similar problem in
+practice and I have no way to validate that a change to the order would
+have a positive effect - or any side effects.
 
-diff --git a/drivers/usb/gadget/function/f_uac2.c b/drivers/usb/gadget/function/f_uac2.c
-index 5d63244ba319..7aa4c8bc5a1a 100644
---- a/drivers/usb/gadget/function/f_uac2.c
-+++ b/drivers/usb/gadget/function/f_uac2.c
-@@ -240,7 +240,7 @@ static struct usb_interface_descriptor std_as_out_if1_desc = {
- 	.bDescriptorType = USB_DT_INTERFACE,
- 
- 	.bAlternateSetting = 1,
--	.bNumEndpoints = 2,
-+	.bNumEndpoints = 1,
- 	.bInterfaceClass = USB_CLASS_AUDIO,
- 	.bInterfaceSubClass = USB_SUBCLASS_AUDIOSTREAMING,
- 	.bInterfaceProtocol = UAC_VERSION_2,
-@@ -317,37 +317,6 @@ static struct uac2_iso_endpoint_descriptor as_iso_out_desc = {
- 	.wLockDelay = 0,
- };
- 
--/* STD AS ISO IN Feedback Endpoint */
--static struct usb_endpoint_descriptor fs_epin_fback_desc = {
--	.bLength = USB_DT_ENDPOINT_SIZE,
--	.bDescriptorType = USB_DT_ENDPOINT,
--
--	.bEndpointAddress = USB_DIR_IN,
--	.bmAttributes = USB_ENDPOINT_XFER_ISOC | USB_ENDPOINT_USAGE_FEEDBACK,
--	.wMaxPacketSize = cpu_to_le16(3),
--	.bInterval = 1,
--};
--
--static struct usb_endpoint_descriptor hs_epin_fback_desc = {
--	.bLength = USB_DT_ENDPOINT_SIZE,
--	.bDescriptorType = USB_DT_ENDPOINT,
--
--	.bmAttributes = USB_ENDPOINT_XFER_ISOC | USB_ENDPOINT_USAGE_FEEDBACK,
--	.wMaxPacketSize = cpu_to_le16(4),
--	.bInterval = 4,
--};
--
--static struct usb_endpoint_descriptor ss_epin_fback_desc = {
--	.bLength = USB_DT_ENDPOINT_SIZE,
--	.bDescriptorType = USB_DT_ENDPOINT,
--
--	.bEndpointAddress = USB_DIR_IN,
--	.bmAttributes = USB_ENDPOINT_XFER_ISOC | USB_ENDPOINT_USAGE_FEEDBACK,
--	.wMaxPacketSize = cpu_to_le16(4),
--	.bInterval = 4,
--};
--
--
- /* Audio Streaming IN Interface - Alt0 */
- static struct usb_interface_descriptor std_as_in_if0_desc = {
- 	.bLength = sizeof std_as_in_if0_desc,
-@@ -462,7 +431,6 @@ static struct usb_descriptor_header *fs_audio_desc[] = {
- 	(struct usb_descriptor_header *)&as_out_fmt1_desc,
- 	(struct usb_descriptor_header *)&fs_epout_desc,
- 	(struct usb_descriptor_header *)&as_iso_out_desc,
--	(struct usb_descriptor_header *)&fs_epin_fback_desc,
- 
- 	(struct usb_descriptor_header *)&std_as_in_if0_desc,
- 	(struct usb_descriptor_header *)&std_as_in_if1_desc,
-@@ -493,7 +461,6 @@ static struct usb_descriptor_header *hs_audio_desc[] = {
- 	(struct usb_descriptor_header *)&as_out_fmt1_desc,
- 	(struct usb_descriptor_header *)&hs_epout_desc,
- 	(struct usb_descriptor_header *)&as_iso_out_desc,
--	(struct usb_descriptor_header *)&hs_epin_fback_desc,
- 
- 	(struct usb_descriptor_header *)&std_as_in_if0_desc,
- 	(struct usb_descriptor_header *)&std_as_in_if1_desc,
-@@ -525,7 +492,6 @@ static struct usb_descriptor_header *ss_audio_desc[] = {
- 	(struct usb_descriptor_header *)&ss_epout_desc,
- 	(struct usb_descriptor_header *)&ss_epout_desc_comp,
- 	(struct usb_descriptor_header *)&as_iso_out_desc,
--	(struct usb_descriptor_header *)&ss_epin_fback_desc,
- 
- 	(struct usb_descriptor_header *)&std_as_in_if0_desc,
- 	(struct usb_descriptor_header *)&std_as_in_if1_desc,
-@@ -602,26 +568,22 @@ static void setup_headers(struct f_uac2_opts *opts,
- 	struct usb_ss_ep_comp_descriptor *epin_desc_comp = NULL;
- 	struct usb_endpoint_descriptor *epout_desc;
- 	struct usb_endpoint_descriptor *epin_desc;
--	struct usb_endpoint_descriptor *epin_fback_desc;
- 	int i;
- 
- 	switch (speed) {
- 	case USB_SPEED_FULL:
- 		epout_desc = &fs_epout_desc;
- 		epin_desc = &fs_epin_desc;
--		epin_fback_desc = &fs_epin_fback_desc;
- 		break;
- 	case USB_SPEED_HIGH:
- 		epout_desc = &hs_epout_desc;
- 		epin_desc = &hs_epin_desc;
--		epin_fback_desc = &hs_epin_fback_desc;
- 		break;
- 	default:
- 		epout_desc = &ss_epout_desc;
- 		epin_desc = &ss_epin_desc;
- 		epout_desc_comp = &ss_epout_desc_comp;
- 		epin_desc_comp = &ss_epin_desc_comp;
--		epin_fback_desc = &ss_epin_fback_desc;
- 	}
- 
- 	i = 0;
-@@ -649,7 +611,6 @@ static void setup_headers(struct f_uac2_opts *opts,
- 			headers[i++] = USBDHDR(epout_desc_comp);
- 
- 		headers[i++] = USBDHDR(&as_iso_out_desc);
--		headers[i++] = USBDHDR(epin_fback_desc);
- 	}
- 	if (EPIN_EN(opts)) {
- 		headers[i++] = USBDHDR(&std_as_in_if0_desc);
-@@ -883,12 +844,6 @@ afunc_bind(struct usb_configuration *cfg, struct usb_function *fn)
- 			dev_err(dev, "%s:%d Error!\n", __func__, __LINE__);
- 			return -ENODEV;
- 		}
--		agdev->in_ep_fback = usb_ep_autoconfig(gadget,
--						       &fs_epin_fback_desc);
--		if (!agdev->in_ep_fback) {
--			dev_err(dev, "%s:%d Error!\n", __func__, __LINE__);
--			return -ENODEV;
--		}
- 	}
- 
- 	if (EPIN_EN(uac2_opts)) {
-@@ -912,10 +867,8 @@ afunc_bind(struct usb_configuration *cfg, struct usb_function *fn)
- 				le16_to_cpu(ss_epout_desc.wMaxPacketSize));
- 
- 	hs_epout_desc.bEndpointAddress = fs_epout_desc.bEndpointAddress;
--	hs_epin_fback_desc.bEndpointAddress = fs_epin_fback_desc.bEndpointAddress;
- 	hs_epin_desc.bEndpointAddress = fs_epin_desc.bEndpointAddress;
- 	ss_epout_desc.bEndpointAddress = fs_epout_desc.bEndpointAddress;
--	ss_epin_fback_desc.bEndpointAddress = fs_epin_fback_desc.bEndpointAddress;
- 	ss_epin_desc.bEndpointAddress = fs_epin_desc.bEndpointAddress;
- 
- 	setup_descriptor(uac2_opts);
-diff --git a/drivers/usb/gadget/function/u_audio.c b/drivers/usb/gadget/function/u_audio.c
-index f637ebec80b0..5fbceee897a3 100644
---- a/drivers/usb/gadget/function/u_audio.c
-+++ b/drivers/usb/gadget/function/u_audio.c
-@@ -38,10 +38,6 @@ struct uac_rtd_params {
- 	unsigned int max_psize;	/* MaxPacketSize of endpoint */
- 
- 	struct usb_request **reqs;
--
--	struct usb_request *req_fback; /* Feedback endpoint request */
--	unsigned int ffback; /* Real frequency reported by feedback endpoint */
--	bool fb_ep_enabled; /* if the ep is enabled */
- };
- 
- struct snd_uac_chip {
-@@ -74,32 +70,6 @@ static const struct snd_pcm_hardware uac_pcm_hardware = {
- 	.periods_min = MIN_PERIODS,
- };
- 
--static void u_audio_set_fback_frequency(enum usb_device_speed speed,
--					unsigned int freq, void *buf)
--{
--	u32 ff = 0;
--
--	if (speed == USB_SPEED_FULL) {
--		/*
--		 * Full-speed feedback endpoints report frequency
--		 * in samples/microframe
--		 * Format is encoded in Q10.10 left-justified in the 24 bits,
--		 * so that it has a Q10.14 format.
--		 */
--		ff = DIV_ROUND_UP((freq << 14), 1000);
--	} else {
--		/*
--		 * High-speed feedback endpoints report frequency
--		 * in samples/microframe.
--		 * Format is encoded in Q12.13 fitted into four bytes so that
--		 * the binary point is located between the second and the third
--		 * byte fromat (that is Q16.16)
--		 */
--		ff = DIV_ROUND_UP((freq << 13), 1000);
--	}
--	*(__le32 *)buf = cpu_to_le32(ff);
--}
--
- static void u_audio_iso_complete(struct usb_ep *ep, struct usb_request *req)
- {
- 	unsigned int pending;
-@@ -203,34 +173,6 @@ static void u_audio_iso_complete(struct usb_ep *ep, struct usb_request *req)
- 		dev_err(uac->card->dev, "%d Error!\n", __LINE__);
- }
- 
--static void u_audio_iso_fback_complete(struct usb_ep *ep,
--				       struct usb_request *req)
--{
--	struct uac_rtd_params *prm = req->context;
--	struct snd_uac_chip *uac = prm->uac;
--	struct g_audio *audio_dev = uac->audio_dev;
--	int status = req->status;
--	unsigned long flags;
--
--	/* i/f shutting down */
--	if (!prm->fb_ep_enabled || req->status == -ESHUTDOWN)
--		return;
--
--	/*
--	 * We can't really do much about bad xfers.
--	 * Afterall, the ISOCH xfers could fail legitimately.
--	 */
--	if (status)
--		pr_debug("%s: iso_complete status(%d) %d/%d\n",
--			__func__, status, req->actual, req->length);
--
--	u_audio_set_fback_frequency(audio_dev->gadget->speed,
--				    prm->ffback, req->buf);
--
--	if (usb_ep_queue(ep, req, GFP_ATOMIC))
--		dev_err(uac->card->dev, "%d Error!\n", __LINE__);
--}
--
- static int uac_pcm_trigger(struct snd_pcm_substream *substream, int cmd)
- {
- 	struct snd_uac_chip *uac = snd_pcm_substream_chip(substream);
-@@ -393,33 +335,14 @@ static inline void free_ep(struct uac_rtd_params *prm, struct usb_ep *ep)
- 		dev_err(uac->card->dev, "%s:%d Error!\n", __func__, __LINE__);
- }
- 
--static inline void free_ep_fback(struct uac_rtd_params *prm, struct usb_ep *ep)
--{
--	struct snd_uac_chip *uac = prm->uac;
--
--	if (!prm->fb_ep_enabled)
--		return;
--
--	prm->fb_ep_enabled = false;
--
--	if (prm->req_fback) {
--		usb_ep_dequeue(ep, prm->req_fback);
--		kfree(prm->req_fback->buf);
--		usb_ep_free_request(ep, prm->req_fback);
--		prm->req_fback = NULL;
--	}
--
--	if (usb_ep_disable(ep))
--		dev_err(uac->card->dev, "%s:%d Error!\n", __func__, __LINE__);
--}
- 
- int u_audio_start_capture(struct g_audio *audio_dev)
- {
- 	struct snd_uac_chip *uac = audio_dev->uac;
- 	struct usb_gadget *gadget = audio_dev->gadget;
- 	struct device *dev = &gadget->dev;
--	struct usb_request *req, *req_fback;
--	struct usb_ep *ep, *ep_fback;
-+	struct usb_request *req;
-+	struct usb_ep *ep;
- 	struct uac_rtd_params *prm;
- 	struct uac_params *params = &audio_dev->params;
- 	int req_len, i;
-@@ -451,42 +374,6 @@ int u_audio_start_capture(struct g_audio *audio_dev)
- 			dev_err(dev, "%s:%d Error!\n", __func__, __LINE__);
- 	}
- 
--	ep_fback = audio_dev->in_ep_fback;
--	if (!ep_fback)
--		return 0;
--
--	/* Setup feedback endpoint */
--	config_ep_by_speed(gadget, &audio_dev->func, ep_fback);
--	prm->fb_ep_enabled = true;
--	usb_ep_enable(ep_fback);
--	req_len = ep_fback->maxpacket;
--
--	req_fback = usb_ep_alloc_request(ep_fback, GFP_ATOMIC);
--	if (req_fback == NULL)
--		return -ENOMEM;
--
--	prm->req_fback = req_fback;
--	req_fback->zero = 0;
--	req_fback->context = prm;
--	req_fback->length = req_len;
--	req_fback->complete = u_audio_iso_fback_complete;
--
--	req_fback->buf = kzalloc(req_len, GFP_ATOMIC);
--	if (!req_fback->buf)
--		return -ENOMEM;
--
--	/*
--	 * Configure the feedback endpoint's reported frequency.
--	 * Always start with original frequency since its deviation can't
--	 * be meauserd at start of playback
--	 */
--	prm->ffback = params->c_srate;
--	u_audio_set_fback_frequency(audio_dev->gadget->speed,
--				    prm->ffback, req_fback->buf);
--
--	if (usb_ep_queue(ep_fback, req_fback, GFP_ATOMIC))
--		dev_err(dev, "%s:%d Error!\n", __func__, __LINE__);
--
- 	return 0;
- }
- EXPORT_SYMBOL_GPL(u_audio_start_capture);
-@@ -495,8 +382,6 @@ void u_audio_stop_capture(struct g_audio *audio_dev)
- {
- 	struct snd_uac_chip *uac = audio_dev->uac;
- 
--	if (audio_dev->in_ep_fback)
--		free_ep_fback(&uac->c_prm, audio_dev->in_ep_fback);
- 	free_ep(&uac->c_prm, audio_dev->out_ep);
- }
- EXPORT_SYMBOL_GPL(u_audio_stop_capture);
-diff --git a/drivers/usb/gadget/function/u_audio.h b/drivers/usb/gadget/function/u_audio.h
-index 53e6baf55cbf..5ea6b86f1fda 100644
---- a/drivers/usb/gadget/function/u_audio.h
-+++ b/drivers/usb/gadget/function/u_audio.h
-@@ -30,10 +30,7 @@ struct g_audio {
- 	struct usb_gadget *gadget;
- 
- 	struct usb_ep *in_ep;
--
- 	struct usb_ep *out_ep;
--	/* feedback IN endpoint corresponding to out_ep */
--	struct usb_ep *in_ep_fback;
- 
- 	/* Max packet size for all in_ep possible speeds */
- 	unsigned int in_ep_maxpsize;
--- 
-2.30.2
 
+Or am I misunderstanding your request?
+
+Regards,
+Bjorn
+
+> > The assignment of the bridge's ops and child_ops is moved along, because
+> > at least the TI Keystone driver overwrites these in its host_init
+> > callback.
+> > 
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> > 
+> > Changes since v1:
+> > - New patch, instead of enabling resources in the qcom driver before jumping to
+> >   dw_pcie_host_init(), per Rob Herring's suggestion.
+> > 
+> >  .../pci/controller/dwc/pcie-designware-host.c | 19 ++++++++++---------
+> >  1 file changed, 10 insertions(+), 9 deletions(-)
+> > 
+> > diff --git a/drivers/pci/controller/dwc/pcie-designware-host.c b/drivers/pci/controller/dwc/pcie-designware-host.c
+> > index d1d9b8344ec9..f4755f3a03be 100644
+> > --- a/drivers/pci/controller/dwc/pcie-designware-host.c
+> > +++ b/drivers/pci/controller/dwc/pcie-designware-host.c
+> > @@ -335,6 +335,16 @@ int dw_pcie_host_init(struct pcie_port *pp)
+> >  	if (pci->link_gen < 1)
+> >  		pci->link_gen = of_pci_get_max_link_speed(np);
+> >  
+> > +	/* Set default bus ops */
+> > +	bridge->ops = &dw_pcie_ops;
+> > +	bridge->child_ops = &dw_child_pcie_ops;
+> > +
+> > +	if (pp->ops->host_init) {
+> > +		ret = pp->ops->host_init(pp);
+> > +		if (ret)
+> > +			return ret;
+> > +	}
+> > +
+> >  	if (pci_msi_enabled()) {
+> >  		pp->has_msi_ctrl = !(pp->ops->msi_host_init ||
+> >  				     of_property_read_bool(np, "msi-parent") ||
+> > @@ -388,15 +398,6 @@ int dw_pcie_host_init(struct pcie_port *pp)
+> >  		}
+> >  	}
+> >  
+> > -	/* Set default bus ops */
+> > -	bridge->ops = &dw_pcie_ops;
+> > -	bridge->child_ops = &dw_child_pcie_ops;
+> > -
+> > -	if (pp->ops->host_init) {
+> > -		ret = pp->ops->host_init(pp);
+> > -		if (ret)
+> > -			goto err_free_msi;
+> > -	}
+> >  	dw_pcie_iatu_detect(pci);
+> >  
+> >  	dw_pcie_setup_rc(pp);
+> > -- 
+> > 2.29.2
+> > 
