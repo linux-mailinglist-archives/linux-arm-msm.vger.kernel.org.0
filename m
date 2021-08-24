@@ -2,74 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 22F223F6374
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Aug 2021 18:54:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 982B93F691B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Aug 2021 20:34:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232971AbhHXQzE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Aug 2021 12:55:04 -0400
-Received: from mail-oo1-f41.google.com ([209.85.161.41]:35456 "EHLO
-        mail-oo1-f41.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230087AbhHXQzD (ORCPT
+        id S232969AbhHXSfc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Aug 2021 14:35:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50646 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231986AbhHXSfa (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Aug 2021 12:55:03 -0400
-Received: by mail-oo1-f41.google.com with SMTP id o17-20020a4a64110000b0290263e1ba7ff9so6711747ooc.2;
-        Tue, 24 Aug 2021 09:54:19 -0700 (PDT)
+        Tue, 24 Aug 2021 14:35:30 -0400
+Received: from mail-ot1-x330.google.com (mail-ot1-x330.google.com [IPv6:2607:f8b0:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51679C061764
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Aug 2021 11:34:46 -0700 (PDT)
+Received: by mail-ot1-x330.google.com with SMTP id c19-20020a9d6153000000b0051829acbfc7so48573915otk.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Aug 2021 11:34:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=MpSjVxSMjJK4OJw4oTKLD3JL0PWvQPTVS0fPqXZYl3g=;
+        b=n/JcnajTDuWMOgB1dqCLhqVz/SK9+IAgpIc6Z5Dlx0X3Bz7NVcegvqK2cpm3DNJbPQ
+         10DZqlRko41kmEobXSLmA4zrYTieEAA4vI1y7bwkO66KsdU7sMqstshTU6BpT0hdAZfy
+         i6kXOJtX6evRy9U7I6Sp6+LA4yS0fHqGvNoOA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=BN9h0+FpUk0o6i8pFJyVsEj7oE46Agrtf2bQvcQp2C4=;
-        b=IxCoo6BdkcygnPbcmK+8OO2vJQ1IsbUG2uzkp+0TlDGH8p2J4j4bEAkse3rrUQEzNE
-         0lHZPK7q9EQi2FiOcXTkBShAt62kpvY/gaH6sFl2OVVNevIh0P1c4XklDe47ZnNvhIqp
-         1/4/7ty0WGADLNhwpPvq01+kaweuDifBdZg5xMNRsKveyyfmoVwsiW+EGDuSbjJ1FQ3Z
-         nyHht/1+UKdLRZDPO89u8I2IyIada0Ww8ejfmKmTEHwAEcWYCS6jWxRqFV8dbUuo1Kek
-         wOTOWaaVegxVucvn+p28MlXPRR6zOIPbxfxI2Gh0u5V1EJdHI7bKCfCadmzJQaeymwyq
-         u3VQ==
-X-Gm-Message-State: AOAM531zPGCmiGZy2HtjJXtaCjiNPP/hnrjFmcGfEGGFzjsL3srIbqKc
-        H+KMiT6PgGQXKDni7t0ZZw==
-X-Google-Smtp-Source: ABdhPJxCuPjalOTnEUsf0GBi3unFaOfI6Wx88SGEOV9NGjoa4ZqaGtcFKTPdqa0Kn/nTjyiEtADicQ==
-X-Received: by 2002:a4a:e3cf:: with SMTP id m15mr30966128oov.21.1629824059186;
-        Tue, 24 Aug 2021 09:54:19 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id u14sm4805507oth.73.2021.08.24.09.54.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Aug 2021 09:54:18 -0700 (PDT)
-Received: (nullmailer pid 618860 invoked by uid 1000);
-        Tue, 24 Aug 2021 16:54:17 -0000
-Date:   Tue, 24 Aug 2021 11:54:17 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     linux-pm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 1/3] dt-bindings: interconnect: sdm660: Add missing
- a2noc qos clocks
-Message-ID: <YSUkObWtKWJUDzyS@robh.at.kernel.org>
-References: <20210824043435.23190-1-shawn.guo@linaro.org>
- <20210824043435.23190-2-shawn.guo@linaro.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=MpSjVxSMjJK4OJw4oTKLD3JL0PWvQPTVS0fPqXZYl3g=;
+        b=MGRh1ccPhSzfWfqscbKwONNwuYe0ZSiPLYgYU7I2JGfeSALKu+MStif+RDtFkuKvIN
+         UB193G6UcFjKoGmAYCwKqHuyodCceKPprglle8sswR6J4KZmMPSc4URxsCW/U5g9am9v
+         rQfh9N8MaCJUJdrrexIewF8iyzyxPH7qk3caEvLjUgWlb/6s3JwxunvWRWYRrE3VP7GH
+         Pdebv9TdEQIKtYr6rhKy6TIAqznlBpnWiaRmswPuWyNBIedZPFU2ZCwxAmf8pHKGTaih
+         8Is8OTJWHmZiDLyn3ePSMvFOr26CaJDzQUE4yE8CodQFjus6i4aVR6se6qguI5iFlnTd
+         tboQ==
+X-Gm-Message-State: AOAM531gztLp2gBMKjMycYMGD57inp4s5vn4q+qobRbenkKRR4qPiGBx
+        1l7sEL1o4NkopfGNWuF5YZ+8luY3ZL1XKA+1LK9XWQ==
+X-Google-Smtp-Source: ABdhPJzRH/Uc7RJJIpCbxFsIdbJBiPfb7rT9/hLjX1Vp9cEqoF/t87EH1mDk73cPqGvQmJ4MtwBCUJQX8YPNs8ZHDkQ=
+X-Received: by 2002:a05:6808:180e:: with SMTP id bh14mr3854642oib.19.1629830085691;
+ Tue, 24 Aug 2021 11:34:45 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 24 Aug 2021 11:34:45 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210824043435.23190-2-shawn.guo@linaro.org>
+In-Reply-To: <1629113954-14084-2-git-send-email-deesin@codeaurora.org>
+References: <1629113954-14084-1-git-send-email-deesin@codeaurora.org> <1629113954-14084-2-git-send-email-deesin@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Tue, 24 Aug 2021 11:34:45 -0700
+Message-ID: <CAE-0n50G_OYqR6R8+K5RkrCBvdQW-E-zDoMZ-yyAoEJW2WyxcA@mail.gmail.com>
+Subject: Re: [PATCH V6 1/2] soc: qcom: aoss: Expose send for generic usecase
+To:     Deepak Kumar Singh <deesin@codeaurora.org>,
+        bjorn.andersson@linaro.org, clew@codeaurora.org,
+        sibis@codeaurora.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, Andy Gross <agross@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 24 Aug 2021 12:34:33 +0800, Shawn Guo wrote:
-> It adds the missing a2noc clocks required for QoS registers programming
-> per downstream kernel[1].
-> 
-> [1] https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/arch/arm/boot/dts/qcom/sdm660-bus.dtsi?h=LA.UM.8.2.r1-04800-sdm660.0#n43
-> 
-> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+Quoting Deepak Kumar Singh (2021-08-16 04:39:13)
+> Not all upcoming usecases will have an interface to allow the aoss
+> driver to hook onto. Expose the send api and create a get function to
+> enable drivers to send their own messages to aoss.
+>
+> Signed-off-by: Chris Lew <clew@codeaurora.org>
+> Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
 > ---
->  .../bindings/interconnect/qcom,sdm660.yaml    | 46 +++++++++++++++++--
->  1 file changed, 42 insertions(+), 4 deletions(-)
-> 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+With one nit below
+
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+
+> diff --git a/drivers/soc/qcom/qcom_aoss.c b/drivers/soc/qcom/qcom_aoss.c
+> index 934fcc4..a43c22c 100644
+> --- a/drivers/soc/qcom/qcom_aoss.c
+> +++ b/drivers/soc/qcom/qcom_aoss.c
+> @@ -515,6 +521,48 @@ static void qmp_cooling_devices_remove(struct qmp *qmp)
+>                 thermal_cooling_device_unregister(qmp->cooling_devs[i].cdev);
+>  }
+>
+> +/**
+> + * qmp_get() - get a qmp handle from a device
+> + * @dev: client device pointer
+> + *
+> + * Return: handle to qmp device on success, ERR_PTR() on failure
+> + */
+> +struct qmp *qmp_get(struct device *dev)
+> +{
+> +       struct platform_device *pdev;
+> +       struct device_node *np;
+> +       struct qmp *qmp;
+> +
+> +       if (!dev || !dev->of_node)
+> +               return ERR_PTR(-EINVAL);
+> +
+> +       np = of_parse_phandle(dev->of_node, "qcom,qmp", 0);
+> +       if (!np)
+> +               return ERR_PTR(-ENODEV);
+> +
+> +       pdev = of_find_device_by_node(np);
+> +       of_node_put(np);
+> +       if (!pdev)
+> +               return ERR_PTR(-EINVAL);
+> +
+> +       qmp = platform_get_drvdata(pdev);
+> +
+> +       return qmp ? qmp : ERR_PTR(-EPROBE_DEFER);
+> +}
+> +EXPORT_SYMBOL(qmp_get);
+> +
+> +/**
+> + * qmp_put() - Match get_device() inside of_find_device_by_node()
+> + *            in qmp_get()
+
+I meant to put this comment next to the put_device() call. This should
+say something like "release a qmp handle" and then the existing comment
+moved down to the if below.
+
+> + * @qmp: qmp handle obtained from qmp_get()
+> + */
+> +void qmp_put(struct qmp *qmp)
+> +{
+> +       if (!IS_ERR_OR_NULL(qmp))
+> +               put_device(qmp->dev);
+> +}
+> +EXPORT_SYMBOL(qmp_put);
+> +
+>  static int qmp_probe(struct platform_device *pdev)
+>  {
+>         struct resource *res;
