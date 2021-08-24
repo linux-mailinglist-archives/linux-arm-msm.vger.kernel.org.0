@@ -2,140 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 716EE3F5573
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Aug 2021 03:17:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB2F43F55C3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Aug 2021 04:19:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233585AbhHXBS3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Aug 2021 21:18:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37052 "EHLO
+        id S233725AbhHXCUP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Aug 2021 22:20:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50840 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229697AbhHXBS2 (ORCPT
+        with ESMTP id S233759AbhHXCUM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Aug 2021 21:18:28 -0400
-Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C0FFC061575
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Aug 2021 18:17:45 -0700 (PDT)
-Received: by mail-pg1-x52f.google.com with SMTP id x4so18272066pgh.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Aug 2021 18:17:45 -0700 (PDT)
+        Mon, 23 Aug 2021 22:20:12 -0400
+Received: from mail-pf1-x436.google.com (mail-pf1-x436.google.com [IPv6:2607:f8b0:4864:20::436])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 70FD5C06175F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Aug 2021 19:19:28 -0700 (PDT)
+Received: by mail-pf1-x436.google.com with SMTP id 7so17003110pfl.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 23 Aug 2021 19:19:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=Hqn67LxL3lG3twDFl2dpaEiJy0jyMcHPR1Uu+GiQgVA=;
-        b=v73Zr5Q8pN7sStTrMPxEY3ITjm7HbhS4Dw7jKdD4VGbGcZG72luOiHCDKRu5C5LuEW
-         Tsyj2Ep9MJI3t/W2YLYwY8OaHQy8UbQQaHtNyjFw0yX6VO0sxXKFZ1O2ILzCnlgV0KjH
-         XMTesil4WZ9dWMCZ+zJ74rwNJrr8yvWOblfMPlGNWN+TXqhsK+0rFyNLdNbfYpr7IamA
-         zC7a4HOfxwsfSIEo/NZcuJ0zDADfBUAigPRiJwelVIGAGFTu/vVExDHk0ux1whKuDC5U
-         SuOCk9R3Na1fwlB8v8FCd022NesV626edWrG5zGhHtfGjec5Io/CJNaU/BiwCFtmn83+
-         p2Wg==
+        h=from:to:cc:subject:date:message-id;
+        bh=SAYfyHfKtEIZUA145VWKAPDNQgImJMaU3dtgNUZKT2M=;
+        b=bzltG0ACe6O5otAzfzo149Fyy+9jQuYkdpMBDOsQBI6oFyGX563Qe1j7ECEGld4L0R
+         ZLjTIN7WECTa/lXMapRT1N971z/p5UvrsYz7AaNeZ36MiiBiMzRDoJqp68qQJbzDgrfO
+         zzNIoiCzUtREbgb7JUnSUjP67fPUvK5t6GpI+g0YofB1IcGmkYyO/WiCOsdg/AckNSml
+         F8a1ayCCAl7jGuUD16Hsdv+J6NJ2PdRKfrqyPMRBRvCzdGqqG4LUHmPJ8ymhbYlIzTnU
+         2GOkU/fpWIuOLHk7p4v5b7D2frCi+eI99ABp3UtEA7LbP8Gn53CayrzRyb2yGOJGa5+l
+         n+VQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=Hqn67LxL3lG3twDFl2dpaEiJy0jyMcHPR1Uu+GiQgVA=;
-        b=ogQO+ITvcGQ846QcY3+zjOH/22vyhgES/h84sIWZ13QP2RtiKbA4p/dSLAVNwoW6f8
-         9+AMVyGwv74IU/+o4Mwy3HZeGtpWiMmaNzJAbJLTGI73EhZpNIM9e9DdEhuv5agUYE4k
-         blIYn45FE9pZaMogBaAB2McmevMxzluo8phi3qk1WTSlHA2M4PX7zSjdvwCvDHWFb/v9
-         ryfPPGK9o0j5LkEki2Yj6t6Pgy8F4IecD/lVXubQSRRVsQAwk0wN7p3BIkAKSIspPGRw
-         CTQGARt42LY41DIDG3SExA7ltPhkgbZvhY+kmgZTLiJ3Xmotlp6CLw78b/f/ObomrvLR
-         /EKQ==
-X-Gm-Message-State: AOAM532UY0M9VIjqyrEzaJh8HP4CsvdKZtTiK6kpJWyB3bKJXemGEr27
-        rCRyevzGlBhQIraP8F9wpT9EYw==
-X-Google-Smtp-Source: ABdhPJzoptsMtsMBaGJ1f/2Nl5/lIr6SJerpLtnEjmXym1WbcktKQBRjUA2lqjy2dTRi9CQ/Qjs6pQ==
-X-Received: by 2002:a05:6a00:134e:b0:3e1:1ed:80ff with SMTP id k14-20020a056a00134e00b003e101ed80ffmr36035307pfu.34.1629767865125;
-        Mon, 23 Aug 2021 18:17:45 -0700 (PDT)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id c17sm416876pjq.16.2021.08.23.18.17.42
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 23 Aug 2021 18:17:44 -0700 (PDT)
-Date:   Tue, 24 Aug 2021 09:17:38 +0800
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=SAYfyHfKtEIZUA145VWKAPDNQgImJMaU3dtgNUZKT2M=;
+        b=jbyo054J/fFT2tYpJveHWzIYXBEi5dpEK9LfwDfHGqEbn26Nb4RfucEmMzUSgmHG0R
+         HQn/ohvv0UReydm56gnHgXxThoASgKuqIKXQlyQr3emH3FjvYLknZb4rPPB0vSm+QCmX
+         i9Wuc1JEzl3bUGm5+6JL+NYOJJSJSdWNTZV1BLHE96LKdpzg0wVwDD3N3korsMdJcd9T
+         HC4wilAgwXER8togbgc89yPOFrzUj8yPZ4NhB0Rf0D+LrIi26NaiVyeRkeoFiW/MDQaP
+         o0ml//OJAP6ZjsE/f4R+Vo/9ddcxT6COt6C+ejTyC1e3ocm34w2xOePq1vJZSSIlDpy/
+         kf6g==
+X-Gm-Message-State: AOAM5301pMhzhBzz7TspIVblyXLC1k5hKz7r5fTaqbATA0RpFI7ZNfy0
+        Ol+x86mUFMrCV4lYlvfX/0/VNQ==
+X-Google-Smtp-Source: ABdhPJx9a7n9WfBw4x3JMROREY8974jeXERbzJ2CFcFAIL4WaSscmhQNA9OrD7o+lj/j0OzHlrQ/AQ==
+X-Received: by 2002:a63:5f94:: with SMTP id t142mr1064973pgb.166.1629771567958;
+        Mon, 23 Aug 2021 19:19:27 -0700 (PDT)
+Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id x4sm499231pjq.20.2021.08.23.19.19.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 23 Aug 2021 19:19:27 -0700 (PDT)
 From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Georgi Djakov <djakov@kernel.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: sdm630: Add missing a2noc qos
- clocks
-Message-ID: <20210824011737.GA22595@dragon>
-References: <20210823095603.5538-1-shawn.guo@linaro.org>
- <20210823095603.5538-4-shawn.guo@linaro.org>
- <CAA8EJpqPMMvtDL5NqUJTDfVEAqX9VD9Y_TWmXxh8DpS8hwDuJg@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAA8EJpqPMMvtDL5NqUJTDfVEAqX9VD9Y_TWmXxh8DpS8hwDuJg@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Shawn Guo <shawn.guo@linaro.org>
+Subject: [PATCH] arm64: dts: qcom: pm660: Add reboot mode support
+Date:   Tue, 24 Aug 2021 10:19:18 +0800
+Message-Id: <20210824021918.17271-1-shawn.guo@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 23, 2021 at 07:51:32PM +0300, Dmitry Baryshkov wrote:
-> On Mon, 23 Aug 2021 at 12:56, Shawn Guo <shawn.guo@linaro.org> wrote:
-> >
-> > It adds the missing a2noc clocks required for QoS registers programming
-> > per downstream kernel[1].
-> >
-> > [1] https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/arch/arm/boot/dts/qcom/sdm660-bus.dtsi?h=LA.UM.8.2.r1-04800-sdm660.0#n43
-> >
-> > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-> > ---
-> >  arch/arm64/boot/dts/qcom/sdm630.dtsi | 17 ++++++++++++++---
-> >  1 file changed, 14 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-> > index 9153e6616ba4..b3a7f3bf1560 100644
-> > --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-> > @@ -652,11 +652,22 @@
-> >
-> >                 a2noc: interconnect@1704000 {
-> >                         compatible = "qcom,sdm660-a2noc";
-> > -                       reg = <0x01704000 0xc100>;
-> > +                       reg = <0x01704000 0x1c000>;
-> 
-> Shawn, as you are at it, do we want to keep these nocs shifted
-> compared to the downstream dtsi (so that the offset of QoS registers
-> is 0) or we'd better introduce QoS register offset and move noc start
-> address to the same address as in downstream?
+It turns out that the pm660 PON is a GEN2 device.  Update the compatible
+to "qcom,pm8998-pon" and add reboot mode support, so that devices can be
+rebooted into bootloader and recovery mode.  Tested on Xiaomi Redmi Note
+7 phone.
 
-Dmitry, thanks for spotting this!  This is really an unintended leftover
-from debugging.  I will drop it in v2.  For address alignment with
-downstream, I do not really have a strong opinion and I can live with
-either of them :)
+While at it, drop the unnecessary newline between 'compatible' and 'reg'
+property.
 
-Shawn
+Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+---
+ arch/arm64/boot/dts/qcom/pm660.dtsi | 5 +++--
+ 1 file changed, 3 insertions(+), 2 deletions(-)
 
-> >                         #interconnect-cells = <1>;
-> > -                       clock-names = "bus", "bus_a";
-> > +                       clock-names = "bus",
-> > +                                     "bus_a",
-> > +                                     "ipa",
-> > +                                     "ufs_axi",
-> > +                                     "aggre2_ufs_axi",
-> > +                                     "aggre2_usb3_axi",
-> > +                                     "cfg_noc_usb2_axi";
-> >                         clocks = <&rpmcc RPM_SMD_AGGR2_NOC_CLK>,
-> > -                                <&rpmcc RPM_SMD_AGGR2_NOC_A_CLK>;
-> > +                                <&rpmcc RPM_SMD_AGGR2_NOC_A_CLK>,
-> > +                                <&rpmcc RPM_SMD_IPA_CLK>,
-> > +                                <&gcc GCC_UFS_AXI_CLK>,
-> > +                                <&gcc GCC_AGGRE2_UFS_AXI_CLK>,
-> > +                                <&gcc GCC_AGGRE2_USB3_AXI_CLK>,
-> > +                                <&gcc GCC_CFG_NOC_USB2_AXI_CLK>;
-> >                 };
-> >
-> >                 mnoc: interconnect@1745000 {
-> > --
-> > 2.17.1
-> >
-> 
-> 
-> -- 
-> With best wishes
-> Dmitry
+diff --git a/arch/arm64/boot/dts/qcom/pm660.dtsi b/arch/arm64/boot/dts/qcom/pm660.dtsi
+index e847d7209afc..d0ef8a1675e2 100644
+--- a/arch/arm64/boot/dts/qcom/pm660.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm660.dtsi
+@@ -49,9 +49,10 @@
+ 		};
+ 
+ 		pon: pon@800 {
+-			compatible = "qcom,pm8916-pon";
+-
++			compatible = "qcom,pm8998-pon";
+ 			reg = <0x800>;
++			mode-bootloader = <0x2>;
++			mode-recovery = <0x1>;
+ 
+ 			pwrkey {
+ 				compatible = "qcom,pm8941-pwrkey";
+-- 
+2.17.1
+
