@@ -2,381 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 58BD03F614D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Aug 2021 17:09:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5DF033F6159
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Aug 2021 17:15:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237981AbhHXPKH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Aug 2021 11:10:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59084 "EHLO
+        id S238074AbhHXPP4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Aug 2021 11:15:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60374 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238040AbhHXPKG (ORCPT
+        with ESMTP id S235683AbhHXPPy (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Aug 2021 11:10:06 -0400
-Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6EC7AC061757
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Aug 2021 08:09:22 -0700 (PDT)
-Received: by mail-ot1-x32c.google.com with SMTP id i8-20020a056830402800b0051afc3e373aso35671809ots.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Aug 2021 08:09:22 -0700 (PDT)
+        Tue, 24 Aug 2021 11:15:54 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B774DC061764
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Aug 2021 08:15:10 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id v33-20020a0568300921b0290517cd06302dso46925215ott.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Aug 2021 08:15:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=d3BTl0th1hxH3iAelzZG6JdEFeXgV6Q2lm+ZL7uQbY8=;
-        b=uVzodX7lrh2NRTJDEYx/QBYQVUB0j10btx5rOd6ty98mdnRiJc1rY07/wbqdBRxKWN
-         awqfR4FF+9T+EbYproYXLZLJLUgyaGLAXTQ4h3wgxx/nriXKKwgFM3CzKhlFTGZGjin4
-         W9g7fOOoLeWjJOmMpbHGMsBacS07zGIbRMsPPYm3+m892tVyCl2vb9NIX/RSH1Aec4Wc
-         wyRCp7JSd3lTicn+wPsnRQXBo61GbSc8oajbMAQ4Loci4rj2HkM82G2BeJ7cLnm78j5h
-         q/kNvsZwlAqxPD1wQ6Ginjnfo1o/21IizHXWt+g5bIi6HS8uJCyfP+kvXirT7Qzp/YRZ
-         +PKg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=Y0kEI+D7S9zjGZEzmEP8rK0NWN9F8ml/ZbrO8rwdGoc=;
+        b=rpzC8nqxjtvlgOqu4Uo6ccz/R+Z9Mz/PUr0z6mqMTfmcAcPvdbwnY1pM9fWcLoiyU0
+         byO8XEiEF2wd2Q4puMGrpWxD8U0n/OzuaHpj6RxYfjjQAjOEFAvYeGi3Lqdvlc05lj/L
+         aHg2aXuHPKooUP4bfqcCg436MQLO96qifEhk30pU2o/ZMqOHew6lV1LDVFbzGhRVNfRU
+         CJezKjjDGy0UbjzsLbMCfFrutA2zwgoMr1nKsRvRNzhUYDFCSRWJ3fFigXkCbthkAf4O
+         ckmc3KAPsAWoLxUMmyOOrh1YZBvdeFT3uIpjp9P3jxBSDBsw0zNEdWEN+0HMP6pcmeij
+         F6Qw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=d3BTl0th1hxH3iAelzZG6JdEFeXgV6Q2lm+ZL7uQbY8=;
-        b=tlLSYCOmsyLU+1sNb18Gkd2NoJc6Hcx+pbyL4kqtlAl2VGgd5FS+pu2UEG+o9NG5fk
-         ILZvt58VMEhSKfJd0kJUx1/30vs+JGa12C8V4sVlYBqbbfCYplf/2CYpOkaGIGoJvckq
-         wS/DXjo29TQrWuKzdMlhufcpoX91UlVubaoXl7DuDw0BFOtmFFf7NNhE9aCa2dygnz4h
-         0mu1BfqUIJR7y/vU4vxqA6srS1eLLcBsiwZyi09EJOliAYl2DBrOZBBIJf0KpktIDOuq
-         XAK+Xm3AobObjEtJtrnCiT+AI267XaFVDHFW9HOeRR8GJY85Sm33fAmQAXM1uidjktci
-         TYQw==
-X-Gm-Message-State: AOAM531nJBis/nMN17AvP4Bs1Z2KgbGzXKW0MKwyC2uqhYWTmcJRJ0YM
-        3driB8/yG/gd7DUhmhxy/Xa6rA==
-X-Google-Smtp-Source: ABdhPJwZiLA+3h4VAoxBovE0mdmunuDICzZZF19f9D0NffiVafv3Lcnlgyv5Ztih6RZ8b18QxuEkhw==
-X-Received: by 2002:a9d:12af:: with SMTP id g44mr18735747otg.45.1629817761787;
-        Tue, 24 Aug 2021 08:09:21 -0700 (PDT)
-Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id n130sm4453772oif.32.2021.08.24.08.09.21
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=Y0kEI+D7S9zjGZEzmEP8rK0NWN9F8ml/ZbrO8rwdGoc=;
+        b=hekTANCUG7G+sm2ZUnDCY3FgI1ByHTsJ4JfpDDbzsmgA+5zPwUxC7aIRuFFQWqZpVw
+         Qr8QMDkONZSHKsZui95el2bi9bCLuhqZ7yvJCJp1o+lvSB007IKNSkQdi4nAoPQv1HkD
+         ubeb2ETSSLpMqmzi5RQpNZRsuMT3zLnZH2p0A1wscPqNFV7yFyG39uXMAwsOh7Hdzh7t
+         F0fM8z8hVPDKQzOHkSu1ugM5jNfiLywEF/xDTs8AUAahqfx5Qsc10O8sMQ1kYZ/AXi94
+         IS+f+1jVztQ1OJknRjGxtm+07JjonIQcoJHt6ziX3Dp+/9FjScM3dEig/hWGNiaZFX7U
+         +r9A==
+X-Gm-Message-State: AOAM531GgVYUDUu1bYXTCR7bnwhg5JwDXkAeBx2j8VxjP7ClZzljy+ud
+        GqJB6SlGTB0j+EHCGpQjFYv+5g==
+X-Google-Smtp-Source: ABdhPJy3vWSiA1OB3S6Pa+SAzoYPn7AL7zqAhUal6qCFvatvxLOdzfyVzN/0FcFLwW6PJ5dPWSuZlw==
+X-Received: by 2002:aca:3193:: with SMTP id x141mr3216871oix.110.1629818110048;
+        Tue, 24 Aug 2021 08:15:10 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id b2sm3566712ook.46.2021.08.24.08.15.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 24 Aug 2021 08:09:21 -0700 (PDT)
+        Tue, 24 Aug 2021 08:15:09 -0700 (PDT)
+Date:   Tue, 24 Aug 2021 08:16:26 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        angelogioacchino.delregno@somainline.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: [PATCH] arm64: dts: qcom: sdm660: Add initial IFC6560 board
-Date:   Tue, 24 Aug 2021 08:10:36 -0700
-Message-Id: <20210824151036.678802-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.29.2
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Cc:     Thara Gopinath <thara.gopinath@linaro.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Andy Gross <agross@kernel.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 14/39] arm64: dts: qcom: sdm630: Add TSENS node
+Message-ID: <YSUNSmgeGgc+x5xA@ripper>
+References: <20210728222542.54269-1-konrad.dybcio@somainline.org>
+ <20210728222542.54269-15-konrad.dybcio@somainline.org>
+ <860f1120-c5a4-f531-3ea9-aa90c6b063dc@linaro.org>
+ <2318377c-959a-a42b-81b5-44e2629570d5@somainline.org>
+ <afee55a8-d7d3-709a-ea4f-0306698c9976@linaro.org>
+ <b16d8000-85a7-d957-77d2-d921e5b09829@somainline.org>
+ <a7f90fe0-ee24-a47d-089d-e716a5766fcd@linaro.org>
+ <2ffc4e54-a501-bd2d-3f29-a6df34023445@somainline.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
+In-Reply-To: <2ffc4e54-a501-bd2d-3f29-a6df34023445@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The IFC6560 is a board from Inforce Computing, built around the SDA660
-SoC. This patch describes core clocks, some regulators from the two
-PMICs, debug uart, storage, bluetooth and audio DSP remoteproc.
+On Thu 29 Jul 06:48 PDT 2021, AngeloGioacchino Del Regno wrote:
 
-The regulator settings are inherited from prior work by Konrad Dybcio
-and AngeloGioacchino Del Regno.
+> Il 29/07/21 13:14, Thara Gopinath ha scritto:
+> > 
+> > 
+> > On 7/29/21 6:55 AM, Konrad Dybcio wrote:
+> > > 
+> > > On 29.07.2021 12:54, Thara Gopinath wrote:
+> > > > 
+> > > > 
+> > > > On 7/29/21 6:52 AM, Konrad Dybcio wrote:
+> > > > > 
+> > > > > On 29.07.2021 12:50, Thara Gopinath wrote:
+> > > > > > Hi Konrad,
+> > > > > > 
+> > > > > > On 7/28/21 6:25 PM, Konrad Dybcio wrote:
+> > > > > > > This will enable temperature reporting for various SoC
+> > > > > > > components.
+> > > > > > > 
+> > > > > > > Signed-off-by: AngeloGioacchino Del Regno
+> > > > > > > <angelogioacchino.delregno@somainline.org>
+> > > > > > > Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> > > > > > > ---
+> > > > > > >     .../devicetree/bindings/thermal/qcom-tsens.yaml       |  1 +
+> > > > > > >     arch/arm64/boot/dts/qcom/sdm630.dtsi                  | 11 +++++++++++
+> > > > > > >     2 files changed, 12 insertions(+)
+> > > > > > > 
+> > > > > > > diff --git
+> > > > > > > a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> > > > > > > b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> > > > > > > index 4a2eaf28e3fd..d3b9e9b600a2 100644
+> > > > > > > --- a/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> > > > > > > +++ b/Documentation/devicetree/bindings/thermal/qcom-tsens.yaml
+> > > > > > > @@ -48,6 +48,7 @@ properties:
+> > > > > > >                   - qcom,sc7180-tsens
+> > > > > > >                   - qcom,sc7280-tsens
+> > > > > > >                   - qcom,sc8180x-tsens
+> > > > > > > +              - qcom,sdm630-tsens
+> > > > > > >                   - qcom,sdm845-tsens
+> > > > > > >                   - qcom,sm8150-tsens
+> > > > > > >                   - qcom,sm8250-tsens
+> > > > > > > diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> > > > > > > b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> > > > > > > index 1e54828817d5..7e9c80e35fba 100644
+> > > > > > > --- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> > > > > > > +++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+> > > > > > > @@ -627,6 +627,17 @@ mnoc: interconnect@1745000 {
+> > > > > > >                      <&mmcc AHB_CLK_SRC>;
+> > > > > > >             };
+> > > > > > >     +        tsens: thermal-sensor@10ae000 {
+> > > > > > > +            compatible = "qcom,sdm630-tsens", "qcom,tsens-v2";
+> > > > > > > +            reg = <0x010ae000 0x1000>, /* TM */
+> > > > > > > +                  <0x010ad000 0x1000>; /* SROT */
+> > > > > > > +            #qcom,sensors = <12>;
+> > > > > > 
+> > > > > > Are all 12 sensors used ? I see that in a later patch
+> > > > > > "arm64: dts: qcom: sdm630: Add thermal-zones
+> > > > > > configuration" only 9 are used.
+> > > > > 
+> > > > > Hi,
+> > > > > 
+> > > > > if I recall correctly, they all give output but not all of
+> > > > > the mappings were documented in the downstream sources and
+> > > > > we have no documentation whatsoever :(
+> > > > 
+> > > > Right. In that case, why not change #qcom,sensors to 9 and add
+> > > > rest of the sensors if and when needed ?
+> > > > 
+> > > I don't think it makes sense to describe the hardware incorrectly,
+> > > even if some of it is unused.
+> > 
+> > My thinking was more along the lines of don't expose unused h/w bits.
+> > 
+> 
+> You're right about not exposing unused HW bits, but even PC x86 motherboards
+> (I mean the smbus/i2c drivers for the big holy management/sensors chips) do
+> have such a "base" configuration, where some lines are read as 0 because they
+> are effectively not connected by hardware.
+> 
+> In order to avoid confusion to other developers, in my personal opinion, it would
+> be good go for the current value of 12 (which isn't incorrect, as that's what the
+> SoC supports)... I don't think that anyone would be confused by seeing zero
+> readings on some sensors (if their device don't support such sensor), as I think
+> that everyone is used to that anyway, even if that's in other circumstances...
+> 
+> In any case, luckily that's also safe, because there's no firmware that restricts
+> the readings to a subset of sensors in this domain (nobody is going to get a
+> hypervisor fault for that).
+> 
+> I would also, in case, propose to see how things go: I would expect other
+> developers to push device trees for many SDM630/636/660 devices, including but
+> not limited to smartphones and SBCs.. so perhaps if we find out that really
+> nobody uses the 12 sensors, or if the very vast majority uses a different amount,
+> perhaps we may just transfer the value to device-specific configurations in one
+> go, as to avoid unnecessary noise... I think :)))
+> 
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- arch/arm64/boot/dts/qcom/Makefile           |   1 +
- arch/arm64/boot/dts/qcom/sdm660-ifc6560.dts | 279 ++++++++++++++++++++
- 2 files changed, 280 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sdm660-ifc6560.dts
+If the SoC has 12 sensors I think it makes sense to define that, similar
+to how a SoC might have 200 GPIOs, even though only a handful is
+actually used.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 70516508be56..88abcfeb4d38 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -73,6 +73,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-discovery.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-pioneer.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm630-sony-xperia-nile-voyager.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm636-sony-xperia-ganges-mermaid.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sdm660-ifc6560.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm660-xiaomi-lavender.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r1.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-cheza-r2.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sdm660-ifc6560.dts b/arch/arm64/boot/dts/qcom/sdm660-ifc6560.dts
-new file mode 100644
-index 000000000000..2244529bc6bf
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sdm660-ifc6560.dts
-@@ -0,0 +1,279 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2021, Linaro Ltd.
-+ * Copyright (c) 2020, Konrad Dybcio <konrad.dybcio@somainline.org>
-+ * Copyright (c) 2020, AngeloGioacchino Del Regno
-+ *                     <angelogioacchino.delregno@somainline.org>
-+ */
-+
-+/dts-v1/;
-+
-+#include "sdm660.dtsi"
-+#include "pm660.dtsi"
-+#include "pm660l.dtsi"
-+
-+/ {
-+	model = "Inforce 6560 Single Board Computer";
-+	compatible = "inforce,ifc6560", "qcom,sdm660";
-+
-+	aliases {
-+		serial0 = &blsp1_uart2;
-+		serial1 = &blsp2_uart1;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+
-+	reserved-memory {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+	};
-+
-+	vph_pwr: vph-pwr-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "vph_pwr";
-+	};
-+
-+	v3p3_bck_bst: v3p3-bck-bst-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "v3p3_bck_bst";
-+
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		vin-supply = <&vph_pwr>;
-+	};
-+
-+	v1p2_ldo: v1p2-ldo-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "v1p2_ldo";
-+
-+		regulator-min-microvolt = <1200000>;
-+		regulator-max-microvolt = <1200000>;
-+
-+		vin-supply = <&vph_pwr>;
-+	};
-+
-+	v5p0_boost: v5p0-boost-regulator {
-+		compatible = "regulator-fixed";
-+		regulator-name = "v5p0_boost";
-+
-+		regulator-min-microvolt = <5000000>;
-+		regulator-max-microvolt = <5000000>;
-+
-+		vin-supply = <&vph_pwr>;
-+	};
-+};
-+
-+&adsp_pil {
-+	firmware-name = "qcom/inforce/ifc6560/adsp.mbn";
-+};
-+
-+&blsp1_uart2 {
-+	status = "okay";
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&uart_active>;
-+};
-+
-+&blsp2_uart1 {
-+	status = "okay";
-+
-+	bluetooth {
-+		compatible = "qcom,wcn3990-bt";
-+
-+		vddio-supply = <&vreg_l13a_1p8>;
-+		vddxo-supply = <&vreg_l9a_1p8>;
-+		vddrf-supply = <&vreg_l6a_1p3>;
-+		vddch0-supply = <&vreg_l19a_3p3>;
-+		max-speed = <3200000>;
-+	};
-+};
-+
-+&rpm_requests {
-+	pm660-regulators {
-+		compatible = "qcom,rpm-pm660-regulators";
-+
-+		vdd_s1-supply = <&vph_pwr>;
-+		vdd_s2-supply = <&vph_pwr>;
-+		vdd_s3-supply = <&vph_pwr>;
-+		vdd_s4-supply = <&vph_pwr>;
-+		vdd_s5-supply = <&vph_pwr>;
-+		vdd_s6-supply = <&vph_pwr>;
-+
-+		vdd_l1_l6_l7-supply = <&vreg_s5a_1p35>;
-+		vdd_l2_l3-supply = <&vreg_s2b_1p05>;
-+		vdd_l5-supply = <&vreg_s2b_1p05>;
-+		vdd_l8_l9_l10_l11_l12_l13_l14-supply = <&vreg_s4a_2p04>;
-+		vdd_l15_l16_l17_l18_l19-supply = <&vreg_bob>;
-+
-+		vreg_s4a_2p04: s4 {
-+			regulator-min-microvolt = <2040000>;
-+			regulator-max-microvolt = <2040000>;
-+			regulator-enable-ramp-delay = <200>;
-+			regulator-ramp-delay = <0>;
-+			regulator-always-on;
-+		};
-+
-+		vreg_s5a_1p35: s5 {
-+			regulator-min-microvolt = <1224000>;
-+			regulator-max-microvolt = <1350000>;
-+			regulator-enable-ramp-delay = <200>;
-+			regulator-ramp-delay = <0>;
-+		};
-+
-+		vreg_l6a_1p3: l6 {
-+			regulator-min-microvolt = <1304000>;
-+			regulator-max-microvolt = <1368000>;
-+			regulator-allow-set-load;
-+			regulator-enable-ramp-delay = <250>;
-+			regulator-ramp-delay = <0>;
-+		};
-+
-+		vreg_l8a_1p8: l8 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+			regulator-enable-ramp-delay = <250>;
-+			regulator-ramp-delay = <0>;
-+			regulator-system-load = <325000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		vreg_l9a_1p8: l9 {
-+			regulator-min-microvolt = <1804000>;
-+			regulator-max-microvolt = <1896000>;
-+			regulator-enable-ramp-delay = <250>;
-+			regulator-ramp-delay = <0>;
-+			regulator-allow-set-load;
-+		};
-+
-+		vreg_l13a_1p8: l13 {
-+			/* This gives power to the LPDDR4: never turn it off! */
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1944000>;
-+			regulator-enable-ramp-delay = <250>;
-+			regulator-ramp-delay = <0>;
-+			regulator-boot-on;
-+			regulator-always-on;
-+		};
-+
-+		vreg_l19a_3p3: l19 {
-+			regulator-min-microvolt = <3312000>;
-+			regulator-max-microvolt = <3400000>;
-+			regulator-enable-ramp-delay = <250>;
-+			regulator-ramp-delay = <0>;
-+			regulator-allow-set-load;
-+		};
-+	};
-+
-+	pm660l-regulators {
-+		compatible = "qcom,rpm-pm660l-regulators";
-+
-+		vdd_s1-supply = <&vph_pwr>;
-+		vdd_s2-supply = <&vph_pwr>;
-+		vdd_s3_s4-supply = <&vph_pwr>;
-+		vdd_s5-supply = <&vph_pwr>;
-+		vdd_s6-supply = <&vph_pwr>;
-+
-+		vdd_l1_l9_l10-supply = <&vreg_s2b_1p05>;
-+		vdd_l2-supply = <&vreg_bob>;
-+		vdd_l3_l5_l7_l8-supply = <&vreg_bob>;
-+		vdd_l4_l6-supply = <&vreg_bob>;
-+		vdd_bob-supply = <&vph_pwr>;
-+
-+		vreg_s2b_1p05: s2 {
-+			regulator-min-microvolt = <1050000>;
-+			regulator-max-microvolt = <1050000>;
-+			regulator-enable-ramp-delay = <200>;
-+			regulator-ramp-delay = <0>;
-+		};
-+
-+		vreg_l2b_2p95: l2 {
-+			/*
-+			 * This regulator supports 1.648 - 3.104V on this board
-+			 * but we set a max voltage of anything less than 2.7V
-+			 * to satisfy a condition in sdhci.c that will disable
-+			 * 3.3V SDHCI signaling, which happens to be not really
-+			 * supported on the Xperia Nile/Ganges platform.
-+			 */
-+			regulator-min-microvolt = <1648000>;
-+			regulator-max-microvolt = <2696000>;
-+			regulator-enable-ramp-delay = <250>;
-+			regulator-ramp-delay = <0>;
-+			regulator-allow-set-load;
-+		};
-+
-+		vreg_l4b_29p5: l4 {
-+			regulator-min-microvolt = <2944000>;
-+			regulator-max-microvolt = <2952000>;
-+			regulator-enable-ramp-delay = <250>;
-+			regulator-ramp-delay = <0>;
-+
-+			regulator-min-microamp = <200>;
-+			regulator-max-microamp = <600000>;
-+			regulator-system-load = <570000>;
-+			regulator-allow-set-load;
-+		};
-+
-+		vreg_l5b_29p5: l5 {
-+			/*
-+			 * Downstream specifies a range of 1721-3600mV,
-+			 * but the only assigned consumers are SDHCI2 VMMC
-+			 * and Coresight QPDI that both request pinned 2.95V.
-+			 * Tighten the range to 1.8-3.328 (closest to 3.3) to
-+			 * make the mmc driver happy.
-+			 */
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <3328000>;
-+			regulator-enable-ramp-delay = <250>;
-+			regulator-ramp-delay = <0>;
-+			regulator-allow-set-load;
-+			regulator-system-load = <800000>;
-+		};
-+
-+		vreg_l8b_3p3: l8 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <3400000>;
-+			regulator-enable-ramp-delay = <250>;
-+			regulator-ramp-delay = <0>;
-+		};
-+
-+		vreg_bob: bob {
-+			regulator-min-microvolt = <3304000>;
-+			regulator-max-microvolt = <3624000>;
-+			regulator-enable-ramp-delay = <500>;
-+			regulator-ramp-delay = <0>;
-+		};
-+	};
-+};
-+
-+&sdhc_1 {
-+	status = "okay";
-+	supports-cqe;
-+
-+	mmc-ddr-1_8v;
-+	mmc-hs400-1_8v;
-+	mmc-hs400-enhanced-strobe;
-+
-+	vmmc-supply = <&vreg_l4b_29p5>;
-+	vqmmc-supply = <&vreg_l8a_1p8>;
-+};
-+
-+&sdhc_2 {
-+	status = "okay";
-+
-+	vmmc-supply = <&vreg_l5b_29p5>;
-+	vqmmc-supply = <&vreg_l2b_2p95>;
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <0 4>, <8 4>;
-+
-+	uart_active: uart-active-state {
-+		pins = "gpio4", "gpio5";
-+		function = "blsp_uart2";
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+};
--- 
-2.29.2
-
+Regards,
+Bjorn
