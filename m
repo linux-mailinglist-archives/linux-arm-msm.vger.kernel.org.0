@@ -2,62 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A174A3F5B2F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Aug 2021 11:41:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 447743F5DF8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Aug 2021 14:27:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235583AbhHXJmD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 24 Aug 2021 05:42:03 -0400
-Received: from mail.kernel.org ([198.145.29.99]:44834 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235566AbhHXJmD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 24 Aug 2021 05:42:03 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id A6DF06108F;
-        Tue, 24 Aug 2021 09:41:18 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1629798079;
-        bh=gFIclmSjmiJh/ormPzj/mq5h+yqt+1OnN3tuT5TqpHw=;
-        h=From:To:Cc:Subject:Date:From;
-        b=jH485jhxhmWnB9jCuN7EaTzM7RzLserft47okor9m+iCNSJWRd/mj4zRH/kbG6ofR
-         zXvs/YW8tHWaviQAr41bTIkBS9uSILaE1+On235GRBizH/75MyCRjZz0uSH68nGqrD
-         Hty42tlTjz08KsWYuMdXkkkOkLskkU6S2vQ8zPXOTXtLIvGgRhK4FQgtRA2Pklynsj
-         3+kOe9RTg3o69vwhU2Sz0eZDfDZyq0JbQwUEIX+pJcaUjV+RjLS7ZrxGcdjMYx8Ge7
-         5T+Nruy089lM0kwha2U+1mBRlLo0/gfGZf6a3Yenlt9GBIsRv+ch4h8RSraI9kktew
-         sfW7BZfRUcOMg==
-From:   Shawn Guo <shawnguo@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>
-Subject: [PATCH] soc: qcom: mdt_loader: Drop PT_LOAD check on hash segment
-Date:   Tue, 24 Aug 2021 17:41:09 +0800
-Message-Id: <20210824094109.7272-1-shawnguo@kernel.org>
-X-Mailer: git-send-email 2.17.1
+        id S237131AbhHXM2g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 24 Aug 2021 08:28:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48906 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236953AbhHXM2g (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 24 Aug 2021 08:28:36 -0400
+Received: from albert.telenet-ops.be (albert.telenet-ops.be [IPv6:2a02:1800:110:4::f00:1a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9E35CC061764
+        for <linux-arm-msm@vger.kernel.org>; Tue, 24 Aug 2021 05:27:51 -0700 (PDT)
+Received: from ramsan.of.borg ([IPv6:2a02:1810:ac12:ed20:fd1d:ce2:c16e:185a])
+        by albert.telenet-ops.be with bizsmtp
+        id lQTk250094wgRL106QTkyV; Tue, 24 Aug 2021 14:27:48 +0200
+Received: from rox.of.borg ([192.168.97.57])
+        by ramsan.of.borg with esmtps  (TLS1.3) tls TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384
+        (Exim 4.93)
+        (envelope-from <geert@linux-m68k.org>)
+        id 1mIVWq-005Q6P-5H; Tue, 24 Aug 2021 14:27:44 +0200
+Received: from geert by rox.of.borg with local (Exim 4.93)
+        (envelope-from <geert@linux-m68k.org>)
+        id 1mIVWp-009Dq7-5E; Tue, 24 Aug 2021 14:27:43 +0200
+From:   Geert Uytterhoeven <geert+renesas@glider.be>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        John Stultz <john.stultz@linaro.org>,
+        He Ying <heying24@huawei.com>
+Cc:     Will Deacon <will@kernel.org>, Kalle Valo <kvalo@codeaurora.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        Geert Uytterhoeven <geert+renesas@glider.be>
+Subject: [PATCH] firmware: qcom_scm: QCOM_SCM should depend on ARCH_QCOM
+Date:   Tue, 24 Aug 2021 14:27:41 +0200
+Message-Id: <5cda77085c07dc2e8d2195507b287457cb2f09e9.1629807831.git.geert+renesas@glider.be>
+X-Mailer: git-send-email 2.25.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Shawn Guo <shawn.guo@linaro.org>
+The Qualcomm Secure Channel Manager (SCM) is only present on Qualcomm
+SoCs.  All drivers using it select QCOM_SCM, and depend on ARCH_QCOM.
+Until recently, QCOM_SCM was an invisible symbol, but this was changed
+by adding loadable module support, exposing it to all ARM and ARM64
+users.  Hence add a dependency on ARCH_QCOM, to prevent asking the user
+about this driver when configuring a kernel without Qualcomm SoC
+support.
 
-It's been observed on Sony Xperia M4 Aqua phone, that wcnss firmware has
-the type of the second segment holding hashes just be PT_LOAD.  So drop
-the check on phdrs[1].p_type to get it go on that phone.
+While at it, drop the dependency on ARM || ARM64, as that is implied by
+HAVE_ARM_SMCCC.
 
-Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+Fixes: b42000e4b8741bf6 ("firmware: qcom_scm: Allow qcom_scm driver to be loadable as a permenent module")
+Fixes: 2954a6f12f250890 ("firmware: qcom-scm: Fix QCOM_SCM configuration")
+Signed-off-by: Geert Uytterhoeven <geert+renesas@glider.be>
 ---
- drivers/soc/qcom/mdt_loader.c | 2 +-
+ drivers/firmware/Kconfig | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
-index eba7f76f9d61..6034cd8992b0 100644
---- a/drivers/soc/qcom/mdt_loader.c
-+++ b/drivers/soc/qcom/mdt_loader.c
-@@ -98,7 +98,7 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len)
- 	if (ehdr->e_phnum < 2)
- 		return ERR_PTR(-EINVAL);
+diff --git a/drivers/firmware/Kconfig b/drivers/firmware/Kconfig
+index 220a58cf0a441ca2..0bebd5a62a9f4d66 100644
+--- a/drivers/firmware/Kconfig
++++ b/drivers/firmware/Kconfig
+@@ -204,7 +204,7 @@ config INTEL_STRATIX10_RSU
  
--	if (phdrs[0].p_type == PT_LOAD || phdrs[1].p_type == PT_LOAD)
-+	if (phdrs[0].p_type == PT_LOAD)
- 		return ERR_PTR(-EINVAL);
+ config QCOM_SCM
+ 	tristate "Qcom SCM driver"
+-	depends on ARM || ARM64
++	depends on ARCH_QCOM || COMPILE_TEST
+ 	depends on HAVE_ARM_SMCCC
+ 	select RESET_CONTROLLER
  
- 	if ((phdrs[1].p_flags & QCOM_MDT_TYPE_MASK) != QCOM_MDT_TYPE_HASH)
 -- 
-2.17.1
+2.25.1
 
