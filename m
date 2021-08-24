@@ -2,36 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 500E23F5633
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Aug 2021 04:59:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3E8D53F5644
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 24 Aug 2021 04:59:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234712AbhHXC7x (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 23 Aug 2021 22:59:53 -0400
-Received: from mail.kernel.org ([198.145.29.99]:55044 "EHLO mail.kernel.org"
+        id S234732AbhHXDAV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 23 Aug 2021 23:00:21 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57200 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234400AbhHXC7W (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 23 Aug 2021 22:59:22 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id CE1F961178;
-        Tue, 24 Aug 2021 02:58:38 +0000 (UTC)
+        id S234662AbhHXC7q (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 23 Aug 2021 22:59:46 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 88FDF6120A;
+        Tue, 24 Aug 2021 02:58:51 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1629773919;
-        bh=ldZzDnpl2aK+mqHK2ob75dzTqLXqICBEeenwmpoXhvM=;
+        s=k20201202; t=1629773932;
+        bh=/6wqijHX82zA4YodiCrdGnipfX4S1JEquuTTeJWDZ08=;
         h=From:To:Cc:Subject:Date:From;
-        b=WYF08vd1qU1vUv3gnAjnwdqtJKsgiN+VE0iezJRhJUA9voE7nmS+MyHomOd6DQv36
-         ltfGgDsfo3Qu8liH8AeRDP/oHRic4sxaKUTg2chogbPUx+q4jlUXwi+tRbrJrbi04f
-         yOX72KjI6xvdJnBKphw0LmWagWczIOK5ixioy0E+X1IpeVR/FRpH7LNuZqA+tCzEUk
-         X3cQVmlXI8yC/AA4oRaecCMSXilyIGIqK2BViqFDOFcaY1tJT5cMjrt0zFBDYIiHBh
-         fi/xxMcve9+CTtngaLV3u2Z1GADrYOrmt0LzJHY4agU3prVNGqdZhlaKCKBMKwQfFk
-         Vnm/0OMpRrByQ==
+        b=f5ItA+iGmQQ3wSZcZEG9Z3Ve4DIBvgE3U58c9ugWXXV95tf9zOuQ84vEwdCQ/5SPa
+         CFOGj+e+yLw1UpiNzPoAYLcbHR+SYHz0qvOc8IVg7KtrKGXqtXKc6qQpoey8XXrG+M
+         u/5fTi5CgOtcQSszy1pY0T9gn0IouBMgEXx0eruNO0fwRc9OtOCd0BdeDuY3mEL/+c
+         fnbarRc0PATKqq8E/wDDQPUpLupN7tFjNm5QHh9eC1iQ3XdedsycRMiCTg3cOP7Mmi
+         OEEtg9apWRV3Yv4vAR31CLTVqD2/dzzmF9/z11O38l8VlL6wANzfqdSG7afPLb5d4E
+         d3eBKQR9ff3ZA==
 From:   Sasha Levin <sashal@kernel.org>
 To:     stable@vger.kernel.org, sbhanu@codeaurora.org
 Cc:     Adrian Hunter <adrian.hunter@intel.com>,
         Ulf Hansson <ulf.hansson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
+        linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: FAILED: Patch "mmc: sdhci-msm: Update the software timeout value for sdhc" failed to apply to 4.9-stable tree
-Date:   Mon, 23 Aug 2021 22:58:37 -0400
-Message-Id: <20210824025837.659653-1-sashal@kernel.org>
+Subject: FAILED: Patch "mmc: sdhci-msm: Update the software timeout value for sdhc" failed to apply to 4.4-stable tree
+Date:   Mon, 23 Aug 2021 22:58:50 -0400
+Message-Id: <20210824025850.660014-1-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
 X-Patchwork-Hint: ignore
@@ -41,7 +41,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The patch below does not apply to the 4.9-stable tree.
+The patch below does not apply to the 4.4-stable tree.
 If someone wants it applied there, or to any other stable or longterm
 tree, then please email the backport, including the original git commit
 id to <stable@vger.kernel.org>.
