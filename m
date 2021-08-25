@@ -2,141 +2,242 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E1E053F75B1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 15:14:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C0423F75FF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 15:38:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240705AbhHYNPj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Aug 2021 09:15:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52156 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240626AbhHYNPi (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Aug 2021 09:15:38 -0400
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33B30C0613C1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Aug 2021 06:14:53 -0700 (PDT)
-Received: by mail-ot1-x334.google.com with SMTP id o16-20020a9d2210000000b0051b1e56c98fso39987055ota.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Aug 2021 06:14:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=XEXdy3GV4G1Rh4nIwOhWQFTlcYHrFKR0AgAwM+GWIhY=;
-        b=C6KVnlNzvoXZts4eK3AtJ7eJeh+g2HUsDqP5RqYWV5Cq5yh993fQP4yODhzdrljm+S
-         KQJTtU5yn5GcDok9ii5P2spyxujD/nlqJuYq+7onwR3tJAgc69a87oUe812TmSySJ784
-         uRtjvcSD8B1eSRSaAgXGageYKCpzx0Tp81OWpO0r4XiutO236+duoMtoVxsUUq8tFKFN
-         GAqwl8WPjyHakCLzD726WF7Ei/7NANNOPuvDA8Q5W3Xh2TMQWWaj1NPLaN5QsDyyYn5j
-         mQw8aWhQIc2KlkUtrc0k0WjrfyT3Gxet6p80vwL3jGTn/6V9Gx1X1Kg2o6xTAnm/TdWX
-         VwOA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=XEXdy3GV4G1Rh4nIwOhWQFTlcYHrFKR0AgAwM+GWIhY=;
-        b=ooZ/gh/17MQxcy1fHShxKWtxJeXYg/+HVArVFUrBNexh7BMSdvs8EhQPt9oFKISw1L
-         Ka5NKhWlIO/RYCnIP4/vRycZzlO/vdrfA9TLdFhmEthYn90rRVFGRClx3gKNQwBquFxD
-         jC7VtU6v21mJEAINxqmdsJiWLkEpSZHW6pSqKa+Pxg8E8EaeBM1dTl9r+2mnOXceX/SD
-         lfeGe4z2lD4xo/VTNIIxc8XsQmodLC6wG2OPAplwUk4eyhqAVXtvSW4DW5ReHglbDyS2
-         7lmJMoVUHVKbm5IgTx63r6fA3r1wA6WnqUJmWWHCRRGz2yiCUzxFs8IX45lmtKHeetII
-         ukrA==
-X-Gm-Message-State: AOAM533M9wE6S8jr941rcIm9XOdFX37iMDYfMqjqYANRNu+uIHRWW47e
-        erXMG8leqSoPqttA+RWe9ilsNw==
-X-Google-Smtp-Source: ABdhPJwtS44OfMfN51KPVKPwvLNM9KHkNN+kRXCO75cwNa8s0IYEpXQb1SuDHt6SHs1ryUhw391pqA==
-X-Received: by 2002:a05:6830:20c2:: with SMTP id z2mr35827621otq.285.1629897292481;
-        Wed, 25 Aug 2021 06:14:52 -0700 (PDT)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id k23sm2536842ood.12.2021.08.25.06.14.51
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Aug 2021 06:14:52 -0700 (PDT)
-Date:   Wed, 25 Aug 2021 06:16:08 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Felipe Balbi <balbi@kernel.org>
-Cc:     Peter Chen <peter.chen@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        agross@kernel.org, gregkh@linuxfoundation.org,
-        jackp@codeaurora.org, wcheng@codeaurora.org,
-        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 0/3] Implement role-switch notifications from dwc3-drd to
- dwc3-qcom
-Message-ID: <YSZCmDEedJaJyI0u@ripper>
-References: <20210704013314.200951-1-bryan.odonoghue@linaro.org>
- <20210707015704.GA28125@nchen>
- <YOX6d+sBEJMP4V3q@yoga>
- <20210708030631.GA22420@nchen>
- <YSWCnsZDdp57KBqB@ripper>
- <87zgt65avm.fsf@kernel.org>
+        id S240767AbhHYNjY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Aug 2021 09:39:24 -0400
+Received: from mail.kernel.org ([198.145.29.99]:32850 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S240444AbhHYNjX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 25 Aug 2021 09:39:23 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id B42E76115A;
+        Wed, 25 Aug 2021 13:38:37 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1629898717;
+        bh=n4b2dLuU/6PNsHWuAsfDOu6iqzBJ3z4WN2b/gs3oU38=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=V5iasCiFtCRORHAssu84CPFS0aDSQU+CzK2xoG5Lh/PkHTMARq8LxVR3gdp61bhxZ
+         O1McAY7Bz8aH+0o+CGOIeF3QP1/ip5q+Uh8pl+vLSsOv3Iimaksb+nKVUmY/rIY76G
+         kRXnw39ykrfvgPRmjERDngDjKBqGHjJ9kETMN7OBKYQvuRtqS+fGnhdTjNVrzqwcP6
+         gz/tTIMv1i+vm5WdNo3ZaSB53GhBVmZ7dLLDYgIrPY1b+29TTcqmscmIWmSaK7yZY3
+         IgXwhF0RN9KscnfrCdSptu1wDWixvQxfa1EgDBLd2BZikhrKWNKZiK0qXT2T2FXl/1
+         6sGrgqVqbUPsQ==
+Received: by mail-ej1-f54.google.com with SMTP id x11so51787137ejv.0;
+        Wed, 25 Aug 2021 06:38:37 -0700 (PDT)
+X-Gm-Message-State: AOAM531nwhVMkuwIbQ8KEKRzXL9PSChXV4PeFVI90S2KUxwPfNxROIEi
+        1j2jD/ouHHa8SLZmt2sgXBiccCd/JJfqSOKoWw==
+X-Google-Smtp-Source: ABdhPJyHgToPUzhhFGCuzGAFrVucfUDHHxUO3gLUDQ9bxKuwkQvIYGaJr2/8q3ewc9y4Yg2LU2ZrDLmqeVQKbzaLT48=
+X-Received: by 2002:a17:906:1cd0:: with SMTP id i16mr4248881ejh.360.1629898716179;
+ Wed, 25 Aug 2021 06:38:36 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87zgt65avm.fsf@kernel.org>
+References: <cover.1620203062.git.baruch@tkos.co.il> <e17461407cf4bb79fed5925ec81196a0b84e7827.1620203062.git.baruch@tkos.co.il>
+ <CAL_JsqKOGo4eXKA7FZK7AQQ24MDDbg2-ngUQF9CJK=8eH_pxHQ@mail.gmail.com> <87o89lahqp.fsf@tarshish>
+In-Reply-To: <87o89lahqp.fsf@tarshish>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Wed, 25 Aug 2021 08:38:24 -0500
+X-Gmail-Original-Message-ID: <CAL_Jsq+wkTbGjyk_i-_1Sad80xcJwAFdf5gBTGBR_TORRA-AoQ@mail.gmail.com>
+Message-ID: <CAL_Jsq+wkTbGjyk_i-_1Sad80xcJwAFdf5gBTGBR_TORRA-AoQ@mail.gmail.com>
+Subject: Re: [PATCH v2 2/6] PCI: qcom: add support for IPQ60xx PCIe controller
+To:     Baruch Siach <baruch@tkos.co.il>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
+        Kathiravan T <kathirav@codeaurora.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Robert Marko <robert.marko@sartura.hr>,
+        devicetree@vger.kernel.org, linux-phy@lists.infradead.org,
+        PCI <linux-pci@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        linux-tegra <linux-tegra@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 24 Aug 22:51 PDT 2021, Felipe Balbi wrote:
-
-> 
-> Hi,
-> 
-> Bjorn Andersson <bjorn.andersson@linaro.org> writes:
-> > On Wed 07 Jul 20:06 PDT 2021, Peter Chen wrote:
+On Wed, Aug 25, 2021 at 6:25 AM Baruch Siach <baruch@tkos.co.il> wrote:
+>
+> Hi Rob,
+>
+> On Fri, Aug 06 2021, Rob Herring wrote:
+> > On Wed, May 5, 2021 at 3:18 AM Baruch Siach <baruch@tkos.co.il> wrote:
+> >>
+> >> From: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
+> >>
+> >> IPQ60xx series of SoCs have one port of PCIe gen 3. Add support for that
+> >> platform.
+> >>
+> >> The code is based on downstream Codeaurora kernel v5.4. Split out the
+> >> DBI registers access part from .init into .post_init. DBI registers are
+> >> only accessible after phy_power_on().
+> >>
+> >> Signed-off-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
+> >> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+> >> ---
+> >> v2:
+> >>   * Drop ATU configuration; rely on common code instead
+> >>
+> >>   * Use more common register macros
+> >>
+> >>   * Use bulk clk and reset APIs
+> >> ---
+> >>  drivers/pci/controller/dwc/pcie-designware.h |   1 +
+> >>  drivers/pci/controller/dwc/pcie-qcom.c       | 150 +++++++++++++++++++
+> >>  2 files changed, 151 insertions(+)
+> >>
+> >> diff --git a/drivers/pci/controller/dwc/pcie-designware.h b/drivers/pci/controller/dwc/pcie-designware.h
+> >> index ceb359b6e6a6..346462c74a3e 100644
+> >> --- a/drivers/pci/controller/dwc/pcie-designware.h
+> >> +++ b/drivers/pci/controller/dwc/pcie-designware.h
+> >> @@ -76,6 +76,7 @@
+> >>
+> >>  #define GEN3_RELATED_OFF                       0x890
+> >>  #define GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL   BIT(0)
+> >> +#define GEN3_RELATED_OFF_RXEQ_RGRDLESS_RXTS    BIT(13)
+> >>  #define GEN3_RELATED_OFF_GEN3_EQ_DISABLE       BIT(16)
+> >>  #define GEN3_RELATED_OFF_RATE_SHADOW_SEL_SHIFT 24
+> >>  #define GEN3_RELATED_OFF_RATE_SHADOW_SEL_MASK  GENMASK(25, 24)
+> >> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> >> index 8a7a300163e5..93766aee3e7c 100644
+> >> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> >> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> >> @@ -52,6 +52,10 @@
+> >>  #define PCIE20_PARF_DBI_BASE_ADDR              0x168
+> >>  #define PCIE20_PARF_SLV_ADDR_SPACE_SIZE                0x16C
+> >>  #define PCIE20_PARF_MHI_CLOCK_RESET_CTRL       0x174
+> >> +#define AHB_CLK_EN                             BIT(0)
+> >> +#define MSTR_AXI_CLK_EN                                BIT(1)
+> >> +#define BYPASS                                 BIT(4)
+> >> +
+> >>  #define PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT      0x178
+> >>  #define PCIE20_PARF_AXI_MSTR_WR_ADDR_HALT_V2   0x1A8
+> >>  #define PCIE20_PARF_LTSSM                      0x1B0
+> >> @@ -94,6 +98,12 @@
+> >>  #define SLV_ADDR_SPACE_SZ                      0x10000000
+> >>
+> >>  #define PCIE20_LNK_CONTROL2_LINK_STATUS2       0xa0
+> >> +#define PCIE_CAP_CURR_DEEMPHASIS               BIT(16)
 > >
-> >> On 21-07-07 14:03:19, Bjorn Andersson wrote:
-> >> > On Tue 06 Jul 20:57 CDT 2021, Peter Chen wrote:
-> >> > 
-> >> > Allow me to reorder your two questions:
-> >> > 
-> >> > > And why using a notifier need to concern core's deferral probe?
-> >> > 
-> >> > The problem at hand calls for the core for somehow invoking
-> >> > dwc3_qcom_vbus_overrride_enable() with a pointer to dwc3_qcom passed.
-> >> > 
-> >> > This means that dwc3-qcom somehow needs to inform the dwc3-core about
-> >> > this (and stash the pointer). And this can't be done until dwc3-core
-> >> > actually exist, which it won't until dwc3_probe() has completed
-> >> > successfully (or in particular allocated struct dwc).
-> >> 
-> >> Maybe you misunderstood the notifier I meant previous, my pointer was
-> >> calling glue layer API directly.
-> >> 
-> >> Role switch is from dwc3-core, when it occurs, it means structure dwc3 has
-> >> allocated successfully, you could call glue layer notifier at function
-> >> dwc3_usb_role_switch_set directly.
-> >> Some references of my idea [1] [2]
-> >> 
-> >> [1] Function ci_hdrc_msm_notify_event at ci_hdrc_msm_notify_event
-> >> [2] https://source.codeaurora.org/external/imx/linux-imx/tree/drivers/usb/dwc3/core.c?h=lf-5.10.y#n205
-> >> 
+> > Isn't this a standard register field?
+>
+> I don't know. I could not find any reference to this field or the
+> registers it's part of.
+
+It is. I found it in the spec. But it's not in pci_reg.h and it is a
+read-only status bit (though some in DWC can be written).
+
+> n
+> >> +#define SPEED_GEN1                             0x1
+> >> +#define SPEED_GEN2                             0x2
+> >> +#define SPEED_GEN3                             0x3
 > >
-> > Hi Peter, I took a proper look at this again, hoping to find a way to
-> > pass a callback pointer from dwc3-qcom to the dwc3 core, that can be
-> > called from __dwc3_set_mode() to inform the Qualcomm glue about mode
-> > changes.
-> 
-> I would rather keep the strict separation between glue and core.
-> 
+> > And these?
 
-I'm okay with that goal, but the result is that both the OMAP and
-Qualcomm driver duplicates the extcon interface already present in the
-DRD, and the Meson driver duplicates the usb_role_switch. In addition to
-the code duplication this manifest itself in the need for us to link
-extcon to both the glue and core nodes in DeviceTree.
+#define PCI_EXP_LNKCTL2         48      /* Link Control 2 */
+#define  PCI_EXP_LNKCTL2_TLS            0x000f
+#define  PCI_EXP_LNKCTL2_TLS_2_5GT      0x0001 /* Supported Speed 2.5GT/s */
+#define  PCI_EXP_LNKCTL2_TLS_5_0GT      0x0002 /* Supported Speed 5GT/s */
+#define  PCI_EXP_LNKCTL2_TLS_8_0GT      0x0003 /* Supported Speed 8GT/s */
+#define  PCI_EXP_LNKCTL2_TLS_16_0GT     0x0004 /* Supported Speed 16GT/s */
+#define  PCI_EXP_LNKCTL2_TLS_32_0GT     0x0005 /* Supported Speed 32GT/s */
+#define  PCI_EXP_LNKCTL2_TLS_64_0GT     0x0006 /* Supported Speed 64GT/s */
+#define  PCI_EXP_LNKCTL2_ENTER_COMP     0x0010 /* Enter Compliance */
+#define  PCI_EXP_LNKCTL2_TX_MARGIN      0x0380 /* Transmit Margin */
+#define  PCI_EXP_LNKCTL2_HASD           0x0020 /* HW Autonomous Speed Disable */
+#define PCI_EXP_LNKSTA2         50      /* Link Status 2 */
 
-In order to function in a USB-C based setup we now need to register a 
-usb_role_switch from the Qualcomm glue and we need to evolve the
-usb_role_switch implementation to allow for the Type-C controller to
-notify more than a single role-switcher.
+> >
+> > There's already some common DWC code for setting the link speed.
+>
+> dw_pcie_link_set_max_speed() deals with other registers, as far as I can
+> see.
 
-So we're facing the need to introduce another bunch of duplication and
-the DT will be quite ugly with both glue and core having to set up an
-of_graph with the Type-C controller.
+Link Control2 which is what the above function configures appears to
+be the same register to me. Your definition is combining 2 registers.
 
+>
+> >> +#define AXI_CLK_RATE                           200000000
+> >> +#define RCHNG_CLK_RATE                         100000000
+> >>
+> >>  #define DEVICE_TYPE_RC                         0x4
+>
+> [snip]
+>
+> >> +static int qcom_pcie_post_init_2_9_0(struct qcom_pcie *pcie)
+> >> +{
+> >> +       struct dw_pcie *pci = pcie->pci;
+> >> +       u16 offset = dw_pcie_find_capability(pci, PCI_CAP_ID_EXP);
+> >> +       u32 val;
+> >> +       int i;
+> >> +
+> >> +       writel(SLV_ADDR_SPACE_SZ,
+> >> +               pcie->parf + PCIE20_v3_PARF_SLV_ADDR_SPACE_SIZE);
+> >> +
+> >> +       val = readl(pcie->parf + PCIE20_PARF_PHY_CTRL);
+> >> +       val &= ~BIT(0);
+> >> +       writel(val, pcie->parf + PCIE20_PARF_PHY_CTRL);
+> >> +
+> >> +       writel(0, pcie->parf + PCIE20_PARF_DBI_BASE_ADDR);
+> >> +
+> >> +       writel(DEVICE_TYPE_RC, pcie->parf + PCIE20_PARF_DEVICE_TYPE);
+> >> +       writel(BYPASS | MSTR_AXI_CLK_EN | AHB_CLK_EN,
+> >> +               pcie->parf + PCIE20_PARF_MHI_CLOCK_RESET_CTRL);
+> >> +       writel(GEN3_RELATED_OFF_RXEQ_RGRDLESS_RXTS
+> >> +               | GEN3_RELATED_OFF_GEN3_ZRXDC_NONCOMPL,
+> >> +               pci->dbi_base + GEN3_RELATED_OFF);
+> >> +
+> >> +       writel(MST_WAKEUP_EN | SLV_WAKEUP_EN | MSTR_ACLK_CGC_DIS
+> >> +               | SLV_ACLK_CGC_DIS | CORE_CLK_CGC_DIS |
+> >> +               AUX_PWR_DET | L23_CLK_RMV_DIS | L1_CLK_RMV_DIS,
+> >> +               pcie->parf + PCIE20_PARF_SYS_CTRL);
+> >> +
+> >> +       writel(0, pcie->parf + PCIE20_PARF_Q2A_FLUSH);
+> >> +
+> >> +       dw_pcie_dbi_ro_wr_en(pci);
+> >> +       writel(PCIE_CAP_LINK1_VAL, pci->dbi_base + offset + PCI_EXP_SLTCAP);
+> >> +
+> >> +       /* Configure PCIe link capabilities for ASPM */
+> >> +       val = readl(pci->dbi_base + offset + PCI_EXP_LNKCAP);
+> >> +       val &= ~PCI_EXP_LNKCAP_ASPMS;
+> >> +       writel(val, pci->dbi_base + offset + PCI_EXP_LNKCAP);
+> >> +
+> >> +       writel(PCI_EXP_DEVCTL2_COMP_TMOUT_DIS, pci->dbi_base + offset +
+> >> +                       PCI_EXP_DEVCTL2);
+> >> +
+> >> +       writel(PCIE_CAP_CURR_DEEMPHASIS | SPEED_GEN3,
+> >> +                       pci->dbi_base + offset + PCI_EXP_DEVCTL2);
+> >
+> > Doesn't this overwrite the prior register write?
+>
+> It does. There are two mistakes here. The writel() above should set
+> PCIE20_DEVICE_CONTROL2_STATUS2 (offset 0x98).
 
-I really would like for us to come up with a way where the core can
-notify the glue that role switching is occurring, so that we instead of
-adding more duplication could aim to, over time, remove the extcon and
-usb_role_switch logic from the Qualcomm, OMAP and Meson drivers.
+No. Did you check what 'offset' is? PCIE20_DEVICE_CONTROL2_STATUS2 is
+PCI_EXP_DEVCTL2 plus the status reg. What's wrong is it should be a
+16-bit write.
 
-Regards,
-Bjorn
+> This writel() should set
+> PCIE20_LNK_CONTROL2_LINK_STATUS2 (offset 0xa0). So both are wrong.
+>
+> >> +
+> >> +       for (i = 0;i < 256;i++)
+> >> +               writel(0x0, pcie->parf + PCIE20_PARF_BDF_TO_SID_TABLE_N
+> >> +                               + (4 * i));
+> >> +
+> >> +       return 0;
+> >> +}
+>
+> Thanks,
+> baruch
+>
+> --
+>                                                      ~. .~   Tk Open Systems
+> =}------------------------------------------------ooO--U--Ooo------------{=
+>    - baruch@tkos.co.il - tel: +972.52.368.4656, http://www.tkos.co.il -
