@@ -2,162 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D09F93F7975
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 17:52:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CCA073F79A7
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 18:01:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241384AbhHYPxA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Aug 2021 11:53:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60622 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237144AbhHYPw7 (ORCPT
+        id S241599AbhHYQCJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Aug 2021 12:02:09 -0400
+Received: from relay04.th.seeweb.it ([5.144.164.165]:39407 "EHLO
+        relay04.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241999AbhHYQBn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Aug 2021 11:52:59 -0400
-Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 235DCC061757
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Aug 2021 08:52:14 -0700 (PDT)
-Received: by mail-oi1-x233.google.com with SMTP id h133so8935653oib.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Aug 2021 08:52:14 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=X+yOu2k/0Aoq0PfnlNV9T3vcn5Wl0bg+LNX6moKW2AY=;
-        b=uScA8LBNrH/79G1Q7QR27MlTKRlHhH2U1zkqkjo3EXd50v0u3GF9aj3CfXJU4V+Q72
-         9NRgJkcmjKSToAbyQkIwYHfKcM+USHHfld7X6MwQmEh4OFqXr6BkqnfsJXsspNKAT9c8
-         Zm1+k+TLBKRvlwRqtnHoZYxRM02LZrsmCiHIn6rPn+9O6ejyfLpb8o7OBJat5CcvN6XV
-         RM0H3jICFo/Idi4N4MTOKHu3owGq3kcME/HF5EAn+OQFXTSRH622g3Flf9ic2fbBjqAV
-         d4qHPzSOtOOdBOh7AjPJJ2FvKmWRK8wu/u1jCUfU5QcdzvNx2Q9pCqclcTrQ9YSfHzS5
-         UBFQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=X+yOu2k/0Aoq0PfnlNV9T3vcn5Wl0bg+LNX6moKW2AY=;
-        b=pb2rtwaUvJb3XNUnfAMxh7/7Ssj9lHNLb1Qk35XETOt+dnZQjp2PfgEvq1o3ZgjkLn
-         PGomFOv8GQr8X+MgEW4yylbYvlxeGCikjjrV3dWr0zM7KM+Yfmku7YSSOe30VxhXZLkQ
-         TimVEAWGIJ5fRuQqZAzzWceLotYjjjoZdLjsKaN4cj7acEUtLknSdOGLwqhMF1EXRxdR
-         vWCuW3B0jNIzYrKxv7b0ep3hvgFvVdiNDJhzjs+oNK3WPN5K340MUXEWYBKdxtESzIF8
-         30/rXFX8WkhXgbGzMOjdVhO1DG576IwWMiVC6Yq8lie8+lWoC5e1LRkrhl7EH/5zX+2m
-         fKdA==
-X-Gm-Message-State: AOAM531gQfY7y3qAFAtbPZRV4qZ62HqvalZvMdDnZ/aFnSs7Ta6Xvl8o
-        uMijTZKpqVgIajR4vX9LHf4QOA==
-X-Google-Smtp-Source: ABdhPJxpZA+yrh+fd6s1aTwCRIFMvjnLJJV+Zzca2ZJVcVcCwKpozzCqooBhKKueEubqQbR282cdKA==
-X-Received: by 2002:aca:5342:: with SMTP id h63mr7163766oib.171.1629906733377;
-        Wed, 25 Aug 2021 08:52:13 -0700 (PDT)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id v16sm37715oou.45.2021.08.25.08.52.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Aug 2021 08:52:12 -0700 (PDT)
-Date:   Wed, 25 Aug 2021 08:53:29 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
-Cc:     Felipe Balbi <balbi@kernel.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Peter Chen <peter.chen@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, agross@kernel.org,
-        gregkh@linuxfoundation.org, jackp@codeaurora.org,
-        wcheng@codeaurora.org, linux-usb@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 0/3] Implement role-switch notifications from dwc3-drd to
- dwc3-qcom
-Message-ID: <YSZned9v1+ajzVx0@ripper>
-References: <20210704013314.200951-1-bryan.odonoghue@linaro.org>
- <20210707015704.GA28125@nchen>
- <YOX6d+sBEJMP4V3q@yoga>
- <20210708030631.GA22420@nchen>
- <YSWCnsZDdp57KBqB@ripper>
- <87zgt65avm.fsf@kernel.org>
- <ce5f12dd-ddc1-6a9c-3dfb-aa44ea166828@linaro.org>
+        Wed, 25 Aug 2021 12:01:43 -0400
+X-Greylist: delayed 69276 seconds by postgrey-1.27 at vger.kernel.org; Wed, 25 Aug 2021 12:01:43 EDT
+Received: from [10.0.20.3] (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 00D8A1F97A;
+        Wed, 25 Aug 2021 18:00:54 +0200 (CEST)
+Subject: Re: [PATCH] clk: qcom: gcc-sdm660: Replace usage of parent_names
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        angelogioacchino.delregno@somainline.org
+References: <20210824150606.678666-1-bjorn.andersson@linaro.org>
+ <386db1a6-a1cd-3c7d-a88e-dc83f8a1be96@somainline.org>
+ <YSV0/bFiPgY3fjPF@ripper>
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+Message-ID: <ed5d27eb-5a54-04c4-dbc4-63da80df1638@somainline.org>
+Date:   Wed, 25 Aug 2021 18:00:54 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <ce5f12dd-ddc1-6a9c-3dfb-aa44ea166828@linaro.org>
+In-Reply-To: <YSV0/bFiPgY3fjPF@ripper>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 25 Aug 01:18 PDT 2021, Bryan O'Donoghue wrote:
+Hi Bjorn,
 
-> On 25/08/2021 06:51, Felipe Balbi wrote:
-> > > Hi Peter, I took a proper look at this again, hoping to find a way to
-> > > pass a callback pointer from dwc3-qcom to the dwc3 core, that can be
-> > > called from __dwc3_set_mode() to inform the Qualcomm glue about mode
-> > > changes.
-> > I would rather keep the strict separation between glue and core.
+On 8/25/21 12:38 AM, Bjorn Andersson wrote:
+> On Tue 24 Aug 13:46 PDT 2021, Marijn Suijten wrote:
 > 
-> # 1 __dwc3_set_mode
-> Felipe wants to keep a strict separation between core and glue
+>> Hi Bjorn,
+>>
+>> Thanks for this cleanup, that's needed and much appreciated!
+>>
+>> On 8/24/21 5:06 PM, Bjorn Andersson wrote:
+>>> Using parent_data and parent_hws, instead of parent_names, does protect
+>>> against some cases of incompletely defined clock trees. While it turns
+>>> out that the bug being chased this time was totally unrelated, this
+>>> patch converts the SDM660 GCC driver to avoid such issues.
+>>>
+>>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>>
+>>
+>> Tested-by: Marijn Suijten <marijn.suijten@somainline.org>
+>>
+>> On the Sony Xperia XA2 Ultra, bar the necessary change in the 14NM DSI PHY
+>> driver commented below.
+>>
+>>> [..]
+>>> -
+>>> -static struct clk_fixed_factor xo = {
+>>> -	.mult = 1,
+>>> -	.div = 1,
+>>> -	.hw.init = &(struct clk_init_data){
+>>> -		.name = "xo",
+>>> -		.parent_names = (const char *[]){ "xo_board" },
+>>> -		.num_parents = 1,
+>>> -		.ops = &clk_fixed_factor_ops,
+>>> -	},
+>>> -};
+>>
+>>
+>> Removing the global "xo" clock makes it so that our 14nm DSI PHY does not
+>> have a parent clock anymore, as the clock is called "xo_board" nowadays
+>> ("xo" in the position of fw_name is, as you know, only local to this driver
+>> because it is named that way in the clock-names property). We (SoMainline)
+>> suffer the same DSI PHY hardcoding issue on many other boards and are at
+>> this point investigating whether to provide &xo_board in DT like any other
+>> sane driver.  Do you happen to know if work is already underway to tackle
+>> this?
+>>
 > 
-> # notifier
-> Requires the core probe() to complete before the glue probe to work
-> reliably. This then would lead us to remaking the dwc3-qcom::probe() to
-> facilitate probe deferral.
+> As far as I can tell most other platforms doesn't define "xo" either.
+> E.g. according to debugfs dsi0vco_clk doesn't have a parent on sdm845...
 > 
-> We can be sure bugs would be introduced in this process.
-> 
-> AFAIK Felipe is not opposed to this, Bjorn likes it
-> 
+> Sounds like we should update the dsi phys to specify a fw_name and
+> update binding and dts to provide this...
 
-Using a notifier or just a direct callback from core to the glue is an
-implementation detail, but as you say we need a way for the glue to
-register this before the core is fully probed.
 
-> # 2 extcon
-> Works but a) is deprecated and b) even if it weren't deprecated has no way
-> to layer the messages - that I know of.
-> 
+I'm all for using .fw_name there, and I hope we all agree that clock 
+dependencies based on global names should become a thing of the past; 
+every such inter-driver dependency should be clearly visible in the DT. 
+  We (SoMainline) can tackle this DSI side if no-one else is working on 
+it yet.
 
-Even with extcon, I really don't fancy the fact that we're duplicating
-extcon registration in the glue and core - not to mention how it looks
-in DT.
+> Does this cause a noticeable regression or it's just that we have a
+> dangling clock?
 
-> # 3 USB role switch
-> Already in-place for the producer {phy, type-c port, usb-gpio typec, google
-> ecros} to consumer dwc-core. It already has a layering 1:1 of that array of
-> producers to the consumer.
-> 
-> Unlike extcon though it cannot relay messages to more than one consumer.
-> 
-> As I see it we can either
-> 
-> A. Rewrite the dwc3-qcom probe to make it synchronous with dwc3-core probe
-> taking the hit of whatever bugs get thrown up as a result of that over the
-> next while, potentially years.
-> 
 
-The reason for it to be synchronous is that we need the glue to be able
-to register it in a way that the core can acquire it when it probes
-later.
+Unfortunately this regresses yes, starting with:
 
-> B. Use USB role switch in some format.
-> 
-> Either
-> X. as I've submitted here based on a bit of code in dwc3-core or
-> 
-> Y. maybe trying to hide the "relay" aspect in DTS and USB role-switch core
-> 
+     dsi0n1_postdiv_clk: Zero divisor and CLK_DIVIDER_ALLOW_ZERO not set
 
-I don't think it's appropriate to work around the split model in DT.
+And proceeding with more such errors on different clocks, clocks getting 
+stuck or failing to update, and the panel never showing anything at all.
 
-> It seems to me our choices are notifier + pain and churn - perhaps low,
-> perhaps high or USB role switch
-> 
-> 3.B.X works and is what has been submitted here but, if it is objectionable
-> is 3.B.Y viable ?
-> 
-> As in make USB role switch propigate to multiple consumers via DTS and
-> whatever additional work is required in the role-switch layer ?
-> 
-> + Heikki on that one.
-> 
+Should we fix DSI PHYs first and let this patch sit for a while, or keep 
+the implicit global "xo" clock just a little while longer until that's 
+over with?
 
-I've not seen the need for multiple consumer of role switching yet (I
-don't find this a legit target for it).
+Either way, feel free to attach my:
 
-But in the case of Type-C altmode several of our boards have either an
-external gpio-based SBU-pin-swapper or some redriver on I2C with this
-functionality, so we need a way to tell both the PHY and this external
-contraption about the orientation.
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 
-Regards,
-Bjorn
+After that.
+
+>>>    static struct clk_alpha_pll gpll0_early = {
+>>>    	.offset = 0x0,
+>>>    	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
+>>> @@ -158,7 +35,9 @@ static struct clk_alpha_pll gpll0_early = {
+>>>    		.enable_mask = BIT(0),
+>>>    		.hw.init = &(struct clk_init_data){
+>>>    			.name = "gpll0_early",
+>>> -			.parent_names = (const char *[]){ "xo" },
+>>> +			.parent_data = &(const struct clk_parent_data){
+>>> +				.fw_name = "xo",
+>>> +			},
+>>
+>>
+>> I wish we could use .parent_names for a list of .fw_name's too
+> 
+> Afaict specifying "name" in struct clk_parent_data is the same as using
+> parent_names. But I'm not up to speed on the details of how to migrate
+> the dsi phys.
+
+
+Yes it is, both do _not_ look at clocks specified in DT before "falling 
+back" to global names (that only happens when both .name and .fw_name 
+are specified).  I'm sort of expressing the desire for .parent_fw_names 
+here in hopes of phasing out global clock names on DT platforms 
+altogether.  We definitely shouldn't rework .parent_names to support 
+both, that only causes confusion and an implicit fallback to global 
+clocks when the DT is under-specifying the required clocks is exactly 
+what we're trying to avoid.
+
+>>> [..]
+>>> @@ -265,7 +270,7 @@ static struct clk_rcg2 blsp1_qup1_i2c_apps_clk_src = {
+>>>    	.freq_tbl = ftbl_blsp1_qup1_i2c_apps_clk_src,
+>>>    	.clkr.hw.init = &(struct clk_init_data){
+>>>    		.name = "blsp1_qup1_i2c_apps_clk_src",
+>>> -		.parent_names = gcc_parent_names_xo_gpll0_gpll0_early_div,
+>>> +		.parent_data = gcc_parent_data_xo_gpll0_gpll0_early_div,
+>>>    		.num_parents = 3,
+>>
+>>
+>> How about using ARRAY_SIZE(gcc_parent_data_xo_gpll0_gpll0_early_div) now?
+>> Same for every other occurrence of this pattern.
+>>
+> 
+> I omitted that because it felt unrelated to the change I was doing, but
+> it could certainly be done.
+
+
+Fair, if done at all it should end up in a separate (2/2) patch or I'll 
+take care of this in a followup.
+
+> Regards,
+> Bjorn
+> 
