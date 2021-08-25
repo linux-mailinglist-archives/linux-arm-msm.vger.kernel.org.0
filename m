@@ -2,70 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 20DE23F7DA7
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 23:23:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BB1AF3F7DB6
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 23:26:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229901AbhHYVYg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Aug 2021 17:24:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52246 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229581AbhHYVYg (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Aug 2021 17:24:36 -0400
-Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C5F40C061757;
-        Wed, 25 Aug 2021 14:23:49 -0700 (PDT)
-Received: from [10.0.20.3] (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id F155E1FEF7;
-        Wed, 25 Aug 2021 23:23:47 +0200 (CEST)
-Subject: Re: [PATCH v2] clk: qcom: gcc-sdm660: Replace usage of parent_names
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        angelogioacchino.delregno@somainline.org
-References: <20210825204517.1278130-1-bjorn.andersson@linaro.org>
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-Message-ID: <f46e9c0a-970b-9391-66d4-70cf514fd93b@somainline.org>
-Date:   Wed, 25 Aug 2021 23:23:47 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        id S231873AbhHYV0j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Aug 2021 17:26:39 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33588 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229923AbhHYV0h (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 25 Aug 2021 17:26:37 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 79419610A1;
+        Wed, 25 Aug 2021 21:25:50 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1629926750;
+        bh=xQDrtgT6uthmEGov/Ldo+EaOEsSjtEqV6roEUR4U2co=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=fASCj+Go18/tQH72Frrh86vQVUhFBKTCcQ9o3Ad3urEcD8hJY/IVjmN/1OlNCuXM4
+         7JHmj+5rcXAer/IJ5s5nNiWQN44+Wzp2sr83a87R1CCPRsMKBGBQIH+6UKRHirnyas
+         wPVtWIKNENPU02jJD6GFFXh1J0YuLxlengl+em2Gt5AdRTxcLXm3lq/u+SnHoFANyy
+         GAemNjEbynsA+w9EusA1aYNMqsnfKT/CgqIfBhQLMN3yeqoGmDtCXqtkzI8KNCv7iO
+         +a/vZ9eADe/hwGSLkGP6I/AoRwgMGYHBduxWGD42U57kaBGxpBic1W/I8SmgF28hOe
+         Vrciu66nkn5+g==
+Date:   Wed, 25 Aug 2021 16:25:49 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Prasad Malisetty <pmaliset@codeaurora.org>, agross@kernel.org,
+        bhelgaas@google.com, bjorn.andersson@linaro.org,
+        lorenzo.pieralisi@arm.com, robh+dt@kernel.org,
+        svarbanov@mm-sol.com, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dianders@chromium.org,
+        mka@chromium.org, vbadigan@codeaurora.org, sallenki@codeaurora.org,
+        manivannan.sadhasivam@linaro.org, linux-pci@vger.kernel.org
+Subject: Re: [PATCH v5 4/4] PCI: qcom: Switch pcie_1_pipe_clk_src after PHY
+ init in SC7280
+Message-ID: <20210825212549.GA3609092@bjorn-Precision-5520>
 MIME-Version: 1.0
-In-Reply-To: <20210825204517.1278130-1-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAE-0n50cnWf_3LQ6P9KMaT4dnryWW9JemP95JDZt5WE1G4mZuQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+[+cc linux-pci; patches to drivers/pci/ should always be cc'd there]
 
-On 8/25/21 10:45 PM, Bjorn Andersson wrote:
-> Using parent_data and parent_hws, instead of parent_names, does protect
-> against some cases of incompletely defined clock trees. While it turns
-> out that the bug being chased this time was totally unrelated, this
-> patch converts the SDM660 GCC driver to avoid such issues.
+On Wed, Aug 25, 2021 at 07:30:09PM +0000, Stephen Boyd wrote:
+> Quoting Prasad Malisetty (2021-08-24 01:10:48)
+> > On 2021-08-17 22:56, Prasad Malisetty wrote:
+> > > On 2021-08-10 09:38, Prasad Malisetty wrote:
+> > >> On the SC7280, By default the clock source for pcie_1_pipe is
+> > >> TCXO for gdsc enable. But after the PHY is initialized, the clock
+> > >> source must be switched to gcc_pcie_1_pipe_clk from TCXO.
+> > >>
+> > >> Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
+> > >> ---
+> > >>  drivers/pci/controller/dwc/pcie-qcom.c | 18 ++++++++++++++++++
+> > >>  1 file changed, 18 insertions(+)
+> > >>
+> > >> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c
+> > >> b/drivers/pci/controller/dwc/pcie-qcom.c
+> > >> index 8a7a300..39e3b21 100644
+> > >> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> > >> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> > >> @@ -166,6 +166,8 @@ struct qcom_pcie_resources_2_7_0 {
+> > >>      struct regulator_bulk_data supplies[2];
+> > >>      struct reset_control *pci_reset;
+> > >>      struct clk *pipe_clk;
+> > >> +    struct clk *gcc_pcie_1_pipe_clk_src;
+> > >> +    struct clk *phy_pipe_clk;
+> > >>  };
+> > >>
+> > >>  union qcom_pcie_resources {
+> > >> @@ -1167,6 +1169,16 @@ static int qcom_pcie_get_resources_2_7_0(struct
+> > >> qcom_pcie *pcie)
+> > >>      if (ret < 0)
+> > >>              return ret;
+> > >>
+> > >> +    if (of_device_is_compatible(dev->of_node, "qcom,pcie-sc7280")) {
+> > >> +            res->gcc_pcie_1_pipe_clk_src = devm_clk_get(dev, "pipe_mux");
+> > >> +            if (IS_ERR(res->gcc_pcie_1_pipe_clk_src))
+> > >> +                    return PTR_ERR(res->gcc_pcie_1_pipe_clk_src);
+> > >> +
+> > >> +            res->phy_pipe_clk = devm_clk_get(dev, "phy_pipe");
+> > >> +            if (IS_ERR(res->phy_pipe_clk))
+> > >> +                    return PTR_ERR(res->phy_pipe_clk);
+> > >> +    }
+> > >
+> > > I would like to check is there any other better approach instead of
+> > > compatible method here as well or is it fine to use compatible method.
 > 
-> The "xo" fixed_factor clock is unused within the gcc driver, but
-> referenced from the DSI PHY. So it's left in place until the DSI driver
-> is updated.
-> 
-> Tested-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
-> 
-> Changes since v1:
-> - Added "xo" back to avoid regression in the DSI PHY
+> I'd prefer the compatible method. If nobody is responding then it's best
+> to just resend the patches with the approach you prefer instead of
+> waiting for someone to respond to a review comment.
 
+I'm missing some context here, so I'm not exactly sure what your
+question is, Prasad, but IMO drivers generally should not need to use
+of_device_is_compatible() if they've already called
+of_device_get_match_data() (as qcom_pcie_probe() has).
 
-Tested again on the XA2 Ultra just to be sure, all is good now. Thanks!
+of_device_is_compatible() does basically the same work of looking for
+a match in qcom_pcie_match[] that of_device_get_match_data() does, so
+it seems pointless to repeat it.
 
-- Marijn
+I am a little confused because while [1] adds "qcom,pcie-sc7280" to
+qcom,pcie.txt, I don't see a patch that adds it to qcom_pcie_match[].
+
+Bjorn
+
+[1] https://lore.kernel.org/linux-arm-msm/1628568516-24155-2-git-send-email-pmaliset@codeaurora.org/
