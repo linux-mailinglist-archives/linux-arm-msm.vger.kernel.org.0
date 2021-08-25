@@ -2,28 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AEF9C3F6F06
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 07:53:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CDA5C3F6F0C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 07:54:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238030AbhHYFyb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Aug 2021 01:54:31 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37776 "EHLO mail.kernel.org"
+        id S238125AbhHYFzE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Aug 2021 01:55:04 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37952 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232420AbhHYFy0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Aug 2021 01:54:26 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 9130661212;
-        Wed, 25 Aug 2021 05:53:36 +0000 (UTC)
+        id S232420AbhHYFzD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 25 Aug 2021 01:55:03 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 1385561212;
+        Wed, 25 Aug 2021 05:54:12 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1629870821;
-        bh=OuVdKfR/MOuYBuzNycEWQRB8+cfvT8D53yuzUluBSe0=;
+        s=k20201202; t=1629870858;
+        bh=wmjL9w2ZoY8OxCDTzWQ4QOrHwwaiCYA1Pt2DOMduG0Y=;
         h=References:From:To:Cc:Subject:Date:In-reply-to:From;
-        b=lWfGGAtXommJm8HbFE7PK3rWnM2Ku1enbbQBZExVftmvW7IhIE6tr/zNYRuBci8a0
-         pTAudCS2VqAdfDTwNCoEyN73YqFS2GQfQPHpcSkdLMRHMOO3Jsu43pJAnPW6uqA6SM
-         mBgbiONurHm0CQ7/dkaj2UfhtoP80hRDF9mAXCe82rdbPCW5w4J9P8u1S6cEp9HZbB
-         VHvGXDMnnIhj0lukvuGZ/6f1mGoNgxtwknJ3d2U0+euK31ZQac/B+any40wHaWfBn2
-         A/8un0oTT1Z555PAO9tZRKi1rViVHR0SSWy0qFexWt10xBLWpPAUodoLvahpgSMBp8
-         Y4GTib4ywAPwg==
+        b=aBBn6u7pGddSuvxDOJohavpgZxxIfIgfS7LFniKKR2eo7+4vZB4hZdceKOFODgjyX
+         EcmfvBm87lNoAC9am4HGFbkLT6QJUOtxdMc5ma5QDF1cLMj1Kvr/h+FJW7mwHJGaZU
+         mHI8mttyOUW9dJ6MD6CY1UYrap44XfNPlb+ioFa5bU4FkagrBNhrug6oGEO1Fm4ZrZ
+         UUGNAG/jhvUsX3fHRJ2M8TFzZiShfF6o1U/N5CwXcP295sqatlteAeh6bgiWkOSOmd
+         UCylXBd1ZvmNIYzziGDR5F3Y0uFszgfkC9JiysP/NcOMePEUExsTvFrdK75Mcb3EjR
+         yp6ee5usIXkXA==
 References: <20210824201433.11385-1-ftoth@exalondelft.nl>
+ <20210824201433.11385-2-ftoth@exalondelft.nl>
 User-agent: mu4e 1.6.4; emacs 27.2
 From:   Felipe Balbi <balbi@kernel.org>
 To:     Ferry Toth <ftoth@exalondelft.nl>
@@ -46,11 +47,11 @@ Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Andy Shevchenko <andy.shevchenko@gmail.com>,
         Pavel Hofman <pavel.hofman@ivitera.com>,
         Ferry Toth <fntoth@gmail.com>
-Subject: Re: [PATCH v1 1/3] Revert "usb: gadget: u_audio: add real feedback
- implementation"
-Date:   Wed, 25 Aug 2021 08:53:23 +0300
-In-reply-to: <20210824201433.11385-1-ftoth@exalondelft.nl>
-Message-ID: <87v93u5au9.fsf@kernel.org>
+Subject: Re: [PATCH v1 2/3] Revert "usb: gadget: f_uac2: add adaptive sync
+ support for capture"
+Date:   Wed, 25 Aug 2021 08:53:57 +0300
+In-reply-to: <20210824201433.11385-2-ftoth@exalondelft.nl>
+Message-ID: <87r1ei5at8.fsf@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -60,7 +61,7 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Ferry Toth <ftoth@exalondelft.nl> writes:
 
-> This reverts commit e89bb4288378b85c82212b60dc98ecda6b3d3a70.
+> This reverts commit 40c73b30546e759bedcec607fedc2d4be954508f.
 >
 > The commit is part of a series with commit
 > 24f779dac8f3efb9629adc0e486914d93dc45517 causing a BUG on dwc3
@@ -92,7 +93,7 @@ Ferry Toth <ftoth@exalondelft.nl> writes:
 >
 > Reported-by: Ferry Toth <fntoth@gmail.com>
 
-this should be Signed-off-by ;-)
+Signed-off-by?
 
 -- 
 balbi
