@@ -2,170 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E3B23F7957
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 17:45:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D09F93F7975
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 17:52:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240982AbhHYPqn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Aug 2021 11:46:43 -0400
-Received: from mail-ot1-f46.google.com ([209.85.210.46]:37386 "EHLO
-        mail-ot1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240346AbhHYPqn (ORCPT
+        id S241384AbhHYPxA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Aug 2021 11:53:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60622 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237144AbhHYPw7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Aug 2021 11:46:43 -0400
-Received: by mail-ot1-f46.google.com with SMTP id i3-20020a056830210300b0051af5666070so45701762otc.4;
-        Wed, 25 Aug 2021 08:45:57 -0700 (PDT)
+        Wed, 25 Aug 2021 11:52:59 -0400
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 235DCC061757
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Aug 2021 08:52:14 -0700 (PDT)
+Received: by mail-oi1-x233.google.com with SMTP id h133so8935653oib.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Aug 2021 08:52:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=X+yOu2k/0Aoq0PfnlNV9T3vcn5Wl0bg+LNX6moKW2AY=;
+        b=uScA8LBNrH/79G1Q7QR27MlTKRlHhH2U1zkqkjo3EXd50v0u3GF9aj3CfXJU4V+Q72
+         9NRgJkcmjKSToAbyQkIwYHfKcM+USHHfld7X6MwQmEh4OFqXr6BkqnfsJXsspNKAT9c8
+         Zm1+k+TLBKRvlwRqtnHoZYxRM02LZrsmCiHIn6rPn+9O6ejyfLpb8o7OBJat5CcvN6XV
+         RM0H3jICFo/Idi4N4MTOKHu3owGq3kcME/HF5EAn+OQFXTSRH622g3Flf9ic2fbBjqAV
+         d4qHPzSOtOOdBOh7AjPJJ2FvKmWRK8wu/u1jCUfU5QcdzvNx2Q9pCqclcTrQ9YSfHzS5
+         UBFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=NsNMFFFFEFLAZuH245IhIJFqtd87059TgySDgcFY3v4=;
-        b=EZSu7B9fxHSZthpjddds/j89ZCAfnEr4pFBSGgnMoV4TaMZvxyqH46NQroLdsRa33m
-         QHzFp1GYsb3b1lp/T/HyIiAm7nY2eczCHc/ScR/hP0Xjr/6iEEc039wH0YaEggXMAewp
-         T0tXpoftznOt0vADI0xuimLISBF6pJl6BChve6qgJQslQyP0sUzmPJKoZs25TihGAW4H
-         PBvT6FYFHPMcVh/uHsxgHNp0LvGH6PtEBhfJ0YB/yNtg/FwqUN+p5FOanK8VXXGoUeyU
-         dRhOf7oMPJLjPdqNVW995s2pInS/K29qhrD8yilxP39O/EVR7IzIjeJDtcN34LpNg454
-         HmOA==
-X-Gm-Message-State: AOAM532l0z+RGwbyGPbRd/Yb2m4rvi/zqway7/1V+xa2EH68nBvWbeMS
-        pdA4obN5RHx54ff2FJaIfQ==
-X-Google-Smtp-Source: ABdhPJzfkJFZqWY/Z2lBCK5ZHgQG7fxjiA4+qlFfRwKE1NQPrJ7s0h5NwB9+cWUFrFbBdsAQHYl9nw==
-X-Received: by 2002:a05:6830:43a0:: with SMTP id s32mr13546006otv.284.1629906356700;
-        Wed, 25 Aug 2021 08:45:56 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id w15sm41445oiw.19.2021.08.25.08.45.55
+         :mime-version:content-disposition:in-reply-to;
+        bh=X+yOu2k/0Aoq0PfnlNV9T3vcn5Wl0bg+LNX6moKW2AY=;
+        b=pb2rtwaUvJb3XNUnfAMxh7/7Ssj9lHNLb1Qk35XETOt+dnZQjp2PfgEvq1o3ZgjkLn
+         PGomFOv8GQr8X+MgEW4yylbYvlxeGCikjjrV3dWr0zM7KM+Yfmku7YSSOe30VxhXZLkQ
+         TimVEAWGIJ5fRuQqZAzzWceLotYjjjoZdLjsKaN4cj7acEUtLknSdOGLwqhMF1EXRxdR
+         vWCuW3B0jNIzYrKxv7b0ep3hvgFvVdiNDJhzjs+oNK3WPN5K340MUXEWYBKdxtESzIF8
+         30/rXFX8WkhXgbGzMOjdVhO1DG576IwWMiVC6Yq8lie8+lWoC5e1LRkrhl7EH/5zX+2m
+         fKdA==
+X-Gm-Message-State: AOAM531gQfY7y3qAFAtbPZRV4qZ62HqvalZvMdDnZ/aFnSs7Ta6Xvl8o
+        uMijTZKpqVgIajR4vX9LHf4QOA==
+X-Google-Smtp-Source: ABdhPJxpZA+yrh+fd6s1aTwCRIFMvjnLJJV+Zzca2ZJVcVcCwKpozzCqooBhKKueEubqQbR282cdKA==
+X-Received: by 2002:aca:5342:: with SMTP id h63mr7163766oib.171.1629906733377;
+        Wed, 25 Aug 2021 08:52:13 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id v16sm37715oou.45.2021.08.25.08.52.12
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Aug 2021 08:45:56 -0700 (PDT)
-Received: (nullmailer pid 2841976 invoked by uid 1000);
-        Wed, 25 Aug 2021 15:45:54 -0000
-Date:   Wed, 25 Aug 2021 10:45:54 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Baruch Siach <baruch@tkos.co.il>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Balaji Prakash J <bjagadee@codeaurora.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v7 3/4] dt-bindings: pwm: add IPQ6018 binding
-Message-ID: <YSZlsgRYqDSwnjPw@robh.at.kernel.org>
-References: <3b70f9e757e018d3cd91a882282040c4c0589a93.1629884907.git.baruch@tkos.co.il>
- <dbf064fb60b1654af25f65d89f75bd397162d701.1629884907.git.baruch@tkos.co.il>
+        Wed, 25 Aug 2021 08:52:12 -0700 (PDT)
+Date:   Wed, 25 Aug 2021 08:53:29 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     Felipe Balbi <balbi@kernel.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Peter Chen <peter.chen@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, agross@kernel.org,
+        gregkh@linuxfoundation.org, jackp@codeaurora.org,
+        wcheng@codeaurora.org, linux-usb@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 0/3] Implement role-switch notifications from dwc3-drd to
+ dwc3-qcom
+Message-ID: <YSZned9v1+ajzVx0@ripper>
+References: <20210704013314.200951-1-bryan.odonoghue@linaro.org>
+ <20210707015704.GA28125@nchen>
+ <YOX6d+sBEJMP4V3q@yoga>
+ <20210708030631.GA22420@nchen>
+ <YSWCnsZDdp57KBqB@ripper>
+ <87zgt65avm.fsf@kernel.org>
+ <ce5f12dd-ddc1-6a9c-3dfb-aa44ea166828@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <dbf064fb60b1654af25f65d89f75bd397162d701.1629884907.git.baruch@tkos.co.il>
+In-Reply-To: <ce5f12dd-ddc1-6a9c-3dfb-aa44ea166828@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 25, 2021 at 12:48:26PM +0300, Baruch Siach wrote:
-> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
-> 
-> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
-> ---
-> v7:
-> 
->   Use 'reg' instead of 'offset' (Rob)
-> 
->   Drop 'clock-names' and 'assigned-clock*' (Bjorn)
-> 
->   Use single cell address/size in example node (Bjorn)
-> 
->   Move '#pwm-cells' lower in example node (Bjorn)
-> 
->   List 'reg' as required
-> 
-> v6:
-> 
->   Device node is child of TCSR; remove phandle (Rob Herring)
-> 
->   Add assigned-clocks/assigned-clock-rates (Uwe Kleine-König)
-> 
-> v5: Use qcom,pwm-regs for phandle instead of direct regs (Bjorn
->     Andersson, Kathiravan T)
-> 
-> v4: Update the binding example node as well (Rob Herring's bot)
-> 
-> v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
-> 
-> v2: Make #pwm-cells const (Rob Herring)
-> ---
->  .../devicetree/bindings/pwm/ipq-pwm.yaml      | 52 +++++++++++++++++++
->  1 file changed, 52 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
-> new file mode 100644
-> index 000000000000..edfec41e77e5
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
-> @@ -0,0 +1,52 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pwm/ipq-pwm.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm IPQ6018 PWM controller
-> +
-> +maintainers:
-> +  - Baruch Siach <baruch@tkos.co.il>
-> +
-> +properties:
-> +  "#pwm-cells":
-> +    const: 2
-> +
-> +  compatible:
-> +    const: qcom,ipq6018-pwm
-> +
-> +  reg:
-> +    description: Offset of PWM register in the TCSR block.
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - "#pwm-cells"
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,gcc-ipq6018.h>
-> +
-> +    tcsr: syscon@1937000 {
-> +        compatible = "qcom,tcsr-ipq6018", "syscon", "simple-mfd";
+On Wed 25 Aug 01:18 PDT 2021, Bryan O'Donoghue wrote:
 
-This needs to be documented. Some visibility into what else is in this 
-block would be nice so we can make some informed decisions as to what 
-all this should look like.
-
-> +        reg = <0x01937000 0x21000>;
-> +        #address-cells = <1>;
-> +        #size-cells = <0>;
-> +
-> +        pwm: pwm@a010 {
-> +            compatible = "qcom,ipq6018-pwm";
-> +            reg = <0xa010>;
-
-There's not a length associated with the PWM registers.
-
-> +            clocks = <&gcc GCC_ADSS_PWM_CLK>;
-> +            assigned-clocks = <&gcc GCC_ADSS_PWM_CLK>;
-> +            assigned-clock-rates = <100000000>;
-> +            #pwm-cells = <2>;
-> +        };
-> +    };
-> -- 
-> 2.32.0
+> On 25/08/2021 06:51, Felipe Balbi wrote:
+> > > Hi Peter, I took a proper look at this again, hoping to find a way to
+> > > pass a callback pointer from dwc3-qcom to the dwc3 core, that can be
+> > > called from __dwc3_set_mode() to inform the Qualcomm glue about mode
+> > > changes.
+> > I would rather keep the strict separation between glue and core.
 > 
+> # 1 __dwc3_set_mode
+> Felipe wants to keep a strict separation between core and glue
 > 
+> # notifier
+> Requires the core probe() to complete before the glue probe to work
+> reliably. This then would lead us to remaking the dwc3-qcom::probe() to
+> facilitate probe deferral.
+> 
+> We can be sure bugs would be introduced in this process.
+> 
+> AFAIK Felipe is not opposed to this, Bjorn likes it
+> 
+
+Using a notifier or just a direct callback from core to the glue is an
+implementation detail, but as you say we need a way for the glue to
+register this before the core is fully probed.
+
+> # 2 extcon
+> Works but a) is deprecated and b) even if it weren't deprecated has no way
+> to layer the messages - that I know of.
+> 
+
+Even with extcon, I really don't fancy the fact that we're duplicating
+extcon registration in the glue and core - not to mention how it looks
+in DT.
+
+> # 3 USB role switch
+> Already in-place for the producer {phy, type-c port, usb-gpio typec, google
+> ecros} to consumer dwc-core. It already has a layering 1:1 of that array of
+> producers to the consumer.
+> 
+> Unlike extcon though it cannot relay messages to more than one consumer.
+> 
+> As I see it we can either
+> 
+> A. Rewrite the dwc3-qcom probe to make it synchronous with dwc3-core probe
+> taking the hit of whatever bugs get thrown up as a result of that over the
+> next while, potentially years.
+> 
+
+The reason for it to be synchronous is that we need the glue to be able
+to register it in a way that the core can acquire it when it probes
+later.
+
+> B. Use USB role switch in some format.
+> 
+> Either
+> X. as I've submitted here based on a bit of code in dwc3-core or
+> 
+> Y. maybe trying to hide the "relay" aspect in DTS and USB role-switch core
+> 
+
+I don't think it's appropriate to work around the split model in DT.
+
+> It seems to me our choices are notifier + pain and churn - perhaps low,
+> perhaps high or USB role switch
+> 
+> 3.B.X works and is what has been submitted here but, if it is objectionable
+> is 3.B.Y viable ?
+> 
+> As in make USB role switch propigate to multiple consumers via DTS and
+> whatever additional work is required in the role-switch layer ?
+> 
+> + Heikki on that one.
+> 
+
+I've not seen the need for multiple consumer of role switching yet (I
+don't find this a legit target for it).
+
+But in the case of Type-C altmode several of our boards have either an
+external gpio-based SBU-pin-swapper or some redriver on I2C with this
+functionality, so we need a way to tell both the PHY and this external
+contraption about the orientation.
+
+Regards,
+Bjorn
