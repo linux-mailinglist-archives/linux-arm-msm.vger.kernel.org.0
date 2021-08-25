@@ -2,29 +2,29 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CDA5C3F6F0C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 07:54:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A4F53F6F10
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 07:54:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238125AbhHYFzE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Aug 2021 01:55:04 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37952 "EHLO mail.kernel.org"
+        id S232442AbhHYFza (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Aug 2021 01:55:30 -0400
+Received: from mail.kernel.org ([198.145.29.99]:38086 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232420AbhHYFzD (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Aug 2021 01:55:03 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 1385561212;
-        Wed, 25 Aug 2021 05:54:12 +0000 (UTC)
+        id S232265AbhHYFza (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 25 Aug 2021 01:55:30 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 25EF361357;
+        Wed, 25 Aug 2021 05:54:39 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1629870858;
-        bh=wmjL9w2ZoY8OxCDTzWQ4QOrHwwaiCYA1Pt2DOMduG0Y=;
+        s=k20201202; t=1629870885;
+        bh=17R6CFi26OkMcA1IXVU7URfswjpzF+gER56JrIECCKs=;
         h=References:From:To:Cc:Subject:Date:In-reply-to:From;
-        b=aBBn6u7pGddSuvxDOJohavpgZxxIfIgfS7LFniKKR2eo7+4vZB4hZdceKOFODgjyX
-         EcmfvBm87lNoAC9am4HGFbkLT6QJUOtxdMc5ma5QDF1cLMj1Kvr/h+FJW7mwHJGaZU
-         mHI8mttyOUW9dJ6MD6CY1UYrap44XfNPlb+ioFa5bU4FkagrBNhrug6oGEO1Fm4ZrZ
-         UUGNAG/jhvUsX3fHRJ2M8TFzZiShfF6o1U/N5CwXcP295sqatlteAeh6bgiWkOSOmd
-         UCylXBd1ZvmNIYzziGDR5F3Y0uFszgfkC9JiysP/NcOMePEUExsTvFrdK75Mcb3EjR
-         yp6ee5usIXkXA==
+        b=Vyye6PRqPFZKLwvl098lwC1bVyHGVa4+z8YaY5eXZRfCs71xud+UnySH/MSkCH8Wi
+         GwQxAENGWpdE0CpijJH5Ry1Zn1zk8Fv5rYeUVnDPNE9WH2Yfy2M3IAxJ8RRHwcY40z
+         NvrLjnrl0kQhs0zQAOY69+Ev6AbrvnXVIAD9MTapUKJQl8rVc5JhMsmpQVev/yhJ9J
+         iNHV1TkW0DNdgMfz9tfdR+D8d75Vgreh9gS/cgs9jVviLIim1QFvOMdJcsOEX5pNGL
+         IwbQrMuGejfEE3OSXbB5uTAoJndnqbTSnss12WtzTw6QcbVkjA/6Od9DkirZPkZ2BC
+         W2YppeGxTTJWQ==
 References: <20210824201433.11385-1-ftoth@exalondelft.nl>
- <20210824201433.11385-2-ftoth@exalondelft.nl>
+ <20210824201433.11385-3-ftoth@exalondelft.nl>
 User-agent: mu4e 1.6.4; emacs 27.2
 From:   Felipe Balbi <balbi@kernel.org>
 To:     Ferry Toth <ftoth@exalondelft.nl>
@@ -47,11 +47,11 @@ Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Andy Shevchenko <andy.shevchenko@gmail.com>,
         Pavel Hofman <pavel.hofman@ivitera.com>,
         Ferry Toth <fntoth@gmail.com>
-Subject: Re: [PATCH v1 2/3] Revert "usb: gadget: f_uac2: add adaptive sync
- support for capture"
-Date:   Wed, 25 Aug 2021 08:53:57 +0300
-In-reply-to: <20210824201433.11385-2-ftoth@exalondelft.nl>
-Message-ID: <87r1ei5at8.fsf@kernel.org>
+Subject: Re: [PATCH v1 3/3] Revert "usb: gadget: f_uac2/u_audio: add
+ feedback endpoint support"
+Date:   Wed, 25 Aug 2021 08:54:28 +0300
+In-reply-to: <20210824201433.11385-3-ftoth@exalondelft.nl>
+Message-ID: <87mtp65ash.fsf@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -61,7 +61,7 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Ferry Toth <ftoth@exalondelft.nl> writes:
 
-> This reverts commit 40c73b30546e759bedcec607fedc2d4be954508f.
+> This reverts commit 24f779dac8f3efb9629adc0e486914d93dc45517.
 >
 > The commit is part of a series with commit
 > 24f779dac8f3efb9629adc0e486914d93dc45517 causing a BUG on dwc3
