@@ -2,103 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A86FD3F777F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 16:34:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 691393F7938
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 17:40:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241755AbhHYOfU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Aug 2021 10:35:20 -0400
-Received: from mx08-00178001.pphosted.com ([91.207.212.93]:7362 "EHLO
-        mx07-00178001.pphosted.com" rhost-flags-OK-OK-OK-FAIL)
-        by vger.kernel.org with ESMTP id S232168AbhHYOfT (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Aug 2021 10:35:19 -0400
-Received: from pps.filterd (m0046660.ppops.net [127.0.0.1])
-        by mx07-00178001.pphosted.com (8.16.1.2/8.16.0.43) with SMTP id 17PDhOum003655;
-        Wed, 25 Aug 2021 16:34:13 +0200
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=foss.st.com; h=from : subject : to
- : cc : message-id : date : mime-version : content-type :
- content-transfer-encoding; s=selector1;
- bh=uB5VgDvAvQ72i1SM94ZVMnpWG1uPhE/nxCUf1gUKsDM=;
- b=J8/nsnlyrDt5jpFg+8ufKUpDe6dVqgJmzghbCCt+7/M/+I3kVGJCgbzgdP3TQZCjIOTe
- iWbxcWomfrrB10/SNyFZTN1CM6gGvvVUDK5QtgRueMmhZnJIedm+5AVnYPd+Nlv1kono
- MUbyH1DR3gCN6eP+mU/cbblmM8l5F+Oxg1IUTlE7N8wi+DTA6ewIA+82kIMzO4+KKv76
- 9dxXrNsvU+WNHO0uqnXDhqyRYxo6MeCE+1ObFqDjvqAleK0tWd86Y5U7APjKMOvX3Xhn
- C3f7JdvJgVPaALaIESNwEYpJClgEYYakEtGyDlmOAtlDSPv7nhgLs/3HfZnrhOe61voI Hg== 
-Received: from beta.dmz-eu.st.com (beta.dmz-eu.st.com [164.129.1.35])
-        by mx07-00178001.pphosted.com with ESMTP id 3ana52vvwe-1
-        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=NOT);
-        Wed, 25 Aug 2021 16:34:13 +0200
-Received: from euls16034.sgp.st.com (euls16034.sgp.st.com [10.75.44.20])
-        by beta.dmz-eu.st.com (STMicroelectronics) with ESMTP id 00AD910002A;
-        Wed, 25 Aug 2021 16:34:11 +0200 (CEST)
-Received: from Webmail-eu.st.com (sfhdag2node3.st.com [10.75.127.6])
-        by euls16034.sgp.st.com (STMicroelectronics) with ESMTP id C47FC25F3F3;
-        Wed, 25 Aug 2021 16:34:11 +0200 (CEST)
-Received: from lmecxl0504.lme.st.com (10.75.127.48) by SFHDAG2NODE3.st.com
- (10.75.127.6) with Microsoft SMTP Server (TLS) id 15.0.1497.2; Wed, 25 Aug
- 2021 16:34:10 +0200
-From:   Yann Gautier <yann.gautier@foss.st.com>
-Subject: Question about MMC_PM_KEEP_POWER in MMCI driver
-To:     Ulf Hansson <ulf.hansson@linaro.org>,
-        "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>
-CC:     Linus Walleij <linus.walleij@linaro.org>,
-        Russell King <linux@armlinux.org.uk>,
+        id S238882AbhHYPl0 convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Aug 2021 11:41:26 -0400
+Received: from guitar.tcltek.co.il ([192.115.133.116]:43943 "EHLO
+        mx.tkos.co.il" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231995AbhHYPl0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 25 Aug 2021 11:41:26 -0400
+Received: from tarshish (unknown [10.0.8.2])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        by mx.tkos.co.il (Postfix) with ESMTPS id D5A7944090A;
+        Wed, 25 Aug 2021 18:40:30 +0300 (IDT)
+References: <3b70f9e757e018d3cd91a882282040c4c0589a93.1629884907.git.baruch@tkos.co.il>
+ <dbf064fb60b1654af25f65d89f75bd397162d701.1629884907.git.baruch@tkos.co.il>
+ <1629900658.219829.2719822.nullmailer@robh.at.kernel.org>
+User-agent: mu4e 1.6.3; emacs 27.1
+From:   Baruch Siach <baruch@tkos.co.il>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Andy Gross <agross@kernel.org>,
+        Balaji Prakash J <bjagadee@codeaurora.org>,
+        linux-pwm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Robert Marko <robert.marko@sartura.hr>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
         Rob Herring <robh+dt@kernel.org>,
-        "linux-arm-kernel@lists.infradead.org" 
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        "linux-stm32@st-md-mailman.stormreply.com" 
-        <linux-stm32@st-md-mailman.stormreply.com>,
-        <devicetree@vger.kernel.org>
-Message-ID: <ccb2dad1-c8c1-9f19-92c4-7faf2b787e6d@foss.st.com>
-Date:   Wed, 25 Aug 2021 16:34:10 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        Thierry Reding <thierry.reding@gmail.com>,
+        Kathiravan T <kathirav@codeaurora.org>,
+        Lee Jones <lee.jones@linaro.org>
+Subject: Re: [PATCH v7 3/4] dt-bindings: pwm: add IPQ6018 binding
+Date:   Wed, 25 Aug 2021 17:59:45 +0300
+In-reply-to: <1629900658.219829.2719822.nullmailer@robh.at.kernel.org>
+Message-ID: <87ilzta5xn.fsf@tarshish>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.75.127.48]
-X-ClientProxiedBy: SFHDAG1NODE2.st.com (10.75.127.2) To SFHDAG2NODE3.st.com
- (10.75.127.6)
-X-Proofpoint-Virus-Version: vendor=baseguard
- engine=ICAP:2.0.182.1,Aquarius:18.0.790,Hydra:6.0.391,FMLib:17.0.607.475
- definitions=2021-08-25_06,2021-08-25_02,2020-04-07_01
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Rob,
 
-In drivers/mmc/host/mmci.c, MMC_PM_KEEP_POWER is unconditionally enabled.
-This prevents correct low-power sequence on STM32MP157C-DK2 board which 
-embeds a Wifi chip brcm,bcm4329-fmac (this wifi part has not yet been 
-sent upstream).
+On Wed, Aug 25 2021, Rob Herring wrote:
 
-This MMC_PM_KEEP_POWER can be taken from DT with the property 
-keep-power-in-suspend. This is what is done for other MMC drivers.
+> On Wed, 25 Aug 2021 12:48:26 +0300, Baruch Siach wrote:
+>> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
+>> 
+>> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+>> ---
+>> v7:
+>> 
+>>   Use 'reg' instead of 'offset' (Rob)
+>> 
+>>   Drop 'clock-names' and 'assigned-clock*' (Bjorn)
+>> 
+>>   Use single cell address/size in example node (Bjorn)
+>> 
+>>   Move '#pwm-cells' lower in example node (Bjorn)
+>> 
+>>   List 'reg' as required
+>> 
+>> v6:
+>> 
+>>   Device node is child of TCSR; remove phandle (Rob Herring)
+>> 
+>>   Add assigned-clocks/assigned-clock-rates (Uwe Kleine-König)
+>> 
+>> v5: Use qcom,pwm-regs for phandle instead of direct regs (Bjorn
+>>     Andersson, Kathiravan T)
+>> 
+>> v4: Update the binding example node as well (Rob Herring's bot)
+>> 
+>> v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
+>> 
+>> v2: Make #pwm-cells const (Rob Herring)
+>> ---
+>>  .../devicetree/bindings/pwm/ipq-pwm.yaml      | 52 +++++++++++++++++++
+>>  1 file changed, 52 insertions(+)
+>>  create mode 100644 Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
+>
+> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+> on your patch (DT_CHECKER_FLAGS is new in v5.13):
+>
+> yamllint warnings/errors:
+>
+> dtschema/dtc warnings/errors:
+> Documentation/devicetree/bindings/pwm/ipq-pwm.example.dt.yaml:0:0:
+> /example-0/syscon@1937000: failed to match any schema with compatible:
+> ['qcom,tcsr-ipq6018', 'syscon', 'simple-mfd']
 
-I wonder what should be the best solution for this.
-
-1) Remove MMC_PM_KEEP_POWER from the driver, and modify all SoC device 
-tree files embedding a arm,pl18x with adding keep-power-in-suspend; 
-property (except stm32mp151.dtsi file).
-This can be easy to do (~10 files to modify). But that could be more 
-board dependent, if an SDIO chip is plugged on this MMC IP.
-And the name keep-power-in-suspend can be misleading as it only applies 
-to SDIO.
-
-2) Remove MMC_PM_KEEP_POWER from the driver, and modify board DT files 
-with the property. This could be a difficult task to find all those 
-boards. And this should be applied only for SDIO configs.
-
-3) Just modify the driver to apply this capability for all MMCI chips 
-but STM32. This could be done in the dedicated file, in 
-sdmmc_variant_init() function. But some boards based on STM32MP15 chip 
-might want to keep this capability.
-
-All advice is welcome.
-
+What can I do about that? Is it because qcom,tcsr-ipq6018 is documented
+in a non-yaml plain .txt file?
 
 Thanks,
-Yann
+baruch
+
+> doc reference errors (make refcheckdocs):
+>
+> See https://patchwork.ozlabs.org/patch/1520591
+>
+> This check can fail if there are any dependencies. The base for a patch
+> series is generally the most recent rc1.
+>
+> If you already ran 'make dt_binding_check' and didn't see the above
+> error(s), then make sure 'yamllint' is installed and dt-schema is up to
+> date:
+>
+> pip3 install dtschema --upgrade
+>
+> Please check and re-submit.
+
+-- 
+                                                     ~. .~   Tk Open Systems
+=}------------------------------------------------ooO--U--Ooo------------{=
+   - baruch@tkos.co.il - tel: +972.52.368.4656, http://www.tkos.co.il -
