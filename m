@@ -2,42 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B67F3F7BD0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 19:55:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 848083F7BD9
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 19:57:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231962AbhHYR4T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Aug 2021 13:56:19 -0400
-Received: from relay04.th.seeweb.it ([5.144.164.165]:49623 "EHLO
-        relay04.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229839AbhHYR4S (ORCPT
+        id S229599AbhHYR6h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Aug 2021 13:58:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34050 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231995AbhHYR6h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Aug 2021 13:56:18 -0400
-Received: from [10.0.20.3] (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id B8BA41F73F;
-        Wed, 25 Aug 2021 19:55:21 +0200 (CEST)
-Subject: Re: [PATCH] clk: qcom: gcc-sdm660: Replace usage of parent_names
+        Wed, 25 Aug 2021 13:58:37 -0400
+Received: from mail-wr1-x42b.google.com (mail-wr1-x42b.google.com [IPv6:2a00:1450:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42CA4C0613C1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Aug 2021 10:57:51 -0700 (PDT)
+Received: by mail-wr1-x42b.google.com with SMTP id i6so567411wrv.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Aug 2021 10:57:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=7HJBCsy/2e+8vsjPLqtpvDX5toDV2JyAqCmGyQypeaw=;
+        b=hvkNt8z3rBE522DXHa6d0kkR9rTK4r5uIwm/1xFzfXbuLbMLm8RIZ0g/qupOb1movf
+         O1ZG7sXtWsWiWVNiYzTMfd5hQjo5UVFaMXc0NsQMLxffZuTE5sx78I7a3Fi7lzjdvgMV
+         hoAZtplGtpJkyYTAtYcVilbzS+/yL+Zwv7jzdlOWIpXRbosmI+w0XT3CtbtU8zgKEH8r
+         FNS50TiyZUlk/OK7KKKug1wbdK7V7RY4y/bw7Lprj0VSjs1rKP3xz0+ezLV1SSTPyLRi
+         n9g8a3T6fg8Htag1ifOFD3y0sJ8c9rjChqtP3rtY9ZgGB1qfMuu8NJZlP+BURIjEoU5w
+         PHEg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=7HJBCsy/2e+8vsjPLqtpvDX5toDV2JyAqCmGyQypeaw=;
+        b=JyDZWJajdx2c2KIJ72Be2YIQ/ppipDxbwsX+iBiSg+0YCa4ZTEHC5kyy/iSFzBZ/SH
+         KZ5oKxmy/NVAqAbrJnjLuuxcuvuEFrh32UVgDcfIbiODCEmuGdiyMG6UqqOrcOUJiUW5
+         ehvJPgQgthfn8/gTDUHCAk1BKQ0LALM7cS2z6DoF4eixZAa6Nv5Z99Dg44mRUAOypyHD
+         q/JEupRkx8f1CwY/QV+kZefmQdIWH/U8Tv3HQsklD0iC85F4tpm8xr57/hKX2ftriYog
+         Uc83gsQln/zztaSQxsvUpnEmYdvOzTzRk2H97KJBDQkg+rQxIr7E8ZjkXIuXVIkJSxK2
+         u2Gw==
+X-Gm-Message-State: AOAM532SUdf2MWWn/aJS26g7dk93BLz6aCXEHlq9G7vhq+m/s6CiXOQu
+        zRtcAq7bpHbjjIgbNv2SJmv03w==
+X-Google-Smtp-Source: ABdhPJyKPhVnc2tnXS2eXCHWuVHjv+XELlwxThJ5sphgUEk8gd+6S/1OZhItx3GZU1jUeKngA2jnlA==
+X-Received: by 2002:adf:eb89:: with SMTP id t9mr27932649wrn.66.1629914269753;
+        Wed, 25 Aug 2021 10:57:49 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id o34sm6172398wms.10.2021.08.25.10.57.48
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Aug 2021 10:57:49 -0700 (PDT)
+Subject: Re: [PATCH 0/3] Implement role-switch notifications from dwc3-drd to
+ dwc3-qcom
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-References: <20210824150606.678666-1-bjorn.andersson@linaro.org>
- <386db1a6-a1cd-3c7d-a88e-dc83f8a1be96@somainline.org>
- <YSV0/bFiPgY3fjPF@ripper>
- <ed5d27eb-5a54-04c4-dbc4-63da80df1638@somainline.org>
- <YSZ7yQLasmTMWBaK@builder.lan>
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-Message-ID: <5eff6991-77c1-9d59-0f90-60923e3766dd@somainline.org>
-Date:   Wed, 25 Aug 2021 19:55:21 +0200
+Cc:     Felipe Balbi <balbi@kernel.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Peter Chen <peter.chen@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, agross@kernel.org,
+        gregkh@linuxfoundation.org, jackp@codeaurora.org,
+        wcheng@codeaurora.org, linux-usb@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+References: <20210704013314.200951-1-bryan.odonoghue@linaro.org>
+ <20210707015704.GA28125@nchen> <YOX6d+sBEJMP4V3q@yoga>
+ <20210708030631.GA22420@nchen> <YSWCnsZDdp57KBqB@ripper>
+ <87zgt65avm.fsf@kernel.org> <ce5f12dd-ddc1-6a9c-3dfb-aa44ea166828@linaro.org>
+ <YSZned9v1+ajzVx0@ripper>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Message-ID: <90d17c95-1cf3-89aa-94ad-920e4781f866@linaro.org>
+Date:   Wed, 25 Aug 2021 18:59:42 +0100
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+ Thunderbird/78.7.1
 MIME-Version: 1.0
-In-Reply-To: <YSZ7yQLasmTMWBaK@builder.lan>
+In-Reply-To: <YSZned9v1+ajzVx0@ripper>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -45,171 +79,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+On 25/08/2021 16:53, Bjorn Andersson wrote:
+> But in the case of Type-C altmode several of our boards have either an
+> external gpio-based SBU-pin-swapper or some redriver on I2C with this
+> functionality, so we need a way to tell both the PHY and this external
+> contraption about the orientation.
 
-On 8/25/21 7:20 PM, Bjorn Andersson wrote:
-> On Wed 25 Aug 11:00 CDT 2021, Marijn Suijten wrote:
-> 
->> Hi Bjorn,
->>
->> On 8/25/21 12:38 AM, Bjorn Andersson wrote:
->>> On Tue 24 Aug 13:46 PDT 2021, Marijn Suijten wrote:
->>>
->>>> Hi Bjorn,
->>>>
->>>> Thanks for this cleanup, that's needed and much appreciated!
->>>>
->>>> On 8/24/21 5:06 PM, Bjorn Andersson wrote:
->>>>> Using parent_data and parent_hws, instead of parent_names, does protect
->>>>> against some cases of incompletely defined clock trees. While it turns
->>>>> out that the bug being chased this time was totally unrelated, this
->>>>> patch converts the SDM660 GCC driver to avoid such issues.
->>>>>
->>>>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->>>>
->>>>
->>>> Tested-by: Marijn Suijten <marijn.suijten@somainline.org>
->>>>
->>>> On the Sony Xperia XA2 Ultra, bar the necessary change in the 14NM DSI PHY
->>>> driver commented below.
->>>>
->>>>> [..]
->>>>> -
->>>>> -static struct clk_fixed_factor xo = {
->>>>> -	.mult = 1,
->>>>> -	.div = 1,
->>>>> -	.hw.init = &(struct clk_init_data){
->>>>> -		.name = "xo",
->>>>> -		.parent_names = (const char *[]){ "xo_board" },
->>>>> -		.num_parents = 1,
->>>>> -		.ops = &clk_fixed_factor_ops,
->>>>> -	},
->>>>> -};
->>>>
->>>>
->>>> Removing the global "xo" clock makes it so that our 14nm DSI PHY does not
->>>> have a parent clock anymore, as the clock is called "xo_board" nowadays
->>>> ("xo" in the position of fw_name is, as you know, only local to this driver
->>>> because it is named that way in the clock-names property). We (SoMainline)
->>>> suffer the same DSI PHY hardcoding issue on many other boards and are at
->>>> this point investigating whether to provide &xo_board in DT like any other
->>>> sane driver.  Do you happen to know if work is already underway to tackle
->>>> this?
->>>>
->>>
->>> As far as I can tell most other platforms doesn't define "xo" either.
->>> E.g. according to debugfs dsi0vco_clk doesn't have a parent on sdm845...
->>>
->>> Sounds like we should update the dsi phys to specify a fw_name and
->>> update binding and dts to provide this...
->>
->>
->> I'm all for using .fw_name there, and I hope we all agree that clock
->> dependencies based on global names should become a thing of the past; every
->> such inter-driver dependency should be clearly visible in the DT.  We
->> (SoMainline) can tackle this DSI side if no-one else is working on it yet.
->>
->>> Does this cause a noticeable regression or it's just that we have a
->>> dangling clock?
->>
->>
->> Unfortunately this regresses yes, starting with:
->>
->>      dsi0n1_postdiv_clk: Zero divisor and CLK_DIVIDER_ALLOW_ZERO not set
->>
->> And proceeding with more such errors on different clocks, clocks getting
->> stuck or failing to update, and the panel never showing anything at all.
->>
->> Should we fix DSI PHYs first and let this patch sit for a while, or keep the
->> implicit global "xo" clock just a little while longer until that's over
->> with?
->>
-> 
-> Thanks, should have read your email as well before replying to the
-> other.
+Its a very similar problem to orientation switch
+
+As an example
+
+- redriver may need to fix up signal integrity for
+   lane switching
+
+- PHY needs to toggle lanes from one IP block to another
+
+I don't think off the top of my head a USB controller or DPU cares much 
+about the orientation switch but for argument sake you could add one to 
+that list.
+
+I _think_ the type-c mux layer handles this though, as in what we did on 
+RB5 has PHY and redriver receiving and reacting to a type-c orientation 
+switch both with the existing type-c port driver and the new tcpm.
+
++ Dmitry - he did the mux work on the PHY and the redriver
+
+Seems to me that the type-c mux way of diseminating to more than one 
+place might fight role-switching well too.
 
 
-No biggie, Angelo was first to reply after all :)
-
-> I will respin this with "xo" intact, then once we've fixed up the DSI
-> code we can drop it.
 
 
-Sounds good, thanks!
-
-> But I still don't understand why we don't have this problem on e.g.
-> sdm845. I must be missing something...
-
-
-It is strange indeed.  On MSM89[57]6 (Sony Xperia Loire, 28nm DSI 
-PHY/PLL) we don't have this parent hooked up either because of the same 
-issue, and it's not a problem there either.  I bet it all comes down to 
-slight differences between the various DSI PHY/PLL implementations.
-
->> Either way, feel free to attach my:
->>
->> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
->>
->> After that.
->>
->>>>>     static struct clk_alpha_pll gpll0_early = {
->>>>>     	.offset = 0x0,
->>>>>     	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
->>>>> @@ -158,7 +35,9 @@ static struct clk_alpha_pll gpll0_early = {
->>>>>     		.enable_mask = BIT(0),
->>>>>     		.hw.init = &(struct clk_init_data){
->>>>>     			.name = "gpll0_early",
->>>>> -			.parent_names = (const char *[]){ "xo" },
->>>>> +			.parent_data = &(const struct clk_parent_data){
->>>>> +				.fw_name = "xo",
->>>>> +			},
->>>>
->>>>
->>>> I wish we could use .parent_names for a list of .fw_name's too
->>>
->>> Afaict specifying "name" in struct clk_parent_data is the same as using
->>> parent_names. But I'm not up to speed on the details of how to migrate
->>> the dsi phys.
->>
->>
->> Yes it is, both do _not_ look at clocks specified in DT before "falling
->> back" to global names (that only happens when both .name and .fw_name are
->> specified).  I'm sort of expressing the desire for .parent_fw_names here in
->> hopes of phasing out global clock names on DT platforms altogether.  We
->> definitely shouldn't rework .parent_names to support both, that only causes
->> confusion and an implicit fallback to global clocks when the DT is
->> under-specifying the required clocks is exactly what we're trying to avoid.
->>
->>>>> [..]
->>>>> @@ -265,7 +270,7 @@ static struct clk_rcg2 blsp1_qup1_i2c_apps_clk_src = {
->>>>>     	.freq_tbl = ftbl_blsp1_qup1_i2c_apps_clk_src,
->>>>>     	.clkr.hw.init = &(struct clk_init_data){
->>>>>     		.name = "blsp1_qup1_i2c_apps_clk_src",
->>>>> -		.parent_names = gcc_parent_names_xo_gpll0_gpll0_early_div,
->>>>> +		.parent_data = gcc_parent_data_xo_gpll0_gpll0_early_div,
->>>>>     		.num_parents = 3,
->>>>
->>>>
->>>> How about using ARRAY_SIZE(gcc_parent_data_xo_gpll0_gpll0_early_div) now?
->>>> Same for every other occurrence of this pattern.
->>>>
->>>
->>> I omitted that because it felt unrelated to the change I was doing, but
->>> it could certainly be done.
->>
->>
->> Fair, if done at all it should end up in a separate (2/2) patch or I'll take
->> care of this in a followup.
->>
-> 
-> Sounds good, I'd be happy to give you a review on that patch :)
-
-
-I'll spin that patch as soon as v2 is merged (preventing 
-ordering/dependency issues?), feel free to CC me.
-
-> Regards,
-> Bjorn
-> 
-
-- Marijn
