@@ -2,105 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 474693F7ADD
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 18:43:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 03C993F7AF5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 18:53:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231502AbhHYQom (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Aug 2021 12:44:42 -0400
-Received: from mga02.intel.com ([134.134.136.20]:29539 "EHLO mga02.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230156AbhHYQom (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Aug 2021 12:44:42 -0400
-X-IronPort-AV: E=McAfee;i="6200,9189,10087"; a="204762260"
-X-IronPort-AV: E=Sophos;i="5.84,351,1620716400"; 
-   d="scan'208";a="204762260"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 25 Aug 2021 09:43:56 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.84,351,1620716400"; 
-   d="scan'208";a="598127309"
-Received: from kuha.fi.intel.com ([10.237.72.162])
-  by fmsmga001.fm.intel.com with SMTP; 25 Aug 2021 09:43:46 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Wed, 25 Aug 2021 19:43:45 +0300
-Date:   Wed, 25 Aug 2021 19:43:45 +0300
-From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Peter Chen <peter.chen@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, agross@kernel.org,
-        gregkh@linuxfoundation.org, jackp@codeaurora.org,
-        wcheng@codeaurora.org, linux-usb@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 0/3] Implement role-switch notifications from dwc3-drd to
- dwc3-qcom
-Message-ID: <YSZzQXzrry+DFU6X@kuha.fi.intel.com>
-References: <20210704013314.200951-1-bryan.odonoghue@linaro.org>
- <20210707015704.GA28125@nchen>
- <YOX6d+sBEJMP4V3q@yoga>
- <20210708030631.GA22420@nchen>
- <YSWCnsZDdp57KBqB@ripper>
- <87zgt65avm.fsf@kernel.org>
- <ce5f12dd-ddc1-6a9c-3dfb-aa44ea166828@linaro.org>
- <YSZned9v1+ajzVx0@ripper>
+        id S232649AbhHYQyA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Aug 2021 12:54:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47194 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230490AbhHYQyA (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 25 Aug 2021 12:54:00 -0400
+Received: from mail-pj1-x1036.google.com (mail-pj1-x1036.google.com [IPv6:2607:f8b0:4864:20::1036])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38D80C061757;
+        Wed, 25 Aug 2021 09:53:14 -0700 (PDT)
+Received: by mail-pj1-x1036.google.com with SMTP id n13-20020a17090a4e0d00b0017946980d8dso4577443pjh.5;
+        Wed, 25 Aug 2021 09:53:14 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=a1796Hm7LQw6smAYsrKNPJogW0RnP+E+pRLLuJInkfI=;
+        b=WHdWBl+l4m1fwzZQ8HT6indM7uORWUDZLUHX77GTT465fUvndZ2v41DO1GNCfSTPlT
+         r5XEO1fIj8xBrMPjNOxJ6S/T7/5DvRG1/cJgmP0gerFUWfIe/Q3Z6ow7DsHBNL89wqa6
+         hDC647Ww7FwGtpwXNsbdtppEeJ8TcTUWaXEvDOJ2hREWbFQYpr+BrTJqwu91o5N+xQxC
+         oJlIXGaTxQHfR2ENpTS23sWSrERT3PxcK0by8PemSuL/kImhfQXffGjyRSozgHV13sF7
+         9EtJOeAtTHSh4BCyPMW0rYZH+dC9DSIg8c6njqkxXNiu6ZeS81GwG6gELQT6KXVlWvyz
+         mxhA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=a1796Hm7LQw6smAYsrKNPJogW0RnP+E+pRLLuJInkfI=;
+        b=Y4/qnN4zazbGkcs+HZUf7xuKy7Xfwe60cQFtSlAJuegfIL5Pl8o6O9HUuIYVvj+Pw/
+         e00clBu3rFusk7kAyGxoazkLg8pz7f8Dh/7phnnWMrjdiXWuDsJ/5wQsLZPG118UBttp
+         mrI7+5C6Btxa9mYU8HkFdURb5TRP0DH8pfHX5gg9AS30SCD9kK4jz1qZthdaWXgYLQrN
+         y6UHJ+HSLi6yqbGKQBExfiINCQ+jXHa17vKWKhD9MEqHUxNGg2IW/KtBG2iVlDhzofJN
+         hfmViZTHIFjl41pZyFTgCzddvUhrOLmw7ITkuDYbWKoL7qJ0u6M1d9UyF1nMrFAxrhpd
+         OxvA==
+X-Gm-Message-State: AOAM5317tj7RxxFbU/OLFkNMob4XVMbCAgyDcg+nz1bD/hwnmTKrYcXE
+        TA5113HTvIAe01RQGAvYtyI=
+X-Google-Smtp-Source: ABdhPJzS0aGZ9AoaQaARKQRJDzPQtz8j/qKpE1lP01ti02kyGpX5pV7nSR2TIy+dL2NKtCIfZxiTng==
+X-Received: by 2002:a17:90a:d686:: with SMTP id x6mr11676307pju.8.1629910392798;
+        Wed, 25 Aug 2021 09:53:12 -0700 (PDT)
+Received: from skynet-linux.local ([106.201.63.141])
+        by smtp.googlemail.com with ESMTPSA id f10sm496010pgm.77.2021.08.25.09.53.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Aug 2021 09:53:12 -0700 (PDT)
+From:   Sireesh Kodali <sireeshkodali1@gmail.com>
+To:     bjorn.andersson@linaro.org, agross@kernel.org, robh+dt@kernel.org,
+        rnayak@codeaurora.org
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Sireesh Kodali <sireeshkodali1@gmail.com>
+Subject: [PATCH 0/4] Add MSM8953 RPM support
+Date:   Wed, 25 Aug 2021 22:22:47 +0530
+Message-Id: <20210825165251.18358-1-sireeshkodali1@gmail.com>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YSZned9v1+ajzVx0@ripper>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Aug 25, 2021 at 08:53:29AM -0700, Bjorn Andersson wrote:
-> On Wed 25 Aug 01:18 PDT 2021, Bryan O'Donoghue wrote:
-> 
-> > On 25/08/2021 06:51, Felipe Balbi wrote:
-> > > > Hi Peter, I took a proper look at this again, hoping to find a way to
-> > > > pass a callback pointer from dwc3-qcom to the dwc3 core, that can be
-> > > > called from __dwc3_set_mode() to inform the Qualcomm glue about mode
-> > > > changes.
-> > > I would rather keep the strict separation between glue and core.
-> > 
-> > # 1 __dwc3_set_mode
-> > Felipe wants to keep a strict separation between core and glue
-> > 
-> > # notifier
-> > Requires the core probe() to complete before the glue probe to work
-> > reliably. This then would lead us to remaking the dwc3-qcom::probe() to
-> > facilitate probe deferral.
-> > 
-> > We can be sure bugs would be introduced in this process.
-> > 
-> > AFAIK Felipe is not opposed to this, Bjorn likes it
+This patch series adds support for the RPM SMD regulators and power domains
+ as found on the MSM8953 platform (SMD450, SDA450, SDM625, SDM632, APQ8053)
 
-Notifiers were proposed for the USB role switches already some time
-ago [1], and I don't think anybody was against them, but in the end I
-don't think there were any users for those notifier, so they were
-never added.
+Vladimir Lypak (4):
+  dt-bindings: soc: qcom: smd-rpm: Add compatible for MSM8953 SoC
+  soc: qcom: smd-rpm: Add compatible for MSM8953 SoC
+  dt-bindings: power: rpmpd: Add MSM8953 to rpmpd binding
+  soc: qcom: rpmpd: Add power domains for MSM8953
 
-If something needs to only react to the role changes like I think in
-this case, then I would just add those notifiers to the USB role
-switches.
-
-[1] https://lore.kernel.org/linux-usb/20191002231617.3670-3-john.stultz@linaro.org/
-
-> Using a notifier or just a direct callback from core to the glue is an
-> implementation detail, but as you say we need a way for the glue to
-> register this before the core is fully probed.
-
-There was an idea to add bind and unbind callbacks to the software
-nodes (callbacks that would be called when a device is bind to the
-node) at one point in order to solve this kind of problems.
-
-In this case it would work so that you would supply a software node
-for the role switch in your glue driver (that part is not a problem),
-and then if the bind of that software node is called, you know the
-role switch was registered, and you can acquire the handle to it
-safely and start listening notifications from it.
-
-But I don't know if that's a very sophisticated solution.
-
-thanks,
+ .../devicetree/bindings/power/qcom,rpmpd.yaml |  1 +
+ .../bindings/soc/qcom/qcom,smd-rpm.yaml       |  2 ++
+ drivers/soc/qcom/rpmpd.c                      | 24 +++++++++++++++++++
+ drivers/soc/qcom/smd-rpm.c                    |  1 +
+ include/dt-bindings/power/qcom-rpmpd.h        |  9 +++++++
+ 5 files changed, 37 insertions(+)
 
 -- 
-heikki
+2.33.0
+
