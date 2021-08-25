@@ -2,122 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 691393F7938
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 17:40:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B6673F77F5
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 17:04:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238882AbhHYPl0 convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Aug 2021 11:41:26 -0400
-Received: from guitar.tcltek.co.il ([192.115.133.116]:43943 "EHLO
-        mx.tkos.co.il" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231995AbhHYPl0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Aug 2021 11:41:26 -0400
-Received: from tarshish (unknown [10.0.8.2])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        by mx.tkos.co.il (Postfix) with ESMTPS id D5A7944090A;
-        Wed, 25 Aug 2021 18:40:30 +0300 (IDT)
-References: <3b70f9e757e018d3cd91a882282040c4c0589a93.1629884907.git.baruch@tkos.co.il>
- <dbf064fb60b1654af25f65d89f75bd397162d701.1629884907.git.baruch@tkos.co.il>
- <1629900658.219829.2719822.nullmailer@robh.at.kernel.org>
-User-agent: mu4e 1.6.3; emacs 27.1
-From:   Baruch Siach <baruch@tkos.co.il>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Andy Gross <agross@kernel.org>,
-        Balaji Prakash J <bjagadee@codeaurora.org>,
-        linux-pwm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        Lee Jones <lee.jones@linaro.org>
-Subject: Re: [PATCH v7 3/4] dt-bindings: pwm: add IPQ6018 binding
-Date:   Wed, 25 Aug 2021 17:59:45 +0300
-In-reply-to: <1629900658.219829.2719822.nullmailer@robh.at.kernel.org>
-Message-ID: <87ilzta5xn.fsf@tarshish>
+        id S239899AbhHYPEv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Aug 2021 11:04:51 -0400
+Received: from mail.kernel.org ([198.145.29.99]:56774 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231995AbhHYPEu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 25 Aug 2021 11:04:50 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id A202861176;
+        Wed, 25 Aug 2021 15:04:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1629903844;
+        bh=SQu8ZriBWtkrMhexm27oLfTLE3woK/0rAxCFoPeJSWs=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=IkW0uZDXe3xbv33KgBw8Bo8H2mB81KwIUiIRJgNP9/vTaKWXH2sxZJrN4+oO1nMxQ
+         YplMbJk33i1nTVfjIzni2O6dVbOMkObGGFB8oEI0wE7XVQh5r1HHJ3fzyzv43b48E/
+         s/1FBAQc2gRVVUILKtSOpR+AxQGCmSfQGqbQEK7NFCKk/cCWbKFIpsBozaZn81414n
+         TeMharqkFIFQKYjkkMu62pMuUgOCwjxLCo4LgmfECxfA6LUVZ4THpARepXaPGu69tA
+         Q2D/PyjaRO8x68LPnYZjWzI14snOQ+Z5kT2Vhrl2izpFPfCC5xTBHPj1SfSad++V6z
+         //mmZeEZTboqg==
+Received: by mail-ej1-f54.google.com with SMTP id t19so2195260ejr.8;
+        Wed, 25 Aug 2021 08:04:04 -0700 (PDT)
+X-Gm-Message-State: AOAM533wV9aUqc9RnGjHEAwSS4inPiKQ7udVtvieOX3gg8Ddgt7efDsF
+        TNaC0qGAe21GvrwDDVS0Cx7hJG7aNrEUcgAxWw==
+X-Google-Smtp-Source: ABdhPJxewKcJ+3Eb7Es36Smt8z5TpesvKwiuyO4A/wqa6BX0T3ZI8RR8aZzlwJux6eaj2JM70CZMGA4Mxv1AsLONrLQ=
+X-Received: by 2002:a17:906:ff41:: with SMTP id zo1mr16030386ejb.525.1629903843136;
+ Wed, 25 Aug 2021 08:04:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8BIT
+References: <cover.1620203062.git.baruch@tkos.co.il> <e17461407cf4bb79fed5925ec81196a0b84e7827.1620203062.git.baruch@tkos.co.il>
+ <CAL_JsqKOGo4eXKA7FZK7AQQ24MDDbg2-ngUQF9CJK=8eH_pxHQ@mail.gmail.com>
+ <87o89lahqp.fsf@tarshish> <CAL_Jsq+wkTbGjyk_i-_1Sad80xcJwAFdf5gBTGBR_TORRA-AoQ@mail.gmail.com>
+ <87lf4pa9i0.fsf@tarshish>
+In-Reply-To: <87lf4pa9i0.fsf@tarshish>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Wed, 25 Aug 2021 10:03:51 -0500
+X-Gmail-Original-Message-ID: <CAL_JsqKLijW0H-f0Ptd3EKrE5mRwtQK5StOTzs3b5UesuuVKdg@mail.gmail.com>
+Message-ID: <CAL_JsqKLijW0H-f0Ptd3EKrE5mRwtQK5StOTzs3b5UesuuVKdg@mail.gmail.com>
+Subject: Re: [PATCH v2 2/6] PCI: qcom: add support for IPQ60xx PCIe controller
+To:     Baruch Siach <baruch@tkos.co.il>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
+        Kathiravan T <kathirav@codeaurora.org>,
+        Bjorn Helgaas <bhelgaas@google.com>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
+        Robert Marko <robert.marko@sartura.hr>,
+        devicetree@vger.kernel.org, linux-phy@lists.infradead.org,
+        PCI <linux-pci@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        linux-tegra <linux-tegra@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Rob,
+On Wed, Aug 25, 2021 at 9:23 AM Baruch Siach <baruch@tkos.co.il> wrote:
+>
+> Hi Rob,
+>
+> On Wed, Aug 25 2021, Rob Herring wrote:
+> > On Wed, Aug 25, 2021 at 6:25 AM Baruch Siach <baruch@tkos.co.il> wrote:
+> >> On Fri, Aug 06 2021, Rob Herring wrote:
+> >> > On Wed, May 5, 2021 at 3:18 AM Baruch Siach <baruch@tkos.co.il> wrote:
+> >> >> +       writel(PCI_EXP_DEVCTL2_COMP_TMOUT_DIS, pci->dbi_base + offset +
+> >> >> +                       PCI_EXP_DEVCTL2);
+> >> >> +
+> >> >> +       writel(PCIE_CAP_CURR_DEEMPHASIS | SPEED_GEN3,
+> >> >> +                       pci->dbi_base + offset + PCI_EXP_DEVCTL2);
+> >> >
+> >> > Doesn't this overwrite the prior register write?
+> >>
+> >> It does. There are two mistakes here. The writel() above should set
+> >> PCIE20_DEVICE_CONTROL2_STATUS2 (offset 0x98).
+> >
+> > No. Did you check what 'offset' is? PCIE20_DEVICE_CONTROL2_STATUS2 is
+> > PCI_EXP_DEVCTL2 plus the status reg. What's wrong is it should be a
+> > 16-bit write.
+>
+> Thanks for enlightening me. 'offset' is 0x70 here. So PCI_EXP_DEVCTL2 is
+> at 0x98, and PCI_EXP_LNKCTL2 is at 0xa0. Only the second writel() is
+> wrong. But since generic code handles speed, I can drop it entirely.
+>
+> I see that dw_pcie_link_set_max_speed() uses dw_pcie_writel_dbi() to
+> write to PCI_EXP_LNKCTL2. Is that 16-bit write?
 
-On Wed, Aug 25 2021, Rob Herring wrote:
+No, that may be because some platforms can only do 32-bit accesses and
+dw_pcie_writew_dbi would be a RMW in that case. Or maybe there's some
+reliance on clearing the status register.
 
-> On Wed, 25 Aug 2021 12:48:26 +0300, Baruch Siach wrote:
->> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
->> 
->> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
->> ---
->> v7:
->> 
->>   Use 'reg' instead of 'offset' (Rob)
->> 
->>   Drop 'clock-names' and 'assigned-clock*' (Bjorn)
->> 
->>   Use single cell address/size in example node (Bjorn)
->> 
->>   Move '#pwm-cells' lower in example node (Bjorn)
->> 
->>   List 'reg' as required
->> 
->> v6:
->> 
->>   Device node is child of TCSR; remove phandle (Rob Herring)
->> 
->>   Add assigned-clocks/assigned-clock-rates (Uwe Kleine-König)
->> 
->> v5: Use qcom,pwm-regs for phandle instead of direct regs (Bjorn
->>     Andersson, Kathiravan T)
->> 
->> v4: Update the binding example node as well (Rob Herring's bot)
->> 
->> v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
->> 
->> v2: Make #pwm-cells const (Rob Herring)
->> ---
->>  .../devicetree/bindings/pwm/ipq-pwm.yaml      | 52 +++++++++++++++++++
->>  1 file changed, 52 insertions(+)
->>  create mode 100644 Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
->
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
->
-> yamllint warnings/errors:
->
-> dtschema/dtc warnings/errors:
-> Documentation/devicetree/bindings/pwm/ipq-pwm.example.dt.yaml:0:0:
-> /example-0/syscon@1937000: failed to match any schema with compatible:
-> ['qcom,tcsr-ipq6018', 'syscon', 'simple-mfd']
+> Why are pci_regs.h register offsets in decimal?
 
-What can I do about that? Is it because qcom,tcsr-ipq6018 is documented
-in a non-yaml plain .txt file?
+No idea...
 
-Thanks,
-baruch
-
-> doc reference errors (make refcheckdocs):
->
-> See https://patchwork.ozlabs.org/patch/1520591
->
-> This check can fail if there are any dependencies. The base for a patch
-> series is generally the most recent rc1.
->
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
->
-> pip3 install dtschema --upgrade
->
-> Please check and re-submit.
-
--- 
-                                                     ~. .~   Tk Open Systems
-=}------------------------------------------------ooO--U--Ooo------------{=
-   - baruch@tkos.co.il - tel: +972.52.368.4656, http://www.tkos.co.il -
+Rob
