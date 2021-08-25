@@ -2,113 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 261DB3F7EE8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Aug 2021 01:11:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 30AD53F7EEA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Aug 2021 01:11:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233067AbhHYXMP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Aug 2021 19:12:15 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48554 "EHLO
+        id S233332AbhHYXMi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Aug 2021 19:12:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48650 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232789AbhHYXMP (ORCPT
+        with ESMTP id S233329AbhHYXMi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Aug 2021 19:12:15 -0400
-Received: from mail-pj1-x1043.google.com (mail-pj1-x1043.google.com [IPv6:2607:f8b0:4864:20::1043])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C43B2C0613C1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Aug 2021 16:11:28 -0700 (PDT)
-Received: by mail-pj1-x1043.google.com with SMTP id ot2-20020a17090b3b4200b0019127f8ed87so4782024pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Aug 2021 16:11:28 -0700 (PDT)
+        Wed, 25 Aug 2021 19:12:38 -0400
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 018A8C0613C1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Aug 2021 16:11:52 -0700 (PDT)
+Received: by mail-oi1-x236.google.com with SMTP id w19so1666662oik.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Aug 2021 16:11:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=auQsiU026YRcUJDBrDCigbKQFMyBdgrRl4yQyRusVVE=;
-        b=KsYDraaCmX1B7uNInfhFu+xYYZW0V2Gz972uL5UYRPpWaK5WAawbOGfWtd42arLjEY
-         JpjHKQMIyUD72LoPfBoxBSL5ZwOG4UAebUC7GIlLE+GJbw9Nn17615fqWok1AV8s+UKa
-         WyyEcIlgtbE1M0DSpXT7BY7BWrBqMg6HwcqlQ=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=QtXruHF4bnU6OyDGPGjhakaBMSfcI7KwDzUGtKN2MR0=;
+        b=LSQ+Qs6HQ2tLgxADlDiknTiMlunVRVb2oTaqttGBCOLAy9cTuB2yKsogtfZ8PG903O
+         h5M4uHZCfTCPEuGn7ae6aRomz+teFyOfwAahWuOVl0gm1XPoAx+WvuUlkgUfrzsn0Id7
+         CFrxc8Q0QMTEBu528ANT70QfY/opiUACSIL1COUemir8eKja0ZTWsAzP7Oa07wR0hm1a
+         nLkMWdmsttzoVcCUK3Qb8RLDR6lRWrUQ0Zj9YaiEgYAJ7ztDcSfp5MR4FZhS1DY6ygcR
+         WA5rYjmlAuOugXKoPtKAfIFNkysDmGpBisdF8/Fayee8kQNXGIRAvBgw9C1nOlVy0aO6
+         +GZQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=auQsiU026YRcUJDBrDCigbKQFMyBdgrRl4yQyRusVVE=;
-        b=rD8nTHKa1M7DhVQ91qdfA4lhNWj91O4xI/zJq2vWUEbu4KFuf2P1sJDvAM+PEa6Mer
-         kr4k960HFTm2j6FBgKLHkDIf4S9lhn61ocHFngsoPMHpDEwUc1OqHx+ILNhE+SSHaE91
-         zsgiyoQOlOXmPyKKtmlzZ8JTn+fwFXAAehlBvma3/WmAyoFuARnPvDhrQ+92zJQGAzRT
-         qSZQb4YSNlkbRY08VDUGGTAaKgxKhV2IcTKUCPGBs+vc85Ah7Crg8lP1B07R5RYegKk9
-         zSoU1JYIGkLILGIrFTfOxbrh7drhF6QX8WocNO5gJUOfsPHA8Pjg6sPlnT0737GMfmgw
-         y8CA==
-X-Gm-Message-State: AOAM530lUcICG9J9orBLEbc66//DobSWEmmi5olJkrb5Dt0JLIDZ4kGD
-        Gkrne7pwk5y3JPxKDiVjjeiIriVXQaS0HXzYHGeWJq/gRtQA6UTP
-X-Google-Smtp-Source: ABdhPJzNUEKVFIv6N8mYQAYQ3A0+DYTB+NOni0Zp//TmiXJA3uI7jGbvj5rAJzumaKzWnPD9VN5+tmK5NYMi16924hc=
-X-Received: by 2002:a17:90a:8801:: with SMTP id s1mr755065pjn.166.1629933088041;
- Wed, 25 Aug 2021 16:11:28 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=QtXruHF4bnU6OyDGPGjhakaBMSfcI7KwDzUGtKN2MR0=;
+        b=uBGXnTqasD0AVQnjlo0WKOHhK6l8us7TRVCt2z0l0tVNPxw5F7ZVe1Qv9ONFenApgr
+         RRDTmEG3qiZgMutIH258x2FSIxwICvR4yhIfPqG/+sTNIxziqDh/9VOPDdCfSbUIJIQs
+         83T7hDuJfdX8jNBSET58MxltalNZ2AQzXdKng/UQCKMutDuQt7/UjkVvJa3/VJns8mYJ
+         u1mjlkkTb11103yfrSnkXEzuUtLZMtx8pSwPN2lM/7S+QKv8CGG2Y3yH8Q9OFpwIkdv/
+         65dzpZi9f11iNCFQYJS9F+Z4uTWUYg1FpyL33XMqAKMTsh8Qt079UxGX325W4BXwUk9o
+         Acnw==
+X-Gm-Message-State: AOAM533IS2KmcRaG1cV16c4fSre1HnPCUnGemeMuYQmCfiRmsAVLoV09
+        NCjgQjmz/V4Pq1kLN0KSkosamg==
+X-Google-Smtp-Source: ABdhPJwWtrUIdXOLEe63DVJX0W3pVBZSObgJ/P3jgP1myOd0+jMUDpnSf5bYJKY/guCKP8rvzghCnA==
+X-Received: by 2002:a05:6808:21a5:: with SMTP id be37mr326536oib.172.1629933111367;
+        Wed, 25 Aug 2021 16:11:51 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id l67sm265529otl.3.2021.08.25.16.11.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Aug 2021 16:11:50 -0700 (PDT)
+Date:   Wed, 25 Aug 2021 18:11:48 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     sbillaka@codeaurora.org
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        robdclark@gmail.com, seanpaul@chromium.org,
+        kalyan_t@codeaurora.org, abhinavk@codeaurora.org,
+        dianders@chromium.org, khsieh@codeaurora.org,
+        mkrishn@codeaurora.org
+Subject: Re: [PATCH v1 1/2] drm/msm/dp: Add support for SC7280 eDP
+Message-ID: <YSbONPNITH6dIECr@builder.lan>
+References: <1628726882-27841-1-git-send-email-sbillaka@codeaurora.org>
+ <1628726882-27841-2-git-send-email-sbillaka@codeaurora.org>
+ <CAE-0n52=mR0Zt8UZ3vOM-nt0UJszcFhi-eYfzDtD0bt3zhNA_Q@mail.gmail.com>
+ <0b2aa426c8f511a29143f2a1117fe9a2@codeaurora.org>
 MIME-Version: 1.0
-References: <20210825084434.32309-1-mansur@codeaurora.org>
-In-Reply-To: <20210825084434.32309-1-mansur@codeaurora.org>
-From:   Nathan Hebert <nhebert@chromium.org>
-Date:   Wed, 25 Aug 2021 16:11:17 -0700
-Message-ID: <CANHAJhE4h+WPL+uRCqZ=CdaqWr9SVuLtK9SXnP3PTkk-A0rZZQ@mail.gmail.com>
-Subject: Re: [PATCH] venus: vdec: update output buffer size during vdec_s_fmt()
-To:     Mansur Alisha Shaik <mansur@codeaurora.org>
-Cc:     linux-media@vger.kernel.org, stanimir.varbanov@linaro.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, dikshita@codeaurora.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <0b2aa426c8f511a29143f2a1117fe9a2@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mansur,
+On Thu 12 Aug 19:28 CDT 2021, sbillaka@codeaurora.org wrote:
 
-I tested the patch on kernel 5.4 on an Acer Chromebook Spin 513 based
-on the Qualcomm Snapdragon 7c platform.
+> On 2021-08-12 06:11, Stephen Boyd wrote:
+> > Quoting Sankeerth Billakanti (2021-08-11 17:08:01)
+[..]
+> > > +static int dp_parser_gpio(struct dp_parser *parser)
+> > > +{
+> > > +       struct device *dev = &parser->pdev->dev;
+> > > +       int ret;
+> > > +
+> > > +       parser->panel_bklt_gpio = devm_gpiod_get(dev, "panel-bklt",
+> > > +                       GPIOD_OUT_HIGH);
+> > > +       if (IS_ERR(parser->panel_bklt_gpio)) {
+> > > +               ret = PTR_ERR(parser->panel_bklt_gpio);
+> > > +               parser->panel_bklt_gpio = NULL;
+> > > +               DRM_ERROR("%s: cannot get panel-bklt gpio, %d\n",
+> > > __func__, ret);
+> > > +               goto fail;
+> > > +       }
+> > > +
+> > > +       parser->panel_pwm_gpio = devm_gpiod_get(dev, "panel-pwm",
+> > > GPIOD_OUT_HIGH);
+> > > +       if (IS_ERR(parser->panel_pwm_gpio)) {
+> > > +               ret = PTR_ERR(parser->panel_pwm_gpio);
+> > > +               parser->panel_pwm_gpio = NULL;
+> > > +               DRM_ERROR("%s: cannot get panel-pwm gpio, %d\n",
+> > > __func__, ret);
+> > > +               goto fail;
+> > > +       }
+> > > +
+> > > +       DRM_INFO("gpio on");
+> > > +fail:
+> > > +       return 0;
+> > > +}
+> > 
+> > Don't we have pwm backlight drivers like
+> > drivers/video/backlight/pwm_bl.c to support this? This sort of thing
+> > doesn't belong in the dp driver.
+> 
+> Okay. I will explore it.
+> 
 
-VP8 test vectors [0] were able to be decoded and decoded picture MD5's
-matched the vpxdec reference decoder. Prior to this patch, three files
-failed to decode. I didn't see any regressions with VP9 Profile 0
-(8-bit) test vectors [1] using the same decode and checksum test
-methods.
+I proposed that we attach a drm_panel and allow that to control the
+(pwm-)backlight. Here's the link for the DP patch:
 
-[0] https://chromium.googlesource.com/webm/vp8-test-vectors
-[1] https://www.webmproject.org/vp9/levels/#test-bitstreams
+https://lore.kernel.org/linux-arm-msm/20210726231351.655302-1-bjorn.andersson@linaro.org/
 
-Tested-by: Nathan Hebert <nhebert@chromium.org>
-
-Best regards,
-Nathan Hebert
-
-On Wed, Aug 25, 2021 at 1:44 AM Mansur Alisha Shaik
-<mansur@codeaurora.org> wrote:
->
-> Video driver maintains an internal context for the output buffer size.
-> During S_fmt() on capture plane, the output buffer size is not updated
-> in driver context. As a result, during buf_prepare(), the size of the
-> vb2_plane and internal size of the buffer, as maintained by the driver,
-> does not match. This leads to buf_prepare() failure.
-> Update the instance context for the output buffer size during s_fmt().
->
-> Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
-> ---
->  drivers/media/platform/qcom/venus/vdec.c | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
-> index 198e47eb63f4..c129b061a325 100644
-> --- a/drivers/media/platform/qcom/venus/vdec.c
-> +++ b/drivers/media/platform/qcom/venus/vdec.c
-> @@ -332,8 +332,11 @@ static int vdec_s_fmt(struct file *file, void *fh, struct v4l2_format *f)
->
->         if (f->type == V4L2_BUF_TYPE_VIDEO_OUTPUT_MPLANE)
->                 inst->fmt_out = fmt;
-> -       else if (f->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE)
-> +       else if (f->type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE) {
->                 inst->fmt_cap = fmt;
-> +               inst->output2_buf_size =
-> +                       venus_helper_get_framesz(pixfmt_cap, orig_pixmp.width, orig_pixmp.height);
-> +       }
->
->         return 0;
->  }
-> --
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
->
+Regards,
+Bjorn
