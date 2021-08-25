@@ -2,44 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 35F493F6F04
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 07:52:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AEF9C3F6F06
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 07:53:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237662AbhHYFxf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Aug 2021 01:53:35 -0400
-Received: from mail.kernel.org ([198.145.29.99]:37672 "EHLO mail.kernel.org"
+        id S238030AbhHYFyb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Aug 2021 01:54:31 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37776 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232420AbhHYFxe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Aug 2021 01:53:34 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 74B8E61165;
-        Wed, 25 Aug 2021 05:52:47 +0000 (UTC)
+        id S232420AbhHYFy0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 25 Aug 2021 01:54:26 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 9130661212;
+        Wed, 25 Aug 2021 05:53:36 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1629870769;
-        bh=ifMd2rV7xzfwYhRjkhwSnMRDSIPtFHCO32Um4nDAlOY=;
+        s=k20201202; t=1629870821;
+        bh=OuVdKfR/MOuYBuzNycEWQRB8+cfvT8D53yuzUluBSe0=;
         h=References:From:To:Cc:Subject:Date:In-reply-to:From;
-        b=u2TGGRp4bi13aPxqx6YVth6OUdmMkEe8EDAAzvDc1KMGpMvBay1bi7WVSVOkGUDcG
-         XANk3gHIfOkheZfnZ9II43cDMcvq+d+lE0/hJwyjST++rdq7vsnUaXmZpHJl2EqBp4
-         wJNoPCtYU9qhSsKEQ/I1VonMF1OdBDIRvpqSls4JWtAp3Nezv6+dA2ouhxgKwHxa01
-         TxzK/fNB7bdlssxLo3BzM934ItRX1Sl001xXUop5PLaKqXO2TFmAgFD/90ZlpTtGwj
-         MlMw8OaHgSVs1f+2dpHtToq0r+eIdUgxtrMfVP4zMCWsrPVnkHkQqsqkIiOCsg+Eph
-         E/7bLzHizFvZw==
-References: <20210704013314.200951-1-bryan.odonoghue@linaro.org>
- <20210707015704.GA28125@nchen> <YOX6d+sBEJMP4V3q@yoga>
- <20210708030631.GA22420@nchen> <YSWCnsZDdp57KBqB@ripper>
+        b=lWfGGAtXommJm8HbFE7PK3rWnM2Ku1enbbQBZExVftmvW7IhIE6tr/zNYRuBci8a0
+         pTAudCS2VqAdfDTwNCoEyN73YqFS2GQfQPHpcSkdLMRHMOO3Jsu43pJAnPW6uqA6SM
+         mBgbiONurHm0CQ7/dkaj2UfhtoP80hRDF9mAXCe82rdbPCW5w4J9P8u1S6cEp9HZbB
+         VHvGXDMnnIhj0lukvuGZ/6f1mGoNgxtwknJ3d2U0+euK31ZQac/B+any40wHaWfBn2
+         A/8un0oTT1Z555PAO9tZRKi1rViVHR0SSWy0qFexWt10xBLWpPAUodoLvahpgSMBp8
+         Y4GTib4ywAPwg==
+References: <20210824201433.11385-1-ftoth@exalondelft.nl>
 User-agent: mu4e 1.6.4; emacs 27.2
 From:   Felipe Balbi <balbi@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Peter Chen <peter.chen@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        agross@kernel.org, gregkh@linuxfoundation.org,
-        jackp@codeaurora.org, wcheng@codeaurora.org,
-        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 0/3] Implement role-switch notifications from dwc3-drd
- to dwc3-qcom
-Date:   Wed, 25 Aug 2021 08:51:55 +0300
-In-reply-to: <YSWCnsZDdp57KBqB@ripper>
-Message-ID: <87zgt65avm.fsf@kernel.org>
+To:     Ferry Toth <ftoth@exalondelft.nl>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Ruslan Bilovol <ruslan.bilovol@gmail.com>,
+        Oded Gabbay <oded.gabbay@gmail.com>,
+        Cezary Rojewski <cezary.rojewski@intel.com>,
+        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Pawel Laszczak <pawell@cadence.com>,
+        Jack Pham <jackp@codeaurora.org>, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-doc@vger.kernel.org,
+        Jonathan Corbet <corbet@lwn.net>,
+        Lorenzo Colitti <lorenzo@google.com>,
+        Wesley Cheng <wcheng@codeaurora.org>, robh+dt@kernel.org,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        frowand.list@gmail.com, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, heikki.krogerus@linux.intel.com,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        Pavel Hofman <pavel.hofman@ivitera.com>,
+        Ferry Toth <fntoth@gmail.com>
+Subject: Re: [PATCH v1 1/3] Revert "usb: gadget: u_audio: add real feedback
+ implementation"
+Date:   Wed, 25 Aug 2021 08:53:23 +0300
+In-reply-to: <20210824201433.11385-1-ftoth@exalondelft.nl>
+Message-ID: <87v93u5au9.fsf@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain
 Precedence: bulk
@@ -47,44 +58,41 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
-Hi,
+Ferry Toth <ftoth@exalondelft.nl> writes:
 
-Bjorn Andersson <bjorn.andersson@linaro.org> writes:
-> On Wed 07 Jul 20:06 PDT 2021, Peter Chen wrote:
+> This reverts commit e89bb4288378b85c82212b60dc98ecda6b3d3a70.
 >
->> On 21-07-07 14:03:19, Bjorn Andersson wrote:
->> > On Tue 06 Jul 20:57 CDT 2021, Peter Chen wrote:
->> > 
->> > Allow me to reorder your two questions:
->> > 
->> > > And why using a notifier need to concern core's deferral probe?
->> > 
->> > The problem at hand calls for the core for somehow invoking
->> > dwc3_qcom_vbus_overrride_enable() with a pointer to dwc3_qcom passed.
->> > 
->> > This means that dwc3-qcom somehow needs to inform the dwc3-core about
->> > this (and stash the pointer). And this can't be done until dwc3-core
->> > actually exist, which it won't until dwc3_probe() has completed
->> > successfully (or in particular allocated struct dwc).
->> 
->> Maybe you misunderstood the notifier I meant previous, my pointer was
->> calling glue layer API directly.
->> 
->> Role switch is from dwc3-core, when it occurs, it means structure dwc3 has
->> allocated successfully, you could call glue layer notifier at function
->> dwc3_usb_role_switch_set directly.
->> Some references of my idea [1] [2]
->> 
->> [1] Function ci_hdrc_msm_notify_event at ci_hdrc_msm_notify_event
->> [2] https://source.codeaurora.org/external/imx/linux-imx/tree/drivers/usb/dwc3/core.c?h=lf-5.10.y#n205
->> 
+> The commit is part of a series with commit
+> 24f779dac8f3efb9629adc0e486914d93dc45517 causing a BUG on dwc3
+> hardware, at least on Intel Merrifield platform when configured
+> through configfs:
+> BUG: kernel NULL pointer dereference, address: 0000000000000008
+> ...
+> RIP: 0010:dwc3_gadget_del_and_unmap_request+0x19/0xe0
+> ...
+> Call Trace:
+>  dwc3_remove_requests.constprop.0+0x12f/0x170
+>  __dwc3_gadget_ep_disable+0x7a/0x160
+>  dwc3_gadget_ep_disable+0x3d/0xd0
+>  usb_ep_disable+0x1c/0x70
+>  u_audio_stop_capture+0x79/0x120 [u_audio]
+>  afunc_set_alt+0x73/0x80 [usb_f_uac2]
+>  composite_setup+0x224/0x1b90 [libcomposite]
 >
-> Hi Peter, I took a proper look at this again, hoping to find a way to
-> pass a callback pointer from dwc3-qcom to the dwc3 core, that can be
-> called from __dwc3_set_mode() to inform the Qualcomm glue about mode
-> changes.
+> Pavel's suggestion to add
+> `echo "adaptive" > functions/uac2.usb0/c_sync` to the configfs script
+> resolves the issue.
+> Thinh suggests "the crash is probably because of f_uac2 prematurely
+> freeing feedback request before its completion. usb_ep_dequeue() is
+> asynchronous. dwc2() may treat it as a synchronous call so you didn't
+> get a crash."
+>
+> Revert as this is a regression and the kernel shouldn't crash depending
+> on configuration parameters.
+>
+> Reported-by: Ferry Toth <fntoth@gmail.com>
 
-I would rather keep the strict separation between glue and core.
+this should be Signed-off-by ;-)
 
 -- 
 balbi
