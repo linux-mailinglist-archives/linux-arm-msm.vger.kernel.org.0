@@ -2,120 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E07A3F7CB8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 21:30:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21CF53F7CFF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 22:05:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241906AbhHYTa6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Aug 2021 15:30:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54876 "EHLO
+        id S242558AbhHYUGM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Aug 2021 16:06:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34508 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234220AbhHYTa4 (ORCPT
+        with ESMTP id S231421AbhHYUGH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Aug 2021 15:30:56 -0400
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E16CDC0613C1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Aug 2021 12:30:10 -0700 (PDT)
-Received: by mail-oi1-x22a.google.com with SMTP id p2so1211363oif.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Aug 2021 12:30:10 -0700 (PDT)
+        Wed, 25 Aug 2021 16:06:07 -0400
+Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DF183C0613C1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Aug 2021 13:05:21 -0700 (PDT)
+Received: by mail-oo1-xc2d.google.com with SMTP id v20-20020a4a2554000000b0028f8cc17378so184558ooe.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Aug 2021 13:05:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=JLcefyKSKqjrSJBjDwRPhSlprne7V+zJmYbnypztomQ=;
-        b=H0Ernshf//ofwPK9XKjTZSg/dMtEYnrdSaZ+jw/BmPdPeTLAS9z5nLjtKaxufq8vS5
-         6HOhqHwXWnQz/p9BxLauB9gVo9Usz+VMM99fOO5Xi2EeTqjgJgIN3F/o/EvmsqfpFevu
-         +drnbaTMTdKMLtbyJ0J40Ulep22EhtrAza9fY=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=/yD6GFocSYAF/+qdR3IWw/sAEDk6He/axJwC6yOCiaw=;
+        b=mJ8AgQwirI+leolAZ/cxcSNAjMpABFpjSzk+Wqkp4P44AtzlswwXSb/vn3jZOxitDS
+         jTl+c72HhJZJJLWkcFbux6l02F+3+xt9pWiM59pbwbB+c6qwwSy665NcJBj3V1LCGhyQ
+         ckr++I01AJTp/DnwmtdcnClK0aoCaLMjs0s1tdj6vY+HQMDWOlEjUediKr7gNo+2nRmE
+         CojYKie68hYV0dAe6ZidfcVYGuL5zhxgjjekS/SsRyqSH5iG1rwgUuaFxOvs3dhPf31l
+         u66K5BT695XgkTOU0SrAZDE4eEue5+GkQDrgBBT5WAMYoUGpjSD9Tpv2c6FEZrTTCn6q
+         tqrg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=JLcefyKSKqjrSJBjDwRPhSlprne7V+zJmYbnypztomQ=;
-        b=jwoBGF8NUxRdfsVLdNAQm/x/x52AKGdzKbzE7tl1yTZKdbA4ZAW6kRxDoqPNdHiAIq
-         pSa47m/OQ2R9oQ0eIklSD26jAKNGyBVlG538EWVYERWkMYvIWchXk0Nl4mQQ8M5RskUP
-         uv0XHhHKhFLvZXeV2hOybS8ou2httGchgCNgfkL35va6SMI3LGH363sjfX43I7kw9HfW
-         lBpHrOZmoEFaDfKxQ+/T+hwtkC0f0puVHqcKda8pRbgixkz/X28ZcFIdVZhVA/mRDgwH
-         /PdcDD5ue+V7iE8QCytgAHrP9bb7S0nmwprR7eMTPb538TWg1BaR4RdFRwwE5P0xD59p
-         wMkg==
-X-Gm-Message-State: AOAM531IsIN1+afcsf5QlHytPmFDnoL5Brw+pTAezjZDgqjJToy4KtNG
-        p8b9DMFRnaSlYdRWNIda2F98OrLVvc0zeQKNCyTrNg==
-X-Google-Smtp-Source: ABdhPJz5kKrkvonN2F69o4kqTbjRO+SWZp3mHOvfJVqkOn6Guyq9jgCetnKtG3j0rp8HaNWPw8iPPt7s22TDjDpBZPA=
-X-Received: by 2002:a54:468d:: with SMTP id k13mr8278136oic.125.1629919810210;
- Wed, 25 Aug 2021 12:30:10 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 25 Aug 2021 19:30:09 +0000
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=/yD6GFocSYAF/+qdR3IWw/sAEDk6He/axJwC6yOCiaw=;
+        b=GGiflwuh2kJTINhLF0IbWPbQ+qlwFSRvvT6iv8K6BxjM5o8gK3SYBuLzx9DvXxN6NX
+         KMO7LcoKO13WLFEE377tdIM1P92uqP9iVq2WNWohRjWbw1bkzJN2rtphYxKY6iOiipyT
+         qLXDq1NiJftGRprt6gENifGU3LoI5H+4VCYzmVMEA4j9QDEIJjQFuTpdTBFyaJyrES3Q
+         WYtC3Sr9y72DBuIjR6yi1/j87lkdxYbkErkcHwOAyEv9d1IdoY1CdRk6hZQn/4ILKdjf
+         r0yms9ewImvXGPDUyh2wZMN+auCERlLr9kkrFk0D6E+HoU5Wsy3dJXE4cUob41ne6cYz
+         Vp9w==
+X-Gm-Message-State: AOAM532Nhr9GjVDmndpOugm3y6JLL8nkNUVNQuF/BAr9hmnsknQclj7/
+        nx4ATadZIexHy/IIgk2riQcfITshUzbpdA==
+X-Google-Smtp-Source: ABdhPJxZ9ib/Ixgf3NwjII25VeGeIGejFPud0i8+B8IRb3QxIP5jgxW5GHM+IYL4Cn/rC11k4CzV2A==
+X-Received: by 2002:a4a:9464:: with SMTP id j33mr76130ooi.5.1629921921180;
+        Wed, 25 Aug 2021 13:05:21 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id 31sm149954oti.63.2021.08.25.13.05.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 25 Aug 2021 13:05:20 -0700 (PDT)
+Date:   Wed, 25 Aug 2021 13:06:36 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Cc:     Felipe Balbi <balbi@kernel.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
+        Peter Chen <peter.chen@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, agross@kernel.org,
+        gregkh@linuxfoundation.org, jackp@codeaurora.org,
+        wcheng@codeaurora.org, linux-usb@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH 0/3] Implement role-switch notifications from dwc3-drd to
+ dwc3-qcom
+Message-ID: <YSaizDpqNRZcBGIc@ripper>
+References: <20210704013314.200951-1-bryan.odonoghue@linaro.org>
+ <20210707015704.GA28125@nchen>
+ <YOX6d+sBEJMP4V3q@yoga>
+ <20210708030631.GA22420@nchen>
+ <YSWCnsZDdp57KBqB@ripper>
+ <87zgt65avm.fsf@kernel.org>
+ <ce5f12dd-ddc1-6a9c-3dfb-aa44ea166828@linaro.org>
+ <YSZned9v1+ajzVx0@ripper>
+ <90d17c95-1cf3-89aa-94ad-920e4781f866@linaro.org>
 MIME-Version: 1.0
-In-Reply-To: <e54b4f62dbcd670a0e0658598e045051@codeaurora.org>
-References: <1628568516-24155-1-git-send-email-pmaliset@codeaurora.org>
- <1628568516-24155-5-git-send-email-pmaliset@codeaurora.org>
- <349b1178f071407dfad8ba3050482772@codeaurora.org> <e54b4f62dbcd670a0e0658598e045051@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Wed, 25 Aug 2021 19:30:09 +0000
-Message-ID: <CAE-0n50cnWf_3LQ6P9KMaT4dnryWW9JemP95JDZt5WE1G4mZuQ@mail.gmail.com>
-Subject: Re: [PATCH v5 4/4] PCI: qcom: Switch pcie_1_pipe_clk_src after PHY
- init in SC7280
-To:     Prasad Malisetty <pmaliset@codeaurora.org>, agross@kernel.org,
-        bhelgaas@google.com, bjorn.andersson@linaro.org,
-        lorenzo.pieralisi@arm.com, robh+dt@kernel.org, svarbanov@mm-sol.com
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dianders@chromium.org, mka@chromium.org, vbadigan@codeaurora.org,
-        sallenki@codeaurora.org, manivannan.sadhasivam@linaro.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <90d17c95-1cf3-89aa-94ad-920e4781f866@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Prasad Malisetty (2021-08-24 01:10:48)
-> On 2021-08-17 22:56, Prasad Malisetty wrote:
-> > On 2021-08-10 09:38, Prasad Malisetty wrote:
-> >> On the SC7280, By default the clock source for pcie_1_pipe is
-> >> TCXO for gdsc enable. But after the PHY is initialized, the clock
-> >> source must be switched to gcc_pcie_1_pipe_clk from TCXO.
-> >>
-> >> Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
-> >> ---
-> >>  drivers/pci/controller/dwc/pcie-qcom.c | 18 ++++++++++++++++++
-> >>  1 file changed, 18 insertions(+)
-> >>
-> >> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c
-> >> b/drivers/pci/controller/dwc/pcie-qcom.c
-> >> index 8a7a300..39e3b21 100644
-> >> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> >> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> >> @@ -166,6 +166,8 @@ struct qcom_pcie_resources_2_7_0 {
-> >>      struct regulator_bulk_data supplies[2];
-> >>      struct reset_control *pci_reset;
-> >>      struct clk *pipe_clk;
-> >> +    struct clk *gcc_pcie_1_pipe_clk_src;
-> >> +    struct clk *phy_pipe_clk;
-> >>  };
-> >>
-> >>  union qcom_pcie_resources {
-> >> @@ -1167,6 +1169,16 @@ static int qcom_pcie_get_resources_2_7_0(struct
-> >> qcom_pcie *pcie)
-> >>      if (ret < 0)
-> >>              return ret;
-> >>
-> >> +    if (of_device_is_compatible(dev->of_node, "qcom,pcie-sc7280")) {
-> >> +            res->gcc_pcie_1_pipe_clk_src = devm_clk_get(dev, "pipe_mux");
-> >> +            if (IS_ERR(res->gcc_pcie_1_pipe_clk_src))
-> >> +                    return PTR_ERR(res->gcc_pcie_1_pipe_clk_src);
-> >> +
-> >> +            res->phy_pipe_clk = devm_clk_get(dev, "phy_pipe");
-> >> +            if (IS_ERR(res->phy_pipe_clk))
-> >> +                    return PTR_ERR(res->phy_pipe_clk);
-> >> +    }
-> >> +
-> >
-> > Hi All,
-> >
-> > Greetings!
-> >
-> > I would like to check is there any other better approach instead of
-> > compatible method here as well or is it fine to use compatible method.
-> >
+On Wed 25 Aug 10:59 PDT 2021, Bryan O'Donoghue wrote:
 
-I'd prefer the compatible method. If nobody is responding then it's best
-to just resend the patches with the approach you prefer instead of
-waiting for someone to respond to a review comment.
+> On 25/08/2021 16:53, Bjorn Andersson wrote:
+> > But in the case of Type-C altmode several of our boards have either an
+> > external gpio-based SBU-pin-swapper or some redriver on I2C with this
+> > functionality, so we need a way to tell both the PHY and this external
+> > contraption about the orientation.
+> 
+> Its a very similar problem to orientation switch
+> 
+> As an example
+> 
+> - redriver may need to fix up signal integrity for
+>   lane switching
+> 
+> - PHY needs to toggle lanes from one IP block to another
+> 
+
+Right, conceptually the problem is similar, but IMHO there's a big
+difference in that the redriver and PHY are two physically separate
+entities - on different buses. The dwc3 glue and core represent the same
+piece of hardware.
+
+> I don't think off the top of my head a USB controller or DPU cares much
+> about the orientation switch but for argument sake you could add one to that
+> list.
+> 
+
+Right, downstream the DPU driver is involved in the orientation
+switching in the PHY, but upstream this moved into the PHY driver.
+
+> I _think_ the type-c mux layer handles this though, as in what we did on RB5
+> has PHY and redriver receiving and reacting to a type-c orientation switch
+> both with the existing type-c port driver and the new tcpm.
+> 
+> + Dmitry - he did the mux work on the PHY and the redriver
+> 
+> Seems to me that the type-c mux way of diseminating to more than one place
+> might fight role-switching well too.
+> 
+
+Both works by you the controller using the of_graph to acquire the
+handle to _the_ consumer. I'm not aware of any support that would allow
+us to signal two separate entities about the mux, orientation or role.
+
+But as I said, for the orientation (at least) we do need to signal two
+separate pieces of hardware (and drivers) about the change. Perhaps the
+notifier mechanism that Heikki linked to earlier would be sufficient
+though (I don't see a problem with probe deferring the redriver until
+the type-c controller is registered).
+
+But I don't like the idea of duplicating the rather clumsy of_graph
+definition on both the glue node and the core node in DT. Similar to how
+we previously had to do extcon in both nodes, and we kept getting that
+wrong.
+
+Regards,
+Bjorn
