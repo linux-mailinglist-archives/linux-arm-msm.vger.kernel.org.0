@@ -2,152 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 09C7F3F706C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 09:31:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4DD783F70F4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 10:16:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238533AbhHYHcb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Aug 2021 03:32:31 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:47399 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238677AbhHYHcb (ORCPT
+        id S238838AbhHYIRl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Aug 2021 04:17:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38602 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229780AbhHYIRk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Aug 2021 03:32:31 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1629876706; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=muFnC5CB8vQwdeeZe3GavEP9rdRjg8DHJtit/NuRghU=; b=O3g1GHGjfVOP21Ja5xyLmZiADSjk3NoI0KHxNMVcJybvx83PcM2lCHzVMkI9kZUOBJEMvFdl
- WW8u0AFUak9amdASuNF8i7nvz2P/loZy0oRTe4xfHnRuRBfv7Fzcc5Q3ZNVY3GB+1dnfHIg6
- pc5EWS/a9wJtKsUruu2K9d1ZIkU=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 6125f1e0c603a0154f37fe5a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 25 Aug 2021 07:31:44
- GMT
-Sender: zijuhu=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 60E12C4338F; Wed, 25 Aug 2021 07:31:43 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: zijuhu)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8885AC4338F;
-        Wed, 25 Aug 2021 07:31:38 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 8885AC4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Zijun Hu <zijuhu@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com
-Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
-        rjliao@codeaurora.org, zijuhu@codeaurora.org, tjiang@codeaurora.org
-Subject: [PATCH v6] Bluetooth: btusb: Add support using different nvm for variant WCN6855 controller
-Date:   Wed, 25 Aug 2021 15:31:34 +0800
-Message-Id: <1629876694-8303-1-git-send-email-zijuhu@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Wed, 25 Aug 2021 04:17:40 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47CB7C0613C1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Aug 2021 01:16:55 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id v20-20020a1cf714000000b002e71f4d2026so3148684wmh.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Aug 2021 01:16:55 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=e12+t8sUP7LevMeTNEkZzKQOYqd64h7xXjFtrcOntvY=;
+        b=DV2AY7Ymt5b1gF8wBzD5VEUPe9i9OuEGX5ZN+mfBS86ls8AUmfpPpMjafpdKHDqemm
+         8H2Zh+Dsx98Co3Q1PQMk5X+416lghbsoWQtdiKpAU1kcVHizpOGjRs7AWz06dMSrryz/
+         aQOHGVglZtckJ0AXjXu8pxNExIwmA3Q70TYeoBLmV1RRJhGBIVPdon4lMNTEglmuM3ir
+         W49XVSPpYIlZapVkfO8KxiXXqEFDN8fKDpXs6MhGMZ0nd3kZlKYcUHZ6KrHLLorQxyFn
+         VeBe8ZYpVwJ8NtVWLn8CCo8koUzMPUPtN5Sjaytxj4GPlU21HdJ1Oia6DTzKsTByQ5AG
+         HioQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=e12+t8sUP7LevMeTNEkZzKQOYqd64h7xXjFtrcOntvY=;
+        b=h8DZjRgsfi/VhKTWOUpt0jzEQMlquxcF2oYpslAtxdjHRf065uEXBTR/RQAQKa5X+6
+         Eqg6DRvGN994qBa8QlEM8TtLDzxFjpgIQ4JFFew0aIqI3ku6nZ/fab51+pD7mQMXth8i
+         j8P5KcXC0JXBuiW5xm1dgGH7kHcApn+k2h9MBL5cmG77L2cJnXdNDaRXn9YNn5MGR9AB
+         sAIeE9rdP5jGcEMxahE+70K8VhVaE0i/C+m9dnvLrzPSp8vAhpzkVFIZDjLkuSvwej3P
+         VJyFxx7QJhnGx70E9RHy+wxZoysA2mfd7cp2DN0k2xu9vs6oeFn5ET6JJO2puXJ+qWVd
+         /4rQ==
+X-Gm-Message-State: AOAM530VOMLQ76py/YmMqcjhVrSsXj8H3neC910Qi5SpVxVKOGWmc+y/
+        KXLNjxwOx4VUeM73Thbd++MKLhzn/m7Mty4L
+X-Google-Smtp-Source: ABdhPJwfNS0SQxhtIoVZ/HEAALlui/RIy3MOVzPMV9eeCjmy3wBI9GKsW6Q3G+uIIeldoql0KG1u7Q==
+X-Received: by 2002:a05:600c:4f91:: with SMTP id n17mr7849023wmq.54.1629879413604;
+        Wed, 25 Aug 2021 01:16:53 -0700 (PDT)
+Received: from [192.168.0.162] (188-141-3-169.dynamic.upc.ie. [188.141.3.169])
+        by smtp.gmail.com with ESMTPSA id b4sm9739226wrp.33.2021.08.25.01.16.52
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 25 Aug 2021 01:16:53 -0700 (PDT)
+Subject: Re: [PATCH 0/3] Implement role-switch notifications from dwc3-drd to
+ dwc3-qcom
+To:     Felipe Balbi <balbi@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Heikki Krogerus <heikki.krogerus@linux.intel.com>
+Cc:     Peter Chen <peter.chen@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, agross@kernel.org,
+        gregkh@linuxfoundation.org, jackp@codeaurora.org,
+        wcheng@codeaurora.org, linux-usb@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+References: <20210704013314.200951-1-bryan.odonoghue@linaro.org>
+ <20210707015704.GA28125@nchen> <YOX6d+sBEJMP4V3q@yoga>
+ <20210708030631.GA22420@nchen> <YSWCnsZDdp57KBqB@ripper>
+ <87zgt65avm.fsf@kernel.org>
+From:   Bryan O'Donoghue <bryan.odonoghue@linaro.org>
+Message-ID: <ce5f12dd-ddc1-6a9c-3dfb-aa44ea166828@linaro.org>
+Date:   Wed, 25 Aug 2021 09:18:47 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.7.1
+MIME-Version: 1.0
+In-Reply-To: <87zgt65avm.fsf@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Tim Jiang <tjiang@codeaurora.org>
+On 25/08/2021 06:51, Felipe Balbi wrote:
+>> Hi Peter, I took a proper look at this again, hoping to find a way to
+>> pass a callback pointer from dwc3-qcom to the dwc3 core, that can be
+>> called from __dwc3_set_mode() to inform the Qualcomm glue about mode
+>> changes.
+> I would rather keep the strict separation between glue and core.
 
-the RF perfermence of wcn6855 soc chip from different foundries will be
-difference, so we should use different nvm to configure them.
+# 1 __dwc3_set_mode
+Felipe wants to keep a strict separation between core and glue
 
-Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
+# notifier
+Requires the core probe() to complete before the glue probe to work 
+reliably. This then would lead us to remaking the dwc3-qcom::probe() to 
+facilitate probe deferral.
+
+We can be sure bugs would be introduced in this process.
+
+AFAIK Felipe is not opposed to this, Bjorn likes it
+
+# 2 extcon
+Works but a) is deprecated and b) even if it weren't deprecated has no 
+way to layer the messages - that I know of.
+
+# 3 USB role switch
+Already in-place for the producer {phy, type-c port, usb-gpio typec, 
+google ecros} to consumer dwc-core. It already has a layering 1:1 of 
+that array of producers to the consumer.
+
+Unlike extcon though it cannot relay messages to more than one consumer.
+
+As I see it we can either
+
+A. Rewrite the dwc3-qcom probe to make it synchronous with dwc3-core 
+probe taking the hit of whatever bugs get thrown up as a result of that 
+over the next while, potentially years.
+
+B. Use USB role switch in some format.
+
+Either
+X. as I've submitted here based on a bit of code in dwc3-core or
+
+Y. maybe trying to hide the "relay" aspect in DTS and USB role-switch core
+
+It seems to me our choices are notifier + pain and churn - perhaps low, 
+perhaps high or USB role switch
+
+3.B.X works and is what has been submitted here but, if it is 
+objectionable is 3.B.Y viable ?
+
+As in make USB role switch propigate to multiple consumers via DTS and 
+whatever additional work is required in the role-switch layer ?
+
++ Heikki on that one.
+
 ---
- drivers/bluetooth/btusb.c | 48 +++++++++++++++++++++++++++++++++++------------
- 1 file changed, 36 insertions(+), 12 deletions(-)
-
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 60d2fce59a71..ed01b966ccd4 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -3141,6 +3141,9 @@ static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
- #define QCA_DFU_TIMEOUT		3000
- #define QCA_FLAG_MULTI_NVM      0x80
- 
-+#define WCN6855_2_0_RAM_VERSION_GF 0x400c1200
-+#define WCN6855_2_1_RAM_VERSION_GF 0x400c1211
-+
- struct qca_version {
- 	__le32	rom_version;
- 	__le32	patch_version;
-@@ -3172,6 +3175,7 @@ static const struct qca_device_info qca_devices_table[] = {
- 	{ 0x00000302, 28, 4, 16 }, /* Rome 3.2 */
- 	{ 0x00130100, 40, 4, 16 }, /* WCN6855 1.0 */
- 	{ 0x00130200, 40, 4, 16 }, /* WCN6855 2.0 */
-+	{ 0x00130201, 40, 4, 16 }, /* WCN6855 2.1 */
- };
- 
- static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 request,
-@@ -3326,27 +3330,47 @@ static int btusb_setup_qca_load_rampatch(struct hci_dev *hdev,
- 	return err;
- }
- 
--static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
--				    struct qca_version *ver,
--				    const struct qca_device_info *info)
-+static void btusb_generate_qca_nvm_name(char **fwname,
-+					int max_size,
-+					struct qca_version *ver,
-+					char *foundry)
- {
--	const struct firmware *fw;
--	char fwname[64];
--	int err;
-+	char *separator = (foundry == NULL) ? "" : "_";
-+	u16 board_id = le16_to_cpu(ver->board_id);
-+	u32 rom_version = le32_to_cpu(ver->rom_version);
- 
- 	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
- 		/* if boardid equal 0, use default nvm without surfix */
- 		if (le16_to_cpu(ver->board_id) == 0x0) {
--			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
--				 le32_to_cpu(ver->rom_version));
-+			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x%s%s.bin",
-+				 rom_version, separator, foundry);
- 		} else {
--			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_%04x.bin",
--				le32_to_cpu(ver->rom_version),
--				le16_to_cpu(ver->board_id));
-+			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x%s%s%04x.bin",
-+				rom_version, separator,	foundry, board_id);
- 		}
- 	} else {
- 		snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
--			 le32_to_cpu(ver->rom_version));
-+			 rom_version);
-+	}
-+
-+}
-+
-+static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
-+				    struct qca_version *ver,
-+				    const struct qca_device_info *info)
-+{
-+	const struct firmware *fw;
-+	char fwname[64];
-+	int err;
-+
-+	switch (ver->ram_version) {
-+	case WCN6855_2_0_RAM_VERSION_GF:
-+	case WCN6855_2_1_RAM_VERSION_GF:
-+			btusb_generate_qca_nvm_name(&fwname, sizeof(fwname), ver, "gf");
-+		break;
-+	default:
-+			btusb_generate_qca_nvm_name(&fwname, sizeof(fwname), ver, NULL);
-+		break;
- 	}
- 
- 	err = request_firmware(&fw, fwname, &hdev->dev);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
-
+bod
