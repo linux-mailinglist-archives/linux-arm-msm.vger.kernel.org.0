@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 558693F7B12
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 19:02:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7C39D3F7B15
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 19:02:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231527AbhHYRCz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Aug 2021 13:02:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49228 "EHLO
+        id S231985AbhHYRD2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Aug 2021 13:03:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49360 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229791AbhHYRCz (ORCPT
+        with ESMTP id S229791AbhHYRD2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Aug 2021 13:02:55 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 58BE7C061757;
-        Wed, 25 Aug 2021 10:02:09 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id j2so10294106pll.1;
-        Wed, 25 Aug 2021 10:02:09 -0700 (PDT)
+        Wed, 25 Aug 2021 13:03:28 -0400
+Received: from mail-pg1-x529.google.com (mail-pg1-x529.google.com [IPv6:2607:f8b0:4864:20::529])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2E8F3C061757;
+        Wed, 25 Aug 2021 10:02:42 -0700 (PDT)
+Received: by mail-pg1-x529.google.com with SMTP id t1so362485pgv.3;
+        Wed, 25 Aug 2021 10:02:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=POcht6CHbp2CZIpdQFDWcjSRWs4gNTIoROE88NDtLaU=;
-        b=PbWx+/kOtFrcOUy0RL0VEVKbZmZbUXoC1E/bC96WWgoYZQKUIOZ26aYqNUehNO5Cn9
-         6jCvMJu33EwYDi5Oly5T+3GkiJzDEGCDnvJkhuZwyJpWjl2ahLt0bdKpMZKeZZUshQbc
-         5BPAWZVN5uiLuJ4IJHMftYvZ2xHR14sJ73MtVJbR/+FIu0smKn+G8VHWv5DIU1Bg3DPj
-         sCEaDLei0l9FdhD87Sch3e50tTzeaJOk0vIuHg8p3dU+W2Vknl/IADp4Oof74B1/LluM
-         F/9Bj2YUUyfyFSND4BN85Ipbra5M3JcYWZizQrjiC8vug9hxvvAgoKLDnLrCDvfSIDBd
-         l5cA==
+        bh=1n43wAVOxzBGxSvP2fIXgbQ4WfFdyefeLR8GbhuguqA=;
+        b=Mu2nZ59PVjVsaiKHTG3kBPc4KRFmCJDLmYpE8ypEttdaC6YWXRpulAmRalse/h7W1z
+         XfG9aE+JeCSC/raTRox3nAtoqq8tz6jb72FecZFyR9RjvhWm5moBcrIFAssjLNFwGSHM
+         AlAazVcKWX3oOC6E4gRN0e1ALwwlpElJiS77Ch9CukWm/cQSCdd271RbnBq6fQfnhUU3
+         h1Ooi9eotdvbmFG97nk/pBb5XqLwf4B72dCL1F47Ez6Nbc+XlYTWzx+8gppCQzPTMDtV
+         SWsnW8ou2UzAqjdnBSnYIjRcpey9pBthDnKyfvpzbsDuClYsD6O3QM5Uk0igIFRRbvv7
+         snPg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=POcht6CHbp2CZIpdQFDWcjSRWs4gNTIoROE88NDtLaU=;
-        b=k6prtACs/vXXfAoiS3mw9l+kzOKypJZTSc+QvUukc51eZJUHI4k3sviemEEcNGSY/w
-         IYLYQdrLf4Sn5rSzE54BOZkXuAIKLL9Tcw1K5oIINaz51G5ZCZQnoTgr/koj+DKyY0Lk
-         +xwJ7h9o0fHhJ9u/kVMqExYX89kHbfTFglNM3rXVOMmxa+P/TOPSW83pFRL5gBAKNx47
-         RHKbnAP3ZRVrkGZF+vygx93WvSDcDiyBpsNkg5k6KsqjCLZ2fg0K+DEmeDDgpQ2OvYq5
-         uRT87CHfqlBJW+UpU7R3H68Xj0TRPC+SbBLvbzOtarzbw8Fl0d0S/FsptC0GfGvMiWRQ
-         Z1YA==
-X-Gm-Message-State: AOAM531i88GLuwJ+fBjk6/Ev1sjTCtaaEV4XKg2VVxm3WqeFtDsdxfAz
-        LKk8A1GcLUz23+mBjxTwBTU=
-X-Google-Smtp-Source: ABdhPJybDLgDLK5ufGR7DRr6c2T3zfE/EgKB6DQcUA9EzY6vl0ugv9n7m2YaNqJ4bY4wCvtHahtQCg==
-X-Received: by 2002:a17:90b:1c8e:: with SMTP id oo14mr11709165pjb.108.1629910928271;
-        Wed, 25 Aug 2021 10:02:08 -0700 (PDT)
+        bh=1n43wAVOxzBGxSvP2fIXgbQ4WfFdyefeLR8GbhuguqA=;
+        b=WnSapHjOVuxIOFVkAkCFrgKHXUA9sg7sboJNjw12dtFN9HOgg1iS8lEdDmBhe/q2W2
+         D28Y6o5xLUMF8TH+yNYuD+3I44sU1GiDibNXyiGo/fx54z6BPBJixSO/OFUcEaGVYc5a
+         sNLygICzls8kq6/sQJDB/2UVznhFaiDyt7Z9vXJJ0uekAqpCxF46XIX1iTKbm4dov9iV
+         qHayLiE/qGEBMhcscpIzCSZUt2wU3VlOod7V2/UR2h5hu3gumcbRlq2HevJTI1Ypn7tb
+         1coOz0owGUx3SIbQSSLL3m7LuE6ErJnzLWclSTxiJN/QsWPichzKaHPNx0OP17KygmbJ
+         HUpA==
+X-Gm-Message-State: AOAM531+s/GUGTQlgvRj/iWHOHy1SCjGcHV6xuLJEOC+oLOrxyMg0I+U
+        LQlmSLGuqcxTTcYPmamIYGI=
+X-Google-Smtp-Source: ABdhPJwM051cFqCEEJ82+Yv99/nhyMvvA+QxTYsfudZlwdiKiNDIBW45+FWvPbJ6qGjH2c3ZyCDI9A==
+X-Received: by 2002:a62:5f07:0:b0:3e2:7556:95a0 with SMTP id t7-20020a625f07000000b003e2755695a0mr44830565pfb.55.1629910961679;
+        Wed, 25 Aug 2021 10:02:41 -0700 (PDT)
 Received: from skynet-linux.local ([106.201.63.141])
-        by smtp.googlemail.com with ESMTPSA id y3sm529387pgc.67.2021.08.25.10.02.04
+        by smtp.googlemail.com with ESMTPSA id s46sm340940pfw.89.2021.08.25.10.02.38
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Aug 2021 10:02:07 -0700 (PDT)
+        Wed, 25 Aug 2021 10:02:41 -0700 (PDT)
 From:   Sireesh Kodali <sireeshkodali1@gmail.com>
 To:     sireeshkodali1@gmail.com
 Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
@@ -55,11 +55,14 @@ Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
         Adam Skladowski <a_skl39@protonmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
         linux-arm-msm@vger.kernel.org (open list:ARM/QUALCOMM SUPPORT),
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH 2/4] soc: qcom: smd-rpm: Add compatible for MSM8953 SoC
-Date:   Wed, 25 Aug 2021 22:31:51 +0530
-Message-Id: <20210825170151.19698-1-sireeshkodali1@gmail.com>
+        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
+        DEVICE TREE BINDINGS), linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH 3/4] dt-bindings: power: rpmpd: Add MSM8953 to rpmpd binding
+Date:   Wed, 25 Aug 2021 22:32:32 +0530
+Message-Id: <20210825170233.19859-1-sireeshkodali1@gmail.com>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20210825165251.18358-1-sireeshkodali1@gmail.com>
 References: <20210825165251.18358-1-sireeshkodali1@gmail.com>
@@ -71,27 +74,49 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Vladimir Lypak <vladimir.lypak@gmail.com>
 
-Add a compatible for MSM8953
+Add compatible and constants for the power domains exposed by the RPM
+in the Qualcomm MSM8953 platform.
 
 Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
 Signed-off-by: Adam Skladowski <a_skl39@protonmail.com>
 Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
 ---
- drivers/soc/qcom/smd-rpm.c | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/devicetree/bindings/power/qcom,rpmpd.yaml | 1 +
+ include/dt-bindings/power/qcom-rpmpd.h                  | 9 +++++++++
+ 2 files changed, 10 insertions(+)
 
-diff --git a/drivers/soc/qcom/smd-rpm.c b/drivers/soc/qcom/smd-rpm.c
-index dfdd4f20f5fd..fb4896d7a9a7 100644
---- a/drivers/soc/qcom/smd-rpm.c
-+++ b/drivers/soc/qcom/smd-rpm.c
-@@ -236,6 +236,7 @@ static const struct of_device_id qcom_smd_rpm_of_match[] = {
- 	{ .compatible = "qcom,rpm-msm8226" },
- 	{ .compatible = "qcom,rpm-msm8916" },
- 	{ .compatible = "qcom,rpm-msm8936" },
-+	{ .compatible = "qcom,rpm-msm8953" },
- 	{ .compatible = "qcom,rpm-msm8974" },
- 	{ .compatible = "qcom,rpm-msm8976" },
- 	{ .compatible = "qcom,rpm-msm8994" },
+diff --git a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+index 239f37881cae..996ddd360de9 100644
+--- a/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
++++ b/Documentation/devicetree/bindings/power/qcom,rpmpd.yaml
+@@ -19,6 +19,7 @@ properties:
+       - qcom,mdm9607-rpmpd
+       - qcom,msm8916-rpmpd
+       - qcom,msm8939-rpmpd
++      - qcom,msm8953-rpmpd
+       - qcom,msm8976-rpmpd
+       - qcom,msm8994-rpmpd
+       - qcom,msm8996-rpmpd
+diff --git a/include/dt-bindings/power/qcom-rpmpd.h b/include/dt-bindings/power/qcom-rpmpd.h
+index 4533dbbf9937..f367cf6fedf3 100644
+--- a/include/dt-bindings/power/qcom-rpmpd.h
++++ b/include/dt-bindings/power/qcom-rpmpd.h
+@@ -133,6 +133,15 @@
+ #define MSM8916_VDDMX		3
+ #define MSM8916_VDDMX_AO	4
+ 
++/* MSM8953 Power Domain Indexes */
++#define MSM8953_VDDMD		0
++#define MSM8953_VDDMD_AO	1
++#define MSM8953_VDDCX		2
++#define MSM8953_VDDCX_AO	3
++#define MSM8953_VDDCX_VFL	4
++#define MSM8953_VDDMX		5
++#define MSM8953_VDDMX_AO	6
++
+ /* MSM8976 Power Domain Indexes */
+ #define MSM8976_VDDCX		0
+ #define MSM8976_VDDCX_AO	1
 -- 
 2.33.0
 
