@@ -2,129 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F9833F7035
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 09:16:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 09C7F3F706C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 09:31:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239162AbhHYHRg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Aug 2021 03:17:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53270 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238606AbhHYHRf (ORCPT
+        id S238533AbhHYHcb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Aug 2021 03:32:31 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:47399 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238677AbhHYHcb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Aug 2021 03:17:35 -0400
-Received: from mail-ej1-x633.google.com (mail-ej1-x633.google.com [IPv6:2a00:1450:4864:20::633])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4EEFDC061757;
-        Wed, 25 Aug 2021 00:16:50 -0700 (PDT)
-Received: by mail-ej1-x633.google.com with SMTP id e21so33580851ejz.12;
-        Wed, 25 Aug 2021 00:16:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=lKMjc7E78IAkyfL3fZ1SzFFun5yiSkSzpm9G4CZp2i4=;
-        b=tsUYQ1MJ3OHa8GPKWJqG4csvl7OhVgn7JQgX7/AtcJYu/71+oNbXYKTqnFpnKvpnvT
-         KbXqnMecrQM95coLn77ICurJTAB9C5U9MF5lsJim2h8Cbx6OpIDRPF5W7e3CRrZlw3ed
-         2yDsfgNZCf/DIy+BrInImDouJBl/lFVLcF3xQKLRTSmoYgmsqJ2ZpJnpKmZATysZmutF
-         tAQ8bBQ4ig5c9mMQenVaajWYEAdlTCC1Gw8/uKLVPUTtxwN1lXDeolTJ4mhE1K2X7HXe
-         AbhcoHT2u0Oxq1ZW3OX4g4DArRzKZgMvoIjCtZAZmPnNJqi8ZzNBmmNFcf/GCiYICape
-         fOEA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=lKMjc7E78IAkyfL3fZ1SzFFun5yiSkSzpm9G4CZp2i4=;
-        b=j4dsTglAUSN6+wl4c1hNyXvdcHWzRv1JI6vq/Wz9G1bHIgwHUlTR4EGupPJba6k3E9
-         GwzLOzwk2hYA1KbzTNFCee9YwqT3sNc918UnnnSVrGVHip7ONgF/h749aFKTYpcXlKM+
-         Sr3MiU8mVSv6Nf+pxr+YciFxsiiCzj1E7qGEG/JkERsYLj9vIyArBXFxXGNaqjUOhTwE
-         FsPjM1NlSVjkR4Cx+rDbIww9uKq82Da+OKNwYMMeLFfrKgoQi7QWPrZ/9CNahXzORWUF
-         HsLYMyTAYVaQQYQ0W8h6rNzl1ecokNcfU4RLkG1PsViLZRxzsG2lqmqy9I+zrHNOpUla
-         NEaQ==
-X-Gm-Message-State: AOAM531+j6anwkIJEIc3SLMW339RRoLRyCaQTlJVHlJxhfc0C5oDL1VY
-        +whgrt+Kgz7f+QQmceQ5P5U=
-X-Google-Smtp-Source: ABdhPJyYYegy/t9WzmeIlTQF2cHB70Xg1WUlnBzFZ5ciMJk8kzVXPXF7ARETWir+tHKpBRbRSOOOKQ==
-X-Received: by 2002:a17:906:3bc3:: with SMTP id v3mr44854819ejf.482.1629875808907;
-        Wed, 25 Aug 2021 00:16:48 -0700 (PDT)
-Received: from ?IPv6:2001:981:6fec:1:b36a:4b43:c293:3ba2? ([2001:981:6fec:1:b36a:4b43:c293:3ba2])
-        by smtp.gmail.com with ESMTPSA id q5sm13205341edt.50.2021.08.25.00.16.47
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 25 Aug 2021 00:16:48 -0700 (PDT)
-Subject: Re: [PATCH v1 1/3] Revert "usb: gadget: u_audio: add real feedback
- implementation"
-To:     Felipe Balbi <balbi@kernel.org>, Ferry Toth <ftoth@exalondelft.nl>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Ruslan Bilovol <ruslan.bilovol@gmail.com>,
-        Oded Gabbay <oded.gabbay@gmail.com>,
-        Cezary Rojewski <cezary.rojewski@intel.com>,
-        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
-        Pawel Laszczak <pawell@cadence.com>,
-        Jack Pham <jackp@codeaurora.org>, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-doc@vger.kernel.org,
-        Jonathan Corbet <corbet@lwn.net>,
-        Lorenzo Colitti <lorenzo@google.com>,
-        Wesley Cheng <wcheng@codeaurora.org>, robh+dt@kernel.org,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        frowand.list@gmail.com, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, heikki.krogerus@linux.intel.com,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>,
-        Pavel Hofman <pavel.hofman@ivitera.com>
-References: <20210824201433.11385-1-ftoth@exalondelft.nl>
- <87v93u5au9.fsf@kernel.org>
-From:   Ferry Toth <fntoth@gmail.com>
-Message-ID: <51212e46-a7c0-7d32-a711-0a865e816d33@gmail.com>
-Date:   Wed, 25 Aug 2021 09:16:46 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
-MIME-Version: 1.0
-In-Reply-To: <87v93u5au9.fsf@kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Wed, 25 Aug 2021 03:32:31 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1629876706; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=muFnC5CB8vQwdeeZe3GavEP9rdRjg8DHJtit/NuRghU=; b=O3g1GHGjfVOP21Ja5xyLmZiADSjk3NoI0KHxNMVcJybvx83PcM2lCHzVMkI9kZUOBJEMvFdl
+ WW8u0AFUak9amdASuNF8i7nvz2P/loZy0oRTe4xfHnRuRBfv7Fzcc5Q3ZNVY3GB+1dnfHIg6
+ pc5EWS/a9wJtKsUruu2K9d1ZIkU=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 6125f1e0c603a0154f37fe5a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 25 Aug 2021 07:31:44
+ GMT
+Sender: zijuhu=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 60E12C4338F; Wed, 25 Aug 2021 07:31:43 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: zijuhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8885AC4338F;
+        Wed, 25 Aug 2021 07:31:38 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 8885AC4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Zijun Hu <zijuhu@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com
+Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
+        rjliao@codeaurora.org, zijuhu@codeaurora.org, tjiang@codeaurora.org
+Subject: [PATCH v6] Bluetooth: btusb: Add support using different nvm for variant WCN6855 controller
+Date:   Wed, 25 Aug 2021 15:31:34 +0800
+Message-Id: <1629876694-8303-1-git-send-email-zijuhu@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-Op 25-08-2021 om 07:53 schreef Felipe Balbi:
-> 
-> Ferry Toth <ftoth@exalondelft.nl> writes:
-> 
->> This reverts commit e89bb4288378b85c82212b60dc98ecda6b3d3a70.
->>
->> The commit is part of a series with commit
->> 24f779dac8f3efb9629adc0e486914d93dc45517 causing a BUG on dwc3
->> hardware, at least on Intel Merrifield platform when configured
->> through configfs:
->> BUG: kernel NULL pointer dereference, address: 0000000000000008
->> ...
->> RIP: 0010:dwc3_gadget_del_and_unmap_request+0x19/0xe0
->> ...
->> Call Trace:
->>   dwc3_remove_requests.constprop.0+0x12f/0x170
->>   __dwc3_gadget_ep_disable+0x7a/0x160
->>   dwc3_gadget_ep_disable+0x3d/0xd0
->>   usb_ep_disable+0x1c/0x70
->>   u_audio_stop_capture+0x79/0x120 [u_audio]
->>   afunc_set_alt+0x73/0x80 [usb_f_uac2]
->>   composite_setup+0x224/0x1b90 [libcomposite]
->>
->> Pavel's suggestion to add
->> `echo "adaptive" > functions/uac2.usb0/c_sync` to the configfs script
->> resolves the issue.
->> Thinh suggests "the crash is probably because of f_uac2 prematurely
->> freeing feedback request before its completion. usb_ep_dequeue() is
->> asynchronous. dwc2() may treat it as a synchronous call so you didn't
->> get a crash."
->>
->> Revert as this is a regression and the kernel shouldn't crash depending
->> on configuration parameters.
->>
->> Reported-by: Ferry Toth <fntoth@gmail.com>
-> 
-> this should be Signed-off-by ;-)
-> 
-Indeed. It probably was until I re-worded the commit text.
+From: Tim Jiang <tjiang@codeaurora.org>
 
-Will resend tonight v2.
+the RF perfermence of wcn6855 soc chip from different foundries will be
+difference, so we should use different nvm to configure them.
+
+Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
+---
+ drivers/bluetooth/btusb.c | 48 +++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 36 insertions(+), 12 deletions(-)
+
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 60d2fce59a71..ed01b966ccd4 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -3141,6 +3141,9 @@ static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
+ #define QCA_DFU_TIMEOUT		3000
+ #define QCA_FLAG_MULTI_NVM      0x80
+ 
++#define WCN6855_2_0_RAM_VERSION_GF 0x400c1200
++#define WCN6855_2_1_RAM_VERSION_GF 0x400c1211
++
+ struct qca_version {
+ 	__le32	rom_version;
+ 	__le32	patch_version;
+@@ -3172,6 +3175,7 @@ static const struct qca_device_info qca_devices_table[] = {
+ 	{ 0x00000302, 28, 4, 16 }, /* Rome 3.2 */
+ 	{ 0x00130100, 40, 4, 16 }, /* WCN6855 1.0 */
+ 	{ 0x00130200, 40, 4, 16 }, /* WCN6855 2.0 */
++	{ 0x00130201, 40, 4, 16 }, /* WCN6855 2.1 */
+ };
+ 
+ static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 request,
+@@ -3326,27 +3330,47 @@ static int btusb_setup_qca_load_rampatch(struct hci_dev *hdev,
+ 	return err;
+ }
+ 
+-static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
+-				    struct qca_version *ver,
+-				    const struct qca_device_info *info)
++static void btusb_generate_qca_nvm_name(char **fwname,
++					int max_size,
++					struct qca_version *ver,
++					char *foundry)
+ {
+-	const struct firmware *fw;
+-	char fwname[64];
+-	int err;
++	char *separator = (foundry == NULL) ? "" : "_";
++	u16 board_id = le16_to_cpu(ver->board_id);
++	u32 rom_version = le32_to_cpu(ver->rom_version);
+ 
+ 	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
+ 		/* if boardid equal 0, use default nvm without surfix */
+ 		if (le16_to_cpu(ver->board_id) == 0x0) {
+-			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
+-				 le32_to_cpu(ver->rom_version));
++			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x%s%s.bin",
++				 rom_version, separator, foundry);
+ 		} else {
+-			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_%04x.bin",
+-				le32_to_cpu(ver->rom_version),
+-				le16_to_cpu(ver->board_id));
++			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x%s%s%04x.bin",
++				rom_version, separator,	foundry, board_id);
+ 		}
+ 	} else {
+ 		snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
+-			 le32_to_cpu(ver->rom_version));
++			 rom_version);
++	}
++
++}
++
++static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
++				    struct qca_version *ver,
++				    const struct qca_device_info *info)
++{
++	const struct firmware *fw;
++	char fwname[64];
++	int err;
++
++	switch (ver->ram_version) {
++	case WCN6855_2_0_RAM_VERSION_GF:
++	case WCN6855_2_1_RAM_VERSION_GF:
++			btusb_generate_qca_nvm_name(&fwname, sizeof(fwname), ver, "gf");
++		break;
++	default:
++			btusb_generate_qca_nvm_name(&fwname, sizeof(fwname), ver, NULL);
++		break;
+ 	}
+ 
+ 	err = request_firmware(&fw, fwname, &hdev->dev);
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+
