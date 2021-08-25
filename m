@@ -2,126 +2,256 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D5713F7B1B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 19:03:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 98C373F7B4C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 25 Aug 2021 19:13:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240947AbhHYREW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Aug 2021 13:04:22 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49584 "EHLO
+        id S242243AbhHYRO3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Aug 2021 13:14:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51886 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241935AbhHYREU (ORCPT
+        with ESMTP id S242222AbhHYRON (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Aug 2021 13:04:20 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 83BE4C061757
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Aug 2021 10:03:34 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id y128so300554oie.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Aug 2021 10:03:34 -0700 (PDT)
+        Wed, 25 Aug 2021 13:14:13 -0400
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EF5D1C0613C1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Aug 2021 10:13:27 -0700 (PDT)
+Received: by mail-ot1-x32b.google.com with SMTP id i3-20020a056830210300b0051af5666070so46028096otc.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Aug 2021 10:13:27 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=OxZWJOQjSVgdZik3q4X7bWzZ7ItlK9AMrSJQNfZd0ho=;
-        b=IdAwgREPvQa+HVeBJeCHs9z0U9N4bNK61d3xQngQHNlQUG+/oZm+/iDTUeaDsec8zG
-         /TpMrsav+Wn7Ts6Ibz3ER+6QdkGgzPCx1MmC++bHf5h9gOI2EmoAljQ0WSvprjfC6fXo
-         al9cbBFCpJw6PQaLVv/5b8udIcz9weay/dkNYb78UvIFLxjFoPfECcw65YlZOim7sEvL
-         ihFn/dRD97J+qR6/cDuC5//s6XyFTbFlKbDrs2+WZNt0U4CHc7N4zOkRiT2+CScc7FrH
-         6ohznaOzDe7REUC2W2+H0lJn5W0+RPX1PoTRnsjcCZxfTcZ1knvpTs46fHf3OisLbyRW
-         M+zg==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=UCTcnsSbnb2BZPV5ZPemMMiSns8GwhF8Z8WDFU9MAlI=;
+        b=Ibh57Mm8xpQqtAjHZeGcPf8lxPMd2widHCoILjnCYnTqer/uKN4ADjUsOUz/d8yeOn
+         JSABs5wZGdIApigvNsHdWChYLvkAAtKABlqdFHzntcL38IXkoEf5VBY9P0iet573RMyT
+         0mRFTWy4GCeiC1ANUzQ3PzLdIqEpqXZRaGZlo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=OxZWJOQjSVgdZik3q4X7bWzZ7ItlK9AMrSJQNfZd0ho=;
-        b=c7b8HWuqBGlf1PnqLrJ09Q9yusR6ckWdJr45mwwAshtlgAWQ7wDxSYg8aGylTgHFut
-         xdRMgGEOoOacbqz6r3d+vWsGKFsqCbBl7A+dKj2oSXpGVcN8bEgRAMaVHA1x0QFbveyf
-         7ilXW2Htjy20ZlRivrTLjPUZXVPdEyIMHQwergYJ2Hb9jvavozXUQlBGNiWAbpTY83Yi
-         DY+u1Cf6QhD//a3HakM4GkvIXHLN/iXTarZolIqKZ6f2RhWhSRos2bSgEjTFBU1q+co0
-         VLZDHXKsk95LyihS9ErediKgCpvsQBKQH+j5XeEW2NXGFGoABqxSj6niMUkrSt9TA/RO
-         SYdw==
-X-Gm-Message-State: AOAM5309zY2cGo4d++FG5nV8VM8rfK+2l9x8Of/PhZkUgbhPho1ImwgD
-        4NiTjUXimbTSh+HiXLm4oYZBWA==
-X-Google-Smtp-Source: ABdhPJyhVDZXAOjj/S4f8SbIH/S2qCOI4BAM4FZwJg+HzaU+tPdduv3y5x9IW68zB/0u5ai2dQ+GAQ==
-X-Received: by 2002:a05:6808:220c:: with SMTP id bd12mr8007639oib.13.1629911013162;
-        Wed, 25 Aug 2021 10:03:33 -0700 (PDT)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id u19sm80376oof.30.2021.08.25.10.03.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 25 Aug 2021 10:03:32 -0700 (PDT)
-Date:   Wed, 25 Aug 2021 10:04:48 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Peter Chen <peter.chen@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, agross@kernel.org,
-        gregkh@linuxfoundation.org, jackp@codeaurora.org,
-        wcheng@codeaurora.org, linux-usb@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 0/3] Implement role-switch notifications from dwc3-drd to
- dwc3-qcom
-Message-ID: <YSZ4MCy8HiSJPNTH@ripper>
-References: <20210704013314.200951-1-bryan.odonoghue@linaro.org>
- <20210707015704.GA28125@nchen>
- <YOX6d+sBEJMP4V3q@yoga>
- <20210708030631.GA22420@nchen>
- <YSWCnsZDdp57KBqB@ripper>
- <87zgt65avm.fsf@kernel.org>
- <ce5f12dd-ddc1-6a9c-3dfb-aa44ea166828@linaro.org>
- <YSZned9v1+ajzVx0@ripper>
- <YSZzQXzrry+DFU6X@kuha.fi.intel.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=UCTcnsSbnb2BZPV5ZPemMMiSns8GwhF8Z8WDFU9MAlI=;
+        b=BHMdu14BvUhazTLEsh8VN0bAgflZa2bKiCHnMMO08PYOzKgxKXLwBLMx3c0tvy9lXo
+         NXqhlzUKbkHdKaB7Eo470nRZh26k6KjYjOSQDDxRA2/4eI5bpVPEYitGUs5Fm8GEEZAI
+         PMUjwCEnW+X8rwbbZBUiYHhV3f19t3JyBpuEqmvJDZA5PVKA61EprXYk9FELB6nbbvxE
+         C6QbWoFRR/NeDx+vRMnbebyCZbHIYo89wKiM1XEm7yhYSDQGK+0B45fBzB1sHUUEagjn
+         KHg1zeo1zr75M5SK+XIDe31s2lv4Ia73ZS2XKm84IUOt4vb3Sk1KzxiygUK1xYD6/K0U
+         sZLQ==
+X-Gm-Message-State: AOAM533JyEL0d7CI0KiVAsjExIAGUvdAf2ZkDT2qfvtm7dm4bCFB3sMy
+        RJELlG488B6LoMmNaY2X+bjje67Tvd3ou+Rbu8/DhQ==
+X-Google-Smtp-Source: ABdhPJzUAvvASSSNhBU6e1q+DsAdjQ//tA+JJPp3BoOFd00NZu2mdaPhv4bOdOq7WiLeweSJGe5V1lDrezdQ5NtyZMU=
+X-Received: by 2002:a05:6830:2473:: with SMTP id x51mr31010415otr.34.1629911607276;
+ Wed, 25 Aug 2021 10:13:27 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 25 Aug 2021 17:13:26 +0000
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YSZzQXzrry+DFU6X@kuha.fi.intel.com>
+In-Reply-To: <1629847226-10112-1-git-send-email-khsieh@codeaurora.org>
+References: <1629847226-10112-1-git-send-email-khsieh@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Wed, 25 Aug 2021 17:13:26 +0000
+Message-ID: <CAE-0n50Yp00hzAhSET8txib3BhTzz2ptOaLhERoF-ggUGU6ChQ@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Add Display Port node
+To:     Kuogee Hsieh <khsieh@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
+        robdclark@gmail.com, robh+dt@kernel.org, sean@poorly.run,
+        vkoul@kernel.org
+Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        mkrishn@codeaurora.org, kalyan_t@codeaurora.org,
+        rajeevny@codeaurora.org, freedreno@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 25 Aug 09:43 PDT 2021, Heikki Krogerus wrote:
+Quoting Kuogee Hsieh (2021-08-24 16:20:26)
+> Add display port supported node for sc7280. Also correct dp-phy node
+> tx/rx/pcs/tx2/rx2 base reg address to fix aux channel read/write
+> failure issue.
+>
+> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280-idp2.dts |  9 +++
 
-> On Wed, Aug 25, 2021 at 08:53:29AM -0700, Bjorn Andersson wrote:
-> > On Wed 25 Aug 01:18 PDT 2021, Bryan O'Donoghue wrote:
-> > 
-> > > On 25/08/2021 06:51, Felipe Balbi wrote:
-> > > > > Hi Peter, I took a proper look at this again, hoping to find a way to
-> > > > > pass a callback pointer from dwc3-qcom to the dwc3 core, that can be
-> > > > > called from __dwc3_set_mode() to inform the Qualcomm glue about mode
-> > > > > changes.
-> > > > I would rather keep the strict separation between glue and core.
-> > > 
-> > > # 1 __dwc3_set_mode
-> > > Felipe wants to keep a strict separation between core and glue
-> > > 
-> > > # notifier
-> > > Requires the core probe() to complete before the glue probe to work
-> > > reliably. This then would lead us to remaking the dwc3-qcom::probe() to
-> > > facilitate probe deferral.
-> > > 
-> > > We can be sure bugs would be introduced in this process.
-> > > 
-> > > AFAIK Felipe is not opposed to this, Bjorn likes it
-> 
-> Notifiers were proposed for the USB role switches already some time
-> ago [1], and I don't think anybody was against them, but in the end I
-> don't think there were any users for those notifier, so they were
-> never added.
-> 
-> If something needs to only react to the role changes like I think in
-> this case, then I would just add those notifiers to the USB role
-> switches.
-> 
-> [1] https://lore.kernel.org/linux-usb/20191002231617.3670-3-john.stultz@linaro.org/
-> 
+Please split the idp diff from the sc7280.dts diff so that there are two
+patches instead of one. It helps with ignoring the idp diff.
 
-Afaict this would end up pretty much identical to the notification chain
-that Bryan proposed earlier; the dwc3 drd code registers a
-usb_role_switch and the glue code somehow needs to get hold of that
-resource to register the notification.
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi     | 98 +++++++++++++++++++++++++++++---
+>  2 files changed, 100 insertions(+), 7 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp2.dts b/arch/arm64/boot/dts/qcom/sc7280-idp2.dts
+> index b1cf70e..4aea369 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-idp2.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp2.dts
+> @@ -202,3 +202,12 @@ ap_h1_spi: &spi14 {};
+>                 backlight = <&backlight>;
+>         };
+>  };
+> +
+> +&msm_dp {
+> +       status = "okay";
+> +       pinctrl-names = "default";
+> +       pinctrl-0 = <&dp_hot_plug_det>;
+> +       data-lanes = <0 1>;
+> +       vdda-1p2-supply = <&vreg_l6b_1p2>;
+> +       vdda-0p9-supply = <&vreg_l1b_0p8>;
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index c29226b..a350d84 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -2918,15 +2918,11 @@
+>                         dp_phy: dp-phy@88ea200 {
+>                                 reg = <0 0x088ea200 0 0x200>,
+>                                       <0 0x088ea400 0 0x200>,
+> -                                     <0 0x088eac00 0 0x400>,
+> +                                     <0 0x088eaa00 0 0x200>,
+>                                       <0 0x088ea600 0 0x200>,
+> -                                     <0 0x088ea800 0 0x200>,
+> -                                     <0 0x088eaa00 0 0x100>;
+> +                                     <0 0x088ea800 0 0x200>;
 
-But the glue code has no way to know when the core/drd code is done
-registering, so it has no way to know when there is a notification chain
-to register with.
+So this was wrong? Best to split that out into another patch with the
+appropriate Fixes tag.
 
-Regards,
-Bjorn
+>                                 #phy-cells = <0>;
+>                                 #clock-cells = <1>;
+> -                               clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
+> -                               clock-names = "pipe0";
+> -                               clock-output-names = "usb3_phy_pipe_clk_src";
+
+And then mention this part in the commit text of the fixing patch.
+
+>                         };
+>                 };
+>
+> @@ -3389,6 +3392,74 @@
+>                                         };
+>                                 };
+>                         };
+> +
+> +                       msm_dp: displayport-controller@ae90000 {
+> +                               status = "disabled";
+> +                               compatible = "qcom,sc7180-dp";
+
+Can we add qcom,sc7280-dp as well? Just in case anything is wrong with
+sc7280 specifically.
+
+> +
+> +                               reg = <0 0x0ae90000 0 0x1400>;
+> +
+> +                               interrupt-parent = <&mdss>;
+> +                               interrupts = <12 IRQ_TYPE_NONE>;
+
+Drop IRQ_TYPE_NONE per the binding it is one cell, not two.
+
+> +
+> +                               clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
+> +                                        <&dispcc DISP_CC_MDSS_DP_AUX_CLK>,
+> +                                        <&dispcc DISP_CC_MDSS_DP_LINK_CLK>,
+> +                                        <&dispcc DISP_CC_MDSS_DP_LINK_INTF_CLK>,
+> +                                        <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>;
+> +                               clock-names = "core_iface", "core_aux", "ctrl_link",
+> +                                             "ctrl_link_iface", "stream_pixel";
+
+Can we get clock-names on one line matching the clocks property please?
+That makes it easier to match it up between the two properties.
+
+> +                               #clock-cells = <1>;
+> +                               assigned-clocks = <&dispcc DISP_CC_MDSS_DP_LINK_CLK_SRC>,
+> +                                                 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
+> +                               assigned-clock-parents = <&dp_phy 0>, <&dp_phy 1>;
+> +                               phys = <&dp_phy>;
+> +                               phy-names = "dp";
+> +
+> +                               operating-points-v2 = <&dp_opp_table>;
+> +                               power-domains = <&rpmhpd SC7180_CX>;
+> +
+> +                               #sound-dai-cells = <0>;
+
+Nitpick: Newline here.
+
+> +                               ports {
+> +                                       #address-cells = <1>;
+> +                                       #size-cells = <0>;
+> +                                       port@0 {
+> +                                               reg = <0>;
+> +                                               dp_in: endpoint {
+> +                                                       remote-endpoint = <&dpu_intf0_out>;
+> +                                               };
+> +                                       };
+> +
+> +                                       port@1 {
+> +                                               reg = <1>;
+> +                                               dp_out: endpoint { };
+> +                                       };
+> +                               };
+> +
+> +                               dp_opp_table: dp-opp-table {
+
+dp_opp_table: opp-table {
+
+> +                                       compatible = "operating-points-v2";
+> +
+> +                                       opp-160000000 {
+> +                                               opp-hz = /bits/ 64 <160000000>;
+> +                                               required-opps = <&rpmhpd_opp_low_svs>;
+> +                                       };
+> +
+> +                                       opp-270000000 {
+> +                                               opp-hz = /bits/ 64 <270000000>;
+> +                                               required-opps = <&rpmhpd_opp_svs>;
+> +                                       };
+> +
+> +                                       opp-540000000 {
+> +                                               opp-hz = /bits/ 64 <540000000>;
+> +                                               required-opps = <&rpmhpd_opp_svs_l1>;
+> +                                       };
+> +
+> +                                       opp-810000000 {
+> +                                               opp-hz = /bits/ 64 <810000000>;
+> +                                               required-opps = <&rpmhpd_opp_nom>;
+> +                                       };
+> +                               };
+> +                       };
+>                 };
+>
+>                 dispcc: clock-controller@af00000 {
+> @@ -3398,7 +3469,8 @@
+>                                  <&gcc GCC_DISP_GPLL0_CLK_SRC>,
+>                                  <&dsi_phy 0>,
+>                                  <&dsi_phy 1>,
+> -                                <0>, <0>,
+> +                                <&dp_phy 0>,
+> +                                <&dp_phy 1>,
+>                                  <&msm_edp 0>,
+>                                  <&msm_edp 1>;
+>                         clock-names = "bi_tcxo", "gcc_disp_gpll0_clk",
+> @@ -3525,6 +3597,18 @@
+>                                  };
+>                          };
+>
+> +                       dp_hot_plug_det: dp-hot-plug-det {
+> +                                pinmux {
+> +                                        pins = "gpio47";
+> +                                        function = "dp_hot";
+> +                                };
+> +
+> +                               pinconf {
+> +                                       pins = "gpio47";
+> +                                       bias-disable;
+> +                               };
+
+Combine these two nodes (pinmux and pinconf) into one please.
+
+                         dp_hot_plug_det: dp-hot-plug-det {
+                                  pins = "gpio47";
+                                  function = "dp_hot";
+                                  bias-disable;
+			 };
+
+> +                        };
+> +
+>                         qspi_clk: qspi-clk {
+>                                 pins = "gpio14";
+>                                 function = "qspi_clk";
