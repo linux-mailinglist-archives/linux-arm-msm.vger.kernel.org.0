@@ -2,137 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 88D9E3F8E67
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Aug 2021 21:02:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3065A3F8E9D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Aug 2021 21:17:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243361AbhHZTCu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Aug 2021 15:02:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38700 "EHLO
+        id S243479AbhHZTRu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Aug 2021 15:17:50 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42182 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243346AbhHZTCt (ORCPT
+        with ESMTP id S243458AbhHZTRt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Aug 2021 15:02:49 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 294CEC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Aug 2021 12:02:02 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id i8-20020a056830402800b0051afc3e373aso4862255ots.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Aug 2021 12:02:02 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:jubject:from:user-agent:date
-         :message-id:subject:to:cc;
-        bh=+iVPuEHGBickynSlN/aspzgM+vCXS1pxLKvIBYzPHaY=;
-        b=m1Qh8c1JI8bJtMbx2zXs3H9EO3V3B24CTfDZ0E0MweKP5VXvP8ajaNkOgqAv29OW/F
-         xjby+KYB85j/qh0w1BGUe1u8LtcQThDspoEcg6Ho/K9SiquHynat2V84AQwXD9k8D+AX
-         lUHCf/zIj2pOkXaqiiOBJBZ//d85EfeL9KDEo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:jubject:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=+iVPuEHGBickynSlN/aspzgM+vCXS1pxLKvIBYzPHaY=;
-        b=PcaC3cGJEKY0Ip2aIP/vGVXdFt3a4FilolDrG7YaIoK2edA6vj3WmxPpY4ZSGd1Igo
-         FulEvl6j5DEKQMQ4RvWV0EbO6Yyce76zPVIO5J6Z8mTv8LQUYL7LWRj5OiTMRqyUj4ol
-         mhOyN07cN9k82B5icjJkVTNgO43z7A1hIl8my0HcKQnc6124vSBCxwY+zwL1UT5zyYt7
-         t0tw/+5jEunc3Tfr3QOh4UNxiG+23b8zH8zDObOCT8YE7wkiuqyeCwJtSf51s0lK4oc+
-         0XyaKYeuChWllyWdKFcFI2jeTPoA1Qvt/61H5AssdOB1GZUVfX3AvBE2MRMaUkPsfy9e
-         9SUQ==
-X-Gm-Message-State: AOAM532CftF9yc5RRzQkOzgkgbNQHaeR9bntJAV4vIjSPbq6WsYviXnw
-        m2vcuW6InAw6CmhJ0axvfC6PiJ+lWo3CriUCq9Dzmw==
-X-Google-Smtp-Source: ABdhPJzdZYXAXrUOl9mGtjohncFB+oGrYX4mON9av982YMT3gjRIDsaw7nD/2scpYTZBlBNfwQfReCj7diwhE7RBlNg=
-X-Received: by 2002:a05:6830:88:: with SMTP id a8mr4600325oto.233.1630004521512;
- Thu, 26 Aug 2021 12:02:01 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 26 Aug 2021 19:02:00 +0000
+        Thu, 26 Aug 2021 15:17:49 -0400
+Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA693C061757;
+        Thu, 26 Aug 2021 12:17:01 -0700 (PDT)
+Received: from [10.0.20.3] (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id D2BE91FABC;
+        Thu, 26 Aug 2021 21:16:57 +0200 (CEST)
+Subject: Re: [PATCH v2] clk: qcom: gcc-sdm660: Replace usage of parent_names
+To:     Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>
+Cc:     linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>
+References: <20210825204517.1278130-1-bjorn.andersson@linaro.org>
+ <163000363556.1317818.13808174908685575043@swboyd.mtv.corp.google.com>
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+Message-ID: <08618b13-816b-7fc3-6ee6-fc222aef0607@somainline.org>
+Date:   Thu, 26 Aug 2021 21:16:57 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-In-Reply-To: <YSfioM5cEnvD3pGb@sashalap>
-References: <20210824025754.658394-1-sashal@kernel.org> <CAE-0n53zk0ogf=TUknMoCAPDd97=jq3Czpp6b1c9E29ormuCSQ@mail.gmail.com>
- <YSfioM5cEnvD3pGb@sashalap>
-jubject: Re: FAILED: Patch "mmc: sdhci-msm: Update the software timeout value
- for sdhc" failed to apply to 5.4-stable tree
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Thu, 26 Aug 2021 19:02:00 +0000
-Message-ID: <CAE-0n50brNnTASH8xR_jSCr0=OAQohcA4cG3HFAeDmt=4U-4Uw@mail.gmail.com>
-Subject: 
-To:     Sasha Levin <sashal@kernel.org>
-Cc:     sbhanu@codeaurora.org, stable@vger.kernel.org,
-        Adrian Hunter <adrian.hunter@intel.com>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        linux-mmc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <163000363556.1317818.13808174908685575043@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sasha Levin (2021-08-26 11:51:12)
-> On Thu, Aug 26, 2021 at 07:51:45AM +0000, Stephen Boyd wrote:
-> >From cd5d41c802f7b3e20c0c0ebd6bf0cb335954fd89 Mon Sep 17 00:00:00 2001
-> >From: Shaik Sajida Bhanu <sbhanu@codeaurora.org>
-> >Date: Fri, 16 Jul 2021 17:16:14 +0530
-> >Subject: [PATCH] mmc: sdhci-msm: Update the software timeout value for sdhc
-> >
-> >commit 67b13f3e221ed81b46a657e2b499bf8b20162476 upstream.
-> >
-> >Whenever SDHC run at clock rate 50MHZ or below, the hardware data
-> >timeout value will be 21.47secs, which is approx. 22secs and we have
-> >a current software timeout value as 10secs. We have to set software
-> >timeout value more than the hardware data timeout value to avioid seeing
-> >the below register dumps.
-> >
-> >[  332.953670] mmc2: Timeout waiting for hardware interrupt.
-> >[  332.959608] mmc2: sdhci: ============ SDHCI REGISTER DUMP ===========
-> >[  332.966450] mmc2: sdhci: Sys addr:  0x00000000 | Version:  0x00007202
-> >[  332.973256] mmc2: sdhci: Blk size:  0x00000200 | Blk cnt:  0x00000001
-> >[  332.980054] mmc2: sdhci: Argument:  0x00000000 | Trn mode: 0x00000027
-> >[  332.986864] mmc2: sdhci: Present:   0x01f801f6 | Host ctl: 0x0000001f
-> >[  332.993671] mmc2: sdhci: Power:     0x00000001 | Blk gap:  0x00000000
-> >[  333.000583] mmc2: sdhci: Wake-up:   0x00000000 | Clock:    0x00000007
-> >[  333.007386] mmc2: sdhci: Timeout:   0x0000000e | Int stat: 0x00000000
-> >[  333.014182] mmc2: sdhci: Int enab:  0x03ff100b | Sig enab: 0x03ff100b
-> >[  333.020976] mmc2: sdhci: ACmd stat: 0x00000000 | Slot int: 0x00000000
-> >[  333.027771] mmc2: sdhci: Caps:      0x322dc8b2 | Caps_1:   0x0000808f
-> >[  333.034561] mmc2: sdhci: Cmd:       0x0000183a | Max curr: 0x00000000
-> >[  333.041359] mmc2: sdhci: Resp[0]:   0x00000900 | Resp[1]:  0x00000000
-> >[  333.048157] mmc2: sdhci: Resp[2]:   0x00000000 | Resp[3]:  0x00000000
-> >[  333.054945] mmc2: sdhci: Host ctl2: 0x00000000
-> >[  333.059657] mmc2: sdhci: ADMA Err:  0x00000000 | ADMA Ptr:
-> >0x0000000ffffff218
-> >[  333.067178] mmc2: sdhci_msm: ----------- VENDOR REGISTER DUMP
-> >-----------
-> >[  333.074343] mmc2: sdhci_msm: DLL sts: 0x00000000 | DLL cfg:
-> >0x6000642c | DLL cfg2: 0x0020a000
-> >[  333.083417] mmc2: sdhci_msm: DLL cfg3: 0x00000000 | DLL usr ctl:
-> >0x00000000 | DDR cfg: 0x80040873
-> >[  333.092850] mmc2: sdhci_msm: Vndr func: 0x00008a9c | Vndr func2 :
-> >0xf88218a8 Vndr func3: 0x02626040
-> >[  333.102371] mmc2: sdhci: ============================================
-> >
-> >So, set software timeout value more than hardware timeout value.
-> >
-> >Signed-off-by: Shaik Sajida Bhanu <sbhanu@codeaurora.org>
-> >Acked-by: Adrian Hunter <adrian.hunter@intel.com>
-> >Cc: stable@vger.kernel.org
-> >Link: https://lore.kernel.org/r/1626435974-14462-1-git-send-email-sbhanu@codeaurora.org
-> >Signed-off-by: Ulf Hansson <ulf.hansson@linaro.org>
-> >Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> >---
-> > drivers/mmc/host/sdhci-msm.c | 18 ++++++++++++++++++
-> > 1 file changed, 18 insertions(+)
-> >
-> >diff --git a/drivers/mmc/host/sdhci-msm.c b/drivers/mmc/host/sdhci-msm.c
-> >index 8bed81cf03ad..8ab963055238 100644
-> >--- a/drivers/mmc/host/sdhci-msm.c
-> >+++ b/drivers/mmc/host/sdhci-msm.c
-> >@@ -1589,6 +1589,23 @@ static void sdhci_msm_set_clock(struct
-> >sdhci_host *host, unsigned int clock)
->
-> I've queued this up, thanks!
+Hi Stephen,
 
-Thanks!
+On 8/26/21 8:47 PM, Stephen Boyd wrote:
+> Quoting Bjorn Andersson (2021-08-25 13:45:17)
+>> Using parent_data and parent_hws, instead of parent_names, does protect
+>> against some cases of incompletely defined clock trees. While it turns
+>> out that the bug being chased this time was totally unrelated, this
+>> patch converts the SDM660 GCC driver to avoid such issues.
+>>
+>> The "xo" fixed_factor clock is unused within the gcc driver, but
+>> referenced from the DSI PHY. So it's left in place until the DSI driver
+>> is updated.
+>>
+>> Tested-by: Marijn Suijten <marijn.suijten@somainline.org>
+>> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+>> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+>> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>> ---
+> 
+> Applied to clk-next after moving back the arrays so the diff is smaller.
+> 
 
->
-> Note that the patch was linewrapped (see above).
+Unfortunately the arrays cannot be moved back up since they (for the 
+most part) reference gpll clocks in `.hw = &gpll*` fields - these have 
+to be defined first or forward-declared otherwise, which is why the 
+arrays were moved down in the first place.
 
-Indeed. Must be something wrong with my mailer setup. I'll look into
-fixing it. Thanks.
+The general structure nowadays seems to place these parent maps/data 
+right above the clock that uses them, making it easier to read.
+
+- Marijn
