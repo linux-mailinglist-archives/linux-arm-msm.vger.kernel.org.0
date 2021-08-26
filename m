@@ -2,237 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 39D183F7FEE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Aug 2021 03:31:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 828B33F8064
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Aug 2021 04:23:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235201AbhHZBc3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 25 Aug 2021 21:32:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51736 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229514AbhHZBc3 (ORCPT
+        id S237460AbhHZCYU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 25 Aug 2021 22:24:20 -0400
+Received: from smtpbg701.qq.com ([203.205.195.86]:50712 "EHLO
+        smtpproxy21.qq.com" rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org
+        with ESMTP id S237442AbhHZCYT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 25 Aug 2021 21:32:29 -0400
-Received: from mail-oi1-x22c.google.com (mail-oi1-x22c.google.com [IPv6:2607:f8b0:4864:20::22c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80571C061757
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Aug 2021 18:31:42 -0700 (PDT)
-Received: by mail-oi1-x22c.google.com with SMTP id w19so2111003oik.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 25 Aug 2021 18:31:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=Gg/g05c4UHis1jo3/o9kO4T0lNRRr/zY+8C1O4NlkAo=;
-        b=MuAvpb4Hnu812Gso+cfKMYOMAOkd8SRKbrPszY2qFC4onLhQQTr75dfPoV07asaL5a
-         0e+FwDK2/mZcbp04o3bidjAUL1go52LPs1mnD/6mhCvZtm6Asydvi9ABfQsCV28JnR6y
-         XwoVXUou6hQRhdwox6XFGMUROkYMWNoddlor4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=Gg/g05c4UHis1jo3/o9kO4T0lNRRr/zY+8C1O4NlkAo=;
-        b=tQIbGQVUoxhxN88BeRbPqAAi1MlEdxqMUCSbfzO6C/9pBBwmUa9U47JRk8BWtxF2P5
-         AJUjtJ2QqtmUtQxwaTqhxltZa/tL+jmrF5ApnVJcSFV7nSmpuh3GLIv1eSLp1LpHcCqt
-         sFV4JZNpwzH/7/bm1NmnaAZAwZn8hv1cR7J+p6d5GIkl9Qza2HfGG4CAK1XTfihibjSG
-         /e+QL5kDFBLMzynEPu2cO64sFKO6rniV43iY/0HqrOK6PaTCI41Qw//YnmU7tq1WC4sn
-         qp/kQgvN+lSxyQSdukZ412vCA1Csc+MARfCi/svysumNFcL9AZ1bv7LrDzv2pnNa27v0
-         nesg==
-X-Gm-Message-State: AOAM533LsmQ8x13pSqzTdaHzGNarNckihNgeU6HCJso/cZ0AyFPYp1l4
-        dL/jhRxX8C3ViNJ+uMtAE2STjwVxXcJafJdxMGksqQ==
-X-Google-Smtp-Source: ABdhPJy9cJMuZDBFBqUS/RvN9rZv8oug1H4dhxG7roMDR0AVWQ/Fjz6Q1qp2I6zPdZBG5w7LOV8Lv+m7o9XgTaHVDeg=
-X-Received: by 2002:a54:468d:: with SMTP id k13mr9218145oic.125.1629941501894;
- Wed, 25 Aug 2021 18:31:41 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 26 Aug 2021 01:31:41 +0000
-MIME-Version: 1.0
-In-Reply-To: <20210726231351.655302-1-bjorn.andersson@linaro.org>
-References: <20210726231351.655302-1-bjorn.andersson@linaro.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Thu, 26 Aug 2021 01:31:41 +0000
-Message-ID: <CAE-0n50HohAKisSSsNijcxgZGHdBgt=sQbLE3b7C87wPkLJ0cw@mail.gmail.com>
-Subject: Re: [RFC] drm/msm/dp: Allow attaching a drm_panel
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc:     Kuogee Hsieh <khsieh@codeaurora.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Vara Reddy <varar@codeaurora.org>,
+        Wed, 25 Aug 2021 22:24:19 -0400
+X-QQ-mid: bizesmtp47t1629944600t0qbyafz
+Received: from localhost.localdomain (unknown [111.207.172.18])
+        by esmtp6.qq.com (ESMTP) with 
+        id ; Thu, 26 Aug 2021 10:23:17 +0800 (CST)
+X-QQ-SSF: 0140000000200050D000B00A0000000
+X-QQ-FEAT: zEFwFsE0FwpIbzN/rQ0seBiGJYh4ez3wZarFkHyzKOOMPDaKXKPVZqZhm5b0y
+        t00/pnVZyX/ysLQOnp7WOI4rsTD+SO4sJTbUI9ENNNpbyob2XS4/h7JPro0WSxF3ZsXsQAw
+        rl7IFbMAYbicqOR0tH8vgWz+PBQ12quXRtvIRyef67TPylwkJJHdy4AjeAg9+D/1UcIe/1V
+        Wro6ak++2HXkqwoghVz5Nj8EUw/T296TMXxfiCfyz25oQYDQf36G2FD0Od2MVXSb4iKL+89
+        qqXN+7+WkSJ+gCxSF2W4R7MJYWx8PRPz6fP55YEBNdjnX2PgZKSshjJtZSDkupye4I9ASBT
+        10Ex5ojATVXD0nKUag=
+X-QQ-GoodBg: 2
+From:   zhaoxiao <zhaoxiao@uniontech.com>
+To:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch
+Cc:     jordan@cosmicpenguin.net, saiprakash.ranjan@codeaurora.org,
+        jonathan@marek.ca, airlied@redhat.com, smasetty@codeaurora.org,
+        konrad.dybcio@somainline.org, akhilpo@codeaurora.org,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+        zhaoxiao <zhaoxiao@uniontech.com>
+Subject: [PATCH v2] drm: msm: adreno_gpu.c: Add and use pr_fmt(fmt)
+Date:   Thu, 26 Aug 2021 10:23:16 +0800
+Message-Id: <20210826022316.9559-1-zhaoxiao@uniontech.com>
+X-Mailer: git-send-email 2.20.1
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
+X-QQ-SENDSIZE: 520
+Feedback-ID: bizesmtp:uniontech.com:qybgforeign:qybgforeign7
+X-QQ-Bgrelay: 1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2021-07-26 16:13:51)
-> eDP panels might need some power sequencing and backlight management,
-> so make it possible to associate a drm_panel with a DP instance and
-> prepare and enable the panel accordingly.
->
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->
-> This solves my immediate problem on my 8cx laptops, of indirectly controlling
-> the backlight during DPMS. But my panel is powered when I boot it and as such I
-> get the hpd interrupt and I don't actually have to deal with a power on
-> sequence - so I'm posting this as an RFC, hoping to get some input on these
-> other aspects.
->
-> If this is acceptable I'd be happy to write up an accompanying DT binding
-> change that marks port 2 of the DP controller's of_graph as a reference to the
-> attached panel.
+Use a more common logging style.
 
-dianders@ mentioned creating a connector (and maybe a bridge) for the DP
-connector (not eDP)[1]. I'm not sure that's directly related, but I
-think with the aux bus code the panel isn't managed in the encoder
-driver. Instead the encoder sees a bridge and tries to power it up and
-then query things over the aux bus? It's all a little too fuzzy to me
-right now so I could be spewing nonsense but I think we want to take
-this bridge route if possible.
+Signed-off-by: zhaoxiao <zhaoxiao@uniontech.com>
+---
+v2:Remove the line: #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+   drivers/gpu/drm/msm/adreno/adreno_gpu.c:23:9: warning: 'pr_fmt' macro redefined [-Wmacro-redefined]
+   #define pr_fmt(fmt) KBUILD_MODNAME ": " fmt
+           ^
+   include/linux/printk.h:348:9: note: previous definition is here
+   #define pr_fmt(fmt) fmt
 
--Stephen
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 12 ++++++------
+ 1 file changed, 6 insertions(+), 6 deletions(-)
 
-[1] https://lore.kernel.org/r/CAD=FV=Xd9fizYdxfXYOkpJ_1fZcHp3-ROJ7k4iPg0g0RQ_+A3Q@mail.gmail.com/
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 9f5a30234b33..f10e9e04c13b 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -753,7 +753,7 @@ void adreno_dump_info(struct msm_gpu *gpu)
+ 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+ 	int i;
+ 
+-	printk("revision: %d (%d.%d.%d.%d)\n",
++	pr_info("revision: %d (%d.%d.%d.%d)\n",
+ 			adreno_gpu->info->revn, adreno_gpu->rev.core,
+ 			adreno_gpu->rev.major, adreno_gpu->rev.minor,
+ 			adreno_gpu->rev.patchid);
+@@ -761,12 +761,12 @@ void adreno_dump_info(struct msm_gpu *gpu)
+ 	for (i = 0; i < gpu->nr_rings; i++) {
+ 		struct msm_ringbuffer *ring = gpu->rb[i];
+ 
+-		printk("rb %d: fence:    %d/%d\n", i,
++		pr_info("rb %d: fence:    %d/%d\n", i,
+ 			ring->memptrs->fence,
+ 			ring->seqno);
+ 
+-		printk("rptr:     %d\n", get_rptr(adreno_gpu, ring));
+-		printk("rb wptr:  %d\n", get_wptr(ring));
++		pr_info("rptr:     %d\n", get_rptr(adreno_gpu, ring));
++		pr_info("rb wptr:  %d\n", get_wptr(ring));
+ 	}
+ }
+ 
+@@ -780,7 +780,7 @@ void adreno_dump(struct msm_gpu *gpu)
+ 		return;
+ 
+ 	/* dump these out in a form that can be parsed by demsm: */
+-	printk("IO:region %s 00000000 00020000\n", gpu->name);
++	pr_info("IO:region %s 00000000 00020000\n", gpu->name);
+ 	for (i = 0; adreno_gpu->registers[i] != ~0; i += 2) {
+ 		uint32_t start = adreno_gpu->registers[i];
+ 		uint32_t end   = adreno_gpu->registers[i+1];
+@@ -788,7 +788,7 @@ void adreno_dump(struct msm_gpu *gpu)
+ 
+ 		for (addr = start; addr <= end; addr++) {
+ 			uint32_t val = gpu_read(gpu, addr);
+-			printk("IO:R %08x %08x\n", addr<<2, val);
++			pr_info("IO:R %08x %08x\n", addr<<2, val);
+ 		}
+ 	}
+ }
+-- 
+2.20.1
 
->
->  drivers/gpu/drm/msm/dp/dp_display.c | 15 +++++++++++++--
->  drivers/gpu/drm/msm/dp/dp_display.h |  1 +
->  drivers/gpu/drm/msm/dp/dp_parser.c  | 19 +++++++++++++++++++
->  drivers/gpu/drm/msm/dp/dp_parser.h  |  1 +
->  4 files changed, 34 insertions(+), 2 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 206bf7806f51..1db5a3f752d2 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -10,6 +10,7 @@
->  #include <linux/component.h>
->  #include <linux/of_irq.h>
->  #include <linux/delay.h>
-> +#include <drm/drm_panel.h>
->
->  #include "msm_drv.h"
->  #include "msm_kms.h"
-> @@ -252,6 +253,8 @@ static int dp_display_bind(struct device *dev, struct device *master,
->                 goto end;
->         }
->
-> +       dp->dp_display.drm_panel = dp->parser->drm_panel;
-> +
->         rc = dp_aux_register(dp->aux, drm);
->         if (rc) {
->                 DRM_ERROR("DRM DP AUX register failed\n");
-> @@ -867,8 +870,10 @@ static int dp_display_set_mode(struct msm_dp *dp_display,
->         return 0;
->  }
->
-> -static int dp_display_prepare(struct msm_dp *dp)
-> +static int dp_display_prepare(struct msm_dp *dp_display)
->  {
-> +       drm_panel_prepare(dp_display->drm_panel);
-> +
->         return 0;
->  }
->
-> @@ -886,6 +891,8 @@ static int dp_display_enable(struct dp_display_private *dp, u32 data)
->         if (!rc)
->                 dp_display->power_on = true;
->
-> +       drm_panel_enable(dp_display->drm_panel);
-> +
->         return rc;
->  }
->
-> @@ -915,6 +922,8 @@ static int dp_display_disable(struct dp_display_private *dp, u32 data)
->         if (!dp_display->power_on)
->                 return 0;
->
-> +       drm_panel_disable(dp_display->drm_panel);
-> +
->         /* wait only if audio was enabled */
->         if (dp_display->audio_enabled) {
->                 /* signal the disconnect event */
-> @@ -939,8 +948,10 @@ static int dp_display_disable(struct dp_display_private *dp, u32 data)
->         return 0;
->  }
->
-> -static int dp_display_unprepare(struct msm_dp *dp)
-> +static int dp_display_unprepare(struct msm_dp *dp_display)
->  {
-> +       drm_panel_unprepare(dp_display->drm_panel);
-> +
->         return 0;
->  }
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
-> index 8b47cdabb67e..ce337824c95d 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.h
-> @@ -15,6 +15,7 @@ struct msm_dp {
->         struct device *codec_dev;
->         struct drm_connector *connector;
->         struct drm_encoder *encoder;
-> +       struct drm_panel *drm_panel;
->         bool is_connected;
->         bool audio_enabled;
->         bool power_on;
-> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
-> index fc8a6452f641..e6a6e9007bfd 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_parser.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
-> @@ -6,6 +6,7 @@
->  #include <linux/of_gpio.h>
->  #include <linux/phy/phy.h>
->
-> +#include <drm/drm_of.h>
->  #include <drm/drm_print.h>
->
->  #include "dp_parser.h"
-> @@ -276,6 +277,20 @@ static int dp_parser_clock(struct dp_parser *parser)
->         return 0;
->  }
->
-> +static int dp_parser_find_panel(struct dp_parser *parser)
-> +{
-> +       struct device_node *np = parser->pdev->dev.of_node;
-> +       int rc;
-> +
-> +       rc = drm_of_find_panel_or_bridge(np, 2, 0, &parser->drm_panel, NULL);
-> +       if (rc == -ENODEV)
-> +               rc = 0;
-> +       else if (rc)
-> +               DRM_ERROR("failed to acquire DRM panel: %d\n", rc);
-> +
-> +       return rc;
-> +}
-> +
->  static int dp_parser_parse(struct dp_parser *parser)
->  {
->         int rc = 0;
-> @@ -297,6 +312,10 @@ static int dp_parser_parse(struct dp_parser *parser)
->         if (rc)
->                 return rc;
->
-> +       rc = dp_parser_find_panel(parser);
-> +       if (rc)
-> +               return rc;
-> +
->         /* Map the corresponding regulator information according to
->          * version. Currently, since we only have one supported platform,
->          * mapping the regulator directly.
-> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.h b/drivers/gpu/drm/msm/dp/dp_parser.h
-> index 3266b529c090..994ca9336acd 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_parser.h
-> +++ b/drivers/gpu/drm/msm/dp/dp_parser.h
-> @@ -122,6 +122,7 @@ struct dp_parser {
->         struct dp_display_data disp_data;
->         const struct dp_regulator_cfg *regulator_cfg;
->         u32 max_dp_lanes;
-> +       struct drm_panel *drm_panel;
->
->         int (*parse)(struct dp_parser *parser);
->  };
-> --
+
+
