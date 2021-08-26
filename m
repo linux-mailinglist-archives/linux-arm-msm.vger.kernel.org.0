@@ -2,132 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 69A4B3F8C87
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Aug 2021 18:56:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0BCAF3F8CA2
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Aug 2021 19:01:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232694AbhHZQ4w (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Aug 2021 12:56:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37738 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229787AbhHZQ4w (ORCPT
+        id S243178AbhHZRCB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Aug 2021 13:02:01 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:3887 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229986AbhHZRCA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Aug 2021 12:56:52 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EE921C061757
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Aug 2021 09:56:04 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id h133so5484357oib.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Aug 2021 09:56:04 -0700 (PDT)
+        Thu, 26 Aug 2021 13:02:00 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ZG20ra+VbWP4KmRr9Qhru/j/9SFXgkuvtYD4gkTXGMY=;
-        b=krelO2npuKNDSGGHREDE9VKuLT4tvL0Olu1s5Vz4ljL6nOXNEyiVKKN4SQDB2u7yFg
-         S5VNc+q2nNXgK0qoiyzXytDBHLLmDVM1zKhtS5SugdgQfeKkVXy8PEKNquS3FuA9+f6x
-         0Dvhn2qWHpy4jMPjx70LkrHdwb4XEB+2aNG2n1SMTnztc8fi5O+jrXYEvXs/q8YdcA3x
-         x4w2jvi35kfTcDg6T5raPvVDRJXzcpZrYGhInp/itKs7S2FLsEcP4isIqooEBl49wyvp
-         eegRqDOETeLcXlW7u/oXEoB8NdCy/bR9GxNh4bN+DZduQIqpTBOi1EhOouWGPCHbN2SV
-         akVg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ZG20ra+VbWP4KmRr9Qhru/j/9SFXgkuvtYD4gkTXGMY=;
-        b=W445zfCnK/GEm75UgdEvNmMTr5XWEcroFIkhk996UlCuKO7X6tKPxb/c/N7X9N1vvY
-         hDEadYijK2a+uExjb5cBYv41QccKfdAaah52XoX74Di9oh6QQVJWzTLnLkxWjKq05e3g
-         PkbQcv41TXqUD0tUGetmXFZZECRf4PS6Rl8+dK8Ub66ja67J03FnzoPeq/Xaa/SXoxLB
-         0ngFPOJnNHMrKrDbyiZO9/dZqkabIrsmGqdakPSVyK5BdQzTEb7v/yibGsodlruc1k9B
-         wIkYTGWbuvtT0TbzCQh3isibOxEgvXqCov//xHPgcEqErmoAn08WavFmPVvDS795/7j7
-         /HbQ==
-X-Gm-Message-State: AOAM532hHXOD+gjooNjPWWBJTZFCq22vT2KIZor8QkO35sdRHZq8OIZR
-        yyG2rSkTqvFa9J32e6jd723WJwAirWYo8g==
-X-Google-Smtp-Source: ABdhPJxEWy8u8+m2iuBlorhcI8KlAntRXpX4G8jaArnzHtbOyhkhOzakheY5KqVZZC4nkalRMOLTgA==
-X-Received: by 2002:aca:3111:: with SMTP id x17mr3274611oix.20.1629996964281;
-        Thu, 26 Aug 2021 09:56:04 -0700 (PDT)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id m206sm732007oif.23.2021.08.26.09.56.03
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Aug 2021 09:56:03 -0700 (PDT)
-Date:   Thu, 26 Aug 2021 09:57:18 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 3/5] drm/msm/dp: Support up to 3 DP controllers
-Message-ID: <YSfH7j+24OMa3rVE@ripper>
-References: <20210825234233.1721068-1-bjorn.andersson@linaro.org>
- <20210825234233.1721068-4-bjorn.andersson@linaro.org>
- <CAE-0n50JXw6KL-u70csWS-9F6YhZy0pNah91h4e9a_9MnjJzmA@mail.gmail.com>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1629997273; x=1661533273;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=RQEhtRtivu+FrdK+WyMh0HrD6utO53RBleoIHmXyIGw=;
+  b=zBQor+kHA0IzNysx4ExSMH/YY4UcV1tVjcKpniwjoIVbCYcsShd0xuqp
+   sRdMgNcux6X96aPP6wI+rnKRpzjyvzm9PumwzQkOwUwCaeo8p3tkBxmFx
+   TPDoRdNJhPFgnkbP8GubwyXCrt7ePMsPfsPHTuX7oQKkgr0z4MTgRVL7Q
+   o=;
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 26 Aug 2021 10:01:13 -0700
+X-QCInternal: smtphost
+Received: from nalasex01a.na.qualcomm.com ([10.47.209.196])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Aug 2021 10:01:12 -0700
+Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
+ Thu, 26 Aug 2021 10:01:11 -0700
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+To:     <mani@kernel.org>, <hemantk@codeaurora.org>,
+        <bbhatt@codeaurora.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        "Jeffrey Hugo" <quic_jhugo@quicinc.com>
+Subject: [PATCH] bus: mhi: core: Use cached values for calculating the shared write pointer
+Date:   Thu, 26 Aug 2021 11:01:03 -0600
+Message-ID: <1629997263-11147-1-git-send-email-quic_jhugo@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAE-0n50JXw6KL-u70csWS-9F6YhZy0pNah91h4e9a_9MnjJzmA@mail.gmail.com>
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 26 Aug 00:13 PDT 2021, Stephen Boyd wrote:
-> Quoting Bjorn Andersson (2021-08-25 16:42:31)
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-[..]
-> > @@ -203,8 +204,8 @@ static int dpu_kms_debugfs_init(struct msm_kms *kms, struct drm_minor *minor)
-> >         dpu_debugfs_vbif_init(dpu_kms, entry);
-> >         dpu_debugfs_core_irq_init(dpu_kms, entry);
-> >
-> > -       if (priv->dp)
-> > -               msm_dp_debugfs_init(priv->dp, minor);
-> > +       for (i = 0; i < ARRAY_SIZE(priv->dp); i++)
-> > +               msm_dp_debugfs_init(priv->dp[i], minor);
-> 
-> Does this need the same if (!priv->dp) continue check like the other
-> loops over priv->dp?
-> 
-[..]
-> > @@ -800,7 +809,8 @@ static int dpu_irq_postinstall(struct msm_kms *kms)
-> >         if (!priv)
-> >                 return -EINVAL;
-> >
-> > -       msm_dp_irq_postinstall(priv->dp);
-> > +       for (i = 0; i < ARRAY_SIZE(priv->dp); i++)
-> > +               msm_dp_irq_postinstall(priv->dp[i]);
-> 
-> This one too? Or maybe those gained NULL pointer checks.
-> 
+mhi_recycle_ev_ring() computes the shared write pointer for the ring
+(ctxt_wp) using a read/modify/write pattern where the ctxt_wp value in the
+shared memory is read, incremented, and written back.  There are no checks
+on the read value, it is assumed that it is kept in sync with the locally
+cached value.  Per the MHI spec, this is correct.  The device should only
+read ctxt_wp, never write it.
 
-This already has a NULL check, that's why I added one to the adjacent
-msm_dp_debugfs_init() as well.
+However, there are devices in the wild that violate the spec, and can
+update the ctxt_wp in a specific scenario.  This can cause corruption, and
+violate the above assumption that the ctxt_wp is in sync with the cached
+value.
 
-> >
-> >         return 0;
-> >  }
-> > diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-[..]
-> > @@ -1194,6 +1230,10 @@ static int dp_display_probe(struct platform_device *pdev)
-> >         if (!dp)
-> >                 return -ENOMEM;
-> >
-> > +       dp->id = dp_display_get_id(pdev);
-> 
-> Ah ok, it's signed for this error check. Maybe assign dp->id in the
-> function and return 0 instead of assigning it here?
-> dp_display_assign_id()
-> 
+This can occur when the device has loaded firmware from the host, and is
+transitioning from the SBL EE to the AMSS EE.  As part of shutting down
+SBL, the SBL flushes it's local MHI context to the shared memory since
+the local context will not persist across an EE change.  In the case of
+the event ring, SBL will flush its entire context, not just the parts that
+it is allowed to update.  This means SBL will write to ctxt_wp, and
+possibly corrupt it.
 
-I like the fact that the "getter" doesn't have side effects, but making
-dp->id unsigned makes sense. So let's pay the price of a local signed
-variable here.
+An example:
 
-> > +       if (dp->id < 0)
-> > +               return -EINVAL;
-> > +
+Host				Device
+----				---
+Update ctxt_wp to 0x1f0
+				SBL observes 0x1f0
+Update ctxt_wp to 0x0
+				Starts transition to AMSS EE
+				Context flush, writes 0x1f0 to ctxt_wp
+Update ctxt_wp to 0x200
+Update ctxt_wp to 0x210
+				AMSS observes 0x210
+				0x210 exceeds ring size
+				AMSS signals syserr
 
-Thanks for the feedback,
-Bjorn
+The reason the ctxt_wp goes off the end of the ring is that the rollover
+check is only performed on the cached wp, which is out of sync with
+ctxt_wp.
+
+Since the host is the authority of the value of ctxt_wp per the MHI spec,
+we can fix this issue by not reading ctxt_wp from the shared memory, and
+instead compute it based on the cached value.  If SBL corrupts ctxt_wp,
+the host won't observe it, and will correct the value at some point later.
+
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+---
+ drivers/bus/mhi/core/main.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+index c01ec2f..1e7e7bb 100644
+--- a/drivers/bus/mhi/core/main.c
++++ b/drivers/bus/mhi/core/main.c
+@@ -533,18 +533,13 @@ irqreturn_t mhi_intvec_handler(int irq_number, void *dev)
+ static void mhi_recycle_ev_ring_element(struct mhi_controller *mhi_cntrl,
+ 					struct mhi_ring *ring)
+ {
+-	dma_addr_t ctxt_wp;
+-
+ 	/* Update the WP */
+ 	ring->wp += ring->el_size;
+-	ctxt_wp = *ring->ctxt_wp + ring->el_size;
+ 
+-	if (ring->wp >= (ring->base + ring->len)) {
++	if (ring->wp >= (ring->base + ring->len))
+ 		ring->wp = ring->base;
+-		ctxt_wp = ring->iommu_base;
+-	}
+ 
+-	*ring->ctxt_wp = ctxt_wp;
++	*ring->ctxt_wp = ring->iommu_base + (ring->wp - ring_base);
+ 
+ 	/* Update the RP */
+ 	ring->rp += ring->el_size;
+-- 
+2.7.4
+
