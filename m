@@ -2,128 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0BCAF3F8CA2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Aug 2021 19:01:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FEB73F8CC0
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Aug 2021 19:11:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243178AbhHZRCB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Aug 2021 13:02:01 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:3887 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229986AbhHZRCA (ORCPT
+        id S243172AbhHZRMn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Aug 2021 13:12:43 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:36177 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232432AbhHZRMm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Aug 2021 13:02:00 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1629997273; x=1661533273;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=RQEhtRtivu+FrdK+WyMh0HrD6utO53RBleoIHmXyIGw=;
-  b=zBQor+kHA0IzNysx4ExSMH/YY4UcV1tVjcKpniwjoIVbCYcsShd0xuqp
-   sRdMgNcux6X96aPP6wI+rnKRpzjyvzm9PumwzQkOwUwCaeo8p3tkBxmFx
-   TPDoRdNJhPFgnkbP8GubwyXCrt7ePMsPfsPHTuX7oQKkgr0z4MTgRVL7Q
-   o=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 26 Aug 2021 10:01:13 -0700
-X-QCInternal: smtphost
-Received: from nalasex01a.na.qualcomm.com ([10.47.209.196])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Aug 2021 10:01:12 -0700
-Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
- Thu, 26 Aug 2021 10:01:11 -0700
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-To:     <mani@kernel.org>, <hemantk@codeaurora.org>,
-        <bbhatt@codeaurora.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "Jeffrey Hugo" <quic_jhugo@quicinc.com>
-Subject: [PATCH] bus: mhi: core: Use cached values for calculating the shared write pointer
-Date:   Thu, 26 Aug 2021 11:01:03 -0600
-Message-ID: <1629997263-11147-1-git-send-email-quic_jhugo@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Thu, 26 Aug 2021 13:12:42 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1629997915; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=3AEzHXCRF73WUOr0pkkL3X7+bnWg8BdvqsbmAMFaBDc=;
+ b=LcWgSEPUXZv/90jnh2mrYVrRHodU5wTj2PcAKPuevjtDmW7YH/Zm7IUNn8KEkkW8n1NXqsxz
+ LSiZSHWxMrcE4j+xt+XVmFg7ZH8HbNcFv9D1war5tWMg1S6qX9Kp1r+PYIwv6QQN/SYGoJcc
+ 2RLaoGfQuKjpZT8XKpE3tSDoFJ8=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 6127cb51d6653df767f9ce15 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 26 Aug 2021 17:11:45
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id BC63CC4338F; Thu, 26 Aug 2021 17:11:44 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CA794C4360D;
+        Thu, 26 Aug 2021 17:11:40 +0000 (UTC)
 MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+Date:   Thu, 26 Aug 2021 10:11:40 -0700
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>,
+        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     mani@kernel.org, hemantk@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+Subject: Re: [PATCH] bus: mhi: core: Update comments on
+ mhi_prepare_for_power_up
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <1629995575-32389-1-git-send-email-quic_jhugo@quicinc.com>
+References: <1629995575-32389-1-git-send-email-quic_jhugo@quicinc.com>
+Message-ID: <57b617bf9689ce3d7d04472af0cb3d5e@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-mhi_recycle_ev_ring() computes the shared write pointer for the ring
-(ctxt_wp) using a read/modify/write pattern where the ctxt_wp value in the
-shared memory is read, incremented, and written back.  There are no checks
-on the read value, it is assumed that it is kept in sync with the locally
-cached value.  Per the MHI spec, this is correct.  The device should only
-read ctxt_wp, never write it.
+On 2021-08-26 09:32 AM, Jeffrey Hugo wrote:
+> From: Pranjal Ramajor Asha Kanojiya <quic_pkanojiy@quicinc.com>
+> 
+> After "bus: mhi: core: Remove pre_init flag used for power purposes"
+> mhi_prepare_for_power_up() is no longer an optional API. All users
+> of MHI should call this API before power up sequence to initialize
+> MHI context. Update the comments on this API to make this clear.
+> 
+> Fixes: eee87072e2fb ("bus: mhi: core: Remove pre_init flag used for
+> power purposes")
+> Signed-off-by: Pranjal Ramajor Asha Kanojiya 
+> <quic_pkanojiy@quicinc.com>
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> ---
+>  include/linux/mhi.h | 6 ++----
+>  1 file changed, 2 insertions(+), 4 deletions(-)
+> 
+> diff --git a/include/linux/mhi.h b/include/linux/mhi.h
+> index 56e7934..483b852 100644
+> --- a/include/linux/mhi.h
+> +++ b/include/linux/mhi.h
+> @@ -617,10 +617,8 @@ int mhi_get_free_desc_count(struct mhi_device 
+> *mhi_dev,
+> 
+>  /**
+>   * mhi_prepare_for_power_up - Do pre-initialization before power up.
+> - *                            This is optional, call this before power 
+> up if
+> - *                            the controller does not want bus 
+> framework to
+> - *                            automatically free any allocated memory 
+> during
+> - *                            shutdown process.
+> + *                            Call this before MHI power up sequence 
+> to
+> + *                            initialize MHI context.
+>   * @mhi_cntrl: MHI controller
+>   */
+>  int mhi_prepare_for_power_up(struct mhi_controller *mhi_cntrl);
 
-However, there are devices in the wild that violate the spec, and can
-update the ctxt_wp in a specific scenario.  This can cause corruption, and
-violate the above assumption that the ctxt_wp is in sync with the cached
-value.
+Thanks for catching this!
 
-This can occur when the device has loaded firmware from the host, and is
-transitioning from the SBL EE to the AMSS EE.  As part of shutting down
-SBL, the SBL flushes it's local MHI context to the shared memory since
-the local context will not persist across an EE change.  In the case of
-the event ring, SBL will flush its entire context, not just the parts that
-it is allowed to update.  This means SBL will write to ctxt_wp, and
-possibly corrupt it.
+Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 
-An example:
+Adding Mani's Linaro email ID for pick-up.
 
-Host				Device
-----				---
-Update ctxt_wp to 0x1f0
-				SBL observes 0x1f0
-Update ctxt_wp to 0x0
-				Starts transition to AMSS EE
-				Context flush, writes 0x1f0 to ctxt_wp
-Update ctxt_wp to 0x200
-Update ctxt_wp to 0x210
-				AMSS observes 0x210
-				0x210 exceeds ring size
-				AMSS signals syserr
-
-The reason the ctxt_wp goes off the end of the ring is that the rollover
-check is only performed on the cached wp, which is out of sync with
-ctxt_wp.
-
-Since the host is the authority of the value of ctxt_wp per the MHI spec,
-we can fix this issue by not reading ctxt_wp from the shared memory, and
-instead compute it based on the cached value.  If SBL corrupts ctxt_wp,
-the host won't observe it, and will correct the value at some point later.
-
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Thanks,
+Bhaumik
 ---
- drivers/bus/mhi/core/main.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
-
-diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-index c01ec2f..1e7e7bb 100644
---- a/drivers/bus/mhi/core/main.c
-+++ b/drivers/bus/mhi/core/main.c
-@@ -533,18 +533,13 @@ irqreturn_t mhi_intvec_handler(int irq_number, void *dev)
- static void mhi_recycle_ev_ring_element(struct mhi_controller *mhi_cntrl,
- 					struct mhi_ring *ring)
- {
--	dma_addr_t ctxt_wp;
--
- 	/* Update the WP */
- 	ring->wp += ring->el_size;
--	ctxt_wp = *ring->ctxt_wp + ring->el_size;
- 
--	if (ring->wp >= (ring->base + ring->len)) {
-+	if (ring->wp >= (ring->base + ring->len))
- 		ring->wp = ring->base;
--		ctxt_wp = ring->iommu_base;
--	}
- 
--	*ring->ctxt_wp = ctxt_wp;
-+	*ring->ctxt_wp = ring->iommu_base + (ring->wp - ring_base);
- 
- 	/* Update the RP */
- 	ring->rp += ring->el_size;
--- 
-2.7.4
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
