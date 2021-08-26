@@ -2,178 +2,225 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 97AD13F8B5C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Aug 2021 17:54:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E528B3F8B85
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Aug 2021 18:08:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242940AbhHZPz0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Aug 2021 11:55:26 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:60562 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230203AbhHZPz0 (ORCPT
+        id S233548AbhHZQIv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Aug 2021 12:08:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54704 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231732AbhHZQIv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Aug 2021 11:55:26 -0400
+        Thu, 26 Aug 2021 12:08:51 -0400
+Received: from mail-wr1-x432.google.com (mail-wr1-x432.google.com [IPv6:2a00:1450:4864:20::432])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 96990C0613CF;
+        Thu, 26 Aug 2021 09:08:03 -0700 (PDT)
+Received: by mail-wr1-x432.google.com with SMTP id n5so5848504wro.12;
+        Thu, 26 Aug 2021 09:08:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1629993279; x=1661529279;
-  h=subject:to:cc:references:from:message-id:date:
-   mime-version:in-reply-to:content-transfer-encoding;
-  bh=lYVeHISZQAyQvD77bpxgjkMpC8zuBoVQZ8+/CjlrXWc=;
-  b=A9vPa49/Tw0EdQMwFdNGQ9aHi/ezzbAWvRKJZJR3c1av0zHhb+0j3okl
-   HGacb70HA2TZoYBcaXTYvdC4NVQjCG0Cpaub760sIBZUdF+JwLOacxY8U
-   ryF+2a638wEOzrH1INI8tnYnfEbKQvjoCGiwLq4a40IdGnZeuOJiwS4o0
-   c=;
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 26 Aug 2021 08:54:39 -0700
-X-QCInternal: smtphost
-Received: from nalasex01a.na.qualcomm.com ([10.47.209.196])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Aug 2021 08:54:37 -0700
-Received: from [10.226.59.216] (10.80.80.8) by nalasex01a.na.qualcomm.com
- (10.47.209.196) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.922.7; Thu, 26 Aug 2021
- 08:54:37 -0700
-Subject: Re: bus: mhi: parse_xfer_event running transfer completion callbacks
- more than once for a given buffer
-To:     Paul Davey <Paul.Davey@alliedtelesis.co.nz>,
-        "bbhatt@codeaurora.org" <bbhatt@codeaurora.org>,
-        "loic.poulain@linaro.org" <loic.poulain@linaro.org>,
-        "hemantk@codeaurora.org" <hemantk@codeaurora.org>,
-        "manivannan.sadhasivam@linaro.org" <manivannan.sadhasivam@linaro.org>
-CC:     "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
-References: <9a6a00acc60c676f39f89a8ce2989416bed1b24d.camel@alliedtelesis.co.nz>
- <CAMZdPi812vx7cjvLXpj_NnbZPOmcierQMFikVHwsUd9gYawHVw@mail.gmail.com>
- <544b3db2-b135-d870-8dd8-ec4450576cb7@codeaurora.org>
- <ce8082f8ecd6bea2961d8841ea6eb1c14b5a34dd.camel@alliedtelesis.co.nz>
- <2b1cbecf50a57a229e30d1bff060d0e241e2841a.camel@alliedtelesis.co.nz>
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-Message-ID: <05e4ff6f-5118-6afb-a000-81d07e5b1078@quicinc.com>
-Date:   Thu, 26 Aug 2021 09:54:36 -0600
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=4P77TwOPdHVoIP43EVGu36WwTX3449lDutu56CYSjjI=;
+        b=IIMsONKwMj2Q0i/dKhcqnhE1+axnJPRhRgJSsjaFOo8Fi301W7IyIU/vvC0kIZ8bgu
+         Je8GdZqD8Q+N5ptSmRVGI3epIzsZDcDnm/k++bXrc9tMepWA8tbXMxHqk3RQHTK/HDQM
+         avf10fHLSNVM9n97yiDhZ8mQdjq02j6mqSNwWVdIBjaMFbU2sJSgr4fzt+qpGFIq8dpl
+         SFShP3yZA9ShUK1nVbF6Ea+PmQApjEJW3IG30Nk5QCLV2eL6THX4rLDjXuzBoV/rs6Uk
+         ZNRM13LILVQwTEdkszgBpPzHc+HSb57pJNc7f25Xv0tkpu5YML8YaKsR8f2Um7NOAGrO
+         0Oxw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=4P77TwOPdHVoIP43EVGu36WwTX3449lDutu56CYSjjI=;
+        b=ZuBd6aD3R0aa1n8c/JwMLEuH4PS1Mh7rwoiGpTyZTjPQazbKQtCNinFcO/rVSrn3vY
+         KD3m5N2uz6IswKOMRXAi340l5AJK31TOyAqjJbC7yk1dOPNXdDbc2WJkQSJ8ZDFV4N+S
+         slTm9sEiXLYyohi4roxYZyVBuGK4cyOf9yTa2+YhOpkD7SNHEfUqtap55Wa4HgnXjEeS
+         oQVsbnix9Stpq2wFB2FyTV/WWLvl82gqV9QC0t8ZCT/JduIY9KuoylvqIP9cFxJ4iSry
+         Ov/uHIfHcm6pe72Q71Mhuq9UmZ0adiNil0eFyJvm3rOsdVweHEdWM7pULEhf77tg0nIb
+         W8gA==
+X-Gm-Message-State: AOAM533UaH79UN6r3jtdsT9Ih359wGLSmuGJ00xodSR6opBSJt9kNSJL
+        /v+Xb/UxueM3FXdCCQli/JpC5/TrwNy83smkBG8=
+X-Google-Smtp-Source: ABdhPJwLEP2d6R9vXs1Mn5jrbDqd3fYAXN3EKb1gwE4cg5t3k5Lj8O18agn2DnUySbO35LQra3OhJpgNFQKmONRXbZA=
+X-Received: by 2002:adf:f90e:: with SMTP id b14mr5170152wrr.28.1629994082123;
+ Thu, 26 Aug 2021 09:08:02 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <2b1cbecf50a57a229e30d1bff060d0e241e2841a.camel@alliedtelesis.co.nz>
-Content-Type: text/plain; charset="utf-8"; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanexm03g.na.qualcomm.com (10.85.0.49) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
+References: <20210805104705.862416-1-daniel.vetter@ffwll.ch> <20210805104705.862416-13-daniel.vetter@ffwll.ch>
+In-Reply-To: <20210805104705.862416-13-daniel.vetter@ffwll.ch>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 26 Aug 2021 09:12:21 -0700
+Message-ID: <CAF6AEGs2yxBe2oW_wPkodL80jkFNPhrrAtmuc60=pzV_dp=igg@mail.gmail.com>
+Subject: Re: [PATCH v5 12/20] drm/msm: Use scheduler dependency handling
+To:     Daniel Vetter <daniel.vetter@ffwll.ch>
+Cc:     DRI Development <dri-devel@lists.freedesktop.org>,
+        Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        Sean Paul <sean@poorly.run>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:DMA BUFFER SHARING FRAMEWORK" 
+        <linux-media@vger.kernel.org>,
+        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
+        <linaro-mm-sig@lists.linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 8/23/2021 12:47 AM, Paul Davey wrote:
-> Hi Hemant, Jeffery
-> 
-> I have some more information after some testing.
-> 
->>> Do you have a log which prints the TRE being processed? Basically i
->>> am
->>> trying understand this : by the time you get double free issue, is
->>> there
->>> any pattern with respect to the TRE that is being processed. For
->>> example
->>> when host processed the given TRE for the first time with RP1,
->>> stale
->>> TRE
->>> was posted by Event RP2 right after RP1
->>>
->>> ->RP1 [TRE1]
->>> ->RP2 [TRE1]
->>>
->>> or occurrence of stale TRE event is random?
->>
-> I have now collected some information by adding buffers which record
-> some of the information desired and searching or printing this
-> information only when the issue is detected in order to avoid constant
-> verbose debug information and potential slowdowns.
-> 
->  From this information I can report that when this issue happens two
-> consecutive transfer completion events occur with the same TRE pointer
-> in them, I did not record events which are not transfer completion
-> events or the event ring RP during processing.
-> 
-> So the event is as follows:
-> 
-> mhi mhi0: (IP_HW0_MBIM-Up) Completion Event code: 2 length: 5e2 ptr:
-> 77c94780
-> mhi mhi0: (IP_HW0_MBIM-Up) Completion Event code: 2 length: 5e2 ptr:
-> 77c94780
+On Thu, Aug 5, 2021 at 3:47 AM Daniel Vetter <daniel.vetter@ffwll.ch> wrote=
+:
+>
+> drm_sched_job_init is already at the right place, so this boils down
+> to deleting code.
+>
+> Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
+> Cc: Rob Clark <robdclark@gmail.com>
+> Cc: Sean Paul <sean@poorly.run>
+> Cc: Sumit Semwal <sumit.semwal@linaro.org>
+> Cc: "Christian K=C3=B6nig" <christian.koenig@amd.com>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: freedreno@lists.freedesktop.org
+> Cc: linux-media@vger.kernel.org
+> Cc: linaro-mm-sig@lists.linaro.org
 
-This isn't good.  I would suspect that the device is glitching then, 
-which should be fixed on the device side, but that doesn't help you here 
-and now.
+r-b
 
-I'm thinking your change is probably a good idea based on this, but I 
-have additional questions.
-
-Can you check the address of the completion events in the shared memory 
-(basically the event ring) when you see this?  I want to rule out the 
-possibility that host is double processing the same event, and this is 
-truly a case of the device duplicating an event.
-
-I hope that makes sense to you.
-
-> Where the ptr value in the event being parsed is this value.
-> 
-> I have also seen a case where a completion event would attempt to run
-> possibly more than once but is not caught by the check I posted in my
-> initial question.
-> 
-> I added code to zero out some buf_info fields when processing
-> completion events and produce logs if the cb_buf that would be passed
-> to the completion callback is NULL.
-> 
-> I am investigating this further and will collect similar information as
-> provided above for this case.
-> 
->>
->>> If you can log all the events you are processing, so that we can
->>> check
->>> when second event arrives for already processed TRE, is the
->>> transfer
->>> length same as originally processed TRE or it is different. In case
->>> it
->>> is different length, is the length matching to the TRE which was
->>> queue
->>> but not processed yet. You can print the mhi_queue_skb TRE content
->>> while
->>> queuing skb. How easy to reproduce this issue ? Is this showing up
->>> in
->>> high throughput use case or it is random? any specific step to
->>> reproduce
->>> this issue?
-> 
-> This TRE address matches one in the buffer of TREs added in gen_tre:
-> 
-> mhi mhi0: (IP_HW0_MBIM-Up) Event TRE addr: 8000000077c94780, ev_len:
-> 5e2, tre_len: 5e2
-> 
-> And here we see the length's match between these.
-> 
->> I would wonder, what is the codebase being testing?  Are the latest
->> MHI
->> patches included?  When we saw something similar on AIC100, it was
->> addressed by the sanity check changes I upstreamed.
-> 
-> This is a bit complicated to answer, the codebase being tested is our
-> kernel, based off 5.7.19 with the mhi drivers being updated to the
-> upstream mainline kernel state as of around late June this year by
-> cherry-picking all commits to relevant paths.  Additionally the change
-> I submitted to this list for making the driver function on big endian
-> systems and changes to the PCI driver to customize the channels to the
-> EM9191 module and some changes to the MBIM net driver MRU for
-> performance reasons.  Additionally I have added one change to increase
-> the time that is waited at poweron for the modem to enter ready state
-> without increasing the timeout as this interfered with latency at
-> shutdown but I suspect using the upstream patch to resolve the shutdown
-> latency will remove the need for this and we can just increase the
-> timeout limit for the modem.
-> 
-> I can confirm that the tested codebase has the following commit
-> included:
-> ec32332df764 bus: mhi: core: Sanity check values from remote device
-> before use
-
-Ok.  Sounds like it wouldn't catch the issue you describe above anyways. 
-  Thanks for confirming though, so we can eliminate what I saw as a 
-possible cause.
+> ---
+>  drivers/gpu/drm/msm/msm_gem.h        |  5 -----
+>  drivers/gpu/drm/msm/msm_gem_submit.c | 19 +++++--------------
+>  drivers/gpu/drm/msm/msm_ringbuffer.c | 12 ------------
+>  3 files changed, 5 insertions(+), 31 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.=
+h
+> index f9e3ffb2309a..8bf0ac707fd7 100644
+> --- a/drivers/gpu/drm/msm/msm_gem.h
+> +++ b/drivers/gpu/drm/msm/msm_gem.h
+> @@ -312,11 +312,6 @@ struct msm_gem_submit {
+>         struct ww_acquire_ctx ticket;
+>         uint32_t seqno;         /* Sequence number of the submit on the r=
+ing */
+>
+> -       /* Array of struct dma_fence * to block on before submitting this=
+ job.
+> -        */
+> -       struct xarray deps;
+> -       unsigned long last_dep;
+> -
+>         /* Hw fence, which is created when the scheduler executes the job=
+, and
+>          * is signaled when the hw finishes (via seqno write from cmdstre=
+am)
+>          */
+> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/m=
+sm_gem_submit.c
+> index 96cea0ba4cfd..fb5a2eab27a2 100644
+> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
+> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+> @@ -52,8 +52,6 @@ static struct msm_gem_submit *submit_create(struct drm_=
+device *dev,
+>                 return ERR_PTR(ret);
+>         }
+>
+> -       xa_init_flags(&submit->deps, XA_FLAGS_ALLOC);
+> -
+>         kref_init(&submit->ref);
+>         submit->dev =3D dev;
+>         submit->aspace =3D queue->ctx->aspace;
+> @@ -72,8 +70,6 @@ void __msm_gem_submit_destroy(struct kref *kref)
+>  {
+>         struct msm_gem_submit *submit =3D
+>                         container_of(kref, struct msm_gem_submit, ref);
+> -       unsigned long index;
+> -       struct dma_fence *fence;
+>         unsigned i;
+>
+>         if (submit->fence_id) {
+> @@ -82,12 +78,6 @@ void __msm_gem_submit_destroy(struct kref *kref)
+>                 mutex_unlock(&submit->queue->lock);
+>         }
+>
+> -       xa_for_each (&submit->deps, index, fence) {
+> -               dma_fence_put(fence);
+> -       }
+> -
+> -       xa_destroy(&submit->deps);
+> -
+>         dma_fence_put(submit->user_fence);
+>         dma_fence_put(submit->hw_fence);
+>
+> @@ -343,8 +333,9 @@ static int submit_fence_sync(struct msm_gem_submit *s=
+ubmit, bool no_implicit)
+>                 if (no_implicit)
+>                         continue;
+>
+> -               ret =3D drm_gem_fence_array_add_implicit(&submit->deps, o=
+bj,
+> -                       write);
+> +               ret =3D drm_sched_job_add_implicit_dependencies(&submit->=
+base,
+> +                                                             obj,
+> +                                                             write);
+>                 if (ret)
+>                         break;
+>         }
+> @@ -588,7 +579,7 @@ static struct drm_syncobj **msm_parse_deps(struct msm=
+_gem_submit *submit,
+>                 if (ret)
+>                         break;
+>
+> -               ret =3D drm_gem_fence_array_add(&submit->deps, fence);
+> +               ret =3D drm_sched_job_add_dependency(&submit->base, fence=
+);
+>                 if (ret)
+>                         break;
+>
+> @@ -798,7 +789,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void=
+ *data,
+>                         goto out_unlock;
+>                 }
+>
+> -               ret =3D drm_gem_fence_array_add(&submit->deps, in_fence);
+> +               ret =3D drm_sched_job_add_dependency(&submit->base, in_fe=
+nce);
+>                 if (ret)
+>                         goto out_unlock;
+>         }
+> diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/m=
+sm_ringbuffer.c
+> index bd54c1412649..652b1dedd7c1 100644
+> --- a/drivers/gpu/drm/msm/msm_ringbuffer.c
+> +++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
+> @@ -11,17 +11,6 @@ static uint num_hw_submissions =3D 8;
+>  MODULE_PARM_DESC(num_hw_submissions, "The max # of jobs to write into ri=
+ngbuffer (default 8)");
+>  module_param(num_hw_submissions, uint, 0600);
+>
+> -static struct dma_fence *msm_job_dependency(struct drm_sched_job *job,
+> -               struct drm_sched_entity *s_entity)
+> -{
+> -       struct msm_gem_submit *submit =3D to_msm_submit(job);
+> -
+> -       if (!xa_empty(&submit->deps))
+> -               return xa_erase(&submit->deps, submit->last_dep++);
+> -
+> -       return NULL;
+> -}
+> -
+>  static struct dma_fence *msm_job_run(struct drm_sched_job *job)
+>  {
+>         struct msm_gem_submit *submit =3D to_msm_submit(job);
+> @@ -52,7 +41,6 @@ static void msm_job_free(struct drm_sched_job *job)
+>  }
+>
+>  const struct drm_sched_backend_ops msm_sched_ops =3D {
+> -       .dependency =3D msm_job_dependency,
+>         .run_job =3D msm_job_run,
+>         .free_job =3D msm_job_free
+>  };
+> --
+> 2.32.0
+>
