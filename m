@@ -2,121 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F05263F8FB8
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Aug 2021 22:37:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4BD33F8FEB
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Aug 2021 23:29:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243512AbhHZUhK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Aug 2021 16:37:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60352 "EHLO
+        id S230095AbhHZUxP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Aug 2021 16:53:15 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229966AbhHZUhG (ORCPT
+        with ESMTP id S243568AbhHZUxM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Aug 2021 16:37:06 -0400
-Received: from mail-il1-x136.google.com (mail-il1-x136.google.com [IPv6:2607:f8b0:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 94BBCC061757
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Aug 2021 13:36:18 -0700 (PDT)
-Received: by mail-il1-x136.google.com with SMTP id u7so4612803ilk.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Aug 2021 13:36:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=of32+HsVJg8BjIpFCQkLFrsfUsAQLmJI9fq1/gQoEQc=;
-        b=VZbC9LJdjvm7jBIyQ99wpnFBXRhf/RtavRPrmiWlpnBkMX5G2PEaCCDA0eZpnirKCK
-         rYivpqDHjpUeYYuxVPPrkWyKbtMNCAR8T0WpQhagK1uWeMtJX+uXPlYF2ZPbRa0A29zC
-         YImvafN9RqYP7O0dVpcGpMgKLCwbxPpZnMZ8c=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=of32+HsVJg8BjIpFCQkLFrsfUsAQLmJI9fq1/gQoEQc=;
-        b=qtWt05abBs+ZG48QghcGVlIDa9EKV8ADXzpBrgcLDNSIZdR896T28Tpl0P24/FBAKK
-         TuUSd3CjvvDx+9WqeO1I6nR7edGML8fTCvgyvdi8vX3ce27f9bC2LYvh0HpfFCZdtDyh
-         tvdBTacsNBgBVvYcAfOZ2lLWb5xIbQ7e9LTqP+to1VyOLncSSQ9HJeQje/Qqk2flHPI2
-         vpFUq29YVmyhkKzIskUNYMThBJQoUafbd6Ff/1IwNMrXvpuiPTZOYmcTyuyS0sEXmwz2
-         JUBQEEpHyyoz4PB6SZgZK9vyGe79R3ug4TYI9CJVrSnov9C0pKi+qLK4VpbC01+4GehY
-         br6Q==
-X-Gm-Message-State: AOAM533Ntsu/59IwIqNWVq3MV5dgUU3msi96uuKilCKHXOyYY4lHq59N
-        I6GKcqx8EkX7cqIVKQWZ/Eq173tx7P6CJw==
-X-Google-Smtp-Source: ABdhPJyRkfWqSYy31niHw+ms4hWfOPSaclyloJJJGJZo/L06WHJbwCqZMZugmrW1sPE/v2DvyvSTGQ==
-X-Received: by 2002:a05:6e02:12b3:: with SMTP id f19mr4153834ilr.234.1630010177753;
-        Thu, 26 Aug 2021 13:36:17 -0700 (PDT)
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com. [209.85.166.172])
-        by smtp.gmail.com with ESMTPSA id e1sm2288947ils.76.2021.08.26.13.36.16
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Aug 2021 13:36:17 -0700 (PDT)
-Received: by mail-il1-f172.google.com with SMTP id g8so4616059ilc.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Aug 2021 13:36:16 -0700 (PDT)
-X-Received: by 2002:a92:d304:: with SMTP id x4mr4140800ila.82.1630010176526;
- Thu, 26 Aug 2021 13:36:16 -0700 (PDT)
+        Thu, 26 Aug 2021 16:53:12 -0400
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B0D59C061757
+        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Aug 2021 13:52:24 -0700 (PDT)
+Received: from [10.0.20.3] (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 9F1F4200D9;
+        Thu, 26 Aug 2021 22:52:21 +0200 (CEST)
+Subject: Re: [PATCH] soc: qcom: mdt_loader: Drop PT_LOAD check on hash segment
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Shawn Guo <shawnguo@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Siddharth Gupta <sidgup@codeaurora.org>
+References: <20210824094109.7272-1-shawnguo@kernel.org>
+ <0410695f-85fe-1df9-46ee-bc494b81bf23@somainline.org>
+ <20210826141826.GB31229@dragon>
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+Message-ID: <ed941f01-7855-006a-9eb9-29388b3be2f4@somainline.org>
+Date:   Thu, 26 Aug 2021 22:52:21 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-References: <20210726231351.655302-1-bjorn.andersson@linaro.org> <CAE-0n50HohAKisSSsNijcxgZGHdBgt=sQbLE3b7C87wPkLJ0cw@mail.gmail.com>
-In-Reply-To: <CAE-0n50HohAKisSSsNijcxgZGHdBgt=sQbLE3b7C87wPkLJ0cw@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 26 Aug 2021 13:36:04 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VnkJqJnGHawyqNS5+p6miWd44zR7FPXZWgLk5vo9fOYQ@mail.gmail.com>
-Message-ID: <CAD=FV=VnkJqJnGHawyqNS5+p6miWd44zR7FPXZWgLk5vo9fOYQ@mail.gmail.com>
-Subject: Re: [RFC] drm/msm/dp: Allow attaching a drm_panel
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>,
-        Vara Reddy <varar@codeaurora.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20210826141826.GB31229@dragon>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Shawn,
 
-On Wed, Aug 25, 2021 at 6:31 PM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Bjorn Andersson (2021-07-26 16:13:51)
-> > eDP panels might need some power sequencing and backlight management,
-> > so make it possible to associate a drm_panel with a DP instance and
-> > prepare and enable the panel accordingly.
-> >
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> >
-> > This solves my immediate problem on my 8cx laptops, of indirectly controlling
-> > the backlight during DPMS. But my panel is powered when I boot it and as such I
-> > get the hpd interrupt and I don't actually have to deal with a power on
-> > sequence - so I'm posting this as an RFC, hoping to get some input on these
-> > other aspects.
-> >
-> > If this is acceptable I'd be happy to write up an accompanying DT binding
-> > change that marks port 2 of the DP controller's of_graph as a reference to the
-> > attached panel.
->
-> dianders@ mentioned creating a connector (and maybe a bridge) for the DP
-> connector (not eDP)[1]. I'm not sure that's directly related, but I
-> think with the aux bus code the panel isn't managed in the encoder
-> driver. Instead the encoder sees a bridge and tries to power it up and
-> then query things over the aux bus? It's all a little too fuzzy to me
-> right now so I could be spewing nonsense but I think we want to take
-> this bridge route if possible.
->
-> -Stephen
->
-> [1] https://lore.kernel.org/r/CAD=FV=Xd9fizYdxfXYOkpJ_1fZcHp3-ROJ7k4iPg0g0RQ_+A3Q@mail.gmail.com/
+On 8/26/21 4:18 PM, Shawn Guo wrote:
+> Hi Marijn,
+> 
+> Thanks much for the information!
+> 
+> On Tue, Aug 24, 2021 at 05:18:05PM +0200, Marijn Suijten wrote:
+>> Hi Shawn,
+>>
+>> On 8/24/21 11:41 AM, Shawn Guo wrote:
+>>> From: Shawn Guo <shawn.guo@linaro.org>
+>>>
+>>> It's been observed on Sony Xperia M4 Aqua phone, that wcnss firmware has
+>>> the type of the second segment holding hashes just be PT_LOAD.  So drop
+>>> the check on phdrs[1].p_type to get it go on that phone.
+>>>
+>>> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+>>> ---
+>>>    drivers/soc/qcom/mdt_loader.c | 2 +-
+>>>    1 file changed, 1 insertion(+), 1 deletion(-)
+>>>
+>>> diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
+>>> index eba7f76f9d61..6034cd8992b0 100644
+>>> --- a/drivers/soc/qcom/mdt_loader.c
+>>> +++ b/drivers/soc/qcom/mdt_loader.c
+>>> @@ -98,7 +98,7 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len)
+>>>    	if (ehdr->e_phnum < 2)
+>>>    		return ERR_PTR(-EINVAL);
+>>> -	if (phdrs[0].p_type == PT_LOAD || phdrs[1].p_type == PT_LOAD)
+>>> +	if (phdrs[0].p_type == PT_LOAD)
+>>>    		return ERR_PTR(-EINVAL);
+>>>    	if ((phdrs[1].p_flags & QCOM_MDT_TYPE_MASK) != QCOM_MDT_TYPE_HASH)
+>>>
+>>
+>>
+>> Konrad (on the CC-list) originally came up with a similar patch to make his
+>> Sony phone boot (Xperia XZ, MSM8996).  We however concluded that this
+>> solution is wrong, for the simple fact that the code below expects a PT_NULL
+>> header with data in the right place.  Skipping this check most likely means
+>> that the code below will read out of bounds since the mdt file isn't large
+>> enough; this data is supposed to be read from an external file as indicated
+>> by the meaning of PT_LOAD.  We built a solution for this, and fortunately
+>> CAF independently submitted a similar solution to the lists a while ago
+>> which is more thorough:
+>>
+>> https://lore.kernel.org/linux-arm-msm/1609968211-7579-1-git-send-email-sidgup@codeaurora.org/
+> 
+> While a thorough solution is good, I do not think my patch makes
+> anything worse or breaks anything, while fixing my issue on Sony Xperia
+> M4 Aqua.  All the current assumptions hold true for my WCNSS firmware,
+> only except that phdrs[1] gets a PT_LOAD type.
 
-The idea of modeling the connector as a bridge is something that makes
-sense to me, but it probably makes sense to tackle that separately. We
-don't need to block on it.
 
-The whole DP AUX bus can also be tackled separately after the fact. It
-really doesn't change things very much--we still have to find/attach
-the panel. It just makes the panel probe in a slightly different way
-and as a side effect gives the panel access to the DP AUX bus.
+It's not up to me to choose between a thorough or quick solution, but 
+this patch seems to open up the possibility for an out-of-bounds read. 
+The assertion was placed in this function for a reason after all.
 
--Doug
+> There is a blog[1] illustrating the situation quite nicely.  Again, the
+> only thing my WCNSS firmware differs from the illustration is that
+> hash segment gets a PT_LOAD type.
+
+
+Yes, that blog post nicely explains the format but it doesn't cover that 
+the hash is encoded in the second program header nor that it can be 
+copied to be packed tightly against the ELF header?  Maybe that only 
+applies to newer formats?
+
+> Skipping the check will not cause problem for firmwares we have seen,
+> because hash segment is duplicated in .mdt file, and we are using that
+> duplication instead of reading from .b01 file.
+
+
+Can you share some more details about the firmware file you're using: 
+size and the program headers as shown by `readelf -l`?  If possible, can 
+you also validate whether QCOM_MDT_TYPE_HASH is set in phdrs[1].p_flags 
+& QCOM_MDT_TYPE_MASK (using something like GNU poke)?
+
+All the files I'm able to test adhere to `/* Is the header and hash 
+already packed */`: `ehdr_size + hash_size == fw->size` (meaning the 
+file solely consists of a tightly packed ELF header and hash signature) 
+but I won't be surprised if there are firmware files out in the wild 
+with different headers or the hash missing, otherwise the else clause 
+wouldn't exist.
+This else clause causes a read starting at fw->data + phdrs[1].p_offset 
+of phdrs[1].p_filesz bytes which is almost certainly out of bounds if 
+the program header type is PT_LOAD instead of PT_NONE, otherwise it 
+wouldn't need to be loaded from a .bXX file in the first place.
+
+For this quick solution to be valid I propose to reject PT_LOAD in the 
+else clause, and otherwise validate that phdrs[1].p_offset + hash_size 
+<= fw->size.
+The aforementioned patch series in qcom_mdt_bins_are_split (and certain 
+firmware files from Sony phones) show that it is also possible to read 
+PT_NULL headers from external files, as long as the header references a 
+range that is out of bounds of the mdt file.
+
+> Shawn
+> 
+> [1] http://bits-please.blogspot.com/2016/04/exploring-qualcomms-secure-execution.html
+> 
+
+- Marijn
