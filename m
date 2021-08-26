@@ -2,149 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 923473F849B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Aug 2021 11:33:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CAD813F84B1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Aug 2021 11:41:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240955AbhHZJe3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Aug 2021 05:34:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47078 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234425AbhHZJe2 (ORCPT
+        id S234559AbhHZJmg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Aug 2021 05:42:36 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:26063 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233721AbhHZJmg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Aug 2021 05:34:28 -0400
-Received: from mail-wm1-x332.google.com (mail-wm1-x332.google.com [IPv6:2a00:1450:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 876B9C061757
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Aug 2021 02:33:41 -0700 (PDT)
-Received: by mail-wm1-x332.google.com with SMTP id x2-20020a1c7c02000000b002e6f1f69a1eso6395018wmc.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Aug 2021 02:33:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=JJwF0PYPmqolDQLzp/yyP0Yq0kNRDALRe2iRCTul0qQ=;
-        b=SH0mRD4lFXjf5zfnArdRmdr/H92IkTiRG83+lu46nthRk6g7hsBLFtgm+PlV987nZb
-         8qS0NSbfSQEVvJHrd9UuRQQZyRYMk9Om3DXftZgrjCWaMM58LLL7moZvaOPhHV2P6OQY
-         zlQ0dHofnwILHwlhcoYEc4vFcvIjxdR6txsQc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=JJwF0PYPmqolDQLzp/yyP0Yq0kNRDALRe2iRCTul0qQ=;
-        b=bymRQtbhvKdoyWMgBE/FIFdZ/pPQUnp44jwTUAFi9epp3t3jLlRkjQXV94GVFpR6Gg
-         Huyiws0RQP8yrEfNyAc5zR+I2/JuGrfrKNBaLAD/cmI1rDqpG1HIzsdJgtLPWD+gst6O
-         B2lDHBGLLp7U0NSLP/468asImvNS1As8raeKUHDY6/PdUr61dqwAjOdV/ly0mCXXIPvU
-         mEVAGJd7pQuthLUpwsew5NdhMq/mGf546DJdmgzNcra/ig5CbxZaWWk70CVMGzm1QDAv
-         +jIWq3jrcQK5WXg5lx/W65ipJndfY24NwzsLmb1oMv3kH1IiraxsBaDPbTLHbjZNrwQk
-         hm6g==
-X-Gm-Message-State: AOAM531aVmBtCvSfNpkBaamkbmtvlLRTD3uYzSlsBNB6NrZObq2E4NC0
-        0V/0iPj5EmrYpw8Nw/rqROlA6g==
-X-Google-Smtp-Source: ABdhPJzc23DuJoTC8nNJ25VQNbiKhhUYQ5XEsHa4ESe0XB/c1un0JqfR7O83A2HYXCq/etCBggdOqg==
-X-Received: by 2002:a05:600c:1d27:: with SMTP id l39mr2677127wms.146.1629970420205;
-        Thu, 26 Aug 2021 02:33:40 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id z6sm2088220wmp.1.2021.08.26.02.33.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 26 Aug 2021 02:33:39 -0700 (PDT)
-From:   Daniel Vetter <daniel.vetter@ffwll.ch>
-To:     DRI Development <dri-devel@lists.freedesktop.org>
-Cc:     Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        Rob Clark <robdclark@chromium.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org,
-        Daniel Vetter <daniel.vetter@intel.com>
-Subject: [PATCH] drm/msm: Improve drm/sched point of no return rules
-Date:   Thu, 26 Aug 2021 11:33:34 +0200
-Message-Id: <20210826093334.1117944-1-daniel.vetter@ffwll.ch>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210817085308.3557257-1-daniel.vetter@ffwll.ch>
-References: <20210817085308.3557257-1-daniel.vetter@ffwll.ch>
+        Thu, 26 Aug 2021 05:42:36 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1629970909; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=J1eX9vP54tGp5BhTuwbE6QmoNUuLLi+lBb5jrhjvGnM=; b=Vcd6JxdKbacaMhzA7+x76sr9Ck2KZR2I8c1tinzEJHcgNCH3NdFha2XfL1RrtDS2ZBgnq6j8
+ UxVi0mVbltUFNfF5W+VsyKoQv0mh47iev7dvysa+Pp5AWYXBIh5xixBJ+elTIburfxEEvbrH
+ SATz85TC1kJ8xXUrflieT2r8Br0=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 612761c7d6653df76799e4ab (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 26 Aug 2021 09:41:27
+ GMT
+Sender: sanm=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id B2C97C4360D; Thu, 26 Aug 2021 09:41:26 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+        version=3.4.0
+Received: from [192.168.0.104] (unknown [49.206.49.109])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sanm)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 00F9CC43460;
+        Thu, 26 Aug 2021 09:41:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 00F9CC43460
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: Regarding usb dwc3 core shutdown callback
+To:     Felipe Balbi <balbi@kernel.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Pratham Pratap <prathampratap@codeaurora.org>,
+        Jack Pham <jackp@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Doug Anderson <dianders@chromium.org>
+References: <e34c8e16-6521-c6e4-f3ed-9d8520d4ece2@codeaurora.org>
+ <87bl63yqq8.fsf@kernel.org>
+From:   Sandeep Maheswaram <sanm@codeaurora.org>
+Message-ID: <eb975a76-1482-f502-4dc1-7993cc3f30d0@codeaurora.org>
+Date:   Thu, 26 Aug 2021 15:11:18 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
+In-Reply-To: <87bl63yqq8.fsf@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Originally drm_sched_job_init was the point of no return, after which
-drivers really should submit a job. I've split that up, which allows
-us to fix this issue pretty easily.
+Hi,
 
-Only thing we have to take care of is to not skip to error paths after
-that. Other drivers do this the same for out-fence and similar things.
+On 8/12/2021 2:37 PM, Felipe Balbi wrote:
+> Hi,
+>
+> (why isn't this email plain/text? Content Type was set to multipart
+> alternative, please configure your email client correctly :-)
+>
+> While at that, also make sure to break lines at 80-columns)
+>
+> Sandeep Maheswaram <sanm@codeaurora.org> writes:
+>> Hi,
+>>
+>> Earlier I have posted the patch for usb dwc3 core shutdown callback
+>>
+>> https://lore.kernel.org/linux-arm-msm/1618380209-20114-1-git-send-email-sanm@codeaurora.org/
+>>
+>> and it was reverted due to issues.
+> Right, as should be expected when we find regressions
+>
+>> https://lore.kernel.org/linux-usb/20210603151742.298243-1-alexandru.elisei@arm.com/
+>>
+>> As we already have shutdown callback in xhci plat driver where we halt
+>> the controller, so there will be no transactions with usb devices.
+>>
+>> https://lore.kernel.org/linux-usb/20200306092328.41253-1-ran.wang_1@nxp.com/
+>>
+>> So I think dwc3 core shutdown may not be required at least when we are
+>> using host mode. Let me know your opinion about this.
+> If that's the case, then sure. Please validate the condition, though,
+> and kindly report back on your findings
 
-v2: It's not really a bugfix, just an improvement, since all
-drm_sched_job_arm does is reserve the fence number. And gaps should be
-fine, as long as the drm_sched_job doesn't escape anywhere at all.
+I have enabled couple of logs in shutdown path and see no URBs enqueued 
+after xhci shut down.
 
-For robustness it's still better to align with other drivers here and
-not bail out after job_arm().
+Hope this is enough for validation . Please suggest if anything more I 
+could do.
 
-v3: I misplaced drm_sched_job_arm by _one_ line! Thanks to Rob for
-testing and debug help.
+[  312.862737] systemd-journald[650]: Received SIGTERM from PID 1 (init).
+[  312.866332] xhci-hcd xhci-hcd.0.auto: xhci_urb_enqueue
+[  312.875205] xhci-hcd xhci-hcd.0.auto: xhci_urb_enqueue
+[  312.951045] Unsafe core_pattern used with fs.suid_dumpable=2.
+[  312.951045] Pipe handler or fully qualified core dump path required.
+[  312.951045] Set kernel.core_pattern before fs.suid_dumpable.
+[  312.981364] ip_local_port_range: prefer different parity for 
+start/end values.
+[  313.086729] Bluetooth: qca_download_firmware() hci0: QCA Downloading 
+qca/crnv32.bin
+[  313.194059] init: console-ttyMSM0 main process (516) killed by TERM 
+signal
+[  313.317109] kvm: exiting hardware virtualization
+[  313.338988] platform video-firmware.0: Removing from iommu group 14
+[  313.345975] platform wifi-firmware.0: Removing from iommu group 12
+[  313.372244] xhci-hcd xhci-hcd.0.auto: -->xhci_shutdown
+[  313.377591] xhci-hcd xhci-hcd.0.auto: // Halt the HC
+[  313.382811] xhci-hcd xhci-hcd.0.auto: xhci_shutdown completed - 
+status = 1
+[  313.398238] Bluetooth: qca_uart_setup() hci0: QCA setup on UART is 
+completed
+[  313.405583] debugfs: Directory 'ibs' with parent 'hci0' already present!
+[  313.439006] Bluetooth: qca_hw_error() hci0: mem_dump_status: 0
+[  313.445073] Bluetooth: qca_send_crashbuffer() hci0: crash the soc to 
+collect controller dump
+[  313.595791] arm-smmu 15000000.iommu: disabling translation
+[  313.601831] arm-smmu 5040000.iommu: disabling translation
+[  313.608559] reboot: Restarting system
 
-Cc: Rob Clark <robdclark@chromium.org>
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: Sumit Semwal <sumit.semwal@linaro.org>
-Cc: "Christian König" <christian.koenig@amd.com>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org
-Cc: linux-media@vger.kernel.org
-Cc: linaro-mm-sig@lists.linaro.org
-Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
----
- drivers/gpu/drm/msm/msm_gem_submit.c | 13 ++++++-------
- 1 file changed, 6 insertions(+), 7 deletions(-)
+Regards
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index 4d1c4d5f6a2a..71b8c8f752a3 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -52,8 +52,6 @@ static struct msm_gem_submit *submit_create(struct drm_device *dev,
- 		return ERR_PTR(ret);
- 	}
- 
--	drm_sched_job_arm(&job->base);
--
- 	xa_init_flags(&submit->deps, XA_FLAGS_ALLOC);
- 
- 	kref_init(&submit->ref);
-@@ -880,6 +878,8 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 
- 	submit->nr_cmds = i;
- 
-+	drm_sched_job_arm(&submit->base);
-+
- 	submit->user_fence = dma_fence_get(&submit->base.s_fence->finished);
- 
- 	/*
-@@ -891,17 +891,16 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
- 	if (submit->fence_id < 0) {
- 		ret = submit->fence_id = 0;
- 		submit->fence_id = 0;
--		goto out;
- 	}
- 
--	if (args->flags & MSM_SUBMIT_FENCE_FD_OUT) {
-+	if (ret == 0 && args->flags & MSM_SUBMIT_FENCE_FD_OUT) {
- 		struct sync_file *sync_file = sync_file_create(submit->user_fence);
- 		if (!sync_file) {
- 			ret = -ENOMEM;
--			goto out;
-+		} else {
-+			fd_install(out_fence_fd, sync_file->file);
-+			args->fence_fd = out_fence_fd;
- 		}
--		fd_install(out_fence_fd, sync_file->file);
--		args->fence_fd = out_fence_fd;
- 	}
- 
- 	submit_attach_object_fences(submit);
--- 
-2.32.0
+Sandeep
 
