@@ -2,122 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BA49F3F8F37
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Aug 2021 21:51:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6B4603F8F46
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Aug 2021 21:55:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240521AbhHZTwZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Aug 2021 15:52:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50284 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233100AbhHZTwY (ORCPT
+        id S232128AbhHZTzt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Aug 2021 15:55:49 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:58352 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230011AbhHZTzt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Aug 2021 15:52:24 -0400
-Received: from mail-pl1-x635.google.com (mail-pl1-x635.google.com [IPv6:2607:f8b0:4864:20::635])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30C9FC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Aug 2021 12:51:37 -0700 (PDT)
-Received: by mail-pl1-x635.google.com with SMTP id c4so2457605plh.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 26 Aug 2021 12:51:37 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=VDKSZwM6+MkspeAfVSvtL1ryQMnZ/8yIsg8vSwepJrk=;
-        b=kKU5fomT08zxgo0C6ur54X+WSdXkohiKvaojhLd65QKKOp1DUTy43t4weo5hEyBW0/
-         LGi2JAL/MobSKVsax+S4xp7F94wJP8F7bkEgpyVd/1FkDLxw1NPGL00nkQRIl9kaXcls
-         zVTo+8SrCNlubKZsH42QWBHs3OLWvlCkPkTnk=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=VDKSZwM6+MkspeAfVSvtL1ryQMnZ/8yIsg8vSwepJrk=;
-        b=WbsPSrY1qvhfv2rEHe0SgCTm3414ULC3wIE7Wab/m/nAiKaiG/+aBpYlR9TcKuapD2
-         WWCJCBMsxr+g90VvTFkubDBXmdkEAXoqSeZ0hhJTp+2pLDFaFxyHer7I0MFBP/xJzZtH
-         J9rJj1RJJwgIsfKG28tRSIKmHDUbafcGra0uG3TcIn3uZKg1mv6hNMFzjohRzXv+2q/1
-         sF2zyoHFeU2zwk7OrXP3o4aXVe7H/dqlJq3ESXIXQwRy/CkhzR1egxneExqoAswC7tGA
-         YQvURe+TOQJA5Dw3jmkdtPndILl6hdJqbAMgDtEaGO2ME5a+jRqrKW4OC0MAnC+TbGLI
-         WGsg==
-X-Gm-Message-State: AOAM532QwqasqNgAPhtyGVYMX7cy52R6dq3t0/K4191BAriB3r9krSuR
-        mmxvPEx87mV72Sui8+OpJxv1vA==
-X-Google-Smtp-Source: ABdhPJx6mpM4H0UsaVPSAz7cl4fw0b0Mrl9F8syKLHFXkbN/VITueXvFSZJ84fZAJAYlW/wHoRFHIw==
-X-Received: by 2002:a17:90a:9f91:: with SMTP id o17mr18336584pjp.29.1630007496692;
-        Thu, 26 Aug 2021 12:51:36 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:bd0b:bcb8:ebdb:c24d])
-        by smtp.gmail.com with UTF8SMTPSA id z8sm3749169pfa.113.2021.08.26.12.51.35
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 26 Aug 2021 12:51:36 -0700 (PDT)
-Date:   Thu, 26 Aug 2021 12:51:34 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     rajpat@codeaurora.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, swboyd@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, rnayak@codeaurora.org,
-        saiprakash.ranjan@codeaurora.org, msavaliy@qti.qualcomm.com,
-        skakit@codeaurora.org
-Subject: Re: [PATCH V5 3/7] arm64: dts: sc7280: Add QUPv3 wrapper_0 nodes
-Message-ID: <YSfwxuX22Ix4fqX2@google.com>
-References: <1628754078-29779-1-git-send-email-rajpat@codeaurora.org>
- <1628754078-29779-4-git-send-email-rajpat@codeaurora.org>
- <YRUsr6x9vqvaBB9i@google.com>
- <114d7419b0a85fcacf775cc34f279f0e@codeaurora.org>
+        Thu, 26 Aug 2021 15:55:49 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1630007701; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=EXwBrTAGYH3RRb4lnABv9qAlkU3sSh0tGVtUJ78yQY0=; b=JL5zxwl9xo8IHlPfVb7Lax64UgjWGmh1GuqrKTo6RtYF4ySdEOgIbHOAP/bUFCspiN8j7Omh
+ 7JjAWcXTHbxpnmO9sgrMyAE/UU2mX4MTlCo/c/PA4LS9BQW1iHrNm2HPxYwXdiw71MNoHOhG
+ KqtH2Fmx2lBiP/R09LSOmMK57SM=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
+ 6127f186d6653df767d408b5 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 26 Aug 2021 19:54:46
+ GMT
+Sender: hemantk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 5F39AC4360C; Thu, 26 Aug 2021 19:54:45 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+        version=3.4.0
+Received: from [192.168.1.9] (cpe-76-176-73-171.san.res.rr.com [76.176.73.171])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: hemantk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 32E43C4338F;
+        Thu, 26 Aug 2021 19:54:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 32E43C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [PATCH] bus: mhi: core: Use cached values for calculating the
+ shared write pointer
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>, mani@kernel.org,
+        bbhatt@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <1629997263-11147-1-git-send-email-quic_jhugo@quicinc.com>
+From:   Hemant Kumar <hemantk@codeaurora.org>
+Message-ID: <30921a2b-1cd0-bbaa-83e1-c414d321493e@codeaurora.org>
+Date:   Thu, 26 Aug 2021 12:54:43 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <114d7419b0a85fcacf775cc34f279f0e@codeaurora.org>
+In-Reply-To: <1629997263-11147-1-git-send-email-quic_jhugo@quicinc.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Aug 26, 2021 at 06:37:02PM +0530, rajpat@codeaurora.org wrote:
-> On 2021-08-12 19:44, Matthias Kaehlcke wrote:
-> > On Thu, Aug 12, 2021 at 01:11:14PM +0530, Rajesh Patil wrote:
-> > > From: Roja Rani Yarubandi <rojay@codeaurora.org>
-> > > 
-> > > Add QUPv3 wrapper_0 DT nodes for SC7280 SoC.
-> > > 
-> > > Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
-> > > Signed-off-by: Rajesh Patil <rajpat@codeaurora.org>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/sc7280.dtsi | 720
-> > > +++++++++++++++++++++++++++++++++++
-> > >  1 file changed, 720 insertions(+)
-> > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > > b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > > index f8dd5ff..e461395 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > >
-> > > ...
-> > >
-> > > +			spi0: spi@980000 {
-> > > +				compatible = "qcom,geni-spi";
-> > > +				reg = <0 0x00980000 0 0x4000>;
-> > > +				clock-names = "se";
-> > > +				clocks = <&gcc GCC_QUPV3_WRAP0_S0_CLK>;
-> > > +				pinctrl-names = "default";
-> > > +				pinctrl-0 = <&qup_spi0_data_clk>, <&qup_spi0_cs>,
-> > > <&qup_spi0_cs_gpio>;
-> > 
-> > What is the story behind 'qup_spiN_cs' and 'qup_spiN_cs_gpio'? Both
-> > configure
-> > the CS pin with a different function:
-> > 
+
+
+On 8/26/2021 10:01 AM, Jeffrey Hugo wrote:
+> mhi_recycle_ev_ring() computes the shared write pointer for the ring
+> (ctxt_wp) using a read/modify/write pattern where the ctxt_wp value in the
+> shared memory is read, incremented, and written back.  There are no checks
+> on the read value, it is assumed that it is kept in sync with the locally
+> cached value.  Per the MHI spec, this is correct.  The device should only
+> read ctxt_wp, never write it.
 > 
-> As per discussion here [1], we have split like this.
+> However, there are devices in the wild that violate the spec, and can
+> update the ctxt_wp in a specific scenario.  This can cause corruption, and
+> violate the above assumption that the ctxt_wp is in sync with the cached
+> value.
 > 
-> [1] https://lore.kernel.org/patchwork/patch/1393353/#1591826
+> This can occur when the device has loaded firmware from the host, and is
+> transitioning from the SBL EE to the AMSS EE.  As part of shutting down
+> SBL, the SBL flushes it's local MHI context to the shared memory since
+> the local context will not persist across an EE change.  In the case of
+> the event ring, SBL will flush its entire context, not just the parts that
+> it is allowed to update.  This means SBL will write to ctxt_wp, and
+> possibly corrupt it.
+> 
+> An example:
+> 
+> Host				Device
+> ----				---
+> Update ctxt_wp to 0x1f0
+> 				SBL observes 0x1f0
+> Update ctxt_wp to 0x0
+> 				Starts transition to AMSS EE
+> 				Context flush, writes 0x1f0 to ctxt_wp
+> Update ctxt_wp to 0x200
+> Update ctxt_wp to 0x210
+> 				AMSS observes 0x210
+> 				0x210 exceeds ring size
+> 				AMSS signals syserr
+> 
+> The reason the ctxt_wp goes off the end of the ring is that the rollover
+> check is only performed on the cached wp, which is out of sync with
+> ctxt_wp.
+> 
+> Since the host is the authority of the value of ctxt_wp per the MHI spec,
+> we can fix this issue by not reading ctxt_wp from the shared memory, and
+> instead compute it based on the cached value.  If SBL corrupts ctxt_wp,
+> the host won't observe it, and will correct the value at some point later.
+> 
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> ---
+Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
 
-IIUC that's only about having separate configs for each pin, instead of
-groups like 'qup-spi0-default'. What you are doing above with 'qup_spi0_cs'
-and 'qup_spi0_cs_gpio' is to configure the same pin (GPIO 3) both as SPI
-chip select and as GPIO. Which one is it?
+LGTM
 
-I imagine we want to have both pinctrl definitions to allow a board to
-configure the pin either as SPI CS or GPIO. However it should be only one
-of the two at a time, and the SoC .dtsi should provide a reasonable
-default, which probably is SPI CS.
-
-Maybe I'm missing something, if so please provide details on why it is
-necessary to have this config.
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum, a Linux Foundation Collaborative Project
