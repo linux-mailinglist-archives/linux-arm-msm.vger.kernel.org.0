@@ -2,61 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 51C4F3F8E4D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Aug 2021 20:57:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A0E03F8E8B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 26 Aug 2021 21:14:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243440AbhHZS5m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 26 Aug 2021 14:57:42 -0400
-Received: from mail.kernel.org ([198.145.29.99]:36684 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S243375AbhHZS5l (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 26 Aug 2021 14:57:41 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id D603961037;
-        Thu, 26 Aug 2021 18:56:53 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1630004213;
-        bh=w4Uab4AooAYn0N9kq1geOud3mJ+cZq68EOwvt0u2rQo=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=mnwhPIb9BXNGirjTKiFTcKNebA5vOZ+gV1j/kpiFHadoBWBJrLeszaECJOSWVjUaB
-         JxBqJtUPRCpKdeNU4YyGLqsHDKErd0nlPm0QJOHv5xXFpCVO+7SA3qwZ3mrzSzK3zx
-         KIkF6/4OJjyI4WnEE3z3uGF4Uh3cS2ySmLt/1j/3dx9P2IHO/1LewRfY759HDBq82V
-         TJU2NBxr8la5Dk31hnM5Ui7gt3Ngs1iXEXxOVGgC1G1zbg9jegVUAqV8ZPo+W5VHY0
-         enrmfgnKL7zOU4QJlDudK9eeD+P2DuVjExZCgJCAF8DTzCpYJLyWvb/V0inXJxBUGA
-         sxn1DpBXsM/NA==
-Content-Type: text/plain; charset="utf-8"
+        id S243398AbhHZTPC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 26 Aug 2021 15:15:02 -0400
+Received: from mailfilter04-out40.webhostingserver.nl ([195.211.73.157]:61555
+        "EHLO mailfilter04-out40.webhostingserver.nl" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S243339AbhHZTO6 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 26 Aug 2021 15:14:58 -0400
+X-Greylist: delayed 963 seconds by postgrey-1.27 at vger.kernel.org; Thu, 26 Aug 2021 15:14:58 EDT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=exalondelft.nl; s=whs1;
+        h=content-transfer-encoding:mime-version:message-id:date:subject:cc:to:from:
+         from;
+        bh=67cnWy3rW/WRnFpQePp6vVIJLxw7FP6uaLsSK01XjKk=;
+        b=LkpAVlIBxEC0Tl02Rax81B/yHLLCoLYqsROgvkNUu1r75o3tmc1N0/SOg0G4ZwtdARAFQ7ES0Lvpf
+         rYiwxxXvztzsmoeDTA4dV9vBDUoWZbdWnGJKYadL+aZGlZLVtTa4kBVGuk9Eo//1+mqpVdzqkCjdpw
+         xZfqeGX3yQ7/H/KEtrDVKdg0jdQkhacaLxonW/0ktY/+snjRRKBkFm3f7mrzScexeoISLsJyIBhncS
+         tbW4yqKOqZRJALibjYS90HNnqhMx1UI44OShRAI5Pi0KXo3tsq7LSiHQmWRgkGa35EJbEifMlKjVxG
+         nY1ylJoJqSdiENSsubR7W7ln9vMx2mA==
+X-Halon-ID: 8ac6b3ea-069f-11ec-8938-001a4a4cb95f
+Received: from s198.webhostingserver.nl (s198.webhostingserver.nl [141.138.168.154])
+        by mailfilter04.webhostingserver.nl (Halon) with ESMTPSA
+        id 8ac6b3ea-069f-11ec-8938-001a4a4cb95f;
+        Thu, 26 Aug 2021 20:58:04 +0200 (CEST)
+Received: from [2001:981:6fec:1:f9ad:97f3:2f9b:d8ba] (helo=localhost.localdomain)
+        by s198.webhostingserver.nl with esmtpa (Exim 4.94.2)
+        (envelope-from <ftoth@exalondelft.nl>)
+        id 1mJKZh-009E4p-KA; Thu, 26 Aug 2021 20:58:03 +0200
+From:   Ferry Toth <ftoth@exalondelft.nl>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Ferry Toth <ftoth@exalondelft.nl>,
+        Ruslan Bilovol <ruslan.bilovol@gmail.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Jonathan Corbet <corbet@lwn.net>,
+        Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
+        Pawel Laszczak <pawell@cadence.com>,
+        Felipe Balbi <balbi@kernel.org>,
+        Jack Pham <jackp@codeaurora.org>, linux-kernel@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-doc@vger.kernel.org
+Cc:     Lorenzo Colitti <lorenzo@google.com>,
+        Wesley Cheng <wcheng@codeaurora.org>, robh+dt@kernel.org,
+        agross@kernel.org, bjorn.andersson@linaro.org,
+        frowand.list@gmail.com, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, heikki.krogerus@linux.intel.com,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Andy Shevchenko <andy.shevchenko@gmail.com>,
+        Pavel Hofman <pavel.hofman@ivitera.com>
+Subject: [PATCH v2 0/3] Revert "usb: gadget: u_audio: add real feedback implementation"
+Date:   Thu, 26 Aug 2021 20:57:36 +0200
+Message-Id: <20210826185739.3868-1-ftoth@exalondelft.nl>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <IPvVnyRWbHuQFswiFz0W08Kj1dKoH55ddQVyIIPhMJw@cp7-web-043.plabs.ch>
-References: <IPvVnyRWbHuQFswiFz0W08Kj1dKoH55ddQVyIIPhMJw@cp7-web-043.plabs.ch>
-Subject: Re: [PATCH RESEND 2/2] clk: qcom: Add Global Clock Controller driver for MSM8953
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     agross@kernel.org, mturquette@baylibre.com, robh+dt@kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Vladimir Lypak <junak.pub@gmail.com>,
-        Adam Skladowski <a_skl39@protonmail.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Sireesh Kodali <sireeshkodali@protonmail.com>
-To:     Sireesh Kodali <sireeshkodali@protonmail.com>,
-        bjorn.andersson@linaro.org
-Date:   Thu, 26 Aug 2021 11:56:52 -0700
-Message-ID: <163000421272.1317818.15533893617596305776@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Content-Transfer-Encoding: 8bit
+X-Antivirus-Scanner: Clean mail though you should still use an Antivirus
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sireesh Kodali (2021-08-05 02:06:57)
-> From: Vladimir Lypak <junak.pub@gmail.com>
->=20
-> This driver provides clocks, resets and power domains for MSM8953
-> and compatible SoCs: APQ8053, SDM450, SDA450, SDM632, SDA632.
->=20
-> Signed-off-by: Vladimir Lypak <junak.pub@gmail.com>
-> Signed-off-by: Adam Skladowski <a_skl39@protonmail.com>
-> Reviewed-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> Signed-off-by: Sireesh Kodali <sireeshkodali@protonmail.com>
-> ---
+Although there is a patch resolving this issue (see 
+https://lore.kernel.org/linux-usb/1jilzsy8g7.fsf@starbuckisacylon.baylibre.com/T/#u)
+it needs a little work and will not be ready for v5.14.0 release. Until then
+revert the series.
 
-Applied to clk-next
+v2:
+- Added SoB (Balbi)
+
+
+Ferry Toth (3):
+  Revert "usb: gadget: u_audio: add real feedback implementation"
+  Revert "usb: gadget: f_uac2: add adaptive sync support for capture"
+  Revert "usb: gadget: f_uac2/u_audio: add feedback endpoint support"
+
+ .../ABI/testing/configfs-usb-gadget-uac2      |   2 -
+ Documentation/usb/gadget-testing.rst          |   2 -
+ drivers/usb/gadget/function/f_uac2.c          | 144 +----------
+ drivers/usb/gadget/function/u_audio.c         | 225 +-----------------
+ drivers/usb/gadget/function/u_audio.h         |  12 -
+ drivers/usb/gadget/function/u_uac2.h          |   4 -
+ 6 files changed, 6 insertions(+), 383 deletions(-)
+
+-- 
+2.30.2
+
