@@ -2,105 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B0E7F3F9AAD
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Aug 2021 16:12:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 958353F9AB2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Aug 2021 16:14:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233888AbhH0OM5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Aug 2021 10:12:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44882 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231571AbhH0OM5 (ORCPT
+        id S235864AbhH0OOb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Aug 2021 10:14:31 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:50066 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232449AbhH0OO3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Aug 2021 10:12:57 -0400
-Received: from mail-pf1-x42a.google.com (mail-pf1-x42a.google.com [IPv6:2607:f8b0:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CAEDEC061757
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Aug 2021 07:12:08 -0700 (PDT)
-Received: by mail-pf1-x42a.google.com with SMTP id 7so5783478pfl.10
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Aug 2021 07:12:08 -0700 (PDT)
+        Fri, 27 Aug 2021 10:14:29 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=XokpzLMEle1i3mpv2Trg+HlaPyYhvdKVEJQHpqOpgjM=;
-        b=DCUTatF2l9Oj8RMTltGhJro0gf1O4XxfrgPA58HlegpdjtaHMqS4wMoL1TfWeb6F+0
-         3aqHsDES2rTD6kRr/5HmjZJxyTssp7SVKY/KSx1eNVFK3BBssVO78OqkP8x1zTzJSUco
-         aH8vnguGbvfRKQGS8aAHIUKb938D24M17gZ+nlScewUuuNpiwwjM67U5sPUzajDRFC4z
-         fCKMvFOJSzqNJq9Mt3bk8u2MI3+Brisbm06aZ6WG6CEjI97rdMTvrnsDVUHib0koZXI0
-         jHWhQJ6xRCCpHtHsxAg1JyCNf9wIwqwuzLJ5lj6k+WwAG1xi3MiL70UP9SwqmvQ+EOnD
-         e5VQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=XokpzLMEle1i3mpv2Trg+HlaPyYhvdKVEJQHpqOpgjM=;
-        b=qZyETmmUTd2E9JtQ24T8ZTn7d57s3KIMfd0nvhRUuYR+VrTM1wX6aMqo9ARZayGVfd
-         7ng0CM0BgS3VJyW4msdV7Mrx2CtpGQcl9Z/hd7WKWA4ItKXdA+tMWkM+5IRIgf/a6Ac+
-         KFUraWiiiNvXN3/71FaE9UvG6lDhABuWQE9RHOpmdIrAbELyWaWKglu361m7hve/uNZj
-         s/vQ3zLDCGQSCR1KkBj/ZCabZgG62GjAHZ8+l/vws1NMlP/R8St+T8nNAoeM/oG5JAaA
-         H7TcAFKNv8M2gP5C5EM2HrjWY/nmg+xYHbomaGk5Kj8iqxyyVzLyovg87D5Gb+mgAwRa
-         0aIg==
-X-Gm-Message-State: AOAM531GcqoYePxC0VthZRp80+SVvGHNX4U55tnnlv1PTE9nm0+R94qA
-        IFvKq9IVDZfgCi4dMWDOgqP9Pg==
-X-Google-Smtp-Source: ABdhPJxbtiVYg6JcgTQESNnXAC4tE4mI1EW6K6wdKF9NcoR+T+y1JL5RBsZJ+E68Xl/CNabr7QQG6A==
-X-Received: by 2002:a05:6a00:234f:b0:3eb:3ffd:6da2 with SMTP id j15-20020a056a00234f00b003eb3ffd6da2mr9189931pfj.15.1630073528059;
-        Fri, 27 Aug 2021 07:12:08 -0700 (PDT)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id t12sm7735105pgo.56.2021.08.27.07.12.05
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 27 Aug 2021 07:12:07 -0700 (PDT)
-Date:   Fri, 27 Aug 2021 22:12:01 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Shawn Guo <shawnguo@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Pavel Dubrova <pashadubrova@gmail.com>,
-        Siddharth Gupta <sidgup@codeaurora.org>
-Subject: Re: [PATCH] soc: qcom: mdt_loader: Drop PT_LOAD check on hash segment
-Message-ID: <20210827141200.GA4274@dragon>
-References: <20210824094109.7272-1-shawnguo@kernel.org>
- <0410695f-85fe-1df9-46ee-bc494b81bf23@somainline.org>
- <20210826141826.GB31229@dragon>
- <ed941f01-7855-006a-9eb9-29388b3be2f4@somainline.org>
- <20210827062359.GC31229@dragon>
- <3df9b523-4d8b-b817-f074-88e38456b35b@somainline.org>
- <20210827095716.GD31229@dragon>
- <9166e1a9-5afa-7ae8-91e5-21704bc7a40f@somainline.org>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1630073620; x=1661609620;
+  h=from:to:cc:subject:date:message-id:mime-version:
+   content-transfer-encoding;
+  bh=cooRg+8poDt2U3SIxIP/cBwAlBTa7XLQaObBrJSXAXw=;
+  b=R1o/RvQWMrRgQmfIzSz/1RSCzIx5ZyV2JGrz8ke4YhRZ1glNB8qEbWsd
+   QTEqWZ1VkUDSU+TkzQRe+vAWWh0Qq04IGyAGulhm7MfPJd0SUQ3ygeuOX
+   7X6gk0+HyH1V6H6Ns0HN0lPMm9O7caw30tcObGzPiLBVPS7BP5o5oXStg
+   E=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 27 Aug 2021 07:13:39 -0700
+X-QCInternal: smtphost
+Received: from nalasex01a.na.qualcomm.com ([10.47.209.196])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Aug 2021 07:13:39 -0700
+Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.922.7;
+ Fri, 27 Aug 2021 07:13:38 -0700
+From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
+To:     <mani@kernel.org>, <hemantk@codeaurora.org>,
+        <bbhatt@codeaurora.org>
+CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        "Jeffrey Hugo" <quic_jhugo@quicinc.com>
+Subject: [PATCH v2] bus: mhi: core: Use cached values for calculating the shared write pointer
+Date:   Fri, 27 Aug 2021 08:13:26 -0600
+Message-ID: <1630073606-13671-1-git-send-email-quic_jhugo@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9166e1a9-5afa-7ae8-91e5-21704bc7a40f@somainline.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 7bit
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanexm03d.na.qualcomm.com (10.85.0.91) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 27, 2021 at 12:46:47PM +0200, Marijn Suijten wrote:
-> Hi Shawn,
-> 
-> On 8/27/21 11:57 AM, Shawn Guo wrote:
-> > > [..]
-> > > PT_LOAD specifies that the segment is to be loaded externally.  The fact
-> > > that our .mdt file is a tight pack of b00 + b01 is mere convenience, but is
-> > > it also a given for the future?  Can we rely on this assumption to never
-> > > change?
-> > 
-> > My patch is trying to fix an existing issue, not anything for the
-> > future.
-> 
-> 
-> We both agree that the PT_LOAD assertion here is too strict, but removing it
-> altogether makes the function too lenient and allows for possible bugs.  To
-> solve your issue in the simple case I have already suggested to add an extra
-> bounds check.
+mhi_recycle_ev_ring() computes the shared write pointer for the ring
+(ctxt_wp) using a read/modify/write pattern where the ctxt_wp value in the
+shared memory is read, incremented, and written back.  There are no checks
+on the read value, it is assumed that it is kept in sync with the locally
+cached value.  Per the MHI spec, this is correct.  The device should only
+read ctxt_wp, never write it.
 
+However, there are devices in the wild that violate the spec, and can
+update the ctxt_wp in a specific scenario.  This can cause corruption, and
+violate the above assumption that the ctxt_wp is in sync with the cached
+value.
 
-So you proposed to reject PT_LOAD in the else clause, which right now
-handles .mbn case, are you sure hash segment in .mbn is not going to be
-PT_LOAD?
+This can occur when the device has loaded firmware from the host, and is
+transitioning from the SBL EE to the AMSS EE.  As part of shutting down
+SBL, the SBL flushes it's local MHI context to the shared memory since
+the local context will not persist across an EE change.  In the case of
+the event ring, SBL will flush its entire context, not just the parts that
+it is allowed to update.  This means SBL will write to ctxt_wp, and
+possibly corrupt it.
 
-Shawn
+An example:
+
+Host				Device
+----				---
+Update ctxt_wp to 0x1f0
+				SBL observes 0x1f0
+Update ctxt_wp to 0x0
+				Starts transition to AMSS EE
+				Context flush, writes 0x1f0 to ctxt_wp
+Update ctxt_wp to 0x200
+Update ctxt_wp to 0x210
+				AMSS observes 0x210
+				0x210 exceeds ring size
+				AMSS signals syserr
+
+The reason the ctxt_wp goes off the end of the ring is that the rollover
+check is only performed on the cached wp, which is out of sync with
+ctxt_wp.
+
+Since the host is the authority of the value of ctxt_wp per the MHI spec,
+we can fix this issue by not reading ctxt_wp from the shared memory, and
+instead compute it based on the cached value.  If SBL corrupts ctxt_wp,
+the host won't observe it, and will correct the value at some point later.
+
+Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+---
+
+v2:
+Fix typo on the ring base
+
+ drivers/bus/mhi/core/main.c | 9 ++-------
+ 1 file changed, 2 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+index c01ec2f..dc86fdb3 100644
+--- a/drivers/bus/mhi/core/main.c
++++ b/drivers/bus/mhi/core/main.c
+@@ -533,18 +533,13 @@ irqreturn_t mhi_intvec_handler(int irq_number, void *dev)
+ static void mhi_recycle_ev_ring_element(struct mhi_controller *mhi_cntrl,
+ 					struct mhi_ring *ring)
+ {
+-	dma_addr_t ctxt_wp;
+-
+ 	/* Update the WP */
+ 	ring->wp += ring->el_size;
+-	ctxt_wp = *ring->ctxt_wp + ring->el_size;
+ 
+-	if (ring->wp >= (ring->base + ring->len)) {
++	if (ring->wp >= (ring->base + ring->len))
+ 		ring->wp = ring->base;
+-		ctxt_wp = ring->iommu_base;
+-	}
+ 
+-	*ring->ctxt_wp = ctxt_wp;
++	*ring->ctxt_wp = ring->iommu_base + (ring->wp - ring->base);
+ 
+ 	/* Update the RP */
+ 	ring->rp += ring->el_size;
+-- 
+2.7.4
+
