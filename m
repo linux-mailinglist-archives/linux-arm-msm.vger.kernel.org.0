@@ -2,126 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0E3CF3F9BC8
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Aug 2021 17:36:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9DF3E3F9BDC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Aug 2021 17:43:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245124AbhH0Pgc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Aug 2021 11:36:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35752 "EHLO
+        id S245193AbhH0Pn7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Aug 2021 11:43:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244608AbhH0Pgb (ORCPT
+        with ESMTP id S245124AbhH0Pn7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Aug 2021 11:36:31 -0400
-Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCF72C061757;
-        Fri, 27 Aug 2021 08:35:42 -0700 (PDT)
-Received: by mail-yb1-xb2e.google.com with SMTP id e129so13270012yba.5;
-        Fri, 27 Aug 2021 08:35:42 -0700 (PDT)
+        Fri, 27 Aug 2021 11:43:59 -0400
+Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 516F1C061796
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Aug 2021 08:43:10 -0700 (PDT)
+Received: by mail-ej1-x62c.google.com with SMTP id bt14so14780124ejb.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Aug 2021 08:43:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
+        d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=elurosbJYKf8PNk7F8ORCf7uCyleyo4sWJRx+2DCXTA=;
-        b=jHxv2iqkEBjOUNyq3zgyb3HRUO6LBwSeIjXl5VENEALmj3ipi3z9SxgpXXz5ziSfoE
-         RYkYReDmKZGDNisVDj6zn5Wy/o/eu4+SuGM16UGw8On0ykD+6maCzQ+0z14mpXCCPlYl
-         eMgGiBCwIEh3R7qrWKDC6gh29uno61759VtABLto1aFukRT9CCWLPvlMU4hxjNa0nb2i
-         zJibeIaW26/KnWvU3RjUXsg+G0NF05kJmvP6PH6tUNKrtUTWg5o56BxCwAkGJOekX7pZ
-         +QaHojHmYJfrNuw0xfDtq6/8nucLViPScaMxUWwWVApS8W+3ptHlqG+HNdfvvV9K2tgN
-         rhJA==
+        bh=oZPGVp92VaS3dLowjetEls763eL/Q9YUNevyNpL1JuM=;
+        b=i5Kxex2KDW8eLSLlwjXmG/+a/FmluMZPNPJFNSy66Tvt+wf9rhzjE8Pd48qZNMetaz
+         G09WE9Q+ms2dF/pP64j3VS3pgUqxMZJqwenYV6987xndMpo/wRdrQ5RokRCSR+fbndIA
+         95ikxf0WSuo4QZUM3T/MxuGC5GmEPfkDQR37HoHMO6FDWY97/V5zqj91aj6nJLRpsjpN
+         duMqcaQ8DmktwD0Kd/WOByzmlEn0pwa4E0UM7u5Rv7+gQjgG5tCtfy0VbwLinKf4Ep6B
+         jzMojJLxZ1QV7IVI6oaR4xlZmRDobHWTOpPWXkCDFrmZv7nxhciY71NYbSo7+esAgCKn
+         1V0g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=elurosbJYKf8PNk7F8ORCf7uCyleyo4sWJRx+2DCXTA=;
-        b=BDYTLMJEM9HmYxPoepKOn/+HLR21dLgcSkvlUr7DlmOOgV/g+zK2EHog2lJorUikCx
-         DxltMptkW1t+/O4/r24VIkpfnL2iN79Zzr94iDzeg6cHE8bjbKKacAO5V+Qbdvp+e0Xq
-         1g1g9heuepoJKVjuJ+yPP2nbtl7+zOx4ob8xHH/yS9vHMh6D/ZbeW/oaYVAWliurTzUd
-         aI2bNW9i6b4JxecxDeX88ObmmFyhHlWhUydAyEc8NHtuLioMCzOd+noLucwTZJ/x9KsS
-         mjz9zfWH4Q3vDsmm+y3+0iYxzNUdWL0uIascBShEB+VXjGSqyceB0GuGb+daZ6bwHn2m
-         QOmw==
-X-Gm-Message-State: AOAM532m3KLtuVC7X1h7XWLHP5b5sEJoUFF1uv3kbJ46kkA4cVA9M+9/
-        Ug3rK/0wUjOOgd0WNezb5Ml+Hhdn8MOUunOsLPI=
-X-Google-Smtp-Source: ABdhPJyhpBHyNr/gDmxLWVfhEtXpRDHMwnDoCOtYOlKrhtC+HzJZ8UZPWf8BVplz6v2mMAitFGLcRhWvkGN1nD8+0DQ=
-X-Received: by 2002:a25:810c:: with SMTP id o12mr6482926ybk.250.1630078541973;
- Fri, 27 Aug 2021 08:35:41 -0700 (PDT)
+        bh=oZPGVp92VaS3dLowjetEls763eL/Q9YUNevyNpL1JuM=;
+        b=rpM3VADGsci7AWXY9K0rxqDwMCANBUqLyyHdjdChVEW1MySNHWfRNrJtUZjcXi6amX
+         HxiOgf0B6LC0pSNWBt0ncccusZK7wh4vACNPHTiWt4gIyMwyGuAeUHVmhTvpKCt5/mm0
+         wld5jbCwwe5AU07tl/VODSincem8XRbVKJVl4c48JvNQOKGsAcreeckVyVZvyMLPEh1s
+         v4X0lwlwTYSOwobn+wasFFvS9GyLQrNcXTrsGVi9KiyiMZPrFLsJybOkV90qIohEbNeS
+         /Awvl1O2DUcEFvmRhOQ2unmgxia794AFr54fzGw512y6dm1iXpxOGoJMVPinu+Gt/Xdc
+         XTWA==
+X-Gm-Message-State: AOAM531dv2ABFeoHgsjUIPthrjd7jFuLABDtkiBrMgYczR/0SlrxbIOt
+        s1fqdYmFLh8/CQJtOG50x+uA5c3ea+UToumx0wLmVQ==
+X-Google-Smtp-Source: ABdhPJyH36GOAC0XBuOQ2fDNT72ll8GhA/IBuvrzOLPOcb/QCzQFNY/p11kajRzZ3QRbsaXgiQXkzZVqanSS1R/qstM=
+X-Received: by 2002:a17:906:fa10:: with SMTP id lo16mr10680576ejb.342.1630078988646;
+ Fri, 27 Aug 2021 08:43:08 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210827132428.GA8934@kili>
-In-Reply-To: <20210827132428.GA8934@kili>
-From:   butt3rflyh4ck <butterflyhuangxx@gmail.com>
-Date:   Fri, 27 Aug 2021 23:35:31 +0800
-Message-ID: <CAFcO6XMo2rFJqb1zZyPgEDtChLHNq26WfhAd5WC+9NMnRNM8uw@mail.gmail.com>
-Subject: Re: [PATCH net-next] net: qrtr: make checks in qrtr_endpoint_post() stricter
-To:     Dan Carpenter <dan.carpenter@oracle.com>
-Cc:     Manivannan Sadhasivam <mani@kernel.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org
+References: <20210622203759.566716-1-iskren.chernev@gmail.com> <20210622203759.566716-2-iskren.chernev@gmail.com>
+In-Reply-To: <20210622203759.566716-2-iskren.chernev@gmail.com>
+From:   Nicolas Dechesne <nicolas.dechesne@linaro.org>
+Date:   Fri, 27 Aug 2021 17:42:58 +0200
+Message-ID: <CAP71WjxRpdoN9MMTH2Y2Xgc==tC2jWfm7X0_A1CrzZ40N_rg8Q@mail.gmail.com>
+Subject: Re: [PATCH v1 2/2] mailbox: qcom: Add support for sm4125 sm6115 APCS IPC
+To:     Iskren Chernev <iskren.chernev@gmail.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 27, 2021 at 9:24 PM Dan Carpenter <dan.carpenter@oracle.com> wrote:
+On Tue, Jun 22, 2021 at 10:38 PM Iskren Chernev
+<iskren.chernev@gmail.com> wrote:
 >
-> These checks are still not strict enough.  The main problem is that if
-> "cb->type == QRTR_TYPE_NEW_SERVER" is true then "len - hdrlen" is
-> guaranteed to be 4 but we need to be at least 16 bytes.  In fact, we
-> can reject everything smaller than sizeof(*pkt) which is 20 bytes.
+> SM4125 and SM6115, codename bengal, have APCS mailbox setup similar to
+> msm8998 and msm8916.
+
+subject and commit refer to SM4125/SM6115, but the diff below is about
+4250/6115. I suppose it's a typo here, since 6115 is similar to 4250,
+not 4125, right?
+
 >
-> Also I don't like the ALIGN(size, 4).  It's better to just insist that
-> data is needs to be aligned at the start.
->
-> Fixes: 0baa99ee353c ("net: qrtr: Allow non-immediate node routing")
-> Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
 > ---
-> This was from review.  Not tested.
+>  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 2 ++
+>  1 file changed, 2 insertions(+)
 >
->  net/qrtr/qrtr.c | 8 ++++++--
->  1 file changed, 6 insertions(+), 2 deletions(-)
->
-> diff --git a/net/qrtr/qrtr.c b/net/qrtr/qrtr.c
-> index b8508e35d20e..dbb647f5481b 100644
-> --- a/net/qrtr/qrtr.c
-> +++ b/net/qrtr/qrtr.c
-> @@ -493,7 +493,7 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
->                 goto err;
->         }
->
-
-> -       if (!size || len != ALIGN(size, 4) + hdrlen)
-> +       if (!size || size % 3 || len != size + hdrlen)
-
-Hi, (size % 3)  is wrong, is it (size & 3), right ?
-
->                 goto err;
->
->         if (cb->dst_port != QRTR_PORT_CTRL && cb->type != QRTR_TYPE_DATA &&
-> @@ -506,8 +506,12 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
->
->         if (cb->type == QRTR_TYPE_NEW_SERVER) {
->                 /* Remote node endpoint can bridge other distant nodes */
-> -               const struct qrtr_ctrl_pkt *pkt = data + hdrlen;
-> +               const struct qrtr_ctrl_pkt *pkt;
->
-> +               if (size < sizeof(*pkt))
-
-Yes, the size should not be smaller than sizeof(*pkt).
-
-> +                       goto err;
-> +
-> +               pkt = data + hdrlen;
->                 qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
->         }
->
+> diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> index f25324d03842..1a4d8cca5881 100644
+> --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+> @@ -166,6 +166,8 @@ static const struct of_device_id qcom_apcs_ipc_of_match[] = {
+>         { .compatible = "qcom,sc8180x-apss-shared", .data = &apps_shared_apcs_data },
+>         { .compatible = "qcom,sdm660-apcs-hmss-global", .data = &sdm660_apcs_data },
+>         { .compatible = "qcom,sdm845-apss-shared", .data = &apps_shared_apcs_data },
+> +       { .compatible = "qcom,sm4250-apcs-hmss-global", .data = &sdm660_apcs_data },
+> +       { .compatible = "qcom,sm6115-apcs-hmss-global", .data = &sdm660_apcs_data },
+>         { .compatible = "qcom,sm8150-apss-shared", .data = &apps_shared_apcs_data },
+>         { .compatible = "qcom,sdx55-apcs-gcc", .data = &sdx55_apcs_data },
+>         {}
 > --
-> 2.20.1
+> 2.31.1
 >
-
-
-Regards,
-  butt3rflyh4ck
-
--- 
-Active Defense Lab of Venustech
