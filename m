@@ -2,511 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F8913F994B
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Aug 2021 14:59:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8779C3F9A0D
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Aug 2021 15:28:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231964AbhH0NAU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Aug 2021 09:00:20 -0400
-Received: from ixit.cz ([94.230.151.217]:60600 "EHLO ixit.cz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231271AbhH0NAU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Aug 2021 09:00:20 -0400
-Received: from newone.lan (ixit.cz [94.230.151.217])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id 2038424A25;
-        Fri, 27 Aug 2021 14:59:27 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1630069167;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=so97q3r4y4aORJQ5v8CiOjUzZ8tmUdxsFWAHRJ9O3xg=;
-        b=p3ZJutPERl/Cvu1baJGwVcaD2UtqaSNGXA2A6hA1Xiq80M8txr1DThOydh2TPf9ZtQkiV8
-        WmzAl5GFys+niBGJXaGDJmGYQPW4XCJCqe2wcIFX6HPUCuLGZSIlG/CT4ETm1/hX5DkYFu
-        SMT0+/jHvVebTnJmNW67NkuonuBItMQ=
-From:   David Heidelberg <david@ixit.cz>
-To:     smasetty@codeaurora.org, masneyb <masneyb@onstation.org>,
-        robdclark <robdclark@chromium.org>,
-        jordan <jordan@cosmicpenguin.net>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        David Heidelberg <david@ixit.cz>
-Subject: [PATCH v2] RFC: dt-bindings: drm/msm/gpu: convert to YAML
-Date:   Fri, 27 Aug 2021 14:58:03 +0200
-Message-Id: <20210827125803.22665-1-david@ixit.cz>
-X-Mailer: git-send-email 2.33.0
+        id S245223AbhH0NZn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Aug 2021 09:25:43 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32]:50968 "EHLO
+        mx0b-00069f02.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S245285AbhH0NZj (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 27 Aug 2021 09:25:39 -0400
+Received: from pps.filterd (m0246632.ppops.net [127.0.0.1])
+        by mx0b-00069f02.pphosted.com (8.16.1.2/8.16.0.43) with SMTP id 17RA9fsc025577;
+        Fri, 27 Aug 2021 13:24:44 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : content-type : mime-version; s=corp-2021-07-09;
+ bh=VUoCVmcTtVBuG/NtFy8NfN54CEFBPcn+o9dRM8mY81o=;
+ b=cxd6pN5bj6RkMYRSKIX2rwDscs7kbl7bZUlSE8H4PS1seZiStCX5YD//NZWvKrxrkASK
+ if7LDMKdT5iRxvtaP/BeRfp+n+N3tzgcmqf6Vy7RJFdetoxo5PD8QzlgFI5lWDvXGyUQ
+ LK1Yh3oHBUm5YX5kURI9zmeWVsJwDtK+zVWb1X8bcqwK1kiS4V68v5gMUa09EMjxKT5X
+ oPkz/PCUSC90YKTCcpMDWpt0OpAXnwX2sqUnwb1ECbahlqXbcIbaFa5YmQqJiSs8or4I
+ GWag5/rMaG5bL3XeFm2Ctma84fP+yTNZHH3F5QRtMBwhvfqwI5Iji68d/vFfs4YjIzrW kA== 
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : content-type : mime-version; s=corp-2020-01-29;
+ bh=VUoCVmcTtVBuG/NtFy8NfN54CEFBPcn+o9dRM8mY81o=;
+ b=HDqGA57CeZj4a+wwpEbb4rPkZTZNJ1NcDIufclyUDefhGMRdz0us7DFm4HlQ0LG4D6AC
+ 266JKPu+UV3CM8mb1pU+Xuw4zhFATdPR5++jSngR0IHXOU0KZGazduKvTlW7GXVOx4iT
+ OB+cXWy7fenDXximADNbgY4zkUslu49fraT7S83FsHVRuEPw34ZLXYjGrq1DWn+t3H5g
+ UF+b5t25DJn54k8oL0GAlUv+lGWdgyRsE3R3mLwNoy37HLUXVr/1G6bNjJNNa/VNIaTt
+ tIyjjQuwKkcsUe5HXIqt4jVlFvoaayMmW6SM96n41zRN0UBUNqTI//EG3VDBnaZRMKVB zQ== 
+Received: from userp3030.oracle.com (userp3030.oracle.com [156.151.31.80])
+        by mx0b-00069f02.pphosted.com with ESMTP id 3ap3eauqxm-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Fri, 27 Aug 2021 13:24:44 +0000
+Received: from pps.filterd (userp3030.oracle.com [127.0.0.1])
+        by userp3030.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 17RD9oBb076997;
+        Fri, 27 Aug 2021 13:24:43 GMT
+Received: from nam12-mw2-obe.outbound.protection.outlook.com (mail-mw2nam12lp2047.outbound.protection.outlook.com [104.47.66.47])
+        by userp3030.oracle.com with ESMTP id 3ajpm4pucv-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Fri, 27 Aug 2021 13:24:43 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=bNJwri2hWlqqgcKSbPN3Paazj7uc0S/lVD+nRWXFgqNX3b1q49eBY+SnAVwyrmOx/Zdkm+E5jQZiz3Kt0Z0dy4wDJnBZ0Kw110N6s+GlE3bmj/5biG3Dxzqqb+Wxs9Iw9kSI7xj4NVBjVJxKGIAk1OsTQtvr/yZevAWMtWjHWNRCoK4qKzozuiKbmrm+D6MJG9uDPw1rKX/l0s6pwFQfEDkZSXvO7Id0pwqHjjWOhfhjy7wcwHj4YUyJMFAb/cCHJL9ROYzyLH2zeUqycDCrhSq/eQfcIV883oyWaBr8LeZG4KOoR7UNZqN9XDjpS4V5Dyqw20GT/PgA/Pu+MpX93A==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=VUoCVmcTtVBuG/NtFy8NfN54CEFBPcn+o9dRM8mY81o=;
+ b=haqQxODMV33MD4wtlbonjRURuvr+M9Kvdri5LCyQgZj24cnreN86wyp+1gSIrZ78sJnuLT/zK5FSChD23id0hvwWJ5l4Bze0O9C4BbT4VZaCdBZ97lyX6I0HVSZi/faOnx4SCOsM82fS7l1GcF6M2O/KvpzEVIkne4Qxm4GOUKSGduIonyADKVEs631MwuauaaDzOzMgBpDaBgBr6QHwaYI346FEn7fBoZ1DRF4hvEBJ2wM4oDEmo1j3KE5H7trVC2H/U4DE6+UcgRzu8GzD95hraT5Fi+gE9Lu+5iOt5pq4Ce7o17C7n/1+82pTX0qopbSiluAlu0ouM1yv68eTwg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=VUoCVmcTtVBuG/NtFy8NfN54CEFBPcn+o9dRM8mY81o=;
+ b=y4safj4NZa0t+aSt6fkYiE55x3giHX1SmZXIk+tiO8RqmWr4OJe9rIGSyLk6I9on+Nuo0QfeskXN2g2HuhQWZSdbTU4XAARQHrfsDBwg0axiqcxgbAK6SXIstMBrPSlrDDWPDuVzl5Znx8B5DWSUmmFQmRClpKhsRqSI+RGkuS0=
+Authentication-Results: kernel.org; dkim=none (message not signed)
+ header.d=none;kernel.org; dmarc=none action=none header.from=oracle.com;
+Received: from MWHPR1001MB2365.namprd10.prod.outlook.com
+ (2603:10b6:301:2d::28) by CO6PR10MB5476.namprd10.prod.outlook.com
+ (2603:10b6:5:35b::19) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4457.21; Fri, 27 Aug
+ 2021 13:24:41 +0000
+Received: from MWHPR1001MB2365.namprd10.prod.outlook.com
+ ([fe80::5820:e42b:73d7:4268]) by MWHPR1001MB2365.namprd10.prod.outlook.com
+ ([fe80::5820:e42b:73d7:4268%7]) with mapi id 15.20.4457.019; Fri, 27 Aug 2021
+ 13:24:41 +0000
+Date:   Fri, 27 Aug 2021 16:24:28 +0300
+From:   Dan Carpenter <dan.carpenter@oracle.com>
+To:     Manivannan Sadhasivam <mani@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Xiaolong Huang <butterflyhuangxx@gmail.com>
+Cc:     "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org
+Subject: [PATCH net-next] net: qrtr: make checks in qrtr_endpoint_post()
+ stricter
+Message-ID: <20210827132428.GA8934@kili>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+X-Mailer: git-send-email haha only kidding
+User-Agent: Mutt/1.10.1 (2018-07-13)
+X-ClientProxiedBy: ZR0P278CA0103.CHEP278.PROD.OUTLOOK.COM
+ (2603:10a6:910:23::18) To MWHPR1001MB2365.namprd10.prod.outlook.com
+ (2603:10b6:301:2d::28)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+X-MS-Exchange-MessageSentRepresentingType: 1
+Received: from kili (62.8.83.99) by ZR0P278CA0103.CHEP278.PROD.OUTLOOK.COM (2603:10a6:910:23::18) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4457.17 via Frontend Transport; Fri, 27 Aug 2021 13:24:37 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: f5b84ae1-ebd6-4df3-45d8-08d9695e06b6
+X-MS-TrafficTypeDiagnostic: CO6PR10MB5476:
+X-MS-Exchange-Transport-Forked: True
+X-Microsoft-Antispam-PRVS: <CO6PR10MB54768D478F2DE3C82C30F97E8EC89@CO6PR10MB5476.namprd10.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:7219;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: wfk5sddx9xlMKaqJh1GhiUZS4seex/k73hTI0pKcLKn0ZODNhIFnThvK7elFUoUoMS+JE6HlGZgA00ZYeB6SQuCF/AqNiaV+Pfg5i7jc3G/Qa/YSlk34HEyMTBFgajRKx4uNPKPpJqKNjXW/xlKtvB2n33pPc4q+UoqQj8RPYZgklNkkys+iTCwndtmpMVvGXE50OYn9p41sBaRKgHvkF/uOSjQa0LuYSJCSn+k75pX+eek2EbF+AkKY73cQ4HZ7Y3R3A1wXx6trbvo1XTTg8YadrBa7d5uPosHITauf+36rPHwnGLUYbfcyd9jD5w+Nr8zY/v4+LkBbZ40W/CnNq2lTB9of2jQUeSpF5a5grdgRpnB6xLbMcKvFk7QC1SoeuXk3pHlN1MvfLgYm4tkGxjxG5sZc33J8pkRIQikR30+XWsVa6UrrIF1OaRIN2D8hV7AFH2Oct7S5DW74Uq5lmSgRoKOYXBzFXSnKjlxdfYvRNpcUanv5kW1uDnnmGKJXcfj9jRHFpnnhTtKdr3HDZtoSm4WJFCBm6jacjlc4jQYcnZTt0e3zt+5mTqlxGdnrrUCRX61zTPa8LcvFVNx4rKm+YQkAkyxISC04nMNAJgk7jwmDm2YEQ89znMcg35HXhm1eeUUK+YW3q2gfVb19/toxjPTRd/Lnan/oNvAjHVj9rGqKycbxRs4IZdTmS5wjFG9BHI8vA2KP9ifSzex5nA==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MWHPR1001MB2365.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(346002)(376002)(366004)(136003)(39860400002)(396003)(956004)(66476007)(66556008)(9576002)(478600001)(44832011)(66946007)(6666004)(8676002)(86362001)(110136005)(2906002)(54906003)(316002)(8936002)(55016002)(9686003)(33716001)(186003)(6496006)(52116002)(1076003)(83380400001)(5660300002)(4326008)(33656002)(38100700002)(26005)(38350700002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?bAjkRtI6W+Tp90DkwR3t39CP7VhTIQHGnGa55Jjr13Nii9MsN0yaTYjnxrqb?=
+ =?us-ascii?Q?LaQm+wVPN4iw5377k+riEdcG7GPSV9tgixQxCTDKOCMNLgCZkgSxxLjN6yKc?=
+ =?us-ascii?Q?TNwSKkWXMcxenDsj7ZlWt9VTXdrnspHfvGk28KMdLX+d3C/T/YSvzGRrmZyT?=
+ =?us-ascii?Q?d5kcUjJhQG7QiMfwG2b6udHOwClz4rxKWA2OQNb1CQu2JUpZolT9wffCBbv6?=
+ =?us-ascii?Q?PaesV7CZlcydxxX1ekStIEErDHkREn6OiLqPLBF1/+w1ycZapbQZthdyNyRG?=
+ =?us-ascii?Q?w/lWSJVSCuytNH2Q2LuhZ3Iy4WTIi0qQVJeNq5mnnouwOhDepyJd71WwzI9Q?=
+ =?us-ascii?Q?HVr8MuDNoQJ1H2bS1qysmQ9vKyVglxhAqgnUFqa4CB/jqaLn14ZADj2+Nv4w?=
+ =?us-ascii?Q?fLKH80g867SEcTwNsI39+rCGZ4t0L5iQCAeVggiK/iz+CMlLIgRJcO08iBtx?=
+ =?us-ascii?Q?r51URzr5KMeM6ROvV0o5K6Mes03+Vp/LgC02gh9cJX2QG5cLJp7Kogr5BrRQ?=
+ =?us-ascii?Q?C1gzYjK7E3Zm1CFmNLvZ07wgKnkw2ujsZiPlhkod6ISwEf25QTeaEoq7sGoG?=
+ =?us-ascii?Q?dFInxJpppTRVoAVYgbeP3ozDFii6OOJgJhc+Z2I6yYXaJQXPsYNphwzME7H6?=
+ =?us-ascii?Q?t3GHt1tDN+cbY3qR9U4KW/R1T7q8WnXFF7C7FZUpfv80KgTCRPdBz/EkYy4U?=
+ =?us-ascii?Q?B9G7kxYswHQiNUa91HCl2I4ErW3/l1hwuXBQh40ENZhWcIGnjkTAl5F2gJTg?=
+ =?us-ascii?Q?JI4f3IDOtPJ/arFZ1rMmQDqfEXQ2Bp9C3Jn1p/sHvNgIgWdIH5Vtlz7CJmnG?=
+ =?us-ascii?Q?fs9/U6OPO1mEe40ArJvA/6Dr+k19pUBVv/4hdIM/MLYWUxpxbZCMMPhyAY0M?=
+ =?us-ascii?Q?BVDzicYfvIA2FKqeHDqt6Auy+Pjwhvj2DofbxxcLM6IVeeoAcD4pb+xc4Wtl?=
+ =?us-ascii?Q?cVxyYnuB/COihnDoy89NCIS1GvWgUafA2+Wu8biDheR8Uw3B9WVv+pF8zORr?=
+ =?us-ascii?Q?e9i+hBsqWcnP4t39RcWMiWwY9si1rMeZZMvZGQRnND/zELLd8W9TMwB2dx3q?=
+ =?us-ascii?Q?MA6xeQYb8U9lpJRBPwJAd/+vf8QXTssqz+Z/wOyfCjMSkOQsWQyGGuvsXnct?=
+ =?us-ascii?Q?iWpnNYjEFfDPF0S5oqMb5tnf5eyfxJrmuTbO0NgWb2goJECCZ3quSO0ZQWaH?=
+ =?us-ascii?Q?oZOJ5YODHDVeRUq2GoAg+VhIQ+926QjqNwJ9apyf6lz9aH6iUggv65/QftYl?=
+ =?us-ascii?Q?0DJuXE3gqK5aktbxoq3TzuDB5XvRGRwSXO1OtOn7t8cPvkgaYdHKmCoHk9Sl?=
+ =?us-ascii?Q?0KIkNYHwMg8p47651RHdrhIY?=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: f5b84ae1-ebd6-4df3-45d8-08d9695e06b6
+X-MS-Exchange-CrossTenant-AuthSource: MWHPR1001MB2365.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 27 Aug 2021 13:24:41.3325
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: RWMFIIXTu7qawX8tpuWsgoZFdzRMWZHIwM6XkKS2O9ZyTPGEg8GfKyAEENpGzfEKxd9qdgo/YpsrLUSv/IjPzipjk3ZBlxrilYocL/x/v5w=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: CO6PR10MB5476
+X-Proofpoint-Virus-Version: vendor=nai engine=6300 definitions=10088 signatures=668682
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 spamscore=0 phishscore=0 malwarescore=0
+ mlxscore=0 bulkscore=0 mlxlogscore=999 suspectscore=0 adultscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2107140000
+ definitions=main-2108270086
+X-Proofpoint-ORIG-GUID: ClF2jluAY0VJreYuAY3LsjZLejTiVRcq
+X-Proofpoint-GUID: ClF2jluAY0VJreYuAY3LsjZLejTiVRcq
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Signed-off-by: David Heidelberg <david@ixit.cz>
+These checks are still not strict enough.  The main problem is that if
+"cb->type == QRTR_TYPE_NEW_SERVER" is true then "len - hdrlen" is
+guaranteed to be 4 but we need to be at least 16 bytes.  In fact, we
+can reject everything smaller than sizeof(*pkt) which is 20 bytes.
+
+Also I don't like the ALIGN(size, 4).  It's better to just insist that
+data is needs to be aligned at the start.
+
+Fixes: 0baa99ee353c ("net: qrtr: Allow non-immediate node routing")
+Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
 ---
-v2:
-  - added compatbile description from Rob Clark
-  - dropped reg description
-  - reg numbers increased to 3 (since we also have uncommon cx_dbgc)
-  - specified interconnect-names items range
-  - defined zap-shader as an object and added it's properties
-  - enforce 0 clocks for Andreno >= 6xx since it's defined in GMU node
+This was from review.  Not tested.
 
- .../devicetree/bindings/display/msm/gpu.txt   | 157 ----------
- .../devicetree/bindings/display/msm/gpu.yaml  | 280 ++++++++++++++++++
- 2 files changed, 280 insertions(+), 157 deletions(-)
- delete mode 100644 Documentation/devicetree/bindings/display/msm/gpu.txt
- create mode 100644 Documentation/devicetree/bindings/display/msm/gpu.yaml
+ net/qrtr/qrtr.c | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/display/msm/gpu.txt b/Documentation/devicetree/bindings/display/msm/gpu.txt
-deleted file mode 100644
-index 090dcb3fc34d..000000000000
---- a/Documentation/devicetree/bindings/display/msm/gpu.txt
-+++ /dev/null
-@@ -1,157 +0,0 @@
--Qualcomm adreno/snapdragon GPU
--
--Required properties:
--- compatible: "qcom,adreno-XYZ.W", "qcom,adreno" or
--	      "amd,imageon-XYZ.W", "amd,imageon"
--    for example: "qcom,adreno-306.0", "qcom,adreno"
--  Note that you need to list the less specific "qcom,adreno" (since this
--  is what the device is matched on), in addition to the more specific
--  with the chip-id.
--  If "amd,imageon" is used, there should be no top level msm device.
--- reg: Physical base address and length of the controller's registers.
--- interrupts: The interrupt signal from the gpu.
--- clocks: device clocks (if applicable)
--  See ../clocks/clock-bindings.txt for details.
--- clock-names: the following clocks are required by a3xx, a4xx and a5xx
--  cores:
--  * "core"
--  * "iface"
--  * "mem_iface"
--  For GMU attached devices the GPU clocks are not used and are not required. The
--  following devices should not list clocks:
--   - qcom,adreno-630.2
--- iommus: optional phandle to an adreno iommu instance
--- operating-points-v2: optional phandle to the OPP operating points
--- interconnects: optional phandle to an interconnect provider.  See
--  ../interconnect/interconnect.txt for details. Some A3xx and all A4xx platforms
--  will have two paths; all others will have one path.
--- interconnect-names: The names of the interconnect paths that correspond to the
--  interconnects property. Values must be gfx-mem and ocmem.
--- qcom,gmu: For GMU attached devices a phandle to the GMU device that will
--  control the power for the GPU. Applicable targets:
--    - qcom,adreno-630.2
--- zap-shader: For a5xx and a6xx devices this node contains a memory-region that
--  points to reserved memory to store the zap shader that can be used to help
--  bring the GPU out of secure mode.
--- firmware-name: optional property of the 'zap-shader' node, listing the
--  relative path of the device specific zap firmware.
--- sram: phandle to the On Chip Memory (OCMEM) that's present on some a3xx and
--        a4xx Snapdragon SoCs. See
--        Documentation/devicetree/bindings/sram/qcom,ocmem.yaml.
--
--Optional properties:
--- #cooling-cells: The value must be 2. For details, please refer
--	Documentation/devicetree/bindings/thermal/thermal-cooling-devices.yaml.
--
--Example 3xx/4xx:
--
--/ {
--	...
--
--	gpu: adreno@fdb00000 {
--		compatible = "qcom,adreno-330.2",
--		             "qcom,adreno";
--		reg = <0xfdb00000 0x10000>;
--		reg-names = "kgsl_3d0_reg_memory";
--		interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
--		interrupt-names = "kgsl_3d0_irq";
--		clock-names = "core",
--		              "iface",
--		              "mem_iface";
--		clocks = <&mmcc OXILI_GFX3D_CLK>,
--		         <&mmcc OXILICX_AHB_CLK>,
--		         <&mmcc OXILICX_AXI_CLK>;
--		sram = <&gpu_sram>;
--		power-domains = <&mmcc OXILICX_GDSC>;
--		operating-points-v2 = <&gpu_opp_table>;
--		iommus = <&gpu_iommu 0>;
--		#cooling-cells = <2>;
--	};
--
--	gpu_sram: ocmem@fdd00000 {
--		compatible = "qcom,msm8974-ocmem";
--
--		reg = <0xfdd00000 0x2000>,
--		      <0xfec00000 0x180000>;
--		reg-names = "ctrl",
--		            "mem";
--
--		clocks = <&rpmcc RPM_SMD_OCMEMGX_CLK>,
--		         <&mmcc OCMEMCX_OCMEMNOC_CLK>;
--		clock-names = "core",
--		              "iface";
--
--		#address-cells = <1>;
--		#size-cells = <1>;
--
--		gpu_sram: gpu-sram@0 {
--			reg = <0x0 0x100000>;
--			ranges = <0 0 0xfec00000 0x100000>;
--		};
--	};
--};
--
--Example a6xx (with GMU):
--
--/ {
--	...
--
--	gpu@5000000 {
--		compatible = "qcom,adreno-630.2", "qcom,adreno";
--		#stream-id-cells = <16>;
--
--		reg = <0x5000000 0x40000>, <0x509e000 0x10>;
--		reg-names = "kgsl_3d0_reg_memory", "cx_mem";
--
--		#cooling-cells = <2>;
--
--		/*
--		 * Look ma, no clocks! The GPU clocks and power are
--		 * controlled entirely by the GMU
--		 */
--
--		interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
--
--		iommus = <&adreno_smmu 0>;
--
--		operating-points-v2 = <&gpu_opp_table>;
--
--		interconnects = <&rsc_hlos MASTER_GFX3D &rsc_hlos SLAVE_EBI1>;
--		interconnect-names = "gfx-mem";
--
--		gpu_opp_table: opp-table {
--			compatible = "operating-points-v2";
--
--			opp-430000000 {
--				opp-hz = /bits/ 64 <430000000>;
--				opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
--				opp-peak-kBps = <5412000>;
--			};
--
--			opp-355000000 {
--				opp-hz = /bits/ 64 <355000000>;
--				opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
--				opp-peak-kBps = <3072000>;
--			};
--
--			opp-267000000 {
--				opp-hz = /bits/ 64 <267000000>;
--				opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
--				opp-peak-kBps = <3072000>;
--			};
--
--			opp-180000000 {
--				opp-hz = /bits/ 64 <180000000>;
--				opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
--				opp-peak-kBps = <1804000>;
--			};
--		};
--
--		qcom,gmu = <&gmu>;
--
--		zap-shader {
--			memory-region = <&zap_shader_region>;
--			firmware-name = "qcom/LENOVO/81JL/qcdxkmsuc850.mbn"
--		};
--	};
--};
-diff --git a/Documentation/devicetree/bindings/display/msm/gpu.yaml b/Documentation/devicetree/bindings/display/msm/gpu.yaml
-new file mode 100644
-index 000000000000..b93d371d8745
---- /dev/null
-+++ b/Documentation/devicetree/bindings/display/msm/gpu.yaml
-@@ -0,0 +1,280 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
+diff --git a/net/qrtr/qrtr.c b/net/qrtr/qrtr.c
+index b8508e35d20e..dbb647f5481b 100644
+--- a/net/qrtr/qrtr.c
++++ b/net/qrtr/qrtr.c
+@@ -493,7 +493,7 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
+ 		goto err;
+ 	}
+ 
+-	if (!size || len != ALIGN(size, 4) + hdrlen)
++	if (!size || size % 3 || len != size + hdrlen)
+ 		goto err;
+ 
+ 	if (cb->dst_port != QRTR_PORT_CTRL && cb->type != QRTR_TYPE_DATA &&
+@@ -506,8 +506,12 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
+ 
+ 	if (cb->type == QRTR_TYPE_NEW_SERVER) {
+ 		/* Remote node endpoint can bridge other distant nodes */
+-		const struct qrtr_ctrl_pkt *pkt = data + hdrlen;
++		const struct qrtr_ctrl_pkt *pkt;
+ 
++		if (size < sizeof(*pkt))
++			goto err;
 +
-+$id: "http://devicetree.org/schemas/display/msm/gpu.yaml#"
-+$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-+
-+title: Devicetree bindings for the Adreno or Snapdragon GPUs
-+
-+maintainers:
-+  - Rob Clark <robdclark@gmail.com>
-+
-+properties:
-+  compatible:
-+    description: |
-+      The driver is parsing the compat string to figure out the gpu-id and patch level.
-+    oneOf:
-+      - items:
-+          - pattern: '^qcom,adreno-[3-6][0-9][0-9].[0-9]$'
-+          - const: qcom,adreno
-+      - items:
-+          - pattern: '^amd,imageon-200.[0-1]$'
-+          - const: amd,imageon
-+
-+  clocks:
-+    maxItems: 3
-+
-+  clock-names:
-+    maxItems: 3
-+
-+  reg:
-+    minItems: 1
-+    maxItems: 3
-+
-+  reg-names:
-+    minItems: 1
-+    maxItems: 3
-+    items:
-+      - const: kgsl_3d0_reg_memory
-+      - const: cx_mem
-+      - const: cx_dbgc
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  interrupt-names:
-+    maxItems: 1
-+
-+  interconnects:
-+    minItems: 1
-+    maxItems: 2
-+    description: |
-+      optional phandle to an interconnect provider. See
-+      ../interconnect/interconnect.txt for details.
-+      Some A3xx and all A4xx platforms will have two paths;
-+      all others will have one path.
-+
-+  interconnect-names:
-+    minItems: 1
-+    maxItems: 2
-+    items:
-+      - const: gfx-mem
-+      - const: ocmem
-+    description: |
-+      the names of the interconnect paths that correspond to
-+      the interconnects property
-+
-+  iommus:
-+    maxItems: 1
-+
-+  sram:
-+    $ref: /schemas/types.yaml#/definitions/phandle-array
-+    minItems: 1
-+    maxItems: 4
-+    description: |
-+      phandles to one or more reserved on-chip SRAM regions.
-+      phandle to the On Chip Memory (OCMEM) that's present on some a3xx and
-+      a4xx Snapdragon SoCs. See
-+      Documentation/devicetree/bindings/sram/qcom,ocmem.yaml
-+
-+  operating-points-v2: true
-+  opp-table: true
-+
-+  power-domains:
-+    maxItems: 1
-+
-+  zap-shader:
-+    type: object
-+    description: |
-+      For a5xx and a6xx devices this node contains a memory-region that
-+      points to reserved memory to store the zap shader that can be used to
-+      help bring the GPU out of secure mode.
-+    properties:
-+      memory-region:
-+        $ref: /schemas/types.yaml#/definitions/phandle
-+
-+      firmware-name:
-+        description: |
-+          Default name of the firmware to load to the remote processor.
-+    required:
-+      - firmware-name
-+
-+  "#cooling-cells":
-+    const: 2
-+
-+  qcom,gmu:
-+    $ref: /schemas/types.yaml#/definitions/phandle
-+    description: |
-+      for GMU attached devices a phandle to the GMU device that will
-+      control the power for the GPU
-+
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+
-+additionalProperties: false
-+
-+allOf:
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            pattern: '^qcom,adreno-[3-5][0-9][0-9].[0-9]$'
-+
-+    then:
-+      properties:
-+        clocks:
-+          items:
-+            - description: GPU Core clock
-+            - description: GPU Interface clock
-+            - description: GPU Memory Interface clock
-+
-+        clock-names:
-+          items:
-+            - const: core
-+            - const: iface
-+            - const: mem_iface
-+      required:
-+        - clocks
-+        - clock-names
-+  - if:
-+      properties:
-+        compatible:
-+          contains:
-+            pattern: '^qcom,adreno-[6-9][0-9][0-9].[0-9]$'
-+
-+    then: # Since Adreno 6xx series clocks should be defined in GMU
-+      properties:
-+        clocks:
-+          maxItems: 0
-+
-+        clock-names:
-+          maxItems: 0
-+
-+examples:
-+  - |
-+
-+    // Example a3xx/4xx:
-+
-+    #include <dt-bindings/clock/qcom,mmcc-msm8974.h>
-+    #include <dt-bindings/clock/qcom,rpmcc.h>
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+
-+    gpu: adreno@fdb00000 {
-+        compatible = "qcom,adreno-330.2", "qcom,adreno";
-+
-+        reg = <0xfdb00000 0x10000>;
-+        reg-names = "kgsl_3d0_reg_memory";
-+
-+        clock-names = "core", "iface", "mem_iface";
-+        clocks = <&mmcc OXILI_GFX3D_CLK>,
-+                 <&mmcc OXILICX_AHB_CLK>,
-+                 <&mmcc OXILICX_AXI_CLK>;
-+
-+        interrupts = <GIC_SPI 33 IRQ_TYPE_LEVEL_HIGH>;
-+        interrupt-names = "kgsl_3d0_irq";
-+
-+        sram = <&gpu_sram>;
-+        power-domains = <&mmcc OXILICX_GDSC>;
-+        operating-points-v2 = <&gpu_opp_table>;
-+        iommus = <&gpu_iommu 0>;
-+        #cooling-cells = <2>;
-+    };
-+
-+    ocmem@fdd00000 {
-+        compatible = "qcom,msm8974-ocmem";
-+
-+        reg = <0xfdd00000 0x2000>,
-+              <0xfec00000 0x180000>;
-+        reg-names = "ctrl", "mem";
-+
-+        clocks = <&rpmcc RPM_SMD_OCMEMGX_CLK>,
-+                 <&mmcc OCMEMCX_OCMEMNOC_CLK>;
-+        clock-names = "core", "iface";
-+
-+        #address-cells = <1>;
-+        #size-cells = <1>;
-+        ranges = <0 0xfec00000 0x100000>;
-+
-+        gpu_sram: gpu-sram@0 {
-+            reg = <0x0 0x100000>;
-+        };
-+    };
-+  - |
-+
-+    // Example a6xx (with GMU):
-+
-+    #include <dt-bindings/clock/qcom,gpucc-sdm845.h>
-+    #include <dt-bindings/clock/qcom,gcc-sdm845.h>
-+    #include <dt-bindings/power/qcom-rpmpd.h>
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+    #include <dt-bindings/interrupt-controller/arm-gic.h>
-+    #include <dt-bindings/interconnect/qcom,sdm845.h>
-+
-+    reserved-memory {
-+        #address-cells = <2>;
-+        #size-cells = <2>;
-+
-+        zap_shader_region: gpu@8f200000 {
-+            compatible = "shared-dma-pool";
-+            reg = <0x0 0x90b00000 0x0 0xa00000>;
-+            no-map;
-+        };
-+    };
-+
-+    gpu@5000000 {
-+        compatible = "qcom,adreno-630.2", "qcom,adreno";
-+
-+        reg = <0x5000000 0x40000>, <0x509e000 0x10>;
-+        reg-names = "kgsl_3d0_reg_memory", "cx_mem";
-+
-+        #cooling-cells = <2>;
-+
-+        interrupts = <GIC_SPI 300 IRQ_TYPE_LEVEL_HIGH>;
-+
-+        iommus = <&adreno_smmu 0>;
-+
-+        operating-points-v2 = <&gpu_opp_table>;
-+
-+        interconnects = <&rsc_hlos MASTER_GFX3D &rsc_hlos SLAVE_EBI1>;
-+        interconnect-names = "gfx-mem";
-+
-+        qcom,gmu = <&gmu>;
-+
-+        gpu_opp_table: opp-table {
-+            compatible = "operating-points-v2";
-+
-+            opp-430000000 {
-+                opp-hz = /bits/ 64 <430000000>;
-+                opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
-+                opp-peak-kBps = <5412000>;
-+            };
-+
-+            opp-355000000 {
-+                opp-hz = /bits/ 64 <355000000>;
-+                opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
-+                opp-peak-kBps = <3072000>;
-+            };
-+
-+            opp-267000000 {
-+                opp-hz = /bits/ 64 <267000000>;
-+                opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
-+                opp-peak-kBps = <3072000>;
-+            };
-+
-+            opp-180000000 {
-+                opp-hz = /bits/ 64 <180000000>;
-+                opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
-+                opp-peak-kBps = <1804000>;
-+            };
-+        };
-+
-+        zap-shader {
-+            memory-region = <&zap_shader_region>;
-+            firmware-name = "qcom/LENOVO/81JL/qcdxkmsuc850.mbn";
-+        };
-+    };
++		pkt = data + hdrlen;
+ 		qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
+ 	}
+ 
 -- 
-2.33.0
+2.20.1
 
