@@ -2,90 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4566E3F9B83
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Aug 2021 17:13:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0E3CF3F9BC8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Aug 2021 17:36:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245398AbhH0PO1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Aug 2021 11:14:27 -0400
-Received: from relay01.th.seeweb.it ([5.144.164.162]:39503 "EHLO
-        relay01.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233587AbhH0PO0 (ORCPT
+        id S245124AbhH0Pgc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Aug 2021 11:36:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35752 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244608AbhH0Pgb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Aug 2021 11:14:26 -0400
-Received: from [10.0.20.3] (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id B094E1F533;
-        Fri, 27 Aug 2021 17:13:34 +0200 (CEST)
-Subject: Re: [PATCH] soc: qcom: mdt_loader: Drop PT_LOAD check on hash segment
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Shawn Guo <shawnguo@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Pavel Dubrova <pashadubrova@gmail.com>,
-        Siddharth Gupta <sidgup@codeaurora.org>
-References: <20210824094109.7272-1-shawnguo@kernel.org>
- <0410695f-85fe-1df9-46ee-bc494b81bf23@somainline.org>
- <20210826141826.GB31229@dragon>
- <ed941f01-7855-006a-9eb9-29388b3be2f4@somainline.org>
- <20210827062359.GC31229@dragon>
- <3df9b523-4d8b-b817-f074-88e38456b35b@somainline.org>
- <20210827095716.GD31229@dragon>
- <9166e1a9-5afa-7ae8-91e5-21704bc7a40f@somainline.org>
- <20210827141200.GA4274@dragon>
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-Message-ID: <16c45f98-60ed-61d0-9e6a-d0c2aa2a20d1@somainline.org>
-Date:   Fri, 27 Aug 2021 17:13:34 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        Fri, 27 Aug 2021 11:36:31 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CCF72C061757;
+        Fri, 27 Aug 2021 08:35:42 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id e129so13270012yba.5;
+        Fri, 27 Aug 2021 08:35:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=elurosbJYKf8PNk7F8ORCf7uCyleyo4sWJRx+2DCXTA=;
+        b=jHxv2iqkEBjOUNyq3zgyb3HRUO6LBwSeIjXl5VENEALmj3ipi3z9SxgpXXz5ziSfoE
+         RYkYReDmKZGDNisVDj6zn5Wy/o/eu4+SuGM16UGw8On0ykD+6maCzQ+0z14mpXCCPlYl
+         eMgGiBCwIEh3R7qrWKDC6gh29uno61759VtABLto1aFukRT9CCWLPvlMU4hxjNa0nb2i
+         zJibeIaW26/KnWvU3RjUXsg+G0NF05kJmvP6PH6tUNKrtUTWg5o56BxCwAkGJOekX7pZ
+         +QaHojHmYJfrNuw0xfDtq6/8nucLViPScaMxUWwWVApS8W+3ptHlqG+HNdfvvV9K2tgN
+         rhJA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=elurosbJYKf8PNk7F8ORCf7uCyleyo4sWJRx+2DCXTA=;
+        b=BDYTLMJEM9HmYxPoepKOn/+HLR21dLgcSkvlUr7DlmOOgV/g+zK2EHog2lJorUikCx
+         DxltMptkW1t+/O4/r24VIkpfnL2iN79Zzr94iDzeg6cHE8bjbKKacAO5V+Qbdvp+e0Xq
+         1g1g9heuepoJKVjuJ+yPP2nbtl7+zOx4ob8xHH/yS9vHMh6D/ZbeW/oaYVAWliurTzUd
+         aI2bNW9i6b4JxecxDeX88ObmmFyhHlWhUydAyEc8NHtuLioMCzOd+noLucwTZJ/x9KsS
+         mjz9zfWH4Q3vDsmm+y3+0iYxzNUdWL0uIascBShEB+VXjGSqyceB0GuGb+daZ6bwHn2m
+         QOmw==
+X-Gm-Message-State: AOAM532m3KLtuVC7X1h7XWLHP5b5sEJoUFF1uv3kbJ46kkA4cVA9M+9/
+        Ug3rK/0wUjOOgd0WNezb5Ml+Hhdn8MOUunOsLPI=
+X-Google-Smtp-Source: ABdhPJyhpBHyNr/gDmxLWVfhEtXpRDHMwnDoCOtYOlKrhtC+HzJZ8UZPWf8BVplz6v2mMAitFGLcRhWvkGN1nD8+0DQ=
+X-Received: by 2002:a25:810c:: with SMTP id o12mr6482926ybk.250.1630078541973;
+ Fri, 27 Aug 2021 08:35:41 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20210827141200.GA4274@dragon>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20210827132428.GA8934@kili>
+In-Reply-To: <20210827132428.GA8934@kili>
+From:   butt3rflyh4ck <butterflyhuangxx@gmail.com>
+Date:   Fri, 27 Aug 2021 23:35:31 +0800
+Message-ID: <CAFcO6XMo2rFJqb1zZyPgEDtChLHNq26WfhAd5WC+9NMnRNM8uw@mail.gmail.com>
+Subject: Re: [PATCH net-next] net: qrtr: make checks in qrtr_endpoint_post() stricter
+To:     Dan Carpenter <dan.carpenter@oracle.com>
+Cc:     Manivannan Sadhasivam <mani@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, netdev@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Shawn,
+On Fri, Aug 27, 2021 at 9:24 PM Dan Carpenter <dan.carpenter@oracle.com> wrote:
+>
+> These checks are still not strict enough.  The main problem is that if
+> "cb->type == QRTR_TYPE_NEW_SERVER" is true then "len - hdrlen" is
+> guaranteed to be 4 but we need to be at least 16 bytes.  In fact, we
+> can reject everything smaller than sizeof(*pkt) which is 20 bytes.
+>
+> Also I don't like the ALIGN(size, 4).  It's better to just insist that
+> data is needs to be aligned at the start.
+>
+> Fixes: 0baa99ee353c ("net: qrtr: Allow non-immediate node routing")
+> Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+> ---
+> This was from review.  Not tested.
+>
+>  net/qrtr/qrtr.c | 8 ++++++--
+>  1 file changed, 6 insertions(+), 2 deletions(-)
+>
+> diff --git a/net/qrtr/qrtr.c b/net/qrtr/qrtr.c
+> index b8508e35d20e..dbb647f5481b 100644
+> --- a/net/qrtr/qrtr.c
+> +++ b/net/qrtr/qrtr.c
+> @@ -493,7 +493,7 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
+>                 goto err;
+>         }
+>
 
-On 8/27/21 4:12 PM, Shawn Guo wrote:
-> [..]
-> 
-> So you proposed to reject PT_LOAD in the else clause, which right now
-> handles .mbn case
+> -       if (!size || len != ALIGN(size, 4) + hdrlen)
+> +       if (!size || size % 3 || len != size + hdrlen)
+
+Hi, (size % 3)  is wrong, is it (size & 3), right ?
+
+>                 goto err;
+>
+>         if (cb->dst_port != QRTR_PORT_CTRL && cb->type != QRTR_TYPE_DATA &&
+> @@ -506,8 +506,12 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep, const void *data, size_t len)
+>
+>         if (cb->type == QRTR_TYPE_NEW_SERVER) {
+>                 /* Remote node endpoint can bridge other distant nodes */
+> -               const struct qrtr_ctrl_pkt *pkt = data + hdrlen;
+> +               const struct qrtr_ctrl_pkt *pkt;
+>
+> +               if (size < sizeof(*pkt))
+
+Yes, the size should not be smaller than sizeof(*pkt).
+
+> +                       goto err;
+> +
+> +               pkt = data + hdrlen;
+>                 qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
+>         }
+>
+> --
+> 2.20.1
+>
 
 
-Yes, I propose to reject PT_LOAD in the else-case, and additionally 
-reject cases where p_offset+p_filesz > sw->size since PT_NULL can also 
-cause external file loads (meaning split-firmware).  This is what 
-Siddharth's patchset - or my respin of it - is going to implement.
+Regards,
+  butt3rflyh4ck
 
-> are you sure hash segment in .mbn is not going to be
-> PT_LOAD?
-
-
-PT_LOAD unambiguously indicates a program header that ought to be loaded 
-from an external file.  Any mbn file (non-split firmware) without split 
-files that set PT_LOAD are misusing this program header type field.  I 
-have no way to validate whether such mbns are in circulation.
-
-Of note, I have never referenced the definition of the program header 
-types yet.  Please see [1]:
-
-     PT_LOAD (1)
-         Indicates that this program header describes a segment to be
-         loaded from the file.
-
-Let me know if you're planning to send a v2 of this patch with 
-aforementioned improvements, then I'll adjust my plans to respin 
-Siddharth's patchset accordingly.
-
-- Marijn
-
-[1]: https://ftp.gnu.org/old-gnu/Manuals/ld-2.9.1/html_node/ld_23.html
+-- 
+Active Defense Lab of Venustech
