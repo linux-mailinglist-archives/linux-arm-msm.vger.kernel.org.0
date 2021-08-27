@@ -2,133 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 958353F9AB2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Aug 2021 16:14:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4566E3F9B83
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Aug 2021 17:13:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235864AbhH0OOb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Aug 2021 10:14:31 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:50066 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232449AbhH0OO3 (ORCPT
+        id S245398AbhH0PO1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Aug 2021 11:14:27 -0400
+Received: from relay01.th.seeweb.it ([5.144.164.162]:39503 "EHLO
+        relay01.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233587AbhH0PO0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Aug 2021 10:14:29 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1630073620; x=1661609620;
-  h=from:to:cc:subject:date:message-id:mime-version:
-   content-transfer-encoding;
-  bh=cooRg+8poDt2U3SIxIP/cBwAlBTa7XLQaObBrJSXAXw=;
-  b=R1o/RvQWMrRgQmfIzSz/1RSCzIx5ZyV2JGrz8ke4YhRZ1glNB8qEbWsd
-   QTEqWZ1VkUDSU+TkzQRe+vAWWh0Qq04IGyAGulhm7MfPJd0SUQ3ygeuOX
-   7X6gk0+HyH1V6H6Ns0HN0lPMm9O7caw30tcObGzPiLBVPS7BP5o5oXStg
-   E=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 27 Aug 2021 07:13:39 -0700
-X-QCInternal: smtphost
-Received: from nalasex01a.na.qualcomm.com ([10.47.209.196])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 27 Aug 2021 07:13:39 -0700
-Received: from jhugo-lnx.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384) id 15.2.922.7;
- Fri, 27 Aug 2021 07:13:38 -0700
-From:   Jeffrey Hugo <quic_jhugo@quicinc.com>
-To:     <mani@kernel.org>, <hemantk@codeaurora.org>,
-        <bbhatt@codeaurora.org>
-CC:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        "Jeffrey Hugo" <quic_jhugo@quicinc.com>
-Subject: [PATCH v2] bus: mhi: core: Use cached values for calculating the shared write pointer
-Date:   Fri, 27 Aug 2021 08:13:26 -0600
-Message-ID: <1630073606-13671-1-git-send-email-quic_jhugo@quicinc.com>
-X-Mailer: git-send-email 2.7.4
+        Fri, 27 Aug 2021 11:14:26 -0400
+Received: from [10.0.20.3] (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id B094E1F533;
+        Fri, 27 Aug 2021 17:13:34 +0200 (CEST)
+Subject: Re: [PATCH] soc: qcom: mdt_loader: Drop PT_LOAD check on hash segment
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Shawn Guo <shawnguo@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Siddharth Gupta <sidgup@codeaurora.org>
+References: <20210824094109.7272-1-shawnguo@kernel.org>
+ <0410695f-85fe-1df9-46ee-bc494b81bf23@somainline.org>
+ <20210826141826.GB31229@dragon>
+ <ed941f01-7855-006a-9eb9-29388b3be2f4@somainline.org>
+ <20210827062359.GC31229@dragon>
+ <3df9b523-4d8b-b817-f074-88e38456b35b@somainline.org>
+ <20210827095716.GD31229@dragon>
+ <9166e1a9-5afa-7ae8-91e5-21704bc7a40f@somainline.org>
+ <20210827141200.GA4274@dragon>
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+Message-ID: <16c45f98-60ed-61d0-9e6a-d0c2aa2a20d1@somainline.org>
+Date:   Fri, 27 Aug 2021 17:13:34 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
+In-Reply-To: <20210827141200.GA4274@dragon>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanexm03d.na.qualcomm.com (10.85.0.91) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-mhi_recycle_ev_ring() computes the shared write pointer for the ring
-(ctxt_wp) using a read/modify/write pattern where the ctxt_wp value in the
-shared memory is read, incremented, and written back.  There are no checks
-on the read value, it is assumed that it is kept in sync with the locally
-cached value.  Per the MHI spec, this is correct.  The device should only
-read ctxt_wp, never write it.
+Hi Shawn,
 
-However, there are devices in the wild that violate the spec, and can
-update the ctxt_wp in a specific scenario.  This can cause corruption, and
-violate the above assumption that the ctxt_wp is in sync with the cached
-value.
+On 8/27/21 4:12 PM, Shawn Guo wrote:
+> [..]
+> 
+> So you proposed to reject PT_LOAD in the else clause, which right now
+> handles .mbn case
 
-This can occur when the device has loaded firmware from the host, and is
-transitioning from the SBL EE to the AMSS EE.  As part of shutting down
-SBL, the SBL flushes it's local MHI context to the shared memory since
-the local context will not persist across an EE change.  In the case of
-the event ring, SBL will flush its entire context, not just the parts that
-it is allowed to update.  This means SBL will write to ctxt_wp, and
-possibly corrupt it.
 
-An example:
+Yes, I propose to reject PT_LOAD in the else-case, and additionally 
+reject cases where p_offset+p_filesz > sw->size since PT_NULL can also 
+cause external file loads (meaning split-firmware).  This is what 
+Siddharth's patchset - or my respin of it - is going to implement.
 
-Host				Device
-----				---
-Update ctxt_wp to 0x1f0
-				SBL observes 0x1f0
-Update ctxt_wp to 0x0
-				Starts transition to AMSS EE
-				Context flush, writes 0x1f0 to ctxt_wp
-Update ctxt_wp to 0x200
-Update ctxt_wp to 0x210
-				AMSS observes 0x210
-				0x210 exceeds ring size
-				AMSS signals syserr
+> are you sure hash segment in .mbn is not going to be
+> PT_LOAD?
 
-The reason the ctxt_wp goes off the end of the ring is that the rollover
-check is only performed on the cached wp, which is out of sync with
-ctxt_wp.
 
-Since the host is the authority of the value of ctxt_wp per the MHI spec,
-we can fix this issue by not reading ctxt_wp from the shared memory, and
-instead compute it based on the cached value.  If SBL corrupts ctxt_wp,
-the host won't observe it, and will correct the value at some point later.
+PT_LOAD unambiguously indicates a program header that ought to be loaded 
+from an external file.  Any mbn file (non-split firmware) without split 
+files that set PT_LOAD are misusing this program header type field.  I 
+have no way to validate whether such mbns are in circulation.
 
-Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
-Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
----
+Of note, I have never referenced the definition of the program header 
+types yet.  Please see [1]:
 
-v2:
-Fix typo on the ring base
+     PT_LOAD (1)
+         Indicates that this program header describes a segment to be
+         loaded from the file.
 
- drivers/bus/mhi/core/main.c | 9 ++-------
- 1 file changed, 2 insertions(+), 7 deletions(-)
+Let me know if you're planning to send a v2 of this patch with 
+aforementioned improvements, then I'll adjust my plans to respin 
+Siddharth's patchset accordingly.
 
-diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
-index c01ec2f..dc86fdb3 100644
---- a/drivers/bus/mhi/core/main.c
-+++ b/drivers/bus/mhi/core/main.c
-@@ -533,18 +533,13 @@ irqreturn_t mhi_intvec_handler(int irq_number, void *dev)
- static void mhi_recycle_ev_ring_element(struct mhi_controller *mhi_cntrl,
- 					struct mhi_ring *ring)
- {
--	dma_addr_t ctxt_wp;
--
- 	/* Update the WP */
- 	ring->wp += ring->el_size;
--	ctxt_wp = *ring->ctxt_wp + ring->el_size;
- 
--	if (ring->wp >= (ring->base + ring->len)) {
-+	if (ring->wp >= (ring->base + ring->len))
- 		ring->wp = ring->base;
--		ctxt_wp = ring->iommu_base;
--	}
- 
--	*ring->ctxt_wp = ctxt_wp;
-+	*ring->ctxt_wp = ring->iommu_base + (ring->wp - ring->base);
- 
- 	/* Update the RP */
- 	ring->rp += ring->el_size;
--- 
-2.7.4
+- Marijn
 
+[1]: https://ftp.gnu.org/old-gnu/Manuals/ld-2.9.1/html_node/ld_23.html
