@@ -2,119 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B6D043F9DAF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Aug 2021 19:27:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5EA373F9E0F
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Aug 2021 19:35:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237006AbhH0RUA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Aug 2021 13:20:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60186 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236341AbhH0RT7 (ORCPT
+        id S230367AbhH0Ray (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Aug 2021 13:30:54 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:43818 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236468AbhH0Rax (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Aug 2021 13:19:59 -0400
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D14E9C061796
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Aug 2021 10:19:10 -0700 (PDT)
-Received: by mail-ot1-x32a.google.com with SMTP id q11-20020a9d4b0b000000b0051acbdb2869so3816765otf.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Aug 2021 10:19:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=LUINJeVF8Mv+Qni9gSoxQ0tMUJKZ5DY+dY1yDHy05KU=;
-        b=wXzAoFu3YPB/qKtRMuy9NS/vw+iY8qqKSMhL91DwkH3fx1VFILrLHQtvDJmfVw/vWt
-         u0Gmea/jMmYkBs0l2KLAt0hNR6cljTmPyyig+3a8NslpVjwrpPlq/V5HKevdiWunMVAL
-         5dYm2M2SZOdSfBVuIJwiptec/K/PECRi7UdwO+40h2rvwcR4JLB8PISkchwuwfkkmICf
-         LMlN97nC/yJnI43xCuUk2ZX2f3sSe5el182ghH6U7YLnuVBQgALrCZERCZN1HTeZtCLz
-         gE/n61OXCM0PdihuljqD6O/yjb8PoVAPYXmmW+ePkLzJ1THBUJhVV9Td6wGBA/sa2z1B
-         Wjtw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=LUINJeVF8Mv+Qni9gSoxQ0tMUJKZ5DY+dY1yDHy05KU=;
-        b=csF4XEgtt52hQA9KkSUjTTSKK2AlS56zUWfK3z8f1bNbMEzkl8aUo5+rESi5lCkRe0
-         dNuAXQxghMYfR3f6Wa7z7aIkkcMpfhnALQfg/YA8kL0Ceqi9CckyF2zjJocM8F+/PxEK
-         genum2pU8a9OjSjl6yfJdRQdcDNkOdtLqE2DSbSOT30gdRtDlhAR29+H3HT5WoKrFuhQ
-         FZpnYwjQvI58AxN+bjwKIXjHKZt6yKfouHcHf2YgkMir/q33MFwu1anQkbZZW9tXYjkR
-         gvnFrFb2Brrd7XEGgOj6iDXtSbC47O835DZlosPfEaBNP4f0tHv/mm7eTuLAaRG0X1So
-         8mKA==
-X-Gm-Message-State: AOAM530X+OcVyxRy/A/5HJXnr+v3vBsE/UyfLEecJQGZkjMYsTmL0iBH
-        u9Ea1OUA0pddAHrYDtjfqgvBAA==
-X-Google-Smtp-Source: ABdhPJzpZGHJr2Nwej0U+Rd/3Jh75eu1bT9hRrxL9fP6KKzmFMhs9Syiz/V9cJhMDnuwNkWiUOuqsQ==
-X-Received: by 2002:a05:6830:314b:: with SMTP id c11mr9064499ots.169.1630084750178;
-        Fri, 27 Aug 2021 10:19:10 -0700 (PDT)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id m20sm1461021oiw.46.2021.08.27.10.19.09
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 27 Aug 2021 10:19:09 -0700 (PDT)
-Date:   Fri, 27 Aug 2021 10:20:23 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Kuogee Hsieh <khsieh@codeaurora.org>
-Cc:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
-        vkoul@kernel.org, agross@kernel.org, robh+dt@kernel.org,
-        devicetree@vger.kernel.org, abhinavk@codeaurora.org,
-        aravindh@codeaurora.org, mkrishn@codeaurora.org,
-        kalyan_t@codeaurora.org, rajeevny@codeaurora.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: sc7280: fix display port phy base
- address offset
-Message-ID: <YSke10cPLS9QlKKZ@ripper>
-References: <1630083316-2028-1-git-send-email-khsieh@codeaurora.org>
+        Fri, 27 Aug 2021 13:30:53 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1630085405; h=Message-ID: References: In-Reply-To: Reply-To:
+ Subject: Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=f1K7tpYyGaEgTI2CpLNbGPsvPdr213WjVf/5LadNQ9c=;
+ b=HlmEih0EcaxaS1zMpZC4ZSsr8HXD1KQVBiIbCTIWHcQmYXigqYkVMsmBFlKkxMXxo47aiwTX
+ ftBcc+u+OEIryw3S/1zXfk5XjvHpekOodxXU7nwVK8ItPXeuiMd+/9IVQs1JLRLrawG8fDzV
+ NLIvBPTdZ1lKG6lq2Tl7qUB6ZQM=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 61292119825e13c54a2e97f1 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 27 Aug 2021 17:30:01
+ GMT
+Sender: bbhatt=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 888F1C4360D; Fri, 27 Aug 2021 17:30:00 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bbhatt)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9AEF6C4338F;
+        Fri, 27 Aug 2021 17:29:59 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1630083316-2028-1-git-send-email-khsieh@codeaurora.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 27 Aug 2021 10:29:59 -0700
+From:   Bhaumik Bhatt <bbhatt@codeaurora.org>
+To:     Jeffrey Hugo <quic_jhugo@quicinc.com>
+Cc:     mani@kernel.org, hemantk@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2] bus: mhi: core: Use cached values for calculating the
+ shared write pointer
+Organization: Qualcomm Innovation Center, Inc.
+Reply-To: bbhatt@codeaurora.org
+Mail-Reply-To: bbhatt@codeaurora.org
+In-Reply-To: <1630073606-13671-1-git-send-email-quic_jhugo@quicinc.com>
+References: <1630073606-13671-1-git-send-email-quic_jhugo@quicinc.com>
+Message-ID: <cba6da940d7b60ce7362c9588ebb2a33@codeaurora.org>
+X-Sender: bbhatt@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 27 Aug 09:55 PDT 2021, Kuogee Hsieh wrote:
-
-So the order was mixed up, 0x088eaa00 got the wrong length and you got
-one hardware block too many in there?
-
-> Fixes: 9886e8fd8438 ("arm64: dts: qcom: sc7280: Add USB related nodes")
-> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
-> ---
->  arch/arm64/boot/dts/qcom/sc7280.dtsi | 8 ++------
->  1 file changed, 2 insertions(+), 6 deletions(-)
+On 2021-08-27 07:13 AM, Jeffrey Hugo wrote:
+> mhi_recycle_ev_ring() computes the shared write pointer for the ring
+> (ctxt_wp) using a read/modify/write pattern where the ctxt_wp value in 
+> the
+> shared memory is read, incremented, and written back.  There are no 
+> checks
+> on the read value, it is assumed that it is kept in sync with the 
+> locally
+> cached value.  Per the MHI spec, this is correct.  The device should 
+> only
+> read ctxt_wp, never write it.
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index c29226b..77b0b4e 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -2918,15 +2918,11 @@
->  			dp_phy: dp-phy@88ea200 {
->  				reg = <0 0x088ea200 0 0x200>,
->  				      <0 0x088ea400 0 0x200>,
-> -				      <0 0x088eac00 0 0x400>,
-> +				      <0 0x088eaa00 0 0x200>,
->  				      <0 0x088ea600 0 0x200>,
-> -				      <0 0x088ea800 0 0x200>,
-> -				      <0 0x088eaa00 0 0x100>;
-> +				      <0 0x088ea800 0 0x200>;
->  				#phy-cells = <0>;
->  				#clock-cells = <1>;
-> -				clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
-> -				clock-names = "pipe0";
-> -				clock-output-names = "usb3_phy_pipe_clk_src";
+> However, there are devices in the wild that violate the spec, and can
+> update the ctxt_wp in a specific scenario.  This can cause corruption, 
+> and
+> violate the above assumption that the ctxt_wp is in sync with the 
+> cached
+> value.
+> 
+> This can occur when the device has loaded firmware from the host, and 
+> is
+> transitioning from the SBL EE to the AMSS EE.  As part of shutting down
+> SBL, the SBL flushes it's local MHI context to the shared memory since
+> the local context will not persist across an EE change.  In the case of
+> the event ring, SBL will flush its entire context, not just the parts 
+> that
+> it is allowed to update.  This means SBL will write to ctxt_wp, and
+> possibly corrupt it.
+> 
+> An example:
+> 
+> Host				Device
+> ----				---
+> Update ctxt_wp to 0x1f0
+> 				SBL observes 0x1f0
+> Update ctxt_wp to 0x0
+> 				Starts transition to AMSS EE
+> 				Context flush, writes 0x1f0 to ctxt_wp
+> Update ctxt_wp to 0x200
+> Update ctxt_wp to 0x210
+> 				AMSS observes 0x210
+> 				0x210 exceeds ring size
+> 				AMSS signals syserr
+> 
+> The reason the ctxt_wp goes off the end of the ring is that the 
+> rollover
+> check is only performed on the cached wp, which is out of sync with
+> ctxt_wp.
+> 
+> Since the host is the authority of the value of ctxt_wp per the MHI 
+> spec,
+> we can fix this issue by not reading ctxt_wp from the shared memory, 
+> and
+> instead compute it based on the cached value.  If SBL corrupts ctxt_wp,
+> the host won't observe it, and will correct the value at some point 
+> later.
+> 
+> Signed-off-by: Jeffrey Hugo <quic_jhugo@quicinc.com>
+> Reviewed-by: Hemant Kumar <hemantk@codeaurora.org>
+> ---
+> 
+> v2:
+> Fix typo on the ring base
+> 
+>  drivers/bus/mhi/core/main.c | 9 ++-------
+>  1 file changed, 2 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/bus/mhi/core/main.c b/drivers/bus/mhi/core/main.c
+> index c01ec2f..dc86fdb3 100644
+> --- a/drivers/bus/mhi/core/main.c
+> +++ b/drivers/bus/mhi/core/main.c
+> @@ -533,18 +533,13 @@ irqreturn_t mhi_intvec_handler(int irq_number, 
+> void *dev)
+>  static void mhi_recycle_ev_ring_element(struct mhi_controller 
+> *mhi_cntrl,
+>  					struct mhi_ring *ring)
+>  {
+> -	dma_addr_t ctxt_wp;
+> -
+>  	/* Update the WP */
+>  	ring->wp += ring->el_size;
+> -	ctxt_wp = *ring->ctxt_wp + ring->el_size;
+> 
+> -	if (ring->wp >= (ring->base + ring->len)) {
+> +	if (ring->wp >= (ring->base + ring->len))
+>  		ring->wp = ring->base;
+> -		ctxt_wp = ring->iommu_base;
+> -	}
+> 
+> -	*ring->ctxt_wp = ctxt_wp;
+> +	*ring->ctxt_wp = ring->iommu_base + (ring->wp - ring->base);
+> 
+>  	/* Update the RP */
+>  	ring->rp += ring->el_size;
 
-This is not "base address offset", please fix $subject.
-
-
-Looking at this makes me feel that the dp-phy node was copy-pasted from
-the usb3-node and that this patch corrects a copy-paste issue. Seems
-like this would be an excellent thing to write in a commit message.
+Reviewed-by: Bhaumik Bhatt <bbhatt@codeaurora.org>
 
 Thanks,
-Bjorn
-
->  			};
->  		};
->  
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+Bhaumik
+---
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum,
+a Linux Foundation Collaborative Project
