@@ -2,82 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A99D3FA0C1
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Aug 2021 22:41:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 357D43FA0CD
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 27 Aug 2021 22:45:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231779AbhH0UmA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 27 Aug 2021 16:42:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50134 "EHLO
+        id S231565AbhH0UpI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 27 Aug 2021 16:45:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50888 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231774AbhH0Ul6 (ORCPT
+        with ESMTP id S231346AbhH0UpI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 27 Aug 2021 16:41:58 -0400
-Received: from mail-ej1-x62c.google.com (mail-ej1-x62c.google.com [IPv6:2a00:1450:4864:20::62c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3BECC0613D9;
-        Fri, 27 Aug 2021 13:41:08 -0700 (PDT)
-Received: by mail-ej1-x62c.google.com with SMTP id h9so16453084ejs.4;
-        Fri, 27 Aug 2021 13:41:08 -0700 (PDT)
+        Fri, 27 Aug 2021 16:45:08 -0400
+Received: from mail-ej1-x635.google.com (mail-ej1-x635.google.com [IPv6:2a00:1450:4864:20::635])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95EDFC0613D9;
+        Fri, 27 Aug 2021 13:44:18 -0700 (PDT)
+Received: by mail-ej1-x635.google.com with SMTP id t19so16426929ejr.8;
+        Fri, 27 Aug 2021 13:44:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Xf357nAIQp/DfI8J7kSV68oMUuTmpfBnw0jmnOXe50I=;
-        b=i02ToSDhvCjpWFC6uRaCryi7/LoA9thyo2fw2FYBXwihADlLwRKxiCF9v7WVJ2Lhx2
-         Y6fDfyjsiUQ8qOYfRkHPMBjsv9fl+BjwnQ05CYN93sRhl313UTNCM1nrbMdzmnwk11yj
-         AXMWlfG1rT4eEiQXnKW0e4F01vXUsUTngUz0Mxkdc9UHWEyyxJAP5Gkn2YiSCoIYdTk0
-         lxz4AJ+PBklLOYq4T2r+kIUwLER4I7N7QS3RTdTaf4he83kFr6v3ZO0hBnl1ODAbMp2U
-         JUR40l2FbOcle4Ah7uIX0nOL8oQH66GsFwICiI8/XlnWt7z1Y2sHiCuS9ENrQqBpK5Jj
-         ImbA==
+        bh=zJr7lhkEOS+2Z0JGIvGtQDn3Bm/wL2AxAcCTTaB5zNk=;
+        b=WCHoy+oKQ8bZOak+BZggZ583d7O0cv+1+g2yrprRtC4gAHmlpjKCnDgdfz6Y8Yhawj
+         jSvfubWMNZKE2KeqB5mv6Ux9ltmlPwrVHi1K6eMLINkfhMsETXN4S0Ye1NBEbQMd3Bwv
+         5sjA4h9dTClZSuT8Bhvpt5Cr4rQfT/HtF7Xm0kap5rn7ycNBq/KemNqzlotu3QrRs1AA
+         puMMF4Cu1I2gGzyS84habQ7INMcb97kJsmHIWbbvzvs/2TDYnvnaNuxSEjL2s+o/NBnI
+         K4tqgBxlZBh4uYajk8eOsDvzykPdbUsmNBAtyB1DkctyqzQwNZwShAfp8QqkyqiIT9UT
+         UwDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=Xf357nAIQp/DfI8J7kSV68oMUuTmpfBnw0jmnOXe50I=;
-        b=H65stQ3GDPDBXRsv4LGA50oMFS+znfkP531+fr//9w7H2v2PU+f8RoeLWmqv6s2kU0
-         kODDxOjEUrOpQVkHxbpVo4hzmbvFlWnVEpnvIRnb/ITozqjffHa9EadYLDLbj2NSeE+h
-         y2/BdFUEDSf0BJvwTUUHDbbvM7jMnLpzs/QahCZt+Fe+Uy2UgUYGpFg3enVXatxMeW7G
-         VGBayLGMtp132V4Ve6+c5g2IXZ8Tq6zVAbjyHHMYgf+XhamsUMt3kdxysix/KnyJ+UVw
-         E04AM3Bn/UpzMo18GNYB5o+SdU3VEYishesylE6sQfd0Wbwow753caW0XOJzVnmjgkr9
-         W5yQ==
-X-Gm-Message-State: AOAM5321eZR7uUF2i4nlMS7DHQsbyUmcdUUZwXWake/9Nwdb7E3I6FWB
-        uw084xlEQGuej1RjFuDay44=
-X-Google-Smtp-Source: ABdhPJzzLZMz6eEGyk7vQVVUp9Qi6qWAHt1bt9JJN1w4oRxyhxemJFY2E+i7IWTJQYI/Nw7Zrd1BGg==
-X-Received: by 2002:a17:907:3e05:: with SMTP id hp5mr11988313ejc.527.1630096867440;
-        Fri, 27 Aug 2021 13:41:07 -0700 (PDT)
+        bh=zJr7lhkEOS+2Z0JGIvGtQDn3Bm/wL2AxAcCTTaB5zNk=;
+        b=Q9SV+pF1P6KkR47F+9a035un8XluBWqbDps/ZBVKxoGZ9zoIiXhjC1jrKJIHfP4A8X
+         WJuyUBpFGNd0ZOlmPPX9tcSk/ufCQGPnh/4BvbXX0MvMqcBc1J2p+NP2KsA0ek0NZ/00
+         V4Q29zVAhM0LbPRy+6nFxAgbPiNTyY0OdW9tKGM3KqCbhpxjwUDNezZ6uTxjDnaUesIE
+         jnwZVY9wlzAcoNlA5hPqlYT+DYLuHxDtgYNeA8mQ0MQAiTIAhyRL0R4SQDXnUujQiCIG
+         1GYAWsSOuDEtn3MvtvAJ30RMJfDOLECdlkDBfGhWlXJ6YKbla2ue0hCtZhDFVlGnk9/1
+         D9mQ==
+X-Gm-Message-State: AOAM530Ds5k/0mJh+UmXYWW4qwYhKZhrzt+N/t2QNe/MNRUV/WghOxpf
+        ANwuRVaO7aXmtKUc2DQeEtU=
+X-Google-Smtp-Source: ABdhPJy0pcZhHZ4YSlyn233g+sfmZqY43BAJNvI5pugXacP6vqXUP7DofxzSPnazyMLoZP4v6kzLRA==
+X-Received: by 2002:a17:906:63ca:: with SMTP id u10mr11654707ejk.411.1630097057184;
+        Fri, 27 Aug 2021 13:44:17 -0700 (PDT)
 Received: from ?IPv6:2001:981:6fec:1:1b32:912f:78cc:6c61? ([2001:981:6fec:1:1b32:912f:78cc:6c61])
-        by smtp.gmail.com with ESMTPSA id s17sm3863006edt.69.2021.08.27.13.41.06
+        by smtp.gmail.com with ESMTPSA id dj25sm3988934edb.51.2021.08.27.13.44.16
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Aug 2021 13:41:06 -0700 (PDT)
-Subject: Re: [PATCH v2 1/3] Revert "usb: gadget: u_audio: add real feedback
+        Fri, 27 Aug 2021 13:44:16 -0700 (PDT)
+Subject: Re: [PATCH v2 0/3] Revert "usb: gadget: u_audio: add real feedback
  implementation"
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Ferry Toth <ftoth@exalondelft.nl>
-Cc:     Ruslan Bilovol <ruslan.bilovol@gmail.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
+To:     Andy Shevchenko <andy.shevchenko@gmail.com>,
+        Jerome Brunet <jbrunet@baylibre.com>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Ferry Toth <ftoth@exalondelft.nl>,
+        Ruslan Bilovol <ruslan.bilovol@gmail.com>,
         Jonathan Corbet <corbet@lwn.net>,
         Mauro Carvalho Chehab <mchehab+huawei@kernel.org>,
         Pawel Laszczak <pawell@cadence.com>,
         Felipe Balbi <balbi@kernel.org>,
-        Jack Pham <jackp@codeaurora.org>, linux-kernel@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-doc@vger.kernel.org,
+        Jack Pham <jackp@codeaurora.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        USB <linux-usb@vger.kernel.org>,
+        Linux Documentation List <linux-doc@vger.kernel.org>,
         Lorenzo Colitti <lorenzo@google.com>,
-        Wesley Cheng <wcheng@codeaurora.org>, robh+dt@kernel.org,
-        agross@kernel.org, bjorn.andersson@linaro.org,
-        frowand.list@gmail.com, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, heikki.krogerus@linux.intel.com,
+        Wesley Cheng <wcheng@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        devicetree <devicetree@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org,
+        "Krogerus, Heikki" <heikki.krogerus@linux.intel.com>,
         Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Andy Shevchenko <andy.shevchenko@gmail.com>,
         Pavel Hofman <pavel.hofman@ivitera.com>
 References: <20210826185739.3868-1-ftoth@exalondelft.nl>
- <20210826185739.3868-2-ftoth@exalondelft.nl> <YSiiTrW/ZF2PyGWd@kroah.com>
+ <1j4kbbxqgr.fsf@starbuckisacylon.baylibre.com>
+ <CAHp75Vdu8v1QSi0CQw7qp-yPhMtwJ_hQO=GT5pWoD0nxmKoF_w@mail.gmail.com>
 From:   Ferry Toth <fntoth@gmail.com>
-Message-ID: <605f5ae5-365d-80be-42a4-8d273a20c3d7@gmail.com>
-Date:   Fri, 27 Aug 2021 22:41:05 +0200
+Message-ID: <4dc02e9c-4009-b964-520a-7e380a819cda@gmail.com>
+Date:   Fri, 27 Aug 2021 22:44:15 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <YSiiTrW/ZF2PyGWd@kroah.com>
+In-Reply-To: <CAHp75Vdu8v1QSi0CQw7qp-yPhMtwJ_hQO=GT5pWoD0nxmKoF_w@mail.gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -85,56 +92,25 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Op 27-08-2021 om 10:29 schreef Greg Kroah-Hartman:
-> On Thu, Aug 26, 2021 at 08:57:37PM +0200, Ferry Toth wrote:
->> This reverts commit e89bb4288378b85c82212b60dc98ecda6b3d3a70.
+Op 27-08-2021 om 11:15 schreef Andy Shevchenko:
+> On Fri, Aug 27, 2021 at 11:05 AM Jerome Brunet <jbrunet@baylibre.com> wrote:
+>> On Thu 26 Aug 2021 at 20:57, Ferry Toth <ftoth@exalondelft.nl> wrote:
 >>
->> The commit is part of a series with commit
->> 24f779dac8f3efb9629adc0e486914d93dc45517 causing a BUG on dwc3
->> hardware, at least on Intel Merrifield platform when configured
->> through configfs:
->> BUG: kernel NULL pointer dereference, address: 0000000000000008
->> ...
->> RIP: 0010:dwc3_gadget_del_and_unmap_request+0x19/0xe0
->> ...
->> Call Trace:
->>   dwc3_remove_requests.constprop.0+0x12f/0x170
->>   __dwc3_gadget_ep_disable+0x7a/0x160
->>   dwc3_gadget_ep_disable+0x3d/0xd0
->>   usb_ep_disable+0x1c/0x70
->>   u_audio_stop_capture+0x79/0x120 [u_audio]
->>   afunc_set_alt+0x73/0x80 [usb_f_uac2]
->>   composite_setup+0x224/0x1b90 [libcomposite]
+>>> Although there is a patch resolving this issue (see
+>>> https://lore.kernel.org/linux-usb/1jilzsy8g7.fsf@starbuckisacylon.baylibre.com/T/#u)
+>>> it needs a little work and will not be ready for v5.14.0 release. Until then
+>>> revert the series.
 >>
->> Pavel's suggestion to add
->> `echo "adaptive" > functions/uac2.usb0/c_sync` to the configfs script
->> resolves the issue.
->> Thinh suggests "the crash is probably because of f_uac2 prematurely
->> freeing feedback request before its completion. usb_ep_dequeue() is
->> asynchronous. dwc2() may treat it as a synchronous call so you didn't
->> get a crash."
->>
->> Revert as this is a regression and the kernel shouldn't crash depending
->> on configuration parameters.
+>> Seems like a quite messy solution when the fix available :/
 > 
-> Are these normal configuration options in the wild, or is this just
-> something that you "can do"?
-
-It's a work around suggested by Pavel, a line that can be added to 
-configfs script.
-
->> Signed-off-by: Ferry Toth <ftoth@exalondelft.nl>
+> Is it? AFAIR Thing pointed out to some problems with the proposed
+> solution. Have those been addressed?
 > 
-> I need an ack from the original authors to revert all this...
-
-A fix has appeared:
+>> Change with the updated commit description is avaialable BTW [0]
+> 
+>> [0]: https://lore.kernel.org/20210827075853.266912-1-jbrunet@baylibre.com
+> 
+> Dunno, but this gives me 404.
+> 
+I think:
 https://lore.kernel.org/linux-usb/1jfsuvw817.fsf@starbuckisacylon.baylibre.com/T/#m922149b7e74204c8ed1bed2c624910ab4eafd43c
-
-This has been acked by Felipe. If we can get that in 5.14.0 it would be 
-preferable to reverting this series.
-
-> thanks,
-> 
-> greg k-h
-> 
-
