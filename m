@@ -2,249 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C78D3FA71C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Aug 2021 20:07:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A3FE3FA729
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Aug 2021 20:32:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229912AbhH1SIm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 28 Aug 2021 14:08:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51104 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230137AbhH1SIe (ORCPT
+        id S230336AbhH1SdC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 28 Aug 2021 14:33:02 -0400
+Received: from mail-io1-f71.google.com ([209.85.166.71]:56056 "EHLO
+        mail-io1-f71.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230183AbhH1SdB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 28 Aug 2021 14:08:34 -0400
-Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D9D74C06179A
-        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Aug 2021 11:07:43 -0700 (PDT)
-Received: by mail-oo1-xc31.google.com with SMTP id l12-20020a4a94cc0000b02902618ad2ea55so3121347ooi.4
-        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Aug 2021 11:07:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=ves4rEFbuIlPzY9KtlYpO56vkgctRzHEkajdiDzSNZI=;
-        b=hdp6No9GL73pD05e+eYeNTDWcPTx1YCFqtVOhyTeTf2uROufLpRpcCpAd9UylKgj3d
-         WGuVdr2F0ccCoHWGW8rbmtLuLtjEv6iOTSIBj+JCzJqaEqE1SZBnBYrVLsl4mrcefQbu
-         WcoLTHbDrz8voCrX+Jlwp2OWKlZiOZJUp76HdBNHcDvaOv8h7IfUF0DRObXZBoP2WGu/
-         UDCmBNOEFIqax2CcxGecDYALKC9+wvygXJZ0eLoGp2b5vsM4G3ytxergTgB+rqxrLwtL
-         7vh33G+GrpgxO4RolCgDxopyVI98QLBjqFwqHaPKevU0tVXQOiPGwfz+d18B0FFN7fmR
-         IR3A==
+        Sat, 28 Aug 2021 14:33:01 -0400
+Received: by mail-io1-f71.google.com with SMTP id o128-20020a6bbe86000000b005bd06eaeca6so6071898iof.22
+        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Aug 2021 11:32:10 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=ves4rEFbuIlPzY9KtlYpO56vkgctRzHEkajdiDzSNZI=;
-        b=psF6z2+TWTvE6yoxmgA+LRSUPpCJMbqwpgBtgX9NAT6QQbhzeqDjjqWxjXtSpNM0HX
-         nr0DyBmQ5akkZiE/RQ66VfWNhNKnlIJarbfq97mVxFNnle1n0EKiFBFsyU1GRwNnHnAs
-         xaN4YwExmoR8b7kmF053Sxte+h2sMLftc/0osw4/keD39niD0jlYTnv4zJeaNvCC5vne
-         bqtUPQrTSkemw1nQGg0ElpPtWKfdeI+u7Qd2385syeFZRj/D1VXqwtIMzE8U7ZTofYDd
-         HbDmd4H3zGROM4WECnSrmfMmftLWF6Di3EkS3lPjkAxpKBJFVpPJjoEOC7t3KlKhW5O6
-         N2MQ==
-X-Gm-Message-State: AOAM531bt+9DqaDdnL1O4I79B45OrElouRzVP908YzoB0KVkZHAJskIr
-        +TFOX4wolRN0FOlqo7Sn0UbvVQ==
-X-Google-Smtp-Source: ABdhPJzGm7aYpkcvBh52pNx0ZDFrrdjtJC2mAVrJctkZ0jCtShiTb6GbKe3ylOcs27/Yo065nyQ4zg==
-X-Received: by 2002:a4a:c541:: with SMTP id j1mr4162359ooq.15.1630174062688;
-        Sat, 28 Aug 2021 11:07:42 -0700 (PDT)
-Received: from yoga (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id 186sm1942151ood.39.2021.08.28.11.07.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 28 Aug 2021 11:07:42 -0700 (PDT)
-Date:   Sat, 28 Aug 2021 13:07:39 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 1/2] dt-bindings: pinctrl: qcom: Add SM6350 pinctrl
- bindings
-Message-ID: <YSp7az2iBlPnGgxQ@yoga>
-References: <20210828172315.55742-1-konrad.dybcio@somainline.org>
+        h=x-gm-message-state:mime-version:date:in-reply-to:message-id:subject
+         :from:to;
+        bh=up8sbinmdfW5FEk6l6npSbM0ylrChylbR3vjt8i49Xs=;
+        b=U7SjF/h3hXFU6wcRpnVeAuZqbbH2xPvin40eoq8AJTmGQbqtNqWUXLt600PSInVOoK
+         eTJdy3YtOekyBa5iBQOMABzV8e82iM88nOXcGPfNyKD/EJGXWFfTo36rvmZQMr+7qgXo
+         CByIdMaIAqlNy940Txb+pTWRXMQPksvt3pMrHtgOC/2tXIkKgP3vhZl83ouE10SYN5J1
+         FN6YAJIcmwr2RwBNA+TsiSWh9gfuyIF/9uZqs5NNefK15+034DK6WPrdxEt/GRkOWsQJ
+         J7dE9DiRSFBlqK6pESGMiGj84a5jbY4QpMN1Joxs9qe5MyI9ot4a5SmLeePfMjvRnO8h
+         E+nQ==
+X-Gm-Message-State: AOAM533UDLcBVBX7BAm/X0PDTPmeYseLwpxRz9Hs5ze3dqWmzQYOdDJr
+        7oMYHc8FFO2T1Y7S6BeKwB1huMUwKflknnF9ymECn33cccqt
+X-Google-Smtp-Source: ABdhPJz+Yyr5HRroDxrfkjQQ5ziL5gBeIlEZ7KitgTECC5WrydwZTAne5hlTp3U9EC17zAoYBcRj22iKM9omVjv0Oo7cv7/OiVjq
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210828172315.55742-1-konrad.dybcio@somainline.org>
+X-Received: by 2002:a92:280d:: with SMTP id l13mr10827952ilf.99.1630175530430;
+ Sat, 28 Aug 2021 11:32:10 -0700 (PDT)
+Date:   Sat, 28 Aug 2021 11:32:10 -0700
+In-Reply-To: <000000000000b575ab05aebfc192@google.com>
+X-Google-Appengine-App-Id: s~syzkaller
+X-Google-Appengine-App-Id-Alias: syzkaller
+Message-ID: <00000000000069bb3e05caa2d1f8@google.com>
+Subject: Re: [syzbot] WARNING: refcount bug in qrtr_node_lookup
+From:   syzbot <syzbot+c613e88b3093ebf3686e@syzkaller.appspotmail.com>
+To:     anant.thazhemadam@gmail.com, bjorn.andersson@linaro.org,
+        butterflyhuangxx@gmail.com, davem@davemloft.net,
+        dragonjetli@gmail.com, hdanton@sina.com, kuba@kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        linux-kernel-mentees@lists.linuxfoundation.org,
+        linux-kernel@vger.kernel.org, mani@kernel.org,
+        manivannan.sadhasivam@linaro.org, masahiroy@kernel.org,
+        netdev@vger.kernel.org, syzkaller-bugs@googlegroups.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 28 Aug 12:23 CDT 2021, Konrad Dybcio wrote:
+syzbot suspects this issue was fixed by commit:
 
-> Add device tree binding Documentation details for Qualcomm SM6350
-> pinctrl driver.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+commit 7e78c597c3ebfd0cb329aa09a838734147e4f117
+Author: Xiaolong Huang <butterflyhuangxx@gmail.com>
+Date:   Thu Aug 19 19:50:34 2021 +0000
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+    net: qrtr: fix another OOB Read in qrtr_endpoint_post
 
-Regards,
-Bjorn
+bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=11279a4d300000
+start commit:   ba4f184e126b Linux 5.9-rc6
+git tree:       upstream
+kernel config:  https://syzkaller.appspot.com/x/.config?x=af502ec9a451c9fc
+dashboard link: https://syzkaller.appspot.com/bug?extid=c613e88b3093ebf3686e
+syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=12263dd9900000
+C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=13d77603900000
 
-> ---
-> Changes since v2:
-> - Tweak the regex to match gpio0-gpio157
-> 
->  .../bindings/pinctrl/qcom,sm6350-pinctrl.yaml | 148 ++++++++++++++++++
->  1 file changed, 148 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm6350-pinctrl.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm6350-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm6350-pinctrl.yaml
-> new file mode 100644
-> index 000000000000..554992a681f3
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm6350-pinctrl.yaml
-> @@ -0,0 +1,148 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pinctrl/qcom,sm6350-pinctrl.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm Technologies, Inc. SM6350 TLMM block
-> +
-> +maintainers:
-> +  - Konrad Dybcio <konrad.dybcio@somainline.org>
-> +
-> +description: |
-> +  This binding describes the Top Level Mode Multiplexer (TLMM) block found
-> +  in the SM6350 platform.
-> +
-> +allOf:
-> +  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,sm6350-tlmm
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  interrupts: true
-> +  interrupt-controller: true
-> +  '#interrupt-cells': true
-> +  gpio-controller: true
-> +  gpio-reserved-ranges: true
-> +  '#gpio-cells': true
-> +  gpio-ranges: true
-> +  wakeup-parent: true
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +
-> +additionalProperties: false
-> +
-> +patternProperties:
-> +  '-state$':
-> +    oneOf:
-> +      - $ref: "#/$defs/qcom-sm6350-tlmm-state"
-> +      - patternProperties:
-> +          ".*":
-> +            $ref: "#/$defs/qcom-sm6350-tlmm-state"
-> +
-> +$defs:
-> +  qcom-sm6350-tlmm-state:
-> +    type: object
-> +    description:
-> +      Pinctrl node's client devices use subnodes for desired pin configuration.
-> +      Client device subnodes use below standard properties.
-> +    $ref: "qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state"
-> +
-> +    properties:
-> +      pins:
-> +        description:
-> +          List of gpio pins affected by the properties specified in this
-> +          subnode.
-> +        items:
-> +          oneOf:
-> +            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-4][0-9]|15[0-7])$"
-> +            - enum: [ sdc1_clk, sdc1_cmd, sdc1_data, sdc2_clk, sdc2_cmd, sdc2_data ]
-> +        minItems: 1
-> +        maxItems: 36
-> +
-> +      function:
-> +        description:
-> +          Specify the alternative function to be configured for the specified
-> +          pins.
-> +
-> +        enum: [ adsp_ext, agera_pll, atest_char, atest_char0, atest_char1, atest_char2,
-> +                atest_char3, atest_tsens, atest_tsens2, atest_usb1, atest_usb10, atest_usb11,
-> +                atest_usb12, atest_usb13, atest_usb2, atest_usb20, atest_usb21, atest_usb22,
-> +                atest_usb23, audio_ref, btfm_slimbus, cam_mclk0, cam_mclk1, cam_mclk2, cam_mclk3,
-> +                cam_mclk4, cci_async, cci_i2c, cci_timer0, cci_timer1, cci_timer2, cci_timer3,
-> +                cci_timer4, cri_trng, dbg_out, ddr_bist, ddr_pxi0, ddr_pxi1, ddr_pxi2, ddr_pxi3,
-> +                dp_hot, edp_lcd, gcc_gp1, gcc_gp2, gcc_gp3, gp_pdm0, gp_pdm1, gp_pdm2, gpio,
-> +                gps_tx, ibi_i3c, jitter_bist, ldo_en, ldo_update, lpass_ext, m_voc, mclk,
-> +                mdp_vsync, mdp_vsync0, mdp_vsync1, mdp_vsync2, mdp_vsync3, mi2s_0, mi2s_1, mi2s_2,
-> +                mss_lte, nav_gpio, nav_pps, pa_indicator, pcie0_clk, phase_flag0, phase_flag1,
-> +                phase_flag10, phase_flag11, phase_flag12, phase_flag13, phase_flag14, phase_flag15,
-> +                phase_flag16, phase_flag17, phase_flag18, phase_flag19, phase_flag2, phase_flag20,
-> +                phase_flag21, phase_flag22, phase_flag23, phase_flag24, phase_flag25, phase_flag26,
-> +                phase_flag27, phase_flag28, phase_flag29, phase_flag3, phase_flag30, phase_flag31,
-> +                phase_flag4, phase_flag5, phase_flag6, phase_flag7, phase_flag8, phase_flag9,
-> +                pll_bist, pll_bypassnl, pll_reset, prng_rosc, qdss_cti, qdss_gpio, qdss_gpio0,
-> +                qdss_gpio1, qdss_gpio10, qdss_gpio11, qdss_gpio12, qdss_gpio13, qdss_gpio14,
-> +                qdss_gpio15, qdss_gpio2, qdss_gpio3, qdss_gpio4, qdss_gpio5, qdss_gpio6,
-> +                qdss_gpio7, qdss_gpio8, qdss_gpio9, qlink0_enable, qlink0_request, qlink0_wmss,
-> +                qlink1_enable, qlink1_request, qlink1_wmss, qup00, qup01, qup02, qup10, qup11,
-> +                qup12, qup13_f1, qup13_f2, qup14, rffe0_clk, rffe0_data, rffe1_clk, rffe1_data,
-> +                rffe2_clk, rffe2_data, rffe3_clk, rffe3_data, rffe4_clk, rffe4_data, sd_write,
-> +                sdc1_tb, sdc2_tb, sp_cmu, tgu_ch0, tgu_ch1, tgu_ch2, tgu_ch3, tsense_pwm1,
-> +                tsense_pwm2, uim1_clk, uim1_data, uim1_present, uim1_reset, uim2_clk, uim2_data,
-> +                uim2_present, uim2_reset, usb_phy, vfr_1, vsense_trigger, wlan1_adc0, wlan1_adc1,
-> +                wlan2_adc0, wlan2_adc1, ]
-> +
-> +
-> +      bias-disable: true
-> +      bias-pull-down: true
-> +      bias-pull-up: true
-> +      drive-strength: true
-> +      input-enable: true
-> +      output-high: true
-> +      output-low: true
-> +
-> +    required:
-> +      - pins
-> +      - function
-> +
-> +    additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +        pinctrl@f100000 {
-> +                compatible = "qcom,sm6350-tlmm";
-> +                reg = <0x0f100000 0x300000>;
-> +                interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
-> +                gpio-controller;
-> +                #gpio-cells = <2>;
-> +                interrupt-controller;
-> +                #interrupt-cells = <2>;
-> +                gpio-ranges = <&tlmm 0 0 157>;
-> +
-> +                gpio-wo-subnode-state {
-> +                        pins = "gpio1";
-> +                        function = "gpio";
-> +                };
-> +
-> +                uart-w-subnodes-state {
-> +                        rx {
-> +                                pins = "gpio25";
-> +                                function = "qup13_f2";
-> +                                bias-disable;
-> +                        };
-> +
-> +                        tx {
-> +                                pins = "gpio26";
-> +                                function = "qup13_f2";
-> +                                bias-disable;
-> +                        };
-> +                };
-> +        };
-> +...
-> -- 
-> 2.33.0
-> 
+If the result looks correct, please mark the issue as fixed by replying with:
+
+#syz fix: net: qrtr: fix another OOB Read in qrtr_endpoint_post
+
+For information about bisection process see: https://goo.gl/tpsmEJ#bisection
