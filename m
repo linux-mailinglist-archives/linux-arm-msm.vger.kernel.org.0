@@ -2,119 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1ECA33FA3FF
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Aug 2021 08:22:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B65B73FA42A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Aug 2021 09:07:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231277AbhH1GW5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 28 Aug 2021 02:22:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37388 "EHLO
+        id S233375AbhH1HDJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 28 Aug 2021 03:03:09 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229555AbhH1GW4 (ORCPT
+        with ESMTP id S233352AbhH1HDI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 28 Aug 2021 02:22:56 -0400
-Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74471C0613D9;
-        Fri, 27 Aug 2021 23:22:06 -0700 (PDT)
-Received: by mail-ej1-x634.google.com with SMTP id bt14so18734042ejb.3;
-        Fri, 27 Aug 2021 23:22:06 -0700 (PDT)
+        Sat, 28 Aug 2021 03:03:08 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8763CC0613D9
+        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Aug 2021 00:02:18 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id m6so3066pfh.13
+        for <linux-arm-msm@vger.kernel.org>; Sat, 28 Aug 2021 00:02:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=HiF+7zA8HBAPFwe6q7tlh4E2+gZ/+XWahT0QBwrHEso=;
-        b=saQ0rnniVs/9gPzlpf0owvdwyXxzd4tkuHaCB32Ux2q/aBfoX7gviX0ODDOLrzjJzG
-         Mi3aMS6SlYnqsImc9W+/j9Lr7fC/rxIAf8uP8oK5Kg8hdW5im7P+pfpmgla2s//z793c
-         oE0J3WibmlszRD8Rgf/DLiXp7jNewaFIi4PECzFrONZoIRCOb5bRT6+FIpf3Md5pvAEw
-         vnohrCncr8jtrW61yYr2ieNGutcls6fGRJp/SmBeJoIqEXcuZR77eeeeATBMRGjMJujO
-         GCf9QmX4mNzHng+6eWpinmi2n8q2cdJzb8ti3AJfywDim3jc5h5bESwgKdnAsy0XMn++
-         CTcw==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=Oma39e4ztyqU/L0DrbCeGQ/UJAnQ1l0pUG/tIJG6wR4=;
+        b=s/CUPMeDIpZQSgMbAi4HZ+h401BTKoxrEbc9dVPc2nFy6iY3o6sbC7Qf353urfMCQs
+         w9jnKRqj1j3tV3hWJ17nzQGo35q/0sP7JslWmsiHHuFHNUJIwM4UfeETs8RN1Whcq2iV
+         so7uqB51C89jgiA8CCb9uzfQ9zlMdW4NpEKZ23bj3L8B6G7e7TNTeouviZa72lHFQSoC
+         lm+O0ooX7yHhwQhBR5oGOoK0f98056ycI+yhuxiCZqNmCTk27bFdCIxyKI07DqSFtDqF
+         JvInMkxusmvsnqLFilFB1Fx4WX7r6CevezlsFacD2XECi2Em6eq0KJZNFoaEdA9VctWM
+         hsCQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=HiF+7zA8HBAPFwe6q7tlh4E2+gZ/+XWahT0QBwrHEso=;
-        b=bJxPrZvnHGeUl2z8rrCsRPNG1LnK7FbI/0z6ui3oW/CukrKnCb2FTO4ZX53Xm6zSa+
-         qTL9BWBTsw1gfBprQ7TyHVr/Z+ug/Ng/NGGUS0wWhRRvIkXoQdgsKSgQ9ORVLKBq1yhN
-         +wvxqKMxsxOq0iJiAxZty/4o5WirfrY0fQJ+33ti87P5CLPM9xu8KA19Y6iFW8T84TWa
-         Z/YvoNHeL1UHVVNy+kAcfwlAD2nKXyAZvXSeNP7JZnhcpqPck4zSOTGwJUUIB9i/19xM
-         /qCwlaI0Pl+XzqkkDerPMTZmtWC+JUH9oYiuuQDmiWpF2tLenL27wrXN9LVILNIXOFt5
-         PAKQ==
-X-Gm-Message-State: AOAM530Xe1bC6m+P+whrNweoaDQn4+SeN4/+wNlbnx/zr8Czd/NvvKNT
-        1uuEb9d6pVAL7cfRYDmGQnQ=
-X-Google-Smtp-Source: ABdhPJwE2CJiAC0MCQMsna3VgnY61/nhEjaKHPlghxDgpyUquvddyvu/gmwkRXkpnqvEe++QloGskQ==
-X-Received: by 2002:a17:907:7252:: with SMTP id ds18mr14018484ejc.105.1630131725043;
-        Fri, 27 Aug 2021 23:22:05 -0700 (PDT)
-Received: from [192.168.69.153] ([77.78.38.236])
-        by smtp.gmail.com with ESMTPSA id m17sm3826924ejr.27.2021.08.27.23.22.03
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 27 Aug 2021 23:22:04 -0700 (PDT)
-Subject: Re: [PATCH v1 2/2] mailbox: qcom: Add support for sm4125 sm6115 APCS
- IPC
-To:     Nicolas Dechesne <nicolas.dechesne@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Jassi Brar <jassisinghbrar@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>, phone-devel@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-References: <20210622203759.566716-1-iskren.chernev@gmail.com>
- <20210622203759.566716-2-iskren.chernev@gmail.com>
- <CAP71WjxRpdoN9MMTH2Y2Xgc==tC2jWfm7X0_A1CrzZ40N_rg8Q@mail.gmail.com>
-From:   Iskren Chernev <iskren.chernev@gmail.com>
-Message-ID: <1085ae56-f164-27e3-0c00-f6b187eed1b3@gmail.com>
-Date:   Sat, 28 Aug 2021 09:21:58 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
-MIME-Version: 1.0
-In-Reply-To: <CAP71WjxRpdoN9MMTH2Y2Xgc==tC2jWfm7X0_A1CrzZ40N_rg8Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=Oma39e4ztyqU/L0DrbCeGQ/UJAnQ1l0pUG/tIJG6wR4=;
+        b=ZK6K38NCUlZ8Y8i06+ecdzFmNIYDN3xk1XGBYZomQts3OnR9y6MZB8sVhk7K1AkFTr
+         AvDjVJm1GMFP+j3k750vFAeZ+DYhqAN8oN7TH1/zKYsQnwSwzmgNMAkUcPANhBmihMg/
+         t4T3RAFByItSJh5MhBjJjGMoEwRE82TR8SgHiMXcrQnlSACtxktMPkR1kck7dUPE55jq
+         BvyBp8eMihO8HEdXfHcO38RCJb1gGHtLqBiMh2UuqFssyhEbLo6d4xgymLD4L7B7aRp2
+         h4POGK7L+PHROFfpUeX86IkboIk+wZCEdK5Y5MqxUXGKhp2WjkJosllp/oFs0wSkzUJP
+         1uDQ==
+X-Gm-Message-State: AOAM533n3x+m9/Jpk3J9/ELJQD9ldezMiGx+TdJGZbl1Ds7OyGb001l9
+        /yVbmS+mdC4edjtsjkK+iBbNFA==
+X-Google-Smtp-Source: ABdhPJyTaTawiH47b206zeHxorAa2CgewWiUPDH2sChn390F2XP81SNN0Mw8BqdcEEAMuApahnH6VA==
+X-Received: by 2002:a63:1b60:: with SMTP id b32mr11188888pgm.422.1630134138055;
+        Sat, 28 Aug 2021 00:02:18 -0700 (PDT)
+Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id 141sm8674284pfv.15.2021.08.28.00.02.16
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 28 Aug 2021 00:02:17 -0700 (PDT)
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Marijn Suijten <marijn.suijten@somainline.org>,
+        Siddharth Gupta <sidgup@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Shawn Guo <shawn.guo@linaro.org>
+Subject: [PATCH v2] soc: qcom: mdt_loader: Drop PT_LOAD check on hash segment
+Date:   Sat, 28 Aug 2021 15:02:02 +0800
+Message-Id: <20210828070202.7033-1-shawn.guo@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+PT_LOAD type denotes that the segment should be loaded into the final
+firmware memory region.  Hash segment is not one such, because it's only
+needed for PAS init and shouldn't be in the final firmware memory region.
+That's why mdt_phdr_valid() explicitly reject non PT_LOAD segment and
+hash segment.  This actually makes the hash segment type check in
+qcom_mdt_read_metadata() unnecessary and redundant.  For a hash segment,
+it won't be loaded into firmware memory region anyway, due to the
+QCOM_MDT_TYPE_HASH check in mdt_phdr_valid(), even if it has a PT_LOAD
+type for some reason (misusing or abusing?).
 
+Some firmware files on Sony phones are such examples, e.g WCNSS firmware
+of Sony Xperia M4 Aqua phone.  The type of hash segment is just PT_LOAD.
+Drop the unnecessary hash segment type check in qcom_mdt_read_metadata()
+to fix firmware loading failure on these phones, while hash segment is
+still kept away from the final firmware memory region.
 
-On 8/27/21 6:42 PM, Nicolas Dechesne wrote:
-> On Tue, Jun 22, 2021 at 10:38 PM Iskren Chernev
-> <iskren.chernev@gmail.com> wrote:
->>
->> SM4125 and SM6115, codename bengal, have APCS mailbox setup similar to
->> msm8998 and msm8916.
-> 
-> subject and commit refer to SM4125/SM6115, but the diff below is about
-> 4250/6115. I suppose it's a typo here, since 6115 is similar to 4250,
-> not 4125, right?
+Fixes: 498b98e93900 ("soc: qcom: mdt_loader: Support loading non-split images")
+Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+---
+Changes for v2:
+- Update commit log based on the great disscussion with Marijn and Bjorn.
 
-Yes, you're correct. The issue was resolved in v2 submitted shorty after:
+ drivers/soc/qcom/mdt_loader.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-https://lkml.org/lkml/2021/6/27/167
+diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
+index eba7f76f9d61..6034cd8992b0 100644
+--- a/drivers/soc/qcom/mdt_loader.c
++++ b/drivers/soc/qcom/mdt_loader.c
+@@ -98,7 +98,7 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len)
+ 	if (ehdr->e_phnum < 2)
+ 		return ERR_PTR(-EINVAL);
+ 
+-	if (phdrs[0].p_type == PT_LOAD || phdrs[1].p_type == PT_LOAD)
++	if (phdrs[0].p_type == PT_LOAD)
+ 		return ERR_PTR(-EINVAL);
+ 
+ 	if ((phdrs[1].p_flags & QCOM_MDT_TYPE_MASK) != QCOM_MDT_TYPE_HASH)
+-- 
+2.17.1
 
->>
->> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
->> ---
->>  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 2 ++
->>  1 file changed, 2 insertions(+)
->>
->> diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
->> index f25324d03842..1a4d8cca5881 100644
->> --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
->> +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
->> @@ -166,6 +166,8 @@ static const struct of_device_id qcom_apcs_ipc_of_match[] = {
->>         { .compatible = "qcom,sc8180x-apss-shared", .data = &apps_shared_apcs_data },
->>         { .compatible = "qcom,sdm660-apcs-hmss-global", .data = &sdm660_apcs_data },
->>         { .compatible = "qcom,sdm845-apss-shared", .data = &apps_shared_apcs_data },
->> +       { .compatible = "qcom,sm4250-apcs-hmss-global", .data = &sdm660_apcs_data },
->> +       { .compatible = "qcom,sm6115-apcs-hmss-global", .data = &sdm660_apcs_data },
->>         { .compatible = "qcom,sm8150-apss-shared", .data = &apps_shared_apcs_data },
->>         { .compatible = "qcom,sdx55-apcs-gcc", .data = &sdx55_apcs_data },
->>         {}
->> --
->> 2.31.1
->>
