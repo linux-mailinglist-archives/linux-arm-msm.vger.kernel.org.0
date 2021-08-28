@@ -2,92 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D07903FA49C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Aug 2021 11:17:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CBDB93FA58C
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Aug 2021 14:05:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233619AbhH1JBd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 28 Aug 2021 05:01:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43710 "EHLO
+        id S233999AbhH1L5z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 28 Aug 2021 07:57:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54620 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233446AbhH1JBc (ORCPT
+        with ESMTP id S233892AbhH1L5z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 28 Aug 2021 05:01:32 -0400
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 625C6C061756;
-        Sat, 28 Aug 2021 02:00:42 -0700 (PDT)
-Received: from [10.0.20.3] (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits))
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 0CEDB1F986;
-        Sat, 28 Aug 2021 11:00:39 +0200 (CEST)
-Subject: Re: [PATCH v2] soc: qcom: mdt_loader: Drop PT_LOAD check on hash
- segment
-To:     Shawn Guo <shawn.guo@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Siddharth Gupta <sidgup@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20210828070202.7033-1-shawn.guo@linaro.org>
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-Message-ID: <2944d5e9-1efb-ac13-a1b2-293ae11c430f@somainline.org>
-Date:   Sat, 28 Aug 2021 11:00:38 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        Sat, 28 Aug 2021 07:57:55 -0400
+Received: from mail-ej1-x630.google.com (mail-ej1-x630.google.com [IPv6:2a00:1450:4864:20::630])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 90298C061756;
+        Sat, 28 Aug 2021 04:57:04 -0700 (PDT)
+Received: by mail-ej1-x630.google.com with SMTP id bt14so19876744ejb.3;
+        Sat, 28 Aug 2021 04:57:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20161025;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=4/LquTxgB8yeywkZTQuKhulBY+lQnXOj7io3Z67t10Y=;
+        b=jJ6N5B8nZJYrgv14X639TtTc+V0pYIKpisTfjba63zWBD32UtdLbN3CSTZUOV0Tfoi
+         X85zp3sQmAoS3NRMC45C5LCeDp/OGyJHmBgAUwzKrOVGpcaSh2r1KKQ7R/amh/frMUns
+         Gvxq8aEvjBDqj2bmZli4If9y7gurfh4Z1omctVQM01Qb8X3lZqFrNkTlctLZ4jcAzx5W
+         zzFzYyU1oDInh+NNkA6Zs3PHwO2jw3N7TPCo7KKqWhtQ39qd+u8DHl7ssj+KEnd/wqPs
+         1bVPzyPRkk7ke0t2kYE/Po1J8xQHmcMsJeSi6adej8nTNUEQPtonqOgOCC0TQ8Ddixp0
+         rubg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=4/LquTxgB8yeywkZTQuKhulBY+lQnXOj7io3Z67t10Y=;
+        b=EEef2trVeq3NLqnYu/XGIQKkGanr/Ed3APCRf3ZhT7gz5WYLIkO4bA3c716DCQLAqv
+         tU1hhXvef+Dggq0MILS3OaPhTArA++I4L+BeLu6w0ztgZsjuzXkU874zt+sIOq7ricKw
+         BBBIizpo/uqoWgXRFG6mYP+3BH7N3bytf8OXqTyGa+p1SEtSylXD923TgraLf5lrcZjs
+         tU57TwrdcxYzOaPSstvLjEtt4wpeXNpS3OJPj/Vb2ieJbCVNuVzCpyyMQRB5NtIPyn/L
+         OCHSk3onW/QmEOqpe22KMlePvNMbsNLEKTHCTuY0Fid0MbAblAhbAZt+kFws0kPeNi3/
+         u7ww==
+X-Gm-Message-State: AOAM531LeadA0R7UiS1juTM17ALn8/iMBbKSCgHduR9DnB9HP7exUjZ9
+        Cf++A2YsksMxFC8u7EVyHTs=
+X-Google-Smtp-Source: ABdhPJzSLTP9wy7Ky6dAZvS6I+EczFJAV2d52NenIBkOTeDyZDHJUYlplorCOjZHfdlUi4TKt3QGFw==
+X-Received: by 2002:a17:906:7250:: with SMTP id n16mr14922055ejk.147.1630151823031;
+        Sat, 28 Aug 2021 04:57:03 -0700 (PDT)
+Received: from localhost (178-169-161-196.razgrad.ddns.bulsat.com. [178.169.161.196])
+        by smtp.gmail.com with ESMTPSA id h19sm4183215ejt.46.2021.08.28.04.57.01
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Sat, 28 Aug 2021 04:57:02 -0700 (PDT)
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mark Brown <broonie@kernel.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        Iskren Chernev <iskren.chernev@gmail.com>
+Subject: [RFC PATCH 0/2] PM6125 regulator support
+Date:   Sat, 28 Aug 2021 14:56:52 +0300
+Message-Id: <20210828115654.647548-1-iskren.chernev@gmail.com>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-In-Reply-To: <20210828070202.7033-1-shawn.guo@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Shawn,
+This patch series adds SPMI and SMD regulator support for the PM6125 found on
+SM4250/SM6115 SoCs from QCom.
 
-On 8/28/21 9:02 AM, Shawn Guo wrote:
-> PT_LOAD type denotes that the segment should be loaded into the final
-> firmware memory region.  Hash segment is not one such, because it's only
-> needed for PAS init and shouldn't be in the final firmware memory region.
-> That's why mdt_phdr_valid() explicitly reject non PT_LOAD segment and
-> hash segment.  This actually makes the hash segment type check in
-> qcom_mdt_read_metadata() unnecessary and redundant.  For a hash segment,
-> it won't be loaded into firmware memory region anyway, due to the
-> QCOM_MDT_TYPE_HASH check in mdt_phdr_valid(), even if it has a PT_LOAD
-> type for some reason (misusing or abusing?).
-> 
-> Some firmware files on Sony phones are such examples, e.g WCNSS firmware
-> of Sony Xperia M4 Aqua phone.  The type of hash segment is just PT_LOAD.
-> Drop the unnecessary hash segment type check in qcom_mdt_read_metadata()
-> to fix firmware loading failure on these phones, while hash segment is
-> still kept away from the final firmware memory region.
-> 
-> Fixes: 498b98e93900 ("soc: qcom: mdt_loader: Support loading non-split images")
-> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+The main source used for this change is qpnp pm6125 support patch from caf [1]:
+
+[1]: https://source.codeaurora.org/quic/la/kernel/msm-5.4/commit/?h=kernel.lnx.5.4.r1-rel&id=d1220daeffaa440ffff0a8c47322eb0033bf54f5
+
+Unfortunatelly the source patch doesn't contain regulator source groups, so all
+regulators define their own source. If that was available (suggestions are
+welcome), this patch could become acceptable.
+
+While at it I have a few suggestions:
+- spmi determines how to treat each regulator based on type,subtype,revision
+  read from regulator register. I assume this information is fixed for a givem
+  PM chip. It would be really helpful if it was available somewhere in code
+  (comment) or maybe the commit message, so correct voltage range and ops can
+  be determined without firing up an actual device and extracting that info.
+  I've included this info in the spmi commit message in patch 1/2.
+- according to caf source, there are 3 general revisions of regs/ops, called
+  common, common2, common3. I think this is cleaner than picking the first
+  regulator name from the new generation and naming ops/regs on it. For example
+  ftsmps426 functions/regs are common2 in caf, and my patch introduces common3
+  (named ftsmps3).
+
+About correctness:
+- spmi patch was compile-tested
+- rpm/smd patch was tested (voltage ranges come from spmi+type/subtype info)
+
+Iskren Chernev (2):
+  regulator: qcom_spmi: Add PM6125 regulators
+  regulator: qcom_smd: Add PM6125 regulator support
+
+ drivers/regulator/qcom_smd-regulator.c  |  46 +++++++
+ drivers/regulator/qcom_spmi-regulator.c | 160 +++++++++++++++++++++++-
+ 2 files changed, 204 insertions(+), 2 deletions(-)
 
 
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+base-commit: 5e63226c72287bc6c6724d4fc7e157af0e3d7908
+--
+2.33.0
 
-Thanks for sitting through that long discussion and coming to the 
-conclusion that your patch was correct all along!
-
-> ---
-> Changes for v2:
-> - Update commit log based on the great disscussion with Marijn and Bjorn.
-> 
->   drivers/soc/qcom/mdt_loader.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/soc/qcom/mdt_loader.c b/drivers/soc/qcom/mdt_loader.c
-> index eba7f76f9d61..6034cd8992b0 100644
-> --- a/drivers/soc/qcom/mdt_loader.c
-> +++ b/drivers/soc/qcom/mdt_loader.c
-> @@ -98,7 +98,7 @@ void *qcom_mdt_read_metadata(const struct firmware *fw, size_t *data_len)
->   	if (ehdr->e_phnum < 2)
->   		return ERR_PTR(-EINVAL);
->   
-> -	if (phdrs[0].p_type == PT_LOAD || phdrs[1].p_type == PT_LOAD)
-> +	if (phdrs[0].p_type == PT_LOAD)
->   		return ERR_PTR(-EINVAL);
->   
->   	if ((phdrs[1].p_flags & QCOM_MDT_TYPE_MASK) != QCOM_MDT_TYPE_HASH)
-> 
