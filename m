@@ -2,171 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8D2333FA3EE
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Aug 2021 08:03:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1ECA33FA3FF
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Aug 2021 08:22:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231277AbhH1GEs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 28 Aug 2021 02:04:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33414 "EHLO
+        id S231277AbhH1GW5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 28 Aug 2021 02:22:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37388 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229555AbhH1GEs (ORCPT
+        with ESMTP id S229555AbhH1GW4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 28 Aug 2021 02:04:48 -0400
-Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45EA5C0613D9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Aug 2021 23:03:58 -0700 (PDT)
-Received: by mail-pl1-x629.google.com with SMTP id m4so5492545pll.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 27 Aug 2021 23:03:58 -0700 (PDT)
+        Sat, 28 Aug 2021 02:22:56 -0400
+Received: from mail-ej1-x634.google.com (mail-ej1-x634.google.com [IPv6:2a00:1450:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74471C0613D9;
+        Fri, 27 Aug 2021 23:22:06 -0700 (PDT)
+Received: by mail-ej1-x634.google.com with SMTP id bt14so18734042ejb.3;
+        Fri, 27 Aug 2021 23:22:06 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=68/6LZll51YMWDfK9E2Ce0WbhUlHdIDgWPo3p8PFz5I=;
-        b=tgxldRB9n6F1R9/5SEL6f98jNwk/OMJBOTRKZLxvNHp7++bCv5l/P0hFedLXQCI9fZ
-         WyqhjEvuySWR5qZOZ3K33p2vSFsIB7JCg173qEtH1bCG2FDS1wfkGWS+qtpd5mYmuNWz
-         VSjjB+j5a1GjbvX3py3wkgzbmpzv1EvAhp14egWtpqeQTaqiRx5GRi6ibTq7vUjCgQ+T
-         Kqx+3LtM0WS4pIxvhq4o6T4njBvQQnpa838LeHOZ3RcqJ8SxjDBKjmvkOPYxb5jxJeaf
-         KCknXlHHfxYqDKMv5hSOrTX4vxo0GDgPFEuYxa5EmwihGbYa3QcINe4qot86aBCAbZUz
-         ITRg==
+        d=gmail.com; s=20161025;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=HiF+7zA8HBAPFwe6q7tlh4E2+gZ/+XWahT0QBwrHEso=;
+        b=saQ0rnniVs/9gPzlpf0owvdwyXxzd4tkuHaCB32Ux2q/aBfoX7gviX0ODDOLrzjJzG
+         Mi3aMS6SlYnqsImc9W+/j9Lr7fC/rxIAf8uP8oK5Kg8hdW5im7P+pfpmgla2s//z793c
+         oE0J3WibmlszRD8Rgf/DLiXp7jNewaFIi4PECzFrONZoIRCOb5bRT6+FIpf3Md5pvAEw
+         vnohrCncr8jtrW61yYr2ieNGutcls6fGRJp/SmBeJoIqEXcuZR77eeeeATBMRGjMJujO
+         GCf9QmX4mNzHng+6eWpinmi2n8q2cdJzb8ti3AJfywDim3jc5h5bESwgKdnAsy0XMn++
+         CTcw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=68/6LZll51YMWDfK9E2Ce0WbhUlHdIDgWPo3p8PFz5I=;
-        b=S8EDPKwS+QOpEesTAHdMUia+BOv7VUTkBqj14jDABsi1/WEiY+m3aOjJLOK9FRXues
-         kaPqsg2w8n833JsU4XmFZkWL7CKvbvBEMo6pVLjZTGDcMTe3uocu+AN7fJ8g0zFu7OU0
-         FhdRnPlgm6uPckJgxNeLtLKDzbrx+VKUTEPA+t0iHjxf13qaiSvaUdOfOqTydCRKRjwj
-         0spbgv/+bU879eQ1QHZThBfBGMazLncsHP5kYZHUV9WDhSsE1MILFtAmbotoM7gTlAXD
-         MPtaqwL076FJzLFcQTACrII1c6/7+INKYmvSUhboziBmIdFxGpwDY2k2lN00qg6XsmPb
-         wXnA==
-X-Gm-Message-State: AOAM533Y7pN+53Rz/HS6J7r2bkvFSVbE05yMOgI4CMyhnNd81t0UKyNC
-        2CcXSiVPWIREZmfH30jJwy29/g==
-X-Google-Smtp-Source: ABdhPJyuoyIMljpZixpBtdgVO9sHof6i9UErH57YTTshb2a/q5ekBjblT2Xm8ZRqjQjWYb2lARHTEw==
-X-Received: by 2002:a17:90b:e0d:: with SMTP id ge13mr15166167pjb.53.1630130637573;
-        Fri, 27 Aug 2021 23:03:57 -0700 (PDT)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id y23sm7488996pfe.129.2021.08.27.23.03.55
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 27 Aug 2021 23:03:57 -0700 (PDT)
-Date:   Sat, 28 Aug 2021 14:03:50 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     Shawn Guo <shawnguo@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Pavel Dubrova <pashadubrova@gmail.com>,
-        Siddharth Gupta <sidgup@codeaurora.org>
-Subject: Re: [PATCH] soc: qcom: mdt_loader: Drop PT_LOAD check on hash segment
-Message-ID: <20210828060349.GB4274@dragon>
-References: <20210824094109.7272-1-shawnguo@kernel.org>
- <0410695f-85fe-1df9-46ee-bc494b81bf23@somainline.org>
- <20210826141826.GB31229@dragon>
- <ed941f01-7855-006a-9eb9-29388b3be2f4@somainline.org>
- <20210827062359.GC31229@dragon>
- <3df9b523-4d8b-b817-f074-88e38456b35b@somainline.org>
- <20210827095716.GD31229@dragon>
- <9166e1a9-5afa-7ae8-91e5-21704bc7a40f@somainline.org>
- <20210827141200.GA4274@dragon>
- <16c45f98-60ed-61d0-9e6a-d0c2aa2a20d1@somainline.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=HiF+7zA8HBAPFwe6q7tlh4E2+gZ/+XWahT0QBwrHEso=;
+        b=bJxPrZvnHGeUl2z8rrCsRPNG1LnK7FbI/0z6ui3oW/CukrKnCb2FTO4ZX53Xm6zSa+
+         qTL9BWBTsw1gfBprQ7TyHVr/Z+ug/Ng/NGGUS0wWhRRvIkXoQdgsKSgQ9ORVLKBq1yhN
+         +wvxqKMxsxOq0iJiAxZty/4o5WirfrY0fQJ+33ti87P5CLPM9xu8KA19Y6iFW8T84TWa
+         Z/YvoNHeL1UHVVNy+kAcfwlAD2nKXyAZvXSeNP7JZnhcpqPck4zSOTGwJUUIB9i/19xM
+         /qCwlaI0Pl+XzqkkDerPMTZmtWC+JUH9oYiuuQDmiWpF2tLenL27wrXN9LVILNIXOFt5
+         PAKQ==
+X-Gm-Message-State: AOAM530Xe1bC6m+P+whrNweoaDQn4+SeN4/+wNlbnx/zr8Czd/NvvKNT
+        1uuEb9d6pVAL7cfRYDmGQnQ=
+X-Google-Smtp-Source: ABdhPJwE2CJiAC0MCQMsna3VgnY61/nhEjaKHPlghxDgpyUquvddyvu/gmwkRXkpnqvEe++QloGskQ==
+X-Received: by 2002:a17:907:7252:: with SMTP id ds18mr14018484ejc.105.1630131725043;
+        Fri, 27 Aug 2021 23:22:05 -0700 (PDT)
+Received: from [192.168.69.153] ([77.78.38.236])
+        by smtp.gmail.com with ESMTPSA id m17sm3826924ejr.27.2021.08.27.23.22.03
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 27 Aug 2021 23:22:04 -0700 (PDT)
+Subject: Re: [PATCH v1 2/2] mailbox: qcom: Add support for sm4125 sm6115 APCS
+ IPC
+To:     Nicolas Dechesne <nicolas.dechesne@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Jassi Brar <jassisinghbrar@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht
+References: <20210622203759.566716-1-iskren.chernev@gmail.com>
+ <20210622203759.566716-2-iskren.chernev@gmail.com>
+ <CAP71WjxRpdoN9MMTH2Y2Xgc==tC2jWfm7X0_A1CrzZ40N_rg8Q@mail.gmail.com>
+From:   Iskren Chernev <iskren.chernev@gmail.com>
+Message-ID: <1085ae56-f164-27e3-0c00-f6b187eed1b3@gmail.com>
+Date:   Sat, 28 Aug 2021 09:21:58 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <16c45f98-60ed-61d0-9e6a-d0c2aa2a20d1@somainline.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <CAP71WjxRpdoN9MMTH2Y2Xgc==tC2jWfm7X0_A1CrzZ40N_rg8Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Aug 27, 2021 at 05:13:34PM +0200, Marijn Suijten wrote:
-> Hi Shawn,
+
+
+On 8/27/21 6:42 PM, Nicolas Dechesne wrote:
+> On Tue, Jun 22, 2021 at 10:38 PM Iskren Chernev
+> <iskren.chernev@gmail.com> wrote:
+>>
+>> SM4125 and SM6115, codename bengal, have APCS mailbox setup similar to
+>> msm8998 and msm8916.
 > 
-> On 8/27/21 4:12 PM, Shawn Guo wrote:
-> > [..]
-> > 
-> > So you proposed to reject PT_LOAD in the else clause, which right now
-> > handles .mbn case
-> 
-> 
-> Yes, I propose to reject PT_LOAD in the else-case, and additionally reject
-> cases where p_offset+p_filesz > sw->size since PT_NULL can also cause
-> external file loads (meaning split-firmware).  This is what Siddharth's
-> patchset - or my respin of it - is going to implement.
-> 
-> > are you sure hash segment in .mbn is not going to be
-> > PT_LOAD?
-> 
-> 
-> PT_LOAD unambiguously indicates a program header that ought to be loaded
-> from an external file.  Any mbn file (non-split firmware) without split
-> files that set PT_LOAD are misusing this program header type field.  I have
-> no way to validate whether such mbns are in circulation.
+> subject and commit refer to SM4125/SM6115, but the diff below is about
+> 4250/6115. I suppose it's a typo here, since 6115 is similar to 4250,
+> not 4125, right?
 
-Following your take on PT_LOAD, I assume that no PT_LOAD segment should
-be found in .mbn file, correct?  Here are two .mbn I found in
-circulation.  Both have PT_LOAD type for a few segments.
+Yes, you're correct. The issue was resolved in v2 submitted shorty after:
 
-$ readelf -l venus.mbn 
+https://lkml.org/lkml/2021/6/27/167
 
-Elf file type is EXEC (Executable file)
-Entry point 0xf500000
-There are 5 program headers, starting at offset 52
-
-Program Headers:
-  Type           Offset   VirtAddr   PhysAddr   FileSiz MemSiz  Flg Align
-  NULL           0x000000 0x00000000 0x00000000 0x000d4 0x00000     0
-  LOAD           0x001000 0x0fa00000 0x0fa00000 0x00b88 0x02000     0x1000
-  LOAD           0x003000 0x00000000 0x0f500000 0xeecd0 0xeecd0 R E 0x100000
-  LOAD           0x0f1cd0 0x000ef000 0x0f5ef000 0x015c0 0x405000 RW  0x4000
-  LOAD           0x0f3290 0x004ff000 0x0f9ff000 0x00020 0x00020 RW  0x4
-
-$ readelf -l mba.mbn 
-
-Elf file type is EXEC (Executable file)
-Entry point 0x4417000
-There are 5 program headers, starting at offset 52
-
-Program Headers:
-  Type           Offset   VirtAddr   PhysAddr   FileSiz MemSiz  Flg Align
-  NULL           0x000000 0x00000000 0x00000000 0x000d4 0x00000     0
-  NULL           0x001000 0x8ea4a000 0x8ea4a000 0x019c8 0x02000     0x1000
-  LOAD           0x003000 0x04417000 0x8ea00000 0x350d0 0x3bbc8 RWE 0x1000
-  LOAD           0x039000 0x04460000 0x8ea49000 0x00380 0x00380 RW  0x1000
-  GNU_STACK      0x002000 0x00000000 0x00000000 0x00000 0x00000 RWE 0x4
-
-Or you think these are all misusing of PT_LOAD?  Sorry, I hardly believe
-your understanding on PT_LOAD matches the reality.  Instead, I'm inclined
-to agree with Bjorn's comment.
-
-Quote:
-
-"I would expect that PT_LOAD denotes that the segment should be loaded
-into the final firmware region and that the hash segment would be
-PT_NULL regardless of being part of the .mdt, single .mbn or a separate
-.bNN segment."
-
-The only part that doesn't hold is "the hash segment would be PT_NULL".
-But the point is that PT_LOAD doesn't mean the segment should be loaded
-externally (from .bNN file). 
-
-> 
-> Of note, I have never referenced the definition of the program header types
-> yet.  Please see [1]:
-> 
->     PT_LOAD (1)
->         Indicates that this program header describes a segment to be
->         loaded from the file.
-> 
-> Let me know if you're planning to send a v2 of this patch with
-> aforementioned improvements, then I'll adjust my plans to respin Siddharth's
-> patchset accordingly.
-
-I will send v2. However there will be no code change but just commit log
-update based on all these discussion.  Thanks!
-
-Shawn
-
-> [1]: https://ftp.gnu.org/old-gnu/Manuals/ld-2.9.1/html_node/ld_23.html
+>>
+>> Signed-off-by: Iskren Chernev <iskren.chernev@gmail.com>
+>> ---
+>>  drivers/mailbox/qcom-apcs-ipc-mailbox.c | 2 ++
+>>  1 file changed, 2 insertions(+)
+>>
+>> diff --git a/drivers/mailbox/qcom-apcs-ipc-mailbox.c b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+>> index f25324d03842..1a4d8cca5881 100644
+>> --- a/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+>> +++ b/drivers/mailbox/qcom-apcs-ipc-mailbox.c
+>> @@ -166,6 +166,8 @@ static const struct of_device_id qcom_apcs_ipc_of_match[] = {
+>>         { .compatible = "qcom,sc8180x-apss-shared", .data = &apps_shared_apcs_data },
+>>         { .compatible = "qcom,sdm660-apcs-hmss-global", .data = &sdm660_apcs_data },
+>>         { .compatible = "qcom,sdm845-apss-shared", .data = &apps_shared_apcs_data },
+>> +       { .compatible = "qcom,sm4250-apcs-hmss-global", .data = &sdm660_apcs_data },
+>> +       { .compatible = "qcom,sm6115-apcs-hmss-global", .data = &sdm660_apcs_data },
+>>         { .compatible = "qcom,sm8150-apss-shared", .data = &apps_shared_apcs_data },
+>>         { .compatible = "qcom,sdx55-apcs-gcc", .data = &sdx55_apcs_data },
+>>         {}
+>> --
+>> 2.31.1
+>>
