@@ -2,137 +2,211 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E70A3FA5A7
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Aug 2021 14:45:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DDF0C3FA5BB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 28 Aug 2021 14:56:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234277AbhH1MlF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 28 Aug 2021 08:41:05 -0400
-Received: from relay03.th.seeweb.it ([5.144.164.164]:41953 "EHLO
-        relay03.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234012AbhH1MlB (ORCPT
+        id S234283AbhH1MwL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 28 Aug 2021 08:52:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38250 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234182AbhH1MwK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 28 Aug 2021 08:41:01 -0400
-Received: from [192.168.1.101] (83.6.168.105.neoplus.adsl.tpnet.pl [83.6.168.105])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 50CFD20123;
-        Sat, 28 Aug 2021 14:40:08 +0200 (CEST)
-Subject: Re: [PATCH 1/2] dt-bindings: pinctrl: qcom: Add SM6350 pinctrl
- bindings
-To:     Maulik Shah <mkshah@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
+        Sat, 28 Aug 2021 08:52:10 -0400
+Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 04804C061756;
+        Sat, 28 Aug 2021 05:51:19 -0700 (PDT)
+Received: from localhost.localdomain (83.6.168.105.neoplus.adsl.tpnet.pl [83.6.168.105])
+        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 59C981FA69;
+        Sat, 28 Aug 2021 14:51:17 +0200 (CEST)
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+To:     ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
         angelogioacchino.delregno@somainline.org,
         marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Linus Walleij <linus.walleij@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20210820203751.232645-1-konrad.dybcio@somainline.org>
- <20210820203751.232645-2-konrad.dybcio@somainline.org>
- <YSO+kQnDsqcaBIOg@ripper>
- <82cb4d2d-f347-b823-fa4c-4c2b0c0bfb0c@codeaurora.org>
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-Message-ID: <07862c1f-f7c0-51c5-b2a5-60c164a53700@somainline.org>
-Date:   Sat, 28 Aug 2021 14:40:07 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+Subject: [PATCH v2 1/2] dt-bindings: pinctrl: qcom: Add SM6350 pinctrl bindings
+Date:   Sat, 28 Aug 2021 14:51:10 +0200
+Message-Id: <20210828125112.14721-1-konrad.dybcio@somainline.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-In-Reply-To: <82cb4d2d-f347-b823-fa4c-4c2b0c0bfb0c@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add device tree binding Documentation details for Qualcomm SM6350
+pinctrl driver.
 
->>> +        #include <dt-bindings/interrupt-controller/arm-gic.h>
->>> +        pinctrl@f100000 {
->>> +                compatible = "qcom,sm6350-tlmm";
->>> +                reg = <0x0f100000 0x300000>;
->>> +                interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>,
->>> +                            <GIC_SPI 209 IRQ_TYPE_LEVEL_HIGH>,
->>> +                            <GIC_SPI 210 IRQ_TYPE_LEVEL_HIGH>,
->>> +                            <GIC_SPI 211 IRQ_TYPE_LEVEL_HIGH>,
->>> +                            <GIC_SPI 212 IRQ_TYPE_LEVEL_HIGH>,
->>> +                            <GIC_SPI 213 IRQ_TYPE_LEVEL_HIGH>,
->>> +                            <GIC_SPI 214 IRQ_TYPE_LEVEL_HIGH>,
->>> +                            <GIC_SPI 215 IRQ_TYPE_LEVEL_HIGH>,
->>> +                            <GIC_SPI 216 IRQ_TYPE_LEVEL_HIGH>;
->>> +                gpio-controller;
->>> +                #gpio-cells = <2>;
->>> +                interrupt-controller;
->>> +                #interrupt-cells = <2>;
->>> +                gpio-ranges = <&tlmm 0 0 156>;
->> Shouldn't this be 157?
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+---
+Changes since v1:
+- Fix gpio-ranges from 156 to 157
+- Don't mess with the common binding, one interrupt is enough
 
-Yes, it should. Good catch.
+ .../bindings/pinctrl/qcom,sm6350-pinctrl.yaml | 148 ++++++++++++++++++
+ 1 file changed, 148 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm6350-pinctrl.yaml
 
-
->>
->>> +
->>> +                gpio-wo-subnode-state {
->>> +                        pins = "gpio1";
->>> +                        function = "gpio";
->>> +                };
->>> +
->>> +                uart-w-subnodes-state {
->>> +                        rx {
->>> +                                pins = "gpio25";
->>> +                                function = "qup13_f2";
->>> +                                bias-disable;
->>> +                        };
->>> +
->>> +                        tx {
->>> +                                pins = "gpio26";
->>> +                                function = "qup13_f2";
->>> +                                bias-disable;
->>> +                        };
->>> +                };
->>> +        };
->>> +...
->>> diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,tlmm-common.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,tlmm-common.yaml
->>> index 3b37cf102d41..99975122a2ce 100644
->>> --- a/Documentation/devicetree/bindings/pinctrl/qcom,tlmm-common.yaml
->>> +++ b/Documentation/devicetree/bindings/pinctrl/qcom,tlmm-common.yaml
->>> @@ -17,7 +17,7 @@ properties:
->>>     interrupts:
->>>       description:
->>>         Specifies the TLMM summary IRQ
->>> -    maxItems: 1
->>> +    maxItems: 9
->> Is this to support direct connected interrupts?
->>
->> Don't you need to add minItems: 1, to permit the other bindings to not
->> define these? I think that's what Rob's automatic reply complains about
->> at least.
->>
->>
->> PS. Any plans to work up support for direct connected interrupts? I
->> think that and "egpio" is the only downstream delta these days... That
->> said, I don't know if anyone actually uses direct connected interrupts?
-
-I haven't really gotten into that piece yet, trying to get the platform up first..
-
-
-
->
-> Using .wakeirq_dual_edge_errata = true, in pinctrl-sm6350.c (msm_pinctrl_soc_data structure) in [1] should help. The direct connect interrupt were added to support dual edge in downstream driver but in upstream setting this flag should help.
->
-> This was used in sc7180 but should apply SM6350 too.
->
-> That way you don't need other TLMM interrupts to be listed here.
->
-> [1] https://patchwork.kernel.org/project/linux-arm-msm/patch/20210820203751.232645-3-konrad.dybcio@somainline.org/
->
-> Thanks,
-> Maulik
->
-Thanks, I'll check and respin a v2 with that.
-
-
-Konrad
+diff --git a/Documentation/devicetree/bindings/pinctrl/qcom,sm6350-pinctrl.yaml b/Documentation/devicetree/bindings/pinctrl/qcom,sm6350-pinctrl.yaml
+new file mode 100644
+index 000000000000..02c660ebc78e
+--- /dev/null
++++ b/Documentation/devicetree/bindings/pinctrl/qcom,sm6350-pinctrl.yaml
+@@ -0,0 +1,148 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/pinctrl/qcom,sm6350-pinctrl.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Technologies, Inc. SM6350 TLMM block
++
++maintainers:
++  - Konrad Dybcio <konrad.dybcio@somainline.org>
++
++description: |
++  This binding describes the Top Level Mode Multiplexer (TLMM) block found
++  in the SM6350 platform.
++
++allOf:
++  - $ref: /schemas/pinctrl/qcom,tlmm-common.yaml#
++
++properties:
++  compatible:
++    const: qcom,sm6350-tlmm
++
++  reg:
++    maxItems: 1
++
++  interrupts: true
++  interrupt-controller: true
++  '#interrupt-cells': true
++  gpio-controller: true
++  gpio-reserved-ranges: true
++  '#gpio-cells': true
++  gpio-ranges: true
++  wakeup-parent: true
++
++required:
++  - compatible
++  - reg
++
++additionalProperties: false
++
++patternProperties:
++  '-state$':
++    oneOf:
++      - $ref: "#/$defs/qcom-sm6350-tlmm-state"
++      - patternProperties:
++          ".*":
++            $ref: "#/$defs/qcom-sm6350-tlmm-state"
++
++$defs:
++  qcom-sm6350-tlmm-state:
++    type: object
++    description:
++      Pinctrl node's client devices use subnodes for desired pin configuration.
++      Client device subnodes use below standard properties.
++    $ref: "qcom,tlmm-common.yaml#/$defs/qcom-tlmm-state"
++
++    properties:
++      pins:
++        description:
++          List of gpio pins affected by the properties specified in this
++          subnode.
++        items:
++          oneOf:
++            - pattern: "^gpio([0-9]|[1-9][0-9]|1[0-9][0-9]|20[0-3])$"
++            - enum: [ sdc1_clk, sdc1_cmd, sdc1_data, sdc2_clk, sdc2_cmd, sdc2_data ]
++        minItems: 1
++        maxItems: 36
++
++      function:
++        description:
++          Specify the alternative function to be configured for the specified
++          pins.
++
++        enum: [ adsp_ext, agera_pll, atest_char, atest_char0, atest_char1, atest_char2,
++                atest_char3, atest_tsens, atest_tsens2, atest_usb1, atest_usb10, atest_usb11,
++                atest_usb12, atest_usb13, atest_usb2, atest_usb20, atest_usb21, atest_usb22,
++                atest_usb23, audio_ref, btfm_slimbus, cam_mclk0, cam_mclk1, cam_mclk2, cam_mclk3,
++                cam_mclk4, cci_async, cci_i2c, cci_timer0, cci_timer1, cci_timer2, cci_timer3,
++                cci_timer4, cri_trng, dbg_out, ddr_bist, ddr_pxi0, ddr_pxi1, ddr_pxi2, ddr_pxi3,
++                dp_hot, edp_lcd, gcc_gp1, gcc_gp2, gcc_gp3, gp_pdm0, gp_pdm1, gp_pdm2, gpio,
++                gps_tx, ibi_i3c, jitter_bist, ldo_en, ldo_update, lpass_ext, m_voc, mclk,
++                mdp_vsync, mdp_vsync0, mdp_vsync1, mdp_vsync2, mdp_vsync3, mi2s_0, mi2s_1, mi2s_2,
++                mss_lte, nav_gpio, nav_pps, pa_indicator, pcie0_clk, phase_flag0, phase_flag1,
++                phase_flag10, phase_flag11, phase_flag12, phase_flag13, phase_flag14, phase_flag15,
++                phase_flag16, phase_flag17, phase_flag18, phase_flag19, phase_flag2, phase_flag20,
++                phase_flag21, phase_flag22, phase_flag23, phase_flag24, phase_flag25, phase_flag26,
++                phase_flag27, phase_flag28, phase_flag29, phase_flag3, phase_flag30, phase_flag31,
++                phase_flag4, phase_flag5, phase_flag6, phase_flag7, phase_flag8, phase_flag9,
++                pll_bist, pll_bypassnl, pll_reset, prng_rosc, qdss_cti, qdss_gpio, qdss_gpio0,
++                qdss_gpio1, qdss_gpio10, qdss_gpio11, qdss_gpio12, qdss_gpio13, qdss_gpio14,
++                qdss_gpio15, qdss_gpio2, qdss_gpio3, qdss_gpio4, qdss_gpio5, qdss_gpio6,
++                qdss_gpio7, qdss_gpio8, qdss_gpio9, qlink0_enable, qlink0_request, qlink0_wmss,
++                qlink1_enable, qlink1_request, qlink1_wmss, qup00, qup01, qup02, qup10, qup11,
++                qup12, qup13_f1, qup13_f2, qup14, rffe0_clk, rffe0_data, rffe1_clk, rffe1_data,
++                rffe2_clk, rffe2_data, rffe3_clk, rffe3_data, rffe4_clk, rffe4_data, sd_write,
++                sdc1_tb, sdc2_tb, sp_cmu, tgu_ch0, tgu_ch1, tgu_ch2, tgu_ch3, tsense_pwm1,
++                tsense_pwm2, uim1_clk, uim1_data, uim1_present, uim1_reset, uim2_clk, uim2_data,
++                uim2_present, uim2_reset, usb_phy, vfr_1, vsense_trigger, wlan1_adc0, wlan1_adc1,
++                wlan2_adc0, wlan2_adc1, ]
++
++
++      bias-disable: true
++      bias-pull-down: true
++      bias-pull-up: true
++      drive-strength: true
++      input-enable: true
++      output-high: true
++      output-low: true
++
++    required:
++      - pins
++      - function
++
++    additionalProperties: false
++
++examples:
++  - |
++        #include <dt-bindings/interrupt-controller/arm-gic.h>
++        pinctrl@f100000 {
++                compatible = "qcom,sm6350-tlmm";
++                reg = <0x0f100000 0x300000>;
++                interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
++                gpio-controller;
++                #gpio-cells = <2>;
++                interrupt-controller;
++                #interrupt-cells = <2>;
++                gpio-ranges = <&tlmm 0 0 157>;
++
++                gpio-wo-subnode-state {
++                        pins = "gpio1";
++                        function = "gpio";
++                };
++
++                uart-w-subnodes-state {
++                        rx {
++                                pins = "gpio25";
++                                function = "qup13_f2";
++                                bias-disable;
++                        };
++
++                        tx {
++                                pins = "gpio26";
++                                function = "qup13_f2";
++                                bias-disable;
++                        };
++                };
++        };
++...
+-- 
+2.33.0
 
