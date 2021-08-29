@@ -2,67 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 658A83FADA1
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Aug 2021 20:09:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17BF13FAE0D
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 29 Aug 2021 21:36:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235709AbhH2SI4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 29 Aug 2021 14:08:56 -0400
-Received: from mail.kernel.org ([198.145.29.99]:44544 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232927AbhH2SI4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 29 Aug 2021 14:08:56 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id C1D7A60ED4;
-        Sun, 29 Aug 2021 18:08:03 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1630260483;
-        bh=KPAQinMx3ezIBjmro4mBpyem8leoYO+pxREtXKJmt4I=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=maIvZJChiJDYIH9W1i4GksLuMPkh+03Jd0UPqtiGq80ybPVjiYM5x/vTCpGh57K4g
-         FZSJ4pIFOrwY5wFpSgrexUKpLAVfVjC2lLJ2cr9Bu7jOZYW4mpyA18MqwUH0MwNEBX
-         Fa50HbbAbnZOSPz0U3noALALNUFTI0i3urO6CDo56+9dfQz2l4AlJEpS4A7ZTkkv+k
-         Ug4WCt2o0cPlF2qKfftaW2oslxAdOuLoa494c18Z6IaD68HP/ELR9cAr8YEV0uc3lE
-         fbXqCFrVdk8ZVyXg0z4MEh71JpNxVdtW4Z0RdmV5tIZnDRo1Z2o7kNGY30enycwLTk
-         b13BuH8IXGvIg==
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <786ebd3c-0596-1090-760d-b75751fcb505@somainline.org>
-References: <20210609145523.467090-1-konrad.dybcio@somainline.org> <786ebd3c-0596-1090-760d-b75751fcb505@somainline.org>
-Subject: Re: [PATCH v2 1/9] dt-bindings: clk: qcom: Add bindings for MSM8994 GCC driver
-From:   Stephen Boyd <sboyd@kernel.org>
+        id S234667AbhH2ThW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 29 Aug 2021 15:37:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47284 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233976AbhH2ThU (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 29 Aug 2021 15:37:20 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 833D3C061756
+        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Aug 2021 12:36:28 -0700 (PDT)
+Received: from localhost.localdomain (83.6.166.149.neoplus.adsl.tpnet.pl [83.6.166.149])
+        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 8A9DC3E81B;
+        Sun, 29 Aug 2021 21:36:22 +0200 (CEST)
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+To:     ~postmarketos/upstreaming@lists.sr.ht
 Cc:     martin.botka@somainline.org,
         angelogioacchino.delregno@somainline.org,
         marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Andy Gross <agross@kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Rob Herring <robh@kernel.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
         Taniya Das <tdas@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Date:   Sun, 29 Aug 2021 11:08:02 -0700
-Message-ID: <163026048249.2676726.2106086525271489846@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+Subject: [PATCH RESEND v2 1/9] dt-bindings: clk: qcom: Add bindings for MSM8994 GCC driver
+Date:   Sun, 29 Aug 2021 21:36:08 +0200
+Message-Id: <20210829193617.4105-1-konrad.dybcio@somainline.org>
+X-Mailer: git-send-email 2.33.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Konrad Dybcio (2021-08-29 07:09:38)
->=20
-> On 09.06.2021 16:55, Konrad Dybcio wrote:
-> > Add documentation for the MSM8994 GCC driver.
-> >
-> > Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> > ---
-> >  .../bindings/clock/qcom,gcc-msm8994.yaml      | 72 +++++++++++++++++++
-> >  1 file changed, 72 insertions(+)
-> >  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-ms=
-m8994.yaml
->=20
->=20
-> Since the MMCC got merged, could this series also be reviewed?
->=20
+Add documentation for the MSM8994 GCC driver.
 
-I don't see it in my queue anymore. Resend?
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Acked-by: Rob Herring <robh@kernel.org>
+---
+No changes since the original v2, only added Rob's A-b
+
+ .../bindings/clock/qcom,gcc-msm8994.yaml      | 72 +++++++++++++++++++
+ 1 file changed, 72 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-msm8994.yaml
+
+diff --git a/Documentation/devicetree/bindings/clock/qcom,gcc-msm8994.yaml b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8994.yaml
+new file mode 100644
+index 000000000000..b44a844d894c
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,gcc-msm8994.yaml
+@@ -0,0 +1,72 @@
++# SPDX-License-Identifier: GPL-2.0-only
++%YAML 1.2
++---
++$id: "http://devicetree.org/schemas/clock/qcom,gcc-msm8994.yaml#"
++$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++
++title: Qualcomm Global Clock & Reset Controller Binding for MSM8994
++
++description: |
++  Qualcomm global clock control module which supports the clocks, resets and
++  power domains on MSM8994 and MSM8992.
++
++  See also:
++  - dt-bindings/clock/qcom,gcc-msm8994.h
++
++maintainers:
++  - Stephen Boyd <sboyd@kernel.org>
++  - Taniya Das <tdas@codeaurora.org>
++
++properties:
++  compatible:
++    enum:
++      - qcom,gcc-msm8992
++      - qcom,gcc-msm8994
++
++  clocks:
++    items:
++      - description: XO source
++      - description: Sleep clock source
++
++  clock-names:
++    items:
++      - const: xo
++      - const: sleep
++
++  '#clock-cells':
++    const: 1
++
++  '#reset-cells':
++    const: 1
++
++  '#power-domain-cells':
++    const: 1
++
++  reg:
++    maxItems: 1
++
++  protected-clocks:
++    description:
++      Protected clock specifier list as per common clock binding.
++
++required:
++  - compatible
++  - reg
++  - '#clock-cells'
++  - '#reset-cells'
++  - '#power-domain-cells'
++
++additionalProperties: false
++
++examples:
++  - |
++    clock-controller@300000 {
++      compatible = "qcom,gcc-msm8994";
++      reg = <0x300000 0x90000>;
++      #clock-cells = <1>;
++      #reset-cells = <1>;
++      #power-domain-cells = <1>;
++      clocks = <&xo_board>, <&sleep_clk>;
++      clock-names = "xo", "sleep";
++    };
++...
+-- 
+2.33.0
+
