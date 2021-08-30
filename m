@@ -2,178 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9C8003FB26E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Aug 2021 10:25:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 282CD3FB279
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Aug 2021 10:28:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234341AbhH3I0J (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Aug 2021 04:26:09 -0400
-Received: from guitar.tcltek.co.il ([192.115.133.116]:50742 "EHLO
-        mx.tkos.co.il" rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234861AbhH3I0J (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Aug 2021 04:26:09 -0400
-Received: from tarshish.tkos.co.il (unknown [10.0.8.2])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S234618AbhH3I3E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Aug 2021 04:29:04 -0400
+Received: from relay03.th.seeweb.it ([5.144.164.164]:53717 "EHLO
+        relay03.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234695AbhH3I3E (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 30 Aug 2021 04:29:04 -0400
+Received: from [10.0.20.3] (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by mx.tkos.co.il (Postfix) with ESMTPS id 14E3F440CD0;
-        Mon, 30 Aug 2021 11:24:54 +0300 (IDT)
-From:   Baruch Siach <baruch@tkos.co.il>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>,
-        Baruch Siach <baruch@tkos.co.il>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 160211F68E;
+        Mon, 30 Aug 2021 10:28:09 +0200 (CEST)
+Subject: Re: [PATCH 1/3] arm: dts: qcom: apq8064: Use 27MHz PXO clock as DSI
+ PLL reference
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Robert Marko <robert.marko@sartura.hr>,
-        devicetree@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-tegra@vger.kernel.org
-Subject: [PATCH v3 3/3] arm64: dts: ipq6018: Add pcie support
-Date:   Mon, 30 Aug 2021 11:24:52 +0300
-Message-Id: <0a6bfc7e9a94eb5c032a019299c9b2477d4d8c1d.1630311481.git.baruch@tkos.co.il>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <cover.1630311481.git.baruch@tkos.co.il>
-References: <cover.1630311481.git.baruch@tkos.co.il>
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20210829203027.276143-1-marijn.suijten@somainline.org>
+ <20210829203027.276143-2-marijn.suijten@somainline.org>
+ <CAA8EJprQ03ipZzO+1vgt9W7jFbLXgsYR0n-oJxVB-142x8dgRA@mail.gmail.com>
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+Message-ID: <17d19b93-dbe5-cc85-f302-b52cd8eeed56@somainline.org>
+Date:   Mon, 30 Aug 2021 10:28:08 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAA8EJprQ03ipZzO+1vgt9W7jFbLXgsYR0n-oJxVB-142x8dgRA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
+Hi Dmitry,
 
-ipq6018 has 1 pcie gen3 port. This patch adds the support for the same.
+On 8/30/21 3:18 AM, Dmitry Baryshkov wrote:
+> On Sun, 29 Aug 2021 at 23:30, Marijn Suijten
+> <marijn.suijten@somainline.org> wrote:
+>>
+>> The 28NM DSI PLL driver for msm8960 calculates with a 27MHz reference
+>> clock and should hence use PXO, not CXO which runs at 19.2MHz.
+>>
+>> Note that none of the DSI PHY/PLL drivers currently use this "ref"
+>> clock; they all rely on (sometimes inexistant) global clock names and
+>> usually function normally without a parent clock.  This discrepancy will
+>> be corrected in a future patch, for which this change needs to be in
+>> place first.
+>>
+>> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> 
+> Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> 
+> Checked the downstream driver, it always uses 27 MHz clock in calculations.
 
-The GICv2m reg property value is a guess based on similar SoCs
-description in downstream Codeaurora kernel. It appears to work.
 
-Signed-off-by: Selvam Sathappan Periakaruppan <speriaka@codeaurora.org>
-[baruch: adjust #address-cells/#size-cells; drop unsupported property;
- increase parf registers size; add 'max-link-speed']
-Signed-off-by: Baruch Siach <baruch@tkos.co.il>
----
-v3: add 'max-link-speed'
+Given our concerns for msm8974 not updating DT in parallel with the 
+kernel (hence the need for a global-name fallback because "ref" is 
+missing from the DT), should we worry about the same for apq8064?  That 
+is, is there a chance that the kernel but not the firmware is upgraded 
+leading to the wrong parent clock being used?  The msm8960 variant of 
+the 28nm PLL driver uses parent_rate in a few places and might read 
+cxo's 19.2MHz erroneously instead of using pxo's 27MHz.
 
-v2: remove 'msi-parent'; doesn't really work
----
- arch/arm64/boot/dts/qcom/ipq6018.dtsi | 100 ++++++++++++++++++++++++++
- 1 file changed, 100 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index ab701da582e5..aaab8d2ee189 100644
---- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -384,6 +384,106 @@ intc: interrupt-controller@b000000 {
- 			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
- 		};
- 
-+		pcie_phy: phy@84000 {
-+			compatible = "qcom,ipq6018-qmp-pcie-phy";
-+			reg = <0x0 0x84000 0x0 0x1bc>; /* Serdes PLL */
-+			status = "disabled";
-+			#address-cells = <2>;
-+			#size-cells = <2>;
-+			ranges;
-+
-+			clocks = <&gcc GCC_PCIE0_AUX_CLK>,
-+				<&gcc GCC_PCIE0_AHB_CLK>;
-+			clock-names = "aux", "cfg_ahb";
-+
-+			resets = <&gcc GCC_PCIE0_PHY_BCR>,
-+				<&gcc GCC_PCIE0PHY_PHY_BCR>;
-+			reset-names = "phy",
-+				      "common";
-+
-+			pcie_phy0: lane@84200 {
-+				reg = <0x0 0x84200 0x0 0x16c>, /* Serdes Tx */
-+				      <0x0 0x84400 0x0 0x200>, /* Serdes Rx */
-+				      <0x0 0x84800 0x0 0x4f4>; /* PCS: Lane0, COM, PCIE */
-+				#phy-cells = <0>;
-+
-+				clocks = <&gcc GCC_PCIE0_PIPE_CLK>;
-+				clock-names = "pipe0";
-+				clock-output-names = "gcc_pcie0_pipe_clk_src";
-+				#clock-cells = <0>;
-+			};
-+		};
-+
-+		pcie0: pci@20000000 {
-+			compatible = "qcom,pcie-ipq6018";
-+			reg = <0x0 0x20000000 0x0 0xf1d>,
-+			      <0x0 0x20000f20 0x0 0xa8>,
-+			      <0x0 0x20001000 0x0 0x1000>,
-+			      <0x0 0x80000 0x0 0x4000>,
-+			      <0x0 0x20100000 0x0 0x1000>;
-+			reg-names = "dbi", "elbi", "atu", "parf", "config";
-+
-+			device_type = "pci";
-+			linux,pci-domain = <0>;
-+			bus-range = <0x00 0xff>;
-+			num-lanes = <1>;
-+			max-link-speed = <3>;
-+			#address-cells = <3>;
-+			#size-cells = <2>;
-+
-+			phys = <&pcie_phy0>;
-+			phy-names = "pciephy";
-+
-+			ranges = <0x81000000 0 0x20200000 0 0x20200000
-+				  0 0x10000>, /* downstream I/O */
-+				 <0x82000000 0 0x20220000 0 0x20220000
-+				  0 0xfde0000>; /* non-prefetchable memory */
-+
-+			interrupts = <GIC_SPI 52 IRQ_TYPE_LEVEL_HIGH>;
-+			interrupt-names = "msi";
-+
-+			#interrupt-cells = <1>;
-+			interrupt-map-mask = <0 0 0 0x7>;
-+			interrupt-map = <0 0 0 1 &intc 0 75
-+					 IRQ_TYPE_LEVEL_HIGH>, /* int_a */
-+					<0 0 0 2 &intc 0 78
-+					 IRQ_TYPE_LEVEL_HIGH>, /* int_b */
-+					<0 0 0 3 &intc 0 79
-+					 IRQ_TYPE_LEVEL_HIGH>, /* int_c */
-+					<0 0 0 4 &intc 0 83
-+					 IRQ_TYPE_LEVEL_HIGH>; /* int_d */
-+
-+			clocks = <&gcc GCC_SYS_NOC_PCIE0_AXI_CLK>,
-+				 <&gcc GCC_PCIE0_AXI_M_CLK>,
-+				 <&gcc GCC_PCIE0_AXI_S_CLK>,
-+				 <&gcc GCC_PCIE0_AXI_S_BRIDGE_CLK>,
-+				 <&gcc PCIE0_RCHNG_CLK>;
-+			clock-names = "iface",
-+				      "axi_m",
-+				      "axi_s",
-+				      "axi_bridge",
-+				      "rchng";
-+
-+			resets = <&gcc GCC_PCIE0_PIPE_ARES>,
-+				 <&gcc GCC_PCIE0_SLEEP_ARES>,
-+				 <&gcc GCC_PCIE0_CORE_STICKY_ARES>,
-+				 <&gcc GCC_PCIE0_AXI_MASTER_ARES>,
-+				 <&gcc GCC_PCIE0_AXI_SLAVE_ARES>,
-+				 <&gcc GCC_PCIE0_AHB_ARES>,
-+				 <&gcc GCC_PCIE0_AXI_MASTER_STICKY_ARES>,
-+				 <&gcc GCC_PCIE0_AXI_SLAVE_STICKY_ARES>;
-+			reset-names = "pipe",
-+				      "sleep",
-+				      "sticky",
-+				      "axi_m",
-+				      "axi_s",
-+				      "ahb",
-+				      "axi_m_sticky",
-+				      "axi_s_sticky";
-+
-+			status = "disabled";
-+		};
-+
- 		watchdog@b017000 {
- 			compatible = "qcom,kpss-wdt";
- 			interrupts = <GIC_SPI 3 IRQ_TYPE_EDGE_RISING>;
--- 
-2.33.0
-
+- Marijn
