@@ -2,96 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E4AD93FB29E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Aug 2021 10:39:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A4CE73FB2CF
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Aug 2021 11:01:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234714AbhH3IkY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Aug 2021 04:40:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51618 "EHLO
+        id S235131AbhH3JCq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Aug 2021 05:02:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56574 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234695AbhH3IkY (ORCPT
+        with ESMTP id S232482AbhH3JCp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Aug 2021 04:40:24 -0400
-Received: from mail-oo1-xc2c.google.com (mail-oo1-xc2c.google.com [IPv6:2607:f8b0:4864:20::c2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18347C061760
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Aug 2021 01:39:31 -0700 (PDT)
-Received: by mail-oo1-xc2c.google.com with SMTP id y47-20020a4a9832000000b00290fb9f6d3fso1138513ooi.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Aug 2021 01:39:31 -0700 (PDT)
+        Mon, 30 Aug 2021 05:02:45 -0400
+Received: from mail-ej1-x62b.google.com (mail-ej1-x62b.google.com [IPv6:2a00:1450:4864:20::62b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7509AC061575
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Aug 2021 02:01:52 -0700 (PDT)
+Received: by mail-ej1-x62b.google.com with SMTP id a25so29573902ejv.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Aug 2021 02:01:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20161025;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=J/hEM3tcQmv5h0aNBtAnL55U1gjZ76bS+5hiezChL/c=;
-        b=pHxOO3OtuhjHfPdiacDEiq974c4w7Vh0NHRop798z7zGNHDfuF1sR08sANF9BP1KDz
-         RJvEBhsc/I0/7mffxPctm5EiB2CtfnHf9wLJP5pA0hyTIN6/veZ22aB1PIomG9i5xY2w
-         dUF8Cvjtbdt6Ya07ORcnNNlsvcBJ7BelF7kRI+L9CC8hgG9b+pPWtdSmQJR2/p7j751q
-         41nhL7VkjW41HWWxB8F6vnfLbkBWHzMGVejHkACWRapSu7UbOqFcISZKBzXtjRxaHV36
-         S4OuBK3n5+at21KBRC2SrQjGlnL8sy+hX+h+A8iBMKb2NtuxhDdgeXcQigzaBAFaOg8r
-         V59Q==
+        d=ffwll.ch; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=6TxX20RG9vZKNb6s13O3Zgz2CFeRVUtXKUgw8R7voIM=;
+        b=DE0IIXDcdI727XPGVqrtky2yQdWuMlMmMgSWIrTGscmSI542IIZjQr6ow8aeAoJp2C
+         2NTnYz2F03dI4OkBH+l2grUnqH4P58F5LPe2sdT79g0apRPMM8rtYgIexPiCfVxr/SUx
+         oyTIzK4y0HsjaMyKMrEpgKc+7oP19WAme9/WU=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=J/hEM3tcQmv5h0aNBtAnL55U1gjZ76bS+5hiezChL/c=;
-        b=Dcncsfv9g0dzSb7Eexca5qOE02XKAy6vYsetfeMmddNdx+mK+HDB7QRVSDp4ZyP4Tu
-         IPGbA6X0plqJT4YHNivJW4iX1LL6UwdJTFQaEBVI09unjvMvKGsqa67rOFQg3Zf2CkpF
-         YtESOHHQhsfY06rulCbOU2jKQzpHoG0xC0EXkKZYXd3GeKH3Imcuw5veBo34dW6k05gr
-         BiYyCd5aj0Wk5PLRj8+EH7lV4ZicEULKfyFrauN44s8AEYdWAy3EnMTuyqkIXrb72Zwu
-         HKJaP9Hro8/3HU9r+23qiQhhJ066I/099Q53Lig0zkivvK0rqwplHEt40MCCoRKKAGA/
-         Q/mA==
-X-Gm-Message-State: AOAM531VkX/3PWvy19kz2FsXqbgp9/0C/4znB2wmkDQsLHudjjKf0Zz/
-        I6yxptMilzpEzOEC1lA2dya8/cUNSiSOJzkw+OrFCQ==
-X-Google-Smtp-Source: ABdhPJx3lro/NLWpABSvjIvK+fiTNntJeWbovYfVkE68ffqFkYVdlWs5TT/jlT2VXeU+rZtIPm7MpbkCFo3UD4S+9jc=
-X-Received: by 2002:a4a:de90:: with SMTP id v16mr9192504oou.42.1630312770009;
- Mon, 30 Aug 2021 01:39:30 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=6TxX20RG9vZKNb6s13O3Zgz2CFeRVUtXKUgw8R7voIM=;
+        b=P+UT+xp2N1Wh8sd4HWkgjgNiHO2fJwwCbACKHQOQyU7+/JOmJlSvfa1VBoJSy5XVMh
+         1DJc/8K6sFXWGSWFu/NxwjimtHj5S4t5RMPm+xOAX2t4+Jbv4YGe5n+x/7Hc4i1cW/kL
+         x56832BxSnuyphNKCUL4fA1Mg/VEqoW7GN44MlH269NIx+AcDkrH9/MYBaMUEOGzIBtg
+         408zkVq2XaeOs5U/rp9OZfQbipRmEJY/r2kOdbxL2mVfJh8IHmlWA5xyozxBI6cRnI28
+         3m1ZDrdbXff/SgcKB6o8GU3W8Ed7NoWCPD7e6ff2o2s1WB+fLo0DiaIRgV27FzDw4gXC
+         BA1g==
+X-Gm-Message-State: AOAM532367zj2RdfoksNC7SyheKenX2VzK01ObVtGhfBSs2hg+lFWK6F
+        YGw1W0qMGPhd56SXoFdqDwjaFa8gizvQIA==
+X-Google-Smtp-Source: ABdhPJxB08ojJo6OGjtdEhKjXGnu9dMQoQyBwlcdnF+4nIzqbNcU7sKY3XjYnrjFGe6CGtKcNnl9hg==
+X-Received: by 2002:a17:906:1806:: with SMTP id v6mr23825047eje.420.1630314111091;
+        Mon, 30 Aug 2021 02:01:51 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id v10sm7269829edt.25.2021.08.30.02.01.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Aug 2021 02:01:50 -0700 (PDT)
+Date:   Mon, 30 Aug 2021 11:01:48 +0200
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     DRI Development <dri-devel@lists.freedesktop.org>
+Cc:     Intel Graphics Development <intel-gfx@lists.freedesktop.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Christian =?iso-8859-1?Q?K=F6nig?= <christian.koenig@amd.com>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-media@vger.kernel.org, linaro-mm-sig@lists.linaro.org
+Subject: Re: [PATCH v5 12/20] drm/msm: Use scheduler dependency handling
+Message-ID: <YSyefFUvvoeNJVTe@phenom.ffwll.local>
+References: <20210805104705.862416-1-daniel.vetter@ffwll.ch>
+ <20210805104705.862416-13-daniel.vetter@ffwll.ch>
 MIME-Version: 1.0
-References: <000000000000b575ab05aebfc192@google.com> <00000000000069bb3e05caa2d1f8@google.com>
-In-Reply-To: <00000000000069bb3e05caa2d1f8@google.com>
-From:   Dmitry Vyukov <dvyukov@google.com>
-Date:   Mon, 30 Aug 2021 10:39:18 +0200
-Message-ID: <CACT4Y+Z1OG0bPB-bfMRS6vN4Ogx8n3_8v+e+WCshLwz7apvnHg@mail.gmail.com>
-Subject: Re: [syzbot] WARNING: refcount bug in qrtr_node_lookup
-To:     syzbot <syzbot+c613e88b3093ebf3686e@syzkaller.appspotmail.com>
-Cc:     anant.thazhemadam@gmail.com, bjorn.andersson@linaro.org,
-        butterflyhuangxx@gmail.com, davem@davemloft.net,
-        dragonjetli@gmail.com, hdanton@sina.com, kuba@kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        linux-kernel-mentees@lists.linuxfoundation.org,
-        linux-kernel@vger.kernel.org, mani@kernel.org,
-        manivannan.sadhasivam@linaro.org, masahiroy@kernel.org,
-        netdev@vger.kernel.org, syzkaller-bugs@googlegroups.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210805104705.862416-13-daniel.vetter@ffwll.ch>
+X-Operating-System: Linux phenom 5.10.0-8-amd64 
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 28 Aug 2021 at 20:32, syzbot
-<syzbot+c613e88b3093ebf3686e@syzkaller.appspotmail.com> wrote:
->
-> syzbot suspects this issue was fixed by commit:
->
-> commit 7e78c597c3ebfd0cb329aa09a838734147e4f117
-> Author: Xiaolong Huang <butterflyhuangxx@gmail.com>
-> Date:   Thu Aug 19 19:50:34 2021 +0000
->
->     net: qrtr: fix another OOB Read in qrtr_endpoint_post
->
-> bisection log:  https://syzkaller.appspot.com/x/bisect.txt?x=11279a4d300000
-> start commit:   ba4f184e126b Linux 5.9-rc6
-> git tree:       upstream
-> kernel config:  https://syzkaller.appspot.com/x/.config?x=af502ec9a451c9fc
-> dashboard link: https://syzkaller.appspot.com/bug?extid=c613e88b3093ebf3686e
-> syz repro:      https://syzkaller.appspot.com/x/repro.syz?x=12263dd9900000
-> C reproducer:   https://syzkaller.appspot.com/x/repro.c?x=13d77603900000
->
-> If the result looks correct, please mark the issue as fixed by replying with:
->
-> #syz fix: net: qrtr: fix another OOB Read in qrtr_endpoint_post
->
-> For information about bisection process see: https://goo.gl/tpsmEJ#bisection
+On Thu, Aug 05, 2021 at 12:46:57PM +0200, Daniel Vetter wrote:
+> drm_sched_job_init is already at the right place, so this boils down
+> to deleting code.
+> 
+> Signed-off-by: Daniel Vetter <daniel.vetter@intel.com>
+> Cc: Rob Clark <robdclark@gmail.com>
+> Cc: Sean Paul <sean@poorly.run>
+> Cc: Sumit Semwal <sumit.semwal@linaro.org>
+> Cc: "Christian König" <christian.koenig@amd.com>
+> Cc: linux-arm-msm@vger.kernel.org
+> Cc: freedreno@lists.freedesktop.org
+> Cc: linux-media@vger.kernel.org
+> Cc: linaro-mm-sig@lists.linaro.org
 
-Hi Hillf,
+Merged up to this patch, except for etnaviv.
+-Daniel
 
-You posted some patch related to refcounts. Do you think "net: qrtr:
-fix another OOB Read in qrtr_endpoint_post" is a plausible fix? Or is
-there still something wrong with refcounts?
+> ---
+>  drivers/gpu/drm/msm/msm_gem.h        |  5 -----
+>  drivers/gpu/drm/msm/msm_gem_submit.c | 19 +++++--------------
+>  drivers/gpu/drm/msm/msm_ringbuffer.c | 12 ------------
+>  3 files changed, 5 insertions(+), 31 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/msm_gem.h b/drivers/gpu/drm/msm/msm_gem.h
+> index f9e3ffb2309a..8bf0ac707fd7 100644
+> --- a/drivers/gpu/drm/msm/msm_gem.h
+> +++ b/drivers/gpu/drm/msm/msm_gem.h
+> @@ -312,11 +312,6 @@ struct msm_gem_submit {
+>  	struct ww_acquire_ctx ticket;
+>  	uint32_t seqno;		/* Sequence number of the submit on the ring */
+>  
+> -	/* Array of struct dma_fence * to block on before submitting this job.
+> -	 */
+> -	struct xarray deps;
+> -	unsigned long last_dep;
+> -
+>  	/* Hw fence, which is created when the scheduler executes the job, and
+>  	 * is signaled when the hw finishes (via seqno write from cmdstream)
+>  	 */
+> diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
+> index 96cea0ba4cfd..fb5a2eab27a2 100644
+> --- a/drivers/gpu/drm/msm/msm_gem_submit.c
+> +++ b/drivers/gpu/drm/msm/msm_gem_submit.c
+> @@ -52,8 +52,6 @@ static struct msm_gem_submit *submit_create(struct drm_device *dev,
+>  		return ERR_PTR(ret);
+>  	}
+>  
+> -	xa_init_flags(&submit->deps, XA_FLAGS_ALLOC);
+> -
+>  	kref_init(&submit->ref);
+>  	submit->dev = dev;
+>  	submit->aspace = queue->ctx->aspace;
+> @@ -72,8 +70,6 @@ void __msm_gem_submit_destroy(struct kref *kref)
+>  {
+>  	struct msm_gem_submit *submit =
+>  			container_of(kref, struct msm_gem_submit, ref);
+> -	unsigned long index;
+> -	struct dma_fence *fence;
+>  	unsigned i;
+>  
+>  	if (submit->fence_id) {
+> @@ -82,12 +78,6 @@ void __msm_gem_submit_destroy(struct kref *kref)
+>  		mutex_unlock(&submit->queue->lock);
+>  	}
+>  
+> -	xa_for_each (&submit->deps, index, fence) {
+> -		dma_fence_put(fence);
+> -	}
+> -
+> -	xa_destroy(&submit->deps);
+> -
+>  	dma_fence_put(submit->user_fence);
+>  	dma_fence_put(submit->hw_fence);
+>  
+> @@ -343,8 +333,9 @@ static int submit_fence_sync(struct msm_gem_submit *submit, bool no_implicit)
+>  		if (no_implicit)
+>  			continue;
+>  
+> -		ret = drm_gem_fence_array_add_implicit(&submit->deps, obj,
+> -			write);
+> +		ret = drm_sched_job_add_implicit_dependencies(&submit->base,
+> +							      obj,
+> +							      write);
+>  		if (ret)
+>  			break;
+>  	}
+> @@ -588,7 +579,7 @@ static struct drm_syncobj **msm_parse_deps(struct msm_gem_submit *submit,
+>  		if (ret)
+>  			break;
+>  
+> -		ret = drm_gem_fence_array_add(&submit->deps, fence);
+> +		ret = drm_sched_job_add_dependency(&submit->base, fence);
+>  		if (ret)
+>  			break;
+>  
+> @@ -798,7 +789,7 @@ int msm_ioctl_gem_submit(struct drm_device *dev, void *data,
+>  			goto out_unlock;
+>  		}
+>  
+> -		ret = drm_gem_fence_array_add(&submit->deps, in_fence);
+> +		ret = drm_sched_job_add_dependency(&submit->base, in_fence);
+>  		if (ret)
+>  			goto out_unlock;
+>  	}
+> diff --git a/drivers/gpu/drm/msm/msm_ringbuffer.c b/drivers/gpu/drm/msm/msm_ringbuffer.c
+> index bd54c1412649..652b1dedd7c1 100644
+> --- a/drivers/gpu/drm/msm/msm_ringbuffer.c
+> +++ b/drivers/gpu/drm/msm/msm_ringbuffer.c
+> @@ -11,17 +11,6 @@ static uint num_hw_submissions = 8;
+>  MODULE_PARM_DESC(num_hw_submissions, "The max # of jobs to write into ringbuffer (default 8)");
+>  module_param(num_hw_submissions, uint, 0600);
+>  
+> -static struct dma_fence *msm_job_dependency(struct drm_sched_job *job,
+> -		struct drm_sched_entity *s_entity)
+> -{
+> -	struct msm_gem_submit *submit = to_msm_submit(job);
+> -
+> -	if (!xa_empty(&submit->deps))
+> -		return xa_erase(&submit->deps, submit->last_dep++);
+> -
+> -	return NULL;
+> -}
+> -
+>  static struct dma_fence *msm_job_run(struct drm_sched_job *job)
+>  {
+>  	struct msm_gem_submit *submit = to_msm_submit(job);
+> @@ -52,7 +41,6 @@ static void msm_job_free(struct drm_sched_job *job)
+>  }
+>  
+>  const struct drm_sched_backend_ops msm_sched_ops = {
+> -	.dependency = msm_job_dependency,
+>  	.run_job = msm_job_run,
+>  	.free_job = msm_job_free
+>  };
+> -- 
+> 2.32.0
+> 
+
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
