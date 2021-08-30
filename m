@@ -2,71 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D0003FB494
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Aug 2021 13:30:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6CC7E3FB4AB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Aug 2021 13:39:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236523AbhH3LbA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Aug 2021 07:31:00 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60098 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236397AbhH3LbA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Aug 2021 07:31:00 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id E978061139;
-        Mon, 30 Aug 2021 11:30:06 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1630323007;
-        bh=4tXTk/7KNC+gT+6ButRi4wIIyra4WmcdLPO4LXO3XQU=;
-        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=ridLiZOTVJloHtE+lGqdGk6hc86ff2UKyawWxwFwCK4QSHKZnfeb2iMZZXwIUMUPY
-         8Q/Q8+kpdfJmfxZ9zepYspzsEupC98yTkh1dTXse/1arlNmrISkbRur7wowMvauww2
-         UiuXU7IYX+0JTtpLdwuGORRRkcV2LHU2dbjuVZ1PPN1z2Oyp7mVrqqm9TfneuY9iby
-         EEHKRmlbc3Jueq8QT7p+CtD9xakhza4NMV7/IoMDZ1RZDkvbXtv6Hzpp6IOrxqHCHg
-         +zFBs2T216Bq8+jqVHGd47yjFQP0XRkZXWp86wccTPGKkEqjlPXrk9xjLtGaIQxG5f
-         oEcd7yUfk/UDQ==
-Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id DDC7060A6F;
-        Mon, 30 Aug 2021 11:30:06 +0000 (UTC)
-Content-Type: text/plain; charset="utf-8"
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH v2 net] net: qrtr: make checks in qrtr_endpoint_post()
- stricter
-From:   patchwork-bot+netdevbpf@kernel.org
-Message-Id: <163032300690.3135.17165027106916962159.git-patchwork-notify@kernel.org>
-Date:   Mon, 30 Aug 2021 11:30:06 +0000
-References: <20210830083717.GU7722@kadam>
-In-Reply-To: <20210830083717.GU7722@kadam>
-To:     Dan Carpenter <dan.carpenter@oracle.com>
-Cc:     mani@kernel.org, loic.poulain@linaro.org,
-        butterflyhuangxx@gmail.com, davem@davemloft.net, kuba@kernel.org,
-        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org
+        id S236551AbhH3LjJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Aug 2021 07:39:09 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:55383 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236523AbhH3LjD (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 30 Aug 2021 07:39:03 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1630323490; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=Hk+iwrjCrFy+LpqAj/ekV8lghLzWqj2rVYGU/ecRJdc=; b=ByKFiaLM0xpuShffbepqrYVlgO0JPcRiWJoPQsUlvy6D6SXopQI9fKlyPwVdMuBGT/vYS2k+
+ Yth6dq5LeK/h4ePFtOmD04JsYu/4zRhxa3uHcJgTZ8asvOuZ20AV1HwajQuITGigmI1dpaXq
+ OgbgCwfH9o9pUG65pftGTw6XK+Y=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 612cc3094cd9015037be341c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 30 Aug 2021 11:37:45
+ GMT
+Sender: deesin=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 4AB7AC4360D; Mon, 30 Aug 2021 11:37:45 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from deesin-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: deesin)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 22F01C43460;
+        Mon, 30 Aug 2021 11:37:41 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 22F01C43460
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Deepak Kumar Singh <deesin@codeaurora.org>
+To:     bjorn.andersson@linaro.org, swboyd@chromium.org,
+        clew@codeaurora.org, sibis@codeaurora.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org,
+        Deepak Kumar Singh <deesin@codeaurora.org>
+Subject: [PATCH V7 0/2] qcom aoss qmp_get and debugfs support patches
+Date:   Mon, 30 Aug 2021 17:07:29 +0530
+Message-Id: <1630323451-7160-1-git-send-email-deesin@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello:
+[Change from V6]
+soc: qcom: aoss: Expose send for generic usecase
+  Changed comment for qmp_put
+  Added comment after put_device in qmp_put
 
-This patch was applied to netdev/net-next.git (refs/heads/master):
+soc: qcom: aoss: Add debugfs entry
+  Removed CONFIG_DEBUG_FS check
 
-On Mon, 30 Aug 2021 11:37:17 +0300 you wrote:
-> These checks are still not strict enough.  The main problem is that if
-> "cb->type == QRTR_TYPE_NEW_SERVER" is true then "len - hdrlen" is
-> guaranteed to be 4 but we need to be at least 16 bytes.  In fact, we
-> can reject everything smaller than sizeof(*pkt) which is 20 bytes.
-> 
-> Also I don't like the ALIGN(size, 4).  It's better to just insist that
-> data is needs to be aligned at the start.
-> 
-> [...]
+Deepak Kumar Singh (2):
+  soc: qcom: aoss: Expose send for generic usecase
+  soc: qcom: aoss: Add debugfs entry
 
-Here is the summary with links:
-  - [v2,net] net: qrtr: make checks in qrtr_endpoint_post() stricter
-    https://git.kernel.org/netdev/net-next/c/aaa8e4922c88
+ drivers/soc/qcom/qcom_aoss.c       | 86 +++++++++++++++++++++++++++++++++++++-
+ include/linux/soc/qcom/qcom_aoss.h | 38 +++++++++++++++++
+ 2 files changed, 123 insertions(+), 1 deletion(-)
+ create mode 100644 include/linux/soc/qcom/qcom_aoss.h
 
-You are awesome, thank you!
---
-Deet-doot-dot, I am a bot.
-https://korg.docs.kernel.org/patchwork/pwbot.html
-
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
