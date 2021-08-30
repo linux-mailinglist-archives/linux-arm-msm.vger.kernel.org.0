@@ -2,127 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4552A3FAF7C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Aug 2021 03:19:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3C4393FB061
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Aug 2021 06:29:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236135AbhH3BTo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 29 Aug 2021 21:19:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38382 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235813AbhH3BTn (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 29 Aug 2021 21:19:43 -0400
-Received: from mail-qk1-x729.google.com (mail-qk1-x729.google.com [IPv6:2607:f8b0:4864:20::729])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 30C7FC06175F
-        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Aug 2021 18:18:51 -0700 (PDT)
-Received: by mail-qk1-x729.google.com with SMTP id a10so13938008qka.12
-        for <linux-arm-msm@vger.kernel.org>; Sun, 29 Aug 2021 18:18:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=1hhV9nDZ+cplYuMpzE5vj+vUQnOUXDSLgbJtDYIw5iU=;
-        b=l48UbSq5y96b7Dk1nHFjQBTnvGbk1gL0McaWJMIJWZqfj+kqRt+GQGwJJd5YNqTf+F
-         icQUbgnMufMLqa/YYBuvxQ1JyTzyx3mAo+679rU4RFgiFJ4+mhaiEbBAJBuWw7IZ78lu
-         8+aPx0JPVRVEJ5p/6qpHfjlSz7y0fWj//LkFtLptH+njEkcJodvFRNLEWNF5xcc6jaG8
-         fHLWb9sF4yb98dATKbxQnOPhDziP9JstHOfN5Lk3mRvS5qxdNmhFwK9MywC3bFF6y1HW
-         d2QY775IlmnUvQlOI1hlg/8/v3yEPNWURgW69mrpTZ6ej+ZyyNqR/QhbVUKkUe4Dqqz5
-         VzxQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=1hhV9nDZ+cplYuMpzE5vj+vUQnOUXDSLgbJtDYIw5iU=;
-        b=fse3X3p2LMNiBkvF9BtXpj7qvmOi++UrjPu3N3tsw/D3LrYoloefQbC+ix1P4diKXS
-         c3zfjwlvE0lMvy47KVAkhycJ6GFvWcproBdQyOitt4+n+Rau6zDkUpWTag5cr9YVBWfZ
-         oR859nHmKIIjUCirHzVORuXlJarv6Z3SF/oflvEZ1iWOpQbmqdO9n4jasTovcD8SiQCU
-         HmqrYKMc5Yr6To7V4E6bGpMamV+7b05gom8kNKqm3TvQGPbGxM2M7O4TsxJ1SxGRR3Dp
-         rC4f77Zo24IHkY3QXhSF/ZWEeaGyPMqL2xRBaR5drojx52AZ+CvvQvedbpam6G/vfVmL
-         ExJg==
-X-Gm-Message-State: AOAM530FsAzwDtihusmn3GM2PeIf3B3fq3VZzAvgoQ4NeZ1GG+Ugd1so
-        rqVZuKdHo/U1H3ANhID1tAYKvoDazMGeiNOeV6Nqbg==
-X-Google-Smtp-Source: ABdhPJzjQAbOyw7RF7SMSFWbofpQGeDuRMHg8J+xdDznT8ceulgiTq42PR9MZKBMAweOZyfYw2CriKpOgNi3EXgRtdQ=
-X-Received: by 2002:a05:620a:1082:: with SMTP id g2mr20776166qkk.138.1630286330330;
- Sun, 29 Aug 2021 18:18:50 -0700 (PDT)
+        id S231237AbhH3ETW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Aug 2021 00:19:22 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:63540 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231561AbhH3ETV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 30 Aug 2021 00:19:21 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1630297108; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=1o0FmZbIKug3vf0o+NtUykmzlIUNMLcvxSthEnoYj3U=; b=msWPxe2STeNz2Aoba7druc8GUf0Njs0cb+TypNfff4nR7xXbcLjqQjcI7kSvTgQ8zI229a1h
+ Q8i8cmtycZLh4gA+QN16h2OBpWgEv49m+Wij3E/hWpg07ggICvmCGgkBt6rByexgZrzTKBnI
+ Dt1R8j9KLZ6+uzTyOthpo0QwUSI=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 612c5c13cd680e8969fc1e82 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 30 Aug 2021 04:18:27
+ GMT
+Sender: sanm=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 51511C43635; Mon, 30 Aug 2021 04:18:26 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-3.5 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.0.104] (unknown [124.123.190.217])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sanm)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1289BC4338F;
+        Mon, 30 Aug 2021 04:18:17 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 1289BC4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: Regarding usb dwc3 core shutdown callback
+To:     Felipe Balbi <balbi@kernel.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Pratham Pratap <prathampratap@codeaurora.org>,
+        Jack Pham <jackp@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Doug Anderson <dianders@chromium.org>
+References: <e34c8e16-6521-c6e4-f3ed-9d8520d4ece2@codeaurora.org>
+ <87bl63yqq8.fsf@kernel.org>
+ <eb975a76-1482-f502-4dc1-7993cc3f30d0@codeaurora.org>
+ <87eeaga39m.fsf@kernel.org>
+From:   Sandeep Maheswaram <sanm@codeaurora.org>
+Message-ID: <7a6bf94b-91cd-15d5-dd9c-798e7a927727@codeaurora.org>
+Date:   Mon, 30 Aug 2021 09:48:16 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-References: <20210829203027.276143-1-marijn.suijten@somainline.org> <20210829203027.276143-2-marijn.suijten@somainline.org>
-In-Reply-To: <20210829203027.276143-2-marijn.suijten@somainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 30 Aug 2021 04:18:39 +0300
-Message-ID: <CAA8EJprQ03ipZzO+1vgt9W7jFbLXgsYR0n-oJxVB-142x8dgRA@mail.gmail.com>
-Subject: Re: [PATCH 1/3] arm: dts: qcom: apq8064: Use 27MHz PXO clock as DSI
- PLL reference
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Pavel Dubrova <pashadubrova@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <87eeaga39m.fsf@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 29 Aug 2021 at 23:30, Marijn Suijten
-<marijn.suijten@somainline.org> wrote:
->
-> The 28NM DSI PLL driver for msm8960 calculates with a 27MHz reference
-> clock and should hence use PXO, not CXO which runs at 19.2MHz.
->
-> Note that none of the DSI PHY/PLL drivers currently use this "ref"
-> clock; they all rely on (sometimes inexistant) global clock names and
-> usually function normally without a parent clock.  This discrepancy will
-> be corrected in a future patch, for which this change needs to be in
-> place first.
->
-> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Hi,
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On 8/26/2021 4:13 PM, Felipe Balbi wrote:
+> Hi,
+>
+> Sandeep Maheswaram <sanm@codeaurora.org> writes:
+>>> (why isn't this email plain/text? Content Type was set to multipart
+>>> alternative, please configure your email client correctly :-)
+>>>
+>>> While at that, also make sure to break lines at 80-columns)
+>>>
+>>> Sandeep Maheswaram <sanm@codeaurora.org> writes:
+>>>> Hi,
+>>>>
+>>>> Earlier I have posted the patch for usb dwc3 core shutdown callback
+>>>>
+>>>> https://lore.kernel.org/linux-arm-msm/1618380209-20114-1-git-send-email-sanm@codeaurora.org/
+>>>>
+>>>> and it was reverted due to issues.
+>>> Right, as should be expected when we find regressions
+>>>
+>>>> https://lore.kernel.org/linux-usb/20210603151742.298243-1-alexandru.elisei@arm.com/
+>>>>
+>>>> As we already have shutdown callback in xhci plat driver where we halt
+>>>> the controller, so there will be no transactions with usb devices.
+>>>>
+>>>> https://lore.kernel.org/linux-usb/20200306092328.41253-1-ran.wang_1@nxp.com/
+>>>>
+>>>> So I think dwc3 core shutdown may not be required at least when we are
+>>>> using host mode. Let me know your opinion about this.
+>>> If that's the case, then sure. Please validate the condition, though,
+>>> and kindly report back on your findings
+>> I have enabled couple of logs in shutdown path and see no URBs
+>> enqueued after xhci shut down.
+>>
+>> Hope this is enough for validation . Please suggest if anything more I
+>> could do.
+> how about writing a little script to kexec into another kernel for a few
+> hundred iterations and make sure things still work after all that?
 
-Checked the downstream driver, it always uses 27 MHz clock in calculations.
-
-> ---
->  arch/arm/boot/dts/qcom-apq8064.dtsi | 4 ++--
->  1 file changed, 2 insertions(+), 2 deletions(-)
->
-> diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
-> index 2687c4e890ba..77659b783759 100644
-> --- a/arch/arm/boot/dts/qcom-apq8064.dtsi
-> +++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
-> @@ -198,7 +198,7 @@ cxo_board: cxo_board {
->                         clock-frequency = <19200000>;
->                 };
->
-> -               pxo_board {
-> +               pxo_board: pxo_board {
->                         compatible = "fixed-clock";
->                         #clock-cells = <0>;
->                         clock-frequency = <27000000>;
-> @@ -1306,7 +1306,7 @@ dsi0_phy: dsi-phy@4700200 {
->                         reg-names = "dsi_pll", "dsi_phy", "dsi_phy_regulator";
->                         clock-names = "iface_clk", "ref";
->                         clocks = <&mmcc DSI_M_AHB_CLK>,
-> -                                <&cxo_board>;
-> +                                <&pxo_board>;
->                 };
->
->
-> --
-> 2.33.0
->
+Currently kexec is not supported on qcom devices.  Anything we can do 
+apart from kexec?
 
 
--- 
-With best wishes
-Dmitry
