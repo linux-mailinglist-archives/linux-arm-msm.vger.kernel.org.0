@@ -2,73 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F9FD3FBB49
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Aug 2021 19:55:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CCFAD3FBB50
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Aug 2021 19:57:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238340AbhH3R4M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Aug 2021 13:56:12 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:28455 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238292AbhH3R4I (ORCPT
+        id S238335AbhH3R6q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Aug 2021 13:58:46 -0400
+Received: from relay05.th.seeweb.it ([5.144.164.166]:49037 "EHLO
+        relay05.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238305AbhH3R6q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Aug 2021 13:56:08 -0400
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 30 Aug 2021 10:55:14 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 30 Aug 2021 10:55:12 -0700
-X-QCInternal: smtphost
-Received: from c-sanm-linux.qualcomm.com ([10.206.25.31])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 30 Aug 2021 23:24:42 +0530
-Received: by c-sanm-linux.qualcomm.com (Postfix, from userid 2343233)
-        id 703C63D31; Mon, 30 Aug 2021 23:24:41 +0530 (IST)
-From:   Sandeep Maheswaram <sanm@codeaurora.org>
-To:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        Mon, 30 Aug 2021 13:58:46 -0400
+Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 26FBF3E83C;
+        Mon, 30 Aug 2021 19:57:50 +0200 (CEST)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Pratham Pratap <prathampratap@codeaurora.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>
-Subject: [PATCH 3/3] arm64: dts: qcom: sc7280: Add cx power domain support
-Date:   Mon, 30 Aug 2021 23:24:33 +0530
-Message-Id: <1630346073-7099-4-git-send-email-sanm@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1630346073-7099-1-git-send-email-sanm@codeaurora.org>
-References: <1630346073-7099-1-git-send-email-sanm@codeaurora.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Brian Masney <masneyb@onstation.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm: dts: qcom-msm8974: Add xo_board reference clock to DSI0 PHY
+Date:   Mon, 30 Aug 2021 19:57:39 +0200
+Message-Id: <20210830175739.143401-1-marijn.suijten@somainline.org>
+X-Mailer: git-send-email 2.33.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add multi pd support to set performance state for cx domain
-to maintain minimum corner voltage for USB clocks.
+According to YAML validation, and for a future patchset putting this
+xo_board reference clock to use as VCO reference parent, add the missing
+clock to dsi_phy0.
 
-Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
+Fixes: 5a9fc531f6ec ("ARM: dts: msm8974: add display support")
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 ---
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 5 ++++-
- 1 file changed, 4 insertions(+), 1 deletion(-)
+ arch/arm/boot/dts/qcom-msm8974.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 53a21d0..7ccccb7 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -1374,7 +1374,10 @@
- 			interrupt-names = "hs_phy_irq", "dp_hs_phy_irq",
- 					  "dm_hs_phy_irq", "ss_phy_irq";
+diff --git a/arch/arm/boot/dts/qcom-msm8974.dtsi b/arch/arm/boot/dts/qcom-msm8974.dtsi
+index db4c06bf7888..96722172b064 100644
+--- a/arch/arm/boot/dts/qcom-msm8974.dtsi
++++ b/arch/arm/boot/dts/qcom-msm8974.dtsi
+@@ -1580,8 +1580,8 @@ dsi_phy0: dsi-phy@fd922a00 {
+ 				#phy-cells = <0>;
+ 				qcom,dsi-phy-index = <0>;
  
--			power-domains = <&gcc GCC_USB30_PRIM_GDSC>;
-+			power-domains = <&rpmhpd SC7280_CX>, <&gcc GCC_USB30_PRIM_GDSC>;
-+			power-domain-names = "cx", "usb_gdsc";
-+
-+			required-opps = <&rpmhpd_opp_nom>;
- 
- 			resets = <&gcc GCC_USB30_PRIM_BCR>;
+-				clocks = <&mmcc MDSS_AHB_CLK>;
+-				clock-names = "iface";
++				clocks = <&mmcc MDSS_AHB_CLK>, <&xo_board>;
++				clock-names = "iface", "ref";
+ 			};
+ 		};
  
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+2.33.0
 
