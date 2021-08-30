@@ -2,119 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8955C3FBC7E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Aug 2021 20:33:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7105B3FBC86
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Aug 2021 20:35:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238843AbhH3SeA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Aug 2021 14:34:00 -0400
-Received: from relay08.th.seeweb.it ([5.144.164.169]:53705 "EHLO
-        relay08.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238849AbhH3Sd7 (ORCPT
+        id S234319AbhH3SgL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Aug 2021 14:36:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50458 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233414AbhH3SgK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Aug 2021 14:33:59 -0400
-Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 5DB493E878;
-        Mon, 30 Aug 2021 20:33:01 +0200 (CEST)
-Date:   Mon, 30 Aug 2021 20:33:00 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Pavel Dubrova <pashadubrova@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH 1/3] arm: dts: qcom: apq8064: Use 27MHz PXO clock as DSI
- PLL reference
-Message-ID: <YS0kXJ/Mr+qNMRfq@Marijn-Arch-PC.localdomain>
-References: <20210829203027.276143-2-marijn.suijten@somainline.org>
- <CAA8EJprQ03ipZzO+1vgt9W7jFbLXgsYR0n-oJxVB-142x8dgRA@mail.gmail.com>
- <17d19b93-dbe5-cc85-f302-b52cd8eeed56@somainline.org>
- <CAA8EJpqd7_5510TodALnX13Wo0MufYm2G=r6vw9sy=VURrewyw@mail.gmail.com>
- <YSznouVZ93sUd6xa@Marijn-Arch-PC.localdomain>
- <CAA8EJpoRo6rPgpUeT9X0K4UPu5d8-YBP=BJ3AAejD+wujhmv+g@mail.gmail.com>
- <YSzqR2yq3MtdPnIG@Marijn-Arch-PC.localdomain>
- <YSz2kVKv8jhz7/n8@yoga>
- <YSz7NZD7elH3+XgP@Marijn-Arch-PC.localdomain>
- <YS0AEZR7NhmDhHmk@yoga>
+        Mon, 30 Aug 2021 14:36:10 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0BF8C061760
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Aug 2021 11:35:16 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id n12so9041875plk.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Aug 2021 11:35:16 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=4lObGbOH7wYXLZts3Wjag1RVJ/fSvvfuumDMeXOvamY=;
+        b=Q7lSvLugEcsO6jz/dsvEvqZfD5CfuPaFmPsqDAtVPqSs20Jd/6dgCj3+ylqcIr1EnF
+         jwLepnTsPsP/+QPpe0p2M4mjvLGTJj0BWKxHTP9O7z1aO2tFiTY3aHcZlUOb+a6XlQXM
+         ATUXIgkDyHiUBCYrZWUoo8y35gJiW/5N5IyhGJ73fequBefUKl85zNfhuYdjRjOwkFFO
+         DMcbXDNdSqX8SPThW2njxQagVjwPbOA5wHbxiKMLnrCe3jWHierYYo0BcKop19CuPfp+
+         rkjM8Q2Fg/hZzBzo1IglI+E+uAlQI1OjhJFzgdnkDt7bDMl3n3HYnvg6BBlII8/6fxOb
+         eN4g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=4lObGbOH7wYXLZts3Wjag1RVJ/fSvvfuumDMeXOvamY=;
+        b=nWC0OT9j0gBYD9p6tJD4x1Q52Vo5CgAlK2165VN7Vj/1aJM5ZtEmJm3ClVCv3FnKIT
+         wrwbYnnhMfxUxk5sHMj7RF3IKRkI5ppQOBZT2rIyPXIbkl6xiKou5P6t3iLptiFSKWwp
+         kMzPXzCLVQleSXB3IsibUzCDDcQ0Ou5RcKSntUWlZ6Hvh73os1nsaHYzEis/fKBaWhDl
+         3rs5AQjEzDpz4nw7XaME2zFAfh5t3IlGo/3GAQmLU7hB1jrQk+cwLYhcUG29RCYO7EU+
+         PqQBmftgnf33GjYbEOacMw5hYeq+XbRk0eBlzejxqRT629MXRYUYfWdPgpiVl8iGLhAl
+         AUDQ==
+X-Gm-Message-State: AOAM530es9YBwL2mAA0ZG1sTTwnlTMLN4RzjHDRL245Fvu7P/a2479j4
+        dAiNVu3NxOz8okr3CyypGqwt
+X-Google-Smtp-Source: ABdhPJymp1hhLxI4Bg+PenRAv5ZqZvFwlomKc4Z90s9V466OSSk/8nDL72VECdaY3v0GglRuL8taGg==
+X-Received: by 2002:a17:90a:940e:: with SMTP id r14mr497274pjo.208.1630348516218;
+        Mon, 30 Aug 2021 11:35:16 -0700 (PDT)
+Received: from thinkpad ([2409:4072:6e8f:10da:9c90:a2f4:77aa:6f51])
+        by smtp.gmail.com with ESMTPSA id n14sm208169pjm.5.2021.08.30.11.35.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 30 Aug 2021 11:35:15 -0700 (PDT)
+Date:   Tue, 31 Aug 2021 00:05:08 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     kishon@ti.com, lorenzo.pieralisi@arm.com, bhelgaas@google.com,
+        robh@kernel.org
+Cc:     devicetree@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        hemantk@codeaurora.org, smohanad@codeaurora.org,
+        bjorn.andersson@linaro.org, sallenki@codeaurora.org,
+        skananth@codeaurora.org, vpernami@codeaurora.org,
+        vbadigan@codeaurora.org
+Subject: Re: [PATCH v7 0/3] Add Qualcomm PCIe Endpoint driver support
+Message-ID: <20210830183508.GA50238@thinkpad>
+References: <20210722121242.47838-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YS0AEZR7NhmDhHmk@yoga>
+In-Reply-To: <20210722121242.47838-1-manivannan.sadhasivam@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-08-30 10:58:09, Bjorn Andersson wrote:
-[...]
-> > > 
-> > > Afaik these devices all boots off a boot.img, which means that it's
-> > > unlikely that a new kernel is installed on a device with an older DT.
-> > > None of them would boot mainline off the DT that shipped with the
-> > > original product.
-> > 
-> > That was my understanding as well, DT overlays are a "new thing" afaik
-> > and most devices (at least all Sony's that I'm working with) use an
-> > appended DTB that's always in-sync with the kernel image.
-> > 
+Hi,
+
+On Thu, Jul 22, 2021 at 05:42:39PM +0530, Manivannan Sadhasivam wrote:
+> Hello,
 > 
-> I think that with the introduction of DT overlays the system becomes
-> more flexible and as such more susceptible for bugs caused by unexpected
-> DT versions.
-
-Offtopic: We have some problems with this on newer Sony devices where
-the BL indeed tries to overlay this DTBO on the DT, which is usually a
-downstream DT not fitting on top of a mainline kernel+appended-DTB.  The
-solution is to simply wipe DTBO, and afaik it should be fine to compile
-the overlay bits directly inside the appended-DTB anyway.  Leads to
-unsuspecting problems at times, but it is manageable.
-
-> I think in practice the real issues comes when the DTB is delivered
-> separately (i.e. not by boot.img) or inbetween two kernel releases where
-> the Qualcomm tree might not be in sync with the driver tree.
-
-Dmitry sees this as a problem for msm8974 but I'm not familiar enough
-with the board.  I take it this doesn't use appended DTBs then?
-
-> > > As such, if I pick this patch up as a fix for 5.15 you can respin the
-> > > other two patches and they can land in 5.16 and I would be surprised if
-> > > anyone will run into any issues with it.
-> > > 
-> > > I.e. I've applied this patch.
-> > 
-> > Sounds good, I'll leave this patch out from v2.  Should it have a Fixes:
-> > tag to get backported too?
-> > 
+> This series adds support for Qualcomm PCIe Endpoint controller found
+> in platforms like SDX55. The Endpoint controller is based on the designware
+> core with additional Qualcomm wrappers around the core.
 > 
-> Sounds good, I added to this:
+> The driver is added separately unlike other Designware based drivers that
+> combine RC and EP in a single driver. This is done to avoid complexity and
+> to maintain this driver autonomously.
 > 
-> Fixes: 6969d1d9c615 ("ARM: dts: qcom-apq8064: Set 'cxo_board' as ref clock of the DSI PHY")
-
-Did the same on the v2 respin since it seems like those patches were
-incomplete without the driver change.
-
-> > Since most review seems to be in I'll respin v2 shortly with the
-> > addition of the "ref" clock to msm8974, that should probably get the
-> > same treatment (added to 5.15 fixes) then we can land this patchset in
-> > 5.16 (maybe without .name= fallback if Dmitry is okay with that).
-> > 
+> The driver has been validated with an out of tree MHI function driver on
+> SDX55 based Telit FN980 EVB connected to x86 host machine over PCIe.
 > 
-> Sounds good.
 
-Sent the msm8974 patch separately and re-spun a v2.  I haven't added the
-.name="xo" fallback yet while awaiting Dmitry to see if that counts as
-enough time for firmware to be delivered between kernel 5.15 and 5.16.
+Any chance this driver could make v5.15?
 
-- Marijn
+Thanks,
+Mani
+
+> Thanks,
+> Mani
+> 
+> Changes in v7:
+> 
+> * Used existing naming convention for callback functions
+> * Used active low state for PERST# gpio
+> 
+> Changes in v6:
+> 
+> * Removed status property in DT and added reviewed tag from Rob
+> * Switched to _relaxed variants as suggested by Rob
+> 
+> Changes in v5:
+> 
+> * Removed the DBI register settings that are not needed
+> * Used the standard definitions available in pci_regs.h
+> * Added defines for all the register fields
+> * Removed the left over code from previous iteration
+> 
+> Changes in v4:
+> 
+> * Removed the active_config settings needed for IPA integration
+> * Switched to writel for couple of relaxed versions that sneaked in
+> 
+> Changes in v3:
+> 
+> * Lot of minor cleanups to the driver patch based on review from Bjorn and Stan.
+> * Noticeable changes are:
+>   - Got rid of _relaxed calls and used readl/writel
+>   - Got rid of separate TCSR memory region and used syscon for getting the
+>     register offsets for Perst registers
+>   - Changed the wake gpio handling logic
+>   - Added remove() callback and removed "suppress_bind_attrs"
+>   - stop_link() callback now just disables PERST IRQ
+> * Added MMIO region and doorbell interrupt to the binding
+> * Added logic to write MMIO physicall address to MHI base address as it is
+>   for the function driver to work
+> 
+> Changes in v2:
+> 
+> * Addressed the comments from Rob on bindings patch
+> * Modified the driver as per binding change
+> * Fixed the warnings reported by Kbuild bot
+> * Removed the PERST# "enable_irq" call from probe()
+> 
+> Manivannan Sadhasivam (3):
+>   dt-bindings: pci: Add devicetree binding for Qualcomm PCIe EP
+>     controller
+>   PCI: qcom-ep: Add Qualcomm PCIe Endpoint controller driver
+>   MAINTAINERS: Add entry for Qualcomm PCIe Endpoint driver and binding
+> 
+>  .../devicetree/bindings/pci/qcom,pcie-ep.yaml | 158 ++++
+>  MAINTAINERS                                   |  10 +-
+>  drivers/pci/controller/dwc/Kconfig            |  10 +
+>  drivers/pci/controller/dwc/Makefile           |   1 +
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c     | 710 ++++++++++++++++++
+>  5 files changed, 888 insertions(+), 1 deletion(-)
+>  create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+>  create mode 100644 drivers/pci/controller/dwc/pcie-qcom-ep.c
+> 
+> -- 
+> 2.25.1
+> 
