@@ -2,122 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 831C93FB6ED
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Aug 2021 15:25:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 786303FB726
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Aug 2021 15:44:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236718AbhH3N0E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Aug 2021 09:26:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33640 "EHLO
+        id S236843AbhH3NpK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Aug 2021 09:45:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236691AbhH3N0D (ORCPT
+        with ESMTP id S236771AbhH3NpK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Aug 2021 09:26:03 -0400
-Received: from mail-qk1-x733.google.com (mail-qk1-x733.google.com [IPv6:2607:f8b0:4864:20::733])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D0188C061760
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Aug 2021 06:25:09 -0700 (PDT)
-Received: by mail-qk1-x733.google.com with SMTP id t4so15521996qkb.9
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Aug 2021 06:25:09 -0700 (PDT)
+        Mon, 30 Aug 2021 09:45:10 -0400
+Received: from mail-lj1-x22a.google.com (mail-lj1-x22a.google.com [IPv6:2a00:1450:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3440CC06175F
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Aug 2021 06:44:16 -0700 (PDT)
+Received: by mail-lj1-x22a.google.com with SMTP id q21so25958428ljj.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Aug 2021 06:44:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=exvJuGKtr25W/uSVhVmLJ9dDndSizQ5pyVnZeMKPf6U=;
-        b=mms14newKPS84RVgPulnIhvgz8tMtpuRypQwgTY51AnAijLWncUJabtEiBlVoTN2zW
-         3La+fBT4bRu5jdAP5UumDBl8kAE6qewY4pjP76Cpn3e5PKWq1Bg+lQK/1HscAXA5Cf9+
-         KjCXmdXlXxS3A6PFj6UYj7HcfZRe0h1vWv2wXwgQyWUT3iUFsqyERgT1uizU7kvg5RE0
-         DAwyxjvkDSaViDtIEI6oQX5qjwriesD2pGB0quveq31AmYLAJnpOu67pUioRufojTDnp
-         ta0OajqFszqYnhSHmAIDdU3vuAI7adD0jZihCKzKybnFoqQBTqNREQp+eiqSk0U1g9gW
-         Jb9w==
+        bh=kOYXhGaqQ6MRJEfF+E0ER+xBLRcBgZV7cWZXRVeFtj4=;
+        b=oSzgQNH2PwxCqBTmQ00Scj9XVNl4PjTfZ++xtN2IEitrBIFKHRNOL0Nw67BOqqLDXc
+         ActdqjZTwLU+LZHafZglw2/Ka0Otxu1mSTzy+f7Iy3+t336Rl1FhjMz2TVigE0AiEfMe
+         sJwAOqAQwp9MrtcdCua2tE/O2fbPeJIJfuZ5yIh6gTpYFU8ZYLHM96NUBCjy6ffwMpVb
+         uT2td0pEGA0MAXd9lc/rMbDlvrPemi+GAcO1VH4u67DOlWf4posmy4rjN9xZEewHg12T
+         9cfnXrYjqrFceBAQli3kRcG6SJrpB64dhbVykWoa0BUH1uuNw3Xod+WsHj2D6vQZ4dTs
+         W+jw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=exvJuGKtr25W/uSVhVmLJ9dDndSizQ5pyVnZeMKPf6U=;
-        b=Uwyqg2zmy+YsulwivAHO9LKrfE7BbAqZAmrgHg47cilpjNwUKYjR1fjLet+3tvaejC
-         CzsUd0UQA+syMAIiv/pBQL885+4CUntZA9gZygun+JugUep2RYSoYVCe6TpQEFV+9HXV
-         v1551cv9s2c1c5/wSdygak7uzN1yCMLRepfdHoB9IKE1HNIW7FWlWpWL1HcrBu5qW1C9
-         /U35M3VdCkoPjzt2dnt+8TrGTR4rrF4T2dqW/YYda0fRIs8X4GlwI5mWARJFnqoMhjU0
-         fbuaV3nam6aIwwROJjMif3aB7VWWI8e1mo50jhum+1sUiYWijaSs6Ld8uLKU6jsmfcpf
-         uuyQ==
-X-Gm-Message-State: AOAM5329FBKPOXvUbY4uP0Fxh/f4AygI0XviMiLErKkb7Gqab5XCvPwW
-        T8l/zv3wNcxs39peu70RGhsAhv3VukfJ4t4UlqRf2Q==
-X-Google-Smtp-Source: ABdhPJyQrSmYGVRpojLW5kEYAkle9dDkeFrhLBy8INWatlvC+AvXupu8xjM/hefniOjkmj7yvU8Hg3Uvuh7N4naBPko=
-X-Received: by 2002:a05:620a:941:: with SMTP id w1mr21668872qkw.434.1630329908857;
- Mon, 30 Aug 2021 06:25:08 -0700 (PDT)
+        bh=kOYXhGaqQ6MRJEfF+E0ER+xBLRcBgZV7cWZXRVeFtj4=;
+        b=sAXWB8yHmB9JGVygfOKSrtQ4hs5l4vzWEbKrMO8JOXCfx7cnSDxX3h4eQUQoprIb2V
+         oVBqA+Uttb/6hP4D1xKACRNpHbr1PHbSN5Q1tly5SaeS13G6jep1/VX3wDxhOy2WdM1m
+         THWzctoxsXvMEPrUF1h2ROvzhjNEr4uQw1RecB2RsfTEzKU4MRWD8CmPCax3Hg3CYnEg
+         g+IMkqeHFtwCb7ZOCPdt4s+VOjgNBsEDdbQ2Q3J8u9eTdfvEtqZbwR99R1ogI7lwJNK/
+         WmbxDCx8TSj5WIn3uyPAS5G24wJwGuY7+hYZRAvlhLemfPEiNqxIpGME70/GUZYBJs0G
+         tWNQ==
+X-Gm-Message-State: AOAM530ZaPCx9AKdu4cQiY56Lib/q7O8g83XMaRLylp81dwSMK/YIcxc
+        lO0toWcYhZlAIhGCawnfB62GgVJTqOoleZb1q4u3Ww==
+X-Google-Smtp-Source: ABdhPJzSbjrfR6nWoj1MvF5PjDjLKW0SfuR+5h1BG6O5DQ4hi8nvSRGwK/6dSx4oy0x4iF+t9nGT3L28hehyyLhGsjQ=
+X-Received: by 2002:a2e:bd09:: with SMTP id n9mr20595594ljq.76.1630331054549;
+ Mon, 30 Aug 2021 06:44:14 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210829203027.276143-1-marijn.suijten@somainline.org>
- <20210829203027.276143-2-marijn.suijten@somainline.org> <CAA8EJprQ03ipZzO+1vgt9W7jFbLXgsYR0n-oJxVB-142x8dgRA@mail.gmail.com>
- <17d19b93-dbe5-cc85-f302-b52cd8eeed56@somainline.org>
-In-Reply-To: <17d19b93-dbe5-cc85-f302-b52cd8eeed56@somainline.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 30 Aug 2021 16:24:58 +0300
-Message-ID: <CAA8EJpqd7_5510TodALnX13Wo0MufYm2G=r6vw9sy=VURrewyw@mail.gmail.com>
-Subject: Re: [PATCH 1/3] arm: dts: qcom: apq8064: Use 27MHz PXO clock as DSI
- PLL reference
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Pavel Dubrova <pashadubrova@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+References: <ccb2dad1-c8c1-9f19-92c4-7faf2b787e6d@foss.st.com>
+In-Reply-To: <ccb2dad1-c8c1-9f19-92c4-7faf2b787e6d@foss.st.com>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Mon, 30 Aug 2021 15:43:38 +0200
+Message-ID: <CAPDyKFqMJmJRLNYF=gWvAEH8wtJzrxrZ9KLz62t4XNsD84vr=Q@mail.gmail.com>
+Subject: Re: Question about MMC_PM_KEEP_POWER in MMCI driver
+To:     Yann Gautier <yann.gautier@foss.st.com>
+Cc:     "linux-mmc@vger.kernel.org" <linux-mmc@vger.kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Russell King <linux@armlinux.org.uk>,
         Rob Herring <robh+dt@kernel.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
+        "linux-arm-kernel@lists.infradead.org" 
+        <linux-arm-kernel@lists.infradead.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "linux-stm32@st-md-mailman.stormreply.com" 
+        <linux-stm32@st-md-mailman.stormreply.com>,
+        DTML <devicetree@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 30 Aug 2021 at 11:28, Marijn Suijten
-<marijn.suijten@somainline.org> wrote:
+On Wed, 25 Aug 2021 at 16:34, Yann Gautier <yann.gautier@foss.st.com> wrote:
 >
-> Hi Dmitry,
+> Hi,
 >
-> On 8/30/21 3:18 AM, Dmitry Baryshkov wrote:
-> > On Sun, 29 Aug 2021 at 23:30, Marijn Suijten
-> > <marijn.suijten@somainline.org> wrote:
-> >>
-> >> The 28NM DSI PLL driver for msm8960 calculates with a 27MHz reference
-> >> clock and should hence use PXO, not CXO which runs at 19.2MHz.
-> >>
-> >> Note that none of the DSI PHY/PLL drivers currently use this "ref"
-> >> clock; they all rely on (sometimes inexistant) global clock names and
-> >> usually function normally without a parent clock.  This discrepancy will
-> >> be corrected in a future patch, for which this change needs to be in
-> >> place first.
-> >>
-> >> Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-> >
-> > Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> >
-> > Checked the downstream driver, it always uses 27 MHz clock in calculations.
->
->
-> Given our concerns for msm8974 not updating DT in parallel with the
-> kernel (hence the need for a global-name fallback because "ref" is
-> missing from the DT), should we worry about the same for apq8064?  That
-> is, is there a chance that the kernel but not the firmware is upgraded
-> leading to the wrong parent clock being used?  The msm8960 variant of
-> the 28nm PLL driver uses parent_rate in a few places and might read
-> cxo's 19.2MHz erroneously instead of using pxo's 27MHz.
+> In drivers/mmc/host/mmci.c, MMC_PM_KEEP_POWER is unconditionally enabled.
+> This prevents correct low-power sequence on STM32MP157C-DK2 board which
+> embeds a Wifi chip brcm,bcm4329-fmac (this wifi part has not yet been
+> sent upstream).
 
-Checked the code. It uses .parent_names =  "pxo", so changing ref
-clock should not matter. We'd need to fix ref clocks and after that we
-can switch parent names to fw_name.
+Exactly why doesn't this work with the STM32MP157C-DK2 board?
 
 >
-> - Marijn
+> This MMC_PM_KEEP_POWER can be taken from DT with the property
+> keep-power-in-suspend. This is what is done for other MMC drivers.
 
+The DT property is what should have been used for mmci as well.
 
+>
+> I wonder what should be the best solution for this.
+>
+> 1) Remove MMC_PM_KEEP_POWER from the driver, and modify all SoC device
+> tree files embedding a arm,pl18x with adding keep-power-in-suspend;
+> property (except stm32mp151.dtsi file).
+> This can be easy to do (~10 files to modify). But that could be more
+> board dependent, if an SDIO chip is plugged on this MMC IP.
+> And the name keep-power-in-suspend can be misleading as it only applies
+> to SDIO.
+>
+> 2) Remove MMC_PM_KEEP_POWER from the driver, and modify board DT files
+> with the property. This could be a difficult task to find all those
+> boards. And this should be applied only for SDIO configs.
+>
+> 3) Just modify the driver to apply this capability for all MMCI chips
+> but STM32. This could be done in the dedicated file, in
+> sdmmc_variant_init() function. But some boards based on STM32MP15 chip
+> might want to keep this capability.
 
--- 
-With best wishes
-Dmitry
+I would suggest option 3).
+
+As a matter of fact, we also allow MMC_PM_KEEP_POWER to become set
+when parsing the DTB via calling mmc_of_parse(). So just changing the
+default value (don't set MMC_PM_KEEP_POWER) for the stm32 variant,
+would do the trick I think.
+
+Kind regards
+Uffe
