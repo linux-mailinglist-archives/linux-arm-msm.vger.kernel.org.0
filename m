@@ -2,73 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 470BF3FBF3D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Aug 2021 01:02:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 102A43FBF45
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Aug 2021 01:10:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239040AbhH3XD1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Aug 2021 19:03:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55124 "EHLO
+        id S238916AbhH3XLZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Aug 2021 19:11:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238936AbhH3XDV (ORCPT
+        with ESMTP id S238773AbhH3XLY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Aug 2021 19:03:21 -0400
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1015DC061760
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Aug 2021 16:02:27 -0700 (PDT)
-Received: by mail-ot1-x333.google.com with SMTP id 107-20020a9d0bf4000000b0051b8be1192fso10288693oth.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Aug 2021 16:02:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=eWM4/3yTwD02gfJC9rFF7KdMYiNQBXaOsLgx6akWtD8=;
-        b=PM1pNMQtWGrH46anjSbXZmaMSIzKWW6VD0gew5jdrK3kFfDUleakCbx5IVbIJtpEYa
-         Oh2WMagW6w4u+oKA422fnZP3Su+eKmPeqyu/nEjhX0qewMS2UGVT87y/fgLyFFBp6t0D
-         cTjAAYsEkR5GZ2oMR36LIt3oLM45RquoPiOqo=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=eWM4/3yTwD02gfJC9rFF7KdMYiNQBXaOsLgx6akWtD8=;
-        b=orQzNRw/qflTz4tXItD5RR8TWL+ZUVCfC52p2KfVObNExU5qwFJ5prqm9M370UOop4
-         kafJBzkRbo4hLY34XgrwdMgvxj2v+btkTnMOnqe7m7A1BZNGjZGwx6KnnLr9472Y7O7U
-         g2ofeM30k6g2FEmVOpqGXZ/CK4vWcwnF70ZbEngmewv5T9iQe/57ar/ZMouRrWg2kkaT
-         ChXSBwadaHAg1WWoTu4KC2+Tt6U3WCe1ZdQyp+b4jTFCFdfltYYBufNOV9pIohXCOO6q
-         eBw5RCQJduAGd+4LFX/Z8TTSZWcsYWIESXhQL6HI+/DwiLvnid1gD4HdcnCxj7te6v8q
-         ah4A==
-X-Gm-Message-State: AOAM5314qOWejBUwBIBtKmTy7YPXYSQ4FkT96W8TiFP5IYVQOfEUTBX6
-        5kH2LUDBYNHwIf1AizBZacRvLcRWJjqlEj1fDklJLheFOQs=
-X-Google-Smtp-Source: ABdhPJyyuZmtDRvRnkmfPxPxg0ZfrKKxpTrd0LDO62OHgk8HUhCwm2cmZKKyWMG7q9pTFPFaQCbn6/Fld+sjB6K1R4o=
-X-Received: by 2002:a9d:123:: with SMTP id 32mr22341511otu.124.1630364546432;
- Mon, 30 Aug 2021 16:02:26 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 30 Aug 2021 16:02:26 -0700
+        Mon, 30 Aug 2021 19:11:24 -0400
+Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68880C061575;
+        Mon, 30 Aug 2021 16:10:30 -0700 (PDT)
+Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id F3FBB1F738;
+        Tue, 31 Aug 2021 01:10:27 +0200 (CEST)
+Date:   Tue, 31 Aug 2021 01:10:26 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Stephen Boyd <swboyd@chromium.org>
+Subject: Re: [PATCH v2 1/2] drm/msm/dsi: Use "ref" fw clock instead of global
+ name for VCO parent
+Message-ID: <YS1lYui5aXadgkEr@Marijn-Arch-PC.localdomain>
+References: <20210830182445.167527-1-marijn.suijten@somainline.org>
+ <20210830182445.167527-2-marijn.suijten@somainline.org>
+ <163036177339.2676726.12271104951144475163@swboyd.mtv.corp.google.com>
+ <YS1fllEswGQEGWPc@Marijn-Arch-PC.localdomain>
+ <163036399040.2676726.5816296584899284140@swboyd.mtv.corp.google.com>
 MIME-Version: 1.0
-In-Reply-To: <1630323451-7160-3-git-send-email-deesin@codeaurora.org>
-References: <1630323451-7160-1-git-send-email-deesin@codeaurora.org> <1630323451-7160-3-git-send-email-deesin@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Mon, 30 Aug 2021 16:02:26 -0700
-Message-ID: <CAE-0n500=1tF2V8nTTfPH3P-wCm8xs-J+9pLK=xfeOc1p=PB5A@mail.gmail.com>
-Subject: Re: [PATCH V7 2/2] soc: qcom: aoss: Add debugfs entry
-To:     Deepak Kumar Singh <deesin@codeaurora.org>,
-        bjorn.andersson@linaro.org, clew@codeaurora.org,
-        sibis@codeaurora.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, Andy Gross <agross@kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <163036399040.2676726.5816296584899284140@swboyd.mtv.corp.google.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Deepak Kumar Singh (2021-08-30 04:37:31)
-> Some user space clients may require to change power states of various
-> parts of hardware. Add a debugfs node for qmp so messages can be sent
-> to aoss from user space.
->
-> Signed-off-by: Chris Lew <clew@codeaurora.org>
-> Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
-> ---
+On 2021-08-30 15:53:10, Stephen Boyd wrote:
+> Quoting Marijn Suijten (2021-08-30 15:45:42)
+> > Hi Stephen,
+> > 
+> > On 2021-08-30 15:16:13, Stephen Boyd wrote:
+> > > Quoting Marijn Suijten (2021-08-30 11:24:44)
+> > > > All DSI PHY/PLL drivers were referencing their VCO parent clock by a
+> > > > global name, most of which don't exist or have been renamed.  These
+> > > > clock drivers seem to function fine without that except the 14nm driver
+> > > > for the sdm6xx [1].
+> > > > 
+> > > > At the same time all DTs provide a "ref" clock as per the requirements
+> > > > of dsi-phy-common.yaml, but the clock is never used.  This patchset puts
+> > > > that clock to use without relying on a global clock name, so that all
+> > > > dependencies are explicitly defined in DT (the firmware) in the end.
+> > > > 
+> > > > Note that msm8974 is the only board not providing this clock, and
+> > > > apq8064 was providing the wrong clock (19.2MHz cxo instead of 27MHz
+> > > > pxo).  Both have been been addressed in separate patches that are
+> > > > supposed to land well in advance of this patchset.
+> > > > 
+> > > > Furthermore not all board-DTs provided this clock initially but that
+> > > > deficiency has been addressed in followup patches (see the Fixes:
+> > > > below).  Those commits seem to assume that the clock was used, while
+> > > > nothing in history indicates that this "ref" clock was ever retrieved.
+> > > > 
+> > > > [1]: https://lore.kernel.org/linux-arm-msm/386db1a6-a1cd-3c7d-a88e-dc83f8a1be96@somainline.org/
+> > > > 
+> > > > Fixes: 79e51645a1dd ("arm64: dts: qcom: msm8916: Set 'xo_board' as ref clock of the DSI PHY")
+> > > > Fixes: 6969d1d9c615 ("ARM: dts: qcom-apq8064: Set 'cxo_board' as ref clock of the DSI PHY")
+> > > > Fixes: 0c0e72705a33 ("arm64: dts: sdm845: Set 'bi_tcxo' as ref clock of the DSI PHYs")
+> > > > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > > > ---
+> > > >  drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c      | 4 +++-
+> > > >  drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c      | 4 +++-
+> > > >  drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c      | 4 +++-
+> > > >  drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c | 4 +++-
+> > > >  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c       | 4 +++-
+> > > >  5 files changed, 15 insertions(+), 5 deletions(-)
+> > > > 
+> > > > diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
+> > > > index e46b10fc793a..3cbb1f1475e8 100644
+> > > > --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
+> > > > +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_10nm.c
+> > > > @@ -562,7 +562,9 @@ static int pll_10nm_register(struct dsi_pll_10nm *pll_10nm, struct clk_hw **prov
+> > > >         char clk_name[32], parent[32], vco_name[32];
+> > > >         char parent2[32], parent3[32], parent4[32];
+> > > >         struct clk_init_data vco_init = {
+> > > > -               .parent_names = (const char *[]){ "xo" },
+> > > > +               .parent_data = &(const struct clk_parent_data) {
+> > > > +                       .fw_name = "ref",
+> > > 
+> > > Please also add .name as the old parent_names value so that newer
+> > > kernels can be used without having to use new DT.
+> > 
+> > We discussed that only msm8974 misses this "ref" clock at the time of
+> > writing.  Aforementioned Fixes: patches have all been merged about 3
+> > years ago, are those DTs still in use with a newer kernel?  I suppose
+> > this patch is only backported to kernels including those DT patches, is
+> > it reasonable to assume that at least that DT is in use there?
+> 
+> I have no idea.
+> 
+> > 
+> > Besides, not all clock trees provide this global "xo" or "bi_tcxo" clock
+> > in the first place.
+> > 
+> 
+> It doesn't hurt to also specify a .name to help migrate anything else
+> over. Unless you're confident it won't cause problems to rely on proper
+> DT being used?
 
-NAK. We don't want userspace to treat debugfs as an ABI. See
-https://lore.kernel.org/r/CAE-0n52YXvTzvK4B3Aggg1fcRyjy=+HzNADP315-J0iJ8bMWUQ@mail.gmail.com
+I'm 95% sure this shouldn't cause any problems given current DTs and
+their history, but that's probably not enough.  This might also impact
+DTs that have not yet been upstreamed, but afaik the general stance is
+to not care and actually serve as a fair hint/warning before new DTs
+make it to the list.
+
+If there is a protocol in place to deprecate, warn, and eventually
+remove this reliance on global clock names I'm more than happy to add
+.name as a temporary fallback, even if likely unneeded.  Otherwise we
+might never get rid of it.
+
+- Marijn
