@@ -2,116 +2,191 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AE8E3FB9A5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Aug 2021 18:04:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B511A3FB9BB
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 30 Aug 2021 18:06:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237684AbhH3QDH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 30 Aug 2021 12:03:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42556 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237659AbhH3QDH (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 30 Aug 2021 12:03:07 -0400
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 784A7C061575
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Aug 2021 09:02:13 -0700 (PDT)
-Received: by mail-io1-xd33.google.com with SMTP id m11so12203839ioo.6
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Aug 2021 09:02:13 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=G49FQ0uWZW6i9vFSjQGplZyOwvgazjM4XABr+KXbVDU=;
-        b=FgHn+o867IORlJciLs9Bi5TiNrh3rHwcUaE5v5BWRE+D8Ogj7RMwzmHDca7m5f8xyj
-         9k6vgOSezNdEwZZ1S0k2a3NC7CqeBjcGdzWdN8NEYaWiFGWtWUCGltPFnCPFQ9udKeno
-         Z4/rimxn50hBdSQnCkBaIIuQD78qeLnmmelk0=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=G49FQ0uWZW6i9vFSjQGplZyOwvgazjM4XABr+KXbVDU=;
-        b=Myrb7flkaZp22cwcw7yM3THdui/G7+5FosjPUei1NxoPVwAwH4KnO1Z8dc/lFw0I/+
-         he8mxBJ40GVR5ipQYpzxompHESkEp/CijsREGOABLV9iWS9GR0ljGMG3pBhhgK5yz3P1
-         GOg7J/0iG8tCccHFIKPO25bAkDwh2s0tLnloJALnSymmnLHBL+AI+dhSx1cji/GRv1tf
-         /ZdMB4ZxPcVbLClJjie0xQnDpCO0lAyosh7Fg48KjHe9gj0rx1SyMU/qHrx2xyt2RE8x
-         0E1DK/yTzQhifZoPqWpkEdTpKRLsUeHSRmhjk8fHiRzrMWOieEHv5K+eSpBbr9CFlwBB
-         HevA==
-X-Gm-Message-State: AOAM530fvmEEgKinJKCDOD+auzS1bTB7qe3EICDH+/IroRa1voDd1oXY
-        PH+M6eji3l7oDHILhU3Vkk45+2MGmYHA9g==
-X-Google-Smtp-Source: ABdhPJzOoOTNtHHaP3tacLjjGuXqDCaLfQ6xurstm6bhqrkSN+bRKha1nzOdAjzkL869An7mI/vrrA==
-X-Received: by 2002:a02:946d:: with SMTP id a100mr20661042jai.118.1630339332784;
-        Mon, 30 Aug 2021 09:02:12 -0700 (PDT)
-Received: from mail-io1-f48.google.com (mail-io1-f48.google.com. [209.85.166.48])
-        by smtp.gmail.com with ESMTPSA id n11sm7984076ioo.44.2021.08.30.09.02.11
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 30 Aug 2021 09:02:12 -0700 (PDT)
-Received: by mail-io1-f48.google.com with SMTP id g9so20566251ioq.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 30 Aug 2021 09:02:11 -0700 (PDT)
-X-Received: by 2002:a02:c7d2:: with SMTP id s18mr17206234jao.22.1630339331487;
- Mon, 30 Aug 2021 09:02:11 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210726231351.655302-1-bjorn.andersson@linaro.org>
- <CAD=FV=UGtHXD==Yy8CVCOioYGb=2hqGQOoNWftD1Jj7OiEp51g@mail.gmail.com> <YSpK3wTUdqlUyJxb@yoga>
-In-Reply-To: <YSpK3wTUdqlUyJxb@yoga>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Mon, 30 Aug 2021 09:01:58 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=URLJHujmu36sNMfPVMYtDZUirJq5T-PLbeMGqjLuMtNQ@mail.gmail.com>
-Message-ID: <CAD=FV=URLJHujmu36sNMfPVMYtDZUirJq5T-PLbeMGqjLuMtNQ@mail.gmail.com>
-Subject: Re: [RFC] drm/msm/dp: Allow attaching a drm_panel
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Vara Reddy <varar@codeaurora.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S236105AbhH3QF6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 30 Aug 2021 12:05:58 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:45600 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237659AbhH3QFz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 30 Aug 2021 12:05:55 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1630339501; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=AhYDa4UTLC4jIGO17fGnHbzpCStT+TLgkWbSA//0TlQ=; b=ILeLN+P5jggGQikviUNDAPdcMN+PtUJiL7nm2ML0eJo+puClsw703yHc6OjsnoCMzScktEWW
+ IrFEPdO/ip8IP47p9sjX7tEFyhfOc25vfufTL8yvu15LvnpfX+aKYkMojGHNcry0ghJ7u/6u
+ FeIkrwwv+Qc2lmrVBgRGOuSDJKE=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 612d01abc603a0154fa6d3bd (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 30 Aug 2021 16:04:59
+ GMT
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 6D80DC43619; Mon, 30 Aug 2021 16:04:58 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 83DEDC43460;
+        Mon, 30 Aug 2021 16:04:56 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 83DEDC43460
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Kuogee Hsieh <khsieh@codeaurora.org>
+To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
+        vkoul@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
+        robh+dt@kernel.org, devicetree@vger.kernel.org
+Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        khsieh@codeaurora.org, mkrishn@codeaurora.org,
+        kalyan_t@codeaurora.org, rajeevny@codeaurora.org,
+        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v2] arm64: dts: qcom: sc7280: Add Display Port node
+Date:   Mon, 30 Aug 2021 09:04:49 -0700
+Message-Id: <1630339489-23172-1-git-send-email-khsieh@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Changes in v2:
+-- break this patch into 3 patches
 
-On Sat, Aug 28, 2021 at 7:40 AM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Fri 27 Aug 15:52 CDT 2021, Doug Anderson wrote:
->
-> > Hi,
-> >
-> > On Mon, Jul 26, 2021 at 4:15 PM Bjorn Andersson
-> > <bjorn.andersson@linaro.org> wrote:
-> > >
-> > > +static int dp_parser_find_panel(struct dp_parser *parser)
-> > > +{
-> > > +       struct device_node *np = parser->pdev->dev.of_node;
-> > > +       int rc;
-> > > +
-> > > +       rc = drm_of_find_panel_or_bridge(np, 2, 0, &parser->drm_panel, NULL);
-> >
-> > Why port 2? Shouldn't this just be port 1 always? The yaml says that
-> > port 1 is "Output endpoint of the controller". We should just use port
-> > 1 here, right?
-> >
->
-> I thought port 1 was the link to the Type-C controller, didn't give it a
-> second thought and took the next available.
->
-> But per the binding it makes sense that the panel is the "Output
-> endpoint of the controller" and I guess one will have either a Type-C
-> controller or a panel - even after the DP rework?
+Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+---
+ arch/arm64/boot/dts/qcom/sc7280.dtsi | 88 +++++++++++++++++++++++++++++++++++-
+ 1 file changed, 87 insertions(+), 1 deletion(-)
 
-Right, my understanding is that "port 1" is the output port
-irregardless of whether you're outputting to a panel or a DP
-connector. I think the only case it would make sense to add a new port
-is if it was possible for the output to be connected to both a panel
-and a DP port simultaneously. ...but that doesn't make sense.
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index c29226b..f224029 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -3202,6 +3202,13 @@
+ 							remote-endpoint = <&edp_in>;
+ 						};
+ 					};
++
++					port@2 {
++                                                reg = <2>;
++                                                dpu_intf0_out: endpoint {
++                                                        remote-endpoint = <&dp_in>;
++                                                };
++                                        };
+ 				};
+ 
+ 				mdp_opp_table: mdp-opp-table {
+@@ -3389,6 +3396,78 @@
+ 					};
+ 				};
+ 			};
++
++			msm_dp: displayport-controller@ae90000 {
++				status = "disabled";
++				compatible = "qcom,sc7180-dp", "qcom,sc7280-dp";
++
++				reg = <0 0x0ae90000 0 0x1400>;
++
++				interrupt-parent = <&mdss>;
++				interrupts = <12>;
++
++				clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
++					 <&dispcc DISP_CC_MDSS_DP_AUX_CLK>,
++					 <&dispcc DISP_CC_MDSS_DP_LINK_CLK>,
++					 <&dispcc DISP_CC_MDSS_DP_LINK_INTF_CLK>,
++					 <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK>;
++				clock-names =	"core_iface",
++						"core_aux",
++						"ctrl_link",
++					     	"ctrl_link_iface",
++						"stream_pixel";
++				#clock-cells = <1>;
++				assigned-clocks = <&dispcc DISP_CC_MDSS_DP_LINK_CLK_SRC>,
++						  <&dispcc DISP_CC_MDSS_DP_PIXEL_CLK_SRC>;
++				assigned-clock-parents = <&dp_phy 0>, <&dp_phy 1>;
++				phys = <&dp_phy>;
++				phy-names = "dp";
++
++				operating-points-v2 = <&dp_opp_table>;
++				power-domains = <&rpmhpd SC7280_CX>;
++
++				#sound-dai-cells = <0>;
++
++				ports {
++					#address-cells = <1>;
++					#size-cells = <0>;
++					port@0 {
++						reg = <0>;
++						dp_in: endpoint {
++							remote-endpoint = <&dpu_intf0_out>;
++						};
++					};
++
++					port@1 {
++						reg = <1>;
++						dp_out: endpoint { };
++					};
++				};
++
++				dp_opp_table: opp-table {
++					compatible = "operating-points-v2";
++
++					opp-160000000 {
++						opp-hz = /bits/ 64 <160000000>;
++						required-opps = <&rpmhpd_opp_low_svs>;
++					};
++
++					opp-270000000 {
++						opp-hz = /bits/ 64 <270000000>;
++						required-opps = <&rpmhpd_opp_svs>;
++					};
++
++					opp-540000000 {
++						opp-hz = /bits/ 64 <540000000>;
++						required-opps = <&rpmhpd_opp_svs_l1>;
++					};
++
++					opp-810000000 {
++						opp-hz = /bits/ 64 <810000000>;
++						required-opps = <&rpmhpd_opp_nom>;
++					};
++				};
++			};
+ 		};
+ 
+ 		dispcc: clock-controller@af00000 {
+@@ -3398,7 +3477,8 @@
+ 				 <&gcc GCC_DISP_GPLL0_CLK_SRC>,
+ 				 <&dsi_phy 0>,
+ 				 <&dsi_phy 1>,
+-				 <0>, <0>,
++			  	 <&dp_phy 0>,
++			  	 <&dp_phy 1>,
+ 				 <&msm_edp 0>,
+ 				 <&msm_edp 1>;
+ 			clock-names = "bi_tcxo", "gcc_disp_gpll0_clk",
+@@ -3525,6 +3605,12 @@
+                                 };
+                         };
+ 
++			dp_hot_plug_det: dp-hot-plug-det {
++				pins = "gpio47";
++				function = "dp_hot";
++				bias-disable;
++                        };
++
+ 			qspi_clk: qspi-clk {
+ 				pins = "gpio14";
+ 				function = "qspi_clk";
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
--Doug
