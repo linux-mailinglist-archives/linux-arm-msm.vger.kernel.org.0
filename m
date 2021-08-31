@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6AE993FCB42
+	by mail.lfdr.de (Postfix) with ESMTP id C9E1E3FCB43
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Aug 2021 18:12:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239787AbhHaQNr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S239789AbhHaQNr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 31 Aug 2021 12:13:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33532 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33542 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239789AbhHaQNo (ORCPT
+        with ESMTP id S239795AbhHaQNq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Aug 2021 12:13:44 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB885C061764
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Aug 2021 09:12:48 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id m4so10967601pll.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Aug 2021 09:12:48 -0700 (PDT)
+        Tue, 31 Aug 2021 12:13:46 -0400
+Received: from mail-pj1-x102d.google.com (mail-pj1-x102d.google.com [IPv6:2607:f8b0:4864:20::102d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4103C061575
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Aug 2021 09:12:50 -0700 (PDT)
+Received: by mail-pj1-x102d.google.com with SMTP id j1so12167606pjv.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Aug 2021 09:12:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=nJ/vHQ8m8iLAMD8+ZyhKRlQPyo+UcB05ujjGTF6TT/E=;
-        b=ShrvEdu4aBcZuH9JQOrGSy5IboFfiYymwSoisBjRrV5v7aapU7MLCcajLG+cvPcidq
-         6rJkTEoUyl21HJ93R/q0D5Y0dWQvWFsLjCEc6TKpRrxYBI0LBoRc3lFXuolvQoZSaMjs
-         M1v8rZ/k+KK/Y/wcAQj3jzeFJQjfRLhtkVmP39glhN52Lxmw+btmis/QMLmD2O2urNNj
-         kmk6gx9Zxsti+4SHkTEVJ+DsZA67rCM1NthxOO8oieo+6RI/SHguz3UjMcgcImWQMG8L
-         qpIPaewOz3j+3kFeitJN39iIt9RCrmEB7fw6jj9HVCp09nDNMknxvDIUhxKBt/PlEbQO
-         AcYA==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=IzUUD53TRCina4FvQp5wgcW+VoUOyAwWBEy3HV4by8c=;
+        b=OOjQD7PcaDHf9UqHMUXZOqvvQUGIPQRaLs3BA8ro+eCzT5qcQF4w+fnt9LRl8ccedp
+         4Dx6UUTBdQaTzpoZpcNCXp6v+1Gfo1Ao5EGEHNuIO4xqiFzSgWuteSmJIH1ZAu3Iwzy9
+         LV3pf93r2TtAQdJyRNzsLefPU43hIGGoffl4ejQsjQR7Li8I0Nq+PX8NbDsMH2HbY4Vw
+         Bg22w2rum1KXFoojqSWHhEW1XrIuMtUDgMAjuN0HWQkd7qzyW6IX+hOSWQb5R/gQ6n5i
+         lT+OQ30Er1Cr1KewCuA08VWXh/1Jk/KlOFVrZPjvFB/hFWx9ztUjOfP0f7nIlYEI5qxL
+         k3vw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=nJ/vHQ8m8iLAMD8+ZyhKRlQPyo+UcB05ujjGTF6TT/E=;
-        b=suOg4oYZSdIZqzLPItOZcwGXudOWn+y+qydHSi6SosZkOKLrYla+CbZaZWb552vX0H
-         P0otLQLwyCAfDNPf8fz7mBrakleEJ8M3qxIvqQ6T0iVPyErSE6lDMtvcrIEpGNCQap0N
-         gSQy5REGafmkcVahQDwFO7ghypBT7fvCd0P3kFL6J5U1iYOkfcVOi4Uw7CXid9zzRYy6
-         AW12lT07b0ug7jNVioZDnjs5bcDcGdFkKSFQHDcXHcQkWv5MPQPyeG9imXnNAk1FehO/
-         GVRrbMHh/f1OYH4eN7ufpISk9DUE2eU9rlc9SxChWUaVh2qLiV8nharH4q4T1FcEbK7z
-         IJAA==
-X-Gm-Message-State: AOAM532OiHwfl1/iqrQpfoyal00tM8mmY9zkZD28kJpvteyrdlr7Q3Kr
-        is50AFpP72R/1t4Mn8MriLw=
-X-Google-Smtp-Source: ABdhPJyfGDeblGXkDl4WZ1mV/1NAF3JEfJAqlDwzgZp48do1VYkeKvrEdCp7apeoDZQRlFawms82AQ==
-X-Received: by 2002:a17:902:6b47:b0:12d:7aa6:1e45 with SMTP id g7-20020a1709026b4700b0012d7aa61e45mr5351215plt.80.1630426368260;
-        Tue, 31 Aug 2021 09:12:48 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=IzUUD53TRCina4FvQp5wgcW+VoUOyAwWBEy3HV4by8c=;
+        b=Yt2EXE4/eHju+weT5693wwIzYK9BKvia8RpUJ7fGgtGdPFBk4djVT5whsTG1Vv0iHN
+         6T13TIE0u2IXhnexjoBIr8otkhW49Fduh/5JkoB3nHvVv2JW0ejwc/e0nIWHPAGYXh6h
+         yw4uDJwexPCDwmCp2IFjZUkJFi9dQ8Y7JLk7tgF8RjphxYFyLYn8nh4Q4lhBr2jzW+qZ
+         Cj5IQSPMqHlsnqy8MqId1t8B4ZcTCmQS6BtEfupu7eqNJv6LWFl7YxuRbftMJtDBoxrE
+         Gw7qFcE+4iBXuagC1NIyTI6npouo2besWO0AsTO5W2UauKDcfE2OpVZXRDzqQLSzLuod
+         AnRQ==
+X-Gm-Message-State: AOAM530HjztK1YHPy8Zr+5becyfVOEDZL3yUy2UwlgSWAp6uvT4PocU6
+        JYdRJMcBCIVgbBwhqP+v2Ls/XxG9+74=
+X-Google-Smtp-Source: ABdhPJzagBDIHTv/jV31+XINjnPPk9hLtJ8OsAkBF08ftXKkvaqBJhCvGvI5pV20pDU+sfVjwGN8Iw==
+X-Received: by 2002:a17:90a:8801:: with SMTP id s1mr6291123pjn.166.1630426370486;
+        Tue, 31 Aug 2021 09:12:50 -0700 (PDT)
 Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id v20sm21386083pgi.39.2021.08.31.09.12.46
+        by smtp.gmail.com with ESMTPSA id a21sm3515990pjo.14.2021.08.31.09.12.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Aug 2021 09:12:47 -0700 (PDT)
+        Tue, 31 Aug 2021 09:12:49 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     igt-dev@lists.freedesktop.org
 Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
@@ -55,10 +55,12 @@ Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
         Akhil P Oommen <akhilpo@codeaurora.org>,
         Petri Latvala <petri.latvala@intel.com>,
         Rob Clark <robdclark@chromium.org>
-Subject: [PATCH igt v4 0/3] Initial igt tests for drm/msm ioctls
-Date:   Tue, 31 Aug 2021 09:17:13 -0700
-Message-Id: <20210831161716.1400057-1-robdclark@gmail.com>
+Subject: [PATCH igt v4 1/3] drmtest: Add DRIVER_MSM support
+Date:   Tue, 31 Aug 2021 09:17:14 -0700
+Message-Id: <20210831161716.1400057-2-robdclark@gmail.com>
 X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20210831161716.1400057-1-robdclark@gmail.com>
+References: <20210831161716.1400057-1-robdclark@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -67,27 +69,46 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-Add an initial set of tests for the gpu SUBMIT ioctl.  There is
-plenty more we can add, but need to start somewhere.
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+Reviewed-by: Petri Latvala <petri.latvala@intel.com>
+---
+ lib/drmtest.c | 3 +++
+ lib/drmtest.h | 1 +
+ 2 files changed, 4 insertions(+)
 
-Rob Clark (3):
-  drmtest: Add DRIVER_MSM support
-  msm: Add helper library
-  msm: Add submit ioctl tests
-
- .../igt-gpu-tools/igt-gpu-tools-docs.xml      |   1 +
- lib/drmtest.c                                 |   3 +
- lib/drmtest.h                                 |   1 +
- lib/igt_msm.c                                 | 211 ++++++++++++++++++
- lib/igt_msm.h                                 | 142 ++++++++++++
- lib/meson.build                               |   1 +
- tests/meson.build                             |   1 +
- tests/msm_submit.c                            | 194 ++++++++++++++++
- 8 files changed, 554 insertions(+)
- create mode 100644 lib/igt_msm.c
- create mode 100644 lib/igt_msm.h
- create mode 100644 tests/msm_submit.c
-
+diff --git a/lib/drmtest.c b/lib/drmtest.c
+index e1f9b115..29cb3f4c 100644
+--- a/lib/drmtest.c
++++ b/lib/drmtest.c
+@@ -179,6 +179,7 @@ static const struct module {
+ } modules[] = {
+ 	{ DRIVER_AMDGPU, "amdgpu" },
+ 	{ DRIVER_INTEL, "i915", modprobe_i915 },
++	{ DRIVER_MSM, "msm" },
+ 	{ DRIVER_PANFROST, "panfrost" },
+ 	{ DRIVER_V3D, "v3d" },
+ 	{ DRIVER_VC4, "vc4" },
+@@ -539,6 +540,8 @@ static const char *chipset_to_str(int chipset)
+ 		return "amdgpu";
+ 	case DRIVER_PANFROST:
+ 		return "panfrost";
++	case DRIVER_MSM:
++		return "msm";
+ 	case DRIVER_ANY:
+ 		return "any";
+ 	default:
+diff --git a/lib/drmtest.h b/lib/drmtest.h
+index 7d17a0f9..a6eb60c3 100644
+--- a/lib/drmtest.h
++++ b/lib/drmtest.h
+@@ -50,6 +50,7 @@
+ #define DRIVER_AMDGPU	(1 << 3)
+ #define DRIVER_V3D	(1 << 4)
+ #define DRIVER_PANFROST	(1 << 5)
++#define DRIVER_MSM	(1 << 6)
+ 
+ /*
+  * Exclude DRVER_VGEM from DRIVER_ANY since if you run on a system
 -- 
 2.31.1
 
