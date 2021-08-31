@@ -2,104 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 988DC3FC6DD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Aug 2021 14:06:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B76023FC72C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Aug 2021 14:29:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241611AbhHaLwd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Aug 2021 07:52:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55816 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241608AbhHaLwd (ORCPT
+        id S240456AbhHaMQp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Aug 2021 08:16:45 -0400
+Received: from mail-vs1-f51.google.com ([209.85.217.51]:37666 "EHLO
+        mail-vs1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239099AbhHaMQk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Aug 2021 07:52:33 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0E6AEC061575;
-        Tue, 31 Aug 2021 04:51:38 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id d5so5830551pjx.2;
-        Tue, 31 Aug 2021 04:51:38 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20161025;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=RX2rigJ/4yVGAmIjeTnRBQKJ9haoWNb/JQuSYn5hcTw=;
-        b=oK5tdGSOQTMsLfb4/ETbVqXw4L2ZZPy7lgqdzuKE5vGRQ9NRXt3hyP4pkf+9CWn1I9
-         JuuRZsjmLhas77RfTcWUeWg0TZBjR6pcEs0Jvu2IHxVmD3ZW/7TNY4HTfnSLoHC0WyfU
-         Io6jF6RjVQ2U77QU7U000QluIYRTee+UuOWvI2Tfod4dkOU3vHk+4tXpGX/4TmlmX420
-         2t3vi+xtP94r268cWL1AzAwpIz4xv5FNijaoCHf9CrRI63svgHwH3gVKAeBJ7QFq4kRb
-         wEzPfOrSoCD6LRpPK5QZpiMWCEzYg27he/KSY2SJs4+Gs+TRPCR9ExT/pBpYsFjfeOq6
-         SsJw==
+        Tue, 31 Aug 2021 08:16:40 -0400
+Received: by mail-vs1-f51.google.com with SMTP id i23so13043246vsj.4;
+        Tue, 31 Aug 2021 05:15:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=RX2rigJ/4yVGAmIjeTnRBQKJ9haoWNb/JQuSYn5hcTw=;
-        b=Kx3yz0J0Ap4MFnrfbZWJjUUCUQ3HWQ5jXn4FA0X9QCXKZsVLJvc6Dy+jBDhFeTUbTw
-         +xRT/tdE8zWrRjL62UrYj4cqbHMsZrglM/v9K7UypZhaSrn/agBu5Sh9gKSciaK/w81d
-         fGIKEkzlcI4E7aQmWaEqOHUS4LsgjzGXYUqH1KLnEoTLVs5PSraVI34eqSSSrCpKEVBw
-         8Um50Pd1xukFvm1/I6sEYMHl2lPioBMpdX4/kStKkg+allAAjm/YwNNQwYsbTXuSWPrU
-         cNd7nLsIOzL5/iOgcBvDFaCjhllkj2fWOGszJbSHT2cFkHPgajU0iGk2EJ0dSS8hGZJ/
-         4D3Q==
-X-Gm-Message-State: AOAM5323lfe9pKHRroiJgTr4XAHa+bo42Xit6G9z+AyMc19f/oB9K4es
-        a+3fgFISrNimNI/c9wYMnhg=
-X-Google-Smtp-Source: ABdhPJzXWq2tYhWG1U3hwSgB2KoPkJW4AwHFV1/8WNeGxVPjtCWZWir2TS/a1El7ezWCydmwoCMq9w==
-X-Received: by 2002:a17:902:a70e:b0:12d:9eff:23be with SMTP id w14-20020a170902a70e00b0012d9eff23bemr4351271plq.34.1630410697578;
-        Tue, 31 Aug 2021 04:51:37 -0700 (PDT)
-Received: from localhost.localdomain ([193.203.214.57])
-        by smtp.gmail.com with ESMTPSA id r8sm20399460pgp.30.2021.08.31.04.51.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Aug 2021 04:51:37 -0700 (PDT)
-From:   cgel.zte@gmail.com
-X-Google-Original-From: chi.minghao@zte.com.cn
-To:     robdclark@gmail.com
-Cc:     sean@poorly.run, airlied@linux.ie, daniel@ffwll.ch,
-        lyude@redhat.com, airlied@redhat.com,
-        laurent.pinchart@ideasonboard.com, chi.minghao@zte.com.cn,
-        treding@nvidia.com, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, Zeal Robot <zealci@zte.com.cn>
-Subject: [PATCH] drm/msm: remove unneeded variable
-Date:   Tue, 31 Aug 2021 04:51:27 -0700
-Message-Id: <20210831115127.18236-1-chi.minghao@zte.com.cn>
-X-Mailer: git-send-email 2.25.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=bnku0FFHfkBfdTCD06jvZHLPwNXL6nx4uAdXOIMz+aw=;
+        b=d3vkWumSN/7okZZwqUxwChaxiIC3WG/Y+MkDbiq2zjWLQVKD1D22zvclUPGoyoaS33
+         MbKRXTDpGRWN1tb20G7T0GVJvYcfDLPXcTJ9g41+8ZCLmOm6EhyM7SNYXOpd44qbIL3t
+         U7eYCJtbDvonscnx/xv/0vcOA/h+OGpYSgjLblA/dTfmRPsKpMN9QKcMhcBd1bYzeIUT
+         ohz9GvKmShdZeAVjjkNAQ7AbzY38nXxkka6iFV07oHrefYdzfzCr/IYw6QN5e1ty6seA
+         Xt5gMtMTTPH7Dzx81UoKEoNeyH0Uy1VyoFwfIa7V1eAZw0zcnErjTPqtn4h+5DJxZwuH
+         PsqQ==
+X-Gm-Message-State: AOAM533o/xgGqts2DSl7UrE6fDAo4iDy8b0cze/1knfs71CKThvcVGyO
+        38TCxWk0oIxvQZ3GJae+RTnC8mx3S5Ps4yrubbs=
+X-Google-Smtp-Source: ABdhPJwDYKJvKetBta1+JjjLOvO7qKHnmkgrzd/T0qifBWKYm5DYsHohpk/PwO3kQ8r8y0SRqMJ0OXCmoTLMUtrPg38=
+X-Received: by 2002:a05:6102:3e92:: with SMTP id m18mr17878737vsv.53.1630412141822;
+ Tue, 31 Aug 2021 05:15:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210731195034.979084-1-dmitry.baryshkov@linaro.org> <20210731195034.979084-3-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20210731195034.979084-3-dmitry.baryshkov@linaro.org>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Tue, 31 Aug 2021 14:15:30 +0200
+Message-ID: <CAMuHMdXmJ-s42NgB9HboudGh3M+_HwfmfFEcBuWNNKoFke8a0g@mail.gmail.com>
+Subject: Re: [PATCH v3 2/3] PM: runtime: add devm_pm_clk_create helper
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        Pavel Machek <pavel@ucw.cz>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linux PM list <linux-pm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-clk <linux-clk@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Chi Minghao <chi.minghao@zte.com.cn>
+Hi Dmitry,
 
-Fix the following coccicheck REVIEW:
-./drivers/gpu/drm/msm/edp/edp_ctrl.c:1245:5-8 Unneeded variable
+Thanks for your patch!
 
-Reported-by: Zeal Robot <zealci@zte.com.cn>
-Signed-off-by: Chi Minghao <chi.minghao@zte.com.cn>
----
- drivers/gpu/drm/msm/edp/edp_ctrl.c | 4 +---
- 1 file changed, 1 insertion(+), 3 deletions(-)
+On Sat, Jul 31, 2021 at 9:51 PM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+> A typical code pattern for pm_clk_create() call is to call it in the
+> _probe function and to call pm_clk_destroy() both from _probe error path
+> and from _remove function. For some drivers the whole remove function
+> would consist of the call to pm_remove_disable().
 
-diff --git a/drivers/gpu/drm/msm/edp/edp_ctrl.c b/drivers/gpu/drm/msm/edp/edp_ctrl.c
-index 4fb397ee7c84..3610e26e62fa 100644
---- a/drivers/gpu/drm/msm/edp/edp_ctrl.c
-+++ b/drivers/gpu/drm/msm/edp/edp_ctrl.c
-@@ -1242,8 +1242,6 @@ bool msm_edp_ctrl_panel_connected(struct edp_ctrl *ctrl)
- int msm_edp_ctrl_get_panel_info(struct edp_ctrl *ctrl,
- 		struct drm_connector *connector, struct edid **edid)
- {
--	int ret = 0;
--
- 	mutex_lock(&ctrl->dev_mutex);
- 
- 	if (ctrl->edid) {
-@@ -1278,7 +1276,7 @@ int msm_edp_ctrl_get_panel_info(struct edp_ctrl *ctrl,
- 	}
- unlock_ret:
- 	mutex_unlock(&ctrl->dev_mutex);
--	return ret;
-+	return 0;
- }
- 
- int msm_edp_ctrl_timing_cfg(struct edp_ctrl *ctrl,
+Is it? I could find only one (drivers/clk/mmp/clk-audio.c).
+All other users call it from their PM Domain .attach_dev() callback,
+which cannot become managed.
+
+> Add helper function to replace this bolierplate piece of code. Calling
+> devm_pm_clk_create() removes the need for calling pm_clk_destroy() both
+> in the probe()'s error path and in the remove() function.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Gr{oetje,eeting}s,
+
+                        Geert
+
 -- 
-2.25.1
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
