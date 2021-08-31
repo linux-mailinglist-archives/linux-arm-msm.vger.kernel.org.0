@@ -2,182 +2,200 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 152713FCD65
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Aug 2021 21:20:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A4603FCD95
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Aug 2021 21:21:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236967AbhHaTD0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Aug 2021 15:03:26 -0400
-Received: from mail-ot1-f43.google.com ([209.85.210.43]:34768 "EHLO
-        mail-ot1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239894AbhHaTDZ (ORCPT
+        id S240381AbhHaTMk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Aug 2021 15:12:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46916 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239694AbhHaTMj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Aug 2021 15:03:25 -0400
-Received: by mail-ot1-f43.google.com with SMTP id k12-20020a056830150c00b0051abe7f680bso432041otp.1;
-        Tue, 31 Aug 2021 12:02:30 -0700 (PDT)
+        Tue, 31 Aug 2021 15:12:39 -0400
+Received: from mail-pf1-x42c.google.com (mail-pf1-x42c.google.com [IPv6:2607:f8b0:4864:20::42c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A6E8C061575
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Aug 2021 12:11:44 -0700 (PDT)
+Received: by mail-pf1-x42c.google.com with SMTP id 7so107009pfl.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Aug 2021 12:11:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ZeXlIpviTzn5ex9dkffQ1j3818rQ1ctd2HbBkClIb6k=;
+        b=q2errspj+rUwbMG3M4gEBlmMaQ4UI6DwAr4wXRkbNHSXUbDaLDNp85bw2JUGTw73JN
+         bZu2zPml28k1pFsdzFv9ZpLc3QQqc7b8/QjKOmbann965/3inH12U0UprgAdmHLYakxk
+         0u5uwnTobJpRh9mslGMW7169VY3XwbESfIhh+DjOLhWC+uCX+jkW+fT5aBuYwXbuMlcU
+         YDf64UcaOmr5jzQwdtSsYtyhwh5etMWVM/fvQc8rzAmlNnW6Bqtq6gemNaJEIa0mrvc4
+         kCCoT+/Uakm0v4R2vxil07KlXvLFjRMfJw0kxHcW5HJl2yYZI3ybSGemYo6WHe7S6mzk
+         Mn7A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=g/wylqfbU2Ds4hPrqFZcDGrgHpasbQqYBGt6ciPf6Ao=;
-        b=C+5NmTp7GacbLtFpGLKYv8XdxPwLxeBKRscZaUuuXSKAxn353jxade3LwQGRWYTTUB
-         bkGubHh3sml5S52lnySiRiLeGcz6Ebp3gy5Z9OcfIfcsqKSWsLGAcntWlC4Ju5JngjDY
-         TBl47wSbX0uxxx/UoawKSncNG3jw/TBiZiHXUGxVTl0/ff65M1/BFXGiOTdriDtvpTD5
-         bLURnNpY+IZoEDKUALdqj9oxV8TMFigwKOx53+EljQEtdHz/dI7xhM0DRPJaG+TQlHao
-         iorv0yTC6biXjmAlpZGUkVHacF3CitJLSPdOqQ4zzANP0KgHofWNHZvkuHpOe38LFQJH
-         867Q==
-X-Gm-Message-State: AOAM532u1rDuv5xiQMsEUoeQX3PMxW9Eawju66rrgpFi4TK7Eze3twAk
-        A6fCt1Of2bzmT4pLOdQoPw==
-X-Google-Smtp-Source: ABdhPJxmCHqLpisbCFuJaaVwlzf2HYOCGHVpu86uYy6MTZoZPDeQ6ydgSLYpeUkyXZK5Gs5GmKFt7g==
-X-Received: by 2002:a9d:7d85:: with SMTP id j5mr25303816otn.164.1630436549707;
-        Tue, 31 Aug 2021 12:02:29 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id 4sm3768624ooa.11.2021.08.31.12.02.28
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Aug 2021 12:02:29 -0700 (PDT)
-Received: (nullmailer pid 479023 invoked by uid 1000);
-        Tue, 31 Aug 2021 19:02:28 -0000
-Date:   Tue, 31 Aug 2021 14:02:28 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Baruch Siach <baruch@tkos.co.il>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Balaji Prakash J <bjagadee@codeaurora.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v8 3/4] dt-bindings: pwm: add IPQ6018 binding
-Message-ID: <YS58xAit1UrEtd0v@robh.at.kernel.org>
-References: <5c95bcf62a9d08208a7da19f0b1cec0689502b9a.1630323987.git.baruch@tkos.co.il>
- <8238dfb5d5e4a40a995f047db36d9a7240431de5.1630323987.git.baruch@tkos.co.il>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ZeXlIpviTzn5ex9dkffQ1j3818rQ1ctd2HbBkClIb6k=;
+        b=UfdR0AnnDWG+volbeyU3Jps+m6L7lpOCp7MTtWZbkLjpIdYyOuS3Bsdlr26aMl627P
+         +5PF2HYQ19s4EjjBE4WOHiOpMoSTy9/a0HPJnld4qOJ+95X3XivsBrbAC6kY65vYP3BT
+         8W2l+w/uSRQ/GWCnX0N96x6vPEUBSIlvGDCR22Bj4JbvCNz41FqROTshiFGhAWBCPO85
+         RJNHHx5GgmD2UJ3/esd6tlFqJmibuYlp/Rf7glwoS44oTv7nvUUffFoeJlmviOO42qcG
+         PX7/q333iLfRYlQH2fDQHvTmhLsWZIe639yKufANMlVdqy/VbJ71RNXz1lDTcEnoNxB6
+         qapA==
+X-Gm-Message-State: AOAM532HOna4i+DXRcTk9oyJ3Sp4mEKxkjEcVxTbxxkIfDZBSRLYV71P
+        TCHaIZg5/qrCCGrGn7Er/u7BEj/JMFeMSStJvJd30w==
+X-Google-Smtp-Source: ABdhPJx42wOD1ke2NsPZdxHBJWqBaSeUsMlqEovH1j3bO/yBfYt79Ud7ZMMJ2OUK+3gXgh78iKg1PRcE9fm4pgcmT9U=
+X-Received: by 2002:a62:8287:0:b0:3ec:f6dc:9672 with SMTP id
+ w129-20020a628287000000b003ecf6dc9672mr29649670pfd.65.1630437103517; Tue, 31
+ Aug 2021 12:11:43 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <8238dfb5d5e4a40a995f047db36d9a7240431de5.1630323987.git.baruch@tkos.co.il>
+References: <20210818194105.1400766-1-trix@redhat.com>
+In-Reply-To: <20210818194105.1400766-1-trix@redhat.com>
+From:   Robert Foss <robert.foss@linaro.org>
+Date:   Tue, 31 Aug 2021 21:11:32 +0200
+Message-ID: <CAG3jFyu9QoXAsAxXx-YWhBCxk_jHOWKc10rL7o051Ehav+e4Kg@mail.gmail.com>
+Subject: Re: [PATCH] media: camss: vfe: simplify vfe_get_wm_sizes()
+To:     trix@redhat.com
+Cc:     Todor Tomov <todor.too@gmail.com>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        linux-media <linux-media@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Aug 30, 2021 at 02:46:26PM +0300, Baruch Siach wrote:
-> DT binding for the PWM block in Qualcomm IPQ6018 SoC.
-> 
-> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+Hey Tom,
+
+Thanks for the patch!
+
+On Wed, 18 Aug 2021 at 21:41, <trix@redhat.com> wrote:
+>
+> From: Tom Rix <trix@redhat.com>
+>
+> Static analysis reports this representative problem
+> camss-vfe-4-1.c:333: The result of the left shift is undefined because
+>   the left operand is negative
+>   reg |= (height - 1) << 4;
+> ~~~~~~~~~ ^
+>
+> The is a false positive.  height is set in vfe_get_wm_sizes() which
+> has a switch statement without a default.
+>
+> Reviewing the switch, the cases contain redundant assignments.
+> So simplify to assignments.
+>
+> Signed-off-by: Tom Rix <trix@redhat.com>
 > ---
-> This series does not convert the TCSR binding documentation to YAML. As
-> a result, this commit adds new a dt_binding_check warning:
-> 
-> /example-0/syscon@1937000: failed to match any schema with compatible: ['qcom,tcsr-ipq 6018', 'syscon', 'simple-mfd']
-> 
-> If that is a blocker to IPQ6018 PWM support, so be it. Patches will wait
-> for someone else to push them further.
-> 
-> v8:
-> 
->   Add size cell to 'reg' (Rob)
-> 
-> v7:
-> 
->   Use 'reg' instead of 'offset' (Rob)
-> 
->   Drop 'clock-names' and 'assigned-clock*' (Bjorn)
-> 
->   Use single cell address/size in example node (Bjorn)
-> 
->   Move '#pwm-cells' lower in example node (Bjorn)
-> 
->   List 'reg' as required
-> 
-> v6:
-> 
->   Device node is child of TCSR; remove phandle (Rob Herring)
-> 
->   Add assigned-clocks/assigned-clock-rates (Uwe Kleine-König)
-> 
-> v5: Use qcom,pwm-regs for phandle instead of direct regs (Bjorn
->     Andersson, Kathiravan T)
-> 
-> v4: Update the binding example node as well (Rob Herring's bot)
-> 
-> v3: s/qcom,pwm-ipq6018/qcom,ipq6018-pwm/ (Rob Herring)
-> 
-> v2: Make #pwm-cells const (Rob Herring)
-> ---
->  .../devicetree/bindings/pwm/ipq-pwm.yaml      | 52 +++++++++++++++++++
->  1 file changed, 52 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
-> new file mode 100644
-> index 000000000000..96bc63e336bf
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/pwm/ipq-pwm.yaml
-> @@ -0,0 +1,52 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/pwm/ipq-pwm.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>  .../media/platform/qcom/camss/camss-vfe-4-1.c | 20 ++++++-------------
+>  .../media/platform/qcom/camss/camss-vfe-4-7.c | 10 +++-------
+>  .../media/platform/qcom/camss/camss-vfe-4-8.c |  9 +++------
+>  3 files changed, 12 insertions(+), 27 deletions(-)
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
+> index 7b7c9a0aaab282..42047b11ba529e 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe-4-1.c
+> @@ -290,22 +290,14 @@ static void vfe_wm_frame_based(struct vfe_device *vfe, u8 wm, u8 enable)
+>  static void vfe_get_wm_sizes(struct v4l2_pix_format_mplane *pix, u8 plane,
+>                              u16 *width, u16 *height, u16 *bytesperline)
+>  {
+> -       switch (pix->pixelformat) {
+> -       case V4L2_PIX_FMT_NV12:
+> -       case V4L2_PIX_FMT_NV21:
+> -               *width = pix->width;
+> -               *height = pix->height;
+> -               *bytesperline = pix->plane_fmt[0].bytesperline;
+> +       *width = pix->width;
+> +       *height = pix->height;
+> +       *bytesperline = pix->plane_fmt[0].bytesperline;
 > +
-> +title: Qualcomm IPQ6018 PWM controller
+> +       if (pix->pixelformat == V4L2_PIX_FMT_NV12 ||
+> +           pix->pixelformat == V4L2_PIX_FMT_NV21)
+>                 if (plane == 1)
+>                         *height /= 2;
+> -               break;
+> -       case V4L2_PIX_FMT_NV16:
+> -       case V4L2_PIX_FMT_NV61:
+> -               *width = pix->width;
+> -               *height = pix->height;
+> -               *bytesperline = pix->plane_fmt[0].bytesperline;
+> -               break;
+> -       }
+>  }
+>
+>  static void vfe_wm_line_based(struct vfe_device *vfe, u32 wm,
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
+> index 2836b12ec98915..ab2d57bdf5e71c 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe-4-7.c
+> @@ -370,30 +370,26 @@ static int vfe_word_per_line_by_bytes(u32 bytes_per_line)
+>  static void vfe_get_wm_sizes(struct v4l2_pix_format_mplane *pix, u8 plane,
+>                              u16 *width, u16 *height, u16 *bytesperline)
+>  {
+> +       *width = pix->width;
+> +       *height = pix->height;
 > +
-> +maintainers:
-> +  - Baruch Siach <baruch@tkos.co.il>
+>         switch (pix->pixelformat) {
+>         case V4L2_PIX_FMT_NV12:
+>         case V4L2_PIX_FMT_NV21:
+> -               *width = pix->width;
+> -               *height = pix->height;
+>                 *bytesperline = pix->plane_fmt[0].bytesperline;
+>                 if (plane == 1)
+>                         *height /= 2;
+>                 break;
+>         case V4L2_PIX_FMT_NV16:
+>         case V4L2_PIX_FMT_NV61:
+> -               *width = pix->width;
+> -               *height = pix->height;
+>                 *bytesperline = pix->plane_fmt[0].bytesperline;
+>                 break;
+>         case V4L2_PIX_FMT_YUYV:
+>         case V4L2_PIX_FMT_YVYU:
+>         case V4L2_PIX_FMT_VYUY:
+>         case V4L2_PIX_FMT_UYVY:
+> -               *width = pix->width;
+> -               *height = pix->height;
+>                 *bytesperline = pix->plane_fmt[plane].bytesperline;
+>                 break;
+> -
+>         }
+>  }
+>
+> diff --git a/drivers/media/platform/qcom/camss/camss-vfe-4-8.c b/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
+> index 19519234f727c1..7e6b62c930ac8a 100644
+> --- a/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
+> +++ b/drivers/media/platform/qcom/camss/camss-vfe-4-8.c
+> @@ -343,27 +343,24 @@ static int vfe_word_per_line_by_bytes(u32 bytes_per_line)
+>  static void vfe_get_wm_sizes(struct v4l2_pix_format_mplane *pix, u8 plane,
+>                              u16 *width, u16 *height, u16 *bytesperline)
+>  {
+> +       *width = pix->width;
+> +       *height = pix->height;
 > +
-> +properties:
-> +  "#pwm-cells":
-> +    const: 2
-> +
-> +  compatible:
-> +    const: qcom,ipq6018-pwm
-> +
-> +  reg:
-> +    description: Offset of PWM register in the TCSR block.
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    maxItems: 1
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - "#pwm-cells"
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,gcc-ipq6018.h>
-> +
-> +    tcsr: syscon@1937000 {
+>         switch (pix->pixelformat) {
+>         case V4L2_PIX_FMT_NV12:
+>         case V4L2_PIX_FMT_NV21:
+> -               *width = pix->width;
+> -               *height = pix->height;
+>                 *bytesperline = pix->plane_fmt[0].bytesperline;
+>                 if (plane == 1)
+>                         *height /= 2;
+>                 break;
+>         case V4L2_PIX_FMT_NV16:
+>         case V4L2_PIX_FMT_NV61:
+> -               *width = pix->width;
+> -               *height = pix->height;
+>                 *bytesperline = pix->plane_fmt[0].bytesperline;
+>                 break;
+>         case V4L2_PIX_FMT_YUYV:
+>         case V4L2_PIX_FMT_YVYU:
+>         case V4L2_PIX_FMT_VYUY:
+>         case V4L2_PIX_FMT_UYVY:
+> -               *width = pix->width;
+> -               *height = pix->height;
+>                 *bytesperline = pix->plane_fmt[plane].bytesperline;
+>                 break;
+>         }
 
-Drop unused (by the example) labels.
-
-> +        compatible = "qcom,tcsr-ipq6018", "syscon", "simple-mfd";
-> +        reg = <0x01937000 0x21000>;
-> +        #address-cells = <1>;
-> +        #size-cells = <1>;
-
-           ranges = <0 0x1937000 0x21000>;
-
-Otherwise, the address is not translatable.
-
-> +
-> +        pwm: pwm@a010 {
-> +            compatible = "qcom,ipq6018-pwm";
-> +            reg = <0xa010 0x20>;
-> +            clocks = <&gcc GCC_ADSS_PWM_CLK>;
-> +            assigned-clocks = <&gcc GCC_ADSS_PWM_CLK>;
-> +            assigned-clock-rates = <100000000>;
-> +            #pwm-cells = <2>;
-> +        };
-> +    };
-> -- 
-> 2.33.0
-> 
-> 
+Reviewed-by: Robert Foss <robert.foss@linaro.org>
