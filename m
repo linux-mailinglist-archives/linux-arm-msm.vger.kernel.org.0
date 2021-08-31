@@ -2,170 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 009FA3FCA5E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Aug 2021 16:52:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 10C843FCAC6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Aug 2021 17:27:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238304AbhHaOx3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Aug 2021 10:53:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43396 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238095AbhHaOxY (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Aug 2021 10:53:24 -0400
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51AABC061764
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Aug 2021 07:52:29 -0700 (PDT)
-Received: by mail-qt1-x833.google.com with SMTP id g11so14826502qtk.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 31 Aug 2021 07:52:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=16AnZsBkJuexPiViN7nj+Gw8aypGSfWNEZGs1nXo6RI=;
-        b=L5BD4pYz0fEMo67TuWH1MBOTFdnKdme6R6s8/ggWGEev72wBIfzIg4IkPEWb7Omu7F
-         65UYUcQ527kpae3Ag8qvqoXegA/QU8yOp29rnW5r1fDfogDhvkyOGtm83sJSDqalAzFg
-         SWQICf+lyt9sNjl4qF9jYWsj9kZJbLY63Y2HS/Gkw0BQXnosolRTyVXWiaLXsO5r15W9
-         1W7tprJcSkyfYNpzSCo3kF/pi7TzplSAxbGMBxA+jpbanCdnM+Zaeh88oi5f2zEL0uDN
-         b81GM3QrM5UOnHbyxgZD6DpCaB0r5BJSxtFLFItUwzL9ESn2RTggGde4hbhzx1UPVHvB
-         4bvA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=16AnZsBkJuexPiViN7nj+Gw8aypGSfWNEZGs1nXo6RI=;
-        b=FxooejzNwLP0s0wf2ERBcIuEBZF+Ei8Sg15ASo95+GH7AbnrweyPneiphkKYYk5GlZ
-         kwgsM06YY1B+M1wixzZgKOL36xSwMAqNQB3pFEmsRR9oS6sBLlI9BFu2HwGmwU0dovs/
-         mJ5lhcxMDGf0LDyTBm+8NLpQmc2EqHiVFCDANYKLd+tb4ATckbzEIUPfxc7O9dkgc9dI
-         SYVMnRQossEGG91yE7k45T/z8GQLb1srfy+9MeLCXS7Ruoy14aAeCPHY+84Zk5BDUbIv
-         AVgO0uUk2zVdXMC7ToO1D4gh6TvmJJfeI+QzmVSdOclBAgEnXrXimSI4+GbpBtYgM9ze
-         JZbw==
-X-Gm-Message-State: AOAM533KhxoXlNIDIPQYLxjEi7JXwmis/H0hhu2hjZhFmG/pTb3JR+Gd
-        k4xOiWaWXutBl53lNYf/F4Nkrw==
-X-Google-Smtp-Source: ABdhPJxJsjOI6usqxmwJ3yXpmCcHvIibzi3UynlO47wUSDrTp5AuNEIAufTh7U3gtaifTI0kQhAKTw==
-X-Received: by 2002:ac8:6054:: with SMTP id k20mr3060953qtm.237.1630421548372;
-        Tue, 31 Aug 2021 07:52:28 -0700 (PDT)
-Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id c28sm14263873qkl.69.2021.08.31.07.52.27
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 31 Aug 2021 07:52:27 -0700 (PDT)
-Subject: Re: [Patch v5 2/6] thermal: qcom: Add support for LMh driver
-To:     Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     agross@kernel.org, rui.zhang@intel.com, viresh.kumar@linaro.org,
-        rjw@rjwysocki.net, robh+dt@kernel.org, steev@kali.org,
-        tdas@codeaurora.org, mka@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
-References: <20210809191605.3742979-1-thara.gopinath@linaro.org>
- <20210809191605.3742979-3-thara.gopinath@linaro.org>
- <fcbb6d64-7e39-7f03-e76c-512946124777@linaro.org> <YSO5Njg3DXo64InF@ripper>
- <a216c89d-6cd5-326d-f203-f48caaf2a096@linaro.org>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <299e2a59-ae4e-278d-200d-630f055c1411@linaro.org>
-Date:   Tue, 31 Aug 2021 10:52:27 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S239144AbhHaP2m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Aug 2021 11:28:42 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:29636 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S239108AbhHaP2m (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 31 Aug 2021 11:28:42 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1630423667; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=scuK1ehy5HtupVmZPQITLXq3WGLemHWuLYY7u5ziWo0=;
+ b=bPRwaN5DWcvFLRfA4h5DqxUzoz9iidxqVESRwcWsksmnJCi8gB2DxPmvGQ01hl0sCFCrbaCK
+ eTWwWzXpqSfAyQEpHxbkk6RMIMB4gRvCnsfctW0tDDB8Hj0Phl8hiBFptL21wWVzfWBTATj/
+ sdBaCe0/VzXuGkqDHw+jcv6tilU=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 612e4a5de0fcecca190b561e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 31 Aug 2021 15:27:25
+ GMT
+Sender: rajpat=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D3E1DC43460; Tue, 31 Aug 2021 15:27:24 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: rajpat)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C044FC4338F;
+        Tue, 31 Aug 2021 15:27:22 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <a216c89d-6cd5-326d-f203-f48caaf2a096@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 31 Aug 2021 20:57:22 +0530
+From:   rajpat@codeaurora.org
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, rnayak@codeaurora.org,
+        saiprakash.ranjan@codeaurora.org, msavaliy@qti.qualcomm.com,
+        skakit@codeaurora.org, sboyd@kernel.org
+Subject: Re: [PATCH V6 4/7] arm64: dts: sc7280: Update QUPv3 UART5 DT node
+In-Reply-To: <YSgBOP/hMob3Ff+4@google.com>
+References: <1629983731-10595-1-git-send-email-rajpat@codeaurora.org>
+ <1629983731-10595-5-git-send-email-rajpat@codeaurora.org>
+ <YSgBOP/hMob3Ff+4@google.com>
+Message-ID: <c4ec1824d9bc36499cea0cc2d1f56415@codeaurora.org>
+X-Sender: rajpat@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
-
-On 8/23/21 11:57 AM, Daniel Lezcano wrote:
+On 2021-08-27 02:31, Matthias Kaehlcke wrote:
+> On Thu, Aug 26, 2021 at 06:45:28PM +0530, Rajesh Patil wrote:
+>> From: Roja Rani Yarubandi <rojay@codeaurora.org>
+>> 
+>> Update the compatible string as "qcom,geni-uart".
+>> Add interconnects and power-domains. Split the pinctrl
+>> functions and correct the gpio pins.
 > 
-> Hi Bjorn,
-> 
-> On 23/08/2021 17:05, Bjorn Andersson wrote:
->> On Sat 21 Aug 02:41 PDT 2021, Daniel Lezcano wrote:
->>
->>>
->>> Hi Thara,
->>>
->>> On 09/08/2021 21:16, Thara Gopinath wrote:
->>>> Driver enabling various pieces of Limits Management Hardware(LMh) for cpu
->>>> cluster0 and cpu cluster1 namely kick starting monitoring of temperature,
->>>> current, battery current violations, enabling reliability algorithm and
->>>> setting up various temperature limits.
->>>>
->>>> The following has been explained in the cover letter. I am including this
->>>> here so that this remains in the commit message as well.
->>>>
->>>> LMh is a hardware infrastructure on some Qualcomm SoCs that can enforce
->>>> temperature and current limits as programmed by software for certain IPs
->>>> like CPU. On many newer LMh is configured by firmware/TZ and no programming
->>>> is needed from the kernel side. But on certain SoCs like sdm845 the
->>>> firmware does not do a complete programming of the h/w. On such soc's
->>>> kernel software has to explicitly set up the temperature limits and turn on
->>>> various monitoring and enforcing algorithms on the hardware.
->>>>
->>>> Tested-by: Steev Klimaszewski <steev@kali.org> # Lenovo Yoga C630
->>>> Signed-off-by: Thara Gopinath <thara.gopinath@linaro.org>
->>>
->>> Is it possible to have an option to disable/enable the LMh driver at
->>> runtime, for instance with a module parameter ?
->>>
->>
->> Are you referring to being able to disable the hardware throttling, or
->> the driver's changes to thermal pressure?
-> 
-> The former.
-
-Hi Daniel,
-
-It is not recommended to turn off LMh once enabled. From h/w point of 
-view, it can be done for debug purposes but it is not to be implemented 
-as a feature.
-
-
-> 
->> I'm not aware of any way to disable the hardware. I do remember that
->> there was some experiments done (with a hacked up boot chain) early on
->> and iirc it was concluded that it's not a good idea.
-> 
-> My objective was to test the board with the thermal framework handling
-> the mitigation instead of the hardware.
-> 
-> I guess I can set the hardware temperature higher than the thermal zone
-> temperature.
-
-Right. Also remember that  patch 5 in this series removes the cooling 
-devices for the cpu thermal zones. So if you are testing this you will 
-have to add them back.
-
-> 
-> On which sensor the lmh does refer to ? The cluster one ?
-> 
-> (by the way the thermal zone temperatures per core are lower by 5°C than
-> the hardware mitigation ? is it done on purpose ?)
-
-
-So IIUC, it refers to tsens for individual cpus and collates the input. 
-But the documentation is not clear on this one. I took the mitigation 
-temperature from downstream code. Yes I did realize that the thermal 
-zone trip1 temp is 90 degree where as the LMh mitigation point is 95 
-degree. My thinking is this is because the h/w mitigation can happen 
-faster than s/w and hence the 5 degree bump up in temperature.
-
-> 
->> Either way, if there is a way and there is a use for it, we can always
->> add such parameter incrementally. So I suggest that we merge this as is.
-> 
-> Yes, that was for my information. It is already merged.
-
-Thank you very much
-
-> 
-> Thanks
-> 
->    -- Daniel
+> You could say that uart5 was formerly treated as special
+> (dedicated debug uart) and that the change removes this
+> specialness and makes it look like any other UART.
 > 
 
--- 
-Warm Regards
-Thara (She/Her/Hers)
+Okay
+
+>> split the pinctrl functions to match with SoC dt
+> 
+> The message should say that this is about the 7280-idp
+> 
+>> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
+>> Signed-off-by: Rajesh Patil <rajpat@codeaurora.org>
+> 
+> The change itself looks good to me, the above are only nits to improve
+> the commit message, so:
+> 
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
