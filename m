@@ -2,77 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2CE733FC3BB
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Aug 2021 10:22:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 701263FC480
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Aug 2021 11:00:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239863AbhHaHbh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Aug 2021 03:31:37 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46410 "EHLO mail.kernel.org"
+        id S240448AbhHaIzk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Aug 2021 04:55:40 -0400
+Received: from foss.arm.com ([217.140.110.172]:52410 "EHLO foss.arm.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S239824AbhHaHbg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Aug 2021 03:31:36 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 20B0960F91;
-        Tue, 31 Aug 2021 07:30:38 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1630395042;
-        bh=58gahRqJCVkZ6Ws/NXcX/rfwRVKeEn+0OjYE684NjAU=;
-        h=References:From:To:Cc:Subject:Date:In-reply-to:From;
-        b=YORRbvpt6ZHHPi0bEl/Amlmr7mRdYiNda3iiPdliD0gkW/E4Dyu766dZpEjA9xaZv
-         4EX0RhqVVF0lx4IJ6vPWfoMcvQAMPW5+IEobZY4mKmNAAJSCmcgPagEtSEzzfE3xtV
-         AmSNclUmSP43p3haiMfspUk9uzA5lN8VSTaYOPWXPgn5FcgYB68H2pVscrX/jH+FwF
-         vmU6EgVmG1btuXl0kvW3Sv2rQWppfr/g7MVJ+BVnrsPCW1driRtRhQv+PlgPP1JTey
-         QR20KZbrA1cMPi6CRQiG/NjlyM5aJsgiHWxpdGe+sNNinTAasPzew7Hurr4/5t7n6z
-         XDuniX/irTzXg==
-References: <f5ea5bc3664a98a684ad4b699a1ac610e847176f.1630389452.git.baruch@tkos.co.il>
- <9f399bdf1ff752e31ab7497e3d5ce19bbb3ff247.1630389452.git.baruch@tkos.co.il>
-User-agent: mu4e 1.6.5; emacs 27.2
-From:   Felipe Balbi <balbi@kernel.org>
-To:     Baruch Siach <baruch@tkos.co.il>
-Cc:     Andy Gross <agross@kernel.org>,
+        id S240380AbhHaIzk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 31 Aug 2021 04:55:40 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 803EB1FB;
+        Tue, 31 Aug 2021 01:54:44 -0700 (PDT)
+Received: from [192.168.178.6] (unknown [172.31.20.19])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 1FE993F5A1;
+        Tue, 31 Aug 2021 01:54:40 -0700 (PDT)
+Subject: Re: [PATCH V3 0/9] Add callback to register with energy model
+To:     Viresh Kumar <viresh.kumar@linaro.org>,
+        Rafael Wysocki <rjw@rjwysocki.net>,
+        Vincent Donnefort <vincent.donnefort@arm.com>,
+        lukasz.luba@arm.com, Quentin Perret <qperret@google.com>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Balaji Prakash J <bjagadee@codeaurora.org>,
-        Rob Herring <robh@kernel.org>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        Jack Pham <jackp@codeaurora.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Robert Marko <robert.marko@sartura.hr>,
-        linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 2/4] usb: dwc3: reference clock period configuration
-Date:   Tue, 31 Aug 2021 10:27:45 +0300
-In-reply-to: <9f399bdf1ff752e31ab7497e3d5ce19bbb3ff247.1630389452.git.baruch@tkos.co.il>
-Message-ID: <87ilzmcbqa.fsf@kernel.org>
+        Cristian Marussi <cristian.marussi@arm.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Kevin Hilman <khilman@kernel.org>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>
+Cc:     linux-pm@vger.kernel.org,
+        Vincent Guittot <vincent.guittot@linaro.org>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-mediatek@lists.infradead.org, linux-omap@vger.kernel.org
+References: <cover.1628742634.git.viresh.kumar@linaro.org>
+From:   Dietmar Eggemann <dietmar.eggemann@arm.com>
+Message-ID: <3d5b823f-259a-8fc6-27ab-2a5d5df89844@arm.com>
+Date:   Tue, 31 Aug 2021 10:54:39 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain
+In-Reply-To: <cover.1628742634.git.viresh.kumar@linaro.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 12/08/2021 06:35, Viresh Kumar wrote:
+> Many cpufreq drivers register with the energy model for each policy and
+> do exactly the same thing. Follow the footsteps of thermal-cooling, to
+> get it done from the cpufreq core itself.
+> 
+> Provide a new callback, which will be called, if present, by the cpufreq
+> core at the right moment (more on that in the code's comment). Also
+> provide a generic implementation that uses dev_pm_opp_of_register_em().
+> 
+> This also allows us to register with the EM at a later point of time,
+> compared to ->init(), from where the EM core can access cpufreq policy
+> directly using cpufreq_cpu_get() type of helpers and perform other work,
+> like marking few frequencies inefficient, this will be done separately.
+> 
+> This is build/boot tested by the bot for a couple of boards.
+> 
+> https://gitlab.com/vireshk/pmko/-/pipelines/351965580
+> 
+> FWIW, I have queued up the series for linux-next to get more testing, but your
+> reviews are welcome. Thanks.
+> 
+> V2->V3:
+> - Drop the auto-register part from all logs, this isn't called auto registration
+>   anymore.
+> - Call register_em() only for new policies.
+> - Update scmi driver to register with EM only when required.
+> - Add Rby tags.
 
-Baruch Siach <baruch@tkos.co.il> writes:
+LGTM. Tested on TC2 (vexpress-spc), Juno-r0 (scpi-cpufreq and scmi).
 
-> From: Balaji Prakash J <bjagadee@codeaurora.org>
->
-> Set reference clock period when it differs from dwc3 default hardware
-> set.
->
-> We could calculate clock period based on reference clock frequency. But
-> this information is not always available. This is the case of PCI bus
-> attached USB host. For that reason we use a custom property.
->
-> Tested (USB2 only) on IPQ6010 SoC based board with 24 MHz reference
-> clock while hardware default is 19.2 MHz.
->
-> Nacked-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Balaji Prakash J <bjagadee@codeaurora.org>
-> [ baruch: rewrite commit message; drop GFLADJ code; remove 'quirk-' from
->   property name; mention tested hardware ]
-> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
-
-Acked-by: Felipe Balbi <balbi@kernel.org>
+Reviewed-by: Dietmar Eggemann <dietmar.eggemann@arm.com>
 
 
--- 
-balbi
