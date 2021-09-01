@@ -2,79 +2,104 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3609C3FE235
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Sep 2021 20:15:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA8563FE25C
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Sep 2021 20:31:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238421AbhIASQR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Sep 2021 14:16:17 -0400
-Received: from mail.kernel.org ([198.145.29.99]:52508 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230063AbhIASQR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Sep 2021 14:16:17 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 76932610CA;
-        Wed,  1 Sep 2021 18:15:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1630520120;
-        bh=WeLEa/IQW8mZoaZdVjZki0IYsQTHhIvg0zU0r+hyVdM=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=gm4r8awO2hKuC/ixokWZ72Mkm+I7VYkmMDItk/W1GV9bpjEO43UNKnbrvjYtVVBs8
-         s+aZeMkaq8E7PgR9D8tfeZ0bCddaC+G5wva2wvcll6Gm3o7ZtlFuOGKssOfV4NOZRl
-         rN6RzqRZkdWEDW89cDkaf2yJlZ6Jw+TK9YAtUswTmnl/QldtlMGZhVH4LN222YbKyo
-         loL8V0yA6lG9UJnAIx5if/Rx0z4pn/MeE6eQa4SMCq/9MM3oD7A4wUD6nSp8t2BsCO
-         GBrBp1JftctFTn7p4LIxhBEjYUtJAf9wIF8f1bgLBEgBZzxrcnozbA3FJkZuicYsOP
-         jL27X1pJg13OA==
-From:   Mark Brown <broonie@kernel.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Vinod Koul <vkoul@kernel.org>, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] regulator: qcom-rpmh-regulator: fix pm8009-1 ldo7 resource name
-Date:   Wed,  1 Sep 2021 19:14:41 +0100
-Message-Id: <163051927361.21773.14106624092156452594.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20210901114350.1106073-1-dmitry.baryshkov@linaro.org>
-References: <20210901114350.1106073-1-dmitry.baryshkov@linaro.org>
+        id S233200AbhIAScY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Sep 2021 14:32:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58398 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234164AbhIAScX (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 1 Sep 2021 14:32:23 -0400
+Received: from relay02.th.seeweb.it (relay02.th.seeweb.it [IPv6:2001:4b7a:2000:18::163])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 84BC2C061575;
+        Wed,  1 Sep 2021 11:31:26 -0700 (PDT)
+Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id C6DB0200E1;
+        Wed,  1 Sep 2021 20:31:24 +0200 (CEST)
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+To:     bjorn.andersson@linaro.org
+Cc:     agross@kernel.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
+        marijn.suijten@somainline.org, martin.botka@somainline.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        paul.bouchara@somainline.org, jeffrey.l.hugo@gmail.com,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Subject: [PATCH 1/5] arm64: dts: msm8998: Configure the MultiMedia Clock Controller (MMCC)
+Date:   Wed,  1 Sep 2021 20:31:19 +0200
+Message-Id: <20210901183123.1087392-1-angelogioacchino.delregno@somainline.org>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 1 Sep 2021 14:43:50 +0300, Dmitry Baryshkov wrote:
-> Fix a typo in the pm8009 LDO7 declaration, it uses resource name ldo%s6
-> instead of ldo%s7.
-> 
-> 
+The MSM8998 MMCC is supported and has a driver: configure it as a
+preparation for a later enablement of multimedia nodes (mdp, venus
+and others).
 
-Applied to
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+---
+ arch/arm64/boot/dts/qcom/msm8998.dtsi | 31 +++++++++++++++++++++++++++
+ 1 file changed, 31 insertions(+)
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+index 34039b5c8017..1a53f15f1266 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+@@ -4,6 +4,7 @@
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
+ #include <dt-bindings/clock/qcom,gcc-msm8998.h>
+ #include <dt-bindings/clock/qcom,gpucc-msm8998.h>
++#include <dt-bindings/clock/qcom,mmcc-msm8998.h>
+ #include <dt-bindings/clock/qcom,rpmcc.h>
+ #include <dt-bindings/power/qcom-rpmpd.h>
+ #include <dt-bindings/gpio/gpio.h>
+@@ -2330,6 +2331,36 @@ blsp2_i2c6: i2c@c1ba000 {
+ 			#size-cells = <0>;
+ 		};
+ 
++		mmcc: clock-controller@c8c0000 {
++			compatible = "qcom,mmcc-msm8998";
++			#clock-cells = <1>;
++			#reset-cells = <1>;
++			#power-domain-cells = <1>;
++			reg = <0xc8c0000 0x40000>;
++			status = "disabled";
++
++			clock-names = "xo",
++				      "gpll0",
++				      "dsi0dsi",
++				      "dsi0byte",
++				      "dsi1dsi",
++				      "dsi1byte",
++				      "hdmipll",
++				      "dplink",
++				      "dpvco",
++				      "core_bi_pll_test_se";
++			clocks = <&rpmcc RPM_SMD_XO_CLK_SRC>,
++				 <&gcc GCC_MMSS_GPLL0_CLK>,
++				 <0>,
++				 <0>,
++				 <0>,
++				 <0>,
++				 <0>,
++				 <0>,
++				 <0>,
++				 <0>;
++		};
++
+ 		remoteproc_adsp: remoteproc@17300000 {
+ 			compatible = "qcom,msm8998-adsp-pas";
+ 			reg = <0x17300000 0x4040>;
+-- 
+2.32.0
 
-Thanks!
-
-[1/1] regulator: qcom-rpmh-regulator: fix pm8009-1 ldo7 resource name
-      commit: 863580418bc82062083be854355f2213d3d804f5
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
