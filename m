@@ -2,198 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B1F5B3FD963
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Sep 2021 14:17:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 360BF3FDDD6
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Sep 2021 16:31:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244036AbhIAMRj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Sep 2021 08:17:39 -0400
-Received: from mail-0201.mail-europe.com ([51.77.79.158]:57226 "EHLO
-        mail-0201.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244028AbhIAMRg (ORCPT
+        id S244961AbhIAOc0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Sep 2021 10:32:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58248 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244957AbhIAOcZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Sep 2021 08:17:36 -0400
-Date:   Wed, 01 Sep 2021 12:16:29 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1630498595;
-        bh=gJxYhcWcE6Z1Ka9oTpUEQ6eNRdg3NGC2Xf2gJSDdzCA=;
-        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=KgqoJYAeYBvjDqKNhThFACvtuZexzJNVTFyVvpTGrn1vWWig64ySd9s9XjlnzjJBl
-         3VoW53KLr/iSXtvaK/MjJk6U3+L3aiRak3v4ExBNS+wTRDo8vUfqW8qWNsmPYjsdDX
-         Vkfys7MSDbwyE1OpAdc4KJUYH8Lc6MoH/7s7+Hwg=
-To:     Andy Gross <agross@kernel.org>,
+        Wed, 1 Sep 2021 10:32:25 -0400
+Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6304C061575
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Sep 2021 07:31:28 -0700 (PDT)
+Received: by mail-lf1-x132.google.com with SMTP id s10so6757936lfr.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Sep 2021 07:31:28 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=MyzTGgHBdb4UXbVsskL7/lTl0nOigmvBb/mL1uEUdQ8=;
+        b=NGX5lM7/edC/Mh61QE7Tgdd3R6sEK9TJbozyAAqaY2gn8zbhcE+FS/LHoTFj6gZWEe
+         pujif+8SdYUF6XrNvhc9hKIpC7wpRIw5k95GQonbDsii7WAwhHyTGGrdeQuAq7djx9Dt
+         +xR8NmF4/pR/9ye1U98Nidg8oB0KaMBCwOkr7Y3/CS5Y2nT4mAExI0jlswROY/QffCe/
+         ywCxWlWMVHO6OExgU3hxfg2D7Cfd26+DefC9qd66MUjg8vwCUNSRORiCgarfbgx/SU6L
+         7BdS9swL5awlXII1UeP2Qo9mvaNuo1Ksh1yGzOdy0+XW7hgWTN33TdJOugGAQx9OeEdx
+         6Lww==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=MyzTGgHBdb4UXbVsskL7/lTl0nOigmvBb/mL1uEUdQ8=;
+        b=tFjuGJh6eqeBBydo7tTXQICyBnF3sfJusgYXrZ8KJeqzvw4x6CgXZiKny3sGLvv1kG
+         js+iskDPlx7om/OGBFfG4ULirXieYsonthQxKGCEV1R4Aq/883IGPa+KfoYoLOPthcXH
+         B6Q/lP+nzaO1Ccd3LxXL4SZcLkqtDOslLq+t7uzzItnQIm8l8wW4yQWx9TxZN3z1ncin
+         BUgJ3VYxncCG/X2jCbz5uzHZkexqD9xf1NsMIS/1Ww4Z0rDDnYjy3OkVE+W9Xc+BtanQ
+         n3Wn8UUq9EzY0J1iIW/yCVQjoOf9nLGBwoub+YPI9MksYJY0HSlyi4jyIZcC9VH3g7xp
+         UYIQ==
+X-Gm-Message-State: AOAM530jlxvvImMfHzU+wB1HSqk9FwPS5MirGJGm1mRFaHfj84H8n5CU
+        LLVupSFEcPo5UNKB39zt7+q4Xw==
+X-Google-Smtp-Source: ABdhPJyeI12ATjCWraagvCx3dR1wv6RJ23LEPdkRkdUEYHeG1MSn8VJusN+OtImL97jjZ9kLLy9RUQ==
+X-Received: by 2002:a05:6512:ac4:: with SMTP id n4mr18982410lfu.237.1630506687231;
+        Wed, 01 Sep 2021 07:31:27 -0700 (PDT)
+Received: from [192.168.43.7] ([94.25.229.122])
+        by smtp.gmail.com with ESMTPSA id k8sm4194lja.57.2021.09.01.07.31.26
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 01 Sep 2021 07:31:26 -0700 (PDT)
+Subject: Re: [PATCH] interconnect: qcom: sdm660: Correct NOC_QOS_PRIORITY
+ shift and mask
+To:     Shawn Guo <shawn.guo@linaro.org>, Georgi Djakov <djakov@kernel.org>
+Cc:     AngeloGioacchino Del Regno <kholk11@gmail.com>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>
-From:   Yassine Oudjana <y.oudjana@protonmail.com>
-Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
-Subject: [PATCH v4 5/5] arm64: dts: qcom: msm8996: Add interconnect support
-Message-ID: <20210901121518.152481-6-y.oudjana@protonmail.com>
-In-Reply-To: <20210901121518.152481-1-y.oudjana@protonmail.com>
-References: <20210901121518.152481-1-y.oudjana@protonmail.com>
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+References: <20210823075405.382-1-shawn.guo@linaro.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <813898c9-5ad6-a98b-35a6-58f24a7cada2@linaro.org>
+Date:   Wed, 1 Sep 2021 17:31:25 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+In-Reply-To: <20210823075405.382-1-shawn.guo@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add interconnect providers for the multiple NoCs available on the platform,
-and assign interconnects used by some blocks.
+On 23/08/2021 10:54, Shawn Guo wrote:
+> The NOC_QOS_PRIORITY shift and mask do not match what vendor kernel
+> defines [1].  Correct them per vendor kernel.
+> 
+> [1] https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/drivers/soc/qcom/msm_bus/msm_bus_noc_adhoc.c?h=LA.UM.8.2.r1-04800-sdm660.0#n37
+> 
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
 
-Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
----
-Changes since v2:
- - Remove interconnect paths from CPUs since cpufreq driver doesn't support=
- icc scaling yet.
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 80 +++++++++++++++++++++++++++
- 1 file changed, 80 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qc=
-om/msm8996.dtsi
-index 52df22ab3f6a..6c98869688bc 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -7,6 +7,7 @@
- #include <dt-bindings/clock/qcom,mmcc-msm8996.h>
- #include <dt-bindings/clock/qcom,rpmcc.h>
- #include <dt-bindings/power/qcom-rpmpd.h>
-+#include <dt-bindings/interconnect/qcom,msm8996.h>
- #include <dt-bindings/soc/qcom,apr.h>
- #include <dt-bindings/thermal/thermal.h>
-=20
-@@ -683,6 +684,15 @@ gcc: clock-controller@300000 {
- =09=09=09clock-names =3D "cxo2";
- =09=09};
-=20
-+=09=09bimc: interconnect@408000 {
-+=09=09=09compatible =3D "qcom,msm8996-bimc";
-+=09=09=09reg =3D <0x00408000 0x5a000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_BIMC_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_BIMC_A_CLK>;
-+=09=09};
-+
- =09=09tsens0: thermal-sensor@4a9000 {
- =09=09=09compatible =3D "qcom,msm8996-tsens", "qcom,tsens-v2";
- =09=09=09reg =3D <0x004a9000 0x1000>, /* TM */
-@@ -705,6 +715,61 @@ tsens1: thermal-sensor@4ad000 {
- =09=09=09#thermal-sensor-cells =3D <1>;
- =09=09};
-=20
-+=09=09cnoc: interconnect@500000 {
-+=09=09=09compatible =3D "qcom,msm8996-cnoc";
-+=09=09=09reg =3D <0x00500000 0x1000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_CNOC_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_CNOC_A_CLK>;
-+=09=09};
-+
-+=09=09snoc: interconnect@524000 {
-+=09=09=09compatible =3D "qcom,msm8996-snoc";
-+=09=09=09reg =3D <0x00524000 0x1c000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_SNOC_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_SNOC_A_CLK>;
-+=09=09};
-+
-+=09=09a1noc: interconnect@562000 {
-+=09=09=09compatible =3D "qcom,msm8996-a1noc";
-+=09=09=09reg =3D <0x00562000 0x5000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_AGGR1_NOC_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_AGGR1_NOC_A_CLK>;
-+=09=09};
-+
-+=09=09a2noc: interconnect@583000 {
-+=09=09=09compatible =3D "qcom,msm8996-a2noc";
-+=09=09=09reg =3D <0x00583000 0x7000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_AGGR2_NOC_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_AGGR2_NOC_A_CLK>;
-+=09=09};
-+
-+=09=09mnoc: interconnect@5a4000 {
-+=09=09=09compatible =3D "qcom,msm8996-mnoc";
-+=09=09=09reg =3D <0x005a4000 0x1c000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a", "iface";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_MMAXI_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_MMAXI_A_CLK>,
-+=09=09=09=09 <&mmcc AHB_CLK_SRC>;
-+=09=09};
-+
-+=09=09pnoc: interconnect@5c0000 {
-+=09=09=09compatible =3D "qcom,msm8996-pnoc";
-+=09=09=09reg =3D <0x005c0000 0x3000>;
-+=09=09=09#interconnect-cells =3D <1>;
-+=09=09=09clock-names =3D "bus", "bus_a";
-+=09=09=09clocks =3D <&rpmcc RPM_SMD_PCNOC_CLK>,
-+=09=09=09=09 <&rpmcc RPM_SMD_PCNOC_A_CLK>;
-+=09=09};
-+
- =09=09tcsr_mutex_regs: syscon@740000 {
- =09=09=09compatible =3D "syscon";
- =09=09=09reg =3D <0x00740000 0x40000>;
-@@ -784,6 +849,11 @@ mdp: mdp@901000 {
- =09=09=09=09assigned-clock-rates =3D <300000000>,
- =09=09=09=09=09 <19200000>;
-=20
-+=09=09=09=09interconnects =3D <&mnoc MASTER_MDP_PORT0 &bimc SLAVE_EBI_CH0>=
-,
-+=09=09=09=09=09=09<&mnoc MASTER_MDP_PORT1 &bimc SLAVE_EBI_CH0>,
-+=09=09=09=09=09=09<&mnoc MASTER_ROTATOR &bimc SLAVE_EBI_CH0>;
-+=09=09=09=09interconnect-names =3D "mdp0-mem", "mdp1-mem", "rotator-mem";
-+
- =09=09=09=09ports {
- =09=09=09=09=09#address-cells =3D <1>;
- =09=09=09=09=09#size-cells =3D <0>;
-@@ -959,6 +1029,9 @@ gpu: gpu@b00000 {
- =09=09=09=09"mem",
- =09=09=09=09"mem_iface";
-=20
-+=09=09=09interconnects =3D <&bimc MASTER_GRAPHICS_3D &bimc SLAVE_EBI_CH0>;
-+=09=09=09interconnect-names =3D "gfx-mem";
-+
- =09=09=09power-domains =3D <&mmcc GPU_GX_GDSC>;
- =09=09=09iommus =3D <&adreno_smmu 0>;
-=20
-@@ -1953,6 +2026,9 @@ venus: video-codec@c00000 {
- =09=09=09=09 <&mmcc VIDEO_AXI_CLK>,
- =09=09=09=09 <&mmcc VIDEO_MAXI_CLK>;
- =09=09=09clock-names =3D "core", "iface", "bus", "mbus";
-+=09=09=09interconnects =3D <&mnoc MASTER_VIDEO_P0 &bimc SLAVE_EBI_CH0>,
-+=09=09=09=09=09<&bimc MASTER_AMPSS_M0 &mnoc SLAVE_VENUS_CFG>;
-+=09=09=09interconnect-names =3D "video-mem", "cpu-cfg";
- =09=09=09iommus =3D <&venus_smmu 0x00>,
- =09=09=09=09 <&venus_smmu 0x01>,
- =09=09=09=09 <&venus_smmu 0x0a>,
-@@ -2569,6 +2645,10 @@ usb3: usb@6af8800 {
- =09=09=09=09=09  <&gcc GCC_USB30_MASTER_CLK>;
- =09=09=09assigned-clock-rates =3D <19200000>, <120000000>;
-=20
-+=09=09=09interconnects =3D <&a2noc MASTER_USB3 &bimc SLAVE_EBI_CH0>,
-+=09=09=09=09=09<&bimc MASTER_AMPSS_M0 &snoc SLAVE_USB3>;
-+=09=09=09interconnect-names =3D "usb-ddr", "apps-usb";
-+
- =09=09=09power-domains =3D <&gcc USB30_GDSC>;
- =09=09=09status =3D "disabled";
-=20
---=20
-2.33.0
+> ---
+>   drivers/interconnect/qcom/sdm660.c | 9 +++++----
+>   1 file changed, 5 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/interconnect/qcom/sdm660.c b/drivers/interconnect/qcom/sdm660.c
+> index ac13046537e8..c89c991a80a0 100644
+> --- a/drivers/interconnect/qcom/sdm660.c
+> +++ b/drivers/interconnect/qcom/sdm660.c
+> @@ -44,9 +44,10 @@
+>   #define NOC_PERM_MODE_BYPASS		(1 << NOC_QOS_MODE_BYPASS)
+>   
+>   #define NOC_QOS_PRIORITYn_ADDR(n)	(0x8 + (n * 0x1000))
+> -#define NOC_QOS_PRIORITY_MASK		0xf
+> +#define NOC_QOS_PRIORITY_P1_MASK	0xc
+> +#define NOC_QOS_PRIORITY_P0_MASK	0x3
+>   #define NOC_QOS_PRIORITY_P1_SHIFT	0x2
+> -#define NOC_QOS_PRIORITY_P0_SHIFT	0x3
+> +#define NOC_QOS_PRIORITY_P0_SHIFT	0x0
+>   
+>   #define NOC_QOS_MODEn_ADDR(n)		(0xc + (n * 0x1000))
+>   #define NOC_QOS_MODEn_MASK		0x3
+> @@ -624,13 +625,13 @@ static int qcom_icc_noc_set_qos_priority(struct regmap *rmap,
+>   	/* Must be updated one at a time, P1 first, P0 last */
+>   	val = qos->areq_prio << NOC_QOS_PRIORITY_P1_SHIFT;
+>   	rc = regmap_update_bits(rmap, NOC_QOS_PRIORITYn_ADDR(qos->qos_port),
+> -				NOC_QOS_PRIORITY_MASK, val);
+> +				NOC_QOS_PRIORITY_P1_MASK, val);
+>   	if (rc)
+>   		return rc;
+>   
+>   	val = qos->prio_level << NOC_QOS_PRIORITY_P0_SHIFT;
+>   	return regmap_update_bits(rmap, NOC_QOS_PRIORITYn_ADDR(qos->qos_port),
+> -				  NOC_QOS_PRIORITY_MASK, val);
+> +				  NOC_QOS_PRIORITY_P0_MASK, val);
+>   }
+>   
+>   static int qcom_icc_set_noc_qos(struct icc_node *src, u64 max_bw)
+> 
 
 
+-- 
+With best wishes
+Dmitry
