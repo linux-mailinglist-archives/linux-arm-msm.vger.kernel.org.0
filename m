@@ -2,77 +2,80 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E8BEE3FCF53
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 31 Aug 2021 23:53:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 879423FD0CC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  1 Sep 2021 03:37:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230286AbhHaVxz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 31 Aug 2021 17:53:55 -0400
-Received: from mail-ot1-f46.google.com ([209.85.210.46]:38466 "EHLO
-        mail-ot1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230085AbhHaVxy (ORCPT
+        id S241525AbhIABio (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 31 Aug 2021 21:38:44 -0400
+Received: from mail-ot1-f45.google.com ([209.85.210.45]:46702 "EHLO
+        mail-ot1-f45.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241332AbhIABin (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 31 Aug 2021 17:53:54 -0400
-Received: by mail-ot1-f46.google.com with SMTP id i8-20020a056830402800b0051afc3e373aso1025023ots.5;
-        Tue, 31 Aug 2021 14:52:59 -0700 (PDT)
+        Tue, 31 Aug 2021 21:38:43 -0400
+Received: by mail-ot1-f45.google.com with SMTP id v33-20020a0568300921b0290517cd06302dso1558455ott.13;
+        Tue, 31 Aug 2021 18:37:47 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Zwk6nIr7M6qjVtVA+MSr+QucaA8ZgDpKt75V4TKIZ2Q=;
-        b=VFmgxXZ8RqsF4XrxTkRkqvBrZ17QmFGErbkV0gy9AYE6RbpM3yWxvU2s3aBymkZ6Vf
-         M56qQBBO8dFGkpbtpJXEZoIp4NjbFNLb2cMgAuViKChQiAHIbhpRefkKJmbgvkhNMwhG
-         Toh1V709JpZmW9CCF+mrSE35WNLpwgcmES+xLDnNEGy6BTmFY7p8DLuuaM6GShbHgCoe
-         WLVa/59og6TH+4IBWnSNIjynTCufBecfLk/LpnzYKdTzxumedfpQkq5+FFQ11E8fds+5
-         YRPquz/P8bpvcLhwq/kBSvKK5/vfSVjDvgPPQvLRjtXGSmP7Q3yel1uVDCFJuwTBr8qH
-         MNIQ==
-X-Gm-Message-State: AOAM531TP5ZdiBr6EHBv0hrBum0b/E/dK8msFIZGCzCj518y+Tk8LYsw
-        Da6o9392Q/YsqRJiseGVcw==
-X-Google-Smtp-Source: ABdhPJzlcnvClbVJAarCbSLNcm1UiifqSWfuZqXJYXWQs5GxTafXiTcX4//TkI4WIWJA8Hk/DWA/AQ==
-X-Received: by 2002:a05:6830:1d69:: with SMTP id l9mr25848571oti.154.1630446778727;
-        Tue, 31 Aug 2021 14:52:58 -0700 (PDT)
+        bh=jGxTqbfDK0eZLNHxAFg+vD5OYnXqeBA60ZAkZk7bA7M=;
+        b=ovQnVfWKtx4dFswuuqQDZu2mdX4R3rw6p3Q/uvFwnPrXC0oMTWL23fXDTLdrFaaIbO
+         DmT69wK77sJ9DtrDTkSTmLanDVCc9B51ipd96J7t1pgTfIeKr4XHhZvA+eiW8J92dZEl
+         837+8gtwZoKb9Sc7DbEJIAgdjTAlkKWzYs4CUeg4RRMqI+iSsxz+fMHn6Av8QUXnLH12
+         3+fzm6DSru4CCXlitTJth6wXad7cY59yaWQ1u+UkzlDP9gi6YO3wi6pqKDNhgXcSdRtT
+         OdDc/fhbxKjrqcR2TPAl4nZT7mRqmHXL7zClPHGJ9zjg68BrEBbNRuunNiU3pIsxgSxK
+         VjHw==
+X-Gm-Message-State: AOAM530JMoqoXH8IG97qdKCexOn0VQu2128aygAkiZDizo8iEdhCWIrU
+        OF5eeRan1VpcAXc7Z37NGg==
+X-Google-Smtp-Source: ABdhPJz+wfrj36iFqzGxGHUFsresakzzQ89/8vgwK+O+YhNqn0CXgf/jFzwWThp3Ttthd6TyTJGXrw==
+X-Received: by 2002:a9d:6e81:: with SMTP id a1mr27074700otr.248.1630460267449;
+        Tue, 31 Aug 2021 18:37:47 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id be5sm2046064oib.10.2021.08.31.14.52.57
+        by smtp.gmail.com with ESMTPSA id b28sm4109859oob.4.2021.08.31.18.37.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 31 Aug 2021 14:52:57 -0700 (PDT)
-Received: (nullmailer pid 708691 invoked by uid 1000);
-        Tue, 31 Aug 2021 21:52:56 -0000
-Date:   Tue, 31 Aug 2021 16:52:56 -0500
+        Tue, 31 Aug 2021 18:37:46 -0700 (PDT)
+Received: (nullmailer pid 1008126 invoked by uid 1000);
+        Wed, 01 Sep 2021 01:37:45 -0000
+Date:   Tue, 31 Aug 2021 20:37:45 -0500
 From:   Rob Herring <robh@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, devicetree@vger.kernel.org,
+To:     Baruch Siach <baruch@tkos.co.il>
+Cc:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        linux-usb@vger.kernel.org, Felipe Balbi <balbi@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Balaji Prakash J <bjagadee@codeaurora.org>,
+        Robert Marko <robert.marko@sartura.hr>,
         Rob Herring <robh+dt@kernel.org>,
-        marijn.suijten@somainline.org, linux-arm-msm@vger.kernel.org,
-        martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        linux-gpio@vger.kernel.org,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-kernel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        jamipkettunen@somainline.org
-Subject: Re: [PATCH v3 1/2] dt-bindings: pinctrl: qcom: Add SM6350 pinctrl
- bindings
-Message-ID: <YS6kuPIanj2e7KkS@robh.at.kernel.org>
-References: <20210828172315.55742-1-konrad.dybcio@somainline.org>
+        Kathiravan T <kathirav@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
+        Jack Pham <jackp@codeaurora.org>, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH v3 1/4] dt-bindings: usb: dwc3: add reference clock period
+Message-ID: <YS7ZafoBpPC/+j2k@robh.at.kernel.org>
+References: <f5ea5bc3664a98a684ad4b699a1ac610e847176f.1630389452.git.baruch@tkos.co.il>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210828172315.55742-1-konrad.dybcio@somainline.org>
+In-Reply-To: <f5ea5bc3664a98a684ad4b699a1ac610e847176f.1630389452.git.baruch@tkos.co.il>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 28 Aug 2021 19:23:13 +0200, Konrad Dybcio wrote:
-> Add device tree binding Documentation details for Qualcomm SM6350
-> pinctrl driver.
+On Tue, 31 Aug 2021 08:57:29 +0300, Baruch Siach wrote:
+> Document the snps,ref-clock-period-ns property that describes reference
+> clock period when it deviates from the default set value.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
 > ---
-> Changes since v2:
-> - Tweak the regex to match gpio0-gpio157
+> v2:
 > 
->  .../bindings/pinctrl/qcom,sm6350-pinctrl.yaml | 148 ++++++++++++++++++
->  1 file changed, 148 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,sm6350-pinctrl.yaml
+> Address comments from Rob Herring:
+> 
+>   Use standard unit suffix
+> 
+>   Reword description
+> ---
+>  Documentation/devicetree/bindings/usb/snps,dwc3.yaml | 8 ++++++++
+>  1 file changed, 8 insertions(+)
 > 
 
 Reviewed-by: Rob Herring <robh@kernel.org>
