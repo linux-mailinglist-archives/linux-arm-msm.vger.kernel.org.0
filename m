@@ -2,103 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E0F813FE6AD
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Sep 2021 02:34:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E90043FE816
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Sep 2021 05:37:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244138AbhIBA3M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Sep 2021 20:29:12 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:15809 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S243810AbhIBA3M (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Sep 2021 20:29:12 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1630542495; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=BpMsY1jdJn9vV9BVN++XtWtWBzsDBD0Qi5rln/LVvzA=; b=QmBaMsvtklFod84APo8YQJqvsqYT/Z98ayHIjzxMMYmiipglexQR3bWlg6fRz+dRHRtAQnNI
- QI92VMO3sM7u8rCJ55atM79tltcOrmJsKw4IN1OThjjVczF5OnJYX2+mnBlCe+TffLbr/gCx
- 56Udt7vIP+EpE+kL0XYN7OS7RaU=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 61301a9e6fc2cf7ad93bf463 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 02 Sep 2021 00:28:14
- GMT
-Sender: jackp=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 203B4C4361B; Thu,  2 Sep 2021 00:28:13 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from jackp-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: jackp)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7FF4AC43460;
-        Thu,  2 Sep 2021 00:28:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 7FF4AC43460
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Date:   Wed, 1 Sep 2021 17:28:04 -0700
-From:   Jack Pham <jackp@codeaurora.org>
-To:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>
-Cc:     Pavel Hofman <pavel.hofman@ivitera.com>,
-        Ferry Toth <fntoth@gmail.com>, Felipe Balbi <balbi@kernel.org>,
-        Wesley Cheng <wcheng@codeaurora.org>,
-        "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
-        "robh+dt@kernel.org" <robh+dt@kernel.org>,
-        "agross@kernel.org" <agross@kernel.org>,
-        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
-        "frowand.list@gmail.com" <frowand.list@gmail.com>,
-        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
-        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
-        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
-        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
-        "heikki.krogerus@linux.intel.com" <heikki.krogerus@linux.intel.com>,
-        "andy.shevchenko@gmail.com" <andy.shevchenko@gmail.com>,
-        Ruslan Bilovol <ruslan.bilovol@gmail.com>
-Subject: Re: [PATCH v10 0/6] Re-introduce TX FIFO resize for larger EP
- bursting
-Message-ID: <20210902002804.GA3500@jackp-linux.qualcomm.com>
-References: <cca69e90-b0ef-00b8-75d3-3bf959a93b45@gmail.com>
- <874kchvcq0.fsf@kernel.org>
- <e59f1201-2aa2-9075-1f94-a6ae7a046dc1@gmail.com>
- <8735raj766.fsf@kernel.org>
- <b3417c2c-613b-8ef6-2e2d-6e2cf9a5d5fd@gmail.com>
- <b3e820f0-9c94-7cba-a248-3b2ec5378ab0@gmail.com>
- <d298df65-417b-f318-9374-b463a15d8308@ivitera.com>
- <a7d7f0dd-dfbb-5eef-d1da-8cbdab5fc4a7@gmail.com>
- <c4e29ac0-1df1-3c64-1218-3687f07e7f77@ivitera.com>
- <60e57455-3768-ab1c-efad-b6a64e592b36@synopsys.com>
+        id S233143AbhIBDis (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Sep 2021 23:38:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41502 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230369AbhIBDis (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 1 Sep 2021 23:38:48 -0400
+Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB379C061575
+        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Sep 2021 20:37:50 -0700 (PDT)
+Received: by mail-oo1-xc31.google.com with SMTP id t2-20020a4ae9a2000000b0028c7144f106so123532ood.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Sep 2021 20:37:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=jTP/sG1HuvFKXr+3xQRfYJQh8HDh4ZXkCSrzx8/zILA=;
+        b=jK7DTpWCdzZ36LyxOqDmYAbosBcu7xVDGahQiC+dPcCbJm11HRmSPMvWnxO4jb9FoC
+         zpiJgMN95jn/Oc5IzsDVNWDhubX5S1Sc7DzgSaAsbs5TSEAZlT3dUI1sS9jKsdKd/A8N
+         orgpEHbC32aA5KkyoJautVtKk4qX6Dw5/yrZA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=jTP/sG1HuvFKXr+3xQRfYJQh8HDh4ZXkCSrzx8/zILA=;
+        b=GxlfueUfN61sSIKhJ+6d9tkv7eUb+XjXmKTUwNtSYdTzIypTbxhhAwzNajvy9D4sDM
+         oyODBrt951cygNXONJAoC47zDfsTY6059rBHwKXfN8fhc5m8fmIZcce+JPOndEA2+tSP
+         NfJ01apOgjCh0Y3AwOaYLBJC01jd+ntSuqCJAV6goQnPvg5MJzQF8Ff9+il7IJAf0Yb8
+         9M/dW4lsvklfmgSvJox1+qKdxJjcckMUN8ucP9g8vfFCgVdPetU/A9vqxosJQxrKztl0
+         AcNmage22eLAt2L1fFXD6aqYn+uinXkYixBZdRpPeEyD2bKP5W+3ohOCjRjJBCJ7P8e5
+         2JBg==
+X-Gm-Message-State: AOAM532Op0QaH6gCkWUFIkyPDpgon3XGYZ+NPQg061/V5vJpzB4WsoCB
+        eXWOSD7bc9p6+BdwlAlAb1ASMIjPxk4sSuc+UqvCPAKvqrY=
+X-Google-Smtp-Source: ABdhPJxWjgk6/3pIlbxH85C1ptiNv0bNKyYD19/tfQg0xIqiQUFjM2i0BdYDC3Ps5LwCFqpjGowDB1MlUFcs5zuH4TM=
+X-Received: by 2002:a4a:a98c:: with SMTP id w12mr910632oom.29.1630553870182;
+ Wed, 01 Sep 2021 20:37:50 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 1 Sep 2021 20:37:49 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <60e57455-3768-ab1c-efad-b6a64e592b36@synopsys.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <5be25c9710b7706cff91f1db71f9e25e@codeaurora.org>
+References: <1628830531-14648-1-git-send-email-skakit@codeaurora.org>
+ <1628830531-14648-2-git-send-email-skakit@codeaurora.org> <CACRpkdZteWY6X+prHeAF0rtPVbCk+X9=ZYgpjgAMH24LhOjhaQ@mail.gmail.com>
+ <4af8171aefd6f0387438225666ec1ccc@codeaurora.org> <CAE-0n53sR12fEa_cNPeT5eGcQVzzL57pd-tYnJbpP0NXkHMTsw@mail.gmail.com>
+ <6801879ddd0edf9a8d0e3605f3868e79@codeaurora.org> <CAE-0n52Ki2tA6qy6ADym3r4UQ0tkvgz3bpif_Mm2q3Y+N=huGg@mail.gmail.com>
+ <5be25c9710b7706cff91f1db71f9e25e@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Wed, 1 Sep 2021 20:37:49 -0700
+Message-ID: <CAE-0n51_v3rjoknfFTt3QcMnyNnHgXnkazDEsfJuroHZ_s5TRg@mail.gmail.com>
+Subject: Re: [PATCH 1/2] pinctrl: qcom: spmi-gpio: correct parent irqspec translation
+To:     skakit@codeaurora.org
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Collins <collinsd@codeaurora.org>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        linux-gpio@vger.kernel.org,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Thinh,
+Quoting skakit@codeaurora.org (2021-08-17 22:26:18)
+> On 2021-08-18 00:45, Stephen Boyd wrote:
+> > Quoting skakit@codeaurora.org (2021-08-17 02:06:42)
+> >> On 2021-08-17 02:38, Stephen Boyd wrote:
+> >> >
+> >> > Are there any boards supported upstream that have a gpio block that
+> >> > isn't at 0xc000?
+> >>
+> >> yes, all the pmics used in sm8350-mtp.dts board have gpio block at
+> >> addresses different than 0xc000.
+> >>
+> >
+> > So maybe
+> >
+> > Fixes: f67cc6a91d88 ("arm64: dts: qcom: sm8350-mtp: Add PMICs")
+> >
+> > is appropriate then?
+>
+> This patch is actually fixing the pinctrl-spmi-gpio.c driver.
+> So, I think we should add
+>
+> Fixes: ca69e2d165eb ("qcom: spmi-gpio: add support for hierarchical IRQ
+> chip")
 
-On Sat, Aug 21, 2021 at 02:57:07AM +0000, Thinh Nguyen wrote:
-> I took a look at 24f779dac8f3 ("usb: gadget: f_uac2/u_audio: add
-> feedback endpoint support") that Ferry reported the issue from
-> bisection. I see at least a couple problems in the new UAC2 changes.
-> 
-> 1) usb_ep_dequeue() is asynchronous. Don't free requests before the
-> controller driver give them back.
-> 
-> 2) Did you test with SuperSpeed? I don't see companion descriptor.
-
-We caught this too when testing f_uac2 in SuperSpeed mode.  I can
-prepare a patch.
-
-Thanks,
-Jack
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+OK. Were you going to resend this patch? I don't see it in linux-next so
+I worry that Linus dropped it while the Fixes tag was figured out.
