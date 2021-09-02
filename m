@@ -2,177 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DF0B83FF407
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Sep 2021 21:19:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 833133FF43F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Sep 2021 21:34:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347238AbhIBTUl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Sep 2021 15:20:41 -0400
-Received: from mail-oi1-f182.google.com ([209.85.167.182]:44905 "EHLO
-        mail-oi1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231161AbhIBTUk (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Sep 2021 15:20:40 -0400
-Received: by mail-oi1-f182.google.com with SMTP id c79so3908976oib.11;
-        Thu, 02 Sep 2021 12:19:41 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=vBZlbhgfABTT3Yk10srbd/x7NTgAjn9sMFwNziqz1LU=;
-        b=MlGC4iCdVF8PvOGWUUENRaqgOlqStKGl8XoSFxSig8X+AYV6R0goJYMHrAlTzo9y6w
-         OvCsKOdgdNCgExhC3Cz2/PZ3MBdomjHcQilKlvHplxzz9hS3Vryf3EAvZbX6am++u2+i
-         stBhjvSFjWnc2wOlPuN42DM7eEdXnmUzs7chnsVJXdbIsxEom0xBxNJgyObLSvPSWXvC
-         inquUUC9y6TH57lpOYtGlpNUgtR3KcKecB4I4R6ZPRlisALrXhAS3rQJslzhzZ6iHHOC
-         BlZmB7nO6jp8df3WdSMxBDEIS95B4ABFT/53V8m6hXHTqnvYfUMnZtnKPmSMuKhUqo0c
-         LgYQ==
-X-Gm-Message-State: AOAM5326rNWYhLV6Hq9Ba1U1rY3KKlavVDmmtlH07FQQhusHaqYFKIsI
-        kn96c7jrzYYNfmnqNLf7DQ==
-X-Google-Smtp-Source: ABdhPJzFtNB+4bifmI7PvcaCV/jGgz1GpqfdR+kukdiVPLZKPzSaWT9W7I3TbSs7X2H44vfmQVGXKg==
-X-Received: by 2002:a05:6808:1442:: with SMTP id x2mr3296651oiv.162.1630610381359;
-        Thu, 02 Sep 2021 12:19:41 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id n73sm554680oig.9.2021.09.02.12.19.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 02 Sep 2021 12:19:40 -0700 (PDT)
-Received: (nullmailer pid 1237538 invoked by uid 1000);
-        Thu, 02 Sep 2021 19:19:39 -0000
-Date:   Thu, 2 Sep 2021 14:19:39 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Cc:     bjorn.andersson@linaro.org, sboyd@kernel.org, vireshk@kernel.org,
-        agross@kernel.org, nm@ti.com, ilia.lin@kernel.org,
-        niklas.cassel@linaro.org, linux-arm-msm@vger.kernel.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
-        marijn.suijten@somainline.org, martin.botka@somainline.org,
-        ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [PATCH 1/2] dt-bindings: opp: qcom-opp: Convert to DT schema
-Message-ID: <YTEjy4DNhjQs3vl5@robh.at.kernel.org>
-References: <20210901155559.627491-1-angelogioacchino.delregno@somainline.org>
+        id S1347404AbhIBTfv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Sep 2021 15:35:51 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34668 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1347356AbhIBTfv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 2 Sep 2021 15:35:51 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 231B260F42;
+        Thu,  2 Sep 2021 19:34:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1630611292;
+        bh=lkU0Lg08Q92PGe4kuQ+5cTptrzCavgcMALCXl/UW/aw=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=pHOYUBoPGg/0YvR6uixHYK6V+0HOgvvWB6/QWB4NXXBIkPvQRiRstlkBnZ37YUt8O
+         aW+qzwreY0wQXQGsIpHrpmL13pJDUflsG1vpgSG4Tu7XDBSmkIsY/G5ITmXU1GEBFo
+         4UmEBWepaeTqsjVpiDaAWwc4bH2oOduaFLbnAvhBGmnNr4lTWJ4HORaoF+xItUQrwO
+         m3YrNmP1UZ/WwRYTa6mu6TUYL8v7Lzgh81EYfDYzknYOpqdOz8usZ9ZCuPkff/kl4I
+         sr6sWIBqW9/77+RQFGSBw9DDDYcsx6ViHJFQ4sS24j4ET9V2ezV1u/fRWJ7S5QdbeT
+         1ho+CFS5gYaiw==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210901155559.627491-1-angelogioacchino.delregno@somainline.org>
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <YTDMHq3rLUrldNfB@Marijn-Arch-Book.localdomain>
+References: <20210830182445.167527-1-marijn.suijten@somainline.org> <20210830182445.167527-3-marijn.suijten@somainline.org> <163047455623.42057.15513441659841056105@swboyd.mtv.corp.google.com> <YS9Aa0tADAf5KMSl@Marijn-Arch-PC.localdomain> <163055439497.405991.16122720273000010218@swboyd.mtv.corp.google.com> <YTDMHq3rLUrldNfB@Marijn-Arch-Book.localdomain>
+Subject: Re: [PATCH v2 2/2] clk: qcom: gcc-sdm660: Remove transient global "xo" clock
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Date:   Thu, 02 Sep 2021 12:34:50 -0700
+Message-ID: <163061129079.405991.11763080753220412244@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 01, 2021 at 05:55:58PM +0200, AngeloGioacchino Del Regno wrote:
-> Rewrite the qcom-opp as qcom-level-opp in dt schema format.
-> 
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> ---
->  .../bindings/opp/qcom-level-opp.yaml          | 68 +++++++++++++++++++
->  .../devicetree/bindings/opp/qcom-opp.txt      | 19 ------
->  2 files changed, 68 insertions(+), 19 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/opp/qcom-level-opp.yaml
->  delete mode 100644 Documentation/devicetree/bindings/opp/qcom-opp.txt
-> 
-> diff --git a/Documentation/devicetree/bindings/opp/qcom-level-opp.yaml b/Documentation/devicetree/bindings/opp/qcom-level-opp.yaml
-> new file mode 100644
-> index 000000000000..65dd2d5d9566
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/opp/qcom-level-opp.yaml
-> @@ -0,0 +1,68 @@
-> +# SPDX-License-Identifier: GPL-2.0
+Quoting Marijn Suijten (2021-09-02 06:05:34)
+> On 2021-09-01 20:46:34, Stephen Boyd wrote:
+> > Quoting Marijn Suijten (2021-09-01 01:57:15)
+> > > On 2021-08-31 22:35:56, Stephen Boyd wrote:
+> > > > Quoting Marijn Suijten (2021-08-30 11:24:45)
+> > > > > The DSI PHY/PLL was relying on a global "xo" clock to be found, b=
+ut the
+> > > > > real clock is named "xo_board" in the DT.  The standard nowadays =
+is to
+> > > > > never use global clock names anymore but require the firmware (DT=
+) to
+> > > > > provide every clock binding explicitly with .fw_name.  The DSI PL=
+Ls have
+> > > > > since been converted to this mechanism (specifically 14nm for SDM=
+660)
+> > > > > and this transient clock can now be removed.
+> > > > >=20
+> > > > > This issue was originally discovered in:
+> > > > > https://lore.kernel.org/linux-arm-msm/386db1a6-a1cd-3c7d-a88e-dc8=
+3f8a1be96@somainline.org/
+> > > > > and prevented the removal of "xo" at that time.
+> > > > >=20
+> > > > > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > > > > ---
+> > > >=20
+> > > > Presumably this wants to go with the first one.
+> > >=20
+> > > What are you referring to with "the first one"?  This patch can only =
+go
+> > > in after patch 1/2 of this series, unless you are suggesting to squash
+> > > it with Bjorns cleanup and making sure that lands after the fix in the
+> > > DSI?
+> >=20
+> > The first patch in this series.
+>=20
+> Are you suggesting to squash this patch into the first patch in this
+> series?  Note that the first patch touches drm/msm/dsi, the second
+> (this) patch touches clk/qcom.
 
-This one of course came from default GPL2 source, but I'm sure the 
-authors are QCom/Linaro and they would be happy to dual license.
-
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/opp/qcom-level-opp.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm OPP bindings for fuse and voltage level OPPs
-> +
-> +maintainers:
-> +  - AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> +  - Niklas Cassel <niklas.cassel@linaro.org>
-> +
-> +allOf:
-> +  - $ref: opp-v2-base.yaml#
-> +
-> +properties:
-> +  compatible:
-> +    const: operating-points-v2-qcom-level
-> +
-> +  opp-shared: true
-> +
-> +required:
-> +  - compatible
-> +
-> +patternProperties:
-> +  '^opp-?[0-9]+$':
-> +    type: object
-> +
-> +    properties:
-> +      opp-level: true
-> +      qcom,opp-fuse-level:
-> +        description:
-> +          At least one positive value representing the fuse corner or level
-> +          associated with this OPP node. In case this is used for CPR >=v3,
-> +          multiple array entries are referring to different CPR threads.
-> +          Sometimes several corners/levels shares a certain fuse
-> +          corner/level. A fuse corner/level contains e.g. ref uV, min uV,
-> +          and max uV.
-> +        $ref: /schemas/types.yaml#/definitions/uint32-array
-> +
-> +    required:
-> +      - opp-level
-> +      - qcom,opp-fuse-level
-> +
-> +    unevaluatedProperties: false
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    cpr_opp_table: opp-table-cpr {
-> +        compatible = "operating-points-v2-qcom-level";
-> +
-> +        cpr_opp1: opp1 {
-> +            opp-level = <1>;
-> +            qcom,opp-fuse-level = <1>;
-> +        };
-> +        cpr_opp2: opp2 {
-> +            opp-level = <2>;
-> +            qcom,opp-fuse-level = <2>;
-> +        };
-> +        cpr_opp3: opp3 {
-> +            opp-level = <3>;
-> +            qcom,opp-fuse-level = <3>;
-> +        };
-> +    };
-> +
-> +...
-> diff --git a/Documentation/devicetree/bindings/opp/qcom-opp.txt b/Documentation/devicetree/bindings/opp/qcom-opp.txt
-> deleted file mode 100644
-> index 41d3e4ff2dc3..000000000000
-> --- a/Documentation/devicetree/bindings/opp/qcom-opp.txt
-> +++ /dev/null
-> @@ -1,19 +0,0 @@
-> -Qualcomm OPP bindings to describe OPP nodes
-> -
-> -The bindings are based on top of the operating-points-v2 bindings
-> -described in Documentation/devicetree/bindings/opp/opp-v2-base.yaml
-> -Additional properties are described below.
-> -
-> -* OPP Table Node
-> -
-> -Required properties:
-> -- compatible: Allow OPPs to express their compatibility. It should be:
-> -  "operating-points-v2-qcom-level"
-> -
-> -* OPP Node
-> -
-> -Required properties:
-> -- qcom,opp-fuse-level: A positive value representing the fuse corner/level
-> -  associated with this OPP node. Sometimes several corners/levels shares
-> -  a certain fuse corner/level. A fuse corner/level contains e.g. ref uV,
-> -  min uV, and max uV.
-> -- 
-> 2.32.0
-> 
-> 
+No.
