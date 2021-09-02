@@ -2,118 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ECFF93FEB80
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Sep 2021 11:45:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2155B3FEE4D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Sep 2021 15:05:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245693AbhIBJnx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Sep 2021 05:43:53 -0400
-Received: from mail-4325.protonmail.ch ([185.70.43.25]:61473 "EHLO
-        mail-4325.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245185AbhIBJnw (ORCPT
+        id S244365AbhIBNGh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Sep 2021 09:06:37 -0400
+Received: from relay07.th.seeweb.it ([5.144.164.168]:59729 "EHLO
+        relay07.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1344687AbhIBNGg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Sep 2021 05:43:52 -0400
-Date:   Thu, 02 Sep 2021 09:42:46 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1630575772;
-        bh=xRF9eqv4PKo+kZdEnxZf3slEfaXPEv4ICmGtDtFFhr0=;
-        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=wf/2sLr+/ZxXhfe0qyapMX8pS587V7p1N27/s2WJgjM3SOUs+CYlEFEHut78r4LcB
-         JEjb4vIvf6QDTkk4B9UWDfaTgdJm5LqSJOomxhnu12RoDcyHDoBtmIkjZm6x1RzLQo
-         WyIJAWORp36Wf43sqL3Qe6yr/w7XzZnKDuzJK2wQ=
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-From:   Yassine Oudjana <y.oudjana@protonmail.com>
-Cc:     AngeloGioacchino Del Regno 
+        Thu, 2 Sep 2021 09:06:36 -0400
+Received: from Marijn-Arch-Book.localdomain (D57D4C6E.static.ziggozakelijk.nl [213.125.76.110])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id CC4D03F215;
+        Thu,  2 Sep 2021 15:05:35 +0200 (CEST)
+Date:   Thu, 2 Sep 2021 15:05:34 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
         Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Georgi Djakov <djakov@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        AngeloGioacchino Del Regno <kholk11@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
-Subject: Re: [PATCH v4 1/5] interconnect: qcom: sdm660: Commonize RPM-QoS
-Message-ID: <UQVSYQ.02005O7OLITH3@protonmail.com>
-In-Reply-To: <efafd058-ad68-eb0a-af42-40d879ef63d9@linaro.org>
-References: <20210901121518.152481-1-y.oudjana@protonmail.com> <20210901121518.152481-2-y.oudjana@protonmail.com> <9af0f031-101e-53b4-514e-9ead44320f4e@somainline.org> <efafd058-ad68-eb0a-af42-40d879ef63d9@linaro.org>
+        Michael Turquette <mturquette@baylibre.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: Re: [PATCH v2 2/2] clk: qcom: gcc-sdm660: Remove transient global
+ "xo" clock
+Message-ID: <YTDMHq3rLUrldNfB@Marijn-Arch-Book.localdomain>
+References: <20210830182445.167527-1-marijn.suijten@somainline.org>
+ <20210830182445.167527-3-marijn.suijten@somainline.org>
+ <163047455623.42057.15513441659841056105@swboyd.mtv.corp.google.com>
+ <YS9Aa0tADAf5KMSl@Marijn-Arch-PC.localdomain>
+ <163055439497.405991.16122720273000010218@swboyd.mtv.corp.google.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <163055439497.405991.16122720273000010218@swboyd.mtv.corp.google.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 2021-09-01 20:46:34, Stephen Boyd wrote:
+> Quoting Marijn Suijten (2021-09-01 01:57:15)
+> > On 2021-08-31 22:35:56, Stephen Boyd wrote:
+> > > Quoting Marijn Suijten (2021-08-30 11:24:45)
+> > > > The DSI PHY/PLL was relying on a global "xo" clock to be found, but the
+> > > > real clock is named "xo_board" in the DT.  The standard nowadays is to
+> > > > never use global clock names anymore but require the firmware (DT) to
+> > > > provide every clock binding explicitly with .fw_name.  The DSI PLLs have
+> > > > since been converted to this mechanism (specifically 14nm for SDM660)
+> > > > and this transient clock can now be removed.
+> > > > 
+> > > > This issue was originally discovered in:
+> > > > https://lore.kernel.org/linux-arm-msm/386db1a6-a1cd-3c7d-a88e-dc83f8a1be96@somainline.org/
+> > > > and prevented the removal of "xo" at that time.
+> > > > 
+> > > > Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> > > > ---
+> > > 
+> > > Presumably this wants to go with the first one.
+> > 
+> > What are you referring to with "the first one"?  This patch can only go
+> > in after patch 1/2 of this series, unless you are suggesting to squash
+> > it with Bjorns cleanup and making sure that lands after the fix in the
+> > DSI?
+> 
+> The first patch in this series.
 
-
-On Thu, Sep 2 2021 at 02:01:59 +0400, Dmitry Baryshkov=20
-<dmitry.baryshkov@linaro.org> wrote:
-> On 01/09/2021 21:48, AngeloGioacchino Del Regno wrote:
->>  Il 01/09/21 14:15, Yassine Oudjana ha scritto:
->>>  SoCs such as MSM8996 also control bus QoS in a similar fashion to=20
->>> SDM660,
->>>  with some paths being controlled by RPM and others directly by the=20
->>> AP.
->>>  Move relevant functions and defines to a new object so that they=20
->>> can
->>>  be used
->>>  in multiple drivers.
->>>=20
->>>  Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
->>=20
->>  Hey guys!
->>=20
->>  I'm waiting for the interconnect RPM-QoS commonization to be merged=20
->> as I
->>  have fresh
->>  interconnect drivers for MSM8998 and MSM8976, ready to send, that=20
->> are
->>  also using
->>  the very same QoS mechanism as SDM660.
->=20
-> We were also looking onto this. I'd propose to merge sdm660 code into
-> main icc-rpm.c instead of splitting it into separate file. We have
-> enabled QoS for apq8096 (msm8916) and msm8939. See
-> https://lore.kernel.org/linux-arm-msm/20210818015732.1717810-1-dmitry.bar=
-yshkov@linaro.org/
-> for the reference. I'm waiting for Shawn to publish v2 of his fix,=20
-> then
-> I can post v2 of my patchset.
-
-I'll wait for your v2 to post v5 of this series then.
-Please add me to Cc when you send it.
-
->=20
->>=20
->>  Yassine, please check Shawn's recent patches for SDM660=20
->> interconnect,
->>  which are
->>  fixing some bits for the QoS implementation and adding some required
->>  clocks to the
->>  SDM660 interconnect driver.
->>=20
->>  Adding Shawn to the Ccs as to make him aware of this patch;
->>  also adding Marijn and Konrad from SoMainline as probably interested
->>  parties.
->>=20
->>  Cheers!
->>  - Angelo
->=20
->=20
-> --
-> With best wishes
-> Dmitry
-
-Thanks,
-Yassine
-
-
-
-
+Are you suggesting to squash this patch into the first patch in this
+series?  Note that the first patch touches drm/msm/dsi, the second
+(this) patch touches clk/qcom.
