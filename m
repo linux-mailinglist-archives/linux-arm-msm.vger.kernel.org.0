@@ -2,168 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 12E063FE60A
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Sep 2021 02:33:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E0F813FE6AD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Sep 2021 02:34:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345132AbhIAXTf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 1 Sep 2021 19:19:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40140 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344640AbhIAXTe (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 1 Sep 2021 19:19:34 -0400
-Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D1C48C061575
-        for <linux-arm-msm@vger.kernel.org>; Wed,  1 Sep 2021 16:18:36 -0700 (PDT)
-Received: by mail-qv1-xf31.google.com with SMTP id z2so114055qvl.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Sep 2021 16:18:36 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=1Y+GVokmV9xV7i0Kbyl+zT81HcVIXennIBiGTGbWIfQ=;
-        b=Ss78CZppoDiVB5zdMTBxQWBVResulcnOWqd8Qi3UkjhRlNgSbjSTQDveLQ4owdMFOd
-         mgwlrVIyuyDeGaBwBWxBoZvXlIJfVMzhnF2/tIAtLNZqNqrIQMexqtyQHl+M/z23jDJt
-         /l6kSthz2Kvx8zBGuz1IIWMUwzkcbS3DLX0UM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=1Y+GVokmV9xV7i0Kbyl+zT81HcVIXennIBiGTGbWIfQ=;
-        b=mJ91bTB8D8S8bH/G06JxoCeSsWHWiZ+71OMYrhhaYAGU7dUeQ5+ZQvJdXF5S0YlKIb
-         HqYDBOfjTTc81dry7rgv58Q+lYeyvXO6FQUIvs/G3gTpXd0e4fZjwsRJqRaVFPT+qxmg
-         Pi/UQ6kmXt2JxFQHUtUld56rK1SdhuE8/eO6HW+yhIuEe50jFFdRzr+aXcCo82RKeAAN
-         FrJzI+Bx/+PuhN62dJbhEw6O1EgM/K/yOE8J9nBM0H30Hx9OQrlUdn9FV9uv4773nXW7
-         oERbDsszuZldaLfjskTG8nik7JacKQKimtZxm6XhCQ5D0/WalP5YvVdbdMqR7Y/DXi+o
-         1dFg==
-X-Gm-Message-State: AOAM53235LqnMenelU3eeh4CelScz3cQP4RdI42J1jlg67qAVxoLd+Hn
-        KeQXrtMP3uxU8P4o5ftgKgDqqY15ocw7fw==
-X-Google-Smtp-Source: ABdhPJzOKR9FZC+LFjzkKWz+mhWo4f+iwDh8LovU3pqG4qIxWL50O95sw6/Jr06T7SgboMQi+KMSwA==
-X-Received: by 2002:a0c:f901:: with SMTP id v1mr53000qvn.45.1630538315929;
-        Wed, 01 Sep 2021 16:18:35 -0700 (PDT)
-Received: from mail-qk1-f171.google.com (mail-qk1-f171.google.com. [209.85.222.171])
-        by smtp.gmail.com with ESMTPSA id k186sm111023qkd.47.2021.09.01.16.18.35
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 01 Sep 2021 16:18:35 -0700 (PDT)
-Received: by mail-qk1-f171.google.com with SMTP id p4so107241qki.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 01 Sep 2021 16:18:35 -0700 (PDT)
-X-Received: by 2002:a02:ca0b:: with SMTP id i11mr277172jak.84.1630537827704;
- Wed, 01 Sep 2021 16:10:27 -0700 (PDT)
+        id S244138AbhIBA3M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 1 Sep 2021 20:29:12 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:15809 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S243810AbhIBA3M (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 1 Sep 2021 20:29:12 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1630542495; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=BpMsY1jdJn9vV9BVN++XtWtWBzsDBD0Qi5rln/LVvzA=; b=QmBaMsvtklFod84APo8YQJqvsqYT/Z98ayHIjzxMMYmiipglexQR3bWlg6fRz+dRHRtAQnNI
+ QI92VMO3sM7u8rCJ55atM79tltcOrmJsKw4IN1OThjjVczF5OnJYX2+mnBlCe+TffLbr/gCx
+ 56Udt7vIP+EpE+kL0XYN7OS7RaU=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 61301a9e6fc2cf7ad93bf463 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 02 Sep 2021 00:28:14
+ GMT
+Sender: jackp=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 203B4C4361B; Thu,  2 Sep 2021 00:28:13 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from jackp-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: jackp)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7FF4AC43460;
+        Thu,  2 Sep 2021 00:28:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 7FF4AC43460
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Date:   Wed, 1 Sep 2021 17:28:04 -0700
+From:   Jack Pham <jackp@codeaurora.org>
+To:     Thinh Nguyen <Thinh.Nguyen@synopsys.com>
+Cc:     Pavel Hofman <pavel.hofman@ivitera.com>,
+        Ferry Toth <fntoth@gmail.com>, Felipe Balbi <balbi@kernel.org>,
+        Wesley Cheng <wcheng@codeaurora.org>,
+        "gregkh@linuxfoundation.org" <gregkh@linuxfoundation.org>,
+        "robh+dt@kernel.org" <robh+dt@kernel.org>,
+        "agross@kernel.org" <agross@kernel.org>,
+        "bjorn.andersson@linaro.org" <bjorn.andersson@linaro.org>,
+        "frowand.list@gmail.com" <frowand.list@gmail.com>,
+        "linux-usb@vger.kernel.org" <linux-usb@vger.kernel.org>,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>,
+        "devicetree@vger.kernel.org" <devicetree@vger.kernel.org>,
+        "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>,
+        "heikki.krogerus@linux.intel.com" <heikki.krogerus@linux.intel.com>,
+        "andy.shevchenko@gmail.com" <andy.shevchenko@gmail.com>,
+        Ruslan Bilovol <ruslan.bilovol@gmail.com>
+Subject: Re: [PATCH v10 0/6] Re-introduce TX FIFO resize for larger EP
+ bursting
+Message-ID: <20210902002804.GA3500@jackp-linux.qualcomm.com>
+References: <cca69e90-b0ef-00b8-75d3-3bf959a93b45@gmail.com>
+ <874kchvcq0.fsf@kernel.org>
+ <e59f1201-2aa2-9075-1f94-a6ae7a046dc1@gmail.com>
+ <8735raj766.fsf@kernel.org>
+ <b3417c2c-613b-8ef6-2e2d-6e2cf9a5d5fd@gmail.com>
+ <b3e820f0-9c94-7cba-a248-3b2ec5378ab0@gmail.com>
+ <d298df65-417b-f318-9374-b463a15d8308@ivitera.com>
+ <a7d7f0dd-dfbb-5eef-d1da-8cbdab5fc4a7@gmail.com>
+ <c4e29ac0-1df1-3c64-1218-3687f07e7f77@ivitera.com>
+ <60e57455-3768-ab1c-efad-b6a64e592b36@synopsys.com>
 MIME-Version: 1.0
-References: <20210901201934.1084250-1-dianders@chromium.org>
- <20210901131531.v3.6.I02250cd7d4799661b068bcc65849a456ed411734@changeid> <CAOesGMjp4pscuxciHZo7br-acgbkZSdRA_mUWNpcz0OfF7zOSA@mail.gmail.com>
-In-Reply-To: <CAOesGMjp4pscuxciHZo7br-acgbkZSdRA_mUWNpcz0OfF7zOSA@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 1 Sep 2021 16:10:15 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=WPXAUyuAHb1jKx9F_aw+JGX4MWB3or=Eq5rXoKY=OQMw@mail.gmail.com>
-Message-ID: <CAD=FV=WPXAUyuAHb1jKx9F_aw+JGX4MWB3or=Eq5rXoKY=OQMw@mail.gmail.com>
-Subject: Re: [PATCH v3 06/16] ARM: configs: Everyone who had PANEL_SIMPLE now
- gets PANEL_SIMPLE_EDP
-To:     Olof Johansson <olof@lixom.net>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linus W <linus.walleij@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        DTML <devicetree@vger.kernel.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Maxime Ripard <mripard@kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        DRI mailing list <dri-devel@lists.freedesktop.org>,
-        Al Viro <viro@zeniv.linux.org.uk>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Andreas Kemnade <andreas@kemnade.info>,
-        Andrey Zhizhikin <andrey.zhizhikin@leica-geosystems.com>,
-        Anson Huang <Anson.Huang@nxp.com>,
-        Arnd Bergmann <arnd@arndb.de>, Chen-Yu Tsai <wens@csie.org>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Codrin Ciubotariu <codrin.ciubotariu@microchip.com>,
-        Corentin Labbe <clabbe@baylibre.com>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Emil Velikov <emil.velikov@collabora.com>,
-        Eugen Hristev <eugen.hristev@microchip.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Fabrice Gasnier <fabrice.gasnier@st.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Grygorii Strashko <grygorii.strashko@ti.com>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Joel Stanley <joel@jms.id.au>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Kees Cook <keescook@chromium.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Lionel Debieve <lionel.debieve@st.com>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        =?UTF-8?Q?Martin_J=C3=BCcker?= <martin.juecker@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Olivier Moysan <olivier.moysan@st.com>,
-        Otavio Salvador <otavio@ossystems.com.br>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Razvan Stefanescu <razvan.stefanescu@microchip.com>,
-        Robert Richter <rric@kernel.org>,
-        Russell King <linux@armlinux.org.uk>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Stefan Wahren <stefan.wahren@i2se.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Tudor Ambarus <tudor.ambarus@microchip.com>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Linux ARM Mailing List <linux-arm-kernel@lists.infradead.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-omap <linux-omap@vger.kernel.org>,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        "moderated list:ARM/SAMSUNG EXYNOS ARM ARCHITECTURES" 
-        <linux-samsung-soc@vger.kernel.org>, linux-sunxi@lists.linux.dev,
-        "open list:TEGRA ARCHITECTURE SUPPORT" <linux-tegra@vger.kernel.org>,
-        =?UTF-8?Q?=C5=81ukasz_Stelmach?= <l.stelmach@samsung.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <60e57455-3768-ab1c-efad-b6a64e592b36@synopsys.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Thinh,
 
-On Wed, Sep 1, 2021 at 2:12 PM Olof Johansson <olof@lixom.net> wrote:
->
-> On Wed, Sep 1, 2021 at 1:20 PM Douglas Anderson <dianders@chromium.org> wrote:
-> >
-> > In the patch ("drm/panel-simple-edp: Split eDP panels out of
-> > panel-simple") we split the PANEL_SIMPLE driver in 2. By default let's
-> > give everyone who had the old driver enabled the new driver too. If
-> > folks want to opt-out of one or the other they always can later.
-> >
-> > Signed-off-by: Douglas Anderson <dianders@chromium.org>
->
-> Isn't this a case where the new option should just have had the old
-> option as the default value to avoid this kind of churn and possibly
-> broken platforms?
+On Sat, Aug 21, 2021 at 02:57:07AM +0000, Thinh Nguyen wrote:
+> I took a look at 24f779dac8f3 ("usb: gadget: f_uac2/u_audio: add
+> feedback endpoint support") that Ferry reported the issue from
+> bisection. I see at least a couple problems in the new UAC2 changes.
+> 
+> 1) usb_ep_dequeue() is asynchronous. Don't free requests before the
+> controller driver give them back.
+> 
+> 2) Did you test with SuperSpeed? I don't see companion descriptor.
 
-I'm happy to go either way. I guess I didn't do that originally
-because logically there's not any reason to link the two drivers going
-forward. Said another way, someone enabling the "simple panel" driver
-for non-eDP panels wouldn't expect that the "simple panel" driver for
-DP panels would also get enabled by default. They really have nothing
-to do with one another. Enabling by default for something like this
-also seems like it would lead to bloat. I could have sworn that
-periodically people get yelled at for marking drivers on by default
-when it doesn't make sense.
+We caught this too when testing f_uac2 in SuperSpeed mode.  I can
+prepare a patch.
 
-...that being said, I'm happy to change the default as you suggest.
-Just let me know.
-
--Doug
+Thanks,
+Jack
+-- 
+The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project
