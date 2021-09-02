@@ -2,178 +2,413 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 75AEE3FF5D4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Sep 2021 23:50:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CBAA23FF5F8
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Sep 2021 23:52:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347537AbhIBVu6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 2 Sep 2021 17:50:58 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:30418 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243323AbhIBVu5 (ORCPT
+        id S1347656AbhIBVxB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Sep 2021 17:53:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39092 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1347649AbhIBVw7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Sep 2021 17:50:57 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1630619399; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=Ylk0Ou+4w2EHSmG7+AYspOW2j8fJqOqntk80Yg+jlC4=; b=axksHMYzIWHy/zB4LPDUjCmaVImuQphYYRWOeJA1PaejXRHvykjZ4wxOVuCfDfxBt6AqloHr
- isONvM8Azgx8wpnFESFQMIqoduqlkM+oy30iLWL/yfhbhivXyuFZdSAM80I/oujiCYiGrM3m
- GSQeQm6ETlu1Qb18FjejCAdcL1s=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 613146f41567234b8c504188 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 02 Sep 2021 21:49:40
- GMT
-Sender: hemantk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A634DC43618; Thu,  2 Sep 2021 21:49:39 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-5.1 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.1.9] (cpe-76-176-73-171.san.res.rr.com [76.176.73.171])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: hemantk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id F2285C4360D;
-        Thu,  2 Sep 2021 21:49:37 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org F2285C4360D
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: bus: mhi: parse_xfer_event running transfer completion callbacks
- more than once for a given buffer
-To:     Paul Davey <Paul.Davey@alliedtelesis.co.nz>,
-        "quic_jhugo@quicinc.com" <quic_jhugo@quicinc.com>,
-        "bbhatt@codeaurora.org" <bbhatt@codeaurora.org>,
-        "loic.poulain@linaro.org" <loic.poulain@linaro.org>,
-        "manivannan.sadhasivam@linaro.org" <manivannan.sadhasivam@linaro.org>
-Cc:     "linux-arm-msm@vger.kernel.org" <linux-arm-msm@vger.kernel.org>
-References: <9a6a00acc60c676f39f89a8ce2989416bed1b24d.camel@alliedtelesis.co.nz>
- <CAMZdPi812vx7cjvLXpj_NnbZPOmcierQMFikVHwsUd9gYawHVw@mail.gmail.com>
- <544b3db2-b135-d870-8dd8-ec4450576cb7@codeaurora.org>
- <ce8082f8ecd6bea2961d8841ea6eb1c14b5a34dd.camel@alliedtelesis.co.nz>
- <2b1cbecf50a57a229e30d1bff060d0e241e2841a.camel@alliedtelesis.co.nz>
- <05e4ff6f-5118-6afb-a000-81d07e5b1078@quicinc.com>
- <79ff6d38e6ab2509a88e7ba860063790fbcbf1ec.camel@alliedtelesis.co.nz>
- <bbac581950a84aef245abff92660fd7c2b977d16.camel@alliedtelesis.co.nz>
-From:   Hemant Kumar <hemantk@codeaurora.org>
-Message-ID: <832109c4-9b38-4bc9-1b5c-aa43deae74d4@codeaurora.org>
-Date:   Thu, 2 Sep 2021 14:49:37 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        Thu, 2 Sep 2021 17:52:59 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26523C061764
+        for <linux-arm-msm@vger.kernel.org>; Thu,  2 Sep 2021 14:52:01 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id j1so2317344pjv.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 02 Sep 2021 14:52:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9AqTKY0JGH3Jbb0gSF8IAPFfJNs3HpHt5YPKABagQcg=;
+        b=TroGmfhH3lliDy7nlIOGWdb8FcrKoEI+zBXUBB6LhwgRqJT8rJC21cyTvnHW4qoRxl
+         QGkBtZphdfZX0pDta6HxNcOrxaZp/XzXyu4UEegOggZ1HeO+8uf3eiMXj6S1cO519f49
+         77LrIwknzOVBGaEo63dyCEibuIS8rsFgQikOo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=9AqTKY0JGH3Jbb0gSF8IAPFfJNs3HpHt5YPKABagQcg=;
+        b=Yuam2o0SU1woZwYUjNyOvXqI829cMh8RSlXU2UrQ54Ll3B9CRm+L5TFW6ihQWDCJyk
+         5eObegORSzOI3af805RIJ0+cU4oiqJD+NOWN456ByJufdpjDUoaJdzoP/Jb3TXmRqpTD
+         9mQWOJAdvq4h330Kevi8md2DuQ3SC/QbXFQubGAhZ5wOLH4iEfuemy4xJFYs0XRPRqzZ
+         0zeZegBPf0U0g6t7kzgofMkVXcNTF5ogqunIZBXlE1WGP4+FbNJlarEgbIilKlo7CxDh
+         Jn8IhdDzTY0qYkCI4hYJTW5pCug2l+MNtibOtkiGhhwKj3/1cfGuEdG+facbC7cQ4aIb
+         FHgw==
+X-Gm-Message-State: AOAM533YIXiaHEpgEvlhkB3pyaiMlsQv48raucHPIqKkK4ln4E3kkn9y
+        1oaM+BTxuP5Dhe3/4a83soPe5g==
+X-Google-Smtp-Source: ABdhPJylvBl1JmAbtW9/3wfeRjqeJYYgIcG7Zd4dlOWFSsdtiIDQh3QV3DSI41U8Pz3Avexd4dUG8w==
+X-Received: by 2002:a17:902:7607:b0:138:9422:5122 with SMTP id k7-20020a170902760700b0013894225122mr356997pll.75.1630619520601;
+        Thu, 02 Sep 2021 14:52:00 -0700 (PDT)
+Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:1a2a:6b44:fbf0:cbcc])
+        by smtp.gmail.com with ESMTPSA id l22sm3015569pjz.54.2021.09.02.14.51.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 02 Sep 2021 14:52:00 -0700 (PDT)
+From:   Douglas Anderson <dianders@chromium.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     mka@chromium.org, swboyd@chromium.org,
+        Douglas Anderson <dianders@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2] arm64: dts: qcom: sc7180: Base dynamic CPU power coefficients in reality
+Date:   Thu,  2 Sep 2021 14:51:37 -0700
+Message-Id: <20210902145127.v2.1.I049b30065f3c715234b6303f55d72c059c8625eb@changeid>
+X-Mailer: git-send-email 2.33.0.153.gba50c8fa24-goog
 MIME-Version: 1.0
-In-Reply-To: <bbac581950a84aef245abff92660fd7c2b977d16.camel@alliedtelesis.co.nz>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Paul,
+The sc7180's dynamic-power-coefficient violates the device tree bindings.
+The bindings (arm/cpus.yaml) say that the units for the
+dynamic-power-coefficient are supposed to be "uW/MHz/V^2". The ones for
+sc7180 aren't this. Qualcomm arbitrarily picked 100 for the "little" CPUs
+and then picked a number for the big CPU based on this.
 
-On 8/31/2021 10:17 PM, Paul Davey wrote:
-> On Fri, 2021-08-27 at 16:51 +1200, Paul Davey wrote:
->> On Thu, 2021-08-26 at 09:54 -0600, Jeffrey Hugo wrote:
->>> On 8/23/2021 12:47 AM, Paul Davey wrote:
->>>> Hi Hemant, Jeffery
->>>>
->>>> I have some more information after some testing.
->>>>
->>>>>> Do you have a log which prints the TRE being processed?
->>>>>> Basically i
->>>>>> am
->>>>>> trying understand this : by the time you get double free
->>>>>> issue,
->>>>>> is
->>>>>> there
->>>>>> any pattern with respect to the TRE that is being processed.
->>>>>> For
->>>>>> example
->>>>>> when host processed the given TRE for the first time with
->>>>>> RP1,
->>>>>> stale
->>>>>> TRE
->>>>>> was posted by Event RP2 right after RP1
->>>>>>
->>>>>> ->RP1 [TRE1]
->>>>>> ->RP2 [TRE1]
->>>>>>
->>>>>> or occurrence of stale TRE event is random?
->>>>
->>>> [...]
->>>
->>
->> Secondly we saw the following pattern in completion events:
->>
->> mhi mhi0: (IP_HW0_MBIM-Up) Completion Event code: 2 length: 5e2 ptr:
->> 7c4004e0
->> mhi mhi0: (IP_HW0_MBIM-Up) Completion Event code: 2 length: 5e2 ptr:
->> 7c400520
->> mhi mhi0: (IP_HW0_MBIM-Up) Completion Event code: 2 length: 5e2 ptr:
->> 7c4004c0
->> mhi mhi0: (IP_HW0_MBIM-Up) Completion Event code: 2 length: 5e2 ptr:
->> 7c4004b0
->> mhi mhi0: (IP_HW0_MBIM-Up) Completion Event code: 2 length: 5e2 ptr:
->> 7c4004a0
->>
->> Here we can see that instead of a completion event for 7c4004d0 we
->> have
->> one for 7c400520 which is significantly ahead of the other point and
->> from the list of TREs I store in mhi_gen_tre I suspect that 7c400520
->> is
->> the next TRE to be used in the TRE ring at this time, as the other
->> information shows it would be the oldest entry in that list.  I am
->> not
->> sure what could have caused this but this is a different case to the
->> modem repeating the same TRE in a completion event.
->>
-> 
-> 
-> I have considered the code further, and while I have seen cases of
-> identical TRE completion events occurring, I do not think these result
-> in the double free case because if the event is actually the same as
-> the last one then the new dev_rp which parse_xfer_event will attempt to
-> advance the local_rp to will already be equal to the local_rp and the
-> whole loop will be skipped in the first place.  The troublesome
-> behaviour comes from the case I describe above where a jump to a
-> "future" TRE's completion event seems to occur followed by a
-> continuation of the order, this results in the tre_ring rp being
-> advanced to that future TRE and then the next completion event
-> following the previous ordered pattern would be before that rp location
-> and the loop will run through the entire tre_ring to reach the new rp
-> location.
-> 
-> 
-> I do have another question though, the driver code seems to in some
-> cases take the mhi_chan->lock when updating the doorbell register, but
-> not when queueing new transfers.  What is the actual purpose of this
-> lock and why does it seem so inconsistently used?  Is there any chance
-> that some of my problems may be the result of queueing new transfers
-> racing somehow with completion event processing?
-Are you pointing to MHI_EV_CC_OOB and MHI_EV_CC_DB_MODE completion code 
-? To prove that race condition you disable burst mode as an experiment
+At the time, there was a giant dicussion about this. Apparently Qualcomm
+Engineers were instructed not to share the actual numbers here. As part
+of the discussion, I pointed out [1] that these numbers shouldn't really
+be secret since once a device is shipping anyone can just run a script
+and produce them. This patch is the result of running the script I posted
+in that discussion on sc7180-trogdor-coachz, which is currently available
+for purchase by consumers.
 
-In pci_generic.c
-#define MHI_CHANNEL_CONFIG_HW_UL(ch_num, ch_name, el_count, ev_ring)
+[1] https://lore.kernel.org/r/CAD=FV=U1FP0e3_AVHpauUUZtD-5X3XCwh5aT9fH_8S_FFML2Uw@mail.gmail.com/
 
-- .doorbell = MHI_DB_BRST_ENABLE
-+ .doorbell = MHI_DB_BRST_DISABLE
+I ran the script four times, measuring little, big, little, big. I used
+the 64-bit version of dhrystone 2.2 in my test. I got these results:
 
-I agree that locking is an issue in that case as we are taking 
-read/write channel lock in parse_xfer_event and using only pm_lock in 
-queue API.
+576 kHz, 596 mV, 20 mW, 88 Cx
+768 kHz, 596 mV, 32 mW, 122 Cx
+1017 kHz, 660 mV, 45 mW, 97 Cx
+1248 kHz, 720 mV, 87 mW, 139 Cx
+1324 kHz, 756 mV, 109 mW, 148 Cx
+1516 kHz, 828 mV, 150 mW, 148 Cx
+1612 kHz, 884 mV, 182 mW, 147 Cx
+1708 kHz, 884 mV, 192 mW, 146 Cx
+1804 kHz, 884 mV, 207 mW, 149 Cx
+Your dynamic-power-coefficient for cpu 0: 132
 
-Thanks,
-Hemant
-> 
-> Thanks,
-> Paul
-> 
+825 kHz, 596 mV, 142 mW, 401 Cx
+979 kHz, 628 mV, 183 mW, 427 Cx
+1113 kHz, 656 mV, 224 mW, 433 Cx
+1267 kHz, 688 mV, 282 mW, 449 Cx
+1555 kHz, 812 mV, 475 mW, 450 Cx
+1708 kHz, 828 mV, 566 mW, 478 Cx
+1843 kHz, 884 mV, 692 mW, 476 Cx
+1900 kHz, 884 mV, 722 mW, 482 Cx
+1996 kHz, 916 mV, 814 mW, 482 Cx
+2112 kHz, 916 mV, 862 mW, 483 Cx
+2208 kHz, 916 mV, 962 mW, 521 Cx
+2323 kHz, 940 mV, 1060 mW, 517 Cx
+2400 kHz, 956 mV, 1133 mW, 518 Cx
+Your dynamic-power-coefficient for cpu 6: 471
 
+576 kHz, 596 mV, 26 mW, 103 Cx
+768 kHz, 596 mV, 40 mW, 147 Cx
+1017 kHz, 660 mV, 54 mW, 114 Cx
+1248 kHz, 720 mV, 97 mW, 151 Cx
+1324 kHz, 756 mV, 113 mW, 150 Cx
+1516 kHz, 828 mV, 154 mW, 148 Cx
+1612 kHz, 884 mV, 194 mW, 155 Cx
+1708 kHz, 884 mV, 203 mW, 152 Cx
+1804 kHz, 884 mV, 219 mW, 155 Cx
+Your dynamic-power-coefficient for cpu 0: 142
+
+825 kHz, 596 mV, 148 mW, 530 Cx
+979 kHz, 628 mV, 189 mW, 475 Cx
+1113 kHz, 656 mV, 230 mW, 461 Cx
+1267 kHz, 688 mV, 287 mW, 466 Cx
+1555 kHz, 812 mV, 469 mW, 445 Cx
+1708 kHz, 828 mV, 567 mW, 480 Cx
+1843 kHz, 884 mV, 699 mW, 482 Cx
+1900 kHz, 884 mV, 719 mW, 480 Cx
+1996 kHz, 916 mV, 814 mW, 484 Cx
+2112 kHz, 916 mV, 861 mW, 483 Cx
+2208 kHz, 916 mV, 963 mW, 522 Cx
+2323 kHz, 940 mV, 1063 mW, 520 Cx
+2400 kHz, 956 mV, 1135 mW, 519 Cx
+Your dynamic-power-coefficient for cpu 6: 489
+
+As you can see, the calculations aren't perfectly consistent but
+roughly you could say about 480 for big and 137 for little.
+
+The ratio between these numbers isn't quite the same as the ratio
+between the two numbers that Qualcomm used. Perhaps this is because
+Qualcomm measured something slightly different than the 64-bit version
+of dhrystone 2.2 or perhaps it's because they fudged these numbers a
+bit (and fudged the capacity-dmips-mhz). As per discussion [2], let's
+use the numbers I came up with and also un-fudge
+capacity-dmips-mhz. While unfudging capacity-dmips-mhz, let's scale it
+so that bigs are 1024 which seems to be the common practice.
+
+In general these numbers don't need to be perfectly exact. In fact,
+they can't be since the CPU power depends a lot on what's being run on
+the CPU and the big/little CPUs are each more or less efficient in
+different operations. Historically running the 32-bit vs. 64-bit
+versions of dhrystone produced notably different numbers, though I
+didn't test this time.
+
+We also need to scale all of the sustainable-power numbers by the same
+amount. I scale ones related to the big CPUs by the adjustment I made
+to the big dynamic-power-coefficient and the ones related to the
+little CPUs by the adjustment I made to the little
+dynamic-power-coefficient.
+
+[2] https://lore.kernel.org/r/0a865b6e-be34-6371-f9f2-9913ee1c5608@codeaurora.org/
+
+Fixes: 71f873169a80 ("arm64: dts: qcom: sc7180: Add dynamic CPU power coefficients")
+Signed-off-by: Douglas Anderson <dianders@chromium.org>
+---
+
+Changes in v2:
+- Unfudge capacity-dmips-mhz too.
+- Don't keep the ratios the same.
+
+ .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  |  2 +-
+ .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi  |  8 +--
+ arch/arm64/boot/dts/qcom/sc7180.dtsi          | 52 +++++++++----------
+ 3 files changed, 31 insertions(+), 31 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
+index a758e4d22612..81098aa9687b 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
+@@ -33,7 +33,7 @@ skin_temp_thermal: skin-temp-thermal {
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&pm6150_adc_tm 1>;
+-			sustainable-power = <814>;
++			sustainable-power = <965>;
+ 
+ 			trips {
+ 				skin_temp_alert0: trip-point0 {
+diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
+index a246dbd74cc1..b7b5264888b7 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi
+@@ -44,7 +44,7 @@ &cpu6_alert1 {
+ };
+ 
+ &cpu6_thermal {
+-	sustainable-power = <948>;
++	sustainable-power = <1124>;
+ };
+ 
+ &cpu7_alert0 {
+@@ -56,7 +56,7 @@ &cpu7_alert1 {
+ };
+ 
+ &cpu7_thermal {
+-	sustainable-power = <948>;
++	sustainable-power = <1124>;
+ };
+ 
+ &cpu8_alert0 {
+@@ -68,7 +68,7 @@ &cpu8_alert1 {
+ };
+ 
+ &cpu8_thermal {
+-	sustainable-power = <948>;
++	sustainable-power = <1124>;
+ };
+ 
+ &cpu9_alert0 {
+@@ -80,7 +80,7 @@ &cpu9_alert1 {
+ };
+ 
+ &cpu9_thermal {
+-	sustainable-power = <948>;
++	sustainable-power = <1124>;
+ };
+ 
+ &gpio_keys {
+diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+index 47b20ba69057..2808a87b6861 100644
+--- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
+@@ -137,8 +137,8 @@ CPU0: cpu@0 {
+ 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+ 					   &LITTLE_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+-			capacity-dmips-mhz = <1024>;
+-			dynamic-power-coefficient = <100>;
++			capacity-dmips-mhz = <415>;
++			dynamic-power-coefficient = <137>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+ 					<&osm_l3 MASTER_OSM_L3_APPS &osm_l3 SLAVE_OSM_L3>;
+@@ -162,8 +162,8 @@ CPU1: cpu@100 {
+ 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+ 					   &LITTLE_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+-			capacity-dmips-mhz = <1024>;
+-			dynamic-power-coefficient = <100>;
++			capacity-dmips-mhz = <415>;
++			dynamic-power-coefficient = <137>;
+ 			next-level-cache = <&L2_100>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+@@ -184,8 +184,8 @@ CPU2: cpu@200 {
+ 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+ 					   &LITTLE_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+-			capacity-dmips-mhz = <1024>;
+-			dynamic-power-coefficient = <100>;
++			capacity-dmips-mhz = <415>;
++			dynamic-power-coefficient = <137>;
+ 			next-level-cache = <&L2_200>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+@@ -206,8 +206,8 @@ CPU3: cpu@300 {
+ 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+ 					   &LITTLE_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+-			capacity-dmips-mhz = <1024>;
+-			dynamic-power-coefficient = <100>;
++			capacity-dmips-mhz = <415>;
++			dynamic-power-coefficient = <137>;
+ 			next-level-cache = <&L2_300>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+@@ -228,8 +228,8 @@ CPU4: cpu@400 {
+ 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+ 					   &LITTLE_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+-			capacity-dmips-mhz = <1024>;
+-			dynamic-power-coefficient = <100>;
++			capacity-dmips-mhz = <415>;
++			dynamic-power-coefficient = <137>;
+ 			next-level-cache = <&L2_400>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+@@ -250,8 +250,8 @@ CPU5: cpu@500 {
+ 			cpu-idle-states = <&LITTLE_CPU_SLEEP_0
+ 					   &LITTLE_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+-			capacity-dmips-mhz = <1024>;
+-			dynamic-power-coefficient = <100>;
++			capacity-dmips-mhz = <415>;
++			dynamic-power-coefficient = <137>;
+ 			next-level-cache = <&L2_500>;
+ 			operating-points-v2 = <&cpu0_opp_table>;
+ 			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+@@ -272,8 +272,8 @@ CPU6: cpu@600 {
+ 			cpu-idle-states = <&BIG_CPU_SLEEP_0
+ 					   &BIG_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+-			capacity-dmips-mhz = <1740>;
+-			dynamic-power-coefficient = <405>;
++			capacity-dmips-mhz = <1024>;
++			dynamic-power-coefficient = <480>;
+ 			next-level-cache = <&L2_600>;
+ 			operating-points-v2 = <&cpu6_opp_table>;
+ 			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+@@ -294,8 +294,8 @@ CPU7: cpu@700 {
+ 			cpu-idle-states = <&BIG_CPU_SLEEP_0
+ 					   &BIG_CPU_SLEEP_1
+ 					   &CLUSTER_SLEEP_0>;
+-			capacity-dmips-mhz = <1740>;
+-			dynamic-power-coefficient = <405>;
++			capacity-dmips-mhz = <1024>;
++			dynamic-power-coefficient = <480>;
+ 			next-level-cache = <&L2_700>;
+ 			operating-points-v2 = <&cpu6_opp_table>;
+ 			interconnects = <&gem_noc MASTER_APPSS_PROC 3 &mc_virt SLAVE_EBI1 3>,
+@@ -3592,7 +3592,7 @@ cpu0_thermal: cpu0-thermal {
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 1>;
+-			sustainable-power = <768>;
++			sustainable-power = <1052>;
+ 
+ 			trips {
+ 				cpu0_alert0: trip-point0 {
+@@ -3641,7 +3641,7 @@ cpu1_thermal: cpu1-thermal {
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 2>;
+-			sustainable-power = <768>;
++			sustainable-power = <1052>;
+ 
+ 			trips {
+ 				cpu1_alert0: trip-point0 {
+@@ -3690,7 +3690,7 @@ cpu2_thermal: cpu2-thermal {
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 3>;
+-			sustainable-power = <768>;
++			sustainable-power = <1052>;
+ 
+ 			trips {
+ 				cpu2_alert0: trip-point0 {
+@@ -3739,7 +3739,7 @@ cpu3_thermal: cpu3-thermal {
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 4>;
+-			sustainable-power = <768>;
++			sustainable-power = <1052>;
+ 
+ 			trips {
+ 				cpu3_alert0: trip-point0 {
+@@ -3788,7 +3788,7 @@ cpu4_thermal: cpu4-thermal {
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 5>;
+-			sustainable-power = <768>;
++			sustainable-power = <1052>;
+ 
+ 			trips {
+ 				cpu4_alert0: trip-point0 {
+@@ -3837,7 +3837,7 @@ cpu5_thermal: cpu5-thermal {
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 6>;
+-			sustainable-power = <768>;
++			sustainable-power = <1052>;
+ 
+ 			trips {
+ 				cpu5_alert0: trip-point0 {
+@@ -3886,7 +3886,7 @@ cpu6_thermal: cpu6-thermal {
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 9>;
+-			sustainable-power = <1202>;
++			sustainable-power = <1425>;
+ 
+ 			trips {
+ 				cpu6_alert0: trip-point0 {
+@@ -3927,7 +3927,7 @@ cpu7_thermal: cpu7-thermal {
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 10>;
+-			sustainable-power = <1202>;
++			sustainable-power = <1425>;
+ 
+ 			trips {
+ 				cpu7_alert0: trip-point0 {
+@@ -3968,7 +3968,7 @@ cpu8_thermal: cpu8-thermal {
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 11>;
+-			sustainable-power = <1202>;
++			sustainable-power = <1425>;
+ 
+ 			trips {
+ 				cpu8_alert0: trip-point0 {
+@@ -4009,7 +4009,7 @@ cpu9_thermal: cpu9-thermal {
+ 			polling-delay = <0>;
+ 
+ 			thermal-sensors = <&tsens0 12>;
+-			sustainable-power = <1202>;
++			sustainable-power = <1425>;
+ 
+ 			trips {
+ 				cpu9_alert0: trip-point0 {
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum, a Linux Foundation Collaborative Project
+2.33.0.153.gba50c8fa24-goog
+
