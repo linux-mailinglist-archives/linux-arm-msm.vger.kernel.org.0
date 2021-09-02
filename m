@@ -2,148 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 85C363FEB74
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Sep 2021 11:41:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ECFF93FEB80
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  2 Sep 2021 11:45:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245455AbhIBJmI convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>); Thu, 2 Sep 2021 05:42:08 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:52596 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245505AbhIBJmH (ORCPT
+        id S245693AbhIBJnx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 2 Sep 2021 05:43:53 -0400
+Received: from mail-4325.protonmail.ch ([185.70.43.25]:61473 "EHLO
+        mail-4325.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S245185AbhIBJnw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 2 Sep 2021 05:42:07 -0400
-Received: from smtpclient.apple (p5b3d2185.dip0.t-ipconnect.de [91.61.33.133])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 7A46DCECDD;
-        Thu,  2 Sep 2021 11:41:07 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
-Subject: Re: [PATCH v7] Bluetooth: btusb: Add support using different nvm for
- variant WCN6855 controller
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <1630572986-30786-1-git-send-email-zijuhu@codeaurora.org>
-Date:   Thu, 2 Sep 2021 11:41:07 +0200
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        open list <linux-kernel@vger.kernel.org>,
-        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        c-hbandi@codeaurora.org, Hemantg <hemantg@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rocky Liao <rjliao@codeaurora.org>, tjiang@codeaurora.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <E3D0B31D-FFFE-4F56-A2E0-CFCC936AED48@holtmann.org>
-References: <1630572986-30786-1-git-send-email-zijuhu@codeaurora.org>
-To:     Zijun Hu <zijuhu@codeaurora.org>
-X-Mailer: Apple Mail (2.3654.120.0.1.13)
+        Thu, 2 Sep 2021 05:43:52 -0400
+Date:   Thu, 02 Sep 2021 09:42:46 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail; t=1630575772;
+        bh=xRF9eqv4PKo+kZdEnxZf3slEfaXPEv4ICmGtDtFFhr0=;
+        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
+        b=wf/2sLr+/ZxXhfe0qyapMX8pS587V7p1N27/s2WJgjM3SOUs+CYlEFEHut78r4LcB
+         JEjb4vIvf6QDTkk4B9UWDfaTgdJm5LqSJOomxhnu12RoDcyHDoBtmIkjZm6x1RzLQo
+         WyIJAWORp36Wf43sqL3Qe6yr/w7XzZnKDuzJK2wQ=
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+From:   Yassine Oudjana <y.oudjana@protonmail.com>
+Cc:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        AngeloGioacchino Del Regno <kholk11@gmail.com>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Shawn Guo <shawn.guo@linaro.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
+Subject: Re: [PATCH v4 1/5] interconnect: qcom: sdm660: Commonize RPM-QoS
+Message-ID: <UQVSYQ.02005O7OLITH3@protonmail.com>
+In-Reply-To: <efafd058-ad68-eb0a-af42-40d879ef63d9@linaro.org>
+References: <20210901121518.152481-1-y.oudjana@protonmail.com> <20210901121518.152481-2-y.oudjana@protonmail.com> <9af0f031-101e-53b4-514e-9ead44320f4e@somainline.org> <efafd058-ad68-eb0a-af42-40d879ef63d9@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Zijun,
 
-> the RF perfermence of wcn6855 soc chip from different foundries will be
 
-spelling check please.
+On Thu, Sep 2 2021 at 02:01:59 +0400, Dmitry Baryshkov=20
+<dmitry.baryshkov@linaro.org> wrote:
+> On 01/09/2021 21:48, AngeloGioacchino Del Regno wrote:
+>>  Il 01/09/21 14:15, Yassine Oudjana ha scritto:
+>>>  SoCs such as MSM8996 also control bus QoS in a similar fashion to=20
+>>> SDM660,
+>>>  with some paths being controlled by RPM and others directly by the=20
+>>> AP.
+>>>  Move relevant functions and defines to a new object so that they=20
+>>> can
+>>>  be used
+>>>  in multiple drivers.
+>>>=20
+>>>  Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+>>=20
+>>  Hey guys!
+>>=20
+>>  I'm waiting for the interconnect RPM-QoS commonization to be merged=20
+>> as I
+>>  have fresh
+>>  interconnect drivers for MSM8998 and MSM8976, ready to send, that=20
+>> are
+>>  also using
+>>  the very same QoS mechanism as SDM660.
+>=20
+> We were also looking onto this. I'd propose to merge sdm660 code into
+> main icc-rpm.c instead of splitting it into separate file. We have
+> enabled QoS for apq8096 (msm8916) and msm8939. See
+> https://lore.kernel.org/linux-arm-msm/20210818015732.1717810-1-dmitry.bar=
+yshkov@linaro.org/
+> for the reference. I'm waiting for Shawn to publish v2 of his fix,=20
+> then
+> I can post v2 of my patchset.
 
-> difference, so we should use different nvm to configure them.
-> 
-> Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
-> ---
-> drivers/bluetooth/btusb.c | 50 +++++++++++++++++++++++++++++++++++------------
-> 1 file changed, 37 insertions(+), 13 deletions(-)
-> 
-> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-> index 928cbfa4c42d..218547f6097e 100644
-> --- a/drivers/bluetooth/btusb.c
-> +++ b/drivers/bluetooth/btusb.c
-> @@ -3161,6 +3161,9 @@ static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
-> #define QCA_DFU_TIMEOUT		3000
-> #define QCA_FLAG_MULTI_NVM      0x80
-> 
-> +#define WCN6855_2_0_RAM_VERSION_GF 0x400c1200
-> +#define WCN6855_2_1_RAM_VERSION_GF 0x400c1211
-> +
-> struct qca_version {
-> 	__le32	rom_version;
-> 	__le32	patch_version;
-> @@ -3192,6 +3195,7 @@ static const struct qca_device_info qca_devices_table[] = {
-> 	{ 0x00000302, 28, 4, 16 }, /* Rome 3.2 */
-> 	{ 0x00130100, 40, 4, 16 }, /* WCN6855 1.0 */
-> 	{ 0x00130200, 40, 4, 16 }, /* WCN6855 2.0 */
-> +	{ 0x00130201, 40, 4, 16 }, /* WCN6855 2.1 */
-> };
-> 
-> static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 request,
-> @@ -3346,6 +3350,31 @@ static int btusb_setup_qca_load_rampatch(struct hci_dev *hdev,
-> 	return err;
-> }
-> 
-> +static void btusb_generate_qca_nvm_name(char *fwname,
-> +					size_t max_size,
-> +					struct qca_version *ver,
-> +					char *variant)
-> +{
-> +	char *separator = (strlen(variant) == 0) ? "" : "_";
+I'll wait for your v2 to post v5 of this series then.
+Please add me to Cc when you send it.
 
-Shortcut this variable name to sep.
+>=20
+>>=20
+>>  Yassine, please check Shawn's recent patches for SDM660=20
+>> interconnect,
+>>  which are
+>>  fixing some bits for the QoS implementation and adding some required
+>>  clocks to the
+>>  SDM660 interconnect driver.
+>>=20
+>>  Adding Shawn to the Ccs as to make him aware of this patch;
+>>  also adding Marijn and Konrad from SoMainline as probably interested
+>>  parties.
+>>=20
+>>  Cheers!
+>>  - Angelo
+>=20
+>=20
+> --
+> With best wishes
+> Dmitry
 
-> +	u16 board_id = le16_to_cpu(ver->board_id);
-> +	u32 rom_version = le32_to_cpu(ver->rom_version);
-> +
-> +	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
-> +		/* if boardid equal 0, use default nvm without suffix */
-> +		if (board_id == 0x0) {
-> +			snprintf(fwname, max_size, "qca/nvm_usb_%08x%s%s.bin",
-> +				 rom_version, separator, variant);
-> +		} else {
-> +			snprintf(fwname, max_size, "qca/nvm_usb_%08x%s%s_%04x.bin",
-> +				rom_version, separator,	variant, board_id);
-> +		}
-> +	} else {
-> +		snprintf(fwname, max_size, "qca/nvm_usb_%08x.bin",
-> +			 rom_version);
-> +	}
-> +
-> +}
-> +
-> static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
-> 				    struct qca_version *ver,
-> 				    const struct qca_device_info *info)
-> @@ -3354,19 +3383,14 @@ static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
-> 	char fwname[64];
-> 	int err;
-> 
-> -	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
-> -		/* if boardid equal 0, use default nvm without surfix */
-> -		if (le16_to_cpu(ver->board_id) == 0x0) {
-> -			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
-> -				 le32_to_cpu(ver->rom_version));
-> -		} else {
-> -			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_%04x.bin",
-> -				le32_to_cpu(ver->rom_version),
-> -				le16_to_cpu(ver->board_id));
-> -		}
-> -	} else {
-> -		snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
-> -			 le32_to_cpu(ver->rom_version));
-> +	switch (ver->ram_version) {
-> +	case WCN6855_2_0_RAM_VERSION_GF:
-> +	case WCN6855_2_1_RAM_VERSION_GF:
-> +			btusb_generate_qca_nvm_name(fwname, sizeof(fwname), ver, "gf");
-> +		break;
-> +	default:
-> +			btusb_generate_qca_nvm_name(fwname, sizeof(fwname), ver, "");
-> +		break;
+Thanks,
+Yassine
 
-Indentation mistake.
 
-> 	}
-> 
-> 	err = request_firmware(&fw, fwname, &hdev->dev);
 
-Regards
-
-Marcel
 
