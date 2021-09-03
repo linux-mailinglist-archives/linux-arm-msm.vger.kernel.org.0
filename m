@@ -2,234 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 16FF44005D3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Sep 2021 21:29:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1807A4005F6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Sep 2021 21:39:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235684AbhICTaf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Sep 2021 15:30:35 -0400
-Received: from mail-0301.mail-europe.com ([188.165.51.139]:60114 "EHLO
-        mail-0301.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235769AbhICTae (ORCPT
+        id S1349686AbhICTkw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Sep 2021 15:40:52 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54376 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1349516AbhICTkv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Sep 2021 15:30:34 -0400
-Date:   Fri, 03 Sep 2021 19:29:28 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1630697370;
-        bh=IIWvAM+fUjurDtuiATc04S+qnRbLaXtjcjstHTtfjVg=;
-        h=Date:To:From:Cc:Reply-To:Subject:From;
-        b=A1ioBZl1xKdBjsUoVYbQNxJ8/vBPQLRtMqYZcOhoRHc+wk89nShld8/SEz3kgi4Im
-         LoxHPXGT4vCNsniMyZOF364LhifG4mC/qNldyz81Pcb5SQ3GS5LlgHAUnvRbQ3XzWF
-         oKs6tx17Bz5tLPRWKibbawH6O5a1WMhmshpayBsA=
-To:     dan.carpenter@oracle.com
-From:   Yassine Oudjana <y.oudjana@protonmail.com>
-Cc:     bjorn.andersson@linaro.org, butterflyhuangxx@gmail.com,
-        davem@davemloft.net, kuba@kernel.org,
-        linux-arm-msm@vger.kernel.org, loic.poulain@linaro.org,
-        mani@kernel.org, netdev@vger.kernel.org
-Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
-Subject: Re: [PATCH v2 net] net: qrtr: make checks in qrtr_endpoint_post() stricter
-Message-ID: <S4IVYQ.R543O8OZ1IFR3@protonmail.com>
+        Fri, 3 Sep 2021 15:40:51 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AA600C061757
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Sep 2021 12:39:50 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id x27so394132lfu.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Sep 2021 12:39:50 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=q/mMqrwEsTCjyLsgA0ikvXEubjygmiehwCmD4JsY2Oo=;
+        b=e5KHOH74YJ5L0QdbPHJWvvNhRVg/kBYpih9FO9zzwTE3Q95WeI/s7HOBinP1qxUIZB
+         QAnJYNt+L1n3Q1Q6X0ppIwQErEr9+ku2/sUUsPrIL8ry1YUEYkbZczH1n2G4sgcJpwlC
+         OyvooXJFcMqYybUZPr/Tp0U4dLLYZJ0nsREnA1bJe/IEeffA+p15vQgG1GazeUiVB75u
+         YHQK2m7Wt4ruuuxdJAk19NWUzUsnHXlHpcoPvWYpqRNkWLUoWuQWlfznNOzPmXPgaFPx
+         CCvMEskqit7QrrcQ3bnSx3i95ugtRUclnRIOx4hxGieGT7BdAV0Hv/XNxCCNjH1LiGU7
+         g6ow==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=q/mMqrwEsTCjyLsgA0ikvXEubjygmiehwCmD4JsY2Oo=;
+        b=LBnZoT+Uxf3HV+K75eUG2o7bqePr3vdERlttjhq5enyGwjhIAIfzwCEih8Zq0sm8L9
+         vcFBaArV19dHwd+X68psEFDo5FNuKdLrnmosXSX4wA6ATNybnel7P+zkRbEhMs0m/Qxl
+         zoZcF9bhQm7LCpKBA7trpjfjz+98O9XQ2qjn3hstFrvWW/BG+Jb4So13z9gU5YFEsRF9
+         70fMLwDIXHDS8v1HL+xBjmZe58bKF9mXqwh09FH3A7zF1nQv5nhk1LECyv+S5XEqwCYT
+         ZCwz+/kD/VTanGnn1/vfInEEXL5tz/Z6grU/LZpLV5mWxmeA9IxcVd/S19Uny70d4j25
+         X53A==
+X-Gm-Message-State: AOAM5338hQ3QywFCY3IALWgkznIFFtu5TQW+d6h9D1bB8VQtkN4XI8zN
+        aziSiqjB2Z24z6BJZvhtk64SGPOsdlsgp3F9FFd6sQ==
+X-Google-Smtp-Source: ABdhPJwPSfd3cWkRvtg1v4fnIt3ikKAKPBDq7JAoqQpURwTDA2QPNnmpp0MqualUro8TR/v6pKApJ8aZS9sZIfFIKQ0=
+X-Received: by 2002:a05:6512:118e:: with SMTP id g14mr348609lfr.661.1630697988724;
+ Fri, 03 Sep 2021 12:39:48 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+References: <20210729183942.2839925-1-robdclark@gmail.com> <1a38a590-a64e-58ef-1bbf-0ae49c004d05@linaro.org>
+ <CAF6AEGs5dzA7kfO89Uqbh3XmorXoEa=fpW+unk5_oaihHm479Q@mail.gmail.com>
+ <e2cebf65-012d-f818-8202-eb511c996e28@linaro.org> <CAF6AEGs11aYnkL30kp79pMqLTg3_4otFwG2Oc890Of2ndLbELw@mail.gmail.com>
+In-Reply-To: <CAF6AEGs11aYnkL30kp79pMqLTg3_4otFwG2Oc890Of2ndLbELw@mail.gmail.com>
+From:   John Stultz <john.stultz@linaro.org>
+Date:   Fri, 3 Sep 2021 12:39:38 -0700
+Message-ID: <CALAqxLUkyXK2gqNMBbtJFfh01ZpcG46dZaM7Zq4jG3OngvFREg@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: Disable frequency clamping on a630
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     Caleb Connolly <caleb.connolly@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        David Airlie <airlied@linux.ie>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 30 Aug 2021 11:37:17 +0300 Dan Carpenter wrote:
- > These checks are still not strict enough. The main problem is that if
- > "cb->type =3D=3D QRTR_TYPE_NEW_SERVER" is true then "len - hdrlen" is
- > guaranteed to be 4 but we need to be at least 16 bytes. In fact, we
- > can reject everything smaller than sizeof(*pkt) which is 20 bytes.
- >
- > Also I don't like the ALIGN(size, 4). It's better to just insist that
- > data is needs to be aligned at the start.
- >
- > Fixes: 0baa99ee353c ("net: qrtr: Allow non-immediate node routing")
- > Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
- > ---
- > v2: Fix a % vs & bug. Thanks, butt3rflyh4ck!
- >
- > net/qrtr/qrtr.c | 8 ++++++--
- > 1 file changed, 6 insertions(+), 2 deletions(-)
- >
- > diff --git a/net/qrtr/qrtr.c b/net/qrtr/qrtr.c
- > index b8508e35d20e..dbb647f5481b 100644
- > --- a/net/qrtr/qrtr.c
- > +++ b/net/qrtr/qrtr.c
- > @@ -493,7 +493,7 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep,=20
-const void *data, size_t len)
- > goto err;
- > }
- >
- > - if (!size || len !=3D ALIGN(size, 4) + hdrlen)
- > + if (!size || size & 3 || len !=3D size + hdrlen)
- > goto err;
- >
- > if (cb->dst_port !=3D QRTR_PORT_CTRL && cb->type !=3D QRTR_TYPE_DATA &&
- > @@ -506,8 +506,12 @@ int qrtr_endpoint_post(struct qrtr_endpoint=20
-*ep, const void *data, size_t len)
- >
- > if (cb->type =3D=3D QRTR_TYPE_NEW_SERVER) {
- > /* Remote node endpoint can bridge other distant nodes */
- > - const struct qrtr_ctrl_pkt *pkt =3D data + hdrlen;
- > + const struct qrtr_ctrl_pkt *pkt;
- >
- > + if (size < sizeof(*pkt))
- > + goto err;
- > +
- > + pkt =3D data + hdrlen;
- > qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
- > }
- >
- > --
- > 2.20.1
- >
+On Thu, Jul 29, 2021 at 1:49 PM Rob Clark <robdclark@gmail.com> wrote:
+> On Thu, Jul 29, 2021 at 1:28 PM Caleb Connolly
+> <caleb.connolly@linaro.org> wrote:
+> > On 29/07/2021 21:24, Rob Clark wrote:
+> > > On Thu, Jul 29, 2021 at 1:06 PM Caleb Connolly
+> > > <caleb.connolly@linaro.org> wrote:
+> > >>
+> > >> Hi Rob,
+> > >>
+> > >> I've done some more testing! It looks like before that patch ("drm/msm: Devfreq tuning") the GPU would never get above
+> > >> the second frequency in the OPP table (342MHz) (at least, not in glxgears). With the patch applied it would more
+> > >> aggressively jump up to the max frequency which seems to be unstable at the default regulator voltages.
+> > >
+> > > *ohh*, yeah, ok, that would explain it
+> > >
+> > >> Hacking the pm8005 s1 regulator (which provides VDD_GFX) up to 0.988v (instead of the stock 0.516v) makes the GPU stable
+> > >> at the higher frequencies.
+> > >>
+> > >> Applying this patch reverts the behaviour, and the GPU never goes above 342MHz in glxgears, losing ~30% performance in
+> > >> glxgear.
+> > >>
+> > >> I think (?) that enabling CPR support would be the proper solution to this - that would ensure that the regulators run
+> > >> at the voltage the hardware needs to be stable.
+> > >>
+> > >> Is hacking the voltage higher (although ideally not quite that high) an acceptable short term solution until we have
+> > >> CPR? Or would it be safer to just not make use of the higher frequencies on a630 for now?
+> > >>
+> > >
+> > > tbh, I'm not sure about the regulator stuff and CPR.. Bjorn is already
+> > > on CC and I added sboyd, maybe one of them knows better.
+> > >
+> > > In the short term, removing the higher problematic OPPs from dts might
+> > > be a better option than this patch (which I'm dropping), since there
+> > > is nothing stopping other workloads from hitting higher OPPs.
+> > Oh yeah that sounds like a more sensible workaround than mine .
+> > >
+> > > I'm slightly curious why I didn't have problems at higher OPPs on my
+> > > c630 laptop (sdm850)
+> > Perhaps you won the sillicon lottery - iirc sdm850 is binned for higher clocks as is out of the factory.
+> >
+> > Would it be best to drop the OPPs for all devices? Or just those affected? I guess it's possible another c630 might
+> > crash where yours doesn't?
+>
+> I've not heard any reports of similar issues from the handful of other
+> folks with c630's on #aarch64-laptops.. but I can't really say if that
+> is luck or not.
+>
+> Maybe just remove it for affected devices?  But I'll defer to Bjorn.
 
-This is crashing MSM8996. I get these messages (dmesg | grep=20
-remoteproc):
+Just as another datapoint, I was just marveling at how suddenly smooth
+the UI was performing on db845c and Caleb pointed me at the "drm/msm:
+Devfreq tuning" patch as the likely cause of the improvement, and
+mid-discussion my board crashed into USB crash mode:
+[  146.157696][    C0] adreno 5000000.gpu: CP | AHB bus error
+[  146.163303][    C0] adreno 5000000.gpu: CP | AHB bus error
+[  146.168837][    C0] adreno 5000000.gpu: RBBM | ATB bus overflow
+[  146.174960][    C0] adreno 5000000.gpu: CP | HW fault | status=0x00000000
+[  146.181917][    C0] adreno 5000000.gpu: CP | AHB bus error
+[  146.187547][    C0] adreno 5000000.gpu: CP illegal instruction error
+[  146.194009][    C0] adreno 5000000.gpu: CP | AHB bus error
+[  146.308909][    T9] Internal error: synchronous external abort:
+96000010 [#1] PREEMPT SMP
+[  146.317150][    T9] Modules linked in:
+[  146.320941][    T9] CPU: 3 PID: 9 Comm: kworker/u16:1 Tainted: G
+    W         5.14.0-mainline-06795-g42b258c2275c #24
+[  146.331974][    T9] Hardware name: Thundercomm Dragonboar
+Format: Log Type - Time(microsec) - Message - Optional Info
+Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
+S - QC_IMAGE_VERSION_STRING=BOOT.XF.2.0-00371-SDM845LZB-1
+S - IMAGE_VARIANT_STRING=SDM845LA
+S - OEM_IMAGE_VERSION_STRING=TSBJ-FA-PC-02170
 
-[ 11.677216] qcom-q6v5-mss 2080000.remoteproc: supply pll not found,=20
-using dummy regulator
-[ 11.701423] qcom_q6v5_pas 1c00000.remoteproc: supply cx not found,=20
-using dummy regulator
-[ 11.716475] qcom_q6v5_pas 1c00000.remoteproc: supply px not found,=20
-using dummy regulator
-[ 11.724481] remoteproc remoteproc0: 2080000.remoteproc is available
-[ 11.747772] remoteproc remoteproc1: 1c00000.remoteproc is available
-[ 11.762163] qcom_q6v5_pas 9300000.remoteproc: supply cx not found,=20
-using dummy regulator
-[ 11.778599] qcom_q6v5_pas 9300000.remoteproc: supply px not found,=20
-using dummy regulator
-[ 11.785288] remoteproc remoteproc2: 9300000.remoteproc is available
-[ 11.786574] remoteproc remoteproc1: powering up 1c00000.remoteproc
-[ 11.791908] remoteproc remoteproc1: Booting fw image=20
-qcom/msm8996/scorpio/slpi.mbn, size 3921212
-[ 11.870859] remoteproc remoteproc2: powering up 9300000.remoteproc
-[ 11.873980] remoteproc remoteproc2: Booting fw image=20
-qcom/msm8996/scorpio/adsp.mbn, size 12264177
-[ 11.922394] remoteproc remoteproc1: remote processor=20
-1c00000.remoteproc is now up
-[ 12.036379] qcom_smd_qrtr remoteproc1:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 12.039457] qcom_smd_qrtr remoteproc1:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 12.112448] qcom_smd_qrtr remoteproc2:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 13.015132] qcom,apr remoteproc2:smd-edge.apr_audio_svc.-1.-1: Adding=20
-APR dev: aprsvc:q6core:4:3
-[ 13.019159] qcom,apr remoteproc2:smd-edge.apr_audio_svc.-1.-1: Adding=20
-APR dev: aprsvc:q6afe:4:4
-[ 13.028870] qcom,apr remoteproc2:smd-edge.apr_audio_svc.-1.-1: Adding=20
-APR dev: aprsvc:q6asm:4:7
-[ 13.031606] qcom,apr remoteproc2:smd-edge.apr_audio_svc.-1.-1: Adding=20
-APR dev: aprsvc:q6adm:4:8
-[ 13.214501] q6asm-dai 9300000.remoteproc:smd-edge:apr:q6asm:dais:=20
-Adding to iommu group 3
-[ 13.994777] remoteproc remoteproc0: powering up 2080000.remoteproc
-[ 13.999669] remoteproc remoteproc0: Booting fw image=20
-qcom/msm8996/scorpio/mba.mbn, size 213888
-[ 14.247034] qcom_smd_qrtr remoteproc1:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 14.247298] qcom_smd_qrtr remoteproc1:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 17.118806] qcom_q6v5_pas 1c00000.remoteproc: timeout waiting for=20
-subsystem event response
-[ 17.119496] qcom_smd_qrtr remoteproc2:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 17.119556] qcom_smd_qrtr remoteproc2:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 19.422732] qcom_q6v5_pas 1c00000.remoteproc: timeout waiting for=20
-subsystem event response
-[ 19.423388] qcom_smd_qrtr remoteproc2:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 19.423453] qcom_smd_qrtr remoteproc2:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 22.238725] qcom_q6v5_pas 9300000.remoteproc: timeout waiting for=20
-subsystem event response
-[ 24.542706] qcom_q6v5_pas 9300000.remoteproc: timeout waiting for=20
-subsystem event response
-[ 24.543468] qcom_smd_qrtr remoteproc2:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 24.543524] qcom_smd_qrtr remoteproc2:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 24.658698] qcom-q6v5-mss 2080000.remoteproc: MBA booted without debug=20
-policy, loading mpss
-[ 25.994603] qcom_smd_qrtr remoteproc0:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 29.662816] qcom_q6v5_pas 9300000.remoteproc: timeout waiting for=20
-subsystem event response
-[ 29.662922] remoteproc remoteproc2: remote processor=20
-9300000.remoteproc is now up
-[ 29.665429] qcom_smd_qrtr remoteproc1:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 29.665645] qcom_smd_qrtr remoteproc1:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 34.782737] qcom_q6v5_pas 1c00000.remoteproc: timeout waiting for=20
-subsystem event response
-[ 34.783369] qcom_smd_qrtr remoteproc2:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 34.783526] qcom_smd_qrtr remoteproc2:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 39.902789] qcom_q6v5_pas 9300000.remoteproc: timeout waiting for=20
-subsystem event response
-[ 39.903057] qcom_smd_qrtr remoteproc0:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 39.903131] qcom_smd_qrtr remoteproc0:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 45.022691] qcom-q6v5-mss 2080000.remoteproc: timeout waiting for=20
-subsystem event response
-[ 45.022824] qcom_smd_qrtr remoteproc0:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 45.022863] qcom_smd_qrtr remoteproc0:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 50.146792] qcom-q6v5-mss 2080000.remoteproc: timeout waiting for=20
-subsystem event response
-[ 50.146888] remoteproc remoteproc0: remote processor=20
-2080000.remoteproc is now up
-[ 66.001288] qcom-q6v5-mss 2080000.remoteproc: fatal error without=20
-message
-[ 66.001311] remoteproc remoteproc0: crash detected in=20
-2080000.remoteproc: type fatal error
-[ 66.001328] remoteproc remoteproc0: handling crash #1 in=20
-2080000.remoteproc
-[ 66.001334] remoteproc remoteproc0: recovering 2080000.remoteproc
-[ 66.003850] qcom_smd_qrtr remoteproc1:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 66.004073] qcom_smd_qrtr remoteproc1:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 71.134780] qcom_q6v5_pas 1c00000.remoteproc: timeout waiting for=20
-subsystem event response
-[ 71.135455] qcom_smd_qrtr remoteproc2:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 71.135505] qcom_smd_qrtr remoteproc2:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 76.258685] qcom_q6v5_pas 9300000.remoteproc: timeout waiting for=20
-subsystem event response
-[ 76.261799] qcom_smd_qrtr remoteproc1:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 76.262029] qcom_smd_qrtr remoteproc1:smd-edge.IPCRTR.-1.-1: invalid=20
-ipcrouter packet
-[ 81.374728] qcom_q6v5_pas 1c00000.remoteproc: timeout waiting for=20
-subsystem event response
-[ 86.494754] qcom_q6v5_pas 9300000.remoteproc: timeout waiting for=20
-subsystem event response
-[ 86.494812] remoteproc remoteproc0: stopped remote processor=20
-2080000.remoteproc
+So Caleb sent me to this thread. :)
 
-Then I get a last message which I wasn't able to capture above but was=20
-able to see:
+I'm still trying to trip it again, but it does seem like db845c is
+also seeing some stability issues with Linus' HEAD.
 
-qcom-q6v5-mss 2080000.remoteproc: MBA booted without debug policy,=20
-loading mpss
-
-and it crashes and reboots right after this message.
-
-
-
-
+thanks
+-john
