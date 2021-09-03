@@ -2,103 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4908B4004FC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Sep 2021 20:40:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7236540050C
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Sep 2021 20:44:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348708AbhICSlt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Sep 2021 14:41:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40462 "EHLO
+        id S1349433AbhICSpA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Sep 2021 14:45:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41246 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348344AbhICSlq (ORCPT
+        with ESMTP id S1349459AbhICSpA (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Sep 2021 14:41:46 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE76AC061575
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Sep 2021 11:40:46 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id k12-20020a056830150c00b0051abe7f680bso176260otp.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Sep 2021 11:40:46 -0700 (PDT)
+        Fri, 3 Sep 2021 14:45:00 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB1F5C061575;
+        Fri,  3 Sep 2021 11:43:59 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id z24-20020a17090acb1800b0018e87a24300so202405pjt.0;
+        Fri, 03 Sep 2021 11:43:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to;
-        bh=g+/vVt6JhLLpX1/epBxESaopp8FQHhl77WcdHs+7WkE=;
-        b=S43gOar878bmf2S/ybLy8S+qmYwiuKKN1YQkjyxZG7PrBlEr3oytcmYjl8Zvz/gTwh
-         YbECImb7dEdGWbCX75zbh/ITV1FIttFEputYDhGJvuRSvPJT4vICkU9+05sCPwKXXcHa
-         DPSw9qv85JWv8adTg+5LDsvHRDpraHZeLUVZ0=
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eL8IPpLjz+u+tW0DpBHxfXxNC5xBjc+5MpXdFfRQCQg=;
+        b=YHyxlRJ9KHFtVLZv4e7UMFACH3/qLmF3MpF0+yavqfvhZZzDGyVeTR/t+WlFdbFLVC
+         3QW7jEOI/CDuyeA3esWyXvJP6wbd9ZCujymOIbf/XF6gMnCuurkKmftPGnQoo/QdkdBw
+         7+jKNY0tho3FGFB1N1pvtoSkAJnpCv4TdiNI+uqGHfR1RlNG4kdAfKwYC8B0dViOyCl2
+         Ar/dPOHZSWhYrhZuCBShrTNNBOchp926sNID6dKZnFdeLBMYyuwqmrSKkIhgnGTGphJg
+         yg2RpyiUoBKInxJyG92yOLpfpuGT8W7LsV13uy83CL2eRKttBllW6DN3dbbLA3gw5XV0
+         D7UA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to;
-        bh=g+/vVt6JhLLpX1/epBxESaopp8FQHhl77WcdHs+7WkE=;
-        b=cNa9AKIHLwBqoeB79JQTWgOWsW8Jd6E3TFFmZoGQ2cXaQDKBbBAjWCDjQIuaoPf89z
-         4hiih55KoT2GHTXZPZWJ+SWL9iKfoIAS5jpHvsMaQMejJ+z2LYf03/nSiKK9NUpkX12a
-         7VRLg8kFSsKInpQ85uD6/pX6ZNKqp4ZB9bhBhC1eJgb60gsy9bA9ZR7IaEuRAPG55VyN
-         ReMDu4o+uB1TYK8DHn+yTkvdPLQApwhzuaWq3RKo74+n2FQom91qQ4JUf6GQQCyVdN5p
-         O1yfnK4Z+YT/CvEmsaXqkSYOEgMsF565dlwD2IifARishN9qmtBuCIm1pICJUSGNkqq+
-         64FA==
-X-Gm-Message-State: AOAM5308LlQrDUh2tNixnhVwG+6kLyNx8AjTR0gpWEMI2sGUAGimZJXt
-        QARfWKyihHOgABpJ6X9FNrisuoWKj3n2HUaO323NvA==
-X-Google-Smtp-Source: ABdhPJycPSV0nBgcq0hjBFC/o2cbbIgqzAp7Pb8hkvRUJrUsZwaG0a7ygKqi477f1CU9FYwgWjubKMEef81F9cz435c=
-X-Received: by 2002:a05:6830:719:: with SMTP id y25mr380633ots.77.1630694445434;
- Fri, 03 Sep 2021 11:40:45 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Fri, 3 Sep 2021 14:40:45 -0400
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=eL8IPpLjz+u+tW0DpBHxfXxNC5xBjc+5MpXdFfRQCQg=;
+        b=i3rZrGZY3i6eKzdPOjNyEIlTzDdiVaE35Dmfsn2rPqvaK9+YgrWunalzLEbhZ6vxCZ
+         fm/gy87PmxFnFyDVN9a5GSR5T50Nf53bvEIao6u/rFuVx6cDLGued2hUcMzxtTQ4V0Pq
+         7IbRwf+6GOZXj6Z6yyA9jlg6Wy0RdsX0X5dD+mFBrg6BogIKcyJTzkBfArnuGlhSiQJA
+         KtKLdgNNm2UoRmiTU/5QqgaEYTQ6G65s4MMY7UPL25E/L+R91wd3AXZh/ex9fQ09v/IB
+         9ZfksupiPwTxBFjSkSrFhZhgiaZqZR7r0bk+XPpOcDPyhAp/eZZqR/GkUwHlHOhyhuKQ
+         5XMA==
+X-Gm-Message-State: AOAM531HNCjzflh4pafJDu1KEiABVvdiU1NhKi53YoANZiG6StRHisej
+        6iAzQbrpixP6OrdL6/YP5JE=
+X-Google-Smtp-Source: ABdhPJz303qR3WoSm2Y3+5yldCV+CDvbO1CpVugiOEPTnv5ubkj0mTAp3wQrZViz13f/ianeVmFTfg==
+X-Received: by 2002:a17:90a:49cb:: with SMTP id l11mr359711pjm.142.1630694639358;
+        Fri, 03 Sep 2021 11:43:59 -0700 (PDT)
+Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
+        by smtp.gmail.com with ESMTPSA id y64sm107777pgy.32.2021.09.03.11.43.58
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 03 Sep 2021 11:43:58 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org, linaro-mm-sig@lists.linaro.org
+Cc:     Daniel Vetter <daniel@ffwll.ch>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= 
+        <ckoenig.leichtzumerken@gmail.com>,
+        =?UTF-8?q?Michel=20D=C3=A4nzer?= <michel@daenzer.net>,
+        Pekka Paalanen <ppaalanen@gmail.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Andrey Grodzovsky <andrey.grodzovsky@amd.com>,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        freedreno@lists.freedesktop.org (open list:DRM DRIVER FOR MSM ADRENO
+        GPU), Gustavo Padovan <gustavo@padovan.org>,
+        Jack Zhang <Jack.Zhang1@amd.com>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        linux-kernel@vger.kernel.org (open list),
+        linux-media@vger.kernel.org (open list:DMA BUFFER SHARING FRAMEWORK),
+        Luben Tuikov <luben.tuikov@amd.com>,
+        Melissa Wen <mwen@igalia.com>,
+        Steven Price <steven.price@arm.com>,
+        Tian Tao <tiantao6@hisilicon.com>
+Subject: [PATCH v3 0/9] dma-fence: Deadline awareness
+Date:   Fri,  3 Sep 2021 11:47:51 -0700
+Message-Id: <20210903184806.1680887-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-In-Reply-To: <20210903100153.9137-1-srivasam@codeaurora.org>
-References: <20210903100153.9137-1-srivasam@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Fri, 3 Sep 2021 14:40:45 -0400
-Message-ID: <CAE-0n50=vL0MHHHkc22ahrqqD3DskFXZzFU8qjU8=EY1kZ+__Q@mail.gmail.com>
-Subject: Re: [PATCH] ASoC: qcom: lpass-platform: Reset irq clear reg post
- handling interrupts
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        agross@kernel.org, alsa-devel@alsa-project.org,
-        bgoswami@codeaurora.org, bjorn.andersson@linaro.org,
-        broonie@kernel.org, devicetree@vger.kernel.org,
-        judyhsiao@chromium.org, lgirdwood@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        perex@perex.cz, plai@codeaurora.org, robh+dt@kernel.org,
-        rohitkr@codeaurora.org, srinivas.kandagatla@linaro.org,
-        tiwai@suse.com
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Srinivasa Rao Mandadapu (2021-09-03 03:01:53)
-> Update interrupt clear register with reset value after addressing
-> all interrupts. This is to fix playback or capture hanging issue in
-> simultaneous playback and capture usecase.
->
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-> ---
+From: Rob Clark <robdclark@chromium.org>
 
-Any Fixes tag?
+This series adds deadline awareness to fences, so realtime deadlines
+such as vblank can be communicated to the fence signaller for power/
+frequency management decisions.
 
->  sound/soc/qcom/lpass-platform.c | 6 ++++++
->  1 file changed, 6 insertions(+)
->
-> diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
-> index f9df76d37858..1a0a4b0b1a03 100644
-> --- a/sound/soc/qcom/lpass-platform.c
-> +++ b/sound/soc/qcom/lpass-platform.c
-> @@ -749,6 +749,12 @@ static irqreturn_t lpass_platform_lpaif_irq(int irq, void *data)
->                 }
->         }
->
-> +       rv = regmap_write(drvdata->lpaif_map, LPAIF_IRQCLEAR_REG(v, LPAIF_IRQ_PORT_HOST), 0x0);
-> +       if (rv) {
-> +               pr_err("error writing to irqstat reg: %d\n", rv);
-> +               return IRQ_NONE;
+This is partially inspired by a trick i915 does, but implemented
+via dma-fence for a couple of reasons:
 
-I was thinking we should return IRQ_HANDLED still, but then I guess
-failing to clear the irq be treated as a spurious irq so that if we fail
-enough times we'll shut off the irq at the irqchip. Things are going bad
-if the write fails.
+1) To continue to be able to use the atomic helpers
+2) To support cases where display and gpu are different drivers
 
-> +       }
-> +
->         return IRQ_HANDLED;
->  }
->
+This iteration adds a dma-fence ioctl to set a deadline (both to
+support igt-tests, and compositors which delay decisions about which
+client buffer to display), and a sw_sync ioctl to read back the
+deadline.  IGT tests utilizing these can be found at:
+
+  https://gitlab.freedesktop.org/robclark/igt-gpu-tools/-/commits/fence-deadline
+
+
+v1: https://patchwork.freedesktop.org/series/93035/
+v2: Move filtering out of later deadlines to fence implementation
+    to avoid increasing the size of dma_fence
+v3: Add support in fence-array and fence-chain; Add some uabi to
+    support igt tests and userspace compositors.
+
+Rob Clark (9):
+  dma-fence: Add deadline awareness
+  drm/vblank: Add helper to get next vblank time
+  drm/atomic-helper: Set fence deadline for vblank
+  drm/scheduler: Add fence deadline support
+  drm/msm: Add deadline based boost support
+  dma-buf/fence-array: Add fence deadline support
+  dma-buf/fence-chain: Add fence deadline support
+  dma-buf/sync_file: Add SET_DEADLINE ioctl
+  dma-buf/sw_sync: Add fence deadline support
+
+ drivers/dma-buf/dma-fence-array.c       | 11 ++++
+ drivers/dma-buf/dma-fence-chain.c       | 13 +++++
+ drivers/dma-buf/dma-fence.c             | 20 +++++++
+ drivers/dma-buf/sw_sync.c               | 58 +++++++++++++++++++
+ drivers/dma-buf/sync_debug.h            |  2 +
+ drivers/dma-buf/sync_file.c             | 19 +++++++
+ drivers/gpu/drm/drm_atomic_helper.c     | 36 ++++++++++++
+ drivers/gpu/drm/drm_vblank.c            | 32 +++++++++++
+ drivers/gpu/drm/msm/msm_fence.c         | 76 +++++++++++++++++++++++++
+ drivers/gpu/drm/msm/msm_fence.h         | 20 +++++++
+ drivers/gpu/drm/msm/msm_gpu.h           |  1 +
+ drivers/gpu/drm/msm/msm_gpu_devfreq.c   | 20 +++++++
+ drivers/gpu/drm/scheduler/sched_fence.c | 34 +++++++++++
+ drivers/gpu/drm/scheduler/sched_main.c  |  2 +-
+ include/drm/drm_vblank.h                |  1 +
+ include/drm/gpu_scheduler.h             |  8 +++
+ include/linux/dma-fence.h               | 16 ++++++
+ include/uapi/linux/sync_file.h          | 20 +++++++
+ 18 files changed, 388 insertions(+), 1 deletion(-)
+
+-- 
+2.31.1
+
