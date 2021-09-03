@@ -2,75 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D6C03400216
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Sep 2021 17:27:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B1810400286
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Sep 2021 17:46:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349723AbhICP0s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Sep 2021 11:26:48 -0400
-Received: from mail.kernel.org ([198.145.29.99]:52596 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1349680AbhICP0a (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Sep 2021 11:26:30 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id C2D0361101;
-        Fri,  3 Sep 2021 15:25:29 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1630682730;
-        bh=g2WcH0dspliSUg3Upb5HzTWrYsmq0if/g0dlKECrmDo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=lzkN6pwHRh14hV1nCbMtFE+7Ei/O9e4HHRRCd0hEDnSkPOLCxGd4gWddraZwJUWVx
-         XCvoXwYyAKFNYugXDLICAW09gcZnc/W0VwJ4B+wL8Bsh69mQXzp/HKgOTen+rsYoq9
-         kB5lzgQsex2ZS+PiZXxE8BiV/eejIbc8gbjYOkWzXY7pjd5pTO+gtYTt1bq0mItWEA
-         cEdzkYyCwRnMT70pstdxEnnKHculfgnmO/vr7qY+VnwzY2vRfR9e+YZihMxEYvtxN6
-         Qc4G/YFrDTE1bK9IH9b3oWf6iF6O4o6WR3dBnb0W1l6wy+VRx+N8xptxhTEQPLV8Xd
-         xHpHrJykJP8mw==
-Date:   Fri, 3 Sep 2021 16:24:56 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Iskren Chernev <iskren.chernev@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
+        id S1349658AbhICPrt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Sep 2021 11:47:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56408 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235536AbhICPrs (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 3 Sep 2021 11:47:48 -0400
+Received: from mail-pl1-x632.google.com (mail-pl1-x632.google.com [IPv6:2607:f8b0:4864:20::632])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85AFAC061757
+        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Sep 2021 08:46:48 -0700 (PDT)
+Received: by mail-pl1-x632.google.com with SMTP id m17so3535453plc.6
+        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Sep 2021 08:46:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Sqqe0m+lG2gnGk/qc8Vy/PEugdCzsPQEHtnGYob2kwI=;
+        b=jYQUzs5eoeHViiY6eSMLM1li3JAQtUU6Xmmw+m08JVIAA7TL9OzMz8lvQ3dTh20YRP
+         L8FTyBupdXpXkOPVReMJ3O1NZleiGPOQRCppqNMScGzem3X4AiCukawmV8fbpWfBYWRp
+         zx5USfjXXlZvPqTFnYbNjyKhgM6GMiEMStuv8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Sqqe0m+lG2gnGk/qc8Vy/PEugdCzsPQEHtnGYob2kwI=;
+        b=rF/yrfHfcyxoUku6U61HEdEqA1lDhwdHQdClk+hdGqWYjcIPZYLEdlDzADKUmjAQBt
+         cUAKLyKrWDqy+qtwy1OkQ4eu3syuSlYAMBzKHOxF+cHYbqcQP8uriDibg1Qjk+NdJUnk
+         OAPhAchKLad4RQGBIoipxmIwGz6BwvCGnLpMkWMvgiDuMZax/h6f9DDWxlVarpnW7Tnm
+         Sw9WWAm5SniAAqb08e3QzENXFUQ6OyEPnnls92uumzzMZRU1WROXyrHkgxH4+JSkDxbb
+         ghIOFVFIclKULhsyWpjExcwXDDpKQZKJCtbFAEu4ndZYvVuCZMfZveG2mqyDIkkxXJq/
+         BTLg==
+X-Gm-Message-State: AOAM5314ZnI2uKnwfSIhljn3kgPgHIioXFp27t+3MB/YnPLv6toyaMQk
+        Fiu/8nP1kBOAGc/+7GjjLJvocA==
+X-Google-Smtp-Source: ABdhPJxvbyEuZMwtiZCbKL6+/BSvy2w0L8i7C/gN4t5Bif7KwFFgeSD5LQo+OhnWncNrBDJM4gQxEw==
+X-Received: by 2002:a17:90a:dc03:: with SMTP id i3mr10283922pjv.163.1630684008001;
+        Fri, 03 Sep 2021 08:46:48 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:80b3:9f00:3170:fd8b])
+        by smtp.gmail.com with UTF8SMTPSA id d4sm5537757pfv.21.2021.09.03.08.46.46
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 03 Sep 2021 08:46:47 -0700 (PDT)
+Date:   Fri, 3 Sep 2021 08:46:45 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     rajpat@codeaurora.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, swboyd@chromium.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [RFC PATCH 0/2] PM6125 regulator support
-Message-ID: <20210903152456.GL4932@sirena.org.uk>
-References: <20210828115654.647548-1-iskren.chernev@gmail.com>
+        devicetree@vger.kernel.org, rnayak@codeaurora.org,
+        saiprakash.ranjan@codeaurora.org, msavaliy@qti.qualcomm.com,
+        skakit@codeaurora.org
+Subject: Re: [PATCH V5 1/7] arm64: dts: sc7280: Add QSPI node
+Message-ID: <YTJDZRw1D444JCNt@google.com>
+References: <1628754078-29779-1-git-send-email-rajpat@codeaurora.org>
+ <1628754078-29779-2-git-send-email-rajpat@codeaurora.org>
+ <YRUdccjvf+ivbqor@google.com>
+ <d271d1dafe56cbb58d35a63ec6944b14@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="f54savKjS/tSNRaU"
+Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <20210828115654.647548-1-iskren.chernev@gmail.com>
-X-Cookie: Darth Vader sleeps with a Teddywookie.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <d271d1dafe56cbb58d35a63ec6944b14@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Aug 26, 2021 at 06:29:41PM +0530, rajpat@codeaurora.org wrote:
+> On 2021-08-12 18:39, Matthias Kaehlcke wrote:
+> > On Thu, Aug 12, 2021 at 01:11:12PM +0530, Rajesh Patil wrote:
+> > > From: Roja Rani Yarubandi <rojay@codeaurora.org>
+> > > 
+> > > Add QSPI DT node and qspi_opp_table for SC7280 SoC.
+> > > 
+> > > Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
+> > > Signed-off-by: Rajesh Patil <rajpat@codeaurora.org>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/sc7280.dtsi | 62
+> > > ++++++++++++++++++++++++++++++++++++
+> > >  1 file changed, 62 insertions(+)
+> > > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > > b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > > index 53a21d0..f8dd5ff 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > > @@ -415,6 +415,25 @@
+> > >  		method = "smc";
+> > >  	};
+> > > 
+> > > +	qspi_opp_table: qspi-opp-table {
+> > > +		compatible = "operating-points-v2";
+> > > +
+> > > +		opp-75000000 {
+> > > +			opp-hz = /bits/ 64 <75000000>;
+> > > +			required-opps = <&rpmhpd_opp_low_svs>;
+> > > +		};
+> > > +
+> > > +		opp-150000000 {
+> > > +			opp-hz = /bits/ 64 <150000000>;
+> > > +			required-opps = <&rpmhpd_opp_svs>;
+> > > +		};
+> > > +
+> > > +		opp-300000000 {
+> > > +			opp-hz = /bits/ 64 <300000000>;
+> > > +			required-opps = <&rpmhpd_opp_nom>;
+> > > +		};
+> > > +	};
+> > > +
+> > 
+> > From v3:
+> > 
+> > roja> Can we move this "qspi_opp_table" to / from /soc?
+> > 
+> > bjorn> If you have made a proper attempt to convince Rob and Mark that
+> > bjorn> a child "opp-table" in a SPI master is not a SPI device - and the
+> > bjorn> conclusion is that this is not a good idea...then yes it should
+> > live
+> > bjorn> outside /soc.
+> > 
+> > I didn't see a follow up on this, was such an attempt made? Is there a
+> > link to the discussion?
+> 
+> For now I am keeping qspi_opp_table  and qup_opp_table outside the SoC and
+> posting V6.
+> I will continue the discussion with DT folks and once concluded I will
+> update as required.
 
---f54savKjS/tSNRaU
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-
-On Sat, Aug 28, 2021 at 02:56:52PM +0300, Iskren Chernev wrote:
-
->  drivers/regulator/qcom_smd-regulator.c  |  46 +++++++
->  drivers/regulator/qcom_spmi-regulator.c | 160 +++++++++++++++++++++++-
->  2 files changed, 204 insertions(+), 2 deletions(-)
-
-You should also add the new compatible to the bindings documentation.
-
---f54savKjS/tSNRaU
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmEyPkgACgkQJNaLcl1U
-h9C+wQf/dh31YevzvPxMwPCSISfojVL1NPvj5x4rsrMKFP94j2ojfCVRqVr9sB09
-OXR+l0oPc8oUucxMKsMQy/2kqt/Cgf6Oq0Qwtufrc3/xhMk881+bWLhBzdO0VMFG
-GrQgXmyaC6wNZc6Nxmvrziwte3r5IVCBlKEZOwm1FSga+CKYcXs8kuvjYbNIz+9u
-3G2DO33hrUCeSFRlMqcVwAMfRZE6TtRxWKlRVQgdenAeh157Xxdi374FvfRZjFr0
-UzXnbFr1UPYIeZcRZkgV4BbNNeDvEKyiaR2wBeoYaqATOmNBjY/FOuOwOucBlhU3
-50VCkFO8Na+t2I0C+yCk9sf3FoqKxA==
-=PjEe
------END PGP SIGNATURE-----
-
---f54savKjS/tSNRaU--
+Do you have a link to that discussion so that people can follow along or
+chime in?
