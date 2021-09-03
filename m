@@ -2,92 +2,181 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5CA1C3FFDD5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Sep 2021 12:05:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A5253FFE93
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Sep 2021 13:02:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349005AbhICKGU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Sep 2021 06:06:20 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:11344 "EHLO m43-7.mailgun.net"
+        id S1348464AbhICLDI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Sep 2021 07:03:08 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:49871 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1349039AbhICKFw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Sep 2021 06:05:52 -0400
+        id S235107AbhICLDH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 3 Sep 2021 07:03:07 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1630663492; h=Content-Transfer-Encoding: MIME-Version:
- Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=bcI92IfWvkqEpmqf6n3xiJ0u7hLOLwmK0IWLJzP+5Ms=; b=lk3JlhnqI0w+85uuSQ9cDYL27crqfjrYRUgGynKWaVdZZiDH0NN6AHqX5jsGpxQLfOdv1vFJ
- U2/OcIeiEPPg8OnoMpkLScPAmtsAWi+oldcb25N7t2qi3qQrE+TUCVNALnSbeEMU7WE4pqgG
- d8KhL27sV7OjIx/w+yLIm4sr6sA=
+ s=smtp; t=1630666928; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=KH+12GLEC44YL4JM6wENp19/gWL340T07kKx0In4XTA=;
+ b=i790KnwMYtbK7rvOp33pIlrQm9PKqc7x13UTsGqshnzN0EDJA/iGadD/qOhnqZxC0WClXyF/
+ pxtevryfqWNg8BwD0J5ZRx9BI+j/nLXwSMSkKI67Qa8N75p9/prwK/vLFmz0wIclTXMz5RQ7
+ 3NDxN9Idlzyq/6QIntuE8e46WOs=
 X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 6131f2b3cd680e8969532511 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 03 Sep 2021 10:02:27
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 613200aa89cdb6206174d9bd (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 03 Sep 2021 11:02:02
  GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Sender: dikshita=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3FAD8C4361A; Fri,  3 Sep 2021 10:02:26 +0000 (UTC)
+        id 9BE95C43617; Fri,  3 Sep 2021 11:02:02 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from hyd-lnxbld210.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1BFFAC4360D;
-        Fri,  3 Sep 2021 10:02:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 1BFFAC4360D
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, judyhsiao@chromium.org
-Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Subject: [PATCH] ASoC: qcom: lpass-platform: Reset irq clear reg post handling interrupts
-Date:   Fri,  3 Sep 2021 15:31:53 +0530
-Message-Id: <20210903100153.9137-1-srivasam@codeaurora.org>
-X-Mailer: git-send-email 2.29.0
+        (Authenticated sender: dikshita)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CBC9EC4338F;
+        Fri,  3 Sep 2021 11:02:01 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 03 Sep 2021 16:32:01 +0530
+From:   dikshita@codeaurora.org
+To:     andy.gross@linaro.org, david.brown@linaro.org, robh+dt@kernel.org,
+        mark.rutland@arm.com, devicetree@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org, stanimir.varbanov@linaro.org
+Subject: Re: [PATCH v5] arm64: dts: qcom: sc7280: Add venus DT node
+In-Reply-To: <1628669090-15648-1-git-send-email-dikshita@codeaurora.org>
+References: <1628669090-15648-1-git-send-email-dikshita@codeaurora.org>
+Message-ID: <1a61344a33782c3b80f30e86efce2c95@codeaurora.org>
+X-Sender: dikshita@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update interrupt clear register with reset value after addressing
-all interrupts. This is to fix playback or capture hanging issue in
-simultaneous playback and capture usecase.
+Hello,
 
-Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
----
- sound/soc/qcom/lpass-platform.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+A gentle reminder for review.
 
-diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
-index f9df76d37858..1a0a4b0b1a03 100644
---- a/sound/soc/qcom/lpass-platform.c
-+++ b/sound/soc/qcom/lpass-platform.c
-@@ -749,6 +749,12 @@ static irqreturn_t lpass_platform_lpaif_irq(int irq, void *data)
- 		}
- 	}
- 
-+	rv = regmap_write(drvdata->lpaif_map, LPAIF_IRQCLEAR_REG(v, LPAIF_IRQ_PORT_HOST), 0x0);
-+	if (rv) {
-+		pr_err("error writing to irqstat reg: %d\n", rv);
-+		return IRQ_NONE;
-+	}
-+
- 	return IRQ_HANDLED;
- }
- 
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+Thanks,
+Dikshita
 
+On 2021-08-11 13:34, Dikshita Agarwal wrote:
+> Add DT entries for the sc7280 venus encoder/decoder.
+> 
+> Change since v4:
+> 	rebased on latest linux-next tree.
+> 
+> this patch depends on [1].
+> 
+> [1] 
+> https://patchwork.kernel.org/project/linux-arm-msm/list/?series=529463
+> 
+> Co-developed-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+> ---
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 75 
+> ++++++++++++++++++++++++++++++++++++
+>  1 file changed, 75 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 3e96604..88de534 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -73,6 +73,11 @@
+>  			reg = <0x0 0x80b00000 0x0 0x100000>;
+>  		};
+> 
+> +		video_mem: memory@8b200000 {
+> +			reg = <0x0 0x8b200000 0x0 0x500000>;
+> +			no-map;
+> +		};
+> +
+>  		ipa_fw_mem: memory@8b700000 {
+>  			reg = <0 0x8b700000 0 0x10000>;
+>  			no-map;
+> @@ -1398,6 +1403,76 @@
+>  			};
+>  		};
+> 
+> +		venus: video-codec@aa00000 {
+> +			compatible = "qcom,sc7280-venus";
+> +			reg = <0 0x0aa00000 0 0xd0600>;
+> +			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +			clocks = <&videocc VIDEO_CC_MVSC_CORE_CLK>,
+> +				 <&videocc VIDEO_CC_MVSC_CTL_AXI_CLK>,
+> +				 <&videocc VIDEO_CC_VENUS_AHB_CLK>,
+> +				 <&videocc VIDEO_CC_MVS0_CORE_CLK>,
+> +				 <&videocc VIDEO_CC_MVS0_AXI_CLK>;
+> +			clock-names = "core", "bus", "iface",
+> +				      "vcodec_core", "vcodec_bus";
+> +
+> +			power-domains = <&videocc MVSC_GDSC>,
+> +					<&videocc MVS0_GDSC>,
+> +					<&rpmhpd SC7280_CX>;
+> +			power-domain-names = "venus", "vcodec0", "cx";
+> +			operating-points-v2 = <&venus_opp_table>;
+> +
+> +			interconnects = <&gem_noc MASTER_APPSS_PROC 0 &cnoc2 
+> SLAVE_VENUS_CFG 0>,
+> +					<&mmss_noc MASTER_VIDEO_P0 0 &mc_virt SLAVE_EBI1 0>;
+> +			interconnect-names = "cpu-cfg", "video-mem";
+> +
+> +			iommus = <&apps_smmu 0x2180 0x20>,
+> +				 <&apps_smmu 0x2184 0x20>;
+> +			memory-region = <&video_mem>;
+> +
+> +			video-decoder {
+> +				compatible = "venus-decoder";
+> +			};
+> +
+> +			video-encoder {
+> +				compatible = "venus-encoder";
+> +			};
+> +
+> +			video-firmware {
+> +				iommus = <&apps_smmu 0x21a2 0x0>;
+> +			};
+> +
+> +			venus_opp_table: venus-opp-table {
+> +				compatible = "operating-points-v2";
+> +
+> +				opp-133330000 {
+> +					opp-hz = /bits/ 64 <133330000>;
+> +					required-opps = <&rpmhpd_opp_low_svs>;
+> +				};
+> +
+> +				opp-240000000 {
+> +					opp-hz = /bits/ 64 <240000000>;
+> +					required-opps = <&rpmhpd_opp_svs>;
+> +				};
+> +
+> +				opp-335000000 {
+> +					opp-hz = /bits/ 64 <335000000>;
+> +					required-opps = <&rpmhpd_opp_svs_l1>;
+> +				};
+> +
+> +				opp-424000000 {
+> +					opp-hz = /bits/ 64 <424000000>;
+> +					required-opps = <&rpmhpd_opp_nom>;
+> +				};
+> +
+> +				opp-460000000 {
+> +					opp-hz = /bits/ 64 <460000000>;
+> +					required-opps = <&rpmhpd_opp_turbo>;
+> +				};
+> +			};
+> +
+> +		};
+> +
+>  		videocc: clock-controller@aaf0000 {
+>  			compatible = "qcom,sc7280-videocc";
+>  			reg = <0 0xaaf0000 0 0x10000>;
