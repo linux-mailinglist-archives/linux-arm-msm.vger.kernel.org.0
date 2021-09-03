@@ -2,172 +2,234 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 51DE14005C0
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Sep 2021 21:22:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 16FF44005D3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  3 Sep 2021 21:29:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235422AbhICTXZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 3 Sep 2021 15:23:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50392 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231599AbhICTXY (ORCPT
+        id S235684AbhICTaf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 3 Sep 2021 15:30:35 -0400
+Received: from mail-0301.mail-europe.com ([188.165.51.139]:60114 "EHLO
+        mail-0301.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235769AbhICTae (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 3 Sep 2021 15:23:24 -0400
-Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A5DEC061575
-        for <linux-arm-msm@vger.kernel.org>; Fri,  3 Sep 2021 12:22:24 -0700 (PDT)
-Received: by mail-pj1-x1029.google.com with SMTP id z24-20020a17090acb1800b0018e87a24300so268989pjt.0
-        for <linux-arm-msm@vger.kernel.org>; Fri, 03 Sep 2021 12:22:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=hnF/e8xJrhWD/AMGCg/7SFP6mcesPXLBhPMYKZEsbD0=;
-        b=ZCwFCmAKuzG3/8lMrM8j7z+BXXwcnXWvFGj+OyDjT6nP3X8EZHJdf22Ic2ME0ZQdoY
-         tpV1i4j6yE3tOb8MhNm/bwdZOH+AGSh6h40Y4yRwZ4v7MUE/2z397obUKPMzmN0RNw2r
-         eRjZDjSSKKB33XD+1KdBlWQCp1dYJbhRRvRdA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=hnF/e8xJrhWD/AMGCg/7SFP6mcesPXLBhPMYKZEsbD0=;
-        b=f0YTEwxI1IZF9v0jBYxiDwsmSysUUKMbCqiJxxGx17Ihzta5gHC6pRiRACrMfzl+uZ
-         6EJnCdpmn7HkdZxetlLn6eVAfvWGuHeJBJ2CC3r+nkFeys17VI0tnA9XMsvJTq6sxgG8
-         9xribOrv1UqsRW5EfXATlTZ2gIheRBcKPPdtj+nhj21jhqmnovuFRb2COIojY2LczLGj
-         vxuuhYjT3sECGPcvHYgsmdEELdq7YbF1kVsrVz+4tf0OoQc38zvmF3d8/gtu7XuMtDS5
-         lYNTwXOjnI3dkP3ej9BNvYMj/gKgMkz9qRuCTRxhpI3t23RQRs3iX/00dpebaLs4F/Io
-         oe8A==
-X-Gm-Message-State: AOAM531gS77rdLShFuIZtrhuaMHZmJ8d9BHsYgH9aOQI+Y9duWz+i/IX
-        7Pj8zBIum7qVOh8GR9LatuE5MQ==
-X-Google-Smtp-Source: ABdhPJwTznSK9vHgWZB8KCDbKVhij7pJCfTjoVIotQRhjy/j2avQBgQDFYT6cBkwCOe2b16hJ7lDuA==
-X-Received: by 2002:a17:90b:188f:: with SMTP id mn15mr499401pjb.154.1630696943938;
-        Fri, 03 Sep 2021 12:22:23 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:80b3:9f00:3170:fd8b])
-        by smtp.gmail.com with UTF8SMTPSA id r13sm129013pgl.90.2021.09.03.12.22.22
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 03 Sep 2021 12:22:23 -0700 (PDT)
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     devicetree@vger.kernel.org,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, Stephen Boyd <swboyd@chromium.org>,
-        linux-kernel@vger.kernel.org, Matthias Kaehlcke <mka@chromium.org>
-Subject: [PATCH v2] arm64: dts: qcom: sc7180-trogdor: Delete ADC config for unused thermistors
-Date:   Fri,  3 Sep 2021 12:22:19 -0700
-Message-Id: <20210903122212.v2.1.I9777d0036ecbb749a4fb9ebb892f94c6e3a51772@changeid>
-X-Mailer: git-send-email 2.33.0.153.gba50c8fa24-goog
+        Fri, 3 Sep 2021 15:30:34 -0400
+Date:   Fri, 03 Sep 2021 19:29:28 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail; t=1630697370;
+        bh=IIWvAM+fUjurDtuiATc04S+qnRbLaXtjcjstHTtfjVg=;
+        h=Date:To:From:Cc:Reply-To:Subject:From;
+        b=A1ioBZl1xKdBjsUoVYbQNxJ8/vBPQLRtMqYZcOhoRHc+wk89nShld8/SEz3kgi4Im
+         LoxHPXGT4vCNsniMyZOF364LhifG4mC/qNldyz81Pcb5SQ3GS5LlgHAUnvRbQ3XzWF
+         oKs6tx17Bz5tLPRWKibbawH6O5a1WMhmshpayBsA=
+To:     dan.carpenter@oracle.com
+From:   Yassine Oudjana <y.oudjana@protonmail.com>
+Cc:     bjorn.andersson@linaro.org, butterflyhuangxx@gmail.com,
+        davem@davemloft.net, kuba@kernel.org,
+        linux-arm-msm@vger.kernel.org, loic.poulain@linaro.org,
+        mani@kernel.org, netdev@vger.kernel.org
+Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
+Subject: Re: [PATCH v2 net] net: qrtr: make checks in qrtr_endpoint_post() stricter
+Message-ID: <S4IVYQ.R543O8OZ1IFR3@protonmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The charger thermistor on Lazor, CoachZ rev1 and Pompom rev1+2 is
-either the wrong part or not stuffed at all, the same is true for
-the skin temperature thermistor on CoachZ rev1. The corresponding
-thermal zones are already disabled for these devices, in addition
-delete the ADC nodes of the thermistors.
+On Mon, 30 Aug 2021 11:37:17 +0300 Dan Carpenter wrote:
+ > These checks are still not strict enough. The main problem is that if
+ > "cb->type =3D=3D QRTR_TYPE_NEW_SERVER" is true then "len - hdrlen" is
+ > guaranteed to be 4 but we need to be at least 16 bytes. In fact, we
+ > can reject everything smaller than sizeof(*pkt) which is 20 bytes.
+ >
+ > Also I don't like the ALIGN(size, 4). It's better to just insist that
+ > data is needs to be aligned at the start.
+ >
+ > Fixes: 0baa99ee353c ("net: qrtr: Allow non-immediate node routing")
+ > Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+ > ---
+ > v2: Fix a % vs & bug. Thanks, butt3rflyh4ck!
+ >
+ > net/qrtr/qrtr.c | 8 ++++++--
+ > 1 file changed, 6 insertions(+), 2 deletions(-)
+ >
+ > diff --git a/net/qrtr/qrtr.c b/net/qrtr/qrtr.c
+ > index b8508e35d20e..dbb647f5481b 100644
+ > --- a/net/qrtr/qrtr.c
+ > +++ b/net/qrtr/qrtr.c
+ > @@ -493,7 +493,7 @@ int qrtr_endpoint_post(struct qrtr_endpoint *ep,=20
+const void *data, size_t len)
+ > goto err;
+ > }
+ >
+ > - if (!size || len !=3D ALIGN(size, 4) + hdrlen)
+ > + if (!size || size & 3 || len !=3D size + hdrlen)
+ > goto err;
+ >
+ > if (cb->dst_port !=3D QRTR_PORT_CTRL && cb->type !=3D QRTR_TYPE_DATA &&
+ > @@ -506,8 +506,12 @@ int qrtr_endpoint_post(struct qrtr_endpoint=20
+*ep, const void *data, size_t len)
+ >
+ > if (cb->type =3D=3D QRTR_TYPE_NEW_SERVER) {
+ > /* Remote node endpoint can bridge other distant nodes */
+ > - const struct qrtr_ctrl_pkt *pkt =3D data + hdrlen;
+ > + const struct qrtr_ctrl_pkt *pkt;
+ >
+ > + if (size < sizeof(*pkt))
+ > + goto err;
+ > +
+ > + pkt =3D data + hdrlen;
+ > qrtr_node_assign(node, le32_to_cpu(pkt->server.node));
+ > }
+ >
+ > --
+ > 2.20.1
+ >
 
-For Lazor and CoachZ rev1 also disable the PM6150 ADC and thermal
-monitor since none of the ADC channels is used.
+This is crashing MSM8996. I get these messages (dmesg | grep=20
+remoteproc):
 
-Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
----
+[ 11.677216] qcom-q6v5-mss 2080000.remoteproc: supply pll not found,=20
+using dummy regulator
+[ 11.701423] qcom_q6v5_pas 1c00000.remoteproc: supply cx not found,=20
+using dummy regulator
+[ 11.716475] qcom_q6v5_pas 1c00000.remoteproc: supply px not found,=20
+using dummy regulator
+[ 11.724481] remoteproc remoteproc0: 2080000.remoteproc is available
+[ 11.747772] remoteproc remoteproc1: 1c00000.remoteproc is available
+[ 11.762163] qcom_q6v5_pas 9300000.remoteproc: supply cx not found,=20
+using dummy regulator
+[ 11.778599] qcom_q6v5_pas 9300000.remoteproc: supply px not found,=20
+using dummy regulator
+[ 11.785288] remoteproc remoteproc2: 9300000.remoteproc is available
+[ 11.786574] remoteproc remoteproc1: powering up 1c00000.remoteproc
+[ 11.791908] remoteproc remoteproc1: Booting fw image=20
+qcom/msm8996/scorpio/slpi.mbn, size 3921212
+[ 11.870859] remoteproc remoteproc2: powering up 9300000.remoteproc
+[ 11.873980] remoteproc remoteproc2: Booting fw image=20
+qcom/msm8996/scorpio/adsp.mbn, size 12264177
+[ 11.922394] remoteproc remoteproc1: remote processor=20
+1c00000.remoteproc is now up
+[ 12.036379] qcom_smd_qrtr remoteproc1:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 12.039457] qcom_smd_qrtr remoteproc1:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 12.112448] qcom_smd_qrtr remoteproc2:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 13.015132] qcom,apr remoteproc2:smd-edge.apr_audio_svc.-1.-1: Adding=20
+APR dev: aprsvc:q6core:4:3
+[ 13.019159] qcom,apr remoteproc2:smd-edge.apr_audio_svc.-1.-1: Adding=20
+APR dev: aprsvc:q6afe:4:4
+[ 13.028870] qcom,apr remoteproc2:smd-edge.apr_audio_svc.-1.-1: Adding=20
+APR dev: aprsvc:q6asm:4:7
+[ 13.031606] qcom,apr remoteproc2:smd-edge.apr_audio_svc.-1.-1: Adding=20
+APR dev: aprsvc:q6adm:4:8
+[ 13.214501] q6asm-dai 9300000.remoteproc:smd-edge:apr:q6asm:dais:=20
+Adding to iommu group 3
+[ 13.994777] remoteproc remoteproc0: powering up 2080000.remoteproc
+[ 13.999669] remoteproc remoteproc0: Booting fw image=20
+qcom/msm8996/scorpio/mba.mbn, size 213888
+[ 14.247034] qcom_smd_qrtr remoteproc1:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 14.247298] qcom_smd_qrtr remoteproc1:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 17.118806] qcom_q6v5_pas 1c00000.remoteproc: timeout waiting for=20
+subsystem event response
+[ 17.119496] qcom_smd_qrtr remoteproc2:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 17.119556] qcom_smd_qrtr remoteproc2:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 19.422732] qcom_q6v5_pas 1c00000.remoteproc: timeout waiting for=20
+subsystem event response
+[ 19.423388] qcom_smd_qrtr remoteproc2:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 19.423453] qcom_smd_qrtr remoteproc2:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 22.238725] qcom_q6v5_pas 9300000.remoteproc: timeout waiting for=20
+subsystem event response
+[ 24.542706] qcom_q6v5_pas 9300000.remoteproc: timeout waiting for=20
+subsystem event response
+[ 24.543468] qcom_smd_qrtr remoteproc2:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 24.543524] qcom_smd_qrtr remoteproc2:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 24.658698] qcom-q6v5-mss 2080000.remoteproc: MBA booted without debug=20
+policy, loading mpss
+[ 25.994603] qcom_smd_qrtr remoteproc0:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 29.662816] qcom_q6v5_pas 9300000.remoteproc: timeout waiting for=20
+subsystem event response
+[ 29.662922] remoteproc remoteproc2: remote processor=20
+9300000.remoteproc is now up
+[ 29.665429] qcom_smd_qrtr remoteproc1:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 29.665645] qcom_smd_qrtr remoteproc1:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 34.782737] qcom_q6v5_pas 1c00000.remoteproc: timeout waiting for=20
+subsystem event response
+[ 34.783369] qcom_smd_qrtr remoteproc2:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 34.783526] qcom_smd_qrtr remoteproc2:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 39.902789] qcom_q6v5_pas 9300000.remoteproc: timeout waiting for=20
+subsystem event response
+[ 39.903057] qcom_smd_qrtr remoteproc0:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 39.903131] qcom_smd_qrtr remoteproc0:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 45.022691] qcom-q6v5-mss 2080000.remoteproc: timeout waiting for=20
+subsystem event response
+[ 45.022824] qcom_smd_qrtr remoteproc0:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 45.022863] qcom_smd_qrtr remoteproc0:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 50.146792] qcom-q6v5-mss 2080000.remoteproc: timeout waiting for=20
+subsystem event response
+[ 50.146888] remoteproc remoteproc0: remote processor=20
+2080000.remoteproc is now up
+[ 66.001288] qcom-q6v5-mss 2080000.remoteproc: fatal error without=20
+message
+[ 66.001311] remoteproc remoteproc0: crash detected in=20
+2080000.remoteproc: type fatal error
+[ 66.001328] remoteproc remoteproc0: handling crash #1 in=20
+2080000.remoteproc
+[ 66.001334] remoteproc remoteproc0: recovering 2080000.remoteproc
+[ 66.003850] qcom_smd_qrtr remoteproc1:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 66.004073] qcom_smd_qrtr remoteproc1:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 71.134780] qcom_q6v5_pas 1c00000.remoteproc: timeout waiting for=20
+subsystem event response
+[ 71.135455] qcom_smd_qrtr remoteproc2:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 71.135505] qcom_smd_qrtr remoteproc2:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 76.258685] qcom_q6v5_pas 9300000.remoteproc: timeout waiting for=20
+subsystem event response
+[ 76.261799] qcom_smd_qrtr remoteproc1:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 76.262029] qcom_smd_qrtr remoteproc1:smd-edge.IPCRTR.-1.-1: invalid=20
+ipcrouter packet
+[ 81.374728] qcom_q6v5_pas 1c00000.remoteproc: timeout waiting for=20
+subsystem event response
+[ 86.494754] qcom_q6v5_pas 9300000.remoteproc: timeout waiting for=20
+subsystem event response
+[ 86.494812] remoteproc remoteproc0: stopped remote processor=20
+2080000.remoteproc
 
-Changes in v2:
-- also disable the ADC for Lazor and CoachZ rev1
-- updated commit message
+Then I get a last message which I wasn't able to capture above but was=20
+able to see:
 
- .../boot/dts/qcom/sc7180-trogdor-coachz-r1.dts     | 14 ++++++++++++++
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi | 12 ++++++++++++
- .../boot/dts/qcom/sc7180-trogdor-pompom-r1.dts     |  8 ++++++++
- .../boot/dts/qcom/sc7180-trogdor-pompom-r2.dts     |  8 ++++++++
- 4 files changed, 42 insertions(+)
+qcom-q6v5-mss 2080000.remoteproc: MBA booted without debug policy,=20
+loading mpss
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts
-index 21b516e0694a..8290d036044a 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz-r1.dts
-@@ -23,6 +23,20 @@ &charger_thermal {
- 	status = "disabled";
- };
- 
-+&pm6150_adc {
-+	status = "disabled";
-+
-+	/delete-node/ skin-temp-thermistor@4e;
-+	/delete-node/ charger-thermistor@4f;
-+};
-+
-+&pm6150_adc_tm {
-+	status = "disabled";
-+
-+	/delete-node/ charger-thermistor@0;
-+	/delete-node/ skin-temp-thermistor@1;
-+};
-+
- /*
-  * CoachZ rev1 is stuffed with a 47k NTC as thermistor for skin temperature,
-  * which currently is not supported by the PM6150 ADC driver. Disable the
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-index 00535aaa43c9..86c9e750995f 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi
-@@ -54,6 +54,18 @@ &panel {
- 	compatible = "boe,nv133fhm-n62";
- };
- 
-+&pm6150_adc {
-+	status = "disabled";
-+
-+	/delete-node/ charger-thermistor@4f;
-+};
-+
-+&pm6150_adc_tm {
-+	status = "disabled";
-+
-+	/delete-node/ charger-thermistor@0;
-+};
-+
- &trackpad {
- 	interrupts = <58 IRQ_TYPE_EDGE_FALLING>;
- };
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dts
-index e122a6b481ff..76a130bad60a 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r1.dts
-@@ -26,6 +26,14 @@ &charger_thermal {
- 	status = "disabled";
- };
- 
-+&pm6150_adc {
-+	/delete-node/ charger-thermistor@4f;
-+};
-+
-+&pm6150_adc_tm {
-+	/delete-node/ charger-thermistor@0;
-+};
-+
- &pp3300_hub {
- 	/* pp3300_l7c is used to power the USB hub */
- 	/delete-property/regulator-always-on;
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2.dts b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2.dts
-index 4f32e6733f4c..88cf2246c18a 100644
---- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2.dts
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-pompom-r2.dts
-@@ -22,3 +22,11 @@ / {
- &charger_thermal {
- 	status = "disabled";
- };
-+
-+&pm6150_adc {
-+	/delete-node/ charger-thermistor@4f;
-+};
-+
-+&pm6150_adc_tm {
-+	/delete-node/ charger-thermistor@0;
-+};
--- 
-2.33.0.153.gba50c8fa24-goog
+and it crashes and reboots right after this message.
+
+
+
 
