@@ -2,22 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C43CB400B00
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Sep 2021 13:27:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D992400B02
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Sep 2021 13:27:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236237AbhIDK7f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 4 Sep 2021 06:59:35 -0400
-Received: from relay01.th.seeweb.it ([5.144.164.162]:35749 "EHLO
-        relay01.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351445AbhIDK7d (ORCPT
+        id S1351257AbhIDLAE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 4 Sep 2021 07:00:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59498 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1351237AbhIDLAD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 4 Sep 2021 06:59:33 -0400
+        Sat, 4 Sep 2021 07:00:03 -0400
+Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2F94C061757
+        for <linux-arm-msm@vger.kernel.org>; Sat,  4 Sep 2021 03:59:01 -0700 (PDT)
 Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
         (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits))
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 668F21F6AF;
-        Sat,  4 Sep 2021 12:58:30 +0200 (CEST)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id EE0881F423;
+        Sat,  4 Sep 2021 12:58:59 +0200 (CEST)
 Subject: Re: [PATCH v2 02/11] interconnect: sdm660: expand DEFINE_QNODE macros
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
         Andy Gross <agross@kernel.org>,
@@ -30,8 +33,8 @@ References: <20210903232421.1384199-1-dmitry.baryshkov@linaro.org>
  <20210903232421.1384199-3-dmitry.baryshkov@linaro.org>
 From:   AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>
-Message-ID: <771c01f9-d0bf-6ed3-9a79-c7026d7ec0c5@somainline.org>
-Date:   Sat, 4 Sep 2021 12:58:30 +0200
+Message-ID: <d6a906c4-d4a3-eee5-9a59-e1db924c9372@somainline.org>
+Date:   Sat, 4 Sep 2021 12:58:59 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.9.0
 MIME-Version: 1.0
@@ -50,6 +53,12 @@ Il 04/09/21 01:24, Dmitry Baryshkov ha scritto:
 > 
 > Suggested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+Tested on Sony Xperia XA2 (sdm630-pioneer)
+
+
+
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 
 > ---
 >   drivers/interconnect/qcom/sdm660.c | 1742 ++++++++++++++++++++++++++--
