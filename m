@@ -2,452 +2,416 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0EE61400D07
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  4 Sep 2021 23:15:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B64C9400FBA
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  5 Sep 2021 14:59:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229888AbhIDVQX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 4 Sep 2021 17:16:23 -0400
-Received: from relay04.th.seeweb.it ([5.144.164.165]:51695 "EHLO
-        relay04.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232295AbhIDVQW (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 4 Sep 2021 17:16:22 -0400
-Received: from localhost.localdomain (83.6.166.194.neoplus.adsl.tpnet.pl [83.6.166.194])
-        by m-r1.th.seeweb.it (Postfix) with ESMTPA id 04CA61F625;
-        Sat,  4 Sep 2021 23:15:17 +0200 (CEST)
-From:   Konrad Dybcio <konrad.dybcio@somainline.org>
-To:     ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2 2/2] thermal: qcom: tsens-v1: Add support for MSM8992/4 TSENS
-Date:   Sat,  4 Sep 2021 23:15:08 +0200
-Message-Id: <20210904211508.317560-2-konrad.dybcio@somainline.org>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20210904211508.317560-1-konrad.dybcio@somainline.org>
-References: <20210904211508.317560-1-konrad.dybcio@somainline.org>
+        id S232129AbhIENAc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Sep 2021 09:00:32 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:32833 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231370AbhIENAc (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 5 Sep 2021 09:00:32 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1630846768; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=41o0tind7XKdI5TMoc1mL2xbFBqxaRBhujKXKiV3kZk=; b=nMGppS1PXX+lgAUcJYK0U/CyEXVGTHJJN7hjlSuldVsb3kY6LoX0jtIPqjfuovkFkzjn10BC
+ AL5/gOc2SiwlRLS1QiYbf9fcmWqff2YQ1uHZ34M+p1WXGIdfXCCHwHC61sqhsMYhpHYE7XE+
+ H5ZQKWjW7fOsyOpVIcCjxfk2PHs=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 6134bf304d644b7d1cdcb5b7 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sun, 05 Sep 2021 12:59:28
+ GMT
+Sender: mkshah=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1899BC43617; Sun,  5 Sep 2021 12:59:28 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-6.7 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [192.168.29.130] (unknown [49.36.87.58])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 080CCC4338F;
+        Sun,  5 Sep 2021 12:59:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 080CCC4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [PATCH v8 2/5] soc: qcom: Add SoC sleep stats driver
+To:     Stephen Boyd <swboyd@chromium.org>, bjorn.andersson@linaro.org,
+        evgreen@chromium.org, mka@chromium.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        agross@kernel.org, dianders@chromium.org, linux@roeck-us.net,
+        rnayak@codeaurora.org, lsrao@codeaurora.org,
+        Mahesh Sivasubramanian <msivasub@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>
+References: <1621596371-26482-1-git-send-email-mkshah@codeaurora.org>
+ <1621596371-26482-3-git-send-email-mkshah@codeaurora.org>
+ <CAE-0n50pLe-1CbjH9nRgcAuT=EfLEKctoJUrm+FnZVkrCr5+LQ@mail.gmail.com>
+From:   Maulik Shah <mkshah@codeaurora.org>
+Message-ID: <51c57d03-af1d-c152-8ff2-ccca223b94b0@codeaurora.org>
+Date:   Sun, 5 Sep 2021 18:29:18 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAE-0n50pLe-1CbjH9nRgcAuT=EfLEKctoJUrm+FnZVkrCr5+LQ@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-GB
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MSM8994, despite being heavily based on MSM8974, uses the
-1.2 version of TSENS. Also, 8994 being 8994, it has a custom
-way of calculating the slope.
+Hi,
 
-MSM8992 in turn is a cut-down version of MSM8994 and uses
-the same TSENS hardware, albeit with a different set of sensors.
+On 5/27/2021 5:15 AM, Stephen Boyd wrote:
+> Quoting Maulik Shah (2021-05-21 04:26:08)
+>> diff --git a/drivers/soc/qcom/soc_sleep_stats.c b/drivers/soc/qcom/soc_sleep_stats.c
+>> new file mode 100644
+>> index 0000000..a8396f9
+>> --- /dev/null
+>> +++ b/drivers/soc/qcom/soc_sleep_stats.c
+>> @@ -0,0 +1,255 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +/*
+>> + * Copyright (c) 2011-2021, The Linux Foundation. All rights reserved.
+>> + */
+>> +
+>> +#include <linux/debugfs.h>
+>> +#include <linux/device.h>
+>> +#include <linux/io.h>
+>> +#include <linux/module.h>
+>> +#include <linux/of.h>
+>> +#include <linux/platform_device.h>
+>> +#include <linux/seq_file.h>
+>> +
+>> +#include <linux/soc/qcom/smem.h>
+>> +#include <clocksource/arm_arch_timer.h>
+>> +
+>> +#define STAT_TYPE_OFFSET       0x0
+>> +#define COUNT_OFFSET           0x4
+>> +#define LAST_ENTERED_AT_OFFSET 0x8
+>> +#define LAST_EXITED_AT_OFFSET  0x10
+>> +#define ACCUMULATED_OFFSET     0x18
+>> +#define CLIENT_VOTES_OFFSET    0x1c
+>> +
+>> +struct subsystem_data {
+>> +       const char *name;
+>> +       u32 smem_item;
+>> +       u32 pid;
+>> +};
+>> +
+>> +static const struct subsystem_data subsystems[] = {
+>> +       { "modem", 605, 1 },
+>> +       { "wpss", 605, 13 },
+>> +       { "adsp", 606, 2 },
+>> +       { "cdsp", 607, 5 },
+>> +       { "slpi", 608, 3 },
+>> +       { "gpu", 609, 0 },
+>> +       { "display", 610, 0 },
+>> +       { "adsp_island", 613, 2 },
+>> +       { "slpi_island", 613, 3 },
+>> +};
+>> +
+>> +struct stats_config {
+>> +       size_t offset_addr;
+>> +       size_t num_records;
+>> +       bool appended_stats_avail;
+>> +};
+>> +
+>> +struct stats_data {
+>> +       bool appended_stats_avail;
+>> +       void __iomem *base;
+>> +};
+>> +
+>> +struct sleep_stats {
+>> +       u32 stat_type;
+>> +       u32 count;
+>> +       u64 last_entered_at;
+>> +       u64 last_exited_at;
+>> +       u64 accumulated;
+> Is this coming from memory directly? So we need a bunch of __le32 and
+> __le64 markings and then the endian swaps?
+Its stored in AOP (RPMH)/ RPM msgram for SoC sleep stats and individual 
+subsystem stats stored in SMEM.
+>
+>> +};
+>> +
+>> +struct appended_stats {
+>> +       u32 client_votes;
+>> +       u32 reserved[3];
+> This one too? It's stored in smem?
+Its only stored in RPM msgram. RPMH and SMEM do not have it.
+>
+>> +};
+>> +
+>> +static void qcom_print_stats(struct seq_file *s, const struct sleep_stats *stat)
+>> +{
+>> +       u64 accumulated = stat->accumulated;
+>> +       /*
+>> +        * If a subsystem is in sleep when reading the sleep stats adjust
+>> +        * the accumulated sleep duration to show actual sleep time.
+>> +        */
+>> +       if (stat->last_entered_at > stat->last_exited_at)
+>> +               accumulated += arch_timer_read_counter() - stat->last_entered_at;
+> Doesn't this read the virtual count? Which could be very different than
+> the physical count that the subsystems see and then write into smem? I
+> suppose we need some sort of "physical count" reading API to match up
+> the timestamps that are there but that is sort of hard given that the
+> physical count isn't always intended to be read by the kernel. Maybe we
+> should split off an MMIO architected timer to be used by this code that
+> uses the same clocksource that the other subsystems are using?
+The timer used is same across all subsystems. Beside it try to give more 
+accurate information by modifying
+total sleep length if subsytem is staying in sleep.
+>
+>> +
+>> +       seq_printf(s, "Count: %u\n", stat->count);
+>> +       seq_printf(s, "Last Entered At: %llu\n", stat->last_entered_at);
+>> +       seq_printf(s, "Last Exited At: %llu\n", stat->last_exited_at);
+>> +       seq_printf(s, "Accumulated Duration: %llu\n", accumulated);
+>> +}
+>> +
+>> +static int qcom_subsystem_sleep_stats_show(struct seq_file *s, void *unused)
+>> +{
+>> +       struct subsystem_data *subsystem = s->private;
+>> +       struct sleep_stats *stat;
+>> +
+>> +       /* Items are allocated lazily, so lookup pointer each time */
+>> +       stat = qcom_smem_get(subsystem->pid, subsystem->smem_item, NULL);
+>> +       if (IS_ERR(stat))
+>> +               return PTR_ERR(stat);
+> Can this return EPROBE_DEFER to userspace? That would be pretty weird.
+> Maybe we should convert the return value to -EIO regardless of the error.
+Ok. Updated in v9 to return -EIO.
+>
+>> +
+>> +       qcom_print_stats(s, stat);
+>> +
+>> +       return 0;
+>> +}
+>> +
+>> +static int qcom_soc_sleep_stats_show(struct seq_file *s, void *unused)
+>> +{
+>> +       struct stats_data *d = s->private;
+>> +       void __iomem *reg = d->base;
+>> +       struct sleep_stats stat;
+>> +
+>> +       memcpy_fromio(&stat, reg, sizeof(stat));
+>> +       qcom_print_stats(s, &stat);
+>> +
+>> +       if (d->appended_stats_avail) {
+>> +               struct appended_stats votes;
+>> +
+>> +               memcpy_fromio(&votes, reg + CLIENT_VOTES_OFFSET, sizeof(votes));
+>> +               seq_printf(s, "Client Votes: %#x\n", votes.client_votes);
+>> +       }
+>> +
+>> +       return 0;
+>> +}
+>> +
+>> +DEFINE_SHOW_ATTRIBUTE(qcom_soc_sleep_stats);
+>> +DEFINE_SHOW_ATTRIBUTE(qcom_subsystem_sleep_stats);
+>> +
+>> +static void qcom_create_soc_sleep_stat_files(struct dentry *root, void __iomem *reg,
+>> +                                            struct stats_data *d, u32 num_records)
+>> +{
+>> +       char stat_type[sizeof(u32) + 1] = {0};
+>> +       u32 offset = 0, type;
+>> +       int i, j;
+>> +
+>> +       for (i = 0; i < num_records; i++) {
+>> +               d[i].base = reg + offset;
+>> +
+>> +               /*
+>> +                * Read the low power mode name and create debugfs file for it.
+> What do we do if there are two same named low power modes? Maybe they
+> should be directories instead with pretty name and values inside of
+> them.
 
-Also tested on 8976 (by a person who didn't want to be named)
-to make sure the 11->16 max_sensors changes didn't break anything.
+This is agreed between AOP and Linux kernel so we would not have two or 
+more same named low power modes.
 
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
----
-Changes since v1:
-- Squash the few lines of 8992 here
-- Add some informative comments
-- Adjust the slope definition for non-anglosaxon-school-system people
-- Change base0 and base1 into ints, no need for them to be arrays
-- Default p[] to the magic value and only overwrite it if need be
-- Use %u for u32 values
+This applies to many things like the structure defination which also be 
+agreed and AOP/subsytems populates same
 
- drivers/thermal/qcom/tsens-v1.c | 299 ++++++++++++++++++++++++++++++--
- drivers/thermal/qcom/tsens.c    |   6 +
- drivers/thermal/qcom/tsens.h    |   2 +-
- 3 files changed, 294 insertions(+), 13 deletions(-)
+structure in MSGRAM / SMEM respectively which kernel can read in same 
+format.
 
-diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
-index 573e261ccca7..c207a63f8e88 100644
---- a/drivers/thermal/qcom/tsens-v1.c
-+++ b/drivers/thermal/qcom/tsens-v1.c
-@@ -142,6 +142,99 @@
- #define CAL_SEL_MASK	7
- #define CAL_SEL_SHIFT	0
- 
-+/* eeprom layout data for 8994 */
-+#define MSM8994_BASE0_MASK	0x3ff
-+#define MSM8994_BASE1_MASK	0xffc00
-+#define MSM8994_BASE0_SHIFT	0
-+#define MSM8994_BASE1_SHIFT	10
-+
-+#define MSM8994_S0_MASK	0xf00000
-+#define MSM8994_S1_MASK	0xf000000
-+#define MSM8994_S2_MASK	0xf0000000
-+#define MSM8994_S3_MASK	0xf
-+#define MSM8994_S4_MASK	0xf0
-+#define MSM8994_S5_MASK	0xf00
-+#define MSM8994_S6_MASK	0xf000
-+#define MSM8994_S7_MASK	0xf0000
-+#define MSM8994_S8_MASK	0xf00000
-+#define MSM8994_S9_MASK	0xf000000
-+#define MSM8994_S10_MASK	0xf0000000
-+#define MSM8994_S11_MASK	0xf
-+#define MSM8994_S12_MASK	0xf0
-+#define MSM8994_S13_MASK	0xf00
-+#define MSM8994_S14_MASK	0xf000
-+#define MSM8994_S15_MASK	0xf0000
-+
-+#define MSM8994_S0_SHIFT	20
-+#define MSM8994_S1_SHIFT	24
-+#define MSM8994_S2_SHIFT	28
-+#define MSM8994_S3_SHIFT	0
-+#define MSM8994_S4_SHIFT	4
-+#define MSM8994_S5_SHIFT	8
-+#define MSM8994_S6_SHIFT	12
-+#define MSM8994_S7_SHIFT	16
-+#define MSM8994_S8_SHIFT	20
-+#define MSM8994_S9_SHIFT	24
-+#define MSM8994_S10_SHIFT	28
-+#define MSM8994_S11_SHIFT	0
-+#define MSM8994_S12_SHIFT	4
-+#define MSM8994_S13_SHIFT	8
-+#define MSM8994_S14_SHIFT	12
-+#define MSM8994_S15_SHIFT	16
-+
-+#define MSM8994_CAL_SEL_MASK	0x700000
-+#define MSM8994_CAL_SEL_SHIFT	20
-+
-+#define MSM8994_BASE0_REDUN_MASK	0x7fe00000
-+#define MSM8994_BASE1_BIT0_REDUN_MASK	0x80000000
-+#define MSM8994_BASE1_BIT1_9_REDUN_MASK	0x1ff
-+#define MSM8994_BASE0_REDUN_SHIFT	21
-+#define MSM8994_BASE1_BIT0_REDUN_SHIFT_COMPUTE	31
-+
-+#define MSM8994_S0_REDUN_MASK	0x1e00
-+#define MSM8994_S1_REDUN_MASK	0x1e000
-+#define MSM8994_S2_REDUN_MASK	0x1e0000
-+#define MSM8994_S3_REDUN_MASK	0x1e00000
-+#define MSM8994_S4_REDUN_MASK	0x1e000000
-+#define MSM8994_S5_REDUN_MASK_BIT0_2	0xe0000000
-+#define MSM8994_S5_REDUN_MASK_BIT3	0x800000
-+#define MSM8994_S6_REDUN_MASK	0xf000000
-+#define MSM8994_S7_REDUN_MASK	0xf0000000
-+#define MSM8994_S8_REDUN_MASK	0xf
-+#define MSM8994_S9_REDUN_MASK	0xf0
-+#define MSM8994_S10_REDUN_MASK	0xf00
-+#define MSM8994_S11_REDUN_MASK	0xf000
-+#define MSM8994_S12_REDUN_MASK	0xf0000
-+#define MSM8994_S13_REDUN_MASK	0xf00000
-+#define MSM8994_S14_REDUN_MASK	0xf000000
-+#define MSM8994_S15_REDUN_MASK	0xf0000000
-+
-+#define MSM8994_S0_REDUN_SHIFT	9
-+#define MSM8994_S1_REDUN_SHIFT	13
-+#define MSM8994_S2_REDUN_SHIFT	17
-+#define MSM8994_S3_REDUN_SHIFT	21
-+#define MSM8994_S4_REDUN_SHIFT	25
-+#define MSM8994_S5_REDUN_SHIFT_BIT0_2	29
-+#define MSM8994_S5_REDUN_SHIFT_BIT3	23
-+#define MSM8994_S6_REDUN_SHIFT	24
-+#define MSM8994_S7_REDUN_SHIFT	28
-+#define MSM8994_S8_REDUN_SHIFT	0
-+#define MSM8994_S9_REDUN_SHIFT	4
-+#define MSM8994_S10_REDUN_SHIFT	8
-+#define MSM8994_S11_REDUN_SHIFT	12
-+#define MSM8994_S12_REDUN_SHIFT	16
-+#define MSM8994_S13_REDUN_SHIFT	20
-+#define MSM8994_S14_REDUN_SHIFT	24
-+#define MSM8994_S15_REDUN_SHIFT	28
-+
-+#define MSM8994_REDUN_SEL_MASK		0x7
-+#define MSM8994_CAL_SEL_REDUN_MASK	0xe0000000
-+#define MSM8994_CAL_SEL_REDUN_SHIFT	29
-+
-+#define BKP_SEL			0x3
-+#define BKP_REDUN_SEL		0xe0000000
-+#define BKP_REDUN_SHIFT		29
-+
- static void compute_intercept_slope_8976(struct tsens_priv *priv,
- 			      u32 *p1, u32 *p2, u32 mode)
- {
-@@ -166,6 +259,29 @@ static void compute_intercept_slope_8976(struct tsens_priv *priv,
- 	}
- }
- 
-+/* HW-specific calculations forwardported from msm-3.10 kernel */
-+static void compute_intercept_slope_8994(struct tsens_priv *priv,
-+			      u32 base0, u32 base1, u32 *p, u32 mode)
-+{
-+	int adc_code_of_tempx, i, num, den, slope;
-+
-+	/* slope (m, dy/dx) = SLOPE_FACTOR * (adc_code2 - adc_code1)/(temp_120_degc - temp_30_degc) */
-+	num = base1 - base0;
-+	num *= SLOPE_FACTOR;
-+	den = CAL_DEGC_PT2 - CAL_DEGC_PT1;
-+	slope = num / den;
-+
-+	for (i = 0; i < priv->num_sensors; i++) {
-+		adc_code_of_tempx = base0 + p[i];
-+		priv->sensor[i].offset = (adc_code_of_tempx * SLOPE_FACTOR) -
-+				(CAL_DEGC_PT1 *	priv->sensor[i].slope);
-+		priv->sensor[i].slope = (mode == TWO_PT_CALIB) ? slope : SLOPE_DEFAULT;
-+
-+		dev_dbg(priv->dev, "%s: offset:%d, slope:%d\n", __func__,
-+			priv->sensor[i].offset, priv->sensor[i].slope);
-+	}
-+}
-+
- static int calibrate_v1(struct tsens_priv *priv)
- {
- 	u32 base0 = 0, base1 = 0;
-@@ -297,14 +413,145 @@ static int calibrate_8976(struct tsens_priv *priv)
- 	return 0;
- }
- 
--/* v1.x: msm8956,8976,qcs404,405 */
-+static int calibrate_8994(struct tsens_priv *priv)
-+{
-+	int base0 = 0, base1 = 0, i;
-+	u32 p[16] = { [0 ... 15] = 532 }; /* HW-specific, undocumented magic value */
-+	int mode = 0;
-+	u32 *calib0, *calib1, *calib2, *calib_mode, *calib_rsel;
-+	u32 calib_redun_sel;
-+
-+	/* 0x40d0-0x40dc */
-+	calib0 = (u32 *)qfprom_read(priv->dev, "calib");
-+	if (IS_ERR(calib0))
-+		return PTR_ERR(calib0);
-+
-+	dev_dbg(priv->dev, "%s: calib0: [0] = %u, [1] = %u, [2] = %u\n",
-+		__func__, calib0[0], calib0[1], calib0[2]);
-+
-+	/* 0x41c0-0x41c8 */
-+	calib1 = (u32 *)qfprom_read(priv->dev, "calib_redun1_2");
-+	if (IS_ERR(calib1))
-+		return PTR_ERR(calib1);
-+
-+	dev_dbg(priv->dev, "%s: calib1: [0] = %u, [1] = %u\n",
-+		__func__, calib1[0], calib1[1]);
-+
-+	/* 0x41cc-0x41d0 */
-+	calib2 = (u32 *)qfprom_read(priv->dev, "calib_redun3");
-+	if (IS_ERR(calib2))
-+		return PTR_ERR(calib2);
-+
-+	dev_dbg(priv->dev, "%s: calib2: [0] = %u\n", __func__, calib2[0]);
-+
-+	/* 0x4440-0x4448 */
-+	calib_mode = (u32 *)qfprom_read(priv->dev, "calib_redun4_5");
-+	if (IS_ERR(calib_mode))
-+		return PTR_ERR(calib_mode);
-+
-+	dev_dbg(priv->dev, "%s: calib_mode: [0] = %u, [1] = %u\n",
-+		__func__, calib1[0], calib1[1]);
-+
-+	/* 0x4464-0x4468 */
-+	calib_rsel = (u32 *)qfprom_read(priv->dev, "calib_rsel");
-+	if (IS_ERR(calib_mode))
-+		return PTR_ERR(calib_mode);
-+
-+	dev_dbg(priv->dev, "%s: calib_rsel: [0] = %u\n", __func__, calib_rsel[0]);
-+
-+	calib_redun_sel =  calib_rsel[0] & MSM8994_CAL_SEL_REDUN_MASK;
-+	calib_redun_sel >>= MSM8994_CAL_SEL_REDUN_SHIFT;
-+
-+	if (calib_redun_sel == BKP_SEL) {
-+		dev_dbg(priv->dev, "%s: Calibrating in REDUN mode, calib_redun_sel = %u",
-+			__func__, calib_redun_sel);
-+		mode = calib_mode[1] & MSM8994_REDUN_SEL_MASK;
-+
-+		if (mode == TWO_PT_CALIB) {
-+			dev_dbg(priv->dev, "%s: REDUN TWO_PT mode, mode = %u", __func__, mode);
-+			base0 = (calib1[0] & MSM8994_BASE0_REDUN_MASK) >> MSM8994_BASE0_REDUN_SHIFT;
-+			base1 = (calib1[0] & MSM8994_BASE1_BIT0_REDUN_MASK) >> MSM8994_BASE1_BIT0_REDUN_SHIFT_COMPUTE;
-+			base1 |= calib1[1] & MSM8994_BASE1_BIT1_9_REDUN_MASK;
-+			p[0] = (calib1[1] & MSM8994_S0_REDUN_MASK) >> MSM8994_S0_REDUN_SHIFT;
-+			p[1] = (calib1[1] & MSM8994_S1_REDUN_MASK) >> MSM8994_S1_REDUN_SHIFT;
-+			p[2] = (calib1[1] & MSM8994_S2_REDUN_MASK) >> MSM8994_S2_REDUN_SHIFT;
-+			p[3] = (calib1[1] & MSM8994_S3_REDUN_MASK) >> MSM8994_S3_REDUN_SHIFT;
-+			p[4] = (calib1[1] & MSM8994_S4_REDUN_MASK) >> MSM8994_S4_REDUN_SHIFT;
-+			p[5] = (calib1[1] & MSM8994_S5_REDUN_MASK_BIT0_2) >> MSM8994_S5_REDUN_SHIFT_BIT0_2;
-+			p[5] |= (calib2[0] & MSM8994_S5_REDUN_MASK_BIT3) >> MSM8994_S5_REDUN_SHIFT_BIT3;
-+			p[6] = (calib2[0] & MSM8994_S6_REDUN_MASK) >> MSM8994_S6_REDUN_SHIFT;
-+			p[7] = (calib2[0] & MSM8994_S7_REDUN_MASK) >> MSM8994_S7_REDUN_SHIFT;
-+			p[8] = (calib2[0] & MSM8994_S8_REDUN_MASK) >> MSM8994_S8_REDUN_SHIFT;
-+			p[9] = (calib2[0] & MSM8994_S9_REDUN_MASK) >> MSM8994_S9_REDUN_SHIFT;
-+			p[10] = (calib2[0] & MSM8994_S10_REDUN_MASK) >> MSM8994_S10_REDUN_SHIFT;
-+			p[11] = (calib2[0] & MSM8994_S11_REDUN_MASK) >> MSM8994_S11_REDUN_SHIFT;
-+			p[12] = (calib2[0] & MSM8994_S12_REDUN_MASK) >> MSM8994_S12_REDUN_SHIFT;
-+			p[13] = (calib2[0] & MSM8994_S13_REDUN_MASK) >> MSM8994_S13_REDUN_SHIFT;
-+			p[14] = (calib2[0] & MSM8994_S14_REDUN_MASK) >> MSM8994_S14_REDUN_SHIFT;
-+			p[15] = (calib2[0] & MSM8994_S15_REDUN_MASK) >> MSM8994_S15_REDUN_SHIFT;
-+		} else {
-+			dev_dbg(priv->dev, "%s: REDUN NON-TWO_PT mode, mode = %u", __func__, mode);
-+		}
-+	} else {
-+		dev_dbg(priv->dev, "%s: Calibrating in NOT-REDUN mode, calib_redun_sel = %u",
-+			__func__, calib_redun_sel);
-+		mode = (calib0[2] & MSM8994_CAL_SEL_MASK) >> MSM8994_CAL_SEL_SHIFT;
-+
-+		if (mode == TWO_PT_CALIB) {
-+			dev_dbg(priv->dev, "%s: NOT-REDUN TWO_PT mode, mode = %u", __func__, mode);
-+			base0 = (calib0[0] & MSM8994_BASE0_MASK) >> MSM8994_BASE0_SHIFT;
-+			base1 = (calib0[0] & MSM8994_BASE1_MASK) >> MSM8994_BASE1_SHIFT;
-+			p[0] = (calib0[0] & MSM8994_S0_MASK) >> MSM8994_S0_SHIFT;
-+			p[1] = (calib0[0] & MSM8994_S1_MASK) >> MSM8994_S1_SHIFT;
-+			p[2] = (calib0[1] & MSM8994_S2_MASK) >> MSM8994_S2_SHIFT;
-+			p[3] = (calib0[1] & MSM8994_S3_MASK) >> MSM8994_S3_SHIFT;
-+			p[4] = (calib0[1] & MSM8994_S4_MASK) >> MSM8994_S4_SHIFT;
-+			p[5] = (calib0[1] & MSM8994_S5_MASK) >> MSM8994_S5_SHIFT;
-+			p[6] = (calib0[1] & MSM8994_S6_MASK) >> MSM8994_S6_SHIFT;
-+			p[7] = (calib0[1] & MSM8994_S7_MASK) >> MSM8994_S7_SHIFT;
-+			p[8] = (calib0[1] & MSM8994_S8_MASK) >> MSM8994_S8_SHIFT;
-+			p[9] = (calib0[1] & MSM8994_S9_MASK) >> MSM8994_S9_SHIFT;
-+			p[10] = (calib0[1] & MSM8994_S10_MASK) >> MSM8994_S10_SHIFT;
-+			p[11] = (calib0[2] & MSM8994_S11_MASK) >> MSM8994_S11_SHIFT;
-+			p[12] = (calib0[2] & MSM8994_S12_MASK) >> MSM8994_S12_SHIFT;
-+			p[13] = (calib0[2] & MSM8994_S13_MASK) >> MSM8994_S13_SHIFT;
-+			p[14] = (calib0[2] & MSM8994_S14_MASK) >> MSM8994_S14_SHIFT;
-+			p[15] = (calib0[2] & MSM8994_S15_MASK) >> MSM8994_S15_SHIFT;
-+		} else {
-+			dev_dbg(priv->dev, "%s: NOT-REDUN NON-TWO_PT mode, mode = %u", __func__, mode);
-+			for (i = 0; i < 16; i++)
-+				p[i] = 532;
-+		}
-+	}
-+
-+	/* 8992 features less sensors and remaps some */
-+	if (priv->num_sensors == 13) {
-+		p[6] = p[7];
-+		p[7] = p[9];
-+		p[8] = p[10];
-+		p[9] = p[11];
-+		p[10] = p[12];
-+		p[11] = p[13];
-+		p[12] = p[14];
-+	}
-+
-+	compute_intercept_slope_8994(priv, base0, base1, p, mode);
-+	kfree(calib0);
-+	kfree(calib1);
-+	kfree(calib2);
-+	kfree(calib_mode);
-+
-+	return 0;
-+}
-+
-+/* v1.x: msm8956/8976, msm8994 (v1.2), qcs404/qcs405 */
- 
- static struct tsens_features tsens_v1_feat = {
- 	.ver_major	= VER_1_X,
- 	.crit_int	= 0,
- 	.adc		= 1,
- 	.srot_split	= 1,
--	.max_sensors	= 11,
-+	.max_sensors	= 16,
- };
- 
- static const struct reg_field tsens_v1_regfields[MAX_REGFIELDS] = {
-@@ -323,12 +570,12 @@ static const struct reg_field tsens_v1_regfields[MAX_REGFIELDS] = {
- 	[INT_EN]     = REG_FIELD(TM_INT_EN_OFF, 0, 0),
- 
- 	/* UPPER/LOWER TEMPERATURE THRESHOLDS */
--	REG_FIELD_FOR_EACH_SENSOR11(LOW_THRESH,    TM_Sn_UPPER_LOWER_STATUS_CTRL_OFF,  0,  9),
--	REG_FIELD_FOR_EACH_SENSOR11(UP_THRESH,     TM_Sn_UPPER_LOWER_STATUS_CTRL_OFF, 10, 19),
-+	REG_FIELD_FOR_EACH_SENSOR16(LOW_THRESH,    TM_Sn_UPPER_LOWER_STATUS_CTRL_OFF,  0,  9),
-+	REG_FIELD_FOR_EACH_SENSOR16(UP_THRESH,     TM_Sn_UPPER_LOWER_STATUS_CTRL_OFF, 10, 19),
- 
- 	/* UPPER/LOWER INTERRUPTS [CLEAR/STATUS] */
--	REG_FIELD_FOR_EACH_SENSOR11(LOW_INT_CLEAR, TM_Sn_UPPER_LOWER_STATUS_CTRL_OFF, 20, 20),
--	REG_FIELD_FOR_EACH_SENSOR11(UP_INT_CLEAR,  TM_Sn_UPPER_LOWER_STATUS_CTRL_OFF, 21, 21),
-+	REG_FIELD_FOR_EACH_SENSOR16(LOW_INT_CLEAR, TM_Sn_UPPER_LOWER_STATUS_CTRL_OFF, 20, 20),
-+	REG_FIELD_FOR_EACH_SENSOR16(UP_INT_CLEAR,  TM_Sn_UPPER_LOWER_STATUS_CTRL_OFF, 21, 21),
- 	[LOW_INT_STATUS_0] = REG_FIELD(TM_HIGH_LOW_INT_STATUS_OFF,  0,  0),
- 	[LOW_INT_STATUS_1] = REG_FIELD(TM_HIGH_LOW_INT_STATUS_OFF,  1,  1),
- 	[LOW_INT_STATUS_2] = REG_FIELD(TM_HIGH_LOW_INT_STATUS_OFF,  2,  2),
-@@ -349,14 +596,14 @@ static const struct reg_field tsens_v1_regfields[MAX_REGFIELDS] = {
- 	/* NO CRITICAL INTERRUPT SUPPORT on v1 */
- 
- 	/* Sn_STATUS */
--	REG_FIELD_FOR_EACH_SENSOR11(LAST_TEMP,    TM_Sn_STATUS_OFF,  0,  9),
--	REG_FIELD_FOR_EACH_SENSOR11(VALID,        TM_Sn_STATUS_OFF, 14, 14),
-+	REG_FIELD_FOR_EACH_SENSOR16(LAST_TEMP,    TM_Sn_STATUS_OFF,  0,  9),
-+	REG_FIELD_FOR_EACH_SENSOR16(VALID,        TM_Sn_STATUS_OFF, 14, 14),
- 	/* xxx_STATUS bits: 1 == threshold violated */
--	REG_FIELD_FOR_EACH_SENSOR11(MIN_STATUS,   TM_Sn_STATUS_OFF, 10, 10),
--	REG_FIELD_FOR_EACH_SENSOR11(LOWER_STATUS, TM_Sn_STATUS_OFF, 11, 11),
--	REG_FIELD_FOR_EACH_SENSOR11(UPPER_STATUS, TM_Sn_STATUS_OFF, 12, 12),
-+	REG_FIELD_FOR_EACH_SENSOR16(MIN_STATUS,   TM_Sn_STATUS_OFF, 10, 10),
-+	REG_FIELD_FOR_EACH_SENSOR16(LOWER_STATUS, TM_Sn_STATUS_OFF, 11, 11),
-+	REG_FIELD_FOR_EACH_SENSOR16(UPPER_STATUS, TM_Sn_STATUS_OFF, 12, 12),
- 	/* No CRITICAL field on v1.x */
--	REG_FIELD_FOR_EACH_SENSOR11(MAX_STATUS,   TM_Sn_STATUS_OFF, 13, 13),
-+	REG_FIELD_FOR_EACH_SENSOR16(MAX_STATUS,   TM_Sn_STATUS_OFF, 13, 13),
- 
- 	/* TRDY: 1=ready, 0=in progress */
- 	[TRDY] = REG_FIELD(TM_TRDY_OFF, 0, 0),
-@@ -388,3 +635,31 @@ struct tsens_plat_data data_8976 = {
- 	.feat		= &tsens_v1_feat,
- 	.fields		= tsens_v1_regfields,
- };
-+
-+static const struct tsens_ops ops_8992 = {
-+	.init		= init_common,
-+	.calibrate	= calibrate_8994,
-+	.get_temp	= get_temp_tsens_valid,
-+};
-+
-+struct tsens_plat_data data_8992 = {
-+	.num_sensors	= 13,
-+	.ops		= &ops_8992,
-+	.hw_ids		= (unsigned int []){ 0, 1, 2, 3, 4, 5, 7, 9, 10, 11, 12, 13, 14 },
-+	.feat		= &tsens_v1_feat,
-+	.fields	= tsens_v1_regfields,
-+};
-+
-+static const struct tsens_ops ops_8994 = {
-+	.init		= init_common,
-+	.calibrate	= calibrate_8994,
-+	.get_temp	= get_temp_tsens_valid,
-+};
-+
-+struct tsens_plat_data data_8994 = {
-+	.num_sensors	= 16,
-+	.ops		= &ops_8994,
-+	.hw_ids		= (unsigned int []){ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
-+	.feat		= &tsens_v1_feat,
-+	.fields	= tsens_v1_regfields,
-+};
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index 4c7ebd1d3f9c..c3cd4425bbfd 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -982,6 +982,12 @@ static const struct of_device_id tsens_table[] = {
- 	}, {
- 		.compatible = "qcom,msm8974-tsens",
- 		.data = &data_8974,
-+	}, {
-+		.compatible = "qcom,msm8992-tsens",
-+		.data = &data_8992,
-+	}, {
-+		.compatible = "qcom,msm8994-tsens",
-+		.data = &data_8994,
- 	}, {
- 		.compatible = "qcom,msm8976-tsens",
- 		.data = &data_8976,
-diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
-index 1471a2c00f15..ca2b0ac914c1 100644
---- a/drivers/thermal/qcom/tsens.h
-+++ b/drivers/thermal/qcom/tsens.h
-@@ -590,7 +590,7 @@ extern struct tsens_plat_data data_8960;
- extern struct tsens_plat_data data_8916, data_8939, data_8974, data_9607;
- 
- /* TSENS v1 targets */
--extern struct tsens_plat_data data_tsens_v1, data_8976;
-+extern struct tsens_plat_data data_tsens_v1, data_8976, data_8992, data_8994;
- 
- /* TSENS v2 targets */
- extern struct tsens_plat_data data_8996, data_tsens_v2;
+>
+>> +                * The names read could be of below,
+>> +                * (may change depending on low power mode supported).
+>> +                * For rpmh-sleep-stats: "aosd", "cxsd" and "ddr".
+>> +                * For rpm-sleep-stats: "vmin" and "vlow".
+>> +                */
+>> +               type = readl(d[i].base);
+>> +               for (j = 0; j < sizeof(u32); j++) {
+>> +                       stat_type[j] = type & 0xff;
+>> +                       type = type >> 8;
+>> +               }
+>> +               strim(stat_type);
+>> +               debugfs_create_file(stat_type, 0400, root, &d[i],
+>> +                                   &qcom_soc_sleep_stats_fops);
+>> +
+>> +               offset += sizeof(struct sleep_stats);
+>> +               if (d[i].appended_stats_avail)
+>> +                       offset += sizeof(struct appended_stats);
+>> +       }
+>> +}
+>> +
+>> +static void qcom_create_subsystem_stat_files(struct dentry *root)
+>> +{
+>> +       struct sleep_stats *stat;
+> const? The pointer isn't used though so is this even relevant?
+Changed to const.
+>
+>> +       int i;
+>> +
+>> +       for (i = 0; i < ARRAY_SIZE(subsystems); i++) {
+>> +               stat = qcom_smem_get(subsystems[i].pid, subsystems[i].smem_item, NULL);
+>> +               if (IS_ERR(stat))
+>> +                       continue;
+>> +
+>> +               debugfs_create_file(subsystems[i].name, 0400, root, (void *)&subsystems[i],
+> Do we need to cast to void pointer? Is it unused? If it's unused then
+> pass NULL?
+It is used. It needs cast too since subsystems array is already a const, 
+without cast will compiler will complain discarding const.
+>
+>> +                                   &qcom_subsystem_sleep_stats_fops);
+>> +       }
+>> +}
+>> +
+>> +static int qcom_soc_sleep_stats_probe(struct platform_device *pdev)
+>> +{
+>> +       struct resource *res;
+>> +       void __iomem *reg;
+>> +       void __iomem *offset_addr;
+>> +       phys_addr_t stats_base;
+>> +       resource_size_t stats_size;
+>> +       struct dentry *root;
+>> +       const struct stats_config *config;
+>> +       struct stats_data *d;
+>> +       int i;
+>> +
+>> +       config = device_get_match_data(&pdev->dev);
+>> +       if (!config)
+>> +               return -ENODEV;
+>> +
+>> +       res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+>> +       if (!res)
+>> +               return PTR_ERR(res);
+>> +
+>> +       offset_addr = ioremap(res->start + config->offset_addr, sizeof(u32));
+> Why can't we devm_platform_get_and_ioremap_resource()?
+Ok, updated in v9.
+>
+>> +       if (IS_ERR(offset_addr))
+>> +               return PTR_ERR(offset_addr);
+>> +
+>> +       stats_base = res->start | readl_relaxed(offset_addr);
+>> +       stats_size = resource_size(res);
+>> +       iounmap(offset_addr);
+> Oh because of unmap? Can we add a resource for stats_base/size to the
+> system? I'd really like to see what address that is at.
+Ok it was developed like this since AOP can populate the stat at 
+different address and it gives this address when reading the value at 
+offset.
+> I think it is
+> actually within the same region of this "pointer" that is assigned in
+> DT, but I honestly don't know why we wouldn't just hardcode the address
+> in DT to begin with instead of doing this map, find the real address,
+> and then map that. Is this really changing that often?
+
+yes its in the same region. it generally don't change for single target 
+but prone to change for other targets.
+
+I have hardcoded that address it self in DT to start with and removed 
+the offset part from driver.
+
+>   Probably it
+> changes a few times during development but then it settles down and we
+> can just hardcode it in DT? At least please make a resource and reserve
+> it so we know that the region isn't being used by other kernel drivers.
+>
+>> +
+>> +       reg = devm_ioremap(&pdev->dev, stats_base, stats_size);
+>> +       if (!reg)
+>> +               return -ENOMEM;
+>> +
+>> +       d = devm_kcalloc(&pdev->dev, config->num_records,
+>> +                        sizeof(*d), GFP_KERNEL);
+>> +       if (!d)
+>> +               return -ENOMEM;
+>> +
+>> +       for (i = 0; i < config->num_records; i++)
+>> +               d[i].appended_stats_avail = config->appended_stats_avail;
+>> +
+>> +       root = debugfs_create_dir("qcom_sleep_stats", NULL);
+>> +
+>> +       qcom_create_subsystem_stat_files(root);
+>> +       qcom_create_soc_sleep_stat_files(root, reg, d, config->num_records);
+>> +
+>> +       platform_set_drvdata(pdev, root);
+>> +
+>> +       return 0;
+>> +}
+>> +
+>> +static int qcom_soc_sleep_stats_remove(struct platform_device *pdev)
+>> +{
+>> +       struct dentry *root = platform_get_drvdata(pdev);
+>> +
+>> +       debugfs_remove_recursive(root);
+>> +
+>> +       return 0;
+>> +}
+>> +
+>> +static const struct stats_config rpm_data = {
+>> +       .offset_addr = 0x14,
+>> +       .num_records = 2,
+>> +       .appended_stats_avail = true,
+>> +};
+>> +
+>> +static const struct stats_config rpmh_data = {
+>> +       .offset_addr = 0x4,
+>> +       .num_records = 3,
+>> +       .appended_stats_avail = false,
+>> +};
+>> +
+>> +static const struct of_device_id qcom_soc_sleep_stats_table[] = {
+>> +       { .compatible = "qcom,rpm-sleep-stats", .data = &rpm_data },
+>> +       { .compatible = "qcom,rpmh-sleep-stats", .data = &rpmh_data },
+>> +       { }
+>> +};
+>> +
+>> +static struct platform_driver soc_sleep_stats_driver = {
+> A driver seems pretty heavyweight for a thing that sticks stuff into
+> debugfs. It's not "driving" anything.
+
+Removed the driver from the end.
+
+Thanks,
+Maulik
+
+>
+>> +       .probe = qcom_soc_sleep_stats_probe,
+>> +       .remove = qcom_soc_sleep_stats_remove,
+>> +       .driver = {
+>> +               .name = "soc_sleep_stats",
+>> +               .of_match_table = qcom_soc_sleep_stats_table,
+>> +       },
+>> +};
+>> +module_platform_driver(soc_sleep_stats_driver);
+>> +
+>> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. (QTI) SoC Sleep Stats driver");
+>> +MODULE_LICENSE("GPL v2");
+>> +MODULE_SOFTDEP("pre: smem");
+
 -- 
-2.33.0
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, hosted by The Linux Foundation
 
