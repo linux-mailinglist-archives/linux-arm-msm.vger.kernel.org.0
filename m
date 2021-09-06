@@ -2,126 +2,217 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C0230401DF7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Sep 2021 18:01:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 13710401E31
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Sep 2021 18:24:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243365AbhIFQCV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Sep 2021 12:02:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53492 "EHLO
+        id S234132AbhIFQZe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Sep 2021 12:25:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58736 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232130AbhIFQCV (ORCPT
+        with ESMTP id S243784AbhIFQZe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Sep 2021 12:02:21 -0400
-Received: from mail-qt1-x82b.google.com (mail-qt1-x82b.google.com [IPv6:2607:f8b0:4864:20::82b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 42202C061575;
-        Mon,  6 Sep 2021 09:01:16 -0700 (PDT)
-Received: by mail-qt1-x82b.google.com with SMTP id w17so5743833qta.9;
-        Mon, 06 Sep 2021 09:01:16 -0700 (PDT)
+        Mon, 6 Sep 2021 12:25:34 -0400
+Received: from mail-wm1-x335.google.com (mail-wm1-x335.google.com [IPv6:2a00:1450:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 65D82C061575;
+        Mon,  6 Sep 2021 09:24:29 -0700 (PDT)
+Received: by mail-wm1-x335.google.com with SMTP id n39so3256433wms.1;
+        Mon, 06 Sep 2021 09:24:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=FJK6YbomEqVIzVAq7qIFz1k3r2WLUCQ5EW1kmXxNyhY=;
-        b=b4e8KIupGJBoafsdONoRw3AbfV0IK9zuf68bRZaVXJBsbn+XA/Kx8RGujLj1RHA/eF
-         +t1B8WopoLqoBO9EYHV74bqhpZavUVCnAS6kH7AKjm2Bxv9YlI4h76jkMIV7d6C3L6xD
-         SW/pqiWrTq3cI4aU0ZydcK9pGv2ja1lSNHQeEh5sGbSeoBBwxMy3lBuin6u+MFo1g4Y5
-         JcWq7ja06MwwhtfUVZX+e0KpF0aaIZNA5fe88weLOgqTf+cjVmkoK7TpH4yLlvNILnbf
-         xaBVpXkC0nPE/4yd6thQunH2CkKujHVPI5uGkvnhDPHjr8dzBZxUER0Kn9kF2m3koWqR
-         nzsg==
+        bh=9N97VMD4r1tZq16RYsS6sybHGcXF3KLg3mXOap6Uh24=;
+        b=e1EfSk5U3NHH2kNNY9FFtosI1uL/cQ5fBmdjg5CrWc8uCQSWuQJ8Y+eN1iEp3CegNX
+         Cncj7Of8In4TCekKPhGt80ywV5cZRUdmIMwGA1bx/XsPgW30O1viReia5fAmW44MZhl8
+         EzCzxNhgpUIkzBPpw/f+FILzopDJDSLwrOuzj3jyzGepxUmcvHadpwTamGoKK2TLjquo
+         HkoFQHx1A/WScxDIL7T6EJmo5rc9ClQI07LdOW3H7A2xqLa4886Zl+aYJsTQDJ+wzXQ6
+         By70yEXpe98lOCkKASGjki0XSnBdg7RP89Z8IVVtDHuX942ot7RWH8Fgk/3oFtOwwOX+
+         1xjQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=FJK6YbomEqVIzVAq7qIFz1k3r2WLUCQ5EW1kmXxNyhY=;
-        b=MgYgqsVaUx/hZ7OhVqkdPUyuKIuLme5WmX8UaUJnax0rTOsCS8B5NWO/GXYTJigoLj
-         Y0op0PacOkdAlza0QILcOYb2d/luzW03JukInPUfUTRt7zJTA+AaXvclFzxO8v7ZQUxS
-         JkZqJtPOg3LuU8/HPIUPFdqegXcNB+zhaHbaYZw31+EA6gUSzys/smhf3DRrDSQEBmTB
-         80zzi5/D+z0JXY+Ns4P4QaSV3Q1zJtzaV+faRf3ujr9nGKQjGvf7sYnbPgT4AZuWXGGL
-         4Z2ro88+yoKBXS92AVjVsz8jbXX2GTXdOwMb959SORQRixrYcDDAWEZD1kuExCjon6jj
-         8g0g==
-X-Gm-Message-State: AOAM532ghs1kExEV37znvQ/dTmJS5BPYUqGK1XbXoNPeXIW2nmU7OHwF
-        JHy2HJsYBacmtwL5/JoYmfIqATTmiAOeLGSd2yM=
-X-Google-Smtp-Source: ABdhPJwgSTP8vJkZbV42sYvXOUcaMlRZXD34GUZUjXOhCF0PUOgdRb1gipQs7vFP6iajgjPhmCSiBBeYZ7u6hL8Zte8=
-X-Received: by 2002:ac8:57c7:: with SMTP id w7mr11338439qta.53.1630944075365;
- Mon, 06 Sep 2021 09:01:15 -0700 (PDT)
+        bh=9N97VMD4r1tZq16RYsS6sybHGcXF3KLg3mXOap6Uh24=;
+        b=EFjkxDL6KXlhD2gVrCdsY3vz19d6c+K0gVEyRn7zF+zTI7rxyF6F766sNg865iNy7y
+         zH5FXqeg480G1oA7SFMYz6Z2fhYsPuBZLMgczvPn7yRTPqtKdybBfnvzCHJhlukIsD4a
+         cl3nS3dK4pTCxWYUZkRpW7njtvkRGVvV177cxs0OiMpdjUD/oftkSJWJItDJ5+k6gD5i
+         rzY992fGaAScjq3w1YlljFqquwGrM4/E70jQJ14d4IVofvF3w/55uJFKRJKcJleoiP3/
+         dUlgzApm6XiLr3b9tfwcmV8rt9dXKC8/4isTVb+Sxt0i9hOBKSqNprFl/P8f/4htrkIy
+         cJ5A==
+X-Gm-Message-State: AOAM530eHFsVHCssAv+XIXb9y2oeSNX7d84BZQCkWvmk2rrBvROeNLcR
+        3Zm8EbPA9vqAyo/kmOSc0QipOWGwuej4o0hp3/c=
+X-Google-Smtp-Source: ABdhPJyECK1opoDK8Fl0t8Cm3YyRHYKPRjer1mMWw44oaHoQjIrr8j4pYRZsqmiTpDKtQvl0pVT+nvCTB9iT7vYJ034=
+X-Received: by 2002:a1c:c903:: with SMTP id f3mr12441394wmb.101.1630945467826;
+ Mon, 06 Sep 2021 09:24:27 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210905171131.660885-1-robimarko@gmail.com> <2c26a5c1302813f5343cb0fd5c192267@codeaurora.org>
-In-Reply-To: <2c26a5c1302813f5343cb0fd5c192267@codeaurora.org>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Mon, 6 Sep 2021 18:01:04 +0200
-Message-ID: <CAOX2RU7TnVK420tTkTB=jVHHvHwtYWVKhpat1nc_7LLBoG8XSg@mail.gmail.com>
-Subject: Re: [PATCH] soc: qcom: socinfo: Add IPQ8074 family ID-s
-To:     Kathiravan T <kathirav@codeaurora.org>
-Cc:     agross@kernel.org, Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org,
+References: <20210729183942.2839925-1-robdclark@gmail.com> <1a38a590-a64e-58ef-1bbf-0ae49c004d05@linaro.org>
+ <CAF6AEGs5dzA7kfO89Uqbh3XmorXoEa=fpW+unk5_oaihHm479Q@mail.gmail.com>
+ <e2cebf65-012d-f818-8202-eb511c996e28@linaro.org> <CAF6AEGs11aYnkL30kp79pMqLTg3_4otFwG2Oc890Of2ndLbELw@mail.gmail.com>
+ <CALAqxLUkyXK2gqNMBbtJFfh01ZpcG46dZaM7Zq4jG3OngvFREg@mail.gmail.com>
+ <CAF6AEGsACLcDuszcgmHHs04GghLPiRfei3tGo161yBXsg7Y-YA@mail.gmail.com> <CAMi1Hd0dniDXPNOuh05ywqHKY+cGvAsd-cnD91K1GLppfO=x0w@mail.gmail.com>
+In-Reply-To: <CAMi1Hd0dniDXPNOuh05ywqHKY+cGvAsd-cnD91K1GLppfO=x0w@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 6 Sep 2021 09:28:45 -0700
+Message-ID: <CAF6AEGvtw06MYST2PdhqHVpsG4Tec2DnUA-uwFRP-6xqa9yf5Q@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: Disable frequency clamping on a630
+To:     Amit Pundir <amit.pundir@linaro.org>
+Cc:     John Stultz <john.stultz@linaro.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        David Airlie <airlied@linux.ie>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sean Paul <sean@poorly.run>,
         open list <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 6 Sept 2021 at 17:50, Kathiravan T <kathirav@codeaurora.org> wrote:
+On Mon, Sep 6, 2021 at 1:02 AM Amit Pundir <amit.pundir@linaro.org> wrote:
 >
-> On 2021-09-05 22:41, Robert Marko wrote:
-> > IPQ8074 family SoC ID-s are missing, so lets add them based on
-> > the downstream driver.
+> On Sat, 4 Sept 2021 at 01:55, Rob Clark <robdclark@gmail.com> wrote:
 > >
->
-> Did you intentionally left out the IDs for below variants?
->
-> IPQ8172 - 397
-> IPQ8173 - 398
-> IPQ8174 - 399
-
-Yes, I wasn't really sure what to do with those.
-
-Regards,
-Robert
->
-> Reviewed-by: Kathiravan T <kathirav@codeaurora.org>
->
-> > Signed-off-by: Robert Marko <robimarko@gmail.com>
-> > ---
-> >  drivers/soc/qcom/socinfo.c | 12 ++++++++++++
-> >  1 file changed, 12 insertions(+)
+> > On Fri, Sep 3, 2021 at 12:39 PM John Stultz <john.stultz@linaro.org> wrote:
+> > >
+> > > On Thu, Jul 29, 2021 at 1:49 PM Rob Clark <robdclark@gmail.com> wrote:
+> > > > On Thu, Jul 29, 2021 at 1:28 PM Caleb Connolly
+> > > > <caleb.connolly@linaro.org> wrote:
+> > > > > On 29/07/2021 21:24, Rob Clark wrote:
+> > > > > > On Thu, Jul 29, 2021 at 1:06 PM Caleb Connolly
+> > > > > > <caleb.connolly@linaro.org> wrote:
+> > > > > >>
+> > > > > >> Hi Rob,
+> > > > > >>
+> > > > > >> I've done some more testing! It looks like before that patch ("drm/msm: Devfreq tuning") the GPU would never get above
+> > > > > >> the second frequency in the OPP table (342MHz) (at least, not in glxgears). With the patch applied it would more
+> > > > > >> aggressively jump up to the max frequency which seems to be unstable at the default regulator voltages.
+> > > > > >
+> > > > > > *ohh*, yeah, ok, that would explain it
+> > > > > >
+> > > > > >> Hacking the pm8005 s1 regulator (which provides VDD_GFX) up to 0.988v (instead of the stock 0.516v) makes the GPU stable
+> > > > > >> at the higher frequencies.
+> > > > > >>
+> > > > > >> Applying this patch reverts the behaviour, and the GPU never goes above 342MHz in glxgears, losing ~30% performance in
+> > > > > >> glxgear.
+> > > > > >>
+> > > > > >> I think (?) that enabling CPR support would be the proper solution to this - that would ensure that the regulators run
+> > > > > >> at the voltage the hardware needs to be stable.
+> > > > > >>
+> > > > > >> Is hacking the voltage higher (although ideally not quite that high) an acceptable short term solution until we have
+> > > > > >> CPR? Or would it be safer to just not make use of the higher frequencies on a630 for now?
+> > > > > >>
+> > > > > >
+> > > > > > tbh, I'm not sure about the regulator stuff and CPR.. Bjorn is already
+> > > > > > on CC and I added sboyd, maybe one of them knows better.
+> > > > > >
+> > > > > > In the short term, removing the higher problematic OPPs from dts might
+> > > > > > be a better option than this patch (which I'm dropping), since there
+> > > > > > is nothing stopping other workloads from hitting higher OPPs.
+> > > > > Oh yeah that sounds like a more sensible workaround than mine .
+> > > > > >
+> > > > > > I'm slightly curious why I didn't have problems at higher OPPs on my
+> > > > > > c630 laptop (sdm850)
+> > > > > Perhaps you won the sillicon lottery - iirc sdm850 is binned for higher clocks as is out of the factory.
+> > > > >
+> > > > > Would it be best to drop the OPPs for all devices? Or just those affected? I guess it's possible another c630 might
+> > > > > crash where yours doesn't?
+> > > >
+> > > > I've not heard any reports of similar issues from the handful of other
+> > > > folks with c630's on #aarch64-laptops.. but I can't really say if that
+> > > > is luck or not.
+> > > >
+> > > > Maybe just remove it for affected devices?  But I'll defer to Bjorn.
+> > >
+> > > Just as another datapoint, I was just marveling at how suddenly smooth
+> > > the UI was performing on db845c and Caleb pointed me at the "drm/msm:
+> > > Devfreq tuning" patch as the likely cause of the improvement, and
+> > > mid-discussion my board crashed into USB crash mode:
+> > > [  146.157696][    C0] adreno 5000000.gpu: CP | AHB bus error
+> > > [  146.163303][    C0] adreno 5000000.gpu: CP | AHB bus error
+> > > [  146.168837][    C0] adreno 5000000.gpu: RBBM | ATB bus overflow
+> > > [  146.174960][    C0] adreno 5000000.gpu: CP | HW fault | status=0x00000000
+> > > [  146.181917][    C0] adreno 5000000.gpu: CP | AHB bus error
+> > > [  146.187547][    C0] adreno 5000000.gpu: CP illegal instruction error
+> > > [  146.194009][    C0] adreno 5000000.gpu: CP | AHB bus error
+> > > [  146.308909][    T9] Internal error: synchronous external abort:
+> > > 96000010 [#1] PREEMPT SMP
+> > > [  146.317150][    T9] Modules linked in:
+> > > [  146.320941][    T9] CPU: 3 PID: 9 Comm: kworker/u16:1 Tainted: G
+> > >     W         5.14.0-mainline-06795-g42b258c2275c #24
+> > > [  146.331974][    T9] Hardware name: Thundercomm Dragonboar
+> > > Format: Log Type - Time(microsec) - Message - Optional Info
+> > > Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
+> > > S - QC_IMAGE_VERSION_STRING=BOOT.XF.2.0-00371-SDM845LZB-1
+> > > S - IMAGE_VARIANT_STRING=SDM845LA
+> > > S - OEM_IMAGE_VERSION_STRING=TSBJ-FA-PC-02170
+> > >
+> > > So Caleb sent me to this thread. :)
+> > >
+> > > I'm still trying to trip it again, but it does seem like db845c is
+> > > also seeing some stability issues with Linus' HEAD.
+> > >
 > >
-> > diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
-> > index 9faf48302f4b..288897868435 100644
-> > --- a/drivers/soc/qcom/socinfo.c
-> > +++ b/drivers/soc/qcom/socinfo.c
-> > @@ -281,19 +281,31 @@ static const struct soc_id soc_id[] = {
-> >       { 319, "APQ8098" },
-> >       { 321, "SDM845" },
-> >       { 322, "MDM9206" },
-> > +     { 323, "IPQ8074" },
-> >       { 324, "SDA660" },
-> >       { 325, "SDM658" },
-> >       { 326, "SDA658" },
-> >       { 327, "SDA630" },
-> >       { 338, "SDM450" },
-> >       { 341, "SDA845" },
-> > +     { 342, "IPQ8072" },
-> > +     { 343, "IPQ8076" },
-> > +     { 344, "IPQ8078" },
-> >       { 345, "SDM636" },
-> >       { 346, "SDA636" },
-> >       { 349, "SDM632" },
-> >       { 350, "SDA632" },
-> >       { 351, "SDA450" },
-> >       { 356, "SM8250" },
-> > +     { 375, "IPQ8070" },
-> > +     { 376, "IPQ8071" },
-> > +     { 389, "IPQ8072A" },
-> > +     { 390, "IPQ8074A" },
-> > +     { 391, "IPQ8076A" },
-> > +     { 392, "IPQ8078A" },
-> >       { 394, "SM6125" },
-> > +     { 395, "IPQ8070A" },
-> > +     { 396, "IPQ8071A" },
-> >       { 402, "IPQ6018" },
-> >       { 403, "IPQ6028" },
-> >       { 421, "IPQ6000" },
+> > Caleb's original pastebin seems to have expired (or at least require
+> > some sort of ubuntu login to access).. were the crashes he was seeing
+> > also 'AHB bus error'?
 >
-> --
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a
-> member of Code Aurora Forum, hosted by The Linux Foundation
+> I can reproduce this hard crash
+> https://www.irccloud.com/pastebin/Cu6UJntE/ and a gpu lockup
+> https://www.irccloud.com/pastebin/6Ryd2Pug/ at times reliably, by
+> running antutu benchmark on pocof1.
+>
+> Reverting 9bc95570175a ("drm/msm: Devfreq tuning") helps and I no
+> longer see these errors.
+>
+> Complete dmesg for hardcrash https://pastebin.com/raw/GLZVQFQN
+>
+
+Does antutu trigger this issue as easily on db845c?  If no, does
+db845c have pmic differences compared to pocof1 and Caleb's phone?
+
+I think we may need some help from qcom here, but I'll go back and
+look at older downstream kernels to see if I can find any evidence
+that we need to limit how far we change the freq in a single step.
+It's not clear to me if there is some physical constraint that the
+driver needs to respect, or if we have some missing/incorrect
+configuration for a630.  IIRC the downstream kernel is letting the GMU
+do more of the freq management, so it might be handling this case for
+the kernel.  But the GMU is a bit of a black box to me and I don't
+have any docs, so just a guess.
+
+It would be helpful if someone who can repro this could try the
+experiments I mentioned about increasing min_freq and/or decreasing
+max_freq to limit the size of the freq change until the issue does not
+happen.
+
+If we have to, we can merge this hack patch to disable freq clamping
+on a630.. but that isn't really a fix.  The root issue is a power
+issue, 9bc95570175a just made it more likely to see the problem.
+
+BR,
+-R
+
+> Regards,
+> Amit Pundir
+>
+> >
+> > If you have a reliable reproducer, I guess it would be worth seeing if
+> > increasing the min_freq (ie. to limit how far we jump the freq in one
+> > shot) "fixes" it?
+> >
+> > I guess I could check downstream kgsl to see if they were doing
+> > something to increase freq in smaller increments.. I don't recall that
+> > they were but it has been a while since I dug thru that code.  And I
+> > suppose downstream it could also be done in their custom tz governor.
+> >
+> > BR,
+> > -R
