@@ -2,53 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B052940199E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Sep 2021 12:19:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 05635401A0A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Sep 2021 12:44:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241751AbhIFKTB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Sep 2021 06:19:01 -0400
-Received: from relay03.th.seeweb.it ([5.144.164.164]:44697 "EHLO
-        relay03.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241736AbhIFKTA (ORCPT
+        id S242069AbhIFKnC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Sep 2021 06:43:02 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:23594 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242065AbhIFKnB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Sep 2021 06:19:00 -0400
-Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id B86491F8A3;
-        Mon,  6 Sep 2021 12:17:52 +0200 (CEST)
-Date:   Mon, 6 Sep 2021 12:17:51 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        jamipkettunen@somainline.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v3 2/9] clk: qcom: gcc-msm8994: Modernize the driver
-Message-ID: <20210906101751.nskjnpn6mxctzjx5@Marijn-Arch-PC.localdomain>
-References: <20210904183014.43528-1-konrad.dybcio@somainline.org>
- <20210904183014.43528-2-konrad.dybcio@somainline.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210904183014.43528-2-konrad.dybcio@somainline.org>
+        Mon, 6 Sep 2021 06:43:01 -0400
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 06 Sep 2021 03:41:56 -0700
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 06 Sep 2021 03:41:54 -0700
+X-QCInternal: smtphost
+Received: from c-skakit-linux.ap.qualcomm.com (HELO c-skakit-linux.qualcomm.com) ([10.242.51.242])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 06 Sep 2021 16:11:33 +0530
+Received: by c-skakit-linux.qualcomm.com (Postfix, from userid 2344709)
+        id 307754FA6; Mon,  6 Sep 2021 16:11:32 +0530 (IST)
+From:   satya priya <skakit@codeaurora.org>
+To:     Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     swboyd@chromium.org, mka@chromium.org, kgunda@codeaurora.org,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        satya priya <skakit@codeaurora.org>
+Subject: [PATCH 0/3] Add PM8350C PMIC PWM support for backlight
+Date:   Mon,  6 Sep 2021 16:11:04 +0530
+Message-Id: <1630924867-4663-1-git-send-email-skakit@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-09-04 20:30:06, Konrad Dybcio wrote:
-> Switch to the newer-style parent_data and remove the hardcoded
-> xo clock.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+This series depends on [1], which adds driver for Qualcomm LPG.
 
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
+[1] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=505483&archive=both&state=*
 
-Though we'll probably end up on the same fallback discussions as for the
-other qcom boards.  In this case it looks like mentioning we're
-intentionally breaking anyone who doesn't update their DT in parallel
-with the kernel should be enough, too.
+satya priya (3):
+  dt-bindings: leds: Add pm8350c pmic support
+  leds: Add pm8350c support to Qualcomm LPG driver
+  arm64: dts: qcom: pm8350c: Add pwm support
+
+ Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml |  1 +
+ arch/arm64/boot/dts/qcom/pm8350c.dtsi                     |  6 ++++++
+ drivers/leds/rgb/leds-qcom-lpg.c                          | 10 ++++++++++
+ 3 files changed, 17 insertions(+)
+
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
+
