@@ -2,128 +2,241 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BC32D4020B2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Sep 2021 22:28:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 13F414020C3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Sep 2021 22:46:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243722AbhIFU1C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Sep 2021 16:27:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56728 "EHLO
+        id S231146AbhIFUra (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Sep 2021 16:47:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32884 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237410AbhIFU1C (ORCPT
+        with ESMTP id S229766AbhIFUr3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Sep 2021 16:27:02 -0400
-Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8BBFC061575;
-        Mon,  6 Sep 2021 13:25:56 -0700 (PDT)
-Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 8B8533E7F1;
-        Mon,  6 Sep 2021 22:25:54 +0200 (CEST)
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Pavel Dubrova <pashadubrova@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Archit Taneja <architt@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/msm/dsi: dsi_phy_14nm: Take ready-bit into account in poll_for_ready
-Date:   Mon,  6 Sep 2021 22:25:51 +0200
-Message-Id: <20210906202552.824598-1-marijn.suijten@somainline.org>
-X-Mailer: git-send-email 2.33.0
+        Mon, 6 Sep 2021 16:47:29 -0400
+Received: from mail-wm1-x329.google.com (mail-wm1-x329.google.com [IPv6:2a00:1450:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77C94C061575;
+        Mon,  6 Sep 2021 13:46:24 -0700 (PDT)
+Received: by mail-wm1-x329.google.com with SMTP id z9-20020a7bc149000000b002e8861aff59so304311wmi.0;
+        Mon, 06 Sep 2021 13:46:24 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=FikPqWO0pVyU0npMMKzuMcpfbgS6ZPBj9erdtWaD4ok=;
+        b=RwEPeZjTqPC34WZAzjdyOXrkoy1dPykzkMMdYayComDzgKVL115xF5CCoVj1UtSPF9
+         5lybFnkCAghSOIRkXipFFxsLprhz/04kj/NWj9MV6pUsDEjmD0EhbeSgUst+IO8aPzKU
+         DuT0q3FpjYOZ4LC/K3/0DuAkfQECE9n4hyvT7LcjMZExFe9zUbpPokv2pZpYxmH8bBV6
+         BQ8U2CqEtMUgGMCdIRs3ISXqVYKiKaZy2HYOLiIstHwO5FlVm762ehsYPy4cP5JEWT7V
+         RJ+JlpN40S1sDoFNYtkG8cb40x5XmS47U2AKXA5Oe6KPNGlq/z1wAztwcMUXxWvcbPCo
+         M4OA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FikPqWO0pVyU0npMMKzuMcpfbgS6ZPBj9erdtWaD4ok=;
+        b=ADfR927bQsZBZuDI0ja1Ye26dYI00je7DjvQvpQVXPOZcBI/iRPG4GAMhXDQW3+IKO
+         DsBBxcpur3CRc9bb9aB11hF6twIe/fWLjl0tDPGerGDSeNCxlRneyYUttVCviae6Z3R3
+         urLNfBLR1+EcDjuxiE/pYLRlF8eNSSg9wxhobnbWt/FZVMGAwAIOLazoQorMUhqLpuw8
+         SrEk9SpMV/9CL01qrBto/i9LD0nO5AK8Xjpwdf/jcAY5gqaStP8aTBvPs+e/hGfNrVqF
+         VZWubmGFrcaY+LWaQT9Obp7picAIYbWGUIdjMngcREAKpkFI4FP7Xrb/HbS2gKBiQhEh
+         b2eA==
+X-Gm-Message-State: AOAM531NSwaeMYOkar+w8ymiULV9xpEBf8i/MScqMIjxIcSP34FNZjfm
+        cEQtYSuFrw+M8kNexmGr4iZ3JFqrdwHZ0h2LTSc=
+X-Google-Smtp-Source: ABdhPJw57uHbSH762JecKKhZxSXjrZi2S07mF4/aw24j1LKAS4WUOQkJdXiCe2SYZOe6bJxKXSoYJUjHiAZ0Gzj0FZY=
+X-Received: by 2002:a05:600c:5c1:: with SMTP id p1mr761877wmd.151.1630961182941;
+ Mon, 06 Sep 2021 13:46:22 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210729183942.2839925-1-robdclark@gmail.com> <1a38a590-a64e-58ef-1bbf-0ae49c004d05@linaro.org>
+ <CAF6AEGs5dzA7kfO89Uqbh3XmorXoEa=fpW+unk5_oaihHm479Q@mail.gmail.com>
+ <e2cebf65-012d-f818-8202-eb511c996e28@linaro.org> <CAF6AEGs11aYnkL30kp79pMqLTg3_4otFwG2Oc890Of2ndLbELw@mail.gmail.com>
+ <CALAqxLUkyXK2gqNMBbtJFfh01ZpcG46dZaM7Zq4jG3OngvFREg@mail.gmail.com>
+ <CAF6AEGsACLcDuszcgmHHs04GghLPiRfei3tGo161yBXsg7Y-YA@mail.gmail.com>
+ <CAMi1Hd0dniDXPNOuh05ywqHKY+cGvAsd-cnD91K1GLppfO=x0w@mail.gmail.com>
+ <CAF6AEGvtw06MYST2PdhqHVpsG4Tec2DnUA-uwFRP-6xqa9yf5Q@mail.gmail.com> <CAMi1Hd1kp8ijH8y3U2sxs5cE3Zfat_v-C3rrGtTK01ry8Om6Lw@mail.gmail.com>
+In-Reply-To: <CAMi1Hd1kp8ijH8y3U2sxs5cE3Zfat_v-C3rrGtTK01ry8Om6Lw@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Mon, 6 Sep 2021 13:50:40 -0700
+Message-ID: <CAF6AEGuE2KAnOQRGwbbVHmms0uOfq4XCvF=a8FJ98spzJ5=+XQ@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: Disable frequency clamping on a630
+To:     Amit Pundir <amit.pundir@linaro.org>
+Cc:     John Stultz <john.stultz@linaro.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        David Airlie <airlied@linux.ie>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sean Paul <sean@poorly.run>,
+        open list <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The downstream driver models this PLL lock check as an if-elseif-else.
-The only way to reach the else case where pll_locked=true [1] is by
-succeeding both readl_poll_timeout_atomic calls (which return zero on
-success) in the if _and_ elseif condition.  Hence both the "lock" and
-"ready" bit need to be tested in the SM_READY_STATUS register before
-considering the PLL locked and ready to go.
+On Mon, Sep 6, 2021 at 12:58 PM Amit Pundir <amit.pundir@linaro.org> wrote:
+>
+> On Mon, 6 Sept 2021 at 21:54, Rob Clark <robdclark@gmail.com> wrote:
+> >
+> > On Mon, Sep 6, 2021 at 1:02 AM Amit Pundir <amit.pundir@linaro.org> wrote:
+> > >
+> > > On Sat, 4 Sept 2021 at 01:55, Rob Clark <robdclark@gmail.com> wrote:
+> > > >
+> > > > On Fri, Sep 3, 2021 at 12:39 PM John Stultz <john.stultz@linaro.org> wrote:
+> > > > >
+> > > > > On Thu, Jul 29, 2021 at 1:49 PM Rob Clark <robdclark@gmail.com> wrote:
+> > > > > > On Thu, Jul 29, 2021 at 1:28 PM Caleb Connolly
+> > > > > > <caleb.connolly@linaro.org> wrote:
+> > > > > > > On 29/07/2021 21:24, Rob Clark wrote:
+> > > > > > > > On Thu, Jul 29, 2021 at 1:06 PM Caleb Connolly
+> > > > > > > > <caleb.connolly@linaro.org> wrote:
+> > > > > > > >>
+> > > > > > > >> Hi Rob,
+> > > > > > > >>
+> > > > > > > >> I've done some more testing! It looks like before that patch ("drm/msm: Devfreq tuning") the GPU would never get above
+> > > > > > > >> the second frequency in the OPP table (342MHz) (at least, not in glxgears). With the patch applied it would more
+> > > > > > > >> aggressively jump up to the max frequency which seems to be unstable at the default regulator voltages.
+> > > > > > > >
+> > > > > > > > *ohh*, yeah, ok, that would explain it
+> > > > > > > >
+> > > > > > > >> Hacking the pm8005 s1 regulator (which provides VDD_GFX) up to 0.988v (instead of the stock 0.516v) makes the GPU stable
+> > > > > > > >> at the higher frequencies.
+> > > > > > > >>
+> > > > > > > >> Applying this patch reverts the behaviour, and the GPU never goes above 342MHz in glxgears, losing ~30% performance in
+> > > > > > > >> glxgear.
+> > > > > > > >>
+> > > > > > > >> I think (?) that enabling CPR support would be the proper solution to this - that would ensure that the regulators run
+> > > > > > > >> at the voltage the hardware needs to be stable.
+> > > > > > > >>
+> > > > > > > >> Is hacking the voltage higher (although ideally not quite that high) an acceptable short term solution until we have
+> > > > > > > >> CPR? Or would it be safer to just not make use of the higher frequencies on a630 for now?
+> > > > > > > >>
+> > > > > > > >
+> > > > > > > > tbh, I'm not sure about the regulator stuff and CPR.. Bjorn is already
+> > > > > > > > on CC and I added sboyd, maybe one of them knows better.
+> > > > > > > >
+> > > > > > > > In the short term, removing the higher problematic OPPs from dts might
+> > > > > > > > be a better option than this patch (which I'm dropping), since there
+> > > > > > > > is nothing stopping other workloads from hitting higher OPPs.
+> > > > > > > Oh yeah that sounds like a more sensible workaround than mine .
+> > > > > > > >
+> > > > > > > > I'm slightly curious why I didn't have problems at higher OPPs on my
+> > > > > > > > c630 laptop (sdm850)
+> > > > > > > Perhaps you won the sillicon lottery - iirc sdm850 is binned for higher clocks as is out of the factory.
+> > > > > > >
+> > > > > > > Would it be best to drop the OPPs for all devices? Or just those affected? I guess it's possible another c630 might
+> > > > > > > crash where yours doesn't?
+> > > > > >
+> > > > > > I've not heard any reports of similar issues from the handful of other
+> > > > > > folks with c630's on #aarch64-laptops.. but I can't really say if that
+> > > > > > is luck or not.
+> > > > > >
+> > > > > > Maybe just remove it for affected devices?  But I'll defer to Bjorn.
+> > > > >
+> > > > > Just as another datapoint, I was just marveling at how suddenly smooth
+> > > > > the UI was performing on db845c and Caleb pointed me at the "drm/msm:
+> > > > > Devfreq tuning" patch as the likely cause of the improvement, and
+> > > > > mid-discussion my board crashed into USB crash mode:
+> > > > > [  146.157696][    C0] adreno 5000000.gpu: CP | AHB bus error
+> > > > > [  146.163303][    C0] adreno 5000000.gpu: CP | AHB bus error
+> > > > > [  146.168837][    C0] adreno 5000000.gpu: RBBM | ATB bus overflow
+> > > > > [  146.174960][    C0] adreno 5000000.gpu: CP | HW fault | status=0x00000000
+> > > > > [  146.181917][    C0] adreno 5000000.gpu: CP | AHB bus error
+> > > > > [  146.187547][    C0] adreno 5000000.gpu: CP illegal instruction error
+> > > > > [  146.194009][    C0] adreno 5000000.gpu: CP | AHB bus error
+> > > > > [  146.308909][    T9] Internal error: synchronous external abort:
+> > > > > 96000010 [#1] PREEMPT SMP
+> > > > > [  146.317150][    T9] Modules linked in:
+> > > > > [  146.320941][    T9] CPU: 3 PID: 9 Comm: kworker/u16:1 Tainted: G
+> > > > >     W         5.14.0-mainline-06795-g42b258c2275c #24
+> > > > > [  146.331974][    T9] Hardware name: Thundercomm Dragonboar
+> > > > > Format: Log Type - Time(microsec) - Message - Optional Info
+> > > > > Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
+> > > > > S - QC_IMAGE_VERSION_STRING=BOOT.XF.2.0-00371-SDM845LZB-1
+> > > > > S - IMAGE_VARIANT_STRING=SDM845LA
+> > > > > S - OEM_IMAGE_VERSION_STRING=TSBJ-FA-PC-02170
+> > > > >
+> > > > > So Caleb sent me to this thread. :)
+> > > > >
+> > > > > I'm still trying to trip it again, but it does seem like db845c is
+> > > > > also seeing some stability issues with Linus' HEAD.
+> > > > >
+> > > >
+> > > > Caleb's original pastebin seems to have expired (or at least require
+> > > > some sort of ubuntu login to access).. were the crashes he was seeing
+> > > > also 'AHB bus error'?
+> > >
+> > > I can reproduce this hard crash
+> > > https://www.irccloud.com/pastebin/Cu6UJntE/ and a gpu lockup
+> > > https://www.irccloud.com/pastebin/6Ryd2Pug/ at times reliably, by
+> > > running antutu benchmark on pocof1.
+> > >
+> > > Reverting 9bc95570175a ("drm/msm: Devfreq tuning") helps and I no
+> > > longer see these errors.
+> > >
+> > > Complete dmesg for hardcrash https://pastebin.com/raw/GLZVQFQN
+> > >
+> >
+> > Does antutu trigger this issue as easily on db845c?  If no, does
+> > db845c have pmic differences compared to pocof1 and Caleb's phone?
+>
+> Yes I can reproduce this hard crash with antutu on db845c as well with
+> linux/master at 477f70cd2a67 ("Merge tag 'drm-next-2021-08-31-1' of
+> git://anongit.freedesktop.org/drm/drm").
+>
+> Dmesg: https://pastebin.com/raw/xXtvxk0G
+>
 
-Tested on the Sony Xperia XA2 Ultra (nile-discovery, sdm630).
+ok, I guess it is at least not a board specific thing (ie. won't need
+to introduce some dt binding)..
 
-[1]: https://source.codeaurora.org/quic/la/kernel/msm-4.19/tree/drivers/clk/qcom/mdss/mdss-dsi-pll-14nm-util.c?h=LA.UM.9.2.1.r1-08000-sdm660.0#n302
+It would be nice to know what the maximum we can safely increase freq
+in one step, if we need to limit that.
 
-Fixes: f079f6d999cb ("drm/msm/dsi: Add PHY/PLL for 8x96")
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
----
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c | 30 +++++++++++-----------
- 1 file changed, 15 insertions(+), 15 deletions(-)
+BR,
+-R
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-index 8905f365c932..789b08c24d25 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-@@ -110,14 +110,13 @@ static struct dsi_pll_14nm *pll_14nm_list[DSI_MAX];
- static bool pll_14nm_poll_for_ready(struct dsi_pll_14nm *pll_14nm,
- 				    u32 nb_tries, u32 timeout_us)
- {
--	bool pll_locked = false;
-+	bool pll_locked = false, pll_ready = false;
- 	void __iomem *base = pll_14nm->phy->pll_base;
- 	u32 tries, val;
- 
- 	tries = nb_tries;
- 	while (tries--) {
--		val = dsi_phy_read(base +
--			       REG_DSI_14nm_PHY_PLL_RESET_SM_READY_STATUS);
-+		val = dsi_phy_read(base + REG_DSI_14nm_PHY_PLL_RESET_SM_READY_STATUS);
- 		pll_locked = !!(val & BIT(5));
- 
- 		if (pll_locked)
-@@ -126,23 +125,24 @@ static bool pll_14nm_poll_for_ready(struct dsi_pll_14nm *pll_14nm,
- 		udelay(timeout_us);
- 	}
- 
--	if (!pll_locked) {
--		tries = nb_tries;
--		while (tries--) {
--			val = dsi_phy_read(base +
--				REG_DSI_14nm_PHY_PLL_RESET_SM_READY_STATUS);
--			pll_locked = !!(val & BIT(0));
-+	if (!pll_locked)
-+		goto out;
- 
--			if (pll_locked)
--				break;
-+	tries = nb_tries;
-+	while (tries--) {
-+		val = dsi_phy_read(base + REG_DSI_14nm_PHY_PLL_RESET_SM_READY_STATUS);
-+		pll_ready = !!(val & BIT(0));
- 
--			udelay(timeout_us);
--		}
-+		if (pll_ready)
-+			break;
-+
-+		udelay(timeout_us);
- 	}
- 
--	DBG("DSI PLL is %slocked", pll_locked ? "" : "*not* ");
-+out:
-+	DBG("DSI PLL is %slocked, %sready", pll_locked ? "" : "*not* ", pll_ready ? "" : "*not* ");
- 
--	return pll_locked;
-+	return pll_locked && pll_ready;
- }
- 
- static void dsi_pll_14nm_config_init(struct dsi_pll_config *pconf)
--- 
-2.33.0
-
+>
+> >
+> > I think we may need some help from qcom here, but I'll go back and
+> > look at older downstream kernels to see if I can find any evidence
+> > that we need to limit how far we change the freq in a single step.
+> > It's not clear to me if there is some physical constraint that the
+> > driver needs to respect, or if we have some missing/incorrect
+> > configuration for a630.  IIRC the downstream kernel is letting the GMU
+> > do more of the freq management, so it might be handling this case for
+> > the kernel.  But the GMU is a bit of a black box to me and I don't
+> > have any docs, so just a guess.
+> >
+> > It would be helpful if someone who can repro this could try the
+> > experiments I mentioned about increasing min_freq and/or decreasing
+> > max_freq to limit the size of the freq change until the issue does not
+> > happen.
+> >
+> > If we have to, we can merge this hack patch to disable freq clamping
+> > on a630.. but that isn't really a fix.  The root issue is a power
+> > issue, 9bc95570175a just made it more likely to see the problem.
+> >
+> > BR,
+> > -R
+> >
+> > > Regards,
+> > > Amit Pundir
+> > >
+> > > >
+> > > > If you have a reliable reproducer, I guess it would be worth seeing if
+> > > > increasing the min_freq (ie. to limit how far we jump the freq in one
+> > > > shot) "fixes" it?
+> > > >
+> > > > I guess I could check downstream kgsl to see if they were doing
+> > > > something to increase freq in smaller increments.. I don't recall that
+> > > > they were but it has been a while since I dug thru that code.  And I
+> > > > suppose downstream it could also be done in their custom tz governor.
+> > > >
+> > > > BR,
+> > > > -R
