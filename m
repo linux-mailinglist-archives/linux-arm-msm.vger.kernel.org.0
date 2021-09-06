@@ -2,240 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A55C840123A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Sep 2021 02:43:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 45DED40153A
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Sep 2021 05:20:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234084AbhIFAoj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 5 Sep 2021 20:44:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43826 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232759AbhIFAoj (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 5 Sep 2021 20:44:39 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3BF8EC061757
-        for <linux-arm-msm@vger.kernel.org>; Sun,  5 Sep 2021 17:43:35 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id h133so6898749oib.7
-        for <linux-arm-msm@vger.kernel.org>; Sun, 05 Sep 2021 17:43:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=VXz3E7pt4ytJZFiidta6LWpYOPkipEqLXRupmapbEkg=;
-        b=hG0uEpCkucAjn2t8kIfAgSG7UwOiEnFhcQemLyHrWcRloRDLXWznn6ZN3Z9qmKEJp/
-         stQb9NvQo+/tXaM8tSPvQGrrM12aGphPU9BROyJNOaVij0ZZANc7SO6fnSoH5XjHkRYE
-         T0O3janIJjd11ceL5oFXFhpFsBQxu+Vcub48fzPxz3LglWw10a1DFhS0TBvElFyTBIoU
-         DPg8TWiX3NbiTnM9dQQ4cPJOuJIBDnDPMfI18A5K79JANydFKd/PVjOaL48hk2hbt/qx
-         jcchydaLfw0arkQ8f3IadtWggyLwbnU68bGVYTaV8QxdiYbh0IKFmAiBWPN99aq5ugw3
-         xGhw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=VXz3E7pt4ytJZFiidta6LWpYOPkipEqLXRupmapbEkg=;
-        b=kFOsBV2PuWk8b8lqNM9M74CGWh7BI0e6juKUbL+kjN/awP4OCNYvf2psKxcvnj1ybU
-         Bq75B1PSt9wBxM0uwc0+BtqONrOHdIUMOet2rdA1wY4IL5Lcli2lpo8WmaYWxUzoAK23
-         w6ZXyykthmAkAswktxIo5Ukv4KYFFzCMuaYiJZQ9SIYFSH3NIP8Yl1/k6BDJevglE+x+
-         Pc8iK0gKwMrRkbknbyh8pXrfbE3Tt+cWAa8xV5ByJTZMR+OBKnN4pgBz9vBZqii27AQo
-         vsOgD3+8TDqFUyzbxLqBHjyblsKN9WYJU6uneCEpbCURYE1iENAp80BHmHIJM1MERtd2
-         B3rA==
-X-Gm-Message-State: AOAM533LodISBrxXYaA1NVQ5DIUAt//Vux1AbLG0LSZKsQKAR1+ZvQSA
-        fixF/7A2wgogfelaKsbuo5DS6w==
-X-Google-Smtp-Source: ABdhPJxMgzd1ppDDtypbqleJZ+qHh8aZdbGzv7WtFvDErUHqWWycI0D7asw3iyPTo4fjijSD3iB68Q==
-X-Received: by 2002:a05:6808:a01:: with SMTP id n1mr6665277oij.52.1630889014515;
-        Sun, 05 Sep 2021 17:43:34 -0700 (PDT)
-Received: from MacBook-Pro.hackershack.net (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
-        by smtp.gmail.com with ESMTPSA id u14sm1482783oth.73.2021.09.05.17.43.33
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sun, 05 Sep 2021 17:43:34 -0700 (PDT)
-Subject: Re: [PATCH] ath10k: Don't always treat modem stop events as crashes
-To:     Stephen Boyd <swboyd@chromium.org>,
-        Kalle Valo <kvalo@codeaurora.org>
-Cc:     linux-kernel@vger.kernel.org, ath10k@lists.infradead.org,
-        linux-wireless@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        netdev@vger.kernel.org, Govind Singh <govinds@codeaurora.org>,
-        Youghandhar Chintala <youghand@codeaurora.org>,
-        Abhishek Kumar <kuabhs@chromium.org>
-References: <20210905210400.1157870-1-swboyd@chromium.org>
-From:   Steev Klimaszewski <steev@kali.org>
-Message-ID: <2ab941df-f604-59b7-28ab-d1a9a6ced2c7@kali.org>
-Date:   Sun, 5 Sep 2021 19:43:32 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.13.0
+        id S233157AbhIFDWB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 5 Sep 2021 23:22:01 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:60242 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231405AbhIFDV7 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 5 Sep 2021 23:21:59 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1630898455; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=zeI7cb88S3dlLs0mexnW614GGMS9653bA0VelDKM6RQ=;
+ b=kYDIwt7+3bxIYazVECWE/qfw/DrPjZ9HHFSSLYz5BGV/05zM4wJMiGDF13bRdPoJK3DM2fHq
+ 0AxgjakgDgJc59IHgYeUFPDpXFwZ+KHOShK8AwMQfrMGp4CbJX67etYYdn9FCgkhAEL2qPZt
+ GUWKcPij829ewJczKDer27tBDbA=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 6135890589cdb6206103d8ee (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 06 Sep 2021 03:20:37
+ GMT
+Sender: sibis=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C3790C4360D; Mon,  6 Sep 2021 03:20:37 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3DBE6C4338F;
+        Mon,  6 Sep 2021 03:20:36 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20210905210400.1157870-1-swboyd@chromium.org>
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Date:   Mon, 06 Sep 2021 08:50:36 +0530
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>, sboyd@kernel.org,
+        robh+dt@kernel.org, viresh.kumar@linaro.org, agross@kernel.org,
+        rjw@rjwysocki.net, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, dianders@chromium.org,
+        tdas@codeaurora.org
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: sc7280: Fixup the cpufreq node
+In-Reply-To: <YS5hDq+xblntYbh0@ripper>
+References: <1627581885-32165-1-git-send-email-sibis@codeaurora.org>
+ <1627581885-32165-4-git-send-email-sibis@codeaurora.org>
+ <YS5LDb4KDFx/dRnM@google.com> <YS5hDq+xblntYbh0@ripper>
+Message-ID: <fde7bac239f796b039b9be58b391fb77@codeaurora.org>
+X-Sender: sibis@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On 2021-08-31 22:34, Bjorn Andersson wrote:
+> On Tue 31 Aug 08:30 PDT 2021, Matthias Kaehlcke wrote:
+> 
+>> On Thu, Jul 29, 2021 at 11:34:44PM +0530, Sibi Sankar wrote:
+>> > Fixup the register regions used by the cpufreq node on SC7280 SoC to
+>> > support per core L3 DCVS.
+>> >
+>> > Fixes: 7dbd121a2c58 ("arm64: dts: qcom: sc7280: Add cpufreq hw node")
+>> > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+>> 
+>> This patch landed in the Bjorn's tree, however the corresponding 
+>> driver
+>> change ("cpufreq: qcom: Re-arrange register offsets to support per 
+>> core
+>> L3 DCVS" / 
+>> https://patchwork.kernel.org/project/linux-arm-msm/patch/1627581885-32165-3-git-send-email-sibis@codeaurora.org/)
+>> did not land in any maintainer tree yet AFAIK. IIUC the DT change 
+>> alone
+>> breaks cpufreq since the changed register regions require the changed
+>> offset in the cpufreq driver.
+>> 
+> 
+> Thanks for the note Matthias, it must have slipped by as I scraped the
+> inbox for things that looked ready.
+> 
+> I'm actually not in favor of splitting these memory blocks in DT to
+> facilitate the Linux implementation of splitting that in multiple
+> drivers...
+> 
+> But I've not been following up on that discussion.
+> 
+> Regards,
+> Bjorn
+> 
+>> Sibi, please confirm or clarify that my concern is unwarranted.
 
-On 9/5/21 4:04 PM, Stephen Boyd wrote:
-> When rebooting on sc7180 Trogdor devices I see the following crash from
-> the wifi driver.
->
->  ath10k_snoc 18800000.wifi: firmware crashed! (guid 83493570-29a2-4e98-a83e-70048c47669c)
->
-> This is because a modem stop event looks just like a firmware crash to
-> the driver, the qmi connection is closed in both cases. Use the qcom ssr
-> notifier block to stop treating the qmi connection close event as a
-> firmware crash signal when the modem hasn't actually crashed. See
-> ath10k_qmi_event_server_exit() for more details.
->
-> This silences the crash message seen during every reboot.
->
-> Fixes: 3f14b73c3843 ("ath10k: Enable MSA region dump support for WCN3990")
-> Cc: Govind Singh <govinds@codeaurora.org>
-> Cc: Youghandhar Chintala <youghand@codeaurora.org>
-> Cc: Abhishek Kumar <kuabhs@chromium.org>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
->  drivers/net/wireless/ath/ath10k/snoc.c | 75 ++++++++++++++++++++++++++
->  drivers/net/wireless/ath/ath10k/snoc.h |  4 ++
->  2 files changed, 79 insertions(+)
->
-> diff --git a/drivers/net/wireless/ath/ath10k/snoc.c b/drivers/net/wireless/ath/ath10k/snoc.c
-> index ea00fbb15601..fc4970e063f8 100644
-> --- a/drivers/net/wireless/ath/ath10k/snoc.c
-> +++ b/drivers/net/wireless/ath/ath10k/snoc.c
-> @@ -12,6 +12,7 @@
->  #include <linux/platform_device.h>
->  #include <linux/property.h>
->  #include <linux/regulator/consumer.h>
-> +#include <linux/remoteproc/qcom_rproc.h>
->  #include <linux/of_address.h>
->  #include <linux/iommu.h>
->  
-> @@ -1477,6 +1478,70 @@ void ath10k_snoc_fw_crashed_dump(struct ath10k *ar)
->  	mutex_unlock(&ar->dump_mutex);
->  }
->  
-> +static int ath10k_snoc_modem_notify(struct notifier_block *nb, unsigned long action,
-> +				    void *data)
-> +{
-> +	struct ath10k_snoc *ar_snoc = container_of(nb, struct ath10k_snoc, nb);
-> +	struct ath10k *ar = ar_snoc->ar;
-> +	struct qcom_ssr_notify_data *notify_data = data;
-> +
-> +	switch (action) {
-> +	case QCOM_SSR_BEFORE_POWERUP:
-> +		ath10k_dbg(ar, ATH10K_DBG_SNOC, "received modem starting event\n");
-> +		clear_bit(ATH10K_SNOC_FLAG_UNREGISTERING, &ar_snoc->flags);
-> +		break;
-> +
-> +	case QCOM_SSR_AFTER_POWERUP:
-> +		ath10k_dbg(ar, ATH10K_DBG_SNOC, "received modem running event\n");
-> +		break;
-> +
-> +	case QCOM_SSR_BEFORE_SHUTDOWN:
-> +		ath10k_dbg(ar, ATH10K_DBG_SNOC, "received modem %s event\n",
-> +			   notify_data->crashed ? "crashed" : "stopping");
-> +		if (!notify_data->crashed)
-> +			set_bit(ATH10K_SNOC_FLAG_UNREGISTERING, &ar_snoc->flags);
-> +		else
-> +			clear_bit(ATH10K_SNOC_FLAG_UNREGISTERING, &ar_snoc->flags);
-> +		break;
-> +
-> +	case QCOM_SSR_AFTER_SHUTDOWN:
-> +		ath10k_dbg(ar, ATH10K_DBG_SNOC, "received modem offline event\n");
-> +		break;
-> +
-> +	default:
-> +		ath10k_err(ar, "received unrecognized event %lu\n", action);
-> +		break;
-> +	}
-> +
-> +	return NOTIFY_OK;
-> +}
-> +
-> +static int ath10k_modem_init(struct ath10k *ar)
-> +{
-> +	struct ath10k_snoc *ar_snoc = ath10k_snoc_priv(ar);
-> +	void *notifier;
-> +
-> +	ar_snoc->nb.notifier_call = ath10k_snoc_modem_notify;
-> +
-> +	notifier = qcom_register_ssr_notifier("mpss", &ar_snoc->nb);
-> +	if (IS_ERR(notifier))
-> +		return PTR_ERR(notifier);
-> +
-> +	ar_snoc->notifier = notifier;
-> +
-> +	return 0;
-> +}
-> +
-> +static void ath10k_modem_deinit(struct ath10k *ar)
-> +{
-> +	int ret;
-> +	struct ath10k_snoc *ar_snoc = ath10k_snoc_priv(ar);
-> +
-> +	ret = qcom_unregister_ssr_notifier(ar_snoc->notifier, &ar_snoc->nb);
-> +	if (ret)
-> +		ath10k_err(ar, "error %d unregistering notifier\n", ret);
-> +}
-> +
->  static int ath10k_setup_msa_resources(struct ath10k *ar, u32 msa_size)
->  {
->  	struct device *dev = ar->dev;
-> @@ -1740,10 +1805,19 @@ static int ath10k_snoc_probe(struct platform_device *pdev)
->  		goto err_fw_deinit;
->  	}
->  
-> +	ret = ath10k_modem_init(ar);
-> +	if (ret) {
-> +		ath10k_err(ar, "failed to initialize modem notifier: %d\n", ret);
-> +		goto err_qmi_deinit;
-> +	}
-> +
->  	ath10k_dbg(ar, ATH10K_DBG_SNOC, "snoc probe\n");
->  
->  	return 0;
->  
-> +err_qmi_deinit:
-> +	ath10k_qmi_deinit(ar);
-> +
->  err_fw_deinit:
->  	ath10k_fw_deinit(ar);
->  
-> @@ -1771,6 +1845,7 @@ static int ath10k_snoc_free_resources(struct ath10k *ar)
->  	ath10k_fw_deinit(ar);
->  	ath10k_snoc_free_irq(ar);
->  	ath10k_snoc_release_resource(ar);
-> +	ath10k_modem_deinit(ar);
->  	ath10k_qmi_deinit(ar);
->  	ath10k_core_destroy(ar);
->  
-> diff --git a/drivers/net/wireless/ath/ath10k/snoc.h b/drivers/net/wireless/ath/ath10k/snoc.h
-> index 5095d1893681..d986edc772f8 100644
-> --- a/drivers/net/wireless/ath/ath10k/snoc.h
-> +++ b/drivers/net/wireless/ath/ath10k/snoc.h
-> @@ -6,6 +6,8 @@
->  #ifndef _SNOC_H_
->  #define _SNOC_H_
->  
-> +#include <linux/notifier.h>
-> +
->  #include "hw.h"
->  #include "ce.h"
->  #include "qmi.h"
-> @@ -75,6 +77,8 @@ struct ath10k_snoc {
->  	struct clk_bulk_data *clks;
->  	size_t num_clks;
->  	struct ath10k_qmi *qmi;
-> +	struct notifier_block nb;
-> +	void *notifier;
->  	unsigned long flags;
->  	bool xo_cal_supported;
->  	u32 xo_cal_data;
->
-> base-commit: 7d2a07b769330c34b4deabeed939325c77a7ec2f
+Let's drop the patch asap as it breaks
+SC7280 cpufreq on lnext without the driver
+changes.
 
-
-I was also seeing this on the Lenovo Yoga C630, so I pulled the patch in
-to test here and after testing 20 reboots, I have not seen the message once.
-
-Tested-By: Steev Klimaszewski <steev@kali.org>
-
+-- 
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
+a Linux Foundation Collaborative Project.
