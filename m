@@ -2,188 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4021440177E
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Sep 2021 10:05:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8FB624017C8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Sep 2021 10:26:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240500AbhIFIGG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Sep 2021 04:06:06 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57586 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240513AbhIFIEX (ORCPT
+        id S240742AbhIFIZQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Sep 2021 04:25:16 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:44479 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240730AbhIFIZQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Sep 2021 04:04:23 -0400
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DD161C0617A8
-        for <linux-arm-msm@vger.kernel.org>; Mon,  6 Sep 2021 01:02:33 -0700 (PDT)
-Received: by mail-io1-xd33.google.com with SMTP id b7so7629402iob.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 06 Sep 2021 01:02:33 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=WZ2JrZUxjomDnhpkXV3UkUZoXyQGVexwecJgXeES0JE=;
-        b=RkEBMsUcqXWVba6jg6GNyX1QSg9Z2w6C+7dlrHeO/RDBP0nWKvHew1z1Sbhi1QwMeC
-         4SxnoCW+llDiw/b0TnXGbaw1wXwgwmiSVC+inI6f1Frkaln1CFkeK2/bMtpAGA40kC/T
-         TedqOSDulzE/wi0uLU5gVLrO6XNn7XFwm4cA8iO+klEcs58lR4MXXTLwxIcP5QwWTjmb
-         XvRFXqtzcirpnP8WzMxsBgCBPDB1LQ97mUcFHiGJnV2pWnUvbXCBMPSH21UcZgErHv/q
-         le/eKFXaASV2+709G+8GA7ECFAdIJumjFUUYek5/Fl1I09oftcDCmuoxJs7kNiwx+1Gi
-         18nQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=WZ2JrZUxjomDnhpkXV3UkUZoXyQGVexwecJgXeES0JE=;
-        b=TbcEHJ2NYsLGVSElBwujgl5qBMqlfs8n4/lEmum42lgaXZniGyKm4di2BJj/1Sy8pr
-         /mrpS8kW2IKJm5fXeVqvuWRSBPjgzJb+yGeYnml4ItMBFgQ8KXcy46Ml3B7HVJRvWPhg
-         YqZuBnbHyMLUUCxgOTuHF9QaGKM4N4iOzptwvLw9hF+kJAFAwMKZfoKngrkNCnb3cll7
-         YFZd0S9OnQa5/ohxUTl+tBqhxFOb98rb0xXpa4yEGcxAGOzWlvYslaUN+qAWoLmkWier
-         L+78G4iPhgktNiPQGF7vasarCChR28abimcErYk+hqcW0/I0uTd2L6uXXndNVQaG+5yD
-         8pOg==
-X-Gm-Message-State: AOAM533nFPOIhRqjUSj8Re5bJmJPtYsHL1NOwn3KGP9OPrNfdIlgS+Pp
-        flgvIJKtPKaT02GJVPVvsDfOZt5dgyzFiejtijQWCA==
-X-Google-Smtp-Source: ABdhPJyTvUQQpstrXnLI1vn4QAa5MprOCKyEKtqMUvuMXUR0YaUtyc1jLZkxnD+RRhbjYl/pF4jE3czU1Qh0ZEaYGtw=
-X-Received: by 2002:a6b:8bcf:: with SMTP id n198mr8922767iod.178.1630915353263;
- Mon, 06 Sep 2021 01:02:33 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210729183942.2839925-1-robdclark@gmail.com> <1a38a590-a64e-58ef-1bbf-0ae49c004d05@linaro.org>
- <CAF6AEGs5dzA7kfO89Uqbh3XmorXoEa=fpW+unk5_oaihHm479Q@mail.gmail.com>
- <e2cebf65-012d-f818-8202-eb511c996e28@linaro.org> <CAF6AEGs11aYnkL30kp79pMqLTg3_4otFwG2Oc890Of2ndLbELw@mail.gmail.com>
- <CALAqxLUkyXK2gqNMBbtJFfh01ZpcG46dZaM7Zq4jG3OngvFREg@mail.gmail.com> <CAF6AEGsACLcDuszcgmHHs04GghLPiRfei3tGo161yBXsg7Y-YA@mail.gmail.com>
-In-Reply-To: <CAF6AEGsACLcDuszcgmHHs04GghLPiRfei3tGo161yBXsg7Y-YA@mail.gmail.com>
-From:   Amit Pundir <amit.pundir@linaro.org>
-Date:   Mon, 6 Sep 2021 13:31:57 +0530
-Message-ID: <CAMi1Hd0dniDXPNOuh05ywqHKY+cGvAsd-cnD91K1GLppfO=x0w@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm: Disable frequency clamping on a630
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     John Stultz <john.stultz@linaro.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>,
-        Rob Clark <robdclark@chromium.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        David Airlie <airlied@linux.ie>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sean Paul <sean@poorly.run>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Mon, 6 Sep 2021 04:25:16 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1630916652; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=EvV4dfy4I8iR55oWtbuMC4EISY7EwSUf8/sJpTChJdQ=; b=pGojqTdoMrwVqPQeWOv3pt5KvA4jAi7Oz8xY3mJFsSgUwr2PQ1tpoeMqsS9IoVnw3w14pK6b
+ DLHyhiUxvmfwP2ICI/z17usTODzV0vkDauRVSGEwFcaj723iweksEyoFsRDJXARm4g9kiwep
+ tKPzKZXFtsZqX0FRwOdmj7TeIy4=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 6135d02a40d2129ac10b94dd (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 06 Sep 2021 08:24:10
+ GMT
+Sender: sibis=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 64F2AC43460; Mon,  6 Sep 2021 08:24:10 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DEDD6C4338F;
+        Mon,  6 Sep 2021 08:24:04 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org DEDD6C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     mka@chromium.org, swboyd@chromium.org, bjorn.andersson@linaro.org,
+        robh+dt@kernel.org
+Cc:     ulf.hansson@linaro.org, rjw@rjwysocki.net, agross@kernel.org,
+        ohad@wizery.com, mathieu.poirier@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dianders@chromium.org, rishabhb@codeaurora.org,
+        sidgup@codeaurora.org, Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH v6 00/13] Use qmp_send to update co-processor load state
+Date:   Mon,  6 Sep 2021 13:53:44 +0530
+Message-Id: <1630916637-4278-1-git-send-email-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 4 Sept 2021 at 01:55, Rob Clark <robdclark@gmail.com> wrote:
->
-> On Fri, Sep 3, 2021 at 12:39 PM John Stultz <john.stultz@linaro.org> wrote:
-> >
-> > On Thu, Jul 29, 2021 at 1:49 PM Rob Clark <robdclark@gmail.com> wrote:
-> > > On Thu, Jul 29, 2021 at 1:28 PM Caleb Connolly
-> > > <caleb.connolly@linaro.org> wrote:
-> > > > On 29/07/2021 21:24, Rob Clark wrote:
-> > > > > On Thu, Jul 29, 2021 at 1:06 PM Caleb Connolly
-> > > > > <caleb.connolly@linaro.org> wrote:
-> > > > >>
-> > > > >> Hi Rob,
-> > > > >>
-> > > > >> I've done some more testing! It looks like before that patch ("drm/msm: Devfreq tuning") the GPU would never get above
-> > > > >> the second frequency in the OPP table (342MHz) (at least, not in glxgears). With the patch applied it would more
-> > > > >> aggressively jump up to the max frequency which seems to be unstable at the default regulator voltages.
-> > > > >
-> > > > > *ohh*, yeah, ok, that would explain it
-> > > > >
-> > > > >> Hacking the pm8005 s1 regulator (which provides VDD_GFX) up to 0.988v (instead of the stock 0.516v) makes the GPU stable
-> > > > >> at the higher frequencies.
-> > > > >>
-> > > > >> Applying this patch reverts the behaviour, and the GPU never goes above 342MHz in glxgears, losing ~30% performance in
-> > > > >> glxgear.
-> > > > >>
-> > > > >> I think (?) that enabling CPR support would be the proper solution to this - that would ensure that the regulators run
-> > > > >> at the voltage the hardware needs to be stable.
-> > > > >>
-> > > > >> Is hacking the voltage higher (although ideally not quite that high) an acceptable short term solution until we have
-> > > > >> CPR? Or would it be safer to just not make use of the higher frequencies on a630 for now?
-> > > > >>
-> > > > >
-> > > > > tbh, I'm not sure about the regulator stuff and CPR.. Bjorn is already
-> > > > > on CC and I added sboyd, maybe one of them knows better.
-> > > > >
-> > > > > In the short term, removing the higher problematic OPPs from dts might
-> > > > > be a better option than this patch (which I'm dropping), since there
-> > > > > is nothing stopping other workloads from hitting higher OPPs.
-> > > > Oh yeah that sounds like a more sensible workaround than mine .
-> > > > >
-> > > > > I'm slightly curious why I didn't have problems at higher OPPs on my
-> > > > > c630 laptop (sdm850)
-> > > > Perhaps you won the sillicon lottery - iirc sdm850 is binned for higher clocks as is out of the factory.
-> > > >
-> > > > Would it be best to drop the OPPs for all devices? Or just those affected? I guess it's possible another c630 might
-> > > > crash where yours doesn't?
-> > >
-> > > I've not heard any reports of similar issues from the handful of other
-> > > folks with c630's on #aarch64-laptops.. but I can't really say if that
-> > > is luck or not.
-> > >
-> > > Maybe just remove it for affected devices?  But I'll defer to Bjorn.
-> >
-> > Just as another datapoint, I was just marveling at how suddenly smooth
-> > the UI was performing on db845c and Caleb pointed me at the "drm/msm:
-> > Devfreq tuning" patch as the likely cause of the improvement, and
-> > mid-discussion my board crashed into USB crash mode:
-> > [  146.157696][    C0] adreno 5000000.gpu: CP | AHB bus error
-> > [  146.163303][    C0] adreno 5000000.gpu: CP | AHB bus error
-> > [  146.168837][    C0] adreno 5000000.gpu: RBBM | ATB bus overflow
-> > [  146.174960][    C0] adreno 5000000.gpu: CP | HW fault | status=0x00000000
-> > [  146.181917][    C0] adreno 5000000.gpu: CP | AHB bus error
-> > [  146.187547][    C0] adreno 5000000.gpu: CP illegal instruction error
-> > [  146.194009][    C0] adreno 5000000.gpu: CP | AHB bus error
-> > [  146.308909][    T9] Internal error: synchronous external abort:
-> > 96000010 [#1] PREEMPT SMP
-> > [  146.317150][    T9] Modules linked in:
-> > [  146.320941][    T9] CPU: 3 PID: 9 Comm: kworker/u16:1 Tainted: G
-> >     W         5.14.0-mainline-06795-g42b258c2275c #24
-> > [  146.331974][    T9] Hardware name: Thundercomm Dragonboar
-> > Format: Log Type - Time(microsec) - Message - Optional Info
-> > Log Type: B - Since Boot(Power On Reset),  D - Delta,  S - Statistic
-> > S - QC_IMAGE_VERSION_STRING=BOOT.XF.2.0-00371-SDM845LZB-1
-> > S - IMAGE_VARIANT_STRING=SDM845LA
-> > S - OEM_IMAGE_VERSION_STRING=TSBJ-FA-PC-02170
-> >
-> > So Caleb sent me to this thread. :)
-> >
-> > I'm still trying to trip it again, but it does seem like db845c is
-> > also seeing some stability issues with Linus' HEAD.
-> >
->
-> Caleb's original pastebin seems to have expired (or at least require
-> some sort of ubuntu login to access).. were the crashes he was seeing
-> also 'AHB bus error'?
+The power domains exposed by the AOSS QMP driver control the load state
+resources linked to modem, adsp, cdsp remoteprocs. These are used to
+notify the Always on Subsystem (AOSS) that a particular co-processor is
+up/down. AOSS uses this information to wait for the co-processors to
+suspend before starting its sleep sequence. These co-processors enter
+low-power modes independent to that of the application processor and
+the load state resources linked to them are expected to remain unaltered
+across system suspend/resume cycles. To achieve this behavior let's stop
+modeling them as power-domains and replace them with generic qmp_send
+interface instead.
 
-I can reproduce this hard crash
-https://www.irccloud.com/pastebin/Cu6UJntE/ and a gpu lockup
-https://www.irccloud.com/pastebin/6Ryd2Pug/ at times reliably, by
-running antutu benchmark on pocof1.
+https://lore.kernel.org/lkml/20200913034603.GV3715@yoga/
+Previous discussion on dropping power-domain support from AOSS QMP driver
 
-Reverting 9bc95570175a ("drm/msm: Devfreq tuning") helps and I no
-longer see these errors.
+Depends on:
+qmp_send: https://patchwork.kernel.org/project/linux-arm-msm/cover/1630420228-31075-1-git-send-email-deesin@codeaurora.org/
 
-Complete dmesg for hardcrash https://pastebin.com/raw/GLZVQFQN
+V6:
+ * Updated commit message to explain binding breakage (patch 2). [Stephen]
 
-Regards,
-Amit Pundir
+V5:
+ * Fixup power-domain count (patch 2). [Matthias]
+ * Add WARN_ON on truncation, remove redundant initialization
+   code, use dev_err_probe (patch 4). [Stephen]
+ * Use devm_kstrdup, handle kstrdup failure due to
+   no memory and set qmp to NULL when not available
+   (patch 4). [Bjorn]
 
->
-> If you have a reliable reproducer, I guess it would be worth seeing if
-> increasing the min_freq (ie. to limit how far we jump the freq in one
-> shot) "fixes" it?
->
-> I guess I could check downstream kgsl to see if they were doing
-> something to increase freq in smaller increments.. I don't recall that
-> they were but it has been a while since I dug thru that code.  And I
-> suppose downstream it could also be done in their custom tz governor.
->
-> BR,
-> -R
+V4:
+ * Rebase patch 1 due to the aoss-qmp yaml conversion (Dropping Rb).
+ * Commit message change and sc8180x co-processor addition
+   to patch 2. [Rob/Bjorn]
+ * Drop unused pdev and kfree the load state string in q6v5_deinit
+   /probe path for patch 4. [Matthias]
+ * Replaced "binding" with "property" across the series. [Matthias]
+ * Commit message change and drop incorrect cleanup on cooling
+   device probe failures. [Matthias]
+
+V3:
+ * Misc. documentation fixes [patch 2]:
+  - Reduce power-domain maxItems due to load_state pd removal
+  - Combine compatibles where possible with the load_state pd removal
+  - Fixup the qcom,qmp ref to phandle type
+
+V2:
+ * load_state is currently broken on mainline so be safely dropped
+   without side-effects.
+ * Rebased on top of qmp_send v3 series.
+ * Dropped R-b from Stephen and Rob on patch 3 due to the yaml
+   conversion.
+ * New patch [12] to drop unused aoss-qmp header.
+ * Commit message update [patch 1] [Rob]
+ * Reorder the series [Stephen]
+
+Sibi Sankar (13):
+  dt-bindings: soc: qcom: aoss: Drop the load state power-domain
+  dt-bindings: remoteproc: qcom: pas: Add QMP property
+  dt-bindings: remoteproc: qcom: Add QMP property
+  remoteproc: qcom: q6v5: Use qmp_send to update co-processor load state
+  arm64: dts: qcom: sc7180: Use QMP property to control load state
+  arm64: dts: qcom: sc7280: Use QMP property to control load state
+  arm64: dts: qcom: sdm845: Use QMP property to control load state
+  arm64: dts: qcom: sm8150: Use QMP property to control load state
+  arm64: dts: qcom: sm8250: Use QMP property to control load state
+  arm64: dts: qcom: sm8350: Use QMP property to control load state
+  soc: qcom: aoss: Drop power domain support
+  dt-bindings: msm/dp: Remove aoss-qmp header
+  dt-bindings: soc: qcom: aoss: Delete unused power-domain definitions
+
+ .../bindings/display/msm/dp-controller.yaml        |   1 -
+ .../devicetree/bindings/remoteproc/qcom,adsp.yaml  |  61 ++++++------
+ .../devicetree/bindings/remoteproc/qcom,q6v5.txt   |   7 +-
+ .../bindings/soc/qcom/qcom,aoss-qmp.yaml           |  11 +--
+ arch/arm64/boot/dts/qcom/sc7180.dtsi               |   9 +-
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               |   2 -
+ arch/arm64/boot/dts/qcom/sdm845.dtsi               |   8 +-
+ arch/arm64/boot/dts/qcom/sm8150.dtsi               |  28 +++---
+ arch/arm64/boot/dts/qcom/sm8250.dtsi               |  22 ++---
+ arch/arm64/boot/dts/qcom/sm8350.dtsi               |  30 +++---
+ drivers/remoteproc/qcom_q6v5.c                     |  57 ++++++++++-
+ drivers/remoteproc/qcom_q6v5.h                     |   7 +-
+ drivers/remoteproc/qcom_q6v5_adsp.c                |   7 +-
+ drivers/remoteproc/qcom_q6v5_mss.c                 |  44 ++-------
+ drivers/remoteproc/qcom_q6v5_pas.c                 |  85 ++++------------
+ drivers/remoteproc/qcom_q6v5_wcss.c                |   4 +-
+ drivers/soc/qcom/qcom_aoss.c                       | 107 ---------------------
+ include/dt-bindings/power/qcom-aoss-qmp.h          |  14 ---
+ 18 files changed, 183 insertions(+), 321 deletions(-)
+ delete mode 100644 include/dt-bindings/power/qcom-aoss-qmp.h
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
