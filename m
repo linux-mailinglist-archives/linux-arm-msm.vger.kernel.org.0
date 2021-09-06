@@ -2,99 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 14303401D8A
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Sep 2021 17:21:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E76B401DC5
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Sep 2021 17:50:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232701AbhIFPWU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Sep 2021 11:22:20 -0400
-Received: from mail-oi1-f182.google.com ([209.85.167.182]:38789 "EHLO
-        mail-oi1-f182.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229531AbhIFPWT (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Sep 2021 11:22:19 -0400
-Received: by mail-oi1-f182.google.com with SMTP id bd1so7228419oib.5;
-        Mon, 06 Sep 2021 08:21:14 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=NhVMAnFWkEDHp3N7s9/kE4AIdpYmEdoiHRWavP3wKGw=;
-        b=Xu8XVf/xh7NvAlTN9QDsWYKS32IQMzO8PrELaP/6/Mtc14q6rxT6HuzujsFyr1FIj7
-         0N0PBpdGRb36TzBKPpTzsiMEzu4gZnPf0qqmb+BZjTN96UGrErZAk9ImXSWT9nG2tXMD
-         DFXYKnoAZMnIQFHTqlH0E4wY9FINZFWAPRAYM6wKjgWJVa/xrbpwMLFZUGFrn8KNug0b
-         Patoqq0FcE7M2467Aftf43T9vYsD9R/9TV/PxHD3ue+dFck+IggwZda0zur+5plbG1+h
-         Am5ypzoGpefKXcD1hEushSv6fzb3Ktx+QOrAzy0+LoxDRw6rZlrxqEGdt/r5vtxkCeIs
-         dyWA==
-X-Gm-Message-State: AOAM532oS020ySBC1BlNh0USzb1pSScoLUlZvYeJxQ+oX43vCckJWm8E
-        q8yzIPKGO9fS68iTtEUJKA==
-X-Google-Smtp-Source: ABdhPJy+l0D7FCPnNx9xIWA4YBi4231EcFQBebEZd1SUGrrTsRR5+JmSQg0LpQh8wlddCVj7KpH+0g==
-X-Received: by 2002:aca:5f03:: with SMTP id t3mr9075263oib.54.1630941674391;
-        Mon, 06 Sep 2021 08:21:14 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id v10sm1824088otp.25.2021.09.06.08.21.12
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 06 Sep 2021 08:21:13 -0700 (PDT)
-Received: (nullmailer pid 1057762 invoked by uid 1000);
-        Mon, 06 Sep 2021 15:21:12 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-clk@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        martin.botka@somainline.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        angelogioacchino.delregno@somainline.org,
-        Michael Turquette <mturquette@baylibre.com>,
-        marijn.suijten@somainline.org, devicetree@vger.kernel.org,
-        jamipkettunen@somainline.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Rob Herring <robh+dt@kernel.org>
-In-Reply-To: <20210904183014.43528-1-konrad.dybcio@somainline.org>
-References: <20210904183014.43528-1-konrad.dybcio@somainline.org>
-Subject: Re: [PATCH v3 1/9] dt-bindings: clk: qcom: Add bindings for MSM8994 GCC driver
-Date:   Mon, 06 Sep 2021 10:21:12 -0500
-Message-Id: <1630941672.493430.1057761.nullmailer@robh.at.kernel.org>
+        id S242960AbhIFPvL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Sep 2021 11:51:11 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:39929 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S242248AbhIFPvL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 6 Sep 2021 11:51:11 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1630943406; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=+EJw87u3VrcDLuHUv/GxuAklamXxAsR9kAqaJTr6SFU=;
+ b=YZHpRhOVBZtdNGuk2ovoQjPnePFFGwru6ylJyysuzFTLBIbdSGqtnD3B8ozdXBWr7XP4jgvt
+ gdmt7mL20apemloR+dqBUp+E8ulFsHEbMhP4FoYUrIqYQ7T8VyRKAFBOvfhN1NW7+TQXvlCr
+ lvuBhYl2h25R/xIVhvVLO6AcROQ=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 613638a61567234b8c292c16 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 06 Sep 2021 15:49:58
+ GMT
+Sender: kathirav=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2299BC43616; Mon,  6 Sep 2021 15:49:58 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kathirav)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 79313C4338F;
+        Mon,  6 Sep 2021 15:49:57 +0000 (UTC)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 06 Sep 2021 21:19:57 +0530
+From:   Kathiravan T <kathirav@codeaurora.org>
+To:     Robert Marko <robimarko@gmail.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] soc: qcom: socinfo: Add IPQ8074 family ID-s
+In-Reply-To: <20210905171131.660885-1-robimarko@gmail.com>
+References: <20210905171131.660885-1-robimarko@gmail.com>
+Message-ID: <2c26a5c1302813f5343cb0fd5c192267@codeaurora.org>
+X-Sender: kathirav@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 04 Sep 2021 20:30:05 +0200, Konrad Dybcio wrote:
-> Add documentation for the MSM8994 GCC driver.
+On 2021-09-05 22:41, Robert Marko wrote:
+> IPQ8074 family SoC ID-s are missing, so lets add them based on
+> the downstream driver.
 > 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+
+Did you intentionally left out the IDs for below variants?
+
+IPQ8172 - 397
+IPQ8173 - 398
+IPQ8174 - 399
+
+Reviewed-by: Kathiravan T <kathirav@codeaurora.org>
+
+> Signed-off-by: Robert Marko <robimarko@gmail.com>
 > ---
-> Changes since v2:
+>  drivers/soc/qcom/socinfo.c | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
 > 
-> - Dropped second dt-binding part for the weird SD card clock configuration
-> - Fix up many mistakes, including maintainers, license and order
-> - I still have no idea why I get a pinctrl regex error.. need help here!
-> 
->  .../bindings/clock/qcom,gcc-msm8994.yaml      | 70 +++++++++++++++++++
->  1 file changed, 70 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-msm8994.yaml
-> 
+> diff --git a/drivers/soc/qcom/socinfo.c b/drivers/soc/qcom/socinfo.c
+> index 9faf48302f4b..288897868435 100644
+> --- a/drivers/soc/qcom/socinfo.c
+> +++ b/drivers/soc/qcom/socinfo.c
+> @@ -281,19 +281,31 @@ static const struct soc_id soc_id[] = {
+>  	{ 319, "APQ8098" },
+>  	{ 321, "SDM845" },
+>  	{ 322, "MDM9206" },
+> +	{ 323, "IPQ8074" },
+>  	{ 324, "SDA660" },
+>  	{ 325, "SDM658" },
+>  	{ 326, "SDA658" },
+>  	{ 327, "SDA630" },
+>  	{ 338, "SDM450" },
+>  	{ 341, "SDA845" },
+> +	{ 342, "IPQ8072" },
+> +	{ 343, "IPQ8076" },
+> +	{ 344, "IPQ8078" },
+>  	{ 345, "SDM636" },
+>  	{ 346, "SDA636" },
+>  	{ 349, "SDM632" },
+>  	{ 350, "SDA632" },
+>  	{ 351, "SDA450" },
+>  	{ 356, "SM8250" },
+> +	{ 375, "IPQ8070" },
+> +	{ 376, "IPQ8071" },
+> +	{ 389, "IPQ8072A" },
+> +	{ 390, "IPQ8074A" },
+> +	{ 391, "IPQ8076A" },
+> +	{ 392, "IPQ8078A" },
+>  	{ 394, "SM6125" },
+> +	{ 395, "IPQ8070A" },
+> +	{ 396, "IPQ8071A" },
+>  	{ 402, "IPQ6018" },
+>  	{ 403, "IPQ6028" },
+>  	{ 421, "IPQ6000" },
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,gcc-msm8994.example.dt.yaml: clock-controller@300000: 'clock-names', 'clocks' do not match any of the regexes: 'pinctrl-[0-9]+'
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,gcc.yaml
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/1524636
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+-- 
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
+member of Code Aurora Forum, hosted by The Linux Foundation
