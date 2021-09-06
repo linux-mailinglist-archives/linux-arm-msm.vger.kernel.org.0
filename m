@@ -2,125 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DA2BB4018B0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Sep 2021 11:15:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 516C1401947
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  6 Sep 2021 11:51:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230284AbhIFJRB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 6 Sep 2021 05:17:01 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:14864 "EHLO m43-7.mailgun.net"
+        id S241680AbhIFJvV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 6 Sep 2021 05:51:21 -0400
+Received: from mga12.intel.com ([192.55.52.136]:10721 "EHLO mga12.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S240795AbhIFJQ6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 6 Sep 2021 05:16:58 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1630919753; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=Dl9Me7VnLoTQO7YH0kYUePI2o6EfNVuN9BpuqWH1wUc=; b=RtdHrj5eMmgPgjKSat6Ob0PkDHDOa/ipuFkQNkRL9pSwiwADAYKCZXEK9z6M9WOyyKzqR8sk
- BhwJVDgBwSl4N6A/njoMzpLIaiaUHd3xteQo8xIp9uIvW+j9SdGOn/5BQq9JAQadx+LSKc6z
- 4QlSgsBoe/VNjFEEXR5gFAmIFZw=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 6135dc4889cdb62061fa3526 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 06 Sep 2021 09:15:52
- GMT
-Sender: sanm=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 67FA3C43460; Mon,  6 Sep 2021 09:15:52 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [192.168.0.104] (unknown [49.206.35.49])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: sanm)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6EF68C4338F;
-        Mon,  6 Sep 2021 09:15:46 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 6EF68C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH 1/3] dt-bindings: usb: qcom,dwc3: Add multi-pd bindings
- for dwc3 qcom
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        id S241691AbhIFJvV (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 6 Sep 2021 05:51:21 -0400
+X-IronPort-AV: E=McAfee;i="6200,9189,10098"; a="199463756"
+X-IronPort-AV: E=Sophos;i="5.85,272,1624345200"; 
+   d="scan'208";a="199463756"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Sep 2021 02:50:16 -0700
+X-IronPort-AV: E=Sophos;i="5.85,272,1624345200"; 
+   d="scan'208";a="536692853"
+Received: from isandweg-mobl2.ger.corp.intel.com (HELO localhost) ([10.251.212.194])
+  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 06 Sep 2021 02:50:10 -0700
+From:   Jani Nikula <jani.nikula@linux.intel.com>
+To:     Douglas Anderson <dianders@chromium.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sam Ravnborg <sam@ravnborg.org>
+Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        linux-arm-msm@vger.kernel.org,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux USB List <linux-usb@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Pratham Pratap <prathampratap@codeaurora.org>
-References: <1630346073-7099-1-git-send-email-sanm@codeaurora.org>
- <1630346073-7099-2-git-send-email-sanm@codeaurora.org>
- <CAD=FV=XjRMdB=iHDcMATWDq5CSRGdh1ZBCftjrZvTfMk_Nqgvg@mail.gmail.com>
-From:   Sandeep Maheswaram <sanm@codeaurora.org>
-Message-ID: <1dc7aaaa-a8da-565b-664e-64f529a861b1@codeaurora.org>
-Date:   Mon, 6 Sep 2021 14:45:43 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        Linus W <linus.walleij@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>, devicetree@vger.kernel.org,
+        Steev Klimaszewski <steev@kali.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Maxime Ripard <mripard@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        dri-devel@lists.freedesktop.org,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v3 02/16] drm/edid: Break out reading block 0 of the EDID
+In-Reply-To: <20210901131531.v3.2.I62e76a034ac78c994d40a23cd4ec5aeee56fa77c@changeid>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+References: <20210901201934.1084250-1-dianders@chromium.org> <20210901131531.v3.2.I62e76a034ac78c994d40a23cd4ec5aeee56fa77c@changeid>
+Date:   Mon, 06 Sep 2021 12:50:07 +0300
+Message-ID: <87k0ju8240.fsf@intel.com>
 MIME-Version: 1.0
-In-Reply-To: <CAD=FV=XjRMdB=iHDcMATWDq5CSRGdh1ZBCftjrZvTfMk_Nqgvg@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Wed, 01 Sep 2021, Douglas Anderson <dianders@chromium.org> wrote:
+> A future change wants to be able to read just block 0 of the EDID, so
+> break it out of drm_do_get_edid() into a sub-function.
+>
+> This is intended to be a no-op change--just code movement.
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+>
+> (no changes since v1)
+>
+>  drivers/gpu/drm/drm_edid.c | 62 +++++++++++++++++++++++++++-----------
+>  1 file changed, 44 insertions(+), 18 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
+> index 6325877c5fd6..a22c38482a90 100644
+> --- a/drivers/gpu/drm/drm_edid.c
+> +++ b/drivers/gpu/drm/drm_edid.c
+> @@ -1905,6 +1905,43 @@ int drm_add_override_edid_modes(struct drm_connector *connector)
+>  }
+>  EXPORT_SYMBOL(drm_add_override_edid_modes);
+>  
+> +static struct edid *drm_do_get_edid_blk0(
 
-On 8/31/2021 1:37 AM, Doug Anderson wrote:
-> Hi,
->
-> On Mon, Aug 30, 2021 at 10:55 AM Sandeep Maheswaram <sanm@codeaurora.org> wrote:
->> Add multi pd bindings to set performance state for cx domain
->> to maintain minimum corner voltage for USB clocks.
->>
->> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
->> ---
->>   Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 13 ++++++++++++-
->>   1 file changed, 12 insertions(+), 1 deletion(-)
->>
->> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
->> index e70afc4..838d9c4 100644
->> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
->> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
->> @@ -41,7 +41,18 @@ properties:
->>
->>     power-domains:
->>       description: specifies a phandle to PM domain provider node
->> -    maxItems: 1
->> +    minItems: 1
->> +    items:
->> +      - description: optional,cx power domain
->> +      - description: USB gdsc power domain
-> You need to re-order the above. The optional one needs to be second, not first.
->
-I wanted to use required-opps for cx domain only. so I have put it first 
-in order.
->> +  power-domain-names:
->> +     items:
->> +      - const: cx
->> +      - const: usb_gdsc
-> Why do you need the names at all? The ordering of power-domains is
-> well defined and there are no holes in it and there are no legacy
-> reasons for having the names (like there are for clocks), so you
-> should drop. This is much like reg-names and I always point people to
-> this message from Rob Herring about reg-names:
->
-> https://lore.kernel.org/r/CAL_Jsq+MMunmVWqeW9v2RyzsMKP+=kMzeTHNMG4JDHM7Fy0HBg@mail.gmail.com/
->
-> You'll have to change your driver to use dev_pm_domain_attach_by_id()
-> but that should be fine.
->
-> -Doug
+Maybe base_block instead of blk0?
 
-Ok..I will try using  dev_pm_domain_attach_by_id()
+> +	int (*get_edid_block)(void *data, u8 *buf, unsigned int block,
+> +			      size_t len),
+> +	void *data, bool *edid_corrupt, int *null_edid_counter)
+> +{
+> +	int i;
+> +	u8 *edid;
 
+With void *edid, this function wouldn't need the cast internally.
 
+> +
+> +	if ((edid = kmalloc(EDID_LENGTH, GFP_KERNEL)) == NULL)
+> +		return NULL;
+
+Could split the allocation and NULL check to two separate lines per
+coding style, while at it?
+
+BR,
+Jani.
+
+> +
+> +	/* base block fetch */
+> +	for (i = 0; i < 4; i++) {
+> +		if (get_edid_block(data, edid, 0, EDID_LENGTH))
+> +			goto out;
+> +		if (drm_edid_block_valid(edid, 0, false, edid_corrupt))
+> +			break;
+> +		if (i == 0 && drm_edid_is_zero(edid, EDID_LENGTH)) {
+> +			if (null_edid_counter)
+> +				(*null_edid_counter)++;
+> +			goto carp;
+> +		}
+> +	}
+> +	if (i == 4)
+> +		goto carp;
+> +
+> +	return (struct edid *)edid;
+> +
+> +carp:
+> +	kfree(edid);
+> +	return ERR_PTR(-EINVAL);
+> +
+> +out:
+> +	kfree(edid);
+> +	return NULL;
+> +}
+> +
+>  /**
+>   * drm_do_get_edid - get EDID data using a custom EDID block read function
+>   * @connector: connector we're probing
+> @@ -1938,25 +1975,16 @@ struct edid *drm_do_get_edid(struct drm_connector *connector,
+>  	if (override)
+>  		return override;
+>  
+> -	if ((edid = kmalloc(EDID_LENGTH, GFP_KERNEL)) == NULL)
+> +	edid = (u8 *)drm_do_get_edid_blk0(get_edid_block, data,
+> +					  &connector->edid_corrupt,
+> +					  &connector->null_edid_counter);
+> +	if (IS_ERR_OR_NULL(edid)) {
+> +		if (IS_ERR(edid))
+> +			connector_bad_edid(connector, edid, 1);
+>  		return NULL;
+> -
+> -	/* base block fetch */
+> -	for (i = 0; i < 4; i++) {
+> -		if (get_edid_block(data, edid, 0, EDID_LENGTH))
+> -			goto out;
+> -		if (drm_edid_block_valid(edid, 0, false,
+> -					 &connector->edid_corrupt))
+> -			break;
+> -		if (i == 0 && drm_edid_is_zero(edid, EDID_LENGTH)) {
+> -			connector->null_edid_counter++;
+> -			goto carp;
+> -		}
+>  	}
+> -	if (i == 4)
+> -		goto carp;
+>  
+> -	/* if there's no extensions, we're done */
+> +	/* if there's no extensions or no connector, we're done */
+>  	valid_extensions = edid[0x7e];
+>  	if (valid_extensions == 0)
+>  		return (struct edid *)edid;
+> @@ -2010,8 +2038,6 @@ struct edid *drm_do_get_edid(struct drm_connector *connector,
+>  
+>  	return (struct edid *)edid;
+>  
+> -carp:
+> -	connector_bad_edid(connector, edid, 1);
+>  out:
+>  	kfree(edid);
+>  	return NULL;
+
+-- 
+Jani Nikula, Intel Open Source Graphics Center
