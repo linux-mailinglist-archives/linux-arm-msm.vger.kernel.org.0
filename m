@@ -2,54 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 92982403046
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Sep 2021 23:26:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 63EBC403083
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Sep 2021 23:57:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243883AbhIGV1O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Sep 2021 17:27:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54980 "EHLO
+        id S1346475AbhIGV6b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Sep 2021 17:58:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347162AbhIGV1O (ORCPT
+        with ESMTP id S232037AbhIGV62 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Sep 2021 17:27:14 -0400
-Received: from mail-ej1-x632.google.com (mail-ej1-x632.google.com [IPv6:2a00:1450:4864:20::632])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3357AC061575;
-        Tue,  7 Sep 2021 14:26:07 -0700 (PDT)
-Received: by mail-ej1-x632.google.com with SMTP id jg16so998394ejc.1;
-        Tue, 07 Sep 2021 14:26:07 -0700 (PDT)
+        Tue, 7 Sep 2021 17:58:28 -0400
+Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D9C0C06175F
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Sep 2021 14:57:21 -0700 (PDT)
+Received: by mail-pl1-x636.google.com with SMTP id u1so9123plq.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Sep 2021 14:57:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=vXNO3olbtma7hE++jUWc8ulS7UJFRFsM1r+fEg/Xcr4=;
-        b=HAVHm8zN9QEe7OrVNoo+oKh4DguUxWBObO+mW8cUZbceKX0u4PqXMzCnOUmyaGzfRX
-         zYSYgRhUgH5K1QHLtrD/Oitonl8impOAq46EeEiZDmb+B2floTTd8hvhRHkyXniyK8cU
-         +Sgxzks3H7DQil7UiUjiLl0eJF0WCGOFWp140DuhgFIHvVs11VmPVuZ5KMNSzalBvTZ/
-         wbNvY/fi6V1OtPsY+hKuk/ovxu3Pnnz20a7RLlJW3tF70g81/YXM1xbmN1w37V2mLZhd
-         1EiC3EDfb2MljCQRrkQpiqY/RYE+xMVReUWEV6hbCrx5B7ZGEFCxTmc18wCg+P3tEENw
-         L/yA==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=UWv6lZCk1njoRineiSM3TW0+5Sxz+XHi+1n+wOw/Lfs=;
+        b=LF90ewmSHX3tGtab+JEX+fD3jiqBMljGIQrnOiOoR+otGO83eE6yt87wkv/Id9RbBN
+         AUZcq7ByXH++uVxQ5DO/ubto9b+w2k+IDsaI/GLy2LX13ezGR8NehSRovIHRNzqlO2/C
+         jVkNbt+oyxjEgL5QlgJhXUmcTDUSEn9LdmNfA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=vXNO3olbtma7hE++jUWc8ulS7UJFRFsM1r+fEg/Xcr4=;
-        b=IBB1hcMLw3nf7Bj2xa+76QlL3G04s7ND/MYiXgcFixZxv8YshwgGh8Po0haiVMxmks
-         sKRJ9sHydv82EBeK/Xk7nPEpbyeH5XA+nEiP8TWDd17IbtvDZYEuHgP+0WWLciNUurFZ
-         75QtZSOjIGuVj1nxmfoFCIvqnCWUhd5+o6gQHICzOA7eJya6Ltk/g+DjRpfYMhYTzoWv
-         el44BAHlYZ9ETCvpedctVxdHHEzknd+Ch5ApUcQ4ci+m4jEUUZNtCs7cxPTJQPUz8o88
-         3WhG6gC1S30k8b/Gy2SB5LJci51lv3FrvvEQ3jo7JwJQKRMeEnjOPe/P0/zlo5TWzniJ
-         lXrw==
-X-Gm-Message-State: AOAM532dqdGSwMzHQrHUiStPqJGOXxm1xsWOgplmlD73f8Bgy8W9RWSS
-        iJB/qXkrhSAepeq5/GXgNVw=
-X-Google-Smtp-Source: ABdhPJyPV8hLqzZZs74jWSed62ing6ThzHcIExC67z5gLH5M8CmTD/ZC1M/mFQdvLFp6AdlyxFQkvA==
-X-Received: by 2002:a17:906:7848:: with SMTP id p8mr410174ejm.212.1631049965630;
-        Tue, 07 Sep 2021 14:26:05 -0700 (PDT)
-Received: from Ansuel-xps.localdomain (host-87-0-193-30.retail.telecomitalia.it. [87.0.193.30])
-        by smtp.googlemail.com with ESMTPSA id k6sm105954edv.77.2021.09.07.14.26.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Sep 2021 14:26:05 -0700 (PDT)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=UWv6lZCk1njoRineiSM3TW0+5Sxz+XHi+1n+wOw/Lfs=;
+        b=hvAKcrAyeQV4e89WAZLrHEIGQOvx6SoLZJp9/csldUQqT+L+2j/pnXe7qa6LFlJLU/
+         +3Lb2gganMmcIhdx4w1gF6eA0ZbjH0cR4ybaIMj+tvJkbsjIVvFHAra8+A54It0KSyIS
+         IQoOdDGK6+r/5jw61SfCh/o+mGJMMcrLtH9U5AhhZIucu1y4vJBHp3qeBAyX3/M1jKF6
+         IjpxoN7vRk3YyZDKJ8R/8gFGYNlukSgKSNDaQK5pMOJdYVzJOKYn+asdGeBlT5m0eYin
+         kDGCOv1hMiFpivg+ER8w5Zy6ulZJUEJ+xNxlzCnLY6aikvsmV5VmLLrWr/m9q7FV5Vdv
+         MxdQ==
+X-Gm-Message-State: AOAM5324z0bAp6imEDbfB+v+MCF+7Kmjlp4ZxQeHZe6stolTIeS0Q8z5
+        3bqLb7DnMnInuTzZEpIJBu3Y1A==
+X-Google-Smtp-Source: ABdhPJyp91BpVqX+NyOUYvFtBYcXP8qWYZx7lahqDgCsp7jBqmEKqLGNVma4UojWH7cIhX0QMuQAxQ==
+X-Received: by 2002:a17:902:c410:b0:138:ad8f:865b with SMTP id k16-20020a170902c41000b00138ad8f865bmr177803plk.79.1631051841144;
+        Tue, 07 Sep 2021 14:57:21 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:c6b2:7ae:474d:36f6])
+        by smtp.gmail.com with UTF8SMTPSA id p9sm120188pgn.36.2021.09.07.14.57.19
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Sep 2021 14:57:20 -0700 (PDT)
+Date:   Tue, 7 Sep 2021 14:57:18 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Ansuel Smith <ansuelsmth@gmail.com>
+Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Amit Kucheria <amitk@kernel.org>,
         Thara Gopinath <thara.gopinath@linaro.org>,
@@ -57,88 +56,112 @@ To:     Andy Gross <agross@kernel.org>,
         Daniel Lezcano <daniel.lezcano@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>
-Subject: [PATCH v2 2/2] drivers: thermal: tsens: add timeout to get_tem_tsens_valid
-Date:   Tue,  7 Sep 2021 23:25:43 +0200
-Message-Id: <20210907212543.20220-2-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210907212543.20220-1-ansuelsmth@gmail.com>
+Subject: Re: [PATCH v2 2/2] drivers: thermal: tsens: add timeout to
+ get_tem_tsens_valid
+Message-ID: <YTfgPmp5gzP6FyqR@google.com>
 References: <20210907212543.20220-1-ansuelsmth@gmail.com>
+ <20210907212543.20220-2-ansuelsmth@gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20210907212543.20220-2-ansuelsmth@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The function can loop and lock the system if for whatever reason the bit
-for the target sensor is NEVER valid. This is the case if a sensor is
-disabled by the factory and the valid bit is never reported as actually
-valid. Add a timeout check and exit if a timeout occurs. As this is
-a very rare condition, handle the timeout only if the first read fails.
-While at it also rework the function to improve readability.
+On Tue, Sep 07, 2021 at 11:25:43PM +0200, Ansuel Smith wrote:
+> The function can loop and lock the system if for whatever reason the bit
+> for the target sensor is NEVER valid. This is the case if a sensor is
+> disabled by the factory and the valid bit is never reported as actually
+> valid. Add a timeout check and exit if a timeout occurs. As this is
+> a very rare condition, handle the timeout only if the first read fails.
+> While at it also rework the function to improve readability.
+> 
+> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> ---
+>  drivers/thermal/qcom/tsens.c | 40 +++++++++++++++++++++++-------------
+>  1 file changed, 26 insertions(+), 14 deletions(-)
+> 
+> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> index b1162e566a70..1ff244176beb 100644
+> --- a/drivers/thermal/qcom/tsens.c
+> +++ b/drivers/thermal/qcom/tsens.c
+> @@ -599,26 +599,38 @@ int get_temp_tsens_valid(const struct tsens_sensor *s, int *temp)
+>  	int hw_id = s->hw_id;
+>  	u32 temp_idx = LAST_TEMP_0 + hw_id;
+>  	u32 valid_idx = VALID_0 + hw_id;
+> +	unsigned long timeout;
+>  	u32 valid;
+>  	int ret;
+>  
+>  	/* VER_0 doesn't have VALID bit */
+> -	if (tsens_version(priv) >= VER_0_1) {
+> +	if (tsens_version(priv) == VER_0)
+> +		goto get_temp;
+> +
+> +	ret = regmap_field_read(priv->rf[valid_idx], &valid);
+> +	if (ret || valid)
+> +		goto check_valid;
+> +
+> +	timeout = jiffies + msecs_to_jiffies(20);
+> +	do {
+> +		/* Valid bit is 0 for 6 AHB clock cycles.
+> +		 * At 19.2MHz, 1 AHB clock is ~60ns.
+> +		 * We should enter this loop very, very rarely.
+> +		 */
+> +		ndelay(400);
+>  		ret = regmap_field_read(priv->rf[valid_idx], &valid);
+> -		if (ret)
+> -			return ret;
+> -		while (!valid) {
+> -			/* Valid bit is 0 for 6 AHB clock cycles.
+> -			 * At 19.2MHz, 1 AHB clock is ~60ns.
+> -			 * We should enter this loop very, very rarely.
+> -			 */
+> -			ndelay(400);
+> -			ret = regmap_field_read(priv->rf[valid_idx], &valid);
+> -			if (ret)
+> -				return ret;
+> -		}
+> -	}
+> +		if (ret || valid)
+> +			goto check_valid;
+> +	} while (time_before(jiffies, timeout));
+> +
+> +	return -ETIMEDOUT;
+> +
+> +check_valid:
+> +	/* Check ret of valid bit read */
+> +	if (ret)
+> +		return ret;
+>  
+> +get_temp:
+>  	/* Valid bit is set, OK to read the temperature */
+>  	*temp = tsens_hw_to_mC(s, temp_idx);
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
- drivers/thermal/qcom/tsens.c | 40 +++++++++++++++++++++++-------------
- 1 file changed, 26 insertions(+), 14 deletions(-)
+I still think that something like this would be clearer than the
+multiple jumps to 'check_valid':
 
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index b1162e566a70..1ff244176beb 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -599,26 +599,38 @@ int get_temp_tsens_valid(const struct tsens_sensor *s, int *temp)
- 	int hw_id = s->hw_id;
- 	u32 temp_idx = LAST_TEMP_0 + hw_id;
- 	u32 valid_idx = VALID_0 + hw_id;
-+	unsigned long timeout;
- 	u32 valid;
- 	int ret;
- 
- 	/* VER_0 doesn't have VALID bit */
--	if (tsens_version(priv) >= VER_0_1) {
-+	if (tsens_version(priv) == VER_0)
-+		goto get_temp;
-+
-+	ret = regmap_field_read(priv->rf[valid_idx], &valid);
-+	if (ret || valid)
-+		goto check_valid;
-+
-+	timeout = jiffies + msecs_to_jiffies(20);
-+	do {
-+		/* Valid bit is 0 for 6 AHB clock cycles.
-+		 * At 19.2MHz, 1 AHB clock is ~60ns.
-+		 * We should enter this loop very, very rarely.
-+		 */
-+		ndelay(400);
- 		ret = regmap_field_read(priv->rf[valid_idx], &valid);
--		if (ret)
--			return ret;
--		while (!valid) {
--			/* Valid bit is 0 for 6 AHB clock cycles.
--			 * At 19.2MHz, 1 AHB clock is ~60ns.
--			 * We should enter this loop very, very rarely.
--			 */
--			ndelay(400);
--			ret = regmap_field_read(priv->rf[valid_idx], &valid);
--			if (ret)
--				return ret;
--		}
--	}
-+		if (ret || valid)
-+			goto check_valid;
-+	} while (time_before(jiffies, timeout));
-+
-+	return -ETIMEDOUT;
-+
-+check_valid:
-+	/* Check ret of valid bit read */
-+	if (ret)
-+		return ret;
- 
-+get_temp:
- 	/* Valid bit is set, OK to read the temperature */
- 	*temp = tsens_hw_to_mC(s, temp_idx);
- 
--- 
-2.32.0
 
+	ret = regmap_field_read(priv->rf[valid_idx], &valid);
+	if (ret)
+		return ret;
+
+	timeout = jiffies + msecs_to_jiffies(20);
+
+	while (!valid) {
+		/* Valid bit is 0 for 6 AHB clock cycles.
+		 * At 19.2MHz, 1 AHB clock is ~60ns.
+		 * We should enter this loop very, very rarely.
+		 */
+		ndelay(400);
+		ret = regmap_field_read(priv->rf[valid_idx], &valid);
+		if (ret)
+			return ret;
+
+		if (time_after(jiffies, timeout))
+			return -ETIMEDOUT;
+	};
+
+That said, I'm just a random dude, so my opinion isn't really important,
+as long as the maintainers are happy with the change :)
