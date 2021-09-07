@@ -2,166 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 63EBC403083
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Sep 2021 23:57:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A1795403141
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Sep 2021 00:58:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346475AbhIGV6b (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Sep 2021 17:58:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33780 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232037AbhIGV62 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Sep 2021 17:58:28 -0400
-Received: from mail-pl1-x636.google.com (mail-pl1-x636.google.com [IPv6:2607:f8b0:4864:20::636])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D9C0C06175F
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Sep 2021 14:57:21 -0700 (PDT)
-Received: by mail-pl1-x636.google.com with SMTP id u1so9123plq.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Sep 2021 14:57:21 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=UWv6lZCk1njoRineiSM3TW0+5Sxz+XHi+1n+wOw/Lfs=;
-        b=LF90ewmSHX3tGtab+JEX+fD3jiqBMljGIQrnOiOoR+otGO83eE6yt87wkv/Id9RbBN
-         AUZcq7ByXH++uVxQ5DO/ubto9b+w2k+IDsaI/GLy2LX13ezGR8NehSRovIHRNzqlO2/C
-         jVkNbt+oyxjEgL5QlgJhXUmcTDUSEn9LdmNfA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20161025;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=UWv6lZCk1njoRineiSM3TW0+5Sxz+XHi+1n+wOw/Lfs=;
-        b=hvAKcrAyeQV4e89WAZLrHEIGQOvx6SoLZJp9/csldUQqT+L+2j/pnXe7qa6LFlJLU/
-         +3Lb2gganMmcIhdx4w1gF6eA0ZbjH0cR4ybaIMj+tvJkbsjIVvFHAra8+A54It0KSyIS
-         IQoOdDGK6+r/5jw61SfCh/o+mGJMMcrLtH9U5AhhZIucu1y4vJBHp3qeBAyX3/M1jKF6
-         IjpxoN7vRk3YyZDKJ8R/8gFGYNlukSgKSNDaQK5pMOJdYVzJOKYn+asdGeBlT5m0eYin
-         kDGCOv1hMiFpivg+ER8w5Zy6ulZJUEJ+xNxlzCnLY6aikvsmV5VmLLrWr/m9q7FV5Vdv
-         MxdQ==
-X-Gm-Message-State: AOAM5324z0bAp6imEDbfB+v+MCF+7Kmjlp4ZxQeHZe6stolTIeS0Q8z5
-        3bqLb7DnMnInuTzZEpIJBu3Y1A==
-X-Google-Smtp-Source: ABdhPJyp91BpVqX+NyOUYvFtBYcXP8qWYZx7lahqDgCsp7jBqmEKqLGNVma4UojWH7cIhX0QMuQAxQ==
-X-Received: by 2002:a17:902:c410:b0:138:ad8f:865b with SMTP id k16-20020a170902c41000b00138ad8f865bmr177803plk.79.1631051841144;
-        Tue, 07 Sep 2021 14:57:21 -0700 (PDT)
-Received: from localhost ([2620:15c:202:201:c6b2:7ae:474d:36f6])
-        by smtp.gmail.com with UTF8SMTPSA id p9sm120188pgn.36.2021.09.07.14.57.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 07 Sep 2021 14:57:20 -0700 (PDT)
-Date:   Tue, 7 Sep 2021 14:57:18 -0700
-From:   Matthias Kaehlcke <mka@chromium.org>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 2/2] drivers: thermal: tsens: add timeout to
- get_tem_tsens_valid
-Message-ID: <YTfgPmp5gzP6FyqR@google.com>
-References: <20210907212543.20220-1-ansuelsmth@gmail.com>
- <20210907212543.20220-2-ansuelsmth@gmail.com>
+        id S1344503AbhIGXAC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Sep 2021 19:00:02 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:62185 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1344087AbhIGXAB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 7 Sep 2021 19:00:01 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1631055535; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=YHLJt++Yk8SoMmB1dGCCJS5cBmhjYlM8QhmxUbhnFP4=;
+ b=SsgSwRb5ufhuNwO0OFdqNw6HUgnKgIJ1wOVybhw+fobl4GTqIYdSNg/p2oQDz7Zfmg5bySGd
+ rljiZEU5DSzPWRUUzqq7Hxov0DvTIYV/G7rsDGyjOFDqCpcf6261TNNTQmMkH8zP0nbqtZyu
+ ydkwxfG+fMOF6q0waq7ZOewxszA=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 6137eeaec603a0154f94bee9 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 07 Sep 2021 22:58:54
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id BC9C1C43618; Tue,  7 Sep 2021 22:58:53 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C9FACC4338F;
+        Tue,  7 Sep 2021 22:58:52 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-In-Reply-To: <20210907212543.20220-2-ansuelsmth@gmail.com>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 07 Sep 2021 15:58:52 -0700
+From:   abhinavk@codeaurora.org
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/dsi: Use division result from div_u64_rem in 7nm
+ and 14nm PLL
+In-Reply-To: <20210906202535.824233-1-marijn.suijten@somainline.org>
+References: <20210906202535.824233-1-marijn.suijten@somainline.org>
+Message-ID: <37d3d27f56787ebe608121ce05bb2ad0@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 07, 2021 at 11:25:43PM +0200, Ansuel Smith wrote:
-> The function can loop and lock the system if for whatever reason the bit
-> for the target sensor is NEVER valid. This is the case if a sensor is
-> disabled by the factory and the valid bit is never reported as actually
-> valid. Add a timeout check and exit if a timeout occurs. As this is
-> a very rare condition, handle the timeout only if the first read fails.
-> While at it also rework the function to improve readability.
+On 2021-09-06 13:25, Marijn Suijten wrote:
+> div_u64_rem provides the result of the divison and additonally the
+> remainder; don't use this function to solely calculate the remainder
+> while calculating the division again with div_u64.
 > 
-> Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> A similar improvement was applied earlier to the 10nm pll in
+> 5c191fef4ce2 ("drm/msm/dsi_pll_10nm: Fix dividing the same numbers
+> twice").
+> 
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
 > ---
->  drivers/thermal/qcom/tsens.c | 40 +++++++++++++++++++++++-------------
->  1 file changed, 26 insertions(+), 14 deletions(-)
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c | 4 +---
+>  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c  | 4 +---
+>  2 files changed, 2 insertions(+), 6 deletions(-)
 > 
-> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-> index b1162e566a70..1ff244176beb 100644
-> --- a/drivers/thermal/qcom/tsens.c
-> +++ b/drivers/thermal/qcom/tsens.c
-> @@ -599,26 +599,38 @@ int get_temp_tsens_valid(const struct tsens_sensor *s, int *temp)
->  	int hw_id = s->hw_id;
->  	u32 temp_idx = LAST_TEMP_0 + hw_id;
->  	u32 valid_idx = VALID_0 + hw_id;
-> +	unsigned long timeout;
->  	u32 valid;
->  	int ret;
->  
->  	/* VER_0 doesn't have VALID bit */
-> -	if (tsens_version(priv) >= VER_0_1) {
-> +	if (tsens_version(priv) == VER_0)
-> +		goto get_temp;
-> +
-> +	ret = regmap_field_read(priv->rf[valid_idx], &valid);
-> +	if (ret || valid)
-> +		goto check_valid;
-> +
-> +	timeout = jiffies + msecs_to_jiffies(20);
-> +	do {
-> +		/* Valid bit is 0 for 6 AHB clock cycles.
-> +		 * At 19.2MHz, 1 AHB clock is ~60ns.
-> +		 * We should enter this loop very, very rarely.
-> +		 */
-> +		ndelay(400);
->  		ret = regmap_field_read(priv->rf[valid_idx], &valid);
-> -		if (ret)
-> -			return ret;
-> -		while (!valid) {
-> -			/* Valid bit is 0 for 6 AHB clock cycles.
-> -			 * At 19.2MHz, 1 AHB clock is ~60ns.
-> -			 * We should enter this loop very, very rarely.
-> -			 */
-> -			ndelay(400);
-> -			ret = regmap_field_read(priv->rf[valid_idx], &valid);
-> -			if (ret)
-> -				return ret;
-> -		}
-> -	}
-> +		if (ret || valid)
-> +			goto check_valid;
-> +	} while (time_before(jiffies, timeout));
-> +
-> +	return -ETIMEDOUT;
-> +
-> +check_valid:
-> +	/* Check ret of valid bit read */
-> +	if (ret)
-> +		return ret;
->  
-> +get_temp:
->  	/* Valid bit is set, OK to read the temperature */
->  	*temp = tsens_hw_to_mC(s, temp_idx);
-
-I still think that something like this would be clearer than the
-multiple jumps to 'check_valid':
-
-
-	ret = regmap_field_read(priv->rf[valid_idx], &valid);
-	if (ret)
-		return ret;
-
-	timeout = jiffies + msecs_to_jiffies(20);
-
-	while (!valid) {
-		/* Valid bit is 0 for 6 AHB clock cycles.
-		 * At 19.2MHz, 1 AHB clock is ~60ns.
-		 * We should enter this loop very, very rarely.
-		 */
-		ndelay(400);
-		ret = regmap_field_read(priv->rf[valid_idx], &valid);
-		if (ret)
-			return ret;
-
-		if (time_after(jiffies, timeout))
-			return -ETIMEDOUT;
-	};
-
-That said, I'm just a random dude, so my opinion isn't really important,
-as long as the maintainers are happy with the change :)
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+> index 3c1e2106d962..8905f365c932 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
+> @@ -213,9 +213,7 @@ static void pll_14nm_dec_frac_calc(struct
+> dsi_pll_14nm *pll, struct dsi_pll_conf
+>  	DBG("vco_clk_rate=%lld ref_clk_rate=%lld", vco_clk_rate, fref);
+> 
+>  	dec_start_multiple = div_u64(vco_clk_rate * multiplier, fref);
+> -	div_u64_rem(dec_start_multiple, multiplier, &div_frac_start);
+> -
+> -	dec_start = div_u64(dec_start_multiple, multiplier);
+> +	dec_start = div_u64_rem(dec_start_multiple, multiplier, 
+> &div_frac_start);
+> 
+>  	pconf->dec_start = (u32)dec_start;
+>  	pconf->div_frac_start = div_frac_start;
+> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> index c77c30628cca..1a5abbd9fb76 100644
+> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
+> @@ -114,9 +114,7 @@ static void dsi_pll_calc_dec_frac(struct
+> dsi_pll_7nm *pll, struct dsi_pll_config
+> 
+>  	multiplier = 1 << FRAC_BITS;
+>  	dec_multiple = div_u64(pll_freq * multiplier, divider);
+> -	div_u64_rem(dec_multiple, multiplier, &frac);
+> -
+> -	dec = div_u64(dec_multiple, multiplier);
+> +	dec = div_u64_rem(dec_multiple, multiplier, &frac);
+> 
+>  	if (!(pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1))
+>  		config->pll_clock_inverters = 0x28;
