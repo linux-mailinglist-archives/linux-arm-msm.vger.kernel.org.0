@@ -2,141 +2,225 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0157A402897
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Sep 2021 14:20:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B659402951
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Sep 2021 15:03:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344162AbhIGMVn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Sep 2021 08:21:43 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:60079 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344710AbhIGMVO (ORCPT
+        id S1344523AbhIGNEm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Sep 2021 09:04:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51358 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1344507AbhIGNEl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Sep 2021 08:21:14 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1631017208; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=5HlGghoP2b2ht8fi4G9mfxQrkVUoJI58Mvkt18+LJGM=; b=E2PKS55+oBzsdq3iszSYbCnh8g0jmMRh/Ngv7yg5jhNY5paGFJ8W4BgAMHRN8g0Dd3Fmo7/I
- 8mWFlE3AyZgzd63trw+i31KLhgUKXflyMoFdCzGk4On6igi3zyUlm46F9HTrvGvnaWvDX71v
- giqtJ3s+tRU/eghIhAe3q7uKXgU=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 613758e91567234b8c943a56 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 07 Sep 2021 12:19:53
- GMT
-Sender: rnayak=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4675FC4314C; Tue,  7 Sep 2021 12:19:52 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-5.2 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.105] (unknown [49.207.193.119])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: rnayak)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 339F4C43619;
-        Tue,  7 Sep 2021 12:19:44 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 339F4C43619
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH 1/3] dt-bindings: usb: qcom,dwc3: Add multi-pd bindings
- for dwc3 qcom
-To:     Sandeep Maheswaram <sanm@codeaurora.org>,
-        Doug Anderson <dianders@chromium.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Felipe Balbi <balbi@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux USB List <linux-usb@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Pratham Pratap <prathampratap@codeaurora.org>
-References: <1630346073-7099-1-git-send-email-sanm@codeaurora.org>
- <1630346073-7099-2-git-send-email-sanm@codeaurora.org>
- <CAD=FV=XjRMdB=iHDcMATWDq5CSRGdh1ZBCftjrZvTfMk_Nqgvg@mail.gmail.com>
- <1dc7aaaa-a8da-565b-664e-64f529a861b1@codeaurora.org>
-From:   Rajendra Nayak <rnayak@codeaurora.org>
-Message-ID: <bfed78b2-38dd-444a-244f-76c280137a1d@codeaurora.org>
-Date:   Tue, 7 Sep 2021 17:49:42 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        Tue, 7 Sep 2021 09:04:41 -0400
+Received: from mail-oo1-xc2e.google.com (mail-oo1-xc2e.google.com [IPv6:2607:f8b0:4864:20::c2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0FE56C06175F
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Sep 2021 06:03:35 -0700 (PDT)
+Received: by mail-oo1-xc2e.google.com with SMTP id v20-20020a4a2554000000b0028f8cc17378so2884558ooe.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Sep 2021 06:03:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=uhC7nzqpqA4nMheQgFCEgMJ6vQ3bkE9hy3QtYBGq9aI=;
+        b=iy5Pab0mOazD/amTTWfY4e/vbO7jZSzp8XFUAEVZF5cdt5JEs2ep1HTTxrt/Zk14pa
+         o/s3v+TTVyd0ak3Z1LZW11YRp+NebeaPuibrA+9DtLlWi5gUzz4QEd2QWsqaztwapLq2
+         cJITIf3sZo6m4sv2NV0Q3NVHtn3YZ1LOEy46HtKKX/Nts9/SM7sDVwWuTQbGLe0HfADv
+         M8+1AoYk0+oC4BQHkPkfNro6sO0zGvON3xuamnPjeQLKwuBBB25pENgv/UOGw2TUu6pa
+         ii99KCMjSkmG+curuRxyRROdxftAzasoukEQQal97EyGDk6U9tQFgWWFGR0zN++DWKY/
+         Krpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=uhC7nzqpqA4nMheQgFCEgMJ6vQ3bkE9hy3QtYBGq9aI=;
+        b=kUUdIGh1Yii/cWMAgp+Wzig2dOk5jCWD0UYK5BNe0GoWFNTQpYqfePgQKUjJEZFpFd
+         WtD5wGBxYQWqxi0DTHevypAlaOEgAp7FnZi3N2XMzo/c4hErgRjmNHKaU5FfvmNLPZqr
+         XH4zh3o/4Z3SgcFAZJFlZF3CtwaKcdqiZyQEWzLuvZNTi7McDs1x2Fqtggm5QuG1WiYr
+         B6WwXiGkZluz2inu0AXkTFCZkIMakHOhEfCUazsd+ChjhvusWL0Pb3vyDsIiCIS7Sozb
+         zoOOb+oFQLfRKSHZY+w9fUr5NSDSrLd9RVuEQiiz9l9VdozeAPkkUsiYqkBzuJUgVuKS
+         pP5g==
+X-Gm-Message-State: AOAM530XMY2uirtSO1IFLZ9NVuUfGbAYSh+1lDI1R3l8TQVB2TTS471q
+        pGIv9obcMo6PAvNIHQ/mvsIoPukMBxssTw==
+X-Google-Smtp-Source: ABdhPJxXMAZmloUHdgSE5zF9AilK2k10mV+Z9C0H9OxJkTzKVhWtamTncqC0p02F+PqlkciLdix31Q==
+X-Received: by 2002:a4a:dfac:: with SMTP id k12mr17537075ook.41.1631019812044;
+        Tue, 07 Sep 2021 06:03:32 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id v10sm2425326otp.25.2021.09.07.06.03.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 07 Sep 2021 06:03:31 -0700 (PDT)
+Date:   Tue, 7 Sep 2021 06:04:31 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
+        marijn.suijten@somainline.org, martin.botka@somainline.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        paul.bouchara@somainline.org
+Subject: Re: [PATCH 1/7] arm64: dts: qcom: Introduce support for MSM8998 Sony
+ Yoshino platform
+Message-ID: <YTdjX2/XGZYQQRDW@ripper>
+References: <20210903180924.1006044-1-angelogioacchino.delregno@somainline.org>
 MIME-Version: 1.0
-In-Reply-To: <1dc7aaaa-a8da-565b-664e-64f529a861b1@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210903180924.1006044-1-angelogioacchino.delregno@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Fri 03 Sep 11:09 PDT 2021, AngeloGioacchino Del Regno wrote:
 
-On 9/6/2021 2:45 PM, Sandeep Maheswaram wrote:
-> 
-> On 8/31/2021 1:37 AM, Doug Anderson wrote:
->> Hi,
->>
->> On Mon, Aug 30, 2021 at 10:55 AM Sandeep Maheswaram <sanm@codeaurora.org> wrote:
->>> Add multi pd bindings to set performance state for cx domain
->>> to maintain minimum corner voltage for USB clocks.
->>>
->>> Signed-off-by: Sandeep Maheswaram <sanm@codeaurora.org>
->>> ---
->>>   Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 13 ++++++++++++-
->>>   1 file changed, 12 insertions(+), 1 deletion(-)
->>>
->>> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
->>> index e70afc4..838d9c4 100644
->>> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
->>> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
->>> @@ -41,7 +41,18 @@ properties:
->>>
->>>     power-domains:
->>>       description: specifies a phandle to PM domain provider node
->>> -    maxItems: 1
->>> +    minItems: 1
->>> +    items:
->>> +      - description: optional,cx power domain
->>> +      - description: USB gdsc power domain
->> You need to re-order the above. The optional one needs to be second, not first.
->>
-> I wanted to use required-opps for cx domain only. so I have put it first in order.
-
-You can always put a <> for the power-domains for which there are no required-opps
-
-+			power-domain-names = "usb_gdsc", "cx";
-+
-+			required-opps = <>, <&rpmhpd_opp_nom>;
-
->>> +  power-domain-names:
->>> +     items:
->>> +      - const: cx
->>> +      - const: usb_gdsc
->> Why do you need the names at all? The ordering of power-domains is
->> well defined and there are no holes in it and there are no legacy
->> reasons for having the names (like there are for clocks), so you
->> should drop. This is much like reg-names and I always point people to
->> this message from Rob Herring about reg-names:
->>
->> https://lore.kernel.org/r/CAL_Jsq+MMunmVWqeW9v2RyzsMKP+=kMzeTHNMG4JDHM7Fy0HBg@mail.gmail.com/
->>
->> You'll have to change your driver to use dev_pm_domain_attach_by_id()
->> but that should be fine.
->>
->> -Doug
-> 
-> Ok..I will try using  dev_pm_domain_attach_by_id()
-> 
+> This commit introduces support for the Sony Yoshino platform, using
+> the MSM8998 SoC, including:
+> - Sony Xperia XZ1 (codename Poplar),
+> - Sony Xperia XZ1 Compact (codename Lilac),
+> - Sony Xperia XZ Premium (codename Maple).
 > 
 
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-of Code Aurora Forum, hosted by The Linux Foundation
+Nice!
+
+> diff --git a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
+[..]
+> +	vph_pwr: vph-pwr-regulator {
+> +		compatible = "regulator-fixed";
+> +		regulator-name = "vph_pwr";
+> +		regulator-always-on;
+> +		regulator-boot-on;
+> +	};
+> +
+> +	gpio_keys {
+
+Please don't use '_' in node names.
+
+> +		compatible = "gpio-keys";
+> +		input-name = "gpio-keys";
+> +		label = "Side buttons";
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&vol_down_pin_a>, <&cam_focus_pin_a>,
+> +			    <&cam_snapshot_pin_a>;
+> +		vol-down {
+> +			label = "Volume Down";
+> +			gpios = <&pm8998_gpio 5 GPIO_ACTIVE_LOW>;
+> +			linux,input-type = <1>;
+> +			linux,code = <KEY_VOLUMEDOWN>;
+> +			gpio-key,wakeup;
+> +			debounce-interval = <15>;
+> +		};
+> +
+> +		camera-snapshot {
+> +			label = "Camera Snapshot";
+> +			gpios = <&pm8998_gpio 7 GPIO_ACTIVE_LOW>;
+> +			linux,input-type = <1>;
+> +			linux,code = <KEY_CAMERA>;
+> +			debounce-interval = <15>;
+> +		};
+> +
+> +		camera-focus {
+> +			label = "Camera Focus";
+> +			gpios = <&pm8998_gpio 8 GPIO_ACTIVE_LOW>;
+> +			linux,input-type = <1>;
+> +			linux,code = <KEY_CAMERA_FOCUS>;
+> +			debounce-interval = <15>;
+> +		};
+> +	};
+> +
+> +	gpio_hall_sensor {
+
+Ditto.
+
+> +		compatible = "gpio-keys";
+> +		input-name = "hall-sensors";
+> +		label = "Hall sensors";
+> +		#address-cells = <1>;
+> +		#size-cells = <0>;
+> +		pinctrl-names = "default";
+> +		pinctrl-0 = <&hall_sensor0_default>;
+> +
+> +		hall_sensor0 {
+
+And here...
+
+> +			label = "Cover Hall Sensor";
+> +			gpios = <&tlmm 124 GPIO_ACTIVE_LOW>;
+> +			linux,input-type = <EV_SW>;
+> +			linux,code = <SW_LID>;
+> +			gpio-key,wakeup;
+> +			debounce-interval = <30>;
+> +		};
+> +	};
+> +
+> +	reserved-memory {
+> +		#address-cells = <2>;
+> +		#size-cells = <2>;
+> +		ranges;
+> +
+> +		hyp_mem: memory@85800000 {
+> +			reg = <0x0 0x85800000 0x0 0x3700000>;
+> +			no-map;
+> +		};
+> +
+> +		cont_splash_mem: cont-splash-region@9d400000 {
+
+Is there any reason for not just naming this "memory"?
+
+> +			reg = <0x0 0x9d400000 0x0 0x2400000>;
+> +			no-map;
+> +		};
+> +
+> +		zap_shader_region: gpu@f6400000 {
+
+This is also just "memory" here.
+
+> +			compatible = "shared-dma-pool";
+> +			reg = <0x0 0xf6400000 0x0 0x2000>;
+> +			no-map;
+> +		};
+> +
+[..]
+> +&rpm_requests {
+> +	pm8998-regulators {
+> +		compatible = "qcom,rpm-pm8998-regulators";
+> +
+[..]
+> +		vreg_lvs1a_1p8: lvs1 { };
+> +		vreg_lvs2a_1p8: lvs2 { };
+> +
+
+Blank line.
+
+> +	};
+> +
+> +	pmi8998-regulators {
+> +		compatible = "qcom,rpm-pmi8998-regulators";
+> +
+> +		vdd_bob-supply = <&vph_pwr>;
+> +
+> +		vreg_bob: bob {
+> +			regulator-min-microvolt = <3312000>;
+> +			regulator-max-microvolt = <3600000>;
+> +		};
+> +	};
+> +};
+> +
+> +&sdhc2 {
+> +	status = "okay";
+> +	cd-gpios = <&tlmm 95 GPIO_ACTIVE_HIGH>;
+> +
+> +	vmmc-supply = <&vreg_l21a_2p95>;
+> +	vqmmc-supply = <&vreg_l13a_2p95>;
+> +
+> +	pinctrl-names = "default", "sleep";
+> +	pinctrl-0 = <&sdc2_clk_on  &sdc2_cmd_on  &sdc2_data_on  &sdc2_cd_on>;
+> +	pinctrl-1 = <&sdc2_clk_off &sdc2_cmd_off &sdc2_data_off &sdc2_cd_off>;
+
+How about grouping these various pins as "sdc2_default_state" and
+"sdc2_sleep_state"?
+
+> +};
+> +
+Regards,
+Bjorn
