@@ -2,271 +2,303 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 93287402E5A
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Sep 2021 20:28:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF71C402E73
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Sep 2021 20:37:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345867AbhIGS3z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Sep 2021 14:29:55 -0400
-Received: from mail-oo1-f46.google.com ([209.85.161.46]:43567 "EHLO
-        mail-oo1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236461AbhIGS3z (ORCPT
+        id S1345873AbhIGSih (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Sep 2021 14:38:37 -0400
+Received: from mail-ot1-f48.google.com ([209.85.210.48]:33552 "EHLO
+        mail-ot1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230354AbhIGSih (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Sep 2021 14:29:55 -0400
-Received: by mail-oo1-f46.google.com with SMTP id y16-20020a4ad6500000b0290258a7ff4058so53455oos.10;
-        Tue, 07 Sep 2021 11:28:48 -0700 (PDT)
+        Tue, 7 Sep 2021 14:38:37 -0400
+Received: by mail-ot1-f48.google.com with SMTP id c42-20020a05683034aa00b0051f4b99c40cso349300otu.0;
+        Tue, 07 Sep 2021 11:37:30 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=RgWj/Qv5gZmPND1H+/OHor/S2gG4REaKzWiuf8h5NB0=;
-        b=ZXEAb2AMK6xq0DsYjrdaaH9tSSTcOoDgXif5FubqNjHab6SEGfQ2U9bNX9m3PsByM7
-         bV5gX2Jb8dPuK3EUJJ3PNQltrF8nk8Enzu6u8pP52fyyyYRuyrmed3CTOFV7p+SzsXZf
-         MV+uYT6cMuUbCsZphjRUV6FliF0qrGvG+WCHqH0sZIvJudm+gYTsKYz7LJwiCWQEddW4
-         wTTFJ5/bNfAbBJtyqobGREYakOV4Ye0c53oFSubDA3IS817oXFTv088mUK/jZWu6g6BF
-         XuHp/PKObn2cTjxmJUzNjEYKFm++XJjx46GoMyYkPI0cMWZA6V6sLFZ7mt1H5yyaWg0s
-         JmXQ==
-X-Gm-Message-State: AOAM533EqPK8wDk/PbkVN8gtUwldLd97fGxRNYqOQqPwvAcftJH7nCaN
-        kpK5eNnRNAFvgpBIYvnZTA==
-X-Google-Smtp-Source: ABdhPJzpmcGdm/qS9Y4WLEbsZ1OG4RAACOvtY26G2Dl1is2ooI+vLH2rLFKyHl6x6bgGNA7riqeHMg==
-X-Received: by 2002:a4a:2549:: with SMTP id v9mr1131256ooe.28.1631039326491;
-        Tue, 07 Sep 2021 11:28:46 -0700 (PDT)
+        bh=VGXBiHd8aGiY42ZI/fI58ICBBOHjaU8L6zf9vtrLjgM=;
+        b=nJBCwNDN55C7kWeIdu3aX3sKoAODbBss6uHoykb3ryTf9DVDSMI9lpSAwvxkW3wcj/
+         XX7K8KaiCuQG++WGG5mFmNgTj3APNFSNRJCxom0T0FXAuUKXxd8xN/E+xuoZoy6kI9Jt
+         sqZjZ+WNF130UffmSqT1k8ejM0o5g+X4bjQGKTW16ZA9UvF+D8tWVWlqCjAnZd2s0bjw
+         ySkdffiJUDb5Xv9gYjY1colsPS1VmJWqwdtk16aY3J96eBYVrv76A3BhQl2r+dTBzq4R
+         +Awtn6kFkSByHWs4xeJGlkmyfEy/crhH1WPxQF23+t1i6AEkWBC6FehBzJb2zwZ3UgJe
+         6NBQ==
+X-Gm-Message-State: AOAM531917abJWTuzS8DuIwNepveItjMgOnZ3/BMWgWCznm1WR8sFMQ6
+        7KEh7hwscH6k5Ufn54PmTA==
+X-Google-Smtp-Source: ABdhPJzpedN7Uv+lz7hd5t31kUf84boXO+DYEziXPnP+k2WKfHCFw4wTNB1/H2gD4Z64yRKl0c0l3w==
+X-Received: by 2002:a05:6830:91:: with SMTP id a17mr17024877oto.189.1631039849985;
+        Tue, 07 Sep 2021 11:37:29 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id j14sm2372334oor.33.2021.09.07.11.28.44
+        by smtp.gmail.com with ESMTPSA id b11sm2372980ooi.0.2021.09.07.11.37.28
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 07 Sep 2021 11:28:45 -0700 (PDT)
-Received: (nullmailer pid 107179 invoked by uid 1000);
-        Tue, 07 Sep 2021 18:28:44 -0000
-Date:   Tue, 7 Sep 2021 13:28:44 -0500
+        Tue, 07 Sep 2021 11:37:29 -0700 (PDT)
+Received: (nullmailer pid 122301 invoked by uid 1000);
+        Tue, 07 Sep 2021 18:37:28 -0000
+Date:   Tue, 7 Sep 2021 13:37:28 -0500
 From:   Rob Herring <robh@kernel.org>
 To:     AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org, lgirdwood@gmail.com,
-        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        phone-devel@vger.kernel.org, konrad.dybcio@somainline.org,
-        marijn.suijten@somainline.org, jami.kettunen@somainline.org,
-        paul.bouchara@somainline.org, martin.botka@somainline.org,
-        ~postmarketos/upstreaming@lists.sr.ht, jeffrey.l.hugo@gmail.com
-Subject: Re: [PATCH v7 2/6] dt-bindings: avs: cpr: Convert binding to YAML
- schema
-Message-ID: <YTevXErwZ+H9BSWr@robh.at.kernel.org>
-References: <20210901155735.629282-1-angelogioacchino.delregno@somainline.org>
- <20210901155735.629282-3-angelogioacchino.delregno@somainline.org>
+Cc:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch, dmitry.baryshkov@linaro.org,
+        abhinavk@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
+        marijn.suijten@somainline.org, martin.botka@somainline.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        paul.bouchara@somainline.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH 3/3] dt-bindings: display: msm: Add binding for msm8998
+ dpu
+Message-ID: <YTexaJuQSNazh9sn@robh.at.kernel.org>
+References: <20210901181138.1052653-1-angelogioacchino.delregno@somainline.org>
+ <20210901181138.1052653-3-angelogioacchino.delregno@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210901155735.629282-3-angelogioacchino.delregno@somainline.org>
+In-Reply-To: <20210901181138.1052653-3-angelogioacchino.delregno@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 01, 2021 at 05:57:31PM +0200, AngeloGioacchino Del Regno wrote:
-> Convert the qcom,cpr.txt document to YAML schema and place it in the
-> appropriate directory, since this driver was moved from power/avs
-> to soc/qcom, but forgets to move the documentation.
+On Wed, Sep 01, 2021 at 08:11:38PM +0200, AngeloGioacchino Del Regno wrote:
+> Add yaml binding for msm8998 dpu1 support.
 > 
-> Fixes: a7305e684fcf ("PM: AVS: qcom-cpr: Move the driver to the qcom specific drivers")
 > Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 > ---
->  .../bindings/power/avs/qcom,cpr.txt           | 131 +-------------
->  .../bindings/soc/qcom/qcom,cpr.yaml           | 167 ++++++++++++++++++
->  MAINTAINERS                                   |   2 +-
->  3 files changed, 169 insertions(+), 131 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,cpr.yaml
-
-
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,cpr.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,cpr.yaml
+>  .../bindings/display/msm/dpu-msm8998.yaml     | 220 ++++++++++++++++++
+>  1 file changed, 220 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/display/msm/dpu-msm8998.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/display/msm/dpu-msm8998.yaml b/Documentation/devicetree/bindings/display/msm/dpu-msm8998.yaml
 > new file mode 100644
-> index 000000000000..20f65427c762
+> index 000000000000..db435342ecbf
 > --- /dev/null
-> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,cpr.yaml
-> @@ -0,0 +1,167 @@
-> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +++ b/Documentation/devicetree/bindings/display/msm/dpu-msm8998.yaml
+> @@ -0,0 +1,220 @@
+> +# SPDX-License-Identifier: GPL-2.0-only or BSD-2-Clause
 > +%YAML 1.2
 > +---
-> +$id: "http://devicetree.org/schemas/soc/qcom/qcom,cpr.yaml#"
-> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
+> +$id: http://devicetree.org/schemas/display/msm/dpu-msm8998.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
-> +title: Qualcomm Core Power Reduction (CPR)
-> +
-> +description: |
-> +  CPR (Core Power Reduction) is a technology to reduce core power on a CPU
-> +  or other device. Each OPP of a device corresponds to a "corner" that has
-> +  a range of valid voltages for a particular frequency. While the device is
-> +  running at a particular frequency, CPR monitors dynamic factors such as
-> +  temperature, etc. and suggests adjustments to the voltage to save power
-> +  and meet silicon characteristic requirements.
+> +title: Qualcomm Display DPU dt properties for MSM8998 target
 > +
 > +maintainers:
-> +  - Niklas Cassel <nks@flawful.org>
+> +  - AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> +
+> +description: |
+> +  Device tree bindings for MSM Mobile Display Subsystem(MDSS) that encapsulates
+> +  sub-blocks like DPU display controller, DSI and DP interfaces etc. Device tree
+> +  bindings of MDSS and DPU are mentioned for MSM8998 target.
 > +
 > +properties:
 > +  compatible:
 > +    items:
-> +      - enum:
-> +          - qcom,qcs404-cpr
-> +      - const: qcom,cpr
+> +      - const: qcom,msm8998-mdss
 > +
 > +  reg:
-> +    description: Base address and size of the RBCPR register region
 > +    maxItems: 1
+> +
+> +  reg-names:
+> +    const: mdss
+> +
+> +  power-domains:
+> +    maxItems: 1
+> +
+> +  clocks:
+> +    items:
+> +      - description: Display AHB clock
+> +      - description: Display AXI clock
+> +      - description: Display core clock
+> +
+> +  clock-names:
+> +    items:
+> +      - const: iface
+> +      - const: bus
+> +      - const: core
 > +
 > +  interrupts:
 > +    maxItems: 1
 > +
-> +  clock-names:
+> +  interrupt-controller: true
+> +
+> +  "#address-cells": true
+> +
+> +  "#size-cells": true
+> +
+> +  "#interrupt-cells":
+> +    const: 1
+> +
+> +  iommus:
 > +    items:
-> +      - const: ref
+> +      - description: Phandle to apps_smmu node with SID mask for Hard-Fail port0
 > +
-> +  clocks:
-> +    items:
-> +      - description: CPR reference clock
+> +  ranges: true
 > +
-> +  vdd-apc-supply:
-> +    description: Autonomous Phase Control (APC) power supply
+> +patternProperties:
+> +  "^display-controller@[0-9a-f]+$":
+> +    type: object
+> +    description: Node containing the properties of DPU.
 > +
-> +  '#power-domain-cells':
-> +    const: 0
+> +    properties:
+> +      compatible:
+> +        items:
+> +          - const: qcom,msm8998-dpu
 > +
-> +  acc-syscon:
-> +    description: phandle to syscon for writing ACC settings
-
-Needs a type reference.
-
+> +      reg:
+> +        items:
+> +          - description: Address offset and size for mdp register set
+> +          - description: Address offset and size for regdma register set
+> +          - description: Address offset and size for vbif register set
+> +          - description: Address offset and size for non-realtime vbif register set
 > +
-> +  nvmem-cells:
-> +    minItems: 9
-> +    maxItems: 32
-> +    description: Cells containing the fuse corners and revision data
+> +      reg-names:
+> +        items:
+> +          - const: mdp
+> +          - const: regdma
+> +          - const: vbif
+> +          - const: vbif_nrt
 > +
-> +  nvmem-cell-names:
-> +    minItems: 9
-> +    maxItems: 32
-
-There were a bunch of names defined that you dropped.
-
+> +      clocks:
+> +        items:
+> +          - description: Display ahb clock
+> +          - description: Display axi clock
+> +          - description: Display mem-noc clock
+> +          - description: Display core clock
+> +          - description: Display vsync clock
 > +
-> +  operating-points-v2: true
+> +      clock-names:
+> +        items:
+> +          - const: iface
+> +          - const: bus
+> +          - const: mnoc
+> +          - const: core
+> +          - const: vsync
+> +
+> +      interrupts:
+> +        maxItems: 1
+> +
+> +      power-domains:
+> +        maxItems: 1
+> +
+> +      operating-points-v2: true
+> +      ports:
+> +        $ref: /schemas/graph.yaml#/properties/ports
+> +        description: |
+> +          Contains the list of output ports from DPU device. These ports
+> +          connect to interfaces that are external to the DPU hardware,
+> +          such as DSI, DP etc. Each output port contains an endpoint that
+> +          describes how it is connected to an external interface.
+> +
+> +        properties:
+> +          port@0:
+> +            $ref: /schemas/graph.yaml#/properties/port
+> +            description: DPU_INTF1 (DSI1)
+> +
+> +          port@1:
+> +            $ref: /schemas/graph.yaml#/properties/port
+> +            description: DPU_INTF2 (DSI2)
+> +
+> +        required:
+> +          - port@0
+> +          - port@1
+> +
+> +    required:
+> +      - compatible
+> +      - reg
+> +      - reg-names
+> +      - clocks
+> +      - interrupts
+> +      - power-domains
+> +      - operating-points-v2
+> +      - ports
 > +
 > +required:
 > +  - compatible
 > +  - reg
-> +  - interrupts
-> +  - clock-names
+> +  - reg-names
+> +  - power-domains
 > +  - clocks
-> +  - vdd-apc-supply
-> +  - "#power-domain-cells"
-> +  - nvmem-cells
-> +  - nvmem-cell-names
-> +  - operating-points-v2
+> +  - interrupts
+> +  - interrupt-controller
+> +  - iommus
+> +  - ranges
 > +
 > +additionalProperties: false
 > +
 > +examples:
 > +  - |
-> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +    #include <dt-bindings/clock/qcom,mmcc-msm8998.h>
+> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
+> +    #include <dt-bindings/power/qcom-rpmpd.h>
 > +
-> +    cpus {
+> +    display-subsystem@c900000 {
+> +        compatible = "qcom,msm8998-mdss";
+> +        reg = <0x0c900000 0x1000>;
+> +        reg-names = "mdss";
+> +
+> +        clocks = <&mmcc MDSS_AHB_CLK>,
+> +                 <&mmcc MDSS_AXI_CLK>,
+> +                 <&mmcc MDSS_MDP_CLK>;
+> +        clock-names = "iface", "bus", "core";
+> +
 > +        #address-cells = <1>;
-> +        #size-cells = <0>;
+> +        #interrupt-cells = <1>;
+> +        #size-cells = <1>;
 > +
-> +        cpu@100 {
-> +            compatible = "arm,cortex-a53";
-> +            device_type = "cpu";
-> +            reg = <0x100>;
-> +            operating-points-v2 = <&cpu_opp_table>;
-> +            power-domains = <&cpr>;
-> +            power-domain-names = "cpr";
-> +        };
-> +    };
+> +        interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
+> +        interrupt-controller;
+> +        iommus = <&mmss_smmu 0>;
 > +
-> +    cpu_opp_table: opp-table-cpu {
-> +        compatible = "operating-points-v2-kryo-cpu";
-> +        opp-shared;
+> +        power-domains = <&mmcc MDSS_GDSC>;
+> +        ranges;
+> +        status = "disabled";
+
+Drop. Why disable an example?
+
 > +
-> +        opp-1094400000 {
-> +            opp-hz = /bits/ 64 <1094400000>;
-> +            required-opps = <&cpr_opp1>;
-> +        };
-> +        opp-1248000000 {
-> +            opp-hz = /bits/ 64 <1248000000>;
-> +            required-opps = <&cpr_opp2>;
-> +        };
-> +        opp-1401600000 {
-> +            opp-hz = /bits/ 64 <1401600000>;
-> +            required-opps = <&cpr_opp3>;
-> +        };
-> +    };
+> +        display-controller@c901000 {
+> +            compatible = "qcom,msm8998-dpu";
+> +            reg = <0x0c901000 0x8f000>,
+> +                  <0x0c9a8e00 0xf0>,
+> +                  <0x0c9b0000 0x2008>,
+> +                  <0x0c9b8000 0x1040>;
+> +            reg-names = "mdp", "regdma", "vbif", "vbif_nrt";
 > +
-> +    cpr_opp_table: opp-table-cpr {
-> +        compatible = "operating-points-v2-qcom-level";
+> +            clocks = <&mmcc MDSS_AHB_CLK>,
+> +                     <&mmcc MDSS_AXI_CLK>,
+> +                     <&mmcc MNOC_AHB_CLK>,
+> +                     <&mmcc MDSS_MDP_CLK>,
+> +                     <&mmcc MDSS_VSYNC_CLK>;
+> +            clock-names = "iface", "bus", "mnoc", "core", "vsync";
 > +
-> +        cpr_opp1: opp1 {
-> +            opp-level = <1>;
-> +            qcom,opp-fuse-level = <1>;
-> +        };
-> +        cpr_opp2: opp2 {
-> +            opp-level = <2>;
-> +            qcom,opp-fuse-level = <2>;
-> +        };
-> +        cpr_opp3: opp3 {
-> +            opp-level = <3>;
-> +            qcom,opp-fuse-level = <3>;
-> +        };
-> +    };
+> +            interrupt-parent = <&mdss>;
+> +            interrupts = <0 IRQ_TYPE_LEVEL_HIGH>;
+> +            operating-points-v2 = <&mdp_opp_table>;
+> +            power-domains = <&rpmpd MSM8998_VDDMX>;
 > +
-> +    power-controller@b018000 {
-> +        compatible = "qcom,qcs404-cpr", "qcom,cpr";
-> +        reg = <0x0b018000 0x1000>;
-> +        interrupts = <0 15 IRQ_TYPE_EDGE_RISING>;
-> +        clocks = <&xo_board>;
-> +        clock-names = "ref";
-> +        vdd-apc-supply = <&pms405_s3>;
-> +        #power-domain-cells = <0>;
-> +        operating-points-v2 = <&cpr_opp_table>;
-> +        acc-syscon = <&tcsr>;
+> +            ports {
+> +                #address-cells = <1>;
+> +                #size-cells = <0>;
 > +
-> +        nvmem-cells = <&cpr_efuse_quot_offset1>,
-> +                      <&cpr_efuse_quot_offset2>,
-> +                      <&cpr_efuse_quot_offset3>,
-> +                      <&cpr_efuse_init_voltage1>,
-> +                      <&cpr_efuse_init_voltage2>,
-> +                      <&cpr_efuse_init_voltage3>,
-> +                      <&cpr_efuse_quot1>,
-> +                      <&cpr_efuse_quot2>,
-> +                      <&cpr_efuse_quot3>,
-> +                      <&cpr_efuse_ring1>,
-> +                      <&cpr_efuse_ring2>,
-> +                      <&cpr_efuse_ring3>,
-> +                      <&cpr_efuse_revision>;
-> +        nvmem-cell-names = "cpr0_quotient_offset1",
-> +                           "cpr0_quotient_offset2",
-> +                           "cpr0_quotient_offset3",
-> +                           "cpr0_init_voltage1",
-> +                           "cpr0_init_voltage2",
-> +                           "cpr0_init_voltage3",
-> +                           "cpr0_quotient1",
-> +                           "cpr0_quotient2",
-> +                           "cpr0_quotient3",
-> +                           "cpr0_ring_osc1",
-> +                           "cpr0_ring_osc2",
-> +                           "cpr0_ring_osc3",
-> +                           "cpr_fuse_revision";
+> +                port@0 {
+> +                    reg = <0>;
+> +                    dpu_intf1_out: endpoint {
+> +                        remote-endpoint = <&dsi0_in>;
+> +                    };
+> +                };
+> +
+> +                port@1 {
+> +                    reg = <1>;
+> +                    dpu_intf2_out: endpoint {
+> +                        remote-endpoint = <&dsi1_in>;
+> +                    };
+> +                };
+> +            };
+> +        };
 > +    };
 > +...
-> diff --git a/MAINTAINERS b/MAINTAINERS
-> index f58dad1a1922..90f1db301fae 100644
-> --- a/MAINTAINERS
-> +++ b/MAINTAINERS
-> @@ -15490,7 +15490,7 @@ M:	Niklas Cassel <nks@flawful.org>
->  L:	linux-pm@vger.kernel.org
->  L:	linux-arm-msm@vger.kernel.org
->  S:	Maintained
-> -F:	Documentation/devicetree/bindings/power/avs/qcom,cpr.txt
-> +F:	Documentation/devicetree/bindings/soc/qcom/qcom,cpr.yaml
->  F:	drivers/soc/qcom/cpr.c
->  
->  QUALCOMM CPUFREQ DRIVER MSM8996/APQ8096
 > -- 
 > 2.32.0
 > 
