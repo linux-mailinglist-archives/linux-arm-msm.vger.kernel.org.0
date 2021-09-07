@@ -2,94 +2,128 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E3C81402ED0
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Sep 2021 21:13:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 89939402ED7
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Sep 2021 21:14:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345873AbhIGTOJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Sep 2021 15:14:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52382 "EHLO
+        id S1346003AbhIGTPa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Sep 2021 15:15:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233374AbhIGTOI (ORCPT
+        with ESMTP id S1345991AbhIGTP3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Sep 2021 15:14:08 -0400
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5F33FC061575;
-        Tue,  7 Sep 2021 12:13:02 -0700 (PDT)
-Received: by mail-io1-xd32.google.com with SMTP id z1so72091ioh.7;
-        Tue, 07 Sep 2021 12:13:02 -0700 (PDT)
+        Tue, 7 Sep 2021 15:15:29 -0400
+Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BC26C061757
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Sep 2021 12:14:23 -0700 (PDT)
+Received: by mail-il1-x133.google.com with SMTP id i13so176522ilm.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Sep 2021 12:14:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
+        d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=bDAmrQspvTHk4pXz96SxgqAEoYvB8Qdlb33lW2JOQKI=;
-        b=iiaLA9iMJ1l/ZVUFBUL09riUqd8KCAFHSBgHpVV94Te6gjyYNUe468qaok1x0albDO
-         IxsvhA9VjWjL68B2TtpsU79ayleQF+6eLhi3eOsxorE/xnyq5VsPeAV1G5rXH1XH4vwH
-         25yrQ3QdtaqOUQIimvO98kzNHEgIBnJK+fxLSSjhoy1U+KonCL69C9Bgpzhxv8L4t87q
-         pIeQ+5LilhJTDuERHH0MjhPzDQ45jkofDeejMgOpldFf6hdwGuc4xMtsgv3Ic7qEriOW
-         0OThCYpCF6l7sjDKKUHyqwFX4HJ/ejjXla4KWYGl3ARlMipeZTb3UNq6WeacvSz51VB0
-         blPA==
+        bh=wptDSYLyDM12oE9PwIaapQVmJMO09viAmQFPtSVPYek=;
+        b=g6tHrIqYCpyi3uj+Y8V0ZzItGWMeRuxbj7UZPUdqo9Ry/Sn6Ke28/Dg30vmx4JzCqo
+         P666Khn7t7fmoEngyabMLFpP8CPK0f0OV9XBYX8VYiMK7gPoOcmKMoEVfQg4SzTjJ3l8
+         Br8oh0YDph1cvQZS95VDMXVGHdGTntHbICFKQ=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=bDAmrQspvTHk4pXz96SxgqAEoYvB8Qdlb33lW2JOQKI=;
-        b=luG6hfsF6DBrD5SoSpjAdSEfhcocreNMLdAg+A7l495VlKkKKPntkN/TBjmO6vUA12
-         leZ6GmULSA1qvCB7IiUqDaWgNMgD+yX7FFjXZzczNpMpbJnrTv5eLPItuWbo/GSP+x0w
-         rPRtqa1qgtVzSHGNpoO1IJP8zRYmRMp+L7O402gHpqepORMg3UVErN8I/zFv913Jmnoq
-         JZ7EbMHJy91tbq7DM0/9AapsKWxgNhkd/5VflIUIQx2SEIvIBaJg6a9akZYWwglSNpyV
-         to7//ZjnT8b1gXyO2RSVJOAVS1RH8BnDU1F7EeuV7cjzsVNr5mVf1sq+Mg7AU5hkzoPo
-         EZDg==
-X-Gm-Message-State: AOAM5321RdWHcmqtNHBkpOFxTCPJPvBLb7vuF2yWUKg0SFGX/m/Xvnr8
-        VwruOf8ZJD9X74kXi2Up5ida+7Mv/AMrjk8ON2A=
-X-Google-Smtp-Source: ABdhPJwzbaiPi0tOgc36KfgAKqrn62eE1qk9JEH9OxgwGowNbmENlYJ37v4PzRRODGJoiIfiZTATjqiN8fzzPEMm/24=
-X-Received: by 2002:a05:6638:2690:: with SMTP id o16mr17203558jat.65.1631041981634;
- Tue, 07 Sep 2021 12:13:01 -0700 (PDT)
+        bh=wptDSYLyDM12oE9PwIaapQVmJMO09viAmQFPtSVPYek=;
+        b=bIbsxKzXZKWNT84L/t3FKbkKR8ul4psVJYd4QLOVwSNAcq5GHJxjHhpkn3PitrO7wW
+         Q1FgaLJd+DHLVL7uSvbXWsNES8J4VYv1Jg8o0ICvHxyhsGMyrQAP8Bb1FiS0LiaNqfgW
+         N1aV6I0EhGgKlFwc7gwflhhydIgQfc9gL8nHEuDO+/IZUzxfPHw8I204WTz7R0A2OaIM
+         Cny/llQ4NoY0Oe1cfYI5aLgMd8fqdMWDhlkpu07MzmVgTqTQg0huz1mfnKtnXSCTC6xT
+         aWAJtHiCDC+Btc4lLOZImBhYkS9Us03ya2Z7yBp0qHlT5uD/9TC79E9kaRcGVcya9vn/
+         pREA==
+X-Gm-Message-State: AOAM531gc3lxO5+HY/A7cUudmtwDmp8O3O8+pMsz63owNBLdomSAPiWe
+        dfhJ5ASgCyAYzx2GES0sXPO2wt9AmQi6JA==
+X-Google-Smtp-Source: ABdhPJz9W98dZNyDlGL625FYKhiYM9UEIjRJfl4hpk7DOtnUIcKO6cRaYmDCYnkHIKxW7i8X4B4+xg==
+X-Received: by 2002:a05:6e02:1564:: with SMTP id k4mr13254847ilu.146.1631042062373;
+        Tue, 07 Sep 2021 12:14:22 -0700 (PDT)
+Received: from mail-il1-f172.google.com (mail-il1-f172.google.com. [209.85.166.172])
+        by smtp.gmail.com with ESMTPSA id i20sm5601121ila.62.2021.09.07.12.14.21
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 07 Sep 2021 12:14:21 -0700 (PDT)
+Received: by mail-il1-f172.google.com with SMTP id a1so162665ilj.6
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Sep 2021 12:14:21 -0700 (PDT)
+X-Received: by 2002:a92:6b0a:: with SMTP id g10mr3631557ilc.27.1631042060676;
+ Tue, 07 Sep 2021 12:14:20 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210901181138.1052653-1-angelogioacchino.delregno@somainline.org>
- <20210901181138.1052653-2-angelogioacchino.delregno@somainline.org>
-In-Reply-To: <20210901181138.1052653-2-angelogioacchino.delregno@somainline.org>
-From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Date:   Tue, 7 Sep 2021 13:12:50 -0600
-Message-ID: <CAOCk7NoOdjxp0vxu9XJzYsi7a04kpqpTOZHm42ApAN3MqkqtDw@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH 2/3] drm/msm/dpu1: Add MSM8998 to hw catalog
-To:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Dave Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
+References: <1627581885-32165-1-git-send-email-sibis@codeaurora.org>
+ <1627581885-32165-4-git-send-email-sibis@codeaurora.org> <YS5LDb4KDFx/dRnM@google.com>
+ <YS5hDq+xblntYbh0@ripper> <fde7bac239f796b039b9be58b391fb77@codeaurora.org>
+In-Reply-To: <fde7bac239f796b039b9be58b391fb77@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Tue, 7 Sep 2021 12:14:08 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XHzwvudc4jABHVUC0OkKat-xdvo5yY2xRJ0VP5gds91w@mail.gmail.com>
+Message-ID: <CAD=FV=XHzwvudc4jABHVUC0OkKat-xdvo5yY2xRJ0VP5gds91w@mail.gmail.com>
+Subject: Re: [PATCH 3/4] arm64: dts: qcom: sc7280: Fixup the cpufreq node
+To:     Sibi Sankar <sibis@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Stephen Boyd <sboyd@kernel.org>,
         Rob Herring <robh+dt@kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        konrad.dybcio@somainline.org, marijn.suijten@somainline.org,
-        martin.botka@somainline.org, ~postmarketos/upstreaming@lists.sr.ht,
-        phone-devel@vger.kernel.org, paul.bouchara@somainline.org,
-        DTML <devicetree@vger.kernel.org>
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        "Rafael J. Wysocki" <rjw@rjwysocki.net>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, LKML <linux-kernel@vger.kernel.org>,
+        Linux PM <linux-pm@vger.kernel.org>,
+        Taniya Das <tdas@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 1, 2021 at 12:11 PM AngeloGioacchino Del Regno
-<angelogioacchino.delregno@somainline.org> wrote:
+Hi,
+
+On Sun, Sep 5, 2021 at 8:20 PM Sibi Sankar <sibis@codeaurora.org> wrote:
 >
-> Bringup functionality for MSM8998 in the DPU, driver which is mostly
-> the same as SDM845 (just a few variations).
+> On 2021-08-31 22:34, Bjorn Andersson wrote:
+> > On Tue 31 Aug 08:30 PDT 2021, Matthias Kaehlcke wrote:
+> >
+> >> On Thu, Jul 29, 2021 at 11:34:44PM +0530, Sibi Sankar wrote:
+> >> > Fixup the register regions used by the cpufreq node on SC7280 SoC to
+> >> > support per core L3 DCVS.
+> >> >
+> >> > Fixes: 7dbd121a2c58 ("arm64: dts: qcom: sc7280: Add cpufreq hw node")
+> >> > Signed-off-by: Sibi Sankar <sibis@codeaurora.org>
+> >>
+> >> This patch landed in the Bjorn's tree, however the corresponding
+> >> driver
+> >> change ("cpufreq: qcom: Re-arrange register offsets to support per
+> >> core
+> >> L3 DCVS" /
+> >> https://patchwork.kernel.org/project/linux-arm-msm/patch/1627581885-32165-3-git-send-email-sibis@codeaurora.org/)
+> >> did not land in any maintainer tree yet AFAIK. IIUC the DT change
+> >> alone
+> >> breaks cpufreq since the changed register regions require the changed
+> >> offset in the cpufreq driver.
+> >>
+> >
+> > Thanks for the note Matthias, it must have slipped by as I scraped the
+> > inbox for things that looked ready.
+> >
+> > I'm actually not in favor of splitting these memory blocks in DT to
+> > facilitate the Linux implementation of splitting that in multiple
+> > drivers...
+> >
+> > But I've not been following up on that discussion.
+> >
+> > Regards,
+> > Bjorn
+> >
+> >> Sibi, please confirm or clarify that my concern is unwarranted.
 >
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> Let's drop the patch asap as it breaks
+> SC7280 cpufreq on lnext without the driver
+> changes.
 
-I don't seem to see a cover letter for this series.
+It's already landed so we need a revert:
 
-Eh, there are a fair number of differences between the MDSS versions
-for 8998 and 845.
+https://lore.kernel.org/r/20210907121220.1.I08460f490473b70de0d768db45f030a4d5c17828@changeid/
 
-Probably a bigger question, why extend the DPU driver for 8998, when
-the MDP5 driver already supports it[1]?  The MDP/DPU split is pretty
-dumb, but I don't see a valid reason for both drivers supporting the
-same target/display revision.  IMO, if you want this support in DPU,
-remove it from MDP5.
-
-[1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?h=v5.14&id=d6c7b2284b14c66a268a448a7a8d54f585d38785
+-Doug
