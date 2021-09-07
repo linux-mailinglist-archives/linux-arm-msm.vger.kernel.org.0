@@ -2,48 +2,48 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 67E40402501
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Sep 2021 10:19:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ABB6540251C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  7 Sep 2021 10:26:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242332AbhIGIUh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Sep 2021 04:20:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42632 "EHLO
+        id S242688AbhIGI1K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 7 Sep 2021 04:27:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44092 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236269AbhIGIUh (ORCPT
+        with ESMTP id S242608AbhIGI1F (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Sep 2021 04:20:37 -0400
-Received: from mail-io1-xd34.google.com (mail-io1-xd34.google.com [IPv6:2607:f8b0:4864:20::d34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 63B76C061575
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Sep 2021 01:19:31 -0700 (PDT)
-Received: by mail-io1-xd34.google.com with SMTP id m11so11642783ioo.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Sep 2021 01:19:31 -0700 (PDT)
+        Tue, 7 Sep 2021 04:27:05 -0400
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80801C06175F
+        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Sep 2021 01:25:59 -0700 (PDT)
+Received: by mail-io1-xd29.google.com with SMTP id a15so11642886iot.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Sep 2021 01:25:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=9MXLDJhiY0fcXEg+LnGTR4OLM7jMrz/NHCTwfTLwDMg=;
-        b=ElO/UJxIHNBjrNw3yfn9GFGNJhWRax3Eba+PUZ2fRtFre/HLcwkOVfWXRighUoPjEM
-         51pdOWhi5deDUkefb5ithDBAYMI1Xt3Ha6kCwxlz2jU3xLR7RY9A2cvZS1TToCOjgiwb
-         G90h5wXsl4q8wEdtWuWhAcFViVGAa6gdHujMmr+8R2+97UhFUYN8BnSW82RzYCS9z25m
-         U3Hbpw/V04VgoxO2f7CU769BkfR4sAUGF4mft1VQBJSWBaog2UPCDTdWjAc5BfTT59gu
-         jjL8bOtXSq9C7rgou3bRoFo0EQUhz/R3Vi7onjxMLCD33If4/Ri4kEThFAQfEbRnGaik
-         JwGA==
+        bh=NsKj9cPaLgyBNOvmCyBpPD5MVH61aPQBDGk2ylDvT4I=;
+        b=Cqjo+7flYZt5PVjhviejc951vnn/ZxHjZDDSZm2iE0Rym074UsRk9jSB8UzOfpCM20
+         1L7LsMW2HeQwiSX1w7skzHYqzLwWa4CPoh5LlihNGeqtjjfG1GqmfL5R3o2BrSipgrlA
+         OuBBIr1mdYQh9FPAF67gcxNx2Kiu+zHh65/LVhufxDIGEAhIB9JYe1+R/wotXAyJUivj
+         0EMSCIzmvIGHrrspZkocKYi6byJGjOhIKyix3nw5KN8ARegcY64YWoEaTFwGuSTWs+KI
+         gDgyLFcM0QY8iY+pcGyzE7Iu2oEGesDb4IGg6lFY7iJ0uL/WSxFH76C9e2HTozPJfOAU
+         pvPA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=9MXLDJhiY0fcXEg+LnGTR4OLM7jMrz/NHCTwfTLwDMg=;
-        b=PvzeIAtIJB9qF9Ofc2v1Y81Naogw/EjQTXjGBXsghbj/LX4cPVkt6FBGLWpXDgAGxx
-         GkLd3SuDFfdqG5Y8ixoBFIGTzep/F00wklF7hMYqf0jiNFoDmKqk35sMMRQufF+uNVfr
-         QfH3b1OZXK8scdmQP1TBWZJ6UH5rV1/+VxKBAHylj61byDDLSnc8wMGJco7N7+1bnP4a
-         VJbRWG1TzBsstsmIM8koo/zNp/xqI3WS2PdtIwUewwrVpAPnT8+V+/Ynx/RSg38ZIPQa
-         mC1HRwFG1Q/8M34NduA9QxP6iH1D5ey+iszvOgOyUhdzlsKSxAEaL7MJxzDJLAgEPObD
-         yOMQ==
-X-Gm-Message-State: AOAM532MP3Zc0u4QHV7zP8JN6lFJq2ilU+nZylkT3IhHrIqhTIpvv4u5
-        8ULRVW7qUHZh3RkJGyjjiLxIX2FOpf3dsbQLVrASvQ==
-X-Google-Smtp-Source: ABdhPJwIQXLBjfDY4x2hegViI0I26x9Ldz3+Wvni8m5cPnPark5Q3y14GL2LxjfcnaO2magWZu87krrTNuiTaU5QMBA=
-X-Received: by 2002:a6b:be02:: with SMTP id o2mr12593752iof.103.1631002770826;
- Tue, 07 Sep 2021 01:19:30 -0700 (PDT)
+        bh=NsKj9cPaLgyBNOvmCyBpPD5MVH61aPQBDGk2ylDvT4I=;
+        b=lb260o1duUffE2ddqb8cvJlP1Gh8GnjQY+kGeZd5H3xK9MI5zJDBSklum5P2WWmW8f
+         tR3fjI6G437PR9jl45zyiKKPjd1ohPmqqg55XQU7yLWKgQ9XKTZ1n65L53hEiP4+tlLY
+         Q56ifqaZ7vLYMgNB8KDnsUqt4YitMPTzHZxD6T6iKVJ/vY2J5ZMVnabOy3o2Rd2/krga
+         /82ZNgutpPbeoJ4yjzU/sR//v+bL84m9gvm1x9BxZTUnD4NKqMmzxOKnNW9To+RAbk9I
+         0yH8LFcuvH7erSh20vT22TUT0MZeGpsj+dEEyQ3WRsZ5NXptPwGxZhMLBmbgzd4sjGBa
+         mAxQ==
+X-Gm-Message-State: AOAM532YKjBmMS48/Qy0JOXdmL6RJqAQOyKVD+Ge3LsXF/NrtY0uHVNk
+        9Xig5IdLSG2GVpegKaNv2EzfZ9KGXOKMBE3HzDFqWG3g/e5rzw6U
+X-Google-Smtp-Source: ABdhPJyJyljW5UoDalrx/KiXWJ1AmyFiYxxkN5TxwIiLyNRIfmd72o0Tug4f9p9B9LTcvpjzBQv03fcRV3wdDGSffHI=
+X-Received: by 2002:a02:3846:: with SMTP id v6mr14251170jae.45.1631003158871;
+ Tue, 07 Sep 2021 01:25:58 -0700 (PDT)
 MIME-Version: 1.0
 References: <20210729183942.2839925-1-robdclark@gmail.com> <1a38a590-a64e-58ef-1bbf-0ae49c004d05@linaro.org>
  <CAF6AEGs5dzA7kfO89Uqbh3XmorXoEa=fpW+unk5_oaihHm479Q@mail.gmail.com>
@@ -52,12 +52,11 @@ References: <20210729183942.2839925-1-robdclark@gmail.com> <1a38a590-a64e-58ef-1
  <CAF6AEGsACLcDuszcgmHHs04GghLPiRfei3tGo161yBXsg7Y-YA@mail.gmail.com>
  <CAMi1Hd0dniDXPNOuh05ywqHKY+cGvAsd-cnD91K1GLppfO=x0w@mail.gmail.com>
  <CAF6AEGvtw06MYST2PdhqHVpsG4Tec2DnUA-uwFRP-6xqa9yf5Q@mail.gmail.com>
- <CAMi1Hd1kp8ijH8y3U2sxs5cE3Zfat_v-C3rrGtTK01ry8Om6Lw@mail.gmail.com>
- <CAF6AEGuE2KAnOQRGwbbVHmms0uOfq4XCvF=a8FJ98spzJ5=+XQ@mail.gmail.com> <CAF6AEGukn2=z-7CroxiKcHiCPfS_U3reOBe0ZYV1fj9UBap17w@mail.gmail.com>
-In-Reply-To: <CAF6AEGukn2=z-7CroxiKcHiCPfS_U3reOBe0ZYV1fj9UBap17w@mail.gmail.com>
+ <CAMi1Hd1kp8ijH8y3U2sxs5cE3Zfat_v-C3rrGtTK01ry8Om6Lw@mail.gmail.com> <CAF6AEGugB5QinhyOxvAiG_V40=mXS20nnqxgk71xe_fmm1iZsw@mail.gmail.com>
+In-Reply-To: <CAF6AEGugB5QinhyOxvAiG_V40=mXS20nnqxgk71xe_fmm1iZsw@mail.gmail.com>
 From:   Amit Pundir <amit.pundir@linaro.org>
-Date:   Tue, 7 Sep 2021 13:48:54 +0530
-Message-ID: <CAMi1Hd2cO=vmFA81y2T9oAPxyKPpKn5d+uOs9emFbiop1vFD-A@mail.gmail.com>
+Date:   Tue, 7 Sep 2021 13:55:22 +0530
+Message-ID: <CAMi1Hd20xd0Lrp0MuKo=HdDPKeNC_DW08iFoF5wseCH5eB=FzQ@mail.gmail.com>
 Subject: Re: [PATCH] drm/msm: Disable frequency clamping on a630
 To:     Rob Clark <robdclark@gmail.com>
 Cc:     John Stultz <john.stultz@linaro.org>,
@@ -68,7 +67,6 @@ Cc:     John Stultz <john.stultz@linaro.org>,
         Jonathan Marek <jonathan@marek.ca>,
         David Airlie <airlied@linux.ie>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
         Akhil P Oommen <akhilpo@codeaurora.org>,
         dri-devel <dri-devel@lists.freedesktop.org>,
         Jordan Crouse <jordan@cosmicpenguin.net>,
@@ -81,26 +79,34 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 7 Sept 2021 at 02:53, Rob Clark <robdclark@gmail.com> wrote:
+On Tue, 7 Sept 2021 at 07:11, Rob Clark <robdclark@gmail.com> wrote:
 >
-> On Mon, Sep 6, 2021 at 1:50 PM Rob Clark <robdclark@gmail.com> wrote:
-> >
-> >
-> > ok, I guess it is at least not a board specific thing (ie. won't need
-> > to introduce some dt binding)..
-> >
-> > It would be nice to know what the maximum we can safely increase freq
-> > in one step, if we need to limit that.
->
-> Also, one sanity check.. for android builds, are you using the same
-> a630_gmu.bin from linux-firmware?  If not, does the l-f gmu fw change
-> things?
+> One thing I thought of, which would be worth ruling out, is whether
+> this issue only occurs with freq changes immediately after resuming
+> the GPU, vs freq changes in general.  Could you try the below patch.
+> And if it "fixes" the issue, then try reducing the delay until you
+> start seeing GPU hangs again.
 
-We are using the same a630_gmu.bin from linux-firmware.
+It doesn't fix the crash and I can still reproduce it
+https://pastebin.com/raw/bxK4mAhB
 
 >
-> For freq changes, we basically ask gmu for the freq we want, and it
-> votes for the requested freq.. so a gmu fw bug could be possible here.
+> ----------
+> diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> index 40c9fef457a4..278b85207ea3 100644
+> --- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> +++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+> @@ -1513,6 +1513,8 @@ static int a6xx_pm_resume(struct msm_gpu *gpu)
+>   if (ret)
+>   return ret;
+>
+> + msleep(5);
+> +
+>   msm_devfreq_resume(gpu);
+>
+>   a6xx_llc_activate(a6xx_gpu);
+> ----------
 >
 > BR,
 > -R
