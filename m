@@ -2,109 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 835D7403610
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Sep 2021 10:26:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DEA80403659
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Sep 2021 10:50:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348087AbhIHI1K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Sep 2021 04:27:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33036 "EHLO
+        id S1348350AbhIHIvy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Sep 2021 04:51:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38690 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348080AbhIHI1J (ORCPT
+        with ESMTP id S1348369AbhIHIvr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Sep 2021 04:27:09 -0400
-Received: from mail-qt1-x830.google.com (mail-qt1-x830.google.com [IPv6:2607:f8b0:4864:20::830])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 036D1C061757
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Sep 2021 01:26:02 -0700 (PDT)
-Received: by mail-qt1-x830.google.com with SMTP id r21so1143171qtw.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Sep 2021 01:26:01 -0700 (PDT)
+        Wed, 8 Sep 2021 04:51:47 -0400
+Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1D355C061757
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Sep 2021 01:50:40 -0700 (PDT)
+Received: by mail-qk1-x731.google.com with SMTP id t4so1464539qkb.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Sep 2021 01:50:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=I2GYoAF05W4QlTQNUCm2X4ED9hxXNWtrDyXhLShUptk=;
-        b=e7g/IsbTln55dVeqTe5gmEnqabfSh7kHTb727uLUnyovBvkSGw8go8jXg95jjjF7tX
-         R3bxp8omNg2Es3zR/CXIfV9ZMzXzQv+UEh4eSsWJkGl23Kssli7oOmRZQy9Pkaz7gEQy
-         T44E5FFPOfRGx0HrA7fHZ6ZY2+IQ+KdzAvmJAeRJMA//xqk3Km7DEs34HVTG8+rE4tdi
-         Nbz5dPeEyxoWv4I3QLfTHj1lYqM5Pp+pZfwjb075mSYqkvPbTo02Io6Avm0Rim4MyC0R
-         4CYSQPxj0VXCNf6T7mcbGmua46gZ5pVoJTpvZBN/cJg4xb18jQYmvSm3Laik4qD63ecW
-         Eo7g==
+        bh=bLPU6JwzUvt2Ww93ncZhtHocO2yM5T3pJGHQ+IZpZfU=;
+        b=OZP730trRpvheHITclDnfyTURcdwmi3WpMyRMR9uvyEnDlM5gu4XtT9OOb946BL88y
+         aoobd6ZfdDXNAfaXRN2234HBTx2quqjElIzh8mvd6Avu28Pvtr0HH8TZoNluYy5aKZ1h
+         NTFki7ws8S+oMddEWszNl+Fm3hO+z/gyr2+d53BQLlFQIrtT/frz4FeMqnPDQ9rkhB9H
+         vV1LNwCsqvax8ptYH7oTGIUICD3WqGcPsRgjiPfomfvUxscjjrk8mwgvDQhO1Lrarpvc
+         WfA9sGwzkWT4IDARoC6V0daOPQD7FXHgQUphv7cBTpL1FnepBCKuGgTt6PGk0Jp3LExO
+         unJg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20161025;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=I2GYoAF05W4QlTQNUCm2X4ED9hxXNWtrDyXhLShUptk=;
-        b=ppcb5g0DMKMmaAmDV2CM5NVKXr8Tm/E8NeX+GH1b3bKE93okFytbYuu8NH/JhsRA1B
-         GqtVNaC14U/3hu8JQyN9CBCEDzohiHzImJUTb9jO2NVUYoNkfELywA2eBcslJYXokrdw
-         fVBmMlCUeaxVzsaHb5maNNWTmL4PnbJeG63XTT9IFENdHL8j8sS4rT7G8RYFd0xSKpQm
-         r26ljDBawW+MziMp4nOGnoUTwi5RcvaFs2f1VTqSr2RMHteqgvU7yO9OnyBgrA431fx5
-         Wf6xQevGqnMuqUH+5ciC/xixo+oJk06CO/Ume+PtXp9QZuCIFhnM+C10xrv3lhLQ9eMO
-         i3vA==
-X-Gm-Message-State: AOAM532gmcqfxQy9JF0KbTAa+PngIltOIJmQsJ7rC0kU7EOTkkm7RXhq
-        jwiKOKU2rNNEFLHZxYlI0+Q88pUakRMfaU8J7fmGZPLMQZA=
-X-Google-Smtp-Source: ABdhPJxJhjzUMRnWrBQrlHB5E1FH9Zjc6focYT3nA4MBbnlIPOsA5Rm9xuH5jYYfBZrGvUDOGlMTALwyLQ7v5Mh8YaQ=
-X-Received: by 2002:ac8:578e:: with SMTP id v14mr2471269qta.285.1631089561173;
- Wed, 08 Sep 2021 01:26:01 -0700 (PDT)
+        bh=bLPU6JwzUvt2Ww93ncZhtHocO2yM5T3pJGHQ+IZpZfU=;
+        b=dzMtQPsc0sxaLRn15/W2jeH66zfSp4+geIC8xvrXuiNXinzIOt4rJBP2id0zMf5lje
+         QeTWTrtJOS+i1mCAHU2xUbDmS8l3wjAveaYicUyTXMVxuNYaBxzMwk/w14e+mAY5q90J
+         TjYjD4YNuAJusqqIaZVdH4E7ZGaa9GQO7ztK73LAlo5Qm8dPaKoEUD1gOX5UTZzF+noy
+         mNVjbmbwAluA8QSdknpZ3iv51NAapG9ixEwbocaFEDREgVOT9DRblpR2ZnN7DrDUO8QZ
+         oKNN9SkMCl1RdGRj5JV6GF6Khavvo+Y1iHhCnC0L4EKM5kjdiaiLpqqTi4XHJn/G+mKg
+         IC7g==
+X-Gm-Message-State: AOAM533C/ZTkY7mRYsQ9mU8kUCx4/utn9QFdpn66wqbSPUobgfTk2tbj
+        G1BijesKcseoxUX8Mdp8ZfHQGEiGzRRY7RXWhsBGxg==
+X-Google-Smtp-Source: ABdhPJw+8k/oeEzk9TVfggI6r5py/ts2bV4nIu0GfPNFNB6fEmyxhd2se0g23I3XJt0EjFVWLutNVQZqBr5vuxSg3fo=
+X-Received: by 2002:a37:541:: with SMTP id 62mr2254933qkf.478.1631091039128;
+ Wed, 08 Sep 2021 01:50:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210901181138.1052653-1-angelogioacchino.delregno@somainline.org>
- <20210901181138.1052653-2-angelogioacchino.delregno@somainline.org> <CAOCk7NoOdjxp0vxu9XJzYsi7a04kpqpTOZHm42ApAN3MqkqtDw@mail.gmail.com>
-In-Reply-To: <CAOCk7NoOdjxp0vxu9XJzYsi7a04kpqpTOZHm42ApAN3MqkqtDw@mail.gmail.com>
+References: <20210727202004.712665-1-dmitry.baryshkov@linaro.org>
+ <163000270629.1317818.2836576068466077505@swboyd.mtv.corp.google.com>
+ <42c3fa20-7ffa-255f-ca28-6f0aa2aa4a13@linaro.org> <163020909027.2218116.11109424225803296345@swboyd.mtv.corp.google.com>
+ <CAA8EJppo8Zze5ViYOWooHy=RR4ueXNeWiBFyKdtpUcm5Cs69ew@mail.gmail.com> <CAPDyKFrv9HM9y1zgPj6x2K84cPuYXOqaQYqtvKZ51itPtt3ghw@mail.gmail.com>
+In-Reply-To: <CAPDyKFrv9HM9y1zgPj6x2K84cPuYXOqaQYqtvKZ51itPtt3ghw@mail.gmail.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Wed, 8 Sep 2021 11:25:50 +0300
-Message-ID: <CAA8EJpp6tj10A0QUR1E75t7BZf2Y3jHUyVNniYhEUd9rXj8Vrg@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH 2/3] drm/msm/dpu1: Add MSM8998 to hw catalog
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Dave Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
+Date:   Wed, 8 Sep 2021 11:50:28 +0300
+Message-ID: <CAA8EJpokEq5JB63wYCpjssKt8neEpeW71pD9nUTjZ0Z_o6U=0A@mail.gmail.com>
+Subject: Re: [PATCH v6 0/6] clk: qcom: use power-domain for sm8250's clock controllers
+To:     Ulf Hansson <ulf.hansson@linaro.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Michael Turquette <mturquette@baylibre.com>,
         Rob Herring <robh+dt@kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        paul.bouchara@somainline.org, DTML <devicetree@vger.kernel.org>
+        Taniya Das <tdas@codeaurora.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        "open list:COMMON CLK FRAMEWORK" <linux-clk@vger.kernel.org>,
+        "Bryan O'Donoghue" <bryan.odonoghue@linaro.org>,
+        Mark Brown <broonie@kernel.org>,
+        open list <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On Tue, 7 Sept 2021 at 22:13, Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
+On Tue, 7 Sept 2021 at 17:34, Ulf Hansson <ulf.hansson@linaro.org> wrote:
 >
-> On Wed, Sep 1, 2021 at 12:11 PM AngeloGioacchino Del Regno
-> <angelogioacchino.delregno@somainline.org> wrote:
+> On Sun, 29 Aug 2021 at 17:54, Dmitry Baryshkov
+> <dmitry.baryshkov@linaro.org> wrote:
 > >
-> > Bringup functionality for MSM8998 in the DPU, driver which is mostly
-> > the same as SDM845 (just a few variations).
+> > On Sun, 29 Aug 2021 at 06:51, Stephen Boyd <sboyd@kernel.org> wrote:
+> > >
+> > > Quoting Dmitry Baryshkov (2021-08-26 14:56:23)
+> > > > On 26/08/2021 21:31, Stephen Boyd wrote:
+> > > > > Quoting Dmitry Baryshkov (2021-07-27 13:19:56)
+> > > > >> On SM8250 both the display and video clock controllers are powered up by
+> > > > >> the MMCX power domain. Handle this by linking clock controllers to the
+> > > > >> proper power domain, and using runtime power management to enable and
+> > > > >> disable the MMCX power domain.
+> > > > >>
+> > > > >> Dependencies:
+> > > > >> - https://lore.kernel.org/linux-arm-msm/20210703005416.2668319-1-bjorn.andersson@linaro.org/
+> > > > >>    (pending)
+> > > > >
+> > > > > Does this patch series need to go through the qcom tree? Presumably the
+> > > > > dependency is going through qcom -> arm-soc
+> > > >
+> > > > It looks like Bjorn did not apply his patches in the for-5.15 series, so
+> > > > we'd have to wait anyway. Probably I should rebase these patches instead
+> > > > on Rajendra's required-opps patch (which is going in this window).
+> > > >
+> > >
+> > > Ok. Thanks. I'll drop it from my queue for now.
 > >
-> > Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> > Just for the reference. I've sent v7 of this patchset. After thinking
+> > more about power domains relationship, I think we have a hole in the
+> > abstraction here. Currently subdomains cause power domains to be
+> > powered up, but do not dictate the performance level the parent domain
+> > should be working in.
 >
-> I don't seem to see a cover letter for this series.
+> That's not entirely true. In genpd_add_subdomain() we verify that if
+> the child is powered on, the parent must already be powered on,
+> otherwise we treat this a bad setup and return an error code.
 >
-> Eh, there are a fair number of differences between the MDSS versions
-> for 8998 and 845.
+> What seems to be missing though, is that if there is a performance
+> state applied for the child domain, that should be propagated to the
+> parent domain too. Right?
 >
-> Probably a bigger question, why extend the DPU driver for 8998, when
-> the MDP5 driver already supports it[1]?  The MDP/DPU split is pretty
-> dumb, but I don't see a valid reason for both drivers supporting the
-> same target/display revision.  IMO, if you want this support in DPU,
-> remove it from MDP5.
+> > While this does not look like an issue for the
+> > gdsc (and thus it can be easily solved by the Bjorn's patches, which
+> > enforce rpmhpd to be powered on to 'at least lowest possible'
+> > performance state, this might be not the case for the future links. I
+> > think at some point the pd_add_subdomain() interface should be
+> > extended with the ability to specify minimum required performance
+> > state when the link becomes on.
 >
-> [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?h=v5.14&id=d6c7b2284b14c66a268a448a7a8d54f585d38785
+> I guess that minimum performance state could be considered as a
+> "required-opp" in the DT node for the power-domain provider, no?
 
-I don't think that we should enforce such requirements. Having support
-both in MDP5 and DPU would allow one to compare those two drivers,
-performance, features, etc.
-It might be that all MDP5-supported hardware would be also supported
-by DPU, thus allowing us to remove the former driver. But until that
-time I'd suggest leaving support in place.
+Yes, up to some point. But this enforces a particular driver code
+(that I've had to change from v6 to v7).
+
+In v6 the gdsc's power_on code would pm_runtime_get() the provider
+device, power on the domain and the pm_runtime_put() the provider
+device. Thus the gdsc genpd would be powered on (keeping parent
+domains in the on state), but the provider device itself would be
+runtime-suspended (neat idea by Bjorn). However this relied on changes
+in rpmhpd behaviour (which still did not make it to linux-next).
+
+In v7 we have to keep the provider device in resumed state while the
+gdsc genpd is powered on (to keep the required-opps vote in place).
+
+I suppose that 'child requires minimum parent's performance state'
+might become common property at some point, allowing us to drop this
+pm_runtime handling.
+
+> Another option would simply be to manage this solely in the
+> platform/soc specific genpd provider. Would that work?
+
+Yes, I've had this in the very old iteration of mmcx fixup patchset
+(even before mmcx-regulator came into play). It ended up with quite an
+ugly piece of code.
+
+>
+> > Until that time I have changed code to
+> > enforce having clock controller in pm resume state when gdsc is
+> > enabled, thus CC itself votes on parent's (rpmhpd) performance state.
+> >
+> >
+> > --
+> > With best wishes
+> > Dmitry
+>
+> Kind regards
+> Uffe
+
+
 
 -- 
 With best wishes
