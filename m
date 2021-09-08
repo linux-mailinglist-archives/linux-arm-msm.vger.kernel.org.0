@@ -2,112 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C44464036C2
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Sep 2021 11:18:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 001B8403719
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Sep 2021 11:41:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351369AbhIHJSs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Sep 2021 05:18:48 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:54883 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1351350AbhIHJSr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Sep 2021 05:18:47 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1631092660; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=D4m1HZX4XxglmANFvhM+U619loFcf8JXgc2VJMqoQP8=;
- b=sKR8iXuambU4iaGi1+EHPpq4syeUjpCPgFQNJu5WbSMN/7zul5PyPTYLM3WFYC4YaHtxL4gq
- oAGKuOjfleTjipyM5j7qVUejwEEKM41+Mhw4tOhqn/F6uR+JQ2HbBdSoXohvi7jwgj9I5E03
- KsUR/EhVlig2crPHNPhC6aQ7fdo=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 61387fb2096d475c7c75650d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 08 Sep 2021 09:17:38
- GMT
-Sender: skakit=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 76D98C43617; Wed,  8 Sep 2021 09:17:38 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: skakit)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D77DCC4338F;
-        Wed,  8 Sep 2021 09:17:37 +0000 (UTC)
+        id S1343606AbhIHJmV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Sep 2021 05:42:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50254 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S245178AbhIHJmU (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Sep 2021 05:42:20 -0400
+Received: from mail-wm1-x32d.google.com (mail-wm1-x32d.google.com [IPv6:2a00:1450:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2AB5AC061757
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Sep 2021 02:41:13 -0700 (PDT)
+Received: by mail-wm1-x32d.google.com with SMTP id u15-20020a05600c19cf00b002f6445b8f55so1048369wmq.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Sep 2021 02:41:13 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:references:from:message-id:date:user-agent:mime-version
+         :in-reply-to:content-language:content-transfer-encoding;
+        bh=SyPGzxAlIqgp8BIndR9Y9ROAIR781ZTstJe/EicRs6I=;
+        b=xgl5YoSwmZ/JDpR5AsGbii8s58EHYdi//SdRbQOLJKixRBhIZy0BQCLNlzGexZ6qdw
+         h8lBMzGQpdASpjBUSLMFnzYXbj7bGFl9dAEN34sAhTIrpG2yw3qgoMgIvIhIIKQ+7Ffr
+         51oW5U/swPa/1r7WbQtZJscez/dsoO/nrBuX38uPFluHu1fDXpqwrhPgdiEadyZ5mKA+
+         QtH/mCi1iJMM/WPTqIncsBYD9Y3wPKy0ROgwmR+rB6v7BozQkJdgsrUrN0X73ONL+5oV
+         NInwqT4dLj2wCH4HQGxRs0i8jIYd7Yjg9HcVCPu+4aygjZAyawRC541SxhU1rUsOvZh0
+         iitQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20161025;
+        h=x-gm-message-state:subject:to:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=SyPGzxAlIqgp8BIndR9Y9ROAIR781ZTstJe/EicRs6I=;
+        b=aXhcYZbsrx7gPmda0diH55CW+AIVJ4bx94tzfvmP8tpgidodDPq32QpwrNxZf8wKrR
+         jy9sxjTIoc//acpCHFCjv3fJSDpaS6V4AutMYOtlZW7DTQyoRZ1KzaLQOWZTEXGVTiru
+         AieNtLsgqEnQ5O/h8UHA+sUv2Xze93+Z/0kd82z1oT5Tqalu1dcuBfEsNQYaP0QiZD8f
+         f3R1X01Gx0Gxe+b1+n5QgB0l0maCf/8/S/MnH07Vi1cDsxi6k/AmTL7+sNG6L+vIwR8V
+         7/Rp7SSzKJpFzI46E8xk7W+zZTrx7cg106ogimiO+de+8BYpy3avG2aGDnk5ySB1VXhp
+         pOXA==
+X-Gm-Message-State: AOAM533fM+Z55eNlvIolgaHoSs3irUNDQWWyjK+ezqw0MzAy8DbTp0IO
+        dwYVAX7yjeh/RGjhO6bIl3TaMQ==
+X-Google-Smtp-Source: ABdhPJx+MGhYGRDQv1Wckw4j7kWKIVjSN3mAwvDiPMKb4OmbCpAMkXCnTxgyYueaL00h2huX4/Crow==
+X-Received: by 2002:a05:600c:4ece:: with SMTP id g14mr2531749wmq.6.1631094071666;
+        Wed, 08 Sep 2021 02:41:11 -0700 (PDT)
+Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.googlemail.com with ESMTPSA id j4sm1599363wrt.23.2021.09.08.02.41.10
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Sep 2021 02:41:10 -0700 (PDT)
+Subject: Re: [PATCH] ASoC: dt-bindings: lpass: add binding headers for digital
+ codecs
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org
+References: <1630934854-14086-1-git-send-email-srivasam@codeaurora.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <4a513810-ab33-006d-4bce-5e35702a51e0@linaro.org>
+Date:   Wed, 8 Sep 2021 10:41:09 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <1630934854-14086-1-git-send-email-srivasam@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Wed, 08 Sep 2021 14:47:37 +0530
-From:   skakit@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Pavel Machek <pavel@ucw.cz>,
-        Rob Herring <robh+dt@kernel.org>, mka@chromium.org,
-        kgunda@codeaurora.org, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/3] leds: Add pm8350c support to Qualcomm LPG driver
-In-Reply-To: <CAE-0n52Jb9nw9rbbQJrKNDQ_O2iCahDr8WLGkWORcNks9ptH-g@mail.gmail.com>
-References: <1630924867-4663-1-git-send-email-skakit@codeaurora.org>
- <1630924867-4663-3-git-send-email-skakit@codeaurora.org>
- <CAE-0n52Jb9nw9rbbQJrKNDQ_O2iCahDr8WLGkWORcNks9ptH-g@mail.gmail.com>
-Message-ID: <f35822d036988a1a6b6e4dcaa46373e7@codeaurora.org>
-X-Sender: skakit@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-09-08 01:50, Stephen Boyd wrote:
-> Quoting satya priya (2021-09-06 03:41:06)
->> Add pm8350c compatible and lpg_data to the driver.
->> 
->> Signed-off-by: satya priya <skakit@codeaurora.org>
->> ---
->>  drivers/leds/rgb/leds-qcom-lpg.c | 10 ++++++++++
->>  1 file changed, 10 insertions(+)
->> 
->> diff --git a/drivers/leds/rgb/leds-qcom-lpg.c 
->> b/drivers/leds/rgb/leds-qcom-lpg.c
->> index 327e81a..6ee80d6 100644
->> --- a/drivers/leds/rgb/leds-qcom-lpg.c
->> +++ b/drivers/leds/rgb/leds-qcom-lpg.c
->> @@ -1275,9 +1275,19 @@ static const struct lpg_data pm8150l_lpg_data = 
->> {
->>         },
->>  };
->> 
->> +static const struct lpg_data pm8350c_pwm_data = {
->> +       .pwm_9bit_mask = BIT(2),
->> +
->> +       .num_channels = 1,
->> +       .channels = (struct lpg_channel_data[]) {
-> 
-> Can this be const struct lpg_channel_data? I think that will move it to
-> rodata which is only a good thing.
-> 
 
-I agree.
-@Bjorn, can we make it const struct?
 
->> +               { .base = 0xeb00 },
->> +       },
->> +};
->> +
->>  static const struct of_device_id lpg_of_table[] = {
->>         { .compatible = "qcom,pm8150b-lpg", .data = &pm8150b_lpg_data 
->> },
->>         { .compatible = "qcom,pm8150l-lpg", .data = &pm8150l_lpg_data 
->> },
->> +       { .compatible = "qcom,pm8350c-pwm", .data = &pm8350c_pwm_data 
->> },
->>         { .compatible = "qcom,pm8916-pwm", .data = &pm8916_pwm_data },
->>         { .compatible = "qcom,pm8941-lpg", .data = &pm8941_lpg_data },
->>         { .compatible = "qcom,pm8994-lpg", .data = &pm8994_lpg_data },
+On 06/09/2021 14:27, Srinivasa Rao Mandadapu wrote:
+> +#define LPASS_CDC_DMA_RX0 6
+
+You are only adding RX0, what happens to RX1.. RX7
+
+TBH, skipping other entries for ex CDC_DMA_RX will end up with sparse 
+numbering.
+
+Please add all the entries for CDC_DMA_RX and other ports as well.
+
+Like:
+
+#define LPASS_CDC_DMA_RX0	6
+#define LPASS_CDC_DMA_RX1	7
+#define LPASS_CDC_DMA_RX2	8
+#define LPASS_CDC_DMA_RX3	9
+#define LPASS_CDC_DMA_RX4	10
+#define LPASS_CDC_DMA_RX5	11
+#define LPASS_CDC_DMA_RX6	12
+#define LPASS_CDC_DMA_RX7	13
+
+
+> +#define LPASS_CDC_DMA_TX3 7
+> +#define LPASS_CDC_DMA_VA0 8
+You mean VA_TX0?
+
+
+> +#define LPASS_MAX_PORTS 9
+We really do not need this in bindings.
+You could add this is some of the driver header files instead.
+
+--srini
+> +
