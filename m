@@ -2,68 +2,74 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CC0A403B03
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Sep 2021 15:53:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D5CD403B11
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Sep 2021 15:56:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351638AbhIHNyF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Sep 2021 09:54:05 -0400
-Received: from mail-ot1-f42.google.com ([209.85.210.42]:47003 "EHLO
-        mail-ot1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232667AbhIHNyE (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Sep 2021 09:54:04 -0400
-Received: by mail-ot1-f42.google.com with SMTP id v33-20020a0568300921b0290517cd06302dso3010996ott.13;
-        Wed, 08 Sep 2021 06:52:56 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=D6Tk2L9d02zWcHjBsqwH5fQA/xlfNx8obSAv+tztxzw=;
-        b=iVjnYpr7XaquqXoB74lonwUaN8hHYyIqL0Uin+xdi4mbre2VUz9IsRsvxIjlzF2erc
-         wl8qfZebDbwiXdrg118BIFgMa7r/fJB2K8XfPZfGvKUa1BHuNGemW8/uRIg4q8dFqizI
-         qKOSaDtMs/898wNi4LN/m0RsGUGMner+VKn1nCbLY9KMZhKPtmVUlP/IoR5l0aTtkEvm
-         L1Me5FOIOp7JxL5hlxjHPx/oTfJdUF16dCyw97XTNRY+JKHJ/c4JortCBrCLp023UN5L
-         Rg/YGIrlfxMpYHTnF+1PZK1RwjAggsfUvLzL9Kvbg5K5jcvf3UhwZ44mI/Of8B/cCIMj
-         cIqQ==
-X-Gm-Message-State: AOAM533Bt94/tmgWTb9s722IjwLC5oRKDtTe5InljUNet0cY1cl+L46+
-        orGI/aWQ1Qh1J8u+OyFFiQ==
-X-Google-Smtp-Source: ABdhPJzsjefa19vIHWqwFsi5sJeji2sL77qKdvvKctwQIEKoetqysxJdXmdkeh/57JybJ8xeCYQDiA==
-X-Received: by 2002:a9d:4d85:: with SMTP id u5mr3224135otk.51.1631109176129;
-        Wed, 08 Sep 2021 06:52:56 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id i1sm468634oiy.25.2021.09.08.06.52.54
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Sep 2021 06:52:55 -0700 (PDT)
-Received: (nullmailer pid 2030549 invoked by uid 1000);
-        Wed, 08 Sep 2021 13:52:54 -0000
-Date:   Wed, 8 Sep 2021 08:52:54 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     satya priya <skakit@codeaurora.org>
-Cc:     devicetree@vger.kernel.org, linux-leds@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>, mka@chromium.org,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        kgunda@codeaurora.org, swboyd@chromium.org,
-        Rob Herring <robh+dt@kernel.org>, Pavel Machek <pavel@ucw.cz>
-Subject: Re: [PATCH 1/3] dt-bindings: leds: Add pm8350c pmic support
-Message-ID: <YTjANsE8Oh/ThEvj@robh.at.kernel.org>
-References: <1630924867-4663-1-git-send-email-skakit@codeaurora.org>
- <1630924867-4663-2-git-send-email-skakit@codeaurora.org>
+        id S1349470AbhIHN4c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Sep 2021 09:56:32 -0400
+Received: from ixit.cz ([94.230.151.217]:34730 "EHLO ixit.cz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231304AbhIHN4b (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Sep 2021 09:56:31 -0400
+Received: from newone.lan (ixit.cz [94.230.151.217])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ixit.cz (Postfix) with ESMTPSA id 749C324A25;
+        Wed,  8 Sep 2021 15:55:21 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1631109321;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=I0acloQnTQGjEElBrRVwhD3k1ePNYT9gjmoa3R81RgE=;
+        b=efixGqHkdly5hegWhB1EF7FMZAiS7ZoA/q8jpoRB0LcSXvqPgWMPyxe3B9S1sEmY+Ol6Tp
+        0kxzhqfmx7qZv5bifN/NsYpierqldpZx8yP7DP0j5Hcj03iV90q27mtYlj6IUO3IlMzfHW
+        TUzAL1Tzg+zHRELWf1EW80xzsAx54/0=
+From:   David Heidelberg <david@ixit.cz>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, David Heidelberg <david@ixit.cz>
+Subject: [PATCH] dt-bindings: arm: qcom, add missing devices
+Date:   Wed,  8 Sep 2021 15:54:09 +0200
+Message-Id: <20210908135409.5896-1-david@ixit.cz>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1630924867-4663-2-git-send-email-skakit@codeaurora.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 06 Sep 2021 16:11:05 +0530, satya priya wrote:
-> Add pm8350c pmic pwm support.
-> 
-> Signed-off-by: satya priya <skakit@codeaurora.org>
-> ---
->  Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml | 1 +
->  1 file changed, 1 insertion(+)
-> 
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-Acked-by: Rob Herring <robh@kernel.org>
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 9aeb500630e0..5169ebb97946 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -95,6 +95,9 @@ properties:
+ 
+       - items:
+           - enum:
++              - asus,nexus4-mako
++              - asus,nexus7-flo
++              - sony,xperia-yuga
+               - qcom,apq8064-cm-qs600
+               - qcom,apq8064-ifc6410
+           - const: qcom,apq8064
+@@ -130,6 +133,7 @@ properties:
+           - enum:
+               - fairphone,fp2
+               - lge,hammerhead
++              - samsung,klte
+               - sony,xperia-amami
+               - sony,xperia-castor
+               - sony,xperia-honami
+-- 
+2.33.0
+
