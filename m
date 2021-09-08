@@ -2,303 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E765C404125
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 00:42:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B03F404112
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 00:37:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245211AbhIHWnt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Sep 2021 18:43:49 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59010 "EHLO
+        id S239190AbhIHWi2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Sep 2021 18:38:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57726 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240269AbhIHWns (ORCPT
+        with ESMTP id S237565AbhIHWi1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Sep 2021 18:43:48 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4568C061575
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Sep 2021 15:42:39 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id c6so13992pjv.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Sep 2021 15:42:39 -0700 (PDT)
+        Wed, 8 Sep 2021 18:38:27 -0400
+Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4787FC06175F
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Sep 2021 15:37:19 -0700 (PDT)
+Received: by mail-io1-xd2e.google.com with SMTP id y18so5427921ioc.1
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Sep 2021 15:37:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=M/dueucM0XzOy1jPT/PQdcqnijwVro2s2Bw0YSR2geg=;
-        b=LkipFzU3cjINN/t5kFqm8if/dRpeVPe5N3h3SK1jKCbuJYBNkdOKO1Q1BlRDgpJwkF
-         uecfJZnqLEqB4ptN4xZ93fVt8PEUJA6HkO2/CTlBx2dJELQY0APPZr34AZSYfiKYYUzh
-         uH+J7IHDcQ+Gf9T4yeyACeE7nz4Tz7it+F8Ok=
+        bh=fJ3ihx4At7jgHYb3j4mYdDe9G4uE+v4pbaUUjca10is=;
+        b=Q75NbNDpBphtBp+PKFLy985Z4TTGj4ihZPMVooF8G2q+TppHtpDID51jmQAp5DG4jc
+         ZGHcVuPWy0owAmiNaf/M9z4/2p+UBiaOdW6CiL1yfw3ia3UJiklAankiuBOipM5srSP+
+         bqi5n2KdIRWO/1X+cu2BWHrYtmVBrfhDHGbL0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=M/dueucM0XzOy1jPT/PQdcqnijwVro2s2Bw0YSR2geg=;
-        b=AI9NgyoNXgkIPeqW0+5LFVK9/ObVl8RnV+JfegL90fFkxlstAc6TgZtoN6OXEgZQP/
-         8sw5c0XHefEOJvFIdV33mCETUb7sTN/rosGmBM8F0Svuh0+iKy+x5JFPN+F/AcaZedFc
-         iPkUDiElEjuN3LhwPynz/WVJWCwG6r/weCQhLmF6BYJ6UHKijJFdqxPt15Lc5/EKA2Po
-         SETjfsJonpKMPJyr4TEPyqfiM8OMwaieoOM/ZiwZTfdEkQRezAsUupNum5IEnWT4w+h9
-         XsQ+8aqKeMmCUV8miLIcxI9yn4umMpYWAx1gKbKJ669f4gXJOpXetM+pPpD9RCjUZaxX
-         UCPA==
-X-Gm-Message-State: AOAM530PwpQSQAQp3Cc2OrnSY69WI91DS+/OjzqiHAVbt2c3VHIWrPr1
-        IZtOe+9wvba5DszYRDbG100Xb3SIm6MEZA==
-X-Google-Smtp-Source: ABdhPJy/CyZPGvarxeYh9nFCpmRpasi2xj+Y6gQZVA7PR1OhGYIIHmVqNmAgknCBi2Qe5tULMbuCkQ==
-X-Received: by 2002:a17:902:8503:b0:13a:366:8c46 with SMTP id bj3-20020a170902850300b0013a03668c46mr548407plb.37.1631140958677;
-        Wed, 08 Sep 2021 15:42:38 -0700 (PDT)
-Received: from mail-pf1-f181.google.com (mail-pf1-f181.google.com. [209.85.210.181])
-        by smtp.gmail.com with ESMTPSA id d20sm216189pfu.36.2021.09.08.15.42.38
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Sep 2021 15:42:38 -0700 (PDT)
-Received: by mail-pf1-f181.google.com with SMTP id s29so9659pfw.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Sep 2021 15:42:38 -0700 (PDT)
-X-Received: by 2002:a5d:8458:: with SMTP id w24mr489939ior.168.1631140574432;
- Wed, 08 Sep 2021 15:36:14 -0700 (PDT)
+        bh=fJ3ihx4At7jgHYb3j4mYdDe9G4uE+v4pbaUUjca10is=;
+        b=qTfEFf4rXaz/fn1yP/s1VC2NaAuW0FqK2dNBcW82zWKUEd1XWHFiKwk/ivRRkf0cJ/
+         GwuIV/vqUePL2NS1oL5v/Ysh9iJ7Li9FsMOVxkNiCsLxOdiWtku2rxDHjR38n8LRNzvY
+         kHvX3xp/WjGF3GmzCjOLJ/aWxfUNeXxmXW38rEw3HjEQwJ9QhCZLmD7rtwhRlnQmnbC7
+         baJE4/7IAlxLCCLTIsx/f4AmPbaC/WhEMcZNI0oW+mM4LlqS9f+TyRqZLkfukhX3gVWt
+         d+Kcsr4vPHT5VoTTohNj/CvBXlj25m1/0iPSIpuhEXPn/UetIFMRbG701mlYaZwXP3Pt
+         vjcw==
+X-Gm-Message-State: AOAM53223cVS73jejZ/D7SqJb5NVtRpHtG03Te0yfSxxOfSlCw2D9/y1
+        WXwsM9YQTDvUtL+QWMMHSyjSuEXcSHyCEnw9AYfehw==
+X-Google-Smtp-Source: ABdhPJzwDblF0Ih7VdiBmyr77yCQeqfj4l4itTfLgiElnagK5TDnK04rTWAknk1pCDtaGemvtTa13cAdWAvzwWeHTxQ=
+X-Received: by 2002:a05:6602:20ce:: with SMTP id 14mr478898ioz.204.1631140638724;
+ Wed, 08 Sep 2021 15:37:18 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210901201934.1084250-1-dianders@chromium.org>
- <20210901131531.v3.6.I02250cd7d4799661b068bcc65849a456ed411734@changeid>
- <CAOesGMjp4pscuxciHZo7br-acgbkZSdRA_mUWNpcz0OfF7zOSA@mail.gmail.com>
- <CAD=FV=WPXAUyuAHb1jKx9F_aw+JGX4MWB3or=Eq5rXoKY=OQMw@mail.gmail.com> <163070152582.405991.9480635890491684680@swboyd.mtv.corp.google.com>
-In-Reply-To: <163070152582.405991.9480635890491684680@swboyd.mtv.corp.google.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 8 Sep 2021 15:36:02 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XzPVda==+hkJ8ZJNXz3sT=V+8y4gbsbUik4k3Om_cGvQ@mail.gmail.com>
-Message-ID: <CAD=FV=XzPVda==+hkJ8ZJNXz3sT=V+8y4gbsbUik4k3Om_cGvQ@mail.gmail.com>
-Subject: Re: [PATCH v3 06/16] ARM: configs: Everyone who had PANEL_SIMPLE now
- gets PANEL_SIMPLE_EDP
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Olof Johansson <olof@lixom.net>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linus W <linus.walleij@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        DTML <devicetree@vger.kernel.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Maxime Ripard <mripard@kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        DRI mailing list <dri-devel@lists.freedesktop.org>,
-        Al Viro <viro@zeniv.linux.org.uk>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Andreas Kemnade <andreas@kemnade.info>,
-        Andrey Zhizhikin <andrey.zhizhikin@leica-geosystems.com>,
-        Anson Huang <Anson.Huang@nxp.com>,
-        Arnd Bergmann <arnd@arndb.de>, Chen-Yu Tsai <wens@csie.org>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Codrin Ciubotariu <codrin.ciubotariu@microchip.com>,
-        Core ntin Labbe <clabbe@baylibre.com>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Emil Velikov <emil.velikov@collabora.com>,
-        Eugen Hristev <eugen.hristev@microchip.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Fabrice Gasnier <fabrice.gasnier@st.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Grygorii Strashko <grygorii.strashko@ti.com>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Joel Stanley <joel@jms.id.au>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Kees Cook <keescook@chromium.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Lionel Debieve <lionel.debieve@st.com>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        =?UTF-8?Q?Martin_J=C3=BCcker?= <martin.juecker@gmail.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Olivier Moysan <olivier.moysan@st.com>,
-        Otavio Salvador <otavio@ossystems.com.br>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Razvan Stefanescu <razvan.stefanescu@microchip.com>,
-        Robert Richter <rric@kernel.org>,
-        Russell King <linux@armlinux.org.uk>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Stefan Wahren <stefan.wahren@i2se.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Tony Lindgren <tony@atomide.com>,
-        Tudor Ambarus <tudor.ambarus@microchip.com>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Linux ARM Mailing List <linux-arm-kernel@lists.infradead.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-omap <linux-omap@vger.kernel.org>,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        "ARM/SAMSUNG EXYNOS ARM ARCHITECTURES" 
-        <linux-samsung-soc@vger.kernel.org>, linux-sunxi@lists.linux.dev,
-        =?UTF-8?Q?open_list=3ATEGRA_ARCHITECTURE_SUPPORT_=3Clinux=2D_tegra=40vger=2Ekern?=
-         =?UTF-8?Q?el=2Eorg=3E=2C_=C5=81ukasz_Stelmach?= 
-        <l.stelmach@samsung.com>
+References: <20210905210400.1157870-1-swboyd@chromium.org> <YTe+a0Gu7O6MEy2d@google.com>
+ <CAE-0n52d_GBh70pSDXTrVkD5S6akP4O9YcE4tVRKZcvLtLZSmg@mail.gmail.com>
+In-Reply-To: <CAE-0n52d_GBh70pSDXTrVkD5S6akP4O9YcE4tVRKZcvLtLZSmg@mail.gmail.com>
+From:   Abhishek Kumar <kuabhs@chromium.org>
+Date:   Wed, 8 Sep 2021 15:37:07 -0700
+Message-ID: <CACTWRwsRLrKHRWVoHHyrU2DEc_VkhqSi66tdD2OBWs_y8J2LPw@mail.gmail.com>
+Subject: Re: [PATCH] ath10k: Don't always treat modem stop events as crashes
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        ath10k <ath10k@lists.infradead.org>,
+        linux-wireless <linux-wireless@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, netdev <netdev@vger.kernel.org>,
+        Govind Singh <govinds@codeaurora.org>,
+        Youghandhar Chintala <youghand@codeaurora.org>,
+        Rakesh Pillai <pillair@codeaurora.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+The way I see this, this issue is happening because of a much bigger
+design constraint. On integrated(modem+wifi) solutions, if remote proc
+service is shutdown, it has a trickle down effect. It deinitializes
+the modem processor (which controls wifi as its subsystem) and the
+wifi FW. As the fw de-initializes, we see the Delete server generated
+by the wifi FW. The FW generates delete server qmi event and there is
+no way on the host wifi driver to differentiate between delete event
+generated from a FW crash and de-initialization due to remoteproc and
+so we see the FW crash logs even during shutdown.
 
-On Fri, Sep 3, 2021 at 1:38 PM Stephen Boyd <sboyd@kernel.org> wrote:
+I would like to know what are Qualcomm's views on the design
+constraint and any plans to reduce the rigidity. Also, will the FW
+broadcast other qmi events(QRTR_TYPE_BYE for e.g.) during shutdown
+(different from crash) ? If so then we can utilize that event and then
+we don't even have to add dependency on remoteproc.
+
+Overall this change should fix the issue, additionally I have one
+comment below and would like other reviewers views.
+
+>  #include <linux/regulator/consumer.h>
+> +#include <linux/remoteproc/qcom_rproc.h>
+>  #include <linux/of_address.h>
+We are adding an external dependency here but since this is added in
+snoc.c (which is for integrated solution only), I can expect if SNOC
+is enabled, remote proc will be enabled as well, so it should be fine.
+
+Reviewed-by: Abhishek Kumar <kuabhs@chromium.org>
+
+On Tue, Sep 7, 2021 at 12:48 PM Stephen Boyd <swboyd@chromium.org> wrote:
 >
-> Quoting Doug Anderson (2021-09-01 16:10:15)
-> > Hi,
-> >
-> > On Wed, Sep 1, 2021 at 2:12 PM Olof Johansson <olof@lixom.net> wrote:
+> Quoting Matthias Kaehlcke (2021-09-07 12:32:59)
+> > On Sun, Sep 05, 2021 at 02:04:00PM -0700, Stephen Boyd wrote:
+> > > @@ -1740,10 +1805,19 @@ static int ath10k_snoc_probe(struct platform_device *pdev)
+> > >               goto err_fw_deinit;
+> > >       }
 > > >
-> > > On Wed, Sep 1, 2021 at 1:20 PM Douglas Anderson <dianders@chromium.org> wrote:
-> > > >
-> > > > In the patch ("drm/panel-simple-edp: Split eDP panels out of
-> > > > panel-simple") we split the PANEL_SIMPLE driver in 2. By default let's
-> > > > give everyone who had the old driver enabled the new driver too. If
-> > > > folks want to opt-out of one or the other they always can later.
-> > > >
-> > > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> > >
-> > > Isn't this a case where the new option should just have had the old
-> > > option as the default value to avoid this kind of churn and possibly
-> > > broken platforms?
+> > > +     ret = ath10k_modem_init(ar);
+> > > +     if (ret) {
+> > > +             ath10k_err(ar, "failed to initialize modem notifier: %d\n", ret);
 > >
-> > I'm happy to go either way. I guess I didn't do that originally
-> > because logically there's not any reason to link the two drivers going
-> > forward. Said another way, someone enabling the "simple panel" driver
-> > for non-eDP panels wouldn't expect that the "simple panel" driver for
-> > DP panels would also get enabled by default. They really have nothing
-> > to do with one another. Enabling by default for something like this
-> > also seems like it would lead to bloat. I could have sworn that
-> > periodically people get yelled at for marking drivers on by default
-> > when it doesn't make sense.
-> >
-> > ...that being said, I'm happy to change the default as you suggest.
-> > Just let me know.
+> > nit: ath10k_modem_init() encapsulates/hides the setup of the notifier,
+> > the error message should be inside the function, as for _deinit()
 >
-> Having the default will help olddefconfig users seamlessly migrate to
-> the new Kconfig. Sadly they don't notice that they should probably
-> disable the previous Kconfig symbol, but oh well. At least with the
-> default they don't go on a hunt/bisect to figure out that some Kconfig
-> needed to be enabled now that they're using a new kernel version.
->
-> Maybe the default should have a TODO comment next to it indicating we
-> should remove the default in a year or two.
-
-OK, so I'm trying to figure out how to do this without just "kicking
-the can" down the road. I guess your idea is that for the next year
-this will be the default and that anyone who really wants
-"CONFIG_DRM_PANEL_EDP" will "opt-in" to keep it by adding
-"CONFIG_DRM_PANEL_EDP=y" to their config? ...and then after a year
-passes we remove the default? ...but that won't work, will it? Since
-"CONFIG_DRM_PANEL_EDP" will be the default for the next year then you
-really can't add it to the "defconfig", at least if you ever
-"normalize" it. The "defconfig" by definition has everything stripped
-from it that's already the "default", so for the next year anyone who
-tries to opt-in will get their preference stripped.
-
-Hrm, so let me explain options as I see them. Maybe someone can point
-out something that I missed. I'll assume that we'll change the config
-option from CONFIG_DRM_PANEL_SIMPLE_EDP to CONFIG_DRM_PANEL_EDP
-(remove the "SIMPLE" part).
-
-==
-
-Where we were before my series:
-
-* One config "CONFIG_DRM_PANEL_SIMPLE" and it enables simple non-eDP
-and eDP drivers.
-
-==
-
-Option 1: update everyone's configs (this patch)
-
-* Keep old config "CONFIG_DRM_PANEL_SIMPLE" but it now only means
-enable the panel-simple (non-eDP) driver.
-* Anyone who wants eDP panels must opt-in to "CONFIG_DRM_PANEL_EDP"
-* Update all configs in mainline; any out-of mainline configs must
-figure this out themselves.
-
-Pros:
-* no long term baggage
-
-Cons:
-* patch upstream is a bit of "churn"
-* anyone with downstream config will have to figure out what happened.
-
-==
-
-Option 2: kick the can down the road + accept cruft
-
-* Keep old config "CONFIG_DRM_PANEL_SIMPLE" and it means enable the
-panel-simple (non-eDP) driver.
-* Anyone with "CONFIG_DRM_PANEL_SIMPLE" is opted in by default to
-"CONFIG_DRM_PANEL_EDP"
-
-AKA:
-config DRM_PANEL_EDP
-  default DRM_PANEL_SIMPLE
-
-Pros:
-* no config patches needed upstream at all and everything just works!
-
-Cons:
-* people are opted in to extra cruft by default and need to know to turn it off.
-* unclear if we can change the default without the same problems.
-
-==
-
-Option 3: try to be clever
-
-* Add _two_ new configs. CONFIG_DRM_PANEL_SIMPLE_V2 and CONFIG_DRM_PANEL_EDP.
-* Old config "CONFIG_DRM_PANEL_SIMPLE" gets marked as "deprecated".
-* Both new configs have "default CONFIG_DRM_PANEL_SIMPLE"
-
-Now anyone old will magically get both the new config options by
-default. Anyone looking at this in the future _won't_ set the
-deprecated CONFIG_DRM_PANEL_SIMPLE but will instead choose if they
-want either the eDP or "simple" driver.
-
-Pros:
-* No long term baggage.
-* Everyone is transitioned automatically by default with no cruft patches.
-
-Cons:
-* I can't think of a better name than "CONFIG_DRM_PANEL_SIMPLE_V2" and
-that name is ugly.
-
-==
-
-Option 4: shave a yak
-
-When thinking about this I came up with a clever idea of stashing the
-kernel version in a defconfig when it's generated. Then you could do
-something like:
-
-config DRM_PANEL_EDP
-  default DRM_PANEL_SIMPLE if DEFCONFIG_GENERATED_AT <= 0x00050f00
-
-That feels like a good idea to me but who knows what others would
-think. In general I think this series already shaves enough yaks. This
-isn't a new problem we're trying to solve so it seems like we should
-pick one of the options above.
-
-==
-
-Unless I get an explicit NAK from someone like Olof or Arnd or I hear
-that everyone loves Option #3 I'll probably just stick with the
-existing approach since:
-
-* Olof's wording didn't make it sound like a strong objection.
-
-* From git history it looks as if config patches don't necessarily
-land through the SoC tree and thus I'd by default follow the
-suggestions of the DRM folks. Andrzej suggested going with the
-existing approach as long as I changed the symbol names and re-ordered
-the patches.
-
-
-Please yell if anything above sounds wrong! I'll probably try to send
-out a new version tomorrow or the next day, but I won't land it right
-away to give people time to yell.
-
-
--Doug
+> Sure. I can fix it. I was also wondering if I should drop the debug
+> prints for the cases that don't matter in the switch statement but I'll
+> just leave that alone unless someone complains about it.
