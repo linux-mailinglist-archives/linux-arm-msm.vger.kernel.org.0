@@ -2,158 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E35BC403555
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Sep 2021 09:28:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1342F403588
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Sep 2021 09:37:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350034AbhIHH3S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Sep 2021 03:29:18 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:63515 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1350010AbhIHH3R (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Sep 2021 03:29:17 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1631086089; h=Message-ID: Subject: Cc: To: From: Date:
- Content-Transfer-Encoding: Content-Type: MIME-Version: Sender;
- bh=bhkyZfrhhg4vHCTOSXNchpd3Qd+b1T880BOzslLod7U=; b=LOQqIh3qL1gSytREgHIj3fF4bWu8UHWZ/RvGlz2xbsjf7L2T752Wrc37T7xGH2BdK7wHSWqM
- vjt0oLcvXzqWfNYClWjojnbeXdYT0j2L7Ks/EakQnW1qU4qH1cWsbuCN6dGz6HPawkerpH1u
- fCSBfqZtGgHZK4BsEkjHw5PKbTE=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 6138660897222b4b5baf04ee (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 08 Sep 2021 07:28:08
- GMT
-Sender: skakit=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5C0DCC4360C; Wed,  8 Sep 2021 07:28:08 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: skakit)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id ABC1DC4338F;
-        Wed,  8 Sep 2021 07:28:07 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 08 Sep 2021 12:58:07 +0530
-From:   skakit@codeaurora.org
-To:     Stephen Boyd <sboyd@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        id S1349531AbhIHHgO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Sep 2021 03:36:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49746 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1348815AbhIHHgN (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Sep 2021 03:36:13 -0400
+Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B68F1C061757
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Sep 2021 00:35:05 -0700 (PDT)
+Received: by mail-oi1-x22d.google.com with SMTP id y128so2007233oie.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Sep 2021 00:35:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=kali.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-transfer-encoding:content-language;
+        bh=VTlV0r9DqE6PwDWOv/JOGBgJvUyj2qI11VGu77nKwQQ=;
+        b=gbJ9Azo7Wxxmx+grxaEcQJZQcdqDbYOMOl0YN65r/1hgKwv9xKB9npmAWXnlVCNVAC
+         PeUxKvpQ4QbkXPQZ1ddViN+kFmKa+UWdo3CfQC/8ksg+njg1+yg1SGhAyHSXjFqmsa8o
+         wHEWIjoInxkviAnR6oslj6JBgyU5tUlHaWxffjRGrC7drQybsG5TzzP4Ccm9UvFkrNPl
+         cb7nmTGkjb3jTcZbYRDM+YVc7GlIy8ZzA0UVo0L2OqGXc58SpXWGaHyKrKya/9WKT18v
+         5ysmXVvtUaxHAMp1q2X8oAwe/aWFJ4l3Jg6YCT7xi458m98Tp9ZC3T/GdrglHMtR0HWJ
+         TZmw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-transfer-encoding
+         :content-language;
+        bh=VTlV0r9DqE6PwDWOv/JOGBgJvUyj2qI11VGu77nKwQQ=;
+        b=qc/iNNnWdiu0EiEnd0tkD++UPxdtI9J+teO5L0j3G2EMdjuuFtmnnX2I1qCDt5KSAT
+         53ig/l+TSYXzsDVFBHpBH7wXyIK6OdFrQfpqTtrjQOkdoainWxs7y0JJXxr1utO5Izww
+         V62TKIvYVmm4W1fk65g6NwtLiK6Lj6pkZ9vgrAHk0f80ETg1OYWDxwDk7OZyEEHtPJxm
+         29LlkosxsIhnBN/j+Wxto7tEbJrdBYNPNOZYdqiOGvb6bIPXeNUaF+sP318PI0b1NsaP
+         y/qdxIV9zna3bVZFUcbWA2I6urHU+UYX7/vIL+AA5UNkhjB32wCd/qd2amdX3Zm9Xpxe
+         5GKQ==
+X-Gm-Message-State: AOAM530mcQxii2uSbIL23xtXChzdluJlYLstueZ3fxHcfJ0zaX3XTFIT
+        VaXgyuBwwb8a2ehCoBfqOTnq8g==
+X-Google-Smtp-Source: ABdhPJxeW5pRsYxtOCmBr/YR/lRxJV7htMMq5ZmjuZKhyjyQ+QejO3RqX2S1juzUmAi9pyo5t7OyAw==
+X-Received: by 2002:aca:b6d5:: with SMTP id g204mr1452030oif.29.1631086505120;
+        Wed, 08 Sep 2021 00:35:05 -0700 (PDT)
+Received: from MacBook-Pro.hackershack.net (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
+        by smtp.gmail.com with ESMTPSA id v19sm314970oic.31.2021.09.08.00.35.04
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Sep 2021 00:35:04 -0700 (PDT)
+Subject: Re: [PATCH 6/6] soc: qcom: rpmh-rsc: Make use of the helper function
+ devm_platform_ioremap_resource_byname()
+To:     Cai Huoqing <caihuoqing@baidu.com>
+Cc:     Niklas Cassel <nks@flawful.org>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH V2 1/2] pinctrl: qcom: spmi-gpio: correct parent irqspec
- translation
-Message-ID: <6ccb0c57d25aebb141e9aa8bab103c93@codeaurora.org>
-X-Sender: skakit@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20210908070930.214-1-caihuoqing@baidu.com>
+ <20210908070930.214-6-caihuoqing@baidu.com>
+From:   Steev Klimaszewski <steev@kali.org>
+Message-ID: <40708b67-9362-aa5d-5f03-d940ff6bac45@kali.org>
+Date:   Wed, 8 Sep 2021 02:35:00 -0500
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
+ Gecko/20100101 Thunderbird/78.13.0
+MIME-Version: 1.0
+In-Reply-To: <20210908070930.214-6-caihuoqing@baidu.com>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-09-03 23:39, Stephen Boyd wrote:
-> Quoting satya priya (2021-09-02 02:15:05)
->> diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c 
->> b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
->> index 98bf0e2..dbae168 100644
->> --- a/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
->> +++ b/drivers/pinctrl/qcom/pinctrl-spmi-gpio.c
->> @@ -1,6 +1,6 @@
->>  // SPDX-License-Identifier: GPL-2.0-only
->>  /*
->> - * Copyright (c) 2012-2014, The Linux Foundation. All rights 
->> reserved.
->> + * Copyright (c) 2012-2014, 2016-2021 The Linux Foundation. All 
->> rights reserved.
->>   */
->> 
->>  #include <linux/gpio/driver.h>
->> @@ -14,6 +14,7 @@
->>  #include <linux/platform_device.h>
->>  #include <linux/regmap.h>
->>  #include <linux/slab.h>
->> +#include <linux/spmi.h>
->>  #include <linux/types.h>
->> 
->>  #include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
->> @@ -171,6 +172,8 @@ struct pmic_gpio_state {
->>         struct pinctrl_dev *ctrl;
->>         struct gpio_chip chip;
->>         struct irq_chip irq;
->> +       u8 usid;
->> +       u8 pid_base;
->>  };
->> 
->>  static const struct pinconf_generic_params pmic_gpio_bindings[] = {
->> @@ -949,12 +952,36 @@ static int 
->> pmic_gpio_child_to_parent_hwirq(struct gpio_chip *chip,
->>                                            unsigned int *parent_hwirq,
->>                                            unsigned int *parent_type)
->>  {
->> -       *parent_hwirq = child_hwirq + 0xc0;
->> +       struct pmic_gpio_state *state = gpiochip_get_data(chip);
->> +
->> +       *parent_hwirq = child_hwirq + state->pid_base;
->>         *parent_type = child_type;
->> 
->>         return 0;
->>  }
->> 
->> +static void *pmic_gpio_populate_parent_fwspec(struct gpio_chip *chip,
->> +                                            unsigned int 
->> parent_hwirq,
->> +                                            unsigned int parent_type)
->> +{
->> +       struct pmic_gpio_state *state = gpiochip_get_data(chip);
->> +       struct irq_fwspec *fwspec;
->> +
->> +       fwspec = kzalloc(sizeof(*fwspec), GFP_KERNEL);
-> 
-> The implementation of gpiochip_populate_parent_fwspec_fourcell() uses
-> kmalloc() here. Should we also do that? Presumably the fwspec will be
-> set with the important parts so this will save a memset call.
-> 
 
-Using kmalloc also should be fine but I'd like to keep the kzalloc, the 
-memset() operation takes some very small amount of time (once at boot 
-per consumer irqspec).  kzalloc() is more deterministic and results in 
-code that doesn't care if elements are added to the definition of struct 
-irq_fwspec. It also ensures that all param[] elements are initialized to 
-0.
+On 9/8/21 2:09 AM, Cai Huoqing wrote:
+> Use the devm_platform_ioremap_resource_byname() helper instead of
+> calling platform_get_resource_byname() and devm_ioremap_resource()
+> separately
+>
+> Signed-off-by: Cai Huoqing <caihuoqing@baidu.com>
+> ---
+>  drivers/soc/qcom/rpmh-rsc.c | 4 +---
+>  1 file changed, 1 insertion(+), 3 deletions(-)
+>
+> diff --git a/drivers/soc/qcom/rpmh-rsc.c b/drivers/soc/qcom/rpmh-rsc.c
+> index e749a2b285d8..2834c6efc16b 100644
+> --- a/drivers/soc/qcom/rpmh-rsc.c
+> +++ b/drivers/soc/qcom/rpmh-rsc.c
+> @@ -910,7 +910,6 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
+>  {
+>  	struct device_node *dn = pdev->dev.of_node;
+>  	struct rsc_drv *drv;
+> -	struct resource *res;
+>  	char drv_id[10] = {0};
+>  	int ret, irq;
+>  	u32 solver_config;
+> @@ -941,8 +940,7 @@ static int rpmh_rsc_probe(struct platform_device *pdev)
+>  		drv->name = dev_name(&pdev->dev);
+>  
+>  	snprintf(drv_id, ARRAY_SIZE(drv_id), "drv-%d", drv->id);
+> -	res = platform_get_resource_byname(pdev, IORESOURCE_MEM, drv_id);
+> -	base = devm_ioremap_resource(&pdev->dev, res);
+> +	base = devm_platform_ioremap_resource_byname(pdev, dri_id);
 
->> +       if (!fwspec)
->> +               return NULL;
->> +
->> +       fwspec->fwnode = chip->irq.parent_domain->fwnode;
->> +
->> +       fwspec->param_count = 4;
->> +       fwspec->param[0] = state->usid;
->> +       fwspec->param[1] = parent_hwirq;
->> +       fwspec->param[2] = 0;
-> 
-> If the kzalloc stays, this can be dropped.
-> 
+dri_id -> drv_id no?
 
-I'll drop this and add a comment like this /* param[2] must be left as 0 
-*/, so that future reviewers don't think that there is a typo in the 
-indices going 0, 1, 3
 
->> +       fwspec->param[3] = parent_type;
->> +
->> +       return fwspec;
->> +}
->> +
->>  static int pmic_gpio_probe(struct platform_device *pdev)
->>  {
->>         struct irq_domain *parent_domain;
+>  	if (IS_ERR(base))
+>  		return PTR_ERR(base);
+>  
