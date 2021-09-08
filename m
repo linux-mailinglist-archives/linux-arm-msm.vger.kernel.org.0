@@ -2,92 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 40A83403A53
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Sep 2021 15:06:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0C92403AF1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Sep 2021 15:51:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238087AbhIHNIF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Sep 2021 09:08:05 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:15746 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234109AbhIHNIF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Sep 2021 09:08:05 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1631106417; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=quIrC/vD4ad/kwLVoQsLmnmsifC9vh2KS4eKsTsArGc=; b=gDL3rGz2usiOppDkCoUgJNBU5u8BmWxWwX8qJ82oSuz5B3P5XepSDEnKvrwOb49QrrJqVEGG
- 01hqAHu9RK3qo6PYJG5zKTlw1FUEI0oYGTIFi92+yojdas3MwRg3GuYR2/oHfzJ2ASnScDrJ
- Rmzsz7c2XKMkKy3xkvkA8oaKd+w=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 6138b568c603a0154f8bc97b (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 08 Sep 2021 13:06:48
- GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 111CCC43619; Wed,  8 Sep 2021 13:06:48 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.8 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from [10.242.137.170] (unknown [202.46.23.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8769AC4338F;
-        Wed,  8 Sep 2021 13:06:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 8769AC4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH] ASoC: dt-bindings: lpass: add binding headers for digital
- codecs
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
-        alsa-devel@alsa-project.org, bgoswami@codeaurora.org,
-        bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
-        judyhsiao@chromium.org, lgirdwood@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        perex@perex.cz, plai@codeaurora.org, robh+dt@kernel.org,
-        rohitkr@codeaurora.org, srinivas.kandagatla@linaro.org,
-        tiwai@suse.com
-References: <1630934854-14086-1-git-send-email-srivasam@codeaurora.org>
- <CAE-0n53Zj3pp4EJ_f_kXhRm3EW=od83UO44qt91P37waEq-z4Q@mail.gmail.com>
- <755e99d3-4d72-3292-a5da-ad3d6045038e@codeaurora.org>
- <20210908102300.GA4112@sirena.org.uk>
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Organization: Qualcomm India Private Limited.
-Message-ID: <0f6aa59a-5350-684d-c90c-b250e6d2977a@codeaurora.org>
-Date:   Wed, 8 Sep 2021 18:36:40 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        id S235608AbhIHNuo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Sep 2021 09:50:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50900 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232667AbhIHNun (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Sep 2021 09:50:43 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47C4AC061575
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Sep 2021 06:49:35 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id 196-20020a1c04cd000000b002fa489ffe1fso1230021wme.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Sep 2021 06:49:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=y0lh+sRHyJvQUVAPP40k5yKczJum04OO6ZyC4AudIkU=;
+        b=oZdIoJNdme6vvjVB/0Gc1a7V21qx2XE+NiQ7TRgrELm+J9yaO9LaPpFJsvpQq9klZ/
+         HqLtUaAcz/afrFGiy/d6OenFiDKWhNBr4WzUK8xj0l3U8eBSB09TxVjGjLv1jQEIVV88
+         38AIqd6sUEPv91QTXD8fOV3yV8/49Qak7CX7o+Rhpe1GNDNYGPsrJ3GuYah3GcCkCeyC
+         uTngstmz4BsZWCCwUWZMj50LjGbKdnATC4bR3O2b3dEpTu3yWtydzGCUsgmrnSgsyzDb
+         I1II2grn8UkgJ9c7osJMgRbDQjL3p+okgD7IkB1rW27pukzY+p6xPiBiRuzIdvM3mLqD
+         E60Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=y0lh+sRHyJvQUVAPP40k5yKczJum04OO6ZyC4AudIkU=;
+        b=wi49Q1X8RUxFQXPi5+0xRBU1RxvtQLS51I4V7Tsm8OoutULwdBJ6t3lu26PBqIRjmD
+         yMLExMl4iKITwv4wkKrRoLxYlDBBPDm62dzIEhRg8fb/P6r8PgOWRBBG86gMCJL2aOCH
+         gl95MNq5HrOS5XOv+TUuz4Uo6VCKuFvSmJkGKDvI9J5ZoPRq8lP090/o4D0+myy6g9Fp
+         Lih3l0jC7UzilCgqW5i/BNqPuw88yXm19M5UKrmTeftZ8JXIcO6ih3wopjWZaDcLYBM2
+         x4/lUZK0ZjQp1/MnhPyvFZCKSwlvUJTCCZZLf+xJ6SODv+fxJk853TVkWM5cD2uqynBF
+         gC+Q==
+X-Gm-Message-State: AOAM5324o9O6kPTiXnI+V1Fkw3jjvyQKn0s1nmpFayLMKzKo0/bNRKu1
+        iYgCTtEgNcq4aWPJnegCN/5X5g==
+X-Google-Smtp-Source: ABdhPJxbIMavCBh55V8iWCnGjzV8EOJfy9bGnqV2NbUt8wggKrAvSL1Pd11a9RjPE+B2TkXi099IMA==
+X-Received: by 2002:a1c:7515:: with SMTP id o21mr3714062wmc.150.1631108973796;
+        Wed, 08 Sep 2021 06:49:33 -0700 (PDT)
+Received: from [192.168.1.12] (host-92-17-50-173.as13285.net. [92.17.50.173])
+        by smtp.gmail.com with ESMTPSA id w1sm2193690wmc.19.2021.09.08.06.49.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Sep 2021 06:49:33 -0700 (PDT)
+Subject: Re: [PATCH] drm/msm: Disable frequency clamping on a630
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>
+Cc:     Rob Clark <robdclark@gmail.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>
+References: <e2cebf65-012d-f818-8202-eb511c996e28@linaro.org>
+ <CAF6AEGs11aYnkL30kp79pMqLTg3_4otFwG2Oc890Of2ndLbELw@mail.gmail.com>
+ <b7334a1a-c4ad-da90-03b4-0d19e1811b13@linaro.org>
+ <CAF6AEGv0WWB3Z1hmXf8vxm1_-d7fsNBRcaQF35aE2JXcJn8-cA@mail.gmail.com>
+ <8aa590be-6a9f-9343-e897-18e86ea48202@linaro.org>
+ <CAF6AEGtd_5jKhixp6h+NnN8-aqjBHTLopRozASE73oT3rfnFHA@mail.gmail.com>
+ <6eefedb2-9e59-56d2-7703-2faf6cb0ca3a@codeaurora.org>
+ <CAF6AEGvhqPHWNK=6GYz+Mu5aKe8+iE4_Teem6o=X6eiANhWsPg@mail.gmail.com>
+ <83ecbe74-caf0-6c42-e6f5-4887b3b534c6@linaro.org>
+ <53d3e5b7-9dc0-a806-70e9-b9b5ff877462@codeaurora.org>
+ <YTgeIuwumPoR9ZTE@ripper>
+From:   Caleb Connolly <caleb.connolly@linaro.org>
+Message-ID: <076cb487-7929-2af4-b2c0-385cd731ee48@linaro.org>
+Date:   Wed, 8 Sep 2021 14:49:31 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-In-Reply-To: <20210908102300.GA4112@sirena.org.uk>
-Content-Type: text/plain; charset=windows-1252; format=flowed
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <YTgeIuwumPoR9ZTE@ripper>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks for Your Time Mark Brown!!!
 
-On 9/8/2021 3:53 PM, Mark Brown wrote:
-> On Wed, Sep 08, 2021 at 10:08:33AM +0530, Srinivasa Rao Mandadapu wrote:
->> On 9/8/2021 1:54 AM, Stephen Boyd wrote:
->>> Quoting Srinivasa Rao Mandadapu (2021-09-06 06:27:34)
->>>> +#define LPASS_CDC_DMA_VA0 8
->>>> +#define LPASS_MAX_PORTS 9
->>> Do we need LPASS_MAX_PORTS in the binding?
->> Yes.  based on this creating array of streams in machine driver. So to make
->> upper limit introduced this macro.
-> That's saying it's useful to have it in the code, do we need it in the
-> binding itself though?
-Okay.  Got it. will remove it and share new patch.
+
+On 08/09/2021 03:21, Bjorn Andersson wrote:
+> On Mon 09 Aug 10:26 PDT 2021, Akhil P Oommen wrote:
+> 
+>> On 8/9/2021 9:48 PM, Caleb Connolly wrote:
+>>>
+>>>
+>>> On 09/08/2021 17:12, Rob Clark wrote:
+>>>> On Mon, Aug 9, 2021 at 7:52 AM Akhil P Oommen
+>>>> <akhilpo@codeaurora.org> wrote:
+> [..]
+>>>>> I am a bit confused. We don't define a power domain for gpu in dt,
+>>>>> correct? Then what exactly set_opp do here? Do you think this usleep is
+>>>>> what is helping here somehow to mask the issue?
+>>> The power domains (for cx and gx) are defined in the GMU DT, the OPPs in
+>>> the GPU DT. For the sake of simplicity I'll refer to the lowest
+>>> frequency (257000000) and OPP level (RPMH_REGULATOR_LEVEL_LOW_SVS) as
+>>> the "min" state, and the highest frequency (710000000) and OPP level
+>>> (RPMH_REGULATOR_LEVEL_TURBO_L1) as the "max" state. These are defined in
+>>> sdm845.dtsi under the gpu node.
+>>>
+>>> The new devfreq behaviour unmasks what I think is a driver bug, it
+>>> inadvertently puts much more strain on the GPU regulators than they
+>>> usually get. With the new behaviour the GPU jumps from it's min state to
+>>> the max state and back again extremely rapidly under workloads as small
+>>> as refreshing UI. Where previously the GPU would rarely if ever go above
+>>> 342MHz when interacting with the device, it now jumps between min and
+>>> max many times per second.
+>>>
+>>> If my understanding is correct, the current implementation of the GMU
+>>> set freq is the following:
+>>>   Â - Get OPP for frequency to set
+>>>   Â - Push the frequency to the GMU - immediately updating the core clock
+>>>   Â - Call dev_pm_opp_set_opp() which triggers a notify chain, this winds
+>>> up somewhere in power management code and causes the gx regulator level
+>>> to be updated
+>>
+>> Nope. dev_pm_opp_set_opp() sets the bandwidth for gpu and nothing else. We
+>> were using a different api earlier which got deprecated -
+>> dev_pm_opp_set_bw().
+>>
+> 
+> On the Lenovo Yoga C630 this is reproduced by starting alacritty and if
+> I'm lucky I managed to hit a few keys before it crashes, so I spent a
+> few hours looking into this as well...
+> 
+> As you say, the dev_pm_opp_set_opp() will only cast a interconnect vote.
+> The opp-level is just there for show and isn't used by anything, at
+> least not on 845.
+> 
+> Further more, I'm missing something in my tree, so the interconnect
+> doesn't hit sync_state, and as such we're not actually scaling the
+> buses. So the problem is not that Linux doesn't turn on the buses in
+> time.
+> 
+> So I suspect that the "AHB bus error" isn't saying that we turned off
+> the bus, but rather that the GPU becomes unstable or something of that
+> sort.
+> 
+> 
+> Lastly, I reverted 9bc95570175a ("drm/msm: Devfreq tuning") and ran
+> Aquarium for 20 minutes without a problem. I then switched the gpu
+> devfreq governor to "userspace" and ran the following:
+> 
+> while true; do
+>    echo 257000000 > /sys/class/devfreq/5000000.gpu/userspace/set_freq
+>    echo 710000000 > /sys/class/devfreq/5000000.gpu/userspace/set_freq
+> done
+> 
+> It took 19 iterations of this loop to crash the GPU.
+> 
+> So the problem doesn't seem to be Rob's change, it's just that prior to
+> it the chance to hitting it is way lower. Question is still what it is
+> that we're triggering.
+
+Do the opp-levels in DTS represent how the hardware behaves? If so then it does just
+appear to be that whatever is responsible for scaling the GX rail voltage
+has no time limits and will attempt to switch the regulator between min/max
+voltage as often as we tell it to which is probably not something the hardware expected.
+> 
+> Regards,
+> Bjorn
+> 
 
 -- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
-
+Kind Regards,
+Caleb (they/them)
