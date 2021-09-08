@@ -2,464 +2,325 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 67011404126
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 00:42:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 49CEA404195
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 01:08:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346392AbhIHWn7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Sep 2021 18:43:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59054 "EHLO
+        id S235112AbhIHXJp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Sep 2021 19:09:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36518 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240269AbhIHWn7 (ORCPT
+        with ESMTP id S229997AbhIHXJo (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Sep 2021 18:43:59 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23B06C061575
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Sep 2021 15:42:51 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id bi4so5105069oib.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Sep 2021 15:42:51 -0700 (PDT)
+        Wed, 8 Sep 2021 19:09:44 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D7285C061757
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Sep 2021 16:08:35 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id l11so2232981plk.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Sep 2021 16:08:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to;
-        bh=VqW5+bekt6QQoJuxceGB6Gpgo1qlpGgrwjlTJ2fvXwI=;
-        b=Hqc3NBf8JTg7GipE1wzXwn/flNwn+MY+VUUhGnKThL3LCKzu4VSfdnz2yAhquXyZbL
-         fbXUWc9mnrAWY4bWGcj424gvueEJhW1/FkTORFr9yjK0zj9i86hTh3GouPwxVCoCmZPk
-         +GIMaN5NsD32W27XGzxpYN1vBdSVe+jpmcrZY=
+        d=lixom-net.20150623.gappssmtp.com; s=20150623;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=zZtlzVhWBbwXoavimL5Cu2zNuLqJKyQrs9PtnLoTbBw=;
+        b=kSjq7V7UVdcmFJyduvILA7A+e4J9ObyfE9f9UlOv1wvamgAl4MgHpJqYP1XrUEZhuD
+         qsMZW0Fk31XflGWEup34tqLssSis/K7KZ1VFRY9uiUuUWwWoHQYync4TQhBzfDNxh2Tv
+         UOgVsuOzWCLKEPDsv1L+nBsBQk5yO9jklbAtJDFD1Th25XdzQZGa3b+fMzs2kswPgwWN
+         8sKr8mQWjMCY75HA6h2gk7J0vCnx9c19EL7g70oFrnAsU54eBRbWhdip29c8oSPgqgpf
+         L5YVWqhWliH0iHZRhi1JBIHkJQ5qPATPl+ulZnecXkpVLPg+9gvZI4nTQS742Q+by/1E
+         VlHA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to;
-        bh=VqW5+bekt6QQoJuxceGB6Gpgo1qlpGgrwjlTJ2fvXwI=;
-        b=mO52x0V1AUqHdEEbYKSm04REBe5fcfrZlAR3GGdDFlAvtA/7atWFSjzDKW/h3x5bLZ
-         /hwn4eyjxOjxzKJw9lDUF/AT9+7ebkVBmwP0fOZVcMtBWS1Xi8InZitpmOnsLStrPREp
-         593e1k0IsBPZeXPdl82mVrxRQNx8g51TsKWx+9GyWGDUpzqwJvG2n+gWNX785sDxS+PG
-         QlLJ/fggeZK3bBoZwOSfeBB5zNe3fEBTfQQ8MnWWNsGoVGaImzb6Wx4Hb0IkATWcwBt5
-         5Hvwbke7VRZB+9p05EUYa2MDsVShAq86yKIUY3X0SS0fS1eX26eQqS3t8Z2PJFVb6W30
-         HjQQ==
-X-Gm-Message-State: AOAM532vDPJ5HfjPSYoQCY65rBI9HU0KriF5XRYM/Vi5EilQxsGo1KNg
-        l20uU1XWoaTE2XdcOLaGpaEzvnjnimvFA8eT9Svb1A==
-X-Google-Smtp-Source: ABdhPJw5BZv+m1oFwBZVKDWtQ/OmALelhjo35OhxGCLqbEojB3tWU3Kr5bPVDLdWU8HMDQJCcc/Xks3EG2bdLcbXO2c=
-X-Received: by 2002:aca:2310:: with SMTP id e16mr319666oie.64.1631140970485;
- Wed, 08 Sep 2021 15:42:50 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 8 Sep 2021 15:42:50 -0700
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=zZtlzVhWBbwXoavimL5Cu2zNuLqJKyQrs9PtnLoTbBw=;
+        b=5E7GXEsDt6oRATxkyXmUz6m1lw7oSoQmv8W5wnL8GEAVFFj+0SBx21DA8xMwmuH87a
+         6p4mVSB5FWM/DAk2pru0bgIFMvD9AuNZOdFRXdTM9Gj4nMMZmEM0Uj7sFyW09DM635zT
+         2UbBzJE13yHOZX8CgUp0bDfLSMPbXglgCGVApSLDZNzbS82hCDUl3JdgcicUNgfCy2vW
+         EZRhpFOoQPU2lvekCwv5ZyYulF3fKO/AyzTv2adARr3ae0qC9/822YgL1XGTQh2siMOC
+         +1X2+8YYYRQTpFps+rSNCCH5Y4cAvETi8YoNYhh9yk2kYCVp6yngEBzbGhohGgX7DpBN
+         YTnQ==
+X-Gm-Message-State: AOAM530XQ/RY356ZOu3r/9bf5PUpnqlQ7Z3b5+mVrDlD+jESM3TOSwqa
+        K9//OwNYpjsOoGFfbPl1MGubKN2grWMtf73SzL/2xw==
+X-Google-Smtp-Source: ABdhPJyFn28fS/y5ulgH/27LqxDmH6NBfIEoA9Td+810/fo43QUOaiDpFlx7utmV8lw1jHrEN/4yqFOCMF/8I1/Q04A=
+X-Received: by 2002:a17:90a:7301:: with SMTP id m1mr45943pjk.34.1631142514970;
+ Wed, 08 Sep 2021 16:08:34 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <1631124057-17155-3-git-send-email-srivasam@codeaurora.org>
-References: <1631124057-17155-1-git-send-email-srivasam@codeaurora.org> <1631124057-17155-3-git-send-email-srivasam@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Wed, 8 Sep 2021 15:42:50 -0700
-Message-ID: <CAE-0n51EESvy0Y5WzcZJDAx+V1OpnaxM4T-BUbuReepJt7ufRA@mail.gmail.com>
-Subject: Re: [PATCH 2/2] ASoC: qcom: SC7280: Add machine driver
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        agross@kernel.org, alsa-devel@alsa-project.org,
-        bgoswami@codeaurora.org, bjorn.andersson@linaro.org,
-        broonie@kernel.org, devicetree@vger.kernel.org,
-        judyhsiao@chromium.org, lgirdwood@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        perex@perex.cz, plai@codeaurora.org, robh+dt@kernel.org,
-        rohitkr@codeaurora.org, srinivas.kandagatla@linaro.org,
-        tiwai@suse.com
+References: <20210901201934.1084250-1-dianders@chromium.org>
+ <20210901131531.v3.6.I02250cd7d4799661b068bcc65849a456ed411734@changeid>
+ <CAOesGMjp4pscuxciHZo7br-acgbkZSdRA_mUWNpcz0OfF7zOSA@mail.gmail.com>
+ <CAD=FV=WPXAUyuAHb1jKx9F_aw+JGX4MWB3or=Eq5rXoKY=OQMw@mail.gmail.com>
+ <163070152582.405991.9480635890491684680@swboyd.mtv.corp.google.com> <CAD=FV=XzPVda==+hkJ8ZJNXz3sT=V+8y4gbsbUik4k3Om_cGvQ@mail.gmail.com>
+In-Reply-To: <CAD=FV=XzPVda==+hkJ8ZJNXz3sT=V+8y4gbsbUik4k3Om_cGvQ@mail.gmail.com>
+From:   Olof Johansson <olof@lixom.net>
+Date:   Wed, 8 Sep 2021 16:08:23 -0700
+Message-ID: <CAOesGMhd+m=hU6Fj3QXxqZb6TFf414UwvQLsLWgxe9Zb=3-tPQ@mail.gmail.com>
+Subject: Re: [PATCH v3 06/16] ARM: configs: Everyone who had PANEL_SIMPLE now
+ gets PANEL_SIMPLE_EDP
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus W <linus.walleij@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        DTML <devicetree@vger.kernel.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Maxime Ripard <mripard@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        DRI mailing list <dri-devel@lists.freedesktop.org>,
+        Al Viro <viro@zeniv.linux.org.uk>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Andreas Kemnade <andreas@kemnade.info>,
+        Andrey Zhizhikin <andrey.zhizhikin@leica-geosystems.com>,
+        Anson Huang <Anson.Huang@nxp.com>,
+        Arnd Bergmann <arnd@arndb.de>, Chen-Yu Tsai <wens@csie.org>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Codrin Ciubotariu <codrin.ciubotariu@microchip.com>,
+        Core ntin Labbe <clabbe@baylibre.com>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Emil Velikov <emil.velikov@collabora.com>,
+        Eugen Hristev <eugen.hristev@microchip.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Fabrice Gasnier <fabrice.gasnier@st.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Grygorii Strashko <grygorii.strashko@ti.com>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Joel Stanley <joel@jms.id.au>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Kees Cook <keescook@chromium.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Lionel Debieve <lionel.debieve@st.com>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Ludovic Desroches <ludovic.desroches@microchip.com>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        =?UTF-8?Q?Martin_J=C3=BCcker?= <martin.juecker@gmail.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Olivier Moysan <olivier.moysan@st.com>,
+        Otavio Salvador <otavio@ossystems.com.br>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Razvan Stefanescu <razvan.stefanescu@microchip.com>,
+        Robert Richter <rric@kernel.org>,
+        Russell King <linux@armlinux.org.uk>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Stefan Wahren <stefan.wahren@i2se.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Tudor Ambarus <tudor.ambarus@microchip.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Linux ARM Mailing List <linux-arm-kernel@lists.infradead.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-omap <linux-omap@vger.kernel.org>,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        "ARM/SAMSUNG EXYNOS ARM ARCHITECTURES" 
+        <linux-samsung-soc@vger.kernel.org>, linux-sunxi@lists.linux.dev,
+        =?UTF-8?Q?open_list=3ATEGRA_ARCHITECTURE_SUPPORT_=3Clinux=2D_tegra=40vger=2Ekern?=
+         =?UTF-8?Q?el=2Eorg=3E=2C_=C5=81ukasz_Stelmach?= 
+        <l.stelmach@samsung.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Srinivasa Rao Mandadapu (2021-09-08 11:00:57)
-> diff --git a/sound/soc/qcom/sc7280.c b/sound/soc/qcom/sc7280.c
-> new file mode 100644
-> index 0000000..1ab29f6
-> --- /dev/null
-> +++ b/sound/soc/qcom/sc7280.c
-> @@ -0,0 +1,347 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +//
-> +// Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
-> +//
-> +// sc7280.c -- ALSA SoC Machine driver for sc7280
-> +
-> +#include <dt-bindings/sound/sc7180-lpass.h>
-> +#include <dt-bindings/sound/qcom,q6afe.h>
+On Wed, Sep 8, 2021 at 3:36 PM Doug Anderson <dianders@chromium.org> wrote:
+>
+> Hi,
+>
+> On Fri, Sep 3, 2021 at 1:38 PM Stephen Boyd <sboyd@kernel.org> wrote:
+> >
+> > Quoting Doug Anderson (2021-09-01 16:10:15)
+> > > Hi,
+> > >
+> > > On Wed, Sep 1, 2021 at 2:12 PM Olof Johansson <olof@lixom.net> wrote:
+> > > >
+> > > > On Wed, Sep 1, 2021 at 1:20 PM Douglas Anderson <dianders@chromium.org> wrote:
+> > > > >
+> > > > > In the patch ("drm/panel-simple-edp: Split eDP panels out of
+> > > > > panel-simple") we split the PANEL_SIMPLE driver in 2. By default let's
+> > > > > give everyone who had the old driver enabled the new driver too. If
+> > > > > folks want to opt-out of one or the other they always can later.
+> > > > >
+> > > > > Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> > > >
+> > > > Isn't this a case where the new option should just have had the old
+> > > > option as the default value to avoid this kind of churn and possibly
+> > > > broken platforms?
+> > >
+> > > I'm happy to go either way. I guess I didn't do that originally
+> > > because logically there's not any reason to link the two drivers going
+> > > forward. Said another way, someone enabling the "simple panel" driver
+> > > for non-eDP panels wouldn't expect that the "simple panel" driver for
+> > > DP panels would also get enabled by default. They really have nothing
+> > > to do with one another. Enabling by default for something like this
+> > > also seems like it would lead to bloat. I could have sworn that
+> > > periodically people get yelled at for marking drivers on by default
+> > > when it doesn't make sense.
+> > >
+> > > ...that being said, I'm happy to change the default as you suggest.
+> > > Just let me know.
+> >
+> > Having the default will help olddefconfig users seamlessly migrate to
+> > the new Kconfig. Sadly they don't notice that they should probably
+> > disable the previous Kconfig symbol, but oh well. At least with the
+> > default they don't go on a hunt/bisect to figure out that some Kconfig
+> > needed to be enabled now that they're using a new kernel version.
+> >
+> > Maybe the default should have a TODO comment next to it indicating we
+> > should remove the default in a year or two.
+>
+> OK, so I'm trying to figure out how to do this without just "kicking
+> the can" down the road. I guess your idea is that for the next year
+> this will be the default and that anyone who really wants
+> "CONFIG_DRM_PANEL_EDP" will "opt-in" to keep it by adding
+> "CONFIG_DRM_PANEL_EDP=y" to their config? ...and then after a year
+> passes we remove the default? ...but that won't work, will it? Since
+> "CONFIG_DRM_PANEL_EDP" will be the default for the next year then you
+> really can't add it to the "defconfig", at least if you ever
+> "normalize" it. The "defconfig" by definition has everything stripped
+> from it that's already the "default", so for the next year anyone who
+> tries to opt-in will get their preference stripped.
+>
+> Hrm, so let me explain options as I see them. Maybe someone can point
+> out something that I missed. I'll assume that we'll change the config
+> option from CONFIG_DRM_PANEL_SIMPLE_EDP to CONFIG_DRM_PANEL_EDP
+> (remove the "SIMPLE" part).
+>
+> ==
+>
+> Where we were before my series:
+>
+> * One config "CONFIG_DRM_PANEL_SIMPLE" and it enables simple non-eDP
+> and eDP drivers.
+>
+> ==
+>
+> Option 1: update everyone's configs (this patch)
+>
+> * Keep old config "CONFIG_DRM_PANEL_SIMPLE" but it now only means
+> enable the panel-simple (non-eDP) driver.
+> * Anyone who wants eDP panels must opt-in to "CONFIG_DRM_PANEL_EDP"
+> * Update all configs in mainline; any out-of mainline configs must
+> figure this out themselves.
+>
+> Pros:
+> * no long term baggage
+>
+> Cons:
+> * patch upstream is a bit of "churn"
+> * anyone with downstream config will have to figure out what happened.
+>
+> ==
+>
+> Option 2: kick the can down the road + accept cruft
+>
+> * Keep old config "CONFIG_DRM_PANEL_SIMPLE" and it means enable the
+> panel-simple (non-eDP) driver.
+> * Anyone with "CONFIG_DRM_PANEL_SIMPLE" is opted in by default to
+> "CONFIG_DRM_PANEL_EDP"
+>
+> AKA:
+> config DRM_PANEL_EDP
+>   default DRM_PANEL_SIMPLE
+>
+> Pros:
+> * no config patches needed upstream at all and everything just works!
+>
+> Cons:
+> * people are opted in to extra cruft by default and need to know to turn it off.
+> * unclear if we can change the default without the same problems.
+>
+> ==
+>
+> Option 3: try to be clever
+>
+> * Add _two_ new configs. CONFIG_DRM_PANEL_SIMPLE_V2 and CONFIG_DRM_PANEL_EDP.
+> * Old config "CONFIG_DRM_PANEL_SIMPLE" gets marked as "deprecated".
+> * Both new configs have "default CONFIG_DRM_PANEL_SIMPLE"
+>
+> Now anyone old will magically get both the new config options by
+> default. Anyone looking at this in the future _won't_ set the
+> deprecated CONFIG_DRM_PANEL_SIMPLE but will instead choose if they
+> want either the eDP or "simple" driver.
+>
+> Pros:
+> * No long term baggage.
+> * Everyone is transitioned automatically by default with no cruft patches.
+>
+> Cons:
+> * I can't think of a better name than "CONFIG_DRM_PANEL_SIMPLE_V2" and
+> that name is ugly.
+>
+> ==
+>
+> Option 4: shave a yak
+>
+> When thinking about this I came up with a clever idea of stashing the
+> kernel version in a defconfig when it's generated. Then you could do
+> something like:
+>
+> config DRM_PANEL_EDP
+>   default DRM_PANEL_SIMPLE if DEFCONFIG_GENERATED_AT <= 0x00050f00
+>
+> That feels like a good idea to me but who knows what others would
+> think. In general I think this series already shaves enough yaks. This
+> isn't a new problem we're trying to solve so it seems like we should
+> pick one of the options above.
+>
+> ==
+>
+> Unless I get an explicit NAK from someone like Olof or Arnd or I hear
+> that everyone loves Option #3 I'll probably just stick with the
+> existing approach since:
+>
+> * Olof's wording didn't make it sound like a strong objection.
 
-Can these come after the linux/sound includes?
+Yeah, not a strong objection but an enquiry if there's a better way to
+handle it. TL;DR: I don't think there really is.
 
-> +#include <linux/gpio.h>
-> +#include <linux/gpio/consumer.h>
-> +#include <linux/module.h>
-> +#include <linux/of_device.h>
-> +#include <linux/platform_device.h>
-> +#include <sound/core.h>
-> +#include <sound/jack.h>
-> +#include <sound/pcm.h>
-> +#include <sound/soc.h>
-> +#include <uapi/linux/input-event-codes.h>
+My comment mostly came from the fact that when olddefconfig gets
+broken like this, we tend to have a bunch of patches trickle in over
+time as downstream users discover the need to turn on the new option.
+You covered (most) of that  by doing the appropriate defconfigs to
+this patch series, so it won't be as bad (besides any newly added
+defconfigs during the same release, and we're quite careful about
+doing that these days).
 
-Is this include used?
+I think most of the other options, besides 2, are just more overhead
+than needed here. So I'd be fine with just picking up option 1.
 
-> +
-> +#include "../codecs/wcd938x.h"
-> +#include "common.h"
-> +#include "lpass.h"
-> +
-> +#define DRIVER_NAME "SC7280"
+What's clear is that this is not a very convenient activity that
+scales, but we don't do it all that often. This is where something
+like a "HAVE_EDP" type config that the platform can provide helps, but
+adding it just for this rework seems to be more work than it's worth.
 
-Is this useful? Why not just inline it in the one place it is used so we
-don't have to jump to the define to figure out what it is?
+> * From git history it looks as if config patches don't necessarily
+> land through the SoC tree and thus I'd by default follow the
+> suggestions of the DRM folks. Andrzej suggested going with the
+> existing approach as long as I changed the symbol names and re-ordered
+> the patches.
 
-> +#define LPASS_MAX_PORTS  (LPASS_CDC_DMA_VA_TX8 + 1)
-> +
-> +
-> +struct sc7280_snd_data {
-> +       bool stream_prepared[LPASS_MAX_PORTS];
-> +       struct snd_soc_card card;
-> +       struct sdw_stream_runtime *sruntime[LPASS_MAX_PORTS];
-> +       struct snd_soc_jack hs_jack;
-> +       struct snd_soc_jack hdmi_jack;
-> +       bool jack_setup;
-> +};
-> +
-> +static void sc7280_jack_free(struct snd_jack *jack)
-> +{
-> +       struct snd_soc_component *component = jack->private_data;
-> +
-> +       snd_soc_component_set_jack(component, NULL, NULL);
-> +}
-> +
-> +static int sc7280_headset_init(struct snd_soc_pcm_runtime *rtd)
-> +{
-> +       struct snd_soc_card *card = rtd->card;
-> +       struct sc7280_snd_data *pdata = snd_soc_card_get_drvdata(card);
-> +       struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
-> +       struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-> +       struct snd_soc_component *component = codec_dai->component;
-> +       struct snd_jack *jack;
-> +       int rval, i;
-> +
-> +       if (!pdata->jack_setup) {
-> +               rval = snd_soc_card_jack_new(card, "Headset Jack",
-> +                                                       SND_JACK_HEADSET | SND_JACK_LINEOUT |
-> +                                                       SND_JACK_MECHANICAL |
-> +                                                       SND_JACK_BTN_0 | SND_JACK_BTN_1 |
-> +                                                       SND_JACK_BTN_2 | SND_JACK_BTN_3 |
-> +                                                       SND_JACK_BTN_4 | SND_JACK_BTN_5,
-> +                                                       &pdata->hs_jack, NULL, 0);
-> +
-> +               if (rval < 0) {
-> +                       dev_err(card->dev, "Unable to add Headset Jack\n");
-> +                       return rval;
-> +               }
-> +
-> +               jack = pdata->hs_jack.jack;
-> +
-> +               snd_jack_set_key(jack, SND_JACK_BTN_0, KEY_MEDIA);
-> +               snd_jack_set_key(jack, SND_JACK_BTN_1, KEY_VOICECOMMAND);
-> +               snd_jack_set_key(jack, SND_JACK_BTN_2, KEY_VOLUMEUP);
-> +               snd_jack_set_key(jack, SND_JACK_BTN_3, KEY_VOLUMEDOWN);
-> +
-> +               jack->private_data = component;
-> +               jack->private_free = sc7280_jack_free;
-> +               pdata->jack_setup = true;
-> +       }
-> +       switch (cpu_dai->id) {
-> +       case LPASS_CDC_DMA_RX0:
-> +       case LPASS_CDC_DMA_TX3:
-> +               for_each_rtd_codec_dais(rtd, i, codec_dai) {
-> +                       rval = snd_soc_component_set_jack(component, &pdata->hs_jack, NULL);
-> +                       if (rval != 0 && rval != -EOPNOTSUPP) {
-> +                               dev_warn(card->dev, "Failed to set jack: %d\n", rval);
+Right, Kconfig changes usually go with the driver. dts and defconfig
+changes go to the SoC tree though since otherwise we end up with a
+bunch of churn and conflicts.
 
-Why not dev_err?
+> Please yell if anything above sounds wrong! I'll probably try to send
+> out a new version tomorrow or the next day, but I won't land it right
+> away to give people time to yell.
 
-> +                               return rval;
-> +                       }
-> +               }
-> +
-> +               break;
-> +       default:
-> +               break;
-> +       }
-> +
-> +       return 0;
-> +}
-> +
-> +static int sc7280_hdmi_init(struct snd_soc_pcm_runtime *rtd)
-> +{
-> +       struct snd_soc_card *card = rtd->card;
-> +       struct sc7280_snd_data *pdata = snd_soc_card_get_drvdata(card);
-> +       struct snd_soc_dai *codec_dai = asoc_rtd_to_codec(rtd, 0);
-> +       struct snd_soc_component *component = codec_dai->component;
-> +       struct snd_jack *jack;
-> +       int rval;
-> +
-> +       rval = snd_soc_card_jack_new(
-> +                       card, "HDMI Jack",
-> +                       SND_JACK_LINEOUT,
-> +                       &pdata->hdmi_jack, NULL, 0);
-> +
-> +       if (rval < 0) {
-> +               dev_err(card->dev, "Unable to add HDMI Jack\n");
-> +               return rval;
-> +       }
-> +
-> +       jack = pdata->hdmi_jack.jack;
-> +       jack->private_data = component;
-> +       jack->private_free = sc7280_jack_free;
-> +
-> +       return snd_soc_component_set_jack(component, &pdata->hdmi_jack, NULL);
-> +}
-> +
-> +static int sc7280_init(struct snd_soc_pcm_runtime *rtd)
-> +{
-> +       struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-> +
-> +       switch (cpu_dai->id) {
-> +       case LPASS_CDC_DMA_TX3:
-> +               return sc7280_headset_init(rtd);
-> +       case LPASS_CDC_DMA_RX0:
-> +       case LPASS_CDC_DMA_VA_TX0:
-> +       case MI2S_SECONDARY:
-> +               return 0;
-> +       case LPASS_DP_RX:
-> +               return sc7280_hdmi_init(rtd);
-> +       default:
-> +               dev_err(rtd->dev, "%s: invalid dai id 0x%x\n", __func__, cpu_dai->id);
-> +               return -EINVAL;
-> +       }
+I'd leave it up to you if you want to do option 1 or 2, since there's
+no really convenient way to do it better. 3 seems to be a bigger
+hammer than what this situation calls for IMHO.
 
-Nitpick: Add newline.
 
-> +       return 0;
-
-Can we even get here? Maybe remove return from default above and make
-this a return -EINVAL.
-
-> +}
-> +
-> +static int sc7280_snd_startup(struct snd_pcm_substream *substream)
-> +{
-> +       struct snd_soc_pcm_runtime *rtd = substream->private_data;
-> +       struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-> +
-> +       switch (cpu_dai->id) {
-> +       case LPASS_CDC_DMA_RX0:
-> +       case LPASS_CDC_DMA_TX3:
-> +       case LPASS_CDC_DMA_VA_TX0:
-> +               break;
-> +       case MI2S_SECONDARY:
-> +               break;
-> +       case LPASS_DP_RX:
-> +               break;
-> +       default:
-> +               dev_err(rtd->dev, "%s: invalid dai id 0x%x\n", __func__, cpu_dai->id);
-> +               return -EINVAL;
-> +       }
-
-Nitpick: Add newline.
-
-> +       return 0;
-> +}
-> +
-> +static int sc7280_snd_hw_params(struct snd_pcm_substream *substream,
-> +                               struct snd_pcm_hw_params *params)
-> +{
-> +       struct snd_pcm_runtime *runtime = substream->runtime;
-> +       struct snd_soc_pcm_runtime *rtd = substream->private_data;
-> +       struct snd_soc_dai *codec_dai;
-> +       struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-
-const?
-
-> +       struct sc7280_snd_data *pdata = snd_soc_card_get_drvdata(rtd->card);
-> +       struct sdw_stream_runtime *sruntime;
-> +       int i;
-> +
-> +       snd_pcm_hw_constraint_minmax(runtime, SNDRV_PCM_HW_PARAM_CHANNELS, 2, 2);
-> +       snd_pcm_hw_constraint_minmax(runtime, SNDRV_PCM_HW_PARAM_RATE, 48000, 48000);
-> +
-> +       switch (cpu_dai->id) {
-> +       case LPASS_CDC_DMA_TX3:
-> +       case LPASS_CDC_DMA_RX0:
-> +               for_each_rtd_codec_dais(rtd, i, codec_dai) {
-> +                       sruntime = snd_soc_dai_get_sdw_stream(codec_dai, substream->stream);
-> +                       if (sruntime != ERR_PTR(-EOPNOTSUPP))
-> +                               pdata->sruntime[cpu_dai->id] = sruntime;
-> +               }
-> +               break;
-> +       }
-> +
-> +       return 0;
-> +
-
-Nitpick: Drop newline.
-
-> +}
-> +
-> +static int sc7280_snd_swr_prepare(struct snd_pcm_substream *substream)
-> +{
-> +       struct snd_soc_pcm_runtime *rtd = substream->private_data;
-> +       struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-
-const?
-
-> +       struct sc7280_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
-> +       struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
-> +       int ret;
-> +
-> +       if (!sruntime)
-> +               return 0;
-> +
-> +       if (data->stream_prepared[cpu_dai->id]) {
-> +               sdw_disable_stream(sruntime);
-> +               sdw_deprepare_stream(sruntime);
-> +               data->stream_prepared[cpu_dai->id] = false;
-> +       }
-> +
-> +       ret = sdw_prepare_stream(sruntime);
-> +       if (ret)
-> +               return ret;
-> +
-> +       ret = sdw_enable_stream(sruntime);
-> +       if (ret) {
-> +               sdw_deprepare_stream(sruntime);
-> +               return ret;
-> +       }
-> +       data->stream_prepared[cpu_dai->id]  = true;
-
-Why two spaces after ]?
-
-> +
-> +       return ret;
-> +}
-> +
-> +
-> +static int sc7280_snd_prepare(struct snd_pcm_substream *substream)
-> +{
-> +       struct snd_soc_pcm_runtime *rtd = substream->private_data;
-> +       struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-
-const?
-
-> +
-> +       switch (cpu_dai->id) {
-> +       case LPASS_CDC_DMA_RX0:
-> +       case LPASS_CDC_DMA_TX3:
-> +               return sc7280_snd_swr_prepare(substream);
-> +       default:
-> +               break;
-> +       }
-> +
-> +       return 0;
-> +}
-> +
-> +static int sc7280_snd_hw_free(struct snd_pcm_substream *substream)
-> +{
-> +       struct snd_soc_pcm_runtime *rtd = substream->private_data;
-> +       struct sc7280_snd_data *data = snd_soc_card_get_drvdata(rtd->card);
-> +       struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-
-const?
-
-> +       struct sdw_stream_runtime *sruntime = data->sruntime[cpu_dai->id];
-> +
-> +       switch (cpu_dai->id) {
-> +       case LPASS_CDC_DMA_RX0:
-> +       case LPASS_CDC_DMA_TX3:
-> +               if (sruntime && data->stream_prepared[cpu_dai->id]) {
-> +                       sdw_disable_stream(sruntime);
-> +                       sdw_deprepare_stream(sruntime);
-> +                       data->stream_prepared[cpu_dai->id] = false;
-> +               }
-> +               break;
-> +       default:
-> +               break;
-> +       }
-> +       return 0;
-> +}
-> +
-> +static void sc7280_snd_shutdown(struct snd_pcm_substream *substream)
-> +{
-> +       struct snd_soc_pcm_runtime *rtd = substream->private_data;
-> +       struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(rtd, 0);
-> +
-> +       switch (cpu_dai->id) {
-> +       case LPASS_CDC_DMA_RX0:
-> +       case LPASS_CDC_DMA_TX3:
-> +       case LPASS_CDC_DMA_VA_TX0:
-> +               break;
-> +       case MI2S_SECONDARY:
-> +               break;
-> +       case LPASS_DP_RX:
-> +               break;
-> +       default:
-> +               dev_err(rtd->dev, "%s: invalid dai id 0x%x\n", __func__, cpu_dai->id);
-
-Can use %#x to skip the 0x part.
-
-> +               break;
-> +       }
-> +}
-> +
-> +static const struct snd_soc_ops sc7280_ops = {
-> +       .startup = sc7280_snd_startup,
-> +       .shutdown = sc7280_snd_shutdown,
-> +       .hw_params = sc7280_snd_hw_params,
-> +       .hw_free = sc7280_snd_hw_free,
-> +       .prepare = sc7280_snd_prepare,
-> +};
-> +
-> +static const struct snd_soc_dapm_widget sc7280_snd_widgets[] = {
-> +       SND_SOC_DAPM_HP("Headphone Jack", NULL),
-> +       SND_SOC_DAPM_MIC("Headset Mic", NULL),
-> +};
-> +
-> +static int sc7280_snd_platform_probe(struct platform_device *pdev)
-> +{
-> +       struct snd_soc_card *card;
-> +       struct sc7280_snd_data *data;
-> +       struct device *dev = &pdev->dev;
-> +       struct snd_soc_dai_link *link;
-> +       int ret, i;
-> +
-> +       /* Allocate the private data */
-> +       data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
-> +       if (!data)
-> +               return -ENOMEM;
-> +
-> +       card = &data->card;
-> +       data->jack_setup = false;
-
-Isn't that implicit via kzalloc above? This can be dropped.
-
-> +       snd_soc_card_set_drvdata(card, data);
-> +
-> +       card->owner = THIS_MODULE;
-> +       card->driver_name = DRIVER_NAME;
-> +       card->dev = dev;
-> +
-> +       ret = qcom_snd_parse_of(card);
-> +       if (ret)
-> +               return ret;
-> +
-> +       for_each_card_prelinks(card, i, link) {
-> +               link->init = sc7280_init;
-> +               link->ops = &sc7280_ops;
-> +       }
-> +       ret = devm_snd_soc_register_card(dev, card);
-> +       return ret;
-
-Nitpick:
-
-return devm_snd_soc_register_card(dev, card)
-
-> +}
-> +
-> +static const struct of_device_id sc7280_snd_device_id[]  = {
-> +       {.compatible = "google,sc7280-herobrine"},
-> +       {},
-
-Nitpick: Drop comma here so nothing can come after without causing a
-compile error.
-
-> +};
-> +MODULE_DEVICE_TABLE(of, sc7280_snd_device_id);
-> +
+-Olof
