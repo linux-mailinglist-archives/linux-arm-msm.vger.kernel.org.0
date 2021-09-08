@@ -2,130 +2,290 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D65D403E26
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Sep 2021 19:10:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EC452403E3D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Sep 2021 19:16:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240945AbhIHRLe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Sep 2021 13:11:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40564 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235364AbhIHRLd (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Sep 2021 13:11:33 -0400
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BB9C8C061757
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Sep 2021 10:10:25 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id x10-20020a056830408a00b004f26cead745so3843753ott.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Sep 2021 10:10:25 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=6LGhLlyGfDieC90krK66I/Mdf34zEcB4tJ81qPREmoM=;
-        b=c80CLUoDExwws380FL+IbjjQl1U/Fmd7uo4QCdYXq8THT//hiA5ubYgIx3oVA8uv17
-         1UbavbcuMaE3fhu9iiLkOVDoHTYqlw6AllaFRb+gLvdKshd/L3D91qvCLdgj7sjHVZdS
-         /cEyQTBgIulkYolYrZ6wcrK/U9PFPHKR3kmta6XzWFopeO5dYQK+vVgQoPjrctKskzlR
-         AlI256UVnHU04mZMt4e2Hb/opWWWN7OVfI58PYzxJV8khac9vtAm9PJMt4Kvo6owlhag
-         2ekYSEYUZRz2iOL/YR/BXfFXlL568R/Knw/nXb3aRGoEZWojF/3wwR0lJWmxfcdoRke0
-         gwzw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=6LGhLlyGfDieC90krK66I/Mdf34zEcB4tJ81qPREmoM=;
-        b=BWr07xln9PBitF3yX+QOHBklFUQ3WXXZ1TteAhYZSW3ATsaqru1ynmkiWAo5HALhMk
-         a9x+MqLXLd2a12by88dSavqSJ2A5j956HYfxrkPiD5m2Xx/UbSqtNy9NJYhJZuyTZk0d
-         ldyJqOUvEyetjprTOcOE9T8Eu3EvGAGwB9GXHpbYpHOZmS+HJydD5KgofB0UfRCw4LVc
-         r4HrFjxVEmKGK7AATxCQNNvTtf5z6rSsWP7ePdl41M/CWQ8NykrGuNFXkY83GCogIDp8
-         qudnnAN7BIYbM86g3Xm7UxbkUkrZXmws7LggSFqUb1/Gnl19a9B3RDo7/dXmO+PVOBtP
-         22iQ==
-X-Gm-Message-State: AOAM532ebGIC+QGEA6UXHIYxWHUQDLcXR8K43L7hv/EfIcpBhwo4ay/R
-        FYXalsBWqjaZCT3TiSK4OWfLeAoICb4JQA==
-X-Google-Smtp-Source: ABdhPJx4UnBs7ICh/RDtbZT+vcUobyCQZkVlqESgpps4CBsDWRckLDEI0l1Y/YgUWM/au1q0GH4B4A==
-X-Received: by 2002:a05:6830:3114:: with SMTP id b20mr4149958ots.17.1631121025099;
-        Wed, 08 Sep 2021 10:10:25 -0700 (PDT)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id z78sm551229ooa.29.2021.09.08.10.10.24
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 08 Sep 2021 10:10:24 -0700 (PDT)
-Date:   Wed, 8 Sep 2021 10:11:23 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     skakit@codeaurora.org
-Cc:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
-        Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
-        mka@chromium.org, kgunda@codeaurora.org,
-        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 2/3] leds: Add pm8350c support to Qualcomm LPG driver
-Message-ID: <YTjuu9VVsvnELtLx@ripper>
-References: <1630924867-4663-1-git-send-email-skakit@codeaurora.org>
- <1630924867-4663-3-git-send-email-skakit@codeaurora.org>
- <CAE-0n52Jb9nw9rbbQJrKNDQ_O2iCahDr8WLGkWORcNks9ptH-g@mail.gmail.com>
- <f35822d036988a1a6b6e4dcaa46373e7@codeaurora.org>
+        id S232430AbhIHRRP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Sep 2021 13:17:15 -0400
+Received: from ixit.cz ([94.230.151.217]:47876 "EHLO ixit.cz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230217AbhIHRRO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Sep 2021 13:17:14 -0400
+Received: from newone.lan (ixit.cz [94.230.151.217])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ixit.cz (Postfix) with ESMTPSA id A0A8C24A25;
+        Wed,  8 Sep 2021 19:16:04 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1631121364;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=2luen1Aw75WFk54UH4uHBWb4js/b04AcAZvA6vWMGpQ=;
+        b=01ZQyret+a97Aqgn4L3B666nJNHqH0l3vZC9MTZFxBwvvUUEmAaaw9FeRPtWPQqjyKLfza
+        QPcP3KODt4pEHpwitWoVQL5JckV49IlPqsrpDW8B8ndByLyTWPfVm4NlKHQAuY3cklcyzh
+        9BAB5DYTDI+jG2WRw17dgO32OaINWjU=
+From:   David Heidelberg <david@ixit.cz>
+To:     Rob Herring <robh+dt@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, David Heidelberg <david@ixit.cz>
+Subject: [RFC PATCH] [v2] dt-bindings: arm/msm/qcom,idle-state convert to YAML
+Date:   Wed,  8 Sep 2021 19:14:53 +0200
+Message-Id: <20210908171453.53259-1-david@ixit.cz>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <f35822d036988a1a6b6e4dcaa46373e7@codeaurora.org>
+Content-Transfer-Encoding: 8bit
+X-Spam: Yes
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 08 Sep 02:17 PDT 2021, skakit@codeaurora.org wrote:
+Switched maintainer from Lina to Bjorn.
 
-> On 2021-09-08 01:50, Stephen Boyd wrote:
-> > Quoting satya priya (2021-09-06 03:41:06)
-> > > Add pm8350c compatible and lpg_data to the driver.
-> > > 
-> > > Signed-off-by: satya priya <skakit@codeaurora.org>
-> > > ---
-> > >  drivers/leds/rgb/leds-qcom-lpg.c | 10 ++++++++++
-> > >  1 file changed, 10 insertions(+)
-> > > 
-> > > diff --git a/drivers/leds/rgb/leds-qcom-lpg.c
-> > > b/drivers/leds/rgb/leds-qcom-lpg.c
-> > > index 327e81a..6ee80d6 100644
-> > > --- a/drivers/leds/rgb/leds-qcom-lpg.c
-> > > +++ b/drivers/leds/rgb/leds-qcom-lpg.c
-> > > @@ -1275,9 +1275,19 @@ static const struct lpg_data pm8150l_lpg_data
-> > > = {
-> > >         },
-> > >  };
-> > > 
-> > > +static const struct lpg_data pm8350c_pwm_data = {
-> > > +       .pwm_9bit_mask = BIT(2),
-> > > +
-> > > +       .num_channels = 1,
-> > > +       .channels = (struct lpg_channel_data[]) {
-> > 
-> > Can this be const struct lpg_channel_data? I think that will move it to
-> > rodata which is only a good thing.
-> > 
-> 
-> I agree.
-> @Bjorn, can we make it const struct?
-> 
+Doesn't fix:
+```
+idle-states: 'spc' does not match any of the regexes: '^(cpu|cluster)-', 'pinctrl-[0-9]+'
+```
+from colliding arm/idle-states.yaml .
 
-I like it and have updated the driver patches accordingly.
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
 
+v2
+ - maintainer is now Bjorn
+ - fixed some newlines
+ - specified exact state names (added $)
 
-Seems like I still have a couple of more comments from Uwe left to
-resolve on v9 of the driver, I'll fix those up and post the driver
-again.
+ .../bindings/arm/msm/qcom,idle-state.txt      |  84 ------------
+ .../bindings/arm/msm/qcom,idle-state.yaml     | 126 ++++++++++++++++++
+ 2 files changed, 126 insertions(+), 84 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,idle-state.txt
+ create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,idle-state.yaml
 
-Thanks,
-Bjorn
+diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,idle-state.txt b/Documentation/devicetree/bindings/arm/msm/qcom,idle-state.txt
+deleted file mode 100644
+index 6ce0b212ec6d..000000000000
+--- a/Documentation/devicetree/bindings/arm/msm/qcom,idle-state.txt
++++ /dev/null
+@@ -1,84 +0,0 @@
+-QCOM Idle States for cpuidle driver
+-
+-ARM provides idle-state node to define the cpuidle states, as defined in [1].
+-cpuidle-qcom is the cpuidle driver for Qualcomm SoCs and uses these idle
+-states. Idle states have different enter/exit latency and residency values.
+-The idle states supported by the QCOM SoC are defined as -
+-
+-    * Standby
+-    * Retention
+-    * Standalone Power Collapse (Standalone PC or SPC)
+-    * Power Collapse (PC)
+-
+-Standby: Standby does a little more in addition to architectural clock gating.
+-When the WFI instruction is executed the ARM core would gate its internal
+-clocks. In addition to gating the clocks, QCOM cpus use this instruction as a
+-trigger to execute the SPM state machine. The SPM state machine waits for the
+-interrupt to trigger the core back in to active. This triggers the cache
+-hierarchy to enter standby states, when all cpus are idle. An interrupt brings
+-the SPM state machine out of its wait, the next step is to ensure that the
+-cache hierarchy is also out of standby, and then the cpu is allowed to resume
+-execution. This state is defined as a generic ARM WFI state by the ARM cpuidle
+-driver and is not defined in the DT. The SPM state machine should be
+-configured to execute this state by default and after executing every other
+-state below.
+-
+-Retention: Retention is a low power state where the core is clock gated and
+-the memory and the registers associated with the core are retained. The
+-voltage may be reduced to the minimum value needed to keep the processor
+-registers active. The SPM should be configured to execute the retention
+-sequence and would wait for interrupt, before restoring the cpu to execution
+-state. Retention may have a slightly higher latency than Standby.
+-
+-Standalone PC: A cpu can power down and warmboot if there is a sufficient time
+-between the time it enters idle and the next known wake up. SPC mode is used
+-to indicate a core entering a power down state without consulting any other
+-cpu or the system resources. This helps save power only on that core.  The SPM
+-sequence for this idle state is programmed to power down the supply to the
+-core, wait for the interrupt, restore power to the core, and ensure the
+-system state including cache hierarchy is ready before allowing core to
+-resume. Applying power and resetting the core causes the core to warmboot
+-back into Elevation Level (EL) which trampolines the control back to the
+-kernel. Entering a power down state for the cpu, needs to be done by trapping
+-into a EL. Failing to do so, would result in a crash enforced by the warm boot
+-code in the EL for the SoC. On SoCs with write-back L1 cache, the cache has to
+-be flushed in s/w, before powering down the core.
+-
+-Power Collapse: This state is similar to the SPC mode, but distinguishes
+-itself in that the cpu acknowledges and permits the SoC to enter deeper sleep
+-modes. In a hierarchical power domain SoC, this means L2 and other caches can
+-be flushed, system bus, clocks - lowered, and SoC main XO clock gated and
+-voltages reduced, provided all cpus enter this state.  Since the span of low
+-power modes possible at this state is vast, the exit latency and the residency
+-of this low power mode would be considered high even though at a cpu level,
+-this essentially is cpu power down. The SPM in this state also may handshake
+-with the Resource power manager (RPM) processor in the SoC to indicate a
+-complete application processor subsystem shut down.
+-
+-The idle-state for QCOM SoCs are distinguished by the compatible property of
+-the idle-states device node.
+-
+-The devicetree representation of the idle state should be -
+-
+-Required properties:
+-
+-- compatible: Must be one of -
+-			"qcom,idle-state-ret",
+-			"qcom,idle-state-spc",
+-			"qcom,idle-state-pc",
+-		and "arm,idle-state".
+-
+-Other required and optional properties are specified in [1].
+-
+-Example:
+-
+-	idle-states {
+-		CPU_SPC: spc {
+-			compatible = "qcom,idle-state-spc", "arm,idle-state";
+-			entry-latency-us = <150>;
+-			exit-latency-us = <200>;
+-			min-residency-us = <2000>;
+-		};
+-	};
+-
+-[1]. Documentation/devicetree/bindings/arm/idle-states.yaml
+diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,idle-state.yaml b/Documentation/devicetree/bindings/arm/msm/qcom,idle-state.yaml
+new file mode 100644
+index 000000000000..254868e09520
+--- /dev/null
++++ b/Documentation/devicetree/bindings/arm/msm/qcom,idle-state.yaml
+@@ -0,0 +1,126 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/arm/msm/qcom,idle-state.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: QCOM Idle States binding description
++
++maintainers:
++  - Bjorn Andersson <bjorn.andersson@linaro.org>
++
++description: |
++  ARM provides idle-state node to define the cpuidle states, as defined in [1].
++  cpuidle-qcom is the cpuidle driver for Qualcomm SoCs and uses these idle
++  states. Idle states have different enter/exit latency and residency values.
++  The idle states supported by the QCOM SoC are defined as -
++
++    * Standby
++    * Retention
++    * Standalone Power Collapse (Standalone PC or SPC)
++    * Power Collapse (PC)
++
++  Standby: Standby does a little more in addition to architectural clock gating.
++  When the WFI instruction is executed the ARM core would gate its internal
++  clocks. In addition to gating the clocks, QCOM cpus use this instruction as a
++  trigger to execute the SPM state machine. The SPM state machine waits for the
++  interrupt to trigger the core back in to active. This triggers the cache
++  hierarchy to enter standby states, when all cpus are idle. An interrupt brings
++  the SPM state machine out of its wait, the next step is to ensure that the
++  cache hierarchy is also out of standby, and then the cpu is allowed to resume
++  execution. This state is defined as a generic ARM WFI state by the ARM cpuidle
++  driver and is not defined in the DT. The SPM state machine should be
++  configured to execute this state by default and after executing every other
++  state below.
++
++  Retention: Retention is a low power state where the core is clock gated and
++  the memory and the registers associated with the core are retained. The
++  voltage may be reduced to the minimum value needed to keep the processor
++  registers active. The SPM should be configured to execute the retention
++  sequence and would wait for interrupt, before restoring the cpu to execution
++  state. Retention may have a slightly higher latency than Standby.
++
++  Standalone PC: A cpu can power down and warmboot if there is a sufficient time
++  between the time it enters idle and the next known wake up. SPC mode is used
++  to indicate a core entering a power down state without consulting any other
++  cpu or the system resources. This helps save power only on that core.  The SPM
++  sequence for this idle state is programmed to power down the supply to the
++  core, wait for the interrupt, restore power to the core, and ensure the
++  system state including cache hierarchy is ready before allowing core to
++  resume. Applying power and resetting the core causes the core to warmboot
++  back into Elevation Level (EL) which trampolines the control back to the
++  kernel. Entering a power down state for the cpu, needs to be done by trapping
++  into a EL. Failing to do so, would result in a crash enforced by the warm boot
++  code in the EL for the SoC. On SoCs with write-back L1 cache, the cache has to
++  be flushed in s/w, before powering down the core.
++
++  Power Collapse: This state is similar to the SPC mode, but distinguishes
++  itself in that the cpu acknowledges and permits the SoC to enter deeper sleep
++  modes. In a hierarchical power domain SoC, this means L2 and other caches can
++  be flushed, system bus, clocks - lowered, and SoC main XO clock gated and
++  voltages reduced, provided all cpus enter this state.  Since the span of low
++  power modes possible at this state is vast, the exit latency and the residency
++  of this low power mode would be considered high even though at a cpu level,
++  this essentially is cpu power down. The SPM in this state also may handshake
++  with the Resource power manager (RPM) processor in the SoC to indicate a
++  complete application processor subsystem shut down.
++
++  The idle-state for QCOM SoCs are distinguished by the compatible property of
++  the idle-states device node.
++
++  [1] Documentation/devicetree/bindings/arm/idle-states.yaml
++
++properties:
++  $nodename:
++    const: idle-states
++
++patternProperties:
++  "^(ret|spc|pc)$":
++    type: object
++    description:
++      Each state node represents a domain idle state description.
++
++    properties:
++      compatible:
++        items:
++          - enum:
++            - qcom,idle-state-ret
++            - qcom,idle-state-spc
++            - qcom,idle-state-pc
++          - const: arm,idle-state
++
++      entry-latency-us:
++        description:
++          The worst case latency in microseconds required to enter the idle
++          state. Note that, the exit-latency-us duration may be guaranteed only
++          after the entry-latency-us has passed.
++
++      exit-latency-us:
++        description:
++          The worst case latency in microseconds required to exit the idle
++          state.
++
++      min-residency-us:
++        description:
++          The minimum residency duration in microseconds after which the idle
++          state will yield power benefits, after overcoming the overhead while
++          entering the idle state.
++
++    required:
++      - compatible
++      - entry-latency-us
++      - exit-latency-us
++      - min-residency-us
++
++additionalProperties: false
++
++examples:
++  - |
++    idle-states {
++      CPU_SPC: spc {
++        compatible = "qcom,idle-state-spc", "arm,idle-state";
++        entry-latency-us = <150>;
++        exit-latency-us = <200>;
++        min-residency-us = <2000>;
++      };
++    };
+-- 
+2.33.0
 
-> > > +               { .base = 0xeb00 },
-> > > +       },
-> > > +};
-> > > +
-> > >  static const struct of_device_id lpg_of_table[] = {
-> > >         { .compatible = "qcom,pm8150b-lpg", .data =
-> > > &pm8150b_lpg_data },
-> > >         { .compatible = "qcom,pm8150l-lpg", .data =
-> > > &pm8150l_lpg_data },
-> > > +       { .compatible = "qcom,pm8350c-pwm", .data =
-> > > &pm8350c_pwm_data },
-> > >         { .compatible = "qcom,pm8916-pwm", .data = &pm8916_pwm_data },
-> > >         { .compatible = "qcom,pm8941-lpg", .data = &pm8941_lpg_data },
-> > >         { .compatible = "qcom,pm8994-lpg", .data = &pm8994_lpg_data },
