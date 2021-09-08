@@ -2,93 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 112414032F7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Sep 2021 05:39:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD381403364
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Sep 2021 06:38:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242586AbhIHDlA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 7 Sep 2021 23:41:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53282 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235130AbhIHDlA (ORCPT
+        id S229795AbhIHEju (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Sep 2021 00:39:50 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:32638 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229556AbhIHEjt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 7 Sep 2021 23:41:00 -0400
-Received: from mail-oi1-x22d.google.com (mail-oi1-x22d.google.com [IPv6:2607:f8b0:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 09BADC0613CF
-        for <linux-arm-msm@vger.kernel.org>; Tue,  7 Sep 2021 20:39:53 -0700 (PDT)
-Received: by mail-oi1-x22d.google.com with SMTP id p2so1382099oif.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 07 Sep 2021 20:39:52 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=GZ0a+q1qXF7MfrjInrLnr5HFObJ3ogMjBmTjbogeVrw=;
-        b=dX9mbpXkrmh1LTKr1u17bTeswHB33lW+3ok9Bgv+zTTgo6UDGp6SKIJhxNX2bOS042
-         +1ue2wyoNZ9z4Z1lfeJCE3nRIJACi/onP6pdf/H8tGud4qRyk3Mflb3Axqqav7vVAP7B
-         6fPs9wFc6pOED/0ZtVJwISqOuYyc6kwk8eEgc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=GZ0a+q1qXF7MfrjInrLnr5HFObJ3ogMjBmTjbogeVrw=;
-        b=Ic0kbrNYgha/lGbhOFCIh2exKEn5E0TYY+z+koG8nICyjVskMVwf9JQS8bAT3gGycX
-         GMBGfeoV2BWVBXZaKTJD+R05UB4XHa/BakxXIkALxt6p0cwSGg9zsrMEy6o3+wPZP9Ho
-         74zp7Vw89L8yd4EltkLcUHLE/hmKaoARFudrqjTWd5jcM3vFpdt9StxPAp7f+WDaN3VV
-         Wq4PFU336tKGjM8FmhcgWANMY8xkFhwucZWwauuf5RwiQoJwPZSLfqoGRrlrWXztO7IB
-         c457x0uLxn8T7fNN+Dict2QziMTeNDnJzZ9c0i4+H966yVJEM0b96pqmTLhcBbxMvlsi
-         m+fg==
-X-Gm-Message-State: AOAM5306V80Tvx93unH8xFI1uVCoBzPWTGA3vbEAf/0vK3PZH1UKhQnA
-        H4zO+Zktyh20kYGFYyEQcfd6DvzErWfWuBY0EcSvUA==
-X-Google-Smtp-Source: ABdhPJxdiiGjJ10TgqGvBQ1/7Lm6AUVwtj/VpCWil2bU6pYVcRN9bsCnM/aq8sDCvKEppqWfKKHKcnIE0NCcnfAWF34=
-X-Received: by 2002:a54:4419:: with SMTP id k25mr1090071oiw.32.1631072392333;
- Tue, 07 Sep 2021 20:39:52 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 8 Sep 2021 03:39:51 +0000
+        Wed, 8 Sep 2021 00:39:49 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1631075922; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: To:
+ Subject: Sender; bh=c5x+uUqMqR66/gj4PnVIfY2Dh/QpVRbiSLzGC5KpnCQ=; b=EhClbBNFduegScSetkdT1XeKHMmgYQ5BztdqoreijW235oSY3oVDEQT3NRH0J8pGj9pSr6Es
+ HqoxdHOvUVxVgewO0RAWfRPb0Q0pWO2RsdaAeMgjjW+lzrMdX2NNEgjhQAr4u/K/W9MEBNNH
+ BuRYIZOdkIpTaf5gx/cG+78aF30=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 61383e51096d475c7cbcf2f0 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 08 Sep 2021 04:38:41
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 58FDDC43617; Wed,  8 Sep 2021 04:38:41 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.8 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.242.137.170] (unknown [202.46.23.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8C112C4338F;
+        Wed,  8 Sep 2021 04:38:35 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 8C112C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [PATCH] ASoC: dt-bindings: lpass: add binding headers for digital
+ codecs
+To:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
+        alsa-devel@alsa-project.org, bgoswami@codeaurora.org,
+        bjorn.andersson@linaro.org, broonie@kernel.org,
+        devicetree@vger.kernel.org, judyhsiao@chromium.org,
+        lgirdwood@gmail.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, perex@perex.cz, plai@codeaurora.org,
+        robh+dt@kernel.org, rohitkr@codeaurora.org,
+        srinivas.kandagatla@linaro.org, tiwai@suse.com
+References: <1630934854-14086-1-git-send-email-srivasam@codeaurora.org>
+ <CAE-0n53Zj3pp4EJ_f_kXhRm3EW=od83UO44qt91P37waEq-z4Q@mail.gmail.com>
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Organization: Qualcomm India Private Limited.
+Message-ID: <755e99d3-4d72-3292-a5da-ad3d6045038e@codeaurora.org>
+Date:   Wed, 8 Sep 2021 10:08:33 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-In-Reply-To: <20210623035039.772660-1-bjorn.andersson@linaro.org>
-References: <20210623035039.772660-1-bjorn.andersson@linaro.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Wed, 8 Sep 2021 03:39:51 +0000
-Message-ID: <CAE-0n53SLqmXhJBPROeQj2HzShgYoFzDqsi-KCj3dgVHdDWUTA@mail.gmail.com>
-Subject: Re: [PATCH v9 1/2] dt-bindings: leds: Add Qualcomm Light Pulse
- Generator binding
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>, Pavel Machek <pavel@ucw.cz>,
-        Rob Herring <robh+dt@kernel.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        =?UTF-8?Q?Uwe_Kleine=2DK=C3=B6nig?= 
-        <u.kleine-koenig@pengutronix.de>
-Cc:     linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-pwm@vger.kernel.org,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Luca Weiss <luca@z3ntu.xyz>,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAE-0n53Zj3pp4EJ_f_kXhRm3EW=od83UO44qt91P37waEq-z4Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2021-06-22 20:50:38)
-> diff --git a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
-> new file mode 100644
-> index 000000000000..10aee61a7ffc
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
-> @@ -0,0 +1,164 @@
-[....]
-> +examples:
-> +  - |
-> +    #include <dt-bindings/leds/common.h>
-> +
-> +    lpg {
+Thanks For Review Stephen!!!
 
-Should the node name be led or leds?
+On 9/8/2021 1:54 AM, Stephen Boyd wrote:
+> Quoting Srinivasa Rao Mandadapu (2021-09-06 06:27:34)
+>> Add header defining for lpass internal digital codecs rx,tx and va
+>> dai node id's.
+>>
+>> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+>> ---
+>>   include/dt-bindings/sound/qcom,lpass.h | 5 +++++
+>>   1 file changed, 5 insertions(+)
+>>
+>> diff --git a/include/dt-bindings/sound/qcom,lpass.h b/include/dt-bindings/sound/qcom,lpass.h
+>> index 7b0b80b..187af45 100644
+>> --- a/include/dt-bindings/sound/qcom,lpass.h
+>> +++ b/include/dt-bindings/sound/qcom,lpass.h
+>> @@ -10,6 +10,11 @@
+>>
+>>   #define LPASS_DP_RX    5
+>>
+>> +#define LPASS_CDC_DMA_RX0 6
+>> +#define LPASS_CDC_DMA_TX3 7
+>> +#define LPASS_CDC_DMA_VA0 8
+>> +#define LPASS_MAX_PORTS 9
+> Do we need LPASS_MAX_PORTS in the binding?
+Yes.  based on this creating array of streams in machine driver. So to 
+make upper limit introduced this macro.
 
-> +      compatible = "qcom,pmi8994-lpg";
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
-Shouldn't there be a reg property? I see the driver has them hardcoded
-but if this is a child of the spmi node then it should have a reg
-property (or many reg properties).
