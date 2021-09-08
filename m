@@ -2,126 +2,284 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2451B403D4A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Sep 2021 18:07:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E239403DB3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Sep 2021 18:40:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343549AbhIHQI0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Sep 2021 12:08:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54328 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231734AbhIHQIZ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Sep 2021 12:08:25 -0400
-Received: from mail-wm1-x334.google.com (mail-wm1-x334.google.com [IPv6:2a00:1450:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62DEFC061757
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Sep 2021 09:07:17 -0700 (PDT)
-Received: by mail-wm1-x334.google.com with SMTP id l7-20020a1c2507000000b002e6be5d86b3so1957363wml.3
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Sep 2021 09:07:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=GYpi6gE4nzN8o+CwjqakTN6E/NlmqkQ97rUaOk/UWX4=;
-        b=dB7G61cBrEEZi4ZBM15sM0lRlQhSceRMs2j8VpUdowxIq7I+EV/O6tHzIlRKCQYMhb
-         sqKtTBuda7JR29GXYY6wtlEPEmOdXuyI7/eQcNvuWD7Cd6m0WoBprusLR/6QX1edwqZP
-         AEgnDtPlQkFvRAK8tJMfKHKW/BuNDC7p19BUYyqoOnFk34twoyiM63BUtq5fRNLxyUQu
-         FhAQzzeo+b1ZVFvMKe/gu1jnlA1YwVlBXGS9QfgyV+mFfgc7UHcQHhb7OM4+wcj/jdTy
-         QwVDcjJcgrc4vPhQrTFrGQYRbWhLz6d4x5VBLtaw1qcQwCtxkRx90tYfvdAdCEyJBoh5
-         VguQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=GYpi6gE4nzN8o+CwjqakTN6E/NlmqkQ97rUaOk/UWX4=;
-        b=UQlz0J5ROUO83nv7fAzKPKHcg7WWidsguiBfZb9mHZoor9FUQMfWwX0yaXg/+UXmcG
-         G1hIuQjsQEyzESCh7aGf2jG6gYuZ4U5oMyB8V7xnn1lwHdKVuS9IbJ5XfAKrlpvDgGMB
-         XOjpYzXJLVAbKUSi4fewVIykGihGRcIo0/cSSPhA20v+V9FPFefIeKHxIQ6c/rRFViR2
-         GdXGl/FyEMk80XHyhhyRsnaE5KSslqCAdMQiWcKed4jx3dhs/A6tkKvRuaSGg6OCbjMl
-         Osmu/ad9lfICB9Kwpy80ImDMRkcTtdHaqtLHMndu74njICjRbvJFHqgXzDV4i7nEPSd1
-         oh1A==
-X-Gm-Message-State: AOAM531zqyO+7p/uxL4ofop6M3JT3DGHHpq6IPGF0Og8HpKy82tp+Yvj
-        BFKc0/bxdqj2FmVSKJj+PfwcOg==
-X-Google-Smtp-Source: ABdhPJxayYYiB4BOAaE9G9T0xgs/ruopGjv/M4dqlYrqylq981dWEmgdngr8ZqrrDDkmypDvw7WByA==
-X-Received: by 2002:a7b:c4cb:: with SMTP id g11mr4377562wmk.80.1631117235971;
-        Wed, 08 Sep 2021 09:07:15 -0700 (PDT)
-Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id o7sm2359684wmq.36.2021.09.08.09.07.14
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Sep 2021 09:07:15 -0700 (PDT)
-Subject: Re: [PATCH v2] ASoC: qcom: lpass-platform: Reset irq clear reg post
- handling interrupts
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org
-References: <20210908142535.31106-1-srivasam@codeaurora.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <c29802c9-4577-87bd-b843-8540588c6d06@linaro.org>
-Date:   Wed, 8 Sep 2021 17:07:13 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        id S1349768AbhIHQld (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Sep 2021 12:41:33 -0400
+Received: from ixit.cz ([94.230.151.217]:46662 "EHLO ixit.cz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1349390AbhIHQld (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Sep 2021 12:41:33 -0400
+Received: from newone.lan (ixit.cz [94.230.151.217])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ixit.cz (Postfix) with ESMTPSA id D509324A25;
+        Wed,  8 Sep 2021 18:40:21 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1631119222;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=xlj5V/5tcn85v4mXpAOLpa9yq0xNVTyfdxiVWVy/QrU=;
+        b=fVimj6XCvM3MSlL12E+FsTqH3xqh/cuc8SglxlLqKCWK6i+AC+IyWEut+67l0R6F3xT/dC
+        FGKGp0TCRev1146jDBAePbZguCcrjYleEtSPI6PZsrb5CyYYxPNkF+GYlEabZDLi95vK5e
+        5fGI65sm27hIeoQ48n0RvMItc61bU7o=
+From:   David Heidelberg <david@ixit.cz>
+To:     Lina Iyer <lina.iyer@linaro.org>, Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, David Heidelberg <david@ixit.cz>
+Subject: [PATCH] RFC: dt-bindings: arm/msm/qcom,idle-state convert to YAML
+Date:   Wed,  8 Sep 2021 18:38:59 +0200
+Message-Id: <20210908163858.45199-1-david@ixit.cz>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-In-Reply-To: <20210908142535.31106-1-srivasam@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
+X-Spam: Yes
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Keeping Lina Iyer as the maintainer (since she was original author).
 
+Doesn't fix:
+```
+idle-states: 'spc' does not match any of the regexes: '^(cpu|cluster)-', 'pinctrl-[0-9]+'
+```
+from collision with arm/idle-states.yaml .
 
-On 08/09/2021 15:25, Srinivasa Rao Mandadapu wrote:
-> Update interrupt clear register with reset value after addressing
-> all interrupts. This is to fix playback or capture hanging issue in
-> simultaneous playback and capture usecase.
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+ .../bindings/arm/msm/qcom,idle-state.txt      |  84 ------------
+ .../bindings/arm/msm/qcom,idle-state.yaml     | 127 ++++++++++++++++++
+ 2 files changed, 127 insertions(+), 84 deletions(-)
+ delete mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,idle-state.txt
+ create mode 100644 Documentation/devicetree/bindings/arm/msm/qcom,idle-state.yaml
 
-Could explain bit more about the issue.
-Specifically which interrupt and which ports is this issue seen.
+diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,idle-state.txt b/Documentation/devicetree/bindings/arm/msm/qcom,idle-state.txt
+deleted file mode 100644
+index 6ce0b212ec6d..000000000000
+--- a/Documentation/devicetree/bindings/arm/msm/qcom,idle-state.txt
++++ /dev/null
+@@ -1,84 +0,0 @@
+-QCOM Idle States for cpuidle driver
+-
+-ARM provides idle-state node to define the cpuidle states, as defined in [1].
+-cpuidle-qcom is the cpuidle driver for Qualcomm SoCs and uses these idle
+-states. Idle states have different enter/exit latency and residency values.
+-The idle states supported by the QCOM SoC are defined as -
+-
+-    * Standby
+-    * Retention
+-    * Standalone Power Collapse (Standalone PC or SPC)
+-    * Power Collapse (PC)
+-
+-Standby: Standby does a little more in addition to architectural clock gating.
+-When the WFI instruction is executed the ARM core would gate its internal
+-clocks. In addition to gating the clocks, QCOM cpus use this instruction as a
+-trigger to execute the SPM state machine. The SPM state machine waits for the
+-interrupt to trigger the core back in to active. This triggers the cache
+-hierarchy to enter standby states, when all cpus are idle. An interrupt brings
+-the SPM state machine out of its wait, the next step is to ensure that the
+-cache hierarchy is also out of standby, and then the cpu is allowed to resume
+-execution. This state is defined as a generic ARM WFI state by the ARM cpuidle
+-driver and is not defined in the DT. The SPM state machine should be
+-configured to execute this state by default and after executing every other
+-state below.
+-
+-Retention: Retention is a low power state where the core is clock gated and
+-the memory and the registers associated with the core are retained. The
+-voltage may be reduced to the minimum value needed to keep the processor
+-registers active. The SPM should be configured to execute the retention
+-sequence and would wait for interrupt, before restoring the cpu to execution
+-state. Retention may have a slightly higher latency than Standby.
+-
+-Standalone PC: A cpu can power down and warmboot if there is a sufficient time
+-between the time it enters idle and the next known wake up. SPC mode is used
+-to indicate a core entering a power down state without consulting any other
+-cpu or the system resources. This helps save power only on that core.  The SPM
+-sequence for this idle state is programmed to power down the supply to the
+-core, wait for the interrupt, restore power to the core, and ensure the
+-system state including cache hierarchy is ready before allowing core to
+-resume. Applying power and resetting the core causes the core to warmboot
+-back into Elevation Level (EL) which trampolines the control back to the
+-kernel. Entering a power down state for the cpu, needs to be done by trapping
+-into a EL. Failing to do so, would result in a crash enforced by the warm boot
+-code in the EL for the SoC. On SoCs with write-back L1 cache, the cache has to
+-be flushed in s/w, before powering down the core.
+-
+-Power Collapse: This state is similar to the SPC mode, but distinguishes
+-itself in that the cpu acknowledges and permits the SoC to enter deeper sleep
+-modes. In a hierarchical power domain SoC, this means L2 and other caches can
+-be flushed, system bus, clocks - lowered, and SoC main XO clock gated and
+-voltages reduced, provided all cpus enter this state.  Since the span of low
+-power modes possible at this state is vast, the exit latency and the residency
+-of this low power mode would be considered high even though at a cpu level,
+-this essentially is cpu power down. The SPM in this state also may handshake
+-with the Resource power manager (RPM) processor in the SoC to indicate a
+-complete application processor subsystem shut down.
+-
+-The idle-state for QCOM SoCs are distinguished by the compatible property of
+-the idle-states device node.
+-
+-The devicetree representation of the idle state should be -
+-
+-Required properties:
+-
+-- compatible: Must be one of -
+-			"qcom,idle-state-ret",
+-			"qcom,idle-state-spc",
+-			"qcom,idle-state-pc",
+-		and "arm,idle-state".
+-
+-Other required and optional properties are specified in [1].
+-
+-Example:
+-
+-	idle-states {
+-		CPU_SPC: spc {
+-			compatible = "qcom,idle-state-spc", "arm,idle-state";
+-			entry-latency-us = <150>;
+-			exit-latency-us = <200>;
+-			min-residency-us = <2000>;
+-		};
+-	};
+-
+-[1]. Documentation/devicetree/bindings/arm/idle-states.yaml
+diff --git a/Documentation/devicetree/bindings/arm/msm/qcom,idle-state.yaml b/Documentation/devicetree/bindings/arm/msm/qcom,idle-state.yaml
+new file mode 100644
+index 000000000000..4bd0ade3ac34
+--- /dev/null
++++ b/Documentation/devicetree/bindings/arm/msm/qcom,idle-state.yaml
+@@ -0,0 +1,127 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/arm/msm/qcom,idle-state.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: QCOM Idle States binding description
++
++maintainers:
++  - Lina Iyer <lina.iyer@linaro.org>
++
++description: |
++  ARM provides idle-state node to define the cpuidle states, as defined in [1].
++  cpuidle-qcom is the cpuidle driver for Qualcomm SoCs and uses these idle
++  states. Idle states have different enter/exit latency and residency values.
++  The idle states supported by the QCOM SoC are defined as -
++
++    * Standby
++    * Retention
++    * Standalone Power Collapse (Standalone PC or SPC)
++    * Power Collapse (PC)
++
++  Standby: Standby does a little more in addition to architectural clock gating.
++  When the WFI instruction is executed the ARM core would gate its internal
++  clocks. In addition to gating the clocks, QCOM cpus use this instruction as a
++  trigger to execute the SPM state machine. The SPM state machine waits for the
++  interrupt to trigger the core back in to active. This triggers the cache
++  hierarchy to enter standby states, when all cpus are idle. An interrupt brings
++  the SPM state machine out of its wait, the next step is to ensure that the
++  cache hierarchy is also out of standby, and then the cpu is allowed to resume
++  execution. This state is defined as a generic ARM WFI state by the ARM cpuidle
++  driver and is not defined in the DT. The SPM state machine should be
++  configured to execute this state by default and after executing every other
++  state below.
++
++  Retention: Retention is a low power state where the core is clock gated and
++  the memory and the registers associated with the core are retained. The
++  voltage may be reduced to the minimum value needed to keep the processor
++  registers active. The SPM should be configured to execute the retention
++  sequence and would wait for interrupt, before restoring the cpu to execution
++  state. Retention may have a slightly higher latency than Standby.
++
++  Standalone PC: A cpu can power down and warmboot if there is a sufficient time
++  between the time it enters idle and the next known wake up. SPC mode is used
++  to indicate a core entering a power down state without consulting any other
++  cpu or the system resources. This helps save power only on that core.  The SPM
++  sequence for this idle state is programmed to power down the supply to the
++  core, wait for the interrupt, restore power to the core, and ensure the
++  system state including cache hierarchy is ready before allowing core to
++  resume. Applying power and resetting the core causes the core to warmboot
++  back into Elevation Level (EL) which trampolines the control back to the
++  kernel. Entering a power down state for the cpu, needs to be done by trapping
++  into a EL. Failing to do so, would result in a crash enforced by the warm boot
++  code in the EL for the SoC. On SoCs with write-back L1 cache, the cache has to
++  be flushed in s/w, before powering down the core.
++
++  Power Collapse: This state is similar to the SPC mode, but distinguishes
++  itself in that the cpu acknowledges and permits the SoC to enter deeper sleep
++  modes. In a hierarchical power domain SoC, this means L2 and other caches can
++  be flushed, system bus, clocks - lowered, and SoC main XO clock gated and
++  voltages reduced, provided all cpus enter this state.  Since the span of low
++  power modes possible at this state is vast, the exit latency and the residency
++  of this low power mode would be considered high even though at a cpu level,
++  this essentially is cpu power down. The SPM in this state also may handshake
++  with the Resource power manager (RPM) processor in the SoC to indicate a
++  complete application processor subsystem shut down.
++
++  The idle-state for QCOM SoCs are distinguished by the compatible property of
++  the idle-states device node.
++
++  [1] Documentation/devicetree/bindings/arm/idle-states.yaml
++
++properties:
++  $nodename:
++    const: idle-states
++
++patternProperties:
++  "^(ret|spc|pc)":
++    type: object
++    description:
++      Each state node represents a domain idle state description.
++
++    properties:
++      compatible:
++        items:
++          - enum:
++            - qcom,idle-state-ret
++            - qcom,idle-state-spc
++            - qcom,idle-state-pc
++          - const: arm,idle-state
++
++      entry-latency-us:
++        description:
++          The worst case latency in microseconds required to enter the idle
++          state. Note that, the exit-latency-us duration may be guaranteed only
++          after the entry-latency-us has passed.
++
++      exit-latency-us:
++        description:
++          The worst case latency in microseconds required to exit the idle
++          state.
++
++      min-residency-us:
++        description:
++          The minimum residency duration in microseconds after which the idle
++          state will yield power benefits, after overcoming the overhead while
++          entering the idle state.
++
++    required:
++      - compatible
++      - entry-latency-us
++      - exit-latency-us
++      - min-residency-us
++
++additionalProperties: false
++
++examples:
++  - |
++
++    idle-states {
++      CPU_SPC: spc {
++        compatible = "qcom,idle-state-spc", "arm,idle-state";
++        entry-latency-us = <150>;
++        exit-latency-us = <200>;
++        min-residency-us = <2000>;
++      };
++    };
+-- 
+2.33.0
 
-> 
-> Fixes: 4f629e4b8705f ("ASoC: qcom: Add ability to handle interrupts per dma channel")
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-> ---
-> Changes since v1:
->      -- Update comments Header information with fixes tag
-> 
->   sound/soc/qcom/lpass-platform.c | 6 ++++++
->   1 file changed, 6 insertions(+)
-> 
-> diff --git a/sound/soc/qcom/lpass-platform.c b/sound/soc/qcom/lpass-platform.c
-> index f9df76d37858..1a0a4b0b1a03 100644
-> --- a/sound/soc/qcom/lpass-platform.c
-> +++ b/sound/soc/qcom/lpass-platform.c
-> @@ -749,6 +749,12 @@ static irqreturn_t lpass_platform_lpaif_irq(int irq, void *data)
->   		}
->   	}
->   
-> +	rv = regmap_write(drvdata->lpaif_map, LPAIF_IRQCLEAR_REG(v, LPAIF_IRQ_PORT_HOST), 0x0);
-
-Writing 1 to a bit of this register will clear the corresponding latched 
-interrupt. So I don't really understand how writing 0 is really helping 
-here?
-
-Do you have this patch in your tree?
-
-https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/sound/soc/qcom/lpass-cpu.c?h=v5.14&id=6a7f5bd6185e1c86256d5e52c3bb7a4d390d6e19
-
-
---srini
-
-> +	if (rv) {
-> +		pr_err("error writing to irqstat reg: %d\n", rv);
-> +		return IRQ_NONE;
-> +	}
-> +
->   	return IRQ_HANDLED;
->   }
->   
-> 
