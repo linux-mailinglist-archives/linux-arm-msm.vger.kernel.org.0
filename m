@@ -2,116 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 51FDD403B25
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Sep 2021 16:04:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64824403B6D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  8 Sep 2021 16:23:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235608AbhIHOF0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Sep 2021 10:05:26 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:38947 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235096AbhIHOF0 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Sep 2021 10:05:26 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1631109858; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=7eNx0fhwCSF+xb+ymgZCfriGvUaN9NPGimpmZv0IsVw=; b=UmwwoLzPrzQQT0ZX6sPl5A0dXCrN1SfN3VPGQ3G/Sh6kKkPiDDx8RcnCMJ84XIOmouv27fjk
- kDJDqIJlgXg/6S1yypyBKA1W29ghh5Lhs4udrk608FuA5SSqZjwBeMHY5uoAvMLOvqNP2iZS
- XMUe6Ar95oib6vDIU0azTYCVDxg=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 6138c2dfd15f4d68a266ef04 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 08 Sep 2021 14:04:15
- GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 1F548C4361C; Wed,  8 Sep 2021 14:04:15 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from hu-srivasam-hyd.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id A0060C4338F;
-        Wed,  8 Sep 2021 14:04:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org A0060C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, judyhsiao@chromium.org
-Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Subject: [PATCH v2] ASoC: dt-bindings: lpass: add binding headers for digital codecs
-Date:   Wed,  8 Sep 2021 19:33:51 +0530
-Message-Id: <1631109831-1360-1-git-send-email-srivasam@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S1351847AbhIHOXl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Sep 2021 10:23:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58430 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229600AbhIHOXk (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 8 Sep 2021 10:23:40 -0400
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A050CC061575;
+        Wed,  8 Sep 2021 07:22:32 -0700 (PDT)
+Received: by mail-io1-xd36.google.com with SMTP id b10so3443446ioq.9;
+        Wed, 08 Sep 2021 07:22:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=YpdBvQHElQQMTNbuBwkHS1EwYa93WjW1ptFmOObW2Xw=;
+        b=IA+yYcV3lrwLM0feMjVIJieiMAU0XNB/HFLzY2A5TzPYgPoXoPsc7hFBlZ1dNFRT+L
+         whiebHATH0j5SnEd4lwNEoYYqtnminOZ/+/guARgLywB57EQpYVhAopw3vhc/thO42uL
+         zxXSslYCLF1t25LM8VsTYVipsZbuIYFCPsCvsVWF1uyBlA0fiCWpIdry2seOLCEeKWwo
+         uXdDZ5dEKM3o736PeLoDhy/NAS7AO85Rzl9HGX6qxp/dANyX+9364yVr1O1dhiRmP0KA
+         NXnlFxIXdpWik2j8m3qyG7OkjLL91wEPJT6RiPe5pLfHVZakKi476sTmScQEVf4h3YvY
+         +eDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=YpdBvQHElQQMTNbuBwkHS1EwYa93WjW1ptFmOObW2Xw=;
+        b=bvrkeV5ANtwrenpy9Jgcd+lGEkkpvyu/00QMi2O2dMfDYR42nP6EM98A8/t8c6AlY0
+         zCkAMVv5EWm2VMtiQDyXbCZFDEWHKEm0+Rs4ztpQK+0dzK5Fuis2goTAgEjw2S7VcWWr
+         RVHuNLMN51V08t1l2Jq2G5S+6B0jTUn1oYJmM8/ODsSy7LSHhOJaEAs3Ypz93k87An1q
+         VhU3M28eNu2s7GiLa/xBqh7jdQP2N1sFM3ta26frziGAfIzR8wfG+KAsiqy34nYysPEe
+         8jG2KkAuykfBaDsdBCI9+r3cPdRHN1jN481o+ClT6you6g1y62OuVKragcc65BKk9AwK
+         M8bA==
+X-Gm-Message-State: AOAM532J27/2Qe0kPBVp4vsKsLd1gmtaLjqWsunXto6lJXW3bo7t49co
+        sZLXeyo+9ZAFrW3igk3DMuLpl8/aNOEGf6Haqt8=
+X-Google-Smtp-Source: ABdhPJyI/7ApcpbBgb+r9bxjYHvbYNE2+8+uKXOYdImqu4lLCliR7ctiq7PlopceQaBnnrce+6hzXGm/HJ9S1fqsSbU=
+X-Received: by 2002:a6b:7a03:: with SMTP id h3mr83894iom.39.1631110946133;
+ Wed, 08 Sep 2021 07:22:26 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210901181138.1052653-1-angelogioacchino.delregno@somainline.org>
+ <20210901181138.1052653-2-angelogioacchino.delregno@somainline.org>
+ <CAOCk7NoOdjxp0vxu9XJzYsi7a04kpqpTOZHm42ApAN3MqkqtDw@mail.gmail.com> <CAA8EJpp6tj10A0QUR1E75t7BZf2Y3jHUyVNniYhEUd9rXj8Vrg@mail.gmail.com>
+In-Reply-To: <CAA8EJpp6tj10A0QUR1E75t7BZf2Y3jHUyVNniYhEUd9rXj8Vrg@mail.gmail.com>
+From:   Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Date:   Wed, 8 Sep 2021 08:22:15 -0600
+Message-ID: <CAOCk7NqhuCJqh-u6ke=Mn=EPgHnc7C2RS_X1nSCg_Nc8An=yPA@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH 2/3] drm/msm/dpu1: Add MSM8998 to hw catalog
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Dave Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        paul.bouchara@somainline.org, DTML <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add header defining for lpass internal digital codecs rx,tx and va
-dai node id's.
+On Wed, Sep 8, 2021 at 2:26 AM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> Hi,
+>
+> On Tue, 7 Sept 2021 at 22:13, Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
+> >
+> > On Wed, Sep 1, 2021 at 12:11 PM AngeloGioacchino Del Regno
+> > <angelogioacchino.delregno@somainline.org> wrote:
+> > >
+> > > Bringup functionality for MSM8998 in the DPU, driver which is mostly
+> > > the same as SDM845 (just a few variations).
+> > >
+> > > Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> >
+> > I don't seem to see a cover letter for this series.
+> >
+> > Eh, there are a fair number of differences between the MDSS versions
+> > for 8998 and 845.
+> >
+> > Probably a bigger question, why extend the DPU driver for 8998, when
+> > the MDP5 driver already supports it[1]?  The MDP/DPU split is pretty
+> > dumb, but I don't see a valid reason for both drivers supporting the
+> > same target/display revision.  IMO, if you want this support in DPU,
+> > remove it from MDP5.
+> >
+> > [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?h=v5.14&id=d6c7b2284b14c66a268a448a7a8d54f585d38785
+>
+> I don't think that we should enforce such requirements. Having support
+> both in MDP5 and DPU would allow one to compare those two drivers,
+> performance, features, etc.
+> It might be that all MDP5-supported hardware would be also supported
+> by DPU, thus allowing us to remove the former driver. But until that
+> time I'd suggest leaving support in place.
 
-Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
----
-Changes since v1:
-    -- Add missing dai node ID's
+Well, then you have a host of problems to solve.
 
- include/dt-bindings/sound/qcom,lpass.h | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
+Lets ignore the code duplication for a minute and assume we've gone
+with this grand experiment.  Two drivers enter, one leaves the victor.
 
-diff --git a/include/dt-bindings/sound/qcom,lpass.h b/include/dt-bindings/sound/qcom,lpass.h
-index 7b0b80b..a9404c3 100644
---- a/include/dt-bindings/sound/qcom,lpass.h
-+++ b/include/dt-bindings/sound/qcom,lpass.h
-@@ -10,6 +10,37 @@
- 
- #define LPASS_DP_RX	5
- 
-+#define LPASS_CDC_DMA_RX0 6
-+#define LPASS_CDC_DMA_RX1 7
-+#define LPASS_CDC_DMA_RX2 8
-+#define LPASS_CDC_DMA_RX3 9
-+#define LPASS_CDC_DMA_RX4 10
-+#define LPASS_CDC_DMA_RX5 11
-+#define LPASS_CDC_DMA_RX6 12
-+#define LPASS_CDC_DMA_RX7 13
-+#define LPASS_CDC_DMA_RX8 14
-+#define LPASS_CDC_DMA_RX9 15
-+
-+#define LPASS_CDC_DMA_TX0 16
-+#define LPASS_CDC_DMA_TX1 17
-+#define LPASS_CDC_DMA_TX2 18
-+#define LPASS_CDC_DMA_TX3 19
-+#define LPASS_CDC_DMA_TX4 20
-+#define LPASS_CDC_DMA_TX5 21
-+#define LPASS_CDC_DMA_TX6 22
-+#define LPASS_CDC_DMA_TX7 23
-+#define LPASS_CDC_DMA_TX8 24
-+
-+#define LPASS_CDC_DMA_VA_TX0 25
-+#define LPASS_CDC_DMA_VA_TX1 26
-+#define LPASS_CDC_DMA_VA_TX2 27
-+#define LPASS_CDC_DMA_VA_TX3 28
-+#define LPASS_CDC_DMA_VA_TX4 29
-+#define LPASS_CDC_DMA_VA_TX5 30
-+#define LPASS_CDC_DMA_VA_TX6 31
-+#define LPASS_CDC_DMA_VA_TX7 32
-+#define LPASS_CDC_DMA_VA_TX8 33
-+
- #define LPASS_MCLK0	0
- 
- #endif /* __DT_QCOM_LPASS_H */
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+How are the clients supposed to pick which driver to use in the mean
+time?  We already have one DT binding for 8998 (which the MDP5 driver
+services).  This series proposes a second.  If we go forward with what
+you propose, we'll have two bindings for the same hardware, which IMO
+doesn't make sense in the context of DT, and the reason for that is to
+select which driver is "better".  Driver selection is not supposed to
+be tied to DT like this.
 
+So, some boards think MDP5 is better, and some boards think DPU is
+better.  At some point, we decide one of the drivers is the clear
+winner (lets assume DPU).  Then what happens to the existing DTs that
+were using the MDP5 description?  Are they really compatible with DPU?
+
+From a DT perspective, there should be one description, but then how
+do you pick which driver to load?  Both can't bind on the single
+description, and while you could argue that the users should build one
+driver or the other, but not both (thus picking which one at build
+time), that doesn't work for distros that want to build both drivers
+so that they can support all platforms with a single build (per arch).
+
+From where I sit, your position starts with a good idea, but isn't
+fully thought out and leads to problems.
+
+If there is some reason why DPU is better for 8998, please enumerate
+it.  Does DPU support some config that MDP5 doesn't, which is valuable
+to you?  I'm ok with ripping out the MDP5 support, the reason I didn't
+go with DPU was that the DPU driver was clearly written only for 845
+at the time, and needed significant rework to "downgrade" to an
+earlier hardware.  However, the "reason" DPU exists separate from MDP5
+is the claim that the MDP hardware underwent a significant
+rearchitecture, and thus it was too cumbersome to extend MDP5.  While
+I disagree with the premise, that "rearch" started with 8998.
