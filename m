@@ -2,116 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A804C404499
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 06:46:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 575524044F4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 07:27:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350500AbhIIErg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Sep 2021 00:47:36 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:63864 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350443AbhIIErc (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Sep 2021 00:47:32 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1631162784; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=2aiD8EVkn8rCQHehlY7lNToGb+2zc8QVGnMllSyftjI=;
- b=liElcdV2t+vhKp2ufosuZnJymzB2RUuskWZTZmyE0tL9TZDQkQdUlhN9kF4lAIfwv0woavJn
- aMwDZesIqMoBOFMOQ+/cvBdBIrUSO3TcQyY5qClDZMioe5hkpOeobRPl9JIIpKLbh1c8x1nf
- ZDUbun+3Sf3oaWeqqjSaZFZX2Aw=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 6139918ce34848cb6aa98c84 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 09 Sep 2021 04:46:04
- GMT
-Sender: rajpat=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B0F32C4360D; Thu,  9 Sep 2021 04:46:04 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: rajpat)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2171CC4338F;
-        Thu,  9 Sep 2021 04:46:04 +0000 (UTC)
+        id S1350499AbhIIF2n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Sep 2021 01:28:43 -0400
+Received: from mga06.intel.com ([134.134.136.31]:47484 "EHLO mga06.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230449AbhIIF2n (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Sep 2021 01:28:43 -0400
+X-IronPort-AV: E=McAfee;i="6200,9189,10101"; a="281699121"
+X-IronPort-AV: E=Sophos;i="5.85,279,1624345200"; 
+   d="scan'208";a="281699121"
+Received: from fmsmga005.fm.intel.com ([10.253.24.32])
+  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2021 22:27:34 -0700
+X-IronPort-AV: E=Sophos;i="5.85,279,1624345200"; 
+   d="scan'208";a="696084370"
+Received: from thrakatuluk.fi.intel.com (HELO thrakatuluk) ([10.237.68.154])
+  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2021 22:27:32 -0700
+Received: from platvala by thrakatuluk with local (Exim 4.94)
+        (envelope-from <petri.latvala@intel.com>)
+        id 1mOCdz-0000Z8-Uz; Thu, 09 Sep 2021 08:30:39 +0300
+Date:   Thu, 9 Sep 2021 08:30:39 +0300
+From:   Petri Latvala <petri.latvala@intel.com>
+To:     Rob Clark <robdclark@gmail.com>
+Cc:     igt-dev@lists.freedesktop.org,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>
+Subject: Re: [PATCH igt v3 0/3] Initial igt tests for drm/msm ioctls
+Message-ID: <YTmb/3jxCUwXOp9K@platvala-desk.ger.corp.intel.com>
+References: <20210830162232.1328594-1-robdclark@gmail.com>
+ <CAF6AEGs2dycGhitXWdcOD8pNqmsueRxD_ZmR0NCXc074kHTwUw@mail.gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 09 Sep 2021 10:16:04 +0530
-From:   rajpat@codeaurora.org
-To:     Matthias Kaehlcke <mka@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, rnayak@codeaurora.org,
-        saiprakash.ranjan@codeaurora.org, msavaliy@qti.qualcomm.com,
-        skakit@codeaurora.org, sboyd@kernel.org, dianders@chromium.org
-Subject: Re: [PATCH V7 3/7] arm64: dts: sc7280: Add QUPv3 wrapper_0 nodes
-In-Reply-To: <YTJOU/oVWSdxD1uz@google.com>
-References: <1630643340-10373-1-git-send-email-rajpat@codeaurora.org>
- <1630643340-10373-4-git-send-email-rajpat@codeaurora.org>
- <YTJOU/oVWSdxD1uz@google.com>
-Message-ID: <bfdccfc2e4362218fc8099dfe566bc1d@codeaurora.org>
-X-Sender: rajpat@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAF6AEGs2dycGhitXWdcOD8pNqmsueRxD_ZmR0NCXc074kHTwUw@mail.gmail.com>
+X-Patchwork-Hint: comment
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-09-03 22:03, Matthias Kaehlcke wrote:
-> On Fri, Sep 03, 2021 at 09:58:56AM +0530, Rajesh Patil wrote:
->> From: Roja Rani Yarubandi <rojay@codeaurora.org>
->> 
->> Add QUPv3 wrapper_0 DT nodes for SC7280 SoC.
->> 
->> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
->> Signed-off-by: Rajesh Patil <rajpat@codeaurora.org>
->> ---
->>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 684 
->> ++++++++++++++++++++++++++++++++++-
->>  1 file changed, 682 insertions(+), 2 deletions(-)
->> 
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi 
->> b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> index 7ec9871..5c6a1d7 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> 
->> ...
->> 
->> +			qup_spi0_data_clk: qup-spi0-data-clk {
->> +				pins = "gpio0", "gpio1", "gpio2";
->> +				function = "qup00";
->> +			};
->> +
->> +			qup_spi0_cs: qup-spi0-cs {
->> +				pins = "gpio3";
->> +				function = "qup00";
->> +			};
+On Wed, Sep 08, 2021 at 11:02:42AM -0700, Rob Clark wrote:
+> On Mon, Aug 30, 2021 at 9:18 AM Rob Clark <robdclark@gmail.com> wrote:
+> >
+> > From: Rob Clark <robdclark@chromium.org>
+> >
+> > Add an initial set of tests for the gpu SUBMIT ioctl.  There is
+> > plenty more we can add, but need to start somewhere.
+> >
+> > Rob Clark (3):
+> >   drmtest: Add DRIVER_MSM support
+> >   msm: Add helper library
+> >   msm: Add submit ioctl tests
 > 
-> 
-> I think we still want this for all SPI ports, which existed in previous
-> versions:
-> 
-> 			qup_spi0_cs_gpio: qup-spi0-cs-gpio {
-> 				pins = "gpio3";
-> 				function = "gpio";
-> 			};
-> 
-> It just shouldn't be selected together with 'qup_spiN_cs'.
-> 
-> Maybe a follow up patch would be good enough, so:
-> 
-> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
+> If there are no more comments on this series, could somebody push it?
+
+Ah, I was expecting you to do it yourself. Merged now.
 
 
-ok.shall we add qup_spiN_cs_gpio for all spi ports
+-- 
+Petri Latvala
