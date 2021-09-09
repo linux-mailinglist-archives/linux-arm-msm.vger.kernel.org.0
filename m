@@ -2,85 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EB3B40423C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 02:22:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3556840424A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 02:30:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348554AbhIIAXH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Sep 2021 20:23:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52850 "EHLO
+        id S1348637AbhIIAbT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 8 Sep 2021 20:31:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54670 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348556AbhIIAXG (ORCPT
+        with ESMTP id S235458AbhIIAbT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Sep 2021 20:23:06 -0400
-Received: from mail-oo1-xc2b.google.com (mail-oo1-xc2b.google.com [IPv6:2607:f8b0:4864:20::c2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6C60C061757
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Sep 2021 17:21:57 -0700 (PDT)
-Received: by mail-oo1-xc2b.google.com with SMTP id g4-20020a4ab044000000b002900bf3b03fso3649oon.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Sep 2021 17:21:57 -0700 (PDT)
+        Wed, 8 Sep 2021 20:31:19 -0400
+Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12AC0C061575
+        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Sep 2021 17:30:10 -0700 (PDT)
+Received: by mail-io1-xd32.google.com with SMTP id a13so101272iol.5
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Sep 2021 17:30:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=KrKQVNDq3/5gBSCRZh6fTEr0lGsTWylg4ncaoymesVE=;
-        b=l2zLirahIdKfjSNP4/FhmOaIxi6RGKTtg2W5yfzqga9z8DM7mF8KKLqdVBbe3EVQU8
-         B2mAb8Kiyg3jGUGCmKchEE2FUCQe8mgtNYWYqjHacr6zdJiQlA/FSaPoBXi+Hveldzji
-         yG8fvl3sD+03w4y0+gHlZYwwEFTawa1SZd9SM=
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=SBJZ+xd67CiFIsbUo5ZILupshCxiGwC5Wpwkm3BLH6k=;
+        b=QFvS6izIE+d1GGVRGHR1QEMy4lxOUpUzI8cdpEPvcnmHg6ncVokDncdiZFJpdPUMfv
+         a8I1A8s8Vi1L61d1h9JgrEGyy6LFUztBBvesIm5nHaDH6EXFqKtgt5okUQHR7jxF5sC6
+         3L1eCO4Ec7roeo/DZl0f2C7fNach3w+CA9UlE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=KrKQVNDq3/5gBSCRZh6fTEr0lGsTWylg4ncaoymesVE=;
-        b=XrCv47ofm+YCFwaaBtKQ7k0qJkpSeKjjtzrPw0hkgW6ok4qskbF1XKawZEWHIM8Afh
-         3QreUw5jT0VdfV5RqNR/nyyDP6Wpx21Jv1ld3i3n4cOXBAMdMjwcCwU5+XNnP6QDGgFo
-         k5AwMWmYVw3BaPKaKPZ6hOKuUwdKbxwTAxI3NZx21vqJDRo3TFPpkJzz1yo3aEOto/2n
-         PRBhiwCvcwci6ZMwkJH4gG5dz9nLbn8tqQDe3keAInP++9ZlrqZGu/T6bxNQCl7orhIv
-         4OfHprPBvvbxjbDgjavF9K/I9Om/5GFVFVx9RExMTXeUyqeMWIDbaP+NG4NJETZwhb5n
-         USJA==
-X-Gm-Message-State: AOAM530guKSSPJ8mynlpq1kQ3O9DI9gSB4vzzOghH0VXZlnSVZdl9Rq9
-        GtvoBRnkH7ONd4aKO8u9Vgr4a7lzs7sX1feOU6TV7zfo1sU=
-X-Google-Smtp-Source: ABdhPJxgF39MsLPy0LWbZeXGBUy3CFp7gIIfxNlCUhObTVORlW5XPn7pdgoxLbPwwQ0fUMnQfRUlseqsLjVZ7A4RYec=
-X-Received: by 2002:a4a:9211:: with SMTP id f17mr259723ooh.25.1631146917250;
- Wed, 08 Sep 2021 17:21:57 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 8 Sep 2021 17:21:56 -0700
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=SBJZ+xd67CiFIsbUo5ZILupshCxiGwC5Wpwkm3BLH6k=;
+        b=OjN9DUavM2AiceZmbmATGZtcoDydI3xj611PdBs/a2nmc3TN3Wb2K3y+AhY62JmdzV
+         WpLauvGP1mi14nUY+PMDBfUVUpxOlSZtjOUw8gIXH5nM1bqS/492v4HPMdJfDQ8JLkP+
+         yZSKjarRJ53UoyXi6VOCUcDJzFKLfVjvK/iKK0ZBq1GVNQuSzN1Tp3AQxm3s9hDEj+Vd
+         VmTxij1CDD4GLU1KDsKllvhqI+Cj1tx0H8sDJGgZ8BJEGsd93+ZtSI/f9nDLIyNUzRjv
+         o5SJjpQm7S2fo9l32izVzYxkKrNqzp9enYMZzV9gJOLQ2zw/P5VIijtVgKAF0gRLxa/q
+         J/Ww==
+X-Gm-Message-State: AOAM533bRmOZJME8UUzlj+i9H9ibNQ53Htl8A+06WRWTF7/GEQMy5Mn5
+        wZC+0tDPDVgvnNIHilaB0xb1NgjPwRdeNg==
+X-Google-Smtp-Source: ABdhPJyFc3wMX9kk3fFGvmhD0MpQZsLj05ks2sdh9br/EzXrLcsJ5Zm1owQOlpQNgVfRIo+UTzth9A==
+X-Received: by 2002:a5e:c802:: with SMTP id y2mr246607iol.162.1631147409273;
+        Wed, 08 Sep 2021 17:30:09 -0700 (PDT)
+Received: from mail-io1-f43.google.com (mail-io1-f43.google.com. [209.85.166.43])
+        by smtp.gmail.com with ESMTPSA id g8sm88236ild.31.2021.09.08.17.30.09
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 08 Sep 2021 17:30:09 -0700 (PDT)
+Received: by mail-io1-f43.google.com with SMTP id j18so87846ioj.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Sep 2021 17:30:09 -0700 (PDT)
+X-Received: by 2002:a92:6b0a:: with SMTP id g10mr141704ilc.27.1631147057200;
+ Wed, 08 Sep 2021 17:24:17 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CACTWRwsRLrKHRWVoHHyrU2DEc_VkhqSi66tdD2OBWs_y8J2LPw@mail.gmail.com>
-References: <20210905210400.1157870-1-swboyd@chromium.org> <YTe+a0Gu7O6MEy2d@google.com>
- <CAE-0n52d_GBh70pSDXTrVkD5S6akP4O9YcE4tVRKZcvLtLZSmg@mail.gmail.com> <CACTWRwsRLrKHRWVoHHyrU2DEc_VkhqSi66tdD2OBWs_y8J2LPw@mail.gmail.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Wed, 8 Sep 2021 17:21:56 -0700
-Message-ID: <CAE-0n50RUGTA8sfK52YWXRkoi31XYnJkahy_MydRZ0zM1QXRQg@mail.gmail.com>
-Subject: Re: [PATCH] ath10k: Don't always treat modem stop events as crashes
-To:     Abhishek Kumar <kuabhs@chromium.org>
-Cc:     Matthias Kaehlcke <mka@chromium.org>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        ath10k <ath10k@lists.infradead.org>,
-        linux-wireless <linux-wireless@vger.kernel.org>,
-        linux-arm-msm@vger.kernel.org, netdev <netdev@vger.kernel.org>,
-        Youghandhar Chintala <youghand@codeaurora.org>,
-        Rakesh Pillai <pillair@codeaurora.org>
+References: <20210901201934.1084250-1-dianders@chromium.org>
+ <20210901131531.v3.3.I4a672175ba1894294d91d3dbd51da11a8239cf4a@changeid> <87h7ey81e9.fsf@intel.com>
+In-Reply-To: <87h7ey81e9.fsf@intel.com>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 8 Sep 2021 17:24:05 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=X-d8XH5bmcAhDGnbs-DHgQ7D6G9g3gRsjo7RN1xQ1kNA@mail.gmail.com>
+Message-ID: <CAD=FV=X-d8XH5bmcAhDGnbs-DHgQ7D6G9g3gRsjo7RN1xQ1kNA@mail.gmail.com>
+Subject: Re: [PATCH v3 03/16] drm/edid: Allow the querying/working with the
+ panel ID from the EDID
+To:     Jani Nikula <jani.nikula@linux.intel.com>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus W <linus.walleij@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Steev Klimaszewski <steev@kali.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Maxime Ripard <mripard@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Abhishek Kumar (2021-09-08 15:37:07)
->
-> Overall this change should fix the issue, additionally I have one
-> comment below and would like other reviewers views.
->
-> >  #include <linux/regulator/consumer.h>
-> > +#include <linux/remoteproc/qcom_rproc.h>
-> >  #include <linux/of_address.h>
-> We are adding an external dependency here but since this is added in
-> snoc.c (which is for integrated solution only), I can expect if SNOC
-> is enabled, remote proc will be enabled as well, so it should be fine.
+Hi,
 
-There are stubs so that if it isn't enabled it won't do anything. But as
-you say SNOC relies on the modem to boot, so maybe CONFIG_ATH10K_SNOC
-should depend on some remoteproc config anyway? I'm not clear how probe
-ordering works but I think we'll want to make sure that we only register
-the notifier once the remoteproc driver for the modem adds itself to the
-list of available strings to look for.
+On Mon, Sep 6, 2021 at 3:05 AM Jani Nikula <jani.nikula@linux.intel.com> wrote:
+>
+> > +{
+> > +     struct edid *edid;
+> > +     u32 val;
+> > +
+> > +     edid = drm_do_get_edid_blk0(drm_do_probe_ddc_edid, adapter, NULL, NULL);
+> > +
+> > +     /*
+> > +      * There are no manufacturer IDs of 0, so if there is a problem reading
+> > +      * the EDID then we'll just return 0.
+> > +      */
+> > +     if (IS_ERR_OR_NULL(edid))
+> > +             return 0;
+> > +
+> > +     /*
+> > +      * In theory we could try to de-obfuscate this like edid_get_quirks()
+> > +      * does, but it's easier to just deal with a 32-bit number.
+>
+> Hmm, but is it, really? AFAICT this is just an internal representation
+> for a table, where it could just as well be stored in a struct that
+> could be just as compact now, but extensible later. You populate the
+> table via an encoding macro, then decode the id using a function - while
+> it could be in a format that's directly usable without the decode. If
+> suitably chosen, the struct could perhaps be reused between the quirks
+> code and your code.
+
+I'm not 100% sure, but I think you're suggesting having this function
+return a `struct edid_panel_id` or something like that. Is that right?
+Maybe that would look something like this?
+
+struct edid_panel_id {
+  char vendor[4];
+  u16 product_id;
+}
+
+...or perhaps this (untested, but I think it works):
+
+struct edid_panel_id {
+  u16 vend_c1:5;
+  u16 vend_c2:5;
+  u16 vend_c3:5;
+  u16 product_id;
+}
+
+...and then change `struct edid_quirk` to something like this:
+
+static const struct edid_quirk {
+  struct edid_panel_id panel_id;
+  u32 quirks;
+} ...
+
+Is that correct? There are a few downsides that I can see:
+
+a) I think the biggest downside is the inability compare with "==". I
+don't believe it's legal to compare structs with "==" in C. Yeah, we
+can use memcmp() but that feels more awkward to me.
+
+b) Unless you use the bitfield approach, it takes up more space. I
+know it's not a huge deal, but the format in the EDID is pretty much
+_forced_ to fit in 32-bits. The bitfield approach seems like it'd be
+more awkward than my encoding macros.
+
+-Doug
