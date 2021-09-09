@@ -2,129 +2,187 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 14D04405D60
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 21:33:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 17BD7405DC0
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 21:50:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245559AbhIITee (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Sep 2021 15:34:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58510 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245487AbhIITed (ORCPT
+        id S1344661AbhIITvW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Sep 2021 15:51:22 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:13092 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237348AbhIITvV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Sep 2021 15:34:33 -0400
-Received: from mail-il1-x12c.google.com (mail-il1-x12c.google.com [IPv6:2607:f8b0:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B1D32C061574
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Sep 2021 12:33:23 -0700 (PDT)
-Received: by mail-il1-x12c.google.com with SMTP id u17so3086036ilm.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Sep 2021 12:33:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=d2IYAT4zf02RWUNDruz7+0lDEcO/Nb9ZtTNr33lXbog=;
-        b=PB5fXArkN11kuDGlOpAY2Uq87Zlrf8VbZJFzYvAFZT5RhsN545UOJp9+uNPzoeyM4e
-         xib37Uo5ToG8XyCVLrJOQ4PDCnYiw5xizwwq+G6OOivyUUmST8sQwFsRyMOYc+l6DO7M
-         8h86v98MDD+4tMscf29L5z/MJV5FVN/5OoQlI=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=d2IYAT4zf02RWUNDruz7+0lDEcO/Nb9ZtTNr33lXbog=;
-        b=JwulyeAzLKiOIzx8elKnH1G0+YIwz9GU6JSPqaXNSHjEy7YMSPLkUIUp5H1qnlSMPA
-         l23hpLKEW8fa5Ao70jih2I799edBnLcWfERDPLlpdoOm9LJx3VrXD/vDylMuNbB2bNn+
-         Y40WXuWToAK1x4l3/WTKmF8L+9ojHqcEckzZqby0qu7LV+zxLSkiZ0MtKh0QF3SjhAju
-         f/ehOEtGnsFl+VybJhm8m0hXwDhgyC+0UcFS1TipXBxz4vgDh9vOPMKyAOu7Jpfzkr4t
-         0+3e87EJnuD7sUNC3oKyXLkARwHLmnaiHCO9kyG2d97G/5r46wkGKTJuFvYLA5MOeQ+F
-         4hcQ==
-X-Gm-Message-State: AOAM532oUitXA0NdJS60SwAT6VTvao5dlWaqTpIqi+8yWK4E1kHxlxNX
-        9djF/hV2gvfRE0H77P3COJ//V0IfN5qUGQ==
-X-Google-Smtp-Source: ABdhPJyQGUa7grhj9dECOil1kftJ1L4YqoT/WMS4AuWOR4AaNyN5qNEMdEItToMRlUpybI4WoG85GQ==
-X-Received: by 2002:a92:6605:: with SMTP id a5mr3362458ilc.17.1631216002965;
-        Thu, 09 Sep 2021 12:33:22 -0700 (PDT)
-Received: from mail-il1-f172.google.com (mail-il1-f172.google.com. [209.85.166.172])
-        by smtp.gmail.com with ESMTPSA id m11sm1383155ilc.2.2021.09.09.12.33.20
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Sep 2021 12:33:20 -0700 (PDT)
-Received: by mail-il1-f172.google.com with SMTP id x10so3087338ilm.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Sep 2021 12:33:20 -0700 (PDT)
-X-Received: by 2002:a05:6e02:e02:: with SMTP id a2mr3620736ilk.180.1631215999852;
- Thu, 09 Sep 2021 12:33:19 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210901201934.1084250-1-dianders@chromium.org>
- <20210901131531.v3.5.I0a2f75bb822d17ce06f5b147734764eeb0c3e3df@changeid> <YTUPiyOjsUJXN11h@ravnborg.org>
-In-Reply-To: <YTUPiyOjsUJXN11h@ravnborg.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 9 Sep 2021 12:33:07 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=VbYcdSqxLHdSaDPh=X0hbW6VWV0mM-iFy3k0J1q+6MWg@mail.gmail.com>
-Message-ID: <CAD=FV=VbYcdSqxLHdSaDPh=X0hbW6VWV0mM-iFy3k0J1q+6MWg@mail.gmail.com>
-Subject: Re: [PATCH v3 05/16] drm/panel-simple-edp: Split eDP panels out of panel-simple
-To:     Sam Ravnborg <sam@ravnborg.org>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linus W <linus.walleij@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Steev Klimaszewski <steev@kali.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Maxime Ripard <mripard@kernel.org>,
-        David Airlie <airlied@linux.ie>,
+        Thu, 9 Sep 2021 15:51:21 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1631217011; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=3CekIbdYG/DWaxayOnRmOo9RT1gL6hIM3S/cqAXoD8M=; b=RzK/OTq4kF0CEXU1+yhYT8qNyd6lG9PH9L2EfygrX2K5k3W13YJc9e094WUzJl63XQQn4kIA
+ XCX81XDHk8BOT1rUpiFFB7aGI4u4ucjPvukWvE69q7spT+8DtRzEvuDTsSZ7xhThwdfXcFMm
+ E+jF8t79Vx7chDUgYkCd97eGlXA=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 613a6569266d62f83239425c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 09 Sep 2021 19:50:00
+ GMT
+Sender: akhilpo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id F0DFAC4338F; Thu,  9 Sep 2021 19:49:59 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+        version=3.4.0
+Received: from [192.168.1.12] (unknown [59.88.226.82])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: akhilpo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 223BFC4338F;
+        Thu,  9 Sep 2021 19:49:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 223BFC4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [PATCH] drm/msm: Disable frequency clamping on a630
+To:     Amit Pundir <amit.pundir@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Caleb Connolly <caleb.connolly@linaro.org>,
+        Rob Clark <robdclark@gmail.com>,
         dri-devel <dri-devel@lists.freedesktop.org>,
-        LKML <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>
+References: <e2cebf65-012d-f818-8202-eb511c996e28@linaro.org>
+ <CAF6AEGs11aYnkL30kp79pMqLTg3_4otFwG2Oc890Of2ndLbELw@mail.gmail.com>
+ <b7334a1a-c4ad-da90-03b4-0d19e1811b13@linaro.org>
+ <CAF6AEGv0WWB3Z1hmXf8vxm1_-d7fsNBRcaQF35aE2JXcJn8-cA@mail.gmail.com>
+ <8aa590be-6a9f-9343-e897-18e86ea48202@linaro.org>
+ <CAF6AEGtd_5jKhixp6h+NnN8-aqjBHTLopRozASE73oT3rfnFHA@mail.gmail.com>
+ <6eefedb2-9e59-56d2-7703-2faf6cb0ca3a@codeaurora.org>
+ <CAF6AEGvhqPHWNK=6GYz+Mu5aKe8+iE4_Teem6o=X6eiANhWsPg@mail.gmail.com>
+ <83ecbe74-caf0-6c42-e6f5-4887b3b534c6@linaro.org>
+ <53d3e5b7-9dc0-a806-70e9-b9b5ff877462@codeaurora.org>
+ <YTgeIuwumPoR9ZTE@ripper>
+ <CAMi1Hd1TOFj5USToEhuvZz8vgboQbMWco7gN413-jHJp-A7Ozg@mail.gmail.com>
+ <CAMi1Hd2gmo-qzDSDpi1hwpX=N1eGM+Q5HqPSvdbq9LdqwNuK+w@mail.gmail.com>
+From:   Akhil P Oommen <akhilpo@codeaurora.org>
+Message-ID: <ea5c23cb-0de4-3f1d-3052-c41fa9317984@codeaurora.org>
+Date:   Fri, 10 Sep 2021 01:19:50 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
+MIME-Version: 1.0
+In-Reply-To: <CAMi1Hd2gmo-qzDSDpi1hwpX=N1eGM+Q5HqPSvdbq9LdqwNuK+w@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 9/9/2021 9:42 PM, Amit Pundir wrote:
+> On Thu, 9 Sept 2021 at 17:47, Amit Pundir <amit.pundir@linaro.org> wrote:
+>>
+>> On Wed, 8 Sept 2021 at 07:50, Bjorn Andersson
+>> <bjorn.andersson@linaro.org> wrote:
+>>>
+>>> On Mon 09 Aug 10:26 PDT 2021, Akhil P Oommen wrote:
+>>>
+>>>> On 8/9/2021 9:48 PM, Caleb Connolly wrote:
+>>>>>
+>>>>>
+>>>>> On 09/08/2021 17:12, Rob Clark wrote:
+>>>>>> On Mon, Aug 9, 2021 at 7:52 AM Akhil P Oommen
+>>>>>> <akhilpo@codeaurora.org> wrote:
+>>> [..]
+>>>>>>> I am a bit confused. We don't define a power domain for gpu in dt,
+>>>>>>> correct? Then what exactly set_opp do here? Do you think this usleep is
+>>>>>>> what is helping here somehow to mask the issue?
+>>>>> The power domains (for cx and gx) are defined in the GMU DT, the OPPs in
+>>>>> the GPU DT. For the sake of simplicity I'll refer to the lowest
+>>>>> frequency (257000000) and OPP level (RPMH_REGULATOR_LEVEL_LOW_SVS) as
+>>>>> the "min" state, and the highest frequency (710000000) and OPP level
+>>>>> (RPMH_REGULATOR_LEVEL_TURBO_L1) as the "max" state. These are defined in
+>>>>> sdm845.dtsi under the gpu node.
+>>>>>
+>>>>> The new devfreq behaviour unmasks what I think is a driver bug, it
+>>>>> inadvertently puts much more strain on the GPU regulators than they
+>>>>> usually get. With the new behaviour the GPU jumps from it's min state to
+>>>>> the max state and back again extremely rapidly under workloads as small
+>>>>> as refreshing UI. Where previously the GPU would rarely if ever go above
+>>>>> 342MHz when interacting with the device, it now jumps between min and
+>>>>> max many times per second.
+>>>>>
+>>>>> If my understanding is correct, the current implementation of the GMU
+>>>>> set freq is the following:
+>>>>>    - Get OPP for frequency to set
+>>>>>    - Push the frequency to the GMU - immediately updating the core clock
+>>>>>    - Call dev_pm_opp_set_opp() which triggers a notify chain, this winds
+>>>>> up somewhere in power management code and causes the gx regulator level
+>>>>> to be updated
+>>>>
+>>>> Nope. dev_pm_opp_set_opp() sets the bandwidth for gpu and nothing else. We
+>>>> were using a different api earlier which got deprecated -
+>>>> dev_pm_opp_set_bw().
+>>>>
+>>>
+>>> On the Lenovo Yoga C630 this is reproduced by starting alacritty and if
+>>> I'm lucky I managed to hit a few keys before it crashes, so I spent a
+>>> few hours looking into this as well...
+>>>
+>>> As you say, the dev_pm_opp_set_opp() will only cast a interconnect vote.
+>>> The opp-level is just there for show and isn't used by anything, at
+>>> least not on 845.
+>>>
+>>> Further more, I'm missing something in my tree, so the interconnect
+>>> doesn't hit sync_state, and as such we're not actually scaling the
+>>> buses. So the problem is not that Linux doesn't turn on the buses in
+>>> time.
+>>>
+>>> So I suspect that the "AHB bus error" isn't saying that we turned off
+>>> the bus, but rather that the GPU becomes unstable or something of that
+>>> sort.
+>>>
+>>>
+>>> Lastly, I reverted 9bc95570175a ("drm/msm: Devfreq tuning") and ran
+>>> Aquarium for 20 minutes without a problem. I then switched the gpu
+>>> devfreq governor to "userspace" and ran the following:
+>>>
+>>> while true; do
+>>>    echo 257000000 > /sys/class/devfreq/5000000.gpu/userspace/set_freq
+>>>    echo 710000000 > /sys/class/devfreq/5000000.gpu/userspace/set_freq
+>>> done
+>>>
+>>> It took 19 iterations of this loop to crash the GPU.
+>>
+>> Ack. With your above script, I can reproduce a crash too on db845c
+>> (A630) running v5.14. I didn't get any crash log though and device
+>> just rebooted to USB crash mode.
+>>
+>> And same crash on RB5 (A650) too https://hastebin.com/raw/ejutetuwun
 
-On Sun, Sep 5, 2021 at 11:42 AM Sam Ravnborg <sam@ravnborg.org> wrote:
->
-> > +++ b/drivers/gpu/drm/panel/panel-simple-edp.c
-> > @@ -0,0 +1,1298 @@
-> > +/*
-> > + * Copyright (C) 2013, NVIDIA Corporation.  All rights reserved.
-> > + *
-> > + * Permission is hereby granted, free of charge, to any person obtaining a
-> > + * copy of this software and associated documentation files (the "Software"),
-> > + * to deal in the Software without restriction, including without limitation
-> > + * the rights to use, copy, modify, merge, publish, distribute, sub license,
-> > + * and/or sell copies of the Software, and to permit persons to whom the
-> > + * Software is furnished to do so, subject to the following conditions:
-> > + *
-> > + * The above copyright notice and this permission notice (including the
-> > + * next paragraph) shall be included in all copies or substantial portions
-> > + * of the Software.
-> > + *
-> > + * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-> > + * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-> > + * FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL
-> > + * THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-> > + * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-> > + * FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
-> > + * DEALINGS IN THE SOFTWARE.
-> > + */
-> Would be nice if you could use the SPDX thingy for the license.
+Are we sure this is the same issue? It could be, but I thought we were 
+seeing a bunch of random gpu errors (which may eventually hit device crash).
 
-I'm going to leave this alone. I definitely started this driver by
-copy-pasting the panel-simple.c file and it still shares a lot of
-lines of code with that driver. It feels like that qualifies for the
-"substantial portions of the Software" portion which tells me to
-retain the license. I also kept Thierry as the author since, again,
-it's really a splitting of the existing driver and not the creation of
-a new driver. In fact, if I were to assign a new author/license to
-panel-edp, one could also make the argument that I should assign a new
-author/license to panel-simple. panel-simple got ~50% of the old
-panels and panel-edp got the other ~50% of the old panels plus a
-search-and-replace of "simple" for "edp" and some code deletion. I
-don't think search-and-replace name change nor code deletion is
-justification for claiming authorship. ;-)
+-Akhil
 
-If Thierry wants to chime in and say that I should put down a
-different license for either of the two files, though, I'd be glad to
-change it.
+> 
+> fwiw I can't reproduce this crash on RB5 so far with v5.15-rc1 merge
+> window (HEAD: 477f70cd2a67)
+> 
+>>
+>>>
+>>> So the problem doesn't seem to be Rob's change, it's just that prior to
+>>> it the chance to hitting it is way lower. Question is still what it is
+>>> that we're triggering.
+>>>
+>>> Regards,
+>>> Bjorn
 
--Doug
