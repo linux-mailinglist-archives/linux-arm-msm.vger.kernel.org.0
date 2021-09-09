@@ -2,84 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 52382405E8F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 23:06:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C059405EC9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 23:30:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346920AbhIIVGq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Sep 2021 17:06:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50450 "EHLO
+        id S1346597AbhIIVbY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Sep 2021 17:31:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56616 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348249AbhIIVGN (ORCPT
+        with ESMTP id S237888AbhIIVbX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Sep 2021 17:06:13 -0400
-Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7CEBEC0613B7
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Sep 2021 14:03:20 -0700 (PDT)
-Received: by mail-ot1-x336.google.com with SMTP id c42-20020a05683034aa00b0051f4b99c40cso4334040otu.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Sep 2021 14:03:20 -0700 (PDT)
+        Thu, 9 Sep 2021 17:31:23 -0400
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E0C5BC061756
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Sep 2021 14:30:13 -0700 (PDT)
+Received: by mail-oi1-x233.google.com with SMTP id 6so4443446oiy.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Sep 2021 14:30:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=Inuz8zjQpJ8vk0GRKUjv4itxCxxuAm5ggH2rL74CYCo=;
-        b=d9PkoVnYvdQBvNX4WHkbuiSrkkvxhgvnV2vCdhmeeozkYSR6EGbZZ6ZUfJOxv/gfcS
-         y34dbvibMZcLJIylua/yfIqUF6zWfkxgUayXj+mXiVUyjAu/D55CAsJv/J0DNU4bQpJ5
-         tvOr8XKYcak6AFVcY31g0W5ngrW3+11dSwTkg=
+        bh=r79cmgNDDidxXvaxTI5T8bA/u2eCAhe6oAZULslvRNg=;
+        b=Sr7U0TQjASjopEl37t4IJYyJD+TW5mSxY+2fu0BItg/tsM3alK382ZCbCLYEO2YANd
+         CstrafRvDeNUHSbOBQAZFa8Qg76MfYcQVa9kkQC64JsOJCoSV/jUF1AzH6v6mjjNLJbQ
+         8JgNs0iVDeJSrzXP3AKOAsGIRYnsXsJEw6mVI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=Inuz8zjQpJ8vk0GRKUjv4itxCxxuAm5ggH2rL74CYCo=;
-        b=z2VDTvkx6lQL9BvqSLB5BnEZqKORIBrZtK/C1pZThWmtaa+5l2Cm70rQadtT91jLjZ
-         PXCo7zF4l7XQh79j4JKJ/TmFOAcwgbid62zT5vqErLtSOtA0j/hDjG0oKpN3lXrNvPpY
-         VjqpC89L9XgFQqS7R++9IlrU5ZkYOoPrWKYbX7GvvoEcPoBdJBXrm9lHuIxAeq4PACJM
-         gJKThrLFAGCwkYC9D+7eNMHpBEiFTn2EHvcopUskGq4AcQ6U2dpQII6Pg9sKxUVgkmT5
-         s8C5Sc5/touFDpmSVfXgrwJlbpj3ICK30zms++22zMQAf33LuYGB0/HFOcBh2S1iRh1d
-         JM1w==
-X-Gm-Message-State: AOAM5306akAJU1MTGA/tMDyeIik/uD3GXx0pRPmAoX/KyteVGMuogdct
-        +iU7duOou5rZamo/+mSPBtJZzf6RYjnbm/a7RNdJJg==
-X-Google-Smtp-Source: ABdhPJxzzYHJmjZxncLWDDGzJ6ALyyZzP3+wJ9In+ibvaJy4YpGmbTqacIrA8T+1HS5SfE/5dxVBYmb1wu2mA1UftOc=
-X-Received: by 2002:a05:6830:18c7:: with SMTP id v7mr1700256ote.126.1631221399723;
- Thu, 09 Sep 2021 14:03:19 -0700 (PDT)
+        bh=r79cmgNDDidxXvaxTI5T8bA/u2eCAhe6oAZULslvRNg=;
+        b=YMRKjqPveDvcU89ZtdkINpBVz1VhVyB1rk3jCzXDezfC4qzKcDHw3eEzajYIw0PkcW
+         tYqOyxw82p/iBisP9vp8q+U6lvJYrDn52G5RcqRqbuVVxcO6isf4Q9+2EF8W2pFParwU
+         kx+8khV4DcJ4fZTtVWT5jmPQGg7eMVE9eMaa7jbcfgZNpV53RSBM8nFDD1RxGf7BaniY
+         Ixn8rEe+Au1LUqEkktgGsiBifLF5LlM/8dXiJxTFb3+CDAdCINBt7361JjLKq/q8A/ns
+         ojsSak5N3N6BHN5Lxgf/yBsQot8OCpPNjYtwjrDU/TfiNv4kntBKrlCVlnAbCrIoLXvC
+         tmjQ==
+X-Gm-Message-State: AOAM5325Vu8V8Uj7JJVTQLK26F5sYpOTphFD1BI4jXMPSwQY+lnds8du
+        ZTSXRN4vU6f3l4RlMvn0j5l8Z/hoNwfiluFdMk9cdA==
+X-Google-Smtp-Source: ABdhPJwCMD1N9F/MFmV5OSnlhCcqSqYaz+by8eltnOy/usqsU4stZm11gxAv2Oo8qN6yrYQ84iAMPseV0RSShDJWq0Y=
+X-Received: by 2002:aca:2310:: with SMTP id e16mr1581007oie.64.1631223013219;
+ Thu, 09 Sep 2021 14:30:13 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 9 Sep 2021 17:03:19 -0400
+ HTTPREST; Thu, 9 Sep 2021 17:30:12 -0400
 MIME-Version: 1.0
-In-Reply-To: <1631216998-10049-1-git-send-email-khsieh@codeaurora.org>
-References: <1631216998-10049-1-git-send-email-khsieh@codeaurora.org>
+In-Reply-To: <20210909122053.1.Ieafda79b74f74a2b15ed86e181c06a3060706ec5@changeid>
+References: <20210909122053.1.Ieafda79b74f74a2b15ed86e181c06a3060706ec5@changeid>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.9.1
-Date:   Thu, 9 Sep 2021 17:03:18 -0400
-Message-ID: <CAE-0n505ihV0eYsk2oyeeL8=DSCW-Uq=hVt_8BhVxusRq7R9NA@mail.gmail.com>
-Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: fix display port phy reg property
-To:     Kuogee Hsieh <khsieh@codeaurora.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
-        robdclark@gmail.com, robh+dt@kernel.org, sean@poorly.run,
-        vkoul@kernel.org
-Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
-        mkrishn@codeaurora.org, kalyan_t@codeaurora.org,
-        rajeevny@codeaurora.org, freedreno@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Date:   Thu, 9 Sep 2021 17:30:12 -0400
+Message-ID: <CAE-0n52kUS9cWh1oWOoAivYQ5TUu-mE2RPqjHZ=-QPN7Y=Y92g@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: Add sc7180-trogdor-homestar
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        devicetree@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2021-09-09 12:49:58)
-> Existing display port phy reg property is derived from usb phy which
-> map display port phy pcs to wrong address which cause aux init
-> with wrong address and prevent both dpcd read and write from working.
-> Fix this problem by assigning correct pcs address to display port
-> phy reg property.
+Quoting Matthias Kaehlcke (2021-09-09 12:21:01)
+> Homestar is a trogdor variant. The DT bits are essentially the same as
+> in the downstream tree, except for:
 >
-> Changes in V2:
-> -- rewording the commit text
-
-This Changes part can be put under the triple dash. This isn't drm tree
-material.
-
+> - skip -rev0 and rev1 which were early builds and have their issues,
+>   it's not very useful to support them upstream
+> - don't include the .dtsi for the MIPI cameras, which doesn't exist
+>   upstream
 >
-> Fixes: 9886e8fd8438 ("arm64: dts: qcom: sc7280: Add USB related nodes")
-> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
 > ---
 
 Reviewed-by: Stephen Boyd <swboyd@chromium.org>
