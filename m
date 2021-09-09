@@ -2,164 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 051FE404946
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 13:26:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0A5D84049CA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 13:42:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235008AbhIIL1I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Sep 2021 07:27:08 -0400
-Received: from relay05.th.seeweb.it ([5.144.164.166]:48473 "EHLO
-        relay05.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234962AbhIIL1I (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Sep 2021 07:27:08 -0400
-Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
-        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 1F0413EEA8;
-        Thu,  9 Sep 2021 13:25:58 +0200 (CEST)
-Subject: Re: [PATCH 2/7] arm64: dts: qcom: msm8998-xperia: Add RMI4
- touchscreen support
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     agross@kernel.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
-        marijn.suijten@somainline.org, martin.botka@somainline.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        paul.bouchara@somainline.org
-References: <20210903180924.1006044-1-angelogioacchino.delregno@somainline.org>
- <20210903180924.1006044-2-angelogioacchino.delregno@somainline.org>
- <YTdsBg78ErgxqFXy@ripper>
-From:   AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>
-Message-ID: <8c817fed-ebc3-c269-ee00-bdef12f707af@somainline.org>
-Date:   Thu, 9 Sep 2021 13:25:57 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.9.0
+        id S238412AbhIILnc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Sep 2021 07:43:32 -0400
+Received: from mail.kernel.org ([198.145.29.99]:46486 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236764AbhIILmv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Sep 2021 07:42:51 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 71939611EE;
+        Thu,  9 Sep 2021 11:41:41 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1631187702;
+        bh=ul6PfnBjkugntozSWDHDKLQiBHMJHl1pcpXfnDvZA/Q=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=O/VCbpFaoWJ55yZaSMujLelip2TbWygG2QVWTnFpypbBi6++r2PWs38IC7L03KeQl
+         zbR5+4kaKxET51zDXDxq4GBXxuvzTe6r8aeNtaLOtq/mM+r9b7Wg3EMoxAp4D9S1PY
+         ty0YmrVPPIoGW1TJSsihtM+dIKkoFCgmoKkM4J3RXpKI7mNWpBH/pGyhUPXaJJCuaY
+         MSgpubl0jpZAi6V0FywU2rP04L7/DfH8JOx6nbjkZriybTtaRSrnm4GGkiB0E9u55b
+         ogxRMaFJBqhNWJDj82DUvj8mHUiGXwfUC8EbB0g2ySi8bYp7Nug89fB+iRaMQkO5ub
+         NsaIyPZZgBGJw==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     David Heidelberg <david@ixit.cz>,
+        Brian Masney <masneyb@onstation.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.14 027/252] ARM: dts: qcom: apq8064: correct clock names
+Date:   Thu,  9 Sep 2021 07:37:21 -0400
+Message-Id: <20210909114106.141462-27-sashal@kernel.org>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20210909114106.141462-1-sashal@kernel.org>
+References: <20210909114106.141462-1-sashal@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <YTdsBg78ErgxqFXy@ripper>
-Content-Type: text/plain; charset=iso-8859-15; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+X-stable: review
+X-Patchwork-Hint: Ignore
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Il 07/09/21 15:41, Bjorn Andersson ha scritto:
-> On Fri 03 Sep 11:09 PDT 2021, AngeloGioacchino Del Regno wrote:
-> 
->> All of the devices in the Sony Yoshino platform are using a Synaptics
->> RMI4-compatible touch IC with identical pins and supplies: enable the
->> I2C-5 bus and add the rmi4-i2c node along with the required pin
->> configurations.
->>
->> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
->> Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
->> ---
->>   .../dts/qcom/msm8998-sony-xperia-yoshino.dtsi | 60 +++++++++++++++++++
->>   1 file changed, 60 insertions(+)
->>
->> diff --git a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
->> index b07cbc759807..2fe53e4675d5 100644
->> --- a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
->> @@ -30,6 +30,15 @@ board_vbat: vbat-regulator {
->>   		regulator-boot-on;
->>   	};
->>   
->> +	touch_vddio_vreg: touch-vddio-vreg {
->> +		compatible = "regulator-fixed";
->> +		regulator-name = "touch_vddio_vreg";
->> +		startup-delay-us = <10000>;
->> +		gpio = <&tlmm 133 GPIO_ACTIVE_HIGH>;
->> +		pinctrl-names = "default";
->> +		pinctrl-0 = <&ts_vddio_en>;
->> +	};
->> +
->>   	vph_pwr: vph-pwr-regulator {
->>   		compatible = "regulator-fixed";
->>   		regulator-name = "vph_pwr";
->> @@ -134,6 +143,42 @@ ramoops@ffc00000 {
->>   	};
->>   };
->>   
->> +&blsp1_i2c5 {
->> +	status = "okay";
->> +	clock-frequency = <355000>;
->> +
->> +	touchscreen: synaptics-rmi4-i2c@2c {
-> 
-> "touchscreen" sounds like a better "generic name" for the node.
-> 
-> Haven't checked the following patches yet, do you need the label?
-> 
+From: David Heidelberg <david@ixit.cz>
 
-Thank you, I forgot to remove the label after a cleanup.
-Also, node name changed.
+[ Upstream commit 0dc6c59892ead17a9febd11202c9f6794aac1895 ]
 
-Cheers,
-- Angelo
+Since new code doesn't take old clk names in account, it does fixes
+error:
 
-> Regards,
-> Bjorn
-> 
->> +		compatible = "syna,rmi4-i2c";
->> +		reg = <0x2c>;
->> +		#address-cells = <1>;
->> +		#size-cells = <0>;
->> +		interrupts-extended = <&tlmm 125 IRQ_TYPE_EDGE_FALLING>;
->> +
->> +		pinctrl-names = "default";
->> +		pinctrl-0 = <&ts_int_n>;
->> +
->> +		vdd-supply = <&vreg_l28_3p0>;
->> +		vio-supply = <&touch_vddio_vreg>;
->> +
->> +		syna,reset-delay-ms = <220>;
->> +		syna,startup-delay-ms = <1000>;
->> +
->> +		rmi4-f01@1 {
->> +			reg = <0x01>;
->> +			syna,nosleep-mode = <1>;
->> +		};
->> +
->> +		rmi4-f11@11 {
->> +			reg = <0x11>;
->> +			syna,sensor-type = <1>;
->> +		};
->> +	};
->> +};
->> +
->> +&blsp1_i2c5_sleep {
->> +	bias-disable;
->> +};
->> +
->>   &blsp2_uart1 {
->>   	status = "okay";
->>   };
->> @@ -448,6 +493,21 @@ hall_sensor0_default: acc-cover-open {
->>   		drive-strength = <2>;
->>   		input-enable;
->>   	};
->> +
->> +	ts_int_n: ts-int-n {
->> +		pins = "gpio125";
->> +		function = "gpio";
->> +		drive-strength = <8>;
->> +		bias-pull-up;
->> +	};
->> +
->> +	ts_vddio_en: ts-vddio-en-default {
->> +		pins = "gpio133";
->> +		function = "gpio";
->> +		bias-disable;
->> +		drive-strength = <2>;
->> +		output-low;
->> +	};
->>   };
->>   
->>   /*
->> -- 
->> 2.32.0
->>
+msm_dsi 4700000.mdss_dsi: dev_pm_opp_set_clkname: Couldn't find clock: -2
+
+and following kernel oops introduced by
+b0530eb1191 ("drm/msm/dpu: Use OPP API to set clk/perf state").
+
+Also removes warning about deprecated clock names.
+
+Tested against linux-5.10.y LTS on Nexus 7 2013.
+
+Reviewed-by: Brian Masney <masneyb@onstation.org>
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Link: https://lore.kernel.org/r/20210707131453.24041-1-david@ixit.cz
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ arch/arm/boot/dts/qcom-apq8064.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
+index 2687c4e890ba..e36d590e8373 100644
+--- a/arch/arm/boot/dts/qcom-apq8064.dtsi
++++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
+@@ -1262,9 +1262,9 @@ dsi0: mdss_dsi@4700000 {
+ 				<&mmcc DSI1_BYTE_CLK>,
+ 				<&mmcc DSI_PIXEL_CLK>,
+ 				<&mmcc DSI1_ESC_CLK>;
+-			clock-names = "iface_clk", "bus_clk", "core_mmss_clk",
+-					"src_clk", "byte_clk", "pixel_clk",
+-					"core_clk";
++			clock-names = "iface", "bus", "core_mmss",
++					"src", "byte", "pixel",
++					"core";
+ 
+ 			assigned-clocks = <&mmcc DSI1_BYTE_SRC>,
+ 					<&mmcc DSI1_ESC_SRC>,
+-- 
+2.30.2
 
