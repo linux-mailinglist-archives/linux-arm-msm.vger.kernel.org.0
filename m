@@ -2,25 +2,25 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CE7134058CB
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 16:17:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA8FD4058D1
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 16:17:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345489AbhIIOSO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Sep 2021 10:18:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41870 "EHLO
+        id S239764AbhIIOSe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Sep 2021 10:18:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41614 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344558AbhIIOSE (ORCPT
+        with ESMTP id S245640AbhIIOS0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Sep 2021 10:18:04 -0400
-Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4D53C101BF9;
-        Thu,  9 Sep 2021 05:37:43 -0700 (PDT)
+        Thu, 9 Sep 2021 10:18:26 -0400
+Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DA611C0281DB;
+        Thu,  9 Sep 2021 05:38:26 -0700 (PDT)
 Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id EBA241FA70;
-        Thu,  9 Sep 2021 14:37:36 +0200 (CEST)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id A489D1FAB1;
+        Thu,  9 Sep 2021 14:38:24 +0200 (CEST)
 From:   AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>
 To:     bjorn.andersson@linaro.org
@@ -32,64 +32,99 @@ Cc:     agross@kernel.org, robh+dt@kernel.org,
         paul.bouchara@somainline.org,
         AngeloGioacchino Del Regno 
         <angelogioacchino.delregno@somainline.org>
-Subject: [PATCH v2 7/7] arm64: dts: qcom: msm8998-xperia: Add audio clock and its pin
-Date:   Thu,  9 Sep 2021 14:37:33 +0200
-Message-Id: <20210909123733.367248-7-angelogioacchino.delregno@somainline.org>
+Subject: [PATCH v2 3/4] arm64: dts: qcom: msm8998-fxtec-pro1: Add Goodix GT9286 touchscreen
+Date:   Thu,  9 Sep 2021 14:38:22 +0200
+Message-Id: <20210909123823.368199-3-angelogioacchino.delregno@somainline.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210909123733.367248-1-angelogioacchino.delregno@somainline.org>
-References: <20210909123733.367248-1-angelogioacchino.delregno@somainline.org>
+In-Reply-To: <20210909123823.368199-1-angelogioacchino.delregno@somainline.org>
+References: <20210909123823.368199-1-angelogioacchino.delregno@somainline.org>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-All smartphones of this platform are equipped with a WCD9335 audio
-codec, getting its MCLK from PM8998 gpio13: add this clock to DT.
+This smartphone has a Goodix GT8296 touch IC, reachable at address
+0x14 on blsp2 i2c-1.
 
 Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 ---
- .../dts/qcom/msm8998-sony-xperia-yoshino.dtsi | 19 +++++++++++++++++++
- 1 file changed, 19 insertions(+)
+ .../boot/dts/qcom/msm8998-fxtec-pro1.dts      | 48 +++++++++++++++++++
+ 1 file changed, 48 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-index 2c609e2cfc4a..91e391282181 100644
---- a/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
-@@ -20,6 +20,19 @@ / {
- 	qcom,msm-id = <0x124 0x20000>, <0x124 0x20001>; /* 8998v2, v2.1 */
- 	qcom,board-id = <8 0>;
- 
-+	clocks {
-+		compatible = "simple-bus";
-+
-+		div1_mclk: divclk1 {
-+			compatible = "gpio-gate-clock";
-+			pinctrl-0 = <&audio_mclk_pin>;
-+			pinctrl-names = "default";
-+			clocks = <&rpmcc RPM_SMD_DIV_CLK1>;
-+			#clock-cells = <0>;
-+			enable-gpios = <&pm8998_gpio 13 GPIO_ACTIVE_HIGH>;
-+		};
-+	};
-+
- 	board_vbat: vbat-regulator {
- 		compatible = "regulator-fixed";
- 		regulator-name = "VBAT";
-@@ -307,6 +320,12 @@ cam_snapshot_pin_a: cam-snapshot-btn-active {
- 		input-enable;
- 		qcom,drive-strength = <PMIC_GPIO_STRENGTH_NO>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts b/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts
+index d44250f09965..deabb00758e3 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts
++++ b/arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts
+@@ -122,6 +122,33 @@ ramoops@ffc00000 {
+ 			record-size = <0x10000>;
+ 		};
  	};
 +
-+	audio_mclk_pin: audio-mclk-pin-active {
-+		pins = "gpio13";
-+		function = "func2";
-+		power-source = <0>;
++	ts_vio_vreg: ts-vio-vreg {
++		compatible = "regulator-fixed";
++		regulator-name = "ts_vio_reg";
++		startup-delay-us = <2>;
++		enable-active-high;
++		gpio = <&tlmm 81 GPIO_ACTIVE_HIGH>;
++		pinctrl-names = "default";
++		pinctrl-0 = <&ts_vio_default>;
++		regulator-always-on;
++	};
++};
++
++&blsp2_i2c1 {
++	status = "ok";
++
++	touchscreen@14 {
++		compatible = "goodix,gt9286";
++		reg = <0x14>;
++		interrupt-parent = <&tlmm>;
++		interrupts = <125 IRQ_TYPE_LEVEL_LOW>;
++		reset-gpios = <&tlmm 89 GPIO_ACTIVE_HIGH>;
++		AVDD28-supply = <&vreg_l28_3p0>;
++		VDDIO-supply = <&ts_vio_vreg>;
++		pinctrl-names = "active";
++		pinctrl-0 = <&ts_rst_n>, <&ts_int_n>;
 +	};
  };
  
- &pmi8998_gpio {
+ &mmcc {
+@@ -178,6 +205,20 @@ mdp_vsync_n: mdp-vsync-n {
+ 		drive-strength = <2>;
+ 	};
+ 
++	ts_vio_default: ts-vio-def {
++		pins = "gpio81";
++		function = "gpio";
++		bias-disable;
++		drive-strength = <2>;
++	};
++
++	ts_rst_n: ts-rst-n {
++		pins = "gpio89";
++		function = "gpio";
++		bias-pull-up;
++		drive-strength = <8>;
++	};
++
+ 	hall_sensor1_default: hall-sensor1-def {
+ 		pins = "gpio124";
+ 		function = "gpio";
+@@ -185,6 +226,13 @@ hall_sensor1_default: hall-sensor1-def {
+ 		drive-strength = <2>;
+ 		input-enable;
+ 	};
++
++	ts_int_n: ts-int-n {
++		pins = "gpio125";
++		function = "gpio";
++		bias-disable;
++		drive-strength = <8>;
++	};
+ };
+ 
+ &ufshc {
 -- 
 2.32.0
 
