@@ -2,40 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E4AF4057F9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 15:44:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B5C5D4054A9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 15:30:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236455AbhIINp1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Sep 2021 09:45:27 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60536 "EHLO mail.kernel.org"
+        id S1350662AbhIINBO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Sep 2021 09:01:14 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57770 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1351801AbhIIMrH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Sep 2021 08:47:07 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 026BF613D0;
-        Thu,  9 Sep 2021 11:56:18 +0000 (UTC)
+        id S1356150AbhIIMxL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Sep 2021 08:53:11 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id BC827600AA;
+        Thu,  9 Sep 2021 11:57:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631188580;
-        bh=6sB9V2TH2YXKggSm4ORmhaVpFYlE+jF8nGZ2tX7oayk=;
+        s=k20201202; t=1631188654;
+        bh=jy87Hs9DjEstU082RReFi1SFX5hfII05KU1e+UcXikQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=C37/nFb8NQvJIw7Chtpb6dP33LMvufkhlvmlA3pdcTRkfOkWYY5amuOgWdqGZBnnw
-         ktNxYB/ZaMtSgldW9w22waXoHPL4l+ZhUh/6iLoJrn5/1az0hCExr5Dcv9wYDTKuln
-         cEMuvEkO7QXztlrbXrDwC5GQD9/mV0a/rznJoeOP12DYZSSO9SZkZuX1h6irqeQH+3
-         FGUG+JChBMfFNZ0tgyWwYf2hGiX7BgD1v4rnLSh5Gr+vZkhC+3jwpy7C38Ze0Z+PFZ
-         WjC3i0FhnZwc0aFyXIIDrTUimAevRInI6GhryJe7AAIztRogpGVGtav5Zcf31gEb8f
-         8XrW2ur7j12Aw==
+        b=FuJn/WlItLezQ4ciaC+Q/ltJ8U/y2ha6VHiOzWdgZBaGzEN8ruw8gA6r3qyumNLqM
+         /BM/r6EF0F93iI+R2raqTJ4laKjL4+F5kNp/rQ0/eB6N09nsTe1E/FS7m2SyqWqFTh
+         0yzXthwfZ2uTeU0NUyvVl46mfK8yeTI6wwgjNX/HjneW2NIVT209Efa4LyezmunDe9
+         hGJaUYd7ATQ2X41bRocIQQyaxOu+tJFYS0dQhmbAbWbXoeWkDBz3zX88fxh+K8rtAd
+         Sppectf8telxUgAd2zJ5b0mWhGh9EQiPLsd4JL/3mkIWYRZjWDSjiXN20qjSFeu8ZE
+         SP8tHjVa1liuA==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     David Heidelberg <david@ixit.cz>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@chromium.org>,
+        Brian Masney <masneyb@onstation.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 5.4 057/109] drm/msm: mdp4: drop vblank get/put from prepare/complete_commit
-Date:   Thu,  9 Sep 2021 07:54:14 -0400
-Message-Id: <20210909115507.147917-57-sashal@kernel.org>
+        devicetree@vger.kernel.org
+Subject: [PATCH AUTOSEL 4.19 06/74] ARM: dts: qcom: apq8064: correct clock names
+Date:   Thu,  9 Sep 2021 07:56:18 -0400
+Message-Id: <20210909115726.149004-6-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210909115507.147917-1-sashal@kernel.org>
-References: <20210909115507.147917-1-sashal@kernel.org>
+In-Reply-To: <20210909115726.149004-1-sashal@kernel.org>
+References: <20210909115726.149004-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -46,64 +46,46 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: David Heidelberg <david@ixit.cz>
 
-[ Upstream commit 56bd931ae506730c9ab1e4cc4bfefa43fc2d18fa ]
+[ Upstream commit 0dc6c59892ead17a9febd11202c9f6794aac1895 ]
 
-msm_atomic is doing vblank get/put's already,
-currently there no need to duplicate the effort in MDP4
+Since new code doesn't take old clk names in account, it does fixes
+error:
 
-Fix warning:
-...
-WARNING: CPU: 3 PID: 79 at drivers/gpu/drm/drm_vblank.c:1194 drm_vblank_put+0x1cc/0x1d4
-...
-and multiple vblank time-outs:
-...
-msm 5100000.mdp: vblank time out, crtc=1
-...
+msm_dsi 4700000.mdss_dsi: dev_pm_opp_set_clkname: Couldn't find clock: -2
 
-Tested on Nexus 7 2013 (deb), LTS 5.10.50.
+and following kernel oops introduced by
+b0530eb1191 ("drm/msm/dpu: Use OPP API to set clk/perf state").
 
-Introduced by: 119ecb7fd3b5 ("drm/msm/mdp4: request vblank during modeset")
+Also removes warning about deprecated clock names.
 
+Tested against linux-5.10.y LTS on Nexus 7 2013.
+
+Reviewed-by: Brian Masney <masneyb@onstation.org>
 Signed-off-by: David Heidelberg <david@ixit.cz>
-Link: https://lore.kernel.org/r/20210715060925.7880-1-david@ixit.cz
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Link: https://lore.kernel.org/r/20210707131453.24041-1-david@ixit.cz
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 13 -------------
- 1 file changed, 13 deletions(-)
+ arch/arm/boot/dts/qcom-apq8064.dtsi | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-index 20194d86d033..5d50e93efe36 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-@@ -108,13 +108,6 @@ static void mdp4_disable_commit(struct msm_kms *kms)
+diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
+index 4a99c9255104..d0153bbbdbeb 100644
+--- a/arch/arm/boot/dts/qcom-apq8064.dtsi
++++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
+@@ -1296,9 +1296,9 @@ dsi0: mdss_dsi@4700000 {
+ 				<&mmcc DSI1_BYTE_CLK>,
+ 				<&mmcc DSI_PIXEL_CLK>,
+ 				<&mmcc DSI1_ESC_CLK>;
+-			clock-names = "iface_clk", "bus_clk", "core_mmss_clk",
+-					"src_clk", "byte_clk", "pixel_clk",
+-					"core_clk";
++			clock-names = "iface", "bus", "core_mmss",
++					"src", "byte", "pixel",
++					"core";
  
- static void mdp4_prepare_commit(struct msm_kms *kms, struct drm_atomic_state *state)
- {
--	int i;
--	struct drm_crtc *crtc;
--	struct drm_crtc_state *crtc_state;
--
--	/* see 119ecb7fd */
--	for_each_new_crtc_in_state(state, crtc, crtc_state, i)
--		drm_crtc_vblank_get(crtc);
- }
- 
- static void mdp4_flush_commit(struct msm_kms *kms, unsigned crtc_mask)
-@@ -133,12 +126,6 @@ static void mdp4_wait_flush(struct msm_kms *kms, unsigned crtc_mask)
- 
- static void mdp4_complete_commit(struct msm_kms *kms, unsigned crtc_mask)
- {
--	struct mdp4_kms *mdp4_kms = to_mdp4_kms(to_mdp_kms(kms));
--	struct drm_crtc *crtc;
--
--	/* see 119ecb7fd */
--	for_each_crtc_mask(mdp4_kms->dev, crtc, crtc_mask)
--		drm_crtc_vblank_put(crtc);
- }
- 
- static long mdp4_round_pixclk(struct msm_kms *kms, unsigned long rate,
+ 			assigned-clocks = <&mmcc DSI1_BYTE_SRC>,
+ 					<&mmcc DSI1_ESC_SRC>,
 -- 
 2.30.2
 
