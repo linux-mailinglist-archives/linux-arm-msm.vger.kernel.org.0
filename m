@@ -2,155 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F7D9404721
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 10:39:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C1B6640472D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 10:44:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231848AbhIIIkJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Sep 2021 04:40:09 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:64867 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231234AbhIIIkJ (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Sep 2021 04:40:09 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1631176740; h=Content-Transfer-Encoding: Content-Type:
- MIME-Version: Message-ID: Date: Subject: In-Reply-To: References: Cc:
- To: From: Sender; bh=dZetHwaye2lReUsUd8ql1cJnBrL9CLUFOLmfRGtkGzg=; b=EOYgFp+oPQjL6A66GYwb7TRoOubyxQIyWzAmIdB0iJ3OWFkoa9MGtVZPU0Bbl8juxtYffSBG
- biBTjilLLr6Ip0TSqVw7GqGwILKYN9rj7q9EKx0b4JIGjALob9hJIT+Qwg/LKjODSdijOp/C
- odMQiaXh+EXBil2/VC3YATiDiaA=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 6139c824ab61cfa9f4da5fa5 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 09 Sep 2021 08:39:00
- GMT
-Sender: pillair=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id EA3F9C43616; Thu,  9 Sep 2021 08:38:59 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from PILLAIR1 (unknown [103.149.158.85])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: pillair)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4797AC4338F;
-        Thu,  9 Sep 2021 08:38:55 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 4797AC4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   <pillair@codeaurora.org>
-To:     "'Stephen Boyd'" <swboyd@chromium.org>, <agross@kernel.org>,
-        <bjorn.andersson@linaro.org>, <robh+dt@kernel.org>
-Cc:     <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <sibis@codeaurora.org>,
-        <mpubbise@codeaurora.org>
-References: <1628619089-12502-1-git-send-email-pillair@codeaurora.org> <CAE-0n539nm6BrR51bZW-jX8e=o5d19JFnKfT9fb-sVS9FGKn0A@mail.gmail.com>
-In-Reply-To: <CAE-0n539nm6BrR51bZW-jX8e=o5d19JFnKfT9fb-sVS9FGKn0A@mail.gmail.com>
-Subject: RE: [PATCH v2] arm64: dts: qcom: sc7280: Add WPSS remoteproc node
-Date:   Thu, 9 Sep 2021 14:08:53 +0530
-Message-ID: <005c01d7a556$220ae9b0$6620bd10$@codeaurora.org>
+        id S231281AbhIIIpU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Sep 2021 04:45:20 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52758 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S231234AbhIIIpU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Sep 2021 04:45:20 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id E774D61139;
+        Thu,  9 Sep 2021 08:44:09 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1631177051;
+        bh=acGBQa9Px7pi52Qs5ue6YEKLuAQ3A+4r/89NWjnto9Q=;
+        h=References:From:To:Cc:Subject:Date:In-reply-to:From;
+        b=vO64dcmx/GAAurjD0cV+plDkKchEKOvK3Sv1kicTuhpgMWL8dOTiuDny/5mOVsZ02
+         qDtS1xaVSqqex7yVqmEbU1FWP3PjLbcybJ6jb5NjCZMG7N1bvOUc2SdlkKu4KMpVWu
+         43v8nqpr0geIOI7+YPJtfVHjn7iFtTX03Z2WsEabh/aENSabjVOVFs+K/d4tL544II
+         yn1AXoHTDN3gzx+AMbVVBO5ZeYJYRhcCKoRXjv1i4b+pXQe6Y1E4plmXgS5oMmjtHg
+         nMB4Cr0zB1G3IOOxHh45+nCBmP9IGY/1GF9Mad634oeplVYe5hPEIMOGl8hKKKbzcn
+         8LzgU6R/dUR4w==
+References: <20210909083120.15350-1-jackp@codeaurora.org>
+User-agent: mu4e 1.6.5; emacs 27.2
+From:   Felipe Balbi <balbi@kernel.org>
+To:     Jack Pham <jackp@codeaurora.org>
+Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Wesley Cheng <wcheng@codeaurora.org>,
+        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH] usb: dwc3: gadget: Skip resizing EP's TX FIFO if
+ already resized
+Date:   Thu, 09 Sep 2021 11:41:38 +0300
+In-reply-to: <20210909083120.15350-1-jackp@codeaurora.org>
+Message-ID: <87fsueb0ko.fsf@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="utf-8"
-Content-Transfer-Encoding: quoted-printable
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQFga5rYGLLrUznfOc7QK5071klN0gIeqw2xrHjfJdA=
-Content-Language: en-us
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+Hi,
 
-> -----Original Message-----
-> From: Stephen Boyd <swboyd@chromium.org>
-> Sent: Wednesday, August 11, 2021 1:22 AM
-> To: Rakesh Pillai <pillair@codeaurora.org>; agross@kernel.org;
-> bjorn.andersson@linaro.org; robh+dt@kernel.org
-> Cc: linux-arm-msm@vger.kernel.org; devicetree@vger.kernel.org; linux-
-> kernel@vger.kernel.org; sibis@codeaurora.org; mpubbise@codeaurora.org
-> Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: Add WPSS remoteproc
-> node
->=20
-> Quoting Rakesh Pillai (2021-08-10 11:11:29)
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > index 53a21d0..41a7826 100644
-> > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > @@ -74,6 +74,16 @@
-> >                         reg =3D <0 0x8b700000 0 0x10000>;
-> >                         no-map;
-> >                 };
-> > +
-> > +               wlan_fw_mem: memory@80c00000 {
-> > +                       no-map;
-> > +                       reg =3D <0x0 0x80c00000 0x0 0xc00000>;
-> > +               };
->=20
-> Please try to keep this sorted by reg address. 80c00000 comes before
-> 8b700000.
->=20
+Jack Pham <jackp@codeaurora.org> writes:
 
-Hi Stephen,
-I will fix this and send v3 for this patch.
+> Some functions may dynamically enable and disable their endpoints
+> regularly throughout their operation, particularly when Set Interface
+> is employed to switch between Alternate Settings.  For instance the
+> UAC2 function has its respective endpoints for playback & capture
+> associated with AltSetting 1, in which case those endpoints would not
+> get enabled until the host activates the AltSetting.  And they
+> conversely become disabled when the interfaces' AltSetting 0 is
+> chosen.
+>
+> With the DWC3 FIFO resizing algorithm recently added, every
+> usb_ep_enable() call results in a call to resize that EP's TXFIFO,
+> but if the same endpoint is enabled again and again, this incorrectly
+> leads to FIFO RAM allocation exhaustion as the mechanism did not
+> account for the possibility that endpoints can be re-enabled many
+> times.
+>
+> Example log splat:
+>
+> 	dwc3 a600000.dwc3: Fifosize(3717) > RAM size(3462) ep3in depth:217973127
+> 	configfs-gadget gadget: u_audio_start_capture:521 Error!
+> 	dwc3 a600000.dwc3: request 000000000be13e18 was not queued to ep3in
+>
+> This is easily fixed by bailing out of dwc3_gadget_resize_tx_fifos()
+> if an endpoint is already resized, avoiding the calculation error
+> resulting from accumulating the EP's FIFO depth repeatedly.
+>
+> Fixes: 9f607a309fbe9 ("usb: dwc3: Resize TX FIFOs to meet EP bursting requirements")
+> Signed-off-by: Jack Pham <jackp@codeaurora.org>
+> ---
+>  drivers/usb/dwc3/gadget.c | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
+> index 804b50548163..c647c76d7361 100644
+> --- a/drivers/usb/dwc3/gadget.c
+> +++ b/drivers/usb/dwc3/gadget.c
+> @@ -747,6 +747,10 @@ static int dwc3_gadget_resize_tx_fifos(struct dwc3_ep *dep)
+>  	if (!usb_endpoint_dir_in(dep->endpoint.desc) || dep->number <= 1)
+>  		return 0;
+>  
+> +	/* bail if already resized */
+> +	if (dwc3_readl(dwc->regs, DWC3_GTXFIFOSIZ(dep->number >> 1)))
+> +		return 0;
+> +
 
+heh, not to say "I told you so", but...
 
-> > +
-> > +               wpss_mem: memory@9ae00000 {
-> > +                       no-map;
-> > +                       reg =3D <0x0 0x9ae00000 0x0 0x1900000>;
-> > +               };
-> >         };
-> >
-> >         cpus {
-> > @@ -1270,6 +1280,53 @@
-> >                         };
-> >                 };
-> >
-> > +               remoteproc_wpss: remoteproc@8a00000 {
-> > +                       compatible =3D "qcom,sc7280-wpss-pil";
-> > +                       reg =3D <0 0x08a00000 0 0x10000>;
-> > +
-> > +                       interrupts-extended =3D <&intc GIC_SPI 587
-> IRQ_TYPE_EDGE_RISING>,
-> > +                                             <&wpss_smp2p_in 0 =
-IRQ_TYPE_NONE>,
-> > +                                             <&wpss_smp2p_in 1 =
-IRQ_TYPE_NONE>,
-> > +                                             <&wpss_smp2p_in 2 =
-IRQ_TYPE_NONE>,
-> > +                                             <&wpss_smp2p_in 3 =
-IRQ_TYPE_NONE>,
-> > +                                             <&wpss_smp2p_in 7
-> > + IRQ_TYPE_NONE>;
->=20
-> Is this IRQ_TYPE_EDGE_RISING? Please add some type of edge or level =
-flag.
+That being said, your test is not very good. The whole idea for resizing
+the FIFOs is that in some applications we only use e.g. 2 endpoints and
+there is considerable FIFO space left unused.
 
-I will change it to IRQ_TYPE_EDGE_RISING and send out the next revision.
+The goal is to use that unused FIFO space to squeeze more throughput out
+of the pipe, since it amortizes SW latency.
 
->=20
-> > +                       interrupt-names =3D "wdog", "fatal", =
-"ready", "handover",
-> > +                                         "stop-ack", =
-"shutdown-ack";
-> > +
-> > +                       clocks =3D <&gcc GCC_WPSS_AHB_BDG_MST_CLK>,
-> > +                                <&gcc GCC_WPSS_AHB_CLK>,
-> > +                                <&gcc GCC_WPSS_RSCP_CLK>,
-> > +                                <&rpmhcc RPMH_CXO_CLK>;
-> > +                       clock-names =3D "gcc_wpss_ahb_bdg_mst_clk",
-> > +                                     "gcc_wpss_ahb_clk",
-> > +                                     "gcc_wpss_rscp_clk",
-> > +                                     "xo";
-> > +
-> > +                       memory-region =3D <&wpss_mem>;
-> > +
-> > +                       qcom,smem-states =3D <&wpss_smp2p_out 0>;
+This patch is essentially the same as reverting the original commit :-)
 
+-- 
+balbi
