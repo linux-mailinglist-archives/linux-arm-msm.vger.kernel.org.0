@@ -2,101 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C254D405DBF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 21:50:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EA228405E36
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 22:48:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344725AbhIITvU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Sep 2021 15:51:20 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:49838 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344593AbhIITvU (ORCPT
+        id S1345722AbhIIUtx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Sep 2021 16:49:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47270 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1345658AbhIIUtw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Sep 2021 15:51:20 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1631217010; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=8k0CvjX0/8JIXqcWEeh28GQhLgUnSZY1azZrJAw1D+s=; b=b2XIkcQjTUQ/Bx9tF6evjbXLhzetXU07DMmIhqtP+vUHLNeTaiefrmqNgYAYjKJiEe5cGmPs
- R82r0TqYwrndrZoC3ubhtJVRWqQrPY7UjL2bXK9wpfIuRfjCnz7kEzWjeUZlvvNZRu0DVE98
- wLBrrTxGoNYzUdrb+TH32H2ilTA=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 613a6571de7dfad22f89c4aa (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 09 Sep 2021 19:50:09
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id F2C58C4361C; Thu,  9 Sep 2021 19:50:07 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 478CAC43616;
-        Thu,  9 Sep 2021 19:50:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 478CAC43616
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Kuogee Hsieh <khsieh@codeaurora.org>
-To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
-        vkoul@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org,
-        robh+dt@kernel.org, devicetree@vger.kernel.org
-Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
-        khsieh@codeaurora.org, mkrishn@codeaurora.org,
-        kalyan_t@codeaurora.org, rajeevny@codeaurora.org,
-        freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2] arm64: dts: qcom: sc7280: fix display port phy reg property
-Date:   Thu,  9 Sep 2021 12:49:58 -0700
-Message-Id: <1631216998-10049-1-git-send-email-khsieh@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Thu, 9 Sep 2021 16:49:52 -0400
+Received: from mail-il1-x129.google.com (mail-il1-x129.google.com [IPv6:2607:f8b0:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BCD2FC061574
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Sep 2021 13:48:42 -0700 (PDT)
+Received: by mail-il1-x129.google.com with SMTP id z2so3373149iln.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Sep 2021 13:48:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=FTXjmRnVh0AWFmD0C2i93mdE+aZFUcGRZVLlt4s8n9Y=;
+        b=OhG+pWKst3E+Zw2mm2Uo8a8KMFQHCgO3R4jnMcjUih6JySF2ZFiRErhvUxZnuAJeXL
+         nKjfbx9KitEtX2Y/fw4VacFgmEiuATD0w/3bVvTLI953fbyet2G/v6ZcKKb3tZgtvpNx
+         m4R+dXz/Qa4SeGnhthj47CHw7d5Qbp8Ba0apo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=FTXjmRnVh0AWFmD0C2i93mdE+aZFUcGRZVLlt4s8n9Y=;
+        b=DhFSw+1OmUI/INHlS3OmI/EGuTbTyZQUtpRWrWlRX6wFBC+tT+n77QJemYaV84Akpb
+         WkH8Kj/LNNv77Bs5DmmeJeW/L2rvoSHf3S7ZtW2N+W+H/ZkYy0bv/6RtYcISDrAndnUm
+         iI/2CZtEDfXDEjsY+hA2CyB7WAmkh80Ag5B3SyktOh0g0HlA/1qA3e9F9bv9OSEFvEJ1
+         0ZQ9SpRRlA+/zNmmqFDzWbCFj2Z5GnbGyBOPfwjTTkPflz1tmEeMchJXJO5GhISIcDdm
+         i9AdLBfdJ/ljAaOPFWc46KHjCJyyB66rsx1oXHJtpi9+szOFULp7FDhBP2AwF4Cr230d
+         0ICA==
+X-Gm-Message-State: AOAM532+WKOAtsPsNMutQzuhCKVrAFst/rqroxy1YPaQNVRv3kUT8c6a
+        Oc1WctSXAnWSqQE0MlKqHBSBshMXID2nQw==
+X-Google-Smtp-Source: ABdhPJxxVUzaGk3JXPmMXAj6J5iZvmfpc3hi9PIFibqzM6h5lF/AO5+tcxOgsT2TjCSCcXwF+axHKw==
+X-Received: by 2002:a05:6e02:154e:: with SMTP id j14mr3823075ilu.226.1631220521818;
+        Thu, 09 Sep 2021 13:48:41 -0700 (PDT)
+Received: from mail-io1-f41.google.com (mail-io1-f41.google.com. [209.85.166.41])
+        by smtp.gmail.com with ESMTPSA id m5sm1474511ila.10.2021.09.09.13.48.40
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 09 Sep 2021 13:48:40 -0700 (PDT)
+Received: by mail-io1-f41.google.com with SMTP id a22so4068553iok.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Sep 2021 13:48:40 -0700 (PDT)
+X-Received: by 2002:a05:6602:1346:: with SMTP id i6mr4202804iov.128.1631220520134;
+ Thu, 09 Sep 2021 13:48:40 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210901201934.1084250-1-dianders@chromium.org> <20210901131531.v3.4.Ib2bdeceb8ce45d36c09f5d1ae62a2263276a0605@changeid>
+In-Reply-To: <20210901131531.v3.4.Ib2bdeceb8ce45d36c09f5d1ae62a2263276a0605@changeid>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 9 Sep 2021 13:48:28 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XuABPeHXaCrSb+KDX-5CEgnmZFJSJF8nGg5b58-ySWkw@mail.gmail.com>
+Message-ID: <CAD=FV=XuABPeHXaCrSb+KDX-5CEgnmZFJSJF8nGg5b58-ySWkw@mail.gmail.com>
+Subject: Re: [PATCH v3 04/16] drm/panel-simple: Reorder logicpd_type_28 / mitsubishi_aa070mc01
+To:     Thierry Reding <thierry.reding@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sam Ravnborg <sam@ravnborg.org>
+Cc:     Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus W <linus.walleij@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Steev Klimaszewski <steev@kali.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Maxime Ripard <mripard@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Existing display port phy reg property is derived from usb phy which
-map display port phy pcs to wrong address which cause aux init
-with wrong address and prevent both dpcd read and write from working.
-Fix this problem by assigning correct pcs address to display port
-phy reg property.
+Hi,
 
-Changes in V2:
--- rewording the commit text
+On Wed, Sep 1, 2021 at 1:20 PM Douglas Anderson <dianders@chromium.org> wrote:
+>
+> The "logicpd_type_28" panel data was splitting up the
+> mitsubishi_aa070mc01 panel data. Reorganize it so that the panel descs
+> and modes are kept together.
+>
+> This is a no-op code-cleanup change, found by code inspection.
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+>
+> Changes in v3:
+> - ("Reorder logicpd_type_28...") patch new for v3.
+>
+>  drivers/gpu/drm/panel/panel-simple.c | 26 +++++++++++++-------------
+>  1 file changed, 13 insertions(+), 13 deletions(-)
 
-Fixes: 9886e8fd8438 ("arm64: dts: qcom: sc7280: Add USB related nodes")
-Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
----
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 8 ++------
- 1 file changed, 2 insertions(+), 6 deletions(-)
+I've pushed just this one patch (with Sam's Ack from the cover letter)
+just to simplify future posts. It's pretty much a no-brainer patch and
+there are no dependencies anywhere for it.
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index fa1353f..cdaff5f 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -2881,15 +2881,11 @@
- 			dp_phy: dp-phy@88ea200 {
- 				reg = <0 0x088ea200 0 0x200>,
- 				      <0 0x088ea400 0 0x200>,
--				      <0 0x088eac00 0 0x400>,
-+				      <0 0x088eaa00 0 0x200>,
- 				      <0 0x088ea600 0 0x200>,
--				      <0 0x088ea800 0 0x200>,
--				      <0 0x088eaa00 0 0x100>;
-+				      <0 0x088ea800 0 0x200>;
- 				#phy-cells = <0>;
- 				#clock-cells = <1>;
--				clocks = <&gcc GCC_USB3_PRIM_PHY_PIPE_CLK>;
--				clock-names = "pipe0";
--				clock-output-names = "usb3_phy_pipe_clk_src";
- 			};
- 		};
- 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+c8527b9ad3cf (drm-misc/drm-misc-next) drm/panel-simple: Reorder
+logicpd_type_28 / mitsubishi_aa070mc01
 
+
+-Doug
