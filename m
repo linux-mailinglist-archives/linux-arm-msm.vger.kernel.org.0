@@ -2,109 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 86E2240454B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 08:02:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 408EF40455C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 08:05:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350945AbhIIGDM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Sep 2021 02:03:12 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:42881 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350876AbhIIGDM (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Sep 2021 02:03:12 -0400
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 08 Sep 2021 23:02:03 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 08 Sep 2021 23:02:01 -0700
-X-QCInternal: smtphost
-Received: from c-skakit-linux.ap.qualcomm.com (HELO c-skakit-linux.qualcomm.com) ([10.242.51.242])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 09 Sep 2021 11:31:44 +0530
-Received: by c-skakit-linux.qualcomm.com (Postfix, from userid 2344709)
-        id 397935460; Thu,  9 Sep 2021 11:31:43 +0530 (IST)
-From:   satya priya <skakit@codeaurora.org>
-To:     Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Stephen Boyd <sboyd@kernel.org>,
-        David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        satya priya <skakit@codeaurora.org>
-Subject: [PATCH V3 2/2] arm64: dts: sc7280: Add volume up support for sc7280-idp
-Date:   Thu,  9 Sep 2021 11:31:28 +0530
-Message-Id: <1631167288-27627-3-git-send-email-skakit@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1631167288-27627-1-git-send-email-skakit@codeaurora.org>
-References: <1631167288-27627-1-git-send-email-skakit@codeaurora.org>
+        id S1350954AbhIIGGI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Sep 2021 02:06:08 -0400
+Received: from ixit.cz ([94.230.151.217]:35404 "EHLO ixit.cz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232012AbhIIGGI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Sep 2021 02:06:08 -0400
+Received: from newone.lan (ixit.cz [94.230.151.217])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ixit.cz (Postfix) with ESMTPSA id F191B23B26;
+        Thu,  9 Sep 2021 08:04:56 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1631167497;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=WtfIKgMT2yvTfh8OH8LJzFcSBPX2PKJLeB664fc42eY=;
+        b=JlhtXDNjywuUF9ZjLMf0bDZjTF6+5Zj16eSGNhfMYpEZ8i1Y+A0qbX3I74mRFWDERa598v
+        X1SluGkJwUfHSrSLSZDg5HPBc84zYENlaboGk7hEgDWifTHao3BV0ojkG3G27/eF3aoUoB
+        MB4Wj3HX5y0MGqylG0rgOl20q8+Ofss=
+From:   David Heidelberg <david@ixit.cz>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, David Heidelberg <david@ixit.cz>
+Subject: [PATCH] ARM: dts: qcom: fill secondary compatible for multiple boards
+Date:   Thu,  9 Sep 2021 08:03:43 +0200
+Message-Id: <20210909060343.9665-1-david@ixit.cz>
+X-Mailer: git-send-email 2.33.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add pm7325 PMIC gpio support for vol+ on sc7280-idp.
+To comply with device-tree definition.
 
-Signed-off-by: satya priya <skakit@codeaurora.org>
+Signed-off-by: David Heidelberg <david@ixit.cz>
 ---
-Changes in V2:
- - No changes.
+ arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dts | 2 +-
+ arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c3.dts | 2 +-
+ arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c1.dts | 2 +-
+ arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c2.dts | 2 +-
+ arch/arm/boot/dts/qcom-ipq8064-ap148.dts        | 2 +-
+ 5 files changed, 5 insertions(+), 5 deletions(-)
 
-Changes in V3:
- - Sorted the nodes alphabetically.
-
- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 31 +++++++++++++++++++++++++++++++
- 1 file changed, 31 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-index 371a2a9..434c1c6 100644
---- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-@@ -239,6 +239,26 @@
- 	cd-gpios = <&tlmm 91 GPIO_ACTIVE_LOW>;
+diff --git a/arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dts b/arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dts
+index b0f476ff017f..a7b1201dd614 100644
+--- a/arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dts
++++ b/arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dts
+@@ -5,7 +5,7 @@
+ 
+ / {
+ 	model = "Qualcomm Technologies, Inc. IPQ4019/AP-DK04.1-C1";
+-	compatible = "qcom,ipq4019-dk04.1-c1";
++	compatible = "qcom,ipq4019-dk04.1-c1", "qcom,ipq4019";
+ 
+ 	soc {
+ 		dma@7984000 {
+diff --git a/arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c3.dts b/arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c3.dts
+index 2d1c4c6e42f1..7765247125e4 100644
+--- a/arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c3.dts
++++ b/arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c3.dts
+@@ -5,5 +5,5 @@
+ 
+ / {
+ 	model = "Qualcomm Technologies, Inc. IPQ4019/AP-DK04.1-C3";
+-	compatible = "qcom,ipq4019-ap-dk04.1-c3";
++	compatible = "qcom,ipq4019-ap-dk04.1-c3", "qcom,ipq4019";
  };
+diff --git a/arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c1.dts b/arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c1.dts
+index f343a2244386..06f9f2cb2fe9 100644
+--- a/arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c1.dts
++++ b/arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c1.dts
+@@ -5,7 +5,7 @@
  
-+&soc {
-+	gpio_keys {
-+		compatible = "gpio-keys";
-+		label = "gpio-keys";
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&key_vol_up_default>;
-+
-+		vol_up {
-+			label = "volume_up";
-+			gpios = <&pm7325_gpios 6 GPIO_ACTIVE_LOW>;
-+			linux,input-type = <1>;
-+			linux,code = <KEY_VOLUMEUP>;
-+			gpio-key,wakeup;
-+			debounce-interval = <15>;
-+			linux,can-disable;
-+		};
-+	};
-+};
-+
- &uart5 {
- 	status = "okay";
- };
-@@ -284,6 +304,17 @@
+ / {
+ 	model = "Qualcomm Technologies, Inc. IPQ4019/AP-DK07.1-C1";
+-	compatible = "qcom,ipq4019-ap-dk07.1-c1";
++	compatible = "qcom,ipq4019-ap-dk07.1-c1", "qcom,ipq4019";
  
- /* PINCTRL - additions to nodes defined in sc7280.dtsi */
+ 	soc {
+ 		pci@40000000 {
+diff --git a/arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c2.dts b/arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c2.dts
+index 582acb681a98..bd3553dd2070 100644
+--- a/arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c2.dts
++++ b/arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c2.dts
+@@ -5,7 +5,7 @@
  
-+&pm7325_gpios {
-+	key_vol_up_default: key_vol_up_default {
-+		pins = "gpio6";
-+		function = "normal";
-+		input-enable;
-+		bias-pull-up;
-+		power-source = <0>;
-+		qcom,drive-strength = <3>;
-+	};
-+};
-+
- &qup_uart5_default {
- 	tx {
- 		pins = "gpio46";
+ / {
+ 	model = "Qualcomm Technologies, Inc. IPQ4019/AP-DK07.1-C2";
+-	compatible = "qcom,ipq4019-ap-dk07.1-c2";
++	compatible = "qcom,ipq4019-ap-dk07.1-c2", "qcom,ipq4019";
+ 
+ 	soc {
+ 		pinctrl@1000000 {
+diff --git a/arch/arm/boot/dts/qcom-ipq8064-ap148.dts b/arch/arm/boot/dts/qcom-ipq8064-ap148.dts
+index e5b9b9cf6097..b63d01d10189 100644
+--- a/arch/arm/boot/dts/qcom-ipq8064-ap148.dts
++++ b/arch/arm/boot/dts/qcom-ipq8064-ap148.dts
+@@ -3,7 +3,7 @@
+ 
+ / {
+ 	model = "Qualcomm Technologies, Inc. IPQ8064/AP-148";
+-	compatible = "qcom,ipq8064-ap148";
++	compatible = "qcom,ipq8064-ap148", "qcom,ipq8064";
+ 
+ 	soc {
+ 		pinmux@800000 {
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
+2.33.0
 
