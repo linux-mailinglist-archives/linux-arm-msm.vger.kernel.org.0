@@ -2,36 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 786B04057F2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 15:44:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E4AF4057F9
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 15:44:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355577AbhIINoO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Sep 2021 09:44:14 -0400
-Received: from mail.kernel.org ([198.145.29.99]:40980 "EHLO mail.kernel.org"
+        id S236455AbhIINp1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Sep 2021 09:45:27 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60536 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1352828AbhIIMrH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S1351801AbhIIMrH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 9 Sep 2021 08:47:07 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 41C7463219;
-        Thu,  9 Sep 2021 11:56:16 +0000 (UTC)
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 026BF613D0;
+        Thu,  9 Sep 2021 11:56:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631188577;
-        bh=VWA7NHbf1w0hEdSW9ID9USH1LNKqF5N+aY34kK5m2BE=;
+        s=k20201202; t=1631188580;
+        bh=6sB9V2TH2YXKggSm4ORmhaVpFYlE+jF8nGZ2tX7oayk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=IYEBXu4TZo+8vtrouzoDKA9rsTdECYyOYEeu4l3U1g4kp8hBYDr72Yiu5fkZ+3EuQ
-         Sq6r1b/GYa4eNbMs0pp+Y5EFgBxTi2q1bql9Pj7KyOOh5IIZs88YeQQRaL07g39Y8q
-         une8K2utFjj27ubwwt89BXNGJPCuatHE05Pyye0mbImARVZfT7oczmWV5eht5WDH+z
-         7hTWlyJG0PoHT8yomGZbKCXRGbfCK8dwZf65D3UfYfw3q2/QPQS2yhyADWDDzRVReC
-         Bl36FJqY7MNPGvuakl5FZSqj+x2iovZe2imM9UrDRaP2xVRexy+puBtFUztdijkbX8
-         S2XqNTBaIXANw==
+        b=C37/nFb8NQvJIw7Chtpb6dP33LMvufkhlvmlA3pdcTRkfOkWYY5amuOgWdqGZBnnw
+         ktNxYB/ZaMtSgldW9w22waXoHPL4l+ZhUh/6iLoJrn5/1az0hCExr5Dcv9wYDTKuln
+         cEMuvEkO7QXztlrbXrDwC5GQD9/mV0a/rznJoeOP12DYZSSO9SZkZuX1h6irqeQH+3
+         FGUG+JChBMfFNZ0tgyWwYf2hGiX7BgD1v4rnLSh5Gr+vZkhC+3jwpy7C38Ze0Z+PFZ
+         WjC3i0FhnZwc0aFyXIIDrTUimAevRInI6GhryJe7AAIztRogpGVGtav5Zcf31gEb8f
+         8XrW2ur7j12Aw==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+Cc:     David Heidelberg <david@ixit.cz>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.4 055/109] arm64: dts: qcom: sdm660: use reg value for memory node
-Date:   Thu,  9 Sep 2021 07:54:12 -0400
-Message-Id: <20210909115507.147917-55-sashal@kernel.org>
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 5.4 057/109] drm/msm: mdp4: drop vblank get/put from prepare/complete_commit
+Date:   Thu,  9 Sep 2021 07:54:14 -0400
+Message-Id: <20210909115507.147917-57-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210909115507.147917-1-sashal@kernel.org>
 References: <20210909115507.147917-1-sashal@kernel.org>
@@ -43,36 +44,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Vinod Koul <vkoul@kernel.org>
+From: David Heidelberg <david@ixit.cz>
 
-[ Upstream commit c81210e38966cfa1c784364e4035081c3227cf5b ]
+[ Upstream commit 56bd931ae506730c9ab1e4cc4bfefa43fc2d18fa ]
 
-memory node like other node should be node@reg, which is missing in this
-case, so fix it up
+msm_atomic is doing vblank get/put's already,
+currently there no need to duplicate the effort in MDP4
 
-arch/arm64/boot/dts/qcom/ipq8074-hk01.dt.yaml: /: memory: False schema does not allow {'device_type': ['memory'], 'reg': [[0, 1073741824, 0, 536870912]]}
+Fix warning:
+...
+WARNING: CPU: 3 PID: 79 at drivers/gpu/drm/drm_vblank.c:1194 drm_vblank_put+0x1cc/0x1d4
+...
+and multiple vblank time-outs:
+...
+msm 5100000.mdp: vblank time out, crtc=1
+...
 
-Signed-off-by: Vinod Koul <vkoul@kernel.org>
-Link: https://lore.kernel.org/r/20210308060826.3074234-18-vkoul@kernel.org
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Tested on Nexus 7 2013 (deb), LTS 5.10.50.
+
+Introduced by: 119ecb7fd3b5 ("drm/msm/mdp4: request vblank during modeset")
+
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Link: https://lore.kernel.org/r/20210715060925.7880-1-david@ixit.cz
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/ipq8074-hk01.dts | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 13 -------------
+ 1 file changed, 13 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts b/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
-index 70be3f95209b..830d9f2c1e5f 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
-+++ b/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
-@@ -20,7 +20,7 @@ chosen {
- 		stdout-path = "serial0";
- 	};
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+index 20194d86d033..5d50e93efe36 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+@@ -108,13 +108,6 @@ static void mdp4_disable_commit(struct msm_kms *kms)
  
--	memory {
-+	memory@40000000 {
- 		device_type = "memory";
- 		reg = <0x0 0x40000000 0x0 0x20000000>;
- 	};
+ static void mdp4_prepare_commit(struct msm_kms *kms, struct drm_atomic_state *state)
+ {
+-	int i;
+-	struct drm_crtc *crtc;
+-	struct drm_crtc_state *crtc_state;
+-
+-	/* see 119ecb7fd */
+-	for_each_new_crtc_in_state(state, crtc, crtc_state, i)
+-		drm_crtc_vblank_get(crtc);
+ }
+ 
+ static void mdp4_flush_commit(struct msm_kms *kms, unsigned crtc_mask)
+@@ -133,12 +126,6 @@ static void mdp4_wait_flush(struct msm_kms *kms, unsigned crtc_mask)
+ 
+ static void mdp4_complete_commit(struct msm_kms *kms, unsigned crtc_mask)
+ {
+-	struct mdp4_kms *mdp4_kms = to_mdp4_kms(to_mdp_kms(kms));
+-	struct drm_crtc *crtc;
+-
+-	/* see 119ecb7fd */
+-	for_each_crtc_mask(mdp4_kms->dev, crtc, crtc_mask)
+-		drm_crtc_vblank_put(crtc);
+ }
+ 
+ static long mdp4_round_pixclk(struct msm_kms *kms, unsigned long rate,
 -- 
 2.30.2
 
