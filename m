@@ -2,124 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CB23405BB2
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 19:03:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B8C95405C35
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 19:41:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239647AbhIIRFH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Sep 2021 13:05:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52168 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234524AbhIIRFG (ORCPT
+        id S241491AbhIIRmO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Sep 2021 13:42:14 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:54290 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237224AbhIIRmN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Sep 2021 13:05:06 -0400
-Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5C94C061574;
-        Thu,  9 Sep 2021 10:03:56 -0700 (PDT)
-Received: by mail-wr1-x42e.google.com with SMTP id x6so3526387wrv.13;
-        Thu, 09 Sep 2021 10:03:56 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=IbPPNqobPmWZ9MF50JtcVBJ+K5zUi+K+HgQrnexV6is=;
-        b=BE/y2bL/mHyRfUxGmarxT/nWkFdJyoDiJQtSLvbtElf2UESCirtPhVWa0xURMyE5tF
-         rYTmwmayvMNAV77nMn8OnSbsQBXKaho0Mf7sx1UJRiNp/0zyvd2vEvD1ZcsOP6Idyh8I
-         nJMdkiJveWXI8MXP3/S+LHsYohhkLiI5HAvtYoDeM1SJxY7AIldHjSqxxEhtIkYmYB84
-         5QNzYwGK3ubwMbqUocdIOoNCwQeHafOucLmkD0NJibGsl58DOIzZPkxc1wHSjsdtDsMX
-         7FbfsGNMPGgQl1HAh6ggsseaIz9cj2Sa7YnMJe1vCa6t0dT04seBaMEuTQ7jh5W87Jol
-         XAQQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=IbPPNqobPmWZ9MF50JtcVBJ+K5zUi+K+HgQrnexV6is=;
-        b=rxQGOUzpOgv47146cQYjpF4xtGug1sWiwAr19bMy8DjEiTOj0V5jQjOGKgJI3WHzWb
-         BoWXoUdNa7zu37A/KagANAV1yZciXq21GhVyjRBIeVq1Cb9H/Ml++770UTQo6ijkK/Ty
-         v1xT0FyVt2f0yJuq0RoqREbcbe88eh7F5z0B803ZEOx6Dk2av2L3GWAxrxVPWJfjBer6
-         6i0goL30lKALNTHlFBAnQ6jruxiw5Hi5T9Kfjc5KGIAut2wtd1gLRQG6cEj8orcNYK/2
-         CUEX3oDm6GNDH0DHYiPGuueUQaKEVL4Iip/5qcJC9kDZQ8zWX1JFfO9nSNR8JoFd8lKN
-         8iTg==
-X-Gm-Message-State: AOAM530DG6I3HpxTS6rhlNJAf/OJ40YvpEFLIpfYFN05/Iz9Ef8Fz3WX
-        QFCBaIIJQpJPF7MMFdsab7a6J6o5TluPUpzSr90=
-X-Google-Smtp-Source: ABdhPJxhkpYn5lOEWS5HH3Rm8m0d/wuvw1EtxFJjV07j/rVitgQQ8dAircwjT8ySc+dDGJd0RC694oWjtFnG4vZItxk=
-X-Received: by 2002:a05:6000:178b:: with SMTP id e11mr4750688wrg.151.1631207035454;
- Thu, 09 Sep 2021 10:03:55 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210903184806.1680887-1-robdclark@gmail.com> <i-XmBd_5J3_d8cdm-IT6Ery2kHN0FPZCX968aU5idvxQxNlvDJguLLThtF2NF15LF8gGsH4uI2w0s0CL_39KGpzoGpuCgcz2_-4Wjf3AYEM=@emersion.fr>
- <CAF6AEGuD2bnFpmSWtGxU5+AFj1HVKtnOZmLKRr-pDVbLn0nPVw@mail.gmail.com> <CZ2qg4SOe8RnrJpAfZtag_GZTFRt6wAdspKbP4RqpFQCE9Wiuf4xyHTUyKIkaXGu6LfKpSALrmOC3jxgfPdMRjgIAkrkvTnNd9stjXqnPNI=@emersion.fr>
-In-Reply-To: <CZ2qg4SOe8RnrJpAfZtag_GZTFRt6wAdspKbP4RqpFQCE9Wiuf4xyHTUyKIkaXGu6LfKpSALrmOC3jxgfPdMRjgIAkrkvTnNd9stjXqnPNI=@emersion.fr>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Thu, 9 Sep 2021 10:08:22 -0700
-Message-ID: <CAF6AEGseoCzbYXUjsJNo7q-_g3FBmn0+BPMKf=QX5gunhOeKKA@mail.gmail.com>
-Subject: Re: [PATCH v3 0/9] dma-fence: Deadline awareness
-To:     Simon Ser <contact@emersion.fr>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
-        <linaro-mm-sig@lists.linaro.org>, Daniel Vetter <daniel@ffwll.ch>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>,
-        =?UTF-8?Q?Michel_D=C3=A4nzer?= <michel@daenzer.net>,
-        Pekka Paalanen <ppaalanen@gmail.com>,
-        Rob Clark <robdclark@chromium.org>,
-        Alex Deucher <alexander.deucher@amd.com>,
-        Andrey Grodzovsky <andrey.grodzovsky@amd.com>,
-        Boris Brezillon <boris.brezillon@collabora.com>,
-        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Gustavo Padovan <gustavo@padovan.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" 
-        <linux-media@vger.kernel.org>, Luben Tuikov <luben.tuikov@amd.com>,
-        Melissa Wen <mwen@igalia.com>,
-        Steven Price <steven.price@arm.com>,
-        Tian Tao <tiantao6@hisilicon.com>
-Content-Type: text/plain; charset="UTF-8"
+        Thu, 9 Sep 2021 13:42:13 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1631209264; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=prNdcE1SYxw4b+K28K8kg3uoPgG24TCJQIzzLAc82Yg=; b=lxi3SS2arNK7Bp7YJRe0yhgONuJ5m8DYMDDthOF6sU4Hvbhj9ygjaaQhCpmHoQeeIPVjPB9b
+ 2ppJgh6MRvx99gAFGp6wvnZ+57v4AaZGQUDE/o+2Pj84f86csK+xFVXEMWSiMy3i48h8R5PR
+ gQNvHTs2CCqCIxXtoyJ79u76/ts=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 613a472c843a8a103220248a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 09 Sep 2021 17:41:00
+ GMT
+Sender: pmaliset=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3BC57C4361A; Thu,  9 Sep 2021 17:41:00 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from pmaliset-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: pmaliset)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4BD51C4338F;
+        Thu,  9 Sep 2021 17:40:53 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 4BD51C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Prasad Malisetty <pmaliset@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, bhelgaas@google.com,
+        robh+dt@kernel.org, swboyd@chromium.org, lorenzo.pieralisi@arm.com,
+        svarbanov@mm-sol.com
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dianders@chromium.org, mka@chromium.org, vbadigan@codeaurora.org,
+        sallenki@codeaurora.org, manivannan.sadhasivam@linaro.org,
+        Prasad Malisetty <pmaliset@codeaurora.org>
+Subject: [PATCH v6 0/4] Add DT bindings and DT nodes for PCIe and PHY in SC7280
+Date:   Thu,  9 Sep 2021 23:10:41 +0530
+Message-Id: <1631209245-31256-1-git-send-email-pmaliset@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 9, 2021 at 9:42 AM Simon Ser <contact@emersion.fr> wrote:
->
-> On Thursday, September 9th, 2021 at 18:31, Rob Clark <robdclark@gmail.com> wrote:
->
-> > Yes, I think it would.. and "dma-buf/sync_file: Add SET_DEADLINE
-> > ioctl" adds such an ioctl.. just for the benefit of igt tests at this
-> > point, but the thought was it would be also used by compositors that
-> > are doing such frame scheduling. Ofc danvet is a bit grumpy that
-> > there isn't a more real (than igt) userspace for the ioctl yet ;-)
->
-> Ah, very nice, I somehow missed it.
->
-> I guess one issue is that explicit sync isn't quite plumbed through
-> compositors yet, so without Jason's DMA-BUF to sync_file IOCTL it'd be
-> a bit difficult to use.
->
-> Can anybody set the deadline? I wonder if clients should be allowed to.
+Changes in v6:
+		* Removed platform check while setting gcc_pcie_1_pipe_clk_src
+		  as clk_set_parent will return 0 with nop if platform doesn't 
+		  need to switch pipe clk source.
+		* Moved wake-n gpio to board specific file sc7280-idp.dtsi
+		* Sorted gpio.h header entry in sc7280.dtsi file 
+		
+Changes in v5:
+    
+            * Re ordered PCIe, PHY nodes in Soc and board specific dtsi files.
+            * Removed ref_clk entry in current patch [PATCH v4 P4/4].
+            * I will add ref clk entry in suspend/ resume commits.
+            * Added boolean flag in Soc specific dtsi file to differentiate
+              SM8250 and SC7280 platforms. based on boolean flag, platforms will handle
+              the pipe clk handling.
 
-In its current form, anyone who has the fd can.. I'm not sure how (or
-even if) we could limit it beyond that.  I suppose hypothetically you
-could use this for completely non-compositor related things, like
-compute jobs where you want the result by some deadline.  (OTOH, it
-could be the driver using this internally when the app is stalling on
-a result)
+Changes in v4 as suggested by Bjorn:
 
-> What happens if the deadline is exceeded? I'd assume nothing in
-> particular, the deadline being just a hint?
+	* Changed pipe clk mux name as gcc_pcie_1_pipe_clk_src.
+	* Changed pipe_ext_src as phy_pipe_clk.
+	* Updated commit message for [PATCH v4 4/4]. 
 
-Nothing in particular, it is just a hint.  The main intention is to
-provide a feedback hint to the drivers in scenarios like vblank
-deadlines, where being 1ms late is just as bad as being
-$frame_duration-1ms late.  From my experiments and profiling it is
-useful in a couple scenarios:
+Changes in v3:
+	* Changed pipe clock names in dt bindings as pipe_mux and phy_pipe.
+	* Moved reset and NVMe GPIO pin configs into board specific file.
+	* Updated pipe clk mux commit message.
+	
+Changes in v2:
+	* Moved pcie pin control settings into IDP file.
+	* Replaced pipe_clk_src with pipe_clk_mux in pcie driver 
+	* Included pipe clk mux setting change set in this series
 
-1) input latency, ie. go from idle to fullscreen animation, where GPU
-has been idle for a while and not busy enough *yet* for devfreq to
-kick in and start ramping up the freq before we miss the first vblank
-2) double buffering, for ex. if you are 1ms late you end up stalling
-15ms before the gpu can start rendering the next frame.. in the
-absence of feedback, devfreq would ramp down in this scenario instead
-of up
+Prasad Malisetty (4):
+  dt-bindings: pci: qcom: Document PCIe bindings for SC7280
+  arm64: dts: qcom: sc7280: Add PCIe and PHY related nodes
+  arm64: dts: qcom: sc7280: Add PCIe nodes for IDP board
+  PCI: qcom: Switch pcie_1_pipe_clk_src after PHY init in SC7280
 
-BR,
--R
+ .../devicetree/bindings/pci/qcom,pcie.txt          |  17 +++
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts            |  39 +++++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               | 121 +++++++++++++++++++++
+ drivers/pci/controller/dwc/pcie-qcom.c             |  18 +++
+ 4 files changed, 195 insertions(+)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
