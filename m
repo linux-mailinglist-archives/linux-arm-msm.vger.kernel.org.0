@@ -2,38 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BD6C404F3C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 14:20:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 31DD2404EEB
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 14:19:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1349787AbhIIMRv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Sep 2021 08:17:51 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51718 "EHLO mail.kernel.org"
+        id S237872AbhIIMQA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Sep 2021 08:16:00 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52004 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1350246AbhIIMNR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Sep 2021 08:13:17 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id ADB8061A3F;
-        Thu,  9 Sep 2021 11:48:55 +0000 (UTC)
+        id S242520AbhIIMN1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Sep 2021 08:13:27 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id CD86161A04;
+        Thu,  9 Sep 2021 11:48:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631188136;
-        bh=cvSvAuL0fcPQPqEG6/sLvUXB7MySQLu0FomkTkI0Xsw=;
+        s=k20201202; t=1631188140;
+        bh=xL8R0xhcv7lM2CtakF54LGe40ktCPUaMQx6L5gTtMWA=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=VVaC7mAl7U8vj0sceNBAwtDYeQR3pIGoYS5Cc2qZPepKj14rHwX+2lgZtIp0z0Smc
-         yO1vgBESIeC9xmdpMRxcpXYEZAYcF975F+VZ+TFxbLpHh0+vggVPTRN3CAMVbPGkLD
-         UvVMXruQSpYvoOza9jeZG/0iz74dyzrOZ5NotGbzmylIH1UUoww2My7GP5J7TbPYp9
-         QGlTLsbS+xMVFemkRLEkKlTkvjB5eGhjIGmrv2KxkUAiY3TpFaT+GksKiwJJjjV8w9
-         dCAnCTwuwr1FoDTBnkd8MVV7VH06fU84Ggms7esiRy8ew0azcmvHxcUuZCouerfEE6
-         zHwaBRH7BrIeQ==
+        b=HDNMOp9V1fiuqlJz1rfD0paJbo5/rl2lhA21TolT8e9aY6TikJN2PKpjG3KmUHTlV
+         EwVD1N3E3g6Or5XF0nipAOuC464hXxQPONC+ShzY/3GlJuFWqrkWL+G9s6ntdFSR88
+         8jO75uaCWjzDVWp5iNmb+fG9LPDlq0pPTkk6pm0eHMYIs+4VNl92hQT90HkJSXTsXk
+         sh4vUbcK1e28y538gYJVfIFtDY0j2oSHmbSlzR01LcVwQv0LhB1j3rwM6Ug/hbx9T/
+         f0zt7Amf/1UTCty8YiZVQeSVnUK+aWJr6lp+XI5k3V82LKcdls2ZDyzjcWu+lYs2MT
+         4+micmTXxta7w==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Georgi Djakov <georgi.djakov@linaro.org>,
+Cc:     David Heidelberg <david@ixit.cz>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.13 109/219] arm64: dts: qcom: sm8250: Fix epss_l3 unit address
-Date:   Thu,  9 Sep 2021 07:44:45 -0400
-Message-Id: <20210909114635.143983-109-sashal@kernel.org>
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH AUTOSEL 5.13 112/219] drm/msm: mdp4: drop vblank get/put from prepare/complete_commit
+Date:   Thu,  9 Sep 2021 07:44:48 -0400
+Message-Id: <20210909114635.143983-112-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210909114635.143983-1-sashal@kernel.org>
 References: <20210909114635.143983-1-sashal@kernel.org>
@@ -45,36 +44,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Georgi Djakov <georgi.djakov@linaro.org>
+From: David Heidelberg <david@ixit.cz>
 
-[ Upstream commit 77b53d65dc1e54321ec841912f06bcb558a079c0 ]
+[ Upstream commit 56bd931ae506730c9ab1e4cc4bfefa43fc2d18fa ]
 
-The unit address of the epss_l3 node is incorrect and does not match
-the address of its "reg" property. Let's fix it.
+msm_atomic is doing vblank get/put's already,
+currently there no need to duplicate the effort in MDP4
 
-Signed-off-by: Georgi Djakov <georgi.djakov@linaro.org>
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Reviewed-by: Sibi Sankar <sibis@codeaurora.org>
-Link: https://lore.kernel.org/r/20210211193637.9737-1-georgi.djakov@linaro.org
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Fix warning:
+...
+WARNING: CPU: 3 PID: 79 at drivers/gpu/drm/drm_vblank.c:1194 drm_vblank_put+0x1cc/0x1d4
+...
+and multiple vblank time-outs:
+...
+msm 5100000.mdp: vblank time out, crtc=1
+...
+
+Tested on Nexus 7 2013 (deb), LTS 5.10.50.
+
+Introduced by: 119ecb7fd3b5 ("drm/msm/mdp4: request vblank during modeset")
+
+Signed-off-by: David Heidelberg <david@ixit.cz>
+Link: https://lore.kernel.org/r/20210715060925.7880-1-david@ixit.cz
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 13 -------------
+ 1 file changed, 13 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 09b552396557..169412f42149 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -3773,7 +3773,7 @@ apps_bcm_voter: bcm_voter {
- 			};
- 		};
+diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+index 4a5b518288b0..1325731282f7 100644
+--- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
++++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
+@@ -108,13 +108,6 @@ static void mdp4_disable_commit(struct msm_kms *kms)
  
--		epss_l3: interconnect@18591000 {
-+		epss_l3: interconnect@18590000 {
- 			compatible = "qcom,sm8250-epss-l3";
- 			reg = <0 0x18590000 0 0x1000>;
+ static void mdp4_prepare_commit(struct msm_kms *kms, struct drm_atomic_state *state)
+ {
+-	int i;
+-	struct drm_crtc *crtc;
+-	struct drm_crtc_state *crtc_state;
+-
+-	/* see 119ecb7fd */
+-	for_each_new_crtc_in_state(state, crtc, crtc_state, i)
+-		drm_crtc_vblank_get(crtc);
+ }
  
+ static void mdp4_flush_commit(struct msm_kms *kms, unsigned crtc_mask)
+@@ -133,12 +126,6 @@ static void mdp4_wait_flush(struct msm_kms *kms, unsigned crtc_mask)
+ 
+ static void mdp4_complete_commit(struct msm_kms *kms, unsigned crtc_mask)
+ {
+-	struct mdp4_kms *mdp4_kms = to_mdp4_kms(to_mdp_kms(kms));
+-	struct drm_crtc *crtc;
+-
+-	/* see 119ecb7fd */
+-	for_each_crtc_mask(mdp4_kms->dev, crtc, crtc_mask)
+-		drm_crtc_vblank_put(crtc);
+ }
+ 
+ static long mdp4_round_pixclk(struct msm_kms *kms, unsigned long rate,
 -- 
 2.30.2
 
