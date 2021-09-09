@@ -2,177 +2,227 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BFF88405C98
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 20:08:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 58DD6405D39
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 21:15:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242417AbhIISJd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Sep 2021 14:09:33 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54084 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231431AbhIISJa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Sep 2021 14:09:30 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 5804C610C9;
-        Thu,  9 Sep 2021 18:08:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631210897;
-        bh=rUgjo8lIkjG8VTsPFFj78gVWqfDjqFx80l5ivn3DkcU=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=fC933vyE/cBcM4YcmOg+DgH13xy31FrmuVVX3jvutEhRRXmQylLC+HDHkFxCH7XHw
-         5h8YbLstZ39heKg7+wKr90HLgqQkkl5O250x3VsWMY3ijIrzPi3VWy+zaXamYODfnR
-         SsItmcEZ+pMqc29dWZU2ET3FXmu3rFz1KY+2e7YpxPQqEcNoUXnE0O8ykO7MhplXh/
-         tA1OYUykv8MWwiAqGzZfa8ZLp0hHRUdbdEIAcEE9HHWzXIN2m+N41jgSRlzqQOGBEz
-         IsaOLE51CpdzB8Ku96fVHDZUqKJ+DPhiBYnpreSDx3opM9uqsNSj2F809nvNtb6e4r
-         tdcZ2ZYlUd50Q==
-Date:   Thu, 9 Sep 2021 13:08:15 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Prasad Malisetty <pmaliset@codeaurora.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
+        id S237677AbhIITQO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Sep 2021 15:16:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54410 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231422AbhIITQO (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Sep 2021 15:16:14 -0400
+Received: from mail-oo1-xc35.google.com (mail-oo1-xc35.google.com [IPv6:2607:f8b0:4864:20::c35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49DD1C061575
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Sep 2021 12:15:04 -0700 (PDT)
+Received: by mail-oo1-xc35.google.com with SMTP id y47-20020a4a9832000000b00290fb9f6d3fso900824ooi.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Sep 2021 12:15:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=X+D/zXC15Sztu7hCHCid5gnO02nMT90v2w2N9r6H9H0=;
+        b=JCFIqViuDyzXdeRbfp9b4Ps7xZlemQh7cNJH01qQyJpQ+uHiP42NjTE7oJPOKgOv1d
+         OZrcpohU2Orz5buQCTXiyrSyDWYPrjQuMB22LcyQ5ACX1jU7dP43JZ68z13z7EoSqVmP
+         DPF19ZZ9qfxEOi9nFNFpw4cRfuwDG6NGXoXac=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=X+D/zXC15Sztu7hCHCid5gnO02nMT90v2w2N9r6H9H0=;
+        b=n0QvJRdLVMLx40CfGmQy7jdrRgTrpUiLWMRS0BavUpJT++PvfzL+1ZbGJjS3nRPir0
+         Bw5mep7vunT/w2qUNeCocNDL/zxFGVwIc7pFrT+lu5zFCTDRmrDpvRqTnxnwuO1WeWrg
+         OpYdPPfOfqZm70PujvHCrwz+LZomSuTbdisnBqFZ29IeKXjSOWfH7DGavKg2pNhMKPsk
+         XqMMwhTsczaRWyk/t5qwDIvLNgE8ajunLgK3Xr6KOZXl8QNvZhM0WGnY9tN1SNe5gg31
+         dYoNonHmuWVVYnqJS/zMnUX+gtEnIePcKwIDXb0BD2xQNsTsUXFRe7uTSBKf8ZJqnPKC
+         T7Kw==
+X-Gm-Message-State: AOAM532sCcg5Obfa0UoOTaL+28cH1JqoJpAydesbeH3Z3/SfZfSveQtE
+        pdDvz7jHgOTVUhC7zfMMQhKHQ5lovySzgsmA+KCVSq+qv78=
+X-Google-Smtp-Source: ABdhPJzq/dmil9c0cBFKt5jZ2mOaXCzoZ1B5mJ0oFBERA/8J3W9zfZf65TQivu70Se7KoS6Qf6CvICON8HB91vqxfWk=
+X-Received: by 2002:a4a:919e:: with SMTP id d30mr1195316ooh.8.1631214903510;
+ Thu, 09 Sep 2021 12:15:03 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 9 Sep 2021 12:15:02 -0700
+MIME-Version: 1.0
+In-Reply-To: <1631209245-31256-3-git-send-email-pmaliset@codeaurora.org>
+References: <1631209245-31256-1-git-send-email-pmaliset@codeaurora.org> <1631209245-31256-3-git-send-email-pmaliset@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Thu, 9 Sep 2021 12:15:02 -0700
+Message-ID: <CAE-0n52ywAF_m7R4v_K6P=Z9=wgqXGscG4PXfPsDMOimdyS31w@mail.gmail.com>
+Subject: Re: [PATCH v6 2/4] arm64: dts: qcom: sc7280: Add PCIe and PHY related nodes
+To:     Prasad Malisetty <pmaliset@codeaurora.org>, agross@kernel.org,
         bhelgaas@google.com, bjorn.andersson@linaro.org,
-        lorenzo.pieralisi@arm.com, svarbanov@mm-sol.com,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        lorenzo.pieralisi@arm.com, robh+dt@kernel.org, svarbanov@mm-sol.com
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
         dianders@chromium.org, mka@chromium.org, vbadigan@codeaurora.org,
-        sallenki@codeaurora.org, manivannan.sadhasivam@linaro.org,
-        linux-pci@vger.kernel.org
-Subject: Re: [PATCH v5 4/4] PCI: qcom: Switch pcie_1_pipe_clk_src after PHY
- init in SC7280
-Message-ID: <20210909180815.GA997402@bjorn-Precision-5520>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <5fae4f586edfde4f615a8ea6a309fbff@codeaurora.org>
+        sallenki@codeaurora.org, manivannan.sadhasivam@linaro.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 09, 2021 at 11:21:22PM +0530, Prasad Malisetty wrote:
-> On 2021-08-31 21:07, Bjorn Helgaas wrote:
-> > On Tue, Aug 31, 2021 at 12:07:30PM +0530, Prasad Malisetty wrote:
-> > > On 2021-08-26 18:07, Rob Herring wrote:
-> > > > On Thu, Aug 26, 2021 at 2:22 AM Prasad Malisetty
-> > > > <pmaliset@codeaurora.org> wrote:
-> > > > >
-> > > > > On 2021-08-26 02:55, Bjorn Helgaas wrote:
-> > > > > > [+cc linux-pci; patches to drivers/pci/ should always be cc'd there]
-> > > > > >
-> > > > > > On Wed, Aug 25, 2021 at 07:30:09PM +0000, Stephen Boyd wrote:
-> > > > > >> Quoting Prasad Malisetty (2021-08-24 01:10:48)
-> > > > > >> > On 2021-08-17 22:56, Prasad Malisetty wrote:
-> > > > > >> > > On 2021-08-10 09:38, Prasad Malisetty wrote:
-> > > > > >> > >> On the SC7280, By default the clock source for pcie_1_pipe is
-> > > > > >> > >> TCXO for gdsc enable. But after the PHY is initialized, the clock
-> > > > > >> > >> source must be switched to gcc_pcie_1_pipe_clk from TCXO.
-> > > > > >> > >>
-> > > > > >> > >> Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
-> > > > > >> > >> ---
-> > > > > >> > >>  drivers/pci/controller/dwc/pcie-qcom.c | 18 ++++++++++++++++++
-> > > > > >> > >>  1 file changed, 18 insertions(+)
-> > > > > >> > >>
-> > > > > >> > >> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > > >> > >> b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > > >> > >> index 8a7a300..39e3b21 100644
-> > > > > >> > >> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > > >> > >> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> > > > > >> > >> @@ -166,6 +166,8 @@ struct qcom_pcie_resources_2_7_0 {
-> > > > > >> > >>      struct regulator_bulk_data supplies[2];
-> > > > > >> > >>      struct reset_control *pci_reset;
-> > > > > >> > >>      struct clk *pipe_clk;
-> > > > > >> > >> +    struct clk *gcc_pcie_1_pipe_clk_src;
-> > > > > >> > >> +    struct clk *phy_pipe_clk;
-> > > > > >> > >>  };
-> > > > > >> > >>
-> > > > > >> > >>  union qcom_pcie_resources {
-> > > > > >> > >> @@ -1167,6 +1169,16 @@ static int qcom_pcie_get_resources_2_7_0(struct
-> > > > > >> > >> qcom_pcie *pcie)
-> > > > > >> > >>      if (ret < 0)
-> > > > > >> > >>              return ret;
-> > > > > >> > >>
-> > > > > >> > >> +    if (of_device_is_compatible(dev->of_node, "qcom,pcie-sc7280")) {
-> > > > > >> > >> +            res->gcc_pcie_1_pipe_clk_src = devm_clk_get(dev, "pipe_mux");
-> > > > > >> > >> +            if (IS_ERR(res->gcc_pcie_1_pipe_clk_src))
-> > > > > >> > >> +                    return PTR_ERR(res->gcc_pcie_1_pipe_clk_src);
-> > > > > >> > >> +
-> > > > > >> > >> +            res->phy_pipe_clk = devm_clk_get(dev, "phy_pipe");
-> > > > > >> > >> +            if (IS_ERR(res->phy_pipe_clk))
-> > > > > >> > >> +                    return PTR_ERR(res->phy_pipe_clk);
-> > > > > >> > >> +    }
-> > > > > >> > >
-> > > > > >> > > I would like to check is there any other better
-> > > > > >> > > approach instead of compatible method here as well or
-> > > > > >> > > is it fine to use compatible method.
-> > > > > >>
-> > > > > >> I'd prefer the compatible method. If nobody is responding
-> > > > > >> then it's best to just resend the patches with the
-> > > > > >> approach you prefer instead of waiting for someone to
-> > > > > >> respond to a review comment.
-> > > > > >
-> > > > > > I'm missing some context here, so I'm not exactly sure
-> > > > > > what your question is, Prasad, but IMO drivers generally
-> > > > > > should not need to use of_device_is_compatible() if
-> > > > > > they've already called of_device_get_match_data() (as
-> > > > > > qcom_pcie_probe() has).
-> > > > > >
-> > > > > > of_device_is_compatible() does basically the same work of
-> > > > > > looking for a match in qcom_pcie_match[] that
-> > > > > > of_device_get_match_data() does, so it seems pointless to
-> > > > > > repeat it.
-> > > >
-> > > > +1
-> > > >
-> > > > > > I am a little confused because while [1] adds "qcom,pcie-sc7280" to
-> > > > > > qcom,pcie.txt, I don't see a patch that adds it to qcom_pcie_match[].
-> > > >
-> > > > Either that's missing or there's a fallback to 8250 that's not
-> > > > documented.
-> > > >
-> > > > > I agree on your point, but the main reason is to use compatible in
-> > > > > get_resources_2_7_0 is same hardware version. For SM8250 & SC7280
-> > > > > platforms, the hw version is same. Since we can't have a separate ops
-> > > > > for SC7280, we are using compatible method in get_resources_2_7_0 to
-> > > > > differentiate SM8250 and SC7280.
-> > > >
-> > > > Then fix the match data to be not just ops, but ops and the flag you
-> > > > need here.
-> > > 
-> > > This difference is not universal across all the platforms but
-> > > instead this is specific to SC7280.  Hence it make sense to use
-> > > compatible other than going for a flag.
-> > 
-> > There's no reason your qcom_pcie_match[].data pointers need to be
-> > strictly based on the hardware version.
-> > 
-> > You can do something like what pcie-brcmstb.c does, e.g.,
-> > 
-> >   struct pcie_cfg_data {
-> >     struct qcom_pcie_ops *ops;
-> >     unsigned int pipe_mux:1;
-> >   };
-> > 
-> >   static const struct pcie_cfg_data sm8250_cfg = {
-> >     .ops = &ops_1_9_0,
-> >   };
-> > 
-> >   static const struct pcie_cfg_data sc7280_cfg = {
-> >     .ops = &ops_1_9_0,
-> >     .pipe_mux = 1,
-> >   };
-> > 
-> >   static const struct of_device_id qcom_pcie_match[] = {
-> >     { .compatible = "qcom,pcie-sm8250", .data = &sm8250_cfg },
-> >     { .compatible = "qcom,pcie-sc7280", .data = &sc7280_cfg },
-> >   };
-> 
-> I have one quick query, If we use above approach, we should change platform
-> data reading in PCIe probe to differentiate remaining platforms right.
-> expect SM8250 and SC7280 all other platforms are using same qcom_pcie_ops
-> structure pointer as data.
+Quoting Prasad Malisetty (2021-09-09 10:40:43)
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> index 53a21d0..422c112 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> @@ -7,6 +7,7 @@
+>
+>  #include <dt-bindings/clock/qcom,gcc-sc7280.h>
+>  #include <dt-bindings/clock/qcom,rpmh.h>
+> +#include <dt-bindings/gpio/gpio.h>
+>  #include <dt-bindings/interconnect/qcom,sc7280.h>
+>  #include <dt-bindings/interrupt-controller/arm-gic.h>
+>  #include <dt-bindings/mailbox/qcom-ipcc.h>
+> @@ -586,6 +587,119 @@
+>                         qcom,bcm-voters = <&apps_bcm_voter>;
+>                 };
+>
+> +               pcie1: pci@1c08000 {
+> +                       compatible = "qcom,pcie-sc7280", "qcom,pcie-sm8250";
 
-Yes.  of_device_get_match_data() must return the same type of pointer
-(in the example above, "struct pcie_cfg_data *") for all platforms.
-So you would have to add a struct for each of them, and each struct
-would contain the ops pointer (&ops_1_0_0, &ops_2_1_0, etc).
+Can you please drop pcie-sm8250?
 
-Thanks for working on this!
+> +                       reg = <0 0x01c08000 0 0x3000>,
+> +                             <0 0x40000000 0 0xf1d>,
+> +                             <0 0x40000f20 0 0xa8>,
+> +                             <0 0x40001000 0 0x1000>,
+> +                             <0 0x40100000 0 0x100000>;
+> +
+> +                       reg-names = "parf", "dbi", "elbi", "atu", "config";
+> +                       device_type = "pci";
+> +                       linux,pci-domain = <1>;
+> +                       bus-range = <0x00 0xff>;
+> +                       num-lanes = <2>;
+> +                       pipe-clk-source-switch;
 
-Bjorn
+I thought this property was going away?
+
+> +
+> +                       #address-cells = <3>;
+> +                       #size-cells = <2>;
+> +
+> +                       ranges = <0x01000000 0x0 0x40200000 0x0 0x40200000 0x0 0x100000>,
+> +                                <0x02000000 0x0 0x40300000 0x0 0x40300000 0x0 0x1fd00000>;
+> +
+> +                       interrupts = <GIC_SPI 307 IRQ_TYPE_LEVEL_HIGH>;
+> +                       interrupt-names = "msi";
+> +                       #interrupt-cells = <1>;
+> +                       interrupt-map-mask = <0 0 0 0x7>;
+> +                       interrupt-map = <0 0 0 1 &intc 0 434 IRQ_TYPE_LEVEL_HIGH>,
+> +                                       <0 0 0 2 &intc 0 435 IRQ_TYPE_LEVEL_HIGH>,
+> +                                       <0 0 0 3 &intc 0 438 IRQ_TYPE_LEVEL_HIGH>,
+> +                                       <0 0 0 4 &intc 0 439 IRQ_TYPE_LEVEL_HIGH>;
+> +
+> +                       clocks = <&gcc GCC_PCIE_1_PIPE_CLK>,
+> +                                <&gcc GCC_PCIE_1_PIPE_CLK_SRC>,
+> +                                <&pcie1_lane 0>,
+> +                                <&rpmhcc RPMH_CXO_CLK>,
+> +                                <&gcc GCC_PCIE_1_AUX_CLK>,
+> +                                <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
+> +                                <&gcc GCC_PCIE_1_MSTR_AXI_CLK>,
+> +                                <&gcc GCC_PCIE_1_SLV_AXI_CLK>,
+> +                                <&gcc GCC_PCIE_1_SLV_Q2A_AXI_CLK>,
+> +                                <&gcc GCC_AGGRE_NOC_PCIE_TBU_CLK>,
+> +                                <&gcc GCC_DDRSS_PCIE_SF_CLK>;
+> +
+> +                       clock-names = "pipe",
+> +                                     "pipe_mux",
+> +                                     "phy_pipe",
+> +                                     "ref",
+> +                                     "aux",
+> +                                     "cfg",
+> +                                     "bus_master",
+> +                                     "bus_slave",
+> +                                     "slave_q2a",
+> +                                     "tbu",
+> +                                     "ddrss_sf_tbu";
+> +
+> +                       assigned-clocks = <&gcc GCC_PCIE_1_AUX_CLK>;
+> +                       assigned-clock-rates = <19200000>;
+> +
+> +                       resets = <&gcc GCC_PCIE_1_BCR>;
+> +                       reset-names = "pci";
+> +
+> +                       power-domains = <&gcc GCC_PCIE_1_GDSC>;
+> +
+> +                       phys = <&pcie1_lane>;
+> +                       phy-names = "pciephy";
+> +
+> +                       perst-gpio = <&tlmm 2 GPIO_ACTIVE_LOW>;
+
+This should move to the board file because it's a plain old gpio.
+
+> +                       pinctrl-names = "default";
+> +                       pinctrl-0 = <&pcie1_default_state>;
+> +
+> +                       iommus = <&apps_smmu 0x1c80 0x1>;
+> +
+> +                       iommu-map = <0x0 &apps_smmu 0x1c80 0x1>,
+> +                                   <0x100 &apps_smmu 0x1c81 0x1>;
+> +
+> +                       status = "disabled";
+> +               };
+> +
+> +               pcie1_phy: phy@1c0e000 {
+> +                       compatible = "qcom,sm8250-qmp-gen3x2-pcie-phy";
+
+sc7280-qmp-gen3x2-pcie-phy?
+
+> +                       reg = <0 0x01c0e000 0 0x1c0>;
+> +                       #address-cells = <2>;
+> +                       #size-cells = <2>;
+> +                       ranges;
+> +                       clocks = <&gcc GCC_PCIE_1_AUX_CLK>,
+> +                                <&gcc GCC_PCIE_1_CFG_AHB_CLK>,
+> +                                <&gcc GCC_PCIE_CLKREF_EN>,
+> +                                <&gcc GCC_PCIE1_PHY_RCHNG_CLK>;
+> +                       clock-names = "aux", "cfg_ahb", "ref", "refgen";
+> +
+> +                       resets = <&gcc GCC_PCIE_1_PHY_BCR>;
+> +                       reset-names = "phy";
+> +
+> +                       assigned-clocks = <&gcc GCC_PCIE1_PHY_RCHNG_CLK>;
+> +                       assigned-clock-rates = <100000000>;
+> +
+> +                       status = "disabled";
+> +
+> +                       pcie1_lane: lanes@1c0e200 {
+> +                               reg = <0 0x01c0e200 0 0x170>,
+> +                                     <0 0x01c0e400 0 0x200>,
+> +                                     <0 0x01c0ea00 0 0x1f0>,
+> +                                     <0 0x01c0e600 0 0x170>,
+> +                                     <0 0x01c0e800 0 0x200>,
+> +                                     <0 0x01c0ee00 0 0xf4>;
+> +                               clocks = <&rpmhcc RPMH_CXO_CLK>;
+> +                               clock-names = "pipe0";
+> +
+> +                               #phy-cells = <0>;
+> +                               #clock-cells = <1>;
+> +                               clock-output-names = "pcie_1_pipe_clk";
+> +                       };
+> +               };
+> +
+>                 ipa: ipa@1e40000 {
+>                         compatible = "qcom,sc7280-ipa";
+>
+> @@ -1598,6 +1712,13 @@
+>                                         bias-bus-hold;
+>                                 };
+>                         };
+> +
+> +                       pcie1_default_state: pcie1-default-state {
+> +                               clkreq {
+
+Drop clkreq node and just put the pin and function directly inside
+please.
+
+> +                                       pins = "gpio79";
+> +                                       function = "pcie1_clkreqn";
+> +                               };
+> +                       };
+>                 };
+>
+>                 apps_smmu: iommu@15000000 {
