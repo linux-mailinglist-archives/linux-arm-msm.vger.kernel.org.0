@@ -2,66 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 575524044F4
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 07:27:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 48BCB404550
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 08:02:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350499AbhIIF2n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Sep 2021 01:28:43 -0400
-Received: from mga06.intel.com ([134.134.136.31]:47484 "EHLO mga06.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230449AbhIIF2n (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Sep 2021 01:28:43 -0400
-X-IronPort-AV: E=McAfee;i="6200,9189,10101"; a="281699121"
-X-IronPort-AV: E=Sophos;i="5.85,279,1624345200"; 
-   d="scan'208";a="281699121"
-Received: from fmsmga005.fm.intel.com ([10.253.24.32])
-  by orsmga104.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2021 22:27:34 -0700
-X-IronPort-AV: E=Sophos;i="5.85,279,1624345200"; 
-   d="scan'208";a="696084370"
-Received: from thrakatuluk.fi.intel.com (HELO thrakatuluk) ([10.237.68.154])
-  by fmsmga005-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Sep 2021 22:27:32 -0700
-Received: from platvala by thrakatuluk with local (Exim 4.94)
-        (envelope-from <petri.latvala@intel.com>)
-        id 1mOCdz-0000Z8-Uz; Thu, 09 Sep 2021 08:30:39 +0300
-Date:   Thu, 9 Sep 2021 08:30:39 +0300
-From:   Petri Latvala <petri.latvala@intel.com>
-To:     Rob Clark <robdclark@gmail.com>
-Cc:     igt-dev@lists.freedesktop.org,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Rob Clark <robdclark@chromium.org>
-Subject: Re: [PATCH igt v3 0/3] Initial igt tests for drm/msm ioctls
-Message-ID: <YTmb/3jxCUwXOp9K@platvala-desk.ger.corp.intel.com>
-References: <20210830162232.1328594-1-robdclark@gmail.com>
- <CAF6AEGs2dycGhitXWdcOD8pNqmsueRxD_ZmR0NCXc074kHTwUw@mail.gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAF6AEGs2dycGhitXWdcOD8pNqmsueRxD_ZmR0NCXc074kHTwUw@mail.gmail.com>
-X-Patchwork-Hint: comment
+        id S1351015AbhIIGDP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Sep 2021 02:03:15 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:42881 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1351002AbhIIGDO (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Sep 2021 02:03:14 -0400
+Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
+  by alexa-out.qualcomm.com with ESMTP; 08 Sep 2021 23:02:05 -0700
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 08 Sep 2021 23:02:03 -0700
+X-QCInternal: smtphost
+Received: from c-skakit-linux.ap.qualcomm.com (HELO c-skakit-linux.qualcomm.com) ([10.242.51.242])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 09 Sep 2021 11:31:44 +0530
+Received: by c-skakit-linux.qualcomm.com (Postfix, from userid 2344709)
+        id 0B9855444; Thu,  9 Sep 2021 11:31:42 +0530 (IST)
+From:   satya priya <skakit@codeaurora.org>
+To:     Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>,
+        David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        satya priya <skakit@codeaurora.org>
+Subject: [PATCH V3 0/2] Add Vol+ support for sc7280-idp
+Date:   Thu,  9 Sep 2021 11:31:26 +0530
+Message-Id: <1631167288-27627-1-git-send-email-skakit@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 08, 2021 at 11:02:42AM -0700, Rob Clark wrote:
-> On Mon, Aug 30, 2021 at 9:18 AM Rob Clark <robdclark@gmail.com> wrote:
-> >
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > Add an initial set of tests for the gpu SUBMIT ioctl.  There is
-> > plenty more we can add, but need to start somewhere.
-> >
-> > Rob Clark (3):
-> >   drmtest: Add DRIVER_MSM support
-> >   msm: Add helper library
-> >   msm: Add submit ioctl tests
-> 
-> If there are no more comments on this series, could somebody push it?
+David Collins (1):
+  pinctrl: qcom: spmi-gpio: correct parent irqspec translation
 
-Ah, I was expecting you to do it yourself. Merged now.
+satya priya (1):
+  arm64: dts: sc7280: Add volume up support for sc7280-idp
 
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 31 ++++++++++++++++++++++++++
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c | 37 +++++++++++++++++++++++++++++---
+ 2 files changed, 65 insertions(+), 3 deletions(-)
 
 -- 
-Petri Latvala
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
+of Code Aurora Forum, hosted by The Linux Foundation
+
