@@ -2,36 +2,38 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1CC5B404B08
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 13:49:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CCEF7404B34
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 13:50:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238912AbhIILue (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Sep 2021 07:50:34 -0400
-Received: from mail.kernel.org ([198.145.29.99]:46772 "EHLO mail.kernel.org"
+        id S238744AbhIILuy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Sep 2021 07:50:54 -0400
+Received: from mail.kernel.org ([198.145.29.99]:55048 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S241329AbhIILq5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Sep 2021 07:46:57 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id A48A361245;
-        Thu,  9 Sep 2021 11:43:07 +0000 (UTC)
+        id S237109AbhIILsw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Sep 2021 07:48:52 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 159636137E;
+        Thu,  9 Sep 2021 11:43:29 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631187788;
-        bh=N+oKi7eeVnuYEUVTGN5wXiWpy68Vo34sA0FAwHUYF8I=;
+        s=k20201202; t=1631187811;
+        bh=wlrHyYfPWKz23ai1ZnO5b4NKnVRwj7Rn0UBQRRpgyJU=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=nCCV6U8x3s3v1ch5xWkNyDRwLzdVak9idScxJcLrwf0XMnfLpduLdle5aBIxgyfFg
-         6EiYbz8cK1pRx7g7dxStRjnh1leuxY1/JXzgw9pqeJwS73p6s4hZjUfiiLJKkmKQRJ
-         8h8+ffxGP6ALXG73hitW3RfKahNDWSW1Gy/Lg6wA5L+01S2MOd3w0Yob7WcqgmACbW
-         ZGkHbM38njwOcpfTERed3sn9T0cGPAL3kC1fKlDKQbQPqoeuBZYRIakZ5aNvyuo2V5
-         DBNneQJU+N9bgfGPJoyPgqCzspnorvqLSGiWeTmke2iJfg5F+hbvmtup8V4TOtrlGL
-         WnXGCnqm3wShA==
+        b=G3mqlBTtUjNawfWR3XUdeSBpdGq0sSvXbEi1Joq3TWy0VBUHCXX6ejPiIwmhGd9YL
+         dn4ZaHXUn2b8SVSJov+QBK6tCGDjK24MyNNTzBjgS4XTZl6fmuoeIZuSfGyvRWPrK7
+         APWYy8z2i/syJfZ88JhWcFoCYlgK89T9V9w+ZGtvnC2E9hm90qXukJwT1Wigzn31qw
+         0ZNpxfpGeQDIwDLhs/iFiYbcwCjsv+D6FxqzZHCWeNPhfbXnGfNN8+TUyWMEiESB1B
+         oJ0E8aSNmNMDNeE8Vyd0k+jTSeoJxqmamPfiYoz5vJy4mM/odwmN0XjitCMuG5MPDs
+         ZQgwZsy959fkQ==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     Akhil P Oommen <akhilpo@codeaurora.org>,
-        Rob Clark <robdclark@chromium.org>,
+Cc:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH AUTOSEL 5.14 095/252] drm/msm/a6xx: Fix llcc configuration for a660 gpu
-Date:   Thu,  9 Sep 2021 07:38:29 -0400
-Message-Id: <20210909114106.141462-95-sashal@kernel.org>
+        devicetree@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.14 112/252] arm64: dts: qcom: sdm630: Rewrite memory map
+Date:   Thu,  9 Sep 2021 07:38:46 -0400
+Message-Id: <20210909114106.141462-112-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210909114106.141462-1-sashal@kernel.org>
 References: <20210909114106.141462-1-sashal@kernel.org>
@@ -43,93 +45,113 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Akhil P Oommen <akhilpo@codeaurora.org>
+From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 
-[ Upstream commit a6f24383f6c0a8d64d1f6afa10733ae4e8f236e0 ]
+[ Upstream commit 26e02c98a9ad63eb21b9be4ac92002f555130d3b ]
 
-Add the missing scache_cntl0 register programing which is required for
-a660 gpu.
+The memory map was wrong. Fix it.
 
-Signed-off-by: Akhil P Oommen <akhilpo@codeaurora.org>
-Link: https://lore.kernel.org/r/20210730011945.v4.1.I110b87677ef16d97397fb7c81c07a16e1f5d211e@changeid
-Signed-off-by: Rob Clark <robdclark@chromium.org>
+Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Link: https://lore.kernel.org/r/20210728222542.54269-2-konrad.dybcio@somainline.org
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 46 ++++++++++++++++-----------
- 1 file changed, 27 insertions(+), 19 deletions(-)
+ arch/arm64/boot/dts/qcom/sdm630.dtsi | 41 ++++++++++++----------------
+ 1 file changed, 18 insertions(+), 23 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-index 9c5e4618aa0a..183b9f9c1b31 100644
---- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-+++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
-@@ -1383,13 +1383,13 @@ static void a6xx_llc_activate(struct a6xx_gpu *a6xx_gpu)
- {
- 	struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
- 	struct msm_gpu *gpu = &adreno_gpu->base;
--	u32 cntl1_regval = 0;
-+	u32 gpu_scid, cntl1_regval = 0;
+diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+index f91a928466c3..5ea3884b3ccb 100644
+--- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+@@ -343,10 +343,19 @@ wlan_msa_mem: wlan-msa-mem@85700000 {
+ 		};
  
- 	if (IS_ERR(a6xx_gpu->llc_mmio))
- 		return;
+ 		qhee_code: qhee-code@85800000 {
+-			reg = <0x0 0x85800000 0x0 0x3700000>;
++			reg = <0x0 0x85800000 0x0 0x600000>;
+ 			no-map;
+ 		};
  
- 	if (!llcc_slice_activate(a6xx_gpu->llc_slice)) {
--		u32 gpu_scid = llcc_get_slice_id(a6xx_gpu->llc_slice);
-+		gpu_scid = llcc_get_slice_id(a6xx_gpu->llc_slice);
- 
- 		gpu_scid &= 0x1f;
- 		cntl1_regval = (gpu_scid << 0) | (gpu_scid << 5) | (gpu_scid << 10) |
-@@ -1409,26 +1409,34 @@ static void a6xx_llc_activate(struct a6xx_gpu *a6xx_gpu)
- 		}
- 	}
- 
--	if (cntl1_regval) {
-+	if (!cntl1_regval)
-+		return;
++		rmtfs_mem: memory@85e00000 {
++			compatible = "qcom,rmtfs-mem";
++			reg = <0x0 0x85e00000 0x0 0x200000>;
++			no-map;
 +
-+	/*
-+	 * Program the slice IDs for the various GPU blocks and GPU MMU
-+	 * pagetables
-+	 */
-+	if (!a6xx_gpu->have_mmu500) {
-+		a6xx_llc_write(a6xx_gpu,
-+			REG_A6XX_CX_MISC_SYSTEM_CACHE_CNTL_1, cntl1_regval);
++			qcom,client-id = <1>;
++			qcom,vmid = <15>;
++		};
 +
- 		/*
--		 * Program the slice IDs for the various GPU blocks and GPU MMU
--		 * pagetables
-+		 * Program cacheability overrides to not allocate cache
-+		 * lines on a write miss
- 		 */
--		if (a6xx_gpu->have_mmu500)
--			gpu_rmw(gpu, REG_A6XX_GBIF_SCACHE_CNTL1, GENMASK(24, 0),
--				cntl1_regval);
--		else {
--			a6xx_llc_write(a6xx_gpu,
--				REG_A6XX_CX_MISC_SYSTEM_CACHE_CNTL_1, cntl1_regval);
+ 		smem_region: smem-mem@86000000 {
+ 			reg = <0 0x86000000 0 0x200000>;
+ 			no-map;
+@@ -357,58 +366,44 @@ tz_mem: memory@86200000 {
+ 			no-map;
+ 		};
+ 
+-		modem_fw_mem: modem-fw-region@8ac00000 {
++		mpss_region: mpss@8ac00000 {
+ 			reg = <0x0 0x8ac00000 0x0 0x7e00000>;
+ 			no-map;
+ 		};
+ 
+-		adsp_fw_mem: adsp-fw-region@92a00000 {
++		adsp_region: adsp@92a00000 {
+ 			reg = <0x0 0x92a00000 0x0 0x1e00000>;
+ 			no-map;
+ 		};
+ 
+-		pil_mba_mem: pil-mba-region@94800000 {
++		mba_region: mba@94800000 {
+ 			reg = <0x0 0x94800000 0x0 0x200000>;
+ 			no-map;
+ 		};
+ 
+-		buffer_mem: buffer-region@94a00000 {
++		buffer_mem: tzbuffer@94a00000 {
+ 			reg = <0x0 0x94a00000 0x0 0x100000>;
+ 			no-map;
+ 		};
+ 
+-		venus_fw_mem: venus-fw-region@9f800000 {
++		venus_region: venus@9f800000 {
+ 			reg = <0x0 0x9f800000 0x0 0x800000>;
+ 			no-map;
+ 		};
+ 
+-		secure_region2: secure-region2@f7c00000 {
+-			reg = <0x0 0xf7c00000 0x0 0x5c00000>;
+-			no-map;
+-		};
 -
--			/*
--			 * Program cacheability overrides to not allocate cache
--			 * lines on a write miss
--			 */
--			a6xx_llc_rmw(a6xx_gpu,
--				REG_A6XX_CX_MISC_SYSTEM_CACHE_CNTL_0, 0xF, 0x03);
--		}
-+		a6xx_llc_rmw(a6xx_gpu,
-+			REG_A6XX_CX_MISC_SYSTEM_CACHE_CNTL_0, 0xF, 0x03);
-+		return;
- 	}
-+
-+	gpu_rmw(gpu, REG_A6XX_GBIF_SCACHE_CNTL1, GENMASK(24, 0), cntl1_regval);
-+
-+	/* On A660, the SCID programming for UCHE traffic is done in
-+	 * A6XX_GBIF_SCACHE_CNTL0[14:10]
-+	 */
-+	if (adreno_is_a660(adreno_gpu))
-+		gpu_rmw(gpu, REG_A6XX_GBIF_SCACHE_CNTL0, (0x1f << 10) |
-+			(1 << 8), (gpu_scid << 10) | (1 << 8));
- }
+ 		adsp_mem: adsp-region@f6000000 {
+ 			reg = <0x0 0xf6000000 0x0 0x800000>;
+ 			no-map;
+ 		};
  
- static void a6xx_llc_slices_destroy(struct a6xx_gpu *a6xx_gpu)
+-		qseecom_ta_mem: qseecom-ta-region@fec00000 {
+-			reg = <0x0 0xfec00000 0x0 0x1000000>;
+-			no-map;
+-		};
+-
+ 		qseecom_mem: qseecom-region@f6800000 {
+ 			reg = <0x0 0xf6800000 0x0 0x1400000>;
+ 			no-map;
+ 		};
+ 
+-		secure_display_memory: secure-region@f5c00000 {
+-			reg = <0x0 0xf5c00000 0x0 0x5c00000>;
+-			no-map;
+-		};
+-
+-		cont_splash_mem: cont-splash-region@9d400000 {
+-			reg = <0x0 0x9d400000 0x0 0x23ff000>;
++		zap_shader_region: gpu@fed00000 {
++			compatible = "shared-dma-pool";
++			reg = <0x0 0xfed00000 0x0 0xa00000>;
+ 			no-map;
+ 		};
+ 	};
 -- 
 2.30.2
 
