@@ -2,111 +2,269 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E150D405951
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 16:41:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D46E405A14
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 17:18:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350852AbhIIOm1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Sep 2021 10:42:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46358 "EHLO
+        id S236887AbhIIPT3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Sep 2021 11:19:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56016 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243524AbhIIOmR (ORCPT
+        with ESMTP id S236632AbhIIPT2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Sep 2021 10:42:17 -0400
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3EEEBC077584
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Sep 2021 07:07:05 -0700 (PDT)
-Received: by mail-pf1-x431.google.com with SMTP id g14so1878634pfm.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Sep 2021 07:07:05 -0700 (PDT)
+        Thu, 9 Sep 2021 11:19:28 -0400
+Received: from mail-pj1-x1034.google.com (mail-pj1-x1034.google.com [IPv6:2607:f8b0:4864:20::1034])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A36CC061756
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Sep 2021 08:18:19 -0700 (PDT)
+Received: by mail-pj1-x1034.google.com with SMTP id w19-20020a17090aaf9300b00191e6d10a19so1693633pjq.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Sep 2021 08:18:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=ZsGmoKVeGSZ+m7Ek1UAVfUV/GOE24csmNWXi5Lpo+Ys=;
-        b=WK1kvHbXWUR8DUmpIIOfo64sSAUbueIsVzFk8Trg3Cr9JiBZrHnSXRMBFjDYBeEuOg
-         nUHYu8U4VvLkkDsI2iFv9RJ2ckvofdX0TkbxI6CyOX9M7m2Hv0aGnxj0Syv5MxOzV6QI
-         8EVLd4XFQ07bX2I9QGSfM27gnStC2j/UdtNtU=
+        bh=VWNh9d2tUZKG8idZXByBeqTa3/M4oXQ5jM0T9ftLR/I=;
+        b=DnigeVP4cZBoGJUJUi88ziXn1T3CRIWIFPRKrJ3LPoiqoQGG3OigRZ/Nw3AdIecPYQ
+         JnFT/1lTu2E9E04ZwY9ZgZbYhJuhV7JPIB++wzcygMO8hvR2L+50c1wMFfxlYt0hVrYb
+         C/YN8jBK0j7lymZLZEXbML9qB5S5JUq017qmg=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=ZsGmoKVeGSZ+m7Ek1UAVfUV/GOE24csmNWXi5Lpo+Ys=;
-        b=l8lozULOx3vKhD2t+hJbQA6de9NnX4QSfOq0vgAsziP0EyDXszGnd0gnZSgVisgqUX
-         4earFKB5h9a+39Kagh8TGDOH/qZTjE9RPO4v5JGAP3XswWHm69bLWs4k9T4d/bI7L/jq
-         aL73Z1wGkF03N2aOpKsV5faEwT48te71mskcKVW7YD66+0jR0v6agQ9ZpL4WmGavQsqi
-         o4cGGvF0fF5fp+fE5e1bz4Qn+Vp+bikyDl9QibqkOFtwnhjDD1t4mwv5+7MKsvTnaYRP
-         06IF1NDD8eQQgadliEJoht+pw7RRSzLhRSZNMpHZ/9VmXEtNWEJb99WOX6V4BP4YJpjB
-         IHfA==
-X-Gm-Message-State: AOAM531LQ0ptwINk1HlMcw31c/CCXD1B8Sn5J3SHggiBVEhTlBPe780y
-        rmZgj1Y69vtxZliOESAGeqW9ag==
-X-Google-Smtp-Source: ABdhPJxx5sfoZckfMgasJEbDoPvi6d1RhwM18VfCsgxtQzpNnnEZTyclvB+pLSwyQPqUVpJIYx94qQ==
-X-Received: by 2002:a63:4b53:: with SMTP id k19mr2805141pgl.3.1631196424789;
-        Thu, 09 Sep 2021 07:07:04 -0700 (PDT)
+        bh=VWNh9d2tUZKG8idZXByBeqTa3/M4oXQ5jM0T9ftLR/I=;
+        b=LjTBDG2TDMFexdHpxRJQEKWchcNr2KehiBkzHK1PCTCSO/ptHq+OsfWouVvmkHaInZ
+         nBKxRwwbEU5ksVkuuMF3v/cFePlhz9gPQB4mtuVzABgoY7WLcdg04cMlvPmY9+Zf9eqp
+         Hj1BaIpkmL1LNAirDsGX/WgeELNvAzAIkwuH8J/qBGrGeg5BvB8v5fRf4g2znwfqUqSO
+         OPvzLvdVcOtWE/7uo5wQ8UZVXbjsFjh7vG8aoq6Mrh0B5Z4u5gMLjCR3mg3Sdvjh5kT7
+         qGsu8zjcdIlDpIizfTJPNkf8EH+xZlEnVJyVYICYqHTbmFsNpi9kDMX+txD19SMyLijx
+         ZVIw==
+X-Gm-Message-State: AOAM531pWNu+rZgpSYcISuYVmJ/OpZ07T6PoYEGpBao2eIXKZPDBw2Yg
+        1H3WJbJ3jufN1dL+MJaEbhxQXA==
+X-Google-Smtp-Source: ABdhPJwOc/+AcPWbSFMHLSdY7Q78w3vlSzQ1LUqYnbXZ/HaAWI8X35xZ6GWLqwIRUxSL36sRhM136Q==
+X-Received: by 2002:a17:90a:2ecb:: with SMTP id h11mr4165144pjs.196.1631200698756;
+        Thu, 09 Sep 2021 08:18:18 -0700 (PDT)
 Received: from localhost ([2620:15c:202:201:27cc:a1d4:ed44:e1de])
-        by smtp.gmail.com with UTF8SMTPSA id mv1sm2382673pjb.29.2021.09.09.07.07.03
+        by smtp.gmail.com with UTF8SMTPSA id q3sm3032653pgf.18.2021.09.09.08.18.17
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Sep 2021 07:07:04 -0700 (PDT)
-Date:   Thu, 9 Sep 2021 07:07:02 -0700
+        Thu, 09 Sep 2021 08:18:18 -0700 (PDT)
+Date:   Thu, 9 Sep 2021 08:18:16 -0700
 From:   Matthias Kaehlcke <mka@chromium.org>
-To:     rajpat@codeaurora.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, rnayak@codeaurora.org,
-        saiprakash.ranjan@codeaurora.org, msavaliy@qti.qualcomm.com,
-        skakit@codeaurora.org, sboyd@kernel.org, dianders@chromium.org,
-        Roja Rani Yarubandi <rojay@codeaurora.org>
-Subject: Re: [PATCH V7 6/7] arm64: dts: sc7280: Add QUPv3 wrapper_1 nodes
-Message-ID: <YToVBqaa7FUL3GVw@google.com>
-References: <1630643340-10373-1-git-send-email-rajpat@codeaurora.org>
- <1630643340-10373-7-git-send-email-rajpat@codeaurora.org>
- <YTJZ8YkjrCmyzNjG@google.com>
- <c0c74fc30ef3f3b1432ab2e614862b93@codeaurora.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Uwe =?utf-8?Q?Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>,
+        linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pwm@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+Subject: Re: [PATCH v9 1/2] dt-bindings: leds: Add Qualcomm Light Pulse
+ Generator binding
+Message-ID: <YToluIBXlNJEFhcb@google.com>
+References: <20210623035039.772660-1-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Disposition: inline
-In-Reply-To: <c0c74fc30ef3f3b1432ab2e614862b93@codeaurora.org>
+In-Reply-To: <20210623035039.772660-1-bjorn.andersson@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 09, 2021 at 10:14:18AM +0530, rajpat@codeaurora.org wrote:
-> On 2021-09-03 22:52, Matthias Kaehlcke wrote:
-> > On Fri, Sep 03, 2021 at 09:58:59AM +0530, Rajesh Patil wrote:
-> > > From: Roja Rani Yarubandi <rojay@codeaurora.org>
-> > > 
-> > > Add QUPv3 wrapper_1 DT nodes for SC7280 SoC.
-> > > 
-> > > Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
-> > > Signed-off-by: Rajesh Patil <rajpat@codeaurora.org>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/sc7280.dtsi | 709
-> > > +++++++++++++++++++++++++++++++++++
-> > >  1 file changed, 709 insertions(+)
-> > > 
-> > > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > > b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > > index 32d1354..8fe54bf 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> > 
-> > > +			qup_spi8_data_clk: qup-spi8-data-clk {
-> > > +				pins = "gpio32", "gpio33", "gpio34";
-> > > +				function = "qup10";
-> > > +			};
-> > > +
-> > > +			qup_spi8_cs: qup-spi8-cs {
-> > > +				pins = "gpio35";
-> > > +				function = "qup10";
-> > > +			};
-> > 
-> > As for wrapper_0, I think we still want the nodes to configure the CS as
-> > GPIO.
-> > 
-> > If there are no other reasons to re-spin these could be added with a
-> > follow-up
-> > patch, so:
-> > 
-> shall we add all removed qup_spiN_cs_gpio nodes?
+On Tue, Jun 22, 2021 at 08:50:38PM -0700, Bjorn Andersson wrote:
+> This adds the binding document describing the three hardware blocks
+> related to the Light Pulse Generator found in a wide range of Qualcomm
+> PMICs.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+> 
+> Changes since v8:
+> - None
+> 
+> Changes since v7:
+> - Added qcom,pmc8180c-lpg
+> - Defined constraints for qcom,power-source
+> - Changes qcom,dtest to matrix and added constraints
+> - Changed example from LED_COLOR_ID_MULTI to LED_COLOR_ID_RGB
+> 
+>  .../bindings/leds/leds-qcom-lpg.yaml          | 164 ++++++++++++++++++
+>  1 file changed, 164 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+> 
+> diff --git a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+> new file mode 100644
+> index 000000000000..10aee61a7ffc
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+> @@ -0,0 +1,164 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/leds/leds-qcom-lpg.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Qualcomm Light Pulse Generator
+> +
+> +maintainers:
+> +  - Bjorn Andersson <bjorn.andersson@linaro.org>
+> +
+> +description: >
+> +  The Qualcomm Light Pulse Generator consists of three different hardware blocks;
+> +  a ramp generator with lookup table, the light pulse generator and a three
+> +  channel current sink. These blocks are found in a wide range of Qualcomm PMICs.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,pm8150b-lpg
+> +      - qcom,pm8150l-lpg
+> +      - qcom,pm8916-pwm
+> +      - qcom,pm8941-lpg
+> +      - qcom,pm8994-lpg
+> +      - qcom,pmc8180c-lpg
+> +      - qcom,pmi8994-lpg
+> +      - qcom,pmi8998-lpg
+> +
+> +  "#pwm-cells":
+> +    const: 2
+> +
+> +  "#address-cells":
+> +    const: 1
+> +
+> +  "#size-cells":
+> +    const: 0
+> +
+> +  qcom,power-source:
+> +    $ref: /schemas/types.yaml#/definitions/uint32
+> +    description:
+> +      power-source used to drive the output, as defined in the datasheet.
+> +      Should be specified if the TRILED block is present
+> +    enum: [0, 1, 3]
+> +
+> +  qcom,dtest:
+> +    $ref: /schemas/types.yaml#/definitions/uint32-matrix
+> +    description: >
+> +      A list of integer pairs, where each pair represent the dtest line the
+> +      particular channel should be connected to and the flags denoting how the
+> +      value should be outputed, as defined in the datasheet. The number of
+> +      pairs should be the same as the number of channels.
+> +    items:
+> +      items:
+> +        - description: dtest line to attach
+> +        - description: flags for the attachment
+> +
+> +  multi-led:
+> +    type: object
+> +    $ref: leds-class-multicolor.yaml#
+> +    properties:
+> +      "#address-cells":
+> +        const: 1
+> +
+> +      "#size-cells":
+> +        const: 0
+> +
+> +      "^led@[0-9a-f]$":
+> +        type: object
+> +        $ref: common.yaml#
+> +
+> +patternProperties:
+> +  "^led@[0-9a-f]$":
+> +    type: object
+> +    $ref: common.yaml#
+> +
+> +    properties:
+> +      reg: true
+> +
+> +    required:
+> +      - reg
+> +
+> +required:
+> +  - compatible
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/leds/common.h>
+> +
+> +    lpg {
+> +      compatible = "qcom,pmi8994-lpg";
+> +
+> +      #address-cells = <1>;
+> +      #size-cells = <0>;
+> +
+> +      qcom,power-source = <1>;
+> +
+> +      qcom,dtest = <0 0>,
+> +                   <0 0>,
+> +                   <0 0>,
+> +                   <4 1>;
+> +
+> +      led@1 {
+> +        reg = <1>;
+> +        label = "green:user1";
+> +      };
+> +
+> +      led@2 {
+> +        reg = <2>;
+> +        label = "green:user0";
+> +        default-state = "on";
+> +      };
+> +
+> +      led@3 {
+> +        reg = <3>;
+> +        label = "green:user2";
+> +      };
+> +
+> +      led@4 {
+> +        reg = <4>;
+> +        label = "green:user3";
+> +      };
+> +    };
+> +  - |
+> +    #include <dt-bindings/leds/common.h>
+> +
+> +    lpg {
+> +      compatible = "qcom,pmi8994-lpg";
+> +
+> +      #address-cells = <1>;
+> +      #size-cells = <0>;
+> +
+> +      qcom,power-source = <1>;
+> +
+> +      multi-led {
+> +        color = <LED_COLOR_ID_RGB>;
+> +        function = LED_FUNCTION_STATUS;
+> +
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        led@1 {
+> +          reg = <1>;
+> +          color = <LED_COLOR_ID_RED>;
+> +        };
+> +
+> +        led@2 {
+> +          reg = <2>;
+> +          color = <LED_COLOR_ID_GREEN>;
+> +        };
+> +
+> +        led@3 {
+> +          reg = <3>;
+> +          color = <LED_COLOR_ID_BLUE>;
+> +        };
+> +      };
+> +    };
+> +  - |
+> +    lpg {
 
-Yes
+nit: should the node be named 'lpg-pwm'?
+
+IIUC a PMIC .dtsi could have both a 'lpg' and a 'lpg-pwm' node, even though
+only one of them can be enabled at any time.
+
+> +      compatible = "qcom,pm8916-pwm";
+> +      #pwm-cells = <2>;
+> +    };
