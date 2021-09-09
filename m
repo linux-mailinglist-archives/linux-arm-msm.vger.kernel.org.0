@@ -2,38 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 76AC140518E
+	by mail.lfdr.de (Postfix) with ESMTP id BF97B40518F
 	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 14:45:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238963AbhIIMhE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Sep 2021 08:37:04 -0400
-Received: from mail.kernel.org ([198.145.29.99]:39522 "EHLO mail.kernel.org"
+        id S1348694AbhIIMhF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Sep 2021 08:37:05 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39524 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1349827AbhIIMb4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Sep 2021 08:31:56 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 78E8D61B4B;
-        Thu,  9 Sep 2021 11:53:00 +0000 (UTC)
+        id S1350046AbhIIMb5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Sep 2021 08:31:57 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 9046561B45;
+        Thu,  9 Sep 2021 11:53:04 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631188381;
-        bh=2aq6J1ZLYuYqjUmkk5KI4Gsxr2Tzc3SzVqjStfVCi/4=;
+        s=k20201202; t=1631188385;
+        bh=0sRjAYb+0qs4QnC1cjMiOdZudBqfkjzC6vfJ9zbTIDw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=eWHqDc6qTP4wVTiytViDGOMvrps5nCR2LmXqEYQTJO98rOz0hB7y+JoKhpZrLbl95
-         HqwGr4+EnlboORVEh/EVZWbQetR+h335Drdkcx6rJKYAADHO4XZdVosYkoK5ErntWU
-         wcBhd364VRXtJMMm0HmOAlE6E5j6/ut1dAnXvu5K7RggrC1xKFodwqemqnrDE7zBMd
-         46MJZCdAHSA4W6C1aM7ld7F6c4fjotl2XChQ9p/MBy0fswp71jfFcHhegEGMqIwtal
-         dXEXskV48gaFfHYdk1qzSkKcea9WmlZRxoA0BQw9V18P2xnogj0/tx2Ns+faLEwAaV
-         qFK9WXFTASH7w==
+        b=hCvbKWeUouaml2QmFCVVrf3+HXKnQBBbDsZ62jXPf32nVQixfS/GVpwCUXYhRvQ+j
+         B/sr6w+Ok2fczqMGO6ZqHgVdSxzs8JxT4oqM3+E4CHrefJI2FYWsdB8mxJJBGfcBWS
+         C84BBCy2iDqmezTKBqBqtFa6KqpuoJvpC9OLEXwr+q/ZreJT45qDRY2407Fz/9R4v5
+         PkEJrfyMibZHxeJnKq397m8E0kkVAiIRVjEWkm2D/z1jppFck25Wiq8EY2z8avqQTb
+         HdfS1i/QeihOa4VCNPiZ/ZKvrkyPTBHISfuxTqY/jdUaFZwwoNagE5dcSRQKluGJwx
+         g7pIbmn46UUCQ==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
+Cc:     Vinod Koul <vkoul@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.10 080/176] arm64: dts: qcom: sdm630: Fix TLMM node and pinctrl configuration
-Date:   Thu,  9 Sep 2021 07:49:42 -0400
-Message-Id: <20210909115118.146181-80-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.10 083/176] arm64: dts: qcom: ipq8074: fix pci node reg property
+Date:   Thu,  9 Sep 2021 07:49:45 -0400
+Message-Id: <20210909115118.146181-83-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210909115118.146181-1-sashal@kernel.org>
 References: <20210909115118.146181-1-sashal@kernel.org>
@@ -45,293 +43,66 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+From: Vinod Koul <vkoul@kernel.org>
 
-[ Upstream commit 36a0d47aee6a8cfd3c6cf4274732d8ef994a25b4 ]
+[ Upstream commit 52c9887fba71fc8f12d343833fc595c762aac8c7 ]
 
-Previous pinctrl configuration was wrong. Fix it and clean up how
-multi-pin states are described.
+reg property should be array of values, here it is a single array,
+leading to below warning:
 
-Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-Link: https://lore.kernel.org/r/20210728222542.54269-9-konrad.dybcio@somainline.org
-[bjorn: Polished the commit message]
+arch/arm64/boot/dts/qcom/ipq8074-hk01.dt.yaml: soc: pci@10000000:reg:0: [268435456, 3869, 268439328, 168, 557056, 8192, 269484032, 4096] is too long
+arch/arm64/boot/dts/qcom/ipq8074-hk01.dt.yaml: soc: pci@10000000:ranges: 'oneOf' conditional failed, one must be fixed:
+arch/arm64/boot/dts/qcom/ipq8074-hk01.dt.yaml: soc: pci@10000000:ranges: 'oneOf' conditional failed, one must be fixed:
+[[2164260864, 0, 270532608, 270532608, 0, 1048576, 2181038080, 0, 271581184, 271581184, 0, 13631488]] is not of type 'null'
+[2164260864, 0, 270532608, 270532608, 0, 1048576, 2181038080, 0, 271581184, 271581184, 0, 13631488] is too long
+arch/arm64/boot/dts/qcom/ipq8074-hk01.dt.yaml: soc: pci@20000000:reg:0: [536870912, 3869, 536874784, 168, 524288, 8192, 537919488, 4096] is too long
+arch/arm64/boot/dts/qcom/ipq8074-hk01.dt.yaml: soc: pci@20000000:ranges: 'oneOf' conditional failed, one must be fixed:
+arch/arm64/boot/dts/qcom/ipq8074-hk01.dt.yaml: soc: pci@20000000:ranges: 'oneOf' conditional failed, one must be fixed:
+[[2164260864, 0, 538968064, 538968064, 0, 1048576, 2181038080, 0, 540016640, 540016640, 0, 13631488]] is not of type 'null'
+[2164260864, 0, 538968064, 538968064, 0, 1048576, 2181038080, 0, 540016640, 540016640, 0, 13631488] is too long
+
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lore.kernel.org/r/20210308060826.3074234-17-vkoul@kernel.org
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm64/boot/dts/qcom/sdm630.dtsi | 212 ++++++++++++++++++---------
- 1 file changed, 139 insertions(+), 73 deletions(-)
+ arch/arm64/boot/dts/qcom/ipq8074.dtsi | 16 ++++++++--------
+ 1 file changed, 8 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-index 7da420cd21ba..ee7fcf4c158f 100644
---- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
-@@ -522,14 +522,18 @@ tcsr_mutex_regs: syscon@1f40000 {
- 			reg = <0x01f40000 0x20000>;
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+index 829e37ac82f6..776a6b0f61a6 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
++++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
+@@ -567,10 +567,10 @@ frame@b128000 {
  
--		tlmm: pinctrl@3000000 {
-+		tlmm: pinctrl@3100000 {
- 			compatible = "qcom,sdm630-pinctrl";
--			reg = <0x03000000 0xc00000>;
-+			reg = <0x03100000 0x400000>,
-+				  <0x03500000 0x400000>,
-+				  <0x03900000 0x400000>;
-+			reg-names = "south", "center", "north";
- 			interrupts = <GIC_SPI 208 IRQ_TYPE_LEVEL_HIGH>;
- 			gpio-controller;
--			#gpio-cells = <0x2>;
-+			gpio-ranges = <&tlmm 0 0 114>;
-+			#gpio-cells = <2>;
- 			interrupt-controller;
--			#interrupt-cells = <0x2>;
-+			#interrupt-cells = <2>;
+ 		pcie1: pci@10000000 {
+ 			compatible = "qcom,pcie-ipq8074";
+-			reg =  <0x10000000 0xf1d
+-				0x10000f20 0xa8
+-				0x00088000 0x2000
+-				0x10100000 0x1000>;
++			reg =  <0x10000000 0xf1d>,
++			       <0x10000f20 0xa8>,
++			       <0x00088000 0x2000>,
++			       <0x10100000 0x1000>;
+ 			reg-names = "dbi", "elbi", "parf", "config";
+ 			device_type = "pci";
+ 			linux,pci-domain = <1>;
+@@ -629,10 +629,10 @@ IRQ_TYPE_LEVEL_HIGH>, /* int_c */
  
- 			blsp1_uart1_default: blsp1-uart1-default {
- 				pins = "gpio0", "gpio1", "gpio2", "gpio3";
-@@ -549,40 +553,48 @@ blsp1_uart2_default: blsp1-uart2-default {
- 				bias-disable;
- 			};
- 
--			blsp2_uart1_tx_active: blsp2-uart1-tx-active {
--				pins = "gpio16";
--				drive-strength = <2>;
--				bias-disable;
--			};
--
--			blsp2_uart1_tx_sleep: blsp2-uart1-tx-sleep {
--				pins = "gpio16";
--				drive-strength = <2>;
--				bias-pull-up;
--			};
-+			blsp2_uart1_default: blsp2-uart1-active {
-+				tx-rts {
-+					pins = "gpio16", "gpio19";
-+					function = "blsp_uart5";
-+					drive-strength = <2>;
-+					bias-disable;
-+				};
- 
--			blsp2_uart1_rxcts_active: blsp2-uart1-rxcts-active {
--				pins = "gpio17", "gpio18";
--				drive-strength = <2>;
--				bias-disable;
--			};
-+				rx {
-+					/*
-+					 * Avoid garbage data while BT module
-+					 * is powered off or not driving signal
-+					 */
-+					pins = "gpio17";
-+					function = "blsp_uart5";
-+					drive-strength = <2>;
-+					bias-pull-up;
-+				};
- 
--			blsp2_uart1_rxcts_sleep: blsp2-uart1-rxcts-sleep {
--				pins = "gpio17", "gpio18";
--				drive-strength = <2>;
--				bias-no-pull;
-+				cts {
-+					/* Match the pull of the BT module */
-+					pins = "gpio18";
-+					function = "blsp_uart5";
-+					drive-strength = <2>;
-+					bias-pull-down;
-+				};
- 			};
- 
--			blsp2_uart1_rfr_active: blsp2-uart1-rfr-active {
--				pins = "gpio19";
--				drive-strength = <2>;
--				bias-disable;
--			};
-+			blsp2_uart1_sleep: blsp2-uart1-sleep {
-+				tx {
-+					pins = "gpio16";
-+					function = "gpio";
-+					drive-strength = <2>;
-+					bias-pull-up;
-+				};
- 
--			blsp2_uart1_rfr_sleep: blsp2-uart1-rfr-sleep {
--				pins = "gpio19";
--				drive-strength = <2>;
--				bias-no-pull;
-+				rx-cts-rts {
-+					pins = "gpio17", "gpio18", "gpio19";
-+					function = "gpio";
-+					drive-strength = <2>;
-+					bias-no-pull;
-+				};
- 			};
- 
- 			i2c1_default: i2c1-default {
-@@ -681,50 +693,106 @@ i2c8_sleep: i2c8-sleep {
- 				bias-pull-up;
- 			};
- 
--			sdc1_clk_on: sdc1-clk-on {
--				pins = "sdc1_clk";
--				bias-disable;
--				drive-strength = <16>;
--			};
-+			sdc1_state_on: sdc1-on {
-+				clk {
-+					pins = "sdc1_clk";
-+					bias-disable;
-+					drive-strength = <16>;
-+				};
- 
--			sdc1_clk_off: sdc1-clk-off {
--				pins = "sdc1_clk";
--				bias-disable;
--				drive-strength = <2>;
--			};
-+				cmd {
-+					pins = "sdc1_cmd";
-+					bias-pull-up;
-+					drive-strength = <10>;
-+				};
- 
--			sdc1_cmd_on: sdc1-cmd-on {
--				pins = "sdc1_cmd";
--				bias-pull-up;
--				drive-strength = <10>;
--			};
-+				data {
-+					pins = "sdc1_data";
-+					bias-pull-up;
-+					drive-strength = <10>;
-+				};
- 
--			sdc1_cmd_off: sdc1-cmd-off {
--				pins = "sdc1_cmd";
--				bias-pull-up;
--				drive-strength = <2>;
-+				rclk {
-+					pins = "sdc1_rclk";
-+					bias-pull-down;
-+				};
- 			};
- 
--			sdc1_data_on: sdc1-data-on {
--				pins = "sdc1_data";
--				bias-pull-up;
--				drive-strength = <8>;
--			};
-+			sdc1_state_off: sdc1-off {
-+				clk {
-+					pins = "sdc1_clk";
-+					bias-disable;
-+					drive-strength = <2>;
-+				};
- 
--			sdc1_data_off: sdc1-data-off {
--				pins = "sdc1_data";
--				bias-pull-up;
--				drive-strength = <2>;
-+				cmd {
-+					pins = "sdc1_cmd";
-+					bias-pull-up;
-+					drive-strength = <2>;
-+				};
-+
-+				data {
-+					pins = "sdc1_data";
-+					bias-pull-up;
-+					drive-strength = <2>;
-+				};
-+
-+				rclk {
-+					pins = "sdc1_rclk";
-+					bias-pull-down;
-+				};
- 			};
- 
--			sdc1_rclk_on: sdc1-rclk-on {
--				pins = "sdc1_rclk";
--				bias-pull-down;
-+			sdc2_state_on: sdc2-on {
-+				clk {
-+					pins = "sdc2_clk";
-+					bias-disable;
-+					drive-strength = <16>;
-+				};
-+
-+				cmd {
-+					pins = "sdc2_cmd";
-+					bias-pull-up;
-+					drive-strength = <10>;
-+				};
-+
-+				data {
-+					pins = "sdc2_data";
-+					bias-pull-up;
-+					drive-strength = <10>;
-+				};
-+
-+				sd-cd {
-+					pins = "gpio54";
-+					bias-pull-up;
-+					drive-strength = <2>;
-+				};
- 			};
- 
--			sdc1_rclk_off: sdc1-rclk-off {
--				pins = "sdc1_rclk";
--				bias-pull-down;
-+			sdc2_state_off: sdc2-off {
-+				clk {
-+					pins = "sdc2_clk";
-+					bias-disable;
-+					drive-strength = <2>;
-+				};
-+
-+				cmd {
-+					pins = "sdc2_cmd";
-+					bias-pull-up;
-+					drive-strength = <2>;
-+				};
-+
-+				data {
-+					pins = "sdc2_data";
-+					bias-pull-up;
-+					drive-strength = <2>;
-+				};
-+
-+				sd-cd {
-+					pins = "gpio54";
-+					bias-disable;
-+					drive-strength = <2>;
-+				};
- 			};
- 		};
- 
-@@ -816,8 +884,8 @@ sdhc_1: sdhci@c0c4000 {
- 			clock-names = "core", "iface", "xo";
- 
- 			pinctrl-names = "default", "sleep";
--			pinctrl-0 = <&sdc1_clk_on &sdc1_cmd_on &sdc1_data_on &sdc1_rclk_on>;
--			pinctrl-1 = <&sdc1_clk_off &sdc1_cmd_off &sdc1_data_off &sdc1_rclk_off>;
-+			pinctrl-0 = <&sdc1_state_on>;
-+			pinctrl-1 = <&sdc1_state_off>;
- 
- 			bus-width = <8>;
- 			non-removable;
-@@ -962,10 +1030,8 @@ blsp2_uart1: serial@c1af000 {
- 			dmas = <&blsp2_dma 0>, <&blsp2_dma 1>;
- 			dma-names = "tx", "rx";
- 			pinctrl-names = "default", "sleep";
--			pinctrl-0 = <&blsp2_uart1_tx_active &blsp2_uart1_rxcts_active
--				&blsp2_uart1_rfr_active>;
--			pinctrl-1 = <&blsp2_uart1_tx_sleep &blsp2_uart1_rxcts_sleep
--				&blsp2_uart1_rfr_sleep>;
-+			pinctrl-0 = <&blsp2_uart1_default>;
-+			pinctrl-1 = <&blsp2_uart1_sleep>;
- 			status = "disabled";
- 		};
- 
+ 		pcie0: pci@20000000 {
+ 			compatible = "qcom,pcie-ipq8074";
+-			reg =  <0x20000000 0xf1d
+-				0x20000f20 0xa8
+-				0x00080000 0x2000
+-				0x20100000 0x1000>;
++			reg = <0x20000000 0xf1d>,
++			      <0x20000f20 0xa8>,
++			      <0x00080000 0x2000>,
++			      <0x20100000 0x1000>;
+ 			reg-names = "dbi", "elbi", "parf", "config";
+ 			device_type = "pci";
+ 			linux,pci-domain = <0>;
 -- 
 2.30.2
 
