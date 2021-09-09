@@ -2,147 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A54C3405BAF
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 19:02:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1CB23405BB2
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 19:03:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239995AbhIIREB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Sep 2021 13:04:01 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:51384 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234524AbhIIREA (ORCPT
+        id S239647AbhIIRFH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Sep 2021 13:05:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52168 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234524AbhIIRFG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Sep 2021 13:04:00 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1631206971; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=qrLWpwJqydDyGvQEH1EuVqU9HUIie2BZyQM8A4ufF9w=; b=TKDkBtYnVpnwkpXpSELN7bogc1hI7xvh9+V2iMYSl/DWNE2I51IqdeNOVjJ84ir/aXM0BeM8
- +mvpeeUP6TySFw7U9ojTKwBoLHAhIfnzRJRdANZzl7gNrNtIkd8p9YlehNb4wYaUKkVlepx4
- Kh02I7HY3b8IdS6D+ci5VyGJ6Bw=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 613a3e32aa8996eab7db370a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 09 Sep 2021 17:02:42
- GMT
-Sender: jackp=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3EA46C4360D; Thu,  9 Sep 2021 17:02:42 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from jackp-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: jackp)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id EDEDEC43460;
-        Thu,  9 Sep 2021 17:02:40 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org EDEDEC43460
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Date:   Thu, 9 Sep 2021 10:02:36 -0700
-From:   Jack Pham <jackp@codeaurora.org>
-To:     Felipe Balbi <balbi@kernel.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Wesley Cheng <wcheng@codeaurora.org>,
-        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] usb: dwc3: gadget: Skip resizing EP's TX FIFO if already
- resized
-Message-ID: <20210909170236.GA20111@jackp-linux.qualcomm.com>
-References: <20210909083120.15350-1-jackp@codeaurora.org>
- <87fsueb0ko.fsf@kernel.org>
+        Thu, 9 Sep 2021 13:05:06 -0400
+Received: from mail-wr1-x42e.google.com (mail-wr1-x42e.google.com [IPv6:2a00:1450:4864:20::42e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5C94C061574;
+        Thu,  9 Sep 2021 10:03:56 -0700 (PDT)
+Received: by mail-wr1-x42e.google.com with SMTP id x6so3526387wrv.13;
+        Thu, 09 Sep 2021 10:03:56 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=IbPPNqobPmWZ9MF50JtcVBJ+K5zUi+K+HgQrnexV6is=;
+        b=BE/y2bL/mHyRfUxGmarxT/nWkFdJyoDiJQtSLvbtElf2UESCirtPhVWa0xURMyE5tF
+         rYTmwmayvMNAV77nMn8OnSbsQBXKaho0Mf7sx1UJRiNp/0zyvd2vEvD1ZcsOP6Idyh8I
+         nJMdkiJveWXI8MXP3/S+LHsYohhkLiI5HAvtYoDeM1SJxY7AIldHjSqxxEhtIkYmYB84
+         5QNzYwGK3ubwMbqUocdIOoNCwQeHafOucLmkD0NJibGsl58DOIzZPkxc1wHSjsdtDsMX
+         7FbfsGNMPGgQl1HAh6ggsseaIz9cj2Sa7YnMJe1vCa6t0dT04seBaMEuTQ7jh5W87Jol
+         XAQQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=IbPPNqobPmWZ9MF50JtcVBJ+K5zUi+K+HgQrnexV6is=;
+        b=rxQGOUzpOgv47146cQYjpF4xtGug1sWiwAr19bMy8DjEiTOj0V5jQjOGKgJI3WHzWb
+         BoWXoUdNa7zu37A/KagANAV1yZciXq21GhVyjRBIeVq1Cb9H/Ml++770UTQo6ijkK/Ty
+         v1xT0FyVt2f0yJuq0RoqREbcbe88eh7F5z0B803ZEOx6Dk2av2L3GWAxrxVPWJfjBer6
+         6i0goL30lKALNTHlFBAnQ6jruxiw5Hi5T9Kfjc5KGIAut2wtd1gLRQG6cEj8orcNYK/2
+         CUEX3oDm6GNDH0DHYiPGuueUQaKEVL4Iip/5qcJC9kDZQ8zWX1JFfO9nSNR8JoFd8lKN
+         8iTg==
+X-Gm-Message-State: AOAM530DG6I3HpxTS6rhlNJAf/OJ40YvpEFLIpfYFN05/Iz9Ef8Fz3WX
+        QFCBaIIJQpJPF7MMFdsab7a6J6o5TluPUpzSr90=
+X-Google-Smtp-Source: ABdhPJxhkpYn5lOEWS5HH3Rm8m0d/wuvw1EtxFJjV07j/rVitgQQ8dAircwjT8ySc+dDGJd0RC694oWjtFnG4vZItxk=
+X-Received: by 2002:a05:6000:178b:: with SMTP id e11mr4750688wrg.151.1631207035454;
+ Thu, 09 Sep 2021 10:03:55 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <87fsueb0ko.fsf@kernel.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <20210903184806.1680887-1-robdclark@gmail.com> <i-XmBd_5J3_d8cdm-IT6Ery2kHN0FPZCX968aU5idvxQxNlvDJguLLThtF2NF15LF8gGsH4uI2w0s0CL_39KGpzoGpuCgcz2_-4Wjf3AYEM=@emersion.fr>
+ <CAF6AEGuD2bnFpmSWtGxU5+AFj1HVKtnOZmLKRr-pDVbLn0nPVw@mail.gmail.com> <CZ2qg4SOe8RnrJpAfZtag_GZTFRt6wAdspKbP4RqpFQCE9Wiuf4xyHTUyKIkaXGu6LfKpSALrmOC3jxgfPdMRjgIAkrkvTnNd9stjXqnPNI=@emersion.fr>
+In-Reply-To: <CZ2qg4SOe8RnrJpAfZtag_GZTFRt6wAdspKbP4RqpFQCE9Wiuf4xyHTUyKIkaXGu6LfKpSALrmOC3jxgfPdMRjgIAkrkvTnNd9stjXqnPNI=@emersion.fr>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Thu, 9 Sep 2021 10:08:22 -0700
+Message-ID: <CAF6AEGseoCzbYXUjsJNo7q-_g3FBmn0+BPMKf=QX5gunhOeKKA@mail.gmail.com>
+Subject: Re: [PATCH v3 0/9] dma-fence: Deadline awareness
+To:     Simon Ser <contact@emersion.fr>
+Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
+        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
+        <linaro-mm-sig@lists.linaro.org>, Daniel Vetter <daniel@ffwll.ch>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>,
+        =?UTF-8?Q?Michel_D=C3=A4nzer?= <michel@daenzer.net>,
+        Pekka Paalanen <ppaalanen@gmail.com>,
+        Rob Clark <robdclark@chromium.org>,
+        Alex Deucher <alexander.deucher@amd.com>,
+        Andrey Grodzovsky <andrey.grodzovsky@amd.com>,
+        Boris Brezillon <boris.brezillon@collabora.com>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Gustavo Padovan <gustavo@padovan.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        "open list:DMA BUFFER SHARING FRAMEWORK" 
+        <linux-media@vger.kernel.org>, Luben Tuikov <luben.tuikov@amd.com>,
+        Melissa Wen <mwen@igalia.com>,
+        Steven Price <steven.price@arm.com>,
+        Tian Tao <tiantao6@hisilicon.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Felipe,
+On Thu, Sep 9, 2021 at 9:42 AM Simon Ser <contact@emersion.fr> wrote:
+>
+> On Thursday, September 9th, 2021 at 18:31, Rob Clark <robdclark@gmail.com> wrote:
+>
+> > Yes, I think it would.. and "dma-buf/sync_file: Add SET_DEADLINE
+> > ioctl" adds such an ioctl.. just for the benefit of igt tests at this
+> > point, but the thought was it would be also used by compositors that
+> > are doing such frame scheduling. Ofc danvet is a bit grumpy that
+> > there isn't a more real (than igt) userspace for the ioctl yet ;-)
+>
+> Ah, very nice, I somehow missed it.
+>
+> I guess one issue is that explicit sync isn't quite plumbed through
+> compositors yet, so without Jason's DMA-BUF to sync_file IOCTL it'd be
+> a bit difficult to use.
+>
+> Can anybody set the deadline? I wonder if clients should be allowed to.
 
-On Thu, Sep 09, 2021 at 11:41:38AM +0300, Felipe Balbi wrote:
-> Jack Pham <jackp@codeaurora.org> writes:
-> 
-> > Some functions may dynamically enable and disable their endpoints
-> > regularly throughout their operation, particularly when Set Interface
-> > is employed to switch between Alternate Settings.  For instance the
-> > UAC2 function has its respective endpoints for playback & capture
-> > associated with AltSetting 1, in which case those endpoints would not
-> > get enabled until the host activates the AltSetting.  And they
-> > conversely become disabled when the interfaces' AltSetting 0 is
-> > chosen.
-> >
-> > With the DWC3 FIFO resizing algorithm recently added, every
-> > usb_ep_enable() call results in a call to resize that EP's TXFIFO,
-> > but if the same endpoint is enabled again and again, this incorrectly
-> > leads to FIFO RAM allocation exhaustion as the mechanism did not
-> > account for the possibility that endpoints can be re-enabled many
-> > times.
-> >
-> > Example log splat:
-> >
-> > 	dwc3 a600000.dwc3: Fifosize(3717) > RAM size(3462) ep3in depth:217973127
-> > 	configfs-gadget gadget: u_audio_start_capture:521 Error!
-> > 	dwc3 a600000.dwc3: request 000000000be13e18 was not queued to ep3in
-> >
-> > This is easily fixed by bailing out of dwc3_gadget_resize_tx_fifos()
-> > if an endpoint is already resized, avoiding the calculation error
-> > resulting from accumulating the EP's FIFO depth repeatedly.
-> >
-> > Fixes: 9f607a309fbe9 ("usb: dwc3: Resize TX FIFOs to meet EP bursting requirements")
-> > Signed-off-by: Jack Pham <jackp@codeaurora.org>
-> > ---
-> >  drivers/usb/dwc3/gadget.c | 4 ++++
-> >  1 file changed, 4 insertions(+)
-> >
-> > diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
-> > index 804b50548163..c647c76d7361 100644
-> > --- a/drivers/usb/dwc3/gadget.c
-> > +++ b/drivers/usb/dwc3/gadget.c
-> > @@ -747,6 +747,10 @@ static int dwc3_gadget_resize_tx_fifos(struct dwc3_ep *dep)
-> >  	if (!usb_endpoint_dir_in(dep->endpoint.desc) || dep->number <= 1)
-> >  		return 0;
-> >  
-> > +	/* bail if already resized */
-> > +	if (dwc3_readl(dwc->regs, DWC3_GTXFIFOSIZ(dep->number >> 1)))
-> > +		return 0;
-> > +
-> 
-> heh, not to say "I told you so", but...
-> 
-> That being said, your test is not very good. The whole idea for resizing
-> the FIFOs is that in some applications we only use e.g. 2 endpoints and
-> there is considerable FIFO space left unused.
-> 
-> The goal is to use that unused FIFO space to squeeze more throughput out
-> of the pipe, since it amortizes SW latency.
-> 
-> This patch is essentially the same as reverting the original commit :-)
+In its current form, anyone who has the fd can.. I'm not sure how (or
+even if) we could limit it beyond that.  I suppose hypothetically you
+could use this for completely non-compositor related things, like
+compute jobs where you want the result by some deadline.  (OTOH, it
+could be the driver using this internally when the app is stalling on
+a result)
 
-No, it's not quite the same as nullifying the resizing algorithm.  This
-patch is predicated on a key part of the resizing algorithm where
-dwc3_gadget_clear_tx_fifos() occurs upon receiving Set_Configuration in
-ep0.c.  Which means that each new connection starts off with a blank
-slate with all the GTXFIFOSIZ(n) registers cleared.  Then each EP gets
-resized one at a time when usb_ep_enable() is called.
+> What happens if the deadline is exceeded? I'd assume nothing in
+> particular, the deadline being just a hint?
 
-The problem this patch is fixing is avoiding *re-resizing*, the idea
-being that if an EP was already resized once during a session (from
-Set Configuration until the next reset or disconnect), then 
-it should be good to go even if it gets disabled and re-enabled again.
-Since we lack any boolean state variable in struct dwc3_ep reflecting
-whether it had already been resized, re-reading the GTXFIFOSIZ register
-is the next best equivalent.  Note also that this check occurs after
-the if (!dwc->do_fifo_resize) check so this is applicable only if the
-entire "tx-fifo-resize" mechanism is enabled.
+Nothing in particular, it is just a hint.  The main intention is to
+provide a feedback hint to the drivers in scenarios like vblank
+deadlines, where being 1ms late is just as bad as being
+$frame_duration-1ms late.  From my experiments and profiling it is
+useful in a couple scenarios:
 
-Jack
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+1) input latency, ie. go from idle to fullscreen animation, where GPU
+has been idle for a while and not busy enough *yet* for devfreq to
+kick in and start ramping up the freq before we miss the first vblank
+2) double buffering, for ex. if you are 1ms late you end up stalling
+15ms before the gpu can start rendering the next frame.. in the
+absence of feedback, devfreq would ramp down in this scenario instead
+of up
+
+BR,
+-R
