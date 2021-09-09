@@ -2,277 +2,220 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7F42A404244
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 02:24:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 07B42404490
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 06:44:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1348430AbhIIAZw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 8 Sep 2021 20:25:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53486 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1348278AbhIIAZv (ORCPT
+        id S231364AbhIIEpY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Sep 2021 00:45:24 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:63864 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229956AbhIIEpY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 8 Sep 2021 20:25:51 -0400
-Received: from mail-il1-x134.google.com (mail-il1-x134.google.com [IPv6:2607:f8b0:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3E1FC061575
-        for <linux-arm-msm@vger.kernel.org>; Wed,  8 Sep 2021 17:24:42 -0700 (PDT)
-Received: by mail-il1-x134.google.com with SMTP id a1so123458ilj.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Sep 2021 17:24:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=5TYYBxc50K8ZMZBZ7awprT/bOkKTiGesfrb7WFjJZ+A=;
-        b=KCg85QMP/OVnq6/fqe2waVZlGw1gFTsTbflgSC3G8O1iDp1IJHUm3MOwpZoQjxxDR7
-         Atw25rhjAEpmxxhj1rRyXedydjURMxf4JnVSadGKtWgcyetFjVG75upvVHgaoqHaOe7Q
-         i7ClThKtbyUxOILSABwytp3A6HENqxe+XgPEA=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=5TYYBxc50K8ZMZBZ7awprT/bOkKTiGesfrb7WFjJZ+A=;
-        b=eKKt3AGoKSG/q2lXXx3LdSQlDJMB4HGRPIh5SKr9Qg9HzbBHs6xer51Q8izhnx0ni/
-         1xSsgmbFJq60CyulkBxMPuY5l7Mjg5oHjMUzu0SArXpYTAW253jmLpKlyOOqT7r8m/R1
-         PEXrUT/2xsY0DyX9c1EA/tMi+6h7+iDwzgpR6olQ0en7qDYmn+ATXOCWghXmnQgrvRLq
-         ZDNcyKmMkMSzcoFXAlu3kdkkYyfl+fdrR7m40KRGhaVtQqt68/+vyNMarArDz1T164FH
-         s+bjyT9OHEPSakAZ9Nak/l5SqKPyX5uhbCmDC0feBquev3aCc6OE92capUjoeFWHTCe5
-         YkGw==
-X-Gm-Message-State: AOAM530r8LU+HOdZA1hgLGdgzEYWYaKIf30Gyl+HIXqZRqYWwjFJg7+Z
-        ANOWcFixXsX9BNQiiWppf1VZssslar514g==
-X-Google-Smtp-Source: ABdhPJwBYM7nUW0XIoZgyHPB+fcLUTSKFIh6E7jEkZHADX6wRoIkZHEX7vVtJhnI1jn+GRn6BhUYtA==
-X-Received: by 2002:a05:6e02:96e:: with SMTP id q14mr134539ilt.43.1631147081955;
-        Wed, 08 Sep 2021 17:24:41 -0700 (PDT)
-Received: from mail-il1-f179.google.com (mail-il1-f179.google.com. [209.85.166.179])
-        by smtp.gmail.com with ESMTPSA id x12sm84212ilm.56.2021.09.08.17.24.40
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 08 Sep 2021 17:24:41 -0700 (PDT)
-Received: by mail-il1-f179.google.com with SMTP id q14so127490ils.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 08 Sep 2021 17:24:40 -0700 (PDT)
-X-Received: by 2002:a05:6e02:214e:: with SMTP id d14mr150446ilv.142.1631147079713;
- Wed, 08 Sep 2021 17:24:39 -0700 (PDT)
+        Thu, 9 Sep 2021 00:45:24 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1631162655; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=v320XhZj9gyFcrPASJLLRDE9pWMYLXWJMVo7lM5KMZ0=;
+ b=ClyWQFU3QQv6rHNfvoqsxm214lpeb/TSbxfm+nhjKv8/hcLm2v6xxysA/KQDelsRxffIa/xU
+ xk4B7Eig+0slrZdBapZkVyxf+lmcE/74GkVdsNAQb1hOnTxuqtbSib/pFbA8UTs+sVUuZ3c+
+ DrWhyOS/VN2QXF8AeRtcWneB/JQ=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 61399110161bd38c42275d4b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 09 Sep 2021 04:44:00
+ GMT
+Sender: rajpat=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 2448CC4360C; Thu,  9 Sep 2021 04:44:00 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: rajpat)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0F75EC4338F;
+        Thu,  9 Sep 2021 04:43:59 +0000 (UTC)
 MIME-Version: 1.0
-References: <20210901201934.1084250-1-dianders@chromium.org> <YTUSiHiCgihz1AcO@ravnborg.org>
-In-Reply-To: <YTUSiHiCgihz1AcO@ravnborg.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Wed, 8 Sep 2021 17:24:28 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=U+dnyuGc9OuvMJpYWVx1x6yYQPJgi6fh+6Ne37+veedw@mail.gmail.com>
-Message-ID: <CAD=FV=U+dnyuGc9OuvMJpYWVx1x6yYQPJgi6fh+6Ne37+veedw@mail.gmail.com>
-Subject: Re: [PATCH v3 00/16] eDP: Support probing eDP panels dynamically
- instead of hardcoding
-To:     Sam Ravnborg <sam@ravnborg.org>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linus W <linus.walleij@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>, Steev Klimaszewski <steev@kali.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Maxime Ripard <mripard@kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Al Viro <viro@zeniv.linux.org.uk>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Alexandre Torgue <alexandre.torgue@foss.st.com>,
-        Andreas Kemnade <andreas@kemnade.info>,
-        Andrey Zhizhikin <andrey.zhizhikin@leica-geosystems.com>,
-        Anson Huang <Anson.Huang@nxp.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Claudiu Beznea <claudiu.beznea@microchip.com>,
-        Codrin Ciubotariu <codrin.ciubotariu@microchip.com>,
-        Corentin Labbe <clabbe@baylibre.com>,
-        Daniel Thompson <daniel.thompson@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Dmitry Osipenko <digetx@gmail.com>,
-        Emil Velikov <emil.velikov@collabora.com>,
-        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
-        Eugen Hristev <eugen.hristev@microchip.com>,
-        Fabio Estevam <festevam@gmail.com>,
-        Fabrice Gasnier <fabrice.gasnier@st.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Grygorii Strashko <grygorii.strashko@ti.com>,
-        =?UTF-8?Q?Guido_G=C3=BCnther?= <agx@sigxcpu.org>,
-        Jagan Teki <jagan@amarulasolutions.com>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Joel Stanley <joel@jms.id.au>,
-        Jonathan Hunter <jonathanh@nvidia.com>,
-        Kees Cook <keescook@chromium.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
-        Lionel Debieve <lionel.debieve@st.com>,
-        Liviu Dudau <liviu.dudau@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Ludovic Desroches <ludovic.desroches@microchip.com>,
-        Magnus Damm <magnus.damm@gmail.com>,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        =?UTF-8?Q?Martin_J=C3=BCcker?= <martin.juecker@gmail.com>,
-        Michael Walle <michael@walle.cc>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Nicolas Ferre <nicolas.ferre@microchip.com>,
-        Nishanth Menon <nm@ti.com>,
-        Olivier Moysan <olivier.moysan@st.com>,
-        Olof Johansson <olof@lixom.net>,
-        Otavio Salvador <otavio@ossystems.com.br>,
-        Paul Cercueil <paul@crapouillou.net>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Razvan Stefanescu <razvan.stefanescu@microchip.com>,
-        Robert Richter <rric@kernel.org>,
-        Russell King <linux@armlinux.org.uk>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Stefan Wahren <stefan.wahren@i2se.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Thomas Bogendoerfer <tsbogend@alpha.franken.de>,
-        Tony Lindgren <tony@atomide.com>,
-        Tudor Ambarus <tudor.ambarus@microchip.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Will Deacon <will@kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-mips <linux-mips@vger.kernel.org>,
-        linux-omap <linux-omap@vger.kernel.org>,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        linux-sunxi@lists.linux.dev,
-        "open list:TEGRA ARCHITECTURE SUPPORT" <linux-tegra@vger.kernel.org>,
-        =?UTF-8?Q?=C5=81ukasz_Stelmach?= <l.stelmach@samsung.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 09 Sep 2021 10:13:58 +0530
+From:   rajpat@codeaurora.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>, robh+dt@kernel.org,
+        agross@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        saiprakash.ranjan@codeaurora.org, msavaliy@qti.qualcomm.com,
+        mka@chromium.org, dianders@chromium.org
+Subject: Re: [PATCH V3 1/3] arm64: dts: sc7280: Add QSPI node
+In-Reply-To: <YPXbw6a4+B5TBD0W@yoga>
+References: <20210604135439.19119-1-rojay@codeaurora.org>
+ <20210604135439.19119-2-rojay@codeaurora.org> <YLxHTDxVcSvVxsd5@builder.lan>
+ <98befc79fc039496b0c12d7983319c92@codeaurora.org>
+ <2ad7a00924b5065bf61c47e8b6d24339@codeaurora.org>
+ <CAE-0n51NfHSwRQvG0HnTcHBkv=Huy-CXEwJCxLG03MN3dSe5kA@mail.gmail.com>
+ <498a2359eec36c6a0b811337ee187df8@codeaurora.org> <YPXbw6a4+B5TBD0W@yoga>
+Message-ID: <b67133f1a12ff0cce1114b10ebc6d6e7@codeaurora.org>
+X-Sender: rajpat@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On 2021-07-20 01:38, Bjorn Andersson wrote:
+> On Wed 14 Jul 02:47 CDT 2021, rojay@codeaurora.org wrote:
+> 
+>> On 2021-07-09 06:26, Stephen Boyd wrote:
+>> > Quoting rojay@codeaurora.org (2021-07-06 02:19:27)
+>> > > On 2021-06-08 13:37, rojay@codeaurora.org wrote:
+>> > > > On 2021-06-06 09:25, Bjorn Andersson wrote:
+>> > > >> On Fri 04 Jun 08:54 CDT 2021, Roja Rani Yarubandi wrote:
+>> > > >>
+>> > > >>> Add QSPI DT node for SC7280 SoC.
+>> > > >>>
+>> > > >>> Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
+>> > > >>> ---
+>> > > >>> Changes in V3:
+>> > > >>>  - Broken the huge V2 patch into 3 smaller patches.
+>> > > >>>    1. QSPI DT nodes
+>> > > >>>    2. QUP wrapper_0 DT nodes
+>> > > >>>    3. QUP wrapper_1 DT nodes
+>> > > >>>
+>> > > >>> Changes in V2:
+>> > > >>>  - As per Doug's comments removed pinmux/pinconf subnodes.
+>> > > >>>  - As per Doug's comments split of SPI, UART nodes has been done.
+>> > > >>>  - Moved QSPI node before aps_smmu as per the order.
+>> > > >>>
+>> > > >>>  arch/arm64/boot/dts/qcom/sc7280-idp.dts | 29 ++++++++++++
+>> > > >>>  arch/arm64/boot/dts/qcom/sc7280.dtsi    | 61
+>> > > >>> +++++++++++++++++++++++++
+>> > > >>>  2 files changed, 90 insertions(+)
+>> > > >>>
+>> > > >>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+>> > > >>> b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+>> > > >>> index 3900cfc09562..d0edffc15736 100644
+>> > > >>> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+>> > > >>> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+>> > > >>> @@ -268,6 +268,22 @@ pmr735b_die_temp {
+>> > > >>>             };
+>> > > >>>  };
+>> > > >>>
+>> > > >>> +&qspi {
+>> > > >>> +   status = "okay";
+>> > > >>> +   pinctrl-names = "default";
+>> > > >>> +   pinctrl-0 = <&qspi_clk>, <&qspi_cs0>, <&qspi_data01>;
+>> > > >>> +
+>> > > >>> +   flash@0 {
+>> > > >>> +           compatible = "jedec,spi-nor";
+>> > > >>> +           reg = <0>;
+>> > > >>> +
+>> > > >>> +           /* TODO: Increase frequency after testing */
+>> > > >>> +           spi-max-frequency = <25000000>;
+>> > > >>> +           spi-tx-bus-width = <2>;
+>> > > >>> +           spi-rx-bus-width = <2>;
+>> > > >>> +   };
+>> > > >>> +};
+>> > > >>> +
+>> > > >>>  &qupv3_id_0 {
+>> > > >>>     status = "okay";
+>> > > >>>  };
+>> > > >>> @@ -278,6 +294,19 @@ &uart5 {
+>> > > >>>
+>> > > >>>  /* PINCTRL - additions to nodes defined in sc7280.dtsi */
+>> > > >>>
+>> > > >>> +&qspi_cs0 {
+>> > > >>> +   bias-disable;
+>> > > >>> +};
+>> > > >>> +
+>> > > >>> +&qspi_clk {
+>> > > >>> +   bias-disable;
+>> > > >>> +};
+>> > > >>> +
+>> > > >>> +&qspi_data01 {
+>> > > >>> +   /* High-Z when no transfers; nice to park the lines */
+>> > > >>> +   bias-pull-up;
+>> > > >>> +};
+>> > > >>> +
+>> > > >>>  &qup_uart5_default {
+>> > > >>>     tx {
+>> > > >>>             pins = "gpio46";
+>> > > >>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> > > >>> b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> > > >>> index 6c9d5eb93f93..3047ab802cd2 100644
+>> > > >>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> > > >>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+>> > > >>> @@ -1061,6 +1061,42 @@ apss_merge_funnel_in: endpoint {
+>> > > >>>                     };
+>> > > >>>             };
+>> > > >>>
+>> > > >>> +           qspi_opp_table: qspi-opp-table {
+>> > > >>
+>> > > >> This node doesn't represents anything on the mmio bus, so it shouldn't
+>> > > >> live in in /soc. Can't you move it into &qspi?
+>> > > >>
+>> > > >> Regards,
+>> > > >> Bjorn
+>> > > >>
+>> > > >
+>> > > > Sure, will move it into qspi node.
+>> > > >
+>> > > > Thanks,
+>> > > > Roja
+>> > > >
+>> > >
+>> > > Hi Bjorn,
+>> > >
+>> > > Moving "qspi_opp_table" inside &qspi node causing this warning:
+>> > > arch/arm64/boot/dts/qcom/sc7280.dtsi:1055.35-1072.6: Warning
+>> > > (spi_bus_reg): /soc@0/spi@88dc000/qspi-opp-table: missing or empty reg
+>> > > property
+>> >
+>> > If DT folks are OK I think we should hard-code 'opp-table' as not a
+>> > device for spi to populate on the spi bus and relax the warning in the
+>> > devicetree compiler (see [1] for more details). Technically, nodes that
+>> > are bus controllers assume all child nodes are devices on that bus.  In
+>> > this case, we want to stick the opp table as a child of the spi node so
+>> > that it can be called 'opp-table' and not be a node in the root of DT.
+>> >
+>> > >
+>> > > Shall I keep the qspi-opp-table out of &qspi node?
+>> > >
+>> >
+>> > If you do, please move it to / instead of putting it under /soc as it
+>> > doesn't have an address or a reg property.
+>> >
+>> 
+>> Hi Bjorn, Rob
+>> 
+>> Can we move this "qspi_opp_table" to / from /soc?
+>> 
+> 
+> If you have made a proper attempt to convince Rob and Mark that
+> a child "opp-table" in a SPI master is not a SPI device - and the
+> conclusion is that this is not a good idea...then yes it should live
+> outside /soc.
+> 
+> Thanks,
+> Bjorn
 
-On Sun, Sep 5, 2021 at 11:55 AM Sam Ravnborg <sam@ravnborg.org> wrote:
->
-> Hi Douglas,
->
-> On Wed, Sep 01, 2021 at 01:19:18PM -0700, Douglas Anderson wrote:
-> > The goal of this patch series is to move away from hardcoding exact
-> > eDP panels in device tree files. As discussed in the various patches
-> > in this series (I'm not repeating everything here), most eDP panels
-> > are 99% probable and we can get that last 1% by allowing two "power
-> > up" delays to be specified in the device tree file and then using the
-> > panel ID (found in the EDID) to look up additional power sequencing
-> > delays for the panel.
-> >
-> > This patch series is the logical contiunation of a previous patch
-> > series where I proposed solving this problem by adding a
-> > board-specific compatible string [1]. In the discussion that followed
-> > it sounded like people were open to something like the solution
-> > proposed in this new series.
-> >
-> > In version 2 I got rid of the idea that we could have a "fallback"
-> > compatible string that we'd use if we didn't recognize the ID in the
-> > EDID. This simplifies the bindings a lot and the implementation
-> > somewhat. As a result of not having a "fallback", though, I'm not
-> > confident in transitioning any existing boards over to this since
-> > we'll have to fallback to very conservative timings if we don't
-> > recognize the ID from the EDID and I can't guarantee that I've seen
-> > every panel that might have shipped on an existing product. The plan
-> > is to use "edp-panel" only on new boards or new revisions of old
-> > boards where we can guarantee that every EDID that ships out of the
-> > factory has an ID in the table.
-> >
-> > Version 3 of this series now splits out all eDP panels to their own
-> > driver and adds the generic eDP panel support to this new driver. I
-> > believe this is what Sam was looking for [2].
-> >
-> > [1] https://lore.kernel.org/r/YFKQaXOmOwYyeqvM@google.com/
-> > [2] https://lore.kernel.org/r/YRTsFNTn%2FT8fLxyB@ravnborg.org/
-> >
-> > Changes in v3:
-> > - Decode hex product ID w/ same endianness as everyone else.
-> > - ("Reorder logicpd_type_28...") patch new for v3.
-> > - Split eDP panels patch new for v3.
-> > - Move wayward panels patch new for v3.
-> > - ("Non-eDP panels don't need "HPD" handling") new for v3.
-> > - Split the delay structure out patch just on eDP now.
-> > - ("Better describe eDP panel delays") new for v3.
-> > - Fix "prepare_to_enable" patch new for v3.
-> > - ("Don't re-read the EDID every time") moved to eDP only patch.
-> > - Generic "edp-panel" handled by the eDP panel driver now.
-> > - Change init order to we power at the end.
-> > - Adjust endianness of product ID.
-> > - Fallback to conservative delays if panel not recognized.
-> > - Add Sharp LQ116M1JW10 to table.
-> > - Add AUO B116XAN06.1 to table.
-> > - Rename delays more generically so they can be reused.
-> >
-> > Changes in v2:
-> > - No longer allow fallback to panel-simple.
-> > - Add "-ms" suffix to delays.
-> > - Don't support a "fallback" panel. Probed panels must be probed.
-> > - Not based on patch to copy "desc"--just allocate for probed panels.
-> > - Add "-ms" suffix to delays.
-> >
-> > Douglas Anderson (16):
-> >   dt-bindings: drm/panel-simple-edp: Introduce generic eDP panels
-> >   drm/edid: Break out reading block 0 of the EDID
-> >   drm/edid: Allow the querying/working with the panel ID from the EDID
-> >   drm/panel-simple: Reorder logicpd_type_28 / mitsubishi_aa070mc01
-> >   drm/panel-simple-edp: Split eDP panels out of panel-simple
-> >   ARM: configs: Everyone who had PANEL_SIMPLE now gets PANEL_SIMPLE_EDP
-> >   arm64: defconfig: Everyone who had PANEL_SIMPLE now gets
-> >     PANEL_SIMPLE_EDP
-> >   MIPS: configs: Everyone who had PANEL_SIMPLE now gets PANEL_SIMPLE_EDP
-> >   drm/panel-simple-edp: Move some wayward panels to the eDP driver
-> >   drm/panel-simple: Non-eDP panels don't need "HPD" handling
-> >   drm/panel-simple-edp: Split the delay structure out
-> >   drm/panel-simple-edp: Better describe eDP panel delays
-> >   drm/panel-simple-edp: hpd_reliable shouldn't be subtraced from
-> >     hpd_absent
-> >   drm/panel-simple-edp: Fix "prepare_to_enable" if panel doesn't handle
-> >     HPD
-> >   drm/panel-simple-edp: Don't re-read the EDID every time we power off
-> >     the panel
-> >   drm/panel-simple-edp: Implement generic "edp-panel"s probed by EDID
->
-> Thanks for looking into this. I really like the outcome.
-> We have panel-simple that now (mostly) handle simple panels,
-> and thus all the eDP functionality is in a separate driver.
->
-> I have provided a few nits.
-> My only take on this is the naming - as we do not want to confuse
-> panel-simple and panel-edp I strongly suggest renaming the driver to
-> panel-edp.
+Hi Rob/Mark,
 
-Sure, I'll do that. I was trying to express the fact that the new
-"panel-edp" driver won't actually handle _all_ eDP panels, only the
-eDP panels that are (comparatively) simpler. For instance, I'm not
-planning to handle panel-samsung-atna33xc20.c in "panel-edp". I guess
-people will figure it out, though.
+adding "qspi_opp_table" inside &qspi node causing warning
+we are getting "empty reg warning". qspi_opp_table contain
+frequencies for qspi and i think putting "opp-table" under qspi node is 
+not a
+good idea because if we put under qspi it will treat "opp-table" as a 
+device on the bus.
+in this scenario "opp-table" is not a device on the bus. so we moved 
+qspi_opp_table from /soc to /.
+please give your inputs about this.
 
-
-> And then rename the corresponding Kconfig entry.
->
-> With these few changes all patches are:
-> Acked-by: Sam Ravnborg <sam@ravnborg.org>
-
-Thanks, I'll add it to the patches. If there's anything major I need
-to change I'll give you a yell to make sure you see it.
-
-
-> For bisectability I suggest to move the defconfig patches up before you
-> introduce the new Kconfig symbol. Or maybe they will be added via
-> another tree and then this is not possible to control
-
-Yup, I'll do that. There was some question about the defconfig patch
-but they are hopefully cleared up now.
-
-
-> I assume you will apply the patches yourself.
-
-Sure, I can do that with your Ack. I'll also make sure that patches
-that Jani commented on get resolved.
-
-
--Doug
+Thanks and Regards,
+Rajesh
