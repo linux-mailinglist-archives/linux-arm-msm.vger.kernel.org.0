@@ -2,37 +2,36 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B5C5D4054A9
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 15:30:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4E6C040579A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 15:42:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350662AbhIINBO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Sep 2021 09:01:14 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57770 "EHLO mail.kernel.org"
+        id S1344697AbhIINiX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Sep 2021 09:38:23 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57780 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1356150AbhIIMxL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Sep 2021 08:53:11 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id BC827600AA;
-        Thu,  9 Sep 2021 11:57:33 +0000 (UTC)
+        id S1354314AbhIIM47 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Sep 2021 08:56:59 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 5F02063252;
+        Thu,  9 Sep 2021 11:58:18 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631188654;
-        bh=jy87Hs9DjEstU082RReFi1SFX5hfII05KU1e+UcXikQ=;
+        s=k20201202; t=1631188699;
+        bh=h08e8F4P8w/l1YEy/TuFnEdjIweC5EMttMZkLs3tubM=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=FuJn/WlItLezQ4ciaC+Q/ltJ8U/y2ha6VHiOzWdgZBaGzEN8ruw8gA6r3qyumNLqM
-         /BM/r6EF0F93iI+R2raqTJ4laKjL4+F5kNp/rQ0/eB6N09nsTe1E/FS7m2SyqWqFTh
-         0yzXthwfZ2uTeU0NUyvVl46mfK8yeTI6wwgjNX/HjneW2NIVT209Efa4LyezmunDe9
-         hGJaUYd7ATQ2X41bRocIQQyaxOu+tJFYS0dQhmbAbWbXoeWkDBz3zX88fxh+K8rtAd
-         Sppectf8telxUgAd2zJ5b0mWhGh9EQiPLsd4JL/3mkIWYRZjWDSjiXN20qjSFeu8ZE
-         SP8tHjVa1liuA==
+        b=gcfUCwFgKslS4MWqbjxGWE0BqAQWDsou1xgumW/xddfSf/MUH1zQccBt3QmE1Zc4e
+         6J0LsLH5gZs+XTmSRkCKGcWFW99xhuNl9a08Yselv5BBBA8WhVjPinBbKj0AtwPpkz
+         TPgvUtBEKVBUIg0T7ZAMa9fGqF+2F7FXFyRaq6fLvGQzAqmLg7CPU3K4rzaSOqlGMg
+         9tTlmUg4v00ih/aFA4To1CDp6MFeExUwcGTNOPZY39o9JpNSVw1yBnG+K4zFS7mtT2
+         rthZGOP9WeZuGwJlqMmYk7JOhHdEC4MtrtgKutRwfEIYE9RJtIoUv1o9/W5WQE04yc
+         GvsOiSqg45ljQ==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
-Cc:     David Heidelberg <david@ixit.cz>,
-        Brian Masney <masneyb@onstation.org>,
+Cc:     Vinod Koul <vkoul@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org
-Subject: [PATCH AUTOSEL 4.19 06/74] ARM: dts: qcom: apq8064: correct clock names
-Date:   Thu,  9 Sep 2021 07:56:18 -0400
-Message-Id: <20210909115726.149004-6-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 4.19 42/74] arm64: dts: qcom: sdm660: use reg value for memory node
+Date:   Thu,  9 Sep 2021 07:56:54 -0400
+Message-Id: <20210909115726.149004-42-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20210909115726.149004-1-sashal@kernel.org>
 References: <20210909115726.149004-1-sashal@kernel.org>
@@ -44,48 +43,36 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: David Heidelberg <david@ixit.cz>
+From: Vinod Koul <vkoul@kernel.org>
 
-[ Upstream commit 0dc6c59892ead17a9febd11202c9f6794aac1895 ]
+[ Upstream commit c81210e38966cfa1c784364e4035081c3227cf5b ]
 
-Since new code doesn't take old clk names in account, it does fixes
-error:
+memory node like other node should be node@reg, which is missing in this
+case, so fix it up
 
-msm_dsi 4700000.mdss_dsi: dev_pm_opp_set_clkname: Couldn't find clock: -2
+arch/arm64/boot/dts/qcom/ipq8074-hk01.dt.yaml: /: memory: False schema does not allow {'device_type': ['memory'], 'reg': [[0, 1073741824, 0, 536870912]]}
 
-and following kernel oops introduced by
-b0530eb1191 ("drm/msm/dpu: Use OPP API to set clk/perf state").
-
-Also removes warning about deprecated clock names.
-
-Tested against linux-5.10.y LTS on Nexus 7 2013.
-
-Reviewed-by: Brian Masney <masneyb@onstation.org>
-Signed-off-by: David Heidelberg <david@ixit.cz>
-Link: https://lore.kernel.org/r/20210707131453.24041-1-david@ixit.cz
+Signed-off-by: Vinod Koul <vkoul@kernel.org>
+Link: https://lore.kernel.org/r/20210308060826.3074234-18-vkoul@kernel.org
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- arch/arm/boot/dts/qcom-apq8064.dtsi | 6 +++---
- 1 file changed, 3 insertions(+), 3 deletions(-)
+ arch/arm64/boot/dts/qcom/ipq8074-hk01.dts | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm/boot/dts/qcom-apq8064.dtsi b/arch/arm/boot/dts/qcom-apq8064.dtsi
-index 4a99c9255104..d0153bbbdbeb 100644
---- a/arch/arm/boot/dts/qcom-apq8064.dtsi
-+++ b/arch/arm/boot/dts/qcom-apq8064.dtsi
-@@ -1296,9 +1296,9 @@ dsi0: mdss_dsi@4700000 {
- 				<&mmcc DSI1_BYTE_CLK>,
- 				<&mmcc DSI_PIXEL_CLK>,
- 				<&mmcc DSI1_ESC_CLK>;
--			clock-names = "iface_clk", "bus_clk", "core_mmss_clk",
--					"src_clk", "byte_clk", "pixel_clk",
--					"core_clk";
-+			clock-names = "iface", "bus", "core_mmss",
-+					"src", "byte", "pixel",
-+					"core";
+diff --git a/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts b/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
+index c13ddee8262b..58acf21d8d33 100644
+--- a/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
++++ b/arch/arm64/boot/dts/qcom/ipq8074-hk01.dts
+@@ -28,7 +28,7 @@ chosen {
+ 		stdout-path = "serial0";
+ 	};
  
- 			assigned-clocks = <&mmcc DSI1_BYTE_SRC>,
- 					<&mmcc DSI1_ESC_SRC>,
+-	memory {
++	memory@40000000 {
+ 		device_type = "memory";
+ 		reg = <0x0 0x40000000 0x0 0x20000000>;
+ 	};
 -- 
 2.30.2
 
