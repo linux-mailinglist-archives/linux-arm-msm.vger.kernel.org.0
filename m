@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4BF8B405E5B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 23:02:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 100EB405E5D
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 23:02:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346451AbhIIVCh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Sep 2021 17:02:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50030 "EHLO
+        id S1346400AbhIIVCi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Sep 2021 17:02:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50018 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346132AbhIIVCe (ORCPT
+        with ESMTP id S1346178AbhIIVCe (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 9 Sep 2021 17:02:34 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A4695C0613C1
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Sep 2021 14:01:22 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id m21-20020a17090a859500b00197688449c4so2431771pjn.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Sep 2021 14:01:22 -0700 (PDT)
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 62475C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Sep 2021 14:01:24 -0700 (PDT)
+Received: by mail-pg1-x52b.google.com with SMTP id n18so3090693pgm.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Sep 2021 14:01:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=ZvgdcotUW/Z2hr5W/JwqaH70rPJvl2nj6s4qqOeE0Dg=;
-        b=Kk+o0RoM58UWObfVq9l6ZWG/YLrp1SwOU5m07aLzfk+Aqbxf3Rbi7USY5eNw5Pa/yQ
-         0zdi7GNmSjZAiOaARPo/QZczwIe31+kTE+Xcu4LPr7AZ3ttD5/DUH6A5uUFjpXEtwpoF
-         emWZzbR1kb2pGEtYFl+AWdJqYApSqvTho/0+U=
+        bh=wgdd7k2meN+TTX6Jg3GzgzE7H76ZLGquQVy1sMGiGZ4=;
+        b=MGMmmuxNGOl5nA2L8i1UACBEDd+APufRbYL5wqzKPPpNcAV+1Zp4qsTrTzUuWBhYNZ
+         RW6cG6JJAeckRKgjnRag/Gb6VdL6aoK0eVIAGWiXcKioTmZIswINTzMBt24Ov/kf5Q8w
+         VxpkJRryXxXMQGR+R6bHJ/Q1IWToWdEMQPgwo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=ZvgdcotUW/Z2hr5W/JwqaH70rPJvl2nj6s4qqOeE0Dg=;
-        b=HCfsB8puRupC3je2idZCPXR5K3U0unZMgZJYzfbVFMf4z689E/vr6hXEIQX2PkmuY0
-         xhtzkm/i0P88cy2IHpK+LMiTBtsYrDv99cbF3Mc9/ifjQWsZ4vxADAnmiB+MjQ/Q3idt
-         g/pzwtSXxkM1YcKKkkqCz+Xd6+4wiSDG7mD0CHZwfeEVekI+/fauhgj/xTIxrM0v4oHl
-         rotVEd7Dd3JTi8N6bcQhw06b75044/AMJGMflyMOhesgPnUbM0SJAmQvK+0KRT9ks9/o
-         cCFhaj5ookPg1Pt53sS7ZI+xEoXVeTmcbfE32hW8+p+uFU6z2yshgCiOi5oRzYoT/qVE
-         Bt8Q==
-X-Gm-Message-State: AOAM532BEh23wYAVIYQixU/KIX0uG4AUbZDrppvbyql3Lgo1vuFsAdlk
-        x7euXLOhMneih6eS50mgXJ4jfg==
-X-Google-Smtp-Source: ABdhPJxiD0XQ4iYeJdjwH+pdCT809jcMlYeS9QJJCeA1dn4+aT8l3d4hfno52/xSmDa7IX1TlI2qKA==
-X-Received: by 2002:a17:902:c613:b0:136:5fc8:5372 with SMTP id r19-20020a170902c61300b001365fc85372mr4437797plr.41.1631221282174;
-        Thu, 09 Sep 2021 14:01:22 -0700 (PDT)
+        bh=wgdd7k2meN+TTX6Jg3GzgzE7H76ZLGquQVy1sMGiGZ4=;
+        b=5b5IqjnoBlbqUtZVoRsiky9dGrmjD6gQclGLH1vbbly7jrlGYj101JmxS1OBuBpde+
+         H6h4XDU7Ln9jS3HvcVWIXvbgRo+1Ca12QeYIEih9zsT3xF+k00uAPbj9XzfhFk0WaCQi
+         sZWVJimqsEctFD2tHGd/Vy9XSfYSPeFBgkV76NCJB0Xx4ruELIQxbsCpZZ/9h18yr/eE
+         2XKi/i0iG94m0BMV9DUhajyPksywTzf36+TUS7jjmOSpw0XDI2aLFvtApPgjuFayKGx1
+         CFa3TLhoqnaUR6VE5Pe4LCq/ixYLR7ebi/7yF8dFEL3MdKp5ZbCNK/eKQ9xX4/cFSTwj
+         lc8A==
+X-Gm-Message-State: AOAM533UAvIhfGfHSDBsLtJmpHRbDgsvSzGwJb3vzajWldm8K13BCiYR
+        VS7dB2U0O+42pN9IzBiWD8QzLQ==
+X-Google-Smtp-Source: ABdhPJxQgS0HpYosTZpAWKSO5dwrgqpNc6QSn0MBODteWKAZ7JkDBz3BTPwOp8wNUPQiYT4+HVYx1Q==
+X-Received: by 2002:a63:2d07:: with SMTP id t7mr4411763pgt.101.1631221283830;
+        Thu, 09 Sep 2021 14:01:23 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:8da3:b0fb:4261:2c10])
-        by smtp.gmail.com with ESMTPSA id l143sm177069pfd.60.2021.09.09.14.01.20
+        by smtp.gmail.com with ESMTPSA id l143sm177069pfd.60.2021.09.09.14.01.22
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 09 Sep 2021 14:01:21 -0700 (PDT)
+        Thu, 09 Sep 2021 14:01:23 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Thierry Reding <thierry.reding@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
@@ -60,9 +60,9 @@ Cc:     devicetree@vger.kernel.org, Maxime Ripard <mripard@kernel.org>,
         dri-devel@lists.freedesktop.org,
         Douglas Anderson <dianders@chromium.org>,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v4 02/15] drm/edid: Break out reading block 0 of the EDID
-Date:   Thu,  9 Sep 2021 14:00:18 -0700
-Message-Id: <20210909135838.v4.2.I62e76a034ac78c994d40a23cd4ec5aeee56fa77c@changeid>
+Subject: [PATCH v4 03/15] drm/edid: Allow querying/working with the panel ID from the EDID
+Date:   Thu,  9 Sep 2021 14:00:19 -0700
+Message-Id: <20210909135838.v4.3.I4a672175ba1894294d91d3dbd51da11a8239cf4a@changeid>
 X-Mailer: git-send-email 2.33.0.309.g3052b89438-goog
 In-Reply-To: <20210909210032.465570-1-dianders@chromium.org>
 References: <20210909210032.465570-1-dianders@chromium.org>
@@ -72,114 +72,182 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-A future change wants to be able to read just block 0 of the EDID, so
-break it out of drm_do_get_edid() into a sub-function.
+EDIDs have 32-bits worth of data which is intended to be used to
+uniquely identify the make/model of a panel. This has historically
+been used only internally in the EDID processing code to identify
+quirks with panels.
 
-This is intended to be a no-op change--just code movement.
+We'd like to use this panel ID in panel drivers to identify which
+panel is hooked up and from that information figure out power sequence
+timings. Let's expose this information from the EDID code and also
+allow it to be accessed early, before a connector has been created.
+
+To make matching in the panel drivers code easier, we'll return the
+panel ID as a 32-bit value. We'll provide some functions for
+converting this value back and forth to something more human readable.
 
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
 Acked-by: Sam Ravnborg <sam@ravnborg.org>
 ---
 
 Changes in v4:
-- "u8 *edid" => "void *edid" to avoid cast.
-- Don't put kmalloc() in the "if" test even if the old code did.
+- Don't refer to "panel-simple" in commit message.
+- decode_edid_id() => drm_edid_decode_panel_id()
 - drm_do_get_edid_blk0() => drm_do_get_edid_base_block()
+- drm_get_panel_id() => drm_edid_get_panel_id()
+- encode_edid_id() => drm_edid_encode_panel_id()
+- split panel id extraction out to its own function.
 
- drivers/gpu/drm/drm_edid.c | 63 +++++++++++++++++++++++++++-----------
- 1 file changed, 45 insertions(+), 18 deletions(-)
+Changes in v3:
+- Decode hex product ID w/ same endianness as everyone else.
+
+ drivers/gpu/drm/drm_edid.c | 67 ++++++++++++++++++++++++++++++++++++++
+ include/drm/drm_edid.h     | 47 ++++++++++++++++++++++++++
+ 2 files changed, 114 insertions(+)
 
 diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
-index 6325877c5fd6..520fe1391769 100644
+index 520fe1391769..f84e0dd264f4 100644
 --- a/drivers/gpu/drm/drm_edid.c
 +++ b/drivers/gpu/drm/drm_edid.c
-@@ -1905,6 +1905,44 @@ int drm_add_override_edid_modes(struct drm_connector *connector)
+@@ -2087,6 +2087,73 @@ struct edid *drm_get_edid(struct drm_connector *connector,
  }
- EXPORT_SYMBOL(drm_add_override_edid_modes);
+ EXPORT_SYMBOL(drm_get_edid);
  
-+static struct edid *drm_do_get_edid_base_block(
-+	int (*get_edid_block)(void *data, u8 *buf, unsigned int block,
-+			      size_t len),
-+	void *data, bool *edid_corrupt, int *null_edid_counter)
++static u32 edid_extract_panel_id(const struct edid *edid)
 +{
-+	int i;
-+	void *edid;
-+
-+	edid = kmalloc(EDID_LENGTH, GFP_KERNEL);
-+	if (edid == NULL)
-+		return NULL;
-+
-+	/* base block fetch */
-+	for (i = 0; i < 4; i++) {
-+		if (get_edid_block(data, edid, 0, EDID_LENGTH))
-+			goto out;
-+		if (drm_edid_block_valid(edid, 0, false, edid_corrupt))
-+			break;
-+		if (i == 0 && drm_edid_is_zero(edid, EDID_LENGTH)) {
-+			if (null_edid_counter)
-+				(*null_edid_counter)++;
-+			goto carp;
-+		}
-+	}
-+	if (i == 4)
-+		goto carp;
-+
-+	return edid;
-+
-+carp:
-+	kfree(edid);
-+	return ERR_PTR(-EINVAL);
-+
-+out:
-+	kfree(edid);
-+	return NULL;
++	/*
++	 * In theory we could try to de-obfuscate this like edid_get_quirks()
++	 * does, but it's easier to just deal with a 32-bit number since then
++	 * it can be compared with "==".
++	 *
++	 * NOTE that we deal with endianness differently for the top half
++	 * of this ID than for the bottom half. The bottom half (the product
++	 * id) gets decoded as little endian by the EDID_PRODUCT_ID because
++	 * that's how everyone seems to interpret it. The top half (the mfg_id)
++	 * gets stored as big endian because that makes
++	 * drm_edid_encode_panel_id() and drm_edid_decode_panel_id() easier
++	 * to write (it's easier to extract the ASCII). It doesn't really
++	 * matter, though, as long as the number here is unique.
++	 */
++	return (u32)edid->mfg_id[0] << 24   |
++	       (u32)edid->mfg_id[1] << 16   |
++	       (u32)EDID_PRODUCT_ID(edid);
 +}
 +
++/**
++ * drm_edid_get_panel_id - Get a panel's ID through DDC
++ * @adapter: I2C adapter to use for DDC
++ *
++ * This function reads the first block of the EDID of a panel and (assuming
++ * that the EDID is valid) extracts the ID out of it. The ID is a 32-bit value
++ * (16 bits of manufacturer ID and 16 bits of per-manufacturer ID) that's
++ * supposed to be different for each different modem of panel.
++ *
++ * This function is intended to be used during early probing on devices where
++ * more than one panel might be present. Because of its intended use it must
++ * assume that the EDID of the panel is correct, at least as far as the ID
++ * is concerned (in other words, we don't process any overrides here).
++ *
++ * NOTE: it's expected that this function and drm_do_get_edid() will both
++ * be read the EDID, but there is no caching between them. Since we're only
++ * reading the first block, hopefully this extra overhead won't be too big.
++ *
++ * Return: A 32-bit ID that should be different for each make/model of panel.
++ *         See the functions drm_edid_encode_panel_id() and
++ *         drm_edid_decode_panel_id() for some details on the structure of this
++ *         ID.
++ */
++
++u32 drm_edid_get_panel_id(struct i2c_adapter *adapter)
++{
++	struct edid *edid;
++	u32 panel_id;
++
++	edid = drm_do_get_edid_base_block(drm_do_probe_ddc_edid, adapter,
++					  NULL, NULL);
++
++	/*
++	 * There are no manufacturer IDs of 0, so if there is a problem reading
++	 * the EDID then we'll just return 0.
++	 */
++	if (IS_ERR_OR_NULL(edid))
++		return 0;
++
++	panel_id = edid_extract_panel_id(edid);
++	kfree(edid);
++
++	return panel_id;
++}
++EXPORT_SYMBOL(drm_edid_get_panel_id);
++
  /**
-  * drm_do_get_edid - get EDID data using a custom EDID block read function
+  * drm_get_edid_switcheroo - get EDID data for a vga_switcheroo output
   * @connector: connector we're probing
-@@ -1938,25 +1976,16 @@ struct edid *drm_do_get_edid(struct drm_connector *connector,
- 	if (override)
- 		return override;
+diff --git a/include/drm/drm_edid.h b/include/drm/drm_edid.h
+index deccfd39e6db..4d17cd04fff7 100644
+--- a/include/drm/drm_edid.h
++++ b/include/drm/drm_edid.h
+@@ -508,6 +508,52 @@ static inline u8 drm_eld_get_conn_type(const uint8_t *eld)
+ 	return eld[DRM_ELD_SAD_COUNT_CONN_TYPE] & DRM_ELD_CONN_TYPE_MASK;
+ }
  
--	if ((edid = kmalloc(EDID_LENGTH, GFP_KERNEL)) == NULL)
-+	edid = (u8 *)drm_do_get_edid_base_block(get_edid_block, data,
-+						&connector->edid_corrupt,
-+						&connector->null_edid_counter);
-+	if (IS_ERR_OR_NULL(edid)) {
-+		if (IS_ERR(edid))
-+			connector_bad_edid(connector, edid, 1);
- 		return NULL;
--
--	/* base block fetch */
--	for (i = 0; i < 4; i++) {
--		if (get_edid_block(data, edid, 0, EDID_LENGTH))
--			goto out;
--		if (drm_edid_block_valid(edid, 0, false,
--					 &connector->edid_corrupt))
--			break;
--		if (i == 0 && drm_edid_is_zero(edid, EDID_LENGTH)) {
--			connector->null_edid_counter++;
--			goto carp;
--		}
- 	}
--	if (i == 4)
--		goto carp;
- 
--	/* if there's no extensions, we're done */
-+	/* if there's no extensions or no connector, we're done */
- 	valid_extensions = edid[0x7e];
- 	if (valid_extensions == 0)
- 		return (struct edid *)edid;
-@@ -2010,8 +2039,6 @@ struct edid *drm_do_get_edid(struct drm_connector *connector,
- 
- 	return (struct edid *)edid;
- 
--carp:
--	connector_bad_edid(connector, edid, 1);
- out:
- 	kfree(edid);
- 	return NULL;
++/**
++ * drm_edid_encode_panel_id - Encode an ID for matching against drm_edid_get_panel_id()
++ * @vend_chr_0: First character of the vendor string.
++ * @vend_chr_2: Second character of the vendor string.
++ * @vend_chr_3: Third character of the vendor string.
++ * @product_id: The 16-bit product ID.
++ *
++ * This is a macro so that it can be calculated at compile time and used
++ * as an initializer.
++ *
++ * For instance:
++ *   drm_edid_encode_panel_id('B', 'O', 'E', 0x2d08) => 0x09e52d08
++ *
++ * Return: a 32-bit ID per panel.
++ */
++#define drm_edid_encode_panel_id(vend_chr_0, vend_chr_1, vend_chr_2, product_id) \
++	((((u32)(vend_chr_0) - '@') & 0x1f) << 26 | \
++	 (((u32)(vend_chr_1) - '@') & 0x1f) << 21 | \
++	 (((u32)(vend_chr_2) - '@') & 0x1f) << 16 | \
++	 ((product_id) & 0xffff))
++
++/**
++ * drm_edid_decode_panel_id - Decode a panel ID from drm_edid_encode_panel_id()
++ * @panel_id: The panel ID to decode.
++ * @vend: A 4-byte buffer to store the 3-letter vendor string plus a '\0'
++ *	  termination
++ * @product_id: The product ID will be returned here.
++ *
++ * For instance, after:
++ *   drm_edid_decode_panel_id(0x09e52d08, vend, &product_id)
++ * These will be true:
++ *   vend[0] = 'B'
++ *   vend[1] = 'O'
++ *   vend[2] = 'E'
++ *   vend[3] = '\0'
++ *   product_id = 0x2d08
++ */
++static inline void drm_edid_decode_panel_id(u32 panel_id, char vend[4], u16 *product_id)
++{
++	*product_id = (u16)(panel_id & 0xffff);
++	vend[0] = '@' + ((panel_id >> 26) & 0x1f);
++	vend[1] = '@' + ((panel_id >> 21) & 0x1f);
++	vend[2] = '@' + ((panel_id >> 16) & 0x1f);
++	vend[3] = '\0';
++}
++
+ bool drm_probe_ddc(struct i2c_adapter *adapter);
+ struct edid *drm_do_get_edid(struct drm_connector *connector,
+ 	int (*get_edid_block)(void *data, u8 *buf, unsigned int block,
+@@ -515,6 +561,7 @@ struct edid *drm_do_get_edid(struct drm_connector *connector,
+ 	void *data);
+ struct edid *drm_get_edid(struct drm_connector *connector,
+ 			  struct i2c_adapter *adapter);
++u32 drm_edid_get_panel_id(struct i2c_adapter *adapter);
+ struct edid *drm_get_edid_switcheroo(struct drm_connector *connector,
+ 				     struct i2c_adapter *adapter);
+ struct edid *drm_edid_duplicate(const struct edid *edid);
 -- 
 2.33.0.309.g3052b89438-goog
 
