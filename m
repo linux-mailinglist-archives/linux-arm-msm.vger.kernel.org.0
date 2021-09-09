@@ -2,200 +2,210 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 10DD3405C5C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 19:51:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ABD06405C7A
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 20:01:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242195AbhIIRw5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Sep 2021 13:52:57 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:49582 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237255AbhIIRw4 (ORCPT
+        id S242890AbhIISCM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Sep 2021 14:02:12 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37224 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237300AbhIISCL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Sep 2021 13:52:56 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1631209906; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=e6AFBjVQo6kyrlar3z1aBbA4tOY9oubcLSMrHzrshzs=;
- b=IDLpZ+HnhqYMfGgdUfmv0qJSWgyAn53Wad7J15WX0EbSW+c9A//LtbKPrvdo/ujMfO4Y0HGg
- 5wl03rHkaobKAItSsR+2giFvBM23qi3xAmukB9dK9C9w89u/Yo16pZyvBACHBbuY3fMzdWFC
- af1S5xeVoo9VqpHhZIKAARp8pjs=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 613a499c37cdab60401b8e63 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 09 Sep 2021 17:51:24
- GMT
-Sender: pmaliset=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A9238C43616; Thu,  9 Sep 2021 17:51:23 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        Thu, 9 Sep 2021 14:02:11 -0400
+Received: from m-r2.th.seeweb.it (m-r2.th.seeweb.it [IPv6:2001:4b7a:2000:18::171])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 979B0C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Sep 2021 11:01:01 -0700 (PDT)
+Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        (Authenticated sender: pmaliset)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 789C9C4338F;
-        Thu,  9 Sep 2021 17:51:22 +0000 (UTC)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id 95A573EBAE;
+        Thu,  9 Sep 2021 20:00:57 +0200 (CEST)
+Subject: Re: [Freedreno] [PATCH 2/3] drm/msm/dpu1: Add MSM8998 to hw catalog
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Dave Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
+        paul.bouchara@somainline.org, DTML <devicetree@vger.kernel.org>
+References: <20210901181138.1052653-1-angelogioacchino.delregno@somainline.org>
+ <20210901181138.1052653-2-angelogioacchino.delregno@somainline.org>
+ <CAOCk7NoOdjxp0vxu9XJzYsi7a04kpqpTOZHm42ApAN3MqkqtDw@mail.gmail.com>
+ <CAA8EJpp6tj10A0QUR1E75t7BZf2Y3jHUyVNniYhEUd9rXj8Vrg@mail.gmail.com>
+ <CAOCk7NqhuCJqh-u6ke=Mn=EPgHnc7C2RS_X1nSCg_Nc8An=yPA@mail.gmail.com>
+ <2d25526f-dd9c-e336-970d-e8882f848d65@linaro.org>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Message-ID: <dcae0f15-8568-0b13-9d3c-b5641bdade10@somainline.org>
+Date:   Thu, 9 Sep 2021 20:00:57 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 09 Sep 2021 23:21:22 +0530
-From:   Prasad Malisetty <pmaliset@codeaurora.org>
-To:     Bjorn Helgaas <helgaas@kernel.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
-        bhelgaas@google.com, bjorn.andersson@linaro.org,
-        lorenzo.pieralisi@arm.com, svarbanov@mm-sol.com,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
-        dianders@chromium.org, mka@chromium.org, vbadigan@codeaurora.org,
-        sallenki@codeaurora.org, manivannan.sadhasivam@linaro.org,
-        linux-pci@vger.kernel.org
-Subject: Re: [PATCH v5 4/4] PCI: qcom: Switch pcie_1_pipe_clk_src after PHY
- init in SC7280
-In-Reply-To: <20210831153714.GA103513@bjorn-Precision-5520>
-References: <20210831153714.GA103513@bjorn-Precision-5520>
-Message-ID: <5fae4f586edfde4f615a8ea6a309fbff@codeaurora.org>
-X-Sender: pmaliset@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+In-Reply-To: <2d25526f-dd9c-e336-970d-e8882f848d65@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-08-31 21:07, Bjorn Helgaas wrote:
-> On Tue, Aug 31, 2021 at 12:07:30PM +0530, Prasad Malisetty wrote:
->> On 2021-08-26 18:07, Rob Herring wrote:
->> > On Thu, Aug 26, 2021 at 2:22 AM Prasad Malisetty
->> > <pmaliset@codeaurora.org> wrote:
->> > >
->> > > On 2021-08-26 02:55, Bjorn Helgaas wrote:
->> > > > [+cc linux-pci; patches to drivers/pci/ should always be cc'd there]
->> > > >
->> > > > On Wed, Aug 25, 2021 at 07:30:09PM +0000, Stephen Boyd wrote:
->> > > >> Quoting Prasad Malisetty (2021-08-24 01:10:48)
->> > > >> > On 2021-08-17 22:56, Prasad Malisetty wrote:
->> > > >> > > On 2021-08-10 09:38, Prasad Malisetty wrote:
->> > > >> > >> On the SC7280, By default the clock source for pcie_1_pipe is
->> > > >> > >> TCXO for gdsc enable. But after the PHY is initialized, the clock
->> > > >> > >> source must be switched to gcc_pcie_1_pipe_clk from TCXO.
->> > > >> > >>
->> > > >> > >> Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
->> > > >> > >> ---
->> > > >> > >>  drivers/pci/controller/dwc/pcie-qcom.c | 18 ++++++++++++++++++
->> > > >> > >>  1 file changed, 18 insertions(+)
->> > > >> > >>
->> > > >> > >> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c
->> > > >> > >> b/drivers/pci/controller/dwc/pcie-qcom.c
->> > > >> > >> index 8a7a300..39e3b21 100644
->> > > >> > >> --- a/drivers/pci/controller/dwc/pcie-qcom.c
->> > > >> > >> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
->> > > >> > >> @@ -166,6 +166,8 @@ struct qcom_pcie_resources_2_7_0 {
->> > > >> > >>      struct regulator_bulk_data supplies[2];
->> > > >> > >>      struct reset_control *pci_reset;
->> > > >> > >>      struct clk *pipe_clk;
->> > > >> > >> +    struct clk *gcc_pcie_1_pipe_clk_src;
->> > > >> > >> +    struct clk *phy_pipe_clk;
->> > > >> > >>  };
->> > > >> > >>
->> > > >> > >>  union qcom_pcie_resources {
->> > > >> > >> @@ -1167,6 +1169,16 @@ static int qcom_pcie_get_resources_2_7_0(struct
->> > > >> > >> qcom_pcie *pcie)
->> > > >> > >>      if (ret < 0)
->> > > >> > >>              return ret;
->> > > >> > >>
->> > > >> > >> +    if (of_device_is_compatible(dev->of_node, "qcom,pcie-sc7280")) {
->> > > >> > >> +            res->gcc_pcie_1_pipe_clk_src = devm_clk_get(dev, "pipe_mux");
->> > > >> > >> +            if (IS_ERR(res->gcc_pcie_1_pipe_clk_src))
->> > > >> > >> +                    return PTR_ERR(res->gcc_pcie_1_pipe_clk_src);
->> > > >> > >> +
->> > > >> > >> +            res->phy_pipe_clk = devm_clk_get(dev, "phy_pipe");
->> > > >> > >> +            if (IS_ERR(res->phy_pipe_clk))
->> > > >> > >> +                    return PTR_ERR(res->phy_pipe_clk);
->> > > >> > >> +    }
->> > > >> > >
->> > > >> > > I would like to check is there any other better approach instead of
->> > > >> > > compatible method here as well or is it fine to use compatible method.
->> > > >>
->> > > >> I'd prefer the compatible method. If nobody is responding then it's
->> > > >> best
->> > > >> to just resend the patches with the approach you prefer instead of
->> > > >> waiting for someone to respond to a review comment.
->> > > >
->> > > > I'm missing some context here, so I'm not exactly sure what your
->> > > > question is, Prasad, but IMO drivers generally should not need to use
->> > > > of_device_is_compatible() if they've already called
->> > > > of_device_get_match_data() (as qcom_pcie_probe() has).
->> > > >
->> > > > of_device_is_compatible() does basically the same work of looking for
->> > > > a match in qcom_pcie_match[] that of_device_get_match_data() does, so
->> > > > it seems pointless to repeat it.
->> >
->> > +1
->> >
->> > > > I am a little confused because while [1] adds "qcom,pcie-sc7280" to
->> > > > qcom,pcie.txt, I don't see a patch that adds it to qcom_pcie_match[].
->> >
->> > Either that's missing or there's a fallback to 8250 that's not
->> > documented.
->> >
->> > > I agree on your point, but the main reason is to use compatible in
->> > > get_resources_2_7_0 is same hardware version. For SM8250 & SC7280
->> > > platforms, the hw version is same. Since we can't have a separate ops
->> > > for SC7280, we are using compatible method in get_resources_2_7_0 to
->> > > differentiate SM8250 and SC7280.
->> >
->> > Then fix the match data to be not just ops, but ops and the flag you
->> > need here.
->> 
->> This difference is not universal across all the platforms but instead 
->> this
->> is specific to SC7280.
->> Hence it make sense to use compatible other than going for a flag.
-> 
-> There's no reason your qcom_pcie_match[].data pointers need to be
-> strictly based on the hardware version.
-> 
-> You can do something like what pcie-brcmstb.c does, e.g.,
-> 
->   struct pcie_cfg_data {
->     struct qcom_pcie_ops *ops;
->     unsigned int pipe_mux:1;
->   };
-> 
->   static const struct pcie_cfg_data sm8250_cfg = {
->     .ops = &ops_1_9_0,
->   };
-> 
->   static const struct pcie_cfg_data sc7280_cfg = {
->     .ops = &ops_1_9_0,
->     .pipe_mux = 1,
->   };
-> 
->   static const struct of_device_id qcom_pcie_match[] = {
->     { .compatible = "qcom,pcie-sm8250", .data = &sm8250_cfg },
->     { .compatible = "qcom,pcie-sc7280", .data = &sc7280_cfg },
->   };
+Il 09/09/21 15:46, Dmitry Baryshkov ha scritto:
+> On 08/09/2021 17:22, Jeffrey Hugo wrote:
+>> On Wed, Sep 8, 2021 at 2:26 AM Dmitry Baryshkov
+>> <dmitry.baryshkov@linaro.org> wrote:
+>>>
+>>> Hi,
+>>>
+>>> On Tue, 7 Sept 2021 at 22:13, Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
+>>>>
+>>>> On Wed, Sep 1, 2021 at 12:11 PM AngeloGioacchino Del Regno
+>>>> <angelogioacchino.delregno@somainline.org> wrote:
+>>>>>
+>>>>> Bringup functionality for MSM8998 in the DPU, driver which is mostly
+>>>>> the same as SDM845 (just a few variations).
+>>>>>
+>>>>> Signed-off-by: AngeloGioacchino Del Regno 
+>>>>> <angelogioacchino.delregno@somainline.org>
+>>>>
+>>>> I don't seem to see a cover letter for this series.
+>>>>
+>>>> Eh, there are a fair number of differences between the MDSS versions
+>>>> for 8998 and 845.
+>>>>
+>>>> Probably a bigger question, why extend the DPU driver for 8998, when
+>>>> the MDP5 driver already supports it[1]?  The MDP/DPU split is pretty
+>>>> dumb, but I don't see a valid reason for both drivers supporting the
+>>>> same target/display revision.  IMO, if you want this support in DPU,
+>>>> remove it from MDP5.
+>>>>
+>>>> [1] 
+>>>> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?h=v5.14&id=d6c7b2284b14c66a268a448a7a8d54f585d38785 
+>>>>
+>>>
+>>> I don't think that we should enforce such requirements. Having support
+>>> both in MDP5 and DPU would allow one to compare those two drivers,
+>>> performance, features, etc.
+>>> It might be that all MDP5-supported hardware would be also supported
+>>> by DPU, thus allowing us to remove the former driver. But until that
+>>> time I'd suggest leaving support in place.
+>>
+>> Well, then you have a host of problems to solve.
+>>
+>> Lets ignore the code duplication for a minute and assume we've gone
+>> with this grand experiment.  Two drivers enter, one leaves the victor.
+>>
 
-Hi Bjorn,
+I know you said let's ignore - but anyway, the code duplication is already
+there: DPU1 supports most of the features that are supported by the MDP5
+driver *anyway*, lacking support for the very very old hardware.
 
-Thanks for the detailed example.
+>> How are the clients supposed to pick which driver to use in the mean
+>> time?  We already have one DT binding for 8998 (which the MDP5 driver
+>> services).  This series proposes a second.  If we go forward with what
+>> you propose, we'll have two bindings for the same hardware, which IMO
+>> doesn't make sense in the context of DT, and the reason for that is to
+>> select which driver is "better".  Driver selection is not supposed to
+>> be tied to DT like this.
+>>
+>> So, some boards think MDP5 is better, and some boards think DPU is
+>> better.  At some point, we decide one of the drivers is the clear
+>> winner (lets assume DPU).  Then what happens to the existing DTs that
+>> were using the MDP5 description?  Are they really compatible with DPU?
+>>
 
-I have one quick query, If we use above approach, we should change 
-platform data reading in PCIe probe to differentiate remaining platforms 
-right.
-expect SM8250 and SC7280 all other platforms are using same 
-qcom_pcie_ops structure pointer as data.
+I don't see any MSM8998 dts/dtsi file using mdp5 upstream anyway, so we wouldn't
+even need to convert anything to using dpu1.
 
-Kindly correct me if my understanding is wrong.
+>>  From a DT perspective, there should be one description, but then how
+>> do you pick which driver to load?  Both can't bind on the single
+>> description, and while you could argue that the users should build one
+>> driver or the other, but not both (thus picking which one at build
+>> time), that doesn't work for distros that want to build both drivers
+>> so that they can support all platforms with a single build (per arch).
+> 
+> Yep, the DT issue wasn't thought about from my side at the review time. I 
+> considered qcom,msm8998-dpu as an extension/upgrade of bare qcom,mdp5 compatibility 
+> string (as we usually add chip-specific compatibilities).
+> 
+> In fact using just 'qcom,mdp5' prevents us from having such kind of driver upgrades.
+> 
+> What I'd propose if everybody else agrees on moving 8998 (and maybe others later) 
+> from MDP5 to DPU would be to continue supporting qcom,mdp5 binding in the mdp5 
+> driver and to add qcom,msm8998-dpu binding used by the DPU driver. Maybe with the 
+> warning telling to update the binding. Then at some point if all the MDP5-supported 
+> hardware is supported by the DPU we can drop the MDP5 driver and implement required 
+> bindings compatibility in the DPU.
+> 
 
-Just posted v6 patch series with same compatible approach as of now. I 
-will go through your example and update further.
+Since there's no upstream dtsi using mdp5, this problem practically does not exist.
+In any case, removing MSM8998 support from mdp5 is probably a good idea.. dpu1 is
+"more featureful" already, so it wouldn't really make sense to use mdp5 for a 8998
+board right now.
+I've also validated this on different 8998 devices with both command mode and video
+mode panels (cmd on Sony Yoshino, video on FxTec Pro1) and they both work fine.
 
-Thanks
--Prasad
+>>
+>>  From where I sit, your position starts with a good idea, but isn't
+>> fully thought out and leads to problems.
+>>
+>> If there is some reason why DPU is better for 8998, please enumerate
+>> it.  Does DPU support some config that MDP5 doesn't, which is valuable
+>> to you? 
+> 
+> The DPU receives more attention from both Qualcomm and Linaro, so it will continue 
+> acquiring features (which MDP5 might not have at the moment).
+> 
+> For example consider the SmartDMA (multirect) support. For now the multirect 
+> patchset it is limited to newer versions, but it might be extended to support older 
+> chips (in the DPU) too. We did not have plans to backport SmartDMA v1 support to MDP5.
+> 
+> Writeback also has more chances to be supported in the DPU rather than in the MDP5 
+> driver (I remember Rob's patches for the MDP5, but they never actually landed 
+> upstream).
+> 
+
+Not to mention the probably coming PCC support (since DSPP is already supported on
+DPU), and the fact that there's Display Stream Compression (DSC) support in the
+works (I saw some patches around on LKML), which is actually needed by at least the
+Sony Xperia XZ Premium (1080p scaled no dsc, or 4k non-scaled but needs dsc).
+
+> Last but not least at this moment DPU has bandwidth scaling support, while MDP5 
+> does not. I've sent a patch for MDP5 earlier, which then got reverted because of 
+> armv7 support. At this moment I did not resend it since we found some underrun 
+> issues on resume or when quickly changing bw down and up.
+> 
+>> I'm ok with ripping out the MDP5 support, the reason I didn't
+>> go with DPU was that the DPU driver was clearly written only for 845
+>> at the time, and needed significant rework to "downgrade" to an
+>> earlier hardware.  However, the "reason" DPU exists separate from MDP5
+>> is the claim that the MDP hardware underwent a significant
+>> rearchitecture, and thus it was too cumbersome to extend MDP5.  While
+>> I disagree with the premise, that "rearch" started with 8998.
+> 
+> Just checked, the SDE, the origin (or parent) of the DPU driver starts it's support 
+> from the 8996 and 8998.
+> 
+> 
+> 
+> 
+
+Yes you are correct, I saw the same downstream, even though I've never tried SDE on
+MSM8996, on Sony downstream kernels we successfully use SDE on MSM8998 since we did
+the porting on the newer kernel (not sure, I think that was 3.18).
+
+
+Also, sorry for not being immediately ready to reply to my own patch series, my
+days are a bit messy, currently.
+
+Cheers,
+- Angelo
