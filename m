@@ -2,206 +2,121 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3D9C3405924
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 16:36:00 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 390AE40594E
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 16:41:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243153AbhIIOhF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Sep 2021 10:37:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46070 "EHLO
+        id S1350798AbhIIOmV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Sep 2021 10:42:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46348 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242608AbhIIOg5 (ORCPT
+        with ESMTP id S1347204AbhIIOmQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Sep 2021 10:36:57 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E03DEC199396
-        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Sep 2021 06:46:29 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id t19so3803475lfe.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Sep 2021 06:46:29 -0700 (PDT)
+        Thu, 9 Sep 2021 10:42:16 -0400
+Received: from mail-pl1-x633.google.com (mail-pl1-x633.google.com [IPv6:2607:f8b0:4864:20::633])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D44CC077581
+        for <linux-arm-msm@vger.kernel.org>; Thu,  9 Sep 2021 07:06:24 -0700 (PDT)
+Received: by mail-pl1-x633.google.com with SMTP id n4so1123033plh.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 09 Sep 2021 07:06:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=IcwFUmmVK4ypxuZB23EEwU2VdYJAuPPWgw97xtMQXeU=;
-        b=RINgsBNhJnCucEyXqV3FOzzraqEYyxPdozRS9NKc72eAh06i1T6Gj5zxbFPIf9eG2I
-         6JmenaLmC7P9DfI1SztdX6NWRzh5Qy2Lam0FGQhLsKOAm0rftefD7Q48aaec0NHKfil1
-         M5fQiqk8iz1TDrGBR4hg2in/9UPakmlNJJW2HFfCtQBgAEwGxk0SlJ2r/1A528FCojRB
-         2K89O0XOXJd7vkYBaKvyRfYq065zoCXx5ZLxdAFZx0A60a6UHr+T2QXotcAlVVyDzqsO
-         V+pZwquUI98tXSDgn48q+J8ECzQ22N9/qyN/1nMZRn1xRHP91Jl/LMqdL/EhSIliWy5Z
-         PHaA==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=L8cDWmvCb4eOy7vGO37SrXUiP73ZTPhnnqWMVCnZKbw=;
+        b=HfwNGyoSZrV4f3V7zT2kav9EMAC9qMpLvHk5yVzNXe42jf4uTRlOa7EOuFDEeypemL
+         BAedshFTqgxWd0P3C7xWqTMPcxDKu7YU4b13Mqsw5niZauVRS4Hd0DBaoi/9DOy6621h
+         MXeqknSlPpHh/p+mvmqmDefBPrrEFb7AIPzyE=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=IcwFUmmVK4ypxuZB23EEwU2VdYJAuPPWgw97xtMQXeU=;
-        b=NPsWxRI/jRg7uXkcuzsEnSjyXbg+kSFoniY55heRmUhF480kxvherQmVk4bHgUOx23
-         DLjHQKT29eYfWmynN75qpEUC5nzQ3iJqA2Cp6ewAvl79+Neltv4G2f1vxtktg8zrfwU+
-         G0J2afAxlXTN4bTZAaGsibCVGKorov888UCBIQP1IxYqSvvNYJlNUV2JpCimiuROdS5f
-         jzmzfBGUNmThtIcOSI6qpI7pwp6aHgwe9o7IfOlRSYZQP5W6lHxZ56QQW2cQHeOr6k9y
-         huA6ngLnK+5o9wCYTSQW5eNXrMPE23bxThuATMh9Sc47yW5DSk9pPf+KZ2bjOG+1VkI1
-         sZrw==
-X-Gm-Message-State: AOAM533zqjjOrmusGfE4F2H4Zi7Cdk+LX7bgEH462zpzujSGKY3g6enq
-        1UH4iyQRioZPXgBmHHFgBpR3pQ==
-X-Google-Smtp-Source: ABdhPJyF6qKPZwa2rQgVlQLfXg7myYMb6+RC7nDu5gtDEdqGAda5fbEso5nkszPL4Y+XWmWjXZ0w4g==
-X-Received: by 2002:ac2:5c0d:: with SMTP id r13mr2487808lfp.552.1631195188217;
-        Thu, 09 Sep 2021 06:46:28 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id p5sm205874lfr.72.2021.09.09.06.46.27
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=L8cDWmvCb4eOy7vGO37SrXUiP73ZTPhnnqWMVCnZKbw=;
+        b=P9rAGXbFlhgLTNBbOjspGANp6P654i06Ptz+b+CzflaDtjtIhk8TFjV6iXBYGPo3ka
+         HnSk1mpe21d5UL3qqfbIdRVZ9toIIZGcdVO7h6eOYaOc/A0MXuzK6G5kO2cux1aDKiET
+         r97r+ckAYuwLXP10E2ZCS7Xa06il17Inr6y1H5vgzeyG7XUzJvP4EuWGgc2OWOEe94PE
+         gezYtevXuaDzGSfp8/QRqWuEwa5FFcalso3Wd1VSUsDZOUrjwsyOG/1JbMgE5KN8aytp
+         kCw+dTVwupOKWK/PE5GAtA3TfAOh77K4ehk5YXLJ6HCV5WcFYSeuzwJv0jdkHjI8SYvp
+         6qwg==
+X-Gm-Message-State: AOAM533J49OLMNu1IigfOGq8sbL2xHWSkGsn0nz5uQPd+E+YsNeYjeoR
+        Bl+SQHuvRBw4RrnZXK7ySpgodQ==
+X-Google-Smtp-Source: ABdhPJziK5kHfyO9p4YECF5ExYztPTeAX5R3q/XOTyZf29rNhAiWZ7bJ7anxKxSntk4vC+pRtcDqlA==
+X-Received: by 2002:a17:90b:1085:: with SMTP id gj5mr3775623pjb.66.1631196383841;
+        Thu, 09 Sep 2021 07:06:23 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:27cc:a1d4:ed44:e1de])
+        by smtp.gmail.com with UTF8SMTPSA id e5sm2372644pjv.44.2021.09.09.07.06.22
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 09 Sep 2021 06:46:27 -0700 (PDT)
-Subject: Re: [Freedreno] [PATCH 2/3] drm/msm/dpu1: Add MSM8998 to hw catalog
-To:     Jeffrey Hugo <jeffrey.l.hugo@gmail.com>
-Cc:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Dave Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Thu, 09 Sep 2021 07:06:22 -0700 (PDT)
+Date:   Thu, 9 Sep 2021 07:06:21 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     rajpat@codeaurora.org
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        lkml <linux-kernel@vger.kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        paul.bouchara@somainline.org, DTML <devicetree@vger.kernel.org>
-References: <20210901181138.1052653-1-angelogioacchino.delregno@somainline.org>
- <20210901181138.1052653-2-angelogioacchino.delregno@somainline.org>
- <CAOCk7NoOdjxp0vxu9XJzYsi7a04kpqpTOZHm42ApAN3MqkqtDw@mail.gmail.com>
- <CAA8EJpp6tj10A0QUR1E75t7BZf2Y3jHUyVNniYhEUd9rXj8Vrg@mail.gmail.com>
- <CAOCk7NqhuCJqh-u6ke=Mn=EPgHnc7C2RS_X1nSCg_Nc8An=yPA@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <2d25526f-dd9c-e336-970d-e8882f848d65@linaro.org>
-Date:   Thu, 9 Sep 2021 16:46:25 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, rnayak@codeaurora.org,
+        saiprakash.ranjan@codeaurora.org, msavaliy@qti.qualcomm.com,
+        skakit@codeaurora.org, sboyd@kernel.org, dianders@chromium.org
+Subject: Re: [PATCH V7 3/7] arm64: dts: sc7280: Add QUPv3 wrapper_0 nodes
+Message-ID: <YToU3RjSB9IDD3Ei@google.com>
+References: <1630643340-10373-1-git-send-email-rajpat@codeaurora.org>
+ <1630643340-10373-4-git-send-email-rajpat@codeaurora.org>
+ <YTJOU/oVWSdxD1uz@google.com>
+ <bfdccfc2e4362218fc8099dfe566bc1d@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <CAOCk7NqhuCJqh-u6ke=Mn=EPgHnc7C2RS_X1nSCg_Nc8An=yPA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <bfdccfc2e4362218fc8099dfe566bc1d@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 08/09/2021 17:22, Jeffrey Hugo wrote:
-> On Wed, Sep 8, 2021 at 2:26 AM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
->>
->> Hi,
->>
->> On Tue, 7 Sept 2021 at 22:13, Jeffrey Hugo <jeffrey.l.hugo@gmail.com> wrote:
->>>
->>> On Wed, Sep 1, 2021 at 12:11 PM AngeloGioacchino Del Regno
->>> <angelogioacchino.delregno@somainline.org> wrote:
->>>>
->>>> Bringup functionality for MSM8998 in the DPU, driver which is mostly
->>>> the same as SDM845 (just a few variations).
->>>>
->>>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
->>>
->>> I don't seem to see a cover letter for this series.
->>>
->>> Eh, there are a fair number of differences between the MDSS versions
->>> for 8998 and 845.
->>>
->>> Probably a bigger question, why extend the DPU driver for 8998, when
->>> the MDP5 driver already supports it[1]?  The MDP/DPU split is pretty
->>> dumb, but I don't see a valid reason for both drivers supporting the
->>> same target/display revision.  IMO, if you want this support in DPU,
->>> remove it from MDP5.
->>>
->>> [1] https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/?h=v5.14&id=d6c7b2284b14c66a268a448a7a8d54f585d38785
->>
->> I don't think that we should enforce such requirements. Having support
->> both in MDP5 and DPU would allow one to compare those two drivers,
->> performance, features, etc.
->> It might be that all MDP5-supported hardware would be also supported
->> by DPU, thus allowing us to remove the former driver. But until that
->> time I'd suggest leaving support in place.
+On Thu, Sep 09, 2021 at 10:16:04AM +0530, rajpat@codeaurora.org wrote:
+> On 2021-09-03 22:03, Matthias Kaehlcke wrote:
+> > On Fri, Sep 03, 2021 at 09:58:56AM +0530, Rajesh Patil wrote:
+> > > From: Roja Rani Yarubandi <rojay@codeaurora.org>
+> > > 
+> > > Add QUPv3 wrapper_0 DT nodes for SC7280 SoC.
+> > > 
+> > > Signed-off-by: Roja Rani Yarubandi <rojay@codeaurora.org>
+> > > Signed-off-by: Rajesh Patil <rajpat@codeaurora.org>
+> > > ---
+> > >  arch/arm64/boot/dts/qcom/sc7280.dtsi | 684
+> > > ++++++++++++++++++++++++++++++++++-
+> > >  1 file changed, 682 insertions(+), 2 deletions(-)
+> > > 
+> > > diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > > b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > > index 7ec9871..5c6a1d7 100644
+> > > --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > > +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+> > > 
+> > > ...
+> > > 
+> > > +			qup_spi0_data_clk: qup-spi0-data-clk {
+> > > +				pins = "gpio0", "gpio1", "gpio2";
+> > > +				function = "qup00";
+> > > +			};
+> > > +
+> > > +			qup_spi0_cs: qup-spi0-cs {
+> > > +				pins = "gpio3";
+> > > +				function = "qup00";
+> > > +			};
+> > 
+> > 
+> > I think we still want this for all SPI ports, which existed in previous
+> > versions:
+> > 
+> > 			qup_spi0_cs_gpio: qup-spi0-cs-gpio {
+> > 				pins = "gpio3";
+> > 				function = "gpio";
+> > 			};
+> > 
+> > It just shouldn't be selected together with 'qup_spiN_cs'.
+> > 
+> > Maybe a follow up patch would be good enough, so:
+> > 
+> > Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
 > 
-> Well, then you have a host of problems to solve.
 > 
-> Lets ignore the code duplication for a minute and assume we've gone
-> with this grand experiment.  Two drivers enter, one leaves the victor.
-> 
-> How are the clients supposed to pick which driver to use in the mean
-> time?  We already have one DT binding for 8998 (which the MDP5 driver
-> services).  This series proposes a second.  If we go forward with what
-> you propose, we'll have two bindings for the same hardware, which IMO
-> doesn't make sense in the context of DT, and the reason for that is to
-> select which driver is "better".  Driver selection is not supposed to
-> be tied to DT like this.
-> 
-> So, some boards think MDP5 is better, and some boards think DPU is
-> better.  At some point, we decide one of the drivers is the clear
-> winner (lets assume DPU).  Then what happens to the existing DTs that
-> were using the MDP5 description?  Are they really compatible with DPU?
-> 
->  From a DT perspective, there should be one description, but then how
-> do you pick which driver to load?  Both can't bind on the single
-> description, and while you could argue that the users should build one
-> driver or the other, but not both (thus picking which one at build
-> time), that doesn't work for distros that want to build both drivers
-> so that they can support all platforms with a single build (per arch).
+> ok.shall we add qup_spiN_cs_gpio for all spi ports
 
-Yep, the DT issue wasn't thought about from my side at the review time. 
-I considered qcom,msm8998-dpu as an extension/upgrade of bare qcom,mdp5 
-compatibility string (as we usually add chip-specific compatibilities).
-
-In fact using just 'qcom,mdp5' prevents us from having such kind of 
-driver upgrades.
-
-What I'd propose if everybody else agrees on moving 8998 (and maybe 
-others later) from MDP5 to DPU would be to continue supporting qcom,mdp5 
-binding in the mdp5 driver and to add qcom,msm8998-dpu binding used by 
-the DPU driver. Maybe with the warning telling to update the binding. 
-Then at some point if all the MDP5-supported hardware is supported by 
-the DPU we can drop the MDP5 driver and implement required bindings 
-compatibility in the DPU.
-
-> 
->  From where I sit, your position starts with a good idea, but isn't
-> fully thought out and leads to problems.
-> 
-> If there is some reason why DPU is better for 8998, please enumerate
-> it.  Does DPU support some config that MDP5 doesn't, which is valuable
-> to you? 
-
-The DPU receives more attention from both Qualcomm and Linaro, so it 
-will continue acquiring features (which MDP5 might not have at the moment).
-
-For example consider the SmartDMA (multirect) support. For now the 
-multirect patchset it is limited to newer versions, but it might be 
-extended to support older chips (in the DPU) too. We did not have plans 
-to backport SmartDMA v1 support to MDP5.
-
-Writeback also has more chances to be supported in the DPU rather than 
-in the MDP5 driver (I remember Rob's patches for the MDP5, but they 
-never actually landed upstream).
-
-Last but not least at this moment DPU has bandwidth scaling support, 
-while MDP5 does not. I've sent a patch for MDP5 earlier, which then got 
-reverted because of armv7 support. At this moment I did not resend it 
-since we found some underrun issues on resume or when quickly changing 
-bw down and up.
-
-> I'm ok with ripping out the MDP5 support, the reason I didn't
-> go with DPU was that the DPU driver was clearly written only for 845
-> at the time, and needed significant rework to "downgrade" to an
-> earlier hardware.  However, the "reason" DPU exists separate from MDP5
-> is the claim that the MDP hardware underwent a significant
-> rearchitecture, and thus it was too cumbersome to extend MDP5.  While
-> I disagree with the premise, that "rearch" started with 8998.
-
-Just checked, the SDE, the origin (or parent) of the DPU driver starts 
-it's support from the 8996 and 8998.
-
-
-
-
--- 
-With best wishes
-Dmitry
+Yes
