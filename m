@@ -2,118 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 29B37404576
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 08:11:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8772740464F
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  9 Sep 2021 09:38:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352227AbhIIGMm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 9 Sep 2021 02:12:42 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:13266 "EHLO m43-7.mailgun.net"
+        id S1352554AbhIIHjK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 9 Sep 2021 03:39:10 -0400
+Received: from mail.kernel.org ([198.145.29.99]:39324 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1351193AbhIIGMl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 9 Sep 2021 02:12:41 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1631167893; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=Tu9VJTw14yYLG7InUDLYuIOAxq1clJaEA5jlZQFtMp0=;
- b=qQ/2cFIg7o+JQuY3B9OlNolQ7JRX3EbX6QXMJOSD3n5K7G6bOs332TUuu6MlJ402YQYtgVDw
- UUXjXPmKyFya27fUMh09JTe9opUihOS6ayVwWn/2YaJqDMd17kpQuRlMkeXi55sWdkEkof07
- aQZZ7pHr2C6nZecYvJmApuI4FEA=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 6139a594ea875192307bb220 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 09 Sep 2021 06:11:32
- GMT
-Sender: skakit=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E3D53C4360D; Thu,  9 Sep 2021 06:11:31 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: skakit)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CB483C4338F;
-        Thu,  9 Sep 2021 06:11:29 +0000 (UTC)
+        id S232549AbhIIHjK (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 9 Sep 2021 03:39:10 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 9399660F11;
+        Thu,  9 Sep 2021 07:38:00 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1631173081;
+        bh=BLlfDPerQHZHqOIxgrdyUbnhgCPzfv2cz4NmxD+JzOo=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=QHmisJ7fUaWxVDE4dS5DkfSuEgfBmbBBJ82yIRyW68s92RMWQ1cM4yhSLvhLq6upp
+         Mk+JjszqrK7ZS2St9jTTqI4vf/NkacU6VyHGugC+0DGhbbqoD/VEWeyQKRWAysupyH
+         LE4RgbLBB09Kz8pMPve9TqjDR7zh38AEnMtH3+co=
+Date:   Thu, 9 Sep 2021 08:18:59 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     David Heidelberg <david@ixit.cz>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Manu Gautam <mgautam@codeaurora.org>,
+        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: usb/qcom,dwc3: add ipq4019 compatible
+Message-ID: <YTmnU7mufgyhPLG8@kroah.com>
+References: <20210908193329.87992-1-david@ixit.cz>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 09 Sep 2021 11:41:29 +0530
-From:   skakit@codeaurora.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Cc:     Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>, swboyd@chromium.org,
-        kgunda@codeaurora.org, linux-leds@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH 3/3] arm64: dts: qcom: pm8350c: Add pwm support
-In-Reply-To: <YTjuGVOmzkTot8z1@ripper>
-References: <1630924867-4663-1-git-send-email-skakit@codeaurora.org>
- <1630924867-4663-4-git-send-email-skakit@codeaurora.org>
- <YTeskY7kXsdmvGPp@google.com>
- <b10e5f36fb0216a4c951d752f5103099@codeaurora.org>
- <YTjW9LAGhTuszoa4@google.com> <YTjuGVOmzkTot8z1@ripper>
-Message-ID: <667da76fe38a67af196e8dad00decd71@codeaurora.org>
-X-Sender: skakit@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210908193329.87992-1-david@ixit.cz>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-09-08 22:38, Bjorn Andersson wrote:
-> On Wed 08 Sep 08:29 PDT 2021, Matthias Kaehlcke wrote:
+On Wed, Sep 08, 2021 at 09:33:28PM +0200, David Heidelberg wrote:
+> Prequisite for getting rid of another warnings when building ipq4019.
 > 
->> On Wed, Sep 08, 2021 at 02:37:39PM +0530, skakit@codeaurora.org wrote:
->> > On 2021-09-07 23:46, Matthias Kaehlcke wrote:
->> > > On Mon, Sep 06, 2021 at 04:11:07PM +0530, satya priya wrote:
->> > > > Add pwm support for PM8350C pmic.
->> > > >
->> > > > Signed-off-by: satya priya <skakit@codeaurora.org>
->> > > > ---
->> > > >  arch/arm64/boot/dts/qcom/pm8350c.dtsi | 6 ++++++
->> > > >  1 file changed, 6 insertions(+)
->> > > >
->> > > > diff --git a/arch/arm64/boot/dts/qcom/pm8350c.dtsi
->> > > > b/arch/arm64/boot/dts/qcom/pm8350c.dtsi
->> > > > index e1b75ae..ecdae55 100644
->> > > > --- a/arch/arm64/boot/dts/qcom/pm8350c.dtsi
->> > > > +++ b/arch/arm64/boot/dts/qcom/pm8350c.dtsi
->> > > > @@ -29,6 +29,12 @@
->> > > >  			interrupt-controller;
->> > > >  			#interrupt-cells = <2>;
->> > > >  		};
->> > > > +
->> > > > +		pm8350c_pwm4: pwm {
->> > >
->> > > What does the '4' represent, an internal channel number? It should
->> > > probably be omitted if the PM8350 only has a single output PWM
->> > > port.
->> > >
->> >
->> > pm8350c has four PWMs, but I think we can drop the '4' here.
->> 
->> Why is only one PWM exposed if the PMIC has for of them? Why number 4
->> and not one of the others?
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+>  Documentation/devicetree/bindings/usb/qcom,dwc3.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
+> diff --git a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> index e70afc40edb2..19641380f922 100644
+> --- a/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> +++ b/Documentation/devicetree/bindings/usb/qcom,dwc3.yaml
+> @@ -13,6 +13,7 @@ properties:
+>    compatible:
+>      items:
+>        - enum:
+> +          - qcom,ipq4019-dwc3
+>            - qcom,msm8996-dwc3
+>            - qcom,msm8998-dwc3
+>            - qcom,sc7180-dwc3
+> -- 
+> 2.33.0
 > 
 
-pwm4 is used for backlight support on kodiak crd board, so I mentioned 
-4, thinking 4 nodes should be present for 4 pwms.
-but I see that we need to represent all the four channels as one node. 
-will drop the '4' in next version.
+Hi,
 
-Thanks,
-Satya Priya
+This is the friendly patch-bot of Greg Kroah-Hartman.  You have sent him
+a patch that has triggered this response.  He used to manually respond
+to these common problems, but in order to save his sanity (he kept
+writing the same thing over and over, yet to different people), I was
+created.  Hopefully you will not take offence and will fix the problem
+in your patch and resubmit it so that it can be accepted into the Linux
+kernel tree.
 
-> The node should represent all 4 channels, which ones the board uses is
-> captured in how they are bound to other clients - or defines as LEDs by
-> additional child nodes.
-> 
-> Regards,
-> Bjorn
+You are receiving this message because of the following common error(s)
+as indicated below:
+
+- You did not specify a description of why the patch is needed, or
+  possibly, any description at all, in the email body.  Please read the
+  section entitled "The canonical patch format" in the kernel file,
+  Documentation/SubmittingPatches for what is needed in order to
+  properly describe the change.
+
+If you wish to discuss this problem further, or you have questions about
+how to resolve this issue, please feel free to respond to this email and
+Greg will reply once he has dug out from the pending patches received
+from other developers.
+
+thanks,
+
+greg k-h's patch email bot
