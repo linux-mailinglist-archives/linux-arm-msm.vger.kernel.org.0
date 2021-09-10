@@ -2,151 +2,184 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C1312407078
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Sep 2021 19:21:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 77F4140706E
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Sep 2021 19:18:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230203AbhIJRWS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Sep 2021 13:22:18 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:18178 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231783AbhIJRWL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Sep 2021 13:22:11 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1631294460; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=dTzyfUob5Y28g9uAV7eeIpiIEDAMZS2HBT7BgJCYXGw=; b=tQwkuzIENP3rnCy1ajP45cV/4sRxHe32xqE00xSu2cTMW/Z8X76rlBrDqpGYW22Lv/1t2DhU
- q26/ot9n9hFal7nAlelkpsZ09XJED3v2OpZVBlPnHxr3TKy6W/7KqbYlD4Ur08weYqYrOrZ4
- 4/Oh6TpLogQLhBdVviPinz98Vzo=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 613b93f2e34848cb6acbdcbc (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 10 Sep 2021 17:20:50
- GMT
-Sender: jackp=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B6D7DC43460; Fri, 10 Sep 2021 17:20:50 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from jackp-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: jackp)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 62F56C43460;
-        Fri, 10 Sep 2021 17:20:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 62F56C43460
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Date:   Fri, 10 Sep 2021 10:20:44 -0700
-From:   Jack Pham <jackp@codeaurora.org>
-To:     Felipe Balbi <balbi@kernel.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Wesley Cheng <wcheng@codeaurora.org>,
-        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] usb: dwc3: gadget: Skip resizing EP's TX FIFO if already
- resized
-Message-ID: <20210910172044.GA23733@jackp-linux.qualcomm.com>
-References: <20210909083120.15350-1-jackp@codeaurora.org>
- <87fsueb0ko.fsf@kernel.org>
- <20210909170236.GA20111@jackp-linux.qualcomm.com>
- <8735qdatwx.fsf@kernel.org>
+        id S231781AbhIJRTe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Sep 2021 13:19:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39334 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231137AbhIJRTd (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 10 Sep 2021 13:19:33 -0400
+Received: from mail-wm1-x32c.google.com (mail-wm1-x32c.google.com [IPv6:2a00:1450:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CB05BC061574;
+        Fri, 10 Sep 2021 10:18:21 -0700 (PDT)
+Received: by mail-wm1-x32c.google.com with SMTP id j17-20020a05600c1c1100b002e754875260so1868417wms.4;
+        Fri, 10 Sep 2021 10:18:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=MKFOyGVVX9gUGWQhknL/mIhBAuXKq4sR2KOb3vUejq8=;
+        b=hm2pduWpXuKN6c2nROMD3yDLvLbbBNDvSKf2an7HtqAvQa1/LWGa+84iUVsiQS0o4G
+         MgcUwXJtgSG8zMzV1V2iPSyNfH7Qq2b0RvUMMRR+t26aISWd1pKc6RDQC/X2zhPSMIe0
+         VkJ2b860cz3sXNVnimc0SoQrBTbC3oLwJwAsA2w8UfO1jo0nf5sZId2mPo4lLdjGFpB1
+         bIeEpmD5NaWcAda0BO7FyNtQSKtAMQo+zhdNmWRJHq3Dn41hLwWOniTmBksou5z19gPv
+         lv5a1+ArCRREo+WKolXC/U5gEt7DRzF1dgIiqRzpfcGObAwWUX1mbN/pThywbCrEVka8
+         CtMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=MKFOyGVVX9gUGWQhknL/mIhBAuXKq4sR2KOb3vUejq8=;
+        b=UgMqIhF3OhL+1TsLmubAyHpdHxPCXhTYcVWtdnj6uRRGo3TWA8JRZaO8ska2rwt3vr
+         aWkAWJnSRnaR3tkusbJucj9edL63Iu5XLZYizA4iQ4FGUWDo2OdKGTAXmgwY3+Fqr7Vb
+         EHkf1EkC8fx8X3eGSO5ynRyiqy9oVmcp/7bmYRnzUg8Y/NBRbgqhS1u0GTiY3/IDSbCE
+         GR4ivRKDwwXHJ+aPTlI+0tt+y4RK6WiyorsdNkQV6MiF/jdr7KxyI+Ozmc2XotX8tmc1
+         5jIOjPL2eL7NYOxfWbnIjXxSAbQrXJPoLa0Nh6PR6xWdzQ1qnIl4KJYth29Lsug0RawW
+         fUXA==
+X-Gm-Message-State: AOAM533wDAErXCR/JIvNPkVCSHewDmYs4WHGDOVksCgZvjZPr8RrbhnI
+        FwivuYuM2cg9dcOEo+C+sddM8ibMPTWp37CKuZg=
+X-Google-Smtp-Source: ABdhPJynIRnO1JxzYZRVbUwrALp1BEq5ySzcpdsBaD8DqrvC+BJ5sSFv5OVp3Qu6ILyrxZytyw7mLyKgrx2oLm6PXpI=
+X-Received: by 2002:a1c:1fd3:: with SMTP id f202mr9442177wmf.44.1631294300236;
+ Fri, 10 Sep 2021 10:18:20 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <8735qdatwx.fsf@kernel.org>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+References: <e2cebf65-012d-f818-8202-eb511c996e28@linaro.org>
+ <CAF6AEGs11aYnkL30kp79pMqLTg3_4otFwG2Oc890Of2ndLbELw@mail.gmail.com>
+ <b7334a1a-c4ad-da90-03b4-0d19e1811b13@linaro.org> <CAF6AEGv0WWB3Z1hmXf8vxm1_-d7fsNBRcaQF35aE2JXcJn8-cA@mail.gmail.com>
+ <8aa590be-6a9f-9343-e897-18e86ea48202@linaro.org> <CAF6AEGtd_5jKhixp6h+NnN8-aqjBHTLopRozASE73oT3rfnFHA@mail.gmail.com>
+ <6eefedb2-9e59-56d2-7703-2faf6cb0ca3a@codeaurora.org> <CAF6AEGvhqPHWNK=6GYz+Mu5aKe8+iE4_Teem6o=X6eiANhWsPg@mail.gmail.com>
+ <83ecbe74-caf0-6c42-e6f5-4887b3b534c6@linaro.org> <53d3e5b7-9dc0-a806-70e9-b9b5ff877462@codeaurora.org>
+ <YTgeIuwumPoR9ZTE@ripper> <CAMi1Hd1TOFj5USToEhuvZz8vgboQbMWco7gN413-jHJp-A7Ozg@mail.gmail.com>
+ <CAMi1Hd2gmo-qzDSDpi1hwpX=N1eGM+Q5HqPSvdbq9LdqwNuK+w@mail.gmail.com>
+ <ea5c23cb-0de4-3f1d-3052-c41fa9317984@codeaurora.org> <CAF6AEGtTNK0t6HVvL8284E4RGnNn=wtDXjT=8DK2dXUuRF+gBQ@mail.gmail.com>
+In-Reply-To: <CAF6AEGtTNK0t6HVvL8284E4RGnNn=wtDXjT=8DK2dXUuRF+gBQ@mail.gmail.com>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 10 Sep 2021 10:22:46 -0700
+Message-ID: <CAF6AEGsfQUX2udVHtMf8xmXjcGVecbrcUE4qKsDdk9UHBYeWqg@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: Disable frequency clamping on a630
+To:     Akhil P Oommen <akhilpo@codeaurora.org>
+Cc:     Amit Pundir <amit.pundir@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 10, 2021 at 08:17:51AM +0300, Felipe Balbi wrote:
-> 
-> Hi Jack,
-> 
-> Jack Pham <jackp@codeaurora.org> writes:
-> >> > diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
-> >> > index 804b50548163..c647c76d7361 100644
-> >> > --- a/drivers/usb/dwc3/gadget.c
-> >> > +++ b/drivers/usb/dwc3/gadget.c
-> >> > @@ -747,6 +747,10 @@ static int dwc3_gadget_resize_tx_fifos(struct dwc3_ep *dep)
-> >> >  	if (!usb_endpoint_dir_in(dep->endpoint.desc) || dep->number <= 1)
-> >> >  		return 0;
-> >> >  
-> >> > +	/* bail if already resized */
-> >> > +	if (dwc3_readl(dwc->regs, DWC3_GTXFIFOSIZ(dep->number >> 1)))
-> >> > +		return 0;
-> >> > +
-> >> 
-> >> heh, not to say "I told you so", but...
-> >> 
-> >> That being said, your test is not very good. The whole idea for resizing
-> >> the FIFOs is that in some applications we only use e.g. 2 endpoints and
-> >> there is considerable FIFO space left unused.
-> >> 
-> >> The goal is to use that unused FIFO space to squeeze more throughput out
-> >> of the pipe, since it amortizes SW latency.
-> >> 
-> >> This patch is essentially the same as reverting the original commit :-)
+On Thu, Sep 9, 2021 at 1:54 PM Rob Clark <robdclark@gmail.com> wrote:
+>
+> On Thu, Sep 9, 2021 at 12:50 PM Akhil P Oommen <akhilpo@codeaurora.org> wrote:
 > >
-> > No, it's not quite the same as nullifying the resizing algorithm.  This
-> > patch is predicated on a key part of the resizing algorithm where
-> > dwc3_gadget_clear_tx_fifos() occurs upon receiving Set_Configuration in
-> > ep0.c.  Which means that each new connection starts off with a blank
-> > slate with all the GTXFIFOSIZ(n) registers cleared.  Then each EP gets
-> > resized one at a time when usb_ep_enable() is called.
+> > On 9/9/2021 9:42 PM, Amit Pundir wrote:
+> > > On Thu, 9 Sept 2021 at 17:47, Amit Pundir <amit.pundir@linaro.org> wrote:
+> > >>
+> > >> On Wed, 8 Sept 2021 at 07:50, Bjorn Andersson
+> > >> <bjorn.andersson@linaro.org> wrote:
+> > >>>
+> > >>> On Mon 09 Aug 10:26 PDT 2021, Akhil P Oommen wrote:
+> > >>>
+> > >>>> On 8/9/2021 9:48 PM, Caleb Connolly wrote:
+> > >>>>>
+> > >>>>>
+> > >>>>> On 09/08/2021 17:12, Rob Clark wrote:
+> > >>>>>> On Mon, Aug 9, 2021 at 7:52 AM Akhil P Oommen
+> > >>>>>> <akhilpo@codeaurora.org> wrote:
+> > >>> [..]
+> > >>>>>>> I am a bit confused. We don't define a power domain for gpu in dt,
+> > >>>>>>> correct? Then what exactly set_opp do here? Do you think this usleep is
+> > >>>>>>> what is helping here somehow to mask the issue?
+> > >>>>> The power domains (for cx and gx) are defined in the GMU DT, the OPPs in
+> > >>>>> the GPU DT. For the sake of simplicity I'll refer to the lowest
+> > >>>>> frequency (257000000) and OPP level (RPMH_REGULATOR_LEVEL_LOW_SVS) as
+> > >>>>> the "min" state, and the highest frequency (710000000) and OPP level
+> > >>>>> (RPMH_REGULATOR_LEVEL_TURBO_L1) as the "max" state. These are defined in
+> > >>>>> sdm845.dtsi under the gpu node.
+> > >>>>>
+> > >>>>> The new devfreq behaviour unmasks what I think is a driver bug, it
+> > >>>>> inadvertently puts much more strain on the GPU regulators than they
+> > >>>>> usually get. With the new behaviour the GPU jumps from it's min state to
+> > >>>>> the max state and back again extremely rapidly under workloads as small
+> > >>>>> as refreshing UI. Where previously the GPU would rarely if ever go above
+> > >>>>> 342MHz when interacting with the device, it now jumps between min and
+> > >>>>> max many times per second.
+> > >>>>>
+> > >>>>> If my understanding is correct, the current implementation of the GMU
+> > >>>>> set freq is the following:
+> > >>>>>    - Get OPP for frequency to set
+> > >>>>>    - Push the frequency to the GMU - immediately updating the core clock
+> > >>>>>    - Call dev_pm_opp_set_opp() which triggers a notify chain, this winds
+> > >>>>> up somewhere in power management code and causes the gx regulator level
+> > >>>>> to be updated
+> > >>>>
+> > >>>> Nope. dev_pm_opp_set_opp() sets the bandwidth for gpu and nothing else. We
+> > >>>> were using a different api earlier which got deprecated -
+> > >>>> dev_pm_opp_set_bw().
+> > >>>>
+> > >>>
+> > >>> On the Lenovo Yoga C630 this is reproduced by starting alacritty and if
+> > >>> I'm lucky I managed to hit a few keys before it crashes, so I spent a
+> > >>> few hours looking into this as well...
+> > >>>
+> > >>> As you say, the dev_pm_opp_set_opp() will only cast a interconnect vote.
+> > >>> The opp-level is just there for show and isn't used by anything, at
+> > >>> least not on 845.
+> > >>>
+> > >>> Further more, I'm missing something in my tree, so the interconnect
+> > >>> doesn't hit sync_state, and as such we're not actually scaling the
+> > >>> buses. So the problem is not that Linux doesn't turn on the buses in
+> > >>> time.
+> > >>>
+> > >>> So I suspect that the "AHB bus error" isn't saying that we turned off
+> > >>> the bus, but rather that the GPU becomes unstable or something of that
+> > >>> sort.
+> > >>>
+> > >>>
+> > >>> Lastly, I reverted 9bc95570175a ("drm/msm: Devfreq tuning") and ran
+> > >>> Aquarium for 20 minutes without a problem. I then switched the gpu
+> > >>> devfreq governor to "userspace" and ran the following:
+> > >>>
+> > >>> while true; do
+> > >>>    echo 257000000 > /sys/class/devfreq/5000000.gpu/userspace/set_freq
+> > >>>    echo 710000000 > /sys/class/devfreq/5000000.gpu/userspace/set_freq
+> > >>> done
+> > >>>
+> > >>> It took 19 iterations of this loop to crash the GPU.
+> > >>
+> > >> Ack. With your above script, I can reproduce a crash too on db845c
+> > >> (A630) running v5.14. I didn't get any crash log though and device
+> > >> just rebooted to USB crash mode.
+> > >>
+> > >> And same crash on RB5 (A650) too https://hastebin.com/raw/ejutetuwun
 > >
-> > The problem this patch is fixing is avoiding *re-resizing*, the idea
-> > being that if an EP was already resized once during a session (from
-> > Set Configuration until the next reset or disconnect), then 
-> > it should be good to go even if it gets disabled and re-enabled again.
-> 
-> that's not a safe assumption, though. What happens in cases where
-> Configuration 1 is wildly different from Configuration 2? Say Config 1
-> is a mass storage device and Config 2 is a collection of several CDC
-> interfaces?
+> > Are we sure this is the same issue? It could be, but I thought we were
+> > seeing a bunch of random gpu errors (which may eventually hit device crash).
+>
+> In the sense that async-serror often seems to be a clk issue, it
+> *could* be related.. but this would have to be triggered by CPU
+> access.  The symptom does seem very different.
+>
 
-The resizing algorithm operates only on one Configuration at a time.
-If a new Configuration is selected by the host, the algorithm starts
-over again, so all of the endpoints in the new config will need to be
-evaluated and resized again.  The number of total endpoints in a
-configuration (including across multiple Alt Settings) is taken into
-account to ensure there is enough room to guarantee each IN endpoint
-will have a minimum amount of FIFO space, but also allowing an
-opportunity for those endpoints who could benefit (based on their
-MaxBurst setting) to be allocated more.
+The more I think about it, the more I think this is a different
+issue.. a650 is somewhat different wrt gmu (ie. hfi vs legacy code
+paths).
 
-> > Since we lack any boolean state variable in struct dwc3_ep reflecting
-> > whether it had already been resized, re-reading the GTXFIFOSIZ register
-> 
-> it might be a better idea to introduce such a flag and make the
-> intention clear. But in any case, I still think the assumption you're
-> making is not very good.
+Amit, could you try the same experiment (with 9bc95570175a ("drm/msm:
+Devfreq tuning") revert) while running something like webgl aquarium
+to prevent the GPU from suspending?  I'm kinda suspecting the issue
+you hit is more likely some suspend/resume issue.
 
-IMHO I think it's pretty straightforward, as the GTXFIFOSIZ(n) register
-must have a valid value for the EP to be operational.  The assumption is
-if it's 0, that means it was cleared by dwc3_gadget_clear_tx_fifos() and
-we haven't yet visited this EP for resizing.  So the check within this
-resize routine is basically a combination of the following:
-
- if (dwc->do_fifo_resize && DWC3_GTXFIFOSIZ(N) != 0)
-    // this IN EP has been resized
-
-But I hear you about using an explicit flag as it would make it crystal
-clear to the reader.  I can prepare something for V2.
-
-> > is the next best equivalent.  Note also that this check occurs after
-> > the if (!dwc->do_fifo_resize) check so this is applicable only if the
-> > entire "tx-fifo-resize" mechanism is enabled.
-> 
-> Right, that's fine :-)
-
-Jack
--- 
-The Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum,
-a Linux Foundation Collaborative Project
+BR,
+-R
