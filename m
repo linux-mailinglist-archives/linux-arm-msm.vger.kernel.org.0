@@ -2,817 +2,214 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DFBBD406973
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Sep 2021 12:04:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 938E0406989
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Sep 2021 12:12:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232120AbhIJKEU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Sep 2021 06:04:20 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53766 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232257AbhIJKET (ORCPT
+        id S232196AbhIJKNo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Sep 2021 06:13:44 -0400
+Received: from wnew4-smtp.messagingengine.com ([64.147.123.18]:42015 "EHLO
+        wnew4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232094AbhIJKNn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Sep 2021 06:04:19 -0400
-Received: from mail-lj1-x22d.google.com (mail-lj1-x22d.google.com [IPv6:2a00:1450:4864:20::22d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B78F3C061762
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Sep 2021 03:03:07 -0700 (PDT)
-Received: by mail-lj1-x22d.google.com with SMTP id q21so2326777ljj.6
-        for <linux-arm-msm@vger.kernel.org>; Fri, 10 Sep 2021 03:03:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3dEuac9rSHq7JUduezT8HwcQhOBmFMqWK+qNzEaHMzA=;
-        b=cGANsLiIwZL5YraDhAoqqQL3JhGo7FT78wGD1pgmxyc2ai+TMrmFAwTeu5vWSI4KP1
-         iNWoki32GjMI63qL0o1REeCB/RaqLOlE5bW1vyD8voEg2byWU830Trxu1bmrWs9Vn3q/
-         tO8s5UM7WWk5mwH3Oc6Y96n2L6mEABKAkFTQbV6b1hMLyKZGPyQxwVQMt8pEYT/hI647
-         uo3IAbHoRlTPBsca9Xmgn/nNDloAaaHGKrc1fJKLB6FE8UPgLEuDH+6ZCI2TbnPTh5iL
-         IkGEK2ZeNMNHyiklh3k5kEvIksN3xYdfOgdE+ggYgWG1/srW8ZA350zlfChsjiOkdHee
-         A9uA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3dEuac9rSHq7JUduezT8HwcQhOBmFMqWK+qNzEaHMzA=;
-        b=ktg9lw3qFElytTtTaYrl+swPihxUuI4Mfe8oC4ep+gQUdHF6DMD4ptsgUZdO3QgqdB
-         f1pRqe9NatSqcW4nHvi36c8mSMKWb2K4yyfcLEzSFk1+cz1NNw9xaHBFOWSm6/0xDEJ3
-         y918T87TxWNPJvZ9NbLPt+uI39hfa9pfdPOSI/ReBViboJ2oEPY06t17jvLNLVbYwcjN
-         Tvp1sv7dOqxkPDwa4KRJHDV3GGuBIAOM/6BuOi5CZZXJvoixmQ5QjcDhFN7h7bjMhdWV
-         Bl/ibESso8IV+L83U7EkmD2BNULL5xncr1aNhChsmCkU+wEQxKgi7QW3zxNfErakP6gw
-         lSQQ==
-X-Gm-Message-State: AOAM530kRNmBxZeN+MEfdiF9UMqVyoOWNh7qRjLERC9SNhHLoLGLZD48
-        tQUyysQwnjtQYMFiwhiZ2ro1zRd8bbiYKPEQNto3SQ==
-X-Google-Smtp-Source: ABdhPJxCuqOyrV8rWgoBg25TY/oC+cAD3QE2JKgVeCDwhA23KMCoCBshviD/DHBB8EAg7Bg9OPA+k3cUGJUXolihNM0=
-X-Received: by 2002:a2e:960c:: with SMTP id v12mr3660606ljh.300.1631268185607;
- Fri, 10 Sep 2021 03:03:05 -0700 (PDT)
+        Fri, 10 Sep 2021 06:13:43 -0400
+Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
+        by mailnew.west.internal (Postfix) with ESMTP id 478942B00939;
+        Fri, 10 Sep 2021 06:12:23 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute5.internal (MEProxy); Fri, 10 Sep 2021 06:12:25 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=
+        from:to:cc:subject:date:message-id:content-type:mime-version
+        :content-transfer-encoding; s=fm3; bh=/wYkDAweBEVV6XEJJiBjkmdd+f
+        sR/vIPk4SFnyRJIEw=; b=Z61vRn/pjHuIVK0U8iQQc6o02wWjGgSy5Mq7VhkrtG
+        9KszoGSplOrJbMAi690ob1Z1Rbd6CXaR0bSdSKloPkNc+4MadfECmZcsS+Iyqg9p
+        wNh+rC18qzcHP5JJUUrGVSUzBgTA/SgkNH5ZsIkacsKcfGDwkjzYgyoV/8tFkqYc
+        M9igqVSgwO5qcewjWPkP11YhCGrq81Qao6UmtRA988I+FV2FJkQPbDonbvBulIfF
+        b9LRs4TR/1m8RlY9zO6rhexNIqQanbrnqQ1a2/QOo8SHhVlfM/Ob9Gu/FWnkjmX/
+        MDod8kaA/25VHLY3v4qc94NOZO5nSZ8fXOfFa3rMpSmQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:content-type
+        :date:from:message-id:mime-version:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=/wYkDA
+        weBEVV6XEJJiBjkmdd+fsR/vIPk4SFnyRJIEw=; b=Tp3/xf5wSTYdhQexa5+jVb
+        /Xr2459iQLqKuECB5obggKx1lCx+O/eqxynoA7E5Jjt9EQf4op6D3dPnOTs31XVY
+        Yo/g7EK8pytjoO5L5bzIEu+dNFNUCIFwBmbKYGDFibf5n3mNDeL44Cg90xk3d1VN
+        +k08B81vz2EBeUAOZ9SWmb1NXeEZgvmfahmSCQiYzThjnNDtCXCCnJxJYXdqc8qw
+        nqKfTYEi0KIA5VHD1ODoNYop3lWLl6ASkwLXZbIXmiyUGgBBzkTvTCDsE5tBsOp+
+        kPYm2rVnR3nYOudb6qmTPmLegTjDSZEAlbOEr4p1qrTE0ZM7NxmT6f/FVWvUPgYg
+        ==
+X-ME-Sender: <xms:hC87YeY799W2Yyv2QDfsd-tYZ2W7aAkkRgJ5QgiICmhoaGFLPe7g3A>
+    <xme:hC87YRZBEy4-3J19eGLjtu5DbtZkWtCTHA9FPt1k-F-ArpCbHasHT-mt4MxNxKw_s
+    xP-JNhJmFVULw4klEg>
+X-ME-Received: <xmr:hC87YY_SVPYz8G2Oq5uYvcK9Grsw4MzqvssnWrr7G9VVLiypbrN30TPSWoj_tMPqMFbY8HOh5GNqxl3e34MlZzkY4gmdHKAtbIrz>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrudeguddgvdegucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhephffvufffkffotggggfesthhqredtredtjeenucfhrhhomhepofgrgihimhgv
+    ucftihhprghrugcuoehmrgigihhmvgestggvrhhnohdrthgvtghhqeenucggtffrrghtth
+    gvrhhnpeetieekgfffkeegkeeltdehudetteejgfekueevhffhteegudfgkedtueegfffg
+    feenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehmrg
+    igihhmvgestggvrhhnohdrthgvtghh
+X-ME-Proxy: <xmx:hC87YQqNAXq2zy6WSo4ZWBQPuS1MJxeUD0ccg-23d0LOWDB7CWFgMQ>
+    <xmx:hC87YZrN20R_GiKpG2lpYUyI2SSLzPTNOUbV08kGX3K4luyaodfl5g>
+    <xmx:hC87YeSCLWOMLfr75sxnvaLE4mJgFnJ9va92ZH1JnLBg_EMStvoyUQ>
+    <xmx:hi87Yarx_m8WB5_rbYe9o-RAM7XgThkPPtirosv1HQfRudXcuLYL4BCbmKo>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 10 Sep 2021 06:12:19 -0400 (EDT)
+From:   Maxime Ripard <maxime@cerno.tech>
+To:     Andrzej Hajda <a.hajda@samsung.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        David Airlie <airlied@linux.ie>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Maxime Ripard <maxime@cerno.tech>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>
+Cc:     Sean Paul <sean@poorly.run>, freedreno@lists.freedesktop.org,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        linux-kernel@vger.kernel.org,
+        Xinliang Liu <xinliang.liu@linaro.org>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Tian Tao <tiantao6@hisilicon.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        dri-devel@lists.freedesktop.org,
+        John Stultz <john.stultz@linaro.org>,
+        Chen Feng <puck.chen@hisilicon.com>,
+        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>
+Subject: [PATCH v4 00/24] drm/bridge: Make panel and bridge probe order consistent
+Date:   Fri, 10 Sep 2021 12:11:54 +0200
+Message-Id: <20210910101218.1632297-1-maxime@cerno.tech>
+X-Mailer: git-send-email 2.31.1
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20210829131305.534417-1-dmitry.baryshkov@linaro.org> <20210829131305.534417-2-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20210829131305.534417-2-dmitry.baryshkov@linaro.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Fri, 10 Sep 2021 12:02:29 +0200
-Message-ID: <CAPDyKFp9CM+x505URK=hcO0QFqcZrpqzQ6uJQ=ZLR6uq-_d5Ew@mail.gmail.com>
-Subject: Re: [RFC v2 01/13] power: add power sequencer subsystem
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-mmc <linux-mmc@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-bluetooth@vger.kernel.org, ath10k@lists.infradead.org,
-        linux-wireless <linux-wireless@vger.kernel.org>,
-        netdev <netdev@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 29 Aug 2021 at 15:13, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> Basing on MMC's pwrseq support code, add separate power sequencer
-> subsystem. It will be used by other drivers to handle device power up
-> requirements.
-
-This is far too vague. You are suggesting to add a new subsystem, I
-think that deserves some more explanations as justifications.
-
-Additionally, it wouldn't hurt to explain a bit how the actual
-subsystem is supposed to work, at least from a toplevel point of view.
-
->
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/power/Kconfig           |   1 +
->  drivers/power/Makefile          |   1 +
->  drivers/power/pwrseq/Kconfig    |  11 +
->  drivers/power/pwrseq/Makefile   |   6 +
->  drivers/power/pwrseq/core.c     | 412 ++++++++++++++++++++++++++++++++
->  include/linux/pwrseq/consumer.h |  88 +++++++
->  include/linux/pwrseq/driver.h   |  75 ++++++
->  7 files changed, 594 insertions(+)
->  create mode 100644 drivers/power/pwrseq/Kconfig
->  create mode 100644 drivers/power/pwrseq/Makefile
->  create mode 100644 drivers/power/pwrseq/core.c
->  create mode 100644 include/linux/pwrseq/consumer.h
->  create mode 100644 include/linux/pwrseq/driver.h
-
-I noticed there is no update of the MAINTAINERS file. We need that to
-be a part of the $subject patch as well, I think. But, let's discuss
-that later.
-
->
-> diff --git a/drivers/power/Kconfig b/drivers/power/Kconfig
-> index 696bf77a7042..c87cd2240a74 100644
-> --- a/drivers/power/Kconfig
-> +++ b/drivers/power/Kconfig
-> @@ -1,3 +1,4 @@
->  # SPDX-License-Identifier: GPL-2.0-only
-> +source "drivers/power/pwrseq/Kconfig"
->  source "drivers/power/reset/Kconfig"
->  source "drivers/power/supply/Kconfig"
-> diff --git a/drivers/power/Makefile b/drivers/power/Makefile
-> index effbf0377f32..1dbce454a8c4 100644
-> --- a/drivers/power/Makefile
-> +++ b/drivers/power/Makefile
-> @@ -1,3 +1,4 @@
->  # SPDX-License-Identifier: GPL-2.0-only
->  obj-$(CONFIG_POWER_RESET)      += reset/
->  obj-$(CONFIG_POWER_SUPPLY)     += supply/
-> +obj-$(CONFIG_PWRSEQ)           += pwrseq/
-> diff --git a/drivers/power/pwrseq/Kconfig b/drivers/power/pwrseq/Kconfig
-> new file mode 100644
-> index 000000000000..8904ec9ed541
-> --- /dev/null
-> +++ b/drivers/power/pwrseq/Kconfig
-> @@ -0,0 +1,11 @@
-> +# SPDX-License-Identifier: GPL-2.0-only
-> +menuconfig PWRSEQ
-> +       bool "Power Sequencer drivers"
-> +       help
-> +         Provides support for special power sequencing drivers.
-
-This needs more description. The name "power sequencer" isn't entirely
-self-explanatory, for when this should be used. I am not saying you
-should invent a new name, rather just extend the description so people
-get a better idea of what this is supposed to be used for.
-
-> +
-> +         Say Y here to enable support for such devices
-> +
-> +if PWRSEQ
-> +
-> +endif
-> diff --git a/drivers/power/pwrseq/Makefile b/drivers/power/pwrseq/Makefile
-> new file mode 100644
-> index 000000000000..108429ff6445
-> --- /dev/null
-> +++ b/drivers/power/pwrseq/Makefile
-> @@ -0,0 +1,6 @@
-> +# SPDX-License-Identifier: GPL-2.0
-> +#
-> +# Makefile for power sequencer drivers.
-> +#
-> +
-> +obj-$(CONFIG_PWRSEQ) += core.o
-> diff --git a/drivers/power/pwrseq/core.c b/drivers/power/pwrseq/core.c
-> new file mode 100644
-> index 000000000000..2e4e9d123e60
-> --- /dev/null
-> +++ b/drivers/power/pwrseq/core.c
-> @@ -0,0 +1,412 @@
-> +// SPDX-License-Identifier: GPL-2.0-only
-> +/*
-> + * Copyright 2021 (c) Linaro Ltd.
-> + * Author: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> + *
-> + * Based on phy-core.c:
-> + * Copyright (C) 2013 Texas Instruments Incorporated - http://www.ti.com
-> + */
-> +
-> +#include <linux/device.h>
-> +#include <linux/idr.h>
-> +#include <linux/module.h>
-> +#include <linux/mutex.h>
-> +#include <linux/of.h>
-> +#include <linux/pm_runtime.h>
-> +#include <linux/pwrseq/consumer.h>
-> +#include <linux/pwrseq/driver.h>
-> +#include <linux/slab.h>
-> +
-> +#define        to_pwrseq(a)    (container_of((a), struct pwrseq, dev))
-> +
-> +static DEFINE_IDA(pwrseq_ida);
-> +static DEFINE_MUTEX(pwrseq_provider_mutex);
-> +static LIST_HEAD(pwrseq_provider_list);
-> +
-> +struct pwrseq_provider {
-> +       struct device           *dev;
-> +       struct module           *owner;
-> +       struct list_head        list;
-> +       void                    *data;
-> +       struct pwrseq * (*of_xlate)(void *data, struct of_phandle_args *args);
-> +};
-> +
-> +void pwrseq_put(struct device *dev, struct pwrseq *pwrseq)
-> +{
-> +       device_link_remove(dev, &pwrseq->dev);
-
-device_links - why do we need these at this initial step?
-
-Please drop them so we can start with a simple implementation - and
-then possibly extend it.
-
-> +
-> +       module_put(pwrseq->owner);
-> +       put_device(&pwrseq->dev);
-> +}
-> +EXPORT_SYMBOL_GPL(pwrseq_put);
-> +
-> +static struct pwrseq_provider *of_pwrseq_provider_lookup(struct device_node *node)
-> +{
-> +       struct pwrseq_provider *pwrseq_provider;
-> +
-> +       list_for_each_entry(pwrseq_provider, &pwrseq_provider_list, list) {
-> +               if (pwrseq_provider->dev->of_node == node)
-> +                       return pwrseq_provider;
-> +       }
-> +
-> +       return ERR_PTR(-EPROBE_DEFER);
-> +}
-> +
-> +static struct pwrseq *_of_pwrseq_get(struct device *dev, const char *id)
-> +{
-> +       struct pwrseq_provider *pwrseq_provider;
-> +       struct pwrseq *pwrseq;
-> +       struct of_phandle_args args;
-> +       char prop_name[64]; /* 64 is max size of property name */
-> +       int ret;
-> +
-> +       snprintf(prop_name, 64, "%s-pwrseq", id);
-> +       ret = of_parse_phandle_with_args(dev->of_node, prop_name, "#pwrseq-cells", 0, &args);
-
-This means that you are parsing a new DT binding/property.
-
-Please fold in a DT binding patch, preceding $subject patch, so that
-new binding that it can be discussed as well.
-
-> +       if (ret) {
-> +               /*
-> +                * Parsing failed. Try locating old bindings for mmc-pwrseq,
-> +                * which did not use #pwrseq-cells.
-> +                */
-> +               if (strcmp(id, "mmc"))
-> +                       return NULL;
-> +
-> +               ret = of_parse_phandle_with_args(dev->of_node, prop_name, NULL, 0, &args);
-> +               if (ret)
-> +                       return NULL;
-> +
-> +               dev_warn(dev, "old mmc-pwrseq binding used, add #pwrseq-cells to the provider\n");
-
-To start simple and thus to also make review easier, I suggest to skip
-the mmc-pwrseq binding for now. Let's see if we can deal with that as
-a standalone change on top, later, instead.
-
-> +       }
-> +
-> +       mutex_lock(&pwrseq_provider_mutex);
-> +       pwrseq_provider = of_pwrseq_provider_lookup(args.np);
-> +       if (IS_ERR(pwrseq_provider) || !try_module_get(pwrseq_provider->owner)) {
-> +               pwrseq = ERR_PTR(-EPROBE_DEFER);
-> +               goto out_unlock;
-> +       }
-> +
-> +       if (!of_device_is_available(args.np)) {
-> +               dev_warn(pwrseq_provider->dev, "Requested pwrseq is disabled\n");
-> +               pwrseq = ERR_PTR(-ENODEV);
-> +               goto out_put_module;
-> +       }
-> +
-> +       pwrseq = pwrseq_provider->of_xlate(pwrseq_provider->data, &args);
-> +
-> +out_put_module:
-> +       module_put(pwrseq_provider->owner);
-> +
-> +out_unlock:
-> +       mutex_unlock(&pwrseq_provider_mutex);
-> +       of_node_put(args.np);
-> +
-> +       return pwrseq;
-> +}
-> +
-> +struct pwrseq * __pwrseq_get(struct device *dev, const char *id, bool optional)
-> +{
-> +       struct pwrseq *pwrseq;
-> +       struct device_link *link;
-> +
-> +       pwrseq = _of_pwrseq_get(dev, id);
-> +       if (pwrseq == NULL)
-> +               return optional ? NULL : ERR_PTR(-ENODEV);
-
-I think we can manage this without "optional". The optional should
-typically be the default behaviour, I think.
-
-The caller should expect to get a handle to a pwrseq - if there is
-property in the DT file that says there should be one. If not, the
-caller should be happy to just receive "NULL". And if there is an
-error, we should return ERR_PTR, as you do.
-
-> +       else if (IS_ERR(pwrseq))
-> +               return pwrseq;
-> +
-> +       if (!try_module_get(pwrseq->owner))
-> +               return ERR_PTR(-EPROBE_DEFER);
-> +
-> +       get_device(&pwrseq->dev);
-> +       link = device_link_add(dev, &pwrseq->dev, DL_FLAG_STATELESS);
-> +       if (!link)
-> +               dev_dbg(dev, "failed to create device link to %s\n",
-> +                       dev_name(pwrseq->dev.parent));
-> +
-> +       return pwrseq;
-> +}
-> +
-> +struct pwrseq * pwrseq_get(struct device *dev, const char *id)
-> +{
-> +       return __pwrseq_get(dev, id, false);
-> +}
-> +EXPORT_SYMBOL_GPL(pwrseq_get);
-> +
-> +static void devm_pwrseq_release(struct device *dev, void *res)
-> +{
-> +       struct pwrseq *pwrseq = *(struct pwrseq **)res;
-> +
-> +       pwrseq_put(dev, pwrseq);
-> +}
-> +
-> +struct pwrseq * devm_pwrseq_get(struct device *dev, const char *id)
-> +{
-> +       struct pwrseq **ptr, *pwrseq;
-> +
-> +       ptr = devres_alloc(devm_pwrseq_release, sizeof(*ptr), GFP_KERNEL);
-> +       if (!ptr)
-> +               return ERR_PTR(-ENOMEM);
-> +
-> +       pwrseq = pwrseq_get(dev, id);
-> +       if (!IS_ERR(pwrseq)) {
-> +               *ptr = pwrseq;
-> +               devres_add(dev, ptr);
-> +       } else {
-> +               devres_free(ptr);
-> +       }
-> +
-> +       return pwrseq;
-> +}
-> +EXPORT_SYMBOL_GPL(devm_pwrseq_get);
-> +
-> +struct pwrseq * pwrseq_get_optional(struct device *dev, const char *id)
-> +{
-> +       return __pwrseq_get(dev, id, true);
-> +}
-> +EXPORT_SYMBOL_GPL(pwrseq_get_optional);
-
-This can be dropped, if we make this the default behaviour.
-
-> +
-> +struct pwrseq * devm_pwrseq_get_optional(struct device *dev, const char *id)
-> +{
-> +       struct pwrseq **ptr, *pwrseq;
-> +
-> +       ptr = devres_alloc(devm_pwrseq_release, sizeof(*ptr), GFP_KERNEL);
-> +       if (!ptr)
-> +               return ERR_PTR(-ENOMEM);
-> +
-> +       pwrseq = pwrseq_get_optional(dev, id);
-> +       if (!IS_ERR_OR_NULL(pwrseq)) {
-> +               *ptr = pwrseq;
-> +               devres_add(dev, ptr);
-> +       } else {
-> +               devres_free(ptr);
-> +       }
-> +
-> +       return pwrseq;
-> +}
-> +EXPORT_SYMBOL_GPL(devm_pwrseq_get_optional);
-
-Ditto.
-
-> +
-> +int pwrseq_pre_power_on(struct pwrseq *pwrseq)
-> +{
-> +       if (pwrseq && pwrseq->ops->pre_power_on)
-> +               return pwrseq->ops->pre_power_on(pwrseq);
-> +
-> +       return 0;
-> +}
-> +EXPORT_SYMBOL_GPL(pwrseq_pre_power_on);
-> +
-> +int pwrseq_power_on(struct pwrseq *pwrseq)
-> +{
-> +       if (pwrseq && pwrseq->ops->power_on)
-> +               return pwrseq->ops->power_on(pwrseq);
-> +
-> +       return 0;
-> +}
-> +EXPORT_SYMBOL_GPL(pwrseq_power_on);
-> +
-> +void pwrseq_power_off(struct pwrseq *pwrseq)
-> +{
-> +       if (pwrseq && pwrseq->ops->power_off)
-> +               pwrseq->ops->power_off(pwrseq);
-> +}
-> +EXPORT_SYMBOL_GPL(pwrseq_power_off);
-> +
-> +void pwrseq_reset(struct pwrseq *pwrseq)
-> +{
-> +       if (pwrseq && pwrseq->ops->reset)
-> +               pwrseq->ops->reset(pwrseq);
-> +}
-> +EXPORT_SYMBOL_GPL(pwrseq_reset);
-> +
-> +static void pwrseq_dev_release(struct device *dev)
-> +{
-> +       struct pwrseq *pwrseq = to_pwrseq(dev);
-> +
-> +       ida_free(&pwrseq_ida, pwrseq->id);
-> +       of_node_put(dev->of_node);
-> +       kfree(pwrseq);
-> +}
-> +
-> +static struct class pwrseq_class = {
-> +       .name = "pwrseq",
-> +       .dev_release = pwrseq_dev_release,
-> +};
-> +
-> +struct pwrseq *__pwrseq_create(struct device *dev, struct module *owner, const struct pwrseq_ops *ops, void *data)
-> +{
-> +       struct pwrseq *pwrseq;
-> +       int ret;
-> +
-> +       if (WARN_ON(!dev))
-> +               return ERR_PTR(-EINVAL);
-> +
-> +       pwrseq = kzalloc(sizeof(*pwrseq), GFP_KERNEL);
-> +       if (!pwrseq)
-> +               return ERR_PTR(-ENOMEM);
-> +
-> +       ret = ida_alloc(&pwrseq_ida, GFP_KERNEL);
-> +       if (ret < 0)
-> +               goto free_pwrseq;
-> +
-> +       pwrseq->id = ret;
-> +
-> +       device_initialize(&pwrseq->dev);
-> +
-> +       pwrseq->dev.class = &pwrseq_class;
-> +       pwrseq->dev.parent = dev;
-> +       pwrseq->dev.of_node = of_node_get(dev->of_node);
-> +       pwrseq->ops = ops;
-> +       pwrseq->owner = owner;
-> +
-> +       dev_set_drvdata(&pwrseq->dev, data);
-> +
-> +       ret = dev_set_name(&pwrseq->dev, "pwrseq-%s.%u", dev_name(dev), pwrseq->id);
-> +       if (ret)
-> +               goto put_dev;
-> +
-> +       ret = device_add(&pwrseq->dev);
-> +       if (ret)
-> +               goto put_dev;
-> +
-> +       if (pm_runtime_enabled(dev)) {
-> +               pm_runtime_enable(&pwrseq->dev);
-> +               pm_runtime_no_callbacks(&pwrseq->dev);
-> +       }
-
-I don't think we should bother with runtime PM, at least in this
-initial step. Please drop it, to start simple.
-
-> +
-> +       return pwrseq;
-> +
-> +put_dev:
-> +       /* will call pwrseq_dev_release() to free resources */
-> +       put_device(&pwrseq->dev);
-> +
-> +       return ERR_PTR(ret);
-> +
-> +free_pwrseq:
-> +       kfree(pwrseq);
-> +
-> +       return ERR_PTR(ret);
-> +}
-> +EXPORT_SYMBOL_GPL(__pwrseq_create);
-> +
-> +void pwrseq_destroy(struct pwrseq *pwrseq)
-> +{
-> +       pm_runtime_disable(&pwrseq->dev);
-> +       device_unregister(&pwrseq->dev);
-> +}
-> +EXPORT_SYMBOL_GPL(pwrseq_destroy);
-> +
-> +static void devm_pwrseq_destroy(struct device *dev, void *res)
-> +{
-> +       struct pwrseq *pwrseq = *(struct pwrseq **)res;
-> +
-> +       pwrseq_destroy(pwrseq);
-> +}
-> +
-> +struct pwrseq *__devm_pwrseq_create(struct device *dev, struct module *owner, const struct pwrseq_ops *ops, void *data)
-> +{
-> +       struct pwrseq **ptr, *pwrseq;
-> +
-> +       ptr = devres_alloc(devm_pwrseq_destroy, sizeof(*ptr), GFP_KERNEL);
-> +       if (!ptr)
-> +               return ERR_PTR(-ENOMEM);
-> +
-> +       pwrseq = __pwrseq_create(dev, owner, ops, data);
-> +       if (!IS_ERR(pwrseq)) {
-> +               *ptr = pwrseq;
-> +               devres_add(dev, ptr);
-> +       } else {
-> +               devres_free(ptr);
-> +       }
-> +
-> +       return pwrseq;
-> +}
-> +EXPORT_SYMBOL_GPL(__devm_pwrseq_create);
-> +
-> +struct pwrseq_provider *__of_pwrseq_provider_register(struct device *dev,
-> +       struct module *owner,
-> +       struct pwrseq * (*of_xlate)(void *data,
-> +                                   struct of_phandle_args *args),
-> +       void *data)
-> +{
-> +       struct pwrseq_provider *pwrseq_provider;
-> +
-> +       pwrseq_provider = kzalloc(sizeof(*pwrseq_provider), GFP_KERNEL);
-> +       if (!pwrseq_provider)
-> +               return ERR_PTR(-ENOMEM);
-> +
-> +       pwrseq_provider->dev = dev;
-> +       pwrseq_provider->owner = owner;
-> +       pwrseq_provider->of_xlate = of_xlate;
-> +       pwrseq_provider->data = data;
-> +
-> +       mutex_lock(&pwrseq_provider_mutex);
-> +       list_add_tail(&pwrseq_provider->list, &pwrseq_provider_list);
-> +       mutex_unlock(&pwrseq_provider_mutex);
-> +
-> +       return pwrseq_provider;
-> +}
-> +EXPORT_SYMBOL_GPL(__of_pwrseq_provider_register);
-> +
-> +void of_pwrseq_provider_unregister(struct pwrseq_provider *pwrseq_provider)
-> +{
-> +       if (IS_ERR(pwrseq_provider))
-> +               return;
-> +
-> +       mutex_lock(&pwrseq_provider_mutex);
-> +       list_del(&pwrseq_provider->list);
-> +       kfree(pwrseq_provider);
-> +       mutex_unlock(&pwrseq_provider_mutex);
-> +}
-> +EXPORT_SYMBOL_GPL(of_pwrseq_provider_unregister);
-> +
-> +static void devm_pwrseq_provider_unregister(struct device *dev, void *res)
-> +{
-> +       struct pwrseq_provider *pwrseq_provider = *(struct pwrseq_provider **)res;
-> +
-> +       of_pwrseq_provider_unregister(pwrseq_provider);
-> +}
-> +
-> +struct pwrseq_provider *__devm_of_pwrseq_provider_register(struct device *dev,
-> +       struct module *owner,
-> +       struct pwrseq * (*of_xlate)(void *data,
-> +                                   struct of_phandle_args *args),
-> +       void *data)
-> +{
-> +       struct pwrseq_provider **ptr, *pwrseq_provider;
-> +
-> +       ptr = devres_alloc(devm_pwrseq_provider_unregister, sizeof(*ptr), GFP_KERNEL);
-> +       if (!ptr)
-> +               return ERR_PTR(-ENOMEM);
-> +
-> +       pwrseq_provider = __of_pwrseq_provider_register(dev, owner, of_xlate, data);
-> +       if (!IS_ERR(pwrseq_provider)) {
-> +               *ptr = pwrseq_provider;
-> +               devres_add(dev, ptr);
-> +       } else {
-> +               devres_free(ptr);
-> +       }
-> +
-> +       return pwrseq_provider;
-> +}
-> +EXPORT_SYMBOL_GPL(__devm_of_pwrseq_provider_register);
-> +
-> +struct pwrseq *of_pwrseq_xlate_onecell(void *data, struct of_phandle_args *args)
-> +{
-> +       struct pwrseq_onecell_data *pwrseq_data = data;
-> +       unsigned int idx;
-> +
-> +       if (args->args_count != 1)
-> +               return ERR_PTR(-EINVAL);
-> +
-> +       idx = args->args[0];
-> +       if (idx >= pwrseq_data->num) {
-> +               pr_err("%s: invalid index %u\n", __func__, idx);
-> +               return ERR_PTR(-EINVAL);
-> +       }
-
-In many cases it's reasonable to leave room for future extensions, so
-that a provider could serve with more than one power-sequencer. I
-guess that is what you intend to do here, right?
-
-In my opinion, I don't think what would happen, especially since a
-power-sequence is something that should be specific to one particular
-device (a Qcom WiFi/Blutooth chip, for example).
-
-That said, I suggest limiting this to a 1:1 mapping between the device
-node and power-sequencer. I think that should simplify the code a bit.
-
-> +
-> +       return pwrseq_data->pwrseqs[idx];
-> +}
-> +
-> +static int __init pwrseq_core_init(void)
-> +{
-> +       return class_register(&pwrseq_class);
-> +}
-> +device_initcall(pwrseq_core_init);
-> diff --git a/include/linux/pwrseq/consumer.h b/include/linux/pwrseq/consumer.h
-> new file mode 100644
-> index 000000000000..fbcdc1fc0751
-> --- /dev/null
-> +++ b/include/linux/pwrseq/consumer.h
-> @@ -0,0 +1,88 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> +/*
-> + * Copyright (c) 2021 Linaro Ltd.
-> + */
-> +
-> +#ifndef __LINUX_PWRSEQ_CONSUMER_H__
-> +#define __LINUX_PWRSEQ_CONSUMER_H__
-> +
-> +struct pwrseq;
-> +struct device;
-> +
-> +#if defined(CONFIG_PWRSEQ)
-> +
-> +struct pwrseq *__must_check pwrseq_get(struct device *dev, const char *id);
-> +struct pwrseq *__must_check devm_pwrseq_get(struct device *dev, const char *id);
-> +
-> +struct pwrseq *__must_check pwrseq_get_optional(struct device *dev, const char *id);
-> +struct pwrseq *__must_check devm_pwrseq_get_optional(struct device *dev, const char *id);
-> +
-> +void pwrseq_put(struct device *dev, struct pwrseq *pwrseq);
-> +
-> +int pwrseq_pre_power_on(struct pwrseq *pwrseq);
-> +int pwrseq_power_on(struct pwrseq *pwrseq);
-> +void pwrseq_power_off(struct pwrseq *pwrseq);
-> +void pwrseq_reset(struct pwrseq *pwrseq);
-> +
-> +#else
-> +
-> +static inline struct pwrseq *__must_check
-> +pwrseq_get(struct device *dev, const char *id)
-> +{
-> +       return ERR_PTR(-ENOSYS);
-> +}
-> +
-> +static inline struct pwrseq *__must_check
-> +devm_pwrseq_get(struct device *dev, const char *id)
-> +{
-> +       return ERR_PTR(-ENOSYS);
-> +}
-> +
-> +static inline struct pwrseq *__must_check
-> +pwrseq_get_optional(struct device *dev, const char *id)
-> +{
-> +       return NULL;
-> +}
-> +
-> +static inline struct pwrseq *__must_check
-> +devm_pwrseq_get_optional(struct device *dev, const char *id)
-> +{
-> +       return NULL;
-> +}
-> +
-> +static inline void pwrseq_put(struct device *dev, struct pwrseq *pwrseq)
-> +{
-> +}
-> +
-> +static inline int pwrseq_pre_power_on(struct pwrseq *pwrseq)
-> +{
-> +       return -ENOSYS;
-> +}
-> +
-> +static inline int pwrseq_power_on(struct pwrseq *pwrseq)
-> +{
-> +       return -ENOSYS;
-> +}
-> +
-> +static inline void pwrseq_power_off(struct pwrseq *pwrseq)
-> +{
-> +}
-> +
-> +static inline void pwrseq_reset(struct pwrseq *pwrseq)
-> +{
-> +}
-> +
-> +#endif
-> +
-> +static inline int pwrseq_full_power_on(struct pwrseq *pwrseq)
-> +{
-> +       int ret;
-> +
-> +       ret = pwrseq_pre_power_on(pwrseq);
-> +       if (ret)
-> +               return ret;
-> +
-> +       return pwrseq_power_on(pwrseq);
-> +}
-> +
-> +#endif /* __LINUX_PWRSEQ_CONSUMER_H__ */
-> diff --git a/include/linux/pwrseq/driver.h b/include/linux/pwrseq/driver.h
-> new file mode 100644
-> index 000000000000..b2bc46624d7e
-> --- /dev/null
-> +++ b/include/linux/pwrseq/driver.h
-> @@ -0,0 +1,75 @@
-> +/* SPDX-License-Identifier: GPL-2.0-or-later */
-> +/*
-> + * Copyright (c) 2021 Linaro Ltd.
-> + */
-> +
-> +#ifndef __LINUX_PWRSEQ_DRIVER_H__
-> +#define __LINUX_PWRSEQ_DRIVER_H__
-> +
-> +#include <linux/device.h>
-> +
-> +struct pwrseq;
-> +
-> +struct pwrseq_ops {
-> +       int (*pre_power_on)(struct pwrseq *pwrseq);
-> +       int (*power_on)(struct pwrseq *pwrseq);
-> +       void (*power_off)(struct pwrseq *pwrseq);
-> +       void (*reset)(struct pwrseq *pwrseq);
-> +};
-> +
-> +struct module;
-> +
-> +struct pwrseq {
-> +       struct device dev;
-> +       const struct pwrseq_ops *ops;
-> +       unsigned int id;
-> +       struct module *owner;
-> +};
-> +
-> +struct pwrseq *__pwrseq_create(struct device *dev, struct module *owner, const struct pwrseq_ops *ops, void *data);
-> +struct pwrseq *__devm_pwrseq_create(struct device *dev, struct module *owner, const struct pwrseq_ops *ops, void *data);
-> +
-> +#define pwrseq_create(dev, ops, data) __pwrseq_create((dev), THIS_MODULE, (ops), (data))
-> +#define devm_pwrseq_create(dev, ops, data) __devm_pwrseq_create((dev), THIS_MODULE, (ops), (data))
-> +
-> +void pwrseq_destroy(struct pwrseq *pwrseq);
-> +
-> +static inline void *pwrseq_get_data(struct pwrseq *pwrseq)
-> +{
-> +       return dev_get_drvdata(&pwrseq->dev);
-> +}
-> +
-> +#define        of_pwrseq_provider_register(dev, xlate, data)   \
-> +       __of_pwrseq_provider_register((dev), THIS_MODULE, (xlate), (data))
-> +
-> +#define        devm_of_pwrseq_provider_register(dev, xlate, data)      \
-> +       __devm_of_pwrseq_provider_register((dev), THIS_MODULE, (xlate), (data))
-> +
-> +struct of_phandle_args;
-> +
-> +struct pwrseq_provider *__of_pwrseq_provider_register(struct device *dev,
-> +       struct module *owner,
-> +       struct pwrseq * (*of_xlate)(void *data,
-> +                                   struct of_phandle_args *args),
-> +       void *data);
-> +struct pwrseq_provider *__devm_of_pwrseq_provider_register(struct device *dev,
-> +       struct module *owner,
-> +       struct pwrseq * (*of_xlate)(void *data,
-> +                                   struct of_phandle_args *args),
-> +       void *data);
-> +void of_pwrseq_provider_unregister(struct pwrseq_provider *pwrseq_provider);
-> +
-> +static inline struct pwrseq *of_pwrseq_xlate_single(void *data,
-> +                                                   struct of_phandle_args *args)
-> +{
-> +       return data;
-> +}
-> +
-> +struct pwrseq_onecell_data {
-> +       unsigned int num;
-> +       struct pwrseq *pwrseqs[];
-> +};
-
-According to my earlier comment, I think a lot can be removed from
-here - if you would limit the provider to only use
-of_pwrseq_xlate_single.
-
-Again, I think it's better to start simple, as it simplifies the review.
-
-> +
-> +struct pwrseq *of_pwrseq_xlate_onecell(void *data, struct of_phandle_args *args);
-> +
-> +#endif /* __LINUX_PWRSEQ_DRIVER_H__ */
-> --
-> 2.33.0
->
-
-Other than my comments, overall I think this looks like a good start.
-
-Kind regards
-Uffe
+Hi,=0D
+=0D
+We've encountered an issue with the RaspberryPi DSI panel that prevented th=
+e=0D
+whole display driver from probing.=0D
+=0D
+The issue is described in detail in the commit 7213246a803f ("drm/vc4: dsi:=
+=0D
+Only register our component once a DSI device is attached"), but the basic =
+idea=0D
+is that since the panel is probed through i2c, there's no synchronization=0D
+between its probe and the registration of the MIPI-DSI host it's attached t=
+o.=0D
+=0D
+We initially moved the component framework registration to the MIPI-DSI Hos=
+t=0D
+attach hook to make sure we register our component only when we have a DSI=
+=0D
+device attached to our MIPI-DSI host, and then use lookup our DSI device in=
+ our=0D
+bind hook.=0D
+=0D
+However, all the DSI bridges controlled through i2c are only registering th=
+eir=0D
+associated DSI device in their bridge attach hook, meaning with our change=
+=0D
+above, we never got that far, and therefore ended up in the same situation =
+than=0D
+the one we were trying to fix for panels.=0D
+=0D
+The best practice to avoid those issues is to register its functions only a=
+fter=0D
+all its dependencies are live. We also shouldn't wait any longer than we sh=
+ould=0D
+to play nice with the other components that are waiting for us, so in our c=
+ase=0D
+that would mean moving the DSI device registration to the bridge probe.=0D
+=0D
+I also had a look at all the DSI hosts, and it seems that exynos, kirin and=
+ msm=0D
+would be affected by this and wouldn't probe anymore after those changes.=0D
+Exynos and kirin seems to be simple enough for a mechanical change (that st=
+ill=0D
+requires to be tested), but the changes in msm seemed to be far more import=
+ant=0D
+and I wasn't confortable doing them.=0D
+=0D
+Let me know what you think,=0D
+Maxime=0D
+=0D
+---=0D
+=0D
+Changes from v3:=0D
+  - Converted exynos and kirin=0D
+  - Converted all the affected bridge drivers=0D
+  - Reworded the documentation a bit=0D
+=0D
+Changes from v2:=0D
+  - Changed the approach as suggested by Andrzej, and aligned the bridge on=
+ the=0D
+    panel this time.=0D
+  - Fixed some typos=0D
+=0D
+Changes from v1:=0D
+  - Change the name of drm_of_get_next function to drm_of_get_bridge=0D
+  - Mention the revert of 87154ff86bf6 and squash the two patches that were=
+=0D
+    reverting that commit=0D
+  - Add some documentation=0D
+  - Make drm_panel_attach and _detach succeed when no callback is there=0D
+=0D
+Maxime Ripard (24):=0D
+  drm/bridge: Add documentation sections=0D
+  drm/bridge: Document the probe issue with MIPI-DSI bridges=0D
+  drm/mipi-dsi: Create devm device registration=0D
+  drm/mipi-dsi: Create devm device attachment=0D
+  drm/bridge: adv7533: Switch to devm MIPI-DSI helpers=0D
+  drm/bridge: adv7511: Register and attach our DSI device at probe=0D
+  drm/bridge: anx7625: Switch to devm MIPI-DSI helpers=0D
+  drm/bridge: anx7625: Register and attach our DSI device at probe=0D
+  drm/bridge: lt8912b: Switch to devm MIPI-DSI helpers=0D
+  drm/bridge: lt8912b: Register and attach our DSI device at probe=0D
+  drm/bridge: lt9611: Switch to devm MIPI-DSI helpers=0D
+  drm/bridge: lt9611: Register and attach our DSI device at probe=0D
+  drm/bridge: lt9611uxc: Switch to devm MIPI-DSI helpers=0D
+  drm/bridge: lt9611uxc: Register and attach our DSI device at probe=0D
+  drm/bridge: ps8640: Switch to devm MIPI-DSI helpers=0D
+  drm/bridge: ps8640: Register and attach our DSI device at probe=0D
+  drm/bridge: sn65dsi83: Switch to devm MIPI-DSI helpers=0D
+  drm/bridge: sn65dsi83: Register and attach our DSI device at probe=0D
+  drm/bridge: sn65dsi86: Switch to devm MIPI-DSI helpers=0D
+  drm/bridge: sn65dsi86: Register and attach our DSI device at probe=0D
+  drm/bridge: tc358775: Switch to devm MIPI-DSI helpers=0D
+  drm/bridge: tc358775: Register and attach our DSI device at probe=0D
+  drm/kirin: dsi: Adjust probe order=0D
+  drm/exynos: dsi: Adjust probe order=0D
+=0D
+ Documentation/gpu/drm-kms-helpers.rst        |  12 +++=0D
+ drivers/gpu/drm/bridge/adv7511/adv7511.h     |   1 -=0D
+ drivers/gpu/drm/bridge/adv7511/adv7511_drv.c |  15 ++-=0D
+ drivers/gpu/drm/bridge/adv7511/adv7533.c     |  20 +---=0D
+ drivers/gpu/drm/bridge/analogix/anx7625.c    |  40 ++++----=0D
+ drivers/gpu/drm/bridge/lontium-lt8912b.c     |  31 ++----=0D
+ drivers/gpu/drm/bridge/lontium-lt9611.c      |  62 +++++-------=0D
+ drivers/gpu/drm/bridge/lontium-lt9611uxc.c   |  65 +++++-------=0D
+ drivers/gpu/drm/bridge/parade-ps8640.c       | 101 ++++++++++---------=0D
+ drivers/gpu/drm/bridge/tc358775.c            |  50 +++++----=0D
+ drivers/gpu/drm/bridge/ti-sn65dsi83.c        |  86 ++++++++--------=0D
+ drivers/gpu/drm/bridge/ti-sn65dsi86.c        |  94 ++++++++---------=0D
+ drivers/gpu/drm/drm_bridge.c                 |  69 ++++++++++++-=0D
+ drivers/gpu/drm/drm_mipi_dsi.c               |  81 +++++++++++++++=0D
+ drivers/gpu/drm/exynos/exynos_drm_dsi.c      |  19 ++--=0D
+ drivers/gpu/drm/hisilicon/kirin/dw_drm_dsi.c |  27 +++--=0D
+ include/drm/drm_mipi_dsi.h                   |   4 +=0D
+ 17 files changed, 460 insertions(+), 317 deletions(-)=0D
+=0D
+-- =0D
+2.31.1=0D
+=0D
