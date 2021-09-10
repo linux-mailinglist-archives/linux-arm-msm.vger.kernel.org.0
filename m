@@ -2,196 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D2AFF4069EB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Sep 2021 12:15:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EFCB7407059
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Sep 2021 19:14:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232227AbhIJKQE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Sep 2021 06:16:04 -0400
-Received: from wnew4-smtp.messagingengine.com ([64.147.123.18]:44983 "EHLO
-        wnew4-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233014AbhIJKPt (ORCPT
+        id S230328AbhIJRPi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Sep 2021 13:15:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38376 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229664AbhIJRPi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Sep 2021 06:15:49 -0400
-Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
-        by mailnew.west.internal (Postfix) with ESMTP id 789FF2B013F5;
-        Fri, 10 Sep 2021 06:14:36 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute4.internal (MEProxy); Fri, 10 Sep 2021 06:14:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=
-        from:to:cc:subject:date:message-id:in-reply-to:references
-        :mime-version:content-transfer-encoding; s=fm3; bh=THjyt/udMqvIS
-        g7/C7BNDCUAlJStjMNR1MB6XhOeOzg=; b=os1ue1yYQlHuSypaKJXgRcobxzFOn
-        KLQPB1ItAoZPXtNimByXgLZFOft9KD0rswZ/ljtTjM803FvgmpVpgUh3CLnBbTY0
-        +nMXLnN1xuzdWGCM5HhgkBxW/u+yA3y2Q3UHB6rT3n1YWbdFpca1GY4UtHRchBKm
-        COpjCIHHZcTBmkQdwgiv4Uan1QPqDKasI+L08A/RNNnbEf9+NDKdffpAvetiF9kq
-        7MmNdm3LKfo1L5+uLBVrSc3eLYb5YJJZzBHJsttc2qEIEKPHKof41uhufmhduPtV
-        7qewwX66bSERofVMxgg79lZNXb/5mnxIVCcwOWVnPBnpSDqFVSumenz9Q==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:date:from
-        :in-reply-to:message-id:mime-version:references:subject:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm3; bh=THjyt/udMqvISg7/C7BNDCUAlJStjMNR1MB6XhOeOzg=; b=Q0KUlGP3
-        5KdAE/kmRk0YcujRCdB7e0GLja4wNw1lQuGdErGpwpOt5o1Uai7qISUJbKfU9E5u
-        DhS0pRuYcChRHkPQFazXVXDlAHccyRoOK9NVgT9c5oAZImoMzxNR9f9+9kdp/dRG
-        iUE7yPvIUE8MUKygMsPUkFNVJDPl9opXwhwiq2thmkvbGF5/+cI95sGw0Fah+//x
-        GWG5N0HHME0qpbhavr8SY11w1e8nFmNd8P10rfb5bKliuavo/PGAsGEVJlKCq/Ca
-        fkiu2l0oI4N8JMKVs5NT7f7qAh1n/gWS9+W7WzRBuSOlz5j1jyXyA0sY6+qNGlzl
-        c3MnO7MJ+pBysQ==
-X-ME-Sender: <xms:CzA7YdMhu3iTLixe02I63ClFyYUVOUN8nfj0rK3R9JKRSYSfj_L0vQ>
-    <xme:CzA7Yf8Ui_id_eU3GTRWD7wVpCll385nG2thLcVrjNR4gasOJITCAxo01nymlRzUV
-    SUScKHLJNxHH5LiLbo>
-X-ME-Received: <xmr:CzA7YcRiiTw5xkGl5JhaHflTJyl8q92nAL3PnKZHqdmx4bUNbxe4VQLTBrOxPR2-3Jq9lux5Ft5all6m16a03fE9u31wvkPu5soW>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrudeguddgvdehucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhephffvufffkffojghfggfgsedtkeertdertddtnecuhfhrohhmpeforgigihhm
-    vgcutfhiphgrrhguuceomhgrgihimhgvsegtvghrnhhordhtvggthheqnecuggftrfgrth
-    htvghrnhepvdekleevfeffkeejhfffueelteelfeduieefheduudfggffhhfffheevveeh
-    hedvnecuvehluhhsthgvrhfuihiivgepfeenucfrrghrrghmpehmrghilhhfrhhomhepmh
-    grgihimhgvsegtvghrnhhordhtvggthh
-X-ME-Proxy: <xmx:CzA7YZuRzn4u0_5t8-e10A6krjJKBbwScWzVS7UBTUZ0TXXbtoTSqw>
-    <xmx:CzA7YVcF7XWqV-91dmSyu7PK3C9oKOHKnvlxCFgM5JRGK5RBKhQdDA>
-    <xmx:CzA7YV0M0gcE2OpSMZJvVcnwSBB5Q5kzC-YyvnuY33zK9_xBuUt8ww>
-    <xmx:DDA7YaOrqgA3bperzcYGWWGF1DaEU7uJHdSFWXcLg1h3edluSjMMDJ-sZ5c>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 10 Sep 2021 06:14:35 -0400 (EDT)
-From:   Maxime Ripard <maxime@cerno.tech>
-To:     Andrzej Hajda <a.hajda@samsung.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        David Airlie <airlied@linux.ie>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Maxime Ripard <maxime@cerno.tech>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>
-Cc:     Sean Paul <sean@poorly.run>, freedreno@lists.freedesktop.org,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        linux-kernel@vger.kernel.org,
-        Xinliang Liu <xinliang.liu@linaro.org>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Tian Tao <tiantao6@hisilicon.com>,
-        Inki Dae <inki.dae@samsung.com>,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        dri-devel@lists.freedesktop.org,
-        John Stultz <john.stultz@linaro.org>,
-        Chen Feng <puck.chen@hisilicon.com>,
-        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>
-Subject: [PATCH v4 24/24] drm/exynos: dsi: Adjust probe order
-Date:   Fri, 10 Sep 2021 12:12:18 +0200
-Message-Id: <20210910101218.1632297-25-maxime@cerno.tech>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210910101218.1632297-1-maxime@cerno.tech>
-References: <20210910101218.1632297-1-maxime@cerno.tech>
+        Fri, 10 Sep 2021 13:15:38 -0400
+Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E9FAC061574;
+        Fri, 10 Sep 2021 10:14:27 -0700 (PDT)
+Received: by mail-wr1-x433.google.com with SMTP id g16so3652481wrb.3;
+        Fri, 10 Sep 2021 10:14:27 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ECe+aP8GlByGFzXgaD0C2iedycpmqMk8h4mAhvXdWJw=;
+        b=O8Gki5ybtBEla/sBKtBCrHndI7fwisew1eOn6Lqthw4E0mPl6UACjbMXL456nF1z1v
+         sFJU96piX3j+957pqio2XG+LxHv+Pv/u5VZA/WjnR0PF2aRLV//oBlG9nlx+a3wVTDwe
+         1z2Njy9dwkHBoYGCfrMcte3FHgHtqENJr9zIiSrJYL0Bdssim6b4fiU3eihhXWh62Cbk
+         Z4l4wLDucLp9iTFZ9fOzL8ihiYH21Hd57eIKXaJcVdOxziOWtpKd4a8b5/VNBi2QqQjF
+         uO4bG6LzF1MBpD2NbCus9exjTGpwz0Ve1E5z8gzcYXXLnw11WPXiAoUhuGKLd9j2u0x3
+         /WAw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ECe+aP8GlByGFzXgaD0C2iedycpmqMk8h4mAhvXdWJw=;
+        b=oTHIXrCr+49jd4V0AtbMsQTC1VGyYU09aMvSUEHj7bAcrtz5JW7IJbQs3YXezeZVvf
+         KcXr+H3/7ftzUw3FMPAp6HbXZtolnuxDsYvI6APQKQ/qGa7SbmIEvO5QMomIL90VzOKv
+         KSLlZNJ+kzZm0JhyOe3bqzaBEeY6Y1FaMyoRl4bl8kIfE3UhjNZGcu7TJVJ1b/SDgSwB
+         DMDzlzVjclnxDtc1Av+OuptWqb6nqdnXUfZZOt1ZV333P3lDMj/874kZgQPaCI56dq+S
+         7zo5QEkSbQXQPjSSxCV0kHr4jmkF3p9jP+l6gQsjHKJwjjeloaJkH66tI4NZPsiULpUc
+         xtjg==
+X-Gm-Message-State: AOAM5335UG4+EmxRsAoblcWMkMoPnovd3YZ2HWTXhPS/O9dHdy/PzxRG
+        mA7A6Vc60xTb8XYXtB9XTkQAMr1u+UGJHdHFvRU=
+X-Google-Smtp-Source: ABdhPJzkpO6p14WF+dyNq4gfagXI6lwls9aScw/TuEZXv5bfemK8KoMGdQYf9uP/IxaevG/gM3MYwLRA5kUAAE7QUWQ=
+X-Received: by 2002:a5d:4803:: with SMTP id l3mr11111785wrq.61.1631294065520;
+ Fri, 10 Sep 2021 10:14:25 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <e2cebf65-012d-f818-8202-eb511c996e28@linaro.org>
+ <CAF6AEGs11aYnkL30kp79pMqLTg3_4otFwG2Oc890Of2ndLbELw@mail.gmail.com>
+ <b7334a1a-c4ad-da90-03b4-0d19e1811b13@linaro.org> <CAF6AEGv0WWB3Z1hmXf8vxm1_-d7fsNBRcaQF35aE2JXcJn8-cA@mail.gmail.com>
+ <8aa590be-6a9f-9343-e897-18e86ea48202@linaro.org> <CAF6AEGtd_5jKhixp6h+NnN8-aqjBHTLopRozASE73oT3rfnFHA@mail.gmail.com>
+ <6eefedb2-9e59-56d2-7703-2faf6cb0ca3a@codeaurora.org> <CAF6AEGvhqPHWNK=6GYz+Mu5aKe8+iE4_Teem6o=X6eiANhWsPg@mail.gmail.com>
+ <83ecbe74-caf0-6c42-e6f5-4887b3b534c6@linaro.org> <53d3e5b7-9dc0-a806-70e9-b9b5ff877462@codeaurora.org>
+ <YTgeIuwumPoR9ZTE@ripper>
+In-Reply-To: <YTgeIuwumPoR9ZTE@ripper>
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Fri, 10 Sep 2021 10:18:52 -0700
+Message-ID: <CAF6AEGt2f16=WWpKgGiWw1OJLrWMSunzrm853H+mGxPQuf2Xug@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm: Disable frequency clamping on a630
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Akhil P Oommen <akhilpo@codeaurora.org>,
+        Caleb Connolly <caleb.connolly@linaro.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        open list <linux-kernel@vger.kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Without proper care and an agreement between how DSI hosts and devices
-drivers register their MIPI-DSI entities and potential components, we can
-end up in a situation where the drivers can never probe.
+On Tue, Sep 7, 2021 at 7:20 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Mon 09 Aug 10:26 PDT 2021, Akhil P Oommen wrote:
+>
+> > On 8/9/2021 9:48 PM, Caleb Connolly wrote:
+> > >
+> > >
+> > > On 09/08/2021 17:12, Rob Clark wrote:
+> > > > On Mon, Aug 9, 2021 at 7:52 AM Akhil P Oommen
+> > > > <akhilpo@codeaurora.org> wrote:
+> [..]
+> > > > > I am a bit confused. We don't define a power domain for gpu in dt,
+> > > > > correct? Then what exactly set_opp do here? Do you think this usleep is
+> > > > > what is helping here somehow to mask the issue?
+> > > The power domains (for cx and gx) are defined in the GMU DT, the OPPs in
+> > > the GPU DT. For the sake of simplicity I'll refer to the lowest
+> > > frequency (257000000) and OPP level (RPMH_REGULATOR_LEVEL_LOW_SVS) as
+> > > the "min" state, and the highest frequency (710000000) and OPP level
+> > > (RPMH_REGULATOR_LEVEL_TURBO_L1) as the "max" state. These are defined in
+> > > sdm845.dtsi under the gpu node.
+> > >
+> > > The new devfreq behaviour unmasks what I think is a driver bug, it
+> > > inadvertently puts much more strain on the GPU regulators than they
+> > > usually get. With the new behaviour the GPU jumps from it's min state to
+> > > the max state and back again extremely rapidly under workloads as small
+> > > as refreshing UI. Where previously the GPU would rarely if ever go above
+> > > 342MHz when interacting with the device, it now jumps between min and
+> > > max many times per second.
+> > >
+> > > If my understanding is correct, the current implementation of the GMU
+> > > set freq is the following:
+> > >   - Get OPP for frequency to set
+> > >   - Push the frequency to the GMU - immediately updating the core clock
+> > >   - Call dev_pm_opp_set_opp() which triggers a notify chain, this winds
+> > > up somewhere in power management code and causes the gx regulator level
+> > > to be updated
+> >
+> > Nope. dev_pm_opp_set_opp() sets the bandwidth for gpu and nothing else. We
+> > were using a different api earlier which got deprecated -
+> > dev_pm_opp_set_bw().
+> >
+>
+> On the Lenovo Yoga C630 this is reproduced by starting alacritty and if
+> I'm lucky I managed to hit a few keys before it crashes, so I spent a
+> few hours looking into this as well...
+>
+> As you say, the dev_pm_opp_set_opp() will only cast a interconnect vote.
+> The opp-level is just there for show and isn't used by anything, at
+> least not on 845.
+>
+> Further more, I'm missing something in my tree, so the interconnect
+> doesn't hit sync_state, and as such we're not actually scaling the
+> buses. So the problem is not that Linux doesn't turn on the buses in
+> time.
+>
+> So I suspect that the "AHB bus error" isn't saying that we turned off
+> the bus, but rather that the GPU becomes unstable or something of that
+> sort.
+>
+>
+> Lastly, I reverted 9bc95570175a ("drm/msm: Devfreq tuning") and ran
+> Aquarium for 20 minutes without a problem. I then switched the gpu
+> devfreq governor to "userspace" and ran the following:
+>
+> while true; do
+>   echo 257000000 > /sys/class/devfreq/5000000.gpu/userspace/set_freq
+>   echo 710000000 > /sys/class/devfreq/5000000.gpu/userspace/set_freq
+> done
+>
+> It took 19 iterations of this loop to crash the GPU.
 
-Most drivers were taking evasive maneuvers to try to workaround this,
-but not all of them were following the same conventions, resulting in
-various incompatibilities between DSI hosts and devices.
+I assume you still had aquarium running, to keep the gpu awake while
+you ran that loop?
 
-Now that we have a sequence agreed upon and documented, let's convert
-exynos to it.
+Fwiw, I modified this slightly to match sc7180's min/max gpu freq and
+could not trigger any issue.. interestingly sc7180 has a lower min
+freq (180) and higher max freq (800) so it was toggling over a wider
+freq range.  I also tried on a device that  had the higher 825MHz opp
+(since I noticed that was the only opp that used
+RPMH_REGULATOR_LEVEL_TURBO_L1 and wanted to rule that out), but could
+not reproduce.
 
-Signed-off-by: Maxime Ripard <maxime@cerno.tech>
----
- drivers/gpu/drm/exynos/exynos_drm_dsi.c | 19 ++++++++++++-------
- 1 file changed, 12 insertions(+), 7 deletions(-)
+I guess a630 (sdm845) should have higher power draw (it is 2x # of
+shader cores and 2x GMEM size, but lower max freq).. the question is,
+is this the reason we see this on sdm845 and not sc7180?  Or is there
+some other difference.  On the gpu side of this, they are both closely
+related (ie. the same "sub-generation" of a6xx, same gmu fw, etc)..
+I'm less sure about the other parts (icc, rpmh, etc)
 
-diff --git a/drivers/gpu/drm/exynos/exynos_drm_dsi.c b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-index e39fac889edc..dfda2b259c44 100644
---- a/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-+++ b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
-@@ -1529,6 +1529,7 @@ static const struct drm_encoder_helper_funcs exynos_dsi_encoder_helper_funcs = {
- 
- MODULE_DEVICE_TABLE(of, exynos_dsi_of_match);
- 
-+static const struct component_ops exynos_dsi_component_ops;
- static int exynos_dsi_host_attach(struct mipi_dsi_host *host,
- 				  struct mipi_dsi_device *device)
- {
-@@ -1536,6 +1537,7 @@ static int exynos_dsi_host_attach(struct mipi_dsi_host *host,
- 	struct drm_encoder *encoder = &dsi->encoder;
- 	struct drm_device *drm = encoder->dev;
- 	struct drm_bridge *out_bridge;
-+	struct device *dev = host->dev;
- 
- 	out_bridge  = of_drm_find_bridge(device->dev.of_node);
- 	if (out_bridge) {
-@@ -1585,7 +1587,7 @@ static int exynos_dsi_host_attach(struct mipi_dsi_host *host,
- 	if (drm->mode_config.poll_enabled)
- 		drm_kms_helper_hotplug_event(drm);
- 
--	return 0;
-+	return component_add(dev, &exynos_dsi_component_ops);
- }
- 
- static int exynos_dsi_host_detach(struct mipi_dsi_host *host,
-@@ -1593,6 +1595,9 @@ static int exynos_dsi_host_detach(struct mipi_dsi_host *host,
- {
- 	struct exynos_dsi *dsi = host_to_dsi(host);
- 	struct drm_device *drm = dsi->encoder.dev;
-+	struct device *dev = host->dev;
-+
-+	component_del(dev, &exynos_dsi_component_ops);
- 
- 	if (dsi->panel) {
- 		mutex_lock(&drm->mode_config.mutex);
-@@ -1716,7 +1721,7 @@ static int exynos_dsi_bind(struct device *dev, struct device *master,
- 		of_node_put(in_bridge_node);
- 	}
- 
--	return mipi_dsi_host_register(&dsi->dsi_host);
-+	return 0;
- }
- 
- static void exynos_dsi_unbind(struct device *dev, struct device *master,
-@@ -1726,8 +1731,6 @@ static void exynos_dsi_unbind(struct device *dev, struct device *master,
- 	struct drm_encoder *encoder = &dsi->encoder;
- 
- 	exynos_dsi_disable(encoder);
--
--	mipi_dsi_host_unregister(&dsi->dsi_host);
- }
- 
- static const struct component_ops exynos_dsi_component_ops = {
-@@ -1821,7 +1824,7 @@ static int exynos_dsi_probe(struct platform_device *pdev)
- 
- 	pm_runtime_enable(dev);
- 
--	ret = component_add(dev, &exynos_dsi_component_ops);
-+	ret = mipi_dsi_host_register(&dsi->dsi_host);
- 	if (ret)
- 		goto err_disable_runtime;
- 
-@@ -1835,10 +1838,12 @@ static int exynos_dsi_probe(struct platform_device *pdev)
- 
- static int exynos_dsi_remove(struct platform_device *pdev)
- {
-+	struct exynos_dsi *dsi = platform_get_drvdata(pdev);
-+
-+	mipi_dsi_host_unregister(&dsi->dsi_host);
-+
- 	pm_runtime_disable(&pdev->dev);
- 
--	component_del(&pdev->dev, &exynos_dsi_component_ops);
--
- 	return 0;
- }
- 
--- 
-2.31.1
+BR,
+-R
 
+> So the problem doesn't seem to be Rob's change, it's just that prior to
+> it the chance to hitting it is way lower. Question is still what it is
+> that we're triggering.
+>
+> Regards,
+> Bjorn
