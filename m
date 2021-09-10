@@ -2,105 +2,139 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 161EC4066AA
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Sep 2021 07:20:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 462F24067AC
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 10 Sep 2021 09:30:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230286AbhIJFVa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 10 Sep 2021 01:21:30 -0400
-Received: from mail.kernel.org ([198.145.29.99]:42246 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230037AbhIJFV3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 10 Sep 2021 01:21:29 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 52C2B61051;
-        Fri, 10 Sep 2021 05:20:17 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631251219;
-        bh=FuY8GwM3s/D3E8hKfy4XmEywqcKGkGW5boPlme8HgLk=;
-        h=References:From:To:Cc:Subject:Date:In-reply-to:From;
-        b=WyOKtj4Dv978O9862QIRpX5gXUXtg1SYfuRf/TNYcefJhXPCatW02kCgwK7JlADh7
-         KELPnIB5qbGHD9x+3l5UDiYfdx4SXvknVY+6KPd3gY6vpvbsoQS8uQVyybZ9p2wVK6
-         /nzF70LrEKgFcrSsMtDg1hOWehKFmAgMwC0HEdn26ldWvvt0eVsDM26b+lHUVWGk1a
-         wbnILPqNNpbnwbSaFHWwNwgNNPrihDqnNoLhbdXx7mIuvAghN5EhduiyJI/BG69/IG
-         oogXZi9CXapFMUn9fA3ILwdmueMbgAv49/8PeW4lLsj5sovfboddj8b6stZY/NjHKq
-         jTkCz/DquhZTQ==
-References: <20210909083120.15350-1-jackp@codeaurora.org>
- <87fsueb0ko.fsf@kernel.org>
- <20210909170236.GA20111@jackp-linux.qualcomm.com>
-User-agent: mu4e 1.6.5; emacs 27.2
-From:   Felipe Balbi <balbi@kernel.org>
-To:     Jack Pham <jackp@codeaurora.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        Wesley Cheng <wcheng@codeaurora.org>,
-        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH] usb: dwc3: gadget: Skip resizing EP's TX FIFO if
- already resized
-Date:   Fri, 10 Sep 2021 08:17:51 +0300
-In-reply-to: <20210909170236.GA20111@jackp-linux.qualcomm.com>
-Message-ID: <8735qdatwx.fsf@kernel.org>
-MIME-Version: 1.0
-Content-Type: text/plain
+        id S231432AbhIJHbR convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 10 Sep 2021 03:31:17 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:58657 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231364AbhIJHbQ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 10 Sep 2021 03:31:16 -0400
+Received: from smtpclient.apple (p5b3d2185.dip0.t-ipconnect.de [91.61.33.133])
+        by mail.holtmann.org (Postfix) with ESMTPSA id EAB79CED3D;
+        Fri, 10 Sep 2021 09:30:03 +0200 (CEST)
+Content-Type: text/plain;
+        charset=us-ascii
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: Re: [PATCH v8] Bluetooth: btusb: Add support using different nvm for
+ variant WCN6855 controller
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <1630641758-22281-1-git-send-email-zijuhu@codeaurora.org>
+Date:   Fri, 10 Sep 2021 09:30:03 +0200
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
+        c-hbandi@codeaurora.org, Hemantg <hemantg@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rocky Liao <rjliao@codeaurora.org>, tjiang@codeaurora.org
+Content-Transfer-Encoding: 8BIT
+Message-Id: <1A6C7105-5BA3-44C4-9F94-BB71FBDBE8F5@holtmann.org>
+References: <1630641758-22281-1-git-send-email-zijuhu@codeaurora.org>
+To:     Zijun Hu <zijuhu@codeaurora.org>
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Zijun,
 
-Hi Jack,
+> the RF perfermance of wcn6855 soc chip from different foundries will be
+> difference, so we should use different nvm to configure them.
+> 
+> Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
+> ---
+> drivers/bluetooth/btusb.c | 50 +++++++++++++++++++++++++++++++++++------------
+> 1 file changed, 37 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+> index 928cbfa4c42d..0f5d2222d624 100644
+> --- a/drivers/bluetooth/btusb.c
+> +++ b/drivers/bluetooth/btusb.c
+> @@ -3161,6 +3161,9 @@ static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
+> #define QCA_DFU_TIMEOUT		3000
+> #define QCA_FLAG_MULTI_NVM      0x80
+> 
+> +#define WCN6855_2_0_RAM_VERSION_GF 0x400c1200
+> +#define WCN6855_2_1_RAM_VERSION_GF 0x400c1211
+> +
+> struct qca_version {
+> 	__le32	rom_version;
+> 	__le32	patch_version;
+> @@ -3192,6 +3195,7 @@ static const struct qca_device_info qca_devices_table[] = {
+> 	{ 0x00000302, 28, 4, 16 }, /* Rome 3.2 */
+> 	{ 0x00130100, 40, 4, 16 }, /* WCN6855 1.0 */
+> 	{ 0x00130200, 40, 4, 16 }, /* WCN6855 2.0 */
+> +	{ 0x00130201, 40, 4, 16 }, /* WCN6855 2.1 */
+> };
+> 
+> static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 request,
+> @@ -3346,6 +3350,31 @@ static int btusb_setup_qca_load_rampatch(struct hci_dev *hdev,
+> 	return err;
+> }
+> 
+> +static void btusb_generate_qca_nvm_name(char *fwname,
+> +					size_t max_size,
+> +					struct qca_version *ver,
+> +					char *variant)
+> +{
+> +	char *sep = (strlen(variant) == 0) ? "" : "_";
+> +	u16 board_id = le16_to_cpu(ver->board_id);
+> +	u32 rom_version = le32_to_cpu(ver->rom_version);
+> +
+> +	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
+> +		/* if boardid equal 0, use default nvm without suffix */
+> +		if (board_id == 0x0) {
+> +			snprintf(fwname, max_size, "qca/nvm_usb_%08x%s%s.bin",
+> +				rom_version, sep, variant);
+> +		} else {
+> +			snprintf(fwname, max_size, "qca/nvm_usb_%08x%s%s_%04x.bin",
+> +				rom_version, sep, variant, board_id);
+> +		}
+> +	} else {
+> +		snprintf(fwname, max_size, "qca/nvm_usb_%08x.bin",
+> +			rom_version);
+> +	}
+> +
+> +}
+> +
+> static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
+> 				    struct qca_version *ver,
+> 				    const struct qca_device_info *info)
+> @@ -3354,19 +3383,14 @@ static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
+> 	char fwname[64];
+> 	int err;
+> 
+> -	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
+> -		/* if boardid equal 0, use default nvm without surfix */
+> -		if (le16_to_cpu(ver->board_id) == 0x0) {
+> -			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
+> -				 le32_to_cpu(ver->rom_version));
+> -		} else {
+> -			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_%04x.bin",
+> -				le32_to_cpu(ver->rom_version),
+> -				le16_to_cpu(ver->board_id));
+> -		}
+> -	} else {
+> -		snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
+> -			 le32_to_cpu(ver->rom_version));
+> +	switch (ver->ram_version) {
+> +	case WCN6855_2_0_RAM_VERSION_GF:
+> +	case WCN6855_2_1_RAM_VERSION_GF:
+> +			btusb_generate_qca_nvm_name(fwname, sizeof(fwname), ver, "gf");
+> +		break;
+> +	default:
+> +			btusb_generate_qca_nvm_name(fwname, sizeof(fwname), ver, "");
+> +		break;
 
-Jack Pham <jackp@codeaurora.org> writes:
->> > diff --git a/drivers/usb/dwc3/gadget.c b/drivers/usb/dwc3/gadget.c
->> > index 804b50548163..c647c76d7361 100644
->> > --- a/drivers/usb/dwc3/gadget.c
->> > +++ b/drivers/usb/dwc3/gadget.c
->> > @@ -747,6 +747,10 @@ static int dwc3_gadget_resize_tx_fifos(struct dwc3_ep *dep)
->> >  	if (!usb_endpoint_dir_in(dep->endpoint.desc) || dep->number <= 1)
->> >  		return 0;
->> >  
->> > +	/* bail if already resized */
->> > +	if (dwc3_readl(dwc->regs, DWC3_GTXFIFOSIZ(dep->number >> 1)))
->> > +		return 0;
->> > +
->> 
->> heh, not to say "I told you so", but...
->> 
->> That being said, your test is not very good. The whole idea for resizing
->> the FIFOs is that in some applications we only use e.g. 2 endpoints and
->> there is considerable FIFO space left unused.
->> 
->> The goal is to use that unused FIFO space to squeeze more throughput out
->> of the pipe, since it amortizes SW latency.
->> 
->> This patch is essentially the same as reverting the original commit :-)
->
-> No, it's not quite the same as nullifying the resizing algorithm.  This
-> patch is predicated on a key part of the resizing algorithm where
-> dwc3_gadget_clear_tx_fifos() occurs upon receiving Set_Configuration in
-> ep0.c.  Which means that each new connection starts off with a blank
-> slate with all the GTXFIFOSIZ(n) registers cleared.  Then each EP gets
-> resized one at a time when usb_ep_enable() is called.
->
-> The problem this patch is fixing is avoiding *re-resizing*, the idea
-> being that if an EP was already resized once during a session (from
-> Set Configuration until the next reset or disconnect), then 
-> it should be good to go even if it gets disabled and re-enabled again.
+I mentioned this multiple times now, the indentation is wrong here.
 
-that's not a safe assumption, though. What happens in cases where
-Configuration 1 is wildly different from Configuration 2? Say Config 1
-is a mass storage device and Config 2 is a collection of several CDC
-interfaces?
+Regards
 
-> Since we lack any boolean state variable in struct dwc3_ep reflecting
-> whether it had already been resized, re-reading the GTXFIFOSIZ register
+Marcel
 
-it might be a better idea to introduce such a flag and make the
-intention clear. But in any case, I still think the assumption you're
-making is not very good.
-
-> is the next best equivalent.  Note also that this check occurs after
-> the if (!dwc->do_fifo_resize) check so this is applicable only if the
-> entire "tx-fifo-resize" mechanism is enabled.
-
-Right, that's fine :-)
-
--- 
-balbi
