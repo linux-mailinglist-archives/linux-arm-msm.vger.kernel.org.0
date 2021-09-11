@@ -2,111 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CBD4940783B
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Sep 2021 15:27:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1E0C8407996
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Sep 2021 18:35:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238108AbhIKN2X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Sep 2021 09:28:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49268 "EHLO
+        id S230347AbhIKQgi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Sep 2021 12:36:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34996 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237075AbhIKN2U (ORCPT
+        with ESMTP id S229487AbhIKQgh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Sep 2021 09:28:20 -0400
-Received: from m-r1.th.seeweb.it (m-r1.th.seeweb.it [IPv6:2001:4b7a:2000:18::170])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56917C0613B8
-        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Sep 2021 06:19:33 -0700 (PDT)
-Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+        Sat, 11 Sep 2021 12:36:37 -0400
+Received: from relay04.th.seeweb.it (relay04.th.seeweb.it [IPv6:2001:4b7a:2000:18::165])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 521E4C061574
+        for <linux-arm-msm@vger.kernel.org>; Sat, 11 Sep 2021 09:35:23 -0700 (PDT)
+Received: from IcarusMOD.eternityproject.eu (unknown [2.237.20.237])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
          key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 1218E1F50A;
-        Sat, 11 Sep 2021 15:19:31 +0200 (CEST)
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: [PATCH v3 2/2] clk: qcom: gcc-sdm660: Remove transient global "xo" clock
-Date:   Sat, 11 Sep 2021 15:19:21 +0200
-Message-Id: <20210911131922.387964-3-marijn.suijten@somainline.org>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20210911131922.387964-1-marijn.suijten@somainline.org>
-References: <20210911131922.387964-1-marijn.suijten@somainline.org>
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id A1A1A1F500;
+        Sat, 11 Sep 2021 18:35:21 +0200 (CEST)
+Subject: Re: [PATCH 2/2] drm/msm/dpu: Fix timeout issues on command mode
+ panels
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch, dmitry.baryshkov@linaro.org,
+        abhinavk@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
+        martin.botka@somainline.org, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org, paul.bouchara@somainline.org
+References: <20210901174347.1012129-1-angelogioacchino.delregno@somainline.org>
+ <20210901174347.1012129-2-angelogioacchino.delregno@somainline.org>
+ <20210910214820.h6in2ffl5pwu7xtv@Marijn-Arch-PC.localdomain>
+From:   AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Message-ID: <1493d3a8-e4a6-d3f9-be4d-87bddd593997@somainline.org>
+Date:   Sat, 11 Sep 2021 18:35:21 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.9.0
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210910214820.h6in2ffl5pwu7xtv@Marijn-Arch-PC.localdomain>
+Content-Type: text/plain; charset=iso-8859-15; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The DSI PHY/PLL was relying on a global "xo" clock to be found, but the
-real clock is named "xo_board" in the DT.  The standard nowadays is to
-never use global clock names anymore but require the firmware (DT) to
-provide every clock binding explicitly with .fw_name.  The DSI PLLs have
-since been converted to this mechanism (specifically 14nm for SDM660)
-and this transient clock can now be removed.
+Il 10/09/21 23:48, Marijn Suijten ha scritto:
+> Hi Angelo!
+> 
+> On 2021-09-01 19:43:47, AngeloGioacchino Del Regno wrote:
+>> In function dpu_encoder_phys_cmd_wait_for_commit_done we are always
+>> checking if the relative CTL is started by waiting for an interrupt
+>> to fire: it is fine to do that, but then sometimes we call this
+>> function while the CTL is up and has never been put down, but that
+>> interrupt gets raised only when the CTL gets a state change from
+>> 0 to 1 (disabled to enabled), so we're going to wait for something
+>> that will never happen on its own.
+>>
+>> Solving this while avoiding to restart the CTL is actually possible
+>> and can be done by just checking if it is already up and running
+>> when the wait_for_commit_done function is called: in this case, so,
+>> if the CTL was already running, we can say that the commit is done
+>> if the command transmission is complete (in other terms, if the
+>> interface has been flushed).
+>>
+>> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+>> ---
+>>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 3 +++
+>>   1 file changed, 3 insertions(+)
+>>
+>> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+>> index aa01698d6b25..b5b1b555ac4e 100644
+>> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+>> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+>> @@ -682,6 +682,9 @@ static int dpu_encoder_phys_cmd_wait_for_commit_done(
+>>   	if (!dpu_encoder_phys_cmd_is_master(phys_enc))
+>>   		return 0;
+>>   
+>> +	if (phys_enc->hw_ctl->ops.is_started)
+>> +		return dpu_encoder_phys_cmd_wait_for_tx_complete(phys_enc);
+> 
+> In the previous commit you introduced is_started to the ops struct as
+> function pointer, and you probably intend to call it here instead of
+> just checking whether it might be NULL.
+> 
+> As far as I remember this was also the reason for previously mentioning
+> that it was faulty and required a v2 in:
+> https://lore.kernel.org/linux-arm-msm/bdc67afc-3736-5497-c43f-5165c55e0354@somainline.org/
+> 
+> Thanks!
+> 
+> - Marijn
+> 
 
-This issue was originally discovered in:
-https://lore.kernel.org/linux-arm-msm/386db1a6-a1cd-3c7d-a88e-dc83f8a1be96@somainline.org/
-and prevented the removal of "xo" at that time.
+Ugh. I've pulled this from the wrong tree.
+Sending a v2 asap.
 
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-Acked-by: Stephen Boyd <sboyd@kernel.org>
----
- drivers/clk/qcom/gcc-sdm660.c | 14 --------------
- 1 file changed, 14 deletions(-)
-
-diff --git a/drivers/clk/qcom/gcc-sdm660.c b/drivers/clk/qcom/gcc-sdm660.c
-index 7fb5adf7fa01..429d12193146 100644
---- a/drivers/clk/qcom/gcc-sdm660.c
-+++ b/drivers/clk/qcom/gcc-sdm660.c
-@@ -37,19 +37,6 @@ enum {
- 	P_GPLL1_EARLY_DIV,
- };
- 
--static struct clk_fixed_factor xo = {
--	.mult = 1,
--	.div = 1,
--	.hw.init = &(struct clk_init_data){
--		.name = "xo",
--		.parent_data = &(const struct clk_parent_data) {
--			.fw_name = "xo"
--		},
--		.num_parents = 1,
--		.ops = &clk_fixed_factor_ops,
--	},
--};
--
- static struct clk_alpha_pll gpll0_early = {
- 	.offset = 0x0,
- 	.regs = clk_alpha_pll_regs[CLK_ALPHA_PLL_TYPE_DEFAULT],
-@@ -2280,7 +2267,6 @@ static struct gdsc pcie_0_gdsc = {
- };
- 
- static struct clk_hw *gcc_sdm660_hws[] = {
--	&xo.hw,
- 	&gpll0_early_div.hw,
- 	&gpll1_early_div.hw,
- };
--- 
-2.33.0
+>> +
+>>   	return _dpu_encoder_phys_cmd_wait_for_ctl_start(phys_enc);
+>>   }
+>>   
+>> -- 
+>> 2.32.0
+>>
 
