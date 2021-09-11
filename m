@@ -2,27 +2,27 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 63A584076AA
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Sep 2021 15:11:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E22BC40771A
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Sep 2021 15:14:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230249AbhIKNNG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Sep 2021 09:13:06 -0400
-Received: from mail.kernel.org ([198.145.29.99]:36614 "EHLO mail.kernel.org"
+        id S236841AbhIKNPF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Sep 2021 09:15:05 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37788 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235829AbhIKNNF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Sep 2021 09:13:05 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 1E181611C3;
-        Sat, 11 Sep 2021 13:11:52 +0000 (UTC)
+        id S236454AbhIKNOC (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 11 Sep 2021 09:14:02 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id E6BAA61209;
+        Sat, 11 Sep 2021 13:12:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631365913;
-        bh=GnPecZJGuwV53OXbZHobSnBO4x7RYDRMd7dyX5YOZV0=;
+        s=k20201202; t=1631365956;
+        bh=nABzhFuLEadkNeNTTZiYTbpVVbm6lDcCKEwHvSmJUb8=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=bQ4ZdndySFIFNbQ+vyrO8Bc+meX03ziW2aBHviGKxhpejOsQ30QtJArJAJ0H1cHue
-         1GAwi+9R3LzzZ8j93alXWm0prJv0Tk1FF68F1YzvCCuIHP9kTqgTvKSyy8aPRAK/IY
-         xIPjalpX6sLbPyGopqaiKwkT5NSwihLwo6Wu6cdkDpxMcsuaIX+dBqOPVVPbxSi1K2
-         /sVRxUkdbTizXClvviJNv9rI2GEFGg2tuhdaBJQRh+6/KLFnZE3O+lJhqGQerxTYZh
-         ij4J+tYLSeIC7LHN4BoSn/Don3W+WebeHqWkGMXNxvxr3IRtYkZJP7Ds0LGcWkP+6n
-         b0gExK0JClriw==
+        b=YZnvoXV8mAhP2e/FiWto83L5F9PVX+mKRs9sg1T7SnboGq7Hr8Te1yFs99O1OFeW9
+         izeq4k5DpQoefgZ1dRVhqr0pb0R+OSDFkYOFxGamKY95bPdktIzXMVfYOQbCSa3lA1
+         MXA2qA+aCKVCpj8Y4XUm+ljNmPxDiKTX8Ggcx6m3xGs3TQXEk8ZRBi9YnrYFZADpmt
+         FQut0IIFsfMnFyg1DQJQ5QR+5G6CCIAbFUWDtqJMt29W9fuCHBtnBX0ISnT8r4aLCk
+         3seXgQHuwMxKskx5/1pqO87EPZnjKSSv5mHvMRgQ2/VBmYNFC3WMAs8fsubVCgMunc
+         wR8JOwwPpwnEQ==
 From:   Sasha Levin <sashal@kernel.org>
 To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -31,12 +31,12 @@ Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Loic Poulain <loic.poulain@linaro.org>,
         Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-remoteproc@vger.kernel.org
-Subject: [PATCH AUTOSEL 5.14 02/32] remoteproc: qcom: wcnss: Fix race with iris probe
-Date:   Sat, 11 Sep 2021 09:11:19 -0400
-Message-Id: <20210911131149.284397-2-sashal@kernel.org>
+Subject: [PATCH AUTOSEL 5.13 02/29] remoteproc: qcom: wcnss: Fix race with iris probe
+Date:   Sat, 11 Sep 2021 09:12:06 -0400
+Message-Id: <20210911131233.284800-2-sashal@kernel.org>
 X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210911131149.284397-1-sashal@kernel.org>
-References: <20210911131149.284397-1-sashal@kernel.org>
+In-Reply-To: <20210911131233.284800-1-sashal@kernel.org>
+References: <20210911131233.284800-1-sashal@kernel.org>
 MIME-Version: 1.0
 X-stable: review
 X-Patchwork-Hint: Ignore
@@ -82,7 +82,7 @@ Signed-off-by: Sasha Levin <sashal@kernel.org>
  3 files changed, 89 insertions(+), 84 deletions(-)
 
 diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
-index f1cbc6b2edbb..ebadc6c08e11 100644
+index 5f3455aa7e0e..387b90cc18d2 100644
 --- a/drivers/remoteproc/qcom_wcnss.c
 +++ b/drivers/remoteproc/qcom_wcnss.c
 @@ -142,18 +142,6 @@ static const struct wcnss_data pronto_v2_data = {
@@ -134,9 +134,9 @@ index f1cbc6b2edbb..ebadc6c08e11 100644
 -	of_platform_depopulate(&pdev->dev);
 +	qcom_iris_remove(wcnss->iris);
  
+ 	qcom_smem_state_put(wcnss->state);
  	rproc_del(wcnss->rproc);
- 
-@@ -686,28 +682,7 @@ static struct platform_driver wcnss_driver = {
+@@ -687,28 +683,7 @@ static struct platform_driver wcnss_driver = {
  	},
  };
  
