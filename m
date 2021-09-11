@@ -2,347 +2,360 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 77B7A40767C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Sep 2021 14:14:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 63A584076AA
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Sep 2021 15:11:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235781AbhIKMPT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Sep 2021 08:15:19 -0400
-Received: from relay06.th.seeweb.it ([5.144.164.167]:60085 "EHLO
-        relay06.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235824AbhIKMPP (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Sep 2021 08:15:15 -0400
-Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id D5BE13F46F;
-        Sat, 11 Sep 2021 14:14:01 +0200 (CEST)
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 8/8] clk: qcom: mmcc-msm8998: Remove unnecessary fallbacks to global clocks
-Date:   Sat, 11 Sep 2021 14:13:40 +0200
-Message-Id: <20210911121340.261920-9-marijn.suijten@somainline.org>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20210911121340.261920-1-marijn.suijten@somainline.org>
-References: <20210911121340.261920-1-marijn.suijten@somainline.org>
+        id S230249AbhIKNNG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Sep 2021 09:13:06 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36614 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235829AbhIKNNF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sat, 11 Sep 2021 09:13:05 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 1E181611C3;
+        Sat, 11 Sep 2021 13:11:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1631365913;
+        bh=GnPecZJGuwV53OXbZHobSnBO4x7RYDRMd7dyX5YOZV0=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=bQ4ZdndySFIFNbQ+vyrO8Bc+meX03ziW2aBHviGKxhpejOsQ30QtJArJAJ0H1cHue
+         1GAwi+9R3LzzZ8j93alXWm0prJv0Tk1FF68F1YzvCCuIHP9kTqgTvKSyy8aPRAK/IY
+         xIPjalpX6sLbPyGopqaiKwkT5NSwihLwo6Wu6cdkDpxMcsuaIX+dBqOPVVPbxSi1K2
+         /sVRxUkdbTizXClvviJNv9rI2GEFGg2tuhdaBJQRh+6/KLFnZE3O+lJhqGQerxTYZh
+         ij4J+tYLSeIC7LHN4BoSn/Don3W+WebeHqWkGMXNxvxr3IRtYkZJP7Ds0LGcWkP+6n
+         b0gExK0JClriw==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Anibal Limon <anibal.limon@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        Sasha Levin <sashal@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.14 02/32] remoteproc: qcom: wcnss: Fix race with iris probe
+Date:   Sat, 11 Sep 2021 09:11:19 -0400
+Message-Id: <20210911131149.284397-2-sashal@kernel.org>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <20210911131149.284397-1-sashal@kernel.org>
+References: <20210911131149.284397-1-sashal@kernel.org>
 MIME-Version: 1.0
+X-stable: review
+X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-A previous patch removes the "xo" clock from the global namespace making
-it impossible to acquire by that ".name".  The device-tree for msm8998
-currently does not include an mmcc node but the dt-bindings for this
-compatible already require all these clocks, and the patch introducing
-this node [1] also includes them.
+From: Bjorn Andersson <bjorn.andersson@linaro.org>
 
-[1]: https://patchwork.kernel.org/project/linux-arm-msm/patch/20210901183123.1087392-1-angelogioacchino.delregno@somainline.org/
+[ Upstream commit 1fcef985c8bdd542c43da0d87bd9d51980c3859b ]
 
-Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+The remoteproc driver is split between the responsibilities of getting
+the SoC-internal ARM core up and running and the external RF (aka
+"Iris") part configured.
+
+In order to satisfy the regulator framework's need of a struct device *
+to look up supplies this was implemented as two different drivers, using
+of_platform_populate() in the remoteproc part to probe the iris part.
+
+Unfortunately it's possible that the iris part probe defers on yet not
+available regulators and an attempt to start the remoteproc will have to
+be rejected, until this has been resolved. But there's no useful
+mechanism of knowing when this would be.
+
+Instead replace the of_platform_populate() and the iris probe with a
+function that rolls its own struct device, with the relevant of_node
+associated that is enough to acquire regulators and clocks specified in
+the DT node and that may propagate the EPROBE_DEFER back to the wcnss
+device's probe.
+
+Acked-by: Mathieu Poirier <mathieu.poirier@linaro.org>
+Reported-by: Anibal Limon <anibal.limon@linaro.org>
+Reported-by: Loic Poulain <loic.poulain@linaro.org>
+Tested-by: Anibal Limon <anibal.limon@linaro.org>
+Link: https://lore.kernel.org/r/20210312002251.3273013-1-bjorn.andersson@linaro.org
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
 ---
- drivers/clk/qcom/mmcc-msm8998.c | 105 +++++++++++++++-----------------
- 1 file changed, 48 insertions(+), 57 deletions(-)
+ drivers/remoteproc/qcom_wcnss.c      |  49 +++--------
+ drivers/remoteproc/qcom_wcnss.h      |   4 +-
+ drivers/remoteproc/qcom_wcnss_iris.c | 120 +++++++++++++++++----------
+ 3 files changed, 89 insertions(+), 84 deletions(-)
 
-diff --git a/drivers/clk/qcom/mmcc-msm8998.c b/drivers/clk/qcom/mmcc-msm8998.c
-index a5ab6abe62bf..c421b1291651 100644
---- a/drivers/clk/qcom/mmcc-msm8998.c
-+++ b/drivers/clk/qcom/mmcc-msm8998.c
-@@ -53,8 +53,7 @@ static struct clk_fixed_factor gpll0_div = {
- 	.hw.init = &(struct clk_init_data){
- 		.name = "mmss_gpll0_div",
- 		.parent_data = &(const struct clk_parent_data){
--			.fw_name = "gpll0",
--			.name = "gpll0"
-+			.fw_name = "gpll0"
- 		},
- 		.num_parents = 1,
- 		.ops = &clk_fixed_factor_ops,
-@@ -78,8 +77,7 @@ static struct clk_alpha_pll mmpll0 = {
- 		.hw.init = &(struct clk_init_data){
- 			.name = "mmpll0",
- 			.parent_data = &(const struct clk_parent_data){
--				.fw_name = "xo",
--				.name = "xo"
-+				.fw_name = "xo"
- 			},
- 			.num_parents = 1,
- 			.ops = &clk_alpha_pll_fixed_fabia_ops,
-@@ -111,8 +109,7 @@ static struct clk_alpha_pll mmpll1 = {
- 		.hw.init = &(struct clk_init_data){
- 			.name = "mmpll1",
- 			.parent_data = &(const struct clk_parent_data){
--				.fw_name = "xo",
--				.name = "xo"
-+				.fw_name = "xo"
- 			},
- 			.num_parents = 1,
- 			.ops = &clk_alpha_pll_fixed_fabia_ops,
-@@ -141,8 +138,7 @@ static struct clk_alpha_pll mmpll3 = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "mmpll3",
- 		.parent_data = &(const struct clk_parent_data){
--			.fw_name = "xo",
--			.name = "xo"
-+			.fw_name = "xo"
- 		},
- 		.num_parents = 1,
- 		.ops = &clk_alpha_pll_fixed_fabia_ops,
-@@ -170,8 +166,7 @@ static struct clk_alpha_pll mmpll4 = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "mmpll4",
- 		.parent_data = &(const struct clk_parent_data){
--			.fw_name = "xo",
--			.name = "xo"
-+			.fw_name = "xo"
- 		},
- 		.num_parents = 1,
- 		.ops = &clk_alpha_pll_fixed_fabia_ops,
-@@ -199,8 +194,7 @@ static struct clk_alpha_pll mmpll5 = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "mmpll5",
- 		.parent_data = &(const struct clk_parent_data){
--			.fw_name = "xo",
--			.name = "xo"
-+			.fw_name = "xo"
- 		},
- 		.num_parents = 1,
- 		.ops = &clk_alpha_pll_fixed_fabia_ops,
-@@ -228,8 +222,7 @@ static struct clk_alpha_pll mmpll6 = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "mmpll6",
- 		.parent_data = &(const struct clk_parent_data){
--			.fw_name = "xo",
--			.name = "xo"
-+			.fw_name = "xo"
- 		},
- 		.num_parents = 1,
- 		.ops = &clk_alpha_pll_fixed_fabia_ops,
-@@ -257,8 +250,7 @@ static struct clk_alpha_pll mmpll7 = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "mmpll7",
- 		.parent_data = &(const struct clk_parent_data){
--			.fw_name = "xo",
--			.name = "xo"
-+			.fw_name = "xo"
- 		},
- 		.num_parents = 1,
- 		.ops = &clk_alpha_pll_fixed_fabia_ops,
-@@ -286,8 +278,7 @@ static struct clk_alpha_pll mmpll10 = {
- 	.clkr.hw.init = &(struct clk_init_data){
- 		.name = "mmpll10",
- 		.parent_data = &(const struct clk_parent_data){
--			.fw_name = "xo",
--			.name = "xo"
-+			.fw_name = "xo"
- 		},
- 		.num_parents = 1,
- 		.ops = &clk_alpha_pll_fixed_fabia_ops,
-@@ -316,9 +307,9 @@ static const struct parent_map mmss_xo_hdmi_map[] = {
+diff --git a/drivers/remoteproc/qcom_wcnss.c b/drivers/remoteproc/qcom_wcnss.c
+index f1cbc6b2edbb..ebadc6c08e11 100644
+--- a/drivers/remoteproc/qcom_wcnss.c
++++ b/drivers/remoteproc/qcom_wcnss.c
+@@ -142,18 +142,6 @@ static const struct wcnss_data pronto_v2_data = {
+ 	.num_vregs = 1,
  };
  
- static const struct clk_parent_data mmss_xo_hdmi[] = {
--	{ .fw_name = "xo", .name = "xo" },
--	{ .fw_name = "hdmipll", .name = "hdmipll" },
--	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
-+	{ .fw_name = "xo" },
-+	{ .fw_name = "hdmipll" },
-+	{ .fw_name = "core_bi_pll_test_se" },
+-void qcom_wcnss_assign_iris(struct qcom_wcnss *wcnss,
+-			    struct qcom_iris *iris,
+-			    bool use_48mhz_xo)
+-{
+-	mutex_lock(&wcnss->iris_lock);
+-
+-	wcnss->iris = iris;
+-	wcnss->use_48mhz_xo = use_48mhz_xo;
+-
+-	mutex_unlock(&wcnss->iris_lock);
+-}
+-
+ static int wcnss_load(struct rproc *rproc, const struct firmware *fw)
+ {
+ 	struct qcom_wcnss *wcnss = (struct qcom_wcnss *)rproc->priv;
+@@ -639,12 +627,20 @@ static int wcnss_probe(struct platform_device *pdev)
+ 		goto detach_pds;
+ 	}
+ 
++	wcnss->iris = qcom_iris_probe(&pdev->dev, &wcnss->use_48mhz_xo);
++	if (IS_ERR(wcnss->iris)) {
++		ret = PTR_ERR(wcnss->iris);
++		goto detach_pds;
++	}
++
+ 	ret = rproc_add(rproc);
+ 	if (ret)
+-		goto detach_pds;
++		goto remove_iris;
+ 
+-	return of_platform_populate(pdev->dev.of_node, NULL, NULL, &pdev->dev);
++	return 0;
+ 
++remove_iris:
++	qcom_iris_remove(wcnss->iris);
+ detach_pds:
+ 	wcnss_release_pds(wcnss);
+ free_rproc:
+@@ -657,7 +653,7 @@ static int wcnss_remove(struct platform_device *pdev)
+ {
+ 	struct qcom_wcnss *wcnss = platform_get_drvdata(pdev);
+ 
+-	of_platform_depopulate(&pdev->dev);
++	qcom_iris_remove(wcnss->iris);
+ 
+ 	rproc_del(wcnss->rproc);
+ 
+@@ -686,28 +682,7 @@ static struct platform_driver wcnss_driver = {
+ 	},
  };
  
- static const struct parent_map mmss_xo_dsi0pll_dsi1pll_map[] = {
-@@ -329,10 +320,10 @@ static const struct parent_map mmss_xo_dsi0pll_dsi1pll_map[] = {
+-static int __init wcnss_init(void)
+-{
+-	int ret;
+-
+-	ret = platform_driver_register(&wcnss_driver);
+-	if (ret)
+-		return ret;
+-
+-	ret = platform_driver_register(&qcom_iris_driver);
+-	if (ret)
+-		platform_driver_unregister(&wcnss_driver);
+-
+-	return ret;
+-}
+-module_init(wcnss_init);
+-
+-static void __exit wcnss_exit(void)
+-{
+-	platform_driver_unregister(&qcom_iris_driver);
+-	platform_driver_unregister(&wcnss_driver);
+-}
+-module_exit(wcnss_exit);
++module_platform_driver(wcnss_driver);
+ 
+ MODULE_DESCRIPTION("Qualcomm Peripheral Image Loader for Wireless Subsystem");
+ MODULE_LICENSE("GPL v2");
+diff --git a/drivers/remoteproc/qcom_wcnss.h b/drivers/remoteproc/qcom_wcnss.h
+index 62c8682d0a92..6d01ee6afa7f 100644
+--- a/drivers/remoteproc/qcom_wcnss.h
++++ b/drivers/remoteproc/qcom_wcnss.h
+@@ -17,9 +17,9 @@ struct wcnss_vreg_info {
+ 	bool super_turbo;
  };
  
- static const struct clk_parent_data mmss_xo_dsi0pll_dsi1pll[] = {
--	{ .fw_name = "xo", .name = "xo" },
--	{ .fw_name = "dsi0dsi", .name = "dsi0dsi" },
--	{ .fw_name = "dsi1dsi", .name = "dsi1dsi" },
--	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
-+	{ .fw_name = "xo" },
-+	{ .fw_name = "dsi0dsi" },
-+	{ .fw_name = "dsi1dsi" },
-+	{ .fw_name = "core_bi_pll_test_se" },
- };
++struct qcom_iris *qcom_iris_probe(struct device *parent, bool *use_48mhz_xo);
++void qcom_iris_remove(struct qcom_iris *iris);
+ int qcom_iris_enable(struct qcom_iris *iris);
+ void qcom_iris_disable(struct qcom_iris *iris);
  
- static const struct parent_map mmss_xo_dsibyte_map[] = {
-@@ -343,10 +334,10 @@ static const struct parent_map mmss_xo_dsibyte_map[] = {
- };
+-void qcom_wcnss_assign_iris(struct qcom_wcnss *wcnss, struct qcom_iris *iris, bool use_48mhz_xo);
+-
+ #endif
+diff --git a/drivers/remoteproc/qcom_wcnss_iris.c b/drivers/remoteproc/qcom_wcnss_iris.c
+index 169acd305ae3..09720ddddc85 100644
+--- a/drivers/remoteproc/qcom_wcnss_iris.c
++++ b/drivers/remoteproc/qcom_wcnss_iris.c
+@@ -17,7 +17,7 @@
+ #include "qcom_wcnss.h"
  
- static const struct clk_parent_data mmss_xo_dsibyte[] = {
--	{ .fw_name = "xo", .name = "xo" },
--	{ .fw_name = "dsi0byte", .name = "dsi0byte" },
--	{ .fw_name = "dsi1byte", .name = "dsi1byte" },
--	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
-+	{ .fw_name = "xo" },
-+	{ .fw_name = "dsi0byte" },
-+	{ .fw_name = "dsi1byte" },
-+	{ .fw_name = "core_bi_pll_test_se" },
- };
+ struct qcom_iris {
+-	struct device *dev;
++	struct device dev;
  
- static const struct parent_map mmss_xo_dp_map[] = {
-@@ -357,10 +348,10 @@ static const struct parent_map mmss_xo_dp_map[] = {
- };
+ 	struct clk *xo_clk;
  
- static const struct clk_parent_data mmss_xo_dp[] = {
--	{ .fw_name = "xo", .name = "xo" },
--	{ .fw_name = "dplink", .name = "dplink" },
--	{ .fw_name = "dpvco", .name = "dpvco" },
--	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
-+	{ .fw_name = "xo" },
-+	{ .fw_name = "dplink" },
-+	{ .fw_name = "dpvco" },
-+	{ .fw_name = "core_bi_pll_test_se" },
- };
+@@ -75,7 +75,7 @@ int qcom_iris_enable(struct qcom_iris *iris)
  
- static const struct parent_map mmss_xo_gpll0_gpll0_div_map[] = {
-@@ -371,10 +362,10 @@ static const struct parent_map mmss_xo_gpll0_gpll0_div_map[] = {
- };
+ 	ret = clk_prepare_enable(iris->xo_clk);
+ 	if (ret) {
+-		dev_err(iris->dev, "failed to enable xo clk\n");
++		dev_err(&iris->dev, "failed to enable xo clk\n");
+ 		goto disable_regulators;
+ 	}
  
- static const struct clk_parent_data mmss_xo_gpll0_gpll0_div[] = {
--	{ .fw_name = "xo", .name = "xo" },
--	{ .fw_name = "gpll0", .name = "gpll0" },
-+	{ .fw_name = "xo" },
-+	{ .fw_name = "gpll0" },
- 	{ .hw = &gpll0_div.hw },
--	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
-+	{ .fw_name = "core_bi_pll_test_se" },
- };
+@@ -93,43 +93,90 @@ void qcom_iris_disable(struct qcom_iris *iris)
+ 	regulator_bulk_disable(iris->num_vregs, iris->vregs);
+ }
  
- static const struct parent_map mmss_xo_mmpll0_gpll0_gpll0_div_map[] = {
-@@ -386,11 +377,11 @@ static const struct parent_map mmss_xo_mmpll0_gpll0_gpll0_div_map[] = {
- };
+-static int qcom_iris_probe(struct platform_device *pdev)
++static const struct of_device_id iris_of_match[] = {
++	{ .compatible = "qcom,wcn3620", .data = &wcn3620_data },
++	{ .compatible = "qcom,wcn3660", .data = &wcn3660_data },
++	{ .compatible = "qcom,wcn3660b", .data = &wcn3680_data },
++	{ .compatible = "qcom,wcn3680", .data = &wcn3680_data },
++	{}
++};
++
++static void qcom_iris_release(struct device *dev)
++{
++	struct qcom_iris *iris = container_of(dev, struct qcom_iris, dev);
++
++	of_node_put(iris->dev.of_node);
++	kfree(iris);
++}
++
++struct qcom_iris *qcom_iris_probe(struct device *parent, bool *use_48mhz_xo)
+ {
++	const struct of_device_id *match;
+ 	const struct iris_data *data;
+-	struct qcom_wcnss *wcnss;
++	struct device_node *of_node;
+ 	struct qcom_iris *iris;
+ 	int ret;
+ 	int i;
  
- static const struct clk_parent_data mmss_xo_mmpll0_gpll0_gpll0_div[] = {
--	{ .fw_name = "xo", .name = "xo" },
-+	{ .fw_name = "xo" },
- 	{ .hw = &mmpll0_out_even.clkr.hw },
--	{ .fw_name = "gpll0", .name = "gpll0" },
-+	{ .fw_name = "gpll0" },
- 	{ .hw = &gpll0_div.hw },
--	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
-+	{ .fw_name = "core_bi_pll_test_se" },
- };
+-	iris = devm_kzalloc(&pdev->dev, sizeof(struct qcom_iris), GFP_KERNEL);
+-	if (!iris)
+-		return -ENOMEM;
++	of_node = of_get_child_by_name(parent->of_node, "iris");
++	if (!of_node) {
++		dev_err(parent, "No child node \"iris\" found\n");
++		return ERR_PTR(-EINVAL);
++	}
++
++	iris = kzalloc(sizeof(*iris), GFP_KERNEL);
++	if (!iris) {
++		of_node_put(of_node);
++		return ERR_PTR(-ENOMEM);
++	}
++
++	device_initialize(&iris->dev);
++	iris->dev.parent = parent;
++	iris->dev.release = qcom_iris_release;
++	iris->dev.of_node = of_node;
++
++	dev_set_name(&iris->dev, "%s.iris", dev_name(parent));
++
++	ret = device_add(&iris->dev);
++	if (ret) {
++		put_device(&iris->dev);
++		return ERR_PTR(ret);
++	}
++
++	match = of_match_device(iris_of_match, &iris->dev);
++	if (!match) {
++		dev_err(&iris->dev, "no matching compatible for iris\n");
++		ret = -EINVAL;
++		goto err_device_del;
++	}
  
- static const struct parent_map mmss_xo_mmpll0_mmpll1_gpll0_gpll0_div_map[] = {
-@@ -403,12 +394,12 @@ static const struct parent_map mmss_xo_mmpll0_mmpll1_gpll0_gpll0_div_map[] = {
- };
+-	data = of_device_get_match_data(&pdev->dev);
+-	wcnss = dev_get_drvdata(pdev->dev.parent);
++	data = match->data;
  
- static const struct clk_parent_data mmss_xo_mmpll0_mmpll1_gpll0_gpll0_div[] = {
--	{ .fw_name = "xo", .name = "xo" },
-+	{ .fw_name = "xo" },
- 	{ .hw = &mmpll0_out_even.clkr.hw },
- 	{ .hw = &mmpll1_out_even.clkr.hw },
--	{ .fw_name = "gpll0", .name = "gpll0" },
-+	{ .fw_name = "gpll0" },
- 	{ .hw = &gpll0_div.hw },
--	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
-+	{ .fw_name = "core_bi_pll_test_se" },
- };
+-	iris->xo_clk = devm_clk_get(&pdev->dev, "xo");
++	iris->xo_clk = devm_clk_get(&iris->dev, "xo");
+ 	if (IS_ERR(iris->xo_clk)) {
+-		if (PTR_ERR(iris->xo_clk) != -EPROBE_DEFER)
+-			dev_err(&pdev->dev, "failed to acquire xo clk\n");
+-		return PTR_ERR(iris->xo_clk);
++		ret = PTR_ERR(iris->xo_clk);
++		if (ret != -EPROBE_DEFER)
++			dev_err(&iris->dev, "failed to acquire xo clk\n");
++		goto err_device_del;
+ 	}
  
- static const struct parent_map mmss_xo_mmpll0_mmpll5_gpll0_gpll0_div_map[] = {
-@@ -421,12 +412,12 @@ static const struct parent_map mmss_xo_mmpll0_mmpll5_gpll0_gpll0_div_map[] = {
- };
+ 	iris->num_vregs = data->num_vregs;
+-	iris->vregs = devm_kcalloc(&pdev->dev,
++	iris->vregs = devm_kcalloc(&iris->dev,
+ 				   iris->num_vregs,
+ 				   sizeof(struct regulator_bulk_data),
+ 				   GFP_KERNEL);
+-	if (!iris->vregs)
+-		return -ENOMEM;
++	if (!iris->vregs) {
++		ret = -ENOMEM;
++		goto err_device_del;
++	}
  
- static const struct clk_parent_data mmss_xo_mmpll0_mmpll5_gpll0_gpll0_div[] = {
--	{ .fw_name = "xo", .name = "xo" },
-+	{ .fw_name = "xo" },
- 	{ .hw = &mmpll0_out_even.clkr.hw },
- 	{ .hw = &mmpll5_out_even.clkr.hw },
--	{ .fw_name = "gpll0", .name = "gpll0" },
-+	{ .fw_name = "gpll0" },
- 	{ .hw = &gpll0_div.hw },
--	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
-+	{ .fw_name = "core_bi_pll_test_se" },
- };
+ 	for (i = 0; i < iris->num_vregs; i++)
+ 		iris->vregs[i].supply = data->vregs[i].name;
  
- static const struct parent_map mmss_xo_mmpll0_mmpll3_mmpll6_gpll0_gpll0_div_map[] = {
-@@ -440,13 +431,13 @@ static const struct parent_map mmss_xo_mmpll0_mmpll3_mmpll6_gpll0_gpll0_div_map[
- };
+-	ret = devm_regulator_bulk_get(&pdev->dev, iris->num_vregs, iris->vregs);
++	ret = devm_regulator_bulk_get(&iris->dev, iris->num_vregs, iris->vregs);
+ 	if (ret) {
+-		dev_err(&pdev->dev, "failed to get regulators\n");
+-		return ret;
++		dev_err(&iris->dev, "failed to get regulators\n");
++		goto err_device_del;
+ 	}
  
- static const struct clk_parent_data mmss_xo_mmpll0_mmpll3_mmpll6_gpll0_gpll0_div[] = {
--	{ .fw_name = "xo", .name = "xo" },
-+	{ .fw_name = "xo" },
- 	{ .hw = &mmpll0_out_even.clkr.hw },
- 	{ .hw = &mmpll3_out_even.clkr.hw },
- 	{ .hw = &mmpll6_out_even.clkr.hw },
--	{ .fw_name = "gpll0", .name = "gpll0" },
-+	{ .fw_name = "gpll0" },
- 	{ .hw = &gpll0_div.hw },
--	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
-+	{ .fw_name = "core_bi_pll_test_se" },
- };
+ 	for (i = 0; i < iris->num_vregs; i++) {
+@@ -143,34 +190,17 @@ static int qcom_iris_probe(struct platform_device *pdev)
+ 					   data->vregs[i].load_uA);
+ 	}
  
- static const struct parent_map mmss_xo_mmpll4_mmpll7_mmpll10_gpll0_gpll0_div_map[] = {
-@@ -460,13 +451,13 @@ static const struct parent_map mmss_xo_mmpll4_mmpll7_mmpll10_gpll0_gpll0_div_map
- };
+-	qcom_wcnss_assign_iris(wcnss, iris, data->use_48mhz_xo);
+-
+-	return 0;
+-}
++	*use_48mhz_xo = data->use_48mhz_xo;
  
- static const struct clk_parent_data mmss_xo_mmpll4_mmpll7_mmpll10_gpll0_gpll0_div[] = {
--	{ .fw_name = "xo", .name = "xo" },
-+	{ .fw_name = "xo" },
- 	{ .hw = &mmpll4_out_even.clkr.hw },
- 	{ .hw = &mmpll7_out_even.clkr.hw },
- 	{ .hw = &mmpll10_out_even.clkr.hw },
--	{ .fw_name = "gpll0", .name = "gpll0" },
-+	{ .fw_name = "gpll0" },
- 	{ .hw = &gpll0_div.hw },
--	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
-+	{ .fw_name = "core_bi_pll_test_se" },
- };
+-static int qcom_iris_remove(struct platform_device *pdev)
+-{
+-	struct qcom_wcnss *wcnss = dev_get_drvdata(pdev->dev.parent);
++	return iris;
  
- static const struct parent_map mmss_xo_mmpll0_mmpll7_mmpll10_gpll0_gpll0_div_map[] = {
-@@ -480,13 +471,13 @@ static const struct parent_map mmss_xo_mmpll0_mmpll7_mmpll10_gpll0_gpll0_div_map
- };
+-	qcom_wcnss_assign_iris(wcnss, NULL, false);
++err_device_del:
++	device_del(&iris->dev);
  
- static const struct clk_parent_data mmss_xo_mmpll0_mmpll7_mmpll10_gpll0_gpll0_div[] = {
--	{ .fw_name = "xo", .name = "xo" },
-+	{ .fw_name = "xo" },
- 	{ .hw = &mmpll0_out_even.clkr.hw },
- 	{ .hw = &mmpll7_out_even.clkr.hw },
- 	{ .hw = &mmpll10_out_even.clkr.hw },
--	{ .fw_name = "gpll0", .name = "gpll0" },
-+	{ .fw_name = "gpll0" },
- 	{ .hw = &gpll0_div.hw },
--	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
-+	{ .fw_name = "core_bi_pll_test_se" },
- };
+-	return 0;
++	return ERR_PTR(ret);
+ }
  
- static const struct parent_map mmss_xo_mmpll0_mmpll4_mmpll7_mmpll10_gpll0_gpll0_div_map[] = {
-@@ -501,14 +492,14 @@ static const struct parent_map mmss_xo_mmpll0_mmpll4_mmpll7_mmpll10_gpll0_gpll0_
- };
- 
- static const struct clk_parent_data mmss_xo_mmpll0_mmpll4_mmpll7_mmpll10_gpll0_gpll0_div[] = {
--	{ .fw_name = "xo", .name = "xo" },
-+	{ .fw_name = "xo" },
- 	{ .hw = &mmpll0_out_even.clkr.hw },
- 	{ .hw = &mmpll4_out_even.clkr.hw },
- 	{ .hw = &mmpll7_out_even.clkr.hw },
- 	{ .hw = &mmpll10_out_even.clkr.hw },
--	{ .fw_name = "gpll0", .name = "gpll0" },
-+	{ .fw_name = "gpll0" },
- 	{ .hw = &gpll0_div.hw },
--	{ .fw_name = "core_bi_pll_test_se", .name = "core_bi_pll_test_se" },
-+	{ .fw_name = "core_bi_pll_test_se" },
- };
- 
- static struct clk_rcg2 byte0_clk_src = {
+-static const struct of_device_id iris_of_match[] = {
+-	{ .compatible = "qcom,wcn3620", .data = &wcn3620_data },
+-	{ .compatible = "qcom,wcn3660", .data = &wcn3660_data },
+-	{ .compatible = "qcom,wcn3660b", .data = &wcn3680_data },
+-	{ .compatible = "qcom,wcn3680", .data = &wcn3680_data },
+-	{}
+-};
+-MODULE_DEVICE_TABLE(of, iris_of_match);
+-
+-struct platform_driver qcom_iris_driver = {
+-	.probe = qcom_iris_probe,
+-	.remove = qcom_iris_remove,
+-	.driver = {
+-		.name = "qcom-iris",
+-		.of_match_table = iris_of_match,
+-	},
+-};
++void qcom_iris_remove(struct qcom_iris *iris)
++{
++	device_del(&iris->dev);
++}
 -- 
-2.33.0
+2.30.2
 
