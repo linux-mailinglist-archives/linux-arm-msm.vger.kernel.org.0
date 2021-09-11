@@ -2,79 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 41C9240758F
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Sep 2021 10:17:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 12BCA40765B
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 11 Sep 2021 14:01:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235402AbhIKIS6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Sep 2021 04:18:58 -0400
-Received: from szxga01-in.huawei.com ([45.249.212.187]:19027 "EHLO
-        szxga01-in.huawei.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235334AbhIKIS6 (ORCPT
+        id S233493AbhIKMCU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 11 Sep 2021 08:02:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59166 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230249AbhIKMCT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Sep 2021 04:18:58 -0400
-Received: from dggemv704-chm.china.huawei.com (unknown [172.30.72.53])
-        by szxga01-in.huawei.com (SkyGuard) with ESMTP id 4H659J66jwzbmHd;
-        Sat, 11 Sep 2021 16:13:40 +0800 (CST)
-Received: from dggpemm500004.china.huawei.com (7.185.36.219) by
- dggemv704-chm.china.huawei.com (10.3.19.47) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id
- 15.1.2308.8; Sat, 11 Sep 2021 16:17:43 +0800
-Received: from huawei.com (10.174.28.241) by dggpemm500004.china.huawei.com
- (7.185.36.219) with Microsoft SMTP Server (version=TLS1_2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256) id 15.1.2308.8; Sat, 11 Sep
- 2021 16:17:43 +0800
-From:   Bixuan Cui <cuibixuan@huawei.com>
-To:     <linux-kernel@vger.kernel.org>, <linux-remoteproc@vger.kernel.org>,
-        <linux-arm-msm@vger.kernel.org>
-CC:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <ohad@wizery.com>, <mathieu.poirier@linaro.org>
-Subject: [PATCH -next] remoteproc: qcom_wcnss: Add missing of_node_put() in qcom_iris_probe()
-Date:   Sat, 11 Sep 2021 16:13:47 +0800
-Message-ID: <20210911081347.33929-1-cuibixuan@huawei.com>
-X-Mailer: git-send-email 2.17.1
+        Sat, 11 Sep 2021 08:02:19 -0400
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 01DA5C061574;
+        Sat, 11 Sep 2021 05:01:06 -0700 (PDT)
+Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id CD7403E8BC;
+        Sat, 11 Sep 2021 14:01:02 +0200 (CEST)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] arm64: DT: qcom: msm8998: Provide missing "xo" and "sleep_clk" to GCC
+Date:   Sat, 11 Sep 2021 14:01:01 +0200
+Message-Id: <20210911120101.248476-1-marijn.suijten@somainline.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.174.28.241]
-X-ClientProxiedBy: dggems703-chm.china.huawei.com (10.3.19.180) To
- dggpemm500004.china.huawei.com (7.185.36.219)
-X-CFilter-Loop: Reflected
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add missing of_node_put() in qcom_iris_probe() before return.
+In a future patch the GCC driver will stop requesting this xo clock by
+its global "xo" name, in favour of of having an explicit phandle here in
+the DT.  Aside from that this clock in addition to the mandatory
+"sleep_clk" were never passed despite being required by the relevant
+dt-bindings.
 
-Reported-by: Hulk Robot <hulkci@huawei.com>
-Signed-off-by: Bixuan Cui <cuibixuan@huawei.com>
+Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
 ---
- drivers/remoteproc/qcom_wcnss_iris.c | 3 +++
- 1 file changed, 3 insertions(+)
+ arch/arm64/boot/dts/qcom/msm8998.dtsi | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
 
-diff --git a/drivers/remoteproc/qcom_wcnss_iris.c b/drivers/remoteproc/qcom_wcnss_iris.c
-index 09720ddddc85..f77ab49a9cae 100644
---- a/drivers/remoteproc/qcom_wcnss_iris.c
-+++ b/drivers/remoteproc/qcom_wcnss_iris.c
-@@ -140,6 +140,7 @@ struct qcom_iris *qcom_iris_probe(struct device *parent, bool *use_48mhz_xo)
- 	ret = device_add(&iris->dev);
- 	if (ret) {
- 		put_device(&iris->dev);
-+		of_node_put(of_node);
- 		return ERR_PTR(ret);
- 	}
+diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+index e9d3ce29937c..05ac5172fcba 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+@@ -117,7 +117,7 @@ xo: xo-board {
+ 			clock-output-names = "xo_board";
+ 		};
  
-@@ -192,10 +193,12 @@ struct qcom_iris *qcom_iris_probe(struct device *parent, bool *use_48mhz_xo)
+-		sleep_clk {
++		sleep_clk: sleep-clk {
+ 			compatible = "fixed-clock";
+ 			#clock-cells = <0>;
+ 			clock-frequency = <32764>;
+@@ -855,6 +855,9 @@ gcc: clock-controller@100000 {
+ 			#reset-cells = <1>;
+ 			#power-domain-cells = <1>;
+ 			reg = <0x00100000 0xb0000>;
++
++			clock-names = "xo", "sleep_clk";
++			clocks = <&xo>, <&sleep_clk>;
+ 		};
  
- 	*use_48mhz_xo = data->use_48mhz_xo;
- 
-+	of_node_put(of_node);
- 	return iris;
- 
- err_device_del:
- 	device_del(&iris->dev);
-+	of_node_put(of_node);
- 
- 	return ERR_PTR(ret);
- }
+ 		rpm_msg_ram: memory@778000 {
 -- 
-2.17.1
+2.33.0
 
