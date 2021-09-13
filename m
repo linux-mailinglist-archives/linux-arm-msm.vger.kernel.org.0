@@ -2,254 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D454409B28
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 19:45:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 86DAA409B2A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 19:45:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243554AbhIMRqg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Sep 2021 13:46:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34972 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238180AbhIMRqf (ORCPT
+        id S243763AbhIMRrE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Sep 2021 13:47:04 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:43612 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229937AbhIMRrD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Sep 2021 13:46:35 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A8B2CC061762
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 10:45:19 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id w19so15083869oik.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 10:45:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=c/DHXuk14m7uILgZ2IPqdDPLEotN8dRdqkDvOEyQCIE=;
-        b=kGHN3BZBgbL/EpS9EsDMxfUClo2vojFYB38hm94QfXt0JFqHf9K50zlmvAqHKodM1w
-         BNAs+BZvwhJ1E/B5HNVHDITzwAr7HgZDym1TfmkKfn/UW7BP1wcG/9FdMTJiLvhALaZ1
-         KDrzfzYbktz+2ws3q0Z6rCfG/yEx3b/vyZU5bDv6Tpj19HrJM1D0nPZliQR1hKZm37Au
-         Cg9sj8N0f0y8KnMv5uKGbtWw8ubNAfFvvWtn4IIq/3Fcs0/uwpcJLngoB0bZeNSkzZbX
-         6KfCywtu9M5jBWVw3NFhWc+jnCkTHy4W6VnxL5pJwcDYPkN5KDfqaVp4/ECOJdJJWczi
-         CsQg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=c/DHXuk14m7uILgZ2IPqdDPLEotN8dRdqkDvOEyQCIE=;
-        b=w1232UGzXb4dumnAv1q05jBFRpvMsfESIWbs7QfMofgpRL2oDal9wL/6t1XyeVznvS
-         W9dSh4OYGL5xtu3nAjZ9ReQr25kiORTyiHBVU1qrIa0N/j8swOpnXjUwIInwNrWOz3je
-         /fhi/1fqKVVzQKru9hER/3WZ5hkquoLgy5uti6jZVRXBIFvD6Z4N3O9sqhiWbOBbHzDZ
-         fMR5WAk5G8beCrSwZ+BW17FLTcCk0tmpcOen7+NFQnHLZlfYJ5b6R/rIsPv2N0StAn7T
-         1/DLvJ1AZXNdUknCdPtpD2cPeuABe2+ZEjtHtKDhfubTcEvbsY9Y7djMwcGNmQoLciCy
-         c/xw==
-X-Gm-Message-State: AOAM530wAt3pHR/xDq4CywpAW2mN++75q2mQ0PL/UHCVLFCrX65tZf0J
-        4eQMKmLc9pudnmOW4DCeZqRXNw==
-X-Google-Smtp-Source: ABdhPJxzcr7SOgHFPzSbXiyMjEFzKm+8xwwEQ1Bqb2+srqPRJEvsk1oY2zd6XNv+3+eoe/7rg+0yrA==
-X-Received: by 2002:a05:6808:bc2:: with SMTP id o2mr9015755oik.73.1631555118953;
-        Mon, 13 Sep 2021 10:45:18 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id m25sm2063620otp.41.2021.09.13.10.45.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 13 Sep 2021 10:45:18 -0700 (PDT)
-Date:   Mon, 13 Sep 2021 12:45:16 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Luca Weiss <luca@z3ntu.xyz>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht, bartosz.dudziak@snejp.pl,
-        Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/8] pinctrl: qcom: msm8226: fill in more functions
-Message-ID: <YT+OLEldZ0ZGGWvV@builder.lan>
-References: <20210911232707.259615-1-luca@z3ntu.xyz>
- <20210911232707.259615-2-luca@z3ntu.xyz>
+        Mon, 13 Sep 2021 13:47:03 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1631555148; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=FQM7/pY/WutvtlfFfc4iVulvOrjxzsE4ffU8N8bZXx0=; b=agM8KsJpA0TiRLzASaR73L9HKpOnXAMJfv0LKRPqwfTMt7hyGen/rHVmKEuwSei3AxVnHP5y
+ g2M9RY8byAia1urbcVbbL4Xg9NoKqw93d0w9CyTYg8jBC7NeSMfryPD52LUTNI0dnRRJ098a
+ 3dL1whhSGcx/G5po9wv/pFk8VPw=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 613f8e37648642cc1c5dd7b6 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 13 Sep 2021 17:45:27
+ GMT
+Sender: deesin=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id BEE1BC4338F; Mon, 13 Sep 2021 17:45:27 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-4.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
+        version=3.4.0
+Received: from [192.168.1.3] (unknown [122.163.130.38])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: deesin)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DBB54C4361B;
+        Mon, 13 Sep 2021 17:45:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org DBB54C4361B
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [PATCH V2 1/1] soc: qcom: smp2p: Add wakeup capability to SMP2P
+ IRQ
+To:     Stephen Boyd <swboyd@chromium.org>, bjorn.andersson@linaro.org,
+        clew@codeaurora.org, sibis@codeaurora.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, Andy Gross <agross@kernel.org>
+References: <1629108335-23463-1-git-send-email-deesin@codeaurora.org>
+ <CAE-0n528DuP4MiAOhYY+Du+L=OZaGM5YJm=NwWia3JF7hp7sAA@mail.gmail.com>
+From:   Deepak Kumar Singh <deesin@codeaurora.org>
+Message-ID: <4697bec1-af58-53e4-9fd1-293bfd8754be@codeaurora.org>
+Date:   Mon, 13 Sep 2021 23:15:19 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.12.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210911232707.259615-2-luca@z3ntu.xyz>
+In-Reply-To: <CAE-0n528DuP4MiAOhYY+Du+L=OZaGM5YJm=NwWia3JF7hp7sAA@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat 11 Sep 18:26 CDT 2021, Luca Weiss wrote:
 
-> Add the functions for QUP4 (spi, uart, uim & i2c), sdc3 and audio_pcm as
-> derived from the downstream gpiomux configuration.
-> 
-> Also sort the functions alphabetically, while we're at it.
-> 
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+On 8/17/2021 1:53 AM, Stephen Boyd wrote:
+> Quoting Deepak Kumar Singh (2021-08-16 03:05:35)
+>> Remote susbsystems notify fatal crash throught smp2p interrupt.
+>> When modem/wifi crashes it can cause soc to come out of low power state
+>> and may not allow again to enter in low power state until crash is handled.
+>>
+>> Mark smp2p interrupt wakeup capable so that interrupt handler is executed
+>> and remote susbsystem crash can be handled in system  resume path.
+>>
+>> Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
+>> ---
+>>   drivers/soc/qcom/smp2p.c | 12 ++++++++++++
+>>   1 file changed, 12 insertions(+)
+>>
+>> diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
+>> index 2df4883..646848b 100644
+>> --- a/drivers/soc/qcom/smp2p.c
+>> +++ b/drivers/soc/qcom/smp2p.c
+>> @@ -18,6 +18,7 @@
+>>   #include <linux/soc/qcom/smem.h>
+>>   #include <linux/soc/qcom/smem_state.h>
+>>   #include <linux/spinlock.h>
+>> +#include <linux/pm_wakeirq.h>
+> Please sort alphabetically by include name, 'p' before 's'.
+>
+>>   /*
+>>    * The Shared Memory Point to Point (SMP2P) protocol facilitates communication
+>> @@ -538,9 +539,20 @@ static int qcom_smp2p_probe(struct platform_device *pdev)
+>>                  goto unwind_interfaces;
+>>          }
+>>
+>> +       /* Setup smp2p interrupt as wakeup source */
+> This comment is bad. Please don't reiterate what the code is doing.
+> Instead, write something like
+>
+> 	/*
+> 	 * Treat remoteproc crashes as wakeups by default so we handle
+> 	 * them sooner rather than along with the next wakeup (e.g.
+> 	 * power button). This avoids leaving the system in a shallower
+> 	 * suspend power state if a remoteproc crashes during suspend,
+> 	 * but requires userspace to actively suspend the device after
+> 	 * handling the crash, or CONFIG_PM_AUTOSLEEP to be true.
+> 	 */
+>
+>> +       ret = device_init_wakeup(&pdev->dev, true);
+> I still wonder if it's better to leave this off by default and only
+> enable it if the kernel is using autosuspend (PM_AUTOSLEEP). Then
+> userspace is responsible to decide if it can handle the wakeup with the
+> screen off, reload the remoteproc, and go back to suspend if it isn't
+> using autosuspend.
 
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Seems like not all targets use PM_AUTOSLEEP feature, even those targets 
+may require wakeup to handle
 
-Regards,
-Bjorn
+modem crash so that important modem events are not missed. I think we 
+can keep wake up as default behavior
 
-> ---
->  drivers/pinctrl/qcom/pinctrl-msm8226.c | 74 ++++++++++++++++++--------
->  1 file changed, 52 insertions(+), 22 deletions(-)
-> 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-msm8226.c b/drivers/pinctrl/qcom/pinctrl-msm8226.c
-> index 98779e62e951..fca0645e8008 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-msm8226.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-msm8226.c
-> @@ -338,26 +338,32 @@ static const unsigned int sdc2_data_pins[] = { 122 };
->   * the pingroup table below.
->   */
->  enum msm8226_functions {
-> -	MSM_MUX_gpio,
-> -	MSM_MUX_cci_i2c0,
-> +	MSM_MUX_audio_pcm,
->  	MSM_MUX_blsp_i2c1,
->  	MSM_MUX_blsp_i2c2,
->  	MSM_MUX_blsp_i2c3,
-> +	MSM_MUX_blsp_i2c4,
->  	MSM_MUX_blsp_i2c5,
->  	MSM_MUX_blsp_spi1,
->  	MSM_MUX_blsp_spi2,
->  	MSM_MUX_blsp_spi3,
-> +	MSM_MUX_blsp_spi4,
->  	MSM_MUX_blsp_spi5,
->  	MSM_MUX_blsp_uart1,
->  	MSM_MUX_blsp_uart2,
->  	MSM_MUX_blsp_uart3,
-> +	MSM_MUX_blsp_uart4,
->  	MSM_MUX_blsp_uart5,
->  	MSM_MUX_blsp_uim1,
->  	MSM_MUX_blsp_uim2,
->  	MSM_MUX_blsp_uim3,
-> +	MSM_MUX_blsp_uim4,
->  	MSM_MUX_blsp_uim5,
->  	MSM_MUX_cam_mclk0,
->  	MSM_MUX_cam_mclk1,
-> +	MSM_MUX_cci_i2c0,
-> +	MSM_MUX_gpio,
-> +	MSM_MUX_sdc3,
->  	MSM_MUX_wlan,
->  	MSM_MUX_NA,
->  };
-> @@ -382,6 +388,10 @@ static const char * const gpio_groups[] = {
->  	"gpio111", "gpio112", "gpio113", "gpio114", "gpio115", "gpio116",
->  };
->  
-> +static const char * const audio_pcm_groups[] = {
-> +	"gpio63", "gpio64", "gpio65", "gpio66"
-> +};
-> +
->  static const char * const blsp_uart1_groups[] = {
->  	"gpio0", "gpio1", "gpio2", "gpio3"
->  };
-> @@ -412,6 +422,16 @@ static const char * const blsp_spi3_groups[] = {
->  	"gpio8", "gpio9", "gpio10", "gpio11"
->  };
->  
-> +static const char * const blsp_uart4_groups[] = {
-> +	"gpio12", "gpio13", "gpio14", "gpio15"
-> +};
-> +
-> +static const char * const blsp_uim4_groups[] = { "gpio12", "gpio13" };
-> +static const char * const blsp_i2c4_groups[] = { "gpio14", "gpio15" };
-> +static const char * const blsp_spi4_groups[] = {
-> +	"gpio12", "gpio13", "gpio14", "gpio15"
-> +};
-> +
->  static const char * const blsp_uart5_groups[] = {
->  	"gpio16", "gpio17", "gpio18", "gpio19"
->  };
-> @@ -427,31 +447,41 @@ static const char * const cci_i2c0_groups[] = { "gpio29", "gpio30" };
->  static const char * const cam_mclk0_groups[] = { "gpio26" };
->  static const char * const cam_mclk1_groups[] = { "gpio27" };
->  
-> +static const char * const sdc3_groups[] = {
-> +	"gpio39", "gpio40", "gpio41", "gpio42", "gpio43", "gpio44"
-> +};
-> +
->  static const char * const wlan_groups[] = {
->  	"gpio40", "gpio41", "gpio42", "gpio43", "gpio44"
->  };
->  
->  static const struct msm_function msm8226_functions[] = {
-> -	FUNCTION(gpio),
-> -	FUNCTION(cci_i2c0),
-> -	FUNCTION(blsp_uim1),
-> -	FUNCTION(blsp_uim2),
-> -	FUNCTION(blsp_uim3),
-> -	FUNCTION(blsp_uim5),
-> +	FUNCTION(audio_pcm),
->  	FUNCTION(blsp_i2c1),
->  	FUNCTION(blsp_i2c2),
->  	FUNCTION(blsp_i2c3),
-> +	FUNCTION(blsp_i2c4),
->  	FUNCTION(blsp_i2c5),
->  	FUNCTION(blsp_spi1),
->  	FUNCTION(blsp_spi2),
->  	FUNCTION(blsp_spi3),
-> +	FUNCTION(blsp_spi4),
->  	FUNCTION(blsp_spi5),
->  	FUNCTION(blsp_uart1),
->  	FUNCTION(blsp_uart2),
->  	FUNCTION(blsp_uart3),
-> +	FUNCTION(blsp_uart4),
->  	FUNCTION(blsp_uart5),
-> +	FUNCTION(blsp_uim1),
-> +	FUNCTION(blsp_uim2),
-> +	FUNCTION(blsp_uim3),
-> +	FUNCTION(blsp_uim4),
-> +	FUNCTION(blsp_uim5),
->  	FUNCTION(cam_mclk0),
->  	FUNCTION(cam_mclk1),
-> +	FUNCTION(cci_i2c0),
-> +	FUNCTION(gpio),
-> +	FUNCTION(sdc3),
->  	FUNCTION(wlan),
->  };
->  
-> @@ -468,10 +498,10 @@ static const struct msm_pingroup msm8226_groups[] = {
->  	PINGROUP(9,   blsp_spi3, blsp_uart3, blsp_uim3, NA, NA, NA, NA),
->  	PINGROUP(10,  blsp_spi3, blsp_uart3, blsp_i2c3, NA, NA, NA, NA),
->  	PINGROUP(11,  blsp_spi3, blsp_uart3, blsp_i2c3, NA, NA, NA, NA),
-> -	PINGROUP(12,  NA, NA, NA, NA, NA, NA, NA),
-> -	PINGROUP(13,  NA, NA, NA, NA, NA, NA, NA),
-> -	PINGROUP(14,  NA, NA, NA, NA, NA, NA, NA),
-> -	PINGROUP(15,  NA, NA, NA, NA, NA, NA, NA),
-> +	PINGROUP(12,  blsp_spi4, blsp_uart4, blsp_uim4, NA, NA, NA, NA),
-> +	PINGROUP(13,  blsp_spi4, blsp_uart4, blsp_uim4, NA, NA, NA, NA),
-> +	PINGROUP(14,  blsp_spi4, blsp_uart4, blsp_i2c4, NA, NA, NA, NA),
-> +	PINGROUP(15,  blsp_spi4, blsp_uart4, blsp_i2c4, NA, NA, NA, NA),
->  	PINGROUP(16,  blsp_spi5, blsp_uart5, blsp_uim5, NA, NA, NA, NA),
->  	PINGROUP(17,  blsp_spi5, blsp_uart5, blsp_uim5, NA, NA, NA, NA),
->  	PINGROUP(18,  blsp_spi5, blsp_uart5, blsp_i2c5, NA, NA, NA, NA),
-> @@ -495,12 +525,12 @@ static const struct msm_pingroup msm8226_groups[] = {
->  	PINGROUP(36,  NA, NA, NA, NA, NA, NA, NA),
->  	PINGROUP(37,  NA, NA, NA, NA, NA, NA, NA),
->  	PINGROUP(38,  NA, NA, NA, NA, NA, NA, NA),
-> -	PINGROUP(39,  NA, NA, NA, NA, NA, NA, NA),
-> -	PINGROUP(40,  wlan, NA, NA, NA, NA, NA, NA),
-> -	PINGROUP(41,  wlan, NA, NA, NA, NA, NA, NA),
-> -	PINGROUP(42,  wlan, NA, NA, NA, NA, NA, NA),
-> -	PINGROUP(43,  wlan, NA, NA, NA, NA, NA, NA),
-> -	PINGROUP(44,  wlan, NA, NA, NA, NA, NA, NA),
-> +	PINGROUP(39,  NA, sdc3, NA, NA, NA, NA, NA),
-> +	PINGROUP(40,  wlan, sdc3, NA, NA, NA, NA, NA),
-> +	PINGROUP(41,  wlan, sdc3, NA, NA, NA, NA, NA),
-> +	PINGROUP(42,  wlan, sdc3, NA, NA, NA, NA, NA),
-> +	PINGROUP(43,  wlan, sdc3, NA, NA, NA, NA, NA),
-> +	PINGROUP(44,  wlan, sdc3, NA, NA, NA, NA, NA),
->  	PINGROUP(45,  NA, NA, NA, NA, NA, NA, NA),
->  	PINGROUP(46,  NA, NA, NA, NA, NA, NA, NA),
->  	PINGROUP(47,  NA, NA, NA, NA, NA, NA, NA),
-> @@ -519,10 +549,10 @@ static const struct msm_pingroup msm8226_groups[] = {
->  	PINGROUP(60,  NA, NA, NA, NA, NA, NA, NA),
->  	PINGROUP(61,  NA, NA, NA, NA, NA, NA, NA),
->  	PINGROUP(62,  NA, NA, NA, NA, NA, NA, NA),
-> -	PINGROUP(63,  NA, NA, NA, NA, NA, NA, NA),
-> -	PINGROUP(64,  NA, NA, NA, NA, NA, NA, NA),
-> -	PINGROUP(65,  NA, NA, NA, NA, NA, NA, NA),
-> -	PINGROUP(66,  NA, NA, NA, NA, NA, NA, NA),
-> +	PINGROUP(63,  audio_pcm, NA, NA, NA, NA, NA, NA),
-> +	PINGROUP(64,  audio_pcm, NA, NA, NA, NA, NA, NA),
-> +	PINGROUP(65,  audio_pcm, NA, NA, NA, NA, NA, NA),
-> +	PINGROUP(66,  audio_pcm, NA, NA, NA, NA, NA, NA),
->  	PINGROUP(67,  NA, NA, NA, NA, NA, NA, NA),
->  	PINGROUP(68,  NA, NA, NA, NA, NA, NA, NA),
->  	PINGROUP(69,  NA, NA, NA, NA, NA, NA, NA),
-> -- 
-> 2.33.0
-> 
+and let the user space disable it through sysfs if it doesn't want it as 
+wake up source.
+
+>> +       if (ret)
+>> +               goto unwind_interfaces;
+>> +
