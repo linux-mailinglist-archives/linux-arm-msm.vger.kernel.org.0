@@ -2,110 +2,367 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B52594099DA
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 18:46:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A27E409A98
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 19:23:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239754AbhIMQrx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Sep 2021 12:47:53 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.54]:35170 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239544AbhIMQrr (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Sep 2021 12:47:47 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1631551571;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
-    bh=LDKU/RP1Q4cF+tw+7bkG3lbITIkUa4qSx/UdAGSCvN0=;
-    b=Ax0e5xbmRT9KN0bWzxrOe/h3pdnK5ju7e8yOrARnvkxqKXf/zGmnjgExpFukHA0pwH
-    MZpcFbMWA9xvTxyx77rocc8y9QdI6FlH5VSKfeL0l4wNXsSCywTAz3qEQsYfYR951iYy
-    RrLYlnMXQNM8tr959amuhAEpm/Kce1B6yFxGVOiDm7KuM/j2yA3JQqlqNNZsXrOv7uKq
-    0J4ipcBuol3TluSqOBKEAXPHMaOIIVAiheAV9c0tptWF9dtlG7KmEM9+3HyTbt3rdnxK
-    dKXy8G4QEroKwGkjPREetIqnaykb89qWDokPTYsGcxySbOjCnAdqexViV+pozYYSFOk0
-    gnMQ==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXTbAOHjRHIhr2eFSKC/A="
-X-RZG-CLASS-ID: mo00
-Received: from droid..
-    by smtp.strato.de (RZmta 47.33.3 DYNA|AUTH)
-    with ESMTPSA id L05399x8DGkAKD1
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Mon, 13 Sep 2021 18:46:10 +0200 (CEST)
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Nikita Travkin <nikita@trvn.ru>
-Subject: [PATCH] drm/msm: Fix devfreq NULL pointer dereference on a3xx
-Date:   Mon, 13 Sep 2021 18:45:56 +0200
-Message-Id: <20210913164556.16284-1-stephan@gerhold.net>
-X-Mailer: git-send-email 2.33.0
+        id S1344671AbhIMRZE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Sep 2021 13:25:04 -0400
+Received: from mail.z3ntu.xyz ([128.199.32.197]:40758 "EHLO mail.z3ntu.xyz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S244624AbhIMRYg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 Sep 2021 13:24:36 -0400
+Received: from g550jk.localnet (ip-213-127-63-121.ip.prioritytelecom.net [213.127.63.121])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 80BE5CB143;
+        Mon, 13 Sep 2021 17:23:18 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1631553798; bh=P7YQBLqM1FKYNMlzZbHNW7UioCxjAprhTAD1I+29b00=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References;
+        b=udSXMj1qcTeaReyUQWRkKY7Upe+Zzbq7Q1r+4FRzC96ypP79XeJf7c3pRVzH+T3wm
+         omCGREirKpjvJSOZiq67n4XC6Pr9MWW5LTSMo8+gtVolY8k86Ury49pOgAXgzuNpo4
+         emZ/zI4rKzrqALkWIgesYr/kJ2v7boOn/HT9ssJ8=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Subject: Re: [PATCH v3 2/2] pinctrl: qcom: Add SM6350 pinctrl driver
+Date:   Mon, 13 Sep 2021 19:23:18 +0200
+Message-ID: <6673399.dA2BYh7nEs@g550jk>
+In-Reply-To: <20210828172315.55742-2-konrad.dybcio@somainline.org>
+References: <20210828172315.55742-1-konrad.dybcio@somainline.org> <20210828172315.55742-2-konrad.dybcio@somainline.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="us-ascii"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is no devfreq on a3xx at the moment since gpu_busy is not
-implemented. This means that msm_devfreq_init() will return early
-and the entire devfreq setup is skipped.
+Hi Konrad,
 
-However, msm_devfreq_active() and msm_devfreq_idle() are still called
-unconditionally later, causing a NULL pointer dereference:
+based on other reviews on the mailing list/IRC I have some comments here
 
-  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000010
-  Internal error: Oops: 96000004 [#1] PREEMPT SMP
-  CPU: 0 PID: 133 Comm: ring0 Not tainted 5.15.0-rc1 #4
-  Hardware name: Longcheer L8150 (DT)
-  pc : mutex_lock_io+0x2bc/0x2f0
-  lr : msm_devfreq_active+0x3c/0xe0 [msm]
-  Call trace:
-   mutex_lock_io+0x2bc/0x2f0
-   msm_gpu_submit+0x164/0x180 [msm]
-   msm_job_run+0x54/0xe0 [msm]
-   drm_sched_main+0x2b0/0x4a0 [gpu_sched]
-   kthread+0x154/0x160
-   ret_from_fork+0x10/0x20
+On Samstag, 28. August 2021 19:23:14 CEST Konrad Dybcio wrote:
+> This adds pincontrol driver for tlmm block found in SM6350 SoC
+> 
+> This patch is based on downstream copyleft code.
+> 
+> Reviewed-by: AngeloGioacchino Del Regno
+> <angelogioacchino.delregno@somainline.org> Signed-off-by: Konrad Dybcio
+> <konrad.dybcio@somainline.org>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+> Changes since v2:
+> - Trim the forgotten-about comments
+> - Add Bjorn's r-b
+> 
+>  drivers/pinctrl/qcom/Kconfig          |    9 +
+>  drivers/pinctrl/qcom/Makefile         |    1 +
+>  drivers/pinctrl/qcom/pinctrl-sm6350.c | 1593 +++++++++++++++++++++++++
+>  3 files changed, 1603 insertions(+)
+>  create mode 100644 drivers/pinctrl/qcom/pinctrl-sm6350.c
+> 
+[SNIP]
+>
+> +DECLARE_MSM_GPIO_PINS(128);
+> +DECLARE_MSM_GPIO_PINS(129);
+> +DECLARE_MSM_GPIO_PINS(130);
+> +DECLARE_MSM_GPIO_PINS(131);
+> +DECLARE_MSM_GPIO_PINS(132);
+> +DECLARE_MSM_GPIO_PINS(133);
+> +DECLARE_MSM_GPIO_PINS(134);
+> +DECLARE_MSM_GPIO_PINS(135);
+> +DECLARE_MSM_GPIO_PINS(136);
+> +DECLARE_MSM_GPIO_PINS(137);
+> +DECLARE_MSM_GPIO_PINS(138);
+> +DECLARE_MSM_GPIO_PINS(139);
+> +DECLARE_MSM_GPIO_PINS(140);
+> +DECLARE_MSM_GPIO_PINS(141);
+> +DECLARE_MSM_GPIO_PINS(142);
+> +DECLARE_MSM_GPIO_PINS(143);
+> +DECLARE_MSM_GPIO_PINS(144);
+> +DECLARE_MSM_GPIO_PINS(145);
+> +DECLARE_MSM_GPIO_PINS(146);
+> +DECLARE_MSM_GPIO_PINS(147);
+> +DECLARE_MSM_GPIO_PINS(148);
+> +DECLARE_MSM_GPIO_PINS(149);
+> +DECLARE_MSM_GPIO_PINS(150);
+> +DECLARE_MSM_GPIO_PINS(151);
+> +DECLARE_MSM_GPIO_PINS(152);
+> +DECLARE_MSM_GPIO_PINS(153);
+> +DECLARE_MSM_GPIO_PINS(154);
+> +DECLARE_MSM_GPIO_PINS(155);
+> +
+> +static const unsigned int sdc1_rclk_pins[] = { 156 };
+> +static const unsigned int sdc1_clk_pins[] = { 157 };
+> +static const unsigned int sdc1_cmd_pins[] = { 158 };
+> +static const unsigned int sdc1_data_pins[] = { 159 };
+> +static const unsigned int sdc2_clk_pins[] = { 160 };
+> +static const unsigned int sdc2_cmd_pins[] = { 161 };
+> +static const unsigned int sdc2_data_pins[] = { 162 };
+> +static const unsigned int ufs_reset_pins[] = { 163 };
 
-Fix this by adding a check in msm_devfreq_active/idle() which ensures
-that devfreq was actually initialized earlier.
+All these numbers don't match anymore after moving ufs_reset to 156
 
-Fixes: 9bc95570175a ("drm/msm: Devfreq tuning")
-Reported-by: Nikita Travkin <nikita@trvn.ru>
-Tested-by: Nikita Travkin <nikita@trvn.ru>
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
----
- drivers/gpu/drm/msm/msm_gpu_devfreq.c | 6 ++++++
- 1 file changed, 6 insertions(+)
+(ref: https://lore.kernel.org/lkml/YNTYvKYDWFxUcb+Y@yoga/ )
 
-diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-index 0a1ee20296a2..84e98c07c900 100644
---- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-+++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
-@@ -151,6 +151,9 @@ void msm_devfreq_active(struct msm_gpu *gpu)
- 	unsigned int idle_time;
- 	unsigned long target_freq = df->idle_freq;
- 
-+	if (!df->devfreq)
-+		return;
-+
- 	/*
- 	 * Hold devfreq lock to synchronize with get_dev_status()/
- 	 * target() callbacks
-@@ -186,6 +189,9 @@ void msm_devfreq_idle(struct msm_gpu *gpu)
- 	struct msm_gpu_devfreq *df = &gpu->devfreq;
- 	unsigned long idle_freq, target_freq = 0;
- 
-+	if (!df->devfreq)
-+		return;
-+
- 	/*
- 	 * Hold devfreq lock to synchronize with get_dev_status()/
- 	 * target() callbacks
--- 
-2.33.0
+> +
+> +enum sm6350_functions {
+> +	msm_mux_adsp_ext,
+> +	msm_mux_agera_pll,
+> +	msm_mux_atest_char,
+> +	msm_mux_atest_char0,
+> +	msm_mux_atest_char1,
+> +	msm_mux_atest_char2,
+> +	msm_mux_atest_char3,
+> +	msm_mux_atest_tsens,
+> +	msm_mux_atest_tsens2,
+> +	msm_mux_atest_usb1,
+> +	msm_mux_atest_usb10,
+> +	msm_mux_atest_usb11,
+> +	msm_mux_atest_usb12,
+> +	msm_mux_atest_usb13,
+> +	msm_mux_atest_usb2,
+> +	msm_mux_atest_usb20,
+> +	msm_mux_atest_usb21,
+> +	msm_mux_atest_usb22,
+> +	msm_mux_atest_usb23,
+
+Bjorn mentioned to merge all the atest_usb* functions into a single one.
+
+> +	msm_mux_audio_ref,
+> +	msm_mux_btfm_slimbus,
+> +	msm_mux_cam_mclk0,
+> +	msm_mux_cam_mclk1,
+> +	msm_mux_cam_mclk2,
+> +	msm_mux_cam_mclk3,
+> +	msm_mux_cam_mclk4,
+> +	msm_mux_cci_async,
+> +	msm_mux_cci_i2c,
+> +	msm_mux_cci_timer0,
+> +	msm_mux_cci_timer1,
+> +	msm_mux_cci_timer2,
+> +	msm_mux_cci_timer3,
+> +	msm_mux_cci_timer4,
+> +	msm_mux_cri_trng,
+> +	msm_mux_dbg_out,
+> +	msm_mux_ddr_bist,
+> +	msm_mux_ddr_pxi0,
+> +	msm_mux_ddr_pxi1,
+> +	msm_mux_ddr_pxi2,
+> +	msm_mux_ddr_pxi3,
+> +	msm_mux_dp_hot,
+> +	msm_mux_edp_lcd,
+> +	msm_mux_gcc_gp1,
+> +	msm_mux_gcc_gp2,
+> +	msm_mux_gcc_gp3,
+> +	msm_mux_gp_pdm0,
+> +	msm_mux_gp_pdm1,
+> +	msm_mux_gp_pdm2,
+> +	msm_mux_gpio,
+> +	msm_mux_gps_tx,
+> +	msm_mux_ibi_i3c,
+> +	msm_mux_jitter_bist,
+> +	msm_mux_ldo_en,
+> +	msm_mux_ldo_update,
+> +	msm_mux_lpass_ext,
+> +	msm_mux_m_voc,
+> +	msm_mux_mclk,
+> +	msm_mux_mdp_vsync,
+> +	msm_mux_mdp_vsync0,
+> +	msm_mux_mdp_vsync1,
+> +	msm_mux_mdp_vsync2,
+> +	msm_mux_mdp_vsync3,
+> +	msm_mux_mi2s_0,
+> +	msm_mux_mi2s_1,
+> +	msm_mux_mi2s_2,
+> +	msm_mux_mss_lte,
+> +	msm_mux_nav_gpio,
+> +	msm_mux_nav_pps,
+> +	msm_mux_pa_indicator,
+> +	msm_mux_pcie0_clk,
+> +	msm_mux_phase_flag0,
+> +	msm_mux_phase_flag1,
+> +	msm_mux_phase_flag10,
+> +	msm_mux_phase_flag11,
+> +	msm_mux_phase_flag12,
+> +	msm_mux_phase_flag13,
+> +	msm_mux_phase_flag14,
+> +	msm_mux_phase_flag15,
+> +	msm_mux_phase_flag16,
+> +	msm_mux_phase_flag17,
+> +	msm_mux_phase_flag18,
+> +	msm_mux_phase_flag19,
+> +	msm_mux_phase_flag2,
+> +	msm_mux_phase_flag20,
+> +	msm_mux_phase_flag21,
+> +	msm_mux_phase_flag22,
+> +	msm_mux_phase_flag23,
+> +	msm_mux_phase_flag24,
+> +	msm_mux_phase_flag25,
+> +	msm_mux_phase_flag26,
+> +	msm_mux_phase_flag27,
+> +	msm_mux_phase_flag28,
+> +	msm_mux_phase_flag29,
+> +	msm_mux_phase_flag3,
+> +	msm_mux_phase_flag30,
+> +	msm_mux_phase_flag31,
+> +	msm_mux_phase_flag4,
+> +	msm_mux_phase_flag5,
+> +	msm_mux_phase_flag6,
+> +	msm_mux_phase_flag7,
+> +	msm_mux_phase_flag8,
+> +	msm_mux_phase_flag9,
+
+.. and all the phase_flag* ones.
+
+> +	msm_mux_pll_bist,
+> +	msm_mux_pll_bypassnl,
+> +	msm_mux_pll_reset,
+> +	msm_mux_prng_rosc,
+> +	msm_mux_qdss_cti,
+> +	msm_mux_qdss_gpio,
+> +	msm_mux_qdss_gpio0,
+> +	msm_mux_qdss_gpio1,
+> +	msm_mux_qdss_gpio10,
+> +	msm_mux_qdss_gpio11,
+> +	msm_mux_qdss_gpio12,
+> +	msm_mux_qdss_gpio13,
+> +	msm_mux_qdss_gpio14,
+> +	msm_mux_qdss_gpio15,
+> +	msm_mux_qdss_gpio2,
+> +	msm_mux_qdss_gpio3,
+> +	msm_mux_qdss_gpio4,
+> +	msm_mux_qdss_gpio5,
+> +	msm_mux_qdss_gpio6,
+> +	msm_mux_qdss_gpio7,
+> +	msm_mux_qdss_gpio8,
+> +	msm_mux_qdss_gpio9,
+> +	msm_mux_qlink0_enable,
+> +	msm_mux_qlink0_request,
+> +	msm_mux_qlink0_wmss,
+> +	msm_mux_qlink1_enable,
+> +	msm_mux_qlink1_request,
+> +	msm_mux_qlink1_wmss,
+> +	msm_mux_qup00,
+> +	msm_mux_qup01,
+> +	msm_mux_qup02,
+> +	msm_mux_qup10,
+> +	msm_mux_qup11,
+> +	msm_mux_qup12,
+> +	msm_mux_qup13_f1,
+> +	msm_mux_qup13_f2,
+> +	msm_mux_qup14,
+> +	msm_mux_rffe0_clk,
+> +	msm_mux_rffe0_data,
+> +	msm_mux_rffe1_clk,
+> +	msm_mux_rffe1_data,
+> +	msm_mux_rffe2_clk,
+> +	msm_mux_rffe2_data,
+> +	msm_mux_rffe3_clk,
+> +	msm_mux_rffe3_data,
+> +	msm_mux_rffe4_clk,
+> +	msm_mux_rffe4_data,
+> +	msm_mux_sd_write,
+> +	msm_mux_sdc1_tb,
+> +	msm_mux_sdc2_tb,
+> +	msm_mux_sp_cmu,
+> +	msm_mux_tgu_ch0,
+> +	msm_mux_tgu_ch1,
+> +	msm_mux_tgu_ch2,
+> +	msm_mux_tgu_ch3,
+> +	msm_mux_tsense_pwm1,
+> +	msm_mux_tsense_pwm2,
+> +	msm_mux_uim1_clk,
+> +	msm_mux_uim1_data,
+> +	msm_mux_uim1_present,
+> +	msm_mux_uim1_reset,
+
+maybe even uim1_* into uim1?
+
+> +	msm_mux_uim2_clk,
+> +	msm_mux_uim2_data,
+> +	msm_mux_uim2_present,
+> +	msm_mux_uim2_reset,
+
+.. and uim2?
+
+> +	msm_mux_usb_phy,
+> +	msm_mux_vfr_1,
+> +	msm_mux_vsense_trigger,
+> +	msm_mux_wlan1_adc0,
+> +	msm_mux_wlan1_adc1,
+> +	msm_mux_wlan2_adc0,
+> +	msm_mux_wlan2_adc1,
+> +	msm_mux__,
+> +};
+> +
+>
+[SNIP]
+>
+> +
+> +static const struct msm_pinctrl_soc_data sm6350_pinctrl = {
+> +	.pins = sm6350_pins,
+> +	.npins = ARRAY_SIZE(sm6350_pins),
+> +	.functions = sm6350_functions,
+> +	.nfunctions = ARRAY_SIZE(sm6350_functions),
+> +	.groups = sm6350_groups,
+> +	.ngroups = ARRAY_SIZE(sm6350_groups),
+> +	.ngpios = 157,
+> +	.wakeirq_map = sm6350_pdc_map,
+> +	.nwakeirq_map = ARRAY_SIZE(sm6350_pdc_map),
+> +	.wakeirq_dual_edge_errata = true,
+> +};
+> +
+> +static int sm6350_pinctrl_probe(struct platform_device *pdev)
+> +{
+> +	return msm_pinctrl_probe(pdev, &sm6350_pinctrl);
+> +}
+> +
+> +static const struct of_device_id sm6350_pinctrl_of_match[] = {
+> +	{ .compatible = "qcom,sm6350-tlmm", },
+> +	{ },
+
+No need for a trailing comma here ;)
+
+> +};
+> +
+> +static struct platform_driver sm6350_pinctrl_driver = {
+> +	.driver = {
+> +		.name = "sm6350-pinctrl",
+> +		.of_match_table = sm6350_pinctrl_of_match,
+> +	},
+> +	.probe = sm6350_pinctrl_probe,
+> +	.remove = msm_pinctrl_remove,
+> +};
+> +
+> +static int __init sm6350_pinctrl_init(void)
+> +{
+> +	return platform_driver_register(&sm6350_pinctrl_driver);
+> +}
+> +arch_initcall(sm6350_pinctrl_init);
+> +
+> +static void __exit sm6350_pinctrl_exit(void)
+> +{
+> +	platform_driver_unregister(&sm6350_pinctrl_driver);
+> +}
+> +module_exit(sm6350_pinctrl_exit);
+> +
+> +MODULE_DESCRIPTION("QTI sm6350 pinctrl driver");
+> +MODULE_LICENSE("GPL v2");
+> +MODULE_DEVICE_TABLE(of, sm6350_pinctrl_of_match);
+
+Some/most(?) newer drivers also use the name tlmm instead of pinctrl in the 
+function names and in the .name of the driver.
+
+Regards,
+Luca
+
 
