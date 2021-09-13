@@ -2,157 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C6EAA409D70
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 21:51:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A9683409D83
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 21:57:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242071AbhIMTwg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Sep 2021 15:52:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36308 "EHLO
+        id S242447AbhIMT6a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Sep 2021 15:58:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37638 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240919AbhIMTwg (ORCPT
+        with ESMTP id S231727AbhIMT63 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Sep 2021 15:52:36 -0400
+        Mon, 13 Sep 2021 15:58:29 -0400
 Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F547C061762
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 12:51:20 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id i8-20020a056830402800b0051afc3e373aso14992176ots.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 12:51:20 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8AA1BC061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 12:57:13 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id m7-20020a9d4c87000000b0051875f56b95so14995259otf.6
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 12:57:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to;
-        bh=7y5Kp92MxlMIM/1uVfkHDfbY3sPUaGnffDNVZpUsrD8=;
-        b=Zodc0o0JSl2wPuA2Y12NHWaoDY6QABXb137QrHTXqY11BK/0mIsSmDtqRM4Zm7UmRG
-         NDS8f4Q5f7Sc3gTutg/hC+SubqhccAhKu6HsGcUna0XluSh0IyQOT9ytmBIL+CvFukJv
-         wuSKCsLqUBP1ML9pxEFAKZPdUExJgd3OvfLFI=
+         :subject:to:cc;
+        bh=oVrHBVnA82OtmOYjdYw081CjAbJqok+5sFDiTTmJyOY=;
+        b=FKMBKQTeyyzPpKaEb0ZcqQGcGxi2u+oJ6BAbbSTLb/qmG6yYs7aD8TekL6WQQLnawc
+         gVaE3anPh7aiJhwpP4AmOxXAdbB/YtbBELHX2VQZ7uyUKUlafQsivwu2uKS9ajmfmqof
+         WuOlWoTKO6xgV1zumIHyL4ZAU1I5UwdVXEfIM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to;
-        bh=7y5Kp92MxlMIM/1uVfkHDfbY3sPUaGnffDNVZpUsrD8=;
-        b=A8W6AENgAzRjzQR8uOyue/mXnrBPwFL5rHnd1rgH/pELtED5z8CK+QoDP8rM3XDJcZ
-         fVdY6/d/wr1UiEZWtq53MrjWGMt82wCnt/lcBiCxV+HYMCx07uDuZIGvYwtGUMmRYE6C
-         5Ev35bLaUbk2cd5koW1rfmF+R7jWVv18gKMlElFVeLmG4xcVUixdJQYcKUV6khzxAqbg
-         j3rPWZeCzDbvpjKl1kPTr3apHiUO8CQyFxS2WXLG8YJmfx4EecchBzDly2Le/khkDgSS
-         jyaMCJSyNuHwhmzI7wUW2lAxEpYZGbjKfcGDtOjHwkDUSeEwI+C/nsP3te8YuaGl3bD8
-         gBXQ==
-X-Gm-Message-State: AOAM533YuUt9x9j/LoeKqsypefiRPDD9jRC/uoY7Xv39a5bzBsbasVul
-        a6D7cbZkSt0XIJTXlbR6656rCX0u4IJn31xNmYt3Rw==
-X-Google-Smtp-Source: ABdhPJy8cOper52GzW4GbJAI4BPyVQYu27nMzrhL6XZsTO4p+Lv1yS1UiO9YJYTrQ5nwZM9IcOtzIoPX1a3xvmpfAnI=
-X-Received: by 2002:a05:6830:18c7:: with SMTP id v7mr11189838ote.126.1631562679479;
- Mon, 13 Sep 2021 12:51:19 -0700 (PDT)
+         :user-agent:date:message-id:subject:to:cc;
+        bh=oVrHBVnA82OtmOYjdYw081CjAbJqok+5sFDiTTmJyOY=;
+        b=CHbX8VJtzhBVnyoBbEWcPd6hVaQhn8/S4vosmb+OfDIUnboxkURj6fAQtWhJURJCNc
+         tBkcXQfyfwHnNVnRtaA8ZoEAUQxFGeALRpk283MmY/domEDqtLyK8N1pRhZVGgp+dIum
+         aXqM0qEg2qKhl8rg8PS/HrvRhZoOUyjeANZIVq2jxCx6DjrKAIzNGaCrA13KiZ+elxuo
+         DTembenzGR1MzofRTrJuaB5Q0Tob5HsIc1cydabBhJyih+rU3z/EH8R0Nw9GE/ino0HD
+         6WkBCh281+VxYeIJpAJwjV2ZQv/oSpBgC9DDp2+EGaGnG3lISA1QecReM9HQV9FzYBmp
+         CpQA==
+X-Gm-Message-State: AOAM530V7Su8nllsRrX3/fP3lsR7+ic8EtntcXADP0hXYctp273WmhYl
+        lTugXgBKjBBOFc3aKIWT7nJgXG1n6YLd+KT/o9MkAg==
+X-Google-Smtp-Source: ABdhPJwQxAL+ThVF6V+sJim9YhLgx5h9y9zXk04Yj0aLrvGNLZyipOd51mVO66boDMbOaqY+usQDCemHnXuynotgc7Q=
+X-Received: by 2002:a05:6830:719:: with SMTP id y25mr11159215ots.77.1631563032742;
+ Mon, 13 Sep 2021 12:57:12 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 13 Sep 2021 12:51:19 -0700
+ HTTPREST; Mon, 13 Sep 2021 12:57:12 -0700
 MIME-Version: 1.0
-In-Reply-To: <1631539062-28577-2-git-send-email-srivasam@codeaurora.org>
-References: <1631539062-28577-1-git-send-email-srivasam@codeaurora.org> <1631539062-28577-2-git-send-email-srivasam@codeaurora.org>
+In-Reply-To: <1631530735-19811-1-git-send-email-rnayak@codeaurora.org>
+References: <1631530735-19811-1-git-send-email-rnayak@codeaurora.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.9.1
-Date:   Mon, 13 Sep 2021 12:51:19 -0700
-Message-ID: <CAE-0n50=ABP+fs1U3JjiqMSKphfxFsZBqQQYwVH2o_iOE1Wu_g@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] ASoC: google: dt-bindings: Add sc7280-herobrine
- machine bindings
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        agross@kernel.org, alsa-devel@alsa-project.org,
-        bgoswami@codeaurora.org, bjorn.andersson@linaro.org,
-        broonie@kernel.org, devicetree@vger.kernel.org,
-        judyhsiao@chromium.org, lgirdwood@gmail.com,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        perex@perex.cz, plai@codeaurora.org, robh+dt@kernel.org,
-        rohitkr@codeaurora.org, srinivas.kandagatla@linaro.org,
-        tiwai@suse.com
+Date:   Mon, 13 Sep 2021 12:57:12 -0700
+Message-ID: <CAE-0n51miUjP4dg4wQR_JBwNNvMNqAafv7jFvEKU+MrfQmhV5A@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280-idp: Add vcc-supply for qfprom
+To:     Rajendra Nayak <rnayak@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, rbokka@codeaurora.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Srinivasa Rao Mandadapu (2021-09-13 06:17:41)
-> diff --git a/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml b/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
-> new file mode 100644
-> index 0000000..e0d705f
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
-> @@ -0,0 +1,169 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/sound/google,sc7280-herobrine.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Google SC7280-Herobrine ASoC sound card driver
-> +
-> +maintainers:
-> +  - Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-> +  - Judy Hsiao <judyhsiao@chromium.org>
-> +
-> +description:
-> +  This binding describes the SC7280 sound card which uses LPASS for audio.
-> +
-> +properties:
-> +  compatible:
-> +    enum:
-> +      - google,sc7280-herobrine
-> +
-> +  audio-routing:
-> +    $ref: /schemas/types.yaml#/definitions/non-unique-string-array
-> +    description:
-> +      A list of the connections between audio components. Each entry is a
-> +      pair of strings, the first being the connection's sink, the second
-> +      being the connection's source.
-> +
-> +  model:
-> +    $ref: /schemas/types.yaml#/definitions/string
-> +    description: User specified audio sound card name
-> +
-> +  "#address-cells":
-> +    const: 1
-> +
-> +  "#size-cells":
-> +    const: 0
-> +
-> +patternProperties:
-> +  "^dai-link@[0-9a-f]$":
-> +    description:
-> +      Each subnode represents a dai link. Subnodes of each dai links would be
-> +      cpu/codec dais.
-> +
-> +    type: object
-> +
-> +    properties:
-> +      link-name:
-> +        description: Indicates dai-link name and PCM stream name.
-> +        $ref: /schemas/types.yaml#/definitions/string
-> +        maxItems: 1
-> +
-> +      reg:
-> +        maxItems: 1
-> +        description: dai link address.
-> +
-> +      cpu:
-> +        description: Holds subnode which indicates cpu dai.
-> +        type: object
-> +        properties:
-> +          sound-dai: true
+Quoting Rajendra Nayak (2021-09-13 03:58:55)
+> Add vcc-supply for the IDP boards that was missed when the
+> qfprom device tree properties were added for the sc7280 SoC.
+>
+> Fixes: c1b2189a19cf ("arm64: dts: qcom: sc7280: Add qfprom node")
+> Reported-by: satya priya <skakit@codeaurora.org>
+> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> ---
 
-Shouldn't sound-dai be required?
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 4 ++++
+>  1 file changed, 4 insertions(+)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> index 371a2a9..99f9ee5 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> @@ -207,6 +207,10 @@
+>         };
+>  };
+>
+> +&qfprom {
+
+Maybe that node should also be marked status = "disabled" by default so
+that it can only be marked OK if the board has setup the regulator
+properly?
+
+> +       vcc-supply = <&vreg_l1c_1p8>;
+> +};
 > +
-> +      codec:
-> +        description: Holds subnode which indicates codec dai.
-> +        type: object
-> +        properties:
-> +          sound-dai: true
-
-Shouldn't sound-dai be required? I don't know but maybe also additional
-properties is false for this node too?
-
-> +
-> +    required:
-> +      - link-name
-> +      - cpu
-> +      - codec
-
-Should 'reg' be required?
-
-> +
-> +    additionalProperties: false
+>  &qupv3_id_0 {
+>         status = "okay";
+>  };
