@@ -2,43 +2,43 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1235C40897A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 12:54:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 41EB140897D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 12:54:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239257AbhIMKzx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Sep 2021 06:55:53 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51504 "EHLO mail.kernel.org"
+        id S239335AbhIMKzy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Sep 2021 06:55:54 -0400
+Received: from mail.kernel.org ([198.145.29.99]:51564 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S239298AbhIMKzr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Sep 2021 06:55:47 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 0DD4760F12;
-        Mon, 13 Sep 2021 10:54:30 +0000 (UTC)
+        id S239281AbhIMKzt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 Sep 2021 06:55:49 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id B0C3461004;
+        Mon, 13 Sep 2021 10:54:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631530471;
-        bh=+LuT1nw1zwnEKWg8ze5we++x+gTI9O+Ydnbmy+cNIDk=;
+        s=k20201202; t=1631530474;
+        bh=CBaronYiroxiOitWnu3/lsS9n0AaVmXWm4fRuQVuEZQ=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=bNahRGyD1ZY6zifYN/gxH5aVeOELABzlt4ajoCiJRWLAPK5COx9axY0N5rjUmWE4V
-         0b/4W4ggOtOwniiAcBF/ust8zByALc111DVKiZGddaPPyWPeR4Dd3moLMYNgG0gkz1
-         2PFhTwWsV6p3dm3V2NYsMuyhMBJlnAHZXnBU24U9z2pxiTbxxjiWSCj7wM2tly4fHD
-         3kliVyMz1SFgcQEAVBQs9YXyfQyMGkUDTy18U8vW3gdTxNObaIQGKlfUa+rrrpLJyJ
-         H+3Yi2bmfRHtKIHB2xAakl9JuBB8GrFz3G7s6zOHnayTAHdXZeqP+RUKckhfZ5aUYh
-         +TY/+KiIqSFyQ==
+        b=LqpGszfcgQvhMbh8xPL1iFBRDyfWeUBd3GxrMGbBTN1L/Pp6ZwJRMTQG1Tps2d0Mo
+         phCkfV+v+XsTHGXMjYEKzoNCNwK1KmO54oT9IbNuz7hIhx55BRMc6QIT/gfCIzzNqL
+         0kMRP7Z69c0dRXJtXbcHIYDgjlymVl3hC53N3dGq/rjOGgGchxr8nc2mxquqrNpQFo
+         CQ7xY32MD13Z8/zjNagnHhPtMnEoeOAkycZtqs7YPJ0xAescQA2gHSjQWeTysaseWt
+         bD5yU7RmLC0yOKPLTpRJ7hQMG2uXq/+0EMvFd3xCcMFSqn95yPgOp2eb5bYxjzU6hx
+         Tj4M9W4780mVQ==
 From:   Mark Brown <broonie@kernel.org>
-To:     perex@perex.cz, plai@codeaurora.org, linux-kernel@vger.kernel.org,
+To:     agross@kernel.org, perex@perex.cz, linux-kernel@vger.kernel.org,
         srinivas.kandagatla@linaro.org, alsa-devel@alsa-project.org,
         bgoswami@codeaurora.org, bjorn.andersson@linaro.org,
-        rohitkr@codeaurora.org, robh+dt@kernel.org, lgirdwood@gmail.com,
-        devicetree@vger.kernel.org, agross@kernel.org, tiwai@suse.com,
-        linux-arm-msm@vger.kernel.org, swboyd@chromium.org,
+        rohitkr@codeaurora.org, devicetree@vger.kernel.org,
+        robh+dt@kernel.org, lgirdwood@gmail.com, plai@codeaurora.org,
+        tiwai@suse.com, linux-arm-msm@vger.kernel.org, swboyd@chromium.org,
         Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
         judyhsiao@chromium.org
 Cc:     Mark Brown <broonie@kernel.org>
-Subject: Re: [PATCH] ASoC: dt-bindings: lpass: add binding headers for digital codecs
-Date:   Mon, 13 Sep 2021 11:53:13 +0100
-Message-Id: <163152996584.45703.6233667847951933638.b4-ty@kernel.org>
+Subject: Re: [PATCH v2] ASoC: dt-bindings: lpass: add binding headers for digital codecs
+Date:   Mon, 13 Sep 2021 11:53:14 +0100
+Message-Id: <163152996586.45703.5277154686084016527.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <1630934854-14086-1-git-send-email-srivasam@codeaurora.org>
-References: <1630934854-14086-1-git-send-email-srivasam@codeaurora.org>
+In-Reply-To: <1631109831-1360-1-git-send-email-srivasam@codeaurora.org>
+References: <1631109831-1360-1-git-send-email-srivasam@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -46,7 +46,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 6 Sep 2021 18:57:34 +0530, Srinivasa Rao Mandadapu wrote:
+On Wed, 8 Sep 2021 19:33:51 +0530, Srinivasa Rao Mandadapu wrote:
 > Add header defining for lpass internal digital codecs rx,tx and va
 > dai node id's.
 > 
