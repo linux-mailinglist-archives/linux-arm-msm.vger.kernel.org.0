@@ -2,314 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7258D407ADE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 12 Sep 2021 01:28:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7DEA5408486
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 08:10:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234806AbhIKX32 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 11 Sep 2021 19:29:28 -0400
-Received: from mail.z3ntu.xyz ([128.199.32.197]:56516 "EHLO mail.z3ntu.xyz"
+        id S237373AbhIMGMM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Sep 2021 02:12:12 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:15559 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234643AbhIKX3Z (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 11 Sep 2021 19:29:25 -0400
-Received: from localhost.localdomain (ip-213-127-63-121.ip.prioritytelecom.net [213.127.63.121])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id CCC61CB201;
-        Sat, 11 Sep 2021 23:28:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1631402891; bh=vmQ4rNn9xJWouEc9m40mcIxw0axx16PXLSt9GfYTuFM=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=nNFw4kxUDtCedYnt3PKINnVoATt+CXO0+C0jVgGkkC2mRgemdY0okPhOH5LvmnI1b
-         LFmhpnbju2WpvK5k7AJ/QWp4vh/mbcz1ad2RRnv9nq+SfHkvMzPMIe/z6QOnvykJJL
-         f38X2ldlW80KJFNkGrYSIYiKJH1qm+7ZFLyeoIQ8=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, bartosz.dudziak@snejp.pl,
-        Luca Weiss <luca@z3ntu.xyz>, Arnd Bergmann <arnd@arndb.de>,
-        Olof Johansson <olof@lixom.net>, soc@kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 8/8] ARM: dts: qcom: Add support for LG G Watch R
-Date:   Sun, 12 Sep 2021 01:27:02 +0200
-Message-Id: <20210911232707.259615-9-luca@z3ntu.xyz>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20210911232707.259615-1-luca@z3ntu.xyz>
-References: <20210911232707.259615-1-luca@z3ntu.xyz>
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S237330AbhIMGMF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 Sep 2021 02:12:05 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1631513450; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=X0lqQRbWV8fWiShZFkmLGQXY4Cdbj1ipT5h/wddHdkw=; b=xXn+hJ9Tfr9jGMqCYp+G50T24AzloGT+RbXkDvq2R4ZnztOmtstnWKSMbokS3iaq9J3j7iDw
+ c/ZAsQrGcMuVkiovAmkp+am7CPY+K4oqmnsxZjVSMp3/UxJ5IAA2zVhdNAOrkOt05pZEEKnT
+ NzrH9TkUuNFaf1x5S/A45iSbh5s=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 613eeb3e648642cc1cc3d5b1 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 13 Sep 2021 06:10:06
+ GMT
+Sender: zijuhu=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 59DFBC4360C; Mon, 13 Sep 2021 06:10:06 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: zijuhu)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C88DAC4338F;
+        Mon, 13 Sep 2021 06:10:02 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org C88DAC4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Zijun Hu <zijuhu@codeaurora.org>
+To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com
+Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
+        rjliao@codeaurora.org, zijuhu@codeaurora.org, tjiang@codeaurora.org
+Subject: [PATCH v9] Bluetooth: btusb: Add support using different nvm for variant WCN6855 controller
+Date:   Mon, 13 Sep 2021 14:09:59 +0800
+Message-Id: <1631513399-22826-1-git-send-email-zijuhu@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a device tree for the LG G Watch R smartwatch, manufactured by LG
-Electronics and based on the msm8226 platform (apq8026).
+the RF performance of wcn6855 soc chip from different foundries will be
+difference, so we should use different nvm to configure them.
 
-Currently UART, internal storage, power button and touchscreen are
-supported.
-
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
 ---
- arch/arm/boot/dts/Makefile                   |   1 +
- arch/arm/boot/dts/qcom-apq8026-lge-lenok.dts | 237 +++++++++++++++++++
- 2 files changed, 238 insertions(+)
- create mode 100644 arch/arm/boot/dts/qcom-apq8026-lge-lenok.dts
+ drivers/bluetooth/btusb.c | 51 +++++++++++++++++++++++++++++++++++------------
+ 1 file changed, 38 insertions(+), 13 deletions(-)
 
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index 7e0934180724..8cb859728bd9 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -939,6 +939,7 @@ dtb-$(CONFIG_ARCH_OXNAS) += \
- 	ox810se-wd-mbwe.dtb \
- 	ox820-cloudengines-pogoplug-series-3.dtb
- dtb-$(CONFIG_ARCH_QCOM) += \
-+	qcom-apq8026-lge-lenok.dtb \
- 	qcom-apq8060-dragonboard.dtb \
- 	qcom-apq8064-cm-qs600.dtb \
- 	qcom-apq8064-ifc6410.dtb \
-diff --git a/arch/arm/boot/dts/qcom-apq8026-lge-lenok.dts b/arch/arm/boot/dts/qcom-apq8026-lge-lenok.dts
-new file mode 100644
-index 000000000000..02c8dfb0988a
---- /dev/null
-+++ b/arch/arm/boot/dts/qcom-apq8026-lge-lenok.dts
-@@ -0,0 +1,237 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2021, Luca Weiss <luca@z3ntu.xyz>
-+ */
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 928cbfa4c42d..7b23cfd131f6 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -3161,6 +3161,9 @@ static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
+ #define QCA_DFU_TIMEOUT		3000
+ #define QCA_FLAG_MULTI_NVM      0x80
+ 
++#define WCN6855_2_0_RAM_VERSION_GF 0x400c1200
++#define WCN6855_2_1_RAM_VERSION_GF 0x400c1211
 +
-+/dts-v1/;
+ struct qca_version {
+ 	__le32	rom_version;
+ 	__le32	patch_version;
+@@ -3192,6 +3195,7 @@ static const struct qca_device_info qca_devices_table[] = {
+ 	{ 0x00000302, 28, 4, 16 }, /* Rome 3.2 */
+ 	{ 0x00130100, 40, 4, 16 }, /* WCN6855 1.0 */
+ 	{ 0x00130200, 40, 4, 16 }, /* WCN6855 2.0 */
++	{ 0x00130201, 40, 4, 16 }, /* WCN6855 2.1 */
+ };
+ 
+ static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 request,
+@@ -3346,6 +3350,31 @@ static int btusb_setup_qca_load_rampatch(struct hci_dev *hdev,
+ 	return err;
+ }
+ 
++static void btusb_generate_qca_nvm_name(char *fwname,
++					size_t max_size,
++					struct qca_version *ver,
++					char *variant)
++{
++	char *sep = (strlen(variant) == 0) ? "" : "_";
++	u16 board_id = le16_to_cpu(ver->board_id);
++	u32 rom_version = le32_to_cpu(ver->rom_version);
 +
-+#include "qcom-msm8226.dtsi"
-+#include "qcom-pm8226.dtsi"
++	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
++		/* if boardid equal 0, use default nvm without suffix */
++		if (board_id == 0x0) {
++			snprintf(fwname, max_size, "qca/nvm_usb_%08x%s%s.bin",
++				rom_version, sep, variant);
++		} else {
++			snprintf(fwname, max_size, "qca/nvm_usb_%08x%s%s_%04x.bin",
++				rom_version, sep, variant, board_id);
++		}
++	} else {
++		snprintf(fwname, max_size, "qca/nvm_usb_%08x.bin",
++			rom_version);
++	}
 +
-+/ {
-+	model = "LG G Watch R";
-+	compatible = "lge,lenok", "qcom,apq8026";
-+	qcom,board-id = <132 0x0a>;
-+	qcom,msm-id = <199 0x20000>;
++}
 +
-+	aliases {
-+		serial0 = &blsp1_uart3;
-+	};
+ static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
+ 				    struct qca_version *ver,
+ 				    const struct qca_device_info *info)
+@@ -3354,19 +3383,15 @@ static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
+ 	char fwname[64];
+ 	int err;
+ 
+-	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
+-		/* if boardid equal 0, use default nvm without surfix */
+-		if (le16_to_cpu(ver->board_id) == 0x0) {
+-			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
+-				 le32_to_cpu(ver->rom_version));
+-		} else {
+-			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_%04x.bin",
+-				le32_to_cpu(ver->rom_version),
+-				le16_to_cpu(ver->board_id));
+-		}
+-	} else {
+-		snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
+-			 le32_to_cpu(ver->rom_version));
++	switch (ver->ram_version) {
++	case WCN6855_2_0_RAM_VERSION_GF:
++	case WCN6855_2_1_RAM_VERSION_GF:
++			btusb_generate_qca_nvm_name(fwname, sizeof(fwname), ver, "gf");
++		break;
 +
-+	chosen {
-+		stdout-path = "serial0:115200n8";
-+	};
-+};
-+
-+&blsp1_i2c5 {
-+	status = "okay";
-+	clock-frequency = <384000>;
-+
-+	touchscreen@20 {
-+		compatible = "syna,rmi4-i2c";
-+		reg = <0x20>;
-+
-+		interrupts-extended = <&tlmm 17 IRQ_TYPE_EDGE_FALLING>;
-+		vdd-supply = <&pm8226_l15>;
-+		vio-supply = <&pm8226_l22>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&touch_pins>;
-+
-+		#address-cells = <1>;
-+		#size-cells = <0>;
-+
-+		rmi4-f01@1 {
-+			reg = <0x1>;
-+			syna,nosleep-mode = <1>;
-+		};
-+
-+		rmi4-f12@12 {
-+			reg = <0x12>;
-+			syna,sensor-type = <1>;
-+		};
-+	};
-+};
-+
-+&blsp1_uart3 {
-+	status = "okay";
-+};
-+
-+&sdhc_1 {
-+	status = "okay";
-+
-+	vmmc-supply = <&pm8226_l17>;
-+	vqmmc-supply = <&pm8226_l6>;
-+
-+	bus-width = <8>;
-+	non-removable;
-+
-+	pinctrl-names = "default";
-+	pinctrl-0 = <&sdhc1_pin_a>;
-+};
-+
-+&rpm_requests {
-+	pm8226-regulators {
-+		compatible = "qcom,rpm-pm8226-regulators";
-+
-+		pm8226_s1: s1 {
-+			regulator-min-microvolt = <500000>;
-+			regulator-max-microvolt = <1275000>;
-+		};
-+		pm8226_s3: s3 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1350000>;
-+		};
-+		pm8226_s4: s4 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2200000>;
-+		};
-+		pm8226_s5: s5 {
-+			regulator-min-microvolt = <1150000>;
-+			regulator-max-microvolt = <1150000>;
-+		};
-+
-+		pm8226_l1: l1 {
-+			regulator-min-microvolt = <1225000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+		pm8226_l2: l2 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+		pm8226_l3: l3 {
-+			regulator-min-microvolt = <750000>;
-+			regulator-max-microvolt = <1337500>;
-+		};
-+		pm8226_l4: l4 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+		pm8226_l5: l5 {
-+			regulator-min-microvolt = <1200000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+		pm8226_l6: l6 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+		pm8226_l7: l7 {
-+			regulator-min-microvolt = <1850000>;
-+			regulator-max-microvolt = <1850000>;
-+		};
-+		pm8226_l8: l8 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+		pm8226_l9: l9 {
-+			regulator-min-microvolt = <2050000>;
-+			regulator-max-microvolt = <2050000>;
-+		};
-+		pm8226_l10: l10 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+		pm8226_l12: l12 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+		pm8226_l14: l14 {
-+			regulator-min-microvolt = <2750000>;
-+			regulator-max-microvolt = <2750000>;
-+		};
-+		pm8226_l15: l15 {
-+			regulator-min-microvolt = <3300000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
-+		pm8226_l16: l16 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3350000>;
-+		};
-+		pm8226_l17: l17 {
-+			regulator-min-microvolt = <2950000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+		pm8226_l18: l18 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3300000>;
-+		};
-+		pm8226_l19: l19 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3000000>;
-+		};
-+		pm8226_l20: l20 {
-+			regulator-min-microvolt = <3075000>;
-+			regulator-max-microvolt = <3075000>;
-+		};
-+		pm8226_l21: l21 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+		pm8226_l22: l22 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <1800000>;
-+		};
-+		pm8226_l23: l23 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2950000>;
-+		};
-+		pm8226_l24: l24 {
-+			regulator-min-microvolt = <1300000>;
-+			regulator-max-microvolt = <1350000>;
-+		};
-+		pm8226_l25: l25 {
-+			regulator-min-microvolt = <1775000>;
-+			regulator-max-microvolt = <2125000>;
-+		};
-+		pm8226_l26: l26 {
-+			regulator-min-microvolt = <1225000>;
-+			regulator-max-microvolt = <1225000>;
-+		};
-+		pm8226_l27: l27 {
-+			regulator-min-microvolt = <2050000>;
-+			regulator-max-microvolt = <2050000>;
-+		};
-+		pm8226_l28: l28 {
-+			regulator-min-microvolt = <2700000>;
-+			regulator-max-microvolt = <3000000>;
-+		};
-+
-+		pm8226_lvs1: lvs1 {};
-+	};
-+};
-+
-+&tlmm {
-+	sdhc1_pin_a: sdhc1-pin-active {
-+		clk {
-+			pins = "sdc1_clk";
-+			drive-strength = <10>;
-+			bias-disable;
-+		};
-+
-+		cmd-data {
-+			pins = "sdc1_cmd", "sdc1_data";
-+			drive-strength = <10>;
-+			bias-pull-up;
-+		};
-+	};
-+
-+	touch_pins: touch {
-+		irq {
-+			pins = "gpio17";
-+			function = "gpio";
-+
-+			drive-strength = <8>;
-+			bias-pull-down;
-+			input-enable;
-+		};
-+
-+		reset {
-+			pins = "gpio16";
-+			function = "gpio";
-+
-+			drive-strength = <8>;
-+			bias-disable;
-+			output-high;
-+		};
-+	};
-+};
++	default:
++			btusb_generate_qca_nvm_name(fwname, sizeof(fwname), ver, "");
++		break;
+ 	}
+ 
+ 	err = request_firmware(&fw, fwname, &hdev->dev);
 -- 
-2.33.0
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
 
