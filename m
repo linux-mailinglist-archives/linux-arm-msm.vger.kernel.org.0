@@ -2,123 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E9BD4096BB
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 17:06:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C17834096E5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 17:16:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345904AbhIMPHy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Sep 2021 11:07:54 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53524 "EHLO
+        id S1347167AbhIMPSA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Sep 2021 11:18:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55776 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345156AbhIMPHv (ORCPT
+        with ESMTP id S1344303AbhIMPRh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Sep 2021 11:07:51 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B77E7C00876E
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 06:43:09 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id a4so21225441lfg.8
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 06:43:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=tQAMjy8VRvJI6lW4tYB0PDHpx0tw8jGULSmN/FaNG+g=;
-        b=Bbb/S9bUWOBSsQ3pUMTVPvPM3mELyvG1d1Lp39NxhVgmVk+79l6sqgb6LzWCOb4L0G
-         4xOUKFakiyAC6nrltsn+MB6bUBos4WlUB0nm7FHkp2RF21NdRLUEm4sunjTSdshoRv4K
-         eNLAmdHSnHkdwraYqYyvKCPiIaApFzA0oCxB65b4ONd9T/nu22W+N71E6gYzBiva34CW
-         IgswZYwE132B2XWdZPaLFJFxywQZsw2cZ4gmU7fM6bSCADjsWz2QqrQNXrytfyNxu0Ed
-         QWM6q7ZowPchznXUFAyvgGnmTOZr9Qu57dB5+Rp0N50r+t46TxzQtEkrBzX3RfDkuaUN
-         gsXA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=tQAMjy8VRvJI6lW4tYB0PDHpx0tw8jGULSmN/FaNG+g=;
-        b=yo+egkTUZ2zV7rO/FcUK+UYUk8bvSfQcCbBNQ17byKTTaaZ7W38xZveJu7QZURYZqB
-         GcV9gfhoTutfst+XnWECKJxvqQ7GGgqP8rtCmrTWEC0Dv9oBXJzLIiC9rC8VA/9JfaUa
-         sYNqixj3uQigRA04LPv9kJnNzq+/y+pH7ciN8FCQQ6/b10Ad0iOydDvxblXTNVfRTPUS
-         nyFPLyWz+yYNS74TfL+s/MnbCgf+WwfEngKLD+C7HwncLkFW7I/YtdMmATpaYZlA+b8w
-         2YFqb1A42La5KnrxJmlT4p4bPrvLjDGBwerWlKHZLWwcM3wYZ+pRe6U6PShroqGXYHEe
-         t1gQ==
-X-Gm-Message-State: AOAM532azvSjvxhp5s7QJvFRA7g+1all3V7FdNOYQgclpGPddbvXG5sa
-        tmjWGIbglMiD8EEehjut8A1So82cTE+f5zDk8UiuXg==
-X-Google-Smtp-Source: ABdhPJy07GBvfOdosgOPOaGQzsGX2CjzdZ3iQjt2WHHbgd+CW+rDXGN21SD5O2GYnEG/e8C/opszahQX3cMDMdCSpjk=
-X-Received: by 2002:a05:6512:6cd:: with SMTP id u13mr8847405lff.184.1631540588087;
- Mon, 13 Sep 2021 06:43:08 -0700 (PDT)
+        Mon, 13 Sep 2021 11:17:37 -0400
+Received: from relay01.th.seeweb.it (relay01.th.seeweb.it [IPv6:2001:4b7a:2000:18::162])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 656B4C0E9CF3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 07:14:22 -0700 (PDT)
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 6CC6A1F4B9;
+        Mon, 13 Sep 2021 16:14:18 +0200 (CEST)
+Date:   Mon, 13 Sep 2021 16:14:17 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Cc:     robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
+        daniel@ffwll.ch, dmitry.baryshkov@linaro.org,
+        abhinavk@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org, konrad.dybcio@somainline.org,
+        martin.botka@somainline.org, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org, paul.bouchara@somainline.org
+Subject: Re: [PATCH v2 2/2] drm/msm/dpu: Fix timeout issues on command mode
+ panels
+Message-ID: <20210913141417.7brqczhagufgqch2@SoMainline.org>
+References: <20210911163919.47173-1-angelogioacchino.delregno@somainline.org>
+ <20210911163919.47173-2-angelogioacchino.delregno@somainline.org>
 MIME-Version: 1.0
-References: <20210829131305.534417-1-dmitry.baryshkov@linaro.org>
- <20210829131305.534417-2-dmitry.baryshkov@linaro.org> <CAPDyKFp9CM+x505URK=hcO0QFqcZrpqzQ6uJQ=ZLR6uq-_d5Ew@mail.gmail.com>
- <a0f8766a-7810-0ca5-229a-a40f73041dd9@linaro.org>
-In-Reply-To: <a0f8766a-7810-0ca5-229a-a40f73041dd9@linaro.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Mon, 13 Sep 2021 15:42:31 +0200
-Message-ID: <CAPDyKFrfEQr0czXeNeJbKSfP0toKuowwOX7yb89c723BORRqCA@mail.gmail.com>
-Subject: Re: [RFC v2 01/13] power: add power sequencer subsystem
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-mmc <linux-mmc@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-bluetooth@vger.kernel.org, ath10k@lists.infradead.org,
-        linux-wireless <linux-wireless@vger.kernel.org>,
-        netdev <netdev@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210911163919.47173-2-angelogioacchino.delregno@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[...]
+On 2021-09-11 18:39:19, AngeloGioacchino Del Regno wrote:
+> In function dpu_encoder_phys_cmd_wait_for_commit_done we are always
+> checking if the relative CTL is started by waiting for an interrupt
+> to fire: it is fine to do that, but then sometimes we call this
+> function while the CTL is up and has never been put down, but that
+> interrupt gets raised only when the CTL gets a state change from
+> 0 to 1 (disabled to enabled), so we're going to wait for something
+> that will never happen on its own.
+> 
+> Solving this while avoiding to restart the CTL is actually possible
+> and can be done by just checking if it is already up and running
+> when the wait_for_commit_done function is called: in this case, so,
+> if the CTL was already running, we can say that the commit is done
+> if the command transmission is complete (in other terms, if the
+> interface has been flushed).
+> 
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 
-> >> +
-> >> +struct pwrseq *of_pwrseq_xlate_onecell(void *data, struct of_phandle_args *args)
-> >> +{
-> >> +       struct pwrseq_onecell_data *pwrseq_data = data;
-> >> +       unsigned int idx;
-> >> +
-> >> +       if (args->args_count != 1)
-> >> +               return ERR_PTR(-EINVAL);
-> >> +
-> >> +       idx = args->args[0];
-> >> +       if (idx >= pwrseq_data->num) {
-> >> +               pr_err("%s: invalid index %u\n", __func__, idx);
-> >> +               return ERR_PTR(-EINVAL);
-> >> +       }
-> >
-> > In many cases it's reasonable to leave room for future extensions, so
-> > that a provider could serve with more than one power-sequencer. I
-> > guess that is what you intend to do here, right?
-> >
-> > In my opinion, I don't think what would happen, especially since a
-> > power-sequence is something that should be specific to one particular
-> > device (a Qcom WiFi/Blutooth chip, for example).
-> >
-> > That said, I suggest limiting this to a 1:1 mapping between the device
-> > node and power-sequencer. I think that should simplify the code a bit.
->
-> In fact the WiFi/BT example itself provides a non 1:1 mapping. In my
-> current design the power sequencer provides two instances (one for WiFi,
-> one for BT). This allows us to move the knowledge about "enable" pins to
-> the pwrseq. Once the QCA BT driver acquires and powers up the pwrseq,
-> the BT part is ready. No need to toggle any additional pins. Once the
-> WiFi pwrseq is powered up, the WiFi part is present on the bus and
-> ready, without any additional pin toggling.
+This has unfortunately not solved any ctl_start timeout issues for me/us
+on other platforms yet, but for the code:
 
-Aha, that seems reasonable.
+Reviewed-by: Marijn Suijten <marijn.suijten@somainline.org>
 
->
-> I can move onecell support to the separate patch if you think this might
-> simplify the code review.
-
-It doesn't matter, both options work for me.
-
-[...]
-
-Kind regards
-Uffe
+> ---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 3 +++
+>  1 file changed, 3 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> index aa01698d6b25..aa5d3b3cef15 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> @@ -682,6 +682,9 @@ static int dpu_encoder_phys_cmd_wait_for_commit_done(
+>  	if (!dpu_encoder_phys_cmd_is_master(phys_enc))
+>  		return 0;
+>  
+> +	if (phys_enc->hw_ctl->ops.is_started(phys_enc->hw_ctl))
+> +		return dpu_encoder_phys_cmd_wait_for_tx_complete(phys_enc);
+> +
+>  	return _dpu_encoder_phys_cmd_wait_for_ctl_start(phys_enc);
+>  }
+>  
+> -- 
+> 2.32.0
+> 
