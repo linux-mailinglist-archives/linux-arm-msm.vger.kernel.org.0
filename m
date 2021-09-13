@@ -2,131 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 86DAA409B2A
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 19:45:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8538F409B74
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 19:58:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243763AbhIMRrE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Sep 2021 13:47:04 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:43612 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229937AbhIMRrD (ORCPT
+        id S239653AbhIMR7s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Sep 2021 13:59:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38066 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239541AbhIMR7r (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Sep 2021 13:47:03 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1631555148; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=FQM7/pY/WutvtlfFfc4iVulvOrjxzsE4ffU8N8bZXx0=; b=agM8KsJpA0TiRLzASaR73L9HKpOnXAMJfv0LKRPqwfTMt7hyGen/rHVmKEuwSei3AxVnHP5y
- g2M9RY8byAia1urbcVbbL4Xg9NoKqw93d0w9CyTYg8jBC7NeSMfryPD52LUTNI0dnRRJ098a
- 3dL1whhSGcx/G5po9wv/pFk8VPw=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 613f8e37648642cc1c5dd7b6 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 13 Sep 2021 17:45:27
- GMT
-Sender: deesin=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BEE1BC4338F; Mon, 13 Sep 2021 17:45:27 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.3] (unknown [122.163.130.38])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: deesin)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id DBB54C4361B;
-        Mon, 13 Sep 2021 17:45:22 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org DBB54C4361B
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH V2 1/1] soc: qcom: smp2p: Add wakeup capability to SMP2P
- IRQ
-To:     Stephen Boyd <swboyd@chromium.org>, bjorn.andersson@linaro.org,
-        clew@codeaurora.org, sibis@codeaurora.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org, Andy Gross <agross@kernel.org>
-References: <1629108335-23463-1-git-send-email-deesin@codeaurora.org>
- <CAE-0n528DuP4MiAOhYY+Du+L=OZaGM5YJm=NwWia3JF7hp7sAA@mail.gmail.com>
-From:   Deepak Kumar Singh <deesin@codeaurora.org>
-Message-ID: <4697bec1-af58-53e4-9fd1-293bfd8754be@codeaurora.org>
-Date:   Mon, 13 Sep 2021 23:15:19 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.12.0
+        Mon, 13 Sep 2021 13:59:47 -0400
+Received: from mail-qt1-x82d.google.com (mail-qt1-x82d.google.com [IPv6:2607:f8b0:4864:20::82d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7B61AC061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 10:58:31 -0700 (PDT)
+Received: by mail-qt1-x82d.google.com with SMTP id s15so8844294qta.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 10:58:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=poorly.run; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=x1esUjNDDpPwTIgE//tv/AYRTHQITQZPLKG3TQ/M4Aw=;
+        b=HSkzBKaW16XHN25FVhfE4ylfh7Ho8sKCp7NrHnYeZ9jqVbeqyvv5nhvkjL7XnJKf4/
+         BaklNXOp8gHXE+dIxpH1EqfKnYbBykjq53Yy+f9sYHgj5MhRKM3vU+TNRzbWCCrlgjRL
+         d6Btg46MYbzPzLbcJsGef7oPKYbzbT8e8DOQ5S6WvYFiPu11tikgrc5rpfIXNQze8xAS
+         EF5ybQt4EiD/YWqON6MYIWklZfZEaCODI3MttyJMNpzbQRoqnK4w7g5RcGHiZtTbrP1P
+         bFHxJyDV5PUtAZJoKr8Nn73rhfQAKxB5ggKQWeIGZ3g1VCe/ow++3JDp6sm+AthJmZrI
+         oqkw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=x1esUjNDDpPwTIgE//tv/AYRTHQITQZPLKG3TQ/M4Aw=;
+        b=KoUwwPKtaJ5+idOLCXE/ZX5ObAOj8EouH55KdRzEgVEvg273JHI1U3bjgaGIpiLAdO
+         7+GVnYu9/qQllcrOSMm12RmxSGDtj49TuAQmlGhC1MVZV7QoED+W7qn7hOD1JA1gWvv+
+         KWqkkHQBXmQCbpymU6CITf9zHpP5ylAp2jcXIXfYEm9TM/sQIGbwlEZRGvbw/7WbIxy6
+         601A5A61GqowF1GzMfZz975+wNxH6ylN9GWSJF69LTeJaoPt6uwyU9V42ss82iQu5J3G
+         uKzNjxhtzAGntMBCoo8G9fSYUsyUJWzUjE+iYziJVS1dEI/1TLU6fPu5ZBJ/MkSJgAGU
+         wwAw==
+X-Gm-Message-State: AOAM532ixPvhlSezlsLqRcq5LHf0Jmw4nQYse0Uhh6Gx5Xd2KjheLfLZ
+        uvVIY2ODOuqEZn1bc4rcySsN5Q==
+X-Google-Smtp-Source: ABdhPJwprGZQb5yj3SWlC8k2jMSq4z8CKpwRKlPSj4/nEKy9bCRmbnJ3kYbKUVAN837wrtFHdahvyQ==
+X-Received: by 2002:a05:622a:199f:: with SMTP id u31mr763515qtc.141.1631555910663;
+        Mon, 13 Sep 2021 10:58:30 -0700 (PDT)
+Received: from localhost ([167.100.64.199])
+        by smtp.gmail.com with ESMTPSA id v145sm5853873qkb.132.2021.09.13.10.58.30
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Mon, 13 Sep 2021 10:58:30 -0700 (PDT)
+From:   Sean Paul <sean@poorly.run>
+To:     dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Cc:     Sean Paul <seanpaul@chromium.org>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org
+Subject: [PATCH 08/14] drm/msm/dpu_kms: Re-order dpu includes
+Date:   Mon, 13 Sep 2021 13:57:39 -0400
+Message-Id: <20210913175747.47456-9-sean@poorly.run>
+X-Mailer: git-send-email 2.31.0
+In-Reply-To: <20210913175747.47456-1-sean@poorly.run>
+References: <20210913175747.47456-1-sean@poorly.run>
 MIME-Version: 1.0
-In-Reply-To: <CAE-0n528DuP4MiAOhYY+Du+L=OZaGM5YJm=NwWia3JF7hp7sAA@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
-Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Sean Paul <seanpaul@chromium.org>
 
-On 8/17/2021 1:53 AM, Stephen Boyd wrote:
-> Quoting Deepak Kumar Singh (2021-08-16 03:05:35)
->> Remote susbsystems notify fatal crash throught smp2p interrupt.
->> When modem/wifi crashes it can cause soc to come out of low power state
->> and may not allow again to enter in low power state until crash is handled.
->>
->> Mark smp2p interrupt wakeup capable so that interrupt handler is executed
->> and remote susbsystem crash can be handled in system  resume path.
->>
->> Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
->> ---
->>   drivers/soc/qcom/smp2p.c | 12 ++++++++++++
->>   1 file changed, 12 insertions(+)
->>
->> diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
->> index 2df4883..646848b 100644
->> --- a/drivers/soc/qcom/smp2p.c
->> +++ b/drivers/soc/qcom/smp2p.c
->> @@ -18,6 +18,7 @@
->>   #include <linux/soc/qcom/smem.h>
->>   #include <linux/soc/qcom/smem_state.h>
->>   #include <linux/spinlock.h>
->> +#include <linux/pm_wakeirq.h>
-> Please sort alphabetically by include name, 'p' before 's'.
->
->>   /*
->>    * The Shared Memory Point to Point (SMP2P) protocol facilitates communication
->> @@ -538,9 +539,20 @@ static int qcom_smp2p_probe(struct platform_device *pdev)
->>                  goto unwind_interfaces;
->>          }
->>
->> +       /* Setup smp2p interrupt as wakeup source */
-> This comment is bad. Please don't reiterate what the code is doing.
-> Instead, write something like
->
-> 	/*
-> 	 * Treat remoteproc crashes as wakeups by default so we handle
-> 	 * them sooner rather than along with the next wakeup (e.g.
-> 	 * power button). This avoids leaving the system in a shallower
-> 	 * suspend power state if a remoteproc crashes during suspend,
-> 	 * but requires userspace to actively suspend the device after
-> 	 * handling the crash, or CONFIG_PM_AUTOSLEEP to be true.
-> 	 */
->
->> +       ret = device_init_wakeup(&pdev->dev, true);
-> I still wonder if it's better to leave this off by default and only
-> enable it if the kernel is using autosuspend (PM_AUTOSLEEP). Then
-> userspace is responsible to decide if it can handle the wakeup with the
-> screen off, reload the remoteproc, and go back to suspend if it isn't
-> using autosuspend.
+Make includes alphabetical in dpu_kms.c
 
-Seems like not all targets use PM_AUTOSLEEP feature, even those targets 
-may require wakeup to handle
+Signed-off-by: Sean Paul <seanpaul@chromium.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
 
-modem crash so that important modem events are not missed. I think we 
-can keep wake up as default behavior
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+index ae48f41821cf..fb0d9f781c66 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+@@ -21,14 +21,14 @@
+ #include "msm_gem.h"
+ #include "disp/msm_disp_snapshot.h"
+ 
+-#include "dpu_kms.h"
+ #include "dpu_core_irq.h"
++#include "dpu_crtc.h"
++#include "dpu_encoder.h"
+ #include "dpu_formats.h"
+ #include "dpu_hw_vbif.h"
+-#include "dpu_vbif.h"
+-#include "dpu_encoder.h"
++#include "dpu_kms.h"
+ #include "dpu_plane.h"
+-#include "dpu_crtc.h"
++#include "dpu_vbif.h"
+ 
+ #define CREATE_TRACE_POINTS
+ #include "dpu_trace.h"
+-- 
+Sean Paul, Software Engineer, Google / Chromium OS
 
-and let the user space disable it through sysfs if it doesn't want it as 
-wake up source.
-
->> +       if (ret)
->> +               goto unwind_interfaces;
->> +
