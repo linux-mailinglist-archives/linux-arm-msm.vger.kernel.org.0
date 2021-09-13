@@ -2,236 +2,256 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 38B5740848B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 08:16:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0D0C4084B7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 08:29:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237193AbhIMGRO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Sep 2021 02:17:14 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:35944 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234655AbhIMGRN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Sep 2021 02:17:13 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1631513758; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=pREX3LGwYAggCgYEPmLhKYdIv1mP8IQUL0WMH1SUxdA=; b=wLMsUZ3UShA1TC05KHGw6gSEM1w+5NzGCxyEe60NY43Mg4DjQo8w3VI7tUVJjBH+tpnSBfh7
- JpNC6f7v7QO6xULA9TBZyE3AYU/vniAO4t50bnPyeTpMdODRVoGmZeNCafqgn5ICWaFbW9A3
- i6kRZUzVBec0bRbGUrFR8TpydUU=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
- 613eec9dd914b051822d1fd3 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 13 Sep 2021 06:15:57
- GMT
-Sender: akhilpo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A0E48C43460; Mon, 13 Sep 2021 06:15:56 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.12] (unknown [59.89.228.88])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CEDFAC4338F;
-        Mon, 13 Sep 2021 06:15:49 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org CEDFAC4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH] drm/msm: Disable frequency clamping on a630
-To:     Caleb Connolly <caleb.connolly@linaro.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Sharat Masetty <smasetty@codeaurora.org>,
-        open list <linux-kernel@vger.kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>
-References: <e2cebf65-012d-f818-8202-eb511c996e28@linaro.org>
- <CAF6AEGs11aYnkL30kp79pMqLTg3_4otFwG2Oc890Of2ndLbELw@mail.gmail.com>
- <b7334a1a-c4ad-da90-03b4-0d19e1811b13@linaro.org>
- <CAF6AEGv0WWB3Z1hmXf8vxm1_-d7fsNBRcaQF35aE2JXcJn8-cA@mail.gmail.com>
- <8aa590be-6a9f-9343-e897-18e86ea48202@linaro.org>
- <CAF6AEGtd_5jKhixp6h+NnN8-aqjBHTLopRozASE73oT3rfnFHA@mail.gmail.com>
- <6eefedb2-9e59-56d2-7703-2faf6cb0ca3a@codeaurora.org>
- <CAF6AEGvhqPHWNK=6GYz+Mu5aKe8+iE4_Teem6o=X6eiANhWsPg@mail.gmail.com>
- <83ecbe74-caf0-6c42-e6f5-4887b3b534c6@linaro.org>
- <53d3e5b7-9dc0-a806-70e9-b9b5ff877462@codeaurora.org>
- <YTgeIuwumPoR9ZTE@ripper>
- <CAF6AEGt2f16=WWpKgGiWw1OJLrWMSunzrm853H+mGxPQuf2Xug@mail.gmail.com>
- <de162479-c4cb-e8b7-6044-e7ccd3cf29f6@linaro.org>
-From:   Akhil P Oommen <akhilpo@codeaurora.org>
-Message-ID: <b385ee2c-fd3c-86e7-c0a5-c3d5bfc59a17@codeaurora.org>
-Date:   Mon, 13 Sep 2021 11:45:50 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        id S237378AbhIMGbA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Sep 2021 02:31:00 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:42311 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237357AbhIMGa7 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 Sep 2021 02:30:59 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20210913062942euoutp01170dc6ccbb35dcfdf76aab515e15401a~kTd5uy5bJ1212612126euoutp01Q
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 06:29:42 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20210913062942euoutp01170dc6ccbb35dcfdf76aab515e15401a~kTd5uy5bJ1212612126euoutp01Q
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1631514582;
+        bh=yfqRkQDKxR6+pW3E/XXVEL3wgEDDUumbRF/U8EODWTs=;
+        h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
+        b=jRD38euYljheO/7pj5Rc330gciJe5MzWqdeRRFHVFFZTaFQ2W0KQwTRP3IYU4O5Mj
+         IPDDMHsP/S42MgbwZtQl05R/1kmJjqTiQfM8nq4z7DA/a3VLC0Cfdz2dGR/F9QFCgr
+         /gDaqqtRq0QByztEzBLv5OVOaDFrTc1dZX2FZNfU=
+Received: from eusmges3new.samsung.com (unknown [203.254.199.245]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20210913062942eucas1p10063f9b5e36ebe923689ebfe2045518f~kTd5NWl0g2716427164eucas1p1F;
+        Mon, 13 Sep 2021 06:29:42 +0000 (GMT)
+Received: from eucas1p1.samsung.com ( [182.198.249.206]) by
+        eusmges3new.samsung.com (EUCPMTA) with SMTP id E9.8E.56448.5DFEE316; Mon, 13
+        Sep 2021 07:29:42 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20210913062941eucas1p24e96143ba4ab25cb1c9c5e7cef29812e~kTd4bc3MY3092830928eucas1p2s;
+        Mon, 13 Sep 2021 06:29:41 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20210913062941eusmtrp1adb246ecd37f99f51f61a2ecbe2601ad~kTd4aX5Ic1726917269eusmtrp1e;
+        Mon, 13 Sep 2021 06:29:41 +0000 (GMT)
+X-AuditID: cbfec7f5-d53ff7000002dc80-7b-613eefd58a9b
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id 2D.3C.31287.5DFEE316; Mon, 13
+        Sep 2021 07:29:41 +0100 (BST)
+Received: from [106.210.131.79] (unknown [106.210.131.79]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20210913062940eusmtip1a1cdacd97e897a0713826f91501e2edb~kTd3LcC591305313053eusmtip1K;
+        Mon, 13 Sep 2021 06:29:39 +0000 (GMT)
+Message-ID: <7ad18d53-3ad6-a614-a8e1-cce6505f90a8@samsung.com>
+Date:   Mon, 13 Sep 2021 08:29:37 +0200
 MIME-Version: 1.0
-In-Reply-To: <de162479-c4cb-e8b7-6044-e7ccd3cf29f6@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:92.0)
+        Gecko/20100101 Thunderbird/92.0
+Subject: Re: [PATCH v4 02/24] drm/bridge: Document the probe issue with
+ MIPI-DSI bridges
+Content-Language: en-GB
+To:     Maxime Ripard <maxime@cerno.tech>, Sam Ravnborg <sam@ravnborg.org>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        David Airlie <airlied@linux.ie>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>
+Cc:     Sean Paul <sean@poorly.run>, freedreno@lists.freedesktop.org,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        linux-kernel@vger.kernel.org,
+        Xinliang Liu <xinliang.liu@linaro.org>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Tian Tao <tiantao6@hisilicon.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        dri-devel@lists.freedesktop.org,
+        John Stultz <john.stultz@linaro.org>,
+        Chen Feng <puck.chen@hisilicon.com>,
+        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>
+From:   Andrzej Hajda <a.hajda@samsung.com>
+In-Reply-To: <20210910101218.1632297-3-maxime@cerno.tech>
 Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA01Se0xTdxTO797be287Sy6Vrb+gU9fFbTpE3MP9yAZjCVluostkS1jGlmGd
+        d8B41LQwhyadQyCAUp5hUBhQRa2ovGyLdKxkVYSmtugQBgYtExiI3Tp5jUfA0V6W8d93vnPO
+        d75zcmhcco0MpBNSUjllijxJRooI080F565+T7g8ZKwJQ/lOG4Yu3GrA0d1ZD4mqxh0AFbsK
+        CTRe0wDQraVdyObuI9DEgzsEml+2CJAjw02h3KI6ChV1OCjUa64iUXmPBUO6J0YClc+vAGTV
+        fIZcZdpVDd08jqa0v+NIv2AE6H7JDYDKSx6RaMFcTaBLjy0UMriLBKizo14QsZn1DGRR7JCz
+        h2TbtPcpduTHZoqtzKkQsGfbH2Fsd+GvGDvU306yrXPDArbaFsW6TnVhbJf5HsXWlfWRrMZQ
+        D9ir9uPsdMuWA0yM6J3DXFLCN5xyd/hBUfxDjfhI3Y5vT57uByeAa1seoGnIvAFndKo8IKIl
+        jB7A/Mkugg9mAKzNvY3zwTSA5t/yyDwg9HW0/t2OebGEuQBg4/XjfJEHwOLMRsqbEDPh8HHp
+        BO7FBLMdnipYIXjeH9oqRn34WeYgHD83i3ltbGRi4KIDeGmckcKMmYsCr2YAs4TDpoVBnyWc
+        uUNA48M8nyjJ7IDLVwd9joRMKMxa7hPw3VvhSWOlzzZkOkXQZmwkeNuRUGMaFfB4I5zsMlA8
+        3gztJafXar6DLn3mWnMOgMamNpxPvA2HnIuk1yq+OrnRvJun34PXK+wEf0g/OPCnP+/BDxab
+        fsB5WgxzsiV89QvQ5TCuCUrhuduzZCGQadedRbtuf+26bbT/z60FRD2Qcmmq5DhO9XoKdzRY
+        JU9WpaXEBX+pSG4Bq89tX+mavQb0k0+CrQCjgRVAGpcFiE3uMLlEfFiefoxTKmKVaUmcygo2
+        0YRMKjYbL8dKmDh5KpfIcUc45X9ZjBYGnsA+D+7t/cK/WvbKV+nPmY5Go8Swj1WKM7KWgkXz
+        mTn1M0F/1AZ299ivRBk3vFiaUZOaOPh+yd2d7r0HrNb+1IE56HcogKjRTcWz52toT0hM5EuS
+        iPy4hn2/PGjeX9WKpH3CraP2iNfG4JgneiQkzROBWUMU2cKRn4FNERrqzAhR36gM89e8Kj8/
+        IUE2+96v0zOf/rOFzvV796Oq5YLsD+LbL+fc27S9E7QtWLsNGnWQfXFYGv69eqX+046o3qms
+        S0hrc3BBT4Oe19btv7Ln5jbDElG0YYb5ybJPrjMUvNnz11vl01W0LetsUllkvvrDjmZLQqy+
+        9JNjiRdfjtY1DLcdkhGqePmenbhSJf8XdYjUSksEAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrLKsWRmVeSWpSXmKPExsVy+t/xu7pX39slGqzdym3Re+4kk8XyM+uY
+        La58fc9mMef5WUaLSfcnsFg8n7+O0eLMb12Lk2+usli8uHeRxeLH332sFmeb3rBbdE5cwm4x
+        cf9ZdovLu+awWcw4v4/JYuHHrSwWM378Y7Q41BdtcX/aLKAZC38wW3ya9ZDZYsXPrYwWdycf
+        YbSYMfklm8XPXfNYLFa/3sduseXNRFaLo/tXsTrIeLy/0crucefceTaPnbPusns8nruR3WN2
+        x0xWj8V7XjJ5nJhwicnjzrU9bB7bvz1g9Zh3MtDjfvdxJo/ju26xeyyZdpXNo2/LKkaPzaer
+        PT5vkgsQiNKzKcovLUlVyMgvLrFVija0MNIztLTQMzKx1DM0No+1MjJV0rezSUnNySxLLdK3
+        S9DLeNTHW7BEs6K55xpjA+N9hS5GTg4JAROJ7R/2MHUxcnEICSxllLjb84ENIiEusXv+W2YI
+        W1jiz7UuNoiit4wSV/fPBEvwCthJvJ7yAsxmEVCV6O7/xwIRF5Q4OfMJmC0qkCCx+3AXexcj
+        B4ewQJTEr7OMIGFmoPlNX1aygswUEfjPLNE1fRUziMMscJVFouHoLKhtuxkl7l9aCraBTUBT
+        4u/mm2DncQpYSrT+vcoKMcpMomtrF9RYeYnmrbOZJzAKzUJyyCwkG2chaZmFpGUBI8sqRpHU
+        0uLc9NxiQ73ixNzi0rx0veT83E2MwHS17djPzTsY5736qHeIkYmD8RCjBAezkgjvtje2iUK8
+        KYmVValF+fFFpTmpxYcYTYGhMZFZSjQ5H5gw80riDc0MTA1NzCwNTC3NjJXEebfOXRMvJJCe
+        WJKanZpakFoE08fEwSnVwLSOV+LvRbl98pEXD6/bcGeWw77F7jGfH11u32XKzFPyRePchS0l
+        i9jZlvpqm6amyJjvP3ooW85rB0OdxZvMwq6i+40/Y/Zp8Fy+P139t+j9qqvvbE1ecIco/r8V
+        J8mVrliTmue9cwnPozUxeY83cmh0tvNH3ly5tFh7euuMixZ50oWyB17fyEmxDRJkP3VmKfsf
+        iZkX53o9SErnOha69pJ8nRf7tQovkZpPs2zmdl+fOIHr6eLn1zbdsIw4tDztNU8+18nD/9eZ
+        9x+wXN3KuMQ8vHyS27EM1xOFer8sdz4Q6Wp61K//4sLs9neGam+9Z4u7uLWq2lSEq4fMeqT+
+        tKTafXLu2sf6IidX3s+4cViJpTgj0VCLuag4EQCy6bx04AMAAA==
+X-CMS-MailID: 20210913062941eucas1p24e96143ba4ab25cb1c9c5e7cef29812e
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20210910101246eucas1p17191a80c37b0e1784d6d9b8bf6fbcd60
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20210910101246eucas1p17191a80c37b0e1784d6d9b8bf6fbcd60
+References: <20210910101218.1632297-1-maxime@cerno.tech>
+        <CGME20210910101246eucas1p17191a80c37b0e1784d6d9b8bf6fbcd60@eucas1p1.samsung.com>
+        <20210910101218.1632297-3-maxime@cerno.tech>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 9/10/2021 11:04 PM, Caleb Connolly wrote:
-> 
-> 
-> On 10/09/2021 18:18, Rob Clark wrote:
->> On Tue, Sep 7, 2021 at 7:20 PM Bjorn Andersson
->> <bjorn.andersson@linaro.org> wrote:
->>>
->>> On Mon 09 Aug 10:26 PDT 2021, Akhil P Oommen wrote:
->>>
->>>> On 8/9/2021 9:48 PM, Caleb Connolly wrote:
->>>>>
->>>>>
->>>>> On 09/08/2021 17:12, Rob Clark wrote:
->>>>>> On Mon, Aug 9, 2021 at 7:52 AM Akhil P Oommen
->>>>>> <akhilpo@codeaurora.org> wrote:
->>> [..]
->>>>>>> I am a bit confused. We don't define a power domain for gpu in dt,
->>>>>>> correct? Then what exactly set_opp do here? Do you think this 
->>>>>>> usleep is
->>>>>>> what is helping here somehow to mask the issue?
->>>>> The power domains (for cx and gx) are defined in the GMU DT, the 
->>>>> OPPs in
->>>>> the GPU DT. For the sake of simplicity I'll refer to the lowest
->>>>> frequency (257000000) and OPP level (RPMH_REGULATOR_LEVEL_LOW_SVS) as
->>>>> the "min" state, and the highest frequency (710000000) and OPP level
->>>>> (RPMH_REGULATOR_LEVEL_TURBO_L1) as the "max" state. These are 
->>>>> defined in
->>>>> sdm845.dtsi under the gpu node.
->>>>>
->>>>> The new devfreq behaviour unmasks what I think is a driver bug, it
->>>>> inadvertently puts much more strain on the GPU regulators than they
->>>>> usually get. With the new behaviour the GPU jumps from it's min 
->>>>> state to
->>>>> the max state and back again extremely rapidly under workloads as 
->>>>> small
->>>>> as refreshing UI. Where previously the GPU would rarely if ever go 
->>>>> above
->>>>> 342MHz when interacting with the device, it now jumps between min and
->>>>> max many times per second.
->>>>>
->>>>> If my understanding is correct, the current implementation of the GMU
->>>>> set freq is the following:
->>>>>    - Get OPP for frequency to set
->>>>>    - Push the frequency to the GMU - immediately updating the core 
->>>>> clock
->>>>>    - Call dev_pm_opp_set_opp() which triggers a notify chain, this 
->>>>> winds
->>>>> up somewhere in power management code and causes the gx regulator 
->>>>> level
->>>>> to be updated
->>>>
->>>> Nope. dev_pm_opp_set_opp() sets the bandwidth for gpu and nothing 
->>>> else. We
->>>> were using a different api earlier which got deprecated -
->>>> dev_pm_opp_set_bw().
->>>>
->>>
->>> On the Lenovo Yoga C630 this is reproduced by starting alacritty and if
->>> I'm lucky I managed to hit a few keys before it crashes, so I spent a
->>> few hours looking into this as well...
->>>
->>> As you say, the dev_pm_opp_set_opp() will only cast a interconnect vote.
->>> The opp-level is just there for show and isn't used by anything, at
->>> least not on 845.
->>>
->>> Further more, I'm missing something in my tree, so the interconnect
->>> doesn't hit sync_state, and as such we're not actually scaling the
->>> buses. So the problem is not that Linux doesn't turn on the buses in
->>> time.
->>>
->>> So I suspect that the "AHB bus error" isn't saying that we turned off
->>> the bus, but rather that the GPU becomes unstable or something of that
->>> sort.
->>>
->>>
->>> Lastly, I reverted 9bc95570175a ("drm/msm: Devfreq tuning") and ran
->>> Aquarium for 20 minutes without a problem. I then switched the gpu
->>> devfreq governor to "userspace" and ran the following:
->>>
->>> while true; do
->>>    echo 257000000 > /sys/class/devfreq/5000000.gpu/userspace/set_freq
->>>    echo 710000000 > /sys/class/devfreq/5000000.gpu/userspace/set_freq
->>> done
->>>
->>> It took 19 iterations of this loop to crash the GPU.
->>
->> I assume you still had aquarium running, to keep the gpu awake while
->> you ran that loop?
->>
->> Fwiw, I modified this slightly to match sc7180's min/max gpu freq and
->> could not trigger any issue.. interestingly sc7180 has a lower min
->> freq (180) and higher max freq (800) so it was toggling over a wider
->> freq range.  I also tried on a device that  had the higher 825MHz opp
->> (since I noticed that was the only opp that used
->> RPMH_REGULATOR_LEVEL_TURBO_L1 and wanted to rule that out), but could
->> not reproduce.
->>
->> I guess a630 (sdm845) should have higher power draw (it is 2x # of
->> shader cores and 2x GMEM size, but lower max freq).. the question is,
->> is this the reason we see this on sdm845 and not sc7180?  Or is there
->> some other difference.  On the gpu side of this, they are both closely
->> related (ie. the same "sub-generation" of a6xx, same gmu fw, etc)..
->> I'm less sure about the other parts (icc, rpmh, etc)
-> 
-> My guess would be power draw, nobody has mentioned this yet but I've 
-> realised that the vdd_gfx rail is powered by a buck converter, which 
-> could explain a lot of the symptoms.
-> 
-> Buck converters depend on high frequency switching and inductors to 
-> work, this inherently leads to some lag time when changing voltages, and 
-> also means that the behaviour of the regulator is defined in part by how 
-> much current is being drawn. Wikipedia has a pretty good explanation: 
-> https://en.wikipedia.org/wiki/Buck_converter
-> 
-> At the best of times these regulators have a known voltage ripple, when 
-> under load and when rapidly switching voltages this will get a lot worse.
-> 
-> Someone with an oscilloscope and schematics could probe the rail and 
-> probably see exactly what's going on when the GPU crashes. Because of 
-> the lag time in the regulator changing voltage, it might be 
-> undershooting whilst the GPU is trying to clock up and draw more current 
-> - causing instability and crashes.
 
-Both of you are correct. The GPU is very similar including the GMU (we 
-have same fw for both), except the GBIF block. As far as I am aware, the 
-non-gpu blocks within SoC should be similar except the configs.
+W dniu 10.09.2021 o 12:11, Maxime Ripard pisze:
+> Interactions between bridges, panels, MIPI-DSI host and the component
+> framework are not trivial and can lead to probing issues when
+> implementing a display driver. Let's document the various cases we need
+> too consider, and the solution to support all the cases.
+>
+> Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+> ---
+>   Documentation/gpu/drm-kms-helpers.rst |  6 +++
+>   drivers/gpu/drm/drm_bridge.c          | 57 +++++++++++++++++++++++++++
+>   2 files changed, 63 insertions(+)
+>
+> diff --git a/Documentation/gpu/drm-kms-helpers.rst b/Documentation/gpu/drm-kms-helpers.rst
+> index 10f8df7aecc0..ec2f65b31930 100644
+> --- a/Documentation/gpu/drm-kms-helpers.rst
+> +++ b/Documentation/gpu/drm-kms-helpers.rst
+> @@ -157,6 +157,12 @@ Display Driver Integration
+>   .. kernel-doc:: drivers/gpu/drm/drm_bridge.c
+>      :doc: display driver integration
+>   
+> +Special Care with MIPI-DSI bridges
+> +----------------------------------
+> +
+> +.. kernel-doc:: drivers/gpu/drm/drm_bridge.c
+> +   :doc: special care dsi
+> +
+>   Bridge Operations
+>   -----------------
+>   
+> diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridge.c
+> index baff74ea4a33..7cc2d2f94ae3 100644
+> --- a/drivers/gpu/drm/drm_bridge.c
+> +++ b/drivers/gpu/drm/drm_bridge.c
+> @@ -96,6 +96,63 @@
+>    * documentation of bridge operations for more details).
+>    */
+>   
+> +/**
+> + * DOC: special care dsi
+> + *
+> + * The interaction between the bridges and other frameworks involved in
+> + * the probing of the upstream driver and the bridge driver can be
+> + * challenging. Indeed, there's multiple cases that needs to be
+> + * considered:
+> + *
+> + * - The upstream driver doesn't use the component framework and isn't a
+> + *   MIPI-DSI host. In this case, the bridge driver will probe at some
+> + *   point and the upstream driver should try to probe again by returning
+> + *   EPROBE_DEFER as long as the bridge driver hasn't probed.
+> + *
+> + * - The upstream driver doesn't use the component framework, but is a
+> + *   MIPI-DSI host. The bridge device uses the MIPI-DCS commands to be
+> + *   controlled. In this case, the bridge device is a child of the
+> + *   display device and when it will probe it's assured that the display
+> + *   device (and MIPI-DSI host) is present. The upstream driver will be
+> + *   assured that the bridge driver is connected between the
+> + *   &mipi_dsi_host_ops.attach and &mipi_dsi_host_ops.detach operations.
+> + *   Therefore, it must run mipi_dsi_host_register() in its probe
+> + *   function, and then run drm_bridge_attach() in its
+> + *   &mipi_dsi_host_ops.attach hook.
+> + *
+> + * - The upstream driver uses the component framework and is a MIPI-DSI
+> + *   host. The bridge device uses the MIPI-DCS commands to be
+> + *   controlled. This is the same situation than above, and can run
+> + *   mipi_dsi_host_register() in either its probe or bind hooks.
+> + *
+> + * - The upstream driver uses the component framework and is a MIPI-DSI
+> + *   host. The bridge device uses a separate bus (such as I2C) to be
+> + *   controlled. In this case, there's no correlation between the probe
+> + *   of the bridge and upstream drivers, so care must be taken to avoid
+> + *   an endless EPROBE_DEFER loop, with each driver waiting for the
+> + *   other to probe.
+> + *
+> + * The ideal pattern to cover the last item (and all the others in the
+> + * MIPI-DSI host driver case) is to split the operations like this:
+> + *
+> + * - The MIPI-DSI host driver must run mipi_dsi_host_register() in its
+> + *   probe hook. It will make sure that the MIPI-DSI host sticks around,
+> + *   and that the driver's bind can be called.
+> + *
+> + * - In its probe hook, the bridge driver must try to find its MIPI-DSI
+> + *   host, register as a MIPI-DSI device and attach the MIPI-DSI device
+> + *   to its host. The bridge driver is now functional.
+> + *
+> + * - In its &struct mipi_dsi_host_ops.attach hook, the MIPI-DSI host can
+> + *   now add its component. Its bind hook will now be called and since
+> + *   the bridge driver is attached and registered, we can now look for
+> + *   and attach it.
+> + *
+> + * At this point, we're now certain that both the upstream driver and
+> + * the bridge driver are functional and we can't have a deadlock-like
+> + * situation when probing.
+> + */
+> +
+>   static DEFINE_MUTEX(bridge_lock);
+>   static LIST_HEAD(bridge_list);
+>   
 
-And yes, for these sort of issues where we suspect a power issue, gx 
-rail should be probed for droops using a very high resolution 
-oscilloscopes (these droops might last less than 1us).
 
-I am aware of only Dragonboard that is still alive from QC perspective. 
-Can someone report this issue to DB support team as it is fairly easy to 
-reproduce?
+Nice work with documenting this initialization dance. It clearly shows 
+that bridge API lacks better mechanism - usage of mipi dsi callbacks to 
+get notifications about bridge appearance is ugly. It remains me my 
+resource tracking patches which I have posted long time ago [1] - they 
+would solve the issue in much more elegant way, described here [2]. 
+Apparently I was not stubborn enough in promoting this solution.
 
--Akhil.
+Anyway:
 
->>
->> BR,
->> -R
->>
->>> So the problem doesn't seem to be Rob's change, it's just that prior to
->>> it the chance to hitting it is way lower. Question is still what it is
->>> that we're triggering.
->>>
->>> Regards,
->>> Bjorn
-> 
+Reviewed-by: Andrzej Hajda <a.hajda@samsung.com>
+
+
+[1]: https://lkml.org/lkml/2014/12/10/342
+
+[2]: 
+https://events19.linuxfoundation.org/wp-content/uploads/2017/12/Deferred-Problem-Issues-With-Complex-Dependencies-Between-Devices-in-Linux-Kernel-Andrzej-Hajda-Samsung.pdf
+
+
+Regards
+Andrzej
+
 
