@@ -2,94 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 81067409CBE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 21:14:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2A457409D55
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 21:42:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235622AbhIMTPd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Sep 2021 15:15:33 -0400
-Received: from mail.z3ntu.xyz ([128.199.32.197]:45366 "EHLO mail.z3ntu.xyz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229460AbhIMTPd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Sep 2021 15:15:33 -0400
-Received: from g550jk.localnet (ip-213-127-63-121.ip.prioritytelecom.net [213.127.63.121])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 92CB3C96D2;
-        Mon, 13 Sep 2021 19:14:15 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1631560455; bh=xXK4qoM6eeH56dLOIWdlOIkpkBiaBDzS80YDoQgblCM=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=sOxjwAvB+CdsxphN08jjTBXJtvxWx0TaKSLPNYCcEWqn7eiHdbKiLjw3rPhQRujfC
-         2habQZaD2P7AKdGOU9NmXb7Su+qKXQqCeIdVKCyargtNuicz8gAST9EKEJbZkpz/S2
-         NQjrn7PyFN70Lax5VePEEfKB6BONXg2J9Bi8UQrw=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org,
-        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, bartosz.dudziak@snejp.pl,
-        Rob Herring <robh+dt@kernel.org>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Oleksij Rempel <linux@rempel-privat.de>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Daniel Palmer <daniel@0x0f.com>,
-        Max Merchel <Max.Merchel@tq-group.com>,
-        Hao Fang <fanghao11@huawei.com>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 6/8] dt-bindings: vendor-prefixes: add LG Electronics
-Date:   Mon, 13 Sep 2021 21:14:14 +0200
-Message-ID: <5220943.AHGTne7y6d@g550jk>
-In-Reply-To: <9942f964-442e-e782-3926-6d7d1123418a@canonical.com>
-References: <20210911232707.259615-1-luca@z3ntu.xyz> <20210911232707.259615-7-luca@z3ntu.xyz> <9942f964-442e-e782-3926-6d7d1123418a@canonical.com>
+        id S1347565AbhIMTns (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Sep 2021 15:43:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34318 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241380AbhIMTnr (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 Sep 2021 15:43:47 -0400
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7FD1CC061762
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 12:42:31 -0700 (PDT)
+Received: by mail-ot1-x332.google.com with SMTP id c42-20020a05683034aa00b0051f4b99c40cso14975334otu.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 12:42:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=BqyiYC70ZQUHHw9//0XYXSrAX8+tnM8/YgezErnlDrU=;
+        b=e/ksqZ8nK4LM8K7qBzx6ztRoNrqG6PH8PC4yEvjbNVYCxAkYDmbjw+IMZbNNQPvF7R
+         fAfXBrgXMcKl+IMNADZbsi5JOMxER5obm4NoKcY/o71HCmbu9xY+Fnt3rDf/PnxozAoe
+         WlqJnz4bjYXgBaQmmKDkmPlCT/C9EH8dwVNhY=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=BqyiYC70ZQUHHw9//0XYXSrAX8+tnM8/YgezErnlDrU=;
+        b=OReqiwKzJpLiVv6wuB3v0TKTMn2moVIbWbSaznbndOF6P+CjwQph3rkTr4VccMqg0L
+         AYC6Yp480C7ikOH+pAROCtHeyTaa0OgAxrYzioZHb1WeGm9fMVbxQLbSwLc/V5go1lcp
+         vZA4usxUCqLYZ7IxxF4oXDl00QVU+ra2waGhxB43T5jQOlGpHCQJFo6xtXY8WhnbCnta
+         M+kAE3b/coz/XlrAiy1hTKR1e7t330FFJjPGeRBgOMOJBfDgma+6QelB2efU/gVx0npc
+         AKZ4ao/wArTxDEbggvCHJ3ewQB0+9odR3TQfYxE5s9I6fg1A7WjfzssXn6yU0KvHJmNY
+         AC0w==
+X-Gm-Message-State: AOAM530/P7Y+JQIeT3MuA6AoRyVSWIgFGAoj2RD/lbyYO3WMW0pvM0IG
+        DKwzxKAKihEBlcwVo60e53DdtUusZ2qCMIt1eCy0JA==
+X-Google-Smtp-Source: ABdhPJwZ8mXUoFC7htDszmiW3cET2FEd1QCjxSbxY2/mXROYf8yoBexV2QICbOCDGNL/7hR7V6ReQxz2sOFr7dvaHZ8=
+X-Received: by 2002:a05:6830:1212:: with SMTP id r18mr10734921otp.159.1631562150764;
+ Mon, 13 Sep 2021 12:42:30 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 13 Sep 2021 12:42:30 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="us-ascii"
+In-Reply-To: <4697bec1-af58-53e4-9fd1-293bfd8754be@codeaurora.org>
+References: <1629108335-23463-1-git-send-email-deesin@codeaurora.org>
+ <CAE-0n528DuP4MiAOhYY+Du+L=OZaGM5YJm=NwWia3JF7hp7sAA@mail.gmail.com> <4697bec1-af58-53e4-9fd1-293bfd8754be@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Mon, 13 Sep 2021 12:42:30 -0700
+Message-ID: <CAE-0n51XcRbY7UeU6bhrrnkvD7rboq3QZFw9Tu0xQZ6e1VyjRw@mail.gmail.com>
+Subject: Re: [PATCH V2 1/1] soc: qcom: smp2p: Add wakeup capability to SMP2P IRQ
+To:     Deepak Kumar Singh <deesin@codeaurora.org>,
+        bjorn.andersson@linaro.org, clew@codeaurora.org,
+        sibis@codeaurora.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, Andy Gross <agross@kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Krzysztof,
+Quoting Deepak Kumar Singh (2021-09-13 10:45:19)
+>
+> On 8/17/2021 1:53 AM, Stephen Boyd wrote:
+> >> +       ret = device_init_wakeup(&pdev->dev, true);
+> > I still wonder if it's better to leave this off by default and only
+> > enable it if the kernel is using autosuspend (PM_AUTOSLEEP). Then
+> > userspace is responsible to decide if it can handle the wakeup with the
+> > screen off, reload the remoteproc, and go back to suspend if it isn't
+> > using autosuspend.
+>
+> Seems like not all targets use PM_AUTOSLEEP feature, even those targets
+> may require wakeup to handle
+>
+> modem crash so that important modem events are not missed. I think we
+> can keep wake up as default behavior
+>
+> and let the user space disable it through sysfs if it doesn't want it as
+> wake up source.
 
-On Montag, 13. September 2021 10:49:43 CEST Krzysztof Kozlowski wrote:
-> On 12/09/2021 01:27, Luca Weiss wrote:
-> > LG Electronics is a part of the LG Corporation and produces, amongst
-> > other things, consumer electronics such as phones and smartwatches.
-> 
-> Hi,
-> 
-> Thanks for the patches.
-> 
-> I think "lge" it's the same prefix as "lg". There is no sense in having
-> multiple vendor prefixes just because company splits inside business
-> units or subsidiaries. The same as with other conglomerates, e.g.
-> Samsung - if we wanted to be specific, there will be 4-5 Samsung
-> vendors... Not mentioning that company organisation is not always
-> disclosed and can change.
-> 
-
-I was mostly following qcom-msm8974-lge-nexus5-hammerhead as it's the other LG 
-device tree I am aware of so I've picked lge instead of lg. Also worth noting 
-that Google uses "LGE" in the Android device tree[1] or in the model name in 
-the LG G Watch R kernel sources ("LGE APQ 8026v2 LENOK rev-1.0").
-
-I don't have a strong opinion either way so I'm fine with either.
-
-If we decide to go with "lg" do we want to change the Nexus 5 devicetree 
-(hammerhead) also, that one has the lge name in at least compatible and 
-filename (I don't know how much of a breaking change that would be considered 
-as).
-
-> We already have lg for several components, also made by LG Electronics.
-> What about these?
-> 
-> There is only one device with "lge", added back in 2016 without adding
-> vendor prefix. I would propose to fix that one, instead of keeping
-> duplicated "lg".
-> 
-> Best regards,
-> Krzysztof
-
-Regards
-Luca
-
-[1] https://android.googlesource.com/device/lge/hammerhead/
-
-
-
+I don't understand. What if userspace is simple and doesn't use
+autosleep and will turn the screen on when the kernel resumes? Why do we
+expect the modem crashing and causing the screen to turn on to be a good
+user experience?
