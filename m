@@ -2,123 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0B780408658
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 10:20:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95B8D408780
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 10:50:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237877AbhIMIWJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Sep 2021 04:22:09 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:56301 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237835AbhIMIWJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Sep 2021 04:22:09 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1631521254; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=VTesdtiKPdW2NXskIxoPYKcZQR5S7va81TqV59+vlWA=; b=bz1HCsjjcXttho9BYcOizogIr0yp6HTjzW1c6zwWkLS18ULCfn7x0eCmRQLwNHzHxvqqvjSZ
- FaCWggowXjMTUDvtXhAf7HGRJHuk6GtiPO/EH8E0BL21zvTgMdvn4dg3WhCwMh83qoPrJJbP
- SFBI7qdy6azfRCxYM+WHArVmGnI=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 613f09e2bd9e12ebc5fd6adc (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 13 Sep 2021 08:20:50
- GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 5DF99C4338F; Mon, 13 Sep 2021 08:20:49 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-4.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=unavailable autolearn_force=no
-        version=3.4.0
-Received: from [10.242.137.170] (unknown [202.46.23.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        id S238081AbhIMIvJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Sep 2021 04:51:09 -0400
+Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122]:52328
+        "EHLO smtp-relay-internal-0.canonical.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S238002AbhIMIvJ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 Sep 2021 04:51:09 -0400
+Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com [209.85.128.71])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id DC8CEC4360C;
-        Mon, 13 Sep 2021 08:20:42 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org DC8CEC4360C
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH 1/2] ASoC: google: dt-bindings: Add sc7280-herobrine
- machine bindings
-To:     Rob Herring <robh@kernel.org>
-Cc:     bjorn.andersson@linaro.org, agross@kernel.org,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        srinivas.kandagatla@linaro.org, linux-kernel@vger.kernel.org,
-        broonie@kernel.org, alsa-devel@alsa-project.org,
-        robh+dt@kernel.org, bgoswami@codeaurora.org,
-        devicetree@vger.kernel.org, tiwai@suse.com, judyhsiao@chromium.org,
-        lgirdwood@gmail.com, perex@perex.cz, swboyd@chromium.org,
-        plai@codeaurora.org
-References: <1631124057-17155-1-git-send-email-srivasam@codeaurora.org>
- <1631124057-17155-2-git-send-email-srivasam@codeaurora.org>
- <1631190773.288819.200339.nullmailer@robh.at.kernel.org>
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Organization: Qualcomm India Private Limited.
-Message-ID: <f683c69a-58bb-15ba-8db5-6eaea6e1a062@codeaurora.org>
-Date:   Mon, 13 Sep 2021 13:50:40 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id D3AE640272
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 08:49:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1631522986;
+        bh=cvsTaNvz2UiyUHxrP1qTmkazHzyp2+ewfPl4qysKyqw=;
+        h=To:Cc:References:From:Subject:Message-ID:Date:MIME-Version:
+         In-Reply-To:Content-Type;
+        b=iX/ddOI0soVCVBJLKnppgpNxk3hwgSXOy1uv0upheDnJzNFHuaHhAGsbNY4MSWM2e
+         ciO8V+YI4aaR+Qp713fZx24OqZc3SO9DwTUHc+AT6JEZdEsawjMTpS3lpfCOUe7sku
+         HW0Yp/WAkW6dhf3IAwaaQgKvZwCJYt9Zne310MIfPq/a9n/j7blngyRl/Q0k5EIc+v
+         A6IiqapNts/Q0aA0t9nMBhfRif62g2KtO/W3agtGHHZlCkdD8qmZp9B6BXs2Rx9WCZ
+         1KCOpsYOZqtQMlsqFRriSrHweafledt0gE4kYLYMT5d0Cz0q5wLBhWUk+x4rQc6NO/
+         7J8f8Ebp0NS+w==
+Received: by mail-wm1-f71.google.com with SMTP id y143-20020a1c7d95000000b00307b9b32cc9so244046wmc.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 01:49:46 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:to:cc:references:from:subject:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=cvsTaNvz2UiyUHxrP1qTmkazHzyp2+ewfPl4qysKyqw=;
+        b=foP/bPCZLA6yTGhdxkY+7jCRtsXkvQ/tXX8QmAdBOsDovzpD218uSDsK2lTq4LDsoe
+         JaNlgI2dhsJ2jB9TogZg5ubPo0MyaP+4ADqwuIreDxcWT6BAa/VOXWp9IRaVmWQs+SdY
+         p+ByZESAGEz9JRd0Gpo514jgOomCWPtn5ziuyGb6rG9SL7jmeOxuPe9EGPtLJ7XJ1Fis
+         mPQ7TSLLQIBbOlWI4hri1vtW6pVMJwTqpc96DFxrXZOQDP1jcukNRyMNr5hlC6PqlvPK
+         GuvHR2h2DrZ7BfCj46hPNnwXBrqKErzep+YDMw5gIrA2Ji/fsP6NZ1fVhUoc1dll/4BJ
+         mkqQ==
+X-Gm-Message-State: AOAM530G/cEO0ywu5AtQIjt/XY3IgphjPAhE1fCDn5iaLv3Ra58tZ5JX
+        sYm2pjeizlwck68C0xlnwi8iiUtAj8+LZOY5FFYt1CIhvISisJFh8MpTbDf4emJOlzdyMYsNCI8
+        TFpRHDUKtOI92o+lmpVY9QTWVUIv3pA1dW/NZPmf5y2M=
+X-Received: by 2002:a1c:7dc8:: with SMTP id y191mr9834718wmc.6.1631522985979;
+        Mon, 13 Sep 2021 01:49:45 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJysUCxDbnakViIKz96HPA6XtGKkx8YI+rcAhRkRtTaIgEYJRWHQ/TSjMn35PEYSgfejgWgdmQ==
+X-Received: by 2002:a1c:7dc8:: with SMTP id y191mr9834698wmc.6.1631522985838;
+        Mon, 13 Sep 2021 01:49:45 -0700 (PDT)
+Received: from [192.168.3.211] (lk.84.20.244.219.dc.cable.static.lj-kabel.net. [84.20.244.219])
+        by smtp.gmail.com with ESMTPSA id j4sm6969822wrt.23.2021.09.13.01.49.44
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 13 Sep 2021 01:49:45 -0700 (PDT)
+To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, bartosz.dudziak@snejp.pl,
+        Rob Herring <robh+dt@kernel.org>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Oleksij Rempel <linux@rempel-privat.de>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Daniel Palmer <daniel@0x0f.com>,
+        Max Merchel <Max.Merchel@tq-group.com>,
+        Hao Fang <fanghao11@huawei.com>, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20210911232707.259615-1-luca@z3ntu.xyz>
+ <20210911232707.259615-7-luca@z3ntu.xyz>
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Subject: Re: [PATCH 6/8] dt-bindings: vendor-prefixes: add LG Electronics
+Message-ID: <9942f964-442e-e782-3926-6d7d1123418a@canonical.com>
+Date:   Mon, 13 Sep 2021 10:49:43 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-In-Reply-To: <1631190773.288819.200339.nullmailer@robh.at.kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 7bit
+In-Reply-To: <20210911232707.259615-7-luca@z3ntu.xyz>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Thanks for info Rob!!!.
+On 12/09/2021 01:27, Luca Weiss wrote:
+> LG Electronics is a part of the LG Corporation and produces, amongst
+> other things, consumer electronics such as phones and smartwatches.
 
-This error is due to missing dependency 
-patch.(https://patchwork.kernel.org/project/alsa-devel/list/?series=543829)
+Hi,
 
-Could You Please check with the above patch applied?
+Thanks for the patches.
 
+I think "lge" it's the same prefix as "lg". There is no sense in having
+multiple vendor prefixes just because company splits inside business
+units or subsidiaries. The same as with other conglomerates, e.g.
+Samsung - if we wanted to be specific, there will be 4-5 Samsung
+vendors... Not mentioning that company organisation is not always
+disclosed and can change.
 
-On 9/9/2021 6:02 PM, Rob Herring wrote:
-> On Wed, 08 Sep 2021 23:30:56 +0530, Srinivasa Rao Mandadapu wrote:
->> Add devicetree bindings documentation file for sc7280 sound card
->> registration.
->>
->> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
->> ---
->>   .../bindings/sound/google,sc7280-herobrine.yaml    | 169 +++++++++++++++++++++
->>   1 file changed, 169 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
->>
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
->
-> yamllint warnings/errors:
->
-> dtschema/dtc warnings/errors:
-> Error: Documentation/devicetree/bindings/sound/google,sc7280-herobrine.example.dts:46.24-25 syntax error
-> FATAL ERROR: Unable to parse input tree
-> make[1]: *** [scripts/Makefile.lib:379: Documentation/devicetree/bindings/sound/google,sc7280-herobrine.example.dt.yaml] Error 1
-> make[1]: *** Waiting for unfinished jobs....
-> make: *** [Makefile:1438: dt_binding_check] Error 2
->
-> doc reference errors (make refcheckdocs):
->
-> See https://patchwork.ozlabs.org/patch/1525980
->
-> This check can fail if there are any dependencies. The base for a patch
-> series is generally the most recent rc1.
->
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
->
-> pip3 install dtschema --upgrade
->
-> Please check and re-submit.
->
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+We already have lg for several components, also made by LG Electronics.
+What about these?
 
+There is only one device with "lge", added back in 2016 without adding
+vendor prefix. I would propose to fix that one, instead of keeping
+duplicated "lg".
+
+Best regards,
+Krzysztof
