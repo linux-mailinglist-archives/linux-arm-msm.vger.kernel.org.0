@@ -2,108 +2,245 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 95B8D408780
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 10:50:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D645C408906
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 12:30:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238081AbhIMIvJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Sep 2021 04:51:09 -0400
-Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122]:52328
-        "EHLO smtp-relay-internal-0.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S238002AbhIMIvJ (ORCPT
+        id S238934AbhIMKbs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Sep 2021 06:31:48 -0400
+Received: from mailout1.w1.samsung.com ([210.118.77.11]:32799 "EHLO
+        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238835AbhIMKbr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Sep 2021 04:51:09 -0400
-Received: from mail-wm1-f71.google.com (mail-wm1-f71.google.com [209.85.128.71])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id D3AE640272
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 08:49:46 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1631522986;
-        bh=cvsTaNvz2UiyUHxrP1qTmkazHzyp2+ewfPl4qysKyqw=;
-        h=To:Cc:References:From:Subject:Message-ID:Date:MIME-Version:
-         In-Reply-To:Content-Type;
-        b=iX/ddOI0soVCVBJLKnppgpNxk3hwgSXOy1uv0upheDnJzNFHuaHhAGsbNY4MSWM2e
-         ciO8V+YI4aaR+Qp713fZx24OqZc3SO9DwTUHc+AT6JEZdEsawjMTpS3lpfCOUe7sku
-         HW0Yp/WAkW6dhf3IAwaaQgKvZwCJYt9Zne310MIfPq/a9n/j7blngyRl/Q0k5EIc+v
-         A6IiqapNts/Q0aA0t9nMBhfRif62g2KtO/W3agtGHHZlCkdD8qmZp9B6BXs2Rx9WCZ
-         1KCOpsYOZqtQMlsqFRriSrHweafledt0gE4kYLYMT5d0Cz0q5wLBhWUk+x4rQc6NO/
-         7J8f8Ebp0NS+w==
-Received: by mail-wm1-f71.google.com with SMTP id y143-20020a1c7d95000000b00307b9b32cc9so244046wmc.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 01:49:46 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:to:cc:references:from:subject:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=cvsTaNvz2UiyUHxrP1qTmkazHzyp2+ewfPl4qysKyqw=;
-        b=foP/bPCZLA6yTGhdxkY+7jCRtsXkvQ/tXX8QmAdBOsDovzpD218uSDsK2lTq4LDsoe
-         JaNlgI2dhsJ2jB9TogZg5ubPo0MyaP+4ADqwuIreDxcWT6BAa/VOXWp9IRaVmWQs+SdY
-         p+ByZESAGEz9JRd0Gpo514jgOomCWPtn5ziuyGb6rG9SL7jmeOxuPe9EGPtLJ7XJ1Fis
-         mPQ7TSLLQIBbOlWI4hri1vtW6pVMJwTqpc96DFxrXZOQDP1jcukNRyMNr5hlC6PqlvPK
-         GuvHR2h2DrZ7BfCj46hPNnwXBrqKErzep+YDMw5gIrA2Ji/fsP6NZ1fVhUoc1dll/4BJ
-         mkqQ==
-X-Gm-Message-State: AOAM530G/cEO0ywu5AtQIjt/XY3IgphjPAhE1fCDn5iaLv3Ra58tZ5JX
-        sYm2pjeizlwck68C0xlnwi8iiUtAj8+LZOY5FFYt1CIhvISisJFh8MpTbDf4emJOlzdyMYsNCI8
-        TFpRHDUKtOI92o+lmpVY9QTWVUIv3pA1dW/NZPmf5y2M=
-X-Received: by 2002:a1c:7dc8:: with SMTP id y191mr9834718wmc.6.1631522985979;
-        Mon, 13 Sep 2021 01:49:45 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJysUCxDbnakViIKz96HPA6XtGKkx8YI+rcAhRkRtTaIgEYJRWHQ/TSjMn35PEYSgfejgWgdmQ==
-X-Received: by 2002:a1c:7dc8:: with SMTP id y191mr9834698wmc.6.1631522985838;
-        Mon, 13 Sep 2021 01:49:45 -0700 (PDT)
-Received: from [192.168.3.211] (lk.84.20.244.219.dc.cable.static.lj-kabel.net. [84.20.244.219])
-        by smtp.gmail.com with ESMTPSA id j4sm6969822wrt.23.2021.09.13.01.49.44
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Sep 2021 01:49:45 -0700 (PDT)
-To:     Luca Weiss <luca@z3ntu.xyz>, linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, bartosz.dudziak@snejp.pl,
-        Rob Herring <robh+dt@kernel.org>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Oleksij Rempel <linux@rempel-privat.de>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Daniel Palmer <daniel@0x0f.com>,
-        Max Merchel <Max.Merchel@tq-group.com>,
-        Hao Fang <fanghao11@huawei.com>, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20210911232707.259615-1-luca@z3ntu.xyz>
- <20210911232707.259615-7-luca@z3ntu.xyz>
-From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
-Subject: Re: [PATCH 6/8] dt-bindings: vendor-prefixes: add LG Electronics
-Message-ID: <9942f964-442e-e782-3926-6d7d1123418a@canonical.com>
-Date:   Mon, 13 Sep 2021 10:49:43 +0200
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        Mon, 13 Sep 2021 06:31:47 -0400
+Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
+        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20210913103030euoutp01b2dad84014bd163ef9e5f099b89b3b17~kWwI9fxaY1965219652euoutp01f
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 10:30:30 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20210913103030euoutp01b2dad84014bd163ef9e5f099b89b3b17~kWwI9fxaY1965219652euoutp01f
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1631529030;
+        bh=mBdkMQ0a8HEntf0WzyTJuWVTEn0vGpkJ1scguzqe5wU=;
+        h=Date:Subject:To:Cc:From:In-Reply-To:References:From;
+        b=iXIOXsC5Mzi7xmMItc5NH+Cfsoa/0qoam8btpJMjtkQCjYNXbijx/gOFFkw44Z5bj
+         OyUGjxul97AbqdWDguhrIVQnPvv7UH/Wy5YV5J6uYvN+sLCNR6XbAVzUoiUHcMvPMk
+         gaZZeFKzimuUGYJWa/tbJmoV0hjg9yrPCcDL/260=
+Received: from eusmges2new.samsung.com (unknown [203.254.199.244]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTP id
+        20210913103029eucas1p2ab099b567293b34bd52ae698c4e08ae1~kWwIaypEq2979329793eucas1p2O;
+        Mon, 13 Sep 2021 10:30:29 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges2new.samsung.com (EUCPMTA) with SMTP id 64.53.42068.5482F316; Mon, 13
+        Sep 2021 11:30:29 +0100 (BST)
+Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
+        20210913103028eucas1p1428844a2a68d9611ef5fe5cc41827079~kWwHup5db0359103591eucas1p17;
+        Mon, 13 Sep 2021 10:30:28 +0000 (GMT)
+Received: from eusmgms1.samsung.com (unknown [182.198.249.179]) by
+        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
+        20210913103028eusmtrp1eacd5f624076fb100ad3e10715c82169~kWwHs96iX1386413864eusmtrp1I;
+        Mon, 13 Sep 2021 10:30:28 +0000 (GMT)
+X-AuditID: cbfec7f4-c71ff7000002a454-24-613f28456861
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms1.samsung.com (EUCPMTA) with SMTP id B5.48.31287.4482F316; Mon, 13
+        Sep 2021 11:30:28 +0100 (BST)
+Received: from [106.210.131.79] (unknown [106.210.131.79]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20210913103027eusmtip115ab51036f568e5ad8646b732b3baac3~kWwGezCNM0455004550eusmtip1L;
+        Mon, 13 Sep 2021 10:30:27 +0000 (GMT)
+Message-ID: <29a2111d-024b-4d9e-27ef-e3399509ff32@samsung.com>
+Date:   Mon, 13 Sep 2021 12:30:27 +0200
 MIME-Version: 1.0
-In-Reply-To: <20210911232707.259615-7-luca@z3ntu.xyz>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:92.0)
+        Gecko/20100101 Thunderbird/92.0
+Subject: Re: [PATCH v4 24/24] drm/exynos: dsi: Adjust probe order
+Content-Language: en-GB
+To:     Maxime Ripard <maxime@cerno.tech>, Sam Ravnborg <sam@ravnborg.org>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        David Airlie <airlied@linux.ie>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>
+Cc:     Sean Paul <sean@poorly.run>, freedreno@lists.freedesktop.org,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        linux-kernel@vger.kernel.org,
+        Xinliang Liu <xinliang.liu@linaro.org>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Tian Tao <tiantao6@hisilicon.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        dri-devel@lists.freedesktop.org,
+        John Stultz <john.stultz@linaro.org>,
+        Chen Feng <puck.chen@hisilicon.com>,
+        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>
+From:   Andrzej Hajda <a.hajda@samsung.com>
+In-Reply-To: <20210910101218.1632297-25-maxime@cerno.tech>
 Content-Transfer-Encoding: 8bit
+X-Brightmail-Tracker: H4sIAAAAAAAAA01Sa0xTZxjOd87p6aFZ8VDc+uEYdQ3LNhLwErd9gwmSjewkbslcNra4ealw
+        1jYCaiuMXZwEL3QdYksnQsE6osjFpVNsYRSEDVDacGdjIAIVnQO5rHKVCsIoBzP+Pe/zvs/7
+        Ps+Xj8JFleQ6SplwmFUlyOKkpIAou+luDY56JUK2sfy0BJ1qcWCosMmMoz+nXSTKG2wGKNOp
+        I9DgeTNATXPByDHaSaCh/nYCzT6p5qHm1FE++l5/kY/0Nc189Ictj0TZrdUYyh+3Eih7dgGg
+        2ozPkDPLuLQjfxZHE8YBHBW5rQD1GeoByjY8IJHbZiLQ5ZFqPrKM6nnoRk0Jb5s/4+o+wWd6
+        W1pJpsLYx2funbvKZ3I1OTzmQtUDjLHrOjCm968qkimfucNjTI4djPOHBoxpsPXwmYtZnSST
+        YSkBzLXGb5jJ0oAP6J2Ct2LZOGUSq9oQvlegSOuyYAfzJMn1OT+SKcDspwVeFKS3wPGeOlIL
+        BJSILgKwot8EuGIKwFLDbwRXTALo6pzCn0pGDCdwrlEI4EDpwsqUC8Cu/ONLHYoS0uGwyC72
+        CAj6Jdh1coLwYCHtAx05fy/jZ+m9cLBgGvNgXzoS6ib6l3mcFsPUqWKeZ+daeg6HV9y3lg/g
+        dDsBrXe1yzZI+lX45Not0oO96FBYN+PEOLUEHrPmLtuDtEMAi7UzfM73O1BvLMA47AuHGywr
+        vD9sNKQTHD4KnUXHV8QaAK1XKlZCh8HelsekJxq+dPkX2waOjoSaUk8cagl7w+4xH86DN8ws
+        O4tztBBqToq46Rehs9m6slAMC9qmSR2QGle9i3FVfuOqNMb/7/4EiBIgZhPV8XJWvTmB/TJE
+        LYtXJybIQ2IOxJeCpf/duNAw9SsoHB4PqQUYBWoBpHDpWmHZ6FaZSBgr++prVnVgjyoxjlXX
+        gucpQioW7rP8vEdEy2WH2f0se5BVPe1ilNe6FKx4V33Yy7yN86fPV80ETm32nk08E3rpmcG3
+        D93dGn4p5fXcbv0jHyYjxC87ObvHIv12sbr/04G22N/tc02ff6j+J9j3MpF4fzx93vCG1vRR
+        YWsUNj/23ptJktR9Z9vfP2cKOCavXOz4OCkzv9gvpjdrzcDDcr+dIxeG5h5vf8EceXNTx0SY
+        /qhI8K4Tv794JFkv++5q3Z3dqQ532sPI2tvrzWkS+70von1DA/uUClngc+ttEbdPic+AijWP
+        cuxR0f9G8+Rt1BFbTroS7C7S6YbdHa9dj+yc3jLRmaeIiNl2yK6K14eRSsxfXqgIulEWHNTg
+        0lR8MhQVoB6rrNmxf/J6d8kupZRQK2SbgnCVWvYfxEW/0U4EAAA=
+X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFjrDKsWRmVeSWpSXmKPExsVy+t/xu7ouGvaJBm9faFr0njvJZLH8zDpm
+        iytf37NZzHl+ltFi0v0JLBbP569jtDjzW9fi5JurLBYv7l1ksfjxdx+rxdmmN+wWnROXsFtM
+        3H+W3eLyrjlsFjPO72OyWPhxK4vFjB//GC0O9UVb3J82C2jGwh/MFp9mPWS2WPFzK6PF3clH
+        GC1mTH7JZvFz1zwWi9Wv97FbbHkzkdXi6P5VrA4yHu9vtLJ73Dl3ns1j56y77B6P525k95jd
+        MZPVY/Gel0weJyZcYvK4c20Pm8f2bw9YPeadDPS4332cyeP4rlvsHkumXWXz6NuyitFj8+lq
+        j8+b5AIEovRsivJLS1IVMvKLS2yVog0tjPQMLS30jEws9QyNzWOtjEyV9O1sUlJzMstSi/Tt
+        EvQy2q9vYSqYI19xZOYUtgbGdZJdjJwcEgImEq8ntzKD2EICSxkl1s4sgIiLS+ye/5YZwhaW
+        +HOtiw2i5i2jxPZzgV2MHBy8AnYSK06Ig4RZBFQlrrd9YgGxeQUEJU7OfAJmiwokSOw+3MUO
+        YgsLOEpM+HQPLM4MNL7py0rWLkYuDhGB/8wSXdNXMYM4zAJXWSQajs5iA3GEBPYwSjz/d4cJ
+        pIVNQFPi7+abYFdwClhJHP52nwlilJlE19YuRghbXqJ562zmCYxCs5BcMgvJxllIWmYhaVnA
+        yLKKUSS1tDg3PbfYUK84Mbe4NC9dLzk/dxMjMFltO/Zz8w7Gea8+6h1iZOJgPMQowcGsJMK7
+        7Y1tohBvSmJlVWpRfnxRaU5q8SFGU2BwTGSWEk3OB6bLvJJ4QzMDU0MTM0sDU0szYyVx3q1z
+        18QLCaQnlqRmp6YWpBbB9DFxcEo1MNVJT3i1atrzssfR1/+raJyr1fh6ck2BXsucbP787HsW
+        geGZjRrnjjy4ZBJ2Ycram5VelUu0mupFg2Ie883irS12WcP6xiup0D8290nLB/uDh6d53P22
+        vP6m2XO7vWcspLhetTi/feJ+7Mc3lU/px32dzLXiL9+5Mf2F+dzvmpf79z4+zrHOyGzvjgu2
+        twqMvVT3P+CPElQwmfNxcv/f9xPFVp55K7ePVXS1S8Izb7eF9/y1mJ4+09WcyFI/RTZvt1ro
+        7+IL+sAwcPLYtrJ9e5ZV7tmW1kN/lZ5H/jCJd38w6c/urTPsJ0oue8JbvOvc5gd1bNtVenVf
+        X1dv9/1v4Rn01zA6pyDbb6vldmG2/UosxRmJhlrMRcWJAEdcfsjfAwAA
+X-CMS-MailID: 20210913103028eucas1p1428844a2a68d9611ef5fe5cc41827079
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20210910101445eucas1p172f99ff7fe853052fc457861c3174f9e
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20210910101445eucas1p172f99ff7fe853052fc457861c3174f9e
+References: <20210910101218.1632297-1-maxime@cerno.tech>
+        <CGME20210910101445eucas1p172f99ff7fe853052fc457861c3174f9e@eucas1p1.samsung.com>
+        <20210910101218.1632297-25-maxime@cerno.tech>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 12/09/2021 01:27, Luca Weiss wrote:
-> LG Electronics is a part of the LG Corporation and produces, amongst
-> other things, consumer electronics such as phones and smartwatches.
 
-Hi,
+W dniu 10.09.2021 o 12:12, Maxime Ripard pisze:
+> Without proper care and an agreement between how DSI hosts and devices
+> drivers register their MIPI-DSI entities and potential components, we can
+> end up in a situation where the drivers can never probe.
+>
+> Most drivers were taking evasive maneuvers to try to workaround this,
+> but not all of them were following the same conventions, resulting in
+> various incompatibilities between DSI hosts and devices.
+>
+> Now that we have a sequence agreed upon and documented, let's convert
+> exynos to it.
+>
+> Signed-off-by: Maxime Ripard <maxime@cerno.tech>
 
-Thanks for the patches.
+This patch should be dropped, as it will probably break the driver.
 
-I think "lge" it's the same prefix as "lg". There is no sense in having
-multiple vendor prefixes just because company splits inside business
-units or subsidiaries. The same as with other conglomerates, e.g.
-Samsung - if we wanted to be specific, there will be 4-5 Samsung
-vendors... Not mentioning that company organisation is not always
-disclosed and can change.
+Exynos is already compatible with the pattern 
+register-bus-then-get-sink, but it adds/removes panel/bridge 
+dynamically, so it creates drm_device without waiting for downstream sink.
 
-We already have lg for several components, also made by LG Electronics.
-What about these?
 
-There is only one device with "lge", added back in 2016 without adding
-vendor prefix. I would propose to fix that one, instead of keeping
-duplicated "lg".
+Regards
 
-Best regards,
-Krzysztof
+Andrzej
+
+
+> ---
+>   drivers/gpu/drm/exynos/exynos_drm_dsi.c | 19 ++++++++++++-------
+>   1 file changed, 12 insertions(+), 7 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/exynos/exynos_drm_dsi.c b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
+> index e39fac889edc..dfda2b259c44 100644
+> --- a/drivers/gpu/drm/exynos/exynos_drm_dsi.c
+> +++ b/drivers/gpu/drm/exynos/exynos_drm_dsi.c
+> @@ -1529,6 +1529,7 @@ static const struct drm_encoder_helper_funcs exynos_dsi_encoder_helper_funcs = {
+>   
+>   MODULE_DEVICE_TABLE(of, exynos_dsi_of_match);
+>   
+> +static const struct component_ops exynos_dsi_component_ops;
+>   static int exynos_dsi_host_attach(struct mipi_dsi_host *host,
+>   				  struct mipi_dsi_device *device)
+>   {
+> @@ -1536,6 +1537,7 @@ static int exynos_dsi_host_attach(struct mipi_dsi_host *host,
+>   	struct drm_encoder *encoder = &dsi->encoder;
+>   	struct drm_device *drm = encoder->dev;
+>   	struct drm_bridge *out_bridge;
+> +	struct device *dev = host->dev;
+>   
+>   	out_bridge  = of_drm_find_bridge(device->dev.of_node);
+>   	if (out_bridge) {
+> @@ -1585,7 +1587,7 @@ static int exynos_dsi_host_attach(struct mipi_dsi_host *host,
+>   	if (drm->mode_config.poll_enabled)
+>   		drm_kms_helper_hotplug_event(drm);
+>   
+> -	return 0;
+> +	return component_add(dev, &exynos_dsi_component_ops);
+>   }
+>   
+>   static int exynos_dsi_host_detach(struct mipi_dsi_host *host,
+> @@ -1593,6 +1595,9 @@ static int exynos_dsi_host_detach(struct mipi_dsi_host *host,
+>   {
+>   	struct exynos_dsi *dsi = host_to_dsi(host);
+>   	struct drm_device *drm = dsi->encoder.dev;
+> +	struct device *dev = host->dev;
+> +
+> +	component_del(dev, &exynos_dsi_component_ops);
+>   
+>   	if (dsi->panel) {
+>   		mutex_lock(&drm->mode_config.mutex);
+> @@ -1716,7 +1721,7 @@ static int exynos_dsi_bind(struct device *dev, struct device *master,
+>   		of_node_put(in_bridge_node);
+>   	}
+>   
+> -	return mipi_dsi_host_register(&dsi->dsi_host);
+> +	return 0;
+>   }
+>   
+>   static void exynos_dsi_unbind(struct device *dev, struct device *master,
+> @@ -1726,8 +1731,6 @@ static void exynos_dsi_unbind(struct device *dev, struct device *master,
+>   	struct drm_encoder *encoder = &dsi->encoder;
+>   
+>   	exynos_dsi_disable(encoder);
+> -
+> -	mipi_dsi_host_unregister(&dsi->dsi_host);
+>   }
+>   
+>   static const struct component_ops exynos_dsi_component_ops = {
+> @@ -1821,7 +1824,7 @@ static int exynos_dsi_probe(struct platform_device *pdev)
+>   
+>   	pm_runtime_enable(dev);
+>   
+> -	ret = component_add(dev, &exynos_dsi_component_ops);
+> +	ret = mipi_dsi_host_register(&dsi->dsi_host);
+>   	if (ret)
+>   		goto err_disable_runtime;
+>   
+> @@ -1835,10 +1838,12 @@ static int exynos_dsi_probe(struct platform_device *pdev)
+>   
+>   static int exynos_dsi_remove(struct platform_device *pdev)
+>   {
+> +	struct exynos_dsi *dsi = platform_get_drvdata(pdev);
+> +
+> +	mipi_dsi_host_unregister(&dsi->dsi_host);
+> +
+>   	pm_runtime_disable(&pdev->dev);
+>   
+> -	component_del(&pdev->dev, &exynos_dsi_component_ops);
+> -
+>   	return 0;
+>   }
+>   
