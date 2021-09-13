@@ -2,91 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CC5F240967B
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 16:55:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B52594099DA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 18:46:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245730AbhIMOvt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Sep 2021 10:51:49 -0400
-Received: from mail.kernel.org ([198.145.29.99]:35582 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1344829AbhIMOsJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Sep 2021 10:48:09 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id CED4F60555;
-        Mon, 13 Sep 2021 14:32:59 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631543580;
-        bh=LlL+UEcL8QdwVkYcbQ0B6JqkI3z3wfY5/i2rd9muYgo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=ZHHgi9WWuwgZWISxqQOyF0tWPKvkbbNt3tXUeu9L5qxBR01cxzYdXFdq9rhuhHpLu
-         Iepo0R8iKhBwLcWf1+yIEA4IhR5nsnAbZqmEqEtFcFbcONpO4QeGPaG2NAV0ge9cgb
-         9HIoM7Esvmaiinz2Q7KMFtcxzw926msOrSFqy0esCq6HcCA/3t/As5gIo3somXFTkj
-         yiTZPzlHnLdQ8wqCODNdCJJv/iYy5X7RfGm/HeHHctqJAlKvh/drwsgIR7ArAlGnR0
-         PLVnM1D8/VtgVMyy48GMfD3q0WIa9Mm3ysFHsKjH/OeV/VNFvALV8eKacBfmGm1M4v
-         CISFWwlS3HTmQ==
-Date:   Mon, 13 Sep 2021 15:32:21 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Iskren Chernev <iskren.chernev@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht
-Subject: Re: [RFC PATCH 2/2] regulator: qcom_smd: Add PM6125 regulator support
-Message-ID: <20210913143221.GG4283@sirena.org.uk>
-References: <20210828115654.647548-1-iskren.chernev@gmail.com>
- <20210828115654.647548-3-iskren.chernev@gmail.com>
- <20210903152331.GK4932@sirena.org.uk>
- <b02e3ba5-b3fe-8963-8457-62304a39e100@gmail.com>
+        id S239754AbhIMQrx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Sep 2021 12:47:53 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.54]:35170 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239544AbhIMQrr (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 Sep 2021 12:47:47 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1631551571;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
+    bh=LDKU/RP1Q4cF+tw+7bkG3lbITIkUa4qSx/UdAGSCvN0=;
+    b=Ax0e5xbmRT9KN0bWzxrOe/h3pdnK5ju7e8yOrARnvkxqKXf/zGmnjgExpFukHA0pwH
+    MZpcFbMWA9xvTxyx77rocc8y9QdI6FlH5VSKfeL0l4wNXsSCywTAz3qEQsYfYR951iYy
+    RrLYlnMXQNM8tr959amuhAEpm/Kce1B6yFxGVOiDm7KuM/j2yA3JQqlqNNZsXrOv7uKq
+    0J4ipcBuol3TluSqOBKEAXPHMaOIIVAiheAV9c0tptWF9dtlG7KmEM9+3HyTbt3rdnxK
+    dKXy8G4QEroKwGkjPREetIqnaykb89qWDokPTYsGcxySbOjCnAdqexViV+pozYYSFOk0
+    gnMQ==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXTbAOHjRHIhr2eFSKC/A="
+X-RZG-CLASS-ID: mo00
+Received: from droid..
+    by smtp.strato.de (RZmta 47.33.3 DYNA|AUTH)
+    with ESMTPSA id L05399x8DGkAKD1
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Mon, 13 Sep 2021 18:46:10 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Stephan Gerhold <stephan@gerhold.net>,
+        Nikita Travkin <nikita@trvn.ru>
+Subject: [PATCH] drm/msm: Fix devfreq NULL pointer dereference on a3xx
+Date:   Mon, 13 Sep 2021 18:45:56 +0200
+Message-Id: <20210913164556.16284-1-stephan@gerhold.net>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="iAL9S67WQOXgEPD9"
-Content-Disposition: inline
-In-Reply-To: <b02e3ba5-b3fe-8963-8457-62304a39e100@gmail.com>
-X-Cookie: Above all else -- sky.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+There is no devfreq on a3xx at the moment since gpu_busy is not
+implemented. This means that msm_devfreq_init() will return early
+and the entire devfreq setup is skipped.
 
---iAL9S67WQOXgEPD9
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+However, msm_devfreq_active() and msm_devfreq_idle() are still called
+unconditionally later, causing a NULL pointer dereference:
 
-On Fri, Sep 03, 2021 at 10:49:52PM +0300, Iskren Chernev wrote:
-> On 9/3/21 6:23 PM, Mark Brown wrote:
-> > On Sat, Aug 28, 2021 at 02:56:54PM +0300, Iskren Chernev wrote:
+  Unable to handle kernel NULL pointer dereference at virtual address 0000000000000010
+  Internal error: Oops: 96000004 [#1] PREEMPT SMP
+  CPU: 0 PID: 133 Comm: ring0 Not tainted 5.15.0-rc1 #4
+  Hardware name: Longcheer L8150 (DT)
+  pc : mutex_lock_io+0x2bc/0x2f0
+  lr : msm_devfreq_active+0x3c/0xe0 [msm]
+  Call trace:
+   mutex_lock_io+0x2bc/0x2f0
+   msm_gpu_submit+0x164/0x180 [msm]
+   msm_job_run+0x54/0xe0 [msm]
+   drm_sched_main+0x2b0/0x4a0 [gpu_sched]
+   kthread+0x154/0x160
+   ret_from_fork+0x10/0x20
 
-> >> NOTE: The sources haven't been determined, so currently each regulator
-> >> has it's own source.
+Fix this by adding a check in msm_devfreq_active/idle() which ensures
+that devfreq was actually initialized earlier.
 
-> > It would probably be safer to just leave them unspecified for now and
-> > then add them as people figure out what's going on rather than putting
-> > something incorrect into the DT bindings.
+Fixes: 9bc95570175a ("drm/msm: Devfreq tuning")
+Reported-by: Nikita Travkin <nikita@trvn.ru>
+Tested-by: Nikita Travkin <nikita@trvn.ru>
+Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+---
+ drivers/gpu/drm/msm/msm_gpu_devfreq.c | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-> I didn't expect this patch to be mergeable, so I didn't add the dt-bindings.
+diff --git a/drivers/gpu/drm/msm/msm_gpu_devfreq.c b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+index 0a1ee20296a2..84e98c07c900 100644
+--- a/drivers/gpu/drm/msm/msm_gpu_devfreq.c
++++ b/drivers/gpu/drm/msm/msm_gpu_devfreq.c
+@@ -151,6 +151,9 @@ void msm_devfreq_active(struct msm_gpu *gpu)
+ 	unsigned int idle_time;
+ 	unsigned long target_freq = df->idle_freq;
+ 
++	if (!df->devfreq)
++		return;
++
+ 	/*
+ 	 * Hold devfreq lock to synchronize with get_dev_status()/
+ 	 * target() callbacks
+@@ -186,6 +189,9 @@ void msm_devfreq_idle(struct msm_gpu *gpu)
+ 	struct msm_gpu_devfreq *df = &gpu->devfreq;
+ 	unsigned long idle_freq, target_freq = 0;
+ 
++	if (!df->devfreq)
++		return;
++
+ 	/*
+ 	 * Hold devfreq lock to synchronize with get_dev_status()/
+ 	 * target() callbacks
+-- 
+2.33.0
 
-If you skip out on basic smell tests like having DT bindings that's
-going to inhibit the amount of review you get, once things obviously
-aren't going to be merged review tends to get a lot more high level.
-
-> So should I add bindings and just ignore all the sources (add them later)?
-
-Yes.
-
---iAL9S67WQOXgEPD9
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmE/YPQACgkQJNaLcl1U
-h9DfmQf+LEQSFvSlXylnotKOPeYGqgofaL3EbkdZDLOzCJ8i1NXog9E0ADq4it5V
-to8oYtTXoa2/d+GA5N0UvFnU+GPZNf3/Z6HMmdeyB+Qxgz7vX0pKVZ9qVetqCkYJ
-L+UR9tWU0TudQ7vSOMuSeXJ2mvL0bmuayULj+gERN3EmCKl1yVeAchGI/5vLG2aD
-wScIW3UXSktks3zx6k1frFDWTZTDifSDO1V0lWgxbTejWwt2Ya70AmRsDIeONf7b
-1xFJA3C4Fx3HqavE4R10/e7J42FUsAV90JSlFyuuF5JMRwGMjzlHv68ZiaCJ/Uh7
-I+tkyJ4mcXUjFmrQgrG4F3lW56zaGg==
-=UcBp
------END PGP SIGNATURE-----
-
---iAL9S67WQOXgEPD9--
