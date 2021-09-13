@@ -2,41 +2,43 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 33629408978
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 12:54:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1235C40897A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 13 Sep 2021 12:54:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239288AbhIMKzt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Sep 2021 06:55:49 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51432 "EHLO mail.kernel.org"
+        id S239257AbhIMKzx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Sep 2021 06:55:53 -0400
+Received: from mail.kernel.org ([198.145.29.99]:51504 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S239251AbhIMKzo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Sep 2021 06:55:44 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 7CF5561051;
-        Mon, 13 Sep 2021 10:54:28 +0000 (UTC)
+        id S239298AbhIMKzr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 13 Sep 2021 06:55:47 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 0DD4760F12;
+        Mon, 13 Sep 2021 10:54:30 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631530469;
-        bh=C/CD9dwxoPjq7daDRZanhVCJzqf9jrManidvO4tPMbc=;
+        s=k20201202; t=1631530471;
+        bh=+LuT1nw1zwnEKWg8ze5we++x+gTI9O+Ydnbmy+cNIDk=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=SRcNfK6l9h3nCMDX/jSnvRdRNFGmqSxn6rH6Qk6+gt4rzELoC4eezGrETQzk0EG+X
-         VAlSBZgobV2lcJfNgwwDf/5e05cxdXLjp9cNzHevwMjBp+IapRILOTMyLxp6t3vGQ7
-         buCKeMKk07qu6gL4gbyJL27++ChJfXOb1aqgYQZ8wWk2zztq8zfF36MDQnKneuZaCX
-         3fcWf6LXxrvD8O0vZlCmvdpz6Y7U7+2JL7QCUByb1MQnPE2mFEDXQS/tzv8JQeM/6e
-         +89RYriJOTLqfNAYVs4A1XMKYItBRCv1VB8FG/Yasgr4VWH609mpFaY8w1IEUB9e/X
-         6zQxDpflQAk2Q==
+        b=bNahRGyD1ZY6zifYN/gxH5aVeOELABzlt4ajoCiJRWLAPK5COx9axY0N5rjUmWE4V
+         0b/4W4ggOtOwniiAcBF/ust8zByALc111DVKiZGddaPPyWPeR4Dd3moLMYNgG0gkz1
+         2PFhTwWsV6p3dm3V2NYsMuyhMBJlnAHZXnBU24U9z2pxiTbxxjiWSCj7wM2tly4fHD
+         3kliVyMz1SFgcQEAVBQs9YXyfQyMGkUDTy18U8vW3gdTxNObaIQGKlfUa+rrrpLJyJ
+         H+3Yi2bmfRHtKIHB2xAakl9JuBB8GrFz3G7s6zOHnayTAHdXZeqP+RUKckhfZ5aUYh
+         +TY/+KiIqSFyQ==
 From:   Mark Brown <broonie@kernel.org>
-To:     Cai Huoqing <caihuoqing@baidu.com>
-Cc:     Mark Brown <broonie@kernel.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        linux-arm-msm@vger.kernel.org,
-        Luka Perkov <luka.perkov@sartura.hr>,
-        Liam Girdwood <lgirdwood@gmail.com>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] regulator: vqmmc-ipq4019: Make use of the helper function devm_platform_ioremap_resource()
-Date:   Mon, 13 Sep 2021 11:53:12 +0100
-Message-Id: <163153010300.45871.10330234930176401038.b4-ty@kernel.org>
+To:     perex@perex.cz, plai@codeaurora.org, linux-kernel@vger.kernel.org,
+        srinivas.kandagatla@linaro.org, alsa-devel@alsa-project.org,
+        bgoswami@codeaurora.org, bjorn.andersson@linaro.org,
+        rohitkr@codeaurora.org, robh+dt@kernel.org, lgirdwood@gmail.com,
+        devicetree@vger.kernel.org, agross@kernel.org, tiwai@suse.com,
+        linux-arm-msm@vger.kernel.org, swboyd@chromium.org,
+        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        judyhsiao@chromium.org
+Cc:     Mark Brown <broonie@kernel.org>
+Subject: Re: [PATCH] ASoC: dt-bindings: lpass: add binding headers for digital codecs
+Date:   Mon, 13 Sep 2021 11:53:13 +0100
+Message-Id: <163152996584.45703.6233667847951933638.b4-ty@kernel.org>
 X-Mailer: git-send-email 2.20.1
-In-Reply-To: <20210908105752.2035-1-caihuoqing@baidu.com>
-References: <20210908105752.2035-1-caihuoqing@baidu.com>
+In-Reply-To: <1630934854-14086-1-git-send-email-srivasam@codeaurora.org>
+References: <1630934854-14086-1-git-send-email-srivasam@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -44,21 +46,20 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 8 Sep 2021 18:57:51 +0800, Cai Huoqing wrote:
-> Use the devm_platform_ioremap_resource() helper instead of
-> calling platform_get_resource() and devm_ioremap_resource()
-> separately
+On Mon, 6 Sep 2021 18:57:34 +0530, Srinivasa Rao Mandadapu wrote:
+> Add header defining for lpass internal digital codecs rx,tx and va
+> dai node id's.
 > 
 > 
 
 Applied to
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/regulator.git for-next
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
 
 Thanks!
 
-[1/1] regulator: vqmmc-ipq4019: Make use of the helper function devm_platform_ioremap_resource()
-      commit: 6998c575b6dc26275b61987a3d70a8a4c976048b
+[1/1] ASoC: dt-bindings: lpass: add binding headers for digital codecs
+      commit: bfad37c53ae6168d03ab06868ea44e77995c43d5
 
 All being well this means that it will be integrated into the linux-next
 tree (usually sometime in the next 24 hours) and sent to Linus during
