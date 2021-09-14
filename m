@@ -2,157 +2,394 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9F6E740A8ED
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Sep 2021 10:10:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F0D340AB3E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Sep 2021 11:56:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230111AbhINILk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Sep 2021 04:11:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33714 "EHLO
+        id S230151AbhINJ5h (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Sep 2021 05:57:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58796 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230263AbhINIL2 (ORCPT
+        with ESMTP id S229907AbhINJ5h (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Sep 2021 04:11:28 -0400
-Received: from mail-pf1-x432.google.com (mail-pf1-x432.google.com [IPv6:2607:f8b0:4864:20::432])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 78754C0613B0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Sep 2021 01:09:20 -0700 (PDT)
-Received: by mail-pf1-x432.google.com with SMTP id y17so11405728pfl.13
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Sep 2021 01:09:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=HORz+N9iPM3MBLFTrD2etygd1AQ7C3FwAZKQ2ef9vXA=;
-        b=hNqZp1dwfdFkEDBjv3xUXxcGBjBFOYQgKv9Fg+Lztu1zsRHrV3An6X4PLGSsbKhgOa
-         t9JlCxXjagpAmLziP/AL4bkyLre2pXearJ6vsOhr3a4OMeeE5IWFJItz28A/KEi4a3t8
-         mBpgnfsVbpl9pw9GSX02QXTV+i2OrSKCNJzSQLhyxVbOQSMnvydpM/9vsKsudJbutJt/
-         VlHtTVJtBzxB+XhxVk5T/zY1+eqmH4bBZobJzk0Ccqr9JCQQ/PGT4tbPOkPrXWRl3JCx
-         nFuZpm82/kf2CtsMtwOjplejstBJ5m09BzGpksPce+zrvVQFXeXb8WLPsb6c9Mn8XRYL
-         NIrw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=HORz+N9iPM3MBLFTrD2etygd1AQ7C3FwAZKQ2ef9vXA=;
-        b=dQhPSIBCUOi9G5tdNhcugjO5POBn4BlOt8V/eBwK8VJ7oGtDj+8vt2ZDLhX0bjLRnc
-         D+FGX/ZNG80wbh9NXim3bLW7PZI3R22QhDgpvR/XPiILkj6YbDPrffcs/lD7M8UH83HD
-         m8daDGNzLiaAEx4VE50SGQ8Ai09mGoVGF/wINMSwi6+WDUHj20oweIop0+DTjOECTnik
-         t0lzr2N4W08z5LdDDJOBY1WHt/P0qzTn87oZNpNWXX95xmQTRKnqmnqSSzoS9haKwJS8
-         cm6416SnTtDNeikmmg4WIAl1yigRRFvbOuszNJJf6wxDikG5N/XSAIktB7PWMhalqkwP
-         hS2Q==
-X-Gm-Message-State: AOAM533tAx4UZKd7xMYzXTpbCBvbvoj2XR/1BdqgJkE0O+4wJYZnTBhk
-        eswcvRTJ62daQC1vC7EbQoQc
-X-Google-Smtp-Source: ABdhPJyh/TNWx4PNfVhDrSi721PTkgySN/TIS/csuXWue6mCXR6CsUoAqZhV2TwTkxInYfdYoJMZGw==
-X-Received: by 2002:aa7:9f8a:0:b0:43c:39be:23fb with SMTP id z10-20020aa79f8a000000b0043c39be23fbmr3434984pfr.57.1631606959868;
-        Tue, 14 Sep 2021 01:09:19 -0700 (PDT)
-Received: from thinkpad ([2409:4072:6211:54eb:fe9c:efbb:2b75:a575])
-        by smtp.gmail.com with ESMTPSA id d5sm669016pjs.53.2021.09.14.01.09.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Sep 2021 01:09:19 -0700 (PDT)
-Date:   Tue, 14 Sep 2021 13:39:11 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     kishon@ti.com, lorenzo.pieralisi@arm.com, bhelgaas@google.com,
-        robh@kernel.org
-Cc:     devicetree@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        hemantk@codeaurora.org, smohanad@codeaurora.org,
-        bjorn.andersson@linaro.org, sallenki@codeaurora.org,
-        skananth@codeaurora.org, vpernami@codeaurora.org,
-        vbadigan@codeaurora.org
-Subject: Re: [PATCH v7 0/3] Add Qualcomm PCIe Endpoint driver support
-Message-ID: <20210914080911.GA16774@thinkpad>
-References: <20210722121242.47838-1-manivannan.sadhasivam@linaro.org>
+        Tue, 14 Sep 2021 05:57:37 -0400
+Received: from relay03.th.seeweb.it (relay03.th.seeweb.it [IPv6:2001:4b7a:2000:18::164])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDE34C061762;
+        Tue, 14 Sep 2021 02:56:19 -0700 (PDT)
+Received: from [192.168.1.101] (83.6.166.65.neoplus.adsl.tpnet.pl [83.6.166.65])
+        (using TLSv1.3 with cipher TLS_AES_128_GCM_SHA256 (128/128 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id A2F821F6A2;
+        Tue, 14 Sep 2021 11:56:14 +0200 (CEST)
+Subject: Re: [PATCH v3 2/2] pinctrl: qcom: Add SM6350 pinctrl driver
+To:     Luca Weiss <luca@z3ntu.xyz>, ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20210828172315.55742-1-konrad.dybcio@somainline.org>
+ <20210828172315.55742-2-konrad.dybcio@somainline.org>
+ <6673399.dA2BYh7nEs@g550jk>
+From:   Konrad Dybcio <konrad.dybcio@somainline.org>
+Message-ID: <9ef42060-7cf8-35e6-b7c8-9b51963d378a@somainline.org>
+Date:   Tue, 14 Sep 2021 11:56:13 +0200
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210722121242.47838-1-manivannan.sadhasivam@linaro.org>
+In-Reply-To: <6673399.dA2BYh7nEs@g550jk>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
 
-On Thu, Jul 22, 2021 at 05:42:39PM +0530, Manivannan Sadhasivam wrote:
-> Hello,
-> 
-> This series adds support for Qualcomm PCIe Endpoint controller found
-> in platforms like SDX55. The Endpoint controller is based on the designware
-> core with additional Qualcomm wrappers around the core.
-> 
-> The driver is added separately unlike other Designware based drivers that
-> combine RC and EP in a single driver. This is done to avoid complexity and
-> to maintain this driver autonomously.
-> 
-> The driver has been validated with an out of tree MHI function driver on
-> SDX55 based Telit FN980 EVB connected to x86 host machine over PCIe.
-> 
+On 13.09.2021 19:23, Luca Weiss wrote:
+> Hi Konrad,
+>
+> based on other reviews on the mailing list/IRC 
 
-Ping again! Do I need to resend this series on top of v5.15-rc1? I thought this
-one could go in for v5.15 but...
+Sorry, I wasn't very active for a while:)
 
-Thanks,
-Mani
 
-> Thanks,
-> Mani
-> 
-> Changes in v7:
-> 
-> * Used existing naming convention for callback functions
-> * Used active low state for PERST# gpio
-> 
-> Changes in v6:
-> 
-> * Removed status property in DT and added reviewed tag from Rob
-> * Switched to _relaxed variants as suggested by Rob
-> 
-> Changes in v5:
-> 
-> * Removed the DBI register settings that are not needed
-> * Used the standard definitions available in pci_regs.h
-> * Added defines for all the register fields
-> * Removed the left over code from previous iteration
-> 
-> Changes in v4:
-> 
-> * Removed the active_config settings needed for IPA integration
-> * Switched to writel for couple of relaxed versions that sneaked in
-> 
-> Changes in v3:
-> 
-> * Lot of minor cleanups to the driver patch based on review from Bjorn and Stan.
-> * Noticeable changes are:
->   - Got rid of _relaxed calls and used readl/writel
->   - Got rid of separate TCSR memory region and used syscon for getting the
->     register offsets for Perst registers
->   - Changed the wake gpio handling logic
->   - Added remove() callback and removed "suppress_bind_attrs"
->   - stop_link() callback now just disables PERST IRQ
-> * Added MMIO region and doorbell interrupt to the binding
-> * Added logic to write MMIO physicall address to MHI base address as it is
->   for the function driver to work
-> 
-> Changes in v2:
-> 
-> * Addressed the comments from Rob on bindings patch
-> * Modified the driver as per binding change
-> * Fixed the warnings reported by Kbuild bot
-> * Removed the PERST# "enable_irq" call from probe()
-> 
-> Manivannan Sadhasivam (3):
->   dt-bindings: pci: Add devicetree binding for Qualcomm PCIe EP
->     controller
->   PCI: qcom-ep: Add Qualcomm PCIe Endpoint controller driver
->   MAINTAINERS: Add entry for Qualcomm PCIe Endpoint driver and binding
-> 
->  .../devicetree/bindings/pci/qcom,pcie-ep.yaml | 158 ++++
->  MAINTAINERS                                   |  10 +-
->  drivers/pci/controller/dwc/Kconfig            |  10 +
->  drivers/pci/controller/dwc/Makefile           |   1 +
->  drivers/pci/controller/dwc/pcie-qcom-ep.c     | 710 ++++++++++++++++++
->  5 files changed, 888 insertions(+), 1 deletion(-)
->  create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
->  create mode 100644 drivers/pci/controller/dwc/pcie-qcom-ep.c
-> 
-> -- 
-> 2.25.1
-> 
+> I have some comments here
+
+>
+> On Samstag, 28. August 2021 19:23:14 CEST Konrad Dybcio wrote:
+>> This adds pincontrol driver for tlmm block found in SM6350 SoC
+>>
+>> This patch is based on downstream copyleft code.
+>>
+>> Reviewed-by: AngeloGioacchino Del Regno
+>> <angelogioacchino.delregno@somainline.org> Signed-off-by: Konrad Dybcio
+>> <konrad.dybcio@somainline.org>
+>> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+>> ---
+>> Changes since v2:
+>> - Trim the forgotten-about comments
+>> - Add Bjorn's r-b
+>>
+>>  drivers/pinctrl/qcom/Kconfig          |    9 +
+>>  drivers/pinctrl/qcom/Makefile         |    1 +
+>>  drivers/pinctrl/qcom/pinctrl-sm6350.c | 1593 +++++++++++++++++++++++++
+>>  3 files changed, 1603 insertions(+)
+>>  create mode 100644 drivers/pinctrl/qcom/pinctrl-sm6350.c
+>>
+> [SNIP]
+>> +DECLARE_MSM_GPIO_PINS(128);
+>> +DECLARE_MSM_GPIO_PINS(129);
+>> +DECLARE_MSM_GPIO_PINS(130);
+>> +DECLARE_MSM_GPIO_PINS(131);
+>> +DECLARE_MSM_GPIO_PINS(132);
+>> +DECLARE_MSM_GPIO_PINS(133);
+>> +DECLARE_MSM_GPIO_PINS(134);
+>> +DECLARE_MSM_GPIO_PINS(135);
+>> +DECLARE_MSM_GPIO_PINS(136);
+>> +DECLARE_MSM_GPIO_PINS(137);
+>> +DECLARE_MSM_GPIO_PINS(138);
+>> +DECLARE_MSM_GPIO_PINS(139);
+>> +DECLARE_MSM_GPIO_PINS(140);
+>> +DECLARE_MSM_GPIO_PINS(141);
+>> +DECLARE_MSM_GPIO_PINS(142);
+>> +DECLARE_MSM_GPIO_PINS(143);
+>> +DECLARE_MSM_GPIO_PINS(144);
+>> +DECLARE_MSM_GPIO_PINS(145);
+>> +DECLARE_MSM_GPIO_PINS(146);
+>> +DECLARE_MSM_GPIO_PINS(147);
+>> +DECLARE_MSM_GPIO_PINS(148);
+>> +DECLARE_MSM_GPIO_PINS(149);
+>> +DECLARE_MSM_GPIO_PINS(150);
+>> +DECLARE_MSM_GPIO_PINS(151);
+>> +DECLARE_MSM_GPIO_PINS(152);
+>> +DECLARE_MSM_GPIO_PINS(153);
+>> +DECLARE_MSM_GPIO_PINS(154);
+>> +DECLARE_MSM_GPIO_PINS(155);
+>> +
+>> +static const unsigned int sdc1_rclk_pins[] = { 156 };
+>> +static const unsigned int sdc1_clk_pins[] = { 157 };
+>> +static const unsigned int sdc1_cmd_pins[] = { 158 };
+>> +static const unsigned int sdc1_data_pins[] = { 159 };
+>> +static const unsigned int sdc2_clk_pins[] = { 160 };
+>> +static const unsigned int sdc2_cmd_pins[] = { 161 };
+>> +static const unsigned int sdc2_data_pins[] = { 162 };
+>> +static const unsigned int ufs_reset_pins[] = { 163 };
+> All these numbers don't match anymore after moving ufs_reset to 156
+>
+> (ref: https://lore.kernel.org/lkml/YNTYvKYDWFxUcb+Y@yoga/ )
+
+Good catch, thanks!
+
+
+>
+>> +
+>> +enum sm6350_functions {
+>> +	msm_mux_adsp_ext,
+>> +	msm_mux_agera_pll,
+>> +	msm_mux_atest_char,
+>> +	msm_mux_atest_char0,
+>> +	msm_mux_atest_char1,
+>> +	msm_mux_atest_char2,
+>> +	msm_mux_atest_char3,
+>> +	msm_mux_atest_tsens,
+>> +	msm_mux_atest_tsens2,
+>> +	msm_mux_atest_usb1,
+>> +	msm_mux_atest_usb10,
+>> +	msm_mux_atest_usb11,
+>> +	msm_mux_atest_usb12,
+>> +	msm_mux_atest_usb13,
+>> +	msm_mux_atest_usb2,
+>> +	msm_mux_atest_usb20,
+>> +	msm_mux_atest_usb21,
+>> +	msm_mux_atest_usb22,
+>> +	msm_mux_atest_usb23,
+> Bjorn mentioned to merge all the atest_usb* functions into a single one.
+
+Will do.
+
+
+
+>
+>> +	msm_mux_audio_ref,
+>> +	msm_mux_btfm_slimbus,
+>> +	msm_mux_cam_mclk0,
+>> +	msm_mux_cam_mclk1,
+>> +	msm_mux_cam_mclk2,
+>> +	msm_mux_cam_mclk3,
+>> +	msm_mux_cam_mclk4,
+>> +	msm_mux_cci_async,
+>> +	msm_mux_cci_i2c,
+>> +	msm_mux_cci_timer0,
+>> +	msm_mux_cci_timer1,
+>> +	msm_mux_cci_timer2,
+>> +	msm_mux_cci_timer3,
+>> +	msm_mux_cci_timer4,
+>> +	msm_mux_cri_trng,
+>> +	msm_mux_dbg_out,
+>> +	msm_mux_ddr_bist,
+>> +	msm_mux_ddr_pxi0,
+>> +	msm_mux_ddr_pxi1,
+>> +	msm_mux_ddr_pxi2,
+>> +	msm_mux_ddr_pxi3,
+>> +	msm_mux_dp_hot,
+>> +	msm_mux_edp_lcd,
+>> +	msm_mux_gcc_gp1,
+>> +	msm_mux_gcc_gp2,
+>> +	msm_mux_gcc_gp3,
+>> +	msm_mux_gp_pdm0,
+>> +	msm_mux_gp_pdm1,
+>> +	msm_mux_gp_pdm2,
+>> +	msm_mux_gpio,
+>> +	msm_mux_gps_tx,
+>> +	msm_mux_ibi_i3c,
+>> +	msm_mux_jitter_bist,
+>> +	msm_mux_ldo_en,
+>> +	msm_mux_ldo_update,
+>> +	msm_mux_lpass_ext,
+>> +	msm_mux_m_voc,
+>> +	msm_mux_mclk,
+>> +	msm_mux_mdp_vsync,
+>> +	msm_mux_mdp_vsync0,
+>> +	msm_mux_mdp_vsync1,
+>> +	msm_mux_mdp_vsync2,
+>> +	msm_mux_mdp_vsync3,
+>> +	msm_mux_mi2s_0,
+>> +	msm_mux_mi2s_1,
+>> +	msm_mux_mi2s_2,
+>> +	msm_mux_mss_lte,
+>> +	msm_mux_nav_gpio,
+>> +	msm_mux_nav_pps,
+>> +	msm_mux_pa_indicator,
+>> +	msm_mux_pcie0_clk,
+>> +	msm_mux_phase_flag0,
+>> +	msm_mux_phase_flag1,
+>> +	msm_mux_phase_flag10,
+>> +	msm_mux_phase_flag11,
+>> +	msm_mux_phase_flag12,
+>> +	msm_mux_phase_flag13,
+>> +	msm_mux_phase_flag14,
+>> +	msm_mux_phase_flag15,
+>> +	msm_mux_phase_flag16,
+>> +	msm_mux_phase_flag17,
+>> +	msm_mux_phase_flag18,
+>> +	msm_mux_phase_flag19,
+>> +	msm_mux_phase_flag2,
+>> +	msm_mux_phase_flag20,
+>> +	msm_mux_phase_flag21,
+>> +	msm_mux_phase_flag22,
+>> +	msm_mux_phase_flag23,
+>> +	msm_mux_phase_flag24,
+>> +	msm_mux_phase_flag25,
+>> +	msm_mux_phase_flag26,
+>> +	msm_mux_phase_flag27,
+>> +	msm_mux_phase_flag28,
+>> +	msm_mux_phase_flag29,
+>> +	msm_mux_phase_flag3,
+>> +	msm_mux_phase_flag30,
+>> +	msm_mux_phase_flag31,
+>> +	msm_mux_phase_flag4,
+>> +	msm_mux_phase_flag5,
+>> +	msm_mux_phase_flag6,
+>> +	msm_mux_phase_flag7,
+>> +	msm_mux_phase_flag8,
+>> +	msm_mux_phase_flag9,
+> .. and all the phase_flag* ones.
+
+Sure
+
+
+>
+>> +	msm_mux_pll_bist,
+>> +	msm_mux_pll_bypassnl,
+>> +	msm_mux_pll_reset,
+>> +	msm_mux_prng_rosc,
+>> +	msm_mux_qdss_cti,
+>> +	msm_mux_qdss_gpio,
+>> +	msm_mux_qdss_gpio0,
+>> +	msm_mux_qdss_gpio1,
+>> +	msm_mux_qdss_gpio10,
+>> +	msm_mux_qdss_gpio11,
+>> +	msm_mux_qdss_gpio12,
+>> +	msm_mux_qdss_gpio13,
+>> +	msm_mux_qdss_gpio14,
+>> +	msm_mux_qdss_gpio15,
+>> +	msm_mux_qdss_gpio2,
+>> +	msm_mux_qdss_gpio3,
+>> +	msm_mux_qdss_gpio4,
+>> +	msm_mux_qdss_gpio5,
+>> +	msm_mux_qdss_gpio6,
+>> +	msm_mux_qdss_gpio7,
+>> +	msm_mux_qdss_gpio8,
+>> +	msm_mux_qdss_gpio9,
+>> +	msm_mux_qlink0_enable,
+>> +	msm_mux_qlink0_request,
+>> +	msm_mux_qlink0_wmss,
+>> +	msm_mux_qlink1_enable,
+>> +	msm_mux_qlink1_request,
+>> +	msm_mux_qlink1_wmss,
+>> +	msm_mux_qup00,
+>> +	msm_mux_qup01,
+>> +	msm_mux_qup02,
+>> +	msm_mux_qup10,
+>> +	msm_mux_qup11,
+>> +	msm_mux_qup12,
+>> +	msm_mux_qup13_f1,
+>> +	msm_mux_qup13_f2,
+>> +	msm_mux_qup14,
+>> +	msm_mux_rffe0_clk,
+>> +	msm_mux_rffe0_data,
+>> +	msm_mux_rffe1_clk,
+>> +	msm_mux_rffe1_data,
+>> +	msm_mux_rffe2_clk,
+>> +	msm_mux_rffe2_data,
+>> +	msm_mux_rffe3_clk,
+>> +	msm_mux_rffe3_data,
+>> +	msm_mux_rffe4_clk,
+>> +	msm_mux_rffe4_data,
+>> +	msm_mux_sd_write,
+>> +	msm_mux_sdc1_tb,
+>> +	msm_mux_sdc2_tb,
+>> +	msm_mux_sp_cmu,
+>> +	msm_mux_tgu_ch0,
+>> +	msm_mux_tgu_ch1,
+>> +	msm_mux_tgu_ch2,
+>> +	msm_mux_tgu_ch3,
+>> +	msm_mux_tsense_pwm1,
+>> +	msm_mux_tsense_pwm2,
+>> +	msm_mux_uim1_clk,
+>> +	msm_mux_uim1_data,
+>> +	msm_mux_uim1_present,
+>> +	msm_mux_uim1_reset,
+> maybe even uim1_* into uim1?
+
+Not sure about these ones though..
+
+
+>
+>> +	msm_mux_uim2_clk,
+>> +	msm_mux_uim2_data,
+>> +	msm_mux_uim2_present,
+>> +	msm_mux_uim2_reset,
+> .. and uim2?
+
+Ditto
+
+
+>> +	msm_mux_usb_phy,
+>> +	msm_mux_vfr_1,
+>> +	msm_mux_vsense_trigger,
+>> +	msm_mux_wlan1_adc0,
+>> +	msm_mux_wlan1_adc1,
+>> +	msm_mux_wlan2_adc0,
+>> +	msm_mux_wlan2_adc1,
+>> +	msm_mux__,
+>> +};
+>> +
+>>
+> [SNIP]
+>> +
+>> +static const struct msm_pinctrl_soc_data sm6350_pinctrl = {
+>> +	.pins = sm6350_pins,
+>> +	.npins = ARRAY_SIZE(sm6350_pins),
+>> +	.functions = sm6350_functions,
+>> +	.nfunctions = ARRAY_SIZE(sm6350_functions),
+>> +	.groups = sm6350_groups,
+>> +	.ngroups = ARRAY_SIZE(sm6350_groups),
+>> +	.ngpios = 157,
+>> +	.wakeirq_map = sm6350_pdc_map,
+>> +	.nwakeirq_map = ARRAY_SIZE(sm6350_pdc_map),
+>> +	.wakeirq_dual_edge_errata = true,
+>> +};
+>> +
+>> +static int sm6350_pinctrl_probe(struct platform_device *pdev)
+>> +{
+>> +	return msm_pinctrl_probe(pdev, &sm6350_pinctrl);
+>> +}
+>> +
+>> +static const struct of_device_id sm6350_pinctrl_of_match[] = {
+>> +	{ .compatible = "qcom,sm6350-tlmm", },
+>> +	{ },
+> No need for a trailing comma here ;)
+
+Heh, true
+
+
+>
+>> +};
+>> +
+>> +static struct platform_driver sm6350_pinctrl_driver = {
+>> +	.driver = {
+>> +		.name = "sm6350-pinctrl",
+>> +		.of_match_table = sm6350_pinctrl_of_match,
+>> +	},
+>> +	.probe = sm6350_pinctrl_probe,
+>> +	.remove = msm_pinctrl_remove,
+>> +};
+>> +
+>> +static int __init sm6350_pinctrl_init(void)
+>> +{
+>> +	return platform_driver_register(&sm6350_pinctrl_driver);
+>> +}
+>> +arch_initcall(sm6350_pinctrl_init);
+>> +
+>> +static void __exit sm6350_pinctrl_exit(void)
+>> +{
+>> +	platform_driver_unregister(&sm6350_pinctrl_driver);
+>> +}
+>> +module_exit(sm6350_pinctrl_exit);
+>> +
+>> +MODULE_DESCRIPTION("QTI sm6350 pinctrl driver");
+>> +MODULE_LICENSE("GPL v2");
+>> +MODULE_DEVICE_TABLE(of, sm6350_pinctrl_of_match);
+> Some/most(?) newer drivers also use the name tlmm instead of pinctrl in the 
+> function names and in the .name of the driver.
+
+I can do the same for consistency.
+
+
+Konrad
