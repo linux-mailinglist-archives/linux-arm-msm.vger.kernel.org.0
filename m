@@ -2,62 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A845740B9B8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Sep 2021 23:13:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 919DF40BA6A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Sep 2021 23:37:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234363AbhINVOl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Sep 2021 17:14:41 -0400
-Received: from mail.kernel.org ([198.145.29.99]:59730 "EHLO mail.kernel.org"
+        id S234814AbhINViv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Sep 2021 17:38:51 -0400
+Received: from mail.kernel.org ([198.145.29.99]:44796 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234298AbhINVOk (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Sep 2021 17:14:40 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 894A9610D1;
-        Tue, 14 Sep 2021 21:13:22 +0000 (UTC)
+        id S235132AbhINViv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 Sep 2021 17:38:51 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 8002F60E8B;
+        Tue, 14 Sep 2021 21:37:33 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631654002;
-        bh=7HE77BXEi8gZJx5D5W1KRYRzBxiyfZmcZVuVI3cDdZo=;
+        s=k20201202; t=1631655453;
+        bh=WwzSLsTMjLJiR94GNvIekUWoK6QUTkUJXToMsNRnYmE=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=rAQU2mMJ1Q7/yfgtA5H+wMnmxNfTWLwzvHsPfZPfwtHZFkTM8PtoQ0w0iNrYUZpsP
-         BWkC31E0wD/wROa1k6pJIyPH8uXNJTsNyxQRkpRhEQ3CJYK6gd8xc7a3WOMwfC2aLt
-         J0/Ge4yxeofKqMry48WHKVdzOS1bX7o74G0H4NzDnbbn9ws/OqNZ428z+tJLUOI8IG
-         AvW5wJv0Gc9SzgVcfOs5j9TZXxUzZA4ZZ9BUnBwurptEdqTNDZ94nsgA45aIgjovqz
-         EVWNOhgqafVKxnu/+83bPLzYjJnqb/93/H/5Itw3U7nHaRIju0DVqc+Z2TY/tBtG7T
-         D3rAT8SSCyprQ==
+        b=FZhtAJ9myg/0wiPkb3zHvrKcbgiBMTAl4JOt2rntYmFAZ+FZvu6GLYsIWidR8JaVH
+         8lBpG9GDsmsV6gFw5QwSjJJpTSKJ+uUp4AuxpPNs1V4iXDPPGbDBjiqNcyy3kRqHc8
+         iuUwWhRynHCyRumpuS6f7MulxT9raRYHr9J7Iz2cXrzJkk2mwt5c/Q4R0woJd5dsow
+         YBZ3ktNohnwYvM7X9LuPnwPb95f5/R1UjD3QNfZ6HE6s7K3qktdDacmpvfwd897VkH
+         y6KlO7hWWsy1qdfnfHvTqrMf8ZVT81zzb3JEYWtOtTdCRhExVBu0R7U7WUhcyEHe8H
+         W5MPNGS92uSZA==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20210829204822.289829-5-marijn.suijten@somainline.org>
-References: <20210829204822.289829-1-marijn.suijten@somainline.org> <20210829204822.289829-5-marijn.suijten@somainline.org>
-Subject: Re: [PATCH 4/4] clk: qcom: gpucc-sdm660: Remove fallback to global clock names
+In-Reply-To: <20210904183014.43528-1-konrad.dybcio@somainline.org>
+References: <20210904183014.43528-1-konrad.dybcio@somainline.org>
+Subject: Re: [PATCH v3 1/9] dt-bindings: clk: qcom: Add bindings for MSM8994 GCC driver
 From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
         Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Pavel Dubrova <pashadubrova@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Michael Turquette <mturquette@baylibre.com>,
+        Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-To:     Marijn Suijten <marijn.suijten@somainline.org>,
-        phone-devel@vger.kernel.org
-Date:   Tue, 14 Sep 2021 14:13:20 -0700
-Message-ID: <163165400096.763609.16224534023728394535@swboyd.mtv.corp.google.com>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht
+Date:   Tue, 14 Sep 2021 14:37:32 -0700
+Message-ID: <163165545224.763609.14645730018738716104@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Marijn Suijten (2021-08-29 13:48:22)
-> The necessary clocks for this driver are already fully specified in
-> sdm630 DT under the .fw_name, and do not need an implicit fallback to
-> their global name.
+Quoting Konrad Dybcio (2021-09-04 11:30:05)
+> Add documentation for the MSM8994 GCC driver.
 >=20
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 > ---
+> Changes since v2:
+>=20
+> - Dropped second dt-binding part for the weird SD card clock configuration
+> - Fix up many mistakes, including maintainers, license and order
+> - I still have no idea why I get a pinctrl regex error.. need help here!
 
-Applied to clk-next
+The compatible fro gcc-msm8994 seems to already be documented in
+
+Documentation/devicetree/bindings/clock/qcom,gcc.yaml
+
+so it needs to be removed from there and only specified in this 8994
+specific binding.
