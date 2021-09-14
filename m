@@ -2,109 +2,340 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F320840B697
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Sep 2021 20:14:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D49DE40B69A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Sep 2021 20:16:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231739AbhINSQE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Sep 2021 14:16:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35882 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229937AbhINSQD (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Sep 2021 14:16:03 -0400
-Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0EA09C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Sep 2021 11:14:46 -0700 (PDT)
-Received: by mail-ot1-x333.google.com with SMTP id c42-20020a05683034aa00b0051f4b99c40cso19817826otu.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Sep 2021 11:14:46 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=sYTvZJAxHGhzzHy9MbB9JE2/ATEqAjDDP6ye5nyr/vE=;
-        b=DTgCe1uEB8ugrI4Uve6EgB8s+22KurxbPhxGKDbFnRkAUiIzTUFljDAf2cGtCQOzxx
-         zW4sOSF2cJzsyTSoSWzdHz7qWGeQbLEnLF2GuUuFOQqBbvzlrWNc2VhZpJCWYdyPHgFy
-         U03jpb3rz9UIy3fvEsXfLc5KX2gQtU4idIv2VkqONw5jVK5/6wUDAGJxawKcYT0f1eDt
-         xzdqKieOo+hCnNYJTKJTag2s127zSH+HxddoipCe3JVXRgPelbVEcruBXIFLkhXBKhFQ
-         AQJEe8aqh2CnTk9u77jHdGjoO+Fdx6lvME6aTFy/eWU9DNpFrU1lyQzuvdqN1xlRfyKY
-         vmfQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=sYTvZJAxHGhzzHy9MbB9JE2/ATEqAjDDP6ye5nyr/vE=;
-        b=bBXqcA5RSPFopCi7QpfPh4CBIP3tgZH8Zl56X+hysXL9EiA52PiVpTvlR4WwPJIEdZ
-         yTTY7e7ojVAdWoZhc6asezUbQ0v3KWDNNoBPmgQZgwLPukzDVDDIRE+Yj0HXO5+C5U14
-         pYX8PuL8O+ghOeHskB99SONicC1gTv32PQRGWzN5nkLGVnxwKnNPk8VYq6eZm9fOZTv1
-         CMSSjAgcHSzMGZA+DaoXoix+kNFCGN6Sex2oP7k1FtKADRUkzGY2JSJvUAzdQyZuA2tV
-         MQp/7cMlR9P4wh7/pok78ZLwhw/yXeuuQTSjv25M2+eWWpUHbqM3H6R9mqMLE9/aAWlv
-         xJ5Q==
-X-Gm-Message-State: AOAM532VIK6SBa5py2lu+3daCMxdcn9DhK3Kp3u7qJmloy9FcDIlf++I
-        0AlCOUwB3vRI/douFGfk1HNz4Q==
-X-Google-Smtp-Source: ABdhPJzAapFP1GYfQM+h+eExDIQ09L8TCYZprsclHv54zKcSa9rwQ66as5TbcALddgz9QnkppHaYuA==
-X-Received: by 2002:a05:6830:2093:: with SMTP id y19mr16018501otq.349.1631643285404;
-        Tue, 14 Sep 2021 11:14:45 -0700 (PDT)
-Received: from DESKTOP-UL9N8HT.localdomain (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
-        by smtp.gmail.com with ESMTPSA id w15sm2578954oiw.19.2021.09.14.11.14.44
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Sep 2021 11:14:45 -0700 (PDT)
-From:   Steev Klimaszewski <steev@kali.org>
-To:     Steev Klimaszewski <steev@kali.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        id S229869AbhINSRw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Sep 2021 14:17:52 -0400
+Received: from mga02.intel.com ([134.134.136.20]:53462 "EHLO mga02.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229605AbhINSRv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 Sep 2021 14:17:51 -0400
+X-IronPort-AV: E=McAfee;i="6200,9189,10107"; a="209324388"
+X-IronPort-AV: E=Sophos;i="5.85,292,1624345200"; 
+   d="scan'208";a="209324388"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by orsmga101.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2021 11:16:33 -0700
+X-IronPort-AV: E=Sophos;i="5.85,292,1624345200"; 
+   d="scan'208";a="544227319"
+Received: from lveltman-mobl.ger.corp.intel.com (HELO localhost) ([10.251.216.6])
+  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2021 11:16:26 -0700
+From:   Jani Nikula <jani.nikula@linux.intel.com>
+To:     Douglas Anderson <dianders@chromium.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Sam Ravnborg <sam@ravnborg.org>
+Cc:     devicetree@vger.kernel.org, Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Linus W <linus.walleij@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        Steev Klimaszewski <steev@kali.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Airlie <airlied@linux.ie>,
+        dri-devel@lists.freedesktop.org,
+        Douglas Anderson <dianders@chromium.org>,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v2] arm64: dts: qcom: c630: add second channel for wifi
-Date:   Tue, 14 Sep 2021 13:16:03 -0500
-Message-Id: <20210914181603.32708-1-steev@kali.org>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20210914162439.31113-1-steev@kali.org>
-References: <20210914162439.31113-1-steev@kali.org>
+Subject: Re: [PATCH v4 04/15] drm/edid: Use new encoded panel id style for quirks matching
+In-Reply-To: <20210909135838.v4.4.I6103ce2b16e5e5a842b14c7022a034712b434609@changeid>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+References: <20210909210032.465570-1-dianders@chromium.org> <20210909135838.v4.4.I6103ce2b16e5e5a842b14c7022a034712b434609@changeid>
+Date:   Tue, 14 Sep 2021 21:16:23 +0300
+Message-ID: <87ee9r10qw.fsf@intel.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On the Lenovo Yoga C630, the WiFi/BT chip can use both RF
-channels/antennas, so add the regulator for it.
+On Thu, 09 Sep 2021, Douglas Anderson <dianders@chromium.org> wrote:
+> In the patch ("drm/edid: Allow the querying/working with the panel ID
+> from the EDID") we introduced a different way of working with the
+> panel ID stored in the EDID. Let's use this new way for the quirks
+> code.
+>
+> Advantages of the new style:
+> * Smaller data structure size. Saves 4 bytes per panel.
+> * Iterate through quirks structure with just "==" instead of strncmp()
+> * In-kernel storage is more similar to what's stored in the EDID
+>   itself making it easier to grok that they are referring to the same
+>   value.
+>
+> The quirk table itself is arguably a bit less readable in the new
+> style but not a ton less and it feels like the above advantages make
+> up for it.
 
-Signed-off-by: Steev Klimaszewski <steev@kali.org>
----
- arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 5 +++++
- 1 file changed, 5 insertions(+)
+I suppose you could pass vendor as a string to EDID_QUIRK() to retain
+better readability?
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-index d7591a4621a2..531b88d4a1a2 100644
---- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-+++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-@@ -230,6 +230,9 @@ vreg_l22a_2p85: ldo22 {
- 		};
- 
- 		vreg_l23a_3p3: ldo23 {
-+			regulator-min-microvolt = <3300000>;
-+			regulator-max-microvolt = <3312000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
- 		};
- 
- 		vdda_qusb_hs0_3p1:
-@@ -610,6 +613,7 @@ bluetooth {
- 		vddxo-supply = <&vreg_l7a_1p8>;
- 		vddrf-supply = <&vreg_l17a_1p3>;
- 		vddch0-supply = <&vreg_l25a_3p3>;
-+		vddch1-supply = <&vreg_l23a_3p3>;
- 		max-speed = <3200000>;
- 	};
- };
-@@ -724,6 +728,7 @@ &wifi {
- 	vdd-1.8-xo-supply = <&vreg_l7a_1p8>;
- 	vdd-1.3-rfa-supply = <&vreg_l17a_1p3>;
- 	vdd-3.3-ch0-supply = <&vreg_l25a_3p3>;
-+	vdd-3.3-ch1-supply = <&vreg_l23a_3p3>;
- 
- 	qcom,snoc-host-cap-8bit-quirk;
- };
+Just bikeshedding, really. ;)
+
+BR,
+Jani.
+
+
+
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> ---
+> This commit is only compile-tested. I don't have any DP panels that
+> exercise this code. Transition from the old table to the new one was
+> done with a regexp.
+>
+> Changes in v4:
+> - ("Use new encoded panel id style for quirks matching") new for v4.
+>
+>  drivers/gpu/drm/drm_edid.c | 157 +++++++++++++++++--------------------
+>  1 file changed, 71 insertions(+), 86 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
+> index f84e0dd264f4..9b19eee0e1b4 100644
+> --- a/drivers/gpu/drm/drm_edid.c
+> +++ b/drivers/gpu/drm/drm_edid.c
+> @@ -100,122 +100,128 @@ struct detailed_mode_closure {
+>  #define LEVEL_GTF2	2
+>  #define LEVEL_CVT	3
+>  
+> +#define EDID_QUIRK(vend_chr_0, vend_chr_1, vend_chr_2, product_id, _quirks) \
+> +{ \
+> +	.panel_id = drm_edid_encode_panel_id(vend_chr_0, vend_chr_1, vend_chr_2, \
+> +					     product_id), \
+> +	.quirks = _quirks \
+> +}
+> +
+>  static const struct edid_quirk {
+> -	char vendor[4];
+> -	int product_id;
+> +	u32 panel_id;
+>  	u32 quirks;
+>  } edid_quirk_list[] = {
+>  	/* Acer AL1706 */
+> -	{ "ACR", 44358, EDID_QUIRK_PREFER_LARGE_60 },
+> +	EDID_QUIRK('A', 'C', 'R', 44358, EDID_QUIRK_PREFER_LARGE_60),
+>  	/* Acer F51 */
+> -	{ "API", 0x7602, EDID_QUIRK_PREFER_LARGE_60 },
+> +	EDID_QUIRK('A', 'P', 'I', 0x7602, EDID_QUIRK_PREFER_LARGE_60),
+>  
+>  	/* AEO model 0 reports 8 bpc, but is a 6 bpc panel */
+> -	{ "AEO", 0, EDID_QUIRK_FORCE_6BPC },
+> +	EDID_QUIRK('A', 'E', 'O', 0, EDID_QUIRK_FORCE_6BPC),
+>  
+>  	/* BOE model on HP Pavilion 15-n233sl reports 8 bpc, but is a 6 bpc panel */
+> -	{ "BOE", 0x78b, EDID_QUIRK_FORCE_6BPC },
+> +	EDID_QUIRK('B', 'O', 'E', 0x78b, EDID_QUIRK_FORCE_6BPC),
+>  
+>  	/* CPT panel of Asus UX303LA reports 8 bpc, but is a 6 bpc panel */
+> -	{ "CPT", 0x17df, EDID_QUIRK_FORCE_6BPC },
+> +	EDID_QUIRK('C', 'P', 'T', 0x17df, EDID_QUIRK_FORCE_6BPC),
+>  
+>  	/* SDC panel of Lenovo B50-80 reports 8 bpc, but is a 6 bpc panel */
+> -	{ "SDC", 0x3652, EDID_QUIRK_FORCE_6BPC },
+> +	EDID_QUIRK('S', 'D', 'C', 0x3652, EDID_QUIRK_FORCE_6BPC),
+>  
+>  	/* BOE model 0x0771 reports 8 bpc, but is a 6 bpc panel */
+> -	{ "BOE", 0x0771, EDID_QUIRK_FORCE_6BPC },
+> +	EDID_QUIRK('B', 'O', 'E', 0x0771, EDID_QUIRK_FORCE_6BPC),
+>  
+>  	/* Belinea 10 15 55 */
+> -	{ "MAX", 1516, EDID_QUIRK_PREFER_LARGE_60 },
+> -	{ "MAX", 0x77e, EDID_QUIRK_PREFER_LARGE_60 },
+> +	EDID_QUIRK('M', 'A', 'X', 1516, EDID_QUIRK_PREFER_LARGE_60),
+> +	EDID_QUIRK('M', 'A', 'X', 0x77e, EDID_QUIRK_PREFER_LARGE_60),
+>  
+>  	/* Envision Peripherals, Inc. EN-7100e */
+> -	{ "EPI", 59264, EDID_QUIRK_135_CLOCK_TOO_HIGH },
+> +	EDID_QUIRK('E', 'P', 'I', 59264, EDID_QUIRK_135_CLOCK_TOO_HIGH),
+>  	/* Envision EN2028 */
+> -	{ "EPI", 8232, EDID_QUIRK_PREFER_LARGE_60 },
+> +	EDID_QUIRK('E', 'P', 'I', 8232, EDID_QUIRK_PREFER_LARGE_60),
+>  
+>  	/* Funai Electronics PM36B */
+> -	{ "FCM", 13600, EDID_QUIRK_PREFER_LARGE_75 |
+> -	  EDID_QUIRK_DETAILED_IN_CM },
+> +	EDID_QUIRK('F', 'C', 'M', 13600, EDID_QUIRK_PREFER_LARGE_75 |
+> +				       EDID_QUIRK_DETAILED_IN_CM),
+>  
+>  	/* LGD panel of HP zBook 17 G2, eDP 10 bpc, but reports unknown bpc */
+> -	{ "LGD", 764, EDID_QUIRK_FORCE_10BPC },
+> +	EDID_QUIRK('L', 'G', 'D', 764, EDID_QUIRK_FORCE_10BPC),
+>  
+>  	/* LG Philips LCD LP154W01-A5 */
+> -	{ "LPL", 0, EDID_QUIRK_DETAILED_USE_MAXIMUM_SIZE },
+> -	{ "LPL", 0x2a00, EDID_QUIRK_DETAILED_USE_MAXIMUM_SIZE },
+> +	EDID_QUIRK('L', 'P', 'L', 0, EDID_QUIRK_DETAILED_USE_MAXIMUM_SIZE),
+> +	EDID_QUIRK('L', 'P', 'L', 0x2a00, EDID_QUIRK_DETAILED_USE_MAXIMUM_SIZE),
+>  
+>  	/* Samsung SyncMaster 205BW.  Note: irony */
+> -	{ "SAM", 541, EDID_QUIRK_DETAILED_SYNC_PP },
+> +	EDID_QUIRK('S', 'A', 'M', 541, EDID_QUIRK_DETAILED_SYNC_PP),
+>  	/* Samsung SyncMaster 22[5-6]BW */
+> -	{ "SAM", 596, EDID_QUIRK_PREFER_LARGE_60 },
+> -	{ "SAM", 638, EDID_QUIRK_PREFER_LARGE_60 },
+> +	EDID_QUIRK('S', 'A', 'M', 596, EDID_QUIRK_PREFER_LARGE_60),
+> +	EDID_QUIRK('S', 'A', 'M', 638, EDID_QUIRK_PREFER_LARGE_60),
+>  
+>  	/* Sony PVM-2541A does up to 12 bpc, but only reports max 8 bpc */
+> -	{ "SNY", 0x2541, EDID_QUIRK_FORCE_12BPC },
+> +	EDID_QUIRK('S', 'N', 'Y', 0x2541, EDID_QUIRK_FORCE_12BPC),
+>  
+>  	/* ViewSonic VA2026w */
+> -	{ "VSC", 5020, EDID_QUIRK_FORCE_REDUCED_BLANKING },
+> +	EDID_QUIRK('V', 'S', 'C', 5020, EDID_QUIRK_FORCE_REDUCED_BLANKING),
+>  
+>  	/* Medion MD 30217 PG */
+> -	{ "MED", 0x7b8, EDID_QUIRK_PREFER_LARGE_75 },
+> +	EDID_QUIRK('M', 'E', 'D', 0x7b8, EDID_QUIRK_PREFER_LARGE_75),
+>  
+>  	/* Lenovo G50 */
+> -	{ "SDC", 18514, EDID_QUIRK_FORCE_6BPC },
+> +	EDID_QUIRK('S', 'D', 'C', 18514, EDID_QUIRK_FORCE_6BPC),
+>  
+>  	/* Panel in Samsung NP700G7A-S01PL notebook reports 6bpc */
+> -	{ "SEC", 0xd033, EDID_QUIRK_FORCE_8BPC },
+> +	EDID_QUIRK('S', 'E', 'C', 0xd033, EDID_QUIRK_FORCE_8BPC),
+>  
+>  	/* Rotel RSX-1058 forwards sink's EDID but only does HDMI 1.1*/
+> -	{ "ETR", 13896, EDID_QUIRK_FORCE_8BPC },
+> +	EDID_QUIRK('E', 'T', 'R', 13896, EDID_QUIRK_FORCE_8BPC),
+>  
+>  	/* Valve Index Headset */
+> -	{ "VLV", 0x91a8, EDID_QUIRK_NON_DESKTOP },
+> -	{ "VLV", 0x91b0, EDID_QUIRK_NON_DESKTOP },
+> -	{ "VLV", 0x91b1, EDID_QUIRK_NON_DESKTOP },
+> -	{ "VLV", 0x91b2, EDID_QUIRK_NON_DESKTOP },
+> -	{ "VLV", 0x91b3, EDID_QUIRK_NON_DESKTOP },
+> -	{ "VLV", 0x91b4, EDID_QUIRK_NON_DESKTOP },
+> -	{ "VLV", 0x91b5, EDID_QUIRK_NON_DESKTOP },
+> -	{ "VLV", 0x91b6, EDID_QUIRK_NON_DESKTOP },
+> -	{ "VLV", 0x91b7, EDID_QUIRK_NON_DESKTOP },
+> -	{ "VLV", 0x91b8, EDID_QUIRK_NON_DESKTOP },
+> -	{ "VLV", 0x91b9, EDID_QUIRK_NON_DESKTOP },
+> -	{ "VLV", 0x91ba, EDID_QUIRK_NON_DESKTOP },
+> -	{ "VLV", 0x91bb, EDID_QUIRK_NON_DESKTOP },
+> -	{ "VLV", 0x91bc, EDID_QUIRK_NON_DESKTOP },
+> -	{ "VLV", 0x91bd, EDID_QUIRK_NON_DESKTOP },
+> -	{ "VLV", 0x91be, EDID_QUIRK_NON_DESKTOP },
+> -	{ "VLV", 0x91bf, EDID_QUIRK_NON_DESKTOP },
+> +	EDID_QUIRK('V', 'L', 'V', 0x91a8, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('V', 'L', 'V', 0x91b0, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('V', 'L', 'V', 0x91b1, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('V', 'L', 'V', 0x91b2, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('V', 'L', 'V', 0x91b3, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('V', 'L', 'V', 0x91b4, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('V', 'L', 'V', 0x91b5, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('V', 'L', 'V', 0x91b6, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('V', 'L', 'V', 0x91b7, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('V', 'L', 'V', 0x91b8, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('V', 'L', 'V', 0x91b9, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('V', 'L', 'V', 0x91ba, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('V', 'L', 'V', 0x91bb, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('V', 'L', 'V', 0x91bc, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('V', 'L', 'V', 0x91bd, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('V', 'L', 'V', 0x91be, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('V', 'L', 'V', 0x91bf, EDID_QUIRK_NON_DESKTOP),
+>  
+>  	/* HTC Vive and Vive Pro VR Headsets */
+> -	{ "HVR", 0xaa01, EDID_QUIRK_NON_DESKTOP },
+> -	{ "HVR", 0xaa02, EDID_QUIRK_NON_DESKTOP },
+> +	EDID_QUIRK('H', 'V', 'R', 0xaa01, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('H', 'V', 'R', 0xaa02, EDID_QUIRK_NON_DESKTOP),
+>  
+>  	/* Oculus Rift DK1, DK2, CV1 and Rift S VR Headsets */
+> -	{ "OVR", 0x0001, EDID_QUIRK_NON_DESKTOP },
+> -	{ "OVR", 0x0003, EDID_QUIRK_NON_DESKTOP },
+> -	{ "OVR", 0x0004, EDID_QUIRK_NON_DESKTOP },
+> -	{ "OVR", 0x0012, EDID_QUIRK_NON_DESKTOP },
+> +	EDID_QUIRK('O', 'V', 'R', 0x0001, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('O', 'V', 'R', 0x0003, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('O', 'V', 'R', 0x0004, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('O', 'V', 'R', 0x0012, EDID_QUIRK_NON_DESKTOP),
+>  
+>  	/* Windows Mixed Reality Headsets */
+> -	{ "ACR", 0x7fce, EDID_QUIRK_NON_DESKTOP },
+> -	{ "HPN", 0x3515, EDID_QUIRK_NON_DESKTOP },
+> -	{ "LEN", 0x0408, EDID_QUIRK_NON_DESKTOP },
+> -	{ "LEN", 0xb800, EDID_QUIRK_NON_DESKTOP },
+> -	{ "FUJ", 0x1970, EDID_QUIRK_NON_DESKTOP },
+> -	{ "DEL", 0x7fce, EDID_QUIRK_NON_DESKTOP },
+> -	{ "SEC", 0x144a, EDID_QUIRK_NON_DESKTOP },
+> -	{ "AUS", 0xc102, EDID_QUIRK_NON_DESKTOP },
+> +	EDID_QUIRK('A', 'C', 'R', 0x7fce, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('H', 'P', 'N', 0x3515, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('L', 'E', 'N', 0x0408, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('L', 'E', 'N', 0xb800, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('F', 'U', 'J', 0x1970, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('D', 'E', 'L', 0x7fce, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('S', 'E', 'C', 0x144a, EDID_QUIRK_NON_DESKTOP),
+> +	EDID_QUIRK('A', 'U', 'S', 0xc102, EDID_QUIRK_NON_DESKTOP),
+>  
+>  	/* Sony PlayStation VR Headset */
+> -	{ "SNY", 0x0704, EDID_QUIRK_NON_DESKTOP },
+> +	EDID_QUIRK('S', 'N', 'Y', 0x0704, EDID_QUIRK_NON_DESKTOP),
+>  
+>  	/* Sensics VR Headsets */
+> -	{ "SEN", 0x1019, EDID_QUIRK_NON_DESKTOP },
+> +	EDID_QUIRK('S', 'E', 'N', 0x1019, EDID_QUIRK_NON_DESKTOP),
+>  
+>  	/* OSVR HDK and HDK2 VR Headsets */
+> -	{ "SVR", 0x1019, EDID_QUIRK_NON_DESKTOP },
+> +	EDID_QUIRK('S', 'V', 'R', 0x1019, EDID_QUIRK_NON_DESKTOP),
+>  };
+>  
+>  /*
+> @@ -2090,9 +2096,8 @@ EXPORT_SYMBOL(drm_get_edid);
+>  static u32 edid_extract_panel_id(const struct edid *edid)
+>  {
+>  	/*
+> -	 * In theory we could try to de-obfuscate this like edid_get_quirks()
+> -	 * does, but it's easier to just deal with a 32-bit number since then
+> -	 * it can be compared with "==".
+> +	 * We represent the ID as a 32-bit number so it can easily be compared
+> +	 * with "==".
+>  	 *
+>  	 * NOTE that we deal with endianness differently for the top half
+>  	 * of this ID than for the bottom half. The bottom half (the product
+> @@ -2197,25 +2202,6 @@ EXPORT_SYMBOL(drm_edid_duplicate);
+>  
+>  /*** EDID parsing ***/
+>  
+> -/**
+> - * edid_vendor - match a string against EDID's obfuscated vendor field
+> - * @edid: EDID to match
+> - * @vendor: vendor string
+> - *
+> - * Returns true if @vendor is in @edid, false otherwise
+> - */
+> -static bool edid_vendor(const struct edid *edid, const char *vendor)
+> -{
+> -	char edid_vendor[3];
+> -
+> -	edid_vendor[0] = ((edid->mfg_id[0] & 0x7c) >> 2) + '@';
+> -	edid_vendor[1] = (((edid->mfg_id[0] & 0x3) << 3) |
+> -			  ((edid->mfg_id[1] & 0xe0) >> 5)) + '@';
+> -	edid_vendor[2] = (edid->mfg_id[1] & 0x1f) + '@';
+> -
+> -	return !strncmp(edid_vendor, vendor, 3);
+> -}
+> -
+>  /**
+>   * edid_get_quirks - return quirk flags for a given EDID
+>   * @edid: EDID to process
+> @@ -2224,14 +2210,13 @@ static bool edid_vendor(const struct edid *edid, const char *vendor)
+>   */
+>  static u32 edid_get_quirks(const struct edid *edid)
+>  {
+> +	u32 panel_id = edid_extract_panel_id(edid);
+>  	const struct edid_quirk *quirk;
+>  	int i;
+>  
+>  	for (i = 0; i < ARRAY_SIZE(edid_quirk_list); i++) {
+>  		quirk = &edid_quirk_list[i];
+> -
+> -		if (edid_vendor(edid, quirk->vendor) &&
+> -		    (EDID_PRODUCT_ID(edid) == quirk->product_id))
+> +		if (quirk->panel_id == panel_id)
+>  			return quirk->quirks;
+>  	}
+
 -- 
-2.33.0
-
+Jani Nikula, Intel Open Source Graphics Center
