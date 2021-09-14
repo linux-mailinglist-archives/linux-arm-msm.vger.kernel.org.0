@@ -2,150 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 61B4C40AB6D
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Sep 2021 12:08:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E323640AC5A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Sep 2021 13:24:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230282AbhINKJ4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Sep 2021 06:09:56 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:20829 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230035AbhINKJy (ORCPT
+        id S232163AbhINLZ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Sep 2021 07:25:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50704 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232151AbhINLZ4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Sep 2021 06:09:54 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1631614117; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=XPF3ihCMAX+tX0noIpuQ+Pi13rzql/r9yG3jtqdHxXs=; b=eNTUuoWeHHWIyjMW0xX4WgTYomfo21gVxne9hAdmIcPyf8NlvX57EN7zxdF0vOzHAZHI9DqT
- UdqTqe2j8SFwlBH+zT+h8ZeSSZ9NMXIR7pfl4vo+Es5GnOJq0HMe/redg+ZehQ2EHEmJ0xEj
- Hqzgi1DNPTJ0tMtCF4Sp9j2+wsc=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 61407497b585cc7d24b27cd2 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 14 Sep 2021 10:08:23
- GMT
-Sender: zijuhu=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3D0E0C43619; Tue, 14 Sep 2021 10:08:23 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from zijuhu-gv.qualcomm.com (unknown [180.166.53.21])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: zijuhu)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D98F8C4338F;
-        Tue, 14 Sep 2021 10:08:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org D98F8C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Zijun Hu <zijuhu@codeaurora.org>
-To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com
-Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
-        rjliao@codeaurora.org, zijuhu@codeaurora.org, tjiang@codeaurora.org
-Subject: [PATCH v10] Bluetooth: btusb: Add support using different nvm for variant WCN6855 controller
-Date:   Tue, 14 Sep 2021 18:08:16 +0800
-Message-Id: <1631614096-24613-1-git-send-email-zijuhu@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Tue, 14 Sep 2021 07:25:56 -0400
+Received: from mail-lj1-x230.google.com (mail-lj1-x230.google.com [IPv6:2a00:1450:4864:20::230])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BC0B5C061764
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Sep 2021 04:24:38 -0700 (PDT)
+Received: by mail-lj1-x230.google.com with SMTP id s3so23130822ljp.11
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Sep 2021 04:24:38 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=MXbax/1bglMzgg6o47IyNakKQ88KE4K/hGwmlnc25Ko=;
+        b=N4100R/sVYI9xB+3RNF629B4s5ko7wLFiA6IUtn0oKfdFh4s/DVlj2FjWpH4EB0GWf
+         nSMDgFuOB1FxKtOSkpd4KpnVn64T9GkSKp0EvH+DldoiZ0rVEhMOPAJHkgb89JuegEgT
+         hVS0D/Osme/N8neVgiEaMNrlnQFqwSccnIyfqqQPfVokx/xmcLh3RCXL52xiIJzY6ZRq
+         uMDG6zYAqhpcYdy+xr46dMDyzOciUPXIix6C8+tsMUz/w5rI2L27oVpcTqN6+X0BNIqO
+         PTdm9tL+nnkFsidR6SB0wS361pbbavkKWyVqdsTpBqhCe/DQMVtEr1A3eR2VmWTrUc/4
+         +zLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=MXbax/1bglMzgg6o47IyNakKQ88KE4K/hGwmlnc25Ko=;
+        b=1+gjujsWLziAr1TLPzAEBNPwfiv/fkcAmGO3vyLhCRnjvK6I18PMGJofKSo7RwiWtj
+         HuPMPuMchC9lBCFR0SPqNYcH6yK3fBdsaEwU8ZxGRmXDuFhgs3SbdbWkw0tlb9lcyOaX
+         18TuGt0bq/0E8Ng8RG791ePcIgIlwANqxb1cIXzdxDRW5xxXd7jqWDvw3p2mhy9qyCnK
+         O3OvBOKt6xLWQqbFjTTY+quy0uA+sdR7GOY+HfnDGIfOO2bcMJ3kwL/0q5z2iaTzrPu7
+         NeCALLsfh6LqWDU/DXzuuwldwR0UwnaVYLt8dporAx87wu4hSPqcTkiRQ8afPvnyU1yf
+         2Ekg==
+X-Gm-Message-State: AOAM532CIKbXt2XM3MkgFNOHhL1jGwKr8PYHWnYoQw8PbHit5HDmkrQ/
+        tr+ymbFWCmK5t2x/l3rnKI+n5d9cpBS6D7z+g5q0Aw==
+X-Google-Smtp-Source: ABdhPJxNQjIx8LfDVzNm9Bxa8g8kduMXKBDzOD8rsarWhRJUMWWBpslN7FA28BAQA42mUmbJjsXpFhnu6cwrV9l1QHM=
+X-Received: by 2002:a2e:9b0b:: with SMTP id u11mr14793392lji.463.1631618677115;
+ Tue, 14 Sep 2021 04:24:37 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210911232707.259615-1-luca@z3ntu.xyz> <20210911232707.259615-3-luca@z3ntu.xyz>
+In-Reply-To: <20210911232707.259615-3-luca@z3ntu.xyz>
+From:   Ulf Hansson <ulf.hansson@linaro.org>
+Date:   Tue, 14 Sep 2021 13:24:00 +0200
+Message-ID: <CAPDyKFr9k2dO8FJf4=ZUKZ6=WpDS2mOJ+BZbtK1m_-OWx_ehmA@mail.gmail.com>
+Subject: Re: [PATCH 2/8] dt-bindings: mmc: sdhci-msm: Add compatible string
+ for msm8226
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht, bartosz.dudziak@snejp.pl,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-mmc <linux-mmc@vger.kernel.org>,
+        DTML <devicetree@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-the RF performance of wcn6855 soc chip from different foundries will be
-difference, so we should use different nvm to configure them.
+On Sun, 12 Sept 2021 at 01:28, Luca Weiss <luca@z3ntu.xyz> wrote:
+>
+> Add msm8226 SoC specific compatible strings for qcom-sdhci controller.
+>
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 
-Signed-off-by: Zijun Hu <zijuhu@codeaurora.org>
----
- drivers/bluetooth/btusb.c | 50 +++++++++++++++++++++++++++++++++++------------
- 1 file changed, 37 insertions(+), 13 deletions(-)
+Applied for next, thanks!
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 928cbfa4c42d..6dc645698e30 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -3161,6 +3161,9 @@ static int btusb_set_bdaddr_wcn6855(struct hci_dev *hdev,
- #define QCA_DFU_TIMEOUT		3000
- #define QCA_FLAG_MULTI_NVM      0x80
- 
-+#define WCN6855_2_0_RAM_VERSION_GF 0x400c1200
-+#define WCN6855_2_1_RAM_VERSION_GF 0x400c1211
-+
- struct qca_version {
- 	__le32	rom_version;
- 	__le32	patch_version;
-@@ -3192,6 +3195,7 @@ static const struct qca_device_info qca_devices_table[] = {
- 	{ 0x00000302, 28, 4, 16 }, /* Rome 3.2 */
- 	{ 0x00130100, 40, 4, 16 }, /* WCN6855 1.0 */
- 	{ 0x00130200, 40, 4, 16 }, /* WCN6855 2.0 */
-+	{ 0x00130201, 40, 4, 16 }, /* WCN6855 2.1 */
- };
- 
- static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 request,
-@@ -3346,6 +3350,31 @@ static int btusb_setup_qca_load_rampatch(struct hci_dev *hdev,
- 	return err;
- }
- 
-+static void btusb_generate_qca_nvm_name(char *fwname,
-+					size_t max_size,
-+					struct qca_version *ver,
-+					char *variant)
-+{
-+	char *sep = (strlen(variant) == 0) ? "" : "_";
-+	u16 board_id = le16_to_cpu(ver->board_id);
-+	u32 rom_version = le32_to_cpu(ver->rom_version);
-+
-+	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
-+		/* if boardid equal 0, use default nvm without suffix */
-+		if (board_id == 0x0) {
-+			snprintf(fwname, max_size, "qca/nvm_usb_%08x%s%s.bin",
-+				rom_version, sep, variant);
-+		} else {
-+			snprintf(fwname, max_size, "qca/nvm_usb_%08x%s%s_%04x.bin",
-+				rom_version, sep, variant, board_id);
-+		}
-+	} else {
-+		snprintf(fwname, max_size, "qca/nvm_usb_%08x.bin",
-+			rom_version);
-+	}
-+
-+}
-+
- static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
- 				    struct qca_version *ver,
- 				    const struct qca_device_info *info)
-@@ -3354,19 +3383,14 @@ static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
- 	char fwname[64];
- 	int err;
- 
--	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
--		/* if boardid equal 0, use default nvm without surfix */
--		if (le16_to_cpu(ver->board_id) == 0x0) {
--			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
--				 le32_to_cpu(ver->rom_version));
--		} else {
--			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_%04x.bin",
--				le32_to_cpu(ver->rom_version),
--				le16_to_cpu(ver->board_id));
--		}
--	} else {
--		snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
--			 le32_to_cpu(ver->rom_version));
-+	switch (ver->ram_version) {
-+	case WCN6855_2_0_RAM_VERSION_GF:
-+	case WCN6855_2_1_RAM_VERSION_GF:
-+		btusb_generate_qca_nvm_name(fwname, sizeof(fwname), ver, "gf");
-+		break;
-+	default:
-+		btusb_generate_qca_nvm_name(fwname, sizeof(fwname), ver, "");
-+		break;
- 	}
- 
- 	err = request_firmware(&fw, fwname, &hdev->dev);
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum, a Linux Foundation Collaborative Project
+Kind regards
+Uffe
 
+
+> ---
+>  Documentation/devicetree/bindings/mmc/sdhci-msm.txt | 1 +
+>  1 file changed, 1 insertion(+)
+>
+> diff --git a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+> index 365c3fc122ea..50841e2843fc 100644
+> --- a/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+> +++ b/Documentation/devicetree/bindings/mmc/sdhci-msm.txt
+> @@ -13,6 +13,7 @@ Required properties:
+>                 string is added to support this change - "qcom,sdhci-msm-v5".
+>         full compatible strings with SoC and version:
+>                 "qcom,apq8084-sdhci", "qcom,sdhci-msm-v4"
+> +               "qcom,msm8226-sdhci", "qcom,sdhci-msm-v4"
+>                 "qcom,msm8974-sdhci", "qcom,sdhci-msm-v4"
+>                 "qcom,msm8916-sdhci", "qcom,sdhci-msm-v4"
+>                 "qcom,msm8992-sdhci", "qcom,sdhci-msm-v4"
+> --
+> 2.33.0
+>
