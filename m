@@ -2,33 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9E41940BA83
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Sep 2021 23:41:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9244D40BA87
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Sep 2021 23:42:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235026AbhINVnM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Sep 2021 17:43:12 -0400
-Received: from mail.kernel.org ([198.145.29.99]:45844 "EHLO mail.kernel.org"
+        id S235157AbhINVnR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Sep 2021 17:43:17 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45952 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S232891AbhINVnL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Sep 2021 17:43:11 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id A4F7260F46;
-        Tue, 14 Sep 2021 21:41:53 +0000 (UTC)
+        id S235130AbhINVnR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 Sep 2021 17:43:17 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 1D55260F46;
+        Tue, 14 Sep 2021 21:41:59 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631655713;
-        bh=yz5Bfvyarz8ioV1nD8LWZxEwKdqGjFozaYoqtDxmce4=;
+        s=k20201202; t=1631655719;
+        bh=meXteCITR8XYuUFsHymRKFm4shPpGfIoRYV8xFZlC4k=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=n8OwrgRGFqEh3jjsms76i6N1FzD9i3xgYm2ic95Rx4DW0JxzsGbySrBDn02Wcyiqw
-         qsmvAcZqf5zMrkKQG0LrkA/8nEnaLQCV5w0gXo7GFKgfj/qAmUbm4OvnuZlQ43tFjC
-         MlSO6Vp0I0b94rT0YpeNjOrCC0uFLEa+Rk7j6UF+YpB7hfH3Aoy+CLB4aK2xa/rvxC
-         n1uwSt4qr5nigm94X3r3suQcwC7wizb7wNLlDMe8xaQOk3TPjVoC16zhGL26EhLiAB
-         0XlV+23Cov+ish1ADEuj5KI2fpeHg9xlxke28vAMg2ph5bH6k+6v1D5Vudhzy7ai3D
-         L/qbjr9pOcuHA==
+        b=jWNvvS2I6cF+EzzxAn64GkqgixKL2X6Ea+3Co7WlJUng204tK6HhBgNp3RoxmwSCq
+         Ijkrur/pgiFscSxPGMsnl7NBn2zfdFuCfjRO1TO0+I4PfOPdTXEVIcsCtZi+nijOBl
+         gl+sBha9PZt4jXZSqsqZlyodnIDnWTGD0EWcFVGCoC8in1jk/NvhnuhSjEAFLc0L4x
+         WyKKolv2CYbTjHzcyTozyiYNT2ab7pPLQxpIUnza9Vf7G3wwfedz5qwxCfu95Woznj
+         s1Tn33EGF8GdJkxehSxdf2iubv4XZ/mX6SoAmKsGp/B8lL4LJNc+BzEn2WZjbvGZtj
+         P+CmzWKZVmGRQ==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20210911121340.261920-2-marijn.suijten@somainline.org>
-References: <20210911121340.261920-1-marijn.suijten@somainline.org> <20210911121340.261920-2-marijn.suijten@somainline.org>
-Subject: Re: [PATCH 1/8] clk: qcom: gcc-msm8998: Move parent names and mapping below GPLLs
+In-Reply-To: <20210911121340.261920-3-marijn.suijten@somainline.org>
+References: <20210911121340.261920-1-marijn.suijten@somainline.org> <20210911121340.261920-3-marijn.suijten@somainline.org>
+Subject: Re: [PATCH 2/8] clk: qcom: gcc-msm8998: Use parent_data/hws for internal clock relations
 From:   Stephen Boyd <sboyd@kernel.org>
 Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         AngeloGioacchino Del Regno 
@@ -46,17 +46,24 @@ Cc:     ~postmarketos/upstreaming@lists.sr.ht,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
 To:     Marijn Suijten <marijn.suijten@somainline.org>,
         phone-devel@vger.kernel.org
-Date:   Tue, 14 Sep 2021 14:41:52 -0700
-Message-ID: <163165571230.763609.16990888514996843036@swboyd.mtv.corp.google.com>
+Date:   Tue, 14 Sep 2021 14:41:57 -0700
+Message-ID: <163165571792.763609.6180391994406597824@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Marijn Suijten (2021-09-11 05:13:33)
-> Prepare for a future patch where we use .hw pointers to these GPLL
-> clocks in the parent mapping instead of name references.  This requires
-> the GPLL clocks to be decared before parent_data arrays.
+Quoting Marijn Suijten (2021-09-11 05:13:34)
+> Use parent_data and parent_hws to specify internal relations using
+> pointers instead of names, and use .fw_name to retrieve external clocks
+> from clock-names in the DT rather than the global clock tree.
+>=20
+> Note that this change relies on the "xo" and "sleep_clk" clocks to be
+> provided in DT, as per the relevant qcom,gcc-mnsm8998.yaml dt-bindings.
+> These clocks have been added in a prior patch [1].
+>=20
+> [1]: https://lore.kernel.org/linux-arm-msm/20210911120101.248476-1-marijn=
+.suijten@somainline.org/
 >=20
 > Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somain=
 line.org>
