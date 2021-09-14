@@ -2,49 +2,49 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DF8F40B8FD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Sep 2021 22:22:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4815F40B901
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Sep 2021 22:22:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233872AbhINUXi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Sep 2021 16:23:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37608 "EHLO
+        id S233904AbhINUXk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Sep 2021 16:23:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37622 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233775AbhINUXg (ORCPT
+        with ESMTP id S233398AbhINUXi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Sep 2021 16:23:36 -0400
-Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 36823C061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Sep 2021 13:22:19 -0700 (PDT)
-Received: by mail-pj1-x102f.google.com with SMTP id v19so530679pjh.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Sep 2021 13:22:19 -0700 (PDT)
+        Tue, 14 Sep 2021 16:23:38 -0400
+Received: from mail-pj1-x102a.google.com (mail-pj1-x102a.google.com [IPv6:2607:f8b0:4864:20::102a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8DE95C061762
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Sep 2021 13:22:20 -0700 (PDT)
+Received: by mail-pj1-x102a.google.com with SMTP id w19-20020a17090aaf9300b00191e6d10a19so534162pjq.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Sep 2021 13:22:20 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Gf4JarCb3My4KVqh9AtVAoVt/GThM0uaZWK4IXBZAcE=;
-        b=JEQV/dISX0d8lmab+IRJeypzRFStY2Gxk0vXLC+4wgKRKz3ZrcBPdZ8FEy31zMCRXW
-         oxiR7gBzDhWVskCSRH/9/mGVspujQbClomSKTQqOwAxUHdWMkH6aPX2USNqJxwVRaW4I
-         YjP5Xw6eHd506y0hWuQjNDgoP5fJLQKtw1nDw=
+        bh=1eq1EhU+zYDo9mJHJDkG29Ky8UkHJSuUomIxtnQFNyU=;
+        b=DbJEGg0xGwg+a49SFAxYOlo+UGjg3cC7kW+wHLhkk+opC8xZLjO4mXNmBmLN/sgtz4
+         3hCnSMgXi69PYfleT76+M+3GA9R2GRilBRHJLtDCgx3qOIWsMo+XJolkbO5j0Tp9AmyK
+         AAfrHllQnojGW3KNEsEIKeY2DW5KA104z4sII=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Gf4JarCb3My4KVqh9AtVAoVt/GThM0uaZWK4IXBZAcE=;
-        b=HNavfWRJXNX43+j4pG49NqJP3fFu4gyl9tkz6N+4ausMHY6zaHYQm0ZW33EWvTG7Ys
-         QVFdXILdAcTIAyANRxDj40avEiQg6+od0UAUvo895AK+RBwlURsFVrPwddahWyUWsF2D
-         2QdPsX7ecaKKP4JEX2nEnoXMkcrg/xaQJas9Nd0qV2Qyb0ndUoHWKFzQhkuLwJxqp5MB
-         zT/VmiyWFmMsYQS4OpV1IbcRFzkr9BI8WgUSTw04M7OC6u1tTGC5LEXF3B4vpj11NTKi
-         VEF5IM18vSxkBSaKiZfW5DgewV6VEjBekrYv+HakU6RPUkBvBgnfeuuq+gG4JNZjoL5I
-         aZeQ==
-X-Gm-Message-State: AOAM533tgaX1HeEMmPkv54PzxBZvQbCDX5PZ9F2QiwRt9HoNAxVvZsZs
-        /jXsHAAMWy23cJlyy1iPu9sZ3w==
-X-Google-Smtp-Source: ABdhPJxkkBwac9oNtP94xfHfgfiDKDJuHFtqgEk3O9wLJII8YiobzcTyG+mR1z6JKDj89qYysrUWPQ==
-X-Received: by 2002:a17:903:185:b0:13a:7ef0:8f43 with SMTP id z5-20020a170903018500b0013a7ef08f43mr16573629plg.32.1631650938712;
-        Tue, 14 Sep 2021 13:22:18 -0700 (PDT)
+        bh=1eq1EhU+zYDo9mJHJDkG29Ky8UkHJSuUomIxtnQFNyU=;
+        b=sZeyePJ3IX4idy1CIKttPsIhofht47sMq/o6ukVkikd77BZA5nEzXho+ppqOGbS/VW
+         BXRYNnRmkwuc3nUPmQpGGV7ld5O1XXr1Ko54v9O9oej/JB/Vr32N3GowS0G9umY8DnKq
+         uT35GIaXJXqlNSREh7lwXlCHG6n2B8bFDcfBUSMuxnN/1n4CBbv0tByBd+Axt3uqPa9T
+         +1JkDPMWoTav2L7ktq5QqvN7ohQQEm14m/wq9QllnKFu6hJTUg9hXtexO6LdTOKqTcj6
+         r8MWsof0ADziv/OOe9r+Xr6XWWKLZjRGWY2NaoIaQnJIO5kaGINhyOM1Qq9+kebthIv1
+         ehMQ==
+X-Gm-Message-State: AOAM533HDLaTvtE4Yd2tUUlH0Cds8vLLwQwejVmN2y9soIzMFzvhPOha
+        1Q4xG2dTmHSBghhahWN3+HiMkw==
+X-Google-Smtp-Source: ABdhPJxZGuqeY7vVGYlZZdjz3TXxrq4Z8aVX1sSURyw7T47gpo2DGYj+w1EEfxevLORoECmy387ikA==
+X-Received: by 2002:a17:90b:3ec6:: with SMTP id rm6mr4119831pjb.68.1631650940174;
+        Tue, 14 Sep 2021 13:22:20 -0700 (PDT)
 Received: from tictac2.mtv.corp.google.com ([2620:15c:202:201:f38f:9d0f:3eba:f8c4])
-        by smtp.gmail.com with ESMTPSA id 141sm12185393pgg.16.2021.09.14.13.22.17
+        by smtp.gmail.com with ESMTPSA id 141sm12185393pgg.16.2021.09.14.13.22.18
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Sep 2021 13:22:18 -0700 (PDT)
+        Tue, 14 Sep 2021 13:22:19 -0700 (PDT)
 From:   Douglas Anderson <dianders@chromium.org>
 To:     Thierry Reding <thierry.reding@gmail.com>,
         Rob Herring <robh+dt@kernel.org>,
@@ -59,10 +59,11 @@ Cc:     devicetree@vger.kernel.org, Steev Klimaszewski <steev@kali.org>,
         Daniel Vetter <daniel@ffwll.ch>,
         Maxime Ripard <mripard@kernel.org>,
         Douglas Anderson <dianders@chromium.org>,
-        Rob Herring <robh@kernel.org>, linux-kernel@vger.kernel.org
-Subject: [PATCH v5 01/15] dt-bindings: drm/panel-simple-edp: Introduce generic eDP panels
-Date:   Tue, 14 Sep 2021 13:21:48 -0700
-Message-Id: <20210914132020.v5.1.I1116e79d34035338a45c1fc7cdd14a097909c8e0@changeid>
+        Jani Nikula <jani.nikula@intel.com>,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v5 02/15] drm/edid: Break out reading block 0 of the EDID
+Date:   Tue, 14 Sep 2021 13:21:49 -0700
+Message-Id: <20210914132020.v5.2.I62e76a034ac78c994d40a23cd4ec5aeee56fa77c@changeid>
 X-Mailer: git-send-email 2.33.0.309.g3052b89438-goog
 In-Reply-To: <20210914202202.1702601-1-dianders@chromium.org>
 References: <20210914202202.1702601-1-dianders@chromium.org>
@@ -72,245 +73,117 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-eDP panels generally contain almost everything needed to control them
-in their EDID. This comes from their DP heritage were a computer needs
-to be able to properly control pretty much any DP display that's
-plugged into it.
+A future change wants to be able to read just block 0 of the EDID, so
+break it out of drm_do_get_edid() into a sub-function.
 
-The one big issue with eDP panels and the reason that we need a panel
-driver for them is that the power sequencing can be different per
-panel.
-
-While it is true that eDP panel sequencing can be arbitrarily complex,
-in practice it turns out that many eDP panels are compatible with just
-some slightly different delays. See the contents of the bindings file
-introduced in this patch for some details.
-
-The fact that eDP panels are 99% probable and that the power
-sequencing (especially power up) can be compatible between many panels
-means that there's a constant desire to plug multiple different panels
-into the same board. This could be for second sourcing purposes or to
-support multiple SKUs (maybe a 11" and a 13", for instance).
-
-As discussed [1], it should be OK to support this by adding two
-properties to the device tree to specify the delays needed for
-powering up the panel the first time. We'll create a new "edp-panel"
-bindings file and define the two delays that might need to be
-specified. NOTE: in the vast majority of the cases (HPD is hooked up
-and isn't glitchy or is debounced) even these delays aren't needed.
-
-[1] https://lore.kernel.org/r/CAD=FV=VZYOMPwQZzWdhJGh5cjJWw_EcM-wQVEivZ-bdGXjPrEQ@mail.gmail.com
+This is intended to be a no-op change--just code movement.
 
 Signed-off-by: Douglas Anderson <dianders@chromium.org>
-Reviewed-by: Rob Herring <robh@kernel.org>
 Acked-by: Sam Ravnborg <sam@ravnborg.org>
+Reviewed-by: Jani Nikula <jani.nikula@intel.com>
 ---
 
-Changes in v5:
-- Probable => Probeable
+(no changes since v4)
 
-Changes in v2:
-- Add "-ms" suffix to delays.
-- No longer allow fallback to panel-simple.
+Changes in v4:
+- "u8 *edid" => "void *edid" to avoid cast.
+- Don't put kmalloc() in the "if" test even if the old code did.
+- drm_do_get_edid_blk0() => drm_do_get_edid_base_block()
 
- .../bindings/display/panel/panel-edp.yaml     | 188 ++++++++++++++++++
- 1 file changed, 188 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/display/panel/panel-edp.yaml
+ drivers/gpu/drm/drm_edid.c | 63 +++++++++++++++++++++++++++-----------
+ 1 file changed, 45 insertions(+), 18 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/display/panel/panel-edp.yaml b/Documentation/devicetree/bindings/display/panel/panel-edp.yaml
-new file mode 100644
-index 000000000000..bb0cf6827e79
---- /dev/null
-+++ b/Documentation/devicetree/bindings/display/panel/panel-edp.yaml
-@@ -0,0 +1,188 @@
-+# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/display/panel/panel-edp.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
+index 6325877c5fd6..520fe1391769 100644
+--- a/drivers/gpu/drm/drm_edid.c
++++ b/drivers/gpu/drm/drm_edid.c
+@@ -1905,6 +1905,44 @@ int drm_add_override_edid_modes(struct drm_connector *connector)
+ }
+ EXPORT_SYMBOL(drm_add_override_edid_modes);
+ 
++static struct edid *drm_do_get_edid_base_block(
++	int (*get_edid_block)(void *data, u8 *buf, unsigned int block,
++			      size_t len),
++	void *data, bool *edid_corrupt, int *null_edid_counter)
++{
++	int i;
++	void *edid;
 +
-+title: Probeable (via DP AUX / EDID) eDP Panels with simple poweron sequences
++	edid = kmalloc(EDID_LENGTH, GFP_KERNEL);
++	if (edid == NULL)
++		return NULL;
 +
-+maintainers:
-+  - Douglas Anderson <dianders@chromium.org>
++	/* base block fetch */
++	for (i = 0; i < 4; i++) {
++		if (get_edid_block(data, edid, 0, EDID_LENGTH))
++			goto out;
++		if (drm_edid_block_valid(edid, 0, false, edid_corrupt))
++			break;
++		if (i == 0 && drm_edid_is_zero(edid, EDID_LENGTH)) {
++			if (null_edid_counter)
++				(*null_edid_counter)++;
++			goto carp;
++		}
++	}
++	if (i == 4)
++		goto carp;
 +
-+description: |
-+  This binding file can be used to indicate that an eDP panel is connected
-+  to a Embedded DisplayPort AUX bus (see display/dp-aux-bus.yaml) without
-+  actually specifying exactly what panel is connected. This is useful for
-+  the case that more than one different panel could be connected to the
-+  board, either for second-sourcing purposes or to support multiple SKUs
-+  with different LCDs that hook up to a common board.
++	return edid;
 +
-+  As per above, a requirement for using this binding is that the panel is
-+  represented under the DP AUX bus. This means that we can use any
-+  information provided by the DP AUX bus (including the EDID) to identify
-+  the panel. We can use this to identify display size, resolution, and
-+  timings among other things.
++carp:
++	kfree(edid);
++	return ERR_PTR(-EINVAL);
 +
-+  One piece of information about eDP panels that is typically _not_
-+  provided anywhere on the DP AUX bus is the power sequencing timings.
-+  This is the reason why, historically, we've always had to explicitly
-+  list eDP panels. We solve that here with two tricks. The "worst case"
-+  power on timings for any panels expected to be connected to a board are
-+  specified in these bindings. Once we've powered on, it's expected that
-+  the operating system will lookup the panel in a table (based on EDID
-+  information) to figure out other power sequencing timings.
++out:
++	kfree(edid);
++	return NULL;
++}
 +
-+  eDP panels in general can have somewhat arbitrary power sequencing
-+  requirements. However, even though it's arbitrary in general, the
-+  vast majority of panel datasheets have a power sequence diagram that
-+  looks the exactly the same as every other panel. Each panel datasheet
-+  cares about different timings in this diagram but the fact that the
-+  diagram is so similar means we can come up with a single driver to
-+  handle it.
-+
-+  These diagrams all look roughly like this, sometimes labeled with
-+  slightly different numbers / lines but all pretty much the same
-+  sequence. This is because much of this diagram comes straight from
-+  the eDP Standard.
-+
-+                __________________________________________________
-+  Vdd       ___/:                                                :\____       /
-+          _/    :                                                :     \_____/
-+           :<T1>:<T2>:                                 :<--T10-->:<T11>:<T12>:
-+                :    +-----------------------+---------+---------+
-+  eDP     -----------+ Black video           | Src vid | Blk vid +
-+  Display       :    +-----------------------+---------+---------+
-+                :     _______________________:_________:_________:
-+  HPD           :<T3>|                       :         :         |
-+          ___________|                       :         :         |_____________
-+                     :                       :         :         :
-+  Sink               +-----------------------:---------:---------+
-+  AUX CH  -----------+ AUX Ch operational    :         :         +-------------
-+                     +-----------------------:---------:---------+
-+                     :                       :         :         :
-+                     :<T4>:             :<T7>:         :         :
-+  Src main                +------+------+--------------+---------+
-+  lnk data----------------+LnkTrn| Idle |Valid vid data| Idle/off+-------------
-+                          +------+------+--------------+---------+
-+                          : <T5> :<-T6->:<-T8->:       :
-+                                               :__:<T9>:
-+  LED_EN                                       |  |
-+          _____________________________________|  |____________________________
-+                                               :  :
-+                                     __________:__:_
-+  PWM                               |          :  : |
-+          __________________________|          :  : |__________________________
-+                                    :          :  : :
-+                       _____________:__________:__:_:______
-+  Bklight         ____/:            :          :  : :     :\____
-+  power   _______/     :<---T13---->:          :  : :<T16>:     \______________
-+  (Vbl)          :<T17>:<---------T14--------->:  :<-T15->:<T18>:
-+
-+  The above looks fairly complex but, as per above, each panel only cares
-+  about a subset of those timings.
-+
-+allOf:
-+  - $ref: panel-common.yaml#
-+
-+properties:
-+  compatible:
-+    const: edp-panel
-+
-+  hpd-reliable-delay-ms:
-+    description:
-+      A fixed amount of time that must be waited after powering on the
-+      panel's power-supply before the HPD signal is a reliable way to know
-+      when the AUX channel is ready. This is useful for panels that glitch
-+      the HPD at the start of power-on. This value is not needed if HPD is
-+      always reliable for all panels that might be connected.
-+
-+  hpd-absent-delay-ms:
-+    description:
-+      The panel specifies that HPD will be asserted this many milliseconds
-+      from power on (timing T3 in the diagram above). If we have no way to
-+      measure HPD then a fixed delay of this many milliseconds can be used.
-+      This can also be used as a timeout when waiting for HPD. Does not
-+      include the hpd-reliable-delay, so if hpd-reliable-delay was 80 ms
-+      and hpd-absent-delay was 200 ms then we'd do a fixed 80 ms delay and
-+      then we know HPD would assert in the next 120 ms. This value is not
-+      needed if HPD hooked up, either through a GPIO in the panel node or
-+      hooked up directly to the eDP controller.
-+
-+  backlight: true
-+  enable-gpios: true
-+  port: true
-+  power-supply: true
-+  no-hpd: true
-+  hpd-gpios: true
-+
-+additionalProperties: false
-+
-+required:
-+  - compatible
-+  - power-supply
-+
-+examples:
-+  - |
-+    #include <dt-bindings/clock/qcom,rpmh.h>
-+    #include <dt-bindings/gpio/gpio.h>
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+
-+    i2c {
-+      #address-cells = <1>;
-+      #size-cells = <0>;
-+
-+      bridge@2d {
-+        compatible = "ti,sn65dsi86";
-+        reg = <0x2d>;
-+
-+        interrupt-parent = <&tlmm>;
-+        interrupts = <10 IRQ_TYPE_LEVEL_HIGH>;
-+
-+        enable-gpios = <&tlmm 102 GPIO_ACTIVE_HIGH>;
-+
-+        vpll-supply = <&src_pp1800_s4a>;
-+        vccio-supply = <&src_pp1800_s4a>;
-+        vcca-supply = <&src_pp1200_l2a>;
-+        vcc-supply = <&src_pp1200_l2a>;
-+
-+        clocks = <&rpmhcc RPMH_LN_BB_CLK2>;
-+        clock-names = "refclk";
-+
-+        no-hpd;
-+
-+        ports {
-+          #address-cells = <1>;
-+          #size-cells = <0>;
-+
-+          port@0 {
-+            reg = <0>;
-+            endpoint {
-+              remote-endpoint = <&dsi0_out>;
-+            };
-+          };
-+
-+          port@1 {
-+            reg = <1>;
-+            sn65dsi86_out: endpoint {
-+              remote-endpoint = <&panel_in_edp>;
-+            };
-+          };
-+        };
-+
-+        aux-bus {
-+          panel {
-+            compatible = "edp-panel";
-+            power-supply = <&pp3300_dx_edp>;
-+            backlight = <&backlight>;
-+            hpd-gpios = <&sn65dsi86_bridge 2 GPIO_ACTIVE_HIGH>;
-+            hpd-reliable-delay-ms = <15>;
-+
-+            port {
-+              panel_in_edp: endpoint {
-+                remote-endpoint = <&sn65dsi86_out>;
-+              };
-+            };
-+          };
-+        };
-+      };
-+    };
+ /**
+  * drm_do_get_edid - get EDID data using a custom EDID block read function
+  * @connector: connector we're probing
+@@ -1938,25 +1976,16 @@ struct edid *drm_do_get_edid(struct drm_connector *connector,
+ 	if (override)
+ 		return override;
+ 
+-	if ((edid = kmalloc(EDID_LENGTH, GFP_KERNEL)) == NULL)
++	edid = (u8 *)drm_do_get_edid_base_block(get_edid_block, data,
++						&connector->edid_corrupt,
++						&connector->null_edid_counter);
++	if (IS_ERR_OR_NULL(edid)) {
++		if (IS_ERR(edid))
++			connector_bad_edid(connector, edid, 1);
+ 		return NULL;
+-
+-	/* base block fetch */
+-	for (i = 0; i < 4; i++) {
+-		if (get_edid_block(data, edid, 0, EDID_LENGTH))
+-			goto out;
+-		if (drm_edid_block_valid(edid, 0, false,
+-					 &connector->edid_corrupt))
+-			break;
+-		if (i == 0 && drm_edid_is_zero(edid, EDID_LENGTH)) {
+-			connector->null_edid_counter++;
+-			goto carp;
+-		}
+ 	}
+-	if (i == 4)
+-		goto carp;
+ 
+-	/* if there's no extensions, we're done */
++	/* if there's no extensions or no connector, we're done */
+ 	valid_extensions = edid[0x7e];
+ 	if (valid_extensions == 0)
+ 		return (struct edid *)edid;
+@@ -2010,8 +2039,6 @@ struct edid *drm_do_get_edid(struct drm_connector *connector,
+ 
+ 	return (struct edid *)edid;
+ 
+-carp:
+-	connector_bad_edid(connector, edid, 1);
+ out:
+ 	kfree(edid);
+ 	return NULL;
 -- 
 2.33.0.309.g3052b89438-goog
 
