@@ -2,164 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2A0D040B72E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Sep 2021 20:50:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 386AC40B733
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Sep 2021 20:52:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229728AbhINSvp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Sep 2021 14:51:45 -0400
-Received: from mga04.intel.com ([192.55.52.120]:13235 "EHLO mga04.intel.com"
+        id S229937AbhINSxs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Sep 2021 14:53:48 -0400
+Received: from mail.kernel.org ([198.145.29.99]:59480 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229869AbhINSvo (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Sep 2021 14:51:44 -0400
-X-IronPort-AV: E=McAfee;i="6200,9189,10107"; a="220225411"
-X-IronPort-AV: E=Sophos;i="5.85,292,1624345200"; 
-   d="scan'208";a="220225411"
-Received: from fmsmga003.fm.intel.com ([10.253.24.29])
-  by fmsmga104.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2021 11:50:26 -0700
-X-IronPort-AV: E=Sophos;i="5.85,292,1624345200"; 
-   d="scan'208";a="544237888"
-Received: from lveltman-mobl.ger.corp.intel.com (HELO localhost) ([10.251.216.6])
-  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 14 Sep 2021 11:50:19 -0700
-From:   Jani Nikula <jani.nikula@linux.intel.com>
-To:     Douglas Anderson <dianders@chromium.org>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sam Ravnborg <sam@ravnborg.org>
-Cc:     devicetree@vger.kernel.org, Maxime Ripard <mripard@kernel.org>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Linus W <linus.walleij@linaro.org>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        Steev Klimaszewski <steev@kali.org>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Airlie <airlied@linux.ie>,
-        dri-devel@lists.freedesktop.org,
-        Douglas Anderson <dianders@chromium.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 02/15] drm/edid: Break out reading block 0 of the EDID
-In-Reply-To: <20210909135838.v4.2.I62e76a034ac78c994d40a23cd4ec5aeee56fa77c@changeid>
-Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
-References: <20210909210032.465570-1-dianders@chromium.org> <20210909135838.v4.2.I62e76a034ac78c994d40a23cd4ec5aeee56fa77c@changeid>
-Date:   Tue, 14 Sep 2021 21:50:15 +0300
-Message-ID: <878rzz0z6g.fsf@intel.com>
+        id S229869AbhINSxr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 Sep 2021 14:53:47 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id D22F261155;
+        Tue, 14 Sep 2021 18:52:29 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1631645550;
+        bh=SDdnorZEBnhPn/ZG3jdmhisa2ptkXBcD2EonNKefoFI=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=S7RbtLB1qRbR4v4VwraXBQIZ8iwL+5gKk1PEM7/bXtVm8NkB+yUCArSQOk45dHKQq
+         peY2GS73m5H/HuM0rYE4HirMU2KMCAq8soy/9PDPCGiRBPK4jrxX5MWm3ugK2oF5MV
+         N0cTZUYo1RC7RmLFJ6AJi6/NCb6H1weXwigDOTiqNdwdOGuUmIMoieZACM2wG/pcOx
+         Nwa+hcljIyHBxrv7iGDYVqornqfXQKkPgCKHCybPanEHdZROfx6+bJo9X+1gOKNmIE
+         kN2H2ybS0ap0GUH4Kj4/uvT3ZSZVidMbt+Xj0ZhQpoRdFwIa8EAyC0/jA0IOoSMnjB
+         dDcR9uB5ijwEA==
+Date:   Tue, 14 Sep 2021 13:52:28 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Prasad Malisetty <pmaliset@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, bhelgaas@google.com,
+        robh+dt@kernel.org, swboyd@chromium.org, lorenzo.pieralisi@arm.com,
+        svarbanov@mm-sol.com, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dianders@chromium.org,
+        mka@chromium.org, vbadigan@codeaurora.org, sallenki@codeaurora.org,
+        manivannan.sadhasivam@linaro.org
+Subject: Re: [PATCH v7 4/4] PCI: qcom: Switch pcie_1_pipe_clk_src after PHY
+ init in SC7280
+Message-ID: <20210914185228.GA1443558@bjorn-Precision-5520>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1631643550-29960-5-git-send-email-pmaliset@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 09 Sep 2021, Douglas Anderson <dianders@chromium.org> wrote:
-> A future change wants to be able to read just block 0 of the EDID, so
-> break it out of drm_do_get_edid() into a sub-function.
->
-> This is intended to be a no-op change--just code movement.
->
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> Acked-by: Sam Ravnborg <sam@ravnborg.org>
-
-Reviewed-by: Jani Nikula <jani.nikula@intel.com>
-
+On Tue, Sep 14, 2021 at 11:49:10PM +0530, Prasad Malisetty wrote:
+> On the SC7280, the clock source for gcc_pcie_1_pipe_clk_src
+> must be the TCXO while gdsc is enabled. After PHY init successful
+> clock source should switch to pipe clock for gcc_pcie_1_pipe_clk_src.
+> 
+> Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
 > ---
->
-> Changes in v4:
-> - "u8 *edid" => "void *edid" to avoid cast.
-> - Don't put kmalloc() in the "if" test even if the old code did.
-> - drm_do_get_edid_blk0() => drm_do_get_edid_base_block()
->
->  drivers/gpu/drm/drm_edid.c | 63 +++++++++++++++++++++++++++-----------
->  1 file changed, 45 insertions(+), 18 deletions(-)
->
-> diff --git a/drivers/gpu/drm/drm_edid.c b/drivers/gpu/drm/drm_edid.c
-> index 6325877c5fd6..520fe1391769 100644
-> --- a/drivers/gpu/drm/drm_edid.c
-> +++ b/drivers/gpu/drm/drm_edid.c
-> @@ -1905,6 +1905,44 @@ int drm_add_override_edid_modes(struct drm_connector *connector)
->  }
->  EXPORT_SYMBOL(drm_add_override_edid_modes);
->  
-> +static struct edid *drm_do_get_edid_base_block(
-> +	int (*get_edid_block)(void *data, u8 *buf, unsigned int block,
-> +			      size_t len),
-> +	void *data, bool *edid_corrupt, int *null_edid_counter)
-> +{
-> +	int i;
-> +	void *edid;
-> +
-> +	edid = kmalloc(EDID_LENGTH, GFP_KERNEL);
-> +	if (edid == NULL)
-> +		return NULL;
-> +
-> +	/* base block fetch */
-> +	for (i = 0; i < 4; i++) {
-> +		if (get_edid_block(data, edid, 0, EDID_LENGTH))
-> +			goto out;
-> +		if (drm_edid_block_valid(edid, 0, false, edid_corrupt))
-> +			break;
-> +		if (i == 0 && drm_edid_is_zero(edid, EDID_LENGTH)) {
-> +			if (null_edid_counter)
-> +				(*null_edid_counter)++;
-> +			goto carp;
-> +		}
-> +	}
-> +	if (i == 4)
-> +		goto carp;
-> +
-> +	return edid;
-> +
-> +carp:
-> +	kfree(edid);
-> +	return ERR_PTR(-EINVAL);
-> +
-> +out:
-> +	kfree(edid);
-> +	return NULL;
-> +}
-> +
->  /**
->   * drm_do_get_edid - get EDID data using a custom EDID block read function
->   * @connector: connector we're probing
-> @@ -1938,25 +1976,16 @@ struct edid *drm_do_get_edid(struct drm_connector *connector,
->  	if (override)
->  		return override;
->  
-> -	if ((edid = kmalloc(EDID_LENGTH, GFP_KERNEL)) == NULL)
-> +	edid = (u8 *)drm_do_get_edid_base_block(get_edid_block, data,
-> +						&connector->edid_corrupt,
-> +						&connector->null_edid_counter);
-> +	if (IS_ERR_OR_NULL(edid)) {
-> +		if (IS_ERR(edid))
-> +			connector_bad_edid(connector, edid, 1);
->  		return NULL;
-> -
-> -	/* base block fetch */
-> -	for (i = 0; i < 4; i++) {
-> -		if (get_edid_block(data, edid, 0, EDID_LENGTH))
-> -			goto out;
-> -		if (drm_edid_block_valid(edid, 0, false,
-> -					 &connector->edid_corrupt))
-> -			break;
-> -		if (i == 0 && drm_edid_is_zero(edid, EDID_LENGTH)) {
-> -			connector->null_edid_counter++;
-> -			goto carp;
-> -		}
->  	}
-> -	if (i == 4)
-> -		goto carp;
->  
-> -	/* if there's no extensions, we're done */
-> +	/* if there's no extensions or no connector, we're done */
->  	valid_extensions = edid[0x7e];
->  	if (valid_extensions == 0)
->  		return (struct edid *)edid;
-> @@ -2010,8 +2039,6 @@ struct edid *drm_do_get_edid(struct drm_connector *connector,
->  
->  	return (struct edid *)edid;
->  
-> -carp:
-> -	connector_bad_edid(connector, edid, 1);
->  out:
->  	kfree(edid);
->  	return NULL;
+>  drivers/pci/controller/dwc/pcie-qcom.c | 90 +++++++++++++++++++++++++++++-----
+>  1 file changed, 79 insertions(+), 11 deletions(-)
+> 
+> +struct qcom_pcie_cfg {
+> +	const struct qcom_pcie_ops *ops;
+> +	bool pcie_1_pipe_clk_src_switch;
 
--- 
-Jani Nikula, Intel Open Source Graphics Center
+This is OK, but all things being equal I like "unsigned int x:1" a
+little better.  Here's some background:
+
+  https://lore.kernel.org/r/CA+55aFzKQ6Pj18TB8p4Yr0M4t+S+BsiHH=BJNmn=76-NcjTj-g@mail.gmail.com/
+  https://lore.kernel.org/r/CA+55aFxnePDimkVKVtv3gNmRGcwc8KQ5mHYvUxY8sAQg6yvVYg@mail.gmail.com/
+
+> @@ -1467,6 +1531,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  	struct pcie_port *pp;
+>  	struct dw_pcie *pci;
+>  	struct qcom_pcie *pcie;
+> +	const struct qcom_pcie_cfg *pcie_cfg = NULL;
+
+No need to initialize this, since you always assign it before using
+it.
+
+>  	int ret;
+>  
+>  	pcie = devm_kzalloc(dev, sizeof(*pcie), GFP_KERNEL);
+> @@ -1488,7 +1553,9 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  
+>  	pcie->pci = pci;
+>  
+> -	pcie->ops = of_device_get_match_data(dev);
+> +	pcie_cfg = of_device_get_match_data(dev);
+> +	pcie->ops = pcie_cfg->ops;
+> +	pcie->pcie_1_pipe_clk_src_switch = pcie_cfg->pcie_1_pipe_clk_src_switch;
+>  
+>  	pcie->reset = devm_gpiod_get_optional(dev, "perst", GPIOD_OUT_HIGH);
+>  	if (IS_ERR(pcie->reset)) {
+
+Looks good, thanks for working on this!
