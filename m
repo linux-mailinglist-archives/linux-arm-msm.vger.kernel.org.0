@@ -2,152 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C5BF440A27A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Sep 2021 03:28:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9F13940A2A8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Sep 2021 03:41:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230375AbhINB35 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Sep 2021 21:29:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55500 "EHLO
+        id S230244AbhINBmQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Sep 2021 21:42:16 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58322 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229825AbhINB35 (ORCPT
+        with ESMTP id S230106AbhINBmP (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Sep 2021 21:29:57 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1B0E7C061574
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 18:28:41 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id k12-20020a056830150c00b0051abe7f680bso16058621otp.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 18:28:41 -0700 (PDT)
+        Mon, 13 Sep 2021 21:42:15 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 579EDC061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 18:40:59 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id k23so7748018pji.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 18:40:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=1iyEkjOspz1YHSZHaH57x8hyXl0nLGx/16zCo4qzljY=;
-        b=Tul4Quso1sZ207HiO8jFYq9hTqO+BCojLOgrdEXHGGbHVUFXmyNkDGbglwl0FW93zC
-         L+RZ9IiQ8+3BBHc5yuu047ayDXEw05KS4A6NjUoLO2QQAie6moBVa+dr7LR667B4iDzJ
-         pjh80uBN8NZKxP/g2j9hoq7Yki43v2L2hdnYU=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=i50eXCIMPdV7KIYFDqVqCxJ2nl6Tna8Sip8wf7VdYRs=;
+        b=WycG2898W7Z4ctAx2UYR1U+cmhGLKDlysRStdiZ/ssFCUg48KW4d3R2nTb6MZtNKxU
+         LHRD3TbGra7M2Sqiu5tznmNrfNp1BAbBadopb1fAeBGhUMEvDLXcHiKHoqrgtOZ/+NcJ
+         yBtEmw/SBop0Q0cGL9BaUbyV+SX43/jdmOLRjXyCY7xXAVftv0/PgvbUvcW8GuUAzAWv
+         fkHQh1Sbn+ypO6pNQ5fLBaxbHglvIqLDi8hw4hdzOFFrerLqRBWuTtyU7msneqdwPdCJ
+         eKIEh3CLgA1Kqgy+SqJXZrvK9Kq++aET3BlGK21Un5DxtqS9MzGKY4tOwskVm8FNZHtg
+         UO/w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=1iyEkjOspz1YHSZHaH57x8hyXl0nLGx/16zCo4qzljY=;
-        b=a1U+AmmS2eFnV8C1hVSYs+w8uELQIvV2RboxHAHiMLWdQxFodzDyQzbXJrcFub5cIu
-         jRolrC+ZcRbktSVBijWei4XSM/DioHuwYczQDSEBKnoH7oFpbTBwdWsIwMwfwSQUTuaI
-         JXPIPR/JkMrL8x/7aWBc/44QAD8BwMoqqnSEryip21odblYMFAkPT0AEdBEDY02w8JYu
-         EEu0n6MTPNcW/QWBkVGHG02iNxYkDur7+r8MLADoxFlChEMz7aziiiPUm0A0uEG8UMlG
-         QOW91K6qi9Xc7TNE4MSpgorKHvc+Essy5QdkMOBnJ8uKSMVGrO42DGSqxkyRJz05tKCc
-         palA==
-X-Gm-Message-State: AOAM5338EMDQO3iPDqeljMlkuF2AC6AJ889OvVlQQ7mmH/WvaNUHblkp
-        yWd00+KNlkMxV6rkXWnK/U/YVoYAJcetwMGFj6h7bw==
-X-Google-Smtp-Source: ABdhPJxiz7kY7hb1EpH/a+L2f+xpsb4urURtmhr4zIGOU4NpfdsFNt7CDlKp7ojpYl5biW2svbBuKdfBR4HRic5UJvg=
-X-Received: by 2002:a05:6830:719:: with SMTP id y25mr12267405ots.77.1631582920355;
- Mon, 13 Sep 2021 18:28:40 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 13 Sep 2021 18:28:39 -0700
-MIME-Version: 1.0
-In-Reply-To: <20210913175747.47456-14-sean@poorly.run>
-References: <20210913175747.47456-1-sean@poorly.run> <20210913175747.47456-14-sean@poorly.run>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Mon, 13 Sep 2021 18:28:39 -0700
-Message-ID: <CAE-0n50DybNUXSQOaPQ56-Ge56tmG8JDkPuzWnQf-S5Y++AnVA@mail.gmail.com>
-Subject: Re: [PATCH 13/14] drm/msm: Add hdcp register ranges to sc7180 device tree
-To:     Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, intel-gfx@lists.freedesktop.org
-Cc:     Sean Paul <seanpaul@chromium.org>, Rob Clark <robdclark@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=i50eXCIMPdV7KIYFDqVqCxJ2nl6Tna8Sip8wf7VdYRs=;
+        b=ZJQE9lWb3pN0MG0G7ob0nIsSA2MPf8zOhB5Cg2Kiyo2m3sZiuZiZnZcGYLyeD55ixx
+         SXHndiB5MkGA6Mu81uUwa27X440JPXgeaP33DLatV9nf0yO93jiTzANTp0b789IRIwcp
+         Kn8D6L75bIKd3vIbeylo7evUYBMXFZ3Ndd+BFzCDUSlPGt3YsaFFpwpyJI/6TgtOMThs
+         qLnEItLglzPNQFv0n69jWemhLgKT4LCZ/xaE35ad/rxZyirY2nc3JhLelyhkYSadgXvP
+         J+U0txPe0IrOuS7vcHEGsgXbpd/sA8yQDktymX2PMa356pxEFFG75CYzVsnAihGFr4Kp
+         4ubA==
+X-Gm-Message-State: AOAM531XTEe+ymjTsCs09jhqjYm74ydpNrC+pg1VSY63jL2Zxv9kriYI
+        3l7F8QYqfe5lsE6h6l8z0MoJDg==
+X-Google-Smtp-Source: ABdhPJzUKcT7KSompsa/VD+baaMmMyUw4Saspi9tY7ldMEovaEXUNgmoWIgh5XO43YPCRRWyyu/aOA==
+X-Received: by 2002:a17:90a:a787:: with SMTP id f7mr2650269pjq.179.1631583658872;
+        Mon, 13 Sep 2021 18:40:58 -0700 (PDT)
+Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id 4sm8037615pjb.21.2021.09.13.18.40.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 13 Sep 2021 18:40:58 -0700 (PDT)
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Jassi Brar <jassisinghbrar@gmail.com>
+Cc:     Rob Herring <robh+dt@kernel.org>,
+        Sivaprakash Murugesan <sivaprak@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Shawn Guo <shawn.guo@linaro.org>
+Subject: [PATCH 0/3] mailbox: Add QCM2290 APCS IPC support
+Date:   Tue, 14 Sep 2021 09:40:47 +0800
+Message-Id: <20210914014050.28788-1-shawn.guo@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sean Paul (2021-09-13 10:57:44)
-> From: Sean Paul <seanpaul@chromium.org>
->
-> This patch adds the register ranges required for HDCP to the sc7180
-> device tree. These registers will be used to inject HDCP key as well as
-> toggle HDCP on and off.
+The first patch cleans up msm8994 type apcs_data, and the other two add
+QCM2290 APCS IPC support.
 
-It doesn't look to do any of that?
+Shawn Guo (3):
+  mailbox: qcom-apcs-ipc: Consolidate msm8994 type apcs_data
+  dt-bindings: mailbox: qcom: Add QCM2290 APCS compatible
+  mailbox: qcom-apcs-ipc: Add QCM2290 APCS IPC support
 
->
-> Signed-off-by: Sean Paul <seanpaul@chromium.org>
-> ---
->  drivers/gpu/drm/msm/dp/dp_parser.c | 30 +++++++++++++++++++++++++++---
->  drivers/gpu/drm/msm/dp/dp_parser.h |  4 ++++
->  2 files changed, 31 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
-> index 0519dd3ac3c3..4bbe2485ce3c 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_parser.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
-> @@ -20,11 +20,19 @@ static const struct dp_regulator_cfg sdm845_dp_reg_cfg = {
->  };
->
->  static int msm_dss_ioremap(struct platform_device *pdev,
-> -                               struct dss_io_data *io_data)
-> +                               struct dss_io_data *io_data, const char *name,
-> +                               int fallback_idx)
->  {
->         struct resource *res = NULL;
->
-> -       res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> +       res = platform_get_resource_byname(pdev, IORESOURCE_MEM, name);
-> +
-> +       /* Support dts which do not have named resources */
+ .../mailbox/qcom,apcs-kpss-global.yaml        |  1 +
+ drivers/mailbox/qcom-apcs-ipc-mailbox.c       | 27 +++++--------------
+ 2 files changed, 7 insertions(+), 21 deletions(-)
 
-Please no. Just use index and know that 0 is the dp hardware, 1 is the
-hdcp key and 2 is the tz interaction zone. There is some backwards
-compat logic to maintain for when it was split out but I hope we can
-drop that soon. Alternatively we could make a new compatible and then
-not care about future conflicts.
+-- 
+2.17.1
 
-> +       if (!res) {
-> +               if (fallback_idx >= 0)
-> +                       res = platform_get_resource(pdev, IORESOURCE_MEM,
-> +                                                   fallback_idx);
-> +       }
->         if (!res) {
->                 DRM_ERROR("%pS->%s: msm_dss_get_res failed\n",
->                         __builtin_return_address(0), __func__);
-> @@ -55,6 +63,8 @@ static void dp_parser_unmap_io_resources(struct dp_parser *parser)
->  {
->         struct dp_io *io = &parser->io;
->
-> +       msm_dss_iounmap(&io->hdcp_tz);
-> +       msm_dss_iounmap(&io->hdcp_key);
->         msm_dss_iounmap(&io->dp_controller);
->  }
->
-> @@ -64,12 +74,26 @@ static int dp_parser_ctrl_res(struct dp_parser *parser)
->         struct platform_device *pdev = parser->pdev;
->         struct dp_io *io = &parser->io;
->
-> -       rc = msm_dss_ioremap(pdev, &io->dp_controller);
-> +       rc = msm_dss_ioremap(pdev, &io->dp_controller, "dp_controller", 0);
->         if (rc) {
->                 DRM_ERROR("unable to remap dp io resources, rc=%d\n", rc);
->                 goto err;
->         }
->
-> +       rc = msm_dss_ioremap(pdev, &io->hdcp_key, "hdcp_key", -1);
-> +       if (rc) {
-> +               DRM_INFO("unable to remap dp hdcp resources, rc=%d\n", rc);
-> +               io->hdcp_key.base = NULL;
-> +               io->hdcp_key.len = 0;
-> +       }
-> +
-> +       rc = msm_dss_ioremap(pdev, &io->hdcp_tz, "hdcp_tz", -1);
-> +       if (rc) {
-> +               DRM_INFO("unable to remap dp hdcp resources, rc=%d\n", rc);
-
-These shouldn't be info messages. Also, the ioremap wrapper already
-prints the message that it failed so these are redundant.
-
-> +               io->hdcp_tz.base = NULL;
-> +               io->hdcp_tz.len = 0;
-> +       }
-> +
->         io->phy = devm_phy_get(&pdev->dev, "dp");
->         if (IS_ERR(io->phy)) {
->                 rc = PTR_ERR(io->phy);
