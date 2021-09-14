@@ -2,75 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2766840B774
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Sep 2021 21:05:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1A6D340B7AE
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Sep 2021 21:13:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232271AbhINTGV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Sep 2021 15:06:21 -0400
-Received: from mail.kernel.org ([198.145.29.99]:38264 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229728AbhINTGU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Sep 2021 15:06:20 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id AB95B6113B;
-        Tue, 14 Sep 2021 19:05:02 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631646303;
-        bh=S+WBtW6HNUgPMZLeWY7k0MAg6G4+RTj47Ww0A0vOLL4=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=aW8H+3EnbpNtT0Q6jAuhJ2xACzDdXhpREproWljO3gmQoVZb8+tuCQTIpSkWydeUz
-         ll4DjX5fJGGPKqrvpgG4OpIeoQ/NMI9g8+6hQUhuPAu2RXE9n4kIUPYoLI7F4Munan
-         q5TwCHTqM7BAR5+avqQSgQD1yJaoLrOq83kXx3dEDcN+N9Ap8UZ8k/gtQBczWsNG38
-         9ay/nZ43qPC+9PKZ5Fz2Mnsbuo7XhnDFIeZdDjPLPllpuDEbcTSCVYeibBmEzkFB8m
-         pxq7g5gS/HsqJrEH4hD9HZi+dzrca46kPVBdnlYxtsDgvGY+uMmbxfoKbqrsPtrhGl
-         /DsJ8ahZ7fAhg==
-Date:   Tue, 14 Sep 2021 14:05:01 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     kishon@ti.com, lorenzo.pieralisi@arm.com, bhelgaas@google.com,
-        robh@kernel.org, devicetree@vger.kernel.org,
-        linux-pci@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, hemantk@codeaurora.org,
-        smohanad@codeaurora.org, bjorn.andersson@linaro.org,
-        sallenki@codeaurora.org, skananth@codeaurora.org,
-        vpernami@codeaurora.org, vbadigan@codeaurora.org
-Subject: Re: [PATCH v7 0/3] Add Qualcomm PCIe Endpoint driver support
-Message-ID: <20210914190501.GA1445131@bjorn-Precision-5520>
+        id S233640AbhINTNj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Sep 2021 15:13:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49228 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233470AbhINTN2 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 14 Sep 2021 15:13:28 -0400
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26F09C0617AA
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Sep 2021 12:11:58 -0700 (PDT)
+Received: by mail-oi1-x236.google.com with SMTP id n27so743172oij.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Sep 2021 12:11:58 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=BSSwT7oxjsgFOMu+1NGwhgQtpViayCWoOwG64CMoBRk=;
+        b=hDSs206v3195Y560qB95htiH1r7XdiqlWoYYGIMmZKsme0wdt3U7Hl0DEmzORETQAl
+         oY7mro96c7tw05FWPje4aYkbJ+sv5WycBN3Nw5uuG+YACDPdMvZNHwpOSPLMWJ5tSv7Q
+         K57nIq7SsAR9mAnQlW2a/GH3wsihNJPESaOnA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=BSSwT7oxjsgFOMu+1NGwhgQtpViayCWoOwG64CMoBRk=;
+        b=JYFdbTi5AhE7glPxu7fYbk+igquWRxSJhSMWv3VDbEvyJ8vwp3tnvysikwER+Ob4eJ
+         4nXV8JvfrWxIZr2USi2w9HfpX0SlhuuMD+CEcuY93ft6advfNeSg1FsFBP/HcecKuYZL
+         ylJ8D2WmMsQ11N8byqIcCYSwuVCiBK1ZguypxWkIU2CmqlMVgj8bhj6lGcSif7/6RPgs
+         62Fk54niA1+beA3JFwltQ+/5wbV6WS9uxbEgj9JtoQ+/zQ0F9/m96gM6GVdgZpTuaOng
+         OV+3KhjR/R3x4vxSohqbWkTM596NoVB9ptYVrN41NKfi5wqsaNi361crwGGEo2O92U+b
+         6IlQ==
+X-Gm-Message-State: AOAM531dQ0kFsLqR24D1JsegK+lxr2l9E/5Qnt0MU3Nd8MdRLy3UuYZA
+        XXHvBB/2fWDHHIUMvbLpYbuj8uNmVA3qypDba54Wtw==
+X-Google-Smtp-Source: ABdhPJxj/G3bL5HF0hTnBTg2JQFv34CpmMFfj/HJPwzL7skUSH+a239+sjhTD9p4IGQVFNxccYFtNL83KeC+Bp7Fvi8=
+X-Received: by 2002:a54:4419:: with SMTP id k25mr2725351oiw.32.1631646717560;
+ Tue, 14 Sep 2021 12:11:57 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 14 Sep 2021 12:11:57 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210914080911.GA16774@thinkpad>
+In-Reply-To: <20210909135838.v4.1.I1116e79d34035338a45c1fc7cdd14a097909c8e0@changeid>
+References: <20210909210032.465570-1-dianders@chromium.org> <20210909135838.v4.1.I1116e79d34035338a45c1fc7cdd14a097909c8e0@changeid>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Tue, 14 Sep 2021 12:11:57 -0700
+Message-ID: <CAE-0n53Pp1F5dZRk98WT5+K9jz_XpMkKUvYAs_suZFaOE0K39w@mail.gmail.com>
+Subject: Re: [PATCH v4 01/15] dt-bindings: drm/panel-simple-edp: Introduce
+ generic eDP panels
+To:     Douglas Anderson <dianders@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Thierry Reding <thierry.reding@gmail.com>
+Cc:     devicetree@vger.kernel.org, Maxime Ripard <mripard@kernel.org>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Linus W <linus.walleij@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        Steev Klimaszewski <steev@kali.org>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Airlie <airlied@linux.ie>,
+        dri-devel@lists.freedesktop.org, Rob Herring <robh@kernel.org>,
+        linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 14, 2021 at 01:39:11PM +0530, Manivannan Sadhasivam wrote:
-> Hi,
-> 
-> On Thu, Jul 22, 2021 at 05:42:39PM +0530, Manivannan Sadhasivam wrote:
-> > Hello,
-> > 
-> > This series adds support for Qualcomm PCIe Endpoint controller found
-> > in platforms like SDX55. The Endpoint controller is based on the designware
-> > core with additional Qualcomm wrappers around the core.
-> > 
-> > The driver is added separately unlike other Designware based drivers that
-> > combine RC and EP in a single driver. This is done to avoid complexity and
-> > to maintain this driver autonomously.
-> > 
-> > The driver has been validated with an out of tree MHI function driver on
-> > SDX55 based Telit FN980 EVB connected to x86 host machine over PCIe.
-> 
-> Ping again! Do I need to resend this series on top of v5.15-rc1? I
-> thought this one could go in for v5.15 but...
+Quoting Douglas Anderson (2021-09-09 14:00:17)
+> diff --git a/Documentation/devicetree/bindings/display/panel/panel-edp.yaml b/Documentation/devicetree/bindings/display/panel/panel-edp.yaml
+> new file mode 100644
+> index 000000000000..6a621376ff86
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/display/panel/panel-edp.yaml
+> @@ -0,0 +1,188 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/display/panel/panel-edp.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+> +
+> +title: Probable (via DP AUX / EDID) eDP Panels with simple poweron sequences
 
-It's still "New" in patchwork:
-
-  https://patchwork.kernel.org/project/linux-pci/list/?series=519709
-
-so if it still applies cleanly on top of v5.15-rc1, you needn't post
-it again.
-
-If it requires any tweaks to apply on v5.15-rc1, please rebase it and
-post a v8.
-
-Bjorn
+Should that be "Probeable" or "Probe-able" or "Detectable"? It's not
+about statistical probabilities right?
