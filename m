@@ -2,145 +2,87 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7717040A1A0
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Sep 2021 01:40:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 689C040A26C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 14 Sep 2021 03:23:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243762AbhIMXlY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 13 Sep 2021 19:41:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59996 "EHLO
+        id S235703AbhINBY4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 13 Sep 2021 21:24:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243742AbhIMXlQ (ORCPT
+        with ESMTP id S230426AbhINBYz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 13 Sep 2021 19:41:16 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6D4AFC061762
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 16:39:58 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id bd1so16373184oib.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 16:39:58 -0700 (PDT)
+        Mon, 13 Sep 2021 21:24:55 -0400
+Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E64FC061574
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 18:23:39 -0700 (PDT)
+Received: by mail-ot1-x332.google.com with SMTP id k12-20020a056830150c00b0051abe7f680bso16046012otp.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 13 Sep 2021 18:23:39 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=ihysQIdGR8w+AiS+ReWp8DK2aVapwmF1UvOCNcDhHKc=;
-        b=IRIIEViIbrzd5kpmoPo6R+Oy3FbupEZKJ6mcTM8r782MvEpzOb2C7MJtR4EBx3lXie
-         CHl/9FYY3aeP6vQqOWBveC/ddBGSnwPWxnSDNX+l8j/LyDSs0YyJA0V5kzPVq7OqGLUj
-         AEtm0/7Jp51ctNjxsGlrTzmlPOU5/8x2CSs0IpWDN90SvGP5TfTkt/g/hzR+tufLr6UW
-         yuDGmsKRIR8E1QzgPqi5oDRRANvSTE9+mxDwDs94C0lx6P9LsTFRwoTL9CrjQGlmDaN4
-         HDVImDXi1v0SNfnC3VTDuj2dkOAwgst8eQllcU1qKkyr+yCz3r7Jo2YSvd1sJU/nVriu
-         D+9Q==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=QApNJaQ+4zf4NOG0NQxMwjGWEI23AT3h/AkJ/g+8Fgs=;
+        b=B5Ou/+YkeYt3m8Q4F5zkxmBu02DaZz1pg/FLbUK/u9KR9D6/RBSadeL749BhJffFZS
+         ddZSGbKbX7mjHwLeAJm9SOVnxFLF3RbBLh30gTW/tmeDg4J21yw/L3DWCT0XyVA8IKYj
+         MObgqrM+4P5HiRWPev07GLPN4TATag+/AXGAc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=ihysQIdGR8w+AiS+ReWp8DK2aVapwmF1UvOCNcDhHKc=;
-        b=YeCsLVFsb8kjYTgEMseZ+e67NtkUXefopl0nFGi8LWpMJriL1Y8L674H47z4rG73G9
-         pPssE8dR29NhuPwuD348swFA4PubM/L0nnD86TJakZ0qsBucvjjFn4XNv39ykLUm+ts2
-         0qZAIFcQKKjgGOjVwZsdOVmMnGkeQth26vlJaswb/clhMHSPAplrt+1v9uRErW7TjEvD
-         IqA99NIIdKPv9X/brlLrSuq5//wEbBzZB9AN/xLTEIYmHRDYuCZKMouMvt/vfAi10zBj
-         xWHknNQ7MqGyYu6gdzvNkqjCC+nJccRb0OFdMZaRRYhZQIVLkcg9FgFzjRUQSPs4xFso
-         mflQ==
-X-Gm-Message-State: AOAM533OnfCO5WSnHC0+IqFjthviAclQyTbH0vk8838mc4ov2vXyjxup
-        f4YzL/5a4DhmaS1uponJVYfkqA==
-X-Google-Smtp-Source: ABdhPJwV6GzMZQ+mNOpdRRBX3HLArICooddBup3dlenG8aQ6qcgGviIlOFg9Jtdit/VWiu2IZB/GZw==
-X-Received: by 2002:aca:914:: with SMTP id 20mr9750235oij.9.1631576397694;
-        Mon, 13 Sep 2021 16:39:57 -0700 (PDT)
-Received: from MacBook-Pro.hackershack.net (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
-        by smtp.gmail.com with ESMTPSA id u15sm2208500oor.34.2021.09.13.16.39.56
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 13 Sep 2021 16:39:57 -0700 (PDT)
-Subject: Re: [RFC v2 00/13] create power sequencing subsystem
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org
-References: <20210829131305.534417-1-dmitry.baryshkov@linaro.org>
-From:   Steev Klimaszewski <steev@kali.org>
-Message-ID: <4a508fc1-6253-9c11-67fb-f84f17fd2719@kali.org>
-Date:   Mon, 13 Sep 2021 18:39:55 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=QApNJaQ+4zf4NOG0NQxMwjGWEI23AT3h/AkJ/g+8Fgs=;
+        b=RACKtpykz3W7ra6XOgU1mo6a1FzPQv57vd08U1PUeVJgYRcgh8TtNunBfSVsiqZeBH
+         K2esY66yNXOInh8LregKuRQqPA1exZKMXM1JqG+kMb3UOjIubmP6MPyGRfuWbZPTmtVM
+         QzS4kUVNhy3h1YWkT+o4gxu4/OspXUQ3jhHDWVi4FQyKShmlTvkGxj1LgxS6ZyBX/3bF
+         ZWz2DtfgjJO0gLJTFZYfpUftGWek2e2levXcyGN8DXk+LtCBhYa6nt3m2+k3fva1gkTn
+         kSbOJWIpoj+Yy3irdY1Gtu5wSwhLGgf2RQ5zKqFtK0QUs4jlwHzb/PPmJzkOZxZ0Ne68
+         WjCw==
+X-Gm-Message-State: AOAM533CP/c9pVU8A0PLm+0iN3Wet0b2d5oV2IOREzuk8l2iS6iZ0mb3
+        loEuxab4KOeHQGQpBYTpE1M6k6a/qFGdVo06sntpWw==
+X-Google-Smtp-Source: ABdhPJz81mU20V2tbBwEn6dAUEH0d4iWsffBcpOJ1p+/Gm0extfrRrbnhXl70N8M3Fw8rJM5F/QFgiqaOkCPoiRYZeo=
+X-Received: by 2002:a05:6830:719:: with SMTP id y25mr12251836ots.77.1631582618692;
+ Mon, 13 Sep 2021 18:23:38 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 13 Sep 2021 18:23:38 -0700
 MIME-Version: 1.0
-In-Reply-To: <20210829131305.534417-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
+In-Reply-To: <20210913175747.47456-13-sean@poorly.run>
+References: <20210913175747.47456-1-sean@poorly.run> <20210913175747.47456-13-sean@poorly.run>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Mon, 13 Sep 2021 18:23:38 -0700
+Message-ID: <CAE-0n507ehHX3FHDUjvsdNRXHvNUM4YRNYuE+PN=PrZb+94U+w@mail.gmail.com>
+Subject: Re: [PATCH 12/14] dt-bindings: msm/dp: Add bindings for HDCP registers
+To:     Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, intel-gfx@lists.freedesktop.org
+Cc:     Sean Paul <seanpaul@chromium.org>, Rob Clark <robdclark@gmail.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Kuogee Hsieh <khsieh@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Quoting Sean Paul (2021-09-13 10:57:43)
+> diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> index 64d8d9e5e47a..984301442653 100644
+> --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
+> @@ -21,6 +21,11 @@ properties:
+>    reg:
+>      maxItems: 1
+>
+> +  reg-names:
+> +    const: dp_controller
+> +    const: hdcp_key
+> +    const: hdcp_tz
 
-On 8/29/21 8:12 AM, Dmitry Baryshkov wrote:
-> This is the second RFC on the proposed power sequencer subsystem. This
-> is a generification of the MMC pwrseq code. The subsystem tries to
-> abstract the idea of complex power-up/power-down/reset of the devices.
->
-> To ease migration to pwrseq and to provide compatibility with older
-> device trees, while keeping drivers simple, this iteration of RFC
-> introduces pwrseq fallback support: pwrseq driver can register fallback
-> providers. If another device driver requests pwrseq instance and none
-> was declared, the pwrseq fallback code would go through the list of
-> fallback providers and if the match is found, driver would return a
-> crafted pwrseq instance. For now this mechanism is limited to the OF
-> device matching, but it can be extended further to use any combination
-> of device IDs.
->
-> The primary set of devices that promted me to create this patchset is
-> the Qualcomm BT+WiFi family of chips. They reside on serial+platform or
-> serial + SDIO interfaces (older generations) or on serial+PCIe (newer
-> generations).  They require a set of external voltage regulators to be
-> powered on and (some of them) have separate WiFi and Bluetooth enable
-> GPIOs.
->
-> This patchset being an RFC tries to demonstrate the approach, design and
-> usage of the pwrseq subsystem. Following issues are present in the RFC
-> at this moment but will be fixed later if the overall approach would be
-> viewed as acceptable:
->
->  - No documentation
->    While the code tries to be self-documenting proper documentation
->    would be required.
->
->  - Minimal device tree bindings changes
->    There are no proper updates for the DT bindings (thus neither Rob
->    Herring nor devicetree are included in the To/Cc lists). The dt
->    schema changes would be a part of v1.
->
->  - Lack of proper PCIe integration
->    At this moment support for PCIe is hacked up to be able to test the
->    PCIe part of qca6390. Proper PCIe support would require automatically
->    powering up the devices before the bus scan depending on the proper
->    device structure in the device tree.
->
-> Changes since RFC v1:
->  - Provider pwrseq fallback support
->  - Implement fallback support in pwrseq_qca.
->  - Mmove susclk handling to pwrseq_qca.
->  - Significantly simplify hci_qca.c changes, by dropping all legacy
->    code. Now hci_qca uses only pwrseq calls to power up/down bluetooth
->    parts of the chip.
->
-I tested this here, on the Lenovo Yoga C630, after creating a patch to
-do basically the same thing as the db845c does.  One thing I noticed, if
-PWRSEQ=y and the rest are =m, there is a build error.  I suppose once
-the full set is posted and not RFC, I can send the patch for that. 
+Perhaps we should drop reg-names and assume index 1 is hdcp_key and
+index 2 is hdcp_tz? And then make them optional by having minItems: 1 on
+the reg property.
 
-One question I have, if you don't mind, in patch 11, you add a second
-channel to qca power sequencer.  I've added that here, but in the c630's
-dts, "vreg_l23a_3p3: ldo23" is empty, so I added the same numbers in for
-the regulator, and I'm wondering how to test that it's actually working
-correctly?
-
--- steev
-
+> +
+>    interrupts:
+>      maxItems: 1
+>
