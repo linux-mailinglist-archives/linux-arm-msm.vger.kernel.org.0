@@ -2,131 +2,217 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 03D4540C6C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Sep 2021 15:53:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB4DF40C70B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Sep 2021 16:06:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237460AbhIONy7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Sep 2021 09:54:59 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51498 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237489AbhIONy6 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Sep 2021 09:54:58 -0400
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8539EC061575
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Sep 2021 06:53:39 -0700 (PDT)
-Received: by mail-ot1-x32a.google.com with SMTP id k12-20020a056830150c00b0051abe7f680bso3662814otp.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Sep 2021 06:53:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=HwjbH00wRESHYMYUExbSRvopc6T9zQ3iIx4fTcZjMp4=;
-        b=reAu9Z61V/HwvYNdt004ZeKTqf5+0/ApKJP+5N/r+/qGsbgnz2HOHAxW7NfSuMVGAP
-         0V+Bqen8LTnhDWfiniXhb1tb+S74os8nk1rAasMp7vbHCpz0wc6K05ikbczIRil8F67V
-         vN5DRVpzQfC48DeRlh8PCjrBfUdiEo7bA6FHMcEJZhR0zWHSX6OGKysMuR/FPo7OFnLQ
-         wCtPvlILNfQq09RFRv7LAL2HMKuNeFRO3Rkr1b+xMTLJyMeKhOSBGm3ZfxlMujhDPo39
-         NvEWmc+wWBwfiqu90b1sv6ekp4i0v1JeBui+lM7dklia5reDBJlSc2TXoH2Pg+hWfLBa
-         uhwQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=HwjbH00wRESHYMYUExbSRvopc6T9zQ3iIx4fTcZjMp4=;
-        b=pq8gVazDbuauB2A6rrLNFgCUHr62wdGHHFNWG+hCKOJRuiRu/pZM4A8jJxAfjulujU
-         3eg9R1GWnlfh+hdXcmdIaK+lB+x/X6LFUabdhDJe37a1BDERJIKTBs5z0J5kMK+vF7u0
-         A4cQwqQat5cg4Njz4SAp9hVT6IDGEZnLam3/dXwLk3Q2NAseJ7F0aJj1A68nHN6hqKRw
-         7GrYViWeQ93Od8X8ImITgaNC0TWiv52iPoFsyxMQGczGKf4RKV3osciPPINXDjSbRBeV
-         ZxCEbzqWQyEvvronrb/xV1x2tGamH3SLzbTTwyKuF61m/neqYht/B6u6/gJ+yCSx18N0
-         G0PA==
-X-Gm-Message-State: AOAM531afNLtwG35nKh+p2bfhto2AebJsvsbtJ2m8q4xIwH78dpjFzdz
-        rotBtDRlk4pON436jVyBXE84vg==
-X-Google-Smtp-Source: ABdhPJxKxZ47iQlZbZE9UmINHqLSepFFmYLSojE3Zu5UPEhdQwynq+j3ajZxZMIhv1xqe4Jchn+sfg==
-X-Received: by 2002:a9d:4694:: with SMTP id z20mr19640996ote.379.1631714018845;
-        Wed, 15 Sep 2021 06:53:38 -0700 (PDT)
-Received: from yoga (rrcs-97-77-166-58.sw.biz.rr.com. [97.77.166.58])
-        by smtp.gmail.com with ESMTPSA id q36sm17361oiw.35.2021.09.15.06.53.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 15 Sep 2021 06:53:38 -0700 (PDT)
-Date:   Wed, 15 Sep 2021 08:53:35 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+        id S237807AbhIOOH2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Sep 2021 10:07:28 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:23027 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237833AbhIOOH1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 15 Sep 2021 10:07:27 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1631714769; h=In-Reply-To: Content-Type: MIME-Version:
+ References: Message-ID: Subject: Cc: To: From: Date: Sender;
+ bh=SK3Coo+erOQWaBCCktW6N7DgBlpVbT1G6s0O7MEhplU=; b=S3RFM/3dLQYHDBpDnMuInF2n+2WP6hkuKugK97NzXAK0oxYvDxeQUHanJyzzELuGC/HRnwQi
+ CFfzpyJ4O5Oplr8TvWRN6k1Tg1ofaiBDoaheBDITEnWB/LIgsYah5DNmCaFWl2Sv2xTJaCLH
+ WdETjvjr3LaGcg5BoOo64a5LWH4=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 6141fdadec62f57c9a0dd79e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 15 Sep 2021 14:05:33
+ GMT
+Sender: pkondeti=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D2AE9C43616; Wed, 15 Sep 2021 14:05:32 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from codeaurora.org (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: pkondeti)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3EE79C4338F;
+        Wed, 15 Sep 2021 14:05:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 3EE79C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Date:   Wed, 15 Sep 2021 19:35:24 +0530
+From:   Pavan Kondeti <pkondeti@codeaurora.org>
 To:     Felipe Balbi <balbi@kernel.org>
-Cc:     Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>,
-        Peter Chen <peter.chen@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, agross@kernel.org,
-        gregkh@linuxfoundation.org, jackp@codeaurora.org,
-        wcheng@codeaurora.org, linux-usb@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH 0/3] Implement role-switch notifications from dwc3-drd to
- dwc3-qcom
-Message-ID: <YUH639jO4qf4Za/K@yoga>
-References: <20210707015704.GA28125@nchen>
- <YOX6d+sBEJMP4V3q@yoga>
- <20210708030631.GA22420@nchen>
- <YSWCnsZDdp57KBqB@ripper>
- <87zgt65avm.fsf@kernel.org>
- <ce5f12dd-ddc1-6a9c-3dfb-aa44ea166828@linaro.org>
- <YSZned9v1+ajzVx0@ripper>
- <90d17c95-1cf3-89aa-94ad-920e4781f866@linaro.org>
- <YSaizDpqNRZcBGIc@ripper>
- <87ilzsafu5.fsf@kernel.org>
+Cc:     Matthias Kaehlcke <mka@chromium.org>,
+        Sandeep Maheswaram <sanm@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Pratham Pratap <prathampratap@codeaurora.org>,
+        linux-pm@vger.kernel.org,
+        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
+Subject: Re: [PATCH v8 6/6] usb: dwc3: qcom: Keep power domain on to support
+ wakeup
+Message-ID: <20210915140524.GB6787@codeaurora.org>
+References: <1624882097-23265-1-git-send-email-sanm@codeaurora.org>
+ <1624882097-23265-7-git-send-email-sanm@codeaurora.org>
+ <YNo97HQXmYjUNz/C@google.com>
+ <87fswjzx52.fsf@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <87ilzsafu5.fsf@kernel.org>
+In-Reply-To: <87fswjzx52.fsf@kernel.org>
+User-Agent: Mutt/1.5.24 (2015-08-30)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 26 Aug 01:15 CDT 2021, Felipe Balbi wrote:
++linux-pm and Rafael
 
+Hi Balbi,
+
+On Mon, Jul 12, 2021 at 12:42:17PM +0300, Felipe Balbi wrote:
 > 
-> Hi,
-> 
-> Bjorn Andersson <bjorn.andersson@linaro.org> writes:
-> > On Wed 25 Aug 10:59 PDT 2021, Bryan O'Donoghue wrote:
+> >> @@ -355,9 +356,15 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom)
+> >>  	u32 val;
+> >>  	int i, ret;
+> >>  
+> >> +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
+> >> +	struct generic_pm_domain *genpd = pd_to_genpd(qcom->dev->pm_domain);
+> >> +
+> >>  	if (qcom->is_suspended)
+> >>  		return 0;
+> >>  
+> >> +	if (!dwc->phy_power_off && dwc->xhci)
+> >> +		genpd->flags |= GENPD_FLAG_ACTIVE_WAKEUP;
+> >> +
+> >>  	val = readl(qcom->qscratch_base + PWR_EVNT_IRQ_STAT_REG);
+> >>  	if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
+> >>  		dev_err(qcom->dev, "HS-PHY not in L2\n");
+> >> @@ -382,9 +389,15 @@ static int dwc3_qcom_resume(struct dwc3_qcom *qcom)
+> >>  	int ret;
+> >>  	int i;
+> >>  
+> >> +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
+> >> +	struct generic_pm_domain *genpd = pd_to_genpd(qcom->dev->pm_domain);
+> >> +
+> >>  	if (!qcom->is_suspended)
+> >>  		return 0;
+> >>  
+> >> +	if (dwc->xhci)
+> >> +		genpd->flags &= ~GENPD_FLAG_ACTIVE_WAKEUP;
+> >> +
+> >>  	if (device_may_wakeup(qcom->dev))
+> >>  		dwc3_qcom_disable_interrupts(qcom);
+> >>  
 > >
-> >> On 25/08/2021 16:53, Bjorn Andersson wrote:
-> >> > But in the case of Type-C altmode several of our boards have either an
-> >> > external gpio-based SBU-pin-swapper or some redriver on I2C with this
-> >> > functionality, so we need a way to tell both the PHY and this external
-> >> > contraption about the orientation.
-> >> 
-> >> Its a very similar problem to orientation switch
-> >> 
-> >> As an example
-> >> 
-> >> - redriver may need to fix up signal integrity for
-> >>   lane switching
-> >> 
-> >> - PHY needs to toggle lanes from one IP block to another
-> >> 
+> > This is essentially the same as v7, which Felipe NAKed
+> > (https://patchwork.kernel.org/project/linux-arm-msm/patch/1619586716-8687-6-git-send-email-sanm@codeaurora.org/)
 > >
-> > Right, conceptually the problem is similar, but IMHO there's a big
-> > difference in that the redriver and PHY are two physically separate
-> > entities - on different buses. The dwc3 glue and core represent the same
-> > piece of hardware.
+> > I think Felipe wants to see the handling of the power domain in the
+> > xhci-plat driver. One problem here is that the power domain is owned
 > 
-> no they don't. The glue is a real piece of HW that adapts the "generic"
-> synopsys IP to a given SoC. OMAP, for example, was adapting Synopsys'
-> proprietary interface to the Sonics interconnect, while some others may
-> adapt it to AXI or PCI or whatever.
+> this is not exactly what I meant to say, though. I want drivers to be
+> self-contained. I.e. dwc3 doesn't modify xhci data and vice-versa. There
+> are a few assummpmtions that we can make, though. The structure is
+> usually like this:
 > 
-> They are different HW blocks, the glue (in many cases) has its own IRQ,
-> its own address space, its own register file, and so on. Granted, the
-> glue also serves as an access port from CPU to the synopsys core, but
-> that's handled by `ranges' DT property.
+> glue {
+>   dwc3 {
+>     xhci
+>   };
+> };
+> 
+> This means that in order for glue_suspend() to run, dwc3 has to suspend
+> first and xhci has to suspend before dwc3.
+> 
+> For example, in the suspend call above, qcom (the glue) is directly
+> accessing dwc3 core data, which is incorrect. It looks like we want to
+> know if the PHY is not powered off and if it isn't, then we want to
+> change the power domain ACTIVE_WAKEUP flag. Now, phy_power_off is false
+> whenever any of xHCI's children enable USB wakeup.
+> 
+> It seems like we need to way to generically propagate that knowledge up
+> the parent tree. I.e., a parent needs to know if its child is wakeup
+> capable, then dwc3 could, in its suspend routine:
+> 
+> static int dwc3_suspend(struct device *dev)
+> {
+> 	/* ... */
+> 
+> 	if (device_children_wakeup_capable(dev))
+>         	device_enable_wakeup(dev);
+> 
+> 	/* ... */
+> }
+> 
+> and similarly for qcom glue:
+> 
+> static int dwc3_qcom_suspend(struct device *dev)
+> {
+> 	/* ... */
+> 
+> 	if (device_children_wakeup_capable(dev)) {
+>         	device_enable_wakeup(dev);
+> 		genpd->flags |= GENPD_FLAG_ACTIVE_WAKEUP;
+>         }
+> 
+> 	/* ... */
+> }
+> 
+> It also seems plausible that this could be done at driver core and
+> completely hidden away from drivers.
 > 
 
-So what you're saying is that the "Qualcomm glue" is the hardware, and
-the core is just the basis for that design?
+device_children_wakeup_capable() idea sounds good. Added linux-pm and Rafael
+for more inputs on this.
 
-Regardless, on the Qualcomm platforms we have need to inform both
-devices about role changes, how do we do this? (Without platform_data
-and preferably without having to duplicate the typec code in the glue
-and core and the two device nodes in DT)
+AFAICT, device wakeup settings are NOT propagated to the parent. Ideally one
+expects the parent to be wake up capable and enabled when any of its children
+is enabling the wakeup. If that had been propagated, we could simply check
+device_may_wakeup() and take an action. I am sure there are good reason why
+and how this propgation may not work as we expect it to work for all devices.
 
-Regards,
-Bjorn
+Can we make something like below to make sure that DWC3 core respects its
+child wakeup setting? This is inline with your suggestion of propagating it
+through layers. we should probably enable wakeup on dwc3 dev so that the
+glue drivers can take the action appropriately.
+
+
+diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
+index 172dfd2..9c43d37 100644
+--- a/drivers/usb/dwc3/core.c
++++ b/drivers/usb/dwc3/core.c
+@@ -1749,7 +1749,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
+                dwc3_core_exit(dwc);
+                break;
+        case DWC3_GCTL_PRTCAP_HOST:
+-               if (!PMSG_IS_AUTO(msg)) {
++               if (!PMSG_IS_AUTO(msg) && !device_may_wakeup(&dwc->xhci->dev)) {
+                        dwc3_core_exit(dwc);
+                        break;
+                }
+@@ -1810,7 +1810,7 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
+                spin_unlock_irqrestore(&dwc->lock, flags);
+                break;
+        case DWC3_GCTL_PRTCAP_HOST:
+-               if (!PMSG_IS_AUTO(msg)) {
++               if (!PMSG_IS_AUTO(msg) && !device_may_wakeup(&dwc->xhci->dev)) {
+                        ret = dwc3_core_init_for_resume(dwc);
+                        if (ret)
+                                return ret;
+
+
+Thanks,
+Pavan
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.
+Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+
