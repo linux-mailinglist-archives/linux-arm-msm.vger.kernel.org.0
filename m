@@ -2,110 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AAB1C40CD2A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Sep 2021 21:26:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DEAD040CD4D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Sep 2021 21:39:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231486AbhIOT2R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Sep 2021 15:28:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44382 "EHLO
+        id S231559AbhIOTlD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Sep 2021 15:41:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47250 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231414AbhIOT2P (ORCPT
+        with ESMTP id S231487AbhIOTlD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Sep 2021 15:28:15 -0400
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B269CC061575
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Sep 2021 12:26:56 -0700 (PDT)
-Received: by mail-oi1-x22a.google.com with SMTP id 6so5632811oiy.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Sep 2021 12:26:56 -0700 (PDT)
+        Wed, 15 Sep 2021 15:41:03 -0400
+Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1FE17C061764
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Sep 2021 12:39:44 -0700 (PDT)
+Received: by mail-ot1-x329.google.com with SMTP id i3-20020a056830210300b0051af5666070so5129975otc.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Sep 2021 12:39:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to;
-        bh=o/xLkGlhrSnpCqv+HEwTNRKoItyS4LasgozuRU4ni1o=;
-        b=AvsLqD+ImZ3uG21Z85q9lNII8aPV/FqVgO1IUBdXtaed29+o/L4jPx8h2xxrNvZPNZ
-         /AqAaoUsRfDPKhJegTmB5uaHM+phiDSUEtA9+4ewEGnBJfLTz6+DfPPN7KFy0S+kZvTH
-         xt6LBjfee3cPZwN1+ScwgNDTcJbEx0PfLPLi4=
+         :subject:to:cc;
+        bh=IGGDgeo7WVVIlkSnWinltsDGGWd6kdeJ2zJ+aw6R/WI=;
+        b=GUS2hAMgT2THzzdYiJDLOPPpMXHleJehii5HTQQ8sTxAHOW276rxND6LOK2QvQFA4u
+         ZusSgHiBg4JbNncoByRn6RQIMW7b2PVv0+wOets/2UphEYO0SohUOndszuIkFXFb2oRk
+         RDrFneIDQXgKYs2QmPxLhVGbi/W+xAtXFEH1Y=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to;
-        bh=o/xLkGlhrSnpCqv+HEwTNRKoItyS4LasgozuRU4ni1o=;
-        b=8MOKHabXm/OV85N+S8tRV3+NxuZwQYk6ObRapbVJZlibsOWRi8JKEjZTukR8o46zVi
-         w1G00pm9DH8dF21AvsPNao9zabysYuZciGeyFuxnukeSJ+TJBvdhH+wG9yTVihMsNBx7
-         rzDfqNizAHCOzvrosFjDNZtjG7K2XCxGG3k1xf4xaXUcMUn0Thke0kFX0NYc3XQyYcF5
-         fYn0JDNHu65aFY5n3C12/RWGMYcaLaejoJBLPBEQ/0m42y+1cicWr9v0EnRMkORtJzkd
-         OEGDSgItOwm8Hbp8teWSU6UvSogz6OqkplnpQDn+Wmw2y1PRFwshTZx5UmfQr5/Fwg7k
-         fc5A==
-X-Gm-Message-State: AOAM530IhLH6U/N7lvXhTnaOqHyRC1UtG5npjZDDmM0J3zdgEjx66GzN
-        nvVxYJ8kwT4eycjN9xqQKxnr+HkUohbulpDv8L4q66tBw6U=
-X-Google-Smtp-Source: ABdhPJwFkrl8F6Ej21HTUvXwucYyETWWwd0o6RXQlIIKy4y8Ocqoi0zQx97NR+cpDDHoED2PMDRevSzOS/rZyXj3qnQ=
-X-Received: by 2002:aca:2310:: with SMTP id e16mr1006542oie.64.1631734016098;
- Wed, 15 Sep 2021 12:26:56 -0700 (PDT)
+         :user-agent:date:message-id:subject:to:cc;
+        bh=IGGDgeo7WVVIlkSnWinltsDGGWd6kdeJ2zJ+aw6R/WI=;
+        b=kjVNOo7NfVlFRxeG95m2fZ2T9u4IZas06TQ98hV6XSHMss+GAZiUA/aTouf7uPVNvQ
+         XWbZuhkn0pNiEyHgtnHKR5IOUNKmDxIfSTw3hyLk8rxNgXEtlEL9OF9fQz70WMsoNwcr
+         j5ZhdCt11icKVFIbAqv/IDMuZYpBtzpmNo6OT+b6BzhGnOMFynzwQgNCT7XP3uOcOwci
+         989KOXkGPlZNJV0DjG88MTrnAAn6FpkyHvNx2EQwGh9GmG83ZPoywttI82EzanF88wEF
+         jFHM/ajhvpJCzhxOQllSRQokuIe54O/LWqhInXDK18YRz0eUUBDFyY1B68MJstcFJCLr
+         23Fg==
+X-Gm-Message-State: AOAM532xHSBx93mkv20/K5aAJ9DAnoT9BF+4G3wT01Nhmn0jqwsRmMcR
+        edOsUYFP5o7mlV+bBOsMeM/IKfbSiIv/grv7uqkLgg==
+X-Google-Smtp-Source: ABdhPJwsc6oh2VNX6ThYRfgqXtiKBP0iz/QFxANVi8LRNsPwLNxkHfTkcMXQQuSYqUHwc8WaTZ7U+OC7MPE57NeeQlE=
+X-Received: by 2002:a05:6830:1212:: with SMTP id r18mr1440354otp.159.1631734783359;
+ Wed, 15 Sep 2021 12:39:43 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 15 Sep 2021 12:26:55 -0700
+ HTTPREST; Wed, 15 Sep 2021 12:39:42 -0700
 MIME-Version: 1.0
-In-Reply-To: <e1e84488-2af5-2272-010a-474788a498a3@codeaurora.org>
-References: <1631539062-28577-1-git-send-email-srivasam@codeaurora.org>
- <1631539062-28577-2-git-send-email-srivasam@codeaurora.org>
- <CAE-0n50=ABP+fs1U3JjiqMSKphfxFsZBqQQYwVH2o_iOE1Wu_g@mail.gmail.com> <e1e84488-2af5-2272-010a-474788a498a3@codeaurora.org>
+In-Reply-To: <8c1fdf2d0807f07ec57b232497b405f1@codeaurora.org>
+References: <20200730095350.13925-1-stanimir.varbanov@linaro.org>
+ <20200730095350.13925-3-stanimir.varbanov@linaro.org> <159718256557.1360974.458611240360821676@swboyd.mtv.corp.google.com>
+ <8c1fdf2d0807f07ec57b232497b405f1@codeaurora.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.9.1
-Date:   Wed, 15 Sep 2021 12:26:55 -0700
-Message-ID: <CAE-0n50wVDvL+f19abt9o9d0GvuAD+AanCwHozoyGfEFWKWz_g@mail.gmail.com>
-Subject: Re: [PATCH v2 1/2] ASoC: google: dt-bindings: Add sc7280-herobrine
- machine bindings
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        agross@kernel.org, alsa-devel@alsa-project.org,
-        bgoswami@codeaurora.org, bjorn.andersson@linaro.org,
-        broonie@kernel.org, devicetree@vger.kernel.org,
-        judyhsiao@chromium.org, lgirdwood@gmail.com,
+Date:   Wed, 15 Sep 2021 12:39:42 -0700
+Message-ID: <CAE-0n53T-RoOvR=s9nHiXAriMgKvBfDqfBfoGKX5Ju5YF3Tcqw@mail.gmail.com>
+Subject: Re: [PATCH v5 2/3] venus: Add a debugfs file for SSR trigger
+To:     dikshita@codeaurora.org
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        perex@perex.cz, plai@codeaurora.org, robh+dt@kernel.org,
-        rohitkr@codeaurora.org, srinivas.kandagatla@linaro.org,
-        tiwai@suse.com
+        linux-media@vger.kernel.org, jim.cromie@gmail.com,
+        Joe Perches <joe@perches.com>, Jason Baron <jbaron@akamai.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-media-owner@vger.kernel.org,
+        Akinobu Mita <akinobu.mita@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Srinivasa Rao Mandadapu (2021-09-15 04:15:43)
+Quoting dikshita@codeaurora.org (2021-09-15 02:13:09)
+> Hi Stephen,
 >
-> On 9/14/2021 1:21 AM, Stephen Boyd wrote:
-> > Quoting Srinivasa Rao Mandadapu (2021-09-13 06:17:41)
-> >> diff --git a/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml b/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
-> >> new file mode 100644
-> >> index 0000000..e0d705f
-> >> --- /dev/null
-> >> +++ b/Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
-> >> +patternProperties:
-> >> +  "^dai-link@[0-9a-f]$":
-> >> +    description:
-> >> +      Each subnode represents a dai link. Subnodes of each dai links would be
-> >> +      cpu/codec dais.
-> >> +
-> >> +    type: object
-> >> +
-> >> +    properties:
-> >> +      link-name:
-> >> +        description: Indicates dai-link name and PCM stream name.
-> >> +        $ref: /schemas/types.yaml#/definitions/string
-> >> +        maxItems: 1
-> >> +
-> >> +      reg:
-> >> +        maxItems: 1
-> >> +        description: dai link address.
-> >> +
-> >> +      cpu:
-> >> +        description: Holds subnode which indicates cpu dai.
-> >> +        type: object
-> >> +        properties:
-> >> +          sound-dai: true
-> > Shouldn't sound-dai be required?
-> Sorry. I didn't get your Query. You mean in below "required:" properties
-> need to add sound-dai also?
+> Reviving the discussion on this change as we need to pull this in.
+>
+> As per your suggestion, I explored the fault injection framework to
+> implement this functionality.
+> But I don't think that meets our requirements.
+>
+> We need a way to trigger subsystem restart from the client-side, it's
+> not derived from the driver.
 
-I'd expect there to be a required: list for the 'cpu' and 'codec'
-objects that says sound-dai, unless that is implicit somehow. I'm
-definitely not an expert in the DT yaml, but I suspect two more
-'required:' sections are needed so that 'sound-dai' isn't an optional
-property.
+Just to confirm, this is all for debugging purposes right?
+
+>
+> while fault injection framework enables the driver to trigger an
+> injection
+> when a specific event occurs for eg: page allocation failure or memory
+> access failure.
+>
+> So, IMO, we will have to use custom debugfs only.
+
+Can you use DECLARE_FAULT_ATTR()? Or you need it to be active instead of
+passive, i.e. it shouldn't wait for should_fail() to return true, but
+actively trigger something on the remoteproc?
+
+>
+> Please feel free to correct me in case my understanding of the framework
+> is wrong.
+>
+
+I presume the fault injection framework could get a new feature that
+lets the fault be injected immediately upon writing the debugfs file.
+My goal is to consolidate this sort of logic into one place and then put
+it behind some config option that distros can disable so the kernel
+isn't bloated with debug features that end users will never care about.
