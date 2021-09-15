@@ -2,98 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 29B5540C291
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Sep 2021 11:13:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4F9CC40C418
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Sep 2021 13:05:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237388AbhIOJOj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Sep 2021 05:14:39 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:36690 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237384AbhIOJOh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Sep 2021 05:14:37 -0400
+        id S232519AbhIOLHG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Sep 2021 07:07:06 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:33157 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232477AbhIOLHF (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 15 Sep 2021 07:07:05 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1631697199; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=mKHLpEcdN44klLDGi4B+FJ2Yr0gWuE7N1GO6uzZKeIg=;
- b=I+O3fjm6/HbZUsihtbWeYRmNtg+QurjaRpk9fef3ZzRrVJeloC+9rZkB/2gabgyFmc+q1PSX
- ygsApDOQajI34+Ieil6csaoo4dDZs5J9JFK7M5hTwBGflm6FaR83b/ArR77RjzkX0Zx2HbC+
- /v+GxdFBuhl8zHwDus7YLIzIeJg=
-X-Mailgun-Sending-Ip: 69.72.43.7
+ s=smtp; t=1631703947; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: To:
+ Subject: Sender; bh=oFYOphu9er1kSJGp6Y6sVZhQq4tL7St6PiF6qEExbaw=; b=hg292BcKvD9Ugr5AmraxJBpGCWBIupLzchzJE1M10BL6skJpkKhmAA0QgkkPzoZVt/R3RSyE
+ SSJj+Vn4XeWwiNBIZmlnj6apYlRZ+/69A38XpbB8qNntQKqrxN2rk8Y+/vnRz3Z0Mofw3JDS
+ 7DusptkUsv3EUV+OQOMmAOJ/AXQ=
+X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 6141b926ec62f57c9a31402c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 15 Sep 2021 09:13:10
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 6141d378bd6681d8ed6d4ad2 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 15 Sep 2021 11:05:28
  GMT
-Sender: dikshita=codeaurora.org@mg.codeaurora.org
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C4CC4C4361A; Wed, 15 Sep 2021 09:13:09 +0000 (UTC)
+        id B02B5C43619; Wed, 15 Sep 2021 11:05:27 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+X-Spam-Status: No, score=-4.6 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from [10.242.137.170] (unknown [202.46.23.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: dikshita)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 25005C4338F;
-        Wed, 15 Sep 2021 09:13:09 +0000 (UTC)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 54B07C4338F;
+        Wed, 15 Sep 2021 11:05:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 54B07C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [PATCH v2 2/2] ASoC: qcom: SC7280: Add machine driver
+To:     Stephen Boyd <swboyd@chromium.org>, agross@kernel.org,
+        alsa-devel@alsa-project.org, bgoswami@codeaurora.org,
+        bjorn.andersson@linaro.org, broonie@kernel.org,
+        devicetree@vger.kernel.org, judyhsiao@chromium.org,
+        lgirdwood@gmail.com, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, perex@perex.cz, plai@codeaurora.org,
+        robh+dt@kernel.org, rohitkr@codeaurora.org,
+        srinivas.kandagatla@linaro.org, tiwai@suse.com
+References: <1631539062-28577-1-git-send-email-srivasam@codeaurora.org>
+ <1631539062-28577-3-git-send-email-srivasam@codeaurora.org>
+ <CAE-0n50i9rm6fcuyjCCPXjtxTyXwAiRVx91dXT4BDpbGA-tKjg@mail.gmail.com>
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Organization: Qualcomm India Private Limited.
+Message-ID: <7e179a64-2fe8-e761-c247-90ba55fcba82@codeaurora.org>
+Date:   Wed, 15 Sep 2021 16:35:19 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <CAE-0n50i9rm6fcuyjCCPXjtxTyXwAiRVx91dXT4BDpbGA-tKjg@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Wed, 15 Sep 2021 14:43:09 +0530
-From:   dikshita@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-media@vger.kernel.org, jim.cromie@gmail.com,
-        Joe Perches <joe@perches.com>, Jason Baron <jbaron@akamai.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-media-owner@vger.kernel.org
-Subject: Re: [PATCH v5 2/3] venus: Add a debugfs file for SSR trigger
-In-Reply-To: <159718256557.1360974.458611240360821676@swboyd.mtv.corp.google.com>
-References: <20200730095350.13925-1-stanimir.varbanov@linaro.org>
- <20200730095350.13925-3-stanimir.varbanov@linaro.org>
- <159718256557.1360974.458611240360821676@swboyd.mtv.corp.google.com>
-Message-ID: <8c1fdf2d0807f07ec57b232497b405f1@codeaurora.org>
-X-Sender: dikshita@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephen,
 
-Reviving the discussion on this change as we need to pull this in.
+On 9/14/2021 1:19 AM, Stephen Boyd wrote:
 
-As per your suggestion, I explored the fault injection framework to 
-implement this functionality.
-But I don't think that meets our requirements.
+Thanks for Your time Stephen!!!
+> Quoting Srinivasa Rao Mandadapu (2021-09-13 06:17:42)
+>> diff --git a/sound/soc/qcom/sc7280.c b/sound/soc/qcom/sc7280.c
+>> new file mode 100644
+>> index 0000000..906910c
+>> --- /dev/null
+>> +++ b/sound/soc/qcom/sc7280.c
+>> @@ -0,0 +1,343 @@
+>> +// SPDX-License-Identifier: GPL-2.0-only
+>> +//
+>> +// Copyright (c) 2020-2021, The Linux Foundation. All rights reserved.
+>> +//
+>> +// sc7280.c -- ALSA SoC Machine driver for sc7280
+>> +
+>> +#include <linux/gpio.h>
+>> +#include <linux/gpio/consumer.h>
+>> +#include <linux/module.h>
+>> +#include <linux/of_device.h>
+>> +#include <linux/platform_device.h>
+>> +#include <sound/core.h>
+>> +#include <sound/jack.h>
+>> +#include <sound/pcm.h>
+>> +#include <sound/soc.h>
+>> +#include <uapi/linux/input-event-codes.h>
+> Looks like the include should be <linux/input.h> instead. I see that
+> practically no other code in the kernel is including the uapi header as
+> it's for userspace, not kernel. The uapi header is included in input.h
+> though so it's not actually all that different.
+Okay Will change accordingly!!!
+>
+>> +
+>> +#include <dt-bindings/sound/sc7180-lpass.h>
+>> +#include <dt-bindings/sound/qcom,q6afe.h>
+>> +
+>> +#include "../codecs/wcd938x.h"
+>> +#include "common.h"
+>> +#include "lpass.h"
+>> +
+> [...]
+>> +static int sc7280_snd_platform_probe(struct platform_device *pdev)
+>> +{
+>> +       struct snd_soc_card *card;
+>> +       struct sc7280_snd_data *data;
+>> +       struct device *dev = &pdev->dev;
+>> +       struct snd_soc_dai_link *link;
+>> +       int ret, i;
+>> +
+>> +       /* Allocate the private data */
+> This comment is worthless.
+Okay. Will remove it.
+>
+>> +       data = devm_kzalloc(dev, sizeof(*data), GFP_KERNEL);
+>> +       if (!data)
+>> +               return -ENOMEM;
+>> +
+>> +       card = &data->card;
+>> +       snd_soc_card_set_drvdata(card, data);
+>> +
+>> +       card->owner = THIS_MODULE;
+>> +       card->driver_name = "SC7280";
+>> +       card->dev = dev;
+>> +
+>> +       ret = qcom_snd_parse_of(card);
+>> +       if (ret)
+>> +               return ret;
+>> +
+>> +       for_each_card_prelinks(card, i, link) {
+>> +               link->init = sc7280_init;
+>> +               link->ops = &sc7280_ops;
+>> +       }
+> Nitpick: Newline here.
+Okay.
+>
+>> +       return devm_snd_soc_register_card(dev, card);
+>> +}
+>> +
 
-We need a way to trigger subsystem restart from the client-side, it's 
-not derived from the driver.
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
-while fault injection framework enables the driver to trigger an 
-injection
-when a specific event occurs for eg: page allocation failure or memory 
-access failure.
-
-So, IMO, we will have to use custom debugfs only.
-
-Please feel free to correct me in case my understanding of the framework 
-is wrong.
-
-Thanks,
-Dikshita
-
-On 2020-08-12 03:19, Stephen Boyd wrote:
-> Quoting Stanimir Varbanov (2020-07-30 02:53:49)
->> The SSR (SubSystem Restart) is used to simulate an error on FW
->> side of Venus. We support following type of triggers - fatal error,
->> div by zero and watchdog IRQ.
-> 
-> Can this use the fault injection framework instead of custom debugfs?
-> See Documentation/fault-injection/.
