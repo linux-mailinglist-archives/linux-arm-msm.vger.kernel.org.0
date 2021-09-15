@@ -2,94 +2,227 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C41A440C7EF
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Sep 2021 17:12:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B64940CB95
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Sep 2021 19:22:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234166AbhIOPOD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Sep 2021 11:14:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41464 "EHLO
+        id S229746AbhIORXn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Sep 2021 13:23:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44088 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233711AbhIOPOD (ORCPT
+        with ESMTP id S229479AbhIORXm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Sep 2021 11:14:03 -0400
-Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 120A5C061575
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Sep 2021 08:12:44 -0700 (PDT)
-Received: by mail-pf1-x430.google.com with SMTP id q23so849971pfs.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Sep 2021 08:12:44 -0700 (PDT)
+        Wed, 15 Sep 2021 13:23:42 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7F354C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Sep 2021 10:22:23 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id x10-20020a056830408a00b004f26cead745so4506340ott.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Sep 2021 10:22:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=wsSC3ElljOcNuAZkoNqFxs8B8LwK8+PsifC2X+pKq7Y=;
-        b=zHdY0vpXi3Pehr90PDksje3KtwyZby9zVYvErd1f3eV5Pa9SrhfiiLDYEiY78DN8yp
-         e+495euySl52T9t+V2t4jh8/xuSmCkhO4oBtKFUoZ0obPPedm3f4F9cTiTzk+XpcVyFV
-         TsOUUcNlJxeXnsA5+TvASjwcGHl1k2GevSoClqzJcupRErVWzaXoMB0sL+rktxgLL8gH
-         LfZ6yYjipI18Z4+FkklOwqTJP+adgJPBLx9WQhMza19gSgVJhIuLnYf0m6YaZk+J5OFA
-         F1ybeX/Ylw1Ahvmf2uw/50ayrfzkakqMLGceTESq3nqCaWU1WarJwdJfmN9qZOofXSJ8
-         ieVQ==
+         :content-disposition:in-reply-to;
+        bh=Ouvl8uGcfsNdsC/MsCM3f3vHO5U6evySdssiReKx13Q=;
+        b=mOgW0hv1gDKc1ZJBPjGCCHi50P16y8gBOz7NtACysrJEkZAMIm0EzrRWvn2nw/N1xh
+         k4n6X8nSxDKdB/SGG7zfuFEM1ruoj+zDRnQe2Bw3FSMqL85AA8WLTawPJartUku+LLvZ
+         DIqN+7GAfXwDdBMEVIkhpHKcKsB0di6w3SqrVfX7RenaK5DJHgdKNZb3X60xIoIaGjJ/
+         a0I64a0Ceqy4Cg3eabfWPe2l/9cnt3d59bka6G47nqkV9UpECGyGAWJusPtPJ9SeoZtP
+         UNGZ3svYE7WNEPgphN9q+uO8N5rsPHJFkK4XmCnNh78thY2aznB2O7juLaMjeZqi/vrC
+         ZX/g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=wsSC3ElljOcNuAZkoNqFxs8B8LwK8+PsifC2X+pKq7Y=;
-        b=T4+YNhIR7dFDsROnre/isi+DOIL98t5MHAwByv+MYpryU48FbeChDp2kvKDBZslA2F
-         Scfg43+uh7eXCfuOzE7Ggia5Xf8Y8VlZa2e7VWbRWoUmdh8UyD+jpqwFiNV55NEXEqUP
-         vUHckYNWMPbTY9ZmhykVT4MjjqfIhyv+72k3tyEAQurJK3w5o7ODw/0S3zbtGBNfVMad
-         6KdpDlOPhC3ysjTwLm7/vp4S8xaTmhOZNlBavl4CATBIFiszhRWu16vdoe5qjMOJDNCM
-         x8nX+/unXy9/UpKviEvSOP/aOpfCDdvCAqlZqppSASwdqHIuySFtl2jImKUH3KNS+4Wq
-         CpIA==
-X-Gm-Message-State: AOAM531nkY+9Is/Hk9x0Wiuw2D4hfDAEFusbKn/yODsXuqvoS6nB7KDx
-        ednzgxMQeIDe6q1egULySj2MvQ==
-X-Google-Smtp-Source: ABdhPJyGqBLjcp/KUd3ds6sWYN6mT2/YPk+mfHPuNRq4EgjEc+zEcs0+PCVfueU9CI7jAVkKj02vEw==
-X-Received: by 2002:a62:1c85:0:b0:440:3583:9fda with SMTP id c127-20020a621c85000000b0044035839fdamr455092pfc.0.1631718763504;
-        Wed, 15 Sep 2021 08:12:43 -0700 (PDT)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id u10sm92513pjf.46.2021.09.15.08.12.40
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Wed, 15 Sep 2021 08:12:42 -0700 (PDT)
-Date:   Wed, 15 Sep 2021 23:12:37 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+         :mime-version:content-disposition:in-reply-to;
+        bh=Ouvl8uGcfsNdsC/MsCM3f3vHO5U6evySdssiReKx13Q=;
+        b=xnzhkDfjrHAtT3WQVfBhw4iub8gF/2Nxn1Czf649pZKyFogEWKiDJCNH9NdVL1qpQ2
+         Dw5yBYUwfEJJ6BhDH1rzjWX1FjLJ1Lh/h3UVeupYeMDh2Dyp5NAdHVwFumZOo6ysY09R
+         2Z0gcqpI/SGqA67MpoIE1JGBcLc/hYkESg8s8zVutEpbJMQPVFUYrN+Z6uaUcsFPQSuD
+         auQENcIFfrqrUElp7nJOBu4tqALqJQ1KaRYEFR1TPL3DPNa/MH4Mu6zZ2cnO8X4Y0L0w
+         rnD8zCqDRLfQtRXXWjgL0bxXa7f6JwFFRGGTqIGZ75OREi1shA9ABMaknsg/G4/CMSF0
+         UjmA==
+X-Gm-Message-State: AOAM533bXrOJFdkYyFlCBlPrgV8HvD0FQIdLKYBVGIyZzLoMy0wyQzn2
+        M3yvh0Fia2ssajKSJwtL1WEAZw==
+X-Google-Smtp-Source: ABdhPJxDceP7aWkzOiD7rkfed8rUwb1NMnfpMyKeTwdsiwFugFShEc0hg/5bzT3KEdVFVFNsYq7pvQ==
+X-Received: by 2002:a9d:5f85:: with SMTP id g5mr959456oti.139.1631726542218;
+        Wed, 15 Sep 2021 10:22:22 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id z7sm135214oti.65.2021.09.15.10.22.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 15 Sep 2021 10:22:21 -0700 (PDT)
+Date:   Wed, 15 Sep 2021 10:23:11 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
 Cc:     Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
         Loic Poulain <loic.poulain@linaro.org>,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
 Subject: Re: [PATCH 1/3] clk: qcom: smd-rpm: Add rate hooks for
  clk_smd_rpm_branch_ops
-Message-ID: <20210915151236.GF25255@dragon>
+Message-ID: <YUIr/002dfXxDWDY@ripper>
 References: <20210914025554.5686-1-shawn.guo@linaro.org>
  <20210914025554.5686-2-shawn.guo@linaro.org>
- <YUFgmdhYK/p2v1LS@ripper>
+ <163165658855.763609.14080313241484048687@swboyd.mtv.corp.google.com>
+ <20210915150526.GE25255@dragon>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YUFgmdhYK/p2v1LS@ripper>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <20210915150526.GE25255@dragon>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 14, 2021 at 07:55:21PM -0700, Bjorn Andersson wrote:
-> On Mon 13 Sep 19:55 PDT 2021, Shawn Guo wrote:
-> 
-> > On QCM2290 platform, the clock xo_board runs at 38400000, while the
-> > child clock bi_tcxo needs to run at 19200000.  That said,
-> > clk_smd_rpm_branch_ops needs the capability of setting rate. Add rate
-> > hooks into clk_smd_rpm_branch_ops to make it possible.
+On Wed 15 Sep 08:05 PDT 2021, Shawn Guo wrote:
+
+> On Tue, Sep 14, 2021 at 02:56:28PM -0700, Stephen Boyd wrote:
+> > Quoting Shawn Guo (2021-09-13 19:55:52)
+> > > On QCM2290 platform, the clock xo_board runs at 38400000, while the
+> > > child clock bi_tcxo needs to run at 19200000.  That said,
+> > > clk_smd_rpm_branch_ops needs the capability of setting rate. Add rate
+> > > hooks into clk_smd_rpm_branch_ops to make it possible.
 > > 
+> > This doesn't sound right. The branch is a simple on/off. If xo_board is
+> > 38.4MHz, then there is an internal divider in the SoC that makes bi_tcxo
+> > (i.e. the root of the entire clk tree) be 19.2MHz. We don't model the
+> > divider, I guess because it isn't very important to. Instead, we tack on
+> > a divider field and implement recalc_rate op. See clk-rpmh.c in the qcom
+> > directory for this.
 > 
-> Most platforms has a crystal oscillator ticking at 38.4MHz feeding the
-> PMIC (represented by the rpmcc and its "xo" parent) and out comes the
-> bi_tcxo with a fixed 19.2MHz rate.
+> Thanks for the comment, Stephen!  To be honest, I copied the
+> implementation from vendor kernel, and wasn't really sure if it's
+> correct or the best.
+> 
+> So here is what I get based on your suggestion.  Let's me know if
+> it's how you wanted it to be.  Thanks!
+> 
+> Shawn
+> 
+> ----8<---------
+> 
+> From 23dda79fee412738f046b89bdd20ef95a24c35cc Mon Sep 17 00:00:00 2001
+> From: Shawn Guo <shawn.guo@linaro.org>
+> Date: Wed, 15 Sep 2021 22:00:32 +0800
+> Subject: [PATCH] clk: qcom: smd-rpm: Add a divider field for branch clock
+> 
+> Similar to clk-rpmh, clk-smd-rpm has the same need to handle the case
+> where an internal divider is there between xo_board and bi_tcxo.  The
+> change is made in the a back compatible way below.
+> 
+>  - Add div field to struct clk_smd_rpm, and have
+>    __DEFINE_CLK_SMD_RPM_BRANCH() assign it.
+> 
+>  - Update all existing __DEFINE_CLK_SMD_RPM_BRANCH() wrappers to pass a
+>    zero div.
+> 
+>  - Add DEFINE_CLK_SMD_RPM_BRANCH_DIV() which doesn't take rate argument
+>    but div.
+> 
+>  - Update clk_smd_rpm_recalc_rate() to handle div and add it as
+>    .recalc_rate of clk_smd_rpm_branch_ops.
+> 
 
-Yeah, but all those platforms are running clk-rpmh driver, I think.
+This looks good to me.
 
-> Is there a problem with the way sdm660_bi_tcxo is defined in this
-> regard?
+And the confirmed that the xo_board in sdm630.dtsi (and hence SDM660) is
+wrong, it should be 38.4MHz as well.
 
-There is no problem if xo clock is 19.2MHz, but for platforms with
-38.4MHz xo, bi_tcxo will be seen as 38.4MHz in clock tree, while we
-expect it to be 19.2MHz.
+Unfortunately adding the appropriate divider to the sdm660 bcxo would
+break existing .dtsi (but we can probably convince the community that it
+would be ok, if we do it now).
 
-Shawn
+Regards,
+Bjorn
+
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> ---
+>  drivers/clk/qcom/clk-smd-rpm.c | 23 ++++++++++++++++-------
+>  1 file changed, 16 insertions(+), 7 deletions(-)
+> 
+> diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
+> index 66d7807ee38e..66ef0d3795fd 100644
+> --- a/drivers/clk/qcom/clk-smd-rpm.c
+> +++ b/drivers/clk/qcom/clk-smd-rpm.c
+> @@ -66,13 +66,14 @@
+>  	}
+>  
+>  #define __DEFINE_CLK_SMD_RPM_BRANCH(_platform, _name, _active, type, r_id,    \
+> -				    stat_id, r, key)			      \
+> +				    stat_id, r, key, _div)		      \
+>  	static struct clk_smd_rpm _platform##_##_active;		      \
+>  	static struct clk_smd_rpm _platform##_##_name = {		      \
+>  		.rpm_res_type = (type),					      \
+>  		.rpm_clk_id = (r_id),					      \
+>  		.rpm_status_id = (stat_id),				      \
+>  		.rpm_key = (key),					      \
+> +		.div = (_div),						      \
+>  		.branch = true,						      \
+>  		.peer = &_platform##_##_active,				      \
+>  		.rate = (r),						      \
+> @@ -92,6 +93,7 @@
+>  		.rpm_status_id = (stat_id),				      \
+>  		.active_only = true,					      \
+>  		.rpm_key = (key),					      \
+> +		.div = (_div),						      \
+>  		.branch = true,						      \
+>  		.peer = &_platform##_##_name,				      \
+>  		.rate = (r),						      \
+> @@ -112,7 +114,12 @@
+>  
+>  #define DEFINE_CLK_SMD_RPM_BRANCH(_platform, _name, _active, type, r_id, r)   \
+>  		__DEFINE_CLK_SMD_RPM_BRANCH(_platform, _name, _active, type,  \
+> -		r_id, 0, r, QCOM_RPM_SMD_KEY_ENABLE)
+> +		r_id, 0, r, QCOM_RPM_SMD_KEY_ENABLE, 0)
+> +
+> +#define DEFINE_CLK_SMD_RPM_BRANCH_DIV(_platform, _name, _active, type, r_id,  \
+> +				      _div)				      \
+> +		__DEFINE_CLK_SMD_RPM_BRANCH(_platform, _name, _active, type,  \
+> +		r_id, 0, 0, QCOM_RPM_SMD_KEY_ENABLE, _div)
+>  
+>  #define DEFINE_CLK_SMD_RPM_QDSS(_platform, _name, _active, type, r_id)	      \
+>  		__DEFINE_CLK_SMD_RPM(_platform, _name, _active, type, r_id,   \
+> @@ -121,12 +128,12 @@
+>  #define DEFINE_CLK_SMD_RPM_XO_BUFFER(_platform, _name, _active, r_id)	      \
+>  		__DEFINE_CLK_SMD_RPM_BRANCH(_platform, _name, _active,	      \
+>  		QCOM_SMD_RPM_CLK_BUF_A, r_id, 0, 1000,			      \
+> -		QCOM_RPM_KEY_SOFTWARE_ENABLE)
+> +		QCOM_RPM_KEY_SOFTWARE_ENABLE, 0)
+>  
+>  #define DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(_platform, _name, _active, r_id) \
+>  		__DEFINE_CLK_SMD_RPM_BRANCH(_platform, _name, _active,	      \
+>  		QCOM_SMD_RPM_CLK_BUF_A, r_id, 0, 1000,			      \
+> -		QCOM_RPM_KEY_PIN_CTRL_CLK_BUFFER_ENABLE_KEY)
+> +		QCOM_RPM_KEY_PIN_CTRL_CLK_BUFFER_ENABLE_KEY, 0)
+>  
+>  #define to_clk_smd_rpm(_hw) container_of(_hw, struct clk_smd_rpm, hw)
+>  
+> @@ -140,6 +147,7 @@ struct clk_smd_rpm {
+>  	bool branch;
+>  	struct clk_smd_rpm *peer;
+>  	struct clk_hw hw;
+> +	u8 div;
+>  	unsigned long rate;
+>  	struct qcom_smd_rpm *rpm;
+>  };
+> @@ -370,10 +378,10 @@ static unsigned long clk_smd_rpm_recalc_rate(struct clk_hw *hw,
+>  
+>  	/*
+>  	 * RPM handles rate rounding and we don't have a way to
+> -	 * know what the rate will be, so just return whatever
+> -	 * rate was set.
+> +	 * know what the rate will be, so just return divided parent
+> +	 * rate or whatever rate was set.
+>  	 */
+> -	return r->rate;
+> +	return r->div ? parent_rate / r->div : r->rate;
+>  }
+>  
+>  static int clk_smd_rpm_enable_scaling(struct qcom_smd_rpm *rpm)
+> @@ -416,6 +424,7 @@ static const struct clk_ops clk_smd_rpm_ops = {
+>  static const struct clk_ops clk_smd_rpm_branch_ops = {
+>  	.prepare	= clk_smd_rpm_prepare,
+>  	.unprepare	= clk_smd_rpm_unprepare,
+> +	.recalc_rate	= clk_smd_rpm_recalc_rate,
+>  };
+>  
+>  DEFINE_CLK_SMD_RPM(msm8916, pcnoc_clk, pcnoc_a_clk, QCOM_SMD_RPM_BUS_CLK, 0);
+> -- 
+> 2.17.1
+> 
