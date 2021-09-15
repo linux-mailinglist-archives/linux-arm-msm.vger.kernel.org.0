@@ -2,269 +2,158 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5A7FD40BDD6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Sep 2021 04:43:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9B4CC40BDDC
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Sep 2021 04:44:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233661AbhIOCod (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 14 Sep 2021 22:44:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39854 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229775AbhIOCod (ORCPT
+        id S229837AbhIOCqL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 14 Sep 2021 22:46:11 -0400
+Received: from mx0b-00069f02.pphosted.com ([205.220.177.32]:15490 "EHLO
+        mx0b-00069f02.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229763AbhIOCqJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 14 Sep 2021 22:44:33 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E86BC061764
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Sep 2021 19:43:15 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id m7-20020a9d4c87000000b0051875f56b95so1561492otf.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 14 Sep 2021 19:43:15 -0700 (PDT)
+        Tue, 14 Sep 2021 22:46:09 -0400
+Received: from pps.filterd (m0246631.ppops.net [127.0.0.1])
+        by mx0b-00069f02.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 18F2g7XS017546;
+        Wed, 15 Sep 2021 02:44:46 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
+ from : message-id : references : date : in-reply-to : content-type :
+ mime-version; s=corp-2021-07-09;
+ bh=cS4qtmGYe4tF59m9fynuZA/iUFfQ9gIwEqX/rTOnOq8=;
+ b=mdJEyKVkW45n7gjtB5B7pt8AFG3wMGGTYTvX+zIKDpbhEdHymwAgX0obnZaJGNpSZ90q
+ sHAR9Rsh798j/7Hqf9n2ROm1ztYrLOtNjCKrwtrlRVMvR9qz5CP41xasxZnEYcbAsjKO
+ qrO8jAbBN+mY0noBkqjWhz/W/rh4Rrm5ggf2AnQ7Ba0xFJpWwb/NcTFo0T4ioKzQDY+S
+ INACFxqnpB96bIUhm4POoGQ7s4YKpGC0f0oJHITEx9eEv9lGB+3Cb588FLGYb5bNPaKH
+ m7p2FoVwQ4DzHc4XLbj+wjFuaBvP53jBW80PNMRLYKmQRS/BVnaCUVauHo09srH5iAF9 JQ== 
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=to : cc : subject :
+ from : message-id : references : date : in-reply-to : content-type :
+ mime-version; s=corp-2020-01-29;
+ bh=cS4qtmGYe4tF59m9fynuZA/iUFfQ9gIwEqX/rTOnOq8=;
+ b=ySWR1/JrOzAW2bNLUhm+BGX+G2IccA/Kc8EqqqLX8UyRArSMnq9z4VMSUcPQo3u6JXO7
+ haVk23DIuTdb99XNC+oN5M4ixWzHqaINlsjqJtqLZbwO0Tu++wU7B/G1BypCUWPcKJed
+ EFXxsEXSA31THa/etWX/lrM4yFSRHhZHFZUoy1kp7CzlHMhwADnsmWCSEWBeI+1rbY6L
+ XfBPESv1XaMRXrgBLVjc5G8IbTmqSvw01J0eoG+X/T6n8+Q6gj34Qde4zOeplQUayhir
+ hNHlu9B72rjssZTXEYBImDVkIvK/AGvhiL99dbT9sezJeEWs9IRWAxWoC9SJVe6vklK1 uQ== 
+Received: from aserp3030.oracle.com (aserp3030.oracle.com [141.146.126.71])
+        by mx0b-00069f02.pphosted.com with ESMTP id 3b2p8tbd11-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Wed, 15 Sep 2021 02:44:46 +0000
+Received: from pps.filterd (aserp3030.oracle.com [127.0.0.1])
+        by aserp3030.oracle.com (8.16.0.42/8.16.0.42) with SMTP id 18F2iYxT095680;
+        Wed, 15 Sep 2021 02:44:45 GMT
+Received: from nam04-mw2-obe.outbound.protection.outlook.com (mail-mw2nam08lp2177.outbound.protection.outlook.com [104.47.73.177])
+        by aserp3030.oracle.com with ESMTP id 3b0jgdy0b3-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Wed, 15 Sep 2021 02:44:45 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=GIOyvsv3y5v5Hd6CGpGOcvxzOyoNM6WXML1rzqQ9aLzClmwvvnCmh2t/8wtWmj9ZZ0VUboe3r6BvjZdm+lhyQj0hbcF5sCeCvUe/1mC1JwE4H3KeHJnB3ZwuKSvU7e5v/uP86jHGxlYXfJlFfXqOe5rv9pbwDv601sZROzMOQnsac/nqyxL5N2uScf6L7hGLifIQQ6xYRgzFIKXLGSD7se/mYCXS0MRS40Qbl4gqW8G/y5aeIIz5C6PggknpqJTm1jLpJY6wqoKxfIPmZqN91QYZvWJq66YSAGxhXVZfNo6lf65IfB6mQOIlk10LRiOnSzVGp8UfifX7zjoSC+VLvg==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901; h=From:Date:Subject:Message-ID:Content-Type:MIME-Version;
+ bh=cS4qtmGYe4tF59m9fynuZA/iUFfQ9gIwEqX/rTOnOq8=;
+ b=EryMwKmeZTDYbjoJwjKv6JFyZH9DNIBrnF8Ifkt9OMM+i3a82/FXsxJSIwVaxAz15me6JD3EPP3hUtpgHd7fIEOYNeqnMhr8W6RdVG04117T5CnvJVaJ9y0zukicExEdw7ai0pjHEl8DuFdVHn11NfpTYhbBsbzBWJxMCIlIHxM2fuhU5osk3abg+WVP4HSzl39xQT5LMC+e96VDUYIYv5oPL6RewvvdiB6NkKygqyyGGXT1Spq1Y8Lo/EaWUwk4bWnUtKMi/fOTGJo11RXOT27VG+HkROCVjF0eW+tnX1QjlHiiPLLLqlHkWAxFqxYMQgaywCxNfCx07ew5i6pZcQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=tNmrdyHBY85C8s/wAkstNSGLnQN601xfdUuYWcdHIhM=;
-        b=DyMA4+7gLmsdBiTiE0z9HP894JM1HrHZrdGfm3HvfqosJWPO89OisfkTvwffxdVD6+
-         Zad5B7YYUkt8+/hNW9EXpFKgwT+bd77rOrTRRXOdGhgPoGBw7BS2SJglDR6DDug7KvGJ
-         z8LxKhmiGBKL/mu6bzYMBRKfMNx48hSELzrlKtvC6fgwmXOCGmcjEACaFiMbCTSjJDTy
-         Rgs3rVLU/nYyNJaqm3dCftRXoot1Jelt/pv4oeYCzG4+2SjMp2Z6iBnhGnOHs3VrKET2
-         R4mquCLlG9tmKP31w3yI8W850NBt+XZS3JWCxT8+VH6y1gEqxZfTaICEBUe4GoLIeATn
-         hijA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=tNmrdyHBY85C8s/wAkstNSGLnQN601xfdUuYWcdHIhM=;
-        b=U+UZpoyAPcV69y34iOu4Dh0m//dKr/PTltLVY8dN//LpOs/5sqNy6R6CyQU+dQdKwQ
-         v7DWFDlvRvonQIwuMPrXdsUAyXuOE7VEyMgnb0NQ9AIL4Z1O3Bgv7lU42nrcatHACeuL
-         VAVbO4+IBjKWpEFCXFsdRgsL/m1leLU74/IzJt2wJWeWUv+BuXeBemkXtd5eW5505uKo
-         YI+5kCj+2QkDNGNvxooGvzKjfGfkiH4qgGx5HDsb6HLnuIDGff9KkO0ZATM/gJ4G2opi
-         VjMjmyr4lSeC8e/vUSrdY1zkgd3XGn6Ouhp7cFsm9CPf3e4xgGGEYdio/+N/1jsy7rLf
-         ZX6A==
-X-Gm-Message-State: AOAM533ayhWHR1QDJjJErS5CPpWAyNypRUAnlxuIJRAb36wCx+ZC5vf8
-        7LMJa2xK9mo2Nz8PE9SyI8eT8Q==
-X-Google-Smtp-Source: ABdhPJzqQ3HdgDW2xWQDpyRLSFxaJF9zE9RR3EeLl1fWD+gRi6WH63pb7blLdz/zkO1cINCweaI8GQ==
-X-Received: by 2002:a05:6830:10c8:: with SMTP id z8mr17165664oto.175.1631673794569;
-        Tue, 14 Sep 2021 19:43:14 -0700 (PDT)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id s14sm2651965oiw.8.2021.09.14.19.43.13
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 14 Sep 2021 19:43:14 -0700 (PDT)
-Date:   Tue, 14 Sep 2021 19:44:05 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Prasad Malisetty <pmaliset@codeaurora.org>
-Cc:     agross@kernel.org, bhelgaas@google.com, robh+dt@kernel.org,
-        swboyd@chromium.org, lorenzo.pieralisi@arm.com,
-        svarbanov@mm-sol.com, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dianders@chromium.org,
-        mka@chromium.org, vbadigan@codeaurora.org, sallenki@codeaurora.org,
-        manivannan.sadhasivam@linaro.org
-Subject: Re: [PATCH v7 4/4] PCI: qcom: Switch pcie_1_pipe_clk_src after PHY
- init in SC7280
-Message-ID: <YUFd9aTlTJ45b9Gg@ripper>
-References: <1631643550-29960-1-git-send-email-pmaliset@codeaurora.org>
- <1631643550-29960-5-git-send-email-pmaliset@codeaurora.org>
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=cS4qtmGYe4tF59m9fynuZA/iUFfQ9gIwEqX/rTOnOq8=;
+ b=yZD+S8TzUDK3nZnxHBNII3xFld+Y3LJShArVARVEcVZESyflfnlOlOhfUZP6ry9hIhcvRu+yr6HOMC9GiYAOVAj9JynjTqbjUnrSbW6FFlaE64oNEZSmzSU/6IzAOJ6iheWAlzPeL3XcQ5pS9C0qgHkBTq1cItalYpVcksq3lx4=
+Authentication-Results: samsung.com; dkim=none (message not signed)
+ header.d=none;samsung.com; dmarc=none action=none header.from=oracle.com;
+Received: from PH0PR10MB4759.namprd10.prod.outlook.com (2603:10b6:510:3d::12)
+ by PH0PR10MB4694.namprd10.prod.outlook.com (2603:10b6:510:3e::7) with
+ Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4500.17; Wed, 15 Sep
+ 2021 02:44:43 +0000
+Received: from PH0PR10MB4759.namprd10.prod.outlook.com
+ ([fe80::c0ed:36a0:7bc8:f2dc]) by PH0PR10MB4759.namprd10.prod.outlook.com
+ ([fe80::c0ed:36a0:7bc8:f2dc%7]) with mapi id 15.20.4500.019; Wed, 15 Sep 2021
+ 02:44:43 +0000
+To:     Chanwoo Lee <cw9316.lee@samsung.com>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
+        alim.akhtar@samsung.com, avri.altman@wdc.com, jejb@linux.ibm.com,
+        martin.petersen@oracle.com, linux-arm-msm@vger.kernel.org,
+        linux-scsi@vger.kernel.org, linux-kernel@vger.kernel.org,
+        grant.jung@samsung.com, jt77.jang@samsung.com,
+        dh0421.hwang@samsung.com, sh043.lee@samsung.com
+Subject: Re: [PATCH] scsi: ufs-qcom: Remove unneeded variable 'err'
+From:   "Martin K. Petersen" <martin.petersen@oracle.com>
+Organization: Oracle Corporation
+Message-ID: <yq1tuimwoad.fsf@ca-mkp.ca.oracle.com>
+References: <CGME20210907044846epcas1p297b8ef121290fc3265cf9dc3eadc44de@epcas1p2.samsung.com>
+        <20210907044111.29632-1-cw9316.lee@samsung.com>
+Date:   Tue, 14 Sep 2021 22:44:40 -0400
+In-Reply-To: <20210907044111.29632-1-cw9316.lee@samsung.com> (Chanwoo Lee's
+        message of "Tue, 7 Sep 2021 13:41:11 +0900")
+Content-Type: text/plain
+X-ClientProxiedBy: CY4PR02CA0028.namprd02.prod.outlook.com
+ (2603:10b6:903:117::14) To PH0PR10MB4759.namprd10.prod.outlook.com
+ (2603:10b6:510:3d::12)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1631643550-29960-5-git-send-email-pmaliset@codeaurora.org>
+Received: from ca-mkp.ca.oracle.com (138.3.201.50) by CY4PR02CA0028.namprd02.prod.outlook.com (2603:10b6:903:117::14) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4523.14 via Frontend Transport; Wed, 15 Sep 2021 02:44:42 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: c7cdaa8a-e19f-452a-be05-08d977f2c578
+X-MS-TrafficTypeDiagnostic: PH0PR10MB4694:
+X-MS-Exchange-Transport-Forked: True
+X-Microsoft-Antispam-PRVS: <PH0PR10MB4694C27AE665693B68C2ED028EDB9@PH0PR10MB4694.namprd10.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:3044;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: JavTMzps4DAVEegC2BjJubhHWTydMNkd4+lDPfsBpCl26m0CXEf0W0nCqSsTlHi7L956d3RPacdeq6qsFpQTjZJwyvo/WCgF1Kd5R7dxObrIfstsG+JKVFBnl+7+qRH3tScd3l3I9Bb6cQJLVcoSq2Z6C33AiDOYbDX/hwiQ1cPSgZK6aA9/VxtSYGRe9x0V/jyzcGDhog7CmoabyuileL8qwy0I0vVV1DjNumbz5mOg2KVtWz6ISZ9i1PUmbT7IWSYcUSAtPqSgQa55D99M2LBHJPYB3zhXu+05LZq3OZ68rRWABoySqzKQ89zqjwJRlWHQNNP8AHqrH/R/g4JpNvVNF4nLEb70SARna+FiAto31SqLYuskTPetWD8L8BTl4MaQ2Am5WghJ7rAZCKNtdzV1LqETXkweiJzOCprRfOckBuqcx+87aemjSzWayC83ZbyXGMaSc1gNo0z0q26zr43ruiQvnxl60IaYohHJ/s3KgOEF8ELv3pUd94KJrFPyjSdQ25du8ykeq8V+J01pSm90ooJufAfLSDAs/b2CqxSRAqUd0i25q0sCMXWuH9nSh355sV0cgvtgkk8q3wE0ZLap6HIN+C2sBw2vYDIG+srw9W2AYLW0qeIQtWWkPLzB7G0FYFbYQmaoeNJYkdcuOjKNTktCxvvpmTwtWyd2SUQ1RQ7AYApqgWSTEbtrlPYO7LFFjxtTsC1d6O4g0078HQ==
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:PH0PR10MB4759.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(346002)(39860400002)(396003)(376002)(366004)(136003)(186003)(478600001)(26005)(8936002)(38100700002)(38350700002)(558084003)(7696005)(55016002)(52116002)(5660300002)(6916009)(956004)(8676002)(86362001)(4326008)(2906002)(7416002)(66476007)(66556008)(316002)(36916002)(66946007);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?JFQReN3xZqmyhAGutDG7tLf8fqs9NYJ8ZqUg87jVadtH37ksp/Js92ONXPbN?=
+ =?us-ascii?Q?kzLsBcvJvBHS+Da411zeIx6N1IsklB4z0SA2iBKQNXSdesTMPWNCzKJOlvwC?=
+ =?us-ascii?Q?ekOcbgITSAPBOfeMdIVoCwrF1YXryL1Shjw9O/xGiqOn86giGkTHg5CT5Oba?=
+ =?us-ascii?Q?CV6Row1u2Vpsypg1pK02B6OTDbfph+oFeithTHaTT2zEe7r6mDMW9rMuQCO0?=
+ =?us-ascii?Q?7C4Y667EvtZLFFp8SR/aIdQBth+1bb4FTXvtwVnJVCLwKC8ZD4bmbTkPLY5u?=
+ =?us-ascii?Q?0h9EUvKDIr6VV+FIsMrvAXU/XK0tCjQr3pTWo2dYq/cU1SBSsZHk2usZPr6H?=
+ =?us-ascii?Q?s3OZTq3ddOulhEX8M+TAQSfcuLtliJAEl2d3mAt9vmdU8Jyji8VyNOcAaadU?=
+ =?us-ascii?Q?zuhCN6xOSj7hRgrjkN3/BzXLvtucA0FJVjihUZdgn/jxvkWs+ltDhCR5mozS?=
+ =?us-ascii?Q?QH6rsm7IeBGgriJUdi+xhChFtzqxAxmlg7X2Gi71327TEA7e/3CD4MTwSARq?=
+ =?us-ascii?Q?//IoVeS3E/Be12LgODl3VCurqT2LmGEZW+dWZ5EhWTzhIpWIsLYvhHwaSzba?=
+ =?us-ascii?Q?ySrT7H7YYI2NcTe49m1v4NpBt/PBw622DjLaSP7N1zgmZ1Fl4ANCofKF89cO?=
+ =?us-ascii?Q?pNdFsPAQ9zVA7w+HjY+jEZX/8I8xnCeWPFgEk2CHN+cNthEcSHuE9/1Xra8g?=
+ =?us-ascii?Q?M0tT6/v/G6J7F27Mr7f96A1Padu/joAjWPrLldSfXl+eoUACwB2DQ9409EPG?=
+ =?us-ascii?Q?1Ly3/GEvPc2TaS6S+CA7kpvtjfK0Rj96yDmrl+Vckf4zkG37OwvsgzjFTwLt?=
+ =?us-ascii?Q?hZ0PDqsbnmluM+dAeRbFZI+noHfWQgCediVP9vn2Xo10wzlhN9cHGCV5LwPa?=
+ =?us-ascii?Q?fztyP+qVk2dsLspMD6tx5eOKs5WA5V/ThP1UTqnaf1qfLk2deAxF1j4AE/kW?=
+ =?us-ascii?Q?epnaQMEnPnA5dDhMMmmI3G0PjWrsfpclfB5NZA311fMWMVRf9oqXGFIStrin?=
+ =?us-ascii?Q?Rnol9cjmY9vKUs1DqZ6HoLwrJpqSUXbOSmhLfCoTO1N708/uYf1ydjlHwlZw?=
+ =?us-ascii?Q?1MeLoj59spauIAm4Klfw2P1OO4cJEXfSNTWvQs4ACKD15a0A7kz9PqydPOpC?=
+ =?us-ascii?Q?lPm+9+UrkgeTHoG5ZrX5j8JTSuEAu+//5Hov/Fc76WNuSyb6fZkwAIbJlKfg?=
+ =?us-ascii?Q?IysRKZYrguInwtZltWplqLxoTSAmpEjjEqZ1Ca1Gdai2LztGiqmkjw+CqDUK?=
+ =?us-ascii?Q?8kH9QSqBkftSWs0oGgMGqVEpVOZVFuQPEY+AKV27MD1ysFfJ37Jz6wutmTQU?=
+ =?us-ascii?Q?Df16MKx/svv32HFl47yPlwsu?=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: c7cdaa8a-e19f-452a-be05-08d977f2c578
+X-MS-Exchange-CrossTenant-AuthSource: PH0PR10MB4759.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 15 Sep 2021 02:44:42.9257
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: U/iTrgDhQSwY74VpJ2D3QI4zGBs/GXTVKdYYRt2JYOuCWBE1J2MV0ZgwNceU2ThiIujZLGkgxAJp+gw1cqgfM2MFgE5TJCXRsGYGxKEwA6c=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: PH0PR10MB4694
+X-Proofpoint-Virus-Version: vendor=nai engine=6300 definitions=10107 signatures=668682
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 suspectscore=0 mlxscore=0
+ mlxlogscore=999 adultscore=0 bulkscore=0 spamscore=0 phishscore=0
+ malwarescore=0 classifier=spam adjust=0 reason=mlx scancount=1
+ engine=8.12.0-2109030001 definitions=main-2109150015
+X-Proofpoint-GUID: lq9-zhqKVwHHJ_pAWmMSrFVwOFCwTcVq
+X-Proofpoint-ORIG-GUID: lq9-zhqKVwHHJ_pAWmMSrFVwOFCwTcVq
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 14 Sep 11:19 PDT 2021, Prasad Malisetty wrote:
 
-> On the SC7280, the clock source for gcc_pcie_1_pipe_clk_src
-> must be the TCXO while gdsc is enabled. After PHY init successful
-> clock source should switch to pipe clock for gcc_pcie_1_pipe_clk_src.
-> 
-> Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
-> ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 90 +++++++++++++++++++++++++++++-----
->  1 file changed, 79 insertions(+), 11 deletions(-)
-> 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 8a7a300..380c962 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -166,6 +166,9 @@ struct qcom_pcie_resources_2_7_0 {
->  	struct regulator_bulk_data supplies[2];
->  	struct reset_control *pci_reset;
->  	struct clk *pipe_clk;
-> +	struct clk *gcc_pcie_1_pipe_clk_src;
+Chanwoo,
 
-Afaict you have both 2 PCIe controllers on sc7280, so I think it seems
-more reasonable to shorted this to "pipe_clk_src".
+> 'err' is not used.  So i remove the unneeded variable.
 
-> +	struct clk *phy_pipe_clk;
-> +	struct clk *ref_clk_src;
->  };
->  
->  union qcom_pcie_resources {
-> @@ -189,6 +192,11 @@ struct qcom_pcie_ops {
->  	int (*config_sid)(struct qcom_pcie *pcie);
->  };
->  
-> +struct qcom_pcie_cfg {
-> +	const struct qcom_pcie_ops *ops;
-> +	bool pcie_1_pipe_clk_src_switch;
+Applied to 5.16/scsi-staging, thanks!
 
-Perhaps something little bit more generic, like pipe_clk_need_muxing?
-
-> +};
-> +
->  struct qcom_pcie {
->  	struct dw_pcie *pci;
->  	void __iomem *parf;			/* DT parf */
-> @@ -197,6 +205,7 @@ struct qcom_pcie {
->  	struct phy *phy;
->  	struct gpio_desc *reset;
->  	const struct qcom_pcie_ops *ops;
-> +	bool pcie_1_pipe_clk_src_switch;
->  };
->  
->  #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
-> @@ -1167,6 +1176,20 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
->  	if (ret < 0)
->  		return ret;
->  
-> +	if (pcie->pcie_1_pipe_clk_src_switch) {
-
-This looks much better, now it will easily scale to other platforms that
-have inherited this need.
-
-> +		res->gcc_pcie_1_pipe_clk_src = devm_clk_get(dev, "pipe_mux");
-> +		if (IS_ERR(res->gcc_pcie_1_pipe_clk_src))
-> +			return PTR_ERR(res->gcc_pcie_1_pipe_clk_src);
-> +
-> +		res->phy_pipe_clk = devm_clk_get(dev, "phy_pipe");
-> +		if (IS_ERR(res->phy_pipe_clk))
-> +			return PTR_ERR(res->phy_pipe_clk);
-> +
-> +		res->ref_clk_src = devm_clk_get(dev, "ref");
-> +		if (IS_ERR(res->ref_clk_src))
-> +			return PTR_ERR(res->ref_clk_src);
-> +	}
-> +
->  	res->pipe_clk = devm_clk_get(dev, "pipe");
->  	return PTR_ERR_OR_ZERO(res->pipe_clk);
->  }
-> @@ -1185,6 +1208,10 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
->  		return ret;
->  	}
->  
-> +	/* Set TCXO as clock source for gcc_pcie_1_pipe_clk_src */
-> +	if (pcie->pcie_1_pipe_clk_src_switch)
-> +		clk_set_parent(res->gcc_pcie_1_pipe_clk_src, res->ref_clk_src);
-> +
->  	ret = clk_bulk_prepare_enable(res->num_clks, res->clks);
->  	if (ret < 0)
->  		goto err_disable_regulators;
-> @@ -1256,6 +1283,10 @@ static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
->  {
->  	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
->  
-> +	/* Set pipe clock as clock source for gcc_pcie_1_pipe_clk_src */
-> +	if (pcie->pcie_1_pipe_clk_src_switch)
-> +		clk_set_parent(res->gcc_pcie_1_pipe_clk_src, res->phy_pipe_clk);
-> +
->  	return clk_prepare_enable(res->pipe_clk);
->  }
->  
-> @@ -1456,6 +1487,39 @@ static const struct qcom_pcie_ops ops_1_9_0 = {
->  	.config_sid = qcom_pcie_config_sid_sm8250,
->  };
->  
-> +static const struct qcom_pcie_cfg apq8084_cfg = {
-> +	.ops = &ops_1_0_0,
-> +};
-> +
-> +static const struct qcom_pcie_cfg ipq8064_cfg = {
-> +	.ops = &ops_2_1_0,
-> +};
-> +
-> +static const struct qcom_pcie_cfg msm8996_cfg = {
-> +	.ops = &ops_2_3_2,
-> +};
-> +
-> +static const struct qcom_pcie_cfg ipq8074_cfg = {
-> +	.ops = &ops_2_3_3,
-> +};
-> +
-> +static const struct qcom_pcie_cfg ipq4019_cfg = {
-> +	.ops = &ops_2_4_0,
-> +};
-> +
-> +static const struct qcom_pcie_cfg sdm845_cfg = {
-> +	.ops = &ops_2_7_0,
-> +};
-> +
-> +static const struct qcom_pcie_cfg sm8250_cfg = {
-> +	.ops = &ops_1_9_0,
-> +};
-> +
-> +static const struct qcom_pcie_cfg sc7280_cfg = {
-> +	.ops = &ops_1_9_0,
-> +	.pcie_1_pipe_clk_src_switch = true,
-> +};
-> +
->  static const struct dw_pcie_ops dw_pcie_ops = {
->  	.link_up = qcom_pcie_link_up,
->  	.start_link = qcom_pcie_start_link,
-> @@ -1467,6 +1531,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  	struct pcie_port *pp;
->  	struct dw_pcie *pci;
->  	struct qcom_pcie *pcie;
-> +	const struct qcom_pcie_cfg *pcie_cfg = NULL;
-
-First use of this variable is an assignment, so I don't see a need for
-zero initialize it.
-
-Regards,
-Bjorn
-
->  	int ret;
->  
->  	pcie = devm_kzalloc(dev, sizeof(*pcie), GFP_KERNEL);
-> @@ -1488,7 +1553,9 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  
->  	pcie->pci = pci;
->  
-> -	pcie->ops = of_device_get_match_data(dev);
-> +	pcie_cfg = of_device_get_match_data(dev);
-> +	pcie->ops = pcie_cfg->ops;
-> +	pcie->pcie_1_pipe_clk_src_switch = pcie_cfg->pcie_1_pipe_clk_src_switch;
->  
->  	pcie->reset = devm_gpiod_get_optional(dev, "perst", GPIOD_OUT_HIGH);
->  	if (IS_ERR(pcie->reset)) {
-> @@ -1545,16 +1612,17 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  }
->  
->  static const struct of_device_id qcom_pcie_match[] = {
-> -	{ .compatible = "qcom,pcie-apq8084", .data = &ops_1_0_0 },
-> -	{ .compatible = "qcom,pcie-ipq8064", .data = &ops_2_1_0 },
-> -	{ .compatible = "qcom,pcie-ipq8064-v2", .data = &ops_2_1_0 },
-> -	{ .compatible = "qcom,pcie-apq8064", .data = &ops_2_1_0 },
-> -	{ .compatible = "qcom,pcie-msm8996", .data = &ops_2_3_2 },
-> -	{ .compatible = "qcom,pcie-ipq8074", .data = &ops_2_3_3 },
-> -	{ .compatible = "qcom,pcie-ipq4019", .data = &ops_2_4_0 },
-> -	{ .compatible = "qcom,pcie-qcs404", .data = &ops_2_4_0 },
-> -	{ .compatible = "qcom,pcie-sdm845", .data = &ops_2_7_0 },
-> -	{ .compatible = "qcom,pcie-sm8250", .data = &ops_1_9_0 },
-> +	{ .compatible = "qcom,pcie-apq8084", .data = &apq8084_cfg },
-> +	{ .compatible = "qcom,pcie-ipq8064", .data = &ipq8064_cfg },
-> +	{ .compatible = "qcom,pcie-ipq8064-v2", .data = &ipq8064_cfg },
-> +	{ .compatible = "qcom,pcie-apq8064", .data = &ipq8064_cfg },
-> +	{ .compatible = "qcom,pcie-msm8996", .data = &msm8996_cfg },
-> +	{ .compatible = "qcom,pcie-ipq8074", .data = &ipq8074_cfg },
-> +	{ .compatible = "qcom,pcie-ipq4019", .data = &ipq4019_cfg },
-> +	{ .compatible = "qcom,pcie-qcs404", .data = &ipq4019_cfg },
-> +	{ .compatible = "qcom,pcie-sdm845", .data = &sdm845_cfg },
-> +	{ .compatible = "qcom,pcie-sm8250", .data = &sm8250_cfg },
-> +	{ .compatible = "qcom,pcie-sc7280", .data = &sc7280_cfg },
->  	{ }
->  };
->  
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
-> 
+-- 
+Martin K. Petersen	Oracle Linux Engineering
