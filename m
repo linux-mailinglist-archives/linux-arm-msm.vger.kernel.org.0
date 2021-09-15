@@ -2,217 +2,213 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CB4DF40C70B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Sep 2021 16:06:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 64E0540C7DE
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 15 Sep 2021 17:05:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237807AbhIOOH2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 15 Sep 2021 10:07:28 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:23027 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237833AbhIOOH1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 15 Sep 2021 10:07:27 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1631714769; h=In-Reply-To: Content-Type: MIME-Version:
- References: Message-ID: Subject: Cc: To: From: Date: Sender;
- bh=SK3Coo+erOQWaBCCktW6N7DgBlpVbT1G6s0O7MEhplU=; b=S3RFM/3dLQYHDBpDnMuInF2n+2WP6hkuKugK97NzXAK0oxYvDxeQUHanJyzzELuGC/HRnwQi
- CFfzpyJ4O5Oplr8TvWRN6k1Tg1ofaiBDoaheBDITEnWB/LIgsYah5DNmCaFWl2Sv2xTJaCLH
- WdETjvjr3LaGcg5BoOo64a5LWH4=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 6141fdadec62f57c9a0dd79e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 15 Sep 2021 14:05:33
- GMT
-Sender: pkondeti=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id D2AE9C43616; Wed, 15 Sep 2021 14:05:32 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from codeaurora.org (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: pkondeti)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3EE79C4338F;
-        Wed, 15 Sep 2021 14:05:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 3EE79C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Date:   Wed, 15 Sep 2021 19:35:24 +0530
-From:   Pavan Kondeti <pkondeti@codeaurora.org>
-To:     Felipe Balbi <balbi@kernel.org>
-Cc:     Matthias Kaehlcke <mka@chromium.org>,
-        Sandeep Maheswaram <sanm@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
+        id S234011AbhIOPG4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 15 Sep 2021 11:06:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39900 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233711AbhIOPGz (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 15 Sep 2021 11:06:55 -0400
+Received: from mail-pj1-x1030.google.com (mail-pj1-x1030.google.com [IPv6:2607:f8b0:4864:20::1030])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0830EC061766
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Sep 2021 08:05:37 -0700 (PDT)
+Received: by mail-pj1-x1030.google.com with SMTP id j1so2338628pjv.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Sep 2021 08:05:37 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=tuZ5AJo9HYV72r//BB/nhJCCtA8J0cLgDUQf1Wa73oU=;
+        b=AqTzpIsgPDCO3HJy4ctU22tG7V35oU3V+ofAVG3HhLBvwkxZqzp3LpsALS6nVYDedT
+         eMz3lyh37h7vFtPORm/SZiEEuVt3GC7omw3sbfd0F5rlvBuKXiANq8qYQ8dklwizxk/t
+         1ldrHdFd+PzmDFTI+BVF+yRpvzPnXS4k6ZKHAjcT9gHOcxopn7G/pEvYWyUo6jwOuwK7
+         EwVXYQKijQjvGtkBRVX2IyhopAvmMkmkHPz42x3ePAD+N6120sVpz9s1acBQ7fJcmYuU
+         WDVHoXJdQsCi4AQBpOzErgvdsLdvTeTzZ71N9gyWUPvp3au/xYfiJpx0b9jaczHLFDWG
+         4Xag==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=tuZ5AJo9HYV72r//BB/nhJCCtA8J0cLgDUQf1Wa73oU=;
+        b=ANMWxgkvHOISUct4uLnhPBoa8Q9FApUcfdo9LYby6zxJwoIUc8irjkrTjMOqy+4rFC
+         U3AdH7Pij+Y3NtAFyn9c2RRGE0A4WSadaj7Ahv3+YDlZ+Q4AT4JxYzzBAKat7TElKdZQ
+         Rl1nmyT1MAEQc94468/yZ2FK+DDHMvubMeYrAafJ1oza0LB9dxJ6CD2+b/tUyTbBJGDB
+         axCsSbBIXLFo86QbBwndmcoi6U/S9SYqgMdn8wMaQbl6VHPmkCR84Udi4EjCmM1PvsaX
+         4PSAM2dPm5OjG8W0NhVE+kxcPvS4Qp8pKSL3ibSfXd5VDez+5K1jXZhS6whpBRYAFYdt
+         tNLw==
+X-Gm-Message-State: AOAM532+KpwxBKsqfdGp6NpJmd4n8gd7Cg0e3XtzRnO3H1gNagEIEF7m
+        ECBzTAA3mB2CSimk78Di9SAM1A==
+X-Google-Smtp-Source: ABdhPJy0Tg9oNP4ZFHBxknMHxgqD9Dk0JxCQuX5C2E5V0NQzkRuEYxefKNUn+Phg3g7CrFCnyeEKfw==
+X-Received: by 2002:a17:90b:957:: with SMTP id dw23mr253699pjb.125.1631718336048;
+        Wed, 15 Sep 2021 08:05:36 -0700 (PDT)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id s10sm3795857pjn.38.2021.09.15.08.05.33
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 15 Sep 2021 08:05:35 -0700 (PDT)
+Date:   Wed, 15 Sep 2021 23:05:27 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Stephen Boyd <sboyd@kernel.org>
+Cc:     Rob Herring <robh+dt@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Doug Anderson <dianders@chromium.org>,
-        Mathias Nyman <mathias.nyman@intel.com>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Pratham Pratap <prathampratap@codeaurora.org>,
-        linux-pm@vger.kernel.org,
-        "Rafael J. Wysocki" <rafael.j.wysocki@intel.com>
-Subject: Re: [PATCH v8 6/6] usb: dwc3: qcom: Keep power domain on to support
- wakeup
-Message-ID: <20210915140524.GB6787@codeaurora.org>
-References: <1624882097-23265-1-git-send-email-sanm@codeaurora.org>
- <1624882097-23265-7-git-send-email-sanm@codeaurora.org>
- <YNo97HQXmYjUNz/C@google.com>
- <87fswjzx52.fsf@kernel.org>
+        Loic Poulain <loic.poulain@linaro.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] clk: qcom: smd-rpm: Add rate hooks for
+ clk_smd_rpm_branch_ops
+Message-ID: <20210915150526.GE25255@dragon>
+References: <20210914025554.5686-1-shawn.guo@linaro.org>
+ <20210914025554.5686-2-shawn.guo@linaro.org>
+ <163165658855.763609.14080313241484048687@swboyd.mtv.corp.google.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <87fswjzx52.fsf@kernel.org>
-User-Agent: Mutt/1.5.24 (2015-08-30)
+In-Reply-To: <163165658855.763609.14080313241484048687@swboyd.mtv.corp.google.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+linux-pm and Rafael
+On Tue, Sep 14, 2021 at 02:56:28PM -0700, Stephen Boyd wrote:
+> Quoting Shawn Guo (2021-09-13 19:55:52)
+> > On QCM2290 platform, the clock xo_board runs at 38400000, while the
+> > child clock bi_tcxo needs to run at 19200000.  That said,
+> > clk_smd_rpm_branch_ops needs the capability of setting rate. Add rate
+> > hooks into clk_smd_rpm_branch_ops to make it possible.
+> 
+> This doesn't sound right. The branch is a simple on/off. If xo_board is
+> 38.4MHz, then there is an internal divider in the SoC that makes bi_tcxo
+> (i.e. the root of the entire clk tree) be 19.2MHz. We don't model the
+> divider, I guess because it isn't very important to. Instead, we tack on
+> a divider field and implement recalc_rate op. See clk-rpmh.c in the qcom
+> directory for this.
 
-Hi Balbi,
+Thanks for the comment, Stephen!  To be honest, I copied the
+implementation from vendor kernel, and wasn't really sure if it's
+correct or the best.
 
-On Mon, Jul 12, 2021 at 12:42:17PM +0300, Felipe Balbi wrote:
-> 
-> >> @@ -355,9 +356,15 @@ static int dwc3_qcom_suspend(struct dwc3_qcom *qcom)
-> >>  	u32 val;
-> >>  	int i, ret;
-> >>  
-> >> +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
-> >> +	struct generic_pm_domain *genpd = pd_to_genpd(qcom->dev->pm_domain);
-> >> +
-> >>  	if (qcom->is_suspended)
-> >>  		return 0;
-> >>  
-> >> +	if (!dwc->phy_power_off && dwc->xhci)
-> >> +		genpd->flags |= GENPD_FLAG_ACTIVE_WAKEUP;
-> >> +
-> >>  	val = readl(qcom->qscratch_base + PWR_EVNT_IRQ_STAT_REG);
-> >>  	if (!(val & PWR_EVNT_LPM_IN_L2_MASK))
-> >>  		dev_err(qcom->dev, "HS-PHY not in L2\n");
-> >> @@ -382,9 +389,15 @@ static int dwc3_qcom_resume(struct dwc3_qcom *qcom)
-> >>  	int ret;
-> >>  	int i;
-> >>  
-> >> +	struct dwc3 *dwc = platform_get_drvdata(qcom->dwc3);
-> >> +	struct generic_pm_domain *genpd = pd_to_genpd(qcom->dev->pm_domain);
-> >> +
-> >>  	if (!qcom->is_suspended)
-> >>  		return 0;
-> >>  
-> >> +	if (dwc->xhci)
-> >> +		genpd->flags &= ~GENPD_FLAG_ACTIVE_WAKEUP;
-> >> +
-> >>  	if (device_may_wakeup(qcom->dev))
-> >>  		dwc3_qcom_disable_interrupts(qcom);
-> >>  
-> >
-> > This is essentially the same as v7, which Felipe NAKed
-> > (https://patchwork.kernel.org/project/linux-arm-msm/patch/1619586716-8687-6-git-send-email-sanm@codeaurora.org/)
-> >
-> > I think Felipe wants to see the handling of the power domain in the
-> > xhci-plat driver. One problem here is that the power domain is owned
-> 
-> this is not exactly what I meant to say, though. I want drivers to be
-> self-contained. I.e. dwc3 doesn't modify xhci data and vice-versa. There
-> are a few assummpmtions that we can make, though. The structure is
-> usually like this:
-> 
-> glue {
->   dwc3 {
->     xhci
->   };
-> };
-> 
-> This means that in order for glue_suspend() to run, dwc3 has to suspend
-> first and xhci has to suspend before dwc3.
-> 
-> For example, in the suspend call above, qcom (the glue) is directly
-> accessing dwc3 core data, which is incorrect. It looks like we want to
-> know if the PHY is not powered off and if it isn't, then we want to
-> change the power domain ACTIVE_WAKEUP flag. Now, phy_power_off is false
-> whenever any of xHCI's children enable USB wakeup.
-> 
-> It seems like we need to way to generically propagate that knowledge up
-> the parent tree. I.e., a parent needs to know if its child is wakeup
-> capable, then dwc3 could, in its suspend routine:
-> 
-> static int dwc3_suspend(struct device *dev)
-> {
-> 	/* ... */
-> 
-> 	if (device_children_wakeup_capable(dev))
->         	device_enable_wakeup(dev);
-> 
-> 	/* ... */
-> }
-> 
-> and similarly for qcom glue:
-> 
-> static int dwc3_qcom_suspend(struct device *dev)
-> {
-> 	/* ... */
-> 
-> 	if (device_children_wakeup_capable(dev)) {
->         	device_enable_wakeup(dev);
-> 		genpd->flags |= GENPD_FLAG_ACTIVE_WAKEUP;
->         }
-> 
-> 	/* ... */
-> }
-> 
-> It also seems plausible that this could be done at driver core and
-> completely hidden away from drivers.
-> 
+So here is what I get based on your suggestion.  Let's me know if
+it's how you wanted it to be.  Thanks!
 
-device_children_wakeup_capable() idea sounds good. Added linux-pm and Rafael
-for more inputs on this.
+Shawn
 
-AFAICT, device wakeup settings are NOT propagated to the parent. Ideally one
-expects the parent to be wake up capable and enabled when any of its children
-is enabling the wakeup. If that had been propagated, we could simply check
-device_may_wakeup() and take an action. I am sure there are good reason why
-and how this propgation may not work as we expect it to work for all devices.
+----8<---------
 
-Can we make something like below to make sure that DWC3 core respects its
-child wakeup setting? This is inline with your suggestion of propagating it
-through layers. we should probably enable wakeup on dwc3 dev so that the
-glue drivers can take the action appropriately.
+From 23dda79fee412738f046b89bdd20ef95a24c35cc Mon Sep 17 00:00:00 2001
+From: Shawn Guo <shawn.guo@linaro.org>
+Date: Wed, 15 Sep 2021 22:00:32 +0800
+Subject: [PATCH] clk: qcom: smd-rpm: Add a divider field for branch clock
 
+Similar to clk-rpmh, clk-smd-rpm has the same need to handle the case
+where an internal divider is there between xo_board and bi_tcxo.  The
+change is made in the a back compatible way below.
 
-diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index 172dfd2..9c43d37 100644
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -1749,7 +1749,7 @@ static int dwc3_suspend_common(struct dwc3 *dwc, pm_message_t msg)
-                dwc3_core_exit(dwc);
-                break;
-        case DWC3_GCTL_PRTCAP_HOST:
--               if (!PMSG_IS_AUTO(msg)) {
-+               if (!PMSG_IS_AUTO(msg) && !device_may_wakeup(&dwc->xhci->dev)) {
-                        dwc3_core_exit(dwc);
-                        break;
-                }
-@@ -1810,7 +1810,7 @@ static int dwc3_resume_common(struct dwc3 *dwc, pm_message_t msg)
-                spin_unlock_irqrestore(&dwc->lock, flags);
-                break;
-        case DWC3_GCTL_PRTCAP_HOST:
--               if (!PMSG_IS_AUTO(msg)) {
-+               if (!PMSG_IS_AUTO(msg) && !device_may_wakeup(&dwc->xhci->dev)) {
-                        ret = dwc3_core_init_for_resume(dwc);
-                        if (ret)
-                                return ret;
+ - Add div field to struct clk_smd_rpm, and have
+   __DEFINE_CLK_SMD_RPM_BRANCH() assign it.
 
+ - Update all existing __DEFINE_CLK_SMD_RPM_BRANCH() wrappers to pass a
+   zero div.
 
-Thanks,
-Pavan
+ - Add DEFINE_CLK_SMD_RPM_BRANCH_DIV() which doesn't take rate argument
+   but div.
+
+ - Update clk_smd_rpm_recalc_rate() to handle div and add it as
+   .recalc_rate of clk_smd_rpm_branch_ops.
+
+Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+---
+ drivers/clk/qcom/clk-smd-rpm.c | 23 ++++++++++++++++-------
+ 1 file changed, 16 insertions(+), 7 deletions(-)
+
+diff --git a/drivers/clk/qcom/clk-smd-rpm.c b/drivers/clk/qcom/clk-smd-rpm.c
+index 66d7807ee38e..66ef0d3795fd 100644
+--- a/drivers/clk/qcom/clk-smd-rpm.c
++++ b/drivers/clk/qcom/clk-smd-rpm.c
+@@ -66,13 +66,14 @@
+ 	}
+ 
+ #define __DEFINE_CLK_SMD_RPM_BRANCH(_platform, _name, _active, type, r_id,    \
+-				    stat_id, r, key)			      \
++				    stat_id, r, key, _div)		      \
+ 	static struct clk_smd_rpm _platform##_##_active;		      \
+ 	static struct clk_smd_rpm _platform##_##_name = {		      \
+ 		.rpm_res_type = (type),					      \
+ 		.rpm_clk_id = (r_id),					      \
+ 		.rpm_status_id = (stat_id),				      \
+ 		.rpm_key = (key),					      \
++		.div = (_div),						      \
+ 		.branch = true,						      \
+ 		.peer = &_platform##_##_active,				      \
+ 		.rate = (r),						      \
+@@ -92,6 +93,7 @@
+ 		.rpm_status_id = (stat_id),				      \
+ 		.active_only = true,					      \
+ 		.rpm_key = (key),					      \
++		.div = (_div),						      \
+ 		.branch = true,						      \
+ 		.peer = &_platform##_##_name,				      \
+ 		.rate = (r),						      \
+@@ -112,7 +114,12 @@
+ 
+ #define DEFINE_CLK_SMD_RPM_BRANCH(_platform, _name, _active, type, r_id, r)   \
+ 		__DEFINE_CLK_SMD_RPM_BRANCH(_platform, _name, _active, type,  \
+-		r_id, 0, r, QCOM_RPM_SMD_KEY_ENABLE)
++		r_id, 0, r, QCOM_RPM_SMD_KEY_ENABLE, 0)
++
++#define DEFINE_CLK_SMD_RPM_BRANCH_DIV(_platform, _name, _active, type, r_id,  \
++				      _div)				      \
++		__DEFINE_CLK_SMD_RPM_BRANCH(_platform, _name, _active, type,  \
++		r_id, 0, 0, QCOM_RPM_SMD_KEY_ENABLE, _div)
+ 
+ #define DEFINE_CLK_SMD_RPM_QDSS(_platform, _name, _active, type, r_id)	      \
+ 		__DEFINE_CLK_SMD_RPM(_platform, _name, _active, type, r_id,   \
+@@ -121,12 +128,12 @@
+ #define DEFINE_CLK_SMD_RPM_XO_BUFFER(_platform, _name, _active, r_id)	      \
+ 		__DEFINE_CLK_SMD_RPM_BRANCH(_platform, _name, _active,	      \
+ 		QCOM_SMD_RPM_CLK_BUF_A, r_id, 0, 1000,			      \
+-		QCOM_RPM_KEY_SOFTWARE_ENABLE)
++		QCOM_RPM_KEY_SOFTWARE_ENABLE, 0)
+ 
+ #define DEFINE_CLK_SMD_RPM_XO_BUFFER_PINCTRL(_platform, _name, _active, r_id) \
+ 		__DEFINE_CLK_SMD_RPM_BRANCH(_platform, _name, _active,	      \
+ 		QCOM_SMD_RPM_CLK_BUF_A, r_id, 0, 1000,			      \
+-		QCOM_RPM_KEY_PIN_CTRL_CLK_BUFFER_ENABLE_KEY)
++		QCOM_RPM_KEY_PIN_CTRL_CLK_BUFFER_ENABLE_KEY, 0)
+ 
+ #define to_clk_smd_rpm(_hw) container_of(_hw, struct clk_smd_rpm, hw)
+ 
+@@ -140,6 +147,7 @@ struct clk_smd_rpm {
+ 	bool branch;
+ 	struct clk_smd_rpm *peer;
+ 	struct clk_hw hw;
++	u8 div;
+ 	unsigned long rate;
+ 	struct qcom_smd_rpm *rpm;
+ };
+@@ -370,10 +378,10 @@ static unsigned long clk_smd_rpm_recalc_rate(struct clk_hw *hw,
+ 
+ 	/*
+ 	 * RPM handles rate rounding and we don't have a way to
+-	 * know what the rate will be, so just return whatever
+-	 * rate was set.
++	 * know what the rate will be, so just return divided parent
++	 * rate or whatever rate was set.
+ 	 */
+-	return r->rate;
++	return r->div ? parent_rate / r->div : r->rate;
+ }
+ 
+ static int clk_smd_rpm_enable_scaling(struct qcom_smd_rpm *rpm)
+@@ -416,6 +424,7 @@ static const struct clk_ops clk_smd_rpm_ops = {
+ static const struct clk_ops clk_smd_rpm_branch_ops = {
+ 	.prepare	= clk_smd_rpm_prepare,
+ 	.unprepare	= clk_smd_rpm_unprepare,
++	.recalc_rate	= clk_smd_rpm_recalc_rate,
+ };
+ 
+ DEFINE_CLK_SMD_RPM(msm8916, pcnoc_clk, pcnoc_a_clk, QCOM_SMD_RPM_BUS_CLK, 0);
 -- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.
-Qualcomm Innovation Center, Inc. is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+2.17.1
 
