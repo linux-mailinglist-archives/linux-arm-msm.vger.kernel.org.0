@@ -2,124 +2,181 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4ECDD40EAA4
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Sep 2021 21:06:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2994340EB55
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Sep 2021 22:06:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347083AbhIPTIQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Sep 2021 15:08:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54314 "EHLO
+        id S236959AbhIPUHV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Sep 2021 16:07:21 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40684 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347079AbhIPTIC (ORCPT
+        with ESMTP id S233356AbhIPUHV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Sep 2021 15:08:02 -0400
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91BDEC06AA79
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Sep 2021 12:02:37 -0700 (PDT)
-Received: by mail-ot1-x334.google.com with SMTP id x10-20020a056830408a00b004f26cead745so9599914ott.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Sep 2021 12:02:37 -0700 (PDT)
+        Thu, 16 Sep 2021 16:07:21 -0400
+Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53A72C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Sep 2021 13:06:00 -0700 (PDT)
+Received: by mail-pf1-x433.google.com with SMTP id g14so7034870pfm.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Sep 2021 13:06:00 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=FWeWVI89CMKoqS12Pp2ofBTtl9f9+kDvHLEYyvtvj3Y=;
-        b=Wt7OcJpNUxw12DAwblAXr10E60SnW77IXBLxYGtjl4MPd+CK4GnWnRs87pe+Uuu3c8
-         ohI3BW3y/F/UIenD56eQVQ6KreefgJIrVNqutHJM0rSM4Fb/zmBfCpOGmXur9lqq2EyJ
-         IzKs4ujCFIvkiccoa6fLoYT+/DDXEJgWTUK08=
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=C825OJtm+GsMiw0RkquyzXjumHiD8fMhLXCP+cnD56A=;
+        b=x12uH75PWv2yZJlJ1u7RjEbR2L7wCjfESWLWNzOFEvBDLAfT3rb9fr70Z6A6Z6Tx5Q
+         5e51a7LLT0SCHChzUHm8OhpH7TMT/L/tRBadrT+4phG2S4ZlbqMZQFq+BBhMqFZD1B52
+         LNzKRkGyjVKIGQTacRagcrYX9r99ZjYEGexp8hYp+2TOEE3I0Is/W+ql13idrY5kP392
+         WJDwfEbrc48LFQbtmucPb9XYNHtl9WeYQGO95FS7EGIOXQIAJfk/Hze8lmzMvovzHpzZ
+         C6ibLTDnpZXRDeo1qdeMxThJF336v8VuWY4HvesOhzBpV2LNaTmlZgj/fQWSppksg/e7
+         KN2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=FWeWVI89CMKoqS12Pp2ofBTtl9f9+kDvHLEYyvtvj3Y=;
-        b=4efRtYW9/JcnaTKa7Bqhaujkjqr32NNAoin/tezmf6bSxDG908msB5iE1vdT0d7XIn
-         6q8UJnPcD6n4fx1bL/byJ21Iobkmy65EG5IvVGagugSXdmocOGgAwPUkJQ29a4bOEnVN
-         XY3z7qC1jGI5pLbB7C4tb0ZDcs2pfCZNCQq2n1TdEaXW9et25BvtaR7ONglU34eVoR3Q
-         5UomfqNvsMjdYLsTS7j0ky5jgHCHeSvMUAygpsxyZSSThWTurlLhj5iM5oEscdI7/JDY
-         wrTiuQ/9aMhLNoAEO/olcZnw0TW7RFaYNtNJiTdZlFtVxgssh5nqDk+RkrBPQsErRlhM
-         RSuw==
-X-Gm-Message-State: AOAM5314K8tmO/zuAHLTtv1rscP7idoSyysHRK9Zb0IXKzq6BKpQzBIH
-        ei4c1cxroqFABOmdllQkrkGyOhgtT//NM3lH6bvB7g==
-X-Google-Smtp-Source: ABdhPJzEFLzP9i6NLH2BNZiamfhPoIiZWSUb5DRAGv784Z0t+KDMcv3d9XBq8O+KgpL10r2bUObyqJ+JYSPOsod0imQ=
-X-Received: by 2002:a05:6830:1212:: with SMTP id r18mr5777608otp.159.1631818956932;
- Thu, 16 Sep 2021 12:02:36 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 16 Sep 2021 12:02:36 -0700
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=C825OJtm+GsMiw0RkquyzXjumHiD8fMhLXCP+cnD56A=;
+        b=Z0yGjy3H+RpLUANuwJbcp4iAbuiibYBGH4rpfmwsj0x+TCpvFsNQNPbXu2SpwtVZHQ
+         mA8FMY4lzIMfGpv7yJtXCDMQe0/U6gafAsLhNwVnNdakHtOjhn8+P9ibwron8B1Ww5Na
+         bCPp2ly8aY7Vsy/67gVOczAtgTBK1eNAWUWZK1+RTc3gCfjXiHkNiQvXHtQLlOPvI6xV
+         GOk+EuGcBkzvvZBe+xWDSlKtKdLheM2eO/miJCes/1bDrXSoLPRwd3uoE5CGKv0HCLd1
+         IyUdkSQjEQAynZxg9grAFGFglq/pCMlD8ZdDgk3I3eM+O53HtXgyDww17FQomNm3QgPU
+         uhpQ==
+X-Gm-Message-State: AOAM533AZJCjNaJ6wqWRxdRo70Axgv8G33S/3Qc9xXc71hdBxYjMVamC
+        duBYKuHAP/08qm+B7J8sMJBxJA==
+X-Google-Smtp-Source: ABdhPJzJXNLpWvp/YAi+c/sg/mnucACdcnd/GWm+TJH6cXdxMA2wtm3fWmCFcSek7ktIo3cduNaZ/Q==
+X-Received: by 2002:a62:2f47:0:b0:43c:11:69ce with SMTP id v68-20020a622f47000000b0043c001169cemr6974646pfv.24.1631822759785;
+        Thu, 16 Sep 2021 13:05:59 -0700 (PDT)
+Received: from localhost.localdomain ([122.171.196.148])
+        by smtp.gmail.com with ESMTPSA id c133sm3800045pfb.39.2021.09.16.13.05.57
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 16 Sep 2021 13:05:59 -0700 (PDT)
+From:   Amit Pundir <amit.pundir@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>, Alex Elder <elder@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Subject: [PATCH] arm64: dts: qcom: sdm850-yoga: Reshuffle IPA memory mappings
+Date:   Fri, 17 Sep 2021 01:35:54 +0530
+Message-Id: <20210916200554.2434439-1-amit.pundir@linaro.org>
+X-Mailer: git-send-email 2.25.1
 MIME-Version: 1.0
-In-Reply-To: <1631798498-10864-3-git-send-email-skakit@codeaurora.org>
-References: <1631798498-10864-1-git-send-email-skakit@codeaurora.org> <1631798498-10864-3-git-send-email-skakit@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Thu, 16 Sep 2021 12:02:36 -0700
-Message-ID: <CAE-0n53i4pU==W-dc=md_x+0Tqbd1gtwkPBFode+rtupSFi0WQ@mail.gmail.com>
-Subject: Re: [PATCH V5 2/2] arm64: dts: sc7280: Add volume up support for sc7280-idp
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Satya Priya <skakit@codeaurora.org>
-Cc:     David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Satya Priya (2021-09-16 06:21:38)
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> index 371a2a9..cbbb0ee 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> @@ -12,6 +12,26 @@
->  #include "pm8350c.dtsi"
->  #include "pmk8350.dtsi"
->
-> +/ {
-> +       gpio-keys {
-> +               compatible = "gpio-keys";
-> +               label = "gpio-keys";
-> +
-> +               pinctrl-names = "default";
-> +               pinctrl-0 = <&key_vol_up_default>;
-> +
-> +               volume-up {
-> +                       label = "volume_up";
-> +                       gpios = <&pm7325_gpios 6 GPIO_ACTIVE_LOW>;
-> +                       linux,input-type = <1>;
-> +                       linux,code = <KEY_VOLUMEUP>;
+Upstream commit 2e01e0c21459 ("arm64: dts: qcom: sdm850-yoga:
+Enable IPA") shuffled reserved memory regions in sdm845.dtsi
+to make firmware loading succeed and enable the ipa device on
+sdm845-yoga but it broke the other common users of those
+memory regions like Xiaomi Pocophone F1.
 
-Is there an include for this define? Looks like
-<dt-bindings/input/input.h> should be added as well? Did you try
-compiling?
+So this patch effectively revert those upstream commit changes
+and move all the relevant changes to sdm850-lenovo-yoga-c630.dts
+instead.
 
-> +                       gpio-key,wakeup;
-> +                       debounce-interval = <15>;
-> +                       linux,can-disable;
-> +               };
-> +       };
-> +};
-> +
->  &apps_rsc {
->         pm7325-regulators {
->                 compatible = "qcom,pm7325-rpmh-regulators";
-> @@ -284,6 +304,17 @@
->
->  /* PINCTRL - additions to nodes defined in sc7280.dtsi */
->
-> +&pm7325_gpios {
-> +       key_vol_up_default: key-vol-up-default {
-> +               pins = "gpio6";
-> +               function = "normal";
-> +               input-enable;
-> +               bias-pull-up;
-> +               power-source = <0>;
-> +               qcom,drive-strength = <3>;
-> +       };
-> +};
-> +
->  &qup_uart5_default {
->         tx {
->                 pins = "gpio46";
-> --
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
->
+Fixes: 2e01e0c21459 ("arm64: dts: qcom: sdm850-yoga: Enable IPA")
+Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
+---
+Smoke tested on PocoF1 and not on Yoga-C630.
+
+ arch/arm64/boot/dts/qcom/sdm845.dtsi          | 21 +++++++-----
+ .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 34 +++++++++++++++++++
+ 2 files changed, 47 insertions(+), 8 deletions(-)
+
+diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+index 6d7172e6f4c3..b3b911926184 100644
+--- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
+@@ -128,23 +128,28 @@ camera_mem: memory@8bf00000 {
+ 			no-map;
+ 		};
+ 
+-		wlan_msa_mem: memory@8c400000 {
+-			reg = <0 0x8c400000 0 0x100000>;
++		ipa_fw_mem: memory@8c400000 {
++			reg = <0 0x8c400000 0 0x10000>;
+ 			no-map;
+ 		};
+ 
+-		gpu_mem: memory@8c515000 {
+-			reg = <0 0x8c515000 0 0x2000>;
++		ipa_gsi_mem: memory@8c410000 {
++			reg = <0 0x8c410000 0 0x5000>;
+ 			no-map;
+ 		};
+ 
+-		ipa_fw_mem: memory@8c517000 {
+-			reg = <0 0x8c517000 0 0x5a000>;
++		gpu_mem: memory@8c415000 {
++			reg = <0 0x8c415000 0 0x2000>;
+ 			no-map;
+ 		};
+ 
+-		adsp_mem: memory@8c600000 {
+-			reg = <0 0x8c600000 0 0x1a00000>;
++		adsp_mem: memory@8c500000 {
++			reg = <0 0x8c500000 0 0x1a00000>;
++			no-map;
++		};
++
++		wlan_msa_mem: memory@8df00000 {
++			reg = <0 0x8df00000 0 0x100000>;
+ 			no-map;
+ 		};
+ 
+diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+index 385e5029437d..2ba23aa582a1 100644
+--- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
++++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+@@ -16,6 +16,17 @@
+ #include "sdm850.dtsi"
+ #include "pm8998.dtsi"
+ 
++/*
++ * Update following upstream (sdm845.dtsi) reserved
++ * memory mappings for firmware loading to succeed
++ * and enable the IPA device.
++ */
++/delete-node/ &ipa_fw_mem;
++/delete-node/ &ipa_gsi_mem;
++/delete-node/ &gpu_mem;
++/delete-node/ &adsp_mem;
++/delete-node/ &wlan_msa_mem;
++
+ / {
+ 	model = "Lenovo Yoga C630";
+ 	compatible = "lenovo,yoga-c630", "qcom,sdm845";
+@@ -58,6 +69,29 @@ panel_in_edp: endpoint {
+ 		};
+ 	};
+ 
++	/* Reserved memory changes for IPA */
++	reserved-memory {
++		wlan_msa_mem: memory@8c400000 {
++			reg = <0 0x8c400000 0 0x100000>;
++			no-map;
++		};
++
++		gpu_mem: memory@8c515000 {
++			reg = <0 0x8c515000 0 0x2000>;
++			no-map;
++		};
++
++		ipa_fw_mem: memory@8c517000 {
++			reg = <0 0x8c517000 0 0x5a000>;
++			no-map;
++		};
++
++		adsp_mem: memory@8c600000 {
++			reg = <0 0x8c600000 0 0x1a00000>;
++			no-map;
++		};
++	};
++
+ 	sn65dsi86_refclk: sn65dsi86-refclk {
+ 		compatible = "fixed-clock";
+ 		#clock-cells = <0>;
+-- 
+2.25.1
+
