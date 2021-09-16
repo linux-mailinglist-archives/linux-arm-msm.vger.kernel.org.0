@@ -2,138 +2,136 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 93AB940D293
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Sep 2021 06:32:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6BC5940D2BF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Sep 2021 07:04:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234182AbhIPEdj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Sep 2021 00:33:39 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:27524 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234176AbhIPEdi (ORCPT
+        id S234292AbhIPFFy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Sep 2021 01:05:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59726 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231951AbhIPFFw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Sep 2021 00:33:38 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1631766739; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=EE9lOacJtzvDM9XaYOOMkcLX+XxN2Z5vNgDB2YTbdIA=;
- b=ZJB8qI8XWv4jwwuEG9qiUaw9iaVZmR6tAIY1rEcBHFIpzXngsUr9BR+h6eeSvcLnqegk3kMy
- +lrmUXQdPCbmPRNg4yykjlTLHDx2+PnbvOsGFq6YA5hOlsGyMUcTyiB4Tlq9MbBFky9IE4pp
- Z+08FLlSWvNTUOqHqB0vv0wZVdY=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 6142c8a8d914b051822b6dcf (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 16 Sep 2021 04:31:36
- GMT
-Sender: rajpat=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 01364C43616; Thu, 16 Sep 2021 04:31:36 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: rajpat)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6F503C4338F;
-        Thu, 16 Sep 2021 04:31:34 +0000 (UTC)
+        Thu, 16 Sep 2021 01:05:52 -0400
+Received: from mail-pg1-x52f.google.com (mail-pg1-x52f.google.com [IPv6:2607:f8b0:4864:20::52f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91C0BC061764
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Sep 2021 22:04:31 -0700 (PDT)
+Received: by mail-pg1-x52f.google.com with SMTP id g184so5032986pgc.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 15 Sep 2021 22:04:31 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=m8pZguFuGhNfWPMK3DmEgTUY5gKWHuK0UZr8qzbuIE8=;
+        b=B+TGQJxmKEGSc6t2j6mF/MTC9uF/Pt3UZv+uKFZCWgbwxD1YxsKnbgyHRwSbpUach5
+         pu/GkPk4PdJzibuK3pQ7TDNeOdyfU6wzNrJ8vn5kpPVOBk6dhlxVl2mV2S8FJKYdUsoz
+         n1KG/CinnA/0MLc9ZcnNY7Xo1ce52YE+01PYSeQyFeHMoOdC9LKy/bFKMm1yLeI7Ce5A
+         nLFhM08VvvPf7HkfzQFIiKPKKvAqTOGxPS+y2eV350lMKLII2AwBebdrYy8PFP2420XI
+         alBvBbQvfAgu8hMp1NSfsIuBc427UgJnfOPL8SkwLA1bD3WrdpFmzVqKPy+5RW5UJNs9
+         F1nA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=m8pZguFuGhNfWPMK3DmEgTUY5gKWHuK0UZr8qzbuIE8=;
+        b=f356g/lxb8u4t5hqdAVZrT3kv3tEmodyTEBx6mS4vEzusSIiA75SinUuozJqmJ0uJ9
+         08iqtuAKXMilIYSFg+kGlXhPLXTYCwmIoq/1GaOvrW2pfaxEGWeS4cIdHjonkxmTXvUO
+         Z5KANXjZKQrvCQt1rzAG1kGXgBclV+AX7gd6YfCrUh64SQdnEAf0blz7aD/KkYjFOAkP
+         UtkjMfJpPQq9L++7C1bYPmYT1c5kt1ND1A2HDYDF0UXkPdWDdd6G6Ch3/3yl69PnPzY4
+         pZUhu0Ufyc+yqREU+2Twfg7Jxh/LBOimG2x2JFGNNG3x2XE800IJhRIq3koFbY1UZT5J
+         qu/g==
+X-Gm-Message-State: AOAM531u77wGoyL+ozhMHg9Sg2KaXr7ql/Ijp+uvdfv+o9L6dRctVI7A
+        qkQJ2mCtrCESAatw6mbaNq67hQ==
+X-Google-Smtp-Source: ABdhPJyZ3lZHJLjMxaOxtl//zK+Bx2+Knn0ildGND0zESTIraqGjWOSxIEkQV9lV/6Ws71LrCdJJLA==
+X-Received: by 2002:a05:6a00:22d5:b0:440:3750:f5f4 with SMTP id f21-20020a056a0022d500b004403750f5f4mr3579272pfj.64.1631768670992;
+        Wed, 15 Sep 2021 22:04:30 -0700 (PDT)
+Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id g13sm1440188pfi.176.2021.09.15.22.04.28
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Wed, 15 Sep 2021 22:04:30 -0700 (PDT)
+Date:   Thu, 16 Sep 2021 13:04:24 +0800
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 1/3] clk: qcom: smd-rpm: Add rate hooks for
+ clk_smd_rpm_branch_ops
+Message-ID: <20210916050423.GG25255@dragon>
+References: <20210914025554.5686-1-shawn.guo@linaro.org>
+ <20210914025554.5686-2-shawn.guo@linaro.org>
+ <163165658855.763609.14080313241484048687@swboyd.mtv.corp.google.com>
+ <20210915150526.GE25255@dragon>
+ <YUIr/002dfXxDWDY@ripper>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 16 Sep 2021 10:01:34 +0530
-From:   rajpat@codeaurora.org
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        msavaliy@qti.qualcomm.com, satya priya <skakit@codeaurora.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Roja Rani Yarubandi <rojay@codeaurora.org>
-Subject: Re: [PATCH V7 1/7] arm64: dts: sc7280: Add QSPI node
-In-Reply-To: <CAD=FV=XjjNx5UzgiKvONw+n0waGqgF+g7Qf4su9dvPQRS7uCrw@mail.gmail.com>
-References: <1630643340-10373-1-git-send-email-rajpat@codeaurora.org>
- <1630643340-10373-2-git-send-email-rajpat@codeaurora.org>
- <CAD=FV=XjjNx5UzgiKvONw+n0waGqgF+g7Qf4su9dvPQRS7uCrw@mail.gmail.com>
-Message-ID: <188e0a1f45336cc56ac2abb98d53dbde@codeaurora.org>
-X-Sender: rajpat@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YUIr/002dfXxDWDY@ripper>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-09-03 21:58, Doug Anderson wrote:
-> Hi,
+On Wed, Sep 15, 2021 at 10:23:11AM -0700, Bjorn Andersson wrote:
+> On Wed 15 Sep 08:05 PDT 2021, Shawn Guo wrote:
 > 
-> On Thu, Sep 2, 2021 at 9:29 PM Rajesh Patil <rajpat@codeaurora.org> 
-> wrote:
->> 
->> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> @@ -415,6 +415,25 @@
->>                 method = "smc";
->>         };
->> 
->> +       qspi_opp_table: qspi-opp-table {
->> +               compatible = "operating-points-v2";
->> +
->> +               opp-75000000 {
->> +                       opp-hz = /bits/ 64 <75000000>;
->> +                       required-opps = <&rpmhpd_opp_low_svs>;
->> +               };
->> +
->> +               opp-150000000 {
->> +                       opp-hz = /bits/ 64 <150000000>;
->> +                       required-opps = <&rpmhpd_opp_svs>;
->> +               };
->> +
+> > On Tue, Sep 14, 2021 at 02:56:28PM -0700, Stephen Boyd wrote:
+> > > Quoting Shawn Guo (2021-09-13 19:55:52)
+> > > > On QCM2290 platform, the clock xo_board runs at 38400000, while the
+> > > > child clock bi_tcxo needs to run at 19200000.  That said,
+> > > > clk_smd_rpm_branch_ops needs the capability of setting rate. Add rate
+> > > > hooks into clk_smd_rpm_branch_ops to make it possible.
+> > > 
+> > > This doesn't sound right. The branch is a simple on/off. If xo_board is
+> > > 38.4MHz, then there is an internal divider in the SoC that makes bi_tcxo
+> > > (i.e. the root of the entire clk tree) be 19.2MHz. We don't model the
+> > > divider, I guess because it isn't very important to. Instead, we tack on
+> > > a divider field and implement recalc_rate op. See clk-rpmh.c in the qcom
+> > > directory for this.
+> > 
+> > Thanks for the comment, Stephen!  To be honest, I copied the
+> > implementation from vendor kernel, and wasn't really sure if it's
+> > correct or the best.
+> > 
+> > So here is what I get based on your suggestion.  Let's me know if
+> > it's how you wanted it to be.  Thanks!
+> > 
+> > Shawn
+> > 
+> > ----8<---------
+> > 
+> > From 23dda79fee412738f046b89bdd20ef95a24c35cc Mon Sep 17 00:00:00 2001
+> > From: Shawn Guo <shawn.guo@linaro.org>
+> > Date: Wed, 15 Sep 2021 22:00:32 +0800
+> > Subject: [PATCH] clk: qcom: smd-rpm: Add a divider field for branch clock
+> > 
+> > Similar to clk-rpmh, clk-smd-rpm has the same need to handle the case
+> > where an internal divider is there between xo_board and bi_tcxo.  The
+> > change is made in the a back compatible way below.
+> > 
+> >  - Add div field to struct clk_smd_rpm, and have
+> >    __DEFINE_CLK_SMD_RPM_BRANCH() assign it.
+> > 
+> >  - Update all existing __DEFINE_CLK_SMD_RPM_BRANCH() wrappers to pass a
+> >    zero div.
+> > 
+> >  - Add DEFINE_CLK_SMD_RPM_BRANCH_DIV() which doesn't take rate argument
+> >    but div.
+> > 
+> >  - Update clk_smd_rpm_recalc_rate() to handle div and add it as
+> >    .recalc_rate of clk_smd_rpm_branch_ops.
+> > 
 > 
-> Any chance you could add a 200 MHz OPP point? It seems plausible that
-> we might want to run the Quad SPI bus at 50 MHz and this OPP needs to
-> be 4x that, so 200 MHz. ...or does it magically handle that case by
-> one of the other OPPs?
+> This looks good to me.
+> 
+> And the confirmed that the xo_board in sdm630.dtsi (and hence SDM660) is
+> wrong, it should be 38.4MHz as well.
 
-Okay
+Hmm, I see CAF kernel has 19.2MHz for SDM630/660 xo_board clock.  Or am
+I looking at the wrong place?
 
-> 
->> +               opp-300000000 {
->> +                       opp-hz = /bits/ 64 <300000000>;
->> +                       required-opps = <&rpmhpd_opp_nom>;
->> +               };
->> +       };
->> +
->>         soc: soc@0 {
->>                 #address-cells = <2>;
->>                 #size-cells = <2>;
->> @@ -1318,6 +1337,23 @@
->>                         };
->>                 };
->> 
->> +               qspi: spi@88dc000 {
->> +                       compatible = "qcom,qspi-v1";
-> 
-> The above compatible should be:
-> 
-> compatible = "qcom,sdm7280-qspi", "qcom,qspi-v1";
-> 
-> ...and you should fix the devicetree bindings to handle that. You
-> should also fix sc7180.
-> 
-> Technically the "qcom,sdm7280-qspi" isn't really needed to make
-> anything work today but having it is encouraged so that if we need to
-> deal with a quirk in the future we can easily do it. Also note that
-> your current dts will cause a bindings error because the current
-> bindings _require_ you to have two compatible strings.
+Shawn
 
-Okay
+> Unfortunately adding the appropriate divider to the sdm660 bcxo would
+> break existing .dtsi (but we can probably convince the community that it
+> would be ok, if we do it now).
