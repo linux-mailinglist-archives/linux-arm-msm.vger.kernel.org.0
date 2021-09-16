@@ -2,72 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D96C40DDF6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Sep 2021 17:28:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1F41040DE1A
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Sep 2021 17:34:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238950AbhIPP3Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Sep 2021 11:29:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33886 "EHLO
+        id S239519AbhIPPes (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Sep 2021 11:34:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35198 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238927AbhIPP3X (ORCPT
+        with ESMTP id S239507AbhIPPej (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Sep 2021 11:29:23 -0400
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68541C061766
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Sep 2021 08:28:03 -0700 (PDT)
-Received: by mail-io1-xd29.google.com with SMTP id g9so8359939ioq.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Sep 2021 08:28:03 -0700 (PDT)
+        Thu, 16 Sep 2021 11:34:39 -0400
+Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EADE6C061767
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Sep 2021 08:33:18 -0700 (PDT)
+Received: by mail-io1-xd2a.google.com with SMTP id a15so8399025iot.2
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Sep 2021 08:33:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=9PGyga+u2JMpsASTRDGCIEIQqGlu+knYZsympOND9rQ=;
-        b=InU3QiCwubwJ7wJwH2fV9uC/toVkZlNbVLSyRxruFnAVHOXGg8qvphDFYNBNPGxhhe
-         4mmIwTZtIsJwMy6F0zfAo1dq23wBKs4+xMPWb339vAePTt0htSMmm0NVpzhLB1T7WH6k
-         ohYTSufm2x5u42lzIV0PUetLBqPuk6V88BKEA=
+        bh=ms3bl+nA5Ri+3UB+CCMQr3zf572ukgQ7gcT+ysEOLx4=;
+        b=GCuBZd4DCB9aZj+pCfyCiLjwRu4LhUZquIp2PLs8FEt7Xt+aP6AYFjmRNrx2pLdLQO
+         H7VqSWn/4MDPPI8YJ+CbpDmTTH+DRt4JLmX64snOhw2xy7fLxCGXDfmETRL3oUxZLHDj
+         kreR9rErzUvoNNTD8le00ZhaWU4Ln4dzaTOr4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=9PGyga+u2JMpsASTRDGCIEIQqGlu+knYZsympOND9rQ=;
-        b=T5NYe/z+YB+G6krY9ZuzevpLFQP384Z1TTnbJvDRkHr3w0BzDSndxNesK13tpd1hxl
-         Xj8EgjI4BwtyCTIifXXBOd/xAktzG+1cjbiUmFyV/wFD76Xm7ITH/Pkqxv5Tn0i/Bi6P
-         ZMYfrybddnNX5YBO9XsdRrZzAKnq1ye/PqZwjmsOOigeDsXRE2SxyGcCzmZs1lTYuSBy
-         +PErk951D+L4OMtUk8EwA0/b/dIJ1+W1v9jMPeuBLXoVM9TO6y0fF7u3Fgj1nfPOjslH
-         KeJlnYFW5NYQ6H3BoQcs35e3wJI4E6qmMDvAMvbnFRYJVkW8IFQmlXw0rrk51S2k7HoL
-         vTpg==
-X-Gm-Message-State: AOAM531SQQssYjnxDOaZKvOqZeYZ6/fkhrUvMPAS4Aaxj9ef4iebXeKL
-        +BTnzQCtWi3k2jprfIACToQSnpGzxPF9qw==
-X-Google-Smtp-Source: ABdhPJyhavIBTTj5zitfnpr70AasyoiU8NjnyPg5L7jWybXRaWbcyTS0GSpMIIHFyCK8GoMdaSS3IA==
-X-Received: by 2002:a5e:c603:: with SMTP id f3mr1258508iok.14.1631806082698;
-        Thu, 16 Sep 2021 08:28:02 -0700 (PDT)
-Received: from mail-il1-f180.google.com (mail-il1-f180.google.com. [209.85.166.180])
-        by smtp.gmail.com with ESMTPSA id y27sm1863326iot.10.2021.09.16.08.28.01
+        bh=ms3bl+nA5Ri+3UB+CCMQr3zf572ukgQ7gcT+ysEOLx4=;
+        b=pwzoOqXYFgq/0ORcDSODPSNZgltCnD6YCQKh5MP5CxffMu8lA2aedAkyYouDX+iOwB
+         kydoAqWBQ33ZXB25ZPylyd+VWnQIEahAITJwnoLSsHmCqy7R9goq/4ZhAzYffoC+SFBO
+         7NaA+7MQQM6fplFmBv31jIp4UjoNH6480IHfb0gQhwnylNXJBN28J+41TndsJMGNN/L6
+         RpwUUdcicQ2DJYmLyb2usvvmuINcJOIgy0D4Q42lhSBmfiApuhalZABwo0MqYRcBFvHY
+         MYAG7zESDGvJ6OQHeVtj0PV+OwB393DoyP3EDobkYlLoiNR4jmx0axClkhI5MmI0m+r7
+         UTtA==
+X-Gm-Message-State: AOAM532p60/QxdIvYZd26+PKb/IZ4wqmD9sAI6OQIRe0wQ4/EEmA2RGp
+        sq2nUwU3UxBkf4sT+rom6El36Q4OHUQ4AA==
+X-Google-Smtp-Source: ABdhPJzB0AwzN7GCbmIYLlad+EuGftQLvCeF2P/73oXjs7mM7MLxhga3vtxKXcy8pfkK7NxuwCc89w==
+X-Received: by 2002:a05:6638:1389:: with SMTP id w9mr4816627jad.138.1631806397809;
+        Thu, 16 Sep 2021 08:33:17 -0700 (PDT)
+Received: from mail-il1-f169.google.com (mail-il1-f169.google.com. [209.85.166.169])
+        by smtp.gmail.com with ESMTPSA id r7sm1905188ilm.5.2021.09.16.08.33.17
         for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 16 Sep 2021 08:28:02 -0700 (PDT)
-Received: by mail-il1-f180.google.com with SMTP id x2so6962934ila.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Sep 2021 08:28:01 -0700 (PDT)
-X-Received: by 2002:a92:da0c:: with SMTP id z12mr4329512ilm.120.1631806081058;
- Thu, 16 Sep 2021 08:28:01 -0700 (PDT)
+        Thu, 16 Sep 2021 08:33:17 -0700 (PDT)
+Received: by mail-il1-f169.google.com with SMTP id b8so6992078ilh.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Sep 2021 08:33:17 -0700 (PDT)
+X-Received: by 2002:a05:6e02:1847:: with SMTP id b7mr4487370ilv.180.1631806396862;
+ Thu, 16 Sep 2021 08:33:16 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210830080621.1.Ia15d97bc4a81f2916290e23a8fde9cbc66186159@changeid>
-In-Reply-To: <20210830080621.1.Ia15d97bc4a81f2916290e23a8fde9cbc66186159@changeid>
+References: <20210903122212.v2.1.I9777d0036ecbb749a4fb9ebb892f94c6e3a51772@changeid>
+In-Reply-To: <20210903122212.v2.1.I9777d0036ecbb749a4fb9ebb892f94c6e3a51772@changeid>
 From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 16 Sep 2021 08:27:49 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=XSFHgUEo2BrEY+o7Vavd3jHcwSZ7hKgwYOTPSHhHaZAw@mail.gmail.com>
-Message-ID: <CAD=FV=XSFHgUEo2BrEY+o7Vavd3jHcwSZ7hKgwYOTPSHhHaZAw@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Move the SD CD GPIO pin out of
- the dtsi file
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Shaik Sajida Bhanu <sbhanu@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Andy Gross <agross@kernel.org>,
+Date:   Thu, 16 Sep 2021 08:33:05 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=U=rT5dLz6S7_y6kuZ4R_ijDZtdn25-UkHw2QhNVUu-hw@mail.gmail.com>
+Message-ID: <CAD=FV=U=rT5dLz6S7_y6kuZ4R_ijDZtdn25-UkHw2QhNVUu-hw@mail.gmail.com>
+Subject: Re: [PATCH v2] arm64: dts: qcom: sc7180-trogdor: Delete ADC config
+ for unused thermistors
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
         "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
         <devicetree@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
         LKML <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
@@ -76,20 +75,33 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Hi,
 
-On Mon, Aug 30, 2021 at 8:07 AM Douglas Anderson <dianders@chromium.org> wrote:
+On Fri, Sep 3, 2021 at 12:22 PM Matthias Kaehlcke <mka@chromium.org> wrote:
 >
-> There's nothing magical about GPIO91 and boards could use different
-> GPIOs for card detect. Move the pin out of the dtsi file and to the
-> only existing board file.
+> The charger thermistor on Lazor, CoachZ rev1 and Pompom rev1+2 is
+> either the wrong part or not stuffed at all, the same is true for
+> the skin temperature thermistor on CoachZ rev1. The corresponding
+> thermal zones are already disabled for these devices, in addition
+> delete the ADC nodes of the thermistors.
 >
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
+> For Lazor and CoachZ rev1 also disable the PM6150 ADC and thermal
+> monitor since none of the ADC channels is used.
+>
+> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
 > ---
 >
->  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 1 +
->  arch/arm64/boot/dts/qcom/sc7280.dtsi     | 4 ----
->  2 files changed, 1 insertion(+), 4 deletions(-)
+> Changes in v2:
+> - also disable the ADC for Lazor and CoachZ rev1
+> - updated commit message
+>
+>  .../boot/dts/qcom/sc7180-trogdor-coachz-r1.dts     | 14 ++++++++++++++
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi | 12 ++++++++++++
+>  .../boot/dts/qcom/sc7180-trogdor-pompom-r1.dts     |  8 ++++++++
+>  .../boot/dts/qcom/sc7180-trogdor-pompom-r2.dts     |  8 ++++++++
+>  4 files changed, 42 insertions(+)
 
-If there are no concerns with this patch, I think it's ready to land
-now. Thanks!
+I haven't done due diligence to review this patch since Stephen
+already did, but it's been on the list of patches I was tracking that
+I thought were ready to land. If there are no objections, it'd be a
+keen time to land it. ;-)
 
 -Doug
