@@ -2,127 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 17D7E40D2E0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Sep 2021 07:29:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2881140D33D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Sep 2021 08:29:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230193AbhIPFah (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Sep 2021 01:30:37 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:48490 "EHLO
+        id S234513AbhIPGa7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Sep 2021 02:30:59 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:37851 "EHLO
         so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234043AbhIPFah (ORCPT
+        with ESMTP id S234492AbhIPGa6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Sep 2021 01:30:37 -0400
+        Thu, 16 Sep 2021 02:30:58 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1631770157; h=Content-Type: MIME-Version: Message-ID:
- In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
- bh=fOhYzZ+UiFCYWAUStU6MsbEzNyurKGfmDelClbmSdhU=; b=xe+hv5EpOLr4Cd6rddmcKHgN7Fcj17shT2hQrA4uRIlSBtRXhO76tUe+OriAYUft9aaknTLr
- 6r4ZUp6+kA8q6s62ZcKCQzaFF29xIL+/JZfiyxHHyQNBH6tlcNg3GgZLGuyh6990KcHtE3ri
- 8AQ+c5Ybvb9qQWDi4ChgFVWJhVQ=
+ s=smtp; t=1631773778; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=14otI/FRn3T6TCrE2iGF/EbKmUQaHDuaRWzxyWGJRJI=;
+ b=JJcGsVLS57WfRuxOV5uOV+1pPCxhazNDrfIl5FGV0iWeUvALB3wYeBPMK5pKeDGJ7Cb52csv
+ rzadfxBAk9ZL1RgkOfSgvhBR66tmhuENtgfBq0IHIZ1aY8l6Jj0Jvi0JsFr7cYuPpwUQ7dAZ
+ pjPCgqLNWN1N9yVoU3UiOXnhafk=
 X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 6142d61ad914b051824fd7ed (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 16 Sep 2021 05:28:58
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 6142e451b585cc7d2466e0ab (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 16 Sep 2021 06:29:37
  GMT
-Sender: kvalo=codeaurora.org@mg.codeaurora.org
+Sender: dikshita=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 25DDBC43616; Thu, 16 Sep 2021 05:28:57 +0000 (UTC)
+        id B0627C43616; Thu, 16 Sep 2021 06:29:37 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from tykki (tynnyri.adurom.net [51.15.11.48])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: kvalo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 945DEC4338F;
-        Thu, 16 Sep 2021 05:28:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 945DEC4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Kalle Valo <kvalo@codeaurora.org>
-To:     Bhaumik Bhatt <bbhatt@codeaurora.org>
-Cc:     ath11k@lists.infradead.org, linux-arm-msm@vger.kernel.org,
-        hemantk@codeaurora.org, linux-kernel@vger.kernel.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        linux-wireless@vger.kernel.org
-Subject: Re: [PATCH v5] bus: mhi: core: Add support for processing priority of event ring
-References: <1624641728-3886-1-git-send-email-bbhatt@codeaurora.org>
-        <20210716114926.GH3323@workstation>
-        <9300cf49a498521f471d6106131bd675@codeaurora.org>
-        <9561c5a41e1707d694b1c872fea399de@codeaurora.org>
-Date:   Thu, 16 Sep 2021 08:28:50 +0300
-In-Reply-To: <9561c5a41e1707d694b1c872fea399de@codeaurora.org> (Bhaumik
-        Bhatt's message of "Wed, 28 Jul 2021 17:06:24 -0700")
-Message-ID: <87bl4t1431.fsf@codeaurora.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        (Authenticated sender: dikshita)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D2D0AC4338F;
+        Thu, 16 Sep 2021 06:29:36 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Thu, 16 Sep 2021 11:59:36 +0530
+From:   dikshita@codeaurora.org
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, jim.cromie@gmail.com,
+        Joe Perches <joe@perches.com>, Jason Baron <jbaron@akamai.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-media-owner@vger.kernel.org,
+        Akinobu Mita <akinobu.mita@gmail.com>
+Subject: Re: [PATCH v5 2/3] venus: Add a debugfs file for SSR trigger
+In-Reply-To: <CAE-0n53T-RoOvR=s9nHiXAriMgKvBfDqfBfoGKX5Ju5YF3Tcqw@mail.gmail.com>
+References: <20200730095350.13925-1-stanimir.varbanov@linaro.org>
+ <20200730095350.13925-3-stanimir.varbanov@linaro.org>
+ <159718256557.1360974.458611240360821676@swboyd.mtv.corp.google.com>
+ <8c1fdf2d0807f07ec57b232497b405f1@codeaurora.org>
+ <CAE-0n53T-RoOvR=s9nHiXAriMgKvBfDqfBfoGKX5Ju5YF3Tcqw@mail.gmail.com>
+Message-ID: <53a38a24cca0b6f1c2a3120f14dfc865@codeaurora.org>
+X-Sender: dikshita@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bhaumik,
+On 2021-09-16 01:09, Stephen Boyd wrote:
+> Quoting dikshita@codeaurora.org (2021-09-15 02:13:09)
+>> Hi Stephen,
+>> 
+>> Reviving the discussion on this change as we need to pull this in.
+>> 
+>> As per your suggestion, I explored the fault injection framework to
+>> implement this functionality.
+>> But I don't think that meets our requirements.
+>> 
+>> We need a way to trigger subsystem restart from the client-side, it's
+>> not derived from the driver.
+> 
+> Just to confirm, this is all for debugging purposes right?
+> 
+yes, correct. this is for debugging purposes. We need this to simulate 
+an error on FW side.
+In a normal scenario, when FW runs into error, sys error is triggered 
+from FW as result of which
+a sequence of commands are followed for restarting the system.
+using this feature, we are trying to simulate this error on FW i.e we 
+are forcing the FW to run into an error.
+>> 
+>> while fault injection framework enables the driver to trigger an
+>> injection
+>> when a specific event occurs for eg: page allocation failure or memory
+>> access failure.
+>> 
+>> So, IMO, we will have to use custom debugfs only.
+> 
+> Can you use DECLARE_FAULT_ATTR()? Or you need it to be active instead 
+> of
+> passive, i.e. it shouldn't wait for should_fail() to return true, but
+> actively trigger something on the remoteproc?
+> 
 
-Bhaumik Bhatt <bbhatt@codeaurora.org> writes:
+yes, it doesn't need to wait for should_fail() to return true.
+the client/user should be able to trigger this subsystem restart(SSR) at 
+any point of time
+when a session is running. It's totally client-driven.
 
-> On 2021-07-16 11:22 AM, Bhaumik Bhatt wrote:
->> Hi Mani,
->>
->> On 2021-07-16 04:49 AM, Manivannan Sadhasivam wrote:
->>> On Fri, Jun 25, 2021 at 10:22:08AM -0700, Bhaumik Bhatt wrote:
->>>> From: Hemant Kumar <hemantk@codeaurora.org>
->>>>
->>>> Event ring priorities are currently set to 1 and are unused.
->>>> Default processing priority for event rings is set to regular
->>>> tasklet. Controllers can choose to use high priority tasklet
->>>> scheduling for certain event rings critical for processing such
->>>> as ones transporting control information if they wish to avoid
->>>> system scheduling delays for those packets. In order to support
->>>> these use cases, allow controllers to set event ring priority to
->>>> high.
->>>>
->>>
->>> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->>>
->>> Just curious, what are the event rings you are going to make as high
->>> priority? If you are going to do that for existing controllers, please
->>> submit a patch now itself.
->>>
->>> Thanks,
->>> Mani
->>>
->> Idea for this patch came from 914b72a6948b ("bus: mhi: Wait for M2
->> state during system resume").
->>
->> If WLAN ath11k controller driver wants to avoid the scenario
->> mentioned in
->> the above patch, it will help them to have a high priority for their
->> dedicated
->> control events ring.
->>
->> I would defer to Kalle and others in ath11k, whether or not they are
->> OK to take that route.
->> as an update to priority will just help return from resume faster.
->> It will also depend on system load/reproducibility rate of the
->> scenario.
->>
->> I can provide a patch for them to review/test since I do not have the
->> setup for it.
->>
-> Would you like to try this patch out? It basically increases the
-> priority
-> at which the control events for M0/M1/M3 state changes are handled.
->
-> Let me know if you have any questions.
-
-At the moment I'm seriously lagging with patches so I don't really have
-any free time. Can some other ath11k developer help here?
-
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+>> 
+>> Please feel free to correct me in case my understanding of the 
+>> framework
+>> is wrong.
+>> 
+> 
+> I presume the fault injection framework could get a new feature that
+> lets the fault be injected immediately upon writing the debugfs file.
+> My goal is to consolidate this sort of logic into one place and then 
+> put
+> it behind some config option that distros can disable so the kernel
+> isn't bloated with debug features that end users will never care about.
