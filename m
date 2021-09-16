@@ -2,33 +2,32 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 397E140D437
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Sep 2021 10:03:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 67C2140D4B9
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Sep 2021 10:41:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234892AbhIPIFO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Sep 2021 04:05:14 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:44708 "EHLO m43-7.mailgun.net"
+        id S232063AbhIPIm3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Sep 2021 04:42:29 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:14280 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235043AbhIPIDU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Sep 2021 04:03:20 -0400
+        id S235117AbhIPIm3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 16 Sep 2021 04:42:29 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1631779265; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=tP+XNZ/9NH4K4GD+4JVcxuh8dLGXglkOiSbkpJxZE3s=;
- b=Hh8wMgLKR0Mbk0THwUrOOzcT5ZOFxchpA3hE4Qx4RE4oA/IY+r3Ks7IBY5nE68Tm+gqCvtSU
- rNvZbQYESmd4cs4fC3CuHcTAvTyYtb2FpundGOqtjGxoQ9KbNCpvOfAfCuE5JVdWtFgoDfC9
- WgJhA6nM/3fXPZzrHElrJe9wzWk=
+ s=smtp; t=1631781669; h=Message-ID: Subject: Cc: To: From: Date:
+ Content-Transfer-Encoding: Content-Type: MIME-Version: Sender;
+ bh=vH/3PJSvt6dKKjRhpN7SN/NYDcrVA+09ITtulvlItFs=; b=xISPuWT8sn1fhPJWzG+4wy3WMpeK7gyiVE2lRTT2mCGA12KWIx5MDzdLFFq6H9go5Oja9zef
+ IWi0krajAJwpec5hGc+MUK7MNNm9HdwpQqkyQHjBjpqzas4TqX5u/1xitG1nnZHiuukVwlIJ
+ 8ORpdixeNoV8hiK2PGte1UJzGCo=
 X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 6142f9a4bd6681d8ed36759e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 16 Sep 2021 08:00:36
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 61430324d914b05182d9ba12 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 16 Sep 2021 08:41:08
  GMT
-Sender: okukatla=codeaurora.org@mg.codeaurora.org
+Sender: tjiang=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 92B98C43617; Thu, 16 Sep 2021 08:00:35 +0000 (UTC)
+        id D59ADC4360D; Thu, 16 Sep 2021 08:41:06 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,93 +36,77 @@ X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
 Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: okukatla)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BBFEBC4360D;
-        Thu, 16 Sep 2021 08:00:34 +0000 (UTC)
+        (Authenticated sender: tjiang)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 2264CC4338F;
+        Thu, 16 Sep 2021 08:41:06 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Thu, 16 Sep 2021 13:30:34 +0530
-From:   okukatla@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        bjorn.andersson@linaro.org, devicetree@vger.kernel.org,
-        evgreen@google.com, georgi.djakov@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        mdtipton@codeaurora.org, sibis@codeaurora.org,
-        saravanak@google.com, seansw@qti.qualcomm.com, elder@linaro.org,
-        linux-pm@vger.kernel.org, linux-arm-msm-owner@vger.kernel.org,
-        okukatla=codeaurora.org@codeaurora.org
-Subject: Re: [v7 3/3] arm64: dts: qcom: sc7280: Add EPSS L3 interconnect
- provider
-In-Reply-To: <CAE-0n53g=qGoVAMh_me_W0ksp39WUm2CCwAttcAK+Do5nYXq5g@mail.gmail.com>
-References: <1629458622-4915-1-git-send-email-okukatla@codeaurora.org>
- <1629458622-4915-4-git-send-email-okukatla@codeaurora.org>
- <CAE-0n51WBdLoJRPs9tWZgdAukJMnkD3V00o7xNYVX77-eToKvw@mail.gmail.com>
- <749157bdb4613ae370adfb7ba055a2a9@codeaurora.org>
- <36fe241f845a27b52509274d007948b1@codeaurora.org>
- <CAE-0n53g=qGoVAMh_me_W0ksp39WUm2CCwAttcAK+Do5nYXq5g@mail.gmail.com>
-Message-ID: <49ba33707767f856ff2a868906387b16@codeaurora.org>
-X-Sender: okukatla@codeaurora.org
+Date:   Thu, 16 Sep 2021 16:41:06 +0800
+From:   tjiang@codeaurora.org
+To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com
+Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
+        rjliao@codeaurora.org, zijuhu@codeaurora.org, tjiang@codeaurora.org
+Subject: [PATCH v1] Bluetooth: btusb: Add gpio reset way for qca btsoc in 
+ cmd_timeout
+Message-ID: <f1548c4ca5186597a21a8a9ee6655b58@codeaurora.org>
+X-Sender: tjiang@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-09-16 01:10, Stephen Boyd wrote:
-> Quoting okukatla@codeaurora.org (2021-09-14 23:26:19)
->> On 2021-09-15 10:35, okukatla@codeaurora.org wrote:
->> > On 2021-09-04 00:36, Stephen Boyd wrote:
->> >> Quoting Odelu Kukatla (2021-08-20 04:23:41)
->> >>> Add Epoch Subsystem (EPSS) L3 interconnect provider node on SC7280
->> >>> SoCs.
->> >>>
->> >>> Signed-off-by: Odelu Kukatla <okukatla@codeaurora.org>
->> >>> ---
->> >>>  arch/arm64/boot/dts/qcom/sc7280.dtsi | 11 +++++++++++
->> >>>  1 file changed, 11 insertions(+)
->> >>>
->> >>> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> >>> b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> >>> index 53a21d0..cf59b47 100644
->> >>> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> >>> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> >>> @@ -1848,6 +1848,17 @@
->> >>>                         };
->> >>>                 };
->> >>>
->> >>> +               epss_l3: interconnect@18590000 {
->> >>> +                       compatible = "qcom,sc7280-epss-l3";
->> >>> +                       reg = <0 0x18590000 0 1000>,
->> >>
->> >> Is this supposed to be 0x1000?
->> >>
->> > No, This is 1000 or 0x3E8.
-> 
-> Wow ok. Why is it the only size that isn't in hex format? Please try to
-> be consistent and use hex throughout.
-> 
-Sure, will update it to hex format in new revision.
->> We have mapped only required registers for L3 scaling, 1000/0x3E8 is
->> suffice.
->> But i will update it to 0x1000 in next revision so that entire clock
->> domain region-0 is mapped.
-> 
-> Doesn't that conflict with the cpufreq-hw device?
-> 
-epss_l3 maps (0x18590000, size:0x1000) region which cpufreq-hw does not 
-need. I will update size to 0x1000 for this region only.
+if platform provide gpio connect to BT_EN reset pin of qca btsoc chip,
+we can do hardware reset instead of usb port reset.
 
->> >>> +                             <0 0x18591000 0 0x100>,
->> >>> +                             <0 0x18592000 0 0x100>,
->> >>> +                             <0 0x18593000 0 0x100>;
->> >>> +                       clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc
->> >>> GCC_GPLL0>;
->> >>> +                       clock-names = "xo", "alternate";
->> >>> +                       #interconnect-cells = <1>;
->> >>> +               };
->> >>> +
->> >>>                 cpufreq_hw: cpufreq@18591000 {
->> >>>                         compatible = "qcom,cpufreq-epss";
->> >>>                         reg = <0 0x18591100 0 0x900>,
+Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
+---
+  drivers/bluetooth/btusb.c | 22 ++++++++++++++++++++++
+  1 file changed, 22 insertions(+)
+
+diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
+index 8ef4e0f6e0bb..da85cc14f931 100644
+--- a/drivers/bluetooth/btusb.c
++++ b/drivers/bluetooth/btusb.c
+@@ -657,11 +657,33 @@ static void btusb_rtl_cmd_timeout(struct hci_dev 
+*hdev)
+  static void btusb_qca_cmd_timeout(struct hci_dev *hdev)
+  {
+  	struct btusb_data *data = hci_get_drvdata(hdev);
++	struct gpio_desc *reset_gpio = data->reset_gpio;
+  	int err;
+
+  	if (++data->cmd_timeout_cnt < 5)
+  		return;
+
++	if (reset_gpio) {
++		bt_dev_err(hdev, "Reset qca device via bt_en gpio");
++
++		/* Toggle the hard reset line. The qca bt device is going to
++		 * yank itself off the USB and then replug. The cleanup is handled
++		 * correctly on the way out (standard USB disconnect), and the new
++		 * device is detected cleanly and bound to the driver again like
++		 * it should be.
++		 */
++		if (test_and_set_bit(BTUSB_HW_RESET_ACTIVE, &data->flags)) {
++			bt_dev_err(hdev, "last reset failed? Not resetting again");
++			return;
++		}
++
++		gpiod_set_value_cansleep(reset_gpio, 0);
++		msleep(200);
++		gpiod_set_value_cansleep(reset_gpio, 1);
++
++		return;
++	}
++
+  	bt_dev_err(hdev, "Multiple cmd timeouts seen. Resetting usb device.");
+  	/* This is not an unbalanced PM reference since the device will reset 
+*/
+  	err = usb_autopm_get_interface(data->intf);
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+Forum, a Linux Foundation Collaborative Project
