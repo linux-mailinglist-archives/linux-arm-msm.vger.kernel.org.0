@@ -2,109 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6AE3640E328
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Sep 2021 19:19:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 92A3140E692
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Sep 2021 19:30:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241049AbhIPQpg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Sep 2021 12:45:36 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:18643 "EHLO
+        id S244326AbhIPRWf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Sep 2021 13:22:35 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:12972 "EHLO
         so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243737AbhIPQng (ORCPT
+        with ESMTP id S240927AbhIPQyF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Sep 2021 12:43:36 -0400
+        Thu, 16 Sep 2021 12:54:05 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1631810536; h=Content-Transfer-Encoding: Content-Type:
- MIME-Version: Message-ID: In-Reply-To: Date: References: Subject: Cc:
- To: From: Sender; bh=GdMX3W4kB6jE1Dh1q7N+9phTK4EXeOSDz7/sYzwb3Mc=; b=cq0MAQwB006y8Q7j0t531m0DjK9jLUh+Vvkv4SwIRadwYMyceDgAk3HFwTZWTZE9s5XS9woF
- 3ejiOLz8QCdGy8+In2FpzKvlKM2qM7IK3gFippYuyylhtaeWXvwm+DI45rdiNV/M2txWnpkF
- NMqVau7T56d9LY3hA4xeWXTmZdU=
+ s=smtp; t=1631811164; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=DLNHbxMKqTmm7T8/5Yy90VJFVEYePts8bq3gFNwVYq4=; b=UHH+vPsT+J52R++9NeudAn/FwnadLEGbTLkDF+ac83AaNsaMGgIS6jip6ORPQQGicfR2yybN
+ BHwKbsPwM0wuK7gPJdSE7zTAzzSU2HOiElglvJ86WvhlIpeWsvOol//rYmcOmPj8fGEoak5f
+ jqONNY+ZRIWGwr08yNmKrakZ0Sw=
 X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
  smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 614373e18b04ef85894085e2 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 16 Sep 2021 16:42:09
+ 614376438b04ef85894b8b69 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 16 Sep 2021 16:52:19
  GMT
-Sender: kvalo=codeaurora.org@mg.codeaurora.org
+Sender: pillair=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 451FFC43164; Thu, 16 Sep 2021 16:42:08 +0000 (UTC)
+        id 7EF17C4360C; Thu, 16 Sep 2021 16:52:19 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
         autolearn=no autolearn_force=no version=3.4.0
-Received: from tykki (tynnyri.adurom.net [51.15.11.48])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from pillair-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: kvalo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 14883C43164;
-        Thu, 16 Sep 2021 16:42:04 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 14883C43164
+        (Authenticated sender: pillair)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D57E2C18E4B;
+        Thu, 16 Sep 2021 16:52:13 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org D57E2C18E4B
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Kalle Valo <kvalo@codeaurora.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Loic Poulain <loic.poulain@linaro.org>, ath11k@lists.infradead.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-wireless@vger.kernel.org, regressions@lists.linux.dev
-Subject: Re: [regression] mhi: ath11k resume fails on some devices
-References: <871r5p0x2u.fsf@codeaurora.org>
-        <CAMZdPi8UJLvBFQd8-nf-iHAQh8cEuihq97PUFfZ7Q=rxRQoPsg@mail.gmail.com>
-        <20210916111218.GA12918@thinkpad>
-        <CAMZdPi94607mZorp+Zmkw3seWXak6p9Jr05CQ5hhfgKQoG8n7Q@mail.gmail.com>
-        <20210916163529.GA9027@thinkpad>
-Date:   Thu, 16 Sep 2021 19:42:02 +0300
-In-Reply-To: <20210916163529.GA9027@thinkpad> (Manivannan Sadhasivam's message
-        of "Thu, 16 Sep 2021 22:05:29 +0530")
-Message-ID: <87k0jgxyjp.fsf@codeaurora.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
+From:   Rakesh Pillai <pillair@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        swboyd@chromium.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, sibis@codeaurora.org,
+        mpubbise@codeaurora.org, kuabhs@chromium.org,
+        Rakesh Pillai <pillair@codeaurora.org>
+Subject: [PATCH v3] arm64: dts: qcom: sc7280: Add WPSS remoteproc node
+Date:   Thu, 16 Sep 2021 22:22:01 +0530
+Message-Id: <1631811121-32662-1-git-send-email-pillair@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
+Add the WPSS remoteproc node in dts for
+PIL loading.
 
-> On Thu, Sep 16, 2021 at 01:18:22PM +0200, Loic Poulain wrote:
->> Le jeu. 16 sept. 2021 =C3=A0 13:12, Manivannan Sadhasivam <
->> manivannan.sadhasivam@linaro.org> a =C3=A9crit :
->>=20
->
-> [...]
->
->> > If things seems to work fine without that patch, then it implies that
->> > setting M0
->> > state works during resume. I think we should just revert that patch.
->> >
->> > Loic, did that patch fix any issue for you or it was a cosmetic fix on=
-ly?
->>=20
->>=20
->> It fixes sdx modem resuming issue, without that we don=E2=80=99t know mo=
-dem needs
->> to be reinitialized.
->>=20
->
-> Okay. Then in that case, the recovery mechanism has to be added to the at=
-h11k
-> MHI controller.
+Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
+---
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts |  4 +++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi    | 63 +++++++++++++++++++++++++++++++++
+ 2 files changed, 67 insertions(+)
 
-What does that mean in practise, do you have any pointers or examples? I
-have no clue what you are proposing :)
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+index 64fc22a..2b8bbcd 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
++++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+@@ -68,3 +68,7 @@
+ 		qcom,pre-scaling = <1 1>;
+ 	};
+ };
++
++&remoteproc_wpss {
++	status = "okay";
++};
+diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+index 89ed7f2..1931ef7d 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
+@@ -69,10 +69,20 @@
+ 			reg = <0x0 0x80b00000 0x0 0x100000>;
+ 		};
+ 
++		wlan_fw_mem: memory@80c00000 {
++			no-map;
++			reg = <0x0 0x80c00000 0x0 0xc00000>;
++		};
++
+ 		ipa_fw_mem: memory@8b700000 {
+ 			reg = <0 0x8b700000 0 0x10000>;
+ 			no-map;
+ 		};
++
++		wpss_mem: memory@9ae00000 {
++			no-map;
++			reg = <0x0 0x9ae00000 0x0 0x1900000>;
++		};
+ 	};
+ 
+ 	cpus {
+@@ -1423,6 +1433,59 @@
+ 			#power-domain-cells = <1>;
+ 		};
+ 
++		remoteproc_wpss: remoteproc@8a00000 {
++			compatible = "qcom,sc7280-wpss-pil";
++			reg = <0 0x08a00000 0 0x10000>;
++
++			interrupts-extended = <&intc GIC_SPI 587 IRQ_TYPE_EDGE_RISING>,
++					      <&wpss_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
++					      <&wpss_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
++					      <&wpss_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
++					      <&wpss_smp2p_in 3 IRQ_TYPE_EDGE_RISING>,
++					      <&wpss_smp2p_in 7 IRQ_TYPE_EDGE_RISING>;
++			interrupt-names = "wdog", "fatal", "ready", "handover",
++					  "stop-ack", "shutdown-ack";
++
++			clocks = <&gcc GCC_WPSS_AHB_BDG_MST_CLK>,
++				 <&gcc GCC_WPSS_AHB_CLK>,
++				 <&gcc GCC_WPSS_RSCP_CLK>,
++				 <&rpmhcc RPMH_CXO_CLK>;
++			clock-names = "gcc_wpss_ahb_bdg_mst_clk",
++				      "gcc_wpss_ahb_clk",
++				      "gcc_wpss_rscp_clk",
++				      "xo";
++
++			power-domains = <&rpmhpd SC7280_CX>,
++					<&rpmhpd SC7280_MX>;
++			power-domain-names = "cx", "mx";
++
++			memory-region = <&wpss_mem>;
++
++			qcom,qmp = <&aoss_qmp>;
++
++			qcom,smem-states = <&wpss_smp2p_out 0>;
++			qcom,smem-state-names = "stop";
++
++			resets = <&aoss_reset AOSS_CC_WCSS_RESTART>,
++				 <&pdc_reset PDC_WPSS_SYNC_RESET>;
++			reset-names = "restart", "pdc_sync";
++
++			qcom,halt-regs = <&tcsr_mutex_regs 0x37000>;
++
++			status = "disabled";
++
++			glink-edge {
++				interrupts-extended = <&ipcc IPCC_CLIENT_WPSS
++							     IPCC_MPROC_SIGNAL_GLINK_QMP
++							     IRQ_TYPE_EDGE_RISING>;
++				mboxes = <&ipcc IPCC_CLIENT_WPSS
++						IPCC_MPROC_SIGNAL_GLINK_QMP>;
++
++				label = "wpss";
++				qcom,remote-pid = <13>;
++			};
++		};
++
+ 		pdc: interrupt-controller@b220000 {
+ 			compatible = "qcom,sc7280-pdc", "qcom,pdc";
+ 			reg = <0 0x0b220000 0 0x30000>;
+-- 
+2.7.4
 
-> If that's too much of work for Kalle, then I'll look into it. But I might=
- get
-> time only after Plumbers.
-
-I'm busy, as always, so not sure when I'm able to do it either. I think
-we should seriously consider reverting 020d3b26c07a and adding it back
-after ath11k is able to handle this new situation.
-
---=20
-https://patchwork.kernel.org/project/linux-wireless/list/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatc=
-hes
