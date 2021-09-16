@@ -2,183 +2,149 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1D00A40EB65
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Sep 2021 22:10:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 39A9F40EBFE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 16 Sep 2021 23:16:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237253AbhIPUMB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Sep 2021 16:12:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41770 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231994AbhIPUMB (ORCPT
+        id S232713AbhIPVRV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Sep 2021 17:17:21 -0400
+Received: from wnew3-smtp.messagingengine.com ([64.147.123.17]:60809 "EHLO
+        wnew3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S230243AbhIPVRV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Sep 2021 16:12:01 -0400
-Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38D5DC061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Sep 2021 13:10:40 -0700 (PDT)
-Received: by mail-io1-xd35.google.com with SMTP id p80so2816507iod.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Sep 2021 13:10:40 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=wu/5meqeHZqsVUKSjtYxX+ZcUZzqTdvsMcCN8QTUfPI=;
-        b=J/r8x5aEqy8Zz1boK1o6nPUUBlaotFj7ta5KZX5ZUTU5V0joZCkMVqLukEG5o2CDDk
-         IVID5A72jCCD+Xg9jI5DoVDUwa1QDhwIiBMW2+o4wK3uG3/LJVtwPKoAthIRAgnvHQcp
-         4yUtKUO4Zzw0lMANMOZYcwKnxXr32rOTNAEuvtJPnykVE5wjUjKT/K2R3mjQDKTwO1sN
-         ueIG2ajmmuh1zgQ3rNJ/HeqcL0yTz/ulLTcW8cXB66dQ9gN7Hh4rLciGmmB6lxJl7LYF
-         gt/rTSDsCE5SWza8KETcR2wVib5qQIrw9UkkjjrKK3xMMu7VB7WUE/Rcyg7Kim5QVxhR
-         sWXQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=wu/5meqeHZqsVUKSjtYxX+ZcUZzqTdvsMcCN8QTUfPI=;
-        b=GP5B/mJ3yVQioKRPiXyfj4eDTVSv/W2L2qYC0lpKTmkKgDwKU4uBX3+ve8kRt/ykPY
-         qvFzqh/5fivgnC0bLLmWYJCXeND/5dqxiFuyPMoOybK93XmVb2BjHeCUGl+c+oGyZlN0
-         oYhntiQWFbum2D+slLhsWRx9okDUMErTtBRKtpXJUyqfd+tXsgAVSn9vu+3z2apxFyJx
-         ZT8umovfBaE7l5kpMBfZvWEq14CwAWGXu4LPoQGfXcr/gZh+aCo9Ii9EafkaKRYm4D6K
-         5rEgi6A38u1TE+SFERqzYeK+fJmrlZswe/DrmHeCbx61b5eY3hFw6C9leqXz4b9uFzmO
-         91Mw==
-X-Gm-Message-State: AOAM533cSH2dEiERzAujtnzCAiKtS23rqX2D86wL7cIYtNR/gcCqOOic
-        HepdBKzL96lwZWWHvcnrt0sjqaJF2hlhOvWCpJ+H5w==
-X-Google-Smtp-Source: ABdhPJz7Kg81nthb06WDU+z8rueH0TLTwNaN9xl5YeWzadsfmddf39Ly2LGb7sxy58ZaG3ZW/Opk9vAlZ6fYEjD4NQw=
-X-Received: by 2002:a6b:8bcf:: with SMTP id n198mr5846212iod.178.1631823039559;
- Thu, 16 Sep 2021 13:10:39 -0700 (PDT)
+        Thu, 16 Sep 2021 17:17:21 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+        by mailnew.west.internal (Postfix) with ESMTP id 1BAF52B011D0;
+        Thu, 16 Sep 2021 17:15:59 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Thu, 16 Sep 2021 17:15:59 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=from
+        :to:cc:subject:date:message-id:mime-version
+        :content-transfer-encoding; s=fm3; bh=v45RiqZN/i6oiIGNrZzNEXsh+f
+        6NSgjMOWlZQrk26uM=; b=dxfey06DfqMg90n/+BtczlPU39glJAkDJIV7LMm06M
+        m8BCYqXT72dMAQ+Khc41PNOMmUgC0ajzA/6ezi2HNPUd983XJTTW5dBR1vH2wuco
+        nYvIr3r6/09L09j7eElkKgfHT19wwhi8QplgSS3j3UXmSptXTb6eIZ3p3NBTiVTT
+        T5aql7+bz8wgJesu4F+COmS1DjH8KVQyERJqkQZOEKU+VYjCnicJ+kWceSFg53MP
+        qhpBxwVVzaJB6T0SrPJTOptA/IdINjwyI7FdboH4CmoUTkRpoYNdreHHyFFi7inP
+        zbxP0vZ3BGcRW95PcjCIls4bJJQpzJee2YajrXRCiNTw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:date:from
+        :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=v45RiqZN/i6oiIGNr
+        ZzNEXsh+f6NSgjMOWlZQrk26uM=; b=IYPiGcVe1V5ahNOjZHFtPOqQZDa1XkRIy
+        RzHMh6lWCr6RTHexSYUBUja/QS1VoEPBXA6TXH6AOtI2iD8xEhWAvlQ16TwQkls4
+        4RagJ2Natj7UX1ccLlPx/vsOxc8j554vF1s27SfFBcOSnNZEcG3kkSEjn2AtxogS
+        7O185Eo6QVy3ChKtaRQpx91otiONpnpZ6M1DIUmnZOh5YhDsNnlRkzzk4XBi7m2k
+        z0d/Rqe2I9wySThumhWl36kOBAyw/AdtmomTSB45E0qI8m9PP2co4em/gpHjU8XR
+        Nl+rNLlbLQrjuPsO0AivDyHFfQX9NHJfJPBZOFjlAbGYjvlvZtwSA==
+X-ME-Sender: <xms:DrRDYS2YBBhC0muLD5cxiMUOIJrQxDCqFtrn1lTj7RiYEB1B49WyCw>
+    <xme:DrRDYVFVH_IvVBSD9kC8ums35IM1hr2LEztXYPfUJlZK4J45fh7LZ4Zzhdu3_rs3d
+    rDhakEox1dteuaOJw>
+X-ME-Received: <xmr:DrRDYa5xChptJGJBVStNset8NVN8nR-xwwVJ9psf1GbDfe6gnJ5MXS7dKpYCnB4CF_8M>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrudehgedgudehvdcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffoggfgsedtkeertd
+    ertddtnecuhfhrohhmpefhvghrnhgrnhguohcutfgrmhhoshcuoehgrhgvvghnfhhoohes
+    uhelvddrvghuqeenucggtffrrghtthgvrhhnpeeiueevtdegtdffgeeggfeuteejkeekvd
+    dvkeeiueekgfefgfeuueffgeelvdeggeenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehgrhgvvghnfhhoohesuhelvddrvghu
+X-ME-Proxy: <xmx:DrRDYT0n4G0IUQlTXvjeSyD0-Lrv2Pwm9g3_-WefWJQCreB9NnDi9Q>
+    <xmx:DrRDYVFHMXp3SYuyB_NQi3348HnS15JlQSB9tHw3ICJ-gCcChO6YJg>
+    <xmx:DrRDYc-_oMpbbkvdnJyBWXH6WZurqNHcGB81qLgmDUpTqv7G5Q2LBQ>
+    <xmx:DrRDYUCR8Wr9Fu8JLjjRoaFZbJEAF63ayA3Z3UvSTMWGs3MfkZd7BRDzrIA>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Thu,
+ 16 Sep 2021 17:15:55 -0400 (EDT)
+From:   Fernando Ramos <greenfoo@u92.eu>
+To:     dri-devel@lists.freedesktop.org
+Cc:     linux-kernel@vger.kernel.org, sean@poorly.run,
+        linux-doc@vger.kernel.org, amd-gfx@lists.freedesktop.org,
+        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        linux-renesas-soc@vger.kernel.org, linux-tegra@vger.kernel.org
+Subject: [PATCH 00/15] drm: cleanup: Use DRM_MODESET_LOCK_ALL_* helpers where possible
+Date:   Thu, 16 Sep 2021 23:15:37 +0200
+Message-Id: <20210916211552.33490-1-greenfoo@u92.eu>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-References: <20210615232816.835325-1-bjorn.andersson@linaro.org>
- <CAMi1Hd0hZV7antTa7ShKvfS5CRxRei4TNycM9EJ9NR5qEBJV7g@mail.gmail.com> <YUNbntpsxISYxOro@ripper>
-In-Reply-To: <YUNbntpsxISYxOro@ripper>
-From:   Amit Pundir <amit.pundir@linaro.org>
-Date:   Fri, 17 Sep 2021 01:40:03 +0530
-Message-ID: <CAMi1Hd2y8CG8Vy--b6dG7UiVKAfG+X71Ofe9Woqg_K6F3_Tn_w@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sdm850-yoga: Enable IPA
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Alex Elder <elder@linaro.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>,
-        lkml <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 16 Sept 2021 at 20:27, Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Thu 16 Sep 03:52 PDT 2021, Amit Pundir wrote:
->
-> > Hi Bjorn,
-> >
-> > On Wed, 16 Jun 2021 at 04:58, Bjorn Andersson
-> > <bjorn.andersson@linaro.org> wrote:
-> > >
-> > > Shuffle memory regions to make firmware loading succeed and then enable
-> > > the ipa device.
-> >
-> > Just a heads-up, this reserved memory region shuffling in sdm845.dtsi
-> > broke PocoF1 and may be other devices too(?) which do not override
-> > these regions.
-> >
->
-> Thanks for the report!
->
-> > IIRC you once had a patch to move the reserved memory regions to board
-> > specific dts files, is it still on the cards so that we don't run into
-> > breakages like this?
-> >
->
-> As you might remember the feedback I got was to not move the regions to
-> the individual devices and it was better to just deal with the problem
-> this way...
->
-> But apparently I was too optimistic and should have played the usual
-> game of deleting the inherited nodes and made the changes in the yoga
-> dts...
->
-> > Meanwhile I'll go and add these regions in sdm845-xiaomi-beryllium.dts.
-> >
->
-> Let's prepare a fix that moves this change into the yoga.dts and get
-> that landed asap.
+Hi all,
 
-Done https://patchwork.kernel.org/project/linux-arm-msm/patch/20210916200554.2434439-1-amit.pundir@linaro.org/
+One of the things in the DRM TODO list ("Documentation/gpu/todo.rst") was to
+"use DRM_MODESET_LOCAL_ALL_* helpers instead of boilerplate". That's what this
+patch series is about.
 
-Smoke tested on PocoF1 only.
+You will find two types of changes here:
 
->
-> Regards,
-> Bjorn
->
-> > Regards,
-> > Amit Pundir
-> >
-> >
-> >
-> > >
-> > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > ---
-> > >  arch/arm64/boot/dts/qcom/sdm845.dtsi          | 21 +++++++------------
-> > >  .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts |  5 +++++
-> > >  2 files changed, 13 insertions(+), 13 deletions(-)
-> > >
-> > > diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > > index 1796ae8372be..49624eadce84 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-> > > @@ -128,28 +128,23 @@ camera_mem: memory@8bf00000 {
-> > >                         no-map;
-> > >                 };
-> > >
-> > > -               ipa_fw_mem: memory@8c400000 {
-> > > -                       reg = <0 0x8c400000 0 0x10000>;
-> > > +               wlan_msa_mem: memory@8c400000 {
-> > > +                       reg = <0 0x8c400000 0 0x100000>;
-> > >                         no-map;
-> > >                 };
-> > >
-> > > -               ipa_gsi_mem: memory@8c410000 {
-> > > -                       reg = <0 0x8c410000 0 0x5000>;
-> > > +               gpu_mem: memory@8c515000 {
-> > > +                       reg = <0 0x8c515000 0 0x2000>;
-> > >                         no-map;
-> > >                 };
-> > >
-> > > -               gpu_mem: memory@8c415000 {
-> > > -                       reg = <0 0x8c415000 0 0x2000>;
-> > > +               ipa_fw_mem: memory@8c517000 {
-> > > +                       reg = <0 0x8c517000 0 0x5a000>;
-> > >                         no-map;
-> > >                 };
-> > >
-> > > -               adsp_mem: memory@8c500000 {
-> > > -                       reg = <0 0x8c500000 0 0x1a00000>;
-> > > -                       no-map;
-> > > -               };
-> > > -
-> > > -               wlan_msa_mem: memory@8df00000 {
-> > > -                       reg = <0 0x8df00000 0 0x100000>;
-> > > +               adsp_mem: memory@8c600000 {
-> > > +                       reg = <0 0x8c600000 0 0x1a00000>;
-> > >                         no-map;
-> > >                 };
-> > >
-> > > diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> > > index c2a709a384e9..3eaa42dc3794 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> > > +++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> > > @@ -415,6 +415,11 @@ ecsh: hid@5c {
-> > >         };
-> > >  };
-> > >
-> > > +&ipa {
-> > > +       status = "okay";
-> > > +       memory-region = <&ipa_fw_mem>;
-> > > +};
-> > > +
-> > >  &mdss {
-> > >         status = "okay";
-> > >  };
-> > > --
-> > > 2.31.0
-> > >
+  - Replacing "drm_modeset_lock_all_ctx()" (and surrounding boilerplate) with
+    "DRM_MODESET_LOCK_ALL_BEGIN()/END()" in the remaining places (as it has
+    already been done in previous commits such as b7ea04d2)
+
+  - Replacing "drm_modeset_lock_all()" with "DRM_MODESET_LOCK_ALL_BEGIN()/END()"
+    in the remaining places (as it has already been done in previous commits
+    such as 57037094)
+    
+Most of the changes are straight forward, except for a few cases in the "amd"
+and "i915" drivers where some extra dancing was needed to overcome the
+limitation that the DRM_MODESET_LOCK_ALL_BEGIN()/END() macros can only be used
+once inside the same function (the reason being that the macro expansion
+includes *labels*, and you can not have two labels named the same inside one
+function)
+
+Notice that, even after this patch series, some places remain where
+"drm_modeset_lock_all()" and "drm_modeset_lock_all_ctx()" are still present,
+all inside drm core (which makes sense), except for two (in "amd" and "i915")
+which cannot be replaced due to the way they are being used.
+
+Fernando Ramos (15):
+  dmr: cleanup: drm_modeset_lock_all_ctx() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  dmr/i915: cleanup: drm_modeset_lock_all_ctx() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  dmr/msm: cleanup: drm_modeset_lock_all_ctx() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm: cleanup: drm_modeset_lock_all() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/vmwgfx: cleanup: drm_modeset_lock_all() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/tegra: cleanup: drm_modeset_lock_all() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/shmobile: cleanup: drm_modeset_lock_all() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/radeon: cleanup: drm_modeset_lock_all() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/omapdrm: cleanup: drm_modeset_lock_all() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/nouveau: cleanup: drm_modeset_lock_all() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/msm: cleanup: drm_modeset_lock_all() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/i915: cleanup: drm_modeset_lock_all() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/gma500: cleanup: drm_modeset_lock_all() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/amd: cleanup: drm_modeset_lock_all() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  doc: drm: remove TODO entry regarding DRM_MODSET_LOCK_ALL cleanup
+
+ Documentation/gpu/todo.rst                    | 17 -------
+ Documentation/locking/ww-mutex-design.rst     |  2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_display.c   | 13 +++--
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 50 +++++++++----------
+ .../amd/display/amdgpu_dm/amdgpu_dm_debugfs.c | 23 +++++----
+ drivers/gpu/drm/drm_client_modeset.c          | 14 +++---
+ drivers/gpu/drm/drm_crtc_helper.c             | 18 ++++---
+ drivers/gpu/drm/drm_fb_helper.c               | 10 ++--
+ drivers/gpu/drm/drm_framebuffer.c             |  6 ++-
+ drivers/gpu/drm/gma500/psb_device.c           | 14 ++++--
+ drivers/gpu/drm/i915/display/intel_audio.c    | 12 +++--
+ drivers/gpu/drm/i915/display/intel_display.c  | 22 +++-----
+ .../drm/i915/display/intel_display_debugfs.c  | 35 ++++++++-----
+ drivers/gpu/drm/i915/display/intel_overlay.c  | 45 ++++++++---------
+ drivers/gpu/drm/i915/display/intel_pipe_crc.c |  5 +-
+ drivers/gpu/drm/i915/i915_drv.c               | 12 +++--
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      |  6 ++-
+ .../gpu/drm/msm/disp/msm_disp_snapshot_util.c | 10 ++--
+ drivers/gpu/drm/nouveau/dispnv50/disp.c       | 12 +++--
+ drivers/gpu/drm/omapdrm/omap_fb.c             |  6 ++-
+ drivers/gpu/drm/radeon/radeon_device.c        | 13 +++--
+ drivers/gpu/drm/radeon/radeon_dp_mst.c        |  7 ++-
+ drivers/gpu/drm/shmobile/shmob_drm_drv.c      |  6 ++-
+ drivers/gpu/drm/tegra/dsi.c                   |  6 ++-
+ drivers/gpu/drm/tegra/hdmi.c                  |  5 +-
+ drivers/gpu/drm/tegra/sor.c                   | 10 ++--
+ drivers/gpu/drm/vmwgfx/vmwgfx_ioctl.c         | 11 ++--
+ drivers/gpu/drm/vmwgfx/vmwgfx_kms.c           | 12 +++--
+ 28 files changed, 222 insertions(+), 180 deletions(-)
+
+-- 
+2.33.0
+
