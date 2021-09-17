@@ -2,305 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E7F940F78E
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 14:33:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8AB4A40F792
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 14:35:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244130AbhIQMey (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Sep 2021 08:34:54 -0400
-Received: from mga17.intel.com ([192.55.52.151]:34259 "EHLO mga17.intel.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S244125AbhIQMex (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Sep 2021 08:34:53 -0400
-X-IronPort-AV: E=McAfee;i="6200,9189,10109"; a="202947870"
-X-IronPort-AV: E=Sophos;i="5.85,301,1624345200"; 
-   d="diff'?scan'208";a="202947870"
-Received: from fmsmga001.fm.intel.com ([10.253.24.23])
-  by fmsmga107.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 17 Sep 2021 05:33:31 -0700
-X-ExtLoop1: 1
-X-IronPort-AV: E=Sophos;i="5.85,301,1624345200"; 
-   d="diff'?scan'208";a="611263596"
-Received: from kuha.fi.intel.com ([10.237.72.162])
-  by fmsmga001.fm.intel.com with SMTP; 17 Sep 2021 05:33:27 -0700
-Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Fri, 17 Sep 2021 15:33:26 +0300
-Date:   Fri, 17 Sep 2021 15:33:26 +0300
-From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Felipe Balbi <balbi@kernel.org>,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Peter Chen <peter.chen@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, agross@kernel.org,
-        gregkh@linuxfoundation.org, jackp@codeaurora.org,
-        wcheng@codeaurora.org, linux-usb@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH 0/3] Implement role-switch notifications from dwc3-drd to
- dwc3-qcom
-Message-ID: <YUSLFlwXr/8GmCZz@kuha.fi.intel.com>
-References: <YOX6d+sBEJMP4V3q@yoga>
- <20210708030631.GA22420@nchen>
- <YSWCnsZDdp57KBqB@ripper>
- <87zgt65avm.fsf@kernel.org>
- <ce5f12dd-ddc1-6a9c-3dfb-aa44ea166828@linaro.org>
- <YSZned9v1+ajzVx0@ripper>
- <90d17c95-1cf3-89aa-94ad-920e4781f866@linaro.org>
- <YSaizDpqNRZcBGIc@ripper>
- <87ilzsafu5.fsf@kernel.org>
- <YUH639jO4qf4Za/K@yoga>
+        id S244123AbhIQMge (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Sep 2021 08:36:34 -0400
+Received: from mailout2.w1.samsung.com ([210.118.77.12]:24804 "EHLO
+        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235181AbhIQMgd (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 17 Sep 2021 08:36:33 -0400
+Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
+        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20210917123509euoutp024d5040947c087a0122832f16dee1b24a~lnCHeLgJN1799117991euoutp02c
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Sep 2021 12:35:09 +0000 (GMT)
+DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20210917123509euoutp024d5040947c087a0122832f16dee1b24a~lnCHeLgJN1799117991euoutp02c
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
+        s=mail20170921; t=1631882109;
+        bh=m1Y6LWA4PXoajOSun3pzOfX28Emf6U0QDQDDXYjTyUo=;
+        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
+        b=N525ixmYaI2hd+M1rwOKqQVzKJ4Ph/PvZVgw5t2si/8X/FBgRxoFO7pfAgozcgP4m
+         7ceKEKFFI5QyBzGnx/Ptl1NE5F2AGuMVW33EPSSxHSJszv0+3fI8/0ofAYSfaZUJfS
+         oaaeMWeY1pTPoUuad1YLZqA3nCFg9yzbLN3K1Qyg=
+Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
+        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
+        20210917123508eucas1p1ca60528d596ee60f53e6b3499307e58d~lnCG4xCFU2999629996eucas1p13;
+        Fri, 17 Sep 2021 12:35:08 +0000 (GMT)
+Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
+        eusmges1new.samsung.com (EUCPMTA) with SMTP id E3.73.45756.C7B84416; Fri, 17
+        Sep 2021 13:35:08 +0100 (BST)
+Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
+        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
+        20210917123508eucas1p2a73b5bf1cab9fac80de826cacfd817b8~lnCGVm2Fj2071520715eucas1p2a;
+        Fri, 17 Sep 2021 12:35:08 +0000 (GMT)
+Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
+        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
+        20210917123508eusmtrp268e219a81f573fd96d703a8a52ea4af2~lnCGUPcK31459814598eusmtrp2E;
+        Fri, 17 Sep 2021 12:35:08 +0000 (GMT)
+X-AuditID: cbfec7f2-7d5ff7000002b2bc-0d-61448b7c201e
+Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
+        eusmgms2.samsung.com (EUCPMTA) with SMTP id 37.FD.20981.B7B84416; Fri, 17
+        Sep 2021 13:35:07 +0100 (BST)
+Received: from [106.210.134.192] (unknown [106.210.134.192]) by
+        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
+        20210917123505eusmtip1840ad4dd0237808a52a6821790b51fda~lnCEVoqUS1263012630eusmtip1b;
+        Fri, 17 Sep 2021 12:35:05 +0000 (GMT)
+Subject: Re: [PATCH v4 24/24] drm/exynos: dsi: Adjust probe order
+To:     Andrzej Hajda <a.hajda@samsung.com>,
+        Maxime Ripard <maxime@cerno.tech>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        David Airlie <airlied@linux.ie>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>
+Cc:     Sean Paul <sean@poorly.run>, freedreno@lists.freedesktop.org,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        linux-kernel@vger.kernel.org,
+        Xinliang Liu <xinliang.liu@linaro.org>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Tian Tao <tiantao6@hisilicon.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        dri-devel@lists.freedesktop.org,
+        John Stultz <john.stultz@linaro.org>,
+        Chen Feng <puck.chen@hisilicon.com>,
+        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>
+From:   Marek Szyprowski <m.szyprowski@samsung.com>
+Message-ID: <fc1fbd42-6ed4-9d67-2903-8f9cc2aaad43@samsung.com>
+Date:   Fri, 17 Sep 2021 14:35:05 +0200
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0)
+        Gecko/20100101 Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: multipart/mixed; boundary="7Vca4YRw49XGD39T"
-Content-Disposition: inline
-In-Reply-To: <YUH639jO4qf4Za/K@yoga>
+In-Reply-To: <29a2111d-024b-4d9e-27ef-e3399509ff32@samsung.com>
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
+X-Brightmail-Tracker: H4sIAAAAAAAAA02SfUxTVxjGc+69vf0wbS5Vw4kfGEvmGBsUlmWcRYMDcd6RmTln4qJx2OkN
+        KFC0FV0dbEgFoThSJIHSgrQrG4xhmQhakUBW3WopbfkYhBEUURJoRU1hOJDBRrm68d/vfc/z
+        fjxvDg8Xd5DreMfkpxiFXJYmIQXE9d/mPBFZRQmyKG33ZjRkcXPQt24Hhmq7LDj6feYZiSrH
+        XQBdGtESaLzaAlDXfARyTPYTaOJ+D4FmF9o5yJU7yUWFJTVcVNLh4qK+1koS6TztGDL5Wwik
+        m10EyFZ8EI2U6Zd6mGZxNKUfxVHdXAtA90rvAKQr9ZJorvUygX563M5FzZMlHPRrRz3n/Y30
+        s8E8Lj3s9pD0Tf09Lv2o6iqXNhRUcGhzmxej72p7MXp4oI2kbzx/wKEvOz6hR4rsGG1vHeLS
+        NWX9JF3cXA/oa86v6OmmkD3UAcG2o0zasdOMQhp7WJCSWxl1Qs3/suZ2HicHNHA1gM+D1DvQ
+        3VSyxAKemKoDsLZqEGeDPwGcmvVibDANoGbGSGgAb7nE35DJ5msBdD18gQVaiSk/gN9XxAd4
+        NRUHtVP3iYBoDWUkoPNcwXJbnOohYMtDDR5QkVQ01DzRkAEWUrHQa3VyAkxQr8E6TzcR4LXU
+        EVi2kIuzmiDoqBhbzvOp7fAHTw4IME5tguoWA85yMBwaq15eG1IOARwuHCJZpwmwfuApzvJq
+        6LM3v7zABvjPzVcFagBH3Ve4bHARwL5cHWBVW+Gw+wUZOABOvQEbW6VsOg4WNI29vIsIDj4J
+        YpcQwUvXy3E2LYQF+WJWvQXq7Zb/xv7S3YtrgUS/wpp+hR39Cjv6/+caAVEPgplMZXoyo4yW
+        M2cilbJ0ZaY8OfJIRnoTWPrjzkX7lBVU+fyRNoDxgA1AHi5ZI+zOipOJhUdlqrOMIiNJkZnG
+        KG1gPY+QBAvrDQ1JYipZdopJZZgTjOLVK8bjr8vBslYpBvC9Bf7v3rq9vXr3mzv3t99S7TV/
+        bI1PC9tc26n+MSb1bKjq9ZSr+8L4137+sPOQL0F6oHGfZqavKFQv9sPH3sNRD1yfDqqsu6cf
+        LYS91xV6Pnwx8bNNGye/SY0n5nuOq2LIERDXGVEVkmhW3KgrX/X1RLYxxegM55dKHV+MihpF
+        Mfl5A1vzrYIMM189YfLtCXvb6go136E+Lx9XnfyoJSR7x8VCX7W2aZvwD2gQ37qr3bnwgfp5
+        rGsX/XRLZOnY/JW/gpst+42JjuNr10sPJpX1v9twWndoPt/9t0nSaZNvMJptsTsMJ3vCu9D5
+        3rYz2aLGICd5jnOhON40dWGXhFCmyKLDcYVS9i/CyZHTUgQAAA==
+X-Brightmail-Tracker: H4sIAAAAAAAAA02Se0xTZxTA+e69fZGR3VWMH8ShaUKcCoWW0n11QpEo3MUssWQucW5Ah1dg
+        Qqu97RzDQSMhjhJZWRdSSuWRIUNWMLw2rAihoqXjUafSLB0PjW4MxJGCUwg+1oJL+O93Hr9z
+        cpLDxfm3WeHcXJWW1qiUeQJ2MDH80jkZXVi+Xxl72RKHvG1jLHR+zIWhH0facHT33wU2ss6M
+        AvTdtJFAM3VtAI2sRiPX/DiB/p76jUDLL/pYaPTsPAeVVTZyUGX/KAfdsVvZyOzuw1CDr5tA
+        5uWXADkqjqLpKot/RsMyjhYt93HUvNIN0KRpECCzaZaNVuy1BPrpUR8Hdc1XstCN/hZW0tvU
+        wu+lHGpizM2mrlgmOdSDC+0cquabahb1Q+8sRg0Zb2PUhKeXTf3y9B6LqnUpqOlyJ0Y57V4O
+        1Vg1zqYquloA1TlcSC11RBwiPxbu1ah1Wnp7jprRJgiOipBYKJIhoVgiE4ri3v10jzheEJO4
+        9xidl/sFrYlJzBTmnLXGnizhfdl4vZSlBzaOAXC5kJRAn01nAMFcPnkRQM/QAGYAPH9+K3RV
+        6VnrvAk+9xjY600LAM6ZX7ADhU3kPmhcnCIChVCykYDXKz0gEODkOAH1NyyvFR+Ar5x2PKCw
+        SRE0PDas6SFkIpztGV7bQZCRsNl9iwjwZjILPn70DFvveQu6qh+u5XmkHDa59SDAOCmFtZ33
+        8XXeBku6a17zFuh9WIcZAd+yQbdsUCwbFMsGpR4QLSCU1jH52fmMWMgo8xmdKluYpc7vAP7n
+        +vnmSlcPuDTnEzoAxgUOALm4IDTk1pl9Sn7IMWXBV7RGnaHR5dGMA8T776nEwzdnqf3fqdJm
+        iKSx8SKJVBYbL5PGCbaESAZtGXwyW6mlT9D0SVrzv4dxeeF67GB/Hx120aA15/2Tzjl1qT5d
+        Qcl9xtgPmtMOh32bcqWhY7L+QtTVw0+O/yVXFFuDIkxvtva2f//1gMS9MzX7+JGEJ5kfJVcf
+        XLrWMVKzar/a2U75fi3fzdOBofKJoraZge1l3qAKU7qymSna0bR0zjEoP7F44LStPpp72WtL
+        +TOhRz2VZHzGnGlNTcWKyZ3x3HvC0t3FN1tlb7SW3FldcWhMakXyq0Ll+a3byqK0BdLuqORP
+        Hnz4nEqKoMGhXU0azFxbepc5cDo18jP5U/G5z4n9R3gxxQXWNKHqHXlmzbW0IDedop6IC0ss
+        eN+5Izfjj/66U8GR73kgUYHPKfbMFgkIJkcp2oVrGOV/GhjNROUDAAA=
+X-CMS-MailID: 20210917123508eucas1p2a73b5bf1cab9fac80de826cacfd817b8
+X-Msg-Generator: CA
+Content-Type: text/plain; charset="utf-8"
+X-RootMTR: 20210910101445eucas1p172f99ff7fe853052fc457861c3174f9e
+X-EPHeader: CA
+CMS-TYPE: 201P
+X-CMS-RootMailID: 20210910101445eucas1p172f99ff7fe853052fc457861c3174f9e
+References: <20210910101218.1632297-1-maxime@cerno.tech>
+        <CGME20210910101445eucas1p172f99ff7fe853052fc457861c3174f9e@eucas1p1.samsung.com>
+        <20210910101218.1632297-25-maxime@cerno.tech>
+        <29a2111d-024b-4d9e-27ef-e3399509ff32@samsung.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi,
 
---7Vca4YRw49XGD39T
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+On 13.09.2021 12:30, Andrzej Hajda wrote:
+> W dniu 10.09.2021 o 12:12, Maxime Ripard pisze:
+>> Without proper care and an agreement between how DSI hosts and devices
+>> drivers register their MIPI-DSI entities and potential components, we can
+>> end up in a situation where the drivers can never probe.
+>>
+>> Most drivers were taking evasive maneuvers to try to workaround this,
+>> but not all of them were following the same conventions, resulting in
+>> various incompatibilities between DSI hosts and devices.
+>>
+>> Now that we have a sequence agreed upon and documented, let's convert
+>> exynos to it.
+>>
+>> Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+> This patch should be dropped, as it will probably break the driver.
+>
+> Exynos is already compatible with the pattern
+> register-bus-then-get-sink, but it adds/removes panel/bridge
+> dynamically, so it creates drm_device without waiting for downstream sink.
 
-On Wed, Sep 15, 2021 at 08:53:35AM -0500, Bjorn Andersson wrote:
-> On Thu 26 Aug 01:15 CDT 2021, Felipe Balbi wrote:
-> 
-> > 
-> > Hi,
-> > 
-> > Bjorn Andersson <bjorn.andersson@linaro.org> writes:
-> > > On Wed 25 Aug 10:59 PDT 2021, Bryan O'Donoghue wrote:
-> > >
-> > >> On 25/08/2021 16:53, Bjorn Andersson wrote:
-> > >> > But in the case of Type-C altmode several of our boards have either an
-> > >> > external gpio-based SBU-pin-swapper or some redriver on I2C with this
-> > >> > functionality, so we need a way to tell both the PHY and this external
-> > >> > contraption about the orientation.
-> > >> 
-> > >> Its a very similar problem to orientation switch
-> > >> 
-> > >> As an example
-> > >> 
-> > >> - redriver may need to fix up signal integrity for
-> > >>   lane switching
-> > >> 
-> > >> - PHY needs to toggle lanes from one IP block to another
-> > >> 
-> > >
-> > > Right, conceptually the problem is similar, but IMHO there's a big
-> > > difference in that the redriver and PHY are two physically separate
-> > > entities - on different buses. The dwc3 glue and core represent the same
-> > > piece of hardware.
-> > 
-> > no they don't. The glue is a real piece of HW that adapts the "generic"
-> > synopsys IP to a given SoC. OMAP, for example, was adapting Synopsys'
-> > proprietary interface to the Sonics interconnect, while some others may
-> > adapt it to AXI or PCI or whatever.
-> > 
-> > They are different HW blocks, the glue (in many cases) has its own IRQ,
-> > its own address space, its own register file, and so on. Granted, the
-> > glue also serves as an access port from CPU to the synopsys core, but
-> > that's handled by `ranges' DT property.
-> > 
-> 
-> So what you're saying is that the "Qualcomm glue" is the hardware, and
-> the core is just the basis for that design?
-> 
-> Regardless, on the Qualcomm platforms we have need to inform both
-> devices about role changes, how do we do this? (Without platform_data
-> and preferably without having to duplicate the typec code in the glue
-> and core and the two device nodes in DT)
+Right, this patch breaks Exynos DSI driver operation. Without it, the 
+whole series works fine on all Exynos based test boards.
 
-That part can be handled by simply adding the notifiers to the USB
-role switch class as said before [1], so I think the actual problem
-here is that your glue layer depends on core that your glue creates
-(or a resource that the core driver creates).
-
-I think the dependency on dwc3 core, and what ever it creates, issue
-you should be able to solve by using the component framework. I'll
-attach you a patch showing how it should probable look like (not even
-compile tested).
-
-So the dwc3 core is the aggregate driver and the glue is the only
-component in that example (that should be enough for your needs), but
-it should not be any problem to later register also the child devices
-(xHCI, USB role switch, etc.) as components if needed.
-
-[1] https://lore.kernel.org/linux-usb/20191002231617.3670-3-john.stultz@linaro.org/
-
-thanks,
-
+Best regards
 -- 
-heikki
+Marek Szyprowski, PhD
+Samsung R&D Institute Poland
 
---7Vca4YRw49XGD39T
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: attachment; filename="dwc3.diff"
-
-diff --git a/drivers/usb/dwc3/core.c b/drivers/usb/dwc3/core.c
-index 0104a80b185e1..7cc49611af74f 100644
---- a/drivers/usb/dwc3/core.c
-+++ b/drivers/usb/dwc3/core.c
-@@ -26,6 +26,7 @@
- #include <linux/acpi.h>
- #include <linux/pinctrl/consumer.h>
- #include <linux/reset.h>
-+#include <linux/component.h>
- 
- #include <linux/usb/ch9.h>
- #include <linux/usb/gadget.h>
-@@ -1521,11 +1522,32 @@ static void dwc3_check_params(struct dwc3 *dwc)
- 	}
- }
- 
-+static int dwc3_aggregate_bind(struct device *dev)
-+{
-+	return component_bind_all(dev, NULL);
-+}
-+
-+static void dwc3_aggregate_unbind(struct device *dev)
-+{
-+	component_unbind_all(dev, NULL);
-+}
-+
-+static const struct component_master_ops dwc3_aggregate_ops = {
-+	.bind = dwc3_aggregate_bind,
-+	.unbind = dwc3_aggregate_unbind,
-+};
-+
-+static int dwc3_compare(struct device *dev, void *data)
-+{
-+	return dev == data;
-+}
-+
- static int dwc3_probe(struct platform_device *pdev)
- {
- 	struct device		*dev = &pdev->dev;
- 	struct resource		*res, dwc_res;
- 	struct dwc3		*dwc;
-+	struct component_match	*match = NULL;
- 
- 	int			ret;
- 
-@@ -1646,10 +1668,21 @@ static int dwc3_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto err5;
- 
-+	/* Add component match entry for the glue. */
-+	component_match_add(dwc->dev, &match, dwc3_compare, dwc->dev->parent);
-+
-+	/* Everything is ready now. Declare this driver as the aggregate. */
-+	ret = component_master_add_with_match(dwc->dev, &dwc3_aggregate_ops, match);
-+	if (ret)
-+		goto err6;
-+
- 	pm_runtime_put(dev);
- 
- 	return 0;
- 
-+err6:
-+	dwc3_core_exit_mode(dwc);
-+
- err5:
- 	dwc3_debugfs_exit(dwc);
- 	dwc3_event_buffers_cleanup(dwc);
-@@ -1696,6 +1729,8 @@ static int dwc3_remove(struct platform_device *pdev)
- 
- 	pm_runtime_get_sync(&pdev->dev);
- 
-+	component_master_del(dwc->dev, &dwc3_aggregate_ops);
-+
- 	dwc3_core_exit_mode(dwc);
- 	dwc3_debugfs_exit(dwc);
- 
-diff --git a/drivers/usb/dwc3/dwc3-qcom.c b/drivers/usb/dwc3/dwc3-qcom.c
-index 9abbd01028c5f..ffe585344d6a8 100644
---- a/drivers/usb/dwc3/dwc3-qcom.c
-+++ b/drivers/usb/dwc3/dwc3-qcom.c
-@@ -20,6 +20,8 @@
- #include <linux/usb/of.h>
- #include <linux/reset.h>
- #include <linux/iopoll.h>
-+#include <linux/usb/role.h>
-+#include <linux/component.h>
- 
- #include "core.h"
- 
-@@ -81,6 +83,7 @@ struct dwc3_qcom {
- 	struct extcon_dev	*host_edev;
- 	struct notifier_block	vbus_nb;
- 	struct notifier_block	host_nb;
-+	struct notifier_block	role_nb;
- 
- 	const struct dwc3_acpi_pdata *acpi_pdata;
- 
-@@ -717,6 +720,51 @@ dwc3_qcom_create_urs_usb_platdev(struct device *dev)
- 	return acpi_create_platform_device(adev, NULL);
- }
- 
-+static int dwc3_qcom_role_notifier(struct notifier_block *nb,
-+				   unsigned long event, void *ptr)
-+{
-+	struct dwc3_qcom *qcom = container_of(nb, struct dwc3_qcom, role_nb);
-+
-+	/* Do what ever you need to do... */
-+
-+	return NOTIFY_DONE;
-+}
-+
-+static int dwc3_qcom_bind(struct device *dev, struct device *dwc, void *data)
-+{
-+	struct usb_role_switch *sw = usb_role_switch_find_by_fwnode(dev_fwnode(dwc));
-+	struct dwc3_qcom *qcom = dev_get_drvdata(dev);
-+
-+	/*
-+	 * Time to finalize initilization.
-+	 *
-+	 * Our aggregate driver - dwc3 core - is guaranteed to be ready when
-+	 * this is called. That means USB role switch "sw" is also now ready.
-+	 */
-+
-+	/* Register role switch notifier */
-+	qcom->role_nb.notifier_call = dwc3_qcom_role_notifier;
-+	usb_role_switch_register_notifier(sw, qcom->role_nb);
-+	usb_role_switch_put(sw);
-+
-+	return 0;
-+}
-+
-+static void dwc3_qcom_unbind(struct device *dev, struct device *dwc, void *data)
-+{
-+	struct usb_role_switch *sw = usb_role_switch_find_by_fwnode(dev_fwnode(dwc));
-+	struct dwc3_qcom *qcom = dev_get_drvdata(dev);
-+
-+	/* Unregister role switch notifier */
-+	usb_role_switch_unregister_notifier(sw, qcom->role_nb);
-+	usb_role_switch_put(sw);
-+}
-+
-+static const struct component_ops dwc3_qcom_component_ops = {
-+	.bind = dwc3_qcom_bind,
-+	.unbind = dwc3_qcom_unbind,
-+};
-+
- static int dwc3_qcom_probe(struct platform_device *pdev)
- {
- 	struct device_node	*np = pdev->dev.of_node;
-@@ -837,6 +885,10 @@ static int dwc3_qcom_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto interconnect_exit;
- 
-+	ret = component_add(dev, &dwc3_qcom_component_ops);
-+	if (ret)
-+		goto interconnect_exit;
-+
- 	device_init_wakeup(&pdev->dev, 1);
- 	qcom->is_suspended = false;
- 	pm_runtime_set_active(dev);
-@@ -869,6 +921,7 @@ static int dwc3_qcom_remove(struct platform_device *pdev)
- 	struct device *dev = &pdev->dev;
- 	int i;
- 
-+	component_del(dev, &dwc3_qcom_component_ops);
- 	device_remove_software_node(&qcom->dwc3->dev);
- 	of_platform_depopulate(dev);
- 
-
---7Vca4YRw49XGD39T--
