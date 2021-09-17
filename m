@@ -2,126 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DC83E4100A2
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 23:15:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 425EC4100D7
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 23:42:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241477AbhIQVQz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Sep 2021 17:16:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44406 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230515AbhIQVQv (ORCPT
+        id S234406AbhIQVme (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Sep 2021 17:42:34 -0400
+Received: from wnew3-smtp.messagingengine.com ([64.147.123.17]:34663 "EHLO
+        wnew3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S233664AbhIQVme (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Sep 2021 17:16:51 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22ECFC061574;
-        Fri, 17 Sep 2021 14:15:28 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id h17so34815159edj.6;
-        Fri, 17 Sep 2021 14:15:28 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=hYLvmWFA5adKzLqY8vh9rsTQj1QLK0NjY6Bw35bbszk=;
-        b=PHb0bolJj9vmBZ77pRP7N/CaAYOPH2gty2ztmn3xwfN6CUptNoqbwingWB0/uvGF2+
-         vehMgrQ5RKIHH9mtcxPBWsjbMcfXZcXMvyTPbfw857n07Qy1z0PgKehORm5QW02LGNW3
-         l3sMjqZamhOUIxzrHsLpR+0KclMJDTs3gFPy/sZKS+lJrXMmBjCoUUZAX+K73ILwns8p
-         uMNR6XqoCmwZj1OG/OxFE4BH2nADsyFa6VEJwudBNcLZOaCGw8AAEECwrnoLrp7xvgt0
-         9w7jxOAnyLw6D0sL/nz+A2Pca06NVUYcY7zXYDTHxEbVzPv7u9hw4Ei82o3Nx8RBKWsB
-         JoKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=hYLvmWFA5adKzLqY8vh9rsTQj1QLK0NjY6Bw35bbszk=;
-        b=cfIKz650SZpKhzOxbNyYPLwuhLOm60Tacjv5CIdnfg1afVX/MlwJ8R2UxC91ZXKVae
-         TGvCvixN5HpzKffG37XZ5ahdhiBo0dA53sUwCqePeUcWJOjITFXq3aMS6wS1WQXl+AMv
-         oPAPLs8xKvzjmhylBYBh+kfnwd7ytbJwXTNvFLBrzEWV4XcobOnMMD1iN9vO/XNYiKo4
-         gwucgEfFQ1wfmPyRkcJ8eXhbuuFdtbO24oVp5Jr8BWP5lL8EuD3FyTtlHrpk6NE7iApD
-         H7FQAVGyC/NRqrePAuG7gLaIjuC7tr/KmIJ16dUhBDT5/sOEDp5H0qSaRym3PD1BE73F
-         MzJg==
-X-Gm-Message-State: AOAM530W6sP73PoPzW58A0kdTh9CxFHuVrpkzMZKgTWi1CX8FbvBKTBz
-        8gGXM2g70h6gI3COafv/Zvo=
-X-Google-Smtp-Source: ABdhPJxZQQeVwSzhHCPzefmz3laO7kGZR35Zg0G/LP966dLvwt6IKKHiGbSAl9Ojd/Mx6Bg/kqXIIg==
-X-Received: by 2002:a17:906:4544:: with SMTP id s4mr14671511ejq.102.1631913326521;
-        Fri, 17 Sep 2021 14:15:26 -0700 (PDT)
-Received: from Ansuel-xps.localdomain (93-42-67-254.ip85.fastwebnet.it. [93.42.67.254])
-        by smtp.googlemail.com with ESMTPSA id la17sm2685763ejb.80.2021.09.17.14.14.22
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Sep 2021 14:14:43 -0700 (PDT)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>
-Subject: [PATCH v3] drivers: thermal: tsens: add timeout to get_temp_tsens_valid
-Date:   Fri, 17 Sep 2021 23:14:03 +0200
-Message-Id: <20210917211403.19640-1-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.32.0
+        Fri, 17 Sep 2021 17:42:34 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailnew.west.internal (Postfix) with ESMTP id 6F5EA2B00902;
+        Fri, 17 Sep 2021 17:41:10 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute4.internal (MEProxy); Fri, 17 Sep 2021 17:41:11 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=date
+        :from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm3; bh=bo5do1/2uMxfSsRyPzIa31G3tU+
+        VXBJq0VxVweJMjNw=; b=lx2x0Jisdd2o9GUHAoLcO7aZNpLHdrPfa7v+3CbHaiR
+        1M7WQ51iFfY9qQzEvo85CsAhISodR2g1V4hPuk1RgX7j2rMrUz9Q5yuRqavVHCIQ
+        /LVPTyEFjI+qDIpG99C2mAXra9mj8z4LPs3Gqi1Vnpx6gUv1axTysv/OcXVzC9Yj
+        8q9xDY7mQQ7POP5KYcLazECYJtC3G/NqeQp+MHyci+UeT4SH+c3uomhGMxPxIc+5
+        +RyIf5WC/T+NQgLisCIlXXcvvQ8QbuX3ErwRXpsACht9OBKx7LTHQ7NQyuJnNlQw
+        i8ctXOoi6jk9qq6ptbYc1HB267/KQLPs/LjqoDgYOzw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=bo5do1
+        /2uMxfSsRyPzIa31G3tU+VXBJq0VxVweJMjNw=; b=Z5DVGbfyPXqul6bnNVQN3+
+        51BL4yVViShm82Jlg2MDeHZOi8YlO8g4DTDddGKR6Yqz+yEPRYpiA9O1NAheI8Mj
+        qfY+4MMrES5Qgcf70UVmEVpYA5Zf3MkId4upz8dtEiGVdD5ju/+Jj9MdZhy0C1lj
+        xMobgxPk8Jb2lvSHc2TQ1UAfJABzS6V+jVefwKZbvwxAB2awio5FQtUZcEPHjHIn
+        PZZBfTEuq1EH82J2tANVbF/4nMck7ofN6LBZ8z5xreZ5ULWyhFFDkYKeTgxgCpey
+        dlvtf35ATwYtChTM84B8IJLD8P5LZw9x76nKD+/mfdALgr2zvUPkH8O7tRO/gixQ
+        ==
+X-ME-Sender: <xms:dQtFYVOhclBMKX3Mcwz-1lbdVKEQy7TPLNBMmoZnTr4oYeyDzU5_fQ>
+    <xme:dQtFYX9eOThRqFuwMFmdFDfSnKLW--Zu8reg_CGY4WaANvYzAOkgmH3kLt2YzGw6D
+    dyuGyrUpzkgOR_Pnw>
+X-ME-Received: <xmr:dQtFYUSux7FMhpk9fvWiDAx3COeucoGTnWN0VO-E2Sq7y1iFg5UMXo6kmRqqCvFElNhzAFV->
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrudehjedgtdduucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehttdertddttdejnecuhfhrohhmpefhvghrnhgr
+    nhguohcutfgrmhhoshcuoehgrhgvvghnfhhoohesuhelvddrvghuqeenucggtffrrghtth
+    gvrhhnpedvjeeifeelhfetiefhhfdthfefkefhhfeutdetvdfgvefgveefheffgfekjeef
+    heenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehgrh
+    gvvghnfhhoohesuhelvddrvghu
+X-ME-Proxy: <xmx:dQtFYRu3KfwHa-WMGiBn4OINuhHAy-twtNlDdRJYh1MOToE3aIEYyg>
+    <xmx:dQtFYdf8bEudJQdBEQL0MyRHYHA5u8SSkW5ADDEeCYdmf4moDrPosg>
+    <xmx:dQtFYd1tqxED0N8SmbmgWlJvaXHbIXT47ztcUOBe2pnUc6WsJ_fRNw>
+    <xmx:dgtFYeVyeMILMbNbOTk6dKqn5cN6B4ugjQ1e_YoJSKUYtobCKnkzpzKg12I>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 17 Sep 2021 17:41:06 -0400 (EDT)
+Date:   Fri, 17 Sep 2021 23:41:03 +0200
+From:   Fernando Ramos <greenfoo@u92.eu>
+To:     Daniel Vetter <daniel@ffwll.ch>
+Cc:     dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        sean@poorly.run, linux-doc@vger.kernel.org,
+        amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        nouveau@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org,
+        linux-tegra@vger.kernel.org
+Subject: Re: [PATCH 00/15] drm: cleanup: Use DRM_MODESET_LOCK_ALL_* helpers
+ where possible
+Message-ID: <YUULb61dISOCiYHw@zacax395.localdomain>
+References: <20210916211552.33490-1-greenfoo@u92.eu>
+ <YUSzKxZwW8C29dLV@phenom.ffwll.local>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <YUSzKxZwW8C29dLV@phenom.ffwll.local>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The function can loop and lock the system if for whatever reason the bit
-for the target sensor is NEVER valid. This is the case if a sensor is
-disabled by the factory and the valid bit is never reported as actually
-valid. Add a timeout check and exit if a timeout occurs. As this is
-a very rare condition, handle the timeout only if the first read fails.
-While at it also rework the function to improve readability and convert
-to poll_timeout generic macro.
+On 21/09/17 05:24PM, Daniel Vetter wrote:
+>
+> Can we at least replace those with drm_modeset_lock_all_ctx and delete
+> drm_modeset_lock_all? That would be really nice goal to make sure these
+> don't spread further.
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
- drivers/thermal/qcom/tsens.c | 29 ++++++++++++++---------------
- 1 file changed, 14 insertions(+), 15 deletions(-)
+I just checked and turns out no one else is using "drm_modeset_lock_all()"
+anymore.
 
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index b1162e566a70..99a8d9f3e03c 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -603,22 +603,21 @@ int get_temp_tsens_valid(const struct tsens_sensor *s, int *temp)
- 	int ret;
- 
- 	/* VER_0 doesn't have VALID bit */
--	if (tsens_version(priv) >= VER_0_1) {
--		ret = regmap_field_read(priv->rf[valid_idx], &valid);
--		if (ret)
--			return ret;
--		while (!valid) {
--			/* Valid bit is 0 for 6 AHB clock cycles.
--			 * At 19.2MHz, 1 AHB clock is ~60ns.
--			 * We should enter this loop very, very rarely.
--			 */
--			ndelay(400);
--			ret = regmap_field_read(priv->rf[valid_idx], &valid);
--			if (ret)
--				return ret;
--		}
--	}
-+	if (tsens_version(priv) == VER_0)
-+		goto get_temp;
-+
-+	/* Valid bit is 0 for 6 AHB clock cycles.
-+	 * At 19.2MHz, 1 AHB clock is ~60ns.
-+	 * We should enter this loop very, very rarely.
-+	 * Wait 1 us since it's the min of poll_timeout macro.
-+	 * Old value was 400 ns.
-+	 */
-+	ret = regmap_field_read_poll_timeout(priv->rf[valid_idx], valid,
-+					     valid, 1, 20 * USEC_PER_MSEC);
-+	if (ret)
-+		return ret;
- 
-+get_temp:
- 	/* Valid bit is set, OK to read the temperature */
- 	*temp = tsens_hw_to_mC(s, temp_idx);
- 
--- 
-2.32.0
+The only reference is the definition of the function itself, which I did not
+remove because it was being EXPORT_SYMBOL'ed and I was not sure whether it could
+be removed or not (to prevent breaking third party modules maybe?)
+
+The same goes true for its sibling "dmr_modeset_unlock_all()".
+
+But if you give me the green light I'll remove both of them right away :)
 
