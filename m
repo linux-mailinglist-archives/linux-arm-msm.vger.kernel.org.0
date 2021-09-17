@@ -2,55 +2,56 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DA8D040F24C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 08:25:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DFD2D40F251
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 08:26:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233584AbhIQG06 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Sep 2021 02:26:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38330 "EHLO
+        id S233715AbhIQG2F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Sep 2021 02:28:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38594 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233552AbhIQG06 (ORCPT
+        with ESMTP id S233797AbhIQG2E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Sep 2021 02:26:58 -0400
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A224FC061764
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Sep 2021 23:25:36 -0700 (PDT)
-Received: by mail-ot1-x334.google.com with SMTP id y63-20020a9d22c5000000b005453f95356cso4644955ota.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Sep 2021 23:25:36 -0700 (PDT)
+        Fri, 17 Sep 2021 02:28:04 -0400
+Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DFB1C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Sep 2021 23:26:43 -0700 (PDT)
+Received: by mail-oi1-x229.google.com with SMTP id w19so12603260oik.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Sep 2021 23:26:43 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=ICEs66mzOrWw5DoGNjzQDzMrnyfZ+Z+NkVU0FU1eIqM=;
-        b=ffB/SHZAlTYkRT/UiB9ZGJAejN4vLBrCabhGLPTmaUVzTGPciu7V/RhWZ2Ppcswr7L
-         EFLXxWZHPfm6dA0V6y1vovBZH/lwgO66e/TDYrfCFOi0lC0uLSPap141TNp0R5Jn4h9P
-         MnX7NdiUb/ajqWy+cZqQcA1GSznY+yOkhMW5g=
+        bh=evM8dYW25rUmoo+jhaGEhb/KiP/SeJMcvT7KRQQj0k4=;
+        b=GloPPC5iQ+gAScdWkJeOIsSgsZ5BSp9BiCqP1rzXOdxccRDtfeoX8O0HsiM7fJbpE9
+         tUSl/aQESeWKK1uPMUO7DCltaBfer5Uo3L92ywAfuAXPYyuw0Q6UkoscP2In/ZftAmou
+         tpYiHFxNgvo/7eg58Bk7Zn4HkLVXoT+1ihqFM=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=ICEs66mzOrWw5DoGNjzQDzMrnyfZ+Z+NkVU0FU1eIqM=;
-        b=QUk8iABfESPC00QmSuvlEW/xJe+qvhUS3NWfLSG0enBxuqavTXcGiHHGXCzYu4GUg+
-         h2wy9aFDo4WjQZtrYYYIgfcDsYwensFMuG354/L7cHFqK6sGOwUEdR5AyrWpiNa150yz
-         UzZlhzPIftr8apZH6TJr21udTzEoDNjncBijzwsmRckXcuZ6Qq5/ch6JMDh51S7Q5gHt
-         E9Qh9aM53XnzZHvgu6tUfrzULaU31Qm4RcP+ebBQ3tqQD7AeSnUzlTntiXHDVH8K2+4y
-         /1VIBOzHUGa+omWpQT0pSAuLBMF+lbd3ovvrASqSr+VyEne6sT34ixl8jIlAoYU81TOL
-         P8PQ==
-X-Gm-Message-State: AOAM533zSGjMM6CKFWl/2CTK6AZH9dJoZc22xQiSTJ7cjBBpu4SIRBhF
-        QpZ0rCF8hxvu4t5TIZe9uKqTMUtUaACSiu/9I1AVMw==
-X-Google-Smtp-Source: ABdhPJyDW1VAO7a/TQ1CU2vowcY3A3hOPeoUkpVMQrtweBg2luyz25xyyE+y6zVDUbyY0eP6EHeblTMoRnpczu07QOc=
-X-Received: by 2002:a05:6830:719:: with SMTP id y25mr7949091ots.77.1631859936068;
- Thu, 16 Sep 2021 23:25:36 -0700 (PDT)
+        bh=evM8dYW25rUmoo+jhaGEhb/KiP/SeJMcvT7KRQQj0k4=;
+        b=dycYme3zgAi5t0bK0zqiawsTkr12WrTQv8/xk4svb48eC9lC3B0B/UqWu9Y/Yu4Zia
+         H/nZFbUzT68ANTERz8xFSlWzaCWCAFdSemVvc8O/Nv6fFhPxHuKuZo7l0iykNeel59Zm
+         jByFyQpeZNH0C3Qx4KTaXiJ67mu9HlaXTidtFPy/r1EnOVkeMFsyfCHcQ7hZgAA0/W1D
+         IQrm38HECLOfwTxjxdvGW+yJPdb+A+x4NhYM5yR7To55OLV0mC7UI0kL1/EP/gOYH2bU
+         I0QNKar39bnRnPMGBKucbXbjutG0TGzcsF+zRkgFZOIG3iBcawW5J2tHqEg6SU3CKOFC
+         ixGQ==
+X-Gm-Message-State: AOAM531dmfNJrR/jOEHhfLSCvs9hrR9sv3r9vd2uYGKuhqHN2e4uoicl
+        ovlkYjFObA7AC0BRgA7Dq+LUtLkNwvTVSeY4BnB+ww==
+X-Google-Smtp-Source: ABdhPJyrkQzCWSDEUH1Rd5lLaPb2mxQs/iP6fiO2b9602AYM1Z/L3nqb7ScjuiLu6cPKzfoKXdFQgYK/XitKb8oyxGk=
+X-Received: by 2002:aca:2310:: with SMTP id e16mr2823690oie.64.1631860002668;
+ Thu, 16 Sep 2021 23:26:42 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 16 Sep 2021 23:25:35 -0700
+ HTTPREST; Thu, 16 Sep 2021 23:26:42 -0700
 MIME-Version: 1.0
-In-Reply-To: <1631811353-503-3-git-send-email-pillair@codeaurora.org>
-References: <1631811353-503-1-git-send-email-pillair@codeaurora.org> <1631811353-503-3-git-send-email-pillair@codeaurora.org>
+In-Reply-To: <1631811353-503-4-git-send-email-pillair@codeaurora.org>
+References: <1631811353-503-1-git-send-email-pillair@codeaurora.org> <1631811353-503-4-git-send-email-pillair@codeaurora.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.9.1
-Date:   Thu, 16 Sep 2021 23:25:35 -0700
-Message-ID: <CAE-0n51KBYjZvwGNy06_okmEWjEfRLQO54CYaY6-JnbBk6kOhA@mail.gmail.com>
-Subject: Re: [PATCH v3 2/3] dt-bindings: remoteproc: qcom: Add SC7280 WPSS support
+Date:   Thu, 16 Sep 2021 23:26:42 -0700
+Message-ID: <CAE-0n501fpj13snR9Q+RyOW12zPqyY8W4ZqzFcrmeqiwA77GVQ@mail.gmail.com>
+Subject: Re: [PATCH v3 3/3] remoteproc: qcom: q6v5_wpss: Add support for
+ sc7280 WPSS
 To:     Rakesh Pillai <pillair@codeaurora.org>, agross@kernel.org,
         bjorn.andersson@linaro.org, mathieu.poirier@linaro.org,
         ohad@wizery.com, p.zabel@pengutronix.de, robh+dt@kernel.org
@@ -62,33 +63,14 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Rakesh Pillai (2021-09-16 09:55:52)
-> @@ -78,6 +84,10 @@ properties:
->        Phandle reference to a syscon representing TCSR followed by the
->        three offsets within syscon for q6, modem and nc halt registers.
+Quoting Rakesh Pillai (2021-09-16 09:55:53)
+> Add support for PIL loading of WPSS processor for SC7280
+> - WPSS boot will be requested by the wifi driver and hence
+>   disable auto-boot for WPSS.
+> - Add a separate shutdown sequence handler for WPSS.
+> - Add multiple power-domain voting support
 >
-> +  qcom,qmp:
-> +    $ref: /schemas/types.yaml#/definitions/phandle
-> +    description: Reference to the AOSS side-channel message RAM.
-> +
->    qcom,smem-states:
->      $ref: /schemas/types.yaml#/definitions/phandle-array
->      description: States used by the AP to signal the Hexagon core
-> @@ -117,6 +127,33 @@ allOf:
->          compatible:
->            contains:
->              enum:
-> +              - qcom,sc7280-wpss-pil
-> +    then:
+> Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
+> ---
 
-Honestly I find this if/else to be a huge tangle. Why not split the
-binding so that each compatible is a different file? Then it is easier
-to read and see what properties to set.
-
-> +      properties:
-> +        interrupts-extended:
-> +          maxItems: 6
-> +          items:
-> +            - description: Watchdog interrupt
-> +            - description: Fatal interrupt
-> +            - description: Ready interrupt
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
