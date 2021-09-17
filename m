@@ -2,80 +2,171 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B656040F269
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 08:33:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6354D40F281
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 08:37:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244245AbhIQGe7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Sep 2021 02:34:59 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:63132 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243221AbhIQGez (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Sep 2021 02:34:55 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
-  t=1631860414; x=1663396414;
-  h=from:to:cc:subject:date:message-id:in-reply-to:
-   references:mime-version;
-  bh=/rJWYNLEshjtrC1IGOED6acbfsbHHmLBFIvrAeJEFiI=;
-  b=MBdthKwijV/pCdARgBtZf1ISGQD2aAokrM7eNebH0XWYi3g5COTWyNBe
-   k90HDMLvmZ8JZ3h42lzDPrq76nDYX6meNCNUyzYVihlVGJcniUJid79E0
-   YPKOUhcKsX7QDk9StiJnB8jaErF3s28FzWYpYllwq2ukXa3zwCxVfJOHo
-   A=;
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 16 Sep 2021 23:33:34 -0700
-X-QCInternal: smtphost
-Received: from nalasex01a.na.qualcomm.com ([10.47.209.196])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2021 23:33:34 -0700
-Received: from fenglinw-gv.qualcomm.com (10.80.80.8) by
- nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
- Thu, 16 Sep 2021 23:33:31 -0700
-From:   Fenglin Wu <quic_fenglinw@quicinc.com>
-To:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <sboyd@kernel.org>
-CC:     <collinsd@codeaurora.org>, <subbaram@codeaurora.org>,
-        <quic_fenglinw@quicinc.com>
-Subject: [RESEND PATCH v1 9/9] spmi: pmic-arb: increase SPMI transaction timeout delay
-Date:   Fri, 17 Sep 2021 14:33:04 +0800
-Message-ID: <1631860384-26608-10-git-send-email-quic_fenglinw@quicinc.com>
+        id S232556AbhIQGjS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Sep 2021 02:39:18 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:49608 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229456AbhIQGjS (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 17 Sep 2021 02:39:18 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1631860677; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=KpNmHEE+/4g91dVa8j0rXZUOEaQm94+OYFqDL1vIVhs=; b=EUM0pZYR0I9ycU9sq1G9wrWsvYdOVuAOZSma4c7EkHWtWXUSUoqvD0dKd5ecCqMCd9D4OQ6P
+ 8E4nQrX9gBdVLW4TQXPPuSf/N6yzSL1P3t4dzPR2Zc283XDj45MwJ0/vKl4HrN133dRh0oc2
+ cLt86cPrKU/KCiL+HC1wtluKN/8=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 614437c2e0f78151d6ad05cc (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 17 Sep 2021 06:37:54
+ GMT
+Sender: rnayak=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8EA35C4338F; Fri, 17 Sep 2021 06:37:54 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-173.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: rnayak)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 47A0AC4338F;
+        Fri, 17 Sep 2021 06:37:51 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 47A0AC4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Rajendra Nayak <rnayak@codeaurora.org>
+To:     bjorn.andersson@linaro.org, agross@kernel.org,
+        linus.walleij@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Prasad Sodagudi <psodagud@codeaurora.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>
+Subject: [PATCH] pinctrl: qcom: Add egpio feature support
+Date:   Fri, 17 Sep 2021 12:07:28 +0530
+Message-Id: <1631860648-31774-1-git-send-email-rnayak@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1631860384-26608-1-git-send-email-quic_fenglinw@quicinc.com>
-References: <1631860384-26608-1-git-send-email-quic_fenglinw@quicinc.com>
-MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [10.80.80.8]
-X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
- nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: David Collins <collinsd@codeaurora.org>
+From: Prasad Sodagudi <psodagud@codeaurora.org>
 
-Increase the SPMI transaction timeout delay from 100 us to
-1000 us in order to account for the slower execution time
-found on some simulator targets.
+egpio is a scheme which allows special power Island Domain IOs
+(LPASS,SSC) to be reused as regular chip GPIOs by muxing regular
+TLMM functions with Island Domain functions.
+With this scheme, an IO can be controlled both by the cpu running
+linux and the Island processor. This provides great flexibility to
+re-purpose the Island IOs for regular TLMM usecases.
 
-Signed-off-by: David Collins <collinsd@codeaurora.org>
-Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+2 new bits are added to ctl_reg, egpio_present is a read only bit
+which shows if egpio feature is available or not on a given gpio.
+egpio_enable is the read/write bit and only effective if egpio_present
+is 1. Once its set, the Island IO is controlled from Chip TLMM.
+egpio_enable when set to 0 means the GPIO is used as Island Domain IO.
+
+The support exists on most recent qcom SoCs, and we add support
+for sm8150/sm8250/sm8350 and sc7280 as part of this patch.
+
+Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
+[rnayak: rewrite commit log, minor rebase]
+Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
 ---
- drivers/spmi/spmi-pmic-arb.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/pinctrl/qcom/pinctrl-msm.c    | 4 ++++
+ drivers/pinctrl/qcom/pinctrl-msm.h    | 2 ++
+ drivers/pinctrl/qcom/pinctrl-sc7280.c | 2 ++
+ drivers/pinctrl/qcom/pinctrl-sm8150.c | 2 ++
+ drivers/pinctrl/qcom/pinctrl-sm8250.c | 2 ++
+ drivers/pinctrl/qcom/pinctrl-sm8350.c | 2 ++
+ 6 files changed, 14 insertions(+)
 
-diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
-index 55fa981..08c2566 100644
---- a/drivers/spmi/spmi-pmic-arb.c
-+++ b/drivers/spmi/spmi-pmic-arb.c
-@@ -91,7 +91,7 @@ enum pmic_arb_channel {
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+index 8476a8a..f4a2343 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.c
++++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+@@ -220,6 +220,10 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
+ 	val = msm_readl_ctl(pctrl, g);
+ 	val &= ~mask;
+ 	val |= i << g->mux_bit;
++	/* Check if egpio present and enable that feature */
++	if (val & BIT(g->egpio_present))
++		val |= BIT(g->egpio_enable);
++
+ 	msm_writel_ctl(val, pctrl, g);
  
- /* Maximum number of support PMIC peripherals */
- #define PMIC_ARB_MAX_PERIPHS		512
--#define PMIC_ARB_TIMEOUT_US		100
-+#define PMIC_ARB_TIMEOUT_US		1000
- #define PMIC_ARB_MAX_TRANS_BYTES	(8)
+ 	raw_spin_unlock_irqrestore(&pctrl->lock, flags);
+diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
+index e31a516..3635b31 100644
+--- a/drivers/pinctrl/qcom/pinctrl-msm.h
++++ b/drivers/pinctrl/qcom/pinctrl-msm.h
+@@ -77,6 +77,8 @@ struct msm_pingroup {
+ 	unsigned drv_bit:5;
  
- #define PMIC_ARB_APID_MASK		0xFF
+ 	unsigned od_bit:5;
++	unsigned egpio_enable:5;
++	unsigned egpio_present:5;
+ 	unsigned oe_bit:5;
+ 	unsigned in_bit:5;
+ 	unsigned out_bit:5;
+diff --git a/drivers/pinctrl/qcom/pinctrl-sc7280.c b/drivers/pinctrl/qcom/pinctrl-sc7280.c
+index afddf6d..607d459 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sc7280.c
++++ b/drivers/pinctrl/qcom/pinctrl-sc7280.c
+@@ -43,6 +43,8 @@
+ 		.mux_bit = 2,			\
+ 		.pull_bit = 0,			\
+ 		.drv_bit = 6,			\
++		.egpio_enable = 12,		\
++		.egpio_present = 11,		\
+ 		.oe_bit = 9,			\
+ 		.in_bit = 0,			\
+ 		.out_bit = 1,			\
+diff --git a/drivers/pinctrl/qcom/pinctrl-sm8150.c b/drivers/pinctrl/qcom/pinctrl-sm8150.c
+index 7359bae..63a625a 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sm8150.c
++++ b/drivers/pinctrl/qcom/pinctrl-sm8150.c
+@@ -56,6 +56,8 @@ enum {
+ 		.mux_bit = 2,			\
+ 		.pull_bit = 0,			\
+ 		.drv_bit = 6,			\
++		.egpio_enable = 12,		\
++		.egpio_present = 11,		\
+ 		.oe_bit = 9,			\
+ 		.in_bit = 0,			\
+ 		.out_bit = 1,			\
+diff --git a/drivers/pinctrl/qcom/pinctrl-sm8250.c b/drivers/pinctrl/qcom/pinctrl-sm8250.c
+index af144e7..ad4fd94 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sm8250.c
++++ b/drivers/pinctrl/qcom/pinctrl-sm8250.c
+@@ -57,6 +57,8 @@ enum {
+ 		.mux_bit = 2,				\
+ 		.pull_bit = 0,				\
+ 		.drv_bit = 6,				\
++		.egpio_enable = 12,			\
++		.egpio_present = 11,			\
+ 		.oe_bit = 9,				\
+ 		.in_bit = 0,				\
+ 		.out_bit = 1,				\
+diff --git a/drivers/pinctrl/qcom/pinctrl-sm8350.c b/drivers/pinctrl/qcom/pinctrl-sm8350.c
+index 4d8f863..bb436dc 100644
+--- a/drivers/pinctrl/qcom/pinctrl-sm8350.c
++++ b/drivers/pinctrl/qcom/pinctrl-sm8350.c
+@@ -46,6 +46,8 @@
+ 		.mux_bit = 2,			\
+ 		.pull_bit = 0,			\
+ 		.drv_bit = 6,			\
++		.egpio_enable = 12,		\
++		.egpio_present = 11,		\
+ 		.oe_bit = 9,			\
+ 		.in_bit = 0,			\
+ 		.out_bit = 1,			\
 -- 
-2.7.4
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
