@@ -2,113 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 296C740EE83
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 02:55:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C332040EE8C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 02:59:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242021AbhIQA40 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 16 Sep 2021 20:56:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49248 "EHLO
+        id S242019AbhIQBBF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 16 Sep 2021 21:01:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241940AbhIQA40 (ORCPT
+        with ESMTP id S230058AbhIQBBF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 16 Sep 2021 20:56:26 -0400
-Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 46882C061756
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Sep 2021 17:55:05 -0700 (PDT)
-Received: by mail-oi1-x22b.google.com with SMTP id 6so11608593oiy.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Sep 2021 17:55:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=2yH0Zt0O7gBl56UZTi2Aqh4YymYqkgwf1TTMl7F/bXo=;
-        b=H0lHLP20LFpppz68jylyF0kBm32s2ENHdXDuWHo/9BSJo6Ho2Vtfxl1ggpn/h7bH+k
-         vSPnQipeBqdE5Hh+ZYlRSgoQ8m+RpFXy//acsVdWCX+fdhrjSIhU3IWPPTccx/AWdHI8
-         iKniZ6s07bSukhxBoUXbQPXUAFa+KHqd/MIGc=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=2yH0Zt0O7gBl56UZTi2Aqh4YymYqkgwf1TTMl7F/bXo=;
-        b=bAJrYLEUG1krjZRmw0oLicW0aRti1f4yG9eLxkp1xgnM6QaD/5VvpGMlkfv7kfX71W
-         XKhmJ+wTPh423SOv/u/i1hj+W2SLaOix2WPJxjlR0ePMLfmCE9UcF6UQ97EPcsUlVJom
-         R/bd7E6WzUVOGvHRqdkKNBDX8s0VxCWMAhe38nHBpsfO5QwiIW4zeMOXGTB4MYlRIpgY
-         3TQhu97tUN1ZlCGi39hsUXs0Jq6HqM1e7m9tPbu7aNgoRfSoLYvsmHWHVrgmOc+EebVq
-         HnOnZyMiPnwUwuuenJCAorc4FR4hOQ8izccx7QvpZGWOSU1rbOUIIAVZGhesoWVFZFmw
-         m5mw==
-X-Gm-Message-State: AOAM530gqceDRchzWn1KZUM7JN7Xrmg7nld7+LP6/gPbnuktZBN3hBXD
-        o8TBLmjqN/36aND70bTOAi20r2YIxNk9XQjVliAoYg==
-X-Google-Smtp-Source: ABdhPJyILhYG1yeMRXTOEinJ2nWQ5k/Wdk5oKtI6BocyrPxqkMfj6StMQ/RoL3uGpsxH8+vdgbsJTpfVXCkhobcsh24=
-X-Received: by 2002:aca:2310:: with SMTP id e16mr2036358oie.64.1631840104499;
- Thu, 16 Sep 2021 17:55:04 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 16 Sep 2021 17:55:04 -0700
+        Thu, 16 Sep 2021 21:01:05 -0400
+Received: from phobos.denx.de (phobos.denx.de [IPv6:2a01:238:438b:c500:173d:9f52:ddab:ee01])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33D82C061574;
+        Thu, 16 Sep 2021 17:59:44 -0700 (PDT)
+Received: from tr.lan (ip-89-176-112-137.net.upcbroadband.cz [89.176.112.137])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: marex@denx.de)
+        by phobos.denx.de (Postfix) with ESMTPSA id 61AA682D18;
+        Fri, 17 Sep 2021 02:59:37 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=denx.de;
+        s=phobos-20191101; t=1631840381;
+        bh=bDuOrCdzoWsT+rs95Bjmzf6kn4ZJSlEQSQ56zrjHy00=;
+        h=From:To:Cc:Subject:Date:From;
+        b=XtwTVrXomL8ZRHqs6Dkl8BjlH0Ti6cypahlBILc0YUuU6lExCL5PBeihb/VNsEgmM
+         3OR70Jf9aeUfE5x63S3MvYRTWg3oybdsN/CNUS10yU1c1/yH3M5OYGlWRrikSyLCJx
+         /gM+hAolHkHatiPiRWU67/UQ8v6Sea7K9ydTR4Wch+T5GWRnG/2H560Er4q3qsmmMe
+         zJl6bsrfLFH06uN+fXtC+C9glX+wcMnLs0o86XVuAdvNUe3DBG4MLkElYdLDWMmAa8
+         33Ocksq5YJ3bCtXJBIB9Mut/+NZQ6xgwdwf6MvTSZ9bENMZ1EVL4OCs+pK3py1lVRY
+         ZSb82sU7X5mlA==
+From:   Marek Vasut <marex@denx.de>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        Marek Vasut <marex@denx.de>, Arnd Bergmann <arnd@arndb.de>,
+        Jordan Crouse <jcrouse@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>, stable@vger.kernel.org
+Subject: [PATCH] drm/msm: Avoid potential overflow in timeout_to_jiffies()
+Date:   Fri, 17 Sep 2021 02:59:13 +0200
+Message-Id: <20210917005913.157379-1-marex@denx.de>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-In-Reply-To: <1631811121-32662-1-git-send-email-pillair@codeaurora.org>
-References: <1631811121-32662-1-git-send-email-pillair@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Thu, 16 Sep 2021 17:55:04 -0700
-Message-ID: <CAE-0n50Qmnxa8dz9pQbP408Y_vOu_8j1qeYFGo61W47WQkGunA@mail.gmail.com>
-Subject: Re: [PATCH v3] arm64: dts: qcom: sc7280: Add WPSS remoteproc node
-To:     Rakesh Pillai <pillair@codeaurora.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, sibis@codeaurora.org,
-        mpubbise@codeaurora.org, kuabhs@chromium.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+X-Virus-Scanned: clamav-milter 0.103.2 at phobos.denx.de
+X-Virus-Status: Clean
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Rakesh Pillai (2021-09-16 09:52:01)
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-> index 64fc22a..2b8bbcd 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-> @@ -1423,6 +1433,59 @@
->                         #power-domain-cells = <1>;
->                 };
->
-> +               remoteproc_wpss: remoteproc@8a00000 {
-> +                       compatible = "qcom,sc7280-wpss-pil";
-> +                       reg = <0 0x08a00000 0 0x10000>;
-> +
-> +                       interrupts-extended = <&intc GIC_SPI 587 IRQ_TYPE_EDGE_RISING>,
-> +                                             <&wpss_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
-> +                                             <&wpss_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
-> +                                             <&wpss_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
-> +                                             <&wpss_smp2p_in 3 IRQ_TYPE_EDGE_RISING>,
-> +                                             <&wpss_smp2p_in 7 IRQ_TYPE_EDGE_RISING>;
-> +                       interrupt-names = "wdog", "fatal", "ready", "handover",
-> +                                         "stop-ack", "shutdown-ack";
-> +
-> +                       clocks = <&gcc GCC_WPSS_AHB_BDG_MST_CLK>,
-> +                                <&gcc GCC_WPSS_AHB_CLK>,
-> +                                <&gcc GCC_WPSS_RSCP_CLK>,
-> +                                <&rpmhcc RPMH_CXO_CLK>;
-> +                       clock-names = "gcc_wpss_ahb_bdg_mst_clk",
-> +                                     "gcc_wpss_ahb_clk",
-> +                                     "gcc_wpss_rscp_clk",
-> +                                     "xo";
-> +
-> +                       power-domains = <&rpmhpd SC7280_CX>,
-> +                                       <&rpmhpd SC7280_MX>;
-> +                       power-domain-names = "cx", "mx";
-> +
-> +                       memory-region = <&wpss_mem>;
-> +
-> +                       qcom,qmp = <&aoss_qmp>;
-> +
-> +                       qcom,smem-states = <&wpss_smp2p_out 0>;
-> +                       qcom,smem-state-names = "stop";
-> +
-> +                       resets = <&aoss_reset AOSS_CC_WCSS_RESTART>,
-> +                                <&pdc_reset PDC_WPSS_SYNC_RESET>;
-> +                       reset-names = "restart", "pdc_sync";
-> +
-> +                       qcom,halt-regs = <&tcsr_mutex_regs 0x37000>;
+The return type of ktime_divns() is s64. The timeout_to_jiffies() currently
+assigns the result of this ktime_divns() to unsigned long, which on 32 bit
+systems may overflow. Furthermore, the result of this function is sometimes
+also passed to functions which expect signed long, dma_fence_wait_timeout()
+is one such example.
 
-Where is this node defined? I don't see it on the mailing list for
-sc7280. Can you indicate what patches this depends on, and use git
-format-patch --base= so we can try to find them ourselves.
+Fix this by adjusting the type of remaining_jiffies to s64, so we do not
+suffer overflow there, and return a value limited to range of 0..INT_MAX,
+which is safe for all usecases of this timeout.
+
+The above overflow can be triggered if userspace passes in too large timeout
+value, larger than INT_MAX / HZ seconds. The kernel detects it and complains
+about "schedule_timeout: wrong timeout value %lx" and generates a warning
+backtrace.
+
+Note that this fixes commit 6cedb8b377bb ("drm/msm: avoid using 'timespec'"),
+because the previously used timespec_to_jiffies() function returned unsigned
+long instead of s64:
+static inline unsigned long timespec_to_jiffies(const struct timespec *value)
+
+Fixes: 6cedb8b377bb ("drm/msm: avoid using 'timespec'")
+Signed-off-by: Marek Vasut <marex@denx.de>
+Cc: Arnd Bergmann <arnd@arndb.de>
+Cc: Jordan Crouse <jcrouse@codeaurora.org>
+Cc: Rob Clark <robdclark@chromium.org>
+Cc: stable@vger.kernel.org # 5.6+
+---
+NOTE: This is related to Mesa MR
+      https://gitlab.freedesktop.org/mesa/mesa/-/merge_requests/12886
+---
+ drivers/gpu/drm/msm/msm_drv.h | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index 0b2686b060c73..d96b254b8aa46 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -543,7 +543,7 @@ static inline int align_pitch(int width, int bpp)
+ static inline unsigned long timeout_to_jiffies(const ktime_t *timeout)
+ {
+ 	ktime_t now = ktime_get();
+-	unsigned long remaining_jiffies;
++	s64 remaining_jiffies;
+ 
+ 	if (ktime_compare(*timeout, now) < 0) {
+ 		remaining_jiffies = 0;
+@@ -552,7 +552,7 @@ static inline unsigned long timeout_to_jiffies(const ktime_t *timeout)
+ 		remaining_jiffies = ktime_divns(rem, NSEC_PER_SEC / HZ);
+ 	}
+ 
+-	return remaining_jiffies;
++	return clamp(remaining_jiffies, 0LL, (s64)INT_MAX);
+ }
+ 
+ #endif /* __MSM_DRV_H__ */
+-- 
+2.33.0
+
