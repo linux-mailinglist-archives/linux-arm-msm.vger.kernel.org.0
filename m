@@ -2,250 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C190340FECC
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 19:47:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C53740FF50
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 20:24:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241297AbhIQRse (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Sep 2021 13:48:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54424 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241212AbhIQRsd (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Sep 2021 13:48:33 -0400
-Received: from mail-wr1-x433.google.com (mail-wr1-x433.google.com [IPv6:2a00:1450:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1A58AC061764
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Sep 2021 10:47:11 -0700 (PDT)
-Received: by mail-wr1-x433.google.com with SMTP id i23so16475997wrb.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Sep 2021 10:47:11 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=SyBCzrN2H1t4tMOe3dvQugP37Sm1iSfEUNMCLVwsx4o=;
-        b=PZIfX93YTe8af+GKbpNUi2889P3xLkYG0AYpgwWcV1pR2sDXGliUziQ4QudkjSf1BL
-         CvXMmzsXQVPL0aqgVIBzC127kiRdBgUk8/8kLLQqAXIPYYdPEfi1iqTp3SJM3jhvO1uB
-         8+bCv4cXtWvfXsbaPpL7EO7hZffxWnIAUuZp4uUzrulucLMb8ryM8MmNE9fSz40HQrUk
-         m31QgZ9MxGEy/NTbfuraeLB4f842REejas9ARD4IVpcxil8OaXMASvvsrunC+F7DGs3m
-         NS7U9ma5Ko3uh51QzPWJrCOkUiw78ID2fOy4NbVHMCXwVwTbIZ5f0HD9fwoM58y+qqvp
-         zKcg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=SyBCzrN2H1t4tMOe3dvQugP37Sm1iSfEUNMCLVwsx4o=;
-        b=6LMF6I/QXHK8x3PyQi+jbelJgCi84ttdF9B+2SLp5ZGlklUInFWSaJBHuZkzOmoK2w
-         tzqyf4hHcNGmMAGBI3MWewsVREvyOnkTcADsLhIboHRHP47aMUAjfKmNmIpNDu/uooII
-         jdEEc8C6Et5m7AmeBVZca6LEMeK6erqVfS/mt/7BJnedVVrEYx6g/3rdHO8sEdSI6ync
-         geyJ5x5Xa1fXbHvgl9UNwItyOac+TiGQ2j+JLhigQoEGOZ4yz+LSU/oqrBoOnWqcukus
-         QFvLEaC6uPC9PMuzOrOqGuSzziBWzDBIZEz4CIg6ykCekSCzJM/P5kUPzGdSLSAR0062
-         Z7sg==
-X-Gm-Message-State: AOAM5300ImBKpJi6wwz/vpyw9iJHuFOlstk5cF62gDaHyMNj5IjeZL4L
-        zpEDoWt2c5m9A8eOEVOjbCpflrCUpy68kuVLhux9T5daCM0=
-X-Google-Smtp-Source: ABdhPJxwoBL4YXVsWGVmQypIOuQvHMyGn3Lf/bbQxI+09bbZq/nFUOndrTK7MPfwUbVDcyAP/lVkHq3BSrvSl9TZsOQ=
-X-Received: by 2002:adf:f207:: with SMTP id p7mr13652606wro.166.1631900829338;
- Fri, 17 Sep 2021 10:47:09 -0700 (PDT)
+        id S242270AbhIQS0F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Sep 2021 14:26:05 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:33959 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1344993AbhIQSZX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 17 Sep 2021 14:25:23 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1631903040; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=lA9m8iW0h+GpB3q/tv02Ab4h8KK1vfBdEm/JgwArBvI=;
+ b=HGfdLnI1wIZEDLKYLj8faaVWtYeZ1h7mVn02dM85Vi4Nb1FZ9Ye0SzzHy2pg5l9Jhvx6EhKn
+ jOlXPJykcjA0utmX5O/6Ig+AKTN9Q2mmzJoL0PByXDOQUfqOQttja2105vr64C1QD7g27mEN
+ IEjAuytntw9oY6LBhNEKyW8w+uM=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 6144dd2fc1b30e2f026663af (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 17 Sep 2021 18:23:43
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 58860C4363B; Fri, 17 Sep 2021 18:23:41 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B3A1AC43639;
+        Fri, 17 Sep 2021 18:23:38 +0000 (UTC)
 MIME-Version: 1.0
-References: <20210916174928.65529-1-ebiggers@kernel.org> <20210916174928.65529-5-ebiggers@kernel.org>
-In-Reply-To: <20210916174928.65529-5-ebiggers@kernel.org>
-From:   Paul Crowley <paulcrowley@google.com>
-Date:   Fri, 17 Sep 2021 10:46:55 -0700
-Message-ID: <CA+_SqcC5V64Y1d2qOEpCV-25_eXj-kDa4v5kKm+eF1zDkwRZyA@mail.gmail.com>
-Subject: Re: [RFC PATCH v2 4/5] fscrypt: allow 256-bit master keys with AES-256-XTS
-To:     Eric Biggers <ebiggers@kernel.org>
-Cc:     linux-block@vger.kernel.org, linux-fscrypt@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, kernel-team@android.com,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Gaurav Kashyap <gaurkash@codeaurora.org>,
-        Satya Tangirala <satyaprateek2357@gmail.com>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Fri, 17 Sep 2021 11:23:38 -0700
+From:   abhinavk@codeaurora.org
+To:     Sean Paul <sean@poorly.run>
+Cc:     dri-devel@lists.freedesktop.org, ppaalanen@gmail.com,
+        maarten.lankhorst@linux.intel.com, tzimmermann@suse.de,
+        airlied@linux.ie, daniel.vetter@ffwll.ch,
+        freedreno@lists.freedesktop.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <seanpaul@chromium.org>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org
+Subject: Re: [Freedreno] [RESEND PATCH v6 04/14] drm/msm/dpu: Replace
+ definitions for dpu debug macros
+In-Reply-To: <20210721175526.22020-5-sean@poorly.run>
+References: <20210721175526.22020-1-sean@poorly.run>
+ <20210721175526.22020-5-sean@poorly.run>
+Message-ID: <745692f677884badc0829193842967dd@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Reviewed-by: paulcrowley@google.com
-
-
-On Thu, 16 Sept 2021 at 11:18, Eric Biggers <ebiggers@kernel.org> wrote:
->
-> From: Eric Biggers <ebiggers@google.com>
->
-> fscrypt currently requires a 512-bit master key when AES-256-XTS is
-> used, since AES-256-XTS keys are 512-bit and fscrypt requires that the
-> master key be at least as long any key that will be derived from it.
->
-> However, this is overly strict because AES-256-XTS doesn't actually have
-> a 512-bit security strength, but rather 256-bit.  The fact that XTS
-> takes twice the expected key size is a quirk of the XTS mode.  It is
-> sufficient to use 256 bits of entropy for AES-256-XTS, provided that it
-> is first properly expanded into a 512-bit key, which HKDF-SHA512 does.
->
-> Therefore, relax the check of the master key size to use the security
-> strength of the derived key rather than the size of the derived key
-> (except for v1 encryption policies, which don't use HKDF).
->
-> Besides making things more flexible for userspace, this is needed in
-> order for the use of a KDF which only takes a 256-bit key to be
-> introduced into the fscrypt key hierarchy.  This will happen with
-> hardware-wrapped keys support, as all known hardware which supports that
-> feature uses an SP800-108 KDF using AES-256-CMAC, so the wrapped keys
-> are wrapped 256-bit AES keys.  Moreover, there is interest in fscrypt
-> supporting the same type of AES-256-CMAC based KDF in software as an
-> alternative to HKDF-SHA512.  There is no security problem with such
-> features, so fix the key length check to work properly with them.
->
-> Signed-off-by: Eric Biggers <ebiggers@google.com>
+On 2021-07-21 10:55, Sean Paul wrote:
+> From: Sean Paul <seanpaul@chromium.org>
+> 
+> The debug messages shouldn't be logged as errors when debug categories
+> are enabled. Use the drm logging helpers to do the right thing
+> 
+> Signed-off-by: Sean Paul <seanpaul@chromium.org>
+Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
+> Link:
+> https://patchwork.freedesktop.org/patch/msgid/20200608210505.48519-5-sean@poorly.run
+> #v5
+> 
+> Changes in v5:
+> -Added to the set
+> Changes in v6:
+> -None
 > ---
->  fs/crypto/fscrypt_private.h |  5 ++--
->  fs/crypto/hkdf.c            | 11 +++++--
->  fs/crypto/keysetup.c        | 57 +++++++++++++++++++++++++++++--------
->  3 files changed, 56 insertions(+), 17 deletions(-)
->
-> diff --git a/fs/crypto/fscrypt_private.h b/fs/crypto/fscrypt_private.h
-> index 3fa965eb3336d..cb25ef0cdf1f3 100644
-> --- a/fs/crypto/fscrypt_private.h
-> +++ b/fs/crypto/fscrypt_private.h
-> @@ -549,8 +549,9 @@ int __init fscrypt_init_keyring(void);
->  struct fscrypt_mode {
->         const char *friendly_name;
->         const char *cipher_str;
-> -       int keysize;
-> -       int ivsize;
-> +       int keysize;            /* key size in bytes */
-> +       int security_strength;  /* security strength in bytes */
-> +       int ivsize;             /* IV size in bytes */
->         int logged_impl_name;
->         enum blk_crypto_mode_num blk_crypto_mode;
->  };
-> diff --git a/fs/crypto/hkdf.c b/fs/crypto/hkdf.c
-> index e0ec210555053..7607d18b35fc0 100644
-> --- a/fs/crypto/hkdf.c
-> +++ b/fs/crypto/hkdf.c
-> @@ -16,9 +16,14 @@
->
->  /*
->   * HKDF supports any unkeyed cryptographic hash algorithm, but fscrypt uses
-> - * SHA-512 because it is reasonably secure and efficient; and since it produces
-> - * a 64-byte digest, deriving an AES-256-XTS key preserves all 64 bytes of
-> - * entropy from the master key and requires only one iteration of HKDF-Expand.
-> + * SHA-512 because it is well-established, secure, and reasonably efficient.
-> + *
-> + * HKDF-SHA256 was also considered, as its 256-bit security strength would be
-> + * sufficient here.  A 512-bit security strength is "nice to have", though.
-> + * Also, on 64-bit CPUs, SHA-512 is usually just as fast as SHA-256.  In the
-> + * common case of deriving an AES-256-XTS key (512 bits), that can result in
-> + * HKDF-SHA512 being much faster than HKDF-SHA256, as the longer digest size of
-> + * SHA-512 causes HKDF-Expand to only need to do one iteration rather than two.
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h | 20 ++++----------------
+>  1 file changed, 4 insertions(+), 16 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> index 323a6bce9e64..c33164d3944a 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h
+> @@ -31,27 +31,15 @@
+>   * DPU_DEBUG - macro for kms/plane/crtc/encoder/connector logs
+>   * @fmt: Pointer to format string
 >   */
->  #define HKDF_HMAC_ALG          "hmac(sha512)"
->  #define HKDF_HASHLEN           SHA512_DIGEST_SIZE
-> diff --git a/fs/crypto/keysetup.c b/fs/crypto/keysetup.c
-> index bca9c6658a7c5..89cd533a88bff 100644
-> --- a/fs/crypto/keysetup.c
-> +++ b/fs/crypto/keysetup.c
-> @@ -19,6 +19,7 @@ struct fscrypt_mode fscrypt_modes[] = {
->                 .friendly_name = "AES-256-XTS",
->                 .cipher_str = "xts(aes)",
->                 .keysize = 64,
-> +               .security_strength = 32,
->                 .ivsize = 16,
->                 .blk_crypto_mode = BLK_ENCRYPTION_MODE_AES_256_XTS,
->         },
-> @@ -26,12 +27,14 @@ struct fscrypt_mode fscrypt_modes[] = {
->                 .friendly_name = "AES-256-CTS-CBC",
->                 .cipher_str = "cts(cbc(aes))",
->                 .keysize = 32,
-> +               .security_strength = 32,
->                 .ivsize = 16,
->         },
->         [FSCRYPT_MODE_AES_128_CBC] = {
->                 .friendly_name = "AES-128-CBC-ESSIV",
->                 .cipher_str = "essiv(cbc(aes),sha256)",
->                 .keysize = 16,
-> +               .security_strength = 16,
->                 .ivsize = 16,
->                 .blk_crypto_mode = BLK_ENCRYPTION_MODE_AES_128_CBC_ESSIV,
->         },
-> @@ -39,12 +42,14 @@ struct fscrypt_mode fscrypt_modes[] = {
->                 .friendly_name = "AES-128-CTS-CBC",
->                 .cipher_str = "cts(cbc(aes))",
->                 .keysize = 16,
-> +               .security_strength = 16,
->                 .ivsize = 16,
->         },
->         [FSCRYPT_MODE_ADIANTUM] = {
->                 .friendly_name = "Adiantum",
->                 .cipher_str = "adiantum(xchacha12,aes)",
->                 .keysize = 32,
-> +               .security_strength = 32,
->                 .ivsize = 32,
->                 .blk_crypto_mode = BLK_ENCRYPTION_MODE_ADIANTUM,
->         },
-> @@ -357,6 +362,45 @@ static int fscrypt_setup_v2_file_key(struct fscrypt_info *ci,
->         return 0;
->  }
->
-> +/*
-> + * Check whether the size of the given master key (@mk) is appropriate for the
-> + * encryption settings which a particular file will use (@ci).
-> + *
-> + * If the file uses a v1 encryption policy, then the master key must be at least
-> + * as long as the derived key, as this is a requirement of the v1 KDF.
-> + *
-> + * Otherwise, the KDF can accept any size key, so we enforce a slightly looser
-> + * requirement: we require that the size of the master key be at least the
-> + * maximum security strength of any algorithm whose key will be derived from it
-> + * (but in practice we only need to consider @ci->ci_mode, since any other
-> + * possible subkeys such as DIRHASH and INODE_HASH will never increase the
-> + * required key size over @ci->ci_mode).  This allows AES-256-XTS keys to be
-> + * derived from a 256-bit master key, which is cryptographically sufficient,
-> + * rather than requiring a 512-bit master key which is unnecessarily long.  (We
-> + * still allow 512-bit master keys if the user chooses to use them, though.)
-> + */
-> +static bool fscrypt_valid_master_key_size(const struct fscrypt_master_key *mk,
-> +                                         const struct fscrypt_info *ci)
-> +{
-> +       unsigned int min_keysize;
+> -#define DPU_DEBUG(fmt, ...)                                            
+>     \
+> -	do {                                                               \
+> -		if (drm_debug_enabled(DRM_UT_KMS))                         \
+> -			DRM_DEBUG(fmt, ##__VA_ARGS__); \
+> -		else                                                       \
+> -			pr_debug(fmt, ##__VA_ARGS__);                      \
+> -	} while (0)
+> +#define DPU_DEBUG(fmt, ...) DRM_DEBUG_KMS(fmt, ##__VA_ARGS__)
+> 
+>  /**
+>   * DPU_DEBUG_DRIVER - macro for hardware driver logging
+>   * @fmt: Pointer to format string
+>   */
+> -#define DPU_DEBUG_DRIVER(fmt, ...)                                     
+>     \
+> -	do {                                                               \
+> -		if (drm_debug_enabled(DRM_UT_DRIVER))                      \
+> -			DRM_ERROR(fmt, ##__VA_ARGS__); \
+> -		else                                                       \
+> -			pr_debug(fmt, ##__VA_ARGS__);                      \
+> -	} while (0)
+> -
+> -#define DPU_ERROR(fmt, ...) pr_err("[dpu error]" fmt, ##__VA_ARGS__)
+> +#define DPU_DEBUG_DRIVER(fmt, ...) DRM_DEBUG_DRIVER(fmt, 
+> ##__VA_ARGS__)
 > +
-> +       if (ci->ci_policy.version == FSCRYPT_POLICY_V1)
-> +               min_keysize = ci->ci_mode->keysize;
-> +       else
-> +               min_keysize = ci->ci_mode->security_strength;
-> +
-> +       if (mk->mk_secret.size < min_keysize) {
-> +               fscrypt_warn(NULL,
-> +                            "key with %s %*phN is too short (got %u bytes, need %u+ bytes)",
-> +                            master_key_spec_type(&mk->mk_spec),
-> +                            master_key_spec_len(&mk->mk_spec),
-> +                            (u8 *)&mk->mk_spec.u,
-> +                            mk->mk_secret.size, min_keysize);
-> +               return false;
-> +       }
-> +       return true;
-> +}
-> +
->  /*
->   * Find the master key, then set up the inode's actual encryption key.
->   *
-> @@ -422,18 +466,7 @@ static int setup_file_encryption_key(struct fscrypt_info *ci,
->                 goto out_release_key;
->         }
->
-> -       /*
-> -        * Require that the master key be at least as long as the derived key.
-> -        * Otherwise, the derived key cannot possibly contain as much entropy as
-> -        * that required by the encryption mode it will be used for.  For v1
-> -        * policies it's also required for the KDF to work at all.
-> -        */
-> -       if (mk->mk_secret.size < ci->ci_mode->keysize) {
-> -               fscrypt_warn(NULL,
-> -                            "key with %s %*phN is too short (got %u bytes, need %u+ bytes)",
-> -                            master_key_spec_type(&mk_spec),
-> -                            master_key_spec_len(&mk_spec), (u8 *)&mk_spec.u,
-> -                            mk->mk_secret.size, ci->ci_mode->keysize);
-> +       if (!fscrypt_valid_master_key_size(mk, ci)) {
->                 err = -ENOKEY;
->                 goto out_release_key;
->         }
-> --
-> 2.33.0
->
+> +#define DPU_ERROR(fmt, ...) DRM_ERROR(fmt, ##__VA_ARGS__)
+> 
+>  /**
+>   * ktime_compare_safe - compare two ktime structures
