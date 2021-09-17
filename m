@@ -2,110 +2,232 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4EB25410029
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 22:02:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C908641007C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 23:05:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234785AbhIQUDz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Sep 2021 16:03:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56506 "EHLO
+        id S243655AbhIQVGh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Sep 2021 17:06:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42038 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244011AbhIQUDx (ORCPT
+        with ESMTP id S235643AbhIQVGg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Sep 2021 16:03:53 -0400
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1C54C061757
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Sep 2021 13:02:30 -0700 (PDT)
-Received: by mail-io1-xd33.google.com with SMTP id y18so13715757ioc.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Sep 2021 13:02:30 -0700 (PDT)
+        Fri, 17 Sep 2021 17:06:36 -0400
+Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23CBAC061574
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Sep 2021 14:05:14 -0700 (PDT)
+Received: by mail-io1-xd29.google.com with SMTP id a15so13815381iot.2
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Sep 2021 14:05:14 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=J1UMbMc8OAj14RDhbE254NcvzwuTcA6/D0lnRvB23mQ=;
-        b=evClt5J6dFFrQPKBBVCoFxqTJwegs8huDM9pX5uOxtetVMSX/DzJB6dQYczFDSMKuP
-         0nvtA2qnccJQsgAPlE1IAc6DZuXXO6oOlYkaa3s9XTabjzfysVl8xz419KIb/N0AqdPz
-         ZwbYoP4LB+0abJLIY3j56sLCv7LSkT4qNai7U=
+        d=poorly.run; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=hYgcz2WmuoTKimNGZMC9XjOQ7lSec5qs3OosNYmK+Ok=;
+        b=MAON7TiphB4V7pl4cblyJU4fCBNd3AtveOG2N9qog5RtSabP80L+gI+5W27tWQEYLK
+         YvxUcBYeSvcJBT3VOHqcvtcl2yR2zxzhCXaRrDEpW3uWD+ac6AA5S7WHRFuVEyzyQGom
+         qMxoopdTBnoIy53LkjdOG7U3iBmeF+WbFnj58NcCFjGcmDj0US9Aj5CLvjp4UlgJEzUD
+         sRe+TgOi1lGjWJsBHO7J/tQRLOJhoEV0WYfMQci4h8eCOR15IdQdEu2t5kFFVeMq1Xo+
+         T48/kki+hg31MvafHT2J/GJxN48aHiGWQuGcWTn5gGcE1IRjdxEeVAxWrFFhXxEteocl
+         sUlA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=J1UMbMc8OAj14RDhbE254NcvzwuTcA6/D0lnRvB23mQ=;
-        b=Ynk64YMDR4PYUa7+1np4nyLVUdXNlZ4u5f8D/UDXlyLess++t1/q0r+3rFZRXfl6dI
-         hji7Nxz1hoPEanwtst+Prva7C7yfRdUCItLjX+5+25yh5RxivQW+J8WLckgu5z5ILgxI
-         SKGr4hLMRzu9VfVz98lCSkqlu4wTzf+gpOt/z6GHVnHd6eR+KtwwL/XaTkRQJX5v3Csz
-         iD7lpLGrhy/qwRMv+PLcEhoz7il+T1qAOVF0UfDwz/LuEE6TfIIdJMbHvPf/pa1JWFQ0
-         f5tjeWlfqQQBZyx92/NNx8tFPIqvg1aJ01n1bPYB3HKKX3OdvYm9zX3qQctseuF0l+as
-         yakw==
-X-Gm-Message-State: AOAM532aPblD8QK7OH63QwOKXc/8xYYicMiwRDw/I5CdlDfIWdy1X/Fd
-        Ptl6tIX5f5s0MLuvVN46Pii5+DdU83J5ig==
-X-Google-Smtp-Source: ABdhPJyFRUUBD5y2sN31RrKEmx6XQDwueS4Qc3c+Bl/9Cj2UC7an6h6Z+Kb3Ojps9lzLLL50ocJwVw==
-X-Received: by 2002:a05:6638:1e2:: with SMTP id t2mr1249088jaq.21.1631908948910;
-        Fri, 17 Sep 2021 13:02:28 -0700 (PDT)
-Received: from mail-io1-f51.google.com (mail-io1-f51.google.com. [209.85.166.51])
-        by smtp.gmail.com with ESMTPSA id a11sm1872998ilk.18.2021.09.17.13.02.27
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Sep 2021 13:02:27 -0700 (PDT)
-Received: by mail-io1-f51.google.com with SMTP id j18so13551115ioj.8
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Sep 2021 13:02:27 -0700 (PDT)
-X-Received: by 2002:a02:ac01:: with SMTP id a1mr1270459jao.93.1631908947377;
- Fri, 17 Sep 2021 13:02:27 -0700 (PDT)
-MIME-Version: 1.0
-References: <1631872087-24416-1-git-send-email-rajpat@codeaurora.org> <1631872087-24416-2-git-send-email-rajpat@codeaurora.org>
-In-Reply-To: <1631872087-24416-2-git-send-email-rajpat@codeaurora.org>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Fri, 17 Sep 2021 13:02:15 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=X-7-OS0uDFDR+_AksgqLvTVCx0+Z5pbmNCCvqwBrvgBg@mail.gmail.com>
-Message-ID: <CAD=FV=X-7-OS0uDFDR+_AksgqLvTVCx0+Z5pbmNCCvqwBrvgBg@mail.gmail.com>
-Subject: Re: [PATCH V8 1/8] dt-bindings: spi: Add sc7280 support
-To:     Rajesh Patil <rajpat@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=hYgcz2WmuoTKimNGZMC9XjOQ7lSec5qs3OosNYmK+Ok=;
+        b=PhABNIah512O4JLMrOBLDkcRx4XUz1PVzN6lfwgow/PjsXRmP3d+BQZnQd5XrwB/5V
+         6bgXyaAzZokfWB+q1TUVrcup3ubL6EAk60xmWT5nx1rcVSIG9PBhpsx42FWuFgqCb83Q
+         tpCDLAGfAUB3GXDhDVjeEyWD2rCs/jNO/jABu8ooXCTZ+pQU8ipBKP/T7x9gSPgCs9wO
+         mnXoeJEZ01qPMQ9AwWIDHxHYLEKake4SufYhDe/RQj9/bU4/h2FafMpaHWJ2uhkyHIAl
+         3ozBzkGaFOwSyiYiLcXGTt6xJTNeXnRYszWlS4GB73n9fNv6tdieLUdIrVAQaxrDuKHU
+         G04w==
+X-Gm-Message-State: AOAM531ASvVfMJqXM0WL773Pf7Y/pMxxSCc/fwLWarK814tw+VycLVLZ
+        7mCnZGDOVJIL1RbRSN+Fzq/mfw==
+X-Google-Smtp-Source: ABdhPJyVGXTAKtSUaIMT4jST+b54K6uGNImHSympt1CfZVSL4qvHFcKKnAOXl2UCKvZYN210dAx95g==
+X-Received: by 2002:a5e:d80a:: with SMTP id l10mr9913779iok.36.1631912713480;
+        Fri, 17 Sep 2021 14:05:13 -0700 (PDT)
+Received: from localhost ([167.100.64.199])
+        by smtp.gmail.com with ESMTPSA id a5sm4857356ilf.27.2021.09.17.14.05.12
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 17 Sep 2021 14:05:13 -0700 (PDT)
+Date:   Fri, 17 Sep 2021 17:05:07 -0400
+From:   Sean Paul <sean@poorly.run>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+        Sean Paul <seanpaul@chromium.org>,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        msavaliy@qti.qualcomm.com, satya priya <skakit@codeaurora.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Matthias Kaehlcke <mka@chromium.org>
-Content-Type: text/plain; charset="UTF-8"
+        Rob Clark <robdclark@gmail.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 13/13] drm/msm: Implement HDCP 1.x using the new drm
+ HDCP helpers
+Message-ID: <20210917210507.GR2515@art_vandelay>
+References: <20210915203834.1439-1-sean@poorly.run>
+ <20210915203834.1439-14-sean@poorly.run>
+ <CAE-0n52Gm6SsjUTEEOt-9LD9dGCb7pFf0OC_xKSnRxLy4PO_iw@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAE-0n52Gm6SsjUTEEOt-9LD9dGCb7pFf0OC_xKSnRxLy4PO_iw@mail.gmail.com>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Thu, Sep 16, 2021 at 11:00:25PM -0700, Stephen Boyd wrote:
+> Quoting Sean Paul (2021-09-15 13:38:32)
 
-On Fri, Sep 17, 2021 at 2:49 AM Rajesh Patil <rajpat@codeaurora.org> wrote:
->
-> Add compatible for sc7280 SoC.
->
-> Signed-off-by: Rajesh Patil <rajpat@codeaurora.org>
-> ---
-> Changes in V8:
->  - As per Doug's comments, added "qcom,sc7280-qspi" compatible
->
->  Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
->
-> diff --git a/Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml b/Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml
-> index ef5698f..31711fe 100644
-> --- a/Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml
-> +++ b/Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml
-> @@ -21,7 +21,10 @@ allOf:
->  properties:
->    compatible:
->      items:
-> -      - const: qcom,sdm845-qspi
-> +      - enum:
-> +        - qcom,sdm845-qspi
-> +        - qcom,sc7280-qspi
+/snip
 
-Other than the fact that the indentation is wrong (as Rob's bot
-found), this looks good to me. Feel free to add my Reviewed-by when
-you fix the indentation. In theory you could also be nice and add the
-sc7180-qspi at the same time, I think.
+> > diff --git a/drivers/gpu/drm/msm/dp/dp_debug.c b/drivers/gpu/drm/msm/dp/dp_debug.c
+> > index 2f6247e80e9d..de16fca8782a 100644
+> > --- a/drivers/gpu/drm/msm/dp/dp_debug.c
+> > +++ b/drivers/gpu/drm/msm/dp/dp_debug.c
+> > @@ -8,6 +8,7 @@
+> >  #include <linux/debugfs.h>
+> >  #include <drm/drm_connector.h>
+> >  #include <drm/drm_file.h>
+> > +#include <drm/drm_hdcp.h>
+> >
+> >  #include "dp_parser.h"
+> >  #include "dp_catalog.h"
+> > @@ -15,6 +16,7 @@
+> >  #include "dp_ctrl.h"
+> >  #include "dp_debug.h"
+> >  #include "dp_display.h"
+> > +#include "dp_hdcp.h"
+> >
+> >  #define DEBUG_NAME "msm_dp"
+> >
+> > @@ -24,6 +26,7 @@ struct dp_debug_private {
+> >         struct dp_usbpd *usbpd;
+> >         struct dp_link *link;
+> >         struct dp_panel *panel;
+> > +       struct dp_hdcp *hdcp;
+> >         struct drm_connector **connector;
+> >         struct device *dev;
+> >         struct drm_device *drm_dev;
+> > @@ -349,6 +352,38 @@ static int dp_test_active_open(struct inode *inode,
+> >                         inode->i_private);
+> >  }
+> >
+> > +static ssize_t dp_hdcp_key_write(struct file *file, const char __user *ubuf,
+> 
+> Is this the API that userspace is going to use to set the key? Or a
+> simple debug interface that's used to test this code out? I hope it's a
+> debugging aid and not the normal flow given that it's through debugfs.
+> 
 
--Doug
+At the moment, generic UAPI is not useful beyond msm-based CrOS devices, which
+is not really a burden upstream should be carrying. On other platforms
+(including qc-based Android devices), the key injection is done in HW. As such,
+I'm tempted to kick key injection UAPI down the road.
+
+Once I finish the userspace client in CrOS, I can upload the UAPI for folks to
+comment on.
+
+/snip
+
+> > diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
+> > index 8b47cdabb67e..421268e47f30 100644
+> > --- a/drivers/gpu/drm/msm/dp/dp_display.h
+> > +++ b/drivers/gpu/drm/msm/dp/dp_display.h
+
+> > +static int dp_hdcp_load_keys(struct drm_connector *connector)
+> > +{
+> > +       struct dp_hdcp *hdcp = dp_display_connector_to_hdcp(connector);
+> > +       struct dp_hdcp_key *key;
+> > +       int i, ret = 0;
+> > +
+> > +       mutex_lock(&hdcp->key_lock);
+> > +
+> > +       key = hdcp->key;
+> > +
+> > +       if (!key->valid) {
+> > +               ret = -ENOENT;
+> > +               goto out;
+> > +       }
+> > +
+> > +       dp_hdcp_write_dp(hdcp, DP_HDCP_SW_LOWER_AKSV, key->ksv.words[0]);
+> > +       dp_hdcp_write_dp(hdcp, DP_HDCP_SW_UPPER_AKSV, key->ksv.words[1]);
+> > +
+> > +       for (i = 0; i < DP_HDCP_NUM_KEYS; i++) {
+> > +               dp_hdcp_write_hdcp(hdcp, DP_HDCP_KEY_LSB(i),
+> > +                                  key->keys[i].words[0]);
+> > +               dp_hdcp_write_hdcp(hdcp, DP_HDCP_KEY_MSB(i),
+> > +                                  key->keys[i].words[1]);
+> > +       }
+> > +
+> > +       dp_hdcp_write_hdcp(hdcp, DP_HDCP_KEY_VALID, DP_HDCP_SW_KEY_VALID);
+> > +       wmb();
+> 
+> What are the wmb()s for? Can you add a comment indicating what we're
+> trying to fix by having them?
+> 
+
+I think these were left over from testing (when things weren't working for me).
+Will remove in the next version, thanks for catching!
+
+/snip
+
+> > diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
+> > index 0519dd3ac3c3..75a163b0b5af 100644
+> > --- a/drivers/gpu/drm/msm/dp/dp_parser.c
+> > +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
+
+/snip
+
+> > @@ -55,6 +55,8 @@ static void dp_parser_unmap_io_resources(struct dp_parser *parser)
+> >  {
+> >         struct dp_io *io = &parser->io;
+> >
+> > +       msm_dss_iounmap(&io->hdcp_tz);
+> > +       msm_dss_iounmap(&io->hdcp_key);
+> >         msm_dss_iounmap(&io->dp_controller);
+> >  }
+> >
+> > @@ -64,10 +66,20 @@ static int dp_parser_ctrl_res(struct dp_parser *parser)
+> >         struct platform_device *pdev = parser->pdev;
+> >         struct dp_io *io = &parser->io;
+> >
+> > -       rc = msm_dss_ioremap(pdev, &io->dp_controller);
+> > -       if (rc) {
+> > -               DRM_ERROR("unable to remap dp io resources, rc=%d\n", rc);
+> > +       rc = msm_dss_ioremap(pdev, &io->dp_controller, 0);
+> > +       if (rc)
+> >                 goto err;
+> > +
+> > +       rc = msm_dss_ioremap(pdev, &io->hdcp_key, 1);
+> > +       if (rc) {
+> > +               io->hdcp_key.base = NULL;
+> > +               io->hdcp_key.len = 0;
+> > +       }
+> > +
+> > +       rc = msm_dss_ioremap(pdev, &io->hdcp_tz, 2);
+> > +       if (rc) {
+> > +               io->hdcp_tz.base = NULL;
+> > +               io->hdcp_tz.len = 0;
+> 
+> Bjorn is trying to split the single io region apart into 4 different
+> regions[1]. This would add two more io regions. Maybe this should come
+> after those patches and be indexed later? I worry about needing to add
+> more register properties later on though. Maybe a better approach would
+> be to make them mandatory for certain compatible strings instead.
+
+Thanks for the heads up, I'll look into adding a compatible string.
+
+All your other comments will be addressed in v3.
+
+Sean
+
+> 
+> [1] https://lore.kernel.org/r/20210825222557.1499104-6-bjorn.andersson@linaro.org
+> 
+> >         }
+> >
+> >         io->phy = devm_phy_get(&pdev->dev, "dp");
+
+-- 
+Sean Paul, Software Engineer, Google / Chromium OS
