@@ -2,75 +2,81 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DFD2D40F251
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 08:26:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 303FB40F25C
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 08:33:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233715AbhIQG2F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Sep 2021 02:28:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38594 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233797AbhIQG2E (ORCPT
+        id S233704AbhIQGee (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Sep 2021 02:34:34 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:60418 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232934AbhIQGee (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Sep 2021 02:28:04 -0400
-Received: from mail-oi1-x229.google.com (mail-oi1-x229.google.com [IPv6:2607:f8b0:4864:20::229])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DFB1C061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Sep 2021 23:26:43 -0700 (PDT)
-Received: by mail-oi1-x229.google.com with SMTP id w19so12603260oik.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Sep 2021 23:26:43 -0700 (PDT)
+        Fri, 17 Sep 2021 02:34:34 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=evM8dYW25rUmoo+jhaGEhb/KiP/SeJMcvT7KRQQj0k4=;
-        b=GloPPC5iQ+gAScdWkJeOIsSgsZ5BSp9BiCqP1rzXOdxccRDtfeoX8O0HsiM7fJbpE9
-         tUSl/aQESeWKK1uPMUO7DCltaBfer5Uo3L92ywAfuAXPYyuw0Q6UkoscP2In/ZftAmou
-         tpYiHFxNgvo/7eg58Bk7Zn4HkLVXoT+1ihqFM=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=evM8dYW25rUmoo+jhaGEhb/KiP/SeJMcvT7KRQQj0k4=;
-        b=dycYme3zgAi5t0bK0zqiawsTkr12WrTQv8/xk4svb48eC9lC3B0B/UqWu9Y/Yu4Zia
-         H/nZFbUzT68ANTERz8xFSlWzaCWCAFdSemVvc8O/Nv6fFhPxHuKuZo7l0iykNeel59Zm
-         jByFyQpeZNH0C3Qx4KTaXiJ67mu9HlaXTidtFPy/r1EnOVkeMFsyfCHcQ7hZgAA0/W1D
-         IQrm38HECLOfwTxjxdvGW+yJPdb+A+x4NhYM5yR7To55OLV0mC7UI0kL1/EP/gOYH2bU
-         I0QNKar39bnRnPMGBKucbXbjutG0TGzcsF+zRkgFZOIG3iBcawW5J2tHqEg6SU3CKOFC
-         ixGQ==
-X-Gm-Message-State: AOAM531dmfNJrR/jOEHhfLSCvs9hrR9sv3r9vd2uYGKuhqHN2e4uoicl
-        ovlkYjFObA7AC0BRgA7Dq+LUtLkNwvTVSeY4BnB+ww==
-X-Google-Smtp-Source: ABdhPJyrkQzCWSDEUH1Rd5lLaPb2mxQs/iP6fiO2b9602AYM1Z/L3nqb7ScjuiLu6cPKzfoKXdFQgYK/XitKb8oyxGk=
-X-Received: by 2002:aca:2310:: with SMTP id e16mr2823690oie.64.1631860002668;
- Thu, 16 Sep 2021 23:26:42 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 16 Sep 2021 23:26:42 -0700
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1631860392; x=1663396392;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=vaJo/3lQdjAPiKiQNJktpgWEtr6D4ST2XKIiQTG6noY=;
+  b=dtuHXMhMtUgzqaanhuLq96JihYwtjytkuYOzj1u8GIFj+4D+EZPSpvDD
+   4vAWXga/1kyyreK96zDLaXlitfhqZ7Lb8VAvceANvOWAu+D46ikjF08DE
+   ing8i/kxMjVnWOLQFrdOSX8m7PwKO2GlIiwZF0ONxUOoKQBlTBBdBVvIn
+   Q=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 16 Sep 2021 23:33:12 -0700
+X-QCInternal: smtphost
+Received: from nalasex01a.na.qualcomm.com ([10.47.209.196])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 16 Sep 2021 23:33:12 -0700
+Received: from fenglinw-gv.qualcomm.com (10.80.80.8) by
+ nalasex01a.na.qualcomm.com (10.47.209.196) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
+ Thu, 16 Sep 2021 23:33:09 -0700
+From:   Fenglin Wu <quic_fenglinw@quicinc.com>
+To:     <linux-arm-msm@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <sboyd@kernel.org>
+CC:     <collinsd@codeaurora.org>, <subbaram@codeaurora.org>,
+        <quic_fenglinw@quicinc.com>
+Subject: [RESEND PATCH v1 0/9] A bunch of fix and optimization patches in spmi-pmic-arb.c
+Date:   Fri, 17 Sep 2021 14:32:55 +0800
+Message-ID: <1631860384-26608-1-git-send-email-quic_fenglinw@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-In-Reply-To: <1631811353-503-4-git-send-email-pillair@codeaurora.org>
-References: <1631811353-503-1-git-send-email-pillair@codeaurora.org> <1631811353-503-4-git-send-email-pillair@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Thu, 16 Sep 2021 23:26:42 -0700
-Message-ID: <CAE-0n501fpj13snR9Q+RyOW12zPqyY8W4ZqzFcrmeqiwA77GVQ@mail.gmail.com>
-Subject: Re: [PATCH v3 3/3] remoteproc: qcom: q6v5_wpss: Add support for
- sc7280 WPSS
-To:     Rakesh Pillai <pillair@codeaurora.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, mathieu.poirier@linaro.org,
-        ohad@wizery.com, p.zabel@pengutronix.de, robh+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, sibis@codeaurora.org,
-        mpubbise@codeaurora.org, kuabhs@chromium.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01a.na.qualcomm.com (10.47.209.196)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Rakesh Pillai (2021-09-16 09:55:53)
-> Add support for PIL loading of WPSS processor for SC7280
-> - WPSS boot will be requested by the wifi driver and hence
->   disable auto-boot for WPSS.
-> - Add a separate shutdown sequence handler for WPSS.
-> - Add multiple power-domain voting support
->
-> Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
-> ---
+Just want to resend the series of the changes again and see if anyone can
+help to review them and give any comments. Thanks!
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+This change series includes some fixes and optimizations in spmi-pmic-arb.c.
+Please see change detail and description in each of the patch. Thanks!
+
+Abhijeet Dharmapurikar (1):
+  spmi: pmic-arb: add a print in cleanup_irq
+
+Ashay Jaiswal (1):
+  spmi: pmic-arb: add support to dispatch interrupt based on IRQ status
+
+David Collins (5):
+  spmi: pmic-arb: check apid against limits before calling irq handler
+  spmi: pmic-arb: correct duplicate APID to PPID mapping logic
+  spmi: pmic-arb: block access for invalid PMIC arbiter v5 SPMI writes
+  spmi: pmic-arb: make interrupt support optional
+  spmi: pmic-arb: increase SPMI transaction timeout delay
+
+Subbaraman Narayanamurthy (1):
+  spmi: pmic-arb: do not ack and clear peripheral interrupts in
+    cleanup_irq
+
+Yimin Peng (1):
+  spmi: pmic-arb: support updating interrupt type flags
+
+ drivers/spmi/spmi-pmic-arb.c | 127 +++++++++++++++++++++++++++++++------------
+ 1 file changed, 91 insertions(+), 36 deletions(-)
+
+-- 
+2.7.4
+
