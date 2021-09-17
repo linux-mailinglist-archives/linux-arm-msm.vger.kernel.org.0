@@ -2,106 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0289A40F1DF
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 08:07:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3515C40F233
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 08:18:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244974AbhIQGI2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Sep 2021 02:08:28 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34028 "EHLO
+        id S231197AbhIQGUK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Sep 2021 02:20:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36770 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244958AbhIQGI2 (ORCPT
+        with ESMTP id S230422AbhIQGUJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Sep 2021 02:08:28 -0400
+        Fri, 17 Sep 2021 02:20:09 -0400
 Received: from mail-ot1-x336.google.com (mail-ot1-x336.google.com [IPv6:2607:f8b0:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77A5CC061764
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Sep 2021 23:07:06 -0700 (PDT)
-Received: by mail-ot1-x336.google.com with SMTP id n2-20020a9d6f02000000b0054455dae485so6251634otq.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Sep 2021 23:07:06 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D349C061766
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Sep 2021 23:18:48 -0700 (PDT)
+Received: by mail-ot1-x336.google.com with SMTP id n2-20020a9d6f02000000b0054455dae485so6284277otq.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 16 Sep 2021 23:18:48 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=uFxktZTFTvrgPpVfXvx5wJ9NT0aZLesc6X5ChP1iv7A=;
-        b=i/ncKKPIpr+3o9b6pA0DCzCBl8WUKX1Ag2tuxiTlv5DFjg2x0hUOLgQi34zNW/rawU
-         vC6nF7DwJ49OTMrhSPq1WDne735OUV/Q9jbN/spxDPPRnkqpOh/AHISPiJjUeoj/vdLZ
-         y4j4lxX/R/X0aM40ICqquVM9oB2b3UQr+OXIk=
+        bh=hzp3W57grtENZ1UMp0tOsXr8ZoYgbq44MmPXCel3Oa4=;
+        b=W6qfmBMKsTv98mLlYbwvasVyjfbNJpx35I87S9ODLKaOW8i/gNzfJE227YWEEgZ7wh
+         HcABjt4NZynd7MI2AHz3zEcEuPDkRMfAYmQzf1NnC+Z4nm0YsbTjP3xFj0y7TvJOBz/K
+         yBRt65DdAnOgAaUg6TeeXusYlDXyatoOmf07Y=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=uFxktZTFTvrgPpVfXvx5wJ9NT0aZLesc6X5ChP1iv7A=;
-        b=6m8r9rECxZjn1XdswJXxctu/dAl4jBakUZEadhb5ireVqMmtBJsQGJe0aRgNPZIvQb
-         OD7tUmlGary6hAg92OoLhMphxXfmji8YqRyFx5ScMaRBxL9GayIe2z40TO6tiLo3TNAA
-         gf1HhuwmZirgbtWy9S29lnIow1g1BoJhpnhnOUSK1wnVx/xdub5Y82Lw1pXkULyQwmfo
-         DBa0ypMJWM8UmF+Ae5gkkmwkSnLzI3XHLBEl4FDdREFd5S/PNnr9a9B2G2nMqRfcZgnt
-         2GQzJkIcsrQc20TY2kTdicFGG2Q0+QUpUIeLwb2MTLlI4Vdnd7Es/+Jvz0lFdjbYDutc
-         Q3og==
-X-Gm-Message-State: AOAM531fx9ncXWGfFibjiK/ect+r+yGxYeC8eVqoOO2f49E1eN4U2Qah
-        AJjwfltx+PBfhZ+4hsoX+2hgyq72jsli3NhZfnc3yg==
-X-Google-Smtp-Source: ABdhPJxQEesmDcj/3cYONDWgEpdGmnZZmuk8Te4FWZg9ahd8D1bR5hpR8n7vTHM4r69wQilPoaiFgB2r7HIGEK65gJE=
-X-Received: by 2002:a05:6830:719:: with SMTP id y25mr7898467ots.77.1631858825850;
- Thu, 16 Sep 2021 23:07:05 -0700 (PDT)
+        bh=hzp3W57grtENZ1UMp0tOsXr8ZoYgbq44MmPXCel3Oa4=;
+        b=x5DhzyeLPa3MRtQup1EiPPGDpWOm9btH21JX7K0J0WFqQqSJP1yN8CWlmmFan+Af2j
+         jmzeQ7njZgwziDNZZctRazYm6MjgwqYM8MdY9+54cFacow47ydeBBw88xRrB2Tqy+p4+
+         WXqcDRHsYf/F8EqsFN/NcoSU2J3be/nCJ4+iU0PuV44iiiEaLkqmrJJjRG2/imTfwpnI
+         c7FtpzFPDbghTyCc9sNfib+wUyjFD4NB0zLUvvyBO0ScayMNb4s5J/wT9LcWTpewd3Ps
+         HBJzeww9SfC+r7jCdM8Al33pU2t2B5m7dg5E6Gmk+DVVXApXTynB4WmPAqbLgTnlc8yT
+         XCDQ==
+X-Gm-Message-State: AOAM530QZG382ZrYkYFN3UBWrICK67qBrFq9D+0Yo9ILYsdNpBxwD6rB
+        7Ys/n9lwz70zsUMayLJ9sN4IbWSNImmnJP9Vmp8qsA==
+X-Google-Smtp-Source: ABdhPJwnpapPZqGI9tLkWKhUef481j23KWl2vfNPI9pI3jrBmxG+IzpYd9/UGy7aQL1rw4TZIJqyFcky0nzdXD72gH4=
+X-Received: by 2002:a05:6830:719:: with SMTP id y25mr7931455ots.77.1631859527357;
+ Thu, 16 Sep 2021 23:18:47 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 16 Sep 2021 23:07:05 -0700
+ HTTPREST; Thu, 16 Sep 2021 23:18:46 -0700
 MIME-Version: 1.0
-In-Reply-To: <baa5c4b4dd19e0a24d28b8bff559b868@codeaurora.org>
-References: <1631798498-10864-1-git-send-email-skakit@codeaurora.org>
- <1631798498-10864-3-git-send-email-skakit@codeaurora.org> <CAE-0n53i4pU==W-dc=md_x+0Tqbd1gtwkPBFode+rtupSFi0WQ@mail.gmail.com>
- <baa5c4b4dd19e0a24d28b8bff559b868@codeaurora.org>
+In-Reply-To: <53a38a24cca0b6f1c2a3120f14dfc865@codeaurora.org>
+References: <20200730095350.13925-1-stanimir.varbanov@linaro.org>
+ <20200730095350.13925-3-stanimir.varbanov@linaro.org> <159718256557.1360974.458611240360821676@swboyd.mtv.corp.google.com>
+ <8c1fdf2d0807f07ec57b232497b405f1@codeaurora.org> <CAE-0n53T-RoOvR=s9nHiXAriMgKvBfDqfBfoGKX5Ju5YF3Tcqw@mail.gmail.com>
+ <53a38a24cca0b6f1c2a3120f14dfc865@codeaurora.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.9.1
-Date:   Thu, 16 Sep 2021 23:07:05 -0700
-Message-ID: <CAE-0n53x6oB+Rj1_1QDNMVJowyCUeXgGBMmZ1SW1rTMmcEwD4A@mail.gmail.com>
-Subject: Re: [PATCH V5 2/2] arm64: dts: sc7280: Add volume up support for sc7280-idp
-To:     skakit@codeaurora.org
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
-        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
+Date:   Thu, 16 Sep 2021 23:18:46 -0700
+Message-ID: <CAE-0n51Pxs7stTdJ5AO3i+Xm=q1R_EUcueR2+_-gFAa7iqUypg@mail.gmail.com>
+Subject: Re: [PATCH v5 2/3] venus: Add a debugfs file for SSR trigger
+To:     dikshita@codeaurora.org
+Cc:     Stanimir Varbanov <stanimir.varbanov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-media@vger.kernel.org, jim.cromie@gmail.com,
+        Joe Perches <joe@perches.com>, Jason Baron <jbaron@akamai.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-media-owner@vger.kernel.org,
+        Akinobu Mita <akinobu.mita@gmail.com>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting skakit@codeaurora.org (2021-09-16 21:08:11)
-> On 2021-09-17 00:32, Stephen Boyd wrote:
-> > Quoting Satya Priya (2021-09-16 06:21:38)
-> >> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> >> b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> >> index 371a2a9..cbbb0ee 100644
-> >> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> >> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
-> >> @@ -12,6 +12,26 @@
-> >>  #include "pm8350c.dtsi"
-> >>  #include "pmk8350.dtsi"
+Quoting dikshita@codeaurora.org (2021-09-15 23:29:36)
+> On 2021-09-16 01:09, Stephen Boyd wrote:
+> > Quoting dikshita@codeaurora.org (2021-09-15 02:13:09)
 > >>
-> >> +/ {
-> >> +       gpio-keys {
-> >> +               compatible = "gpio-keys";
-> >> +               label = "gpio-keys";
-> >> +
-> >> +               pinctrl-names = "default";
-> >> +               pinctrl-0 = <&key_vol_up_default>;
-> >> +
-> >> +               volume-up {
-> >> +                       label = "volume_up";
-> >> +                       gpios = <&pm7325_gpios 6 GPIO_ACTIVE_LOW>;
-> >> +                       linux,input-type = <1>;
-> >> +                       linux,code = <KEY_VOLUMEUP>;
+> >> So, IMO, we will have to use custom debugfs only.
 > >
-> > Is there an include for this define? Looks like
-> > <dt-bindings/input/input.h> should be added as well? Did you try
-> > compiling?
+> > Can you use DECLARE_FAULT_ATTR()? Or you need it to be active instead
+> > of
+> > passive, i.e. it shouldn't wait for should_fail() to return true, but
+> > actively trigger something on the remoteproc?
 > >
 >
-> Yeah, it needs <dt-bindings/input/linux-event-codes.h> to be included.
-> This header was included in pmk8350.dtsi which is added in this file.
+> yes, it doesn't need to wait for should_fail() to return true.
+> the client/user should be able to trigger this subsystem restart(SSR) at
+> any point of time
+> when a session is running. It's totally client-driven.
+>
+> >>
+> >> Please feel free to correct me in case my understanding of the
+> >> framework
+> >> is wrong.
+> >>
+> >
+> > I presume the fault injection framework could get a new feature that
+> > lets the fault be injected immediately upon writing the debugfs file.
+> > My goal is to consolidate this sort of logic into one place and then
+> > put
+> > it behind some config option that distros can disable so the kernel
+> > isn't bloated with debug features that end users will never care about.
 
-Alright, got it. If you can include this header in this dts file it
-would be better so we don't rely on implicit includes from other files
-to get macros. With that change you can add my
-
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+So you can modify fault injection framework to support direct injection
+instead of statistical failures?
