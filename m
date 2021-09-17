@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 336F540F483
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 11:08:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2746240F487
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 11:09:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232837AbhIQJJo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Sep 2021 05:09:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47116 "EHLO
+        id S239861AbhIQJKE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Sep 2021 05:10:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47176 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232910AbhIQJJm (ORCPT
+        with ESMTP id S238946AbhIQJJz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Sep 2021 05:09:42 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C277C061766
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Sep 2021 02:08:19 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id g16so13998984wrb.3
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Sep 2021 02:08:19 -0700 (PDT)
+        Fri, 17 Sep 2021 05:09:55 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74923C061764
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Sep 2021 02:08:33 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id d21so13961938wra.12
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Sep 2021 02:08:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:references:from:message-id:date:user-agent:mime-version
-         :in-reply-to:content-language:content-transfer-encoding;
-        bh=6H3PgEvJtKdfjyBEYlYykpBnafjbdNton0u/XHPtQkY=;
-        b=e92OBaLRYooNOD8adcQCqfoNoPrMKrhSenSe/RAIl/Q3MEONRS++meOfqRiquzCPTO
-         oFzdPQwEfuP0VJEjRUEEaGWZbd9sV/eORFgkfV2WjjuSyuOQde9tuRB/3a+q56dFq0J/
-         Utg2hQVV5ctHvAP7kerfL32V+CIzQY7p5UvEnHQkEycyxNDa37+Z7tCIAjlG6hQZj3Ha
-         NvRAlYvZqQTS3onGoVZR509VwzDwX500IPRBu9+2WWjaeZ211Up8sIdgULQ52/mP45D3
-         rJ0SMArM3xr79qR1o64ScXD2qWI68PUyv9Z3ecWh6v4Acfd6f+7krIAaXDHi7j7EVIFz
-         VY7w==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=/I1Tt1HzjsE75nZdTSIEAGwCXwh62BBwx+UsI2exLfE=;
+        b=g7vbAOuYwlGhiAw9321uxYSPDO4QmS+BNVRgg54rzvRGqw2zAa6COxOrt0WHHGiqd0
+         uM7aePVxRjSQYOkyW4FSx/bmhcVAO6vFcYS1WtWCF9EYw37AiDrqya4pk0xAU/KaevQd
+         c5CcGZQo68v6rxSMr0qrq10qIYGCwbWSxQrc3nL1WaJMA1ENNAgpln9Is4QrBoAJDqO+
+         EqtnQ6Nwv29l0rGeSFmwg9e0WocgUqP04KB1yW/l5hhyuucSmsS384qOrgse9AxGGj1R
+         KEeMdQiRrkTv9PSZShGqhWuQpBySfM8970yf8/fjidJmqn6gcAjaKv+4zHDxfY3h/B/z
+         ThLw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:references:from:message-id:date
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=6H3PgEvJtKdfjyBEYlYykpBnafjbdNton0u/XHPtQkY=;
-        b=aSOJbb1/cr1FemC6cgQgkO9JJs6arepE7meDF3UThj6MS5yUbDExe2GivS0ddbxGdI
-         O9DoFbGfuDb+CZHdRNKKTlAipnM7FNXWo0/uhbMG4pktqTegzld8s77SKPlaQBphkr/S
-         HDU24Z2s2gAWw2gGuMimei1DnVnu+WmOfEJEVAj14ZFkngz2VLFqaiXChQKvCrbxApxV
-         IHmTMKi0roApFTT8vx7l1s/fPqArGpjvX3bEVQSraFSA1HHg9Ysnz0eQ96slJ1LhL65Y
-         J0Nl759NCgor1kg0trc7aHjyQEynT5Qw0ARJ3FghN75QA4uMR7Ugb5cJppFy/9j5fvP5
-         kFJg==
-X-Gm-Message-State: AOAM532oxHgcV2PaU3jqQgqToUWUnZ7CAxEfbQXhQrLvcExeLUiK9k0C
-        0JFY6vQ1oMgFfq/P/iIuDK4G6Q==
-X-Google-Smtp-Source: ABdhPJzhFXRN7B5ouSQwSKgqj5+f/A/03bCmzpqAegKiAAOn3OFsIbt0Eet7OTCBonqbpgTw3y4NIA==
-X-Received: by 2002:a5d:5229:: with SMTP id i9mr10794836wra.373.1631869697332;
-        Fri, 17 Sep 2021 02:08:17 -0700 (PDT)
+        bh=/I1Tt1HzjsE75nZdTSIEAGwCXwh62BBwx+UsI2exLfE=;
+        b=kuCof6PF6XnWsErN4nO2g4oD1oGZeK2OYUb7wdHn404DsiEoWQEeNAj7n0L4WiYJWq
+         x5Yc70cCVisvt0bNjqDZ3ESyu0JTIz7DJ3q0BRXTxTZvlMDYIapgE/2hB7xMu+ZFU93j
+         qZqQmT5NTV7CO4X1T0rHBR28skY82hfEOYLVh62PFgNFzLNUH2+/xe8eVLz+H5Zl0OmP
+         IFOsH/2pLmQsmUc7I+KgXEV03152rNbMJpZPxNCYJgik/Wt6TT8XMkSjwYD4YwXxzjr7
+         5DTJNrciatyrXD7IRxnv4CV8emhhYnP+Lv+DMTHLliNFTztW+nK54yFfvSaKFWlv72l9
+         5icA==
+X-Gm-Message-State: AOAM5323zDABdP28dXOjIRInxqTB7fdNB7kVnWD36rxAteJx0INTy7Qj
+        NfuNPi6EGaCQUXIF8oQtn2m3gA==
+X-Google-Smtp-Source: ABdhPJwUBCGdpmC3bQGNPhpHns+vpWRXUWfkWp9nmnSGcm2X6UWVp0FLYQO7wVAmPuVCIOurE3k+IA==
+X-Received: by 2002:a5d:6dad:: with SMTP id u13mr10421628wrs.55.1631869711923;
+        Fri, 17 Sep 2021 02:08:31 -0700 (PDT)
 Received: from ?IPv6:2a01:e34:ed2f:f020:cf95:6508:8470:7171? ([2a01:e34:ed2f:f020:cf95:6508:8470:7171])
-        by smtp.googlemail.com with ESMTPSA id m2sm9888055wmm.3.2021.09.17.02.08.16
+        by smtp.googlemail.com with ESMTPSA id y8sm5986742wrh.44.2021.09.17.02.08.30
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 17 Sep 2021 02:08:16 -0700 (PDT)
-Subject: Re: [PATCH v2 2/2] drivers: thermal: tsens: add timeout to
- get_tem_tsens_valid
+        Fri, 17 Sep 2021 02:08:31 -0700 (PDT)
+Subject: Re: [PATCH v2 1/2] drivers: thermal: tsens: fix wrong check for tzd
+ in irq handlers
 To:     Ansuel Smith <ansuelsmth@gmail.com>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -58,15 +58,15 @@ To:     Ansuel Smith <ansuelsmth@gmail.com>,
         Thara Gopinath <thara.gopinath@linaro.org>,
         Zhang Rui <rui.zhang@intel.com>, linux-arm-msm@vger.kernel.org,
         linux-pm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     Matthias Kaehlcke <mka@chromium.org>
 References: <20210907212543.20220-1-ansuelsmth@gmail.com>
- <20210907212543.20220-2-ansuelsmth@gmail.com>
 From:   Daniel Lezcano <daniel.lezcano@linaro.org>
-Message-ID: <f06f6d13-e659-16e9-5900-2d82596f139c@linaro.org>
-Date:   Fri, 17 Sep 2021 11:08:15 +0200
+Message-ID: <95c7a633-144c-917b-376f-636b904f8b73@linaro.org>
+Date:   Fri, 17 Sep 2021 11:08:30 +0200
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.13.0
 MIME-Version: 1.0
-In-Reply-To: <20210907212543.20220-2-ansuelsmth@gmail.com>
+In-Reply-To: <20210907212543.20220-1-ansuelsmth@gmail.com>
 Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
 Content-Transfer-Encoding: 8bit
@@ -74,79 +74,44 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+
+Applied, thanks
+
 On 07/09/2021 23:25, Ansuel Smith wrote:
-> The function can loop and lock the system if for whatever reason the bit
-> for the target sensor is NEVER valid. This is the case if a sensor is
-> disabled by the factory and the valid bit is never reported as actually
-> valid. Add a timeout check and exit if a timeout occurs. As this is
-> a very rare condition, handle the timeout only if the first read fails.
-> While at it also rework the function to improve readability.
+> Some device can have some thermal sensor disabled from the factory. The
+> current 2 irq handler functions check all the sensor by default and the
+> check if the sensor was actually registered is wrong. The tzd is
+> actually never set if the registration fail hence the IS_ERR check is
+> wrong.
 > 
 > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+> Reviewed-by: Matthias Kaehlcke <mka@chromium.org>
 > ---
->  drivers/thermal/qcom/tsens.c | 40 +++++++++++++++++++++++-------------
->  1 file changed, 26 insertions(+), 14 deletions(-)
+>  drivers/thermal/qcom/tsens.c | 4 ++--
+>  1 file changed, 2 insertions(+), 2 deletions(-)
 > 
 > diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-> index b1162e566a70..1ff244176beb 100644
+> index 4c7ebd1d3f9c..b1162e566a70 100644
 > --- a/drivers/thermal/qcom/tsens.c
 > +++ b/drivers/thermal/qcom/tsens.c
-> @@ -599,26 +599,38 @@ int get_temp_tsens_valid(const struct tsens_sensor *s, int *temp)
->  	int hw_id = s->hw_id;
->  	u32 temp_idx = LAST_TEMP_0 + hw_id;
->  	u32 valid_idx = VALID_0 + hw_id;
-> +	unsigned long timeout;
->  	u32 valid;
->  	int ret;
+> @@ -417,7 +417,7 @@ static irqreturn_t tsens_critical_irq_thread(int irq, void *data)
+>  		const struct tsens_sensor *s = &priv->sensor[i];
+>  		u32 hw_id = s->hw_id;
 >  
->  	/* VER_0 doesn't have VALID bit */
-> -	if (tsens_version(priv) >= VER_0_1) {
-> +	if (tsens_version(priv) == VER_0)
-> +		goto get_temp;
-> +
-> +	ret = regmap_field_read(priv->rf[valid_idx], &valid);
-> +	if (ret || valid)
-> +		goto check_valid;
-> +
-> +	timeout = jiffies + msecs_to_jiffies(20);
-
-Why not use regmap_field_read_poll_timeout() ?
-
-> +	do {
-> +		/* Valid bit is 0 for 6 AHB clock cycles.
-> +		 * At 19.2MHz, 1 AHB clock is ~60ns.
-> +		 * We should enter this loop very, very rarely.
-> +		 */
-> +		ndelay(400);
->  		ret = regmap_field_read(priv->rf[valid_idx], &valid);
-> -		if (ret)
-> -			return ret;
-> -		while (!valid) {
-> -			/* Valid bit is 0 for 6 AHB clock cycles.
-> -			 * At 19.2MHz, 1 AHB clock is ~60ns.
-> -			 * We should enter this loop very, very rarely.
-> -			 */
-> -			ndelay(400);
-> -			ret = regmap_field_read(priv->rf[valid_idx], &valid);
-> -			if (ret)
-> -				return ret;
-> -		}
-> -	}
-> +		if (ret || valid)
-> +			goto check_valid;
-> +	} while (time_before(jiffies, timeout));
-> +
-> +	return -ETIMEDOUT;
-> +
-> +check_valid:
-> +	/* Check ret of valid bit read */
-> +	if (ret)
-> +		return ret;
+> -		if (IS_ERR(s->tzd))
+> +		if (!s->tzd)
+>  			continue;
+>  		if (!tsens_threshold_violated(priv, hw_id, &d))
+>  			continue;
+> @@ -467,7 +467,7 @@ static irqreturn_t tsens_irq_thread(int irq, void *data)
+>  		const struct tsens_sensor *s = &priv->sensor[i];
+>  		u32 hw_id = s->hw_id;
 >  
-> +get_temp:
->  	/* Valid bit is set, OK to read the temperature */
->  	*temp = tsens_hw_to_mC(s, temp_idx);
->  
+> -		if (IS_ERR(s->tzd))
+> +		if (!s->tzd)
+>  			continue;
+>  		if (!tsens_threshold_violated(priv, hw_id, &d))
+>  			continue;
 > 
 
 
