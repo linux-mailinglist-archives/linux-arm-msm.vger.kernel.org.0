@@ -2,96 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EA391410004
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 21:50:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4EB25410029
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 22:02:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344867AbhIQTvq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Sep 2021 15:51:46 -0400
-Received: from mail-oi1-f176.google.com ([209.85.167.176]:35505 "EHLO
-        mail-oi1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234785AbhIQTuV (ORCPT
+        id S234785AbhIQUDz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Sep 2021 16:03:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56506 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S244011AbhIQUDx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Sep 2021 15:50:21 -0400
-Received: by mail-oi1-f176.google.com with SMTP id r26so15482064oij.2;
-        Fri, 17 Sep 2021 12:48:59 -0700 (PDT)
+        Fri, 17 Sep 2021 16:03:53 -0400
+Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1C54C061757
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Sep 2021 13:02:30 -0700 (PDT)
+Received: by mail-io1-xd33.google.com with SMTP id y18so13715757ioc.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Sep 2021 13:02:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=J1UMbMc8OAj14RDhbE254NcvzwuTcA6/D0lnRvB23mQ=;
+        b=evClt5J6dFFrQPKBBVCoFxqTJwegs8huDM9pX5uOxtetVMSX/DzJB6dQYczFDSMKuP
+         0nvtA2qnccJQsgAPlE1IAc6DZuXXO6oOlYkaa3s9XTabjzfysVl8xz419KIb/N0AqdPz
+         ZwbYoP4LB+0abJLIY3j56sLCv7LSkT4qNai7U=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=k73+20oMzuAw5PJdzXrVZQ8DNLKi5Ygwc7hTogsnp9k=;
-        b=RerxTSYNPhdbhFiYzE3HsnpiT+Mfig/YiWi8d0qEg/pKvj3mTZrkmLjipCVx3NLYNo
-         tUgnlgWBemp+2o8YG6uGcaClElyahN9VdQ71eNJr0v+0RTpfkru1jVNBSE1IZl8zQ8jN
-         fefj3wFRE/qzJadPveHz1II9mr1iMicaXeQeUxtW3MJaX9cIY4slsAL5Me8wxPYHnvkS
-         xksulL1oQ381Vek3X8NyuUOvYJvifRBWppThu7a+EEo5+qG0vHZjwh2glVwUSD+Uwd2P
-         2enmauiCC3wmgzU/jwmGrb6bhVgJuzAjan4W5uLAg/vaYH3UddjslQV8LLHKB02a+ZXa
-         r2CA==
-X-Gm-Message-State: AOAM530kVrGCjyHdjFA9s48F/cNJlVb8i4qq54aSau1SKTKjhye0/qBP
-        1xFZ+mKTK64xDv4gZQnT673WWUhGYQ==
-X-Google-Smtp-Source: ABdhPJyHkJprsjX0KNy6IqPp7iO8QrFdQymObPv0zprHFsIFbUJLu1hwZxjDZRpoBAGKg4nANmhoNQ==
-X-Received: by 2002:aca:3114:: with SMTP id x20mr1734704oix.174.1631908138523;
-        Fri, 17 Sep 2021 12:48:58 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id o8sm1642429oiw.55.2021.09.17.12.48.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 17 Sep 2021 12:48:57 -0700 (PDT)
-Received: (nullmailer pid 2025331 invoked by uid 1000);
-        Fri, 17 Sep 2021 19:48:54 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Cc:     perex@perex.cz, tiwai@suse.com, plai@codeaurora.org,
-        robh+dt@kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, swboyd@chromium.org,
-        broonie@kernel.org, lgirdwood@gmail.com, judyhsiao@chromium.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        bgoswami@codeaurora.org, agross@kernel.org,
-        srinivas.kandagatla@linaro.org, bjorn.andersson@linaro.org,
-        rohitkr@codeaurora.org
-In-Reply-To: <1631872892-1821-2-git-send-email-srivasam@codeaurora.org>
-References: <1631872892-1821-1-git-send-email-srivasam@codeaurora.org> <1631872892-1821-2-git-send-email-srivasam@codeaurora.org>
-Subject: Re: [PATCH v3 1/2] ASoC: google: dt-bindings: Add sc7280-herobrine machine bindings
-Date:   Fri, 17 Sep 2021 14:48:54 -0500
-Message-Id: <1631908134.321286.2025330.nullmailer@robh.at.kernel.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=J1UMbMc8OAj14RDhbE254NcvzwuTcA6/D0lnRvB23mQ=;
+        b=Ynk64YMDR4PYUa7+1np4nyLVUdXNlZ4u5f8D/UDXlyLess++t1/q0r+3rFZRXfl6dI
+         hji7Nxz1hoPEanwtst+Prva7C7yfRdUCItLjX+5+25yh5RxivQW+J8WLckgu5z5ILgxI
+         SKGr4hLMRzu9VfVz98lCSkqlu4wTzf+gpOt/z6GHVnHd6eR+KtwwL/XaTkRQJX5v3Csz
+         iD7lpLGrhy/qwRMv+PLcEhoz7il+T1qAOVF0UfDwz/LuEE6TfIIdJMbHvPf/pa1JWFQ0
+         f5tjeWlfqQQBZyx92/NNx8tFPIqvg1aJ01n1bPYB3HKKX3OdvYm9zX3qQctseuF0l+as
+         yakw==
+X-Gm-Message-State: AOAM532aPblD8QK7OH63QwOKXc/8xYYicMiwRDw/I5CdlDfIWdy1X/Fd
+        Ptl6tIX5f5s0MLuvVN46Pii5+DdU83J5ig==
+X-Google-Smtp-Source: ABdhPJyFRUUBD5y2sN31RrKEmx6XQDwueS4Qc3c+Bl/9Cj2UC7an6h6Z+Kb3Ojps9lzLLL50ocJwVw==
+X-Received: by 2002:a05:6638:1e2:: with SMTP id t2mr1249088jaq.21.1631908948910;
+        Fri, 17 Sep 2021 13:02:28 -0700 (PDT)
+Received: from mail-io1-f51.google.com (mail-io1-f51.google.com. [209.85.166.51])
+        by smtp.gmail.com with ESMTPSA id a11sm1872998ilk.18.2021.09.17.13.02.27
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 17 Sep 2021 13:02:27 -0700 (PDT)
+Received: by mail-io1-f51.google.com with SMTP id j18so13551115ioj.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Sep 2021 13:02:27 -0700 (PDT)
+X-Received: by 2002:a02:ac01:: with SMTP id a1mr1270459jao.93.1631908947377;
+ Fri, 17 Sep 2021 13:02:27 -0700 (PDT)
+MIME-Version: 1.0
+References: <1631872087-24416-1-git-send-email-rajpat@codeaurora.org> <1631872087-24416-2-git-send-email-rajpat@codeaurora.org>
+In-Reply-To: <1631872087-24416-2-git-send-email-rajpat@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 17 Sep 2021 13:02:15 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=X-7-OS0uDFDR+_AksgqLvTVCx0+Z5pbmNCCvqwBrvgBg@mail.gmail.com>
+Message-ID: <CAD=FV=X-7-OS0uDFDR+_AksgqLvTVCx0+Z5pbmNCCvqwBrvgBg@mail.gmail.com>
+Subject: Re: [PATCH V8 1/8] dt-bindings: spi: Add sc7280 support
+To:     Rajesh Patil <rajpat@codeaurora.org>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        msavaliy@qti.qualcomm.com, satya priya <skakit@codeaurora.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Matthias Kaehlcke <mka@chromium.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, 17 Sep 2021 15:31:31 +0530, Srinivasa Rao Mandadapu wrote:
-> Add devicetree bindings documentation file for sc7280 sound card
-> registration.
-> 
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Hi,
+
+On Fri, Sep 17, 2021 at 2:49 AM Rajesh Patil <rajpat@codeaurora.org> wrote:
+>
+> Add compatible for sc7280 SoC.
+>
+> Signed-off-by: Rajesh Patil <rajpat@codeaurora.org>
 > ---
-> This patch depends on the dt-bindings header patch
->   -- https://patchwork.kernel.org/project/alsa-devel/list/?series=543829
->  .../bindings/sound/google,sc7280-herobrine.yaml    | 170 +++++++++++++++++++++
->  1 file changed, 170 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/sound/google,sc7280-herobrine.yaml
-> 
+> Changes in V8:
+>  - As per Doug's comments, added "qcom,sc7280-qspi" compatible
+>
+>  Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+>
+> diff --git a/Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml b/Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml
+> index ef5698f..31711fe 100644
+> --- a/Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml
+> +++ b/Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml
+> @@ -21,7 +21,10 @@ allOf:
+>  properties:
+>    compatible:
+>      items:
+> -      - const: qcom,sdm845-qspi
+> +      - enum:
+> +        - qcom,sdm845-qspi
+> +        - qcom,sc7280-qspi
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Other than the fact that the indentation is wrong (as Rob's bot
+found), this looks good to me. Feel free to add my Reviewed-by when
+you fix the indentation. In theory you could also be nice and add the
+sc7180-qspi at the same time, I think.
 
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-Error: Documentation/devicetree/bindings/sound/google,sc7280-herobrine.example.dts:46.24-25 syntax error
-FATAL ERROR: Unable to parse input tree
-make[1]: *** [scripts/Makefile.lib:385: Documentation/devicetree/bindings/sound/google,sc7280-herobrine.example.dt.yaml] Error 1
-make[1]: *** Waiting for unfinished jobs....
-make: *** [Makefile:1441: dt_binding_check] Error 2
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/1529313
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+-Doug
