@@ -2,232 +2,126 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C908641007C
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 23:05:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC83E4100A2
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 23:15:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243655AbhIQVGh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Sep 2021 17:06:37 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42038 "EHLO
+        id S241477AbhIQVQz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Sep 2021 17:16:55 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44406 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235643AbhIQVGg (ORCPT
+        with ESMTP id S230515AbhIQVQv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Sep 2021 17:06:36 -0400
-Received: from mail-io1-xd29.google.com (mail-io1-xd29.google.com [IPv6:2607:f8b0:4864:20::d29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 23CBAC061574
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Sep 2021 14:05:14 -0700 (PDT)
-Received: by mail-io1-xd29.google.com with SMTP id a15so13815381iot.2
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Sep 2021 14:05:14 -0700 (PDT)
+        Fri, 17 Sep 2021 17:16:51 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 22ECFC061574;
+        Fri, 17 Sep 2021 14:15:28 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id h17so34815159edj.6;
+        Fri, 17 Sep 2021 14:15:28 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=poorly.run; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=hYgcz2WmuoTKimNGZMC9XjOQ7lSec5qs3OosNYmK+Ok=;
-        b=MAON7TiphB4V7pl4cblyJU4fCBNd3AtveOG2N9qog5RtSabP80L+gI+5W27tWQEYLK
-         YvxUcBYeSvcJBT3VOHqcvtcl2yR2zxzhCXaRrDEpW3uWD+ac6AA5S7WHRFuVEyzyQGom
-         qMxoopdTBnoIy53LkjdOG7U3iBmeF+WbFnj58NcCFjGcmDj0US9Aj5CLvjp4UlgJEzUD
-         sRe+TgOi1lGjWJsBHO7J/tQRLOJhoEV0WYfMQci4h8eCOR15IdQdEu2t5kFFVeMq1Xo+
-         T48/kki+hg31MvafHT2J/GJxN48aHiGWQuGcWTn5gGcE1IRjdxEeVAxWrFFhXxEteocl
-         sUlA==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hYLvmWFA5adKzLqY8vh9rsTQj1QLK0NjY6Bw35bbszk=;
+        b=PHb0bolJj9vmBZ77pRP7N/CaAYOPH2gty2ztmn3xwfN6CUptNoqbwingWB0/uvGF2+
+         vehMgrQ5RKIHH9mtcxPBWsjbMcfXZcXMvyTPbfw857n07Qy1z0PgKehORm5QW02LGNW3
+         l3sMjqZamhOUIxzrHsLpR+0KclMJDTs3gFPy/sZKS+lJrXMmBjCoUUZAX+K73ILwns8p
+         uMNR6XqoCmwZj1OG/OxFE4BH2nADsyFa6VEJwudBNcLZOaCGw8AAEECwrnoLrp7xvgt0
+         9w7jxOAnyLw6D0sL/nz+A2Pca06NVUYcY7zXYDTHxEbVzPv7u9hw4Ei82o3Nx8RBKWsB
+         JoKg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=hYgcz2WmuoTKimNGZMC9XjOQ7lSec5qs3OosNYmK+Ok=;
-        b=PhABNIah512O4JLMrOBLDkcRx4XUz1PVzN6lfwgow/PjsXRmP3d+BQZnQd5XrwB/5V
-         6bgXyaAzZokfWB+q1TUVrcup3ubL6EAk60xmWT5nx1rcVSIG9PBhpsx42FWuFgqCb83Q
-         tpCDLAGfAUB3GXDhDVjeEyWD2rCs/jNO/jABu8ooXCTZ+pQU8ipBKP/T7x9gSPgCs9wO
-         mnXoeJEZ01qPMQ9AwWIDHxHYLEKake4SufYhDe/RQj9/bU4/h2FafMpaHWJ2uhkyHIAl
-         3ozBzkGaFOwSyiYiLcXGTt6xJTNeXnRYszWlS4GB73n9fNv6tdieLUdIrVAQaxrDuKHU
-         G04w==
-X-Gm-Message-State: AOAM531ASvVfMJqXM0WL773Pf7Y/pMxxSCc/fwLWarK814tw+VycLVLZ
-        7mCnZGDOVJIL1RbRSN+Fzq/mfw==
-X-Google-Smtp-Source: ABdhPJyVGXTAKtSUaIMT4jST+b54K6uGNImHSympt1CfZVSL4qvHFcKKnAOXl2UCKvZYN210dAx95g==
-X-Received: by 2002:a5e:d80a:: with SMTP id l10mr9913779iok.36.1631912713480;
-        Fri, 17 Sep 2021 14:05:13 -0700 (PDT)
-Received: from localhost ([167.100.64.199])
-        by smtp.gmail.com with ESMTPSA id a5sm4857356ilf.27.2021.09.17.14.05.12
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Fri, 17 Sep 2021 14:05:13 -0700 (PDT)
-Date:   Fri, 17 Sep 2021 17:05:07 -0400
-From:   Sean Paul <sean@poorly.run>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-        Sean Paul <seanpaul@chromium.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=hYLvmWFA5adKzLqY8vh9rsTQj1QLK0NjY6Bw35bbszk=;
+        b=cfIKz650SZpKhzOxbNyYPLwuhLOm60Tacjv5CIdnfg1afVX/MlwJ8R2UxC91ZXKVae
+         TGvCvixN5HpzKffG37XZ5ahdhiBo0dA53sUwCqePeUcWJOjITFXq3aMS6wS1WQXl+AMv
+         oPAPLs8xKvzjmhylBYBh+kfnwd7ytbJwXTNvFLBrzEWV4XcobOnMMD1iN9vO/XNYiKo4
+         gwucgEfFQ1wfmPyRkcJ8eXhbuuFdtbO24oVp5Jr8BWP5lL8EuD3FyTtlHrpk6NE7iApD
+         H7FQAVGyC/NRqrePAuG7gLaIjuC7tr/KmIJ16dUhBDT5/sOEDp5H0qSaRym3PD1BE73F
+         MzJg==
+X-Gm-Message-State: AOAM530W6sP73PoPzW58A0kdTh9CxFHuVrpkzMZKgTWi1CX8FbvBKTBz
+        8gGXM2g70h6gI3COafv/Zvo=
+X-Google-Smtp-Source: ABdhPJxZQQeVwSzhHCPzefmz3laO7kGZR35Zg0G/LP966dLvwt6IKKHiGbSAl9Ojd/Mx6Bg/kqXIIg==
+X-Received: by 2002:a17:906:4544:: with SMTP id s4mr14671511ejq.102.1631913326521;
+        Fri, 17 Sep 2021 14:15:26 -0700 (PDT)
+Received: from Ansuel-xps.localdomain (93-42-67-254.ip85.fastwebnet.it. [93.42.67.254])
+        by smtp.googlemail.com with ESMTPSA id la17sm2685763ejb.80.2021.09.17.14.14.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 17 Sep 2021 14:14:43 -0700 (PDT)
+From:   Ansuel Smith <ansuelsmth@gmail.com>
+To:     Amit Kucheria <amitk@kernel.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v2 13/13] drm/msm: Implement HDCP 1.x using the new drm
- HDCP helpers
-Message-ID: <20210917210507.GR2515@art_vandelay>
-References: <20210915203834.1439-1-sean@poorly.run>
- <20210915203834.1439-14-sean@poorly.run>
- <CAE-0n52Gm6SsjUTEEOt-9LD9dGCb7pFf0OC_xKSnRxLy4PO_iw@mail.gmail.com>
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        linux-pm@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Ansuel Smith <ansuelsmth@gmail.com>
+Subject: [PATCH v3] drivers: thermal: tsens: add timeout to get_temp_tsens_valid
+Date:   Fri, 17 Sep 2021 23:14:03 +0200
+Message-Id: <20210917211403.19640-1-ansuelsmth@gmail.com>
+X-Mailer: git-send-email 2.32.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAE-0n52Gm6SsjUTEEOt-9LD9dGCb7pFf0OC_xKSnRxLy4PO_iw@mail.gmail.com>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 16, 2021 at 11:00:25PM -0700, Stephen Boyd wrote:
-> Quoting Sean Paul (2021-09-15 13:38:32)
+The function can loop and lock the system if for whatever reason the bit
+for the target sensor is NEVER valid. This is the case if a sensor is
+disabled by the factory and the valid bit is never reported as actually
+valid. Add a timeout check and exit if a timeout occurs. As this is
+a very rare condition, handle the timeout only if the first read fails.
+While at it also rework the function to improve readability and convert
+to poll_timeout generic macro.
 
-/snip
+Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
+---
+ drivers/thermal/qcom/tsens.c | 29 ++++++++++++++---------------
+ 1 file changed, 14 insertions(+), 15 deletions(-)
 
-> > diff --git a/drivers/gpu/drm/msm/dp/dp_debug.c b/drivers/gpu/drm/msm/dp/dp_debug.c
-> > index 2f6247e80e9d..de16fca8782a 100644
-> > --- a/drivers/gpu/drm/msm/dp/dp_debug.c
-> > +++ b/drivers/gpu/drm/msm/dp/dp_debug.c
-> > @@ -8,6 +8,7 @@
-> >  #include <linux/debugfs.h>
-> >  #include <drm/drm_connector.h>
-> >  #include <drm/drm_file.h>
-> > +#include <drm/drm_hdcp.h>
-> >
-> >  #include "dp_parser.h"
-> >  #include "dp_catalog.h"
-> > @@ -15,6 +16,7 @@
-> >  #include "dp_ctrl.h"
-> >  #include "dp_debug.h"
-> >  #include "dp_display.h"
-> > +#include "dp_hdcp.h"
-> >
-> >  #define DEBUG_NAME "msm_dp"
-> >
-> > @@ -24,6 +26,7 @@ struct dp_debug_private {
-> >         struct dp_usbpd *usbpd;
-> >         struct dp_link *link;
-> >         struct dp_panel *panel;
-> > +       struct dp_hdcp *hdcp;
-> >         struct drm_connector **connector;
-> >         struct device *dev;
-> >         struct drm_device *drm_dev;
-> > @@ -349,6 +352,38 @@ static int dp_test_active_open(struct inode *inode,
-> >                         inode->i_private);
-> >  }
-> >
-> > +static ssize_t dp_hdcp_key_write(struct file *file, const char __user *ubuf,
-> 
-> Is this the API that userspace is going to use to set the key? Or a
-> simple debug interface that's used to test this code out? I hope it's a
-> debugging aid and not the normal flow given that it's through debugfs.
-> 
-
-At the moment, generic UAPI is not useful beyond msm-based CrOS devices, which
-is not really a burden upstream should be carrying. On other platforms
-(including qc-based Android devices), the key injection is done in HW. As such,
-I'm tempted to kick key injection UAPI down the road.
-
-Once I finish the userspace client in CrOS, I can upload the UAPI for folks to
-comment on.
-
-/snip
-
-> > diff --git a/drivers/gpu/drm/msm/dp/dp_display.h b/drivers/gpu/drm/msm/dp/dp_display.h
-> > index 8b47cdabb67e..421268e47f30 100644
-> > --- a/drivers/gpu/drm/msm/dp/dp_display.h
-> > +++ b/drivers/gpu/drm/msm/dp/dp_display.h
-
-> > +static int dp_hdcp_load_keys(struct drm_connector *connector)
-> > +{
-> > +       struct dp_hdcp *hdcp = dp_display_connector_to_hdcp(connector);
-> > +       struct dp_hdcp_key *key;
-> > +       int i, ret = 0;
-> > +
-> > +       mutex_lock(&hdcp->key_lock);
-> > +
-> > +       key = hdcp->key;
-> > +
-> > +       if (!key->valid) {
-> > +               ret = -ENOENT;
-> > +               goto out;
-> > +       }
-> > +
-> > +       dp_hdcp_write_dp(hdcp, DP_HDCP_SW_LOWER_AKSV, key->ksv.words[0]);
-> > +       dp_hdcp_write_dp(hdcp, DP_HDCP_SW_UPPER_AKSV, key->ksv.words[1]);
-> > +
-> > +       for (i = 0; i < DP_HDCP_NUM_KEYS; i++) {
-> > +               dp_hdcp_write_hdcp(hdcp, DP_HDCP_KEY_LSB(i),
-> > +                                  key->keys[i].words[0]);
-> > +               dp_hdcp_write_hdcp(hdcp, DP_HDCP_KEY_MSB(i),
-> > +                                  key->keys[i].words[1]);
-> > +       }
-> > +
-> > +       dp_hdcp_write_hdcp(hdcp, DP_HDCP_KEY_VALID, DP_HDCP_SW_KEY_VALID);
-> > +       wmb();
-> 
-> What are the wmb()s for? Can you add a comment indicating what we're
-> trying to fix by having them?
-> 
-
-I think these were left over from testing (when things weren't working for me).
-Will remove in the next version, thanks for catching!
-
-/snip
-
-> > diff --git a/drivers/gpu/drm/msm/dp/dp_parser.c b/drivers/gpu/drm/msm/dp/dp_parser.c
-> > index 0519dd3ac3c3..75a163b0b5af 100644
-> > --- a/drivers/gpu/drm/msm/dp/dp_parser.c
-> > +++ b/drivers/gpu/drm/msm/dp/dp_parser.c
-
-/snip
-
-> > @@ -55,6 +55,8 @@ static void dp_parser_unmap_io_resources(struct dp_parser *parser)
-> >  {
-> >         struct dp_io *io = &parser->io;
-> >
-> > +       msm_dss_iounmap(&io->hdcp_tz);
-> > +       msm_dss_iounmap(&io->hdcp_key);
-> >         msm_dss_iounmap(&io->dp_controller);
-> >  }
-> >
-> > @@ -64,10 +66,20 @@ static int dp_parser_ctrl_res(struct dp_parser *parser)
-> >         struct platform_device *pdev = parser->pdev;
-> >         struct dp_io *io = &parser->io;
-> >
-> > -       rc = msm_dss_ioremap(pdev, &io->dp_controller);
-> > -       if (rc) {
-> > -               DRM_ERROR("unable to remap dp io resources, rc=%d\n", rc);
-> > +       rc = msm_dss_ioremap(pdev, &io->dp_controller, 0);
-> > +       if (rc)
-> >                 goto err;
-> > +
-> > +       rc = msm_dss_ioremap(pdev, &io->hdcp_key, 1);
-> > +       if (rc) {
-> > +               io->hdcp_key.base = NULL;
-> > +               io->hdcp_key.len = 0;
-> > +       }
-> > +
-> > +       rc = msm_dss_ioremap(pdev, &io->hdcp_tz, 2);
-> > +       if (rc) {
-> > +               io->hdcp_tz.base = NULL;
-> > +               io->hdcp_tz.len = 0;
-> 
-> Bjorn is trying to split the single io region apart into 4 different
-> regions[1]. This would add two more io regions. Maybe this should come
-> after those patches and be indexed later? I worry about needing to add
-> more register properties later on though. Maybe a better approach would
-> be to make them mandatory for certain compatible strings instead.
-
-Thanks for the heads up, I'll look into adding a compatible string.
-
-All your other comments will be addressed in v3.
-
-Sean
-
-> 
-> [1] https://lore.kernel.org/r/20210825222557.1499104-6-bjorn.andersson@linaro.org
-> 
-> >         }
-> >
-> >         io->phy = devm_phy_get(&pdev->dev, "dp");
-
+diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+index b1162e566a70..99a8d9f3e03c 100644
+--- a/drivers/thermal/qcom/tsens.c
++++ b/drivers/thermal/qcom/tsens.c
+@@ -603,22 +603,21 @@ int get_temp_tsens_valid(const struct tsens_sensor *s, int *temp)
+ 	int ret;
+ 
+ 	/* VER_0 doesn't have VALID bit */
+-	if (tsens_version(priv) >= VER_0_1) {
+-		ret = regmap_field_read(priv->rf[valid_idx], &valid);
+-		if (ret)
+-			return ret;
+-		while (!valid) {
+-			/* Valid bit is 0 for 6 AHB clock cycles.
+-			 * At 19.2MHz, 1 AHB clock is ~60ns.
+-			 * We should enter this loop very, very rarely.
+-			 */
+-			ndelay(400);
+-			ret = regmap_field_read(priv->rf[valid_idx], &valid);
+-			if (ret)
+-				return ret;
+-		}
+-	}
++	if (tsens_version(priv) == VER_0)
++		goto get_temp;
++
++	/* Valid bit is 0 for 6 AHB clock cycles.
++	 * At 19.2MHz, 1 AHB clock is ~60ns.
++	 * We should enter this loop very, very rarely.
++	 * Wait 1 us since it's the min of poll_timeout macro.
++	 * Old value was 400 ns.
++	 */
++	ret = regmap_field_read_poll_timeout(priv->rf[valid_idx], valid,
++					     valid, 1, 20 * USEC_PER_MSEC);
++	if (ret)
++		return ret;
+ 
++get_temp:
+ 	/* Valid bit is set, OK to read the temperature */
+ 	*temp = tsens_hw_to_mC(s, temp_idx);
+ 
 -- 
-Sean Paul, Software Engineer, Google / Chromium OS
+2.32.0
+
