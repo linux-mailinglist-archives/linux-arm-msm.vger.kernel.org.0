@@ -2,174 +2,202 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AF74440FCBB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 17:39:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5521F40FCCB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 17:40:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243480AbhIQPk7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Sep 2021 11:40:59 -0400
-Received: from mail.kernel.org ([198.145.29.99]:44160 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S242055AbhIQPkn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Sep 2021 11:40:43 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 33E6761164;
-        Fri, 17 Sep 2021 15:39:19 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1631893159;
-        bh=kSdq0hKExFv8TXBDsAqqcVjzosArwA4JtM7vQeOmyb0=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=l01PzpViwki9LA7T5gwPRzros5O03Fnq4JF1/rmEmPMtO4J2Yf6qcIa3IIQeJQNBf
-         o7KN+YVWoGpllAa9JPybanl3gwpiaiMl9dnKvdY7Q3LjHUGgGLyh0/P/YHaizBQ0h8
-         89xnTV/vt9ANhXKh884AS3PhWcyPFK9kRPloDZnefAupBgeWZbJbpCY7ivTmkhYq6w
-         BCjSBab3TY9CHETuz2IrIdbJ9zCGoUYq/5+xiKkKZ2h6OXFimp9anSJz3YKt/yr0mU
-         GT6F8BFi/XcRQW9WWC7yWDQVS5sZNrrjyLkyRvIeXJObrRKqSWGtpP+UV13r2fqu7I
-         3DnNZZ2cCaf9A==
-Date:   Fri, 17 Sep 2021 16:38:37 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Satya Priya <skakit@codeaurora.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>, mka@chromium.org,
-        swboyd@chromium.org, Das Srinagesh <gurus@codeaurora.org>,
-        David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/4] regulator: Add a regulator driver for the PM8008 PMIC
-Message-ID: <20210917153837.GB4700@sirena.org.uk>
-References: <1631875538-22473-1-git-send-email-skakit@codeaurora.org>
- <1631875538-22473-4-git-send-email-skakit@codeaurora.org>
+        id S244146AbhIQPl5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Sep 2021 11:41:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53350 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243803AbhIQPl4 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 17 Sep 2021 11:41:56 -0400
+Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5C799C061768
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Sep 2021 08:40:34 -0700 (PDT)
+Received: by mail-qk1-x735.google.com with SMTP id p4so18718317qki.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Sep 2021 08:40:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=poorly.run; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=ySJeE4ysYIw9RaXTv5EfYfSx9XZTDRHe0HBU7fYPDYk=;
+        b=HCZgo08IWdYcal6imdSq3F9urscT1LBzNenngRIw6fSEwE6rfra+zCiDK2NzmGR+6S
+         jN7pyRkfkKUxmw3gg3iZWxLv0o/IRiO9tW3q17GlWby1NmcvVBqFwzhzgsP+1jgoBKzj
+         LEnLhFY8zOMZbEQP6px7mgP6dqRv35CF/67kONqEw7LleaTULBYLDQMhQrEzZyybfoJv
+         E4cy5JHzqzVRKGNcAsCilBC4Z1Xwtimv9Xr24uW9zzvez6mIGWGYvtzkOdEl5kNN4xGr
+         M9F6i9G+7oeeV+KYp5Nsn8fyh64bhvu2METf9Ae3CadhhaIKLiIcj2u3oP/LarAKCRKE
+         y+UQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=ySJeE4ysYIw9RaXTv5EfYfSx9XZTDRHe0HBU7fYPDYk=;
+        b=4MCEhEnzIVnoNOJlFrKom/VhobirS2lkqga1qBI1oi2GM+mZr7GhiJYdqgeoOAm5WG
+         SWFymcKKBPliCuzEcN4ka+oe3gvXDIqSLXT5VsCUdTV1RYZEp+AonNjA8OgQEBgRooti
+         dyeUj6JfXhm2YtmsBBEZzUptSwqju8PLSuI0XS0ugS7LZK6jTeppq1bz6/FcJ4gvxZLw
+         hs+7HeBWWo6lI7Gbzx3AOR7wj4Opd5JPvfHA+JmIHC/WfLdly0h7nm/XA5KO+ZvBALnZ
+         tTj5KwKDMtdxBnErBQX+mAsYKQPg/ZCasMZDK2wcfnzQKsvwXgtP0p/r9FIMfZxdy9EE
+         MoTw==
+X-Gm-Message-State: AOAM53002Z8ROM7Qek6qgaiesJ/LbgO5XKFHJE2rzruVm/p1HcUmv5AW
+        UaXyc+nDX8jqEaIPLeG5RJ2oFg==
+X-Google-Smtp-Source: ABdhPJykn7GqWq+6l4vuRei4kg1H47sF8YD8eIEb6O3DxFiapVQYu17NPibEZ1AzkPOzDxPJVNkJSw==
+X-Received: by 2002:a37:68d0:: with SMTP id d199mr10726589qkc.96.1631893233467;
+        Fri, 17 Sep 2021 08:40:33 -0700 (PDT)
+Received: from localhost ([167.100.64.199])
+        by smtp.gmail.com with ESMTPSA id az6sm4765236qkb.70.2021.09.17.08.40.32
+        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
+        Fri, 17 Sep 2021 08:40:33 -0700 (PDT)
+Date:   Fri, 17 Sep 2021 11:40:31 -0400
+From:   Sean Paul <sean@poorly.run>
+To:     Fernando Ramos <greenfoo@u92.eu>
+Cc:     dri-devel@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        sean@poorly.run, linux-doc@vger.kernel.org,
+        amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        nouveau@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org,
+        linux-tegra@vger.kernel.org
+Subject: Re: [PATCH 08/15] drm/radeon: cleanup: drm_modeset_lock_all() -->
+ DRM_MODESET_LOCK_ALL_BEGIN()
+Message-ID: <20210917154031.GH2515@art_vandelay>
+References: <20210916211552.33490-1-greenfoo@u92.eu>
+ <20210916211552.33490-9-greenfoo@u92.eu>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="7ZAtKRhVyVSsbBD2"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1631875538-22473-4-git-send-email-skakit@codeaurora.org>
-X-Cookie: A man's house is his hassle.
-User-Agent: Mutt/1.10.1 (2018-07-13)
+In-Reply-To: <20210916211552.33490-9-greenfoo@u92.eu>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Thu, Sep 16, 2021 at 11:15:45PM +0200, Fernando Ramos wrote:
+> As requested in Documentation/gpu/todo.rst, replace driver calls to
+> drm_modeset_lock_all() with DRM_MODESET_LOCK_ALL_BEGIN() and
+> DRM_MODESET_LOCK_ALL_END()
+> 
+> Signed-off-by: Fernando Ramos <greenfoo@u92.eu>
+> ---
+>  drivers/gpu/drm/radeon/radeon_device.c | 13 +++++++++----
+>  drivers/gpu/drm/radeon/radeon_dp_mst.c |  7 +++++--
+>  2 files changed, 14 insertions(+), 6 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/radeon/radeon_device.c b/drivers/gpu/drm/radeon/radeon_device.c
+> index 4f0fbf667431..3feb1fd44409 100644
+> --- a/drivers/gpu/drm/radeon/radeon_device.c
+> +++ b/drivers/gpu/drm/radeon/radeon_device.c
+> @@ -37,6 +37,7 @@
+>  #include <drm/drm_cache.h>
+>  #include <drm/drm_crtc_helper.h>
+>  #include <drm/drm_device.h>
+> +#include <drm/drm_drv.h>
+>  #include <drm/drm_file.h>
+>  #include <drm/drm_probe_helper.h>
+>  #include <drm/radeon_drm.h>
+> @@ -1559,7 +1560,9 @@ int radeon_suspend_kms(struct drm_device *dev, bool suspend,
+>  	struct pci_dev *pdev;
+>  	struct drm_crtc *crtc;
+>  	struct drm_connector *connector;
+> +	struct drm_modeset_acquire_ctx ctx;
+>  	int i, r;
+> +	int ret;
 
---7ZAtKRhVyVSsbBD2
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Could you please tuck this up with i & r?
 
-On Fri, Sep 17, 2021 at 04:15:37PM +0530, Satya Priya wrote:
+>  
+>  	if (dev == NULL || dev->dev_private == NULL) {
+>  		return -ENODEV;
+> @@ -1573,12 +1576,12 @@ int radeon_suspend_kms(struct drm_device *dev, bool suspend,
+>  
+>  	drm_kms_helper_poll_disable(dev);
+>  
+> -	drm_modeset_lock_all(dev);
+> +	DRM_MODESET_LOCK_ALL_BEGIN(dev, ctx, 0, ret);
+>  	/* turn off display hw */
+>  	list_for_each_entry(connector, &dev->mode_config.connector_list, head) {
+>  		drm_helper_connector_dpms(connector, DRM_MODE_DPMS_OFF);
+>  	}
+> -	drm_modeset_unlock_all(dev);
+> +	DRM_MODESET_LOCK_ALL_END(dev, ctx, ret);
 
-> +static int pm8008_regulator_is_enabled(struct regulator_dev *rdev)
-> +{
-> +	struct pm8008_regulator *pm8008_reg = rdev_get_drvdata(rdev);
-> +	int rc;
-> +	u8 reg;
-> +
-> +	rc = pm8008_read(pm8008_reg->regmap,
-> +			LDO_ENABLE_REG(pm8008_reg->base), &reg, 1);
-> +	if (rc < 0) {
-> +		pr_err("failed to read enable reg rc=%d\n", rc);
-> +		return rc;
-> +	}
-> +
-> +	return !!(reg & ENABLE_BIT);
-> +}
+You should check ret here
 
-This could just be regulator_is_enabled_regmap().  There's also a lot of
-instances in the driver where it's using pr_err() not dev_err() (and
-similarly for the debug prints).
+>  
+>  	/* unpin the front buffers and cursors */
+>  	list_for_each_entry(crtc, &dev->mode_config.crtc_list, head) {
+> @@ -1663,7 +1666,9 @@ int radeon_resume_kms(struct drm_device *dev, bool resume, bool fbcon)
+>  	struct radeon_device *rdev = dev->dev_private;
+>  	struct pci_dev *pdev = to_pci_dev(dev->dev);
+>  	struct drm_crtc *crtc;
+> +	struct drm_modeset_acquire_ctx ctx;
+>  	int r;
+> +	int ret;
 
-> +
-> +static int pm8008_regulator_enable(struct regulator_dev *rdev)
-> +{
-> +	struct pm8008_regulator *pm8008_reg = rdev_get_drvdata(rdev);
-> +	int rc, current_uv, delay_us, delay_ms, retry_count = 10;
-> +	u8 reg;
+Same suggestion here, move up with r
 
-This is the regmap helper.
+>  
+>  	if (dev->switch_power_state == DRM_SWITCH_POWER_OFF)
+>  		return 0;
+> @@ -1741,11 +1746,11 @@ int radeon_resume_kms(struct drm_device *dev, bool resume, bool fbcon)
+>  	if (fbcon) {
+>  		drm_helper_resume_force_mode(dev);
+>  		/* turn on display hw */
+> -		drm_modeset_lock_all(dev);
+> +		DRM_MODESET_LOCK_ALL_BEGIN(dev, ctx, 0, ret);
+>  		list_for_each_entry(connector, &dev->mode_config.connector_list, head) {
+>  			drm_helper_connector_dpms(connector, DRM_MODE_DPMS_ON);
+>  		}
+> -		drm_modeset_unlock_all(dev);
+> +		DRM_MODESET_LOCK_ALL_END(dev, ctx, ret);
 
-> +	/*
-> +	 * Wait for the VREG_READY status bit to be set using a timeout delay
-> +	 * calculated from the current commanded voltage.
-> +	 */
-> +	delay_us = STARTUP_DELAY_USEC
-> +			+ DIV_ROUND_UP(current_uv, pm8008_reg->step_rate);
-> +	delay_ms = DIV_ROUND_UP(delay_us, 1000);
+Also check ret here
 
-Set poll_enable_time and implement get_status() then this will be
-handled by the core.
 
-> +static int pm8008_regulator_disable(struct regulator_dev *rdev)
-> +{
+>  	}
+>  
+>  	drm_kms_helper_poll_enable(dev);
+> diff --git a/drivers/gpu/drm/radeon/radeon_dp_mst.c b/drivers/gpu/drm/radeon/radeon_dp_mst.c
+> index ec867fa880a4..04fe7b0a6746 100644
+> --- a/drivers/gpu/drm/radeon/radeon_dp_mst.c
+> +++ b/drivers/gpu/drm/radeon/radeon_dp_mst.c
+> @@ -4,6 +4,7 @@
+>  #include <drm/drm_fb_helper.h>
+>  #include <drm/drm_file.h>
+>  #include <drm/drm_probe_helper.h>
+> +#include <drm/drm_drv.h>
+>  
+>  #include "atom.h"
+>  #include "ni_reg.h"
+> @@ -737,11 +738,13 @@ static int radeon_debugfs_mst_info_show(struct seq_file *m, void *unused)
+>  	struct radeon_device *rdev = (struct radeon_device *)m->private;
+>  	struct drm_device *dev = rdev->ddev;
+>  	struct drm_connector *connector;
+> +	struct drm_modeset_acquire_ctx ctx;
+>  	struct radeon_connector *radeon_connector;
+>  	struct radeon_connector_atom_dig *dig_connector;
+>  	int i;
+> +	int ret;
 
-Use the regmap helper.
+Move up with i
 
-> +	rc = pm8008_write_voltage(pm8008_reg, min_uv, max_uv);
-> +	if (rc < 0)
-> +		return rc;
+>  
+> -	drm_modeset_lock_all(dev);
+> +	DRM_MODESET_LOCK_ALL_BEGIN(dev, ctx, 0, ret);
+>  	list_for_each_entry(connector, &dev->mode_config.connector_list, head) {
+>  		if (connector->connector_type != DRM_MODE_CONNECTOR_DisplayPort)
+>  			continue;
+> @@ -759,7 +762,7 @@ static int radeon_debugfs_mst_info_show(struct seq_file *m, void *unused)
+>  				   radeon_connector->cur_stream_attribs[i].fe,
+>  				   radeon_connector->cur_stream_attribs[i].slots);
+>  	}
+> -	drm_modeset_unlock_all(dev);
+> +	DRM_MODESET_LOCK_ALL_END(dev, ctx, ret);
+>  	return 0;
+>  }
+>  
+> -- 
+> 2.33.0
+> 
 
-This is the only place where write_voltage() is called, may as well just
-inline it.
-
-> +	init_voltage = -EINVAL;
-> +	of_property_read_u32(reg_node, "qcom,init-voltage", &init_voltage);
-
-Why does this property exist and if it's needed why is it specific to
-this device?  It looks like the device allows you to read the voltage on
-startup from the regmap.
-
-> +	init_data = of_get_regulator_init_data(dev, reg_node,
-> +						&pm8008_reg->rdesc);
-> +	if (init_data == NULL) {
-> +		dev_err(dev, "%s: failed to get regulator data\n", name);
-> +		return -ENODATA;
-> +	}
-> +	if (!init_data->constraints.name) {
-> +		dev_err(dev, "%s: regulator name missing\n", name);
-> +		return -EINVAL;
-> +	}
-
-Just let the core find the init data for you, there is no reason to
-insist on a system provided name - that is an entirely optional property
-for systems to use, there is no reason for a regulator driver to care.
-
-> +	init_data->constraints.input_uV = init_data->constraints.max_uV;
-> +	init_data->constraints.valid_ops_mask |= REGULATOR_CHANGE_STATUS
-> +						| REGULATOR_CHANGE_VOLTAGE;
-
-This is absolutely not something that a regulator driver should be
-doing, the whole point with constraints is that they come from the
-machine.
-
-> +static int pm8008_parse_regulator(struct regmap *regmap, struct device *dev)
-> +{
-> +	int rc = 0;
-> +	const char *name;
-> +	struct device_node *child;
-> +	struct pm8008_regulator *pm8008_reg;
-> +
-> +	/* parse each subnode and register regulator for regulator child */
-> +	for_each_available_child_of_node(dev->of_node, child) {
-> +		pm8008_reg = devm_kzalloc(dev, sizeof(*pm8008_reg), GFP_KERNEL);
-> +		if (!pm8008_reg)
-
-You shouldn't be doing this, just unconditionally register all the
-regulators supported by the chip.  If they don't appear in the DT that's
-totally fine - it gives read only access which can be useful for
-diagnostics.
-
---7ZAtKRhVyVSsbBD2
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmFEtnwACgkQJNaLcl1U
-h9CrJAf/TnpjaJxjPGDD/NDInzhqNZ3pu873PCgDW33FLzZrLDR9VA9y65y4D4V3
-5QTDdaeFkrw6Z7JCVafXdZ+FpkNFs8gObqtdDgiaAascU9fbKEJY1Vwsc+GUdH6m
-R07VKi0wvmn8Gjb12vUMkTBB+bZKlMBIRoFKSkavYSZmiKbeoLDRXZKq1V42rqv5
-BQeCB/irm3UeeuqkT9Ek7365vaVP7pdnDQ7N9DF3pS0P7Tly/zCMfW401VbwkMia
-jf2OR0Ke7h4C3NBUzLPlxW5JEbjZwVduiUJlNMvl/tW1CpcXNfnt7Fzq9/co+1/L
-y7hwKMN3pFDpeSByl63kPgWPQ80slQ==
-=HmpC
------END PGP SIGNATURE-----
-
---7ZAtKRhVyVSsbBD2--
+-- 
+Sean Paul, Software Engineer, Google / Chromium OS
