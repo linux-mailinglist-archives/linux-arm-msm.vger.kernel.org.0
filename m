@@ -2,166 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8AB4A40F792
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 14:35:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD84E40F9AB
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 17 Sep 2021 15:56:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244123AbhIQMge (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 17 Sep 2021 08:36:34 -0400
-Received: from mailout2.w1.samsung.com ([210.118.77.12]:24804 "EHLO
-        mailout2.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235181AbhIQMgd (ORCPT
+        id S242191AbhIQN5j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 17 Sep 2021 09:57:39 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:36747 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241306AbhIQN5f (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 17 Sep 2021 08:36:33 -0400
-Received: from eucas1p2.samsung.com (unknown [182.198.249.207])
-        by mailout2.w1.samsung.com (KnoxPortal) with ESMTP id 20210917123509euoutp024d5040947c087a0122832f16dee1b24a~lnCHeLgJN1799117991euoutp02c
-        for <linux-arm-msm@vger.kernel.org>; Fri, 17 Sep 2021 12:35:09 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout2.w1.samsung.com 20210917123509euoutp024d5040947c087a0122832f16dee1b24a~lnCHeLgJN1799117991euoutp02c
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1631882109;
-        bh=m1Y6LWA4PXoajOSun3pzOfX28Emf6U0QDQDDXYjTyUo=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=N525ixmYaI2hd+M1rwOKqQVzKJ4Ph/PvZVgw5t2si/8X/FBgRxoFO7pfAgozcgP4m
-         7ceKEKFFI5QyBzGnx/Ptl1NE5F2AGuMVW33EPSSxHSJszv0+3fI8/0ofAYSfaZUJfS
-         oaaeMWeY1pTPoUuad1YLZqA3nCFg9yzbLN3K1Qyg=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20210917123508eucas1p1ca60528d596ee60f53e6b3499307e58d~lnCG4xCFU2999629996eucas1p13;
-        Fri, 17 Sep 2021 12:35:08 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id E3.73.45756.C7B84416; Fri, 17
-        Sep 2021 13:35:08 +0100 (BST)
-Received: from eusmtrp2.samsung.com (unknown [182.198.249.139]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20210917123508eucas1p2a73b5bf1cab9fac80de826cacfd817b8~lnCGVm2Fj2071520715eucas1p2a;
-        Fri, 17 Sep 2021 12:35:08 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp2.samsung.com (KnoxPortal) with ESMTP id
-        20210917123508eusmtrp268e219a81f573fd96d703a8a52ea4af2~lnCGUPcK31459814598eusmtrp2E;
-        Fri, 17 Sep 2021 12:35:08 +0000 (GMT)
-X-AuditID: cbfec7f2-7d5ff7000002b2bc-0d-61448b7c201e
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id 37.FD.20981.B7B84416; Fri, 17
-        Sep 2021 13:35:07 +0100 (BST)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20210917123505eusmtip1840ad4dd0237808a52a6821790b51fda~lnCEVoqUS1263012630eusmtip1b;
-        Fri, 17 Sep 2021 12:35:05 +0000 (GMT)
-Subject: Re: [PATCH v4 24/24] drm/exynos: dsi: Adjust probe order
-To:     Andrzej Hajda <a.hajda@samsung.com>,
-        Maxime Ripard <maxime@cerno.tech>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        David Airlie <airlied@linux.ie>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>
-Cc:     Sean Paul <sean@poorly.run>, freedreno@lists.freedesktop.org,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        linux-kernel@vger.kernel.org,
-        Xinliang Liu <xinliang.liu@linaro.org>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Tian Tao <tiantao6@hisilicon.com>,
-        Inki Dae <inki.dae@samsung.com>,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        dri-devel@lists.freedesktop.org,
-        John Stultz <john.stultz@linaro.org>,
-        Chen Feng <puck.chen@hisilicon.com>,
-        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-Message-ID: <fc1fbd42-6ed4-9d67-2903-8f9cc2aaad43@samsung.com>
-Date:   Fri, 17 Sep 2021 14:35:05 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0)
-        Gecko/20100101 Thunderbird/78.14.0
-MIME-Version: 1.0
-In-Reply-To: <29a2111d-024b-4d9e-27ef-e3399509ff32@samsung.com>
-Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-Brightmail-Tracker: H4sIAAAAAAAAA02SfUxTVxjGc+69vf0wbS5Vw4kfGEvmGBsUlmWcRYMDcd6RmTln4qJx2OkN
-        KFC0FV0dbEgFoThSJIHSgrQrG4xhmQhakUBW3WopbfkYhBEUURJoRU1hOJDBRrm68d/vfc/z
-        fjxvDg8Xd5DreMfkpxiFXJYmIQXE9d/mPBFZRQmyKG33ZjRkcXPQt24Hhmq7LDj6feYZiSrH
-        XQBdGtESaLzaAlDXfARyTPYTaOJ+D4FmF9o5yJU7yUWFJTVcVNLh4qK+1koS6TztGDL5Wwik
-        m10EyFZ8EI2U6Zd6mGZxNKUfxVHdXAtA90rvAKQr9ZJorvUygX563M5FzZMlHPRrRz3n/Y30
-        s8E8Lj3s9pD0Tf09Lv2o6iqXNhRUcGhzmxej72p7MXp4oI2kbzx/wKEvOz6hR4rsGG1vHeLS
-        NWX9JF3cXA/oa86v6OmmkD3UAcG2o0zasdOMQhp7WJCSWxl1Qs3/suZ2HicHNHA1gM+D1DvQ
-        3VSyxAKemKoDsLZqEGeDPwGcmvVibDANoGbGSGgAb7nE35DJ5msBdD18gQVaiSk/gN9XxAd4
-        NRUHtVP3iYBoDWUkoPNcwXJbnOohYMtDDR5QkVQ01DzRkAEWUrHQa3VyAkxQr8E6TzcR4LXU
-        EVi2kIuzmiDoqBhbzvOp7fAHTw4IME5tguoWA85yMBwaq15eG1IOARwuHCJZpwmwfuApzvJq
-        6LM3v7zABvjPzVcFagBH3Ve4bHARwL5cHWBVW+Gw+wUZOABOvQEbW6VsOg4WNI29vIsIDj4J
-        YpcQwUvXy3E2LYQF+WJWvQXq7Zb/xv7S3YtrgUS/wpp+hR39Cjv6/+caAVEPgplMZXoyo4yW
-        M2cilbJ0ZaY8OfJIRnoTWPrjzkX7lBVU+fyRNoDxgA1AHi5ZI+zOipOJhUdlqrOMIiNJkZnG
-        KG1gPY+QBAvrDQ1JYipZdopJZZgTjOLVK8bjr8vBslYpBvC9Bf7v3rq9vXr3mzv3t99S7TV/
-        bI1PC9tc26n+MSb1bKjq9ZSr+8L4137+sPOQL0F6oHGfZqavKFQv9sPH3sNRD1yfDqqsu6cf
-        LYS91xV6Pnwx8bNNGye/SY0n5nuOq2LIERDXGVEVkmhW3KgrX/X1RLYxxegM55dKHV+MihpF
-        Mfl5A1vzrYIMM189YfLtCXvb6go136E+Lx9XnfyoJSR7x8VCX7W2aZvwD2gQ37qr3bnwgfp5
-        rGsX/XRLZOnY/JW/gpst+42JjuNr10sPJpX1v9twWndoPt/9t0nSaZNvMJptsTsMJ3vCu9D5
-        3rYz2aLGICd5jnOhON40dWGXhFCmyKLDcYVS9i/CyZHTUgQAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Se0xTZxTA+e69fZGR3VWMH8ShaUKcCoWW0n11QpEo3MUssWQucW5Ah1dg
-        Qqu97RzDQSMhjhJZWRdSSuWRIUNWMLw2rAihoqXjUafSLB0PjW4MxJGCUwg+1oJL+O93Hr9z
-        cpLDxfm3WeHcXJWW1qiUeQJ2MDH80jkZXVi+Xxl72RKHvG1jLHR+zIWhH0facHT33wU2ss6M
-        AvTdtJFAM3VtAI2sRiPX/DiB/p76jUDLL/pYaPTsPAeVVTZyUGX/KAfdsVvZyOzuw1CDr5tA
-        5uWXADkqjqLpKot/RsMyjhYt93HUvNIN0KRpECCzaZaNVuy1BPrpUR8Hdc1XstCN/hZW0tvU
-        wu+lHGpizM2mrlgmOdSDC+0cquabahb1Q+8sRg0Zb2PUhKeXTf3y9B6LqnUpqOlyJ0Y57V4O
-        1Vg1zqYquloA1TlcSC11RBwiPxbu1ah1Wnp7jprRJgiOipBYKJIhoVgiE4ri3v10jzheEJO4
-        9xidl/sFrYlJzBTmnLXGnizhfdl4vZSlBzaOAXC5kJRAn01nAMFcPnkRQM/QAGYAPH9+K3RV
-        6VnrvAk+9xjY600LAM6ZX7ADhU3kPmhcnCIChVCykYDXKz0gEODkOAH1NyyvFR+Ar5x2PKCw
-        SRE0PDas6SFkIpztGV7bQZCRsNl9iwjwZjILPn70DFvveQu6qh+u5XmkHDa59SDAOCmFtZ33
-        8XXeBku6a17zFuh9WIcZAd+yQbdsUCwbFMsGpR4QLSCU1jH52fmMWMgo8xmdKluYpc7vAP7n
-        +vnmSlcPuDTnEzoAxgUOALm4IDTk1pl9Sn7IMWXBV7RGnaHR5dGMA8T776nEwzdnqf3fqdJm
-        iKSx8SKJVBYbL5PGCbaESAZtGXwyW6mlT9D0SVrzv4dxeeF67GB/Hx120aA15/2Tzjl1qT5d
-        Qcl9xtgPmtMOh32bcqWhY7L+QtTVw0+O/yVXFFuDIkxvtva2f//1gMS9MzX7+JGEJ5kfJVcf
-        XLrWMVKzar/a2U75fi3fzdOBofKJoraZge1l3qAKU7qymSna0bR0zjEoP7F44LStPpp72WtL
-        +TOhRz2VZHzGnGlNTcWKyZ3x3HvC0t3FN1tlb7SW3FldcWhMakXyq0Ll+a3byqK0BdLuqORP
-        Hnz4nEqKoMGhXU0azFxbepc5cDo18jP5U/G5z4n9R3gxxQXWNKHqHXlmzbW0IDedop6IC0ss
-        eN+5Izfjj/66U8GR73kgUYHPKfbMFgkIJkcp2oVrGOV/GhjNROUDAAA=
-X-CMS-MailID: 20210917123508eucas1p2a73b5bf1cab9fac80de826cacfd817b8
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20210910101445eucas1p172f99ff7fe853052fc457861c3174f9e
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20210910101445eucas1p172f99ff7fe853052fc457861c3174f9e
-References: <20210910101218.1632297-1-maxime@cerno.tech>
-        <CGME20210910101445eucas1p172f99ff7fe853052fc457861c3174f9e@eucas1p1.samsung.com>
-        <20210910101218.1632297-25-maxime@cerno.tech>
-        <29a2111d-024b-4d9e-27ef-e3399509ff32@samsung.com>
+        Fri, 17 Sep 2021 09:57:35 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1631886973; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=JBVHCkLtM4/xMQKfljMOWqvD4lNbxvM3MaLwQGSzXBA=; b=QyFpymuLgwFPxoT4MQnqjre6ZXWw2emxYopMTXBxwRHN/OS+l40/cmJu+XkyjOZfBToFbeHE
+ 1ZnjZsBBe+u1/3AcNSxmcUR44r1lSBO3RrsZbZhQskOC4MJxQajmWvRke8gCcKiXzY9lyFAX
+ irx75Eu86TfKWFVf3sqypIt1WyU=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 61449e67e0f78151d6bbf6da (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 17 Sep 2021 13:55:51
+ GMT
+Sender: sibis=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 11C6BC4338F; Fri, 17 Sep 2021 13:55:50 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-87.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: sibis)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id F0994C4338F;
+        Fri, 17 Sep 2021 13:55:44 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org F0994C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Sibi Sankar <sibis@codeaurora.org>
+To:     bjorn.andersson@linaro.org, robh+dt@kernel.org, will@kernel.org,
+        saiprakash.ranjan@codeaurora.org, swboyd@chromium.org,
+        mka@chromium.org
+Cc:     ohad@wizery.com, agross@kernel.org, mathieu.poirier@linaro.org,
+        robin.murphy@arm.com, joro@8bytes.org, p.zabel@pengutronix.de,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org, evgreen@chromium.org,
+        dianders@chromium.org, Sibi Sankar <sibis@codeaurora.org>
+Subject: [PATCH v5 00/10] Add Modem support on SC7280 SoCs
+Date:   Fri, 17 Sep 2021 19:25:25 +0530
+Message-Id: <1631886935-14691-1-git-send-email-sibis@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+This patch series adds support for booting the Modem Q6 DSP found on
+Qualcomm's SC7280 SoCs.
 
-On 13.09.2021 12:30, Andrzej Hajda wrote:
-> W dniu 10.09.2021 o 12:12, Maxime Ripard pisze:
->> Without proper care and an agreement between how DSI hosts and devices
->> drivers register their MIPI-DSI entities and potential components, we can
->> end up in a situation where the drivers can never probe.
->>
->> Most drivers were taking evasive maneuvers to try to workaround this,
->> but not all of them were following the same conventions, resulting in
->> various incompatibilities between DSI hosts and devices.
->>
->> Now that we have a sequence agreed upon and documented, let's convert
->> exynos to it.
->>
->> Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-> This patch should be dropped, as it will probably break the driver.
->
-> Exynos is already compatible with the pattern
-> register-bus-then-get-sink, but it adds/removes panel/bridge
-> dynamically, so it creates drm_device without waiting for downstream sink.
+Depends on:
+qmp_send: https://patchwork.kernel.org/project/linux-arm-msm/cover/1630420228-31075-1-git-send-email-deesin@codeaurora.org/
+rproc qmp: https://patchwork.kernel.org/project/linux-arm-msm/cover/1631800770-371-1-git-send-email-sibis@codeaurora.org/
 
-Right, this patch breaks Exynos DSI driver operation. Without it, the 
-whole series works fine on all Exynos based test boards.
+V5:
+ * Rebased to linux-next and picked up Rbs.
+ * Add pka to the clock list to boot secure modem devices.
 
-Best regards
+V4:
+ * Rebased to linux-next and picked up Rbs.
+ * Fixed typo (patch 10).
+
+V3:
+ * Keep the memory map version in commit message (patch 6). [Bjorn]
+ * Rename tcsr node and add qualifying compatibles to tcsr and imem nodes
+   (patch 8). [Bjorn]
+ * Place remoteproc_mpss node in alphabetical order above pinctrl
+   section (patch 10). [Stephen]
+
+V2:
+ * Misc. typos (patch 3). [Matthias]
+ * Document the q-channel takedown procedure (patch 5). [Matthias]
+ * Split reserved memory updates between SoC and platform (patch 6). [Matthias]
+
+Sibi Sankar (10):
+  dt-bindings: remoteproc: qcom: pas: Add SC7280 MPSS support
+  remoteproc: qcom: pas: Add SC7280 Modem support
+  dt-bindings: remoteproc: qcom: Update Q6V5 Modem PIL binding
+  iommu/arm-smmu-qcom: Request direct mapping for modem device
+  remoteproc: mss: q6v5-mss: Add modem support on SC7280
+  arm64: dts: qcom: sc7280: Update reserved memory map
+  arm64: dts: qcom: sc7280: Add/Delete/Update reserved memory nodes
+  arm64: dts: qcom: sc7280: Add nodes to boot modem
+  arm64: dts: qcom: sc7280: Add Q6V5 MSS node
+  arm64: dts: qcom: sc7280: Update Q6V5 MSS node
+
+ .../devicetree/bindings/remoteproc/qcom,adsp.yaml  |   5 +
+ .../devicetree/bindings/remoteproc/qcom,q6v5.txt   |  32 ++-
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi           |  59 +++++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               | 107 +++++++++
+ drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c         |   1 +
+ drivers/remoteproc/qcom_q6v5_mss.c                 | 253 ++++++++++++++++++++-
+ drivers/remoteproc/qcom_q6v5_pas.c                 |   1 +
+ 7 files changed, 452 insertions(+), 6 deletions(-)
+
 -- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
