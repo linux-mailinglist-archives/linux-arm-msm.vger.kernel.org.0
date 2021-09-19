@@ -2,86 +2,83 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 766A241098F
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Sep 2021 05:35:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4A6FA410BE1
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 19 Sep 2021 16:33:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236050AbhISDgx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 18 Sep 2021 23:36:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44886 "EHLO
+        id S231952AbhISOet (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 19 Sep 2021 10:34:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45326 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235887AbhISDgw (ORCPT
+        with ESMTP id S231918AbhISOet (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 18 Sep 2021 23:36:52 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3283CC061757
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Sep 2021 20:35:28 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id g14so13046823pfm.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 18 Sep 2021 20:35:28 -0700 (PDT)
+        Sun, 19 Sep 2021 10:34:49 -0400
+Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8A1FC061574;
+        Sun, 19 Sep 2021 07:33:23 -0700 (PDT)
+Received: by mail-pg1-x535.google.com with SMTP id s11so14759849pgr.11;
+        Sun, 19 Sep 2021 07:33:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=2ZHVK/Jt1mzqXZxHbsZQx8f4Inu42Nq3yYQLi7QmACA=;
-        b=yDXRj+7JMxBz4eJVFeHMHnBiwLOzFA7A0Idi+V8spGFR6kLdjnBgQankrYQ6dMk6fJ
-         ZqXEVNw+EbCJRergP2xlyOSvLiBr8ORsxQP5dkvX6ZvjmZUYm5QDcCeKvo41KYz4J2J9
-         3jKEf4uzCQDgMw/tgMIlzPJ/h+vRuQ7kF61vyOLpqV52zwg3KbTZlA436EO17teF1Vzr
-         yYuzf+x/Uda4WbKCZA2dbrmSf8hZL4tJLy+XCpLHQDwwbiN82HLF8DL6PntmC+4BuKQu
-         dMVGoXl30wP0GEACIG5UvLwswV8itAiULFVPJ/1EacGkitCkS0zfDtkPxa/3s4MAS97e
-         bABg==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BDxzixVW4qLygzz/rLWj9i1sOmn4ydTQ+VNVepgXop4=;
+        b=bQXsrcOSH4L3JxdQRZRCUYUU4dxddjNDV2CKo1g88ucDU2jw4z5k24S1G3roj70hxI
+         XoAPo11ZZdYCz8yOwiFkv4BDAoCtErTCf7IGVyR1c4obYEpe61d+pyNRTjoJXvqbgFaR
+         HfziQO2K7pQS/eOvh5pbowqVnxfJVD7gshi0Nf9c5nwE7gx0KkwQRD/r5Qm6/GoY3QPG
+         g6S3/atA31w0BwKjZczj3XsCZNoFvaD4r5ytdd3Uxk5qG30oOeW8ZoDDdurn6I+fBLSp
+         EzY96o2wYnYSRTPqHWJ8Kr4ORzY7T6cQUrkIEQ9vVddFUR++u7SHDrKN1GPx4Zv+L8Uv
+         kcNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=2ZHVK/Jt1mzqXZxHbsZQx8f4Inu42Nq3yYQLi7QmACA=;
-        b=kVLpN+AIK4lygHHsKVwQgVPbYRoVbwnZaNLrOVmTsB64v0wiVOrt7aYp3v/1bEChqf
-         gBrsqrqHyfs/n88/ERgQBe6/0Yolg/7vMoHaXmNAGU53p9SfCsnRSNWcWjvQM1PtSB0W
-         HNwTAxJc+F0oouHM/I9EiW/F6TsuXUaq+5Ajxt6S9NZYpoWLay/VHYNdYXytFcxQiNHt
-         JS1KOtqY6RUaGJ+0DvC/JOY6TH+MvTh2/e03NI3aGYVlVjmCOVSgaQbTXQHdLS9AznQn
-         lme+WmtF/4OQ+V9z8KCzeNmETI9ApMnEqkSaHVXkZZasj+apQNcnCLfm+cYquSIhzEXa
-         mLGg==
-X-Gm-Message-State: AOAM530hxBE9c05de/7wP6X92jspO98hf+lQyyoclThwRoAdKRQX7OPY
-        m+J76Ioup3QRDkETP1plm+HzAg==
-X-Google-Smtp-Source: ABdhPJy8kRKK01qfSwpFJtkhq1N9s3rgKcp2JFmJyloTNrozfp56ZQ5kzL6yUVOU6GzPOUA9NL8w7A==
-X-Received: by 2002:a62:774b:0:b0:43c:36de:ed14 with SMTP id s72-20020a62774b000000b0043c36deed14mr19028132pfc.36.1632022526820;
-        Sat, 18 Sep 2021 20:35:26 -0700 (PDT)
-Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id s2sm1644509pjs.56.2021.09.18.20.35.24
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=BDxzixVW4qLygzz/rLWj9i1sOmn4ydTQ+VNVepgXop4=;
+        b=4pBkQ05+7YOGtglYqPdctayiICkcz/j/3A6fIhjQLXEoUhtkpLM5XOz8ERL/v6jzaR
+         m1xNgcjsfBI/UagZtis39NWlpxeCLjdij2ge8BcXl2nO0PQ4wBdyfLl6VkwUmuHGQKvG
+         tARF3BxT6R2J1P0TBCGkJRTw5eUL6UzL1/K3TH+7mzZg3l/s/vcaTy/32qbCZwJP1fVP
+         ohAXlDDvjvmFAoAElZWOhrJqnqvDhU1rMwRsY2LIWoZWhSHLGNmJ8bx6Nl0+f86ONCHX
+         /9slYkxfzjGWzJ2TGxqJhyKZ+0pMQ+AHLzDMX8g1IOJ0okwsLkUk4faD5uRsU+kloc0C
+         qOxw==
+X-Gm-Message-State: AOAM530tnI5Rew+UZTiXuR0svfaCNbnwps4fk1Vy531zGk4Ziv+6TRo5
+        Xj4BiJ4nOY9kE9lAdzFA7cSyEqUnpZG0bg==
+X-Google-Smtp-Source: ABdhPJwUIh6IB3dx/EHH8UIYeMxZ/aDKDyVul/PTJJsUNhJZxC+tGt+oEU38ATN29dWoZjnFc40sdw==
+X-Received: by 2002:a62:8015:0:b0:43b:400c:7a73 with SMTP id j21-20020a628015000000b0043b400c7a73mr21045432pfd.34.1632062002769;
+        Sun, 19 Sep 2021 07:33:22 -0700 (PDT)
+Received: from skynet-linux.local ([106.201.127.154])
+        by smtp.googlemail.com with ESMTPSA id m2sm13062149pgd.70.2021.09.19.07.33.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 18 Sep 2021 20:35:26 -0700 (PDT)
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Shawn Guo <shawn.guo@linaro.org>
-Subject: [PATCH] dt-bindings: phy: qcom,qusb2: Update maintainer email
-Date:   Sun, 19 Sep 2021 11:35:19 +0800
-Message-Id: <20210919033519.29559-1-shawn.guo@linaro.org>
-X-Mailer: git-send-email 2.17.1
+        Sun, 19 Sep 2021 07:33:22 -0700 (PDT)
+From:   Sireesh Kodali <sireeshkodali1@gmail.com>
+To:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        dmaengine@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     Sireesh Kodali <sireeshkodali1@gmail.com>
+Subject: [PATCH 0/1] Add support for metadata in bam_dma
+Date:   Sun, 19 Sep 2021 20:03:10 +0530
+Message-Id: <20210919143311.31015-1-sireeshkodali1@gmail.com>
+X-Mailer: git-send-email 2.33.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Manu's codeaurora.org email address bounces.  Before he comes
-back with his new email, fill Vinod's address in there.
+IPA v2.x uses BAM to send and receive IP packets, to and from the AP.
+However, unlike its predecessor BAM-DMUX, it doesn't send information
+about the packet length. To find the length of the packet, one must
+instead read the bam_desc metadata. This patch adds support for sending
+the size metadata over the dmaengine metadata api. Currently only the
+dma size is stored in the metadata. Only client-side metadata is
+supported for now, because host-side metadata doesn't make sense for
+IPA, where more than one DMA descriptors could be waiting to be acked
+and processed.
 
-Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
----
- Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+Sireesh Kodali (1):
+  dmaengine: qcom: bam_dma: Add support for metadata
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
-index ec9ccaaba098..d6301471780c 100644
---- a/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml
-@@ -8,7 +8,7 @@ $schema: "http://devicetree.org/meta-schemas/core.yaml#"
- title: Qualcomm QUSB2 phy controller
- 
- maintainers:
--  - Manu Gautam <mgautam@codeaurora.org>
-+  - Vinod Koul <vkoul@kernel.org>
- 
- description:
-   QUSB2 controller supports LS/FS/HS usb connectivity on Qualcomm chipsets.
+ drivers/dma/qcom/bam_dma.c | 74 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 74 insertions(+)
+
 -- 
-2.17.1
+2.33.0
 
