@@ -2,145 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D631F4111DE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Sep 2021 11:26:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 293E84111EC
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Sep 2021 11:31:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231904AbhITJ1f (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Sep 2021 05:27:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37830 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230269AbhITJ1e (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Sep 2021 05:27:34 -0400
-Received: from mail-qk1-x731.google.com (mail-qk1-x731.google.com [IPv6:2607:f8b0:4864:20::731])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B160FC061574;
-        Mon, 20 Sep 2021 02:26:07 -0700 (PDT)
-Received: by mail-qk1-x731.google.com with SMTP id c7so34848878qka.2;
-        Mon, 20 Sep 2021 02:26:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=au55GNjpfBfkdbCkHp9jPXoTXVquLSMkLM/GCREZpo0=;
-        b=ZQ6Km5pS4aZ+jKXmwtMjz5cU5HdmwC/LQMatHVfmvToefzsCxXzdC4opylr49dcEDK
-         aVTtu5upLFxpJj3pzQWu3zy+LKFvvqWRihwUWfqUzOhOD6ayi1/6EifX2xyTUeJKkelg
-         9FRFxJVr28TPZBb7fzJqB6/afv2ZRsMXRK60ZBh+GP5TupNFSNQ7vhPv8/2Vc8NNrovU
-         nn8Qc0MveyEavMN78nibOKgUwmVJ+g4lyMXCIWP3SDSbSOV8st7QcVQijzL8JINEj4XE
-         HjPIRRNLV99OUVh96tv2Niwh8X8Z8RW3vFWVIFbVxgHj73SgnyNcz07PStgJR08gixtG
-         0kFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=au55GNjpfBfkdbCkHp9jPXoTXVquLSMkLM/GCREZpo0=;
-        b=qg8977LomzU85iUL0m6hyDQIH2eKx5TNh/mrBxIS6QTgS7i6eZZSS4gC1A0O0fQYEp
-         U4k7Zi2cQEZfgY1cO2rXqd6jm0wYyscHDILdoZcjevW6Z5Zods05W37ahsijmFQvCviC
-         IouaLZb2iOHzr/xNtgAtPtDTk4vK/jRnHfeU5MhlWs9UziLzgUzbonfLY+Wz5c39CiaU
-         U9fzpINO0SgEQIv5IATrtkdUyEeEpBF4SdEEmNguDqEOLqWFUsEIO3v2WEigsJh6/ewT
-         ukj3rt3w9iv1YNwo89dFmjDBiH7wlsEvxwCvsk2Km6YYGvuePUZ2hC7dKTwyyK+4ldqH
-         PTCw==
-X-Gm-Message-State: AOAM5337mb24Pf8BKVhr4udqFR5fFGLzDEZvaMM/Gnu4BQLtdmZCMkfd
-        /4wBRcA1fAU1Wow/u7sS/GjNbzG6WWam5j6Lgsy1HgX8XVTARw==
-X-Google-Smtp-Source: ABdhPJzQhK7gME1s4V90C3jebKNsTrgkIgvpbRz5fREuKp7WJrO6DbSe9WTuRhqyXyR59mcWaEp0QhYZi33lnD8wvhM=
-X-Received: by 2002:a37:f909:: with SMTP id l9mr22993655qkj.512.1632129966520;
- Mon, 20 Sep 2021 02:26:06 -0700 (PDT)
+        id S233724AbhITJcv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Sep 2021 05:32:51 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:30097 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230191AbhITJcv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 20 Sep 2021 05:32:51 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1632130284; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=rArp1RA0/MIPIrJ9K0lLkQd4he/8EHpqu1s9srPsVr0=;
+ b=v6TzP/6jcfwbq1fLD0wjg8Z+jKOZRJHFCs8a5avgTvQby2knxFvdvXxEHA9wAYyc1i2Jupjq
+ 04+3u40dq6df5D8ZEU070vkz+mvqwSu9vuWUNmtBe7I9bTznOUnmWwxGj2DSRjyUlpRNdvtn
+ QwbBfQLv4GpSTHveObOz2M2WPfk=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 614854dcec62f57c9a028216 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 20 Sep 2021 09:31:08
+ GMT
+Sender: jeyr=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 1F469C4360C; Mon, 20 Sep 2021 09:31:08 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: jeyr)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8547BC4338F;
+        Mon, 20 Sep 2021 09:31:07 +0000 (UTC)
 MIME-Version: 1.0
-References: <20210902214708.1776690-1-robimarko@gmail.com> <YUf3aKn78+41Cb/G@builder.lan>
-In-Reply-To: <YUf3aKn78+41Cb/G@builder.lan>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Mon, 20 Sep 2021 11:25:55 +0200
-Message-ID: <CAOX2RU5b46H7nqm6G4mHLSqEhGiWktwWjUKF5w10Ut+AdKea-A@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: ipq8074: add SMEM support
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     agross@kernel.org, robh+dt@kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 20 Sep 2021 15:01:07 +0530
+From:   jeyr@codeaurora.org
+To:     Greg KH <gregkh@linuxfoundation.org>
+Cc:     linux-arm-msm@vger.kernel.org, srinivas.kandagatla@linaro.org,
+        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
+Subject: Re: [PATCH] misc: fastrpc: fix improper packet size calculation
+In-Reply-To: <YUhPlj8eeszBNZTE@kroah.com>
+References: <1632125731-18768-1-git-send-email-jeyr@codeaurora.org>
+ <YUhPlj8eeszBNZTE@kroah.com>
+Message-ID: <6b3663fcadfdc5bc0cc82eedce533905@codeaurora.org>
+X-Sender: jeyr@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 20 Sept 2021 at 04:52, Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Thu 02 Sep 16:47 CDT 2021, Robert Marko wrote:
->
-> > IPQ8074 uses SMEM like other modern QCA SoC-s, so since its already
-> > supported by the kernel add the required DT nodes.
-> >
-> > Signed-off-by: Robert Marko <robimarko@gmail.com>
->
-> Thanks for your patch Robert.
->
-> > ---
-> >  arch/arm64/boot/dts/qcom/ipq8074.dtsi | 28 +++++++++++++++++++++++++++
-> >  1 file changed, 28 insertions(+)
-> >
-> > diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> > index a620ac0d0b19..83e9243046aa 100644
-> > --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> > +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> > @@ -82,6 +82,29 @@ scm {
-> >               };
-> >       };
-> >
-> > +     reserved-memory {
-> > +             #address-cells = <2>;
-> > +             #size-cells = <2>;
-> > +             ranges;
-> > +
-> > +             smem_region: memory@4ab00000 {
-> > +                     no-map;
-> > +                     reg = <0x0 0x4ab00000 0x0 0x00100000>;
-> > +             };
-> > +     };
-> > +
-> > +     tcsr_mutex: hwlock {
-> > +             compatible = "qcom,tcsr-mutex";
-> > +             syscon = <&tcsr_mutex_regs 0 0x80>;
->
-> Since it's not okay to have a lone "syscon" and I didn't think it was
-> worth coming up with a binding for the TCSR mutex "syscon" I rewrote the
-> binding a while back. As such qcom,tcsr-mutex should now live in /soc
-> directly.
->
-> So can you please respin accordingly?
+On 2021-09-20 14:38, Greg KH wrote:
+> On Mon, Sep 20, 2021 at 01:45:31PM +0530, Jeya R wrote:
+>> The buffer list is sorted and this is not being
+>> considered while calculating packet size. This
+>> would lead to improper copy length calculation
+>> for non-dmaheap buffers which would eventually
+>> cause sending improper buffers to DSP.
+> 
+> You do have the full 72 columns to use :)
 
-Sure, can you just confirm that the:
-reg = <0x01905000 0x8000>;
+Thanks, will update the commit message considering this.
 
-Is the whole TCSR range as I don't have docs?
+> 
+>> 
+>> Signed-off-by: Jeya R <jeyr@codeaurora.org>
+>> ---
+>>  drivers/misc/fastrpc.c | 13 +++++++++----
+>>  1 file changed, 9 insertions(+), 4 deletions(-)
+> 
+> What commit does this fix?
+> 
+> thanks,
+> 
+> greg k-h
 
-Regards,
-Robert
->
-> Thanks,
-> Bjorn
->
-> > +             #hwlock-cells = <1>;
-> > +     };
-> > +
-> > +     smem {
-> > +             compatible = "qcom,smem";
-> > +             memory-region = <&smem_region>;
-> > +             hwlocks = <&tcsr_mutex 0>;
-> > +     };
-> > +
-> >       soc: soc {
-> >               #address-cells = <0x1>;
-> >               #size-cells = <0x1>;
-> > @@ -293,6 +316,11 @@ gcc: gcc@1800000 {
-> >                       #reset-cells = <0x1>;
-> >               };
-> >
-> > +             tcsr_mutex_regs: syscon@1905000 {
-> > +                     compatible = "syscon";
-> > +                     reg = <0x01905000 0x8000>;
-> > +             };
-> > +
-> >               sdhc_1: sdhci@7824900 {
-> >                       compatible = "qcom,sdhci-msm-v4";
-> >                       reg = <0x7824900 0x500>, <0x7824000 0x800>;
-> > --
-> > 2.31.1
-> >
+Payload calculation function was modified to handle buffer overlapping 
+calculation in this commit:
+https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/commit/drivers/misc/fastrpc.c?h=v5.15-rc2&id=25e8dfb83cda0a123bb1e091d6c3599cde050d76
+
+Here during buffer overlap calculation, the buffer list is getting 
+sorted. This needs to be considered during the calculation of payload 
+size also by using unsorted buffer index "raix".
