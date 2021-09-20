@@ -2,123 +2,115 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B9B3D4127C5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Sep 2021 23:10:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B51724127CA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Sep 2021 23:15:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237162AbhITVLn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Sep 2021 17:11:43 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:45271 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238096AbhITVJn (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Sep 2021 17:09:43 -0400
+        id S234560AbhITVRZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Sep 2021 17:17:25 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:48323 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233874AbhITVPZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 20 Sep 2021 17:15:25 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1632172096; h=References: In-Reply-To: References:
- In-Reply-To: Message-Id: Date: Subject: Cc: To: From: Sender;
- bh=LC1CDaf9KsUSVcMN5EyFnJjnyIeffZTnWvVRfkHFxgA=; b=Ny1+KEgaCYwcE5v8/gQbXZ2SCYEbPRkFFykx3LRpEq/d4WwBgqh5+Cl038pYivU1hkwj5VZa
- nsKgmLKPmH5rHCdVGn5kRbnNRZOwIlmcz7YGGJnkK0az/jG49P8bkUZOZOtedK+qzr+Xibt0
- /bO75CdhRy/KC0BzBDUSlCHv3No=
-X-Mailgun-Sending-Ip: 198.61.254.9
+ s=smtp; t=1632172437; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=4ijXYlmqoMPuqo2n4/kMk/32yQvABM55JAadYGLqsTw=; b=OlgpWG+x8uE3VLtndh8JbhdRjXNeHAyy1qzU3kuXAsvN+TjFYxXRS5nKCBj0Z/0Mg2RrdPt+
+ 9sgOSWH2LEo9WfEOjdvJW9C8hhK0paYhSy6s1E/s/hIz7PJuIrD4N5kjgs+eW1a0aksakSIn
+ oJmkJZfVIuahg5P5QEI6vak4bow=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 6148f83eec62f57c9a7a48a8 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 20 Sep 2021 21:08:14
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 6148f99565c3cc8c63e8b31a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 20 Sep 2021 21:13:57
  GMT
-Sender: nguyenb=codeaurora.org@mg.codeaurora.org
+Sender: wcheng=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A4819C4360C; Mon, 20 Sep 2021 21:08:13 +0000 (UTC)
+        id 07FD0C43460; Mon, 20 Sep 2021 21:13:57 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from stor-berry.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [192.168.1.26] (075-140-094-099.biz.spectrum.com [75.140.94.99])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: nguyenb)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id AAF9AC43617;
-        Mon, 20 Sep 2021 21:08:12 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org AAF9AC43617
+        (Authenticated sender: wcheng)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 835BAC43460;
+        Mon, 20 Sep 2021 21:13:55 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 835BAC43460
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   "Bao D. Nguyen" <nguyenb@codeaurora.org>
-To:     cang@codeaurora.org, asutoshd@codeaurora.org,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        "Bao D . Nguyen" <nguyenb@codeaurora.org>,
+Subject: Re: dwc3-qcom: tx-fifo-resize regression on Poco F1 (sdm845) with
+ v5.15-rc1
+To:     Amit Pundir <amit.pundir@linaro.org>
+Cc:     Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Alim Akhtar <alim.akhtar@samsung.com>,
-        Avri Altman <avri.altman@wdc.com>,
-        "James E.J. Bottomley" <jejb@linux.ibm.com>,
-        linux-kernel@vger.kernel.org (open list)
-Subject: [PATCH v1 2/2] scsi: ufs-qcom: enter and exit hibern8 during clock scaling
-Date:   Mon, 20 Sep 2021 14:07:50 -0700
-Message-Id: <94cda1143d3332c3284a09b88139e358eab5a233.1632171047.git.nguyenb@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <cover.1632171047.git.nguyenb@codeaurora.org>
-References: <cover.1632171047.git.nguyenb@codeaurora.org>
-In-Reply-To: <cover.1632171047.git.nguyenb@codeaurora.org>
-References: <cover.1632171047.git.nguyenb@codeaurora.org>
+        Rob Herring <robh+dt@kernel.org>,
+        Jack Pham <jackp@codeaurora.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        John Stultz <john.stultz@linaro.org>,
+        linux-usb@vger.kernel.org, lkml <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>
+References: <CAMi1Hd3k2snB4-=M57pVrMVom=a9_2a0DTFk-+Hzpubwk-Pr9Q@mail.gmail.com>
+From:   Wesley Cheng <wcheng@codeaurora.org>
+Message-ID: <64a2a428-8bb1-0078-2403-1ca8e28cf4b1@codeaurora.org>
+Date:   Mon, 20 Sep 2021 14:13:54 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <CAMi1Hd3k2snB4-=M57pVrMVom=a9_2a0DTFk-+Hzpubwk-Pr9Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Asutosh Das <asutoshd@codeaurora.org>
+Hi Amit,
 
-Qualcomm controller needs to be in hibern8 before scaling clocks.
-This change puts the controller in hibern8 state before scaling
-and brings it out after scaling of clocks.
+On 9/20/2021 1:45 PM, Amit Pundir wrote:
+> Hi Wesley, All,
+> 
+> I see a reboot loop on Xiaomi Pocophone F1 (sdm845) with TX FIFO
+> resize patches which landed in v5.15-rc1. Upstream commit cefdd52fa045
+> "usb: dwc3: dwc3-qcom: Enable tx-fifo-resize property by default" to
+> be specific, which switched on this feature by default.
+> 
+> At times the phone crashes into the fastboot mode after the reboot
+> loop, but mostly end up booting to UI after a while. This is what it
+> looks like https://people.linaro.org/~amit.pundir/beryllium-userdebug/PXL_20210920_162749483.mp4.
+> 
 
-Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
-Signed-off-by: Bao D. Nguyen <nguyenb@codeaurora.org>
----
- drivers/scsi/ufs/ufs-qcom.c | 12 +++++++++++-
- 1 file changed, 11 insertions(+), 1 deletion(-)
+I believe Android will attempt a number of bootup sequences and if it
+fails, it falls back to fastboot mode.  Are there any available logs you
+might be able to collect to see where the issue is?
 
-diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-index 92d4c61..92f5bb4 100644
---- a/drivers/scsi/ufs/ufs-qcom.c
-+++ b/drivers/scsi/ufs/ufs-qcom.c
-@@ -1212,24 +1212,34 @@ static int ufs_qcom_clk_scale_notify(struct ufs_hba *hba,
- 	int err = 0;
- 
- 	if (status == PRE_CHANGE) {
-+		err = ufshcd_uic_hibern8_enter(hba);
-+		if (err)
-+			return err;
- 		if (scale_up)
- 			err = ufs_qcom_clk_scale_up_pre_change(hba);
- 		else
- 			err = ufs_qcom_clk_scale_down_pre_change(hba);
-+		if (err)
-+			ufshcd_uic_hibern8_exit(hba);
-+
- 	} else {
- 		if (scale_up)
- 			err = ufs_qcom_clk_scale_up_post_change(hba);
- 		else
- 			err = ufs_qcom_clk_scale_down_post_change(hba);
- 
--		if (err || !dev_req_params)
-+
-+		if (err || !dev_req_params) {
-+			ufshcd_uic_hibern8_exit(hba);
- 			goto out;
-+		}
- 
- 		ufs_qcom_cfg_timers(hba,
- 				    dev_req_params->gear_rx,
- 				    dev_req_params->pwr_rx,
- 				    dev_req_params->hs_rate,
- 				    false);
-+		ufshcd_uic_hibern8_exit(hba);
- 	}
- 
- out:
+> PocoF1 does support TX fifo resizing as I can see that in the
+> downstream dts. So maybe it is the tx-fifo-max-num which need to be
+> adjusted for the device? I couldn't find the tx-fifo-max-num
+> equivalent in the downstream tree though
+> https://github.com/MiCode/Xiaomi_Kernel_OpenSource/tree/dipper-q-oss/
+> 
+
+I assume that you've already confirmed reverting that change resolves
+the constant reboots?
+
+> Curious if you had any ideas what might be going wrong? For now I'll
+> keep digging around tx-fifo-max-num, but I figured I'd ask just in
+> case it's obvious to you.
+> 
+
+The tx-fifo-max-num parameter should still be set to 6 for SDM845, which
+would be the same for more recent targets as well.
+
+Thanks
+Wesley Cheng
+
 -- 
 The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
 a Linux Foundation Collaborative Project
-
