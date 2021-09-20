@@ -2,203 +2,430 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0C49A410E0C
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Sep 2021 02:44:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC05E410E0E
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Sep 2021 02:51:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231573AbhITAqA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 19 Sep 2021 20:46:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36624 "EHLO
+        id S231749AbhITAwc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 19 Sep 2021 20:52:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38030 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229719AbhITAp7 (ORCPT
+        with ESMTP id S231730AbhITAwb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 19 Sep 2021 20:45:59 -0400
-Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8A3CEC061574
-        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Sep 2021 17:44:33 -0700 (PDT)
-Received: by mail-ot1-x32a.google.com with SMTP id 97-20020a9d006a000000b00545420bff9eso14418539ota.8
-        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Sep 2021 17:44:33 -0700 (PDT)
+        Sun, 19 Sep 2021 20:52:31 -0400
+Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8B687C061764
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Sep 2021 17:51:05 -0700 (PDT)
+Received: by mail-oi1-x234.google.com with SMTP id s69so15011293oie.13
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Sep 2021 17:51:05 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=lzKqB+hvLZ/JMccnjIuEIhViBFYa45nTJzf1VzPKkQM=;
-        b=geuYnnJgB8GKQG9MHXQWQ9qCeznG/2qiKgr26NIQ2RlTKID2Ai8AQTzC3FHNsffvYm
-         xFN1q2LncnS//Ppt4czKmDJrFUaKFoGGrYNGfSAFV1rHAGpX6VbQHBHZCAeJvMAUukme
-         n+5jxW4GOHoZrPsQ9IJFXuF53SOqYumNaLk00sAzPmCiRFrhvfheG5AcgE4EPYbXrAYc
-         foy2vaQbKs6ykHcdMPF3c0+3ZJNbrKi9sd54wmJ5sCQXx3kAnzmQTew0dDLyuvbdSUMm
-         Mj+Ij/We8jLSmbGR25LHHIYRTEPjqyN7XUufwr59RgN4DDL2OH8bTm7l5BUiZaip99d1
-         Q3oA==
+        bh=Z6iIwGZqo8KFJn+K0TUvoAOeMuSy61NsAakI2Z/4K8w=;
+        b=KvM71N8Dw/gWNX5mKKyv6VZ1nY6dwecJVnMPR5dWjRm+Y7rkXJrt/JN9cAX2LpM/fv
+         k8rzVabTBJ4LJtWma1/vWUhGNkJo6CKcwEQd7UGjEaxHHwl11MboslsmZMn90Ak0V/18
+         HIqm7nx8f81940o09Ud0t0epVRtUWvg5iBhUEdzCHcpgTNspdc3GgVndJJhRl8BecDUv
+         g0KcsGMDVOEc2BLKEJoM3Qc40jZZ9CQrstBpP/7laf9Cnkua6fsPl0CRVlZkkDp4M6ZR
+         kYdPjuQ1Jv6bMH63sWX/Xi5n5FIGGo5gewH8lEAm3VqHWzBIIRiihCkuXza4XNRUKhVG
+         70hA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=lzKqB+hvLZ/JMccnjIuEIhViBFYa45nTJzf1VzPKkQM=;
-        b=uWSOdC8enHO8nZT+xOLEQiBl4BVMebpJExORd66tny+gEvRSJ7WdQnxgr7NLioMXto
-         8RXW7lG4vZBbyRDC+ZEQoUrcLnT/e9ayTamcGVlC6o/oYYLbUQ+4pEAdxEwPPz7TBpzR
-         ceEodwgI4z1tBsgJIt9Fh/pNOBLjhtQy/cS4fPezZ0ndGIwPRQ+SWHkxz3tJqWVB5vjG
-         5j3DGuyFEudYzhzgXuFGhozGQDO6wv8mF+RKaE0wW/pKlrjUppjVgBdgyF8TIrmSqiL6
-         OApD4SPA1bsKggsK3ZjMcfrcThDkTRRZLiPPIxOjwbqFf2mdYXH4SOuPvD1A0UB6tFJk
-         3rLw==
-X-Gm-Message-State: AOAM531rr2lAJX13gOG8tzG0NmMoHyBOERM3Y2XReCkNukTOutSqplRe
-        HLTMYpJeC6UCautlasTTJ0wV6g==
-X-Google-Smtp-Source: ABdhPJyURgRw9OC2NNBTkmOgiOvyzID7Xviw5xcTBH6RmvJCkZ+rCi5FGlZoYceTmyxZphPwzV4JBw==
-X-Received: by 2002:a9d:5a9b:: with SMTP id w27mr18814468oth.29.1632098672900;
-        Sun, 19 Sep 2021 17:44:32 -0700 (PDT)
+        bh=Z6iIwGZqo8KFJn+K0TUvoAOeMuSy61NsAakI2Z/4K8w=;
+        b=3roa6yRsdMS8JtPZjDC710DKM1a0NifVktezqWQmSdWZziZkYTUCF0BQs/KgTbk660
+         Q6u8DtYZa4qBC52FA62Wv58MNRc8MKblKL3qhznEE7VHMtLg0sd7q4l4z2E7Vqy0hxDR
+         0nynn6lQ2g2pN7uhJx63punkiTaDm4Hu90zLGpEhOtUdm6gbAoTamN7SbnUuqQG5BlyS
+         EfMsSDbEerZQa3SQdFZtZMPQnwMAF7LxHPfe93appVfoEpEPJTuiKwDT8w1itOHDFLvC
+         /GSv6YqG2fn3e2zX7yLTHaDeIuQ5Bfm4Fhrr8XDbIeTTXJWNfkomixHZekdlNwiCWHJB
+         GaBQ==
+X-Gm-Message-State: AOAM532TyZdOnrI9T4hnFz3Yo+rpoFFmGK3iwU4CI6mSaUSZTWeVR6la
+        qtLHgsbMNB+4OS93fBmsaKvksw==
+X-Google-Smtp-Source: ABdhPJxSkAodcmoM2Y66MDLBhy46TWQ5FzcF1TGxUX/DMbwy5Gc50Wxz/JTxTF7zP5+eDbTsC1414g==
+X-Received: by 2002:aca:2218:: with SMTP id b24mr5017407oic.55.1632099064731;
+        Sun, 19 Sep 2021 17:51:04 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id f17sm1884382ook.9.2021.09.19.17.44.32
+        by smtp.gmail.com with ESMTPSA id i1sm3182453ooo.15.2021.09.19.17.51.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Sep 2021 17:44:32 -0700 (PDT)
-Date:   Sun, 19 Sep 2021 19:44:30 -0500
+        Sun, 19 Sep 2021 17:51:04 -0700 (PDT)
+Date:   Sun, 19 Sep 2021 19:51:02 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     agross@kernel.org, linus.walleij@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Prasad Sodagudi <psodagud@codeaurora.org>
-Subject: Re: [PATCH] pinctrl: qcom: Add egpio feature support
-Message-ID: <YUfZbsf3MX1aQJ2+@builder.lan>
-References: <1631860648-31774-1-git-send-email-rnayak@codeaurora.org>
+To:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>
+Cc:     agross@kernel.org, robh+dt@kernel.org, lgirdwood@gmail.com,
+        broonie@kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        phone-devel@vger.kernel.org, konrad.dybcio@somainline.org,
+        marijn.suijten@somainline.org, jami.kettunen@somainline.org,
+        paul.bouchara@somainline.org, martin.botka@somainline.org,
+        ~postmarketos/upstreaming@lists.sr.ht, jeffrey.l.hugo@gmail.com,
+        robh@kernel.org
+Subject: Re: [PATCH v7 2/6] dt-bindings: avs: cpr: Convert binding to YAML
+ schema
+Message-ID: <YUfa9jF+F3ght1lN@builder.lan>
+References: <20210901155735.629282-1-angelogioacchino.delregno@somainline.org>
+ <20210901155735.629282-3-angelogioacchino.delregno@somainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1631860648-31774-1-git-send-email-rnayak@codeaurora.org>
+In-Reply-To: <20210901155735.629282-3-angelogioacchino.delregno@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 17 Sep 01:37 CDT 2021, Rajendra Nayak wrote:
+On Wed 01 Sep 10:57 CDT 2021, AngeloGioacchino Del Regno wrote:
 
-> From: Prasad Sodagudi <psodagud@codeaurora.org>
+> Convert the qcom,cpr.txt document to YAML schema and place it in the
+> appropriate directory, since this driver was moved from power/avs
+> to soc/qcom, but forgets to move the documentation.
 > 
-> egpio is a scheme which allows special power Island Domain IOs
-> (LPASS,SSC) to be reused as regular chip GPIOs by muxing regular
-> TLMM functions with Island Domain functions.
-> With this scheme, an IO can be controlled both by the cpu running
-> linux and the Island processor. This provides great flexibility to
-> re-purpose the Island IOs for regular TLMM usecases.
-> 
-> 2 new bits are added to ctl_reg, egpio_present is a read only bit
-> which shows if egpio feature is available or not on a given gpio.
-> egpio_enable is the read/write bit and only effective if egpio_present
-> is 1. Once its set, the Island IO is controlled from Chip TLMM.
-> egpio_enable when set to 0 means the GPIO is used as Island Domain IO.
-> 
-> The support exists on most recent qcom SoCs, and we add support
-> for sm8150/sm8250/sm8350 and sc7280 as part of this patch.
-> 
+> Fixes: a7305e684fcf ("PM: AVS: qcom-cpr: Move the driver to the qcom specific drivers")
 
-I was under the impression that this feature would allow you to
-repurpose pins for use either by the remote island or by apps.
-
-But if I understand your proposal, you check to see if the pin is
-"egpio capable" for a pin and if so just sets the bit - muxing it to
-apps (or the island?).
+I don't see it to be a requirement that the DT binding structure follows
+the Linux implementation structure, so I think it's appropriate to keep
+it in power/avs and I don't think it deserves a fixes.
 
 
-It seems reasonable that this would be another pinmux state for these
-pins, rather than just flipping them all in one or the other direction.
+I would like to merge this series, could you please address Rob's
+concerns on the binding?
 
 
-PS. When I spoke with Prasad about this a couple of years ago, I think
-we talked about representing this as a pinconf property, but it seems to
-make more sense to me now that it would be a pinmux state.
+PS. If you did the YAML-ification as the last step I would have merged
+the other 5 patches...
 
-Regards,
+Thanks,
 Bjorn
 
-> Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
-> [rnayak: rewrite commit log, minor rebase]
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 > ---
->  drivers/pinctrl/qcom/pinctrl-msm.c    | 4 ++++
->  drivers/pinctrl/qcom/pinctrl-msm.h    | 2 ++
->  drivers/pinctrl/qcom/pinctrl-sc7280.c | 2 ++
->  drivers/pinctrl/qcom/pinctrl-sm8150.c | 2 ++
->  drivers/pinctrl/qcom/pinctrl-sm8250.c | 2 ++
->  drivers/pinctrl/qcom/pinctrl-sm8350.c | 2 ++
->  6 files changed, 14 insertions(+)
+>  .../bindings/power/avs/qcom,cpr.txt           | 131 +-------------
+>  .../bindings/soc/qcom/qcom,cpr.yaml           | 167 ++++++++++++++++++
+>  MAINTAINERS                                   |   2 +-
+>  3 files changed, 169 insertions(+), 131 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom,cpr.yaml
 > 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
-> index 8476a8a..f4a2343 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-msm.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
-> @@ -220,6 +220,10 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
->  	val = msm_readl_ctl(pctrl, g);
->  	val &= ~mask;
->  	val |= i << g->mux_bit;
-> +	/* Check if egpio present and enable that feature */
-> +	if (val & BIT(g->egpio_present))
-> +		val |= BIT(g->egpio_enable);
+> diff --git a/Documentation/devicetree/bindings/power/avs/qcom,cpr.txt b/Documentation/devicetree/bindings/power/avs/qcom,cpr.txt
+> index ab0d5ebbad4e..2ada8cd08949 100644
+> --- a/Documentation/devicetree/bindings/power/avs/qcom,cpr.txt
+> +++ b/Documentation/devicetree/bindings/power/avs/qcom,cpr.txt
+> @@ -1,130 +1 @@
+> -QCOM CPR (Core Power Reduction)
+> -
+> -CPR (Core Power Reduction) is a technology to reduce core power on a CPU
+> -or other device. Each OPP of a device corresponds to a "corner" that has
+> -a range of valid voltages for a particular frequency. While the device is
+> -running at a particular frequency, CPR monitors dynamic factors such as
+> -temperature, etc. and suggests adjustments to the voltage to save power
+> -and meet silicon characteristic requirements.
+> -
+> -- compatible:
+> -	Usage: required
+> -	Value type: <string>
+> -	Definition: should be "qcom,qcs404-cpr", "qcom,cpr" for qcs404
+> -
+> -- reg:
+> -	Usage: required
+> -	Value type: <prop-encoded-array>
+> -	Definition: base address and size of the rbcpr register region
+> -
+> -- interrupts:
+> -	Usage: required
+> -	Value type: <prop-encoded-array>
+> -	Definition: should specify the CPR interrupt
+> -
+> -- clocks:
+> -	Usage: required
+> -	Value type: <prop-encoded-array>
+> -	Definition: phandle to the reference clock
+> -
+> -- clock-names:
+> -	Usage: required
+> -	Value type: <stringlist>
+> -	Definition: must be "ref"
+> -
+> -- vdd-apc-supply:
+> -	Usage: required
+> -	Value type: <phandle>
+> -	Definition: phandle to the vdd-apc-supply regulator
+> -
+> -- #power-domain-cells:
+> -	Usage: required
+> -	Value type: <u32>
+> -	Definition: should be 0
+> -
+> -- operating-points-v2:
+> -	Usage: required
+> -	Value type: <phandle>
+> -	Definition: A phandle to the OPP table containing the
+> -		    performance states supported by the CPR
+> -		    power domain
+> -
+> -- acc-syscon:
+> -	Usage: optional
+> -	Value type: <phandle>
+> -	Definition: phandle to syscon for writing ACC settings
+> -
+> -- nvmem-cells:
+> -	Usage: required
+> -	Value type: <phandle>
+> -	Definition: phandle to nvmem cells containing the data
+> -		    that makes up a fuse corner, for each fuse corner.
+> -		    As well as the CPR fuse revision.
+> -
+> -- nvmem-cell-names:
+> -	Usage: required
+> -	Value type: <stringlist>
+> -	Definition: should be "cpr_quotient_offset1", "cpr_quotient_offset2",
+> -		    "cpr_quotient_offset3", "cpr_init_voltage1",
+> -		    "cpr_init_voltage2", "cpr_init_voltage3", "cpr_quotient1",
+> -		    "cpr_quotient2", "cpr_quotient3", "cpr_ring_osc1",
+> -		    "cpr_ring_osc2", "cpr_ring_osc3", "cpr_fuse_revision"
+> -		    for qcs404.
+> -
+> -Example:
+> -
+> -	cpr_opp_table: cpr-opp-table {
+> -		compatible = "operating-points-v2-qcom-level";
+> -
+> -		cpr_opp1: opp1 {
+> -			opp-level = <1>;
+> -			qcom,opp-fuse-level = <1>;
+> -		};
+> -		cpr_opp2: opp2 {
+> -			opp-level = <2>;
+> -			qcom,opp-fuse-level = <2>;
+> -		};
+> -		cpr_opp3: opp3 {
+> -			opp-level = <3>;
+> -			qcom,opp-fuse-level = <3>;
+> -		};
+> -	};
+> -
+> -	power-controller@b018000 {
+> -		compatible = "qcom,qcs404-cpr", "qcom,cpr";
+> -		reg = <0x0b018000 0x1000>;
+> -		interrupts = <0 15 IRQ_TYPE_EDGE_RISING>;
+> -		clocks = <&xo_board>;
+> -		clock-names = "ref";
+> -		vdd-apc-supply = <&pms405_s3>;
+> -		#power-domain-cells = <0>;
+> -		operating-points-v2 = <&cpr_opp_table>;
+> -		acc-syscon = <&tcsr>;
+> -
+> -		nvmem-cells = <&cpr_efuse_quot_offset1>,
+> -			<&cpr_efuse_quot_offset2>,
+> -			<&cpr_efuse_quot_offset3>,
+> -			<&cpr_efuse_init_voltage1>,
+> -			<&cpr_efuse_init_voltage2>,
+> -			<&cpr_efuse_init_voltage3>,
+> -			<&cpr_efuse_quot1>,
+> -			<&cpr_efuse_quot2>,
+> -			<&cpr_efuse_quot3>,
+> -			<&cpr_efuse_ring1>,
+> -			<&cpr_efuse_ring2>,
+> -			<&cpr_efuse_ring3>,
+> -			<&cpr_efuse_revision>;
+> -		nvmem-cell-names = "cpr_quotient_offset1",
+> -			"cpr_quotient_offset2",
+> -			"cpr_quotient_offset3",
+> -			"cpr_init_voltage1",
+> -			"cpr_init_voltage2",
+> -			"cpr_init_voltage3",
+> -			"cpr_quotient1",
+> -			"cpr_quotient2",
+> -			"cpr_quotient3",
+> -			"cpr_ring_osc1",
+> -			"cpr_ring_osc2",
+> -			"cpr_ring_osc3",
+> -			"cpr_fuse_revision";
+> -	};
+> +This file has been moved to ../../soc/qcom/qcom,cpr.yaml
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,cpr.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,cpr.yaml
+> new file mode 100644
+> index 000000000000..20f65427c762
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,cpr.yaml
+> @@ -0,0 +1,167 @@
+> +# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: "http://devicetree.org/schemas/soc/qcom/qcom,cpr.yaml#"
+> +$schema: "http://devicetree.org/meta-schemas/core.yaml#"
 > +
->  	msm_writel_ctl(val, pctrl, g);
+> +title: Qualcomm Core Power Reduction (CPR)
+> +
+> +description: |
+> +  CPR (Core Power Reduction) is a technology to reduce core power on a CPU
+> +  or other device. Each OPP of a device corresponds to a "corner" that has
+> +  a range of valid voltages for a particular frequency. While the device is
+> +  running at a particular frequency, CPR monitors dynamic factors such as
+> +  temperature, etc. and suggests adjustments to the voltage to save power
+> +  and meet silicon characteristic requirements.
+> +
+> +maintainers:
+> +  - Niklas Cassel <nks@flawful.org>
+> +
+> +properties:
+> +  compatible:
+> +    items:
+> +      - enum:
+> +          - qcom,qcs404-cpr
+> +      - const: qcom,cpr
+> +
+> +  reg:
+> +    description: Base address and size of the RBCPR register region
+> +    maxItems: 1
+> +
+> +  interrupts:
+> +    maxItems: 1
+> +
+> +  clock-names:
+> +    items:
+> +      - const: ref
+> +
+> +  clocks:
+> +    items:
+> +      - description: CPR reference clock
+> +
+> +  vdd-apc-supply:
+> +    description: Autonomous Phase Control (APC) power supply
+> +
+> +  '#power-domain-cells':
+> +    const: 0
+> +
+> +  acc-syscon:
+> +    description: phandle to syscon for writing ACC settings
+> +
+> +  nvmem-cells:
+> +    minItems: 9
+> +    maxItems: 32
+> +    description: Cells containing the fuse corners and revision data
+> +
+> +  nvmem-cell-names:
+> +    minItems: 9
+> +    maxItems: 32
+> +
+> +  operating-points-v2: true
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +  - interrupts
+> +  - clock-names
+> +  - clocks
+> +  - vdd-apc-supply
+> +  - "#power-domain-cells"
+> +  - nvmem-cells
+> +  - nvmem-cell-names
+> +  - operating-points-v2
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  - |
+> +    #include <dt-bindings/interrupt-controller/irq.h>
+> +
+> +    cpus {
+> +        #address-cells = <1>;
+> +        #size-cells = <0>;
+> +
+> +        cpu@100 {
+> +            compatible = "arm,cortex-a53";
+> +            device_type = "cpu";
+> +            reg = <0x100>;
+> +            operating-points-v2 = <&cpu_opp_table>;
+> +            power-domains = <&cpr>;
+> +            power-domain-names = "cpr";
+> +        };
+> +    };
+> +
+> +    cpu_opp_table: opp-table-cpu {
+> +        compatible = "operating-points-v2-kryo-cpu";
+> +        opp-shared;
+> +
+> +        opp-1094400000 {
+> +            opp-hz = /bits/ 64 <1094400000>;
+> +            required-opps = <&cpr_opp1>;
+> +        };
+> +        opp-1248000000 {
+> +            opp-hz = /bits/ 64 <1248000000>;
+> +            required-opps = <&cpr_opp2>;
+> +        };
+> +        opp-1401600000 {
+> +            opp-hz = /bits/ 64 <1401600000>;
+> +            required-opps = <&cpr_opp3>;
+> +        };
+> +    };
+> +
+> +    cpr_opp_table: opp-table-cpr {
+> +        compatible = "operating-points-v2-qcom-level";
+> +
+> +        cpr_opp1: opp1 {
+> +            opp-level = <1>;
+> +            qcom,opp-fuse-level = <1>;
+> +        };
+> +        cpr_opp2: opp2 {
+> +            opp-level = <2>;
+> +            qcom,opp-fuse-level = <2>;
+> +        };
+> +        cpr_opp3: opp3 {
+> +            opp-level = <3>;
+> +            qcom,opp-fuse-level = <3>;
+> +        };
+> +    };
+> +
+> +    power-controller@b018000 {
+> +        compatible = "qcom,qcs404-cpr", "qcom,cpr";
+> +        reg = <0x0b018000 0x1000>;
+> +        interrupts = <0 15 IRQ_TYPE_EDGE_RISING>;
+> +        clocks = <&xo_board>;
+> +        clock-names = "ref";
+> +        vdd-apc-supply = <&pms405_s3>;
+> +        #power-domain-cells = <0>;
+> +        operating-points-v2 = <&cpr_opp_table>;
+> +        acc-syscon = <&tcsr>;
+> +
+> +        nvmem-cells = <&cpr_efuse_quot_offset1>,
+> +                      <&cpr_efuse_quot_offset2>,
+> +                      <&cpr_efuse_quot_offset3>,
+> +                      <&cpr_efuse_init_voltage1>,
+> +                      <&cpr_efuse_init_voltage2>,
+> +                      <&cpr_efuse_init_voltage3>,
+> +                      <&cpr_efuse_quot1>,
+> +                      <&cpr_efuse_quot2>,
+> +                      <&cpr_efuse_quot3>,
+> +                      <&cpr_efuse_ring1>,
+> +                      <&cpr_efuse_ring2>,
+> +                      <&cpr_efuse_ring3>,
+> +                      <&cpr_efuse_revision>;
+> +        nvmem-cell-names = "cpr0_quotient_offset1",
+> +                           "cpr0_quotient_offset2",
+> +                           "cpr0_quotient_offset3",
+> +                           "cpr0_init_voltage1",
+> +                           "cpr0_init_voltage2",
+> +                           "cpr0_init_voltage3",
+> +                           "cpr0_quotient1",
+> +                           "cpr0_quotient2",
+> +                           "cpr0_quotient3",
+> +                           "cpr0_ring_osc1",
+> +                           "cpr0_ring_osc2",
+> +                           "cpr0_ring_osc3",
+> +                           "cpr_fuse_revision";
+> +    };
+> +...
+> diff --git a/MAINTAINERS b/MAINTAINERS
+> index f58dad1a1922..90f1db301fae 100644
+> --- a/MAINTAINERS
+> +++ b/MAINTAINERS
+> @@ -15490,7 +15490,7 @@ M:	Niklas Cassel <nks@flawful.org>
+>  L:	linux-pm@vger.kernel.org
+>  L:	linux-arm-msm@vger.kernel.org
+>  S:	Maintained
+> -F:	Documentation/devicetree/bindings/power/avs/qcom,cpr.txt
+> +F:	Documentation/devicetree/bindings/soc/qcom/qcom,cpr.yaml
+>  F:	drivers/soc/qcom/cpr.c
 >  
->  	raw_spin_unlock_irqrestore(&pctrl->lock, flags);
-> diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
-> index e31a516..3635b31 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-msm.h
-> +++ b/drivers/pinctrl/qcom/pinctrl-msm.h
-> @@ -77,6 +77,8 @@ struct msm_pingroup {
->  	unsigned drv_bit:5;
->  
->  	unsigned od_bit:5;
-> +	unsigned egpio_enable:5;
-> +	unsigned egpio_present:5;
->  	unsigned oe_bit:5;
->  	unsigned in_bit:5;
->  	unsigned out_bit:5;
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sc7280.c b/drivers/pinctrl/qcom/pinctrl-sc7280.c
-> index afddf6d..607d459 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-sc7280.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-sc7280.c
-> @@ -43,6 +43,8 @@
->  		.mux_bit = 2,			\
->  		.pull_bit = 0,			\
->  		.drv_bit = 6,			\
-> +		.egpio_enable = 12,		\
-> +		.egpio_present = 11,		\
->  		.oe_bit = 9,			\
->  		.in_bit = 0,			\
->  		.out_bit = 1,			\
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sm8150.c b/drivers/pinctrl/qcom/pinctrl-sm8150.c
-> index 7359bae..63a625a 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-sm8150.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-sm8150.c
-> @@ -56,6 +56,8 @@ enum {
->  		.mux_bit = 2,			\
->  		.pull_bit = 0,			\
->  		.drv_bit = 6,			\
-> +		.egpio_enable = 12,		\
-> +		.egpio_present = 11,		\
->  		.oe_bit = 9,			\
->  		.in_bit = 0,			\
->  		.out_bit = 1,			\
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sm8250.c b/drivers/pinctrl/qcom/pinctrl-sm8250.c
-> index af144e7..ad4fd94 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-sm8250.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-sm8250.c
-> @@ -57,6 +57,8 @@ enum {
->  		.mux_bit = 2,				\
->  		.pull_bit = 0,				\
->  		.drv_bit = 6,				\
-> +		.egpio_enable = 12,			\
-> +		.egpio_present = 11,			\
->  		.oe_bit = 9,				\
->  		.in_bit = 0,				\
->  		.out_bit = 1,				\
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sm8350.c b/drivers/pinctrl/qcom/pinctrl-sm8350.c
-> index 4d8f863..bb436dc 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-sm8350.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-sm8350.c
-> @@ -46,6 +46,8 @@
->  		.mux_bit = 2,			\
->  		.pull_bit = 0,			\
->  		.drv_bit = 6,			\
-> +		.egpio_enable = 12,		\
-> +		.egpio_present = 11,		\
->  		.oe_bit = 9,			\
->  		.in_bit = 0,			\
->  		.out_bit = 1,			\
+>  QUALCOMM CPUFREQ DRIVER MSM8996/APQ8096
 > -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
+> 2.32.0
 > 
