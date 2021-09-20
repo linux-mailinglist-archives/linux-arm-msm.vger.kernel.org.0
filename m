@@ -2,96 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E2D46410EC2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Sep 2021 05:16:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1C2A2410EE9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Sep 2021 06:17:01 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232903AbhITDMu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 19 Sep 2021 23:12:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39784 "EHLO
+        id S230143AbhITESX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Sep 2021 00:18:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54136 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231892AbhITDM3 (ORCPT
+        with ESMTP id S229555AbhITESW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 19 Sep 2021 23:12:29 -0400
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 192B1C0617BD;
-        Sun, 19 Sep 2021 20:10:23 -0700 (PDT)
-Received: by mail-pf1-x42b.google.com with SMTP id y8so14897803pfa.7;
-        Sun, 19 Sep 2021 20:10:23 -0700 (PDT)
+        Mon, 20 Sep 2021 00:18:22 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8702C061760
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Sep 2021 21:16:56 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id c8-20020a9d6c88000000b00517cd06302dso21836865otr.13
+        for <linux-arm-msm@vger.kernel.org>; Sun, 19 Sep 2021 21:16:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=kcXtoLmYt2phW1mwUUg+pkx0ARAiF/TyvXAFksE2SBQ=;
-        b=pFlrtsqNO9qXwFt7kVRJc3jd1jIT/rtb8ePyXwe1f5FtWfdxdXDUNIrPR50+7rYSyo
-         MfoiSV6RnhAsp7qzYXl7Ld1REg38NbZNBCfcbEfgH/KgDw5hE2i1MGbE0eQj6e7+XNhq
-         f1m9hWdjFYTOYFV7Y8dAkfTk3HT+8WQLcRfJOBfHZ8sIsdRvzVUepchC03JmcJ+b86zm
-         E7rM5LxE6urcvQBRCMITMWiuzvFDi62VwQUhhFqi5FfFd5xHsLdE8ARSPXmokNuKqXfO
-         d5bN4p6nDH/RkpJUfoqQZchoFoHz9aW8tA8Mwkpc2NvpOmsSxVtvNHMDHmTETLoyhTQl
-         TwGQ==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=0N/v0Gsykjs7WJF9Qw6lISgB5iqvBLM+hQh8dhdz0T0=;
+        b=UBiSCTKK1GPR2bNgRg2TrffMeItGZd+b+nwxFcWw0zRmFi5z3LjZpCkAVwozO1ElXh
+         Q6rbnuJuBBCz1nf328o60CM4UZg85AC2YPXVzxwZTIcHd4VJJzOu1KJ/mBO/2XmAaWyK
+         fNguKUtoYA4YNUeKeVxuGB39p/icyw8okbXA93wEuHxIjeqXpA4bD+feCXNsEUUXTqjs
+         QMWl8Ls6eME4Mqvbby3u4LSti8Jk76qSu3qwsK68uRNG/tbqO+/tkQklNEVYKwQWCpDp
+         xIvKBmlscI7Np8Fz/LLtEzyPoaDV7iCrbv3NalDAOWyFxOxlk6Rx807hY/M0cvjDF36h
+         2jeQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=kcXtoLmYt2phW1mwUUg+pkx0ARAiF/TyvXAFksE2SBQ=;
-        b=xBTmMptq3rdLWnuD/zKE1pqRmh/RDGiyjFlGfZSU7jo2Ltn8nwCIVgDYLmT1mOupZJ
-         qSFSfaW/Ob5N4VMu4BOF+zUdobGkGl0zu5VQYpFsMcYVBSNgMI88OSKoOsdtq3fphrs1
-         Pwauohyl6maos8Yv7KOD0epo0SJi1Iyz3GJcr+zsvdVhs5ew55IVpxFdPZfItfEpHVKm
-         kuYVAT6G6QYk7D7RAmoW/gQbf1iTkyQTzAYq3b3c9eICYh2jePuPV2jB2+mkZQCLlKtn
-         PbBEa6F+3T/IW3ReZeE5yKAzYn1bQRH0XK+F24aE+qWxxTrqGk97cQCfBz2c57grLdBa
-         3T6g==
-X-Gm-Message-State: AOAM530/SX2DfVaT3wReLpxQ4vF1lxxfEo3rDrlJ3k9tc268sOfeA3/r
-        dTY00NPQ8O/CAhWApWJibe5bSWSDPeVuS+Zi
-X-Google-Smtp-Source: ABdhPJy+NEw+sEBgIWaA+ZDckq/1cv/4xFeVi9rF+KOct7Jo17tYOoW1t+YKJqTU2FMS6+04RcQxJg==
-X-Received: by 2002:a63:dd51:: with SMTP id g17mr21385975pgj.47.1632107422430;
-        Sun, 19 Sep 2021 20:10:22 -0700 (PDT)
-Received: from skynet-linux.local ([106.201.127.154])
-        by smtp.googlemail.com with ESMTPSA id l11sm16295065pjg.22.2021.09.19.20.10.18
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=0N/v0Gsykjs7WJF9Qw6lISgB5iqvBLM+hQh8dhdz0T0=;
+        b=Kqs5csc0ib0tYM/1UUtYGKMBlJhIuTGDRC+wAkXg4Z6FcxuYrmhdp+ziOiCV0iqc1z
+         /LZBycnqrbSG0AvUuwq+/ZpUBE/nNUA6RSc74HfgPlq/CblNJdZ95T3kfwxpqLuIVj5f
+         Is3gEnkXQcKllI+GTP+iKbsjR13HF89ayfehvYu09+SKCTzlpwAZzq3AdhxL3vSajaqc
+         hXSv2Usrmw2gcDVV0zql/a+jaIH4B1sviy8pLhg8FJZcUKAlRBTjQpga5ut5Vyj5xt4/
+         /UXhIIulU1/vjD0cx1ayRT8CPiJgvV8dCugLNElvTGlJEkyepBBoNpv9vA6btWZUzoWG
+         +b1g==
+X-Gm-Message-State: AOAM531WLOl+UzlrCrZh9YG29pdA/EiifcCQwvAetdyhVMKiecUXx4KB
+        VNSlxNHr5s266wp/EiHwjYxy9Q==
+X-Google-Smtp-Source: ABdhPJzaujUf8VNoX9rkPNxkf7ZzKEX36vXMeq8Umw/8JMYwZ7swWChQQkeIKpy0w+9g5AnTKGCXdg==
+X-Received: by 2002:a05:6830:913:: with SMTP id v19mr18727098ott.131.1632111416118;
+        Sun, 19 Sep 2021 21:16:56 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id m2sm3233639ooa.42.2021.09.19.21.16.54
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 19 Sep 2021 20:10:22 -0700 (PDT)
-From:   Sireesh Kodali <sireeshkodali1@gmail.com>
-To:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, elder@kernel.org
-Cc:     Sireesh Kodali <sireeshkodali1@gmail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
+        Sun, 19 Sep 2021 21:16:55 -0700 (PDT)
+Date:   Sun, 19 Sep 2021 23:16:53 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     David Heidelberg <david@ixit.cz>
+Cc:     Andy Gross <agross@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
         Rob Herring <robh+dt@kernel.org>,
-        devicetree@vger.kernel.org (open list:OPEN FIRMWARE AND FLATTENED
-        DEVICE TREE BINDINGS)
-Subject: [RFC PATCH 17/17] dt-bindings: net: qcom,ipa: Add support for MSM8953 and MSM8996 IPA
-Date:   Mon, 20 Sep 2021 08:38:11 +0530
-Message-Id: <20210920030811.57273-18-sireeshkodali1@gmail.com>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20210920030811.57273-1-sireeshkodali1@gmail.com>
-References: <20210920030811.57273-1-sireeshkodali1@gmail.com>
+        Manu Gautam <mgautam@codeaurora.org>,
+        linux-usb@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 2/2] ARM: dts: qcom: ipq4019: add dwc3 arch spec
+ compatible
+Message-ID: <YUgLNZlKbaqeCQYp@builder.lan>
+References: <20210908193329.87992-1-david@ixit.cz>
+ <20210908193329.87992-2-david@ixit.cz>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210908193329.87992-2-david@ixit.cz>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MSM8996 uses IPA v2.5 and MSM8953 uses IPA v2.6l
+On Wed 08 Sep 14:33 CDT 2021, David Heidelberg wrote:
 
-Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
----
- Documentation/devicetree/bindings/net/qcom,ipa.yaml | 2 ++
- 1 file changed, 2 insertions(+)
+> To be compilant with qcom,dwc3 definition
+>  - add compatible
+>  - rename dwc3@ to usb@
+> 
+> No functional changes intended.
+> 
+> Signed-off-by: David Heidelberg <david@ixit.cz>
+> ---
+>  arch/arm/boot/dts/qcom-ipq4019.dtsi | 8 ++++----
+>  1 file changed, 4 insertions(+), 4 deletions(-)
+> 
+> diff --git a/arch/arm/boot/dts/qcom-ipq4019.dtsi b/arch/arm/boot/dts/qcom-ipq4019.dtsi
+> index a3ae5458ac68..25b7e10537df 100644
+> --- a/arch/arm/boot/dts/qcom-ipq4019.dtsi
+> +++ b/arch/arm/boot/dts/qcom-ipq4019.dtsi
+> @@ -637,7 +637,7 @@ usb3_hs_phy: hsphy@a6000 {
+>  		};
+>  
+>  		usb3: usb3@8af8800 {
+> -			compatible = "qcom,dwc3";
+> +			compatible = "qcom,ipq4019-dwc3", "qcom,dwc3";
+>  			reg = <0x8af8800 0x100>;
+>  			#address-cells = <1>;
+>  			#size-cells = <1>;
+> @@ -648,7 +648,7 @@ usb3: usb3@8af8800 {
+>  			ranges;
+>  			status = "disabled";
+>  
+> -			dwc3@8a00000 {
+> +			usb@8a00000 {
 
-diff --git a/Documentation/devicetree/bindings/net/qcom,ipa.yaml b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-index b8a0b392b24e..e857827bfa54 100644
---- a/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-+++ b/Documentation/devicetree/bindings/net/qcom,ipa.yaml
-@@ -44,6 +44,8 @@ description:
- properties:
-   compatible:
-     enum:
-+      - qcom,msm8953-ipa
-+      - qcom,msm8996-ipa
-       - qcom,msm8998-ipa
-       - qcom,sc7180-ipa
-       - qcom,sc7280-ipa
--- 
-2.33.0
+As noted in a recent discussion, this causes the UDC name exposed in
+sysfs to change. So even though it's contradicting the binding let's
+keep it unchanged for now.
 
+The compatible part looks good though, so can you please respin this
+patch with that part only?
+
+Thanks,
+Bjorn
+
+>  				compatible = "snps,dwc3";
+>  				reg = <0x8a00000 0xf8000>;
+>  				interrupts = <GIC_SPI 132 IRQ_TYPE_LEVEL_HIGH>;
+> @@ -669,7 +669,7 @@ usb2_hs_phy: hsphy@a8000 {
+>  		};
+>  
+>  		usb2: usb2@60f8800 {
+> -			compatible = "qcom,dwc3";
+> +			compatible = "qcom,ipq4019-dwc3", "qcom,dwc3";
+>  			reg = <0x60f8800 0x100>;
+>  			#address-cells = <1>;
+>  			#size-cells = <1>;
+> @@ -680,7 +680,7 @@ usb2: usb2@60f8800 {
+>  			ranges;
+>  			status = "disabled";
+>  
+> -			dwc3@6000000 {
+> +			usb@6000000 {
+>  				compatible = "snps,dwc3";
+>  				reg = <0x6000000 0xf8000>;
+>  				interrupts = <GIC_SPI 136 IRQ_TYPE_LEVEL_HIGH>;
+> -- 
+> 2.33.0
+> 
