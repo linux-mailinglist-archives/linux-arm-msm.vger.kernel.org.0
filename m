@@ -2,119 +2,99 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F1AA4127FC
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Sep 2021 23:27:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 93B13412889
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Sep 2021 23:55:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238575AbhITV3A (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Sep 2021 17:29:00 -0400
-Received: from wnew1-smtp.messagingengine.com ([64.147.123.26]:54121 "EHLO
-        wnew1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S231784AbhITV1A (ORCPT
+        id S233851AbhITV44 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Sep 2021 17:56:56 -0400
+Received: from mail-ot1-f42.google.com ([209.85.210.42]:45646 "EHLO
+        mail-ot1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234193AbhITVy4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Sep 2021 17:27:00 -0400
-Received: from compute5.internal (compute5.nyi.internal [10.202.2.45])
-        by mailnew.west.internal (Postfix) with ESMTP id EECA82B012E5;
-        Mon, 20 Sep 2021 17:25:31 -0400 (EDT)
-Received: from mailfrontend2 ([10.202.2.163])
-  by compute5.internal (MEProxy); Mon, 20 Sep 2021 17:25:32 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=AWImI2KGSpvCbthaTGpOCk4QbRl
-        8dZEEYq4SHjBTZJE=; b=USXGjuU+4R2n9u+CDG6f9J49IGnM33Ay4XL+MlmTPNv
-        zeb26cRTrDZymp/Wy0xOKrb0j7P0vB55p2h5DS5Co/L1vAGjJoI0JQcZh93opH11
-        4hsuQsFzDJ4FhOR4s7lTtgsnMNm+7OJWq8pl9qVcXWJF1hr9RNClUgeMfBLC8kcb
-        WyhUfNH8fNniw9f56QJwijgyaUFVFtXVm0bLLG/NskWpOyT6fINV5jlub6v5TEPQ
-        VsBBXzNvOEzK+lONgNf2QcFjqJvJG3T8ipYXGF4VfGvx8NtLjS2OlTOKVN/Oy1pT
-        LUKfj8RyH4XVxQ7OUFm/X8+0xVYdgIpKJSzQ0okyh3g==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=AWImI2
-        KGSpvCbthaTGpOCk4QbRl8dZEEYq4SHjBTZJE=; b=Aaj6hUmY/KPtF72LH13Yrv
-        mhXLRAym+vY8SVlWlLweQ7NtjfFgQ8vEjItH8b++bypf/hy2iQn7jXeRszrOQgwP
-        bXw8UJGlZzVijGiBljQD7wCXpJriQ+UJnLTQq0TINKW2ITc6xyX1sxYD3uohAlQu
-        6NXwJfYejUwBe4HT5zuWM3MzCB5nfIJSe2ywV7rnVQevRT4FOiZsdm/CiUuvY9Ur
-        +w/vhof0UnA4w+UPfcdCYlDEWSOhnSlYH+YUv0M8vfe3CCycZx+YQprmNbDIjPC5
-        Cm8RaSUQGSODp8Y/5sbZydYQDDu4pZLzEq8bUfLwBEXWTYEB65RxOuAwkjZCPNrw
-        ==
-X-ME-Sender: <xms:SvxIYb_SD3L6GKZGVyKR7v3MeCFNcaciiz1aAknxnzN1mAygQkqBOw>
-    <xme:SvxIYXtxHvokL16p3vxzx4LR9djf0dxSIuc0NrHJnrHy5ApNkIX81_FKyP9MujcT9
-    HkykA1gYSfghYEL1Q>
-X-ME-Received: <xmr:SvxIYZArrxeoKSowR3xIM7iucgEBrsqP3y96noTubNXQwy3MMLQSSHnoIGnz94lvXMXyUj08>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrudeivddgudehlecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhepfffhvffukfhfgggtuggjsehttd
-    ertddttdejnecuhfhrohhmpefhvghrnhgrnhguohcutfgrmhhoshcuoehgrhgvvghnfhho
-    ohesuhelvddrvghuqeenucggtffrrghtthgvrhhnpedvjeeifeelhfetiefhhfdthfefke
-    fhhfeutdetvdfgvefgveefheffgfekjeefheenucevlhhushhtvghrufhiiigvpedtnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgrhgvvghnfhhoohesuhelvddrvghu
-X-ME-Proxy: <xmx:SvxIYXdYXMRZ0FKBeMVhN17WTZvhEpWL2Yj5nRDic3kSBqDeyY_H4g>
-    <xmx:SvxIYQNZxI6Eiljl_BP_kv2DzxGV3Hrcbf9AGmdTrdbaPqAM5R83Zw>
-    <xmx:SvxIYZk0PVsalhpoyFR0uPrwJJnzF_M7F_mQGyC2mlSLjujPt_T2Ug>
-    <xmx:S_xIYREyT86uoIjKzNQk2NcGSP8U-MKgIMOwk712MBk4AtGVUt2psHpZW2g>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Mon,
- 20 Sep 2021 17:25:27 -0400 (EDT)
-Date:   Mon, 20 Sep 2021 23:25:24 +0200
-From:   Fernando Ramos <greenfoo@u92.eu>
-To:     kernel test robot <lkp@intel.com>
-Cc:     dri-devel@lists.freedesktop.org, kbuild-all@lists.01.org,
-        linux-kernel@vger.kernel.org, sean@poorly.run,
-        linux-doc@vger.kernel.org, amd-gfx@lists.freedesktop.org,
-        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
-        linux-renesas-soc@vger.kernel.org
-Subject: Re: [PATCH 03/15] dmr/msm: cleanup: drm_modeset_lock_all_ctx() -->
- DRM_MODESET_LOCK_ALL_BEGIN()
-Message-ID: <YUj8RHdl7aIONPa0@zacax395.localdomain>
-References: <20210916211552.33490-4-greenfoo@u92.eu>
- <202109200942.M3etmn3s-lkp@intel.com>
+        Mon, 20 Sep 2021 17:54:56 -0400
+Received: by mail-ot1-f42.google.com with SMTP id l7-20020a0568302b0700b0051c0181deebso25539738otv.12;
+        Mon, 20 Sep 2021 14:53:28 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=X2j5YtyheAq5Lphy8fXkDQEgWgYMfVgh6X/yNCkEz3Q=;
+        b=38YYFjauQkPGSA4wEPPyzNuWETM3kGW0c8xGcMFOR3CPAgqud3HiBuMDlkXc2R2PK0
+         QOVcNsaAQhAGs9hIhSnTdSfCgtPp2tQBHB8M5edPDReib5g/qprVh303BG+rsqWE+S7V
+         nrUnKA6WScX7WdUN9zZKH4Dsh2v9Ql+JkcjSyb7LNqUfKVp0HL3yDHL7hn7Y+rmhQoDP
+         iscxJiVtIhGBjCotMsZobh9KnsABv2EeUhIuLp983XOv/zgypNSC2ECFATcVJFfrzw9o
+         4UsrzB2XosR7J1eBOnr5D1ud5BSepH0K23KRZL1XD7EPgFr+kf5ntHMSX135RIdLMUmR
+         /RmQ==
+X-Gm-Message-State: AOAM530chm/4JIm6tmNgcFRdKuZ4BkT1hnNfE2C1g4KcHdJfo4ZzzLoB
+        Ssit4Zf+rJoe/GQiGYcUvw==
+X-Google-Smtp-Source: ABdhPJwegcq4esMvrkBxmsBb4RHxvmCqmtfc/O8GDwlMOCxv29nheZNjDAf1CkhXb2sVvNIZYuPpyw==
+X-Received: by 2002:a05:6830:14c2:: with SMTP id t2mr6795296otq.115.1632174808482;
+        Mon, 20 Sep 2021 14:53:28 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id e10sm1316020oig.11.2021.09.20.14.53.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 20 Sep 2021 14:53:27 -0700 (PDT)
+Received: (nullmailer pid 848408 invoked by uid 1000);
+        Mon, 20 Sep 2021 21:53:26 -0000
+Date:   Mon, 20 Sep 2021 16:53:26 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, bartosz.dudziak@snejp.pl,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@codeaurora.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 7/8] dt-bindings: arm: qcom: Document APQ8026 SoC binding
+Message-ID: <YUkC1q65RjkwBaAj@robh.at.kernel.org>
+References: <20210911232707.259615-1-luca@z3ntu.xyz>
+ <20210911232707.259615-8-luca@z3ntu.xyz>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <202109200942.M3etmn3s-lkp@intel.com>
+In-Reply-To: <20210911232707.259615-8-luca@z3ntu.xyz>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/09/20 09:54AM, kernel test robot wrote:
+On Sun, Sep 12, 2021 at 01:27:01AM +0200, Luca Weiss wrote:
+> Document the APQ8026 (based on MSM8226) SoC device-tree binding and the
+> LG G Watch R.
+
+Looks like this was applied, but lg vs. lge needs to be sorted first. 
+IMO, we should fix the one instance of 'lge'.
+
 > 
-> [auto build test ERROR on drm-exynos/exynos-drm-next]
-> [also build test ERROR on tegra-drm/drm/tegra/for-next linus/master v5.15-rc2 next-20210917]
-
-I forgot to #include <drm/drm_drv.h> for those platforms and didn't notice
-because I only tried to build for X86. I'll fix it.
-
-
-> [cannot apply to drm-intel/for-linux-next tegra/for-next drm-tip/drm-tip airlied/drm-next]
-> [If your patch is applied to the wrong git tree, kindly drop us a note.
-> And when submitting patch, we suggest to use '--base'.
-
-I built this patch against drm-next, which currently points to v5.15-rc1.
-
-Should I be targeting a different branch? In any case, as suggested, I'll
-remember to use "--base" in the future to make it easier to apply. Thanks for
-the hint.
-
-
-> All errors (new ones prefixed by >>):
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> ---
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
+>  1 file changed, 6 insertions(+)
 > 
->    In file included from include/drm/drm_crtc.h:36,
->                     from include/drm/drm_atomic_helper.h:31,
->                     from drivers/gpu/drm/msm/disp/msm_disp_snapshot.h:9,
->                     from drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c:8:
->    drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c: In function 'msm_disp_capture_atomic_state':
-> >> include/drm/drm_modeset_lock.h:167:14: error: implicit declaration of function 'drm_drv_uses_atomic_modeset' [-Werror=implicit-function-declaration]
->      167 |         if (!drm_drv_uses_atomic_modeset(dev))                          \
->          |              ^~~~~~~~~~~~~~~~~~~~~~~~~~~
->    drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c:108:9: note: in expansion of macro 'DRM_MODESET_LOCK_ALL_BEGIN'
->      108 |         DRM_MODESET_LOCK_ALL_BEGIN(ddev, ctx, 0, ret);
->          |         ^~~~~~~~~~~~~~~~~~~~~~~~~~
->    cc1: some warnings being treated as errors
-
-Out of curiosity: The top comment says there were two build errors (one on
-exynos and another one on tegra), but there is only one reported bug (on msm).
-
-Is this because the bot only reports the first error found? Is there a link to
-a report with each of the build errors on each of the platforms?
-
-Thanks.
+> diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+> index 880ddafc634e..da44688133af 100644
+> --- a/Documentation/devicetree/bindings/arm/qcom.yaml
+> +++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+> @@ -25,6 +25,7 @@ description: |
+>    The 'SoC' element must be one of the following strings:
+>  
+>          apq8016
+> +        apq8026
+>          apq8074
+>          apq8084
+>          apq8096
+> @@ -92,6 +93,11 @@ properties:
+>                - qcom,apq8016-sbc
+>            - const: qcom,apq8016
+>  
+> +      - items:
+> +          - enum:
+> +              - lge,lenok
+> +          - const: qcom,apq8026
+> +
+>        - items:
+>            - enum:
+>                - qcom,apq8064-cm-qs600
+> -- 
+> 2.33.0
+> 
+> 
