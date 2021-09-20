@@ -2,99 +2,73 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5AF5341103E
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Sep 2021 09:37:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6E88D411084
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Sep 2021 09:52:15 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235200AbhITHiV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Sep 2021 03:38:21 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:61700 "EHLO m43-7.mailgun.net"
+        id S229839AbhITHxb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Sep 2021 03:53:31 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57586 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235273AbhITHiL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Sep 2021 03:38:11 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1632123405; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=DlZnHGCDJOpKEs7/UbxZ3jG6Fo3UEfNqEU7n/+MVkH8=; b=jliz7YLckzHNZX039G//N3IQTqf4eMVE7ue36tR26NzY/j8y0qKMgUC+e+LlAk0yaGtvwGnf
- uKvxSSIYGl2Uu8BZCHyJ0vbSJKKAn/A8oxncElxQijtNm6+3Z6ukagc19q3Z9sJlYRicqK0F
- tnXokB9O6FzyP/pUr5/Va2Um2BM=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 61483a0d648642cc1c339543 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 20 Sep 2021 07:36:45
- GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 316E2C43637; Mon, 20 Sep 2021 07:36:44 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from hu-srivasam-hyd.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id CD57AC4361A;
-        Mon, 20 Sep 2021 07:36:33 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org CD57AC4361A
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, judyhsiao@chromium.org
-Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        Venkata Prasad Potturu <potturu@codeaurora.org>
-Subject: [PATCH 7/7] ASoC: codecs: lpass-va-macro: set mclk clock rate correctly
-Date:   Mon, 20 Sep 2021 13:05:31 +0530
-Message-Id: <1632123331-2425-8-git-send-email-srivasam@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1632123331-2425-1-git-send-email-srivasam@codeaurora.org>
-References: <1632123331-2425-1-git-send-email-srivasam@codeaurora.org>
+        id S235359AbhITHwr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 20 Sep 2021 03:52:47 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 66B8960FF2;
+        Mon, 20 Sep 2021 07:51:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1632124280;
+        bh=zjM/MTscwltcL8YCPcuFkxfuK+EJqGaD1Adm0/N+pVk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=J6IrkpNH65oVZIUchWF2GQ3UYDTZyp7+n+xPusCB8Y0eMGeW+AHOgawO6RWvtOpnA
+         m31r41ki8xRawaz9hDN/L/i535w+l9mkPJlm6DLQT36M912LI+Y/vyQX6CCCakxnSa
+         fYSzB1x4uDWRM5/6AG5yUlGD7jk81iRwhAPa1hBc=
+Date:   Mon, 20 Sep 2021 09:51:18 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Jeya R <jeyr@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, srinivas.kandagatla@linaro.org,
+        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
+Subject: Re: [PATCH] misc: fastrpc: Update number of max fastrpc sessions
+Message-ID: <YUg9dmThHg9s8XAy@kroah.com>
+References: <1632123274-32054-1-git-send-email-jeyr@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1632123274-32054-1-git-send-email-jeyr@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Update mclk clock frequency from 9.6MHz to 19.2MHz.
+On Mon, Sep 20, 2021 at 01:04:34PM +0530, Jeya R wrote:
+> For latest chipsets, upto 13 fastrpc sessions can be
+> supported. This includes 12 compute sessions and 1 cpz
+> session. Not updating this might result to out of bounds
+> memory access issues if more than 9 context bank nodes
+> are added to the DT file.
+> 
+> Signed-off-by: Jeya R <jeyr@codeaurora.org>
+> ---
+>  drivers/misc/fastrpc.c | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> index beda610..bd7811e 100644
+> --- a/drivers/misc/fastrpc.c
+> +++ b/drivers/misc/fastrpc.c
+> @@ -24,7 +24,7 @@
+>  #define SDSP_DOMAIN_ID (2)
+>  #define CDSP_DOMAIN_ID (3)
+>  #define FASTRPC_DEV_MAX		4 /* adsp, mdsp, slpi, cdsp*/
+> -#define FASTRPC_MAX_SESSIONS	9 /*8 compute, 1 cpz*/
+> +#define FASTRPC_MAX_SESSIONS	13 /*12 compute, 1 cpz*/
+>  #define FASTRPC_ALIGN		128
+>  #define FASTRPC_MAX_FDLIST	16
+>  #define FASTRPC_MAX_CRCLIST	64
+> -- 
+> 2.7.4
+> 
 
-Fixes: 908e6b1df26e (ASoC: codecs: lpass-va-macro: Add support to VA Macro)
+What happens if you run this on "older" chipsets?
 
-Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
-Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
----
- sound/soc/codecs/lpass-va-macro.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+And is this an issue now, or can this wait to 5.16-rc1?
 
-diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
-index 0ea39ae..f2ab09b 100644
---- a/sound/soc/codecs/lpass-va-macro.c
-+++ b/sound/soc/codecs/lpass-va-macro.c
-@@ -1353,7 +1353,7 @@ static int va_macro_validate_dmic_sample_rate(u32 dmic_sample_rate,
- 					      struct va_macro *va)
- {
- 	u32 div_factor;
--	u32 mclk_rate = VA_MACRO_MCLK_FREQ;
-+	u32 mclk_rate = 2 * VA_MACRO_MCLK_FREQ;
- 
- 	if (!dmic_sample_rate || mclk_rate % dmic_sample_rate != 0)
- 		goto undefined_rate;
-@@ -1432,7 +1432,7 @@ static int va_macro_probe(struct platform_device *pdev)
- 	}
- 
- 	/* mclk rate */
--	clk_set_rate(va->mclk, VA_MACRO_MCLK_FREQ);
-+	clk_set_rate(va->mclk, 2 * VA_MACRO_MCLK_FREQ);
- 
- 	clk_prepare_enable(va->mclk);
- 	clk_prepare_enable(va->macro);
--- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+thanks,
 
+greg k-h
