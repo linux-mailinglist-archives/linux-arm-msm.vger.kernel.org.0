@@ -2,190 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 73E0F411190
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Sep 2021 11:06:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A41494111C1
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Sep 2021 11:14:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236174AbhITJH2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Sep 2021 05:07:28 -0400
-Received: from www.zeus03.de ([194.117.254.33]:54294 "EHLO mail.zeus03.de"
+        id S235006AbhITJPa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Sep 2021 05:15:30 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53876 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236134AbhITJHQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Sep 2021 05:07:16 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=sang-engineering.com; h=
-        from:to:cc:subject:date:message-id:in-reply-to:references
-        :mime-version:content-transfer-encoding; s=k1; bh=KXU1uvvGG3Zwek
-        t4tqYouB7lvi7vVs87+GJSqA8pvcg=; b=ZEoox5cWHSEWiHX8F3b60QHgE4BSTo
-        ByZKSvlB6kYXa1ekjk10OzxT4DMgE4kXw/hNgUrkE3YFzKuS9cmAwn1Nv/NYg6xr
-        8HK7vUzn4Nz1CUKHfk8rDmzcJowZczuj89ZApRzYNdDXBFJG0FfX+Ln5fNM56RBg
-        UdoO29nU/CcAo=
-Received: (qmail 2412676 invoked from network); 20 Sep 2021 11:05:25 +0200
-Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 20 Sep 2021 11:05:25 +0200
-X-UD-Smtp-Session: l3s3148p1@ky/klGnMDosgAwDPXwlxANIWpbLKE1Uh
-From:   Wolfram Sang <wsa+renesas@sang-engineering.com>
-To:     linux-kernel@vger.kernel.org
-Cc:     linux-renesas-soc@vger.kernel.org,
-        Wolfram Sang <wsa+renesas@sang-engineering.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH 4/9] drm/msm: simplify getting .driver_data
-Date:   Mon, 20 Sep 2021 11:05:16 +0200
-Message-Id: <20210920090522.23784-5-wsa+renesas@sang-engineering.com>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20210920090522.23784-1-wsa+renesas@sang-engineering.com>
-References: <20210920090522.23784-1-wsa+renesas@sang-engineering.com>
+        id S230360AbhITJPJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 20 Sep 2021 05:15:09 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 488D560FC0;
+        Mon, 20 Sep 2021 09:08:40 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1632128920;
+        bh=G0xk/In77HKWUFgN+ffEjb+8ar4ZJgT3XWv0U2UYhcE=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=DU9PtqkPUzHI6qosiweJrMLwhY9jT6bfPnE6zWk4APz9IcNXvdXAEvqN1wcPRnTtB
+         jaP8bwO2YivOtDZPGYlpM8LD7Ok7ZDY3oTqQ2ZTQXZbpNgIkuPKUzp5wmU/CL1HXBE
+         SMyIb7VyDVhdMK75gmEu2OfknNQf8WFcT7lpXJ2A=
+Date:   Mon, 20 Sep 2021 11:08:38 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     Jeya R <jeyr@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, srinivas.kandagatla@linaro.org,
+        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
+Subject: Re: [PATCH] misc: fastrpc: fix improper packet size calculation
+Message-ID: <YUhPlj8eeszBNZTE@kroah.com>
+References: <1632125731-18768-1-git-send-email-jeyr@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1632125731-18768-1-git-send-email-jeyr@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-We should get 'driver_data' from 'struct device' directly. Going via
-platform_device is an unneeded step back and forth.
+On Mon, Sep 20, 2021 at 01:45:31PM +0530, Jeya R wrote:
+> The buffer list is sorted and this is not being
+> considered while calculating packet size. This
+> would lead to improper copy length calculation
+> for non-dmaheap buffers which would eventually
+> cause sending improper buffers to DSP.
 
-Signed-off-by: Wolfram Sang <wsa+renesas@sang-engineering.com>
----
+You do have the full 72 columns to use :)
 
-Build tested only. buildbot is happy.
+> 
+> Signed-off-by: Jeya R <jeyr@codeaurora.org>
+> ---
+>  drivers/misc/fastrpc.c | 13 +++++++++----
+>  1 file changed, 9 insertions(+), 4 deletions(-)
 
- drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c  | 13 +++++--------
- drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c |  6 ++----
- drivers/gpu/drm/msm/dp/dp_display.c      |  6 ++----
- drivers/gpu/drm/msm/dsi/dsi_host.c       |  6 ++----
- drivers/gpu/drm/msm/msm_drv.c            |  3 +--
- 5 files changed, 12 insertions(+), 22 deletions(-)
+What commit does this fix?
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-index ae48f41821cf..32410bd299e7 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
-@@ -1185,16 +1185,15 @@ static int dpu_bind(struct device *dev, struct device *master, void *data)
- 
- static void dpu_unbind(struct device *dev, struct device *master, void *data)
- {
--	struct platform_device *pdev = to_platform_device(dev);
--	struct dpu_kms *dpu_kms = platform_get_drvdata(pdev);
-+	struct dpu_kms *dpu_kms = dev_get_drvdata(dev);
- 	struct dss_module_power *mp = &dpu_kms->mp;
- 
- 	msm_dss_put_clk(mp->clk_config, mp->num_clk);
--	devm_kfree(&pdev->dev, mp->clk_config);
-+	devm_kfree(dev, mp->clk_config);
- 	mp->num_clk = 0;
- 
- 	if (dpu_kms->rpm_enabled)
--		pm_runtime_disable(&pdev->dev);
-+		pm_runtime_disable(dev);
- }
- 
- static const struct component_ops dpu_ops = {
-@@ -1216,8 +1215,7 @@ static int dpu_dev_remove(struct platform_device *pdev)
- static int __maybe_unused dpu_runtime_suspend(struct device *dev)
- {
- 	int i, rc = -1;
--	struct platform_device *pdev = to_platform_device(dev);
--	struct dpu_kms *dpu_kms = platform_get_drvdata(pdev);
-+	struct dpu_kms *dpu_kms = dev_get_drvdata(dev);
- 	struct dss_module_power *mp = &dpu_kms->mp;
- 
- 	/* Drop the performance state vote */
-@@ -1235,8 +1233,7 @@ static int __maybe_unused dpu_runtime_suspend(struct device *dev)
- static int __maybe_unused dpu_runtime_resume(struct device *dev)
- {
- 	int rc = -1;
--	struct platform_device *pdev = to_platform_device(dev);
--	struct dpu_kms *dpu_kms = platform_get_drvdata(pdev);
-+	struct dpu_kms *dpu_kms = dev_get_drvdata(dev);
- 	struct drm_encoder *encoder;
- 	struct drm_device *ddev;
- 	struct dss_module_power *mp = &dpu_kms->mp;
-diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-index b3b42672b2d4..3db9d1603dfe 100644
---- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-+++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
-@@ -1015,8 +1015,7 @@ static int mdp5_dev_remove(struct platform_device *pdev)
- 
- static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
- {
--	struct platform_device *pdev = to_platform_device(dev);
--	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
-+	struct mdp5_kms *mdp5_kms = dev_get_drvdata(dev);
- 
- 	DBG("");
- 
-@@ -1025,8 +1024,7 @@ static __maybe_unused int mdp5_runtime_suspend(struct device *dev)
- 
- static __maybe_unused int mdp5_runtime_resume(struct device *dev)
- {
--	struct platform_device *pdev = to_platform_device(dev);
--	struct mdp5_kms *mdp5_kms = platform_get_drvdata(pdev);
-+	struct mdp5_kms *mdp5_kms = dev_get_drvdata(dev);
- 
- 	DBG("");
- 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index fbe4c2cd52a3..a58fccacc874 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1272,8 +1272,7 @@ static int dp_display_remove(struct platform_device *pdev)
- 
- static int dp_pm_resume(struct device *dev)
- {
--	struct platform_device *pdev = to_platform_device(dev);
--	struct msm_dp *dp_display = platform_get_drvdata(pdev);
-+	struct msm_dp *dp_display = dev_get_drvdata(dev);
- 	struct dp_display_private *dp;
- 	int sink_count = 0;
- 
-@@ -1329,8 +1328,7 @@ static int dp_pm_resume(struct device *dev)
- 
- static int dp_pm_suspend(struct device *dev)
- {
--	struct platform_device *pdev = to_platform_device(dev);
--	struct msm_dp *dp_display = platform_get_drvdata(pdev);
-+	struct msm_dp *dp_display = dev_get_drvdata(dev);
- 	struct dp_display_private *dp;
- 
- 	dp = container_of(dp_display, struct dp_display_private, dp_display);
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index e269df285136..d27db5777f2c 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -470,8 +470,7 @@ static void dsi_bus_clk_disable(struct msm_dsi_host *msm_host)
- 
- int msm_dsi_runtime_suspend(struct device *dev)
- {
--	struct platform_device *pdev = to_platform_device(dev);
--	struct msm_dsi *msm_dsi = platform_get_drvdata(pdev);
-+	struct msm_dsi *msm_dsi = dev_get_drvdata(dev);
- 	struct mipi_dsi_host *host = msm_dsi->host;
- 	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
- 
-@@ -485,8 +484,7 @@ int msm_dsi_runtime_suspend(struct device *dev)
- 
- int msm_dsi_runtime_resume(struct device *dev)
- {
--	struct platform_device *pdev = to_platform_device(dev);
--	struct msm_dsi *msm_dsi = platform_get_drvdata(pdev);
-+	struct msm_dsi *msm_dsi = dev_get_drvdata(dev);
- 	struct mipi_dsi_host *host = msm_dsi->host;
- 	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
- 
-diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
-index 2e6fc185e54d..ede3d8b43761 100644
---- a/drivers/gpu/drm/msm/msm_drv.c
-+++ b/drivers/gpu/drm/msm/msm_drv.c
-@@ -309,8 +309,7 @@ static int vblank_ctrl_queue_work(struct msm_drm_private *priv,
- 
- static int msm_drm_uninit(struct device *dev)
- {
--	struct platform_device *pdev = to_platform_device(dev);
--	struct drm_device *ddev = platform_get_drvdata(pdev);
-+	struct drm_device *ddev = dev_get_drvdata(dev);
- 	struct msm_drm_private *priv = ddev->dev_private;
- 	struct msm_kms *kms = priv->kms;
- 	struct msm_mdss *mdss = priv->mdss;
--- 
-2.30.2
+thanks,
 
+greg k-h
