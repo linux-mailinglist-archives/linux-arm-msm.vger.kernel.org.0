@@ -2,79 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 669834110C5
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Sep 2021 10:15:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B4FF411188
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 20 Sep 2021 11:05:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235454AbhITIRN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 20 Sep 2021 04:17:13 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:30134 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235596AbhITIRN (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 20 Sep 2021 04:17:13 -0400
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 20 Sep 2021 01:15:46 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 20 Sep 2021 01:15:45 -0700
-X-QCInternal: smtphost
-Received: from ekangupt-linux.qualcomm.com ([10.204.67.11])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 20 Sep 2021 13:45:34 +0530
-Received: by ekangupt-linux.qualcomm.com (Postfix, from userid 2319895)
-        id B23A642C4; Mon, 20 Sep 2021 13:45:33 +0530 (IST)
-From:   Jeya R <jeyr@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org, srinivas.kandagatla@linaro.org
-Cc:     Jeya R <jeyr@codeaurora.org>, gregkh@linuxfoundation.org,
-        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
-Subject: [PATCH] misc: fastrpc: fix improper packet size calculation
-Date:   Mon, 20 Sep 2021 13:45:31 +0530
-Message-Id: <1632125731-18768-1-git-send-email-jeyr@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S236145AbhITJHR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 20 Sep 2021 05:07:17 -0400
+Received: from www.zeus03.de ([194.117.254.33]:54150 "EHLO mail.zeus03.de"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234397AbhITJHI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 20 Sep 2021 05:07:08 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=simple; d=sang-engineering.com; h=
+        from:to:cc:subject:date:message-id:mime-version
+        :content-transfer-encoding; s=k1; bh=8Ic7rPl8wS6tSUDgDBOpnPfgXT8
+        diIPVuuJEV7+3x14=; b=y3zScd6qLqQkIP3VZO9fvHA8J6/TlWpstJuxEWG+2wh
+        RSUW1mVxF26O2U33Dq6EbBJ3XmayRck4KWgT5z4BxcgklO7B+9wEmZO5zVAmdCUU
+        eq691H+mkSBSVXJ5b+Z4iTQ6tBhA1RnGtNmi7NlL+YGjQ7U1KmJ/dc6bhwHIpZnk
+        =
+Received: (qmail 2412526 invoked from network); 20 Sep 2021 11:05:23 +0200
+Received: by mail.zeus03.de with ESMTPSA (TLS_AES_256_GCM_SHA384 encrypted, authenticated); 20 Sep 2021 11:05:23 +0200
+X-UD-Smtp-Session: l3s3148p1@Lz7AlGnMBosgAwDPXwlxANIWpbLKE1Uh
+From:   Wolfram Sang <wsa+renesas@sang-engineering.com>
+To:     linux-kernel@vger.kernel.org
+Cc:     linux-renesas-soc@vger.kernel.org,
+        Wolfram Sang <wsa+renesas@sang-engineering.com>,
+        dmaengine@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-amlogic@lists.infradead.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-iio@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        linux-stm32@st-md-mailman.stormreply.com, netdev@vger.kernel.org
+Subject: [PATCH 0/9] treewide: simplify getting .driver_data
+Date:   Mon, 20 Sep 2021 11:05:12 +0200
+Message-Id: <20210920090522.23784-1-wsa+renesas@sang-engineering.com>
+X-Mailer: git-send-email 2.30.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The buffer list is sorted and this is not being
-considered while calculating packet size. This
-would lead to improper copy length calculation
-for non-dmaheap buffers which would eventually
-cause sending improper buffers to DSP.
+I got tired of fixing this in Renesas drivers manually, so I took the big
+hammer. Remove this cumbersome code pattern which got copy-pasted too much
+already:
 
-Signed-off-by: Jeya R <jeyr@codeaurora.org>
----
- drivers/misc/fastrpc.c | 13 +++++++++----
- 1 file changed, 9 insertions(+), 4 deletions(-)
+-	struct platform_device *pdev = to_platform_device(dev);
+-	struct ep93xx_keypad *keypad = platform_get_drvdata(pdev);
++	struct ep93xx_keypad *keypad = dev_get_drvdata(dev);
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index beda610..a7e550f 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -719,16 +719,21 @@ static int fastrpc_get_meta_size(struct fastrpc_invoke_ctx *ctx)
- static u64 fastrpc_get_payload_size(struct fastrpc_invoke_ctx *ctx, int metalen)
- {
- 	u64 size = 0;
--	int i;
-+	int oix = 0;
- 
- 	size = ALIGN(metalen, FASTRPC_ALIGN);
--	for (i = 0; i < ctx->nscalars; i++) {
-+	for (oix = 0; oix < ctx->nbufs; oix++) {
-+		int i = ctx->olaps[oix].raix;
-+
-+		if (ctx->args[i].length == 0)
-+			continue;
-+
- 		if (ctx->args[i].fd == 0 || ctx->args[i].fd == -1) {
- 
--			if (ctx->olaps[i].offset == 0)
-+			if (ctx->olaps[oix].offset == 0)
- 				size = ALIGN(size, FASTRPC_ALIGN);
- 
--			size += (ctx->olaps[i].mend - ctx->olaps[i].mstart);
-+			size += (ctx->olaps[oix].mend - ctx->olaps[oix].mstart);
- 		}
- 	}
- 
+A branch, tested by buildbot, can be found here:
+
+git://git.kernel.org/pub/scm/linux/kernel/git/wsa/linux.git coccinelle/get_drvdata
+
+I am open for other comments, suggestions, too, of course.
+
+Here is the cocci-script I created:
+
+@@
+struct device* d;
+identifier pdev;
+expression *ptr;
+@@
+(
+-	struct platform_device *pdev = to_platform_device(d);
+|
+-	struct platform_device *pdev;
+	...
+-	pdev = to_platform_device(d);
+)
+	<... when != pdev
+-	&pdev->dev
++	d
+	...>
+
+	ptr =
+-	platform_get_drvdata(pdev)
++	dev_get_drvdata(d)
+
+	<... when != pdev
+-	&pdev->dev
++	d
+	...>
+
+Kind regards,
+
+   Wolfram
+
+
+Wolfram Sang (9):
+  dmaengine: stm32-dmamux: simplify getting .driver_data
+  firmware: meson: simplify getting .driver_data
+  gpio: xilinx: simplify getting .driver_data
+  drm/msm: simplify getting .driver_data
+  drm/panfrost: simplify getting .driver_data
+  iio: common: cros_ec_sensors: simplify getting .driver_data
+  net: mdio: mdio-bcm-iproc: simplify getting .driver_data
+  platform: chrome: cros_ec_sensorhub: simplify getting .driver_data
+  remoteproc: omap_remoteproc: simplify getting .driver_data
+
+ drivers/dma/stm32-dmamux.c                         | 14 +++++---------
+ drivers/firmware/meson/meson_sm.c                  |  3 +--
+ drivers/gpio/gpio-xilinx.c                         |  6 ++----
+ drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c            | 13 +++++--------
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c           |  6 ++----
+ drivers/gpu/drm/msm/dp/dp_display.c                |  6 ++----
+ drivers/gpu/drm/msm/dsi/dsi_host.c                 |  6 ++----
+ drivers/gpu/drm/msm/msm_drv.c                      |  3 +--
+ drivers/gpu/drm/panfrost/panfrost_device.c         |  6 ++----
+ .../common/cros_ec_sensors/cros_ec_sensors_core.c  |  3 +--
+ drivers/net/mdio/mdio-bcm-iproc.c                  |  3 +--
+ drivers/platform/chrome/cros_ec_sensorhub.c        |  6 ++----
+ drivers/remoteproc/omap_remoteproc.c               |  6 ++----
+ 13 files changed, 28 insertions(+), 53 deletions(-)
+
 -- 
-2.7.4
+2.30.2
 
