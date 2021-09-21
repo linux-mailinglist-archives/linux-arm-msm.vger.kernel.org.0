@@ -2,163 +2,206 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DC224412F7E
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Sep 2021 09:30:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 52459413006
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Sep 2021 10:14:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230331AbhIUHcX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Sep 2021 03:32:23 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:29807 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230294AbhIUHcW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Sep 2021 03:32:22 -0400
+        id S230415AbhIUIQQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Sep 2021 04:16:16 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:53572 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230442AbhIUIQP (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 21 Sep 2021 04:16:15 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1632209454; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1632212087; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=OFZWp+6f6TpmtHBWFeHMQYaxckaDcifPYI6YFQ7nMQY=; b=NxJU86dz34oJBmwqg1nHwtAXcrDUqISM3CQfRTNwa+jR4gmqTbC/aOcb/yNxAMcOpx8yKqzb
- faFY9t4fq7DLYR0tkbDY6CfYuiI78y2ORw5JR5nKY/OMhZLzq9SRNU+hQfc0ihzPLx3EUS1L
- NqukEZj/sm4ehqPzXuCQm2hTlKQ=
-X-Mailgun-Sending-Ip: 69.72.43.7
+ Subject: Sender; bh=VYuQcjJgBCV5YB1/ZkmdBfsOPsqJ+sm51i8VCCVd5I8=; b=P4IWpjDJTjZkzvf4fiMN/1ZUCoFpRzv1LEWk60ER5WTh+30YoiH/MvhMwnYnhAZ1qI4AItDa
+ OZ2XYcd3LTQG93o58Rsz5NrjYsfWI6fOhe+s+MxD94Idoqu33ayLSTTvArAirG4eTpxoiK4A
+ S0L+18bAEqCtBHigIWaMxE9YEUA=
+X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
  smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 61498a2e648642cc1c243aee (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 21 Sep 2021 07:30:54
+ 61499465648642cc1c3609e8 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 21 Sep 2021 08:14:29
  GMT
-Sender: wcheng=codeaurora.org@mg.codeaurora.org
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BE109C43460; Tue, 21 Sep 2021 07:30:53 +0000 (UTC)
+        id 549EFC43618; Tue, 21 Sep 2021 08:14:29 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
         NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
         version=3.4.0
-Received: from [192.168.1.6] (cpe-75-80-185-151.san.res.rr.com [75.80.185.151])
+Received: from [192.168.204.90] (unknown [157.48.173.130])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: wcheng)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 616FDC4338F;
-        Tue, 21 Sep 2021 07:30:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 616FDC4338F
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 540C4C4338F;
+        Tue, 21 Sep 2021 08:14:21 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 540C4C4338F
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: dwc3-qcom: tx-fifo-resize regression on Poco F1 (sdm845) with
- v5.15-rc1
-To:     Amit Pundir <amit.pundir@linaro.org>
-Cc:     Felipe Balbi <balbi@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jack Pham <jackp@codeaurora.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        John Stultz <john.stultz@linaro.org>,
-        linux-usb@vger.kernel.org, lkml <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>
-References: <CAMi1Hd3k2snB4-=M57pVrMVom=a9_2a0DTFk-+Hzpubwk-Pr9Q@mail.gmail.com>
- <64a2a428-8bb1-0078-2403-1ca8e28cf4b1@codeaurora.org>
- <CAMi1Hd2MCxJgbHz9oGWe4L+MXNM3p+Xntpcg6t3TvZxwjJTy0Q@mail.gmail.com>
-From:   Wesley Cheng <wcheng@codeaurora.org>
-Message-ID: <47a06078-dd41-7b3d-3de3-4e6c24211691@codeaurora.org>
-Date:   Tue, 21 Sep 2021 00:30:51 -0700
+Subject: Re: [PATCH 4/7] ASoC: codecs: lpass-va-macro: Change bulk voting to
+ individual clock voting
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org
+Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>
+References: <1632123331-2425-1-git-send-email-srivasam@codeaurora.org>
+ <1632123331-2425-5-git-send-email-srivasam@codeaurora.org>
+ <5f915592-0ca6-2839-43fc-6d9aef1484b7@linaro.org>
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Organization: Qualcomm India Private Limited.
+Message-ID: <2378b5b1-fe45-171d-f8f9-373f8cece37f@codeaurora.org>
+Date:   Tue, 21 Sep 2021 13:44:19 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <CAMi1Hd2MCxJgbHz9oGWe4L+MXNM3p+Xntpcg6t3TvZxwjJTy0Q@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
+In-Reply-To: <5f915592-0ca6-2839-43fc-6d9aef1484b7@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
 Content-Language: en-US
-Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Amit,
 
-On 9/21/2021 12:04 AM, Amit Pundir wrote:
-> Hi Wesley,
-> 
-> On Tue, 21 Sept 2021 at 02:44, Wesley Cheng <wcheng@codeaurora.org> wrote:
+On 9/20/2021 6:55 PM, Srinivas Kandagatla wrote:
+>
+>
+Thanks for Your time Srini!!!
+> On 20/09/2021 08:35, Srinivasa Rao Mandadapu wrote:
+>> Change bulk clock frequency voting to individual voting.
 >>
->> Hi Amit,
+> Can you please explain why do we need to move out using clk bulk apis?
+>
+> Am not seeing any thing obvious behavior changing as part of this 
+> patch, more details please..
+
+In ADSP bypass use case, few clocks like macro and decode, are optional. 
+So is the main reason for move out.
+
+And sometimes we are seeing bulk voting failed in Kodiak setup.
+
+>> Fixes: 908e6b1df26e (ASoC: codecs: lpass-va-macro: Add support to VA 
+>> Macro)
+>
+> Why this has Fixes tag? Are we fixing any bug with this patch?
+Okay. As such we are not fixing any bug. Will remove this fixes tag on 
+your suggestion.
+>
 >>
->> On 9/20/2021 1:45 PM, Amit Pundir wrote:
->>> Hi Wesley, All,
->>>
->>> I see a reboot loop on Xiaomi Pocophone F1 (sdm845) with TX FIFO
->>> resize patches which landed in v5.15-rc1. Upstream commit cefdd52fa045
->>> "usb: dwc3: dwc3-qcom: Enable tx-fifo-resize property by default" to
->>> be specific, which switched on this feature by default.
->>>
->>> At times the phone crashes into the fastboot mode after the reboot
->>> loop, but mostly end up booting to UI after a while. This is what it
->>> looks like https://people.linaro.org/~amit.pundir/beryllium-userdebug/PXL_20210920_162749483.mp4.
->>>
+>> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+>> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+>> ---
+>>   sound/soc/codecs/lpass-va-macro.c | 46 
+>> ++++++++++++++++++++++++---------------
+>>   1 file changed, 28 insertions(+), 18 deletions(-)
 >>
->> I believe Android will attempt a number of bootup sequences and if it
->> fails, it falls back to fastboot mode.  Are there any available logs you
->> might be able to collect to see where the issue is?
-> 
-> It is a stock phone with no UART access, so I can't get early crash
-> logs unless I'm booted up to adb shell. I can try getting some info
-> using pstore-ramoops but warm reset support for sdm845 was not
-> upstreamed when I tried using that the last time.
-> 
-
-I see, can we maybe avoid the actual resizing by commenting out the
-following writel() calls, but let the fifo resize logic calculate the EPs?
-
-void dwc3_gadget_clear_tx_fifos(struct dwc3 *dwc)
-{
-...
-		/* Don't change TXFRAMNUM on usb31 version */
-		size = DWC3_IP_IS(DWC3) ? 0 :
-			dwc3_readl(dwc->regs, DWC3_GTXFIFOSIZ(num >> 1)) &
-				   DWC31_GTXFIFOSIZ_TXFRAMNUM;
-		/* Comment the dwc3_writel() */
-		//dwc3_writel(dwc->regs, DWC3_GTXFIFOSIZ(num >> 1), size);
-
-and
-
-static int dwc3_gadget_resize_tx_fifos(struct dwc3_ep *dep)
-{
-...
-	/* Comment the dwc3_writel() */
-	//dwc3_writel(dwc->regs, DWC3_GTXFIFOSIZ(dep->number >> 1), fifo_size);
-	dwc->num_ep_resized++;
-
-Those 2 writel() would be the one that actually programs the TXFIFO
-register.  I hope when commented out, no resize should actually happen
-anymore.
-
-With this, hopefully we can get some logs from the device at least :)
-
+>> diff --git a/sound/soc/codecs/lpass-va-macro.c 
+>> b/sound/soc/codecs/lpass-va-macro.c
+>> index d312a14..0ea39ae 100644
+>> --- a/sound/soc/codecs/lpass-va-macro.c
+>> +++ b/sound/soc/codecs/lpass-va-macro.c
+>> @@ -193,7 +193,10 @@ struct va_macro {
+>>         int dec_mode[VA_MACRO_NUM_DECIMATORS];
+>>       struct regmap *regmap;
+>> -    struct clk_bulk_data clks[VA_NUM_CLKS_MAX];
+>> +    struct clk *mclk;
+>> +    struct clk *macro;
+>> +    struct clk *dcodec;
+>> +
+>>       struct clk_hw hw;
+>>         s32 dmic_0_1_clk_cnt;
+>> @@ -1321,7 +1324,7 @@ static const struct clk_ops fsgen_gate_ops = {
+>>     static int va_macro_register_fsgen_output(struct va_macro *va)
+>>   {
+>> -    struct clk *parent = va->clks[2].clk;
+>> +    struct clk *parent = va->mclk;
+>>       struct device *dev = va->dev;
+>>       struct device_node *np = dev->of_node;
+>>       const char *parent_clk_name;
+>> @@ -1404,15 +1407,18 @@ static int va_macro_probe(struct 
+>> platform_device *pdev)
+>>           return -ENOMEM;
+>>         va->dev = dev;
+>> -    va->clks[0].id = "macro";
+>> -    va->clks[1].id = "dcodec";
+>> -    va->clks[2].id = "mclk";
+>>   -    ret = devm_clk_bulk_get(dev, VA_NUM_CLKS_MAX, va->clks);
+>> -    if (ret) {
+>> -        dev_err(dev, "Error getting VA Clocks (%d)\n", ret);
+>> -        return ret;
+>> -    }
+>> +    va->macro = devm_clk_get_optional(dev, "macro");
+>> +    if (IS_ERR(va->macro))
+>> +        return PTR_ERR(va->macro);
+>> +
+>> +    va->dcodec = devm_clk_get_optional(dev, "dcodec");
+>> +    if (IS_ERR(va->dcodec))
+>> +        return PTR_ERR(va->dcodec);
+>> +
+>> +    va->mclk = devm_clk_get(dev, "mclk");
+>> +    if (IS_ERR(va->mclk))
+>> +        return PTR_ERR(va->mclk);
+>>         ret = of_property_read_u32(dev->of_node, 
+>> "qcom,dmic-sample-rate",
+>>                      &sample_rate);
+>> @@ -1426,10 +1432,11 @@ static int va_macro_probe(struct 
+>> platform_device *pdev)
+>>       }
+>>         /* mclk rate */
+>> -    clk_set_rate(va->clks[1].clk, VA_MACRO_MCLK_FREQ);
+>> -    ret = clk_bulk_prepare_enable(VA_NUM_CLKS_MAX, va->clks);
+>> -    if (ret)
+>> -        return ret;
+>> +    clk_set_rate(va->mclk, VA_MACRO_MCLK_FREQ);
+>> +
+>> +    clk_prepare_enable(va->mclk);
+>> +    clk_prepare_enable(va->macro);
+>> +    clk_prepare_enable(va->dcodec);
+>>         base = devm_platform_ioremap_resource(pdev, 0);
+>>       if (IS_ERR(base)) {
+>> @@ -1457,8 +1464,9 @@ static int va_macro_probe(struct 
+>> platform_device *pdev)
+>>       return ret;
+>>     err:
+>> -    clk_bulk_disable_unprepare(VA_NUM_CLKS_MAX, va->clks);
+>> -
+>> +    clk_disable_unprepare(va->mclk);
+>> +    clk_disable_unprepare(va->macro);
+>> +    clk_disable_unprepare(va->dcodec);
+>>       return ret;
+>>   }
+>>   @@ -1466,8 +1474,10 @@ static int va_macro_remove(struct 
+>> platform_device *pdev)
+>>   {
+>>       struct va_macro *va = dev_get_drvdata(&pdev->dev);
+>>   -    clk_bulk_disable_unprepare(VA_NUM_CLKS_MAX, va->clks);
+>> -
+>> +    of_clk_del_provider(pdev->dev.of_node);
+>
+> fsgen clk is registered using devm_* variant of clk apis, so why do we 
+> need this here?
+>
+Okay. Will remove it and post new patch.
+>
+> --srini
+>> +    clk_disable_unprepare(va->mclk);
+>> +    clk_disable_unprepare(va->macro);
+>> +    clk_disable_unprepare(va->dcodec);
+>>       return 0;
+>>   }
 >>
->>> PocoF1 does support TX fifo resizing as I can see that in the
->>> downstream dts. So maybe it is the tx-fifo-max-num which need to be
->>> adjusted for the device? I couldn't find the tx-fifo-max-num
->>> equivalent in the downstream tree though
->>> https://github.com/MiCode/Xiaomi_Kernel_OpenSource/tree/dipper-q-oss/
->>>
->>
->> I assume that you've already confirmed reverting that change resolves
->> the constant reboots?
-> 
-> Yes reverting that change resolves the reboot loop issue. Speaking of
-> which, since no other platform seem to be running into this issue and
-> "tx-fifo-max-num" property is apparently not at fault either, is it
-> reasonable to skip adding "tx-fifo-resize" property for PocoF1 using
-> of_machine_is_compatible("xiaomi,beryllium") as a workaround?
-> 
-
-Since SDM845 does technically support txfifo resize downstream, let me
-see if I can figure out what is different on this particular device
-after getting the logs.
-
-Thanks
-Wesley Cheng
-
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+
