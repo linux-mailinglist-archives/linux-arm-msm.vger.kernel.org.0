@@ -2,145 +2,163 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 835EC412F79
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Sep 2021 09:30:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC224412F7E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Sep 2021 09:30:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230194AbhIUHcB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Sep 2021 03:32:01 -0400
+        id S230331AbhIUHcX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Sep 2021 03:32:23 -0400
 Received: from m43-7.mailgun.net ([69.72.43.7]:29807 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230160AbhIUHcA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Sep 2021 03:32:00 -0400
+        id S230294AbhIUHcW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 21 Sep 2021 03:32:22 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1632209432; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1632209454; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=aqjmP31SDqTSrOPTYMKFyi6cjdtEi8k8K9EsQv1g7o0=; b=FIFVg8ZSJF4wmavn9HgTHYbf97R6c0uz95qOqjzrh+3vAqgxWWPRaEeX1koUrjH1QJkVBTfq
- 0Dp5Z8HKWPl2vzBHPw6gdPzmnJHWLm9Gl5hbWYFykG1m5VkrBd3HPoai18WQyR5kkGzQvBbs
- 0prMq7KPOFfk17Wp5jbIjMNgUTA=
+ Subject: Sender; bh=OFZWp+6f6TpmtHBWFeHMQYaxckaDcifPYI6YFQ7nMQY=; b=NxJU86dz34oJBmwqg1nHwtAXcrDUqISM3CQfRTNwa+jR4gmqTbC/aOcb/yNxAMcOpx8yKqzb
+ faFY9t4fq7DLYR0tkbDY6CfYuiI78y2ORw5JR5nKY/OMhZLzq9SRNU+hQfc0ihzPLx3EUS1L
+ NqukEZj/sm4ehqPzXuCQm2hTlKQ=
 X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 61498a08b585cc7d24befdc8 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 21 Sep 2021 07:30:16
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 61498a2e648642cc1c243aee (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 21 Sep 2021 07:30:54
  GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Sender: wcheng=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C10EEC4361B; Tue, 21 Sep 2021 07:30:16 +0000 (UTC)
+        id BE109C43460; Tue, 21 Sep 2021 07:30:53 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
         NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
         version=3.4.0
-Received: from [192.168.204.90] (unknown [157.48.173.130])
+Received: from [192.168.1.6] (cpe-75-80-185-151.san.res.rr.com [75.80.185.151])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id E164CC43460;
-        Tue, 21 Sep 2021 07:30:08 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org E164CC43460
+        (Authenticated sender: wcheng)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 616FDC4338F;
+        Tue, 21 Sep 2021 07:30:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 616FDC4338F
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH 3/7] ASoC: codecs: tx-macro: Change mic control registers
- to volatile
-To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org
-Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>
-References: <1632123331-2425-1-git-send-email-srivasam@codeaurora.org>
- <1632123331-2425-4-git-send-email-srivasam@codeaurora.org>
- <c1c7b1e8-98f5-99a3-1374-11d1d61535b4@linaro.org>
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Organization: Qualcomm India Private Limited.
-Message-ID: <b442ee2b-622c-674d-3abe-b1fbbfa5aeb9@codeaurora.org>
-Date:   Tue, 21 Sep 2021 13:00:05 +0530
+Subject: Re: dwc3-qcom: tx-fifo-resize regression on Poco F1 (sdm845) with
+ v5.15-rc1
+To:     Amit Pundir <amit.pundir@linaro.org>
+Cc:     Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jack Pham <jackp@codeaurora.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        John Stultz <john.stultz@linaro.org>,
+        linux-usb@vger.kernel.org, lkml <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>
+References: <CAMi1Hd3k2snB4-=M57pVrMVom=a9_2a0DTFk-+Hzpubwk-Pr9Q@mail.gmail.com>
+ <64a2a428-8bb1-0078-2403-1ca8e28cf4b1@codeaurora.org>
+ <CAMi1Hd2MCxJgbHz9oGWe4L+MXNM3p+Xntpcg6t3TvZxwjJTy0Q@mail.gmail.com>
+From:   Wesley Cheng <wcheng@codeaurora.org>
+Message-ID: <47a06078-dd41-7b3d-3de3-4e6c24211691@codeaurora.org>
+Date:   Tue, 21 Sep 2021 00:30:51 -0700
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <c1c7b1e8-98f5-99a3-1374-11d1d61535b4@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <CAMi1Hd2MCxJgbHz9oGWe4L+MXNM3p+Xntpcg6t3TvZxwjJTy0Q@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
 Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Amit,
 
-On 9/20/2021 6:54 PM, Srinivas Kandagatla wrote:
-Thanks for your time Srini!!
->
-> On 20/09/2021 08:35, Srinivasa Rao Mandadapu wrote:
->> Update amic and dmic related tx macro control registers to volatile
+On 9/21/2021 12:04 AM, Amit Pundir wrote:
+> Hi Wesley,
+> 
+> On Tue, 21 Sept 2021 at 02:44, Wesley Cheng <wcheng@codeaurora.org> wrote:
 >>
->> Fixes: c39667ddcfc5 (ASoC: codecs: lpass-tx-macro: add support for 
->> lpass tx macro)
+>> Hi Amit,
 >>
->> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
->> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
->> ---
->>   sound/soc/codecs/lpass-tx-macro.c | 13 +++++++++++++
->>   1 file changed, 13 insertions(+)
+>> On 9/20/2021 1:45 PM, Amit Pundir wrote:
+>>> Hi Wesley, All,
+>>>
+>>> I see a reboot loop on Xiaomi Pocophone F1 (sdm845) with TX FIFO
+>>> resize patches which landed in v5.15-rc1. Upstream commit cefdd52fa045
+>>> "usb: dwc3: dwc3-qcom: Enable tx-fifo-resize property by default" to
+>>> be specific, which switched on this feature by default.
+>>>
+>>> At times the phone crashes into the fastboot mode after the reboot
+>>> loop, but mostly end up booting to UI after a while. This is what it
+>>> looks like https://people.linaro.org/~amit.pundir/beryllium-userdebug/PXL_20210920_162749483.mp4.
+>>>
 >>
->> diff --git a/sound/soc/codecs/lpass-tx-macro.c 
->> b/sound/soc/codecs/lpass-tx-macro.c
->> index 9273724..e65b592 100644
->> --- a/sound/soc/codecs/lpass-tx-macro.c
->> +++ b/sound/soc/codecs/lpass-tx-macro.c
->> @@ -423,6 +423,13 @@ static bool tx_is_volatile_register(struct 
->> device *dev, unsigned int reg)
->>       case CDC_TX_TOP_CSR_SWR_DMIC1_CTL:
->>       case CDC_TX_TOP_CSR_SWR_DMIC2_CTL:
->>       case CDC_TX_TOP_CSR_SWR_DMIC3_CTL:
->> +    case CDC_TX_TOP_CSR_SWR_AMIC0_CTL:
->> +    case CDC_TX_TOP_CSR_SWR_AMIC1_CTL:
->> +    case CDC_TX_CLK_RST_CTRL_MCLK_CONTROL:
->> +    case CDC_TX_CLK_RST_CTRL_FS_CNT_CONTROL:
->> +    case CDC_TX_CLK_RST_CTRL_SWR_CONTROL:
->> +    case CDC_TX_TOP_CSR_SWR_CTRL:
->> +    case CDC_TX0_TX_PATH_SEC7:
->
-> Why are these marked as Volatile?
-> Can you provide some details on the issue that you are seeing?
->
-> --srini
+>> I believe Android will attempt a number of bootup sequences and if it
+>> fails, it falls back to fastboot mode.  Are there any available logs you
+>> might be able to collect to see where the issue is?
+> 
+> It is a stock phone with no UART access, so I can't get early crash
+> logs unless I'm booted up to adb shell. I can try getting some info
+> using pstore-ramoops but warm reset support for sdm845 was not
+> upstreamed when I tried using that the last time.
+> 
 
-Without volatile these registers are not reflecting in Hardware and 
-playback and capture is not working.
+I see, can we maybe avoid the actual resizing by commenting out the
+following writel() calls, but let the fifo resize logic calculate the EPs?
 
-Will do recheck and keep only required registers as volatile.
+void dwc3_gadget_clear_tx_fifos(struct dwc3 *dwc)
+{
+...
+		/* Don't change TXFRAMNUM on usb31 version */
+		size = DWC3_IP_IS(DWC3) ? 0 :
+			dwc3_readl(dwc->regs, DWC3_GTXFIFOSIZ(num >> 1)) &
+				   DWC31_GTXFIFOSIZ_TXFRAMNUM;
+		/* Comment the dwc3_writel() */
+		//dwc3_writel(dwc->regs, DWC3_GTXFIFOSIZ(num >> 1), size);
 
->
->
->>           return true;
->>       }
->>       return false;
->> @@ -1674,6 +1681,12 @@ static int tx_macro_component_probe(struct 
->> snd_soc_component *comp)
->>         snd_soc_component_update_bits(comp, CDC_TX0_TX_PATH_SEC7, 0x3F,
->>                         0x0A);
->> +    snd_soc_component_update_bits(comp, 
->> CDC_TX_TOP_CSR_SWR_AMIC0_CTL, 0xFF, 0x00);
->> +    snd_soc_component_update_bits(comp, 
->> CDC_TX_TOP_CSR_SWR_AMIC1_CTL, 0xFF, 0x00);
->> +    snd_soc_component_update_bits(comp, 
->> CDC_TX_TOP_CSR_SWR_DMIC0_CTL, 0xFF, 0x00);
->> +    snd_soc_component_update_bits(comp, 
->> CDC_TX_TOP_CSR_SWR_DMIC1_CTL, 0xFF, 0x00);
->> +    snd_soc_component_update_bits(comp, 
->> CDC_TX_TOP_CSR_SWR_DMIC2_CTL, 0xFF, 0x00);
->> +    snd_soc_component_update_bits(comp, 
->> CDC_TX_TOP_CSR_SWR_DMIC3_CTL, 0xFF, 0x00);
->>         return 0;
->>   }
+and
+
+static int dwc3_gadget_resize_tx_fifos(struct dwc3_ep *dep)
+{
+...
+	/* Comment the dwc3_writel() */
+	//dwc3_writel(dwc->regs, DWC3_GTXFIFOSIZ(dep->number >> 1), fifo_size);
+	dwc->num_ep_resized++;
+
+Those 2 writel() would be the one that actually programs the TXFIFO
+register.  I hope when commented out, no resize should actually happen
+anymore.
+
+With this, hopefully we can get some logs from the device at least :)
+
 >>
+>>> PocoF1 does support TX fifo resizing as I can see that in the
+>>> downstream dts. So maybe it is the tx-fifo-max-num which need to be
+>>> adjusted for the device? I couldn't find the tx-fifo-max-num
+>>> equivalent in the downstream tree though
+>>> https://github.com/MiCode/Xiaomi_Kernel_OpenSource/tree/dipper-q-oss/
+>>>
+>>
+>> I assume that you've already confirmed reverting that change resolves
+>> the constant reboots?
+> 
+> Yes reverting that change resolves the reboot loop issue. Speaking of
+> which, since no other platform seem to be running into this issue and
+> "tx-fifo-max-num" property is apparently not at fault either, is it
+> reasonable to skip adding "tx-fifo-resize" property for PocoF1 using
+> of_machine_is_compatible("xiaomi,beryllium") as a workaround?
+> 
+
+Since SDM845 does technically support txfifo resize downstream, let me
+see if I can figure out what is different on this particular device
+after getting the logs.
+
+Thanks
+Wesley Cheng
+
 -- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
-
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
