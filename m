@@ -2,147 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E38EE412E12
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Sep 2021 06:50:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F38A8412E6E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Sep 2021 08:00:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229925AbhIUEwX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Sep 2021 00:52:23 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:50737 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229923AbhIUEwV (ORCPT
+        id S229679AbhIUGBh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Sep 2021 02:01:37 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:26988 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229664AbhIUGBh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Sep 2021 00:52:21 -0400
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 20 Sep 2021 21:50:50 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 20 Sep 2021 21:50:48 -0700
-X-QCInternal: smtphost
-Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 21 Sep 2021 10:20:32 +0530
-Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
-        id 1C78721D93; Tue, 21 Sep 2021 10:20:31 +0530 (IST)
-From:   Dikshita Agarwal <dikshita@codeaurora.org>
-To:     andy.gross@linaro.org, david.brown@linaro.org, robh+dt@kernel.org,
-        mark.rutland@arm.com, devicetree@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org, stanimir.varbanov@linaro.org,
-        Dikshita Agarwal <dikshita@codeaurora.org>,
-        Mansur Alisha Shaik <mansur@codeaurora.org>
-Subject: [RESEND PATCH v6] arm64: dts: qcom: sc7280: Add venus DT node
-Date:   Tue, 21 Sep 2021 10:20:29 +0530
-Message-Id: <1632199829-25686-1-git-send-email-dikshita@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Tue, 21 Sep 2021 02:01:37 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1632204009; h=Content-Transfer-Encoding: MIME-Version:
+ Message-Id: Date: Subject: Cc: To: From: Sender;
+ bh=OhGeWw49+gS6KAJRqr/xs6z83h7Ybuk7Knmq/JpWzIg=; b=vTCZb+FLnme8rzmZe/gLJ/zORddZ9JjTAyP46I3Xy0SJEWw1KGwKJAsi0Fn8KLlkL1PxVEqL
+ +BFsV4V4ctiOOOPf9TPRTT3YPzzRx5wAzyTaz2ZlepcmeYbUoZKWKryvRGafKMc2K4DJAC1d
+ odJLjBF3rWjjzauPu3FQE1Ceokw=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 614974deec62f57c9a786044 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 21 Sep 2021 05:59:58
+ GMT
+Sender: saiprakash.ranjan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id A0F5FC4360C; Tue, 21 Sep 2021 05:59:57 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from blr-ubuntu-253.qualcomm.com (blr-bdr-fw-01_GlobalNAT_AllZones-Outside.qualcomm.com [103.229.18.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: saiprakash.ranjan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id CFCF9C4338F;
+        Tue, 21 Sep 2021 05:59:54 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org CFCF9C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org,
+        Naina Mehta <nainmeht@codeaurora.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: [PATCH] soc: qcom: llcc: Disable MMUHWT retention
+Date:   Tue, 21 Sep 2021 11:29:42 +0530
+Message-Id: <20210921055942.30600-1-saiprakash.ranjan@codeaurora.org>
+X-Mailer: git-send-email 2.29.0
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add DT entries for the sc7280 venus encoder/decoder.
+From: Naina Mehta <nainmeht@codeaurora.org>
 
-this patch depends on [1].
+Disable MMUHWT retention for SC7280 as done for other platforms
+to avoid more power burn.
 
-[1] https://patchwork.kernel.org/project/linux-arm-msm/list/?series=529463
-
-Co-developed-by: Mansur Alisha Shaik <mansur@codeaurora.org>
-Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
-Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+Fixes: f6a07be63301 ("soc: qcom: llcc: Add configuration data for SC7280")
+Signed-off-by: Naina Mehta <nainmeht@codeaurora.org>
+Signed-off-by: Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
 ---
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 75 ++++++++++++++++++++++++++++++++++++
- 1 file changed, 75 insertions(+)
+ drivers/soc/qcom/llcc-qcom.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index a8c274a..f171ababc 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -63,6 +63,11 @@
- 			no-map;
- 			reg = <0x0 0x80b00000 0x0 0x100000>;
- 		};
-+
-+		video_mem: memory@8b200000 {
-+			reg = <0x0 0x8b200000 0x0 0x500000>;
-+			no-map;
-+		};
- 	};
- 
- 	cpus {
-@@ -1063,6 +1068,76 @@
- 			qcom,bcm-voters = <&apps_bcm_voter>;
- 		};
- 
-+		venus: video-codec@aa00000 {
-+			compatible = "qcom,sc7280-venus";
-+			reg = <0 0x0aa00000 0 0xd0600>;
-+			interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
-+
-+			clocks = <&videocc VIDEO_CC_MVSC_CORE_CLK>,
-+				 <&videocc VIDEO_CC_MVSC_CTL_AXI_CLK>,
-+				 <&videocc VIDEO_CC_VENUS_AHB_CLK>,
-+				 <&videocc VIDEO_CC_MVS0_CORE_CLK>,
-+				 <&videocc VIDEO_CC_MVS0_AXI_CLK>;
-+			clock-names = "core", "bus", "iface",
-+				      "vcodec_core", "vcodec_bus";
-+
-+			power-domains = <&videocc MVSC_GDSC>,
-+					<&videocc MVS0_GDSC>,
-+					<&rpmhpd SC7280_CX>;
-+			power-domain-names = "venus", "vcodec0", "cx";
-+			operating-points-v2 = <&venus_opp_table>;
-+
-+			interconnects = <&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_VENUS_CFG 0>,
-+					<&mmss_noc MASTER_VIDEO_P0 0 &mc_virt SLAVE_EBI1 0>;
-+			interconnect-names = "cpu-cfg", "video-mem";
-+
-+			iommus = <&apps_smmu 0x2180 0x20>,
-+				 <&apps_smmu 0x2184 0x20>;
-+			memory-region = <&video_mem>;
-+
-+			video-decoder {
-+				compatible = "venus-decoder";
-+			};
-+
-+			video-encoder {
-+				compatible = "venus-encoder";
-+			};
-+
-+			video-firmware {
-+				iommus = <&apps_smmu 0x21a2 0x0>;
-+			};
-+
-+			venus_opp_table: venus-opp-table {
-+				compatible = "operating-points-v2";
-+
-+				opp-133330000 {
-+					opp-hz = /bits/ 64 <133330000>;
-+					required-opps = <&rpmhpd_opp_low_svs>;
-+				};
-+
-+				opp-240000000 {
-+					opp-hz = /bits/ 64 <240000000>;
-+					required-opps = <&rpmhpd_opp_svs>;
-+				};
-+
-+				opp-335000000 {
-+					opp-hz = /bits/ 64 <335000000>;
-+					required-opps = <&rpmhpd_opp_svs_l1>;
-+				};
-+
-+				opp-424000000 {
-+					opp-hz = /bits/ 64 <424000000>;
-+					required-opps = <&rpmhpd_opp_nom>;
-+				};
-+
-+				opp-460000048 {
-+					opp-hz = /bits/ 64 <460000048>;
-+					required-opps = <&rpmhpd_opp_turbo>;
-+				};
-+			};
-+
-+		};
-+
- 		videocc: clock-controller@aaf0000 {
- 			compatible = "qcom,sc7280-videocc";
- 			reg = <0 0xaaf0000 0 0x10000>;
+diff --git a/drivers/soc/qcom/llcc-qcom.c b/drivers/soc/qcom/llcc-qcom.c
+index fb471cc4066b..6bf2f1d1f2c5 100644
+--- a/drivers/soc/qcom/llcc-qcom.c
++++ b/drivers/soc/qcom/llcc-qcom.c
+@@ -115,7 +115,7 @@ static const struct llcc_slice_config sc7280_data[] =  {
+ 	{ LLCC_CMPT,     10, 768, 1, 1, 0x3f, 0x0, 0, 0, 0, 1, 0, 0},
+ 	{ LLCC_GPUHTW,   11, 256, 1, 1, 0x3f, 0x0, 0, 0, 0, 1, 0, 0},
+ 	{ LLCC_GPU,      12, 512, 1, 0, 0x3f, 0x0, 0, 0, 0, 1, 0, 0},
+-	{ LLCC_MMUHWT,   13, 256, 1, 1, 0x3f, 0x0, 0, 0, 0, 1, 1, 0},
++	{ LLCC_MMUHWT,   13, 256, 1, 1, 0x3f, 0x0, 0, 0, 0, 0, 1, 0},
+ 	{ LLCC_MDMPNG,   21, 768, 0, 1, 0x3f, 0x0, 0, 0, 0, 1, 0, 0},
+ 	{ LLCC_WLHW,     24, 256, 1, 1, 0x3f, 0x0, 0, 0, 0, 1, 0, 0},
+ 	{ LLCC_MODPE,    29, 64,  1, 1, 0x3f, 0x0, 0, 0, 0, 1, 0, 0},
 -- 
-2.7.4
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
