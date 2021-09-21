@@ -2,55 +2,57 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 70B4441364B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Sep 2021 17:36:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 47C82413616
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Sep 2021 17:23:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233981AbhIUPgi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Sep 2021 11:36:38 -0400
-Received: from mo4-p00-ob.smtp.rzone.de ([85.215.255.24]:30364 "EHLO
-        mo4-p00-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234125AbhIUPgh (ORCPT
+        id S234009AbhIUPYj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Sep 2021 11:24:39 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.52]:12732 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233295AbhIUPYi (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Sep 2021 11:36:37 -0400
-X-Greylist: delayed 541 seconds by postgrey-1.27 at vger.kernel.org; Tue, 21 Sep 2021 11:36:37 EDT
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1632237786;
+        Tue, 21 Sep 2021 11:24:38 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1632237787;
     s=strato-dkim-0002; d=gerhold.net;
-    h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
-    bh=JqxV/QM2aORH0D35iRMcueybQwkHash0nrd4YqDUGUA=;
-    b=GMvZJ7wnGvEIFPnHPYjkujtqrxLBqK8b4F1ghUNZRtGdb73d4Lf95TTl+ADt6cSM7F
-    Wp1g2gVS0opHWYgt6s0jspwUg2xDg0qbkLGjSPyBNp47QXH8nqDDnQTAaonn0i/waz71
-    FoqIVpU0HnS2yuyjvhdMF2enMvRH6WvkVEV+rmvhqMfB20RdEzmcm/Pys5A+3coS/e3j
-    NvGSqPlZUDhhgqEPt2TQoVFZgujlg7s4wmjs+BaZI9xIjspC7EFzi1nD7qJuytlLkrdw
-    +n84pFZaLjfOzRLcRyYV8NwfxkOwuqvh2HnHfMQ7T+uLUzWZgEngIYTaxlnKVw99IzCD
-    UnHA==
+    h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Cc:Date:
+    From:Subject:Sender;
+    bh=Td19UKq3T0glXNJuIuxRU4USqHAXzFvxdaOhOWmflRg=;
+    b=jA1Mg9KanOKTmAGLq86s31pGXblWz8FO27KOiRsahzgPeRqMd3zs5KSjId/Fz4fdf2
+    H0/BYdeKxKNUsyPRmXE61RuPssV4qL/BvOT87Th5wAshorEvnc1Qz9la2wq2/mldmhV+
+    Sj0NaK+AA07XHvIW4nNUDcEJXB1CTzyvHo+SVHv3ERGg7NeMng35/hGP5LYE9f/ZdjkC
+    OFBihgR7vNRak5l6fURhp054j+AC0TvpSujbZ/WhcfroENdjeaYvx3mHKumdKdLgJsKX
+    kcbL/mXYe51mPqSx/H0hTQkhjBpPWJ6U5+2UmyFuTnKhauU2oXUmflIPqyPUzclsIeID
+    rP5A==
 Authentication-Results: strato.com;
     dkim=none
 X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXTbAOHjRHIhr2eFOATg=="
 X-RZG-CLASS-ID: mo00
 Received: from droid..
     by smtp.strato.de (RZmta 47.33.8 DYNA|AUTH)
-    with ESMTPSA id 301038x8LFN3ARL
+    with ESMTPSA id 301038x8LFN7ARM
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
         (Client did not present a certificate);
-    Tue, 21 Sep 2021 17:23:03 +0200 (CEST)
+    Tue, 21 Sep 2021 17:23:07 +0200 (CEST)
 From:   Stephan Gerhold <stephan@gerhold.net>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
         devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
         Stephan Gerhold <stephan@gerhold.net>
-Subject: [PATCH 1/3] arm64: dts: qcom: msm8916: Add unit name for /soc node
-Date:   Tue, 21 Sep 2021 17:21:18 +0200
-Message-Id: <20210921152120.6710-1-stephan@gerhold.net>
+Subject: [PATCH 2/3] arm64: dts: qcom: msm8916: Drop underscore in node name
+Date:   Tue, 21 Sep 2021 17:21:19 +0200
+Message-Id: <20210921152120.6710-2-stephan@gerhold.net>
 X-Mailer: git-send-email 2.33.0
+In-Reply-To: <20210921152120.6710-1-stephan@gerhold.net>
+References: <20210921152120.6710-1-stephan@gerhold.net>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This fixes the following warning when building with W=1:
-Warning (unit_address_vs_reg): /soc: node has a reg or ranges property,
-but no unit name
+Using underscores in device tree nodes is not very common.
+Additionally, the _region suffix in "smem_region@..." is not really
+useful since it's obvious that it describes a reserved memory region.
 
 Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 ---
@@ -58,18 +60,18 @@ Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 008b98fe8c6b..5551dba2d5fd 100644
+index 5551dba2d5fd..95dea20cde75 100644
 --- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
 +++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -414,7 +414,7 @@ wcnss_smsm: wcnss@6 {
+@@ -41,7 +41,7 @@ tz-apps@86000000 {
+ 			no-map;
  		};
- 	};
  
--	soc: soc {
-+	soc: soc@0 {
- 		#address-cells = <1>;
- 		#size-cells = <1>;
- 		ranges = <0 0 0 0xffffffff>;
+-		smem_mem: smem_region@86300000 {
++		smem_mem: smem@86300000 {
+ 			reg = <0x0 0x86300000 0x0 0x100000>;
+ 			no-map;
+ 		};
 -- 
 2.33.0
 
