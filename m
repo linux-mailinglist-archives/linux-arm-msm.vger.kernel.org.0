@@ -2,88 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 45B82413619
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Sep 2021 17:23:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AFFA84136C2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Sep 2021 17:56:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232909AbhIUPYj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Sep 2021 11:24:39 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.52]:23636 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233837AbhIUPYi (ORCPT
+        id S234190AbhIUP5y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Sep 2021 11:57:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56832 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234031AbhIUP5x (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Sep 2021 11:24:38 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1632237787;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Cc:Date:
-    From:Subject:Sender;
-    bh=Mn6STB2mKFNw5lkE3KQV6CgCSU0VfjctWesLRX+6DBE=;
-    b=RE33oTpygs0xOUtNx4RhF7qHZs7gCpirkFNKgj4drZ96qExytbSbzU/hBpwiCfytI4
-    tzzyMFuzsOhUW2+EP1cBEHhffUAHEmBVUrHb8H8wCvxaBU97gIrEhRcHzKfGR4Bd5VPo
-    tpGR1dmzUT0CwN3MTe2DEw6pDkgGOHpDhiC1/3K0488ulgo0F8vs4Gq8TaiQjym5oBMk
-    0DbH5XYEZPNxH7OF2zEsz0WH49lTOCbqDuB999WeThB65Caq/m6OrD3MZ8jsFKzsP6wJ
-    KVChTpjyWISTMGYjEv7ujOOBnpqE07IU0gfMYM46zL9u51yS6uhk59CeKEjKfL+NbBlo
-    0hDA==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXTbAOHjRHIhr2eFOATg=="
-X-RZG-CLASS-ID: mo00
-Received: from droid..
-    by smtp.strato.de (RZmta 47.33.8 DYNA|AUTH)
-    with ESMTPSA id 301038x8LFN7ARN
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Tue, 21 Sep 2021 17:23:07 +0200 (CEST)
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        Stephan Gerhold <stephan@gerhold.net>
-Subject: [PATCH 3/3] arm64: dts: qcom: msm8916: Add "qcom,msm8916-sdhci" compatible
-Date:   Tue, 21 Sep 2021 17:21:20 +0200
-Message-Id: <20210921152120.6710-3-stephan@gerhold.net>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20210921152120.6710-1-stephan@gerhold.net>
-References: <20210921152120.6710-1-stephan@gerhold.net>
+        Tue, 21 Sep 2021 11:57:53 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 52BE1C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Sep 2021 08:56:25 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id e15so44625232lfr.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Sep 2021 08:56:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=3dRRvOoGnmIrwwlsxrjhXDNUq+Kqf2aFZjcm4Fpvb7k=;
+        b=XjT8euJ1tczso29kfHXmNCJHZRMAS1oX71/URiU3zEEb64+9uDWgmIwauvqNThaKd2
+         LY6KbMerapB+rxaOPqzMXMMoo13WjSu99La0jzgxrbYC3oRmbVXsvwOc2eDBkPiST4AE
+         Vx9Y2HZ3utTbU1zwoIfIwYQ+f72e96CJ5i+98x8/LpRPLGQrfmZd5Vg/WlsDPIFtkbA9
+         8kAuY8odwAUT+MFeuVlE9RbB11tnFs90USfJY66NmOhc7dplcF6vSuI2yrSdO9+9lu+L
+         9I6tocdkqJ7EcfnoXSqvvJfk2mQ/2gDyYNoFBYC30GH0lx/hspNQtok0n2XFWFxX4J1d
+         IWvA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3dRRvOoGnmIrwwlsxrjhXDNUq+Kqf2aFZjcm4Fpvb7k=;
+        b=vW5brmjvFJXiNnsZ3/T8bxPlIsSGuMJ4yqMPBJ/Rne2eSkZepG5KLjjf95vnCqkXy7
+         S4/s8HEV2ybnwlZBs9P6YQfusdJgl1BGtc4ALD8U+W2SPdgT1upO0HKYMTiu/S3F2b+u
+         kYhvo3UV34U2BqSm0fY4ctNoBX/vpmZtVwDJClmWdrbQaA9Kejx6CcT0a8FpdIVYtkrL
+         V7nJ+pyxJXoe1kFj1kKZPPnHS9CrwWWO/+KrWWt3Qo+M+1+TLKWA4KOoUrgUHHJPtXxc
+         3zHLToYRy85BfiY9SV5XA2GxZ0vjSGl0cdimPuU2dljtmG7R+MOf1XJ+AEOh4pTLho9h
+         +3gw==
+X-Gm-Message-State: AOAM532el9egeW/1NmGB7GH3NJP6Mv/ofS2cOdOaGV95p9nTEFSF4Q2G
+        MLEHwjbB3X2F/CvsJCKDp+GeY+9d3NpTF6dA5DqmkQ==
+X-Google-Smtp-Source: ABdhPJwFv538xdJK2HBZc2Lz0Yc451rwEukRVrSDiTltXNyPlcvQxBCy+cpnqY1P/Xjdy+Z5BZBlkAZXIBjSs9HGGEU=
+X-Received: by 2002:a05:6512:10cb:: with SMTP id k11mr13874613lfg.72.1632239775245;
+ Tue, 21 Sep 2021 08:56:15 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <1631860648-31774-1-git-send-email-rnayak@codeaurora.org>
+ <YUfZbsf3MX1aQJ2+@builder.lan> <d2f28d34-99b3-30f8-8504-bc819946876f@codeaurora.org>
+In-Reply-To: <d2f28d34-99b3-30f8-8504-bc819946876f@codeaurora.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Tue, 21 Sep 2021 17:56:04 +0200
+Message-ID: <CACRpkdaJm_UbJu=kXGOFs76MiAiTkqToEpOnf1Pk-by4FsCcgQ@mail.gmail.com>
+Subject: Re: [PATCH] pinctrl: qcom: Add egpio feature support
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        Prasad Sodagudi <psodagud@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-According to Documentation/devicetree/bindings/mmc/sdhci-msm.txt
-a SoC specific compatible should be used in addition to the IP version
-compatible, but for some reason it was never added for MSM8916.
+On Tue, Sep 21, 2021 at 12:39 PM Rajendra Nayak <rnayak@codeaurora.org> wrote:
+> On 9/20/2021 6:14 AM, Bjorn Andersson wrote:
 
-Add the "qcom,msm8916-sdhci" compatible additionally to make the
-device tree match the documented bindings.
+> > It seems reasonable that this would be another pinmux state for these
+> > pins, rather than just flipping them all in one or the other direction.
+>
+> hmm, I don't understand. This is not a pinmux state, its a switch to decide
+> the ownership.
+> These egpio pins have regulator mux functions, some for apps, some for the
+> island processor, they might not always be used as gpios.
 
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
----
- arch/arm64/boot/dts/qcom/msm8916.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+The pinmux API is for muliplexing a pin between owners, and that
+is what is going on is it not?
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916.dtsi b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-index 95dea20cde75..5879be0805b6 100644
---- a/arch/arm64/boot/dts/qcom/msm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8916.dtsi
-@@ -1420,7 +1420,7 @@ lpass_codec: audio-codec@771c000 {
- 		};
- 
- 		sdhc_1: sdhci@7824000 {
--			compatible = "qcom,sdhci-msm-v4";
-+			compatible = "qcom,msm8916-sdhci", "qcom,sdhci-msm-v4";
- 			reg = <0x07824900 0x11c>, <0x07824000 0x800>;
- 			reg-names = "hc_mem", "core_mem";
- 
-@@ -1438,7 +1438,7 @@ sdhc_1: sdhci@7824000 {
- 		};
- 
- 		sdhc_2: sdhci@7864000 {
--			compatible = "qcom,sdhci-msm-v4";
-+			compatible = "qcom,msm8916-sdhci", "qcom,sdhci-msm-v4";
- 			reg = <0x07864900 0x11c>, <0x07864000 0x800>;
- 			reg-names = "hc_mem", "core_mem";
- 
--- 
-2.33.0
+If the bit(s) select different processors that is changing the owner
+and creating a usage matrix, e.g.
 
+TLMM_GPIO
+ISLAND_GPIO
+TLMM_I2C
+ISLAND_I2C
+etc etc
+
+They become different muxing states nevertheless. How to encode them,
+such as (a) bitfields in the enums, (b) more cells in the device tree or
+(c) ... that is another question.
+
+Shoehorning it into pinconf is not the answer IMO.
+
+Yours,
+Linus Walleij
