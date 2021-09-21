@@ -2,98 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AE709413370
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Sep 2021 14:40:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6EF514133AC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Sep 2021 15:02:57 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232710AbhIUMly (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Sep 2021 08:41:54 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50428 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230052AbhIUMly (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Sep 2021 08:41:54 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 687CF60EE4;
-        Tue, 21 Sep 2021 12:40:25 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
-        s=korg; t=1632228025;
-        bh=vnQtIdfALMpaBJcqOxeMIYV1/XVbzBlFUwV0+5xXDHE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=hfPgZ+/hwaSovUFOgATGC1QVqr0Yk4QLB+UyjmRiqLffZ/bMb5VWnk5gOEmLo7/08
-         Mf3/7gM15uwnogJtmCwqIQUkdUB6zVZS7U9rR7deLGGf1ulpxTeHvtTN9zbOpFzXf2
-         UnJCniKlAP37Krjbg1woMn77MpZHsCqPKjXjKNIk=
-Date:   Tue, 21 Sep 2021 14:40:23 +0200
-From:   Greg KH <gregkh@linuxfoundation.org>
-To:     jeyr@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, srinivas.kandagatla@linaro.org,
-        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
-Subject: Re: [PATCH v3] misc: fastrpc: fix improper packet size calculation
-Message-ID: <YUnSt9B4hAe3y2k2@kroah.com>
-References: <1632224895-32661-1-git-send-email-jeyr@codeaurora.org>
- <YUnHbiQDZK/+tTAp@kroah.com>
- <9c5c13a393b64a4527f7be7ca42734d2@codeaurora.org>
+        id S232792AbhIUNEY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Sep 2021 09:04:24 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:37984 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232667AbhIUNEQ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 21 Sep 2021 09:04:16 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1632229368; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=qH2l5wCnZnelf0eU2pGiDEZnMruL9bfu6QZc4HulXxE=; b=BnbJZ7mRZv1aEqPxi7Az0whTJKS58+RmKA3T83QeWVWz/38n9YLaA8U9PZ5AsgfbREXycy6s
+ Tw58hzX3+GB/vtGIc4XhPrRlXJCkLmHfjezxZiLj34siKllzDYkUDlTr16BhDLkL4m3YNmba
+ Mk+vzN60z0Y0gUlOVnnB3zIUCpI=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 6149d7ddec62f57c9a213e40 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 21 Sep 2021 13:02:21
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 6C83CC43616; Tue, 21 Sep 2021 13:02:20 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.1.105] (unknown [157.48.153.228])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D3A5CC4338F;
+        Tue, 21 Sep 2021 13:02:12 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org D3A5CC4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [PATCH 3/7] ASoC: codecs: tx-macro: Change mic control registers
+ to volatile
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org
+Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>
+References: <1632123331-2425-1-git-send-email-srivasam@codeaurora.org>
+ <1632123331-2425-4-git-send-email-srivasam@codeaurora.org>
+ <c1c7b1e8-98f5-99a3-1374-11d1d61535b4@linaro.org>
+ <b442ee2b-622c-674d-3abe-b1fbbfa5aeb9@codeaurora.org>
+ <e87ef6e1-0c10-beaa-81ad-2c0ceae6bbcc@linaro.org>
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Organization: Qualcomm India Private Limited.
+Message-ID: <62c85130-df75-5aa6-8954-d1a55167827f@codeaurora.org>
+Date:   Tue, 21 Sep 2021 18:32:09 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <9c5c13a393b64a4527f7be7ca42734d2@codeaurora.org>
+In-Reply-To: <e87ef6e1-0c10-beaa-81ad-2c0ceae6bbcc@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 21, 2021 at 06:03:42PM +0530, jeyr@codeaurora.org wrote:
-> On 2021-09-21 17:22, Greg KH wrote:
-> > On Tue, Sep 21, 2021 at 05:18:15PM +0530, Jeya R wrote:
-> > > The buffer list is sorted and this is not being considered while
-> > > calculating packet size. This would lead to improper copy length
-> > > calculation for non-dmaheap buffers which would eventually cause
-> > > sending improper buffers to DSP.
-> > > 
-> > > Fixes: c68cfb718c8f ("misc: fastrpc: Add support for context Invoke
-> > > method")
-> > > Signed-off-by: Jeya R <jeyr@codeaurora.org>
-> > > Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-> > 
-> > Does this also need to go to the stable kernels?
-> Yes, this needs to go to stable kernels also as this fixes a potential issue
-> which is easily reproducible.
 
+On 9/21/2021 2:18 PM, Srinivas Kandagatla wrote:
+>
+>
+> On 21/09/2021 08:30, Srinivasa Rao Mandadapu wrote:
+>>
+>> On 9/20/2021 6:54 PM, Srinivas Kandagatla wrote:
+>> Thanks for your time Srini!!
+>>>
+>>> On 20/09/2021 08:35, Srinivasa Rao Mandadapu wrote:
+>>>> Update amic and dmic related tx macro control registers to volatile
+>>>>
+>>>> Fixes: c39667ddcfc5 (ASoC: codecs: lpass-tx-macro: add support for 
+>>>> lpass tx macro)
+>>>>
+>>>> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+>>>> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+>>>> ---
+>>>>   sound/soc/codecs/lpass-tx-macro.c | 13 +++++++++++++
+>>>>   1 file changed, 13 insertions(+)
+>>>>
+>>>> diff --git a/sound/soc/codecs/lpass-tx-macro.c 
+>>>> b/sound/soc/codecs/lpass-tx-macro.c
+>>>> index 9273724..e65b592 100644
+>>>> --- a/sound/soc/codecs/lpass-tx-macro.c
+>>>> +++ b/sound/soc/codecs/lpass-tx-macro.c
+>>>> @@ -423,6 +423,13 @@ static bool tx_is_volatile_register(struct 
+>>>> device *dev, unsigned int reg)
+>>>>       case CDC_TX_TOP_CSR_SWR_DMIC1_CTL:
+>>>>       case CDC_TX_TOP_CSR_SWR_DMIC2_CTL:
+>>>>       case CDC_TX_TOP_CSR_SWR_DMIC3_CTL:
+>>>> +    case CDC_TX_TOP_CSR_SWR_AMIC0_CTL:
+>>>> +    case CDC_TX_TOP_CSR_SWR_AMIC1_CTL:
+>>>> +    case CDC_TX_CLK_RST_CTRL_MCLK_CONTROL:
+>>>> +    case CDC_TX_CLK_RST_CTRL_FS_CNT_CONTROL:
+>>>> +    case CDC_TX_CLK_RST_CTRL_SWR_CONTROL:
+>>>> +    case CDC_TX_TOP_CSR_SWR_CTRL:
+>>>> +    case CDC_TX0_TX_PATH_SEC7:
+>>>
+>>> Why are these marked as Volatile?
+>>> Can you provide some details on the issue that you are seeing?
+>>>
+>>> --srini
+>>
+>> Without volatile these registers are not reflecting in Hardware and 
+>> playback and capture is not working.
+>>
+>> Will do recheck and keep only required registers as volatile.
+>
+> This sounds like a total hack to me,
+>
+> this might be happening in your case:
+>
+> The default values for this register are different to actual defaults.
+> Ex: CDC_TX_TOP_CSR_SWR_AMIC0_CTL default is 0x00
+> so writing 0x0 to this register will be no-op as there is no change in 
+> the register value as compared to default value as per regmap.
+>
+> In you case make sure the hardware default values are correctly 
+> reflected in tx_defaults array.
 
+The default values in tx_defaults are proper. But same value is not 
+reflecting in Hardware, but In Cache it's reflecting set value.
 
-> 
-> > 
-> > > ---
-> > > Changes in v3:
-> > > - relocate patch change list
-> > > 
-> > > Changes in v2:
-> > > - updated commit message to proper format
-> > > - added fixes tag to commit message
-> > > - removed unnecessary variable initialization
-> > > - removed length check during payload calculation
-> > > 
-> > >  drivers/misc/fastrpc.c | 10 ++++++----
-> > >  1 file changed, 6 insertions(+), 4 deletions(-)
-> > > 
-> > > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-> > > index beda610..69d45c4 100644
-> > > --- a/drivers/misc/fastrpc.c
-> > > +++ b/drivers/misc/fastrpc.c
-> > > @@ -719,16 +719,18 @@ static int fastrpc_get_meta_size(struct
-> > > fastrpc_invoke_ctx *ctx)
-> > >  static u64 fastrpc_get_payload_size(struct fastrpc_invoke_ctx *ctx,
-> > > int metalen)
-> > >  {
-> > >  	u64 size = 0;
-> > > -	int i;
-> > > +	int oix;
-> > 
-> > What does "oix" stand for?  What was wrong with i?
-> It is just a general convention we use. "oix" is used to iterate through
-> sorted overlap buffer list and use "i" to get corresponding unsorted list
-> index. We follow the same convention at other places also, for example:
-> fastrpc_get_args function.
+>
+> Then setting the desired value should work.
+>
+>
+> --srini
+>
+>
+>
+>>
+>>>
+>>>
+>>>>           return true;
+>>>>       }
+>>>>       return false;
+>>>> @@ -1674,6 +1681,12 @@ static int tx_macro_component_probe(struct 
+>>>> snd_soc_component *comp)
+>>>>         snd_soc_component_update_bits(comp, CDC_TX0_TX_PATH_SEC7, 
+>>>> 0x3F,
+>>>>                         0x0A);
+>>>> +    snd_soc_component_update_bits(comp, 
+>>>> CDC_TX_TOP_CSR_SWR_AMIC0_CTL, 0xFF, 0x00);
+>>>> +    snd_soc_component_update_bits(comp, 
+>>>> CDC_TX_TOP_CSR_SWR_AMIC1_CTL, 0xFF, 0x00);
+>>>> +    snd_soc_component_update_bits(comp, 
+>>>> CDC_TX_TOP_CSR_SWR_DMIC0_CTL, 0xFF, 0x00);
+>>>> +    snd_soc_component_update_bits(comp, 
+>>>> CDC_TX_TOP_CSR_SWR_DMIC1_CTL, 0xFF, 0x00);
+>>>> +    snd_soc_component_update_bits(comp, 
+>>>> CDC_TX_TOP_CSR_SWR_DMIC2_CTL, 0xFF, 0x00);
+>>>> +    snd_soc_component_update_bits(comp, 
+>>>> CDC_TX_TOP_CSR_SWR_DMIC3_CTL, 0xFF, 0x00);
+>>>>         return 0;
+>>>>   }
+>>>>
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 
-That is the only place it is used in all of the whole kernel tree.  It
-is not a normal variable for a loop, so who is "we" here?
-
-thanks,
-
-greg k-h
