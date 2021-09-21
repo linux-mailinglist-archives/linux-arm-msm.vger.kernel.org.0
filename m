@@ -2,163 +2,175 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 26960412E96
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Sep 2021 08:24:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3BC37412EE8
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Sep 2021 08:59:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229828AbhIUG0L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Sep 2021 02:26:11 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:34858 "EHLO
+        id S230012AbhIUHA4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Sep 2021 03:00:56 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:57854 "EHLO
         so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229788AbhIUG0L (ORCPT
+        with ESMTP id S229864AbhIUHAz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Sep 2021 02:26:11 -0400
+        Tue, 21 Sep 2021 03:00:55 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1632205483; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=r1MIh/PkldH2U+1tjZkQG+gLUFnytt67vnrcPlCRQvw=;
- b=Bqx1dfJ64j6ICx/M2Xnb4fBqYUV4J2WTy+pxf53BUph0hxCeq0SrL0o0NhOuefSvjR2f+Ecs
- Nzw8axMlvlcMoSz21ERn0jpmfr2KGEr4Vm5Ywa0XN0uGRsF0uDAUl4BUqykWlNM3cfoAU/iM
- NoaFqbkBrQ86t934/tB7Iae20s4=
+ s=smtp; t=1632207567; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=mqWwXANTiQxXkA98c0p3Y/JczBb1em+X57YatmhzCkE=; b=tZAHYXK2EBniqqfzFgZy4RHf+zEP3JMhCSq2nl3euvKkAOs+FZ9fGlTlIMm9agGghx3ZBXAA
+ ppz9JFfX8iTF8PbtJqKWCDnZ8c0IoX3LR87vcK0TwE61wJiH1ZSkyhpdOhldhku7wPJ0ASJd
+ 0HSZZoKzAjSoxljESgwDP3DjSmE=
 X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 61497aa2b585cc7d2498a9f9 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 21 Sep 2021 06:24:33
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 614982c9648642cc1c139354 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 21 Sep 2021 06:59:21
  GMT
-Sender: kathirav=codeaurora.org@mg.codeaurora.org
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id CBA2AC4360D; Tue, 21 Sep 2021 06:24:33 +0000 (UTC)
+        id CEA5DC43619; Tue, 21 Sep 2021 06:59:21 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
+        version=3.4.0
+Received: from [192.168.204.90] (unknown [157.48.173.130])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: kathirav)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D3792C4338F;
-        Tue, 21 Sep 2021 06:24:32 +0000 (UTC)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9DCBAC4338F;
+        Tue, 21 Sep 2021 06:59:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 9DCBAC4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [PATCH 2/7] ASoC: qcom: dt-bindings: Add compatible names for
+ lpass sc7280 digital codecs
+To:     Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
+        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org
+Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>
+References: <1632123331-2425-1-git-send-email-srivasam@codeaurora.org>
+ <1632123331-2425-3-git-send-email-srivasam@codeaurora.org>
+ <7c12126d-99a8-4572-6e95-b63131cae300@linaro.org>
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Organization: Qualcomm India Private Limited.
+Message-ID: <3e8ea5bd-9301-2605-b7e9-02ddab076fc7@codeaurora.org>
+Date:   Tue, 21 Sep 2021 12:29:08 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 21 Sep 2021 11:54:32 +0530
-From:   Kathiravan T <kathirav@codeaurora.org>
-To:     Robert Marko <robimarko@gmail.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>, agross@kernel.org,
-        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        open list <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH] arm64: dts: qcom: ipq8074: add SMEM support
-In-Reply-To: <CAOX2RU5b46H7nqm6G4mHLSqEhGiWktwWjUKF5w10Ut+AdKea-A@mail.gmail.com>
-References: <20210902214708.1776690-1-robimarko@gmail.com>
- <YUf3aKn78+41Cb/G@builder.lan>
- <CAOX2RU5b46H7nqm6G4mHLSqEhGiWktwWjUKF5w10Ut+AdKea-A@mail.gmail.com>
-Message-ID: <632a7d28c23a8497d35ea009bfe89883@codeaurora.org>
-X-Sender: kathirav@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+In-Reply-To: <7c12126d-99a8-4572-6e95-b63131cae300@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 8bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-09-20 14:55, Robert Marko wrote:
-> On Mon, 20 Sept 2021 at 04:52, Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
->> 
->> On Thu 02 Sep 16:47 CDT 2021, Robert Marko wrote:
->> 
->> > IPQ8074 uses SMEM like other modern QCA SoC-s, so since its already
->> > supported by the kernel add the required DT nodes.
->> >
->> > Signed-off-by: Robert Marko <robimarko@gmail.com>
->> 
->> Thanks for your patch Robert.
->> 
->> > ---
->> >  arch/arm64/boot/dts/qcom/ipq8074.dtsi | 28 +++++++++++++++++++++++++++
->> >  1 file changed, 28 insertions(+)
->> >
->> > diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
->> > index a620ac0d0b19..83e9243046aa 100644
->> > --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
->> > +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
->> > @@ -82,6 +82,29 @@ scm {
->> >               };
->> >       };
->> >
->> > +     reserved-memory {
->> > +             #address-cells = <2>;
->> > +             #size-cells = <2>;
->> > +             ranges;
->> > +
->> > +             smem_region: memory@4ab00000 {
->> > +                     no-map;
->> > +                     reg = <0x0 0x4ab00000 0x0 0x00100000>;
->> > +             };
->> > +     };
->> > +
->> > +     tcsr_mutex: hwlock {
->> > +             compatible = "qcom,tcsr-mutex";
->> > +             syscon = <&tcsr_mutex_regs 0 0x80>;
->> 
->> Since it's not okay to have a lone "syscon" and I didn't think it was
->> worth coming up with a binding for the TCSR mutex "syscon" I rewrote 
->> the
->> binding a while back. As such qcom,tcsr-mutex should now live in /soc
->> directly.
->> 
->> So can you please respin accordingly?
-> 
-> Sure, can you just confirm that the:
-> reg = <0x01905000 0x8000>;
-> 
-> Is the whole TCSR range as I don't have docs?
 
-Robert,
-
-TCSR_MUTEX block starts from 0x01905000 and has size 0x20000 (128KB)
-
-Thanks,
-Kathiravan T.
-
-> 
-> Regards,
-> Robert
->> 
->> Thanks,
->> Bjorn
->> 
->> > +             #hwlock-cells = <1>;
->> > +     };
->> > +
->> > +     smem {
->> > +             compatible = "qcom,smem";
->> > +             memory-region = <&smem_region>;
->> > +             hwlocks = <&tcsr_mutex 0>;
->> > +     };
->> > +
->> >       soc: soc {
->> >               #address-cells = <0x1>;
->> >               #size-cells = <0x1>;
->> > @@ -293,6 +316,11 @@ gcc: gcc@1800000 {
->> >                       #reset-cells = <0x1>;
->> >               };
->> >
->> > +             tcsr_mutex_regs: syscon@1905000 {
->> > +                     compatible = "syscon";
->> > +                     reg = <0x01905000 0x8000>;
->> > +             };
->> > +
->> >               sdhc_1: sdhci@7824900 {
->> >                       compatible = "qcom,sdhci-msm-v4";
->> >                       reg = <0x7824900 0x500>, <0x7824000 0x800>;
->> > --
->> > 2.31.1
->> >
-
+On 9/20/2021 6:54 PM, Srinivas Kandagatla wrote:
+Thanks for your time Srini!!
+>
+> On 20/09/2021 08:35, Srinivasa Rao Mandadapu wrote:
+>> Update compatible names in va, wsa, rx and tx macro codes for lpass 
+>> sc7280
+>>
+>> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+>> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+>> ---
+>> Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml | 4 
+>> +++-
+>> Documentation/devicetree/bindings/sound/qcom,lpass-tx-macro.yaml | 4 
+>> +++-
+>> Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml | 4 
+>> +++-
+>> Documentation/devicetree/bindings/sound/qcom,lpass-wsa-macro.yaml | 4 
+>> +++-
+>>   4 files changed, 12 insertions(+), 4 deletions(-)
+>>
+>> diff --git 
+>> a/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml 
+>> b/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml
+>> index 443d556..a4e767e 100644
+>> --- a/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml
+>> +++ b/Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml
+>> @@ -11,7 +11,9 @@ maintainers:
+>>     properties:
+>>     compatible:
+>> -    const: qcom,sm8250-lpass-rx-macro
+>> +    oneOf:
+>> +      - const: qcom,sm8250-lpass-rx-macro
+>> +      - const: qcom,sc7280-lpass-rx-macro
+> Recently Rob did tree wide change to use enum instead of oneOf for 
+> below reason
+> "
+> 'enum' is equivalent to 'oneOf' with a list of 'const' entries, but 
+> 'enum' is more concise and yields better error messages."
+>
+> So, can you move these to enums like:
+>
+> enum:
+>   - qcom,sm8250-lpass-rx-macro
+>   - qcom,sc7280-lpass-rx-macro
+>
+> --srini
+Okay. will change accordingly and post it.
+>
+>>     reg:
+>>       maxItems: 1
+>> diff --git 
+>> a/Documentation/devicetree/bindings/sound/qcom,lpass-tx-macro.yaml 
+>> b/Documentation/devicetree/bindings/sound/qcom,lpass-tx-macro.yaml
+>> index 6b5ca02..cdec478 100644
+>> --- a/Documentation/devicetree/bindings/sound/qcom,lpass-tx-macro.yaml
+>> +++ b/Documentation/devicetree/bindings/sound/qcom,lpass-tx-macro.yaml
+>> @@ -11,7 +11,9 @@ maintainers:
+>>     properties:
+>>     compatible:
+>> -    const: qcom,sm8250-lpass-tx-macro
+>> +    oneOf:
+>> +      - const: qcom,sm8250-lpass-tx-macro
+>> +      - const: qcom,sc7280-lpass-tx-macro
+>>       reg:
+>>       maxItems: 1
+>> diff --git 
+>> a/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml 
+>> b/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
+>> index 679b49c..e15bc05 100644
+>> --- a/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
+>> +++ b/Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml
+>> @@ -11,7 +11,9 @@ maintainers:
+>>     properties:
+>>     compatible:
+>> -    const: qcom,sm8250-lpass-va-macro
+>> +    oneOf:
+>> +      - const: qcom,sm8250-lpass-va-macro
+>> +      - const: qcom,sc7280-lpass-va-macro
+>>       reg:
+>>       maxItems: 1
+>> diff --git 
+>> a/Documentation/devicetree/bindings/sound/qcom,lpass-wsa-macro.yaml 
+>> b/Documentation/devicetree/bindings/sound/qcom,lpass-wsa-macro.yaml
+>> index 435b019..2dcccb5 100644
+>> --- a/Documentation/devicetree/bindings/sound/qcom,lpass-wsa-macro.yaml
+>> +++ b/Documentation/devicetree/bindings/sound/qcom,lpass-wsa-macro.yaml
+>> @@ -11,7 +11,9 @@ maintainers:
+>>     properties:
+>>     compatible:
+>> -    const: qcom,sm8250-lpass-wsa-macro
+>> +    oneOf:
+>> +      - const: qcom,sm8250-lpass-wsa-macro
+>> +      - const: qcom,sc7280-lpass-wsa-macro
+>>       reg:
+>>       maxItems: 1
+>>
 -- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member of Code Aurora Forum, hosted by The Linux Foundation
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+
