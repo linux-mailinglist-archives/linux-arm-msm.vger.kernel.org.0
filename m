@@ -2,201 +2,261 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EB0E0413785
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Sep 2021 18:24:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A6AF8413786
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Sep 2021 18:25:43 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233128AbhIUQ0I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Sep 2021 12:26:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35312 "EHLO
+        id S231386AbhIUQ1L (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Sep 2021 12:27:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35538 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231386AbhIUQ0I (ORCPT
+        with ESMTP id S231297AbhIUQ1K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Sep 2021 12:26:08 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 91A4FC061574
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Sep 2021 09:24:39 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id b20so25355183lfv.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Sep 2021 09:24:39 -0700 (PDT)
+        Tue, 21 Sep 2021 12:27:10 -0400
+Received: from mail-oo1-xc29.google.com (mail-oo1-xc29.google.com [IPv6:2607:f8b0:4864:20::c29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 43F42C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Sep 2021 09:25:42 -0700 (PDT)
+Received: by mail-oo1-xc29.google.com with SMTP id l17-20020a4ae391000000b00294ad0b1f52so7224061oov.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Sep 2021 09:25:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=oA9W6l8KRx2QluDseKYwcp4SAoPQajmJRCR/++O2IPM=;
-        b=N9/NbaeUZbA778s4xRXZFBDEPBctPhOmDxgTG51I7UVzgANmVPfuYLsk1GMJuIDXVM
-         sMx0Dv/PZFRwD/sRTpl0RqIJ7cXf7IOs3BL1MGksCo8s7oHWMG35wAUlKtDhqnnZQQzw
-         oiW22s98XchV/zOeFo52JRY4lLQpFwQrAIXS5/IJHuU90kUvNfFnYsrKsy94jpwwr65W
-         5vQ9cd9g+IGGm//iq5B0cTEXZAJCZE6I6jZ5/v2PFSYXVUva92+8MUjlW/r360qbxNEE
-         D0X0k3ZUp9MubzAi7U1FtvdMgS6bGu3Z7lKjqwQHszRJcPSI/mGFUJWJ9cB+J4OxvUSu
-         d8VQ==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=8730Bktiqk4tNVMLL/QOHd8DUmsTsfdK+RPNnLjS13I=;
+        b=VRrsr8juMP7JcmvqszJf3Kw5kbOJBokuGC7gnKzAt9Z9sG06orD0t9EfuL4N1XzuXB
+         rk1S8O8rqs54ly/NehWr5i2OVuQYHIGOBvAu5yemWMHut7f+fk8KgA4hdmi2HhFth4rh
+         D+/G6qXG27KpDHa8mJCt+scEnQU6ZU3J+TZY1s26n1+abSBnBjrFDstSFpEoZHDsXAS/
+         X9+U+MnUQRLyQIwQqy2KN1LdDB1iFJqGgkzmcAzEsjFwqs9NYrw/HEPDEIw7eIz8AKUV
+         Kfe6yFj9ysNde8C1vC0faX/KaG2FBxwrPJHBdZ+cRm+8TAWpObJ+7bV3LK7AK5MPX9AC
+         qc6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=oA9W6l8KRx2QluDseKYwcp4SAoPQajmJRCR/++O2IPM=;
-        b=EBOsA+VZr1HxiH5M3e4UODvsEVVyzz7eCjxrxmLDZkpwohSRUEG8NMuzyJRJK+3G0o
-         cOnI1fdRIjW6ycFoPorizFy6hhLb0q8upVxf2env4rEjvDBrE4Y8+gnQyqvqOBnyhkeE
-         infSzJ3im2xxzPqkxAWXg8Sd1xwohh7DCl/xtODywvZyGeJzYZRXz8l3+s2dc1msSot+
-         Wr4O0m1RN/Q06o66+Zqamn9u1VVSiUCAfJMqND3CjIueZiKYwCnN4kG7M2TkYQkIDaa7
-         1AQa/5t5BXn4uQzdW2DBbOiUDUWwziiqY83LHBRk7zv3CDwjw+HDQTP1u0/8aWbrbrR7
-         FJkA==
-X-Gm-Message-State: AOAM53086sH+m2ynI7z6P7nDjHrcbqaQZrnthy29m6B3FkcCXMuHmvvL
-        524Pc+DqrM5ZN/a3W+1k3ZqlEw==
-X-Google-Smtp-Source: ABdhPJz8//pQL7rxkAQDCqlMPYURApFFcrlNJBBwuGAKnVevdB1SX4KGQFNwZrPfHdd+k4OY0UwNmQ==
-X-Received: by 2002:a2e:a36c:: with SMTP id i12mr29555587ljn.427.1632241474286;
-        Tue, 21 Sep 2021 09:24:34 -0700 (PDT)
-Received: from umbar.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id a4sm1792058ljn.122.2021.09.21.09.24.33
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=8730Bktiqk4tNVMLL/QOHd8DUmsTsfdK+RPNnLjS13I=;
+        b=a9m4Wr5NQU4NFStbnTNlIofYHsQ+TrlefuNr4iB9K/FdSI8C3cjq/MrvA2G5bb45Iq
+         IeJVvdOw3FbUsElSkiPB/PanDcHkH/+54xoPXd7nyOa8df/AVG/AzZVgCTFDuF36qUEu
+         RmjHPSM1zFRr1jSFSHj4OKCtgQV+p2bf0MeJSnVUy7KrYDdeqN3q9SUSulvzhugMw5OE
+         GYEo+PbGyk+mjrdPqw2fHUHc08g/R4CrJ92jNCMHqzzapikgr7WzYI8oRE9/ysfBhH7t
+         Q0BeAPV+6HspWlK97hEcfrECSS37BtEm52b+R68bidOlS/5/MJqdI95zBA2RQRdyIBwt
+         Gemg==
+X-Gm-Message-State: AOAM533tGLemdW6ncyX3Z9p73U8edNISHtJJS8M4Ihu/Wwh0gOBzWHXr
+        AGiAywcfmvmCVZz3TIQTD26sXA==
+X-Google-Smtp-Source: ABdhPJyWx86fuRCxiB1BbAZsfo1axvq1nZpMeHdaaS8MkdJ7Qfh2CZw6I5ofRnlPQT0RBvanujWInQ==
+X-Received: by 2002:a4a:a388:: with SMTP id s8mr6397396ool.39.1632241541498;
+        Tue, 21 Sep 2021 09:25:41 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id q7sm4154239otl.68.2021.09.21.09.25.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 21 Sep 2021 09:24:33 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>
-Cc:     David Heidelberg <david@ixit.cz>, linux-arm-msm@vger.kernel.org
-Subject: [PATCH] mfd: qcom-pm8xxx: switch away from using chained IRQ handlers
-Date:   Tue, 21 Sep 2021 19:24:33 +0300
-Message-Id: <20210921162433.1858296-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.30.2
+        Tue, 21 Sep 2021 09:25:41 -0700 (PDT)
+Date:   Tue, 21 Sep 2021 09:26:23 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Rajendra Nayak <rnayak@codeaurora.org>
+Cc:     agross@kernel.org, linus.walleij@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Prasad Sodagudi <psodagud@codeaurora.org>
+Subject: Re: [PATCH] pinctrl: qcom: Add egpio feature support
+Message-ID: <YUoHr0F9qjr2Toeb@ripper>
+References: <1631860648-31774-1-git-send-email-rnayak@codeaurora.org>
+ <YUfZbsf3MX1aQJ2+@builder.lan>
+ <d2f28d34-99b3-30f8-8504-bc819946876f@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <d2f28d34-99b3-30f8-8504-bc819946876f@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-PM8xxx PMIC family uses GPIO as parent IRQ. Using it together with the
-irq_set_chained_handler_and_data() results in warnings from the GPIOLIB
-as in this path the IRQ resources are not allocated (and thus the
-corresponding GPIO is not marked as used for the IRQ. Use request_irq so
-that the IRQ resources are proprely setup.
+On Tue 21 Sep 03:39 PDT 2021, Rajendra Nayak wrote:
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/mfd/qcom-pm8xxx.c | 39 ++++++++++++++++-----------------------
- 1 file changed, 16 insertions(+), 23 deletions(-)
+> 
+> 
+> On 9/20/2021 6:14 AM, Bjorn Andersson wrote:
+> > On Fri 17 Sep 01:37 CDT 2021, Rajendra Nayak wrote:
+> > 
+> > > From: Prasad Sodagudi <psodagud@codeaurora.org>
+> > > 
+> > > egpio is a scheme which allows special power Island Domain IOs
+> > > (LPASS,SSC) to be reused as regular chip GPIOs by muxing regular
+> > > TLMM functions with Island Domain functions.
+> > > With this scheme, an IO can be controlled both by the cpu running
+> > > linux and the Island processor. This provides great flexibility to
+> > > re-purpose the Island IOs for regular TLMM usecases.
+> > > 
+> > > 2 new bits are added to ctl_reg, egpio_present is a read only bit
+> > > which shows if egpio feature is available or not on a given gpio.
+> > > egpio_enable is the read/write bit and only effective if egpio_present
+> > > is 1. Once its set, the Island IO is controlled from Chip TLMM.
+> > > egpio_enable when set to 0 means the GPIO is used as Island Domain IO.
+> > > 
+> > > The support exists on most recent qcom SoCs, and we add support
+> > > for sm8150/sm8250/sm8350 and sc7280 as part of this patch.
+> > > 
+> > 
+> > I was under the impression that this feature would allow you to
+> > repurpose pins for use either by the remote island or by apps.
+> 
+> thats right, you can repurpose the pins for usage by apps by setting
+> the egpio_enable to 1, when set to 0 its owned by the island processor.
 
-diff --git a/drivers/mfd/qcom-pm8xxx.c b/drivers/mfd/qcom-pm8xxx.c
-index ec18a04de355..2f2734ba5273 100644
---- a/drivers/mfd/qcom-pm8xxx.c
-+++ b/drivers/mfd/qcom-pm8xxx.c
-@@ -65,7 +65,7 @@
- struct pm_irq_data {
- 	int num_irqs;
- 	struct irq_chip *irq_chip;
--	void (*irq_handler)(struct irq_desc *desc);
-+	irq_handler_t irq_handler;
- };
- 
- struct pm_irq_chip {
-@@ -169,19 +169,16 @@ static int pm8xxx_irq_master_handler(struct pm_irq_chip *chip, int master)
- 	return ret;
- }
- 
--static void pm8xxx_irq_handler(struct irq_desc *desc)
-+static irqreturn_t pm8xxx_irq_handler(int irq, void *data)
- {
--	struct pm_irq_chip *chip = irq_desc_get_handler_data(desc);
--	struct irq_chip *irq_chip = irq_desc_get_chip(desc);
-+	struct pm_irq_chip *chip = data;
- 	unsigned int root;
- 	int	i, ret, masters = 0;
- 
--	chained_irq_enter(irq_chip, desc);
--
- 	ret = regmap_read(chip->regmap, SSBI_REG_ADDR_IRQ_ROOT, &root);
- 	if (ret) {
- 		pr_err("Can't read root status ret=%d\n", ret);
--		return;
-+		return IRQ_NONE;
- 	}
- 
- 	/* on pm8xxx series masters start from bit 1 of the root */
-@@ -192,7 +189,7 @@ static void pm8xxx_irq_handler(struct irq_desc *desc)
- 		if (masters & (1 << i))
- 			pm8xxx_irq_master_handler(chip, i);
- 
--	chained_irq_exit(irq_chip, desc);
-+	return IRQ_HANDLED;
- }
- 
- static void pm8821_irq_block_handler(struct pm_irq_chip *chip,
-@@ -230,19 +227,17 @@ static inline void pm8821_irq_master_handler(struct pm_irq_chip *chip,
- 			pm8821_irq_block_handler(chip, master, block);
- }
- 
--static void pm8821_irq_handler(struct irq_desc *desc)
-+static irqreturn_t pm8821_irq_handler(int irq, void *data)
- {
--	struct pm_irq_chip *chip = irq_desc_get_handler_data(desc);
--	struct irq_chip *irq_chip = irq_desc_get_chip(desc);
-+	struct pm_irq_chip *chip = data;
- 	unsigned int master;
- 	int ret;
- 
--	chained_irq_enter(irq_chip, desc);
- 	ret = regmap_read(chip->regmap,
- 			  PM8821_SSBI_REG_ADDR_IRQ_MASTER0, &master);
- 	if (ret) {
- 		pr_err("Failed to read master 0 ret=%d\n", ret);
--		goto done;
-+		return IRQ_NONE;
- 	}
- 
- 	/* bits 1 through 7 marks the first 7 blocks in master 0 */
-@@ -251,19 +246,18 @@ static void pm8821_irq_handler(struct irq_desc *desc)
- 
- 	/* bit 0 marks if master 1 contains any bits */
- 	if (!(master & BIT(0)))
--		goto done;
-+		return IRQ_NONE;
- 
- 	ret = regmap_read(chip->regmap,
- 			  PM8821_SSBI_REG_ADDR_IRQ_MASTER1, &master);
- 	if (ret) {
- 		pr_err("Failed to read master 1 ret=%d\n", ret);
--		goto done;
-+		return IRQ_NONE;
- 	}
- 
- 	pm8821_irq_master_handler(chip, 1, master);
- 
--done:
--	chained_irq_exit(irq_chip, desc);
-+	return IRQ_HANDLED;
- }
- 
- static void pm8xxx_irq_mask_ack(struct irq_data *d)
-@@ -574,14 +568,15 @@ static int pm8xxx_probe(struct platform_device *pdev)
- 	if (!chip->irqdomain)
- 		return -ENODEV;
- 
--	irq_set_chained_handler_and_data(irq, data->irq_handler, chip);
-+	rc = devm_request_irq(&pdev->dev, irq, data->irq_handler, 0, dev_name(&pdev->dev), chip);
-+	if (rc)
-+		return rc;
-+
- 	irq_set_irq_wake(irq, 1);
- 
- 	rc = of_platform_populate(pdev->dev.of_node, NULL, NULL, &pdev->dev);
--	if (rc) {
--		irq_set_chained_handler_and_data(irq, NULL, NULL);
-+	if (rc)
- 		irq_domain_remove(chip->irqdomain);
--	}
- 
- 	return rc;
- }
-@@ -594,11 +589,9 @@ static int pm8xxx_remove_child(struct device *dev, void *unused)
- 
- static int pm8xxx_remove(struct platform_device *pdev)
- {
--	int irq = platform_get_irq(pdev, 0);
- 	struct pm_irq_chip *chip = platform_get_drvdata(pdev);
- 
- 	device_for_each_child(&pdev->dev, NULL, pm8xxx_remove_child);
--	irq_set_chained_handler_and_data(irq, NULL, NULL);
- 	irq_domain_remove(chip->irqdomain);
- 
- 	return 0;
--- 
-2.30.2
+Good.
 
+> > 
+> > But if I understand your proposal, you check to see if the pin is
+> > "egpio capable" for a pin and if so just sets the bit - muxing it to
+> > apps (or the island?).
+> 
+> Right, so if there is a request for a egpio-capable pin, the driver
+> flips the ownership. Are you suggesting having some kind of checks to determine
+> who should own it?
+> 
+
+I see, I missed that nuance. So Linux will steal any pins that are
+mentioned in DT. But that would mean that you're relying on someone else
+to ensure that this bit is cleared for the other pins and you would not
+be able to explicitly flip the state back to island mode in runtime.
+
+I would prefer that this was more explicit.
+
+> > It seems reasonable that this would be another pinmux state for these
+> > pins, rather than just flipping them all in one or the other direction.
+> 
+> hmm, I don't understand. This is not a pinmux state, its a switch to decide
+> the ownership.
+
+But does it mux the pin to the island, or does it state that the island
+is now in charge of the associated TLMM registers?
+
+If it's muxing the pin to the island, then it's conceptually just a
+special mux state that we can represent in DT as another pinmux
+function.
+
+> These egpio pins have regulator mux functions, some for apps, some for the
+> island processor, they might not always be used as gpios.
+
+Right, so if egpio = 1 for a pin, then it works like any other pin
+that's handled by the pinctrl-msm driver, with whatever muxing options
+are available for the given pin.
+
+But what happens when egpio = 0? Is the TLMM decoupled from the physical
+pin, or does the island use the TLMM as well?
+
+If it's not using the TLMM, do we need the TLMM to be in some particular
+state?
+
+
+What I'm proposing is that if the egpio is simply a first-line mux and
+the TLMM isn't used when the pin is muxed towards the island. Then we
+could add a custom 'function = "egpio"' muxing state and you could per
+pin mux things explicitly, and possibly dynamically, to be routed to the
+island.
+
+Regards,
+Bjorn
+
+> > PS. When I spoke with Prasad about this a couple of years ago, I think
+> > we talked about representing this as a pinconf property, but it seems to
+> > make more sense to me now that it would be a pinmux state.
+> > 
+> > Regards,
+> > Bjorn
+> > 
+> > > Signed-off-by: Prasad Sodagudi <psodagud@codeaurora.org>
+> > > [rnayak: rewrite commit log, minor rebase]
+> > > Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
+> > > ---
+> > >   drivers/pinctrl/qcom/pinctrl-msm.c    | 4 ++++
+> > >   drivers/pinctrl/qcom/pinctrl-msm.h    | 2 ++
+> > >   drivers/pinctrl/qcom/pinctrl-sc7280.c | 2 ++
+> > >   drivers/pinctrl/qcom/pinctrl-sm8150.c | 2 ++
+> > >   drivers/pinctrl/qcom/pinctrl-sm8250.c | 2 ++
+> > >   drivers/pinctrl/qcom/pinctrl-sm8350.c | 2 ++
+> > >   6 files changed, 14 insertions(+)
+> > > 
+> > > diff --git a/drivers/pinctrl/qcom/pinctrl-msm.c b/drivers/pinctrl/qcom/pinctrl-msm.c
+> > > index 8476a8a..f4a2343 100644
+> > > --- a/drivers/pinctrl/qcom/pinctrl-msm.c
+> > > +++ b/drivers/pinctrl/qcom/pinctrl-msm.c
+> > > @@ -220,6 +220,10 @@ static int msm_pinmux_set_mux(struct pinctrl_dev *pctldev,
+> > >   	val = msm_readl_ctl(pctrl, g);
+> > >   	val &= ~mask;
+> > >   	val |= i << g->mux_bit;
+> > > +	/* Check if egpio present and enable that feature */
+> > > +	if (val & BIT(g->egpio_present))
+> > > +		val |= BIT(g->egpio_enable);
+> > > +
+> > >   	msm_writel_ctl(val, pctrl, g);
+> > >   	raw_spin_unlock_irqrestore(&pctrl->lock, flags);
+> > > diff --git a/drivers/pinctrl/qcom/pinctrl-msm.h b/drivers/pinctrl/qcom/pinctrl-msm.h
+> > > index e31a516..3635b31 100644
+> > > --- a/drivers/pinctrl/qcom/pinctrl-msm.h
+> > > +++ b/drivers/pinctrl/qcom/pinctrl-msm.h
+> > > @@ -77,6 +77,8 @@ struct msm_pingroup {
+> > >   	unsigned drv_bit:5;
+> > >   	unsigned od_bit:5;
+> > > +	unsigned egpio_enable:5;
+> > > +	unsigned egpio_present:5;
+> > >   	unsigned oe_bit:5;
+> > >   	unsigned in_bit:5;
+> > >   	unsigned out_bit:5;
+> > > diff --git a/drivers/pinctrl/qcom/pinctrl-sc7280.c b/drivers/pinctrl/qcom/pinctrl-sc7280.c
+> > > index afddf6d..607d459 100644
+> > > --- a/drivers/pinctrl/qcom/pinctrl-sc7280.c
+> > > +++ b/drivers/pinctrl/qcom/pinctrl-sc7280.c
+> > > @@ -43,6 +43,8 @@
+> > >   		.mux_bit = 2,			\
+> > >   		.pull_bit = 0,			\
+> > >   		.drv_bit = 6,			\
+> > > +		.egpio_enable = 12,		\
+> > > +		.egpio_present = 11,		\
+> > >   		.oe_bit = 9,			\
+> > >   		.in_bit = 0,			\
+> > >   		.out_bit = 1,			\
+> > > diff --git a/drivers/pinctrl/qcom/pinctrl-sm8150.c b/drivers/pinctrl/qcom/pinctrl-sm8150.c
+> > > index 7359bae..63a625a 100644
+> > > --- a/drivers/pinctrl/qcom/pinctrl-sm8150.c
+> > > +++ b/drivers/pinctrl/qcom/pinctrl-sm8150.c
+> > > @@ -56,6 +56,8 @@ enum {
+> > >   		.mux_bit = 2,			\
+> > >   		.pull_bit = 0,			\
+> > >   		.drv_bit = 6,			\
+> > > +		.egpio_enable = 12,		\
+> > > +		.egpio_present = 11,		\
+> > >   		.oe_bit = 9,			\
+> > >   		.in_bit = 0,			\
+> > >   		.out_bit = 1,			\
+> > > diff --git a/drivers/pinctrl/qcom/pinctrl-sm8250.c b/drivers/pinctrl/qcom/pinctrl-sm8250.c
+> > > index af144e7..ad4fd94 100644
+> > > --- a/drivers/pinctrl/qcom/pinctrl-sm8250.c
+> > > +++ b/drivers/pinctrl/qcom/pinctrl-sm8250.c
+> > > @@ -57,6 +57,8 @@ enum {
+> > >   		.mux_bit = 2,				\
+> > >   		.pull_bit = 0,				\
+> > >   		.drv_bit = 6,				\
+> > > +		.egpio_enable = 12,			\
+> > > +		.egpio_present = 11,			\
+> > >   		.oe_bit = 9,				\
+> > >   		.in_bit = 0,				\
+> > >   		.out_bit = 1,				\
+> > > diff --git a/drivers/pinctrl/qcom/pinctrl-sm8350.c b/drivers/pinctrl/qcom/pinctrl-sm8350.c
+> > > index 4d8f863..bb436dc 100644
+> > > --- a/drivers/pinctrl/qcom/pinctrl-sm8350.c
+> > > +++ b/drivers/pinctrl/qcom/pinctrl-sm8350.c
+> > > @@ -46,6 +46,8 @@
+> > >   		.mux_bit = 2,			\
+> > >   		.pull_bit = 0,			\
+> > >   		.drv_bit = 6,			\
+> > > +		.egpio_enable = 12,		\
+> > > +		.egpio_present = 11,		\
+> > >   		.oe_bit = 9,			\
+> > >   		.in_bit = 0,			\
+> > >   		.out_bit = 1,			\
+> > > -- 
+> > > QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> > > of Code Aurora Forum, hosted by The Linux Foundation
+> > > 
+> 
+> -- 
+> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+> of Code Aurora Forum, hosted by The Linux Foundation
