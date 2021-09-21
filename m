@@ -2,33 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AEAFC4132C5
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Sep 2021 13:44:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 831AF4132D2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Sep 2021 13:48:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232089AbhIULpm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Sep 2021 07:45:42 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:39675 "EHLO
+        id S231778AbhIULuB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Sep 2021 07:50:01 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:49423 "EHLO
         alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231778AbhIULpm (ORCPT
+        with ESMTP id S232467AbhIULt7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Sep 2021 07:45:42 -0400
+        Tue, 21 Sep 2021 07:49:59 -0400
 Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
-  by alexa-out.qualcomm.com with ESMTP; 21 Sep 2021 04:44:13 -0700
+  by alexa-out.qualcomm.com with ESMTP; 21 Sep 2021 04:48:31 -0700
 X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 21 Sep 2021 04:44:12 -0700
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 21 Sep 2021 04:48:30 -0700
 X-QCInternal: smtphost
 Received: from ekangupt-linux.qualcomm.com ([10.204.67.11])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 21 Sep 2021 17:14:10 +0530
+  by ironmsg02-blr.qualcomm.com with ESMTP; 21 Sep 2021 17:18:19 +0530
 Received: by ekangupt-linux.qualcomm.com (Postfix, from userid 2319895)
-        id 95FD6425A; Tue, 21 Sep 2021 17:14:09 +0530 (IST)
+        id 48434425A; Tue, 21 Sep 2021 17:18:18 +0530 (IST)
 From:   Jeya R <jeyr@codeaurora.org>
 To:     linux-arm-msm@vger.kernel.org, srinivas.kandagatla@linaro.org
 Cc:     Jeya R <jeyr@codeaurora.org>, gregkh@linuxfoundation.org,
         linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
-Subject: [RESEND PATCH v2] misc: fastrpc: fix improper packet size calculation
-Date:   Tue, 21 Sep 2021 17:14:07 +0530
-Message-Id: <1632224647-32297-1-git-send-email-jeyr@codeaurora.org>
+Subject: [PATCH v3] misc: fastrpc: fix improper packet size calculation
+Date:   Tue, 21 Sep 2021 17:18:15 +0530
+Message-Id: <1632224895-32661-1-git-send-email-jeyr@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
@@ -43,6 +43,9 @@ Fixes: c68cfb718c8f ("misc: fastrpc: Add support for context Invoke method")
 Signed-off-by: Jeya R <jeyr@codeaurora.org>
 Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
 ---
+Changes in v3:
+- relocate patch change list
+
 Changes in v2:
 - updated commit message to proper format
 - added fixes tag to commit message
