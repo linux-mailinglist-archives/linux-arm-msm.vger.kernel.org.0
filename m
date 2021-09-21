@@ -2,147 +2,252 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7B53E4137F1
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Sep 2021 19:03:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8970841380E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Sep 2021 19:09:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229732AbhIUREV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Sep 2021 13:04:21 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:19906 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231371AbhIURDa (ORCPT
+        id S230076AbhIURKe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Sep 2021 13:10:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45530 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229622AbhIURKd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Sep 2021 13:03:30 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1632243721; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=JVbNHBTbqGlyvcI9UWa1875Y6AZEumrY3iqK6OLeT7M=;
- b=QcGp6bI6U1ulukkezdaZlyg5npqJugr1WPdbA2E2aqKfRFtmZR6RShqXUZyspWFGgYllgkSE
- YC3x3Zcwd1JugfgGrH1F2LyOVz43yYB+elSrQWyOxHATQTOK2GQ1+ZP1KPv5ro8TSB4Sr/HW
- lm3lALk1OULPXcC/NHOFohNkQfI=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 614a0fbf65c3cc8c6352f411 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 21 Sep 2021 17:00:47
- GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 33F93C4360D; Tue, 21 Sep 2021 17:00:47 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 408F2C4338F;
-        Tue, 21 Sep 2021 17:00:46 +0000 (UTC)
+        Tue, 21 Sep 2021 13:10:33 -0400
+Received: from mail-pf1-x430.google.com (mail-pf1-x430.google.com [IPv6:2607:f8b0:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AD21C061574
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Sep 2021 10:09:05 -0700 (PDT)
+Received: by mail-pf1-x430.google.com with SMTP id 203so33475pfy.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Sep 2021 10:09:05 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=n7HGmPYwL475PdtYm46wy9zSx3aGM/fXJUshwhN+SlM=;
+        b=EBGNZr04Sh+tbGaVPvAAdZ5Ir0X+RVOsM8s8+OSuzEJrbjn0YyjKTiFuqcQx3s+Fzp
+         Wmp4l5WktYW+gN3asE7UoNA3p5ZebYhMoMLKR/wbIpzMPux113AF9qx4jS0Ik/QqDhQs
+         CksYISDeY0hZPI/xyNpHfrWANy33TDBgE1Yk8=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=n7HGmPYwL475PdtYm46wy9zSx3aGM/fXJUshwhN+SlM=;
+        b=FvKKeQq2bgXhn81jHxYoE/PAOTDlvW9jxSPGCVgqTp4VBB11r/LBntmwGnojeSFF/s
+         6dM8mtzRj0ONMKHQQ/fwz4q1ptBlTsnkewm3aMwZef/kbkBfCBIP0jdlRh+3za91LroL
+         XNw1OAL7kbluZv+VLjo1U4wCCxHSwDTA5/0T8axuoec0fFKZWHIP3U0NJGFkFpNalNwd
+         d3UkEVzQawCFiOIFUr5H5VLGc8h8J24VIYITfd+d5/CU8b9PJtvq1LQz16I0Tmpj/6ix
+         fv5ZDddBz1ytOzGXXNolA8FWa6qtHPVEIb3/NgyaTRD+ekUs4DFf3hWCHADZfCujLmwg
+         ckPg==
+X-Gm-Message-State: AOAM530fLNIpiFIM+1NwQmcajRDgwNvIQ9xoQ/Az2RzYJ5berqZARFhi
+        CKnoWyMqkiZphGURXBxy3sQ56Q==
+X-Google-Smtp-Source: ABdhPJwk5MxTN+l52NY4vcaU18EvzpQ49+tcjyE707C5yPkbyZlZeop5dVG7ahQWqeY1X+ZkbGx7/A==
+X-Received: by 2002:a05:6a00:26cc:b0:440:51c6:fa38 with SMTP id p12-20020a056a0026cc00b0044051c6fa38mr30406951pfw.45.1632244144756;
+        Tue, 21 Sep 2021 10:09:04 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:40f3:7953:e98e:68ab])
+        by smtp.gmail.com with UTF8SMTPSA id w4sm2874355pfb.3.2021.09.21.10.09.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 21 Sep 2021 10:09:04 -0700 (PDT)
+Date:   Tue, 21 Sep 2021 10:08:59 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Alan Stern <stern@rowland.harvard.edu>,
+        Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Mathias Nyman <mathias.nyman@intel.com>,
+        Felipe Balbi <balbi@kernel.org>
+Cc:     devicetree@vger.kernel.org, Peter Chen <peter.chen@kernel.org>,
+        linux-kernel@vger.kernel.org, linux-usb@vger.kernel.org,
+        Bastien Nocera <hadess@hadess.net>,
+        Ravi Chandra Sadineni <ravisadineni@chromium.org>,
+        Michal Simek <michal.simek@xilinx.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Roger Quadros <rogerq@kernel.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Al Cooper <alcooperx@gmail.com>,
+        Al Viro <viro@zeniv.linux.org.uk>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Andrew Lunn <andrew@lunn.ch>,
+        Andrey Zhizhikin <andrey.zhizhikin@leica-geosystems.com>,
+        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Aswath Govindraju <a-govindraju@ti.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Dong Aisheng <aisheng.dong@nxp.com>,
+        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Fabrice Gasnier <fabrice.gasnier@st.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Gregory Clement <gregory.clement@bootlin.com>,
+        Grygorii Strashko <grygorii.strashko@ti.com>,
+        Guido =?utf-8?Q?G=C3=BCnther?= <agx@sigxcpu.org>,
+        Jagan Teki <jagan@amarulasolutions.com>,
+        Jens Axboe <axboe@kernel.dk>, Johan Hovold <johan@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Lad Prabhakar <prabhakar.mahadev-lad.rj@bp.renesas.com>,
+        Lionel Debieve <lionel.debieve@st.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Mark Brown <broonie@kernel.org>,
+        Martin =?utf-8?Q?J=C3=BCcker?= <martin.juecker@gmail.com>,
+        Nishanth Menon <nm@ti.com>,
+        Olivier Moysan <olivier.moysan@st.com>,
+        Pawel Laszczak <pawell@cadence.com>,
+        Robert Richter <rric@kernel.org>,
+        Russell King <linux@armlinux.org.uk>,
+        Sebastian Hesselbarth <sebastian.hesselbarth@gmail.com>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Thomas Gleixner <tglx@linutronix.de>,
+        Tony Lindgren <tony@atomide.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Will Deacon <will@kernel.org>,
+        William Cohen <wcohen@redhat.com>,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, linux-omap@vger.kernel.org,
+        linux-samsung-soc@vger.kernel.org,
+        =?utf-8?Q?=C5=81ukasz?= Stelmach <l.stelmach@samsung.com>
+Subject: Re: [PATCH v16 0/7] usb: misc: Add onboard_usb_hub driver
+Message-ID: <YUoRq1RrOIoiBJ5+@google.com>
+References: <20210813195228.2003500-1-mka@chromium.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 21 Sep 2021 10:00:46 -0700
-From:   abhinavk@codeaurora.org
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        David Heidelberg <david@ixit.cz>
-Subject: Re: [Freedreno] [PATCH] drm/msm/dsi: do not install irq handler
- before power up the host
-In-Reply-To: <20210921162258.1858223-1-dmitry.baryshkov@linaro.org>
-References: <20210921162258.1858223-1-dmitry.baryshkov@linaro.org>
-Message-ID: <0c275df228a1925e43a4dc59ceeab6b7@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <20210813195228.2003500-1-mka@chromium.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-09-21 09:22, Dmitry Baryshkov wrote:
-> The DSI host might be left in some state by the bootloader. If this
-> state generates an IRQ, it might hang the system by holding the
-> interrupt line before the driver sets up the DSI host to the known
-> state.
-> 
-> Move the request/free_irq calls into msm_dsi_host_power_on/_off calls,
-> so that we can be sure that the interrupt is delivered when the host is
-> in the known state.
-> 
-> Fixes: a689554ba6ed ("drm/msm: Initial add DSI connector support")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Hi Greg,
 
-This is a valid change and we have seen interrupt storms in downstream 
-happening
-when like you said the bootloader leaves the DSI host in unknown state.
-Just one question below.
+are there any actions pending or can this land in usb-testing?
 
-> ---
->  drivers/gpu/drm/msm/dsi/dsi_host.c | 21 ++++++++++++---------
->  1 file changed, 12 insertions(+), 9 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index e269df285136..cd842347a6b1 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -1951,15 +1951,6 @@ int msm_dsi_host_modeset_init(struct 
-> mipi_dsi_host *host,
->  		return ret;
->  	}
-> 
-> -	ret = devm_request_irq(&pdev->dev, msm_host->irq,
-> -			dsi_host_irq, IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-> -			"dsi_isr", msm_host);
-> -	if (ret < 0) {
-> -		DRM_DEV_ERROR(&pdev->dev, "failed to request IRQ%u: %d\n",
-> -				msm_host->irq, ret);
-> -		return ret;
-> -	}
-> -
->  	msm_host->dev = dev;
->  	ret = cfg_hnd->ops->tx_buf_alloc(msm_host, SZ_4K);
->  	if (ret) {
-> @@ -2413,6 +2404,16 @@ int msm_dsi_host_power_on(struct mipi_dsi_host 
-> *host,
->  	if (msm_host->disp_en_gpio)
->  		gpiod_set_value(msm_host->disp_en_gpio, 1);
-> 
-> +	ret = devm_request_irq(&msm_host->pdev->dev, msm_host->irq,
-> +			dsi_host_irq, IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
-> +			"dsi_isr", msm_host);
-> +	if (ret < 0) {
-> +		DRM_DEV_ERROR(&msm_host->pdev->dev, "failed to request IRQ%u: %d\n",
-> +				msm_host->irq, ret);
-> +		return ret;
-> +	}
-> +
-> +
+I confirmed that this series can be rebased on top of v5.15-rc2
+without conflicts.
 
-Do you want to move this to msm_dsi_host_enable()?
-So without the controller being enabled it is still in unknown state?
-Also do you want to do this after dsi0 and dsi1 are initialized to 
-account for
-dual dsi cases?
+Thanks
 
->  	msm_host->power_on = true;
->  	mutex_unlock(&msm_host->dev_mutex);
+m.
+
+On Fri, Aug 13, 2021 at 12:52:21PM -0700, Matthias Kaehlcke wrote:
+> This series adds:
+> - the onboard_usb_hub_driver
+> - glue in the xhci-plat driver to create and destroy the
+>   onboard_usb_hub platform devices if needed
+> - a device tree binding for the Realtek RTS5411 USB hub controller
+> - device tree changes that add RTS5411 entries for the QCA SC7180
+>   based boards trogdor and lazor
+> - a couple of stubs for platform device functions to avoid
+>   unresolved symbols with certain kernel configs
 > 
-> @@ -2439,6 +2440,8 @@ int msm_dsi_host_power_off(struct mipi_dsi_host 
-> *host)
->  		goto unlock_ret;
->  	}
+> The main issue the driver addresses is that a USB hub needs to be
+> powered before it can be discovered. For discrete onboard hubs (an
+> example for such a hub is the Realtek RTS5411) this is often solved
+> by supplying the hub with an 'always-on' regulator, which is kind
+> of a hack. Some onboard hubs may require further initialization
+> steps, like changing the state of a GPIO or enabling a clock, which
+> requires even more hacks. This driver creates a platform device
+> representing the hub which performs the necessary initialization.
+> Currently it only supports switching on a single regulator, support
+> for multiple regulators or other actions can be added as needed.
+> Different initialization sequences can be supported based on the
+> compatible string.
 > 
-> +	devm_free_irq(&msm_host->pdev->dev, msm_host->irq, msm_host);
-> +
->  	dsi_ctrl_config(msm_host, false, NULL, NULL);
+> Besides performing the initialization the driver can be configured
+> to power the hub off during system suspend. This can help to extend
+> battery life on battery powered devices which have no requirements
+> to keep the hub powered during suspend. The driver can also be
+> configured to leave the hub powered when a wakeup capable USB device
+> is connected when suspending, and power it off otherwise.
 > 
->  	if (msm_host->disp_en_gpio)
+> Changes in v16:
+> - added patch 'ARM: configs: Explicitly enable USB_XHCI_PLATFORM
+>   where needed' to keep arm32 defconfigs effectively unchanged
+> 
+> Changes in v15:
+> - adjusted dependencies of USB_DWC3_CORE to make sure it can only
+>   be enabled when at least one of USB_DWC3_HOST, USB_DWC3_GADGET
+>   or USB_DWC3_DUAL_ROLE is selectable
+> 
+> Changes in v14:
+> - rebased on top of v5.14-rc1
+> - dropped DT binding patch which landed in v5.13
+> 
+> Changes in v13:
+> - added patch "usb: Specify dependency on USB_XHCI_PLATFORM with
+>   'depends on'" to the series to avoid Kconfig conflicts
+> - added patch "arm64: defconfig: Explicitly enable USB_XHCI_PLATFORM"
+>   to the series to keep effective defconfig unchanged
+> 
+> Changes in v12:
+> - onboard_hub driver: use IS_ENABLED(CONFIG_USB_ONBOARD_HUB_MODULE)
+>   in onboard_hub.h to also check for the driver built as module
+> - onboard_hub_driver: include onboard_hub.h again to make sure there
+>   are prototype declarations for the public functions
+> 
+> Changes in v11:
+> - support multiple onboard hubs connected to the same parent
+> - don't include ‘onboard_hub.h’ from the onboard hub driver
+> 
+> Changes in v10:
+> - always use of_is_onboard_usb_hub() stub unless ONBOARD_USB_HUB=y/m
+> - keep 'regulator-boot-on' property for pp3300_hub
+> 
+> Changes in v9:
+> - added dependency on ONBOARD_USB_HUB (or !!ONBOARD_USB_HUB) to
+>   USB_PLATFORM_XHCI
+> 
+> Changes in v7:
+> - updated DT binding
+> - series rebased on qcom/arm64-for-5.13
+> 
+> Changes in v6:
+> - updated summary
+> 
+> Changes in v5:
+> - cover letter added
+> 
+> Matthias Kaehlcke (7):
+>   usb: misc: Add onboard_usb_hub driver
+>   of/platform: Add stubs for of_platform_device_create/destroy()
+>   ARM: configs: Explicitly enable USB_XHCI_PLATFORM where needed
+>   arm64: defconfig: Explicitly enable USB_XHCI_PLATFORM
+>   usb: Specify dependencies on USB_XHCI_PLATFORM with 'depends on'
+>   usb: host: xhci-plat: Create platform device for onboard hubs in
+>     probe()
+>   arm64: dts: qcom: sc7180-trogdor: Add nodes for onboard USB hub
+> 
+>  .../sysfs-bus-platform-onboard-usb-hub        |   8 +
+>  MAINTAINERS                                   |   7 +
+>  arch/arm/configs/exynos_defconfig             |   1 +
+>  arch/arm/configs/keystone_defconfig           |   1 +
+>  arch/arm/configs/multi_v7_defconfig           |   1 +
+>  arch/arm/configs/mvebu_v7_defconfig           |   1 +
+>  arch/arm/configs/omap2plus_defconfig          |   1 +
+>  arch/arm/configs/pxa_defconfig                |   1 +
+>  .../boot/dts/qcom/sc7180-trogdor-lazor-r0.dts |  19 +-
+>  .../boot/dts/qcom/sc7180-trogdor-lazor-r1.dts |  12 +-
+>  .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts |  19 +-
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  |  19 +-
+>  arch/arm64/configs/defconfig                  |   1 +
+>  drivers/usb/cdns3/Kconfig                     |   2 +-
+>  drivers/usb/dwc3/Kconfig                      |   5 +-
+>  drivers/usb/host/Kconfig                      |   5 +-
+>  drivers/usb/host/xhci-plat.c                  |   6 +
+>  drivers/usb/host/xhci.h                       |   2 +
+>  drivers/usb/misc/Kconfig                      |  17 +
+>  drivers/usb/misc/Makefile                     |   1 +
+>  drivers/usb/misc/onboard_usb_hub.c            | 497 ++++++++++++++++++
+>  include/linux/of_platform.h                   |  22 +-
+>  include/linux/usb/onboard_hub.h               |  18 +
+>  23 files changed, 627 insertions(+), 39 deletions(-)
+>  create mode 100644 Documentation/ABI/testing/sysfs-bus-platform-onboard-usb-hub
+>  create mode 100644 drivers/usb/misc/onboard_usb_hub.c
+>  create mode 100644 include/linux/usb/onboard_hub.h
+> 
+> -- 
+> 2.33.0.rc1.237.g0d66db33f3-goog
+> 
