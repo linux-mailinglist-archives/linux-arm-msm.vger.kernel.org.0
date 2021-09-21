@@ -2,172 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AD452413168
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Sep 2021 12:19:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CBFC741317D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 21 Sep 2021 12:29:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231614AbhIUKU6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 21 Sep 2021 06:20:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35212 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231491AbhIUKU6 (ORCPT
+        id S231812AbhIUKai (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 21 Sep 2021 06:30:38 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:62319 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231787AbhIUKah (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 21 Sep 2021 06:20:58 -0400
-Received: from mail-io1-xd33.google.com (mail-io1-xd33.google.com [IPv6:2607:f8b0:4864:20::d33])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A5DEC061575
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Sep 2021 03:19:26 -0700 (PDT)
-Received: by mail-io1-xd33.google.com with SMTP id y197so12503811iof.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 21 Sep 2021 03:19:26 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=gxVjksGN/3yuclGhnmoWEQKT5gLNVLIOyY61uXcwmWI=;
-        b=vO46N99FpdRLkV1NF+gjE9qSMCIUZhOeIy/mhBx5gPsP926ONSii9PXt2deJ3DGL3e
-         NjIwdQOHkvYPd4Je03SklDs0b7KsYP4kBXjpK1TGDI3dgQe8P2djwcVqx5/y1K8c9zsB
-         mCX9S3NgX/2UoLP5azlPU7WExgd7yVRpONvUhrwD/09Hr+e9fRaQHJ8HnUJ715Znm7DN
-         Z7OHvsjM9YttYJcPUA485abYs9vP8yJ5zt5EJt7CuMP3zlnrxV8eEfWnhcLotbLwrXuk
-         sy1LU5Cz+yhgoFdFfChdHpOSm3m5AKYD4dNUes/f9eEjwCbOLNoyiziW05Z4RH7ftFJn
-         sEkg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=gxVjksGN/3yuclGhnmoWEQKT5gLNVLIOyY61uXcwmWI=;
-        b=0GEZRThHM0gNzDA2izW/v0lOz37qBXjRZC6tbmfsArXTY3m0ttOMImvQLk4jkCcdy0
-         17RBVuEGG7Hgvr/6YNW1J0Z5EqtCVAjTaL5VhGxH8vgqBBbXfjo3WpYTG4l+txZfKGlY
-         e7zIeXBHH13LyGz9cpHl1ZQfFWuWMeKWSZnZ/uld7fWpalI7htqj14oRkkIqDuwKWXuU
-         YBqZHZQ/MrEd701gXV74v3Tt4rZCV560bWESLZWDcBc0cX39LeYFTxQRZosCM5U4rFY4
-         eFN95jevHLpNTCj1fYjGlJOCJ2r7hh7uQOqzZdvTf5OPUs+XZ/ZUs5UATcxFvgukO/Sk
-         +qCA==
-X-Gm-Message-State: AOAM531ZdX7fkTHBo13/bOkImNFIfdKEtK7fZ+yT7ISdtCNYdqMeMsVT
-        Y6q42fz0j0X6cXhp3w/CLx6ldYMa9O+D5nCAZ19vu+H2+3IdRA==
-X-Google-Smtp-Source: ABdhPJz86aatVqFyHRCUhvImhsp2CKqHcGwOGrpQiGAsYeZo1977hFAgAenDq9K/oh27Yx/hhOzO2jV+sXZxluuCWfk=
-X-Received: by 2002:a02:908a:: with SMTP id x10mr23047196jaf.30.1632219565662;
- Tue, 21 Sep 2021 03:19:25 -0700 (PDT)
+        Tue, 21 Sep 2021 06:30:37 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1632220149; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=LqapVmBEbKGHm5asiD093kwO082i8COLKxB74YyhX8U=; b=oLMr2pJWGweHA6qzJhJrcvkNF5H1pDJLJ/ZedpBRv1d/42zwQl4z1aoiczlpgQUt+b71QuQm
+ gGm+oMRYHw6yS4pf391d6/lz5YMreCjC9YbuNKYnBhzywVlp3LInBos742XuYaVHvOuBoIED
+ 3XZyIYAiBWfKavAUgx1myirOVXk=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
+ 6149b3dcbd6681d8ed3cfef2 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 21 Sep 2021 10:28:44
+ GMT
+Sender: deesin=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 05447C43460; Tue, 21 Sep 2021 10:28:44 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [192.168.1.3] (unknown [110.226.75.128])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: deesin)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A4157C4360C;
+        Tue, 21 Sep 2021 10:28:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org A4157C4360C
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: [PATCH V4 1/1] soc: qcom: smp2p: Add wakeup capability to SMP2P
+ IRQ
+To:     Stephen Boyd <swboyd@chromium.org>, bjorn.andersson@linaro.org,
+        clew@codeaurora.org, sibis@codeaurora.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org, Andy Gross <agross@kernel.org>
+References: <1631991735-18920-1-git-send-email-deesin@codeaurora.org>
+ <CAE-0n52Gqossa9V-tPLHsgggQ_MHt_zD7gzrjUVrU7Rno-4f8w@mail.gmail.com>
+From:   Deepak Kumar Singh <deesin@codeaurora.org>
+Message-ID: <de5de2e2-a233-b94b-7846-5a7d149f497c@codeaurora.org>
+Date:   Tue, 21 Sep 2021 15:58:33 +0530
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-References: <CAMi1Hd3k2snB4-=M57pVrMVom=a9_2a0DTFk-+Hzpubwk-Pr9Q@mail.gmail.com>
- <64a2a428-8bb1-0078-2403-1ca8e28cf4b1@codeaurora.org> <CAMi1Hd2MCxJgbHz9oGWe4L+MXNM3p+Xntpcg6t3TvZxwjJTy0Q@mail.gmail.com>
- <47a06078-dd41-7b3d-3de3-4e6c24211691@codeaurora.org>
-In-Reply-To: <47a06078-dd41-7b3d-3de3-4e6c24211691@codeaurora.org>
-From:   Amit Pundir <amit.pundir@linaro.org>
-Date:   Tue, 21 Sep 2021 15:48:49 +0530
-Message-ID: <CAMi1Hd1UtTECaDROGm7hE377Dp5qLzZeqBowmxoQJpOm9uQFHw@mail.gmail.com>
-Subject: Re: dwc3-qcom: tx-fifo-resize regression on Poco F1 (sdm845) with v5.15-rc1
-To:     Wesley Cheng <wcheng@codeaurora.org>
-Cc:     Felipe Balbi <balbi@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jack Pham <jackp@codeaurora.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
-        John Stultz <john.stultz@linaro.org>,
-        linux-usb@vger.kernel.org, lkml <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <CAE-0n52Gqossa9V-tPLHsgggQ_MHt_zD7gzrjUVrU7Rno-4f8w@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 21 Sept 2021 at 13:00, Wesley Cheng <wcheng@codeaurora.org> wrote:
->
-> Hi Amit,
->
-> On 9/21/2021 12:04 AM, Amit Pundir wrote:
-> > Hi Wesley,
-> >
-> > On Tue, 21 Sept 2021 at 02:44, Wesley Cheng <wcheng@codeaurora.org> wrote:
-> >>
-> >> Hi Amit,
-> >>
-> >> On 9/20/2021 1:45 PM, Amit Pundir wrote:
-> >>> Hi Wesley, All,
-> >>>
-> >>> I see a reboot loop on Xiaomi Pocophone F1 (sdm845) with TX FIFO
-> >>> resize patches which landed in v5.15-rc1. Upstream commit cefdd52fa045
-> >>> "usb: dwc3: dwc3-qcom: Enable tx-fifo-resize property by default" to
-> >>> be specific, which switched on this feature by default.
-> >>>
-> >>> At times the phone crashes into the fastboot mode after the reboot
-> >>> loop, but mostly end up booting to UI after a while. This is what it
-> >>> looks like https://people.linaro.org/~amit.pundir/beryllium-userdebug/PXL_20210920_162749483.mp4.
-> >>>
-> >>
-> >> I believe Android will attempt a number of bootup sequences and if it
-> >> fails, it falls back to fastboot mode.  Are there any available logs you
-> >> might be able to collect to see where the issue is?
-> >
-> > It is a stock phone with no UART access, so I can't get early crash
-> > logs unless I'm booted up to adb shell. I can try getting some info
-> > using pstore-ramoops but warm reset support for sdm845 was not
-> > upstreamed when I tried using that the last time.
-> >
->
-> I see, can we maybe avoid the actual resizing by commenting out the
-> following writel() calls, but let the fifo resize logic calculate the EPs?
->
-> void dwc3_gadget_clear_tx_fifos(struct dwc3 *dwc)
-> {
-> ...
->                 /* Don't change TXFRAMNUM on usb31 version */
->                 size = DWC3_IP_IS(DWC3) ? 0 :
->                         dwc3_readl(dwc->regs, DWC3_GTXFIFOSIZ(num >> 1)) &
->                                    DWC31_GTXFIFOSIZ_TXFRAMNUM;
->                 /* Comment the dwc3_writel() */
->                 //dwc3_writel(dwc->regs, DWC3_GTXFIFOSIZ(num >> 1), size);
->
-> and
->
-> static int dwc3_gadget_resize_tx_fifos(struct dwc3_ep *dep)
-> {
-> ...
->         /* Comment the dwc3_writel() */
->         //dwc3_writel(dwc->regs, DWC3_GTXFIFOSIZ(dep->number >> 1), fifo_size);
->         dwc->num_ep_resized++;
->
-> Those 2 writel() would be the one that actually programs the TXFIFO
-> register.  I hope when commented out, no resize should actually happen
-> anymore.
->
-> With this, hopefully we can get some logs from the device at least :)
 
-I can boot fine with above 2 writel() removed but I don't see EP
-counts being printed in the log anywhere and the only relevant
-message in dmesg I see is this:
+On 9/21/2021 12:07 AM, Stephen Boyd wrote:
+> Quoting Deepak Kumar Singh (2021-09-18 12:02:15)
+>> diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
+>> index 2df4883..60ad632 100644
+>> --- a/drivers/soc/qcom/smp2p.c
+>> +++ b/drivers/soc/qcom/smp2p.c
+>> @@ -14,6 +14,7 @@
+>>   #include <linux/mfd/syscon.h>
+>>   #include <linux/module.h>
+>>   #include <linux/platform_device.h>
+>> +#include <linux/pm_wakeirq.h>
+>>   #include <linux/regmap.h>
+>>   #include <linux/soc/qcom/smem.h>
+>>   #include <linux/soc/qcom/smem_state.h>
+>> @@ -538,9 +539,26 @@ static int qcom_smp2p_probe(struct platform_device *pdev)
+>>                  goto unwind_interfaces;
+>>          }
+>>
+>> +       /*
+>> +        * Treat smp2p interrupt as wakeup source, but keep it disabled
+>> +        * by default. User space can decide enabling it depending on its
+>> +        * use cases. For example if remoteproc crashes and device wants
+>> +        * to handle it immediatedly (e.g. to not miss phone calls) it can
+>> +        * enable wakeup source from user space, while other devices which
+>> +        * do not have proper autosleep feature may want to handle it with
+>> +        * other wakeup events (e.g. Power button) instead waking up immediately.
+>> +        */
+>> +       device_set_wakeup_capable(&pdev->dev, true);
+>> +
+>> +       ret = dev_pm_set_wake_irq(&pdev->dev, irq);
+>> +       if (ret)
+>> +               goto set_wake_irq_fail;
+>>
+>>          return 0;
+>>
+>> +set_wake_irq_fail:
+>> +       dev_pm_clear_wake_irq(&pdev->dev);
+>> +
+>>   unwind_interfaces:
+>>          list_for_each_entry(entry, &smp2p->inbound, node)
+>>                  irq_domain_remove(entry->domain);
+>> @@ -565,6 +583,9 @@ static int qcom_smp2p_remove(struct platform_device *pdev)
+>>          struct qcom_smp2p *smp2p = platform_get_drvdata(pdev);
+>>          struct smp2p_entry *entry;
+>>
+>> +       dev_pm_clear_wake_irq(&pdev->dev);
+>> +       device_init_wakeup(&pdev->dev, false);
+> Is this device_init_wakeup() call necessary? It looks like we can get
+> away without it and then once this driver probes the device will have
+> the wakeup capability set on it. Future binding/unbinding of the driver
+> will keep working.
 
-    Duplicate name in dwc3@a600000, renamed to "tx-fifo-resize#1"
+ok, cleanup is handled in device_unregister() path. So it is redundant here.
 
-which is interesting because I don't see tx-fifo-resize property being
-set by any of the upstream sdm845 or relevant dtsi files.
+I will remove this in next patch.
 
-
->
-> >>
-> >>> PocoF1 does support TX fifo resizing as I can see that in the
-> >>> downstream dts. So maybe it is the tx-fifo-max-num which need to be
-> >>> adjusted for the device? I couldn't find the tx-fifo-max-num
-> >>> equivalent in the downstream tree though
-> >>> https://github.com/MiCode/Xiaomi_Kernel_OpenSource/tree/dipper-q-oss/
-> >>>
-> >>
-> >> I assume that you've already confirmed reverting that change resolves
-> >> the constant reboots?
-> >
-> > Yes reverting that change resolves the reboot loop issue. Speaking of
-> > which, since no other platform seem to be running into this issue and
-> > "tx-fifo-max-num" property is apparently not at fault either, is it
-> > reasonable to skip adding "tx-fifo-resize" property for PocoF1 using
-> > of_machine_is_compatible("xiaomi,beryllium") as a workaround?
-> >
->
-> Since SDM845 does technically support txfifo resize downstream, let me
-> see if I can figure out what is different on this particular device
-> after getting the logs.
->
-> Thanks
-> Wesley Cheng
->
-> --
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
