@@ -2,90 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A8231414B6C
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Sep 2021 16:10:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5ADED414C7B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Sep 2021 16:54:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232243AbhIVOLn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Sep 2021 10:11:43 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53076 "EHLO
+        id S236272AbhIVO4R (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Sep 2021 10:56:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235503AbhIVOLn (ORCPT
+        with ESMTP id S236157AbhIVO4R (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Sep 2021 10:11:43 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3397C061756
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Sep 2021 07:10:12 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id i23so7328279wrb.2
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Sep 2021 07:10:12 -0700 (PDT)
+        Wed, 22 Sep 2021 10:56:17 -0400
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 16D1BC061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Sep 2021 07:54:47 -0700 (PDT)
+Received: by mail-io1-xd36.google.com with SMTP id b10so3702193ioq.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Sep 2021 07:54:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:content-transfer-encoding:in-reply-to;
-        bh=316eM28pK/8Y6ZPFwh3V4osKtYsZzbtNOZjPZ78hW2o=;
-        b=qgeTRI7MZLWaVeFQzGXTpSsFcyvmu7kjfYlSc+NPJCrhsXvE1fEn07XHZl63akX/A9
-         yQbXdXADzwP00MT27Hew7Q5+BXqnTnHMX2GPMy8eew9d5u8RXyglhqDuge9gsmwXrD8R
-         HAvFLaIw6+HC5YglZjYxDz9U1L+MwF/UV+iop1VTv+4b+TeLv+YtgqdgDzTRzzxMdQBi
-         kVYSpNyYlR+kdCs44djZFix4hbr60HjdLscIRa4b55RCcwpz1lxAKHoewcClaR6+Bjai
-         CEDO1S4JoEByQsW1f8EyZ+aN8rL1sGz/bP6WNU3H2x5Jzjl6OhYQ9HBAhlyBspTGsysg
-         sLHg==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=aGsfFQms67z3DWxhubYarnuQaxcgC0ufqpReCHjs4NQ=;
+        b=f3cCT6Ps7OWQR4FksT7+sX2KnBzte6EDv1u0bacbishSaTg4G7PmjictF5dnda5XBx
+         qbLRZHkDb1N/rg6aVEa/pKo5vGEvCxu4ZOq1R/vDB7bkUzklxzbjXfExzWYvegBZTue0
+         1C9MWVM+ExwkfFSyBu7TjLi3B6vUlebH7hv2c=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:content-transfer-encoding
-         :in-reply-to;
-        bh=316eM28pK/8Y6ZPFwh3V4osKtYsZzbtNOZjPZ78hW2o=;
-        b=djTpNmuFzjMD99CXblIiI7JRH2COygMvkxzkX9IvtToj5zr+RGL3m8T9BWgH+P5zX1
-         ML2OFgqkT73kxwfO3xOzDDGDXG/tWY3LROLmk5pp9vQgOi5t+iBxPHx8cngq4MaLi+8Y
-         K2xtTybWq7wcT5Ib4HZNGk3Ce0jHGK282wdT7JIkizsgKtI8hXBP6il5wDRIF45L6G2z
-         hIjf1ywRxUxdtEwnwiF7yP63Nlrbdk1Cef9tA4IswczjXCSwpvavjCBywOhqMPjKnGB+
-         sKvyZb3VxRhuDI4mm8wWamvrqjat+1M9LN2y3WHg1Wbz6yOGAcZerZW+48m5oS57WJXT
-         OCzg==
-X-Gm-Message-State: AOAM5305trcz6k5A2GzSMUv7e+lIEu91its/VT1B/LewXcsxk0kJB6YN
-        hcRXP46Xt/s+y2fp4gAHkEOBJQ==
-X-Google-Smtp-Source: ABdhPJwPWyPwb8fFPniP4WALIolIXo/0F86m+aaMDJzd9oMldjmXMowgEbhBdLf2fAEhdwOQkl2WeQ==
-X-Received: by 2002:a5d:64cd:: with SMTP id f13mr41907210wri.419.1632319811428;
-        Wed, 22 Sep 2021 07:10:11 -0700 (PDT)
-Received: from google.com ([95.148.6.233])
-        by smtp.gmail.com with ESMTPSA id i203sm5875577wma.7.2021.09.22.07.10.10
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Sep 2021 07:10:10 -0700 (PDT)
-Date:   Wed, 22 Sep 2021 15:10:08 +0100
-From:   Lee Jones <lee.jones@linaro.org>
-To:     Baruch Siach <baruch@tkos.co.il>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
-        <u.kleine-koenig@pengutronix.de>, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Balaji Prakash J <bjagadee@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Robert Marko <robert.marko@sartura.hr>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
-Subject: Re: [PATCH v8 1/4] dt-bindings: mfd: qcom,tcsr: document ipq6018
- compatible
-Message-ID: <YUs5QAeQnPijfp7z@google.com>
-References: <5c95bcf62a9d08208a7da19f0b1cec0689502b9a.1630323987.git.baruch@tkos.co.il>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=aGsfFQms67z3DWxhubYarnuQaxcgC0ufqpReCHjs4NQ=;
+        b=XP7cpiU8tYtjSCBEreVAV3+dmRTzZAbI8AVH+9Ixpp6FhKsStsPBkc+wtgeedmUjdD
+         Scjr69g5rQq0M1cm7xBOHNggFr19xPFILn39hFtiTX8xI/JV5kvMSsHVjKRz6VQEP6fK
+         BIP3tSmJSOxgnVA9ek0DkA/UBWDTW8BHsBTwhyWsk/+mfjrTJlLm7iEZ1Xoj5b4M7ACu
+         YbtPobpTw9Uv3XVzIvNSDXVcg0UxRJgdjoM/3m21vpcA++FtaC6ehc1dRy/PhFO9UtWF
+         fuzIw8l978HfS7oTmryPE+iKfLvWGYMn/iPikpvWv0WS6CLhYe60648sxfZrIXRqFi2F
+         D7sw==
+X-Gm-Message-State: AOAM533pTr1h0i3qcaae+q7LpJBIHKQelRcNMB6j6oJybVqfxnKioekM
+        WalE4FLOWrfNgv6JYlT1DSK5kMmB9sityg==
+X-Google-Smtp-Source: ABdhPJwaIZiohWnwfLdtBZI1kn4oZLjA7D2dvbU4idUve5iHFJ5mpdp2PwCBeJYWW+iGns5Imb+gGg==
+X-Received: by 2002:a5d:9256:: with SMTP id e22mr38900iol.152.1632322486226;
+        Wed, 22 Sep 2021 07:54:46 -0700 (PDT)
+Received: from mail-il1-f172.google.com (mail-il1-f172.google.com. [209.85.166.172])
+        by smtp.gmail.com with ESMTPSA id c1sm1117274iot.44.2021.09.22.07.54.44
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 22 Sep 2021 07:54:45 -0700 (PDT)
+Received: by mail-il1-f172.google.com with SMTP id v16so3046189ilg.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Sep 2021 07:54:44 -0700 (PDT)
+X-Received: by 2002:a92:da0c:: with SMTP id z12mr75412ilm.120.1632322484455;
+ Wed, 22 Sep 2021 07:54:44 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
-In-Reply-To: <5c95bcf62a9d08208a7da19f0b1cec0689502b9a.1630323987.git.baruch@tkos.co.il>
+References: <21d14dd0bfa945ee617ed4b86b4495ee@codeaurora.org>
+In-Reply-To: <21d14dd0bfa945ee617ed4b86b4495ee@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Wed, 22 Sep 2021 07:54:32 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=X=PUeahdf_bbTyCAZSeZ-ahRwZVvH-Oh=3wQmRxbt2CQ@mail.gmail.com>
+Message-ID: <CAD=FV=X=PUeahdf_bbTyCAZSeZ-ahRwZVvH-Oh=3wQmRxbt2CQ@mail.gmail.com>
+Subject: Re: [PATCH V9 4/8] arm64: dts: sc7280: Add QUPv3 wrapper_0 nodes
+To:     Rajesh Patil <rajpat@codeaurora.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        msavaliy@qti.qualcomm.com, satya priya <skakit@codeaurora.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Roja Rani Yarubandi <rojay@codeaurora.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 30 Aug 2021, Baruch Siach wrote:
+Hi,
 
-> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
-> ---
->  Documentation/devicetree/bindings/mfd/qcom,tcsr.txt | 1 +
->  1 file changed, 1 insertion(+)
+On Wed, Sep 22, 2021 at 5:31 AM <rajpat@codeaurora.org> wrote:
+>
+> >> +                       spi0: spi@980000 {
+> >> +                               compatible = "qcom,geni-spi";
+> >> +                               reg = <0 0x00980000 0 0x4000>;
+> >> +                               clocks = <&gcc
+> >> GCC_QUPV3_WRAP0_S0_CLK>;
+> >> +                               clock-names = "se";
+> >> +                               pinctrl-names = "default";
+> >> +                               pinctrl-0 = <&qup_spi0_data_clk>,
+> >> <&qup_spi0_cs>, <&qup_spi0_cs_gpio>;
+> >
+> > This should only have qup_spi0_data_clk and qup_spi0_cs, not
+> > qup_spi0_cs_gpio. Both qup controlled and gpio controlled options are
+> > provided in case a board wants to use the qup version of chipselect,
+> > but
+> > having them both used by default leads to conflicts and confusion. This
+> > same comment applies to all spi pinctrl properties in this file. Please
+> > keep the cs_gpio variants though so that boards can use them if they
+> > want. They will be unused, but that's OK.
+>
+> Okay. Shall we remove only "<&qup_spiN_cs_gpio>" in each SPI node?
 
-Applied, thanks.
+Right. So for this one:
 
--- 
-Lee Jones [李琼斯]
-Senior Technical Lead - Developer Services
-Linaro.org │ Open source software for Arm SoCs
-Follow Linaro: Facebook | Twitter | Blog
+pinctrl-0 = <&qup_spi0_data_clk>, <&qup_spi0_cs>;
+
+-Doug
