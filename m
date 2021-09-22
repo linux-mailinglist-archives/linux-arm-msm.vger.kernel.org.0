@@ -2,261 +2,151 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 23A084153EF
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 01:33:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 808BA4153F6
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 01:35:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238500AbhIVXfR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Sep 2021 19:35:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42168 "EHLO
+        id S238455AbhIVXhY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Sep 2021 19:37:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42656 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238465AbhIVXfQ (ORCPT
+        with ESMTP id S231259AbhIVXhY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Sep 2021 19:35:16 -0400
-Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADEF3C06175F
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Sep 2021 16:33:44 -0700 (PDT)
-Received: by mail-pj1-x102c.google.com with SMTP id dw14so3209081pjb.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Sep 2021 16:33:44 -0700 (PDT)
+        Wed, 22 Sep 2021 19:37:24 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9D201C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Sep 2021 16:35:53 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id m3so18900288lfu.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Sep 2021 16:35:53 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
+        d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=Qu/+z+aYcuCRRFV+AdPh6n2kZeZUi3nq/2xiRzSarqU=;
-        b=gFuPPJbAGRdaInS/VLIJmOCk18/NgcoEmfoLSgKh6WDgngL3AVQ2pcwVDx6rVE/RE4
-         hI7nSj24FM1F2sGsGK//HcmGuv1gqiHdONbytTNWY5SZePuPshmwKQYANguBidv4nPwj
-         C37HwRHjws+0LBnoIR9nXKCzLfVm6Fh2LBBJU=
+        bh=JvK7nAAVSpgD5oIumQfPNaMMDtIPTVj4JW6h6SRFBiI=;
+        b=m7Ws3JYfXgj+8PH6Cag5WpV2j8JcFJnqRzZ68LxwCGf2HaDFfNhmeZ7GD5HhEVEmHr
+         2wdPhokOrDyfZ4kfdurEt1drytZc88nqomP8V70TiyK3ukpJ4njjqOllO3cpzVFcjcx8
+         SvvhudRrNmGLbqmBJvGThmenRpFYW8lOhCeWyTze63VvwstcABuKR2/XjU0wehMkiOIv
+         M2FdSAOIn+cy5ypv4P5Y094wPzuXhmG4/KmvJ1Uw1i/OtBvwmSHemheKyd3qZcbqJbbz
+         4pfU3ojQzxnsjNguwUj6yIrP+RcaZ4PMLyoz1XpRnd4RMVrjvh2ekbdqQh+UXDGEjyTV
+         WIZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=Qu/+z+aYcuCRRFV+AdPh6n2kZeZUi3nq/2xiRzSarqU=;
-        b=crtOsb15HR75l01Y6VhUYunRzWtH4ZploogkqIRCOXNAExi6BkB8iHds6N+ccjMx6/
-         oItmb/U0jkAYa6G/h/hv9BzKPz8GGzSOtZlu7XGR7SwvPpQ91C2Ceod/+n0MbMyBl4Pq
-         kd+472GoFzvMXAw/aleSRdvR1Qs3tOCii/QcHZj4gVRvtk5qBP7BggAYsIVbkrb9Q5bE
-         HpBp3+tcTjUFMuBkJXMOhLlbJ/Ta0kmgw0AJCuF/jbVJfqnaZPdoM8owi5LxRmcmk/Vf
-         56ln+X2zIwMfoE6xJW1DjEtikMXoNnvczfP63DEjvARK8z/Gn4ljZnTgVOoRDC8+1F81
-         x16Q==
-X-Gm-Message-State: AOAM533+dZj81GmEtJIHzPQ2DXkU3PrRY3jXXXbWV3dB2dclafhPq9Tf
-        2ApxTksqGlqU9Y+q3vrmgDCfzw==
-X-Google-Smtp-Source: ABdhPJykHokI3YoeiFBK57yuuSqnBnuc3wat42SlCJkeZBB8jzA+AaA3iby0tGWZRkxEbiX/faOr8A==
-X-Received: by 2002:a17:90b:1089:: with SMTP id gj9mr1802909pjb.228.1632353624171;
-        Wed, 22 Sep 2021 16:33:44 -0700 (PDT)
-Received: from smtp.gmail.com ([2620:15c:202:201:abc0:dab6:bf88:23d5])
-        by smtp.gmail.com with ESMTPSA id z62sm6902816pjj.53.2021.09.22.16.33.42
+        bh=JvK7nAAVSpgD5oIumQfPNaMMDtIPTVj4JW6h6SRFBiI=;
+        b=orRBaI7X8FJmjl3dlD+IDAxC9vc+yyI3feux2wwi+Okm98h8JBlU8+ey47E+NQsvib
+         AhvvUIwUfN6CefBQbxEhQjDSH9lf+5eO3/IGPvJyLfuVoYx/xTmpozGzY4bYH57A8qFO
+         GxnjiD4UJnYlKeBGqJSXMh2KLp6AsSbBtLZftEwF1zj/BlPTziPj8oBbsneGnWHkftzX
+         CEouhrTcIzZrUzBoUeDbiGB5JLdpt4/vI0FPmDDsMZlY0Vzf/0q5qarj2DGKeQxS0ewb
+         tMAbAytnFfjRvtjp8Ub4BeJv8LrrqHc1IxvNCstEf+5JC0ryWXT41hjvz+hHbGJAzA+y
+         GbKQ==
+X-Gm-Message-State: AOAM530298hsCfEYocaPGMJWj+6lsQpYK/yqJaufdZs4brWiP/I/Xbn6
+        YwS8q8m7Qy5H25juhtf3m0dzvQ==
+X-Google-Smtp-Source: ABdhPJw6/BC44TsHxbq6eRNn+XpjMPDGV7n+oj8ucJc6YzVyg5rvHLlqT4IM85ADObmwy3AF+rI4vA==
+X-Received: by 2002:a2e:9707:: with SMTP id r7mr1272013lji.121.1632353751921;
+        Wed, 22 Sep 2021 16:35:51 -0700 (PDT)
+Received: from localhost.localdomain (88-112-130-172.elisa-laajakaista.fi. [88.112.130.172])
+        by smtp.gmail.com with ESMTPSA id x204sm287460lff.301.2021.09.22.16.35.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Sep 2021 16:33:43 -0700 (PDT)
-From:   Stephen Boyd <swboyd@chromium.org>
-To:     Kalle Valo <kvalo@codeaurora.org>
-Cc:     linux-kernel@vger.kernel.org, ath10k@lists.infradead.org,
-        linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Youghandhar Chintala <youghand@codeaurora.org>,
-        Abhishek Kumar <kuabhs@chromium.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rakesh Pillai <pillair@codeaurora.org>
-Subject: [PATCH v3] ath10k: Don't always treat modem stop events as crashes
-Date:   Wed, 22 Sep 2021 16:33:41 -0700
-Message-Id: <20210922233341.182624-1-swboyd@chromium.org>
-X-Mailer: git-send-email 2.33.0.464.g1972c5931b-goog
+        Wed, 22 Sep 2021 16:35:51 -0700 (PDT)
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: [PATCH v2] phy: qcom-qusb2: Fix a memory leak on probe
+Date:   Thu, 23 Sep 2021 02:35:48 +0300
+Message-Id: <20210922233548.2150244-1-vladimir.zapolskiy@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-When rebooting on sc7180 Trogdor devices I see the following crash from
-the wifi driver.
+On success nvmem_cell_read() returns a pointer to a dynamically allocated
+buffer, and therefore it shall be freed after usage.
 
- ath10k_snoc 18800000.wifi: firmware crashed! (guid 83493570-29a2-4e98-a83e-70048c47669c)
+The issue is reported by kmemleak:
 
-This is because a modem stop event looks just like a firmware crash to
-the driver, the qmi connection is closed in both cases. Use the qcom ssr
-notifier block to stop treating the qmi connection close event as a
-firmware crash signal when the modem hasn't actually crashed. See
-ath10k_qmi_event_server_exit() for more details.
+  # cat /sys/kernel/debug/kmemleak
+  unreferenced object 0xffff3b3803e4b280 (size 128):
+    comm "kworker/u16:1", pid 107, jiffies 4294892861 (age 94.120s)
+    hex dump (first 32 bytes):
+      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    backtrace:
+      [<000000007739afdc>] __kmalloc+0x27c/0x41c
+      [<0000000071c0fbf8>] nvmem_cell_read+0x40/0xe0
+      [<00000000e803ef1f>] qusb2_phy_init+0x258/0x5bc
+      [<00000000fc81fcfa>] phy_init+0x70/0x110
+      [<00000000e3d48a57>] dwc3_core_soft_reset+0x4c/0x234
+      [<0000000027d1dbd4>] dwc3_core_init+0x68/0x990
+      [<000000001965faf9>] dwc3_probe+0x4f4/0x730
+      [<000000002f7617ca>] platform_probe+0x74/0xf0
+      [<00000000a2576cac>] really_probe+0xc4/0x470
+      [<00000000bc77f2c5>] __driver_probe_device+0x11c/0x190
+      [<00000000130db71f>] driver_probe_device+0x48/0x110
+      [<0000000019f36c2b>] __device_attach_driver+0xa4/0x140
+      [<00000000e5812ff7>]  bus_for_each_drv+0x84/0xe0
+      [<00000000f4bac574>] __device_attach+0xe4/0x1c0
+      [<00000000d3beb631>] device_initial_probe+0x20/0x30
+      [<000000008019b9db>] bus_probe_device+0xa4/0xb0
 
-This silences the crash message seen during every reboot.
-
-Fixes: 3f14b73c3843 ("ath10k: Enable MSA region dump support for WCN3990")
-Cc: Youghandhar Chintala <youghand@codeaurora.org>
-Cc: Abhishek Kumar <kuabhs@chromium.org>
-Cc: Steev Klimaszewski <steev@kali.org>
-Cc: Matthias Kaehlcke <mka@chromium.org>
-Cc: Rakesh Pillai <pillair@codeaurora.org>
-Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+Fixes: ca04d9d3e1b1 ("phy: qcom-qusb2: New driver for QUSB2 PHY on Qcom chips")
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 ---
+Changes from v1 to v2:
+* fixed a memory leak in case of reading a zero value and return,
+* corrected the fixed commit, the memory leak is present before a rename.
 
-Changes since v2 (https://lore.kernel.org/r/20210913205313.3420049-1-swboyd@chromium.org):
- * Use a new bit instead of overloading unregistering
+ drivers/phy/qualcomm/phy-qcom-qusb2.c | 16 ++++++++++------
+ 1 file changed, 10 insertions(+), 6 deletions(-)
 
-Changes since v1 (https://lore.kernel.org/r/20210905210400.1157870-1-swboyd@chromium.org):
- * Push error message into function instead of checking at callsite
-
- drivers/net/wireless/ath/ath10k/qmi.c  |  3 +-
- drivers/net/wireless/ath/ath10k/snoc.c | 77 ++++++++++++++++++++++++++
- drivers/net/wireless/ath/ath10k/snoc.h |  5 ++
- 3 files changed, 84 insertions(+), 1 deletion(-)
-
-diff --git a/drivers/net/wireless/ath/ath10k/qmi.c b/drivers/net/wireless/ath/ath10k/qmi.c
-index 07e478f9a808..80fcb917fe4e 100644
---- a/drivers/net/wireless/ath/ath10k/qmi.c
-+++ b/drivers/net/wireless/ath/ath10k/qmi.c
-@@ -864,7 +864,8 @@ static void ath10k_qmi_event_server_exit(struct ath10k_qmi *qmi)
+diff --git a/drivers/phy/qualcomm/phy-qcom-qusb2.c b/drivers/phy/qualcomm/phy-qcom-qusb2.c
+index 3c1d3b71c825..f1d97fbd1331 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qusb2.c
++++ b/drivers/phy/qualcomm/phy-qcom-qusb2.c
+@@ -561,7 +561,7 @@ static void qusb2_phy_set_tune2_param(struct qusb2_phy *qphy)
+ {
+ 	struct device *dev = &qphy->phy->dev;
+ 	const struct qusb2_phy_cfg *cfg = qphy->cfg;
+-	u8 *val;
++	u8 *val, hstx_trim;
  
- 	ath10k_qmi_remove_msa_permission(qmi);
- 	ath10k_core_free_board_files(ar);
--	if (!test_bit(ATH10K_SNOC_FLAG_UNREGISTERING, &ar_snoc->flags))
-+	if (!test_bit(ATH10K_SNOC_FLAG_UNREGISTERING, &ar_snoc->flags) &&
-+	    !test_bit(ATH10K_SNOC_FLAG_MODEM_STOPPED, &ar_snoc->flags))
- 		ath10k_snoc_fw_crashed_dump(ar);
- 
- 	ath10k_snoc_fw_indication(ar, ATH10K_QMI_EVENT_FW_DOWN_IND);
-diff --git a/drivers/net/wireless/ath/ath10k/snoc.c b/drivers/net/wireless/ath/ath10k/snoc.c
-index ea00fbb15601..9513ab696fff 100644
---- a/drivers/net/wireless/ath/ath10k/snoc.c
-+++ b/drivers/net/wireless/ath/ath10k/snoc.c
-@@ -12,6 +12,7 @@
- #include <linux/platform_device.h>
- #include <linux/property.h>
- #include <linux/regulator/consumer.h>
-+#include <linux/remoteproc/qcom_rproc.h>
- #include <linux/of_address.h>
- #include <linux/iommu.h>
- 
-@@ -1477,6 +1478,74 @@ void ath10k_snoc_fw_crashed_dump(struct ath10k *ar)
- 	mutex_unlock(&ar->dump_mutex);
+ 	/* efuse register is optional */
+ 	if (!qphy->cell)
+@@ -575,7 +575,13 @@ static void qusb2_phy_set_tune2_param(struct qusb2_phy *qphy)
+ 	 * set while configuring the phy.
+ 	 */
+ 	val = nvmem_cell_read(qphy->cell, NULL);
+-	if (IS_ERR(val) || !val[0]) {
++	if (IS_ERR(val)) {
++		dev_dbg(dev, "failed to read a valid hs-tx trim value\n");
++		return;
++	}
++	hstx_trim = val[0];
++	kfree(val);
++	if (!hstx_trim) {
+ 		dev_dbg(dev, "failed to read a valid hs-tx trim value\n");
+ 		return;
+ 	}
+@@ -583,12 +589,10 @@ static void qusb2_phy_set_tune2_param(struct qusb2_phy *qphy)
+ 	/* Fused TUNE1/2 value is the higher nibble only */
+ 	if (cfg->update_tune1_with_efuse)
+ 		qusb2_write_mask(qphy->base, cfg->regs[QUSB2PHY_PORT_TUNE1],
+-				 val[0] << HSTX_TRIM_SHIFT,
+-				 HSTX_TRIM_MASK);
++				 hstx_trim << HSTX_TRIM_SHIFT, HSTX_TRIM_MASK);
+ 	else
+ 		qusb2_write_mask(qphy->base, cfg->regs[QUSB2PHY_PORT_TUNE2],
+-				 val[0] << HSTX_TRIM_SHIFT,
+-				 HSTX_TRIM_MASK);
++				 hstx_trim << HSTX_TRIM_SHIFT, HSTX_TRIM_MASK);
  }
  
-+static int ath10k_snoc_modem_notify(struct notifier_block *nb, unsigned long action,
-+				    void *data)
-+{
-+	struct ath10k_snoc *ar_snoc = container_of(nb, struct ath10k_snoc, nb);
-+	struct ath10k *ar = ar_snoc->ar;
-+	struct qcom_ssr_notify_data *notify_data = data;
-+
-+	switch (action) {
-+	case QCOM_SSR_BEFORE_POWERUP:
-+		ath10k_dbg(ar, ATH10K_DBG_SNOC, "received modem starting event\n");
-+		clear_bit(ATH10K_SNOC_FLAG_MODEM_STOPPED, &ar_snoc->flags);
-+		break;
-+
-+	case QCOM_SSR_AFTER_POWERUP:
-+		ath10k_dbg(ar, ATH10K_DBG_SNOC, "received modem running event\n");
-+		break;
-+
-+	case QCOM_SSR_BEFORE_SHUTDOWN:
-+		ath10k_dbg(ar, ATH10K_DBG_SNOC, "received modem %s event\n",
-+			   notify_data->crashed ? "crashed" : "stopping");
-+		if (!notify_data->crashed)
-+			set_bit(ATH10K_SNOC_FLAG_MODEM_STOPPED, &ar_snoc->flags);
-+		else
-+			clear_bit(ATH10K_SNOC_FLAG_MODEM_STOPPED, &ar_snoc->flags);
-+		break;
-+
-+	case QCOM_SSR_AFTER_SHUTDOWN:
-+		ath10k_dbg(ar, ATH10K_DBG_SNOC, "received modem offline event\n");
-+		break;
-+
-+	default:
-+		ath10k_err(ar, "received unrecognized event %lu\n", action);
-+		break;
-+	}
-+
-+	return NOTIFY_OK;
-+}
-+
-+static int ath10k_modem_init(struct ath10k *ar)
-+{
-+	struct ath10k_snoc *ar_snoc = ath10k_snoc_priv(ar);
-+	void *notifier;
-+	int ret;
-+
-+	ar_snoc->nb.notifier_call = ath10k_snoc_modem_notify;
-+
-+	notifier = qcom_register_ssr_notifier("mpss", &ar_snoc->nb);
-+	if (IS_ERR(notifier)) {
-+		ret = PTR_ERR(notifier);
-+		ath10k_err(ar, "failed to initialize modem notifier: %d\n", ret);
-+		return ret;
-+	}
-+
-+	ar_snoc->notifier = notifier;
-+
-+	return 0;
-+}
-+
-+static void ath10k_modem_deinit(struct ath10k *ar)
-+{
-+	int ret;
-+	struct ath10k_snoc *ar_snoc = ath10k_snoc_priv(ar);
-+
-+	ret = qcom_unregister_ssr_notifier(ar_snoc->notifier, &ar_snoc->nb);
-+	if (ret)
-+		ath10k_err(ar, "error %d unregistering notifier\n", ret);
-+}
-+
- static int ath10k_setup_msa_resources(struct ath10k *ar, u32 msa_size)
- {
- 	struct device *dev = ar->dev;
-@@ -1740,10 +1809,17 @@ static int ath10k_snoc_probe(struct platform_device *pdev)
- 		goto err_fw_deinit;
- 	}
- 
-+	ret = ath10k_modem_init(ar);
-+	if (ret)
-+		goto err_qmi_deinit;
-+
- 	ath10k_dbg(ar, ATH10K_DBG_SNOC, "snoc probe\n");
- 
- 	return 0;
- 
-+err_qmi_deinit:
-+	ath10k_qmi_deinit(ar);
-+
- err_fw_deinit:
- 	ath10k_fw_deinit(ar);
- 
-@@ -1771,6 +1847,7 @@ static int ath10k_snoc_free_resources(struct ath10k *ar)
- 	ath10k_fw_deinit(ar);
- 	ath10k_snoc_free_irq(ar);
- 	ath10k_snoc_release_resource(ar);
-+	ath10k_modem_deinit(ar);
- 	ath10k_qmi_deinit(ar);
- 	ath10k_core_destroy(ar);
- 
-diff --git a/drivers/net/wireless/ath/ath10k/snoc.h b/drivers/net/wireless/ath/ath10k/snoc.h
-index 5095d1893681..d4bce1707696 100644
---- a/drivers/net/wireless/ath/ath10k/snoc.h
-+++ b/drivers/net/wireless/ath/ath10k/snoc.h
-@@ -6,6 +6,8 @@
- #ifndef _SNOC_H_
- #define _SNOC_H_
- 
-+#include <linux/notifier.h>
-+
- #include "hw.h"
- #include "ce.h"
- #include "qmi.h"
-@@ -45,6 +47,7 @@ struct ath10k_snoc_ce_irq {
- enum ath10k_snoc_flags {
- 	ATH10K_SNOC_FLAG_REGISTERED,
- 	ATH10K_SNOC_FLAG_UNREGISTERING,
-+	ATH10K_SNOC_FLAG_MODEM_STOPPED,
- 	ATH10K_SNOC_FLAG_RECOVERY,
- 	ATH10K_SNOC_FLAG_8BIT_HOST_CAP_QUIRK,
- };
-@@ -75,6 +78,8 @@ struct ath10k_snoc {
- 	struct clk_bulk_data *clks;
- 	size_t num_clks;
- 	struct ath10k_qmi *qmi;
-+	struct notifier_block nb;
-+	void *notifier;
- 	unsigned long flags;
- 	bool xo_cal_supported;
- 	u32 xo_cal_data;
-
-base-commit: e4e737bb5c170df6135a127739a9e6148ee3da82
+ static int qusb2_phy_set_mode(struct phy *phy,
 -- 
-https://chromeos.dev
+2.33.0
 
