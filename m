@@ -2,166 +2,294 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D20E641443F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Sep 2021 10:53:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4B52E41444D
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Sep 2021 10:57:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234128AbhIVIzN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Sep 2021 04:55:13 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:54985 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234103AbhIVIzM (ORCPT
+        id S234040AbhIVI6n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Sep 2021 04:58:43 -0400
+Received: from new2-smtp.messagingengine.com ([66.111.4.224]:36025 "EHLO
+        new2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S233741AbhIVI6m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Sep 2021 04:55:12 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1632300822; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=id+uOqWXqh1BzsspNKQReK/0+hKAUXpygQ1iBVBGuvw=; b=Pm1QvnFiXAXUmcVSpNqJHjrlEx+va/hToQTMmfRz8UedKvq+ofO4X9o8d21WOk5+oHahxxY5
- 1xOQgWYYFC9nDFTfpGSQIPATcYul/YBG4kIbrLBjq9Oqw/EIBc3fDKP99OlMR8uBOnSy5df/
- PUEowwtO5uJQqurutqesY7XsDFs=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 614aef08b585cc7d2461cdf1 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 22 Sep 2021 08:53:28
- GMT
-Sender: wcheng=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 03754C43617; Wed, 22 Sep 2021 08:53:28 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [192.168.1.6] (cpe-75-80-185-151.san.res.rr.com [75.80.185.151])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: wcheng)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 36681C43460;
-        Wed, 22 Sep 2021 08:53:26 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 36681C43460
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: dwc3-qcom: tx-fifo-resize regression on Poco F1 (sdm845) with
- v5.15-rc1
-To:     Amit Pundir <amit.pundir@linaro.org>
-Cc:     Felipe Balbi <balbi@kernel.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jack Pham <jackp@codeaurora.org>,
-        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
+        Wed, 22 Sep 2021 04:58:42 -0400
+Received: from compute1.internal (compute1.nyi.internal [10.202.2.41])
+        by mailnew.nyi.internal (Postfix) with ESMTP id B6DFA5802BF;
+        Wed, 22 Sep 2021 04:57:12 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute1.internal (MEProxy); Wed, 22 Sep 2021 04:57:12 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=
+        date:from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm3; bh=7nh2OaBNhdhEMW4Zegg2B+NrTP1
+        XdzNcvYRzKw/Wl3A=; b=iDcMKwn+bqpWf7dTIYyvIdo5u50WHQ77/X5wGm8aFjj
+        yIFnv0UI7UtjodhdrtTfJ5/zJwytzywdyoiXiDkl5RH3su/erphOJKSOkQLgmcjU
+        2BjSf5QFwfSq4BmkK0SI/3Dz0XFf7e2/NEsLrACFmUqaX7FqFA2B0NQ9mESU+wJ5
+        RXIeymf3yEMh/1ZJP298CIjUncAc9SR5fdjtQNf0gAnZcyeNNwHXxNSUF7UgYtXA
+        /L/jLwttiF+2ndwKedSLBR/E8W1zFMotYmTRKkdnCoQsVGC9aBOUWTGDlCDpGFcB
+        cd7WKxASYb1BQRXXN34+7ERBXxC8+Np7k22QtgwXDWQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=7nh2Oa
+        BNhdhEMW4Zegg2B+NrTP1XdzNcvYRzKw/Wl3A=; b=kmUrzeGSSyw5nyDhY/0Ztg
+        2JfLH4xedbJ9le3sOOwZFApcu0D+nGDP/LskhUAtvY3nTbNTdZiR5lxaACr3Ny+z
+        LOK67SdXIc3VUjKESo2WEtE1N/5gwSdXQpjlKCn0mnjCo5RHct3Y0kmumxi3lLqt
+        2trrk2DxeqFjFK3x4kwrA/JiDTayW523QK8et/Ee4GvRyYlq5cicMEvcgdF5q6i4
+        MhpOh37Z2MDs/WTO4FQS2DrrPw4URj7e6E7vqKnSdZwSRMY3be4lue2tjY+UBV39
+        hRsF1DdgclU8woYnQwAX2u6UgLA4l9lhPDqD6yFcK2Y5cW0CKqCXKq4REIBLjY/A
+        ==
+X-ME-Sender: <xms:5u9KYUHHpgHPYCJLvfOaAMv5cwjflEqcL2JmBw7C9Vzx56UUcgOfTg>
+    <xme:5u9KYdVY6eCMVMC5sedDGBqA8pCoNBquJNTnNwXafWD2MAItROEt2_V_ieD7I2i-M
+    riQO5v4bcf2hToFtBY>
+X-ME-Received: <xmr:5u9KYeKI5vqbyrT9hf96H1CSJrDnc8ZmHVzAMtZGO7ZsQ12EP9Db5nVQe7j1kRzYLrvY0VinAH_9T8n0XlVnYJawzAj7dZdUJOkD>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrudeijedgtdelucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddunecuhfhrohhmpeforgigihhm
+    vgcutfhiphgrrhguuceomhgrgihimhgvsegtvghrnhhordhtvggthheqnecuggftrfgrth
+    htvghrnhepuddvudfhkeekhefgffetffelgffftdehffduffegveetffehueeivddvjedv
+    gfevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepmh
+    grgihimhgvsegtvghrnhhordhtvggthh
+X-ME-Proxy: <xmx:5u9KYWHAXmTPeGMK2WUkDxfD23AHx5m7l7BRETz0_L-jOzDGuV4dHA>
+    <xmx:5u9KYaXT3pB5F9rGBBYpbF79jvZbT38tkQqmtB3wKw_Fp8n_pqdIJg>
+    <xmx:5u9KYZP3CJTkdRA5K5T9QqOMI_V4BDOuQUme-F-2U0dr3LmfMCUOdw>
+    <xmx:6O9KYdrtARzZVcrde821ZotQ8wHBzELXuK7ca6IVc2HciGwi176qEQ>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 22 Sep 2021 04:57:10 -0400 (EDT)
+Date:   Wed, 22 Sep 2021 10:57:07 +0200
+From:   Maxime Ripard <maxime@cerno.tech>
+To:     Andrzej Hajda <a.hajda@samsung.com>
+Cc:     Sam Ravnborg <sam@ravnborg.org>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        David Airlie <airlied@linux.ie>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Sean Paul <sean@poorly.run>, freedreno@lists.freedesktop.org,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        linux-kernel@vger.kernel.org,
+        Xinliang Liu <xinliang.liu@linaro.org>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Tian Tao <tiantao6@hisilicon.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        dri-devel@lists.freedesktop.org,
         John Stultz <john.stultz@linaro.org>,
-        linux-usb@vger.kernel.org, lkml <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dt <devicetree@vger.kernel.org>
-References: <CAMi1Hd3k2snB4-=M57pVrMVom=a9_2a0DTFk-+Hzpubwk-Pr9Q@mail.gmail.com>
- <64a2a428-8bb1-0078-2403-1ca8e28cf4b1@codeaurora.org>
- <CAMi1Hd2MCxJgbHz9oGWe4L+MXNM3p+Xntpcg6t3TvZxwjJTy0Q@mail.gmail.com>
- <47a06078-dd41-7b3d-3de3-4e6c24211691@codeaurora.org>
- <CAMi1Hd1UtTECaDROGm7hE377Dp5qLzZeqBowmxoQJpOm9uQFHw@mail.gmail.com>
-From:   Wesley Cheng <wcheng@codeaurora.org>
-Message-ID: <a126f6f3-1313-64f9-98bf-fcb7984220cd@codeaurora.org>
-Date:   Wed, 22 Sep 2021 01:53:25 -0700
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        Chen Feng <puck.chen@hisilicon.com>,
+        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>
+Subject: Re: [PATCH v4 02/24] drm/bridge: Document the probe issue with
+ MIPI-DSI bridges
+Message-ID: <20210922085707.dr3fautmyowof7cr@gilmour>
+References: <20210910101218.1632297-1-maxime@cerno.tech>
+ <CGME20210910101246eucas1p17191a80c37b0e1784d6d9b8bf6fbcd60@eucas1p1.samsung.com>
+ <20210910101218.1632297-3-maxime@cerno.tech>
+ <7ad18d53-3ad6-a614-a8e1-cce6505f90a8@samsung.com>
+ <20210914143541.433ucx2kvz36tw42@gilmour>
+ <e5ec9763-37fe-6cd8-6eca-52792afbdb94@samsung.com>
 MIME-Version: 1.0
-In-Reply-To: <CAMi1Hd1UtTECaDROGm7hE377Dp5qLzZeqBowmxoQJpOm9uQFHw@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="ogv2yceu2bvyarnp"
+Content-Disposition: inline
+In-Reply-To: <e5ec9763-37fe-6cd8-6eca-52792afbdb94@samsung.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Amit,
 
-On 9/21/2021 3:18 AM, Amit Pundir wrote:
-> On Tue, 21 Sept 2021 at 13:00, Wesley Cheng <wcheng@codeaurora.org> wrote:
->>
->> Hi Amit,
->>
->> On 9/21/2021 12:04 AM, Amit Pundir wrote:
->>> Hi Wesley,
->>>
->>> On Tue, 21 Sept 2021 at 02:44, Wesley Cheng <wcheng@codeaurora.org> wrote:
->>>>
->>>> Hi Amit,
->>>>
->>>> On 9/20/2021 1:45 PM, Amit Pundir wrote:
->>>>> Hi Wesley, All,
->>>>>
->>>>> I see a reboot loop on Xiaomi Pocophone F1 (sdm845) with TX FIFO
->>>>> resize patches which landed in v5.15-rc1. Upstream commit cefdd52fa045
->>>>> "usb: dwc3: dwc3-qcom: Enable tx-fifo-resize property by default" to
->>>>> be specific, which switched on this feature by default.
->>>>>
->>>>> At times the phone crashes into the fastboot mode after the reboot
->>>>> loop, but mostly end up booting to UI after a while. This is what it
->>>>> looks like https://people.linaro.org/~amit.pundir/beryllium-userdebug/PXL_20210920_162749483.mp4.
->>>>>
->>>>
->>>> I believe Android will attempt a number of bootup sequences and if it
->>>> fails, it falls back to fastboot mode.  Are there any available logs you
->>>> might be able to collect to see where the issue is?
->>>
->>> It is a stock phone with no UART access, so I can't get early crash
->>> logs unless I'm booted up to adb shell. I can try getting some info
->>> using pstore-ramoops but warm reset support for sdm845 was not
->>> upstreamed when I tried using that the last time.
->>>
->>
->> I see, can we maybe avoid the actual resizing by commenting out the
->> following writel() calls, but let the fifo resize logic calculate the EPs?
->>
->> void dwc3_gadget_clear_tx_fifos(struct dwc3 *dwc)
->> {
->> ...
->>                 /* Don't change TXFRAMNUM on usb31 version */
->>                 size = DWC3_IP_IS(DWC3) ? 0 :
->>                         dwc3_readl(dwc->regs, DWC3_GTXFIFOSIZ(num >> 1)) &
->>                                    DWC31_GTXFIFOSIZ_TXFRAMNUM;
->>                 /* Comment the dwc3_writel() */
->>                 //dwc3_writel(dwc->regs, DWC3_GTXFIFOSIZ(num >> 1), size);
->>
->> and
->>
->> static int dwc3_gadget_resize_tx_fifos(struct dwc3_ep *dep)
->> {
->> ...
->>         /* Comment the dwc3_writel() */
->>         //dwc3_writel(dwc->regs, DWC3_GTXFIFOSIZ(dep->number >> 1), fifo_size);
->>         dwc->num_ep_resized++;
->>
->> Those 2 writel() would be the one that actually programs the TXFIFO
->> register.  I hope when commented out, no resize should actually happen
->> anymore.
->>
->> With this, hopefully we can get some logs from the device at least :)
-> 
-> I can boot fine with above 2 writel() removed but I don't see EP
-> counts being printed in the log anywhere and the only relevant
-> message in dmesg I see is this:
-> 
->     Duplicate name in dwc3@a600000, renamed to "tx-fifo-resize#1"
-> 
-> which is interesting because I don't see tx-fifo-resize property being
-> set by any of the upstream sdm845 or relevant dtsi files.
-> 
-> 
-Thanks for testing.  What is the current composition the device is
-exposing to the host?
+--ogv2yceu2bvyarnp
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Can we get a ftrace log w/ the DWC3 events enabled, as well as the
-kernel log? (if not at boot up then maybe a plug in/out)  This will at
-least help us identify when the DWC3 ep enable is being called (which
-triggers the resize routine)
+Hi,
 
-Thanks
-Wesley Cheng
+On Tue, Sep 14, 2021 at 09:00:28PM +0200, Andrzej Hajda wrote:
+>=20
+> W dniu 14.09.2021 o=A016:35, Maxime Ripard pisze:
+> > Hi,
+> >
+> > On Mon, Sep 13, 2021 at 08:29:37AM +0200, Andrzej Hajda wrote:
+> >> W dniu 10.09.2021 o=A012:11, Maxime Ripard pisze:
+> >>> Interactions between bridges, panels, MIPI-DSI host and the component
+> >>> framework are not trivial and can lead to probing issues when
+> >>> implementing a display driver. Let's document the various cases we ne=
+ed
+> >>> too consider, and the solution to support all the cases.
+> >>>
+> >>> Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+> >>> ---
+> >>>    Documentation/gpu/drm-kms-helpers.rst |  6 +++
+> >>>    drivers/gpu/drm/drm_bridge.c          | 57 +++++++++++++++++++++++=
+++++
+> >>>    2 files changed, 63 insertions(+)
+> >>>
+> >>> diff --git a/Documentation/gpu/drm-kms-helpers.rst b/Documentation/gp=
+u/drm-kms-helpers.rst
+> >>> index 10f8df7aecc0..ec2f65b31930 100644
+> >>> --- a/Documentation/gpu/drm-kms-helpers.rst
+> >>> +++ b/Documentation/gpu/drm-kms-helpers.rst
+> >>> @@ -157,6 +157,12 @@ Display Driver Integration
+> >>>    .. kernel-doc:: drivers/gpu/drm/drm_bridge.c
+> >>>       :doc: display driver integration
+> >>>   =20
+> >>> +Special Care with MIPI-DSI bridges
+> >>> +----------------------------------
+> >>> +
+> >>> +.. kernel-doc:: drivers/gpu/drm/drm_bridge.c
+> >>> +   :doc: special care dsi
+> >>> +
+> >>>    Bridge Operations
+> >>>    -----------------
+> >>>   =20
+> >>> diff --git a/drivers/gpu/drm/drm_bridge.c b/drivers/gpu/drm/drm_bridg=
+e.c
+> >>> index baff74ea4a33..7cc2d2f94ae3 100644
+> >>> --- a/drivers/gpu/drm/drm_bridge.c
+> >>> +++ b/drivers/gpu/drm/drm_bridge.c
+> >>> @@ -96,6 +96,63 @@
+> >>>     * documentation of bridge operations for more details).
+> >>>     */
+> >>>   =20
+> >>> +/**
+> >>> + * DOC: special care dsi
+> >>> + *
+> >>> + * The interaction between the bridges and other frameworks involved=
+ in
+> >>> + * the probing of the upstream driver and the bridge driver can be
+> >>> + * challenging. Indeed, there's multiple cases that needs to be
+> >>> + * considered:
+> >>> + *
+> >>> + * - The upstream driver doesn't use the component framework and isn=
+'t a
+> >>> + *   MIPI-DSI host. In this case, the bridge driver will probe at so=
+me
+> >>> + *   point and the upstream driver should try to probe again by retu=
+rning
+> >>> + *   EPROBE_DEFER as long as the bridge driver hasn't probed.
+> >>> + *
+> >>> + * - The upstream driver doesn't use the component framework, but is=
+ a
+> >>> + *   MIPI-DSI host. The bridge device uses the MIPI-DCS commands to =
+be
+> >>> + *   controlled. In this case, the bridge device is a child of the
+> >>> + *   display device and when it will probe it's assured that the dis=
+play
+> >>> + *   device (and MIPI-DSI host) is present. The upstream driver will=
+ be
+> >>> + *   assured that the bridge driver is connected between the
+> >>> + *   &mipi_dsi_host_ops.attach and &mipi_dsi_host_ops.detach operati=
+ons.
+> >>> + *   Therefore, it must run mipi_dsi_host_register() in its probe
+> >>> + *   function, and then run drm_bridge_attach() in its
+> >>> + *   &mipi_dsi_host_ops.attach hook.
+> >>> + *
+> >>> + * - The upstream driver uses the component framework and is a MIPI-=
+DSI
+> >>> + *   host. The bridge device uses the MIPI-DCS commands to be
+> >>> + *   controlled. This is the same situation than above, and can run
+> >>> + *   mipi_dsi_host_register() in either its probe or bind hooks.
+> >>> + *
+> >>> + * - The upstream driver uses the component framework and is a MIPI-=
+DSI
+> >>> + *   host. The bridge device uses a separate bus (such as I2C) to be
+> >>> + *   controlled. In this case, there's no correlation between the pr=
+obe
+> >>> + *   of the bridge and upstream drivers, so care must be taken to av=
+oid
+> >>> + *   an endless EPROBE_DEFER loop, with each driver waiting for the
+> >>> + *   other to probe.
+> >>> + *
+> >>> + * The ideal pattern to cover the last item (and all the others in t=
+he
+> >>> + * MIPI-DSI host driver case) is to split the operations like this:
+> >>> + *
+> >>> + * - The MIPI-DSI host driver must run mipi_dsi_host_register() in i=
+ts
+> >>> + *   probe hook. It will make sure that the MIPI-DSI host sticks aro=
+und,
+> >>> + *   and that the driver's bind can be called.
+> >>> + *
+> >>> + * - In its probe hook, the bridge driver must try to find its MIPI-=
+DSI
+> >>> + *   host, register as a MIPI-DSI device and attach the MIPI-DSI dev=
+ice
+> >>> + *   to its host. The bridge driver is now functional.
+> >>> + *
+> >>> + * - In its &struct mipi_dsi_host_ops.attach hook, the MIPI-DSI host=
+ can
+> >>> + *   now add its component. Its bind hook will now be called and sin=
+ce
+> >>> + *   the bridge driver is attached and registered, we can now look f=
+or
+> >>> + *   and attach it.
+> >>> + *
+> >>> + * At this point, we're now certain that both the upstream driver and
+> >>> + * the bridge driver are functional and we can't have a deadlock-like
+> >>> + * situation when probing.
+> >>> + */
+> >>> +
+> >>>    static DEFINE_MUTEX(bridge_lock);
+> >>>    static LIST_HEAD(bridge_list);
+> >>
+> >> Nice work with documenting this initialization dance. It clearly shows
+> >> that bridge API lacks better mechanism - usage of mipi dsi callbacks to
+> >> get notifications about bridge appearance is ugly.
+> > Yeah, there's so many moving parts it's definitely not great.
+> >
+> >> It remains me my resource tracking patches which I have posted long
+> >> time ago [1] - they would solve the issue in much more elegant way,
+> >> described here [2]. Apparently I was not stubborn enough in promoting
+> >> this solution.
+> > Wow, that sounds like a massive change indeed :/
+> >
+> >> Anyway:
+> >>
+> >> Reviewed-by: Andrzej Hajda <a.hajda@samsung.com>
+> > I assume you'll want me to hold off that patch before someone reviews
+> > the rest?
+>=20
+> The last exynos patch should be dropped,
 
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+Done
+
+> kirin patch should be tested/reviewed/acked by kirin maintaner. I am
+> not sure about bridge patches, which ones have been tested by you, and
+> which one have other users.
+
+Rob was nice enough to give it a try last week for msm and do the needed
+changes. He tested it with the sn65dsi86 bridge. John was also saying it
+was on their todo list (for kirin I assume?). So hopefully it can be
+fairly smooth for everyone.
+
+I tested sn65dsi83 and ps8640 with the vc4 driver. I don't have the
+hardware so it was just making sure that everything was probing
+properly, but it's what we're interested in anyway.
+
+> If yes it would be good to test them as well - changes in initialization=
+=20
+> flow can beat sometimes :)
+>=20
+> I think patches 1-4 can be merged earlier, if you like, as they are on=20
+> the list for long time.
+
+Ack, I'll merge them, thanks!
+Maxime
+
+--ogv2yceu2bvyarnp
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCYUrv4wAKCRDj7w1vZxhR
+xQoBAP920qamAHvLMhCg5u1wp+EEFBEufqValUOHaOJZojlTCwEA/7pqFJGHB8T3
+DdmJKwivFSWQ4kYOXp5/PsK5KM2l7wM=
+=MG4a
+-----END PGP SIGNATURE-----
+
+--ogv2yceu2bvyarnp--
