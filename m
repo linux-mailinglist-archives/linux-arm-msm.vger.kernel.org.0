@@ -2,140 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1792C414107
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Sep 2021 07:03:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2B76841443B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Sep 2021 10:53:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231791AbhIVFE4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Sep 2021 01:04:56 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:27875 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231626AbhIVFE4 (ORCPT
+        id S233879AbhIVIyo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Sep 2021 04:54:44 -0400
+Received: from new2-smtp.messagingengine.com ([66.111.4.224]:54035 "EHLO
+        new2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S233741AbhIVIyn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Sep 2021 01:04:56 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1632287006; h=Content-Transfer-Encoding: Content-Type:
- MIME-Version: Message-ID: Date: Subject: In-Reply-To: References: Cc:
- To: From: Sender; bh=F6JDteZc07ta9blvaVuEHXEVpmU7kZtyp9jRwTKVV7E=; b=l+v0+dztpkLJmuz10s+cQDt5I25iI5nI/BnulttGJ5TKrEFXCSYHQj1Czt28IdB+Ltb4zUSd
- A5z8J/bDHqFxcXzghFzKfo0C/+vTE9BLKYhlelf5a4n3KjrgsRT8FXbjXJ7S9DOg28T9/YkA
- 2SgKNf6zOBMjyZgenwlMQ3KUWuw=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 614ab91ebd6681d8ed39b0b4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 22 Sep 2021 05:03:26
- GMT
-Sender: pillair=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A0D1DC43617; Wed, 22 Sep 2021 05:03:25 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from PILLAIR1 (unknown [103.155.223.107])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: pillair)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6AECAC4338F;
-        Wed, 22 Sep 2021 05:03:20 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 6AECAC4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   <pillair@codeaurora.org>
-To:     "'Bjorn Andersson'" <bjorn.andersson@linaro.org>,
-        "'Stephen Boyd'" <swboyd@chromium.org>
-Cc:     <agross@kernel.org>, <mathieu.poirier@linaro.org>,
-        <ohad@wizery.com>, <p.zabel@pengutronix.de>, <robh+dt@kernel.org>,
-        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
-        <linux-kernel@vger.kernel.org>, <sibis@codeaurora.org>,
-        <mpubbise@codeaurora.org>, <kuabhs@chromium.org>
-References: <1631811353-503-1-git-send-email-pillair@codeaurora.org> <1631811353-503-3-git-send-email-pillair@codeaurora.org> <CAE-0n51KBYjZvwGNy06_okmEWjEfRLQO54CYaY6-JnbBk6kOhA@mail.gmail.com> <YUps1JfGtf6JdbCx@ripper>
-In-Reply-To: <YUps1JfGtf6JdbCx@ripper>
-Subject: RE: [PATCH v3 2/3] dt-bindings: remoteproc: qcom: Add SC7280 WPSS support
-Date:   Wed, 22 Sep 2021 10:33:17 +0530
-Message-ID: <000b01d7af6f$2be09c50$83a1d4f0$@codeaurora.org>
+        Wed, 22 Sep 2021 04:54:43 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailnew.nyi.internal (Postfix) with ESMTP id 7BE84580255;
+        Wed, 22 Sep 2021 04:53:13 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Wed, 22 Sep 2021 04:53:13 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=
+        date:from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm3; bh=vB4ezIS3B/kZC3s/eTN0cuFplTA
+        XmSMYfGeoI88X2qo=; b=YsylE5OY/aekw+oI2+1FimeeZRY/2Yo3w7Q4AnyFH/C
+        0ih8xf12GaTRWGSGTSa1lN6UtpMTcTfPWnzJzLZyulnDzMLCiqsIOMHgWvvvtM+t
+        aRxYTV4nS+BDY+Jp+0Tgjp32cDAX2K9LovlT8axaAZrkNb3g8FlQE0hlxdSHcc6v
+        uUazUJciXlMA2np4kTf2XA4jP58ygmsHJhALjr8iW8ds3YWvvsyMuFrxW3dW+xvg
+        oVhVSI66rua+eX1nSrT2AGrFsrVYDfuNjuem8BNuK2YVmXG/FVK+ZyojoexASuNw
+        Hc2CPhaDFbymXUYb9wF9OYPe8VdgS5NsCJBUHWMZeKw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=vB4ezI
+        S3B/kZC3s/eTN0cuFplTAXmSMYfGeoI88X2qo=; b=fC2KOYeledOkkC0aXAt3K+
+        dKvD36fgpb6vnAv1HouSdfS8PJmsHJ8jhtXbGGb9iC/Xj+ZSlG2oWEx6AkoYkon5
+        suffel7OAkN/YnqLea9oClqBi5NJqimc8Y6NiZoghzmE4R3RHtJJabaRXFdnj8fN
+        zf2mEiVJ9qw5XbV+038Vsl1IA2WGOIvUoIjisaLgYdqMpKblOttTJH/a8FG1R64F
+        DR1noMRcccN9iK2qlxgLD0a6PweKrFhR8wrD7ht8NtAMG6s1YMSPoj4hxC5HMI3H
+        eRshjJ/OpQNYI1qL+EZVbeZx3oTUTLwA9fVnhcPIUekEPJg5h59MmMslpiM8ud6Q
+        ==
+X-ME-Sender: <xms:9u5KYekdnmXJHNpxfNoWaC4yZDbFKMDIMpBBkzOiDOyqU4KbopKu2Q>
+    <xme:9u5KYV0u9Dvd18g4ZX-oDyXf5gzHYsf__TZf6J-xqn1HKqh3JlnhL-FgeImrf-LIJ
+    c8nsmIzVXCsWz2VH3s>
+X-ME-Received: <xmr:9u5KYcqju0OvuwONUjkYz6Bu9GX5MgRgU_JTyWtOsiO_PLMOvDJyCEtjRuemy-o7d7uRRzYwZA7xTyCyqdi1PmYYmJITakP5W5-W>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrudeijedgtdekucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddunecuhfhrohhmpeforgigihhm
+    vgcutfhiphgrrhguuceomhgrgihimhgvsegtvghrnhhordhtvggthheqnecuggftrfgrth
+    htvghrnhepuddvudfhkeekhefgffetffelgffftdehffduffegveetffehueeivddvjedv
+    gfevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepmh
+    grgihimhgvsegtvghrnhhordhtvggthh
+X-ME-Proxy: <xmx:9u5KYSmlJ9urbGNWvh4mVJzB7EAtmY5_AdSC33thxwd9Is6TzxDMCQ>
+    <xmx:9u5KYc3sU_rz5oyUREwe9hVvDy4C4ZX2INr1dn8wF-y2blmj0sNX4g>
+    <xmx:9u5KYZudXpDV8jw8CDYTCg1WodNfJFH5dobYYFeTpQDpH9nUBu7jkQ>
+    <xmx:-e5KYeGzPi3o7aXd1E6BUwNERCc7GvHXrLBDt2qHkLcX8pLIPyjrAw>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 22 Sep 2021 04:53:09 -0400 (EDT)
+Date:   Wed, 22 Sep 2021 10:53:08 +0200
+From:   Maxime Ripard <maxime@cerno.tech>
+To:     Marek Szyprowski <m.szyprowski@samsung.com>
+Cc:     Andrzej Hajda <a.hajda@samsung.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        David Airlie <airlied@linux.ie>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Sean Paul <sean@poorly.run>, freedreno@lists.freedesktop.org,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        linux-kernel@vger.kernel.org,
+        Xinliang Liu <xinliang.liu@linaro.org>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Tian Tao <tiantao6@hisilicon.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>,
+        dri-devel@lists.freedesktop.org,
+        John Stultz <john.stultz@linaro.org>,
+        Chen Feng <puck.chen@hisilicon.com>,
+        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>
+Subject: Re: [PATCH v4 24/24] drm/exynos: dsi: Adjust probe order
+Message-ID: <20210922085308.udvhfbzpn3vpbksr@gilmour>
+References: <20210910101218.1632297-1-maxime@cerno.tech>
+ <CGME20210910101445eucas1p172f99ff7fe853052fc457861c3174f9e@eucas1p1.samsung.com>
+ <20210910101218.1632297-25-maxime@cerno.tech>
+ <29a2111d-024b-4d9e-27ef-e3399509ff32@samsung.com>
+ <fc1fbd42-6ed4-9d67-2903-8f9cc2aaad43@samsung.com>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQHMNEBDEmK8+OU0e0UN4gvXCrx/ZwJ79PxeAhycz40Chr1Yo6uNex2g
-Content-Language: en-us
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="26b3pc6nmf5dnhp2"
+Content-Disposition: inline
+In-Reply-To: <fc1fbd42-6ed4-9d67-2903-8f9cc2aaad43@samsung.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
+--26b3pc6nmf5dnhp2
+Content-Type: text/plain; charset=iso-8859-1
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-> -----Original Message-----
-> From: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Sent: Wednesday, September 22, 2021 5:08 AM
-> To: Stephen Boyd <swboyd@chromium.org>
-> Cc: Rakesh Pillai <pillair@codeaurora.org>; agross@kernel.org;
-> mathieu.poirier@linaro.org; ohad@wizery.com; p.zabel@pengutronix.de;
-> robh+dt@kernel.org; linux-arm-msm@vger.kernel.org;
-> devicetree@vger.kernel.org; linux-kernel@vger.kernel.org;
-> sibis@codeaurora.org; mpubbise@codeaurora.org; kuabhs@chromium.org
-> Subject: Re: [PATCH v3 2/3] dt-bindings: remoteproc: qcom: Add SC7280
-> WPSS support
-> 
-> On Thu 16 Sep 23:25 PDT 2021, Stephen Boyd wrote:
-> 
-> > Quoting Rakesh Pillai (2021-09-16 09:55:52)
-> > > @@ -78,6 +84,10 @@ properties:
-> > >        Phandle reference to a syscon representing TCSR followed by the
-> > >        three offsets within syscon for q6, modem and nc halt
-registers.
-> > >
-> > > +  qcom,qmp:
-> > > +    $ref: /schemas/types.yaml#/definitions/phandle
-> > > +    description: Reference to the AOSS side-channel message RAM.
-> > > +
-> > >    qcom,smem-states:
-> > >      $ref: /schemas/types.yaml#/definitions/phandle-array
-> > >      description: States used by the AP to signal the Hexagon core
-> > > @@ -117,6 +127,33 @@ allOf:
-> > >          compatible:
-> > >            contains:
-> > >              enum:
-> > > +              - qcom,sc7280-wpss-pil
-> > > +    then:
+Hi Marek,
+
+On Fri, Sep 17, 2021 at 02:35:05PM +0200, Marek Szyprowski wrote:
+> Hi,
+>=20
+> On 13.09.2021 12:30, Andrzej Hajda wrote:
+> > W dniu 10.09.2021 o=A012:12, Maxime Ripard pisze:
+> >> Without proper care and an agreement between how DSI hosts and devices
+> >> drivers register their MIPI-DSI entities and potential components, we =
+can
+> >> end up in a situation where the drivers can never probe.
+> >>
+> >> Most drivers were taking evasive maneuvers to try to workaround this,
+> >> but not all of them were following the same conventions, resulting in
+> >> various incompatibilities between DSI hosts and devices.
+> >>
+> >> Now that we have a sequence agreed upon and documented, let's convert
+> >> exynos to it.
+> >>
+> >> Signed-off-by: Maxime Ripard <maxime@cerno.tech>
+> > This patch should be dropped, as it will probably break the driver.
 > >
-> > Honestly I find this if/else to be a huge tangle. Why not split the
-> > binding so that each compatible is a different file? Then it is easier
-> > to read and see what properties to set.
-> >
-> 
-> Further more, the way we express the non-PAS properties in the PAS node
-> in the dtsi and then switch the compatible in the non-PAS devices means
-that
-> we're causing validation errors.
-> 
-> So we should explode this binding to get rid of the conditionals and to
-> describe the "superset" of the PAS and non-PAS compatibles, for platforms
-> where this is applicable.
-> 
-> Regards,
-> Bjorn
+> > Exynos is already compatible with the pattern
+> > register-bus-then-get-sink, but it adds/removes panel/bridge
+> > dynamically, so it creates drm_device without waiting for downstream si=
+nk.
+>=20
+> Right, this patch breaks Exynos DSI driver operation. Without it, the=20
+> whole series works fine on all Exynos based test boards.
 
-Hi Bjorn,
+Thanks for testing. Did you have any board using one of those bridges in
+your test sample?
 
-I have posted v4 for this patchseries with wpss dt-bindings added as a
-separate file.
-Can you please check v4 ?
+Thanks!
+Maxime
 
-Thanks,
-Rakesh Pillai.
+--26b3pc6nmf5dnhp2
+Content-Type: application/pgp-signature; name="signature.asc"
 
+-----BEGIN PGP SIGNATURE-----
 
-> 
-> > > +      properties:
-> > > +        interrupts-extended:
-> > > +          maxItems: 6
-> > > +          items:
-> > > +            - description: Watchdog interrupt
-> > > +            - description: Fatal interrupt
-> > > +            - description: Ready interrupt
+iHUEABYIAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCYUru9AAKCRDj7w1vZxhR
+xTqqAP9CqUjRoyxAvQGCjWFdaNoEsrQKtq/nCmfrA8Q8IiEyfQEAvvCeSnRl1MRL
+dPx0RgcMkyY55JZZXZJ3c688AzfVKg0=
+=c7ne
+-----END PGP SIGNATURE-----
 
+--26b3pc6nmf5dnhp2--
