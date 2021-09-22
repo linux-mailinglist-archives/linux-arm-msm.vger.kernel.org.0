@@ -2,66 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 90732415286
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Sep 2021 23:16:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 72B4641533B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 00:16:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237833AbhIVVSJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Sep 2021 17:18:09 -0400
-Received: from mail-oi1-f181.google.com ([209.85.167.181]:44754 "EHLO
-        mail-oi1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236476AbhIVVSJ (ORCPT
+        id S232918AbhIVWR5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Sep 2021 18:17:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52894 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232149AbhIVWR5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Sep 2021 17:18:09 -0400
-Received: by mail-oi1-f181.google.com with SMTP id o66so6490699oib.11;
-        Wed, 22 Sep 2021 14:16:38 -0700 (PDT)
+        Wed, 22 Sep 2021 18:17:57 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 85652C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Sep 2021 15:16:25 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id z24so18464362lfu.13
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Sep 2021 15:16:25 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=iJyIIM2QFhs+G5EZ1WU7oBTvtat5Hn20U14nwrelU7s=;
+        b=HuEgirt2muwN+0XlXBdcb6b2Otnh/emh7JWoI7WblW6h6LmNMrkYZpKTT8xygsJ9is
+         DLE0aEnyE/rMxqn42/b0S2wlRJif/C4vJDgRjS8Z3xoVjs0qi6hdfHi5kuzKG6+gXHNl
+         fFmpRMUdMZgwbpLJNeqLfi86yycrLi2MFx8wbYH1YpIpBgpGkVJ4fwzyiG0HgL+FMs10
+         ELXAg5vk6w2jOA91gIkYKoou/222VaQtGUHcnGhyfVUmap+oWlBbKaiGucClwjG0Uvn/
+         ObbbhQ8ZNonbVWsQj/abn+CN1lKvkNWRcWsq99j8Tk28hv7ethbdAVH30y7O5EODWDnz
+         7/iQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Kh4Ghm6qYxW1QP5eDOkkCFbtlvfqc6r3kIiF78R6ML4=;
-        b=lLGBv2P1znFv8iFW1oNzmvvxK2BdIpXvpH2wzrYTbZED0bYgvUWe2NMI+Q4M3qoW6D
-         /+92y2lJ34AaXAaEeWMa+pRCSDF2ykgE3hrXnecZjHtjj3UkWC6EAc8/aYXB2p9qSJKf
-         K5WWP2rDOJ6YKw6HBmlbVlKsg8oqoS7KzH4rDMJX1fNb/GVY7/u1i/oyWyWYXQJ+MYRY
-         K5vJA/vT1E1dLmfI6VVJ04624KjBVGNZUgfzW7Z0KSEHxrwIu3UuXo+g68k8QeNMsFYN
-         SiqKnwxvJWehVBy5Bm62ucncmqYjo0UIfAKOU41HXBUAj/J8QRHqcDaydDQ9h3rvzCjE
-         LfWg==
-X-Gm-Message-State: AOAM531+8O6kU3pHaUuWOSUL7lG2G2n8n/i0Q75lUxZNHeuPrbDIjp8q
-        10N+J2mtdpB87iCcWgd/gQ==
-X-Google-Smtp-Source: ABdhPJwKzojWvsxGCdpvga72I3IhSMl5L8xtOQdbUXjk42Y7eW8ZDGoiKlWf+b/oOud7SP6AAwzn/Q==
-X-Received: by 2002:a05:6808:2110:: with SMTP id r16mr1011645oiw.117.1632345398451;
-        Wed, 22 Sep 2021 14:16:38 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id k4sm792618oic.48.2021.09.22.14.16.37
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=iJyIIM2QFhs+G5EZ1WU7oBTvtat5Hn20U14nwrelU7s=;
+        b=0Z8pYkKJV08w6y34VRODrrjAfjoVlCJS0BqZlKU8orfx7o/RkBaA/xTuF32xFvK9go
+         A+QSjZh1MuSFbj8y3L2FtjasGuuHejRfoKLGZGTxs+p/nvHADeECmArAA7fakPOfitsY
+         WJzUUB6EDtZq+e8UcnvAq91o+tVNoB7CvKAgWVsYGsRX5D7tu27n+X1VGT7i2sGbyB1R
+         VViHNvSJ1tqbrMI1iTh/0Sqfmx96jeSn2c0KWUmiGP2o7MAOTzjiwwwbPnXvr0w7ZEog
+         TQ64IgqrrpSb8UwIyIU32Ykzoghy3bXZheBDznxZMf55STsORtDSo/+AFbrNsXycv9xd
+         8+aw==
+X-Gm-Message-State: AOAM532ko7dN11Bek5kSpYBa2On3QXuhRVsOqlnE20JVyrgmez0Oha6H
+        vXZeTAlis9Ejhe8bJvILPJ8jhw==
+X-Google-Smtp-Source: ABdhPJz1Vsssxxw6D2HRoNWz+ON9jnTJVcB0f7IgKXZgr9ecJz1mhJ6urjy9Z2S9K3rTXpq+AmovdA==
+X-Received: by 2002:ac2:5609:: with SMTP id v9mr1162154lfd.415.1632348983612;
+        Wed, 22 Sep 2021 15:16:23 -0700 (PDT)
+Received: from localhost.localdomain (88-112-130-172.elisa-laajakaista.fi. [88.112.130.172])
+        by smtp.gmail.com with ESMTPSA id br40sm275811lfb.64.2021.09.22.15.16.23
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 22 Sep 2021 14:16:37 -0700 (PDT)
-Received: (nullmailer pid 1308640 invoked by uid 1000);
-        Wed, 22 Sep 2021 21:16:36 -0000
-Date:   Wed, 22 Sep 2021 16:16:36 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Vinod Koul <vkoul@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH] dt-bindings: phy: qcom,qusb2: Update maintainer email
-Message-ID: <YUudNLH6wsgQVk/c@robh.at.kernel.org>
-References: <20210919033519.29559-1-shawn.guo@linaro.org>
+        Wed, 22 Sep 2021 15:16:23 -0700 (PDT)
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: [PATCH] phy: qcom-qusb2: Fix a memory leak on probe
+Date:   Thu, 23 Sep 2021 01:16:13 +0300
+Message-Id: <20210922221613.2115038-1-vladimir.zapolskiy@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210919033519.29559-1-shawn.guo@linaro.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 19 Sep 2021 11:35:19 +0800, Shawn Guo wrote:
-> Manu's codeaurora.org email address bounces.  Before he comes
-> back with his new email, fill Vinod's address in there.
-> 
-> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-> ---
->  Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml | 2 +-
->  1 file changed, 1 insertion(+), 1 deletion(-)
-> 
+On success nvmem_cell_read() returns a pointer to a dynamically allocated
+buffer, and therefore it shall be freed after usage.
 
-Acked-by: Rob Herring <robh@kernel.org>
+The issue is reported by kmemleak:
+
+  # cat /sys/kernel/debug/kmemleak
+  unreferenced object 0xffff3b3803e4b280 (size 128):
+    comm "kworker/u16:1", pid 107, jiffies 4294892861 (age 94.120s)
+    hex dump (first 32 bytes):
+      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+      00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+    backtrace:
+      [<000000007739afdc>] __kmalloc+0x27c/0x41c
+      [<0000000071c0fbf8>] nvmem_cell_read+0x40/0xe0
+      [<00000000e803ef1f>] qusb2_phy_init+0x258/0x5bc
+      [<00000000fc81fcfa>] phy_init+0x70/0x110
+      [<00000000e3d48a57>] dwc3_core_soft_reset+0x4c/0x234
+      [<0000000027d1dbd4>] dwc3_core_init+0x68/0x990
+      [<000000001965faf9>] dwc3_probe+0x4f4/0x730
+      [<000000002f7617ca>] platform_probe+0x74/0xf0
+      [<00000000a2576cac>] really_probe+0xc4/0x470
+      [<00000000bc77f2c5>] __driver_probe_device+0x11c/0x190
+      [<00000000130db71f>] driver_probe_device+0x48/0x110
+      [<0000000019f36c2b>] __device_attach_driver+0xa4/0x140
+      [<00000000e5812ff7>]  bus_for_each_drv+0x84/0xe0
+      [<00000000f4bac574>] __device_attach+0xe4/0x1c0
+      [<00000000d3beb631>] device_initial_probe+0x20/0x30
+      [<000000008019b9db>] bus_probe_device+0xa4/0xb0
+
+Fixes: 0b56e9a7e835 ("phy: Group vendor specific phy drivers")
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+---
+ drivers/phy/qualcomm/phy-qcom-qusb2.c | 2 ++
+ 1 file changed, 2 insertions(+)
+
+diff --git a/drivers/phy/qualcomm/phy-qcom-qusb2.c b/drivers/phy/qualcomm/phy-qcom-qusb2.c
+index 3c1d3b71c825..061665ba8ef7 100644
+--- a/drivers/phy/qualcomm/phy-qcom-qusb2.c
++++ b/drivers/phy/qualcomm/phy-qcom-qusb2.c
+@@ -589,6 +589,8 @@ static void qusb2_phy_set_tune2_param(struct qusb2_phy *qphy)
+ 		qusb2_write_mask(qphy->base, cfg->regs[QUSB2PHY_PORT_TUNE2],
+ 				 val[0] << HSTX_TRIM_SHIFT,
+ 				 HSTX_TRIM_MASK);
++
++	kfree(val);
+ }
+ 
+ static int qusb2_phy_set_mode(struct phy *phy,
+-- 
+2.33.0
+
