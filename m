@@ -2,87 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 382D6414A00
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Sep 2021 15:00:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A8231414B6C
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Sep 2021 16:10:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230526AbhIVNBz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Sep 2021 09:01:55 -0400
-Received: from mx24.baidu.com ([111.206.215.185]:55544 "EHLO baidu.com"
-        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
-        id S231344AbhIVNBz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Sep 2021 09:01:55 -0400
-Received: from BJHW-Mail-Ex03.internal.baidu.com (unknown [10.127.64.13])
-        by Forcepoint Email with ESMTPS id F28FCEE13D26D10CED01;
-        Wed, 22 Sep 2021 21:00:23 +0800 (CST)
-Received: from BJHW-MAIL-EX27.internal.baidu.com (10.127.64.42) by
- BJHW-Mail-Ex03.internal.baidu.com (10.127.64.13) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
- 15.1.2308.14; Wed, 22 Sep 2021 21:00:23 +0800
-Received: from LAPTOP-UKSR4ENP.internal.baidu.com (172.31.63.8) by
- BJHW-MAIL-EX27.internal.baidu.com (10.127.64.42) with Microsoft SMTP Server
- (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
- 15.1.2308.14; Wed, 22 Sep 2021 21:00:23 +0800
-From:   Cai Huoqing <caihuoqing@baidu.com>
-To:     <caihuoqing@baidu.com>
-CC:     Andy Gross <agross@kernel.org>,
+        id S232243AbhIVOLn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Sep 2021 10:11:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53076 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235503AbhIVOLn (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 22 Sep 2021 10:11:43 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D3397C061756
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Sep 2021 07:10:12 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id i23so7328279wrb.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Sep 2021 07:10:12 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:content-transfer-encoding:in-reply-to;
+        bh=316eM28pK/8Y6ZPFwh3V4osKtYsZzbtNOZjPZ78hW2o=;
+        b=qgeTRI7MZLWaVeFQzGXTpSsFcyvmu7kjfYlSc+NPJCrhsXvE1fEn07XHZl63akX/A9
+         yQbXdXADzwP00MT27Hew7Q5+BXqnTnHMX2GPMy8eew9d5u8RXyglhqDuge9gsmwXrD8R
+         HAvFLaIw6+HC5YglZjYxDz9U1L+MwF/UV+iop1VTv+4b+TeLv+YtgqdgDzTRzzxMdQBi
+         kVYSpNyYlR+kdCs44djZFix4hbr60HjdLscIRa4b55RCcwpz1lxAKHoewcClaR6+Bjai
+         CEDO1S4JoEByQsW1f8EyZ+aN8rL1sGz/bP6WNU3H2x5Jzjl6OhYQ9HBAhlyBspTGsysg
+         sLHg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:content-transfer-encoding
+         :in-reply-to;
+        bh=316eM28pK/8Y6ZPFwh3V4osKtYsZzbtNOZjPZ78hW2o=;
+        b=djTpNmuFzjMD99CXblIiI7JRH2COygMvkxzkX9IvtToj5zr+RGL3m8T9BWgH+P5zX1
+         ML2OFgqkT73kxwfO3xOzDDGDXG/tWY3LROLmk5pp9vQgOi5t+iBxPHx8cngq4MaLi+8Y
+         K2xtTybWq7wcT5Ib4HZNGk3Ce0jHGK282wdT7JIkizsgKtI8hXBP6il5wDRIF45L6G2z
+         hIjf1ywRxUxdtEwnwiF7yP63Nlrbdk1Cef9tA4IswczjXCSwpvavjCBywOhqMPjKnGB+
+         sKvyZb3VxRhuDI4mm8wWamvrqjat+1M9LN2y3WHg1Wbz6yOGAcZerZW+48m5oS57WJXT
+         OCzg==
+X-Gm-Message-State: AOAM5305trcz6k5A2GzSMUv7e+lIEu91its/VT1B/LewXcsxk0kJB6YN
+        hcRXP46Xt/s+y2fp4gAHkEOBJQ==
+X-Google-Smtp-Source: ABdhPJwPWyPwb8fFPniP4WALIolIXo/0F86m+aaMDJzd9oMldjmXMowgEbhBdLf2fAEhdwOQkl2WeQ==
+X-Received: by 2002:a5d:64cd:: with SMTP id f13mr41907210wri.419.1632319811428;
+        Wed, 22 Sep 2021 07:10:11 -0700 (PDT)
+Received: from google.com ([95.148.6.233])
+        by smtp.gmail.com with ESMTPSA id i203sm5875577wma.7.2021.09.22.07.10.10
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 22 Sep 2021 07:10:10 -0700 (PDT)
+Date:   Wed, 22 Sep 2021 15:10:08 +0100
+From:   Lee Jones <lee.jones@linaro.org>
+To:     Baruch Siach <baruch@tkos.co.il>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Uwe =?iso-8859-1?Q?Kleine-K=F6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        "Vinod Koul" <vkoul@kernel.org>, <linux-arm-msm@vger.kernel.org>,
-        <linux-phy@lists.infradead.org>, <linux-kernel@vger.kernel.org>
-Subject: [PATCH] phy: qcom-qmp: Make use of the helper function devm_add_action_or_reset()
-Date:   Wed, 22 Sep 2021 21:00:16 +0800
-Message-ID: <20210922130017.692-1-caihuoqing@baidu.com>
-X-Mailer: git-send-email 2.17.1
+        Balaji Prakash J <bjagadee@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Robert Marko <robert.marko@sartura.hr>,
+        Kathiravan T <kathirav@codeaurora.org>,
+        linux-pwm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-arm-kernel@lists.infradead.org
+Subject: Re: [PATCH v8 1/4] dt-bindings: mfd: qcom,tcsr: document ipq6018
+ compatible
+Message-ID: <YUs5QAeQnPijfp7z@google.com>
+References: <5c95bcf62a9d08208a7da19f0b1cec0689502b9a.1630323987.git.baruch@tkos.co.il>
 MIME-Version: 1.0
-Content-Type: text/plain
-X-Originating-IP: [172.31.63.8]
-X-ClientProxiedBy: BJHW-Mail-Ex09.internal.baidu.com (10.127.64.32) To
- BJHW-MAIL-EX27.internal.baidu.com (10.127.64.42)
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+Content-Transfer-Encoding: 8bit
+In-Reply-To: <5c95bcf62a9d08208a7da19f0b1cec0689502b9a.1630323987.git.baruch@tkos.co.il>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The helper function devm_add_action_or_reset() will internally
-call devm_add_action(), and gif devm_add_action() fails then it will
-execute the action mentioned and return the error code. So
-use devm_add_action_or_reset() instead of devm_add_action()
-to simplify the error handling, reduce the code.
+On Mon, 30 Aug 2021, Baruch Siach wrote:
 
-Signed-off-by: Cai Huoqing <caihuoqing@baidu.com>
----
- drivers/phy/qualcomm/phy-qcom-qmp.c | 12 ++----------
- 1 file changed, 2 insertions(+), 10 deletions(-)
+> Signed-off-by: Baruch Siach <baruch@tkos.co.il>
+> ---
+>  Documentation/devicetree/bindings/mfd/qcom,tcsr.txt | 1 +
+>  1 file changed, 1 insertion(+)
 
-diff --git a/drivers/phy/qualcomm/phy-qcom-qmp.c b/drivers/phy/qualcomm/phy-qcom-qmp.c
-index f14032170b1c..084e3d96264e 100644
---- a/drivers/phy/qualcomm/phy-qcom-qmp.c
-+++ b/drivers/phy/qualcomm/phy-qcom-qmp.c
-@@ -5154,11 +5154,7 @@ static int phy_pipe_clk_register(struct qcom_qmp *qmp, struct device_node *np)
- 	 * Roll a devm action because the clock provider is the child node, but
- 	 * the child node is not actually a device.
- 	 */
--	ret = devm_add_action(qmp->dev, phy_clk_release_provider, np);
--	if (ret)
--		phy_clk_release_provider(np);
--
--	return ret;
-+	return devm_add_action_or_reset(qmp->dev, phy_clk_release_provider, np);
- }
- 
- /*
-@@ -5350,11 +5346,7 @@ static int phy_dp_clks_register(struct qcom_qmp *qmp, struct qmp_phy *qphy,
- 	 * Roll a devm action because the clock provider is the child node, but
- 	 * the child node is not actually a device.
- 	 */
--	ret = devm_add_action(qmp->dev, phy_clk_release_provider, np);
--	if (ret)
--		phy_clk_release_provider(np);
--
--	return ret;
-+	return devm_add_action_or_reset(qmp->dev, phy_clk_release_provider, np);
- }
- 
- static const struct phy_ops qcom_qmp_phy_gen_ops = {
+Applied, thanks.
+
 -- 
-2.25.1
-
+Lee Jones [李琼斯]
+Senior Technical Lead - Developer Services
+Linaro.org │ Open source software for Arm SoCs
+Follow Linaro: Facebook | Twitter | Blog
