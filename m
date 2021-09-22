@@ -2,155 +2,166 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2B76841443B
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Sep 2021 10:53:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D20E641443F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 22 Sep 2021 10:53:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233879AbhIVIyo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Sep 2021 04:54:44 -0400
-Received: from new2-smtp.messagingengine.com ([66.111.4.224]:54035 "EHLO
-        new2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233741AbhIVIyn (ORCPT
+        id S234128AbhIVIzN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Sep 2021 04:55:13 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:54985 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234103AbhIVIzM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Sep 2021 04:54:43 -0400
-Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
-        by mailnew.nyi.internal (Postfix) with ESMTP id 7BE84580255;
-        Wed, 22 Sep 2021 04:53:13 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute3.internal (MEProxy); Wed, 22 Sep 2021 04:53:13 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=
-        date:from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm3; bh=vB4ezIS3B/kZC3s/eTN0cuFplTA
-        XmSMYfGeoI88X2qo=; b=YsylE5OY/aekw+oI2+1FimeeZRY/2Yo3w7Q4AnyFH/C
-        0ih8xf12GaTRWGSGTSa1lN6UtpMTcTfPWnzJzLZyulnDzMLCiqsIOMHgWvvvtM+t
-        aRxYTV4nS+BDY+Jp+0Tgjp32cDAX2K9LovlT8axaAZrkNb3g8FlQE0hlxdSHcc6v
-        uUazUJciXlMA2np4kTf2XA4jP58ygmsHJhALjr8iW8ds3YWvvsyMuFrxW3dW+xvg
-        oVhVSI66rua+eX1nSrT2AGrFsrVYDfuNjuem8BNuK2YVmXG/FVK+ZyojoexASuNw
-        Hc2CPhaDFbymXUYb9wF9OYPe8VdgS5NsCJBUHWMZeKw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-type:date:from:in-reply-to
-        :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=vB4ezI
-        S3B/kZC3s/eTN0cuFplTAXmSMYfGeoI88X2qo=; b=fC2KOYeledOkkC0aXAt3K+
-        dKvD36fgpb6vnAv1HouSdfS8PJmsHJ8jhtXbGGb9iC/Xj+ZSlG2oWEx6AkoYkon5
-        suffel7OAkN/YnqLea9oClqBi5NJqimc8Y6NiZoghzmE4R3RHtJJabaRXFdnj8fN
-        zf2mEiVJ9qw5XbV+038Vsl1IA2WGOIvUoIjisaLgYdqMpKblOttTJH/a8FG1R64F
-        DR1noMRcccN9iK2qlxgLD0a6PweKrFhR8wrD7ht8NtAMG6s1YMSPoj4hxC5HMI3H
-        eRshjJ/OpQNYI1qL+EZVbeZx3oTUTLwA9fVnhcPIUekEPJg5h59MmMslpiM8ud6Q
-        ==
-X-ME-Sender: <xms:9u5KYekdnmXJHNpxfNoWaC4yZDbFKMDIMpBBkzOiDOyqU4KbopKu2Q>
-    <xme:9u5KYV0u9Dvd18g4ZX-oDyXf5gzHYsf__TZf6J-xqn1HKqh3JlnhL-FgeImrf-LIJ
-    c8nsmIzVXCsWz2VH3s>
-X-ME-Received: <xmr:9u5KYcqju0OvuwONUjkYz6Bu9GX5MgRgU_JTyWtOsiO_PLMOvDJyCEtjRuemy-o7d7uRRzYwZA7xTyCyqdi1PmYYmJITakP5W5-W>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrudeijedgtdekucetufdoteggodetrfdotf
-    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
-    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
-    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddunecuhfhrohhmpeforgigihhm
-    vgcutfhiphgrrhguuceomhgrgihimhgvsegtvghrnhhordhtvggthheqnecuggftrfgrth
-    htvghrnhepuddvudfhkeekhefgffetffelgffftdehffduffegveetffehueeivddvjedv
-    gfevnecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepmh
-    grgihimhgvsegtvghrnhhordhtvggthh
-X-ME-Proxy: <xmx:9u5KYSmlJ9urbGNWvh4mVJzB7EAtmY5_AdSC33thxwd9Is6TzxDMCQ>
-    <xmx:9u5KYc3sU_rz5oyUREwe9hVvDy4C4ZX2INr1dn8wF-y2blmj0sNX4g>
-    <xmx:9u5KYZudXpDV8jw8CDYTCg1WodNfJFH5dobYYFeTpQDpH9nUBu7jkQ>
-    <xmx:-e5KYeGzPi3o7aXd1E6BUwNERCc7GvHXrLBDt2qHkLcX8pLIPyjrAw>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 22 Sep 2021 04:53:09 -0400 (EDT)
-Date:   Wed, 22 Sep 2021 10:53:08 +0200
-From:   Maxime Ripard <maxime@cerno.tech>
-To:     Marek Szyprowski <m.szyprowski@samsung.com>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        David Airlie <airlied@linux.ie>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Sean Paul <sean@poorly.run>, freedreno@lists.freedesktop.org,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        linux-kernel@vger.kernel.org,
-        Xinliang Liu <xinliang.liu@linaro.org>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Tian Tao <tiantao6@hisilicon.com>,
-        Inki Dae <inki.dae@samsung.com>,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        dri-devel@lists.freedesktop.org,
+        Wed, 22 Sep 2021 04:55:12 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1632300822; h=Content-Transfer-Encoding: Content-Type:
+ In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
+ Subject: Sender; bh=id+uOqWXqh1BzsspNKQReK/0+hKAUXpygQ1iBVBGuvw=; b=Pm1QvnFiXAXUmcVSpNqJHjrlEx+va/hToQTMmfRz8UedKvq+ofO4X9o8d21WOk5+oHahxxY5
+ 1xOQgWYYFC9nDFTfpGSQIPATcYul/YBG4kIbrLBjq9Oqw/EIBc3fDKP99OlMR8uBOnSy5df/
+ PUEowwtO5uJQqurutqesY7XsDFs=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 614aef08b585cc7d2461cdf1 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 22 Sep 2021 08:53:28
+ GMT
+Sender: wcheng=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 03754C43617; Wed, 22 Sep 2021 08:53:28 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
+Received: from [192.168.1.6] (cpe-75-80-185-151.san.res.rr.com [75.80.185.151])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: wcheng)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 36681C43460;
+        Wed, 22 Sep 2021 08:53:26 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 36681C43460
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+Subject: Re: dwc3-qcom: tx-fifo-resize regression on Poco F1 (sdm845) with
+ v5.15-rc1
+To:     Amit Pundir <amit.pundir@linaro.org>
+Cc:     Felipe Balbi <balbi@kernel.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Jack Pham <jackp@codeaurora.org>,
+        Thinh Nguyen <Thinh.Nguyen@synopsys.com>,
         John Stultz <john.stultz@linaro.org>,
-        Chen Feng <puck.chen@hisilicon.com>,
-        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>
-Subject: Re: [PATCH v4 24/24] drm/exynos: dsi: Adjust probe order
-Message-ID: <20210922085308.udvhfbzpn3vpbksr@gilmour>
-References: <20210910101218.1632297-1-maxime@cerno.tech>
- <CGME20210910101445eucas1p172f99ff7fe853052fc457861c3174f9e@eucas1p1.samsung.com>
- <20210910101218.1632297-25-maxime@cerno.tech>
- <29a2111d-024b-4d9e-27ef-e3399509ff32@samsung.com>
- <fc1fbd42-6ed4-9d67-2903-8f9cc2aaad43@samsung.com>
+        linux-usb@vger.kernel.org, lkml <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dt <devicetree@vger.kernel.org>
+References: <CAMi1Hd3k2snB4-=M57pVrMVom=a9_2a0DTFk-+Hzpubwk-Pr9Q@mail.gmail.com>
+ <64a2a428-8bb1-0078-2403-1ca8e28cf4b1@codeaurora.org>
+ <CAMi1Hd2MCxJgbHz9oGWe4L+MXNM3p+Xntpcg6t3TvZxwjJTy0Q@mail.gmail.com>
+ <47a06078-dd41-7b3d-3de3-4e6c24211691@codeaurora.org>
+ <CAMi1Hd1UtTECaDROGm7hE377Dp5qLzZeqBowmxoQJpOm9uQFHw@mail.gmail.com>
+From:   Wesley Cheng <wcheng@codeaurora.org>
+Message-ID: <a126f6f3-1313-64f9-98bf-fcb7984220cd@codeaurora.org>
+Date:   Wed, 22 Sep 2021 01:53:25 -0700
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="26b3pc6nmf5dnhp2"
-Content-Disposition: inline
-In-Reply-To: <fc1fbd42-6ed4-9d67-2903-8f9cc2aaad43@samsung.com>
+In-Reply-To: <CAMi1Hd1UtTECaDROGm7hE377Dp5qLzZeqBowmxoQJpOm9uQFHw@mail.gmail.com>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Amit,
 
---26b3pc6nmf5dnhp2
-Content-Type: text/plain; charset=iso-8859-1
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
+On 9/21/2021 3:18 AM, Amit Pundir wrote:
+> On Tue, 21 Sept 2021 at 13:00, Wesley Cheng <wcheng@codeaurora.org> wrote:
+>>
+>> Hi Amit,
+>>
+>> On 9/21/2021 12:04 AM, Amit Pundir wrote:
+>>> Hi Wesley,
+>>>
+>>> On Tue, 21 Sept 2021 at 02:44, Wesley Cheng <wcheng@codeaurora.org> wrote:
+>>>>
+>>>> Hi Amit,
+>>>>
+>>>> On 9/20/2021 1:45 PM, Amit Pundir wrote:
+>>>>> Hi Wesley, All,
+>>>>>
+>>>>> I see a reboot loop on Xiaomi Pocophone F1 (sdm845) with TX FIFO
+>>>>> resize patches which landed in v5.15-rc1. Upstream commit cefdd52fa045
+>>>>> "usb: dwc3: dwc3-qcom: Enable tx-fifo-resize property by default" to
+>>>>> be specific, which switched on this feature by default.
+>>>>>
+>>>>> At times the phone crashes into the fastboot mode after the reboot
+>>>>> loop, but mostly end up booting to UI after a while. This is what it
+>>>>> looks like https://people.linaro.org/~amit.pundir/beryllium-userdebug/PXL_20210920_162749483.mp4.
+>>>>>
+>>>>
+>>>> I believe Android will attempt a number of bootup sequences and if it
+>>>> fails, it falls back to fastboot mode.  Are there any available logs you
+>>>> might be able to collect to see where the issue is?
+>>>
+>>> It is a stock phone with no UART access, so I can't get early crash
+>>> logs unless I'm booted up to adb shell. I can try getting some info
+>>> using pstore-ramoops but warm reset support for sdm845 was not
+>>> upstreamed when I tried using that the last time.
+>>>
+>>
+>> I see, can we maybe avoid the actual resizing by commenting out the
+>> following writel() calls, but let the fifo resize logic calculate the EPs?
+>>
+>> void dwc3_gadget_clear_tx_fifos(struct dwc3 *dwc)
+>> {
+>> ...
+>>                 /* Don't change TXFRAMNUM on usb31 version */
+>>                 size = DWC3_IP_IS(DWC3) ? 0 :
+>>                         dwc3_readl(dwc->regs, DWC3_GTXFIFOSIZ(num >> 1)) &
+>>                                    DWC31_GTXFIFOSIZ_TXFRAMNUM;
+>>                 /* Comment the dwc3_writel() */
+>>                 //dwc3_writel(dwc->regs, DWC3_GTXFIFOSIZ(num >> 1), size);
+>>
+>> and
+>>
+>> static int dwc3_gadget_resize_tx_fifos(struct dwc3_ep *dep)
+>> {
+>> ...
+>>         /* Comment the dwc3_writel() */
+>>         //dwc3_writel(dwc->regs, DWC3_GTXFIFOSIZ(dep->number >> 1), fifo_size);
+>>         dwc->num_ep_resized++;
+>>
+>> Those 2 writel() would be the one that actually programs the TXFIFO
+>> register.  I hope when commented out, no resize should actually happen
+>> anymore.
+>>
+>> With this, hopefully we can get some logs from the device at least :)
+> 
+> I can boot fine with above 2 writel() removed but I don't see EP
+> counts being printed in the log anywhere and the only relevant
+> message in dmesg I see is this:
+> 
+>     Duplicate name in dwc3@a600000, renamed to "tx-fifo-resize#1"
+> 
+> which is interesting because I don't see tx-fifo-resize property being
+> set by any of the upstream sdm845 or relevant dtsi files.
+> 
+> 
+Thanks for testing.  What is the current composition the device is
+exposing to the host?
 
-Hi Marek,
+Can we get a ftrace log w/ the DWC3 events enabled, as well as the
+kernel log? (if not at boot up then maybe a plug in/out)  This will at
+least help us identify when the DWC3 ep enable is being called (which
+triggers the resize routine)
 
-On Fri, Sep 17, 2021 at 02:35:05PM +0200, Marek Szyprowski wrote:
-> Hi,
->=20
-> On 13.09.2021 12:30, Andrzej Hajda wrote:
-> > W dniu 10.09.2021 o=A012:12, Maxime Ripard pisze:
-> >> Without proper care and an agreement between how DSI hosts and devices
-> >> drivers register their MIPI-DSI entities and potential components, we =
-can
-> >> end up in a situation where the drivers can never probe.
-> >>
-> >> Most drivers were taking evasive maneuvers to try to workaround this,
-> >> but not all of them were following the same conventions, resulting in
-> >> various incompatibilities between DSI hosts and devices.
-> >>
-> >> Now that we have a sequence agreed upon and documented, let's convert
-> >> exynos to it.
-> >>
-> >> Signed-off-by: Maxime Ripard <maxime@cerno.tech>
-> > This patch should be dropped, as it will probably break the driver.
-> >
-> > Exynos is already compatible with the pattern
-> > register-bus-then-get-sink, but it adds/removes panel/bridge
-> > dynamically, so it creates drm_device without waiting for downstream si=
-nk.
->=20
-> Right, this patch breaks Exynos DSI driver operation. Without it, the=20
-> whole series works fine on all Exynos based test boards.
+Thanks
+Wesley Cheng
 
-Thanks for testing. Did you have any board using one of those bridges in
-your test sample?
-
-Thanks!
-Maxime
-
---26b3pc6nmf5dnhp2
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iHUEABYIAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCYUru9AAKCRDj7w1vZxhR
-xTqqAP9CqUjRoyxAvQGCjWFdaNoEsrQKtq/nCmfrA8Q8IiEyfQEAvvCeSnRl1MRL
-dPx0RgcMkyY55JZZXZJ3c688AzfVKg0=
-=c7ne
------END PGP SIGNATURE-----
-
---26b3pc6nmf5dnhp2--
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
