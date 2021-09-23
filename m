@@ -2,175 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 671084159DD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 10:14:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7E091415A13
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 10:34:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239825AbhIWIQF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Sep 2021 04:16:05 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:53588 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239788AbhIWIQE (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Sep 2021 04:16:04 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20210923081431euoutp01446eb2182544f535d7d7aa394b3bb035~nZWRiyg_k0268102681euoutp01i
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Sep 2021 08:14:31 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20210923081431euoutp01446eb2182544f535d7d7aa394b3bb035~nZWRiyg_k0268102681euoutp01i
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1632384871;
-        bh=yNljC3lhlzvkgfEvJYswOqoHieAqwy4m//l5R64LCFw=;
-        h=Subject:To:Cc:From:Date:In-Reply-To:References:From;
-        b=FZPZ2aVG4rIIYLxscSuq8HH+SQOiapZP9X6qNC+PoH9df8Z74yTAmmpzaVYJWkIpz
-         Id4SiX44otxjoRK7TIZ1g9VWp660gRVsB4HMOBcpns94jzIw+cAm1Iaz8J4N7k6J85
-         DILnCQ0y769NXGo6w+zE8y4CY4nAluCUp3Nnw+2Q=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20210923081430eucas1p179b042d2570012764588bac8b2d5d26c~nZWQw9onn0857408574eucas1p1h;
-        Thu, 23 Sep 2021 08:14:30 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id 27.F3.45756.6673C416; Thu, 23
-        Sep 2021 09:14:30 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTPA id
-        20210923081430eucas1p12d75e91b0dd5563ace62b9aff303eb5c~nZWQCpt4K0328203282eucas1p1B;
-        Thu, 23 Sep 2021 08:14:30 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20210923081430eusmtrp1527e16d88a5802f8424922dc13ee89c9~nZWQBCJRI2584725847eusmtrp11;
-        Thu, 23 Sep 2021 08:14:30 +0000 (GMT)
-X-AuditID: cbfec7f2-7d5ff7000002b2bc-97-614c3766e789
-Received: from eusmtip2.samsung.com ( [203.254.199.222]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id F8.24.20981.5673C416; Thu, 23
-        Sep 2021 09:14:29 +0100 (BST)
-Received: from [106.210.134.192] (unknown [106.210.134.192]) by
-        eusmtip2.samsung.com (KnoxPortal) with ESMTPA id
-        20210923081428eusmtip2872dfc213f889ff46f91b55ffa143f8f~nZWOgaVhD0303903039eusmtip2Y;
-        Thu, 23 Sep 2021 08:14:28 +0000 (GMT)
-Subject: Re: [PATCH v4 24/24] drm/exynos: dsi: Adjust probe order
-To:     Maxime Ripard <maxime@cerno.tech>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        Daniel Vetter <daniel.vetter@intel.com>,
-        David Airlie <airlied@linux.ie>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Sean Paul <sean@poorly.run>, freedreno@lists.freedesktop.org,
-        Kyungmin Park <kyungmin.park@samsung.com>,
-        linux-kernel@vger.kernel.org,
-        Xinliang Liu <xinliang.liu@linaro.org>,
-        Seung-Woo Kim <sw0312.kim@samsung.com>,
-        Tian Tao <tiantao6@hisilicon.com>,
-        Inki Dae <inki.dae@samsung.com>,
-        linux-samsung-soc@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>,
-        dri-devel@lists.freedesktop.org,
-        John Stultz <john.stultz@linaro.org>,
-        Chen Feng <puck.chen@hisilicon.com>,
-        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
-        Joonyoung Shim <jy0922.shim@samsung.com>
-From:   Marek Szyprowski <m.szyprowski@samsung.com>
-Message-ID: <de030bcc-bd8a-c43b-7466-c260dbdd2ff3@samsung.com>
-Date:   Thu, 23 Sep 2021 10:14:28 +0200
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0)
-        Gecko/20100101 Thunderbird/78.14.0
+        id S239877AbhIWIgV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Sep 2021 04:36:21 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:60118 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S239825AbhIWIgU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 23 Sep 2021 04:36:20 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1632386089; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=RnAXDb/cdy2vNbulmV0mjCa/sumMUiZffdwxvVj6GIc=;
+ b=naTQWYtsmxHUvr8lTq93f0LFQyIbDlA5tKBzR077FzRE9oNyrNizNxcs7uwDwxLNzEXY1d91
+ qEBeqvWZNglcFRhnSdMKf8737xzKkYGkncaHoU7ASVN0+w9h6Q1O5rgqNcEe9ZAIvRFNS8kx
+ AkRmu6bZnKWtBUw7zvj7zquibuQ=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
+ 614c3c24ec62f57c9ad4d9d5 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 23 Sep 2021 08:34:44
+ GMT
+Sender: cjhuang=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id C962BC43460; Thu, 23 Sep 2021 08:34:43 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: cjhuang)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 10B7EC4338F;
+        Thu, 23 Sep 2021 08:34:43 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <20210922085308.udvhfbzpn3vpbksr@gilmour>
+Content-Type: text/plain; charset=UTF-8;
+ format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
-X-Brightmail-Tracker: H4sIAAAAAAAAA01Se1BUZRyd775ZW+a6SHxDprkzillANIx8aa2akXcabHw0aeBkm17BEdDZ
-        heRhM7COBgjEsoJweYWiECQE8hAGIVhpXYGFQJIhXuYGQhjDosS7drlY/He+3znnd85v5mNw
-        WT3lzJwMDuFVwcpAOSUhKn+eaXM94eWjfCtT7456ik0kSjAZMZTfUoyjB8/HKZQ53ApQ8kAS
-        gYZzigFqmXNFxrEuAj3p/4VA0wt1JGrVjNEoVptHI219K406azIplNZWh6HciQoCpU0vAtSY
-        6IcGUgXrjtxpHFmERzgqmKkAqE93F6A03QiFZmqyCVT0Zx2Nyse0JGqqLyR3vsqNd1+guV5T
-        G8VVC3009zirlOYyYtJJ7lrtCMbdS+rAuN5faymuamqQ5LKN+7mBSwaMM9T00FxeahfFJZYX
-        Au5WcyQ3WbZuH+srefc4H3jyK17lrvhCEhBdEXCm6KUwnbkFjwIXJHHAjoGsJ+zSllBxQMLI
-        2AIAo4smCRshY58BqLm0XiQmAcy9XE2+cMy1fE+LRD6AFX/PLdsnAEwcurtkd2B3wSRL/xJe
-        w26EDxLu4DYRzpoYOHW/mLIRFOsB457GLWEpq4Apt3IxGyashvT834ANO7LHYOqCBhc1q6Ex
-        3by01I7dCtsnCpfmOLsenq/IWMZOsMecg9nCINskgYuPE5Z7fwAfXhzERewARw3ltIjXwmZd
-        PCEazgP4yHSTFh/xAHZq0oCo2g57TbPWqow14nVYUuMujnfBmDJbI8aK7WH309ViCXuYXHkF
-        F8dSGHNRJqo3QcFQ/F9sQ3sHngTkworThBXnCCvOEf7P/Q4QhcCJD1UH+fNqj2D+rJtaGaQO
-        DfZ3O3Y6qAxY/3jzosFyG2SNTrg1AowBjQAyuHyNdLL7I6VMelwZHsGrTh9VhQby6kbwCkPI
-        naSFGT8clbH+yhD+FM+f4VUvWIyxc47CQun6/oNHgv2q781+3DO1mfzpdx/Hhy7J0k9He3L2
-        btnJbsgy9zWEvXFI/3WY4zfpXjdmSxWda+9XnXLaG5rhJ3GYwYa1mvmhkvdKb8Sn3bEMjoe/
-        GRHvHV9bTkrJ7FWv5bHGZ2Fy5fsL8/+0u+PO+65O+5o2Vb1Dbgv5rFXY+uHG62+bU3fM+UVc
-        ryx42d/TpVq/+2YB8SRTuc6iB4ovD1g6Kh29W/aQXmT7J+dchQYFP1g/ktKUsu2sd8F++2jf
-        zbF2SS4x270cD3fouD+iPt9wQnNE9zxSv8eJ0vjML+h337686uDh8B2KcyFXf0zp/faK+S9f
-        YaRuZChS6gnqsucOxYbLCXWA0mMLrlIr/wWaiEQcUgQAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA02Se0xTZxiH/c45PadlYznWIl8IbrNxJsNY2trWDyyEXZwnbkxHtj+UTNbB
-        4TKBQlsMc8nCFDLoJhYLCAWLBBW5DDehbDaIrkOwobTjGsIEJBCBUUKKYdKBZoW6hP+e5P09
-        7yV5uTh/gBPCTcvUsZpMVbqQDCB6X/RM7GcPfqQSuy5GorEWJwddcNoxVO9owdHQyhKJqmf7
-        ALo0aSDQbE0LQI61/cjuHibQ3EQ/gVafd3JQ3zk3hYpKrlGo5F4fhQat1SSqcHViqNZjIVDF
-        6guAbMXxaLLc5OtRu4qjZdMUjm56LQCNG7sAqjDOk8hrNROoaaGTQm3uEg56cK+RE7OLWRot
-        oJhHThfJ3DGNU8z0lV8opqqwksPUdcxjzEPDAMY8GukgmV//ecxhzPZPmMkfejCmxzpGMdfK
-        h0mmuK0RMK293zBPb79+nD4pUmrUOTr2zVS1VhcljJcgqUgSgURSWYRIcuDg55FSuTA8WpnE
-        pqedYTXh0V+IUr+zpGY1vZprnHHgeaAgQA94XEjL4JqjgdKDAC6fvg6gYfE57i+EQnt5HsfP
-        O+D6iJ70h5YANF/xbhZ20O9Aw/IEscEC+i04dOEuvhHC6SEu7M8f4/iNAQzarPWbBklLoH5x
-        oxWPG0hHw7LWWmyDCZ9dWf8X2OAgOhEuLjzD/Jnt0F45szmBRyvgn57GzfVwH5tbp17yG/C8
-        peolB8OxmRrMAPimLbppi2Laopi2KFcB0QgEbI42IyVDKxVpVRnanMwUUaI64zbwPVd7t7ft
-        N9Dwt0dkAxgX2ADk4kJB4NPRoyp+YJLq67OsRp2gyUlntTYg991TgocEJap935mpS5AoxHKJ
-        TBEhlkcoDgiDA2VdzQl8OkWlY0+zbBar+d/DuLyQPOx6cr/llC00ZidhGn/XjOV6cOWna9Iv
-        rVFketnopa68wsEqwc8jx5Rni8PKukGwONZ9dNtX90dJKld80ShLI27VlsoX9rClBXd2w71P
-        lsAzYV32TnXprb3v3TgSF7ote/u3zer1edm+16ada9P68nXqe1fMenLN8eCfBILY5TSj5NyJ
-        9xWVvIf5UXMe1aFDYc3rTYLxBu/bv9/IOrKYLWi3z352QrI7yXU6nnzl7p4VQ/fJj+fyWx7/
-        qHamNPNQsSxcWeOYGp65HwvnDn+wEll4vjpuISQS/MtEWS1B/R2hZ7yD+y5/6O6tC0v+w81f
-        iYMPQkaK2tsvP9l1U1BUeOqwkNCmqiRhuEar+g8p4MSc5QMAAA==
-X-CMS-MailID: 20210923081430eucas1p12d75e91b0dd5563ace62b9aff303eb5c
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20210910101445eucas1p172f99ff7fe853052fc457861c3174f9e
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20210910101445eucas1p172f99ff7fe853052fc457861c3174f9e
-References: <20210910101218.1632297-1-maxime@cerno.tech>
-        <CGME20210910101445eucas1p172f99ff7fe853052fc457861c3174f9e@eucas1p1.samsung.com>
-        <20210910101218.1632297-25-maxime@cerno.tech>
-        <29a2111d-024b-4d9e-27ef-e3399509ff32@samsung.com>
-        <fc1fbd42-6ed4-9d67-2903-8f9cc2aaad43@samsung.com>
-        <20210922085308.udvhfbzpn3vpbksr@gilmour>
+Date:   Thu, 23 Sep 2021 16:34:43 +0800
+From:   Carl Huang <cjhuang@codeaurora.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Kalle Valo <kvalo@codeaurora.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        ath11k@lists.infradead.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-wireless@vger.kernel.org, regressions@lists.linux.dev
+Subject: Re: [regression] mhi: ath11k resume fails on some devices
+In-Reply-To: <20210916171927.GB9027@thinkpad>
+References: <871r5p0x2u.fsf@codeaurora.org>
+ <CAMZdPi8UJLvBFQd8-nf-iHAQh8cEuihq97PUFfZ7Q=rxRQoPsg@mail.gmail.com>
+ <20210916111218.GA12918@thinkpad>
+ <CAMZdPi94607mZorp+Zmkw3seWXak6p9Jr05CQ5hhfgKQoG8n7Q@mail.gmail.com>
+ <20210916163529.GA9027@thinkpad> <87k0jgxyjp.fsf@codeaurora.org>
+ <20210916171927.GB9027@thinkpad>
+Message-ID: <b7c0906041dcafb43be215bd4f55326a@codeaurora.org>
+X-Sender: cjhuang@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Maxime,
+On 2021-09-17 01:19, Manivannan Sadhasivam wrote:
+> On Thu, Sep 16, 2021 at 07:42:02PM +0300, Kalle Valo wrote:
+>> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
+>> 
+>> > On Thu, Sep 16, 2021 at 01:18:22PM +0200, Loic Poulain wrote:
+>> >> Le jeu. 16 sept. 2021 à 13:12, Manivannan Sadhasivam <
+>> >> manivannan.sadhasivam@linaro.org> a écrit :
+>> >>
+>> >
+>> > [...]
+>> >
+>> >> > If things seems to work fine without that patch, then it implies that
+>> >> > setting M0
+>> >> > state works during resume. I think we should just revert that patch.
+>> >> >
+>> >> > Loic, did that patch fix any issue for you or it was a cosmetic fix only?
+>> >>
+>> >>
+>> >> It fixes sdx modem resuming issue, without that we don’t know modem needs
+>> >> to be reinitialized.
+>> >>
+>> >
+>> > Okay. Then in that case, the recovery mechanism has to be added to the ath11k
+>> > MHI controller.
+>> 
+>> What does that mean in practise, do you have any pointers or examples? 
+>> I
+>> have no clue what you are proposing :)
+>> 
+> 
+> Take a look at the mhi_pci_recovery_work() function below:
+> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/bus/mhi/pci_generic.c#n610
+> 
+> You need to implement something similar that basically powers up the 
+> MHI
+> endpoint (QCA6390) in case pm_resume() fails. At minimum, you need to 
+> call
+> below functions:
+> 
+> # Check if the device is powered on. If yes, then power it down to 
+> bring it back
+> mhi_power_down()
+> mhi_unprepare_after_power_down()
+> 
+> # Power up the device
+> mhi_prepare_for_power_up()
+> mhi_sync_power_up()
+> 
+> This implies that the WLAN device has been powered off during suspend, 
+> so the
+> resume fails and we are bringing the device back to working state.
+> 
+This is fine for platform which doesn't provide power supply during 
+suspend.
+But NUC has power supply in suspend state.
+QCA6390 on NUC works after just reverting this commit also proves NUC 
+has power supply in
+suspend state.
 
-On 22.09.2021 10:53, Maxime Ripard wrote:
-> On Fri, Sep 17, 2021 at 02:35:05PM +0200, Marek Szyprowski wrote:
->> On 13.09.2021 12:30, Andrzej Hajda wrote:
->>> W dniu 10.09.2021 o 12:12, Maxime Ripard pisze:
->>>> Without proper care and an agreement between how DSI hosts and devices
->>>> drivers register their MIPI-DSI entities and potential components, we can
->>>> end up in a situation where the drivers can never probe.
->>>>
->>>> Most drivers were taking evasive maneuvers to try to workaround this,
->>>> but not all of them were following the same conventions, resulting in
->>>> various incompatibilities between DSI hosts and devices.
->>>>
->>>> Now that we have a sequence agreed upon and documented, let's convert
->>>> exynos to it.
->>>>
->>>> Signed-off-by: Maxime Ripard <maxime@cerno.tech>
->>> This patch should be dropped, as it will probably break the driver.
->>>
->>> Exynos is already compatible with the pattern
->>> register-bus-then-get-sink, but it adds/removes panel/bridge
->>> dynamically, so it creates drm_device without waiting for downstream sink.
->> Right, this patch breaks Exynos DSI driver operation. Without it, the
->> whole series works fine on all Exynos based test boards.
-> Thanks for testing. Did you have any board using one of those bridges in
-> your test sample?
+The reason is MHI-STATUS register can't be read somehow in M3 state on 
+NUC.
+Does the MHI spec state that MHI-STATUS register can be read in M3 
+state?
 
-Nope, the only bridges I've tested are tc358764 and exynos-mic. However, 
-both are used in a bit special way. The rest of my test boards just have 
-a dsi panel.
-
-Best regards
--- 
-Marek Szyprowski, PhD
-Samsung R&D Institute Poland
-
+>> > If that's too much of work for Kalle, then I'll look into it. But I might get
+>> > time only after Plumbers.
+>> 
+>> I'm busy, as always, so not sure when I'm able to do it either. I 
+>> think
+>> we should seriously consider reverting 020d3b26c07a and adding it back
+>> after ath11k is able to handle this new situation.
+>> 
+> 
+> Since Loic said that reverting would cause his modem (SDX device) to 
+> fail during
+> resume, this is not possible.
+> 
+> Thanks,
+> Mani
+> 
+>> --
+>> https://patchwork.kernel.org/project/linux-wireless/list/
+>> 
+>> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
