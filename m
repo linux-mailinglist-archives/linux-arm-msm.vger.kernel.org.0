@@ -2,152 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7E091415A13
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 10:34:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF9BE415A24
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 10:38:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239877AbhIWIgV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Sep 2021 04:36:21 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:60118 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S239825AbhIWIgU (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Sep 2021 04:36:20 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1632386089; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=RnAXDb/cdy2vNbulmV0mjCa/sumMUiZffdwxvVj6GIc=;
- b=naTQWYtsmxHUvr8lTq93f0LFQyIbDlA5tKBzR077FzRE9oNyrNizNxcs7uwDwxLNzEXY1d91
- qEBeqvWZNglcFRhnSdMKf8737xzKkYGkncaHoU7ASVN0+w9h6Q1O5rgqNcEe9ZAIvRFNS8kx
- AkRmu6bZnKWtBUw7zvj7zquibuQ=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-east-1.postgun.com with SMTP id
- 614c3c24ec62f57c9ad4d9d5 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 23 Sep 2021 08:34:44
- GMT
-Sender: cjhuang=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C962BC43460; Thu, 23 Sep 2021 08:34:43 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: cjhuang)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 10B7EC4338F;
-        Thu, 23 Sep 2021 08:34:43 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8;
- format=flowed
-Content-Transfer-Encoding: 8bit
-Date:   Thu, 23 Sep 2021 16:34:43 +0800
-From:   Carl Huang <cjhuang@codeaurora.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Kalle Valo <kvalo@codeaurora.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        ath11k@lists.infradead.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-wireless@vger.kernel.org, regressions@lists.linux.dev
-Subject: Re: [regression] mhi: ath11k resume fails on some devices
-In-Reply-To: <20210916171927.GB9027@thinkpad>
-References: <871r5p0x2u.fsf@codeaurora.org>
- <CAMZdPi8UJLvBFQd8-nf-iHAQh8cEuihq97PUFfZ7Q=rxRQoPsg@mail.gmail.com>
- <20210916111218.GA12918@thinkpad>
- <CAMZdPi94607mZorp+Zmkw3seWXak6p9Jr05CQ5hhfgKQoG8n7Q@mail.gmail.com>
- <20210916163529.GA9027@thinkpad> <87k0jgxyjp.fsf@codeaurora.org>
- <20210916171927.GB9027@thinkpad>
-Message-ID: <b7c0906041dcafb43be215bd4f55326a@codeaurora.org>
-X-Sender: cjhuang@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        id S239909AbhIWIjk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Sep 2021 04:39:40 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:48169 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239825AbhIWIjk (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 23 Sep 2021 04:39:40 -0400
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 23 Sep 2021 01:38:08 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 23 Sep 2021 01:38:06 -0700
+X-QCInternal: smtphost
+Received: from ekangupt-linux.qualcomm.com ([10.204.67.11])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 23 Sep 2021 14:07:56 +0530
+Received: by ekangupt-linux.qualcomm.com (Postfix, from userid 2319895)
+        id 339FA42FD; Thu, 23 Sep 2021 14:07:55 +0530 (IST)
+From:   Jeya R <jeyr@codeaurora.org>
+To:     linux-arm-msm@vger.kernel.org, srinivas.kandagatla@linaro.org
+Cc:     Jeya R <jeyr@codeaurora.org>, gregkh@linuxfoundation.org,
+        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
+Subject: [PATCH] misc: fastrpc: copy to user only for non-DMA-BUF heap buffers
+Date:   Thu, 23 Sep 2021 14:07:52 +0530
+Message-Id: <1632386272-18139-1-git-send-email-jeyr@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-09-17 01:19, Manivannan Sadhasivam wrote:
-> On Thu, Sep 16, 2021 at 07:42:02PM +0300, Kalle Valo wrote:
->> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
->> 
->> > On Thu, Sep 16, 2021 at 01:18:22PM +0200, Loic Poulain wrote:
->> >> Le jeu. 16 sept. 2021 à 13:12, Manivannan Sadhasivam <
->> >> manivannan.sadhasivam@linaro.org> a écrit :
->> >>
->> >
->> > [...]
->> >
->> >> > If things seems to work fine without that patch, then it implies that
->> >> > setting M0
->> >> > state works during resume. I think we should just revert that patch.
->> >> >
->> >> > Loic, did that patch fix any issue for you or it was a cosmetic fix only?
->> >>
->> >>
->> >> It fixes sdx modem resuming issue, without that we don’t know modem needs
->> >> to be reinitialized.
->> >>
->> >
->> > Okay. Then in that case, the recovery mechanism has to be added to the ath11k
->> > MHI controller.
->> 
->> What does that mean in practise, do you have any pointers or examples? 
->> I
->> have no clue what you are proposing :)
->> 
-> 
-> Take a look at the mhi_pci_recovery_work() function below:
-> https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/tree/drivers/bus/mhi/pci_generic.c#n610
-> 
-> You need to implement something similar that basically powers up the 
-> MHI
-> endpoint (QCA6390) in case pm_resume() fails. At minimum, you need to 
-> call
-> below functions:
-> 
-> # Check if the device is powered on. If yes, then power it down to 
-> bring it back
-> mhi_power_down()
-> mhi_unprepare_after_power_down()
-> 
-> # Power up the device
-> mhi_prepare_for_power_up()
-> mhi_sync_power_up()
-> 
-> This implies that the WLAN device has been powered off during suspend, 
-> so the
-> resume fails and we are bringing the device back to working state.
-> 
-This is fine for platform which doesn't provide power supply during 
-suspend.
-But NUC has power supply in suspend state.
-QCA6390 on NUC works after just reverting this commit also proves NUC 
-has power supply in
-suspend state.
+fastrpc_put_args is copying all the output buffers to user. For large
+number of output context buffers, this might cause performance
+degradation. Copying is not needed for DMA-BUF heap buffers.
 
-The reason is MHI-STATUS register can't be read somehow in M3 state on 
-NUC.
-Does the MHI spec state that MHI-STATUS register can be read in M3 
-state?
+Signed-off-by: Jeya R <jeyr@codeaurora.org>
+---
+ drivers/misc/fastrpc.c | 18 ++++++++++--------
+ 1 file changed, 10 insertions(+), 8 deletions(-)
 
->> > If that's too much of work for Kalle, then I'll look into it. But I might get
->> > time only after Plumbers.
->> 
->> I'm busy, as always, so not sure when I'm able to do it either. I 
->> think
->> we should seriously consider reverting 020d3b26c07a and adding it back
->> after ath11k is able to handle this new situation.
->> 
-> 
-> Since Loic said that reverting would cause his modem (SDX device) to 
-> fail during
-> resume, this is not possible.
-> 
-> Thanks,
-> Mani
-> 
->> --
->> https://patchwork.kernel.org/project/linux-wireless/list/
->> 
->> https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+index beda610..536eabf 100644
+--- a/drivers/misc/fastrpc.c
++++ b/drivers/misc/fastrpc.c
+@@ -890,15 +890,17 @@ static int fastrpc_put_args(struct fastrpc_invoke_ctx *ctx,
+ 	inbufs = REMOTE_SCALARS_INBUFS(ctx->sc);
+ 
+ 	for (i = inbufs; i < ctx->nbufs; ++i) {
+-		void *src = (void *)(uintptr_t)rpra[i].pv;
+-		void *dst = (void *)(uintptr_t)ctx->args[i].ptr;
+-		u64 len = rpra[i].len;
++		if (!ctx->maps[i]) {
++			void *src = (void *)(uintptr_t)rpra[i].pv;
++			void *dst = (void *)(uintptr_t)ctx->args[i].ptr;
++			u64 len = rpra[i].len;
+ 
+-		if (!kernel) {
+-			if (copy_to_user((void __user *)dst, src, len))
+-				return -EFAULT;
+-		} else {
+-			memcpy(dst, src, len);
++			if (!kernel) {
++				if (copy_to_user((void __user *)dst, src, len))
++					return -EFAULT;
++			} else {
++				memcpy(dst, src, len);
++			}
+ 		}
+ 	}
+ 
+-- 
+2.7.4
+
