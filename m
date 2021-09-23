@@ -2,146 +2,88 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 73C35415419
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 01:47:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E9AB1415463
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 02:04:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230412AbhIVXsi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 22 Sep 2021 19:48:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45162 "EHLO
+        id S234487AbhIWAF4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 22 Sep 2021 20:05:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49218 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238556AbhIVXsg (ORCPT
+        with ESMTP id S230414AbhIWAFx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 22 Sep 2021 19:48:36 -0400
+        Wed, 22 Sep 2021 20:05:53 -0400
 Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 26247C061767
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Sep 2021 16:46:57 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id e15so18748332lfr.10
-        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Sep 2021 16:46:57 -0700 (PDT)
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 935F5C061574
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Sep 2021 17:04:22 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id u18so18403101lfd.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 22 Sep 2021 17:04:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=aAGBCjkspExmpXroz1trymUPrSbhC0Yih1wDe+h05ag=;
-        b=JmattVShzBibso7FtXu3lo0vHfWEPqJcwLpy2lhH84uohEya5HfNHKn4Es7MVeta6B
-         yB/xUfGizyXhuQxTROHTVqNipO+5vaRcy63QBvaFrwWnJK1dQpWJXh4W5sj81DqfnECt
-         NOpxi9BDlTVN3zRpGTWm1qwhaHPfpbZvYVRT0xIDDbjqKpajs1fBfy829cAgq3ahL/FM
-         kuyfDz0X/bRePpt9KOg3LRn1Db0sSyd0NjHK24hr7maUu9AgYnUJxT4xn5VwCiMQM87v
-         5kvKLCOjQtkcgs4MYyq0XL0aTKUKBrthPk+DiDyZMHQG5fFBSnUo9Dbdevig9dG1AGNt
-         jvTg==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=Sa3iqWTO0RSINxC6pdN7sv6Khz55kfHyIbBdNZkvBp4=;
+        b=OTFX9ZJLD5vh0fKJTVOUpE2Zrv1mtIFUZoxaIdu+/Z8ekt3vtoHq9DfqyPDOQKM5Qp
+         fm0X/JKT4FZ+fNpYGrHe9kjjBLdkS6IVFbyBOk72qtaYrWRSTXFOXejvI92QiP1yP9lI
+         1eqx0xpNNdQUBZmNQO7wNm6OcyF1UNTl3X0d9/nD156HuE77iYWDaamArGvrq4Zmn5wC
+         R66btAiYOjOXDOQuJqKzo6iiyvDbQN/+NpipWY+SRMGfTCuPMGeiQGAreEv3Cw6gObqD
+         OBIF3UNpZkpHDxHxZgzHO5hy7cvH7ODAiy0cd9soNkLOsjjtEnB0vqvMr7buHSxQZmfk
+         mHeg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=aAGBCjkspExmpXroz1trymUPrSbhC0Yih1wDe+h05ag=;
-        b=ZYzmULj/hoGC434sq+9eYknRyHRSTiuLNGW5Fpqgm8FwDcpfHccfOfyfU88X4mmaBB
-         Sv3dQWmi2zvOR6cTf1z+IJEMD8k6Pvooh7h91Azvam5THueD76uaQ0LIVIUj+lGFv7de
-         EBAmkhAHVRT4bMy6XRfhXD5rLDw/r+MeWbDT73PsxIOutPaykqHNMS4oHCn9VVsL6g/J
-         Zs5Ac6xld2r75LM77dISunKpt1SkVHBkx2Xlkpu7ljzO6O6qXy0FYs9hJHtYuve3kirg
-         H9JatNaUBhar/t3vCAYh2PWpbkjFNyIiiYqfhRNmT3yXMfWi33GB+RYNrjpu8c8C1V1c
-         qyqA==
-X-Gm-Message-State: AOAM5319fNDxe8gsj50FB3Lr72iR6inQP8JYHMORyq5PtJ41KygIUUKa
-        oSQog/Wdm6lzJ47JpDMTtxlifA==
-X-Google-Smtp-Source: ABdhPJwZI5sE/S305lCmHN3qymUOeIcki+pNf7yR75LekUX3JQBM2TUjiyH+C3cXPCivKZxmqxZMoQ==
-X-Received: by 2002:a05:651c:b12:: with SMTP id b18mr2036215ljr.512.1632354416017;
-        Wed, 22 Sep 2021 16:46:56 -0700 (PDT)
-Received: from [192.168.10.17] (88-112-130-172.elisa-laajakaista.fi. [88.112.130.172])
-        by smtp.gmail.com with ESMTPSA id b28sm389970ljf.101.2021.09.22.16.46.55
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 22 Sep 2021 16:46:55 -0700 (PDT)
-Subject: Re: [PATCH] phy: qcom-qusb2: Fix a memory leak on probe
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Kishon Vijay Abraham I <kishon@ti.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Vivek Gautam <vivek.gautam@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
-References: <20210922221613.2115038-1-vladimir.zapolskiy@linaro.org>
- <YUu0txXFw2fL3Fgq@ripper>
-From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Message-ID: <f4bd4988-543b-ee3f-a37b-1d0185760ea1@linaro.org>
-Date:   Thu, 23 Sep 2021 02:46:22 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=Sa3iqWTO0RSINxC6pdN7sv6Khz55kfHyIbBdNZkvBp4=;
+        b=1fr3DkFKEBNIj7ITwHCiT/UAUMmNMtFUad5EosK6hjd65yqgm01w0ptTC2BBL/8m+R
+         e4wx/IZaWWBa8PRmnQM1N3hybUsKzLdQTvgPPV4vj+oyFmoAyB0Pg7SRvf7yuxefwzrn
+         T3UueYTa2aNTEMHptoszO2mc+zupZQg9/ZyAdhjhdQelyPGHvFwkAYu0m5aYMK/tO4gG
+         9RmlM8Nh+OF4ujKe5MeD2LPHgN5DQrrnVlw+swusctB8EAej0sFadc5wBwDt/HMpH88f
+         JKHNGAadPPZrp/WJFHMehtNS27I/FqY3b4E2dTuKTewOFVljBO8gl7V7HBJwT/y39HXp
+         wHfg==
+X-Gm-Message-State: AOAM531IF0+/NGMqWFroTlD/m1KpbxScJlHn1cYNbO+VWXQhhL1mLdgV
+        IUg1nYCidj4xPRE0SY5D3yZJazSutMhP+rZ5bPOH2xfyVj6Vtw==
+X-Google-Smtp-Source: ABdhPJwsRrPN9D5ir08pDg3q5mLEmvyUxXdigIoSb7uBDAMPrKXkSs+VHrXem7+1aFU6lGf2cgBHR3FPOw9sGQqHh4E=
+X-Received: by 2002:a2e:4c19:: with SMTP id z25mr2083292lja.145.1632355460966;
+ Wed, 22 Sep 2021 17:04:20 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <YUu0txXFw2fL3Fgq@ripper>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20210921162433.1858296-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20210921162433.1858296-1-dmitry.baryshkov@linaro.org>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Thu, 23 Sep 2021 02:04:10 +0200
+Message-ID: <CACRpkdb15D0m7L-vO7RFcAaVuS7hdD8J=6=15TFgRgvvsw1e9g@mail.gmail.com>
+Subject: Re: [PATCH] mfd: qcom-pm8xxx: switch away from using chained IRQ handlers
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        David Heidelberg <david@ixit.cz>
+Cc:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        MSM <linux-arm-msm@vger.kernel.org>, phone-devel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+On Tue, Sep 21, 2021 at 6:24 PM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
 
-On 9/23/21 1:56 AM, Bjorn Andersson wrote:
-> On Wed 22 Sep 15:16 PDT 2021, Vladimir Zapolskiy wrote:
-> 
->> On success nvmem_cell_read() returns a pointer to a dynamically allocated
->> buffer, and therefore it shall be freed after usage.
->>
->> The issue is reported by kmemleak:
->>
->>    # cat /sys/kernel/debug/kmemleak
->>    unreferenced object 0xffff3b3803e4b280 (size 128):
->>      comm "kworker/u16:1", pid 107, jiffies 4294892861 (age 94.120s)
->>      hex dump (first 32 bytes):
->>        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
->>        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
->>      backtrace:
->>        [<000000007739afdc>] __kmalloc+0x27c/0x41c
->>        [<0000000071c0fbf8>] nvmem_cell_read+0x40/0xe0
->>        [<00000000e803ef1f>] qusb2_phy_init+0x258/0x5bc
->>        [<00000000fc81fcfa>] phy_init+0x70/0x110
->>        [<00000000e3d48a57>] dwc3_core_soft_reset+0x4c/0x234
->>        [<0000000027d1dbd4>] dwc3_core_init+0x68/0x990
->>        [<000000001965faf9>] dwc3_probe+0x4f4/0x730
->>        [<000000002f7617ca>] platform_probe+0x74/0xf0
->>        [<00000000a2576cac>] really_probe+0xc4/0x470
->>        [<00000000bc77f2c5>] __driver_probe_device+0x11c/0x190
->>        [<00000000130db71f>] driver_probe_device+0x48/0x110
->>        [<0000000019f36c2b>] __device_attach_driver+0xa4/0x140
->>        [<00000000e5812ff7>]  bus_for_each_drv+0x84/0xe0
->>        [<00000000f4bac574>] __device_attach+0xe4/0x1c0
->>        [<00000000d3beb631>] device_initial_probe+0x20/0x30
->>        [<000000008019b9db>] bus_probe_device+0xa4/0xb0
->>
->> Fixes: 0b56e9a7e835 ("phy: Group vendor specific phy drivers")
->> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
->> ---
->>   drivers/phy/qualcomm/phy-qcom-qusb2.c | 2 ++
->>   1 file changed, 2 insertions(+)
->>
->> diff --git a/drivers/phy/qualcomm/phy-qcom-qusb2.c b/drivers/phy/qualcomm/phy-qcom-qusb2.c
->> index 3c1d3b71c825..061665ba8ef7 100644
->> --- a/drivers/phy/qualcomm/phy-qcom-qusb2.c
->> +++ b/drivers/phy/qualcomm/phy-qcom-qusb2.c
->> @@ -589,6 +589,8 @@ static void qusb2_phy_set_tune2_param(struct qusb2_phy *qphy)
->>   		qusb2_write_mask(qphy->base, cfg->regs[QUSB2PHY_PORT_TUNE2],
->>   				 val[0] << HSTX_TRIM_SHIFT,
->>   				 HSTX_TRIM_MASK);
->> +
->> +	kfree(val);
-> 
-> Nice catch, here's my:
-> 
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> PM8xxx PMIC family uses GPIO as parent IRQ. Using it together with the
+> irq_set_chained_handler_and_data() results in warnings from the GPIOLIB
+> as in this path the IRQ resources are not allocated (and thus the
+> corresponding GPIO is not marked as used for the IRQ. Use request_irq so
+> that the IRQ resources are proprely setup.
+>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Thank you for the review, however I have just found a still unresolved
-memleak when zeroes are returned, so there is v2.
+I sent this patch:
+https://lore.kernel.org/lkml/20210819154400.51932-1-linus.walleij@linaro.org/
 
-> 
-> That said, do you think we could replace the nvmem_cell_read() with a
-> call to nvmem_cell_read_u8() to avoid the need to clean it up instead?
+David Heidelberg reported that it didn't work for him.
 
-It might be a good idea to do it in a separate change, nvmem_cell_read_u8()
-is found in v5.9 and later versions, so its usage prevents a probable
-backport to stable branches, because the original problem comes in v4.12.
+David can you test Dmitry's patch instead and see if that works
+for you, I suppose I could have some bug in my patch :/
+It would be nice with a Tested-by from David.
 
-FWIW the sent fix should be clearly applicable to v4.20 and later versions
-only, if it's needed, separate changes are required to cover v4.12-v4.20
-range.
+FWIW the code looks good:
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
---
-Best wishes,
-Vladimir
+Yours,
+Linus Walleij
