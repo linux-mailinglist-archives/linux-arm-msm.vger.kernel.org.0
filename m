@@ -2,70 +2,91 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 112DC415E9D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 14:42:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E6DD0415F41
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 15:11:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240995AbhIWMoK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Sep 2021 08:44:10 -0400
-Received: from mail-oo1-f50.google.com ([209.85.161.50]:46638 "EHLO
-        mail-oo1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240911AbhIWMoK (ORCPT
+        id S241175AbhIWNMb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Sep 2021 09:12:31 -0400
+Received: from mail-ot1-f53.google.com ([209.85.210.53]:45755 "EHLO
+        mail-ot1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238588AbhIWNM3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Sep 2021 08:44:10 -0400
-Received: by mail-oo1-f50.google.com with SMTP id q26-20020a4adc5a000000b002918a69c8eeso2070465oov.13;
-        Thu, 23 Sep 2021 05:42:38 -0700 (PDT)
+        Thu, 23 Sep 2021 09:12:29 -0400
+Received: by mail-ot1-f53.google.com with SMTP id l7-20020a0568302b0700b0051c0181deebso8353404otv.12;
+        Thu, 23 Sep 2021 06:10:57 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=EQoFaazURf0T5iPiEHtr8R2ifsqYmGtx+pVuh7cl/+k=;
-        b=CXeuSBeeCcaibIRzwOnmgSigsc1zlVlMP/a3IXyv2SAdWTToOQUf1ZYteWFcjq5xg0
-         clO1RaQRKJdYG8cn0EjTLbQbptY7xGwUyKW4p7cU5WpIQzl/tuYky4NuNC8XPBlNmuNm
-         TwyOSJ4E97nhXp+oKKAEzJuxCoC0zVm3QpH5CkcQlQF1aMm9FpghIrbU4IY08MTXMyCa
-         mTLUP3abwcnZFljk+2CXOLPbxSCtvIcu/C48LdAHL8COO3wR5RGrS0STHI0Lj8Gj+liM
-         vTrW6NyajbQsRTSU44hx02oJwLcj5t5XORLhzOdcxnvZ53n8E6lsB3WieHSBjtiAzMUz
-         uSig==
-X-Gm-Message-State: AOAM530yOlCYBNDFxCGoeGyNZ04mMsKvA6jxkfPce+1ps8TPBrLNVCUf
-        tnrLid/0M8p0mgPv4WxSRg==
-X-Google-Smtp-Source: ABdhPJwrgYbulGwbPiYtS0EElA0FGBwUloejY13vS7nH+r61vSAMDCynPfMD/VZzkVpdL13OLOkYTA==
-X-Received: by 2002:a4a:942:: with SMTP id 63mr3533940ooa.25.1632400958139;
-        Thu, 23 Sep 2021 05:42:38 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=cFspYBLeURdfYGcovqZnYm0YSY7LeEP/BmbI4nCU0mU=;
+        b=bTjHAvg7WugVnMOfxjH1AtHQF8aXac9RwivmZNXnwWit+zJ3CzEbDfvf+ZsYZyQQzz
+         EDFcATkv6CtbzpCREmPwJ/Af14XIqZNmeccojIykA3pOv0CO8xslocIXN830eYXf8vqF
+         3gAMSVlPhY8e+qMt12J8DPUOok8reC3rNtu7w0118ELW4+l8is9f28k5654fwcwu6Ec2
+         GRAr77zjVTU8HQ4thxTgLiax3U2ZsEXlZT1b1GKJZmdRS1okQ1ONDj3S8YOrYTyArSGb
+         9fzEvT2lOdpzCP5z5IyB2hIyBuj6SymTgkFKy/+qA90HC2okGKQi9HYnETocrzMsT+H2
+         mkmg==
+X-Gm-Message-State: AOAM532ukkdJuRfMx+FAe7JL5ToYklXXWFnw3nShPjW1UmMUKPi6kW+f
+        1lvv+e0fbyLs5+H6fH31NaUmzfUCsQ==
+X-Google-Smtp-Source: ABdhPJybDJ7Lb8fIZU10sfK8nNbiDimDfC7u+ouNEMJmW0a2CScZ5nkLpcBFkUpNYos99iZlSTkXAA==
+X-Received: by 2002:a9d:4604:: with SMTP id y4mr4229176ote.79.1632402657391;
+        Thu, 23 Sep 2021 06:10:57 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id y9sm1331567ooe.10.2021.09.23.05.42.36
+        by smtp.gmail.com with ESMTPSA id p8sm1262495oti.15.2021.09.23.06.10.55
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Sep 2021 05:42:37 -0700 (PDT)
-Received: (nullmailer pid 2819083 invoked by uid 1000);
-        Thu, 23 Sep 2021 12:42:36 -0000
-Date:   Thu, 23 Sep 2021 07:42:36 -0500
+        Thu, 23 Sep 2021 06:10:56 -0700 (PDT)
+Received: (nullmailer pid 2861278 invoked by uid 1000);
+        Thu, 23 Sep 2021 13:10:53 -0000
 From:   Rob Herring <robh@kernel.org>
-To:     Sireesh Kodali <sireeshkodali1@gmail.com>
-Cc:     netdev@vger.kernel.org, Jakub Kicinski <kuba@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht, elder@kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>, phone-devel@vger.kernel.org,
-        "David S. Miller" <davem@davemloft.net>
-Subject: Re: [RFC PATCH 17/17] dt-bindings: net: qcom,ipa: Add support for
- MSM8953 and MSM8996 IPA
-Message-ID: <YUx2PLKZOMtKfru0@robh.at.kernel.org>
-References: <20210920030811.57273-1-sireeshkodali1@gmail.com>
- <20210920030811.57273-18-sireeshkodali1@gmail.com>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210920030811.57273-18-sireeshkodali1@gmail.com>
+To:     Dikshita Agarwal <dikshita@codeaurora.org>
+Cc:     robh+dt@kernel.org, linux-kernel@vger.kernel.org,
+        stanimir.varbanov@linaro.org, mchehab@kernel.org,
+        devicetree@vger.kernel.org, vgarodia@codeaurora.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        agross@kernel.org, linux-media@vger.kernel.org
+In-Reply-To: <1632377309-25148-1-git-send-email-dikshita@codeaurora.org>
+References: <1632377309-25148-1-git-send-email-dikshita@codeaurora.org>
+Subject: Re: [RESEND PATCH v3] dt-bindings: media: venus: Add sc7280 dt schema
+Date:   Thu, 23 Sep 2021 08:10:53 -0500
+Message-Id: <1632402653.567694.2861277.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 20 Sep 2021 08:38:11 +0530, Sireesh Kodali wrote:
-> MSM8996 uses IPA v2.5 and MSM8953 uses IPA v2.6l
+On Thu, 23 Sep 2021 11:38:29 +0530, Dikshita Agarwal wrote:
+> Add a schema description for the venus video encoder/decoder on the sc7280.
 > 
-> Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
+> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
 > ---
->  Documentation/devicetree/bindings/net/qcom,ipa.yaml | 2 ++
->  1 file changed, 2 insertions(+)
+>  .../bindings/media/qcom,sc7280-venus.yaml          | 159 +++++++++++++++++++++
+>  1 file changed, 159 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
 > 
 
-Acked-by: Rob Herring <robh@kernel.org>
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
+
+yamllint warnings/errors:
+
+dtschema/dtc warnings/errors:
+Error: Documentation/devicetree/bindings/media/qcom,sc7280-venus.example.dts:24.31-32 syntax error
+FATAL ERROR: Unable to parse input tree
+make[1]: *** [scripts/Makefile.lib:385: Documentation/devicetree/bindings/media/qcom,sc7280-venus.example.dt.yaml] Error 1
+make[1]: *** Waiting for unfinished jobs....
+make: *** [Makefile:1441: dt_binding_check] Error 2
+
+doc reference errors (make refcheckdocs):
+
+See https://patchwork.ozlabs.org/patch/1531553
+
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
+
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
+
+pip3 install dtschema --upgrade
+
+Please check and re-submit.
+
