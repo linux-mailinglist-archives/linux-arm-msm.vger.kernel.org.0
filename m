@@ -2,114 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 36245415DFE
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 14:16:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 112DC415E9D
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 14:42:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240826AbhIWMS0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Sep 2021 08:18:26 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:64801 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240733AbhIWMSY (ORCPT
+        id S240995AbhIWMoK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Sep 2021 08:44:10 -0400
+Received: from mail-oo1-f50.google.com ([209.85.161.50]:46638 "EHLO
+        mail-oo1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240911AbhIWMoK (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Sep 2021 08:18:24 -0400
-Received: from ironmsg07-lv.qualcomm.com ([10.47.202.151])
-  by alexa-out.qualcomm.com with ESMTP; 23 Sep 2021 05:16:49 -0700
-X-QCInternal: smtphost
-Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
-  by ironmsg07-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 23 Sep 2021 05:16:47 -0700
-X-QCInternal: smtphost
-Received: from rajpat-linux.qualcomm.com ([10.206.21.0])
-  by ironmsg01-blr.qualcomm.com with ESMTP; 23 Sep 2021 17:46:30 +0530
-Received: by rajpat-linux.qualcomm.com (Postfix, from userid 2344945)
-        id 98F122160E; Thu, 23 Sep 2021 17:46:29 +0530 (IST)
-From:   Rajesh Patil <rajpat@codeaurora.org>
-To:     Andy Gross <agross@kernel.org>,
+        Thu, 23 Sep 2021 08:44:10 -0400
+Received: by mail-oo1-f50.google.com with SMTP id q26-20020a4adc5a000000b002918a69c8eeso2070465oov.13;
+        Thu, 23 Sep 2021 05:42:38 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=EQoFaazURf0T5iPiEHtr8R2ifsqYmGtx+pVuh7cl/+k=;
+        b=CXeuSBeeCcaibIRzwOnmgSigsc1zlVlMP/a3IXyv2SAdWTToOQUf1ZYteWFcjq5xg0
+         clO1RaQRKJdYG8cn0EjTLbQbptY7xGwUyKW4p7cU5WpIQzl/tuYky4NuNC8XPBlNmuNm
+         TwyOSJ4E97nhXp+oKKAEzJuxCoC0zVm3QpH5CkcQlQF1aMm9FpghIrbU4IY08MTXMyCa
+         mTLUP3abwcnZFljk+2CXOLPbxSCtvIcu/C48LdAHL8COO3wR5RGrS0STHI0Lj8Gj+liM
+         vTrW6NyajbQsRTSU44hx02oJwLcj5t5XORLhzOdcxnvZ53n8E6lsB3WieHSBjtiAzMUz
+         uSig==
+X-Gm-Message-State: AOAM530yOlCYBNDFxCGoeGyNZ04mMsKvA6jxkfPce+1ps8TPBrLNVCUf
+        tnrLid/0M8p0mgPv4WxSRg==
+X-Google-Smtp-Source: ABdhPJwrgYbulGwbPiYtS0EElA0FGBwUloejY13vS7nH+r61vSAMDCynPfMD/VZzkVpdL13OLOkYTA==
+X-Received: by 2002:a4a:942:: with SMTP id 63mr3533940ooa.25.1632400958139;
+        Thu, 23 Sep 2021 05:42:38 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id y9sm1331567ooe.10.2021.09.23.05.42.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Sep 2021 05:42:37 -0700 (PDT)
+Received: (nullmailer pid 2819083 invoked by uid 1000);
+        Thu, 23 Sep 2021 12:42:36 -0000
+Date:   Thu, 23 Sep 2021 07:42:36 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Sireesh Kodali <sireeshkodali1@gmail.com>
+Cc:     netdev@vger.kernel.org, Jakub Kicinski <kuba@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, rnayak@codeaurora.org,
-        saiprakash.ranjan@codeaurora.org, msavaliy@qti.qualcomm.com,
-        skakit@codeaurora.org, sboyd@kernel.org, mka@chromium.org,
-        dianders@chromium.org, Rajesh Patil <rajpat@codeaurora.org>
-Subject: [PATCH V10 8/8] arm64: dts: sc7280: Add aliases for I2C and SPI
-Date:   Thu, 23 Sep 2021 17:46:18 +0530
-Message-Id: <1632399378-12229-9-git-send-email-rajpat@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1632399378-12229-1-git-send-email-rajpat@codeaurora.org>
-References: <1632399378-12229-1-git-send-email-rajpat@codeaurora.org>
+        ~postmarketos/upstreaming@lists.sr.ht, elder@kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, phone-devel@vger.kernel.org,
+        "David S. Miller" <davem@davemloft.net>
+Subject: Re: [RFC PATCH 17/17] dt-bindings: net: qcom,ipa: Add support for
+ MSM8953 and MSM8996 IPA
+Message-ID: <YUx2PLKZOMtKfru0@robh.at.kernel.org>
+References: <20210920030811.57273-1-sireeshkodali1@gmail.com>
+ <20210920030811.57273-18-sireeshkodali1@gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210920030811.57273-18-sireeshkodali1@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add aliases for i2c and spi for sc7280 soc.
+On Mon, 20 Sep 2021 08:38:11 +0530, Sireesh Kodali wrote:
+> MSM8996 uses IPA v2.5 and MSM8953 uses IPA v2.6l
+> 
+> Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
+> ---
+>  Documentation/devicetree/bindings/net/qcom,ipa.yaml | 2 ++
+>  1 file changed, 2 insertions(+)
+> 
 
-Signed-off-by: Rajesh Patil <rajpat@codeaurora.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
----
-Change in V10:
- - No changes
-
-Changes in V9:
- - No changes
-
-Changes in V8:
- - No changes
-
-Changes in V7:
- - As per Stephen's comments, Sorted alias names for i2c and spi as per alphabet order
-
-Changes in V6:
- - As per Doug's comments, added aliases for i2c and spi
-
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 32 ++++++++++++++++++++++++++++++++
- 1 file changed, 32 insertions(+)
-
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index c26647a..e5fefd1 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -26,8 +26,40 @@
- 	chosen { };
- 
- 	aliases {
-+		i2c0 = &i2c0;
-+		i2c1 = &i2c1;
-+		i2c2 = &i2c2;
-+		i2c3 = &i2c3;
-+		i2c4 = &i2c4;
-+		i2c5 = &i2c5;
-+		i2c6 = &i2c6;
-+		i2c7 = &i2c7;
-+		i2c8 = &i2c8;
-+		i2c9 = &i2c9;
-+		i2c10 = &i2c10;
-+		i2c11 = &i2c11;
-+		i2c12 = &i2c12;
-+		i2c13 = &i2c13;
-+		i2c14 = &i2c14;
-+		i2c15 = &i2c15;
- 		mmc1 = &sdhc_1;
- 		mmc2 = &sdhc_2;
-+		spi0 = &spi0;
-+		spi1 = &spi1;
-+		spi2 = &spi2;
-+		spi3 = &spi3;
-+		spi4 = &spi4;
-+		spi5 = &spi5;
-+		spi6 = &spi6;
-+		spi7 = &spi7;
-+		spi8 = &spi8;
-+		spi9 = &spi9;
-+		spi10 = &spi10;
-+		spi11 = &spi11;
-+		spi12 = &spi12;
-+		spi13 = &spi13;
-+		spi14 = &spi14;
-+		spi15 = &spi15;
- 	};
- 
- 	clocks {
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member 
-of Code Aurora Forum, hosted by The Linux Foundation
-
+Acked-by: Rob Herring <robh@kernel.org>
