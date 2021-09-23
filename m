@@ -2,136 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 68D6E415BE6
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 12:24:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2EE9B415C19
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 12:39:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231609AbhIWK0P (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Sep 2021 06:26:15 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:64430 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231392AbhIWK0P (ORCPT
+        id S240428AbhIWKl3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Sep 2021 06:41:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49932 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236299AbhIWKl3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Sep 2021 06:26:15 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1632392684; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=/rPqK1WCpsnEtZqc+MRoJWHJK1jfb1Wh+E4tw/wmBrI=;
- b=RoHEUrOigl1FXLVm3WUN1LiA/Seyl61AFUrmSXtMF5ip4OWUGmGGKLPKosNJmNkLpgH2Wujf
- Tl9l1CjF7uEa7PyU1O3s74Tyh0ELj5avV5MUdY8ItmJB6BCcA6V6EqFNPAqkESuO0ZW7ccyN
- 98VmL3IRRYEQyiQ+c56gQ1NvGRg=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 614c55d08b04ef858943301e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 23 Sep 2021 10:24:16
- GMT
-Sender: jeyr=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C1A43C4360C; Thu, 23 Sep 2021 10:24:16 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: jeyr)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 0FCC8C4338F;
-        Thu, 23 Sep 2021 10:24:15 +0000 (UTC)
+        Thu, 23 Sep 2021 06:41:29 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9B68C061756
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Sep 2021 03:39:57 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id w11so3692141plz.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Sep 2021 03:39:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc:content-transfer-encoding;
+        bh=0l5Qjk10ns9RTcZCx62S0Ghtn1+O62O0rQJz+8Rhm0I=;
+        b=n8Wqw2WAmNvR3Tfi0IN+hvY9FiUzaOcCcnnXcLK89WtSIR7TucrqCxR1kymTRGKzwU
+         2lTZq5gtLAKlj0ciNizxwCSSFk5at9MDpjkx7Zix2Wa70HQjvjPKCaiNqDykmbEoH+0V
+         IFOyuUukiqSdgrTjdg5IWPbFKSQ9W6cyN4e8+E4K/su0afRI2cG12hJwBSKbkVlH/luA
+         xC/qtUiLMECJ+SayzxbbsghqViDuQL2G7P/zthFDVFRmsOBAMDOQXUWKleB7Cgz9AnLm
+         OO587hdDoTtG1l4kyieL5kdJFDw37yZx5NO2SV7BHVc7DxaXCx2jf6CJWV259SyveSK6
+         WMLg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=0l5Qjk10ns9RTcZCx62S0Ghtn1+O62O0rQJz+8Rhm0I=;
+        b=Tb3XiUFCt9+4XHdz7fgX+5wGK7P9d3BpAjExuNBxVO+OC7vA58qUEsQ+U/rk8BhscB
+         EwvNA4pI+V9F5luqFbDrMCAIttscKxz03UFdTpOsqgIBog/AO+kx9Nk38t7z1tQefubM
+         HFaNfZg709gkT9zSdBoyRyXGQqVvobKOk3k7Qc89z7SeGN2C8uY29MWbFW/YgBRChH/A
+         CogeUEfMUVQ3haw+gyxKe3eDk07PRE5qtP9TjQKfzl0pz+opKQdzIyTSkER83pf3QxPM
+         QgBp+s6IrBm2bTjvcyo4V+R3Y5magBkqdlD3uzzDIw4fVUHoGQwG3I2irXetuWqXpW3s
+         NHYg==
+X-Gm-Message-State: AOAM532SG+xZU8w5lQ1m5Etnz0eT+ez8ljApeEqdIIHPrbmmDiZ0QZCp
+        i2RdIrgEu/AtmkKsnAeYjjhjq7X9odr6UXkOkzwF1Q==
+X-Google-Smtp-Source: ABdhPJzkbgNlQdn54hfS6ArGL5SRw53Cv7Fuq/8iSKoYVDZpajH5rCyoTEjEMX9HaJM31dUcaJsRWZRXBwZKT3o3JOw=
+X-Received: by 2002:a17:90b:4a88:: with SMTP id lp8mr4495426pjb.159.1632393597263;
+ Thu, 23 Sep 2021 03:39:57 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 23 Sep 2021 15:54:15 +0530
-From:   jeyr@codeaurora.org
-To:     Greg KH <gregkh@linuxfoundation.org>
-Cc:     linux-arm-msm@vger.kernel.org, srinivas.kandagatla@linaro.org,
-        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
-Subject: Re: [PATCH] misc: fastrpc: copy to user only for non-DMA-BUF heap
- buffers
-In-Reply-To: <YUw/k1PdjfYmufQP@kroah.com>
-References: <1632386272-18139-1-git-send-email-jeyr@codeaurora.org>
- <YUw/k1PdjfYmufQP@kroah.com>
-Message-ID: <f3333ba748b0b7aacfa6ec87888ccb6c@codeaurora.org>
-X-Sender: jeyr@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <871r5p0x2u.fsf@codeaurora.org> <CAMZdPi8UJLvBFQd8-nf-iHAQh8cEuihq97PUFfZ7Q=rxRQoPsg@mail.gmail.com>
+ <20210916111218.GA12918@thinkpad> <CAMZdPi94607mZorp+Zmkw3seWXak6p9Jr05CQ5hhfgKQoG8n7Q@mail.gmail.com>
+ <20210916163529.GA9027@thinkpad> <87k0jgxyjp.fsf@codeaurora.org>
+ <20210916171927.GB9027@thinkpad> <b7c0906041dcafb43be215bd4f55326a@codeaurora.org>
+ <20210923085926.GD6083@thinkpad> <6912b6840858c0554922c01a0f9c47b8@codeaurora.org>
+In-Reply-To: <6912b6840858c0554922c01a0f9c47b8@codeaurora.org>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Thu, 23 Sep 2021 12:50:08 +0200
+Message-ID: <CAMZdPi-3WOj_TT7diUJJ00RaoHgKw-tu-heQJu6vDUK1yZ4CZg@mail.gmail.com>
+Subject: Re: [regression] mhi: ath11k resume fails on some devices
+To:     Carl Huang <cjhuang@codeaurora.org>,
+        Kalle Valo <kvalo@codeaurora.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        ath11k@lists.infradead.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        linux-wireless@vger.kernel.org, regressions@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-09-23 14:19, Greg KH wrote:
-> On Thu, Sep 23, 2021 at 02:07:52PM +0530, Jeya R wrote:
->> fastrpc_put_args is copying all the output buffers to user. For large
->> number of output context buffers, this might cause performance
->> degradation. Copying is not needed for DMA-BUF heap buffers.
-> 
-> What does "performance degradation" really mean?
+Hi Carl and Kalle,
 
-Unnecessary copying for large number of buffers would cause some
-additional time which would get added to overall fastrpc call cost.
+On Thu, 23 Sept 2021 at 11:26, Carl Huang <cjhuang@codeaurora.org> wrote:
+>
+> On 2021-09-23 16:59, Manivannan Sadhasivam wrote:
+> > On Thu, Sep 23, 2021 at 04:34:43PM +0800, Carl Huang wrote:
+> >> On 2021-09-17 01:19, Manivannan Sadhasivam wrote:
+> >> > On Thu, Sep 16, 2021 at 07:42:02PM +0300, Kalle Valo wrote:
+> >> > > Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
+> >> > >
+> >> > > > On Thu, Sep 16, 2021 at 01:18:22PM +0200, Loic Poulain wrote:
+> >> > > >> Le jeu. 16 sept. 2021 =C3=A0 13:12, Manivannan Sadhasivam <
+> >> > > >> manivannan.sadhasivam@linaro.org> a =C3=A9crit :
+> >> > > >>
+> >> > > >
+> >> > > > [...]
+> >> > > >
+> >> > > >> > If things seems to work fine without that patch, then it impl=
+ies that
+> >> > > >> > setting M0
+> >> > > >> > state works during resume. I think we should just revert that=
+ patch.
+> >> > > >> >
+> >> > > >> > Loic, did that patch fix any issue for you or it was a cosmet=
+ic fix only?
+> >> > > >>
+> >> > > >>
+> >> > > >> It fixes sdx modem resuming issue, without that we don=E2=80=99=
+t know modem needs
+> >> > > >> to be reinitialized.
+> >> > > >>
+> >> > > >
+> >> > > > Okay. Then in that case, the recovery mechanism has to be added =
+to the ath11k
+> >> > > > MHI controller.
+> >> > >
+> >> > > What does that mean in practise, do you have any pointers or
+> >> > > examples? I
+> >> > > have no clue what you are proposing :)
+> >> > >
+> >> >
+> >> > Take a look at the mhi_pci_recovery_work() function below:
+> >> > https://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git/t=
+ree/drivers/bus/mhi/pci_generic.c#n610
+> >> >
+> >> > You need to implement something similar that basically powers up the=
+ MHI
+> >> > endpoint (QCA6390) in case pm_resume() fails. At minimum, you need t=
+o
+> >> > call
+> >> > below functions:
+> >> >
+> >> > # Check if the device is powered on. If yes, then power it down to b=
+ring
+> >> > it back
+> >> > mhi_power_down()
+> >> > mhi_unprepare_after_power_down()
+> >> >
+> >> > # Power up the device
+> >> > mhi_prepare_for_power_up()
+> >> > mhi_sync_power_up()
+> >> >
+> >> > This implies that the WLAN device has been powered off during suspen=
+d,
+> >> > so the
+> >> > resume fails and we are bringing the device back to working state.
+> >> >
+> >> This is fine for platform which doesn't provide power supply during
+> >> suspend.
+> >> But NUC has power supply in suspend state.
+> >
+> > If NUC retains power supply during suspend then it should work with
+> > that commit.
+> > During resume, the device is expected to be in M3 state and that's what
+> > the
+> > commit verifies.
+> >
+> > If the device is in a different state, then most likely the device have
+> > power
+> > cycled.
+> >
+> But the tricky thing here is that upstream QCA6390 doesn't have recovery
+> mechanism to download
+> firmware again, so QCA6390 has no way to work after a power cycle.
 
-> 
->> 
->> Signed-off-by: Jeya R <jeyr@codeaurora.org>
->> ---
->>  drivers/misc/fastrpc.c | 18 ++++++++++--------
->>  1 file changed, 10 insertions(+), 8 deletions(-)
->> 
->> diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
->> index beda610..536eabf 100644
->> --- a/drivers/misc/fastrpc.c
->> +++ b/drivers/misc/fastrpc.c
->> @@ -890,15 +890,17 @@ static int fastrpc_put_args(struct 
->> fastrpc_invoke_ctx *ctx,
->>  	inbufs = REMOTE_SCALARS_INBUFS(ctx->sc);
->> 
->>  	for (i = inbufs; i < ctx->nbufs; ++i) {
->> -		void *src = (void *)(uintptr_t)rpra[i].pv;
->> -		void *dst = (void *)(uintptr_t)ctx->args[i].ptr;
->> -		u64 len = rpra[i].len;
->> +		if (!ctx->maps[i]) {
->> +			void *src = (void *)(uintptr_t)rpra[i].pv;
->> +			void *dst = (void *)(uintptr_t)ctx->args[i].ptr;
-> 
-> uintptr_t is not a kernel variable type.  Please use the real kernel
-> type for this as you are touching these lines.
-> 
+Maybe a simple quick-fix would be to add a 'force' parameter to the
+mhi resume function and discard state testing in case it is forced,
+that would allow both ath11k and modem to work for now. Then
+investigating what happens on ath11k side.
 
-Sure, thanks for pointing this. Will update this in the next patch.
+Thoughts?
 
->> +			u64 len = rpra[i].len;
->> 
->> -		if (!kernel) {
->> -			if (copy_to_user((void __user *)dst, src, len))
->> -				return -EFAULT;
->> -		} else {
->> -			memcpy(dst, src, len);
->> +			if (!kernel) {
->> +				if (copy_to_user((void __user *)dst, src, len))
->> +					return -EFAULT;
->> +			} else {
->> +				memcpy(dst, src, len);
->> +			}
-> 
-> So you were copying buffers that didn't need to be copied?  So you are
-> now doing less work?  Or is this fixing a bug where you were copying
-> things that you should not have been copying?
-> 
-> What commit does this fix?  Does this need to go to the stable kernel
-> trees?
-> 
-
-Yes, not all buffer needs to be copied. This change would avoid 
-unnecessary
-copying of buffers. Not adding fix tag as it's not exactly fixing any 
-bug.
-This should go to stable kernel trees.
-
-Thanks
-
-> thanks,
-> 
-> greg k-h
+Regards,
+Loic
