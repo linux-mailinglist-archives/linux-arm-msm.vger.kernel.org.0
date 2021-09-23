@@ -2,19 +2,19 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 778944162F5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 18:22:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 974BE4162FA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 18:22:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242127AbhIWQYK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Sep 2021 12:24:10 -0400
-Received: from relay06.th.seeweb.it ([5.144.164.167]:44301 "EHLO
+        id S242076AbhIWQYS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Sep 2021 12:24:18 -0400
+Received: from relay06.th.seeweb.it ([5.144.164.167]:44519 "EHLO
         relay06.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242107AbhIWQYE (ORCPT
+        with ESMTP id S242129AbhIWQYG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Sep 2021 12:24:04 -0400
+        Thu, 23 Sep 2021 12:24:06 -0400
 Received: from localhost.localdomain (83.6.166.81.neoplus.adsl.tpnet.pl [83.6.166.81])
-        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 5E2B03F67F;
-        Thu, 23 Sep 2021 18:22:19 +0200 (CEST)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 54A863F688;
+        Thu, 23 Sep 2021 18:22:20 +0200 (CEST)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     ~postmarketos/upstreaming@lists.sr.ht
 Cc:     martin.botka@somainline.org,
@@ -26,9 +26,9 @@ Cc:     martin.botka@somainline.org,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v3 08/17] arm64: dts: qcom: sm6350: Add cpufreq-hw support
-Date:   Thu, 23 Sep 2021 18:21:54 +0200
-Message-Id: <20210923162204.21752-8-konrad.dybcio@somainline.org>
+Subject: [PATCH v3 09/17] arm64: dts: qcom: sm6350: Add TSENS nodes
+Date:   Thu, 23 Sep 2021 18:21:55 +0200
+Message-Id: <20210923162204.21752-9-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20210923162204.21752-1-konrad.dybcio@somainline.org>
 References: <20210923162204.21752-1-konrad.dybcio@somainline.org>
@@ -38,99 +38,46 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add cpufreq-hw node and assign qcom,freq-domain properties to CPUs to enable
-CPU clock scaling.
+Add nodes required for TSENS block using the common qcom,tsens-v2 binding.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- arch/arm64/boot/dts/qcom/sm6350.dtsi | 18 ++++++++++++++++++
- 1 file changed, 18 insertions(+)
+ arch/arm64/boot/dts/qcom/sm6350.dtsi | 22 ++++++++++++++++++++++
+ 1 file changed, 22 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-index ad755a16310a..582915d2b4f0 100644
+index 582915d2b4f0..2e9701f2f276 100644
 --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-@@ -42,6 +42,7 @@ CPU0: cpu@0 {
- 			capacity-dmips-mhz = <1024>;
- 			dynamic-power-coefficient = <100>;
- 			next-level-cache = <&L2_0>;
-+			qcom,freq-domain = <&cpufreq_hw 0>;
- 			#cooling-cells = <2>;
- 			L2_0: l2-cache {
- 				compatible = "cache";
-@@ -60,6 +61,7 @@ CPU1: cpu@100 {
- 			capacity-dmips-mhz = <1024>;
- 			dynamic-power-coefficient = <100>;
- 			next-level-cache = <&L2_100>;
-+			qcom,freq-domain = <&cpufreq_hw 0>;
- 			#cooling-cells = <2>;
- 			L2_100: l2-cache {
- 				compatible = "cache";
-@@ -75,6 +77,7 @@ CPU2: cpu@200 {
- 			capacity-dmips-mhz = <1024>;
- 			dynamic-power-coefficient = <100>;
- 			next-level-cache = <&L2_200>;
-+			qcom,freq-domain = <&cpufreq_hw 0>;
- 			#cooling-cells = <2>;
- 			L2_200: l2-cache {
- 				compatible = "cache";
-@@ -90,6 +93,7 @@ CPU3: cpu@300 {
- 			capacity-dmips-mhz = <1024>;
- 			dynamic-power-coefficient = <100>;
- 			next-level-cache = <&L2_300>;
-+			qcom,freq-domain = <&cpufreq_hw 0>;
- 			#cooling-cells = <2>;
- 			L2_300: l2-cache {
- 				compatible = "cache";
-@@ -105,6 +109,7 @@ CPU4: cpu@400 {
- 			capacity-dmips-mhz = <1024>;
- 			dynamic-power-coefficient = <100>;
- 			next-level-cache = <&L2_400>;
-+			qcom,freq-domain = <&cpufreq_hw 0>;
- 			#cooling-cells = <2>;
- 			L2_400: l2-cache {
- 				compatible = "cache";
-@@ -120,6 +125,7 @@ CPU5: cpu@500 {
- 			capacity-dmips-mhz = <1024>;
- 			dynamic-power-coefficient = <100>;
- 			next-level-cache = <&L2_500>;
-+			qcom,freq-domain = <&cpufreq_hw 0>;
- 			#cooling-cells = <2>;
- 			L2_500: l2-cache {
- 				compatible = "cache";
-@@ -136,6 +142,7 @@ CPU6: cpu@600 {
- 			capacity-dmips-mhz = <1894>;
- 			dynamic-power-coefficient = <703>;
- 			next-level-cache = <&L2_600>;
-+			qcom,freq-domain = <&cpufreq_hw 1>;
- 			#cooling-cells = <2>;
- 			L2_600: l2-cache {
- 				compatible = "cache";
-@@ -151,6 +158,7 @@ CPU7: cpu@700 {
- 			capacity-dmips-mhz = <1894>;
- 			dynamic-power-coefficient = <703>;
- 			next-level-cache = <&L2_700>;
-+			qcom,freq-domain = <&cpufreq_hw 1>;
- 			#cooling-cells = <2>;
- 			L2_700: l2-cache {
- 				compatible = "cache";
-@@ -621,6 +629,16 @@ rpmhcc: clock-controller {
- 				clocks = <&xo_board>;
- 			};
+@@ -513,6 +513,28 @@ pdc: interrupt-controller@b220000 {
+ 			interrupt-controller;
  		};
-+
-+		cpufreq_hw: cpufreq@18323000 {
-+			compatible = "qcom,cpufreq-hw";
-+			reg = <0 0x18323000 0 0x1000>, <0 0x18325800 0 0x1000>;
-+			reg-names = "freq-domain0", "freq-domain1";
-+			clocks = <&rpmhcc RPMH_CXO_CLK>, <&gcc GPLL0>;
-+			clock-names = "xo", "alternate";
-+
-+			#freq-domain-cells = <1>;
-+		};
- 	};
  
- 	timer {
++		tsens0: thermal-sensor@c263000 {
++			compatible = "qcom,sm6350-tsens", "qcom,tsens-v2";
++			reg = <0 0x0c263000 0 0x1ff>, /* TM */
++			      <0 0x0c222000 0 0x8>; /* SROT */
++			#qcom,sensors = <16>;
++			interrupts = <&pdc 26 IRQ_TYPE_LEVEL_HIGH>,
++				     <&pdc 28 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "uplow", "critical";
++			#thermal-sensor-cells = <1>;
++		};
++
++		tsens1: thermal-sensor@c265000 {
++			compatible = "qcom,sm6350-tsens", "qcom,tsens-v2";
++			reg = <0 0x0c265000 0 0x1ff>, /* TM */
++			      <0 0x0c223000 0 0x8>; /* SROT */
++			#qcom,sensors = <16>;
++			interrupts = <&pdc 27 IRQ_TYPE_LEVEL_HIGH>,
++				     <&pdc 29 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "uplow", "critical";
++			#thermal-sensor-cells = <1>;
++		};
++
+ 		tlmm: pinctrl@f100000 {
+ 			compatible = "qcom,sm6350-tlmm";
+ 			reg = <0 0x0f100000 0 0x300000>;
 -- 
 2.33.0
 
