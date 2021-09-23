@@ -2,73 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5087A41674B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 23:15:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 293FD416756
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 23:22:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243232AbhIWVQr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Sep 2021 17:16:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57732 "EHLO
+        id S243241AbhIWVYH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Sep 2021 17:24:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243174AbhIWVQq (ORCPT
+        with ESMTP id S243174AbhIWVYG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Sep 2021 17:16:46 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7952CC061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Sep 2021 14:15:14 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id m3so31695379lfu.2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Sep 2021 14:15:14 -0700 (PDT)
+        Thu, 23 Sep 2021 17:24:06 -0400
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A73C9C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Sep 2021 14:22:34 -0700 (PDT)
+Received: by mail-ot1-x331.google.com with SMTP id 5-20020a9d0685000000b0054706d7b8e5so10471177otx.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Sep 2021 14:22:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=f9fF1es1aEeH+o2sBBMLmPK2zQTL0jPUM9WO4klM+IA=;
-        b=vSV3zeebm7WI+VqdkF7vS+UCyw08t3Sh3i5cSKiVxyJN6kImADE6c42pxwf0I+t8Oj
-         u88Ra797Y4PaN0nwlQoLxQAydPBYLC/zhRTGx3a6Sxxe+WGsTAPgisVCLH6+kIXiZMnL
-         hiuLnIwVuVOPfgg1obGzyD+5wiPg92JebqWvlUEEJi1a+7fXYHPBkDzxE53qEZyMx4r+
-         4ieoV75QtMDWdsvDSdyoZI7r4i/KCapAt3EQtz4yBYWTGQlE1AMpaeqvz1mtoCiaZFWo
-         BIm4+nxxg1DmhgnqB7MM8D8TzPBUCAZiG8feHRjP2KsUsmf+wUtHS48333q/P2rNuGDs
-         6XxA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=i3MYig+t76yXS3PKKNnmxfZV0vUCyZOrKe0JE9dsF3Y=;
+        b=q6DQ/uLh+rOOIptl7Av8RCuOCTgOEjdj7GpDdnqxUyESYJRANG61gxUFHaU45agQ2m
+         bGjgNCzq1UQ6g1pQGkjXiGaj7A6uEr1mP7jBABFaXd6cLeO+oDKL5CaX9PS72zl9s68Q
+         U58lWIA+Qg2kFDZYUYonVYlWF3z5F4vg5ZQU7asFpX4pIuYLMs0YYhRP9Dju7t84GKkl
+         9hJ1gfTR22oWcY2KtTvlY2dS8MifcWxQK1Am/1cVJ5RU5Jq3cs/UDVqTOpDVwwVHc/ZE
+         UKdsJkfMlGo8RjeEi33NarztHimYe5Z0iRVYzfJ2COnXbwJq/Be47z/eWn65n8uwfZye
+         1spQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=f9fF1es1aEeH+o2sBBMLmPK2zQTL0jPUM9WO4klM+IA=;
-        b=E4ML83NlsmMNkPikEN0AzrW3kiItx+apg8K/PbpPw6WW9jTHbzRrym2aojLjRCcSIk
-         DMSG7EEuZBi1cppE0q3L7WgR0P2Ib/UDTaUPEpBv7lmbGw2juB0V2MFCyfj1hxlsDKkA
-         6lPrBkjVm3YODqTdWCEXAHHNH45ntHCYuSueSeX3jBhg2m0pVbXy14X4qqlBANmrOYIm
-         acikgZJ/W+5monOjeFJkkdM/uxTX0IclKFQ1JNY5FuiqNL5ztiXqVoW3T7vdh6YwUg8l
-         CF3pinmTDotItsVAZlqgkdyfBrTmlMDPz23wKA3fbhKJy3Xh6eT/brE2Qoy5K97yaAOi
-         6Wfg==
-X-Gm-Message-State: AOAM531EPNHy2US6jYs6DI3yg6o3pbAe/QY1ZMzw/fwxkBg+8FvqStmK
-        0M0AY6jHfgWFK3nhpbu75PlSgQzPEllJ9IupQOsICfUSnII=
-X-Google-Smtp-Source: ABdhPJyuSO61DwL5xrptJCfC+nHyEj2RbaWo2sXdQsh+r2DreGO7KINuSEchn0tzjfVrF/fRc/3HKOYOXXxnMkpW+Vo=
-X-Received: by 2002:ac2:4d03:: with SMTP id r3mr6436551lfi.339.1632431712880;
- Thu, 23 Sep 2021 14:15:12 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210921162433.1858296-1-dmitry.baryshkov@linaro.org>
- <CACRpkdb15D0m7L-vO7RFcAaVuS7hdD8J=6=15TFgRgvvsw1e9g@mail.gmail.com> <B4GVZQ.IG4PDOTEQGB82@ixit.cz>
-In-Reply-To: <B4GVZQ.IG4PDOTEQGB82@ixit.cz>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Thu, 23 Sep 2021 23:15:02 +0200
-Message-ID: <CACRpkdZJb-ybj8o5hSxEgYbfLfxN96O4cfC9FYa6g5HPSc8yTw@mail.gmail.com>
-Subject: Re: [PATCH] mfd: qcom-pm8xxx: switch away from using chained IRQ handlers
-To:     David Heidelberg <david@ixit.cz>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=i3MYig+t76yXS3PKKNnmxfZV0vUCyZOrKe0JE9dsF3Y=;
+        b=pEjzdfGx8Zm5904Bf643b2IgtHbtdzpmm00rxCmYFdZsmi3AQ4H7Fk7E0zsXajMRdl
+         Sczv/kZbEmDNQf5yGlBEYVQwngIM6P6hmOu0Wzu918q9l5Zz3y86shbRSOSapeBf8BQ2
+         uQhDtim75RpqfsqRwPBD5TyG9k34YxB7YxpZz8ngpeBlZ0e8NkniqnWdBslX/UMFEpCY
+         eDh3hlgpQC6Fx8rIPNfphC32zOLgTemhdYj+KeLEdcFDy78dk1h0Ix7YJiwi6aOnJ5eu
+         sFgaQINHwAZF8GwyweRMK4BFCJ7l/j7PHuOsLoknnrbRgMKZiYi5eGQyfr1CvXtI7V0Q
+         C3wQ==
+X-Gm-Message-State: AOAM530aoafp9vfAxOke8LY9v8kbvW+qdK+yJu99q0DJCRFbs/kjxMX2
+        qlC8uOKAqLfOm/otb0bfnBCPhA==
+X-Google-Smtp-Source: ABdhPJw1+QXHT9g87r3Rk2jaH8Dne7oQjgMbwUcaYWZFTuBKwZWtlLl2TUADRgFUKsVb9eCo7tHKag==
+X-Received: by 2002:a9d:3e15:: with SMTP id a21mr831400otd.60.1632432154033;
+        Thu, 23 Sep 2021 14:22:34 -0700 (PDT)
+Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id e16sm1586820oie.17.2021.09.23.14.22.33
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 23 Sep 2021 14:22:33 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>, phone-devel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v2 0/4] arm64: dts: qcom: sdm845: Add thermal zones for PM8998 ADC
+Date:   Thu, 23 Sep 2021 14:23:07 -0700
+Message-Id: <20210923212311.2877048-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.29.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 23, 2021 at 7:20 AM David Heidelberg <david@ixit.cz> wrote:
+Describe ADC channels, related thermal monitor channels and add thermal zones for these.
 
-> with this patch, it does boot without any problems or warnings
-> regarding to IRQ.
+Bjorn Andersson (4):
+  dt-bindings: thermal: qcom: add HC variant of adc-thermal monitor
+    bindings
+  thermal/drivers/qcom/spmi-adc-tm5: Add support for HC variant
+  arm64: dts: qcom: pm8998: Add ADC Thermal Monitor node
+  arm64: dts: qcom: sdm845: mtp: Add vadc channels and thermal zones
 
-Excellent, let's apply it!
+ .../bindings/thermal/qcom-spmi-adc-tm-hc.yaml | 149 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/pm8998.dtsi          |  10 ++
+ arch/arm64/boot/dts/qcom/sdm845-mtp.dts       | 128 +++++++++++++++
+ drivers/thermal/qcom/qcom-spmi-adc-tm5.c      |  43 ++++-
+ 4 files changed, 329 insertions(+), 1 deletion(-)
+ create mode 100644 Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm-hc.yaml
 
-Yours,
-Linus Walleij
+-- 
+2.29.2
+
