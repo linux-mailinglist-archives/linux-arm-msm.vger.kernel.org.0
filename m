@@ -2,87 +2,215 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9BCAF4157D0
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 07:20:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A925E415816
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 08:08:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239137AbhIWFWT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Sep 2021 01:22:19 -0400
-Received: from ixit.cz ([94.230.151.217]:53778 "EHLO ixit.cz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229504AbhIWFWT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Sep 2021 01:22:19 -0400
-Received: from [10.111.222.169] (ixit.cz [94.230.151.217])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id B555823B26;
-        Thu, 23 Sep 2021 07:20:45 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1632374446;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:content-type:content-type:
-         in-reply-to:in-reply-to:references:references;
-        bh=cFfRp9hRc2lQUu9wZPFFHqwIGiNz/3vf6zUsUc5shkg=;
-        b=CanIE2BlFjfAJzudFVKoZFhT0A3sC3uvnAWt2+SFQtYXDGTBG65+VwECxCFi7cJfQh/Ebr
-        HeAL0VtANKJpwE1c/EYiOYy10zxbwdQ7zH4HzPVq0IeHnlbRdpx8xCSb70k4a11N2sxBvg
-        0IZsOU4kE5CoEB7bn23xOBjF6wiXJzU=
-Date:   Thu, 23 Sep 2021 07:19:23 +0200
-From:   David Heidelberg <david@ixit.cz>
-Subject: Re: [PATCH] mfd: qcom-pm8xxx: switch away from using chained IRQ
- handlers
-To:     Linus Walleij <linus.walleij@linaro.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        MSM <linux-arm-msm@vger.kernel.org>, phone-devel@vger.kernel.org
-Message-Id: <B4GVZQ.IG4PDOTEQGB82@ixit.cz>
-In-Reply-To: <CACRpkdb15D0m7L-vO7RFcAaVuS7hdD8J=6=15TFgRgvvsw1e9g@mail.gmail.com>
-References: <20210921162433.1858296-1-dmitry.baryshkov@linaro.org>
-        <CACRpkdb15D0m7L-vO7RFcAaVuS7hdD8J=6=15TFgRgvvsw1e9g@mail.gmail.com>
-X-Mailer: geary/40.0
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii; format=flowed
+        id S239266AbhIWGKY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Sep 2021 02:10:24 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:47850 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239226AbhIWGKY (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 23 Sep 2021 02:10:24 -0400
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 22 Sep 2021 23:08:52 -0700
+X-QCInternal: smtphost
+Received: from ironmsg01-blr.qualcomm.com ([10.86.208.130])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 22 Sep 2021 23:08:50 -0700
+X-QCInternal: smtphost
+Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
+  by ironmsg01-blr.qualcomm.com with ESMTP; 23 Sep 2021 11:38:33 +0530
+Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
+        id B5B9321D9B; Thu, 23 Sep 2021 11:38:32 +0530 (IST)
+From:   Dikshita Agarwal <dikshita@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        mchehab@kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        vgarodia@codeaurora.org, stanimir.varbanov@linaro.org,
+        Dikshita Agarwal <dikshita@codeaurora.org>
+Subject: [RESEND PATCH v3] dt-bindings: media: venus: Add sc7280 dt schema
+Date:   Thu, 23 Sep 2021 11:38:29 +0530
+Message-Id: <1632377309-25148-1-git-send-email-dikshita@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-with this patch, it does boot without any problems or warnings 
-regarding to IRQ.
+Add a schema description for the venus video encoder/decoder on the sc7280.
 
-Tested-by: David Heidelberg <david@ixit.cz>
-Best regards
-David Heidelberg
+Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
+---
+ .../bindings/media/qcom,sc7280-venus.yaml          | 159 +++++++++++++++++++++
+ 1 file changed, 159 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
 
-On Thu, Sep 23 2021 at 02:04:10 +0200, Linus Walleij 
-<linus.walleij@linaro.org> wrote:
-> On Tue, Sep 21, 2021 at 6:24 PM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
-> 
->>  PM8xxx PMIC family uses GPIO as parent IRQ. Using it together with 
->> the
->>  irq_set_chained_handler_and_data() results in warnings from the 
->> GPIOLIB
->>  as in this path the IRQ resources are not allocated (and thus the
->>  corresponding GPIO is not marked as used for the IRQ. Use 
->> request_irq so
->>  that the IRQ resources are proprely setup.
->> 
->>  Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> 
-> I sent this patch:
-> https://lore.kernel.org/lkml/20210819154400.51932-1-linus.walleij@linaro.org/
-> 
-> David Heidelberg reported that it didn't work for him.
-> 
-> David can you test Dmitry's patch instead and see if that works
-> for you, I suppose I could have some bug in my patch :/
-> It would be nice with a Tested-by from David.
-> 
-> FWIW the code looks good:
-> Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
-> 
-> Yours,
-> Linus Walleij
-
+diff --git a/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
+new file mode 100644
+index 0000000..b8574db
+--- /dev/null
++++ b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
+@@ -0,0 +1,159 @@
++# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
++
++%YAML 1.2
++---
++$id: "http://devicetree.org/schemas/media/qcom,sc7280-venus.yaml#"
++$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++
++title: Qualcomm Venus video encode and decode accelerators
++
++maintainers:
++  - Stanimir Varbanov <stanimir.varbanov@linaro.org>
++
++description: |
++  The Venus Iris2 IP is a video encode and decode accelerator present
++  on Qualcomm platforms
++
++properties:
++  compatible:
++    const: qcom,sc7280-venus
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  power-domains:
++    minItems: 2
++    maxItems: 3
++
++  power-domain-names:
++    minItems: 2
++    maxItems: 3
++    items:
++      - const: venus
++      - const: vcodec0
++      - const: cx
++
++  clocks:
++    maxItems: 5
++
++  clock-names:
++    items:
++      - const: core
++      - const: bus
++      - const: iface
++      - const: vcodec_core
++      - const: vcodec_bus
++
++  iommus:
++    maxItems: 2
++
++  memory-region:
++    maxItems: 1
++
++  interconnects:
++    maxItems: 2
++
++  interconnect-names:
++    items:
++      - const: cpu-cfg
++      - const: video-mem
++
++  video-decoder:
++    type: object
++
++    properties:
++      compatible:
++        const: venus-decoder
++
++    required:
++      - compatible
++
++    additionalProperties: false
++
++  video-encoder:
++    type: object
++
++    properties:
++      compatible:
++        const: venus-encoder
++
++    required:
++      - compatible
++
++    additionalProperties: false
++
++  video-firmware:
++    type: object
++
++    description: |
++      Firmware subnode is needed when the platform does not
++      have TrustZone.
++
++    properties:
++      iommus:
++        maxItems: 1
++
++    required:
++      - iommus
++
++required:
++  - compatible
++  - reg
++  - interrupts
++  - power-domains
++  - power-domain-names
++  - clocks
++  - clock-names
++  - iommus
++  - memory-region
++  - video-decoder
++  - video-encoder
++
++additionalProperties: false
++
++examples:
++  - |
++        #include <dt-bindings/clock/qcom,videocc-sc7280.h>
++
++        venus: video-codec@aa00000 {
++                compatible = "qcom,sc7280-venus";
++                reg = <0x0aa00000 0xd0600>;
++                interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
++
++                clocks = <&videocc VIDEO_CC_MVSC_CORE_CLK>,
++                         <&videocc VIDEO_CC_MVSC_CTL_AXI_CLK>,
++                         <&videocc VIDEO_CC_VENUS_AHB_CLK>,
++                         <&videocc VIDEO_CC_MVS0_CORE_CLK>,
++                         <&videocc VIDEO_CC_MVS0_AXI_CLK>;
++                clock-names = "core", "bus", "iface",
++                              "vcodec_core", "vcodec_bus";
++
++                power-domains = <&videocc MVSC_GDSC>,
++                                <&videocc MVS0_GDSC>;
++                                <&rpmhpd SC7280_CX>;
++                power-domain-names = "venus", "vcodec0", "cx";
++
++                interconnects = <&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_VENUS_CFG 0>
++                                <&mmss_noc MASTER_VIDEO_P0 0 &mc_virt SLAVE_EBI1 0>;
++                interconnect-names = "cpu-cfg", "video-mem";
++
++                iommus = <&apps_smmu 0x2180 0x20>,
++                         <&apps_smmu 0x2184 0x20>;
++
++                memory-region = <&video_mem>;
++
++                video-decoder {
++                        compatible = "venus-decoder";
++                };
++
++                video-encoder {
++                        compatible = "venus-encoder";
++                };
++
++                video-firmware {
++                        iommus = <&apps_smmu 0x21a2 0x0>;
++                };
++        };
+-- 
+2.7.4
 
