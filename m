@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B8153416093
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 16:07:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 84F754160DD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 16:18:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241583AbhIWOI5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Sep 2021 10:08:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42832 "EHLO
+        id S241467AbhIWOTg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Sep 2021 10:19:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45482 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241480AbhIWOI5 (ORCPT
+        with ESMTP id S241308AbhIWOTg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Sep 2021 10:08:57 -0400
-Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E4D4CC061574
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Sep 2021 07:07:25 -0700 (PDT)
-Received: by mail-oi1-x232.google.com with SMTP id w19so9772751oik.10
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Sep 2021 07:07:25 -0700 (PDT)
+        Thu, 23 Sep 2021 10:19:36 -0400
+Received: from mail-oi1-x233.google.com (mail-oi1-x233.google.com [IPv6:2607:f8b0:4864:20::233])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79A1AC061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Sep 2021 07:18:04 -0700 (PDT)
+Received: by mail-oi1-x233.google.com with SMTP id s24so7286656oij.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Sep 2021 07:18:04 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=rl01Ta80Yr4ByQxSLkYQ7H+fLAzMAWO93dhfRjw2UBs=;
-        b=r7u1PwpwArC9EAvuU3cKy1s11clM2dr6mzAczapPC7cfvKFhrz8nAQMlomqzRe1N2k
-         68ElptbGuwomurTUpjy0/gJRS4hU0mmdTsmgriUoyh8WKA+SLGeJC1Jcb4bSSIyjWE5P
-         NfgM9Vedp9PZoOlu5pc7vayw8N1RIbOIuxExmuGIIrtqiYa9F5kL+vhPQUPRs2uz4Sc+
-         2RhtSZsRuuzsm5RnlCGdSEJJB7s8Rkb+xTdE2YT7ZZR5KZ/2yQ2gPv+aMA8pNErHFRZZ
-         YTyU6+xa3FLABE2GFpQz7LxvdlXSBvNhY/M0MH5i+VCt7ynf+/VN1QQ/BHc5DVcoxoES
-         ZzGA==
+        bh=qtSma9q9BqHYrVg9rCdNIMKY6V64T/6gLqQcxTokY2M=;
+        b=PYEK0I2XVXfutbxezOSYeATdb6rGXwAQHfSEx+N+ml8euVsQ8kga/0pN+nOjlvvY/w
+         UgJZvbGfxXV0iwfmvBl5e0XNqLt9EDs9AKmhmJrnhmvadPJGnbmXN+FrQyyFL6afSo1D
+         phey5q9KL58F/BEuggCvEAymjdshEo8iSFy2wF0hunrH3RlkfbIKgM8sbuD6g/2XEMhL
+         zwdACGRNdghy0ZPg+e9B4Tq5FLw0Z32dEjeLt7F2rfc3GQ7VbeG34OmfJrnlZQXNPiKi
+         /ksnhOEMiFL/K4NKcBRrb6U9lwIQcNRfL/BkBMJdtDS3m2q+4hRRUoa3r83F4fYAHmd4
+         VEFQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=rl01Ta80Yr4ByQxSLkYQ7H+fLAzMAWO93dhfRjw2UBs=;
-        b=uWB30w5w+QPiC/yeluVgH0pIWzQje3gdOTqgsMbrXKY6hielz2AJzXIcJppa+zyeYY
-         NMb5vWGnPd98nJlKkEQN70zGiePvFGwbasCZfg4cnXSBnOcuRuBTrHlYlgrniZpbQCQN
-         VvgDXNN35kwmvRt3hwCe0plF+YPsyn1s7OAK6kYSOHP3Hk0xWGt/v+BJsA1uNjBX387A
-         uSx7Y6z7pDEkjMQSlomfAKH1af/FvxDnvKZZspQRY9mHjAkPjLqBxe2wFtc7+yXzfW4d
-         4DWWIDtzmcRvbFXRRdPpqI8mrLM/5oPvkT9641/Wd0BBuLnFmVgKNmeIAtp4GGB8lcjy
-         LWFg==
-X-Gm-Message-State: AOAM5322CmZlgm6Wk0dCxxbNx/obbGRKL0YMyCirQ9stWpBPbWdAyUt5
-        B+DZRR20Lid5oQKqVnTFcNYDc0S4fpE2jw==
-X-Google-Smtp-Source: ABdhPJylXh2NQzqJ/PBHEG9jhjm+DJT6YzzUeNPQGad7rheR/BDfVigl0ZRlbVf7Q2A+tNrZQzi6SQ==
-X-Received: by 2002:a05:6808:2113:: with SMTP id r19mr12357957oiw.69.1632406045189;
-        Thu, 23 Sep 2021 07:07:25 -0700 (PDT)
+        bh=qtSma9q9BqHYrVg9rCdNIMKY6V64T/6gLqQcxTokY2M=;
+        b=EbPIPjBRCtclcNyo3OkyNKYqj8K7OrynGjMOFCKKrogj94lhEd5TSYcn9cHP+X9zdw
+         XYJzVRTHB1YEja84oOfVX9HemSR0LxRQNKzVzgGqQWXVaRYCWP4dS0hLTqXKK9PpKEsS
+         eDmarbUjqox/Mjz3CgjsLZsHXITSGaagVK3CHM2LNp6nuSUjnYQU37i6QkbecrM1sEpU
+         jRjUAQ/MtEu4PFadBDiwuoWTb5X+4Q8WOGny/pzImPJWZyIZvBlYpm5o6REshi3Hn2zc
+         T2b+U71oBW+bHsKcodHUFVtf0aww7Sk8xF41UilwUVMUOpwwhM/EQQohiTFoJh9VeQfV
+         iyIw==
+X-Gm-Message-State: AOAM533ju8h2al3oj2k89HjElWVyqnRP1eIjKXABnSv+gR6QBh72mU98
+        tZ6B/oPpRTG02Zj5JIjH+XVA7A==
+X-Google-Smtp-Source: ABdhPJxsgwpyvgQak9HZi9WjKrznb7X1aRRESpUMtD9ho2g2JDLxjinqTHA6WvSWzVpXGwyE2g0KnA==
+X-Received: by 2002:a05:6808:14d6:: with SMTP id f22mr12790454oiw.132.1632406683800;
+        Thu, 23 Sep 2021 07:18:03 -0700 (PDT)
 Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id r23sm1275221otu.54.2021.09.23.07.07.24
+        by smtp.gmail.com with ESMTPSA id g5sm1401986oof.29.2021.09.23.07.18.03
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Sep 2021 07:07:24 -0700 (PDT)
-Date:   Thu, 23 Sep 2021 07:08:05 -0700
+        Thu, 23 Sep 2021 07:18:03 -0700 (PDT)
+Date:   Thu, 23 Sep 2021 07:18:43 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -57,7 +57,7 @@ Cc:     Andy Gross <agross@kernel.org>,
         Vivek Gautam <vivek.gautam@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
 Subject: Re: [PATCH v2] phy: qcom-qusb2: Fix a memory leak on probe
-Message-ID: <YUyKRTemi7A1bqTE@ripper>
+Message-ID: <YUyMw9QqjKFMOEf1@ripper>
 References: <20210922233548.2150244-1-vladimir.zapolskiy@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
@@ -105,6 +105,20 @@ On Wed 22 Sep 16:35 PDT 2021, Vladimir Zapolskiy wrote:
 > * fixed a memory leak in case of reading a zero value and return,
 > * corrected the fixed commit, the memory leak is present before a rename.
 > 
+
+Should have read your two replies in opposite order and missed your
+reason for not going to the newer API and the fact that v1 still leaks
+the memory if the read value is 0.
+
+
+So, this looks good and as you said, we should follow up with a cleanup
+by replacing the nvmem_cell_read().
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Thanks,
+Bjorn
+
 >  drivers/phy/qualcomm/phy-qcom-qusb2.c | 16 ++++++++++------
 >  1 file changed, 10 insertions(+), 6 deletions(-)
 > 
@@ -132,24 +146,6 @@ On Wed 22 Sep 16:35 PDT 2021, Vladimir Zapolskiy wrote:
 > +	}
 > +	hstx_trim = val[0];
 > +	kfree(val);
-
-I don't see any additional value added by the introduction of
-"hstx_trim", compared to v1.
-
-However, it certainly makes sense if you change this to:
-
-ret = nvmem_cell_read_u8(qphy->cell, NULL, &hstx_trim);
-if (ret < 0 || !hstx_trim) {
-	dev_dbg(dev, "failed to read a valid hs-tx trim value\n");
-	return;
-}
-
-
-In which case you don't need the kfree(), and you can drop "val"...
-
-Regards,
-Bjorn
-
 > +	if (!hstx_trim) {
 >  		dev_dbg(dev, "failed to read a valid hs-tx trim value\n");
 >  		return;
