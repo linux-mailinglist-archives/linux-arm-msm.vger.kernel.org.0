@@ -2,97 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D5C4B41644E
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 19:23:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2AD8F41649B
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 19:43:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242538AbhIWRYw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Sep 2021 13:24:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60964 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242415AbhIWRYw (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Sep 2021 13:24:52 -0400
-Received: from mail-oo1-xc2a.google.com (mail-oo1-xc2a.google.com [IPv6:2607:f8b0:4864:20::c2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AEC7BC061757
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Sep 2021 10:23:20 -0700 (PDT)
-Received: by mail-oo1-xc2a.google.com with SMTP id m14-20020a4ad50e000000b002912a944a47so2354301oos.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Sep 2021 10:23:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=4psaqAqkYBsHRJZIhz8Kb0YzLqDuMmJCURun1+ui80c=;
-        b=rxWR5F/BNcX1AMMGW6CfMfwuPwVeziorWJSn1rXPDf614kbk1wRlLqPEo02VJO54lL
-         B7BtY7sSJiw6McPc6ugF/+nqiooHzgI9N4RNHcR2w5BBigSYWw4NGrH8XiRd58qBuDOH
-         1jNGmlLjPNTpxwUuPH8Jj6L81wRKiFWITqZfMcH2L4cKM3FD6QeSq7J0o00CCzWed9DM
-         Wj/rC0Sk7Fky5vowF1QGzdNGrKqmrNyi1Kkc0uWkYh8X+BAThNCF0fySjskWgfWvF3Pw
-         rGeVp5DRlUpn1YExuJpXSNOXkCtOAbHP5OCK9zj2GFO7SHsTZpBJQKTGBo84rusobP1t
-         fsVA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=4psaqAqkYBsHRJZIhz8Kb0YzLqDuMmJCURun1+ui80c=;
-        b=1P6n98lsq12jxOqw3wxq4qBhAorD/KzgX7jdunnY/yetnzHLOT7UAQpaQb5kFEpewm
-         hmYqhd1idqf5IDQtUGQz4haEHSHEdVhhx54mz8pyn57YF08u1VJY6LYpEdGzJaClIHyt
-         duCURbew0nIptcac3uCq3FvYBgqd9ZGXyVPoPLWQllztm71cVFRBCk0+UWw/noJ+cJ1L
-         ht/qIyFVte/Jt4E3t7W4mayVYmd0j6BqwJ1AWDcPWXi8imNu4SN2l8GE2qn+ajsxFa+N
-         F8IGV4bjuRGdPIpjRs0/e9PqqAyB4IfS4e/tOtvszTLoMMFdkJ83pVwgsgfMkZPd2Jzg
-         O50Q==
-X-Gm-Message-State: AOAM530PwFHpLHfib3gBcBmbsy+hkHtBunP0yycG0iBYnxKaZW7SfHPZ
-        5/5+EZeX84OjO2y81qM63If709d86yvo1w==
-X-Google-Smtp-Source: ABdhPJxgLEGgR52wqQW/bWd22UfJUy7hTkj4NwRbgYrtrinHMTAItyhkVol5Ujk0AZ//YeqfMUwm5g==
-X-Received: by 2002:a4a:ea84:: with SMTP id r4mr4787465ooh.92.1632417799967;
-        Thu, 23 Sep 2021 10:23:19 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id j23sm1467347oih.30.2021.09.23.10.23.19
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Sep 2021 10:23:19 -0700 (PDT)
-Date:   Thu, 23 Sep 2021 12:23:17 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     agross@kernel.org, linus.walleij@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2] pinctrl: qcom: sc7280: Add PM suspend callbacks
-Message-ID: <YUy4BQ7BW1LgBipv@builder.lan>
-References: <1632389487-11283-1-git-send-email-rnayak@codeaurora.org>
+        id S242582AbhIWRpA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Sep 2021 13:45:00 -0400
+Received: from mail.kernel.org ([198.145.29.99]:48196 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233669AbhIWRpA (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 23 Sep 2021 13:45:00 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id C840B60F4C;
+        Thu, 23 Sep 2021 17:43:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1632419008;
+        bh=2pB6+rQ1KDZ58hG85EpwUaTjBgEVnhSiiN/dICRDX0I=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=TcqGwPZ2yJSYhj+2XwfJI9SKh/1wdSZcDO4YrDj5FYSI1KJ3D1HsiUl+Ufj+vAMD1
+         Ny4uX2qOLkAYLBUmuIeuUjIDC/KM99atliXBgXo7Xw9IJNN3KUnY51rgqVJRYngEmo
+         Dvj4kZH+UQga8MbdrzzoE0+GFoVAFuwQKOpJK9qw=
+Date:   Thu, 23 Sep 2021 19:43:26 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     jeyr@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, srinivas.kandagatla@linaro.org,
+        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
+Subject: Re: [PATCH] misc: fastrpc: copy to user only for non-DMA-BUF heap
+ buffers
+Message-ID: <YUy8vuEjuams8TCV@kroah.com>
+References: <1632386272-18139-1-git-send-email-jeyr@codeaurora.org>
+ <YUw/k1PdjfYmufQP@kroah.com>
+ <f3333ba748b0b7aacfa6ec87888ccb6c@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1632389487-11283-1-git-send-email-rnayak@codeaurora.org>
+In-Reply-To: <f3333ba748b0b7aacfa6ec87888ccb6c@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 23 Sep 04:31 CDT 2021, Rajendra Nayak wrote:
+On Thu, Sep 23, 2021 at 03:54:15PM +0530, jeyr@codeaurora.org wrote:
+> On 2021-09-23 14:19, Greg KH wrote:
+> > On Thu, Sep 23, 2021 at 02:07:52PM +0530, Jeya R wrote:
+> > > fastrpc_put_args is copying all the output buffers to user. For large
+> > > number of output context buffers, this might cause performance
+> > > degradation. Copying is not needed for DMA-BUF heap buffers.
+> > 
+> > What does "performance degradation" really mean?
+> 
+> Unnecessary copying for large number of buffers would cause some
+> additional time which would get added to overall fastrpc call cost.
+> 
+> > 
+> > > 
+> > > Signed-off-by: Jeya R <jeyr@codeaurora.org>
+> > > ---
+> > >  drivers/misc/fastrpc.c | 18 ++++++++++--------
+> > >  1 file changed, 10 insertions(+), 8 deletions(-)
+> > > 
+> > > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> > > index beda610..536eabf 100644
+> > > --- a/drivers/misc/fastrpc.c
+> > > +++ b/drivers/misc/fastrpc.c
+> > > @@ -890,15 +890,17 @@ static int fastrpc_put_args(struct
+> > > fastrpc_invoke_ctx *ctx,
+> > >  	inbufs = REMOTE_SCALARS_INBUFS(ctx->sc);
+> > > 
+> > >  	for (i = inbufs; i < ctx->nbufs; ++i) {
+> > > -		void *src = (void *)(uintptr_t)rpra[i].pv;
+> > > -		void *dst = (void *)(uintptr_t)ctx->args[i].ptr;
+> > > -		u64 len = rpra[i].len;
+> > > +		if (!ctx->maps[i]) {
+> > > +			void *src = (void *)(uintptr_t)rpra[i].pv;
+> > > +			void *dst = (void *)(uintptr_t)ctx->args[i].ptr;
+> > 
+> > uintptr_t is not a kernel variable type.  Please use the real kernel
+> > type for this as you are touching these lines.
+> > 
+> 
+> Sure, thanks for pointing this. Will update this in the next patch.
+> 
+> > > +			u64 len = rpra[i].len;
+> > > 
+> > > -		if (!kernel) {
+> > > -			if (copy_to_user((void __user *)dst, src, len))
+> > > -				return -EFAULT;
+> > > -		} else {
+> > > -			memcpy(dst, src, len);
+> > > +			if (!kernel) {
+> > > +				if (copy_to_user((void __user *)dst, src, len))
+> > > +					return -EFAULT;
+> > > +			} else {
+> > > +				memcpy(dst, src, len);
+> > > +			}
+> > 
+> > So you were copying buffers that didn't need to be copied?  So you are
+> > now doing less work?  Or is this fixing a bug where you were copying
+> > things that you should not have been copying?
+> > 
+> > What commit does this fix?  Does this need to go to the stable kernel
+> > trees?
+> > 
+> 
+> Yes, not all buffer needs to be copied. This change would avoid unnecessary
+> copying of buffers. Not adding fix tag as it's not exactly fixing any bug.
+> This should go to stable kernel trees.
 
-> Use PM suspend callbacks from msm core, without this the hog_sleep
-> pins don't change state in suspend.
-> 
-> Signed-off-by: Rajendra Nayak <rnayak@codeaurora.org>
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-> ---
-> v2: removed some stale diffstat
-> 
->  drivers/pinctrl/qcom/pinctrl-sc7280.c | 1 +
->  1 file changed, 1 insertion(+)
-> 
-> diff --git a/drivers/pinctrl/qcom/pinctrl-sc7280.c b/drivers/pinctrl/qcom/pinctrl-sc7280.c
-> index 607d459..1cbf2cc 100644
-> --- a/drivers/pinctrl/qcom/pinctrl-sc7280.c
-> +++ b/drivers/pinctrl/qcom/pinctrl-sc7280.c
-> @@ -1498,6 +1498,7 @@ static const struct of_device_id sc7280_pinctrl_of_match[] = {
->  static struct platform_driver sc7280_pinctrl_driver = {
->  	.driver = {
->  		.name = "sc7280-pinctrl",
-> +		.pm = &msm_pinctrl_dev_pm_ops,
->  		.of_match_table = sc7280_pinctrl_of_match,
->  	},
->  	.probe = sc7280_pinctrl_probe,
-> -- 
-> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
-> of Code Aurora Forum, hosted by The Linux Foundation
-> 
+If it's not fixing a bug, why should it go into the stable trees?
