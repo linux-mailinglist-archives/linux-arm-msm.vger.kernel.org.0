@@ -2,22 +2,19 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 850C5416317
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 18:23:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D4883416302
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 18:22:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242158AbhIWQYe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Sep 2021 12:24:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46464 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242116AbhIWQYS (ORCPT
+        id S233964AbhIWQYV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Sep 2021 12:24:21 -0400
+Received: from relay05.th.seeweb.it ([5.144.164.166]:38057 "EHLO
+        relay05.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242098AbhIWQYO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Sep 2021 12:24:18 -0400
-Received: from relay06.th.seeweb.it (relay06.th.seeweb.it [IPv6:2001:4b7a:2000:18::167])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48F49C0613E2
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Sep 2021 09:22:26 -0700 (PDT)
+        Thu, 23 Sep 2021 12:24:14 -0400
 Received: from localhost.localdomain (83.6.166.81.neoplus.adsl.tpnet.pl [83.6.166.81])
-        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 3DF253F68B;
-        Thu, 23 Sep 2021 18:22:24 +0200 (CEST)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPA id 396C73F687;
+        Thu, 23 Sep 2021 18:22:25 +0200 (CEST)
 From:   Konrad Dybcio <konrad.dybcio@somainline.org>
 To:     ~postmarketos/upstreaming@lists.sr.ht
 Cc:     martin.botka@somainline.org,
@@ -29,9 +26,9 @@ Cc:     martin.botka@somainline.org,
         Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v3 13/17] arm64: dts: qcom: sm6350: Add RPMHPD and BCM voter
-Date:   Thu, 23 Sep 2021 18:21:59 +0200
-Message-Id: <20210923162204.21752-13-konrad.dybcio@somainline.org>
+Subject: [PATCH v3 14/17] arm64: dts: qcom: sm6350: Add SDHCI1/2 nodes
+Date:   Thu, 23 Sep 2021 18:22:00 +0200
+Message-Id: <20210923162204.21752-14-konrad.dybcio@somainline.org>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20210923162204.21752-1-konrad.dybcio@somainline.org>
 References: <20210923162204.21752-1-konrad.dybcio@somainline.org>
@@ -41,79 +38,119 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add RPMHPD node, its OPP table and BCM voter to prepare for performance level
-voting.
+Add SDHCI1/2 nodes for eMMC and uSD card respectively.
+Do note that most SM6350 devices seem to come with UFS.
 
 Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 ---
- arch/arm64/boot/dts/qcom/sm6350.dtsi | 54 ++++++++++++++++++++++++++++
- 1 file changed, 54 insertions(+)
+ arch/arm64/boot/dts/qcom/sm6350.dtsi | 81 ++++++++++++++++++++++++++++
+ 1 file changed, 81 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/sm6350.dtsi b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-index 0765ae4fb5ea..6162af01ae9a 100644
+index 6162af01ae9a..3699176d2575 100644
 --- a/arch/arm64/boot/dts/qcom/sm6350.dtsi
 +++ b/arch/arm64/boot/dts/qcom/sm6350.dtsi
-@@ -686,6 +686,60 @@ rpmhcc: clock-controller {
- 				clock-names = "xo";
- 				clocks = <&xo_board>;
- 			};
-+
-+			rpmhpd: power-controller {
-+				compatible = "qcom,sm6350-rpmhpd";
-+				#power-domain-cells = <1>;
-+				operating-points-v2 = <&rpmhpd_opp_table>;
-+
-+				rpmhpd_opp_table: opp-table {
-+					compatible = "operating-points-v2";
-+
-+					rpmhpd_opp_ret: opp1 {
-+						opp-level = <RPMH_REGULATOR_LEVEL_RETENTION>;
-+					};
-+
-+					rpmhpd_opp_min_svs: opp2 {
-+						opp-level = <RPMH_REGULATOR_LEVEL_MIN_SVS>;
-+					};
-+
-+					rpmhpd_opp_low_svs: opp3 {
-+						opp-level = <RPMH_REGULATOR_LEVEL_LOW_SVS>;
-+					};
-+
-+					rpmhpd_opp_svs: opp4 {
-+						opp-level = <RPMH_REGULATOR_LEVEL_SVS>;
-+					};
-+
-+					rpmhpd_opp_svs_l1: opp5 {
-+						opp-level = <RPMH_REGULATOR_LEVEL_SVS_L1>;
-+					};
-+
-+					rpmhpd_opp_nom: opp6 {
-+						opp-level = <RPMH_REGULATOR_LEVEL_NOM>;
-+					};
-+
-+					rpmhpd_opp_nom_l1: opp7 {
-+						opp-level = <RPMH_REGULATOR_LEVEL_NOM_L1>;
-+					};
-+
-+					rpmhpd_opp_nom_l2: opp8 {
-+						opp-level = <RPMH_REGULATOR_LEVEL_NOM_L2>;
-+					};
-+
-+					rpmhpd_opp_turbo: opp9 {
-+						opp-level = <RPMH_REGULATOR_LEVEL_TURBO>;
-+					};
-+
-+					rpmhpd_opp_turbo_l1: opp10 {
-+						opp-level = <RPMH_REGULATOR_LEVEL_TURBO_L1>;
-+					};
-+				};
-+			};
-+
-+			apps_bcm_voter: bcm_voter {
-+				compatible = "qcom,bcm-voter";
-+			};
+@@ -8,6 +8,7 @@
+ #include <dt-bindings/gpio/gpio.h>
+ #include <dt-bindings/interrupt-controller/arm-gic.h>
+ #include <dt-bindings/mailbox/qcom-ipcc.h>
++#include <dt-bindings/power/qcom-rpmpd.h>
+ #include <dt-bindings/soc/qcom,rpmh-rsc.h>
+ 
+ / {
+@@ -397,12 +398,92 @@ rng: rng@793000 {
+ 			clock-names = "core";
  		};
  
- 		cpufreq_hw: cpufreq@18323000 {
++		sdhc_1: sdhci@7c4000 {
++			compatible = "qcom,sm6350-sdhci", "qcom,sdhci-msm-v5";
++			reg = <0 0x007c4000 0 0x1000>,
++				<0 0x007c5000 0 0x1000>,
++				<0 0x007c8000 0 0x8000>;
++			reg-names = "hc", "cqhci", "ice";
++
++			interrupts = <GIC_SPI 641 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 644 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "hc_irq", "pwr_irq";
++
++			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
++				 <&gcc GCC_SDCC1_APPS_CLK>,
++				 <&rpmhcc RPMH_CXO_CLK>;
++			clock-names = "iface", "core", "xo";
++			qcom,dll-config = <0x000f642c>;
++			qcom,ddr-config = <0x80040868>;
++			power-domains = <&rpmhpd SM6350_CX>;
++			operating-points-v2 = <&sdhc1_opp_table>;
++			bus-width = <8>;
++			non-removable;
++			supports-cqe;
++
++			status = "disabled";
++
++			sdhc1_opp_table: sdhc1-opp-table {
++				compatible = "operating-points-v2";
++
++				opp-19200000 {
++					opp-hz = /bits/ 64 <19200000>;
++					required-opps = <&rpmhpd_opp_min_svs>;
++				};
++
++				opp-100000000 {
++					opp-hz = /bits/ 64 <100000000>;
++					required-opps = <&rpmhpd_opp_low_svs>;
++				};
++
++				opp-384000000 {
++					opp-hz = /bits/ 64 <384000000>;
++					required-opps = <&rpmhpd_opp_svs_l1>;
++				};
++			};
++		};
++
+ 		tcsr_mutex: hwlock@1f40000 {
+ 			compatible = "qcom,tcsr-mutex";
+ 			reg = <0x0 0x01f40000 0x0 0x40000>;
+ 			#hwlock-cells = <1>;
+ 		};
+ 
++		sdhc_2: sdhci@8804000 {
++			compatible = "qcom,sm6350-sdhci", "qcom,sdhci-msm-v5";
++			reg = <0 0x08804000 0 0x1000>;
++
++			interrupts = <GIC_SPI 204 IRQ_TYPE_LEVEL_HIGH>,
++				     <GIC_SPI 222 IRQ_TYPE_LEVEL_HIGH>;
++			interrupt-names = "hc_irq", "pwr_irq";
++
++			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
++				 <&gcc GCC_SDCC2_APPS_CLK>,
++				 <&rpmhcc RPMH_CXO_CLK>;
++			clock-names = "iface", "core", "xo";
++			qcom,dll-config = <0x0007642c>;
++			qcom,ddr-config = <0x80040868>;
++			power-domains = <&rpmhpd SM6350_CX>;
++			operating-points-v2 = <&sdhc2_opp_table>;
++			bus-width = <4>;
++
++			status = "disabled";
++
++			sdhc2_opp_table: sdhc2-opp-table {
++				compatible = "operating-points-v2";
++
++				opp-100000000 {
++					opp-hz = /bits/ 64 <100000000>;
++					required-opps = <&rpmhpd_opp_svs_l1>;
++				};
++
++				opp-202000000 {
++					opp-hz = /bits/ 64 <202000000>;
++					required-opps = <&rpmhpd_opp_nom>;
++				};
++			};
++		};
++
+ 		usb_1_hsphy: phy@88e3000 {
+ 			compatible = "qcom,sm6350-qusb2-phy", "qcom,qusb2-v2-phy";
+ 			reg = <0 0x088e3000 0 0x400>;
 -- 
 2.33.0
 
