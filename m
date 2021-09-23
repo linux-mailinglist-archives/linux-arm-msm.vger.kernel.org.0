@@ -2,86 +2,78 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D432416731
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 23:11:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 62BF2416746
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 23 Sep 2021 23:14:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243192AbhIWVNV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Sep 2021 17:13:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56830 "EHLO
+        id S243321AbhIWVPs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Sep 2021 17:15:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57474 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243193AbhIWVNV (ORCPT
+        with ESMTP id S243313AbhIWVPr (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Sep 2021 17:13:21 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1CA1DC061757
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Sep 2021 14:11:49 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id i4so31458398lfv.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Sep 2021 14:11:49 -0700 (PDT)
+        Thu, 23 Sep 2021 17:15:47 -0400
+Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77634C06175F
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Sep 2021 14:14:15 -0700 (PDT)
+Received: by mail-lf1-x129.google.com with SMTP id x27so31546282lfu.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Sep 2021 14:14:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=p1Ur9mDQJrxxxKKtvUNbsObnagkgoIKu1zTSJFMJRAI=;
-        b=OWzTBJO0Oxz9T1eiG1HmlQm+jlqfImdO27LbZ/sOl2nug8QeTffpfDP0O7pqzc7ywc
-         VW0Po3SOVCC7sN/1WlP0hLUzJ6oNYgm7uimAdkt/+4DnjqEDzkKfhp0ZPCsq0ytKmpA3
-         ERNs4s+hSSCH/pk1YfRfOpBsQ6YxwPuo1HhxgqfWVsNZwvKYJH+4mOvnCUpmxHGF5x89
-         fXfvMrfbx8jDO3JpYL/h+nJOxMlkn5WmOGicPoSTSdz8F+MIqT14+MPHg2uJeoZIZGqL
-         XmZEquEj7NXUbWSRk6kA4xJst+6DO8iQh5Vi+RVm3MVtJeW0dZzIa7oP3qYiJ4LFLh5+
-         cy3A==
+        bh=WxXxNcv/6eNzAAN8fhaS7vrxJGE+bzvZ/0gEIXI7wcI=;
+        b=jHIfJLb3BXmF+5JxcPHSppPnmHldOagXEqQtdmYJ6UCEWoN+L4C7en6niQqKH4LjEj
+         WRljS8nwJabdImoaxR+jNi5fF2R/yzTGr8DkzPBq0kYDag8JUYcvaIj7e6x0Kaa7jsiX
+         yguO97P3arV/8jhtRSMu56XT2EaAcPXfvQiSpNmWC33jSmLRvUpGdQ+N1QWQstbFnrsD
+         3lmcz5jSNs8ed+cuMW+rT9Tx9I0ZaE2u1BkGhiCPwBJvhEwXufYboW5LIguU81PZYM0/
+         d8AqVkgogAvO4YzJOZjYdT9OOArON3+9wzJPA60WrrybIXQ4juypeK4Kj346wzMrLpm9
+         6VIg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=p1Ur9mDQJrxxxKKtvUNbsObnagkgoIKu1zTSJFMJRAI=;
-        b=7tZ7/iLuxi8Epk8K7a3phBQb46koc5sMQt+A7SZuRoqeXZLi49vqG6RKS/g5c3wHkq
-         Mcjic/Lt4Kvq72lbvcYlFesJyLMT7/DvDodAhk/AQmLiUaaXd0n+u1DaoG2srDHBSPxQ
-         55j+CQOHrshisa0nVXnUDLVAIO2HH+q/fUtanZTlAa6gDSj55byPGMtA9GS7klD9ggpj
-         M0ULgAdudXGhamsfh3I0PESAS/bSLceyS/WZVwzhb4qv61PYO7ktLcIHgEqB+y3nRZW+
-         T+pj75+qipSKtNb9fYmCWwnPEjFXKZ+W7HN4aehJfWtuK2qM2goqK5qd2uMApXwSwOkG
-         2X6A==
-X-Gm-Message-State: AOAM532vMCbQXN0q7lanJphWl4egRtY5PQyD82d5i9Q38LrAdMHN0ywH
-        Pp7P1tNVakpUBJLIXiE5mPkBum/DuEcBL+OE/dxEFA==
-X-Google-Smtp-Source: ABdhPJwPcligFsjGw59I+AviOKzPYmC+dBi5fWpJYxXSCjsw3GvUu/YonGc2AXAegTZ6biPRjBEzt7SUntjsGqIJNew=
-X-Received: by 2002:a05:651c:4ca:: with SMTP id e10mr7750969lji.259.1632431507415;
- Thu, 23 Sep 2021 14:11:47 -0700 (PDT)
+        bh=WxXxNcv/6eNzAAN8fhaS7vrxJGE+bzvZ/0gEIXI7wcI=;
+        b=fu1dYaevuI6NhdfCNzGkOv/UGoxWpM5OLGyvlpvmYqaNF3Oyqe4EUgT7Wh3c4qWf1Q
+         Vyz7yO5aXJ2xWv8rUCK/i5DWjgXXDWrgO0fdZSjKE2FJDlG+1GmaVh5Zno7qm44/FMdC
+         StqtU2ANNWWt04UrCTpVGI5QrBOdrCvIljDfV9IRY+Ut1QNoVJa+W0NWu40xeS9aQ3Dw
+         2N5vO2C8cIKgtN1grUBGZ+ib8m/7F3q1Nu6pOihvm4i9VuMR/ZeagDfIhgvzAzPQjcTw
+         T1wRQqBlDg2jB9YgsTkR3co5TV3HJ+u+ZGC5b2bhR4ABT1W8qRm1+tZckI7VlEZ4d3X6
+         9kvA==
+X-Gm-Message-State: AOAM532D0ubi5iLwpe6T4gEqcf5cT2Aw2MAZr8C0ZGHJ/gtnOwasOeDP
+        aHxpknOsA5cv8qmKgY8SjyhAvN2NGOVwAve5Qb62LA==
+X-Google-Smtp-Source: ABdhPJzbKGH3XuXNt657Q/JIhfFDaP9v7epYX50bsUVwc/TDc+/11OZkYy+zqblwdRJwbdcOVrHae5NCS20RcG5oIsw=
+X-Received: by 2002:a19:f249:: with SMTP id d9mr6450803lfk.229.1632431653837;
+ Thu, 23 Sep 2021 14:14:13 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210923161450.15278-1-konrad.dybcio@somainline.org> <20210923161450.15278-2-konrad.dybcio@somainline.org>
-In-Reply-To: <20210923161450.15278-2-konrad.dybcio@somainline.org>
+References: <20210923033224.29719-1-shawn.guo@linaro.org>
+In-Reply-To: <20210923033224.29719-1-shawn.guo@linaro.org>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Thu, 23 Sep 2021 23:11:36 +0200
-Message-ID: <CACRpkdZ5+ZKd0KKRfkhoit5jbwqsBnMq76MnCdtv3tvzCdrOMQ@mail.gmail.com>
-Subject: Re: [PATCH v4 2/2] pinctrl: qcom: Add SM6350 pinctrl driver
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS
-        <devicetree@vger.kernel.org>, Hans de Goede <hdegoede@redhat.com>, Andy
-        Shevchenko <andy.shevchenko@gmail.com>," 
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        Martin Botka <martin.botka@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>
+Date:   Thu, 23 Sep 2021 23:14:03 +0200
+Message-ID: <CACRpkdZpOunX2GHSmRkWuJoakE=Rsdey2KbbK5Xy8SV61NyUpA@mail.gmail.com>
+Subject: Re: [PATCH v3 0/2] Add pinctrl driver for QCM2290
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, MSM <linux-arm-msm@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Sep 23, 2021 at 6:15 PM Konrad Dybcio
-<konrad.dybcio@somainline.org> wrote:
+On Thu, Sep 23, 2021 at 5:32 AM Shawn Guo <shawn.guo@linaro.org> wrote:
 
-> This adds pincontrol driver for tlmm block found in SM6350 SoC
+> The series adds QCM2290 pinctrl driver and bindings.
 >
-> This patch is based on downstream copyleft code.
->
-> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Changes for v3:
+> - Update function enum table in the bindings doc.
 
-Patch applied for v5.16!
+v3 applied for v5.16!
+
+Thanks Shawn, good work as always.
 
 Yours,
 Linus Walleij
