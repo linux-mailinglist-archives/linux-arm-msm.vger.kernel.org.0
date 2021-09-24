@@ -2,225 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D7535417C99
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Sep 2021 22:54:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C166F417DE6
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Sep 2021 00:44:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346111AbhIXUzf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Sep 2021 16:55:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42474 "EHLO
+        id S1345670AbhIXWp4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Sep 2021 18:45:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39544 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1345966AbhIXUze (ORCPT
+        with ESMTP id S1345514AbhIXWp4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Sep 2021 16:55:34 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DC2B1C061571;
-        Fri, 24 Sep 2021 13:54:00 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id w29so30989152wra.8;
-        Fri, 24 Sep 2021 13:54:00 -0700 (PDT)
+        Fri, 24 Sep 2021 18:45:56 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A25B9C061571
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Sep 2021 15:44:22 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id 67-20020a9d0449000000b00546e5a8062aso15171818otc.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Sep 2021 15:44:22 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=uBK3kIF03EoojuPkVPYFnbtHDg911meAFaC4x+8vLoU=;
-        b=eG+xwf1r45RolAI7X1FYzC+K9OkqVYQHyQYpfYYqqJueIM/GtMuLrUnWkiF//ZdsP0
-         euDauiBLOpRw5ASNk3lX3V2Ewt6WiMsD5BCGoX9Cv0kVdcaStIi6w2J8qEEYY7XlxaGu
-         iY9hum/H4z/IGDdTGWKmaBoDsLVO2JCNvKmS+BKU8vhAA8waUWIazRKkvKIZ01g3G6l2
-         UBiEo5e8neza03fvcDDIx8DQ803a2gqDQkcfr7+0vXpRkYGfO8w08F5kLw5ag4ESY5gV
-         bTdHYZcbly+SdzJ4l8ejQWiAavKeo/i2mp5POgjmU4GHipFocMJY4JqltmcvniaL6Yyr
-         8OfA==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=7gyAp11GVy3k0igMDf0mWwOpAwqokrDaJ8vtHbGpMaY=;
+        b=jwtSoWFN7eT/+6F7TkV+rnDt3whdvugsXoSs2Le3Sz9bTNBHHRRO7+f7XMFOvrAVVt
+         J4RXXtld9IhS6tffti6wADOFhHmgLFdpU+PX0C65E17VE2aCLwgs7wbMHJPT6kMUkJuH
+         SYWO3TkVsRjM0hglRb1panwV5OuvjEXtLZQ7YMbDWS9qxgC1KW89CWspIp/Ii71yM9/q
+         VNsh7cKPCfX3KqBNEOxemhkn4fTTzbiPQf9GqKOUJsG92LYsCOOFBWY2W56X9lTC9h1M
+         kx5wDDJzuoBPetvuh7WuPEdjQoP1AOEfUNlpQJGARQG0Y1Snr4W1g8/qkPcrT2jiyLSL
+         yTiQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=uBK3kIF03EoojuPkVPYFnbtHDg911meAFaC4x+8vLoU=;
-        b=1g0jIIUU//JnPNG0XaTPQSkGCX6tQ4bSL0qwLTZ7cpxDtooL3xgdY5ofDTng3sm74O
-         nTheESNohQdlz7BwZcjxncozuw0RWoP0Bm7iHXhwehGig1+o3SQO6Rtep4yF4gzXvqvJ
-         24SLXKYjd75vufb0KwLOFbYcTHbUD+6UTaY8Tdp9QxAyZD3bK/E/DNZKJreXUWFnEufC
-         OgQLzzqlMpPOZm9AN/8p8QLDgzi6ndj7HFK/PkjbaeUqx20GRrhj0tG3Hxx0BLJQW4ch
-         paZ5n53effxp9SiWTxwa99aBtTWmuYcC+KsQNMYliiV0uHcoTKLlA38afQoksHs5kwlD
-         ueYg==
-X-Gm-Message-State: AOAM533+XXbxCPdkVHvFbC21XnQFa6THBRUBoFo4PVpRcAHyoW56BBF1
-        F84INysYyg7elZbAOwKF+bFawjcJaOYmngCFfIU=
-X-Google-Smtp-Source: ABdhPJyI8zaM6SVV9fKH0gNRI3MH/q09miYXikX9BmaxTIVHKik9puC7KXd2F8UYrIhi7QrD7wnVKE8z9RBeIw3dr2M=
-X-Received: by 2002:a1c:ac03:: with SMTP id v3mr4149363wme.127.1632516839424;
- Fri, 24 Sep 2021 13:53:59 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=7gyAp11GVy3k0igMDf0mWwOpAwqokrDaJ8vtHbGpMaY=;
+        b=uewMohqIou3Dcrx//ROoCbvONaByWonEjKB+a0CRjfIRaDFeEa6GbW1fSLfdHwrrAp
+         YC33UbROXFOeu938pju2drmFle/asnnmTS2/at50mksa3+V1JkXfle4rjxp7yLE6EyCL
+         YV1CTsxf9csiqiY3/vll1RS733ZUDUkHPc3lfWjBfTOuCmfP4jBGPpaAPn8npm5T1OpQ
+         gFweGCXxbijURQZWCe/k5JYypWwG9B8An7f/gS3rM0YiVhXDZZideiUfOoZA9siJ46Nz
+         1869zc1mizmI4YKTY6LeKjCxkyyB/0N7+HOjA9TuxBdQ/F1P1KySE+9d2HnBUsDyGBWf
+         8uxQ==
+X-Gm-Message-State: AOAM5339PYbFRwjhZeywhZ4xWGx5jE7TdocazZ8OaT0+CVpFNqTk4Zzc
+        aYEnQSWjcT3ZqsSt20t0qUPEJA==
+X-Google-Smtp-Source: ABdhPJz2K2HvjPfjNvJQV+nwwKIJsuIByaxemSpdOIRViuYY0V41ni1py8I/1OUye2lrALIOsNHhCQ==
+X-Received: by 2002:a05:6830:708:: with SMTP id y8mr6179443ots.77.1632523461522;
+        Fri, 24 Sep 2021 15:44:21 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id a23sm2374956otp.44.2021.09.24.15.44.20
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Sep 2021 15:44:21 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Rajesh Patil <rajpat@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     dianders@chromium.org, skakit@codeaurora.org, sboyd@kernel.org,
+        devicetree@vger.kernel.org, rnayak@codeaurora.org,
+        mka@chromium.org, msavaliy@qti.qualcomm.com,
+        linux-arm-msm@vger.kernel.org, saiprakash.ranjan@codeaurora.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH V10 0/8] Add QSPI and QUPv3 DT nodes for SC7280 SoC
+Date:   Fri, 24 Sep 2021 17:44:19 -0500
+Message-Id: <163252328671.1213592.16550436828870710723.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <1632399378-12229-1-git-send-email-rajpat@codeaurora.org>
+References: <1632399378-12229-1-git-send-email-rajpat@codeaurora.org>
 MIME-Version: 1.0
-References: <20210924071759.22659-1-christian.koenig@amd.com>
-In-Reply-To: <20210924071759.22659-1-christian.koenig@amd.com>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Fri, 24 Sep 2021 13:58:31 -0700
-Message-ID: <CAF6AEGtD5Xb=4LYK3Nxd+ucMDkABdLFvW6rUqqP8q2-iVedqew@mail.gmail.com>
-Subject: Re: [PATCH 1/4] dma-buf: add dma_fence_describe and dma_resv_describe
-To:     =?UTF-8?Q?Christian_K=C3=B6nig?= <ckoenig.leichtzumerken@gmail.com>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        "open list:DMA BUFFER SHARING FRAMEWORK" 
-        <linux-media@vger.kernel.org>,
-        "moderated list:DMA BUFFER SHARING FRAMEWORK" 
-        <linaro-mm-sig@lists.linaro.org>,
-        The etnaviv authors <etnaviv@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Lucas Stach <l.stach@pengutronix.de>,
-        Christian Gmeiner <christian.gmeiner@gmail.com>,
-        Russell King <linux+etnaviv@armlinux.org.uk>,
-        Sean Paul <sean@poorly.run>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Sep 24, 2021 at 12:18 AM Christian K=C3=B6nig
-<ckoenig.leichtzumerken@gmail.com> wrote:
->
-> Add functions to dump dma_fence and dma_resv objects into a seq_file and
-> use them for printing the debugfs informations.
->
-> Signed-off-by: Christian K=C3=B6nig <christian.koenig@amd.com>
+On Thu, 23 Sep 2021 17:46:10 +0530, Rajesh Patil wrote:
+> Changes in V10:
+>  - As per Stephen's comments, Removed <&qup_spiN_cs_gpio> in all spi ports.
+>  - Added "&qupv3_id_1" in sc7280-idp.dtsi file  because EC and TPM
+>    are using "qupv3_id_1" node.
+> 
+> Changes in V9:
+>  - As per Stephen's comments,
+>    1. Moved back qup_opp_table from /soc@0/geniqup@9c0000 to /
+>    2. changed node names to "qup_spi0_cs_gpio: qup-spi0-cs-gpio" because
+>       node names should have dashes instead of underscores.
+> 
+> [...]
 
-for the series,
+Applied, thanks!
 
-Reviewed-by: Rob Clark <robdclark@gmail.com>
+[2/8] arm64: dts: sc7280: Add QSPI node
+      commit: 7720ea001b528d88cdb7980cb9c97327f95a815d
+[3/8] arm64: dts: sc7280: Configure SPI-NOR FLASH for sc7280-idp
+      commit: df0174b13d3f6e744a5a3dfdfc1853bb60533fdb
+[4/8] arm64: dts: sc7280: Add QUPv3 wrapper_0 nodes
+      commit: bf6f37a3086bec4c103dc4a478b25c9adf8dd671
+[5/8] arm64: dts: sc7280: Update QUPv3 UART5 DT node
+      commit: 38cd93f413fd946fa39b83d3283a6a2a21ca0789
+[6/8] arm64: dts: sc7280: Configure uart7 to support bluetooth on sc7280-idp
+      commit: e3bc6fec5aaa67b8147a422d8d88a36d46827f0f
+[7/8] arm64: dts: sc7280: Add QUPv3 wrapper_1 nodes
+      commit: 4e8e7648ae645d1113649a7b9a781fdb4b2701f5
+[8/8] arm64: dts: sc7280: Add aliases for I2C and SPI
+      commit: 5f65408d9bfcc418353c8cd4dd17f60ba60d61a0
 
-> ---
->  drivers/dma-buf/dma-buf.c   | 11 +----------
->  drivers/dma-buf/dma-fence.c | 16 ++++++++++++++++
->  drivers/dma-buf/dma-resv.c  | 23 +++++++++++++++++++++++
->  include/linux/dma-fence.h   |  1 +
->  include/linux/dma-resv.h    |  1 +
->  5 files changed, 42 insertions(+), 10 deletions(-)
->
-> diff --git a/drivers/dma-buf/dma-buf.c b/drivers/dma-buf/dma-buf.c
-> index d35c71743ccb..4975c9289b02 100644
-> --- a/drivers/dma-buf/dma-buf.c
-> +++ b/drivers/dma-buf/dma-buf.c
-> @@ -1368,8 +1368,6 @@ static int dma_buf_debug_show(struct seq_file *s, v=
-oid *unused)
->  {
->         struct dma_buf *buf_obj;
->         struct dma_buf_attachment *attach_obj;
-> -       struct dma_resv_iter cursor;
-> -       struct dma_fence *fence;
->         int count =3D 0, attach_count;
->         size_t size =3D 0;
->         int ret;
-> @@ -1397,14 +1395,7 @@ static int dma_buf_debug_show(struct seq_file *s, =
-void *unused)
->                                 file_inode(buf_obj->file)->i_ino,
->                                 buf_obj->name ?: "");
->
-> -               dma_resv_for_each_fence(&cursor, buf_obj->resv, true, fen=
-ce) {
-> -                       seq_printf(s, "\t%s fence: %s %s %ssignalled\n",
-> -                                  dma_resv_iter_is_exclusive(&cursor) ?
-> -                                       "Exclusive" : "Shared",
-> -                                  fence->ops->get_driver_name(fence),
-> -                                  fence->ops->get_timeline_name(fence),
-> -                                  dma_fence_is_signaled(fence) ? "" : "u=
-n");
-> -               }
-> +               dma_resv_describe(buf_obj->resv, s);
->
->                 seq_puts(s, "\tAttached Devices:\n");
->                 attach_count =3D 0;
-> diff --git a/drivers/dma-buf/dma-fence.c b/drivers/dma-buf/dma-fence.c
-> index 1e82ecd443fa..5175adf58644 100644
-> --- a/drivers/dma-buf/dma-fence.c
-> +++ b/drivers/dma-buf/dma-fence.c
-> @@ -907,6 +907,22 @@ dma_fence_wait_any_timeout(struct dma_fence **fences=
-, uint32_t count,
->  }
->  EXPORT_SYMBOL(dma_fence_wait_any_timeout);
->
-> +/**
-> + * dma_fence_describe - Dump fence describtion into seq_file
-> + * @fence: the 6fence to describe
-> + * @seq: the seq_file to put the textual description into
-> + *
-> + * Dump a textual description of the fence and it's state into the seq_f=
-ile.
-> + */
-> +void dma_fence_describe(struct dma_fence *fence, struct seq_file *seq)
-> +{
-> +       seq_printf(seq, "%s %s seq %llu %ssignalled\n",
-> +                  fence->ops->get_driver_name(fence),
-> +                  fence->ops->get_timeline_name(fence), fence->seqno,
-> +                  dma_fence_is_signaled(fence) ? "" : "un");
-> +}
-> +EXPORT_SYMBOL(dma_fence_describe);
-> +
->  /**
->   * dma_fence_init - Initialize a custom fence.
->   * @fence: the fence to initialize
-> diff --git a/drivers/dma-buf/dma-resv.c b/drivers/dma-buf/dma-resv.c
-> index 266ec9e3caef..6bb25d53e702 100644
-> --- a/drivers/dma-buf/dma-resv.c
-> +++ b/drivers/dma-buf/dma-resv.c
-> @@ -38,6 +38,7 @@
->  #include <linux/mm.h>
->  #include <linux/sched/mm.h>
->  #include <linux/mmu_notifier.h>
-> +#include <linux/seq_file.h>
->
->  /**
->   * DOC: Reservation Object Overview
-> @@ -654,6 +655,28 @@ bool dma_resv_test_signaled(struct dma_resv *obj, bo=
-ol test_all)
->  }
->  EXPORT_SYMBOL_GPL(dma_resv_test_signaled);
->
-> +/**
-> + * dma_resv_describe - Dump description of the resv object into seq_file
-> + * @obj: the reservation object
-> + * @seq: the seq_file to dump the description into
-> + *
-> + * Dump a textual description of the fences inside an dma_resv object in=
-to the
-> + * seq_file.
-> + */
-> +void dma_resv_describe(struct dma_resv *obj, struct seq_file *seq)
-> +{
-> +       struct dma_resv_iter cursor;
-> +       struct dma_fence *fence;
-> +
-> +       dma_resv_for_each_fence(&cursor, obj, true, fence) {
-> +               seq_printf(seq, "\t%s fence:",
-> +                          dma_resv_iter_is_exclusive(&cursor) ?
-> +                               "Exclusive" : "Shared");
-> +               dma_fence_describe(fence, seq);
-> +       }
-> +}
-> +EXPORT_SYMBOL_GPL(dma_resv_describe);
-> +
->  #if IS_ENABLED(CONFIG_LOCKDEP)
->  static int __init dma_resv_lockdep(void)
->  {
-> diff --git a/include/linux/dma-fence.h b/include/linux/dma-fence.h
-> index a706b7bf51d7..1ea691753bd3 100644
-> --- a/include/linux/dma-fence.h
-> +++ b/include/linux/dma-fence.h
-> @@ -264,6 +264,7 @@ void dma_fence_init(struct dma_fence *fence, const st=
-ruct dma_fence_ops *ops,
->
->  void dma_fence_release(struct kref *kref);
->  void dma_fence_free(struct dma_fence *fence);
-> +void dma_fence_describe(struct dma_fence *fence, struct seq_file *seq);
->
->  /**
->   * dma_fence_put - decreases refcount of the fence
-> diff --git a/include/linux/dma-resv.h b/include/linux/dma-resv.h
-> index d4b4cd43f0f1..49c0152073fd 100644
-> --- a/include/linux/dma-resv.h
-> +++ b/include/linux/dma-resv.h
-> @@ -486,5 +486,6 @@ int dma_resv_copy_fences(struct dma_resv *dst, struct=
- dma_resv *src);
->  long dma_resv_wait_timeout(struct dma_resv *obj, bool wait_all, bool int=
-r,
->                            unsigned long timeout);
->  bool dma_resv_test_signaled(struct dma_resv *obj, bool test_all);
-> +void dma_resv_describe(struct dma_resv *obj, struct seq_file *seq);
->
->  #endif /* _LINUX_RESERVATION_H */
-> --
-> 2.25.1
->
+
+That said, all but a single commit to arch/arm64/boot/dts/qcom/sc7280* has the
+prefix "arm64: dts: qcom: sc7280: ", so I would be happy if you could follow
+this and include "qcom" in the future.
+
+Best regards,
+-- 
+Bjorn Andersson <bjorn.andersson@linaro.org>
