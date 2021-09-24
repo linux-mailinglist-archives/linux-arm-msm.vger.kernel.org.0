@@ -2,139 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 904FF416B93
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Sep 2021 08:25:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9158D416BB1
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Sep 2021 08:43:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244165AbhIXG1H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Sep 2021 02:27:07 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:58452 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S244155AbhIXG1H (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Sep 2021 02:27:07 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1632464734; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=QlR56ZIA9jMdRCNZViamyRPbdHO9b5RbsDdO6yIrMAE=;
- b=ZoDY4AB5rGYnWmbAm7mhxhiXyE3knSc/yfOU03htr1EMOLDuVegXQ2xgCK3yWhh0oJbJWrd0
- vQi/J/VR3bVgfAtwgOpAhMpk/PyZ3vu5jjX+n3x0sMEH9NStDNxQKYyX6aQFXtAVXJR2K9Sd
- vbtMG7sw8Uxya1p5QuBTy3AwieQ=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 614d6f5ee0480a7d6f53555a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 24 Sep 2021 06:25:34
- GMT
-Sender: jeyr=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 80BFCC4360D; Fri, 24 Sep 2021 06:25:33 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: jeyr)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BDCD1C4338F;
-        Fri, 24 Sep 2021 06:25:32 +0000 (UTC)
+        id S244256AbhIXGpG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Sep 2021 02:45:06 -0400
+Received: from new3-smtp.messagingengine.com ([66.111.4.229]:46445 "EHLO
+        new3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S244182AbhIXGpG (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 24 Sep 2021 02:45:06 -0400
+Received: from compute3.internal (compute3.nyi.internal [10.202.2.43])
+        by mailnew.nyi.internal (Postfix) with ESMTP id 172CB580591;
+        Fri, 24 Sep 2021 02:43:33 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute3.internal (MEProxy); Fri, 24 Sep 2021 02:43:33 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=from
+        :to:cc:subject:date:message-id:mime-version
+        :content-transfer-encoding; s=fm3; bh=8JxUh0idl2OqTGZk5RBguL60tV
+        5G7pyRJ1PUXb3KSO8=; b=UazL6jNFbUYv1RK8ZFvI998QvQhhzP8gyc4/g2VeN2
+        sHUeRdspdNoQLtL/1myW6NPN2N47+4fLHR8PHba6d6Bg0SZ4DQGaTBqy/jQhM+iw
+        9jsxicANK3u3q/F5W3GG3XXy6QTKJD3nO1R62NZ/Mgw2ai+Y0vKHEVxd7vXxxO0I
+        FkeqYHghU+mksumRTOK96yc+EpBQBEsX2LLzxOqHXArQzlzQP/2IexbbUSNcWrDq
+        t9vweO5LmYIEwF0DxYYMD+8PG1bZTNMb/iy6MBCrkgjGJqk+IjUPtus/FCNETpbr
+        219hS8JrZp8AbeQu/Pr8IrVeT+vKo+qujJazXqZ8SCeQ==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:date:from
+        :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm3; bh=8JxUh0idl2OqTGZk5
+        RBguL60tV5G7pyRJ1PUXb3KSO8=; b=AnHvEYhKcDFMV8oGVr0u7Pe14AyyyiQhH
+        wwTKp1bF/EWMUIo4sHWX5rNMTm81OoaWLYX2Uf8D8dFAMBFHRGUGujhXtdr+eKJ0
+        Grl4PmTYvsr9GAfbgFvzejBfvttqA/vMFyBQdj3npM6wiNUuxpBBYxtkVNIKW7aN
+        Kl+Zkts+x0e6LPi3S8QuRdDgSfgeTD+j9O65ytmPzT0MGF+mjFVhsNSOwmzNTwwr
+        AKx5Zox0RUeJa6KAI7F2aztC4zKYv5S36AoEVIddLtfcfi9+BN/SyWcDnFEPDLI1
+        1El5NHxQt4UEC1yQEyPmulIOfB84GjGYvredlE6tX8+qcB/emWXBQ==
+X-ME-Sender: <xms:lHNNYT_YRaW0CDRib44K7f-o632_sljDgiGxqOXLY-_sFsjU2RsZYA>
+    <xme:lHNNYfvID2OaXtn6bhfFWVfB0awSYBFtpfVd9YwGdJkQuLQEsVrS7pxsa_QBLwMig
+    0WGjklEspF0YWtg7Q>
+X-ME-Received: <xmr:lHNNYRBtDkXyi-hazgRBv0OnErKymeGM5e56I1El9ltnUG1IqMYyAVoLX3jdUm9NCsVt>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrudejtddguddtkecutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffoggfgsedtkeertd
+    ertddtnecuhfhrohhmpefhvghrnhgrnhguohcutfgrmhhoshcuoehgrhgvvghnfhhoohes
+    uhelvddrvghuqeenucggtffrrghtthgvrhhnpeeiueevtdegtdffgeeggfeuteejkeekvd
+    dvkeeiueekgfefgfeuueffgeelvdeggeenucevlhhushhtvghrufhiiigvpedtnecurfgr
+    rhgrmhepmhgrihhlfhhrohhmpehgrhgvvghnfhhoohesuhelvddrvghu
+X-ME-Proxy: <xmx:lHNNYfc7xAwlJbnY8z6DIhlqmNFgLD9ew_CIMHQANpyzpg_6StXmBQ>
+    <xmx:lHNNYYM2ZXPseFBG9iF6TFZxCXpI5fDGDS19zPEbDCcNZdCoQLF_7A>
+    <xmx:lHNNYRmEvGydt9qLP9-zeLKD-u-Svya9Gx_HhArCcgKaWzFThkQR-Q>
+    <xmx:lXNNYXpITK9_ctPoDq7MDCrPzR7CHLI9wCWmLCE3vPi5EE66LK8v7g>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
+ 24 Sep 2021 02:43:29 -0400 (EDT)
+From:   Fernando Ramos <greenfoo@u92.eu>
+To:     dri-devel@lists.freedesktop.org
+Cc:     linux-kernel@vger.kernel.org, sean@poorly.run,
+        linux-doc@vger.kernel.org, amd-gfx@lists.freedesktop.org,
+        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        linux-renesas-soc@vger.kernel.org, linux-tegra@vger.kernel.org
+Subject: [PATCH v2 00/17] drm: cleanup: Use DRM_MODESET_LOCK_ALL_* helpers where possible
+Date:   Fri, 24 Sep 2021 08:43:07 +0200
+Message-Id: <20210924064324.229457-1-greenfoo@u92.eu>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 24 Sep 2021 11:55:32 +0530
-From:   jeyr@codeaurora.org
-To:     Greg KH <gregkh@linuxfoundation.org>
-Cc:     linux-arm-msm@vger.kernel.org, srinivas.kandagatla@linaro.org,
-        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
-Subject: Re: [PATCH] misc: fastrpc: copy to user only for non-DMA-BUF heap
- buffers
-In-Reply-To: <YUy8vuEjuams8TCV@kroah.com>
-References: <1632386272-18139-1-git-send-email-jeyr@codeaurora.org>
- <YUw/k1PdjfYmufQP@kroah.com>
- <f3333ba748b0b7aacfa6ec87888ccb6c@codeaurora.org>
- <YUy8vuEjuams8TCV@kroah.com>
-Message-ID: <c59a764c653569e2ca74b60ae952f749@codeaurora.org>
-X-Sender: jeyr@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-09-23 23:13, Greg KH wrote:
-> On Thu, Sep 23, 2021 at 03:54:15PM +0530, jeyr@codeaurora.org wrote:
->> On 2021-09-23 14:19, Greg KH wrote:
->> > On Thu, Sep 23, 2021 at 02:07:52PM +0530, Jeya R wrote:
->> > > fastrpc_put_args is copying all the output buffers to user. For large
->> > > number of output context buffers, this might cause performance
->> > > degradation. Copying is not needed for DMA-BUF heap buffers.
->> >
->> > What does "performance degradation" really mean?
->> 
->> Unnecessary copying for large number of buffers would cause some
->> additional time which would get added to overall fastrpc call cost.
->> 
->> >
->> > >
->> > > Signed-off-by: Jeya R <jeyr@codeaurora.org>
->> > > ---
->> > >  drivers/misc/fastrpc.c | 18 ++++++++++--------
->> > >  1 file changed, 10 insertions(+), 8 deletions(-)
->> > >
->> > > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
->> > > index beda610..536eabf 100644
->> > > --- a/drivers/misc/fastrpc.c
->> > > +++ b/drivers/misc/fastrpc.c
->> > > @@ -890,15 +890,17 @@ static int fastrpc_put_args(struct
->> > > fastrpc_invoke_ctx *ctx,
->> > >  	inbufs = REMOTE_SCALARS_INBUFS(ctx->sc);
->> > >
->> > >  	for (i = inbufs; i < ctx->nbufs; ++i) {
->> > > -		void *src = (void *)(uintptr_t)rpra[i].pv;
->> > > -		void *dst = (void *)(uintptr_t)ctx->args[i].ptr;
->> > > -		u64 len = rpra[i].len;
->> > > +		if (!ctx->maps[i]) {
->> > > +			void *src = (void *)(uintptr_t)rpra[i].pv;
->> > > +			void *dst = (void *)(uintptr_t)ctx->args[i].ptr;
->> >
->> > uintptr_t is not a kernel variable type.  Please use the real kernel
->> > type for this as you are touching these lines.
->> >
->> 
->> Sure, thanks for pointing this. Will update this in the next patch.
->> 
->> > > +			u64 len = rpra[i].len;
->> > >
->> > > -		if (!kernel) {
->> > > -			if (copy_to_user((void __user *)dst, src, len))
->> > > -				return -EFAULT;
->> > > -		} else {
->> > > -			memcpy(dst, src, len);
->> > > +			if (!kernel) {
->> > > +				if (copy_to_user((void __user *)dst, src, len))
->> > > +					return -EFAULT;
->> > > +			} else {
->> > > +				memcpy(dst, src, len);
->> > > +			}
->> >
->> > So you were copying buffers that didn't need to be copied?  So you are
->> > now doing less work?  Or is this fixing a bug where you were copying
->> > things that you should not have been copying?
->> >
->> > What commit does this fix?  Does this need to go to the stable kernel
->> > trees?
->> >
->> 
->> Yes, not all buffer needs to be copied. This change would avoid 
->> unnecessary
->> copying of buffers. Not adding fix tag as it's not exactly fixing any 
->> bug.
->> This should go to stable kernel trees.
-> 
-> If it's not fixing a bug, why should it go into the stable trees?
+Hi all,
 
-This is not a bug fix, it can be considered as an enhancement and it can 
-go in
-to new release.
+One of the things in the DRM TODO list ("Documentation/gpu/todo.rst") was to
+"use DRM_MODESET_LOCAL_ALL_* helpers instead of boilerplate". That's what this
+patch series is about.
+
+You will find two types of changes here:
+
+  - Replacing "drm_modeset_lock_all_ctx()" (and surrounding boilerplate) with
+    "DRM_MODESET_LOCK_ALL_BEGIN()/END()" in the remaining places (as it has
+    already been done in previous commits such as b7ea04d2)
+
+  - Replacing "drm_modeset_lock_all()" with "DRM_MODESET_LOCK_ALL_BEGIN()/END()"
+    in the remaining places (as it has already been done in previous commits
+    such as 57037094)
+    
+Most of the changes are straight forward, except for a few cases in the "amd"
+and "i915" drivers where some extra dancing was needed to overcome the
+limitation that the DRM_MODESET_LOCK_ALL_BEGIN()/END() macros can only be used
+once inside the same function (the reason being that the macro expansion
+includes *labels*, and you can not have two labels named the same inside one
+function)
+
+Notice that, even after this patch series, some places remain where
+"drm_modeset_lock_all()" and "drm_modeset_lock_all_ctx()" are still present,
+all inside drm core (which makes sense), except for two (in "amd" and "i915")
+which cannot be replaced due to the way they are being used.
+
+Changes in v2:
+
+  - Fix commit message typo
+  - Use the value returned by DRM_MODESET_LOCK_ALL_END when possible
+  - Split drm/i915 patch into two simpler ones
+  - Remove drm_modeset_(un)lock_all()
+  - Fix build problems in non-x86 platforms
+
+Fernando Ramos (17):
+  drm: cleanup: drm_modeset_lock_all_ctx() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/i915: cleanup: drm_modeset_lock_all_ctx() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/msm: cleanup: drm_modeset_lock_all_ctx() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm: cleanup: drm_modeset_lock_all() --> DRM_MODESET_LOCK_ALL_BEGIN() drm/vmwgfx: cleanup: drm_modeset_lock_all() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/tegra: cleanup: drm_modeset_lock_all() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/shmobile: cleanup: drm_modeset_lock_all() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/radeon: cleanup: drm_modeset_lock_all() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/omapdrm: cleanup: drm_modeset_lock_all() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/nouveau: cleanup: drm_modeset_lock_all() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/msm: cleanup: drm_modeset_lock_all() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/i915: cleanup: drm_modeset_lock_all() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/i915: cleanup: drm_modeset_lock_all() --> DRM_MODESET_LOCK_ALL_BEGIN() part 2
+  drm/gma500: cleanup: drm_modeset_lock_all() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/amd: cleanup: drm_modeset_lock_all() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm: cleanup: remove drm_modeset_(un)lock_all()
+  doc: drm: remove TODO entry regarding DRM_MODSET_LOCK_ALL cleanup
+
+ Documentation/gpu/todo.rst                    | 17 ----
+ Documentation/locking/ww-mutex-design.rst     |  2 +-
+ drivers/gpu/drm/amd/amdgpu/amdgpu_display.c   | 21 +++--
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 50 +++++-----
+ .../amd/display/amdgpu_dm/amdgpu_dm_debugfs.c | 25 ++---
+ drivers/gpu/drm/drm_client_modeset.c          | 14 ++-
+ drivers/gpu/drm/drm_crtc_helper.c             | 18 ++--
+ drivers/gpu/drm/drm_fb_helper.c               | 10 +-
+ drivers/gpu/drm/drm_framebuffer.c             |  6 +-
+ drivers/gpu/drm/drm_modeset_lock.c            | 94 +------------------
+ drivers/gpu/drm/gma500/psb_device.c           | 18 ++--
+ drivers/gpu/drm/i915/display/intel_audio.c    | 16 ++--
+ drivers/gpu/drm/i915/display/intel_display.c  | 23 ++---
+ .../drm/i915/display/intel_display_debugfs.c  | 46 +++++----
+ drivers/gpu/drm/i915/display/intel_overlay.c  | 46 ++++-----
+ drivers/gpu/drm/i915/display/intel_pipe_crc.c |  7 +-
+ drivers/gpu/drm/i915/i915_drv.c               | 13 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      | 10 +-
+ .../gpu/drm/msm/disp/msm_disp_snapshot_util.c | 12 +--
+ drivers/gpu/drm/nouveau/dispnv50/disp.c       | 15 ++-
+ drivers/gpu/drm/omapdrm/omap_fb.c             |  9 +-
+ drivers/gpu/drm/radeon/radeon_device.c        | 21 +++--
+ drivers/gpu/drm/radeon/radeon_dp_mst.c        | 10 +-
+ drivers/gpu/drm/shmobile/shmob_drm_drv.c      |  6 +-
+ drivers/gpu/drm/tegra/dsi.c                   |  6 +-
+ drivers/gpu/drm/tegra/hdmi.c                  |  6 +-
+ drivers/gpu/drm/tegra/sor.c                   | 11 ++-
+ drivers/gpu/drm/vmwgfx/vmwgfx_ioctl.c         | 11 ++-
+ drivers/gpu/drm/vmwgfx/vmwgfx_kms.c           | 12 ++-
+ include/drm/drm_modeset_lock.h                |  2 -
+ 30 files changed, 265 insertions(+), 292 deletions(-)
+
+
+base-commit: 6880fa6c56601bb8ed59df6c30fd390cc5f6dd8f
+-- 
+2.33.0
+
