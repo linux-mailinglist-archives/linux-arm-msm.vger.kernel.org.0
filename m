@@ -2,128 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 82C11416C04
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Sep 2021 08:45:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD552416C6A
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Sep 2021 08:55:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244509AbhIXGqD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Sep 2021 02:46:03 -0400
-Received: from new3-smtp.messagingengine.com ([66.111.4.229]:41355 "EHLO
-        new3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S244450AbhIXGp4 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Sep 2021 02:45:56 -0400
-Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
-        by mailnew.nyi.internal (Postfix) with ESMTP id BA6BC581082;
-        Fri, 24 Sep 2021 02:44:22 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute2.internal (MEProxy); Fri, 24 Sep 2021 02:44:22 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=from
-        :to:cc:subject:date:message-id:in-reply-to:references
-        :mime-version:content-transfer-encoding; s=fm3; bh=XfJogIGLAj5OT
-        81g+tui9DWnR48Irs4IqE3/HCsJYoM=; b=ij/gSoCX7lvPk5tr1A9OXnqZqCMRr
-        U0haB6gEeGrh9Y9jN/nJwy6w+i5kDtagb7aEnzhFzgD2HOEM6DlS3UH+Kk6bFhjC
-        ebrgK7f/MHy5rHDg8y3AE9z7KmK13hnWr+wfF1auvNmv0lz4748rBukBbB1i/T4f
-        J5FIk8r0j1xguek2Pz4c4qQJ4L62LuJ4BI2f7QSx62q1kZhor5d0PyHH2WtFpJQJ
-        Hs9Cy34+aJ0tYQc/HuIBosphvrtUMOxDNr/QITNp5P1idIGKJEkbYGw36AcY2FiI
-        PT93zcxsfWgOKFE0BohvydKzh5BsM3DIeQU5ERYPYZLPYCzXxdnrH7Qfw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:date:from
-        :in-reply-to:message-id:mime-version:references:subject:to
-        :x-me-proxy:x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=
-        fm3; bh=XfJogIGLAj5OT81g+tui9DWnR48Irs4IqE3/HCsJYoM=; b=amtM/Scu
-        45i/msMp1j/6QmVXCuKWbczO3R6PXM4V2IqrrtRNMczn528AikHK1P4YKlI557MZ
-        YRQGReMlh7/kCFniNkGe+g7ERM3UoDjWukuRpfccgIkKvRt6IMbKWzlbIvW6vB7L
-        wqHLHpmjDJFeKAxf6X7K+5LnJ4GuF7ivlti/9CcXik+fVplAymdFYum7eByYKCZo
-        9zF3/wDeRu8YQr/eEM7cI3yCJBNDgf0TJ2hrrfxcacu+n2JNWKORSwc32TB3Nvav
-        7bt43SpqlSb6ET66yp3mcBZHJgyGv4kKwc6LcgYF2gPV3qWdQ45sJbDC5DqRrvLU
-        KUhQ23ysoOM1SQ==
-X-ME-Sender: <xms:xnNNYSvEzsNEIDIAsKMKyBq1Y1KpBd5sGi0Y_-LjnXGX_C-TGGLziA>
-    <xme:xnNNYXdE4oyjZcvRl-GxJtVInMAYdqKNVTDhehR4JpkmZvtIOpjb3_FCwdDbhZqgb
-    GRlDo-MQaUr9kzU3g>
-X-ME-Received: <xmr:xnNNYdxo7owbIRCtkYUXDdcMOrCvDqD3RWirTKdRY5rqoh-LMZcps_N6Lt9xhA3TPtB_>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrudejtddguddtkecutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffojghfggfgsedtke
-    ertdertddtnecuhfhrohhmpefhvghrnhgrnhguohcutfgrmhhoshcuoehgrhgvvghnfhho
-    ohesuhelvddrvghuqeenucggtffrrghtthgvrhhnpeekleekjedtheejheekfefggeevvd
-    fgueegffeuveduhfehueegkeeijedvvdejfeenucevlhhushhtvghrufhiiigvpeegnecu
-    rfgrrhgrmhepmhgrihhlfhhrohhmpehgrhgvvghnfhhoohesuhelvddrvghu
-X-ME-Proxy: <xmx:xnNNYdO5a-sMk-t_g8OUbcznBnK42aehjeXKomDIZX14mNFK5FcOPQ>
-    <xmx:xnNNYS91mYrXXL9edztOfmblpQ9uVG88-cFkO2gSC01eT4_wwgg99w>
-    <xmx:xnNNYVW72SwU9pak8JcwrTPW1yJkAVUZF5v8sdlKx-vtGJKA0GT-lA>
-    <xmx:xnNNYVb1fg46HdQu4etxelBVYEKR4qB7pQhZQgYnzuXz9_IZ55PtXg>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Fri,
- 24 Sep 2021 02:44:19 -0400 (EDT)
-From:   Fernando Ramos <greenfoo@u92.eu>
-To:     dri-devel@lists.freedesktop.org
-Cc:     linux-kernel@vger.kernel.org, sean@poorly.run,
-        linux-doc@vger.kernel.org, amd-gfx@lists.freedesktop.org,
-        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
-        linux-renesas-soc@vger.kernel.org, linux-tegra@vger.kernel.org
-Subject: [PATCH v2 17/17] doc: drm: remove TODO entry regarding DRM_MODSET_LOCK_ALL cleanup
-Date:   Fri, 24 Sep 2021 08:43:24 +0200
-Message-Id: <20210924064324.229457-18-greenfoo@u92.eu>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20210924064324.229457-1-greenfoo@u92.eu>
-References: <20210924064324.229457-1-greenfoo@u92.eu>
+        id S244273AbhIXG5S (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Sep 2021 02:57:18 -0400
+Received: from mail.kernel.org ([198.145.29.99]:56844 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S244234AbhIXG5Q (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 24 Sep 2021 02:57:16 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 4E72E61214;
+        Fri, 24 Sep 2021 06:55:43 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1632466543;
+        bh=OTaWo/pN6da5XpJ2K3POrQMeNAjTayJek3y+Pn8wrLk=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Dch8VWuX+ydB9AwQpYBVSTT+ZsoWGj3Epj/GXAxNWZsO5Wt0R0+fju7gnu4YWQD1l
+         HRh1URkCICH8f6cogpjRd+6T1cLrRA9vhi56FXmNnxS9eryS79Fv0EYGC2V1aYGWYE
+         2UqieiW+QiLeZraDczi3dmrQTQXFDh0ixHOwwkoA=
+Date:   Fri, 24 Sep 2021 08:55:41 +0200
+From:   Greg KH <gregkh@linuxfoundation.org>
+To:     jeyr@codeaurora.org
+Cc:     linux-arm-msm@vger.kernel.org, srinivas.kandagatla@linaro.org,
+        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
+Subject: Re: [PATCH] misc: fastrpc: copy to user only for non-DMA-BUF heap
+ buffers
+Message-ID: <YU12beZoXvEkpi99@kroah.com>
+References: <1632386272-18139-1-git-send-email-jeyr@codeaurora.org>
+ <YUw/k1PdjfYmufQP@kroah.com>
+ <f3333ba748b0b7aacfa6ec87888ccb6c@codeaurora.org>
+ <YUy8vuEjuams8TCV@kroah.com>
+ <c59a764c653569e2ca74b60ae952f749@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c59a764c653569e2ca74b60ae952f749@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The previous commits do exactly what this entry in the TODO file asks
-for, thus we can remove it now as it is no longer applicable.
+On Fri, Sep 24, 2021 at 11:55:32AM +0530, jeyr@codeaurora.org wrote:
+> On 2021-09-23 23:13, Greg KH wrote:
+> > On Thu, Sep 23, 2021 at 03:54:15PM +0530, jeyr@codeaurora.org wrote:
+> > > On 2021-09-23 14:19, Greg KH wrote:
+> > > > On Thu, Sep 23, 2021 at 02:07:52PM +0530, Jeya R wrote:
+> > > > > fastrpc_put_args is copying all the output buffers to user. For large
+> > > > > number of output context buffers, this might cause performance
+> > > > > degradation. Copying is not needed for DMA-BUF heap buffers.
+> > > >
+> > > > What does "performance degradation" really mean?
+> > > 
+> > > Unnecessary copying for large number of buffers would cause some
+> > > additional time which would get added to overall fastrpc call cost.
+> > > 
+> > > >
+> > > > >
+> > > > > Signed-off-by: Jeya R <jeyr@codeaurora.org>
+> > > > > ---
+> > > > >  drivers/misc/fastrpc.c | 18 ++++++++++--------
+> > > > >  1 file changed, 10 insertions(+), 8 deletions(-)
+> > > > >
+> > > > > diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
+> > > > > index beda610..536eabf 100644
+> > > > > --- a/drivers/misc/fastrpc.c
+> > > > > +++ b/drivers/misc/fastrpc.c
+> > > > > @@ -890,15 +890,17 @@ static int fastrpc_put_args(struct
+> > > > > fastrpc_invoke_ctx *ctx,
+> > > > >  	inbufs = REMOTE_SCALARS_INBUFS(ctx->sc);
+> > > > >
+> > > > >  	for (i = inbufs; i < ctx->nbufs; ++i) {
+> > > > > -		void *src = (void *)(uintptr_t)rpra[i].pv;
+> > > > > -		void *dst = (void *)(uintptr_t)ctx->args[i].ptr;
+> > > > > -		u64 len = rpra[i].len;
+> > > > > +		if (!ctx->maps[i]) {
+> > > > > +			void *src = (void *)(uintptr_t)rpra[i].pv;
+> > > > > +			void *dst = (void *)(uintptr_t)ctx->args[i].ptr;
+> > > >
+> > > > uintptr_t is not a kernel variable type.  Please use the real kernel
+> > > > type for this as you are touching these lines.
+> > > >
+> > > 
+> > > Sure, thanks for pointing this. Will update this in the next patch.
+> > > 
+> > > > > +			u64 len = rpra[i].len;
+> > > > >
+> > > > > -		if (!kernel) {
+> > > > > -			if (copy_to_user((void __user *)dst, src, len))
+> > > > > -				return -EFAULT;
+> > > > > -		} else {
+> > > > > -			memcpy(dst, src, len);
+> > > > > +			if (!kernel) {
+> > > > > +				if (copy_to_user((void __user *)dst, src, len))
+> > > > > +					return -EFAULT;
+> > > > > +			} else {
+> > > > > +				memcpy(dst, src, len);
+> > > > > +			}
+> > > >
+> > > > So you were copying buffers that didn't need to be copied?  So you are
+> > > > now doing less work?  Or is this fixing a bug where you were copying
+> > > > things that you should not have been copying?
+> > > >
+> > > > What commit does this fix?  Does this need to go to the stable kernel
+> > > > trees?
+> > > >
+> > > 
+> > > Yes, not all buffer needs to be copied. This change would avoid
+> > > unnecessary
+> > > copying of buffers. Not adding fix tag as it's not exactly fixing
+> > > any bug.
+> > > This should go to stable kernel trees.
+> > 
+> > If it's not fixing a bug, why should it go into the stable trees?
+> 
+> This is not a bug fix, it can be considered as an enhancement and it can go
+> in
+> to new release.
 
-Signed-off-by: Fernando Ramos <greenfoo@u92.eu>
-Reviewed-by: Sean Paul <sean@poorly.run>
----
- Documentation/gpu/todo.rst                | 17 -----------------
- Documentation/locking/ww-mutex-design.rst |  2 +-
- 2 files changed, 1 insertion(+), 18 deletions(-)
+Ok, please update and send a v2 with the needed changes.
 
-diff --git a/Documentation/gpu/todo.rst b/Documentation/gpu/todo.rst
-index 12e61869939e..6613543955e9 100644
---- a/Documentation/gpu/todo.rst
-+++ b/Documentation/gpu/todo.rst
-@@ -353,23 +353,6 @@ converted, except for struct drm_driver.gem_prime_mmap.
- 
- Level: Intermediate
- 
--Use DRM_MODESET_LOCK_ALL_* helpers instead of boilerplate
-----------------------------------------------------------
--
--For cases where drivers are attempting to grab the modeset locks with a local
--acquire context. Replace the boilerplate code surrounding
--drm_modeset_lock_all_ctx() with DRM_MODESET_LOCK_ALL_BEGIN() and
--DRM_MODESET_LOCK_ALL_END() instead.
--
--This should also be done for all places where drm_modeset_lock_all() is still
--used.
--
--As a reference, take a look at the conversions already completed in drm core.
--
--Contact: Sean Paul, respective driver maintainers
--
--Level: Starter
--
- Rename CMA helpers to DMA helpers
- ---------------------------------
- 
-diff --git a/Documentation/locking/ww-mutex-design.rst b/Documentation/locking/ww-mutex-design.rst
-index 6a4d7319f8f0..6a8f8beb9ec4 100644
---- a/Documentation/locking/ww-mutex-design.rst
-+++ b/Documentation/locking/ww-mutex-design.rst
-@@ -60,7 +60,7 @@ Concepts
- Compared to normal mutexes two additional concepts/objects show up in the lock
- interface for w/w mutexes:
- 
--Acquire context: To ensure eventual forward progress it is important the a task
-+Acquire context: To ensure eventual forward progress it is important that a task
- trying to acquire locks doesn't grab a new reservation id, but keeps the one it
- acquired when starting the lock acquisition. This ticket is stored in the
- acquire context. Furthermore the acquire context keeps track of debugging state
--- 
-2.33.0
+thanks,
 
+greg k-h
