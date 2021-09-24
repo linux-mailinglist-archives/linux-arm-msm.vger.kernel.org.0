@@ -2,214 +2,199 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 68488416E94
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Sep 2021 11:10:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 11048416F04
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Sep 2021 11:33:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244498AbhIXJLs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Sep 2021 05:11:48 -0400
-Received: from mailout1.w1.samsung.com ([210.118.77.11]:49089 "EHLO
-        mailout1.w1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244510AbhIXJLr (ORCPT
+        id S244969AbhIXJfT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Sep 2021 05:35:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54676 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243849AbhIXJfT (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Sep 2021 05:11:47 -0400
-Received: from eucas1p1.samsung.com (unknown [182.198.249.206])
-        by mailout1.w1.samsung.com (KnoxPortal) with ESMTP id 20210924091011euoutp017d64020bbd298fcd3207857f5a7e067a~ntwKmwOUW2400624006euoutp01c;
-        Fri, 24 Sep 2021 09:10:11 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.w1.samsung.com 20210924091011euoutp017d64020bbd298fcd3207857f5a7e067a~ntwKmwOUW2400624006euoutp01c
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1632474612;
-        bh=GDIYSu/OY2EFkD7/7XvXSG2UL3GneP5U91ko+jcNozQ=;
-        h=Date:From:Subject:To:Cc:In-Reply-To:References:From;
-        b=BhmXmEphHN2PW7grFTMUq3yHrG4IR8JYqqER6Q5rzMRtj1voVonQM6cZF3RIqYKgL
-         TDXg+Vc4g1sbgGrq/WnIok6KbJUWT1Yb/yqLwNxaC487iJk0lnO2MeybrKl1zvRMkS
-         x8zN3vue9oM6LlCukdYsVzHMom+JVMdeBiX1SD8c=
-Received: from eusmges1new.samsung.com (unknown [203.254.199.242]) by
-        eucas1p1.samsung.com (KnoxPortal) with ESMTP id
-        20210924091011eucas1p1b2d6107118f1e24a80b7c9be02e7fce7~ntwJ_5oNC0534605346eucas1p1M;
-        Fri, 24 Sep 2021 09:10:11 +0000 (GMT)
-Received: from eucas1p2.samsung.com ( [182.198.249.207]) by
-        eusmges1new.samsung.com (EUCPMTA) with SMTP id 3F.53.45756.3F59D416; Fri, 24
-        Sep 2021 10:10:11 +0100 (BST)
-Received: from eusmtrp1.samsung.com (unknown [182.198.249.138]) by
-        eucas1p2.samsung.com (KnoxPortal) with ESMTPA id
-        20210924091010eucas1p21a6b28ce9866385d25ade5b854d9c110~ntwJOuvk21198011980eucas1p20;
-        Fri, 24 Sep 2021 09:10:10 +0000 (GMT)
-Received: from eusmgms2.samsung.com (unknown [182.198.249.180]) by
-        eusmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20210924091010eusmtrp158c1fd12553683e07b5cb268591a7897~ntwJK-xUr3000630006eusmtrp1Y;
-        Fri, 24 Sep 2021 09:10:10 +0000 (GMT)
-X-AuditID: cbfec7f2-7bdff7000002b2bc-0f-614d95f32ade
-Received: from eusmtip1.samsung.com ( [203.254.199.221]) by
-        eusmgms2.samsung.com (EUCPMTA) with SMTP id 9A.E8.20981.2F59D416; Fri, 24
-        Sep 2021 10:10:10 +0100 (BST)
-Received: from [106.210.131.79] (unknown [106.210.131.79]) by
-        eusmtip1.samsung.com (KnoxPortal) with ESMTPA id
-        20210924091008eusmtip1d03be791cbb29065d8b3415cff78ff10~ntwHanPJO3170131701eusmtip1V;
-        Fri, 24 Sep 2021 09:10:08 +0000 (GMT)
-Message-ID: <68c3f798-a18d-fe8d-2925-2686716a985b@samsung.com>
-Date:   Fri, 24 Sep 2021 11:10:08 +0200
+        Fri, 24 Sep 2021 05:35:19 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4AD8AC061574
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Sep 2021 02:33:46 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id gj8-20020a17090b108800b0019e8deab37bso743544pjb.5
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Sep 2021 02:33:46 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=arvKcy0oK1uFOhB3DROjhVP+WqafjpA1AZpd270wCvw=;
+        b=i0IYMBS3HK/kkWs1+qkNMSEnDmcVOFC1MK0IGtBlrzmtBl9xVa2SncSipBP5YE9/rd
+         vWjOX/Y8J4ZzHRN0wLDXSEa95Aqyul3nHr28v2F6Bv7S/fE2FbrIFQyc4FuDafhDKAD5
+         ZCKycgKMz1YhqwBWsMdoXsn/0FTqpApY/WjgJYcESSb8hJ6xxtmg1e+y1l6Bs8sXhoxa
+         0WwtjRMUnZq3MGDK4U+6jBsgEo1YpvVBH5/YHyfJAbLR2OuFvxjuWGEYbz1WLvV6Kn6O
+         ZcEyiVF/KgqZDAooL6uDCKS7Vq2/1CX+rSVulKWZJgyUoQYBCbD+/nkPpA8DN4rvvB1Z
+         t5uw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=arvKcy0oK1uFOhB3DROjhVP+WqafjpA1AZpd270wCvw=;
+        b=cJdunmGbxCycWSnA93/izwKHfvJDoAn7GsDdWOQlotwmjSFFNsIA4jAqshWmfE8jhC
+         ShNCI2xzkLwOmieXVV8/lLDebY0dbJoi8BSLl+TVLR6ScS/x+Z3gJfYvQJ9fi8HYH2cF
+         /RuTPCfyCcmyWVLbBX1S47jAYfLdGpRi/VDtKvRtEp0ChWUt1RXbEMnwJQ0W0dnbKPNJ
+         Km6vukLgrTvG2MGXGa97/F4ADY+Kxc4CA2/Kabw992G2gb9Q6BMDQfMCy02u68lunh5n
+         2+Pm0p25fusji3uKeQzvqxKKhcVwklFZItZf3udE/4WQOr4fvfguMT5lJtUGs1ecstlJ
+         8Ntg==
+X-Gm-Message-State: AOAM5335frZj0SMyK64BMVBnaC+QzU7WRIJaokPhM9wFfshOmnpAkWri
+        RHY6Q+2E5EoklHe1T8nZYfHOIHdw7P/ImbnkVmFg+g==
+X-Google-Smtp-Source: ABdhPJxtCbRhCeURlLN0FOqsy+WKL3sVedKtGsiZ/CK357GTgFZfiCcxWCqrVeFE/SRiJmX9nIa1AOdqdnGKvTITu0k=
+X-Received: by 2002:a17:90b:4a88:: with SMTP id lp8mr1080883pjb.159.1632476025514;
+ Fri, 24 Sep 2021 02:33:45 -0700 (PDT)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:93.0)
-        Gecko/20100101 Thunderbird/93.0
-From:   Andrzej Hajda <a.hajda@samsung.com>
-Subject: Re: [PATCH v5 00/15] eDP: Support probing eDP panels dynamically
- instead of hardcoding
-To:     Jani Nikula <jani.nikula@linux.intel.com>,
-        Doug Anderson <dianders@chromium.org>,
-        Linus Walleij <linus.walleij@linaro.org>
-Cc:     Thierry Reding <thierry.reding@gmail.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        "open list:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
-        Thomas Zimmermann <tzimmermann@suse.de>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Maxime Ripard <mripard@kernel.org>,
-        Al Viro <viro@zeniv.linux.org.uk>,
-        Alexandre Belloni <alexandre.belloni@bootlin.com>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Catalin Marinas <catalin.marinas@arm.com>,
-        Emil Velikov <emil.velikov@collabora.com>,
-        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
-        Geert Uytterhoeven <geert+renesas@glider.be>,
-        Jagan Teki <jagan@amarulasolutions.com>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Kees Cook <keescook@chromium.org>,
-        Krzysztof Kozlowski <krzk@kernel.org>,
-        Marek Szyprowski <m.szyprowski@samsung.com>,
-        Russell King <linux@armlinux.org.uk>,
-        Will Deacon <will@kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        Linux-OMAP <linux-omap@vger.kernel.org>,
-        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
-        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
-        linux-sunxi@lists.linux.dev,
-        linux-tegra <linux-tegra@vger.kernel.org>,
-        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
-Content-Language: pl
-In-Reply-To: <874kaabdt5.fsf@intel.com>
-Content-Transfer-Encoding: 8bit
-X-Brightmail-Tracker: H4sIAAAAAAAAA01Te0xTVxzO6b29ve2sXh6TMyB7MA2TKeiEeOYq6rKR65JNiWMPyYJFbhBH
-        gbTiNrZFCIz3xBZQaQXRsZZHRdNZoAhsa7p2iMBKJ48IY9MtjPIaUNhgtI5ya8Z/3/ed7/u9
-        kkNi3qOEP5mUcpqRpoiTgwgB3mRe6t0xX/6meOeUgUBf9nRyUN60moecCjMPzaiLAXrUJMfQ
-        FVMPF3WrvyfQzwszBPqjcIpA2vtGgCpVCoAcuvME0thuADR2pRGgu0US1Nt7k4fKVjQcpHvY
-        z0Xyb7t5yNZ6mUCqmhIc6cenOehSbwcHlXW0EqjAoSSQsbwdoOumER66OqvHUW6Bmou+aDfx
-        UO2SHqC8QhFaaq3C0a1JORf1Oi1clDMccWALfX12lEtrq7SAtvVbMfrfZQWgq7Sf0qpMK063
-        jNQAun2xGqfl3Ttog3KER3/VNs6hdfUFBD3c30bQzYu/cumqzmh6tMjCOeJ3TCBKYJKTzjDS
-        sMjjgpPZBjytjvo467cL3ExgFRYCkoRUOMzJEhcCAelN1QLocFZyWeIA8O873wGWzAPY32DG
-        HieG76ezugbAc3NZHtMMgE366dU4nxRSkfBSvZVwY5zaCvNdeRire8HOit9xN36SOg4nftGt
-        eQhqG3R+M0S4G/hQYtieS7hr+lKZAJZ0lWBuglF9T0CnyrAWwChfOPggB7gxnwqGFYt2wOrP
-        wGy9ai0AKYcA3u0cX+sMqddgX/ayB/tAu+UWj8WBsKu0GGfxWTham+MJ5wOov2nwBF6Bwz3L
-        a+Nhq6PeaA1j5YNwYNCEs2fZCAenvNgZNkJF00XPtYQwP9ebdT8HR7v1noJ+8OufFojzIEi5
-        7izKdZsp122j/L9vNcDrgR+TLpMkMrJdKcxHoTKxRJaekhh6IlWiA6t/oMtlmWsBlfbZUCPg
-        kMAIIIkF+QrnB98QewsTxJ9kMNLUOGl6MiMzggASD/IT1qu0cd5Uovg08yHDpDHSx68cku+f
-        yXm2bkIX/eehTntSze59FS1Pk0VR5oM/FGlcDxUbTn22cFvKtZ8Z78NctpdXdAOwp6u9o9h+
-        4LAxWhIVv+ns9nKfmlArCL/3zu2rph/zE0TVAWRkbfFmL1fAwJgg1Gn7q2/Iq+B5dMyyP2Iv
-        uCh769S190pjXLIM0+EPds/RpG1zwyag3PBCmlJU5vuq4fMQs9Oxde+hqH1b1KK3G+UZZdEN
-        s6UXdu45ERccFfFUYOCkzT8Gb9sefadf/3rf/lgm/sjEnlTJ5aOTlpJETVhwo+rdugePcvj3
-        VsKaV/5RhMWGv8iPFyXGvj9lGR48WlesHsNGQvTN14YCfGLwAZ6imr/tpSBcdlK8KwSTysT/
-        AZvrFYdyBAAA
-X-Brightmail-Tracker: H4sIAAAAAAAAA01Sa0yTZxjN2+/SwmzyUWB9BzPbCmaZCYUihReC7JLGfdG5bH+2OEaggw+K
-        vbm2dF4SB8pgVNgoImI7Ck4EwTK0UNByMasNyAbWjq2iQBgqM7CBoyoLCDKgW8K/k3Oec86T
-        Jw8H4/mIME6uSsdoVFKFgAzEf37ePx7lO7VXGrO8ilDZzQEWKp5rYKOVij42etRQCtBqhxFD
-        ta6bBBpq+JFEvz59RKIpwyyJrKNOgGrMFQA9sZWTqHG4FaCHtT8ANHhCidzuS2xUudzIQrb7
-        XgIZrw2x0bDjOxKZ67/FkX16joWq3b0sVNnrIFHJExOJnKd6AGpxjbPR2Xk7jopKGgj0VY+L
-        jS4s2gEqNiSjRYcFR+1/GQnkXuknUOGY+K1IumV+gqCtFiugh70ejH62VAFoi/UIbc734PSV
-        8XpA9yzU4bRxKIq+ahpn0+e6p1m0rbmEpMe83STdufA7QVsGPqQnTvSzPuB/IkzWqPN0zKsy
-        tVa3U5AqQrFCUSISxsYlCkU7EtKSYsWC6JTkLEaRq2c00SkZQtnxq/iBJupgwWQVkQ88XAPg
-        cCAVB8dG8wwgkMOjzgNoablNGEDAGs+HXbWzmB8Hw2WvgfQPzQI4U2kH6wKXSoHVzR5yHePU
-        Nvj182LMzwfBgTMP8HUcSmXAk3csG6Ek9QZcabtDrhcHU1LYU7SRGUIdA/CftqqNGYwaeQF2
-        zYT7y7pY8MbYfcwvhMCRe4UbxQHU6/DMwgzw8/HQYDf8h1+Bx+1mrBzwTJv2MG2ymzZZTJss
-        dQBvBiFMnlaZo9TGCrVSpTZPlSPMVCttYO35OvoW26+Appl5oROwOMAJIAcThHAfj+yW8rhZ
-        0kOHGY06XZOnYLROIF47hhELC81Ur32vSpcuio8Ri+LiE2PEifE7BHxunMuazqNypDpGzjAH
-        GM3/PhYnICyfldV0sWxLaue2BJ3+8UsJ2d9Eqo9mfTn39o0m7qFgH86vz12VLdEF1wW70qvD
-        dzpqCH3l3mtpW3kdu80PJv/MTmp9/+xS4e3kW6vnHMqncHtUfFzrw46Rzjf3l1+Qy1Xez0ym
-        j/Y825OUkDU5uSz5rUrPj/BIsk2OX4olitLejhej77UbJ0QHy/QRW3UnJUHqjLRZj0L16Wsv
-        V/P5g/KAoLsjdWyVIrLEvSX0ls3dN5g2+u47so9lRdlTR8rEvZenHZ/v0vwh79p3ubS0MIKc
-        dl3K/KLm7t/HrO99n6ossOWev94d7TrsW6TDwvcXmn+anG8M3Hd67KKmwX20TRI5NVzhcwpw
-        rUwq2o5ptNJ/AZQIyjoFBAAA
-X-CMS-MailID: 20210924091010eucas1p21a6b28ce9866385d25ade5b854d9c110
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-RootMTR: 20210924080417eucas1p209819b105dc64faf1f2a7140c5c1389b
-X-EPHeader: CA
-CMS-TYPE: 201P
-X-CMS-RootMailID: 20210924080417eucas1p209819b105dc64faf1f2a7140c5c1389b
-References: <20210914202202.1702601-1-dianders@chromium.org>
-        <CACRpkdaTb4_UfFzCqw=fiAnQhHD+1sDDua529KdGQbgMVfjYBw@mail.gmail.com>
-        <CAD=FV=VPgFRBLgOGvt4a4afDr80aQL64L7=H3kqeRf2ffiusPg@mail.gmail.com>
-        <CGME20210924080417eucas1p209819b105dc64faf1f2a7140c5c1389b@eucas1p2.samsung.com>
-        <874kaabdt5.fsf@intel.com>
+References: <871r5p0x2u.fsf@codeaurora.org> <CAMZdPi8UJLvBFQd8-nf-iHAQh8cEuihq97PUFfZ7Q=rxRQoPsg@mail.gmail.com>
+ <877df6tlnq.fsf@codeaurora.org>
+In-Reply-To: <877df6tlnq.fsf@codeaurora.org>
+From:   Loic Poulain <loic.poulain@linaro.org>
+Date:   Fri, 24 Sep 2021 11:43:55 +0200
+Message-ID: <CAMZdPi8P7YZPhPir+WfS3cY_a7He1m2Pq2uqBhczPdEeoNRb0Q@mail.gmail.com>
+Subject: Re: [regression] mhi: ath11k resume fails on some devices
+To:     Kalle Valo <kvalo@codeaurora.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        ath11k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        regressions@lists.linux.dev
+Content-Type: multipart/mixed; boundary="0000000000009bbc5c05ccba717f"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi
+--0000000000009bbc5c05ccba717f
+Content-Type: text/plain; charset="UTF-8"
 
-removed most cc, due to server limitation
+Hi Kalle,
 
-
-W dniu 24.09.2021 o 10:03, Jani Nikula pisze:
-> On Mon, 20 Sep 2021, Doug Anderson <dianders@chromium.org> wrote:
->> Pushed all 15 to drm-misc-next.
-> ...
->> e8de4d55c259 drm/edid: Use new encoded panel id style for quirks matching
->> d9f91a10c3e8 drm/edid: Allow querying/working with the panel ID from 
->> the EDID
-> Hi Doug, Stan's reporting "initializer element is not constant" issues
-> here that were discussed before [1]. I wonder what gives, you said you'd
-> hit them on a draft version, but not with what was merged, and I can't
-> reproduce this either. Curious.
-
-
-Apparently this is grey area of unclear specification.
-
-gcc version below 8 reports error, above 8.1+ should work [1]. I am not 
-sure if there is nice workaround for older gcc.
-
-
-[1]: https://gcc.gnu.org/bugzilla/show_bug.cgi?id=69960#c18
-
-
-Regards
-
-Andrzej
-
-
-> BR,
-> Jani.
+On Fri, 24 Sept 2021 at 10:36, Kalle Valo <kvalo@codeaurora.org> wrote:
 >
+> Loic Poulain <loic.poulain@linaro.org> writes:
 >
-> In file included from drivers/gpu/drm/drm_edid.c:42:0:
-> ./include/drm/drm_edid.h:525:2: error: initializer element is not constant
-> ((((u32)((vend)[0]) - '@') & 0x1f) << 26 | \
-> ^
-> drivers/gpu/drm/drm_edid.c:111:14: note: in expansion of macro 
-> ‘drm_edid_encode_panel_id’
-> .panel_id = drm_edid_encode_panel_id(vend, product_id), \
-> ^~~~~~~~~~~~~~~~~~~~~~~~
-> drivers/gpu/drm/drm_edid.c:120:2: note: in expansion of macro ‘EDID_QUIRK’
-> EDID_QUIRK("ACR", 44358, EDID_QUIRK_PREFER_LARGE_60),
-> ^~~~~~~~~~
-> ./include/drm/drm_edid.h:525:2: note: (near initialization for 
-> ‘edid_quirk_list[0].panel_id’)
-> ((((u32)((vend)[0]) - '@') & 0x1f) << 26 | \
-> ^
-> drivers/gpu/drm/drm_edid.c:111:14: note: in expansion of macro 
-> ‘drm_edid_encode_panel_id’
-> .panel_id = drm_edid_encode_panel_id(vend, product_id), \
-> ^~~~~~~~~~~~~~~~~~~~~~~~
-> drivers/gpu/drm/drm_edid.c:120:2: note: in expansion of macro ‘EDID_QUIRK’
-> EDID_QUIRK("ACR", 44358, EDID_QUIRK_PREFER_LARGE_60),
-> ^~~~~~~~~~
+> > Hi Kalle,
+> >
+> > On Thu, 16 Sept 2021 at 10:00, Kalle Valo <kvalo@codeaurora.org> wrote:
+> >>
+> >> Hi Loic and Mani,
+> >>
+> >> I hate to be the bearer of bad news again :)
+> >>
+> >> I noticed already a while ago that commit 020d3b26c07a ("bus: mhi: Early
+> >> MHI resume failure in non M3 state"), introduced in v5.13-rc1, broke
+> >> ath11k resume on my NUC x86 testbox using QCA6390. Interestingly enough
+> >> Dell XPS 13 9310 laptop (with QCA6390 as well) does not have this
+> >> problem, I only see the problem on the NUC. I do not know what's causing
+> >> this difference.
+> >
+> > I suppose the NUC is current PCI-Express power during suspend while
+> > the laptop maintains PCIe/M2 power.
 >
+> Sorry, I'm not able to parse that sentence. Can you elaborate more?
+
+Ouch, yes, I wanted to say that the NUC does not maintain the power of
+PCI express during suspend (leading to PCI D3cold state), whereas the
+laptop maintains the power of the M2 card... well, not sure now I see
+your logs.
+
 >
-> [1] 
-> https://lore.kernel.org/all/CAD=FV=XHvFq5+Rtax7WNq2-BieQr-BM4UnmOcma_eTzkX2ZtNA@mail.gmail.com/
+> >> At the moment I'm running my tests with commit 020d3b26c07a reverted and
+> >> everything works without problems. Is there a simple way to fix this? Or
+> >> maybe we should just revert the commit? Commit log and kernel logs from
+> >> a failing case below.
+> >
+> > Do you have log of success case?
 >
+> A log from a successful case in the end of email, using v5.15-rc1 plus
+> revert of commit 020d3b26c07abe27.
 >
+> > To me, the device loses power, that is why MHI resuming is failing.
+> > Normally the device should be properly recovered/reinitialized. Before
+> > that patch the power loss was simply not detected (or handled at
+> > higher stack level).
+>
+> Currently in ath11k we always keep the firmware running when in suspend,
+> this is a workaround due to problems between mac80211 and MHI stack.
+> IIRC the problem was something related MHI creating struct device during
+> resume or something like that.
+
+Could you give a try with the attached patch? It should solve your
+issue without breaking modem support.
+
+Regards,
+Loic
+
+--0000000000009bbc5c05ccba717f
+Content-Type: application/x-patch; 
+	name="0001-bus-mhi-Add-support-for-forced-resume.patch"
+Content-Disposition: attachment; 
+	filename="0001-bus-mhi-Add-support-for-forced-resume.patch"
+Content-Transfer-Encoding: base64
+Content-ID: <f_kty6egb60>
+X-Attachment-Id: f_kty6egb60
+
+RnJvbSA2OTdjZjkwMTU1ZDc4MjI1ZDk2NzgzNmRjZGIyMjkxNDY4YzNlNjBkIE1vbiBTZXAgMTcg
+MDA6MDA6MDAgMjAwMQpGcm9tOiBMb2ljIFBvdWxhaW4gPGxvaWMucG91bGFpbkBsaW5hcm8ub3Jn
+PgpEYXRlOiBGcmksIDI0IFNlcCAyMDIxIDExOjE0OjAzICswMjAwClN1YmplY3Q6IFtQQVRDSF0g
+YnVzOiBtaGk6IEFkZCBzdXBwb3J0IGZvciBmb3JjZWQgcmVzdW1lCgpGb3Igd2hhdGV2ZXIgcmVh
+c29uLCBzb21lIGRldmljZXMgbGlrZSBhdGgxMWsgYXJlIG5vdCBpbiBNMyBzdGF0ZSB3aGVuCnJl
+c3VtaW5nLCBidXQgc3RpbGwgZnVuY3Rpb25hbC4gVGhlIG1oaV9wbV9yZXN1bWUgc2hvdWxkIHRo
+ZW4gbm90IGZhaWwKaW4gdGhhdCBjYXNlLCBhbmQgbGV0IHRoZSBoaWdoZXIgbGV2ZWwgZGV2aWNl
+IHNwZWNpZmljIHN0YWNrIGNvbnRpbnVlCnJlc3VtaW5nIHByb2Nlc3MuCgpBZGQgYSBuZXcgcGFy
+YW1ldGVyIHRvIG1oaV9wbV9yZXN1bWUsIHRvIHRyeSByZXN1bWluZywgd2hhdGV2ZXIgdGhlCmN1
+cnJlbnQgTUhJIHN0YXRlIGlzLiBUaGlzIGZpeGVzIGEgcmVncmVzc2lvbiB3aXRoIG5vbiBmdW5j
+dGlvbmFsCmF0aDExayBXaUZpIGFmdGVyIHN1c3BlbmQvcmVzdW1lIGN5Y2xlIG9uIHNvbWUgbWFj
+aGluZXMuCgpGaXhlczogMDIwZDNiMjZjMDdhICgiYnVzOiBtaGk6IEVhcmx5IE1ISSByZXN1bWUg
+ZmFpbHVyZSBpbiBub24gTTMgc3RhdGUiKQpTaWduZWQtb2ZmLWJ5OiBMb2ljIFBvdWxhaW4gPGxv
+aWMucG91bGFpbkBsaW5hcm8ub3JnPgotLS0KIGRyaXZlcnMvYnVzL21oaS9jb3JlL3BtLmMgICAg
+ICAgICAgICAgfCAxMCArKysrKysrLS0tCiBkcml2ZXJzL2J1cy9taGkvcGNpX2dlbmVyaWMuYyAg
+ICAgICAgIHwgIDIgKy0KIGRyaXZlcnMvbmV0L3dpcmVsZXNzL2F0aC9hdGgxMWsvbWhpLmMgfCAg
+MiArLQogaW5jbHVkZS9saW51eC9taGkuaCAgICAgICAgICAgICAgICAgICB8ICAzICsrLQogNCBm
+aWxlcyBjaGFuZ2VkLCAxMSBpbnNlcnRpb25zKCspLCA2IGRlbGV0aW9ucygtKQoKZGlmZiAtLWdp
+dCBhL2RyaXZlcnMvYnVzL21oaS9jb3JlL3BtLmMgYi9kcml2ZXJzL2J1cy9taGkvY29yZS9wbS5j
+CmluZGV4IGJiZjZjZDAuLmVmMGU2OTggMTAwNjQ0Ci0tLSBhL2RyaXZlcnMvYnVzL21oaS9jb3Jl
+L3BtLmMKKysrIGIvZHJpdmVycy9idXMvbWhpL2NvcmUvcG0uYwpAQCAtODgxLDcgKzg4MSw3IEBA
+IGludCBtaGlfcG1fc3VzcGVuZChzdHJ1Y3QgbWhpX2NvbnRyb2xsZXIgKm1oaV9jbnRybCkKIH0K
+IEVYUE9SVF9TWU1CT0xfR1BMKG1oaV9wbV9zdXNwZW5kKTsKIAotaW50IG1oaV9wbV9yZXN1bWUo
+c3RydWN0IG1oaV9jb250cm9sbGVyICptaGlfY250cmwpCitpbnQgbWhpX3BtX3Jlc3VtZShzdHJ1
+Y3QgbWhpX2NvbnRyb2xsZXIgKm1oaV9jbnRybCwgYm9vbCBmb3JjZSkKIHsKIAlzdHJ1Y3QgbWhp
+X2NoYW4gKml0ciwgKnRtcDsKIAlzdHJ1Y3QgZGV2aWNlICpkZXYgPSAmbWhpX2NudHJsLT5taGlf
+ZGV2LT5kZXY7CkBAIC04OTgsOCArODk4LDEyIEBAIGludCBtaGlfcG1fcmVzdW1lKHN0cnVjdCBt
+aGlfY29udHJvbGxlciAqbWhpX2NudHJsKQogCWlmIChNSElfUE1fSU5fRVJST1JfU1RBVEUobWhp
+X2NudHJsLT5wbV9zdGF0ZSkpCiAJCXJldHVybiAtRUlPOwogCi0JaWYgKG1oaV9nZXRfbWhpX3N0
+YXRlKG1oaV9jbnRybCkgIT0gTUhJX1NUQVRFX00zKQotCQlyZXR1cm4gLUVJTlZBTDsKKwlpZiAo
+bWhpX2dldF9taGlfc3RhdGUobWhpX2NudHJsKSAhPSBNSElfU1RBVEVfTTMpIHsKKwkJZGV2X3dh
+cm4oZGV2LCAiUmVzdW1pbmcgZnJvbSBub24gTTMgc3RhdGUgKCVzKVxuIiwKKwkJCSBUT19NSElf
+U1RBVEVfU1RSKG1oaV9nZXRfbWhpX3N0YXRlKG1oaV9jbnRybCkpKTsKKwkJaWYgKCFmb3JjZSkK
+KwkJCXJldHVybiAtRUlOVkFMOworCX0KIAogCS8qIE5vdGlmeSBjbGllbnRzIGFib3V0IGV4aXRp
+bmcgTFBNICovCiAJbGlzdF9mb3JfZWFjaF9lbnRyeV9zYWZlKGl0ciwgdG1wLCAmbWhpX2NudHJs
+LT5scG1fY2hhbnMsIG5vZGUpIHsKZGlmZiAtLWdpdCBhL2RyaXZlcnMvYnVzL21oaS9wY2lfZ2Vu
+ZXJpYy5jIGIvZHJpdmVycy9idXMvbWhpL3BjaV9nZW5lcmljLmMKaW5kZXggYjMzYjlkNy4uZGJh
+NGI3ZCAxMDA2NDQKLS0tIGEvZHJpdmVycy9idXMvbWhpL3BjaV9nZW5lcmljLmMKKysrIGIvZHJp
+dmVycy9idXMvbWhpL3BjaV9nZW5lcmljLmMKQEAgLTkyNCw3ICs5MjQsNyBAQCBzdGF0aWMgaW50
+IF9fbWF5YmVfdW51c2VkIG1oaV9wY2lfcnVudGltZV9yZXN1bWUoc3RydWN0IGRldmljZSAqZGV2
+KQogCQlyZXR1cm4gMDsgLyogTm90aGluZyB0byBkbyBhdCBNSEkgbGV2ZWwgKi8KIAogCS8qIEV4
+aXQgTTMsIHRyYW5zaXRpb24gdG8gTTAgc3RhdGUgKi8KLQllcnIgPSBtaGlfcG1fcmVzdW1lKG1o
+aV9jbnRybCk7CisJZXJyID0gbWhpX3BtX3Jlc3VtZShtaGlfY250cmwsIGZhbHNlKTsKIAlpZiAo
+ZXJyKSB7CiAJCWRldl9lcnIoJnBkZXYtPmRldiwgImZhaWxlZCB0byByZXN1bWUgZGV2aWNlOiAl
+ZFxuIiwgZXJyKTsKIAkJZ290byBlcnJfcmVjb3Zlcnk7CmRpZmYgLS1naXQgYS9kcml2ZXJzL25l
+dC93aXJlbGVzcy9hdGgvYXRoMTFrL21oaS5jIGIvZHJpdmVycy9uZXQvd2lyZWxlc3MvYXRoL2F0
+aDExay9taGkuYwppbmRleCA3NWNjMmQ4Li5mOTEzNDM5IDEwMDY0NAotLS0gYS9kcml2ZXJzL25l
+dC93aXJlbGVzcy9hdGgvYXRoMTFrL21oaS5jCisrKyBiL2RyaXZlcnMvbmV0L3dpcmVsZXNzL2F0
+aC9hdGgxMWsvbWhpLmMKQEAgLTUzMiw3ICs1MzIsNyBAQCBzdGF0aWMgaW50IGF0aDExa19taGlf
+c2V0X3N0YXRlKHN0cnVjdCBhdGgxMWtfcGNpICphYl9wY2ksCiAJCXJldCA9IG1oaV9wbV9zdXNw
+ZW5kKGFiX3BjaS0+bWhpX2N0cmwpOwogCQlicmVhazsKIAljYXNlIEFUSDExS19NSElfUkVTVU1F
+OgotCQlyZXQgPSBtaGlfcG1fcmVzdW1lKGFiX3BjaS0+bWhpX2N0cmwpOworCQlyZXQgPSBtaGlf
+cG1fcmVzdW1lKGFiX3BjaS0+bWhpX2N0cmwsIHRydWUpOwogCQlicmVhazsKIAljYXNlIEFUSDEx
+S19NSElfVFJJR0dFUl9SRERNOgogCQlyZXQgPSBtaGlfZm9yY2VfcmRkbV9tb2RlKGFiX3BjaS0+
+bWhpX2N0cmwpOwpkaWZmIC0tZ2l0IGEvaW5jbHVkZS9saW51eC9taGkuaCBiL2luY2x1ZGUvbGlu
+dXgvbWhpLmgKaW5kZXggYzQ5M2E4MC4uZjczYjI3MCAxMDA2NDQKLS0tIGEvaW5jbHVkZS9saW51
+eC9taGkuaAorKysgYi9pbmNsdWRlL2xpbnV4L21oaS5oCkBAIC02NTgsOCArNjU4LDkgQEAgaW50
+IG1oaV9wbV9zdXNwZW5kKHN0cnVjdCBtaGlfY29udHJvbGxlciAqbWhpX2NudHJsKTsKIC8qKgog
+ICogbWhpX3BtX3Jlc3VtZSAtIFJlc3VtZSBNSEkgZnJvbSBzdXNwZW5kZWQgc3RhdGUKICAqIEBt
+aGlfY250cmw6IE1ISSBjb250cm9sbGVyCisgKiBAZm9yY2U6IEZvcmNlIHJlc3VtaW5nIHRvIE0w
+LCB3aGF0ZXZlciB0aGUgY3VycmVudCBzdGF0ZQogICovCi1pbnQgbWhpX3BtX3Jlc3VtZShzdHJ1
+Y3QgbWhpX2NvbnRyb2xsZXIgKm1oaV9jbnRybCk7CitpbnQgbWhpX3BtX3Jlc3VtZShzdHJ1Y3Qg
+bWhpX2NvbnRyb2xsZXIgKm1oaV9jbnRybCwgYm9vbCBmb3JjZSk7CiAKIC8qKgogICogbWhpX2Rv
+d25sb2FkX3JkZG1faW1hZ2UgLSBEb3dubG9hZCByYW1kdW1wIGltYWdlIGZyb20gZGV2aWNlIGZv
+cgotLSAKMi43LjQKCg==
+--0000000000009bbc5c05ccba717f--
