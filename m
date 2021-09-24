@@ -2,81 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 62684416928
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Sep 2021 03:00:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B47D4169F8
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Sep 2021 04:23:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243705AbhIXBCT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 23 Sep 2021 21:02:19 -0400
-Received: from mail-ot1-f52.google.com ([209.85.210.52]:41920 "EHLO
-        mail-ot1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243678AbhIXBCS (ORCPT
+        id S243877AbhIXCYl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 23 Sep 2021 22:24:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42304 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232911AbhIXCYk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 23 Sep 2021 21:02:18 -0400
-Received: by mail-ot1-f52.google.com with SMTP id 97-20020a9d006a000000b00545420bff9eso10999451ota.8;
-        Thu, 23 Sep 2021 18:00:46 -0700 (PDT)
+        Thu, 23 Sep 2021 22:24:40 -0400
+Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 502A0C061574
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Sep 2021 19:23:08 -0700 (PDT)
+Received: by mail-oo1-xc31.google.com with SMTP id n4-20020a4aa7c4000000b002adb4997965so1134538oom.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 23 Sep 2021 19:23:08 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=LAYAkbkNZo1Peyg1Lw8w9S8AW36p1FDE1eK2XpmXUvU=;
+        b=s7LUn20R6YALzq4CYG9t/YFw6TtC6VEyOMQxS9UUw0QVUXmNHz593CGkeMy61E+IAo
+         Vy+mR9N5tQDWHGD234kDWHp4D49AVaPKQ230WO+0EWpK4W0EK8fYP3XUoRY8B+uI91jK
+         HD8v4orUdZpnRNtTimlK7c+/xAb+R0FAhPtydwsatPcoaVoaxoayFhEiNz1rxc6hgzRE
+         gMI5uibBWxXUkGwCiMQlk9US7KaEI8+trYtp29obJtXgkvQt2t2L5c9NkWytMexVoAf5
+         6TB/2nMwr0JUp5M5TKujPA8823YW3eJjcoYPKhbJMw29+/+4h081NBhLdnFSkZinHfIA
+         VMVw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=1TJzWuj8+bzZyndMFx8jWebrZeVJyh9b45P01OYgrS0=;
-        b=a6oyX5d0Hnn3N8vk5AFBGXZQd8V/H+zY7v/zjLTGoMHqDOFAtqA9r/WglvrYx+AUnl
-         3RArUfTPtRq861De5YO1zxZWf59wAVAd0JZWGmG68ZtZ0WWC+TdPBxVjs1fVwd2UjHMV
-         CsBzcB2GJsInKG5zMt8fG1x4srOsrIDxGVUFu9qD9Ngmc+0n8Qfh2akQyVezVRPKwjTs
-         +Wa6r9okNZ3otoR1O+AyJh/krimZZbWRWvBePjrLtstPDFEIxHBOmpC/XA3HZm2ZUaTX
-         41UlP6JJiCvif2meSbd6OgB8sygaSEhfWdPdonEGoHsKK/IRHN9or/+Hg2ITODewxpSu
-         pYlA==
-X-Gm-Message-State: AOAM5309/AK8ns8k+qN3ldBwFoXfGcUguV1v/gF9xor+bFU528SToV2I
-        FTDH3fo0pzHSPatv77woQw==
-X-Google-Smtp-Source: ABdhPJy6eZWrOh3pu2S52LgzkkluFsXiIOwPaK+twomhoKwxx8iDuMQGB6Skfx8n3hZ7uN4MzzzDMw==
-X-Received: by 2002:a05:6830:4411:: with SMTP id q17mr1429613otv.67.1632445245965;
-        Thu, 23 Sep 2021 18:00:45 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id l28sm1739449oof.30.2021.09.23.18.00.44
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=LAYAkbkNZo1Peyg1Lw8w9S8AW36p1FDE1eK2XpmXUvU=;
+        b=hM9pmJ5n5809FTwwXRtEeCizPQEzZ0GcmNXeO448GgqtJ8yx4CtYCtB1Rp2LTfLQV4
+         aOvnDTJwtoVr2FlvunhJ21F8tPOXsr3YuHtPkekHH/X5DSBNASc1ZT0fZ1nW9inZ6jx7
+         LFneH8pe6rLw+LfxfKYAaUISO6kiEuYPgIvmpFUIO67ClVN6QYozxyZMRTdhhANxvm67
+         R3xRH+pDT2nx42/SFMp4Br3Uta/s307J4H5dVA8RpGRB/vuDyQVzlpuZRRC3kOEbBvW2
+         p5XswL56Bn30dyFN0yw4Tj1HXQfBqjcbPXCvLw7/shIMKtWyAXWMg+8+Copetpm7Jf2O
+         LIOg==
+X-Gm-Message-State: AOAM533deyMyIMhiU65vobZSGgc6FzsDdZvKrz5cOwbUlEHX0pDJl+ib
+        S9swb6otiBpDrjqOrCojkFRbUA==
+X-Google-Smtp-Source: ABdhPJxGSV4VuO/mPzJ62qLVHmogryzSw/Pa1LYra4xGr0X2iPBv2REt9nXbPy4EP+xFv8xRfRNUKA==
+X-Received: by 2002:a4a:6412:: with SMTP id o18mr6564774ooc.79.1632450187659;
+        Thu, 23 Sep 2021 19:23:07 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id r19sm1813147otg.37.2021.09.23.19.23.06
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 23 Sep 2021 18:00:45 -0700 (PDT)
-Received: (nullmailer pid 3849035 invoked by uid 1000);
-        Fri, 24 Sep 2021 01:00:44 -0000
-Date:   Thu, 23 Sep 2021 20:00:44 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Rajesh Patil <rajpat@codeaurora.org>
-Cc:     devicetree@vger.kernel.org, rnayak@codeaurora.org,
-        skakit@codeaurora.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        mka@chromium.org, saiprakash.ranjan@codeaurora.org,
-        Rob Herring <robh+dt@kernel.org>, linux-kernel@vger.kernel.org,
-        sboyd@kernel.org, msavaliy@qti.qualcomm.com, dianders@chromium.org
-Subject: Re: [PATCH V10 1/8] dt-bindings: spi: Add sc7280 support
-Message-ID: <YU0jPOsvzUbEPShy@robh.at.kernel.org>
-References: <1632399378-12229-1-git-send-email-rajpat@codeaurora.org>
- <1632399378-12229-2-git-send-email-rajpat@codeaurora.org>
+        Thu, 23 Sep 2021 19:23:07 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Fabio Estevam <festevam@gmail.com>
+Cc:     devicetree@vger.kernel.org, martin.botka@somainline.org,
+        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org
+Subject: Re: (subset) [PATCH] arm64: dts: sm6125: Remove leading zeroes
+Date:   Thu, 23 Sep 2021 21:23:06 -0500
+Message-Id: <163245012732.850743.3717197322767814061.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20210922195208.1734936-1-festevam@gmail.com>
+References: <20210922195208.1734936-1-festevam@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1632399378-12229-2-git-send-email-rajpat@codeaurora.org>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 23 Sep 2021 17:46:11 +0530, Rajesh Patil wrote:
-> Add compatible for sc7280 SoC.
+On Wed, 22 Sep 2021 16:52:08 -0300, Fabio Estevam wrote:
+> dtc complains about the leading zeroes:
 > 
-> Signed-off-by: Rajesh Patil <rajpat@codeaurora.org>
-> Reviewed-by: Doug Anderson <dianders@chromium.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> ---
-> Change in V10:
->  - As per Stephen's comments,
->    sorted compatible names in alphabet order
+> arch/arm64/boot/dts/qcom/sm6125.dtsi:497.19-503.6: Warning (unit_address_format): /soc/timer@f120000/frame@0f121000: unit name should not have leading 0s
+> arch/arm64/boot/dts/qcom/sm6125.dtsi:505.19-510.6: Warning (unit_address_format): /soc/timer@f120000/frame@0f123000: unit name should not have leading 0s
+> arch/arm64/boot/dts/qcom/sm6125.dtsi:512.19-517.6: Warning (unit_address_format): /soc/timer@f120000/frame@0f124000: unit name should not have leading 0
 > 
-> Changes in V9:
->  - No changes
+> Remove them.
 > 
-> Changes in V8:
->  - As per Doug's comments, added "qcom,sc7280-qspi" compatible
-> 
->  Documentation/devicetree/bindings/spi/qcom,spi-qcom-qspi.yaml | 5 ++++-
->  1 file changed, 4 insertions(+), 1 deletion(-)
-> 
+> [...]
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Applied, thanks!
+
+[1/1] arm64: dts: sm6125: Remove leading zeroes
+      commit: 2e7586bab95f5d284867c35ca46c0f0c19ccbf7f
+
+Best regards,
+-- 
+Bjorn Andersson <bjorn.andersson@linaro.org>
