@@ -2,53 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C083E417E1C
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Sep 2021 01:20:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 82B3C417E1E
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Sep 2021 01:23:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344050AbhIXXWa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Sep 2021 19:22:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47552 "EHLO
+        id S1343829AbhIXXYv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Sep 2021 19:24:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48074 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343748AbhIXXW1 (ORCPT
+        with ESMTP id S1343675AbhIXXYt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Sep 2021 19:22:27 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14B75C061571
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Sep 2021 16:20:54 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id u22so16664361oie.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Sep 2021 16:20:54 -0700 (PDT)
+        Fri, 24 Sep 2021 19:24:49 -0400
+Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5A520C061571
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Sep 2021 16:23:15 -0700 (PDT)
+Received: by mail-oi1-x231.google.com with SMTP id w206so16713440oiw.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Sep 2021 16:23:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=3SchbBMO8esSuHO9zb7hi/3VwsuPSq+/4byWQI9bhwo=;
-        b=MOor9mQhKPl5tsRdcLpdQnaXi5NpBXdWbuxV0ckEABcfX7Gwwee+yO1tRtmTkbAqXL
-         o+/VWwO6FCjwXTDio/4o86nhB+kmuIcCbTRJTJSra5iGvvYEvzEDdjcBt7kz93nkrwc9
-         +Or1K0qX5zSXtflOmuP40+uAkHcScPqBbJdfIZ4wRLN9/6u5dqNUo1NCVozh9vI0DSMd
-         8t9JrwwxjjmJLMISAwWXTruABy93/9sJKel/s9jp0cBZu/JqdsPEm9GAyRDWYe48RByD
-         6jE2P3JoFq0burmGlnibCIYGc3Nsc+O9iy1cV5xong7ch2plsXzkn+NVxNzBw6/plVsV
-         6I9A==
+        bh=I+3/OaDuhI5pjIMPop3s/uZ1XCPBr1j1NL0ouxoZ0gM=;
+        b=S91I40xC00oQdUpaFG4GcBFUQyEUVCQHyAuv9yqrOusPXyyxN7+SgE3pw+PTWMV47S
+         UvsrUT8r9g+fuvWcYxjERKY9b68GqYPAm4jrzbfZrQVLXKa0KSDfDA8fRpR3mFZTr0IH
+         1lRR4pnjinWbUq2QUiqucVBQIoRkVztYIG5B3WkBWrV33eYSr8C4HRnpGX3+kefxhjNT
+         yY/XPZYJXLhxJoBOciADz6DT1UVPgd5zb72+L+OOewv4rjXr7cu6lJn6Oe3d8CrBoiCT
+         s0Yktyw3tyw6rP4D/tDREaRBjrztNF6o4gyQve2f3yjVUkA4b4nNr9g0ChThgseFXK1R
+         fuZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=3SchbBMO8esSuHO9zb7hi/3VwsuPSq+/4byWQI9bhwo=;
-        b=OWIVTI9mMeJ3HyVFJdQjjGSVAHdIcQ6fNPh1lmLjuw1GN6bSLI/V6Cz2UMcLYgwyXl
-         4jJJCWQLIbof3c3QSdQP1p9KZyVtiDDRT0ZemNyQmQ+68W1M+UvJEb8c9HdP5MSCOob6
-         5jbaaQZ+c9g+NfrOLHXbzwH1U5SkPq7U3pY1MRMoTLp2sqv23Jh14JH65tC8ZEowYUf9
-         Yp1c90p8vTWIgyHKReQ2ET7Us4TZPCONgmzmaxbYcUN5EDhCYPYsM5D+qdkI7Vu6lkcy
-         sM0TFlTS8yLptN4MAzTociPJ3/irxGcYRnHJG06pMyYY4AI1SoS7pjHjaGlGsAn8QA4M
-         EnnA==
-X-Gm-Message-State: AOAM533fwek3fDNzmfGcva6scLTD8rrn5Vvd+VkPcTQhXUF7clU8tplA
-        NGYf/yznWt3rl4AnRVxlkI19eA==
-X-Google-Smtp-Source: ABdhPJzdZ0UUeH7LezRjVbUG0+gFu4oT4kFRdeQnkwsynww3XrNmiy/7XKCSlhx024OGg+AyxHHrXA==
-X-Received: by 2002:a05:6808:d51:: with SMTP id w17mr3477533oik.179.1632525653217;
-        Fri, 24 Sep 2021 16:20:53 -0700 (PDT)
+        bh=I+3/OaDuhI5pjIMPop3s/uZ1XCPBr1j1NL0ouxoZ0gM=;
+        b=d/OTK9fwD6mPWym+8u92ZgX4khCZfjJDVKrWUMs19xHE+iOKClwlQeQdmsNPHhpoZP
+         sMoR5WUTHq07cDNkNrtH8+z7NYDU64Ud346gb7vRf6l0JNpEsqnYQsYFoW3wgZ5/4+n9
+         d271WtVc2xriEeYMyUquLLd41+PdNQBZo5jNV2dqNRZnEf1MkH5AF2FhEzA9OhJ8WgPH
+         yXE97h/NFdRw9rrJ10c/Z4mAgrzDuf2kVjc1SwES8TCV2+Gq9TvsppSccbkqSKdH9mTD
+         NKl7wc/K8PSTJyVd54yslOIUr6V6Mi46e9fxzNZfbMSTDtvKBJdOzUJlymCGM1w7BQfj
+         8lNQ==
+X-Gm-Message-State: AOAM532QNu+bGNMIJYKm27m1kXXREnuYqGChD2Qa3/jMef6dxpAP41SA
+        PuOjAOSuM2NXwBHXBJFnmZr32purPVWFPA==
+X-Google-Smtp-Source: ABdhPJylGhExA23SHB9J+GJqA01IVv93OAddQoG2deBurYRJPBnEjud1LmbKzO47llhrTZt1JFlGzw==
+X-Received: by 2002:aca:abc7:: with SMTP id u190mr3459765oie.159.1632525794724;
+        Fri, 24 Sep 2021 16:23:14 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id e10sm2464064oig.11.2021.09.24.16.20.52
+        by smtp.gmail.com with ESMTPSA id k23sm2661698ook.45.2021.09.24.16.23.13
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Sep 2021 16:20:52 -0700 (PDT)
-Date:   Fri, 24 Sep 2021 18:20:50 -0500
+        Fri, 24 Sep 2021 16:23:14 -0700 (PDT)
+Date:   Fri, 24 Sep 2021 18:23:12 -0500
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Maulik Shah <mkshah@codeaurora.org>
 Cc:     swboyd@chromium.org, mka@chromium.org, evgreen@chromium.org,
@@ -56,177 +56,108 @@ Cc:     swboyd@chromium.org, mka@chromium.org, evgreen@chromium.org,
         agross@kernel.org, dianders@chromium.org, linux@roeck-us.net,
         rnayak@codeaurora.org, lsrao@codeaurora.org,
         Mahesh Sivasubramanian <msivasub@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>
-Subject: Re: [PATCH v9 2/5] soc: qcom: Add SoC sleep stats driver
-Message-ID: <YU5dUlscQzGXloKc@builder.lan>
+        devicetree@vger.kernel.org, Lina Iyer <ilina@codeaurora.org>
+Subject: Re: [PATCH v9 1/5] dt-bindings: Introduce SoC sleep stats bindings
+Message-ID: <YU5d4PhKRvF3wzGX@builder.lan>
 References: <1630906083-32194-1-git-send-email-mkshah@codeaurora.org>
- <1630906083-32194-3-git-send-email-mkshah@codeaurora.org>
+ <1630906083-32194-2-git-send-email-mkshah@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1630906083-32194-3-git-send-email-mkshah@codeaurora.org>
+In-Reply-To: <1630906083-32194-2-git-send-email-mkshah@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 06 Sep 00:28 CDT 2021, Maulik Shah wrote:
+On Mon 06 Sep 00:27 CDT 2021, Maulik Shah wrote:
 
 > From: Mahesh Sivasubramanian <msivasub@codeaurora.org>
 > 
-> Let's add a driver to read the stats from remote processor and
-> export to debugfs.
+> Add device binding documentation for Qualcomm Technologies, Inc. (QTI)
+> SoC sleep stats driver. The driver is used for displaying SoC sleep
+> statistic maintained by Always On Processor or Resource Power Manager.
 > 
-> The driver creates "qcom_sleep_stats" directory in debugfs and
-> adds files for various low power mode available. Below is sample
-> output with command
-> 
-> cat /sys/kernel/debug/qcom_sleep_stats/ddr
-> count = 0
-> Last Entered At = 0
-> Last Exited At = 0
-> Accumulated Duration = 0
-> 
+> Cc: devicetree@vger.kernel.org
 > Signed-off-by: Mahesh Sivasubramanian <msivasub@codeaurora.org>
 > Signed-off-by: Lina Iyer <ilina@codeaurora.org>
-> [mkshah: add subsystem sleep stats, create one file for each stat]
 > Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 > ---
->  drivers/soc/qcom/Kconfig           |  10 ++
->  drivers/soc/qcom/Makefile          |   1 +
->  drivers/soc/qcom/soc_sleep_stats.c | 241 +++++++++++++++++++++++++++++++++++++
->  3 files changed, 252 insertions(+)
->  create mode 100644 drivers/soc/qcom/soc_sleep_stats.c
+>  .../bindings/soc/qcom/soc-sleep-stats.yaml         | 48 ++++++++++++++++++++++
+>  1 file changed, 48 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.yaml
 > 
-> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
-> index 79b568f..e80b63a 100644
-> --- a/drivers/soc/qcom/Kconfig
-> +++ b/drivers/soc/qcom/Kconfig
-> @@ -190,6 +190,16 @@ config QCOM_SOCINFO
->  	 Say yes here to support the Qualcomm socinfo driver, providing
->  	 information about the SoC to user space.
->  
-> +config QCOM_SOC_SLEEP_STATS
-> +	tristate "Qualcomm Technologies, Inc. (QTI) SoC sleep stats driver"
-> +	depends on ARCH_QCOM && DEBUG_FS || COMPILE_TEST
-> +	depends on QCOM_SMEM
-> +	help
-> +	  Qualcomm Technologies, Inc. (QTI) SoC sleep stats driver to read
-> +	  the shared memory exported by the remote processor related to
-> +	  various SoC level low power modes statistics and export to debugfs
-> +	  interface.
+> diff --git a/Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.yaml b/Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.yaml
+> new file mode 100644
+> index 0000000..4161156
+> --- /dev/null
+> +++ b/Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.yaml
+> @@ -0,0 +1,48 @@
+> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
+> +%YAML 1.2
+> +---
+> +$id: http://devicetree.org/schemas/soc/qcom/soc-sleep-stats.yaml#
+> +$schema: http://devicetree.org/meta-schemas/core.yaml#
 > +
->  config QCOM_WCNSS_CTRL
->  	tristate "Qualcomm WCNSS control driver"
->  	depends on ARCH_QCOM || COMPILE_TEST
-> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
-> index ad675a6..5f30d74 100644
-> --- a/drivers/soc/qcom/Makefile
-> +++ b/drivers/soc/qcom/Makefile
-> @@ -20,6 +20,7 @@ obj-$(CONFIG_QCOM_SMEM_STATE) += smem_state.o
->  obj-$(CONFIG_QCOM_SMP2P)	+= smp2p.o
->  obj-$(CONFIG_QCOM_SMSM)	+= smsm.o
->  obj-$(CONFIG_QCOM_SOCINFO)	+= socinfo.o
-> +obj-$(CONFIG_QCOM_SOC_SLEEP_STATS)	+= soc_sleep_stats.o
-
-I know that the rest of the modules here does a bad job and have
-completely generic names, but could we rename this "qcom_sleep_stats"
-instead?
-
->  obj-$(CONFIG_QCOM_WCNSS_CTRL) += wcnss_ctrl.o
->  obj-$(CONFIG_QCOM_APR) += apr.o
->  obj-$(CONFIG_QCOM_LLCC) += llcc-qcom.o
-> diff --git a/drivers/soc/qcom/soc_sleep_stats.c b/drivers/soc/qcom/soc_sleep_stats.c
-[..]
-> +static int qcom_soc_sleep_stats_probe(struct platform_device *pdev)
-> +{
-> +	struct resource *res;
-> +	void __iomem *reg;
-> +	struct dentry *root;
-> +	const struct stats_config *config;
-> +	struct stats_data *d;
-> +	int i;
+> +title: Qualcomm Technologies, Inc. (QTI) SoC sleep stats bindings
 > +
-> +	config = device_get_match_data(&pdev->dev);
-> +	if (!config)
-> +		return -ENODEV;
-> +
-> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
-> +	if (!res)
-> +		return PTR_ERR(res);
+> +maintainers:
+> +  - Maulik Shah <mkshah@codeaurora.org>
+> +  - Lina Iyer <ilina@codeaurora.org>
 
-You no longer use this "res".
+Lina's address is no longer valid.
 
 > +
-> +	reg = devm_platform_get_and_ioremap_resource(pdev, 0, NULL);
-> +	if (!reg)
+> +description:
+> +  Always On Processor/Resource Power Manager maintains statistics of the SoC
+> +  sleep modes involving powering down of the rails and oscillator clock.
+> +
+> +  Statistics includes SoC sleep mode type, number of times low power mode were
+> +  entered, time of last entry, time of last exit and accumulated sleep duration.
+> +
+> +properties:
+> +  compatible:
+> +    enum:
+> +      - qcom,rpmh-sleep-stats
+> +      - qcom,rpm-sleep-stats
+> +
+> +  reg:
+> +    maxItems: 1
+> +
+> +required:
+> +  - compatible
+> +  - reg
+> +
+> +additionalProperties: false
+> +
+> +examples:
+> +  # Example of rpmh sleep stats
+> +  - |
+> +    aop_msgram@c3f0048 {
+> +      compatible = "qcom,rpmh-sleep-stats";
+> +      reg = <0x0c3f0048 0x400>;
 
-IS_ERR()
+As I tested this series I did find it quite odd that the start address
+of this block is $48 bytes into a page and still the length is an even
+$400.
 
-> +		return -ENOMEM;
-> +
-> +	d = devm_kcalloc(&pdev->dev, config->num_records,
-> +			 sizeof(*d), GFP_KERNEL);
-> +	if (!d)
-> +		return -ENOMEM;
-> +
-> +	for (i = 0; i < config->num_records; i++)
-> +		d[i].appended_stats_avail = config->appended_stats_avail;
-> +
-> +	root = debugfs_create_dir("qcom_sleep_stats", NULL);
-> +
-> +	qcom_create_subsystem_stat_files(root);
-> +	qcom_create_soc_sleep_stat_files(root, reg, d, config->num_records);
-> +
-> +	platform_set_drvdata(pdev, root);
-> +
-> +	return 0;
-> +}
-> +
-> +static int qcom_soc_sleep_stats_remove(struct platform_device *pdev)
-> +{
-> +	struct dentry *root = platform_get_drvdata(pdev);
-> +
-> +	debugfs_remove_recursive(root);
-> +
-> +	return 0;
-> +}
-> +
-> +static const struct stats_config rpm_data = {
-> +	.num_records = 2,
-> +	.appended_stats_avail = true,
-> +};
-> +
-> +static const struct stats_config rpmh_data = {
-> +	.num_records = 3,
-> +	.appended_stats_avail = false,
-> +};
-> +
-> +static const struct of_device_id qcom_soc_sleep_stats_table[] = {
-> +	{ .compatible = "qcom,rpm-sleep-stats", .data = &rpm_data },
-> +	{ .compatible = "qcom,rpmh-sleep-stats", .data = &rpmh_data },
-> +	{ }
-> +};
-
-MODULE_DEVICE_TABLE(of, qcom_soc_sleep_stats_table);
-
-Otherwise the module doesn't load automatically.
+Is there any single platform where qcom,rpmh-sleep-stats doesn't start
+at an offset of $48 from the beginning of its msgram? Could we move this
+number to the driver?
 
 Regards,
 Bjorn
 
-> +
-> +static struct platform_driver soc_sleep_stats = {
-> +	.probe = qcom_soc_sleep_stats_probe,
-> +	.remove = qcom_soc_sleep_stats_remove,
-> +	.driver = {
-> +		.name = "soc_sleep_stats",
-> +		.of_match_table = qcom_soc_sleep_stats_table,
-> +	},
-> +};
-> +module_platform_driver(soc_sleep_stats);
-> +
-> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. (QTI) SoC Sleep Stats driver");
-> +MODULE_LICENSE("GPL v2");
+> +    };
+> +  # Example of rpm sleep stats
+> +  - |
+> +    rpm_msgram@4690000 {
+> +      compatible = "qcom,rpm-sleep-stats";
+> +      reg = <0x04690000 0x400>;
+> +    };
+> +...
 > -- 
 > QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 > of Code Aurora Forum, hosted by The Linux Foundation
