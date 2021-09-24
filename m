@@ -2,128 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CB01A416CBB
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Sep 2021 09:18:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 906BD416D42
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Sep 2021 10:00:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244390AbhIXHTk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Sep 2021 03:19:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51312 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S244381AbhIXHTj (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Sep 2021 03:19:39 -0400
-Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 98E97C061574;
-        Fri, 24 Sep 2021 00:18:06 -0700 (PDT)
-Received: by mail-wr1-x430.google.com with SMTP id t7so24218147wrw.13;
-        Fri, 24 Sep 2021 00:18:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=zdiCR57I2VQ9UbAgMh1ATN9FWtSQnQ+P4kUe0ofzWJM=;
-        b=WspNFDBd3YguRCkegjfpIkoKi4mAXUIwY99A+hOeTdLBMvPRUA9/jI58DgAO/njnJY
-         ii/ubXUaX2Qn8rRaIyWHkgcv8Kkwiw2ZK1z9c4a8WgZBD/Aqp1vzvUkYPlHE02QtcLqA
-         +Jv6C15obv9SgvSg/+Kw/S17D+QfEOaCxsBA1H88TKwIwKQ05a7r8JHgqaGiKgGWiDIw
-         tg357eFJuakgqnK87Fh7KGLUVQO/gENGj7NJi5QSFNUliujrUKjxhaqA9+V6gGjp4MG+
-         BflL7igpt/0w98+v14C/TwblWBJyW2n/PVOkTn+IITMcrj5MRHf+pfOiQkDsCmCiciRs
-         Yjgg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=zdiCR57I2VQ9UbAgMh1ATN9FWtSQnQ+P4kUe0ofzWJM=;
-        b=8PSDwQcckw6PC+5+go6p7gKao/4RBzSfTJ4PBgOJlLMN+xrct663eZU4xt217mEqEj
-         PvNBJIKHs1Hq9cFiwrT/9z248ROm7OmTsskcw/ZPb0ZteryZpVaMj1nWmg4KHECzh3lc
-         MLXxfDN9p3UnVU9XcA/oLeeWPGYWc8B2c8MmFFpsVslPOpHj/a7ytZuxxhPVNbHJ/NiB
-         87Ncb67qJfzkCFqXX//25+TZmtTyRNq8UcvmmHVsBFw7AIBH57w54Cf6599goQppF8+q
-         LTtjRiInhz5rPmsuWIDPL4sXydBOVzYSUmqJrDKaPwvp9G5HHydUFM1w2Z5u9N+h0n5T
-         qAEg==
-X-Gm-Message-State: AOAM533xNdA75Id5aWMHOxJF8tpZIDnXglWkOkGLEdO+coXJO6a8zZuj
-        AvOqglpu6BUQGjecoAVIogw=
-X-Google-Smtp-Source: ABdhPJztLdLXtRY+dHAnQxKC62ECEE/JQBUNN3kIlTaempf7aLIH0KHkHYPSRCQaVQiQyzq2faqTlA==
-X-Received: by 2002:adf:cf04:: with SMTP id o4mr9280410wrj.352.1632467885212;
-        Fri, 24 Sep 2021 00:18:05 -0700 (PDT)
-Received: from abel.fritz.box (p5b0ea1b5.dip0.t-ipconnect.de. [91.14.161.181])
-        by smtp.gmail.com with ESMTPSA id b7sm9200070wrm.9.2021.09.24.00.18.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 24 Sep 2021 00:18:04 -0700 (PDT)
-From:   "=?UTF-8?q?Christian=20K=C3=B6nig?=" 
-        <ckoenig.leichtzumerken@gmail.com>
-X-Google-Original-From: =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>
-To:     dri-devel@lists.freedesktop.org, linux-media@vger.kernel.org,
-        linaro-mm-sig@lists.linaro.org, etnaviv@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-Cc:     l.stach@pengutronix.de, christian.gmeiner@gmail.com,
-        linux+etnaviv@armlinux.org.uk, robdclark@gmail.com, sean@poorly.run
-Subject: [PATCH 4/4] drm/etnaviv: use dma_resv_describe
-Date:   Fri, 24 Sep 2021 09:17:59 +0200
-Message-Id: <20210924071759.22659-4-christian.koenig@amd.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20210924071759.22659-1-christian.koenig@amd.com>
-References: <20210924071759.22659-1-christian.koenig@amd.com>
+        id S244496AbhIXIBm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Sep 2021 04:01:42 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:20096 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S244474AbhIXIBl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 24 Sep 2021 04:01:41 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1632470408; h=Content-Type: MIME-Version: Message-ID:
+ In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
+ bh=TSws/164fiyq3oktWfzcBH/e+yGW2wBhhF/5uUAH+OQ=; b=ohpMaCMT9xB+3PGmbW5nwPG3NB3jnJY57Mpy9E1+1KBCZqafbc8YYANc4MDhE5/r2EFXPjiQ
+ 4Mas7Wf/MzK8tf8anw9An8oqGond+M3Aj1Dj09Dwj/5U5zxTvqwRmymIa1Lv9ezES2PDZ6G8
+ pRsGDOo185miwLA2iFGIjLyH1EY=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 614d857b648642cc1c339f6f (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 24 Sep 2021 07:59:55
+ GMT
+Sender: kvalo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id AC15DC43617; Fri, 24 Sep 2021 07:59:55 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from tykki (tynnyri.adurom.net [51.15.11.48])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kvalo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B3E77C4338F;
+        Fri, 24 Sep 2021 07:59:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org B3E77C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Kalle Valo <kvalo@codeaurora.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     pillair@codeaurora.org, ath10k@lists.infradead.org,
+        govinds@codeaurora.org, kuabhs@chromium.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
+        youghand@codeaurora.org
+Subject: Re: [PATCH] ath10k: Don't always treat modem stop events as crashes
+References: <002501d7af73$ae0a7620$0a1f6260$@codeaurora.org>
+        <CAE-0n52DcCwcdR07fvMLrj=RJFtNthy0FdWmt1gBWiD9eLrOvQ@mail.gmail.com>
+Date:   Fri, 24 Sep 2021 10:59:47 +0300
+In-Reply-To: <CAE-0n52DcCwcdR07fvMLrj=RJFtNthy0FdWmt1gBWiD9eLrOvQ@mail.gmail.com>
+        (Stephen Boyd's message of "Wed, 22 Sep 2021 15:20:07 -0700")
+Message-ID: <87bl4itnd8.fsf@codeaurora.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=UTF-8
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Instead of dumping the fence info manually.
+Stephen Boyd <swboyd@chromium.org> writes:
 
-Signed-off-by: Christian König <christian.koenig@amd.com>
----
- drivers/gpu/drm/etnaviv/etnaviv_gem.c | 26 +++++++-------------------
- 1 file changed, 7 insertions(+), 19 deletions(-)
+> Quoting pillair@codeaurora.org (2021-09-21 22:35:34)
+>> On 9/5/21 4:04 PM, Stephen Boyd wrote:
+>>
+>> > +static int ath10k_snoc_modem_notify(struct notifier_block *nb, unsigned long
+> [...]
+>>
+>> > +
+>>
+>> > +          return NOTIFY_OK;
+>>
+>> > +}
+>>
+>>
+>>
+>> Thanks for posting the patch. It would be preferable to use a different flag
+>> instead of ATH10K_SNOC_FLAG_UNREGISTERING,
+>>
+>> since we are not unloading the ath10k driver.
 
-diff --git a/drivers/gpu/drm/etnaviv/etnaviv_gem.c b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-index 0eeb33de2ff4..304b006e86bb 100644
---- a/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-+++ b/drivers/gpu/drm/etnaviv/etnaviv_gem.c
-@@ -425,36 +425,24 @@ int etnaviv_gem_wait_bo(struct etnaviv_gpu *gpu, struct drm_gem_object *obj,
- }
- 
- #ifdef CONFIG_DEBUG_FS
--static void etnaviv_gem_describe_fence(struct dma_fence *fence,
--	const char *type, struct seq_file *m)
--{
--	seq_printf(m, "\t%9s: %s %s seq %llu\n", type,
--		   fence->ops->get_driver_name(fence),
--		   fence->ops->get_timeline_name(fence),
--		   fence->seqno);
--}
--
- static void etnaviv_gem_describe(struct drm_gem_object *obj, struct seq_file *m)
- {
- 	struct etnaviv_gem_object *etnaviv_obj = to_etnaviv_bo(obj);
- 	struct dma_resv *robj = obj->resv;
--	struct dma_resv_iter cursor;
--	struct dma_fence *fence;
- 	unsigned long off = drm_vma_node_start(&obj->vma_node);
-+	int r;
- 
- 	seq_printf(m, "%08x: %c %2d (%2d) %08lx %p %zd\n",
- 			etnaviv_obj->flags, is_active(etnaviv_obj) ? 'A' : 'I',
- 			obj->name, kref_read(&obj->refcount),
- 			off, etnaviv_obj->vaddr, obj->size);
- 
--	dma_resv_iter_begin(&cursor, robj, true);
--	dma_resv_for_each_fence_unlocked(&cursor, fence) {
--		if (dma_resv_iter_is_exclusive(&cursor))
--			etnaviv_gem_describe_fence(fence, "Exclusive", m);
--		else
--			etnaviv_gem_describe_fence(fence, "Shared", m);
--	}
--	dma_resv_iter_end(&cursor);
-+	r = dma_resv_lock(robj, NULL);
-+	if (r)
-+		return;
-+
-+	dma_resv_describe(robj, m);
-+	dma_resv_unlock(robj);
- }
- 
- void etnaviv_gem_describe_objects(struct etnaviv_drm_private *priv,
+Weird, I don't see pillair's email on patchwork[1] and not in the ath10k
+list either. Was it sent as HTML or something?
+
+[1] https://patchwork.kernel.org/project/linux-wireless/patch/20210905210400.1157870-1-swboyd@chromium.org/
+
 -- 
-2.25.1
+https://patchwork.kernel.org/project/linux-wireless/list/
 
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
