@@ -2,87 +2,155 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E27C5417759
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Sep 2021 17:18:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AE896417764
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Sep 2021 17:19:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347045AbhIXPTe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Sep 2021 11:19:34 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:32102 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1346995AbhIXPTd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Sep 2021 11:19:33 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1632496680; h=Content-Type: MIME-Version: Message-ID:
- In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
- bh=5qolC4jFcMwSFM7kapELzpfX73mIYRcPlbRNqrVXTXg=; b=QotGoXXjFiOgniVkJ45TYjhbQEBMnbNMF3oOcvq5QLF5D/P/SDNutpQinuoq6X49IPOxs2Fj
- 6BrHF/Hm/erBCqiU0NQyM5KzhCcGeG5F7Mk73szcJspINkotSoVwuq0jFHSDoa+KZ54r+5Sm
- U9SxEXNRCMRMA5OZhwIphtj8rqs=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 614dec256c4c0e0dc3231a10 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 24 Sep 2021 15:17:57
- GMT
-Sender: kvalo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8A2AEC4360D; Fri, 24 Sep 2021 15:17:56 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from tykki (tynnyri.adurom.net [51.15.11.48])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: kvalo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5DC86C4338F;
-        Fri, 24 Sep 2021 15:17:53 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 5DC86C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Kalle Valo <kvalo@codeaurora.org>
-To:     Youghandhar Chintala <youghand@codeaurora.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>, linux-kernel@vger.kernel.org,
-        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Abhishek Kumar <kuabhs@chromium.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rakesh Pillai <pillair@codeaurora.org>
-Subject: Re: [PATCH v3] ath10k: Don't always treat modem stop events as crashes
-References: <20210922233341.182624-1-swboyd@chromium.org>
-        <98706efc03c88b54bfb44161566c8e4b@codeaurora.org>
-Date:   Fri, 24 Sep 2021 18:17:49 +0300
-In-Reply-To: <98706efc03c88b54bfb44161566c8e4b@codeaurora.org> (Youghandhar
-        Chintala's message of "Fri, 24 Sep 2021 18:13:48 +0530")
-Message-ID: <871r5eroiq.fsf@codeaurora.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S1347042AbhIXPU4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Sep 2021 11:20:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49670 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1346995AbhIXPUz (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 24 Sep 2021 11:20:55 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9490DC061613
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Sep 2021 08:19:22 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id 67-20020a9d0449000000b00546e5a8062aso13558908otc.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 24 Sep 2021 08:19:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=FPuGLXyf4GhSufJtTJPE2zMV0i7GqU53SMkQ5L/me9Q=;
+        b=f/iKq4FEp3LEXigAZZ11zXCgcDuCmdMdOyDEgV6ybsY5fbnKvDWEZsgf/jeXsl0fcJ
+         ESsqyytRG+8Yzcbx8ws72ASSAZu+x4U1Q+4faH4oMc0XAMOQR5sG4JjEyMCZhOObOg5u
+         eNCzhqERrT5pRMc7PGNHr8RTiQr80VjVp/2vhfsGfZslJDQMvlezmCHYUNzL/jKAqG9H
+         AukSJFJi/UQRixGLRygUevm4Y8k+IfecrNwl0ZDwd/ixhHZGWwm2XL/b1VF/HnYd+x8V
+         r/s9DPuXpSTRRMK+dCtOAU92kPIqlLANQRqXVDvxQGbMsFNAHuJouRzexUadSbu8cfGR
+         GSpg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=FPuGLXyf4GhSufJtTJPE2zMV0i7GqU53SMkQ5L/me9Q=;
+        b=4/L6QlHbpkcvVoG2s7LHggBcDFUpwguydskQ7T7LbWv1F1h3f50kMar8XaUYFVHSUk
+         IcXgq48pzLiNJJyBkk7+ZaRmX8GMSetw1e5MWs3hxU62+Xh7WTBVj3FQL5CTkgtUIaXL
+         aorpZGjIUH0UerEvLFPE1i1FfSgSFuxDjFXW5KKU2zUKfGoQFAm4pUPQAS9EMv3N5uQ8
+         1OsErWbMnmKJqVeVwCd9ysP7YwjXl4GKwLsPDN5ZtNKWBy0wu26E8+hnhDlpo+Da817r
+         dnSKqKyj7amBBk8gMWyBej31fk1fybBnYMXXWlJVO87gGlG3vLvR5W2uuSMx+yjJNEVc
+         O4tQ==
+X-Gm-Message-State: AOAM533QKCHFJHDky36B1IankArT3xMu/V8q4ovx8JOWS4zxRPe4u/Gm
+        81tFRL2vZ4uBaLiAt/KBV6oQkg==
+X-Google-Smtp-Source: ABdhPJwppbzTnd5V1quAynG3XkKUBXIK0hPAtxhhdSVQJJOEo57BZuYRHSwufDJQKlS6onACToGjxQ==
+X-Received: by 2002:a9d:6206:: with SMTP id g6mr4588442otj.62.1632496761890;
+        Fri, 24 Sep 2021 08:19:21 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id e2sm1815335ooa.20.2021.09.24.08.19.21
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 24 Sep 2021 08:19:21 -0700 (PDT)
+Date:   Fri, 24 Sep 2021 08:20:00 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Georgi Djakov <djakov@kernel.org>
+Cc:     Shawn Guo <shawn.guo@linaro.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+Subject: Re: [PATCH v2 2/3] interconnect: qcom: sdm660: Add missing a2noc qos
+ clocks
+Message-ID: <YU3soCSg7nbywpGw@ripper>
+References: <20210824043435.23190-1-shawn.guo@linaro.org>
+ <20210824043435.23190-3-shawn.guo@linaro.org>
+ <YU3hoXHap5DsjTOm@builder.lan>
+ <9b660924-1f07-8723-b66c-182ca06629d2@kernel.org>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <9b660924-1f07-8723-b66c-182ca06629d2@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Youghandhar Chintala <youghand@codeaurora.org> writes:
+On Fri 24 Sep 07:58 PDT 2021, Georgi Djakov wrote:
 
-> I pulled the latest patch changes and tested them on SC7180. Which
-> works as expected.
-> Do not see this error message during reboot and can be seen while
-> doing SSR.
->
-> Tested-By: Youghandhar Chintala <youghand@codeaurora.org>
+> On 24.09.21 17:33, Bjorn Andersson wrote:
+> > On Mon 23 Aug 23:34 CDT 2021, Shawn Guo wrote:
+> > 
+> > > It adds the missing a2noc clocks required for QoS registers programming
+> > > per downstream kernel[1].  Otherwise, qcom_icc_noc_set_qos_priority()
+> > > call on mas_ufs or mas_usb_hs node will simply result in a hardware hang
+> > > on SDM660 SoC.
+> > > 
+> > > [1] https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/arch/arm/boot/dts/qcom/sdm660-bus.dtsi?h=LA.UM.8.2.r1-04800-sdm660.0#n43
+> > > 
+> > > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+> > > Tested-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > 
+> > Georgi, do you intend to pull this patch in for v5.15-rc?
+> > 
+> > I.e. should I pick up the dts change for v5.15 as well.
+> 
+> Yes, i have just sent a pull request with this included, so please
+> pull the dts change as a fix for v5.15-rc. Sorry for not mentioning
+> it explicitly.
+> I assume that not all bootloaders are leaving the qos clocks enabled,
+> so if this is fixing a hardware hang, should we also backport it into
+> stable? This is probably more of a question to the people actively
+> using this board?
+> 
 
-Thanks for testing. But this style of replies makes it hard to use
-patchwork:
+Devices that needed this change wouldn't boot on that older kernel
+anyways, so I think it's safe to assume that we don't have any users on
+an old kernel that would benefit from this change.
 
-https://patchwork.kernel.org/project/linux-wireless/patch/20210922233341.182624-1-swboyd@chromium.org/
+So v5.15 is probably sufficient.
 
-So please do not top post and always edit your quotes, thank you, Same
-request also to Rakesh.
+Regards,
+Bjorn
 
--- 
-https://patchwork.kernel.org/project/linux-wireless/list/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+> Thanks,
+> Georgi
+> 
+> > Regards,
+> > Bjorn
+> > 
+> > > ---
+> > >   drivers/interconnect/qcom/sdm660.c | 14 ++++++++++++++
+> > >   1 file changed, 14 insertions(+)
+> > > 
+> > > diff --git a/drivers/interconnect/qcom/sdm660.c b/drivers/interconnect/qcom/sdm660.c
+> > > index c89c991a80a0..661eb3635d21 100644
+> > > --- a/drivers/interconnect/qcom/sdm660.c
+> > > +++ b/drivers/interconnect/qcom/sdm660.c
+> > > @@ -174,6 +174,16 @@ static const struct clk_bulk_data bus_mm_clocks[] = {
+> > >   	{ .id = "iface" },
+> > >   };
+> > > +static const struct clk_bulk_data bus_a2noc_clocks[] = {
+> > > +	{ .id = "bus" },
+> > > +	{ .id = "bus_a" },
+> > > +	{ .id = "ipa" },
+> > > +	{ .id = "ufs_axi" },
+> > > +	{ .id = "aggre2_ufs_axi" },
+> > > +	{ .id = "aggre2_usb3_axi" },
+> > > +	{ .id = "cfg_noc_usb2_axi" },
+> > > +};
+> > > +
+> > >   /**
+> > >    * struct qcom_icc_provider - Qualcomm specific interconnect provider
+> > >    * @provider: generic interconnect provider
+> > > @@ -811,6 +821,10 @@ static int qnoc_probe(struct platform_device *pdev)
+> > >   		qp->bus_clks = devm_kmemdup(dev, bus_mm_clocks,
+> > >   					    sizeof(bus_mm_clocks), GFP_KERNEL);
+> > >   		qp->num_clks = ARRAY_SIZE(bus_mm_clocks);
+> > > +	} else if (of_device_is_compatible(dev->of_node, "qcom,sdm660-a2noc")) {
+> > > +		qp->bus_clks = devm_kmemdup(dev, bus_a2noc_clocks,
+> > > +					    sizeof(bus_a2noc_clocks), GFP_KERNEL);
+> > > +		qp->num_clks = ARRAY_SIZE(bus_a2noc_clocks);
+> > >   	} else {
+> > >   		if (of_device_is_compatible(dev->of_node, "qcom,sdm660-bimc"))
+> > >   			qp->is_bimc_node = true;
+> > > -- 
+> > > 2.17.1
+> > > 
+> 
