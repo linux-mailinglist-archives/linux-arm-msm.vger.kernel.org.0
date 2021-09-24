@@ -2,118 +2,310 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EC7814171A4
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Sep 2021 14:19:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AECF14171FF
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Sep 2021 14:38:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245498AbhIXMVF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Sep 2021 08:21:05 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:15766 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245499AbhIXMVD (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Sep 2021 08:21:03 -0400
-Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
-  by alexa-out.qualcomm.com with ESMTP; 24 Sep 2021 05:19:30 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/AES256-SHA; 24 Sep 2021 05:19:29 -0700
-X-QCInternal: smtphost
-Received: from ekangupt-linux.qualcomm.com ([10.204.67.11])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 24 Sep 2021 17:49:15 +0530
-Received: by ekangupt-linux.qualcomm.com (Postfix, from userid 2319895)
-        id 6F3534318; Fri, 24 Sep 2021 17:49:14 +0530 (IST)
-From:   Jeya R <jeyr@codeaurora.org>
-To:     linux-arm-msm@vger.kernel.org, srinivas.kandagatla@linaro.org
-Cc:     Jeya R <jeyr@codeaurora.org>, gregkh@linuxfoundation.org,
-        linux-kernel@vger.kernel.org, fastrpc.upstream@qti.qualcomm.com
-Subject: [PATCH 4/4] misc: fastrpc: reject non-secure node for secure domain
-Date:   Fri, 24 Sep 2021 17:49:11 +0530
-Message-Id: <1632485951-13473-5-git-send-email-jeyr@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1632485951-13473-1-git-send-email-jeyr@codeaurora.org>
-References: <1632485951-13473-1-git-send-email-jeyr@codeaurora.org>
+        id S245098AbhIXMjx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Sep 2021 08:39:53 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:15409 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S244845AbhIXMjx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 24 Sep 2021 08:39:53 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1632487100; h=Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Message-ID: Date: Subject: In-Reply-To: References: Cc:
+ To: From: Sender; bh=C0NbK+GyRf4zfOg9CVcouCe61GtP6bkooNjoBguhgOk=; b=Bu/Yk54rbKptWeYMLURuw/vgGPZ3M+AF2aj8SdViD4OrF8hdsVxyORZl2Sim5zxOGhke7C3A
+ qR5sMV+tdxfH/KJxn/UDr5IXzNXAg0hZg6Hzs8/xrFMcj+1I5T4Rbh6fI3xTzBVjejYC8+vM
+ lwkICK4Zg7HbPUUqHVzMEVFUPqQ=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 614dc6bab585cc7d24035e7b (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 24 Sep 2021 12:38:18
+ GMT
+Sender: pillair=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id CFB16C4360D; Fri, 24 Sep 2021 12:38:18 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from PILLAIR1 (unknown [103.155.222.105])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: pillair)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 16437C4360C;
+        Fri, 24 Sep 2021 12:38:11 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 16437C4360C
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   <pillair@codeaurora.org>
+To:     "'Stephen Boyd'" <swboyd@chromium.org>,
+        "'Kalle Valo'" <kvalo@codeaurora.org>
+Cc:     <linux-kernel@vger.kernel.org>, <ath10k@lists.infradead.org>,
+        <linux-wireless@vger.kernel.org>, <netdev@vger.kernel.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        "'Youghandhar Chintala'" <youghand@codeaurora.org>,
+        "'Abhishek Kumar'" <kuabhs@chromium.org>,
+        "'Steev Klimaszewski'" <steev@kali.org>,
+        "'Matthias Kaehlcke'" <mka@chromium.org>
+References: <20210922233341.182624-1-swboyd@chromium.org>
+In-Reply-To: <20210922233341.182624-1-swboyd@chromium.org>
+Subject: RE: [PATCH v3] ath10k: Don't always treat modem stop events as crashes
+Date:   Fri, 24 Sep 2021 18:08:08 +0530
+Message-ID: <005a01d7b141$0b886e00$22994a00$@codeaurora.org>
+MIME-Version: 1.0
+Content-Type: text/plain;
+        charset="us-ascii"
+Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+Thread-Index: AQGvLF3qEcjld9hlj/CI0Eadhs8rcKwEKQ8Q
+Content-Language: en-us
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Reject session if domain is secure and device non-secure. Also check if
-opened device node is proper.
 
-Signed-off-by: Jeya R <jeyr@codeaurora.org>
----
- drivers/misc/fastrpc.c | 24 ++++++++++++++++++++++++
- 1 file changed, 24 insertions(+)
 
-diff --git a/drivers/misc/fastrpc.c b/drivers/misc/fastrpc.c
-index 631713d..adf2700 100644
---- a/drivers/misc/fastrpc.c
-+++ b/drivers/misc/fastrpc.c
-@@ -235,6 +235,7 @@ struct fastrpc_user {
- 	spinlock_t lock;
- 	/* lock for allocations */
- 	struct mutex mutex;
-+	int dev_minor;
- };
- 
- static void fastrpc_free_map(struct kref *ref)
-@@ -1013,6 +1014,17 @@ static int fastrpc_internal_invoke(struct fastrpc_user *fl,  u32 kernel,
- 	return err;
- }
- 
-+static int is_session_rejected(struct fastrpc_user *fl)
-+{
-+	/* Check if the device node is non-secure and channel is secure*/
-+	if ((fl->dev_minor == fl->cctx->miscdev.minor) && fl->cctx->secure) {
-+		dev_err(&fl->cctx->rpdev->dev, "Cannot use non-secure device"
-+				"node on secure channel\n");
-+		return -EACCES;
-+	}
-+	return 0;
-+}
-+
- static int fastrpc_init_create_process(struct fastrpc_user *fl,
- 					char __user *argp)
- {
-@@ -1033,6 +1045,10 @@ static int fastrpc_init_create_process(struct fastrpc_user *fl,
- 	} inbuf;
- 	u32 sc;
- 
-+	err = is_session_rejected(fl);
-+	if (err)
-+		return err;
-+
- 	args = kcalloc(FASTRPC_CREATE_PROCESS_NARGS, sizeof(*args), GFP_KERNEL);
- 	if (!args)
- 		return -ENOMEM;
-@@ -1221,6 +1237,7 @@ static int fastrpc_device_open(struct inode *inode, struct file *filp)
- 	struct fastrpc_user *fl = NULL;
- 	struct miscdevice *currdev = NULL;
- 	unsigned long flags;
-+	int dev_minor = MINOR(inode->i_rdev);
- 
- 	if (!filp)
- 		return -EFAULT;
-@@ -1234,6 +1251,12 @@ static int fastrpc_device_open(struct inode *inode, struct file *filp)
- 	else
- 		cctx = miscdev_to_cctx(filp->private_data);
- 
-+	if (!((dev_minor == cctx->miscdev.minor) ||
-+	     (dev_minor == cctx->securedev.minor))) {
-+		dev_err(&cctx->rpdev->dev, "Device node is not proper\n");
-+		return -EFAULT;
-+	}
-+
- 	fl = kzalloc(sizeof(*fl), GFP_KERNEL);
- 	if (!fl)
- 		return -ENOMEM;
-@@ -1250,6 +1273,7 @@ static int fastrpc_device_open(struct inode *inode, struct file *filp)
- 	INIT_LIST_HEAD(&fl->user);
- 	fl->tgid = current->tgid;
- 	fl->cctx = cctx;
-+	fl->dev_minor = dev_minor;
- 
- 	fl->sctx = fastrpc_session_alloc(cctx);
- 	if (!fl->sctx) {
--- 
-2.7.4
+> -----Original Message-----
+> From: Stephen Boyd <swboyd@chromium.org>
+> Sent: Thursday, September 23, 2021 5:04 AM
+> To: Kalle Valo <kvalo@codeaurora.org>
+> Cc: linux-kernel@vger.kernel.org; ath10k@lists.infradead.org; linux-
+> wireless@vger.kernel.org; netdev@vger.kernel.org; linux-arm-
+> msm@vger.kernel.org; Youghandhar Chintala <youghand@codeaurora.org>;
+> Abhishek Kumar <kuabhs@chromium.org>; Steev Klimaszewski
+> <steev@kali.org>; Matthias Kaehlcke <mka@chromium.org>; Rakesh Pillai
+> <pillair@codeaurora.org>
+> Subject: [PATCH v3] ath10k: Don't always treat modem stop events as
+> crashes
+> 
+> When rebooting on sc7180 Trogdor devices I see the following crash from
+the
+> wifi driver.
+> 
+>  ath10k_snoc 18800000.wifi: firmware crashed! (guid 83493570-29a2-4e98-
+> a83e-70048c47669c)
+> 
+> This is because a modem stop event looks just like a firmware crash to the
+> driver, the qmi connection is closed in both cases. Use the qcom ssr
+notifier
+> block to stop treating the qmi connection close event as a firmware crash
+> signal when the modem hasn't actually crashed. See
+> ath10k_qmi_event_server_exit() for more details.
+> 
+> This silences the crash message seen during every reboot.
+> 
+> Fixes: 3f14b73c3843 ("ath10k: Enable MSA region dump support for
+> WCN3990")
+> Cc: Youghandhar Chintala <youghand@codeaurora.org>
+> Cc: Abhishek Kumar <kuabhs@chromium.org>
+> Cc: Steev Klimaszewski <steev@kali.org>
+> Cc: Matthias Kaehlcke <mka@chromium.org>
+> Cc: Rakesh Pillai <pillair@codeaurora.org>
+> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+> 
+> Changes since v2 (https://lore.kernel.org/r/20210913205313.3420049-1-
+> swboyd@chromium.org):
+>  * Use a new bit instead of overloading unregistering
+> 
+> Changes since v1 (https://lore.kernel.org/r/20210905210400.1157870-1-
+> swboyd@chromium.org):
+>  * Push error message into function instead of checking at callsite
+> 
+>  drivers/net/wireless/ath/ath10k/qmi.c  |  3 +-
+> drivers/net/wireless/ath/ath10k/snoc.c | 77
+> ++++++++++++++++++++++++++  drivers/net/wireless/ath/ath10k/snoc.h |
+> 5 ++
+>  3 files changed, 84 insertions(+), 1 deletion(-)
+
+Reviewed-by: Rakesh Pillai <pillair@codeaurora.org>
+
+
+
+
+> 
+> diff --git a/drivers/net/wireless/ath/ath10k/qmi.c
+> b/drivers/net/wireless/ath/ath10k/qmi.c
+> index 07e478f9a808..80fcb917fe4e 100644
+> --- a/drivers/net/wireless/ath/ath10k/qmi.c
+> +++ b/drivers/net/wireless/ath/ath10k/qmi.c
+> @@ -864,7 +864,8 @@ static void ath10k_qmi_event_server_exit(struct
+> ath10k_qmi *qmi)
+> 
+>  	ath10k_qmi_remove_msa_permission(qmi);
+>  	ath10k_core_free_board_files(ar);
+> -	if (!test_bit(ATH10K_SNOC_FLAG_UNREGISTERING, &ar_snoc-
+> >flags))
+> +	if (!test_bit(ATH10K_SNOC_FLAG_UNREGISTERING, &ar_snoc-
+> >flags) &&
+> +	    !test_bit(ATH10K_SNOC_FLAG_MODEM_STOPPED, &ar_snoc-
+> >flags))
+>  		ath10k_snoc_fw_crashed_dump(ar);
+> 
+>  	ath10k_snoc_fw_indication(ar,
+> ATH10K_QMI_EVENT_FW_DOWN_IND); diff --git
+> a/drivers/net/wireless/ath/ath10k/snoc.c
+> b/drivers/net/wireless/ath/ath10k/snoc.c
+> index ea00fbb15601..9513ab696fff 100644
+> --- a/drivers/net/wireless/ath/ath10k/snoc.c
+> +++ b/drivers/net/wireless/ath/ath10k/snoc.c
+> @@ -12,6 +12,7 @@
+>  #include <linux/platform_device.h>
+>  #include <linux/property.h>
+>  #include <linux/regulator/consumer.h>
+> +#include <linux/remoteproc/qcom_rproc.h>
+>  #include <linux/of_address.h>
+>  #include <linux/iommu.h>
+> 
+> @@ -1477,6 +1478,74 @@ void ath10k_snoc_fw_crashed_dump(struct
+> ath10k *ar)
+>  	mutex_unlock(&ar->dump_mutex);
+>  }
+> 
+> +static int ath10k_snoc_modem_notify(struct notifier_block *nb, unsigned
+> long action,
+> +				    void *data)
+> +{
+> +	struct ath10k_snoc *ar_snoc = container_of(nb, struct ath10k_snoc,
+> nb);
+> +	struct ath10k *ar = ar_snoc->ar;
+> +	struct qcom_ssr_notify_data *notify_data = data;
+> +
+> +	switch (action) {
+> +	case QCOM_SSR_BEFORE_POWERUP:
+> +		ath10k_dbg(ar, ATH10K_DBG_SNOC, "received modem
+> starting event\n");
+> +		clear_bit(ATH10K_SNOC_FLAG_MODEM_STOPPED,
+> &ar_snoc->flags);
+> +		break;
+> +
+> +	case QCOM_SSR_AFTER_POWERUP:
+> +		ath10k_dbg(ar, ATH10K_DBG_SNOC, "received modem
+> running event\n");
+> +		break;
+> +
+> +	case QCOM_SSR_BEFORE_SHUTDOWN:
+> +		ath10k_dbg(ar, ATH10K_DBG_SNOC, "received modem %s
+> event\n",
+> +			   notify_data->crashed ? "crashed" : "stopping");
+> +		if (!notify_data->crashed)
+> +			set_bit(ATH10K_SNOC_FLAG_MODEM_STOPPED,
+> &ar_snoc->flags);
+> +		else
+> +			clear_bit(ATH10K_SNOC_FLAG_MODEM_STOPPED,
+> &ar_snoc->flags);
+> +		break;
+> +
+> +	case QCOM_SSR_AFTER_SHUTDOWN:
+> +		ath10k_dbg(ar, ATH10K_DBG_SNOC, "received modem
+> offline event\n");
+> +		break;
+> +
+> +	default:
+> +		ath10k_err(ar, "received unrecognized event %lu\n", action);
+> +		break;
+> +	}
+> +
+> +	return NOTIFY_OK;
+> +}
+> +
+> +static int ath10k_modem_init(struct ath10k *ar) {
+> +	struct ath10k_snoc *ar_snoc = ath10k_snoc_priv(ar);
+> +	void *notifier;
+> +	int ret;
+> +
+> +	ar_snoc->nb.notifier_call = ath10k_snoc_modem_notify;
+> +
+> +	notifier = qcom_register_ssr_notifier("mpss", &ar_snoc->nb);
+> +	if (IS_ERR(notifier)) {
+> +		ret = PTR_ERR(notifier);
+> +		ath10k_err(ar, "failed to initialize modem notifier: %d\n",
+> ret);
+> +		return ret;
+> +	}
+> +
+> +	ar_snoc->notifier = notifier;
+> +
+> +	return 0;
+> +}
+> +
+> +static void ath10k_modem_deinit(struct ath10k *ar) {
+> +	int ret;
+> +	struct ath10k_snoc *ar_snoc = ath10k_snoc_priv(ar);
+> +
+> +	ret = qcom_unregister_ssr_notifier(ar_snoc->notifier, &ar_snoc-
+> >nb);
+> +	if (ret)
+> +		ath10k_err(ar, "error %d unregistering notifier\n", ret); }
+> +
+>  static int ath10k_setup_msa_resources(struct ath10k *ar, u32 msa_size)  {
+>  	struct device *dev = ar->dev;
+> @@ -1740,10 +1809,17 @@ static int ath10k_snoc_probe(struct
+> platform_device *pdev)
+>  		goto err_fw_deinit;
+>  	}
+> 
+> +	ret = ath10k_modem_init(ar);
+> +	if (ret)
+> +		goto err_qmi_deinit;
+> +
+>  	ath10k_dbg(ar, ATH10K_DBG_SNOC, "snoc probe\n");
+> 
+>  	return 0;
+> 
+> +err_qmi_deinit:
+> +	ath10k_qmi_deinit(ar);
+> +
+>  err_fw_deinit:
+>  	ath10k_fw_deinit(ar);
+> 
+> @@ -1771,6 +1847,7 @@ static int ath10k_snoc_free_resources(struct
+> ath10k *ar)
+>  	ath10k_fw_deinit(ar);
+>  	ath10k_snoc_free_irq(ar);
+>  	ath10k_snoc_release_resource(ar);
+> +	ath10k_modem_deinit(ar);
+>  	ath10k_qmi_deinit(ar);
+>  	ath10k_core_destroy(ar);
+> 
+> diff --git a/drivers/net/wireless/ath/ath10k/snoc.h
+> b/drivers/net/wireless/ath/ath10k/snoc.h
+> index 5095d1893681..d4bce1707696 100644
+> --- a/drivers/net/wireless/ath/ath10k/snoc.h
+> +++ b/drivers/net/wireless/ath/ath10k/snoc.h
+> @@ -6,6 +6,8 @@
+>  #ifndef _SNOC_H_
+>  #define _SNOC_H_
+> 
+> +#include <linux/notifier.h>
+> +
+>  #include "hw.h"
+>  #include "ce.h"
+>  #include "qmi.h"
+> @@ -45,6 +47,7 @@ struct ath10k_snoc_ce_irq {  enum ath10k_snoc_flags {
+>  	ATH10K_SNOC_FLAG_REGISTERED,
+>  	ATH10K_SNOC_FLAG_UNREGISTERING,
+> +	ATH10K_SNOC_FLAG_MODEM_STOPPED,
+>  	ATH10K_SNOC_FLAG_RECOVERY,
+>  	ATH10K_SNOC_FLAG_8BIT_HOST_CAP_QUIRK,
+>  };
+> @@ -75,6 +78,8 @@ struct ath10k_snoc {
+>  	struct clk_bulk_data *clks;
+>  	size_t num_clks;
+>  	struct ath10k_qmi *qmi;
+> +	struct notifier_block nb;
+> +	void *notifier;
+>  	unsigned long flags;
+>  	bool xo_cal_supported;
+>  	u32 xo_cal_data;
+> 
+> base-commit: e4e737bb5c170df6135a127739a9e6148ee3da82
+> --
+> https://chromeos.dev
+
 
