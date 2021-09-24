@@ -2,94 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 906BD416D42
-	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Sep 2021 10:00:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C226416D51
+	for <lists+linux-arm-msm@lfdr.de>; Fri, 24 Sep 2021 10:04:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244496AbhIXIBm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 24 Sep 2021 04:01:42 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:20096 "EHLO m43-7.mailgun.net"
+        id S244542AbhIXIF7 convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 24 Sep 2021 04:05:59 -0400
+Received: from mga12.intel.com ([192.55.52.136]:37593 "EHLO mga12.intel.com"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S244474AbhIXIBl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 24 Sep 2021 04:01:41 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1632470408; h=Content-Type: MIME-Version: Message-ID:
- In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
- bh=TSws/164fiyq3oktWfzcBH/e+yGW2wBhhF/5uUAH+OQ=; b=ohpMaCMT9xB+3PGmbW5nwPG3NB3jnJY57Mpy9E1+1KBCZqafbc8YYANc4MDhE5/r2EFXPjiQ
- 4Mas7Wf/MzK8tf8anw9An8oqGond+M3Aj1Dj09Dwj/5U5zxTvqwRmymIa1Lv9ezES2PDZ6G8
- pRsGDOo185miwLA2iFGIjLyH1EY=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 614d857b648642cc1c339f6f (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 24 Sep 2021 07:59:55
- GMT
-Sender: kvalo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id AC15DC43617; Fri, 24 Sep 2021 07:59:55 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from tykki (tynnyri.adurom.net [51.15.11.48])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: kvalo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B3E77C4338F;
-        Fri, 24 Sep 2021 07:59:52 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org B3E77C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Kalle Valo <kvalo@codeaurora.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     pillair@codeaurora.org, ath10k@lists.infradead.org,
-        govinds@codeaurora.org, kuabhs@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-wireless@vger.kernel.org, netdev@vger.kernel.org,
-        youghand@codeaurora.org
-Subject: Re: [PATCH] ath10k: Don't always treat modem stop events as crashes
-References: <002501d7af73$ae0a7620$0a1f6260$@codeaurora.org>
-        <CAE-0n52DcCwcdR07fvMLrj=RJFtNthy0FdWmt1gBWiD9eLrOvQ@mail.gmail.com>
-Date:   Fri, 24 Sep 2021 10:59:47 +0300
-In-Reply-To: <CAE-0n52DcCwcdR07fvMLrj=RJFtNthy0FdWmt1gBWiD9eLrOvQ@mail.gmail.com>
-        (Stephen Boyd's message of "Wed, 22 Sep 2021 15:20:07 -0700")
-Message-ID: <87bl4itnd8.fsf@codeaurora.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        id S244471AbhIXIF6 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 24 Sep 2021 04:05:58 -0400
+X-IronPort-AV: E=McAfee;i="6200,9189,10116"; a="203519850"
+X-IronPort-AV: E=Sophos;i="5.85,319,1624345200"; 
+   d="scan'208";a="203519850"
+Received: from fmsmga003.fm.intel.com ([10.253.24.29])
+  by fmsmga106.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Sep 2021 01:04:04 -0700
+X-IronPort-AV: E=Sophos;i="5.85,319,1624345200"; 
+   d="scan'208";a="551488631"
+Received: from avanhout-mobl.ger.corp.intel.com (HELO localhost) ([10.249.37.153])
+  by fmsmga003-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 24 Sep 2021 01:03:37 -0700
+From:   Jani Nikula <jani.nikula@linux.intel.com>
+To:     Doug Anderson <dianders@chromium.org>,
+        Linus Walleij <linus.walleij@linaro.org>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        "open list\:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Steev Klimaszewski <steev@kali.org>,
+        "open list\:DRM PANEL DRIVERS" <dri-devel@lists.freedesktop.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Maxime Ripard <mripard@kernel.org>,
+        Adam Ford <aford173@gmail.com>,
+        Al Viro <viro@zeniv.linux.org.uk>,
+        Alexandre Belloni <alexandre.belloni@bootlin.com>,
+        Alexandre Torgue <alexandre.torgue@foss.st.com>,
+        Andreas Kemnade <andreas@kemnade.info>,
+        Andrey Zhizhikin <andrey.zhizhikin@leica-geosystems.com>,
+        Anson Huang <Anson.Huang@nxp.com>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Catalin Marinas <catalin.marinas@arm.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Claudiu Beznea <claudiu.beznea@microchip.com>,
+        Corentin Labbe <clabbe@baylibre.com>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Dmitry Osipenko <digetx@gmail.com>,
+        Emil Velikov <emil.velikov@collabora.com>,
+        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
+        Eugen Hristev <eugen.hristev@microchip.com>,
+        Fabio Estevam <festevam@gmail.com>,
+        Fabrice Gasnier <fabrice.gasnier@st.com>,
+        Florian Fainelli <f.fainelli@gmail.com>,
+        Geert Uytterhoeven <geert+renesas@glider.be>,
+        Grygorii Strashko <grygorii.strashko@ti.com>,
+        Guido =?utf-8?Q?G=C3=BCnther?= <agx@sigxcpu.org>,
+        Jagan Teki <jagan@amarulasolutions.com>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Joel Stanley <joel@jms.id.au>,
+        Jonathan Hunter <jonathanh@nvidia.com>,
+        Kees Cook <keescook@chromium.org>,
+        Krzysztof Kozlowski <krzk@kernel.org>,
+        Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>,
+        Lionel Debieve <lionel.debieve@st.com>,
+        Liviu Dudau <liviu.dudau@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Ludovic Desroches <ludovic.desroches@microchip.com>,
+        Magnus Damm <magnus.damm@gmail.com>,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        Marek Szyprowski <m.szyprowski@samsung.com>,
+        Martin =?utf-8?Q?J=C3=BCcker?= <martin.juecker@gmail.com>,
+        Matthias Brugger <matthias.bgg@gmail.com>,
+        Michael Walle <michael@walle.cc>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Nicolas Ferre <nicolas.ferre@microchip.com>,
+        Nishanth Menon <nm@ti.com>,
+        Olivier Moysan <olivier.moysan@st.com>,
+        Otavio Salvador <otavio@ossystems.com.br>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Razvan Stefanescu <razvan.stefanescu@microchip.com>,
+        Robert Richter <rric@kernel.org>,
+        Russell King <linux@armlinux.org.uk>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Stefan Wahren <stefan.wahren@i2se.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Tony Lindgren <tony@atomide.com>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Will Deacon <will@kernel.org>,
+        William Cohen <wcohen@redhat.com>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        Linux-OMAP <linux-omap@vger.kernel.org>,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>,
+        linux-samsung-soc <linux-samsung-soc@vger.kernel.org>,
+        linux-sunxi@lists.linux.dev,
+        linux-tegra <linux-tegra@vger.kernel.org>,
+        =?utf-8?Q?=C5=81ukasz?= Stelmach <l.stelmach@samsung.com>,
+        Stanislav Lisovskiy <stanislav.lisovskiy@intel.com>
+Subject: Re: [PATCH v5 00/15] eDP: Support probing eDP panels dynamically instead of hardcoding
+In-Reply-To: <CAD=FV=VPgFRBLgOGvt4a4afDr80aQL64L7=H3kqeRf2ffiusPg@mail.gmail.com>
+Organization: Intel Finland Oy - BIC 0357606-4 - Westendinkatu 7, 02160 Espoo
+References: <20210914202202.1702601-1-dianders@chromium.org> <CACRpkdaTb4_UfFzCqw=fiAnQhHD+1sDDua529KdGQbgMVfjYBw@mail.gmail.com> <CAD=FV=VPgFRBLgOGvt4a4afDr80aQL64L7=H3kqeRf2ffiusPg@mail.gmail.com>
+Date:   Fri, 24 Sep 2021 11:03:34 +0300
+Message-ID: <874kaabdt5.fsf@intel.com>
 MIME-Version: 1.0
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Stephen Boyd <swboyd@chromium.org> writes:
+On Mon, 20 Sep 2021, Doug Anderson <dianders@chromium.org> wrote:
+> Pushed all 15 to drm-misc-next.
+...
+> e8de4d55c259 drm/edid: Use new encoded panel id style for quirks matching
+> d9f91a10c3e8 drm/edid: Allow querying/working with the panel ID from the EDID
 
-> Quoting pillair@codeaurora.org (2021-09-21 22:35:34)
->> On 9/5/21 4:04 PM, Stephen Boyd wrote:
->>
->> > +static int ath10k_snoc_modem_notify(struct notifier_block *nb, unsigned long
-> [...]
->>
->> > +
->>
->> > +          return NOTIFY_OK;
->>
->> > +}
->>
->>
->>
->> Thanks for posting the patch. It would be preferable to use a different flag
->> instead of ATH10K_SNOC_FLAG_UNREGISTERING,
->>
->> since we are not unloading the ath10k driver.
+Hi Doug, Stan's reporting "initializer element is not constant" issues
+here that were discussed before [1]. I wonder what gives, you said you'd
+hit them on a draft version, but not with what was merged, and I can't
+reproduce this either. Curious.
 
-Weird, I don't see pillair's email on patchwork[1] and not in the ath10k
-list either. Was it sent as HTML or something?
+BR,
+Jani.
 
-[1] https://patchwork.kernel.org/project/linux-wireless/patch/20210905210400.1157870-1-swboyd@chromium.org/
+
+In file included from drivers/gpu/drm/drm_edid.c:42:0:
+./include/drm/drm_edid.h:525:2: error: initializer element is not constant
+  ((((u32)((vend)[0]) - '@') & 0x1f) << 26 | \
+  ^
+drivers/gpu/drm/drm_edid.c:111:14: note: in expansion of macro ‘drm_edid_encode_panel_id’
+  .panel_id = drm_edid_encode_panel_id(vend, product_id), \
+	      ^~~~~~~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/drm_edid.c:120:2: note: in expansion of macro ‘EDID_QUIRK’
+  EDID_QUIRK("ACR", 44358, EDID_QUIRK_PREFER_LARGE_60),
+  ^~~~~~~~~~
+./include/drm/drm_edid.h:525:2: note: (near initialization for ‘edid_quirk_list[0].panel_id’)
+  ((((u32)((vend)[0]) - '@') & 0x1f) << 26 | \
+  ^
+drivers/gpu/drm/drm_edid.c:111:14: note: in expansion of macro ‘drm_edid_encode_panel_id’
+  .panel_id = drm_edid_encode_panel_id(vend, product_id), \
+	      ^~~~~~~~~~~~~~~~~~~~~~~~
+drivers/gpu/drm/drm_edid.c:120:2: note: in expansion of macro ‘EDID_QUIRK’
+  EDID_QUIRK("ACR", 44358, EDID_QUIRK_PREFER_LARGE_60),
+  ^~~~~~~~~~
+
+
+[1] https://lore.kernel.org/all/CAD=FV=XHvFq5+Rtax7WNq2-BieQr-BM4UnmOcma_eTzkX2ZtNA@mail.gmail.com/
+
 
 -- 
-https://patchwork.kernel.org/project/linux-wireless/list/
-
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+Jani Nikula, Intel Open Source Graphics Center
