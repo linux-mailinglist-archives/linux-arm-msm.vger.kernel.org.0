@@ -2,170 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 85425418297
-	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Sep 2021 16:18:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 35BCA4182AB
+	for <lists+linux-arm-msm@lfdr.de>; Sat, 25 Sep 2021 16:25:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245656AbhIYOUU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 25 Sep 2021 10:20:20 -0400
-Received: from relay02.th.seeweb.it ([5.144.164.163]:57735 "EHLO
-        relay02.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238275AbhIYOUU (ORCPT
+        id S234173AbhIYO1E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 25 Sep 2021 10:27:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45478 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233738AbhIYO1E (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 25 Sep 2021 10:20:20 -0400
-Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 7BDD31F698;
-        Sat, 25 Sep 2021 16:18:42 +0200 (CEST)
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     phone-devel@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Pavel Dubrova <pashadubrova@gmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] arm64: dts: qcom: sm6125: Improve indentation of multiline properties
-Date:   Sat, 25 Sep 2021 16:18:41 +0200
-Message-Id: <20210925141841.407257-1-marijn.suijten@somainline.org>
-X-Mailer: git-send-email 2.33.0
+        Sat, 25 Sep 2021 10:27:04 -0400
+Received: from mail-yb1-xb36.google.com (mail-yb1-xb36.google.com [IPv6:2607:f8b0:4864:20::b36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 497E9C061570
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Sep 2021 07:25:29 -0700 (PDT)
+Received: by mail-yb1-xb36.google.com with SMTP id v10so12412197ybq.7
+        for <linux-arm-msm@vger.kernel.org>; Sat, 25 Sep 2021 07:25:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=FELeHWRLzFEBrq4obhX73D1BquHMgJ/7I3UYNELg8LY=;
+        b=dEt80S2gx7iwjw9wiaWn4rEEqXJStiGCeU17eSXKnJhmwnCQf6XTtREbUqU80t6mw4
+         zhtWCzmBghuQi5uRZSxNbWkKrmMhoosGSVxQwahpXiTPi7LVQU7UBoyzk5VkNqHJAG/J
+         589cON8v8HMepdWoeRLJG0jqmjeorbRnMsXf+IpLEXu0c2+G2Bm56AH38sHKuE1Q+xuY
+         ZdIMo315mWhH1A/AdrooT8Fs2gpaNp6FU7EWS4bqUaLzdZkw1K7m1YbnQkTE0LBNIHkK
+         sszPyV2otJOV+L9vmziw63e/9DCkpuuaK+25ronzRcwg60HM9tJ3F3x2BQG4SU+DkmjW
+         8cbQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=FELeHWRLzFEBrq4obhX73D1BquHMgJ/7I3UYNELg8LY=;
+        b=pUAdedW1gylCSnFXtbcfXWdhaUi4jtiBAqR9TIVdbdcgEP0ukb4FpV0RvDXEAmRAKX
+         wUjLQvYHjTmQmmVoH5DUUfl25ey+r+iAO2SQTqs8ScGk6X/MPYBU1Q1TRBnn2RCk8w/B
+         IZGwrakCIhUQj/levZdU8FrNC/+DjvtePI7+PcAbk5jaeroILIBDUp87lAyZKryxDNXN
+         D8v180la98Yb9cu3xSmjsoDX54mych3Ejdo/b8Momt6vJFoZsdfgFj8anDgTl6MqYLos
+         48Tml/XUOB/6N8gEZ/19OI9slHv8fDvVlnsboB+ZVWvmUkcsjG2fSHP7vPVmxs05Cxhe
+         KONQ==
+X-Gm-Message-State: AOAM531KlxE2Jz2s66is41yMZHs/3OcBujySCxt9deXXJlwWpi5tjcyi
+        q//7TtrLbh5nFu/UoRH0y2iJ/xC5zlXX6vppPzowtfjPB00=
+X-Google-Smtp-Source: ABdhPJxcHCbmPsc69PV7vzVg/xGp1RlrvxRZm/pBicy1BWa2EW+lOZuDVNf83i9dr4DyiwftYwHdicztTyKBPsemSaE=
+X-Received: by 2002:a25:7e46:: with SMTP id z67mr18205669ybc.166.1632579928321;
+ Sat, 25 Sep 2021 07:25:28 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   Turritopsis Dohrnii Teo En Ming <ceo.teo.en.ming@gmail.com>
+Date:   Sat, 25 Sep 2021 22:25:18 +0800
+Message-ID: <CAMEJMGEDU+TwX8+oQMstmQDCYb+zAJMxRsM6ouN5-mJiXukh6g@mail.gmail.com>
+Subject: Introduction: I am a Linux and open source software enthusiast
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ceo@teo-en-ming-corp.com
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Some multiline properties (spread out over multiple lines to keep length
-in check) were not indented properly, leading to misalignment with the
-items above.  The DT file is still small enough to address this early in
-the process.
+Subject: Introduction: I am a Linux and open source software enthusiast
 
-Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Martin Botka <martin.botka@somainline.org>
----
- arch/arm64/boot/dts/qcom/sm6125.dtsi | 46 ++++++++++++++--------------
- 1 file changed, 23 insertions(+), 23 deletions(-)
+Greetings from Singapore,
 
-diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-index 2b37ce6a9f9c..e92fab5a2484 100644
---- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
-@@ -326,8 +326,8 @@ tcsr_mutex: hwlock@340000 {
- 		tlmm: pinctrl@500000 {
- 			compatible = "qcom,sm6125-tlmm";
- 			reg = <0x00500000 0x400000>,
--				<0x00900000 0x400000>,
--				<0x00d00000 0x400000>;
-+			      <0x00900000 0x400000>,
-+			      <0x00d00000 0x400000>;
- 			reg-names = "west", "south", "east";
- 			interrupts = <GIC_SPI 227 IRQ_TYPE_LEVEL_HIGH>;
- 			gpio-controller;
-@@ -391,12 +391,12 @@ sdhc_1: sdhci@4744000 {
- 			reg-names = "hc", "core";
- 
- 			interrupts = <GIC_SPI 348 IRQ_TYPE_LEVEL_HIGH>,
--				<GIC_SPI 352 IRQ_TYPE_LEVEL_HIGH>;
-+				     <GIC_SPI 352 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
- 
- 			clocks = <&gcc GCC_SDCC1_AHB_CLK>,
--				<&gcc GCC_SDCC1_APPS_CLK>,
--				<&xo_board>;
-+				 <&gcc GCC_SDCC1_APPS_CLK>,
-+				 <&xo_board>;
- 			clock-names = "iface", "core", "xo";
- 			bus-width = <8>;
- 			non-removable;
-@@ -409,12 +409,12 @@ sdhc_2: sdhci@4784000 {
- 			reg-names = "hc";
- 
- 			interrupts = <GIC_SPI 350 IRQ_TYPE_LEVEL_HIGH>,
--				<GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
-+				     <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
- 			interrupt-names = "hc_irq", "pwr_irq";
- 
- 			clocks = <&gcc GCC_SDCC2_AHB_CLK>,
--				<&gcc GCC_SDCC2_APPS_CLK>,
--				<&xo_board>;
-+				 <&gcc GCC_SDCC2_APPS_CLK>,
-+				 <&xo_board>;
- 			clock-names = "iface", "core", "xo";
- 
- 			pinctrl-0 = <&sdc2_state_on>;
-@@ -433,11 +433,11 @@ usb3: usb@4ef8800 {
- 			ranges;
- 
- 			clocks = <&gcc GCC_USB30_PRIM_MASTER_CLK>,
--				<&gcc GCC_SYS_NOC_USB3_PRIM_AXI_CLK>,
--				<&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
--				<&gcc GCC_USB3_PRIM_CLKREF_CLK>,
--				<&gcc GCC_USB30_PRIM_SLEEP_CLK>,
--				<&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>;
-+				 <&gcc GCC_SYS_NOC_USB3_PRIM_AXI_CLK>,
-+				 <&gcc GCC_CFG_NOC_USB3_PRIM_AXI_CLK>,
-+				 <&gcc GCC_USB3_PRIM_CLKREF_CLK>,
-+				 <&gcc GCC_USB30_PRIM_SLEEP_CLK>,
-+				 <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>;
- 
- 			assigned-clocks = <&gcc GCC_USB30_PRIM_MOCK_UTMI_CLK>,
- 					  <&gcc GCC_USB30_PRIM_MASTER_CLK>;
-@@ -462,11 +462,11 @@ usb3_dwc3: usb@4e00000 {
- 
- 		spmi_bus: spmi@1c40000 {
- 			compatible = "qcom,spmi-pmic-arb";
--			reg =	<0x01c40000 0x1100>,
--				<0x01e00000 0x2000000>,
--				<0x03e00000 0x100000>,
--				<0x03f00000 0xa0000>,
--				<0x01c0a000 0x26000>;
-+			reg = <0x01c40000 0x1100>,
-+			      <0x01e00000 0x2000000>,
-+			      <0x03e00000 0x100000>,
-+			      <0x03f00000 0xa0000>,
-+			      <0x01c0a000 0x26000>;
- 			reg-names = "core", "chnls", "obsrvr", "intr", "cnfg";
- 			interrupt-names = "periph_irq";
- 			interrupts = <GIC_SPI 183 IRQ_TYPE_LEVEL_HIGH>;
-@@ -497,7 +497,7 @@ timer@f120000 {
- 			frame@0f121000 {
- 				frame-number = <0>;
- 				interrupts = <GIC_SPI 8 IRQ_TYPE_LEVEL_HIGH>,
--						<GIC_SPI 7 IRQ_TYPE_LEVEL_HIGH>;
-+					     <GIC_SPI 7 IRQ_TYPE_LEVEL_HIGH>;
- 				reg = <0x0f121000 0x1000>,
- 				      <0x0f122000 0x1000>;
- 			};
-@@ -548,7 +548,7 @@ frame@f128000 {
- 		intc: interrupt-controller@f200000 {
- 			compatible = "arm,gic-v3";
- 			reg = <0x0f200000 0x20000>,
--				<0x0f300000 0x100000>;
-+			      <0x0f300000 0x100000>;
- 			#interrupt-cells = <3>;
- 			interrupt-controller;
- 			interrupts = <GIC_PPI 9 IRQ_TYPE_LEVEL_HIGH>;
-@@ -558,9 +558,9 @@ intc: interrupt-controller@f200000 {
- 	timer {
- 		compatible = "arm,armv8-timer";
- 		interrupts = <GIC_PPI 1 0xf08
--				GIC_PPI 2 0xf08
--				GIC_PPI 3 0xf08
--				GIC_PPI 0 0xf08>;
-+			      GIC_PPI 2 0xf08
-+			      GIC_PPI 3 0xf08
-+			      GIC_PPI 0 0xf08>;
- 		clock-frequency = <19200000>;
- 	};
- };
--- 
-2.33.0
+My name is Mr. Turritopsis Dohrnii Teo En Ming, 43 years old as of 25
+September 2021. My country is Singapore. Presently I am an IT
+Consultant with a System Integrator (SI)/computer firm in Singapore. I
+am also a Linux and open source software and information technology
+enthusiast.
 
+You can read my autobiography on my redundant blogs. The title of my
+autobiography is:
+
+"Autobiography of Singaporean Targeted Individual Mr. Turritopsis
+Dohrnii Teo En Ming (Very First Draft, Lots More to Add in Future)"
+
+Links to my redundant blogs (Blogger and Wordpress) can be found in my
+email signature below. These are my main blogs.
+
+I have three other redundant blogs, namely:
+
+https://teo-en-ming.tumblr.com/
+
+https://teo-en-ming.medium.com/
+
+https://teo-en-ming.livejournal.com/
+
+Future/subsequent versions of my autobiography will be published on my
+redundant blogs.
+
+My Blog Books (in PDF format) are also available for download on my
+redundant blogs.
+
+I have also published many guides, howtos, tutorials, and information
+technology articles on my redundant blogs.
+
+Thank you very much.
+
+
+
+
+
+
+-----BEGIN EMAIL SIGNATURE-----
+
+The Gospel for all Targeted Individuals (TIs):
+
+[The New York Times] Microwave Weapons Are Prime Suspect in Ills of
+U.S. Embassy Workers
+
+Link:
+https://www.nytimes.com/2018/09/01/science/sonic-attack-cuba-microwave.html
+
+********************************************************************************************
+
+Singaporean Targeted Individual Mr. Turritopsis Dohrnii Teo En Ming's
+Academic Qualifications as at 14 Feb 2019 and refugee seeking attempts
+at the United Nations Refugee Agency Bangkok (21 Mar 2017), in Taiwan
+(5 Aug 2019) and Australia (25 Dec 2019 to 9 Jan 2020):
+
+[1] https://tdtemcerts.wordpress.com/
+
+[2] https://tdtemcerts.blogspot.sg/
+
+[3] https://www.scribd.com/user/270125049/Teo-En-Ming
+
+-----END EMAIL SIGNATURE-----
