@@ -2,219 +2,235 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D393E4187DE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Sep 2021 11:15:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5B0144187EE
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Sep 2021 11:41:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229691AbhIZJQh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 26 Sep 2021 05:16:37 -0400
-Received: from mail-4319.protonmail.ch ([185.70.43.19]:21235 "EHLO
-        mail-4319.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229584AbhIZJQh (ORCPT
+        id S229783AbhIZJn2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 26 Sep 2021 05:43:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42796 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229716AbhIZJn1 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 26 Sep 2021 05:16:37 -0400
-Date:   Sun, 26 Sep 2021 09:14:53 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1632647699;
-        bh=EaQZugeIZYFPOkLvYmzmKldXWgaDiRwWgn2j4xItey8=;
-        h=Date:To:From:Cc:Reply-To:Subject:From;
-        b=bSPcZlneXLjZQEI1V1R7+URkdM2jA65GQPp+CRaP1QalBNY9Zt74xsrEP65uF37hs
-         GWpdOFh/Th7cFf2Ty1/cmrZ+Y+GrFKh023AkPrCxg1QSmrAT8SytHah+u7tBhDXWwD
-         hkbIitOAVpBWa/wOEgVtn02QCxu2dulxDxwSjreg=
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <abhinavk@codeaurora.org>
-From:   Yassine Oudjana <y.oudjana@protonmail.com>
-Cc:     Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
-Subject: Re: [PATCH] drm/msm/mdp5: fix cursor-related warnings
-Message-ID: <12096203c2651e07403d236956ae56bebe061654.camel@protonmail.com>
+        Sun, 26 Sep 2021 05:43:27 -0400
+Received: from mail-il1-x135.google.com (mail-il1-x135.google.com [IPv6:2607:f8b0:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DABEDC061570
+        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Sep 2021 02:41:51 -0700 (PDT)
+Received: by mail-il1-x135.google.com with SMTP id q6so1659432ilm.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Sep 2021 02:41:51 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=sURKX3yyrfO/8LKThpmlC5JRuURmlywhZ+iusQpU9BE=;
+        b=rRBkLthjRwcxXRXYpSHEzoHOb05+vektXd26Xqn5FRVM2KJ9TVSC+KFqV+In8drboY
+         C5a8FM6hLRZXdatifFicUrsEhjcyHTKLL+bS1dqyb1Dz6dlD++rAHxRoTciaLhMPRtGN
+         irFvRSE5iAxhRjFr4D3rHLJOaljU+NYWneHWInmt6X90xiQYRfLw/uC2HMRBhtMvYEvy
+         euiDnyBZD5uVp/bQF4Uo7JMsP1TDXc63Y81AfTSPs90gSoC3symGn0qwHgOLY2YmQuwi
+         civEnaoHY4vduya3jdKLjurQrzYRhI5xZ9FnjfsDuckYPanEKck2qmucV/maKYaUZep7
+         21yA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=sURKX3yyrfO/8LKThpmlC5JRuURmlywhZ+iusQpU9BE=;
+        b=MHKahBwzouVOqJAOYEjgQog5cxaSNBdRT7PhYxUBwrKgOMCYpbms1IwxMpLF+oHzFa
+         olKe9Gjff3eM4VXHjRVy9LKU7MI4E5YDhwFiDgGo+niADWSYGGlOcO7gTPXP1CxxIp4P
+         GSVUUM41C9O+2AzHOkSNtLoy81uNcDyRBNpQ6XcPqYYU2ihZYZc/5hioDuToGzN+Hl26
+         s71vDcknPIpDPM8bxh8kQQUc38FK60Nld7ifvwp/tj4XYVbhBnHqND7lntyi94kmllKc
+         vuurNvAltFlpzCh2Ef5ZixQUKujqTfGl3pNEMGUapbZSiKZ951YLJ1HqjIvhJMUgcrJB
+         0s+Q==
+X-Gm-Message-State: AOAM531K3uMV28WKu1fcqNyfM+sYT35IUrR35BGT5U+5iUeDdf5PO+hv
+        hPExtaifrKeUvzQC4O+69lcjX0r8QG+UQaFqpcvhxA==
+X-Google-Smtp-Source: ABdhPJwVQBHRN1knXuI4zae36PRZGQeKKRF3Hx1VMBXqjP7WEcuIOIcdHRTsHdPxGzwNJm/nxdp/fP3EdS063+NkKGY=
+X-Received: by 2002:a92:b703:: with SMTP id k3mr15029251ili.95.1632649310890;
+ Sun, 26 Sep 2021 02:41:50 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+References: <20210926075951.28034-1-shawn.guo@linaro.org>
+In-Reply-To: <20210926075951.28034-1-shawn.guo@linaro.org>
+From:   Amit Pundir <amit.pundir@linaro.org>
+Date:   Sun, 26 Sep 2021 15:11:14 +0530
+Message-ID: <CAMi1Hd3iG9a3AAJgR49kfDhK303T0WB6AajfX1WOw7-X8K20+Q@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: Drop vdd-supply from qusb2-phy devices
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Caleb Connolly <caleb@connolly.tech>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        dt <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        lkml <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sat, 2021-09-25 at 22:28 +0300, Dmitry Baryshkov wrote:
-> Since f35a2a99100f ("drm/encoder: make encoder control functions
-> optional") drm_mode_config_validate would print warnings if both cursor
-> plane and cursor functions are provided. Restore separate set of
-> drm_crtc_funcs to be used if separate cursor plane is provided.
->=20
-> [    6.556046] ------------[ cut here ]------------
-> [    6.556071] [CRTC:93:crtc-0] must not have both a cursor plane and a c=
-ursor_set func
-> [    6.556091] WARNING: CPU: 1 PID: 76 at drivers/gpu/drm/drm_mode_config=
-.c:648 drm_mode_config_validate+0x238/0x4d0
-> [    6.567453] Modules linked in:
-> [    6.577604] CPU: 1 PID: 76 Comm: kworker/u8:2 Not tainted 5.15.0-rc1-d=
-irty #43
-> [    6.580557] Hardware name: Qualcomm Technologies, Inc. DB820c (DT)
-> [    6.587763] Workqueue: events_unbound deferred_probe_work_func
-> [    6.593926] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYP=
-E=3D--)
-> [    6.599740] pc : drm_mode_config_validate+0x238/0x4d0
-> [    6.606596] lr : drm_mode_config_validate+0x238/0x4d0
-> [    6.611804] sp : ffff8000121b3980
-> [    6.616838] x29: ffff8000121b3990 x28: 0000000000000000 x27: 000000000=
-0000001
-> [    6.620140] x26: ffff8000114cde50 x25: ffff8000114cdd40 x24: ffff00009=
-87282d8
-> [    6.627258] x23: 0000000000000000 x22: 0000000000000000 x21: 000000000=
-0000001
-> [    6.634376] x20: ffff000098728000 x19: ffff000080a39000 x18: fffffffff=
-fffffff
-> [    6.641494] x17: 3136564e3631564e x16: 0000000000000324 x15: ffff80001=
-1c78709
-> [    6.648613] x14: 0000000000000000 x13: ffff800011a22850 x12: 000000000=
-00009ab
-> [    6.655730] x11: 0000000000000339 x10: ffff800011a22850 x9 : ffff80001=
-1a22850
-> [    6.662848] x8 : 00000000ffffefff x7 : ffff800011a7a850 x6 : ffff80001=
-1a7a850
-> [    6.669966] x5 : 000000000000bff4 x4 : 40000000fffff339 x3 : 000000000=
-0000000
-> [    6.677084] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff00008=
-093b800
-> [    6.684205] Call trace:
-> [    6.691319]  drm_mode_config_validate+0x238/0x4d0
-> [    6.693577]  drm_dev_register+0x17c/0x210
-> [    6.698435]  msm_drm_bind+0x4b4/0x694
-> [    6.702429]  try_to_bring_up_master+0x164/0x1d0
-> [    6.706075]  __component_add+0xa0/0x170
-> [    6.710415]  component_add+0x14/0x20
-> [    6.714234]  msm_hdmi_dev_probe+0x1c/0x2c
-> [    6.718053]  platform_probe+0x68/0xe0
-> [    6.721959]  really_probe.part.0+0x9c/0x30c
-> [    6.725606]  __driver_probe_device+0x98/0x144
-> [    6.729600]  driver_probe_device+0xc8/0x15c
-> [    6.734114]  __device_attach_driver+0xb4/0x120
-> [    6.738106]  bus_for_each_drv+0x78/0xd0
-> [    6.742619]  __device_attach+0xdc/0x184
-> [    6.746351]  device_initial_probe+0x14/0x20
-> [    6.750172]  bus_probe_device+0x9c/0xa4
-> [    6.754337]  deferred_probe_work_func+0x88/0xc0
-> [    6.758158]  process_one_work+0x1d0/0x370
-> [    6.762671]  worker_thread+0x2c8/0x470
-> [    6.766839]  kthread+0x15c/0x170
-> [    6.770483]  ret_from_fork+0x10/0x20
-> [    6.773870] ---[ end trace 5884eb76cd26d274 ]---
-> [    6.777500] ------------[ cut here ]------------
-> [    6.782043] [CRTC:93:crtc-0] must not have both a cursor plane and a c=
-ursor_move func
-> [    6.782063] WARNING: CPU: 1 PID: 76 at drivers/gpu/drm/drm_mode_config=
-.c:654 drm_mode_config_validate+0x290/0x4d0
-> [    6.794362] Modules linked in:
-> [    6.804600] CPU: 1 PID: 76 Comm: kworker/u8:2 Tainted: G        W     =
-    5.15.0-rc1-dirty #43
-> [    6.807555] Hardware name: Qualcomm Technologies, Inc. DB820c (DT)
-> [    6.816148] Workqueue: events_unbound deferred_probe_work_func
-> [    6.822311] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYP=
-E=3D--)
-> [    6.828126] pc : drm_mode_config_validate+0x290/0x4d0
-> [    6.834981] lr : drm_mode_config_validate+0x290/0x4d0
-> [    6.840189] sp : ffff8000121b3980
-> [    6.845223] x29: ffff8000121b3990 x28: 0000000000000000 x27: 000000000=
-0000001
-> [    6.848525] x26: ffff8000114cde50 x25: ffff8000114cdd40 x24: ffff00009=
-87282d8
-> [    6.855643] x23: 0000000000000000 x22: 0000000000000000 x21: 000000000=
-0000001
-> [    6.862763] x20: ffff000098728000 x19: ffff000080a39000 x18: fffffffff=
-fffffff
-> [    6.869879] x17: 3136564e3631564e x16: 0000000000000324 x15: ffff80001=
-1c790c2
-> [    6.876998] x14: 0000000000000000 x13: ffff800011a22850 x12: 000000000=
-0000a2f
-> [    6.884116] x11: 0000000000000365 x10: ffff800011a22850 x9 : ffff80001=
-1a22850
-> [    6.891234] x8 : 00000000ffffefff x7 : ffff800011a7a850 x6 : ffff80001=
-1a7a850
-> [    6.898351] x5 : 000000000000bff4 x4 : 40000000fffff365 x3 : 000000000=
-0000000
-> [    6.905470] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff00008=
-093b800
-> [    6.912590] Call trace:
-> [    6.919702]  drm_mode_config_validate+0x290/0x4d0
-> [    6.921960]  drm_dev_register+0x17c/0x210
-> [    6.926821]  msm_drm_bind+0x4b4/0x694
-> [    6.930813]  try_to_bring_up_master+0x164/0x1d0
-> [    6.934459]  __component_add+0xa0/0x170
-> [    6.938799]  component_add+0x14/0x20
-> [    6.942619]  msm_hdmi_dev_probe+0x1c/0x2c
-> [    6.946438]  platform_probe+0x68/0xe0
-> [    6.950345]  really_probe.part.0+0x9c/0x30c
-> [    6.953991]  __driver_probe_device+0x98/0x144
-> [    6.957984]  driver_probe_device+0xc8/0x15c
-> [    6.962498]  __device_attach_driver+0xb4/0x120
-> [    6.966492]  bus_for_each_drv+0x78/0xd0
-> [    6.971004]  __device_attach+0xdc/0x184
-> [    6.974737]  device_initial_probe+0x14/0x20
-> [    6.978556]  bus_probe_device+0x9c/0xa4
-> [    6.982722]  deferred_probe_work_func+0x88/0xc0
-> [    6.986543]  process_one_work+0x1d0/0x370
-> [    6.991057]  worker_thread+0x2c8/0x470
-> [    6.995223]  kthread+0x15c/0x170
-> [    6.998869]  ret_from_fork+0x10/0x20
-> [    7.002255] ---[ end trace 5884eb76cd26d275 ]---
->=20
-> Fixes: aa649e875daf ("drm/msm/mdp5: mdp5_crtc: Restore cursor state only =
-if LM cursors are enabled")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+On Sun, 26 Sept 2021 at 13:29, Shawn Guo <shawn.guo@linaro.org> wrote:
+>
+> Looking at qcom,qusb2-phy.yaml bindings and qusb2_phy_vreg_names[] in
+> qusb2-phy driver, vdd-supply is not a supported/valid property.  Drop it
+> from qusb2-phy devices on various boards.
+>
+
+No obvious regression on PocoF1 (Beryllium).
+
+Tested-by: Amit Pundir <amit.pundir@linaro.org>
+
+> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
 > ---
->  drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c | 16 ++++++++++++++++
->  1 file changed, 16 insertions(+)
->=20
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c b/drivers/gpu/drm/=
-msm/disp/mdp5/mdp5_crtc.c
-> index f482e0911d03..bb7d066618e6 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c
-> @@ -1125,6 +1125,20 @@ static void mdp5_crtc_reset(struct drm_crtc *crtc)
->  =09__drm_atomic_helper_crtc_reset(crtc, &mdp5_cstate->base);
->  }
-> =20
-> +static const struct drm_crtc_funcs mdp5_crtc_no_lm_cursor_funcs =3D {
-> +=09.set_config =3D drm_atomic_helper_set_config,
-> +=09.destroy =3D mdp5_crtc_destroy,
-> +=09.page_flip =3D drm_atomic_helper_page_flip,
-> +=09.reset =3D mdp5_crtc_reset,
-> +=09.atomic_duplicate_state =3D mdp5_crtc_duplicate_state,
-> +=09.atomic_destroy_state =3D mdp5_crtc_destroy_state,
-> +=09.atomic_print_state =3D mdp5_crtc_atomic_print_state,
-> +=09.get_vblank_counter =3D mdp5_crtc_get_vblank_counter,
-> +=09.enable_vblank  =3D msm_crtc_enable_vblank,
-> +=09.disable_vblank =3D msm_crtc_disable_vblank,
-> +=09.get_vblank_timestamp =3D drm_crtc_vblank_helper_get_vblank_timestamp=
-,
-> +};
-> +
->  static const struct drm_crtc_funcs mdp5_crtc_funcs =3D {
->  =09.set_config =3D drm_atomic_helper_set_config,
->  =09.destroy =3D mdp5_crtc_destroy,
-> @@ -1313,6 +1327,8 @@ struct drm_crtc *mdp5_crtc_init(struct drm_device *=
-dev,
->  =09mdp5_crtc->lm_cursor_enabled =3D cursor_plane ? false : true;
-> =20
->  =09drm_crtc_init_with_planes(dev, crtc, plane, cursor_plane,
-> +=09=09=09=09  cursor_plane ?
-> +=09=09=09=09  &mdp5_crtc_no_lm_cursor_funcs :
->  =09=09=09=09  &mdp5_crtc_funcs, NULL);
-> =20
->  =09drm_flip_work_init(&mdp5_crtc->unref_cursor_work,
-
-On msm8996-xiaomi-scorpio:
-
-Tested-by: Yassine Oudjana <y.oudjana@protonmail.com>
-
-
+>  arch/arm64/boot/dts/qcom/sc7180-idp.dts               | 1 -
+>  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi          | 1 -
+>  arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi | 1 -
+>  arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi            | 2 --
+>  arch/arm64/boot/dts/qcom/sdm845-db845c.dts            | 2 --
+>  arch/arm64/boot/dts/qcom/sdm845-mtp.dts               | 2 --
+>  arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi   | 1 -
+>  arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts  | 1 -
+>  arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts  | 2 --
+>  9 files changed, 13 deletions(-)
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-idp.dts b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> index acdb36f4479f..5ec47eaa4a90 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-idp.dts
+> @@ -429,7 +429,6 @@
+>
+>  &usb_1_hsphy {
+>         status = "okay";
+> -       vdd-supply = <&vreg_l4a_0p8>;
+>         vdda-pll-supply = <&vreg_l11a_1p8>;
+>         vdda-phy-dpdm-supply = <&vreg_l17a_3p0>;
+>         qcom,imp-res-offset-value = <8>;
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> index 0f2b3c00e434..ed68f1233d66 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi
+> @@ -928,7 +928,6 @@ ap_spi_fp: &spi10 {
+>
+>  &usb_1_hsphy {
+>         status = "okay";
+> -       vdd-supply = <&vdd_qusb_hs0_core>;
+>         vdda-pll-supply = <&vdda_qusb_hs0_1p8>;
+>         vdda-phy-dpdm-supply = <&vdda_qusb_hs0_3p1>;
+>         qcom,imp-res-offset-value = <8>;
+> diff --git a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
+> index 11d0a8c1cf35..b05d5433a674 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm630-sony-xperia-nile.dtsi
+> @@ -228,7 +228,6 @@
+>  &qusb2phy {
+>         status = "okay";
+>
+> -       vdd-supply = <&vreg_l1b_0p925>;
+>         vdda-pll-supply = <&vreg_l10a_1p8>;
+>         vdda-phy-dpdm-supply = <&vreg_l7b_3p125>;
+>  };
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+> index dfd1b42c07fd..12fa059bef5a 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-cheza.dtsi
+> @@ -807,7 +807,6 @@ ap_ts_i2c: &i2c14 {
+>  &usb_1_hsphy {
+>         status = "okay";
+>
+> -       vdd-supply = <&vdda_usb1_ss_core>;
+>         vdda-pll-supply = <&vdda_qusb_hs0_1p8>;
+>         vdda-phy-dpdm-supply = <&vdda_qusb_hs0_3p1>;
+>
+> @@ -829,7 +828,6 @@ ap_ts_i2c: &i2c14 {
+>  &usb_2_hsphy {
+>         status = "okay";
+>
+> -       vdd-supply = <&vdda_usb2_ss_core>;
+>         vdda-pll-supply = <&vdda_qusb_hs0_1p8>;
+>         vdda-phy-dpdm-supply = <&vdda_qusb_hs0_3p1>;
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> index 2d5533dd4ec2..894be3b6aea5 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-db845c.dts
+> @@ -940,7 +940,6 @@
+>  &usb_1_hsphy {
+>         status = "okay";
+>
+> -       vdd-supply = <&vreg_l1a_0p875>;
+>         vdda-pll-supply = <&vreg_l12a_1p8>;
+>         vdda-phy-dpdm-supply = <&vreg_l24a_3p075>;
+>
+> @@ -968,7 +967,6 @@
+>  &usb_2_hsphy {
+>         status = "okay";
+>
+> -       vdd-supply = <&vreg_l1a_0p875>;
+>         vdda-pll-supply = <&vreg_l12a_1p8>;
+>         vdda-phy-dpdm-supply = <&vreg_l24a_3p075>;
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
+> index 52dd7a858231..08485eb5963a 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
+> @@ -517,7 +517,6 @@
+>  &usb_1_hsphy {
+>         status = "okay";
+>
+> -       vdd-supply = <&vdda_usb1_ss_core>;
+>         vdda-pll-supply = <&vdda_qusb_hs0_1p8>;
+>         vdda-phy-dpdm-supply = <&vdda_qusb_hs0_3p1>;
+>
+> @@ -551,7 +550,6 @@
+>  &usb_2_hsphy {
+>         status = "okay";
+>
+> -       vdd-supply = <&vdda_usb2_ss_core>;
+>         vdda-pll-supply = <&vdda_qusb_hs0_1p8>;
+>         vdda-phy-dpdm-supply = <&vdda_qusb_hs0_3p1>;
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+> index d4355522374a..911105d7603d 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
+> @@ -580,7 +580,6 @@
+>  &usb_1_hsphy {
+>         status = "okay";
+>
+> -       vdd-supply = <&vdda_usb1_ss_core>;
+>         vdda-pll-supply = <&vdda_qusb_hs0_1p8>;
+>         vdda-phy-dpdm-supply = <&vdda_qusb_hs0_3p1>;
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+> index c60c8c640e17..9dc173c1f0be 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-xiaomi-beryllium.dts
+> @@ -496,7 +496,6 @@
+>  &usb_1_hsphy {
+>         status = "okay";
+>
+> -       vdd-supply = <&vreg_l1a_0p875>;
+>         vdda-pll-supply = <&vreg_l12a_1p8>;
+>         vdda-phy-dpdm-supply = <&vreg_l24a_3p075>;
+>
+> diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+> index 385e5029437d..e330721cd6cd 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+> @@ -646,7 +646,6 @@
+>  &usb_1_hsphy {
+>         status = "okay";
+>
+> -       vdd-supply = <&vdda_usb1_ss_core>;
+>         vdda-pll-supply = <&vdda_qusb_hs0_1p8>;
+>         vdda-phy-dpdm-supply = <&vdda_qusb_hs0_3p1>;
+>
+> @@ -674,7 +673,6 @@
+>  &usb_2_hsphy {
+>         status = "okay";
+>
+> -       vdd-supply = <&vdda_usb2_ss_core>;
+>         vdda-pll-supply = <&vdda_qusb_hs0_1p8>;
+>         vdda-phy-dpdm-supply = <&vdda_qusb_hs0_3p1>;
+>
+> --
+> 2.17.1
+>
