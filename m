@@ -2,24 +2,24 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 970ED418AAB
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Sep 2021 21:06:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CCDB8418AB0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 26 Sep 2021 21:06:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229959AbhIZTIM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 26 Sep 2021 15:08:12 -0400
-Received: from mail-4318.protonmail.ch ([185.70.43.18]:28613 "EHLO
+        id S229919AbhIZTIU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 26 Sep 2021 15:08:20 -0400
+Received: from mail-4318.protonmail.ch ([185.70.43.18]:18699 "EHLO
         mail-4318.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229900AbhIZTIK (ORCPT
+        with ESMTP id S229916AbhIZTIU (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 26 Sep 2021 15:08:10 -0400
-Date:   Sun, 26 Sep 2021 19:06:28 +0000
+        Sun, 26 Sep 2021 15:08:20 -0400
+Date:   Sun, 26 Sep 2021 19:06:35 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1632683191;
-        bh=oqFbCeCc6o9yr1xwdz7yiLzjrQnuGfa2Ku5w5u0x9AQ=;
+        s=protonmail; t=1632683201;
+        bh=VOvK+zw4WxW2VQY2O6xUBaEP2ZuDPG5wlMplcLzQD0I=;
         h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
-        b=wEGHL0w679/Hmdc0NB/oRBdVHk5RjB9Ox0XVG1nnuwdIfFhNZNVyBmNCmrtJgRxNq
-         Rk+/7RNCff//K3VhnNCvV/Cgs2ZUP9i88ZTK71j188OLWeBLemCHIddEaAxpR1JHGO
-         81a2vaPICMRx6Ittg2nITI6iSRKOAxWlWyf2onU4=
+        b=axk8KETmOlJn4UQoCYissiIfV9MtzMCBMiLIhSYQY25/EPcOuFwJIFhg7c8owyTc2
+         XvoUinvdPSMb/SoZciOYWYNqTdw1pHY56IFJhoFJuPtvQLpGvFptIIHY3jOIN5ZUsi
+         kNZwNrtjGCZEYuTtT/e+2g9bLKJmXPbGRcHfGUTw=
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Ohad Ben-Cohen <ohad@wizery.com>,
@@ -35,8 +35,8 @@ Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
         devicetree@vger.kernel.org, phone-devel@vger.kernel.org,
         linux-kernel@vger.kernel.org
 Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
-Subject: [PATCH v2 3/5] arm64: dts: qcom: msm8996: Unify smp2p naming
-Message-ID: <20210926190555.278589-4-y.oudjana@protonmail.com>
+Subject: [PATCH v2 4/5] arm64: dts: qcom: msm8996: Add MSS and SLPI
+Message-ID: <20210926190555.278589-5-y.oudjana@protonmail.com>
 In-Reply-To: <20210926190555.278589-1-y.oudjana@protonmail.com>
 References: <20210926190555.278589-1-y.oudjana@protonmail.com>
 MIME-Version: 1.0
@@ -51,110 +51,124 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Rename smp2p-modem to smp2p-mpss, and make the subnode labels of smp2p_adsp
-and smp2p_slpi follow the <name>_smp2p_<out/in> layout.
-Also move smp2p_slpi_out above smp2p_slpi_in to make it match mpss and adsp
-where master-kernel is the first subnode.
-
-This patch brings no functional change.
+Add nodes for the MSS and SLPI remoteprocs.
 
 Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
 ---
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 33 ++++++++++++++-------------
- 1 file changed, 17 insertions(+), 16 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 99 +++++++++++++++++++++++++++
+ 1 file changed, 99 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qc=
 om/msm8996.dtsi
-index 1495fff6ffc9..7710ca6f3374 100644
+index 7710ca6f3374..1301ffcf588b 100644
 --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
 +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -518,12 +518,12 @@ smp2p-adsp {
- =09=09qcom,local-pid =3D <0>;
- =09=09qcom,remote-pid =3D <2>;
-=20
--=09=09smp2p_adsp_out: master-kernel {
-+=09=09adsp_smp2p_out: master-kernel {
- =09=09=09qcom,entry-name =3D "master-kernel";
- =09=09=09#qcom,smem-state-cells =3D <1>;
+@@ -2103,6 +2103,105 @@ lpass_q6_smmu: iommu@1600000 {
+ =09=09=09clock-names =3D "iface", "bus";
  =09=09};
 =20
--=09=09smp2p_adsp_in: slave-kernel {
-+=09=09adsp_smp2p_in: slave-kernel {
- =09=09=09qcom,entry-name =3D "slave-kernel";
-=20
- =09=09=09interrupt-controller;
-@@ -531,7 +531,7 @@ smp2p_adsp_in: slave-kernel {
- =09=09};
- =09};
-=20
--=09smp2p-modem {
-+=09smp2p-mpss {
- =09=09compatible =3D "qcom,smp2p";
- =09=09qcom,smem =3D <435>, <428>;
-=20
-@@ -542,12 +542,12 @@ smp2p-modem {
- =09=09qcom,local-pid =3D <0>;
- =09=09qcom,remote-pid =3D <1>;
-=20
--=09=09modem_smp2p_out: master-kernel {
-+=09=09mpss_smp2p_out: master-kernel {
- =09=09=09qcom,entry-name =3D "master-kernel";
- =09=09=09#qcom,smem-state-cells =3D <1>;
- =09=09};
-=20
--=09=09modem_smp2p_in: slave-kernel {
-+=09=09mpss_smp2p_in: slave-kernel {
- =09=09=09qcom,entry-name =3D "slave-kernel";
-=20
- =09=09=09interrupt-controller;
-@@ -566,16 +566,17 @@ smp2p-slpi {
- =09=09qcom,local-pid =3D <0>;
- =09=09qcom,remote-pid =3D <3>;
-=20
--=09=09smp2p_slpi_in: slave-kernel {
-+=09=09slpi_smp2p_out: master-kernel {
-+=09=09=09qcom,entry-name =3D "master-kernel";
-+=09=09=09#qcom,smem-state-cells =3D <1>;
++=09=09slpi_pil: remoteproc@1c00000 {
++=09=09=09compatible =3D "qcom,msm8996-slpi-pil";
++=09=09=09reg =3D <0x01c00000 0x4000>;
++
++=09=09=09interrupts-extended =3D <&intc 0 390 IRQ_TYPE_EDGE_RISING>,
++=09=09=09=09=09      <&slpi_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
++=09=09=09=09=09      <&slpi_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
++=09=09=09=09=09      <&slpi_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
++=09=09=09=09=09      <&slpi_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
++=09=09=09interrupt-names =3D "wdog",
++=09=09=09=09=09  "fatal",
++=09=09=09=09=09  "ready",
++=09=09=09=09=09  "handover",
++=09=09=09=09=09  "stop-ack";
++
++=09=09=09clocks =3D <&xo_board>,
++=09=09=09=09 <&rpmcc RPM_SMD_AGGR2_NOC_CLK>;
++=09=09=09clock-names =3D "xo", "aggre2";
++
++=09=09=09memory-region =3D <&slpi_mem>;
++
++=09=09=09qcom,smem-states =3D <&slpi_smp2p_out 0>;
++=09=09=09qcom,smem-state-names =3D "stop";
++
++=09=09=09power-domains =3D <&rpmpd MSM8996_VDDSSCX>;
++=09=09=09power-domain-names =3D "ssc_cx";
++
++=09=09=09status =3D "disabled";
++
++=09=09=09smd-edge {
++=09=09=09=09interrupts =3D <GIC_SPI 176 IRQ_TYPE_EDGE_RISING>;
++
++=09=09=09=09label =3D "dsps";
++=09=09=09=09mboxes =3D <&apcs_glb 25>;
++=09=09=09=09qcom,smd-edge =3D <3>;
++=09=09=09=09qcom,remote-pid =3D <3>;
++=09=09=09};
 +=09=09};
 +
-+=09=09slpi_smp2p_in: slave-kernel {
- =09=09=09qcom,entry-name =3D "slave-kernel";
++=09=09mss_pil: remoteproc@2080000 {
++=09=09=09compatible =3D "qcom,msm8996-mss-pil";
++=09=09=09reg =3D <0x2080000 0x100>,
++=09=09=09      <0x2180000 0x020>;
++=09=09=09reg-names =3D "qdsp6", "rmb";
 +
- =09=09=09interrupt-controller;
- =09=09=09#interrupt-cells =3D <2>;
- =09=09};
--
--=09=09smp2p_slpi_out: master-kernel {
--=09=09=09qcom,entry-name =3D "master-kernel";
--=09=09=09#qcom,smem-state-cells =3D <1>;
--=09=09};
- =09};
-=20
- =09soc: soc {
-@@ -3003,10 +3004,10 @@ adsp_pil: remoteproc@9300000 {
- =09=09=09reg =3D <0x09300000 0x80000>;
-=20
- =09=09=09interrupts-extended =3D <&intc 0 162 IRQ_TYPE_EDGE_RISING>,
--=09=09=09=09=09      <&smp2p_adsp_in 0 IRQ_TYPE_EDGE_RISING>,
--=09=09=09=09=09      <&smp2p_adsp_in 1 IRQ_TYPE_EDGE_RISING>,
--=09=09=09=09=09      <&smp2p_adsp_in 2 IRQ_TYPE_EDGE_RISING>,
--=09=09=09=09=09      <&smp2p_adsp_in 3 IRQ_TYPE_EDGE_RISING>;
-+=09=09=09=09=09      <&adsp_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
-+=09=09=09=09=09      <&adsp_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
-+=09=09=09=09=09      <&adsp_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
-+=09=09=09=09=09      <&adsp_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
- =09=09=09interrupt-names =3D "wdog", "fatal", "ready",
- =09=09=09=09=09  "handover", "stop-ack";
-=20
-@@ -3015,7 +3016,7 @@ adsp_pil: remoteproc@9300000 {
-=20
- =09=09=09memory-region =3D <&adsp_mem>;
-=20
--=09=09=09qcom,smem-states =3D <&smp2p_adsp_out 0>;
-+=09=09=09qcom,smem-states =3D <&adsp_smp2p_out 0>;
- =09=09=09qcom,smem-state-names =3D "stop";
-=20
- =09=09=09power-domains =3D <&rpmpd MSM8996_VDDCX>;
++=09=09=09interrupts-extended =3D <&intc 0 448 IRQ_TYPE_EDGE_RISING>,
++=09=09=09=09=09      <&mpss_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
++=09=09=09=09=09      <&mpss_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
++=09=09=09=09=09      <&mpss_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
++=09=09=09=09=09      <&mpss_smp2p_in 3 IRQ_TYPE_EDGE_RISING>,
++=09=09=09=09=09      <&mpss_smp2p_in 7 IRQ_TYPE_EDGE_RISING>;
++=09=09=09interrupt-names =3D "wdog", "fatal", "ready",
++=09=09=09=09=09  "handover", "stop-ack",
++=09=09=09=09=09  "shutdown-ack";
++
++=09=09=09clocks =3D <&gcc GCC_MSS_CFG_AHB_CLK>,
++=09=09=09=09 <&gcc GCC_MSS_Q6_BIMC_AXI_CLK>,
++=09=09=09=09 <&gcc GCC_BOOT_ROM_AHB_CLK>,
++=09=09=09=09 <&xo_board>,
++=09=09=09=09 <&gcc GCC_MSS_GPLL0_DIV_CLK>,
++=09=09=09=09 <&gcc GCC_MSS_SNOC_AXI_CLK>,
++=09=09=09=09 <&gcc GCC_MSS_MNOC_BIMC_AXI_CLK>,
++=09=09=09=09 <&rpmcc RPM_SMD_PCNOC_CLK>,
++=09=09=09=09 <&rpmcc RPM_SMD_QDSS_CLK>;
++=09=09=09clock-names =3D "iface", "bus", "mem", "xo", "gpll0_mss",
++=09=09=09=09      "snoc_axi", "mnoc_axi", "pnoc", "qdss";
++
++=09=09=09resets =3D <&gcc GCC_MSS_RESTART>;
++=09=09=09reset-names =3D "mss_restart";
++
++=09=09=09power-domains =3D <&rpmpd MSM8996_VDDCX>,
++=09=09=09=09=09<&rpmpd MSM8996_VDDMX>;
++=09=09=09power-domain-names =3D "cx", "mx";
++
++=09=09=09qcom,smem-states =3D <&mpss_smp2p_out 0>;
++=09=09=09qcom,smem-state-names =3D "stop";
++
++=09=09=09qcom,halt-regs =3D <&tcsr_mutex_regs 0x23000 0x25000 0x24000>;
++
++=09=09=09status =3D "disabled";
++
++=09=09=09mba {
++=09=09=09=09memory-region =3D <&mba_mem>;
++=09=09=09};
++
++=09=09=09mpss {
++=09=09=09=09memory-region =3D <&mpss_mem>;
++=09=09=09};
++
++=09=09=09smd-edge {
++=09=09=09=09interrupts =3D <GIC_SPI 449 IRQ_TYPE_EDGE_RISING>;
++
++=09=09=09=09label =3D "mpss";
++=09=09=09=09mboxes =3D <&apcs_glb 12>;
++=09=09=09=09qcom,smd-edge =3D <0>;
++=09=09=09=09qcom,remote-pid =3D <1>;
++=09=09=09};
++=09=09};
++
+ =09=09stm@3002000 {
+ =09=09=09compatible =3D "arm,coresight-stm", "arm,primecell";
+ =09=09=09reg =3D <0x3002000 0x1000>,
 --=20
 2.33.0
 
