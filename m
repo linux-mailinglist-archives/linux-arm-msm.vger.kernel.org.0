@@ -2,96 +2,530 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8F298418D95
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Sep 2021 04:00:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 205B7418DCD
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Sep 2021 04:43:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232405AbhI0CCC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 26 Sep 2021 22:02:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58084 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232360AbhI0CCB (ORCPT
+        id S232502AbhI0CpE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 26 Sep 2021 22:45:04 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:53575 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229473AbhI0CpE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 26 Sep 2021 22:02:01 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38201C061575
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Sep 2021 19:00:24 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id g2so10277927pfc.6
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Sep 2021 19:00:24 -0700 (PDT)
+        Sun, 26 Sep 2021 22:45:04 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=fRhfaZIMy0eMtR+WN6XwxZ3efkveVfiLx2hy6oKGqxQ=;
-        b=dfcbR4kDhZ0gl4NR+Wc6aGJZHUXpkXjkImsqmPR3LqcilVOqtSdfDPG8Wa9sNm6uiZ
-         g/iD5AHm5/10gZfKrT1xzPHrsSRcNIj7PDUAKbYzH9rwBC25Iz5G9jCl5MwBOxGuLsMs
-         u2aUgSgoRzXcMBoduqJVxy6QMRYt21hn77PGH+3F5r7h+llUjtq2K4e655HmpuTlBICp
-         S0QmHxdm3o/BPdWrkpYG02P+l2/gZ23DAUbTdgWMSroRAqLi9RRmlXymH4chRkJvuGYv
-         Q8ZKHx/+heDK78gsarabaSYNobLd6Sg7JXPpQuNl2Ocz9PHiNawsNfxJKajVx5yJebKU
-         r0qw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=fRhfaZIMy0eMtR+WN6XwxZ3efkveVfiLx2hy6oKGqxQ=;
-        b=YH0aG3VL0UAFuxWARu2FeqecqJaCoq/7wY38pvVxJh1Oa4eZddTbrTPx0ln5iR31Gy
-         sU/bjy8tljimd5N4Qh0jJNr1MBaAZm5nGp2cxgRkNRSaVil6khmUuZCslln2f45J1+kS
-         iWAEu6phmKJ1nbY+5O813Zq5mqYWSTgOWfRm5/BTZsjfjg/FsmIZYfhOoqAzCJ8vSoOi
-         DLFxNcHYWci3PikTHya7T8U8CTSW4CtHse2wqFpT4mEenmjxku4sWvDsZZNJzkBRFaVm
-         zFncwiuuZea+5Ql+53w0j+R18kXRCAdgcocwmCbH5E73NBaMoXaF1juyKfHmjEs6wAPJ
-         cJuA==
-X-Gm-Message-State: AOAM530UO3ocQfNNth+G5cmk/oqRILiCdmmyJB5IX68ls/FYrLiZkEps
-        RYeAtrBSp9oTm27+Eeg3XRZvrJZYd3DCjg==
-X-Google-Smtp-Source: ABdhPJz4jMv+ZFKHUgilpdzHEejF4xPeD0JX5Z31RfTCjSg8tVRfIxlzuVybruG/dRHHjmGAg4u3yg==
-X-Received: by 2002:a63:ea44:: with SMTP id l4mr14464843pgk.210.1632708023631;
-        Sun, 26 Sep 2021 19:00:23 -0700 (PDT)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id x5sm8658762pfq.136.2021.09.26.19.00.20
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 26 Sep 2021 19:00:23 -0700 (PDT)
-Date:   Mon, 27 Sep 2021 10:00:08 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1632710607; x=1664246607;
+  h=from:to:cc:subject:date:message-id:mime-version;
+  bh=G19ZawGl4yA+d518Ao44C1Pd5HIVXMPeFBssvKZTTck=;
+  b=Kavl3pBlBfd2ay+aXRu1SR+zSpdGRPAs3Nsyq988NRumjR7+o7zROfHG
+   gazeMGly9DK9JNVWq8yveaNvAQXfg6HBUCCQ++jPXE5u6xNmaDc2rtKU1
+   d2LcTfOX5COr29CcqrDpg3aUC6Y3yuVcUVQJb0ce9x5j/ZQPe0v3HfgcO
+   A=;
+Received: from ironmsg-lv-alpha.qualcomm.com ([10.47.202.13])
+  by alexa-out.qualcomm.com with ESMTP; 26 Sep 2021 19:43:27 -0700
+X-QCInternal: smtphost
+Received: from nalasex01c.na.qualcomm.com ([10.47.97.35])
+  by ironmsg-lv-alpha.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 26 Sep 2021 19:43:26 -0700
+Received: from taozha-gv.qualcomm.com (10.80.80.8) by
+ nalasex01c.na.qualcomm.com (10.47.97.35) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
+ Sun, 26 Sep 2021 19:43:20 -0700
+From:   Tao Zhang <quic_taozha@quicinc.com>
+To:     Mathieu Poirier <mathieu.poirier@linaro.org>,
+        Suzuki K Poulose <suzuki.poulose@arm.com>,
+        Alexander Shishkin <alexander.shishkin@linux.intel.com>,
+        Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Caleb Connolly <caleb@connolly.tech>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: Drop vdd-supply from qusb2-phy devices
-Message-ID: <20210927020007.GF9901@dragon>
-References: <20210926075951.28034-1-shawn.guo@linaro.org>
- <c8d61171-225f-ca1c-db9e-7ed3f91365b8@somainline.org>
- <20210927000715.GD9901@dragon>
+        <linux-arm-msm@vger.kernel.org>, <devicetree@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     Tao Zhang <quic_taozha@quicinc.com>,
+        Mike Leach <mike.leach@linaro.org>,
+        Leo Yan <leo.yan@linaro.org>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        <coresight@lists.linaro.org>,
+        <linux-arm-kernel@lists.infradead.org>,
+        Tingwei Zhang <quic_tingweiz@quicinc.com>,
+        Mao Jinlong <quic_jinlmao@quicinc.com>,
+        "Yuanfang Zhang" <quic_yuanfang@quicinc.com>
+Subject: [PATCH v2 2/2] arm64: dts: qcom: sm8250: Add Coresight support
+Date:   Mon, 27 Sep 2021 10:43:01 +0800
+Message-ID: <1632710581-11896-1-git-send-email-quic_taozha@quicinc.com>
+X-Mailer: git-send-email 2.7.4
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210927000715.GD9901@dragon>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Type: text/plain
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01b.na.qualcomm.com (10.46.141.250) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 27, 2021 at 08:07:16AM +0800, Shawn Guo wrote:
-> On Mon, Sep 27, 2021 at 12:58:19AM +0200, Konrad Dybcio wrote:
-> > 
-> > On 26.09.2021 09:59, Shawn Guo wrote:
-> > > Looking at qcom,qusb2-phy.yaml bindings and qusb2_phy_vreg_names[] in
-> > > qusb2-phy driver, vdd-supply is not a supported/valid property.  Drop it
-> > > from qusb2-phy devices on various boards.
-> > >
-> > > Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
-> > 
-> > Why not add it to the regulators list instead? It's a valid regulator for this hw.
-> 
-> I do not have enough information to be sure.  Could you cook up a patch to
-> update bindings and driver, if you think that's the case?  I will be
-> happy as long as that DTS, bindings and driver are on the same page.
+Add the basic coresight components found on Qualcomm SM8250 Soc. The
+basic coresight components include ETF, ETMs,STM and the related
+funnels.
+ETM verification and use of Coresight components need Coresight
+support in this device tree. Since the ETR sink needs SMMU support,
+and SMMU has not been enabled on RB5. ETR is not added to this patch,
+and it will be added once SMMU is enabled on RB5. ETF sink has been
+added to the device tree for RB5.
 
-Aha, I checked downstream kernel and vdd is indeed a valid supply for
-qusb2_phy.  Please disregard this patch, and I will update bindings and
-driver instead.  Thanks, Konrad!
+Signed-off-by: Tao Zhang <quic_taozha@quicinc.com>
+---
+ arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 439 +++++++++++++++++++++++++++++++
+ 1 file changed, 439 insertions(+)
 
-Shawn
+diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+index 5f41de2..1e1579a 100644
+--- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
++++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
+@@ -223,6 +223,445 @@
+ 		regulator-max-microvolt = <1800000>;
+ 		regulator-always-on;
+ 	};
++
++	stm@6002000 {
++		compatible = "arm,coresight-stm", "arm,primecell";
++		reg = <0 0x06002000 0 0x1000>,
++		      <0 0x16280000 0 0x180000>;
++		reg-names = "stm-base", "stm-stimulus-base";
++
++		clocks = <&aoss_qmp>;
++		clock-names = "apb_pclk";
++
++		out-ports {
++			port {
++				stm_out: endpoint {
++					remote-endpoint =
++					  <&funnel0_in7>;
++				};
++			};
++		};
++	};
++
++	funnel@6041000 {
++		compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++		reg = <0 0x06041000 0 0x1000>;
++
++		clocks = <&aoss_qmp>;
++		clock-names = "apb_pclk";
++
++		out-ports {
++			port {
++				funnel0_out: endpoint {
++					remote-endpoint =
++					  <&merge_funnel_in0>;
++				};
++			};
++		};
++
++		in-ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@7 {
++				reg = <7>;
++				funnel0_in7: endpoint {
++					remote-endpoint = <&stm_out>;
++				};
++			};
++		};
++	};
++
++	funnel@6042000 {
++		compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++		reg = <0 0x06042000 0 0x1000>;
++
++		clocks = <&aoss_qmp>;
++		clock-names = "apb_pclk";
++
++		out-ports {
++			port {
++				funnel2_out: endpoint {
++					remote-endpoint =
++					  <&merge_funnel_in2>;
++				};
++			};
++		};
++
++		in-ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@4 {
++				reg = <4>;
++				funnel2_in5: endpoint {
++					remote-endpoint =
++					  <&apss_merge_funnel_out>;
++				};
++			};
++		};
++	};
++
++	funnel@6b04000 {
++		compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++		arm,primecell-periphid = <0x000bb908>;
++
++		reg = <0 0x6b04000 0 0x1000>;
++		reg-names = "funnel-base";
++
++		clocks = <&aoss_qmp>;
++		clock-names = "apb_pclk";
++
++		out-ports {
++			port {
++				merge_funnel_out: endpoint {
++					remote-endpoint =
++						<&etf_in>;
++				};
++			};
++		};
++
++		in-ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@7 {
++				reg = <7>;
++				swao_funnel_in7: endpoint {
++					slave-mode;
++					remote-endpoint=
++						<&merg_funnel_out>;
++				};
++			};
++		};
++
++	};
++
++	funnel@6045000 {
++		compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++		reg = <0 0x06045000 0 0x1000>;
++
++		clocks = <&aoss_qmp>;
++		clock-names = "apb_pclk";
++
++		out-ports {
++			port {
++				merg_funnel_out: endpoint {
++					remote-endpoint = <&swao_funnel_in7>;
++				};
++			};
++		};
++
++		in-ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++				merge_funnel_in0: endpoint {
++					remote-endpoint =
++					  <&funnel0_out>;
++				};
++			};
++
++			port@1 {
++				reg = <1>;
++				merge_funnel_in2: endpoint {
++					remote-endpoint =
++					  <&funnel2_out>;
++				};
++			};
++		};
++	};
++
++	etf@6b05000 {
++		compatible = "arm,coresight-tmc", "arm,primecell";
++		reg = <0 0x06b05000 0 0x1000>;
++
++		clocks = <&aoss_qmp>;
++		clock-names = "apb_pclk";
++
++		in-ports {
++			port {
++				etf_in: endpoint {
++					remote-endpoint =
++					  <&merge_funnel_out>;
++				};
++			};
++		};
++	};
++
++	etm@7040000 {
++		compatible = "arm,coresight-etm4x", "arm,primecell";
++		reg = <0 0x07040000 0 0x1000>;
++
++		cpu = <&CPU0>;
++
++		clocks = <&aoss_qmp>;
++		clock-names = "apb_pclk";
++		arm,coresight-loses-context-with-cpu;
++
++		out-ports {
++			port {
++				etm0_out: endpoint {
++					remote-endpoint =
++					  <&apss_funnel_in0>;
++				};
++			};
++		};
++	};
++
++	etm@7140000 {
++		compatible = "arm,coresight-etm4x", "arm,primecell";
++		reg = <0 0x07140000 0 0x1000>;
++
++		cpu = <&CPU1>;
++
++		clocks = <&aoss_qmp>;
++		clock-names = "apb_pclk";
++		arm,coresight-loses-context-with-cpu;
++
++		out-ports {
++			port {
++				etm1_out: endpoint {
++					remote-endpoint =
++					  <&apss_funnel_in1>;
++				};
++			};
++		};
++	};
++
++	etm@7240000 {
++		compatible = "arm,coresight-etm4x", "arm,primecell";
++		reg = <0 0x07240000 0 0x1000>;
++
++		cpu = <&CPU2>;
++
++		clocks = <&aoss_qmp>;
++		clock-names = "apb_pclk";
++		arm,coresight-loses-context-with-cpu;
++
++		out-ports {
++			port {
++				etm2_out: endpoint {
++					remote-endpoint =
++					  <&apss_funnel_in2>;
++				};
++			};
++		};
++	};
++
++	etm@7340000 {
++		compatible = "arm,coresight-etm4x", "arm,primecell";
++		reg = <0 0x07340000 0 0x1000>;
++
++		cpu = <&CPU3>;
++
++		clocks = <&aoss_qmp>;
++		clock-names = "apb_pclk";
++		arm,coresight-loses-context-with-cpu;
++
++		out-ports {
++			port {
++				etm3_out: endpoint {
++					remote-endpoint =
++					  <&apss_funnel_in3>;
++				};
++			};
++		};
++	};
++
++	etm@7440000 {
++		compatible = "arm,coresight-etm4x", "arm,primecell";
++		reg = <0 0x07440000 0 0x1000>;
++
++		cpu = <&CPU4>;
++
++		clocks = <&aoss_qmp>;
++		clock-names = "apb_pclk";
++		arm,coresight-loses-context-with-cpu;
++
++		out-ports {
++			port {
++				etm4_out: endpoint {
++					remote-endpoint =
++					  <&apss_funnel_in4>;
++				};
++			};
++		};
++	};
++
++	etm@7540000 {
++		compatible = "arm,coresight-etm4x", "arm,primecell";
++		reg = <0 0x07540000 0 0x1000>;
++
++		cpu = <&CPU5>;
++
++		clocks = <&aoss_qmp>;
++		clock-names = "apb_pclk";
++		arm,coresight-loses-context-with-cpu;
++
++		out-ports {
++			port {
++				etm5_out: endpoint {
++					remote-endpoint =
++					  <&apss_funnel_in5>;
++				};
++			};
++		};
++	};
++
++	etm@7640000 {
++		compatible = "arm,coresight-etm4x", "arm,primecell";
++		reg = <0 0x07640000 0 0x1000>;
++
++		cpu = <&CPU6>;
++
++		clocks = <&aoss_qmp>;
++		clock-names = "apb_pclk";
++		arm,coresight-loses-context-with-cpu;
++
++		out-ports {
++			port {
++				etm6_out: endpoint {
++					remote-endpoint =
++					  <&apss_funnel_in6>;
++				};
++			};
++		};
++	};
++
++	etm@7740000 {
++		compatible = "arm,coresight-etm4x", "arm,primecell";
++		reg = <0 0x07740000 0 0x1000>;
++
++		cpu = <&CPU7>;
++
++		clocks = <&aoss_qmp>;
++		clock-names = "apb_pclk";
++		arm,coresight-loses-context-with-cpu;
++
++		out-ports {
++			port {
++				etm7_out: endpoint {
++					remote-endpoint =
++					  <&apss_funnel_in7>;
++				};
++			};
++		};
++	};
++
++	funnel@7800000 {
++		compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++		reg = <0 0x07800000 0 0x1000>;
++
++		clocks = <&aoss_qmp>;
++		clock-names = "apb_pclk";
++
++		out-ports {
++			port {
++				apss_funnel_out: endpoint {
++					remote-endpoint =
++					  <&apss_merge_funnel_in>;
++				};
++			};
++		};
++
++		in-ports {
++			#address-cells = <1>;
++			#size-cells = <0>;
++
++			port@0 {
++				reg = <0>;
++				apss_funnel_in0: endpoint {
++					remote-endpoint =
++					  <&etm0_out>;
++				};
++			};
++
++			port@1 {
++				reg = <1>;
++				apss_funnel_in1: endpoint {
++					remote-endpoint =
++					  <&etm1_out>;
++				};
++			};
++
++			port@2 {
++				reg = <2>;
++				apss_funnel_in2: endpoint {
++					remote-endpoint =
++					  <&etm2_out>;
++				};
++			};
++
++			port@3 {
++				reg = <3>;
++				apss_funnel_in3: endpoint {
++					remote-endpoint =
++					  <&etm3_out>;
++				};
++			};
++
++			port@4 {
++				reg = <4>;
++				apss_funnel_in4: endpoint {
++					remote-endpoint =
++					  <&etm4_out>;
++				};
++			};
++
++			port@5 {
++				reg = <5>;
++				apss_funnel_in5: endpoint {
++					remote-endpoint =
++					  <&etm5_out>;
++				};
++			};
++
++			port@6 {
++				reg = <6>;
++				apss_funnel_in6: endpoint {
++					remote-endpoint =
++					  <&etm6_out>;
++				};
++			};
++
++			port@7 {
++				reg = <7>;
++				apss_funnel_in7: endpoint {
++					remote-endpoint =
++					  <&etm7_out>;
++				};
++			};
++		};
++	};
++
++	funnel@7810000 {
++		compatible = "arm,coresight-dynamic-funnel", "arm,primecell";
++		reg = <0 0x07810000 0 0x1000>;
++
++		clocks = <&aoss_qmp>;
++		clock-names = "apb_pclk";
++
++		out-ports {
++			port {
++				apss_merge_funnel_out: endpoint {
++					remote-endpoint =
++					  <&funnel2_in5>;
++				};
++			};
++		};
++
++		in-ports {
++			port {
++				apss_merge_funnel_in: endpoint {
++					remote-endpoint =
++					  <&apss_funnel_out>;
++				};
++			};
++		};
++	};
+ };
+ 
+ &adsp {
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
