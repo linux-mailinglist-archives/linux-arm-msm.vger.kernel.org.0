@@ -2,39 +2,40 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A8E4E41A37A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 01:00:09 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4078E41A37B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 01:00:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237909AbhI0XBq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S237903AbhI0XBq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Mon, 27 Sep 2021 19:01:46 -0400
-Received: from mail.kernel.org ([198.145.29.99]:41450 "EHLO mail.kernel.org"
+Received: from mail.kernel.org ([198.145.29.99]:41442 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237903AbhI0XBq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S237780AbhI0XBq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Mon, 27 Sep 2021 19:01:46 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPS id D43B861058;
+Received: by mail.kernel.org (Postfix) with ESMTPS id C781860EFF;
         Mon, 27 Sep 2021 23:00:07 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
         s=k20201202; t=1632783607;
-        bh=pcYx9M/LJ20OAehGzzaYKqNyFU0ka+P5TepaE1E7aKg=;
+        bh=3tidb5OlIxBs02wMr1rJQSwemtOrJ60cw+D2rmkkh4c=;
         h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
-        b=GkMKRdJT+J1zx28/qwWPdBu1UzuoVGBqFIOUyunhlgG+3Wo0/JFqJd2YxPooUfrtd
-         QX7y422vNXC3bCKVZuzb+IMuebJnu2BKhfcWXD9wmZzlOLs2cC6AtnLkhdzYt9y+to
-         BtPFHsws5zdCT+pUPcGp2O7HjEOksle7bRTIpXYjX+oARzUZihReBdkv5GYpzvdVZS
-         H0mlMYqv8MS72yjaF5coFNx+YBCC81i5eT/yDtO5mJ7feclp+TQ9v2lyjsNbnzc7d9
-         ENBV9oyT1XTBjObwQ1G1LVIFK0Yy6NbsQ0cLOJXJZpKig9WsH9HcZJ+B9AEfc83nbz
-         TJ8J5fxyeksHw==
+        b=Tt08dNpNW8B6PEsut2k6m0RG4RLEQNHdfFGivrF2p/1t7M6ox8y4qc1hHxuZekyja
+         r8jEFVx9joHNiju37ZOKYzc4q/wCgd4crWOUD8NscnInJG6qo80uJLXTI++pqdBOB0
+         9lSP2eeRV/kiRx9w+Q2u6qiblZXN/x80tQLE2otXa8/SV6rpLS7aVp27G5/DAE2BOp
+         udTfZWrfJcUXWCzp64CLGrXDqznV1/uv7HoiMfqon0EEV0FJKGr8qlCwfk0EVbPe70
+         GZLRJ++RI0+XhDqYtq9KPMYsIYV4DbKAxauUjjGrUFv+TLI221f1lMXri8CpsYXOh0
+         fEUzz+zcvMCcw==
 Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
-        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id C8F6360A69;
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id BEF6960A53;
         Mon, 27 Sep 2021 23:00:07 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
-Subject: Re: [PATCH] arm64: dts: qcom: msm8916: Fix Secondary MI2S bit clock
+Subject: Re: [PATCH] arm64: dts: qcom: msm8916-longcheer-l8150: Add missing sensor
+ interrupts
 From:   patchwork-bot+linux-arm-msm@kernel.org
-Message-Id: <163278360781.4723.13409230876953128767.git-patchwork-notify@kernel.org>
+Message-Id: <163278360777.4723.16462055347638300134.git-patchwork-notify@kernel.org>
 Date:   Mon, 27 Sep 2021 23:00:07 +0000
-References: <20210816181810.2242-1-stephan@gerhold.net>
-In-Reply-To: <20210816181810.2242-1-stephan@gerhold.net>
+References: <20210816123544.14027-1-stephan@gerhold.net>
+In-Reply-To: <20210816123544.14027-1-stephan@gerhold.net>
 To:     Stephan Gerhold <stephan@gerhold.net>
 Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
@@ -45,19 +46,24 @@ Hello:
 
 This patch was applied to qcom/linux.git (refs/heads/for-next):
 
-On Mon, 16 Aug 2021 20:18:10 +0200 you wrote:
-> At the moment, playing audio on Secondary MI2S will just end up getting
-> stuck, without actually playing any audio. This happens because the wrong
-> bit clock is configured when playing audio on Secondary MI2S.
+On Mon, 16 Aug 2021 14:35:44 +0200 you wrote:
+> So far there were no interrupts set up for the BMC150 accelerometer
+> + magnetometer combo because they were broken for some reason.
+> It turns out Longcheer L8150 actually has a BMC156 which is very similar
+> to BMC150, but only has an INT2 pin for the accelerometer part.
 > 
-> The PRI_I2S_CLK (better name: SPKR_I2S_CLK) is used by the SPKR audio mux
-> block that provides both Primary and Secondary MI2S.
+> This requires some minor changes in the bmc150-accel driver which is now
+> supported by using the more correct bosch,bmc156_accel compatible.
+> Unfortunately it looks like even INT2 is not functional on most boards
+> because the interrupt line is not actually connected to the BMC156.
+> However, there are two pads next to the chip that can be shorted
+> to make it work if needed.
 > 
 > [...]
 
 Here is the summary with links:
-  - arm64: dts: qcom: msm8916: Fix Secondary MI2S bit clock
-    https://git.kernel.org/qcom/c/8199a0b31e76
+  - arm64: dts: qcom: msm8916-longcheer-l8150: Add missing sensor interrupts
+    https://git.kernel.org/qcom/c/51c7786f5d42
 
 You are awesome, thank you!
 --
