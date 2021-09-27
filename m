@@ -2,100 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BF4CE419FA4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Sep 2021 21:59:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE71D419FF3
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Sep 2021 22:16:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236715AbhI0UAq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Sep 2021 16:00:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50680 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236655AbhI0UAp (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Sep 2021 16:00:45 -0400
-Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F034C061604
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Sep 2021 12:59:07 -0700 (PDT)
-Received: by mail-ot1-x32e.google.com with SMTP id g62-20020a9d2dc4000000b0054752cfbc59so20286741otb.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Sep 2021 12:59:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=Zu4vVZfjBvQG3c6lbaKUHBCzEAuiakqkbk50f2WpbsU=;
-        b=AUyYGatR0L+ZAKRYrOlQa80vyKI4RtAEG94vt6NYNKIOWE0vptxcS8+qUX7Sz1357u
-         qpszknbOqc9pLBVdgtyIF48d3cQmUmSaSCzlDuVJzvRytz/cGUZOITkkYWDoum4Ns3xf
-         qAoNh30tgT2G3Y9Anl4BqRWEJGJG3AgH2h0Hg=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=Zu4vVZfjBvQG3c6lbaKUHBCzEAuiakqkbk50f2WpbsU=;
-        b=TQCoggR4jxnYz3k4yy0eEyvVpbWkp2RA/DbxWlm8wO32gh9d39rb7IP1yIj+r5ZQi3
-         Q/V1VGm6wOGUitTo96fhJr4fbnjxWAP95g+sTivn2jx0RR26TTiYPTI6pxPf3xP93155
-         2vOd9R3/gqjLQWSr7cnxilAlAvGpiAiQgq2AQP0HOPRUP3YpMjmql64Z0jJ/bdrXHRCJ
-         3o4a3KBJF08bAVmphvKz8WvZJN89XZibh2ZokRZTNiXKc/pYmewQgISMiVF2F/oZYB0c
-         L2UKLckvGt6m0b/UVf4sGJroUG3SWoBKpk1KOLG6QbnOc+KJzjl+Sa6n9dJ+J180BkU3
-         5PMw==
-X-Gm-Message-State: AOAM531jxAhydQkiRg9ENCLCdhZmFzvhUjP9JTBCAoqBS/UPeRVj85UG
-        5c4GKuPPC1pB3gfH50fSX0sg4FvVvpXYegk889GGiw==
-X-Google-Smtp-Source: ABdhPJy55etq8fVl9RMOyOF/0w7JpQU+TZK4qTsk4iPj6m0oB6kxb3YiQ0adJRdVSHKh0ncjuHvTRXnwExL89xLGtTA=
-X-Received: by 2002:a05:6830:708:: with SMTP id y8mr1581379ots.77.1632772746544;
- Mon, 27 Sep 2021 12:59:06 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 27 Sep 2021 12:59:05 -0700
+        id S236937AbhI0URm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Sep 2021 16:17:42 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35706 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S236763AbhI0URl (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 27 Sep 2021 16:17:41 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 46BD5611C3;
+        Mon, 27 Sep 2021 20:16:03 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1632773763;
+        bh=Lb3LIgfAEjVXdf1vE2V7OoMMbogeWMravjEabJ1Nxyg=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=aoqynUkGyB6ZPUI0PZbhRVWrRQEh4dUFl+HnGRbJEjz36swl07OI+waO5juXrxZEL
+         jHlAKLJtp7vLEn53dGPq9ybdvqoV7skp3bnJ2v0dt7b3LCLaWszZoJwfgXGV5CewIZ
+         EeT9Puax/p5vO3xFfjNQpP/s5z+vV6IucH/tDVc9OrhV9apJ4xfqmWfbZVQ6mT6zds
+         T7V/1iyHvtmaHFbCozBGLs87R9buQKkqhGe1GFJbwuhVxRAw/14pw6aQABaZ9IXQ/3
+         OdqLZFHV5ZJBQxWkAwNJ0thZGMxGk74lNv+sDueBnQKqvqp7vbKRWok7c77AtHcBAs
+         PL2/kpsfVk1jA==
+Received: by mail-wr1-f53.google.com with SMTP id g16so54027899wrb.3;
+        Mon, 27 Sep 2021 13:16:03 -0700 (PDT)
+X-Gm-Message-State: AOAM533A9Dlo5xlQ9wTe8lwQ5Rw/y18zWiNA8hEYg0fKcAx9F0YYwwjL
+        WQIZl1vHv7uaSF3bXhgVCcdRMt2ZOCzYk9VWg9E=
+X-Google-Smtp-Source: ABdhPJxhSUG+xfsMcnYBJG/aU9zQ/jW83Rbf6e2ezlqzSM1qdDuC1ur8sa8pPTTU3lbMghJJfkyUaLecI/p3sCcMSis=
+X-Received: by 2002:a5d:6cb4:: with SMTP id a20mr1431020wra.428.1632773761805;
+ Mon, 27 Sep 2021 13:16:01 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20210924165322.1.Ib7e63ae17e827ce0636a09d5dec9796043e4f80a@changeid>
-References: <20210924165322.1.Ib7e63ae17e827ce0636a09d5dec9796043e4f80a@changeid>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Mon, 27 Sep 2021 12:59:05 -0700
-Message-ID: <CAE-0n53uBf-qbPptg-=9TX3=FGG4PvtVARfipxriJRE6cdWt4A@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: sc7180: Factor out ti-sn65dsi86 support
-To:     LKML <linux-kernel@vger.kernel.org>,
-        Philip Chen <philipchen@chromium.org>
-Cc:     dianders@chromium.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
+References: <20210927152412.2900928-1-arnd@kernel.org> <YVIg9CxJGaJr1vpp@ripper>
+In-Reply-To: <YVIg9CxJGaJr1vpp@ripper>
+From:   Arnd Bergmann <arnd@kernel.org>
+Date:   Mon, 27 Sep 2021 22:15:45 +0200
+X-Gmail-Original-Message-ID: <CAK8P3a1fEuFsQVY9b1oGdTOHzr8pu9wvrSBCMn2iOvgWqtHNnA@mail.gmail.com>
+Message-ID: <CAK8P3a1fEuFsQVY9b1oGdTOHzr8pu9wvrSBCMn2iOvgWqtHNnA@mail.gmail.com>
+Subject: Re: [PATCH] [RFC] qcom_scm: hide Kconfig symbol
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     John Stultz <john.stultz@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Alex Elder <elder@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Maxime Ripard <mripard@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
+        Linux Media Mailing List <linux-media@vger.kernel.org>,
+        linux-mmc <linux-mmc@vger.kernel.org>,
+        Networking <netdev@vger.kernel.org>, ath10k@lists.infradead.org,
+        linux-wireless <linux-wireless@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-sunxi@lists.linux.dev
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Philip Chen (2021-09-24 16:54:13)
-> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-ti-sn65dsi86.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-ti-sn65dsi86.dtsi
-> new file mode 100644
-> index 000000000000..7b1034a5a8e9
-> --- /dev/null
-> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-ti-sn65dsi86.dtsi
-> @@ -0,0 +1,87 @@
-> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-> +/*
-> + * Google Trogdor dts fragment for the boards with TI sn65dsi86 edp bridge
-> + *
-> + * Copyright 2021 Google LLC.
-> + */
-> +
-> +&dsi0_out {
-> +       remote-endpoint = <&sn65dsi86_in>;
-> +       data-lanes = <0 1 2 3>;
-> +};
-> +
-> +&edp_brij_i2c {
-> +       sn65dsi86_bridge: bridge@2d {
-> +               compatible = "ti,sn65dsi86";
-> +               reg = <0x2d>;
-> +               pinctrl-names = "default";
-> +               pinctrl-0 = <&edp_brij_en>, <&edp_brij_irq>;
+On Mon, Sep 27, 2021 at 9:52 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+> On Mon 27 Sep 08:22 PDT 2021, Arnd Bergmann wrote:
+> > From: Arnd Bergmann <arnd@arndb.de>
+> >
+> >  - To avoid a circular dependency chain involving RESET_CONTROLLER
+> >    and PINCTRL_SUNXI, change the 'depends on RESET_CONTROLLER' in
+> >    the latter one to 'select'.
+>
+> Can you please help me understand why this is part of the same patch?
 
-Why not move edp_brij_en as well? I think you want to reuse the node
-name for the other bridge, but it doesn't make sense unless that other
-patch is part of this series.
+This can be done as a preparatory patch if we decide to do it this way,
+for the review it seemed better to spell out that this is required.
 
-> +               gpio-controller;
-> +               #gpio-cells = <2>;
-> +
-> +               interrupt-parent = <&tlmm>;
-> +               interrupts = <11 IRQ_TYPE_LEVEL_HIGH>;
-> +
-> +               enable-gpios = <&tlmm 104 GPIO_ACTIVE_HIGH>;
+I still hope that we can avoid adding another 'select RESET_CONTROLLER'
+if someone can figure out what to do instead.
+
+The problem here is that QCOM_SCM selects RESET_CONTROLLER,
+and turning that into 'depends on' would in turn mean that any driver that
+wants to select QCOM_SCM would have to have the same RESET_CONTROLLER
+dependency.
+
+An easier option might be to find a way to build QCOM_SCM without
+RESET_CONTROLLER for compile testing purposes. I don't know
+what would break from that.
+
+     Arnd
