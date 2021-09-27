@@ -2,219 +2,113 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7499F41938F
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Sep 2021 13:47:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AFE69419415
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Sep 2021 14:21:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234128AbhI0Lsk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Sep 2021 07:48:40 -0400
-Received: from alexa-out.qualcomm.com ([129.46.98.28]:36562 "EHLO
-        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234037AbhI0Lsj (ORCPT
+        id S234312AbhI0MX0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Sep 2021 08:23:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55664 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234364AbhI0MXQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Sep 2021 07:48:39 -0400
-Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
-  by alexa-out.qualcomm.com with ESMTP; 27 Sep 2021 04:47:02 -0700
-X-QCInternal: smtphost
-Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
-  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 27 Sep 2021 04:47:00 -0700
-X-QCInternal: smtphost
-Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
-  by ironmsg02-blr.qualcomm.com with ESMTP; 27 Sep 2021 17:16:44 +0530
-Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
-        id C658121BAE; Mon, 27 Sep 2021 17:16:42 +0530 (IST)
-From:   Dikshita Agarwal <dikshita@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
-        mchehab@kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        vgarodia@codeaurora.org, stanimir.varbanov@linaro.org,
-        Dikshita Agarwal <dikshita@codeaurora.org>
-Subject: [PATCH v4] dt-bindings: media: venus: Add sc7280 dt schema
-Date:   Mon, 27 Sep 2021 17:16:37 +0530
-Message-Id: <1632743197-32291-1-git-send-email-dikshita@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        Mon, 27 Sep 2021 08:23:16 -0400
+Received: from mail-wr1-x430.google.com (mail-wr1-x430.google.com [IPv6:2a00:1450:4864:20::430])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1E594C061773
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Sep 2021 05:21:35 -0700 (PDT)
+Received: by mail-wr1-x430.google.com with SMTP id g16so51622209wrb.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Sep 2021 05:21:35 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Y1oO8Q1pVhL1wgXlZ6jgRJOBx8hE/D0mjiLspGYY22I=;
+        b=zU/6pGYEYUokOUxUeb8/GAuawoBAl6EG+Hh3TOj/B2OKTm5JQOwVWHX36sIfwNBUma
+         GnuIinoxHtg54xUxnSMbAMFAAaE+6gREGDw8cp46lFzz3ugCx5kXy8I03OF2IRY6kEHZ
+         mU0owTjSYVivmOesqAVCfTVODIVE+LrLgDFBeDC46uiOQuCc2lZIrDq63TExFfYA7mjz
+         Be2TFQCwlnMDC5ylPfDwxChkg5yB4RaJ/A8RoYuAI+ruRh6+Zc8iexhrr6yAPk3QGijl
+         tiTnIqyagfIQhWlg03uB5nSI0Nk2ejqoK+pXfi2wjz6tmubUohNgM12z4vhaPDsI4GuU
+         Nz0A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Y1oO8Q1pVhL1wgXlZ6jgRJOBx8hE/D0mjiLspGYY22I=;
+        b=qKcfeByNoutm8M6W8jL3sGMVz3XK7zKNDBjBYI7N3qR1rBNLzWACnIgtGKdyjBavNb
+         WBIejHtANO1R2c12eUiytsM+1eUqIM/PLqZSB85aQyJjI0amX1aPc7vk7ccUw28EjOgG
+         tAVGD4BJ2VN5UgS7O+K0Z5SEK7PJ0WlGjX/qZof81A5X+yGeRuYi88LNUMbxmphNfRqT
+         40Bn4tzR7VzhBxdlYNjvnjWPED9YJvy0KV/GXOWT+0pzXn5N9VYR6D68fkwDrLPaUS+Q
+         bcUTSf5dWyBjoBU+cD/kgdRvutTY3MlLD9ZlyIfVk6GMIQ4U7wBQo/OyHxvOqwf+8eWD
+         JrIw==
+X-Gm-Message-State: AOAM530UqqiM8Qy75mcadoKTwkW3DpWjTKSdESlBjZidL4EAgFvDRqzS
+        QSVoEPv+xJmaGDpabWQlLiPxMg==
+X-Google-Smtp-Source: ABdhPJwbyY2P8aShYVbbdpFJ3b9wq5kVBsdgTZ2cuTJ/S34IoxiWAZ9GN3oNxdVlTEcaoTXc+GD5Ng==
+X-Received: by 2002:a5d:6d07:: with SMTP id e7mr27268884wrq.378.1632745293671;
+        Mon, 27 Sep 2021 05:21:33 -0700 (PDT)
+Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.googlemail.com with ESMTPSA id i18sm16795175wrn.64.2021.09.27.05.21.32
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 27 Sep 2021 05:21:33 -0700 (PDT)
+Subject: Re: [PATCH v2 3/5] ASoC: codecs: tx-macro: Enable tx top soundwire
+ mic clock
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
+        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, swboyd@chromium.org,
+        judyhsiao@chromium.org
+Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>
+References: <agross@kernel.org; bjorn.andersson@linaro.org;
+ lgirdwood@gmail.com; broonie@kernel.org;robh+dt@kernel.org;
+ plai@codeaurora.org; bgoswami@codeaurora.org; perex@perex.cz;
+ tiwai@suse.com;srinivas.kandagatla@linaro.org; rohitkr@codeaurora.org;
+ linux-arm-msm@vger.kernel.org; alsa-devel@alsa-project.org;
+ devicetree@vger.kernel.org; linux-kernel@vger.kernel.org;
+ swboyd@chromium.org; judyhsiao@chromium.org;>
+ <1632313878-12089-1-git-send-email-srivasam@codeaurora.org>
+ <1632313878-12089-4-git-send-email-srivasam@codeaurora.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <1e176dd1-fc8b-09dc-eb73-35b7d268e89a@linaro.org>
+Date:   Mon, 27 Sep 2021 13:21:32 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <1632313878-12089-4-git-send-email-srivasam@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a schema description for the venus video encoder/decoder on the sc7280.
 
-Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
-Reviewed-by: Rob Herring <robh@kernel.org>
----
-change since v3:
-    Added missing dependency.
 
- .../bindings/media/qcom,sc7280-venus.yaml          | 160 +++++++++++++++++++++
- 1 file changed, 160 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
+On 22/09/2021 13:31, Srinivasa Rao Mandadapu wrote:
+> Enable tx path soundwire mic0 and mic1 clock.
+> 
+> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> ---
+>   sound/soc/codecs/lpass-tx-macro.c | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
+> index 5dcae73..e980b2e 100644
+> --- a/sound/soc/codecs/lpass-tx-macro.c
+> +++ b/sound/soc/codecs/lpass-tx-macro.c
+> @@ -1674,6 +1674,8 @@ static int tx_macro_component_probe(struct snd_soc_component *comp)
+>   
+>   	snd_soc_component_update_bits(comp, CDC_TX0_TX_PATH_SEC7, 0x3F,
+>   				      0x0A);
+> +	snd_soc_component_update_bits(comp, CDC_TX_TOP_CSR_SWR_AMIC0_CTL, 0xFF, 0x00);
+> +	snd_soc_component_update_bits(comp, CDC_TX_TOP_CSR_SWR_AMIC1_CTL, 0xFF, 0x00);
 
-diff --git a/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
-new file mode 100644
-index 0000000..12a42a0
---- /dev/null
-+++ b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
-@@ -0,0 +1,160 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+
-+%YAML 1.2
-+---
-+$id: "http://devicetree.org/schemas/media/qcom,sc7280-venus.yaml#"
-+$schema: "http://devicetree.org/meta-schemas/core.yaml#"
-+
-+title: Qualcomm Venus video encode and decode accelerators
-+
-+maintainers:
-+  - Stanimir Varbanov <stanimir.varbanov@linaro.org>
-+
-+description: |
-+  The Venus Iris2 IP is a video encode and decode accelerator present
-+  on Qualcomm platforms
-+
-+properties:
-+  compatible:
-+    const: qcom,sc7280-venus
-+
-+  reg:
-+    maxItems: 1
-+
-+  interrupts:
-+    maxItems: 1
-+
-+  power-domains:
-+    minItems: 2
-+    maxItems: 3
-+
-+  power-domain-names:
-+    minItems: 2
-+    maxItems: 3
-+    items:
-+      - const: venus
-+      - const: vcodec0
-+      - const: cx
-+
-+  clocks:
-+    maxItems: 5
-+
-+  clock-names:
-+    items:
-+      - const: core
-+      - const: bus
-+      - const: iface
-+      - const: vcodec_core
-+      - const: vcodec_bus
-+
-+  iommus:
-+    maxItems: 2
-+
-+  memory-region:
-+    maxItems: 1
-+
-+  interconnects:
-+    maxItems: 2
-+
-+  interconnect-names:
-+    items:
-+      - const: cpu-cfg
-+      - const: video-mem
-+
-+  video-decoder:
-+    type: object
-+
-+    properties:
-+      compatible:
-+        const: venus-decoder
-+
-+    required:
-+      - compatible
-+
-+    additionalProperties: false
-+
-+  video-encoder:
-+    type: object
-+
-+    properties:
-+      compatible:
-+        const: venus-encoder
-+
-+    required:
-+      - compatible
-+
-+    additionalProperties: false
-+
-+  video-firmware:
-+    type: object
-+
-+    description: |
-+      Firmware subnode is needed when the platform does not
-+      have TrustZone.
-+
-+    properties:
-+      iommus:
-+        maxItems: 1
-+
-+    required:
-+      - iommus
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - power-domains
-+  - power-domain-names
-+  - clocks
-+  - clock-names
-+  - iommus
-+  - memory-region
-+  - video-decoder
-+  - video-encoder
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+        #include <dt-bindings/interrupt-controller/arm-gic.h>
-+        #include <dt-bindings/clock/qcom,videocc-sc7280.h>
-+
-+        venus: video-codec@aa00000 {
-+                compatible = "qcom,sc7280-venus";
-+                reg = <0x0aa00000 0xd0600>;
-+                interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
-+
-+                clocks = <&videocc VIDEO_CC_MVSC_CORE_CLK>,
-+                         <&videocc VIDEO_CC_MVSC_CTL_AXI_CLK>,
-+                         <&videocc VIDEO_CC_VENUS_AHB_CLK>,
-+                         <&videocc VIDEO_CC_MVS0_CORE_CLK>,
-+                         <&videocc VIDEO_CC_MVS0_AXI_CLK>;
-+                clock-names = "core", "bus", "iface",
-+                              "vcodec_core", "vcodec_bus";
-+
-+                power-domains = <&videocc MVSC_GDSC>,
-+                                <&videocc MVS0_GDSC>;
-+                                <&rpmhpd SC7280_CX>;
-+                power-domain-names = "venus", "vcodec0", "cx";
-+
-+                interconnects = <&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_VENUS_CFG 0>
-+                                <&mmss_noc MASTER_VIDEO_P0 0 &mc_virt SLAVE_EBI1 0>;
-+                interconnect-names = "cpu-cfg", "video-mem";
-+
-+                iommus = <&apps_smmu 0x2180 0x20>,
-+                         <&apps_smmu 0x2184 0x20>;
-+
-+                memory-region = <&video_mem>;
-+
-+                video-decoder {
-+                        compatible = "venus-decoder";
-+                };
-+
-+                video-encoder {
-+                        compatible = "venus-encoder";
-+                };
-+
-+                video-firmware {
-+                        iommus = <&apps_smmu 0x21a2 0x0>;
-+                };
-+        };
--- 
-2.7.4
+This needs a comment for more clarity to readers.
 
+--srini
+>   
+>   	return 0;
+>   }
+> 
