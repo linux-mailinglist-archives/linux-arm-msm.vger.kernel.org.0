@@ -2,94 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0069541A189
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Sep 2021 23:52:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5C12C41A19B
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Sep 2021 23:58:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237300AbhI0Vyf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Sep 2021 17:54:35 -0400
-Received: from fanzine.igalia.com ([178.60.130.6]:42709 "EHLO
-        fanzine.igalia.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237245AbhI0Vye (ORCPT
+        id S237528AbhI0WAM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Sep 2021 18:00:12 -0400
+Received: from relay01.th.seeweb.it ([5.144.164.162]:46475 "EHLO
+        relay01.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237537AbhI0WAL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Sep 2021 17:54:34 -0400
-X-Greylist: delayed 420 seconds by postgrey-1.27 at vger.kernel.org; Mon, 27 Sep 2021 17:54:32 EDT
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed; d=igalia.com; s=20170329;
-        h=Content-Transfer-Encoding:Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:Subject; bh=Qu7dQEqBlUkYgFtfoJbYHfEYXPbW8/2J84uKAJ25ta8=;
-        b=ZDm9nCGr949Kxmt4aGaRNvIKZ8wqj138CYJS2Xq1I+37JzQ6tU5ZelywPwNE0UdHZBT8XtPXEc6/69qWykNFiMFBwHTnWTzFCdhs8XtW81s0aF7PZI8moOwukSFRd4YA110VeAkvqG9YiSF1htCccXp0Xeua2V6U3I08u9iSr3IitIn7l+P10s57ICpTFJxFXGFWV4biFdW2m/Wl7YIJnyK7rVybMobZ5mtnWrD8cLW2dLhjf3xW66OjXhXQliuc6OXcsxjM9G9mEND7lVXQp+BMk7R0eN2xoVpJHo74BrnF+/A6nIvyOr4hWE44YsPXlXjLv4z+gYEybTb2uVTBPw==;
-Received: from [177.95.15.66] (helo=[192.168.1.64])
-        by fanzine.igalia.com with esmtpsa 
-        (Cipher TLS1.2:ECDHE_RSA_AES_128_GCM_SHA256:128) (Exim)
-        id 1mUyYM-0000e3-94; Mon, 27 Sep 2021 23:52:50 +0200
-Subject: Re: [PATCH] arm64: dts: qcom: msm8996: Add CPU cooling suppor,t
-To:     y.oudjana@protonmail.com
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        kernel@gpiccoli.net, loic.poulain@linaro.org,
-        konrad.dybcio@somainline.org
-References: <5ccc4ea8-e000-b6b9-0781-dcde814eda96@igalia.com>
-From:   "Guilherme G. Piccoli" <gpiccoli@igalia.com>
-Message-ID: <233effdb-5604-2405-fdaa-ebd35b0c0126@igalia.com>
-Date:   Mon, 27 Sep 2021 18:52:35 -0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        Mon, 27 Sep 2021 18:00:11 -0400
+Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 285CF1F88D;
+        Mon, 27 Sep 2021 23:58:30 +0200 (CEST)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v4 0/2] Global Clock Controller driver for MSM8976/56
+Date:   Mon, 27 Sep 2021 23:58:26 +0200
+Message-Id: <20210927215828.52357-1-marijn.suijten@somainline.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-In-Reply-To: <5ccc4ea8-e000-b6b9-0781-dcde814eda96@igalia.com>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 27/09/2021 18:45, Guilherme G. Piccoli wrote:
-> Hi Yassine, thanks for the patch! I was doing some experiments with a
-> dragonboard 820-based board, and without your patch, a CPU benchmark can
-> quickly cause overheating - throttling mechanism doesn't start and we
-> get a FW reset to a bad state (likely a HW protection mechanism).
-> 
-> I noticed that a similar patch including cooling maps is present in
-> Linaro's qcom tree [0], and it was submitted upstream [1], but there was
-> a re-submission [2] by Konrad that was merged and dropped the thermals
-> part. Based on some threads I read, it seems a FW lockup was detected
-> with the complete patch?
-> 
-> I'm not sure, so I'm looping Konrad / Loic / Bjorn here, to understand
-> better what made this portion of the patch to be dropped.
-> Anyway, I think worth to mention this in your commit message Yassine,
-> including perhaps a fixes tag like:
-> 
-> Fixes: 90173a954a22 ("arm64: dts: qcom: msm8996: Add CPU opps").
-> 
-> Also, I'm not sure why there was no response here or why it wasn't
-> merged, but if it helps, please have my:
-> 
-> Tested-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-> 
-> Thanks,
-> 
-> 
-> Guilherme
-> 
-> 
-> [0]
-> https://git.linaro.org/landing-teams/working/qualcomm/kernel.git/commit/?h=release/qcomlt-4.14&id=2274c48c671
-> 
-> [1]
-> https://patchwork.kernel.org/project/linux-arm-msm/patch/1595253740-29466-6-git-send-email-loic.poulain@linaro.org/
-> 
-> [2]
-> https://lore.kernel.org/linux-arm-msm/20210527194455.782108-2-konrad.dybcio@somainline.org/
-> 
+This is the Global Clock Controller (GCC) driver for MSM8956, MSM8976
+and APQ variants and it has been tested on two Sony phones featuring the
+Qualcomm MSM8956 SoC.
 
+In addition to GCC this driver is also responsible for providing MDSS
+and GFX3D clocks which reside in the same register space.
 
-Unfortunately, (likely) due to a typo in the Subject field, this wasn't
-threaded correctly. So, the original message I was responding is:
+SoMainline is dedicated to getting their long-awaited msm8976 support,
+including the Xperia X, X Compact and if feasible also the Xperia Touch
+projector (APQ8056) slowly but steadily upstreamed.
 
-https://lore.kernel.org/linux-arm-msm/jmayJcXoExAK2G7UBIXMz5CDN0BYgYkFZguHlPNRFOU@cp4-web-038.plabs.ch/
+Changes since v3:
+- Set the enable_mask of gcc_apss_ahb_clk and gcc_apss_axi_clk to BIT 14
+  and 13 respectively instead of overlapping gcc_crypto_ahb_clk's BIT 0.
 
-I'm sorry about the confusion with the mail thread!
-Cheers,
+Changes since v2:
+- Rebased on v5.14;
+- Various minor cleanups (lowercase hex, const where appropriate,
+  removal of unused enum constants);
+- Fixed XOR confusion in probe;
+- All remnants of global clock name dependencies are removed, all
+  inter-driver dependencies must be fully specified in DT;
+- Added proper dt-bindings yaml validation, listing the required clocks;
+- Moved dt-bindings header to the dt-bindings patch.
 
+Changes since v1:
+- Rebased onto linux-next 20191015
+- Fixed platform driver name (qcom,gcc-8976 => gcc-msm8976)
+- Splitted changes to dt-bindings to a separate commit
 
-Guilherme
+AngeloGioacchino Del Regno (1):
+  clk: qcom: Add MSM8976/56 Global Clock Controller (GCC) driver
+
+Marijn Suijten (1):
+  dt-bindings: clk: qcom: Document MSM8976 Global Clock Controller
+
+ .../bindings/clock/qcom,gcc-msm8976.yaml      |   90 +
+ drivers/clk/qcom/Kconfig                      |    8 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/gcc-msm8976.c                | 4154 +++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-msm8976.h  |  240 +
+ 5 files changed, 4493 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-msm8976.yaml
+ create mode 100644 drivers/clk/qcom/gcc-msm8976.c
+ create mode 100644 include/dt-bindings/clock/qcom,gcc-msm8976.h
+
+--
+2.33.0
+
