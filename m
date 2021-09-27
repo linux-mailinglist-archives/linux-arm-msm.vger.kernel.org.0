@@ -2,126 +2,77 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3CD7E419E51
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Sep 2021 20:31:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 58D69419ECE
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Sep 2021 21:01:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236158AbhI0SdA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Sep 2021 14:33:00 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58512 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236012AbhI0Sc7 (ORCPT
+        id S235847AbhI0TDM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Sep 2021 15:03:12 -0400
+Received: from mail-ot1-f53.google.com ([209.85.210.53]:33688 "EHLO
+        mail-ot1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235825AbhI0TDL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Sep 2021 14:32:59 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4A187C061575
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Sep 2021 11:31:20 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id u18so80024332lfd.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Sep 2021 11:31:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:from:to:cc:references:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=sWmqXMuBrucuIeakdjz9BORDR3vl7TbPCCWtbIs4HsQ=;
-        b=qjbC3u4RvCRjqFP+IDqxbgDTZaId2dnGKxvHO5eeQyWsVWmbTQgLobqt/yAW+X0Ghn
-         TajScg8JESA1H9S0+15RKB5n7gRpugUil1yVkZq4UgQ+xy0Qj9AZMUq6zZxddGPVytJq
-         IZy+3rPID0+L31UtMNINPPx2F23HLf/jyda0MJC0n7LuSYyNEMpiorCUS0TEQ23RWqI3
-         w8429B3XLM9pWb04fMen5yT1exU9mylBuRTgu3lcJ77hw/xQrnfEd3ROZlJ07IWaB6Xl
-         0SqwaE3zB/KMh1AtJ4SNjbQAHhtG/rZVLoQ3EiTvD89/sgpZhe6hOWY6KTUQ62r4auFM
-         xCHg==
+        Mon, 27 Sep 2021 15:03:11 -0400
+Received: by mail-ot1-f53.google.com with SMTP id d12-20020a05683025cc00b0054d8486c6b8so3746648otu.0;
+        Mon, 27 Sep 2021 12:01:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:from:to:cc:references:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=sWmqXMuBrucuIeakdjz9BORDR3vl7TbPCCWtbIs4HsQ=;
-        b=QEpQU40zEV9rFzI5PJhKYEw+yO7kbOJFUDx49ELc/Uwtc4w9ZaD67PAwvd4aFu3ep3
-         oi4W2nE+RgHQzlGdsHpo+U3L7zP2KoCpFVc8IH4EYvVAA3R4YHFLbSUkaI0B01gZ7wAL
-         EonmINg2rFlwZ5FL7X7P9esJh7iFLXcypbdpXCSNJzbwLci+zvjyCrFmDzLxo+soOab8
-         b7WqKD0y3Hyo5v7R0c8S90oRMQhJPfRve37zTiPxCjaQa4ij8GDpPrLIhbaFzxxldKMN
-         vUIjzt7qrbrDBIdztRHa9mA2F9slf/3XtdSdzoqQECBfAp1n4HRgzXC0YQ5M9/afQVen
-         HjoA==
-X-Gm-Message-State: AOAM533eqgEltcJ1Kw96Q/+4eFpbBeet+Y44onUvVkqIL/VKV3te9Qn/
-        voph80Vlm5Wrc5+9qFN2ZFXbcVS7NVCfvw==
-X-Google-Smtp-Source: ABdhPJxwP05zdXBtU+0jDLh//7TLDHEPrVzDS70hOgJcCU4U2k6vSzc2JXdGoSf1+lT+28xAXHp4VQ==
-X-Received: by 2002:a2e:bf1a:: with SMTP id c26mr1442559ljr.88.1632767476760;
-        Mon, 27 Sep 2021 11:31:16 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id r22sm2080554lji.5.2021.09.27.11.31.16
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Sep 2021 11:31:16 -0700 (PDT)
-Subject: Re: [PATCH] drm/bridge/lontium-lt9611uxc: fix provided connector
- suport
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Robert Foss <robert.foss@linaro.org>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>
-Cc:     David Airlie <airlied@linux.ie>, Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org
-References: <20210708230329.395976-1-dmitry.baryshkov@linaro.org>
-Message-ID: <e793810b-5e45-693f-8d72-b20e85b78f61@linaro.org>
-Date:   Mon, 27 Sep 2021 21:31:14 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=KDfN3VPs9v1P9wRbetasKjyeNxBPhJmR/WhM7HctVEY=;
+        b=vpj+FmV/eT7TetncPNUWzNfht1YRDC1qOYAD/dfg4QfLI6Z/C4mZ91GE2yqHCaB6Di
+         0sZ9FgqLr+UpcZD8vKcHkN/PIuayzP1sdGPp9Stj/vkYYRPE6h0uxoxIxUZH/pvpUaCt
+         ypzZT3eyvfz+1IPSDY3/3AwnWLRVrLJrv7HGbJevpOoLmPUshT1NrYstRQMZvHC0jCFk
+         D7BSdhD5/vRPkSFxPyOnBVopFrWpGCdSYYAEpziwdXGaQSeEIRytrodCeea4Mju91ZPK
+         OKpl039sq+3EIOcn6008/Qz7EpAHApXABRuLZ+Ltw9ZR9EdgCICXiU3z5qGLUQ7Fvdyi
+         /vcg==
+X-Gm-Message-State: AOAM533eaafWnDOgNjqGhTJzkZ52X1mtzfpf7g55YsjSQnFx8D6xQP/3
+        ZnBEXaHPO4cyNMOp2fgkaA==
+X-Google-Smtp-Source: ABdhPJz6z3MNPTLUXwOZo87wAe7zH1Ti2ldX1clqtvsG0UygqrhDcYkZP4+QP/c4OW/PUNc7UvO1ew==
+X-Received: by 2002:a05:6830:2b27:: with SMTP id l39mr1444334otv.25.1632769293304;
+        Mon, 27 Sep 2021 12:01:33 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id z10sm4127882otq.64.2021.09.27.12.01.31
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Sep 2021 12:01:32 -0700 (PDT)
+Received: (nullmailer pid 3670394 invoked by uid 1000);
+        Mon, 27 Sep 2021 19:01:31 -0000
+Date:   Mon, 27 Sep 2021 14:01:31 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Cc:     tiwai@suse.com, linux-kernel@vger.kernel.org,
+        alsa-devel@alsa-project.org, lgirdwood@gmail.com,
+        srinivas.kandagatla@linaro.org, swboyd@chromium.org,
+        robh+dt@kernel.org, perex@perex.cz, rohitkr@codeaurora.org,
+        agross@kernel.org, bjorn.andersson@linaro.org, broonie@kernel.org,
+        judyhsiao@chromium.org, bgoswami@codeaurora.org,
+        linux-arm-msm@vger.kernel.org,
+        Venkata Prasad Potturu <potturu@codeaurora.org>,
+        plai@codeaurora.org, devicetree@vger.kernel.org
+Subject: Re: [PATCH v2 2/5] ASoC: qcom: dt-bindings: Add compatible names for
+ lpass sc7280 digital codecs
+Message-ID: <YVIVC5GFTMu2PjPm@robh.at.kernel.org>
+References: <agross@kernel.org;bjorn.andersson@linaro.org;lgirdwood@gmail.com;broonie@kernel.org;robh+dt@kernel.org;plai@codeaurora.org;bgoswami@codeaurora.org;perex@perex.cz;tiwai@suse.com;srinivas.kandagatla@linaro.org;rohitkr@codeaurora.org;linux-arm-msm@vger.kernel.org;alsa-devel@alsa-project.org;devicetree@vger.kernel.org;linux-kernel@vger.kernel.org;swboyd@chromium.org;judyhsiao@chromium.org;>
+ <1632313878-12089-1-git-send-email-srivasam@codeaurora.org>
+ <1632313878-12089-3-git-send-email-srivasam@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <20210708230329.395976-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1632313878-12089-3-git-send-email-srivasam@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 09/07/2021 02:03, Dmitry Baryshkov wrote:
-> - set DRM_CONNECTOR_POLL_HPD as the connector will generate hotplug
->    events on its own
+On Wed, 22 Sep 2021 18:01:15 +0530, Srinivasa Rao Mandadapu wrote:
+> Update compatible names in va, wsa, rx and tx macro codes for lpass sc7280
 > 
-> - do not call drm_kms_helper_hotplug_event() unless mode_config.funcs
->    pointer is not NULL to remove possible kernel oops.
-> 
-> Fixes: bc6fa8676ebb ("drm/bridge/lontium-lt9611uxc: move HPD notification out of IRQ handler")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
 > ---
-
-Gracious ping for review. It would be really nice to get this patch into 
-5.16
-
-
->   drivers/gpu/drm/bridge/lontium-lt9611uxc.c | 9 ++++++---
->   1 file changed, 6 insertions(+), 3 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-> index 3cac16db970f..010657ea7af7 100644
-> --- a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-> +++ b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-> @@ -167,9 +167,10 @@ static void lt9611uxc_hpd_work(struct work_struct *work)
->   	struct lt9611uxc *lt9611uxc = container_of(work, struct lt9611uxc, work);
->   	bool connected;
->   
-> -	if (lt9611uxc->connector.dev)
-> -		drm_kms_helper_hotplug_event(lt9611uxc->connector.dev);
-> -	else {
-> +	if (lt9611uxc->connector.dev) {
-> +		if (lt9611uxc->connector.dev->mode_config.funcs)
-> +			drm_kms_helper_hotplug_event(lt9611uxc->connector.dev);
-> +	} else {
->   
->   		mutex_lock(&lt9611uxc->ocm_lock);
->   		connected = lt9611uxc->hdmi_connected;
-> @@ -339,6 +340,8 @@ static int lt9611uxc_connector_init(struct drm_bridge *bridge, struct lt9611uxc
->   		return -ENODEV;
->   	}
->   
-> +	lt9611uxc->connector.polled = DRM_CONNECTOR_POLL_HPD;
-> +
->   	drm_connector_helper_add(&lt9611uxc->connector,
->   				 &lt9611uxc_bridge_connector_helper_funcs);
->   	ret = drm_connector_init(bridge->dev, &lt9611uxc->connector,
+>  Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml  | 4 +++-
+>  Documentation/devicetree/bindings/sound/qcom,lpass-tx-macro.yaml  | 4 +++-
+>  Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml  | 4 +++-
+>  Documentation/devicetree/bindings/sound/qcom,lpass-wsa-macro.yaml | 4 +++-
+>  4 files changed, 12 insertions(+), 4 deletions(-)
 > 
 
-
--- 
-With best wishes
-Dmitry
+Acked-by: Rob Herring <robh@kernel.org>
