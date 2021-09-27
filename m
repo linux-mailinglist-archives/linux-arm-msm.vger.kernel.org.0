@@ -2,90 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 746AA41A369
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 00:56:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A8E4E41A37A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 01:00:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238076AbhI0W6F (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Sep 2021 18:58:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35410 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238031AbhI0W6D (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Sep 2021 18:58:03 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E8981C061740
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Sep 2021 15:56:24 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id o59-20020a9d2241000000b0054745f28c69so24496999ota.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Sep 2021 15:56:24 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=LJ0UkhVUse0owYw0meU2mVKVFJcfpj5Elb4nNJo/rUg=;
-        b=U6dcOpMzCitoKbfby6IB2+UU7U/AckDV50+5UbpLQC8KtuZLZ8lqUCfVzWhNGytk4d
-         LJ4ElrRBRt9hEn5BLyqGyCnsR8UAOZdLkPKLInohRoIeRSYN3qGmNr2Hbk0wgvB/Mfe9
-         w42dNltXmI8U5vtusrxRTcsiS9gjwnTCziwkE8y6pupEyVUf4c3/iPkg9qAC3u8FMVt7
-         ET4G8oTG0CAfl1+xNBafMqimLZUp3KjFgMxJasXINF/5LVptSgwX2KAhEsucDRXFSFPr
-         WdrncGGZ9RPBlZ/CiWGjKvrJuAeqf/wBuJibgmLHcFofJOPdw+v3gIkjhaRfWGlrAEN3
-         7oNw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=LJ0UkhVUse0owYw0meU2mVKVFJcfpj5Elb4nNJo/rUg=;
-        b=HcTHn+dfdAhczUQgkWtcbJUEAoQSsmb9ssrdLSqCK37KwXAo7ISqiFQ6MPKKwXQvfw
-         gTAnGLdUnfo1r+up3jFycQz8MXWHf9ihkcW99S3bRHYPyo7j7iLUukguGWQaMR1NDJN4
-         mAL7mKXnDj9cY9Faf0oMqd02quok4Sh3u0UsS/WquVUu7ClrRw2LzLsa+8t1Vuk+2IwX
-         4scoPsNV9pBbpsf+NdujnQUNHiiwUfrP3OpkszLxgdTRDmo9IiJ31qfHVLDFh8Agzbt5
-         pKUxxkH+XLDoev9A7Op6KJNNPxJE1SUEIr2PttCw+W95/VA0H5kr/aAn3EA0MOd6fx8R
-         bIqg==
-X-Gm-Message-State: AOAM533w7SrU5GLwP7tk+1aU1yHUXGpUdwTRNfv8Gy3/tnwmxC5iEuBy
-        a/aLZVVovIRtr0VM3YEI0Pp1pg==
-X-Google-Smtp-Source: ABdhPJyuTVvLBVFtId0sbqAztJopYbSNFfuNroaV6GsQ3dhAD8Sn3wd3fnjgzoj64LglgGhREAT9ZA==
-X-Received: by 2002:a9d:74cb:: with SMTP id a11mr2254882otl.45.1632783384302;
-        Mon, 27 Sep 2021 15:56:24 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id w184sm4231084oie.35.2021.09.27.15.56.23
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Sep 2021 15:56:23 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        Nikita Travkin <nikita@trvn.ru>, linux-arm-msm@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org
-Subject: Re: (subset) [PATCH] arm64: dts: qcom: msm8916-longcheer-l8150: Add missing sensor interrupts
-Date:   Mon, 27 Sep 2021 17:56:18 -0500
-Message-Id: <163278329750.1522839.12342678140663941056.b4-ty@linaro.org>
-X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210816123544.14027-1-stephan@gerhold.net>
-References: <20210816123544.14027-1-stephan@gerhold.net>
-MIME-Version: 1.0
+        id S237909AbhI0XBq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Sep 2021 19:01:46 -0400
+Received: from mail.kernel.org ([198.145.29.99]:41450 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S237903AbhI0XBq (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 27 Sep 2021 19:01:46 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPS id D43B861058;
+        Mon, 27 Sep 2021 23:00:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1632783607;
+        bh=pcYx9M/LJ20OAehGzzaYKqNyFU0ka+P5TepaE1E7aKg=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=GkMKRdJT+J1zx28/qwWPdBu1UzuoVGBqFIOUyunhlgG+3Wo0/JFqJd2YxPooUfrtd
+         QX7y422vNXC3bCKVZuzb+IMuebJnu2BKhfcWXD9wmZzlOLs2cC6AtnLkhdzYt9y+to
+         BtPFHsws5zdCT+pUPcGp2O7HjEOksle7bRTIpXYjX+oARzUZihReBdkv5GYpzvdVZS
+         H0mlMYqv8MS72yjaF5coFNx+YBCC81i5eT/yDtO5mJ7feclp+TQ9v2lyjsNbnzc7d9
+         ENBV9oyT1XTBjObwQ1G1LVIFK0Yy6NbsQ0cLOJXJZpKig9WsH9HcZJ+B9AEfc83nbz
+         TJ8J5fxyeksHw==
+Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id C8F6360A69;
+        Mon, 27 Sep 2021 23:00:07 +0000 (UTC)
 Content-Type: text/plain; charset="utf-8"
+MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] arm64: dts: qcom: msm8916: Fix Secondary MI2S bit clock
+From:   patchwork-bot+linux-arm-msm@kernel.org
+Message-Id: <163278360781.4723.13409230876953128767.git-patchwork-notify@kernel.org>
+Date:   Mon, 27 Sep 2021 23:00:07 +0000
+References: <20210816181810.2242-1-stephan@gerhold.net>
+In-Reply-To: <20210816181810.2242-1-stephan@gerhold.net>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     linux-arm-msm@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 16 Aug 2021 14:35:44 +0200, Stephan Gerhold wrote:
-> So far there were no interrupts set up for the BMC150 accelerometer
-> + magnetometer combo because they were broken for some reason.
-> It turns out Longcheer L8150 actually has a BMC156 which is very similar
-> to BMC150, but only has an INT2 pin for the accelerometer part.
+Hello:
+
+This patch was applied to qcom/linux.git (refs/heads/for-next):
+
+On Mon, 16 Aug 2021 20:18:10 +0200 you wrote:
+> At the moment, playing audio on Secondary MI2S will just end up getting
+> stuck, without actually playing any audio. This happens because the wrong
+> bit clock is configured when playing audio on Secondary MI2S.
 > 
-> This requires some minor changes in the bmc150-accel driver which is now
-> supported by using the more correct bosch,bmc156_accel compatible.
-> Unfortunately it looks like even INT2 is not functional on most boards
-> because the interrupt line is not actually connected to the BMC156.
-> However, there are two pads next to the chip that can be shorted
-> to make it work if needed.
+> The PRI_I2S_CLK (better name: SPKR_I2S_CLK) is used by the SPKR audio mux
+> block that provides both Primary and Secondary MI2S.
 > 
 > [...]
 
-Applied, thanks!
+Here is the summary with links:
+  - arm64: dts: qcom: msm8916: Fix Secondary MI2S bit clock
+    https://git.kernel.org/qcom/c/8199a0b31e76
 
-[1/1] arm64: dts: qcom: msm8916-longcheer-l8150: Add missing sensor interrupts
-      commit: 51c7786f5d4201422e076b9a3650e543a61d36da
+You are awesome, thank you!
+--
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
 
-Best regards,
--- 
-Bjorn Andersson <bjorn.andersson@linaro.org>
+
