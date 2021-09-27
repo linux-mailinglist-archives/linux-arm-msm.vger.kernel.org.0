@@ -2,103 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 12F0A41A089
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Sep 2021 22:48:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E186841A09F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Sep 2021 22:54:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237012AbhI0Uts (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Sep 2021 16:49:48 -0400
-Received: from mail.kernel.org ([198.145.29.99]:56270 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237074AbhI0Utp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Sep 2021 16:49:45 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 2064961052;
-        Mon, 27 Sep 2021 20:48:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1632775685;
-        bh=GHCCCNNGDh7j8AzsSAwR+7WjFwTTkZQkWzBp4yf5Anw=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=EtTYXuV99xHvDuCezChTC1fYR0ncVq3Rk1GokwMu8SQwpY+EmUiFM+RJIajTO8jW3
-         VrmnSOnx8ztK/horbiFLR4Q1ZWDBNyvy7tKy9OeuG4ddMCv7tR6NZWpZqi+5myOFRZ
-         fUlC6Cg5AZEODAOrfOLYA3DADysDTM/85vB/lrkAnFddU4ZJYrY9Qs93uwL2IgXWp2
-         ShOzsV013bF2pbhJUOsUOYV7NBfbitxpmzxjeFzmgMdmeTIB3GqmWBkk202+UoozT6
-         QbwxnW2Yp/G+PD6grSc1VyWUP3kS05HQi/kIejRv/Gb69g5//VZRJWFOBSMsttdGMH
-         imsrWEit+NvGQ==
-Received: by mail-wr1-f50.google.com with SMTP id d21so54009008wra.12;
-        Mon, 27 Sep 2021 13:48:05 -0700 (PDT)
-X-Gm-Message-State: AOAM533l3ZQ2aOR4nf+eHv+wcamOBD9uWCtuL9xvzHIEhSY9RQ7k7+wl
-        4CL80gkLd/vQ076NDcyLOY99CBrz3q7TOJLckB4=
-X-Google-Smtp-Source: ABdhPJyr//9nG+qcYuFmIIHo02EBLzzoRAIp7o7Kc5vnLIs/c/42qbXfOQSeIjG8WR8ZxK+L1GxrgnNIqE5zvhpeDJ8=
-X-Received: by 2002:a5d:6a08:: with SMTP id m8mr2207127wru.336.1632775683762;
- Mon, 27 Sep 2021 13:48:03 -0700 (PDT)
+        id S237021AbhI0Uzk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Sep 2021 16:55:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35394 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236967AbhI0Uzk (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 27 Sep 2021 16:55:40 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 18E52C061740
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Sep 2021 13:54:02 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id c6-20020a9d2786000000b005471981d559so26184436otb.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Sep 2021 13:54:02 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=jevnR5FH7bUpn4+kaXeGqfWRR85p0D3C8wYGwh5l7i4=;
+        b=q864TxafQpqgmMUZQRry0erO9gNcAV39XKZUM/3hB/MRO2SQhgag/qSnlv/9tSXChq
+         hp55959LiiUYpNgKBzYjBU9nn92+jwk6mQYrXrOkJPJOJmCK37amqccPlGFXvSa7JdBY
+         jipL3iHfKj368C7yOaZyzj306Daal7hoJIwUf/QVbogIyD4/bQP4yAD5dmJJqnBrhlQ8
+         mf8ebG+4Thb2PdLMt6sGJJccB2Oj3VVXH+s5pZYwBVf2SxXXQjQxUsMUu12jJGki9YPB
+         GY4by0rMqmcf9Ik3yIz+r8d3tW766NxgUy7Q+4XC1xL/eWBZMev3/DPnwkjoD5rXqVJ1
+         kuMw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=jevnR5FH7bUpn4+kaXeGqfWRR85p0D3C8wYGwh5l7i4=;
+        b=a7SqMYoprZO+FeQgBecHvsx7/9O186FAoS4gCob7A68uh2vcSB77/4RNn6wMdGR+wp
+         d8Z+MShy9ZiTDsvZb7D1UBOqfRM+KtReSjFYSuIP88IqLFqwMpK7CpjjGfB9Ct66s6T4
+         2FMMruZz1Xz64xLKK4xdmN3YeCw8U9ye9kA5SVnVi0rhHGPm+27BKsPyQ/sgCPI3Bqa8
+         ITHFZtHVwl15GXky0bZFU7H8nz3AkKHKVh4m/1tnVCBY+RpYSN+g3dOMwOQ6M0ncvlzW
+         bihhiDSP5xZdj5MrzT43iVREaqL6ORU/PZyhMbv1g7Ex8F3i/E9DnCr3RyJNOEeVQpgs
+         IyFQ==
+X-Gm-Message-State: AOAM5308CwROJleAy497WpzZoLgPHjiJJcwKBQPoq24VrggDDR4Wa06L
+        cmbGE78e7ZKzBDSsI2Uo4MkzKg==
+X-Google-Smtp-Source: ABdhPJxD9riS4UCPLtuBEXeCuHvE1abSdbZgUUjXBsjApnwi9B+v6g8ImWiJlnGWLNsSc3kycoRDiw==
+X-Received: by 2002:a9d:313:: with SMTP id 19mr1823961otv.12.1632776041438;
+        Mon, 27 Sep 2021 13:54:01 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id z10sm4187275otq.64.2021.09.27.13.54.00
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 27 Sep 2021 13:54:01 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     mka@chromium.org, robh+dt@kernel.org, swboyd@chromium.org,
+        Sibi Sankar <sibis@codeaurora.org>
+Cc:     ohad@wizery.com, sidgup@codeaurora.org, dianders@chromium.org,
+        linux-remoteproc@vger.kernel.org, rishabhb@codeaurora.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        rjw@rjwysocki.net, mathieu.poirier@linaro.org,
+        ulf.hansson@linaro.org, devicetree@vger.kernel.org,
+        agross@kernel.org
+Subject: Re: (subset) [PATCH v7 01/13] dt-bindings: soc: qcom: aoss: Drop the load state power-domain
+Date:   Mon, 27 Sep 2021 15:53:51 -0500
+Message-Id: <163277593825.1470888.10339811623270143910.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <1631800770-371-2-git-send-email-sibis@codeaurora.org>
+References: <1631800770-371-1-git-send-email-sibis@codeaurora.org> <1631800770-371-2-git-send-email-sibis@codeaurora.org>
 MIME-Version: 1.0
-References: <20210927152412.2900928-1-arnd@kernel.org> <YVIg9CxJGaJr1vpp@ripper>
- <CAK8P3a1fEuFsQVY9b1oGdTOHzr8pu9wvrSBCMn2iOvgWqtHNnA@mail.gmail.com> <YVIsrgKiOG/gFVdT@ripper>
-In-Reply-To: <YVIsrgKiOG/gFVdT@ripper>
-From:   Arnd Bergmann <arnd@kernel.org>
-Date:   Mon, 27 Sep 2021 22:47:47 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a1WRBA4mP691fO82ZhYdPhHLGjLH=VhcUxGNeGRMX8knw@mail.gmail.com>
-Message-ID: <CAK8P3a1WRBA4mP691fO82ZhYdPhHLGjLH=VhcUxGNeGRMX8knw@mail.gmail.com>
-Subject: Re: [PATCH] [RFC] qcom_scm: hide Kconfig symbol
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     John Stultz <john.stultz@linaro.org>,
-        Arnd Bergmann <arnd@arndb.de>, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Alex Elder <elder@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Maxime Ripard <mripard@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        linux-mmc <linux-mmc@vger.kernel.org>,
-        Networking <netdev@vger.kernel.org>, ath10k@lists.infradead.org,
-        linux-wireless <linux-wireless@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-sunxi@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 27, 2021 at 10:42 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
-> On Mon 27 Sep 13:15 PDT 2021, Arnd Bergmann wrote:
-> > On Mon, Sep 27, 2021 at 9:52 PM Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
-> >
-> > An easier option might be to find a way to build QCOM_SCM without
-> > RESET_CONTROLLER for compile testing purposes. I don't know
-> > what would break from that.
-> >
->
-> Afaict the reset API is properly stubbed and RESET_CONTROLLER is a bool,
-> so I think we can simply drop the "select" and the kernel will still
-> compile fine in all combinations.
->
-> When it comes to runtime, we currently select RESET_CONTROLLER from the
-> Qualcomm common clocks. If that is dropped (why would it...) it seems
-> possible to build a custom kernel for msm8916 that we can boot and miss
-> the stubbed out "mss restart" reset line from the SCM.
->
->
-> So, let's just drop the select RESET_CONTROLLER from SCM for now.
+On Thu, 16 Sep 2021 19:29:18 +0530, Sibi Sankar wrote:
+> The power-domains exposed by AOSS QMP node are used to notify the Always
+> on Subsystem (AOSS) that a particular co-processor is up/down. These
+> co-processors enter low-power modes independent to that of the application
+> processor and their states are expected to remain unaltered across system
+> suspend/resume cycles. To achieve this behavior let's drop the load
+> power-domain and replace them with generic qmp_send interface instead.
+> 
+> [...]
 
-Ok, I've made that change locally, giving it more time on the randconfig
-build box now.
+Applied, thanks!
 
-       Arnd
+[01/13] dt-bindings: soc: qcom: aoss: Drop the load state power-domain
+        commit: a4fe5159038f22604e9ef3a8c38b680db4456138
+
+Best regards,
+-- 
+Bjorn Andersson <bjorn.andersson@linaro.org>
