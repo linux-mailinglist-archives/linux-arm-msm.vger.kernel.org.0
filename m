@@ -2,50 +2,51 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E2AFB418F48
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Sep 2021 08:48:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E4139418F4A
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Sep 2021 08:48:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233092AbhI0GuZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Sep 2021 02:50:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35902 "EHLO
+        id S233088AbhI0Gu1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Sep 2021 02:50:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35922 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233068AbhI0GuY (ORCPT
+        with ESMTP id S233095AbhI0Gu0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Sep 2021 02:50:24 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id ADE25C061570
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Sep 2021 23:48:47 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id n2so11060929plk.12
-        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Sep 2021 23:48:47 -0700 (PDT)
+        Mon, 27 Sep 2021 02:50:26 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8CB78C061740
+        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Sep 2021 23:48:49 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id g13-20020a17090a3c8d00b00196286963b9so14609765pjc.3
+        for <linux-arm-msm@vger.kernel.org>; Sun, 26 Sep 2021 23:48:49 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id;
-        bh=JGgK1pP0+awojk4y6sIFF5gFJNXp8xBI/eToel7KJRI=;
-        b=D03xhEMQoE8HCYK3EP8igCx+K+PxXLn2YcVBNqcaYPIJkVlwe6lPvral43lBANxnq7
-         429TOCF5KNb1VmC/zwx7295eDjjPG1v2lKJnnTziuRVrvrI9DWBFRsyIE+rswctqbMbu
-         A3H8urXOhWwKzPRmkMOID2ojKlQOXhlJo9/35mRM0b3VXwnIj/Gc6yQbLgB44DQAX89f
-         uIPH0Hs8dZqDQqiM+UwHM4T8Gi9+IrZPgUOyJQKPcfEmYFslJpptCMF8xX5QNb6i/LfN
-         HcPEOOTKFcmicZJ+I8Lw7s4hI5rO1UidUT2O/NkQQtEgr4JE8nbS2I3RC/zK/ZrSde9l
-         PXZQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references;
+        bh=1isXXJLmhlN1IlR8OI1SSeBiSZeElsmbNCFhrIVQTH0=;
+        b=ABTl83oUoeXcPVOvaTSea7gdqrvVZsAjQ6zFnu2vJjGYYcmjkdCPTRo+kYW/xjsshe
+         CifgXy8l102EraCs/0x2912tj9Brj13fiRhiMVcCSpMDNHXLe+j4ckTxFpEbgYZPywEH
+         DpCR3QJwAF7NXcpL8zYytgv5dr+WLZIsiCHs8DS0CqFRYT4fgXXEtiMSg6WzQ4dtV95l
+         HI96+pQNrANq01LnQZ3LcWO3HGbt+pla5Tfz6xOLlDceTiM+gAInSs5J7FRgmE2HJXxk
+         vmSYuFCl8+jAWGkshh4/OE6OU7hvH0/Iaej6l2zDy8zHCD+Ps7qoCUHOe3TxZpm9rdOJ
+         tnIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id;
-        bh=JGgK1pP0+awojk4y6sIFF5gFJNXp8xBI/eToel7KJRI=;
-        b=Vh4UQQ4wif/GTqB1ownfQ+iWcVuT6m6ZPKt5AlZE5uMPnV/4RH1bihAUpRiJqfrAuI
-         T6K6uktKA/q2YPBSl1Yz4R/sm3E+wqlVr09TedZ0UOr987/mlwwHmpW0+1WBtJH/V3yd
-         roCPIwf9CHsxRbw1JRLP9HkVhQz4XOOP30jDhO8SPjU+Yq2qvLQotoOTwGMZVHhAs2Vi
-         ZaKMjKhZ8XsHVTeOvaXql1W1FoMwHRrsc0xUWLDH73l8nOPU8p+jrs6YhaoHEtDdya1o
-         IOov55Y+9CbHiFwKgBmBp/ItW111bhCEk1XvfGvPJNoKOH9rf4dUXZ8VOPKsBAGx5GtB
-         CAHw==
-X-Gm-Message-State: AOAM532n3ZsWOMdl6SogfFUBnBUggahtTBcxBr5OBENfnYttn0cn5bLN
-        JROwHQ/7KFKO8/EJxf0NC/zg/w==
-X-Google-Smtp-Source: ABdhPJx1HcMXkW5t/LysfiEuICq6FfiPRjiYjTxRvAWl/yGWqirR5BPbcfMGwyg6TftdVkNLfFAA4Q==
-X-Received: by 2002:a17:90b:4d08:: with SMTP id mw8mr17640366pjb.97.1632725326394;
-        Sun, 26 Sep 2021 23:48:46 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references;
+        bh=1isXXJLmhlN1IlR8OI1SSeBiSZeElsmbNCFhrIVQTH0=;
+        b=ax3LLRKWrwuzQC+ZbqiLD6usaEkFvdN+epfz2MkdBxPslgoCgqct9DEanTP808+LjJ
+         H/3cncul9z/jzwciMQl6ruZzNKbcM2iG02uepYueg+H2X02czEqKczPd6qHlN+BrPLoo
+         hxSiL+XPuF6kddVH8aiN+K3GpxHXYVcky14wzaNGOFTXPbrnEanAGaI55bBD03qxbqt2
+         sifjPhDylgjjD0DiTQ5o2FMWvw97Tenr0Eh+DZ++svc/FXGCWMBE0Ktj0/xxICwGVCBi
+         vTWjg7HepYbLFY/6cg9WajEBKOXNkVxh5TVBLyTAqIf0Qe45OynSn9qtS8ucgIAJMt7m
+         wFQw==
+X-Gm-Message-State: AOAM532p+cBPHn6MtyNCtj6iWN5xPXQfqWSc3adZkNTRJSHE5M4OHs3h
+        4oYxA31Tk9lJOVIWth5SO7aRKw==
+X-Google-Smtp-Source: ABdhPJygXoarE081fOIuaHVbPDbueZQSYkdfgpPeEF6QDomDVme6XxmwUOjjKqyHSmw2DMDIszn7NA==
+X-Received: by 2002:a17:90b:38cf:: with SMTP id nn15mr18107377pjb.81.1632725329089;
+        Sun, 26 Sep 2021 23:48:49 -0700 (PDT)
 Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id o16sm17169910pgv.29.2021.09.26.23.48.43
+        by smtp.gmail.com with ESMTPSA id o16sm17169910pgv.29.2021.09.26.23.48.46
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sun, 26 Sep 2021 23:48:45 -0700 (PDT)
+        Sun, 26 Sep 2021 23:48:48 -0700 (PDT)
 From:   Shawn Guo <shawn.guo@linaro.org>
 To:     Vinod Koul <vkoul@kernel.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -54,25 +55,68 @@ Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         Shawn Guo <shawn.guo@linaro.org>
-Subject: [PATCH 0/2] Add QCM2290 USB3 PHY support
-Date:   Mon, 27 Sep 2021 14:48:27 +0800
-Message-Id: <20210927064829.5752-1-shawn.guo@linaro.org>
+Subject: [PATCH 1/2] dt-bindings: phy: qcom,qmp: Add QCM2290 USB3 PHY
+Date:   Mon, 27 Sep 2021 14:48:28 +0800
+Message-Id: <20210927064829.5752-2-shawn.guo@linaro.org>
 X-Mailer: git-send-email 2.17.1
+In-Reply-To: <20210927064829.5752-1-shawn.guo@linaro.org>
+References: <20210927064829.5752-1-shawn.guo@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The series adds support for USB3 PHY found on QCM2290 SoC.
+Add support for USB3 PHY found on Qualcomm QCM2290 SoC.
 
-Shawn Guo (2):
-  dt-bindings: phy: qcom,qmp: Add QCM2290 USB3 PHY
-  phy: qcom-qmp: Add QCM2290 USB3 PHY support
+Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+---
+ .../devicetree/bindings/phy/qcom,qmp-phy.yaml | 27 +++++++++++++++++++
+ 1 file changed, 27 insertions(+)
 
- .../devicetree/bindings/phy/qcom,qmp-phy.yaml |  27 ++++
- drivers/phy/qualcomm/phy-qcom-qmp.c           | 143 ++++++++++++++++++
- drivers/phy/qualcomm/phy-qcom-qmp.h           |   2 +
- 3 files changed, 172 insertions(+)
-
+diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+index 75be5650a198..4e7371956ed4 100644
+--- a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
++++ b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
+@@ -27,6 +27,7 @@ properties:
+       - qcom,msm8998-qmp-pcie-phy
+       - qcom,msm8998-qmp-ufs-phy
+       - qcom,msm8998-qmp-usb3-phy
++      - qcom,qcm2290-qmp-usb3-phy
+       - qcom,sc7180-qmp-usb3-phy
+       - qcom,sc8180x-qmp-pcie-phy
+       - qcom,sc8180x-qmp-ufs-phy
+@@ -414,6 +415,32 @@ allOf:
+           items:
+             - const: phy
+             - const: common
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
++              - qcom,qcm2290-qmp-usb3-phy
++    then:
++      properties:
++        clocks:
++          items:
++            - description: Phy config clock.
++            - description: 19.2 MHz ref clk.
++            - description: Phy common block aux clock.
++        clock-names:
++          items:
++            - const: cfg_ahb
++            - const: ref
++            - const: com_aux
++        resets:
++          items:
++            - description: phy_phy reset.
++            - description: reset of phy block.
++        reset-names:
++          items:
++            - const: phy_phy
++            - const: phy
+ 
+ examples:
+   - |
 -- 
 2.17.1
 
