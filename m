@@ -2,79 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2C05E41A0E4
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Sep 2021 22:58:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D14441A12D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Sep 2021 23:09:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236843AbhI0U7q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Sep 2021 16:59:46 -0400
-Received: from mail-ot1-f42.google.com ([209.85.210.42]:39884 "EHLO
-        mail-ot1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236723AbhI0U7p (ORCPT
+        id S237112AbhI0VLO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Sep 2021 17:11:14 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39204 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230046AbhI0VLO (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Sep 2021 16:59:45 -0400
-Received: by mail-ot1-f42.google.com with SMTP id j11-20020a9d190b000000b00546fac94456so26204858ota.6;
-        Mon, 27 Sep 2021 13:58:07 -0700 (PDT)
+        Mon, 27 Sep 2021 17:11:14 -0400
+Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 45F3CC061604
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Sep 2021 14:09:36 -0700 (PDT)
+Received: by mail-oo1-xc36.google.com with SMTP id p22-20020a4a8156000000b002a8c9ea1858so6441261oog.11
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Sep 2021 14:09:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=Dq29TxJ5zpM4XHFteYmjRFf+8vB0LPfL9SydtuPUex4=;
+        b=QXoqixS9dSwgotQCR4tPOH2boVVWjkQ9G/7fRvVPwOODbCs72HTY16UDes5QZRApcH
+         KpzoIV+7PFON62nO10VhOP3msaqlF2KOpIyzg8TyhBSU5ysGfhzrSAtrTmwwNlYPKVP7
+         SXcSfXUWpQz0lHdH1A4JuyE2FlzoL4tlEyHcA=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=T+oO+q9uTHene+6MJpbDZGG/hGqpkwIsiNpAYh7tp2c=;
-        b=3gRfuHIF5rYdO630b9QRBQKYc7UbIdn8+b/oKNy3AwSUaZTFe5FCRa4a/8Xz2vufQI
-         5fsQcg4qAMwZkvg0F6vk5OwPN4wY/lC+VrNGxhvrNMUOl+KimZOWJK2WvPUgkDbcLu3A
-         IVPcLG2DmhMHYJM0OpdY6vgzHzD5v7qUeNyV5NfEJJUxsEY09V3bPQbrCUbtGBBuOBNs
-         dQxjbvEOL4MxmZGCWmm5cakS+1OwSNg4th8nDgwENhT5X4tusz25ngjweT8Jb2mf16lR
-         h44Bk6g2T6IILYSxv+e5nXToJVDWQixrZCGOU/16UkaCvVqG9wfv6PycmM47zwzbac3h
-         a1Og==
-X-Gm-Message-State: AOAM531Xiblw6/kr5/HEDkA8XxolPfiuF5tk+X3uKCMZ552lJfcqHFfc
-        ++j68T0jW239NnqBd2n3qg==
-X-Google-Smtp-Source: ABdhPJwbTL4lMi71JS4MYcb+wMczLubUBwcUPuBKqhkh2PAL1O98pWcD9XnrRWcNmRiJFE813CDSZA==
-X-Received: by 2002:a9d:4e91:: with SMTP id v17mr1830005otk.297.1632776287237;
-        Mon, 27 Sep 2021 13:58:07 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id r19sm4355739otg.37.2021.09.27.13.58.06
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Sep 2021 13:58:06 -0700 (PDT)
-Received: (nullmailer pid 3861865 invoked by uid 1000);
-        Mon, 27 Sep 2021 20:58:05 -0000
-Date:   Mon, 27 Sep 2021 15:58:05 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     jamipkettunen@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        martin.botka@somainline.org, Stephen Boyd <sboyd@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        marijn.suijten@somainline.org, devicetree@vger.kernel.org,
-        Michael Turquette <mturquette@baylibre.com>,
-        Taniya Das <tdas@codeaurora.org>, linux-kernel@vger.kernel.org,
-        Andy Gross <agross@kernel.org>, linux-clk@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [PATCH v4 1/9] dt-bindings: clk: qcom: Add bindings for MSM8994
- GCC driver
-Message-ID: <YVIwXXAE7HvXZxNt@robh.at.kernel.org>
-References: <20210923162645.23257-1-konrad.dybcio@somainline.org>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=Dq29TxJ5zpM4XHFteYmjRFf+8vB0LPfL9SydtuPUex4=;
+        b=J5E+PxgmFb0/jeBFqOpf6TP+Y/wIMFbNs7hb7cSGNwPwv7FJITQfIvfN7JsVTdOR+l
+         SLvqgnue94zOIJJ9ZTF1ZQ7ESLga/M+Z6nnNA3o+P/4TsqJX2btdTYXzazYxxGVFVDRp
+         qQaP9b0QSkfGx8MIqEEe8f6nUzx26KVNSX6cI8Z8ny12/WKVfDCH2CjP2o/5poowNyNc
+         fnH1cFP4kfLLQQBO8KsQm/vEzq/q2LgCF3hkn4ZxVwOcsEK7YH3G4E3glM4b8Akx+rMt
+         9026oOcv2YftXVRw9HCQS6oTvSOiynlt7gbcPQNznUjOU9CqXoUdLISC1aXo5hoHn5WH
+         Mq7w==
+X-Gm-Message-State: AOAM532SPsAatNO0VwK/j9hFAjBS8+oEWmQ5YXQk3muXDcf51J383iZD
+        3MtBZov9pMrM/WnKhRDK9Ke+vvpARXUPpynGpt90Jw==
+X-Google-Smtp-Source: ABdhPJwsE/D0A4gu7LK9Uo5aq776hYHg6zVFtNMjoHs4nXxtn9C+5PEy6DETLnx3RKhAzWNHPiAUZenoQ4MczmEq2U8=
+X-Received: by 2002:a4a:c3c2:: with SMTP id e2mr1747622ooq.8.1632776975637;
+ Mon, 27 Sep 2021 14:09:35 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 27 Sep 2021 14:09:35 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210923162645.23257-1-konrad.dybcio@somainline.org>
+In-Reply-To: <20210927113632.3849987-1-arnd@kernel.org>
+References: <20210927113632.3849987-1-arnd@kernel.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Mon, 27 Sep 2021 14:09:35 -0700
+Message-ID: <CAE-0n52=yYW6SuMUPwGiv374K7D6DDpOZdJUudHdhMa7x2p1CA@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/submit: fix overflow check on 64-bit architectures
+To:     Arnd Bergmann <arnd@kernel.org>, Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        "Kristian H. Kristensen" <hoegsberg@google.com>,
+        Nathan Chancellor <nathan@kernel.org>,
+        Nick Desaulniers <ndesaulniers@google.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
+        llvm@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 23 Sep 2021 18:26:34 +0200, Konrad Dybcio wrote:
-> Add documentation for the MSM8994 GCC driver. While at it, retire its
-> compatible from the old, everyone-get-in-here file.
-> 
-> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
+Quoting Arnd Bergmann (2021-09-27 04:36:23)
+> From: Arnd Bergmann <arnd@arndb.de>
+>
+> The overflow check does causes a warning from clang-14 when 'sz' is a type
+> that is smaller than size_t:
+>
+> drivers/gpu/drm/msm/msm_gem_submit.c:217:10: error: result of comparison of constant 18446744073709551615 with expression of type 'unsigned int' is always false [-Werror,-Wtautological-constant-out-of-range-compare]
+>                 if (sz == SIZE_MAX) {
+>
+> Change the type accordingly.
+>
+> Fixes: 20224d715a88 ("drm/msm/submit: Move copy_from_user ahead of locking bos")
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 > ---
-> Changes since v3:
-> - Don't document the compatible twice
-> 
->  .../bindings/clock/qcom,gcc-msm8994.yaml      | 70 +++++++++++++++++++
->  .../devicetree/bindings/clock/qcom,gcc.yaml   |  2 -
->  2 files changed, 70 insertions(+), 2 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-msm8994.yaml
-> 
 
-Reviewed-by: Rob Herring <robh@kernel.org>
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
