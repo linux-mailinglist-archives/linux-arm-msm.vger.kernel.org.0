@@ -2,65 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A87DA418FC0
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Sep 2021 09:16:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 791124190D9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Sep 2021 10:31:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233208AbhI0HS3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Sep 2021 03:18:29 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33658 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S233175AbhI0HSY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Sep 2021 03:18:24 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id C34CD61166;
-        Mon, 27 Sep 2021 07:16:45 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1632727007;
-        bh=GhTlDAW0xH7ir0UUmr56Jr65UbGSTVOTfqjzCV3Kv+w=;
-        h=From:To:Cc:Subject:Date:From;
-        b=JnIbnSuOys/SVDL0oyxsv/9UfmTS7yefkPZg/Z3aV4613nbC0YzKmR2NNn/cdOAWO
-         Ylz2rHHdVnsfmzgJne9GKHJk4byL1gLESLbkmiMTEFBUrhAU2TRfBT4TksCCPwZVCt
-         BowQMkJMITela0Zt+zJHTawXYnR1lq0NNdao+0KW0+LQQL0X5suyEaF6KPRRS/jfpS
-         GyB7uRjPOHoAu2IdxDzRqBStKDWcSNc/QiHRMghsq6d53QR0dMZTDKJdVOTFVYSD1R
-         1O+Aw4QrxZotAaSdJIy8N4FnEpDkXdlKToUUH/D6QkotGY2SzRJVd2d580KNjZyjiB
-         mso4ZaKu1jlDA==
-From:   Shawn Guo <shawnguo@kernel.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Shawn Guo <shawn.guo@linaro.org>
-Subject: [PATCH] dt-bindings: phy: qcom,qmp: Update maintainer email
-Date:   Mon, 27 Sep 2021 15:16:39 +0800
-Message-Id: <20210927071639.6225-1-shawnguo@kernel.org>
+        id S233464AbhI0IdC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Sep 2021 04:33:02 -0400
+Received: from mx22.baidu.com ([220.181.50.185]:38158 "EHLO baidu.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S233417AbhI0IdB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 27 Sep 2021 04:33:01 -0400
+Received: from BC-Mail-Ex07.internal.baidu.com (unknown [172.31.51.47])
+        by Forcepoint Email with ESMTPS id C26F8183A0D47E84DEA2;
+        Mon, 27 Sep 2021 16:14:37 +0800 (CST)
+Received: from BJHW-MAIL-EX27.internal.baidu.com (10.127.64.42) by
+ BC-Mail-EX07.internal.baidu.com (172.31.51.47) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
+ 15.1.2242.12; Mon, 27 Sep 2021 16:14:37 +0800
+Received: from LAPTOP-UKSR4ENP.internal.baidu.com (172.31.63.8) by
+ BJHW-MAIL-EX27.internal.baidu.com (10.127.64.42) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
+ 15.1.2308.14; Mon, 27 Sep 2021 16:14:36 +0800
+From:   Cai Huoqing <caihuoqing@baidu.com>
+To:     <caihuoqing@baidu.com>
+CC:     Linus Walleij <linus.walleij@linaro.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        "Pengutronix Kernel Team" <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        "NXP Linux Team" <linux-imx@nxp.com>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        "Neil Armstrong" <narmstrong@baylibre.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-iio@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-amlogic@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-rockchip@lists.infradead.org>
+Subject: [PATCH 1/9] iio: adc: ab8500-gpadc: Make use of the helper function dev_err_probe()
+Date:   Mon, 27 Sep 2021 16:14:17 +0800
+Message-ID: <20210927081426.762-1-caihuoqing@baidu.com>
 X-Mailer: git-send-email 2.17.1
+MIME-Version: 1.0
+Content-Type: text/plain
+X-Originating-IP: [172.31.63.8]
+X-ClientProxiedBy: BC-Mail-Ex10.internal.baidu.com (172.31.51.50) To
+ BJHW-MAIL-EX27.internal.baidu.com (10.127.64.42)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Shawn Guo <shawn.guo@linaro.org>
+When possible use dev_err_probe help to properly deal with the
+PROBE_DEFER error, the benefit is that DEFER issue will be logged
+in the devices_deferred debugfs file.
+Using dev_err_probe() can reduce code size, and the error value
+gets printed.
 
-Manu's codeaurora.org email address bounces.  Before he comes
-back with his new email, fill Vinod's address in there.
-
-Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+Signed-off-by: Cai Huoqing <caihuoqing@baidu.com>
 ---
- Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ drivers/iio/adc/ab8500-gpadc.c | 9 ++++-----
+ 1 file changed, 4 insertions(+), 5 deletions(-)
 
-diff --git a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-index 75be5650a198..a167b5c1ae17 100644
---- a/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-+++ b/Documentation/devicetree/bindings/phy/qcom,qmp-phy.yaml
-@@ -8,7 +8,7 @@ $schema: "http://devicetree.org/meta-schemas/core.yaml#"
- title: Qualcomm QMP PHY controller
+diff --git a/drivers/iio/adc/ab8500-gpadc.c b/drivers/iio/adc/ab8500-gpadc.c
+index 7b5212ba5501..c58d0e2ae538 100644
+--- a/drivers/iio/adc/ab8500-gpadc.c
++++ b/drivers/iio/adc/ab8500-gpadc.c
+@@ -1146,11 +1146,10 @@ static int ab8500_gpadc_probe(struct platform_device *pdev)
  
- maintainers:
--  - Manu Gautam <mgautam@codeaurora.org>
-+  - Vinod Koul <vkoul@kernel.org>
+ 	/* The VTVout LDO used to power the AB8500 GPADC */
+ 	gpadc->vddadc = devm_regulator_get(dev, "vddadc");
+-	if (IS_ERR(gpadc->vddadc)) {
+-		ret = PTR_ERR(gpadc->vddadc);
+-		dev_err(dev, "failed to get vddadc\n");
+-		return ret;
+-	}
++	if (IS_ERR(gpadc->vddadc))
++		return dev_err_probe(dev,
++				     PTR_ERR(gpadc->vddadc),
++				     "failed to get vddadc\n");
  
- description:
-   QMP phy controller supports physical layer functionality for a number of
+ 	ret = regulator_enable(gpadc->vddadc);
+ 	if (ret) {
 -- 
-2.17.1
+2.25.1
 
