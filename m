@@ -2,80 +2,219 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 647D2419334
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Sep 2021 13:36:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7499F41938F
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 27 Sep 2021 13:47:04 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234097AbhI0LiP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Sep 2021 07:38:15 -0400
-Received: from mail.kernel.org ([198.145.29.99]:43108 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234075AbhI0LiP (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Sep 2021 07:38:15 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id ED57060F58;
-        Mon, 27 Sep 2021 11:36:34 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1632742597;
-        bh=Rl3OTC7V1DvxO5S+CLcKb/G4xypiFLCG7rhJzIouM9o=;
-        h=From:To:Cc:Subject:Date:From;
-        b=GIRQdOlWtQeOMLb+VYfzHERHrDKA38VhnFhqfoB27L2ZztW1kG/YwfGnx8+bG5m2w
-         tIDcTjzg8OBfBy9I1T9duPEeXgoEHSjzRE69zF4UJ7AN7s9NWuE0m658Wci7xL0xai
-         ea0aXKeWWRmrVH1JbjRfizMoUuLHo3hr8X0TrZixmNsPDHbeeIng78GbIcOuvMrqu8
-         SE4vg9tVwLTVvaJB9O6sjiGoXNzhsd0WjChOtXE+Iu3PjfXtqu4Gt2Iej5V8WYyQ4x
-         +/9bhZDBAYhH7wIdixdaYvEL5yVXxdw563oV7wHam7QvEezxKicYyfyS58W33vgEEx
-         LNh6HRkSCn50A==
-From:   Arnd Bergmann <arnd@kernel.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Nathan Chancellor <nathan@kernel.org>,
-        Nick Desaulniers <ndesaulniers@google.com>,
-        "Kristian H. Kristensen" <hoegsberg@google.com>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-        Jordan Crouse <jordan@cosmicpenguin.net>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        llvm@lists.linux.dev
-Subject: [PATCH] drm/msm/submit: fix overflow check on 64-bit architectures
-Date:   Mon, 27 Sep 2021 13:36:23 +0200
-Message-Id: <20210927113632.3849987-1-arnd@kernel.org>
-X-Mailer: git-send-email 2.29.2
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        id S234128AbhI0Lsk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Sep 2021 07:48:40 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:36562 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234037AbhI0Lsj (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 27 Sep 2021 07:48:39 -0400
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 27 Sep 2021 04:47:02 -0700
+X-QCInternal: smtphost
+Received: from ironmsg02-blr.qualcomm.com ([10.86.208.131])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/AES256-SHA; 27 Sep 2021 04:47:00 -0700
+X-QCInternal: smtphost
+Received: from dikshita-linux.qualcomm.com ([10.204.65.237])
+  by ironmsg02-blr.qualcomm.com with ESMTP; 27 Sep 2021 17:16:44 +0530
+Received: by dikshita-linux.qualcomm.com (Postfix, from userid 347544)
+        id C658121BAE; Mon, 27 Sep 2021 17:16:42 +0530 (IST)
+From:   Dikshita Agarwal <dikshita@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, robh+dt@kernel.org,
+        mchehab@kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Cc:     linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
+        vgarodia@codeaurora.org, stanimir.varbanov@linaro.org,
+        Dikshita Agarwal <dikshita@codeaurora.org>
+Subject: [PATCH v4] dt-bindings: media: venus: Add sc7280 dt schema
+Date:   Mon, 27 Sep 2021 17:16:37 +0530
+Message-Id: <1632743197-32291-1-git-send-email-dikshita@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Arnd Bergmann <arnd@arndb.de>
+Add a schema description for the venus video encoder/decoder on the sc7280.
 
-The overflow check does causes a warning from clang-14 when 'sz' is a type
-that is smaller than size_t:
-
-drivers/gpu/drm/msm/msm_gem_submit.c:217:10: error: result of comparison of constant 18446744073709551615 with expression of type 'unsigned int' is always false [-Werror,-Wtautological-constant-out-of-range-compare]
-                if (sz == SIZE_MAX) {
-
-Change the type accordingly.
-
-Fixes: 20224d715a88 ("drm/msm/submit: Move copy_from_user ahead of locking bos")
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
 ---
- drivers/gpu/drm/msm/msm_gem_submit.c | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+change since v3:
+    Added missing dependency.
 
-diff --git a/drivers/gpu/drm/msm/msm_gem_submit.c b/drivers/gpu/drm/msm/msm_gem_submit.c
-index fdc5367aecaa..ac23bbdb0bab 100644
---- a/drivers/gpu/drm/msm/msm_gem_submit.c
-+++ b/drivers/gpu/drm/msm/msm_gem_submit.c
-@@ -171,7 +171,8 @@ static int submit_lookup_objects(struct msm_gem_submit *submit,
- static int submit_lookup_cmds(struct msm_gem_submit *submit,
- 		struct drm_msm_gem_submit *args, struct drm_file *file)
- {
--	unsigned i, sz;
-+	unsigned i;
-+	size_t sz;
- 	int ret = 0;
- 
- 	for (i = 0; i < args->nr_cmds; i++) {
+ .../bindings/media/qcom,sc7280-venus.yaml          | 160 +++++++++++++++++++++
+ 1 file changed, 160 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
+
+diff --git a/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
+new file mode 100644
+index 0000000..12a42a0
+--- /dev/null
++++ b/Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
+@@ -0,0 +1,160 @@
++# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
++
++%YAML 1.2
++---
++$id: "http://devicetree.org/schemas/media/qcom,sc7280-venus.yaml#"
++$schema: "http://devicetree.org/meta-schemas/core.yaml#"
++
++title: Qualcomm Venus video encode and decode accelerators
++
++maintainers:
++  - Stanimir Varbanov <stanimir.varbanov@linaro.org>
++
++description: |
++  The Venus Iris2 IP is a video encode and decode accelerator present
++  on Qualcomm platforms
++
++properties:
++  compatible:
++    const: qcom,sc7280-venus
++
++  reg:
++    maxItems: 1
++
++  interrupts:
++    maxItems: 1
++
++  power-domains:
++    minItems: 2
++    maxItems: 3
++
++  power-domain-names:
++    minItems: 2
++    maxItems: 3
++    items:
++      - const: venus
++      - const: vcodec0
++      - const: cx
++
++  clocks:
++    maxItems: 5
++
++  clock-names:
++    items:
++      - const: core
++      - const: bus
++      - const: iface
++      - const: vcodec_core
++      - const: vcodec_bus
++
++  iommus:
++    maxItems: 2
++
++  memory-region:
++    maxItems: 1
++
++  interconnects:
++    maxItems: 2
++
++  interconnect-names:
++    items:
++      - const: cpu-cfg
++      - const: video-mem
++
++  video-decoder:
++    type: object
++
++    properties:
++      compatible:
++        const: venus-decoder
++
++    required:
++      - compatible
++
++    additionalProperties: false
++
++  video-encoder:
++    type: object
++
++    properties:
++      compatible:
++        const: venus-encoder
++
++    required:
++      - compatible
++
++    additionalProperties: false
++
++  video-firmware:
++    type: object
++
++    description: |
++      Firmware subnode is needed when the platform does not
++      have TrustZone.
++
++    properties:
++      iommus:
++        maxItems: 1
++
++    required:
++      - iommus
++
++required:
++  - compatible
++  - reg
++  - interrupts
++  - power-domains
++  - power-domain-names
++  - clocks
++  - clock-names
++  - iommus
++  - memory-region
++  - video-decoder
++  - video-encoder
++
++additionalProperties: false
++
++examples:
++  - |
++        #include <dt-bindings/interrupt-controller/arm-gic.h>
++        #include <dt-bindings/clock/qcom,videocc-sc7280.h>
++
++        venus: video-codec@aa00000 {
++                compatible = "qcom,sc7280-venus";
++                reg = <0x0aa00000 0xd0600>;
++                interrupts = <GIC_SPI 174 IRQ_TYPE_LEVEL_HIGH>;
++
++                clocks = <&videocc VIDEO_CC_MVSC_CORE_CLK>,
++                         <&videocc VIDEO_CC_MVSC_CTL_AXI_CLK>,
++                         <&videocc VIDEO_CC_VENUS_AHB_CLK>,
++                         <&videocc VIDEO_CC_MVS0_CORE_CLK>,
++                         <&videocc VIDEO_CC_MVS0_AXI_CLK>;
++                clock-names = "core", "bus", "iface",
++                              "vcodec_core", "vcodec_bus";
++
++                power-domains = <&videocc MVSC_GDSC>,
++                                <&videocc MVS0_GDSC>;
++                                <&rpmhpd SC7280_CX>;
++                power-domain-names = "venus", "vcodec0", "cx";
++
++                interconnects = <&gem_noc MASTER_APPSS_PROC 0 &cnoc2 SLAVE_VENUS_CFG 0>
++                                <&mmss_noc MASTER_VIDEO_P0 0 &mc_virt SLAVE_EBI1 0>;
++                interconnect-names = "cpu-cfg", "video-mem";
++
++                iommus = <&apps_smmu 0x2180 0x20>,
++                         <&apps_smmu 0x2184 0x20>;
++
++                memory-region = <&video_mem>;
++
++                video-decoder {
++                        compatible = "venus-decoder";
++                };
++
++                video-encoder {
++                        compatible = "venus-encoder";
++                };
++
++                video-firmware {
++                        iommus = <&apps_smmu 0x21a2 0x0>;
++                };
++        };
 -- 
-2.29.2
+2.7.4
 
