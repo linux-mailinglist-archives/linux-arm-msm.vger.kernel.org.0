@@ -2,179 +2,310 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D8E7541A5D3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 05:01:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC50441A69A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 06:25:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238673AbhI1DC4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Sep 2021 23:02:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34132 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238655AbhI1DCz (ORCPT
+        id S231445AbhI1E1Z (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Sep 2021 00:27:25 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:42882 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229493AbhI1E1Z (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Sep 2021 23:02:55 -0400
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31E00C061575
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Sep 2021 20:01:17 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id l16-20020a9d6a90000000b0053b71f7dc83so27184903otq.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Sep 2021 20:01:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=FHuHO2He2woiAxdN++JqYcpf3pYVN/DIGyfNIKeTVbA=;
-        b=B7T/YnyhBbGZ0d4ZYsouWc6sQWQXW4xXSkWxQNzYcbUYxZzTLb7IOzT2MUoxR0c9hW
-         ynAmZa6ebozVZGq2RAhxhoEf9VXU/mPih0yTdJRzSxY0fmneF903RWGTCNqiLFIUus8+
-         Cyx8+31z96OTJP+UWoIP90oArU+Ff/7Ipglk+49pGmhmh30qABnMrHLtBKa4L1bEzWpF
-         9rVxD8qiFmPaWdzcQC99ez99YG1WS54uxu7qHBuO8h3cLaImJwAkyPy82m+TLRApIGF+
-         wVjto9/AKTfOA8SID7CKJHu2epUlyrS7fgw/TO4yKCYWbYxfGLd6EdUbDEvFpgM1aKWC
-         q0xw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=FHuHO2He2woiAxdN++JqYcpf3pYVN/DIGyfNIKeTVbA=;
-        b=oS+71wuKyHJ5V6xGBwrve/TXdCGoNsR+u0GiLh1r0JJdIlm3MxeR0oC3a38lv6AlxW
-         lxf/KX1OdW1QFyGObIcITh2P5SCmtT5OZSuSR/Bn3ImLVqSGmBcbOFjpHOvvb8zuIxM/
-         2EixGF0bJx6ghezLZ5jgrFbNj2ZZr6gPxmRu6Jq2Q1NDqrgAOpbnvehkRr4pqzoqPNRR
-         KpJVH0FN3MNNPQhzWyJ7zxF7frcB2m0qI6eOMVr+weJX8yAXftX7nnr1Z1+UKIObN0+U
-         R/rDv60VgHZx8gRdFFwfiuWF0gL6ApVH4G+B7DCItrAwORD6GCPyzOH4tT6/7C/DgCp7
-         oitQ==
-X-Gm-Message-State: AOAM532OBgYpA32epNHMEMfM/fPl1aJtxj2tg3d3MsdtVNKjsxAlj6zw
-        WFGu3o+0z375k2eRT03Lg6xAd9cxKituzw==
-X-Google-Smtp-Source: ABdhPJzPYOMVbGt6/MeLS6xjKOPREgFzY3eMKxMnBbOCa4vN9OqrjLQH3zhaeqW2XaG3ThSUBR2low==
-X-Received: by 2002:a05:6830:1018:: with SMTP id a24mr3122576otp.300.1632798076361;
-        Mon, 27 Sep 2021 20:01:16 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id s29sm1774405otg.60.2021.09.27.20.01.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Sep 2021 20:01:16 -0700 (PDT)
-Date:   Mon, 27 Sep 2021 22:01:14 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
-        kernel@gpiccoli.net
-Subject: Re: [PATCH] arm64: dts: qcom: db820c: Improve regulator voltage
- range and mark it as always-on
-Message-ID: <YVKFeqpe/sWj3h6K@builder.lan>
-References: <20210927163745.2066610-1-gpiccoli@igalia.com>
+        Tue, 28 Sep 2021 00:27:25 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1632803146; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=8Fdju3P6IjvRGlsabLtKZvgu/gyQdArD8go49Jzs5gY=;
+ b=mWmnE+I4Pdxus0tzjU5Sj4uH7xN0ahQt5QuHQ9MrUy8siSj4U4Bnf+Kc6N/5UMSKf1tdPwJi
+ nR+i+4FRuoNZ46PivAf9kJV2SxcJtOOo3UcNaGsVqO6ET1r1SZRNqyBnsHZy5452iDSuQZ6U
+ keT/Z/7pi9NT93R/d1jYx8XX0H8=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 615299451abbf21d347e70b4 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Sep 2021 04:25:40
+ GMT
+Sender: mansur=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 18AD1C4360D; Tue, 28 Sep 2021 04:25:40 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: mansur)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id DC18AC43460;
+        Tue, 28 Sep 2021 04:25:38 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210927163745.2066610-1-gpiccoli@igalia.com>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 28 Sep 2021 09:55:38 +0530
+From:   mansur@codeaurora.org
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, vgarodia@codeaurora.org,
+        dikshita@codeaurora.org
+Subject: Re: [V3] venus: vdec: decoded picture buffer handling during reconfig
+ sequence
+In-Reply-To: <78dec463-5e75-18d7-b74e-154f00b8a7b2@linaro.org>
+References: <20210825110841.12815-1-mansur@codeaurora.org>
+ <78dec463-5e75-18d7-b74e-154f00b8a7b2@linaro.org>
+Message-ID: <4db580aea0ddfc6092fd86b51e67802f@codeaurora.org>
+X-Sender: mansur@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 27 Sep 11:37 CDT 2021, Guilherme G. Piccoli wrote:
-
-> Commit 2317b87a2a6f ("arm64: dts: qcom: db820c: Add vdd_gfx and tie it into mmcc")
-> introduced this voltage regulator which seems to be essential for the GPU,
-> according to the board schematics [0]. The problem is that such commit sets
-> the regulator min/max voltage range to a static value, which is a bit lower than
-> the range supported to such regulator [1]. With that, the GPU is not stable
-> as per my experiments (in a Dragonboard 820c-based board) - I've observed
-> sudden reboots into a FW bad state.
+On 2021-09-21 19:17, Stanimir Varbanov wrote:
+> Hi Mansur,
 > 
-
-The regulator range described in the datasheet and in the regulator
-driver defines what the PMIC can do, the dts refines this to a range
-that it suitable for this particular board. So it's expected to be more
-narrow.
-
-The problem with vdd_gfx is that we don't have anything voting for an
-actual voltage, so you will either continue to run with whatever voltage
-we got from the power-on state (or bootloader), or
-regulator-min-microvolt. Until someone could come up with this support
-0.98V seems to have been picked as some good enough number...
-
-
-The right thing would be to ensure that the voltage is scaled with the
-GPU clock, presumably with some reference from gpu_opp_table. This can
-perhaps be done using static voltages, but should in the long run be
-done by votes against the performance states exposed by the CPR block
-attached to the vdd_gfx - which will then ensure that the voltage level
-is adjusted as needed on a per-device basis.
-
-> More than that, my experiment showed that this regulator must be set to
-> always-on - this idea came from a commit in Linaro's tree, from Rajendra [2].
-
-The regulator should be enabled whenever someone is voting for the
-GPU_GX_GDSC power domain of mmcc. Question is why this isn't enough.
-
-> With the voltage range updated plus set as always-on, the GPU is working
-> correctly, in a stable fashion.
+> On 8/25/21 2:08 PM, Mansur Alisha Shaik wrote:
+>> In existing implementation, driver is freeing and un-mapping all the
+>> decoded picture buffers(DPB) as part of dynamic resolution change(DRC)
+>> handling. As a result, when firmware try to access the DPB buffer, 
+>> from
+>> previous sequence, SMMU context fault is seen due to the buffer being
+>> already unmapped.
+>> 
+>> With this change, driver defines ownership of each DPB buffer. If a 
+>> buffer
+>> is owned by firmware, driver would skip from un-mapping the same.
+>> 
+>> Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+>> 
+>> Changes in V3:
+>> - Migrated id allocation using kernel API ida_alloc_min()
+>> 
+>> ---
+>>  drivers/media/platform/qcom/venus/helpers.c | 50 
+>> ++++++++++++++++++++-
+>>  drivers/media/platform/qcom/venus/helpers.h |  2 +
+>>  drivers/media/platform/qcom/venus/vdec.c    |  7 ++-
+>>  3 files changed, 57 insertions(+), 2 deletions(-)
+>> 
+>> diff --git a/drivers/media/platform/qcom/venus/helpers.c 
+>> b/drivers/media/platform/qcom/venus/helpers.c
+>> index 8012f5c7bf34..f36361d346b2 100644
+>> --- a/drivers/media/platform/qcom/venus/helpers.c
+>> +++ b/drivers/media/platform/qcom/venus/helpers.c
+>> @@ -3,6 +3,7 @@
+>>   * Copyright (c) 2012-2016, The Linux Foundation. All rights 
+>> reserved.
+>>   * Copyright (C) 2017 Linaro Ltd.
+>>   */
+>> +#include <linux/idr.h>
+>>  #include <linux/list.h>
+>>  #include <linux/mutex.h>
+>>  #include <linux/slab.h>
+>> @@ -21,6 +22,13 @@
+>>  #define NUM_MBS_720P	(((1280 + 15) >> 4) * ((720 + 15) >> 4))
+>>  #define NUM_MBS_4K	(((4096 + 15) >> 4) * ((2304 + 15) >> 4))
+>> 
+>> +static DEFINE_IDA(dpb_out_tag_ida);
 > 
+> No global static variables please. Make it part of venus_inst 
+> structure.
+As per my understanding it is not just static global variable.
+We are defining the ida structure and assign to name when pass as param 
+as follows
+struct ida {
+              struct idr		idr;
+              struct ida_bitmap	*free_bitmap;
+};
+#define IDA_INIT(name)		{ .idr = IDR_INIT((name).idr), .free_bitmap = 
+NULL, }
+#define DEFINE_IDA(name)	struct ida name = IDA_INIT(name)
 
-Could you perhaps check /sys/kernel/debug/regulator/regulator_summary to
-see the voltage level you get for your VDD_GFX when it works?
-
-> [0] See page 9 (VDD_GFX), at
-> https://www.96boards.org/documentation/consumer/dragonboard/dragonboard820c/hardware-docs/files/db820c-schematics.pdf
-> 
-> [1] See section 3.5.3 (FT-SMPS) in the "PMI8994/PMI8996 Power Management IC",
-> at https://developer.qualcomm.com/download/sd820e/pmi8994pmi8996-power-management-ic-device-specification.pdf
-> 
-> [2] https://git.linaro.org/landing-teams/working/qualcomm/kernel.git/commit/?h=release/qcomlt-4.14&id=75fb43f3a62
-> 
-> Cc: Rajendra Nayak <rnayak@codeaurora.org>
-> Cc: Vinod Koul <vkoul@kernel.org>
-> Fixes: 2317b87a2a6f ("arm64: dts: qcom: db820c: Add vdd_gfx and tie it into mmcc")
-> Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
-> ---
-> 
-> Hi Andy/Bjorn/all, this patch was tested in 5.14, but I've tested it
-> in the linux-next tree as well and was able to apply there cleanly.
-> I'm new in the DTS world, so my apologies in advance for any rookie
-> mistake - suggestions are appreciated! Thanks in advance for the review,
-> 
-
-No need to apologize, the patch itself looks really good and nice to see
-that you tested it on both v5.14 and linux-next!
+Any ida related API's expect pointer to this structure.
+If we move the variable then it might be bit difficult use ida_xxx() 
+API'same
 
 > 
-> Guilherme
+>> +
+>> +enum dpb_buf_owner {
+>> +	DRIVER,
+>> +	FIRMWARE,
+>> +};
+>> +
+>>  struct intbuf {
+>>  	struct list_head list;
+>>  	u32 type;
+>> @@ -28,6 +36,8 @@ struct intbuf {
+>>  	void *va;
+>>  	dma_addr_t da;
+>>  	unsigned long attrs;
+>> +	enum dpb_buf_owner owned_by;
+>> +	u32 dpb_out_tag;
+>>  };
+>> 
+>>  bool venus_helper_check_codec(struct venus_inst *inst, u32 
+>> v4l2_pixfmt)
+>> @@ -95,9 +105,16 @@ int venus_helper_queue_dpb_bufs(struct venus_inst 
+>> *inst)
+>>  		fdata.device_addr = buf->da;
+>>  		fdata.buffer_type = buf->type;
+>> 
+>> +		if (buf->owned_by == FIRMWARE)
+>> +			continue;
+>> +
+>> +		fdata.clnt_data = buf->dpb_out_tag;
+>> +
+>>  		ret = hfi_session_process_buf(inst, &fdata);
+>>  		if (ret)
+>>  			goto fail;
+>> +
+>> +		buf->owned_by = FIRMWARE;
+>>  	}
+>> 
+>>  fail:
+>> @@ -110,13 +127,19 @@ int venus_helper_free_dpb_bufs(struct venus_inst 
+>> *inst)
+>>  	struct intbuf *buf, *n;
+>> 
+>>  	list_for_each_entry_safe(buf, n, &inst->dpbbufs, list) {
+>> +		if (buf->owned_by == FIRMWARE)
+>> +			continue;
+>> +
+>> +		ida_free(&dpb_out_tag_ida, buf->dpb_out_tag);
+>> +
+>>  		list_del_init(&buf->list);
+>>  		dma_free_attrs(inst->core->dev, buf->size, buf->va, buf->da,
+>>  			       buf->attrs);
+>>  		kfree(buf);
+>>  	}
+>> 
+>> -	INIT_LIST_HEAD(&inst->dpbbufs);
+>> +	if (list_empty(&inst->dpbbufs))
+>> +		INIT_LIST_HEAD(&inst->dpbbufs);
+>> 
+>>  	return 0;
+>>  }
+>> @@ -134,6 +157,7 @@ int venus_helper_alloc_dpb_bufs(struct venus_inst 
+>> *inst)
+>>  	unsigned int i;
+>>  	u32 count;
+>>  	int ret;
+>> +	int id;
+>> 
+>>  	/* no need to allocate dpb buffers */
+>>  	if (!inst->dpb_fmt)
+>> @@ -171,6 +195,15 @@ int venus_helper_alloc_dpb_bufs(struct venus_inst 
+>> *inst)
+>>  			ret = -ENOMEM;
+>>  			goto fail;
+>>  		}
+>> +		buf->owned_by = DRIVER;
+>> +
+>> +		id = ida_alloc_min(&dpb_out_tag_ida, VB2_MAX_FRAME, GFP_KERNEL);
+>> +		if (id < 0) {
+>> +			ret = id;
+>> +			goto fail;
+>> +		}
+>> +
+>> +		buf->dpb_out_tag = id;
+>> 
+>>  		list_add_tail(&buf->list, &inst->dpbbufs);
+>>  	}
+>> @@ -1365,6 +1398,21 @@ venus_helper_find_buf(struct venus_inst *inst, 
+>> unsigned int type, u32 idx)
+>>  }
+>>  EXPORT_SYMBOL_GPL(venus_helper_find_buf);
+>> 
+>> +void venus_helper_find_dpb_buf(struct venus_inst *inst, struct 
+>> vb2_v4l2_buffer *vbuf,
+>> +			       unsigned int type, unsigned int buf_type, u32 tag)
 > 
+> If this helper will return void then it should be renamed to something
+> like venus_helper_dpb_buf_change_owner().
 > 
->  arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi | 7 +++++--
->  1 file changed, 5 insertions(+), 2 deletions(-)
+Ok. I will change while posting next version.
+>> +{
+>> +	struct intbuf *dpb_buf;
+>> +
+>> +	if (type == V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE &&
+>> +	    buf_type == HFI_BUFFER_OUTPUT)
+>> +		list_for_each_entry(dpb_buf, &inst->dpbbufs, list)
+>> +			if (dpb_buf->dpb_out_tag == tag) {
+>> +				dpb_buf->owned_by = DRIVER;
+>> +				break;
+>> +			}
+>> +}
+>> +EXPORT_SYMBOL_GPL(venus_helper_find_dpb_buf);
+>> +
+>>  int venus_helper_vb2_buf_init(struct vb2_buffer *vb)
+>>  {
+>>  	struct venus_inst *inst = vb2_get_drv_priv(vb->vb2_queue);
+>> diff --git a/drivers/media/platform/qcom/venus/helpers.h 
+>> b/drivers/media/platform/qcom/venus/helpers.h
+>> index e6269b4be3af..17c5aadaec82 100644
+>> --- a/drivers/media/platform/qcom/venus/helpers.h
+>> +++ b/drivers/media/platform/qcom/venus/helpers.h
+>> @@ -14,6 +14,8 @@ struct venus_core;
+>>  bool venus_helper_check_codec(struct venus_inst *inst, u32 
+>> v4l2_pixfmt);
+>>  struct vb2_v4l2_buffer *venus_helper_find_buf(struct venus_inst 
+>> *inst,
+>>  					      unsigned int type, u32 idx);
+>> +void venus_helper_find_dpb_buf(struct venus_inst *inst, struct 
+>> vb2_v4l2_buffer *vbuf,
+>> +			       unsigned int type, unsigned int buf_type, u32 idx);
+>>  void venus_helper_buffers_done(struct venus_inst *inst, unsigned int 
+>> type,
+>>  			       enum vb2_buffer_state state);
+>>  int venus_helper_vb2_buf_init(struct vb2_buffer *vb);
+>> diff --git a/drivers/media/platform/qcom/venus/vdec.c 
+>> b/drivers/media/platform/qcom/venus/vdec.c
+>> index 198e47eb63f4..cafdc3d8e473 100644
+>> --- a/drivers/media/platform/qcom/venus/vdec.c
+>> +++ b/drivers/media/platform/qcom/venus/vdec.c
+>> @@ -1297,6 +1297,7 @@ static void vdec_buf_done(struct venus_inst 
+>> *inst, unsigned int buf_type,
+>>  	struct vb2_v4l2_buffer *vbuf;
+>>  	struct vb2_buffer *vb;
+>>  	unsigned int type;
+>> +	struct intbuf *dpb_buf;
+>> 
+>>  	vdec_pm_touch(inst);
+>> 
+>> @@ -1306,8 +1307,10 @@ static void vdec_buf_done(struct venus_inst 
+>> *inst, unsigned int buf_type,
+>>  		type = V4L2_BUF_TYPE_VIDEO_CAPTURE_MPLANE;
+>> 
+>>  	vbuf = venus_helper_find_buf(inst, type, tag);
+>> -	if (!vbuf)
+>> +	if (!vbuf) {
+>> +		venus_helper_find_dpb_buf(inst, vbuf, type, buf_type, tag);
+>>  		return;
+>> +	}
+>> 
+>>  	vbuf->flags = flags;
+>>  	vbuf->field = V4L2_FIELD_NONE;
+>> @@ -1622,6 +1625,8 @@ static int vdec_close(struct file *file)
+>> 
+>>  	vdec_pm_get(inst);
+>> 
+>> +	venus_helper_free_dpb_bufs(inst);
+>> +	INIT_LIST_HEAD(&inst->dpbbufs);
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-> index 51e17094d7b1..977842068619 100644
-> --- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-> @@ -699,8 +699,11 @@ &pmi8994_spmi_regulators {
->  	vdd_gfx: s2@1700 {
->  		reg = <0x1700 0x100>;
->  		regulator-name = "VDD_GFX";
-> -		regulator-min-microvolt = <980000>;
-> -		regulator-max-microvolt = <980000>;
-> +		regulator-min-microvolt = <350000>;
-> +		regulator-max-microvolt = <1350000>;
-> +		regulator-always-on;
-> +		status = "okay";
-
-status = "okay" is the default value, so unless you want to disable a
-node in the dtsi by default, or override it to "okay" when it was
-previously disabled, there's no need to provide "status" here.
-
-> +
-
-And this empty line is undesirable.
-
-
-So to summarize, I do think there might be cases where your patch
-lowers the GPU voltage from 0.98V to 0.35V, which would result in a sad
-outcome. I think we should try to plug some voltages into gpu_opp_table,
-but perhaps we need to look into CPR to figure out what those voltages
-should be?
-
-Regards,
-Bjorn
-
->  	};
->  };
->  
-> -- 
-> 2.33.0
+> This belongs to venus_helper_free_dpb_bufs not here.
 > 
+Ok, I will remove it from here, since in free_dpb() api INIT_LIST_HEAD() 
+when list is free.
+
+>>  	v4l2_m2m_ctx_release(inst->m2m_ctx);
+>>  	v4l2_m2m_release(inst->m2m_dev);
+>>  	vdec_ctrl_deinit(inst);
+>> 
+> 
+> --
+> regards,
+> Stan
+Thanks,
+Mansur
