@@ -2,96 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EA43641B507
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 19:21:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1FFFE41B512
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 19:23:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242038AbhI1RXc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Sep 2021 13:23:32 -0400
-Received: from mo4-p03-ob.smtp.rzone.de ([81.169.146.174]:9000 "EHLO
-        mo4-p03-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242040AbhI1RXa (ORCPT
+        id S241959AbhI1RZE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Sep 2021 13:25:04 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:24810 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241995AbhI1RZE (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Sep 2021 13:23:30 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1632849695;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Cc:Date:
-    From:Subject:Sender;
-    bh=S9w5GiKQ2oy3NSyTEw/qOS43AM2R39Tjvw3qTBO3Zj4=;
-    b=be9uUQxmVeU8gYqHprkIP23lqdRMsBKz0LStw88fX1W5jg5bI+r5xvDsxMYHtuDmwj
-    D08hnopCwRGwFzJyOGGfb8JXT7yKkjp18c1OlZo3UECID/nc3263q6H6iLxrN6u3Mzab
-    KGLmrLTirnzlQjAep27OsaLl9Pl7FxHRE2a2fOOLxr+hsCxomhlGQux32IYEi+/VuuB9
-    6IKfsmdvXf7RMgYcRZ1uOiEcFpNwaeG//FQd8JxywLLkCYQb2J+L3nhdXjsxM5CP4LyK
-    tmH6DYJZTvPSB5kbt+9kjNcKHm1vhPpUH2nwvFonxJ4xR2eH4oU5LFLWsOC8Bb21Pr0S
-    QsOA==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXTbAOHjRHIhr3eFSKSxc="
-X-RZG-CLASS-ID: mo00
-Received: from droid..
-    by smtp.strato.de (RZmta 47.33.8 DYNA|AUTH)
-    with ESMTPSA id 301038x8SHLYoBV
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Tue, 28 Sep 2021 19:21:34 +0200 (CEST)
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
-        Stephan Gerhold <stephan@gerhold.net>
-Subject: [PATCH 15/15] ARM: dts: qcom: msm8916-samsung-serranove: Include dts from arm64
-Date:   Tue, 28 Sep 2021 19:12:31 +0200
-Message-Id: <20210928171231.12766-16-stephan@gerhold.net>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20210928171231.12766-1-stephan@gerhold.net>
-References: <20210928171231.12766-1-stephan@gerhold.net>
+        Tue, 28 Sep 2021 13:25:04 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1632849804; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=mb/o+TU/jtzYpiRKctEI+EzDEsfd4AjUR8iTNCtSlZo=;
+ b=ALr0f1nbVmeAEN3NoJr5yCnEkLfmXcfVUFpXTxYuZW0ATDqo5F1/aBdtcHvFVQYlpDM/oDqM
+ tEhXyPTvozm+Poz9SqGR90ikd2KDsl9UyKB6r2ksYJ73F9JcbmVgvH0F2JDglCTVJa9xUze2
+ LW5V0yPKC4W9gxo/SB97vubWR40=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
+ 61534f6447d64efb6d51911a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Sep 2021 17:22:44
+ GMT
+Sender: khsieh=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id E9223C008F2; Tue, 28 Sep 2021 17:22:43 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: khsieh)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B7904C008EF;
+        Tue, 28 Sep 2021 17:22:41 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 28 Sep 2021 10:22:41 -0700
+From:   khsieh@codeaurora.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 3/5] drm/msm/dp: Support up to 3 DP controllers
+In-Reply-To: <YSkdaljt7DPbyTDe@builder.lan>
+References: <20210825234233.1721068-1-bjorn.andersson@linaro.org>
+ <20210825234233.1721068-4-bjorn.andersson@linaro.org>
+ <CAE-0n52YaQXQ4-=bR5ffMHOMp7CyFnCS-u9a2pddvaRUQhLrog@mail.gmail.com>
+ <YSkdaljt7DPbyTDe@builder.lan>
+Message-ID: <66f0f29e449b02e30678ed2e3487c7f2@codeaurora.org>
+X-Sender: khsieh@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-After adding all necessary support for MSM8916 SMP/cpuidle without PSCI
-on ARM32, build the Samsung Galaxy S4 Mini VE device tree from the arm64
-tree together with the ARM32 include to allow booting this device on ARM32.
+On 2021-08-27 10:14, Bjorn Andersson wrote:
+> On Fri 27 Aug 00:20 CDT 2021, Stephen Boyd wrote:
+> 
+>> Quoting Bjorn Andersson (2021-08-25 16:42:31)
+>> > diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+>> > index 2c7de43f655a..4a6132c18e57 100644
+>> > --- a/drivers/gpu/drm/msm/dp/dp_display.c
+>> > +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+>> > @@ -78,6 +78,8 @@ struct dp_display_private {
+>> >         char *name;
+>> >         int irq;
+>> >
+>> > +       int id;
+>> > +
+>> >         /* state variables */
+>> >         bool core_initialized;
+>> >         bool hpd_irq_on;
+>> > @@ -115,8 +117,19 @@ struct dp_display_private {
+>> >         struct dp_audio *audio;
+>> >  };
+>> >
+>> > +
+>> > +struct msm_dp_config {
+>> > +       phys_addr_t io_start[3];
+>> 
+>> Can this be made into another struct, like msm_dp_desc, that also
+>> indicates what type of DP connector it is, i.e. eDP vs DP? That would
+>> help me understand in modetest and /sys/class/drm what sort of 
+>> connector
+>> is probing. dp_drm_connector_init() would need to pass the type of
+>> connector appropriately. Right now, eDP connectors still show up as DP
+>> instead of eDP in sysfs.
+>> 
+> 
+> I like it, will spin a v3 with this.
+> 
+> Regards,
+> Bjorn
 
-The approach to include device tree files from other architectures is
-inspired from e.g. the Raspberry Pi (bcm2711-rpi-4-b.dts) where this is
-used to build the device tree for both ARM32 and ARM64.
+Hi Bjorn,
 
-Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
----
-I'm not sure what's the best way to apply this patch...
-It might be easiest to apply the two ARM32 dts patches to the arm64 branch.
-(It does not seem to cause any conflicts at the moment...)
----
- arch/arm/boot/dts/Makefile                           | 1 +
- arch/arm/boot/dts/qcom-msm8916-samsung-serranove.dts | 3 +++
- 2 files changed, 4 insertions(+)
- create mode 100644 arch/arm/boot/dts/qcom-msm8916-samsung-serranove.dts
+Have you spin off V3 yet?
+When you expect your patches related to DP be up streamed?
 
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index 8cb859728bd9..0a53bbd9d7b1 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -960,6 +960,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
- 	qcom-ipq8064-rb3011.dtb \
- 	qcom-msm8226-samsung-s3ve3g.dtb \
- 	qcom-msm8660-surf.dtb \
-+	qcom-msm8916-samsung-serranove.dtb \
- 	qcom-msm8960-cdp.dtb \
- 	qcom-msm8974-fairphone-fp2.dtb \
- 	qcom-msm8974-lge-nexus5-hammerhead.dtb \
-diff --git a/arch/arm/boot/dts/qcom-msm8916-samsung-serranove.dts b/arch/arm/boot/dts/qcom-msm8916-samsung-serranove.dts
-new file mode 100644
-index 000000000000..dee2c20af355
---- /dev/null
-+++ b/arch/arm/boot/dts/qcom-msm8916-samsung-serranove.dts
-@@ -0,0 +1,3 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+#include "arm64/qcom/msm8916-samsung-serranove.dts"
-+#include "qcom-msm8916-smp.dtsi"
--- 
-2.33.0
-
+Thanks,
+kuogee
+> 
+>> > +       size_t num_dp;
+>> > +};
+>> > +
+>> > +static const struct msm_dp_config sc7180_dp_cfg = {
+>> > +       .io_start = { 0x0ae90000 },
+>> > +       .num_dp = 1,
+>> > +};
+>> > +
+>> >  static const struct of_device_id dp_dt_match[] = {
+>> > -       {.compatible = "qcom,sc7180-dp"},
+>> > +       { .compatible = "qcom,sc7180-dp", .data = &sc7180_dp_cfg },
+>> >         {}
+>> >  };
+>> >
