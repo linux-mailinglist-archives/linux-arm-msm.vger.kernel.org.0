@@ -2,95 +2,246 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D287141B390
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 18:11:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B44B441B3B6
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 18:21:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241405AbhI1QN0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Sep 2021 12:13:26 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:54165 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241568AbhI1QN0 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Sep 2021 12:13:26 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1632845506; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=egQWYMWS1uSTfo5noOmbI+I/vVEdRaRmixsKz9P1yHM=; b=PtYBfIyJ0g9i5UCXTdsyluyBzqaiJxY5LiYNTrZECZS8wsIg5DLxT5e3ogtWDhjQHK4Bx+I1
- /ybuJzqTg5jILi7xniun5ghClVhkEJux4WY4MY+eQS1w9baefvJgtPOUKS5waYjOi3KDX8mG
- DNtcgQDGlBgAMd5mj/ah3W9KmEQ=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 61533ea8519bd8dcf00ec1dc (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Sep 2021 16:11:20
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9D73AC4338F; Tue, 28 Sep 2021 16:11:20 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 4747BC4338F;
-        Tue, 28 Sep 2021 16:11:19 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 4747BC4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Kuogee Hsieh <khsieh@codeaurora.org>
-To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
-        vkoul@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
-        khsieh@codeaurora.org, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/msm/dp: only signal audio when disconnected detected at dp_pm_resume
-Date:   Tue, 28 Sep 2021 09:11:12 -0700
-Message-Id: <1632845472-29276-1-git-send-email-khsieh@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        id S241697AbhI1QXa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Sep 2021 12:23:30 -0400
+Received: from mail.kernel.org ([198.145.29.99]:56472 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S241662AbhI1QXa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 Sep 2021 12:23:30 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 136C660F5B;
+        Tue, 28 Sep 2021 16:21:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1632846110;
+        bh=pMo9KK5doUM7+rvpr+8DStF/6cDzZLGEDqhBIksnBAQ=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=ee30XMTJzmJ1Ftatpaxcg4q3jAMMSRDOc8lPLaCJQxAToLAS94K6U9ENweBWVt14q
+         5So91pbyf1uxyWPdlrnpc1yAUIMFf7Yu/sEzRZffwEmRAh7cF5+i5+CTzlnZ7IrPuG
+         dQ9EI0fxgC1qDuF+l1gHAVXdKyEZ256oQfemwVyY7GLAYW5ByeLv70gP6b35UFUmkL
+         NezpBoDwasqRDcYg59nnhwXmRi9dhAvMvBn7V+u0+viHC4wcIGsXq754MviH5sfg5E
+         OzTRIEJQXnP2TLNVuA8rE+qBdlznwVwYpXDxot7R6/NPcuFbFrRr1rLmeu1I1+DB3k
+         UX4wiMUpNIGYQ==
+Date:   Tue, 28 Sep 2021 11:21:48 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Prasad Malisetty <pmaliset@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, bhelgaas@google.com,
+        robh+dt@kernel.org, swboyd@chromium.org, lorenzo.pieralisi@arm.com,
+        svarbanov@mm-sol.com, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dianders@chromium.org,
+        mka@chromium.org, vbadigan@codeaurora.org, sallenki@codeaurora.org,
+        manivannan.sadhasivam@linaro.org, linux-pci@vger.kernel.org
+Subject: Re: [PATCH v9 4/4] PCI: qcom: Switch pcie_1_pipe_clk_src after PHY
+ init in SC7280
+Message-ID: <20210928162148.GA701581@bhelgaas>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1632837350-12100-5-git-send-email-pmaliset@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Only signal audio when disconnected detected at dp_pm_resume since
-connected status will be signaled to audio at next plugin handler.
+[+cc linux-pci; please cc drivers/pci changes there]
 
-Fixes: 078867ce04ed ("drm/msm/dp: signal audio plugged change at dp_pm_resume")
-Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+On Tue, Sep 28, 2021 at 07:25:50PM +0530, Prasad Malisetty wrote:
+> On the SC7280, the clock source for gcc_pcie_1_pipe_clk_src
+> must be the TCXO while gdsc is enabled. After PHY init successful
+> clock source should switch to pipe clock for gcc_pcie_1_pipe_clk_src.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 0e543a03..6f13008 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1356,14 +1356,14 @@ static int dp_pm_resume(struct device *dev)
- 	 * can not declared display is connected unless
- 	 * HDMI cable is plugged in and sink_count of
- 	 * dongle become 1
-+	 * also only signal audio when disconnected
- 	 */
--	if (dp->link->sink_count)
-+	if (dp->link->sink_count) {
- 		dp->dp_display.is_connected = true;
--	else
-+	} else {
- 		dp->dp_display.is_connected = false;
--
--	dp_display_handle_plugged_change(g_dp_display,
--				dp->dp_display.is_connected);
-+		dp_display_handle_plugged_change(g_dp_display, false);
-+	}
- 
- 	DRM_DEBUG_DP("After, sink_count=%d is_connected=%d core_inited=%d power_on=%d\n",
- 			dp->link->sink_count, dp->dp_display.is_connected,
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+This looks good.  Ideally the commit log would say what the patch
+*does*.  I know it's in the subject, but it's nice to have it both
+places so the body is complete in itself.
 
+Again in an ideal world, I would split this into two patches:
+
+  1) Do the boilerplate conversions to struct qcom_pcie_cfg and
+  updates of qcom_pcie_match[].  This patch would have no functional
+  change.
+
+  2) Add the code to deal with pcie_1_pipe_clk_src, which should be a
+  much smaller patch.
+
+This makes it easier to see the important part of dealing with
+pcie_1_pipe_clk_src and makes any future bisect much more specific.
+
+> Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 94 ++++++++++++++++++++++++++++++----
+>  1 file changed, 83 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 8a7a300..7896a86 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -166,6 +166,9 @@ struct qcom_pcie_resources_2_7_0 {
+>  	struct regulator_bulk_data supplies[2];
+>  	struct reset_control *pci_reset;
+>  	struct clk *pipe_clk;
+> +	struct clk *pipe_clk_src;
+> +	struct clk *phy_pipe_clk;
+> +	struct clk *ref_clk_src;
+>  };
+>  
+>  union qcom_pcie_resources {
+> @@ -189,6 +192,11 @@ struct qcom_pcie_ops {
+>  	int (*config_sid)(struct qcom_pcie *pcie);
+>  };
+>  
+> +struct qcom_pcie_cfg {
+> +	const struct qcom_pcie_ops *ops;
+> +	unsigned int pipe_clk_need_muxing:1;
+> +};
+> +
+>  struct qcom_pcie {
+>  	struct dw_pcie *pci;
+>  	void __iomem *parf;			/* DT parf */
+> @@ -197,6 +205,7 @@ struct qcom_pcie {
+>  	struct phy *phy;
+>  	struct gpio_desc *reset;
+>  	const struct qcom_pcie_ops *ops;
+> +	unsigned int pipe_clk_need_muxing:1;
+>  };
+>  
+>  #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
+> @@ -1167,6 +1176,20 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
+>  	if (ret < 0)
+>  		return ret;
+>  
+> +	if (pcie->pipe_clk_need_muxing) {
+> +		res->pipe_clk_src = devm_clk_get(dev, "pipe_mux");
+> +		if (IS_ERR(res->pipe_clk_src))
+> +			return PTR_ERR(res->pipe_clk_src);
+> +
+> +		res->phy_pipe_clk = devm_clk_get(dev, "phy_pipe");
+> +		if (IS_ERR(res->phy_pipe_clk))
+> +			return PTR_ERR(res->phy_pipe_clk);
+> +
+> +		res->ref_clk_src = devm_clk_get(dev, "ref");
+> +		if (IS_ERR(res->ref_clk_src))
+> +			return PTR_ERR(res->ref_clk_src);
+> +	}
+> +
+>  	res->pipe_clk = devm_clk_get(dev, "pipe");
+>  	return PTR_ERR_OR_ZERO(res->pipe_clk);
+>  }
+> @@ -1185,6 +1208,10 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
+>  		return ret;
+>  	}
+>  
+> +	/* Set TCXO as clock source for pcie_pipe_clk_src */
+> +	if (pcie->pipe_clk_need_muxing)
+> +		clk_set_parent(res->pipe_clk_src, res->ref_clk_src);
+> +
+>  	ret = clk_bulk_prepare_enable(res->num_clks, res->clks);
+>  	if (ret < 0)
+>  		goto err_disable_regulators;
+> @@ -1256,6 +1283,10 @@ static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
+>  {
+>  	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
+>  
+> +	/* Set pipe clock as clock source for pcie_pipe_clk_src */
+> +	if (pcie->pipe_clk_need_muxing)
+> +		clk_set_parent(res->pipe_clk_src, res->phy_pipe_clk);
+> +
+>  	return clk_prepare_enable(res->pipe_clk);
+>  }
+>  
+> @@ -1456,6 +1487,39 @@ static const struct qcom_pcie_ops ops_1_9_0 = {
+>  	.config_sid = qcom_pcie_config_sid_sm8250,
+>  };
+>  
+> +static const struct qcom_pcie_cfg apq8084_cfg = {
+> +	.ops = &ops_1_0_0,
+> +};
+> +
+> +static const struct qcom_pcie_cfg ipq8064_cfg = {
+> +	.ops = &ops_2_1_0,
+> +};
+> +
+> +static const struct qcom_pcie_cfg msm8996_cfg = {
+> +	.ops = &ops_2_3_2,
+> +};
+> +
+> +static const struct qcom_pcie_cfg ipq8074_cfg = {
+> +	.ops = &ops_2_3_3,
+> +};
+> +
+> +static const struct qcom_pcie_cfg ipq4019_cfg = {
+> +	.ops = &ops_2_4_0,
+> +};
+> +
+> +static const struct qcom_pcie_cfg sdm845_cfg = {
+> +	.ops = &ops_2_7_0,
+> +};
+> +
+> +static const struct qcom_pcie_cfg sm8250_cfg = {
+> +	.ops = &ops_1_9_0,
+> +};
+> +
+> +static const struct qcom_pcie_cfg sc7280_cfg = {
+> +	.ops = &ops_1_9_0,
+> +	.pipe_clk_need_muxing = true,
+> +};
+> +
+>  static const struct dw_pcie_ops dw_pcie_ops = {
+>  	.link_up = qcom_pcie_link_up,
+>  	.start_link = qcom_pcie_start_link,
+> @@ -1467,6 +1531,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  	struct pcie_port *pp;
+>  	struct dw_pcie *pci;
+>  	struct qcom_pcie *pcie;
+> +	const struct qcom_pcie_cfg *pcie_cfg;
+>  	int ret;
+>  
+>  	pcie = devm_kzalloc(dev, sizeof(*pcie), GFP_KERNEL);
+> @@ -1488,7 +1553,13 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  
+>  	pcie->pci = pci;
+>  
+> -	pcie->ops = of_device_get_match_data(dev);
+> +	pcie_cfg = of_device_get_match_data(dev);
+> +	pcie->ops = pcie_cfg->ops;
+> +	if (!pcie->ops) {
+> +		dev_err(dev, "Invalid platform data\n");
+> +		return -EINVAL;
+> +	}
+> +	pcie->pipe_clk_need_muxing = pcie_cfg->pipe_clk_need_muxing;
+>  
+>  	pcie->reset = devm_gpiod_get_optional(dev, "perst", GPIOD_OUT_HIGH);
+>  	if (IS_ERR(pcie->reset)) {
+> @@ -1545,16 +1616,17 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  }
+>  
+>  static const struct of_device_id qcom_pcie_match[] = {
+> -	{ .compatible = "qcom,pcie-apq8084", .data = &ops_1_0_0 },
+> -	{ .compatible = "qcom,pcie-ipq8064", .data = &ops_2_1_0 },
+> -	{ .compatible = "qcom,pcie-ipq8064-v2", .data = &ops_2_1_0 },
+> -	{ .compatible = "qcom,pcie-apq8064", .data = &ops_2_1_0 },
+> -	{ .compatible = "qcom,pcie-msm8996", .data = &ops_2_3_2 },
+> -	{ .compatible = "qcom,pcie-ipq8074", .data = &ops_2_3_3 },
+> -	{ .compatible = "qcom,pcie-ipq4019", .data = &ops_2_4_0 },
+> -	{ .compatible = "qcom,pcie-qcs404", .data = &ops_2_4_0 },
+> -	{ .compatible = "qcom,pcie-sdm845", .data = &ops_2_7_0 },
+> -	{ .compatible = "qcom,pcie-sm8250", .data = &ops_1_9_0 },
+> +	{ .compatible = "qcom,pcie-apq8084", .data = &apq8084_cfg },
+> +	{ .compatible = "qcom,pcie-ipq8064", .data = &ipq8064_cfg },
+> +	{ .compatible = "qcom,pcie-ipq8064-v2", .data = &ipq8064_cfg },
+> +	{ .compatible = "qcom,pcie-apq8064", .data = &ipq8064_cfg },
+> +	{ .compatible = "qcom,pcie-msm8996", .data = &msm8996_cfg },
+> +	{ .compatible = "qcom,pcie-ipq8074", .data = &ipq8074_cfg },
+> +	{ .compatible = "qcom,pcie-ipq4019", .data = &ipq4019_cfg },
+> +	{ .compatible = "qcom,pcie-qcs404", .data = &ipq4019_cfg },
+> +	{ .compatible = "qcom,pcie-sdm845", .data = &sdm845_cfg },
+> +	{ .compatible = "qcom,pcie-sm8250", .data = &sm8250_cfg },
+> +	{ .compatible = "qcom,pcie-sc7280", .data = &sc7280_cfg },
+>  	{ }
+>  };
+>  
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
