@@ -2,112 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D756941B405
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 18:38:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7FF6641B409
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 18:39:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230251AbhI1Qjz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Sep 2021 12:39:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54440 "EHLO
+        id S241777AbhI1Qk7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Sep 2021 12:40:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54700 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241844AbhI1Qjy (ORCPT
+        with ESMTP id S241773AbhI1Qk6 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Sep 2021 12:39:54 -0400
-Received: from mail-yb1-xb2c.google.com (mail-yb1-xb2c.google.com [IPv6:2607:f8b0:4864:20::b2c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA76FC06174E
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 09:38:14 -0700 (PDT)
-Received: by mail-yb1-xb2c.google.com with SMTP id 71so7141735ybe.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 09:38:14 -0700 (PDT)
+        Tue, 28 Sep 2021 12:40:58 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 33B9EC06161C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 09:39:17 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id g41so94834850lfv.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 09:39:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=NidJhDFKleQVXlEZfqCJKrel6vUdjqPR6YuC5wFIREs=;
-        b=VaOO6PWInASpyJkK+NCUu7r06A85FElDK+VCiYMAWxx41ZXkhpPaJ4gvQAZdFV7yXE
-         rhMZ/bB+Di2JPC0yeZcB5c79kPLmix7zSmNr1GW8+vM4CYQypuKYcYEm9vLpDdY13I/t
-         UTUOuoJApZDWuGKPCRm/edwlKn7HXnISzfij5d7r07Vqc5koana6ZBbvdkJJokO6y5Eq
-         kHpvkHD6TbS1pxOG+Kth7Qlte25LP8+7gABsjPPbq618aDWKWa5cc6L2RFIj4UfVpCC4
-         7+WLhGm0IMFLcNAcGi/n7ZdmLJFVwC2xCDbGMEvGosa6doPy4aGdol4lIzZtir+Fsje/
-         olkQ==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=G7Nu624BHA+ciBaAN51wOEprdQ45Szw6B8+mMioIzMU=;
+        b=cetdKQLhcnBhXSFEllvSJ8rYG6P547knd8cgm9LIqgEBIpZbimxBdLyGX5CLabrDi2
+         uiLSxpnHuOhVwpOg/pWAfEVtMdG1dS4PBMGIF/oy7GAyQ2xf9y+1EtWxxId3s9NIlvao
+         v/lb3+AibTbQAIj+2DJu5cdBrkKvqBEJFLvTBlh7QM7HcrmdXH635oioXiHj26pFw8dM
+         MyoltSzyCbx8X6MgoyFB6SyYgw0itqm+KK7oSR1GwxcRZaXXKr8syeTCWFN1RSwjaMLB
+         FCicBfESaEPfPJszwJV0M43V04uc7L4ayKKK1LQ+VahfpNjLioeyiqxoyysoOv+kXDVE
+         TeDQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=NidJhDFKleQVXlEZfqCJKrel6vUdjqPR6YuC5wFIREs=;
-        b=o4ppxRR1dxbtlYTkFCqWyzVhqPa+r/55yH1i0SGNYp1WIK8O+LqNIOKLIcSBkv1400
-         pmOqknnIibTSeBRZ5ve/3xA/8HQAsG/Qv3xnKVpBOcPsgmncnY4unLeGG3pi91LfJX+S
-         8oyCgACzY9qzpa+hruTAOBvMyGmhmQ/+TjgxOhiZhACXRT9k4NepFXg+nUav72+9I6UG
-         uqK79YGqZ8CGg44f3NrXhmsIr2C0yidbHx3JPAVk7QrYRQgalZUVmKJH7eurCtGfXG2d
-         VqYpREc8QzdLatROgcpUMK/W9FROs9eMT8KhW3iHnUORDCw7P0UQpyQ8Vbyh4/UulqbW
-         W0Wg==
-X-Gm-Message-State: AOAM532456TeboMKkvpNkmuoTSFBO6w672hGogdfY4fpTqAbyFLVZwBN
-        V8+u52xmNfAqGSCq5snTonEb+9cQ9v4bVKfVpz4slA==
-X-Google-Smtp-Source: ABdhPJyexz0v4kSqFZ9qeYAlNw+MyCoD5uulH8/ODMbblguUJ/vUtCAhclfCvhFYok2NfKJqLxRpbX3rD+QF+59idGw=
-X-Received: by 2002:a25:4684:: with SMTP id t126mr6335213yba.476.1632847092780;
- Tue, 28 Sep 2021 09:38:12 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=G7Nu624BHA+ciBaAN51wOEprdQ45Szw6B8+mMioIzMU=;
+        b=gisauTbKeQBs2kzfN/yTCFl/MELE6wZGniHMCDIn5h7RNEtaP+iLV2QM7vqnehDRI3
+         yPG4YKnlKeWMyr+Y1FAmTxyH6/2FwAdD8HRt6zc7vPb4RaEtENRNqI0KVw9ggm2YbJyu
+         kHL4jYkkVHJJLfWo4FkcIV+V4aIoc1hM8/9NWMrzjt5ei1qI2ASyre6SK7PySJhk22JR
+         ChAmL4g4Vut9T8gwWdQzAQ68g6+vqy4a74rLys5y5lJOFU6QZhMN0tC/GUK23UYcz7hg
+         8ypWyR1klhhxHWxsvFnKy6qLdOo8pdAMg4LkPcGrQDXcU3FYA2jtMol+DoFUhNOKv1nu
+         nzRg==
+X-Gm-Message-State: AOAM530GH1RuXipSFZnKrPElcWgfZssPX30kfRCI8coGmlmCyHoc/AOS
+        7IbZMJc1RtOXyKph6QcDJmne4w==
+X-Google-Smtp-Source: ABdhPJyCj8nkgVuxflTeFioAAJwZAukYxUdj8p/t666Q+NKGnuf9aDbO0HpPK9CHZhyIDATH2r/4Lg==
+X-Received: by 2002:ac2:4bc1:: with SMTP id o1mr6633392lfq.596.1632847155514;
+        Tue, 28 Sep 2021 09:39:15 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id u10sm1970336lfl.87.2021.09.28.09.39.14
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Tue, 28 Sep 2021 09:39:14 -0700 (PDT)
+Subject: Re: [PATCH] drm/msm/dpu: Remove some nonsense
+To:     Rob Clark <robdclark@gmail.com>, dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Rob Clark <robdclark@chromium.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Krishna Manikandan <mkrishn@codeaurora.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        open list <linux-kernel@vger.kernel.org>
+References: <20210928162903.1104847-1-robdclark@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <dbefd596-4382-3822-fdec-486cf3df1560@linaro.org>
+Date:   Tue, 28 Sep 2021 19:39:14 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-References: <20210927204830.4018624-1-dmitry.baryshkov@linaro.org>
- <CAGETcx-3Y3rOSoXu3SbDa6BP_jcT8uSQA+MV55QCY4b0Oe7L-A@mail.gmail.com>
- <11fe1793-1455-ae44-b213-9afe47dfa370@linaro.org> <CAGETcx_HRmvDKuXQEJkMk7zBpedLGkQmvJ24tAWpCHFf4DPX_w@mail.gmail.com>
- <YVMK90kRtkBxptlR@kroah.com>
-In-Reply-To: <YVMK90kRtkBxptlR@kroah.com>
-From:   Saravana Kannan <saravanak@google.com>
-Date:   Tue, 28 Sep 2021 09:37:36 -0700
-Message-ID: <CAGETcx_7hgF_mk+fh6Bk1VvGm=2t1gZ_P2C4+N2Ai0V6jEkpxw@mail.gmail.com>
-Subject: Re: [PATCH] Revert "of: property: fw_devlink: Add support for remote-endpoint"
-To:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Stephen Boyd <sboyd@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <20210928162903.1104847-1-robdclark@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 28, 2021 at 5:30 AM Greg Kroah-Hartman
-<gregkh@linuxfoundation.org> wrote:
->
-> On Mon, Sep 27, 2021 at 06:13:12PM -0700, Saravana Kannan wrote:
-> > On Mon, Sep 27, 2021 at 5:56 PM Dmitry Baryshkov
-> > > root@qcom-armv8a:~# ls -l /sys/bus/platform/devices/88e9000.phy/
-> > > lrwxrwxrwx    1 root     root             0 Aug  4 15:13
-> > > consumer:platform:a600000.usb ->
-> > > ../../../virtual/devlink/platform:88e9000.phy--platform:a600000.usb
-> > > lrwxrwxrwx    1 root     root             0 Aug  4 15:13
-> > > consumer:platform:af00000.clock-controller ->
-> > > ../../../virtual/devlink/platform:88e9000.phy--platform:af00000.clock-controller
-> > > -rw-r--r--    1 root     root          4096 Aug  4 15:13 driver_override
-> > > -r--r--r--    1 root     root          4096 Aug  4 15:13 modalias
-> > > lrwxrwxrwx    1 root     root             0 Aug  4 15:13 of_node ->
-> > > ../../../../firmware/devicetree/base/soc@0/phy@88e9000
-> > > drwxr-xr-x    2 root     root             0 Aug  4 15:13 power
-> > > lrwxrwxrwx    1 root     root             0 Aug  4 15:10 subsystem ->
-> > > ../../../../bus/platform
-> > > lrwxrwxrwx    1 root     root             0 Aug  4 15:13
-> > > supplier:platform:100000.clock-controller ->
-> > > ../../../virtual/devlink/platform:100000.clock-controller--platform:88e9000.phy
-> > > lrwxrwxrwx    1 root     root             0 Aug  4 15:13
-> > > supplier:platform:18200000.rsc:clock-controller ->
-> > > ../../../virtual/devlink/platform:18200000.rsc:clock-controller--platform:88e9000.phy
-> > > lrwxrwxrwx    1 root     root             0 Aug  4 15:13
-> > > supplier:platform:18200000.rsc:pm8150-rpmh-regulators ->
-> > > ../../../virtual/devlink/platform:18200000.rsc:pm8150-rpmh-regulators--platform:88e9000.phy
-> > > -rw-r--r--    1 root     root          4096 Aug  4 15:10 uevent
-> > > -r--r--r--    1 root     root          4096 Aug  4 15:13
-> > > waiting_for_supplier
-> > >
-> > > Thus it is not possible to spot this device link without
-> > > CONFIG_DEBUG_DRIVER=y (or any similar debugging technique).
-> >
-> > I sent out some patches to make this easier. But doesn't look like
-> > it'll land in 5.15.
-> > https://lore.kernel.org/lkml/20210915172808.620546-1-saravanak@google.com/
->
-> I have now queued these up to make it into 5.15-final, this thread has
-> convinced me :)
+On 28/09/2021 19:28, Rob Clark wrote:
+> From: Rob Clark <robdclark@chromium.org>
+> 
+> These aren't used.  And if we add use for them later, we should probably
+> do something a bit more structured than string parsing.
+> 
+> Signed-off-by: Rob Clark <robdclark@chromium.org>
 
-Thanks :)
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
--Saravana
+> ---
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c | 6 ------
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h | 8 --------
+>   2 files changed, 14 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> index b131fd376192..e32dbb06aad1 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> @@ -958,12 +958,6 @@ static const struct dpu_perf_cfg sdm845_perf_data = {
+>   	.min_core_ib = 2400000,
+>   	.min_llcc_ib = 800000,
+>   	.min_dram_ib = 800000,
+> -	.core_ib_ff = "6.0",
+> -	.core_clk_ff = "1.0",
+> -	.comp_ratio_rt =
+> -	"NV12/5/1/1.23 AB24/5/1/1.23 XB24/5/1/1.23",
+> -	.comp_ratio_nrt =
+> -	"NV12/5/1/1.25 AB24/5/1/1.25 XB24/5/1/1.25",
+>   	.undersized_prefill_lines = 2,
+>   	.xtra_prefill_lines = 2,
+>   	.dest_scale_prefill_lines = 3,
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> index d2a945a27cfa..4ade44bbd37e 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h
+> @@ -676,10 +676,6 @@ struct dpu_perf_cdp_cfg {
+>    * @min_core_ib        minimum mnoc ib vote in kbps
+>    * @min_llcc_ib        minimum llcc ib vote in kbps
+>    * @min_dram_ib        minimum dram ib vote in kbps
+> - * @core_ib_ff         core instantaneous bandwidth fudge factor
+> - * @core_clk_ff        core clock fudge factor
+> - * @comp_ratio_rt      string of 0 or more of <fourcc>/<ven>/<mod>/<comp ratio>
+> - * @comp_ratio_nrt     string of 0 or more of <fourcc>/<ven>/<mod>/<comp ratio>
+>    * @undersized_prefill_lines   undersized prefill in lines
+>    * @xtra_prefill_lines         extra prefill latency in lines
+>    * @dest_scale_prefill_lines   destination scaler latency in lines
+> @@ -702,10 +698,6 @@ struct dpu_perf_cfg {
+>   	u32 min_core_ib;
+>   	u32 min_llcc_ib;
+>   	u32 min_dram_ib;
+> -	const char *core_ib_ff;
+> -	const char *core_clk_ff;
+> -	const char *comp_ratio_rt;
+> -	const char *comp_ratio_nrt;
+>   	u32 undersized_prefill_lines;
+>   	u32 xtra_prefill_lines;
+>   	u32 dest_scale_prefill_lines;
+> 
+
+
+-- 
+With best wishes
+Dmitry
