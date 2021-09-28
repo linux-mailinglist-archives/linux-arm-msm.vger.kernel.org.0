@@ -2,34 +2,34 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DBFD41AF17
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 14:32:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5801241AF2A
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 14:42:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240566AbhI1Mdm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Sep 2021 08:33:42 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:47893 "EHLO
+        id S240641AbhI1Mn5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Sep 2021 08:43:57 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:56160 "EHLO
         so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240526AbhI1Mdl (ORCPT
+        with ESMTP id S240488AbhI1Mnz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Sep 2021 08:33:41 -0400
+        Tue, 28 Sep 2021 08:43:55 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1632832322; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1632832936; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=lz0RQ3WTqzUYVr3sYY2bnFpPgLz9uXHvoHlxlgCwPwk=;
- b=OI13nQ1PUXRZs9ryxQH9iu6QfoXFGwNWnXWVssL4jShrwvYsf6OSOD98kd2MhUoM/kEz27Um
- MsrkoYeLE/DfRoKDgwj7bEc3j78AH6s6lN4BhUcKZj8iVHF8vOc8MnyotYMPzmhPU4QBKZcJ
- 8I0iFWUVWK6VR06zjE7XCG5QeC4=
+ MIME-Version: Sender; bh=bfvExRyMFxw1e6AjAzU9jgJ8KWmezb7Nm5djdW68m8w=;
+ b=InuM9IgItyRu7SUc3pOQURipWguInyyKsCMsOnMHYhASXsALjdEUDSEyH6aSxi6UU22mO6py
+ nC6IXMpdyzi+ICgJpy28/SpszH1GAEDuRFUq2DZZecDbBCeTZiS421P3GHcfXzgCSdbngryQ
+ 9PXTulM7QAP3ykeheL8jsnYq8zE=
 X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 61530b3e47d64efb6d3b6f67 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Sep 2021 12:31:58
+ smtp-out-n07.prod.us-east-1.postgun.com with SMTP id
+ 61530da61abbf21d34cb3ace (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Sep 2021 12:42:14
  GMT
 Sender: skakit=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id DB764C43616; Tue, 28 Sep 2021 12:31:57 +0000 (UTC)
+        id 13BE9C4360D; Tue, 28 Sep 2021 12:42:14 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -39,13 +39,13 @@ Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: skakit)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 27A68C4338F;
-        Tue, 28 Sep 2021 12:31:56 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6EF74C4338F;
+        Tue, 28 Sep 2021 12:42:13 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Tue, 28 Sep 2021 18:01:56 +0530
+Date:   Tue, 28 Sep 2021 18:12:13 +0530
 From:   skakit@codeaurora.org
 To:     Stephen Boyd <swboyd@chromium.org>
 Cc:     Andy Gross <agross@kernel.org>,
@@ -59,48 +59,95 @@ Cc:     Andy Gross <agross@kernel.org>,
         Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
         linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/4] dt-bindings: mfd: pm8008: Add pm8008 regulator node
-In-Reply-To: <CAE-0n51Xrv54XVLJwz9ENTtOhtCKWG7WtQg2o2+SFEoru1M4VA@mail.gmail.com>
+Subject: Re: [PATCH 4/4] arm64: dts: qcom: sc7280: Add pm8008 regulators
+ support for sc7280-idp
+In-Reply-To: <CAE-0n53rto=_+9qtc0RL0tkDwBkd9HJL26TQV-m6Q8myiNSCVA@mail.gmail.com>
 References: <1631875538-22473-1-git-send-email-skakit@codeaurora.org>
- <1631875538-22473-2-git-send-email-skakit@codeaurora.org>
- <CAE-0n51Xrv54XVLJwz9ENTtOhtCKWG7WtQg2o2+SFEoru1M4VA@mail.gmail.com>
-Message-ID: <1524de68017cfd6c9de706441496b3e5@codeaurora.org>
+ <1631875538-22473-5-git-send-email-skakit@codeaurora.org>
+ <CAE-0n53rto=_+9qtc0RL0tkDwBkd9HJL26TQV-m6Q8myiNSCVA@mail.gmail.com>
+Message-ID: <61eabd793256583c930c487b9a21c60b@codeaurora.org>
 X-Sender: skakit@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-09-21 01:02, Stephen Boyd wrote:
-> Quoting Satya Priya (2021-09-17 03:45:35)
->> Add pm8008-regulator node and example.
+On 2021-09-21 01:07, Stephen Boyd wrote:
+> Quoting Satya Priya (2021-09-17 03:45:38)
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi 
+>> b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> index 52638e2..3b3af49 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> @@ -207,6 +207,97 @@
+>>         };
+>>  };
 >> 
->> Signed-off-by: Satya Priya <skakit@codeaurora.org>
->> ---
->>  .../devicetree/bindings/mfd/qcom,pm8008.yaml       | 24 
->> ++++++++++++++++++++++
->>  1 file changed, 24 insertions(+)
->> 
->> diff --git a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml 
->> b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
->> index ec3138c..de182f8 100644
->> --- a/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
->> +++ b/Documentation/devicetree/bindings/mfd/qcom,pm8008.yaml
->> @@ -45,6 +45,10 @@ properties:
->>      const: 0
->> 
->>  patternProperties:
->> +  "^pm8008[a-z]?-regulator$":
-> 
-> Shouldn't it be ^pm8008-regulator$ without the a-z optional letter?
-> 
-
-Some platforms use 2 PM8008 PMICS, in that case we need suffixing like 
-pm8008i pm8008j etc. So, I mentioned this way.
-
->> +    type: object
->> +    $ref: "../regulator/qcom,pm8008-regulator.yaml#"
+>> +&i2c1 {
+>> +       #address-cells = <1>;
+>> +       #size-cells = <0>;
+>> +       status = "okay";
 >> +
->>    "^gpio@[0-9a-f]+$":
->>      type: object
+>> +       pm8008_chip: pm8008@8 {
+>> +               compatible = "qcom,pm8008";
+>> +               reg = <0x8>;
+>> +               #address-cells = <1>;
+>> +               #size-cells = <0>;
+>> +
+>> +               pinctrl-names = "default";
+>> +               pinctrl-0 = <&pm8008_active>;
+>> +       };
+>> +
+>> +       pm8008_ldo: pm8008@9 {
+> [...]
+>> +
+>> +                       pm8008_l7: regulator@4600 {
+>> +                               reg = <0x4600>;
+>> +                               regulator-name = "pm8008_l7";
+>> +                               regulator-min-microvolt = <3000000>;
+>> +                               regulator-max-microvolt = <3544000>;
+>> +                               qcom,min-dropout-voltage = <96000>;
+> 
+> Is this headroom? Is it actually configurable or is it merely a 
+> property
+> of the hardware? If it's the latter then it should be in the driver and
+> not in the DTS.
+> 
+
+Yes this is a headroom and its configurable.
+
+>> +                       };
+>> +               };
+>> +       };
+>> +};
+>> +
+>>  &qfprom {
+>>         vcc-supply = <&vreg_l1c_1p8>;
+>>  };
+>> @@ -313,6 +404,18 @@
 >> 
+>>  /* PINCTRL - additions to nodes defined in sc7280.dtsi */
+>> 
+>> +&pm8350c_gpios {
+>> +       pm8008_reset {
+> 
+> Is this a pinctrl node?
+> 
+
+No.
+
+>> +               pm8008_active: pm8008_active {
+> 
+> Please use dashes in node names wherever an underscore goes.
+> 
+
+Okay.
+
+>> +                       pins = "gpio4";
+>> +                       function = "normal";
+>> +                       bias-disable;
+>> +                       output-high;
+>> +                       power-source = <0>;
+>> +               };
+>> +       };
+>> +};
