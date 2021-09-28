@@ -2,99 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9FF0B41B12A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 15:51:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CDAD41B150
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 15:56:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241110AbhI1Nwl (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Sep 2021 09:52:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43326 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240979AbhI1Nwk (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Sep 2021 09:52:40 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 89578C061604
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 06:51:00 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id u18so91355729lfd.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 06:51:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=hqwz9jzyEQV5H4SW8S/gf8kyYKDVCl9EoNAa0kvGs9E=;
-        b=lK1N+HWcCfWtNCrGgY4s6GgX9CsGhnRcYX4lqPYKVXVMLm9dFqGOmTWH6W7yDgrYlP
-         r5EfG2iKtNsCiPEpu2jIIZUO/prlSrOSngipvA1TaZXN//4VkeA+JwIztwUCHInTjF+X
-         dIEeqXK9vl1zabQddSGCMK/1z7p7VHD0/EGwo/HlhXJ3zAduBt5JgEYfTeOMBww2Fp7C
-         uuEQ+v8uMPilV3Gj8rG9xjCBY2Z3AgQB7zHz7LAOKEGK+E4GoP5y67eAshWxmcfY0b/C
-         tbJ5BllnohxxoWYH9FNEsSkrxF7kZTx9LML4VnlI/nkZyyXKBdokKSpCUGceySjEP260
-         j7fw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=hqwz9jzyEQV5H4SW8S/gf8kyYKDVCl9EoNAa0kvGs9E=;
-        b=k5mx7wSsl9RVCpBbiltRpeIWVGcAwNgAvTE+VQ6Y4FXASIGdSUU6Ez8g7XBy8W/dgB
-         b2H9v/e5S7Ay+7YjFQg6xv5xDmQ9YD5buUgDwEd8SEac05dtIPMstE25MIbhZ8RxLu5v
-         9wvp/IeFQcpsyEFRHQ9+c7s7ucRBGufNSYeq8yvSGYfPq8+fu+2A9Q0ke0iI8nikNfA4
-         UIcMesNXWh+wCoSleKPKhI8dWB+L+TELQHQEkxfrnPF75znilREtsgETlWpYSB9etvxp
-         D6eCNgh/3vjepD3kOaWUgC1LlCAIKKsPacOPu3RWB7Kb1kR90hGn9EOxz81b4S8OoSSW
-         0N1g==
-X-Gm-Message-State: AOAM530nggSQtemzoCBMQBtt2AeWC65kMt4x7DaKRN+OeLyU2Q9vbH0U
-        zrXrYphNNWROs8QyItWVbsSjmILsOpnmIoYjDUb1FA==
-X-Google-Smtp-Source: ABdhPJzKB7hvIUZRQ/aoIoW5cqtS9HhlPZ5bpsUvwPy/3OPtxA+hpK098gljBYdBI6LlYdW5gw8hagp89uPCk1TRlmw=
-X-Received: by 2002:a05:651c:4ca:: with SMTP id e10mr43638lji.259.1632837047280;
- Tue, 28 Sep 2021 06:50:47 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210928013621.1245-1-caihuoqing@baidu.com> <20210928013621.1245-7-caihuoqing@baidu.com>
-In-Reply-To: <20210928013621.1245-7-caihuoqing@baidu.com>
-From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Tue, 28 Sep 2021 15:50:36 +0200
-Message-ID: <CACRpkdYJjDCvzX7LL1Qv7zYM_E1+1fqCSNxz-KVK6t35xMi6LA@mail.gmail.com>
-Subject: Re: [PATCH v2 7/9] iio: adc: qcom-pm8xxx-xoadc: Make use of the
- helper function dev_err_probe()
-To:     Cai Huoqing <caihuoqing@baidu.com>
-Cc:     Jonathan Cameron <jic23@kernel.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        Pengutronix Kernel Team <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        NXP Linux Team <linux-imx@nxp.com>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-iio <linux-iio@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>,
-        "open list:ARM/Amlogic Meson..." <linux-amlogic@lists.infradead.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:ARM/Rockchip SoC..." <linux-rockchip@lists.infradead.org>
-Content-Type: text/plain; charset="UTF-8"
+        id S241169AbhI1N5o (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Sep 2021 09:57:44 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:19422 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S241030AbhI1N5o (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 Sep 2021 09:57:44 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1632837364; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=+3xXXzc009IxecDeBe7hyMKaiYwYiM2uughQvgQkNZI=; b=ZEON0t2fu+mhrfKDIFUcD5pNVabLgOIo/dTSz83BK56YoDu/0a/3LG9QqOJVMj5M/yQsnzlr
+ aJSsqI2Uh5oiCeyKupVHPPW6Df4u47YXvkrrdvC4OyxBsuqJwbXGML4b3W8e6cP+Z0zLv6So
+ 1YSAW+EQe9sYZ6Ybnqz4qWpCLNg=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 61531ef43cc3a01f26bc6620 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Sep 2021 13:56:04
+ GMT
+Sender: pmaliset=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 3A433C43619; Tue, 28 Sep 2021 13:56:04 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from pmaliset-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: pmaliset)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B8A4FC4338F;
+        Tue, 28 Sep 2021 13:55:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org B8A4FC4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Prasad Malisetty <pmaliset@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, bhelgaas@google.com,
+        robh+dt@kernel.org, swboyd@chromium.org, lorenzo.pieralisi@arm.com,
+        svarbanov@mm-sol.com
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dianders@chromium.org, mka@chromium.org, vbadigan@codeaurora.org,
+        sallenki@codeaurora.org, manivannan.sadhasivam@linaro.org,
+        Prasad Malisetty <pmaliset@codeaurora.org>
+Subject: [PATCH v9 0/4] Add DT bindings and DT nodes for PCIe and PHY in SC7280
+Date:   Tue, 28 Sep 2021 19:25:46 +0530
+Message-Id: <1632837350-12100-1-git-send-email-pmaliset@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 28, 2021 at 3:37 AM Cai Huoqing <caihuoqing@baidu.com> wrote:
+Changes added in v9:
+    * Added fixed regulator entry for nvme.suggested by Stephen Boyd
+    * Added NULL pointer check before accessing ops in pcie probe
+      Suggested by Stephen Boyd
 
-> When possible use dev_err_probe help to properly deal with the
-> PROBE_DEFER error, the benefit is that DEFER issue will be logged
-> in the devices_deferred debugfs file.
-> Using dev_err_probe() can reduce code size, and the error value
-> gets printed.
->
-> Signed-off-by: Cai Huoqing <caihuoqing@baidu.com>
-(...)
-> -               return -ENXIO;
-> +               return -ENODEV;
+Changes added in v8:
 
-Why?
+    * Added seperate pinctrl state for NVMe LDO enable pin [v8 P3/4]
+    * Removed pointer initialization for pcie_cfg [v8 P4/4]
+    * Replaced bool pcie_pipe_clk_src with unsigned int:1 [v8 P4/4]
+    * Changed gcc_pcie_1_pipe_clk_src to pipe_clk_src
 
-I think it's the right change, but should be in the changelog.
+Changes added in v7:
 
-Yours,
-Linus Walleij
+        * Removed two fallbacks qcom,pcie-sm8250 and snps,dw-pcie.
+        * Replaced compatible method in get_resources_2_7_0 with
+            flag approach suggested by Bjorn Helgaas .
+        * Setting gcc_pcie_1_clk_src as XO in init_2_7_0 for
+          gdsc enable.
+        * Added specific NVMe GPIO entries for SKU1 and SKU2 support
+          in idp.dts and idp2.dts respectively.
+        * Moved pcie_1 and pcie_1_phy board specific entries into common
+          board file sc7280-idp.dtsi file.
+
+Changes in v6:
+
+    * Removed platform check while setting gcc_pcie_1_pipe_clk_src
+          as clk_set_parent will return 0 with nop if platform doesn't
+          need to switch pipe clk source.
+        * Moved wake-n gpio to board specific file sc7280-idp.dtsi
+        * Sorted gpio.h header entry in sc7280.dtsi file
+
+Changes in v5:
+
+        * Re ordered PCIe, PHY nodes in Soc and board specific dtsi files.
+        * Removed ref_clk entry in current patch [PATCH v4 P4/4].
+        * I will add ref clk entry in suspend/ resume commits.
+        * Added boolean flag in Soc specific dtsi file to differentiate
+          SM8250 and SC7280 platforms. based on boolean flag, platforms will handle
+          the pipe clk handling.
+
+Changes in v4 as suggested by Bjorn:
+
+        * Changed pipe clk mux name as gcc_pcie_1_pipe_clk_src.
+        * Changed pipe_ext_src as phy_pipe_clk.
+        * Updated commit message for [PATCH v4 4/4].
+
+Changes in v3:
+        * Changed pipe clock names in dt bindings as pipe_mux and phy_pipe.
+        * Moved reset and NVMe GPIO pin configs into board specific file.
+        * Updated pipe clk mux commit message.
+
+Changes in v2:
+        * Moved pcie pin control settings into IDP file.
+        * Replaced pipe_clk_src with pipe_clk_mux in pcie driver
+        * Included pipe clk mux setting change set in this series
+
+Prasad Malisetty (4):
+  dt-bindings: pci: qcom: Document PCIe bindings for SC7280
+  arm64: dts: qcom: sc7280: Add PCIe and PHY related nodes
+  arm64: dts: qcom: sc7280: Add PCIe nodes for IDP board
+  PCI: qcom: Switch pcie_1_pipe_clk_src after PHY init in SC7280
+
+ .../devicetree/bindings/pci/qcom,pcie.txt          |  17 +++
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts            |   9 ++
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi           |  54 ++++++++++
+ arch/arm64/boot/dts/qcom/sc7280-idp2.dts           |   9 ++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               | 119 +++++++++++++++++++++
+ drivers/pci/controller/dwc/pcie-qcom.c             |  94 ++++++++++++++--
+ 6 files changed, 291 insertions(+), 11 deletions(-)
+
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
