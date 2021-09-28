@@ -2,111 +2,89 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D03B41ACDD
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 12:22:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7154B41AD80
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 13:03:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240185AbhI1KXw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Sep 2021 06:23:52 -0400
-Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.53]:35350 "EHLO
-        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240161AbhI1KXv (ORCPT
+        id S239863AbhI1LFR convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Sep 2021 07:05:17 -0400
+Received: from coyote.holtmann.net ([212.227.132.17]:59007 "EHLO
+        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S239306AbhI1LFQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Sep 2021 06:23:51 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1632824530;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=zlZ7tFTRJhpCCgiAaXyQJqTvywOUygVuhXAlOlCKPKc=;
-    b=SxeLQAe7vkBWh3xilHdNU4/rM3gOEPswGTM6DAnd55Pli8SYFBgXGGmVlY+T/v/s/W
-    UIwdlyBWjyGFk17puCrmW4akytuQjgo8hLVwVY73zJ3hJbPrLLby5zElzlEgUFn4P0zE
-    uA5qTsBk4zfHYU5M7ny4K3aqQHfaqbCKtRkBbPzNsUL5c6UX1yBcGP1yv+sxX6C6QOJb
-    ntlNMcyv8AOQX5WC/lF7Y/eteAZmGNGaKSUXjrRpjMrGXu98m5bgy20HB2FIVs4QKBn+
-    oTHhk5pN08/oxzhUGTgFzhdsEUo18L9zFgtk48uxf9puRav0kl6j0a5BKKRMaRqOwR6H
-    a3uw==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4pSA8ZyK1A=="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.33.8 DYNA|AUTH)
-    with ESMTPSA id 301038x8SAM9jsq
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Tue, 28 Sep 2021 12:22:09 +0200 (CEST)
-Date:   Tue, 28 Sep 2021 12:22:05 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 1/3] dt-bindings: soc: smem: Make indirection optional
-Message-ID: <YVLszZ7U7D91oIH2@gerhold.net>
-References: <20210928044546.4111223-1-bjorn.andersson@linaro.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210928044546.4111223-1-bjorn.andersson@linaro.org>
+        Tue, 28 Sep 2021 07:05:16 -0400
+Received: from smtpclient.apple (p5b3d2185.dip0.t-ipconnect.de [91.61.33.133])
+        by mail.holtmann.org (Postfix) with ESMTPSA id 072DDCECD9;
+        Tue, 28 Sep 2021 13:03:35 +0200 (CEST)
+Content-Type: text/plain;
+        charset=utf-8
+Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
+Subject: Re: [PATCH v11] Bluetooth: btusb: Add support using different nvm for
+  variant WCN6855 controller
+From:   Marcel Holtmann <marcel@holtmann.org>
+In-Reply-To: <25d13858fced474d0d71faed2d829032@codeaurora.org>
+Date:   Tue, 28 Sep 2021 13:03:35 +0200
+Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
+        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
+        open list <linux-kernel@vger.kernel.org>,
+        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
+        rjliao@codeaurora.org, zijuhu@codeaurora.org
+Content-Transfer-Encoding: 8BIT
+Message-Id: <C8C7AC2D-7A0C-4FCB-8D60-5705D86BC50B@holtmann.org>
+References: <25d13858fced474d0d71faed2d829032@codeaurora.org>
+To:     tjiang@codeaurora.org
+X-Mailer: Apple Mail (2.3654.120.0.1.13)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Sep 27, 2021 at 09:45:44PM -0700, Bjorn Andersson wrote:
-> In the olden days the Qualcomm shared memory (SMEM) region consisted of
-> multiple chunks of memory, so SMEM was described as a standalone node
-> with references to its various memory regions.
+Hi Tim,
+
+> the RF performance of wcn6855 soc chip from different foundries will be
+> difference, so we should use different nvm to configure them.
 > 
-> But practically all modern Qualcomm platforms has a single reserved memory
-> region used for SMEM. So rather than having to use two nodes to describe
-> the one SMEM region, update the binding to allow the reserved-memory
-> region alone to describe SMEM.
-> 
-> The olden format is preserved as valid, as this is widely used already.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
 > ---
->  .../bindings/soc/qcom/qcom,smem.yaml          | 34 ++++++++++++++++---
->  1 file changed, 30 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
-> index f7e17713b3d8..4149cf2b66be 100644
-> --- a/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
-> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
-> [...]
-> @@ -43,6 +55,20 @@ examples:
->          #size-cells = <1>;
->          ranges;
->  
-> +        smem@fa00000 {
+> drivers/bluetooth/btusb.c | 49 ++++++++++++++++++++++++++++++++++-------------
+> 1 file changed, 36 insertions(+), 13 deletions(-)
 
-I think this is a good opportunity to make a decision which node name
-should be used here. :)
+I am done reviewing this patch and frankly I don’t care how urgent this is for your new chip; and how many times you ping me privately about it. So please find someone else to write and send patches. This is not acceptable behavior here.
 
-You use smem@ here but mentioned before that you think using the generic
-memory@ would be better [1]. And you use memory@ in PATCH 3/3:
+If you are blindly ignoring the review comments from Matthias, then I have no idea what to do. This is such a simple patch and it takes 12 revision to get this done.
 
--		smem_mem: memory@86000000 {
-+		memory@86000000 {
-+			compatible = "qcom,smem";
- 			reg = <0x0 0x86000000 0 0x200000>;
- 			no-map;
-+			hwlocks = <&tcsr_mutex 3>;
- 		};
+static void btusb_generate_qca_nvm_name(char *fwname, size_t max_size, const struct qca_version *ver)
+{
+	u32 rom_version = le32_to_cpu(ver->rom_version);
 
-However, if you would use memory@ as example in this DT schema,
-Rob's bot would complain with the same error that I mentioned earlier [2]:
+	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
+		u16 board_id = le16_to_cpu(ver->board_id);
+		const char *variant;
 
-soc/qcom/qcom,smem.example.dt.yaml: memory@fa00000: 'device_type' is a required property
-        From schema: dtschema/schemas/memory.yaml
+		switch (le32_to_cpu(ver->ram_version)) {
+		case WCN6855_2_0_RAM_VERSION_GF:
+		case WCN6855_2_1_RAM_VERSION_GF:
+			variant = “_gf”;
+			break;
+		default:
+			variant = “”;
+			break;
+		}
 
-We should either fix the error when using memory@ or start using some
-different node name (Stephen Boyd suggested shared-memory@ for example).
-Otherwise we'll just keep introducing more and more dtbs_check errors
-for the Qualcomm device trees.
+		/* if boardid equal 0, use default nvm without suffix */
+		if (board_id == 0x0)
+			snprintf(fwname, max_size, "qca/nvm_usb_%08x%s.bin”,
+				 rom_version, variant);
+		else
+			snprintf(fwname, max_size, "qca/nvm_usb_%08x%s_%04x.bin”,
+				 rom_version, variant, board_id);
+	} else {
+		snprintf(fwname, max_size, "qca/nvm_usb_%08x.bin”, rom_version);
+	}
+}
 
-Thanks,
-Stephan
+Regards
 
-[1]: https://lore.kernel.org/linux-arm-msm/YUo0suaIugOco1Vu@builder.lan/
-[2]: https://lore.kernel.org/linux-arm-msm/YUo2ZzQktf2iSec%2F@gerhold.net/
+Marcel
+
