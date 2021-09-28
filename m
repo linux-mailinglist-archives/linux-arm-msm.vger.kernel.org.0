@@ -2,65 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 628C541B315
+	by mail.lfdr.de (Postfix) with ESMTP id D2F3C41B316
 	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 17:38:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241473AbhI1Pkc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S241682AbhI1Pkc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Tue, 28 Sep 2021 11:40:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40438 "EHLO
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40444 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241600AbhI1Pkb (ORCPT
+        with ESMTP id S241680AbhI1Pkc (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Sep 2021 11:40:31 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F38FC061746
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 08:38:51 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id d12-20020a05683025cc00b0054d8486c6b8so7425025otu.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 08:38:51 -0700 (PDT)
+        Tue, 28 Sep 2021 11:40:32 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A12CFC06161C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 08:38:52 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id u22so30447594oie.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 08:38:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=/BTvQpPVNKgxMTK/nBY1CVBNCOMqwDcqqaf4Emy82EY=;
-        b=SCEz76ZfAMmmqaHk3wkNObEkhwAhWTB6urBlvG5yfyLi3qxHmhBtxH5PzLT1MrILcX
-         ZoeMwhKAH0x3kcykKnOqVR+qab7IO9aLcw/Bh7nscDuJJfEoixSl5gwapMx05Zf8e/kQ
-         t+js7dck4DEIILfCbZYghAHIo1Xg9qiXfYWLnQzPQItyz6fZn7ULPz0IuidEqw5WIPbo
-         JhnIRyj8Cb/Rk7BZ2jkMcKtH2G9qy3zLNx+kfsm87giz0RvBhGP/9e4ALZ3gPqBeqb47
-         IWr2xSvuLDZ/EtLcJk2Ez3tRNP2yc6ZDEjffZ5WMc16h0DWWZZpgNmyi5gyoCGFlqSgu
-         Q3Iw==
+        bh=7jDiOTxX7jaxQpVKcdTHIgMq+jgTAr1Yd+3O5LrgMwU=;
+        b=h/+LwkgzEG9aGMKoRoMXckMlXYX4aBbnBYOTXpWVIYrd0VTf21pPQEzYYZX5oK3gQo
+         eRarN92LB/LqUla5rfSIRWHw7qG8ZsFq1GspdaLA9hHCPt6aujalsLb3e8b6APnMWgD3
+         yfo3NUOwQJR9g/eSyQPXildzYOwQgyrUd1a1RrD5cWPLlFzs5GGeN2G5lXO78EU3fEHu
+         Cs16KJipmr/XUs6dpXEnEC+g9bfrcpi2/BNwdOFjCdPb7Ns+jZa8GrgETfTmYkPqkLzX
+         Kq9dU95wWe6dTCNN5S8JzVfUHg9k3jixeikhCuv22bOgj+yjFzx2LkYU7gHRiA2iQX+9
+         Yqvg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=/BTvQpPVNKgxMTK/nBY1CVBNCOMqwDcqqaf4Emy82EY=;
-        b=p80nJSh45RNem5A9k0A4G0YH3PXRFhjbYFSzuCTskKKsWqngbDkb4uYCCkkUnyqEMT
-         XSU+x2NSKQ28OTN0wS4b0QrDt5Jdh9ZGxOKM8Xjazh2/4xwykMFNL2OjiEEK/bDlcDAO
-         Hb3MOgsQWVhnOcETiRVIsZoz45axZ1QotDw+ctMIeEseLoGq3cY2XNMpjiUFu7As36mw
-         vcFCBQIzmUTNuiZ57R0u3cV3/A8oXgZtFXsRMA9NKfuK7Yo7mOwHtUkh2K3QSKCxO0+x
-         uKDQbvAFkZ244kVizFkVMVkurEyaPFV3EpiXww6XIQ8ej4F+yMK2tkRQ1GgeX6q84HlV
-         aESQ==
-X-Gm-Message-State: AOAM533CVFmOAbrv+4iZ8ALJZQuz1Sg38XcYhYmphykgWUF44HfIjC6B
-        03jYhe+Hf0MLUKa/QVMmjfhZUQ==
-X-Google-Smtp-Source: ABdhPJxsxHQlBRohzzSm76bZT7sTEprhydi/9GB5wvRdlH2i+bDzxpxAfq9c/mPY5TAyxnQ3K/18Hg==
-X-Received: by 2002:a9d:711d:: with SMTP id n29mr5752034otj.304.1632843530886;
-        Tue, 28 Sep 2021 08:38:50 -0700 (PDT)
+        bh=7jDiOTxX7jaxQpVKcdTHIgMq+jgTAr1Yd+3O5LrgMwU=;
+        b=ALluSOkPYYYrFr+BFYerJM70yLe0gliDnpMxa2Jny2BImbUD/RrfAnLNIHWqExSL4h
+         calSTLY6flhT9WeHJHkJJ8Iu2inTplDCqrux9Qkobgx9cGSluAFT1hkW5q54QV/r1iaL
+         BARsPwNPtp4xHoxeA2+KDLCI0tCkbVmKsmf4lqpl4mhhbk0mEKrs6vXfKu3oCz69EZT3
+         KFffdnHBhO4qJwm28kC/5Xcs0gPpmzx5zNKK2jB7JevkRAjdXPk/VuW25QCllYbYLj4X
+         5DCBUf9eKy7e8z+Ossi7r9798b3XCR5xPfHU3qRuEAbMOKMmM2rPMU+z/oekm0HYBgdi
+         4FKw==
+X-Gm-Message-State: AOAM530bupqeu9oL+sPclWgkrbkSF7GRTiT2OGx6IajzULcBvDynAtO5
+        8M0P2xQXFgElHoUOhydP+qDyOw==
+X-Google-Smtp-Source: ABdhPJxtuuraLtO422PIv+kxJ+gf970U0cto3rIHLv58MEm715ro8XN4qNx/zOYTxxiGCqMsloA6LA==
+X-Received: by 2002:a54:4199:: with SMTP id 25mr4181397oiy.108.1632843531969;
+        Tue, 28 Sep 2021 08:38:51 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
         by smtp.gmail.com with ESMTPSA id 18sm4753034otj.10.2021.09.28.08.38.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Sep 2021 08:38:50 -0700 (PDT)
+        Tue, 28 Sep 2021 08:38:51 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        linux-kernel@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        Konrad Dybcio <konrad.dybcio@somainline.org>
-Subject: Re: (subset) [PATCH] arm64: dts: qcom: sdm630-nile: Correct regulator label name
-Date:   Tue, 28 Sep 2021 10:38:47 -0500
-Message-Id: <163284350355.1592203.13124373993937139741.b4-ty@linaro.org>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Andy Gross <agross@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Stephen Boyd <swboyd@chromium.org>, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Nikita Travkin <nikita@trvn.ru>
+Subject: Re: [PATCH 1/3] arm64: dts: qcom: pm8916: Remove wrong reg-names for rtc@6000
+Date:   Tue, 28 Sep 2021 10:38:48 -0500
+Message-Id: <163284350355.1592203.14045868206050212695.b4-ty@linaro.org>
 X-Mailer: git-send-email 2.32.0
-In-Reply-To: <20210926072215.27517-1-shawn.guo@linaro.org>
-References: <20210926072215.27517-1-shawn.guo@linaro.org>
+In-Reply-To: <20210928112945.25310-1-stephan@gerhold.net>
+References: <20210928112945.25310-1-stephan@gerhold.net>
 MIME-Version: 1.0
 Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
@@ -68,16 +67,24 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 26 Sep 2021 15:22:15 +0800, Shawn Guo wrote:
-> 29.5V (29p5) is obviously wrong for regulator l4 and l5.  Correct them
-> to be 2.95V (2p95).  No functional change.
+On Tue, 28 Sep 2021 13:29:43 +0200, Stephan Gerhold wrote:
+> While removing the size from the "reg" properties in pm8916.dtsi,
+> commit bd6429e81010 ("ARM64: dts: qcom: Remove size elements from
+> pmic reg properties") mistakenly also removed the second register
+> address for the rtc@6000 device. That one did not represent the size
+> of the register region but actually the address of the second "alarm"
+> register region of the rtc@6000 device.
 > 
-> 
+> [...]
 
 Applied, thanks!
 
-[1/1] arm64: dts: qcom: sdm630-nile: Correct regulator label name
-      commit: c22441a7cbd014e2546329af89363b2a43cc8bf2
+[1/3] arm64: dts: qcom: pm8916: Remove wrong reg-names for rtc@6000
+      commit: 483de2b44cd3a168458f8f9ff237e78a434729bc
+[2/3] arm64: dts: qcom: pm8916: Add pm8941-misc extcon for USB detection
+      commit: f5d7bca55425c8611e6cfa3f236d1f56031920e8
+[3/3] arm64: dts: qcom: msm8916-longcheer-l8150: Use &pm8916_usbin extcon
+      commit: b30cad26d8030bddeb0ee2373b6d4c1440ffb1a3
 
 Best regards,
 -- 
