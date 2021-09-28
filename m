@@ -2,100 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4544441B1BA
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 16:09:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B309241B1EB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 16:20:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241248AbhI1OLa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Sep 2021 10:11:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47996 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241232AbhI1OLa (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Sep 2021 10:11:30 -0400
-Received: from mail-pl1-x630.google.com (mail-pl1-x630.google.com [IPv6:2607:f8b0:4864:20::630])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D5D3DC061746
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 07:09:50 -0700 (PDT)
-Received: by mail-pl1-x630.google.com with SMTP id t4so14332219plo.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 07:09:50 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=e6lM+hhK/m+urfAtZGkPcFyDFl9j9yUWbcgtPEkj/iQ=;
-        b=Dt9ouw+JdZulu+bRiOV4Lp9X3ScPrdsjO2Qv+L+u+V3rPvU7+03porVjdXfZyuZRxD
-         mCkJRt03j/D9QWSq7dmPtUGlFPtUrL6BuOOJLvcnmvZKJkL/n4J+Wi0zo/AetMs73FCI
-         6nKmBrPXY5m2RyWZAmpzCKKGCIbFd514ENjGCLux2lskkaIn3CGvA+/8renkxtYLHhUr
-         vMDWfnyhKF3BqIRqmWr/wIsrCExEbx9Y/mA09kVm0w4waduxzu4XG5xtArvjrn9A6pp1
-         T410f5BSXZ1IHT2CZrtrUj/pnil1ryDeLe4j6morrpm0cRCE7HkQX9j9tC8lCdTaijjj
-         KAFA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=e6lM+hhK/m+urfAtZGkPcFyDFl9j9yUWbcgtPEkj/iQ=;
-        b=C+2zQRPbgYabj8mWdn1+ogfdNhn3MxqFShcM64TksR57Y15Up8LqLwmkqV4PjIotu2
-         x5OnIYa/StFMF3u7M/3J37gQ2oCUI9RraaEIzR50HW2CFq0DIcLzVlfOKml+OPv0MM/r
-         DU5NChTgwtCPruhQ5glFs9c58OPwXNvxzib7a9IWY9zoc1zm8jws113oVDVHOcoO7pQW
-         9cVQXztWp1l4bKwCKX1hqcaLShKJ+nzFnTp4+0R92ImxJk9k8jQp10/75//7tx3LPLPH
-         6FLnkvqQfVtMBYreKnRQwP3H0Qe4UF/gRihEvBfCwhz/yZmLFuvGiyWobqgotUoktBKI
-         kaAg==
-X-Gm-Message-State: AOAM532EiuSmmLMW5FayliobvSrINGmOenjEmfD6AsjZtFa6b7rckEe/
-        eA/xvL/Q+glwuqcSbBLAs6rAMdV+A8xtuA==
-X-Google-Smtp-Source: ABdhPJz25zUnloDPoCMgJVlwXtuTN4jaKyfS/PLdPZwxMzx6ZmLttqESRJXv7/5UfNvMt/igoW30vw==
-X-Received: by 2002:a17:90a:154b:: with SMTP id y11mr202534pja.116.1632838190147;
-        Tue, 28 Sep 2021 07:09:50 -0700 (PDT)
-Received: from localhost.localdomain.name ([122.161.49.251])
-        by smtp.gmail.com with ESMTPSA id ch7sm2704578pjb.44.2021.09.28.07.09.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Sep 2021 07:09:49 -0700 (PDT)
-From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
-        vkoul@kernel.org, robh+dt@kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: [PATCH 2/2] arm64: dts: qcom: sa8155p-adp: Enable remoteproc capabilities
-Date:   Tue, 28 Sep 2021 19:39:29 +0530
-Message-Id: <20210928140929.2549459-3-bhupesh.sharma@linaro.org>
-X-Mailer: git-send-email 2.31.1
-In-Reply-To: <20210928140929.2549459-1-bhupesh.sharma@linaro.org>
-References: <20210928140929.2549459-1-bhupesh.sharma@linaro.org>
+        id S240908AbhI1OVu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Sep 2021 10:21:50 -0400
+Received: from mx22.baidu.com ([220.181.50.185]:48346 "EHLO baidu.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S233878AbhI1OVu (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 Sep 2021 10:21:50 -0400
+Received: from BJHW-Mail-Ex08.internal.baidu.com (unknown [10.127.64.18])
+        by Forcepoint Email with ESMTPS id 0CEA2FD94BFD96959CDC;
+        Tue, 28 Sep 2021 22:20:06 +0800 (CST)
+Received: from BJHW-MAIL-EX27.internal.baidu.com (10.127.64.42) by
+ BJHW-Mail-Ex08.internal.baidu.com (10.127.64.18) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
+ 15.1.2308.14; Tue, 28 Sep 2021 22:20:05 +0800
+Received: from LAPTOP-UKSR4ENP.internal.baidu.com (172.31.63.8) by
+ BJHW-MAIL-EX27.internal.baidu.com (10.127.64.42) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256_P256) id
+ 15.1.2308.14; Tue, 28 Sep 2021 22:20:04 +0800
+From:   Cai Huoqing <caihuoqing@baidu.com>
+To:     <caihuoqing@baidu.com>
+CC:     Linus Walleij <linus.walleij@linaro.org>,
+        Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        "Pengutronix Kernel Team" <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        "NXP Linux Team" <linux-imx@nxp.com>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        "Neil Armstrong" <narmstrong@baylibre.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-iio@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-amlogic@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-rockchip@lists.infradead.org>
+Subject: [PATCH v3 1/9] iio: adc: ab8500-gpadc: Make use of the helper function dev_err_probe()
+Date:   Tue, 28 Sep 2021 22:19:47 +0800
+Message-ID: <20210928141956.2148-1-caihuoqing@baidu.com>
+X-Mailer: git-send-email 2.17.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-Originating-IP: [172.31.63.8]
+X-ClientProxiedBy: BJHW-Mail-Ex13.internal.baidu.com (10.127.64.36) To
+ BJHW-MAIL-EX27.internal.baidu.com (10.127.64.42)
+X-Baidu-BdMsfe-DateCheck: 1_BJHW-Mail-Ex08_2021-09-28 22:20:06:085
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Enable two remoteprocs found on SA8155p ADP
-platform - 'audio and compute'. Also add firmware for them.
+When possible use dev_err_probe help to properly deal with the
+PROBE_DEFER error, the benefit is that DEFER issue will be logged
+in the devices_deferred debugfs file.
+Using dev_err_probe() can reduce code size, and the error value
+gets printed.
 
-Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Signed-off-by: Cai Huoqing <caihuoqing@baidu.com>
 ---
- arch/arm64/boot/dts/qcom/sa8155p-adp.dts | 10 ++++++++++
- 1 file changed, 10 insertions(+)
+v1->v2: Remove the separate line of PTR_ERR().
 
-diff --git a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-index 5ae2ddc65f7e..7b703a8e0cd7 100644
---- a/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-+++ b/arch/arm64/boot/dts/qcom/sa8155p-adp.dts
-@@ -307,6 +307,16 @@ &qupv3_id_1 {
- 	status = "okay";
- };
+ drivers/iio/adc/ab8500-gpadc.c | 8 +++-----
+ 1 file changed, 3 insertions(+), 5 deletions(-)
+
+diff --git a/drivers/iio/adc/ab8500-gpadc.c b/drivers/iio/adc/ab8500-gpadc.c
+index 7b5212ba5501..c58d0e2ae538 100644
+--- a/drivers/iio/adc/ab8500-gpadc.c
++++ b/drivers/iio/adc/ab8500-gpadc.c
+@@ -1146,11 +1146,9 @@ static int ab8500_gpadc_probe(struct platform_device *pdev)
  
-+&remoteproc_adsp {
-+	status = "okay";
-+	firmware-name = "qcom/sa8155p/adsp.mdt";
-+};
-+
-+&remoteproc_cdsp {
-+	status = "okay";
-+	firmware-name = "qcom/sa8155p/cdsp.mdt";
-+};
-+
- &uart2 {
- 	status = "okay";
- };
+ 	/* The VTVout LDO used to power the AB8500 GPADC */
+ 	gpadc->vddadc = devm_regulator_get(dev, "vddadc");
+-	if (IS_ERR(gpadc->vddadc)) {
+-		ret = PTR_ERR(gpadc->vddadc);
+-		dev_err(dev, "failed to get vddadc\n");
+-		return ret;
+-	}
++	if (IS_ERR(gpadc->vddadc))
++		return dev_err_probe(dev, PTR_ERR(gpadc->vddadc),
++				     "failed to get vddadc\n");
+ 
+ 	ret = regulator_enable(gpadc->vddadc);
+ 	if (ret) {
 -- 
-2.31.1
+2.25.1
 
