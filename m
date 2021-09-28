@@ -2,120 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B5D6A41B841
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 22:19:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1ACBC41B86F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 22:38:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242680AbhI1UVL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Sep 2021 16:21:11 -0400
-Received: from mslow1.mail.gandi.net ([217.70.178.240]:53509 "EHLO
-        mslow1.mail.gandi.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232756AbhI1UVK (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Sep 2021 16:21:10 -0400
-Received: from relay6-d.mail.gandi.net (unknown [217.70.183.198])
-        by mslow1.mail.gandi.net (Postfix) with ESMTP id 0AE38D2C64;
-        Tue, 28 Sep 2021 20:11:37 +0000 (UTC)
-Received: (Authenticated sender: thomas.perrot@bootlin.com)
-        by relay6-d.mail.gandi.net (Postfix) with ESMTPSA id A34F8C0002;
-        Tue, 28 Sep 2021 20:11:13 +0000 (UTC)
-Message-ID: <5e1c5979b7fd35aa5715ed9b25ca3a59b7b259f4.camel@bootlin.com>
-Subject: Re: [PATCH] bus: mhi: pci_generic: increase timeout value for
- operations to 24000ms
-From:   Thomas Perrot <thomas.perrot@bootlin.com>
+        id S242629AbhI1UkJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Sep 2021 16:40:09 -0400
+Received: from mail.z3ntu.xyz ([128.199.32.197]:52000 "EHLO mail.z3ntu.xyz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S242016AbhI1UkI (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 Sep 2021 16:40:08 -0400
+Received: from localhost.localdomain (ip-213-127-63-121.ip.prioritytelecom.net [213.127.63.121])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 7B925C8FD4;
+        Tue, 28 Sep 2021 20:38:27 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1632861507; bh=AgjIuOx9dWqDATQ37NMIqqkUWI6WO/V5tMSEfStAkC0=;
+        h=From:To:Cc:Subject:Date;
+        b=aI5bDofyAayklefVb98SUcMvK4cwhdHvRxilAiqj/yFCxqqJe7Ufv10qANNRDHdHH
+         W0C0bOlsdKSNcwG6EU5jw/bUsOIHWIjt09LB1wCmnD5ohaiGSRp4RM7iGsmMZL6Mnd
+         I1cs9vpsEklmkUE9kGr7l48/rweTzlkdymRP8Py8=
+From:   Luca Weiss <luca@z3ntu.xyz>
 To:     linux-arm-msm@vger.kernel.org
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        hemantk@codeaurora.org, loic.poulain@linaro.org,
-        stable@vger.kernel.org
-Date:   Tue, 28 Sep 2021 22:11:12 +0200
-In-Reply-To: <20210816042206.GA3637@thinkpad>
-References: <20210805140231.268273-1-thomas.perrot@bootlin.com>
-         <20210816042206.GA3637@thinkpad>
-Content-Type: multipart/signed; micalg="pgp-sha256";
-        protocol="application/pgp-signature"; boundary="=-+0L0MOBcfzP8BlPB1d/S"
-User-Agent: Evolution 3.38.4 (3.38.4-1.fc33) 
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, Luca Weiss <luca@z3ntu.xyz>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <sboyd@codeaurora.org>,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 1/2] dt-bindings: arm: qcom: rename vendor of apq8026-lenok
+Date:   Tue, 28 Sep 2021 22:38:14 +0200
+Message-Id: <20210928203815.77175-1-luca@z3ntu.xyz>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+In order to avoid having prefixes for multiple internal divisions of LG
+use the "lg" prefix instead of "lge".
 
---=-+0L0MOBcfzP8BlPB1d/S
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Fixes: 21f3cbf693b0 ("dt-bindings: arm: qcom: Document APQ8026 SoC binding")
+Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+---
+ Documentation/devicetree/bindings/arm/qcom.yaml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-Hello Manivannan,
-
-I just saw that this patch seems not yet been merged, is there a issue
-with it?
-
-Best regards,
-Thomas
-
-On Mon, 2021-08-16 at 09:52 +0530, Manivannan Sadhasivam wrote:
-> On Thu, Aug 05, 2021 at 04:02:31PM +0200, Thomas Perrot wrote:
-> > Otherwise, the waiting time was too short to use a Sierra Wireless
-> > EM919X
-> > connected to an i.MX6 through the PCIe bus.
-> >=20
-> > Signed-off-by: Thomas Perrot <thomas.perrot@bootlin.com>
->=20
-> Reviewed-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
->=20
-> Thanks,
-> Mani
->=20
-> > ---
-> > =C2=A0drivers/bus/mhi/pci_generic.c | 2 +-
-> > =C2=A01 file changed, 1 insertion(+), 1 deletion(-)
-> >=20
-> > diff --git a/drivers/bus/mhi/pci_generic.c
-> > b/drivers/bus/mhi/pci_generic.c
-> > index 4dd1077354af..e08ed6e5031b 100644
-> > --- a/drivers/bus/mhi/pci_generic.c
-> > +++ b/drivers/bus/mhi/pci_generic.c
-> > @@ -248,7 +248,7 @@ static struct mhi_event_config
-> > modem_qcom_v1_mhi_events[] =3D {
-> > =C2=A0
-> > =C2=A0static const struct mhi_controller_config
-> > modem_qcom_v1_mhiv_config =3D {
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0.max_channels =3D 128,
-> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0.timeout_ms =3D 8000,
-> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0.timeout_ms =3D 24000,
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0.num_channels =3D ARRAY=
-_SIZE(modem_qcom_v1_mhi_channels),
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0.ch_cfg =3D modem_qcom_=
-v1_mhi_channels,
-> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0.num_events =3D ARRAY_S=
-IZE(modem_qcom_v1_mhi_events),
-> > --=20
-> > 2.31.1
-> >=20
-
---=20
-Thomas Perrot, Bootlin
-Embedded Linux and kernel engineering
-https://bootlin.com
-
-
---=-+0L0MOBcfzP8BlPB1d/S
-Content-Type: application/pgp-signature; name="signature.asc"
-Content-Description: This is a digitally signed message part
-Content-Transfer-Encoding: 7bit
-
------BEGIN PGP SIGNATURE-----
-
-iQGzBAABCAAdFiEEh0B3xqajCiMDqBIhn8ALBXH+Cu0FAmFTduAACgkQn8ALBXH+
-Cu33nQwAs8zG3VKh9pWXs3sGavgBzl6meKlz7wh6FZKl4wpbOlpaBhtt7H9wHqyt
-9vk+xrgkljYqTM7CEAm15LLUPjh0jKT1IJ4dkqozWGZhxq5O4FhguBWf/YpdROd3
-lXDbh21z7A92L/yQR0IZCrVDDzYQsTw+Fh9h8IBC2dsCWgjD2DhHuGvWrQxn4KP7
-0v7Ic+PIHZXgO4/8wppWi2DYYCJPD5rq1oL2LbI9/IUF9E/vmDfzGXA4FfLsX+V8
-kKXv5kNI5MkZDzpzftuSvDWAZ28RTdcjTiYQQuoK8P7wOUKtIN67n79W0L65DteK
-OyVZmT6O/v6t+SIdYlzs45LYVxfjfIfOJ6q2SDRk1pcWWvTXaoOw6iTiUMZkdPBp
-1OZHi1E5wGEiwd6ZhXJSe15sU+RLb7FcSPO83SjA50xfEKDSnM9O7oY3y4fAaFfN
-RAHerf7tWPMQY6hbSnnt6CxM6wnwDm9VVNEb4LyPWwke7spTa+EauMYJZJf3oZ9I
-la4m5o5q
-=G2lD
------END PGP SIGNATURE-----
-
---=-+0L0MOBcfzP8BlPB1d/S--
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index a2e679112737..06da9ab5c0b6 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -96,7 +96,7 @@ properties:
+ 
+       - items:
+           - enum:
+-              - lge,lenok
++              - lg,lenok
+           - const: qcom,apq8026
+ 
+       - items:
+-- 
+2.33.0
 
