@@ -2,93 +2,85 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D06841AEFC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 14:28:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9CCE741AF13
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 14:30:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240627AbhI1M37 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Sep 2021 08:29:59 -0400
-Received: from mail-ot1-f43.google.com ([209.85.210.43]:35648 "EHLO
-        mail-ot1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240610AbhI1M37 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Sep 2021 08:29:59 -0400
-Received: by mail-ot1-f43.google.com with SMTP id 77-20020a9d0ed3000000b00546e10e6699so28734554otj.2;
-        Tue, 28 Sep 2021 05:28:20 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=HzAZ/T3R+PH8bgPxuKvTGOSJkQIkRR+vx63M18LOtQc=;
-        b=IXpHqqL02P5+YpTfhoxtVfZF3hy2D41RiZCsiVvkdQ8KvucyO/2twdUjMBIxp4kkSO
-         3hCe7M3yMOEbjqYCWoYv8niQ2Glg2a6nua8ZGTvOPhiptYTQ2Mi7pb2cVq4PIxZ13SZU
-         64g1uQrcn8Xl2pPwqd8nPLGrBcdMdRYlTrPrRkZPanlkaCtsIu2EXSsqsFkFGqdse02o
-         l4WTAeNBbfsrU7Zbh+JwytthnQJt7xkV7i/cs+DqHY+gyAy2Hib88Jg4nsTnocBQHrPd
-         ALmkgJFPFUsEFUSfQJ7rMnsVbFFS7ZdCAnWYZw+VBFbIL8/KPX7PijR3Qm8qP+ZaC4gJ
-         mktg==
-X-Gm-Message-State: AOAM530jD+k0GDRc9+UitkjjuAEWaHwnNezny0g4Xej8z1U0fHXh7xZJ
-        O5J8zZgiQ/aevYbTPcXSlA==
-X-Google-Smtp-Source: ABdhPJxVIrmxKPlTwA7wEdAtl66dHAN0QACL6JJR7dP8LaFI8FqpE7dEQViPIRV461RJgTN5q8H47A==
-X-Received: by 2002:a9d:20aa:: with SMTP id x39mr4788921ota.292.1632832099904;
-        Tue, 28 Sep 2021 05:28:19 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id y12sm4507502otu.11.2021.09.28.05.28.18
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Sep 2021 05:28:19 -0700 (PDT)
-Received: (nullmailer pid 963813 invoked by uid 1000);
-        Tue, 28 Sep 2021 12:28:18 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        id S240560AbhI1Mc3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Sep 2021 08:32:29 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34200 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S240540AbhI1Mc3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 Sep 2021 08:32:29 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 75E2E61058;
+        Tue, 28 Sep 2021 12:30:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=linuxfoundation.org;
+        s=korg; t=1632832249;
+        bh=mtSfHm8rKZZDIv110IBwJuxSeqCXj4md2IThNZnXe9c=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=jyTR57Xle6lTAoHy2sBUMN/HVXZN1O4L6YgU3KqqWVrnpZ+D+S++HIfAJhZAeXhxm
+         5RRZ0IeQSJECjtr04A2ETSlFuY5awhlk4SS65bURbIbLKaUeZJxCgNIlgD9nNUYTKu
+         wjHZXA2MRKMxMd9R/2ZVfwa5RB07jifgAtK9VWCc=
+Date:   Tue, 28 Sep 2021 14:30:47 +0200
+From:   Greg Kroah-Hartman <gregkh@linuxfoundation.org>
+To:     Saravana Kannan <saravanak@google.com>
+Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
         Frank Rowand <frowand.list@gmail.com>,
-        devicetree@vger.kernel.org
-In-Reply-To: <20210928044546.4111223-1-bjorn.andersson@linaro.org>
-References: <20210928044546.4111223-1-bjorn.andersson@linaro.org>
-Subject: Re: [PATCH 1/3] dt-bindings: soc: smem: Make indirection optional
-Date:   Tue, 28 Sep 2021 07:28:18 -0500
-Message-Id: <1632832098.523897.963812.nullmailer@robh.at.kernel.org>
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Stephen Boyd <sboyd@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Subject: Re: [PATCH] Revert "of: property: fw_devlink: Add support for
+ remote-endpoint"
+Message-ID: <YVMK90kRtkBxptlR@kroah.com>
+References: <20210927204830.4018624-1-dmitry.baryshkov@linaro.org>
+ <CAGETcx-3Y3rOSoXu3SbDa6BP_jcT8uSQA+MV55QCY4b0Oe7L-A@mail.gmail.com>
+ <11fe1793-1455-ae44-b213-9afe47dfa370@linaro.org>
+ <CAGETcx_HRmvDKuXQEJkMk7zBpedLGkQmvJ24tAWpCHFf4DPX_w@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAGETcx_HRmvDKuXQEJkMk7zBpedLGkQmvJ24tAWpCHFf4DPX_w@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 27 Sep 2021 21:45:44 -0700, Bjorn Andersson wrote:
-> In the olden days the Qualcomm shared memory (SMEM) region consisted of
-> multiple chunks of memory, so SMEM was described as a standalone node
-> with references to its various memory regions.
+On Mon, Sep 27, 2021 at 06:13:12PM -0700, Saravana Kannan wrote:
+> On Mon, Sep 27, 2021 at 5:56 PM Dmitry Baryshkov
+> > root@qcom-armv8a:~# ls -l /sys/bus/platform/devices/88e9000.phy/
+> > lrwxrwxrwx    1 root     root             0 Aug  4 15:13
+> > consumer:platform:a600000.usb ->
+> > ../../../virtual/devlink/platform:88e9000.phy--platform:a600000.usb
+> > lrwxrwxrwx    1 root     root             0 Aug  4 15:13
+> > consumer:platform:af00000.clock-controller ->
+> > ../../../virtual/devlink/platform:88e9000.phy--platform:af00000.clock-controller
+> > -rw-r--r--    1 root     root          4096 Aug  4 15:13 driver_override
+> > -r--r--r--    1 root     root          4096 Aug  4 15:13 modalias
+> > lrwxrwxrwx    1 root     root             0 Aug  4 15:13 of_node ->
+> > ../../../../firmware/devicetree/base/soc@0/phy@88e9000
+> > drwxr-xr-x    2 root     root             0 Aug  4 15:13 power
+> > lrwxrwxrwx    1 root     root             0 Aug  4 15:10 subsystem ->
+> > ../../../../bus/platform
+> > lrwxrwxrwx    1 root     root             0 Aug  4 15:13
+> > supplier:platform:100000.clock-controller ->
+> > ../../../virtual/devlink/platform:100000.clock-controller--platform:88e9000.phy
+> > lrwxrwxrwx    1 root     root             0 Aug  4 15:13
+> > supplier:platform:18200000.rsc:clock-controller ->
+> > ../../../virtual/devlink/platform:18200000.rsc:clock-controller--platform:88e9000.phy
+> > lrwxrwxrwx    1 root     root             0 Aug  4 15:13
+> > supplier:platform:18200000.rsc:pm8150-rpmh-regulators ->
+> > ../../../virtual/devlink/platform:18200000.rsc:pm8150-rpmh-regulators--platform:88e9000.phy
+> > -rw-r--r--    1 root     root          4096 Aug  4 15:10 uevent
+> > -r--r--r--    1 root     root          4096 Aug  4 15:13
+> > waiting_for_supplier
+> >
+> > Thus it is not possible to spot this device link without
+> > CONFIG_DEBUG_DRIVER=y (or any similar debugging technique).
 > 
-> But practically all modern Qualcomm platforms has a single reserved memory
-> region used for SMEM. So rather than having to use two nodes to describe
-> the one SMEM region, update the binding to allow the reserved-memory
-> region alone to describe SMEM.
-> 
-> The olden format is preserved as valid, as this is widely used already.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  .../bindings/soc/qcom/qcom,smem.yaml          | 34 ++++++++++++++++---
->  1 file changed, 30 insertions(+), 4 deletions(-)
-> 
+> I sent out some patches to make this easier. But doesn't look like
+> it'll land in 5.15.
+> https://lore.kernel.org/lkml/20210915172808.620546-1-saravanak@google.com/
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+I have now queued these up to make it into 5.15-final, this thread has
+convinced me :)
 
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-Documentation/devicetree/bindings/soc/qcom/qcom,smem.example.dt.yaml:0:0: /example-1/soc/sram@fc428000: failed to match any schema with compatible: ['qcom,rpm-msg-ram']
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/1533702
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
-
+greg k-h
