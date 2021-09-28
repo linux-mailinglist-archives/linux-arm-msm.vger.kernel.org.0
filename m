@@ -2,200 +2,156 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9399D41A898
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 08:05:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0DD3541A940
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 09:04:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239382AbhI1GHQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Sep 2021 02:07:16 -0400
-Received: from mailout1.samsung.com ([203.254.224.24]:17955 "EHLO
-        mailout1.samsung.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238897AbhI1GGB (ORCPT
+        id S237706AbhI1HGO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Sep 2021 03:06:14 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:22460 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233681AbhI1HGN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Sep 2021 02:06:01 -0400
-Received: from epcas5p4.samsung.com (unknown [182.195.41.42])
-        by mailout1.samsung.com (KnoxPortal) with ESMTP id 20210928060421epoutp013f2c474900bc9626f83ce7266dfff182~o5zCreNZE0275002750epoutp01w
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 06:04:21 +0000 (GMT)
-DKIM-Filter: OpenDKIM Filter v2.11.0 mailout1.samsung.com 20210928060421epoutp013f2c474900bc9626f83ce7266dfff182~o5zCreNZE0275002750epoutp01w
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=samsung.com;
-        s=mail20170921; t=1632809061;
-        bh=8sweX3DIsALuKLz+wzpzAeQefZMloVVd1YMoHWSAA8Y=;
-        h=From:To:Cc:In-Reply-To:Subject:Date:References:From;
-        b=fBL3jYiO7vESXFereg+QX0cweivPPROXJhMJcn/yG7WIYDoLZXUG5KVvWUvSqqcMF
-         Gyd78xGe9x2oRz3WHiPmiJSr+u1O93Ghr9c0IHG17ZNSA7aZ16IcJyq9op+79yBCj7
-         XYcBdha15P5f64z009ag4Xsk1iGpbSKInT539FSQ=
-Received: from epsnrtp3.localdomain (unknown [182.195.42.164]) by
-        epcas5p4.samsung.com (KnoxPortal) with ESMTP id
-        20210928060420epcas5p4d953816bbbf6290317681d222b63bd12~o5zB-D7FF3135731357epcas5p4I;
-        Tue, 28 Sep 2021 06:04:20 +0000 (GMT)
-Received: from epsmges5p2new.samsung.com (unknown [182.195.38.175]) by
-        epsnrtp3.localdomain (Postfix) with ESMTP id 4HJTV81cpvz4x9Q2; Tue, 28 Sep
-        2021 06:04:16 +0000 (GMT)
-Received: from epcas5p1.samsung.com ( [182.195.41.39]) by
-        epsmges5p2new.samsung.com (Symantec Messaging Gateway) with SMTP id
-        9C.40.10367.D50B2516; Tue, 28 Sep 2021 15:04:13 +0900 (KST)
-Received: from epsmtrp1.samsung.com (unknown [182.195.40.13]) by
-        epcas5p2.samsung.com (KnoxPortal) with ESMTPA id
-        20210928060357epcas5p22ff1cce62e551d446377dd6443bc316f~o5ysQMunA1416714167epcas5p26;
-        Tue, 28 Sep 2021 06:03:57 +0000 (GMT)
-Received: from epsmgms1p2.samsung.com (unknown [182.195.42.42]) by
-        epsmtrp1.samsung.com (KnoxPortal) with ESMTP id
-        20210928060357epsmtrp10068b6bdbc4e1720793fed78b6f4f67b~o5ysPP3ie1504215042epsmtrp1I;
-        Tue, 28 Sep 2021 06:03:57 +0000 (GMT)
-X-AuditID: b6c32a4a-b2dff7000000287f-dd-6152b05d71b2
-Received: from epsmtip2.samsung.com ( [182.195.34.31]) by
-        epsmgms1p2.samsung.com (Symantec Messaging Gateway) with SMTP id
-        C1.E4.08750.C40B2516; Tue, 28 Sep 2021 15:03:56 +0900 (KST)
-Received: from alimakhtar03 (unknown [107.122.12.5]) by epsmtip2.samsung.com
-        (KnoxPortal) with ESMTPA id
-        20210928060355epsmtip26014d70cf40fa59c43f4a4193a9ec5fb~o5yqbA3nW0054400544epsmtip2j;
-        Tue, 28 Sep 2021 06:03:54 +0000 (GMT)
-From:   "Alim Akhtar" <alim.akhtar@samsung.com>
-To:     "'Bao D. Nguyen'" <nguyenb@codeaurora.org>, <cang@codeaurora.org>,
-        <asutoshd@codeaurora.org>, <martin.petersen@oracle.com>,
-        <linux-scsi@vger.kernel.org>
-Cc:     <linux-arm-msm@vger.kernel.org>,
-        "'Andy Gross'" <agross@kernel.org>,
-        "'Bjorn Andersson'" <bjorn.andersson@linaro.org>,
-        "'Avri Altman'" <avri.altman@wdc.com>,
-        "'James E.J. Bottomley'" <jejb@linux.ibm.com>,
-        "'open list'" <linux-kernel@vger.kernel.org>
-In-Reply-To: <94cda1143d3332c3284a09b88139e358eab5a233.1632171047.git.nguyenb@codeaurora.org>
-Subject: RE: [PATCH v1 2/2] scsi: ufs-qcom: enter and exit hibern8 during
- clock scaling
-Date:   Tue, 28 Sep 2021 11:33:53 +0530
-Message-ID: <000801d7b42e$9f69df10$de3d9d30$@samsung.com>
+        Tue, 28 Sep 2021 03:06:13 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1632812674; h=Content-Type: MIME-Version: Message-ID:
+ In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
+ bh=mcC+NI9lbMYVHDFKxEvKMLG3JdbT8e+is/T3jV6QeT8=; b=A2R+BU0cR0TLSUXK0ANF7/Z4A8j5hFZHRSLvQhqBibBlKPz4uaAt+1XJ1N/DjKGSH/EMsHco
+ nIWGezM/Jv965tFHbbGH7LZPX+2IXzGFWesomRGuVEPd/XdiLiqqgnsMWUMhW0uSyQf5k4T3
+ i5ab+as4udcioD7mtqZCgIM8o4o=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 6152be4b605ecf100b924372 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Sep 2021 07:03:39
+ GMT
+Sender: kvalo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 30C25C4360C; Tue, 28 Sep 2021 07:03:39 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from tykki (tynnyri.adurom.net [51.15.11.48])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kvalo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9DA53C4338F;
+        Tue, 28 Sep 2021 07:03:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 9DA53C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Kalle Valo <kvalo@codeaurora.org>
+To:     Arnd Bergmann <arnd@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Alex Elder <elder@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Maxime Ripard <mripard@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        iommu@lists.linux-foundation.org, linux-media@vger.kernel.org,
+        linux-mmc@vger.kernel.org, netdev@vger.kernel.org,
+        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        linux-sunxi@lists.linux.dev
+Subject: Re: [PATCH] [RFC] qcom_scm: hide Kconfig symbol
+References: <20210927152412.2900928-1-arnd@kernel.org>
+Date:   Tue, 28 Sep 2021 10:03:25 +0300
+In-Reply-To: <20210927152412.2900928-1-arnd@kernel.org> (Arnd Bergmann's
+        message of "Mon, 27 Sep 2021 17:22:13 +0200")
+Message-ID: <87k0j1qj0i.fsf@codeaurora.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-Thread-Index: AQFSrXMYWf6xZll5STjad3GlX/AECgF7MZHvAVJql3KsrJU7oA==
-Content-Language: en-us
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFtrJJsWRmVeSWpSXmKPExsWy7bCmum7shqBEg1sPeC3OPf7NYrG37QS7
-        xcufV9ksTu9/x2Lxaf0yVotFN7YxWUzcf5bd4vKuOWwW3dd3sFksP/6PyeJj12xGB26Py329
-        TB6bVnWyedy5tofNY8KiA4weH5/eYvH4vEnOo/1AN1MAe1S2TUZqYkpqkUJqXnJ+SmZeuq2S
-        d3C8c7ypmYGhrqGlhbmSQl5ibqqtkotPgK5bZg7QkUoKZYk5pUChgMTiYiV9O5ui/NKSVIWM
-        /OISW6XUgpScApMCveLE3OLSvHS9vNQSK0MDAyNToMKE7IwN9/uYC7qEK859UWxgfMrfxcjJ
-        ISFgIvFlyke2LkYuDiGB3YwSF2Y9YYFwPjFKfLrVxA7hfGaUaLgzix2mpXN5JytEYhejxMZp
-        K5hAEkICLxkljrwSALHZBHQldixuA5srIrCAUaLzwjmwDmaBZiaJV8c+gY3iFIiVeDv9EguI
-        LSwQKfH73nawOIuAqsSiHf+YQWxeAUuJ+dt+skLYghInZz4Bq2cWkJfY/nYOM8RJChI/ny4D
-        qxERcJLYN+cAVI24xMujR8B+kBA4wSExfcoLqAYXiUOHp7JA2MISr45vgfpNSuJlfxuQzQFk
-        Z0v07DKGCNdILJ13DKrcXuLAlTksICXMApoS63fpQ4RlJaaeWscEsZZPovf3EyaIOK/Ejnkw
-        tqpE87urUGOkJSZ2d7NOYFSaheSzWUg+m4Xkg1kI2xYwsqxilEwtKM5NTy02LTDKSy2HR3hy
-        fu4mRnAa1vLawfjwwQe9Q4xMHIyHGCU4mJVEeINZ/BOFeFMSK6tSi/Lji0pzUosPMZoCg3si
-        s5Rocj4wE+SVxBuaWBqYmJmZmVgamxkqifN+fG2ZKCSQnliSmp2aWpBaBNPHxMEp1cDEkmSx
-        tZ9x27zI7I+2swV3qCx91VLWPverzv/umZ77jcR/CskmnuSecNh1YvuKl3F2/T2Hn3xp+iG1
-        a89Wc58pyzkEn/4RPbnp2rM57Lc+PVh2Tco/5SerXFVknvPfHefWpz9MW9/97o7H0r5NacXR
-        /+vKTt/6x24i6vrurfDDXf+2fcv643o4KTTqssqO40mF3+euOGuZtdHjwCVbRiXBKcunGc7w
-        SdwcZ35jk2FA4cro2hkmL22eP7bK/nM7Y3uPBO/M+V9uHPq4U/SBcd8Wx+u+fc4Ti/aJZG6/
-        qZF0isnu/KayBVu/OE09mvvbgvvdMoH9k7TXvtMx5jI1XuAwYbp1qMAxxvsTbYsuaG2T1lZi
-        Kc5INNRiLipOBADBwVfkTAQAAA==
-X-Brightmail-Tracker: H4sIAAAAAAAAA+NgFlrIIsWRmVeSWpSXmKPExsWy7bCSvK7PhqBEg81tZhbnHv9msdjbdoLd
-        4uXPq2wWp/e/Y7H4tH4Zq8WiG9uYLCbuP8tucXnXHDaL7us72CyWH//HZPGxazajA7fH5b5e
-        Jo9NqzrZPO5c28PmMWHRAUaPj09vsXh83iTn0X6gmymAPYrLJiU1J7MstUjfLoErY8P9PuaC
-        LuGKc18UGxif8ncxcnJICJhIdC7vZO1i5OIQEtjBKHH33DpGiIS0xPWNE9ghbGGJlf+es0MU
-        PWeUWPnmEDNIgk1AV2LH4jY2kISIwBJGiUfrLzOBOMwC7UwSvXeeMkG03GGUeDyjGWwWp0Cs
-        xNvpl1hAbGGBcImG+VPB9rEIqEos2vEPbCyvgKXE/G0/WSFsQYmTM58A1XMATdWTaNsIVs4s
-        IC+x/e0cZojzFCR+Pl0GVi4i4CSxb84BFogacYmXR4+wT2AUnoVk0iyESbOQTJqFpGMBI8sq
-        RsnUguLc9NxiwwKjvNRyveLE3OLSvHS95PzcTYzgWNTS2sG4Z9UHvUOMTByMhxglOJiVRHiD
-        WfwThXhTEiurUovy44tKc1KLDzFKc7AoifNe6DoZLySQnliSmp2aWpBaBJNl4uCUamDK9/rc
-        vcyHY+PcR/tmyqz0M/a9Zemc1Ba+6MqEfRvf5ur8PKE7py8/eO1eCfeuQ584vcQXPrfqvbGX
-        javuTtqjXW1hR3ZWq9xe0Rq8Myms68TZ4P0R8iHbLXZOL/7R0r/kjvJ7zrNHxKtz7HcvlQu0
-        mr/i6pfynBrWORM27g3Y2P75CevjT1l54d/frr430+3u/+tmyxhrbrXMv/Hw0B3n9MPyqnKs
-        55ztHrJ2mMm/mVDqW5O22CDeduPZuUtXVM9iYf6ysTfL50Xbx/7ITRI9v7526D/9HSRUy9wl
-        HbPT9PKqyGstW654XnJ2397tI8H9OsbsHs90gZW5T3MUT+Tc/KV+x9xc7nTsDM5zew53KbEU
-        ZyQaajEXFScCAPCL7b80AwAA
-X-CMS-MailID: 20210928060357epcas5p22ff1cce62e551d446377dd6443bc316f
-X-Msg-Generator: CA
-Content-Type: text/plain; charset="utf-8"
-X-Sendblock-Type: REQ_APPROVE
-CMS-TYPE: 105P
-DLP-Filter: Pass
-X-CFilter-Loop: Reflected
-X-CMS-RootMailID: 20210920210821epcas5p233e0025318135ae97b5f87eb83391b4a
-References: <cover.1632171047.git.nguyenb@codeaurora.org>
-        <CGME20210920210821epcas5p233e0025318135ae97b5f87eb83391b4a@epcas5p2.samsung.com>
-        <94cda1143d3332c3284a09b88139e358eab5a233.1632171047.git.nguyenb@codeaurora.org>
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello,
+Arnd Bergmann <arnd@kernel.org> writes:
 
->-----Original Message-----
->From: nguyenb=codeaurora.org@mg.codeaurora.org
->[mailto:nguyenb=codeaurora.org@mg.codeaurora.org] On Behalf Of Bao D.
->Nguyen
->Sent: Tuesday, September 21, 2021 2:38 AM
->To: cang@codeaurora.org; asutoshd@codeaurora.org;
->martin.petersen@oracle.com; linux-scsi@vger.kernel.org
->Cc: linux-arm-msm@vger.kernel.org; Bao D . Nguyen
-><nguyenb@codeaurora.org>; Andy Gross <agross@kernel.org>; Bjorn Andersson
-><bjorn.andersson@linaro.org>; Alim Akhtar <alim.akhtar@samsung.com>; Avri
->Altman <avri.altman@wdc.com>; James E.J. Bottomley <jejb@linux.ibm.com>;
->open list <linux-kernel@vger.kernel.org>
->Subject: [PATCH v1 2/2] scsi: ufs-qcom: enter and exit hibern8 during clock
-scaling
+> From: Arnd Bergmann <arnd@arndb.de>
 >
->From: Asutosh Das <asutoshd@codeaurora.org>
+> Now that SCM can be a loadable module, we have to add another
+> dependency to avoid link failures when ipa or adreno-gpu are
+> built-in:
 >
->Qualcomm controller needs to be in hibern8 before scaling clocks.
->This change puts the controller in hibern8 state before scaling and brings
-it out
->after scaling of clocks.
+> aarch64-linux-ld: drivers/net/ipa/ipa_main.o: in function `ipa_probe':
+> ipa_main.c:(.text+0xfc4): undefined reference to `qcom_scm_is_available'
 >
->Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
->Signed-off-by: Bao D. Nguyen <nguyenb@codeaurora.org>
->---
+> ld.lld: error: undefined symbol: qcom_scm_is_available
+>>>> referenced by adreno_gpu.c
+>>>>               gpu/drm/msm/adreno/adreno_gpu.o:(adreno_zap_shader_load)
+>>>> in archive drivers/built-in.a
+>
+> This can happen when CONFIG_ARCH_QCOM is disabled and we don't select
+> QCOM_MDT_LOADER, but some other module selects QCOM_SCM. Ideally we'd
+> use a similar dependency here to what we have for QCOM_RPROC_COMMON,
+> but that causes dependency loops from other things selecting QCOM_SCM.
+>
+> This appears to be an endless problem, so try something different this
+> time:
+>
+>  - CONFIG_QCOM_SCM becomes a hidden symbol that nothing 'depends on'
+>    but that is simply selected by all of its users
+>
+>  - All the stubs in include/linux/qcom_scm.h can go away
+>
+>  - arm-smccc.h needs to provide a stub for __arm_smccc_smc() to
+>    allow compile-testing QCOM_SCM on all architectures.
+>
+>  - To avoid a circular dependency chain involving RESET_CONTROLLER
+>    and PINCTRL_SUNXI, change the 'depends on RESET_CONTROLLER' in
+>    the latter one to 'select'.
+>
+> The last bit is rather annoying, as drivers should generally never
+> 'select' another subsystem, and about half the users of the reset
+> controller interface do this anyway.
+>
+> Nevertheless, this version seems to pass all my randconfig tests
+> and is more robust than any of the prior versions.
+>
+> Comments?
+>
+> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
 
-Reviewed-by: Alim Akhtar <alim.akhtar@samsung.com>
+[...]
 
-> drivers/scsi/ufs/ufs-qcom.c | 12 +++++++++++-
-> 1 file changed, 11 insertions(+), 1 deletion(-)
->
->diff --git a/drivers/scsi/ufs/ufs-qcom.c b/drivers/scsi/ufs/ufs-qcom.c
-index
->92d4c61..92f5bb4 100644
->--- a/drivers/scsi/ufs/ufs-qcom.c
->+++ b/drivers/scsi/ufs/ufs-qcom.c
->@@ -1212,24 +1212,34 @@ static int ufs_qcom_clk_scale_notify(struct ufs_hba
->*hba,
-> 	int err = 0;
->
-> 	if (status == PRE_CHANGE) {
->+		err = ufshcd_uic_hibern8_enter(hba);
->+		if (err)
->+			return err;
-> 		if (scale_up)
-> 			err = ufs_qcom_clk_scale_up_pre_change(hba);
-> 		else
-> 			err = ufs_qcom_clk_scale_down_pre_change(hba);
->+		if (err)
->+			ufshcd_uic_hibern8_exit(hba);
->+
-> 	} else {
-> 		if (scale_up)
-> 			err = ufs_qcom_clk_scale_up_post_change(hba);
-> 		else
-> 			err = ufs_qcom_clk_scale_down_post_change(hba);
->
->-		if (err || !dev_req_params)
->+
->+		if (err || !dev_req_params) {
->+			ufshcd_uic_hibern8_exit(hba);
-> 			goto out;
->+		}
->
-> 		ufs_qcom_cfg_timers(hba,
-> 				    dev_req_params->gear_rx,
-> 				    dev_req_params->pwr_rx,
-> 				    dev_req_params->hs_rate,
-> 				    false);
->+		ufshcd_uic_hibern8_exit(hba);
-> 	}
->
-> out:
->--
->The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a
->Linux Foundation Collaborative Project
+> diff --git a/drivers/net/wireless/ath/ath10k/Kconfig b/drivers/net/wireless/ath/ath10k/Kconfig
+> index 741289e385d5..ca007b800f75 100644
+> --- a/drivers/net/wireless/ath/ath10k/Kconfig
+> +++ b/drivers/net/wireless/ath/ath10k/Kconfig
+> @@ -44,7 +44,7 @@ config ATH10K_SNOC
+>  	tristate "Qualcomm ath10k SNOC support"
+>  	depends on ATH10K
+>  	depends on ARCH_QCOM || COMPILE_TEST
+> -	depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
+> +	select QCOM_SCM
+>  	select QCOM_QMI_HELPERS
+>  	help
+>  	  This module adds support for integrated WCN3990 chip connected
 
+I assume I can continue to build test ATH10K_SNOC with x86 as before?
+That's important for me. If yes, then:
 
+Acked-by: Kalle Valo <kvalo@codeaurora.org>
+
+-- 
+https://patchwork.kernel.org/project/linux-wireless/list/
+
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
