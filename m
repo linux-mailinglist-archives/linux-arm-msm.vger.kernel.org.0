@@ -2,37 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B651541B4EC
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 19:21:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0416341B4F2
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 19:21:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242004AbhI1RXS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Sep 2021 13:23:18 -0400
-Received: from mo4-p02-ob.smtp.rzone.de ([85.215.255.80]:32115 "EHLO
+        id S241952AbhI1RXU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Sep 2021 13:23:20 -0400
+Received: from mo4-p02-ob.smtp.rzone.de ([85.215.255.81]:27835 "EHLO
         mo4-p02-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241944AbhI1RXS (ORCPT
+        with ESMTP id S241999AbhI1RXS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Tue, 28 Sep 2021 13:23:18 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1632849689;
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1632849690;
     s=strato-dkim-0002; d=gerhold.net;
     h=References:In-Reply-To:Message-Id:Date:Subject:Cc:To:From:Cc:Date:
     From:Subject:Sender;
-    bh=KKL6fs65nkhZyVQ8iCMkQHWgC9qX0YJFvu3jOqVLaGs=;
-    b=eoP+qb2py9xxPe6TXKMpKLAyM8LRa8nXhf8jtiHVIJ6MgDTLsszygcxgNME469ZnVO
-    Gd/GikZGjviPmqczJX/amWbGCyVDGAky9eqDbCFu0vh5LjmpvdGO1ExaUEYz3QZ/kjsv
-    Q0zMXrsz3neRSLoZkXHh22oDbKRDIZKoLSuHOoqFIRhn1f6qi9aacYBwsEBF/a0YhRKw
-    DKeZHSE6boHvgTP2tmax8pwLM92uizfS7iYPK+5K3/l1udpIaAkvXKKsJ9YpOFemqv0c
-    PPaeGtGs1J5GKlO/yeifSz6h/JEuBfF1eEhrnRzuE0ce0tpBThj2wFFgwzDTsNJV9yXY
-    Hptw==
+    bh=s1FlzWcDA9eIJrOyiRw4JBchPVmZGKUUzVFj052hZhY=;
+    b=IaB2aZ7mLbEY0bKzptvW8aixsRWfKnX3Dq3a4fWEPIkubu0OGbDirsweGGc9rm8cZ/
+    eZ/b3HxPvrLms2PO55qMnz51p1HP1ivcsf++O9jdrwtpUjCsaT9kHVTUw7Gtr6b9Xe1y
+    0dHRMJCkleugTaJc+2yGPUMx8ggmntVazKl60vkZaIZBRdfAkterIwhDDt4zLIOl7BxP
+    AOkPjFW70ZaJDY2v8wWC92XHfLovDW0g+9AlxJtRRkL65rarTKh0RCPdYFrmATmstPEY
+    AqfLP+j1ZHuIwEY0hU9aOZRDdWD6/crAJ6x7yaT/0Xo02ZHjXjslsQSTXwbATw3RT/Mu
+    sCVg==
 Authentication-Results: strato.com;
     dkim=none
 X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXTbAOHjRHIhr3eFSKSxc="
 X-RZG-CLASS-ID: mo00
 Received: from droid..
     by smtp.strato.de (RZmta 47.33.8 DYNA|AUTH)
-    with ESMTPSA id 301038x8SHLSoBL
+    with ESMTPSA id 301038x8SHLToBM
         (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
         (Client did not present a certificate);
-    Tue, 28 Sep 2021 19:21:28 +0200 (CEST)
+    Tue, 28 Sep 2021 19:21:29 +0200 (CEST)
 From:   Stephan Gerhold <stephan@gerhold.net>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
@@ -40,9 +40,9 @@ Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
         linux-arm-kernel@lists.infradead.org,
         ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org,
         Stephan Gerhold <stephan@gerhold.net>
-Subject: [PATCH 05/15] arm64: dts: qcom: msm8916-samsung-serranove: Add rt5033 battery
-Date:   Tue, 28 Sep 2021 19:12:21 +0200
-Message-Id: <20210928171231.12766-6-stephan@gerhold.net>
+Subject: [PATCH 06/15] arm64: dts: qcom: msm8916-samsung-serranove: Add NFC
+Date:   Tue, 28 Sep 2021 19:12:22 +0200
+Message-Id: <20210928171231.12766-7-stephan@gerhold.net>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20210928171231.12766-1-stephan@gerhold.net>
 References: <20210928171231.12766-1-stephan@gerhold.net>
@@ -52,59 +52,88 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Like the Samsung Galaxy A3/A5, the S4 Mini VE uses a Richtek RT5033 PMIC
-as battery fuel gauge, charger, flash LED and for some regulators.
-For now, only add the fuel gauge/battery device to the device tree,
-so we can check the remaining battery percentage.
+The LTE version of the S4 Mini VE has a NXP PN547, which is supported
+by the nxp-nci-i2c driver in mainline. It seems to detect NFC tags
+using "nfctool" just fine, although more testing is difficult given
+there seem to be very few useful applications making use of the
+Linux NFC subsystem. :(
 
-The other RT5033 drivers need some more work first before
-they can be used properly.
+Note that for some reason Samsung decided to connect the I2C pins
+to GPIOs where no hardware I2C bus is available, so we need to
+fall back to software bit-banging with i2c-gpio.
 
 Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
 ---
- .../dts/qcom/msm8916-samsung-serranove.dts    | 23 +++++++++++++++++++
- 1 file changed, 23 insertions(+)
+ .../dts/qcom/msm8916-samsung-serranove.dts    | 50 +++++++++++++++++++
+ 1 file changed, 50 insertions(+)
 
 diff --git a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
-index 73fe7b2a5b66..4a94158e7624 100644
+index 4a94158e7624..caeed942a4c5 100644
 --- a/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
 +++ b/arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
-@@ -185,6 +185,21 @@ imu@6b {
+@@ -168,6 +168,32 @@ touchkey@20 {
+ 			pinctrl-0 = <&tkey_default>;
+ 		};
  	};
- };
- 
-+&blsp_i2c4 {
-+	status = "okay";
 +
-+	battery@35 {
-+		compatible = "richtek,rt5033-battery";
-+		reg = <0x35>;
-+
-+		interrupt-parent = <&msmgpio>;
-+		interrupts = <121 IRQ_TYPE_EDGE_FALLING>;
++	i2c-nfc {
++		compatible = "i2c-gpio";
++		sda-gpios = <&msmgpio 0 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
++		scl-gpios = <&msmgpio 1 (GPIO_ACTIVE_HIGH|GPIO_OPEN_DRAIN)>;
 +
 +		pinctrl-names = "default";
-+		pinctrl-0 = <&fg_alert_default>;
-+	};
-+};
++		pinctrl-0 = <&nfc_i2c_default>;
 +
- &blsp_i2c5 {
- 	status = "okay";
- 
-@@ -371,6 +386,14 @@ l18 {
++		#address-cells = <1>;
++		#size-cells = <0>;
++
++		nfc@2b {
++			compatible = "nxp,pn547", "nxp,nxp-nci-i2c";
++			reg = <0x2b>;
++
++			interrupt-parent = <&msmgpio>;
++			interrupts = <21 IRQ_TYPE_EDGE_RISING>;
++
++			enable-gpios = <&msmgpio 20 GPIO_ACTIVE_HIGH>;
++			firmware-gpios = <&msmgpio 49 GPIO_ACTIVE_HIGH>;
++
++			pinctrl-names = "default";
++			pinctrl-0 = <&nfc_default>;
++		};
++	};
  };
  
- &msmgpio {
-+	fg_alert_default: fg-alert-default {
-+		pins = "gpio121";
+ &blsp_i2c2 {
+@@ -434,6 +460,30 @@ muic_irq_default: muic-irq-default {
+ 		bias-disable;
+ 	};
+ 
++	nfc_default: nfc-default {
++		pins = "gpio20", "gpio49";
++		function = "gpio";
++
++		drive-strength = <2>;
++		bias-disable;
++
++		irq {
++			pins = "gpio21";
++			function = "gpio";
++
++			drive-strength = <2>;
++			bias-pull-down;
++		};
++	};
++
++	nfc_i2c_default: nfc-i2c-default {
++		pins = "gpio0", "gpio1";
 +		function = "gpio";
 +
 +		drive-strength = <2>;
 +		bias-disable;
 +	};
 +
- 	gpio_keys_default: gpio-keys-default {
- 		pins = "gpio107", "gpio109";
+ 	tkey_default: tkey-default {
+ 		pins = "gpio98";
  		function = "gpio";
 -- 
 2.33.0
