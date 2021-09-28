@@ -2,96 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 45B9041A50A
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 04:01:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2332441A53C
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 04:20:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238453AbhI1CD3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Sep 2021 22:03:29 -0400
-Received: from mail-oo1-f42.google.com ([209.85.161.42]:43610 "EHLO
-        mail-oo1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238494AbhI1CD3 (ORCPT
+        id S238637AbhI1CV7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Sep 2021 22:21:59 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52946 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238634AbhI1CV7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Sep 2021 22:03:29 -0400
-Received: by mail-oo1-f42.google.com with SMTP id n4-20020a4aa7c4000000b002adb4997965so5018933oom.10;
-        Mon, 27 Sep 2021 19:01:50 -0700 (PDT)
+        Mon, 27 Sep 2021 22:21:59 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F4021C061740
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Sep 2021 19:20:20 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id c1so17560800pfp.10
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Sep 2021 19:20:20 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id;
+        bh=kg/GzF/sdW0p0vvfKH2R41tEISnLDtHPzxNdShxqvM8=;
+        b=lnEiCT4W2Vt81xX2B3QBWSajzRS0BHhPdyPDg26pxACWSFyjBXtVsl46QeDm39PLvH
+         6ddbtIh7sK2NOsWb9ER08iCoqfUFsHxRHOmoGH1lzsLvkUPn0u/n0UIQUvVWQlweW1RB
+         wixpgeD/BVudgMhrgkqqxqq8SHWDqCX9glVYjOhHjVfCjjmeWuPMAVvRoxETd/DU1kq0
+         xQZLQSTvD64o2x1RCjK4gq1pZfp6pVq11nYoNR0BvoeocH9QSvdal6ymhBlZaBp8OFUN
+         a9+Nmn5xcitwz8WrFEUrTdtE/lE6p0ioEPmS7AjxGyE6F32q7+FNO5BL5o9xKUQ6C7cE
+         Qv1Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=HBjpaa7sxaSk6yNv0m4ThUeRnu+WwigFczsXL34g8Z4=;
-        b=dmj8kM3rk0C3ULo0KJIq/65ReQIjpLM9G558OUnLi7NmnwiECeZhlDTnoE91KKc5Uu
-         yB6FK9PUBYiK910vMLMmtV3mb9QcNkFOPUZZeGypGwERQzxXqMgw4cu/QLul+mbtHTNP
-         v0ost2MZiZbr3Gf3DPw2lEGKBVqRsLD5H51UtaosZtpzZ7IYDPBAp6fvs0ntX/D/Bubs
-         pMxTscz21I/h9i5fNgp2zu8Y+mh94gZBv+jRdVxf5GObkEOlY5Vm6fm09Y9bntc12X9V
-         45n7vr68OMSIewBQ/El/L2iXvogHqNiGQinEZZd0Bu6gPrWS7LtSXCqsOseBDVcoaF8e
-         sQpg==
-X-Gm-Message-State: AOAM530ujZ5fa75XrsYtBcsGk5arSJpcTGek+1M85grDyxkrhJ6F3jtj
-        9H7BeBqcl/04/tBHYqKXxQ==
-X-Google-Smtp-Source: ABdhPJyiFGpnEaZEJQKQQpvbx8njRVXh5MqJbBRik+vr588di/y93ljmuPTKon6CFW2WQmK11to7cA==
-X-Received: by 2002:a4a:c292:: with SMTP id b18mr2723202ooq.64.1632794509836;
-        Mon, 27 Sep 2021 19:01:49 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id l28sm4454679oof.30.2021.09.27.19.01.48
+        h=x-gm-message-state:from:to:cc:subject:date:message-id;
+        bh=kg/GzF/sdW0p0vvfKH2R41tEISnLDtHPzxNdShxqvM8=;
+        b=bTFqdhguVWL8EsJ1splblTQjeFvPlj43WOGwGgNKOpkUCfTfoV8uqOCjCOFOsG7LJZ
+         f2ExkEX14XgZoeQ9RvlhLtmtNFnFLQO5xB1gk9SMuhyoI0c5ascwkIUxVsDSuVg9Us6B
+         EjaHnELCcBoAwthPgELH9XeMZoR7uP0+FRSY6TfHzUJ39DJLLSAjvFVS+NRlX4HiaWnS
+         +rmuPK7DdfdWLbm1Ltl5bafMkkGDV4+cGgCdE6BhbXPNO9nIuRua/k3hPW7ExLttfycN
+         cd+RT7KFSVdz472ZJVriM4xendZNlusKTxf1dEuLy3Rm0OTLfqYq1VQGMPjX7l6E3/YA
+         +ubg==
+X-Gm-Message-State: AOAM531oXcqrslOYXRAUATkvfmsTvLCN8LSifxvHQ0fkF4zv386k2x+O
+        uA3BXAesakQoNsdyXVhCsudxgg==
+X-Google-Smtp-Source: ABdhPJwm2OGAXCfz1pcfsnrhgPp8cc3IJ9EYc8O3kZGQEbShcjrda5y+PfksmciTxjhD3HIQPlBtgA==
+X-Received: by 2002:a65:6a0a:: with SMTP id m10mr2429816pgu.82.1632795620400;
+        Mon, 27 Sep 2021 19:20:20 -0700 (PDT)
+Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
+        by smtp.gmail.com with ESMTPSA id u12sm19178729pgi.21.2021.09.27.19.20.17
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Sep 2021 19:01:49 -0700 (PDT)
-Received: (nullmailer pid 84114 invoked by uid 1000);
-        Tue, 28 Sep 2021 02:01:48 -0000
-Date:   Mon, 27 Sep 2021 21:01:48 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Dikshita Agarwal <dikshita@codeaurora.org>
-Cc:     robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org,
-        bjorn.andersson@linaro.org, linux-kernel@vger.kernel.org,
-        vgarodia@codeaurora.org, mchehab@kernel.org, agross@kernel.org,
-        devicetree@vger.kernel.org
-Subject: Re: [PATCH v4] dt-bindings: media: venus: Add sc7280 dt schema
-Message-ID: <YVJ3jFKGP6KfSUfM@robh.at.kernel.org>
-References: <1632743197-32291-1-git-send-email-dikshita@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1632743197-32291-1-git-send-email-dikshita@codeaurora.org>
+        Mon, 27 Sep 2021 19:20:19 -0700 (PDT)
+From:   Shawn Guo <shawn.guo@linaro.org>
+To:     Vinod Koul <vkoul@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Jami Kettunen <jamipkettunen@gmail.com>,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Shawn Guo <shawn.guo@linaro.org>
+Subject: [PATCH v2 0/3] Add missing vdd-supply for QUSB2 PHY
+Date:   Tue, 28 Sep 2021 10:19:59 +0800
+Message-Id: <20210928022002.26286-1-shawn.guo@linaro.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 27 Sep 2021 17:16:37 +0530, Dikshita Agarwal wrote:
-> Add a schema description for the venus video encoder/decoder on the sc7280.
-> 
-> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> ---
-> change since v3:
->     Added missing dependency.
-> 
->  .../bindings/media/qcom,sc7280-venus.yaml          | 160 +++++++++++++++++++++
->  1 file changed, 160 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
-> 
+The series adds missing vdd-supply for QUSB2 PHY which is required for
+digital circuit.  The driver works right now likely because firmware
+already sets it up.  Add it to bindings, driver and DTS that miss the
+supply.
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+It should not cause problem for existing DTBs:
+- SC7180, SDM630, SDM845 based platforms already specified vdd-supply
+  in the DTBs.
+- MSM8996 and MSM8998 platform DTBs miss vdd-supply, but dummy regulator
+  will ensure QUSB2 PHY driver works as before on these platforms.
 
-yamllint warnings/errors:
+Changes for v2:
+- Correct copy & paste error on vdd-supply name in bindings doc.
 
-dtschema/dtc warnings/errors:
-Error: Documentation/devicetree/bindings/media/qcom,sc7280-venus.example.dts:37.33-34 syntax error
-FATAL ERROR: Unable to parse input tree
-make[1]: *** [scripts/Makefile.lib:385: Documentation/devicetree/bindings/media/qcom,sc7280-venus.example.dt.yaml] Error 1
-make[1]: *** Waiting for unfinished jobs....
-make: *** [Makefile:1441: dt_binding_check] Error 2
 
-doc reference errors (make refcheckdocs):
+Shawn Guo (3):
+  dt-bindings: phy: qcom,qusb2: Add missing vdd-supply
+  phy: qcom-qusb2: Add missing vdd supply
+  arm64: dts: qcom: Add missing vdd-supply for QUSB2 PHY
 
-See https://patchwork.ozlabs.org/patch/1533296
+ Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml | 6 ++++++
+ arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi              | 2 ++
+ arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi    | 1 +
+ arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi           | 1 +
+ arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi      | 1 +
+ drivers/phy/qualcomm/phy-qcom-qusb2.c                     | 2 +-
+ 6 files changed, 12 insertions(+), 1 deletion(-)
 
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
+-- 
+2.17.1
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
