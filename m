@@ -2,142 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B2B8041B306
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 17:35:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DB4D541B312
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 17:38:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241579AbhI1Phi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Sep 2021 11:37:38 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39742 "EHLO
+        id S241641AbhI1Pka (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Sep 2021 11:40:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40426 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241473AbhI1Phh (ORCPT
+        with ESMTP id S241371AbhI1Pka (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Sep 2021 11:37:37 -0400
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 531B0C061745
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 08:35:58 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id d12-20020a05683025cc00b0054d8486c6b8so7413379otu.0
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 08:35:58 -0700 (PDT)
+        Tue, 28 Sep 2021 11:40:30 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BE1CDC061745
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 08:38:50 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id 24so30524802oix.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 08:38:50 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Swdg435aFYXKutncMJ2uDQgpoMMpMIxDo9eC2m9kWLo=;
-        b=Ixzn2+iHFGzsLTGXmk9RgcSKPH76xHeoiBgPdEHR8tbzEke8JE+Lv7AF5yhq//gR6U
-         rDFSbrpvvaQwIiymq/fwxXBu532kErm9j2eUlsl3K9WrhrkA5gjVVoYmkuLIKEb8pQ3M
-         6R+lNUC8DyXsuvlIBR5d7XAC/SSrpKr6q3Qfjhg+uu9rUWWAy9iO7n7PTJnmljiPsFWA
-         VAXN15aSKTRqQgzqcKYOK1p6x8s5NrvOx0c2byOJjqvksOeIFPayYhbnFSpDHd+eZqqu
-         F1kXWAC8qnfXxOwhhy/8ZORIL1KpApvjY85L/bLkbIEglLK17lI1HB99SmLvc4x5egj2
-         h5OQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=UzVpZWKlJwRxSjuK78I3eEXEjM8AokgYI911F1Dgoog=;
+        b=Lh7oxXzq7U5xVayIB8k4MdCaBlpkBo6oslCTe6LgtGxkoYhjvFQRQQo76tCzHSQqNo
+         LcDnoDaBX4FYrTGolrUuokUEfpz5hMXbfKsFoY3qlS2o8Fr2LF1O8aBfdp++VwaYYk2j
+         JocuHgDSRphkZO+zB0pdJKJ/hDSEkxqyEd0On57iHu1HcWJLu5zfSqZZLgK1nH2KldZJ
+         2JEqnXg32m9KwN94R/VzGNb5/xoO7C5zCsV2VxYHK9zK1ljlxIcPRcZc9XDENGoWJ2oS
+         OLP+EBd4igDboPbw7LKsZrLUOTF+5kbCqXmuE1IciV/c2pFPuUZDnZ0L2qRhgKBihrfJ
+         3leg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Swdg435aFYXKutncMJ2uDQgpoMMpMIxDo9eC2m9kWLo=;
-        b=QtyA6gTgVeFKeZcgpMflFgEH+bDTvYgbSTQwy83A2WlaXZDY9jXAvguvNDD68mzkKT
-         YwYMcUKGKpISixZ2jg6dosseXbgQWo7exER7qC7eUYqQnJnBx3gL6yt65ci/12s8dAxa
-         fLVzxRMZRPLS9sBtWs/vvnm0W0jPSqcA0wJwRJtStGCZltpgBd7EmRB2QE5bQmXch71D
-         K928vvMUqCg2jDL5pLK1UaXGrPKrULlZl7ATGHx99O5xB6e82/0GuCl9Alg/lhjwChQV
-         ky6kEqZZ8YvFn/er5TX2qAqy1BipubMUrN4syAA3jokUHWLd9UFOVKbN8IoYKt5waHsV
-         xZ6w==
-X-Gm-Message-State: AOAM531KDqcWBVFkBM6RRaeGNrT99PInaJMzinaUBMex8RDqFFLakGHT
-        rBRWqRMcCTJqu7J48IqHFVx4Vw==
-X-Google-Smtp-Source: ABdhPJwrXenx8W8F32BC40cDXvKGXOIOYJvI7bmwFlysaoGUm335yzGIjxiKP8o+jmi4wCE1985IxA==
-X-Received: by 2002:a9d:6396:: with SMTP id w22mr5828089otk.26.1632843357557;
-        Tue, 28 Sep 2021 08:35:57 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=UzVpZWKlJwRxSjuK78I3eEXEjM8AokgYI911F1Dgoog=;
+        b=ChB0rgd2y6Oa4JpPxhmn+x2KUJ+mm9MGY+/i+9ombSY5a4eLXh6Dqx2SN8o7BePpkw
+         V/NsdktrozzUYa3OhpWlwuhGnwggg1sEuMzhhMObzpN0+JhHiAsNDj/5Iz1dwLUArO3o
+         AWSHLSJ9zYTr7Nu57h1ZgWb0Voifyw7VUfNUvVjX5Rvi6WlzNVEyw3IuamO77fQDYvID
+         Mr7NGKHVNFcAwHWBfA0gcbvWdXWODf0qGiiQoNLhiT861E1pVh9N6S6kCfDlAk+0Rllu
+         ZdroEAYH3TVwdpOFZW242FK+TPm/wXQeHhrfBUL1R4VaC1Qh89Ta236fDWrZDL88ADGY
+         aMvg==
+X-Gm-Message-State: AOAM533CTgG5hsSL1bQaKSUi0XgaTUJZq2OGnvhAtsl7qHNJUHgXVOoX
+        g5aeoQAsXzjsUeSKaByoNwpTJw==
+X-Google-Smtp-Source: ABdhPJzpKI/iHmrF8iGPdIrucU5CqhILBdh66wKx3f4vL1+mlc0e2eWHMpxxhJ22+nE5sf9nrUdarw==
+X-Received: by 2002:aca:606:: with SMTP id 6mr4222738oig.82.1632843530129;
+        Tue, 28 Sep 2021 08:38:50 -0700 (PDT)
 Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id l19sm2897066ota.17.2021.09.28.08.35.56
+        by smtp.gmail.com with ESMTPSA id 18sm4753034otj.10.2021.09.28.08.38.49
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Sep 2021 08:35:56 -0700 (PDT)
-Date:   Tue, 28 Sep 2021 10:35:55 -0500
+        Tue, 28 Sep 2021 08:38:49 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Steev Klimaszewski <steev@kali.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: c630: Move panel to aux-bus
-Message-ID: <YVM2WwFZxv5Rm+Dw@builder.lan>
-References: <20210924025255.853906-1-bjorn.andersson@linaro.org>
- <20210926060749.GB9901@dragon>
+To:     phone-devel@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Pavel Dubrova <pashadubrova@gmail.com>,
+        Andy Gross <agross@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        linux-kernel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Rob Herring <robh+dt@kernel.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Subject: Re: (subset) [PATCH] arm64: dts: qcom: sm6125: Improve indentation of multiline properties
+Date:   Tue, 28 Sep 2021 10:38:46 -0500
+Message-Id: <163284350355.1592203.2999251996289733980.b4-ty@linaro.org>
+X-Mailer: git-send-email 2.32.0
+In-Reply-To: <20210925141841.407257-1-marijn.suijten@somainline.org>
+References: <20210925141841.407257-1-marijn.suijten@somainline.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210926060749.GB9901@dragon>
+Content-Type: text/plain; charset="utf-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun 26 Sep 01:07 CDT 2021, Shawn Guo wrote:
-
-> On Thu, Sep 23, 2021 at 09:52:55PM -0500, Bjorn Andersson wrote:
-> > With the newly introduced aux-bus under the TI SN65DSI86 the panel
-> > node should be described as a child instead of a standalone node, move
-> > it there.
-> > 
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> >  .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 27 +++++++++----------
-> >  1 file changed, 13 insertions(+), 14 deletions(-)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> > index bd22352b6c7a..4818ca6d820d 100644
-> > --- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> > +++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> > @@ -56,20 +56,6 @@ mode {
-> >  		};
-> >  	};
-> >  
-> > -	panel {
-> > -		compatible = "boe,nv133fhm-n61";
-> > -		no-hpd;
-> > -		backlight = <&backlight>;
+On Sat, 25 Sep 2021 16:18:41 +0200, Marijn Suijten wrote:
+> Some multiline properties (spread out over multiple lines to keep length
+> in check) were not indented properly, leading to misalignment with the
+> items above.  The DT file is still small enough to address this early in
+> the process.
 > 
-> There is some prerequisite change for this patch?  I do not find this
-> backlight node on v5.15-rc, neither linux-next.
 > 
 
-Seems I had this and the backlight addition patch in the wrong order in
-my local tree. Let's see if we can land the backlight support and then
-I'll repost this.
+Applied, thanks!
 
-Thanks,
-Bjorn
+[1/1] arm64: dts: qcom: sm6125: Improve indentation of multiline properties
+      commit: 4e31e85759a0622b25a63300019d04ff031c95e0
 
-> Shawn
-> 
-> > -
-> > -		ports {
-> > -			port {
-> > -				panel_in_edp: endpoint {
-> > -					remote-endpoint = <&sn65dsi86_out>;
-> > -				};
-> > -			};
-> > -		};
-> > -	};
-> > -
-> >  	/* Reserved memory changes for IPA */
-> >  	reserved-memory {
-> >  		wlan_msa_mem: memory@8c400000 {
-> > @@ -441,6 +427,19 @@ sn65dsi86_out: endpoint {
-> >  				};
-> >  			};
-> >  		};
-> > +
-> > +		aux-bus {
-> > +			panel: panel {
-> > +				compatible = "boe,nv133fhm-n61";
-> > +				backlight = <&backlight>;
-> > +
-> > +				port {
-> > +					panel_in_edp: endpoint {
-> > +						remote-endpoint = <&sn65dsi86_out>;
-> > +					};
-> > +				};
-> > +			};
-> > +		};
-> >  	};
-> >  };
-> >  
-> > -- 
-> > 2.32.0
-> > 
+Best regards,
+-- 
+Bjorn Andersson <bjorn.andersson@linaro.org>
