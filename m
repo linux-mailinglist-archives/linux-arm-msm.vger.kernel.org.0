@@ -2,139 +2,179 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4234B41A545
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 04:20:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D8E7541A5D3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 05:01:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238718AbhI1CWL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Sep 2021 22:22:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53022 "EHLO
+        id S238673AbhI1DC4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Sep 2021 23:02:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238700AbhI1CWJ (ORCPT
+        with ESMTP id S238655AbhI1DCz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Sep 2021 22:22:09 -0400
-Received: from mail-pg1-x530.google.com (mail-pg1-x530.google.com [IPv6:2607:f8b0:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7C56FC061765
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Sep 2021 19:20:30 -0700 (PDT)
-Received: by mail-pg1-x530.google.com with SMTP id h3so19597472pgb.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Sep 2021 19:20:30 -0700 (PDT)
+        Mon, 27 Sep 2021 23:02:55 -0400
+Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 31E00C061575
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Sep 2021 20:01:17 -0700 (PDT)
+Received: by mail-ot1-x331.google.com with SMTP id l16-20020a9d6a90000000b0053b71f7dc83so27184903otq.7
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Sep 2021 20:01:17 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references;
-        bh=KEllPcS5Xq9Pyinz9uhBulFqCz5TInIHturtjFlsWfM=;
-        b=T87rTQzEU62NuU3FOhvPREGW7/nPgaG5Bzo+GXN2I0O/jz2fHahkOXybbH4MdRKvCP
-         WJEjY8UZ7c3qBpCP7kfotW2esh3XCYpDqtX+BxtU/rBeUaUMgJO7N6DBYuhBoG4deGjt
-         qGFLAJW3fjE1vFb5YF3JySkjjDRQew9M5nF6lE+Q/o7SBJuhhJv93Jzw3snGguRos0dO
-         RsIXhZdioVhosWYH4Ov0asxioE4XHit85mCroKr3NYGgNBij1/tw49ogg3VmoeD8EcwU
-         ZL4Zl9FytxEunl+sr8hsbQKXEsUYYKtJvzESv/tkQZf1mLLWSYo5ylP0QezLY2wle8b9
-         sq3g==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=FHuHO2He2woiAxdN++JqYcpf3pYVN/DIGyfNIKeTVbA=;
+        b=B7T/YnyhBbGZ0d4ZYsouWc6sQWQXW4xXSkWxQNzYcbUYxZzTLb7IOzT2MUoxR0c9hW
+         ynAmZa6ebozVZGq2RAhxhoEf9VXU/mPih0yTdJRzSxY0fmneF903RWGTCNqiLFIUus8+
+         Cyx8+31z96OTJP+UWoIP90oArU+Ff/7Ipglk+49pGmhmh30qABnMrHLtBKa4L1bEzWpF
+         9rVxD8qiFmPaWdzcQC99ez99YG1WS54uxu7qHBuO8h3cLaImJwAkyPy82m+TLRApIGF+
+         wVjto9/AKTfOA8SID7CKJHu2epUlyrS7fgw/TO4yKCYWbYxfGLd6EdUbDEvFpgM1aKWC
+         q0xw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references;
-        bh=KEllPcS5Xq9Pyinz9uhBulFqCz5TInIHturtjFlsWfM=;
-        b=cjZjIJ2rHwP4/eiu+MijGBeC+FF0w5aqfFEz6dVfnLYgorR6YvoVbRgN8Zzh+yNRPC
-         QHe8pjhtUe73gsr3nDln8+Cywy151IikPwKlsAS3ZFQHrq7/6nk7rkRoDW6yuH3rUawT
-         jxWGMw0Z/ymHcSdt5gYlNCQUeszCpaYqSQAoZNNKaKDSVLvCW5Y1a7CzVoaVqNGvJ8v1
-         Aj9UgXGRFM1IzguV3RLKuUJt7Y+tbkwL/THpDcudYkUBqP0ZZODAd/XPS680hyCquGKs
-         +pMXmr5Ru1ETfdVZTOMS85QK5R5zpbwWCjhxkyzde91AQe7XJyrcNw6cXXIs2NGcWILi
-         yo0w==
-X-Gm-Message-State: AOAM532dAswrbo/iJK8isshMHB5q3M1X5yUsPVa7fVg+UBWi/VPlaIDW
-        c8BzgylT4sYqTptK2ROfTZVv9A==
-X-Google-Smtp-Source: ABdhPJy4QvjIvE5bquuYcb7fMbqGz4cZlG5kaauiiTmBYpbUf2ig1Y5Xi+Wqm45331UsVXUZzzKj+Q==
-X-Received: by 2002:a62:4d42:0:b0:44b:3078:7387 with SMTP id a63-20020a624d42000000b0044b30787387mr2859388pfb.27.1632795630041;
-        Mon, 27 Sep 2021 19:20:30 -0700 (PDT)
-Received: from localhost.localdomain (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id u12sm19178729pgi.21.2021.09.27.19.20.27
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=FHuHO2He2woiAxdN++JqYcpf3pYVN/DIGyfNIKeTVbA=;
+        b=oS+71wuKyHJ5V6xGBwrve/TXdCGoNsR+u0GiLh1r0JJdIlm3MxeR0oC3a38lv6AlxW
+         lxf/KX1OdW1QFyGObIcITh2P5SCmtT5OZSuSR/Bn3ImLVqSGmBcbOFjpHOvvb8zuIxM/
+         2EixGF0bJx6ghezLZ5jgrFbNj2ZZr6gPxmRu6Jq2Q1NDqrgAOpbnvehkRr4pqzoqPNRR
+         KpJVH0FN3MNNPQhzWyJ7zxF7frcB2m0qI6eOMVr+weJX8yAXftX7nnr1Z1+UKIObN0+U
+         R/rDv60VgHZx8gRdFFwfiuWF0gL6ApVH4G+B7DCItrAwORD6GCPyzOH4tT6/7C/DgCp7
+         oitQ==
+X-Gm-Message-State: AOAM532OBgYpA32epNHMEMfM/fPl1aJtxj2tg3d3MsdtVNKjsxAlj6zw
+        WFGu3o+0z375k2eRT03Lg6xAd9cxKituzw==
+X-Google-Smtp-Source: ABdhPJzPYOMVbGt6/MeLS6xjKOPREgFzY3eMKxMnBbOCa4vN9OqrjLQH3zhaeqW2XaG3ThSUBR2low==
+X-Received: by 2002:a05:6830:1018:: with SMTP id a24mr3122576otp.300.1632798076361;
+        Mon, 27 Sep 2021 20:01:16 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id s29sm1774405otg.60.2021.09.27.20.01.15
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 27 Sep 2021 19:20:29 -0700 (PDT)
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Jami Kettunen <jamipkettunen@gmail.com>,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Shawn Guo <shawn.guo@linaro.org>
-Subject: [PATCH v2 3/3] arm64: dts: qcom: Add missing vdd-supply for QUSB2 PHY
-Date:   Tue, 28 Sep 2021 10:20:02 +0800
-Message-Id: <20210928022002.26286-4-shawn.guo@linaro.org>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20210928022002.26286-1-shawn.guo@linaro.org>
-References: <20210928022002.26286-1-shawn.guo@linaro.org>
+        Mon, 27 Sep 2021 20:01:16 -0700 (PDT)
+Date:   Mon, 27 Sep 2021 22:01:14 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     "Guilherme G. Piccoli" <gpiccoli@igalia.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>
+Cc:     linux-arm-msm@vger.kernel.org, agross@kernel.org,
+        kernel@gpiccoli.net
+Subject: Re: [PATCH] arm64: dts: qcom: db820c: Improve regulator voltage
+ range and mark it as always-on
+Message-ID: <YVKFeqpe/sWj3h6K@builder.lan>
+References: <20210927163745.2066610-1-gpiccoli@igalia.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210927163745.2066610-1-gpiccoli@igalia.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QUSB2 PHY requires vdd-supply for digital circuit operation.  Add it for
-platforms that miss it.
+On Mon 27 Sep 11:37 CDT 2021, Guilherme G. Piccoli wrote:
 
-Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
----
- arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi           | 2 ++
- arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi | 1 +
- arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi        | 1 +
- arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi   | 1 +
- 4 files changed, 5 insertions(+)
+> Commit 2317b87a2a6f ("arm64: dts: qcom: db820c: Add vdd_gfx and tie it into mmcc")
+> introduced this voltage regulator which seems to be essential for the GPU,
+> according to the board schematics [0]. The problem is that such commit sets
+> the regulator min/max voltage range to a static value, which is a bit lower than
+> the range supported to such regulator [1]. With that, the GPU is not stable
+> as per my experiments (in a Dragonboard 820c-based board) - I've observed
+> sudden reboots into a FW bad state.
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-index 51e17094d7b1..d9826ce27e50 100644
---- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-+++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
-@@ -230,6 +230,7 @@
- &hsusb_phy1 {
- 	status = "okay";
- 
-+	vdd-supply = <&vreg_l28a_0p925>;
- 	vdda-pll-supply = <&vreg_l12a_1p8>;
- 	vdda-phy-dpdm-supply = <&vreg_l24a_3p075>;
- };
-@@ -237,6 +238,7 @@
- &hsusb_phy2 {
- 	status = "okay";
- 
-+	vdd-supply = <&vreg_l28a_0p925>;
- 	vdda-pll-supply = <&vreg_l12a_1p8>;
- 	vdda-phy-dpdm-supply = <&vreg_l24a_3p075>;
- };
-diff --git a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-index 507396c4d23b..61ea6d4ef8ac 100644
---- a/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi
-@@ -184,6 +184,7 @@
- &hsusb_phy1 {
- 	status = "okay";
- 
-+	vdd-supply = <&pm8994_l28>;
- 	vdda-pll-supply = <&pm8994_l12>;
- 	vdda-phy-dpdm-supply = <&pm8994_l24>;
- };
-diff --git a/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi b/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi
-index 125d7923d713..4f823974559b 100644
---- a/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi
-@@ -102,6 +102,7 @@
- &qusb2phy {
- 	status = "okay";
- 
-+	vdd-supply = <&vreg_l1a_0p875>;
- 	vdda-pll-supply = <&vreg_l12a_1p8>;
- 	vdda-phy-dpdm-supply = <&vreg_l24a_3p075>;
- };
-diff --git a/arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi
-index 0f5c7828a901..243f4ee5da8c 100644
---- a/arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi
-@@ -260,6 +260,7 @@
- &qusb2phy {
- 	status = "okay";
- 
-+	vdd-supply = <&vreg_l1a_0p875>;
- 	vdda-pll-supply = <&vreg_l12a_1p8>;
- 	vdda-phy-dpdm-supply = <&vreg_l24a_3p075>;
- };
--- 
-2.17.1
+The regulator range described in the datasheet and in the regulator
+driver defines what the PMIC can do, the dts refines this to a range
+that it suitable for this particular board. So it's expected to be more
+narrow.
 
+The problem with vdd_gfx is that we don't have anything voting for an
+actual voltage, so you will either continue to run with whatever voltage
+we got from the power-on state (or bootloader), or
+regulator-min-microvolt. Until someone could come up with this support
+0.98V seems to have been picked as some good enough number...
+
+
+The right thing would be to ensure that the voltage is scaled with the
+GPU clock, presumably with some reference from gpu_opp_table. This can
+perhaps be done using static voltages, but should in the long run be
+done by votes against the performance states exposed by the CPR block
+attached to the vdd_gfx - which will then ensure that the voltage level
+is adjusted as needed on a per-device basis.
+
+> More than that, my experiment showed that this regulator must be set to
+> always-on - this idea came from a commit in Linaro's tree, from Rajendra [2].
+
+The regulator should be enabled whenever someone is voting for the
+GPU_GX_GDSC power domain of mmcc. Question is why this isn't enough.
+
+> With the voltage range updated plus set as always-on, the GPU is working
+> correctly, in a stable fashion.
+> 
+
+Could you perhaps check /sys/kernel/debug/regulator/regulator_summary to
+see the voltage level you get for your VDD_GFX when it works?
+
+> [0] See page 9 (VDD_GFX), at
+> https://www.96boards.org/documentation/consumer/dragonboard/dragonboard820c/hardware-docs/files/db820c-schematics.pdf
+> 
+> [1] See section 3.5.3 (FT-SMPS) in the "PMI8994/PMI8996 Power Management IC",
+> at https://developer.qualcomm.com/download/sd820e/pmi8994pmi8996-power-management-ic-device-specification.pdf
+> 
+> [2] https://git.linaro.org/landing-teams/working/qualcomm/kernel.git/commit/?h=release/qcomlt-4.14&id=75fb43f3a62
+> 
+> Cc: Rajendra Nayak <rnayak@codeaurora.org>
+> Cc: Vinod Koul <vkoul@kernel.org>
+> Fixes: 2317b87a2a6f ("arm64: dts: qcom: db820c: Add vdd_gfx and tie it into mmcc")
+> Signed-off-by: Guilherme G. Piccoli <gpiccoli@igalia.com>
+> ---
+> 
+> Hi Andy/Bjorn/all, this patch was tested in 5.14, but I've tested it
+> in the linux-next tree as well and was able to apply there cleanly.
+> I'm new in the DTS world, so my apologies in advance for any rookie
+> mistake - suggestions are appreciated! Thanks in advance for the review,
+> 
+
+No need to apologize, the patch itself looks really good and nice to see
+that you tested it on both v5.14 and linux-next!
+
+> 
+> Guilherme
+> 
+> 
+>  arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi | 7 +++++--
+>  1 file changed, 5 insertions(+), 2 deletions(-)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
+> index 51e17094d7b1..977842068619 100644
+> --- a/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi
+> @@ -699,8 +699,11 @@ &pmi8994_spmi_regulators {
+>  	vdd_gfx: s2@1700 {
+>  		reg = <0x1700 0x100>;
+>  		regulator-name = "VDD_GFX";
+> -		regulator-min-microvolt = <980000>;
+> -		regulator-max-microvolt = <980000>;
+> +		regulator-min-microvolt = <350000>;
+> +		regulator-max-microvolt = <1350000>;
+> +		regulator-always-on;
+> +		status = "okay";
+
+status = "okay" is the default value, so unless you want to disable a
+node in the dtsi by default, or override it to "okay" when it was
+previously disabled, there's no need to provide "status" here.
+
+> +
+
+And this empty line is undesirable.
+
+
+So to summarize, I do think there might be cases where your patch
+lowers the GPU voltage from 0.98V to 0.35V, which would result in a sad
+outcome. I think we should try to plug some voltages into gpu_opp_table,
+but perhaps we need to look into CPR to figure out what those voltages
+should be?
+
+Regards,
+Bjorn
+
+>  	};
+>  };
+>  
+> -- 
+> 2.33.0
+> 
