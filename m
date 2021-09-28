@@ -2,170 +2,116 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2262D41B524
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 19:30:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 42AC741B52F
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 19:34:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242083AbhI1RcN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Sep 2021 13:32:13 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:25238 "EHLO m43-7.mailgun.net"
+        id S242172AbhI1Rg3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Sep 2021 13:36:29 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33778 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S242081AbhI1RcL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Sep 2021 13:32:11 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1632850232; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=Lu/WTpMvwg4jnja38XQYqTJ4WyLbF7FcUTVzra8gO/Q=;
- b=p+Qc8ZPgBkuDQ7Jed0Tantb/jTD6rvp8n8K5rhReq3n/vTc1iwlW5qrV2DPEqD6O2yZRPCW+
- 62445yittxYdPIKfuaUJEeSay5kvWswd3JArChwoTzgPUzMPCbalB1oyavNqiCu09i/RAQzj
- 2GdMpMuxtlp8OUp+AiIryW0xIFM=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 61535120a5a9bab6e8d1cd70 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Sep 2021 17:30:08
- GMT
-Sender: nguyenb=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 348D6C4361A; Tue, 28 Sep 2021 17:30:08 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: nguyenb)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3380FC4360C;
-        Tue, 28 Sep 2021 17:30:06 +0000 (UTC)
+        id S242171AbhI1Rg3 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 Sep 2021 13:36:29 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 5BF0B60F21;
+        Tue, 28 Sep 2021 17:34:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1632850489;
+        bh=Yfz08pV/gYDk+AOKJrmWrje1tFITZe7lHU+DG0nHe6Y=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=J3CdxDwHAF/IOVbYE4xxqV7Vv8NFVxTUJP/d0ax6bFYiBdgoclg3VgLO2tz+ndDj6
+         +ALOO3Q4lykpwvkmwFGWwExz6DdJAFZ0iuB8bxFtyAKAThiJkG8mOrDBnUJsmwalX3
+         lwc0oIQ9bR4XG7u3OK4l5ZmFbHZyRmtQD4YS1e4O/5IXOwXJDzD9lfJETjT+fqIR2T
+         RjVotFLwDdAzOAsmhjNJm/i1OzlCBs1sihufF6ZcFyQ040TPXSWikvUK0ukHDMoa/L
+         1G/yoeUpb86zY55GZYMIPkWr4xJIJswTPqkUkzXPoBAd8Qy7KdRa6vO9DtPgDTTXZ5
+         kjEfswrDsJRPw==
+Received: by mail-ed1-f50.google.com with SMTP id v10so82125349edj.10;
+        Tue, 28 Sep 2021 10:34:49 -0700 (PDT)
+X-Gm-Message-State: AOAM530Gy5f1Yzs1H78rU29janvahhEtul0GGW4UGzprPIKUVg0ss8tM
+        S2NRq7SFZLPfMtiolM/WrNMtcoXMv3x45djf6A==
+X-Google-Smtp-Source: ABdhPJySpBpXBtvPlQzRJSJ2jWwV4frZtniA8zfrmtuNaT8B9QSxRnDPopvqhpf1lHPNNHh2uyKCZ4Xxc1GjniBCCA0=
+X-Received: by 2002:a17:906:7217:: with SMTP id m23mr7883864ejk.466.1632850487958;
+ Tue, 28 Sep 2021 10:34:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 28 Sep 2021 10:30:06 -0700
-From:   nguyenb@codeaurora.org
-To:     Alim Akhtar <alim.akhtar@samsung.com>
-Cc:     cang@codeaurora.org, asutoshd@codeaurora.org,
-        martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, 'Avri Altman' <avri.altman@wdc.com>,
-        "'James E.J. Bottomley'" <jejb@linux.ibm.com>,
-        'Bean Huo' <beanhuo@micron.com>,
-        'Stanley Chu' <stanley.chu@mediatek.com>,
-        'Bart Van Assche' <bvanassche@acm.org>,
-        'Jaegeuk Kim' <jaegeuk@kernel.org>,
-        'Adrian Hunter' <adrian.hunter@intel.com>,
-        'Keoseong Park' <keosung.park@samsung.com>,
-        'open list' <linux-kernel@vger.kernel.org>
-Subject: Re: [PATCH v1 1/2] scsi: ufs: export hibern8 entry and exit
-In-Reply-To: <000701d7b42b$3cc69680$b653c380$@samsung.com>
-References: <cover.1632171047.git.nguyenb@codeaurora.org>
- <CGME20210920210820epcas5p3255a53f0d25000310e401305795017e8@epcas5p3.samsung.com>
- <70c5376129f902b6b3e9940ea3b10f147bf18a10.1632171047.git.nguyenb@codeaurora.org>
- <000701d7b42b$3cc69680$b653c380$@samsung.com>
-Message-ID: <16df2ef1db49e3afc3235878fb13c3da@codeaurora.org>
-X-Sender: nguyenb@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <20210928044546.4111223-1-bjorn.andersson@linaro.org> <YVLszZ7U7D91oIH2@gerhold.net>
+In-Reply-To: <YVLszZ7U7D91oIH2@gerhold.net>
+From:   Rob Herring <robh+dt@kernel.org>
+Date:   Tue, 28 Sep 2021 12:34:35 -0500
+X-Gmail-Original-Message-ID: <CAL_Jsq+66j8Y5y+PQ+mezkaxN1pfHFKz524YUF4Lz_OU5E-mZQ@mail.gmail.com>
+Message-ID: <CAL_Jsq+66j8Y5y+PQ+mezkaxN1pfHFKz524YUF4Lz_OU5E-mZQ@mail.gmail.com>
+Subject: Re: [PATCH 1/3] dt-bindings: soc: smem: Make indirection optional
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        devicetree@vger.kernel.org,
+        "linux-kernel@vger.kernel.org" <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-09-27 22:39, Alim Akhtar wrote:
-> Hi Bao
-> 
->> -----Original Message-----
->> From: nguyenb=codeaurora.org@mg.codeaurora.org
->> [mailto:nguyenb=codeaurora.org@mg.codeaurora.org] On Behalf Of Bao D.
->> Nguyen
->> Sent: Tuesday, September 21, 2021 2:38 AM
->> To: cang@codeaurora.org; asutoshd@codeaurora.org;
->> martin.petersen@oracle.com; linux-scsi@vger.kernel.org
->> Cc: linux-arm-msm@vger.kernel.org; Bao D . Nguyen
->> <nguyenb@codeaurora.org>; Alim Akhtar <alim.akhtar@samsung.com>; Avri
->> Altman <avri.altman@wdc.com>; James E.J. Bottomley 
->> <jejb@linux.ibm.com>;
->> Bean Huo <beanhuo@micron.com>; Stanley Chu <stanley.chu@mediatek.com>;
->> Bart Van Assche <bvanassche@acm.org>; Jaegeuk Kim 
->> <jaegeuk@kernel.org>;
->> Adrian Hunter <adrian.hunter@intel.com>; Keoseong Park
->> <keosung.park@samsung.com>; open list <linux-kernel@vger.kernel.org>
->> Subject: [PATCH v1 1/2] scsi: ufs: export hibern8 entry and exit
->> 
->> From: Asutosh Das <asutoshd@codeaurora.org>
->> 
->> Qualcomm controllers need to be in hibern8 before scaling up or down 
->> the
->> clocks. Hence, export the hibern8 entry and exit functions.
->> 
->> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
->> Signed-off-by: Bao D. Nguyen <nguyenb@codeaurora.org>
->> ---
->> drivers/scsi/ufs/ufshcd.c | 4 ++--
->> drivers/scsi/ufs/ufshcd.h | 2 ++
->> 2 files changed, 4 insertions(+), 2 deletions(-)
->> 
->> diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c 
->> index
->> 3841ab49..f3aad32 100644
->> --- a/drivers/scsi/ufs/ufshcd.c
->> +++ b/drivers/scsi/ufs/ufshcd.c
->> @@ -227,7 +227,6 @@ static void ufshcd_hba_exit(struct ufs_hba *hba);
-> static
->> int ufshcd_clear_ua_wluns(struct ufs_hba *hba);  static int
->> ufshcd_probe_hba(struct ufs_hba *hba, bool async);  static int
->> ufshcd_setup_clocks(struct ufs_hba *hba, bool on); -static int
->> ufshcd_uic_hibern8_enter(struct ufs_hba *hba);  static inline void
->> ufshcd_add_delay_before_dme_cmd(struct ufs_hba *hba);  static int
->> ufshcd_host_reset_and_restore(struct ufs_hba *hba);  static void
->> ufshcd_resume_clkscaling(struct ufs_hba *hba); @@ -4116,7 +4115,7 @@ 
->> int
->> ufshcd_link_recovery(struct ufs_hba *hba)  }
->> EXPORT_SYMBOL_GPL(ufshcd_link_recovery);
->> 
->> -static int ufshcd_uic_hibern8_enter(struct ufs_hba *hba)
->> +int ufshcd_uic_hibern8_enter(struct ufs_hba *hba)
->> {
->> 	int ret;
->> 	struct uic_command uic_cmd = {0};
->> @@ -4138,6 +4137,7 @@ static int ufshcd_uic_hibern8_enter(struct 
->> ufs_hba
->> *hba)
->> 
->> 	return ret;
->> }
->> +EXPORT_SYMBOL_GPL(ufshcd_uic_hibern8_enter);
->> 
->> int ufshcd_uic_hibern8_exit(struct ufs_hba *hba)  { diff --git
->> a/drivers/scsi/ufs/ufshcd.h b/drivers/scsi/ufs/ufshcd.h index
-> 52ea6f3..0cc55a2
->> 100644
->> --- a/drivers/scsi/ufs/ufshcd.h
->> +++ b/drivers/scsi/ufs/ufshcd.h
->> @@ -1397,4 +1397,6 @@ static inline int ufshcd_rpmb_rpm_put(struct 
->> ufs_hba
->> *hba)
->> 	return pm_runtime_put(&hba->sdev_rpmb->sdev_gendev);
->> }
->> 
->> +int ufshcd_uic_hibern8_enter(struct ufs_hba *hba); int
->> +ufshcd_uic_hibern8_exit(struct ufs_hba *hba);
-> 
-> This will add ufshcd_uic_hibern8_exit() twice, it is already add by
-> commit: 9d19bf7ad168a8: scsi: ufs: export some functions for vendor 
-> usage
-Thank you, Alim. I have corrected this in Patch V2.
+On Tue, Sep 28, 2021 at 5:22 AM Stephan Gerhold <stephan@gerhold.net> wrote:
+>
+> On Mon, Sep 27, 2021 at 09:45:44PM -0700, Bjorn Andersson wrote:
+> > In the olden days the Qualcomm shared memory (SMEM) region consisted of
+> > multiple chunks of memory, so SMEM was described as a standalone node
+> > with references to its various memory regions.
+> >
+> > But practically all modern Qualcomm platforms has a single reserved memory
+> > region used for SMEM. So rather than having to use two nodes to describe
+> > the one SMEM region, update the binding to allow the reserved-memory
+> > region alone to describe SMEM.
+> >
+> > The olden format is preserved as valid, as this is widely used already.
+> >
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> >  .../bindings/soc/qcom/qcom,smem.yaml          | 34 ++++++++++++++++---
+> >  1 file changed, 30 insertions(+), 4 deletions(-)
+> >
+> > diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
+> > index f7e17713b3d8..4149cf2b66be 100644
+> > --- a/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
+> > +++ b/Documentation/devicetree/bindings/soc/qcom/qcom,smem.yaml
+> > [...]
+> > @@ -43,6 +55,20 @@ examples:
+> >          #size-cells = <1>;
+> >          ranges;
+> >
+> > +        smem@fa00000 {
+>
+> I think this is a good opportunity to make a decision which node name
+> should be used here. :)
 
-> 
-> Also move ufshcd_uic_hibern8_enter() before _earlier_
-> ufshcd_uic_hibern8_exit() declaration.
-Yes, I have addressed this in the Patch V2. Please review.
-Thank you.
+reserved-memory node names are kind of a mess, so I haven't tried for
+any standard... It needs to be solved globally.
 
-> 
->> #endif /* End of Header */
->> --
->> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
->> Forum,
-> a
->> Linux Foundation Collaborative Project
+>
+> You use smem@ here but mentioned before that you think using the generic
+> memory@ would be better [1]. And you use memory@ in PATCH 3/3:
+>
+> -               smem_mem: memory@86000000 {
+> +               memory@86000000 {
+> +                       compatible = "qcom,smem";
+>                         reg = <0x0 0x86000000 0 0x200000>;
+>                         no-map;
+> +                       hwlocks = <&tcsr_mutex 3>;
+>                 };
+>
+> However, if you would use memory@ as example in this DT schema,
+> Rob's bot would complain with the same error that I mentioned earlier [2]:
+>
+> soc/qcom/qcom,smem.example.dt.yaml: memory@fa00000: 'device_type' is a required property
+>         From schema: dtschema/schemas/memory.yaml
+>
+> We should either fix the error when using memory@ or start using some
+> different node name (Stephen Boyd suggested shared-memory@ for example).
+> Otherwise we'll just keep introducing more and more dtbs_check errors
+> for the Qualcomm device trees.
+
+A different node name. A node name should only have 1 meaning and
+'memory' is already defined.
+
+The main issue here is what to name nodes with only a size and no address.
+
+Rob
