@@ -2,211 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3F9A041AE9F
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 14:17:18 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0D06841AEFC
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 14:28:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240513AbhI1MSz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Sep 2021 08:18:55 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:42753 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S240503AbhI1MSz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Sep 2021 08:18:55 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1632831436; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=3YxpkI8yDoGtSj31ff3dv3bwdiRI/L0P/ZZXyQghP1k=;
- b=kWtI/TXNd1BjtNs+k9yu2cv8Xr0V0kbfl6k90hSh58w/rdfpZllwCJPZTIc2tIxXBk/hKbkU
- uuAmb1bIneiih6IcOPkCSzWUvP4CsfWsp5ocMgAtQwfycelARnxgfS+9Us15sA8daLS6Nm8c
- GJIOP7IEvBKwqBy+yJs27OiT8DQ=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 615307b9713d5d6f96782ba1 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Sep 2021 12:16:57
- GMT
-Sender: skakit=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 97176C43639; Tue, 28 Sep 2021 12:16:56 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: skakit)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6BECDC43619;
-        Tue, 28 Sep 2021 12:16:54 +0000 (UTC)
-MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 28 Sep 2021 17:46:54 +0530
-From:   skakit@codeaurora.org
-To:     Mark Brown <broonie@kernel.org>
-Cc:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Liam Girdwood <lgirdwood@gmail.com>, mka@chromium.org,
-        swboyd@chromium.org, Das Srinagesh <gurus@codeaurora.org>,
-        David Collins <collinsd@codeaurora.org>, kgunda@codeaurora.org,
-        Subbaraman Narayanamurthy <subbaram@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 3/4] regulator: Add a regulator driver for the PM8008 PMIC
-In-Reply-To: <20210917153837.GB4700@sirena.org.uk>
-References: <1631875538-22473-1-git-send-email-skakit@codeaurora.org>
- <1631875538-22473-4-git-send-email-skakit@codeaurora.org>
- <20210917153837.GB4700@sirena.org.uk>
-Message-ID: <fbd80685df0a86b30868187e2556d67f@codeaurora.org>
-X-Sender: skakit@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        id S240627AbhI1M37 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Sep 2021 08:29:59 -0400
+Received: from mail-ot1-f43.google.com ([209.85.210.43]:35648 "EHLO
+        mail-ot1-f43.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240610AbhI1M37 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 Sep 2021 08:29:59 -0400
+Received: by mail-ot1-f43.google.com with SMTP id 77-20020a9d0ed3000000b00546e10e6699so28734554otj.2;
+        Tue, 28 Sep 2021 05:28:20 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=HzAZ/T3R+PH8bgPxuKvTGOSJkQIkRR+vx63M18LOtQc=;
+        b=IXpHqqL02P5+YpTfhoxtVfZF3hy2D41RiZCsiVvkdQ8KvucyO/2twdUjMBIxp4kkSO
+         3hCe7M3yMOEbjqYCWoYv8niQ2Glg2a6nua8ZGTvOPhiptYTQ2Mi7pb2cVq4PIxZ13SZU
+         64g1uQrcn8Xl2pPwqd8nPLGrBcdMdRYlTrPrRkZPanlkaCtsIu2EXSsqsFkFGqdse02o
+         l4WTAeNBbfsrU7Zbh+JwytthnQJt7xkV7i/cs+DqHY+gyAy2Hib88Jg4nsTnocBQHrPd
+         ALmkgJFPFUsEFUSfQJ7rMnsVbFFS7ZdCAnWYZw+VBFbIL8/KPX7PijR3Qm8qP+ZaC4gJ
+         mktg==
+X-Gm-Message-State: AOAM530jD+k0GDRc9+UitkjjuAEWaHwnNezny0g4Xej8z1U0fHXh7xZJ
+        O5J8zZgiQ/aevYbTPcXSlA==
+X-Google-Smtp-Source: ABdhPJxVIrmxKPlTwA7wEdAtl66dHAN0QACL6JJR7dP8LaFI8FqpE7dEQViPIRV461RJgTN5q8H47A==
+X-Received: by 2002:a9d:20aa:: with SMTP id x39mr4788921ota.292.1632832099904;
+        Tue, 28 Sep 2021 05:28:19 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id y12sm4507502otu.11.2021.09.28.05.28.18
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Sep 2021 05:28:19 -0700 (PDT)
+Received: (nullmailer pid 963813 invoked by uid 1000);
+        Tue, 28 Sep 2021 12:28:18 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        devicetree@vger.kernel.org
+In-Reply-To: <20210928044546.4111223-1-bjorn.andersson@linaro.org>
+References: <20210928044546.4111223-1-bjorn.andersson@linaro.org>
+Subject: Re: [PATCH 1/3] dt-bindings: soc: smem: Make indirection optional
+Date:   Tue, 28 Sep 2021 07:28:18 -0500
+Message-Id: <1632832098.523897.963812.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Mark,
-
-Thanks for reviewing the changes!
-
-On 2021-09-17 21:08, Mark Brown wrote:
-> On Fri, Sep 17, 2021 at 04:15:37PM +0530, Satya Priya wrote:
+On Mon, 27 Sep 2021 21:45:44 -0700, Bjorn Andersson wrote:
+> In the olden days the Qualcomm shared memory (SMEM) region consisted of
+> multiple chunks of memory, so SMEM was described as a standalone node
+> with references to its various memory regions.
 > 
->> +static int pm8008_regulator_is_enabled(struct regulator_dev *rdev)
->> +{
->> +	struct pm8008_regulator *pm8008_reg = rdev_get_drvdata(rdev);
->> +	int rc;
->> +	u8 reg;
->> +
->> +	rc = pm8008_read(pm8008_reg->regmap,
->> +			LDO_ENABLE_REG(pm8008_reg->base), &reg, 1);
->> +	if (rc < 0) {
->> +		pr_err("failed to read enable reg rc=%d\n", rc);
->> +		return rc;
->> +	}
->> +
->> +	return !!(reg & ENABLE_BIT);
->> +}
+> But practically all modern Qualcomm platforms has a single reserved memory
+> region used for SMEM. So rather than having to use two nodes to describe
+> the one SMEM region, update the binding to allow the reserved-memory
+> region alone to describe SMEM.
 > 
-> This could just be regulator_is_enabled_regmap().  There's also a lot 
-> of
-> instances in the driver where it's using pr_err() not dev_err() (and
-> similarly for the debug prints).
+> The olden format is preserved as valid, as this is widely used already.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+>  .../bindings/soc/qcom/qcom,smem.yaml          | 34 ++++++++++++++++---
+>  1 file changed, 30 insertions(+), 4 deletions(-)
 > 
 
-Okay, I'll use the helper regulator_is_enabled_regmap() here and remove 
-this completely.
+My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
+on your patch (DT_CHECKER_FLAGS is new in v5.13):
 
->> +
->> +static int pm8008_regulator_enable(struct regulator_dev *rdev)
->> +{
->> +	struct pm8008_regulator *pm8008_reg = rdev_get_drvdata(rdev);
->> +	int rc, current_uv, delay_us, delay_ms, retry_count = 10;
->> +	u8 reg;
-> 
-> This is the regmap helper.
-> 
+yamllint warnings/errors:
 
-Okay, I'll use regulator_enable_regmap().
+dtschema/dtc warnings/errors:
+Documentation/devicetree/bindings/soc/qcom/qcom,smem.example.dt.yaml:0:0: /example-1/soc/sram@fc428000: failed to match any schema with compatible: ['qcom,rpm-msg-ram']
 
->> +	/*
->> +	 * Wait for the VREG_READY status bit to be set using a timeout 
->> delay
->> +	 * calculated from the current commanded voltage.
->> +	 */
->> +	delay_us = STARTUP_DELAY_USEC
->> +			+ DIV_ROUND_UP(current_uv, pm8008_reg->step_rate);
->> +	delay_ms = DIV_ROUND_UP(delay_us, 1000);
-> 
-> Set poll_enable_time and implement get_status() then this will be
-> handled by the core.
-> 
+doc reference errors (make refcheckdocs):
 
-Anyway I will be removing this API.
+See https://patchwork.ozlabs.org/patch/1533702
 
->> +static int pm8008_regulator_disable(struct regulator_dev *rdev)
->> +{
-> 
-> Use the regmap helper.
-> 
+This check can fail if there are any dependencies. The base for a patch
+series is generally the most recent rc1.
 
-Ok, I'll use regulator_disable_regmap.
+If you already ran 'make dt_binding_check' and didn't see the above
+error(s), then make sure 'yamllint' is installed and dt-schema is up to
+date:
 
->> +	rc = pm8008_write_voltage(pm8008_reg, min_uv, max_uv);
->> +	if (rc < 0)
->> +		return rc;
-> 
-> This is the only place where write_voltage() is called, may as well 
-> just
-> inline it.
-> 
+pip3 install dtschema --upgrade
 
-Okay.
+Please check and re-submit.
 
->> +	init_voltage = -EINVAL;
->> +	of_property_read_u32(reg_node, "qcom,init-voltage", &init_voltage);
-> 
-> Why does this property exist and if it's needed why is it specific to
-> this device?  It looks like the device allows you to read the voltage 
-> on
-> startup from the regmap.
-> 
-
-I think it is not necessary, will remove it.
-
->> +	init_data = of_get_regulator_init_data(dev, reg_node,
->> +						&pm8008_reg->rdesc);
->> +	if (init_data == NULL) {
->> +		dev_err(dev, "%s: failed to get regulator data\n", name);
->> +		return -ENODATA;
->> +	}
->> +	if (!init_data->constraints.name) {
->> +		dev_err(dev, "%s: regulator name missing\n", name);
->> +		return -EINVAL;
->> +	}
-> 
-> Just let the core find the init data for you, there is no reason to
-> insist on a system provided name - that is an entirely optional 
-> property
-> for systems to use, there is no reason for a regulator driver to care.
-> 
-
-OK, I will remove this if check.
-
->> +	init_data->constraints.input_uV = init_data->constraints.max_uV;
->> +	init_data->constraints.valid_ops_mask |= REGULATOR_CHANGE_STATUS
->> +						| REGULATOR_CHANGE_VOLTAGE;
-> 
-> This is absolutely not something that a regulator driver should be
-> doing, the whole point with constraints is that they come from the
-> machine.
-> 
-
-Okay I will remove this.
-
->> +static int pm8008_parse_regulator(struct regmap *regmap, struct 
->> device *dev)
->> +{
->> +	int rc = 0;
->> +	const char *name;
->> +	struct device_node *child;
->> +	struct pm8008_regulator *pm8008_reg;
->> +
->> +	/* parse each subnode and register regulator for regulator child */
->> +	for_each_available_child_of_node(dev->of_node, child) {
->> +		pm8008_reg = devm_kzalloc(dev, sizeof(*pm8008_reg), GFP_KERNEL);
->> +		if (!pm8008_reg)
-> 
-> You shouldn't be doing this, just unconditionally register all the
-> regulators supported by the chip.  If they don't appear in the DT 
-> that's
-> totally fine - it gives read only access which can be useful for
-> diagnostics.
-
-Okay will remove this check as well.
-
--Satya Priya.
