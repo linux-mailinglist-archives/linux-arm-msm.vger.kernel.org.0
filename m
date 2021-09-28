@@ -2,93 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A425641AFE3
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 15:19:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C396C41AFEA
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 15:20:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240711AbhI1NV3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Sep 2021 09:21:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35770 "EHLO
+        id S240945AbhI1NVx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Sep 2021 09:21:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35892 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240933AbhI1NV2 (ORCPT
+        with ESMTP id S240952AbhI1NVv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Sep 2021 09:21:28 -0400
-Received: from mail-pg1-x535.google.com (mail-pg1-x535.google.com [IPv6:2607:f8b0:4864:20::535])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5ABD3C061740;
-        Tue, 28 Sep 2021 06:19:49 -0700 (PDT)
-Received: by mail-pg1-x535.google.com with SMTP id k24so21176133pgh.8;
-        Tue, 28 Sep 2021 06:19:49 -0700 (PDT)
+        Tue, 28 Sep 2021 09:21:51 -0400
+Received: from mail-pg1-x531.google.com (mail-pg1-x531.google.com [IPv6:2607:f8b0:4864:20::531])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EFF5DC06176A;
+        Tue, 28 Sep 2021 06:20:11 -0700 (PDT)
+Received: by mail-pg1-x531.google.com with SMTP id g184so21179852pgc.6;
+        Tue, 28 Sep 2021 06:20:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=mbGOZOb5Aj7io+E29ChYb6CsUDD7dFSCNT86GCOGyck=;
-        b=R7bth3A5PT5PURiz5K18ZdI8YpdB/N/YEwZjer13k7Y2rT3iHQ54V7L/b9h7GZ8WC0
-         geKEtD8C26cUfX1heBMp82a4JGKbon62qNGokbEkBCfJ394ZkJX6oa9A0+1i4MvOGkGc
-         k6kGHIqUw7YekI8FsJ4tYJtu0BxY11Gh34GNMQZkhtmIpMv02SqZ/wIby4tT3JnObHg2
-         KXQbJairfQfI0GajqHashVmAhgGtBPOXD5rlkPR1/8JY17q/tHe7kqTRsXyt50YH/RoF
-         zkFn0IpysG5VGVeSTTn7K/XZ+vTUUnLCNixiB27h6z5UXRfjaiIb5AXbGyFcEEUI+5bR
-         SXUQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=skXS9FAAmXWjWTOfJ7iolwq9Ls6y2YQYKSTYxiYgvoU=;
+        b=i6WMO8Sh7rRGOyKHKsCDYxJpraDsM/kfqTc2vdZyuidM9YA55oyyKotHO70yVyvMNr
+         zfEo8uy9rNi+jiC28DdsNNegAVjlUSFMl5hvRNfh09lKoPLvo38vrtGcCREtCXv8lEz3
+         wOL69Fg6t9l25gN29igh5ATaQJC1Q10og2MIg4TexqD8pKqO9Sze06F4H7HADdOVIPWn
+         afFtbXYXaQEtYKyPwi7hb+A1r5hjjmNhDvwMgRW6l7v03awBZecb9Pn73vU4k2I5v6Ly
+         zuDRQbG0gWzPBtBfMyz2JqjpeqWc9S1mvPW6mv3pnrhMfpqY5B+w4qBxKhaVINQ5SCbL
+         TbMg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=mbGOZOb5Aj7io+E29ChYb6CsUDD7dFSCNT86GCOGyck=;
-        b=d8fkO/ovrQuL2vmek2Re9kqSuexZq4WQT1HcZK0H1nznUwMOj2ANBTky5WX/+7dI1W
-         m/xWCeh2fMSdkiJ7Pht7V/sPndwbbD07L8dUpW4SqUtHttPaR6MoTUzj2k8SJJJHDQIS
-         f6hhyZiaELyrtIC48L+sM0roKdy/DbvLRW6THjwnWSDrdeIqI/67gNZaz2+q7ts+LrV1
-         JCazBy5KVc8HOFO39Z8A8NlGzMJ2SOmcXpLXSa6xwHwaEaDcIgXuY9pSxuz93EuWlsS2
-         AfBAZi8nGwuf7kQpua97RZylCm9n4YUML4hJt2L4dEhFaOSOatRtcGdobFOrkx+JTu//
-         JjWQ==
-X-Gm-Message-State: AOAM5338k3I0ZE2bkGeMGSz0gCSnwZnIQygiEced+Hss3h78bMKoeI60
-        PBLsjHdom+LqYoMtoF4T2OzWa0SzGRzzenMRALU=
-X-Google-Smtp-Source: ABdhPJwaObiI2BOknhU4lQ+z3pJBh4NFUuZcJXyQl1hfKKpwnY4tJs+iDCyZ149gdxsP9MGtH/9Acg==
-X-Received: by 2002:a63:8c42:: with SMTP id q2mr4583519pgn.325.1632835188631;
-        Tue, 28 Sep 2021 06:19:48 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=skXS9FAAmXWjWTOfJ7iolwq9Ls6y2YQYKSTYxiYgvoU=;
+        b=Dt39eoHpBM+binaRucJijeBHsq5z0WTP28asLlitCKG9OOYeFxpdRjak3wMI8dddDr
+         smTjUI+P++DuZ6QGXmnOtw+R6iHo2JAnkcfXItealkYmCtHsZUXSjie70PRIBYCPe53Z
+         +cYA5UbQ5I8MXHMEcyA52lgkf7KP4Yt1bDnOiW8vu2HMwPC+yM6CY44ZgYL+3eGB5YaX
+         IV/SnGAbFFO1Vp5c4gQEg9o2O+CyFOM1+f6WAW9NmXBK7sfNZ1QqVQ6y1zYFKS+qXPKG
+         +CfML+9BOHhq32wOh66KMGOqszbrl1fXI4OjKhhnecOqCYgZ1H9762uJC1lNbBAaK+kI
+         KMIA==
+X-Gm-Message-State: AOAM532XpF4Lom1JFqeS5r5SChL6NU7dM4JV9njuEzbC2KcCd4FlxzZ5
+        UKANHP/FNs/bYAVCe6PFnOD7gsRMLIt+XV/fJBQ=
+X-Google-Smtp-Source: ABdhPJyAcqBb1eBhinIUc+8FjDCCzm4doSh4iuL5aND31CFGPvloAiVi5tdj6bffjArxki064WG1aA==
+X-Received: by 2002:a65:6ab0:: with SMTP id x16mr4585175pgu.181.1632835211234;
+        Tue, 28 Sep 2021 06:20:11 -0700 (PDT)
 Received: from skynet-linux.local ([122.162.197.175])
-        by smtp.googlemail.com with ESMTPSA id h13sm22063964pgf.14.2021.09.28.06.19.45
+        by smtp.googlemail.com with ESMTPSA id h13sm22063964pgf.14.2021.09.28.06.20.07
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Sep 2021 06:19:48 -0700 (PDT)
+        Tue, 28 Sep 2021 06:20:10 -0700 (PDT)
 From:   Sireesh Kodali <sireeshkodali1@gmail.com>
 To:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
         devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Cc:     Sireesh Kodali <sireeshkodali1@gmail.com>
-Subject: [PATCH v3 0/3] MSM8953 MDP/DSI PHY enablement
-Date:   Tue, 28 Sep 2021 18:49:26 +0530
-Message-Id: <20210928131929.18567-1-sireeshkodali1@gmail.com>
+Cc:     Sireesh Kodali <sireeshkodali1@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Krishna Manikandan <mkrishn@codeaurora.org>
+Subject: [PATCH v3 1/3] dt-bindings: msm: dsi: Add MSM8953 dsi phy
+Date:   Tue, 28 Sep 2021 18:49:27 +0530
+Message-Id: <20210928131929.18567-2-sireeshkodali1@gmail.com>
 X-Mailer: git-send-email 2.33.0
+In-Reply-To: <20210928131929.18567-1-sireeshkodali1@gmail.com>
+References: <20210928131929.18567-1-sireeshkodali1@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch series adds support for the MDP and DSI PHY as found on the
-MSM8953 platform (APQ8053, SDM450, SDA450, SDM625, SDM626). All the SoCs
-on this platform use the adreno 506 GPU.
+SoCs based on the MSM8953 platform use the 14nm DSI PHY driver
 
-Changes since v2:
-- Changed dt-bindings to use enum instead of oneOf
+Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
+---
+ Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml | 1 +
+ 1 file changed, 1 insertion(+)
 
-Changes since v1:
-- Split the dsi phy doc changes into a separate commit
-- Add Reviewed-by tag to patch 2
-
-Sireesh Kodali (1):
-  dt-bindings: msm: dsi: Add MSM8953 dsi phy
-
-Vladimir Lypak (2):
-  drm/msm/dsi: Add phy configuration for MSM8953
-  drm/msm/mdp5: Add configuration for MDP v1.16
-
- .../bindings/display/msm/dsi-phy-14nm.yaml    |  1 +
- drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c      | 89 +++++++++++++++++++
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c         |  2 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.h         |  1 +
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c    | 21 +++++
- 5 files changed, 114 insertions(+)
-
+diff --git a/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml b/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
+index 064df50e21a5..81dbee4803c0 100644
+--- a/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
++++ b/Documentation/devicetree/bindings/display/msm/dsi-phy-14nm.yaml
+@@ -17,6 +17,7 @@ properties:
+     enum:
+       - qcom,dsi-phy-14nm
+       - qcom,dsi-phy-14nm-660
++      - qcom,dsi-phy-14nm-8953
+ 
+   reg:
+     items:
 -- 
 2.33.0
 
