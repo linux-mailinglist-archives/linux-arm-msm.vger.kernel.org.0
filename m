@@ -2,85 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E72041B870
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 22:38:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3B4E041B88B
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 22:42:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242725AbhI1UkJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Sep 2021 16:40:09 -0400
-Received: from mail.z3ntu.xyz ([128.199.32.197]:52012 "EHLO mail.z3ntu.xyz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S242604AbhI1UkJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Sep 2021 16:40:09 -0400
-Received: from localhost.localdomain (ip-213-127-63-121.ip.prioritytelecom.net [213.127.63.121])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id EE2C5C8FF3;
-        Tue, 28 Sep 2021 20:38:27 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1632861508; bh=CiNsP3adcwuzakR+x22r6mqUJpYSqHKJwX//BvpNn8Y=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=nniINJnXsWVKOUK5D8dbOk2nO7fBY9fySeqU+cOL52VS6akL+eU5DxKZ6PlcInPnI
-         2Bvk6IyB6Vc8hG5QgodK+NStTx0ZjZGb2pPopzICM2WLNsGKnGUfVRVMqFguVZ+OBF
-         skrK9NFpQVoKVVvY5Z5ZQFbD5clXAmnnxKCWaVyk=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht, Luca Weiss <luca@z3ntu.xyz>,
-        Arnd Bergmann <arnd@arndb.de>, Olof Johansson <olof@lixom.net>,
-        soc@kernel.org, Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-kernel@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH 2/2] ARM: dts: qcom: apq8026-lg-lenok: rename board vendor
-Date:   Tue, 28 Sep 2021 22:38:15 +0200
-Message-Id: <20210928203815.77175-2-luca@z3ntu.xyz>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20210928203815.77175-1-luca@z3ntu.xyz>
-References: <20210928203815.77175-1-luca@z3ntu.xyz>
+        id S242776AbhI1UoR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Sep 2021 16:44:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54850 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242771AbhI1UoQ (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 Sep 2021 16:44:16 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76541C061745
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 13:42:36 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id g62-20020a9d2dc4000000b0054752cfbc59so118060otb.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 13:42:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=uegvCqgF33M3moNAXxbTAqPKWgE2zUFv3rJPDnCK318=;
+        b=bTGLeyAqVm4yvVybxFMvfr82sU4tDikUIegRQQB2zrmSWA2/zpvsM79ITuVnhLIS3y
+         cy0ov0MHqaZXUa48g1wwmcKzX/Ym9dC6tBedVGhUrduILDfeVkl3Anc9L3hLXRQrT2FW
+         X0cQtuXqNiJzsuCZRMczREtR8wOuChTM/babo=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=uegvCqgF33M3moNAXxbTAqPKWgE2zUFv3rJPDnCK318=;
+        b=5JG+lPYb8YxWbkETrzBYG2T1zWhD7F9X2Lw4cSujNIWvDEGKfi/VJI+9U9IYbG4OQE
+         lcGpXfv86bfDZgnuDPau753P7ko7o8ws/XTpY0p+v3wFM5dQxma4feZHQyF7hHIHifjF
+         J/CxD9DELln328ABheEOmvLZeppDajR50MzAcJliPjz4nTxpgRcck427mrQJLEFGKU3m
+         382uEfv8arslN+hX/7TzWbq7wmWRkfdrh1K2YL7Y31k54l4/EspHeII60jOM+CmIySX9
+         /EYvtUXSlJLNS1B6dm4vQEY7ibSNTRLikTOAZgUBehFDQTFrGbnEOObFDn5SbpNqQ/MI
+         s5dQ==
+X-Gm-Message-State: AOAM532yTo7HlHcqwJ/ybXne0lJIFTanbv0mmbvlyVaU1bYiPs2ofO8V
+        DGPvXY7mTxHwfhCtvq+BA3auzjgwczYgsX0lQJ7oog==
+X-Google-Smtp-Source: ABdhPJzbrReCsPak9qtP+xmmFsOIy27/pz5auaxnHNLOf59z46/3FuUj4GNV6gNgUU6sLbKtpPIPTPQA/PZ66xgDUdU=
+X-Received: by 2002:a05:6830:358:: with SMTP id h24mr6640507ote.159.1632861755401;
+ Tue, 28 Sep 2021 13:42:35 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 28 Sep 2021 13:42:34 -0700
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <1632845472-29276-1-git-send-email-khsieh@codeaurora.org>
+References: <1632845472-29276-1-git-send-email-khsieh@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Tue, 28 Sep 2021 13:42:34 -0700
+Message-ID: <CAE-0n53qPN_ujrs8ABnvdUWgg7mKvcgZBaNq3Os17i7iPKnoTA@mail.gmail.com>
+Subject: Re: [PATCH] drm/msm/dp: only signal audio when disconnected detected
+ at dp_pm_resume
+To:     Kuogee Hsieh <khsieh@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robdclark@gmail.com, sean@poorly.run,
+        vkoul@kernel.org
+Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
+        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-In order to avoid having prefixes for multiple internal divisions of LG
-use the "lg" prefix instead of "lge".
+Quoting Kuogee Hsieh (2021-09-28 09:11:12)
+> Only signal audio when disconnected detected at dp_pm_resume since
+> connected status will be signaled to audio at next plugin handler.
 
-Fixes: ad3f04b7bef6 ("ARM: dts: qcom: Add support for LG G Watch R")
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
----
- arch/arm/boot/dts/Makefile                                      | 2 +-
- .../{qcom-apq8026-lge-lenok.dts => qcom-apq8026-lg-lenok.dts}   | 2 +-
- 2 files changed, 2 insertions(+), 2 deletions(-)
- rename arch/arm/boot/dts/{qcom-apq8026-lge-lenok.dts => qcom-apq8026-lg-lenok.dts} (99%)
+Please add more details. This says what the patch does but it would be
+better if it included why it is important. Does it fix something?
+There's a fixes tag so it must fix something. Is it bad to signal audio
+plug change on resume when it hasn't actually changed from last time?
+Why is that bad? What if the cable is unplugged and then plugged in
+before resume? Does audio still get signalled in that case?
 
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index 5ffab0486665..ff8f5ed5dd65 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -942,7 +942,7 @@ dtb-$(CONFIG_ARCH_OXNAS) += \
- 	ox810se-wd-mbwe.dtb \
- 	ox820-cloudengines-pogoplug-series-3.dtb
- dtb-$(CONFIG_ARCH_QCOM) += \
--	qcom-apq8026-lge-lenok.dtb \
-+	qcom-apq8026-lg-lenok.dtb \
- 	qcom-apq8060-dragonboard.dtb \
- 	qcom-apq8064-cm-qs600.dtb \
- 	qcom-apq8064-ifc6410.dtb \
-diff --git a/arch/arm/boot/dts/qcom-apq8026-lge-lenok.dts b/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
-similarity index 99%
-rename from arch/arm/boot/dts/qcom-apq8026-lge-lenok.dts
-rename to arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
-index ada4e94ade66..52a848e1b4d0 100644
---- a/arch/arm/boot/dts/qcom-apq8026-lge-lenok.dts
-+++ b/arch/arm/boot/dts/qcom-apq8026-lg-lenok.dts
-@@ -10,7 +10,7 @@
- 
- / {
- 	model = "LG G Watch R";
--	compatible = "lge,lenok", "qcom,apq8026";
-+	compatible = "lg,lenok", "qcom,apq8026";
- 	qcom,board-id = <132 0x0a>;
- 	qcom,msm-id = <199 0x20000>;
- 
--- 
-2.33.0
-
+>
+> Fixes: 078867ce04ed ("drm/msm/dp: signal audio plugged change at dp_pm_resume")
+> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+> ---
+>  drivers/gpu/drm/msm/dp/dp_display.c | 10 +++++-----
+>  1 file changed, 5 insertions(+), 5 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 0e543a03..6f13008 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -1356,14 +1356,14 @@ static int dp_pm_resume(struct device *dev)
+>          * can not declared display is connected unless
+>          * HDMI cable is plugged in and sink_count of
+>          * dongle become 1
+> +        * also only signal audio when disconnected
+>          */
+> -       if (dp->link->sink_count)
+> +       if (dp->link->sink_count) {
+>                 dp->dp_display.is_connected = true;
+> -       else
+> +       } else {
+>                 dp->dp_display.is_connected = false;
+> -
+> -       dp_display_handle_plugged_change(g_dp_display,
+> -                               dp->dp_display.is_connected);
+> +               dp_display_handle_plugged_change(g_dp_display, false);
+> +       }
