@@ -2,103 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3B4E041B88B
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 22:42:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D91F41B8B3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 22:52:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242776AbhI1UoR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Sep 2021 16:44:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54850 "EHLO
+        id S242760AbhI1Uyd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Sep 2021 16:54:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57178 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242771AbhI1UoQ (ORCPT
+        with ESMTP id S235775AbhI1Uyb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Sep 2021 16:44:16 -0400
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 76541C061745
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 13:42:36 -0700 (PDT)
-Received: by mail-ot1-x32f.google.com with SMTP id g62-20020a9d2dc4000000b0054752cfbc59so118060otb.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 13:42:36 -0700 (PDT)
+        Tue, 28 Sep 2021 16:54:31 -0400
+Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3EBEC06161C
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 13:52:51 -0700 (PDT)
+Received: by mail-oi1-x236.google.com with SMTP id v10so79730oic.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 13:52:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=uegvCqgF33M3moNAXxbTAqPKWgE2zUFv3rJPDnCK318=;
-        b=bTGLeyAqVm4yvVybxFMvfr82sU4tDikUIegRQQB2zrmSWA2/zpvsM79ITuVnhLIS3y
-         cy0ov0MHqaZXUa48g1wwmcKzX/Ym9dC6tBedVGhUrduILDfeVkl3Anc9L3hLXRQrT2FW
-         X0cQtuXqNiJzsuCZRMczREtR8wOuChTM/babo=
+        bh=3Jv+h2WbR0xCnK/aZ32tsYZMhSsRXzBhaqTpIfuiDho=;
+        b=YRDxoPYUP1th3n3DNQ1RQ12iybGeum6noi5WCEfmCk+EY0hBDcTA/jcKyJoNU8eKVI
+         yaLflsaZZ+5PCH3EcO9qozTaKr8Wnmm7bViTahh/TyeI43ujxzn42jvm+InPjx7V8/Wk
+         /SfoCHzhCAnle+v6RfETXS76dLAJBDsMOlDP0=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=uegvCqgF33M3moNAXxbTAqPKWgE2zUFv3rJPDnCK318=;
-        b=5JG+lPYb8YxWbkETrzBYG2T1zWhD7F9X2Lw4cSujNIWvDEGKfi/VJI+9U9IYbG4OQE
-         lcGpXfv86bfDZgnuDPau753P7ko7o8ws/XTpY0p+v3wFM5dQxma4feZHQyF7hHIHifjF
-         J/CxD9DELln328ABheEOmvLZeppDajR50MzAcJliPjz4nTxpgRcck427mrQJLEFGKU3m
-         382uEfv8arslN+hX/7TzWbq7wmWRkfdrh1K2YL7Y31k54l4/EspHeII60jOM+CmIySX9
-         /EYvtUXSlJLNS1B6dm4vQEY7ibSNTRLikTOAZgUBehFDQTFrGbnEOObFDn5SbpNqQ/MI
-         s5dQ==
-X-Gm-Message-State: AOAM532yTo7HlHcqwJ/ybXne0lJIFTanbv0mmbvlyVaU1bYiPs2ofO8V
-        DGPvXY7mTxHwfhCtvq+BA3auzjgwczYgsX0lQJ7oog==
-X-Google-Smtp-Source: ABdhPJzbrReCsPak9qtP+xmmFsOIy27/pz5auaxnHNLOf59z46/3FuUj4GNV6gNgUU6sLbKtpPIPTPQA/PZ66xgDUdU=
-X-Received: by 2002:a05:6830:358:: with SMTP id h24mr6640507ote.159.1632861755401;
- Tue, 28 Sep 2021 13:42:35 -0700 (PDT)
+        bh=3Jv+h2WbR0xCnK/aZ32tsYZMhSsRXzBhaqTpIfuiDho=;
+        b=V0NZviCFtVBmMM7/53ty7/rNFTgU0OLUfZnlhwopqqVDCasLXmN4uFztNHkV3uClF4
+         pevt/X75EgAFDxG+YjXgLJSbppvx0YoRrAGsqZClTAM5B0T4Fi9uEGvPcqmV8+tXMDgN
+         cc6UR2qPRM5MDRUfw+SbP+8ci7sDgiQLxgZgXHl91KeQTlCdfQrWIBQmwrTYiwlFbogJ
+         aYlZVItPmy7bRvmuipQ4KjyLj2TQPM5/fLHliwNtB5RQC0euAhCeQrT8ohENGygjXbQW
+         AmxSUG496nRR2WCcbnlz0BySI698bR1D4GdOpmZAqJ2S9DYoQ9lP6H/taqENHYRAZmGO
+         gPFw==
+X-Gm-Message-State: AOAM533BBa8wQ4b4XSSMioW+yX2eAJOEWsrw4kdhipDM3s+mr+UjeCAC
+        ARWPfqtIT0Ubq9DxZh+/8uugWCCfQ53/R1wbnWWCcA==
+X-Google-Smtp-Source: ABdhPJw0mMipeCAS7vVd22Q11fDnciZcgmzICC4Qg/PuJcOVUzmex18kXMFcEj0EBIRqzYJUisWuVlWD/dVbuj8WBjM=
+X-Received: by 2002:a05:6808:f8f:: with SMTP id o15mr5176358oiw.164.1632862371131;
+ Tue, 28 Sep 2021 13:52:51 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 28 Sep 2021 13:42:34 -0700
+ HTTPREST; Tue, 28 Sep 2021 13:52:50 -0700
 MIME-Version: 1.0
-In-Reply-To: <1632845472-29276-1-git-send-email-khsieh@codeaurora.org>
-References: <1632845472-29276-1-git-send-email-khsieh@codeaurora.org>
+In-Reply-To: <1632837350-12100-4-git-send-email-pmaliset@codeaurora.org>
+References: <1632837350-12100-1-git-send-email-pmaliset@codeaurora.org> <1632837350-12100-4-git-send-email-pmaliset@codeaurora.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.9.1
-Date:   Tue, 28 Sep 2021 13:42:34 -0700
-Message-ID: <CAE-0n53qPN_ujrs8ABnvdUWgg7mKvcgZBaNq3Os17i7iPKnoTA@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dp: only signal audio when disconnected detected
- at dp_pm_resume
-To:     Kuogee Hsieh <khsieh@codeaurora.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, robdclark@gmail.com, sean@poorly.run,
-        vkoul@kernel.org
-Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Date:   Tue, 28 Sep 2021 13:52:50 -0700
+Message-ID: <CAE-0n52G7=PFrPGr5Zwq43q55CWBSkaEm7HpC+C4r2+Gjv3JQg@mail.gmail.com>
+Subject: Re: [PATCH v9 3/4] arm64: dts: qcom: sc7280: Add PCIe nodes for IDP board
+To:     Prasad Malisetty <pmaliset@codeaurora.org>, agross@kernel.org,
+        bhelgaas@google.com, bjorn.andersson@linaro.org,
+        lorenzo.pieralisi@arm.com, robh+dt@kernel.org, svarbanov@mm-sol.com
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dianders@chromium.org, mka@chromium.org, vbadigan@codeaurora.org,
+        sallenki@codeaurora.org, manivannan.sadhasivam@linaro.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Kuogee Hsieh (2021-09-28 09:11:12)
-> Only signal audio when disconnected detected at dp_pm_resume since
-> connected status will be signaled to audio at next plugin handler.
-
-Please add more details. This says what the patch does but it would be
-better if it included why it is important. Does it fix something?
-There's a fixes tag so it must fix something. Is it bad to signal audio
-plug change on resume when it hasn't actually changed from last time?
-Why is that bad? What if the cable is unplugged and then plugged in
-before resume? Does audio still get signalled in that case?
-
+Quoting Prasad Malisetty (2021-09-28 06:55:49)
+> Enable PCIe controller and PHY for sc7280 IDP board.
+> Add specific NVMe GPIO entries for SKU1 and SKU2 support.
 >
-> Fixes: 078867ce04ed ("drm/msm/dp: signal audio plugged change at dp_pm_resume")
-> Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
+> Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
 > ---
->  drivers/gpu/drm/msm/dp/dp_display.c | 10 +++++-----
->  1 file changed, 5 insertions(+), 5 deletions(-)
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dts  |  9 ++++++
+>  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 54 ++++++++++++++++++++++++++++++++
+>  arch/arm64/boot/dts/qcom/sc7280-idp2.dts |  9 ++++++
+>  3 files changed, 72 insertions(+)
 >
-> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 0e543a03..6f13008 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -1356,14 +1356,14 @@ static int dp_pm_resume(struct device *dev)
->          * can not declared display is connected unless
->          * HDMI cable is plugged in and sink_count of
->          * dongle become 1
-> +        * also only signal audio when disconnected
->          */
-> -       if (dp->link->sink_count)
-> +       if (dp->link->sink_count) {
->                 dp->dp_display.is_connected = true;
-> -       else
-> +       } else {
->                 dp->dp_display.is_connected = false;
-> -
-> -       dp_display_handle_plugged_change(g_dp_display,
-> -                               dp->dp_display.is_connected);
-> +               dp_display_handle_plugged_change(g_dp_display, false);
-> +       }
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+> index 64fc22a..1562386 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+> @@ -61,6 +61,15 @@
+>         modem-init;
+>  };
+>
+> +&nvme_pwren_pin {
+> +       pins = "gpio19";
+> +};
+
+This should move to the bottom in the "pinctrl" section.
+
+> +
+> +&nvme_3v3_regulators {
+> +       gpio = <&tlmm 19 GPIO_ACTIVE_HIGH>;
+> +       enable-active-high;
+
+The enable-active-high can be in the idp.dtsi file? That doesn't seem to
+change.
+
+> +};
+> +
+>  &pmk8350_vadc {
+>         pmr735a_die_temp {
+>                 reg = <PMR735A_ADC7_DIE_TEMP>;
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> index def22ff..5b5505f 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+> @@ -31,6 +31,17 @@
+>                         linux,can-disable;
+>                 };
+>         };
+> +
+> +       nvme_3v3_regulators: nvme-3v3-regulators {
+
+Why plural? Isn't it a single regulator?
+
+> +               compatible = "regulator-fixed";
+> +               regulator-name = "VLDO_3V3";
+> +
+> +               regulator-min-microvolt = <3300000>;
+> +               regulator-max-microvolt = <3300000>;
+> +
+> +               pinctrl-names = "default";
+> +               pinctrl-0 = <&nvme_pwren_pin>;
+> +       };
+>  };
+>
+>  &apps_rsc {
+> @@ -220,6 +231,42 @@
+>         modem-init;
+>  };
+>
+> +&pcie1 {
+> +       status = "okay";
+> +       perst-gpio = <&tlmm 2 GPIO_ACTIVE_LOW>;
+> +
+> +       vddpe-3v3-supply = <&nvme_3v3_regulators>;
+> +
+> +       pinctrl-names = "default";
+> +       pinctrl-0 = <&pcie1_default_state>;
+> +};
+> +
+> +&pcie1_phy {
+> +       status = "okay";
+> +
+> +       vdda-phy-supply = <&vreg_l10c_0p8>;
+> +       vdda-pll-supply = <&vreg_l6b_1p2>;
+> +};
+> +
+> +&pcie1_default_state {
+
+I thought the node would be split into a reset config node and a wake
+config node. Is that not being done for some reason? The pinctrl-0 would
+look like
+
+	pinctrl-0 = <&pcie1_default_state>, <&pcie1_reset_n>, <&pcie1_wake_n>;
+
+> +       reset-n {
+> +               pins = "gpio2";
+> +               function = "gpio";
+> +
+> +               drive-strength = <16>;
+> +               output-low;
+> +               bias-disable;
+> +       };
+> +
+> +       wake-n {
+> +               pins = "gpio3";
+> +               function = "gpio";
+> +
+> +               drive-strength = <2>;
+> +               bias-pull-up;
+> +       };
+> +};
+> +
+>  &pmk8350_vadc {
+>         pmk8350_die_temp {
+>                 reg = <PMK8350_ADC7_DIE_TEMP>;
+> @@ -489,3 +536,10 @@
+>                 bias-pull-up;
+>         };
+>  };
+> +
+> +&tlmm {
+> +       nvme_pwren_pin: nvme-pwren-pin {
+> +               function = "gpio";
+> +               bias-pull-up;
+> +       };
+> +};
+> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp2.dts b/arch/arm64/boot/dts/qcom/sc7280-idp2.dts
+> index 1fc2add..0548cb6 100644
+> --- a/arch/arm64/boot/dts/qcom/sc7280-idp2.dts
+> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp2.dts
+> @@ -21,3 +21,12 @@
+>                 stdout-path = "serial0:115200n8";
+>         };
+>  };
+> +
+> +&nvme_pwren_pin {
+> +       pins = "gpio51";
+> +};
+
+The pin config can go to a pinctrl section at the bottom of this file?
+
+> +
+> +&nvme_3v3_regulators {
+> +       gpio = <&tlmm 51 GPIO_ACTIVE_HIGH>;
+> +       enable-active-high;
+> +};
