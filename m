@@ -2,158 +2,96 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0762841B0F8
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 15:36:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2942841B118
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 15:47:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241055AbhI1Nia (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Sep 2021 09:38:30 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:22212 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241409AbhI1Ni1 (ORCPT
+        id S241015AbhI1NtK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Sep 2021 09:49:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42424 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240988AbhI1NtI (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Sep 2021 09:38:27 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1632836208; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=RXIq/K2ohsUwqQm35SM1S19TmqC+YjwzpoMV/xptKiU=;
- b=DUVBIqWY560jCGodn6ofAlmeV0aNe4zIQdezKYwEg4F99DFfTsZ6XROLU+iJn0u5qqwnMHO1
- 6E3hJPDglED8IN/hvzn5GdVY4qEOrR2hu7NknsWi7COhDQLM473mXFyZpnpKhxK9ZLhFcCGz
- ShTPKI/GQZXtefI5M7DyqL9NR9M=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 61531a6b9ffb4131497e37bb (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Sep 2021 13:36:43
- GMT
-Sender: pmaliset=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A0C30C447A3; Tue, 28 Sep 2021 13:36:42 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: pmaliset)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id BFACEC4338F;
-        Tue, 28 Sep 2021 13:36:41 +0000 (UTC)
+        Tue, 28 Sep 2021 09:49:08 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4892AC061575
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 06:47:29 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id x27so8166785lfa.9
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 06:47:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=zwVENlJtRAi6Ax59HxxFqFtBJgRbm8ce1Id+5WhoWL8=;
+        b=XQFP1mUhXKlHXI+xEmvDrSXbeLGnD4CLmXjgYseEqEruv9KrCC6FSc8Y5Ho4LjbDOX
+         zC6snsJNUUz1wZImn8MwvqtBxmMBxpHhjrx+sD7movv4TlZPXtvtAREC+/yRiKmX0pue
+         ++eKN5f+0dJcVxMLuJppLKf8ZQF/8jTKUtiroQPAE26FNLy3qV5NuZ4Mfmn9YaCTMPq7
+         nzwGakmqi86S8+l5vHWVzyPlqaDPjAMTD04P50HoQaOwSxjmCvIFwGP8TkCDq/Iqin0z
+         nosD+DseVrciB0VXscUsdG8/7r83wCXEdGV3qDxxotWcJfScS76Tqa9v285icJA3aBNN
+         Ec1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=zwVENlJtRAi6Ax59HxxFqFtBJgRbm8ce1Id+5WhoWL8=;
+        b=HLF4i+6RyniOanJrYtD5k09evfmtXI/QKTKYqYMZzDODlhofKH3ZgeplDHS5wHHuL6
+         rRDHbFpSrJ3yf0Pw7Ak97edUHBzCs0bnQV0/gasXq418DfCfq8ZfZ6YH3qbilZApi8kX
+         BWjEjHAq5vmSt0uB8zQIu0tTo3DtBWRbv3uTIdrtdNmRpSB6QkLdEkDYcdgGVscRY9k9
+         psgsEseDzAy6LHr5xszgYftkGKBxx6HhsBgGS4fnndglyKse/ETtZBzmgPz01Xnz0j/k
+         zV9Qj3w5YFzNDUT69jlJhT4Pni3hss+pGMRw2+Mxs+LQU65Uuzv2SndFcZJrPFV9SNiD
+         b3iA==
+X-Gm-Message-State: AOAM533q/hxumMDnInM9ume9BStS9NSEXv1qvn2f1H1Qks3Ku1RRC4+s
+        Pi6O/ELJ757lODxqeMV3XpvrrEbx4tFsdZjPPlAyrQ==
+X-Google-Smtp-Source: ABdhPJw2Fb4WlAdBMN6qf/ANOW7XfaZ4dwR3+5V+TQbap6YMXmbnt1TkRoKkuxS6/KOggTQZ6bWvGaBx1mJ0aeF2U9k=
+X-Received: by 2002:a19:f249:: with SMTP id d9mr5834936lfk.229.1632836846030;
+ Tue, 28 Sep 2021 06:47:26 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 28 Sep 2021 19:06:41 +0530
-From:   Prasad Malisetty <pmaliset@codeaurora.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     agross@kernel.org, bhelgaas@google.com, bjorn.andersson@linaro.org,
-        lorenzo.pieralisi@arm.com, robh+dt@kernel.org,
-        svarbanov@mm-sol.com, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dianders@chromium.org,
-        mka@chromium.org, vbadigan@codeaurora.org, sallenki@codeaurora.org,
-        manivannan.sadhasivam@linaro.org
-Subject: Re: [PATCH v8 3/4] arm64: dts: qcom: sc7280: Add PCIe nodes for IDP
- board
-In-Reply-To: <CAE-0n53N-7wGgGmqep6ZTAt14dYObq43cTak_BWAjy6XS0Gnig@mail.gmail.com>
-References: <1631898947-27433-1-git-send-email-pmaliset@codeaurora.org>
- <1631898947-27433-4-git-send-email-pmaliset@codeaurora.org>
- <CAE-0n53N-7wGgGmqep6ZTAt14dYObq43cTak_BWAjy6XS0Gnig@mail.gmail.com>
-Message-ID: <5677240b6391d3e9a2d9a629505b9bf6@codeaurora.org>
-X-Sender: pmaliset@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <20210928013621.1245-1-caihuoqing@baidu.com>
+In-Reply-To: <20210928013621.1245-1-caihuoqing@baidu.com>
+From:   Linus Walleij <linus.walleij@linaro.org>
+Date:   Tue, 28 Sep 2021 15:47:14 +0200
+Message-ID: <CACRpkdZX6JkBOFX9yd-gsrzD5ObXR1VKmVNFLNbAv2Q0w1w5FQ@mail.gmail.com>
+Subject: Re: [PATCH v2 1/9] iio: adc: ab8500-gpadc: Make use of the helper
+ function dev_err_probe()
+To:     Cai Huoqing <caihuoqing@baidu.com>
+Cc:     Jonathan Cameron <jic23@kernel.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        Pengutronix Kernel Team <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        NXP Linux Team <linux-imx@nxp.com>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-iio <linux-iio@vger.kernel.org>,
+        linux-kernel <linux-kernel@vger.kernel.org>,
+        "open list:ARM/Amlogic Meson..." <linux-amlogic@lists.infradead.org>,
+        MSM <linux-arm-msm@vger.kernel.org>,
+        "open list:ARM/Rockchip SoC..." <linux-rockchip@lists.infradead.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-09-21 01:21, Stephen Boyd wrote:
-> Quoting Prasad Malisetty (2021-09-17 10:15:46)
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi 
->> b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> index 99f9ee5..ee00df0 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> @@ -199,6 +199,39 @@
->>         modem-init;
->>  };
->> 
->> +&pcie1 {
->> +       status = "okay";
->> +
->> +       perst-gpio = <&tlmm 2 GPIO_ACTIVE_LOW>;
->> +       pinctrl-0 = <&pcie1_default_state &nvme_ldo_enable_pin>;
->> +};
->> +
->> +&pcie1_phy {
->> +       status = "okay";
->> +
->> +       vdda-phy-supply = <&vreg_l10c_0p8>;
->> +       vdda-pll-supply = <&vreg_l6b_1p2>;
->> +};
->> +
->> +&pcie1_default_state {
->> +       reset-n {
->> +               pins = "gpio2";
->> +               function = "gpio";
->> +
->> +               drive-strength = <16>;
->> +               output-low;
->> +               bias-disable;
->> +       };
->> +
->> +       wake-n {
->> +               pins = "gpio3";
->> +               function = "gpio";
->> +
->> +               drive-strength = <2>;
->> +               bias-pull-up;
->> +       };
-> 
-> I think the previous round of this series Bjorn was saying that these
-> should be different nodes and tacked onto the pinctrl-0 list for the
-> pcie1 device instead of adding them as subnodes of the "default state".
-> 
+On Tue, Sep 28, 2021 at 3:36 AM Cai Huoqing <caihuoqing@baidu.com> wrote:
 
-Hi Stephen,
+> When possible use dev_err_probe help to properly deal with the
+> PROBE_DEFER error, the benefit is that DEFER issue will be logged
+> in the devices_deferred debugfs file.
+> Using dev_err_probe() can reduce code size, and the error value
+> gets printed.
+>
+> Signed-off-by: Cai Huoqing <caihuoqing@baidu.com>
+> ---
+> v1->v2: Remove the separate line of PTR_ERR().
 
-Here NVMe gpio entry is endpoint related where as wake-n and reset-n are 
-PCIe controller gpio's. I think Bjorn was saying keep endpoint related 
-gpio (NVMe) in separate state entry in pinctrl-0 list.
+Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
 
-Thanks
--Prasad.
-
->> +};
->> +
->>  &pmk8350_vadc {
->>         pmk8350_die_temp {
->>                 reg = <PMK8350_ADC7_DIE_TEMP>;
->> @@ -343,3 +376,10 @@
->>                 bias-pull-up;
->>         };
->>  };
->> +
->> +&tlmm {
->> +       nvme_ldo_enable_pin: nvme_ldo_enable_pin {
-> 
-> Please use dashes where you use underscores in node names
-> 
->        nvme_ldo_enable_pin: nvme-ldo-enable-pin {
-> 
->> +               function = "gpio";
->> +               bias-pull-up;
-> 
-> Of course with that said, the name of this node makes it sound like 
-> this
-> is a gpio controlled regulator. Why not use that binding then and 
-> enable
-> the regulator either by default with regulator properties like
-> regulator-always-on and regulator-boot-enable and/or reference it from
-> the pcie device somehow so that it can be turned off during suspend?
-> 
-Agree, I will add in next patch series.
-
->> +       };
->> +};
+Yours,
+Linus Walleij
