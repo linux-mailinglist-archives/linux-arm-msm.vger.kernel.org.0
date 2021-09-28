@@ -2,228 +2,218 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0D0D741A456
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 02:56:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B3BE241A479
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 03:06:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238402AbhI1A56 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 27 Sep 2021 20:57:58 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34046 "EHLO
+        id S238395AbhI1BIS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 27 Sep 2021 21:08:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36428 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238405AbhI1A55 (ORCPT
+        with ESMTP id S229942AbhI1BIS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 27 Sep 2021 20:57:57 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B6328C061740
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Sep 2021 17:56:18 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id i4so85065051lfv.4
-        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Sep 2021 17:56:18 -0700 (PDT)
+        Mon, 27 Sep 2021 21:08:18 -0400
+Received: from mail-qk1-x72f.google.com (mail-qk1-x72f.google.com [IPv6:2607:f8b0:4864:20::72f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1108AC061575
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Sep 2021 18:06:40 -0700 (PDT)
+Received: by mail-qk1-x72f.google.com with SMTP id q125so24402701qkd.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 27 Sep 2021 18:06:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=lC52cuIyhysmon3FmA4ZHryvBqfp0OdO4554JVWx3pA=;
-        b=uFTatvFZmp14sUa3nTYziriLbjac4lAK7Yy3RZFbP0lL1QXDB0acxxhyw5Q8n7ZeAO
-         koOX9qc4H1Lve7XU45ByctJIqSu7qhJwx31vEZLwgyOGQv9Ui5PBdSUDKZyAd40jKt7E
-         OwvrNEAsnXelX3kC76vXKcJ4f7RfnZsyp3heMv8/NqGajKSRcqsTPrwiyVYIczmFxV8D
-         RZJ7FRXp+h7pMk7QQzGMosMbVi0p9gACrqjQUx2iNjf4hFEzqP/+jhNqn5mIijdG9vVT
-         5AYBGPvXuoONWOBz6mHm3TgeknSS8eQTGehEupwyAv4b4i4jJBGzOrthjljH0Klzs/A0
-         iyjQ==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=mERY1nGuxQ0QFsXPxpQrWeW9FJy4Jbni4FQPie6L/Ak=;
+        b=ZS6GITD1DV/9jH7ykxZDXEiEqJy3yHDZiE22sWzK3RpQn2Q9005y2738tpQBOCeAFv
+         unmwXoGyzquhJ0LKrVdV7E1LAu6fqVcOUjCcxDLaJ54cnlU8aTthRrIr3rgJWNHu6ozk
+         lZP2tDRlV0K4paDqox/NavN4OObNqR/DfLaxzwBKNlOzxnx4uAM3wDeZROGRC7SlXqT5
+         dO/T50rffba97gCQ7T/V4Cg0Dp5Kh8M6hqxOoNdt6bkjgQ4S/tWgn7jbZVOz2Om6EPx6
+         J5ZtKRpPnG0JzJl6TCYtoeAjuvm71EYEWPGFylHGSKUlZlGwgTVoeZi1o3IYp0lRWhsS
+         DVkA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=lC52cuIyhysmon3FmA4ZHryvBqfp0OdO4554JVWx3pA=;
-        b=Degjx/9bY7aGMepPN346/hL02psMDEuiDgHTR9c1hwEHLpWvZ41Gr0GIYyzfPFhTju
-         yKUwpiaaLnD4gQeaMlroF5NhlHJ5ZpO/qhE60AgFwkY57vgRM2QbT06X++bKPbicmd2r
-         LO5vCBsR3f0cmvgDvrdzB1+mN73xvFxjAeMQlxF6wxMYE9OoQSjUP80xo52jVBcDehyi
-         MY3P2COswMpI+o/oFF3DRfEN7SRibTsC+VCQh3mJKxPqAxpd8PkB+HHQLkYNGEIFvDbw
-         /uvb03VnIAY/KviQ9I1obsYNgstqzb0t7G1YQdrmCP+NGsgx2I29EBSDnL/iJpKhrC6H
-         BxAg==
-X-Gm-Message-State: AOAM5305H+nZqG8hmxL2DXfF2r3+uBXJc/znLumPMurDJG3YNLsqaPml
-        BkJ8XljexGDHZ9WdsW5ttrkxQpaU0ut54Q==
-X-Google-Smtp-Source: ABdhPJxJrJbxhxKcogHRALa7l7VZTa87ZfS1oLhn4Xs2Gj22eJ6GMC8KF3knrc9Albd5LA3YGd3udg==
-X-Received: by 2002:a2e:5046:: with SMTP id v6mr3019932ljd.368.1632790576577;
-        Mon, 27 Sep 2021 17:56:16 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id b15sm1752076lfp.221.2021.09.27.17.56.15
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 27 Sep 2021 17:56:16 -0700 (PDT)
-Subject: Re: [PATCH] Revert "of: property: fw_devlink: Add support for
- remote-endpoint"
-To:     Saravana Kannan <saravanak@google.com>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Stephen Boyd <sboyd@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-References: <20210927204830.4018624-1-dmitry.baryshkov@linaro.org>
- <CAGETcx-3Y3rOSoXu3SbDa6BP_jcT8uSQA+MV55QCY4b0Oe7L-A@mail.gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <11fe1793-1455-ae44-b213-9afe47dfa370@linaro.org>
-Date:   Tue, 28 Sep 2021 03:56:15 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=mERY1nGuxQ0QFsXPxpQrWeW9FJy4Jbni4FQPie6L/Ak=;
+        b=L10ltVYu+GBwS3DdgPTPMVNu+PaQI9+fc1ro7T8j7LGyPtTZpHW8zJq/ejiUWWiPHQ
+         5hsw/vqoiyaMrhgB3zNRuRERrnnjRZPODShBUb3HHrdqL4VyIG581XyzXq4oFIZESLYt
+         R4Rch33xZ18VzoawTOu7iWBwLRBgKoDuwUTmLlgJsRLcYwvN+stvM7Tp6yXQY3yU2mKA
+         KFh838Mcazy8q9hN1168z4dBiLxc4AvpaTtFyCaxojI1FB8ZLuUL2OLtSHenLKco7M2Q
+         3d7SqVwqyrkSN6ZwQUFbHV38cbWb4GCMTrgbglJ06eAZ1Nh6Jo42pDcdusQ1aKl1klX3
+         pwiw==
+X-Gm-Message-State: AOAM530A21aS1ae8RmWKDS7/9X2Q213RqjkhS3kcFVKFlC2kBBl2xEnS
+        zejJnAyDIv59HdjbQRFQ5y73DLLRkCd47e/dWvPaICmXQEU+GA==
+X-Google-Smtp-Source: ABdhPJx88Drvqsf7DG/Br0/p8AqE/XYpjfbYn9jUoGqGM//Bc5IpCKRsnGY0eLJ9AacfePn/3cR1HFvaiPb32OfVMss=
+X-Received: by 2002:ae9:d842:: with SMTP id u63mr3115630qkf.44.1632791199135;
+ Mon, 27 Sep 2021 18:06:39 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <CAGETcx-3Y3rOSoXu3SbDa6BP_jcT8uSQA+MV55QCY4b0Oe7L-A@mail.gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+References: <20210921162258.1858223-1-dmitry.baryshkov@linaro.org>
+ <0c275df228a1925e43a4dc59ceeab6b7@codeaurora.org> <CAA8EJppLDpmT81OhdpWjHh4joPL=mNaG8eZN2cZOZk8mSpbd+w@mail.gmail.com>
+ <8c1e44cf44f917d38fa7133b869047b0@codeaurora.org> <7512b299-106f-2ffa-6d4f-46dc195abb84@linaro.org>
+ <8060e6fd83d521ed14785ea66386337b@codeaurora.org>
+In-Reply-To: <8060e6fd83d521ed14785ea66386337b@codeaurora.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Tue, 28 Sep 2021 04:06:27 +0300
+Message-ID: <CAA8EJpqvNJudg8-PActLEYf-BgmnJD3N7a4pMqb8VNf4hFiHdw@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH] drm/msm/dsi: do not install irq handler
+ before power up the host
+To:     Abhinav Kumar <abhinavk@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        David Heidelberg <david@ixit.cz>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[Adding Stephen and linux-arm-msm to the CC list, missed on the patch Cc 
-list]
+On Tue, 28 Sept 2021 at 03:22, <abhinavk@codeaurora.org> wrote:
+>
+> On 2021-09-25 12:43, Dmitry Baryshkov wrote:
+> > On 21/09/2021 23:52, abhinavk@codeaurora.org wrote:
+> >> On 2021-09-21 10:47, Dmitry Baryshkov wrote:
+> >>> Hi,
+> >>>
+> >>> On Tue, 21 Sept 2021 at 20:01, <abhinavk@codeaurora.org> wrote:
+> >>>>
+> >>>> On 2021-09-21 09:22, Dmitry Baryshkov wrote:
+> >>>> > The DSI host might be left in some state by the bootloader. If this
+> >>>> > state generates an IRQ, it might hang the system by holding the
+> >>>> > interrupt line before the driver sets up the DSI host to the known
+> >>>> > state.
+> >>>> >
+> >>>> > Move the request/free_irq calls into msm_dsi_host_power_on/_off calls,
+> >>>> > so that we can be sure that the interrupt is delivered when the host is
+> >>>> > in the known state.
+> >>>> >
+> >>>> > Fixes: a689554ba6ed ("drm/msm: Initial add DSI connector support")
+> >>>> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> >>>>
+> >>>> This is a valid change and we have seen interrupt storms in
+> >>>> downstream
+> >>>> happening
+> >>>> when like you said the bootloader leaves the DSI host in unknown
+> >>>> state.
+> >>>> Just one question below.
+> >>>>
+> >>>> > ---
+> >>>> >  drivers/gpu/drm/msm/dsi/dsi_host.c | 21 ++++++++++++---------
+> >>>> >  1 file changed, 12 insertions(+), 9 deletions(-)
+> >>>> >
+> >>>> > diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> >>>> > b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> >>>> > index e269df285136..cd842347a6b1 100644
+> >>>> > --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
+> >>>> > +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+> >>>> > @@ -1951,15 +1951,6 @@ int msm_dsi_host_modeset_init(struct
+> >>>> > mipi_dsi_host *host,
+> >>>> >               return ret;
+> >>>> >       }
+> >>>> >
+> >>>> > -     ret = devm_request_irq(&pdev->dev, msm_host->irq,
+> >>>> > -                     dsi_host_irq, IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+> >>>> > -                     "dsi_isr", msm_host);
+> >>>> > -     if (ret < 0) {
+> >>>> > -             DRM_DEV_ERROR(&pdev->dev, "failed to request IRQ%u: %d\n",
+> >>>> > -                             msm_host->irq, ret);
+> >>>> > -             return ret;
+> >>>> > -     }
+> >>>> > -
+> >>>> >       msm_host->dev = dev;
+> >>>> >       ret = cfg_hnd->ops->tx_buf_alloc(msm_host, SZ_4K);
+> >>>> >       if (ret) {
+> >>>> > @@ -2413,6 +2404,16 @@ int msm_dsi_host_power_on(struct mipi_dsi_host
+> >>>> > *host,
+> >>>> >       if (msm_host->disp_en_gpio)
+> >>>> >               gpiod_set_value(msm_host->disp_en_gpio, 1);
+> >>>> >
+> >>>> > +     ret = devm_request_irq(&msm_host->pdev->dev, msm_host->irq,
+> >>>> > +                     dsi_host_irq, IRQF_TRIGGER_HIGH | IRQF_ONESHOT,
+> >>>> > +                     "dsi_isr", msm_host);
+> >>>> > +     if (ret < 0) {
+> >>>> > +             DRM_DEV_ERROR(&msm_host->pdev->dev, "failed to request IRQ%u: %d\n",
+> >>>> > +                             msm_host->irq, ret);
+> >>>> > +             return ret;
+> >>>> > +     }
+> >>>> > +
+> >>>> > +
+> >>>>
+> >>>> Do you want to move this to msm_dsi_host_enable()?
+> >>>> So without the controller being enabled it is still in unknown
+> >>>> state?
+> >>>
+> >>> msm_dsi_host_power_on() reconfigures the host registers, so the state
+> >>> is known at the end of the power_on().
+> >>>
+> >>>> Also do you want to do this after dsi0 and dsi1 are initialized to
+> >>>> account for
+> >>>> dual dsi cases?
+> >>>
+> >>> I don't think this should matter. The host won't generate 'extra'
+> >>> interrupts in such case, will it?
+> >>>
+> >> We have seen cases where misconfiguration has caused interrupts to
+> >> storm only
+> >> on one DSI in some cases. So yes, I would prefer this is done after
+> >> both are
+> >> configured.
+> >
+> > I've checked. The power_on is called from dsi_mgr_bridge_pre_enable()
+> > when both DSI hosts should be bound.
+>
+> DSI being bound is enough? I thought the issue we are trying to address
+> is that
+> we need to have called msm_dsi_host_power_on() for both the hosts so
+> that both are
+> put in the known state before requesting the irq.
+>
+> OR in other words move the irq_enable() to below location.
+>
+> 341 static void dsi_mgr_bridge_pre_enable(struct drm_bridge *bridge)
+> 342 {
+> ********************************
+> 364     ret = msm_dsi_host_power_on(host, &phy_shared_timings[id],
+> is_bonded_dsi, msm_dsi->phy);
+> 365     if (ret) {
+> 366             pr_err("%s: power on host %d failed, %d\n", __func__, id, ret);
+> 367             goto host_on_fail;
+> 368     }
+> 369
+> 370     if (is_bonded_dsi && msm_dsi1) {
+> 371             ret = msm_dsi_host_power_on(msm_dsi1->host,
+> 372                             &phy_shared_timings[DSI_1], is_bonded_dsi, msm_dsi1->phy);
+> 373             if (ret) {
+> 374                     pr_err("%s: power on host1 failed, %d\n",
+> 375                                                     __func__, ret);
+> 376                     goto host1_on_fail;
+> 377             }
+> 378     }
+>
+> < move the irq enable here >
+> **********************************
 
-On 28/09/2021 00:58, Saravana Kannan wrote:
-> On Mon, Sep 27, 2021 at 1:48 PM Dmitry Baryshkov
-> <dmitry.baryshkov@linaro.org> wrote:
->>
->> Since the commit f7514a663016 ("of: property: fw_devlink: Add support
->> for remote-endpoint") Linux kernel started parsing and adding devlinks
->> for the remote-endpoint properties. However this brings more harm than
->> good.
->>
->> For all the remote-endpoints in the graph two links are created. Thus
->> each and every remote-endpoint ends up in the cyclic graph (instead of
->> the original intent of catching a cycle of graph + non-graph link):
-> 
-> Yes, I'm well aware of this. I even called this out in the commit
-> text. This creating of cycles and then catching and relaxing it is
-> intentional.
-> https://lore.kernel.org/all/20210330185056.1022008-1-saravanak@google.com/
+Ah, I see your point. What about moving to msm_dsi_host_enable() then?
 
-What would be the reason two always create a cycle which gives no 
-additional information? Maybe I'm just misunderstanding this piece of code.
+> >>>> >       msm_host->power_on = true;
+> >>>> >       mutex_unlock(&msm_host->dev_mutex);
+> >>>> >
+> >>>> > @@ -2439,6 +2440,8 @@ int msm_dsi_host_power_off(struct mipi_dsi_host
+> >>>> > *host)
+> >>>> >               goto unlock_ret;
+> >>>> >       }
+> >>>> >
+> >>>> > +     devm_free_irq(&msm_host->pdev->dev, msm_host->irq, msm_host);
+> >>>> > +
+> >>>> >       dsi_ctrl_config(msm_host, false, NULL, NULL);
+> >>>> >
+> >>>> >       if (msm_host->disp_en_gpio)
 
-Regarding your commit message. Even if there is a non-remote-endpoint 
-dependency, it will be hidden by the remote-endpoint cycle.
-
-And another consequence of remote-endpoint loops.
-
-Consider this part part of dmesg. One warning is correct (real cyclic 
-dependency). Others are remote-endpoint spam. Can you spot, which ones?
-
-[    7.032225] platform 1d87000.phy: Fixing up cyclic dependency with 
-1d84000.ufshc
-[   21.760326] platform c440000.spmi:pmic@2:typec@1500: Fixing up cyclic 
-dependency with c440000.spmi:pmic@2:pmic-tcpm
-[   21.944849] platform c440000.spmi:pmic@2:pdphy@1700: Fixing up cyclic 
-dependency with c440000.spmi:pmic@2:pmic-tcpm
-[   23.541968] platform a600000.usb: Fixing up cyclic dependency with 
-c440000.spmi:pmic@2:pmic-tcpm
-[   30.354170] i2c 5-002b: Fixing up cyclic dependency with hdmi-out
-
-
->>
->> [    0.381057] OF: remote-endpoint linking /soc@0/geniqup@9c0000/i2c@994000/hdmi-bridge@2b to /soc@0/mdss@ae00000/dsi@ae94000/ports/port@1/endpoint
->> [    0.394421] OF: remote-endpoint linking /soc@0/geniqup@9c0000/i2c@994000/hdmi-bridge@2b to /hdmi-out/port/endpoint
->> [    0.407007] OF: remote-endpoint linking /soc@0/phy@88e9000 to /soc@0/spmi@c440000/pmic@2/pmic-tcpm/connector/ports/port@0/endpoint@0
->> [    0.419648] OF: remote-endpoint linking /soc@0/usb@a6f8800/usb@a600000 to /soc@0/spmi@c440000/pmic@2/pmic-tcpm/ports/port@2/endpoint@0
->> [    0.432578] OF: remote-endpoint linking /soc@0/cci@ac4f000/i2c-bus@1/cam1@c0 to /soc@0/camss@ac6a000/ports/port@1/endpoint
->> [    0.444450] OF: remote-endpoint linking /soc@0/camss@ac6a000 to /soc@0/cci@ac4f000/i2c-bus@1/cam1@c0/port/endpoint
->> [    0.455292] OF: remote-endpoint linking /soc@0/mdss@ae00000/mdp@ae01000 to /soc@0/mdss@ae00000/dsi@ae94000/ports/port@0/endpoint
->> [    0.467210] OF: remote-endpoint linking /soc@0/mdss@ae00000/mdp@ae01000 to /soc@0/mdss@ae00000/dsi@ae96000/ports/port@0/endpoint
->> [    0.479239] OF: remote-endpoint linking /soc@0/mdss@ae00000/dsi@ae94000 to /soc@0/mdss@ae00000/mdp@ae01000/ports/port@0/endpoint
->> [    0.491147] OF: remote-endpoint linking /soc@0/mdss@ae00000/dsi@ae94000 to /soc@0/geniqup@9c0000/i2c@994000/hdmi-bridge@2b/ports/port@0/endpoint
->> [    0.504979] OF: remote-endpoint linking /soc@0/spmi@c440000/pmic@2/typec@1500 to /soc@0/spmi@c440000/pmic@2/pmic-tcpm/ports/port@0/endpoint
->> [    0.517958] OF: remote-endpoint linking /soc@0/spmi@c440000/pmic@2/pdphy@1700 to /soc@0/spmi@c440000/pmic@2/pmic-tcpm/ports/port@1/endpoint
->> [    0.565326] OF: remote-endpoint linking /hdmi-out to /soc@0/geniqup@9c0000/i2c@994000/hdmi-bridge@2b/ports/port@2/endpoint
->>
->> Under some conditions the device can become it's own supplier,
->> preventing this device to be probed at all:
-> 
-> I'm not sure this analysis is correct -- this shouldn't be happening.
-> If you go to the device link folder and cat "sync_state_only", I
-> expect it to be "1" in this case. Can you confirm that?
-
-It is "1".
-
-> Which means it won't block probing. Yes, the link itself is useless
-> and it'll get auto deleted once mdss probes and it's easy to not
-> create it in the first place. But this is definitely not your issue.
-> 
->> $ ls -l /sys/bus/platform/devices/ae00000.mdss/
->> lrwxrwxrwx    1 root     root             0 Aug  4 15:13 consumer:platform:ae00000.mdss -> ../../../virtual/devlink/platform:ae00000.mdss--platform:ae00000.mdss
->>
->> I think that until of_link can be tought to handle bi-directional links
->> on its own, we should not parse remote-endpoint properties. Thus the
->> aforementioned commit should be reverted.
-> 
-> Nak. remote-endpoint parsing is working as intended. I don't think the
-> analysis is correct.
-> 
-> Can you please enable the logs in all these functions and attach the
-> log so we can see why it's not probing mdss?
-> device_link_add
-> device_links_check_suppliers
-> func fw_devlink_relax_link
-> fw_devlink_create_devlink
-
-After doing the analysis, I can confirm that I was too quick regarding 
-the mdss links preventing it from being probed. Sorry about that.
-
-It all went up to the DP phy having a link with usb-c-connector. I was 
-running the kernel 5.15-rc1, so your tcpm fix is already present. 
-However my colleague has disabled the tcpm device (which I did not 
-notice). So the driver did not call fw_devlink_purge_absent_suppliers().
-The devlink still exists:
-
-[   53.426446] platform 88e9000.phy: probe deferral - wait for supplier 
-connector
-
-However it is not present in the sysfs:
-
-root@qcom-armv8a:~# ls -l /sys/bus/platform/devices/88e9000.phy/
-lrwxrwxrwx    1 root     root             0 Aug  4 15:13 
-consumer:platform:a600000.usb -> 
-../../../virtual/devlink/platform:88e9000.phy--platform:a600000.usb
-lrwxrwxrwx    1 root     root             0 Aug  4 15:13 
-consumer:platform:af00000.clock-controller -> 
-../../../virtual/devlink/platform:88e9000.phy--platform:af00000.clock-controller
--rw-r--r--    1 root     root          4096 Aug  4 15:13 driver_override
--r--r--r--    1 root     root          4096 Aug  4 15:13 modalias
-lrwxrwxrwx    1 root     root             0 Aug  4 15:13 of_node -> 
-../../../../firmware/devicetree/base/soc@0/phy@88e9000
-drwxr-xr-x    2 root     root             0 Aug  4 15:13 power
-lrwxrwxrwx    1 root     root             0 Aug  4 15:10 subsystem -> 
-../../../../bus/platform
-lrwxrwxrwx    1 root     root             0 Aug  4 15:13 
-supplier:platform:100000.clock-controller -> 
-../../../virtual/devlink/platform:100000.clock-controller--platform:88e9000.phy
-lrwxrwxrwx    1 root     root             0 Aug  4 15:13 
-supplier:platform:18200000.rsc:clock-controller -> 
-../../../virtual/devlink/platform:18200000.rsc:clock-controller--platform:88e9000.phy
-lrwxrwxrwx    1 root     root             0 Aug  4 15:13 
-supplier:platform:18200000.rsc:pm8150-rpmh-regulators -> 
-../../../virtual/devlink/platform:18200000.rsc:pm8150-rpmh-regulators--platform:88e9000.phy
--rw-r--r--    1 root     root          4096 Aug  4 15:10 uevent
--r--r--r--    1 root     root          4096 Aug  4 15:13 
-waiting_for_supplier
-
-Thus it is not possible to spot this device link without 
-CONFIG_DEBUG_DRIVER=y (or any similar debugging technique).
-
-If I re-enabled tcpm device or if I reverted remote-endpoint parsing, DP 
-PHY probing would go fine. The DP PHY does not really depend on the 
-connector (or TCPM) being present in the system. The driver will 
-continue working w/o it. However it does not have a change to declare that.
-
-Furthermore I went back to the original case that caused you to add 
-remote-endpoint support. The DSI-eDP bridge and eDP panel using the GPIO 
-provided by that bridge. I think the proper fix for the original problem 
-was implemented by the commit bf73537f411b ("drm/bridge: ti-sn65dsi86: 
-Break GPIO and MIPI-to-eDP bridge into sub-drivers"). It split the 
-DSI-eDP bridge driver into functional parts (devices), so that GPIO part 
-and eDP parts are independent, thus breaking this cyclic dependency in a 
-functional way. The remote-endpoint parsing is no longer necessary in 
-this case (Stephen, please correct me if I'm wrong).
-
-
-I still think that remote endpoint parsing does more harm and noise than 
-good and thus should be reverted.
 
 -- 
 With best wishes
