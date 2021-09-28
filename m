@@ -2,111 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CB00D41B516
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 19:24:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2262D41B524
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 19:30:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241974AbhI1R0K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Sep 2021 13:26:10 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37072 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242060AbhI1R0K (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Sep 2021 13:26:10 -0400
-Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9094FC061746
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 10:24:30 -0700 (PDT)
-Received: by mail-ot1-x32f.google.com with SMTP id 5-20020a9d0685000000b0054706d7b8e5so29893205otx.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 10:24:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Tz7rXxaL4F/0f9c2pv27juc+BGdU7ScDq2tqCmIv38Y=;
-        b=tR2pRCj/qKxjNExZrPW1JMusgHTkF217aDaxwmJWEm2fFtDA/r7cVLoE6t7EzHMG+j
-         4cnF8eefX32CXwbIWS6Fb2aNitjEQgYmhl/kiZWdzTtTEgr5BzM5bDrNr0xGoQcnHfo4
-         ukAyh1JNMGUrNsZ4ZRwG+Cz3NZM+zUpCggoPt4Asg9JC7DVN8QeAGxfMPgjNvvfvWI+o
-         VTDg52u12ACCsADmcqS7lLTm4+uCVoHSAG1DP1EAuiZkXe6vAFC8vMFuc33DT81Th2U9
-         zWszlzIR4HpkbUqmWejkpNV+2ZUU010wD19zv6P/NL6yj08YpU3BBQ76/wRQfklSWNK4
-         xWRQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Tz7rXxaL4F/0f9c2pv27juc+BGdU7ScDq2tqCmIv38Y=;
-        b=I8AuI6c0ESYiDemfGDbLCj+48InXcHDlRomcUKSYxeucQ1ulAhFdGH6ZMrXTowTBDR
-         +Fz9dd3wg7bJh+EL27wJd5lGYuKTyyUtRf3Y8FeJHUGxYoF7VaTUNnpKuCI7xd69qhv0
-         2vvP/RkmE7DitkwIvXzTxMCDWqDl3wsy1ua6ltfCNs4SFR9db0JFyf5urGCxvwjxz5AT
-         rzt1fuh9NaUAlGiBsb2Jf5e5OGN8IGp3PzyZfRGSqjOvHa6CRcL2tJ2/7f2F6/uqH5sf
-         K0JpF4PU5/j7fspZueodezPm7ES2ZvqU4yAsrHkKfPXF28OCaLILpe19EwzPqFMEu/ED
-         BbRw==
-X-Gm-Message-State: AOAM5320SNYyEnOXxKK/BgmItoAWbo27Pkgx02wnUwq3aADIX/+L8lZw
-        3wwZX474A9k6LAeQNUNBYd/GDQ==
-X-Google-Smtp-Source: ABdhPJwIoTF2vk7NvGDYXmuN/1D5SS3NUp6rSCUQCZ5HX/Jvkr7HMFjXoFn7PWmdaYmAJBezNd8FNg==
-X-Received: by 2002:a05:6830:1d43:: with SMTP id p3mr5968746oth.80.1632849869862;
-        Tue, 28 Sep 2021 10:24:29 -0700 (PDT)
-Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id z1sm5225337ooj.25.2021.09.28.10.24.29
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 28 Sep 2021 10:24:29 -0700 (PDT)
-Date:   Tue, 28 Sep 2021 12:24:27 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Luca Weiss <luca@z3ntu.xyz>
-Cc:     linux-arm-msm@vger.kernel.org,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        Manivannan Sadhasivam <mani@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>, netdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] net: qrtr: combine nameservice into main module
-Message-ID: <YVNPy+IAtLiKI19Q@builder.lan>
-References: <20210928171156.6353-1-luca@z3ntu.xyz>
+        id S242083AbhI1RcN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Sep 2021 13:32:13 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:25238 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S242081AbhI1RcL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 Sep 2021 13:32:11 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1632850232; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=Lu/WTpMvwg4jnja38XQYqTJ4WyLbF7FcUTVzra8gO/Q=;
+ b=p+Qc8ZPgBkuDQ7Jed0Tantb/jTD6rvp8n8K5rhReq3n/vTc1iwlW5qrV2DPEqD6O2yZRPCW+
+ 62445yittxYdPIKfuaUJEeSay5kvWswd3JArChwoTzgPUzMPCbalB1oyavNqiCu09i/RAQzj
+ 2GdMpMuxtlp8OUp+AiIryW0xIFM=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 61535120a5a9bab6e8d1cd70 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Sep 2021 17:30:08
+ GMT
+Sender: nguyenb=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 348D6C4361A; Tue, 28 Sep 2021 17:30:08 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: nguyenb)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 3380FC4360C;
+        Tue, 28 Sep 2021 17:30:06 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210928171156.6353-1-luca@z3ntu.xyz>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 28 Sep 2021 10:30:06 -0700
+From:   nguyenb@codeaurora.org
+To:     Alim Akhtar <alim.akhtar@samsung.com>
+Cc:     cang@codeaurora.org, asutoshd@codeaurora.org,
+        martin.petersen@oracle.com, linux-scsi@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, 'Avri Altman' <avri.altman@wdc.com>,
+        "'James E.J. Bottomley'" <jejb@linux.ibm.com>,
+        'Bean Huo' <beanhuo@micron.com>,
+        'Stanley Chu' <stanley.chu@mediatek.com>,
+        'Bart Van Assche' <bvanassche@acm.org>,
+        'Jaegeuk Kim' <jaegeuk@kernel.org>,
+        'Adrian Hunter' <adrian.hunter@intel.com>,
+        'Keoseong Park' <keosung.park@samsung.com>,
+        'open list' <linux-kernel@vger.kernel.org>
+Subject: Re: [PATCH v1 1/2] scsi: ufs: export hibern8 entry and exit
+In-Reply-To: <000701d7b42b$3cc69680$b653c380$@samsung.com>
+References: <cover.1632171047.git.nguyenb@codeaurora.org>
+ <CGME20210920210820epcas5p3255a53f0d25000310e401305795017e8@epcas5p3.samsung.com>
+ <70c5376129f902b6b3e9940ea3b10f147bf18a10.1632171047.git.nguyenb@codeaurora.org>
+ <000701d7b42b$3cc69680$b653c380$@samsung.com>
+Message-ID: <16df2ef1db49e3afc3235878fb13c3da@codeaurora.org>
+X-Sender: nguyenb@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 28 Sep 12:11 CDT 2021, Luca Weiss wrote:
-
-> Previously with CONFIG_QRTR=m a separate ns.ko would be built which
-> wasn't done on purpose and should be included in qrtr.ko.
+On 2021-09-27 22:39, Alim Akhtar wrote:
+> Hi Bao
 > 
-> Rename qrtr.c to af_qrtr.c so we can build a qrtr.ko with both af_qrtr.c
-> and ns.c.
+>> -----Original Message-----
+>> From: nguyenb=codeaurora.org@mg.codeaurora.org
+>> [mailto:nguyenb=codeaurora.org@mg.codeaurora.org] On Behalf Of Bao D.
+>> Nguyen
+>> Sent: Tuesday, September 21, 2021 2:38 AM
+>> To: cang@codeaurora.org; asutoshd@codeaurora.org;
+>> martin.petersen@oracle.com; linux-scsi@vger.kernel.org
+>> Cc: linux-arm-msm@vger.kernel.org; Bao D . Nguyen
+>> <nguyenb@codeaurora.org>; Alim Akhtar <alim.akhtar@samsung.com>; Avri
+>> Altman <avri.altman@wdc.com>; James E.J. Bottomley 
+>> <jejb@linux.ibm.com>;
+>> Bean Huo <beanhuo@micron.com>; Stanley Chu <stanley.chu@mediatek.com>;
+>> Bart Van Assche <bvanassche@acm.org>; Jaegeuk Kim 
+>> <jaegeuk@kernel.org>;
+>> Adrian Hunter <adrian.hunter@intel.com>; Keoseong Park
+>> <keosung.park@samsung.com>; open list <linux-kernel@vger.kernel.org>
+>> Subject: [PATCH v1 1/2] scsi: ufs: export hibern8 entry and exit
+>> 
+>> From: Asutosh Das <asutoshd@codeaurora.org>
+>> 
+>> Qualcomm controllers need to be in hibern8 before scaling up or down 
+>> the
+>> clocks. Hence, export the hibern8 entry and exit functions.
+>> 
+>> Signed-off-by: Asutosh Das <asutoshd@codeaurora.org>
+>> Signed-off-by: Bao D. Nguyen <nguyenb@codeaurora.org>
+>> ---
+>> drivers/scsi/ufs/ufshcd.c | 4 ++--
+>> drivers/scsi/ufs/ufshcd.h | 2 ++
+>> 2 files changed, 4 insertions(+), 2 deletions(-)
+>> 
+>> diff --git a/drivers/scsi/ufs/ufshcd.c b/drivers/scsi/ufs/ufshcd.c 
+>> index
+>> 3841ab49..f3aad32 100644
+>> --- a/drivers/scsi/ufs/ufshcd.c
+>> +++ b/drivers/scsi/ufs/ufshcd.c
+>> @@ -227,7 +227,6 @@ static void ufshcd_hba_exit(struct ufs_hba *hba);
+> static
+>> int ufshcd_clear_ua_wluns(struct ufs_hba *hba);  static int
+>> ufshcd_probe_hba(struct ufs_hba *hba, bool async);  static int
+>> ufshcd_setup_clocks(struct ufs_hba *hba, bool on); -static int
+>> ufshcd_uic_hibern8_enter(struct ufs_hba *hba);  static inline void
+>> ufshcd_add_delay_before_dme_cmd(struct ufs_hba *hba);  static int
+>> ufshcd_host_reset_and_restore(struct ufs_hba *hba);  static void
+>> ufshcd_resume_clkscaling(struct ufs_hba *hba); @@ -4116,7 +4115,7 @@ 
+>> int
+>> ufshcd_link_recovery(struct ufs_hba *hba)  }
+>> EXPORT_SYMBOL_GPL(ufshcd_link_recovery);
+>> 
+>> -static int ufshcd_uic_hibern8_enter(struct ufs_hba *hba)
+>> +int ufshcd_uic_hibern8_enter(struct ufs_hba *hba)
+>> {
+>> 	int ret;
+>> 	struct uic_command uic_cmd = {0};
+>> @@ -4138,6 +4137,7 @@ static int ufshcd_uic_hibern8_enter(struct 
+>> ufs_hba
+>> *hba)
+>> 
+>> 	return ret;
+>> }
+>> +EXPORT_SYMBOL_GPL(ufshcd_uic_hibern8_enter);
+>> 
+>> int ufshcd_uic_hibern8_exit(struct ufs_hba *hba)  { diff --git
+>> a/drivers/scsi/ufs/ufshcd.h b/drivers/scsi/ufs/ufshcd.h index
+> 52ea6f3..0cc55a2
+>> 100644
+>> --- a/drivers/scsi/ufs/ufshcd.h
+>> +++ b/drivers/scsi/ufs/ufshcd.h
+>> @@ -1397,4 +1397,6 @@ static inline int ufshcd_rpmb_rpm_put(struct 
+>> ufs_hba
+>> *hba)
+>> 	return pm_runtime_put(&hba->sdev_rpmb->sdev_gendev);
+>> }
+>> 
+>> +int ufshcd_uic_hibern8_enter(struct ufs_hba *hba); int
+>> +ufshcd_uic_hibern8_exit(struct ufs_hba *hba);
 > 
+> This will add ufshcd_uic_hibern8_exit() twice, it is already add by
+> commit: 9d19bf7ad168a8: scsi: ufs: export some functions for vendor 
+> usage
+Thank you, Alim. I have corrected this in Patch V2.
 
-Nice, I don't think we ever intended to end up with "ns.ko" on its own.
-
-Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-
-Regards,
-Bjorn
-
-> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
-> ---
->  net/qrtr/Makefile              | 3 ++-
->  net/qrtr/{qrtr.c => af_qrtr.c} | 0
->  2 files changed, 2 insertions(+), 1 deletion(-)
->  rename net/qrtr/{qrtr.c => af_qrtr.c} (100%)
 > 
-> diff --git a/net/qrtr/Makefile b/net/qrtr/Makefile
-> index 1b1411d158a7..8e0605f88a73 100644
-> --- a/net/qrtr/Makefile
-> +++ b/net/qrtr/Makefile
-> @@ -1,5 +1,6 @@
->  # SPDX-License-Identifier: GPL-2.0-only
-> -obj-$(CONFIG_QRTR) := qrtr.o ns.o
-> +obj-$(CONFIG_QRTR) += qrtr.o
-> +qrtr-y	:= af_qrtr.o ns.o
->  
->  obj-$(CONFIG_QRTR_SMD) += qrtr-smd.o
->  qrtr-smd-y	:= smd.o
-> diff --git a/net/qrtr/qrtr.c b/net/qrtr/af_qrtr.c
-> similarity index 100%
-> rename from net/qrtr/qrtr.c
-> rename to net/qrtr/af_qrtr.c
-> -- 
-> 2.33.0
+> Also move ufshcd_uic_hibern8_enter() before _earlier_
+> ufshcd_uic_hibern8_exit() declaration.
+Yes, I have addressed this in the Patch V2. Please review.
+Thank you.
+
 > 
+>> #endif /* End of Header */
+>> --
+>> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
+>> Forum,
+> a
+>> Linux Foundation Collaborative Project
