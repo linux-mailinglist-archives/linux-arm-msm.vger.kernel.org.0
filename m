@@ -2,133 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1FFFE41B512
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 19:23:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB00D41B516
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 19:24:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241959AbhI1RZE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Sep 2021 13:25:04 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:24810 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241995AbhI1RZE (ORCPT
+        id S241974AbhI1R0K (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Sep 2021 13:26:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37072 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S242060AbhI1R0K (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Sep 2021 13:25:04 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1632849804; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=mb/o+TU/jtzYpiRKctEI+EzDEsfd4AjUR8iTNCtSlZo=;
- b=ALr0f1nbVmeAEN3NoJr5yCnEkLfmXcfVUFpXTxYuZW0ATDqo5F1/aBdtcHvFVQYlpDM/oDqM
- tEhXyPTvozm+Poz9SqGR90ikd2KDsl9UyKB6r2ksYJ73F9JcbmVgvH0F2JDglCTVJa9xUze2
- LW5V0yPKC4W9gxo/SB97vubWR40=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 61534f6447d64efb6d51911a (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 28 Sep 2021 17:22:44
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id E9223C008F2; Tue, 28 Sep 2021 17:22:43 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B7904C008EF;
-        Tue, 28 Sep 2021 17:22:41 +0000 (UTC)
+        Tue, 28 Sep 2021 13:26:10 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9094FC061746
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 10:24:30 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id 5-20020a9d0685000000b0054706d7b8e5so29893205otx.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 10:24:30 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Tz7rXxaL4F/0f9c2pv27juc+BGdU7ScDq2tqCmIv38Y=;
+        b=tR2pRCj/qKxjNExZrPW1JMusgHTkF217aDaxwmJWEm2fFtDA/r7cVLoE6t7EzHMG+j
+         4cnF8eefX32CXwbIWS6Fb2aNitjEQgYmhl/kiZWdzTtTEgr5BzM5bDrNr0xGoQcnHfo4
+         ukAyh1JNMGUrNsZ4ZRwG+Cz3NZM+zUpCggoPt4Asg9JC7DVN8QeAGxfMPgjNvvfvWI+o
+         VTDg52u12ACCsADmcqS7lLTm4+uCVoHSAG1DP1EAuiZkXe6vAFC8vMFuc33DT81Th2U9
+         zWszlzIR4HpkbUqmWejkpNV+2ZUU010wD19zv6P/NL6yj08YpU3BBQ76/wRQfklSWNK4
+         xWRQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Tz7rXxaL4F/0f9c2pv27juc+BGdU7ScDq2tqCmIv38Y=;
+        b=I8AuI6c0ESYiDemfGDbLCj+48InXcHDlRomcUKSYxeucQ1ulAhFdGH6ZMrXTowTBDR
+         +Fz9dd3wg7bJh+EL27wJd5lGYuKTyyUtRf3Y8FeJHUGxYoF7VaTUNnpKuCI7xd69qhv0
+         2vvP/RkmE7DitkwIvXzTxMCDWqDl3wsy1ua6ltfCNs4SFR9db0JFyf5urGCxvwjxz5AT
+         rzt1fuh9NaUAlGiBsb2Jf5e5OGN8IGp3PzyZfRGSqjOvHa6CRcL2tJ2/7f2F6/uqH5sf
+         K0JpF4PU5/j7fspZueodezPm7ES2ZvqU4yAsrHkKfPXF28OCaLILpe19EwzPqFMEu/ED
+         BbRw==
+X-Gm-Message-State: AOAM5320SNYyEnOXxKK/BgmItoAWbo27Pkgx02wnUwq3aADIX/+L8lZw
+        3wwZX474A9k6LAeQNUNBYd/GDQ==
+X-Google-Smtp-Source: ABdhPJwIoTF2vk7NvGDYXmuN/1D5SS3NUp6rSCUQCZ5HX/Jvkr7HMFjXoFn7PWmdaYmAJBezNd8FNg==
+X-Received: by 2002:a05:6830:1d43:: with SMTP id p3mr5968746oth.80.1632849869862;
+        Tue, 28 Sep 2021 10:24:29 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id z1sm5225337ooj.25.2021.09.28.10.24.29
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Sep 2021 10:24:29 -0700 (PDT)
+Date:   Tue, 28 Sep 2021 12:24:27 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Manivannan Sadhasivam <mani@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] net: qrtr: combine nameservice into main module
+Message-ID: <YVNPy+IAtLiKI19Q@builder.lan>
+References: <20210928171156.6353-1-luca@z3ntu.xyz>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Tue, 28 Sep 2021 10:22:41 -0700
-From:   khsieh@codeaurora.org
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 3/5] drm/msm/dp: Support up to 3 DP controllers
-In-Reply-To: <YSkdaljt7DPbyTDe@builder.lan>
-References: <20210825234233.1721068-1-bjorn.andersson@linaro.org>
- <20210825234233.1721068-4-bjorn.andersson@linaro.org>
- <CAE-0n52YaQXQ4-=bR5ffMHOMp7CyFnCS-u9a2pddvaRUQhLrog@mail.gmail.com>
- <YSkdaljt7DPbyTDe@builder.lan>
-Message-ID: <66f0f29e449b02e30678ed2e3487c7f2@codeaurora.org>
-X-Sender: khsieh@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210928171156.6353-1-luca@z3ntu.xyz>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-08-27 10:14, Bjorn Andersson wrote:
-> On Fri 27 Aug 00:20 CDT 2021, Stephen Boyd wrote:
-> 
->> Quoting Bjorn Andersson (2021-08-25 16:42:31)
->> > diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
->> > index 2c7de43f655a..4a6132c18e57 100644
->> > --- a/drivers/gpu/drm/msm/dp/dp_display.c
->> > +++ b/drivers/gpu/drm/msm/dp/dp_display.c
->> > @@ -78,6 +78,8 @@ struct dp_display_private {
->> >         char *name;
->> >         int irq;
->> >
->> > +       int id;
->> > +
->> >         /* state variables */
->> >         bool core_initialized;
->> >         bool hpd_irq_on;
->> > @@ -115,8 +117,19 @@ struct dp_display_private {
->> >         struct dp_audio *audio;
->> >  };
->> >
->> > +
->> > +struct msm_dp_config {
->> > +       phys_addr_t io_start[3];
->> 
->> Can this be made into another struct, like msm_dp_desc, that also
->> indicates what type of DP connector it is, i.e. eDP vs DP? That would
->> help me understand in modetest and /sys/class/drm what sort of 
->> connector
->> is probing. dp_drm_connector_init() would need to pass the type of
->> connector appropriately. Right now, eDP connectors still show up as DP
->> instead of eDP in sysfs.
->> 
-> 
-> I like it, will spin a v3 with this.
-> 
-> Regards,
-> Bjorn
+On Tue 28 Sep 12:11 CDT 2021, Luca Weiss wrote:
 
-Hi Bjorn,
-
-Have you spin off V3 yet?
-When you expect your patches related to DP be up streamed?
-
-Thanks,
-kuogee
+> Previously with CONFIG_QRTR=m a separate ns.ko would be built which
+> wasn't done on purpose and should be included in qrtr.ko.
 > 
->> > +       size_t num_dp;
->> > +};
->> > +
->> > +static const struct msm_dp_config sc7180_dp_cfg = {
->> > +       .io_start = { 0x0ae90000 },
->> > +       .num_dp = 1,
->> > +};
->> > +
->> >  static const struct of_device_id dp_dt_match[] = {
->> > -       {.compatible = "qcom,sc7180-dp"},
->> > +       { .compatible = "qcom,sc7180-dp", .data = &sc7180_dp_cfg },
->> >         {}
->> >  };
->> >
+> Rename qrtr.c to af_qrtr.c so we can build a qrtr.ko with both af_qrtr.c
+> and ns.c.
+> 
+
+Nice, I don't think we ever intended to end up with "ns.ko" on its own.
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Regards,
+Bjorn
+
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> ---
+>  net/qrtr/Makefile              | 3 ++-
+>  net/qrtr/{qrtr.c => af_qrtr.c} | 0
+>  2 files changed, 2 insertions(+), 1 deletion(-)
+>  rename net/qrtr/{qrtr.c => af_qrtr.c} (100%)
+> 
+> diff --git a/net/qrtr/Makefile b/net/qrtr/Makefile
+> index 1b1411d158a7..8e0605f88a73 100644
+> --- a/net/qrtr/Makefile
+> +++ b/net/qrtr/Makefile
+> @@ -1,5 +1,6 @@
+>  # SPDX-License-Identifier: GPL-2.0-only
+> -obj-$(CONFIG_QRTR) := qrtr.o ns.o
+> +obj-$(CONFIG_QRTR) += qrtr.o
+> +qrtr-y	:= af_qrtr.o ns.o
+>  
+>  obj-$(CONFIG_QRTR_SMD) += qrtr-smd.o
+>  qrtr-smd-y	:= smd.o
+> diff --git a/net/qrtr/qrtr.c b/net/qrtr/af_qrtr.c
+> similarity index 100%
+> rename from net/qrtr/qrtr.c
+> rename to net/qrtr/af_qrtr.c
+> -- 
+> 2.33.0
+> 
