@@ -2,195 +2,142 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C9A3241B2F7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 17:31:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B2B8041B306
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 28 Sep 2021 17:35:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241629AbhI1Pcz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Sep 2021 11:32:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38650 "EHLO
+        id S241579AbhI1Phi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Sep 2021 11:37:38 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39742 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S241586AbhI1Pcy (ORCPT
+        with ESMTP id S241473AbhI1Phh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Sep 2021 11:32:54 -0400
-Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2A315C06161C;
-        Tue, 28 Sep 2021 08:31:15 -0700 (PDT)
-Received: by mail-wm1-x336.google.com with SMTP id z2so3839739wmc.3;
-        Tue, 28 Sep 2021 08:31:15 -0700 (PDT)
+        Tue, 28 Sep 2021 11:37:37 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 531B0C061745
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 08:35:58 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id d12-20020a05683025cc00b0054d8486c6b8so7413379otu.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 08:35:58 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc:content-transfer-encoding;
-        bh=FsN/fCo7r6BqWXRWyecStM0iHpOHHFdsOUPHUfPZmk4=;
-        b=m2IvqQPArQ3gmZH+vbWs/F4xB+ZJC5rcjIX6VxRDqe/mOCRhMrBQ6Lrnxs0AV/GWLK
-         5bvQf+5KaUBPCa08rphJGgpYUzT/juQA2mzanEykF7KR1o0RPGaYR1nN/mahX+muUZE4
-         Q9spI4GVpkNubyZDsqBxnWTwFLK1l9uPzjkQBxneNwnmn4331P2JKvq0nCtmXd5SOg9n
-         T4kMSKxW8mI6oUhi7AfKe6pu+rUFTPAg0ij+gNJlhtJFNft0VbDgm4eYazy/mhq0N/Lw
-         yKGvk3xpOrAyzpd9TPEyXaS5oI9MV+5wwot8RlSFg7bVhLXOJRD4BVUIl1UrumwMajIo
-         0vsQ==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Swdg435aFYXKutncMJ2uDQgpoMMpMIxDo9eC2m9kWLo=;
+        b=Ixzn2+iHFGzsLTGXmk9RgcSKPH76xHeoiBgPdEHR8tbzEke8JE+Lv7AF5yhq//gR6U
+         rDFSbrpvvaQwIiymq/fwxXBu532kErm9j2eUlsl3K9WrhrkA5gjVVoYmkuLIKEb8pQ3M
+         6R+lNUC8DyXsuvlIBR5d7XAC/SSrpKr6q3Qfjhg+uu9rUWWAy9iO7n7PTJnmljiPsFWA
+         VAXN15aSKTRqQgzqcKYOK1p6x8s5NrvOx0c2byOJjqvksOeIFPayYhbnFSpDHd+eZqqu
+         F1kXWAC8qnfXxOwhhy/8ZORIL1KpApvjY85L/bLkbIEglLK17lI1HB99SmLvc4x5egj2
+         h5OQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=FsN/fCo7r6BqWXRWyecStM0iHpOHHFdsOUPHUfPZmk4=;
-        b=Lup0ur1iNyVFX6zxul9O8VtBjDTuShgD38uA3KhNKPBTqGIjL7z1So+eBKuBcoHYgQ
-         FxkowClIEuIbgW1m3wYMtvTHdxt24kOLdfYeevHP/lQj+kznz4CQfkpSj+wQ8wgYimX2
-         dMo/DnX3wNUtLmFONoIxBTb04l1TwpqPHfdc2qrz/Tk8tL6kC9rGFrzeaR882mr79RUu
-         KC7s//tuE23o4gVdv0JaRKcueaxGdruKrR4yygSKXDVsEGe9jQBWHEZ2CfvSDUzSweLi
-         tEkni8fmLPuZN0qBdQTWH50vsLAYiMVPs2c3u1TrpI68efoRE3SB3h8fQZFwNywq+TEO
-         9XDg==
-X-Gm-Message-State: AOAM530v416SGKzz7m4jaa+kWvXBWVWlpIIrgaDQG427A93nc7PuiBpF
-        pBjrOG9PaCzDe6uJ/ob+1n4I/sTNK1vP1+InFosvPrd+H3Q=
-X-Google-Smtp-Source: ABdhPJwTvRK+5sabvBWudsj3UeqhoyqclgpHynD6xJC3yg6DnP94bvQlIRyd4pVAYkbxL5RwtKqCb9tN7bvhRgbtinY=
-X-Received: by 2002:a1c:f201:: with SMTP id s1mr5358976wmc.101.1632843073673;
- Tue, 28 Sep 2021 08:31:13 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Swdg435aFYXKutncMJ2uDQgpoMMpMIxDo9eC2m9kWLo=;
+        b=QtyA6gTgVeFKeZcgpMflFgEH+bDTvYgbSTQwy83A2WlaXZDY9jXAvguvNDD68mzkKT
+         YwYMcUKGKpISixZ2jg6dosseXbgQWo7exER7qC7eUYqQnJnBx3gL6yt65ci/12s8dAxa
+         fLVzxRMZRPLS9sBtWs/vvnm0W0jPSqcA0wJwRJtStGCZltpgBd7EmRB2QE5bQmXch71D
+         K928vvMUqCg2jDL5pLK1UaXGrPKrULlZl7ATGHx99O5xB6e82/0GuCl9Alg/lhjwChQV
+         ky6kEqZZ8YvFn/er5TX2qAqy1BipubMUrN4syAA3jokUHWLd9UFOVKbN8IoYKt5waHsV
+         xZ6w==
+X-Gm-Message-State: AOAM531KDqcWBVFkBM6RRaeGNrT99PInaJMzinaUBMex8RDqFFLakGHT
+        rBRWqRMcCTJqu7J48IqHFVx4Vw==
+X-Google-Smtp-Source: ABdhPJwrXenx8W8F32BC40cDXvKGXOIOYJvI7bmwFlysaoGUm335yzGIjxiKP8o+jmi4wCE1985IxA==
+X-Received: by 2002:a9d:6396:: with SMTP id w22mr5828089otk.26.1632843357557;
+        Tue, 28 Sep 2021 08:35:57 -0700 (PDT)
+Received: from builder.lan (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id l19sm2897066ota.17.2021.09.28.08.35.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 28 Sep 2021 08:35:56 -0700 (PDT)
+Date:   Tue, 28 Sep 2021 10:35:55 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Shawn Guo <shawn.guo@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Steev Klimaszewski <steev@kali.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] arm64: dts: qcom: c630: Move panel to aux-bus
+Message-ID: <YVM2WwFZxv5Rm+Dw@builder.lan>
+References: <20210924025255.853906-1-bjorn.andersson@linaro.org>
+ <20210926060749.GB9901@dragon>
 MIME-Version: 1.0
-References: <20210927152928.831245-1-robdclark@gmail.com> <f1c6fff0-a220-86d9-8572-2de3d47ab96a@codeaurora.org>
-In-Reply-To: <f1c6fff0-a220-86d9-8572-2de3d47ab96a@codeaurora.org>
-From:   Rob Clark <robdclark@gmail.com>
-Date:   Tue, 28 Sep 2021 08:35:46 -0700
-Message-ID: <CAF6AEGtSjaaWPUeke9mtaOen0fkyZYTMULLGzWDH4+nyFn47bQ@mail.gmail.com>
-Subject: Re: [Freedreno] [PATCH] drm/msm: Switch ordering of runpm put vs devfreq_idle
-To:     Akhil P Oommen <akhilpo@codeaurora.org>
-Cc:     dri-devel <dri-devel@lists.freedesktop.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Rob Clark <robdclark@chromium.org>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210926060749.GB9901@dragon>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 28, 2021 at 7:52 AM Akhil P Oommen <akhilpo@codeaurora.org> wro=
-te:
->
-> On 9/27/2021 8:59 PM, Rob Clark wrote:
-> > From: Rob Clark <robdclark@chromium.org>
-> >
-> > I've seen a few crashes like:
-> >
-> >      Internal error: synchronous external abort: 96000010 [#1] PREEMPT =
-SMP
-> >      Modules linked in: snd_seq_dummy snd_seq snd_seq_device bridge stp=
- llc tun nf_nat_tftp nf_conntrack_tftp nf_nat_ftp nf_conntrack_ftp esp6 ah6=
- ip6t_REJECT ip6t_ipv6header vhost_vsock vhost vmw_vsock_virtio_transport_c=
-ommon vsock rfcomm algif_hash algif_skcipher af_alg uinput veth xt_cgroup x=
-t_MASQUERADE venus_enc venus_dec videobuf2_dma_contig qcom_spmi_adc5 qcom_s=
-pmi_adc_tm5 hci_uart qcom_vadc_common cros_ec_typec qcom_spmi_temp_alarm ty=
-pec btqca snd_soc_rt5682_i2c snd_soc_rt5682 snd_soc_sc7180 bluetooth snd_so=
-c_qcom_common snd_soc_rl6231 ecdh_generic ecc venus_core v4l2_mem2mem snd_s=
-oc_lpass_sc7180 snd_soc_lpass_hdmi snd_soc_lpass_cpu snd_soc_lpass_platform=
- snd_soc_max98357a ip6table_nat fuse iio_trig_sysfs cros_ec_lid_angle cros_=
-ec_sensors cros_ec_sensors_core industrialio_triggered_buffer kfifo_buf cro=
-s_ec_sensorhub lzo_rle ath10k_snoc lzo_compress ath10k_core ath zram mac802=
-11 cfg80211 ax88179_178a usbnet mii uvcvideo videobuf2_vmalloc joydev
-> >      CPU: 3 PID: 212 Comm: A618-worker Tainted: G W 5.4.139-16300-g88d8=
-e1285982 #1
-> >      Hardware name: Google Pompom (rev1) with LTE (DT)
-> >      pstate: 60c00009 (nZCv daif +PAN +UAO)
-> >      pc : a6xx_gmu_set_oob+0x114/0x200
-> >      lr : a6xx_gmu_set_oob+0x10c/0x200
-> >      sp : ffffffc011b7bc20
-> >      x29: ffffffc011b7bc20 x28: ffffffdad27c5000
-> >      x27: 0000000000000001 x26: ffffffdad1521044
-> >      x25: ffffffbef7498338 x24: 0000000000000018
-> >      x23: 0000000000000002 x22: 0000000000014648
-> >      x21: 0000033732fe638b x20: 0000000080000000
-> >      x19: ffffffbef7433bc8 x18: 0000000040000000
-> >      x17: 000000243508d982 x16: 000000000000b67e
-> >      x15: 00000000000090d4 x14: 0000000000000024
-> >      x13: 0000000000000024 x12: 0000000000017521
-> >      x11: 0000000000000b48 x10: 0000000000326a48
-> >      x9 : 1a130d33f6371600 x8 : ffffffc011e54648
-> >      x7 : 614948e00005003c x6 : ffffffbe3cd17e60
-> >      x5 : 0000000000000040 x4 : 0000000000000004
-> >      x3 : 0000000000000000 x2 : ffffffbef7488000
-> >      x1 : ffffffbef7488000 x0 : 0000000000000000
-> >      Call trace:
-> >      a6xx_gmu_set_oob+0x114/0x200
-> >      a6xx_gmu_set_freq+0xe0/0x1fc
-> >      msm_devfreq_target+0x80/0x13c
-> >      msm_devfreq_idle+0x54/0x94
-> >      retire_submit+0x170/0x254
-> >      retire_submits+0xa4/0xdc
-> >      retire_worker+0x1c/0x28
-> >      kthread_worker_fn+0xf4/0x1bc
-> >      kthread+0x140/0x158
-> >      ret_from_fork+0x10/0x18
-> >      Code: 52800c81 9415bbe5 f9400a68 8b160108 (b9400108)
-> >      ---[ end trace 16b871df2482cd61 ]---
-> >      Kernel panic - not syncing: Fatal exception
-> >      SMP: stopping secondary CPUs
-> >      Kernel Offset: 0x1ac1400000 from 0xffffffc010000000
-> >      PHYS_OFFSET: 0xffffffc280000000
-> >      CPU features: 0x88102e,2a80aa38
-> >      Memory Limit: none
-> >
-> > Which smells a lot like touching hw after power collapse.  I'm not
-> > *entirely* sure how it could have taken 66ms (the autosuspend delay)
-> > before we get to a6xx_gmu_set_oob(), but to be safe we should move
-> > the pm_runtime_put_autosuspend() after msm_devfreq_idle().
-> https://elixir.bootlin.com/linux/v5.15-rc1/source/drivers/gpu/drm/msm/adr=
-eno/a6xx_gmu.c#L132
-> We have this check in the gmu freq set path which should avoid this
-> scenario. I might be a bit pedantic here, but I feel that the original
-> code is more accurate. We should immediately mark last busy and put
-> runtime_pm refcount.
+On Sun 26 Sep 01:07 CDT 2021, Shawn Guo wrote:
 
-The problem is that get_if_in_use(gmu->dev) doesn't prevent the _gpu_
-device from suspending and racing down the _set_oob()/_clear_oob()
-path in parallel with set_freq().. I think that (plus the potential
-for either of those paths to race with get_timestamp()) is related to
-the gmu OOB crashes I'm seeing from the field.
-
-A better plan is probably something along the lines of [1].. maybe
-re-worked a bit if it is not acceptable to start using c99.  Which
-we'll also need if we wanted to defer slightly clamping to idle.  (Or
-if we had IFPC working we could just drop the whole freq change on
-idle<->active transitions ;-))
-
-[1] https://patchwork.freedesktop.org/patch/455928/?series=3D95119&rev=3D1
-
->
-> -Akhil.
->
-> >
-> > Fixes: 9bc95570175a ("drm/msm: Devfreq tuning")
-> > Signed-off-by: Rob Clark <robdclark@chromium.org>
+> On Thu, Sep 23, 2021 at 09:52:55PM -0500, Bjorn Andersson wrote:
+> > With the newly introduced aux-bus under the TI SN65DSI86 the panel
+> > node should be described as a child instead of a standalone node, move
+> > it there.
+> > 
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 > > ---
-> >   drivers/gpu/drm/msm/msm_gpu.c | 6 +++---
-> >   1 file changed, 3 insertions(+), 3 deletions(-)
-> >
-> > diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gp=
-u.c
-> > index d1a16642ecd5..2b2bbe7499e6 100644
-> > --- a/drivers/gpu/drm/msm/msm_gpu.c
-> > +++ b/drivers/gpu/drm/msm/msm_gpu.c
-> > @@ -667,9 +667,6 @@ static void retire_submit(struct msm_gpu *gpu, stru=
-ct msm_ringbuffer *ring,
-> >
-> >       msm_submit_retire(submit);
-> >
-> > -     pm_runtime_mark_last_busy(&gpu->pdev->dev);
-> > -     pm_runtime_put_autosuspend(&gpu->pdev->dev);
+> >  .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts | 27 +++++++++----------
+> >  1 file changed, 13 insertions(+), 14 deletions(-)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+> > index bd22352b6c7a..4818ca6d820d 100644
+> > --- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+> > +++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
+> > @@ -56,20 +56,6 @@ mode {
+> >  		};
+> >  	};
+> >  
+> > -	panel {
+> > -		compatible = "boe,nv133fhm-n61";
+> > -		no-hpd;
+> > -		backlight = <&backlight>;
+> 
+> There is some prerequisite change for this patch?  I do not find this
+> backlight node on v5.15-rc, neither linux-next.
+> 
+
+Seems I had this and the backlight addition patch in the wrong order in
+my local tree. Let's see if we can land the backlight support and then
+I'll repost this.
+
+Thanks,
+Bjorn
+
+> Shawn
+> 
 > > -
-> >       spin_lock_irqsave(&ring->submit_lock, flags);
-> >       list_del(&submit->node);
-> >       spin_unlock_irqrestore(&ring->submit_lock, flags);
-> > @@ -683,6 +680,9 @@ static void retire_submit(struct msm_gpu *gpu, stru=
-ct msm_ringbuffer *ring,
-> >       mutex_unlock(&gpu->active_lock);
-> >
-> >       msm_gem_submit_put(submit);
+> > -		ports {
+> > -			port {
+> > -				panel_in_edp: endpoint {
+> > -					remote-endpoint = <&sn65dsi86_out>;
+> > -				};
+> > -			};
+> > -		};
+> > -	};
+> > -
+> >  	/* Reserved memory changes for IPA */
+> >  	reserved-memory {
+> >  		wlan_msa_mem: memory@8c400000 {
+> > @@ -441,6 +427,19 @@ sn65dsi86_out: endpoint {
+> >  				};
+> >  			};
+> >  		};
 > > +
-> > +     pm_runtime_mark_last_busy(&gpu->pdev->dev);
-> > +     pm_runtime_put_autosuspend(&gpu->pdev->dev);
-> >   }
-> >
-> >   static void retire_submits(struct msm_gpu *gpu)
-> >
->
+> > +		aux-bus {
+> > +			panel: panel {
+> > +				compatible = "boe,nv133fhm-n61";
+> > +				backlight = <&backlight>;
+> > +
+> > +				port {
+> > +					panel_in_edp: endpoint {
+> > +						remote-endpoint = <&sn65dsi86_out>;
+> > +					};
+> > +				};
+> > +			};
+> > +		};
+> >  	};
+> >  };
+> >  
+> > -- 
+> > 2.32.0
+> > 
