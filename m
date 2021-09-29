@@ -2,118 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ECD3C41C221
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 11:58:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EDC1541C239
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 12:05:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245222AbhI2KA2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Sep 2021 06:00:28 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:12808 "EHLO m43-7.mailgun.net"
+        id S245258AbhI2KHC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Sep 2021 06:07:02 -0400
+Received: from mail.kernel.org ([198.145.29.99]:44624 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S243962AbhI2KA2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Sep 2021 06:00:28 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1632909527; h=Message-ID: Subject: Cc: To: From: Date:
- Content-Transfer-Encoding: Content-Type: MIME-Version: Sender;
- bh=ivnG2s/4++v9VWEkF6iT5CGGdFnqaknZPfDcxr1ygb4=; b=F5WJQzSaPNzmMLigTrZYVZ1Px6lDj8m3UP190yqKBCv4nAR4ONPcWxC8pVDEPBHeH4n5IqUB
- PwgVBh/Oj8A2MW8afVInefyZXeg8Np/8xf+nwS0R2cBRATXPLfFRVr/8nV280GWSOpXqNC/b
- dh0DoodGwGBHjuvOUFiJQ1oTmXI=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 615438cb605ecf100bbf92a7 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 29 Sep 2021 09:58:35
- GMT
-Sender: tjiang=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3BDB4C4360C; Wed, 29 Sep 2021 09:58:35 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: tjiang)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 93E2CC4338F;
-        Wed, 29 Sep 2021 09:58:34 +0000 (UTC)
+        id S245248AbhI2KGz (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 29 Sep 2021 06:06:55 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 3326B61439;
+        Wed, 29 Sep 2021 10:05:14 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1632909914;
+        bh=Xxn9/SD1dYhlDwttos3PuGBQ5U/2yCNeeOkyqW/lvMU=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=ORjEaY8oVoBe/kc1cZJj2pdtkHjlj8HbwEZxZTWQ2RJxE3GmpxNBmdNmOnphEgvSX
+         ZOxvvBYGhy3vPJuqA7LfPTEfGfZd04jb5pa8GODKkdyshK6wcZoWwPGMWC+MS9U+hB
+         xbVhK4m/Jq2Iwa6W/3givlEv93HsBHlrwK8xareW519JavUdMcvSDsFayE2ZD0oN8U
+         pIltEb8rvFoy0z9I8Y2vMLwBlDucBVUKGTbifrVUXnBcQOBZxHm/pShHiIlrwCdByI
+         22paW8ns7SMXCobLPJLkLp0xaLAaB7vuo8aCGQL+Oy4kg80h0CJMOIrD0tYnYvfS9M
+         gE71ALaohzM2g==
+Received: by mail-wm1-f54.google.com with SMTP id z184-20020a1c7ec1000000b003065f0bc631so4803714wmc.0;
+        Wed, 29 Sep 2021 03:05:14 -0700 (PDT)
+X-Gm-Message-State: AOAM532yZxt2Ugc20fx35XlU9lIw+2q6Dr19g/YRF6FloXm4Uy/5/Wnj
+        SBExSeBq1sMLRQCFM4vh42Bvw3zFo4f0jCdPZvo=
+X-Google-Smtp-Source: ABdhPJxj45zzIMnN/HHyq+6nU2KpFjlg3Tr2+Q2ZpxFzEZguNBmccSscTdNWt05AmI9I9AwUnU3a/laQUUwcLa8ETFA=
+X-Received: by 2002:a05:600c:896:: with SMTP id l22mr9378065wmp.173.1632909912585;
+ Wed, 29 Sep 2021 03:05:12 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Wed, 29 Sep 2021 17:58:34 +0800
-From:   tjiang@codeaurora.org
-To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com
-Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
-        rjliao@codeaurora.org, zijuhu@codeaurora.org, tjiang@codeaurora.org
-Subject: [PATCH v1] Bluetooth: btusb: Add the new support IDs for WCN6855
-Message-ID: <d7b3f7d75e58b81081b11e8f3ac7e536@codeaurora.org>
-X-Sender: tjiang@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+References: <20210927152412.2900928-1-arnd@kernel.org> <20210929095107.GA21057@willie-the-truck>
+In-Reply-To: <20210929095107.GA21057@willie-the-truck>
+From:   Arnd Bergmann <arnd@kernel.org>
+Date:   Wed, 29 Sep 2021 12:04:55 +0200
+X-Gmail-Original-Message-ID: <CAK8P3a2QnJkYCoEWhziYYXQusb-25_wUhA5ZTGtBsyfFx3NWzQ@mail.gmail.com>
+Message-ID: <CAK8P3a2QnJkYCoEWhziYYXQusb-25_wUhA5ZTGtBsyfFx3NWzQ@mail.gmail.com>
+Subject: Re: [PATCH] [RFC] qcom_scm: hide Kconfig symbol
+To:     Will Deacon <will@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Arnd Bergmann <arnd@arndb.de>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Joerg Roedel <joro@8bytes.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Alex Elder <elder@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Maxime Ripard <mripard@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
+        Linux Media Mailing List <linux-media@vger.kernel.org>,
+        linux-mmc <linux-mmc@vger.kernel.org>,
+        Networking <netdev@vger.kernel.org>, ath10k@lists.infradead.org,
+        linux-wireless <linux-wireless@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-sunxi@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add some new support IDs to usb_device_id table for WCN6855.
+On Wed, Sep 29, 2021 at 11:51 AM Will Deacon <will@kernel.org> wrote:
+> On Mon, Sep 27, 2021 at 05:22:13PM +0200, Arnd Bergmann wrote:
+> >
+> > diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
+> > index 124c41adeca1..989c83acbfee 100644
+> > --- a/drivers/iommu/Kconfig
+> > +++ b/drivers/iommu/Kconfig
+> > @@ -308,7 +308,7 @@ config APPLE_DART
+> >  config ARM_SMMU
+> >       tristate "ARM Ltd. System MMU (SMMU) Support"
+> >       depends on ARM64 || ARM || (COMPILE_TEST && !GENERIC_ATOMIC64)
+> > -     depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
+> > +     select QCOM_SCM
+> >       select IOMMU_API
+> >       select IOMMU_IO_PGTABLE_LPAE
+> >       select ARM_DMA_USE_IOMMU if ARM
+>
+> I don't want to get in the way of this patch because I'm also tired of the
+> randconfig failures caused by QCOM_SCM. However, ARM_SMMU is applicable to
+> a wide variety of (non-qcom) SoCs and so it seems a shame to require the
+> QCOM_SCM code to be included for all of those when it's not strictly needed
+> at all.
 
-Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
----
-  drivers/bluetooth/btusb.c | 37 +++++++++++++++++++++++++++++++++++++
-  1 file changed, 37 insertions(+)
+Good point, I agree that needs to be fixed. I think this additional
+change should do the trick:
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index 34363d3c85e5..346cb1ea93a6 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -295,6 +295,43 @@ static const struct usb_device_id blacklist_table[] 
-= {
-  	{ USB_DEVICE(0x0cf3, 0xe600), .driver_info = BTUSB_QCA_WCN6855 |
-  						     BTUSB_WIDEBAND_SPEECH |
-  						     BTUSB_VALID_LE_STATES },
-+	{ USB_DEVICE(0x0489, 0xe0cc), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH |
-+						     BTUSB_VALID_LE_STATES },
-+	{ USB_DEVICE(0x0489, 0xe0c9), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH |
-+						     BTUSB_VALID_LE_STATES },
-+	{ USB_DEVICE(0x0489, 0xe0d6), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH |
-+						     BTUSB_VALID_LE_STATES },
-+	{ USB_DEVICE(0x0489, 0xe0e3), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH |
-+						     BTUSB_VALID_LE_STATES },
-+	{ USB_DEVICE(0x0489, 0xe0d0), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH |
-+						     BTUSB_VALID_LE_STATES },
-+	{ USB_DEVICE(0x0489, 0xe0df), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH |
-+						     BTUSB_VALID_LE_STATES },
-+	{ USB_DEVICE(0x0489, 0xe0e1), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH |
-+						     BTUSB_VALID_LE_STATES },
-+	{ USB_DEVICE(0x04ca, 0x3025), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH |
-+						     BTUSB_VALID_LE_STATES },
-+	{ USB_DEVICE(0x10ab, 0x9608), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH |
-+						     BTUSB_VALID_LE_STATES },
-+	{ USB_DEVICE(0x10ab, 0x9609), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH |
-+						     BTUSB_VALID_LE_STATES },
-+	{ USB_DEVICE(0x10ab, 0x9308), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH |
-+						     BTUSB_VALID_LE_STATES },
-+	{ USB_DEVICE(0x10ab, 0x9309), .driver_info = BTUSB_QCA_WCN6855 |
-+						     BTUSB_WIDEBAND_SPEECH |
-+						     BTUSB_VALID_LE_STATES },
-+
+--- a/drivers/iommu/Kconfig
++++ b/drivers/iommu/Kconfig
+@@ -308,7 +308,6 @@ config APPLE_DART
+ config ARM_SMMU
+        tristate "ARM Ltd. System MMU (SMMU) Support"
+        depends on ARM64 || ARM || (COMPILE_TEST && !GENERIC_ATOMIC64)
+-       select QCOM_SCM
+        select IOMMU_API
+        select IOMMU_IO_PGTABLE_LPAE
+        select ARM_DMA_USE_IOMMU if ARM
+@@ -438,7 +437,7 @@ config QCOM_IOMMU
+        # Note: iommu drivers cannot (yet?) be built as modules
+        bool "Qualcomm IOMMU Support"
+        depends on ARCH_QCOM || (COMPILE_TEST && !GENERIC_ATOMIC64)
+-       depends on QCOM_SCM=y
++       select QCOM_SCM
+        select IOMMU_API
+        select IOMMU_IO_PGTABLE_LPAE
+        select ARM_DMA_USE_IOMMU
 
-  	/* Broadcom BCM2035 */
-  	{ USB_DEVICE(0x0a5c, 0x2009), .driver_info = BTUSB_BCM92035 },
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum, a Linux Foundation Collaborative Project
+I'll see if that causes any problems for the randconfig builds.
+
+       Arnd
