@@ -2,178 +2,245 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F421641CBD4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 20:30:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 81BCB41CC09
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 20:40:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345932AbhI2Scb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Sep 2021 14:32:31 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60364 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1345707AbhI2Scb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Sep 2021 14:32:31 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 8816F61527;
-        Wed, 29 Sep 2021 18:30:49 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1632940249;
-        bh=gjF28VMTIug2m1bl/FU/M9snQ4rR61AFv5fVsRKalNI=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=CISl9Rl7R+M6haM6b37hM8Y55j2HAbcMi0eojp8x2X5LO3rMaVS5sudmIbZDpY2Fa
-         v3jkZlxqIQsgk7xdc/KNDPDNwnRYggSWDCUgB/s/FiZxlhlKX24dWHVpR7Wt0mlN/7
-         mhK6ym9B69BkMQdp4WI4pKJ+rr90hmai+tmZp9rhMJtK7ONWh9AhmLAFD2pHKhaUG3
-         HMRbEb2CCpVxIrKjjd6yE6ttU5SikyGGITOLPKJu1L7QFLNrx8p43TXVkgBvbCSBJk
-         HoUf+R5uDfbywO7AlRlXS5uX8pbpj5u56JSH5+uMScUwkPlS/zeQ1/1lCIAk541NMv
-         d88464bdH/fHQ==
-Received: by mail-wr1-f46.google.com with SMTP id s21so5795619wra.7;
-        Wed, 29 Sep 2021 11:30:49 -0700 (PDT)
-X-Gm-Message-State: AOAM533mlJSocCVOo/4P9J4qQuKiBP7NH/xEdDD9UUrSLsaNSwbRmlJY
-        BB6Hiwg8DRcMl0JsnYHnxRYjLAvza1+qy4aCjik=
-X-Google-Smtp-Source: ABdhPJznh64DeD5YLkqLyCdpGZrw2eJDCFhsGINcOBsXO/6p1u7dAzpxKDez727ElHRBigRMgHpji/X6aGMkMR1n8h4=
-X-Received: by 2002:a05:6000:1561:: with SMTP id 1mr1607418wrz.369.1632940247984;
- Wed, 29 Sep 2021 11:30:47 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210927152412.2900928-1-arnd@kernel.org> <20210929095107.GA21057@willie-the-truck>
- <CAK8P3a2QnJkYCoEWhziYYXQusb-25_wUhA5ZTGtBsyfFx3NWzQ@mail.gmail.com> <YVR8Q7LO0weiFin+@yoga>
-In-Reply-To: <YVR8Q7LO0weiFin+@yoga>
-From:   Arnd Bergmann <arnd@kernel.org>
-Date:   Wed, 29 Sep 2021 20:30:30 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a2Kk6Y1Hs98z2UFEis8cWekREFt8YKg2Nbu3G5WQJ7Fag@mail.gmail.com>
-Message-ID: <CAK8P3a2Kk6Y1Hs98z2UFEis8cWekREFt8YKg2Nbu3G5WQJ7Fag@mail.gmail.com>
-Subject: Re: [PATCH] [RFC] qcom_scm: hide Kconfig symbol
+        id S1346259AbhI2SmW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Sep 2021 14:42:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45864 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1346227AbhI2SmV (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 29 Sep 2021 14:42:21 -0400
+Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 54D93C061766
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 11:40:40 -0700 (PDT)
+Received: by mail-pl1-x62f.google.com with SMTP id y1so2148840plk.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 11:40:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=4jwM7sobvyC/yr53MKLR0xpqrIrHAxpL22WbxQS8Ssk=;
+        b=BO4+2wrBhpWuCNj60xpuPgO7J50jiinFUZAkXTz6DPCNbk/I5aD11OhFxHjNtyFxYf
+         RvbtY17gJxHrUyr27wF6UBUJhxcBqQjmphC31JZ64+fNg3H8Bwg86zMp615PKpLSaL3v
+         mAQ9BTwki3iV5apUvUPYwTeH/26Af/6eh1ChA=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=4jwM7sobvyC/yr53MKLR0xpqrIrHAxpL22WbxQS8Ssk=;
+        b=QWx5bcsq67iiIrL4syDD2DgVLpFCLzkvjGI+TUmd0WY3g/dUoYsAsDYaiPmjG46wul
+         ztg465/7ohBzBSdqGKa6hOA8fQpWBUwr/buOfHQ1b9l5FbSdyr+TNTPDT1+DZ1YOPpPa
+         U/O/ANbPikD2QZRfotWV6LF0QLzKRkJZoD4xTtE+jIrdgMjr54fp2DmEPCDrOiTYfJKc
+         gz7QXTyZVJr5VlYFjPl20WFQpyLQTMT2sVim1ovPjcOLJ3JxRAtHH34kgBqiWwCouUxL
+         DIVojjNgXoBHtYBaV0yywj45hJtRE3GNtV007l26jYGhZtuCdkmYsdkG9qWuE550Dale
+         H/Xg==
+X-Gm-Message-State: AOAM532l7m+sVpK3JnrjuN0JBOcJHASR6uG/DqJfwUh9pPqbU8i8mpGZ
+        5ntMP2lQKesTeiFM40zElb1VDg==
+X-Google-Smtp-Source: ABdhPJyU6YGAnOeNMh7OS1RrgoT3QJ2xKwQz0u5IBYHVhIbWpHqBeKoWjIxxse5LTwLah0AAs5Kibw==
+X-Received: by 2002:a17:90b:2385:: with SMTP id mr5mr1478243pjb.189.1632940839770;
+        Wed, 29 Sep 2021 11:40:39 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:2f10:2763:4825:1f01])
+        by smtp.gmail.com with UTF8SMTPSA id c9sm425983pfi.212.2021.09.29.11.40.38
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Sep 2021 11:40:39 -0700 (PDT)
+Date:   Wed, 29 Sep 2021 11:40:37 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Joerg Roedel <joro@8bytes.org>,
-        Mauro Carvalho Chehab <mchehab@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Alex Elder <elder@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Andy Gross <agross@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Maxime Ripard <mripard@kernel.org>,
-        Chen-Yu Tsai <wens@csie.org>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        Mark Rutland <mark.rutland@arm.com>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        "open list:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
-        Linux Media Mailing List <linux-media@vger.kernel.org>,
-        linux-mmc <linux-mmc@vger.kernel.org>,
-        Networking <netdev@vger.kernel.org>, ath10k@lists.infradead.org,
-        linux-wireless <linux-wireless@vger.kernel.org>,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        linux-sunxi@lists.linux.dev
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Andy Gross <agross@kernel.org>, Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: sdm845: mtp: Add vadc channels
+ and thermal zones
+Message-ID: <YVSzJZ8G43CLml3L@google.com>
+References: <20210923212311.2877048-1-bjorn.andersson@linaro.org>
+ <20210923212311.2877048-5-bjorn.andersson@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <20210923212311.2877048-5-bjorn.andersson@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Sep 29, 2021 at 4:46 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Wed 29 Sep 05:04 CDT 2021, Arnd Bergmann wrote:
->
-> > On Wed, Sep 29, 2021 at 11:51 AM Will Deacon <will@kernel.org> wrote:
-> > > On Mon, Sep 27, 2021 at 05:22:13PM +0200, Arnd Bergmann wrote:
-> > > >
-> > > > diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
-> > > > index 124c41adeca1..989c83acbfee 100644
-> > > > --- a/drivers/iommu/Kconfig
-> > > > +++ b/drivers/iommu/Kconfig
-> > > > @@ -308,7 +308,7 @@ config APPLE_DART
-> > > >  config ARM_SMMU
-> > > >       tristate "ARM Ltd. System MMU (SMMU) Support"
-> > > >       depends on ARM64 || ARM || (COMPILE_TEST && !GENERIC_ATOMIC64)
-> > > > -     depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
-> > > > +     select QCOM_SCM
-> > > >       select IOMMU_API
-> > > >       select IOMMU_IO_PGTABLE_LPAE
-> > > >       select ARM_DMA_USE_IOMMU if ARM
-> > >
-> > > I don't want to get in the way of this patch because I'm also tired of the
-> > > randconfig failures caused by QCOM_SCM. However, ARM_SMMU is applicable to
-> > > a wide variety of (non-qcom) SoCs and so it seems a shame to require the
-> > > QCOM_SCM code to be included for all of those when it's not strictly needed
-> > > at all.
-> >
-> > Good point, I agree that needs to be fixed. I think this additional
-> > change should do the trick:
-> >
->
-> ARM_SMMU and QCOM_IOMMU are two separate implementations and both uses
-> QCOM_SCM. So both of them should select QCOM_SCM.
+On Thu, Sep 23, 2021 at 02:23:11PM -0700, Bjorn Andersson wrote:
+> Downstream defines four ADC channels related to thermal sensors external
+> to the PM8998 and two channels for internal voltage measurements.
+> 
+> Add these to the upstream SDM845 MTP, describe the thermal monitor
+> channels and add thermal_zones for these.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+> 
+> In addition to the iio channels exposed by v1, Daniel wanted thermal_zones...
+> 
+> Changes since v1:
+> - Enable the pm8998_adc_tm and describe the ADC channels
+> - Add thermal-zones for the new channels
+> 
+>  arch/arm64/boot/dts/qcom/sdm845-mtp.dts | 128 ++++++++++++++++++++++++
+>  1 file changed, 128 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
+> index 52dd7a858231..e3b40daef801 100644
+> --- a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
+> +++ b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
+> @@ -10,6 +10,8 @@
+>  #include <dt-bindings/gpio/gpio.h>
+>  #include <dt-bindings/regulator/qcom,rpmh-regulator.h>
+>  #include "sdm845.dtsi"
+> +#include "pm8998.dtsi"
+> +#include "pmi8998.dtsi"
+>  
+>  / {
+>  	model = "Qualcomm Technologies, Inc. SDM845 MTP";
+> @@ -46,6 +48,68 @@ vreg_s4a_1p8: pm8998-smps4 {
+>  
+>  		vin-supply = <&vph_pwr>;
+>  	};
+> +
+> +	thermal-zones {
+> +		xo_thermal: xo-thermal {
+> +			polling-delay-passive = <0>;
+> +			polling-delay = <0>;
+> +
+> +			thermal-sensors = <&pm8998_adc_tm 1>;
+> +
+> +			trips {
+> +				trip-point {
+> +					temperature = <125000>;
+> +					hysteresis = <10000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		msm_thermal: msm-thermal {
+> +			polling-delay-passive = <0>;
+> +			polling-delay = <0>;
+> +
+> +			thermal-sensors = <&pm8998_adc_tm 2>;
+> +
+> +			trips {
+> +				trip-point {
+> +					temperature = <125000>;
+> +					hysteresis = <10000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		pa_thermal: pa-thermal {
+> +			polling-delay-passive = <0>;
+> +			polling-delay = <0>;
+> +
+> +			thermal-sensors = <&pm8998_adc_tm 3>;
+> +
+> +			trips {
+> +				trip-point {
+> +					temperature = <125000>;
+> +					hysteresis = <10000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +
+> +		quiet_thermal: quiet-thermal {
+> +			polling-delay-passive = <0>;
+> +			polling-delay = <0>;
+> +
+> +			thermal-sensors = <&pm8998_adc_tm 4>;
+> +
+> +			trips {
+> +				trip-point {
+> +					temperature = <125000>;
+> +					hysteresis = <10000>;
+> +					type = "passive";
+> +				};
+> +			};
+> +		};
+> +	};
+>  };
+>  
+>  &adsp_pas {
+> @@ -469,6 +533,70 @@ &mss_pil {
+>  	firmware-name = "qcom/sdm845/mba.mbn", "qcom/sdm845/modem.mbn";
+>  };
+>  
+> +&pm8998_adc {
+> +	adc-chan@4c {
+> +		reg = <ADC5_XO_THERM_100K_PU>;
+> +		label = "xo_therm";
+> +	};
+> +
+> +	adc-chan@4d {
+> +		reg = <ADC5_AMUX_THM1_100K_PU>;
+> +		label = "msm_therm";
+> +	};
+> +
+> +	adc-chan@4f {
+> +		reg = <ADC5_AMUX_THM3_100K_PU>;
+> +		label = "pa_therm1";
+> +	};
+> +
+> +	adc-chan@51 {
+> +		reg = <ADC5_AMUX_THM5_100K_PU>;
+> +		label = "quiet_therm";
+> +	};
+> +
+> +	adc-chan@83 {
+> +		reg = <ADC5_VPH_PWR>;
+> +		label = "vph_pwr";
+> +	};
+> +
+> +	adc-chan@85 {
+> +		reg = <ADC5_VCOIN>;
+> +		label = "vcoin";
+> +	};
+> +};
+> +
+> +&pm8998_adc_tm {
+> +	status = "okay";
+> +
+> +	xo-thermistor@1 {
+> +		reg = <1>;
+> +		io-channels = <&pm8998_adc ADC5_XO_THERM_100K_PU>;
+> +		qcom,ratiometric;
+> +		qcom,hw-settle-time-us = <200>;
+> +	};
+> +
+> +	msm-thermistor@2 {
+> +		reg = <2>;
+> +		io-channels = <&pm8998_adc ADC5_AMUX_THM1_100K_PU>;
+> +		qcom,ratiometric;
+> +		qcom,hw-settle-time-us = <200>;
+> +	};
+> +
+> +	pa-thermistor@3 {
+> +		reg = <3>;
+> +		io-channels = <&pm8998_adc ADC5_AMUX_THM3_100K_PU>;
+> +		qcom,ratiometric;
+> +		qcom,hw-settle-time-us = <200>;
+> +	};
+> +
+> +	quiet-thermistor@4 {
+> +		reg = <4>;
+> +		io-channels = <&pm8998_adc ADC5_AMUX_THM5_100K_PU>;
+> +		qcom,ratiometric;
+> +		qcom,hw-settle-time-us = <200>;
+> +	};
+> +};
+> +
 
-Right, I figured that out later as well.
-
-> "Unfortunately" the Qualcomm portion of ARM_SMMU is builtin
-> unconditionally, so going with something like select QCOM_SCM if
-> ARCH_QCOM would still require the stubs in qcom_scm.h.
-
-Yes, sounds good. I also noticed that I still need one hack in there
-if I do this:
-
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-index 55690af1b25d..36c304a8fc9b 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
-@@ -427,6 +427,9 @@ struct arm_smmu_device *qcom_smmu_impl_init(struct
-arm_smmu_device *smmu)
- {
-        const struct device_node *np = smmu->dev->of_node;
-
-+       if (!IS_ENABLED(CONFIG_QCOM_SCM))
-+               return ERR_PTR(-ENXIO);
-+
- #ifdef CONFIG_ACPI
-        if (np == NULL) {
-                /* Match platform for ACPI boot */
-
-
-Otherwise it still breaks with ARM_SMMU=y and QCOM_SCM=m.
-
-Splitting out the qualcomm portion of the arm_smmu driver using
-a separate 'bool' symbol should also work, if  you prefer that
-and can suggest a name and help text for that symbol. It would
-look like
-
-diff --git a/drivers/iommu/arm/arm-smmu/Makefile
-b/drivers/iommu/arm/arm-smmu/Makefile
-index e240a7bcf310..b0cc01aa20c9 100644
---- a/drivers/iommu/arm/arm-smmu/Makefile
-+++ b/drivers/iommu/arm/arm-smmu/Makefile
-@@ -1,4 +1,5 @@
- # SPDX-License-Identifier: GPL-2.0
- obj-$(CONFIG_QCOM_IOMMU) += qcom_iommu.o
- obj-$(CONFIG_ARM_SMMU) += arm_smmu.o
--arm_smmu-objs += arm-smmu.o arm-smmu-impl.o arm-smmu-nvidia.o arm-smmu-qcom.o
-+arm_smmu-objs += arm-smmu.o arm-smmu-impl.o arm-smmu-nvidia.o
-+arm_smmu-$(CONFIG_ARM_SMMU_QCOM) += arm-smmu-qcom.o
-diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
-b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
-index 9f465e146799..2c25cce38060 100644
---- a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
-+++ b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
-@@ -215,7 +215,8 @@ struct arm_smmu_device *arm_smmu_impl_init(struct
-arm_smmu_device *smmu)
-            of_device_is_compatible(np, "nvidia,tegra186-smmu"))
-                return nvidia_smmu_impl_init(smmu);
-
--       smmu = qcom_smmu_impl_init(smmu);
-+       if (IS_ENABLED(CONFIG_ARM_SMMU_QCOM))
-+               smmu = qcom_smmu_impl_init(smmu);
-
-        if (of_device_is_compatible(np, "marvell,ap806-smmu-500"))
-                smmu->impl = &mrvl_mmu500_impl;
-
-
-
-       Arnd
+The example in the 'qcom,spmi-adc-tm5' binding specifies 'qcom,ratiometric'
+and 'qcom,hw-settle-time-us' for both the ADC and the thermal monitor, so do
+several board files (e.g. sm8250-mtp.dts and qrb5165-rb5.dts). This apparent
+redundancy bothered me earlier, it's not really clear to me whether it's
+needed/recommended or not. Do you happen to have any insights on this?
