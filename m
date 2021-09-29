@@ -2,187 +2,146 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 374A841CCFE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 21:55:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6FADF41CE22
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 23:28:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1346021AbhI2T5I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Sep 2021 15:57:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34788 "EHLO
+        id S1347006AbhI2V3T (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Sep 2021 17:29:19 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55596 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1346081AbhI2T5D (ORCPT
+        with ESMTP id S1347014AbhI2V3O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Sep 2021 15:57:03 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 483F0C061766
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 12:55:22 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id x27so15362262lfa.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 12:55:22 -0700 (PDT)
+        Wed, 29 Sep 2021 17:29:14 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 28AB5C061772
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 14:27:33 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id u18so16387528lfd.12
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 14:27:33 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=zIP+fT3P6R0yvKNN26znulCvOf0uZzhNp76ydFE5KGM=;
-        b=oLH5VMnESFf8hDlXdhtVvTI4OPGgZPLti9/yUSFcghvqOFR8+1q15z4q6upS+kTSvk
-         K3BKlDD5vbLvfuGkR2znd52pJxoqID2YMqf24qVuId5hOO5io+aMo4+g4+HRMAu3dzsK
-         WQcvLHMd+wdKtmts8MHrukqHFaEGyCQNH12etPoANPb3jeEU5R8zMZcmYOIOL4hl7xdy
-         CpB+Vn7h9KkrmAa77QlZY8thzONOxPKcB4IRQJlb3BHdPdKW8OWixOY1zwrouOPXq2c0
-         noAeX2Yo54bebM4Tkd0sldYqTE5gbm9ZIjWf7tLIdntkLY/a8q4yXJQ/0+DST800MKRf
-         rUJA==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=vjQP0/+z55MvzkQLmpO17f1ojfgarxRQxkpypeDCRYQ=;
+        b=P6d7v/ARFy2oAzNGlzkCFMmhuF0dw1E4Ty8/aKGGomT30aic5OSINMht/5eTnTjw+E
+         HVwG/Vb0f044xHEAedWSzxWElToMUBbgbJq2HpAC0E3cTqgTRqpyyvO/TxZlRGm7Knzd
+         g197vNwd2IHxhZjeaz4yRtAoxCOvziEh/yVbtU+3O8VuswsBr07x1VFM5xAtgWihuCkO
+         uaX1aUCJfdL12bZY+cJm7vPnn7R7kAZO2pzg6uXgoaCGHwkzYiXL2tUrJgQgg6Kyykb/
+         RcZANF9j+IZ5JhNrzRCHZVii00VULrEZwGuwD9dkVZiGUnoOdzpJdvJXgmdVANl52dPG
+         GeTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=zIP+fT3P6R0yvKNN26znulCvOf0uZzhNp76ydFE5KGM=;
-        b=O1QQCbw7dsNWeZgVOumWolnDbZluydYtyQlpW/HBsvPLXDlu9M8J/hgzZDSsHMOlAg
-         iw+Fl2qeRtnzLE7SE72Yx0tmSqFFQhQPVZbF8NVZXRpJmm7zsWL393DIuZvA0W8qcy38
-         8O6sRv0OVXyF2cJUi+I6ANeAawaV1A+XX+5nRCcFB4Hh2jZU0SaD/fTRQuczgvd6u4A4
-         dDIYFrJOQFX2QfskgoKFK8B+jw9izCJ2Hed+DO6zdp+hanbCGMnhzF9tQ+gfBq5z6Rt6
-         JLc/bI1Uul+NdQepldXmpG7IlzE/bc6aXjddKfiLNrrzXiKxMsscsmqb4yspBpd43srq
-         sJjw==
-X-Gm-Message-State: AOAM5328OTorDoWdXgu3A16HAAm17gXTyPwkhyHF1SLWWCDn5Rt7oET+
-        MY/Kh41vaKIlIb1AbmMKeipHKkTqzqmW40SN
-X-Google-Smtp-Source: ABdhPJw2NBeebkhp21q8eiztBXx7rEsS8aq9QKNrH06jaurbSofJowNctBm6Ot5kXUJjIgkgPboaVw==
-X-Received: by 2002:a05:6512:3f1a:: with SMTP id y26mr1524768lfa.372.1632945320615;
-        Wed, 29 Sep 2021 12:55:20 -0700 (PDT)
-Received: from [192.168.10.17] (88-112-130-172.elisa-laajakaista.fi. [88.112.130.172])
-        by smtp.gmail.com with ESMTPSA id z8sm94311lfq.284.2021.09.29.12.55.19
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 29 Sep 2021 12:55:20 -0700 (PDT)
-Subject: Re: [PATCH v2 2/4] thermal/drivers/qcom/spmi-adc-tm5: Add support for
- HC variant
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20210923212311.2877048-1-bjorn.andersson@linaro.org>
- <20210923212311.2877048-3-bjorn.andersson@linaro.org>
-From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Message-ID: <04bbf390-9e17-08fb-24dd-f1d71288aaaa@linaro.org>
-Date:   Wed, 29 Sep 2021 22:55:19 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.1
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=vjQP0/+z55MvzkQLmpO17f1ojfgarxRQxkpypeDCRYQ=;
+        b=IurW7AcOyih0PU2fNtY71lC+1VZzT+x0kDo0KC7SajAKQYnH9qrPe93Hg7d5cjgds6
+         YFE7tv77wTJU4jYVK6nx+0Zy/UNOXDfvOKrzB4Q/Gz2yS709njhotMKVRJfbWbUgHcRK
+         VLWbrlLGJXfrm5A4JgCLLTLxbljYpN1Zq7lLvXdPTRrHSpIBM5RQD8VVPx2lZs/3/Pbo
+         zlOczRAswRpP3uiQOxRmomu+0K71wDEb093D26/CWcB0nv9UmLcBdcTyJpgVXmLCx8lx
+         9SDzKFK489kLPgCSMCqtXMsQSyszn2WHgNXNclkD8u1gMGZJxEjtBXd26Th/HJ/WeGn1
+         ZyOQ==
+X-Gm-Message-State: AOAM531fTokjB5e065PCv/60BWbSx9ExRSM0hpnzfWBJxsLKoQugTnYX
+        GFxowVpJ7yZPmMJFfJaMvpdfvl1BsT8Q2aDPDE/F4w==
+X-Google-Smtp-Source: ABdhPJxlRl2WWh8eZDcWokrINznDZYEeyO4HbV5UfIxRhCovDEAxjUhr3yg0Uy13hYjMGKtihX9SR8gKl3bzVxFYltc=
+X-Received: by 2002:a05:6512:ea5:: with SMTP id bi37mr1986548lfb.36.1632950851440;
+ Wed, 29 Sep 2021 14:27:31 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20210923212311.2877048-3-bjorn.andersson@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20210910101218.1632297-1-maxime@cerno.tech>
+In-Reply-To: <20210910101218.1632297-1-maxime@cerno.tech>
+From:   John Stultz <john.stultz@linaro.org>
+Date:   Wed, 29 Sep 2021 14:27:19 -0700
+Message-ID: <CALAqxLUqdkxXogmPhPgHv4Bgx-4b3mxe12LzzvWb07pLSnb2kA@mail.gmail.com>
+Subject: Re: [PATCH v4 00/24] drm/bridge: Make panel and bridge probe order consistent
+To:     Maxime Ripard <maxime@cerno.tech>
+Cc:     Andrzej Hajda <a.hajda@samsung.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        David Airlie <airlied@linux.ie>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Sean Paul <sean@poorly.run>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Xinliang Liu <xinliang.liu@linaro.org>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Tian Tao <tiantao6@hisilicon.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Linux Samsung SOC <linux-samsung-soc@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Chen Feng <puck.chen@hisilicon.com>,
+        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bjorn,
+On Fri, Sep 10, 2021 at 3:12 AM Maxime Ripard <maxime@cerno.tech> wrote:
+>
+> We've encountered an issue with the RaspberryPi DSI panel that prevented the
+> whole display driver from probing.
+>
+> The issue is described in detail in the commit 7213246a803f ("drm/vc4: dsi:
+> Only register our component once a DSI device is attached"), but the basic idea
+> is that since the panel is probed through i2c, there's no synchronization
+> between its probe and the registration of the MIPI-DSI host it's attached to.
+>
+> We initially moved the component framework registration to the MIPI-DSI Host
+> attach hook to make sure we register our component only when we have a DSI
+> device attached to our MIPI-DSI host, and then use lookup our DSI device in our
+> bind hook.
+>
+> However, all the DSI bridges controlled through i2c are only registering their
+> associated DSI device in their bridge attach hook, meaning with our change
+> above, we never got that far, and therefore ended up in the same situation than
+> the one we were trying to fix for panels.
+>
+> The best practice to avoid those issues is to register its functions only after
+> all its dependencies are live. We also shouldn't wait any longer than we should
+> to play nice with the other components that are waiting for us, so in our case
+> that would mean moving the DSI device registration to the bridge probe.
+>
+> I also had a look at all the DSI hosts, and it seems that exynos, kirin and msm
+> would be affected by this and wouldn't probe anymore after those changes.
+> Exynos and kirin seems to be simple enough for a mechanical change (that still
+> requires to be tested), but the changes in msm seemed to be far more important
+> and I wasn't confortable doing them.
 
-On 9/24/21 12:23 AM, Bjorn Andersson wrote:
-> The variant of the ADC Thermal Monitor block found in e.g. PM8998 is
-> "HC", add support for this variant to the ADC TM5 driver in order to
-> support using VADC channels as thermal_zones on SDM845 et al.
-> 
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
-> 
-> Changes since v1:
-> - New patch
-> 
->   drivers/thermal/qcom/qcom-spmi-adc-tm5.c | 43 +++++++++++++++++++++++-
->   1 file changed, 42 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-> index 8494cc04aa21..7fe5cf28ae15 100644
-> --- a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-> +++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
-> @@ -82,6 +82,7 @@ struct adc_tm5_data {
->   	const u32	full_scale_code_volt;
->   	unsigned int	*decimation;
->   	unsigned int	*hw_settle;
-> +	bool		is_hc;
->   };
->   
->   enum adc_tm5_cal_method {
-> @@ -146,6 +147,14 @@ static const struct adc_tm5_data adc_tm5_data_pmic = {
->   					 64000, 128000 },
->   };
->   
-> +static const struct adc_tm5_data adc_tm_hc_data_pmic = {
-> +	.full_scale_code_volt = 0x70e4,
-> +	.decimation = (unsigned int []) { 256, 512, 1024 },
-> +	.hw_settle = (unsigned int []) { 0, 100, 200, 300, 400, 500, 600, 700,
-> +					 1000, 2000, 4000, 6000, 8000, 10000 },
-> +	.is_hc = true,
-> +};
-> +
->   static int adc_tm5_read(struct adc_tm5_chip *adc_tm, u16 offset, u8 *data, int len)
->   {
->   	return regmap_bulk_read(adc_tm->regmap, adc_tm->base + offset, data, len);
-> @@ -375,6 +384,31 @@ static int adc_tm5_register_tzd(struct adc_tm5_chip *adc_tm)
->   	return 0;
->   }
->   
-> +static int adc_tm_hc_init(struct adc_tm5_chip *chip)
-> +{
-> +	unsigned int i;
-> +	u8 buf[2];
-> +	int ret;
-> +
-> +	for (i = 0; i < chip->nchannels; i++) {
-> +		if (chip->channels[i].channel >= ADC_TM5_NUM_CHANNELS) {
-> +			dev_err(chip->dev, "Invalid channel %d\n", chip->channels[i].channel);
-> +			return -EINVAL;
-> +		}
-> +	}
-> +
-> +	buf[0] = chip->decimation;
-> +	buf[1] = chip->avg_samples | ADC_TM5_FAST_AVG_EN;
-> +
-> +	ret = adc_tm5_write(chip, ADC_TM5_ADC_DIG_PARAM, buf, sizeof(buf));
-> +	if (ret) {
-> +		dev_err(chip->dev, "block write failed: %d\n", ret);
-> +		return ret;
-> +	}
 
-	if (ret)
-		dev_err(chip->dev, "block write failed: %d\n", ret);
+Hey Maxime,
+  Sorry for taking so long to get to this, but now that plumbers is
+over I've had a chance to check it out on kirin
 
-above should be sufficient here and similarly in adc_tm5_init().
+Rob Clark pointed me to his branch with some fixups here:
+   https://gitlab.freedesktop.org/robclark/msm/-/commits/for-mripard/bridge-rework
 
-> +
-> +	return ret;
-> +}
-> +
->   static int adc_tm5_init(struct adc_tm5_chip *chip)
->   {
->   	u8 buf[4], channels_available;
-> @@ -591,7 +625,10 @@ static int adc_tm5_probe(struct platform_device *pdev)
->   		return ret;
->   	}
->   
-> -	ret = adc_tm5_init(adc_tm);
-> +	if (adc_tm->data->is_hc)
-> +		ret = adc_tm_hc_init(adc_tm);
-> +	else
-> +		ret = adc_tm5_init(adc_tm);
->   	if (ret) {
->   		dev_err(dev, "adc-tm init failed\n");
->   		return ret;
-> @@ -612,6 +649,10 @@ static const struct of_device_id adc_tm5_match_table[] = {
->   		.compatible = "qcom,spmi-adc-tm5",
->   		.data = &adc_tm5_data_pmic,
->   	},
-> +	{
-> +		.compatible = "qcom,spmi-adc-tm-hc",
-> +		.data = &adc_tm_hc_data_pmic,
-> +	},
->   	{ }
->   };
->   MODULE_DEVICE_TABLE(of, adc_tm5_match_table);
-> 
+But trying to boot hikey with that, I see the following loop indefinitely:
+[    4.632132] adv7511 2-0039: supply avdd not found, using dummy regulator
+[    4.638961] adv7511 2-0039: supply dvdd not found, using dummy regulator
+[    4.645741] adv7511 2-0039: supply pvdd not found, using dummy regulator
+[    4.652483] adv7511 2-0039: supply a2vdd not found, using dummy regulator
+[    4.659342] adv7511 2-0039: supply v3p3 not found, using dummy regulator
+[    4.666086] adv7511 2-0039: supply v1p2 not found, using dummy regulator
+[    4.681898] adv7511 2-0039: failed to find dsi host
+[    4.688836] adv7511 2-0039: supply avdd not found, using dummy regulator
+[    4.695724] adv7511 2-0039: supply dvdd not found, using dummy regulator
+[    4.702583] adv7511 2-0039: supply pvdd not found, using dummy regulator
+[    4.709369] adv7511 2-0039: supply a2vdd not found, using dummy regulator
+[    4.716232] adv7511 2-0039: supply v3p3 not found, using dummy regulator
+[    4.722972] adv7511 2-0039: supply v1p2 not found, using dummy regulator
+[    4.738720] adv7511 2-0039: failed to find dsi host
 
---
-Best wishes,
-Vladimir
+I'll have to dig a bit to figure out what's going wrong, but wanted to
+give you the heads up that there seems to be a problem
+
+thanks
+-john
