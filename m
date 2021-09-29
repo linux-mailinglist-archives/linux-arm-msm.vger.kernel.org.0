@@ -2,103 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9B7CF41C49D
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 14:24:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2E61941C562
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 15:17:39 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343627AbhI2MZR convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Sep 2021 08:25:17 -0400
-Received: from coyote.holtmann.net ([212.227.132.17]:40492 "EHLO
-        mail.holtmann.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245563AbhI2MZQ (ORCPT
+        id S1344100AbhI2NTS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Sep 2021 09:19:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54854 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1344081AbhI2NTR (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Sep 2021 08:25:16 -0400
-Received: from smtpclient.apple (p5b3d2185.dip0.t-ipconnect.de [91.61.33.133])
-        by mail.holtmann.org (Postfix) with ESMTPSA id 09636CECF8;
-        Wed, 29 Sep 2021 14:23:34 +0200 (CEST)
-Content-Type: text/plain;
-        charset=us-ascii
-Mime-Version: 1.0 (Mac OS X Mail 14.0 \(3654.120.0.1.13\))
-Subject: Re: [PATCH v1] Bluetooth: btusb: Add the new support IDs for WCN6855
-From:   Marcel Holtmann <marcel@holtmann.org>
-In-Reply-To: <d7b3f7d75e58b81081b11e8f3ac7e536@codeaurora.org>
-Date:   Wed, 29 Sep 2021 14:23:33 +0200
-Cc:     Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        linux-bluetooth <linux-bluetooth@vger.kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        c-hbandi@codeaurora.org, Hemantg <hemantg@codeaurora.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rocky Liao <rjliao@codeaurora.org>, zijuhu@codeaurora.org
-Content-Transfer-Encoding: 8BIT
-Message-Id: <95D9737D-62AD-486C-A30B-D49CD1101300@holtmann.org>
-References: <d7b3f7d75e58b81081b11e8f3ac7e536@codeaurora.org>
-To:     tjiang@codeaurora.org
-X-Mailer: Apple Mail (2.3654.120.0.1.13)
+        Wed, 29 Sep 2021 09:19:17 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4365FC06161C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 06:17:36 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id b26so8808386edt.0
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 06:17:36 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=aleksander-es.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=UJLiiUeulvsE5Jpu0obENQGGvYdNvxhst0WjqmLYdUg=;
+        b=v4YOzY3zC6nHOPzxbDz2rLrlZesaa8fIiHRxmFuNP2QGO6VtJVWDIV+pshTho5RnWf
+         rsoqAlNkLsvprRAYGCqBF3ByuYuDoKYcqPODlO9vOIsLlU1tDjlKXCUrdsOOd/MxPSpn
+         +VkPTIsG3TQUVstZP9VzxEGq/LgTcFW1woySilmgFdsHvSiW/0BxB9pSis8zwVQdpcTq
+         bIfl++Tvy+17cMLlBrtmJ0CkjAkD5dCwii60pp3b1RqHd0yhds1IjLm9phacZd2jjnUU
+         0ikndzbT8Bk4jfMwC76f1dDJSUJO9r89SJd53LvPcKuwNmszBsrIJPqT4Ftna3tH87Pf
+         BTvw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=UJLiiUeulvsE5Jpu0obENQGGvYdNvxhst0WjqmLYdUg=;
+        b=rmrEus+USpKqrEY9LL3Jf1O9CW00RSWCD0g75Ten1Kbro9tySUhVq64zT7AGpV7iLf
+         wSJciZSGE4xTHWsE/9BrHxpk+QqlrgYKSznoPgVGhFPl4GZZ2fN3HIgXCotswVrL8ysZ
+         qnuVE3c8REIhpvQs44QC14Uq2eyzruq8mGKTnpekcYYEHbhLigTvTDirJ13ex9w5KnC7
+         WarCRn0B2NDNXQTfR+7KB5G6jLlxA++FhBHfCk1mG0SjVoT+EpslnjfGkHBREeEr+t/2
+         BU/XGBwz7cIvl9gDEktRAzNa/6c/ELZtEAoXeO//XRQyBebAv9wiKKEIBgTjK1lxiFzn
+         4EGQ==
+X-Gm-Message-State: AOAM530fBFfKMH4yL9yn3p5crO2UBwcnVuB6QkTa4o3M9zWOxIJ4EWeF
+        PsU0NqxAgsdYmMPILGgiIBUccjI1fGm0dGlc+Sz76A==
+X-Google-Smtp-Source: ABdhPJyPDEvncO7qg4K5DedWjH02dF6b/iP9HhGB6aoRgnqmLyh9HPFi0+KHqSz5GwTR7RxcSwp5RMJrerMI0Ni2o7o=
+X-Received: by 2002:a17:906:6d0:: with SMTP id v16mr13841146ejb.258.1632921435817;
+ Wed, 29 Sep 2021 06:17:15 -0700 (PDT)
+MIME-Version: 1.0
+References: <20210805140231.268273-1-thomas.perrot@bootlin.com>
+ <f358044a-78d0-ad63-a777-87b4b9d94745@aleksander.es> <73A52D61-FCAB-4A2B-BA96-0117F6942842@linaro.org>
+In-Reply-To: <73A52D61-FCAB-4A2B-BA96-0117F6942842@linaro.org>
+From:   Aleksander Morgado <aleksander@aleksander.es>
+Date:   Wed, 29 Sep 2021 15:17:04 +0200
+Message-ID: <CAAP7ucL1Zv6g8G0SWAjEAjr6OSVTyDmvmFkH+vMmmBwOH2=ZUQ@mail.gmail.com>
+Subject: Re: [PATCH] bus: mhi: pci_generic: increase timeout value for
+ operations to 24000ms
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     Thomas Perrot <thomas.perrot@bootlin.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        hemantk@codeaurora.org, Loic Poulain <loic.poulain@linaro.org>,
+        stable <stable@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Tim,
+Hey Mani,
 
-> Add some new support IDs to usb_device_id table for WCN6855.
-> 
-> Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
-> ---
-> drivers/bluetooth/btusb.c | 37 +++++++++++++++++++++++++++++++++++++
-> 1 file changed, 37 insertions(+)
-> 
-> diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-> index 34363d3c85e5..346cb1ea93a6 100644
-> --- a/drivers/bluetooth/btusb.c
-> +++ b/drivers/bluetooth/btusb.c
-> @@ -295,6 +295,43 @@ static const struct usb_device_id blacklist_table[] = {
-> 	{ USB_DEVICE(0x0cf3, 0xe600), .driver_info = BTUSB_QCA_WCN6855 |
-> 						     BTUSB_WIDEBAND_SPEECH |
-> 						     BTUSB_VALID_LE_STATES },
-> +	{ USB_DEVICE(0x0489, 0xe0cc), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH |
-> +						     BTUSB_VALID_LE_STATES },
-> +	{ USB_DEVICE(0x0489, 0xe0c9), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH |
-> +						     BTUSB_VALID_LE_STATES },
-> +	{ USB_DEVICE(0x0489, 0xe0d6), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH |
-> +						     BTUSB_VALID_LE_STATES },
-> +	{ USB_DEVICE(0x0489, 0xe0e3), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH |
-> +						     BTUSB_VALID_LE_STATES },
-> +	{ USB_DEVICE(0x0489, 0xe0d0), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH |
-> +						     BTUSB_VALID_LE_STATES },
-> +	{ USB_DEVICE(0x0489, 0xe0df), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH |
-> +						     BTUSB_VALID_LE_STATES },
-> +	{ USB_DEVICE(0x0489, 0xe0e1), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH |
-> +						     BTUSB_VALID_LE_STATES },
-> +	{ USB_DEVICE(0x04ca, 0x3025), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH |
-> +						     BTUSB_VALID_LE_STATES },
-> +	{ USB_DEVICE(0x10ab, 0x9608), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH |
-> +						     BTUSB_VALID_LE_STATES },
-> +	{ USB_DEVICE(0x10ab, 0x9609), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH |
-> +						     BTUSB_VALID_LE_STATES },
-> +	{ USB_DEVICE(0x10ab, 0x9308), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH |
-> +						     BTUSB_VALID_LE_STATES },
-> +	{ USB_DEVICE(0x10ab, 0x9309), .driver_info = BTUSB_QCA_WCN6855 |
-> +						     BTUSB_WIDEBAND_SPEECH |
-> +						     BTUSB_VALID_LE_STATES },
-> +
+> >> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+> >> index 4dd1077354af..e08ed6e5031b 100644
+> >> --- a/drivers/bus/mhi/pci_generic.c
+> >> +++ b/drivers/bus/mhi/pci_generic.c
+> >> @@ -248,7 +248,7 @@ static struct mhi_event_config modem_qcom_v1_mhi_events[] = {
+> >>
+> >>   static const struct mhi_controller_config modem_qcom_v1_mhiv_config = {
+> >>      .max_channels = 128,
+> >> -    .timeout_ms = 8000,
+> >> +    .timeout_ms = 24000,
+> >
+> >
+> >This modem_qcom_v1_mhiv_config config applies to all generic SDX24, SDX55 and SDX65 modules.
+> >Other vendor-branded SDX55 based modules in this same file (Foxconn SDX55, MV31), have 20000ms as timeout.
+> >Other vendor-branded SDX24 based modules in this same file (Quectel EM12xx), have also 20000ms as timeout.
+> >Maybe it makes sense to have a common timeout for all?
+> >
+>
+> Eventhough the baseport coming from Qualcomm for the modem chipsets are same, it is possible that the vendors might have customized the firmware for their own usecase. That could be the cause of the delay for modem booting.
+>
+> So I don't think we should use the same timeout of 2400ms for all modems.
+>
 
-nobody is sending patches like this. Everybody includes /sys/kernel/debug/usb/devices portion and describes the devices.
+Please note it's 24000ms what's being suggested here, not 2400ms.
 
-Regards
+> >Thomas, is the 24000ms value taken from experimentation, or is it a safe enough value? Maybe 20000ms as in other modules would have been enough?
+> >
+>
+> It was derived from testing I believe.
 
-Marcel
+Following your reasoning above, shouldn't this 24000ms timeout be
+applied only to the Sierra Wireless EM91xx devices (which may have
+custom firmware bits delaying the initialization a bit longer), and
+not to the generic SDX24, SDX55 and SDX65?
 
+If I'm not mistaken, Thomas is testing with a custom mhi_pci_generic
+entry for the EM91xx; as in
+https://forum.sierrawireless.com/t/sierra-wireless-airprime-em919x-pcie-support/24927.
+I'm also playing with that same entry on my own setup, but have other
+problems of my own :)
+
+
+--
+Aleksander
+https://aleksander.es
