@@ -2,106 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 12C8841CAA0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 18:53:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 50C0141CB4A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 19:51:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245753AbhI2Qxo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Sep 2021 12:53:44 -0400
-Received: from mail.kernel.org ([198.145.29.99]:48762 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S245180AbhI2Qxn (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Sep 2021 12:53:43 -0400
-Received: from jic23-huawei (cpc108967-cmbg20-2-0-cust86.5-4.cable.virginm.net [81.101.6.87])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        id S1344278AbhI2Rx1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Sep 2021 13:53:27 -0400
+Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122]:41128
+        "EHLO smtp-relay-internal-0.canonical.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S243396AbhI2Rx0 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 29 Sep 2021 13:53:26 -0400
+Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
         (No client certificate requested)
-        by mail.kernel.org (Postfix) with ESMTPSA id 37C1361411;
-        Wed, 29 Sep 2021 16:51:57 +0000 (UTC)
-Date:   Wed, 29 Sep 2021 17:55:51 +0100
-From:   Jonathan Cameron <jic23@kernel.org>
-To:     Cai Huoqing <caihuoqing@baidu.com>
-Cc:     Linus Walleij <linus.walleij@linaro.org>,
-        Lars-Peter Clausen <lars@metafoo.de>,
-        Shawn Guo <shawnguo@kernel.org>,
-        Sascha Hauer <s.hauer@pengutronix.de>,
-        "Pengutronix Kernel Team" <kernel@pengutronix.de>,
-        Fabio Estevam <festevam@gmail.com>,
-        "NXP Linux Team" <linux-imx@nxp.com>,
-        Vladimir Zapolskiy <vz@mleia.com>,
-        "Neil Armstrong" <narmstrong@baylibre.com>,
-        Kevin Hilman <khilman@baylibre.com>,
-        Jerome Brunet <jbrunet@baylibre.com>,
-        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
-        Andy Gross <agross@kernel.org>,
-        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
-        Heiko Stuebner <heiko@sntech.de>,
-        <linux-arm-kernel@lists.infradead.org>,
-        <linux-iio@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <linux-amlogic@lists.infradead.org>,
-        <linux-arm-msm@vger.kernel.org>,
-        <linux-rockchip@lists.infradead.org>
-Subject: Re: [PATCH v3 8/9] iio: adc: rockchip_saradc: Make use of the
- helper function dev_err_probe()
-Message-ID: <20210929175551.7517b018@jic23-huawei>
-In-Reply-To: <20210928141956.2148-8-caihuoqing@baidu.com>
-References: <20210928141956.2148-1-caihuoqing@baidu.com>
-        <20210928141956.2148-8-caihuoqing@baidu.com>
-X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.30; x86_64-pc-linux-gnu)
+        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 55736402F6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 17:51:44 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1632937904;
+        bh=sGmR+urAbR+sGbkj5JCyniQzZ7uplCBGMFqJx16vAAg=;
+        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version;
+        b=G8DW55cwYit1A19tvXvqD/7hOAixox5Qn26Rddl7NNb78TmKpj+bTBCKjhYGckqzG
+         d5sVYFzL6Mby96z1zbz9Cz2zQj53pp5gb08EUVTxHbqVWPbocG4m9p2P5gpSLO7xiI
+         aKQeNdYEo9AjtBVv1AvrU7V16mD9zaQDL19sWNLvzKkXqIk6jXFxybveJ9gYIg7kn8
+         RB3bCa5LuntvErS53LB4xHdiqw0OYO5KRl02saRqEM1SwSMiEidzBqW1bgGKbEtbzW
+         Ge8KMusT4eM3amk2u/xl9rnmZ6r5y2Xz3yKD13QQG9+KoVOAJXchSu5SnTLbMvu3LW
+         zqTz0RWsJ23UA==
+Received: by mail-pl1-f200.google.com with SMTP id ba4-20020a170902720400b0013a432f7556so1675283plb.4
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 10:51:44 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=sGmR+urAbR+sGbkj5JCyniQzZ7uplCBGMFqJx16vAAg=;
+        b=BU2pBFfrU4FPAzYsMeZUfzGgyhBiGG0VoAJQR5Fg+CO8pAgMDbB5XmCsaXzpawJYpg
+         8HI8Oe1/clHItdXhi7Tkg5poSdwOrKCKMx61UZgjc+loA4+HqtqY1gby8howjZ1UvoQB
+         tSeAXc8pX150FpqzBpcc6YwzAcnRF1KWeSiBCZj5uOIP02jemEjCoaNah56woWu2AXdE
+         54mAeX7QHVRAVB1Vk0jd/ShLiS8j4dNJli5HwW7A+nqAx948o5CpnNgLPV8OgzndsXFT
+         Pv5hUwXGnzlZ7Gqlad21lF/qJwQKHSPk4Ft6eBa+/ByxY9TxHu6pRMxlyvFqGU3nY99y
+         MCZA==
+X-Gm-Message-State: AOAM532Q4zWrDZY2Aga2PAPC/kW2ZQxWrUqHCEzEwcV7PBX0uclW4PF6
+        K/Fc+yXDHpGsR/2ek+l3MSFfKq2TcS4LZDIKkPDb3t4ozqNt/3TY5OnpLWVqQfn5WgHxUdTWTxn
+        miuZnLdXNObYUqqudh2SGz4TzrMyptpzWvo1/BW2Iexc=
+X-Received: by 2002:a17:902:bb81:b0:12d:a7ec:3d85 with SMTP id m1-20020a170902bb8100b0012da7ec3d85mr855667pls.17.1632937902044;
+        Wed, 29 Sep 2021 10:51:42 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJyjjac0TBBohoJcJhQhSRim7mjmRR5K1fIbkEhcN8vg/rftFjZi6B+vE8JDhtXmh2PCd3d37w==
+X-Received: by 2002:a17:902:bb81:b0:12d:a7ec:3d85 with SMTP id m1-20020a170902bb8100b0012da7ec3d85mr855648pls.17.1632937901819;
+        Wed, 29 Sep 2021 10:51:41 -0700 (PDT)
+Received: from localhost.localdomain ([69.163.84.166])
+        by smtp.gmail.com with ESMTPSA id u24sm431805pfm.85.2021.09.29.10.51.40
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 29 Sep 2021 10:51:41 -0700 (PDT)
+From:   Tim Gardner <tim.gardner@canonical.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     tim.gardner@canonical.com, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH] drm/msm/dsi: prevent unintentional integer overflow in dsi_pll_28nm_clk_recalc_rate()
+Date:   Wed, 29 Sep 2021 11:51:34 -0600
+Message-Id: <20210929175134.15808-1-tim.gardner@canonical.com>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 28 Sep 2021 22:19:54 +0800
-Cai Huoqing <caihuoqing@baidu.com> wrote:
+Coverity warns of an unintentional integer overflow
 
-> When possible use dev_err_probe help to properly deal with the
-> PROBE_DEFER error, the benefit is that DEFER issue will be logged
-> in the devices_deferred debugfs file.
-> Using dev_err_probe() can reduce code size, and the error value
-> gets printed.
-> 
-> Signed-off-by: Cai Huoqing <caihuoqing@baidu.com>
+CID 120715 (#1 of 1): Unintentional integer overflow (OVERFLOW_BEFORE_WIDEN)
+overflow_before_widen: Potentially overflowing expression ref_clk * sdm_byp_div
+  with type unsigned int (32 bits, unsigned) is evaluated using 32-bit arithmetic,
+  and then used in a context that expects an expression of type unsigned long
+  (64 bits, unsigned).
+To avoid overflow, cast either ref_clk or sdm_byp_div to type unsigned long.
+263                vco_rate = ref_clk * sdm_byp_div;
 
-In this driver, there is also a call to
-devm_reset_control_get_exclusive() which I think can return
--EPROBE_DEFER
+Fix this and another possible overflow by casting ref_clk to unsigned long.
 
-There isn't a message printed on that particular patch, but it would
-be good to add something generic. Same for platform_get_irq()
+Cc: Rob Clark <robdclark@gmail.com>
+Cc: Sean Paul <sean@poorly.run>
+Cc: David Airlie <airlied@linux.ie>
+Cc: Daniel Vetter <daniel@ffwll.ch>
+Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc: Abhinav Kumar <abhinavk@codeaurora.org>
+Cc: linux-arm-msm@vger.kernel.org
+Cc: dri-devel@lists.freedesktop.org
+Cc: freedreno@lists.freedesktop.org
+Cc: linux-kernel@vger.kernel.org
+Signed-off-by: Tim Gardner <tim.gardner@canonical.com>
+---
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-There are some devm_clk_get() calls as well which likewise probably
-want handling in a similar fashion as you have done in other patches.
-
-Thanks,
-
-Jonathan
-
-
-> ---
-> v1->v2: Remove the separate line of PTR_ERR().
-> 
->  drivers/iio/adc/rockchip_saradc.c | 8 +++-----
->  1 file changed, 3 insertions(+), 5 deletions(-)
-> 
-> diff --git a/drivers/iio/adc/rockchip_saradc.c b/drivers/iio/adc/rockchip_saradc.c
-> index a56a0d7337ca..57419ccb3c70 100644
-> --- a/drivers/iio/adc/rockchip_saradc.c
-> +++ b/drivers/iio/adc/rockchip_saradc.c
-> @@ -392,11 +392,9 @@ static int rockchip_saradc_probe(struct platform_device *pdev)
->  	}
->  
->  	info->vref = devm_regulator_get(&pdev->dev, "vref");
-> -	if (IS_ERR(info->vref)) {
-> -		dev_err(&pdev->dev, "failed to get regulator, %ld\n",
-> -			PTR_ERR(info->vref));
-> -		return PTR_ERR(info->vref);
-> -	}
-> +	if (IS_ERR(info->vref))
-> +		return dev_err_probe(&pdev->dev, PTR_ERR(info->vref),
-> +				     "failed to get regulator\n");
->  
->  	if (info->reset)
->  		rockchip_saradc_reset_controller(info->reset);
+diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
+index 2da673a2add6..cfe4b30eb96d 100644
+--- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
++++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
+@@ -260,7 +260,7 @@ static unsigned long dsi_pll_28nm_clk_recalc_rate(struct clk_hw *hw,
+ 		sdm_byp_div = FIELD(
+ 				dsi_phy_read(base + REG_DSI_28nm_PHY_PLL_SDM_CFG0),
+ 				DSI_28nm_PHY_PLL_SDM_CFG0_BYP_DIV) + 1;
+-		vco_rate = ref_clk * sdm_byp_div;
++		vco_rate = (unsigned long)ref_clk * sdm_byp_div;
+ 	} else {
+ 		/* sdm mode */
+ 		sdm_dc_off = FIELD(
+@@ -274,7 +274,7 @@ static unsigned long dsi_pll_28nm_clk_recalc_rate(struct clk_hw *hw,
+ 		sdm_freq_seed = (sdm3 << 8) | sdm2;
+ 		DBG("sdm_freq_seed = %d", sdm_freq_seed);
+ 
+-		vco_rate = (ref_clk * (sdm_dc_off + 1)) +
++		vco_rate = ((unsigned long)ref_clk * (sdm_dc_off + 1)) +
+ 			mult_frac(ref_clk, sdm_freq_seed, BIT(16));
+ 		DBG("vco rate = %lu", vco_rate);
+ 	}
+-- 
+2.33.0
 
