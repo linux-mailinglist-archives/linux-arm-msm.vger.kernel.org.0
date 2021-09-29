@@ -2,63 +2,64 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6C3B841C401
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 13:58:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8595241C441
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 14:04:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1343562AbhI2MA3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Sep 2021 08:00:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36508 "EHLO
+        id S245603AbhI2MGd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Sep 2021 08:06:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37992 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1343563AbhI2MA2 (ORCPT
+        with ESMTP id S245233AbhI2MGd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Sep 2021 08:00:28 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A07CC061755
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 04:58:48 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id l6so1333265plh.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 04:58:48 -0700 (PDT)
+        Wed, 29 Sep 2021 08:06:33 -0400
+Received: from mail-pg1-x52e.google.com (mail-pg1-x52e.google.com [IPv6:2607:f8b0:4864:20::52e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6A6BAC061753
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 05:04:52 -0700 (PDT)
+Received: by mail-pg1-x52e.google.com with SMTP id h3so2456724pgb.7
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 05:04:52 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:user-agent:in-reply-to:references
          :message-id:mime-version:content-transfer-encoding;
-        bh=xe4OX2IAROL4XHXtqnP6SRnXOTt0CNJYp0ngxrxDPo8=;
-        b=OV5RWEtEpbJ3GrsHwcanzexLVHnGjHqavm3zSVZcuoe0UKmqUF+7Z4WImLSelE21te
-         zfWn/rKHblUz87MGDZ3Psxt9dywxzuKEfGK7XBNOX3dhpLaR0m70tNj+6xwypNAIj/LX
-         rZlIzdWAj+tBT8PboJ6CuHwoFYYcVVSrI/bFNIp6JUfTN3Pn5lusuYtbxQR9HK8nffdj
-         cQND0/8z/d/wZOYcyx8ZPu6ZPy1Bo3P57Z+8ZI2yQvtbSApNBo5Jxv05NNHo8R/mw+By
-         qoB/tQuo8zFxjowT0P0Sm1KpPWIJxUAnCn62oejS8uNF3Ys70Y7EnuB1h/Ri3K8OIYRo
-         nnwQ==
+        bh=O+kwQC4M0E3sUw4dmsxYQXLtGg3AMi5EmwiMTeq0Mu4=;
+        b=qw3OOrK/4e4AM3+2JQgTPdk7h8rozsq6Eza9GHl6/VAUmCBclH7pGUr5g++lfx0bX6
+         3tNMlzhxym4xdDyt9CF1Tqhj3pMB+vQkZzqHv0cy4nRe4w6HxSITZX17o7XAhOfhwC7r
+         SmO1k2mn/mxAXq9H0jCW3F2RPI+C6gOMpDA3yvL4kYSzJ/t66Xk1ZDa4BJ0hn5SjQKQN
+         dGzINlNFFpnwSVSGmyRiqYetijRaX2iZhEilKlLsslbaXBzSy/jhQt1EQ8+EUhccp5gw
+         VmV1ks/j9W/81+lqeNECr87E+lGSWJukUyj80XNZfNVfU3iRHsg5Q26in2aOwx7oluwt
+         QFTQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:user-agent:in-reply-to
          :references:message-id:mime-version:content-transfer-encoding;
-        bh=xe4OX2IAROL4XHXtqnP6SRnXOTt0CNJYp0ngxrxDPo8=;
-        b=cNYYa+CYtR28AIKH7PFV5MMCY3JCQ7RBeqTlZl0DrwoSEN5VKoCmE8jXUkkf3i4whC
-         hCGdmyltsAijvGrIM1iXvR/W1Wln/2qEYORv2UsemhNVkBu8BGhh8ruOloZ6eSSV6cDK
-         J9kuhnhkCs57pFPD2VpsXmQ+tRUc1Lyk/Hraqy92NVAQCXxfd05eMf/mjXRDNJ1/UZKZ
-         J5FOd89Lvqo+yT50sEfRBNiBlJWMUaXxiYW5+rNYoKWfgT+ZxirRkuZoTMAn2hSTntSM
-         meTeNdDFqovDQgT87beezdKmLQSn1pmNvYa9eDZzaQWA+euSCyrVWZtLFzDitn2cTSRL
-         o5Pw==
-X-Gm-Message-State: AOAM530urLcN+WUTSqzdLJWEaABX3kCM3B2Rva2fwwwcpqOgByFaYIZg
-        81aBnKYkovkX3KA3vSJK7qgC
-X-Google-Smtp-Source: ABdhPJxfsqkvREMuyJK5oAtQ9l4F4lzbKzB6AVvYLiHB7or7DOrdovizQZ2w7k/KG3+YmfaS1bdmsg==
-X-Received: by 2002:a17:90a:5d0f:: with SMTP id s15mr6000391pji.10.1632916727685;
-        Wed, 29 Sep 2021 04:58:47 -0700 (PDT)
+        bh=O+kwQC4M0E3sUw4dmsxYQXLtGg3AMi5EmwiMTeq0Mu4=;
+        b=qv1EyBe+ITiBX84CQnqe2Aa9UX4+0D4+MHeDYo1i/W8SajpiuKvsff7Y2TQsnEoUVQ
+         6XQl83trUtK7Kpgf+kTmKuZAjpWlB8DMGLh9QmRH0wflcOytDqApCxSfCYduI3U7eZpG
+         aRc41gwani6FlgV/YwECM+r+QX2tde3na7BM6/hae66aTymHWasddfq9T47JqDXlyZhH
+         ID85dMGpOe8PbQ0EeZQthoLe2VwnP9bWuOH62hixv4S+MwsJFuU1y7f2pmcIVh1w9DcN
+         rjKMVtM6oSZcdl+l687cyGb9TPP2mCYlNL4+4tIB5furJuT0lUm+gjjYNBAcXpcXWDHq
+         vZdg==
+X-Gm-Message-State: AOAM531edmJywIUP2pvl6i7mfJXTP3kvdcQCZ9QFUvVhGbLr8fonKwnb
+        Rd4AYaKY9s5oi4N411O01GN1
+X-Google-Smtp-Source: ABdhPJwL+JkaE70dk1RsNkXUtipXgEKGpAwvD9cskLR+DzQZHKm/4cbC08v9ZtzXnv0UxK19QjiQAg==
+X-Received: by 2002:a63:7a45:: with SMTP id j5mr9243171pgn.369.1632917091886;
+        Wed, 29 Sep 2021 05:04:51 -0700 (PDT)
 Received: from ?IPv6:::1? ([2409:4072:6d9d:8ec1:20a3:9c79:fefb:80c0])
-        by smtp.gmail.com with ESMTPSA id k22sm2337009pfi.149.2021.09.29.04.58.45
+        by smtp.gmail.com with ESMTPSA id q21sm2381057pgk.71.2021.09.29.05.04.49
         (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
-        Wed, 29 Sep 2021 04:58:46 -0700 (PDT)
-Date:   Wed, 29 Sep 2021 17:28:39 +0530
+        Wed, 29 Sep 2021 05:04:50 -0700 (PDT)
+Date:   Wed, 29 Sep 2021 17:34:42 +0530
 From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Thomas Perrot <thomas.perrot@bootlin.com>,
+To:     Aleksander Morgado <aleksander@aleksander.es>,
+        Thomas Perrot <thomas.perrot@bootlin.com>,
         linux-arm-msm@vger.kernel.org
 CC:     hemantk@codeaurora.org, loic.poulain@linaro.org,
         stable@vger.kernel.org
 Subject: =?US-ASCII?Q?Re=3A_=5BPATCH=5D_bus=3A_mhi=3A_pci=5Fgeneric=3A_increa?= =?US-ASCII?Q?se_timeout_value_for_operations_to_24000ms?=
 User-Agent: K-9 Mail for Android
-In-Reply-To: <5e1c5979b7fd35aa5715ed9b25ca3a59b7b259f4.camel@bootlin.com>
-References: <20210805140231.268273-1-thomas.perrot@bootlin.com> <20210816042206.GA3637@thinkpad> <5e1c5979b7fd35aa5715ed9b25ca3a59b7b259f4.camel@bootlin.com>
-Message-ID: <8109C610-8171-4FD1-8599-28A3860915B0@linaro.org>
+In-Reply-To: <f358044a-78d0-ad63-a777-87b4b9d94745@aleksander.es>
+References: <20210805140231.268273-1-thomas.perrot@bootlin.com> <f358044a-78d0-ad63-a777-87b4b9d94745@aleksander.es>
+Message-ID: <73A52D61-FCAB-4A2B-BA96-0117F6942842@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain;
  charset=utf-8
@@ -67,67 +68,75 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Thomas,=20
 
-On 29 September 2021 1:41:12 AM IST, Thomas Perrot <thomas=2Eperrot@bootli=
-n=2Ecom> wrote:
->Hello Manivannan,
+
+On 29 September 2021 3:07:23 PM IST, Aleksander Morgado <aleksander@aleksa=
+nder=2Ees> wrote:
+>Hey all,
 >
->I just saw that this patch seems not yet been merged, is there a issue
->with it?
+>On 5/8/21 16:02, Thomas Perrot wrote:
+>> Otherwise, the waiting time was too short to use a Sierra Wireless EM91=
+9X
+>> connected to an i=2EMX6 through the PCIe bus=2E
+>>=20
+>> Signed-off-by: Thomas Perrot <thomas=2Eperrot@bootlin=2Ecom>
+>> ---
+>>   drivers/bus/mhi/pci_generic=2Ec | 2 +-
+>>   1 file changed, 1 insertion(+), 1 deletion(-)
+>>=20
+>> diff --git a/drivers/bus/mhi/pci_generic=2Ec b/drivers/bus/mhi/pci_gene=
+ric=2Ec
+>> index 4dd1077354af=2E=2Ee08ed6e5031b 100644
+>> --- a/drivers/bus/mhi/pci_generic=2Ec
+>> +++ b/drivers/bus/mhi/pci_generic=2Ec
+>> @@ -248,7 +248,7 @@ static struct mhi_event_config modem_qcom_v1_mhi_ev=
+ents[] =3D {
+>>  =20
+>>   static const struct mhi_controller_config modem_qcom_v1_mhiv_config =
+=3D {
+>>   	=2Emax_channels =3D 128,
+>> -	=2Etimeout_ms =3D 8000,
+>> +	=2Etimeout_ms =3D 24000,
+>
+>
+>This modem_qcom_v1_mhiv_config config applies to all generic SDX24, SDX55=
+ and SDX65 modules=2E
+>Other vendor-branded SDX55 based modules in this same file (Foxconn SDX55=
+, MV31), have 20000ms as timeout=2E
+>Other vendor-branded SDX24 based modules in this same file (Quectel EM12x=
+x), have also 20000ms as timeout=2E
+>Maybe it makes sense to have a common timeout for all?
 >
 
-For the last merge window we had a conflict with netdev tree so I was not =
-able to send the second iteration of the PR=2E Will apply this patch for v5=
-=2E16=2E
+Eventhough the baseport coming from Qualcomm for the modem chipsets are sa=
+me, it is possible that the vendors might have customized the firmware for =
+their own usecase=2E That could be the cause of the delay for modem booting=
+=2E=20
+
+So I don't think we should use the same timeout of 2400ms for all modems=
+=2E=20
+
+>Thomas, is the 24000ms value taken from experimentation, or is it a safe =
+enough value? Maybe 20000ms as in other modules would have been enough?
+>
+
+It was derived from testing I believe=2E=20
 
 Thanks,=20
 Mani
 
->Best regards,
->Thomas
+>And if 20000ms wasn't enough but 24000ms is, how about adding that same v=
+alue for all modules? These modules definitely need time to boot, not sure =
+if having slightly different timeout values for each would make much sense,=
+ unless there are very very different values required=2E
 >
->On Mon, 2021-08-16 at 09:52 +0530, Manivannan Sadhasivam wrote:
->> On Thu, Aug 05, 2021 at 04:02:31PM +0200, Thomas Perrot wrote:
->> > Otherwise, the waiting time was too short to use a Sierra Wireless
->> > EM919X
->> > connected to an i=2EMX6 through the PCIe bus=2E
->> >=20
->> > Signed-off-by: Thomas Perrot <thomas=2Eperrot@bootlin=2Ecom>
+>What do you think?
+>
+>>   	=2Enum_channels =3D ARRAY_SIZE(modem_qcom_v1_mhi_channels),
+>>   	=2Ech_cfg =3D modem_qcom_v1_mhi_channels,
+>>   	=2Enum_events =3D ARRAY_SIZE(modem_qcom_v1_mhi_events),
 >>=20
->> Reviewed-by: Manivannan Sadhasivam <manivannan=2Esadhasivam@linaro=2Eor=
-g>
->>=20
->> Thanks,
->> Mani
->>=20
->> > ---
->> > =C2=A0drivers/bus/mhi/pci_generic=2Ec | 2 +-
->> > =C2=A01 file changed, 1 insertion(+), 1 deletion(-)
->> >=20
->> > diff --git a/drivers/bus/mhi/pci_generic=2Ec
->> > b/drivers/bus/mhi/pci_generic=2Ec
->> > index 4dd1077354af=2E=2Ee08ed6e5031b 100644
->> > --- a/drivers/bus/mhi/pci_generic=2Ec
->> > +++ b/drivers/bus/mhi/pci_generic=2Ec
->> > @@ -248,7 +248,7 @@ static struct mhi_event_config
->> > modem_qcom_v1_mhi_events[] =3D {
->> > =C2=A0
->> > =C2=A0static const struct mhi_controller_config
->> > modem_qcom_v1_mhiv_config =3D {
->> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=2Emax_channels =3D 1=
-28,
->> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=2Etimeout_ms =3D 8000,
->> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=2Etimeout_ms =3D 24000,
->> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=2Enum_channels =3D A=
-RRAY_SIZE(modem_qcom_v1_mhi_channels),
->> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=2Ech_cfg =3D modem_q=
-com_v1_mhi_channels,
->> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=2Enum_events =3D ARR=
-AY_SIZE(modem_qcom_v1_mhi_events),
->> > --=20
->> > 2=2E31=2E1
->> >=20
+>
 >
 
 --=20
