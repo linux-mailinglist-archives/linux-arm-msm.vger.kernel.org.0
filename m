@@ -2,161 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 48E0B41BAE0
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 01:15:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 49C5341BC00
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 03:00:11 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231149AbhI1XQ5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 28 Sep 2021 19:16:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33624 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229854AbhI1XQ4 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 28 Sep 2021 19:16:56 -0400
-Received: from mail-yb1-xb35.google.com (mail-yb1-xb35.google.com [IPv6:2607:f8b0:4864:20::b35])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E6043C06161C
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 16:15:16 -0700 (PDT)
-Received: by mail-yb1-xb35.google.com with SMTP id r4so1214515ybp.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 28 Sep 2021 16:15:16 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=a8ee7WRS14R1O+BHcNU3Zd5XnKmvSTh6mYlENaJtsFs=;
-        b=eWt9X/Jqh7u9qa8ilTksY05Vlq460clfXJSJwTGEMiyi9I3duuWFlnAe+zZebsBJZV
-         15AJsLYBy6uXOdaTdkQqCcbxzXR5kc395Gms9aGkaq0Jy8mio8TIgs71TZcr4azxCqV1
-         VnIkSSoDunlxZXjvMWmNUm/ftdAlcIMd8PObw=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=a8ee7WRS14R1O+BHcNU3Zd5XnKmvSTh6mYlENaJtsFs=;
-        b=oFEz/vXdxi/LBAYNzeP6IhOZp9xphRbuKp6vb/5Acz5DnqoNHZK7ouTFWyjq4yx2KH
-         sXfVzQMBXS0HVz5cUIy/z7mIZ+lEW9kWNvuRKhQl6CR6yNzyy0sEpMXN3P2Dv4T1JXMh
-         d3csRPtwsFwFyjei7VvfKc4RjlE+rWb+4SIs02v/ElDIAW92FXhAYTDE5UhBLbJAcLYv
-         L0XZnPrBVm1ujfpRHjACjY4TnwJ4IP0w8mCjmQbqLCI6kGgilrH6nQmmd59a/10LCtGG
-         MD918oB6uM30v6vBV9A3UiLPZCvbXfsBVoQY6HRr8x4n6yQYtLWljHuovLp9tM5RKnXg
-         H0kg==
-X-Gm-Message-State: AOAM531ZySmb8+EWQcBeeQm5KKR2lAeR0OjVqNBwqBlh3WW/fqzU4AQL
-        p9tggwOoULSlcCuE0zG13pRZaTpQrRVZHXCeyJJsaQ==
-X-Google-Smtp-Source: ABdhPJxH6/p92YPgO/7HgmWzUCpzT3aC3l1Fe59UgZFVRHr2rRuYtxEtIzMzurOBOUFi8ko6ewEazBNVdxy/MJvI9A4=
-X-Received: by 2002:a25:8885:: with SMTP id d5mr9334051ybl.14.1632870916255;
- Tue, 28 Sep 2021 16:15:16 -0700 (PDT)
+        id S243491AbhI2BBt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 28 Sep 2021 21:01:49 -0400
+Received: from mail.kernel.org ([198.145.29.99]:52906 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S243521AbhI2BBt (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 28 Sep 2021 21:01:49 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPS id 62206613D0;
+        Wed, 29 Sep 2021 01:00:07 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1632877207;
+        bh=4ntuuqobgpC4pwkcswEOHa5njU23sxBo1ci+pXNHnNU=;
+        h=Subject:From:Date:References:In-Reply-To:To:Cc:From;
+        b=rOz9XTIHgDA9kjXbFQsV6JPgRpKll/oYUYqys0Nwx9e2nV6F33n3nf0C0ZGaezSYZ
+         ybDcZxeDDSo8gNbNgJy11GOLDesjkIIGgWRslSy2QJg36ZVNKIvIXqkrokKeMGKKAc
+         M5+7Ubz88QHDYt4Knw73GBi+7K13w0gQJxNN294HtXmOU5GcWTcZSRLsASRSbtrqPZ
+         d+9gz7Q3lBoYv/t0J1HVc7P0CvzkH3wJIVDE7vwQIR37w+wrxFtjMc2xxk3SewUA9R
+         zAl86Ltrf9cjhSyISn3I5uTdVGqnYHJjcTsqV3LIUqIirz/s2ookflpZiA3j3lvrPd
+         5Hrag1yqyH+SA==
+Received: from pdx-korg-docbuild-2.ci.codeaurora.org (localhost.localdomain [127.0.0.1])
+        by pdx-korg-docbuild-2.ci.codeaurora.org (Postfix) with ESMTP id 573CE608FE;
+        Wed, 29 Sep 2021 01:00:07 +0000 (UTC)
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-References: <20210927184858.1.Ib7e63ae17e827ce0636a09d5dec9796043e4f80a@changeid>
- <20210927184858.2.I651eec59ce3cd1c4bdd64de31f9c3531f501b3a8@changeid> <CAE-0n51kTvv-UENH-jZPX-cJu-BCF8HGkCgVBUc3kkxrcUPy9Q@mail.gmail.com>
-In-Reply-To: <CAE-0n51kTvv-UENH-jZPX-cJu-BCF8HGkCgVBUc3kkxrcUPy9Q@mail.gmail.com>
-From:   Philip Chen <philipchen@chromium.org>
-Date:   Tue, 28 Sep 2021 16:15:05 -0700
-Message-ID: <CA+cxXh=BOsJKvCSFBof-PGC-aaXwyaxukVPKQv3okijnpnxXuQ@mail.gmail.com>
-Subject: Re: [PATCH 2/2] arm64: dts: sc7180: Support Parade ps8640 edp bridge
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
+Subject: Re: [PATCH] net: qrtr: combine nameservice into main module
+From:   patchwork-bot+netdevbpf@kernel.org
+Message-Id: <163287720735.1190.7481361805015480385.git-patchwork-notify@kernel.org>
+Date:   Wed, 29 Sep 2021 01:00:07 +0000
+References: <20210928171156.6353-1-luca@z3ntu.xyz>
+In-Reply-To: <20210928171156.6353-1-luca@z3ntu.xyz>
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, mani@kernel.org,
+        davem@davemloft.net, kuba@kernel.org, netdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephen,
+Hello:
 
-On Tue, Sep 28, 2021 at 1:58 PM Stephen Boyd <swboyd@chromium.org> wrote:
->
-> Quoting Philip Chen (2021-09-27 18:49:40)
-> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-parade-ps8640.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-parade-ps8640.dtsi
-> > new file mode 100644
-> > index 000000000000..647afb3a7c6a
-> > --- /dev/null
-> > +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-parade-ps8640.dtsi
-> > @@ -0,0 +1,105 @@
-> > +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-> > +/*
-> > + * Google Trogdor dts fragment for the boards with Parade ps8640 edp bridge
-> > + *
-> > + * Copyright 2021 Google LLC.
-> > + */
-> > +
-> > +/ {
-> > +       pp3300_brij_ps8640: pp3300-brij-ps8640 {
-> > +               compatible = "regulator-fixed";
-> > +               status = "okay";
-> > +               regulator-name = "pp3300_brij_ps8640";
-> > +
-> > +               regulator-min-microvolt = <3300000>;
-> > +               regulator-max-microvolt = <3300000>;
-> > +
-> > +               gpio = <&tlmm 32 GPIO_ACTIVE_HIGH>;
-> > +
-> > +               pinctrl-names = "default";
-> > +               pinctrl-0 = <&en_pp3300_edp_brij_ps8640>;
-> > +
-> > +               vin-supply = <&pp3300_a>;
-> > +       };
-> > +};
-> > +
-> > +&dsi0_out {
-> > +       remote-endpoint = <&ps8640_in>;
-> > +};
-> > +
-> > +&i2c2 {
-> > +       ps8640_bridge: edp-bridge@8 {
-> > +               compatible = "parade,ps8640";
-> > +               reg = <0x8>;
-> > +
-> > +               powerdown-gpios = <&tlmm 104 GPIO_ACTIVE_LOW>;
-> > +               reset-gpios = <&tlmm 11 GPIO_ACTIVE_LOW>;
-> > +
-> > +               pinctrl-names = "default";
-> > +               pinctrl-0 = <&edp_brij_en>, <&edp_brij_ps8640_rst>;
->
-> Ah here it is. Ignore my concern on patch #1.
->
-> > +
-> > +               vdd12-supply = <&pp1200_brij>;
-> > +               vdd33-supply = <&pp3300_brij_ps8640>;
-> > +
-> > +               ports {
-> > +                       #address-cells = <1>;
-> > +                       #size-cells = <0>;
-> > +
-> > +                       port@0 {
-> > +                               reg = <0>;
-> > +                               ps8640_in: endpoint {
-> > +                                       remote-endpoint = <&dsi0_out>;
-> > +                               };
-> > +                       };
-> > +
-> > +                       port@1 {
-> > +                               reg = <1>;
-> > +                               ps8640_out: endpoint {
-> > +                                       remote-endpoint = <&panel_in_edp>;
-> > +                               };
-> > +                       };
-> > +               };
-> > +
-> > +               aux_bus: aux-bus {
->
-> The parade,ps8640 binding needs an update for aux-bus. Is that somewhere
-> in linux-next or on the list?
-Thanks for the reminder.
-I'll upload a patch to fix the devicetree binding document.
-But I'll wait until the support for ps8640 aux-bus is 100% verified by hardware.
+This patch was applied to netdev/net-next.git (refs/heads/master):
 
->
-> > +                       panel: panel {
-> > +                               /* Compatible will be filled in per-board */
-> > +                               power-supply = <&pp3300_dx_edp>;
-> > +                               backlight = <&backlight>;
-> > +
-> > +                               port {
-> > +                                       panel_in_edp: endpoint {
-> > +                                               remote-endpoint = <&ps8640_out>;
-> > +                                       };
-> > +                               };
-> > +                       };
-> > +               };
-> > +       };
-> > +};
+On Tue, 28 Sep 2021 19:11:57 +0200 you wrote:
+> Previously with CONFIG_QRTR=m a separate ns.ko would be built which
+> wasn't done on purpose and should be included in qrtr.ko.
+> 
+> Rename qrtr.c to af_qrtr.c so we can build a qrtr.ko with both af_qrtr.c
+> and ns.c.
+> 
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
+> 
+> [...]
+
+Here is the summary with links:
+  - net: qrtr: combine nameservice into main module
+    https://git.kernel.org/netdev/net-next/c/a365023a76f2
+
+You are awesome, thank you!
+--
+Deet-doot-dot, I am a bot.
+https://korg.docs.kernel.org/patchwork/pwbot.html
+
+
