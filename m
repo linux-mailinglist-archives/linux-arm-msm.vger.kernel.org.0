@@ -2,125 +2,178 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 50C0141CB4A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 19:51:54 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id F421641CBD4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 20:30:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344278AbhI2Rx1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Sep 2021 13:53:27 -0400
-Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122]:41128
-        "EHLO smtp-relay-internal-0.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S243396AbhI2Rx0 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Sep 2021 13:53:26 -0400
-Received: from mail-pl1-f200.google.com (mail-pl1-f200.google.com [209.85.214.200])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id 55736402F6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 17:51:44 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1632937904;
-        bh=sGmR+urAbR+sGbkj5JCyniQzZ7uplCBGMFqJx16vAAg=;
-        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version;
-        b=G8DW55cwYit1A19tvXvqD/7hOAixox5Qn26Rddl7NNb78TmKpj+bTBCKjhYGckqzG
-         d5sVYFzL6Mby96z1zbz9Cz2zQj53pp5gb08EUVTxHbqVWPbocG4m9p2P5gpSLO7xiI
-         aKQeNdYEo9AjtBVv1AvrU7V16mD9zaQDL19sWNLvzKkXqIk6jXFxybveJ9gYIg7kn8
-         RB3bCa5LuntvErS53LB4xHdiqw0OYO5KRl02saRqEM1SwSMiEidzBqW1bgGKbEtbzW
-         Ge8KMusT4eM3amk2u/xl9rnmZ6r5y2Xz3yKD13QQG9+KoVOAJXchSu5SnTLbMvu3LW
-         zqTz0RWsJ23UA==
-Received: by mail-pl1-f200.google.com with SMTP id ba4-20020a170902720400b0013a432f7556so1675283plb.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 10:51:44 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=sGmR+urAbR+sGbkj5JCyniQzZ7uplCBGMFqJx16vAAg=;
-        b=BU2pBFfrU4FPAzYsMeZUfzGgyhBiGG0VoAJQR5Fg+CO8pAgMDbB5XmCsaXzpawJYpg
-         8HI8Oe1/clHItdXhi7Tkg5poSdwOrKCKMx61UZgjc+loA4+HqtqY1gby8howjZ1UvoQB
-         tSeAXc8pX150FpqzBpcc6YwzAcnRF1KWeSiBCZj5uOIP02jemEjCoaNah56woWu2AXdE
-         54mAeX7QHVRAVB1Vk0jd/ShLiS8j4dNJli5HwW7A+nqAx948o5CpnNgLPV8OgzndsXFT
-         Pv5hUwXGnzlZ7Gqlad21lF/qJwQKHSPk4Ft6eBa+/ByxY9TxHu6pRMxlyvFqGU3nY99y
-         MCZA==
-X-Gm-Message-State: AOAM532Q4zWrDZY2Aga2PAPC/kW2ZQxWrUqHCEzEwcV7PBX0uclW4PF6
-        K/Fc+yXDHpGsR/2ek+l3MSFfKq2TcS4LZDIKkPDb3t4ozqNt/3TY5OnpLWVqQfn5WgHxUdTWTxn
-        miuZnLdXNObYUqqudh2SGz4TzrMyptpzWvo1/BW2Iexc=
-X-Received: by 2002:a17:902:bb81:b0:12d:a7ec:3d85 with SMTP id m1-20020a170902bb8100b0012da7ec3d85mr855667pls.17.1632937902044;
-        Wed, 29 Sep 2021 10:51:42 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJyjjac0TBBohoJcJhQhSRim7mjmRR5K1fIbkEhcN8vg/rftFjZi6B+vE8JDhtXmh2PCd3d37w==
-X-Received: by 2002:a17:902:bb81:b0:12d:a7ec:3d85 with SMTP id m1-20020a170902bb8100b0012da7ec3d85mr855648pls.17.1632937901819;
-        Wed, 29 Sep 2021 10:51:41 -0700 (PDT)
-Received: from localhost.localdomain ([69.163.84.166])
-        by smtp.gmail.com with ESMTPSA id u24sm431805pfm.85.2021.09.29.10.51.40
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Sep 2021 10:51:41 -0700 (PDT)
-From:   Tim Gardner <tim.gardner@canonical.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     tim.gardner@canonical.com, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/msm/dsi: prevent unintentional integer overflow in dsi_pll_28nm_clk_recalc_rate()
-Date:   Wed, 29 Sep 2021 11:51:34 -0600
-Message-Id: <20210929175134.15808-1-tim.gardner@canonical.com>
-X-Mailer: git-send-email 2.33.0
+        id S1345932AbhI2Scb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Sep 2021 14:32:31 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60364 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1345707AbhI2Scb (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 29 Sep 2021 14:32:31 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 8816F61527;
+        Wed, 29 Sep 2021 18:30:49 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1632940249;
+        bh=gjF28VMTIug2m1bl/FU/M9snQ4rR61AFv5fVsRKalNI=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=CISl9Rl7R+M6haM6b37hM8Y55j2HAbcMi0eojp8x2X5LO3rMaVS5sudmIbZDpY2Fa
+         v3jkZlxqIQsgk7xdc/KNDPDNwnRYggSWDCUgB/s/FiZxlhlKX24dWHVpR7Wt0mlN/7
+         mhK6ym9B69BkMQdp4WI4pKJ+rr90hmai+tmZp9rhMJtK7ONWh9AhmLAFD2pHKhaUG3
+         HMRbEb2CCpVxIrKjjd6yE6ttU5SikyGGITOLPKJu1L7QFLNrx8p43TXVkgBvbCSBJk
+         HoUf+R5uDfbywO7AlRlXS5uX8pbpj5u56JSH5+uMScUwkPlS/zeQ1/1lCIAk541NMv
+         d88464bdH/fHQ==
+Received: by mail-wr1-f46.google.com with SMTP id s21so5795619wra.7;
+        Wed, 29 Sep 2021 11:30:49 -0700 (PDT)
+X-Gm-Message-State: AOAM533mlJSocCVOo/4P9J4qQuKiBP7NH/xEdDD9UUrSLsaNSwbRmlJY
+        BB6Hiwg8DRcMl0JsnYHnxRYjLAvza1+qy4aCjik=
+X-Google-Smtp-Source: ABdhPJznh64DeD5YLkqLyCdpGZrw2eJDCFhsGINcOBsXO/6p1u7dAzpxKDez727ElHRBigRMgHpji/X6aGMkMR1n8h4=
+X-Received: by 2002:a05:6000:1561:: with SMTP id 1mr1607418wrz.369.1632940247984;
+ Wed, 29 Sep 2021 11:30:47 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20210927152412.2900928-1-arnd@kernel.org> <20210929095107.GA21057@willie-the-truck>
+ <CAK8P3a2QnJkYCoEWhziYYXQusb-25_wUhA5ZTGtBsyfFx3NWzQ@mail.gmail.com> <YVR8Q7LO0weiFin+@yoga>
+In-Reply-To: <YVR8Q7LO0weiFin+@yoga>
+From:   Arnd Bergmann <arnd@kernel.org>
+Date:   Wed, 29 Sep 2021 20:30:30 +0200
+X-Gmail-Original-Message-ID: <CAK8P3a2Kk6Y1Hs98z2UFEis8cWekREFt8YKg2Nbu3G5WQJ7Fag@mail.gmail.com>
+Message-ID: <CAK8P3a2Kk6Y1Hs98z2UFEis8cWekREFt8YKg2Nbu3G5WQJ7Fag@mail.gmail.com>
+Subject: Re: [PATCH] [RFC] qcom_scm: hide Kconfig symbol
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Will Deacon <will@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Joerg Roedel <joro@8bytes.org>,
+        Mauro Carvalho Chehab <mchehab@kernel.org>,
+        Ulf Hansson <ulf.hansson@linaro.org>,
+        Alex Elder <elder@kernel.org>,
+        "David S. Miller" <davem@davemloft.net>,
+        Jakub Kicinski <kuba@kernel.org>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        Andy Gross <agross@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        Maxime Ripard <mripard@kernel.org>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Mark Rutland <mark.rutland@arm.com>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        "open list:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
+        Linux Media Mailing List <linux-media@vger.kernel.org>,
+        linux-mmc <linux-mmc@vger.kernel.org>,
+        Networking <netdev@vger.kernel.org>, ath10k@lists.infradead.org,
+        linux-wireless <linux-wireless@vger.kernel.org>,
+        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        linux-sunxi@lists.linux.dev
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Coverity warns of an unintentional integer overflow
+On Wed, Sep 29, 2021 at 4:46 PM Bjorn Andersson
+<bjorn.andersson@linaro.org> wrote:
+>
+> On Wed 29 Sep 05:04 CDT 2021, Arnd Bergmann wrote:
+>
+> > On Wed, Sep 29, 2021 at 11:51 AM Will Deacon <will@kernel.org> wrote:
+> > > On Mon, Sep 27, 2021 at 05:22:13PM +0200, Arnd Bergmann wrote:
+> > > >
+> > > > diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
+> > > > index 124c41adeca1..989c83acbfee 100644
+> > > > --- a/drivers/iommu/Kconfig
+> > > > +++ b/drivers/iommu/Kconfig
+> > > > @@ -308,7 +308,7 @@ config APPLE_DART
+> > > >  config ARM_SMMU
+> > > >       tristate "ARM Ltd. System MMU (SMMU) Support"
+> > > >       depends on ARM64 || ARM || (COMPILE_TEST && !GENERIC_ATOMIC64)
+> > > > -     depends on QCOM_SCM || !QCOM_SCM #if QCOM_SCM=m this can't be =y
+> > > > +     select QCOM_SCM
+> > > >       select IOMMU_API
+> > > >       select IOMMU_IO_PGTABLE_LPAE
+> > > >       select ARM_DMA_USE_IOMMU if ARM
+> > >
+> > > I don't want to get in the way of this patch because I'm also tired of the
+> > > randconfig failures caused by QCOM_SCM. However, ARM_SMMU is applicable to
+> > > a wide variety of (non-qcom) SoCs and so it seems a shame to require the
+> > > QCOM_SCM code to be included for all of those when it's not strictly needed
+> > > at all.
+> >
+> > Good point, I agree that needs to be fixed. I think this additional
+> > change should do the trick:
+> >
+>
+> ARM_SMMU and QCOM_IOMMU are two separate implementations and both uses
+> QCOM_SCM. So both of them should select QCOM_SCM.
 
-CID 120715 (#1 of 1): Unintentional integer overflow (OVERFLOW_BEFORE_WIDEN)
-overflow_before_widen: Potentially overflowing expression ref_clk * sdm_byp_div
-  with type unsigned int (32 bits, unsigned) is evaluated using 32-bit arithmetic,
-  and then used in a context that expects an expression of type unsigned long
-  (64 bits, unsigned).
-To avoid overflow, cast either ref_clk or sdm_byp_div to type unsigned long.
-263                vco_rate = ref_clk * sdm_byp_div;
+Right, I figured that out later as well.
 
-Fix this and another possible overflow by casting ref_clk to unsigned long.
+> "Unfortunately" the Qualcomm portion of ARM_SMMU is builtin
+> unconditionally, so going with something like select QCOM_SCM if
+> ARCH_QCOM would still require the stubs in qcom_scm.h.
 
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: David Airlie <airlied@linux.ie>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc: Abhinav Kumar <abhinavk@codeaurora.org>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org
-Cc: linux-kernel@vger.kernel.org
-Signed-off-by: Tim Gardner <tim.gardner@canonical.com>
----
- drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+Yes, sounds good. I also noticed that I still need one hack in there
+if I do this:
 
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-index 2da673a2add6..cfe4b30eb96d 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm.c
-@@ -260,7 +260,7 @@ static unsigned long dsi_pll_28nm_clk_recalc_rate(struct clk_hw *hw,
- 		sdm_byp_div = FIELD(
- 				dsi_phy_read(base + REG_DSI_28nm_PHY_PLL_SDM_CFG0),
- 				DSI_28nm_PHY_PLL_SDM_CFG0_BYP_DIV) + 1;
--		vco_rate = ref_clk * sdm_byp_div;
-+		vco_rate = (unsigned long)ref_clk * sdm_byp_div;
- 	} else {
- 		/* sdm mode */
- 		sdm_dc_off = FIELD(
-@@ -274,7 +274,7 @@ static unsigned long dsi_pll_28nm_clk_recalc_rate(struct clk_hw *hw,
- 		sdm_freq_seed = (sdm3 << 8) | sdm2;
- 		DBG("sdm_freq_seed = %d", sdm_freq_seed);
- 
--		vco_rate = (ref_clk * (sdm_dc_off + 1)) +
-+		vco_rate = ((unsigned long)ref_clk * (sdm_dc_off + 1)) +
- 			mult_frac(ref_clk, sdm_freq_seed, BIT(16));
- 		DBG("vco rate = %lu", vco_rate);
- 	}
--- 
-2.33.0
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+index 55690af1b25d..36c304a8fc9b 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-qcom.c
+@@ -427,6 +427,9 @@ struct arm_smmu_device *qcom_smmu_impl_init(struct
+arm_smmu_device *smmu)
+ {
+        const struct device_node *np = smmu->dev->of_node;
 
++       if (!IS_ENABLED(CONFIG_QCOM_SCM))
++               return ERR_PTR(-ENXIO);
++
+ #ifdef CONFIG_ACPI
+        if (np == NULL) {
+                /* Match platform for ACPI boot */
+
+
+Otherwise it still breaks with ARM_SMMU=y and QCOM_SCM=m.
+
+Splitting out the qualcomm portion of the arm_smmu driver using
+a separate 'bool' symbol should also work, if  you prefer that
+and can suggest a name and help text for that symbol. It would
+look like
+
+diff --git a/drivers/iommu/arm/arm-smmu/Makefile
+b/drivers/iommu/arm/arm-smmu/Makefile
+index e240a7bcf310..b0cc01aa20c9 100644
+--- a/drivers/iommu/arm/arm-smmu/Makefile
++++ b/drivers/iommu/arm/arm-smmu/Makefile
+@@ -1,4 +1,5 @@
+ # SPDX-License-Identifier: GPL-2.0
+ obj-$(CONFIG_QCOM_IOMMU) += qcom_iommu.o
+ obj-$(CONFIG_ARM_SMMU) += arm_smmu.o
+-arm_smmu-objs += arm-smmu.o arm-smmu-impl.o arm-smmu-nvidia.o arm-smmu-qcom.o
++arm_smmu-objs += arm-smmu.o arm-smmu-impl.o arm-smmu-nvidia.o
++arm_smmu-$(CONFIG_ARM_SMMU_QCOM) += arm-smmu-qcom.o
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
+b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
+index 9f465e146799..2c25cce38060 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
+@@ -215,7 +215,8 @@ struct arm_smmu_device *arm_smmu_impl_init(struct
+arm_smmu_device *smmu)
+            of_device_is_compatible(np, "nvidia,tegra186-smmu"))
+                return nvidia_smmu_impl_init(smmu);
+
+-       smmu = qcom_smmu_impl_init(smmu);
++       if (IS_ENABLED(CONFIG_ARM_SMMU_QCOM))
++               smmu = qcom_smmu_impl_init(smmu);
+
+        if (of_device_is_compatible(np, "marvell,ap806-smmu-500"))
+                smmu->impl = &mrvl_mmu500_impl;
+
+
+
+       Arnd
