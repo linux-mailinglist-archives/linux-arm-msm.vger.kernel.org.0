@@ -2,179 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5D72641C3DC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 13:54:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6C3B841C401
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 13:58:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S245400AbhI2Lzf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Sep 2021 07:55:35 -0400
-Received: from smtp-relay-canonical-1.canonical.com ([185.125.188.121]:51086
-        "EHLO smtp-relay-canonical-1.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S244943AbhI2Lzf (ORCPT
+        id S1343562AbhI2MA3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Sep 2021 08:00:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36508 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1343563AbhI2MA2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Sep 2021 07:55:35 -0400
-Received: from localhost (1.general.cking.uk.vpn [10.172.193.212])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by smtp-relay-canonical-1.canonical.com (Postfix) with ESMTPSA id CEB314060E;
-        Wed, 29 Sep 2021 11:53:52 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1632916432;
-        bh=SA3MOhUQB8LiGeG2R1qfgrcRYehbqo7vhZPQxaRL3OU=;
-        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version:Content-Type;
-        b=jtY1PiModmvCpOJ9on9ATR8EYWn4f0xjXLFdHz/GnD5zjepReEYx9+6JuzHeXnTNN
-         aXgW3N/Da0O0NbUV1k/P3scgIjJytZfrTddN9sj5di67DIkmrRSfVTgHOFLN1FHcbE
-         BFYBe5S8o5QVsI72uG3akFb5Y4m+J3iNfyub/RXPu4fXsR5ECTmUGYpOOTvKzVSH6m
-         LQEhzoYzeQL/MOdI5Pmn75MUuNfG7rd+Sg0S/W9OjD2mRC9nPv3I9aiJB9kjBzqdKJ
-         wadzjsHAiAVLeT7/u7n1JE+FBdN4C8NMlRmumkooFn+1IDPv89R3Vs6sB++vGRFIh0
-         KsS0uqJDv1plw==
-From:   Colin King <colin.king@canonical.com>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH][V2] drm/msm: Fix potential integer overflow on 32 bit multiply
-Date:   Wed, 29 Sep 2021 12:53:52 +0100
-Message-Id: <20210929115352.212849-1-colin.king@canonical.com>
-X-Mailer: git-send-email 2.32.0
+        Wed, 29 Sep 2021 08:00:28 -0400
+Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3A07CC061755
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 04:58:48 -0700 (PDT)
+Received: by mail-pl1-x62d.google.com with SMTP id l6so1333265plh.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 04:58:48 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:user-agent:in-reply-to:references
+         :message-id:mime-version:content-transfer-encoding;
+        bh=xe4OX2IAROL4XHXtqnP6SRnXOTt0CNJYp0ngxrxDPo8=;
+        b=OV5RWEtEpbJ3GrsHwcanzexLVHnGjHqavm3zSVZcuoe0UKmqUF+7Z4WImLSelE21te
+         zfWn/rKHblUz87MGDZ3Psxt9dywxzuKEfGK7XBNOX3dhpLaR0m70tNj+6xwypNAIj/LX
+         rZlIzdWAj+tBT8PboJ6CuHwoFYYcVVSrI/bFNIp6JUfTN3Pn5lusuYtbxQR9HK8nffdj
+         cQND0/8z/d/wZOYcyx8ZPu6ZPy1Bo3P57Z+8ZI2yQvtbSApNBo5Jxv05NNHo8R/mw+By
+         qoB/tQuo8zFxjowT0P0Sm1KpPWIJxUAnCn62oejS8uNF3Ys70Y7EnuB1h/Ri3K8OIYRo
+         nnwQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:user-agent:in-reply-to
+         :references:message-id:mime-version:content-transfer-encoding;
+        bh=xe4OX2IAROL4XHXtqnP6SRnXOTt0CNJYp0ngxrxDPo8=;
+        b=cNYYa+CYtR28AIKH7PFV5MMCY3JCQ7RBeqTlZl0DrwoSEN5VKoCmE8jXUkkf3i4whC
+         hCGdmyltsAijvGrIM1iXvR/W1Wln/2qEYORv2UsemhNVkBu8BGhh8ruOloZ6eSSV6cDK
+         J9kuhnhkCs57pFPD2VpsXmQ+tRUc1Lyk/Hraqy92NVAQCXxfd05eMf/mjXRDNJ1/UZKZ
+         J5FOd89Lvqo+yT50sEfRBNiBlJWMUaXxiYW5+rNYoKWfgT+ZxirRkuZoTMAn2hSTntSM
+         meTeNdDFqovDQgT87beezdKmLQSn1pmNvYa9eDZzaQWA+euSCyrVWZtLFzDitn2cTSRL
+         o5Pw==
+X-Gm-Message-State: AOAM530urLcN+WUTSqzdLJWEaABX3kCM3B2Rva2fwwwcpqOgByFaYIZg
+        81aBnKYkovkX3KA3vSJK7qgC
+X-Google-Smtp-Source: ABdhPJxfsqkvREMuyJK5oAtQ9l4F4lzbKzB6AVvYLiHB7or7DOrdovizQZ2w7k/KG3+YmfaS1bdmsg==
+X-Received: by 2002:a17:90a:5d0f:: with SMTP id s15mr6000391pji.10.1632916727685;
+        Wed, 29 Sep 2021 04:58:47 -0700 (PDT)
+Received: from ?IPv6:::1? ([2409:4072:6d9d:8ec1:20a3:9c79:fefb:80c0])
+        by smtp.gmail.com with ESMTPSA id k22sm2337009pfi.149.2021.09.29.04.58.45
+        (version=TLS1_2 cipher=ECDHE-ECDSA-AES128-GCM-SHA256 bits=128/128);
+        Wed, 29 Sep 2021 04:58:46 -0700 (PDT)
+Date:   Wed, 29 Sep 2021 17:28:39 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     Thomas Perrot <thomas.perrot@bootlin.com>,
+        linux-arm-msm@vger.kernel.org
+CC:     hemantk@codeaurora.org, loic.poulain@linaro.org,
+        stable@vger.kernel.org
+Subject: =?US-ASCII?Q?Re=3A_=5BPATCH=5D_bus=3A_mhi=3A_pci=5Fgeneric=3A_increa?= =?US-ASCII?Q?se_timeout_value_for_operations_to_24000ms?=
+User-Agent: K-9 Mail for Android
+In-Reply-To: <5e1c5979b7fd35aa5715ed9b25ca3a59b7b259f4.camel@bootlin.com>
+References: <20210805140231.268273-1-thomas.perrot@bootlin.com> <20210816042206.GA3637@thinkpad> <5e1c5979b7fd35aa5715ed9b25ca3a59b7b259f4.camel@bootlin.com>
+Message-ID: <8109C610-8171-4FD1-8599-28A3860915B0@linaro.org>
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain;
+ charset=utf-8
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Colin Ian King <colin.king@canonical.com>
+Hi Thomas,=20
 
-In the case where clock is 2147485 or greater the 32 bit multiplication
-by 1000 will cause an integer overflow. Fix this by making the constant
-1000 an unsigned long to ensure a long multiply occurs to avoid the
-overflow before assigning the result to the long result in variable
-requested.  Most probably a theoretical overflow issue, but worth fixing
-to clear up static analysis warnings.
+On 29 September 2021 1:41:12 AM IST, Thomas Perrot <thomas=2Eperrot@bootli=
+n=2Ecom> wrote:
+>Hello Manivannan,
+>
+>I just saw that this patch seems not yet been merged, is there a issue
+>with it?
+>
 
-Addresses-Coverity: ("Unintentional integer overflow")
-Fixes: c8afe684c95c ("drm/msm: basic KMS driver for snapdragon")
-Fixes: 3e87599b68e7 ("drm/msm/mdp4: add LVDS panel support")
-Fixes: 937f941ca06f ("drm/msm/dp: Use qmp phy for DP PLL and PHY")
-Fixes: ab5b0107ccf3 ("drm/msm: Initial add eDP support in msm drm driver (v5)")
-Fixes: a3376e3ec81c ("drm/msm: convert to drm_bridge")
+For the last merge window we had a conflict with netdev tree so I was not =
+able to send the second iteration of the PR=2E Will apply this patch for v5=
+=2E16=2E
 
-Signed-off-by: Colin Ian King <colin.king@canonical.com>
----
-V2: Find and fix all unintentional integer overflows that match this
-    overflow pattern.
----
- drivers/gpu/drm/msm/disp/mdp4/mdp4_dtv_encoder.c    | 2 +-
- drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c   | 2 +-
- drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c | 2 +-
- drivers/gpu/drm/msm/dp/dp_ctrl.c                    | 4 ++--
- drivers/gpu/drm/msm/edp/edp_connector.c             | 2 +-
- drivers/gpu/drm/msm/hdmi/hdmi_bridge.c              | 2 +-
- drivers/gpu/drm/msm/hdmi/hdmi_connector.c           | 2 +-
- 7 files changed, 8 insertions(+), 8 deletions(-)
+Thanks,=20
+Mani
 
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_dtv_encoder.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_dtv_encoder.c
-index 88645dbc3785..83140066441e 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_dtv_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_dtv_encoder.c
-@@ -50,7 +50,7 @@ static void mdp4_dtv_encoder_mode_set(struct drm_encoder *encoder,
- 
- 	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode));
- 
--	mdp4_dtv_encoder->pixclock = mode->clock * 1000;
-+	mdp4_dtv_encoder->pixclock = mode->clock * 1000U;
- 
- 	DBG("pixclock=%lu", mdp4_dtv_encoder->pixclock);
- 
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
-index 10eb3e5b218e..d90dc0a39855 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
-@@ -225,7 +225,7 @@ static void mdp4_lcdc_encoder_mode_set(struct drm_encoder *encoder,
- 
- 	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode));
- 
--	mdp4_lcdc_encoder->pixclock = mode->clock * 1000;
-+	mdp4_lcdc_encoder->pixclock = mode->clock * 1000U;
- 
- 	DBG("pixclock=%lu", mdp4_lcdc_encoder->pixclock);
- 
-diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
-index 7288041dd86a..a965e7962a7f 100644
---- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
-+++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
-@@ -64,7 +64,7 @@ static int mdp4_lvds_connector_mode_valid(struct drm_connector *connector,
- 	struct drm_encoder *encoder = mdp4_lvds_connector->encoder;
- 	long actual, requested;
- 
--	requested = 1000 * mode->clock;
-+	requested = 1000U * mode->clock;
- 	actual = mdp4_lcdc_round_pixclk(encoder, requested);
- 
- 	DBG("requested=%ld, actual=%ld", requested, actual);
-diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-index 62e75dc8afc6..6babeb79aeb0 100644
---- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
-+++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
-@@ -1316,7 +1316,7 @@ static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl)
- 	opts_dp->lanes = ctrl->link->link_params.num_lanes;
- 	opts_dp->link_rate = ctrl->link->link_params.rate / 100;
- 	dp_ctrl_set_clock_rate(ctrl, DP_CTRL_PM, "ctrl_link",
--					ctrl->link->link_params.rate * 1000);
-+					ctrl->link->link_params.rate * 1000U);
- 
- 	phy_configure(phy, &dp_io->phy_opts);
- 	phy_power_on(phy);
-@@ -1336,7 +1336,7 @@ static int dp_ctrl_enable_stream_clocks(struct dp_ctrl_private *ctrl)
- 	int ret = 0;
- 
- 	dp_ctrl_set_clock_rate(ctrl, DP_STREAM_PM, "stream_pixel",
--					ctrl->dp_ctrl.pixel_rate * 1000);
-+					ctrl->dp_ctrl.pixel_rate * 1000U);
- 
- 	ret = dp_power_clk_enable(ctrl->power, DP_STREAM_PM, true);
- 	if (ret)
-diff --git a/drivers/gpu/drm/msm/edp/edp_connector.c b/drivers/gpu/drm/msm/edp/edp_connector.c
-index 73cb5fd97a5a..837e7873141f 100644
---- a/drivers/gpu/drm/msm/edp/edp_connector.c
-+++ b/drivers/gpu/drm/msm/edp/edp_connector.c
-@@ -64,7 +64,7 @@ static int edp_connector_mode_valid(struct drm_connector *connector,
- 	struct msm_kms *kms = priv->kms;
- 	long actual, requested;
- 
--	requested = 1000 * mode->clock;
-+	requested = 1000L * mode->clock;
- 	actual = kms->funcs->round_pixclk(kms,
- 			requested, edp_connector->edp->encoder);
- 
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-index 6e380db9287b..e4c68a59772a 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
-@@ -209,7 +209,7 @@ static void msm_hdmi_bridge_mode_set(struct drm_bridge *bridge,
- 
- 	mode = adjusted_mode;
- 
--	hdmi->pixclock = mode->clock * 1000;
-+	hdmi->pixclock = mode->clock * 1000U;
- 
- 	hstart = mode->htotal - mode->hsync_start;
- 	hend   = mode->htotal - mode->hsync_start + mode->hdisplay;
-diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_connector.c b/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
-index 58707a1f3878..ce116a7b1bba 100644
---- a/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
-+++ b/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
-@@ -385,7 +385,7 @@ static int msm_hdmi_connector_mode_valid(struct drm_connector *connector,
- 	struct msm_kms *kms = priv->kms;
- 	long actual, requested;
- 
--	requested = 1000 * mode->clock;
-+	requested = 1000U * mode->clock;
- 	actual = kms->funcs->round_pixclk(kms,
- 			requested, hdmi_connector->hdmi->encoder);
- 
--- 
-2.32.0
+>Best regards,
+>Thomas
+>
+>On Mon, 2021-08-16 at 09:52 +0530, Manivannan Sadhasivam wrote:
+>> On Thu, Aug 05, 2021 at 04:02:31PM +0200, Thomas Perrot wrote:
+>> > Otherwise, the waiting time was too short to use a Sierra Wireless
+>> > EM919X
+>> > connected to an i=2EMX6 through the PCIe bus=2E
+>> >=20
+>> > Signed-off-by: Thomas Perrot <thomas=2Eperrot@bootlin=2Ecom>
+>>=20
+>> Reviewed-by: Manivannan Sadhasivam <manivannan=2Esadhasivam@linaro=2Eor=
+g>
+>>=20
+>> Thanks,
+>> Mani
+>>=20
+>> > ---
+>> > =C2=A0drivers/bus/mhi/pci_generic=2Ec | 2 +-
+>> > =C2=A01 file changed, 1 insertion(+), 1 deletion(-)
+>> >=20
+>> > diff --git a/drivers/bus/mhi/pci_generic=2Ec
+>> > b/drivers/bus/mhi/pci_generic=2Ec
+>> > index 4dd1077354af=2E=2Ee08ed6e5031b 100644
+>> > --- a/drivers/bus/mhi/pci_generic=2Ec
+>> > +++ b/drivers/bus/mhi/pci_generic=2Ec
+>> > @@ -248,7 +248,7 @@ static struct mhi_event_config
+>> > modem_qcom_v1_mhi_events[] =3D {
+>> > =C2=A0
+>> > =C2=A0static const struct mhi_controller_config
+>> > modem_qcom_v1_mhiv_config =3D {
+>> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=2Emax_channels =3D 1=
+28,
+>> > -=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=2Etimeout_ms =3D 8000,
+>> > +=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=2Etimeout_ms =3D 24000,
+>> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=2Enum_channels =3D A=
+RRAY_SIZE(modem_qcom_v1_mhi_channels),
+>> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=2Ech_cfg =3D modem_q=
+com_v1_mhi_channels,
+>> > =C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=C2=A0=2Enum_events =3D ARR=
+AY_SIZE(modem_qcom_v1_mhi_events),
+>> > --=20
+>> > 2=2E31=2E1
+>> >=20
+>
 
+--=20
+Sent from my Android device with K-9 Mail=2E Please excuse my brevity=2E
