@@ -2,106 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6FE8641C9F5
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 18:17:25 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B773041C9ED
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 18:17:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345539AbhI2QTE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Sep 2021 12:19:04 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:22006 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S245195AbhI2QTE (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Sep 2021 12:19:04 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1632932243; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=NZF3/95G8ydfWP4E8Tlviqhl539BTdjyutBy9YAK7qA=; b=T9PYgFPcRQaar5vdm4fIPUdHgyKgW1hDVwopXSPvbkmv7nQlAscevooMDrOkIZDbI5jIwOIs
- nOTe3muUmGQbE6G4bs1AZaO+OPW1sbyyE7XC+ifgeETX00mtvymm3O12mli8akuP3gdVVBeO
- ETQsW0TjcIgq8XhJOvuJymaN7m8=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
- 61549188519bd8dcf0140f67 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 29 Sep 2021 16:17:12
- GMT
-Sender: khsieh=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8D8DDC4338F; Wed, 29 Sep 2021 16:17:12 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from khsieh-linux1.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        id S1344001AbhI2QSP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Sep 2021 12:18:15 -0400
+Received: from mail.kernel.org ([198.145.29.99]:60000 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233501AbhI2QSO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 29 Sep 2021 12:18:14 -0400
+Received: from jic23-huawei (cpc108967-cmbg20-2-0-cust86.5-4.cable.virginm.net [81.101.6.87])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: khsieh)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 98D13C4338F;
-        Wed, 29 Sep 2021 16:17:10 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 98D13C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Kuogee Hsieh <khsieh@codeaurora.org>
-To:     robdclark@gmail.com, sean@poorly.run, swboyd@chromium.org,
-        vkoul@kernel.org, agross@kernel.org, bjorn.andersson@linaro.org
-Cc:     abhinavk@codeaurora.org, aravindh@codeaurora.org,
-        khsieh@codeaurora.org, freedreno@lists.freedesktop.org,
-        dri-devel@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH v2] drm/msm/dp: only signal audio when disconnected detected at dp_pm_resume
-Date:   Wed, 29 Sep 2021 09:17:04 -0700
-Message-Id: <1632932224-25102-1-git-send-email-khsieh@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        by mail.kernel.org (Postfix) with ESMTPSA id 5DDEB6159A;
+        Wed, 29 Sep 2021 16:16:27 +0000 (UTC)
+Date:   Wed, 29 Sep 2021 17:20:21 +0100
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     Cai Huoqing <caihuoqing@baidu.com>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        "Pengutronix Kernel Team" <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        "NXP Linux Team" <linux-imx@nxp.com>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        "Neil Armstrong" <narmstrong@baylibre.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-iio@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-amlogic@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-rockchip@lists.infradead.org>
+Subject: Re: [PATCH v3 1/9] iio: adc: ab8500-gpadc: Make use of the helper
+ function dev_err_probe()
+Message-ID: <20210929172021.4b797990@jic23-huawei>
+In-Reply-To: <20210928141956.2148-1-caihuoqing@baidu.com>
+References: <20210928141956.2148-1-caihuoqing@baidu.com>
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.30; x86_64-pc-linux-gnu)
+MIME-Version: 1.0
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Currently there is audio not working problem after system resume from suspend
-if hdmi monitor stay plugged in at DUT. However this problem does not happen
-at normal operation but at a particular test case. The root cause is DP driver
-signal audio with connected state at resume which trigger audio trying to setup
-audio data path through DP main link but failed due to display port is not setup
-and enabled by upper layer framework yet. This patch only have DP driver signal
-audio only when DP is in disconnected state so that audio option shows correct
-state after system resume. DP driver will not signal audio with connected state
-until display enabled executed by upper layer framework where display port is
-setup completed and main link is running.
+On Tue, 28 Sep 2021 22:19:47 +0800
+Cai Huoqing <caihuoqing@baidu.com> wrote:
 
-Changes in V2:
--- add details commit text
+> When possible use dev_err_probe help to properly deal with the
+> PROBE_DEFER error, the benefit is that DEFER issue will be logged
+> in the devices_deferred debugfs file.
+> Using dev_err_probe() can reduce code size, and the error value
+> gets printed.
+> 
+> Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+> Signed-off-by: Cai Huoqing <caihuoqing@baidu.com>
 
-Fixes: 078867ce04ed ("drm/msm/dp: signal audio plugged change at dp_pm_resume")
-Signed-off-by: Kuogee Hsieh <khsieh@codeaurora.org>
----
- drivers/gpu/drm/msm/dp/dp_display.c | 10 +++++-----
- 1 file changed, 5 insertions(+), 5 deletions(-)
+I believe we could in theory get an -EPROBE_DEFER from
+platform_get_irq_by_name() so we should handle that one similarly.
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 0e543a03..6f13008 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1356,14 +1356,14 @@ static int dp_pm_resume(struct device *dev)
- 	 * can not declared display is connected unless
- 	 * HDMI cable is plugged in and sink_count of
- 	 * dongle become 1
-+	 * also only signal audio when disconnected
- 	 */
--	if (dp->link->sink_count)
-+	if (dp->link->sink_count) {
- 		dp->dp_display.is_connected = true;
--	else
-+	} else {
- 		dp->dp_display.is_connected = false;
--
--	dp_display_handle_plugged_change(g_dp_display,
--				dp->dp_display.is_connected);
-+		dp_display_handle_plugged_change(g_dp_display, false);
-+	}
- 
- 	DRM_DEBUG_DP("After, sink_count=%d is_connected=%d core_inited=%d power_on=%d\n",
- 			dp->link->sink_count, dp->dp_display.is_connected,
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+I have no idea if can actually happen on this platform, but seems to me
+that we should be thorough given how easy it is to do here.
+
+Thanks,
+
+Jonathan
+
+> ---
+> v1->v2: Remove the separate line of PTR_ERR().
+> 
+>  drivers/iio/adc/ab8500-gpadc.c | 8 +++-----
+>  1 file changed, 3 insertions(+), 5 deletions(-)
+> 
+> diff --git a/drivers/iio/adc/ab8500-gpadc.c b/drivers/iio/adc/ab8500-gpadc.c
+> index 7b5212ba5501..c58d0e2ae538 100644
+> --- a/drivers/iio/adc/ab8500-gpadc.c
+> +++ b/drivers/iio/adc/ab8500-gpadc.c
+> @@ -1146,11 +1146,9 @@ static int ab8500_gpadc_probe(struct platform_device *pdev)
+>  
+>  	/* The VTVout LDO used to power the AB8500 GPADC */
+>  	gpadc->vddadc = devm_regulator_get(dev, "vddadc");
+> -	if (IS_ERR(gpadc->vddadc)) {
+> -		ret = PTR_ERR(gpadc->vddadc);
+> -		dev_err(dev, "failed to get vddadc\n");
+> -		return ret;
+> -	}
+> +	if (IS_ERR(gpadc->vddadc))
+> +		return dev_err_probe(dev, PTR_ERR(gpadc->vddadc),
+> +				     "failed to get vddadc\n");
+>  
+>  	ret = regulator_enable(gpadc->vddadc);
+>  	if (ret) {
 
