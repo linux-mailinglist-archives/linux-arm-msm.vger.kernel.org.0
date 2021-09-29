@@ -2,110 +2,112 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DEA7F41CA10
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 18:26:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7192541CA00
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 18:22:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1345852AbhI2Q1r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Sep 2021 12:27:47 -0400
-Received: from smtp-relay-internal-1.canonical.com ([185.125.188.123]:59620
-        "EHLO smtp-relay-internal-1.canonical.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S1345850AbhI2Q1r (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Sep 2021 12:27:47 -0400
-Received: from mail-pj1-f69.google.com (mail-pj1-f69.google.com [209.85.216.69])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        id S245575AbhI2QYT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Sep 2021 12:24:19 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33308 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1344369AbhI2QYT (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 29 Sep 2021 12:24:19 -0400
+Received: from jic23-huawei (cpc108967-cmbg20-2-0-cust86.5-4.cable.virginm.net [81.101.6.87])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        by smtp-relay-internal-1.canonical.com (Postfix) with ESMTPS id 317E23F4B9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 16:26:05 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
-        s=20210705; t=1632932765;
-        bh=Rm+gsKMf3KO4CSrmWZZZ6Qt7mfefNMHgflz9fS2JkAo=;
-        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version;
-        b=wP/hR1x32R8oYqCqcOyN2YA3L2+cUlhbUR0AY37FUfA7bZ+JO3rlZkllmJW9qDPaz
-         Tw77qBd90v9GvthlrvF/WFOqIfPYZH0wYfLUriEMP7iDEJ2df6sPWiqsyFdac+jW6f
-         DEh0qrciafG3sqS+krrlSFSbrMcZZfz7J7d7yt/w3n4Gl4wcUVQvKWvkhN2Gd3MAJO
-         4PLM63dYExq765hdOvdl3nJ0+SmeRFHhwB9Ld4Og0S1zX2BIEqdDcMhEVahsgUefPv
-         a6eW28x+ttmq1GnISB9y9N2QktzKH3kMDnyW6Nw5/rJf7wWfAZqMHy1dnC7vTh/05Y
-         Ujc5a0jdeMr3g==
-Received: by mail-pj1-f69.google.com with SMTP id n3-20020a17090a394300b0019765b9bd7bso2160658pjf.8
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 09:26:05 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Rm+gsKMf3KO4CSrmWZZZ6Qt7mfefNMHgflz9fS2JkAo=;
-        b=jfz+ZDSTBcMHrGluWuNQVfkGa/wgRjQnKT0xJ2ZHtPeahB4GYz8FIM3ob46hAG9Pxm
-         9rrTm+Ff+u3jgsIyqJXm/DjDz/jiQubtI+drikPFEmcyI7G+KOKOMbhBBKa8EkWSHPuR
-         Xnxtr8JXXb4mxJCllGhBTSGUHQVAr1E78EWAg6TiNmxiT+HbJj5z/FDT+T42o30Io3PC
-         eS0pW3rwSlrXV6riXbkPB2StMfpUSgkkA1PSFC+l89Vys4njC0qwUJi2VCddmZ/7QUCB
-         yMvoGM/wOmsqzsnNgfXkLuJRHAAsoO3e0Wh2sAsRYX4IVfhbV9TMgxKT7BSBeP8qMyyM
-         J+pQ==
-X-Gm-Message-State: AOAM533NURAn23NOlqCNKXWdmwjEGsWit/iSXxVNs70PCz/RlWtHd9yg
-        ieNnsnAnUrhr/o3i4fmgEJLW6KOCby2Xk1XbbxesD1nWQFpWtKs6Ubc458pjNJ3roq+iUIHeVxR
-        envYsmyWxSXWDnJgPPYIjcj3CrF03c9j3NHMO6ZAebvE=
-X-Received: by 2002:a17:90a:4290:: with SMTP id p16mr7357983pjg.112.1632932763762;
-        Wed, 29 Sep 2021 09:26:03 -0700 (PDT)
-X-Google-Smtp-Source: ABdhPJzC22Ts07QZM3TqmbHY6TDE7TF4sYwB/o3/NJgExi9doWhLlJTT95Q4jxI32IZQB87N6iLNQw==
-X-Received: by 2002:a17:90a:4290:: with SMTP id p16mr7357953pjg.112.1632932763495;
-        Wed, 29 Sep 2021 09:26:03 -0700 (PDT)
-Received: from localhost.localdomain ([69.163.84.166])
-        by smtp.gmail.com with ESMTPSA id p16sm293615pfq.95.2021.09.29.09.26.02
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Sep 2021 09:26:03 -0700 (PDT)
-From:   Tim Gardner <tim.gardner@canonical.com>
-To:     dri-devel@lists.freedesktop.org
-Cc:     tim.gardner@canonical.com, Rob Clark <robdclark@gmail.com>,
-        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/msm: prevent NULL dereference in msm_gpu_crashstate_capture()
-Date:   Wed, 29 Sep 2021 10:25:54 -0600
-Message-Id: <20210929162554.14295-1-tim.gardner@canonical.com>
-X-Mailer: git-send-email 2.33.0
+        by mail.kernel.org (Postfix) with ESMTPSA id 275C461246;
+        Wed, 29 Sep 2021 16:22:32 +0000 (UTC)
+Date:   Wed, 29 Sep 2021 17:26:27 +0100
+From:   Jonathan Cameron <jic23@kernel.org>
+To:     Cai Huoqing <caihuoqing@baidu.com>
+Cc:     Linus Walleij <linus.walleij@linaro.org>,
+        Lars-Peter Clausen <lars@metafoo.de>,
+        Shawn Guo <shawnguo@kernel.org>,
+        Sascha Hauer <s.hauer@pengutronix.de>,
+        "Pengutronix Kernel Team" <kernel@pengutronix.de>,
+        Fabio Estevam <festevam@gmail.com>,
+        "NXP Linux Team" <linux-imx@nxp.com>,
+        Vladimir Zapolskiy <vz@mleia.com>,
+        "Neil Armstrong" <narmstrong@baylibre.com>,
+        Kevin Hilman <khilman@baylibre.com>,
+        Jerome Brunet <jbrunet@baylibre.com>,
+        Martin Blumenstingl <martin.blumenstingl@googlemail.com>,
+        Andy Gross <agross@kernel.org>,
+        "Bjorn Andersson" <bjorn.andersson@linaro.org>,
+        Heiko Stuebner <heiko@sntech.de>,
+        <linux-arm-kernel@lists.infradead.org>,
+        <linux-iio@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
+        <linux-amlogic@lists.infradead.org>,
+        <linux-arm-msm@vger.kernel.org>,
+        <linux-rockchip@lists.infradead.org>
+Subject: Re: [PATCH v3 2/9] iio: adc: imx7d_adc: Make use of the helper
+ function dev_err_probe()
+Message-ID: <20210929172627.1dfd4f17@jic23-huawei>
+In-Reply-To: <20210928141956.2148-2-caihuoqing@baidu.com>
+References: <20210928141956.2148-1-caihuoqing@baidu.com>
+        <20210928141956.2148-2-caihuoqing@baidu.com>
+X-Mailer: Claws Mail 4.0.0 (GTK+ 3.24.30; x86_64-pc-linux-gnu)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Coverity complains of a possible NULL dereference:
+On Tue, 28 Sep 2021 22:19:48 +0800
+Cai Huoqing <caihuoqing@baidu.com> wrote:
 
-CID 120718 (#1 of 1): Dereference null return value (NULL_RETURNS)
-23. dereference: Dereferencing a pointer that might be NULL state->bos when
-    calling msm_gpu_crashstate_get_bo. [show details]
-301                        msm_gpu_crashstate_get_bo(state, submit->bos[i].obj,
-302                                submit->bos[i].iova, submit->bos[i].flags);
+> When possible use dev_err_probe help to properly deal with the
+> PROBE_DEFER error, the benefit is that DEFER issue will be logged
+> in the devices_deferred debugfs file.
+> Using dev_err_probe() can reduce code size, and the error value
+> gets printed.
+> 
+> Signed-off-by: Cai Huoqing <caihuoqing@baidu.com>
+Hi Cai,
 
-Fix this by employing the same state->bos NULL check as is used in the next
-for loop.
+It is currently not printing a message, but should we handle the same
+for platform_get_irq?
 
-Cc: Rob Clark <robdclark@gmail.com>
-Cc: Sean Paul <sean@poorly.run>
-Cc: David Airlie <airlied@linux.ie>
-Cc: Daniel Vetter <daniel@ffwll.ch>
-Cc: linux-arm-msm@vger.kernel.org
-Cc: dri-devel@lists.freedesktop.org
-Cc: freedreno@lists.freedesktop.org
-Cc: linux-kernel@vger.kernel.org
-Signed-off-by: Tim Gardner <tim.gardner@canonical.com>
----
- drivers/gpu/drm/msm/msm_gpu.c | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+One other minor comment inline.  Actual change here is fine.
 
-diff --git a/drivers/gpu/drm/msm/msm_gpu.c b/drivers/gpu/drm/msm/msm_gpu.c
-index 8a3a592da3a4..2c46cd968ac4 100644
---- a/drivers/gpu/drm/msm/msm_gpu.c
-+++ b/drivers/gpu/drm/msm/msm_gpu.c
-@@ -296,7 +296,7 @@ static void msm_gpu_crashstate_capture(struct msm_gpu *gpu,
- 		state->bos = kcalloc(nr,
- 			sizeof(struct msm_gpu_state_bo), GFP_KERNEL);
- 
--		for (i = 0; i < submit->nr_bos; i++) {
-+		for (i = 0; state->bos && i < submit->nr_bos; i++) {
- 			if (should_dump(submit, i)) {
- 				msm_gpu_crashstate_get_bo(state, submit->bos[i].obj,
- 					submit->bos[i].iova, submit->bos[i].flags);
--- 
-2.33.0
+Thanks,
+
+Jonathan
+
+> ---
+>  drivers/iio/adc/imx7d_adc.c | 16 +++++-----------
+>  1 file changed, 5 insertions(+), 11 deletions(-)
+> 
+> diff --git a/drivers/iio/adc/imx7d_adc.c b/drivers/iio/adc/imx7d_adc.c
+> index 4969a5f941e3..f47360cbff3b 100644
+> --- a/drivers/iio/adc/imx7d_adc.c
+> +++ b/drivers/iio/adc/imx7d_adc.c
+> @@ -496,19 +496,13 @@ static int imx7d_adc_probe(struct platform_device *pdev)
+>  		return irq;
+>  
+>  	info->clk = devm_clk_get(dev, "adc");
+> -	if (IS_ERR(info->clk)) {
+> -		ret = PTR_ERR(info->clk);
+> -		dev_err(dev, "Failed getting clock, err = %d\n", ret);
+> -		return ret;
+> -	}
+> +	if (IS_ERR(info->clk))
+> +		return dev_err_probe(dev, PTR_ERR(info->clk), "Failed getting clock\n");
+
+Where it doesn't hurt readabilty preferred to keep below 80 chars.
+
+>  
+>  	info->vref = devm_regulator_get(dev, "vref");
+> -	if (IS_ERR(info->vref)) {
+> -		ret = PTR_ERR(info->vref);
+> -		dev_err(dev,
+> -			"Failed getting reference voltage, err = %d\n", ret);
+> -		return ret;
+> -	}
+> +	if (IS_ERR(info->vref))
+> +		return dev_err_probe(dev, PTR_ERR(info->vref),
+> +				     "Failed getting reference voltage\n");
+>  
+>  	platform_set_drvdata(pdev, indio_dev);
+>  
 
