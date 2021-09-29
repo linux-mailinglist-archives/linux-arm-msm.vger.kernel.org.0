@@ -2,111 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E61941C562
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 15:17:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EBE9B41C64A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 16:06:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1344100AbhI2NTS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Sep 2021 09:19:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54854 "EHLO
+        id S245362AbhI2OIL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Sep 2021 10:08:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37788 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1344081AbhI2NTR (ORCPT
+        with ESMTP id S230212AbhI2OIF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Sep 2021 09:19:17 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4365FC06161C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 06:17:36 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id b26so8808386edt.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 06:17:36 -0700 (PDT)
+        Wed, 29 Sep 2021 10:08:05 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7534DC06161C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 07:06:24 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id v17so4474778wrv.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 07:06:24 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=aleksander-es.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=UJLiiUeulvsE5Jpu0obENQGGvYdNvxhst0WjqmLYdUg=;
-        b=v4YOzY3zC6nHOPzxbDz2rLrlZesaa8fIiHRxmFuNP2QGO6VtJVWDIV+pshTho5RnWf
-         rsoqAlNkLsvprRAYGCqBF3ByuYuDoKYcqPODlO9vOIsLlU1tDjlKXCUrdsOOd/MxPSpn
-         +VkPTIsG3TQUVstZP9VzxEGq/LgTcFW1woySilmgFdsHvSiW/0BxB9pSis8zwVQdpcTq
-         bIfl++Tvy+17cMLlBrtmJ0CkjAkD5dCwii60pp3b1RqHd0yhds1IjLm9phacZd2jjnUU
-         0ikndzbT8Bk4jfMwC76f1dDJSUJO9r89SJd53LvPcKuwNmszBsrIJPqT4Ftna3tH87Pf
-         BTvw==
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=6Fpk4eNFB/FqNcDuDV/dejw65ihoRMEpb7CL35wXBpY=;
+        b=x2oQ5kChrmnKaewPLRbDPuiIaIS8dBaZpQa20OfXZIUskVf1xG5N+N565Xf4eq/ppx
+         2lk5MBcNkxcQaE1Jj72rCyjWJU8HLE7N8+IDSSZZVbSzj74+OOzGXbkZbfAE2ewIN1RF
+         nL5TfZhJ9TN9a2yd6Rx8WHUDJYxUzxhJ8PAOWa7LV/94IDMnn/CU7iGjoKv3h+xvfVOz
+         wn1eS8bZjWALbs2dCYcKKpo4LXhAeymW4obmlcHL9msvbG1kxnDPoHGou60TUlNP5arQ
+         7VPgcEgyGBp6wpXk8kSRYBRxuK39TQT81RNcVCygjh7iN2ScK1JNXMXwUIjTk+XcTy5c
+         J4/A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=UJLiiUeulvsE5Jpu0obENQGGvYdNvxhst0WjqmLYdUg=;
-        b=rmrEus+USpKqrEY9LL3Jf1O9CW00RSWCD0g75Ten1Kbro9tySUhVq64zT7AGpV7iLf
-         wSJciZSGE4xTHWsE/9BrHxpk+QqlrgYKSznoPgVGhFPl4GZZ2fN3HIgXCotswVrL8ysZ
-         qnuVE3c8REIhpvQs44QC14Uq2eyzruq8mGKTnpekcYYEHbhLigTvTDirJ13ex9w5KnC7
-         WarCRn0B2NDNXQTfR+7KB5G6jLlxA++FhBHfCk1mG0SjVoT+EpslnjfGkHBREeEr+t/2
-         BU/XGBwz7cIvl9gDEktRAzNa/6c/ELZtEAoXeO//XRQyBebAv9wiKKEIBgTjK1lxiFzn
-         4EGQ==
-X-Gm-Message-State: AOAM530fBFfKMH4yL9yn3p5crO2UBwcnVuB6QkTa4o3M9zWOxIJ4EWeF
-        PsU0NqxAgsdYmMPILGgiIBUccjI1fGm0dGlc+Sz76A==
-X-Google-Smtp-Source: ABdhPJyPDEvncO7qg4K5DedWjH02dF6b/iP9HhGB6aoRgnqmLyh9HPFi0+KHqSz5GwTR7RxcSwp5RMJrerMI0Ni2o7o=
-X-Received: by 2002:a17:906:6d0:: with SMTP id v16mr13841146ejb.258.1632921435817;
- Wed, 29 Sep 2021 06:17:15 -0700 (PDT)
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=6Fpk4eNFB/FqNcDuDV/dejw65ihoRMEpb7CL35wXBpY=;
+        b=KF7iL/YZIMM6tpkixEJyEiQ0jS1Z0vV/V3dsRxOP7g2cS7UDGtevyoEyJFjuLXHBxG
+         gEkXHtZcAp9VNX7XUWcny9Qu0Mx8z185h0+AF7+nGP5eDrZWle0d29FWSeEBAhujZAO4
+         IdW/j/fj9clBt4mklE8F4T7gmP5BOWGJlBwv0ODhGwA1lJ4tFAXwQ2x2rH91oIuN1zsn
+         zJibjufm/HngrOlPhxa8R6kKVZsoBMcZLJ34dsIY4PNm335XN43FqJMyMT4ZbVVE56CP
+         uWVowOrL7aQS6pNzr5NpMAOr/0uYiUeI+UJ9tKrL4UYeft6/6Gzo2ksEP3L7eBukli1K
+         JXLQ==
+X-Gm-Message-State: AOAM533BEDB8jFQ13BDmsQ3x5llzaKpmnB8pZO6LQaqb2Lde+QFdHYDT
+        p8LiyxjtOwh0mho7T7xThpJgPRF9UFvlFg==
+X-Google-Smtp-Source: ABdhPJy/Ei9sVDkUj7lCSKfNjn5FrbVmdclZn9wWgDr1+KjgiIYFrscFtuyl7VOuILxMBboOHdwl6g==
+X-Received: by 2002:adf:fbd1:: with SMTP id d17mr19660wrs.146.1632924383074;
+        Wed, 29 Sep 2021 07:06:23 -0700 (PDT)
+Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
+        by smtp.googlemail.com with ESMTPSA id g13sm2735wmh.20.2021.09.29.07.06.21
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Sep 2021 07:06:22 -0700 (PDT)
+Subject: Re: [PATCH 0/4] Add secure domains support
+To:     Jeya R <jeyr@codeaurora.org>, linux-arm-msm@vger.kernel.org
+Cc:     gregkh@linuxfoundation.org, linux-kernel@vger.kernel.org,
+        fastrpc.upstream@qti.qualcomm.com
+References: <1632485951-13473-1-git-send-email-jeyr@codeaurora.org>
+From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
+Message-ID: <e9d20133-fd21-b3d6-ec42-04093f9def14@linaro.org>
+Date:   Wed, 29 Sep 2021 15:06:21 +0100
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-References: <20210805140231.268273-1-thomas.perrot@bootlin.com>
- <f358044a-78d0-ad63-a777-87b4b9d94745@aleksander.es> <73A52D61-FCAB-4A2B-BA96-0117F6942842@linaro.org>
-In-Reply-To: <73A52D61-FCAB-4A2B-BA96-0117F6942842@linaro.org>
-From:   Aleksander Morgado <aleksander@aleksander.es>
-Date:   Wed, 29 Sep 2021 15:17:04 +0200
-Message-ID: <CAAP7ucL1Zv6g8G0SWAjEAjr6OSVTyDmvmFkH+vMmmBwOH2=ZUQ@mail.gmail.com>
-Subject: Re: [PATCH] bus: mhi: pci_generic: increase timeout value for
- operations to 24000ms
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Thomas Perrot <thomas.perrot@bootlin.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        hemantk@codeaurora.org, Loic Poulain <loic.poulain@linaro.org>,
-        stable <stable@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+In-Reply-To: <1632485951-13473-1-git-send-email-jeyr@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Mani,
-
-> >> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
-> >> index 4dd1077354af..e08ed6e5031b 100644
-> >> --- a/drivers/bus/mhi/pci_generic.c
-> >> +++ b/drivers/bus/mhi/pci_generic.c
-> >> @@ -248,7 +248,7 @@ static struct mhi_event_config modem_qcom_v1_mhi_events[] = {
-> >>
-> >>   static const struct mhi_controller_config modem_qcom_v1_mhiv_config = {
-> >>      .max_channels = 128,
-> >> -    .timeout_ms = 8000,
-> >> +    .timeout_ms = 24000,
-> >
-> >
-> >This modem_qcom_v1_mhiv_config config applies to all generic SDX24, SDX55 and SDX65 modules.
-> >Other vendor-branded SDX55 based modules in this same file (Foxconn SDX55, MV31), have 20000ms as timeout.
-> >Other vendor-branded SDX24 based modules in this same file (Quectel EM12xx), have also 20000ms as timeout.
-> >Maybe it makes sense to have a common timeout for all?
-> >
->
-> Eventhough the baseport coming from Qualcomm for the modem chipsets are same, it is possible that the vendors might have customized the firmware for their own usecase. That could be the cause of the delay for modem booting.
->
-> So I don't think we should use the same timeout of 2400ms for all modems.
->
-
-Please note it's 24000ms what's being suggested here, not 2400ms.
-
-> >Thomas, is the 24000ms value taken from experimentation, or is it a safe enough value? Maybe 20000ms as in other modules would have been enough?
-> >
->
-> It was derived from testing I believe.
-
-Following your reasoning above, shouldn't this 24000ms timeout be
-applied only to the Sierra Wireless EM91xx devices (which may have
-custom firmware bits delaying the initialization a bit longer), and
-not to the generic SDX24, SDX55 and SDX65?
-
-If I'm not mistaken, Thomas is testing with a custom mhi_pci_generic
-entry for the EM91xx; as in
-https://forum.sierrawireless.com/t/sierra-wireless-airprime-em919x-pcie-support/24927.
-I'm also playing with that same entry on my own setup, but have other
-problems of my own :)
 
 
---
-Aleksander
-https://aleksander.es
+On 24/09/2021 13:19, Jeya R wrote:
+> This patch series adds secure domains support. All DSP domains other
+> than CDSP are set as secure by default and CDSP is set as secure domain
+
+This is going to break the existing devices that work with this driver? 
+Alteast the non cdsp cases.
+like msm8996, sdm845, sm8250 ....
+
+> if fastrpc DT node carries secure domains property. If any process is
+> getting initialized using non-secure device and the dsp channel is
+> secure, then the session gets rejected.
+
+Could you elaborate on what exactly you meant by secure here?
+Is this SE linux policy we are talking about ?
+
+Why can't we deal with this directly on /dev/[adsp|cdsp]-fastrpc nodes, 
+why do we need this extra secured node?
+
+--srini
+
+> 
+> Jeya R (4):
+>    dt-bindings: devicetree documentation for secure domain
+>    misc: fastrpc: Add secure device node support
+>    misc: fastrpc: Set channel as secure
+>    misc: fastrpc: reject non-secure node for secure domain
+> 
+>   .../devicetree/bindings/misc/qcom,fastrpc.txt      |  6 ++
+>   drivers/misc/fastrpc.c                             | 64 +++++++++++++++++++++-
+>   2 files changed, 68 insertions(+), 2 deletions(-)
+> 
