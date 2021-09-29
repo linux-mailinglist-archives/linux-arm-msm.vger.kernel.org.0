@@ -2,163 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 36CD241C0B9
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 10:36:30 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB2CA41C1B3
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 29 Sep 2021 11:37:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S244571AbhI2IiJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Sep 2021 04:38:09 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:41602 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S244582AbhI2IiJ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Sep 2021 04:38:09 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1632904585; h=Message-ID: Subject: Cc: To: From: Date:
- Content-Transfer-Encoding: Content-Type: MIME-Version: Sender;
- bh=EIi/7R+B4A7qgjfMhR7sZN90W0plkrmN1FfTlJIQ8EA=; b=psrGygY038ecNB3/1esXOPqEc12QB0FVO7pyNxQ+ksxAznpXBpzeGvijtk6IC7bw2Et4AbMA
- hiEzO2cX8c/xpWqE2I34KdORkuiA0pNFpjYjARfWNZnk4Wk8/WWhQWcoPNKm1KDpFpWVC+tj
- UjxNWHteJ/NHZmDeWtL97jKXUis=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 61542587713d5d6f968dc314 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 29 Sep 2021 08:36:23
- GMT
-Sender: tjiang=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 7E2DFC43460; Wed, 29 Sep 2021 08:36:22 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: tjiang)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9A52CC4338F;
-        Wed, 29 Sep 2021 08:36:20 +0000 (UTC)
+        id S229487AbhI2JjI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Sep 2021 05:39:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60404 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243626AbhI2JjH (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 29 Sep 2021 05:39:07 -0400
+Received: from mail-wr1-x42f.google.com (mail-wr1-x42f.google.com [IPv6:2a00:1450:4864:20::42f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9703C06161C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 02:37:26 -0700 (PDT)
+Received: by mail-wr1-x42f.google.com with SMTP id v17so3120960wrv.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 02:37:26 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=aleksander-es.20210112.gappssmtp.com; s=20210112;
+        h=message-id:date:mime-version:user-agent:content-language:to:cc
+         :references:from:subject:in-reply-to:content-transfer-encoding;
+        bh=jBWmL0JpNKFM5c6ohDYxw+GPyaJ3iBmiTERbb1R2J3c=;
+        b=WXT/VgkD54cm9UG4fsR/5sUppMoF1zzzTx+eCZd6jOcbv3fzRDPKNX4Hp6Id7YcSux
+         zTxJlsZd5MKO00D5GnSt9Yg5SSJgAalLKluuupLHubvZCljMUkgozn01B0/Sf+gkaG9T
+         gN6+uVjuyuF4LtPpTVTvoO+zyGEYFlDO6vEKqUsNRxrFIl48Kng5HLv9fsh3qQbR3Ofx
+         4j1ttsq6EhJCa4x2cY5rEvyiXoKuhpyPZHQ6mQfx57tnfqG3iCFtMAB9gUckM8sjEqjZ
+         WerJ5pckhVaRUoyMpQpVUs6ykun2rz95AZxCVEDO+QWy8/f/O0R/9QKLokZ2GchDvKa6
+         bmPA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:message-id:date:mime-version:user-agent
+         :content-language:to:cc:references:from:subject:in-reply-to
+         :content-transfer-encoding;
+        bh=jBWmL0JpNKFM5c6ohDYxw+GPyaJ3iBmiTERbb1R2J3c=;
+        b=lBv92NbQhhqYwwqGx0oqbXRvwkvEVuoIksa5l2j/HOiZSYdprUZXCdd9q3YesucjEY
+         8yPVXfb5By/GW32Kdkrz9pls+/ErvmN3h68Kt4Hh9D5d7qkXvPZyQr7tn6kb443A4+5e
+         YB1R/ITDBzm8VIIqVN+TP5YXiicP9YczuDfDPBM8ziCwRogfDrYS1091M6ELW1bmWjPr
+         RKxoRCbAQ6Y5X448wZzwUZwXsmWAVybI5XV0HRCIVE1viXGcZRfndhhmftWCgjfxv1AY
+         6EpKJwNpCdkQBuhlZ8DYvvVWJb0dGftqgY+jInSSa2OQxechXG6OfYncDqgPCrwUYyEb
+         OwTw==
+X-Gm-Message-State: AOAM531ubb4yyTTPsdcAYL6h6j6qo0KldDhhDv/7gBQzEieLqI562/pf
+        rOTcK1stX7USZqDCIU+fixQ26w==
+X-Google-Smtp-Source: ABdhPJz56+LA6+MezNoVisRkHJmkTryPkUGdVZdzpyhKppEZy55+TeN8gj2SzwfpubBE7klF7H93Jw==
+X-Received: by 2002:adf:ce89:: with SMTP id r9mr5544185wrn.238.1632908245475;
+        Wed, 29 Sep 2021 02:37:25 -0700 (PDT)
+Received: from [192.168.100.6] (156.red-79-144-201.dynamicip.rima-tde.net. [79.144.201.156])
+        by smtp.gmail.com with ESMTPSA id z17sm1700142wrr.49.2021.09.29.02.37.24
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 29 Sep 2021 02:37:24 -0700 (PDT)
+Message-ID: <f358044a-78d0-ad63-a777-87b4b9d94745@aleksander.es>
+Date:   Wed, 29 Sep 2021 11:37:23 +0200
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101
+ Thunderbird/91.1.0
+Content-Language: en-US
+To:     Thomas Perrot <thomas.perrot@bootlin.com>,
+        linux-arm-msm@vger.kernel.org
+Cc:     manivannan.sadhasivam@linaro.org, hemantk@codeaurora.org,
+        loic.poulain@linaro.org, stable@vger.kernel.org
+References: <20210805140231.268273-1-thomas.perrot@bootlin.com>
+From:   Aleksander Morgado <aleksander@aleksander.es>
+Subject: Re: [PATCH] bus: mhi: pci_generic: increase timeout value for
+ operations to 24000ms
+In-Reply-To: <20210805140231.268273-1-thomas.perrot@bootlin.com>
+Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Wed, 29 Sep 2021 16:36:20 +0800
-From:   tjiang@codeaurora.org
-To:     marcel@holtmann.org, johan.hedberg@gmail.com, luiz.dentz@gmail.com
-Cc:     linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
-        c-hbandi@codeaurora.org, hemantg@codeaurora.org, mka@chromium.org,
-        rjliao@codeaurora.org, zijuhu@codeaurora.org, tjiang@codeaurora.org
-Subject: [PATCH v12] Bluetooth: btusb: Add support using different nvm for 
- variant WCN6855 controller
-Message-ID: <a1ce8bbbf391d39f126d4f8fa7cae541@codeaurora.org>
-X-Sender: tjiang@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-the RF performance of wcn6855 soc chip from different foundries will be
-difference, so we should use different nvm to configure them.
+Hey all,
 
-Signed-off-by: Tim Jiang <tjiang@codeaurora.org>
----
-  drivers/bluetooth/btusb.c | 54 
-+++++++++++++++++++++++++++++++++++------------
-  1 file changed, 40 insertions(+), 14 deletions(-)
+On 5/8/21 16:02, Thomas Perrot wrote:
+> Otherwise, the waiting time was too short to use a Sierra Wireless EM919X
+> connected to an i.MX6 through the PCIe bus.
+> 
+> Signed-off-by: Thomas Perrot <thomas.perrot@bootlin.com>
+> ---
+>   drivers/bus/mhi/pci_generic.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
+> 
+> diff --git a/drivers/bus/mhi/pci_generic.c b/drivers/bus/mhi/pci_generic.c
+> index 4dd1077354af..e08ed6e5031b 100644
+> --- a/drivers/bus/mhi/pci_generic.c
+> +++ b/drivers/bus/mhi/pci_generic.c
+> @@ -248,7 +248,7 @@ static struct mhi_event_config modem_qcom_v1_mhi_events[] = {
+>   
+>   static const struct mhi_controller_config modem_qcom_v1_mhiv_config = {
+>   	.max_channels = 128,
+> -	.timeout_ms = 8000,
+> +	.timeout_ms = 24000,
 
-diff --git a/drivers/bluetooth/btusb.c b/drivers/bluetooth/btusb.c
-index da85cc14f931..0a75c82796aa 100644
---- a/drivers/bluetooth/btusb.c
-+++ b/drivers/bluetooth/btusb.c
-@@ -3186,6 +3186,9 @@ static int btusb_set_bdaddr_wcn6855(struct hci_dev 
-*hdev,
-  #define QCA_DFU_TIMEOUT		3000
-  #define QCA_FLAG_MULTI_NVM      0x80
 
-+#define WCN6855_2_0_RAM_VERSION_GF 0x400c1200
-+#define WCN6855_2_1_RAM_VERSION_GF 0x400c1211
-+
-  struct qca_version {
-  	__le32	rom_version;
-  	__le32	patch_version;
-@@ -3217,6 +3220,7 @@ static const struct qca_device_info 
-qca_devices_table[] = {
-  	{ 0x00000302, 28, 4, 16 }, /* Rome 3.2 */
-  	{ 0x00130100, 40, 4, 16 }, /* WCN6855 1.0 */
-  	{ 0x00130200, 40, 4, 16 }, /* WCN6855 2.0 */
-+	{ 0x00130201, 40, 4, 16 }, /* WCN6855 2.1 */
-  };
+This modem_qcom_v1_mhiv_config config applies to all generic SDX24, SDX55 and SDX65 modules.
+Other vendor-branded SDX55 based modules in this same file (Foxconn SDX55, MV31), have 20000ms as timeout.
+Other vendor-branded SDX24 based modules in this same file (Quectel EM12xx), have also 20000ms as timeout.
+Maybe it makes sense to have a common timeout for all?
 
-  static int btusb_qca_send_vendor_req(struct usb_device *udev, u8 
-request,
-@@ -3371,6 +3375,41 @@ static int btusb_setup_qca_load_rampatch(struct 
-hci_dev *hdev,
-  	return err;
-  }
+Thomas, is the 24000ms value taken from experimentation, or is it a safe enough value? Maybe 20000ms as in other modules would have been enough?
 
-+static void btusb_generate_qca_nvm_name(char *fwname,
-+					size_t max_size,
-+					struct qca_version *ver)
-+{
-+	u32 rom_version = le32_to_cpu(ver->rom_version);
-+
-+	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
-+		u16 board_id = le16_to_cpu(ver->board_id);
-+		const char *variant;
-+
-+		switch (ver->ram_version) {
-+		case WCN6855_2_0_RAM_VERSION_GF:
-+		case WCN6855_2_1_RAM_VERSION_GF:
-+			variant = "_gf";
-+			break;
-+		default:
-+			variant = "";
-+			break;
-+		}
-+
-+		/* if boardid equal 0, use default nvm without suffix */
-+		if (board_id == 0x0) {
-+			snprintf(fwname, max_size, "qca/nvm_usb_%08x%s.bin",
-+				rom_version, variant);
-+		} else {
-+			snprintf(fwname, max_size, "qca/nvm_usb_%08x%s_%04x.bin",
-+				rom_version, variant, board_id);
-+		}
-+	} else {
-+		snprintf(fwname, max_size, "qca/nvm_usb_%08x.bin",
-+			rom_version);
-+	}
-+
-+}
-+
-  static int btusb_setup_qca_load_nvm(struct hci_dev *hdev,
-  				    struct qca_version *ver,
-  				    const struct qca_device_info *info)
-@@ -3379,20 +3418,7 @@ static int btusb_setup_qca_load_nvm(struct 
-hci_dev *hdev,
-  	char fwname[64];
-  	int err;
+And if 20000ms wasn't enough but 24000ms is, how about adding that same value for all modules? These modules definitely need time to boot, not sure if having slightly different timeout values for each would make much sense, unless there are very very different values required.
 
--	if (((ver->flag >> 8) & 0xff) == QCA_FLAG_MULTI_NVM) {
--		/* if boardid equal 0, use default nvm without surfix */
--		if (le16_to_cpu(ver->board_id) == 0x0) {
--			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
--				 le32_to_cpu(ver->rom_version));
--		} else {
--			snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x_%04x.bin",
--				le32_to_cpu(ver->rom_version),
--				le16_to_cpu(ver->board_id));
--		}
--	} else {
--		snprintf(fwname, sizeof(fwname), "qca/nvm_usb_%08x.bin",
--			 le32_to_cpu(ver->rom_version));
--	}
-+	btusb_generate_qca_nvm_name(fwname, sizeof(fwname), ver);
+What do you think?
 
-  	err = request_firmware(&fw, fwname, &hdev->dev);
-  	if (err) {
+>   	.num_channels = ARRAY_SIZE(modem_qcom_v1_mhi_channels),
+>   	.ch_cfg = modem_qcom_v1_mhi_channels,
+>   	.num_events = ARRAY_SIZE(modem_qcom_v1_mhi_events),
+> 
+
+
 -- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora 
-Forum, a Linux Foundation Collaborative Project
+Aleksander
+https://aleksander.es
