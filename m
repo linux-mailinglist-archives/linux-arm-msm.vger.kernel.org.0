@@ -2,250 +2,168 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EB44941DEF2
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Sep 2021 18:25:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 69A8A41DF1C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Sep 2021 18:33:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350256AbhI3Q1Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Sep 2021 12:27:16 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:19370 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1350157AbhI3Q1P (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Sep 2021 12:27:15 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1633019132; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=YXMSKvMn+9jeuk6GoqyHMrg9yPQg5Hn2Mw2Nz9iMl9M=; b=GBmxcKGizuoDlNY6BZt6XhjbEoI++LCnDwafxw3ApRZoDDLhubOW0neY4HWbv8U0YCeY1C2f
- eTkXyo06JhAzG+mDXObEHEcsWXXqLURJAsNi2o7e3+uNr/+V+kHz5j7amvnJ/5MzvFSj6XaR
- dXeAo4xzdNgIwbjDagjWG4/J+T4=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 6155e4f747d64efb6daf45ed (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 30 Sep 2021 16:25:27
- GMT
-Sender: deesin=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3B27EC43460; Thu, 30 Sep 2021 16:25:27 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from deesin-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: deesin)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 04A14C4338F;
-        Thu, 30 Sep 2021 16:25:23 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 04A14C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Deepak Kumar Singh <deesin@codeaurora.org>
-To:     bjorn.andersson@linaro.org, clew@codeaurora.org
+        id S1351996AbhI3QfF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Sep 2021 12:35:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37530 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1351988AbhI3QfF (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 30 Sep 2021 12:35:05 -0400
+Received: from mail-ot1-x32e.google.com (mail-ot1-x32e.google.com [IPv6:2607:f8b0:4864:20::32e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AE00CC06176D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Sep 2021 09:33:22 -0700 (PDT)
+Received: by mail-ot1-x32e.google.com with SMTP id c6-20020a9d2786000000b005471981d559so8046498otb.5
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Sep 2021 09:33:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=6il0YsB1u07XrEjL6UToDW7bxsUfzL4X0YSwrMv6RAU=;
+        b=GWoUgKIUmlJAesMzEQ0g1Oq55aq7DEJwAR60nRriwRZ0XmAq48kcPlWynnKbtGgbuX
+         QCo+TnQ57X7OVvjsVxJFou+tqEbQqorxw4p6e4AujvKCwG79ISOmZHcThSw/3Cu7Lx19
+         cN61ye+NjqH64Dap2tfl8Eo2E4rTKiLxD2Kho=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=6il0YsB1u07XrEjL6UToDW7bxsUfzL4X0YSwrMv6RAU=;
+        b=FxZJnj/4PDM9IwBthpU1R4WQSKo+OQkjV5MjGRdlXR0xscoAmeJV9wOF1FozLRwP7R
+         N7+Igbg6tQ8kFcjb4Ry5UdHBJF+qtk58tYgRiG4/LcarwZZ65DiWN5ncW0fkEIk838tx
+         VrVjRYQRH0jB72FuXPElLrAdK6/4fjjymL7WlTvNL1a2qbTzhTI4oOzdZQAem8T11bNO
+         Kk1x0BpO05g3+02ARsMMhe1NkqmHbolQhTaiPfWNELyc6SJ2ANWqYM/HyjuGdlzvuDIV
+         1UZBegQzvjj9EfkCyY3ywX68RgQPuzo0GNUwH6C7BcwcEXv7AH3iDLUaQsSCqWM+2D/1
+         xvIQ==
+X-Gm-Message-State: AOAM530wOKRMd+4BH2fm/8lY50gdOX9wEIJZ7t5suvHQQB3zmxK7fKQs
+        STNEwnNOhFF/SNEVbgyDqaBIIEdXjGI61J7pKB7cmQ==
+X-Google-Smtp-Source: ABdhPJyfg8wA4FLIK4t09eCr4cNEB5fDhR5+3AC+oZNHy7BEHMCMDs0mE7qsVwPd3+24uG/XdamDu1281AsdtPxuJC8=
+X-Received: by 2002:a05:6830:708:: with SMTP id y8mr5996176ots.77.1633019602013;
+ Thu, 30 Sep 2021 09:33:22 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 30 Sep 2021 09:33:21 -0700
+MIME-Version: 1.0
+In-Reply-To: <1633015924-881-4-git-send-email-deesin@codeaurora.org>
+References: <1633015924-881-1-git-send-email-deesin@codeaurora.org> <1633015924-881-4-git-send-email-deesin@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Thu, 30 Sep 2021 09:33:21 -0700
+Message-ID: <CAE-0n52Wn6_70-3Y6a+Yk5zkoA_hiA5w51rTeCVX-DN37Gc=ig@mail.gmail.com>
+Subject: Re: [PATCH V1 2/3] rpmsg: glink: Add support to handle signals command
+To:     Deepak Kumar Singh <deesin@codeaurora.org>,
+        bjorn.andersson@linaro.org, clew@codeaurora.org,
+        mathieu.poirier@linaro.org
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        Deepak Kumar Singh <deesin@codeaurora.org>,
-        Andy Gross <agross@kernel.org>
-Subject: [PATCH V1 1/1] soc: qcom: smp2p: add feature negotiation and ssr ack feature support
-Date:   Thu, 30 Sep 2021 21:55:10 +0530
-Message-Id: <1633019111-9318-1-git-send-email-deesin@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
+        linux-remoteproc@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Ohad Ben-Cohen <ohad@wizery.com>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This patch adds feature negotiation and ssr ack feature between
-local and remote host. Local host can negotiate on common features
-supported with remote host.
+Quoting Deepak Kumar Singh (2021-09-30 08:32:03)
+> diff --git a/drivers/rpmsg/qcom_glink_native.c b/drivers/rpmsg/qcom_glink_native.c
+> index 05533c7..384fcd2 100644
+> --- a/drivers/rpmsg/qcom_glink_native.c
+> +++ b/drivers/rpmsg/qcom_glink_native.c
+> @@ -976,6 +984,68 @@ static int qcom_glink_rx_open_ack(struct qcom_glink *glink, unsigned int lcid)
+>         return 0;
+>  }
+>
+> +/**
+> + * qcom_glink_set_flow_control() - convert a signal cmd to wire format and
+> + *                                transmit
+> + * @ept:       Rpmsg endpoint for channel.
+> + * @enable:    True/False - enable or disable flow control
+> + *
+> + * Return: 0 on success or standard Linux error code.
+> + */
+> +static int qcom_glink_set_flow_control(struct rpmsg_endpoint *ept, bool enable)
+> +{
+> +       struct glink_channel *channel = to_glink_channel(ept);
+> +       struct qcom_glink *glink = channel->glink;
+> +       struct glink_msg msg;
+> +       u32 sigs = 0;
 
-Signed-off-by: Chris Lew <clew@codeaurora.org>
-Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
----
- drivers/soc/qcom/smp2p.c | 128 ++++++++++++++++++++++++++++++++++++++---------
- 1 file changed, 103 insertions(+), 25 deletions(-)
+Drop assignment.
 
-diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
-index 38585a7..c1a60016 100644
---- a/drivers/soc/qcom/smp2p.c
-+++ b/drivers/soc/qcom/smp2p.c
-@@ -41,8 +41,11 @@
- #define SMP2P_MAX_ENTRY_NAME 16
- 
- #define SMP2P_FEATURE_SSR_ACK 0x1
-+#define SMP2P_FLAGS_RESTART_DONE_BIT 0
-+#define SMP2P_FLAGS_RESTART_ACK_BIT 1
- 
- #define SMP2P_MAGIC 0x504d5324
-+#define SMP2P_FEATURES	SMP2P_FEATURE_SSR_ACK
- 
- /**
-  * struct smp2p_smem_item - in memory communication structure
-@@ -136,6 +139,10 @@ struct qcom_smp2p {
- 
- 	unsigned valid_entries;
- 
-+	bool ssr_ack_enabled;
-+	bool ssr_ack;
-+	bool open;
-+
- 	unsigned local_pid;
- 	unsigned remote_pid;
- 
-@@ -163,22 +170,59 @@ static void qcom_smp2p_kick(struct qcom_smp2p *smp2p)
- 	}
- }
- 
--/**
-- * qcom_smp2p_intr() - interrupt handler for incoming notifications
-- * @irq:	unused
-- * @data:	smp2p driver context
-- *
-- * Handle notifications from the remote side to handle newly allocated entries
-- * or any changes to the state bits of existing entries.
-- */
--static irqreturn_t qcom_smp2p_intr(int irq, void *data)
-+static bool qcom_smp2p_check_ssr(struct qcom_smp2p *smp2p)
-+{
-+	struct smp2p_smem_item *in = smp2p->in;
-+	bool restart;
-+
-+	if (!smp2p->ssr_ack_enabled)
-+		return false;
-+
-+	restart = in->flags & BIT(SMP2P_FLAGS_RESTART_DONE_BIT);
-+	if (restart == smp2p->ssr_ack)
-+		return false;
-+
-+	return true;
-+}
-+
-+static void qcom_smp2p_do_ssr_ack(struct qcom_smp2p *smp2p)
-+{
-+	struct smp2p_smem_item *out = smp2p->out;
-+	u32 ack;
-+	u32 val;
-+
-+	ack = !smp2p->ssr_ack;
-+	smp2p->ssr_ack = ack;
-+	ack = ack << SMP2P_FLAGS_RESTART_ACK_BIT;
-+
-+	val = out->flags & ~BIT(SMP2P_FLAGS_RESTART_ACK_BIT);
-+	val |= ack;
-+	out->flags = val;
-+
-+	qcom_smp2p_kick(smp2p);
-+}
-+
-+static void qcom_smp2p_negotiate(struct qcom_smp2p *smp2p)
-+{
-+	struct smp2p_smem_item *out = smp2p->out;
-+	struct smp2p_smem_item *in = smp2p->in;
-+	u32 features;
-+
-+	if (in->version == out->version) {
-+		features = in->features & out->features;
-+		out->features = features;
-+
-+		if (features & SMP2P_FEATURE_SSR_ACK)
-+			smp2p->ssr_ack_enabled = true;
-+
-+		smp2p->open = true;
-+	}
-+}
-+
-+static void qcom_smp2p_notify_in(struct qcom_smp2p *smp2p)
- {
- 	struct smp2p_smem_item *in;
- 	struct smp2p_entry *entry;
--	struct qcom_smp2p *smp2p = data;
--	unsigned smem_id = smp2p->smem_items[SMP2P_INBOUND];
--	unsigned pid = smp2p->remote_pid;
--	size_t size;
- 	int irq_pin;
- 	u32 status;
- 	char buf[SMP2P_MAX_ENTRY_NAME];
-@@ -187,18 +231,6 @@ static irqreturn_t qcom_smp2p_intr(int irq, void *data)
- 
- 	in = smp2p->in;
- 
--	/* Acquire smem item, if not already found */
--	if (!in) {
--		in = qcom_smem_get(pid, smem_id, &size);
--		if (IS_ERR(in)) {
--			dev_err(smp2p->dev,
--				"Unable to acquire remote smp2p item\n");
--			return IRQ_HANDLED;
--		}
--
--		smp2p->in = in;
--	}
--
- 	/* Match newly created entries */
- 	for (i = smp2p->valid_entries; i < in->valid_entries; i++) {
- 		list_for_each_entry(entry, &smp2p->inbound, node) {
-@@ -237,7 +269,52 @@ static irqreturn_t qcom_smp2p_intr(int irq, void *data)
- 			}
- 		}
- 	}
-+}
-+
-+/**
-+ * qcom_smp2p_intr() - interrupt handler for incoming notifications
-+ * @irq:	unused
-+ * @data:	smp2p driver context
-+ *
-+ * Handle notifications from the remote side to handle newly allocated entries
-+ * or any changes to the state bits of existing entries.
-+ */
-+static irqreturn_t qcom_smp2p_intr(int irq, void *data)
-+{
-+	struct smp2p_smem_item *in;
-+	struct qcom_smp2p *smp2p = data;
-+	unsigned int smem_id = smp2p->smem_items[SMP2P_INBOUND];
-+	unsigned int pid = smp2p->remote_pid;
-+	size_t size;
-+
-+	in = smp2p->in;
-+
-+	/* Acquire smem item, if not already found */
-+	if (!in) {
-+		in = qcom_smem_get(pid, smem_id, &size);
-+		if (IS_ERR(in)) {
-+			dev_err(smp2p->dev,
-+				"Unable to acquire remote smp2p item\n");
-+			goto out;
-+		}
-+
-+		smp2p->in = in;
-+	}
-+
-+	if (!smp2p->open)
-+		qcom_smp2p_negotiate(smp2p);
-+
-+	if (smp2p->open) {
-+		bool do_restart;
-+
-+		do_restart = qcom_smp2p_check_ssr(smp2p);
-+		qcom_smp2p_notify_in(smp2p);
-+
-+		if (do_restart)
-+			qcom_smp2p_do_ssr_ack(smp2p);
-+	}
- 
-+out:
- 	return IRQ_HANDLED;
- }
- 
-@@ -393,6 +470,7 @@ static int qcom_smp2p_alloc_outbound_item(struct qcom_smp2p *smp2p)
- 	out->remote_pid = smp2p->remote_pid;
- 	out->total_entries = SMP2P_MAX_ENTRY;
- 	out->valid_entries = 0;
-+	out->features = SMP2P_FEATURES;
- 
- 	/*
- 	 * Make sure the rest of the header is written before we validate the
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
+> +
+> +       /**
+> +        * convert signals from TIOCM to NATIVE
+> +        * sigs = TIOCM_DTR|TIOCM_RTS
+> +        */
+> +       if (enable)
+> +               sigs |= (NATIVE_DTR_SIG | NATIVE_CTS_SIG);
 
+sigs = NATIVE_DTR_SIG | NATIVE_CTS_SIG;
+
+> +       else
+> +               sigs |= (~(NATIVE_DTR_SIG | NATIVE_CTS_SIG));
+
+sigs = ~(NATIVE_DTR_SIG | NATIVE_CTS_SIG);
+
+> +
+> +       msg.cmd = cpu_to_le16(RPM_CMD_SIGNALS);
+> +       msg.param1 = cpu_to_le16(channel->lcid);
+> +       msg.param2 = cpu_to_le32(sigs);
+> +
+> +       return qcom_glink_tx(glink, &msg, sizeof(msg), NULL, 0, true);
+> +}
+> +
+> +static int qcom_glink_handle_signals(struct qcom_glink *glink,
+> +                                    unsigned int rcid, unsigned int sigs)
+> +{
+> +       struct glink_channel *channel;
+> +       unsigned long flags;
+> +
+> +       spin_lock_irqsave(&glink->idr_lock, flags);
+
+irqsave can be skipped because this is only called from an irq handler.
+
+> +       channel = idr_find(&glink->rcids, rcid);
+> +       spin_unlock_irqrestore(&glink->idr_lock, flags);
+> +       if (!channel) {
+> +               dev_err(glink->dev, "signal for non-existing channel\n");
+> +               return -EINVAL;
+> +       }
+> +
+> +       /* convert signals from NATIVE to TIOCM */
+> +       if (sigs & NATIVE_DTR_SIG)
+> +               sigs |= TIOCM_DSR;
+> +       if (sigs & NATIVE_CTS_SIG)
+> +               sigs |= TIOCM_CTS;
+> +       if (sigs & NATIVE_CD_SIG)
+> +               sigs |= TIOCM_CD;
+> +       if (sigs & NATIVE_RI_SIG)
+> +               sigs |= TIOCM_RI;
+> +       sigs &= 0x0fff;
+
+Is this to only keep TIOCM_* bits? Maybe make this an ORed together mask
+of those bits so we know what 0xfff means.
+
+> +
+> +       if (channel->ept.sig_cb)
+> +               channel->ept.sig_cb(channel->ept.rpdev, channel->ept.priv, sigs);
+> +
+> +       return 0;
+> +}
+> +
+>  static irqreturn_t qcom_glink_native_intr(int irq, void *data)
+>  {
+>         struct qcom_glink *glink = data;
+> @@ -1037,6 +1107,10 @@ static irqreturn_t qcom_glink_native_intr(int irq, void *data)
+>                         qcom_glink_handle_intent_req_ack(glink, param1, param2);
+>                         qcom_glink_rx_advance(glink, ALIGN(sizeof(msg), 8));
+>                         break;
+> +               case RPM_CMD_SIGNALS:
+> +                       qcom_glink_handle_signals(glink, param1, param2);
+
+Should the return value be handled and if there isn't a channel then
+treat it as a spurious irq?
+
+> +                       qcom_glink_rx_advance(glink, ALIGN(sizeof(msg), 8));
+> +                       break;
+>                 default:
+>                         dev_err(glink->dev, "unhandled rx cmd: %d\n", cmd);
+>                         ret = -EINVAL;
