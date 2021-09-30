@@ -2,50 +2,50 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 92F7141DBB3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Sep 2021 16:00:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 15A7641DBB5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Sep 2021 16:00:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351627AbhI3OCM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Sep 2021 10:02:12 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57364 "EHLO
+        id S1351623AbhI3OCN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Sep 2021 10:02:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351623AbhI3OCM (ORCPT
+        with ESMTP id S1351626AbhI3OCM (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
         Thu, 30 Sep 2021 10:02:12 -0400
 Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CA0BC06176A
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F24EFC06176C
         for <linux-arm-msm@vger.kernel.org>; Thu, 30 Sep 2021 07:00:29 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id e15so25768941lfr.10
+Received: by mail-lf1-x12e.google.com with SMTP id b15so25604586lfe.7
         for <linux-arm-msm@vger.kernel.org>; Thu, 30 Sep 2021 07:00:29 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=6k7szBFo3j8aTdpEXsB/ZpCD/JR4bHzUrZ/Dsq5ntZM=;
-        b=iQRW3OwRFBL76Hi+dUDeR4Z3cFvAVw5UYwYiX6uQc4CdHc6r6aInykS5+fR42TKRXp
-         qJ/3EYgSTa28EZbDHKdwJnlJeuJwdhoRQ95mAVquu/srZ8hR6qv4KexshSwA11kdrzgL
-         Cs8xq7H1FynLA0pCaiV6fNi+yGNcdnAjNI+6ZU6ZX8Woc4fkMzMgwbUTfe3l+bOSaqpA
-         GM35cqWzvIFa4DmfPS3kYYL2UtjGXJ7ajq4Cp8y10r+kUaveXYpWrPcHUYHE7+ALeWuh
-         lhoUZqklmzMOZ6lw+O9I5ztRODYFe5EkKPSacQxXEPHOgDI7u+/0oRb7N86oWzzJ5msr
-         JavA==
+        bh=tX2Y3oxJ0uBfusHpDm+yJkPzEqEPEDfIr4Jpe3x0Dr8=;
+        b=JkfvFrcJctRthH43Pygw6txN3cCymLAf+rEhcHSN5PK1R7yh/VGQe8cIrHvLjEl4Pv
+         vTAzKf1z7mZa1g9ihIWXdeYVZuXz2a5bViC/nnMuaX30evFKqu3o2trTe6e7qwMi40dm
+         WA4Ga2sJLdbZPclbY/0JLcyCTNSGutZa9EB47xbZmVg9cRcxGYTe6KsaR3CYNxfL1zOr
+         p6fG1KwYCq7AO9LHAZ29NaviEc0xKvYVbotq+y/Qca9pPHfgMTQVGceLBpevugm4wGI5
+         D+L95W8UQcQXe0Na8LHAOWLYRBqjuckICaUOh7zK5QQ2e1EaaEco+mEwt/WKc++KSXg7
+         +wMA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=6k7szBFo3j8aTdpEXsB/ZpCD/JR4bHzUrZ/Dsq5ntZM=;
-        b=UZ6RxPBl41VEi1UsvurOFswmcORecWBVEuIuJ1UHtE+vTMr3nI3BdISr+/TDt22SRn
-         pzDRrHiEkrjPnoB7B+jZ8TGEzX3KEYi6hKTYE5hI5iO0YjaB/r3Z0fpU+8DugdQqf4bI
-         +CA9bsUCAROaxSwL24zAewVz444tzY0hXOOSCva8liIIT8Bsmoypg+yeduXW2wbXpscC
-         9AXrWR4QoDc6Y6Jz6X1h+zKlIqhnJgpm24Hft5yn9vbCzDeStNk0K5c1SoNRZdvHoJ+h
-         SwL5OM5n5PQdg+UjbF7NR5W9tkujO/jPNGJbhaqit1Dr7HU1s5eFEhaekiBI8HiZTW38
-         Rc2w==
-X-Gm-Message-State: AOAM530g5jSodWKChTtlEtVtsiSSArDEK5ABq+7UEyh2bGKuL55Py82m
-        nDgVTcQw8J43olY+yeXQL5HrQw==
-X-Google-Smtp-Source: ABdhPJxqdY0zyox3O0A3C2lcMQwoia0Ugdy97gCXDuUYFdDzoqXBScIuF7E1IO+f+xMn27p/YsYm7w==
-X-Received: by 2002:a2e:6f1b:: with SMTP id k27mr5994686ljc.117.1633010425390;
-        Thu, 30 Sep 2021 07:00:25 -0700 (PDT)
+        bh=tX2Y3oxJ0uBfusHpDm+yJkPzEqEPEDfIr4Jpe3x0Dr8=;
+        b=RZG/dsfrSFFNesRg2406tkutAoAa6gqYrRMg5keFeQoNrFIt8YzcV4PvNMKg56YNwH
+         cp5PdUvYk01c+zSr0gzq4VcGnB2tAbARllFa1kAvC4cxNou6cPhT0oLqToOsvVDGUyQE
+         fd3YhtFUx8IrhryfYyV8Dr/bg788q4HmJwR4gAI3SXf+v39DssKlL/LRl8z48UBMlAay
+         48TBNaCNGUFt1lAVBGz8SNn+gOsiLtO1Tmlh6RG8Q4qf36H5t9xgFhmd0ydkW9c0ThPB
+         CZfuEl4Z+zQVI2axHEw/wUryaVTdVRh61EOGEcoGjymoD4Y0BOMIlZhbgYbIZfZ0aQ1J
+         chXw==
+X-Gm-Message-State: AOAM531vwFMn4QjeYTVax0WgRwaZMGqV3uJsIPtWriL5bjPQC+kvCx6I
+        HXLzWt1wCpS2TdnomKpp6gFb2A==
+X-Google-Smtp-Source: ABdhPJw83ua3zouvHGpcGfsa38AA3Q52JHg9xL+BN3kaAIJj6r6UF36d4GE5FarhuHlS+dtJXCswCg==
+X-Received: by 2002:a2e:984d:: with SMTP id e13mr6134827ljj.392.1633010426146;
+        Thu, 30 Sep 2021 07:00:26 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id o7sm380481lfr.216.2021.09.30.07.00.24
+        by smtp.gmail.com with ESMTPSA id o7sm380481lfr.216.2021.09.30.07.00.25
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
         Thu, 30 Sep 2021 07:00:25 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
@@ -57,9 +57,9 @@ Cc:     Jonathan Marek <jonathan@marek.ca>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH 06/11] drm/msm/dpu: drop scaler config from plane state
-Date:   Thu, 30 Sep 2021 16:59:57 +0300
-Message-Id: <20210930140002.308628-7-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 07/11] drm/msm/dpu: drop dpu_csc_cfg from dpu_plane
+Date:   Thu, 30 Sep 2021 16:59:58 +0300
+Message-Id: <20210930140002.308628-8-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20210930140002.308628-1-dmitry.baryshkov@linaro.org>
 References: <20210930140002.308628-1-dmitry.baryshkov@linaro.org>
@@ -69,166 +69,214 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Scaler and pixel_ext configuration does not contain a long living state,
-it is used only during plane update, so remove these two fiels from
-dpu_plane_state and allocate them on stack.
+Simplify code surrounding CSC table setup by removing struct dpu_csc_cfg
+pointer from dpu_plane and getting it directly at the CSC setup time.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 59 ++++++++++-------------
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h |  6 ---
- 2 files changed, 26 insertions(+), 39 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c |  2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h |  2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c |  2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h |  2 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   | 96 +++++++++++----------
+ 5 files changed, 54 insertions(+), 50 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index 5288b5b824f8..4259c4ecde9b 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -542,14 +542,12 @@ static void _dpu_plane_setup_scaler3(struct dpu_plane *pdpu,
- 		struct dpu_plane_state *pstate,
- 		uint32_t src_w, uint32_t src_h, uint32_t dst_w, uint32_t dst_h,
- 		struct dpu_hw_scaler3_cfg *scale_cfg,
-+		struct dpu_hw_pixel_ext *pixel_ext,
- 		const struct dpu_format *fmt,
- 		uint32_t chroma_subsmpl_h, uint32_t chroma_subsmpl_v)
- {
- 	uint32_t i;
- 
--	memset(scale_cfg, 0, sizeof(*scale_cfg));
--	memset(&pstate->pixel_ext, 0, sizeof(struct dpu_hw_pixel_ext));
--
- 	scale_cfg->phase_step_x[DPU_SSPP_COMP_0] =
- 		mult_frac((1 << PHASE_STEP_SHIFT), src_w, dst_w);
- 	scale_cfg->phase_step_y[DPU_SSPP_COMP_0] =
-@@ -588,9 +586,9 @@ static void _dpu_plane_setup_scaler3(struct dpu_plane *pdpu,
- 			scale_cfg->preload_y[i] = DPU_QSEED3_DEFAULT_PRELOAD_V;
- 		}
- 
--		pstate->pixel_ext.num_ext_pxls_top[i] =
-+		pixel_ext->num_ext_pxls_top[i] =
- 			scale_cfg->src_height[i];
--		pstate->pixel_ext.num_ext_pxls_left[i] =
-+		pixel_ext->num_ext_pxls_left[i] =
- 			scale_cfg->src_width[i];
- 	}
- 	if (!(DPU_FORMAT_IS_YUV(fmt)) && (src_h == dst_h)
-@@ -660,6 +658,11 @@ static void _dpu_plane_setup_scaler(struct dpu_plane *pdpu,
- 		struct dpu_hw_pipe_cfg *pipe_cfg)
- {
- 	const struct drm_format_info *info = drm_format_info(fmt->base.pixel_format);
-+	struct dpu_hw_scaler3_cfg scaler3_cfg;
-+	struct dpu_hw_pixel_ext pixel_ext;
-+
-+	memset(&scaler3_cfg, 0, sizeof(scaler3_cfg));
-+	memset(&pixel_ext, 0, sizeof(pixel_ext));
- 
- 	/* don't chroma subsample if decimating */
- 	/* update scaler. calculate default config for QSEED3 */
-@@ -668,8 +671,23 @@ static void _dpu_plane_setup_scaler(struct dpu_plane *pdpu,
- 			drm_rect_height(&pipe_cfg->src_rect),
- 			drm_rect_width(&pipe_cfg->dst_rect),
- 			drm_rect_height(&pipe_cfg->dst_rect),
--			&pstate->scaler3_cfg, fmt,
-+			&scaler3_cfg, &pixel_ext, fmt,
- 			info->hsub, info->vsub);
-+
-+	if (pdpu->pipe_hw->ops.setup_pe)
-+		pdpu->pipe_hw->ops.setup_pe(pdpu->pipe_hw,
-+				&pixel_ext);
-+
-+	/**
-+	 * when programmed in multirect mode, scalar block will be
-+	 * bypassed. Still we need to update alpha and bitwidth
-+	 * ONLY for RECT0
-+	 */
-+	if (pdpu->pipe_hw->ops.setup_scaler &&
-+			pstate->multirect_index != DPU_SSPP_RECT_1)
-+		pdpu->pipe_hw->ops.setup_scaler(pdpu->pipe_hw,
-+				pipe_cfg, &pixel_ext,
-+				&scaler3_cfg);
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+index cbafb61404d0..103d4bd7585b 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
+@@ -537,7 +537,7 @@ static void dpu_hw_sspp_setup_sourceaddress(struct dpu_hw_pipe *ctx,
  }
  
- /**
-@@ -710,7 +728,6 @@ static int _dpu_plane_color_fill(struct dpu_plane *pdpu,
- 			drm_rect_width(&pipe_cfg.dst_rect);
- 		pipe_cfg.src_rect.y2 =
- 			drm_rect_height(&pipe_cfg.dst_rect);
--		_dpu_plane_setup_scaler(pdpu, pstate, fmt, true, &pipe_cfg);
+ static void dpu_hw_sspp_setup_csc(struct dpu_hw_pipe *ctx,
+-		struct dpu_csc_cfg *data)
++		const struct dpu_csc_cfg *data)
+ {
+ 	u32 idx;
+ 	bool csc10 = false;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+index 27263bc1a1ef..e8939d7387cb 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
+@@ -262,7 +262,7 @@ struct dpu_hw_sspp_ops {
+ 	 * @ctx: Pointer to pipe context
+ 	 * @data: Pointer to config structure
+ 	 */
+-	void (*setup_csc)(struct dpu_hw_pipe *ctx, struct dpu_csc_cfg *data);
++	void (*setup_csc)(struct dpu_hw_pipe *ctx, const struct dpu_csc_cfg *data);
  
- 		if (pdpu->pipe_hw->ops.setup_format)
- 			pdpu->pipe_hw->ops.setup_format(pdpu->pipe_hw,
-@@ -722,15 +739,7 @@ static int _dpu_plane_color_fill(struct dpu_plane *pdpu,
- 					&pipe_cfg,
- 					pstate->multirect_index);
+ 	/**
+ 	 * setup_solidfill - enable/disable colorfill
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+index f94584c982cd..aad85116b0a0 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c
+@@ -374,7 +374,7 @@ u32 dpu_hw_get_scaler3_ver(struct dpu_hw_blk_reg_map *c,
  
--		if (pdpu->pipe_hw->ops.setup_pe)
--			pdpu->pipe_hw->ops.setup_pe(pdpu->pipe_hw,
--					&pstate->pixel_ext);
+ void dpu_hw_csc_setup(struct dpu_hw_blk_reg_map *c,
+ 		u32 csc_reg_off,
+-		struct dpu_csc_cfg *data, bool csc10)
++		const struct dpu_csc_cfg *data, bool csc10)
+ {
+ 	static const u32 matrix_shift = 7;
+ 	u32 clamp_shift = csc10 ? 16 : 8;
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+index ff3cffde84cd..bc2fdb2b8f5f 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+@@ -321,6 +321,6 @@ u32 dpu_hw_get_scaler3_ver(struct dpu_hw_blk_reg_map *c,
+ 
+ void dpu_hw_csc_setup(struct dpu_hw_blk_reg_map  *c,
+ 		u32 csc_reg_off,
+-		struct dpu_csc_cfg *data, bool csc10);
++		const struct dpu_csc_cfg *data, bool csc10);
+ 
+ #endif /* _DPU_HW_UTIL_H */
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+index 4259c4ecde9b..b8836c089863 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
+@@ -90,7 +90,6 @@ enum dpu_plane_qos {
+ /*
+  * struct dpu_plane - local dpu plane structure
+  * @aspace: address space pointer
+- * @csc_ptr: Points to dpu_csc_cfg structure to use for current
+  * @mplane_list: List of multirect planes of the same pipe
+  * @catalog: Points to dpu catalog structure
+  * @revalidate: force revalidation of all the plane properties
+@@ -111,8 +110,6 @@ struct dpu_plane {
+ 	struct list_head mplane_list;
+ 	struct dpu_mdss_cfg *catalog;
+ 
+-	struct dpu_csc_cfg *csc_ptr;
 -
--		if (pdpu->pipe_hw->ops.setup_scaler &&
--				pstate->multirect_index != DPU_SSPP_RECT_1)
--			pdpu->pipe_hw->ops.setup_scaler(pdpu->pipe_hw,
--					&pipe_cfg, &pstate->pixel_ext,
--					&pstate->scaler3_cfg);
-+		_dpu_plane_setup_scaler(pdpu, pstate, fmt, true, &pipe_cfg);
+ 	const struct dpu_sspp_sub_blks *pipe_sblk;
+ 
+ 	/* debugfs related stuff */
+@@ -605,51 +602,59 @@ static void _dpu_plane_setup_scaler3(struct dpu_plane *pdpu,
+ 	scale_cfg->enable = 1;
+ }
+ 
+-static void _dpu_plane_setup_csc(struct dpu_plane *pdpu)
+-{
+-	static const struct dpu_csc_cfg dpu_csc_YUV2RGB_601L = {
+-		{
+-			/* S15.16 format */
+-			0x00012A00, 0x00000000, 0x00019880,
+-			0x00012A00, 0xFFFF9B80, 0xFFFF3000,
+-			0x00012A00, 0x00020480, 0x00000000,
++static const struct dpu_csc_cfg dpu_csc_YUV2RGB_601L = {
++	{
++		/* S15.16 format */
++		0x00012A00, 0x00000000, 0x00019880,
++		0x00012A00, 0xFFFF9B80, 0xFFFF3000,
++		0x00012A00, 0x00020480, 0x00000000,
++	},
++	/* signed bias */
++	{ 0xfff0, 0xff80, 0xff80,},
++	{ 0x0, 0x0, 0x0,},
++	/* unsigned clamp */
++	{ 0x10, 0xeb, 0x10, 0xf0, 0x10, 0xf0,},
++	{ 0x00, 0xff, 0x00, 0xff, 0x00, 0xff,},
++};
++
++static const struct dpu_csc_cfg dpu_csc10_YUV2RGB_601L = {
++	{
++		/* S15.16 format */
++		0x00012A00, 0x00000000, 0x00019880,
++		0x00012A00, 0xFFFF9B80, 0xFFFF3000,
++		0x00012A00, 0x00020480, 0x00000000,
+ 		},
+-		/* signed bias */
+-		{ 0xfff0, 0xff80, 0xff80,},
+-		{ 0x0, 0x0, 0x0,},
+-		/* unsigned clamp */
+-		{ 0x10, 0xeb, 0x10, 0xf0, 0x10, 0xf0,},
+-		{ 0x00, 0xff, 0x00, 0xff, 0x00, 0xff,},
+-	};
+-	static const struct dpu_csc_cfg dpu_csc10_YUV2RGB_601L = {
+-		{
+-			/* S15.16 format */
+-			0x00012A00, 0x00000000, 0x00019880,
+-			0x00012A00, 0xFFFF9B80, 0xFFFF3000,
+-			0x00012A00, 0x00020480, 0x00000000,
+-			},
+-		/* signed bias */
+-		{ 0xffc0, 0xfe00, 0xfe00,},
+-		{ 0x0, 0x0, 0x0,},
+-		/* unsigned clamp */
+-		{ 0x40, 0x3ac, 0x40, 0x3c0, 0x40, 0x3c0,},
+-		{ 0x00, 0x3ff, 0x00, 0x3ff, 0x00, 0x3ff,},
+-	};
++	/* signed bias */
++	{ 0xffc0, 0xfe00, 0xfe00,},
++	{ 0x0, 0x0, 0x0,},
++	/* unsigned clamp */
++	{ 0x40, 0x3ac, 0x40, 0x3c0, 0x40, 0x3c0,},
++	{ 0x00, 0x3ff, 0x00, 0x3ff, 0x00, 0x3ff,},
++};
++
++static const struct dpu_csc_cfg *_dpu_plane_get_csc(struct dpu_plane *pdpu, const struct dpu_format *fmt)
++{
++	const struct dpu_csc_cfg *csc_ptr;
+ 
+ 	if (!pdpu) {
+ 		DPU_ERROR("invalid plane\n");
+-		return;
++		return NULL;
  	}
  
- 	return 0;
-@@ -1122,8 +1131,6 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
++	if (!DPU_FORMAT_IS_YUV(fmt))
++		return NULL;
++
+ 	if (BIT(DPU_SSPP_CSC_10BIT) & pdpu->features)
+-		pdpu->csc_ptr = (struct dpu_csc_cfg *)&dpu_csc10_YUV2RGB_601L;
++		csc_ptr = &dpu_csc10_YUV2RGB_601L;
+ 	else
+-		pdpu->csc_ptr = (struct dpu_csc_cfg *)&dpu_csc_YUV2RGB_601L;
++		csc_ptr = &dpu_csc_YUV2RGB_601L;
  
- 	pipe_cfg.dst_rect = state->dst;
+ 	DPU_DEBUG_PLANE(pdpu, "using 0x%X 0x%X 0x%X...\n",
+-			pdpu->csc_ptr->csc_mv[0],
+-			pdpu->csc_ptr->csc_mv[1],
+-			pdpu->csc_ptr->csc_mv[2]);
++			csc_ptr->csc_mv[0],
++			csc_ptr->csc_mv[1],
++			csc_ptr->csc_mv[2]);
++
++	return csc_ptr;
+ }
  
--	_dpu_plane_setup_scaler(pdpu, pstate, fmt, false, &pipe_cfg);
+ static void _dpu_plane_setup_scaler(struct dpu_plane *pdpu,
+@@ -1070,8 +1075,13 @@ void dpu_plane_flush(struct drm_plane *plane)
+ 	else if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG)
+ 		/* force 100% alpha */
+ 		_dpu_plane_color_fill(pdpu, pdpu->color_fill, 0xFF);
+-	else if (pdpu->pipe_hw && pdpu->csc_ptr && pdpu->pipe_hw->ops.setup_csc)
+-		pdpu->pipe_hw->ops.setup_csc(pdpu->pipe_hw, pdpu->csc_ptr);
++	else if (pdpu->pipe_hw && pdpu->pipe_hw->ops.setup_csc) {
++		const struct dpu_format *fmt = to_dpu_format(msm_framebuffer_format(plane->state->fb));
++		const struct dpu_csc_cfg *csc_ptr = _dpu_plane_get_csc(pdpu, fmt);
++
++		if (csc_ptr)
++			pdpu->pipe_hw->ops.setup_csc(pdpu->pipe_hw, csc_ptr);
++	}
+ 
+ 	/* flag h/w flush complete */
+ 	if (plane->state)
+@@ -1187,12 +1197,6 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
+ 
+ 			pdpu->pipe_hw->ops.setup_cdp(pdpu->pipe_hw, cdp_cfg);
+ 		}
 -
- 	/* override for color fill */
- 	if (pdpu->color_fill & DPU_PLANE_COLOR_FILL_FLAG) {
- 		/* skip remaining processing on color fill */
-@@ -1136,21 +1143,7 @@ static void dpu_plane_sspp_atomic_update(struct drm_plane *plane)
- 				pstate->multirect_index);
+-		/* update csc */
+-		if (DPU_FORMAT_IS_YUV(fmt))
+-			_dpu_plane_setup_csc(pdpu);
+-		else
+-			pdpu->csc_ptr = 0;
  	}
  
--	if (pdpu->pipe_hw->ops.setup_pe &&
--			(pstate->multirect_index != DPU_SSPP_RECT_1))
--		pdpu->pipe_hw->ops.setup_pe(pdpu->pipe_hw,
--				&pstate->pixel_ext);
--
--	/**
--	 * when programmed in multirect mode, scalar block will be
--	 * bypassed. Still we need to update alpha and bitwidth
--	 * ONLY for RECT0
--	 */
--	if (pdpu->pipe_hw->ops.setup_scaler &&
--			pstate->multirect_index != DPU_SSPP_RECT_1)
--		pdpu->pipe_hw->ops.setup_scaler(pdpu->pipe_hw,
--				&pipe_cfg, &pstate->pixel_ext,
--				&pstate->scaler3_cfg);
-+	_dpu_plane_setup_scaler(pdpu, pstate, fmt, false, &pipe_cfg);
- 
- 	if (pdpu->pipe_hw->ops.setup_multirect)
- 		pdpu->pipe_hw->ops.setup_multirect(
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-index 34e03ac05f4a..087194be3c22 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h
-@@ -23,8 +23,6 @@
-  * @multirect_index: index of the rectangle of SSPP
-  * @multirect_mode: parallel or time multiplex multirect mode
-  * @pending:	whether the current update is still pending
-- * @scaler3_cfg: configuration data for scaler3
-- * @pixel_ext: configuration data for pixel extensions
-  * @cdp_cfg:	CDP configuration
-  * @plane_fetch_bw: calculated BW per plane
-  * @plane_clk: calculated clk per plane
-@@ -38,10 +36,6 @@ struct dpu_plane_state {
- 	uint32_t multirect_mode;
- 	bool pending;
- 
--	/* scaler configuration */
--	struct dpu_hw_scaler3_cfg scaler3_cfg;
--	struct dpu_hw_pixel_ext pixel_ext;
--
- 	struct dpu_hw_pipe_cdp_cfg cdp_cfg;
- 	u64 plane_fetch_bw;
- 	u64 plane_clk;
+ 	_dpu_plane_set_qos_lut(plane, fb, &pipe_cfg);
 -- 
 2.33.0
 
