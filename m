@@ -2,197 +2,192 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 592E541D09B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Sep 2021 02:35:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 21CEB41D159
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Sep 2021 04:19:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1347232AbhI3Agw (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 29 Sep 2021 20:36:52 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42126 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1347389AbhI3Agv (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 29 Sep 2021 20:36:51 -0400
-Received: from mail-pf1-x433.google.com (mail-pf1-x433.google.com [IPv6:2607:f8b0:4864:20::433])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 68786C06161C
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 17:35:09 -0700 (PDT)
-Received: by mail-pf1-x433.google.com with SMTP id s16so3456175pfk.0
-        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 17:35:09 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=XjJMyo4nepY67DLXBfdTq1qdfOniUTOoSKlZO422mI0=;
-        b=c/uR3dVM+1NVe4obbihceA7rgd8OA3E91zAv+gUeWoCAc7PfSZl1E1/2TwtoCrvWJq
-         6TD0hT9OuycedZg4J6eFUAvC/nBuDeH4nOZpqyFtIj+ym/scWUXWB7hZdGo42QpdJl5h
-         NCbO35gOrQB1k0gimHMkZ3z1HMzd2H3Z1XeR8=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=XjJMyo4nepY67DLXBfdTq1qdfOniUTOoSKlZO422mI0=;
-        b=O65JftystVIlDAZecjKafdVtMyJgYIjkwJ0YGFTXslNNAjr6F0u9cg5KU6hx34GabC
-         ujpbdfypKSHyDDwkPjgSVaaHFULirMJ3mgO8E8/A3DgADcu53dOr8xavSRoMHZqsFInW
-         JNoEncHL6GcQFrrlCtg+cVRVZjaBW+aEAqhixVQbW1hWD/FPhG/yqEpuM2SXmAq79wy8
-         mDMpwfApwatcNTvXEFone/6VjRiU633mipI9vpryHldzMd0PnYgs1EERBZ341jWaR9hP
-         bhw06qUhMAfGRw7mFFNOBF+JhdOsLJ/VRj0MiQ42oGHlZWYPA0cC70al6gFm6b1N8fuK
-         4iJA==
-X-Gm-Message-State: AOAM531bdeV+GbpG+cTBLVBku/Z3c/a84iv+wieaK7PVVTWjVjSxNrU+
-        mLSa0SGs3TcqGCkDBV4vRVTpNQ==
-X-Google-Smtp-Source: ABdhPJzCl8vaM3acFT6ZGZlpSD0orUBM5WLa1c4jnTLVnWtCLiy3A2a6dGM0AmTqMoh5N1nCrM0mZQ==
-X-Received: by 2002:a62:3881:0:b0:44b:6639:6c20 with SMTP id f123-20020a623881000000b0044b66396c20mr1336754pfa.78.1632962108997;
-        Wed, 29 Sep 2021 17:35:08 -0700 (PDT)
-Received: from philipchen.mtv.corp.google.com ([2620:15c:202:201:b6b6:ed63:b801:ded7])
-        by smtp.gmail.com with ESMTPSA id 23sm711648pgk.89.2021.09.29.17.35.08
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 29 Sep 2021 17:35:08 -0700 (PDT)
-From:   Philip Chen <philipchen@chromium.org>
-To:     LKML <linux-kernel@vger.kernel.org>
-Cc:     dianders@chromium.org, swboyd@chromium.org,
-        Philip Chen <philipchen@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 3/3] arm64: dts: sc7180: Support Parade ps8640 edp bridge
-Date:   Wed, 29 Sep 2021 17:34:58 -0700
-Message-Id: <20210929173343.v2.3.I630340a51130f4582dbe14e42f673b74e0531a2b@changeid>
-X-Mailer: git-send-email 2.33.0.685.g46640cef36-goog
-In-Reply-To: <20210929173343.v2.1.Ib7e63ae17e827ce0636a09d5dec9796043e4f80a@changeid>
-References: <20210929173343.v2.1.Ib7e63ae17e827ce0636a09d5dec9796043e4f80a@changeid>
+        id S1347487AbhI3CU5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 29 Sep 2021 22:20:57 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:39896 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232383AbhI3CU5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 29 Sep 2021 22:20:57 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1632968355; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=+7oKjBSrX1u3jxx0QQvh+jT5dPbbCieWUQ1+GE9nPt0=;
+ b=svuQfFmTOaWciHhXn3FXEeQ0hpeFJW7EMimJN7GSU/86tOF5KvvetBMjPNZlTiLqiTZx8m6G
+ cwd1yOArGwsRuO2/aQC9CvIAZIcDbeiMxSpoHLkrBc18FDkps2OoP+dAw3TPDYPgdyx1SoO0
+ LVZ5SVDMLHolyEgyMoc3mbVxkpY=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 61551e9ca3e8d3c640b423c3 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 30 Sep 2021 02:19:08
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 8286FC43460; Thu, 30 Sep 2021 02:19:07 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id A0B1EC4338F;
+        Thu, 30 Sep 2021 02:19:05 +0000 (UTC)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Wed, 29 Sep 2021 19:19:05 -0700
+From:   abhinavk@codeaurora.org
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        freedreno@lists.freedesktop.org
+Subject: Re: [Freedreno] [PATCH v2 00/22] drm/msm/dpu: switch dpu_plane to be
+ virtual
+In-Reply-To: <20210705012115.4179824-1-dmitry.baryshkov@linaro.org>
+References: <20210705012115.4179824-1-dmitry.baryshkov@linaro.org>
+Message-ID: <c7caa55f5244ba4b7341a1b912835d91@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add a dts fragment file to support the sc7180 boards with the second
-source edp bridge, Parade ps8640.
+Hi Dmitry
 
-Signed-off-by: Philip Chen <philipchen@chromium.org>
----
+On 2021-07-04 18:20, Dmitry Baryshkov wrote:
+> As discussed on IRC, change dpu_plane implementation to be virtual:
+> register unified planes and select backing SSPP block at runtime.
+> 
+> Use msm.dpu_use_virtual_planes=1 to enable usage of virtual planes
+> rather than statically allocated SSPPs at the plane registration.
+> 
+> Patches 1-9 move state variables from struct dpu_plane onto the stack
+> allocation. State should not be a part of struct dpu_plane anyway.
+> 
+> Patches 10-18 make additional changes to plane code, reworking check,
+> debugfs, dropping old multirec support, which results in patch 19 
+> adding
+> support for virtual planes per se.
+> 
+> Patches 20-22 demonstrate my main goal behind reworking dpu_plane
+> support. They change dpu_plane to automatically use one of SSPP block
+> features - multirec, an ability to display two unscaled RGB rectangles
+> using single SSPP block. This allows us to double the amount of created
+> planes. If the user tries to enable more planes than actually supported
+> by the underlying SSPP blocks, atomic_check code would return an error.
+> 
+> As you can see, this patchset is not atomic, so different patches can 
+> go
+> separately.
 
-Changes in v2:
-- Add the definition of edp_brij_i2c and some other properties to
-  ps8640 dts, making it match ti-sn65dsi86 dts better
+I am half way through this series and have finished checking patches 
+1-12
+I am okay with patches 1-4, 6-12. Its a reasonable cleanup to make the 
+dpu_plane struct lighter.
+I need a little more time with the rest as I am comparing the downstream 
+solution against yours.
 
- .../qcom/sc7180-trogdor-parade-ps8640.dtsi    | 108 ++++++++++++++++++
- 1 file changed, 108 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-parade-ps8640.dtsi
+As you mentioned, this patchset is not atomic, hence can you break it up 
+like
+-> cleanup of dpu_plane struct in one series
+-> removal of current multirect and current src split which will include 
+patch 5 as well
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-parade-ps8640.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-parade-ps8640.dtsi
-new file mode 100644
-index 000000000000..c274ab41bd67
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-parade-ps8640.dtsi
-@@ -0,0 +1,108 @@
-+// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
-+/*
-+ * Google Trogdor dts fragment for the boards with Parade ps8640 edp bridge
-+ *
-+ * Copyright 2021 Google LLC.
-+ */
-+
-+/ {
-+	pp3300_brij_ps8640: pp3300-brij-ps8640 {
-+		compatible = "regulator-fixed";
-+		status = "okay";
-+		regulator-name = "pp3300_brij_ps8640";
-+
-+		regulator-min-microvolt = <3300000>;
-+		regulator-max-microvolt = <3300000>;
-+
-+		gpio = <&tlmm 32 GPIO_ACTIVE_HIGH>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&en_pp3300_edp_brij_ps8640>;
-+
-+		vin-supply = <&pp3300_a>;
-+	};
-+};
-+
-+&dsi0_out {
-+	remote-endpoint = <&ps8640_in>;
-+};
-+
-+edp_brij_i2c: &i2c2 {
-+	status = "okay";
-+	clock-frequency = <400000>;
-+
-+	ps8640_bridge: edp-bridge@8 {
-+		compatible = "parade,ps8640";
-+		reg = <0x8>;
-+
-+		powerdown-gpios = <&tlmm 104 GPIO_ACTIVE_LOW>;
-+		reset-gpios = <&tlmm 11 GPIO_ACTIVE_LOW>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&edp_brij_en>, <&edp_brij_ps8640_rst>;
-+
-+		vdd12-supply = <&pp1200_brij>;
-+		vdd33-supply = <&pp3300_brij_ps8640>;
-+
-+		ports {
-+			#address-cells = <1>;
-+			#size-cells = <0>;
-+
-+			port@0 {
-+				reg = <0>;
-+				ps8640_in: endpoint {
-+					remote-endpoint = <&dsi0_out>;
-+				};
-+			};
-+
-+			port@1 {
-+				reg = <1>;
-+				ps8640_out: endpoint {
-+					remote-endpoint = <&panel_in_edp>;
-+				};
-+			};
-+		};
-+
-+		aux_bus: aux-bus {
-+			panel: panel {
-+				/* Compatible will be filled in per-board */
-+				power-supply = <&pp3300_dx_edp>;
-+				backlight = <&backlight>;
-+
-+				port {
-+					panel_in_edp: endpoint {
-+						remote-endpoint = <&ps8640_out>;
-+					};
-+				};
-+			};
-+		};
-+	};
-+};
-+
-+&tlmm {
-+	edp_brij_ps8640_rst: edp-brij-ps8640-rst {
-+		pinmux {
-+			pins = "gpio11";
-+			function = "gpio";
-+		};
-+
-+		pinconf {
-+			pins = "gpio11";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+	};
-+
-+	en_pp3300_edp_brij_ps8640: en-pp3300-edp-brij-ps8640 {
-+		pinmux {
-+			pins = "gpio32";
-+			function = "gpio";
-+		};
-+
-+		pinconf {
-+			pins = "gpio32";
-+			drive-strength = <2>;
-+			bias-disable;
-+		};
-+	};
-+};
--- 
-2.33.0.685.g46640cef36-goog
+So that the first series can go through and it gives us a little more 
+time to check the second
+series.
 
+Thanks
+
+Abhinav
+
+> 
+> Changes since v1:
+>  - Add multirec implementation
+>  - Added msm.dpu_use_virtual_planes kernel parameter instead of using
+>    compile time switch
+>  - Changed code to always reallocate SSPPs in the CRTC atomic check to
+>    let the kernel pick up the best multirec config. This can be
+>    optimized later.
+>  - Rework RM SSPP API to always receive plane id
+>  - Removed scaler_cfg, pixel_ext and cdp_cfg from struct 
+> dpu_plane_state
+>  - Made _dpu_scaler_setup() call sspp's setup_scaler and setup_pe
+>  - Removed dpu_csc_cfg from dpu_plane
+> 
+> The following changes since commit 
+> e88bbc91849b2bf57683119c339e52916d34433f:
+> 
+>   Revert "drm/msm/mdp5: provide dynamic bandwidth management"
+> (2021-06-23 14:06:20 -0700)
+> 
+> are available in the Git repository at:
+> 
+>   https://git.linaro.org/people/dmitry.baryshkov/kernel.git 
+> dpu-multirec-2
+> 
+> for you to fetch changes up to 
+> 19f6afd40097d4c826e56b8f4a8cbd807f7b61f6:
+> 
+>   drm/msm/dpu: add multirect support (2021-07-05 04:04:50 +0300)
+> 
+> ----------------------------------------------------------------
+> Dmitry Baryshkov (22):
+>       drm/msm/dpu: move LUT levels out of QOS config
+>       drm/msm/dpu: remove pipe_qos_cfg from struct dpu_plane
+>       drm/msm/dpu: drop pipe_name from struct dpu_plane
+>       drm/msm/dpu: remove stage_cfg from struct dpu_crtc
+>       drm/msm/dpu: rip out master planes support
+>       drm/msm/dpu: move dpu_hw_pipe_cfg out of struct dpu_plane
+>       drm/msm/dpu: drop scaler config from plane state
+>       drm/msm/dpu: drop dpu_csc_cfg from dpu_plane
+>       drm/msm/dpu: remove dpu_hw_pipe_cdp_cfg from dpu_plane
+>       drm/msm/dpu: don't cache pipe->cap->features in dpu_plane
+>       drm/msm/dpu: don't cache pipe->cap->sblk in dpu_plane
+>       drm/msm/dpu: rip out debugfs support from dpu_plane
+>       drm/msm/dpu: drop src_split and multirect check from 
+> dpu_crtc_atomic_check
+>       drm/msm/dpu: add list of supported formats to the DPU caps
+>       drm/msm/dpu: simplify DPU_SSPP features checks
+>       drm/msm/dpu: do not limit the zpos property
+>       drm/msm/dpu: add support for SSPP allocation to RM
+>       drm/msm/dpu: move pipe_hw to dpu_plane_state
+>       drm/msm/dpu: add support for virtualized planes
+>       drm/msm/dpu: fix smart dma support
+>       drm/msm/dpu: fix CDP setup to account for multirect index
+>       drm/msm/dpu: add multirect support
+> 
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c       | 261 +++-----
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h       |   2 -
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c |  20 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.h |  20 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c    |  41 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h    |  52 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.c    |   2 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h    |   2 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c        | 234 ++++---
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.h        |  70 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c      | 851 
+> +++++++++++--------------
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_plane.h      |  75 +--
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_rm.c         |  81 +++
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_rm.h         |   6 +
+>  14 files changed, 793 insertions(+), 924 deletions(-)
+> 
+> _______________________________________________
+> Freedreno mailing list
+> Freedreno@lists.freedesktop.org
+> https://lists.freedesktop.org/mailman/listinfo/freedreno
