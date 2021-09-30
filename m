@@ -2,151 +2,304 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3097541DF7F
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Sep 2021 18:44:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E9A0C41E02C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Sep 2021 19:27:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352276AbhI3Qq1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Sep 2021 12:46:27 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40320 "EHLO
+        id S1352677AbhI3R3H (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Sep 2021 13:29:07 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50200 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350980AbhI3Qq0 (ORCPT
+        with ESMTP id S1352671AbhI3R3G (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Sep 2021 12:46:26 -0400
-Received: from mail-vs1-xe43.google.com (mail-vs1-xe43.google.com [IPv6:2607:f8b0:4864:20::e43])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D2A25C06176A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Sep 2021 09:44:43 -0700 (PDT)
-Received: by mail-vs1-xe43.google.com with SMTP id x1so8100766vsp.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Sep 2021 09:44:43 -0700 (PDT)
+        Thu, 30 Sep 2021 13:29:06 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5376C06176D
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Sep 2021 10:27:23 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id g62-20020a9d2dc4000000b0054752cfbc59so8290772otb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Sep 2021 10:27:23 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:reply-to:from:date:message-id:subject:to;
-        bh=/T9drlD1s9vO6lHEMs4LJzmDo2MKXEHBXvFYaWoQWpk=;
-        b=EsLCv7AEd7vtbqyV/OiUSUuCbkOKxmlcfZM1v1wgFSApl/4nFI7f+BaRJqzpjvS04i
-         mkJwSn/ZQh2bsgii5Ix6poB70AoKA1WfkEmVTXepxtjw+4MAdVQi40dW8n8xqi3+fa18
-         1bPvA0COueaQweCG/fSWdCKbFfcyPjU0tuD/1kxPcqCM83/fRieSFmtWek5kCC27Ltv5
-         FXBVCy4Xp8cGUooofUei2DqQ8e/TTQGra89GktRgQmEwRcT33O0i/FN6XSfXt/bUe67O
-         hwX4JiWBc99uGtYXWeQwuT4NavTVleIfUaM50KdusSBzoZh0cSXqtW5FNJ3rhx7Ff1vg
-         QA5Q==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Z0so+JpsMJmiwyWtbeW90mFJLYHMDOO/l6yFYEdQKko=;
+        b=iW4lCl11Mi4Ci5B0nPgW66wXSJ3oFJsldUJwON53VvaTEvskQ0xywG9m6GzDqKnYJK
+         vVXIeGN2yD6fEVa2qXKf2aAJ8C4Z2OLMo4JL7/RslUIES1SMNA3RZtRRLSywxhG/UW/q
+         3iZED9J0w4UB54aRlDTkQRFq30s5gjOWZopxSTvJm2SIiHwQnFWdcZPGHqATy2vquJ3w
+         kH78TZJEGZJH9ylkyvpSFPmvf9RnchizGC5DaxbUXHbPgHGYpaG7vmA8Z/p04i4hZeuP
+         kbzwdi4u5y6ZScxYAJFChGhHd821q9H6MgWjyYUgC9Q8x84hXAyCE3O5NcReag4g3rYe
+         HJ/Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
-         :subject:to;
-        bh=/T9drlD1s9vO6lHEMs4LJzmDo2MKXEHBXvFYaWoQWpk=;
-        b=HH0CU+LRekdo2PkTWafdLBvJ0s5F4Bg26LqOqduTHKpg11TNePr/cHazpYOtgEjMSx
-         2F/DHIJx1Hoe2eQgMM02Of6AbrHOox1RPVHt3cR0jzLkKU1uvdq8Fb1UlVwe6w8hJ0Tj
-         jEbsjyRzjZrc00ConcIHyfeInFm463ZLaplGtIGEjfJGy95vamtil5P4vrUDZg3Umo8R
-         bp6OiucsLBt6sl8b8+A1xpAEz82jhXQeBMyIEBbKbseEYTRaOzQ35QT48l2jf8yAoQgI
-         1tlcfK57wFwcZ5HwVIhMTyhqd05MXA2yWBFgJSB8oBLJgPWl9gCWnaUE7nzM1YTMXMrD
-         MFWg==
-X-Gm-Message-State: AOAM530qm78mIP8C56xChib1gZUI/pbVC8UHkT8/4qA5d2wmfEjjITUh
-        cZpOqsvs4ZGcVXf7WYQGhkjdNF2TojUbmHsLvCk=
-X-Google-Smtp-Source: ABdhPJxA0rYZ0PQcttzpvJKBp9a+xMfb3oj8O6Y0ef0aGkhzOFSDtO3LPmiDKlOqxB5q8N0nggNMP3QDg2AuPOK1PCw=
-X-Received: by 2002:a05:6102:6ce:: with SMTP id m14mr287143vsg.42.1633020282955;
- Thu, 30 Sep 2021 09:44:42 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Z0so+JpsMJmiwyWtbeW90mFJLYHMDOO/l6yFYEdQKko=;
+        b=Y8X2O6KLVJHasVTCmnD+dwBfDJj+6xFNkwbI120EUkzhVHlMcvi8QIAriH7f8DH7Ii
+         txDH5siIIpeuAN8sMXSUNRTs5jwOzRBXj78Vs727h0upJrisF3224r+cdPg0fzBHXsGQ
+         8bwitw4RL2dgrIL5hxaEPI2ohc6N8ZzS7iZIRCTkg0pe+A3d7Hq/mm97czI02ttwOdf0
+         VePB3vORQ2OQtvYGWQHR42rwyUYsHggrP0DoiHPM+Say7o3lcDs6oxc9OOXoCVB6+bC0
+         s1r5CuL082a/ZpvAn/mI4IqsKhsC9Z2MnZzzosSbfsro22a3smUWTOr43cV6M87Ma/4v
+         NnEg==
+X-Gm-Message-State: AOAM530Eaxsnd4FsEWUeZKi8V2UxldNRVQ67rZFJXCoFf85c1yJQx+gj
+        fVdD8Op+r5p+UF/PJ39J5vqYYA==
+X-Google-Smtp-Source: ABdhPJwSU3M+Xbhrp3j+ZjQM+GRN/gcA3Mg0AQ+a0cVqJja6qTMcgUzhFJH7Voq5lUYa0AWdtNng9g==
+X-Received: by 2002:a05:6830:1da6:: with SMTP id z6mr6450386oti.234.1633022842874;
+        Thu, 30 Sep 2021 10:27:22 -0700 (PDT)
+Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
+        by smtp.gmail.com with ESMTPSA id p2sm700562ooe.34.2021.09.30.10.27.22
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Sep 2021 10:27:22 -0700 (PDT)
+Date:   Thu, 30 Sep 2021 10:29:11 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Deepak Kumar Singh <deesin@codeaurora.org>
+Cc:     clew@codeaurora.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org,
+        Andy Gross <agross@kernel.org>
+Subject: Re: [PATCH V1 1/1] soc: qcom: smp2p: add feature negotiation and ssr
+ ack feature support
+Message-ID: <YVXz54+pZfC+hGFI@ripper>
+References: <1633019111-9318-1-git-send-email-deesin@codeaurora.org>
 MIME-Version: 1.0
-Received: by 2002:a59:ab2e:0:b0:22d:7f44:603a with HTTP; Thu, 30 Sep 2021
- 09:44:42 -0700 (PDT)
-Reply-To: irenezakari24@gmail.com
-From:   Irene zakari <irenezakari88@gmail.com>
-Date:   Thu, 30 Sep 2021 09:44:42 -0700
-Message-ID: <CAFT8PFHbHST3JQr361Sw8wG0QMhXaM=P1Ekf5_Z8foTHwFdjow@mail.gmail.com>
-Subject: PLEASE I NEED YOUR HELP
-To:     undisclosed-recipients:;
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1633019111-9318-1-git-send-email-deesin@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hello   ..
+On Thu 30 Sep 09:25 PDT 2021, Deepak Kumar Singh wrote:
 
-How do you do over there? I hope you are doing well?
+> This patch adds feature negotiation and ssr ack feature between
+> local and remote host. Local host can negotiate on common features
+> supported with remote host.
+> 
 
-My name is Irene. (24 years), i am single, from Gambia, the only child
-of late Eng. Bernard Bakary Zakaria. the Director of Bajam Enterprise
-(Building Construction Company in The Gambia) also the CEO of Bernard
-Import and Export (GAMBIA).
+This states that you're negotiating features, but doesn't capture the
+actual ssr ack; why it's there and how it works.
 
-As a matter of fact my mother died when i was barely 4 years old
-according to my late father and because of the type of love he had for
-my mother made him to remain UN-married till he left the ghost..
+> Signed-off-by: Chris Lew <clew@codeaurora.org>
 
-So after the death of my father as a result of assassinate, his brother (My
-Uncle) who is the purchasing and marketing sale manager of my late
-fathers company named (Mr. James Tokunbo Oriade Zakaria) wanted to
-convert all the properties and resources of my late father into his
-which i quarreled with him and it made him to lay his anger on me to
-the extent of hiring an assassins to kill me but to God be the glory i
-succeeded by making a way to Burkina faso for my dear life.
-Honestly i do live a fearful life even here in Burkina faso because of
-those Assassins coming after me .
+Author of the patch should be Chris, please commit with --author
+"Chris.."
 
-I would want to live and study in your country for my better future.
-because my father same blood brother wanted to force me into undecided
-marriage, just for me to leave my father home and went and live with
-another man I never know as he want to occupied all my father home
-and maybe to sold it as my father no longer alive, I'm the only child
-daughter my father born, '' but he don't know that i am not
-interesting in any of my father properties or early marriage for now,
-because i still have future to think about and to focus on my studies
-first as i was doing my first year in the University before the death
-of my father.
+> Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
+> ---
+>  drivers/soc/qcom/smp2p.c | 128 ++++++++++++++++++++++++++++++++++++++---------
+>  1 file changed, 103 insertions(+), 25 deletions(-)
+> 
+> diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
+> index 38585a7..c1a60016 100644
+> --- a/drivers/soc/qcom/smp2p.c
+> +++ b/drivers/soc/qcom/smp2p.c
+> @@ -41,8 +41,11 @@
+>  #define SMP2P_MAX_ENTRY_NAME 16
+>  
+>  #define SMP2P_FEATURE_SSR_ACK 0x1
+> +#define SMP2P_FLAGS_RESTART_DONE_BIT 0
+> +#define SMP2P_FLAGS_RESTART_ACK_BIT 1
+>  
+>  #define SMP2P_MAGIC 0x504d5324
+> +#define SMP2P_FEATURES	SMP2P_FEATURE_SSR_ACK
 
-Actually what I want to discuss with you is about my personal issue
-concern funds my late father deposited in a bank outside my country,
-worth $4.5 million united state dollars. i need your assistance to
-receive and invest this funds in your country.
+Rename this SMP2P_ALL_FEATURES?
 
-Please help me, I am sincere to you and I want to be member of your
-family as well if you wouldn't mind to accept me and lead me to better
-future in your country.
+>  
+>  /**
+>   * struct smp2p_smem_item - in memory communication structure
+> @@ -136,6 +139,10 @@ struct qcom_smp2p {
+>  
+>  	unsigned valid_entries;
+>  
+> +	bool ssr_ack_enabled;
+> +	bool ssr_ack;
+> +	bool open;
 
-All the documents the bank issue to my father during time of deposit
-is with me now.
-I already notify the bank on phone about the death of my father and
-they are surprise for the news and accept that my father is their good
-customer.
-I will be happy if this money can be invested in any business of your
-choice and it will be under your control till i finished my education,
-also I'm assuring you good relationship and I am ready to discuss the
-amount of money to give you from this money for your help.
+How about renaming this "negotiation_done"?
 
-Therefore, I shall give you the bank contact and other necessary
-information in my next email if you will only promise me that you will
-not/never betray and disclosed this matter to anybody, because, this
-money is the only hope i have for survival on earth since I have lost
-my parents.
+> +
+>  	unsigned local_pid;
+>  	unsigned remote_pid;
+>  
+> @@ -163,22 +170,59 @@ static void qcom_smp2p_kick(struct qcom_smp2p *smp2p)
+>  	}
+>  }
+>  
+> -/**
+> - * qcom_smp2p_intr() - interrupt handler for incoming notifications
+> - * @irq:	unused
+> - * @data:	smp2p driver context
+> - *
+> - * Handle notifications from the remote side to handle newly allocated entries
+> - * or any changes to the state bits of existing entries.
+> - */
+> -static irqreturn_t qcom_smp2p_intr(int irq, void *data)
+> +static bool qcom_smp2p_check_ssr(struct qcom_smp2p *smp2p)
+> +{
+> +	struct smp2p_smem_item *in = smp2p->in;
+> +	bool restart;
+> +
+> +	if (!smp2p->ssr_ack_enabled)
+> +		return false;
+> +
+> +	restart = in->flags & BIT(SMP2P_FLAGS_RESTART_DONE_BIT);
 
-Moreover I have the FUND PLACEMENT CERTIFICATE and the DEATH
-CERTIFICATE here with me, but before I give you further information, i
-will like to know your full data
+	return restart != smp2p->ssr_ack;
 
-1. Full Name: ........................
-2. Address: ..................
-3. Nationality: ........... Sex................
-4. Age:........... Date of Birth:................
-5. Occupation:...................
-.....
-6. Phone: ........... Fax:.........................
-7. State of Origin: .......Country:..............
-8. Occupation:...................
-................
-9. Marital status........... E-mail address's: ............
-10. Scan copy of your ID card or Driving License/Photo:............
-DECLARATION:
+> +	if (restart == smp2p->ssr_ack)
+> +		return false;
+> +
+> +	return true;
+> +}
+> +
+> +static void qcom_smp2p_do_ssr_ack(struct qcom_smp2p *smp2p)
+> +{
+> +	struct smp2p_smem_item *out = smp2p->out;
+> +	u32 ack;
+> +	u32 val;
+> +
+> +	ack = !smp2p->ssr_ack;
+> +	smp2p->ssr_ack = ack;
+> +	ack = ack << SMP2P_FLAGS_RESTART_ACK_BIT;
+> +
+> +	val = out->flags & ~BIT(SMP2P_FLAGS_RESTART_ACK_BIT);
+> +	val |= ack;
+> +	out->flags = val;
 
-so that i will be fully sure that i am not trusting the wrong person.
-and it will also give me the mind to send you the bank contact for you
-to communicate with them for more verification about this money. and
-to know you more better.
+I think this would be cleaner as:
 
-Meanwhile, you can reach me through my pastor,his name is Pastor Paul
-any time you call, tell him that you want to speak with me because
-right now i am living in the church here in Burkina faso and i don't
-want to stay here any longer,
-send for me to speak with you his phone number is this(+226 75213646)
+	smp2p->ssr_ack = !smp2p->ssr_ack;
 
-I will stop here and i will be waiting for your reply and feel free
-ask any thing you want to know about me.
-Please help me, I would be highly appreciated
-Have nice day.
-From Irene
+	val = out->flags & ~BIT(SMP2P_FLAGS_RESTART_ACK_BIT);
+	if (smp2p->ssr_ack)
+		val |= BIT(SMP2P_FLAGS_RESTART_ACK_BIT);
+	out->flags = val;
+
+> +
+> +	qcom_smp2p_kick(smp2p);
+> +}
+> +
+> +static void qcom_smp2p_negotiate(struct qcom_smp2p *smp2p)
+> +{
+> +	struct smp2p_smem_item *out = smp2p->out;
+> +	struct smp2p_smem_item *in = smp2p->in;
+> +	u32 features;
+> +
+> +	if (in->version == out->version) {
+> +		features = in->features & out->features;
+> +		out->features = features;
+
+		out->features &= in->features;
+> +
+> +		if (features & SMP2P_FEATURE_SSR_ACK)
+
+		if (out->features & SMP2P_FEATURE_SSR_ACK)
+
+> +			smp2p->ssr_ack_enabled = true;
+> +
+> +		smp2p->open = true;
+> +	}
+> +}
+> +
+> +static void qcom_smp2p_notify_in(struct qcom_smp2p *smp2p)
+>  {
+>  	struct smp2p_smem_item *in;
+>  	struct smp2p_entry *entry;
+> -	struct qcom_smp2p *smp2p = data;
+> -	unsigned smem_id = smp2p->smem_items[SMP2P_INBOUND];
+> -	unsigned pid = smp2p->remote_pid;
+> -	size_t size;
+>  	int irq_pin;
+>  	u32 status;
+>  	char buf[SMP2P_MAX_ENTRY_NAME];
+> @@ -187,18 +231,6 @@ static irqreturn_t qcom_smp2p_intr(int irq, void *data)
+>  
+>  	in = smp2p->in;
+>  
+> -	/* Acquire smem item, if not already found */
+> -	if (!in) {
+> -		in = qcom_smem_get(pid, smem_id, &size);
+> -		if (IS_ERR(in)) {
+> -			dev_err(smp2p->dev,
+> -				"Unable to acquire remote smp2p item\n");
+> -			return IRQ_HANDLED;
+> -		}
+> -
+> -		smp2p->in = in;
+> -	}
+> -
+>  	/* Match newly created entries */
+>  	for (i = smp2p->valid_entries; i < in->valid_entries; i++) {
+>  		list_for_each_entry(entry, &smp2p->inbound, node) {
+> @@ -237,7 +269,52 @@ static irqreturn_t qcom_smp2p_intr(int irq, void *data)
+>  			}
+>  		}
+>  	}
+> +}
+> +
+> +/**
+> + * qcom_smp2p_intr() - interrupt handler for incoming notifications
+> + * @irq:	unused
+> + * @data:	smp2p driver context
+> + *
+> + * Handle notifications from the remote side to handle newly allocated entries
+> + * or any changes to the state bits of existing entries.
+> + */
+> +static irqreturn_t qcom_smp2p_intr(int irq, void *data)
+> +{
+> +	struct smp2p_smem_item *in;
+> +	struct qcom_smp2p *smp2p = data;
+> +	unsigned int smem_id = smp2p->smem_items[SMP2P_INBOUND];
+> +	unsigned int pid = smp2p->remote_pid;
+> +	size_t size;
+> +
+> +	in = smp2p->in;
+> +
+> +	/* Acquire smem item, if not already found */
+> +	if (!in) {
+> +		in = qcom_smem_get(pid, smem_id, &size);
+> +		if (IS_ERR(in)) {
+> +			dev_err(smp2p->dev,
+> +				"Unable to acquire remote smp2p item\n");
+> +			goto out;
+> +		}
+> +
+> +		smp2p->in = in;
+> +	}
+> +
+> +	if (!smp2p->open)
+> +		qcom_smp2p_negotiate(smp2p);
+> +
+> +	if (smp2p->open) {
+> +		bool do_restart;
+
+How about "ack_restart" or "need_ack"?
+
+While valid, can you please move the declaration to the top of the
+function, to follow the style.
+
+Regards,
+Bjorn
+
+> +
+> +		do_restart = qcom_smp2p_check_ssr(smp2p);
+> +		qcom_smp2p_notify_in(smp2p);
+> +
+> +		if (do_restart)
+> +			qcom_smp2p_do_ssr_ack(smp2p);
+> +	}
+>  
+> +out:
+>  	return IRQ_HANDLED;
+>  }
+>  
+> @@ -393,6 +470,7 @@ static int qcom_smp2p_alloc_outbound_item(struct qcom_smp2p *smp2p)
+>  	out->remote_pid = smp2p->remote_pid;
+>  	out->total_entries = SMP2P_MAX_ENTRY;
+>  	out->valid_entries = 0;
+> +	out->features = SMP2P_FEATURES;
+>  
+>  	/*
+>  	 * Make sure the rest of the header is written before we validate the
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
