@@ -2,88 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A372141D212
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Sep 2021 06:01:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 238C941D215
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Sep 2021 06:02:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232176AbhI3ECp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Sep 2021 00:02:45 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:10522 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229512AbhI3ECp (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Sep 2021 00:02:45 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1632974463; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=0fT3aNKXsrBX4t+tHvtMz9qUHFpaZPC4Ksn3XbXKe6g=;
- b=ruc+jp4Hu8r5il3ZjHX2Ot1WOKce/P3oRLwiOaKSuj4GsogrlC0JaNvgURzqzquWeaiwU/yC
- JArLlmcTgmTtatszENq/thh5Gx+HlrC16/vLNkHaQyM6B2gtCd5BAaMj0E2/L204Q9iZaV3u
- eoSqNN02+yKc4LlEHy7vqDJP/Hc=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 6155366a9ffb4131490a2466 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 30 Sep 2021 04:00:42
- GMT
-Sender: skakit=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id B1295C43617; Thu, 30 Sep 2021 04:00:41 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: skakit)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 22C8BC4360C;
-        Thu, 30 Sep 2021 04:00:41 +0000 (UTC)
+        id S1347691AbhI3EDq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Sep 2021 00:03:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59946 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235452AbhI3EDq (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 30 Sep 2021 00:03:46 -0400
+Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2EB0FC06161C
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 21:02:04 -0700 (PDT)
+Received: by mail-ot1-x32d.google.com with SMTP id j11-20020a9d190b000000b00546fac94456so5650902ota.6
+        for <linux-arm-msm@vger.kernel.org>; Wed, 29 Sep 2021 21:02:04 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=R9mpe6GAMYXYmN7BguKYQDj8CISG/3Bymg9UCpNDaUA=;
+        b=J1qc7TcOvA4WBtz50QMiHU+6+Y6nKOwAj1EeOPUDYv1YfmcQDMwNqd5LBX0wXJGeJW
+         xHsaIfix1bx/ylxq2pHjsLdsSJqDmCyWPuMuglPj71U0lIH6NUJLEyNzGnxZrid/Jox0
+         XPDRS4LTLj6ngvyAncNHXNb6J/kSFpgihTZFM=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=R9mpe6GAMYXYmN7BguKYQDj8CISG/3Bymg9UCpNDaUA=;
+        b=VRytmR7U/xmW6TgasIZS1wojrQcc4JocHP2SpVu6RnUtImUfyZIAtSHwUDf7Dtho2q
+         GCV53cT5BuEPYV6bD8aA2T02SAkokiyvxjv+V/R4Os0xFHOJE5PjyKy3MsiQbYo0XIY1
+         wr6sM6enTUhtcybAhY6IfZoi3qDWrD9bY3g1S0e0BKwo0RVpI5FOr+t7QL5EMp9TnCR/
+         vYSeb7QQVhtZJcDlC5aU/VVcde7jTrHJt/qMtoT5pitLNE4zAAigbt2rwZyzgkz4Bc4E
+         iRUyb9U40jzSJF3PV+CmOjr9lVr+URT6pBFn80rrj0Suy/yXofQ+nvlMuoby035GAX6z
+         drNQ==
+X-Gm-Message-State: AOAM5327/m+GvEF2dzhwWfuRSXrAyYwa0ejEd3pHrQtNFIlXquVrsVh8
+        M+tPf19rPAwq0B+QGOnC3Z/aH7Dfl/FIJHFnNiUI+A==
+X-Google-Smtp-Source: ABdhPJwUQZCYg9IJwPdZYKtFyaHgpiUNp09whvzhPcppd0uJKfX6l+9+wj2paO+gdV0uO/hrjjLXT0RolLDi5J2H+kE=
+X-Received: by 2002:a9d:6a0f:: with SMTP id g15mr3329286otn.126.1632974523505;
+ Wed, 29 Sep 2021 21:02:03 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Wed, 29 Sep 2021 21:02:03 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 30 Sep 2021 09:30:41 +0530
-From:   skakit@codeaurora.org
-To:     Douglas Anderson <dianders@chromium.org>,
-        bjorn.andersson@linaro.org
-Cc:     vkoul@kernel.org, mka@chromium.org, swboyd@chromium.org,
-        Andy Gross <agross@kernel.org>,
+In-Reply-To: <20210929173343.v2.3.I630340a51130f4582dbe14e42f673b74e0531a2b@changeid>
+References: <20210929173343.v2.1.Ib7e63ae17e827ce0636a09d5dec9796043e4f80a@changeid>
+ <20210929173343.v2.3.I630340a51130f4582dbe14e42f673b74e0531a2b@changeid>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Wed, 29 Sep 2021 21:02:03 -0700
+Message-ID: <CAE-0n53EBvKv-RdMwiiOsUkb+LOKAKwrpP7cDavx4meA2vbvcA@mail.gmail.com>
+Subject: Re: [PATCH v2 3/3] arm64: dts: sc7180: Support Parade ps8640 edp bridge
+To:     LKML <linux-kernel@vger.kernel.org>,
+        Philip Chen <philipchen@chromium.org>
+Cc:     dianders@chromium.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH] arm64: dts: qcom: pmk8350: Make RTC disabled by default;
- enable on sc7280-idp
-In-Reply-To: <20210929153553.1.Ib44c2ac967833d7a3f51452d44d15b7b8d23c1f0@changeid>
-References: <20210929153553.1.Ib44c2ac967833d7a3f51452d44d15b7b8d23c1f0@changeid>
-Message-ID: <86b0d847ddf06c1b445f3dbac9c771a9@codeaurora.org>
-X-Sender: skakit@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+        linux-arm-msm@vger.kernel.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-09-30 04:08, Douglas Anderson wrote:
-> The RTC on the pmk8350 is not useful on all boards. Some boards may
-> not provide backup power to the PMIC but might have another RTC on the
-> board that does have backup power. In this case it's better to not use
-> the RTC on the PMIC.
-> 
-> At the moment, the only boards that includes this PMIC are sc7280-idp
-> and sc7280-idp2. On sc7280-idp I'm not aware of any other RTCs, but
-> sc7280-idp2 has a Chrome OS EC on it and this is intended to provide
-> the RTC for the AP.
-> 
-> Let's do what we normally do for hardware that's not used by all
-> boards and set it to a default status of "disabled" and then enable it
-> on the boards that need it.
-> 
-> NOTE: for sc7280-idp it's _possible_ we might also want to add
-> `allow-set-time;`. That could be the subject of a future patch if it
-> is indeed true.
-> 
-> Signed-off-by: Douglas Anderson <dianders@chromium.org>
-> ---
-> 
+Quoting Philip Chen (2021-09-29 17:34:58)
+> diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-parade-ps8640.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-parade-ps8640.dtsi
+> new file mode 100644
+> index 000000000000..c274ab41bd67
+> --- /dev/null
+> +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-parade-ps8640.dtsi
+> @@ -0,0 +1,108 @@
+> +// SPDX-License-Identifier: (GPL-2.0+ OR MIT)
+> +/*
+> + * Google Trogdor dts fragment for the boards with Parade ps8640 edp bridge
+> + *
+> + * Copyright 2021 Google LLC.
+> + */
+> +
+> +/ {
+> +       pp3300_brij_ps8640: pp3300-brij-ps8640 {
+> +               compatible = "regulator-fixed";
+> +               status = "okay";
+> +               regulator-name = "pp3300_brij_ps8640";
+> +
+> +               regulator-min-microvolt = <3300000>;
+> +               regulator-max-microvolt = <3300000>;
+> +
+> +               gpio = <&tlmm 32 GPIO_ACTIVE_HIGH>;
 
-Reviewed-by: Satya Priya <skakit@codeaurora.org>
+Doesn't this need
+
+		enable-active-high;
+
+?
+
+> +
+> +               pinctrl-names = "default";
+> +               pinctrl-0 = <&en_pp3300_edp_brij_ps8640>;
+> +
+> +               vin-supply = <&pp3300_a>;
+> +       };
+> +};
+> +
+> +&dsi0_out {
+> +       remote-endpoint = <&ps8640_in>;
+
+Should this also have data-lanes to be "complete"?
+
+> +};
+> +
+> +edp_brij_i2c: &i2c2 {
+> +       status = "okay";
+> +       clock-frequency = <400000>;
+> +
+> +       ps8640_bridge: edp-bridge@8 {
+
+Just bridge@8 to match ti bridge? Also, is the label used? If not
+please drop it.
+
+> +               compatible = "parade,ps8640";
+> +               reg = <0x8>;
+> +
+> +               powerdown-gpios = <&tlmm 104 GPIO_ACTIVE_LOW>;
+> +               reset-gpios = <&tlmm 11 GPIO_ACTIVE_LOW>;
+> +
+> +               pinctrl-names = "default";
+> +               pinctrl-0 = <&edp_brij_en>, <&edp_brij_ps8640_rst>;
+> +
+> +               vdd12-supply = <&pp1200_brij>;
+> +               vdd33-supply = <&pp3300_brij_ps8640>;
+> +
+> +               ports {
+> +                       #address-cells = <1>;
+> +                       #size-cells = <0>;
+> +
+> +                       port@0 {
+> +                               reg = <0>;
+> +                               ps8640_in: endpoint {
+> +                                       remote-endpoint = <&dsi0_out>;
+> +                               };
+> +                       };
+> +
+> +                       port@1 {
+> +                               reg = <1>;
+> +                               ps8640_out: endpoint {
+> +                                       remote-endpoint = <&panel_in_edp>;
+> +                               };
+> +                       };
+> +               };
+> +
+> +               aux_bus: aux-bus {
+
+Is this label used either?
+
+> +                       panel: panel {
+> +                               /* Compatible will be filled in per-board */
+> +                               power-supply = <&pp3300_dx_edp>;
+> +                               backlight = <&backlight>;
+> +
+> +                               port {
+> +                                       panel_in_edp: endpoint {
+> +                                               remote-endpoint = <&ps8640_out>;
+> +                                       };
+> +                               };
+> +                       };
+> +               };
+> +       };
+> +};
+> +
