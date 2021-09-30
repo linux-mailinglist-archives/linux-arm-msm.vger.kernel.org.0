@@ -2,217 +2,138 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1611E41D944
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Sep 2021 13:58:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 507AB41D9B8
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Sep 2021 14:23:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350663AbhI3L64 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Sep 2021 07:58:56 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:59892 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350656AbhI3L6v (ORCPT
+        id S1349928AbhI3MYn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Sep 2021 08:24:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33670 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S1349808AbhI3MYm (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Sep 2021 07:58:51 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1633003029; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=MgsTdvHC32CVeXQvpvDOvg9iOpH6jzoyvVH+Vm7ZG44=;
- b=gyqmYa8nuFuRTaVZHRx3AcJrgMk/CmgjLfj+TAhU0YKvGeceBcwtlQ3PSOjdkzlA5HvHjHCO
- 6ccNl9RAiBUQoTbuQzriRdvBFjGsn5C0xxfSYa5TQrg0x+JXuL7fqrqEy6ODZjbJvmhWhd9/
- LCb2/GJL9CR4lkOIEbWczS/a0fA=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 6155a60ca5a9bab6e879f250 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 30 Sep 2021 11:57:00
- GMT
-Sender: mkrishn=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 06212C4360D; Thu, 30 Sep 2021 11:57:00 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkrishn)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 44068C4338F;
-        Thu, 30 Sep 2021 11:56:59 +0000 (UTC)
+        Thu, 30 Sep 2021 08:24:42 -0400
+Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD9B3C06176A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Sep 2021 05:22:59 -0700 (PDT)
+Received: by mail-lf1-x135.google.com with SMTP id u18so24491244lfd.12
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Sep 2021 05:22:59 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UjJvdphNoww1UQC7tKg+Ad3Su/zXKxP5zUPapu5vK68=;
+        b=eILJWnBJzwlcMWIDqw5C/dW+1sebRPzKo5zpompiXrwowfEecgJA8hVmrBUomsaz+T
+         thCgZmKGpV86dcTaRxC02nQo9YclQ6g1g9M2MOS7BcykyouGykQ7t1LTU7NjYmTmu8or
+         CpWx8vGn+c1Kz8eC+XPOtOGG+C7PakRf72U+umkjGja85Vk+LzlwRCchanNuS2d+GML3
+         LamKNUTpJmhigVOkeVz6W7QPppyWiAZkG3WhUfI61dumKE3c3kcw25yLIxM5MCQdlb9y
+         vFx9dOW4Tw7rz+k/WMjgPc+taNYzorfdAg2NeY252rzEjGQhvGWSTUu72hjIPDPmMPCm
+         7OIA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=UjJvdphNoww1UQC7tKg+Ad3Su/zXKxP5zUPapu5vK68=;
+        b=22x9mp3UpR6/1z8JmhCOnVjJa4HTftZMDPfb1SeO0Fi5n4Z+YpDDa/JqMX9Yoqssm0
+         T6iG9DmE+XkwfORdy28qT//2O4fgHIGAaMkwLkGc9f27+qdzPKw/8DYekUZHErgTPcQ4
+         X3Q/aIDabKNvoNgmC3SVSZIDJbbqZAiQz1hXl1UFM9zoBRV2oal3AIzwV3a34VZiv550
+         siDdQz/ffUV0Zb513SqDJWlt1AY/M0uVk9YJjmqQ5cUSvq2fxkeEmq/ZMZiRHIknioZV
+         1BBn/+mwqNIi5eeAoJwoIWYsnrZoqFAiQJfWBdsRpO2kkOMIkzFYTXgwinJdSNB/mHS0
+         OACg==
+X-Gm-Message-State: AOAM530PGKkUYbGX8TFK88i2T5cOf0zHmiOpV2hywtbR8qoxgbijYJIT
+        FrvlUqYJ/RrsvO/VaSq4HP6GUtcW55y4tw==
+X-Google-Smtp-Source: ABdhPJx4TQyhAUiMeCUBekDoEbTX/3PW20niivSARnP/iSN5VxaxugLdn5/liPkrSsHhFmc6So774Q==
+X-Received: by 2002:a05:6512:169c:: with SMTP id bu28mr5566933lfb.41.1633004576863;
+        Thu, 30 Sep 2021 05:22:56 -0700 (PDT)
+Received: from localhost.localdomain (88-112-130-172.elisa-laajakaista.fi. [88.112.130.172])
+        by smtp.gmail.com with ESMTPSA id m29sm353866lfo.191.2021.09.30.05.22.56
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 30 Sep 2021 05:22:56 -0700 (PDT)
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+To:     Georgi Djakov <djakov@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org
+Subject: [PATCH] interconnect: qcom: Fix endianness in an intermediate storage
+Date:   Thu, 30 Sep 2021 15:22:54 +0300
+Message-Id: <20210930122254.8899-1-vladimir.zapolskiy@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Thu, 30 Sep 2021 17:26:59 +0530
-From:   mkrishn@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kalyan_t@codeaurora.org,
-        sbillaka@codeaurora.org, abhinavk@codeaurora.org,
-        robdclark@gmail.com, bjorn.andersson@linaro.org,
-        khsieh@codeaurora.org, rajeevny@codeaurora.org,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        robh+dt@kernel.org
-Subject: Re: [PATCH v1 2/4] arm64: dts: qcom: sc7280: add display dt nodes
-In-Reply-To: <CAE-0n50b=pX=1MFwGPDvDR=O03tUAkAgyMonGm2+SXBft=16KQ@mail.gmail.com>
-References: <1629282424-4070-1-git-send-email-mkrishn@codeaurora.org>
- <1629282424-4070-2-git-send-email-mkrishn@codeaurora.org>
- <CAE-0n50b=pX=1MFwGPDvDR=O03tUAkAgyMonGm2+SXBft=16KQ@mail.gmail.com>
-Message-ID: <5adf2ab2c2a162272509d253bd797721@codeaurora.org>
-X-Sender: mkrishn@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-08-19 01:27, Stephen Boyd wrote:
-> Quoting Krishna Manikandan (2021-08-18 03:27:02)
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi 
->> b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> index 53a21d0..fd7ff1c 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> @@ -5,6 +5,7 @@
->>   * Copyright (c) 2020-2021, The Linux Foundation. All rights 
->> reserved.
->>   */
->> 
->> +#include <dt-bindings/clock/qcom,dispcc-sc7280.h>
->>  #include <dt-bindings/clock/qcom,gcc-sc7280.h>
->>  #include <dt-bindings/clock/qcom,rpmh.h>
->>  #include <dt-bindings/interconnect/qcom,sc7280.h>
->> @@ -1424,6 +1425,90 @@
->>                         #power-domain-cells = <1>;
->>                 };
->> 
->> +               mdss: mdss@ae00000 {
-> 
-> subsystem@ae00000
-> 
->> +                       compatible = "qcom,sc7280-mdss";
->> +                       reg = <0 0x0ae00000 0 0x1000>;
->> +                       reg-names = "mdss";
->> +
->> +                       power-domains = <&dispcc 
->> DISP_CC_MDSS_CORE_GDSC>;
->> +
->> +                       clocks = <&gcc GCC_DISP_AHB_CLK>,
->> +                                <&dispcc DISP_CC_MDSS_AHB_CLK>,
->> +                               <&dispcc DISP_CC_MDSS_MDP_CLK>;
->> +                       clock-names = "iface", "ahb", "core";
->> +
->> +                       assigned-clocks = <&dispcc 
->> DISP_CC_MDSS_MDP_CLK>;
->> +                       assigned-clock-rates = <300000000>;
->> +
->> +                       interrupts = <GIC_SPI 83 IRQ_TYPE_LEVEL_HIGH>;
->> +                       interrupt-controller;
->> +                       #interrupt-cells = <1>;
->> +
->> +                       interconnects = <&mmss_noc MASTER_MDP0 0 
->> &mc_virt SLAVE_EBI1 0>;
->> +                       interconnect-names = "mdp0-mem";
->> +
->> +                       iommus = <&apps_smmu 0x900 0x402>;
->> +
->> +                       #address-cells = <2>;
->> +                       #size-cells = <2>;
->> +                       ranges;
->> +
->> +                       status = "disabled";
->> +
->> +                       mdp: mdp@ae01000 {
-> 
-> display-controller@ae01000
+A minor issue is reported by sparse:
 
-Stephen,
-    In the current driver code, there is a substring comparison for "mdp" 
-in device node name as part of probe sequence. If "mdp" is not present 
-in the node name, it will
-    return an error resulting in probe failure. Can we continue using mdp 
-as nodename instead of display controller?
+bcm-voter.c:72:77: warning: restricted __le16 degrades to integer
+bcm-voter.c:76:78: warning: restricted __le16 degrades to integer
+bcm-voter.c:82:66: warning: incorrect type in argument 2 (different base types)
+bcm-voter.c:82:66:    expected unsigned int [usertype] base
+bcm-voter.c:82:66:    got restricted __le32 [usertype] unit
+bcm-voter.c:85:66: warning: incorrect type in argument 2 (different base types)
+bcm-voter.c:85:66:    expected unsigned int [usertype] base
+bcm-voter.c:85:66:    got restricted __le32 [usertype] unit
 
-Thanks,
-Krishna
+icc-rpmh.c:165:28: warning: incorrect type in assignment (different base types)
+icc-rpmh.c:165:28:    expected restricted __le32 [usertype] unit
+icc-rpmh.c:165:28:    got unsigned int [usertype]
+icc-rpmh.c:166:29: warning: incorrect type in assignment (different base types)
+icc-rpmh.c:166:29:    expected restricted __le16 [usertype] width
+icc-rpmh.c:166:29:    got unsigned short [usertype]
 
+The change is intended to be non-functional, only the stored data of
+'struct bcm_db' is changed and build time warnings from above are gone.
 
-> 
->> +                               compatible = "qcom,sc7280-dpu";
->> +                               reg = <0 0x0ae01000 0 0x8f030>,
->> +                                       <0 0x0aeb0000 0 0x2008>;
->> +                               reg-names = "mdp", "vbif";
->> +
->> +                               clocks = <&gcc GCC_DISP_HF_AXI_CLK>,
->> +                                       <&gcc GCC_DISP_SF_AXI_CLK>,
->> +                                       <&dispcc 
->> DISP_CC_MDSS_AHB_CLK>,
->> +                                       <&dispcc 
->> DISP_CC_MDSS_MDP_LUT_CLK>,
->> +                                       <&dispcc 
->> DISP_CC_MDSS_MDP_CLK>,
->> +                                       <&dispcc 
->> DISP_CC_MDSS_VSYNC_CLK>;
->> +                               clock-names = "bus", "nrt_bus", 
->> "iface", "lut", "core",
->> +                                             "vsync";
-> 
-> One line per string please.
-> 
->> +                               assigned-clocks = <&dispcc 
->> DISP_CC_MDSS_MDP_CLK>,
->> +                                               <&dispcc 
->> DISP_CC_MDSS_VSYNC_CLK>,
->> +                                               <&dispcc 
->> DISP_CC_MDSS_AHB_CLK>;
->> +                               assigned-clock-rates = <300000000>,
->> +                                                       <19200000>,
->> +                                                       <19200000>;
->> +                               operating-points-v2 = 
->> <&mdp_opp_table>;
->> +                               power-domains = <&rpmhpd SC7280_CX>;
->> +
->> +                               interrupt-parent = <&mdss>;
->> +                               interrupts = <0>;
->> +
->> +                               status = "disabled";
->> +
->> +                               mdp_opp_table: mdp-opp-table {
-> 
-> mdp_opp_table: opp-table {
-> 
->> +                                       compatible = 
->> "operating-points-v2";
->> +
->> +                                       opp-200000000 {
->> +                                               opp-hz = /bits/ 64 
->> <200000000>;
->> +                                               required-opps = 
->> <&rpmhpd_opp_low_svs>;
->> +                                       };
->> +
->> +                                       opp-300000000 {
->> +                                               opp-hz = /bits/ 64 
->> <300000000>;
->> +                                               required-opps = 
->> <&rpmhpd_opp_svs>;
->> +                                       };
->> +
->> +                                       opp-380000000 {
->> +                                               opp-hz = /bits/ 64 
->> <380000000>;
->> +                                               required-opps = 
->> <&rpmhpd_opp_svs_l1>;
->> +                                       };
->> +
->> +                                       opp-506666667 {
->> +                                               opp-hz = /bits/ 64 
->> <506666667>;
->> +                                               required-opps = 
->> <&rpmhpd_opp_nom>;
->> +                                       };
->> +                               };
->> +                       };
->> +               };
->> +
+Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+---
+ drivers/interconnect/qcom/bcm-voter.c | 8 ++++----
+ drivers/interconnect/qcom/icc-rpmh.c  | 4 ++--
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/drivers/interconnect/qcom/bcm-voter.c b/drivers/interconnect/qcom/bcm-voter.c
+index 8f385f9c2dd3..976938a84bd1 100644
+--- a/drivers/interconnect/qcom/bcm-voter.c
++++ b/drivers/interconnect/qcom/bcm-voter.c
+@@ -69,20 +69,20 @@ static void bcm_aggregate(struct qcom_icc_bcm *bcm)
+ 	for (bucket = 0; bucket < QCOM_ICC_NUM_BUCKETS; bucket++) {
+ 		for (i = 0; i < bcm->num_nodes; i++) {
+ 			node = bcm->nodes[i];
+-			temp = bcm_div(node->sum_avg[bucket] * bcm->aux_data.width,
++			temp = bcm_div(node->sum_avg[bucket] * le16_to_cpu(bcm->aux_data.width),
+ 				       node->buswidth * node->channels);
+ 			agg_avg[bucket] = max(agg_avg[bucket], temp);
+ 
+-			temp = bcm_div(node->max_peak[bucket] * bcm->aux_data.width,
++			temp = bcm_div(node->max_peak[bucket] * le16_to_cpu(bcm->aux_data.width),
+ 				       node->buswidth);
+ 			agg_peak[bucket] = max(agg_peak[bucket], temp);
+ 		}
+ 
+ 		temp = agg_avg[bucket] * bcm->vote_scale;
+-		bcm->vote_x[bucket] = bcm_div(temp, bcm->aux_data.unit);
++		bcm->vote_x[bucket] = bcm_div(temp, le32_to_cpu(bcm->aux_data.unit));
+ 
+ 		temp = agg_peak[bucket] * bcm->vote_scale;
+-		bcm->vote_y[bucket] = bcm_div(temp, bcm->aux_data.unit);
++		bcm->vote_y[bucket] = bcm_div(temp, le32_to_cpu(bcm->aux_data.unit));
+ 	}
+ 
+ 	if (bcm->keepalive && bcm->vote_x[QCOM_ICC_BUCKET_AMC] == 0 &&
+diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
+index 3eb7936d2cf6..e8533027ce38 100644
+--- a/drivers/interconnect/qcom/icc-rpmh.c
++++ b/drivers/interconnect/qcom/icc-rpmh.c
+@@ -162,8 +162,8 @@ int qcom_icc_bcm_init(struct qcom_icc_bcm *bcm, struct device *dev)
+ 		return -EINVAL;
+ 	}
+ 
+-	bcm->aux_data.unit = le32_to_cpu(data->unit);
+-	bcm->aux_data.width = le16_to_cpu(data->width);
++	bcm->aux_data.unit = data->unit;
++	bcm->aux_data.width = data->width;
+ 	bcm->aux_data.vcd = data->vcd;
+ 	bcm->aux_data.reserved = data->reserved;
+ 	INIT_LIST_HEAD(&bcm->list);
+-- 
+2.33.0
+
