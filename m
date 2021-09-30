@@ -2,116 +2,180 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EA6B541E0F3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Sep 2021 20:19:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F6AC41E0FD
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Sep 2021 20:20:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350697AbhI3SVN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Sep 2021 14:21:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33966 "EHLO
+        id S1349286AbhI3SWS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Sep 2021 14:22:18 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34312 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350743AbhI3SVK (ORCPT
+        with ESMTP id S1350389AbhI3SWS (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Sep 2021 14:21:10 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CE60FC06176C
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Sep 2021 11:19:27 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id e66-20020a9d2ac8000000b0054da8bdf2aeso6241483otb.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Sep 2021 11:19:27 -0700 (PDT)
+        Thu, 30 Sep 2021 14:22:18 -0400
+Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A2D99C06176A;
+        Thu, 30 Sep 2021 11:20:34 -0700 (PDT)
+Received: by mail-pf1-x42b.google.com with SMTP id k17so5741964pff.8;
+        Thu, 30 Sep 2021 11:20:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=ssfSmhsMHjEW6hYVe4PjTHBi61zsb9noqUigbf2gVRo=;
-        b=gCZKuBk5M3O2d6AQ6j53Dgx+OE2D665B/f7BF3j+ZV++mhUC2OqzthPTuK+SO78db/
-         KtTB8wc45m6vgtkxkxgpJcRqlY+svn2wtwfqEgdA1ykfjqCcFPs/3MqaMXPOFuOsetxG
-         cU7T/H8iXPjMWjJE4I+308Nw/WtO0Pex1uN7NlKCT/0Ip6CWTy8eIyj4CQgLgBTk9mb3
-         ASm+luD4b6PrECb7zs4GsbHNvpcfn4ECNZwwcOkHYjZVEsi0tQoBzJWRav+R+AXLgPRz
-         SI6WUgvPh1T+K+nMAp+KoZkDRol3QIT65/17KNEY2bZmfw7gM87fW7AzIq+1DLOyVXi5
-         cKEQ==
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gjZZ/ucXOWL7CIsLTW5U/ybZd+F2uJjp6RNFoIb1zYc=;
+        b=IM4363ZIbg2YekiDwC2QFrRe/u/VVnOy6LGDPj2DxxC80vB/bOfCcCbiFuMFIWZ1VD
+         egrxrxplwBr3BfS2iZtDxAXuQI+ZVZMTXW9vaKbwndqAUU6h59HYajlupBrbOFqhZyv1
+         XN/caWJJGDoFsb/w/6/FvfWwMUXpFD7LwuNaMz9x5mZbnvQTjx8Uoy3BBTDmV/9AHsIq
+         kppWrjC0Kx1w7witsYITJB69FqKzc6P19HJYyJkeTrX5Mx4Q0p6N6M212gjo0FqDyJgb
+         giE9hSAnnqreGeV5AA+P1XmKRdceNwGXRpezVtyavpscF1IzHumjkfH9YJGkkjhTDwSk
+         JI2Q==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=ssfSmhsMHjEW6hYVe4PjTHBi61zsb9noqUigbf2gVRo=;
-        b=azXIlUm87mzjLMHZRhnq+pg48ePzO7JZH7+7daIKUnHENkeQs23rlkSa9QE6CD7jg4
-         itTx6477cf4KQbhncJ8n3xTAJhiY0a/YRFP8Ce+B/rsNYPq+dXEZasYFP2riWCYFX0gE
-         xmETBesr+kki/Z73te+cLjzXepI8Pv9kmlvTcJVGvaGnFQMc+2A+PJ8qofDvBorZ5VPB
-         ID6mZ7ipI6miWwsA1OWzI++4nvw49TFaWTe3p62yamvS9x6kpM7eIY/pZBBly8yVR0VS
-         wDgaU1gjR4+UZ6l5CO+m8EY9bIUtM2ENxynPRdGoN6awMCl2X5ZvCVflsPZzBW+Rtz/s
-         CFoA==
-X-Gm-Message-State: AOAM5339zBpstQCUBfoHacbzKmWcgCFqyJis8OSOR9WEH3C3rZyhIg9x
-        RO7zsCEXU29RMV/ZRnaf1I0I9A==
-X-Google-Smtp-Source: ABdhPJysxT/S2qCAUgtNFfo215PxQiLxPc6UaM4C3xoF2S30WXVkVEm2Dx2mDB4zZ6ichO79ZGVVww==
-X-Received: by 2002:a9d:7053:: with SMTP id x19mr6729949otj.229.1633025967205;
-        Thu, 30 Sep 2021 11:19:27 -0700 (PDT)
-Received: from localhost.localdomain (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id k6sm727416otf.80.2021.09.30.11.19.26
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=gjZZ/ucXOWL7CIsLTW5U/ybZd+F2uJjp6RNFoIb1zYc=;
+        b=Fi+1BPs0ooaLPl3NeWSyL5sPxfThLbobYCVQ6wxV9/1W94vGfjFIoEsIVeegw7PLCh
+         KSW7u6nAqGcAvtQX2HMOErpWQvBYUbxJhpyQ8vH4fal6EWkELMA088C+yAdDW3YS+z4t
+         w/+6hJJ1ToB7Q++MxeInLX4QyBGAbziMkZoN0ydgF+DYL0lkCzXRJEWfz7wcVSZ3WIvw
+         pYqwkzErywK507GOkCLvwUOsIMSQjsrnQpjaazi66xdMg2w1JU2nOHiGIf9caeWZ+SFS
+         KXXAqgn5HiU3uxDdUcMn/AFAwUAEIusw50SV7pqQZnknIxURYWrPHhMOyHWCMAQoJtd7
+         cOiA==
+X-Gm-Message-State: AOAM530yvoVSuuuT/g9RX0XyakAVVCFDeN65AhgZ6vOIJ74QSx8gHgRV
+        e61GwN47FHJFpfI8mqyT/Cg=
+X-Google-Smtp-Source: ABdhPJyUCr7ygKUx86DaLgetw9p4qlMD/xpSRDWXB7zvz7jE7HLv8Cc6vDLV6GdHS5ZUTKVwxpoHVg==
+X-Received: by 2002:a63:191a:: with SMTP id z26mr6084310pgl.373.1633026034126;
+        Thu, 30 Sep 2021 11:20:34 -0700 (PDT)
+Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
+        by smtp.gmail.com with ESMTPSA id q18sm3629863pfh.170.2021.09.30.11.20.32
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Sep 2021 11:19:26 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, Chris Lew <clew@codeaurora.org>,
-        Deepak Kumar Singh <deesin@codeaurora.org>
-Subject: [PATCH v2 4/4] arm64: dts: qcom: sdm845: Drop standalone smem node
-Date:   Thu, 30 Sep 2021 11:21:11 -0700
-Message-Id: <20210930182111.57353-5-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.29.2
-In-Reply-To: <20210930182111.57353-1-bjorn.andersson@linaro.org>
-References: <20210930182111.57353-1-bjorn.andersson@linaro.org>
+        Thu, 30 Sep 2021 11:20:32 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Yangtao Li <tiny.windzz@gmail.com>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm/a6xx: Track current ctx by seqno
+Date:   Thu, 30 Sep 2021 11:25:02 -0700
+Message-Id: <20210930182506.1236811-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Now that the SMEM binding and driver allows the SMEM node to be
-described in the reserved-memory region directly, move the compatible
-and hwlock properties to the reserved-memory node and drop the
-standadlone node.
+From: Rob Clark <robdclark@chromium.org>
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+In theory a context can be destroyed and a new one allocated at the same
+address, making the pointer comparision to detect when we don't need to
+update the current pagetables invalid.  Instead assign a sequence number
+to each context on creation, and use this for the check.
+
+Fixes: 84c31ee16f90 ("drm/msm/a6xx: Add support for per-instance pagetables")
+Signed-off-by: Rob Clark <robdclark@chromium.org>
 ---
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c |  6 +++---
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.h | 11 ++++++++++-
+ drivers/gpu/drm/msm/msm_drv.c         |  3 +++
+ drivers/gpu/drm/msm/msm_drv.h         |  1 +
+ 4 files changed, 17 insertions(+), 4 deletions(-)
 
-Changes since v1:
-- Node name is changed to "smem", as "memory" is reserved for memory nodes.
-
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 10 +++-------
- 1 file changed, 3 insertions(+), 7 deletions(-)
-
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index beee57087d05..64119d2efdcf 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -99,9 +99,11 @@ aop_cmd_db_mem: memory@85fe0000 {
- 			no-map;
- 		};
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 5e1ae3df42ba..e0a8b2fd1ff0 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -106,7 +106,7 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
+ 	u32 asid;
+ 	u64 memptr = rbmemptr(ring, ttbr0);
  
--		smem_mem: memory@86000000 {
-+		smem@86000000 {
-+			compatible = "qcom,smem";
- 			reg = <0x0 0x86000000 0 0x200000>;
- 			no-map;
-+			hwlocks = <&tcsr_mutex 3>;
- 		};
+-	if (ctx == a6xx_gpu->cur_ctx)
++	if (ctx->seqno == a6xx_gpu->cur_ctx_seqno)
+ 		return;
  
- 		tz_mem: memory@86200000 {
-@@ -941,12 +943,6 @@ tcsr_mutex: hwlock {
- 		#hwlock-cells = <1>;
- 	};
+ 	if (msm_iommu_pagetable_params(ctx->aspace->mmu, &ttbr, &asid))
+@@ -139,7 +139,7 @@ static void a6xx_set_pagetable(struct a6xx_gpu *a6xx_gpu,
+ 	OUT_PKT7(ring, CP_EVENT_WRITE, 1);
+ 	OUT_RING(ring, 0x31);
  
--	smem {
--		compatible = "qcom,smem";
--		memory-region = <&smem_mem>;
--		hwlocks = <&tcsr_mutex 3>;
--	};
--
- 	smp2p-cdsp {
- 		compatible = "qcom,smp2p";
- 		qcom,smem = <94>, <432>;
+-	a6xx_gpu->cur_ctx = ctx;
++	a6xx_gpu->cur_ctx_seqno = ctx->seqno;
+ }
+ 
+ static void a6xx_submit(struct msm_gpu *gpu, struct msm_gem_submit *submit)
+@@ -1081,7 +1081,7 @@ static int hw_init(struct msm_gpu *gpu)
+ 	/* Always come up on rb 0 */
+ 	a6xx_gpu->cur_ring = gpu->rb[0];
+ 
+-	a6xx_gpu->cur_ctx = NULL;
++	a6xx_gpu->cur_ctx_seqno = 0;
+ 
+ 	/* Enable the SQE_to start the CP engine */
+ 	gpu_write(gpu, REG_A6XX_CP_SQE_CNTL, 1);
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+index 0bc2d062f54a..8e5527c881b1 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.h
+@@ -19,7 +19,16 @@ struct a6xx_gpu {
+ 	uint64_t sqe_iova;
+ 
+ 	struct msm_ringbuffer *cur_ring;
+-	struct msm_file_private *cur_ctx;
++
++	/**
++	 * cur_ctx_seqno:
++	 *
++	 * The ctx->seqno value of the context with current pgtables
++	 * installed.  Tracked by seqno rather than pointer value to
++	 * avoid dangling pointers, and cases where a ctx can be freed
++	 * and a new one created with the same address.
++	 */
++	int cur_ctx_seqno;
+ 
+ 	struct a6xx_gmu gmu;
+ 
+diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+index 624078b3adf2..30c1efc3d8a0 100644
+--- a/drivers/gpu/drm/msm/msm_drv.c
++++ b/drivers/gpu/drm/msm/msm_drv.c
+@@ -711,6 +711,7 @@ static void load_gpu(struct drm_device *dev)
+ 
+ static int context_init(struct drm_device *dev, struct drm_file *file)
+ {
++	static atomic_t ident = ATOMIC_INIT(0);
+ 	struct msm_drm_private *priv = dev->dev_private;
+ 	struct msm_file_private *ctx;
+ 
+@@ -727,6 +728,8 @@ static int context_init(struct drm_device *dev, struct drm_file *file)
+ 	ctx->aspace = msm_gpu_create_private_address_space(priv->gpu, current);
+ 	file->driver_priv = ctx;
+ 
++	ctx->seqno = atomic_inc_return(&ident);
++
+ 	return 0;
+ }
+ 
+diff --git a/drivers/gpu/drm/msm/msm_drv.h b/drivers/gpu/drm/msm/msm_drv.h
+index de062450add4..8633d0059a3e 100644
+--- a/drivers/gpu/drm/msm/msm_drv.h
++++ b/drivers/gpu/drm/msm/msm_drv.h
+@@ -59,6 +59,7 @@ struct msm_file_private {
+ 	int queueid;
+ 	struct msm_gem_address_space *aspace;
+ 	struct kref ref;
++	int seqno;
+ };
+ 
+ enum msm_mdp_plane_property {
 -- 
-2.29.2
+2.31.1
 
