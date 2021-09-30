@@ -2,181 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 51B1341DCBB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Sep 2021 16:53:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 44D8841DD8F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Sep 2021 17:32:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351948AbhI3Oz0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Sep 2021 10:55:26 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41794 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351620AbhI3Oz0 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Sep 2021 10:55:26 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74C65C06176C
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Sep 2021 07:53:43 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id u22so7602448oie.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Sep 2021 07:53:43 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=VIxcNt9zqnRNapqvBD226bMsuD2C6DbQkjAikT4Sfbs=;
-        b=EZLK+026N367xK6Of3/3GFxZQGgcXh52/fAR/gMfyylEAMSLOjaGozS4BXHjQ0K/0K
-         LUGvtSWNBkGbj3vK3NaM3SSlSlmXhEBUukIBUMcuNDEBcaKo29JVDhFwVhFH5z1k0Gvo
-         Ejswi89qmuPtm2VivBxcTHW0bvbYqPLLm6Tc3PzXOGXXcHhChpAuSOGvtGhsYNz0v3KQ
-         BCmp3DFDvaFHNeB2EP8FOGXDwgmbJCMGTjiU4uOYAgFnK7ihgh13gwKXhmDN4C7/EHGa
-         0rhUVaPzBMur7fhj0lIC2F9eei/bW7mAO/kPsVadZyD1N39peE9xlYhe4pUyXEryKfZq
-         A7Yw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=VIxcNt9zqnRNapqvBD226bMsuD2C6DbQkjAikT4Sfbs=;
-        b=rEtkyrFn32XZbSFyH5g9LY7UKjiJjQccDWX5RdXGmcoQlzb9sbpcwxEoE/SMpjUqgG
-         u/4taJvysFnjyNnwHjXdAII8d/dNazPcX4uIa2r3jhjqm1+inbk2aA2NweJ+UktK1VGQ
-         0W+nNxyF7jzMRrB/1xp70fXyX8CFwErICBmwDsM+WtvAN1PM62DVTSBrGitItablFH4v
-         RigqiFXcWOVN+1WgKkZ07BiT8I/xTfP3/d/0OstZdx4dZP1G0BO9MmkGFqNXWkMq/8i8
-         Ec7Jex+5P3ThRIODptD4+Un02rGSF3FSYAV1adB4nMVPKUFLnF3C8Ug+wLi2Z2nAckzp
-         sWug==
-X-Gm-Message-State: AOAM5302soSMgpUwsnlNmbdP/N574ZVr5x0A2bUoayzezUUUZc5anjQ2
-        qgKKpdFVEKyu/4XKhMGQDkwUJQ==
-X-Google-Smtp-Source: ABdhPJxoDnNjjvVhWww8Ms5gJnrwtghVKekf8KDWX4JcOvmCGqZvKZBxs7JTCgp9mPP+WeYCpgBpGA==
-X-Received: by 2002:aca:744:: with SMTP id 65mr3319322oih.174.1633013622716;
-        Thu, 30 Sep 2021 07:53:42 -0700 (PDT)
-Received: from ripper (104-57-184-186.lightspeed.austtx.sbcglobal.net. [104.57.184.186])
-        by smtp.gmail.com with ESMTPSA id m26sm606177otf.12.2021.09.30.07.53.41
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Sep 2021 07:53:42 -0700 (PDT)
-Date:   Thu, 30 Sep 2021 07:55:31 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     agross@kernel.org, linus.walleij@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-gpio@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Prasad Sodagudi <psodagud@codeaurora.org>
-Subject: Re: [PATCH] pinctrl: qcom: Add egpio feature support
-Message-ID: <YVXP46FvzmZ1xDvY@ripper>
-References: <1631860648-31774-1-git-send-email-rnayak@codeaurora.org>
- <YUfZbsf3MX1aQJ2+@builder.lan>
- <d2f28d34-99b3-30f8-8504-bc819946876f@codeaurora.org>
- <YUoHr0F9qjr2Toeb@ripper>
- <2d2891e2-0cdf-1938-f9a1-77135066f5de@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <2d2891e2-0cdf-1938-f9a1-77135066f5de@codeaurora.org>
+        id S1344421AbhI3Pea (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Sep 2021 11:34:30 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:60279 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S1344321AbhI3PeW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 30 Sep 2021 11:34:22 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1633015960; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=UoX3t5l01qY1IVf8XES/yJPaHZjP4Dey0oxqRTxiqCk=; b=AJeQFlRie5oWU3YX40Cz8NRqBzawOF0bSTMtOkRdvB8nofjI31V+x9Rd9RCDDdQ6z0ZBpN3E
+ zB7Uui4tARWW0/dX0PyPTm23AQWlDm/SfrlgwvjB8CqKqIVVm41s/sQpTgpajSaCnwySrTxi
+ PmXcuWqJz/o/fIXiETkbefvZwAE=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
+ 6155d88747d64efb6d65a077 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 30 Sep 2021 15:32:23
+ GMT
+Sender: deesin=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 7BFB6C43618; Thu, 30 Sep 2021 15:32:23 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from deesin-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: deesin)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B02F1C4360C;
+        Thu, 30 Sep 2021 15:32:19 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org B02F1C4360C
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Deepak Kumar Singh <deesin@codeaurora.org>
+To:     bjorn.andersson@linaro.org, swboyd@chromium.org,
+        clew@codeaurora.org, mathieu.poirier@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-remoteproc@vger.kernel.org,
+        Deepak Kumar Singh <deesin@codeaurora.org>
+Subject: [PATCH V1 0/3] rpmsg and glink signaling api support
+Date:   Thu, 30 Sep 2021 21:02:00 +0530
+Message-Id: <1633015924-881-1-git-send-email-deesin@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 30 Sep 02:46 PDT 2021, Rajendra Nayak wrote:
+This patch series provides support for serial like signals (DTR, RTS etc)
+over glink. Clients on local host can use this interface for sending and 
+receiving these signals to and from modem for flow control purpose.
 
-> 
-> 
-> On 9/21/2021 9:56 PM, Bjorn Andersson wrote:
-> > On Tue 21 Sep 03:39 PDT 2021, Rajendra Nayak wrote:
-> > 
-> > > 
-> > > 
-> > > On 9/20/2021 6:14 AM, Bjorn Andersson wrote:
-> > > > On Fri 17 Sep 01:37 CDT 2021, Rajendra Nayak wrote:
-> > > > 
-> > > > > From: Prasad Sodagudi <psodagud@codeaurora.org>
-> > > > > 
-> > > > > egpio is a scheme which allows special power Island Domain IOs
-> > > > > (LPASS,SSC) to be reused as regular chip GPIOs by muxing regular
-> > > > > TLMM functions with Island Domain functions.
-> > > > > With this scheme, an IO can be controlled both by the cpu running
-> > > > > linux and the Island processor. This provides great flexibility to
-> > > > > re-purpose the Island IOs for regular TLMM usecases.
-> > > > > 
-> > > > > 2 new bits are added to ctl_reg, egpio_present is a read only bit
-> > > > > which shows if egpio feature is available or not on a given gpio.
-> > > > > egpio_enable is the read/write bit and only effective if egpio_present
-> > > > > is 1. Once its set, the Island IO is controlled from Chip TLMM.
-> > > > > egpio_enable when set to 0 means the GPIO is used as Island Domain IO.
-> > > > > 
-> > > > > The support exists on most recent qcom SoCs, and we add support
-> > > > > for sm8150/sm8250/sm8350 and sc7280 as part of this patch.
-> > > > > 
-> > > > 
-> > > > I was under the impression that this feature would allow you to
-> > > > repurpose pins for use either by the remote island or by apps.
-> > > 
-> > > thats right, you can repurpose the pins for usage by apps by setting
-> > > the egpio_enable to 1, when set to 0 its owned by the island processor.
-> > 
-> > Good.
-> > 
-> > > > 
-> > > > But if I understand your proposal, you check to see if the pin is
-> > > > "egpio capable" for a pin and if so just sets the bit - muxing it to
-> > > > apps (or the island?).
-> > > 
-> > > Right, so if there is a request for a egpio-capable pin, the driver
-> > > flips the ownership. Are you suggesting having some kind of checks to determine
-> > > who should own it?
-> > > 
-> > 
-> > I see, I missed that nuance. So Linux will steal any pins that are
-> > mentioned in DT. But that would mean that you're relying on someone else
-> > to ensure that this bit is cleared for the other pins and you would not
-> > be able to explicitly flip the state back to island mode in runtime.
-> > 
-> > I would prefer that this was more explicit.
-> > 
-> > > > It seems reasonable that this would be another pinmux state for these
-> > > > pins, rather than just flipping them all in one or the other direction.
-> > > 
-> > > hmm, I don't understand. This is not a pinmux state, its a switch to decide
-> > > the ownership.
-> > 
-> > But does it mux the pin to the island, or does it state that the island
-> > is now in charge of the associated TLMM registers?
-> 
-> The island processor does not access the APPS TLMM register space, it has its
-> own TLMM register space that it configures. APPS TLMM registers control its
-> mux/conf settings and Island TLMM registers controls its mux/conf. So essentially
-> there are 2 sets of registers to control the same pin.
-> This bit is more like a top level mux which decides what register settings
-> take affect.
-> 
+Deepak Kumar Singh (3):
+  rpmsg: core: Add signal API support
+  rpmsg: glink: Add support to handle signals command
+  rpmsg: char: Add TIOCMGET/TIOCMSET ioctl support
 
-"One mux to rule them all" :)
+ drivers/rpmsg/qcom_glink_native.c | 75 +++++++++++++++++++++++++++++++++++++++
+ drivers/rpmsg/rpmsg_char.c        | 43 ++++++++++++++++++++++
+ drivers/rpmsg/rpmsg_core.c        | 21 +++++++++++
+ drivers/rpmsg/rpmsg_internal.h    |  2 ++
+ include/linux/rpmsg.h             | 15 ++++++++
+ 5 files changed, 156 insertions(+)
 
-When we switch this mux towards the Island TLMM, do we need to configure
-the APPS TLMM in a particular way, or does the state of that not matter?
+-- 
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
-Would it be reasonable to say that when muxed towards the island the
-apps should always be in gpio mux with some predetermined properties, to
-save power?
-
-
-To reiterate, as proposed, mentioning a egpio-capable pin in the apps
-DTS will cause it to be muxed to the APSS TLMM. But I'm not convinced
-that we don't have scenarios where one might want to dynamically mux the
-pin between island and apss tlmm.
-
-My suggestion is that even that it's two independent muxes controlled in
-the apps tlmm, we'd express them in the same pinmux, i.e. we'd have
-something like:
-
-some-local-state {
-	pins = "gpio1";
-	function = "gpio";
-	output-high;
-};
-
-some-remote-state {
-	pins = "gpio1";
-	function = "island"; /* or just egpio... ? */
-};
-
-One case I imaging where this could be useful is to allow Linux to
-configure a known state of pins when the island isn't running, from the
-remoteproc driver and then flip it over to island mode before booting
-the remote.
-
-Regards,
-Bjorn
