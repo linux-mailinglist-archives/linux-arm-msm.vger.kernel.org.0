@@ -2,154 +2,526 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6CBD641D843
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Sep 2021 13:01:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9925341D889
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Sep 2021 13:20:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1350244AbhI3LCX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Sep 2021 07:02:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42722 "EHLO
+        id S1350364AbhI3LUo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Sep 2021 07:20:44 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46896 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1350203AbhI3LCX (ORCPT
+        with ESMTP id S1350303AbhI3LUj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Sep 2021 07:02:23 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7073C06176A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Sep 2021 04:00:40 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id g41so23533698lfv.1
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Sep 2021 04:00:40 -0700 (PDT)
+        Thu, 30 Sep 2021 07:20:39 -0400
+Received: from mail-qv1-xf2f.google.com (mail-qv1-xf2f.google.com [IPv6:2607:f8b0:4864:20::f2f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 875AEC06176A
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Sep 2021 04:18:56 -0700 (PDT)
+Received: by mail-qv1-xf2f.google.com with SMTP id gs10so3305034qvb.13
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Sep 2021 04:18:56 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=3paTwRjuoWutw0fS6/rPNTw4z+kWTMvX0jj70+ZzL4k=;
-        b=cD2OX5QDfrdNPoZ9A4XO3D6eqhyMMxfaYKqbM6zDQXwU4mrq886RI2lJonX3G1Xbj1
-         B9cp0Ua9DwOfvKaNLPaCL0aP6sY9y7udhrEzOMtzhAuTgswAXyO8aff+ZXYQpyJO3idR
-         kE+Oxo/2Xe6VXt7Q0oa+SvePrU3C36PFG0kcH7zt1p+YBtbQBIgwTTPvxfKR+V/+D+iN
-         s+OnFLmSlxWyqNiPG4HxWXEClKyAtS4o9CakIyZi7U6lknTBeVqjA3N/ezifZ58Z18mJ
-         TDDKRkjXV5TEq+O5Sdawl79edJH/mXv47pG+IBoX24RwyXC4sz7ZJDYuTYfuufWUQANz
-         af1g==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=w3gLhNCF4ryp2DY3tzm+OjeL9I8VrLLU0Pj90xlnH10=;
+        b=EDSJuP73fFtNL8g9tRkyAftI9lCLWEDsNZswn0UnEdsZPT2/7A17Q+mcKFClWaZnmB
+         91S6r4Psx7W8sp89HNWv+lzKb066Z9R094IDwV8AJrJ+f9XVh0CClId3RGm+hyoSTw9u
+         IcsTnKwjWMQR4xKV+A7Kva+4sTtlOwbD1TJNlRZ4srSYDkCCch6evg0XBK+RDHrqyvXB
+         l9VNWTgm8f6l1T9QUEJ/AxvkKgBSMJjqHOce3tzAmT4+zbJf4t9JxvQj0PjnI46JI/fE
+         J+jNylNelHJw2FZmdl4r5SoSMq4LeLZOqrD8sWqvdlIhhblSbbCAraXmGzQvplxhX2iH
+         WtNw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=3paTwRjuoWutw0fS6/rPNTw4z+kWTMvX0jj70+ZzL4k=;
-        b=zWQrrT5lVIoIjGBvRyBJhI18flWXWJY/M2LSPMG2q504lzIMF6MX05fcT4Z5lS/Ac7
-         8U2HGebIhpzb327/vy3dxFZH0cuT/0wPO7qDUWlCe41nrum1xMBV/ENlm086G/WyzsGZ
-         BC83oLf6i4RKxKxb9sHoCBh7qmB683Bxa6SSwrOh9N0NYKMkETOECwUjC2eNaMsEakiz
-         QbuFCq/N5vnv2uH3UFsdfvC6aeu2RzFi6/S64+Djhws0zsxEHYtx4pv8nyiV4JKpsmgs
-         FIAqtEyEBgMarIz2666z1z0ojQgBJORXf4clSghztXj97sRB3C2xXd2vYn0bqY6B69O1
-         Q+bQ==
-X-Gm-Message-State: AOAM5318DZOQQDqm+Ope4RM3guR/yAJZODlenjVTh42bVbqDljQTUWYo
-        epnoXTCO9kYlzVFqqOD2mo97YTPp4Bnp25xV6Bm8GQ==
-X-Google-Smtp-Source: ABdhPJwlcPYRdliaFL/hRdve/aA6h3WG2/GLsSKGwlkKHIB0RGyN7KREuv1W0CW/YZik2WJlpZRa6gdfWMqznikfaMU=
-X-Received: by 2002:a19:5f4b:: with SMTP id a11mr5099579lfj.373.1632999639151;
- Thu, 30 Sep 2021 04:00:39 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210926132847.22268-1-shawn.guo@linaro.org>
-In-Reply-To: <20210926132847.22268-1-shawn.guo@linaro.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Thu, 30 Sep 2021 13:00:03 +0200
-Message-ID: <CAPDyKFoVJSkODW8bjHcTVywiNPMQndHhg2B9haQTP_3M3-B3hQ@mail.gmail.com>
-Subject: Re: [RFC PATCH] mmc: sdhci: Map more voltage level to SDHCI_POWER_330
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Adrian Hunter <adrian.hunter@intel.com>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=w3gLhNCF4ryp2DY3tzm+OjeL9I8VrLLU0Pj90xlnH10=;
+        b=jtVnB/xrEOZi34CkN7PQIYc0cQhTYtJDYJUI8rMk0VhUVVOD8QRpQ2sKQjbBday0Ku
+         aVgtkX1+ewDh+E813zFLP7wx0nzRWiK/Hi7mbFNetafaAOQ3fVMvoSDlHx1jqA11njT/
+         XONcEGmx+KrX0USnWQNiFir5XThTJO76sabL4vB5moAtwZyQ51uq25pMfeTUDbIZTk5A
+         1YfLKhbxnKjFa62krrWk/3DmYCL1kjkUbkLXHoOosSwkFG436izBcdFKZ8eaeW8AqOWY
+         nE1xWpWTTI7RhJFXEcl3P9XP5pPg7Ce0ZdDTQzbK4Orpuhg+u0ld1kd/aHFQDI7rNS1q
+         G/sA==
+X-Gm-Message-State: AOAM5322fXQd8ok8LfgoxUn5TXF9ytqXzgqY2aRVF+depWaP1bvpfa6o
+        bpngG9hFM73rz22TFF6qq8tuVA==
+X-Google-Smtp-Source: ABdhPJxw4nMzQaesU/yuM5O8g7CsxXbZdRPFA7M3cf6u3GQLBgM6VsjxYO3LAdR1VURopvZfodTOpw==
+X-Received: by 2002:a05:6214:2e2:: with SMTP id h2mr666827qvu.13.1633000735565;
+        Thu, 30 Sep 2021 04:18:55 -0700 (PDT)
+Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.gmail.com with ESMTPSA id h5sm1315826qke.1.2021.09.30.04.18.54
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 30 Sep 2021 04:18:55 -0700 (PDT)
+Subject: Re: [PATCH v2 2/2] thermal: qcom: tsens-v1: Add support for MSM8992/4
+ TSENS
+To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht
+Cc:     martin.botka@somainline.org,
+        angelogioacchino.delregno@somainline.org,
+        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
+        Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-mmc <linux-mmc@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Amit Kucheria <amitk@kernel.org>,
+        Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20210904211508.317560-1-konrad.dybcio@somainline.org>
+ <20210904211508.317560-2-konrad.dybcio@somainline.org>
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Message-ID: <089bc912-6f49-c4e6-5667-d4bcb83fed84@linaro.org>
+Date:   Thu, 30 Sep 2021 07:18:54 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
+MIME-Version: 1.0
+In-Reply-To: <20210904211508.317560-2-konrad.dybcio@somainline.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, 26 Sept 2021 at 15:28, Shawn Guo <shawn.guo@linaro.org> wrote:
->
-> On Thundercomm TurboX CM2290, the eMMC OCR reports vdd = 23 (3.5 ~ 3.6 V),
-> which is being treated as an invalid value by sdhci_set_power_noreg().
-> And thus eMMC is totally broken on the platform.
->
-> [    1.436599] ------------[ cut here ]------------
-> [    1.436606] mmc0: Invalid vdd 0x17
-> [    1.436640] WARNING: CPU: 2 PID: 69 at drivers/mmc/host/sdhci.c:2048 sdhci_set_power_noreg+0x168/0x2b4
-> [    1.436655] Modules linked in:
-> [    1.436662] CPU: 2 PID: 69 Comm: kworker/u8:1 Tainted: G        W         5.15.0-rc1+ #137
-> [    1.436669] Hardware name: Thundercomm TurboX CM2290 (DT)
-> [    1.436674] Workqueue: events_unbound async_run_entry_fn
-> [    1.436685] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> [    1.436692] pc : sdhci_set_power_noreg+0x168/0x2b4
-> [    1.436698] lr : sdhci_set_power_noreg+0x168/0x2b4
-> [    1.436703] sp : ffff800010803a60
-> [    1.436705] x29: ffff800010803a60 x28: ffff6a9102465f00 x27: ffff6a9101720a70
-> [    1.436715] x26: ffff6a91014de1c0 x25: ffff6a91014de010 x24: ffff6a91016af280
-> [    1.436724] x23: ffffaf7b1b276640 x22: 0000000000000000 x21: ffff6a9101720000
-> [    1.436733] x20: ffff6a9101720370 x19: ffff6a9101720580 x18: 0000000000000020
-> [    1.436743] x17: 0000000000000000 x16: 0000000000000004 x15: ffffffffffffffff
-> [    1.436751] x14: 0000000000000000 x13: 00000000fffffffd x12: ffffaf7b1b84b0bc
-> [    1.436760] x11: ffffaf7b1b720d10 x10: 000000000000000a x9 : ffff800010803a60
-> [    1.436769] x8 : 000000000000000a x7 : 000000000000000f x6 : 00000000fffff159
-> [    1.436778] x5 : 0000000000000000 x4 : 0000000000000000 x3 : 00000000ffffffff
-> [    1.436787] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff6a9101718d80
-> [    1.436797] Call trace:
-> [    1.436800]  sdhci_set_power_noreg+0x168/0x2b4
-> [    1.436805]  sdhci_set_ios+0xa0/0x7fc
-> [    1.436811]  mmc_power_up.part.0+0xc4/0x164
-> [    1.436818]  mmc_start_host+0xa0/0xb0
-> [    1.436824]  mmc_add_host+0x60/0x90
-> [    1.436830]  __sdhci_add_host+0x174/0x330
-> [    1.436836]  sdhci_msm_probe+0x7c0/0x920
-> [    1.436842]  platform_probe+0x68/0xe0
-> [    1.436850]  really_probe.part.0+0x9c/0x31c
-> [    1.436857]  __driver_probe_device+0x98/0x144
-> [    1.436863]  driver_probe_device+0xc8/0x15c
-> [    1.436869]  __device_attach_driver+0xb4/0x120
-> [    1.436875]  bus_for_each_drv+0x78/0xd0
-> [    1.436881]  __device_attach_async_helper+0xac/0xd0
-> [    1.436888]  async_run_entry_fn+0x34/0x110
-> [    1.436895]  process_one_work+0x1d0/0x354
-> [    1.436903]  worker_thread+0x13c/0x470
-> [    1.436910]  kthread+0x150/0x160
-> [    1.436915]  ret_from_fork+0x10/0x20
-> [    1.436923] ---[ end trace fcfac44cb045c3a8 ]---
->
-> Fix the issue by mapping MMC_VDD_35_36 (and MMC_VDD_34_35) to
-> SDHCI_POWER_330 as well.
->
-> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+
+
+On 9/4/21 5:15 PM, Konrad Dybcio wrote:
+> MSM8994, despite being heavily based on MSM8974, uses the
+> 1.2 version of TSENS. Also, 8994 being 8994, it has a custom
+> way of calculating the slope.
+> 
+> MSM8992 in turn is a cut-down version of MSM8994 and uses
+> the same TSENS hardware, albeit with a different set of sensors.
+> 
+> Also tested on 8976 (by a person who didn't want to be named)
+> to make sure the 11->16 max_sensors changes didn't break anything.
+
+Hi Konrad,
+
+Thanks for the patch and sorry for the delay. A few nits below.
+
+> 
+> Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 > ---
-> I'm not sure if this is the right solution, as I do not have SDHCI
-> specification.  Hence it's a RFC.
->
->  drivers/mmc/host/sdhci.c | 2 ++
->  1 file changed, 2 insertions(+)
->
-> diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
-> index 8eefa7d5fe85..2427481535a3 100644
-> --- a/drivers/mmc/host/sdhci.c
-> +++ b/drivers/mmc/host/sdhci.c
-> @@ -2042,6 +2042,8 @@ void sdhci_set_power_noreg(struct sdhci_host *host, unsigned char mode,
->                         break;
->                 case MMC_VDD_32_33:
->                 case MMC_VDD_33_34:
-> +               case MMC_VDD_34_35:
-> +               case MMC_VDD_35_36:
->                         pwr = SDHCI_POWER_330;
+> Changes since v1:
+> - Squash the few lines of 8992 here
+> - Add some informative comments
+> - Adjust the slope definition for non-anglosaxon-school-system people
+> - Change base0 and base1 into ints, no need for them to be arrays
+> - Default p[] to the magic value and only overwrite it if need be
+> - Use %u for u32 values
+> 
+>   drivers/thermal/qcom/tsens-v1.c | 299 ++++++++++++++++++++++++++++++--
+>   drivers/thermal/qcom/tsens.c    |   6 +
+>   drivers/thermal/qcom/tsens.h    |   2 +-
+>   3 files changed, 294 insertions(+), 13 deletions(-)
+> 
+> diff --git a/drivers/thermal/qcom/tsens-v1.c b/drivers/thermal/qcom/tsens-v1.c
+> index 573e261ccca7..c207a63f8e88 100644
+> --- a/drivers/thermal/qcom/tsens-v1.c
+> +++ b/drivers/thermal/qcom/tsens-v1.c
+> @@ -142,6 +142,99 @@
+>   #define CAL_SEL_MASK	7
+>   #define CAL_SEL_SHIFT	0
+>   
+> +/* eeprom layout data for 8994 */
+> +#define MSM8994_BASE0_MASK	0x3ff
+> +#define MSM8994_BASE1_MASK	0xffc00
+> +#define MSM8994_BASE0_SHIFT	0
+> +#define MSM8994_BASE1_SHIFT	10
+> +
+> +#define MSM8994_S0_MASK	0xf00000
+> +#define MSM8994_S1_MASK	0xf000000
+> +#define MSM8994_S2_MASK	0xf0000000
+> +#define MSM8994_S3_MASK	0xf
+> +#define MSM8994_S4_MASK	0xf0
+> +#define MSM8994_S5_MASK	0xf00
+> +#define MSM8994_S6_MASK	0xf000
+> +#define MSM8994_S7_MASK	0xf0000
+> +#define MSM8994_S8_MASK	0xf00000
+> +#define MSM8994_S9_MASK	0xf000000
+> +#define MSM8994_S10_MASK	0xf0000000
+> +#define MSM8994_S11_MASK	0xf
+> +#define MSM8994_S12_MASK	0xf0
+> +#define MSM8994_S13_MASK	0xf00
+> +#define MSM8994_S14_MASK	0xf000
+> +#define MSM8994_S15_MASK	0xf0000
+> +
+> +#define MSM8994_S0_SHIFT	20
+> +#define MSM8994_S1_SHIFT	24
+> +#define MSM8994_S2_SHIFT	28
+> +#define MSM8994_S3_SHIFT	0
+> +#define MSM8994_S4_SHIFT	4
+> +#define MSM8994_S5_SHIFT	8
+> +#define MSM8994_S6_SHIFT	12
+> +#define MSM8994_S7_SHIFT	16
+> +#define MSM8994_S8_SHIFT	20
+> +#define MSM8994_S9_SHIFT	24
+> +#define MSM8994_S10_SHIFT	28
+> +#define MSM8994_S11_SHIFT	0
+> +#define MSM8994_S12_SHIFT	4
+> +#define MSM8994_S13_SHIFT	8
+> +#define MSM8994_S14_SHIFT	12
+> +#define MSM8994_S15_SHIFT	16
+> +
+> +#define MSM8994_CAL_SEL_MASK	0x700000
+> +#define MSM8994_CAL_SEL_SHIFT	20
+> +
+> +#define MSM8994_BASE0_REDUN_MASK	0x7fe00000
+> +#define MSM8994_BASE1_BIT0_REDUN_MASK	0x80000000
+> +#define MSM8994_BASE1_BIT1_9_REDUN_MASK	0x1ff
+> +#define MSM8994_BASE0_REDUN_SHIFT	21
+> +#define MSM8994_BASE1_BIT0_REDUN_SHIFT_COMPUTE	31
+> +
+> +#define MSM8994_S0_REDUN_MASK	0x1e00
+> +#define MSM8994_S1_REDUN_MASK	0x1e000
+> +#define MSM8994_S2_REDUN_MASK	0x1e0000
+> +#define MSM8994_S3_REDUN_MASK	0x1e00000
+> +#define MSM8994_S4_REDUN_MASK	0x1e000000
+> +#define MSM8994_S5_REDUN_MASK_BIT0_2	0xe0000000
+> +#define MSM8994_S5_REDUN_MASK_BIT3	0x800000
+> +#define MSM8994_S6_REDUN_MASK	0xf000000
+> +#define MSM8994_S7_REDUN_MASK	0xf0000000
+> +#define MSM8994_S8_REDUN_MASK	0xf
+> +#define MSM8994_S9_REDUN_MASK	0xf0
+> +#define MSM8994_S10_REDUN_MASK	0xf00
+> +#define MSM8994_S11_REDUN_MASK	0xf000
+> +#define MSM8994_S12_REDUN_MASK	0xf0000
+> +#define MSM8994_S13_REDUN_MASK	0xf00000
+> +#define MSM8994_S14_REDUN_MASK	0xf000000
+> +#define MSM8994_S15_REDUN_MASK	0xf0000000
+> +
+> +#define MSM8994_S0_REDUN_SHIFT	9
+> +#define MSM8994_S1_REDUN_SHIFT	13
+> +#define MSM8994_S2_REDUN_SHIFT	17
+> +#define MSM8994_S3_REDUN_SHIFT	21
+> +#define MSM8994_S4_REDUN_SHIFT	25
+> +#define MSM8994_S5_REDUN_SHIFT_BIT0_2	29
+> +#define MSM8994_S5_REDUN_SHIFT_BIT3	23
+> +#define MSM8994_S6_REDUN_SHIFT	24
+> +#define MSM8994_S7_REDUN_SHIFT	28
+> +#define MSM8994_S8_REDUN_SHIFT	0
+> +#define MSM8994_S9_REDUN_SHIFT	4
+> +#define MSM8994_S10_REDUN_SHIFT	8
+> +#define MSM8994_S11_REDUN_SHIFT	12
+> +#define MSM8994_S12_REDUN_SHIFT	16
+> +#define MSM8994_S13_REDUN_SHIFT	20
+> +#define MSM8994_S14_REDUN_SHIFT	24
+> +#define MSM8994_S15_REDUN_SHIFT	28
+> +
+> +#define MSM8994_REDUN_SEL_MASK		0x7
+> +#define MSM8994_CAL_SEL_REDUN_MASK	0xe0000000
+> +#define MSM8994_CAL_SEL_REDUN_SHIFT	29
+> +
+> +#define BKP_SEL			0x3
+> +#define BKP_REDUN_SEL		0xe0000000
+> +#define BKP_REDUN_SHIFT		29
+> +
+>   static void compute_intercept_slope_8976(struct tsens_priv *priv,
+>   			      u32 *p1, u32 *p2, u32 mode)
+>   {
+> @@ -166,6 +259,29 @@ static void compute_intercept_slope_8976(struct tsens_priv *priv,
+>   	}
+>   }
+>   
+> +/* HW-specific calculations forwardported from msm-3.10 kernel */
+> +static void compute_intercept_slope_8994(struct tsens_priv *priv,
+> +			      u32 base0, u32 base1, u32 *p, u32 mode)
+> +{
+> +	int adc_code_of_tempx, i, num, den, slope;
+> +
+> +	/* slope (m, dy/dx) = SLOPE_FACTOR * (adc_code2 - adc_code1)/(temp_120_degc - temp_30_degc) */
+> +	num = base1 - base0;
+> +	num *= SLOPE_FACTOR;
 
-The SDHCI specification doesn't state exactly what level
-SDHCI_POWER_330 corresponds to. It's 3.3V typically.
+Combine into one line please. (base1 - base0) * SLOPE_FACTOR
 
-I don't have any strong opinion about this change, although I am a
-little bit puzzled over why this solves the problem for you.
+> +	den = CAL_DEGC_PT2 - CAL_DEGC_PT1;
+> +	slope = num / den;
+> +
+> +	for (i = 0; i < priv->num_sensors; i++) {
+> +		adc_code_of_tempx = base0 + p[i];
+> +		priv->sensor[i].offset = (adc_code_of_tempx * SLOPE_FACTOR) -
+> +				(CAL_DEGC_PT1 *	priv->sensor[i].slope);
 
-Unless the host (sdhci) announces that it supports MMC_VDD_34_35 or
-MMC_VDD_35_36 through its mmc->ocr_avail mask, the mmc core shouldn't
-try to use it. Can you perhaps check what value the mmc->ocr_avail
-gets assigned to in sdhci_setup_host() for your mmc host?
+Is this intentional? To use priv->sensor[i].slope before computing it 
+below ?
 
->                         break;
->                 default:
-> --
-> 2.17.1
->
+> +		priv->sensor[i].slope = (mode == TWO_PT_CALIB) ? slope : SLOPE_DEFAULT;
+> +
+> +		dev_dbg(priv->dev, "%s: offset:%d, slope:%d\n", __func__,
+> +			priv->sensor[i].offset, priv->sensor[i].slope);
+> +	}
+> +}
+> +
+>   static int calibrate_v1(struct tsens_priv *priv)
+>   {
+>   	u32 base0 = 0, base1 = 0;
+> @@ -297,14 +413,145 @@ static int calibrate_8976(struct tsens_priv *priv)
+>   	return 0;
+>   }
+>   
+> -/* v1.x: msm8956,8976,qcs404,405 */
+> +static int calibrate_8994(struct tsens_priv *priv)
+> +{
+> +	int base0 = 0, base1 = 0, i;
+> +	u32 p[16] = { [0 ... 15] = 532 }; /* HW-specific, undocumented magic value */
 
-Kind regards
-Uffe
+Maybe make 532 into a #define ?
+
+> +	int mode = 0;
+> +	u32 *calib0, *calib1, *calib2, *calib_mode, *calib_rsel;
+> +	u32 calib_redun_sel;
+> +
+> +	/* 0x40d0-0x40dc */
+> +	calib0 = (u32 *)qfprom_read(priv->dev, "calib");
+> +	if (IS_ERR(calib0))
+> +		return PTR_ERR(calib0);
+> +
+> +	dev_dbg(priv->dev, "%s: calib0: [0] = %u, [1] = %u, [2] = %u\n",
+> +		__func__, calib0[0], calib0[1], calib0[2]);
+> +
+> +	/* 0x41c0-0x41c8 */
+> +	calib1 = (u32 *)qfprom_read(priv->dev, "calib_redun1_2");
+> +	if (IS_ERR(calib1))
+> +		return PTR_ERR(calib1);
+> +
+> +	dev_dbg(priv->dev, "%s: calib1: [0] = %u, [1] = %u\n",
+> +		__func__, calib1[0], calib1[1]);
+> +
+> +	/* 0x41cc-0x41d0 */
+> +	calib2 = (u32 *)qfprom_read(priv->dev, "calib_redun3");
+> +	if (IS_ERR(calib2))
+> +		return PTR_ERR(calib2);
+> +
+> +	dev_dbg(priv->dev, "%s: calib2: [0] = %u\n", __func__, calib2[0]);
+> +
+> +	/* 0x4440-0x4448 */
+> +	calib_mode = (u32 *)qfprom_read(priv->dev, "calib_redun4_5");
+> +	if (IS_ERR(calib_mode))
+> +		return PTR_ERR(calib_mode);
+> +
+> +	dev_dbg(priv->dev, "%s: calib_mode: [0] = %u, [1] = %u\n",
+> +		__func__, calib1[0], calib1[1]);
+> +
+> +	/* 0x4464-0x4468 */
+> +	calib_rsel = (u32 *)qfprom_read(priv->dev, "calib_rsel");
+> +	if (IS_ERR(calib_mode))
+> +		return PTR_ERR(calib_mode);
+> +
+> +	dev_dbg(priv->dev, "%s: calib_rsel: [0] = %u\n", __func__, calib_rsel[0]);
+> +
+> +	calib_redun_sel =  calib_rsel[0] & MSM8994_CAL_SEL_REDUN_MASK;
+> +	calib_redun_sel >>= MSM8994_CAL_SEL_REDUN_SHIFT;
+
+Again please look at combining the above into one line.
+
+> +
+> +	if (calib_redun_sel == BKP_SEL) {
+> +		dev_dbg(priv->dev, "%s: Calibrating in REDUN mode, calib_redun_sel = %u",
+> +			__func__, calib_redun_sel);
+> +		mode = calib_mode[1] & MSM8994_REDUN_SEL_MASK;
+> +
+> +		if (mode == TWO_PT_CALIB) {
+> +			dev_dbg(priv->dev, "%s: REDUN TWO_PT mode, mode = %u", __func__, mode);
+> +			base0 = (calib1[0] & MSM8994_BASE0_REDUN_MASK) >> MSM8994_BASE0_REDUN_SHIFT;
+> +			base1 = (calib1[0] & MSM8994_BASE1_BIT0_REDUN_MASK) >> MSM8994_BASE1_BIT0_REDUN_SHIFT_COMPUTE;
+> +			base1 |= calib1[1] & MSM8994_BASE1_BIT1_9_REDUN_MASK;
+> +			p[0] = (calib1[1] & MSM8994_S0_REDUN_MASK) >> MSM8994_S0_REDUN_SHIFT;
+> +			p[1] = (calib1[1] & MSM8994_S1_REDUN_MASK) >> MSM8994_S1_REDUN_SHIFT;
+> +			p[2] = (calib1[1] & MSM8994_S2_REDUN_MASK) >> MSM8994_S2_REDUN_SHIFT;
+> +			p[3] = (calib1[1] & MSM8994_S3_REDUN_MASK) >> MSM8994_S3_REDUN_SHIFT;
+> +			p[4] = (calib1[1] & MSM8994_S4_REDUN_MASK) >> MSM8994_S4_REDUN_SHIFT;
+> +			p[5] = (calib1[1] & MSM8994_S5_REDUN_MASK_BIT0_2) >> MSM8994_S5_REDUN_SHIFT_BIT0_2;
+> +			p[5] |= (calib2[0] & MSM8994_S5_REDUN_MASK_BIT3) >> MSM8994_S5_REDUN_SHIFT_BIT3;
+> +			p[6] = (calib2[0] & MSM8994_S6_REDUN_MASK) >> MSM8994_S6_REDUN_SHIFT;
+> +			p[7] = (calib2[0] & MSM8994_S7_REDUN_MASK) >> MSM8994_S7_REDUN_SHIFT;
+> +			p[8] = (calib2[0] & MSM8994_S8_REDUN_MASK) >> MSM8994_S8_REDUN_SHIFT;
+> +			p[9] = (calib2[0] & MSM8994_S9_REDUN_MASK) >> MSM8994_S9_REDUN_SHIFT;
+> +			p[10] = (calib2[0] & MSM8994_S10_REDUN_MASK) >> MSM8994_S10_REDUN_SHIFT;
+> +			p[11] = (calib2[0] & MSM8994_S11_REDUN_MASK) >> MSM8994_S11_REDUN_SHIFT;
+> +			p[12] = (calib2[0] & MSM8994_S12_REDUN_MASK) >> MSM8994_S12_REDUN_SHIFT;
+> +			p[13] = (calib2[0] & MSM8994_S13_REDUN_MASK) >> MSM8994_S13_REDUN_SHIFT;
+> +			p[14] = (calib2[0] & MSM8994_S14_REDUN_MASK) >> MSM8994_S14_REDUN_SHIFT;
+> +			p[15] = (calib2[0] & MSM8994_S15_REDUN_MASK) >> MSM8994_S15_REDUN_SHIFT;
+> +		} else {
+> +			dev_dbg(priv->dev, "%s: REDUN NON-TWO_PT mode, mode = %u", __func__, mode);
+> +		}
+> +	} else {
+> +		dev_dbg(priv->dev, "%s: Calibrating in NOT-REDUN mode, calib_redun_sel = %u",
+> +			__func__, calib_redun_sel);
+> +		mode = (calib0[2] & MSM8994_CAL_SEL_MASK) >> MSM8994_CAL_SEL_SHIFT;
+> +
+> +		if (mode == TWO_PT_CALIB) {
+> +			dev_dbg(priv->dev, "%s: NOT-REDUN TWO_PT mode, mode = %u", __func__, mode);
+> +			base0 = (calib0[0] & MSM8994_BASE0_MASK) >> MSM8994_BASE0_SHIFT;
+> +			base1 = (calib0[0] & MSM8994_BASE1_MASK) >> MSM8994_BASE1_SHIFT;
+> +			p[0] = (calib0[0] & MSM8994_S0_MASK) >> MSM8994_S0_SHIFT;
+> +			p[1] = (calib0[0] & MSM8994_S1_MASK) >> MSM8994_S1_SHIFT;
+> +			p[2] = (calib0[1] & MSM8994_S2_MASK) >> MSM8994_S2_SHIFT;
+> +			p[3] = (calib0[1] & MSM8994_S3_MASK) >> MSM8994_S3_SHIFT;
+> +			p[4] = (calib0[1] & MSM8994_S4_MASK) >> MSM8994_S4_SHIFT;
+> +			p[5] = (calib0[1] & MSM8994_S5_MASK) >> MSM8994_S5_SHIFT;
+> +			p[6] = (calib0[1] & MSM8994_S6_MASK) >> MSM8994_S6_SHIFT;
+> +			p[7] = (calib0[1] & MSM8994_S7_MASK) >> MSM8994_S7_SHIFT;
+> +			p[8] = (calib0[1] & MSM8994_S8_MASK) >> MSM8994_S8_SHIFT;
+> +			p[9] = (calib0[1] & MSM8994_S9_MASK) >> MSM8994_S9_SHIFT;
+> +			p[10] = (calib0[1] & MSM8994_S10_MASK) >> MSM8994_S10_SHIFT;
+> +			p[11] = (calib0[2] & MSM8994_S11_MASK) >> MSM8994_S11_SHIFT;
+> +			p[12] = (calib0[2] & MSM8994_S12_MASK) >> MSM8994_S12_SHIFT;
+> +			p[13] = (calib0[2] & MSM8994_S13_MASK) >> MSM8994_S13_SHIFT;
+> +			p[14] = (calib0[2] & MSM8994_S14_MASK) >> MSM8994_S14_SHIFT;
+> +			p[15] = (calib0[2] & MSM8994_S15_MASK) >> MSM8994_S15_SHIFT;
+> +		} else {
+> +			dev_dbg(priv->dev, "%s: NOT-REDUN NON-TWO_PT mode, mode = %u", __func__, mode);
+> +			for (i = 0; i < 16; i++)
+> +				p[i] = 532;
+
+		You can drop the loop, right? Because you have initialized it above.
+
+> +		}
+> +	}
+> +
+> +	/* 8992 features less sensors and remaps some */
+> +	if (priv->num_sensors == 13) {
+
+I don't really like this check. But then there is no other way in 
+tsens_priv to distinguish btw 8992 and 8994. So let us leave it as is.
+
+> +		p[6] = p[7];
+> +		p[7] = p[9];
+> +		p[8] = p[10];
+> +		p[9] = p[11];
+> +		p[10] = p[12];
+> +		p[11] = p[13];
+> +		p[12] = p[14];
+> +	}
+> +
+> +	compute_intercept_slope_8994(priv, base0, base1, p, mode);
+> +	kfree(calib0);
+> +	kfree(calib1);
+> +	kfree(calib2);
+> +	kfree(calib_mode);
+
+free calib_rsel ??
+
+> +
+> +	return 0;
+> +}
+> +
+> +/* v1.x: msm8956/8976, msm8994 (v1.2), qcs404/qcs405 */
+>   
+>   static struct tsens_features tsens_v1_feat = {
+>   	.ver_major	= VER_1_X,
+>   	.crit_int	= 0,
+>   	.adc		= 1,
+>   	.srot_split	= 1,
+> -	.max_sensors	= 11,
+> +	.max_sensors	= 16,
+>   };
+>   
+>   static const struct reg_field tsens_v1_regfields[MAX_REGFIELDS] = {
+> @@ -323,12 +570,12 @@ static const struct reg_field tsens_v1_regfields[MAX_REGFIELDS] = {
+>   	[INT_EN]     = REG_FIELD(TM_INT_EN_OFF, 0, 0),
+>   
+>   	/* UPPER/LOWER TEMPERATURE THRESHOLDS */
+> -	REG_FIELD_FOR_EACH_SENSOR11(LOW_THRESH,    TM_Sn_UPPER_LOWER_STATUS_CTRL_OFF,  0,  9),
+> -	REG_FIELD_FOR_EACH_SENSOR11(UP_THRESH,     TM_Sn_UPPER_LOWER_STATUS_CTRL_OFF, 10, 19),
+> +	REG_FIELD_FOR_EACH_SENSOR16(LOW_THRESH,    TM_Sn_UPPER_LOWER_STATUS_CTRL_OFF,  0,  9),
+> +	REG_FIELD_FOR_EACH_SENSOR16(UP_THRESH,     TM_Sn_UPPER_LOWER_STATUS_CTRL_OFF, 10, 19),
+>   
+>   	/* UPPER/LOWER INTERRUPTS [CLEAR/STATUS] */
+> -	REG_FIELD_FOR_EACH_SENSOR11(LOW_INT_CLEAR, TM_Sn_UPPER_LOWER_STATUS_CTRL_OFF, 20, 20),
+> -	REG_FIELD_FOR_EACH_SENSOR11(UP_INT_CLEAR,  TM_Sn_UPPER_LOWER_STATUS_CTRL_OFF, 21, 21),
+> +	REG_FIELD_FOR_EACH_SENSOR16(LOW_INT_CLEAR, TM_Sn_UPPER_LOWER_STATUS_CTRL_OFF, 20, 20),
+> +	REG_FIELD_FOR_EACH_SENSOR16(UP_INT_CLEAR,  TM_Sn_UPPER_LOWER_STATUS_CTRL_OFF, 21, 21),
+>   	[LOW_INT_STATUS_0] = REG_FIELD(TM_HIGH_LOW_INT_STATUS_OFF,  0,  0),
+>   	[LOW_INT_STATUS_1] = REG_FIELD(TM_HIGH_LOW_INT_STATUS_OFF,  1,  1),
+>   	[LOW_INT_STATUS_2] = REG_FIELD(TM_HIGH_LOW_INT_STATUS_OFF,  2,  2),
+> @@ -349,14 +596,14 @@ static const struct reg_field tsens_v1_regfields[MAX_REGFIELDS] = {
+>   	/* NO CRITICAL INTERRUPT SUPPORT on v1 */
+>   
+>   	/* Sn_STATUS */
+> -	REG_FIELD_FOR_EACH_SENSOR11(LAST_TEMP,    TM_Sn_STATUS_OFF,  0,  9),
+> -	REG_FIELD_FOR_EACH_SENSOR11(VALID,        TM_Sn_STATUS_OFF, 14, 14),
+> +	REG_FIELD_FOR_EACH_SENSOR16(LAST_TEMP,    TM_Sn_STATUS_OFF,  0,  9),
+> +	REG_FIELD_FOR_EACH_SENSOR16(VALID,        TM_Sn_STATUS_OFF, 14, 14),
+>   	/* xxx_STATUS bits: 1 == threshold violated */
+> -	REG_FIELD_FOR_EACH_SENSOR11(MIN_STATUS,   TM_Sn_STATUS_OFF, 10, 10),
+> -	REG_FIELD_FOR_EACH_SENSOR11(LOWER_STATUS, TM_Sn_STATUS_OFF, 11, 11),
+> -	REG_FIELD_FOR_EACH_SENSOR11(UPPER_STATUS, TM_Sn_STATUS_OFF, 12, 12),
+> +	REG_FIELD_FOR_EACH_SENSOR16(MIN_STATUS,   TM_Sn_STATUS_OFF, 10, 10),
+> +	REG_FIELD_FOR_EACH_SENSOR16(LOWER_STATUS, TM_Sn_STATUS_OFF, 11, 11),
+> +	REG_FIELD_FOR_EACH_SENSOR16(UPPER_STATUS, TM_Sn_STATUS_OFF, 12, 12),
+>   	/* No CRITICAL field on v1.x */
+> -	REG_FIELD_FOR_EACH_SENSOR11(MAX_STATUS,   TM_Sn_STATUS_OFF, 13, 13),
+> +	REG_FIELD_FOR_EACH_SENSOR16(MAX_STATUS,   TM_Sn_STATUS_OFF, 13, 13),
+>   
+>   	/* TRDY: 1=ready, 0=in progress */
+>   	[TRDY] = REG_FIELD(TM_TRDY_OFF, 0, 0),
+> @@ -388,3 +635,31 @@ struct tsens_plat_data data_8976 = {
+>   	.feat		= &tsens_v1_feat,
+>   	.fields		= tsens_v1_regfields,
+>   };
+> +
+> +static const struct tsens_ops ops_8992 = {
+> +	.init		= init_common,
+> +	.calibrate	= calibrate_8994,
+> +	.get_temp	= get_temp_tsens_valid,
+> +};
+> +
+> +struct tsens_plat_data data_8992 = {
+> +	.num_sensors	= 13,
+> +	.ops		= &ops_8992,
+> +	.hw_ids		= (unsigned int []){ 0, 1, 2, 3, 4, 5, 7, 9, 10, 11, 12, 13, 14 },
+> +	.feat		= &tsens_v1_feat,
+> +	.fields	= tsens_v1_regfields,
+> +};
+> +
+> +static const struct tsens_ops ops_8994 = {
+> +	.init		= init_common,
+> +	.calibrate	= calibrate_8994,
+> +	.get_temp	= get_temp_tsens_valid,
+> +};
+
+Please use one common tsens_ops for 8994 and 8992.
+
+> +
+> +struct tsens_plat_data data_8994 = {
+> +	.num_sensors	= 16,
+> +	.ops		= &ops_8994,
+> +	.hw_ids		= (unsigned int []){ 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 },
+> +	.feat		= &tsens_v1_feat,
+> +	.fields	= tsens_v1_regfields,
+> +};
+> diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
+> index 4c7ebd1d3f9c..c3cd4425bbfd 100644
+> --- a/drivers/thermal/qcom/tsens.c
+> +++ b/drivers/thermal/qcom/tsens.c
+> @@ -982,6 +982,12 @@ static const struct of_device_id tsens_table[] = {
+>   	}, {
+>   		.compatible = "qcom,msm8974-tsens",
+>   		.data = &data_8974,
+> +	}, {
+> +		.compatible = "qcom,msm8992-tsens",
+> +		.data = &data_8992,
+> +	}, {
+> +		.compatible = "qcom,msm8994-tsens",
+> +		.data = &data_8994,
+>   	}, {
+>   		.compatible = "qcom,msm8976-tsens",
+>   		.data = &data_8976,
+> diff --git a/drivers/thermal/qcom/tsens.h b/drivers/thermal/qcom/tsens.h
+> index 1471a2c00f15..ca2b0ac914c1 100644
+> --- a/drivers/thermal/qcom/tsens.h
+> +++ b/drivers/thermal/qcom/tsens.h
+> @@ -590,7 +590,7 @@ extern struct tsens_plat_data data_8960;
+>   extern struct tsens_plat_data data_8916, data_8939, data_8974, data_9607;
+>   
+>   /* TSENS v1 targets */
+> -extern struct tsens_plat_data data_tsens_v1, data_8976;
+> +extern struct tsens_plat_data data_tsens_v1, data_8976, data_8992, data_8994;
+>   
+>   /* TSENS v2 targets */
+>   extern struct tsens_plat_data data_8996, data_tsens_v2;
+> 
+
+-- 
+Warm Regards
+Thara (She/Her/Hers)
