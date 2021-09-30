@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EBA3F41DBAD
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Sep 2021 16:00:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD3F541DBAF
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 30 Sep 2021 16:00:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1351594AbhI3OCI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 30 Sep 2021 10:02:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57340 "EHLO
+        id S1351567AbhI3OCK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 30 Sep 2021 10:02:10 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57350 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1351567AbhI3OCH (ORCPT
+        with ESMTP id S1351624AbhI3OCJ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 30 Sep 2021 10:02:07 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5594C06176A
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Sep 2021 07:00:24 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id j5so20886627lfg.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Sep 2021 07:00:24 -0700 (PDT)
+        Thu, 30 Sep 2021 10:02:09 -0400
+Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97894C06176C
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Sep 2021 07:00:26 -0700 (PDT)
+Received: by mail-lf1-x134.google.com with SMTP id y26so25737668lfa.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 30 Sep 2021 07:00:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=K24m6l0NnBZbk6oY1NJdmmNReuA8KGWltScg/Ra42NU=;
-        b=QtJgb548MrKRthSLXxC6fDjo4gouo3g156/3Xwi9vwdlRq86GgwP4P1/8fszHIgWIj
-         3mfPKfzmaw+0kqE7rH3yqoGD0XSVqAHTsjNIIGfQZ77z+y6bc5Q0QdnVewWy8ELVWX1o
-         ggqzN2gYsDzZ3ylZZhrebkztkN1dZ8N5PEusN3fEGEXzzSjBxDFGuNm6wpweWHPngppi
-         39pBpJreRD09Pd1DJPHXr56PdJL0nl1VdTJkSo+POxPFZ8CmEd6zLtslKi3dyLcRogKu
-         v07D8ey4la+QDyZzIUw4H/g6zkP2hcBC8gz9WzJs7xd6rX7tsEynl4Ty+P7HeV2Utph1
-         2qeg==
+        bh=gL53R+XdMCTb/eRhUK3++4AIECbyYkUaMebTCoLD6nQ=;
+        b=J6jzfV3mAuA8nc0fewfvt6KLGVXlOEyRqkQwYLopC7172HNq6KB6hmsKLFke1Cp21x
+         zGrLYxD/1J9R8HXUfRVPbghVaGlvriFle0634k4b4DvAi5+BvEWCopwlWiZgGqBCW0/n
+         2UhRdV1yUWQGvghdhHVJ3gEwXkJehXNc19RxCEeXTnl/T//JYwSvw/iD/mhnPBdjGcsi
+         bPlTwIDmHF0CyXY5WbQIIEmCW09zRWWAFazmjWfexvJUpRebdymAPvhebYSi1EhCiFnR
+         D6nWS4snul0Fbs25tQMHkUxfl9fffsrPmW/AL1fClcWbp22PYumQz55HGSN2hH1lnKZu
+         h8FQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=K24m6l0NnBZbk6oY1NJdmmNReuA8KGWltScg/Ra42NU=;
-        b=P1tyrkzPwChA0t9qvNwtG5cQpRqweetNaSiCng5toAuqa8pOgd4FGjxemMJ5WZlbqF
-         /F79ZTt0wlHpFCRawF7WPhJs89vhMdLgcxVaM7ikpGqJAMr+GD5rYHh3ZyLBT0B9/EJ5
-         YwnP2oJLuB9PZMGe1ZkMlzIBBY19q1LLZFdNiowEdFJm42zTboOFbDg5KQRT0I/dF82S
-         ib8Fd3/GSSgpYc0RLmlbMW4GJN+p9s/HQtbQBfsj8DBmrt2UBZU3TbvZ4G71M1/qB6+Z
-         7YtQE/GuJlePT3KbLyApUe9jQk1sXqFG2k5g3ROanquLfonNqaQyrTK4Pi5DS4QMjTh6
-         m+8Q==
-X-Gm-Message-State: AOAM531mm118wsgor2TnHyXdNM42LodwZrU55RJ6eum0gB21eaRixCph
-        wbRPSDS4IgePGHjZP9Xq9f2XTw==
-X-Google-Smtp-Source: ABdhPJxMP0/y+hKybqSwpDrZ+90drfU8FXoTxtNpSWFNW0yDeFQgrWDXZlaXgn/QtJqOXhJPofB2HA==
-X-Received: by 2002:a2e:6f1a:: with SMTP id k26mr5710514ljc.11.1633010420461;
-        Thu, 30 Sep 2021 07:00:20 -0700 (PDT)
+        bh=gL53R+XdMCTb/eRhUK3++4AIECbyYkUaMebTCoLD6nQ=;
+        b=gyY40uhtz8BI+ReUsOLdtF00nsNo61hexG5YEjKSYF69SZQxoqzKhRuOX36DjJUQzR
+         D6ae/ItmGZUsQ5C+VedBCRbhi08QQg5xVrUysz5mJl95erVInLfgpJ1xl+nVFBIXWKR/
+         AQ6+ULOUIfayBl1PUxkK5IVAl/GIS+19+B4VTJYV5U6vngIA+g1Tcst0keHxcGmM1m3c
+         GwZHH2slY7oWxA8/w0IQIhZt0EOXmwoWSnDYi1/AAc2kDrLeCNXiARVC4vm6UBMv2eEP
+         jtJDFGzlFQk3/BNXssq3saoALBi9RYcAqqaZ1h0I3HfnPa5LMXTs8G+i/doIOe/Jcf++
+         0HIQ==
+X-Gm-Message-State: AOAM531f7JdfWjkoX9F3nnW1NsM5il4yBspL52EQScfV+rI7ge9jpSmf
+        OSGF0txfcvYwdp3C24NKV+vsXDWCNHYFjg==
+X-Google-Smtp-Source: ABdhPJyFPfkn+twETssQFXkBw8VaStg+qrDcC4ozmbl5fJDs9pwQPV9i9y2HNG88gQvSUoRa2aQPoA==
+X-Received: by 2002:a05:6512:513:: with SMTP id o19mr6201016lfb.31.1633010421577;
+        Thu, 30 Sep 2021 07:00:21 -0700 (PDT)
 Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id o7sm380481lfr.216.2021.09.30.07.00.19
+        by smtp.gmail.com with ESMTPSA id o7sm380481lfr.216.2021.09.30.07.00.20
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 30 Sep 2021 07:00:19 -0700 (PDT)
+        Thu, 30 Sep 2021 07:00:21 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
@@ -57,9 +57,9 @@ Cc:     Jonathan Marek <jonathan@marek.ca>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
         dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH 01/11] drm/msm/dpu: move LUT levels out of QOS config
-Date:   Thu, 30 Sep 2021 16:59:52 +0300
-Message-Id: <20210930140002.308628-2-dmitry.baryshkov@linaro.org>
+Subject: [PATCH 02/11] drm/msm/dpu: remove pipe_qos_cfg from struct dpu_plane
+Date:   Thu, 30 Sep 2021 16:59:53 +0300
+Message-Id: <20210930140002.308628-3-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20210930140002.308628-1-dmitry.baryshkov@linaro.org>
 References: <20210930140002.308628-1-dmitry.baryshkov@linaro.org>
@@ -69,159 +69,78 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-LUT levels are setup outside of setup_qos_ctrl, so remove them from the
-struct dpu_hw_pipe_qos_cfg.
+The pipe_qos_cfg is used only in _dpu_plane_set_qos_ctrl(), so remove it
+from the dpu_plane struct and allocate it on stack when necessary.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c | 15 ++++++++-------
- drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h | 16 ++++++----------
- drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c   | 17 ++++++-----------
- 3 files changed, 20 insertions(+), 28 deletions(-)
+ drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c | 30 ++++++++++++-----------
+ 1 file changed, 16 insertions(+), 14 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-index 69eed7932486..cbafb61404d0 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.c
-@@ -569,19 +569,20 @@ static void dpu_hw_sspp_setup_solidfill(struct dpu_hw_pipe *ctx, u32 color, enum
- }
- 
- static void dpu_hw_sspp_setup_danger_safe_lut(struct dpu_hw_pipe *ctx,
--		struct dpu_hw_pipe_qos_cfg *cfg)
-+			u32 danger_lut,
-+			u32 safe_lut)
- {
- 	u32 idx;
- 
- 	if (_sspp_subblk_offset(ctx, DPU_SSPP_SRC, &idx))
- 		return;
- 
--	DPU_REG_WRITE(&ctx->hw, SSPP_DANGER_LUT + idx, cfg->danger_lut);
--	DPU_REG_WRITE(&ctx->hw, SSPP_SAFE_LUT + idx, cfg->safe_lut);
-+	DPU_REG_WRITE(&ctx->hw, SSPP_DANGER_LUT + idx, danger_lut);
-+	DPU_REG_WRITE(&ctx->hw, SSPP_SAFE_LUT + idx, safe_lut);
- }
- 
- static void dpu_hw_sspp_setup_creq_lut(struct dpu_hw_pipe *ctx,
--		struct dpu_hw_pipe_qos_cfg *cfg)
-+			u64 creq_lut)
- {
- 	u32 idx;
- 
-@@ -589,11 +590,11 @@ static void dpu_hw_sspp_setup_creq_lut(struct dpu_hw_pipe *ctx,
- 		return;
- 
- 	if (ctx->cap && test_bit(DPU_SSPP_QOS_8LVL, &ctx->cap->features)) {
--		DPU_REG_WRITE(&ctx->hw, SSPP_CREQ_LUT_0 + idx, cfg->creq_lut);
-+		DPU_REG_WRITE(&ctx->hw, SSPP_CREQ_LUT_0 + idx, creq_lut);
- 		DPU_REG_WRITE(&ctx->hw, SSPP_CREQ_LUT_1 + idx,
--				cfg->creq_lut >> 32);
-+				creq_lut >> 32);
- 	} else {
--		DPU_REG_WRITE(&ctx->hw, SSPP_CREQ_LUT + idx, cfg->creq_lut);
-+		DPU_REG_WRITE(&ctx->hw, SSPP_CREQ_LUT + idx, creq_lut);
- 	}
- }
- 
-diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-index fdfd4b46e2c6..27263bc1a1ef 100644
---- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-+++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_sspp.h
-@@ -166,18 +166,12 @@ struct dpu_hw_pipe_cfg {
- 
- /**
-  * struct dpu_hw_pipe_qos_cfg : Source pipe QoS configuration
-- * @danger_lut: LUT for generate danger level based on fill level
-- * @safe_lut: LUT for generate safe level based on fill level
-- * @creq_lut: LUT for generate creq level based on fill level
-  * @creq_vblank: creq value generated to vbif during vertical blanking
-  * @danger_vblank: danger value generated during vertical blanking
-  * @vblank_en: enable creq_vblank and danger_vblank during vblank
-  * @danger_safe_en: enable danger safe generation
-  */
- struct dpu_hw_pipe_qos_cfg {
--	u32 danger_lut;
--	u32 safe_lut;
--	u64 creq_lut;
- 	u32 creq_vblank;
- 	u32 danger_vblank;
- 	bool vblank_en;
-@@ -302,20 +296,22 @@ struct dpu_hw_sspp_ops {
- 	/**
- 	 * setup_danger_safe_lut - setup danger safe LUTs
- 	 * @ctx: Pointer to pipe context
--	 * @cfg: Pointer to pipe QoS configuration
-+	 * @danger_lut: LUT for generate danger level based on fill level
-+	 * @safe_lut: LUT for generate safe level based on fill level
- 	 *
- 	 */
- 	void (*setup_danger_safe_lut)(struct dpu_hw_pipe *ctx,
--			struct dpu_hw_pipe_qos_cfg *cfg);
-+			u32 danger_lut,
-+			u32 safe_lut);
- 
- 	/**
- 	 * setup_creq_lut - setup CREQ LUT
- 	 * @ctx: Pointer to pipe context
--	 * @cfg: Pointer to pipe QoS configuration
-+	 * @creq_lut: LUT for generate creq level based on fill level
- 	 *
- 	 */
- 	void (*setup_creq_lut)(struct dpu_hw_pipe *ctx,
--			struct dpu_hw_pipe_qos_cfg *cfg);
-+			u64 creq_lut);
- 
- 	/**
- 	 * setup_qos_ctrl - setup QoS control
 diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-index c989621209aa..5e0d06f26e53 100644
+index 5e0d06f26e53..88d726133b8b 100644
 --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
 +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
-@@ -348,8 +348,6 @@ static void _dpu_plane_set_qos_lut(struct drm_plane *plane,
- 	qos_lut = _dpu_plane_get_qos_lut(
- 			&pdpu->catalog->perf.qos_lut_tbl[lut_usage], total_fl);
+@@ -105,7 +105,6 @@ struct dpu_plane {
  
--	pdpu->pipe_qos_cfg.creq_lut = qos_lut;
--
- 	trace_dpu_perf_set_qos_luts(pdpu->pipe - SSPP_VIG0,
- 			(fmt) ? fmt->base.pixel_format : 0,
- 			pdpu->is_rt_pipe, total_fl, qos_lut, lut_usage);
-@@ -359,7 +357,7 @@ static void _dpu_plane_set_qos_lut(struct drm_plane *plane,
- 			fmt ? (char *)&fmt->base.pixel_format : NULL,
- 			pdpu->is_rt_pipe, total_fl, qos_lut);
+ 	struct dpu_hw_pipe *pipe_hw;
+ 	struct dpu_hw_pipe_cfg pipe_cfg;
+-	struct dpu_hw_pipe_qos_cfg pipe_qos_cfg;
+ 	uint32_t color_fill;
+ 	bool is_error;
+ 	bool is_rt_pipe;
+@@ -422,38 +421,41 @@ static void _dpu_plane_set_qos_ctrl(struct drm_plane *plane,
+ 	bool enable, u32 flags)
+ {
+ 	struct dpu_plane *pdpu = to_dpu_plane(plane);
++	struct dpu_hw_pipe_qos_cfg pipe_qos_cfg;
++
++	memset(&pipe_qos_cfg, 0, sizeof(pipe_qos_cfg));
  
--	pdpu->pipe_hw->ops.setup_creq_lut(pdpu->pipe_hw, &pdpu->pipe_qos_cfg);
-+	pdpu->pipe_hw->ops.setup_creq_lut(pdpu->pipe_hw, qos_lut);
- }
- 
- /**
-@@ -397,24 +395,21 @@ static void _dpu_plane_set_danger_lut(struct drm_plane *plane,
- 		}
+ 	if (flags & DPU_PLANE_QOS_VBLANK_CTRL) {
+-		pdpu->pipe_qos_cfg.creq_vblank = pdpu->pipe_sblk->creq_vblank;
+-		pdpu->pipe_qos_cfg.danger_vblank =
++		pipe_qos_cfg.creq_vblank = pdpu->pipe_sblk->creq_vblank;
++		pipe_qos_cfg.danger_vblank =
+ 				pdpu->pipe_sblk->danger_vblank;
+-		pdpu->pipe_qos_cfg.vblank_en = enable;
++		pipe_qos_cfg.vblank_en = enable;
  	}
  
--	pdpu->pipe_qos_cfg.danger_lut = danger_lut;
--	pdpu->pipe_qos_cfg.safe_lut = safe_lut;
--
- 	trace_dpu_perf_set_danger_luts(pdpu->pipe - SSPP_VIG0,
- 			(fmt) ? fmt->base.pixel_format : 0,
- 			(fmt) ? fmt->fetch_mode : 0,
--			pdpu->pipe_qos_cfg.danger_lut,
--			pdpu->pipe_qos_cfg.safe_lut);
-+			danger_lut,
-+			safe_lut);
+ 	if (flags & DPU_PLANE_QOS_VBLANK_AMORTIZE) {
+ 		/* this feature overrules previous VBLANK_CTRL */
+-		pdpu->pipe_qos_cfg.vblank_en = false;
+-		pdpu->pipe_qos_cfg.creq_vblank = 0; /* clear vblank bits */
++		pipe_qos_cfg.vblank_en = false;
++		pipe_qos_cfg.creq_vblank = 0; /* clear vblank bits */
+ 	}
  
- 	DPU_DEBUG_PLANE(pdpu, "pnum:%d fmt: %4.4s mode:%d luts[0x%x, 0x%x]\n",
+ 	if (flags & DPU_PLANE_QOS_PANIC_CTRL)
+-		pdpu->pipe_qos_cfg.danger_safe_en = enable;
++		pipe_qos_cfg.danger_safe_en = enable;
+ 
+ 	if (!pdpu->is_rt_pipe) {
+-		pdpu->pipe_qos_cfg.vblank_en = false;
+-		pdpu->pipe_qos_cfg.danger_safe_en = false;
++		pipe_qos_cfg.vblank_en = false;
++		pipe_qos_cfg.danger_safe_en = false;
+ 	}
+ 
+ 	DPU_DEBUG_PLANE(pdpu, "pnum:%d ds:%d vb:%d pri[0x%x, 0x%x] is_rt:%d\n",
  		pdpu->pipe - SSPP_VIG0,
- 		fmt ? (char *)&fmt->base.pixel_format : NULL,
- 		fmt ? fmt->fetch_mode : -1,
--		pdpu->pipe_qos_cfg.danger_lut,
--		pdpu->pipe_qos_cfg.safe_lut);
-+		danger_lut,
-+		safe_lut);
+-		pdpu->pipe_qos_cfg.danger_safe_en,
+-		pdpu->pipe_qos_cfg.vblank_en,
+-		pdpu->pipe_qos_cfg.creq_vblank,
+-		pdpu->pipe_qos_cfg.danger_vblank,
++		pipe_qos_cfg.danger_safe_en,
++		pipe_qos_cfg.vblank_en,
++		pipe_qos_cfg.creq_vblank,
++		pipe_qos_cfg.danger_vblank,
+ 		pdpu->is_rt_pipe);
  
- 	pdpu->pipe_hw->ops.setup_danger_safe_lut(pdpu->pipe_hw,
+ 	pdpu->pipe_hw->ops.setup_qos_ctrl(pdpu->pipe_hw,
 -			&pdpu->pipe_qos_cfg);
-+			danger_lut, safe_lut);
++			&pipe_qos_cfg);
  }
  
  /**
