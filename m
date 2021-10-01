@@ -2,108 +2,94 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C6CEA41F36C
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Oct 2021 19:43:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8D22241F34D
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Oct 2021 19:42:19 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354623AbhJARo4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Oct 2021 13:44:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43018 "EHLO
+        id S231573AbhJARoA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Oct 2021 13:44:00 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42722 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1353953AbhJARo4 (ORCPT
+        with ESMTP id S229833AbhJARn7 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Oct 2021 13:44:56 -0400
-Received: from mail-lf1-x12e.google.com (mail-lf1-x12e.google.com [IPv6:2a00:1450:4864:20::12e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A88FC06177D
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Oct 2021 10:43:11 -0700 (PDT)
-Received: by mail-lf1-x12e.google.com with SMTP id x27so41247426lfa.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Oct 2021 10:43:11 -0700 (PDT)
+        Fri, 1 Oct 2021 13:43:59 -0400
+Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 260CEC061775
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Oct 2021 10:42:15 -0700 (PDT)
+Received: by mail-ot1-x335.google.com with SMTP id 97-20020a9d006a000000b00545420bff9eso12451265ota.8
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Oct 2021 10:42:15 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=trOpTX3fPgPSfjOpDMDPYXwd4LNjI9d/+tq2q/EXfXQ=;
-        b=KI3fJiRswZHK7JIIXimHTd8OowVIiXi/9S53GbwPQ83bF/hY52XkV0A9vlrTu+XBf6
-         Y63wVv35AvDlsSlaO6hsekVqxNao1ElfQNxyhV8XtgGYuZS7p3RCZSy27g2Vm9ErDf4c
-         AKLSENXIget1Mxj9It9IJBJFVM7fA5r1hVRrzLfyGI+UeHSCWlx8b4N+FHesI8dCOn+Y
-         jVVqYwwcBZ4LPGR8DFafriSOG78Tuov+fIPsyruyJ/p6h5mrTwHUOctS/ioY2nN5zl76
-         Fdx1siPDvoxni6Hvn3dPpXzTLCD/83TR630uVYjaQAWvTqiHgA2XqKyd8azozC1SGmWf
-         owTg==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=T4Pk/SKGcDml8g9kQfIFxWSgB1QkZnzEqcqoMDRtiFU=;
+        b=VRR2kMxgmb9zJjO0qYX8lZqyUNeV+qdczrK/Y59b/4E3QvXYlZ0QNQ5xWsfIh6rK4H
+         nD4pIRu9YpKAIAdKd4oIkEF5ff3HecWkEyDSfCgCzmipUezsGOpwt1SxEu3gQbyT0ESX
+         nKFje9Tgi0BiW6/BVW4wLn1l4GLuvW2UMx7naANaAnWjU+st9NQKlnGP+yeh/ZWdSEG2
+         kfk6c3KYIkOzZN4LkqhYvnfEu+uBHf/g74EKVcCHmv5Ghd/hqILcluFBIBM/RO8lFyFx
+         ZMNd1UynGsc3QBwsehEFGtmj3RGwdff8DeSzbHhGQAV1ziSq/XR+ACZlKODvoO079f5N
+         yg8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=trOpTX3fPgPSfjOpDMDPYXwd4LNjI9d/+tq2q/EXfXQ=;
-        b=f1GpOAJQUDwsXDZkPV8etnOQKS+E1/Y44jZU2aitIQBDLtyKm42fSDwwdu8x80Egfm
-         YBkWzz8u2UCZyNiT8QLOMqjYbho4xDl2OuPBbDRrtaqlH0aDAFdSxXke+3ca4GhoUavq
-         RasPJJ0yoWJSBHC3TMtoH/w81g1Josq82dZEGAUpgqqx5jAifBDkVuqihC8jj03SrKko
-         ip+rI7aUKJKjcMdTRF6scrdmcnzqBks+nHI1z8+zMsL1Xadvw/UQx0P54sSCkpKtLM0k
-         asTsYFUaDOAysvztVtTG8Y2KvT014wA5hcHIY3G/jKfBwREhy4Uj7ycoCVHcoxDAje5/
-         i+Dw==
-X-Gm-Message-State: AOAM533ytJ7VBzSLf5lP+mO/0bbc/PikSs3HEM0U1HjYQjKTSoRwxAFr
-        wiXJ+MBdRlXWDYb9sLUSPbGzgg==
-X-Google-Smtp-Source: ABdhPJwnqJ4zOBa3TwxdlBctEXCtk8ih+ennQVb4Li8mAsgMGpf5gT3g7NpA8Y+kGCVKPaXiLBBb9A==
-X-Received: by 2002:ac2:489b:: with SMTP id x27mr6563941lfc.43.1633110189970;
-        Fri, 01 Oct 2021 10:43:09 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id v3sm873116lfq.70.2021.10.01.10.43.09
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Oct 2021 10:43:09 -0700 (PDT)
-Subject: Re: [PATCH] drm/msm/dp: Remove redundant initialization of variable
- bpp
-To:     Colin King <colin.king@canonical.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        bh=T4Pk/SKGcDml8g9kQfIFxWSgB1QkZnzEqcqoMDRtiFU=;
+        b=6Bp6nfgemIb9oB3wH9eTLZgNxdO64EICqU1n+0p4a1V+tFnqFGKfmX7/yIhxh9NtyV
+         QmqiQ3uZ/8evwMCHfKsxyfFf3qZD8syM1mOZoCHsVahlDncaschVANUj6q1oixRpEp2t
+         egIIbPl2ImkGxPg8gP9pzekfB/Zw8OiFi5UlqSwBiANF0CvRd0qWvTyOmMszJjCDt4nf
+         WCRHDLI3HXUZKii4LvGdWnOE06JBzRLNS9+869yPFFztX+4T/8JSzQN8Itr9r6J8otGV
+         VBUsnQ41gKapMJOEXPMfKW5xk5cUkGKRbeDCODZPlX1PYw/ccap/JUJTAAZ1IlCnWKZv
+         mrCg==
+X-Gm-Message-State: AOAM530Trc5X46K84M3V+mfNlQ4VxqNC7vg/uYZeDEC4+0FmxrOohqTu
+        FAv7Z4FqGh46dy19nSygu1iJWw==
+X-Google-Smtp-Source: ABdhPJwsyNL/kZct1ui5XlNR0vlk5yVHdKEYNUXX7kt5RL34oCziPyKWeZrHRi9vLGJtc5+BkxMkzg==
+X-Received: by 2002:a9d:6399:: with SMTP id w25mr11409273otk.53.1633110134535;
+        Fri, 01 Oct 2021 10:42:14 -0700 (PDT)
+Received: from localhost.localdomain ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id u15sm1369264oon.35.2021.10.01.10.42.13
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Oct 2021 10:42:14 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
-References: <20210929105458.209895-1-colin.king@canonical.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <f0d9d9f5-2f6f-8936-1a6d-825ce07a5d65@linaro.org>
-Date:   Fri, 1 Oct 2021 20:43:08 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+Cc:     Kuogee Hsieh <khsieh@codeaurora.org>,
+        Tanmay Shah <tanmay@codeaurora.org>,
+        Chandan Uddaraju <chandanu@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: [PATCH v3 0/5] drm/msm/dp: Allow variation in register regions
+Date:   Fri,  1 Oct 2021 10:43:55 -0700
+Message-Id: <20211001174400.981707-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-In-Reply-To: <20210929105458.209895-1-colin.king@canonical.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29/09/2021 13:54, Colin King wrote:
-> From: Colin Ian King <colin.king@canonical.com>
-> 
-> The variable bpp is being initialized with a value that is never
-> read, it is being updated later on in both paths of an if statement.
-> The assignment is redundant and can be removed.
-> 
-> Addresses-Coverity: ("Unused value")
-> Signed-off-by: Colin Ian King <colin.king@canonical.com>
+It turns out that sc8180x (among others) doesn't have the same internal
+layout of the 4 subblocks. This series therefor modifies the binding to
+require all four regions to be described individually and then extends
+the driver to read these four regions. The driver will fall back to read
+the old single-reg format and apply the original offsets and sizes.
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Bjorn Andersson (5):
+  dt-bindings: msm/dp: Change reg definition
+  drm/msm/dp: Use devres for ioremap()
+  drm/msm/dp: Refactor ioremap wrapper
+  drm/msm/dp: Store each subblock in the io region
+  drm/msm/dp: Allow sub-regions to be specified in DT
 
-> ---
->   drivers/gpu/drm/msm/dp/dp_panel.c | 2 +-
->   1 file changed, 1 insertion(+), 1 deletion(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dp/dp_panel.c b/drivers/gpu/drm/msm/dp/dp_panel.c
-> index 2181b60e1d1d..71db10c0f262 100644
-> --- a/drivers/gpu/drm/msm/dp/dp_panel.c
-> +++ b/drivers/gpu/drm/msm/dp/dp_panel.c
-> @@ -234,7 +234,7 @@ u32 dp_panel_get_mode_bpp(struct dp_panel *dp_panel,
->   		u32 mode_edid_bpp, u32 mode_pclk_khz)
->   {
->   	struct dp_panel_private *panel;
-> -	u32 bpp = mode_edid_bpp;
-> +	u32 bpp;
->   
->   	if (!dp_panel || !mode_edid_bpp || !mode_pclk_khz) {
->   		DRM_ERROR("invalid input\n");
-> 
-
+ .../bindings/display/msm/dp-controller.yaml   |  13 ++-
+ drivers/gpu/drm/msm/dp/dp_catalog.c           |  64 ++++-------
+ drivers/gpu/drm/msm/dp/dp_parser.c            | 102 ++++++++++--------
+ drivers/gpu/drm/msm/dp/dp_parser.h            |  11 +-
+ 4 files changed, 100 insertions(+), 90 deletions(-)
 
 -- 
-With best wishes
-Dmitry
+2.29.2
+
