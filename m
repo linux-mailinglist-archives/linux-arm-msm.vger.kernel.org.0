@@ -2,110 +2,208 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2E4F841F696
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Oct 2021 23:00:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9406B41F6AC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Oct 2021 23:09:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232084AbhJAVCY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Oct 2021 17:02:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60612 "EHLO
+        id S1354493AbhJAVLF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Oct 2021 17:11:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34324 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229735AbhJAVCX (ORCPT
+        with ESMTP id S1354551AbhJAVLD (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Oct 2021 17:02:23 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EC479C061775
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Oct 2021 14:00:38 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id o59-20020a9d2241000000b0054745f28c69so13029719ota.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Oct 2021 14:00:38 -0700 (PDT)
+        Fri, 1 Oct 2021 17:11:03 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA8EBC0613E2
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Oct 2021 14:09:18 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id y26so43772219lfa.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Oct 2021 14:09:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=NC9cmhLrHdckMuK/r28TvZNjmeIVCX8ECTisIPvM3VE=;
-        b=XimCMpcHPEIPcAavsLIBQ7e4UqLEpKZsP5a1nMGqsGf5ozPAwSgkjCn3bwUoBZRJKG
-         38ks49GU17lkYI2bUN0zLpXw9zF9ykNXYAGdQOR6LoXpO9e6e7Qk22Vt0qU7gX8ejinL
-         9vTstYflDVB0JcqkSbf+/tuaA1by6r7A2zhQkDqQdZyrw0wphZmwvBATHJcr7X6uHDtO
-         4e+5tVG7WGVxi3W7EEG8Sv/2kLYkWsUa3qMSPzEieSJ56Ux7OgiTsVd40kvXZvD1GFwA
-         yRKjcpF1mNHBtiF7/rZkhigpYnHR6SvtN76kF3sXuZKVzyg8PBs9ClyTcUmqq/SWXvAt
-         K4PA==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=IebbO+ma/A1unpbrZ8oEgbjXE5CUx4OQ3cw7YGHtnpM=;
+        b=MmcVHRWhjWn9KKZ/McV6/+Uoq6LupKzHXYCrxqBnqPPByl9LyIApmjQdSArX5IS1wv
+         BDDVCN+9yflaCTtMHYwZQ+4iARy/KJH+03vwJWdUSqHCbaR8P4hY6Fu5VcgIiWf9nJg+
+         pRCmia4gT/fFJcgBptVySNk7evnIS9V1A20AeUhyqGO1gGfzw/TPA0Lk/xoNQSvF0Jws
+         qEWVvp4fE9+kqg5rgO8UrLQZZad35dzpWxvcgyhHeiQLr6Sjwi/y5KDKrEuL7tII4ejq
+         M0V94nquYSxGjWFn4H+ppA51fLS2INdCJs5U4TA5NqAG1rv7v4OALlsTqL6J+Y63pW1B
+         2NZw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=NC9cmhLrHdckMuK/r28TvZNjmeIVCX8ECTisIPvM3VE=;
-        b=xEdDiXhbIMqI0QzKrxWYHeNDiMApHj3aG0G5VIZzY+ZMTK+V1f3ZCaBUg2vQS/SwRB
-         wqzev+3hDr1PbKU0/9J3PY3ya7tAa8EFsT2PjQztQtkU87R73SL1A2psRGAL56WWDyJt
-         V3uvt1B2LCsfFs89m2ZecOii2wVREXgL55CWwk8KlY3OZY4dQnBQDKv9ns3UoZ6eSHaL
-         sGMAOWpXCdjHk9gR1G0XXk6ITvAInzsL0FOr6lyQihsBzO2tj0DBgWLZJAqFwGX35ZPV
-         w0qPzX1Iq5B0+m2LGqhRkL+MFBsbIAvVjbhu6YfLJk/4dqZRaBKHA4bHXhUJPB21qcEP
-         o/Hw==
-X-Gm-Message-State: AOAM532jNl/olV77WmxdYyJN1ixa7f3b03IxR1NhWNbyjJAGU7xEQNQb
-        zuRufWAui50/hMMedhliSpujJw==
-X-Google-Smtp-Source: ABdhPJwoHN/UBWInkMgxVgelTcg9Ak/uofV+tp/je2/pG4B/t/W7LZ0cC6Rvth9aFQh6/JZINgrG/Q==
-X-Received: by 2002:a9d:6396:: with SMTP id w22mr18800otk.26.1633122038272;
-        Fri, 01 Oct 2021 14:00:38 -0700 (PDT)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id j24sm539724otq.72.2021.10.01.14.00.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Oct 2021 14:00:37 -0700 (PDT)
-Date:   Fri, 1 Oct 2021 14:02:25 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=IebbO+ma/A1unpbrZ8oEgbjXE5CUx4OQ3cw7YGHtnpM=;
+        b=rVp/hfrFYEgApytW2+DKFuUbeEtrMTyNKzrXZlQ0x+uwHAei2zSH0LB71z5LeQcyu4
+         KxA1s91FLEqIFz18ta+I+HJht24qm/+726mAtJKohnnC/miUsqd4wHfFR/fPxQEBCCE0
+         mE1+6EHrMS1aifcOPjBOjbtPDfqM6R3DseBx2pIw/yuxkfAwUsmEslqx7LVFI9BPKxCC
+         8mIWQUVhF90Bs591PTYO+vJA5INqTj4VATKhQMqquguIKNj1PJD5uQpDkAKluf+dfxkF
+         LgT0OwLYo7sxoML3Aww0zmlzA3nB4lAMsSkbDtV0tLZnxjI5hTnYlAgrPjAEuOL2kkkZ
+         EP3g==
+X-Gm-Message-State: AOAM5303uwq5S0URyE44Qadop9mSXbqoFfyCXOqaaJx/nk1qo+xjxkol
+        j0Yof9jLgKDn/BMf0f7TK7bYOg==
+X-Google-Smtp-Source: ABdhPJw3pmsNgv9RYeS4huOp4qxuDaNliY0fsFTacMOU3A1X25G6Gt/OxqhoGbmcF5nk6N3Rx5wpkw==
+X-Received: by 2002:a05:6512:1399:: with SMTP id p25mr199919lfa.277.1633122557113;
+        Fri, 01 Oct 2021 14:09:17 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id u25sm846522lfr.279.2021.10.01.14.09.16
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 01 Oct 2021 14:09:16 -0700 (PDT)
+Subject: Re: [PATCH v3 3/3] drm/msm/mdp5: Add configuration for MDP v1.16
+To:     Sireesh Kodali <sireeshkodali1@gmail.com>,
+        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Vladimir Lypak <vladimir.lypak@gmail.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
         Abhinav Kumar <abhinavk@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Vara Reddy <varar@codeaurora.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>
-Subject: Re: [RFC] drm/msm/dp: Allow attaching a drm_panel
-Message-ID: <YVd3YdfgFVc0Br5T@ripper>
-References: <20210726231351.655302-1-bjorn.andersson@linaro.org>
- <CAD=FV=UGtHXD==Yy8CVCOioYGb=2hqGQOoNWftD1Jj7OiEp51g@mail.gmail.com>
+        James Willcox <jwillcox@squareup.com>
+References: <20210928131929.18567-1-sireeshkodali1@gmail.com>
+ <20210928131929.18567-4-sireeshkodali1@gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <06a40d0d-da39-ba0b-e932-d4435c0735d3@linaro.org>
+Date:   Sat, 2 Oct 2021 00:09:15 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAD=FV=UGtHXD==Yy8CVCOioYGb=2hqGQOoNWftD1Jj7OiEp51g@mail.gmail.com>
+In-Reply-To: <20210928131929.18567-4-sireeshkodali1@gmail.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 27 Aug 13:52 PDT 2021, Doug Anderson wrote:
-
-> Hi,
+On 28/09/2021 16:19, Sireesh Kodali wrote:
+> From: Vladimir Lypak <vladimir.lypak@gmail.com>
 > 
-> On Mon, Jul 26, 2021 at 4:15 PM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> >
-> > +static int dp_parser_find_panel(struct dp_parser *parser)
-> > +{
-> > +       struct device_node *np = parser->pdev->dev.of_node;
-> > +       int rc;
-> > +
-> > +       rc = drm_of_find_panel_or_bridge(np, 2, 0, &parser->drm_panel, NULL);
+> MDP version v1.16 is almost identical to v1.15 with most significant
+> difference being presence of second DSI interface. MDP v1.16 is found on
+> SoCs such as MSM8x53, SDM450, SDM632 (All with Adreno 506).
 > 
-> Why port 2? Shouldn't this just be port 1 always? The yaml says that
-> port 1 is "Output endpoint of the controller". We should just use port
-> 1 here, right?
+> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
+> Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
+
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+
+> ---
+>   drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c | 89 ++++++++++++++++++++++++
+>   1 file changed, 89 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
+> index 9741544ffc35..0d28c8ff4009 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
+> @@ -752,6 +752,94 @@ const struct mdp5_cfg_hw msm8x76_config = {
+>   	.max_clk = 360000000,
+>   };
+>   
+> +static const struct mdp5_cfg_hw msm8x53_config = {
+> +	.name = "msm8x53",
+> +	.mdp = {
+> +		.count = 1,
+> +		.caps = MDP_CAP_CDM |
+> +			MDP_CAP_SRC_SPLIT,
+> +	},
+> +	.ctl = {
+> +		.count = 3,
+> +		.base = { 0x01000, 0x01200, 0x01400 },
+> +		.flush_hw_mask = 0xffffffff,
+> +	},
+> +	.pipe_vig = {
+> +		.count = 1,
+> +		.base = { 0x04000 },
+> +		.caps = MDP_PIPE_CAP_HFLIP	|
+> +			MDP_PIPE_CAP_VFLIP	|
+> +			MDP_PIPE_CAP_SCALE	|
+> +			MDP_PIPE_CAP_CSC	|
+> +			MDP_PIPE_CAP_DECIMATION	|
+> +			MDP_PIPE_CAP_SW_PIX_EXT	|
+> +			0,
+> +	},
+> +	.pipe_rgb = {
+> +		.count = 2,
+> +		.base = { 0x14000, 0x16000 },
+> +		.caps = MDP_PIPE_CAP_HFLIP	|
+> +			MDP_PIPE_CAP_VFLIP	|
+> +			MDP_PIPE_CAP_DECIMATION	|
+> +			MDP_PIPE_CAP_SW_PIX_EXT	|
+> +			0,
+> +	},
+> +	.pipe_dma = {
+> +		.count = 1,
+> +		.base = { 0x24000 },
+> +		.caps = MDP_PIPE_CAP_HFLIP	|
+> +			MDP_PIPE_CAP_VFLIP	|
+> +			MDP_PIPE_CAP_SW_PIX_EXT	|
+> +			0,
+> +	},
+> +	.pipe_cursor = {
+> +		.count = 1,
+> +		.base = { 0x34000 },
+> +		.caps = MDP_PIPE_CAP_HFLIP	|
+> +			MDP_PIPE_CAP_VFLIP	|
+> +			MDP_PIPE_CAP_SW_PIX_EXT	|
+> +			MDP_PIPE_CAP_CURSOR	|
+> +			0,
+> +	},
+> +
+> +	.lm = {
+> +		.count = 3,
+> +		.base = { 0x44000, 0x45000 },
+> +		.instances = {
+> +				{ .id = 0, .pp = 0, .dspp = 0,
+> +				  .caps = MDP_LM_CAP_DISPLAY |
+> +					  MDP_LM_CAP_PAIR },
+> +				{ .id = 1, .pp = 1, .dspp = -1,
+> +				  .caps = MDP_LM_CAP_DISPLAY },
+> +			     },
+> +		.nb_stages = 5,
+> +		.max_width = 2048,
+> +		.max_height = 0xFFFF,
+> +	},
+> +	.dspp = {
+> +		.count = 1,
+> +		.base = { 0x54000 },
+> +
+> +	},
+> +	.pp = {
+> +		.count = 2,
+> +		.base = { 0x70000, 0x70800 },
+> +	},
+> +	.cdm = {
+> +		.count = 1,
+> +		.base = { 0x79200 },
+> +	},
+> +	.intf = {
+> +		.base = { 0x6a000, 0x6a800, 0x6b000 },
+> +		.connect = {
+> +			[0] = INTF_DISABLED,
+> +			[1] = INTF_DSI,
+> +			[2] = INTF_DSI,
+> +		},
+> +	},
+> +	.max_clk = 400000000,
+> +};
+> +
+>   static const struct mdp5_cfg_hw msm8917_config = {
+>   	.name = "msm8917",
+>   	.mdp = {
+> @@ -1151,6 +1239,7 @@ static const struct mdp5_cfg_handler cfg_handlers_v1[] = {
+>   	{ .revision = 7, .config = { .hw = &msm8x96_config } },
+>   	{ .revision = 11, .config = { .hw = &msm8x76_config } },
+>   	{ .revision = 15, .config = { .hw = &msm8917_config } },
+> +	{ .revision = 16, .config = { .hw = &msm8x53_config } },
+>   };
+>   
+>   static const struct mdp5_cfg_handler cfg_handlers_v3[] = {
 > 
 
-Finally got back to this, changed it to 1 and figured out why I left it
-at 2.
 
-drm_of_find_panel_or_bridge() on a DP controller will find the of_graph
-reference to the USB-C controller, scan through the registered panels
-and conclude that the of_node of the USB-C controller isn't a registered
-panel and return -EPROBE_DEFER.
-
-So I picked 2, because I'm not able to figure out a way to distinguish
-between a not yet probed panel and the USB-C controller...
-
-Any suggestions?
-
-Regards,
-Bjorn
+-- 
+With best wishes
+Dmitry
