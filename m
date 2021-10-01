@@ -2,132 +2,421 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 02DD241F116
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Oct 2021 17:20:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0FF6841F18F
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Oct 2021 17:52:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231928AbhJAPWk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Oct 2021 11:22:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38144 "EHLO
+        id S231765AbhJAPyc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Oct 2021 11:54:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45464 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355003AbhJAPWi (ORCPT
+        with ESMTP id S231621AbhJAPyb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Oct 2021 11:22:38 -0400
-Received: from mail-lf1-x132.google.com (mail-lf1-x132.google.com [IPv6:2a00:1450:4864:20::132])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 580EBC06177C
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Oct 2021 08:20:54 -0700 (PDT)
-Received: by mail-lf1-x132.google.com with SMTP id z24so40210630lfu.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Oct 2021 08:20:54 -0700 (PDT)
+        Fri, 1 Oct 2021 11:54:31 -0400
+Received: from mail-pg1-x536.google.com (mail-pg1-x536.google.com [IPv6:2607:f8b0:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2927EC06177C
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Oct 2021 08:52:47 -0700 (PDT)
+Received: by mail-pg1-x536.google.com with SMTP id 133so9832240pgb.1
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Oct 2021 08:52:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=a42zKH2Tz1xdsd82BNyM3/JzMce4gdtbfSOE4DnvM4I=;
-        b=gDvlAQfOEYKry6coVGHJcy7BwGm89sWKXZ10vwTmBlanwHmjpzrbSWRyesPq7+unE+
-         4e62mIX3xbLm+SvW2iXv8SXV9qXyfmFo0LBN11KC0bApcC3faYsj02W9yAxZKKZ7122Z
-         ixBcnqsN3KNraq8bpfs18/Gie9xSbXbxyZ+pU+64XGRdqntqmWnlVDrjMxl9FunijN0K
-         K6OWwFzP6ie948y/GBQo9DfbqrLCZOtlrGTNoV6MVMj8Bqbyws0WhmAvBaL5PkyYIrXP
-         zNxQyxJbuZ3MIFTTZA7TqXnTGyRXVt2VdO0GqvmRMc1/WTfdonQ2wjrRskWiAz+9L2MU
-         vpIw==
+        d=chromium.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=W/2GzNB3u7TT74q9PP+qr3+N2+FbkoiA6tUqxu1t9uk=;
+        b=BlZFV/FP1uVSPdR/tPI438iaxuP71Hl/02jq4Q+B9+U+0kjLBbKDPDjXSYC5UAbKOP
+         +OmHjKtRjb9gEJ9IUzlOvD4mVL4YkU0f3ifg0nBStp6Tn0WO8ubCRPHIfXdE5AAY5y0w
+         PGfluAAYRZjK7Oi0BJgcvYjs8gc+XFUorBLu4=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=a42zKH2Tz1xdsd82BNyM3/JzMce4gdtbfSOE4DnvM4I=;
-        b=C1/m/C86V/vTyx2mkPGpeFAfUce3zXEICb0zX4TGBy70LK6A2V9slPnOXg+G//9HDx
-         wSvjtUIqGw57Pj4UEAgvH+TF4+ePitFGlkYxy1Q1Fn0tQg3QcP2uk7zmr9Pgto2HO/7Q
-         HNv8TYlYkd16EdFLQ1KM1ldyv2PqowsTvBtm7kFxUTLgnxUMcmXkWkWrp/W8JSL3w+Y/
-         PS8nMrwo2T2nTf3hK5/3Au1jlacJZ0JmRX5erkOcHHY5ndtlWrZX5jRtcNo7F4ohuFTB
-         FesvNBmtkUNpdGEqwOYmtLh7014XRkWVtnBGH9nZ0ZW46gdqcRE3bgDWm/o9lj518GyS
-         4zcA==
-X-Gm-Message-State: AOAM531hIx3YHU3c6mwp/MQCVyYfJOZyONl7LmENYbMg7wvopCLEJYwd
-        197U2v/ZdoWeOmf7AVIGcL43qEL0+w4ppt/1
-X-Google-Smtp-Source: ABdhPJz5R8MadhnX8c6ibjK+02JQ4SKsSiXQURM7ZiOQIwjYP/d6zBf1bDX35CC2Hl/Bk+LtwFrhtA==
-X-Received: by 2002:a05:651c:1790:: with SMTP id bn16mr12325475ljb.457.1633101652679;
-        Fri, 01 Oct 2021 08:20:52 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id j16sm212083lfk.257.2021.10.01.08.20.52
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=W/2GzNB3u7TT74q9PP+qr3+N2+FbkoiA6tUqxu1t9uk=;
+        b=ceuUzo7S6danFDZ70UZpUk1mZ2AaF5bn0DlXf4wvH3gnIPcEes7CbdGYLs8BxKmJPt
+         htu2AF607C2f+yShQnj8P+Wsn1h0J5ePsMhbo8OAa5ILp9HBORQdEiZ2XqGaBcD3asRc
+         wH41UoteggYf/TCRaVAd3V6Z9ixz/ZZ87l6LfwLpNKEocJ0DAGB9/zW3HIzl28JIRfU+
+         emzE92DK8AwvsA6Cu9aiRcRppx7tQtb1qP7+28Q+8h8DNBIr010lhm21Kj12FNPq6f99
+         k6JsL6judjK7iitOfq7xirLjYjEtAGsFpd2Te26G3TTvYdh0Yia/u+5hdLAoP9TeYqWP
+         r/6w==
+X-Gm-Message-State: AOAM530XD2G1+ZBVqDh7HZMmItjYEXnGKUQn9jf1fdnKTgFW4UlkGA/f
+        Xe9KzsrdOUk/w/Hsek4ODca8VRAU7KpH8A==
+X-Google-Smtp-Source: ABdhPJxbW/w0AacFdyk0ikXT+slEN8/ifKr5jE1IrW4gPBXgMAtnj1+sCIqCQNOpG9muNHWycaARPw==
+X-Received: by 2002:a63:f30c:: with SMTP id l12mr10226543pgh.360.1633103566594;
+        Fri, 01 Oct 2021 08:52:46 -0700 (PDT)
+Received: from localhost ([2620:15c:202:201:f57f:9f3a:1408:a801])
+        by smtp.gmail.com with UTF8SMTPSA id n14sm6885211pgd.48.2021.10.01.08.52.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Oct 2021 08:20:52 -0700 (PDT)
-Subject: Re: [PATCH] drm/msm/dsi: Fix some reference counted resource leaks
-To:     Christophe JAILLET <christophe.jaillet@wanadoo.fr>,
-        robdclark@gmail.com, sean@poorly.run, airlied@linux.ie,
-        daniel@ffwll.ch, abhinavk@codeaurora.org, hali@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        kernel-janitors@vger.kernel.org
-References: <f15bc57648a00e7c99f943903468a04639d50596.1628241097.git.christophe.jaillet@wanadoo.fr>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <9ea0857b-fca5-3011-6ebb-3ff6173ac037@linaro.org>
-Date:   Fri, 1 Oct 2021 18:20:51 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Fri, 01 Oct 2021 08:52:46 -0700 (PDT)
+Date:   Fri, 1 Oct 2021 08:52:44 -0700
+From:   Matthias Kaehlcke <mka@chromium.org>
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        swboyd@chromium.org, judyhsiao@chromium.org,
+        Venkata Prasad Potturu <potturu@codeaurora.org>
+Subject: Re: [PATCH 4/8] ASoC: qcom: Add lapss CPU driver for codec dma
+ control
+Message-ID: <YVcuzEXA4Ej3HpHH@google.com>
+References: <1633087292-1378-1-git-send-email-srivasam@codeaurora.org>
+ <1633087292-1378-5-git-send-email-srivasam@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <f15bc57648a00e7c99f943903468a04639d50596.1628241097.git.christophe.jaillet@wanadoo.fr>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=utf-8
+Content-Disposition: inline
+In-Reply-To: <1633087292-1378-5-git-send-email-srivasam@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/08/2021 12:15, Christophe JAILLET wrote:
-> 'of_find_device_by_node()' takes a reference that must be released when
-> not needed anymore.
-> This is expected to be done in 'dsi_destroy()'.
-> 
-> However, there are 2 issues in 'dsi_get_phy()'.
-> 
-> First, if 'of_find_device_by_node()' succeeds but 'platform_get_drvdata()'
-> returns NULL, 'msm_dsi->phy_dev' will still be NULL, and the reference
-> won't be released in 'dsi_destroy()'.
-> 
-> Secondly, as 'of_find_device_by_node()' already takes a reference, there is
-> no need for an additional 'get_device()'.
-> 
-> Move the assignment to 'msm_dsi->phy_dev' a few lines above and remove the
-> unneeded 'get_device()' to solve both issues.
-> 
-> Fixes: ec31abf6684e ("drm/msm/dsi: Separate PHY to another platform device")
-> Signed-off-by: Christophe JAILLET <christophe.jaillet@wanadoo.fr>
+On Fri, Oct 01, 2021 at 04:51:28PM +0530, Srinivasa Rao Mandadapu wrote:
+> Subject: ASoC: qcom: Add lapss CPU driver for codec dma control
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+nit: s/lapss/lpass/
 
-> ---
-> Review carefully, management of reference counted resources is sometimes
-> tricky.
-> ---
->   drivers/gpu/drm/msm/dsi/dsi.c | 6 +++---
->   1 file changed, 3 insertions(+), 3 deletions(-)
+>
+> Add lpass cpu driver to support audio over codec dma for
+> ADSP bypass usecase.
 > 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi.c b/drivers/gpu/drm/msm/dsi/dsi.c
-> index 75afc12a7b25..29d11f1cb79b 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi.c
-> @@ -26,8 +26,10 @@ static int dsi_get_phy(struct msm_dsi *msm_dsi)
->   	}
->   
->   	phy_pdev = of_find_device_by_node(phy_node);
-> -	if (phy_pdev)
-> +	if (phy_pdev) {
->   		msm_dsi->phy = platform_get_drvdata(phy_pdev);
-> +		msm_dsi->phy_dev = &phy_pdev->dev;
+> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> ---
+>  sound/soc/qcom/lpass-cdc-dma.c | 263 +++++++++++++++++++++++++++++++++++++++++
+>  sound/soc/qcom/lpass.h         |   1 +
+>  2 files changed, 264 insertions(+)
+>  create mode 100644 sound/soc/qcom/lpass-cdc-dma.c
+> 
+> diff --git a/sound/soc/qcom/lpass-cdc-dma.c b/sound/soc/qcom/lpass-cdc-dma.c
+> new file mode 100644
+> index 0000000..56b3791
+> --- /dev/null
+> +++ b/sound/soc/qcom/lpass-cdc-dma.c
+> @@ -0,0 +1,263 @@
+> +// SPDX-License-Identifier: GPL-2.0-only
+> +/*
+> + * Copyright (c) 2021 The Linux Foundation. All rights reserved.
+> + *
+> + * lpass-cdc-dma.c -- ALSA SoC WCD -CPU DAI driver for QTi LPASS WCD
+> + */
+> +
+> +#include <linux/module.h>
+> +#include <sound/soc.h>
+> +#include <sound/soc-dai.h>
+> +
+> +#include "lpass-lpaif-reg.h"
+> +#include "lpass.h"
+> +
+> +static int __lpass_platform_codec_intf_init(struct snd_soc_dai *dai,
+> +					 struct snd_pcm_substream *substream)
+> +{
+> +	struct snd_soc_pcm_runtime *soc_runtime = asoc_substream_to_rtd(substream);
+> +	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(soc_runtime, 0);
+> +	struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
+> +	struct snd_pcm_runtime *rt = substream->runtime;
+> +	struct lpass_pcm_data *pcm_data = rt->private_data;
+> +	struct lpass_variant *v = drvdata->variant;
+> +	struct lpaif_dmactl *dmactl;
+> +	struct regmap *map;
+> +	int dir = substream->stream;
+> +	int ret, id;
+> +	unsigned int dai_id = cpu_dai->driver->id;
+> +
+> +	if (dir ==  SNDRV_PCM_STREAM_PLAYBACK) {
+
+s/ ==  / == /
+
+> +		dmactl = drvdata->rxtx_rd_dmactl;
+> +		map = drvdata->rxtx_lpaif_map;
+> +		id = pcm_data->dma_ch;
+> +	} else {
+> +		if (dai_id == LPASS_CDC_DMA_TX3) {
+> +			dmactl = drvdata->rxtx_wr_dmactl;
+> +			map = drvdata->rxtx_lpaif_map;
+> +			id = pcm_data->dma_ch - v->rxtx_wrdma_channel_start;
+> +		} else if (dai_id == LPASS_CDC_DMA_VA_TX0) {
+> +			dmactl = drvdata->va_wr_dmactl;
+> +			map = drvdata->va_lpaif_map;
+> +			id = pcm_data->dma_ch - v->va_wrdma_channel_start;
+> +		}
 > +	}
->   
->   	of_node_put(phy_node);
->   
-> @@ -36,8 +38,6 @@ static int dsi_get_phy(struct msm_dsi *msm_dsi)
->   		return -EPROBE_DEFER;
->   	}
->   
-> -	msm_dsi->phy_dev = get_device(&phy_pdev->dev);
-> -
->   	return 0;
->   }
->   
+
+'map' is assigned here, but not used in the rest of the function, drop it.
+
+> +
+> +	if (dir ==  SNDRV_PCM_STREAM_PLAYBACK) {
+
+s/ ==  / == /
+
+> +		ret = regmap_fields_write(dmactl->codec_intf, id, LPASS_CDC_DMA_RX0_INTERFACE);
+> +		if (ret) {
+> +			dev_err(soc_runtime->dev,
+> +				"error writing to rdmactl reg: %d\n", ret);
+
+Some of the logs print the register name, others don't, why not log it
+always?
+
+> +			return ret;
+> +		}
+> +	    ret = regmap_fields_write(dmactl->codec_fs_sel, id, 0x0);
+
+fix indentation
+
+> +		if (ret) {
+> +			dev_err(soc_runtime->dev,
+> +				"error writing to rdmactl reg: %d\n", ret);
+> +			return ret;
+> +		}
+> +		ret = regmap_fields_write(dmactl->codec_fs_delay, id, 0x0);
+> +		if (ret) {
+> +			dev_err(soc_runtime->dev,
+> +				"error writing to rdmactl codec_fs_delay reg field: %d\n", ret);
+> +			return ret;
+> +		}
+> +		ret = regmap_fields_write(dmactl->codec_pack, id, 0x1);
+> +		if (ret) {
+> +			dev_err(soc_runtime->dev,
+> +				"error writing to rdmactl codec_pack reg field: %d\n", ret);
+> +			return ret;
+> +		}
+> +		ret = regmap_fields_write(dmactl->codec_enable, id, LPAIF_DMACTL_ENABLE_ON);
+> +		if (ret) {
+> +			dev_err(soc_runtime->dev,
+> +				"error writing to rdmactl reg: %d\n", ret);
+> +			return ret;
+> +		}
+> +
+
+Remove empty line
+
+> +	} else {
+> +		ret = regmap_fields_write(dmactl->codec_intf, id, LPASS_CDC_DMA_INTERFACE(dai_id));
+> +		if (ret) {
+> +			dev_err(soc_runtime->dev,
+> +				"error writing to wrdmactl codec_intf reg field: %d\n", ret);
+> +			return ret;
+> +		}
+> +	    ret = regmap_fields_write(dmactl->codec_fs_sel, id, 0x0);
+
+fix indentation
+
+> +		if (ret) {
+> +			dev_err(soc_runtime->dev,
+> +				"error writing to wrdmactl codec_fs_sel reg field: %d\n", ret);
+> +			return ret;
+> +		}
+> +		ret = regmap_fields_write(dmactl->codec_fs_delay, id, 0x0);
+> +		if (ret) {
+> +			dev_err(soc_runtime->dev,
+> +				"error writing to wrdmactl codec_fs_delay reg field: %d\n", ret);
+> +			return ret;
+> +		}
+> +		ret = regmap_fields_write(dmactl->codec_pack, id, 0x1);
+> +		if (ret) {
+> +			dev_err(soc_runtime->dev,
+> +				"error writing to wrdmactl codec_pack reg field: %d\n", ret);
+> +			return ret;
+> +		}
+> +		ret = regmap_fields_write(dmactl->codec_enable, id, LPAIF_DMACTL_ENABLE_ON);
+> +		if (ret) {
+> +			dev_err(soc_runtime->dev,
+> +				"error writing to wrdmactl codec_enable reg field: %d\n", ret);
+> +			return ret;
+> +		}
+
+The last four register writes are exactly the same in both branches, only the
+logging distinguishes between 'rdmactl' and 'wrdmactl'. Those should be in the
+main branch, if you really need to distinguish between 'rdmactl' and 'wrdmactl'
+in the logging you can assign a string pointer in the 'if (dir == SNDRV_PCM_STREAM_PLAYBACK)'
+branches.
+
+> +	}
+> +	return 0;
+> +}
+> +
+> +static int lpass_wcd_daiops_startup(struct snd_pcm_substream *substream,
+> +		struct snd_soc_dai *dai)
+> +{
+> +	struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
+> +	int ret, i;
+> +
+> +	for (i = 0; i < drvdata->cdc_num_clks; i++) {
+> +		ret = clk_prepare_enable(drvdata->cdc_dma_clks[i]);
+> +		if (ret) {
+> +			dev_err(dai->dev, "error in enabling cdc dma clks: %d\n", ret);
+> +			return ret;
+
+Disable clocks that have been enabled previously?
+
+> +		}
+> +	}
+> +
+> +	return 0;
+> +}
+> +
+> +static void lpass_wcd_daiops_shutdown(struct snd_pcm_substream *substream,
+> +		struct snd_soc_dai *dai)
+> +{
+> +	int i;
+> +	struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
+> +
+> +	for (i = 0; i < drvdata->cdc_num_clks; i++)
+> +		clk_disable_unprepare(drvdata->cdc_dma_clks[i]);
+> +}
+> +
+> +static int lpass_wcd_daiops_hw_params(struct snd_pcm_substream *substream,
+> +		struct snd_pcm_hw_params *params, struct snd_soc_dai *dai)
+> +{
+> +	struct snd_soc_pcm_runtime *soc_runtime = asoc_substream_to_rtd(substream);
+> +	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(soc_runtime, 0);
+> +	struct lpaif_dmactl *dmactl;
+> +	struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
+> +	struct snd_pcm_runtime *rt = substream->runtime;
+> +	struct lpass_pcm_data *pcm_data = rt->private_data;
+> +	struct lpass_variant *v = drvdata->variant;
+> +	struct regmap *map;
+> +	int dir = substream->stream;
+> +	unsigned int ret, regval;
+> +	unsigned int channels = params_channels(params);
+> +	int id;
+> +	unsigned int dai_id = cpu_dai->driver->id;
+> +
+> +	if (dir == SNDRV_PCM_STREAM_PLAYBACK) {
+> +		dmactl = drvdata->rxtx_rd_dmactl;
+> +		map = drvdata->rxtx_lpaif_map;
+> +		id = pcm_data->dma_ch;
+> +	} else {
+> +		if (dai_id == LPASS_CDC_DMA_TX3) {
+> +			dmactl = drvdata->rxtx_wr_dmactl;
+> +			map = drvdata->rxtx_lpaif_map;
+> +			id = pcm_data->dma_ch - v->rxtx_wrdma_channel_start;
+> +		} else if (dai_id == LPASS_CDC_DMA_VA_TX0) {
+> +			dmactl = drvdata->va_wr_dmactl;
+> +			map = drvdata->va_lpaif_map;
+> +			id = pcm_data->dma_ch - v->va_wrdma_channel_start;
+> +		}
+> +	}
+
+The exact same code block is used 3 times in this driver. Add a helper with
+'substream' and 'dai' as parameters, which determines 'dmactl and 'id'.
+That would also make the variable declaration/assignment section of these
+functions signifcantly shorter.
+
+> +
+> +	switch (channels) {
+> +	case 1:
+> +		regval = LPASS_CDC_DMA_INTF_ONE_CHANNEL;
+> +		break;
+> +	case 2:
+> +		regval = LPASS_CDC_DMA_INTF_TWO_CHANNEL;
+> +		break;
+> +	case 4:
+> +		regval = LPASS_CDC_DMA_INTF_FOUR_CHANNEL;
+> +		break;
+> +	case 6:
+> +		regval = LPASS_CDC_DMA_INTF_SIX_CHANNEL;
+> +		break;
+> +	case 8:
+> +		regval = LPASS_CDC_DMA_INTF_EIGHT_CHANNEL;
+> +		break;
+> +	default:
+> +		dev_err(soc_runtime->dev, "invalid PCM config\n");
+> +		return -EINVAL;
+> +	}
+> +
+> +	ret = regmap_fields_write(dmactl->codec_channel, id, regval);
+> +	if (ret) {
+> +		dev_err(soc_runtime->dev,
+> +			"error writing to rdmactl codec_channel reg field: %d\n", ret);
+
+not necessarily 'rdmactl'.
+
+> +		return ret;
+> +	}
+> +	return ret;
+
+	return 0
+
+> +}
+> +
+> +static int lpass_wcd_daiops_trigger(struct snd_pcm_substream *substream,
+> +		int cmd, struct snd_soc_dai *dai)
+> +{
+> +	struct snd_soc_pcm_runtime *soc_runtime = asoc_substream_to_rtd(substream);
+> +	struct snd_soc_dai *cpu_dai = asoc_rtd_to_cpu(soc_runtime, 0);
+> +	struct lpass_data *drvdata = snd_soc_dai_get_drvdata(dai);
+> +	struct snd_pcm_runtime *rt = substream->runtime;
+> +	struct lpass_pcm_data *pcm_data = rt->private_data;
+> +	struct lpass_variant *v = drvdata->variant;
+> +	int dir = substream->stream;
+> +	struct lpaif_dmactl *dmactl;
+> +	struct regmap *map;
+> +	unsigned int dai_id = cpu_dai->driver->id;
+> +	int ret = 0, id;
+> +
+> +	if (dir == SNDRV_PCM_STREAM_PLAYBACK) {
+> +		dmactl = drvdata->rxtx_rd_dmactl;
+> +		map = drvdata->rxtx_lpaif_map;
+> +		id = pcm_data->dma_ch;
+> +	} else {
+> +		if (dai_id == LPASS_CDC_DMA_TX3) {
+> +			dmactl = drvdata->rxtx_wr_dmactl;
+> +			map = drvdata->rxtx_lpaif_map;
+> +			id = pcm_data->dma_ch - v->rxtx_wrdma_channel_start;
+> +		} else if (dai_id == LPASS_CDC_DMA_VA_TX0) {
+> +			dmactl = drvdata->va_wr_dmactl;
+> +			map = drvdata->va_lpaif_map;
+> +			id = pcm_data->dma_ch - v->va_wrdma_channel_start;
+> +		}
+> +	}
+
+see above
+
+> +	switch (cmd) {
+> +	case SNDRV_PCM_TRIGGER_START:
+> +	case SNDRV_PCM_TRIGGER_RESUME:
+> +	case SNDRV_PCM_TRIGGER_PAUSE_RELEASE:
+> +		__lpass_platform_codec_intf_init(dai, substream);
+> +		break;
+> +	case SNDRV_PCM_TRIGGER_STOP:
+> +	case SNDRV_PCM_TRIGGER_SUSPEND:
+> +	case SNDRV_PCM_TRIGGER_PAUSE_PUSH:
+> +		ret = regmap_fields_write(dmactl->codec_enable, id, LPAIF_DMACTL_ENABLE_OFF);
+> +		if (ret) {
+> +			dev_err(soc_runtime->dev,
+> +				"error writing to rdmactl reg: %d\n", ret);
+
+not necessarily rdmactl, better log that it's the codec enable reg.
+
+> +			return ret;
+> +		}
+> +
+> +		break;
+> +	}
+> +	return ret;
+> +}
+> +
+> +const struct snd_soc_dai_ops asoc_qcom_lpass_wcd_dai_ops = {
+> +	.startup	= lpass_wcd_daiops_startup,
+> +	.shutdown	= lpass_wcd_daiops_shutdown,
+> +	.hw_params	= lpass_wcd_daiops_hw_params,
+> +	.trigger	= lpass_wcd_daiops_trigger,
+> +};
+> +EXPORT_SYMBOL_GPL(asoc_qcom_lpass_wcd_dai_ops);
+> +
+> +MODULE_DESCRIPTION("QTi LPASS CDC DMA Driver");
+> +MODULE_LICENSE("GPL v2");
+> diff --git a/sound/soc/qcom/lpass.h b/sound/soc/qcom/lpass.h
+> index 058b42d..e0ea698 100644
+> --- a/sound/soc/qcom/lpass.h
+> +++ b/sound/soc/qcom/lpass.h
+> @@ -418,5 +418,6 @@ int asoc_qcom_lpass_cpu_dai_probe(struct snd_soc_dai *dai);
+>  extern const struct snd_soc_dai_ops asoc_qcom_lpass_cpu_dai_ops;
+>  int lpass_cpu_pcm_new(struct snd_soc_pcm_runtime *rtd,
+>  				struct snd_soc_dai *dai);
+> +extern const struct snd_soc_dai_ops asoc_qcom_lpass_wcd_dai_ops;
+>  
+>  #endif /* __LPASS_H__ */
+> -- 
+> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+> is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
 > 
-
-
--- 
-With best wishes
-Dmitry
