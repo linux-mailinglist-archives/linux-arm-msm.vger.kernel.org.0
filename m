@@ -2,87 +2,53 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 39FF841E8DF
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Oct 2021 10:16:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 686AF41E8E7
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Oct 2021 10:17:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352331AbhJAISV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Oct 2021 04:18:21 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33870 "EHLO mail.kernel.org"
+        id S241603AbhJAITG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Oct 2021 04:19:06 -0400
+Received: from mail.kernel.org ([198.145.29.99]:34188 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231327AbhJAISM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Oct 2021 04:18:12 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 41CB7615A4;
-        Fri,  1 Oct 2021 08:16:26 +0000 (UTC)
+        id S231161AbhJAITF (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 1 Oct 2021 04:19:05 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 0785361A57;
+        Fri,  1 Oct 2021 08:17:20 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1633076188;
-        bh=0WyIYGVy95a4Hf9zq1uMRFezhbR9FuA0Atxqav/Yddg=;
+        s=k20201202; t=1633076242;
+        bh=b47P8z/W2i1bDRrOsD/Ji/gwBq3k4b2HBXMWS7tzHHg=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=em7oJ774XXNZKeM4ZYSHcAyi1rpWJYjh+u+tMJuJVEt4KCscEPHlmRdxHekUAREhp
-         puOEEzRorZMgmde5IAD0bGX+0fsBAPi06Iwf/7BUqG6nzpjylVSG0w88xSL/1OppOV
-         VB/ZzdVUvSKbRCVBVyTHldYLWU8v1l/zOac4TuaeZIyjrPUjk4mCWpuHm7vhnaoC0c
-         8VREGvd47L3+++U6uCnGsgDHUkTzfCTL6qWMl7qj5ljJ1/AngHygzC8buRQ//xu5IS
-         sOEpdg0SJut6zRd2Dkf64sVDcDxxf2ZQru5eDbL9SkPl+YWh98v/xeikrX5bCNCYZl
-         NoEnl/QBUX78w==
-Date:   Fri, 1 Oct 2021 13:46:23 +0530
+        b=TZ94LUBtNi1J3Z3D5NGdHA3FC3szbke8YAnGq+3WAzG5r3VmW00Jr9rQTeZz4/5PE
+         QCzy5MIYHxj2257fGcuNsigrGml0xL1+9rYrx3wUR0UwvYTJPSgpHKcjsdxBNn4rhh
+         rVmHEaXWMpPc0uDG5YBNOM1P+01sruApPJrDtTtL1D80LE5MkhYi1xznbSvbJ7j+S8
+         NLVUS3R51+rDWWiK9Fd8pzHHT+e2bfwrBh9SX5yj6lrFz6EdKTw0kxdf7xkCGNXmHP
+         L/+OfmDPjl6l1KIRZkb3vkEWVjCnP8f6cz8sxF4CU6AOGoLdYPa2abxk9o4W6uV314
+         iubZqr0N2KOqA==
+Date:   Fri, 1 Oct 2021 13:47:18 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Shawn Guo <shawn.guo@linaro.org>
+To:     Shawn Guo <shawnguo@kernel.org>
 Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Jami Kettunen <jamipkettunen@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
         linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/3] Add missing vdd-supply for QUSB2 PHY
-Message-ID: <YVbD12kTfbGmRYId@matsya>
-References: <20210928022002.26286-1-shawn.guo@linaro.org>
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Shawn Guo <shawn.guo@linaro.org>
+Subject: Re: [PATCH] dt-bindings: phy: qcom,qmp: Update maintainer email
+Message-ID: <YVbEDnMHx+vte1oh@matsya>
+References: <20210927071639.6225-1-shawnguo@kernel.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210928022002.26286-1-shawn.guo@linaro.org>
+In-Reply-To: <20210927071639.6225-1-shawnguo@kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Shawn,
+On 27-09-21, 15:16, Shawn Guo wrote:
+> From: Shawn Guo <shawn.guo@linaro.org>
+> 
+> Manu's codeaurora.org email address bounces.  Before he comes
+> back with his new email, fill Vinod's address in there.
 
-On 28-09-21, 10:19, Shawn Guo wrote:
-> The series adds missing vdd-supply for QUSB2 PHY which is required for
-> digital circuit.  The driver works right now likely because firmware
-> already sets it up.  Add it to bindings, driver and DTS that miss the
-> supply.
-> 
-> It should not cause problem for existing DTBs:
-> - SC7180, SDM630, SDM845 based platforms already specified vdd-supply
->   in the DTBs.
-> - MSM8996 and MSM8998 platform DTBs miss vdd-supply, but dummy regulator
->   will ensure QUSB2 PHY driver works as before on these platforms.
-
-What about the rest.. I checked SM8350 and SM8250 mtp ones are missing
-this. With the property made mandatory, I guess it would cause these to
-fail right..
-
-> 
-> Changes for v2:
-> - Correct copy & paste error on vdd-supply name in bindings doc.
-> 
-> 
-> Shawn Guo (3):
->   dt-bindings: phy: qcom,qusb2: Add missing vdd-supply
->   phy: qcom-qusb2: Add missing vdd supply
->   arm64: dts: qcom: Add missing vdd-supply for QUSB2 PHY
-> 
->  Documentation/devicetree/bindings/phy/qcom,qusb2-phy.yaml | 6 ++++++
->  arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi              | 2 ++
->  arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone.dtsi    | 1 +
->  arch/arm64/boot/dts/qcom/msm8998-clamshell.dtsi           | 1 +
->  arch/arm64/boot/dts/qcom/msm8998-oneplus-common.dtsi      | 1 +
->  drivers/phy/qualcomm/phy-qcom-qusb2.c                     | 2 +-
->  6 files changed, 12 insertions(+), 1 deletion(-)
-> 
-> -- 
-> 2.17.1
+Sure if he is back, will add. Thanks applied now
 
 -- 
 ~Vinod
