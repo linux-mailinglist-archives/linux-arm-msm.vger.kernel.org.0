@@ -2,137 +2,222 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5E63041F6F3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Oct 2021 23:31:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D94C741F70E
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Oct 2021 23:45:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1355382AbhJAVc5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Oct 2021 17:32:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39234 "EHLO
+        id S239989AbhJAVra (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Oct 2021 17:47:30 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42516 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229727AbhJAVc5 (ORCPT
+        with ESMTP id S230220AbhJAVr3 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Oct 2021 17:32:57 -0400
-Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47C76C06177F
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Oct 2021 14:31:12 -0700 (PDT)
-Received: by mail-wr1-x42a.google.com with SMTP id v17so17444190wrv.9
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Oct 2021 14:31:12 -0700 (PDT)
+        Fri, 1 Oct 2021 17:47:29 -0400
+Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5C98C061775
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Oct 2021 14:45:44 -0700 (PDT)
+Received: by mail-lf1-x12a.google.com with SMTP id i4so44265342lfv.4
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Oct 2021 14:45:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=gbMaNhtOH4nXLp4HUS2ZPT1VowmcEtHTXpHcBFPpVz4=;
-        b=GepQiSuw0T0mJ1Cm1ZrL8yaNRxwFtjYqccsjcsM+yFgmRwMWX2QtZTUgab7+hyDtfV
-         r3qnReN67T/1jtXEkurkt7QPwLn3gzSIhvvpi0/DweLrDJ4q62exrQFKdxTg1znpJwVO
-         2mLTd4Mld7lyUU9pRGybmMJq4TWpM70wiwMIez9+bcVXsJPAxDVo4p7fSS1jtS7d0iWs
-         2oKVY/Qv9KDrvGuO0+/bhW0VhrtazQcCDhK1FgyIYEm7P6oAgpU+hV/qFuwRB6JBhB57
-         zNDApFqcoYy2GAKX3fH6Av8P2Qp1hhWNfApIeJV+NjCruyyCpYApexzH+vK2MDsUwwIE
-         +aVQ==
+        bh=/3QM+JWeDJkTe4t3CtmCDkFs9BoPpAtgcYva2gyfDlw=;
+        b=pB5FIZYV+BREE/kNjfkIrKBciv7pI7+03MvHIx12OEzfaXErvh15RwP6E4Yk9Z3iXq
+         Y0CutAM4QjWI7YVk4GT2mgln5Fg1QDDIOCSTbk6sfPiQbyTDTaG8Cl8Bnig4FvqnXBzO
+         AyetwfEYYSdp6bqH6zuJ9r5u3KvqvqgmdSsakGxCh5cp2eWifGRTXwDd6gmcavGkqT91
+         9Mc1cW9c1W6G2AVcU/BB3qCM3hQLeYt/ZkG7VdxWTelg2SIEQMV5QCEL8SneCxxvem81
+         WIELhyeyScTgMdN0kSQQA8BboX3b4C1k6ArQB0PWsI/GPHlvGDPUEiIU2QfU7CqiFgAL
+         FDIQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=gbMaNhtOH4nXLp4HUS2ZPT1VowmcEtHTXpHcBFPpVz4=;
-        b=0KGPVu/doGDYHKjU20InWThjgJkrNSDD20czSP+T7BctIT7QhUAGpankzJioyzIzUc
-         2/UglZGaw4o+UVg/TXTghC+gabTUC+6k/1jXC8YHFWVN7jUQ7PGWcZBL9Cwt/vc3Pk37
-         N1Gv4MihpBmPoRBWtSvGWCgBV20k3mxFcpnj2RUVy3BgxIQpB4bReoJHI22M34coF5xO
-         c7I5c38bg7a+/MirD/oA7xS6FXPYioPe9l+CdtspLz2GWT+FG2i5PbJRHRVky/eti9cf
-         CDAdx5QD0J/eIqdb/WFHabixiDKJGCbqqq3xGhYX1Z/KmpHUDcZpG1nXBlS8S+x07qFg
-         qZ6Q==
-X-Gm-Message-State: AOAM530QqptbqzepX7TyoXoOYYdM7HMxOZHn1CzCosjpk08dhVJ8Q7JW
-        TllneS1xjcD9xv5ICJ44zW+Ufw==
-X-Google-Smtp-Source: ABdhPJw66kQ9/jT7l/6SvbcqiM7kpnCVCSg5UgghtKDOc3IWGsjuYaHH4/ti9PBB8a9opfK2qnJwsw==
-X-Received: by 2002:adf:a154:: with SMTP id r20mr203761wrr.326.1633123870708;
-        Fri, 01 Oct 2021 14:31:10 -0700 (PDT)
-Received: from [192.168.1.12] (hst-221-15.medicom.bg. [84.238.221.15])
-        by smtp.googlemail.com with ESMTPSA id d3sm7839997wrb.36.2021.10.01.14.31.09
+        bh=/3QM+JWeDJkTe4t3CtmCDkFs9BoPpAtgcYva2gyfDlw=;
+        b=j/zTK1d7ZBvbo3WYXQc08KOcVkmOeUS7mLtMb28jrSuocWk4JQeqN+qMnIAdgXzZyY
+         ciBPlHfpVXiw4XbgubmX1ICDLqLkxvuYfe6wwnMH3dr1ivBF1HM6bLmFZE+oje6MUURK
+         InGwtHvtBTdxN497GM8cS3EdcXP6ZLQbmCmTrtaikm0p6YwNFsy6NitmAt3RpJvYZgyJ
+         /iBbgnvngzKSLoRjANdUaDiK1+xHqsY4UOLa4KmnS0MQrQvgBnezUa5NXYB+OArmmmpq
+         78Fa0rmdRkhpcV4wjYmPUHapoOiQYfhRN9OrUfDkEEFlpxYVcpDKBm1otmY6SyYSNioZ
+         xFdA==
+X-Gm-Message-State: AOAM533PQk7jq7Tqbfr85RPIpLxN8gOrTVyiio9sng1oRm3mc7xLWhJF
+        NGgyovyaQCG8JpNdIUUlmTWMgg==
+X-Google-Smtp-Source: ABdhPJw6MWBrdW/oxXgWl6yPDf7EjHUf1K+v4NhgkOTmf9ESfQWJ8lvv4sfudi5dhIHnJ3bY9LClGA==
+X-Received: by 2002:a2e:bc27:: with SMTP id b39mr331770ljf.438.1633124743260;
+        Fri, 01 Oct 2021 14:45:43 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id c5sm772982ljd.94.2021.10.01.14.45.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Oct 2021 14:31:10 -0700 (PDT)
-Subject: Re: [PATCH v4 6/7] media: venus: helpers: update NUM_MBS macro
- calculation
-To:     Dikshita Agarwal <dikshita@codeaurora.org>,
-        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        vgarodia@codeaurora.org
-References: <1628588875-23790-1-git-send-email-dikshita@codeaurora.org>
- <1628588875-23790-7-git-send-email-dikshita@codeaurora.org>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <283e23db-5383-57d7-48ca-0efa03420335@linaro.org>
-Date:   Sat, 2 Oct 2021 00:31:08 +0300
+        Fri, 01 Oct 2021 14:45:42 -0700 (PDT)
+Subject: Re: [PATCH][V2] drm/msm: Fix potential integer overflow on 32 bit
+ multiply
+To:     Colin King <colin.king@canonical.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Cc:     kernel-janitors@vger.kernel.org, linux-kernel@vger.kernel.org
+References: <20210929115352.212849-1-colin.king@canonical.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <e1d66d58-7bfa-ec21-9c19-5c81c071932a@linaro.org>
+Date:   Sat, 2 Oct 2021 00:45:42 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <1628588875-23790-7-git-send-email-dikshita@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
+In-Reply-To: <20210929115352.212849-1-colin.king@canonical.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On 8/10/21 12:47 PM, Dikshita Agarwal wrote:
-> Consider alignment while calculating NUM_MBS.
+On 29/09/2021 14:53, Colin King wrote:
+> From: Colin Ian King <colin.king@canonical.com>
 > 
-> Co-developed-by: Mansur Alisha Shaik <mansur@codeaurora.org>
-> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+> In the case where clock is 2147485 or greater the 32 bit multiplication
+> by 1000 will cause an integer overflow. Fix this by making the constant
+> 1000 an unsigned long to ensure a long multiply occurs to avoid the
+
+You are talking about 'unsigned long' here, however in the patch you've 
+used just 'unsigned' suffix. So, which one should be used?
+
+I suspect that wanted to use UL here, since mode->clock is int, so it is 
+int * unsigned.
+
+Also I'd suggest to define a helper function macro in the drm_modes.h(?) 
+that would take struct drm_display_mode pointer and return proper clock. 
+See icc_units_to_bps() for the inspiration.
+
+
+> overflow before assigning the result to the long result in variable
+> requested.  Most probably a theoretical overflow issue, but worth fixing
+> to clear up static analysis warnings.
+> 
+> Addresses-Coverity: ("Unintentional integer overflow")
+> Fixes: c8afe684c95c ("drm/msm: basic KMS driver for snapdragon")
+> Fixes: 3e87599b68e7 ("drm/msm/mdp4: add LVDS panel support")
+> Fixes: 937f941ca06f ("drm/msm/dp: Use qmp phy for DP PLL and PHY")
+> Fixes: ab5b0107ccf3 ("drm/msm: Initial add eDP support in msm drm driver (v5)")
+> Fixes: a3376e3ec81c ("drm/msm: convert to drm_bridge")
+> 
+> Signed-off-by: Colin Ian King <colin.king@canonical.com>
 > ---
->  drivers/media/platform/qcom/venus/helpers.c | 13 +++++++------
->  1 file changed, 7 insertions(+), 6 deletions(-)
+> V2: Find and fix all unintentional integer overflows that match this
+>      overflow pattern.
+> ---
+>   drivers/gpu/drm/msm/disp/mdp4/mdp4_dtv_encoder.c    | 2 +-
+>   drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c   | 2 +-
+>   drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c | 2 +-
+>   drivers/gpu/drm/msm/dp/dp_ctrl.c                    | 4 ++--
+>   drivers/gpu/drm/msm/edp/edp_connector.c             | 2 +-
+>   drivers/gpu/drm/msm/hdmi/hdmi_bridge.c              | 2 +-
+>   drivers/gpu/drm/msm/hdmi/hdmi_connector.c           | 2 +-
+>   7 files changed, 8 insertions(+), 8 deletions(-)
 > 
-> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-> index 60a2775..2db33ba 100644
-> --- a/drivers/media/platform/qcom/venus/helpers.c
-> +++ b/drivers/media/platform/qcom/venus/helpers.c
-> @@ -18,8 +18,8 @@
->  #include "hfi_platform.h"
->  #include "hfi_parser.h"
->  
-> -#define NUM_MBS_720P	(((1280 + 15) >> 4) * ((720 + 15) >> 4))
-> -#define NUM_MBS_4K	(((4096 + 15) >> 4) * ((2304 + 15) >> 4))
-> +#define NUM_MBS_720P	(((ALIGN(1280, 16)) >> 4) * ((ALIGN(736, 16)) >> 4))
-> +#define NUM_MBS_4K	(((ALIGN(4096, 16)) >> 4) * ((ALIGN(2304, 16)) >> 4))
->  
->  struct intbuf {
->  	struct list_head list;
-> @@ -1098,16 +1098,17 @@ static u32 venus_helper_get_work_mode(struct venus_inst *inst)
->  	u32 num_mbs;
->  
->  	mode = VIDC_WORK_MODE_2;
-> +
->  	if (inst->session_type == VIDC_SESSION_TYPE_DEC) {
-> -		num_mbs = (ALIGN(inst->height, 16) * ALIGN(inst->width, 16)) / 256;
-> +		num_mbs = ((ALIGN(inst->height, 16))/16 * (ALIGN(inst->width, 16)))/16;
-
-Could you help me understand what is the difference between both
-calculations? IMO this patch should only change NUM_MBS_720P and
-NUM_MBS_4K macros.
-
->  		if (inst->hfi_codec == HFI_VIDEO_CODEC_MPEG2 ||
-> -		    inst->pic_struct != HFI_INTERLACE_FRAME_PROGRESSIVE ||
-> -		    num_mbs <= NUM_MBS_720P)
-> +			inst->pic_struct != HFI_INTERLACE_FRAME_PROGRESSIVE ||
-> +			num_mbs <= NUM_MBS_720P)
-
-This change just makes indentation wrong and also it is not related to
-the patch subject.
-
->  			mode = VIDC_WORK_MODE_1;
->  	} else {
->  		num_mbs = (ALIGN(inst->out_height, 16) * ALIGN(inst->out_width, 16)) / 256;
->  		if (inst->hfi_codec == HFI_VIDEO_CODEC_VP8 &&
-> -		    num_mbs <= NUM_MBS_4K)
-> +			num_mbs <= NUM_MBS_4K)
-
-ditto
-
->  			mode = VIDC_WORK_MODE_1;
->  	}
->  
+> diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_dtv_encoder.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_dtv_encoder.c
+> index 88645dbc3785..83140066441e 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_dtv_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_dtv_encoder.c
+> @@ -50,7 +50,7 @@ static void mdp4_dtv_encoder_mode_set(struct drm_encoder *encoder,
+>   
+>   	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode));
+>   
+> -	mdp4_dtv_encoder->pixclock = mode->clock * 1000;
+> +	mdp4_dtv_encoder->pixclock = mode->clock * 1000U;
+>   
+>   	DBG("pixclock=%lu", mdp4_dtv_encoder->pixclock);
+>   
+> diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
+> index 10eb3e5b218e..d90dc0a39855 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lcdc_encoder.c
+> @@ -225,7 +225,7 @@ static void mdp4_lcdc_encoder_mode_set(struct drm_encoder *encoder,
+>   
+>   	DBG("set mode: " DRM_MODE_FMT, DRM_MODE_ARG(mode));
+>   
+> -	mdp4_lcdc_encoder->pixclock = mode->clock * 1000;
+> +	mdp4_lcdc_encoder->pixclock = mode->clock * 1000U;
+>   
+>   	DBG("pixclock=%lu", mdp4_lcdc_encoder->pixclock);
+>   
+> diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
+> index 7288041dd86a..a965e7962a7f 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_lvds_connector.c
+> @@ -64,7 +64,7 @@ static int mdp4_lvds_connector_mode_valid(struct drm_connector *connector,
+>   	struct drm_encoder *encoder = mdp4_lvds_connector->encoder;
+>   	long actual, requested;
+>   
+> -	requested = 1000 * mode->clock;
+> +	requested = 1000U * mode->clock;
+>   	actual = mdp4_lcdc_round_pixclk(encoder, requested);
+>   
+>   	DBG("requested=%ld, actual=%ld", requested, actual);
+> diff --git a/drivers/gpu/drm/msm/dp/dp_ctrl.c b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> index 62e75dc8afc6..6babeb79aeb0 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_ctrl.c
+> @@ -1316,7 +1316,7 @@ static int dp_ctrl_enable_mainlink_clocks(struct dp_ctrl_private *ctrl)
+>   	opts_dp->lanes = ctrl->link->link_params.num_lanes;
+>   	opts_dp->link_rate = ctrl->link->link_params.rate / 100;
+>   	dp_ctrl_set_clock_rate(ctrl, DP_CTRL_PM, "ctrl_link",
+> -					ctrl->link->link_params.rate * 1000);
+> +					ctrl->link->link_params.rate * 1000U);
+>   
+>   	phy_configure(phy, &dp_io->phy_opts);
+>   	phy_power_on(phy);
+> @@ -1336,7 +1336,7 @@ static int dp_ctrl_enable_stream_clocks(struct dp_ctrl_private *ctrl)
+>   	int ret = 0;
+>   
+>   	dp_ctrl_set_clock_rate(ctrl, DP_STREAM_PM, "stream_pixel",
+> -					ctrl->dp_ctrl.pixel_rate * 1000);
+> +					ctrl->dp_ctrl.pixel_rate * 1000U);
+>   
+>   	ret = dp_power_clk_enable(ctrl->power, DP_STREAM_PM, true);
+>   	if (ret)
+> diff --git a/drivers/gpu/drm/msm/edp/edp_connector.c b/drivers/gpu/drm/msm/edp/edp_connector.c
+> index 73cb5fd97a5a..837e7873141f 100644
+> --- a/drivers/gpu/drm/msm/edp/edp_connector.c
+> +++ b/drivers/gpu/drm/msm/edp/edp_connector.c
+> @@ -64,7 +64,7 @@ static int edp_connector_mode_valid(struct drm_connector *connector,
+>   	struct msm_kms *kms = priv->kms;
+>   	long actual, requested;
+>   
+> -	requested = 1000 * mode->clock;
+> +	requested = 1000L * mode->clock;
+>   	actual = kms->funcs->round_pixclk(kms,
+>   			requested, edp_connector->edp->encoder);
+>   
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+> index 6e380db9287b..e4c68a59772a 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_bridge.c
+> @@ -209,7 +209,7 @@ static void msm_hdmi_bridge_mode_set(struct drm_bridge *bridge,
+>   
+>   	mode = adjusted_mode;
+>   
+> -	hdmi->pixclock = mode->clock * 1000;
+> +	hdmi->pixclock = mode->clock * 1000U;
+>   
+>   	hstart = mode->htotal - mode->hsync_start;
+>   	hend   = mode->htotal - mode->hsync_start + mode->hdisplay;
+> diff --git a/drivers/gpu/drm/msm/hdmi/hdmi_connector.c b/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
+> index 58707a1f3878..ce116a7b1bba 100644
+> --- a/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
+> +++ b/drivers/gpu/drm/msm/hdmi/hdmi_connector.c
+> @@ -385,7 +385,7 @@ static int msm_hdmi_connector_mode_valid(struct drm_connector *connector,
+>   	struct msm_kms *kms = priv->kms;
+>   	long actual, requested;
+>   
+> -	requested = 1000 * mode->clock;
+> +	requested = 1000U * mode->clock;
+>   	actual = kms->funcs->round_pixclk(kms,
+>   			requested, hdmi_connector->hdmi->encoder);
+>   
 > 
+
 
 -- 
-regards,
-Stan
+With best wishes
+Dmitry
