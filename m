@@ -2,208 +2,137 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9406B41F6AC
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Oct 2021 23:09:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5E63041F6F3
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Oct 2021 23:31:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1354493AbhJAVLF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Oct 2021 17:11:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34324 "EHLO
+        id S1355382AbhJAVc5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Oct 2021 17:32:57 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39234 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1354551AbhJAVLD (ORCPT
+        with ESMTP id S229727AbhJAVc5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Oct 2021 17:11:03 -0400
-Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EA8EBC0613E2
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Oct 2021 14:09:18 -0700 (PDT)
-Received: by mail-lf1-x133.google.com with SMTP id y26so43772219lfa.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Oct 2021 14:09:18 -0700 (PDT)
+        Fri, 1 Oct 2021 17:32:57 -0400
+Received: from mail-wr1-x42a.google.com (mail-wr1-x42a.google.com [IPv6:2a00:1450:4864:20::42a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47C76C06177F
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Oct 2021 14:31:12 -0700 (PDT)
+Received: by mail-wr1-x42a.google.com with SMTP id v17so17444190wrv.9
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Oct 2021 14:31:12 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=IebbO+ma/A1unpbrZ8oEgbjXE5CUx4OQ3cw7YGHtnpM=;
-        b=MmcVHRWhjWn9KKZ/McV6/+Uoq6LupKzHXYCrxqBnqPPByl9LyIApmjQdSArX5IS1wv
-         BDDVCN+9yflaCTtMHYwZQ+4iARy/KJH+03vwJWdUSqHCbaR8P4hY6Fu5VcgIiWf9nJg+
-         pRCmia4gT/fFJcgBptVySNk7evnIS9V1A20AeUhyqGO1gGfzw/TPA0Lk/xoNQSvF0Jws
-         qEWVvp4fE9+kqg5rgO8UrLQZZad35dzpWxvcgyhHeiQLr6Sjwi/y5KDKrEuL7tII4ejq
-         M0V94nquYSxGjWFn4H+ppA51fLS2INdCJs5U4TA5NqAG1rv7v4OALlsTqL6J+Y63pW1B
-         2NZw==
+        bh=gbMaNhtOH4nXLp4HUS2ZPT1VowmcEtHTXpHcBFPpVz4=;
+        b=GepQiSuw0T0mJ1Cm1ZrL8yaNRxwFtjYqccsjcsM+yFgmRwMWX2QtZTUgab7+hyDtfV
+         r3qnReN67T/1jtXEkurkt7QPwLn3gzSIhvvpi0/DweLrDJ4q62exrQFKdxTg1znpJwVO
+         2mLTd4Mld7lyUU9pRGybmMJq4TWpM70wiwMIez9+bcVXsJPAxDVo4p7fSS1jtS7d0iWs
+         2oKVY/Qv9KDrvGuO0+/bhW0VhrtazQcCDhK1FgyIYEm7P6oAgpU+hV/qFuwRB6JBhB57
+         zNDApFqcoYy2GAKX3fH6Av8P2Qp1hhWNfApIeJV+NjCruyyCpYApexzH+vK2MDsUwwIE
+         +aVQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=IebbO+ma/A1unpbrZ8oEgbjXE5CUx4OQ3cw7YGHtnpM=;
-        b=rVp/hfrFYEgApytW2+DKFuUbeEtrMTyNKzrXZlQ0x+uwHAei2zSH0LB71z5LeQcyu4
-         KxA1s91FLEqIFz18ta+I+HJht24qm/+726mAtJKohnnC/miUsqd4wHfFR/fPxQEBCCE0
-         mE1+6EHrMS1aifcOPjBOjbtPDfqM6R3DseBx2pIw/yuxkfAwUsmEslqx7LVFI9BPKxCC
-         8mIWQUVhF90Bs591PTYO+vJA5INqTj4VATKhQMqquguIKNj1PJD5uQpDkAKluf+dfxkF
-         LgT0OwLYo7sxoML3Aww0zmlzA3nB4lAMsSkbDtV0tLZnxjI5hTnYlAgrPjAEuOL2kkkZ
-         EP3g==
-X-Gm-Message-State: AOAM5303uwq5S0URyE44Qadop9mSXbqoFfyCXOqaaJx/nk1qo+xjxkol
-        j0Yof9jLgKDn/BMf0f7TK7bYOg==
-X-Google-Smtp-Source: ABdhPJw3pmsNgv9RYeS4huOp4qxuDaNliY0fsFTacMOU3A1X25G6Gt/OxqhoGbmcF5nk6N3Rx5wpkw==
-X-Received: by 2002:a05:6512:1399:: with SMTP id p25mr199919lfa.277.1633122557113;
-        Fri, 01 Oct 2021 14:09:17 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id u25sm846522lfr.279.2021.10.01.14.09.16
+        bh=gbMaNhtOH4nXLp4HUS2ZPT1VowmcEtHTXpHcBFPpVz4=;
+        b=0KGPVu/doGDYHKjU20InWThjgJkrNSDD20czSP+T7BctIT7QhUAGpankzJioyzIzUc
+         2/UglZGaw4o+UVg/TXTghC+gabTUC+6k/1jXC8YHFWVN7jUQ7PGWcZBL9Cwt/vc3Pk37
+         N1Gv4MihpBmPoRBWtSvGWCgBV20k3mxFcpnj2RUVy3BgxIQpB4bReoJHI22M34coF5xO
+         c7I5c38bg7a+/MirD/oA7xS6FXPYioPe9l+CdtspLz2GWT+FG2i5PbJRHRVky/eti9cf
+         CDAdx5QD0J/eIqdb/WFHabixiDKJGCbqqq3xGhYX1Z/KmpHUDcZpG1nXBlS8S+x07qFg
+         qZ6Q==
+X-Gm-Message-State: AOAM530QqptbqzepX7TyoXoOYYdM7HMxOZHn1CzCosjpk08dhVJ8Q7JW
+        TllneS1xjcD9xv5ICJ44zW+Ufw==
+X-Google-Smtp-Source: ABdhPJw66kQ9/jT7l/6SvbcqiM7kpnCVCSg5UgghtKDOc3IWGsjuYaHH4/ti9PBB8a9opfK2qnJwsw==
+X-Received: by 2002:adf:a154:: with SMTP id r20mr203761wrr.326.1633123870708;
+        Fri, 01 Oct 2021 14:31:10 -0700 (PDT)
+Received: from [192.168.1.12] (hst-221-15.medicom.bg. [84.238.221.15])
+        by smtp.googlemail.com with ESMTPSA id d3sm7839997wrb.36.2021.10.01.14.31.09
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Fri, 01 Oct 2021 14:09:16 -0700 (PDT)
-Subject: Re: [PATCH v3 3/3] drm/msm/mdp5: Add configuration for MDP v1.16
-To:     Sireesh Kodali <sireeshkodali1@gmail.com>,
-        phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Vladimir Lypak <vladimir.lypak@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        James Willcox <jwillcox@squareup.com>
-References: <20210928131929.18567-1-sireeshkodali1@gmail.com>
- <20210928131929.18567-4-sireeshkodali1@gmail.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <06a40d0d-da39-ba0b-e932-d4435c0735d3@linaro.org>
-Date:   Sat, 2 Oct 2021 00:09:15 +0300
+        Fri, 01 Oct 2021 14:31:10 -0700 (PDT)
+Subject: Re: [PATCH v4 6/7] media: venus: helpers: update NUM_MBS macro
+ calculation
+To:     Dikshita Agarwal <dikshita@codeaurora.org>,
+        linux-media@vger.kernel.org, stanimir.varbanov@linaro.org
+Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        vgarodia@codeaurora.org
+References: <1628588875-23790-1-git-send-email-dikshita@codeaurora.org>
+ <1628588875-23790-7-git-send-email-dikshita@codeaurora.org>
+From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Message-ID: <283e23db-5383-57d7-48ca-0efa03420335@linaro.org>
+Date:   Sat, 2 Oct 2021 00:31:08 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <20210928131929.18567-4-sireeshkodali1@gmail.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
+In-Reply-To: <1628588875-23790-7-git-send-email-dikshita@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 28/09/2021 16:19, Sireesh Kodali wrote:
-> From: Vladimir Lypak <vladimir.lypak@gmail.com>
-> 
-> MDP version v1.16 is almost identical to v1.15 with most significant
-> difference being presence of second DSI interface. MDP v1.16 is found on
-> SoCs such as MSM8x53, SDM450, SDM632 (All with Adreno 506).
-> 
-> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
-> Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
+Hi,
 
-Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-
+On 8/10/21 12:47 PM, Dikshita Agarwal wrote:
+> Consider alignment while calculating NUM_MBS.
+> 
+> Co-developed-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
 > ---
->   drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c | 89 ++++++++++++++++++++++++
->   1 file changed, 89 insertions(+)
+>  drivers/media/platform/qcom/venus/helpers.c | 13 +++++++------
+>  1 file changed, 7 insertions(+), 6 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-> index 9741544ffc35..0d28c8ff4009 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_cfg.c
-> @@ -752,6 +752,94 @@ const struct mdp5_cfg_hw msm8x76_config = {
->   	.max_clk = 360000000,
->   };
->   
-> +static const struct mdp5_cfg_hw msm8x53_config = {
-> +	.name = "msm8x53",
-> +	.mdp = {
-> +		.count = 1,
-> +		.caps = MDP_CAP_CDM |
-> +			MDP_CAP_SRC_SPLIT,
-> +	},
-> +	.ctl = {
-> +		.count = 3,
-> +		.base = { 0x01000, 0x01200, 0x01400 },
-> +		.flush_hw_mask = 0xffffffff,
-> +	},
-> +	.pipe_vig = {
-> +		.count = 1,
-> +		.base = { 0x04000 },
-> +		.caps = MDP_PIPE_CAP_HFLIP	|
-> +			MDP_PIPE_CAP_VFLIP	|
-> +			MDP_PIPE_CAP_SCALE	|
-> +			MDP_PIPE_CAP_CSC	|
-> +			MDP_PIPE_CAP_DECIMATION	|
-> +			MDP_PIPE_CAP_SW_PIX_EXT	|
-> +			0,
-> +	},
-> +	.pipe_rgb = {
-> +		.count = 2,
-> +		.base = { 0x14000, 0x16000 },
-> +		.caps = MDP_PIPE_CAP_HFLIP	|
-> +			MDP_PIPE_CAP_VFLIP	|
-> +			MDP_PIPE_CAP_DECIMATION	|
-> +			MDP_PIPE_CAP_SW_PIX_EXT	|
-> +			0,
-> +	},
-> +	.pipe_dma = {
-> +		.count = 1,
-> +		.base = { 0x24000 },
-> +		.caps = MDP_PIPE_CAP_HFLIP	|
-> +			MDP_PIPE_CAP_VFLIP	|
-> +			MDP_PIPE_CAP_SW_PIX_EXT	|
-> +			0,
-> +	},
-> +	.pipe_cursor = {
-> +		.count = 1,
-> +		.base = { 0x34000 },
-> +		.caps = MDP_PIPE_CAP_HFLIP	|
-> +			MDP_PIPE_CAP_VFLIP	|
-> +			MDP_PIPE_CAP_SW_PIX_EXT	|
-> +			MDP_PIPE_CAP_CURSOR	|
-> +			0,
-> +	},
+> diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
+> index 60a2775..2db33ba 100644
+> --- a/drivers/media/platform/qcom/venus/helpers.c
+> +++ b/drivers/media/platform/qcom/venus/helpers.c
+> @@ -18,8 +18,8 @@
+>  #include "hfi_platform.h"
+>  #include "hfi_parser.h"
+>  
+> -#define NUM_MBS_720P	(((1280 + 15) >> 4) * ((720 + 15) >> 4))
+> -#define NUM_MBS_4K	(((4096 + 15) >> 4) * ((2304 + 15) >> 4))
+> +#define NUM_MBS_720P	(((ALIGN(1280, 16)) >> 4) * ((ALIGN(736, 16)) >> 4))
+> +#define NUM_MBS_4K	(((ALIGN(4096, 16)) >> 4) * ((ALIGN(2304, 16)) >> 4))
+>  
+>  struct intbuf {
+>  	struct list_head list;
+> @@ -1098,16 +1098,17 @@ static u32 venus_helper_get_work_mode(struct venus_inst *inst)
+>  	u32 num_mbs;
+>  
+>  	mode = VIDC_WORK_MODE_2;
 > +
-> +	.lm = {
-> +		.count = 3,
-> +		.base = { 0x44000, 0x45000 },
-> +		.instances = {
-> +				{ .id = 0, .pp = 0, .dspp = 0,
-> +				  .caps = MDP_LM_CAP_DISPLAY |
-> +					  MDP_LM_CAP_PAIR },
-> +				{ .id = 1, .pp = 1, .dspp = -1,
-> +				  .caps = MDP_LM_CAP_DISPLAY },
-> +			     },
-> +		.nb_stages = 5,
-> +		.max_width = 2048,
-> +		.max_height = 0xFFFF,
-> +	},
-> +	.dspp = {
-> +		.count = 1,
-> +		.base = { 0x54000 },
-> +
-> +	},
-> +	.pp = {
-> +		.count = 2,
-> +		.base = { 0x70000, 0x70800 },
-> +	},
-> +	.cdm = {
-> +		.count = 1,
-> +		.base = { 0x79200 },
-> +	},
-> +	.intf = {
-> +		.base = { 0x6a000, 0x6a800, 0x6b000 },
-> +		.connect = {
-> +			[0] = INTF_DISABLED,
-> +			[1] = INTF_DSI,
-> +			[2] = INTF_DSI,
-> +		},
-> +	},
-> +	.max_clk = 400000000,
-> +};
-> +
->   static const struct mdp5_cfg_hw msm8917_config = {
->   	.name = "msm8917",
->   	.mdp = {
-> @@ -1151,6 +1239,7 @@ static const struct mdp5_cfg_handler cfg_handlers_v1[] = {
->   	{ .revision = 7, .config = { .hw = &msm8x96_config } },
->   	{ .revision = 11, .config = { .hw = &msm8x76_config } },
->   	{ .revision = 15, .config = { .hw = &msm8917_config } },
-> +	{ .revision = 16, .config = { .hw = &msm8x53_config } },
->   };
->   
->   static const struct mdp5_cfg_handler cfg_handlers_v3[] = {
-> 
+>  	if (inst->session_type == VIDC_SESSION_TYPE_DEC) {
+> -		num_mbs = (ALIGN(inst->height, 16) * ALIGN(inst->width, 16)) / 256;
+> +		num_mbs = ((ALIGN(inst->height, 16))/16 * (ALIGN(inst->width, 16)))/16;
 
+Could you help me understand what is the difference between both
+calculations? IMO this patch should only change NUM_MBS_720P and
+NUM_MBS_4K macros.
+
+>  		if (inst->hfi_codec == HFI_VIDEO_CODEC_MPEG2 ||
+> -		    inst->pic_struct != HFI_INTERLACE_FRAME_PROGRESSIVE ||
+> -		    num_mbs <= NUM_MBS_720P)
+> +			inst->pic_struct != HFI_INTERLACE_FRAME_PROGRESSIVE ||
+> +			num_mbs <= NUM_MBS_720P)
+
+This change just makes indentation wrong and also it is not related to
+the patch subject.
+
+>  			mode = VIDC_WORK_MODE_1;
+>  	} else {
+>  		num_mbs = (ALIGN(inst->out_height, 16) * ALIGN(inst->out_width, 16)) / 256;
+>  		if (inst->hfi_codec == HFI_VIDEO_CODEC_VP8 &&
+> -		    num_mbs <= NUM_MBS_4K)
+> +			num_mbs <= NUM_MBS_4K)
+
+ditto
+
+>  			mode = VIDC_WORK_MODE_1;
+>  	}
+>  
+> 
 
 -- 
-With best wishes
-Dmitry
+regards,
+Stan
