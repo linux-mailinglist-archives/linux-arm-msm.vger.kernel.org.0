@@ -2,222 +2,240 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EEAD541F570
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Oct 2021 21:05:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A03FE41F5BC
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Oct 2021 21:28:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229723AbhJATHM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Oct 2021 15:07:12 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:59635 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S1355316AbhJATHL (ORCPT
+        id S232235AbhJAT3q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Oct 2021 15:29:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39250 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232147AbhJAT3p (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Oct 2021 15:07:11 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1633115127; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=zxHL1tJuP1iAjagS9cfndBxpoCz7NOKL98a7EEV/PCM=;
- b=hB+oIyPp0w1UejG3cr/Kej5qCBqQ/xgRbNxzkVmW1Hd7NJond323PSALD7OPHpCXxI9hBQ/Z
- S6tA0XEHO6nB8xrnsMPCdkJpZZiiRqWAaRfgZnESN0bh0udPCzMp5vNMYALkP7z8b8Dy1E4n
- h9+s8t+BkYHmsd5MOyAV23igCSY=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-east-1.postgun.com with SMTP id
- 61575bdb8578ef11ed759b36 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 01 Oct 2021 19:04:59
- GMT
-Sender: jesszhan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A4269C4360D; Fri,  1 Oct 2021 19:04:58 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: jesszhan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1E9BFC4360C;
-        Fri,  1 Oct 2021 19:04:58 +0000 (UTC)
+        Fri, 1 Oct 2021 15:29:45 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 79A66C061775;
+        Fri,  1 Oct 2021 12:28:01 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id me5-20020a17090b17c500b0019af76b7bb4so10059077pjb.2;
+        Fri, 01 Oct 2021 12:28:01 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=MMNTBntVzKygVq0hqqFgHRj5ZdEdCR0hZf65zLuUi4k=;
+        b=UUU76DOsbZw3ep4rh/1quCAvw2oi84GyEbWItBW9nIoEzitOYfb9fj/AecW+SGk9vb
+         obEwOXb/H/9dYQ74oNqHeMn4F4XvyAXKwoQWms9ivpcHaKlPrX+bi7RB+9+bMpepwo6D
+         2YQMX6JY3rzntES0yciuVFrbEw1amwrwXc0tRLVU+aobFDJmR8QttqEP24F8osTEFPfJ
+         3IOv/jLntWxEcBTjXtBJ2YAsj8nPiQBCRgPwoshe+wN/PW7cP0uSFo/AIgRqtuSGnba9
+         mJElK8vrxQU0X8LJeahGll/upvD+lXhM94M3nKDSBOjyCS3/yGEglIQqeH+Cvh4iwQny
+         SJfw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=MMNTBntVzKygVq0hqqFgHRj5ZdEdCR0hZf65zLuUi4k=;
+        b=GEfFbuN6m1axzHhbtOI0/1z0616ob1NaBI8c150SAgrs9LPQPSdfUd2V1HpTxGj68b
+         izPUniHcVUtZ9kK8mpGZiGJ8qeMvKNRzyI/GgLaz40oYK9nLMtDU9j0vBbUh6BDGIw62
+         FOfpWvq7d3C4vTUqd4IWYCCCKzigNRhDpG5hLYj7BU267h84vxERjNfuIm3ZgmSknB2I
+         VOAnCmpw+ZE7mIqLewLBlciq+U6K529hfUlCfsWqGhjfxO1AnChp/jf1e6hokhRKNQjn
+         7gQ0BvifPPdeDCIJtdewRUQotPbXtiX3L2mIGDPKJ72uX7E4vWk07Li8DJhnRn4andju
+         scaw==
+X-Gm-Message-State: AOAM533+j9ApHxnyKINzKsIhfh+9NL3iSiWDJ72UV7tH0fkr/XuODZCZ
+        LTrsoTHndedbWkXm4mK1VC4=
+X-Google-Smtp-Source: ABdhPJxJEGlGwS+NDMQK+F2w+z58ZgoKk/GjU5f4vo06X3YBeIB6CRcvACNsWEEfWXVIHYZ3h3S/bg==
+X-Received: by 2002:a17:90a:1c6:: with SMTP id 6mr15233784pjd.194.1633116480909;
+        Fri, 01 Oct 2021 12:28:00 -0700 (PDT)
+Received: from localhost ([2601:1c0:5200:a6:307:a401:7b76:c6e5])
+        by smtp.gmail.com with ESMTPSA id j7sm6926937pfh.168.2021.10.01.12.27.59
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 01 Oct 2021 12:27:59 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     freedreno@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Eric Anholt <eric@anholt.net>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH] drm/msm/a6xx: Serialize GMU communication
+Date:   Fri,  1 Oct 2021 12:32:37 -0700
+Message-Id: <20211001193241.1348868-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 01 Oct 2021 12:04:58 -0700
-From:   jesszhan@codeaurora.org
-To:     Dan Carpenter <dan.carpenter@oracle.com>
-Cc:     jsanka@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org
-Subject: Re: [bug report] drm/msm: Add SDM845 DPU support
-In-Reply-To: <20211001122838.GD2283@kili>
-References: <20211001122838.GD2283@kili>
-Message-ID: <c1537b326b654f05be247ca61d21e9f0@codeaurora.org>
-X-Sender: jesszhan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Dan,
+From: Rob Clark <robdclark@chromium.org>
 
-Thanks for the heads up, will take care of it.
+I've seen some crashes in our crash reporting that *look* like multiple
+threads stomping on each other while communicating with GMU.  So wrap
+all those paths in a lock.
 
-On 2021-10-01 05:28, Dan Carpenter wrote:
-> Hello Jeykumar Sankaran,
-> 
-> The patch 25fdd5933e4c: "drm/msm: Add SDM845 DPU support" from Jun
-> 27, 2018, leads to the following
-> Smatch static checker warning:
-> 
-> 	drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c:1679 dpu_plane_init()
-> 	warn: '&pdpu->mplane_list' not removed from list
-> 
-> drivers/gpu/drm/msm/disp/dpu1/dpu_plane.c
->     1567 struct drm_plane *dpu_plane_init(struct drm_device *dev,
->     1568                 uint32_t pipe, enum drm_plane_type type,
->     1569                 unsigned long possible_crtcs, u32 
-> master_plane_id)
->     1570 {
->     1571         struct drm_plane *plane = NULL, *master_plane = NULL;
->     1572         const uint32_t *format_list;
->     1573         struct dpu_plane *pdpu;
->     1574         struct msm_drm_private *priv = dev->dev_private;
->     1575         struct dpu_kms *kms = to_dpu_kms(priv->kms);
->     1576         int zpos_max = DPU_ZPOS_MAX;
->     1577         uint32_t num_formats;
->     1578         int ret = -EINVAL;
->     1579
->     1580         /* create and zero local structure */
->     1581         pdpu = kzalloc(sizeof(*pdpu), GFP_KERNEL);
->     1582         if (!pdpu) {
->     1583                 DPU_ERROR("[%u]failed to allocate local plane
-> struct\n", pipe);
->     1584                 ret = -ENOMEM;
->     1585                 return ERR_PTR(ret);
->     1586         }
->     1587
->     1588         /* cache local stuff for later */
->     1589         plane = &pdpu->base;
->     1590         pdpu->pipe = pipe;
->     1591         pdpu->is_virtual = (master_plane_id != 0);
->     1592         INIT_LIST_HEAD(&pdpu->mplane_list);
->     1593         master_plane = drm_plane_find(dev, NULL, 
-> master_plane_id);
->     1594         if (master_plane) {
->     1595                 struct dpu_plane *mpdpu = 
-> to_dpu_plane(master_plane);
->     1596
->     1597                 list_add_tail(&pdpu->mplane_list, 
-> &mpdpu->mplane_list);
->                                         ^^^^^^^^^^^^^^^^^
-> This is not removed from the list in the error handling code so it will
-> lead to a Use After Free.
-> 
->     1598         }
->     1599
->     1600         /* initialize underlying h/w driver */
->     1601         pdpu->pipe_hw = dpu_hw_sspp_init(pipe, kms->mmio, 
-> kms->catalog,
->     1602
-> master_plane_id != 0);
->     1603         if (IS_ERR(pdpu->pipe_hw)) {
->     1604                 DPU_ERROR("[%u]SSPP init failed\n", pipe);
->     1605                 ret = PTR_ERR(pdpu->pipe_hw);
->     1606                 goto clean_plane;
->     1607         } else if (!pdpu->pipe_hw->cap || 
-> !pdpu->pipe_hw->cap->sblk) {
->     1608                 DPU_ERROR("[%u]SSPP init returned invalid
-> cfg\n", pipe);
->     1609                 goto clean_sspp;
->     1610         }
->     1611
->     1612         /* cache features mask for later */
->     1613         pdpu->features = pdpu->pipe_hw->cap->features;
->     1614         pdpu->pipe_sblk = pdpu->pipe_hw->cap->sblk;
->     1615         if (!pdpu->pipe_sblk) {
->     1616                 DPU_ERROR("[%u]invalid sblk\n", pipe);
->     1617                 goto clean_sspp;
->     1618         }
->     1619
->     1620         if (pdpu->is_virtual) {
->     1621                 format_list = 
-> pdpu->pipe_sblk->virt_format_list;
->     1622                 num_formats = 
-> pdpu->pipe_sblk->virt_num_formats;
->     1623         }
->     1624         else {
->     1625                 format_list = pdpu->pipe_sblk->format_list;
->     1626                 num_formats = pdpu->pipe_sblk->num_formats;
->     1627         }
->     1628
->     1629         ret = drm_universal_plane_init(dev, plane, 0xff,
-> &dpu_plane_funcs,
->     1630                                 format_list, num_formats,
->     1631                                 supported_format_modifiers,
-> type, NULL);
->     1632         if (ret)
->     1633                 goto clean_sspp;
->     1634
->     1635         pdpu->catalog = kms->catalog;
->     1636
->     1637         if (kms->catalog->mixer_count &&
->     1638                 kms->catalog->mixer[0].sblk->maxblendstages) {
->     1639                 zpos_max =
-> kms->catalog->mixer[0].sblk->maxblendstages - 1;
->     1640                 if (zpos_max > DPU_STAGE_MAX - DPU_STAGE_0 - 
-> 1)
->     1641                         zpos_max = DPU_STAGE_MAX - DPU_STAGE_0 
-> - 1;
->     1642         }
->     1643
->     1644         ret = drm_plane_create_zpos_property(plane, 0, 0, 
-> zpos_max);
->     1645         if (ret)
->     1646                 DPU_ERROR("failed to install zpos property,
-> rc = %d\n", ret);
->     1647
->     1648         drm_plane_create_alpha_property(plane);
->     1649         drm_plane_create_blend_mode_property(plane,
->     1650                         BIT(DRM_MODE_BLEND_PIXEL_NONE) |
->     1651                         BIT(DRM_MODE_BLEND_PREMULTI) |
->     1652                         BIT(DRM_MODE_BLEND_COVERAGE));
->     1653
->     1654         drm_plane_create_rotation_property(plane,
->     1655                         DRM_MODE_ROTATE_0,
->     1656                         DRM_MODE_ROTATE_0 |
->     1657                         DRM_MODE_ROTATE_180 |
->     1658                         DRM_MODE_REFLECT_X |
->     1659                         DRM_MODE_REFLECT_Y);
->     1660
->     1661         drm_plane_enable_fb_damage_clips(plane);
->     1662
->     1663         /* success! finalize initialization */
->     1664         drm_plane_helper_add(plane, &dpu_plane_helper_funcs);
->     1665
->     1666         /* save user friendly pipe name for later */
->     1667         snprintf(pdpu->pipe_name, DPU_NAME_SIZE, "plane%u",
-> plane->base.id);
->     1668
->     1669         mutex_init(&pdpu->lock);
->     1670
->     1671         DPU_DEBUG("%s created for pipe:%u id:%u
-> virtual:%u\n", pdpu->pipe_name,
->     1672                                         pipe, plane->base.id,
-> master_plane_id);
->     1673         return plane;
->     1674
->     1675 clean_sspp:
->     1676         if (pdpu && pdpu->pipe_hw)
->     1677                 dpu_hw_sspp_destroy(pdpu->pipe_hw);
->     1678 clean_plane:
-> --> 1679         kfree(pdpu);
->     1680         return ERR_PTR(ret);
->     1681 }
-> 
-> regards,
-> dan carpenter
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c |  6 ++++
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.h |  3 ++
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c | 40 +++++++++++++++++++++++----
+ 3 files changed, 43 insertions(+), 6 deletions(-)
 
-Best,
-Jessica Zhang
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+index a7c58018959f..8b73f70766a4 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.c
+@@ -296,6 +296,8 @@ int a6xx_gmu_set_oob(struct a6xx_gmu *gmu, enum a6xx_gmu_oob_state state)
+ 	u32 val;
+ 	int request, ack;
+ 
++	WARN_ON_ONCE(!mutex_is_locked(&gmu->lock));
++
+ 	if (state >= ARRAY_SIZE(a6xx_gmu_oob_bits))
+ 		return -EINVAL;
+ 
+@@ -337,6 +339,8 @@ void a6xx_gmu_clear_oob(struct a6xx_gmu *gmu, enum a6xx_gmu_oob_state state)
+ {
+ 	int bit;
+ 
++	WARN_ON_ONCE(!mutex_is_locked(&gmu->lock));
++
+ 	if (state >= ARRAY_SIZE(a6xx_gmu_oob_bits))
+ 		return;
+ 
+@@ -1482,6 +1486,8 @@ int a6xx_gmu_init(struct a6xx_gpu *a6xx_gpu, struct device_node *node)
+ 	if (!pdev)
+ 		return -ENODEV;
+ 
++	mutex_init(&gmu->lock);
++
+ 	gmu->dev = &pdev->dev;
+ 
+ 	of_dma_configure(gmu->dev, node, true);
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+index 3c74f64e3126..84bd516f01e8 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gmu.h
+@@ -44,6 +44,9 @@ struct a6xx_gmu_bo {
+ struct a6xx_gmu {
+ 	struct device *dev;
+ 
++	/* For serializing communication with the GMU: */
++	struct mutex lock;
++
+ 	struct msm_gem_address_space *aspace;
+ 
+ 	void * __iomem mmio;
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index f6a4dbef796b..bd7bdeff5d6f 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -881,7 +881,7 @@ static int a6xx_zap_shader_init(struct msm_gpu *gpu)
+ 	  A6XX_RBBM_INT_0_MASK_UCHE_OOB_ACCESS | \
+ 	  A6XX_RBBM_INT_0_MASK_UCHE_TRAP_INTR)
+ 
+-static int a6xx_hw_init(struct msm_gpu *gpu)
++static int hw_init(struct msm_gpu *gpu)
+ {
+ 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+ 	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+@@ -1135,6 +1135,19 @@ static int a6xx_hw_init(struct msm_gpu *gpu)
+ 	return ret;
+ }
+ 
++static int a6xx_hw_init(struct msm_gpu *gpu)
++{
++	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
++	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
++	int ret;
++
++	mutex_lock(&a6xx_gpu->gmu.lock);
++	ret = hw_init(gpu);
++	mutex_unlock(&a6xx_gpu->gmu.lock);
++
++	return ret;
++}
++
+ static void a6xx_dump(struct msm_gpu *gpu)
+ {
+ 	DRM_DEV_INFO(&gpu->pdev->dev, "status:   %08x\n",
+@@ -1509,7 +1522,9 @@ static int a6xx_pm_resume(struct msm_gpu *gpu)
+ 
+ 	trace_msm_gpu_resume(0);
+ 
++	mutex_lock(&a6xx_gpu->gmu.lock);
+ 	ret = a6xx_gmu_resume(a6xx_gpu);
++	mutex_unlock(&a6xx_gpu->gmu.lock);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -1532,7 +1547,9 @@ static int a6xx_pm_suspend(struct msm_gpu *gpu)
+ 
+ 	msm_devfreq_suspend(gpu);
+ 
++	mutex_lock(&a6xx_gpu->gmu.lock);
+ 	ret = a6xx_gmu_stop(a6xx_gpu);
++	mutex_unlock(&a6xx_gpu->gmu.lock);
+ 	if (ret)
+ 		return ret;
+ 
+@@ -1547,18 +1564,19 @@ static int a6xx_get_timestamp(struct msm_gpu *gpu, uint64_t *value)
+ {
+ 	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
+ 	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
+-	static DEFINE_MUTEX(perfcounter_oob);
+ 
+-	mutex_lock(&perfcounter_oob);
++	mutex_lock(&a6xx_gpu->gmu.lock);
+ 
+ 	/* Force the GPU power on so we can read this register */
+ 	a6xx_gmu_set_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
+ 
+ 	*value = gpu_read64(gpu, REG_A6XX_CP_ALWAYS_ON_COUNTER_LO,
+-		REG_A6XX_CP_ALWAYS_ON_COUNTER_HI);
++			    REG_A6XX_CP_ALWAYS_ON_COUNTER_HI);
+ 
+ 	a6xx_gmu_clear_oob(&a6xx_gpu->gmu, GMU_OOB_PERFCOUNTER_SET);
+-	mutex_unlock(&perfcounter_oob);
++
++	mutex_unlock(&a6xx_gpu->gmu.lock);
++
+ 	return 0;
+ }
+ 
+@@ -1622,6 +1640,16 @@ static unsigned long a6xx_gpu_busy(struct msm_gpu *gpu)
+ 	return (unsigned long)busy_time;
+ }
+ 
++void a6xx_gpu_set_freq(struct msm_gpu *gpu, struct dev_pm_opp *opp)
++{
++	struct adreno_gpu *adreno_gpu = to_adreno_gpu(gpu);
++	struct a6xx_gpu *a6xx_gpu = to_a6xx_gpu(adreno_gpu);
++
++	mutex_lock(&a6xx_gpu->gmu.lock);
++	a6xx_gmu_set_freq(gpu, opp);
++	mutex_unlock(&a6xx_gpu->gmu.lock);
++}
++
+ static struct msm_gem_address_space *
+ a6xx_create_address_space(struct msm_gpu *gpu, struct platform_device *pdev)
+ {
+@@ -1766,7 +1794,7 @@ static const struct adreno_gpu_funcs funcs = {
+ #endif
+ 		.gpu_busy = a6xx_gpu_busy,
+ 		.gpu_get_freq = a6xx_gmu_get_freq,
+-		.gpu_set_freq = a6xx_gmu_set_freq,
++		.gpu_set_freq = a6xx_gpu_set_freq,
+ #if defined(CONFIG_DRM_MSM_GPU_STATE)
+ 		.gpu_state_get = a6xx_gpu_state_get,
+ 		.gpu_state_put = a6xx_gpu_state_put,
+-- 
+2.31.1
+
