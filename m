@@ -2,109 +2,251 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AF19541E7A7
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Oct 2021 08:39:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2EC5E41E800
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  1 Oct 2021 09:08:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S1352280AbhJAGky (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Oct 2021 02:40:54 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:13629 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S1352255AbhJAGkx (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Oct 2021 02:40:53 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1633070349; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=DH07yRNxfLIbPow4oMCMJkb9io5D23Aj6DAM87OKB7w=;
- b=L/NJ3XbBL01HIPsQP+E6HgzAZAtK8WZZsSbhl07rAAIaB4b3IZROz+25us7aNWfcd2uOTpf5
- zmzp0c3skaeeYjN/fFVnVf2i4MAt7aw0tv9/GJWhbhygu6VgqmDJjzOKLYiqOS5uv1Obi3Xb
- aG2OTvQvClyeiFIcKDrqHCVUML0=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 6156ad0d63b1f186582f8e8d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 01 Oct 2021 06:39:09
- GMT
-Sender: mkrishn=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9D9B1C43618; Fri,  1 Oct 2021 06:39:08 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkrishn)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 356EEC43460;
-        Fri,  1 Oct 2021 06:39:07 +0000 (UTC)
+        id S231204AbhJAHKZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Oct 2021 03:10:25 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36244 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231134AbhJAHKY (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 1 Oct 2021 03:10:24 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9562DC061779
+        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Oct 2021 00:08:40 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id i19so31810434lfu.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Oct 2021 00:08:40 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=d+67dZI32wvtfT/woO5CfYBNyLEC+7GhwoOQwraT6EE=;
+        b=T+iko0ZvnOCFVOjzR/EupuBJ1DoSkQA0lgxYS0G9gP1D7hh54JuL9z7q3jnEKG7+mu
+         ktMUZjq7C8JRlPWIq6AdKMeF2vJHzpp70p3vb5nGKIGGuso4jQH6chWx/xqksryjwJLg
+         bTA7wn4Hn6B9ksg2CWU6KhXiAojJdsbHENBb+WVDMuN7GfLXztCN4/4hPKLYtPc66jdI
+         8y8EN174MysT80nAsSZB3/7VaTj//JVlqgkvX+WUaeX86lPKOJa27storU8lo5nDwPEf
+         UGxnfg3i4oDk3x9GxYBijePw49I8FLm3vM1tTetUSINxYXAz/DYIWqZHwDrdTu15ib/k
+         B64Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=d+67dZI32wvtfT/woO5CfYBNyLEC+7GhwoOQwraT6EE=;
+        b=t3B6kJipoa7O1HfU0QyXE6E29e0XHD6ahsnGzGWVVywNhqqx8/Ycvthz6hskQHKk5V
+         OXHkJXZWOpXNaAcOIDgBFvSjNWRtfy2HMvHAHLqeSCMru+XoXrUO4NyOuQW6jt7vW6PX
+         +jDR6jUJkSQhMZoA3nJnRkoMlxGdVEQUqQvw9m3+MGBdKxTHQRiNZqaxxdcv/ojMsRi7
+         K1a8DP/a5najUmT0NWUwQ99QvusND75wuSCCM6925lrxEf+5o0WSG3syFbQkia3Yd05l
+         l5vlpS6nGLxWDJdnIRwkTS2ENNSsSfOnQy8OvkuBM9FwU+9M6xbphIMY+au4pSkSaMuG
+         dytQ==
+X-Gm-Message-State: AOAM532gDgLGDICMLJmQ7JVVHlZDMwPWL2GVIQ4THAWvk9qCYYkEiTCY
+        x3FTacrkU+Nwc88QLMht8G0hBg==
+X-Google-Smtp-Source: ABdhPJyEo2IdYkhhcZntpK5K9ICUfn44bkyHDyERU57Jj1fA5GS/v4aJNAE9wAEb0dWr7VXBmoGWHA==
+X-Received: by 2002:a2e:a54b:: with SMTP id e11mr10631275ljn.171.1633072118579;
+        Fri, 01 Oct 2021 00:08:38 -0700 (PDT)
+Received: from [192.168.10.17] (88-112-130-172.elisa-laajakaista.fi. [88.112.130.172])
+        by smtp.gmail.com with ESMTPSA id i19sm584769ljg.92.2021.10.01.00.08.37
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 01 Oct 2021 00:08:38 -0700 (PDT)
+Subject: Re: [PATCH v2 3/4] soc: qcom: smem: Support reserved-memory
+ description
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, Chris Lew <clew@codeaurora.org>,
+        Deepak Kumar Singh <deesin@codeaurora.org>
+References: <20210930182111.57353-1-bjorn.andersson@linaro.org>
+ <20210930182111.57353-4-bjorn.andersson@linaro.org>
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Message-ID: <9a4ef69d-df15-0fbc-3735-6d7c861855ac@linaro.org>
+Date:   Fri, 1 Oct 2021 10:08:15 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <20210930182111.57353-4-bjorn.andersson@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Fri, 01 Oct 2021 12:09:07 +0530
-From:   mkrishn@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org, kalyan_t@codeaurora.org,
-        sbillaka@codeaurora.org, abhinavk@codeaurora.org,
-        robdclark@gmail.com, bjorn.andersson@linaro.org,
-        khsieh@codeaurora.org, rajeevny@codeaurora.org,
-        freedreno@lists.freedesktop.org, dri-devel@lists.freedesktop.org,
-        robh+dt@kernel.org
-Subject: Re: [PATCH v1 2/4] arm64: dts: qcom: sc7280: add display dt nodes
-In-Reply-To: <CAE-0n53kQU=8pdcWR0OZap1wDgxxwed0qvfaGruc71YT5Cj1iA@mail.gmail.com>
-References: <1629282424-4070-1-git-send-email-mkrishn@codeaurora.org>
- <1629282424-4070-2-git-send-email-mkrishn@codeaurora.org>
- <CAE-0n50b=pX=1MFwGPDvDR=O03tUAkAgyMonGm2+SXBft=16KQ@mail.gmail.com>
- <5adf2ab2c2a162272509d253bd797721@codeaurora.org>
- <CAE-0n53kQU=8pdcWR0OZap1wDgxxwed0qvfaGruc71YT5Cj1iA@mail.gmail.com>
-Message-ID: <8f344213978f31c04e80b804a931db56@codeaurora.org>
-X-Sender: mkrishn@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-09-30 23:28, Stephen Boyd wrote:
-> Quoting mkrishn@codeaurora.org (2021-09-30 04:56:59)
->> On 2021-08-19 01:27, Stephen Boyd wrote:
->> > Quoting Krishna Manikandan (2021-08-18 03:27:02)
->> >> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> >> b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> >> index 53a21d0..fd7ff1c 100644
->> >> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> >> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
->> >> +
->> >> +                       status = "disabled";
->> >> +
->> >> +                       mdp: mdp@ae01000 {
->> >
->> > display-controller@ae01000
->> 
->> Stephen,
->>     In the current driver code, there is a substring comparison for 
->> "mdp"
->> in device node name as part of probe sequence. If "mdp" is not present
->> in the node name, it will
->>     return an error resulting in probe failure. Can we continue using 
->> mdp
->> as nodename instead of display controller?
->> 
+Hi Bjorn,
+
+On 9/30/21 9:21 PM, Bjorn Andersson wrote:
+> Practically all modern Qualcomm platforms has a single reserved-memory
+> region for SMEM. So rather than having to describe SMEM in the form of a
+> node with a reference to a reserved-memory node, allow the SMEM device
+> to be instantiated directly from the reserved-memory node.
 > 
-> Can we fix the driver to not look for node names and look for 
-> compatible
-> strings instead? It took me a minute to find compare_name_mdp() in
-> drivers/gpu/drm/msm/msm_drv.c to understand what you're talking about.
-> Perhaps looking for qcom,mdp5 in there will be sufficient instead of
-> looking at the node name.
+> The current means of falling back to dereferencing the "memory-region"
+> is kept as a fallback, if it's determined that the SMEM node is a
+> reserved-memory node.
+> 
+> The "qcom,smem" compatible is added to the reserved_mem_matches list, to
+> allow the reserved-memory device to be probed.
+> 
+> In order to retain the readability of the code, the resolution of
+> resources is split from the actual ioremapping.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+> 
+> Changes since v1:
+> - None
+> 
+>   drivers/of/platform.c   |  1 +
+>   drivers/soc/qcom/smem.c | 57 ++++++++++++++++++++++++++++-------------
+>   2 files changed, 40 insertions(+), 18 deletions(-)
+> 
+> diff --git a/drivers/of/platform.c b/drivers/of/platform.c
+> index 32d5ff8df747..07813fb1ef37 100644
+> --- a/drivers/of/platform.c
+> +++ b/drivers/of/platform.c
+> @@ -505,6 +505,7 @@ EXPORT_SYMBOL_GPL(of_platform_default_populate);
+>   static const struct of_device_id reserved_mem_matches[] = {
+>   	{ .compatible = "qcom,rmtfs-mem" },
+>   	{ .compatible = "qcom,cmd-db" },
+> +	{ .compatible = "qcom,smem" },
+>   	{ .compatible = "ramoops" },
+>   	{ .compatible = "nvmem-rmem" },
+>   	{}
+> diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
+> index 4fb5aeeb0843..c7e519bfdc8a 100644
+> --- a/drivers/soc/qcom/smem.c
+> +++ b/drivers/soc/qcom/smem.c
+> @@ -9,6 +9,7 @@
+>   #include <linux/module.h>
+>   #include <linux/of.h>
+>   #include <linux/of_address.h>
+> +#include <linux/of_reserved_mem.h>
+>   #include <linux/platform_device.h>
+>   #include <linux/sizes.h>
+>   #include <linux/slab.h>
+> @@ -240,7 +241,7 @@ static const u8 SMEM_INFO_MAGIC[] = { 0x53, 0x49, 0x49, 0x49 }; /* SIII */
+>    * @size:	size of the memory region
+>    */
+>   struct smem_region {
+> -	u32 aux_base;
+> +	phys_addr_t aux_base;
+>   	void __iomem *virt_base;
+>   	size_t size;
+>   };
+> @@ -499,7 +500,7 @@ static void *qcom_smem_get_global(struct qcom_smem *smem,
+>   	for (i = 0; i < smem->num_regions; i++) {
+>   		region = &smem->regions[i];
+>   
+> -		if (region->aux_base == aux_base || !aux_base) {
+> +		if ((u32)region->aux_base == aux_base || !aux_base) {
+>   			if (size != NULL)
+>   				*size = le32_to_cpu(entry->size);
+>   			return region->virt_base + le32_to_cpu(entry->offset);
+> @@ -664,7 +665,7 @@ phys_addr_t qcom_smem_virt_to_phys(void *p)
+>   		if (p < region->virt_base + region->size) {
+>   			u64 offset = p - region->virt_base;
+>   
+> -			return (phys_addr_t)region->aux_base + offset;
+> +			return region->aux_base + offset;
+>   		}
+>   	}
+>   
+> @@ -863,12 +864,12 @@ qcom_smem_enumerate_partitions(struct qcom_smem *smem, u16 local_host)
+>   	return 0;
+>   }
+>   
+> -static int qcom_smem_map_memory(struct qcom_smem *smem, struct device *dev,
+> -				const char *name, int i)
+> +static int qcom_smem_resolve_mem(struct qcom_smem *smem, const char *name,
+> +				 struct smem_region *region)
+>   {
+> +	struct device *dev = smem->dev;
+>   	struct device_node *np;
+>   	struct resource r;
+> -	resource_size_t size;
+>   	int ret;
+>   
+>   	np = of_parse_phandle(dev->of_node, name, 0);
+> @@ -881,13 +882,9 @@ static int qcom_smem_map_memory(struct qcom_smem *smem, struct device *dev,
+>   	of_node_put(np);
+>   	if (ret)
+>   		return ret;
+> -	size = resource_size(&r);
+>   
+> -	smem->regions[i].virt_base = devm_ioremap_wc(dev, r.start, size);
+> -	if (!smem->regions[i].virt_base)
+> -		return -ENOMEM;
+> -	smem->regions[i].aux_base = (u32)r.start;
+> -	smem->regions[i].size = size;
+> +	region->aux_base = r.start;
+> +	region->size = resource_size(&r);
+>   
+>   	return 0;
+>   }
+> @@ -895,12 +892,14 @@ static int qcom_smem_map_memory(struct qcom_smem *smem, struct device *dev,
+>   static int qcom_smem_probe(struct platform_device *pdev)
+>   {
+>   	struct smem_header *header;
+> +	struct reserved_mem *rmem;
+>   	struct qcom_smem *smem;
+>   	size_t array_size;
+>   	int num_regions;
+>   	int hwlock_id;
+>   	u32 version;
+>   	int ret;
+> +	int i;
 
-Sure Stephen. I will make the necessary changes in msm_drv.c to look for 
-compatible string instead of node name.
-Can I include these two changes (changing mdp--> display controller and 
-msm_drv.c changes) in a separate series ?
+Just a nitpicking, the index can be unsigned.
 
-Thanks,
-Krishna
+>   
+>   	num_regions = 1;
+>   	if (of_find_property(pdev->dev.of_node, "qcom,rpm-msg-ram", NULL))
+> @@ -914,13 +913,35 @@ static int qcom_smem_probe(struct platform_device *pdev)
+>   	smem->dev = &pdev->dev;
+>   	smem->num_regions = num_regions;
+>   
+> -	ret = qcom_smem_map_memory(smem, &pdev->dev, "memory-region", 0);
+> -	if (ret)
+> -		return ret;
+> +	rmem = of_reserved_mem_lookup(pdev->dev.of_node);
+> +	if (rmem) {
+> +		smem->regions[0].aux_base = rmem->base;
+> +		smem->regions[0].size = rmem->size;
+> +	} else {
+> +		/*
+> +		 * Fall back to the memory-region reference, if we're not a
+> +		 * reserved-memory node.
+> +		 */
+> +		ret = qcom_smem_resolve_mem(smem, "memory-region", &smem->regions[0]);
+> +		if (ret)
+> +			return ret;
+> +	}
+>   
+> -	if (num_regions > 1 && (ret = qcom_smem_map_memory(smem, &pdev->dev,
+> -					"qcom,rpm-msg-ram", 1)))
+> -		return ret;
+> +	if (num_regions > 1) {
+> +		ret = qcom_smem_resolve_mem(smem, "qcom,rpm-msg-ram", &smem->regions[1]);
+> +		if (ret)
+> +			return ret;
+> +	}
+> +
+> +	for (i = 0; i < num_regions; i++) {
+> +		smem->regions[i].virt_base = devm_ioremap_wc(&pdev->dev,
+> +							     smem->regions[i].aux_base,
+> +							     smem->regions[i].size);
+> +		if (!smem->regions[i].virt_base) {
+> +			dev_err(&pdev->dev, "failed to remap %pa\n", &smem->regions[i].aux_base);
+> +			return -ENOMEM;
+> +		}
+> +	}
+>   
+>   	header = smem->regions[0].virt_base;
+>   	if (le32_to_cpu(header->initialized) != 1 ||
+> 
+
+--
+Best wishes,
+Vladimir
