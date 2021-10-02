@@ -2,188 +2,92 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 982F141FD6C
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Oct 2021 19:28:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id EB44A41FDB7
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Oct 2021 20:31:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233656AbhJBR34 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 2 Oct 2021 13:29:56 -0400
-Received: from new3-smtp.messagingengine.com ([66.111.4.229]:45069 "EHLO
-        new3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S233451AbhJBR3z (ORCPT
+        id S233778AbhJBSdI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 2 Oct 2021 14:33:08 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33226 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229875AbhJBSdH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 2 Oct 2021 13:29:55 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-        by mailnew.nyi.internal (Postfix) with ESMTP id 647E45804E9;
-        Sat,  2 Oct 2021 13:28:08 -0400 (EDT)
-Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Sat, 02 Oct 2021 13:28:08 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=date
-        :from:to:cc:subject:message-id:references:mime-version
-        :content-type:content-transfer-encoding:in-reply-to; s=fm3; bh=N
-        dG2AiDGU0yyjfZEfSHSA1eX2my+Y7Dhy95tEwsxOEE=; b=EHf38XIxyX3AijX2q
-        ngopIdoNyr1T5LjiY1RSy1XuPrV8q1XjL/4tLTYscB1g0B6chFWCuxlMe9QImHiV
-        kUpLrMS9xdGbUshDw+eXNLhDLdgo8zVWBjqftwU0nnAVlbE+KFdfEpgLiDq38IZ4
-        AXamJNqMxQXQUKYBEugY/tcVm7z5aaZeWfLZgKrJsiQgRlW4aMI9ca3HhZF090fF
-        TY/u7r/lXgDW9S5blz3NC7PUxKj/TR7c8R646Q4AK7Nu9uCUNIXZXuEROSZtl92o
-        GYGRgcLS1zLTnpzVv/HMzNgUtzsoU8rYdAmiUHJVjxtvP/c6HfwAnyamZYrldcuB
-        93tzw==
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
-        messagingengine.com; h=cc:content-transfer-encoding:content-type
-        :date:from:in-reply-to:message-id:mime-version:references
-        :subject:to:x-me-proxy:x-me-proxy:x-me-sender:x-me-sender
-        :x-sasl-enc; s=fm1; bh=NdG2AiDGU0yyjfZEfSHSA1eX2my+Y7Dhy95tEwsxO
-        EE=; b=RrpcoIklxRRr1rba6cZd76mHODb8D+vtPu79QI+bAxxAMeXKLCDgaupqC
-        JBUzgot1VDDL+3oxEW+xFShKnLUv8F/9i97SMqx++QNxoq3x/LVndAw7I3HX3kdJ
-        /pJ7/W1ykkpDt+vPELlhrLDli4MI+GxLfSzApQw9pc2geW6yCJYw2aH9HHHcrcva
-        uSwZzMvBtjl2+H0v6OiyBRIYP9LmVlltLFMa267Jd579CWYYxFkJfi1BpSL9PqFK
-        aQfe+VLf7jqJ3oShgh3viO7+9jjJLuPfbRhF0qyGiIjt8ilL+WrvObsImLgTXnTr
-        M+oDUovLY3IvonoBXHDIz77IcXOLQ==
-X-ME-Sender: <xms:p5ZYYc6C5hKN4W1y5JtKH-pQV-GWgNVKCNp0gst7MYkbAFgbXncIXw>
-    <xme:p5ZYYd7hiKdkyl5vWoA78zGA5phD8s6tDgUtMlZBjWCMf5CXr0BN4kv6re3BEBXS4
-    dWP_07Ww8KH8SCIOw>
-X-ME-Received: <xmr:p5ZYYbf3PQTUIfpmiTMquywnIKLHp0OtfyBwiq7Vy2Og_pzRfgRNyWCRptIe86pa3FFNjg6T>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrudekkedgudduvdcutefuodetggdotefrod
-    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
-    necuuegrihhlohhuthemuceftddtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmd
-    enucfjughrpeffhffvuffkfhggtggugfgjsehtkeertddttdejnecuhfhrohhmpefhvghr
-    nhgrnhguohcutfgrmhhoshcuoehgrhgvvghnfhhoohesuhelvddrvghuqeenucggtffrrg
-    htthgvrhhnpeeghfffgedufeeuheevtddukedtteeikefgiefhudfhfeffjeetvedtgfff
-    keejudenucffohhmrghinhepfhhrvggvuggvshhkthhophdrohhrghdpmhhuthgvgidrsh
-    honecuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhr
-    vggvnhhfohhosehuledvrdgvuh
-X-ME-Proxy: <xmx:qJZYYRJPiM7v-h_OyID40YuW8z7zHCbCpFD7_x7o2gIg1-LmMH0EzQ>
-    <xmx:qJZYYQKb7yPr7CSSefp3QHug76AGInQ4EfuSKY6xBTXXI7qCH73gFw>
-    <xmx:qJZYYSxoB7UTJoL9NFfxQdHs61p9oapG08SeOKgWK_YlS0lJB_xsxQ>
-    <xmx:qJZYYdDxWowz3_IF0LiVoWYot8015Y8My-CogxeqM1cnMlDwleOVxA>
-Received: by mail.messagingengine.com (Postfix) with ESMTPA; Sat,
- 2 Oct 2021 13:28:04 -0400 (EDT)
-Date:   Sat, 2 Oct 2021 19:28:02 +0200
-From:   Fernando Ramos <greenfoo@u92.eu>
-To:     Ville =?utf-8?B?U3lyasOkbMOk?= <ville.syrjala@linux.intel.com>
-Cc:     Sean Paul <sean@poorly.run>, dri-devel@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org, linux-doc@vger.kernel.org,
-        amd-gfx@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-        linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org,
-        nouveau@lists.freedesktop.org, linux-renesas-soc@vger.kernel.org,
-        linux-tegra@vger.kernel.org
-Subject: Re: [Intel-gfx] [PATCH v2 00/17] drm: cleanup: Use
- DRM_MODESET_LOCK_ALL_* helpers where possible
-Message-ID: <YViWomXZWdy/81uT@zacax395.localdomain>
-References: <20210924064324.229457-1-greenfoo@u92.eu>
- <20211001183655.GW2515@art_vandelay>
- <YVda4jNSGuQf50JV@intel.com>
- <20211001204815.GA2515@art_vandelay>
- <YVeGOyLzuhN7zzV7@intel.com>
- <YVfEWaLfYWdhezCa@intel.com>
- <YVgGklsHT5fkavDL@zacax395.localdomain>
+        Sat, 2 Oct 2021 14:33:07 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A96B2C0613EC
+        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Oct 2021 11:31:21 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id y26so52747126lfa.11
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Oct 2021 11:31:21 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=0TOsxY2C2gcID0yo/4ltic8viK9R7xT9wFfMMcLu9ro=;
+        b=YOZy7cFDGr/Q/xTYZPKmmixJVhBWywFG98Onlmyb/fatkVb6thgrG7xrC/G6DTr4lE
+         7RAQRmQIajpd14yBwouwaEq5K9Y0tX61rbBLEW+VSBtJfDF6Rr+a6JDdBmiqrq0yUHJc
+         iuJU1vwngQ6iSW4FS2uYv9yHorF460tj3v2HQW/dgJTnfBS36pKNsxsxUl26Eh1IE07T
+         3/fKkiYZ7ml/AR0HAEBsfvQdKdMMDBjZjs8KTzJTsSnLIXA7+O8YZwbA//t/cdMYc0ZK
+         22mY2T+uE3Wu4jZRz4Cr70IzcodFnbEFsTHRthkktNHmqDQOIy5Y0rh8PJtalS7fmlHe
+         vCDw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=0TOsxY2C2gcID0yo/4ltic8viK9R7xT9wFfMMcLu9ro=;
+        b=iqU7p+jS5XliIpf4u+rIz1IJAWlDHd16WSALF5NzWJbV2cul1i/+QGi4lDMqnj5G+Z
+         LsWCZa7W/F0+9bDg/8ew8ZbWXgeYzsaz1vGfchEYSOlvD70GJ8PGQUQF2v1hiJ/JKPmK
+         A5D++FZ7wxcd7cwjbIUJ3In44FpYE61jS6n3g1ADTTwBOUHvpZF+LU6z+XCXrvYjZmMr
+         E0pGbDSFR4QUHo08nmxzDJF15ZxAzX4g161C+U43X9Oa5N0Dznb38Q9iqBIsxym4IR7K
+         C+B2GdoXw0azwi2AmGu95rPaMofHUOgeyyemVynq19t3itHrR76bHiVT1x0RfAvGWup5
+         fbwA==
+X-Gm-Message-State: AOAM530mhaf0B7J5HSg3n5EaL8iximHE0CS1Z4PfFcJTjahrXcb7VlQz
+        byW/jz6OknxyQXVcYELQbhxP8g==
+X-Google-Smtp-Source: ABdhPJy8m4i2Oku6/vsJU1h6QPiGIK/uE9SJIhSZqadR7hSfSSI7MhWm6lisY30xU9zxBX4GAQDOkA==
+X-Received: by 2002:a05:6512:3082:: with SMTP id z2mr4916664lfd.657.1633199479933;
+        Sat, 02 Oct 2021 11:31:19 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id bd7sm1020419ljb.20.2021.10.02.11.31.19
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 02 Oct 2021 11:31:19 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Abhinav Kumar <abhinavk@codeaurora.org>
+Cc:     Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH] drm/msm/a6xx: correct cx_debugbus_read arguments
+Date:   Sat,  2 Oct 2021 21:31:18 +0300
+Message-Id: <20211002183118.748841-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Disposition: inline
 Content-Transfer-Encoding: 8bit
-In-Reply-To: <YVgGklsHT5fkavDL@zacax395.localdomain>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 21/10/02 09:13AM, Fernando Ramos wrote:
-> On 21/10/02 05:30AM, Ville Syrjälä wrote:
-> > On Sat, Oct 02, 2021 at 01:05:47AM +0300, Ville Syrjälä wrote:
-> > > On Fri, Oct 01, 2021 at 04:48:15PM -0400, Sean Paul wrote:
-> > > > On Fri, Oct 01, 2021 at 10:00:50PM +0300, Ville Syrjälä wrote:
-> > > > > On Fri, Oct 01, 2021 at 02:36:55PM -0400, Sean Paul wrote:
-> > > > > > 
-> > > > > > Thank you for revising, Fernando! I've pushed the set to drm-misc-next (along
-> > > > > > with the necessary drm-tip conflict resolutions).
-> > > > > 
-> > > > > Ugh. Did anyone actually review the locking changes this does?
-> > > > > I shot the previous i915 stuff down because the commit messages
-> > > > > did not address any of it.
-> > > > 
-> > > > I reviewed the set on 9/17, I didn't see your feedback on that thread.
-> > > 
-> > > It was much earlir than that.
-> > > https://lists.freedesktop.org/archives/dri-devel/2021-June/313193.html
+First argument of cx_debugbus_read() should be 'void __iomem *' rather
+than 'void * __iomem' to make sparse happy.
 
-Sorry, I'm new to this and it did not occur to me to search for similar patches
-in the mailing list archives in case there were additional comments that applied
-to my change set.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-In case I had done that I would have found that, as you mentioned, you had
-already raised two issues back in June:
-
-    On Tue, Jun 29, 2021, Ville Syrjälä wrote:
-    >
-    > That looks wrong. You're using a private ctx here, but still
-    > passing dev->mode_config.acquire_ctx to the lower level stuff.
-    > 
-    > Also DRM_MODESET_LOCK_ALL_{BEGIN,END}() do not seem to be
-    > equivalent to drm_modeset_{lock,unlock}_all() when it comes to 
-    > mode_config.mutex. So would need a proper review whether we
-    > actually need that lock or not.
-
-The first one was pointing out the same error I would later repeat in my patch
-series (ups).
-
-After further inspection of the code it looks to me that changing this:
-
-    intel_modeset_setup_hw_state(dev, dev->mode_config.acquire_ctx);
-
-...into this:
-
-    intel_modeset_setup_hw_state(dev, &ctx);
-
-...would be enough.
-
-Why? The only difference between the old drm_modeset_{lock,unlock}_all()
-functions and the new DRM_MODESET_LOCK_ALL_{BEGIN,END}() macros is that the
-former use a global context stored in dev->mode_config.acquire_ctx while the
-latter depend on a user provided one (typically in the stack).
-
-In the old (working) code the global context structure is freed in
-drm_modeset_unlock_all() thus we are sure no one is holding a reference to it at
-that point. This means that as long as no one accesses the global
-dev->mode_config.acquire_ctx context in the block that runs between lock/BEGIN
-and unlock/END, the code should be equivalent before and after my changes.
-
-In fact, now that my patch series removes the drm_modeset_{lock,unlock}_all()
-functions, the acquire_ctx field of the drm_mode_config structure should be
-deleted:
-
-    /**
-     * @acquire_ctx:
-     *
-     * Global implicit acquire context used by atomic drivers for legacy
-     * IOCTLs. Deprecated, since implicit locking contexts make it
-     * impossible to use driver-private &struct drm_modeset_lock. Users of
-     * this must hold @mutex.
-     */
-    struct drm_modeset_acquire_ctx *acquire_ctx;
-
-If I had done that (ie. removing this field) I would have detected the problem
-when compiling.
-
-There is another place (in the amdgpu driver) where this field is still being
-referenced, but before I investigate that I would like to know if you agree that
-this is a good path to follow.
-
-Regarding the second issue you raised...
-
-    > Also DRM_MODESET_LOCK_ALL_{BEGIN,END}() do not seem to be
-    > equivalent to drm_modeset_{lock,unlock}_all() when it comes to 
-    > mode_config.mutex. So would need a proper review whether we
-    > actually need that lock or not.
-
-...the only difference regarding mode_config.mutex I see is that in the new
-macros the mutex is locked only under this condition:
-
-    if (!drm_drv_uses_atomic_modeset(dev))
-
-...which seems reasonable, right? Is this what you were referring to or is it
-something else?
-
-Please let me know what you think.
-
-Thanks!
-
-
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+index e8f65cd8eca6..7501849ed15d 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu_state.c
+@@ -180,7 +180,7 @@ static int debugbus_read(struct msm_gpu *gpu, u32 block, u32 offset,
+ 	msm_readl((ptr) + ((offset) << 2))
+ 
+ /* read a value from the CX debug bus */
+-static int cx_debugbus_read(void *__iomem cxdbg, u32 block, u32 offset,
++static int cx_debugbus_read(void __iomem *cxdbg, u32 block, u32 offset,
+ 		u32 *data)
+ {
+ 	u32 reg = A6XX_CX_DBGC_CFG_DBGBUS_SEL_A_PING_INDEX(offset) |
+-- 
+2.33.0
 
