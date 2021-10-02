@@ -2,68 +2,68 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E27D441FDE6
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Oct 2021 21:48:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BF86541FDEA
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Oct 2021 21:48:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233908AbhJBTuX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 2 Oct 2021 15:50:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50010 "EHLO
+        id S233927AbhJBTue (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 2 Oct 2021 15:50:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50060 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229590AbhJBTuX (ORCPT
+        with ESMTP id S229689AbhJBTud (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 2 Oct 2021 15:50:23 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AFCB9C061714
-        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Oct 2021 12:48:36 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id g41so52717213lfv.1
-        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Oct 2021 12:48:36 -0700 (PDT)
+        Sat, 2 Oct 2021 15:50:33 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0950C061714
+        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Oct 2021 12:48:47 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id e15so53021985lfr.10
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Oct 2021 12:48:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=3v/geDj0uGsJ/NYH2t8jxZkd5djSTKuilXHwfdzt1Cc=;
-        b=RHg/dSVzLyBV46OXc3FslmwBEmjnSZ551iVREvMg49ZnxMhGpK8IqjAlYnyuzz4VyA
-         qDY03Z7ywArwD0J+/I7fU1CqVSTlzISn0nvICz84CkGqS3CEuyMkUYZybqK1ZbROgm83
-         JoP6GmR/pLdjYA2ySMpbLnVq3xpW5Fw7voH/YA4xt2g98PJUTVJHjSnZWChxzIk+Rpoa
-         BnXuNaAkHfh72cSHr2qMgkLivgXC+PjpgY9Y8t/siTpdwusB9OxwokOeMqk4B/WkuwkF
-         79JaNsd0T1XrCNrANY/O++5vhdtYtl4SSE//KL2AOD3Yd8q7vxa/DveK4vOwzOdEB0sa
-         hw/g==
+        bh=3iD8ut9T1OePPVNgxRODW+TG74L9ph+sNjofBkFX9mg=;
+        b=wG2lRoHDQCTj6Halp/cZ2LtDN2u5uTWjX8eziYcpJA9DdBOXDvnWbMnA5ShXMxQ2kH
+         dowbU15I0QIc8vNDqpWEAgJqHONlHsmFFidkGSOF4Q/PXteyOh9DnQk39fMIOvMyDluc
+         +um3v4Xcar05hv8fPklhZ62KtTvW/mGWTqY5uBCFXBAENZlpxtFT4n+ck9n/UljVX8yp
+         +CqUbWxJxMhXeolXBMhRcDtzm1Bt6mDO9Tt8g8H8gDfnSZhG453yumALo7yPZ9Z+/9M2
+         EdtewggioCxQ1pgdEWvlOZzbPTYitIt3aTR+iEStuhnmm6EhGighfFiwxbz9vjZ5rHGN
+         UdVA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=3v/geDj0uGsJ/NYH2t8jxZkd5djSTKuilXHwfdzt1Cc=;
-        b=Rj95z+gP27wHUcxOEgNEIseaZpzdYyIQh4bqHjeltUNd0bnL3MoWnIGGnFvDmj5lYD
-         WY5SPyWmcbrqIlTP74yvW162P+UxZpLBLoc62nTTJQZz4qMp92hubE3kRPF4pNpOcFpv
-         rPOIWluhBt/0AvA+RNM1XT0DAHuI1ublZQD4lH54wzWPZM7K8SC4iibQFGJ8nZeUePJ+
-         pWtzy/Z6UVKk5qtA2dm5orJILKxFad/+1u62ODJBpTq4siSEcxDgJrDprGSNGL1IXZAJ
-         0OGktiAMMCuf9LhgCHIMJAy2t7R2LKBDoQ8chGfxqa/PrMFbWKPuOufkePPE6DmWB8Dr
-         KYJQ==
-X-Gm-Message-State: AOAM533CABjkvFKTeHBrruSDvIiJMm/R33/1b96x/GyaidilV8FXdxue
-        21KQouT85ZqXW0K1lJ5u9ENCMw==
-X-Google-Smtp-Source: ABdhPJwLnDBY0HJqJaaf7DmtwiIdW9JIcvRLJwkpht+8jNm1I/nya8rzp3SvoRS6VNc2NJxlBiCI8Q==
-X-Received: by 2002:a2e:1557:: with SMTP id 23mr5644871ljv.84.1633204115051;
-        Sat, 02 Oct 2021 12:48:35 -0700 (PDT)
+        bh=3iD8ut9T1OePPVNgxRODW+TG74L9ph+sNjofBkFX9mg=;
+        b=UAYCBSoHoTQdOEBKkWuZdpWCpMYxBm24YAcHBkf3HQeMO2ugmMV6WtnpPoc2B9+Irw
+         azrUY7dxF2ruQl2e8jU34Ps9qZGNUqkKLOQHy/HTni18U1xiXkzdROWmRWyO2PDgP50k
+         IXKQrST59wo1ukdM3w18osS5HkQ11WFIbzogXeCpSsN+sGxaK/wVoEXItoCCmjClsNz1
+         ge3fAbplT7rv3bIPUkTiUoyyMmOPvLpzMt8j4/f9C6zYfr3DuIMgYICakLLNHA+vrV6r
+         jOiGH003SZiEkMNqMErNA5fFm4PMpYWwR0o6yK+/LUiQgm1WPA2Yf3PUp/lEcYDmA/xf
+         85OQ==
+X-Gm-Message-State: AOAM531gk5zh5I1NuppWewz584EsCDX20ajerU+GsxwaY42v3pip9Yrg
+        Sd8gYHRX8HZwNTI9dmZPhbPt8A==
+X-Google-Smtp-Source: ABdhPJy0g6pZkiwHE0oFUqRTjGu57K8i4MMyLOxOgQQmBEd1NUDk2GlFyW5BjqmnEINAiGmmJijFnQ==
+X-Received: by 2002:a2e:80d6:: with SMTP id r22mr5393812ljg.127.1633204126011;
+        Sat, 02 Oct 2021 12:48:46 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id e23sm632330lfn.215.2021.10.02.12.48.34
+        by smtp.gmail.com with ESMTPSA id r23sm491197lfe.268.2021.10.02.12.48.45
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 02 Oct 2021 12:48:34 -0700 (PDT)
-Subject: Re: [PATCH] drm/msm/mdp4: Remove redundant null check before
+        Sat, 02 Oct 2021 12:48:45 -0700 (PDT)
+Subject: Re: [PATCH] drm/msm/mdp5: Remove redundant null check before
  clk_prepare_enable/clk_disable_unprepare
 To:     Xu Wang <vulab@iscas.ac.cn>, robdclark@gmail.com, sean@poorly.run,
         airlied@linux.ie, daniel@ffwll.ch, jcrouse@codeaurora.org,
-        tzimmermann@suse.de, sam@ravnborg.org
+        tzimmermann@suse.de, abhinavk@codeaurora.org
 Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20201231094155.25481-1-vulab@iscas.ac.cn>
+References: <20201231094935.25737-1-vulab@iscas.ac.cn>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <3809d7e9-3aa6-8ac0-c1ea-88b63a3d6d63@linaro.org>
-Date:   Sat, 2 Oct 2021 22:48:31 +0300
+Message-ID: <b8e7ca23-b8aa-18ef-c4a9-2fcaec0f52f6@linaro.org>
+Date:   Sat, 2 Oct 2021 22:48:45 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <20201231094155.25481-1-vulab@iscas.ac.cn>
+In-Reply-To: <20201231094935.25737-1-vulab@iscas.ac.cn>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
@@ -71,7 +71,7 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/12/2020 12:41, Xu Wang wrote:
+On 31/12/2020 12:49, Xu Wang wrote:
 > Because clk_prepare_enable() and clk_disable_unprepare() already checked
 > NULL clock parameter, so the additional checks are unnecessary, just
 > remove them.
@@ -81,45 +81,79 @@ On 31/12/2020 12:41, Xu Wang wrote:
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 > ---
->   drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c | 18 ++++++------------
->   1 file changed, 6 insertions(+), 12 deletions(-)
+>   drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c  | 18 ++++++------------
+>   drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c | 12 ++++--------
+>   2 files changed, 10 insertions(+), 20 deletions(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-> index 3d729270bde1..696a22d571ad 100644
-> --- a/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-> +++ b/drivers/gpu/drm/msm/disp/mdp4/mdp4_kms.c
-> @@ -207,12 +207,9 @@ int mdp4_disable(struct mdp4_kms *mdp4_kms)
->   	DBG("");
+> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> index 15aed45022bc..8d373d2ffd51 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_kms.c
+> @@ -303,15 +303,12 @@ static int mdp5_disable(struct mdp5_kms *mdp5_kms)
+>   	mdp5_kms->enable_count--;
+>   	WARN_ON(mdp5_kms->enable_count < 0);
 >   
->   	clk_disable_unprepare(mdp4_kms->clk);
-> -	if (mdp4_kms->pclk)
-> -		clk_disable_unprepare(mdp4_kms->pclk);
-> -	if (mdp4_kms->lut_clk)
-> -		clk_disable_unprepare(mdp4_kms->lut_clk);
-> -	if (mdp4_kms->axi_clk)
-> -		clk_disable_unprepare(mdp4_kms->axi_clk);
-> +	clk_disable_unprepare(mdp4_kms->pclk);
-> +	clk_disable_unprepare(mdp4_kms->lut_clk);
-> +	clk_disable_unprepare(mdp4_kms->axi_clk);
->   
->   	return 0;
->   }
-> @@ -222,12 +219,9 @@ int mdp4_enable(struct mdp4_kms *mdp4_kms)
->   	DBG("");
->   
->   	clk_prepare_enable(mdp4_kms->clk);
-> -	if (mdp4_kms->pclk)
-> -		clk_prepare_enable(mdp4_kms->pclk);
-> -	if (mdp4_kms->lut_clk)
-> -		clk_prepare_enable(mdp4_kms->lut_clk);
-> -	if (mdp4_kms->axi_clk)
-> -		clk_prepare_enable(mdp4_kms->axi_clk);
-> +	clk_prepare_enable(mdp4_kms->pclk);
-> +	clk_prepare_enable(mdp4_kms->lut_clk);
-> +	clk_prepare_enable(mdp4_kms->axi_clk);
+> -	if (mdp5_kms->tbu_rt_clk)
+> -		clk_disable_unprepare(mdp5_kms->tbu_rt_clk);
+> -	if (mdp5_kms->tbu_clk)
+> -		clk_disable_unprepare(mdp5_kms->tbu_clk);
+> +	clk_disable_unprepare(mdp5_kms->tbu_rt_clk);
+> +	clk_disable_unprepare(mdp5_kms->tbu_clk);
+>   	clk_disable_unprepare(mdp5_kms->ahb_clk);
+>   	clk_disable_unprepare(mdp5_kms->axi_clk);
+>   	clk_disable_unprepare(mdp5_kms->core_clk);
+> -	if (mdp5_kms->lut_clk)
+> -		clk_disable_unprepare(mdp5_kms->lut_clk);
+> +	clk_disable_unprepare(mdp5_kms->lut_clk);
 >   
 >   	return 0;
 >   }
+> @@ -325,12 +322,9 @@ static int mdp5_enable(struct mdp5_kms *mdp5_kms)
+>   	clk_prepare_enable(mdp5_kms->ahb_clk);
+>   	clk_prepare_enable(mdp5_kms->axi_clk);
+>   	clk_prepare_enable(mdp5_kms->core_clk);
+> -	if (mdp5_kms->lut_clk)
+> -		clk_prepare_enable(mdp5_kms->lut_clk);
+> -	if (mdp5_kms->tbu_clk)
+> -		clk_prepare_enable(mdp5_kms->tbu_clk);
+> -	if (mdp5_kms->tbu_rt_clk)
+> -		clk_prepare_enable(mdp5_kms->tbu_rt_clk);
+> +	clk_prepare_enable(mdp5_kms->lut_clk);
+> +	clk_prepare_enable(mdp5_kms->tbu_clk);
+> +	clk_prepare_enable(mdp5_kms->tbu_rt_clk);
+>   
+>   	return 0;
+>   }
+> diff --git a/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c b/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c
+> index 09bd46ad820b..02c6c4b68c68 100644
+> --- a/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c
+> +++ b/drivers/gpu/drm/msm/disp/mdp5/mdp5_mdss.c
+> @@ -137,10 +137,8 @@ static int mdp5_mdss_enable(struct msm_mdss *mdss)
+>   	DBG("");
+>   
+>   	clk_prepare_enable(mdp5_mdss->ahb_clk);
+> -	if (mdp5_mdss->axi_clk)
+> -		clk_prepare_enable(mdp5_mdss->axi_clk);
+> -	if (mdp5_mdss->vsync_clk)
+> -		clk_prepare_enable(mdp5_mdss->vsync_clk);
+> +	clk_prepare_enable(mdp5_mdss->axi_clk);
+> +	clk_prepare_enable(mdp5_mdss->vsync_clk);
+>   
+>   	return 0;
+>   }
+> @@ -150,10 +148,8 @@ static int mdp5_mdss_disable(struct msm_mdss *mdss)
+>   	struct mdp5_mdss *mdp5_mdss = to_mdp5_mdss(mdss);
+>   	DBG("");
+>   
+> -	if (mdp5_mdss->vsync_clk)
+> -		clk_disable_unprepare(mdp5_mdss->vsync_clk);
+> -	if (mdp5_mdss->axi_clk)
+> -		clk_disable_unprepare(mdp5_mdss->axi_clk);
+> +	clk_disable_unprepare(mdp5_mdss->vsync_clk);
+> +	clk_disable_unprepare(mdp5_mdss->axi_clk);
+>   	clk_disable_unprepare(mdp5_mdss->ahb_clk);
+>   
+>   	return 0;
 > 
 
 
