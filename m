@@ -2,70 +2,70 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4219841FDF0
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Oct 2021 21:49:06 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8447D41FDF8
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Oct 2021 22:03:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233926AbhJBTur (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 2 Oct 2021 15:50:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50112 "EHLO
+        id S233919AbhJBUFb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 2 Oct 2021 16:05:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53304 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233932AbhJBTun (ORCPT
+        with ESMTP id S229907AbhJBUFb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 2 Oct 2021 15:50:43 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5587BC061714
-        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Oct 2021 12:48:57 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id y26so53249147lfa.11
-        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Oct 2021 12:48:57 -0700 (PDT)
+        Sat, 2 Oct 2021 16:05:31 -0400
+Received: from mail-lf1-x133.google.com (mail-lf1-x133.google.com [IPv6:2a00:1450:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5760C0613EC
+        for <linux-arm-msm@vger.kernel.org>; Sat,  2 Oct 2021 13:03:44 -0700 (PDT)
+Received: by mail-lf1-x133.google.com with SMTP id i25so53030315lfg.6
+        for <linux-arm-msm@vger.kernel.org>; Sat, 02 Oct 2021 13:03:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=DvdMhFbXdHD7A6qJ5QaxL5UY0tJ08n/H0zZVRP0lw34=;
-        b=YFaCW+4el+K/jG5JcYf1j3WPgImW/sWsAq6uGe/M/7YQcsfv5GhtquTVoq/8QWvm/Z
-         Nft+fSHuwn92Gb8wI9Fgmu71gtxXLH+230Lz/0IS3GKMz2rxP1Fgmj4UtPaB3lgwnerN
-         w1NUmEVaWUjxN8O6WR7FegRP1VP8n270ocoSQYJ+NdEJHVQdzkLDCmpqujBbukBDLSPG
-         mFA7BswIhERO33Um6sRot8rlDwuyeDEE4zrMVy9Yvs49knS45DpfEb3pOq7VEPrx1NSz
-         c8p8SJis7t9dlrW/V9e3Pct6Fg7xjR5cEMoH9LSC2TrhOwv5dbhzF5msqownb0alwtZ1
-         Pk3A==
+        bh=13J5NCM9YubkgnF2CpC0yWl/i0g0jlxsWta30UGyZs0=;
+        b=oegKqyu7mPdwoj9O7UaSL7cBNwXG4+DCDfIIwHzwmEDyXxNlBxYXNWubfWrtiVv22I
+         yMpvmEagtIR5jGGfEm7WleKL+gYwYbph9rAcr9tnJefvYCkFRpBs2ZbyrF8QcxsIGyay
+         v4N+ETsW9Hc2f1yZXGdwrYSiBmYKAizqEgG1XU+vlBDIxA40atShmhTtum2ljLmwZxk6
+         P6+cL/GcTNYowwBd7M0ZWEDUlIvpP3SNu0uzyVwnXmuhmU6tY69nQ9FL4W7k80F/DpIu
+         sfz/1WcR3qd4/GSdZZoLVVe2UnliC3RysOdV+0ZXGzoE54qc+OaTbcmLltdN5nR44KNE
+         pOtA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=DvdMhFbXdHD7A6qJ5QaxL5UY0tJ08n/H0zZVRP0lw34=;
-        b=uuqLS6KCKyjttkjKXuDZP35QZS9rAxzYWHVJPggi838Rw196nbBNtqeLsyPRaldoXz
-         3OeQrSJNkaYGASmdDbnAmGHzfiiBB6+vnGfWSrnVyq/mwoB4fxKRq3sAiLT1bM2w6Pmf
-         GmsbHqsFVmyAQUPqSN4ihCIeRaPIaXwlKAsKfkI2g+y8sA2ix3Zt/Y2Yfk6uHD0OWtrA
-         oNiOw+GQByqwNYTLShWFYaCJqRe+/wfn++b7qWwPZj19qCTQnNf4JRzVtLrSpayLCjGI
-         CQjrMt6puceQzERIGA2iO3KakDRfTJXEJX1L+paPC+VVI+Seoz/541A6iIAAc3H9EDS3
-         AGuQ==
-X-Gm-Message-State: AOAM531Rdy+r8bMcHel6TyzRaxH6uEbU532KCyNTV6EqEgOmQ4dltqHM
-        0BI3hyiBinHYLEPT0+4zXkM15w==
-X-Google-Smtp-Source: ABdhPJw8ihcmBd/kFBOK8dZPMvMjHmdQ7DFw/tJ78Z2qNJWwDmAT/6/rANheh1Pl0qvgWTzcNVzkDQ==
-X-Received: by 2002:a2e:95cc:: with SMTP id y12mr5396780ljh.337.1633204135751;
-        Sat, 02 Oct 2021 12:48:55 -0700 (PDT)
+        bh=13J5NCM9YubkgnF2CpC0yWl/i0g0jlxsWta30UGyZs0=;
+        b=Srg9M0+nfBw7DnEKmVTpeDusWHtzJep8D36b02Y/CfKsCXWFyyCLQ7juS92L925ssM
+         ZwY7BEZPsEdEssA234TugAgyCT/8t/Hy7mNkOyG+iKHZBUihXQxDZobfqEwrCFYVQFw1
+         hzQV2XpYQTOa35iZH+9dYI9PCsRHZErzG/Bf4SkoqTKLdispd5TH7M/3D0el4g5e2k39
+         STcYe/RMGJM15BXnjH15UemiDJGQZOf6hkPPmayCcoTzo/iNi7CGQ3IxHmSsIxRyzrsc
+         d9NrMh4mxOFl7vfTyhe8uabNP0N88NZ6S9+dsKlX/sqVMhusqHBCXksGgLg0WiqdiKF4
+         qX6Q==
+X-Gm-Message-State: AOAM533zS+YtrLgWErOjoy+GrjxUw3kOyIHC5wxcGQ9ytpDzKSCBDIKF
+        F4aVSu8jX/9uSMfr3zpBXPW0qQ==
+X-Google-Smtp-Source: ABdhPJxMzC5Hbab+sd5joT8D86weC5/IpuCQJrBVIIXEaN35dhD0lCCRcJVMffgtoz1UV//z8P6stw==
+X-Received: by 2002:a05:651c:504:: with SMTP id o4mr5475218ljp.393.1633205023010;
+        Sat, 02 Oct 2021 13:03:43 -0700 (PDT)
 Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id k21sm1115451lji.81.2021.10.02.12.48.55
+        by smtp.gmail.com with ESMTPSA id bj40sm1009896ljb.106.2021.10.02.13.03.42
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 02 Oct 2021 12:48:55 -0700 (PDT)
-Subject: Re: [PATCH] drm/msm: dsi: Remove redundant null check before
- clk_prepare_enable/clk_disable_unprepare
-To:     Xu Wang <vulab@iscas.ac.cn>, robdclark@gmail.com, sean@poorly.run,
-        airlied@linux.ie, daniel@ffwll.ch, tzimmermann@suse.de,
-        mka@chromium.org, harigovi@codeaurora.org,
-        emil.velikov@collabora.com, rikard.falkeborn@gmail.com,
-        viresh.kumar@linaro.org, rnayak@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        Sat, 02 Oct 2021 13:03:42 -0700 (PDT)
+Subject: Re: [PATCH] drm/msm: delete conversion from bool value to bool return
+To:     Bernard Zhao <bernard@vivo.com>, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Drew Davenport <ddavenport@chromium.org>,
+        Zheng Bin <zhengbin13@huawei.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-References: <20201231095616.25973-1-vulab@iscas.ac.cn>
+Cc:     opensource.kernel@vivo.com
+References: <20201102125030.6209-1-bernard@vivo.com>
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <3de6b365-7ef7-e191-a072-c7bd418c519b@linaro.org>
-Date:   Sat, 2 Oct 2021 22:48:54 +0300
+Message-ID: <2e2abdc5-d426-a0f4-9fbb-640560b4abd4@linaro.org>
+Date:   Sat, 2 Oct 2021 23:03:41 +0300
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <20201231095616.25973-1-vulab@iscas.ac.cn>
+In-Reply-To: <20201102125030.6209-1-bernard@vivo.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
@@ -73,52 +73,30 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 31/12/2020 12:56, Xu Wang wrote:
-> Because clk_prepare_enable() and clk_disable_unprepare() already checked
-> NULL clock parameter, so the additional checks are unnecessary, just
-> remove them.
+On 02/11/2020 15:50, Bernard Zhao wrote:
+> Delete the conversion from bool value to bool function return.
 > 
-> Signed-off-by: Xu Wang <vulab@iscas.ac.cn>
+> Signed-off-by: Bernard Zhao <bernard@vivo.com>
 
 Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
 > ---
->   drivers/gpu/drm/msm/dsi/dsi_host.c | 15 ++++++---------
->   1 file changed, 6 insertions(+), 9 deletions(-)
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c | 2 +-
+>   1 file changed, 1 insertion(+), 1 deletion(-)
 > 
-> diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> index ab281cba0f08..e7af90f045bf 100644
-> --- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-> +++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-> @@ -565,13 +565,11 @@ int dsi_link_clk_enable_6g(struct msm_dsi_host *msm_host)
->   		goto pixel_clk_err;
->   	}
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> index 8493d68ad841..411222f4cd6f 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder_phys_cmd.c
+> @@ -37,7 +37,7 @@
 >   
-> -	if (msm_host->byte_intf_clk) {
-> -		ret = clk_prepare_enable(msm_host->byte_intf_clk);
-> -		if (ret) {
-> -			pr_err("%s: Failed to enable byte intf clk\n",
-> -			       __func__);
-> -			goto byte_intf_clk_err;
-> -		}
-> +	ret = clk_prepare_enable(msm_host->byte_intf_clk);
-> +	if (ret) {
-> +		pr_err("%s: Failed to enable byte intf clk\n",
-> +			   __func__);
-> +		goto byte_intf_clk_err;
->   	}
->   
->   	return 0;
-> @@ -667,8 +665,7 @@ void dsi_link_clk_disable_6g(struct msm_dsi_host *msm_host)
->   	dev_pm_opp_set_rate(&msm_host->pdev->dev, 0);
->   	clk_disable_unprepare(msm_host->esc_clk);
->   	clk_disable_unprepare(msm_host->pixel_clk);
-> -	if (msm_host->byte_intf_clk)
-> -		clk_disable_unprepare(msm_host->byte_intf_clk);
-> +	clk_disable_unprepare(msm_host->byte_intf_clk);
->   	clk_disable_unprepare(msm_host->byte_clk);
+>   static bool dpu_encoder_phys_cmd_is_master(struct dpu_encoder_phys *phys_enc)
+>   {
+> -	return (phys_enc->split_role != ENC_ROLE_SLAVE) ? true : false;
+> +	return (phys_enc->split_role != ENC_ROLE_SLAVE);
 >   }
 >   
+>   static bool dpu_encoder_phys_cmd_mode_fixup(
 > 
 
 
