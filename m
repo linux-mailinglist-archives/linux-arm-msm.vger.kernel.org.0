@@ -2,179 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B6C8941F926
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Oct 2021 03:27:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1154D41F934
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  2 Oct 2021 03:37:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232267AbhJBB3E (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 1 Oct 2021 21:29:04 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35982 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231904AbhJBB3D (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 1 Oct 2021 21:29:03 -0400
-Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 72028C061775
-        for <linux-arm-msm@vger.kernel.org>; Fri,  1 Oct 2021 18:27:18 -0700 (PDT)
-Received: by mail-lf1-x130.google.com with SMTP id z24so45298312lfu.13
-        for <linux-arm-msm@vger.kernel.org>; Fri, 01 Oct 2021 18:27:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=HCKHFO3dr+m9bm0sBpvW4eyWO19sk206ehV2Fufn3Uw=;
-        b=RwoO6xCNqLSgb+yrVyvfkrUfVwPVgcCyfM28jknW+jK2socKpUyLvDeugNwcicYJwe
-         idh5hMywEhDW43Zw6ok6BubluCqlu94qKb4ZISBIcil5Vx5y1je7q7NrESn5mh+DxAt8
-         TgFRLa7YuKMAk48SEZ9xnSRGBldR3iMQnuCxc1zf4JqT2uwQ7mhFAwe4lYccsBpofkqP
-         2o3u0JhDLNsZf3ppgwC+5Jr+Afwq3X2TB5J1k/bvyDNy7fWQZcwLU/KbIeRTbDwU8Y62
-         nL+yODKfvkZ5qlreYvYtYI0ihThS9RbnMgOVte/21PXpvp0QzXrj5oFSTLEG2eaNeFnw
-         jwCw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=HCKHFO3dr+m9bm0sBpvW4eyWO19sk206ehV2Fufn3Uw=;
-        b=bvjE+NmiFqqDdnCjVs9yzJUryxQBsLkkotLTK9QkIzNvN7LrOrPNS+NisF90ojYpe7
-         yNnE+0wVsjuygEvYrJWmHhz+tPOj6hW3l5/m/ymzf1DVYq+hMn+xeJVBFD8x4p8UBDc4
-         pMxl8/1JdW+yGTUGHwH+T4DMua4BCC1ApIZ7U5Ew0TdhFgWfRWAz4cPo7+vwDG5ERqk4
-         N4mYa1y0PpsCOp3h8ft27z0lrRxkzqutWnflJz/dASIozDfuE8qefizcJrbEEZtq6yuT
-         mK808dWzK7t2g5WTRydbG3bl/zPYI7RwQJfUSH8KQKb5u2wjn6m7kysmYBjdxP98P548
-         KBvQ==
-X-Gm-Message-State: AOAM530Ww2LXAYUon1ne19fNl/Fve2fmiS+3fCfxoX6aP3LYDQDwH/Mi
-        C09SR1LFOdA0V79IUVqd6rbfWQ==
-X-Google-Smtp-Source: ABdhPJwyZY4O91MaQ4n2WL+AocW5fgIQtGUtMJ+NghEL1qP+x20mZOH+mg6hamq1SiXHgim0j0Q1LA==
-X-Received: by 2002:a19:6e06:: with SMTP id j6mr1208786lfc.351.1633138036834;
-        Fri, 01 Oct 2021 18:27:16 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id j20sm722405lfu.304.2021.10.01.18.27.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 01 Oct 2021 18:27:16 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+        id S232323AbhJBBi6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 1 Oct 2021 21:38:58 -0400
+Received: from mail.kernel.org ([198.145.29.99]:53642 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230255AbhJBBi5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 1 Oct 2021 21:38:57 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id A776E61A0A;
+        Sat,  2 Oct 2021 01:37:11 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1633138632;
+        bh=S1iJBVNG9DMAouGbDTOh9/aGx161HWIJcwmGxISWhBY=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=rno/fqW3+LxPx58gzTld6Hi4mX0C72T4ydmWT4mvG+r0f2oSr+AbFQPjpebFkYUIb
+         OjcAf08z18flToVp/1U4WzBmpX3qJgWug02i2vNaQbm4M5CJgkulQPN0iSn+b9xjjC
+         49tn0/IguuzSI3d3TyOSxWTzGf2sMOKeOVvhHtY/bwCDMDxpAhlTo+K1bHEPwTq/ob
+         cLMXb4Z128BymUAFETxzDQxju9wy5jNVjk8zSVbgNuhCc2eAYiXvMZ50G3yw314wd6
+         0iovB/vFqtpO8srsQyIiy430Zg57a5s8Ha0i4KfeOoaMgXJKHHsw892r/HWxgJJcOP
+         8X1yKGy1ObsxA==
+From:   Mark Brown <broonie@kernel.org>
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <abhinavk@codeaurora.org>
-Cc:     Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH] drm/msm/dsi: use bulk clk API
-Date:   Sat,  2 Oct 2021 04:27:15 +0300
-Message-Id: <20211002012715.691406-1-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.33.0
+        Doug Anderson <dianders@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Rajesh Patil <rajpat@codeaurora.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     Mark Brown <broonie@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, saiprakash.ranjan@codeaurora.org,
+        linux-kernel@vger.kernel.org, rnayak@codeaurora.org,
+        mka@chromium.org, msavaliy@qti.qualcomm.com, sboyd@kernel.org,
+        skakit@codeaurora.org
+Subject: Re: (subset) [PATCH V1 0/2] Add device tree compatible for sc7180 SoC
+Date:   Sat,  2 Oct 2021 02:37:06 +0100
+Message-Id: <163313862169.2275998.5804867182938981158.b4-ty@kernel.org>
+X-Mailer: git-send-email 2.30.2
+In-Reply-To: <1632997450-32293-1-git-send-email-rajpat@codeaurora.org>
+References: <1632997450-32293-1-git-send-email-rajpat@codeaurora.org>
 MIME-Version: 1.0
+Content-Type: text/plain; charset="utf-8"
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Use clk_bulk_* API instead of hand-coding them. Note, this drops support
-for legacy clk naming (e.g. "iface_clk" instead of just "iface"),
-however all in-kernel device trees were converted long long ago. The
-warning is present there since 2017.
+On Thu, 30 Sep 2021 15:54:08 +0530, Rajesh Patil wrote:
+>  - As per Doug's comments
+>    1. Added device tree compatible in dt-bindings
+>    2. Added "qcom,sc718-qspi" in qspi node
+> 
+> Rajesh Patil (2):
+>   dt-bindings: spi: Add sc7180 support
+>   arm64: dts: qcom: sc7180: Add qspi compatible
+> 
+> [...]
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/dsi/dsi_host.c | 59 ++++++------------------------
- 1 file changed, 12 insertions(+), 47 deletions(-)
+Applied to
 
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index e269df285136..3b81f40bba2e 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -106,7 +106,8 @@ struct msm_dsi_host {
- 	phys_addr_t ctrl_size;
- 	struct regulator_bulk_data supplies[DSI_DEV_REGULATOR_MAX];
- 
--	struct clk *bus_clks[DSI_BUS_CLK_MAX];
-+	int num_bus_clks;
-+	struct clk_bulk_data bus_clks[DSI_BUS_CLK_MAX];
- 
- 	struct clk *byte_clk;
- 	struct clk *esc_clk;
-@@ -374,15 +375,14 @@ static int dsi_clk_init(struct msm_dsi_host *msm_host)
- 	int i, ret = 0;
- 
- 	/* get bus clocks */
--	for (i = 0; i < cfg->num_bus_clks; i++) {
--		msm_host->bus_clks[i] = msm_clk_get(pdev,
--						cfg->bus_clk_names[i]);
--		if (IS_ERR(msm_host->bus_clks[i])) {
--			ret = PTR_ERR(msm_host->bus_clks[i]);
--			pr_err("%s: Unable to get %s clock, ret = %d\n",
--				__func__, cfg->bus_clk_names[i], ret);
--			goto exit;
--		}
-+	for (i = 0; i < cfg->num_bus_clks; i++)
-+		msm_host->bus_clks[i].id = cfg->bus_clk_names[i];
-+	msm_host->num_bus_clks = cfg->num_bus_clks;
-+
-+	ret = devm_clk_bulk_get(&pdev->dev, msm_host->num_bus_clks, msm_host->bus_clks);
-+	if (ret < 0) {
-+		dev_err(&pdev->dev, "Unable to get clocks, ret = %d\n", ret);
-+		goto exit;
- 	}
- 
- 	/* get link and source clocks */
-@@ -433,41 +433,6 @@ static int dsi_clk_init(struct msm_dsi_host *msm_host)
- 	return ret;
- }
- 
--static int dsi_bus_clk_enable(struct msm_dsi_host *msm_host)
--{
--	const struct msm_dsi_config *cfg = msm_host->cfg_hnd->cfg;
--	int i, ret;
--
--	DBG("id=%d", msm_host->id);
--
--	for (i = 0; i < cfg->num_bus_clks; i++) {
--		ret = clk_prepare_enable(msm_host->bus_clks[i]);
--		if (ret) {
--			pr_err("%s: failed to enable bus clock %d ret %d\n",
--				__func__, i, ret);
--			goto err;
--		}
--	}
--
--	return 0;
--err:
--	for (; i > 0; i--)
--		clk_disable_unprepare(msm_host->bus_clks[i]);
--
--	return ret;
--}
--
--static void dsi_bus_clk_disable(struct msm_dsi_host *msm_host)
--{
--	const struct msm_dsi_config *cfg = msm_host->cfg_hnd->cfg;
--	int i;
--
--	DBG("");
--
--	for (i = cfg->num_bus_clks - 1; i >= 0; i--)
--		clk_disable_unprepare(msm_host->bus_clks[i]);
--}
--
- int msm_dsi_runtime_suspend(struct device *dev)
- {
- 	struct platform_device *pdev = to_platform_device(dev);
-@@ -478,7 +443,7 @@ int msm_dsi_runtime_suspend(struct device *dev)
- 	if (!msm_host->cfg_hnd)
- 		return 0;
- 
--	dsi_bus_clk_disable(msm_host);
-+	clk_bulk_disable_unprepare(msm_host->num_bus_clks, msm_host->bus_clks);
- 
- 	return 0;
- }
-@@ -493,7 +458,7 @@ int msm_dsi_runtime_resume(struct device *dev)
- 	if (!msm_host->cfg_hnd)
- 		return 0;
- 
--	return dsi_bus_clk_enable(msm_host);
-+	return clk_bulk_prepare_enable(msm_host->num_bus_clks, msm_host->bus_clks);
- }
- 
- int dsi_link_clk_set_rate_6g(struct msm_dsi_host *msm_host)
--- 
-2.33.0
+   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/spi.git for-next
 
+Thanks!
+
+[1/2] dt-bindings: spi: Add sc7180 support
+      commit: acde408188491ab8965c10bf82bb06600599cdd4
+
+All being well this means that it will be integrated into the linux-next
+tree (usually sometime in the next 24 hours) and sent to Linus during
+the next merge window (or sooner if it is a bug fix), however if
+problems are discovered then the patch may be dropped or reverted.
+
+You may get further e-mails resulting from automated or manual testing
+and review of the tree, please engage with people reporting problems and
+send followup patches addressing any issues that are reported if needed.
+
+If any updates are required or you are submitting further changes they
+should be sent as incremental updates against current git, existing
+patches will not be replaced.
+
+Please add any relevant lists and maintainers to the CCs when replying
+to this mail.
+
+Thanks,
+Mark
