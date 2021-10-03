@@ -2,41 +2,35 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ABA224200D3
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Oct 2021 10:33:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9176D4200D6
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Oct 2021 10:33:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229989AbhJCIfP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        id S230004AbhJCIfP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
         Sun, 3 Oct 2021 04:35:15 -0400
-Received: from mail.z3ntu.xyz ([128.199.32.197]:37980 "EHLO mail.z3ntu.xyz"
+Received: from mail.z3ntu.xyz ([128.199.32.197]:37988 "EHLO mail.z3ntu.xyz"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229999AbhJCId4 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 3 Oct 2021 04:33:56 -0400
+        id S230001AbhJCId5 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 3 Oct 2021 04:33:57 -0400
 Received: from g550jk.portal.nstrein.ns.nl (unknown [145.15.244.215])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id DF373C9115;
-        Sun,  3 Oct 2021 08:32:07 +0000 (UTC)
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id CBAD1C9118;
+        Sun,  3 Oct 2021 08:32:08 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1633249928; bh=X4Qneg2lzExo3bu3en8DYD1jCtqON6mIXHXBLOUGwvE=;
+        t=1633249929; bh=RJQLF6oLD/LA6HJd8wF9mMr/P17NktfBH/lE5wJ42IE=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=Cnvzqi51zafi6/EOgB7bZLu6ltQgSr+5n5CPZcZKQJyT7KWHZPqdf92D8vR648Es5
-         +kq5RcO/j7lEOm5f8OrZ22DPlRttrOtfhY1tj6nkMQvA4UaD1ocwCMYPBJr8KeaoLM
-         83iPBX7+THEZqGOqy0eFab4vvMdR5/j/EkZC5Tq4=
+        b=uatboYMRq7/13F9IO4U1y0wSY0pUrk4a0DkKGisupMOwCeWFkGml4GSNQmZ+omHgn
+         SOi2EnQK7prA2lPwDZb5bgDe4LguRC2MVF3z8XhO+NuX1kITX1W0jbvcc7snn+W1ij
+         evfYr/K/hlyKD+3Q1/IS350ZyLBes8lTMdegiK+c=
 From:   Luca Weiss <luca@z3ntu.xyz>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, Luca Weiss <luca@z3ntu.xyz>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Herring <robh+dt@kernel.org>,
-        Mark Brown <broonie@kernel.org>,
-        Viresh Kumar <viresh.kumar@linaro.org>,
-        Srinivas Kandagatla <srinivas.kandagatla@linaro.org>,
-        Sebastian Reichel <sre@kernel.org>,
-        Hector Martin <marcan@marcan.st>,
-        Sudeep Holla <sudeep.holla@arm.com>,
-        Vinod Koul <vkoul@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Stephen Boyd <sboyd@codeaurora.org>,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 08/11] dt-bindings: arm: cpus: Add Kryo 570 CPUs
-Date:   Sun,  3 Oct 2021 10:31:31 +0200
-Message-Id: <20211003083141.613509-9-luca@z3ntu.xyz>
+Subject: [PATCH 09/11] dt-bindings: arm: qcom: Document sm7225 and fairphone,fp4 board
+Date:   Sun,  3 Oct 2021 10:31:32 +0200
+Message-Id: <20211003083141.613509-10-luca@z3ntu.xyz>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20211003083141.613509-1-luca@z3ntu.xyz>
 References: <20211003083141.613509-1-luca@z3ntu.xyz>
@@ -46,25 +40,38 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Document Kryo 570 CPUs found in Qualcomm Snapdragon 750G (SM7225).
+Add binding documentation for Fairphone 4 smartphone which is based on
+Snapdragon 750G (sm7225).
 
 Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 ---
- Documentation/devicetree/bindings/arm/cpus.yaml | 1 +
- 1 file changed, 1 insertion(+)
+ Documentation/devicetree/bindings/arm/qcom.yaml | 6 ++++++
+ 1 file changed, 6 insertions(+)
 
-diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Documentation/devicetree/bindings/arm/cpus.yaml
-index 897eec887e5a..1e530391f355 100644
---- a/Documentation/devicetree/bindings/arm/cpus.yaml
-+++ b/Documentation/devicetree/bindings/arm/cpus.yaml
-@@ -172,6 +172,7 @@ properties:
-       - qcom,kryo468
-       - qcom,kryo485
-       - qcom,kryo560
-+      - qcom,kryo570
-       - qcom,kryo685
-       - qcom,scorpion
+diff --git a/Documentation/devicetree/bindings/arm/qcom.yaml b/Documentation/devicetree/bindings/arm/qcom.yaml
+index 880ddafc634e..540dfafa3418 100644
+--- a/Documentation/devicetree/bindings/arm/qcom.yaml
++++ b/Documentation/devicetree/bindings/arm/qcom.yaml
+@@ -44,6 +44,7 @@ description: |
+         sdm660
+         sdm845
+         sdx55
++        sm7225
+         sm8150
+         sm8250
+         sm8350
+@@ -217,6 +218,11 @@ properties:
+               - qcom,sa8155p-adp
+           - const: qcom,sa8155p
  
++      - items:
++          - enum:
++              - fairphone,fp4
++          - const: qcom,sm7225
++
+       - items:
+           - enum:
+               - qcom,sm8150-mtp
 -- 
 2.33.0
 
