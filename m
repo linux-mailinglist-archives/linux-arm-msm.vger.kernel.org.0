@@ -2,38 +2,37 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 483054200BA
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Oct 2021 10:32:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E548A4200BE
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Oct 2021 10:32:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229916AbhJCIds (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 3 Oct 2021 04:33:48 -0400
-Received: from mail.z3ntu.xyz ([128.199.32.197]:37914 "EHLO mail.z3ntu.xyz"
+        id S229937AbhJCIdu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 3 Oct 2021 04:33:50 -0400
+Received: from mail.z3ntu.xyz ([128.199.32.197]:37924 "EHLO mail.z3ntu.xyz"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229875AbhJCIds (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        id S229885AbhJCIds (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
         Sun, 3 Oct 2021 04:33:48 -0400
 Received: from g550jk.portal.nstrein.ns.nl (unknown [145.15.244.215])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 5FA99C90EC;
-        Sun,  3 Oct 2021 08:31:59 +0000 (UTC)
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 5CB29C90F6;
+        Sun,  3 Oct 2021 08:32:00 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1633249920; bh=zmfazeMicj6zMjUJKJReCRNKJm8RWvDgpzfVzDxY7O8=;
+        t=1633249920; bh=cPDamchJW0mjeP0iNR4px+LzJKosMc9BhKEa6fAGkEw=;
         h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=rBRihO+oqeAxJC5HfS0CbqS7qaV/Dej4lQKdpixvPFx0i4bOSjCAbaQqDYFFxoVj7
-         F50xqCAChRmWMzvx4jl+ypPHAeQeIWjpLq3EORnfkvP93pV4y4t3ZvNQguw/6+yrs8
-         5kG/qlEEr7PqJbY2K4waH/m/D+pg7/dL8To3ZB0Q=
+        b=BgwdoVZK00Phlxx9j2cPArOU41IJLf+WuzAx8sBtrjmL6KL36eIkM0zvD0IibkcS+
+         QuDda7ArDPaIVwuIp2NwnWELPCOK3nQTCZvOlYaBySuTq8OxpBm4CAvfDJGJTEFHGD
+         NPDkr6BBaHO5CzQKJz5okoqgNDjWivQhhnNLabaA=
 From:   Luca Weiss <luca@z3ntu.xyz>
 To:     linux-arm-msm@vger.kernel.org
 Cc:     ~postmarketos/upstreaming@lists.sr.ht, Luca Weiss <luca@z3ntu.xyz>,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Michael Turquette <mturquette@baylibre.com>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH 01/11] clk: qcom: add select QCOM_GDSC for SM6350
-Date:   Sun,  3 Oct 2021 10:31:24 +0200
-Message-Id: <20211003083141.613509-2-luca@z3ntu.xyz>
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Mark Brown <broonie@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        David Collins <collinsd@codeaurora.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+Subject: [PATCH 02/11] dt-bindings: regulator: qcom,rpmh: Add compatible for PM6350
+Date:   Sun,  3 Oct 2021 10:31:25 +0200
+Message-Id: <20211003083141.613509-3-luca@z3ntu.xyz>
 X-Mailer: git-send-email 2.33.0
 In-Reply-To: <20211003083141.613509-1-luca@z3ntu.xyz>
 References: <20211003083141.613509-1-luca@z3ntu.xyz>
@@ -43,26 +42,33 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-QCOM_GDSC is needed for the gcc driver to probe.
+Add compatible string for pm6350 used in sm6350 boards.
 
-Fixes: 131abae905df ("clk: qcom: Add SM6350 GCC driver")
 Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 ---
- drivers/clk/qcom/Kconfig | 1 +
- 1 file changed, 1 insertion(+)
+ .../devicetree/bindings/regulator/qcom,rpmh-regulator.yaml      | 2 ++
+ 1 file changed, 2 insertions(+)
 
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index 0a5596797b93..9ef007b3cf9b 100644
---- a/drivers/clk/qcom/Kconfig
-+++ b/drivers/clk/qcom/Kconfig
-@@ -564,6 +564,7 @@ config SM_GCC_6125
- 
- config SM_GCC_6350
- 	tristate "SM6350 Global Clock Controller"
-+	select QCOM_GDSC
- 	help
- 	  Support for the global clock controller on SM6350 devices.
- 	  Say Y if you want to use peripheral devices such as UART,
+diff --git a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+index 34de38377aa6..b959504e0ea4 100644
+--- a/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
++++ b/Documentation/devicetree/bindings/regulator/qcom,rpmh-regulator.yaml
+@@ -35,6 +35,7 @@ description: |
+     PMIC. Supported regulator node names are
+       For PM6150, smps1 - smps5, ldo1 - ldo19
+       For PM6150L, smps1 - smps8, ldo1 - ldo11, bob
++      For PM6350, smps1 - smps5, ldo1 - ldo22
+       For PM7325, smps1 - smps8, ldo1 - ldo19
+       For PM8005, smps1 - smps4
+       For PM8009, smps1 - smps2, ldo1 - ldo7
+@@ -52,6 +53,7 @@ properties:
+     enum:
+       - qcom,pm6150-rpmh-regulators
+       - qcom,pm6150l-rpmh-regulators
++      - qcom,pm6350-rpmh-regulators
+       - qcom,pm7325-rpmh-regulators
+       - qcom,pm8005-rpmh-regulators
+       - qcom,pm8009-rpmh-regulators
 -- 
 2.33.0
 
