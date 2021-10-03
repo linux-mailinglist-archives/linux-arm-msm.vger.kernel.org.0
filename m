@@ -2,119 +2,90 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D144B41FF62
-	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Oct 2021 05:07:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C55ED4200B7
+	for <lists+linux-arm-msm@lfdr.de>; Sun,  3 Oct 2021 10:32:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229512AbhJCDJk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 2 Oct 2021 23:09:40 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:44558 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229534AbhJCDJk (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 2 Oct 2021 23:09:40 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1633230473; h=Content-Transfer-Encoding: Content-Type:
- MIME-Version: Message-ID: Date: Subject: In-Reply-To: References: Cc:
- To: From: Sender; bh=HujBRiYiitwYZZp7MU2kjf/XZ35qPbOPap9BDIM9iNk=; b=oTtXGmOjwfJG49rLEhCFJ8PoYU34vQEfrH5dqexK4q5epC/xVSCOuY9qsJjnwtAlTNQMTIWW
- VxpunVKPsfy6kzgmRu6Uzs1rce/Whmo5FyrwMDRWM58SvZ8hSarO9o93oFgKREE4n+da6r1h
- 1vQb53F5S9E2Hh2cYojxVyVZDoE=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
- 61591e7d63b1f18658cacfe3 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Sun, 03 Oct 2021 03:07:41
- GMT
-Sender: pillair=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id AFE0CC4338F; Sun,  3 Oct 2021 03:07:40 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from PILLAIR1 (unknown [103.155.223.104])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: pillair)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 78C8BC4338F;
-        Sun,  3 Oct 2021 03:07:34 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 78C8BC4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   <pillair@codeaurora.org>
-To:     <agross@kernel.org>, <bjorn.andersson@linaro.org>,
-        <ohad@wizery.com>, <mathieu.poirier@linaro.org>,
-        <robh+dt@kernel.org>, <p.zabel@pengutronix.de>
-Cc:     <swboyd@chromium.org>, <linux-arm-msm@vger.kernel.org>,
-        <devicetree@vger.kernel.org>, <linux-kernel@vger.kernel.org>,
-        <sibis@codeaurora.org>, <mpubbise@codeaurora.org>,
-        <kuabhs@chromium.org>
-References: <1633230251-12676-1-git-send-email-pillair@codeaurora.org>
-In-Reply-To: <1633230251-12676-1-git-send-email-pillair@codeaurora.org>
-Subject: RE: [PATCH v5 0/3] Add support for sc7280 WPSS PIL loading
-Date:   Sun, 3 Oct 2021 08:37:30 +0530
-Message-ID: <003b01d7b803$d2740330$775c0990$@codeaurora.org>
+        id S229889AbhJCIds (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 3 Oct 2021 04:33:48 -0400
+Received: from mail.z3ntu.xyz ([128.199.32.197]:37898 "EHLO mail.z3ntu.xyz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229809AbhJCIdr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Sun, 3 Oct 2021 04:33:47 -0400
+Received: from g550jk.portal.nstrein.ns.nl (unknown [145.15.244.215])
+        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 9454DC9072;
+        Sun,  3 Oct 2021 08:31:57 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
+        t=1633249919; bh=7A3bctolnPomul0Ceu+ocAChJSDa+GUUAFf4Ke825mc=;
+        h=From:To:Cc:Subject:Date;
+        b=cDaZGW7vadCXMfDCOVNdSTrGqr8VU8gvccrlL6DA1N3p0m4gWG3xSpyGfWRWSOkeA
+         6T08FT3SNi7oCdB+eDSRqrxuWt5oqkx8wGGXDsZ4Xiimpvhun0npLRveeKJ5xyke49
+         8xlc+MAD5wDb4JEJyFLCQ8ThU0kMbgSZF7+0Vy3c=
+From:   Luca Weiss <luca@z3ntu.xyz>
+To:     linux-arm-msm@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht, Luca Weiss <luca@z3ntu.xyz>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Collins <collinsd@codeaurora.org>,
+        Hector Martin <marcan@marcan.st>,
+        Jonathan Cameron <Jonathan.Cameron@huawei.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>,
+        Mark Brown <broonie@kernel.org>, Rob Herring <robh@kernel.org>,
+        Sebastian Reichel <sre@kernel.org>,
+        Stephen Boyd <sboyd@codeaurora.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Sudeep Holla <sudeep.holla@arm.com>,
+        Vinod Koul <vkoul@kernel.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        devicetree@vger.kernel.org, linux-clk@vger.kernel.org,
+        linux-gpio@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH 00/11] Initial Fairphone 4 support
+Date:   Sun,  3 Oct 2021 10:31:23 +0200
+Message-Id: <20211003083141.613509-1-luca@z3ntu.xyz>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-thread-index: AQIMrOB36X74kAwJcyhulo1mcEV4SatWrZoQ
-Content-Language: en-us
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Please ignore v5 due to a mistake in signed-off.
-I will send v6 after correcting it.
+This series adds basic support for the recently announced Fairphone 4
+smartphone, based on the Snapdragon 750G (sm7225).
 
-Thanks,
-Rakesh Pillai
+This adds support for UART, power & volume buttons, screen based on
+simple-framebuffer, regulators and USB.
 
-> -----Original Message-----
-> From: Rakesh Pillai <pillair@codeaurora.org>
-> Sent: Sunday, October 3, 2021 8:34 AM
-> To: agross@kernel.org; bjorn.andersson@linaro.org; ohad@wizery.com;
-> mathieu.poirier@linaro.org; robh+dt@kernel.org; p.zabel@pengutronix.de
-> Cc: swboyd@chromium.org; linux-arm-msm@vger.kernel.org;
-> devicetree@vger.kernel.org; linux-kernel@vger.kernel.org;
-> sibis@codeaurora.org; mpubbise@codeaurora.org; kuabhs@chromium.org;
-> Rakesh Pillai <pillair@codeaurora.org>
-> Subject: [PATCH v5 0/3] Add support for sc7280 WPSS PIL loading
-> 
-> Add support for PIL loading of WPSS co-processor for SC7280 SOCs.
-> 
-> Changes from v4:
-> - Add yaml conversion for adsp/cdsp dt-bindings
-> - Change clock names in wpss dt-bindings
-> 
-> Rakesh Pillai (3):
->   dt-bindings: remoteproc: qcom: adsp: Convert binding to YAML
->   dt-bindings: remoteproc: qcom: Add SC7280 WPSS support
->   remoteproc: qcom: q6v5_wpss: Add support for sc7280 WPSS
-> 
->  .../bindings/remoteproc/qcom,hexagon-v56.txt       | 140 --------------
->  .../bindings/remoteproc/qcom,qcs404-cdsp-pil.yaml  | 167
-> ++++++++++++++++  .../bindings/remoteproc/qcom,sc7280-wpss-pil.yaml  |
-> 196 +++++++++++++++++++  .../bindings/remoteproc/qcom,sdm845-adsp-
-> pil.yaml  | 160 ++++++++++++++++
->  drivers/remoteproc/qcom_q6v5_adsp.c                | 209
-> +++++++++++++++++++--
->  5 files changed, 717 insertions(+), 155 deletions(-)  delete mode 100644
-> Documentation/devicetree/bindings/remoteproc/qcom,hexagon-v56.txt
->  create mode 100644
-> Documentation/devicetree/bindings/remoteproc/qcom,qcs404-cdsp-
-> pil.yaml
->  create mode 100644
-> Documentation/devicetree/bindings/remoteproc/qcom,sc7280-wpss-
-> pil.yaml
->  create mode 100644
-> Documentation/devicetree/bindings/remoteproc/qcom,sdm845-adsp-
-> pil.yaml
-> 
-> --
-> 2.7.4
+Luca Weiss (11):
+  clk: qcom: add select QCOM_GDSC for SM6350
+  dt-bindings: regulator: qcom,rpmh: Add compatible for PM6350
+  regulator: qcom-rpmh: Add PM6350 regulators
+  dt-bindings: pinctrl: qcom,pmic-gpio: Add compatible for PM6350
+  pinctrl: qcom: spmi-gpio: Add compatible for PM6350
+  arm64: dts: qcom: Add PM6350 PMIC
+  arm64: dts: qcom: sm6350: add debug uart
+  dt-bindings: arm: cpus: Add Kryo 570 CPUs
+  dt-bindings: arm: qcom: Document sm7225 and fairphone,fp4 board
+  arm64: dts: qcom: Add SM7225 device tree
+  arm64: dts: qcom: sm7225: Add device tree for Fairphone 4
 
+ .../devicetree/bindings/arm/cpus.yaml         |   1 +
+ .../devicetree/bindings/arm/qcom.yaml         |   6 +
+ .../bindings/pinctrl/qcom,pmic-gpio.yaml      |   2 +
+ .../regulator/qcom,rpmh-regulator.yaml        |   2 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ arch/arm64/boot/dts/qcom/pm6350.dtsi          |  54 +++
+ arch/arm64/boot/dts/qcom/sm6350.dtsi          |  31 ++
+ .../boot/dts/qcom/sm7225-fairphone-fp4.dts    | 322 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/sm7225.dtsi          |  16 +
+ drivers/clk/qcom/Kconfig                      |   1 +
+ drivers/pinctrl/qcom/pinctrl-spmi-gpio.c      |   1 +
+ drivers/regulator/qcom-rpmh-regulator.c       |  32 ++
+ 12 files changed, 469 insertions(+)
+ create mode 100644 arch/arm64/boot/dts/qcom/pm6350.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
+ create mode 100644 arch/arm64/boot/dts/qcom/sm7225.dtsi
+
+-- 
+2.33.0
 
