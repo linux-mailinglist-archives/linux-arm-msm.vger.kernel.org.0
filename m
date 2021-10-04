@@ -2,236 +2,169 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B0B0420582
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 07:01:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E25674205C7
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 08:19:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232362AbhJDFC7 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Oct 2021 01:02:59 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:63761 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230193AbhJDFC6 (ORCPT
+        id S232655AbhJDGVC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Oct 2021 02:21:02 -0400
+Received: from mx0a-00069f02.pphosted.com ([205.220.165.32]:46418 "EHLO
+        mx0a-00069f02.pphosted.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S232131AbhJDGVB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Oct 2021 01:02:58 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1633323670; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=md+WhcXo9Co1RVUTL3+oTqB7noJAW/K8AXFDsva3XTE=;
- b=vhx82fl4vVyAAn6MahikTvu+TCk+d5255wo/FxxUhvQHkZHbSknA1MSQkNdMbjwD2iUSJEJR
- VeBm+M4aWZXXv6hFAJ9hVTaBCO3i7dZ5qSJ2jSyRg/5k4G93p5sCXLfwx3aQWBgoTSdLxMqA
- Fl9MpdLsBD3RQV73F+6HpdLf3KQ=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 615a8a91a5a9bab6e8985eeb (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 04 Oct 2021 05:01:05
- GMT
-Sender: schowdhu=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 028B3C4360D; Mon,  4 Oct 2021 05:01:05 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: schowdhu)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id D7C5FC4338F;
-        Mon,  4 Oct 2021 05:01:03 +0000 (UTC)
+        Mon, 4 Oct 2021 02:21:01 -0400
+Received: from pps.filterd (m0246627.ppops.net [127.0.0.1])
+        by mx0b-00069f02.pphosted.com (8.16.1.2/8.16.1.2) with SMTP id 1945hrkd018657;
+        Mon, 4 Oct 2021 06:19:00 GMT
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=oracle.com; h=date : from : to : cc
+ : subject : message-id : references : content-type : in-reply-to :
+ mime-version; s=corp-2021-07-09;
+ bh=h1taugnI7Zvj/9vULTtZg3fKaoqvwfC+P9rCyViONdQ=;
+ b=V1kSQTtZaEPsnL4dkan1KA9mOsVXr1koCR1dzlDLTLjPI5g5MdxYSbaDoTP/LUsu4edY
+ qS9KC+P+oKG0a8Da2OhabyTv3DhgP1c90PiPN4RagLtXkiL42/BcK7c921BFeY7T0jnp
+ WCboNtkxWl4fYkzdVo4ovQI2bfBrg7JJjkm6ItA7EFViGNmJAMBJuaKSfK4GLUIS1mwQ
+ ybym+cK+ej6T0EuwbJSj3Y0qTo5Uz5YLil/cFuov7PcIfnwfcJskn4abqg2cNOIyex0z
+ cbJjAlpL+QG74brwKL8feH09uHx73E39GgLg7idKLEws6b2eJCUjh6Apv3mJoeaCF+GI EQ== 
+Received: from aserp3030.oracle.com (aserp3030.oracle.com [141.146.126.71])
+        by mx0b-00069f02.pphosted.com with ESMTP id 3bf9m0224e-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=FAIL);
+        Mon, 04 Oct 2021 06:18:59 +0000
+Received: from pps.filterd (aserp3030.oracle.com [127.0.0.1])
+        by aserp3030.oracle.com (8.16.1.2/8.16.1.2) with SMTP id 19469q6F006642;
+        Mon, 4 Oct 2021 06:18:58 GMT
+Received: from nam02-dm3-obe.outbound.protection.outlook.com (mail-dm3nam07lp2048.outbound.protection.outlook.com [104.47.56.48])
+        by aserp3030.oracle.com with ESMTP id 3bev7r7cus-1
+        (version=TLSv1.2 cipher=ECDHE-RSA-AES256-GCM-SHA384 bits=256 verify=OK);
+        Mon, 04 Oct 2021 06:18:58 +0000
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=j2XdpEeAJTRnXPZb++k6ygm/lkjs1ZJspRcvUgNKQMkI1tnRSDoF/lFPoOg0NIQoJXqMNBtiEGON1k2ZI16Iw+WJWCb/Ggmoiq8K5J22mEZ5ZeArm2eAEWLqLUbHcxakFSLxNXGGqzQDZZHrOqV07zMzHI41PunMYbZQWV4/g5+bNwXg99Uv5r9yn35IQm6O9P4QNv9uiPHyqYHYOOiTabhgG62SITMBWMxtK7+aprg1p+L1CmtD7mtVFWZxjnn5pTFi/1AZkjNOt1ActEC8D7h2rm1H5iaxGSHg1hqPCoe8ds5//kMFlems+ES8N4BJ3uaUb+DGjT2X/fy1SKgksA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=h1taugnI7Zvj/9vULTtZg3fKaoqvwfC+P9rCyViONdQ=;
+ b=UMwB5xi6v8TdJefHGVc9x1690GUurTfhGMPpIf2BSJTHWzsjfZ/20QJmajub7oFsGyPZmL6IDl89m+VJzvYwUFWHpVqhmyTWu1XXemh8fQl2uOsoXZtiX9MUOSwMqcL1stjE5Af/f7W0iIotH99Aj1PYRd5ycF0/7Yo4AEfTrvj/GInDifWSZaAU8diUMeLkbb2TdLY2Inhe+VMAMZ017y4d25+BWtmqM1yziFq/OlWhHzz7cpJCuxVTW8Na9LBHb3MYHCPqJPb14q2MvzW8zPC7ByQUgAp5DKheQUL2qTl/Rl3hIFbhrgQE9F7AYfucooYPh2M3H3tiYDwXJXgsbg==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=oracle.com; dmarc=pass action=none header.from=oracle.com;
+ dkim=pass header.d=oracle.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+ d=oracle.onmicrosoft.com; s=selector2-oracle-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=h1taugnI7Zvj/9vULTtZg3fKaoqvwfC+P9rCyViONdQ=;
+ b=peLRGkJHofu4VFyX7uzDmG6WhE8bwYrGqMbOWJKukwQfgkauRkZ3bE7OVTKXphSM+ALN5YkjnwIHsW0oVyTSZXLo69uR5MojEh60d2R5XzMO1AQ7vUQXQOpTpaMi5BwVO3cPP78tVZxkLtdv12B8JoE9BGtOEK9wKuruzPGGyD8=
+Authentication-Results: linaro.org; dkim=none (message not signed)
+ header.d=none;linaro.org; dmarc=none action=none header.from=oracle.com;
+Received: from MWHPR1001MB2365.namprd10.prod.outlook.com
+ (2603:10b6:301:2d::28) by MWHPR10MB1488.namprd10.prod.outlook.com
+ (2603:10b6:300:23::17) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4566.15; Mon, 4 Oct
+ 2021 06:18:56 +0000
+Received: from MWHPR1001MB2365.namprd10.prod.outlook.com
+ ([fe80::d409:11b5:5eb2:6be9]) by MWHPR1001MB2365.namprd10.prod.outlook.com
+ ([fe80::d409:11b5:5eb2:6be9%5]) with mapi id 15.20.4566.022; Mon, 4 Oct 2021
+ 06:18:56 +0000
+Date:   Mon, 4 Oct 2021 09:18:35 +0300
+From:   Dan Carpenter <dan.carpenter@oracle.com>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Hai Li <hali@codeaurora.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Yangtao Li <tiny.windzz@gmail.com>,
+        Nicolas Boichat <drinkcat@chromium.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, kernel-janitors@vger.kernel.org
+Subject: Re: [PATCH 3/3] drm/msm/dsi: fix signedness bug in
+ msm_dsi_host_cmd_rx()
+Message-ID: <20211004061835.GQ2048@kadam>
+References: <20211001123617.GH2283@kili>
+ <a61cad95-d81d-6f6d-33d4-f5259d9814cb@linaro.org>
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <a61cad95-d81d-6f6d-33d4-f5259d9814cb@linaro.org>
+User-Agent: Mutt/1.9.4 (2018-02-28)
+X-ClientProxiedBy: JNAP275CA0004.ZAFP275.PROD.OUTLOOK.COM (2603:1086:0:4c::9)
+ To MWHPR1001MB2365.namprd10.prod.outlook.com (2603:10b6:301:2d::28)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Mon, 04 Oct 2021 10:31:03 +0530
-From:   schowdhu@codeaurora.org
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>, vkoul@kernel.org
-Subject: Re: [PATCH V6 0/7] Add driver support for Data Capture and Compare
- Engine(DCC) for SM8150,SC7280,SC7180,SDM845
-In-Reply-To: <cover.1628617260.git.schowdhu@codeaurora.org>
-References: <cover.1628617260.git.schowdhu@codeaurora.org>
-Message-ID: <d1344b04dc3f39c17f8df594769da269@codeaurora.org>
-X-Sender: schowdhu@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Received: from kadam (62.8.83.99) by JNAP275CA0004.ZAFP275.PROD.OUTLOOK.COM (2603:1086:0:4c::9) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4566.15 via Frontend Transport; Mon, 4 Oct 2021 06:18:48 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 8e13da91-e75b-472b-da50-08d986fed873
+X-MS-TrafficTypeDiagnostic: MWHPR10MB1488:
+X-MS-Exchange-Transport-Forked: True
+X-Microsoft-Antispam-PRVS: <MWHPR10MB148866BC3A47A77289306ADA8EAE9@MWHPR10MB1488.namprd10.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:5797;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: o99sXqLQqPSQxOPPr+6NSwdEtw3Knh97eZPpPmrq2EK7vDbLzesPKogkggPC1/CCAqxxu0nz0a/bshFmpi83S+WnVZWBHZ1OGHaimdZchzbMiI8YHdKIJJQmMyzYHR6ZSiy6zcQMW2MVN2TlzoEf/5azu2AhDr51kK2Eh21BQWvARn2US9w4S/5xJrk2TwSAMq+z47MnYYbUL8LiRRsDRhyhvgy/xieWXQy0Zyoj3oh8Zqv4b/eg4KKSaTr4EchBc4qjryMZvnaPveFis2QXQKFrD3Wy+WGzp1UBOLJFHqnt7SkGKzpohfaUtgP3nh9vn5KDbQ5NiqXbUSG7USTCFNlbRC4K7kOcbXr2pp/zos2rsUIjRfPPSXKZoMA2dSTU+UvGGC8xPgZVELOYiBbeA38Eq1VZm95l2TZCx7WdnC283J/NGHbRHmSdxIQDzLEr1w/ycjO10du7zveMPJIxXRw2ij98RqRYjd231BjZ7YQsqld/3R59/Nei59tSo/gIH2BmvUSXfnyTjIDAKno0/tcDqXYJHVdD6ljO2YGIhM9ePuL4QFCrsL1BUeffByVKA/zQaVtvfTC8c5VH53IpNTKwmqkknPO1i5UsKKnHOYgThzovFdvt1te6is213xlrHphjKloQeC5o28JlZoQWSGz0X4tDWhViTDVKJGsqWJf0f4dscgLbte38HAuFfbal
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:MWHPR1001MB2365.namprd10.prod.outlook.com;PTR:;CAT:NONE;SFS:(366004)(186003)(33716001)(6666004)(54906003)(55016002)(9576002)(4744005)(26005)(316002)(508600001)(86362001)(44832011)(9686003)(6496006)(38100700002)(38350700002)(52116002)(8936002)(66946007)(4326008)(7416002)(1076003)(66476007)(33656002)(66556008)(8676002)(956004)(2906002)(53546011)(6916009)(5660300002);DIR:OUT;SFP:1101;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?irE+PECB5zkLY12PYZV2SIO97g0ypxNi2JNUP8u1jJFChnNteA3PaGe+y0Iy?=
+ =?us-ascii?Q?qyVF97ORDeuenOeyYD+SpB4gMGOj021DnYVphvyzOC209QQFbFCx1iR+TN2c?=
+ =?us-ascii?Q?k1Y6UooeKUDCfJvrsImQSoWm1BOMQ534LZw6d9hYk09ld40NgOOfcIgf8BBK?=
+ =?us-ascii?Q?ihlJwERrGIZ6KnlOslzWc/yMLkw12Q/NWnQGKl00I0B9Nk/dzGv5cDAGq2mZ?=
+ =?us-ascii?Q?YRIVGWOGTDuNZrwqFsiJlBbqfPjBbflw7dZHnssd5J5MBKFXMWzQPGy//y66?=
+ =?us-ascii?Q?+3SPNj/pnCw6ZP+maxheKD0lngEoJNN0k1Ue9wxCLONaa06VWxphlGAMEEh0?=
+ =?us-ascii?Q?2KglaCy5bss1nL4ui+AxjgLZlkYjcRlmQbpOLjkO1Zoq1oBnC4xTCnqkGbZ2?=
+ =?us-ascii?Q?/9R3w+RxQL+vaM82HvzuYieIVIenyEHhlLLN3P0zLSGrI4ZwY3w4FWHWAAWs?=
+ =?us-ascii?Q?YxUj1N3AAlMNKNTWbvSv0CoNLec8q6Qi+dr12cjdTHqfbnjATICHboTPePl2?=
+ =?us-ascii?Q?ohyfoO+i9Q1BKNPsY0jf4D8bXscIXVbtkkf/TgJUOz52Y2wo1XLtF04c2Y6y?=
+ =?us-ascii?Q?bl5F8mborwT8LW/Xc/MBbZ5PvbSPnMKUvwI5PKpq73Fi05VP1myRFpOxwzf8?=
+ =?us-ascii?Q?t26f7uXHpoMP5kEZEGYmbXWIafMTQkGORbngSDyoOzQWPe5LNvKlx7qGpd69?=
+ =?us-ascii?Q?a3tvY+sRQyBVi8/w5ulT1F/4eoE5aWwEtXV0lqH3OfRyVKuaE15UFRoBgv9e?=
+ =?us-ascii?Q?vlMJR2/pLg8CSjHJNxs0SkjEknT0uagYGC7f5BwC9TvjcIvbZmhsfXpg62u2?=
+ =?us-ascii?Q?9QgO5p2uuhEydow55N/0YCARM72q9Cu5oJSkNbAbpQuqYl1EuhmhtmUyCi+F?=
+ =?us-ascii?Q?AVUofm+1z5B/i0GZyJkEhTZUho58lYit0BSdlhyl6Kt+KgQXIyme+s2nuRWw?=
+ =?us-ascii?Q?20SkKlz4YajbCYmsAkXFY5+HFLvSZXkf0Cvw1cWZDZHUkJTRfZ0IOyGhwDoz?=
+ =?us-ascii?Q?QuQIdb1JTlEZtLog1Rz48/z8eJiPyYUHhmVs3T2TtV1I/94As3c6auiFpEI3?=
+ =?us-ascii?Q?TARWAPuUeUY7OwHiGILr0B/8NHRaoLx29Q7hRe32XFPMxcFYmB8PWo/5s9hF?=
+ =?us-ascii?Q?MI8Jx8qU1JLzzLbCJ9EM1bfis4Sner0IY+JCsxJQJfJ0T8/nzobHRr4HJclW?=
+ =?us-ascii?Q?V2afFguCSiqabBi5j4KMw4FAvzhyKN0MsZZKQ7OUww/Mhih+3D27HfOqOLIA?=
+ =?us-ascii?Q?uWSH6HQOZAiUrFD7b4NxaP+ZPSFRKis92RUHEWSmV9V/aKmWFiihwd9mUv5h?=
+ =?us-ascii?Q?scKmNZpbZk3klnxX808nBmWW?=
+X-OriginatorOrg: oracle.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 8e13da91-e75b-472b-da50-08d986fed873
+X-MS-Exchange-CrossTenant-AuthSource: MWHPR1001MB2365.namprd10.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 04 Oct 2021 06:18:56.6798
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 4e2c6054-71cb-48f1-bd6c-3a9705aca71b
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: fBICX4y/s4ZVoHI6tTO63O3skHJetm7thx0NRbvpC5mJUkDezom5o4vy4jBfXLr6oWSwMsXd6jcTuSx70HacQiJEHidsKL0a6t0x2yu7w3c=
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: MWHPR10MB1488
+X-Proofpoint-Virus-Version: vendor=nai engine=6300 definitions=10126 signatures=668683
+X-Proofpoint-Spam-Details: rule=notspam policy=default score=0 mlxscore=0 mlxlogscore=999 adultscore=0
+ bulkscore=0 suspectscore=0 malwarescore=0 spamscore=0 phishscore=0
+ classifier=spam adjust=0 reason=mlx scancount=1 engine=8.12.0-2109230001
+ definitions=main-2110040044
+X-Proofpoint-ORIG-GUID: f2Z6cjmfiWppu4UPaaR4_8DPBAo3OZI9
+X-Proofpoint-GUID: f2Z6cjmfiWppu4UPaaR4_8DPBAo3OZI9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-08-10 23:24, Souradeep Chowdhury wrote:
-> DCC(Data Capture and Compare) is a DMA engine designed for debugging
-> purposes.In case of a system
-> crash or manual software triggers by the user the DCC hardware stores
-> the value at the register
-> addresses which can be used for debugging purposes.The DCC driver
-> provides the user with sysfs
-> interface to configure the register addresses.The options that the DCC
-> hardware provides include
-> reading from registers,writing to registers,first reading and then
-> writing to registers and looping
-> through the values of the same register.
+On Sat, Oct 02, 2021 at 01:59:56AM +0300, Dmitry Baryshkov wrote:
+> On 01/10/2021 15:36, Dan Carpenter wrote:
+> > The "msg->tx_len" variable is type size_t so if dsi_cmds2buf_tx()
+> > returns a negative error code that it type promoted to a high positive
+> > value and treat as a success.  The second problem with this code is
+> > that it can return meaningless positive values on error.
 > 
-> In certain cases a register write needs to be executed for accessing
-> the rest of the registers,
-> also the user might want to record the changing values of a register
-> with time for which he has the
-> option to use the loop feature.
+> It looks to me that this piece of code is not fully correct at all.
+> dsi_cmds2bus_tx would return the size of DSI packet, not the size of the DSI
+> buffer.
 > 
-> The options mentioned above are exposed to the user by sysfs files
-> once the driver is probed.The
-> details and usage of this sysfs files are documented in
-> Documentation/ABI/testing/sysfs-driver-dcc.
+> Could you please be more specific, which 'meaningless positive values' were
+> you receiving?
 > 
-> As an example let us consider a couple of debug scenarios where DCC
-> has been proved to be effective
-> for debugging purposes:-
-> 
-> i)TimeStamp Related Issue
-> 
-> On SC7180, there was a coresight timestamp issue where it would
-> occasionally be all 0 instead of proper
-> timestamp values.
-> 
-> Proper timestamp:
-> Idx:3373; ID:10; I_TIMESTAMP : Timestamp.; Updated val =
-> 0x13004d8f5b7aa; CC=0x9e
-> 
-> Zero timestamp:
-> Idx:3387; ID:10; I_TIMESTAMP : Timestamp.; Updated val = 0x0; CC=0xa2
-> 
-> Now this is a non-fatal issue and doesn't need a system reset, but 
-> still needs
-> to be rootcaused and fixed for those who do care about coresight etm 
-> traces.
-> Since this is a timestamp issue, we would be looking for any timestamp 
-> related
-> clocks and such.
-> 
-> o we get all the clk register details from IP documentation and 
-> configure it
-> via DCC config syfs node. Before that we set the current linked list.
-> 
-> /* Set the current linked list */
-> echo 3 > /sys/bus/platform/devices/10a2000.dcc/curr_list
-> 
-> /* Program the linked list with the addresses */
-> echo 0x10c004 > /sys/bus/platform/devices/10a2000.dcc/config
-> echo 0x10c008 > /sys/bus/platform/devices/10a2000.dcc/config
-> echo 0x10c00c > /sys/bus/platform/devices/10a2000.dcc/config
-> echo 0x10c010 > /sys/bus/platform/devices/10a2000.dcc/config
-> ..... and so on for other timestamp related clk registers
-> 
-> /* Other way of specifying is in "addr len" pair, in below case it
-> specifies to capture 4 words starting 0x10C004 */
-> 
-> echo 0x10C004 4 > /sys/bus/platform/devices/10a2000.dcc/config
-> 
-> /* Enable DCC */
-> echo 1 > /sys/bus/platform/devices/10a2000.dcc/enable
-> 
-> /* Run the timestamp test for working case */
-> 
-> /* Send SW trigger */
-> echo 1 > /sys/bus/platform/devices/10a2000.dcc/trigger
-> 
-> /* Read SRAM */
-> cat /dev/dcc_sram > dcc_sram1.bin
-> 
-> /* Run the timestamp test for non-working case */
-> 
-> /* Send SW trigger */
-> echo 1 > /sys/bus/platform/devices/10a2000.dcc/trigger
-> 
-> /* Read SRAM */
-> cat /dev/dcc_sram > dcc_sram2.bin
-> 
-> Get the parser from [1] and checkout the latest branch.
-> 
-> /* Parse the SRAM bin */
-> python dcc_parser.py -s dcc_sram1.bin --v2 -o output/
-> python dcc_parser.py -s dcc_sram2.bin --v2 -o output/
-> 
-> Sample parsed output of dcc_sram1.bin:
-> 
-> <hwioDump version="1">
->         <timestamp>03/14/21</timestamp>
->             <generator>Linux DCC Parser</generator>
->                 <chip name="None" version="None">
->                 <register address="0x0010c004" value="0x80000000" />
->                 <register address="0x0010c008" value="0x00000008" />
->                 <register address="0x0010c00c" value="0x80004220" />
->                 <register address="0x0010c010" value="0x80000000" />
->             </chip>
->     <next_ll_offset>next_ll_offset : 0x1c </next_ll_offset>
-> </hwioDump>
-> 
-> ii)NOC register errors
-> 
-> A particular class of registers called NOC which are functional
-> registers was reporting
-> errors while logging the values.To trace these errors the DCC has been
-> used effectively.
-> The steps followed were similar to the ones mentioned above.
-> In addition to NOC registers a few other dependent registers were
-> configured in DCC to
-> monitor it's values during a crash. A look at the dependent register
-> values revealed that
-> the crash was happening due to a secured access to one of these
-> dependent registers.
-> All these debugging activity and finding the root cause was achieved 
-> using DCC.
-> 
-> DCC parser is available at the following open source location
-> 
-> https://source.codeaurora.org/quic/la/platform/vendor/qcom-opensource/tools/tree/dcc_parser
-> 
-> Changes in v6:
-> 
-> *Added support in the dcc driver to handle multiple Qualcomm SoCs
-> including SC7180,SC7280,SDM845
->  along with existing SM8150.
-> 
-> *Added the support node in the respective device tree files for
-> SC7180,SC7280,SDM845.
-> 
-> Souradeep Chowdhury (7):
->   dt-bindings: Added the yaml bindings for DCC
->   soc: qcom: dcc:Add driver support for Data Capture and Compare
->     unit(DCC)
->   MAINTAINERS: Add the entry for DCC(Data Capture and Compare) driver
->     support
->   arm64: dts: qcom: sm8150: Add Data Capture and Compare(DCC) support
->     node
->   arm64: dts: qcom: sc7280: Add Data Capture and Compare(DCC) support
->     node
->   arm64: dts: qcom: sc7180: Add Data Capture and Compare(DCC) support
->     node
->   arm64: dts: qcom: sdm845: Add Data Capture and Compare(DCC) support
->     node
-> 
->  Documentation/ABI/testing/sysfs-driver-dcc         |  114 ++
->  .../devicetree/bindings/arm/msm/qcom,dcc.yaml      |   43 +
->  MAINTAINERS                                        |    8 +
->  arch/arm64/boot/dts/qcom/sc7180.dtsi               |    6 +
->  arch/arm64/boot/dts/qcom/sc7280.dtsi               |    6 +
->  arch/arm64/boot/dts/qcom/sdm845.dtsi               |    6 +
->  arch/arm64/boot/dts/qcom/sm8150.dtsi               |    6 +
->  drivers/soc/qcom/Kconfig                           |    8 +
->  drivers/soc/qcom/Makefile                          |    1 +
->  drivers/soc/qcom/dcc.c                             | 1549 
-> ++++++++++++++++++++
->  10 files changed, 1747 insertions(+)
->  create mode 100644 Documentation/ABI/testing/sysfs-driver-dcc
->  create mode 100644 
-> Documentation/devicetree/bindings/arm/msm/qcom,dcc.yaml
->  create mode 100644 drivers/soc/qcom/dcc.c
 
-Gentle ping
+Sorry, I misread the code.  I thought it returned negatives or the
+number of bytes copied.  (This is from static analysis btw).  Anyway,
+returning only negatives is a much better way.
+
+I will fix this patch and resend.
+
+regards,
+dan carpenter
+
