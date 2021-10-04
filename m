@@ -2,145 +2,114 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 28E71421ABA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 01:35:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 46A8D421ABB
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 01:35:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235402AbhJDXhX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Oct 2021 19:37:23 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:27929 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229635AbhJDXhW (ORCPT
+        id S235450AbhJDXhk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Oct 2021 19:37:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36616 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229635AbhJDXhj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Oct 2021 19:37:22 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1633390532; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=vu7C8t0iUI8uOYbany4gPE7MKWinCoJ5kNtenpiHbOM=;
- b=DJimaekgqY02eTg9GEm/Y1H+/M0GKf4zLLmsoklYhPSMjApfRBx0UHR+RhLXMJ+Ca9UTw6/v
- m+aQQsfiU7aMGrJ5D8xRHtEznCdkvuOqcFkB7U+hOtwBJbk9fGttAU0POgl9SUL9pznrjfd0
- GQrXvst2nzvAnFTRyg2mnYRgpWY=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 615b8fc3a3e8d3c640f0f2f4 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 04 Oct 2021 23:35:31
- GMT
-Sender: jesszhan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 3C857C4360D; Mon,  4 Oct 2021 23:35:30 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: jesszhan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8DC8FC4338F;
-        Mon,  4 Oct 2021 23:35:29 +0000 (UTC)
+        Mon, 4 Oct 2021 19:37:39 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9925DC061745
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Oct 2021 16:35:49 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id b20so78970877lfv.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Oct 2021 16:35:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=bAbUrq+YEGQ8QqX2x0huaegjL+DVKSS+ia5e1PaJxbQ=;
+        b=g7W5OPmi1aIkzDo+3ETFXRiySovtja0OIr8nT1tL7ZjQT6aVgeLI26HzuGEdUdqcDy
+         6qld8PFaqKQdAmJ679ADX84uIOf2HkayYVSsR41TsYUcnkwQJs3hgjnAqmCHkg4NXtgJ
+         ihA7XLOzqxkEoucEGw/bX4GQ0ibaJbjBSFWJ0TOnW3t7+Mh3W/M6eZIFWgsOWEnLb+y3
+         gn2UGWrwDGOxDvikkhXLLuxfX9y4fZaCiMt95rE6LpFVYSAmzogbHBYgtFdiT07JLTJ2
+         thTmql+V3bde0RKqBUPKY1tBmkOnwRNATvsL+Twdpo2Z+70+DZKGhLaPD5TFnLbYeH0x
+         jxTg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=bAbUrq+YEGQ8QqX2x0huaegjL+DVKSS+ia5e1PaJxbQ=;
+        b=VyPSjarUKXy+xFo/FUXMF+qeegVFfEnSIqwe+hW25pdbuDHGje1SpcW7/Q8Bnp6IqJ
+         uL9S2YIUffpMM9GCxK87Qdeoy4CJAlEbjXDFYGmKvTZdC4RhT7d944ox8vw1z/Th+rfq
+         9Ygx2cfjiyZizBElN2OOJgJMZJvqHjPf6k+X8pERdRI7+MGsdhUTTSaU6lYUqN5xVAV0
+         kERWUsBIH3uipqyo2W6F+FxfP/jPrSjI8jaau4eOJm6t4ZcmwPlAYVQFagv9O7hdDh9F
+         gpiMJCJdmy5Fz3+KQdDdG4NT+dr80+sbL6kPmnLupQrjUZFwcW6I1Va9nYENfBy4EZIH
+         VsTA==
+X-Gm-Message-State: AOAM531hJth8CD4NIFeXkOjTMx8Ri4UhRgHJi5vcdS2NCH7nVDPJGSXr
+        fUBIgzKKDUVvm38rytO7pfWvTw==
+X-Google-Smtp-Source: ABdhPJxqEOfRrI4DMjINIanU3R0WVfP1o4DgyUrQI2RwWT4K/iTMKPHT32fSDRakRbU/hei4nH9Vbw==
+X-Received: by 2002:a05:6512:33c2:: with SMTP id d2mr33196lfg.18.1633390547930;
+        Mon, 04 Oct 2021 16:35:47 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id g27sm276458lfh.162.2021.10.04.16.35.47
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 04 Oct 2021 16:35:47 -0700 (PDT)
+Subject: Re: [PATCH] drm/msm: potential error pointer dereference in init()
+To:     Dan Carpenter <dan.carpenter@oracle.com>,
+        Rob Clark <robdclark@gmail.com>,
+        Jordan Crouse <jordan@cosmicpenguin.net>
+Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Viresh Kumar <viresh.kumar@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Xu Wang <vulab@iscas.ac.cn>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Yangtao Li <tiny.windzz@gmail.com>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, kernel-janitors@vger.kernel.org
+References: <20211004103806.GD25015@kili>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <60e7beb3-e54b-6367-0989-e0f780a34b52@linaro.org>
+Date:   Tue, 5 Oct 2021 02:35:46 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <20211004103806.GD25015@kili>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
-Date:   Mon, 04 Oct 2021 16:35:29 -0700
-From:   jesszhan@codeaurora.org
-To:     abhinavk@codeaurora.org, dan.carpenter@oracle.com,
-        architt@codeaurora.org
-Cc:     linux-arm-msm@vger.kernel.org
-Subject: Re: Fwd: [bug report] drm/msm/hdmi: HDMI 8996 PHY/PLL support
-In-Reply-To: <6ea3f6b01beb7fc57837e763e70b9963@codeaurora.org>
-References: <20211004115936.GA28995@kili>
- <6ea3f6b01beb7fc57837e763e70b9963@codeaurora.org>
-Message-ID: <a266f85eb35b40aed342b906627b40a7@codeaurora.org>
-X-Sender: jesszhan@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Dan,
+On 04/10/2021 13:38, Dan Carpenter wrote:
+> The msm_iommu_new() returns error pointers on failure so check for that
+> to avoid an Oops.
+> 
+> Fixes: ccac7ce373c1 ("drm/msm: Refactor address space initialization")
+> Signed-off-by: Dan Carpenter <dan.carpenter@oracle.com>
+> ---
 
-On 2021-10-04 16:26, abhinavk@codeaurora.org wrote:
-> -------- Original Message --------
-> Subject: [bug report] drm/msm/hdmi: HDMI 8996 PHY/PLL support
-> Date: 2021-10-04 04:59
-> From: Dan Carpenter <dan.carpenter@oracle.com>
-> To: architt@codeaurora.org
-> Cc: linux-arm-msm@vger.kernel.org
-> 
-> Hello Archit Taneja,
-> 
-> The patch e17afdceb4f2: "drm/msm/hdmi: HDMI 8996 PHY/PLL support"
-> from Feb 25, 2016, leads to the following
-> Smatch static checker warning:
-> 
->    drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c:606 hdmi_8996_pll_prepare()
->    info: return a literal instead of 'ret'
-> 
->    drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c:622 hdmi_8996_pll_prepare()
->    info: return a literal instead of 'ret'
-> 
-> drivers/gpu/drm/msm/hdmi/hdmi_phy_8996.c
->     592 static int hdmi_8996_pll_prepare(struct clk_hw *hw)
->     593 {
->     594         struct hdmi_pll_8996 *pll = hw_clk_to_pll(hw);
->     595         struct hdmi_phy *phy = pll_get_phy(pll);
->     596         int i, ret = 0;
->     597
->     598         hdmi_phy_write(phy, REG_HDMI_8996_PHY_CFG, 0x1);
->     599         udelay(100);
->     600
->     601         hdmi_phy_write(phy, REG_HDMI_8996_PHY_CFG, 0x19);
->     602         udelay(100);
->     603
->     604         ret = hdmi_8996_pll_lock_status(pll);
->     605         if (!ret)
-> --> 606                 return ret;
-> 
-> If this is not locked it returns success?  That's strange.
-> 
->     607
->     608         for (i = 0; i < HDMI_NUM_TX_CHANNEL; i++)
->     609                 hdmi_tx_chan_write(pll, i,
->     610
-> REG_HDMI_PHY_QSERDES_TX_LX_HIGHZ_TRANSCEIVEREN_BIAS_DRVR_EN,
->     611                         0x6F);
->     612
->     613         /* Disable SSC */
->     614         hdmi_pll_write(pll, REG_HDMI_PHY_QSERDES_COM_SSC_PER1, 
-> 0x0);
->     615         hdmi_pll_write(pll, REG_HDMI_PHY_QSERDES_COM_SSC_PER2, 
-> 0x0);
->     616         hdmi_pll_write(pll,
-> REG_HDMI_PHY_QSERDES_COM_SSC_STEP_SIZE1, 0x0);
->     617         hdmi_pll_write(pll,
-> REG_HDMI_PHY_QSERDES_COM_SSC_STEP_SIZE2, 0x0);
->     618         hdmi_pll_write(pll,
-> REG_HDMI_PHY_QSERDES_COM_SSC_EN_CENTER, 0x2);
->     619
->     620         ret = hdmi_8996_phy_ready_status(phy);
->     621         if (!ret)
->     622                 return ret;
-> 
-> If it's not ready then this returns success.  That seems very wrong.  I
-> would have expected -EIO or something.
-> 
->     623
->     624         /* Restart the retiming buffer */
->     625         hdmi_phy_write(phy, REG_HDMI_8996_PHY_CFG, 0x18);
->     626         udelay(1);
->     627         hdmi_phy_write(phy, REG_HDMI_8996_PHY_CFG, 0x19);
->     628
->     629         return 0;
->     630 }
-> 
-> regards,
-> dan carpenter
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Thanks for the report, will work on it.
+>   drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c | 4 ++++
+>   1 file changed, 4 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index ae48f41821cf..ad247c06e198 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -908,6 +908,10 @@ static int _dpu_kms_mmu_init(struct dpu_kms *dpu_kms)
+>   		return 0;
+>   
+>   	mmu = msm_iommu_new(dpu_kms->dev->dev, domain);
+> +	if (IS_ERR(mmu)) {
+> +		iommu_domain_free(domain);
+> +		return PTR_ERR(mmu);
+> +	}
+>   	aspace = msm_gem_address_space_create(mmu, "dpu1",
+>   		0x1000, 0x100000000 - 0x1000);
+>   
+> 
 
-Best,
-Jessica Zhang
+
+-- 
+With best wishes
+Dmitry
