@@ -2,71 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B94F84216AD
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 20:38:28 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D5F804216B0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 20:39:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238727AbhJDSkQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Oct 2021 14:40:16 -0400
-Received: from mail-ot1-f52.google.com ([209.85.210.52]:35647 "EHLO
-        mail-ot1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234678AbhJDSkP (ORCPT
+        id S234678AbhJDSlW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Oct 2021 14:41:22 -0400
+Received: from mail-ot1-f51.google.com ([209.85.210.51]:36445 "EHLO
+        mail-ot1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233311AbhJDSlW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Oct 2021 14:40:15 -0400
-Received: by mail-ot1-f52.google.com with SMTP id 77-20020a9d0ed3000000b00546e10e6699so22811062otj.2;
-        Mon, 04 Oct 2021 11:38:26 -0700 (PDT)
+        Mon, 4 Oct 2021 14:41:22 -0400
+Received: by mail-ot1-f51.google.com with SMTP id 5-20020a9d0685000000b0054706d7b8e5so22845532otx.3;
+        Mon, 04 Oct 2021 11:39:33 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=Gi9whHJHCckrxGFMJNFgaZ43tSyX5tZHz5rNi4nABKg=;
-        b=RAya1rv7SBXKP18l0CBpXqRLxknvUkVYw8uW5ko2Ol+VJvP4mXRqLCCARQL+jRYPSl
-         J7h5pL5Lnqf36zcvPH6XDJmSHl1vDyxhGPdSYjzvTY4gktioUeJDjLuUw6nolURJEEKm
-         mXQxzZLc9X/uW2gJ3iTA7MxAznTw5gqWbHeX0hw/0j6gdH3TpMVJg/QGnmLKOjrB2XLN
-         mFQ8GmEQn8cZIql1lGROuJ+l2DXGDzwxRwFYj6Yv2fwIyNTMdKlLjgj1qvkSmSdha6ft
-         eXqAnIpZ8MoTPAQ+B6/dAbgOjY6d5+feUNnffKN+MnYd+VgTA2o4326RVCqnLYeKkVEx
-         wbyQ==
-X-Gm-Message-State: AOAM530DsPYGn8WMF71su0z8t+ePdcQPxyDtmWrumXRw8D0gs55Poxi7
-        qF3Gw2gtgmu9/817Q+VBkfcex8tarw==
-X-Google-Smtp-Source: ABdhPJxuxXQQZFMuwC+FOU/i6MqUOi2PEIw5HNg+VX/IARPsfBFJemh87ZiOr1JXLMQrJnQ/y5Ufug==
-X-Received: by 2002:a05:6830:204d:: with SMTP id f13mr10563025otp.123.1633372706295;
-        Mon, 04 Oct 2021 11:38:26 -0700 (PDT)
+        bh=gFE6Zrwh36md7xRXo1r5LwgkE2MlXqHKMZYtf2/mijA=;
+        b=z7seC7CoF38wYBRGDcCJ+MLIh/aheiupZfVtPXUP+0YZDk0ouEsKR4ZNyD/e+khXRm
+         m3dWC4Ea+xCF7j13C8ALod1kqDjnJyZ8fCjd7hej0nn5xmck2wV3lp8D1Axg2wz8Kqy0
+         6hkCTW49jAqtLtXyUscNDLmyHEq0oQb40v6Ckej09i/7kLLcX6kkm8gDgsdH0S3GQq3Y
+         lmoaNG8G5cVLp+mb4UvQsQq83yM5uUG1Qr+yeLalKXIGohjGDpRLrS49Vo8DAEuFrecf
+         m9y0OEYNnL9Nx2fXS2xM2g025t/iFg46ksqsZTryuuTYLbov3slujPIwWmsk4lX/5HpG
+         YNjw==
+X-Gm-Message-State: AOAM532T40nXfvhaf6H5mMocmsYBN9G8C9ibukC31JcH5tq9q+9X9HFu
+        3Exl/oLOEu7VqIwnZUambw==
+X-Google-Smtp-Source: ABdhPJwnuR4jPfngb9xLZk4Ss1bbs3Od1eg7kzgJ1GVcG3t4jZUPJB7/SnXnQRqxwc/JBJphRJiSYw==
+X-Received: by 2002:a9d:7344:: with SMTP id l4mr11002389otk.155.1633372772926;
+        Mon, 04 Oct 2021 11:39:32 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id s13sm1204984oou.11.2021.10.04.11.38.25
+        by smtp.gmail.com with ESMTPSA id s7sm2965482ook.8.2021.10.04.11.39.31
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Oct 2021 11:38:25 -0700 (PDT)
-Received: (nullmailer pid 1627915 invoked by uid 1000);
-        Mon, 04 Oct 2021 18:38:24 -0000
-Date:   Mon, 4 Oct 2021 13:38:24 -0500
+        Mon, 04 Oct 2021 11:39:32 -0700 (PDT)
+Received: (nullmailer pid 1629772 invoked by uid 1000);
+        Mon, 04 Oct 2021 18:39:31 -0000
+Date:   Mon, 4 Oct 2021 13:39:31 -0500
 From:   Rob Herring <robh@kernel.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     Rob Herring <robh+dt@kernel.org>,
         ~postmarketos/upstreaming@lists.sr.ht,
-        linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org
-Subject: Re: [PATCH 10/15] dt-bindings: soc: qcom: spm: Document
- qcom,msm8916-saw2-v3.0-cpu
-Message-ID: <YVtKINeJ2Z2dslMT@robh.at.kernel.org>
-References: <20210928171231.12766-1-stephan@gerhold.net>
- <20210928171231.12766-11-stephan@gerhold.net>
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Stephen Boyd <sboyd@codeaurora.org>,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org
+Subject: Re: [PATCH 1/2] dt-bindings: arm: qcom: rename vendor of
+ apq8026-lenok
+Message-ID: <YVtKY6wY4GJpwVvF@robh.at.kernel.org>
+References: <20210928203815.77175-1-luca@z3ntu.xyz>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20210928171231.12766-11-stephan@gerhold.net>
+In-Reply-To: <20210928203815.77175-1-luca@z3ntu.xyz>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 28 Sep 2021 19:12:26 +0200, Stephan Gerhold wrote:
-> Document the qcom,msm8916-saw2-v3.0-cpu compatible that is needed
-> for cpuidle for MSM8916 on some devices with outdated (signed) firmware
-> which is only capable of booting ARM32 kernels without PSCI.
+On Tue, 28 Sep 2021 22:38:14 +0200, Luca Weiss wrote:
+> In order to avoid having prefixes for multiple internal divisions of LG
+> use the "lg" prefix instead of "lge".
 > 
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> Fixes: 21f3cbf693b0 ("dt-bindings: arm: qcom: Document APQ8026 SoC binding")
+> Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
 > ---
->  Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml | 1 +
->  1 file changed, 1 insertion(+)
+>  Documentation/devicetree/bindings/arm/qcom.yaml | 2 +-
+>  1 file changed, 1 insertion(+), 1 deletion(-)
 > 
 
 Acked-by: Rob Herring <robh@kernel.org>
