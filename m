@@ -2,425 +2,86 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 02B94420605
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 08:49:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D29AC420667
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 09:05:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232884AbhJDGve (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Oct 2021 02:51:34 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:57804 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232871AbhJDGvd (ORCPT
+        id S229478AbhJDHHX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Oct 2021 03:07:23 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59514 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229523AbhJDHHW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Oct 2021 02:51:33 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1633330185; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=8btGR/C4vY4RRwRt+6kZ0s0vYGFWOouUc/lcRsEOI9s=; b=HvKBKq2V7lLINVHQ6kboOXZ+QEApDGjtBfbYTwUeMEj+uTaPHocobVFdavuTayw17l/lnJGi
- o+B+PLJpCvGU3K4zRZgnZwVRA9hOBaYzIigzvAmjDlhwCHhSqa566OOtIt0vG7YKBWfy/bIv
- 0y5TrEe8dewfFt9ar5quud667PM=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n05.prod.us-west-2.postgun.com with SMTP id
- 615aa3f1a5a9bab6e8c52b66 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 04 Oct 2021 06:49:21
- GMT
-Sender: pillair=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id EEF89C43617; Mon,  4 Oct 2021 06:49:20 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from pillair-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: pillair)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id B23ECC43619;
-        Mon,  4 Oct 2021 06:49:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org B23ECC43619
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Rakesh Pillai <pillair@codeaurora.org>
-To:     agross@kernel.org, bjorn.andersson@linaro.org, ohad@wizery.com,
-        mathieu.poirier@linaro.org, robh+dt@kernel.org,
-        p.zabel@pengutronix.de
-Cc:     swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        sibis@codeaurora.org, mpubbise@codeaurora.org, kuabhs@chromium.org,
-        Rakesh Pillai <pillair@codeaurora.org>
-Subject: [PATCH v6 3/3] remoteproc: qcom: q6v5_wpss: Add support for sc7280 WPSS
-Date:   Mon,  4 Oct 2021 12:18:53 +0530
-Message-Id: <1633330133-29617-4-git-send-email-pillair@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1633330133-29617-1-git-send-email-pillair@codeaurora.org>
-References: <1633330133-29617-1-git-send-email-pillair@codeaurora.org>
+        Mon, 4 Oct 2021 03:07:22 -0400
+Received: from mail-pj1-x102c.google.com (mail-pj1-x102c.google.com [IPv6:2607:f8b0:4864:20::102c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7326CC061745
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Oct 2021 00:05:34 -0700 (PDT)
+Received: by mail-pj1-x102c.google.com with SMTP id pf6-20020a17090b1d8600b0019fa884ab85so2845421pjb.5
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Oct 2021 00:05:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=RPoe9yQ/p8JX2xrTYhiPsh6nCIk1jjrxqKzdQqWJyog=;
+        b=Ka8y1AQQmTEFx8/r768QmfjGxG53lXA8UbkO6mDVZsaX+DQI8NaaDAcF3mBu9G9Xyd
+         HUE6S7nv1P+pTi2De6WqhQC1deOIQ0Ke7YEYeLR5tuKrC1A05ShCiDTNwoLZxoOHW7Qx
+         bLehQMyfGNeG/PjVcgu1gqrCRf40HaVU6o9scklcvA0BTypLghbyv8B43pyb5mChkEAb
+         VEzNnd2+e72sLNEonol5rLBSnumCUUFEGUNO971Qi0B2/2tqyqMQuAZnSTlOkLLe1CiB
+         WP04FkeCobT53WYfu4kl2vy9e9Wvbkyst6XAjIzAZb0kkWMLzU86rtsCf2FeqQqCZina
+         efew==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=RPoe9yQ/p8JX2xrTYhiPsh6nCIk1jjrxqKzdQqWJyog=;
+        b=iBO5kqaXflxwpN1sPw79N5KBwVd4QZV9fjQDatnBHtSmx1ek/MtDNlkZ/T2fEpT+27
+         TZFGAVtiY6KoR56YuqCgf2cAOP/Ik0vG04ORG2INij5eduH2tIVck2GjWHyQDphW3ZxB
+         tKOY9hsdVPtqzTY7AEgjCqvawX8XTs9oq2s/UQczIEeSB9Ab6BreH50fcFOzaZ0/C79F
+         UyTbNH4ECZLEKKyBcJR1hKCUBqkRGUidTw8u0uPNQSgz8R2hL518NkWaabCov/GHripX
+         7zfJm2qdUZpvNDlBCxG09sgh+wRNn1dXI3DsshLuplg3D+FQGzVyu/cMMLSojy4/CuIF
+         838g==
+X-Gm-Message-State: AOAM533Dc3rOgyc5VKk0naMIUdbdwvwjtqVQMEOQVMwoEWrZdn6O19uQ
+        rwsILeUT/UnyOZjOjIG6gLf+Xw==
+X-Google-Smtp-Source: ABdhPJyA+/zycYXtCrPiIKuHwWlHal7yChVygfvWDZI2GL/gExSMeDtDqVqRw5UZIxqD9vYgxtfCug==
+X-Received: by 2002:a17:90b:4b49:: with SMTP id mi9mr36027415pjb.79.1633331133955;
+        Mon, 04 Oct 2021 00:05:33 -0700 (PDT)
+Received: from localhost ([122.171.247.18])
+        by smtp.gmail.com with ESMTPSA id y15sm6631075pfa.64.2021.10.04.00.05.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Oct 2021 00:05:33 -0700 (PDT)
+Date:   Mon, 4 Oct 2021 12:35:31 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     rafael@kernel.org, robh+dt@kernel.org, bjorn.andersson@linaro.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH] dt-bindings: cpufreq: cpufreq-qcom-hw: Convert to YAML
+ bindings
+Message-ID: <20211004070531.sexvnqmnkoe4j6a2@vireshk-i7>
+References: <20211004044317.34809-1-manivannan.sadhasivam@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211004044317.34809-1-manivannan.sadhasivam@linaro.org>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add support for PIL loading of WPSS processor for SC7280
-- WPSS boot will be requested by the wifi driver and hence
-  disable auto-boot for WPSS.
-- Add a separate shutdown sequence handler for WPSS.
-- Add multiple power-domain voting support
+On 04-10-21, 10:13, Manivannan Sadhasivam wrote:
+> Convert Qualcomm cpufreq devicetree binding to YAML.
+> 
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
 
-Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
----
- drivers/remoteproc/qcom_q6v5_adsp.c | 209 +++++++++++++++++++++++++++++++++---
- 1 file changed, 194 insertions(+), 15 deletions(-)
+I am not sure if Rob ever gave this.
 
-diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
-index 098362e6..b6d3c3d 100644
---- a/drivers/remoteproc/qcom_q6v5_adsp.c
-+++ b/drivers/remoteproc/qcom_q6v5_adsp.c
-@@ -32,6 +32,7 @@
- 
- /* time out value */
- #define ACK_TIMEOUT			1000
-+#define ACK_TIMEOUT_US			1000000
- #define BOOT_FSM_TIMEOUT		10000
- /* mask values */
- #define EVB_MASK			GENMASK(27, 4)
-@@ -51,6 +52,8 @@
- #define QDSP6SS_CORE_CBCR	0x20
- #define QDSP6SS_SLEEP_CBCR	0x3c
- 
-+#define QCOM_Q6V5_RPROC_PROXY_PD_MAX	3
-+
- struct adsp_pil_data {
- 	int crash_reason_smem;
- 	const char *firmware_name;
-@@ -58,9 +61,13 @@ struct adsp_pil_data {
- 	const char *ssr_name;
- 	const char *sysmon_name;
- 	int ssctl_id;
-+	bool is_wpss;
-+	bool auto_boot;
- 
- 	const char **clk_ids;
- 	int num_clks;
-+	const char **proxy_pd_names;
-+	const char *load_state;
- };
- 
- struct qcom_adsp {
-@@ -93,11 +100,143 @@ struct qcom_adsp {
- 	void *mem_region;
- 	size_t mem_size;
- 
-+	struct device *proxy_pds[QCOM_Q6V5_RPROC_PROXY_PD_MAX];
-+	int proxy_pd_count;
-+
- 	struct qcom_rproc_glink glink_subdev;
- 	struct qcom_rproc_ssr ssr_subdev;
- 	struct qcom_sysmon *sysmon;
-+
-+	int (*shutdown)(struct qcom_adsp *adsp);
- };
- 
-+static int qcom_rproc_pds_attach(struct device *dev, struct device **devs,
-+				 const char **pd_names)
-+{
-+	size_t num_pds = 0;
-+	int ret;
-+	int i;
-+
-+	if (!pd_names)
-+		return 0;
-+
-+	/* Handle single power domain */
-+	if (dev->pm_domain) {
-+		devs[0] = dev;
-+		pm_runtime_enable(dev);
-+		return 1;
-+	}
-+
-+	while (pd_names[num_pds])
-+		num_pds++;
-+
-+	for (i = 0; i < num_pds; i++) {
-+		devs[i] = dev_pm_domain_attach_by_name(dev, pd_names[i]);
-+		if (IS_ERR_OR_NULL(devs[i])) {
-+			ret = PTR_ERR(devs[i]) ? : -ENODATA;
-+			goto unroll_attach;
-+		}
-+	}
-+
-+	return num_pds;
-+
-+unroll_attach:
-+	for (i--; i >= 0; i--)
-+		dev_pm_domain_detach(devs[i], false);
-+
-+	return ret;
-+}
-+
-+static void qcom_rproc_pds_detach(struct qcom_adsp *adsp, struct device **pds,
-+				  size_t pd_count)
-+{
-+	struct device *dev = adsp->dev;
-+	int i;
-+
-+	/* Handle single power domain */
-+	if (dev->pm_domain && pd_count) {
-+		pm_runtime_disable(dev);
-+		return;
-+	}
-+
-+	for (i = 0; i < pd_count; i++)
-+		dev_pm_domain_detach(pds[i], false);
-+}
-+
-+static int qcom_rproc_pds_enable(struct qcom_adsp *adsp, struct device **pds,
-+				 size_t pd_count)
-+{
-+	int ret;
-+	int i;
-+
-+	for (i = 0; i < pd_count; i++) {
-+		dev_pm_genpd_set_performance_state(pds[i], INT_MAX);
-+		ret = pm_runtime_get_sync(pds[i]);
-+		if (ret < 0) {
-+			pm_runtime_put_noidle(pds[i]);
-+			dev_pm_genpd_set_performance_state(pds[i], 0);
-+			goto unroll_pd_votes;
-+		}
-+	}
-+
-+	return 0;
-+
-+unroll_pd_votes:
-+	for (i--; i >= 0; i--) {
-+		dev_pm_genpd_set_performance_state(pds[i], 0);
-+		pm_runtime_put(pds[i]);
-+	}
-+
-+	return ret;
-+}
-+
-+static void qcom_rproc_pds_disable(struct qcom_adsp *adsp, struct device **pds,
-+				   size_t pd_count)
-+{
-+	int i;
-+
-+	for (i = 0; i < pd_count; i++) {
-+		dev_pm_genpd_set_performance_state(pds[i], 0);
-+		pm_runtime_put(pds[i]);
-+	}
-+}
-+
-+static int qcom_wpss_shutdown(struct qcom_adsp *adsp)
-+{
-+	unsigned int val;
-+
-+	regmap_write(adsp->halt_map, adsp->halt_lpass + LPASS_HALTREQ_REG, 1);
-+
-+	/* Wait for halt ACK from QDSP6 */
-+	regmap_read_poll_timeout(adsp->halt_map,
-+				 adsp->halt_lpass + LPASS_HALTACK_REG, val,
-+				 val, 1000, ACK_TIMEOUT_US);
-+
-+	/* Assert the WPSS PDC Reset */
-+	reset_control_assert(adsp->pdc_sync_reset);
-+	/* Place the WPSS processor into reset */
-+	reset_control_assert(adsp->restart);
-+	/* wait after asserting subsystem restart from AOSS */
-+	usleep_range(200, 205);
-+	/* Remove the WPSS reset */
-+	reset_control_deassert(adsp->restart);
-+	/* De-assert the WPSS PDC Reset */
-+	reset_control_deassert(adsp->pdc_sync_reset);
-+
-+	usleep_range(100, 105);
-+
-+	clk_bulk_disable_unprepare(adsp->num_clks, adsp->clks);
-+
-+	regmap_write(adsp->halt_map, adsp->halt_lpass + LPASS_HALTREQ_REG, 0);
-+
-+	/* Wait for halt ACK from QDSP6 */
-+	regmap_read_poll_timeout(adsp->halt_map,
-+				 adsp->halt_lpass + LPASS_HALTACK_REG, val,
-+				 !val, 1000, ACK_TIMEOUT_US);
-+
-+	return 0;
-+}
-+
- static int qcom_adsp_shutdown(struct qcom_adsp *adsp)
- {
- 	unsigned long timeout;
-@@ -193,12 +332,10 @@ static int adsp_start(struct rproc *rproc)
- 	if (ret)
- 		goto disable_irqs;
- 
--	dev_pm_genpd_set_performance_state(adsp->dev, INT_MAX);
--	ret = pm_runtime_get_sync(adsp->dev);
--	if (ret) {
--		pm_runtime_put_noidle(adsp->dev);
-+	ret = qcom_rproc_pds_enable(adsp, adsp->proxy_pds,
-+				    adsp->proxy_pd_count);
-+	if (ret < 0)
- 		goto disable_xo_clk;
--	}
- 
- 	ret = clk_bulk_prepare_enable(adsp->num_clks, adsp->clks);
- 	if (ret) {
-@@ -243,8 +380,7 @@ static int adsp_start(struct rproc *rproc)
- disable_adsp_clks:
- 	clk_bulk_disable_unprepare(adsp->num_clks, adsp->clks);
- disable_power_domain:
--	dev_pm_genpd_set_performance_state(adsp->dev, 0);
--	pm_runtime_put(adsp->dev);
-+	qcom_rproc_pds_disable(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
- disable_xo_clk:
- 	clk_disable_unprepare(adsp->xo);
- disable_irqs:
-@@ -258,8 +394,7 @@ static void qcom_adsp_pil_handover(struct qcom_q6v5 *q6v5)
- 	struct qcom_adsp *adsp = container_of(q6v5, struct qcom_adsp, q6v5);
- 
- 	clk_disable_unprepare(adsp->xo);
--	dev_pm_genpd_set_performance_state(adsp->dev, 0);
--	pm_runtime_put(adsp->dev);
-+	qcom_rproc_pds_disable(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
- }
- 
- static int adsp_stop(struct rproc *rproc)
-@@ -272,7 +407,7 @@ static int adsp_stop(struct rproc *rproc)
- 	if (ret == -ETIMEDOUT)
- 		dev_err(adsp->dev, "timed out on wait\n");
- 
--	ret = qcom_adsp_shutdown(adsp);
-+	ret = adsp->shutdown(adsp);
- 	if (ret)
- 		dev_err(adsp->dev, "failed to shutdown: %d\n", ret);
- 
-@@ -441,6 +576,8 @@ static int adsp_probe(struct platform_device *pdev)
- 		dev_err(&pdev->dev, "unable to allocate remoteproc\n");
- 		return -ENOMEM;
- 	}
-+
-+	rproc->auto_boot = desc->auto_boot;
- 	rproc_coredump_set_elf_info(rproc, ELFCLASS32, EM_NONE);
- 
- 	adsp = (struct qcom_adsp *)rproc->priv;
-@@ -449,6 +586,11 @@ static int adsp_probe(struct platform_device *pdev)
- 	adsp->info_name = desc->sysmon_name;
- 	platform_set_drvdata(pdev, adsp);
- 
-+	if (desc->is_wpss)
-+		adsp->shutdown = qcom_wpss_shutdown;
-+	else
-+		adsp->shutdown = qcom_adsp_shutdown;
-+
- 	ret = adsp_alloc_memory_region(adsp);
- 	if (ret)
- 		goto free_rproc;
-@@ -457,7 +599,13 @@ static int adsp_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto free_rproc;
- 
--	pm_runtime_enable(adsp->dev);
-+	ret = qcom_rproc_pds_attach(adsp->dev, adsp->proxy_pds,
-+				    desc->proxy_pd_names);
-+	if (ret < 0) {
-+		dev_err(&pdev->dev, "Failed to attach proxy power domains\n");
-+		goto free_rproc;
-+	}
-+	adsp->proxy_pd_count = ret;
- 
- 	ret = adsp_init_reset(adsp);
- 	if (ret)
-@@ -467,8 +615,8 @@ static int adsp_probe(struct platform_device *pdev)
- 	if (ret)
- 		goto disable_pm;
- 
--	ret = qcom_q6v5_init(&adsp->q6v5, pdev, rproc, desc->crash_reason_smem, NULL,
--			     qcom_adsp_pil_handover);
-+	ret = qcom_q6v5_init(&adsp->q6v5, pdev, rproc, desc->crash_reason_smem,
-+			     desc->load_state, qcom_adsp_pil_handover);
- 	if (ret)
- 		goto disable_pm;
- 
-@@ -489,7 +637,8 @@ static int adsp_probe(struct platform_device *pdev)
- 	return 0;
- 
- disable_pm:
--	pm_runtime_disable(adsp->dev);
-+	qcom_rproc_pds_detach(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
-+
- free_rproc:
- 	rproc_free(rproc);
- 
-@@ -506,7 +655,7 @@ static int adsp_remove(struct platform_device *pdev)
- 	qcom_remove_glink_subdev(adsp->rproc, &adsp->glink_subdev);
- 	qcom_remove_sysmon_subdev(adsp->sysmon);
- 	qcom_remove_ssr_subdev(adsp->rproc, &adsp->ssr_subdev);
--	pm_runtime_disable(adsp->dev);
-+	qcom_rproc_pds_detach(adsp, adsp->proxy_pds, adsp->proxy_pd_count);
- 	rproc_free(adsp->rproc);
- 
- 	return 0;
-@@ -518,11 +667,16 @@ static const struct adsp_pil_data adsp_resource_init = {
- 	.ssr_name = "lpass",
- 	.sysmon_name = "adsp",
- 	.ssctl_id = 0x14,
-+	.is_wpss = false,
-+	.auto_boot = true,
- 	.clk_ids = (const char*[]) {
- 		"sway_cbcr", "lpass_ahbs_aon_cbcr", "lpass_ahbm_aon_cbcr",
- 		"qdsp6ss_xo", "qdsp6ss_sleep", "qdsp6ss_core", NULL
- 	},
- 	.num_clks = 7,
-+	.proxy_pd_names = (const char*[]) {
-+		"cx", NULL
-+	},
- };
- 
- static const struct adsp_pil_data cdsp_resource_init = {
-@@ -531,15 +685,40 @@ static const struct adsp_pil_data cdsp_resource_init = {
- 	.ssr_name = "cdsp",
- 	.sysmon_name = "cdsp",
- 	.ssctl_id = 0x17,
-+	.is_wpss = false,
-+	.auto_boot = true,
- 	.clk_ids = (const char*[]) {
- 		"sway", "tbu", "bimc", "ahb_aon", "q6ss_slave", "q6ss_master",
- 		"q6_axim", NULL
- 	},
- 	.num_clks = 7,
-+	.proxy_pd_names = (const char*[]) {
-+		"cx", NULL
-+	},
-+};
-+
-+static const struct adsp_pil_data wpss_resource_init = {
-+	.crash_reason_smem = 626,
-+	.firmware_name = "wpss.mdt",
-+	.ssr_name = "wpss",
-+	.sysmon_name = "wpss",
-+	.ssctl_id = 0x19,
-+	.is_wpss = true,
-+	.auto_boot = false,
-+	.load_state = "wpss",
-+	.clk_ids = (const char*[]) {
-+		"gcc_wpss_ahb_bdg_mst_clk", "gcc_wpss_ahb_clk",
-+		"gcc_wpss_rscp_clk", NULL
-+	},
-+	.num_clks = 3,
-+	.proxy_pd_names = (const char*[]) {
-+		"cx", "mx", NULL
-+	},
- };
- 
- static const struct of_device_id adsp_of_match[] = {
- 	{ .compatible = "qcom,qcs404-cdsp-pil", .data = &cdsp_resource_init },
-+	{ .compatible = "qcom,sc7280-wpss-pil", .data = &wpss_resource_init },
- 	{ .compatible = "qcom,sdm845-adsp-pil", .data = &adsp_resource_init },
- 	{ },
- };
+> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+
+Why double signed off ?
+
 -- 
-2.7.4
-
+viresh
