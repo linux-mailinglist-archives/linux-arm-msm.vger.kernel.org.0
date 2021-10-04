@@ -2,118 +2,103 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 056F94217D8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 21:44:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5AC984217FB
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 21:53:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233537AbhJDTqj (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Oct 2021 15:46:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40536 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233414AbhJDTqi (ORCPT
+        id S234915AbhJDTyu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Oct 2021 15:54:50 -0400
+Received: from relay03.th.seeweb.it ([5.144.164.164]:40247 "EHLO
+        relay03.th.seeweb.it" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234925AbhJDTyt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Oct 2021 15:46:38 -0400
-Received: from mail-oi1-x231.google.com (mail-oi1-x231.google.com [IPv6:2607:f8b0:4864:20::231])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 56EC5C061745
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Oct 2021 12:44:49 -0700 (PDT)
-Received: by mail-oi1-x231.google.com with SMTP id e24so23091813oig.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Oct 2021 12:44:49 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=5lPwZ+iwsuPnoAxmrkeLnm/5OtvoYrkkwPtp9yTV4PE=;
-        b=hgF1ZS5hnGhwUx2jX7oe2GHCphP61nmlCP4jO1u7qYsCENPZl9Qq27TGGNB+bkKiac
-         jdQn2fj8+mXEEmTTF6pL+5RGN3fhZ9Mc5u6QUYrdVHMefiUrfQvD3gfU4n6+G0lQThA5
-         g+MynwqkJ3Y7M+fZUlMYwhxFJU8oRv1d5a5USP7B1XsA0TjlUPEtd2l2VyabrC8owMJT
-         1ae6r6JkuwqaaK5hC6lHMiG4iAM7Umrh2CRIEjUwLH0VH0mt7+X76isPUD6aUXldQV1j
-         KvISpuM2NO8ZbrBKQyIohf6z9eiKHATGZe2xJACeqb2PiuDlaYzUnn5XiXQM9Gi3hMRT
-         5WDA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=5lPwZ+iwsuPnoAxmrkeLnm/5OtvoYrkkwPtp9yTV4PE=;
-        b=Dn5rA/j/bqknKJDekT5qyhtOrSXtvSyu9F3PJIEy9ghld7B/gaMA3uT2Rt9XmM2eUQ
-         i4pI1ufVJ7vF/B6joukj+I2n5wUV8wHxqsjdsiIezt0Akaw8ZditF1NHCbTGwU64fkbx
-         9026lrtoi3JTi/doqNOX2Pr8HuWP9aKTZ4qMqTPaxx4HV3E1o1ogPLx5OMMVTeOMupZl
-         39JBC75t11ZAOxypl4guhBrmIe7ysstpqMDZt8lPoYVL2VUoAh5XfxE+tY3uaXZRSpI8
-         LGG6fCaFWCO+HvwADK4bwE24t2yvBLZw53w/GR1VIFZa6N1rKeOfdO8PDeS6Adac+pvv
-         7SoA==
-X-Gm-Message-State: AOAM532vZ6WoAbwZbWP+Bh9q9VQBT+7P17yLgIHKtv8z+UcF9VKFYFx1
-        7BOwM7JsQKXi42a0pZNOlhb+uA==
-X-Google-Smtp-Source: ABdhPJwI92lYk3R3FU/4z6wR+/EiRyFE+2CPENxQiTRDE+M3rjZ6qwYRkxV0gelImXKGjpQ2x+ZpAQ==
-X-Received: by 2002:aca:f0c3:: with SMTP id o186mr13729435oih.37.1633376688632;
-        Mon, 04 Oct 2021 12:44:48 -0700 (PDT)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id j10sm2972251oog.39.2021.10.04.12.44.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Oct 2021 12:44:48 -0700 (PDT)
-Date:   Mon, 4 Oct 2021 12:46:31 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Mianhan Liu <liumh1@shanghaitech.edu.cn>
-Cc:     Andy Gross <agross@kernel.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        linux-arm-msm@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH -next -v2] ./drivers/bluetooth/btqcomsmd.c: remove
- superfluous header files from btqcomsmd.c
-Message-ID: <YVtaF1YD/T9r8Ucy@ripper>
-References: <20210928200811.22059-1-liumh1@shanghaitech.edu.cn>
+        Mon, 4 Oct 2021 15:54:49 -0400
+Received: from Marijn-Arch-PC.localdomain (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r1.th.seeweb.it (Postfix) with ESMTPSA id 104111F67F;
+        Mon,  4 Oct 2021 21:52:58 +0200 (CEST)
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     phone-devel@vger.kernel.org
+Cc:     ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Taniya Das <tdas@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: [PATCH v5 0/2] Global Clock Controller driver for MSM8976/56
+Date:   Mon,  4 Oct 2021 21:52:53 +0200
+Message-Id: <20211004195255.701220-1-marijn.suijten@somainline.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210928200811.22059-1-liumh1@shanghaitech.edu.cn>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 28 Sep 13:08 PDT 2021, Mianhan Liu wrote:
+This is the Global Clock Controller (GCC) driver for MSM8956, MSM8976
+and APQ variants and it has been tested on two Sony phones featuring the
+Qualcomm MSM8956 SoC.
 
-If you run a "git log --oneline -- drivers/bluetooth/btqcomsmd.c" you
-will see that the appropriate prefix would be "Bluetooth: btqcomsmd: "
+In addition to GCC this driver is also responsible for providing MDSS
+and GFX3D clocks which reside in the same register space.
 
-In other words, a better $subject would be:
+SoMainline is dedicated to getting their long-awaited msm8976 support,
+including the Xperia X, X Compact and if feasible also the Xperia Touch
+projector (APQ8056) slowly but steadily upstreamed.
 
-[PATCH v2] Bluetooth: btqcomsmd: remove superfluous includes
+Changes since v4:
+- Insert error handling that left `int ret;` in gcc_msm8976_probe unused
+  when the original regmap read, xor, and write were replaced with
+  regmap_update_bits in v3;
+- Document vdd_gfx supply, required in oxili_gx_gdsc;
+- Dual-license the yaml Documentation and DT bindings (Rob).
 
-> btqcomsmd.c hasn't use any macro or function declared in linux/of.h
-> and linux/slab.h.
-> Thus, these files can be removed from btqcomsmd.c safely without
-> affecting the compilation of the ./drivers/bluetooth module
-> 
-> Signed-off-by: Mianhan Liu <liumh1@shanghaitech.edu.cn>
-> 
-> ---
+Changes since v3:
+- Set the enable_mask of gcc_apss_ahb_clk and gcc_apss_axi_clk to BIT 14
+  and 13 respectively instead of overlapping gcc_crypto_ahb_clk's BIT 0.
 
-Here is an excellent place to state "Changes since v1" and mention that
-you no longer remove btqca.h and you added your S-o-b.
+Changes since v2:
+- Rebased on v5.14;
+- Various minor cleanups (lowercase hex, const where appropriate,
+  removal of unused enum constants);
+- Fixed XOR confusion in probe;
+- All remnants of global clock name dependencies are removed, all
+  inter-driver dependencies must be fully specified in DT;
+- Added proper dt-bindings yaml validation, listing the required clocks;
+- Moved dt-bindings header to the dt-bindings patch.
 
->  drivers/bluetooth/btqcomsmd.c | 2 --
->  1 file changed, 2 deletions(-)
-> 
-> diff --git a/drivers/bluetooth/btqcomsmd.c b/drivers/bluetooth/btqcomsmd.c
-> index 2acb719e5..e556d96a4 100644
-> --- a/drivers/bluetooth/btqcomsmd.c
-> +++ b/drivers/bluetooth/btqcomsmd.c
-> @@ -5,9 +5,7 @@
->   */
->  
->  #include <linux/module.h>
-> -#include <linux/slab.h>
->  #include <linux/rpmsg.h>
-> -#include <linux/of.h>
->  
+Changes since v1:
+- Rebased onto linux-next 20191015
+- Fixed platform driver name (qcom,gcc-8976 => gcc-msm8976)
+- Splitted changes to dt-bindings to a separate commit
 
-This looks reasonable.
+AngeloGioacchino Del Regno (1):
+  clk: qcom: Add MSM8976/56 Global Clock Controller (GCC) driver
 
-Regards,
-Bjorn
+Marijn Suijten (1):
+  dt-bindings: clk: qcom: Document MSM8976 Global Clock Controller
 
->  #include <linux/soc/qcom/wcnss_ctrl.h>
->  #include <linux/platform_device.h>
-> -- 
-> 2.25.1
-> 
-> 
+ .../bindings/clock/qcom,gcc-msm8976.yaml      |   95 +
+ drivers/clk/qcom/Kconfig                      |    8 +
+ drivers/clk/qcom/Makefile                     |    1 +
+ drivers/clk/qcom/gcc-msm8976.c                | 4160 +++++++++++++++++
+ include/dt-bindings/clock/qcom,gcc-msm8976.h  |  240 +
+ 5 files changed, 4504 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-msm8976.yaml
+ create mode 100644 drivers/clk/qcom/gcc-msm8976.c
+ create mode 100644 include/dt-bindings/clock/qcom,gcc-msm8976.h
+
+-- 
+2.33.0
+
