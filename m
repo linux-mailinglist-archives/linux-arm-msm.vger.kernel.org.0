@@ -2,191 +2,219 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 317F54212D1
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 17:39:32 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78C574212E8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 17:42:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235685AbhJDPlT (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Oct 2021 11:41:19 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38048 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233881AbhJDPlS (ORCPT
+        id S235389AbhJDPog (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Oct 2021 11:44:36 -0400
+Received: from mail-ua1-f46.google.com ([209.85.222.46]:46897 "EHLO
+        mail-ua1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235375AbhJDPog (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Oct 2021 11:41:18 -0400
-Received: from mail-oo1-xc36.google.com (mail-oo1-xc36.google.com [IPv6:2607:f8b0:4864:20::c36])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 20CD9C061746
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Oct 2021 08:39:29 -0700 (PDT)
-Received: by mail-oo1-xc36.google.com with SMTP id y16-20020a4ade10000000b002b5dd6f4c8dso5465947oot.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Oct 2021 08:39:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=Us2MiqnVBXpIAHNmjS+4Uro6qLPvm37AM9FJM95DVqk=;
-        b=UvTBpMnnuGZzjffPYb1u5v3vOYcVC2caWUQcqnkd1SLnhHYh9HoUpsXWXuHV6CtF5c
-         qMZKrO/WVTD50NObgICfr6AIx2m7OqeFLWq38/Bojj2dfTst72YaiVDbAP4LRm84siko
-         W0POz+WpjQ8TkFq/mdfHoftPovhR7ea0POI0/jkT0FchYIXofqPaFVabSVDjA5naW9fH
-         LIoKCl5sVg/m3yswO6YL8mr13fQV3LxifZ6QaM3DnXbxNn69JDOXnrCy7PzY8roN46Hb
-         pCVL3TwbByCMm2KZ0bT/eSw3E/gI0K15dpImi2Cc9n2eyL1p0LiiYc+iuhX5Zq+vGJ5j
-         4IYg==
+        Mon, 4 Oct 2021 11:44:36 -0400
+Received: by mail-ua1-f46.google.com with SMTP id u5so9713308uao.13;
+        Mon, 04 Oct 2021 08:42:46 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=Us2MiqnVBXpIAHNmjS+4Uro6qLPvm37AM9FJM95DVqk=;
-        b=4I+lD8SfQ72UvTJU536Z8TFUWz1uky4sn21klobW5oPomKzU7yYpU6rtk31XxpVhmD
-         wgTuUVxVDK5YHvhPGXwE35XoFC2S9wogkPYf4lp0RD+n/6KBtqj0ppo/A+oPoSZNBssg
-         hH6d93ahxR4sY7rlBQJ8HctR1UQo7ZZq/yD1KCAtz8xRL3F0a86fKvy0t2n9zbh9bYTK
-         l6CqYwUbuAVYK2N4IqVqFKPopakMmML/SzsyRPMoWVkJwsUlvswkK8irBSdMbmNoEL1+
-         3RHMsNXE/cca/ejooKyAnuOPT0trEvCl9cQVNmjiC0+qtFqT6QsSV2eyzq8n13Swuw9h
-         JXlA==
-X-Gm-Message-State: AOAM531aecqHLchJO2T5yfPkWnd82prZMyR9esMDmFFREvPPYjeuYbxt
-        yo2tSoQu0xwoRqcP1Gc6Ze8DQw==
-X-Google-Smtp-Source: ABdhPJxxvMe3/BhpD1hlLw/7JNd8iujE5rqTGt73ELHYeygX/swn9CKzIPC4Wb4jnT2LvEpikdkp2w==
-X-Received: by 2002:a4a:dc1a:: with SMTP id p26mr9580113oov.6.1633361968417;
-        Mon, 04 Oct 2021 08:39:28 -0700 (PDT)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id x28sm3127570ote.24.2021.10.04.08.39.27
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Oct 2021 08:39:28 -0700 (PDT)
-Date:   Mon, 4 Oct 2021 08:41:11 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rakesh Pillai <pillair@codeaurora.org>
-Cc:     agross@kernel.org, robh+dt@kernel.org, swboyd@chromium.org,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, sibis@codeaurora.org,
-        mpubbise@codeaurora.org, kuabhs@chromium.org
-Subject: Re: [PATCH v5] arm64: dts: qcom: sc7280: Add WPSS remoteproc node
-Message-ID: <YVsgl+EQr4aByTW5@ripper>
-References: <1633339945-1568-1-git-send-email-pillair@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=MQdBFrT4gY5hArjSORJuBxhjfd5fLS9GXe/QptoG1WE=;
+        b=WzE0JkGDLpHffVCRB3rfb0BoOwsLqPmpR8lDJEICw2l3Um8VsMvCDXvHmNDAn5qetQ
+         KvujVfbX1xu7dgIUkL8mDZqx+3uLE//0bF2RPfGhno51N8KTAMdcfkN1lMF4vj0KttyC
+         QyxUF14lb4KwDxT1cUE3CmkFziSoo/YRX+gQiKPoFkkovmVIJHL5/Kkr/xSqVflqHKsF
+         42wcS5qr6oVcaX8g1hmjuSYOnuSNHpKnWohco/QdFV+NXBgNmlJGuHY8t9qmJ629XdDR
+         4JBFOOOSnnsdW37X88NMgyYPODMssgu9amry1UAICnMHoYFoZOK42nv4GCkVjZ9qeJck
+         qb6w==
+X-Gm-Message-State: AOAM531GL5enKJTYTOs4fQGqZRv2l4f2IEVF8WOVGHLiYlQAtArgJtER
+        09o9NVZrAElPTY6RSu3AqK82Di7pRL8g3icjTKfYSSONZls=
+X-Google-Smtp-Source: ABdhPJx0vB1rRxvDrREx/zG8/LgZeL2ryBFKT9obtzzKyTnHkzyoBuYlzdLJX5UVe9rEup1mwW9F5wpGlG4jGmIEVAY=
+X-Received: by 2002:ab0:311a:: with SMTP id e26mr7219640ual.122.1633362166344;
+ Mon, 04 Oct 2021 08:42:46 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1633339945-1568-1-git-send-email-pillair@codeaurora.org>
+References: <20210914202202.1702601-1-dianders@chromium.org> <20210914132020.v5.2.I62e76a034ac78c994d40a23cd4ec5aeee56fa77c@changeid>
+In-Reply-To: <20210914132020.v5.2.I62e76a034ac78c994d40a23cd4ec5aeee56fa77c@changeid>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Mon, 4 Oct 2021 17:42:35 +0200
+Message-ID: <CAMuHMdWy+aASNevg8nc9LTvR9QNrGYZQnB3sYYLDRfEU1w_idg@mail.gmail.com>
+Subject: Re: [PATCH v5 02/15] drm/edid: Break out reading block 0 of the EDID
+To:     Douglas Anderson <dianders@chromium.org>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        Rob Herring <robh+dt@kernel.org>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>, Steev Klimaszewski <steev@kali.org>,
+        DRI Development <dri-devel@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Linus W <linus.walleij@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Maxime Ripard <mripard@kernel.org>,
+        Jani Nikula <jani.nikula@intel.com>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linux-Renesas <linux-renesas-soc@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 04 Oct 02:32 PDT 2021, Rakesh Pillai wrote:
+Hi Douglas,
 
-> Add the WPSS remoteproc node in dts for
-> PIL loading.
-> 
-> Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
+On Tue, Sep 14, 2021 at 10:23 PM Douglas Anderson <dianders@chromium.org> wrote:
+> A future change wants to be able to read just block 0 of the EDID, so
+> break it out of drm_do_get_edid() into a sub-function.
+>
+> This is intended to be a no-op change--just code movement.
+>
+> Signed-off-by: Douglas Anderson <dianders@chromium.org>
 
-qcom,sc7280-wpss-pil isn't a compatible that's documented or implemented
-upstream, so I can't do anything with this patch.
+Thanks for your patch, which is now commit bac9c29482248b00 ("drm/edid:
+Break out reading block 0 of the EDID") in drm-next.
 
-I did go back an looked for the binding and driver and made a comment
-regarding auto_boot. My comment/question still stands, but I see I made
-that comment on v1, which is the last version you sent to the
-linux-remoteproc@ mailing list.
+> --- a/drivers/gpu/drm/drm_edid.c
+> +++ b/drivers/gpu/drm/drm_edid.c
+> @@ -1905,6 +1905,44 @@ int drm_add_override_edid_modes(struct drm_connector *connector)
+>  }
+>  EXPORT_SYMBOL(drm_add_override_edid_modes);
+>
+> +static struct edid *drm_do_get_edid_base_block(
+> +       int (*get_edid_block)(void *data, u8 *buf, unsigned int block,
+> +                             size_t len),
+> +       void *data, bool *edid_corrupt, int *null_edid_counter)
+> +{
+> +       int i;
+> +       void *edid;
+> +
+> +       edid = kmalloc(EDID_LENGTH, GFP_KERNEL);
+> +       if (edid == NULL)
+> +               return NULL;
+> +
+> +       /* base block fetch */
+> +       for (i = 0; i < 4; i++) {
+> +               if (get_edid_block(data, edid, 0, EDID_LENGTH))
+> +                       goto out;
+> +               if (drm_edid_block_valid(edid, 0, false, edid_corrupt))
+> +                       break;
+> +               if (i == 0 && drm_edid_is_zero(edid, EDID_LENGTH)) {
+> +                       if (null_edid_counter)
+> +                               (*null_edid_counter)++;
+> +                       goto carp;
+> +               }
+> +       }
+> +       if (i == 4)
+> +               goto carp;
+> +
+> +       return edid;
+> +
+> +carp:
+> +       kfree(edid);
+> +       return ERR_PTR(-EINVAL);
+> +
+> +out:
+> +       kfree(edid);
+> +       return NULL;
+> +}
+> +
+>  /**
+>   * drm_do_get_edid - get EDID data using a custom EDID block read function
+>   * @connector: connector we're probing
+> @@ -1938,25 +1976,16 @@ struct edid *drm_do_get_edid(struct drm_connector *connector,
+>         if (override)
+>                 return override;
+>
+> -       if ((edid = kmalloc(EDID_LENGTH, GFP_KERNEL)) == NULL)
+> +       edid = (u8 *)drm_do_get_edid_base_block(get_edid_block, data,
+> +                                               &connector->edid_corrupt,
+> +                                               &connector->null_edid_counter);
+> +       if (IS_ERR_OR_NULL(edid)) {
+> +               if (IS_ERR(edid))
 
-Unfortunately the dt binding in v6 seem to have some issues still.
+So edid is an error code, not a valid pointer...
 
+> +                       connector_bad_edid(connector, edid, 1);
 
-So based on that, I will have to ignore this patch until the binding has
-landed - please help me remember this forward dependency when that day
-comes.
+... while connector_bad_edid() expects edid to be a valid pointer,
+causing a crash:
 
-And please include linux-remoteproc@ if you want the binding & driver
-merged.
+Unable to handle kernel NULL pointer dereference at virtual address
+0000000000000068
+Mem abort info:
+  ESR = 0x96000004
+  EC = 0x25: DABT (current EL), IL = 32 bits
+  SET = 0, FnV = 0
+  EA = 0, S1PTW = 0
+  FSC = 0x04: level 0 translation fault
+Data abort info:
+  ISV = 0, ISS = 0x00000004
+  CM = 0, WnR = 0
+[0000000000000068] user address but active_mm is swapper
+Internal error: Oops: 96000004 [#1] PREEMPT SMP
+CPU: 0 PID: 7 Comm: kworker/u4:0 Not tainted
+5.15.0-rc3-arm64-renesas-00629-geb2d42841024-dirty #1313
+Hardware name: Renesas Ebisu-4D board based on r8a77990 (DT)
+Workqueue: events_unbound deferred_probe_work_func
+pstate: 20000005 (nzCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
+pc : connector_bad_edid+0x28/0x1a8
+lr : drm_do_get_edid+0x260/0x268
+sp : ffff8000121336a0
+x29: ffff8000121336a0 x28: ffff00000a373200 x27: 0000000000001ffe
+PM: ==== always-on/ee160000.mmc: stop
+x26: 0000000000000005 x25: 0000000000000041 x24: 0000000000000000
+x23: ffff000008a25080 x22: ffff8000106bd990 x21: ffff0000081496c0
+x20: 0000000000000001 x19: ffffffffffffffea x18: 0000000000000010
+x17: 0000000000000000 x16: 0000000000000000 x15: 0000000000000000
+x14: 0000000000000000 x13: 0000000000000000 x12: 0000000000000000
+x11: 0000000000000000 x10: 0000000000000000 x9 : 0000000000000000
+x8 : 0000000000000000 x7 : 0000000000000080 x6 : ffff000009c71000
+x5 : 0000000000000000 x4 : 0000000000000069 x3 : ffff00000a3c2900
+x2 : 0000000000000001 x1 : ffffffffffffffea x0 : ffff000009c71000
+Call trace:
+ connector_bad_edid+0x28/0x1a8
+ drm_do_get_edid+0x260/0x268
+ adv7511_get_edid+0xb4/0xd0
+ adv7511_bridge_get_edid+0x10/0x18
 
-Regards,
-Bjorn
+>                 return NULL;
+> -
+> -       /* base block fetch */
+> -       for (i = 0; i < 4; i++) {
+> -               if (get_edid_block(data, edid, 0, EDID_LENGTH))
+> -                       goto out;
+> -               if (drm_edid_block_valid(edid, 0, false,
+> -                                        &connector->edid_corrupt))
+> -                       break;
+> -               if (i == 0 && drm_edid_is_zero(edid, EDID_LENGTH)) {
+> -                       connector->null_edid_counter++;
+> -                       goto carp;
+> -               }
+>         }
+> -       if (i == 4)
+> -               goto carp;
+>
+> -       /* if there's no extensions, we're done */
+> +       /* if there's no extensions or no connector, we're done */
+>         valid_extensions = edid[0x7e];
+>         if (valid_extensions == 0)
+>                 return (struct edid *)edid;
+> @@ -2010,8 +2039,6 @@ struct edid *drm_do_get_edid(struct drm_connector *connector,
+>
+>         return (struct edid *)edid;
+>
+> -carp:
+> -       connector_bad_edid(connector, edid, 1);
+>  out:
+>         kfree(edid);
+>         return NULL;
 
-> ---
->  arch/arm64/boot/dts/qcom/sc7280-idp.dts |  4 +++
->  arch/arm64/boot/dts/qcom/sc7280.dtsi    | 58 +++++++++++++++++++++++++++++++++
->  2 files changed, 62 insertions(+)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-> index 64fc22a..2b8bbcd 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
-> @@ -68,3 +68,7 @@
->  		qcom,pre-scaling = <1 1>;
->  	};
->  };
-> +
-> +&remoteproc_wpss {
-> +	status = "okay";
-> +};
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> index 39635da..edc7951 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-> @@ -134,6 +134,11 @@
->  			no-map;
->  		};
->  
-> +		wpss_mem: memory@9ae00000 {
-> +			no-map;
-> +			reg = <0x0 0x9ae00000 0x0 0x1900000>;
-> +		};
-> +
->  		rmtfs_mem: memory@9c900000 {
->  			compatible = "qcom,rmtfs-mem";
->  			reg = <0x0 0x9c900000 0x0 0x280000>;
-> @@ -2588,6 +2593,59 @@
->  			#power-domain-cells = <1>;
->  		};
->  
-> +		remoteproc_wpss: remoteproc@8a00000 {
-> +			compatible = "qcom,sc7280-wpss-pil";
-> +			reg = <0 0x08a00000 0 0x10000>;
-> +
-> +			interrupts-extended = <&intc GIC_SPI 587 IRQ_TYPE_EDGE_RISING>,
-> +					      <&wpss_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
-> +					      <&wpss_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
-> +					      <&wpss_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
-> +					      <&wpss_smp2p_in 3 IRQ_TYPE_EDGE_RISING>,
-> +					      <&wpss_smp2p_in 7 IRQ_TYPE_EDGE_RISING>;
-> +			interrupt-names = "wdog", "fatal", "ready", "handover",
-> +					  "stop-ack", "shutdown-ack";
-> +
-> +			clocks = <&gcc GCC_WPSS_AHB_BDG_MST_CLK>,
-> +				 <&gcc GCC_WPSS_AHB_CLK>,
-> +				 <&gcc GCC_WPSS_RSCP_CLK>,
-> +				 <&rpmhcc RPMH_CXO_CLK>;
-> +			clock-names = "gcc_wpss_ahb_bdg_mst_clk",
-> +				      "gcc_wpss_ahb_clk",
-> +				      "gcc_wpss_rscp_clk",
-> +				      "xo";
-> +
-> +			power-domains = <&rpmhpd SC7280_CX>,
-> +					<&rpmhpd SC7280_MX>;
-> +			power-domain-names = "cx", "mx";
-> +
-> +			memory-region = <&wpss_mem>;
-> +
-> +			qcom,qmp = <&aoss_qmp>;
-> +
-> +			qcom,smem-states = <&wpss_smp2p_out 0>;
-> +			qcom,smem-state-names = "stop";
-> +
-> +			resets = <&aoss_reset AOSS_CC_WCSS_RESTART>,
-> +				 <&pdc_reset PDC_WPSS_SYNC_RESET>;
-> +			reset-names = "restart", "pdc_sync";
-> +
-> +			qcom,halt-regs = <&tcsr_mutex 0x37000>;
-> +
-> +			status = "disabled";
-> +
-> +			glink-edge {
-> +				interrupts-extended = <&ipcc IPCC_CLIENT_WPSS
-> +							     IPCC_MPROC_SIGNAL_GLINK_QMP
-> +							     IRQ_TYPE_EDGE_RISING>;
-> +				mboxes = <&ipcc IPCC_CLIENT_WPSS
-> +						IPCC_MPROC_SIGNAL_GLINK_QMP>;
-> +
-> +				label = "wpss";
-> +				qcom,remote-pid = <13>;
-> +			};
-> +		};
-> +
->  		pdc: interrupt-controller@b220000 {
->  			compatible = "qcom,sc7280-pdc", "qcom,pdc";
->  			reg = <0 0x0b220000 0 0x30000>;
-> -- 
-> 2.7.4
-> 
+Gr{oetje,eeting}s,
+
+                        Geert
+
+-- 
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
