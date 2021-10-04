@@ -2,193 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D6CD54218D0
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 22:56:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE95D4218D8
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 22:57:12 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233188AbhJDU6O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Oct 2021 16:58:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57308 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233056AbhJDU6N (ORCPT
+        id S233868AbhJDU67 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Oct 2021 16:58:59 -0400
+Received: from mo4-p03-ob.smtp.rzone.de ([81.169.146.174]:35242 "EHLO
+        mo4-p03-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233533AbhJDU65 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Oct 2021 16:58:13 -0400
-Received: from mail-qt1-x833.google.com (mail-qt1-x833.google.com [IPv6:2607:f8b0:4864:20::833])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C7232C061749
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Oct 2021 13:56:23 -0700 (PDT)
-Received: by mail-qt1-x833.google.com with SMTP id r16so17183730qtw.11
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Oct 2021 13:56:23 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=1eQiWMZ4lymZhXSohlx4RiHi1Znkn0XwFspzyAQ+6Iw=;
-        b=yAj0KI/Q4RAtOOwCLsC+i6W48grzLyHT6dYmBvRQ80kX4+c6EJhAiV63SRn7d7PMCp
-         IomeYeocu716ENOjAmxvDgQwOYqr+OmL5Mf3fm8h9RlXpNfecoRWuiloIIV9hzPQfA/Q
-         t6LdNbGcfFB0Sfn/SF7S+dbscHu1phxbLpYSE907d54wt7MbORsLhRkoZ527iRDjP1Mg
-         QVZlPS+BJvEO9b3jyje9Lnu2yF9F02ne+U/1skn8S+jyeVmFo0I5XW0IM8coNfwwTjOX
-         Tx0j8OJ2Mx3fqYk66PX2Hbr5UDe30WRM12n1GR6gpejN2iW83OpVHuQ/D1KxC7v8jXIt
-         QVdg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=1eQiWMZ4lymZhXSohlx4RiHi1Znkn0XwFspzyAQ+6Iw=;
-        b=qLoTN6SQ4Rfr1PN8ti6+9Bw9d6b456rB6DayubYYTc44kzw9mMqGkuWyzGU9pl/Aym
-         Fn6dBVvqmBr2GUdS5lwAo3DCrcFcToOAqOIaN+Kw/gciRuXc9B3CensWVM7kxc6gxIS4
-         Ru7MwO8b3q4sfOrmyLNmlgfI7F8eOl0VVTLxmHYkGzEAd+dbNppVBbcg2JXkhrfOqWHR
-         05FBM3Mpgctr6+izne9OqoYkqe+BD7ovfC31h4MbzZ11mRmvlJVuWi5dxz8WVQuYW7gH
-         PiCsYJ/blyLArNo1MH+vbirjCcqPdNQzO1zXsWy9P5u7TqRdCDCqUWj3IgTAhC9NDFvj
-         bHEw==
-X-Gm-Message-State: AOAM533+98huRiY8Qb1O/iuN5Fo3pP/+I2awRZZpAsyfmKa2eqp2NJXm
-        2hNQfFZ4PDeyR9ml9Tm0eeCcuxERZrv6ae2whMXd+g==
-X-Google-Smtp-Source: ABdhPJzTTTgb2VURiv0i9cfBWf1L2Z4r4TEETUlviwbAf6zzaXeUYI6x+ysMDBZNIHCcQYpLwm0LwzHbahxq5Onevlo=
-X-Received: by 2002:ac8:1011:: with SMTP id z17mr15928369qti.388.1633380982877;
- Mon, 04 Oct 2021 13:56:22 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210923212311.2877048-1-bjorn.andersson@linaro.org>
- <20210923212311.2877048-5-bjorn.andersson@linaro.org> <YVSzJZ8G43CLml3L@google.com>
- <YVtg3lcR1HMqVdAJ@ripper>
-In-Reply-To: <YVtg3lcR1HMqVdAJ@ripper>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Date:   Mon, 4 Oct 2021 23:56:11 +0300
-Message-ID: <CAA8EJprYij6pWD1A17yr1+5-n5fKPW=YDA_-2+f8h6JnEh4myw@mail.gmail.com>
-Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: sdm845: mtp: Add vadc channels
- and thermal zones
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Matthias Kaehlcke <mka@chromium.org>,
+        Mon, 4 Oct 2021 16:58:57 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1633381020;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=E0qdQBxjh9+IrFGfHN0IpBEDVrfru3woX63k95iqOrg=;
+    b=UUkwpl4uMSW7qvBwP3il0LDXLMawYRybT+N/HqGSxWmjQaH/ISNfwRWoL4e66IoYc5
+    VVEhbfDhF0uZ0p3T5WbtMNVaDVRFRW95//3jn1F8NYuG9D4mIjC+/bpiee+pdHhMFwmX
+    lL56hXz/wO3mAfBTnaxYjgMWLgioUNEtu+oq6JBpZDk4VJgxXokGBWxARueLIBTq8q/i
+    5q0/QArRdXLnBmoDt1T2V1zONfby+ocBMHjxHnY/B+bk8YUnseF8YYAtKJSfWKNtvvmK
+    /4ybXntJFgnPwLNO/FNeAR+qclwc2s6Vtwj/WQwnhfxbRAj0Id1ruWlSRgOd+FhZjWnv
+    Cg1g==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4pWA8pmE1A=="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.33.8 DYNA|AUTH)
+    with ESMTPSA id 301038x94KuxKT3
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Mon, 4 Oct 2021 22:56:59 +0200 (CEST)
+Date:   Mon, 4 Oct 2021 22:56:54 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Rob Herring <robh@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Andy Gross <agross@kernel.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>,
-        Linux PM <linux-pm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        devicetree@vger.kernel.org,
+        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS
+        <devicetree@vger.kernel.org>, Hans de Goede <hdegoede@redhat.com>, Andy
+        Shevchenko <andy.shevchenko@gmail.com>," 
+        <~postmarketos/upstreaming@lists.sr.ht>,
+        phone-devel@vger.kernel.org
+Subject: Re: [PATCH 08/15] dt-bindings: arm: cpus: Document qcom,msm8916-smp
+ enable-method
+Message-ID: <YVtnfNA1yF3uB35Q@gerhold.net>
+References: <20210928171231.12766-1-stephan@gerhold.net>
+ <20210928171231.12766-9-stephan@gerhold.net>
+ <YVtJIm6Tu2z+Ph/V@robh.at.kernel.org>
+ <CAL_Jsq+nJH8WgSL0S4LAW6Ru_W-000+AxGQrtxskrPWViRqN5w@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAL_Jsq+nJH8WgSL0S4LAW6Ru_W-000+AxGQrtxskrPWViRqN5w@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 4 Oct 2021 at 23:13, Bjorn Andersson <bjorn.andersson@linaro.org> wrote:
->
-> On Wed 29 Sep 11:40 PDT 2021, Matthias Kaehlcke wrote:
->
-> > On Thu, Sep 23, 2021 at 02:23:11PM -0700, Bjorn Andersson wrote:
-> > > Downstream defines four ADC channels related to thermal sensors external
-> > > to the PM8998 and two channels for internal voltage measurements.
-> > >
-> > > Add these to the upstream SDM845 MTP, describe the thermal monitor
-> > > channels and add thermal_zones for these.
-> > >
-> > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > ---
-> > >
-> > > In addition to the iio channels exposed by v1, Daniel wanted thermal_zones...
-> > >
-> > > Changes since v1:
-> > > - Enable the pm8998_adc_tm and describe the ADC channels
-> > > - Add thermal-zones for the new channels
-> > >
-> > >  arch/arm64/boot/dts/qcom/sdm845-mtp.dts | 128 ++++++++++++++++++++++++
-> > >  1 file changed, 128 insertions(+)
-> > >
-> > > diff --git a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
-> [..]
-> > > +&pm8998_adc {
-> > > +   adc-chan@4c {
-> > > +           reg = <ADC5_XO_THERM_100K_PU>;
-> > > +           label = "xo_therm";
-> > > +   };
-> > > +
-> > > +   adc-chan@4d {
-> > > +           reg = <ADC5_AMUX_THM1_100K_PU>;
-> > > +           label = "msm_therm";
-> > > +   };
-> > > +
-> > > +   adc-chan@4f {
-> > > +           reg = <ADC5_AMUX_THM3_100K_PU>;
-> > > +           label = "pa_therm1";
-> > > +   };
-> > > +
-> > > +   adc-chan@51 {
-> > > +           reg = <ADC5_AMUX_THM5_100K_PU>;
-> > > +           label = "quiet_therm";
-> > > +   };
-> > > +
-> > > +   adc-chan@83 {
-> > > +           reg = <ADC5_VPH_PWR>;
-> > > +           label = "vph_pwr";
-> > > +   };
-> > > +
-> > > +   adc-chan@85 {
-> > > +           reg = <ADC5_VCOIN>;
-> > > +           label = "vcoin";
-> > > +   };
-> > > +};
-> > > +
-> > > +&pm8998_adc_tm {
-> > > +   status = "okay";
-> > > +
-> > > +   xo-thermistor@1 {
-> > > +           reg = <1>;
-> > > +           io-channels = <&pm8998_adc ADC5_XO_THERM_100K_PU>;
-> > > +           qcom,ratiometric;
-> > > +           qcom,hw-settle-time-us = <200>;
-> > > +   };
-> > > +
-> > > +   msm-thermistor@2 {
-> > > +           reg = <2>;
-> > > +           io-channels = <&pm8998_adc ADC5_AMUX_THM1_100K_PU>;
-> > > +           qcom,ratiometric;
-> > > +           qcom,hw-settle-time-us = <200>;
-> > > +   };
-> > > +
-> > > +   pa-thermistor@3 {
-> > > +           reg = <3>;
-> > > +           io-channels = <&pm8998_adc ADC5_AMUX_THM3_100K_PU>;
-> > > +           qcom,ratiometric;
-> > > +           qcom,hw-settle-time-us = <200>;
-> > > +   };
-> > > +
-> > > +   quiet-thermistor@4 {
-> > > +           reg = <4>;
-> > > +           io-channels = <&pm8998_adc ADC5_AMUX_THM5_100K_PU>;
-> > > +           qcom,ratiometric;
-> > > +           qcom,hw-settle-time-us = <200>;
-> > > +   };
-> > > +};
-> > > +
+On Mon, Oct 04, 2021 at 01:37:58PM -0500, Rob Herring wrote:
+> On Mon, Oct 4, 2021 at 1:34 PM Rob Herring <robh@kernel.org> wrote:
 > >
-> > The example in the 'qcom,spmi-adc-tm5' binding specifies 'qcom,ratiometric'
-> > and 'qcom,hw-settle-time-us' for both the ADC and the thermal monitor, so do
-> > several board files (e.g. sm8250-mtp.dts and qrb5165-rb5.dts). This apparent
-> > redundancy bothered me earlier, it's not really clear to me whether it's
-> > needed/recommended or not. Do you happen to have any insights on this?
->
-> Hmm, you're right and I missed this in defining my channels. I've not
-> looked at this detail, just got reasonable readings from my thermal
-> zones and was happy about that.
->
-> Dmitry, do you have any further insights why these properties are
-> supposed to be duplicated between the adc channel and the thermal zones?
+> > On Tue, Sep 28, 2021 at 07:12:24PM +0200, Stephan Gerhold wrote:
+> > > Document the qcom,msm8916-smp enable method. It is actually just
+> > > an alias for qcom,msm8226-smp since it should be implemented identically.
+> > >
+> > > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> > > ---
+> > >  Documentation/devicetree/bindings/arm/cpus.yaml | 4 +++-
+> > >  1 file changed, 3 insertions(+), 1 deletion(-)
+> > >
+> > > diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Documentation/devicetree/bindings/arm/cpus.yaml
+> > > index 11e3e09da2e5..5602a8f3c513 100644
+> > > --- a/Documentation/devicetree/bindings/arm/cpus.yaml
+> > > +++ b/Documentation/devicetree/bindings/arm/cpus.yaml
+> > > @@ -211,6 +211,7 @@ properties:
+> > >            - qcom,kpss-acc-v1
+> > >            - qcom,kpss-acc-v2
+> > >            - qcom,msm8226-smp
+> > > +          - qcom,msm8916-smp
+> >
+> > I thought arm64 is PSCI only.
+> 
+> I see the explanation now. Please add that to this commit as well and
+> a comment here that this is for 32-bit only.
+> 
 
-Because both ADC channel and thermal zone registers should be
-programmed accordingly.
+I'm not sure why this is literally the only patch in the series where
+I omitted the explanation. Sorry for the confusion! :)
 
-One not-so-perfect approach would be to use io-channels property to
-locate the adc's adc-chan node and to parse it. However this way
-thermal driver would have to know the exact structure of adc's device
-tree nodes.
-Another (even worse) solution would be to introduce qcom-specific API
-to query these properties from the IIO channel.
+I clarified this in v2 and added the comment as you suggested.
 
-Selecting between these two options I decided to follow the downstream
-path and just to duplicate these few properties.
-
--- 
-With best wishes
-Dmitry
+Thanks!
+Stephan
