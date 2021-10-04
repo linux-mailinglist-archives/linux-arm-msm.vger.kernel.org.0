@@ -2,101 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F48642068D
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 09:22:34 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 47E194206B3
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 09:37:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229771AbhJDHYV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Oct 2021 03:24:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35096 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229740AbhJDHYT (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Oct 2021 03:24:19 -0400
-Received: from mail-pf1-x435.google.com (mail-pf1-x435.google.com [IPv6:2607:f8b0:4864:20::435])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F0E9BC061746
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Oct 2021 00:22:27 -0700 (PDT)
-Received: by mail-pf1-x435.google.com with SMTP id k26so13717563pfi.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Oct 2021 00:22:27 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to:user-agent;
-        bh=7mKXXe3kx7Xg5YaGiLWPR8pCdxsfsItgH8LVPO+KjDE=;
-        b=qVXhg8tF8dRzIKjnC2Jvyu3cK7Gy9wjYPsh5+baTMVFNAy5X0W8ldjw8pKbSde5vKf
-         OS4cb9ul4d5492JScITqJFV0RPf7We/VTsbdOpUX4TIM5tOwtLHhp5BozB7Jkt2qz6lN
-         ayre0eFOalNUaAIiGGmKmyMB4+vNPluQHd9SASkOa2GceZc4icghwY+MGH6ycMIJR4Xh
-         KJ2ybQvlgKWiJi+Sksxy1rLzmpNkF97y1hldmDLVglnwbGyZR5ivQoDDy5eguFrb2tch
-         ri7vOQ8LB9AZYvjrT+8k/GPYhNVJYI4wV5ekBcrHymVkOKhRISHmCuhyL8miWiKvEGRW
-         96Ew==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=7mKXXe3kx7Xg5YaGiLWPR8pCdxsfsItgH8LVPO+KjDE=;
-        b=sVuoFOBlu83LZMXADOqzqbD+I/obA8m7a9sRDAYDkpAgYCMdPBvF1+mu1Injq2h88/
-         kJFtzem7Gao+7iX4GPMRgVpyOZTVw65elr8KuRhknLX3CzguS/6V38Jx8gxgtufL+cbL
-         KMcx63DoyNd6TsAnwno36NY5H6wp3KHoZjnz+iOYJ4aVNFMrCjLEhe3ihEBvm3VhB3Xo
-         8jXEW3osr5xUKaf9zDn23vZQQ6NcjteDCdcdkQQ5pxh87yZP97c8iXnOZkI81wBS3+10
-         gHYwyVoBmMMcNbHibazhzmqT2r0wiVUSkv68ltjFYMufyGN9jOkpzrsJbVhKdb4QzhGH
-         xN5g==
-X-Gm-Message-State: AOAM53087VGRt1HwNvS1F+acpmkyV+mMd+MkVSPQyzqRCD9oZCRXjAlf
-        LQ0e9S2INfoYaXGX45BjVo4jdrDO8yyp
-X-Google-Smtp-Source: ABdhPJyzUrzIuLl1SlLOxM85x7EgYuuRcpxtQ52/DgMsDAAiUVEKaKayeFC1Jc1FXMWEsma5IL2LOw==
-X-Received: by 2002:a63:724b:: with SMTP id c11mr9614019pgn.9.1633332147462;
-        Mon, 04 Oct 2021 00:22:27 -0700 (PDT)
-Received: from workstation ([120.138.13.170])
-        by smtp.gmail.com with ESMTPSA id z23sm13444807pgv.45.2021.10.04.00.22.24
-        (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Mon, 04 Oct 2021 00:22:27 -0700 (PDT)
-Date:   Mon, 4 Oct 2021 12:52:22 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Viresh Kumar <viresh.kumar@linaro.org>
-Cc:     rafael@kernel.org, robh+dt@kernel.org, bjorn.andersson@linaro.org,
-        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Rob Herring <robh@kernel.org>
-Subject: Re: [PATCH] dt-bindings: cpufreq: cpufreq-qcom-hw: Convert to YAML
- bindings
-Message-ID: <20211004072222.GE16442@workstation>
-References: <20211004044317.34809-1-manivannan.sadhasivam@linaro.org>
- <20211004070531.sexvnqmnkoe4j6a2@vireshk-i7>
+        id S230137AbhJDHjf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Oct 2021 03:39:35 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:64183 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230004AbhJDHjf (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 4 Oct 2021 03:39:35 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1633333066; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=qkd4MVWGUsJu+oxqYRU+yhpR+llgKwiBa2xcweEug+I=;
+ b=EsJhn8A2U0Qtoq3YSxfoEqLzZ+ySp44biXQ10LyTlUNqUCRIpXpagFvJ/ZPutd1qv3NFjJ7Y
+ klw6xYVeKynWVY8EE3jF3+6P/4Xc+89+2XGDKtU3F1xi3KZVp/LrOAyuqZCKJ19EUCtw+GMS
+ 2K8uS6luuuP9+IWP8xSzKssH3ys=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 615aaf34a3e8d3c640281634 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 04 Oct 2021 07:37:24
+ GMT
+Sender: dikshita=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id EB1E5C43460; Mon,  4 Oct 2021 07:37:23 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: dikshita)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 503E8C4338F;
+        Mon,  4 Oct 2021 07:37:22 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211004070531.sexvnqmnkoe4j6a2@vireshk-i7>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Mon, 04 Oct 2021 13:07:22 +0530
+From:   dikshita@codeaurora.org
+To:     Stanimir Varbanov <stanimir.varbanov@linaro.org>
+Cc:     linux-media@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, vgarodia@codeaurora.org
+Subject: Re: [PATCH v4 6/7] media: venus: helpers: update NUM_MBS macro
+ calculation
+In-Reply-To: <283e23db-5383-57d7-48ca-0efa03420335@linaro.org>
+References: <1628588875-23790-1-git-send-email-dikshita@codeaurora.org>
+ <1628588875-23790-7-git-send-email-dikshita@codeaurora.org>
+ <283e23db-5383-57d7-48ca-0efa03420335@linaro.org>
+Message-ID: <5acab57bd6c1088dd1beff1df0ba71d1@codeaurora.org>
+X-Sender: dikshita@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 04, 2021 at 12:35:31PM +0530, Viresh Kumar wrote:
-> On 04-10-21, 10:13, Manivannan Sadhasivam wrote:
-> > Convert Qualcomm cpufreq devicetree binding to YAML.
-> > 
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> > Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> > Reviewed-by: Rob Herring <robh@kernel.org>
+Hi Stan,
+
+On 2021-10-02 03:01, Stanimir Varbanov wrote:
+> Hi,
 > 
-> I am not sure if Rob ever gave this.
+> On 8/10/21 12:47 PM, Dikshita Agarwal wrote:
+>> Consider alignment while calculating NUM_MBS.
+>> 
+>> Co-developed-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+>> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
+>> ---
+>>  drivers/media/platform/qcom/venus/helpers.c | 13 +++++++------
+>>  1 file changed, 7 insertions(+), 6 deletions(-)
+>> 
+>> diff --git a/drivers/media/platform/qcom/venus/helpers.c 
+>> b/drivers/media/platform/qcom/venus/helpers.c
+>> index 60a2775..2db33ba 100644
+>> --- a/drivers/media/platform/qcom/venus/helpers.c
+>> +++ b/drivers/media/platform/qcom/venus/helpers.c
+>> @@ -18,8 +18,8 @@
+>>  #include "hfi_platform.h"
+>>  #include "hfi_parser.h"
+>> 
+>> -#define NUM_MBS_720P	(((1280 + 15) >> 4) * ((720 + 15) >> 4))
+>> -#define NUM_MBS_4K	(((4096 + 15) >> 4) * ((2304 + 15) >> 4))
+>> +#define NUM_MBS_720P	(((ALIGN(1280, 16)) >> 4) * ((ALIGN(736, 16)) >> 
+>> 4))
+>> +#define NUM_MBS_4K	(((ALIGN(4096, 16)) >> 4) * ((ALIGN(2304, 16)) >> 
+>> 4))
+>> 
+>>  struct intbuf {
+>>  	struct list_head list;
+>> @@ -1098,16 +1098,17 @@ static u32 venus_helper_get_work_mode(struct 
+>> venus_inst *inst)
+>>  	u32 num_mbs;
+>> 
+>>  	mode = VIDC_WORK_MODE_2;
+>> +
+>>  	if (inst->session_type == VIDC_SESSION_TYPE_DEC) {
+>> -		num_mbs = (ALIGN(inst->height, 16) * ALIGN(inst->width, 16)) / 256;
+>> +		num_mbs = ((ALIGN(inst->height, 16))/16 * (ALIGN(inst->width, 
+>> 16)))/16;
 > 
-
-I'm not fooling you :)
-https://patchwork.kernel.org/project/linux-pm/patch/20210701105730.322718-5-angelogioacchino.delregno@somainline.org/#24312445
-
-> > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Could you help me understand what is the difference between both
+> calculations? IMO this patch should only change NUM_MBS_720P and
+> NUM_MBS_4K macros.
 > 
-> Why double signed off ?
+We are updating the calculation here to match with the calculation used 
+in Macro.
+AFAIK, we were seeing a size mismatch for a resolution with the old 
+calculation.
+
+>>  		if (inst->hfi_codec == HFI_VIDEO_CODEC_MPEG2 ||
+>> -		    inst->pic_struct != HFI_INTERLACE_FRAME_PROGRESSIVE ||
+>> -		    num_mbs <= NUM_MBS_720P)
+>> +			inst->pic_struct != HFI_INTERLACE_FRAME_PROGRESSIVE ||
+>> +			num_mbs <= NUM_MBS_720P)
 > 
-
-Ah, it came while I applied the patch from Angelo's series. If you want
-I can send a new version removing one or you can do that while applying.
-
-Let me know.
-
-Thanks,
-Mani
-
-> -- 
-> viresh
+> This change just makes indentation wrong and also it is not related to
+> the patch subject.
+I think it can be dropped.
+> 
+>>  			mode = VIDC_WORK_MODE_1;
+>>  	} else {
+>>  		num_mbs = (ALIGN(inst->out_height, 16) * ALIGN(inst->out_width, 
+>> 16)) / 256;
+>>  		if (inst->hfi_codec == HFI_VIDEO_CODEC_VP8 &&
+>> -		    num_mbs <= NUM_MBS_4K)
+>> +			num_mbs <= NUM_MBS_4K)
+> 
+> ditto
+Same here.
+> 
+>>  			mode = VIDC_WORK_MODE_1;
+>>  	}
+>> 
+>> 
