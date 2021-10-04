@@ -2,107 +2,177 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BA8A842182B
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 22:08:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E54DA421840
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 22:13:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234217AbhJDUJx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Oct 2021 16:09:53 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46024 "EHLO
+        id S235908AbhJDUPe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Oct 2021 16:15:34 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47316 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229945AbhJDUJx (ORCPT
+        with ESMTP id S235919AbhJDUPd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Oct 2021 16:09:53 -0400
-Received: from bombadil.infradead.org (unknown [IPv6:2607:7c80:54:e::133])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D04F7C061745;
-        Mon,  4 Oct 2021 13:08:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
-        d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
-        Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:
-        Subject:Sender:Reply-To:Content-ID:Content-Description;
-        bh=6NiXQi8FxQNfm2NDse7N8BfGltA2mCF/JILct9+dz5A=; b=IvWFtcK7h4k7Vmy6dpdXujm7yI
-        mQdPZ4B0HaT3PYtufSwlwh/xglhOMcG20bRkm4jBUJQYB3Hf4XdzG4M6rBO9U849TDLp/JhD659kY
-        Gwoa0rfBOy/GIu172JyiyMUTDyuT3hn2rcmMjll/B6GqhzAjsQzbsLDfn/S+9Ec+kEjxivzW4uv3T
-        de5BndTeYo4ENzV5OrgNTTxSOa6Ykw7bI0wRpm1pt6ML40YSFf0RPjXn9D2Nm2L9jYOfeb6a3JA51
-        7ET4f8Q4lVKxtAtW8Gbbx+16A5+s9b/UfkceikvMhe297oYqr1qDTh2rGJFcp+8VNQzki9cqP+dGh
-        HNpp933g==;
-Received: from [2601:1c0:6280:3f0::aa0b]
-        by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
-        id 1mXUFm-007wSC-Qt; Mon, 04 Oct 2021 20:08:02 +0000
-Subject: Re: [PATCH V0 4/7] usb: common: eud: Added the driver support for
- Embedded USB Debugger(EUD)
-To:     Souradeep Chowdhury <schowdhu@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        Bryan O'Donoghue <pure.logic@nexus-software.ie>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Greg KH <greg@kroah.com>
-Cc:     linux-kernel@vger.kernel.org, ckadabi@codeaurora.org,
-        tsoni@codeaurora.org, bryanh@codeaurora.org,
-        psodagud@codeaurora.org, satyap@codeaurora.org,
-        pheragu@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
-References: <cover.1633343547.git.schowdhu@codeaurora.org>
- <e6df4a21a283e822d15dedb7ffb3ae62c241999c.1633343547.git.schowdhu@codeaurora.org>
-From:   Randy Dunlap <rdunlap@infradead.org>
-Message-ID: <73c1eb4f-6870-1c30-9b23-d991b8c8b35d@infradead.org>
-Date:   Mon, 4 Oct 2021 13:08:01 -0700
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        Mon, 4 Oct 2021 16:15:33 -0400
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 691DAC061753
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Oct 2021 13:13:44 -0700 (PDT)
+Received: by mail-oi1-x22a.google.com with SMTP id v10so23160025oic.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Oct 2021 13:13:44 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=zOyi2S95uxdbFdCGOc7m3K4Adp+itmzmW8gzb/ESD2A=;
+        b=NHcT5M3mp7sXlQg/hJy4HQmFI4Ixa+1mArVErtOuxeYthCkG0IflqNJ/vr9/va2C/R
+         vMtejRNBeHnf4z7M3fn+9rVBrsLQxmwiEnroet1ZokIGN27QHSMcLyKYVLS7gHO16r4C
+         lrvB/VqjSugs30zuuNtHbfHjZOB3VXgBslVUO7alXhs1I9njL90EVQGFYy1lmUZR4LMc
+         DLKnlYwrW3HjtS6ClV31364qZD4dUvxBJLOEcSnqGVRmrWNTV/on8w2bqtnzpI0tO6VE
+         MLn4lq3Ajh8LxlsXqaqKreIVh/Wim+AxRy5V+wOQ+aAgkEbl3amzJiKA6Z+/HXnNFDDr
+         bZfA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=zOyi2S95uxdbFdCGOc7m3K4Adp+itmzmW8gzb/ESD2A=;
+        b=wt6jnet5zggPmywyKY3TTfmyY0mVfgs7n6/2TNsf+k9DJ3AnEvo6aD/uP1uNYtlFrD
+         2IIFMr5/fpXByOYNQqKOddw6mSMUx5wn0ueuHF6AV93hx6gC9nN1pa9DY2gzM64QytVk
+         mMqmUkYjLVqq7sKgre686e+mbErrBYu7QP1useUq/w21Afs7HOcX+/LixV4/v6mjA7Fn
+         W0w8A2nAieSwnALd0h/zT8K0liPHudwcEle0XNymV6uOcmIXOV5XJqVnfQNppn61SEik
+         8w8gWvyNgjwbt4IMQjTzipT4pCHPAkHGHos0ywwBgN9/DyjqyYhm74YkRDuUXA/5jFC7
+         nA2w==
+X-Gm-Message-State: AOAM5312H5gJDTCQBz5z79wCKhGi7EjPH/V8t5e2lBpQrg2CreF8j/I2
+        APzdVQX+TNkGdzytMt7tlmErt+IdYCJRJw==
+X-Google-Smtp-Source: ABdhPJwZYp6jBuxmxXIgtPCA5/ZWf29iADPg6Bjiibxne53m0r1ddxNDFt0NNc+s8iNXD2sqzb7o/w==
+X-Received: by 2002:a05:6808:8d4:: with SMTP id k20mr4026876oij.116.1633378423736;
+        Mon, 04 Oct 2021 13:13:43 -0700 (PDT)
+Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id s13sm1249546oou.11.2021.10.04.13.13.42
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Oct 2021 13:13:43 -0700 (PDT)
+Date:   Mon, 4 Oct 2021 13:15:26 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Matthias Kaehlcke <mka@chromium.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Zhang Rui <rui.zhang@intel.com>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>,
+        Amit Kucheria <amitk@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: sdm845: mtp: Add vadc channels
+ and thermal zones
+Message-ID: <YVtg3lcR1HMqVdAJ@ripper>
+References: <20210923212311.2877048-1-bjorn.andersson@linaro.org>
+ <20210923212311.2877048-5-bjorn.andersson@linaro.org>
+ <YVSzJZ8G43CLml3L@google.com>
 MIME-Version: 1.0
-In-Reply-To: <e6df4a21a283e822d15dedb7ffb3ae62c241999c.1633343547.git.schowdhu@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YVSzJZ8G43CLml3L@google.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/4/21 4:16 AM, Souradeep Chowdhury wrote:
-> Add support for control peripheral of EUD (Embedded USB Debugger) to
-> listen to events such as USB attach/detach, pet EUD to indicate software
+On Wed 29 Sep 11:40 PDT 2021, Matthias Kaehlcke wrote:
 
-   I don't quite understand: what pets the EUD? how does it do that?
-
-> is functional.Reusing the platform device kobj, sysfs entry 'enable' is
-
-      functional. Reusing
-
-> created to enable or disable EUD.
+> On Thu, Sep 23, 2021 at 02:23:11PM -0700, Bjorn Andersson wrote:
+> > Downstream defines four ADC channels related to thermal sensors external
+> > to the PM8998 and two channels for internal voltage measurements.
+> > 
+> > Add these to the upstream SDM845 MTP, describe the thermal monitor
+> > channels and add thermal_zones for these.
+> > 
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> > 
+> > In addition to the iio channels exposed by v1, Daniel wanted thermal_zones...
+> > 
+> > Changes since v1:
+> > - Enable the pm8998_adc_tm and describe the ADC channels
+> > - Add thermal-zones for the new channels
+> > 
+> >  arch/arm64/boot/dts/qcom/sdm845-mtp.dts | 128 ++++++++++++++++++++++++
+> >  1 file changed, 128 insertions(+)
+> > 
+> > diff --git a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
+[..]
+> > +&pm8998_adc {
+> > +	adc-chan@4c {
+> > +		reg = <ADC5_XO_THERM_100K_PU>;
+> > +		label = "xo_therm";
+> > +	};
+> > +
+> > +	adc-chan@4d {
+> > +		reg = <ADC5_AMUX_THM1_100K_PU>;
+> > +		label = "msm_therm";
+> > +	};
+> > +
+> > +	adc-chan@4f {
+> > +		reg = <ADC5_AMUX_THM3_100K_PU>;
+> > +		label = "pa_therm1";
+> > +	};
+> > +
+> > +	adc-chan@51 {
+> > +		reg = <ADC5_AMUX_THM5_100K_PU>;
+> > +		label = "quiet_therm";
+> > +	};
+> > +
+> > +	adc-chan@83 {
+> > +		reg = <ADC5_VPH_PWR>;
+> > +		label = "vph_pwr";
+> > +	};
+> > +
+> > +	adc-chan@85 {
+> > +		reg = <ADC5_VCOIN>;
+> > +		label = "vcoin";
+> > +	};
+> > +};
+> > +
+> > +&pm8998_adc_tm {
+> > +	status = "okay";
+> > +
+> > +	xo-thermistor@1 {
+> > +		reg = <1>;
+> > +		io-channels = <&pm8998_adc ADC5_XO_THERM_100K_PU>;
+> > +		qcom,ratiometric;
+> > +		qcom,hw-settle-time-us = <200>;
+> > +	};
+> > +
+> > +	msm-thermistor@2 {
+> > +		reg = <2>;
+> > +		io-channels = <&pm8998_adc ADC5_AMUX_THM1_100K_PU>;
+> > +		qcom,ratiometric;
+> > +		qcom,hw-settle-time-us = <200>;
+> > +	};
+> > +
+> > +	pa-thermistor@3 {
+> > +		reg = <3>;
+> > +		io-channels = <&pm8998_adc ADC5_AMUX_THM3_100K_PU>;
+> > +		qcom,ratiometric;
+> > +		qcom,hw-settle-time-us = <200>;
+> > +	};
+> > +
+> > +	quiet-thermistor@4 {
+> > +		reg = <4>;
+> > +		io-channels = <&pm8998_adc ADC5_AMUX_THM5_100K_PU>;
+> > +		qcom,ratiometric;
+> > +		qcom,hw-settle-time-us = <200>;
+> > +	};
+> > +};
+> > +
 > 
-> To enable the eud the following needs to be done
-> echo 1 >/sys/bus/platform/.../enable
-> 
-> To disable eud, following is the command
-> echo 0 >/sys/bus/platform/.../enable
-> 
-> Signed-off-by: Souradeep Chowdhury<schowdhu@codeaurora.org>
-> ---
->   Documentation/ABI/testing/sysfs-driver-eud |   7 +
->   drivers/usb/common/Kconfig                 |   9 +
->   drivers/usb/common/Makefile                |   1 +
->   drivers/usb/common/qcom_eud.c              | 256 +++++++++++++++++++++++++++++
->   4 files changed, 273 insertions(+)
->   create mode 100644 Documentation/ABI/testing/sysfs-driver-eud
->   create mode 100644 drivers/usb/common/qcom_eud.c
-> 
-> diff --git a/Documentation/ABI/testing/sysfs-driver-eud b/Documentation/ABI/testing/sysfs-driver-eud
-> new file mode 100644
-> index 0000000..14a02da
-> --- /dev/null
-> +++ b/Documentation/ABI/testing/sysfs-driver-eud
-> @@ -0,0 +1,7 @@
-> +What:		/sys/bus/platform/.../enable
-> +Date:           October 2021
-> +Contact:        Souradeep Chowdhury<schowdhu@codeaurora.org>
-> +Description:
-> +		The Enable/Disable sysfs interface for Embedded
-> +		USB Debugger(EUD).This enables and disables the
+> The example in the 'qcom,spmi-adc-tm5' binding specifies 'qcom,ratiometric'
+> and 'qcom,hw-settle-time-us' for both the ADC and the thermal monitor, so do
+> several board files (e.g. sm8250-mtp.dts and qrb5165-rb5.dts). This apparent
+> redundancy bothered me earlier, it's not really clear to me whether it's
+> needed/recommended or not. Do you happen to have any insights on this?
 
-		    Debugger (EUD). This enables
+Hmm, you're right and I missed this in defining my channels. I've not
+looked at this detail, just got reasonable readings from my thermal
+zones and was happy about that.
 
-> +		EUD based on a 1 or a 0 value.
+Dmitry, do you have any further insights why these properties are
+supposed to be duplicated between the adc channel and the thermal zones?
 
-
--- 
-~Randy
+Thanks,
+Bjorn
