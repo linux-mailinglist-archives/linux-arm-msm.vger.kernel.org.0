@@ -2,94 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6E6004207B7
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 11:01:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 31C354207C0
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 11:03:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230408AbhJDJDV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Oct 2021 05:03:21 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:57744 "EHLO
+        id S230478AbhJDJFC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Oct 2021 05:05:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58140 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229631AbhJDJDU (ORCPT
+        with ESMTP id S230457AbhJDJFC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Oct 2021 05:03:20 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9760C061745
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Oct 2021 02:01:31 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id l7so38361097edq.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Oct 2021 02:01:31 -0700 (PDT)
+        Mon, 4 Oct 2021 05:05:02 -0400
+Received: from mail-pj1-x102e.google.com (mail-pj1-x102e.google.com [IPv6:2607:f8b0:4864:20::102e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 837F2C0613EC
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Oct 2021 02:03:13 -0700 (PDT)
+Received: by mail-pj1-x102e.google.com with SMTP id d13-20020a17090ad3cd00b0019e746f7bd4so3441740pjw.0
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Oct 2021 02:03:13 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=Q3MZIqZDXegBSXIvBEMS5cUbXEk8VGglzQRc4EcONxg=;
-        b=GewnubD5UIDtsgS/vO3SqD3Lp1e1ujOByHgoXS2PNKFieGqx6QwbKixv+gyOKCDZWs
-         TbhBUq8u2fwjw8WzOAeUdZztsoK+mCew/UcQnRw19fM1rCgXMl9p9NXpg6t5McKXUMn6
-         p3Ib4GmbJrEOcqzUf+13xIIv+J/2auic2TgcXYM3/fqy0TjML4pksBSodXuTbVYzZ+YF
-         6uakSZoO1rygm8iAZGDa4BFYMaRUydMpndQFZ2kJeOoAR99tftbsMVf1zwxG2cgDk0ql
-         7JX3rAGO6PMWAKwmm2p8PhHkQVKSCDHSRYqkQNdEY+nfU7OKBbl59CuF41xKk0Keu59X
-         YDbw==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=Lq895Nb4Ct+Ub9VR31k06exDUume1AHkepUF0n7GX6I=;
+        b=DoauARro51+RAFBcQnseSJBz3MSOSMh9B5dQ2DKxxGDyXK1Qy3KbaajVARZ5C5zHco
+         0+F31TdKV04Nc9fYfW1PzN24o6r857zFIy5crfaAieQfEf7xKQs+LwCdZGbCHKg49g1F
+         xzXRYqBi6OsTz6GkZmY4dmwwcf3HSowpdTs+Nskd0VnIdkV7UKtGGIxOy6YSSZF2hJiY
+         IDcaCGmSYWOrP6sjU9aTpKCRvRXAqSAJRmIOk35dzIsB9iqhfQf7kzE1HU1gc4OfNBB4
+         XpygESY0O2aUB5U41GChlGixCY1Pc3xHMfUSXqQtQfaI2N5qKZJ7GK3QZf14ZeHOxQJn
+         6xjw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=Q3MZIqZDXegBSXIvBEMS5cUbXEk8VGglzQRc4EcONxg=;
-        b=M7Wj5bSs8wNvBJ5Ri/iqFD7W8cil7MD5AofZCgNjSUjdxfXxQInSrUMrqom2SwIg6J
-         ZSHHDShrj6/XIvdCc+RB4TGIyePOLG4tKU1lbCu+Bau0KPoyfS/pQsVP7POc5sfVqmKe
-         svFW6vFewYY0ZW5lpv+GvULfylq1WJ4rybhvgDtEu4qqFzIcvurRDGjn1ODRLDzcZxUf
-         YVfOBR+YJdpK5Fpqswh4/sB3MkJ8CqAbmlnss1S//+leyx8XpoL7H4LknzlemTHobdYk
-         UoNR+r8/PHpdUxwO3xCLZTwpyDgGQLUCNXoMCF0CeZcl3uZUcYExz2BD/BcPwKWLuJCF
-         QucA==
-X-Gm-Message-State: AOAM532xiCQCzGQyxx2sMBX8ElHParCBarKaJhjUhG2mE1ekxWw2/HCT
-        UHg9mspBFsrxFK9nLy9T0Z5sqg==
-X-Google-Smtp-Source: ABdhPJzQp7/tTml8Hy4AY7ZI0ADwKQ5HYvKR7HzlJDYAuJQcyUPufcn7tceWa6w1lMFK0BvE6l6mNw==
-X-Received: by 2002:a05:6402:1b8a:: with SMTP id cc10mr16295980edb.313.1633338087640;
-        Mon, 04 Oct 2021 02:01:27 -0700 (PDT)
-Received: from [192.168.1.15] ([84.238.208.199])
-        by smtp.googlemail.com with ESMTPSA id lb20sm6248548ejc.40.2021.10.04.02.01.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 04 Oct 2021 02:01:27 -0700 (PDT)
-Subject: Re: [PATCH v5] dt-bindings: media: venus: Add sc7280 dt schema
-To:     Dikshita Agarwal <dikshita@codeaurora.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, robh+dt@kernel.org, mchehab@kernel.org,
-        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org
-Cc:     linux-kernel@vger.kernel.org, linux-media@vger.kernel.org,
-        vgarodia@codeaurora.org
-References: <1632817373-25755-1-git-send-email-dikshita@codeaurora.org>
-From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Message-ID: <b7ebd135-6bf9-b6de-d6fe-eb348c54c2bd@linaro.org>
-Date:   Mon, 4 Oct 2021 12:01:25 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=Lq895Nb4Ct+Ub9VR31k06exDUume1AHkepUF0n7GX6I=;
+        b=coj6q/tSvwb1PNyQzC1MIo88Fa6jhLXWMIlKEbf2g6XHbnBG88s0l9jv91PAfGvoXo
+         n7gW52dwyOcDXkeV0Juue6npLpFQB7F9bRfH9YND4LNEymvVkDu4KU0/HecGe3yB0bdt
+         c9NpOPjuTG4qfih7m9ufPPigHocHL7nFzQmaCDDvPAz3124F46pxxLttUJd8YZbj7HON
+         pQIlNJydYYS7LQGerNyFK2iTFEmkRkh4XOup4h90rLWOhl8P1pH07F1h8dX6x+HgKDAO
+         QPPGAQPzQYEtoK1rwzi4RIMqc0FsFArS0/bK0EwKV5uKHeBLb5egYa/PYrDaiVpzmEbS
+         0WHg==
+X-Gm-Message-State: AOAM533+ImH/bGmi43gTRjnNy9PPD0IEg03rRx7C6ya5bBbyppWuwODn
+        wLzoRLAHgpOkHq1olNy7N53PmQ==
+X-Google-Smtp-Source: ABdhPJxJcS0g7wFeeSHz3t6QcKZVb7PuQOGEmvH6cBs66mWGAKJyWwuW2FIhrKRi36aBWjXYf5WFog==
+X-Received: by 2002:a17:90b:4b89:: with SMTP id lr9mr3432892pjb.11.1633338192932;
+        Mon, 04 Oct 2021 02:03:12 -0700 (PDT)
+Received: from localhost ([122.171.247.18])
+        by smtp.gmail.com with ESMTPSA id k5sm15281374pfc.111.2021.10.04.02.03.12
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Oct 2021 02:03:12 -0700 (PDT)
+Date:   Mon, 4 Oct 2021 14:33:10 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     rafael@kernel.org, robh+dt@kernel.org, bjorn.andersson@linaro.org,
+        linux-pm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH] dt-bindings: cpufreq: cpufreq-qcom-hw: Convert to YAML
+ bindings
+Message-ID: <20211004090310.pwtsjpmwajivclxj@vireshk-i7>
+References: <20211004044317.34809-1-manivannan.sadhasivam@linaro.org>
+ <20211004070531.sexvnqmnkoe4j6a2@vireshk-i7>
+ <20211004072222.GE16442@workstation>
 MIME-Version: 1.0
-In-Reply-To: <1632817373-25755-1-git-send-email-dikshita@codeaurora.org>
-Content-Type: text/plain; charset=utf-8
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211004072222.GE16442@workstation>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-Thanks for the patch!
-
-On 9/28/21 11:22 AM, Dikshita Agarwal wrote:
-> Add a schema description for the venus video encoder/decoder on the sc7280.
+On 04-10-21, 12:52, Manivannan Sadhasivam wrote:
+> On Mon, Oct 04, 2021 at 12:35:31PM +0530, Viresh Kumar wrote:
+> > On 04-10-21, 10:13, Manivannan Sadhasivam wrote:
+> > > Convert Qualcomm cpufreq devicetree binding to YAML.
+> > > 
+> > > Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> > > Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+> > > Reviewed-by: Rob Herring <robh@kernel.org>
+> > 
+> > I am not sure if Rob ever gave this.
+> > 
 > 
-> Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> ---
-> changes since v4:
->     fixed missing dependencies.
-> 
->  .../bindings/media/qcom,sc7280-venus.yaml          | 162 +++++++++++++++++++++
->  1 file changed, 162 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/media/qcom,sc7280-venus.yaml
+> I'm not fooling you :)
+> https://patchwork.kernel.org/project/linux-pm/patch/20210701105730.322718-5-angelogioacchino.delregno@somainline.org/#24312445
 
-I will push this through linux-media tree with Rob's reviewed-by tag.
+Btw, I also wondered about this since we now have "performance-domain"
+bindings and was thinking if this should be moved to use those or not.
+
+Rob ?
 
 -- 
-regards,
-Stan
+viresh
