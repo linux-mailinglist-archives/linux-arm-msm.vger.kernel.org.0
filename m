@@ -2,97 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CE95D4218D8
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 22:57:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 49023421920
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 23:19:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233868AbhJDU67 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Oct 2021 16:58:59 -0400
-Received: from mo4-p03-ob.smtp.rzone.de ([81.169.146.174]:35242 "EHLO
-        mo4-p03-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233533AbhJDU65 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Oct 2021 16:58:57 -0400
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1633381020;
-    s=strato-dkim-0002; d=gerhold.net;
-    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
-    From:Subject:Sender;
-    bh=E0qdQBxjh9+IrFGfHN0IpBEDVrfru3woX63k95iqOrg=;
-    b=UUkwpl4uMSW7qvBwP3il0LDXLMawYRybT+N/HqGSxWmjQaH/ISNfwRWoL4e66IoYc5
-    VVEhbfDhF0uZ0p3T5WbtMNVaDVRFRW95//3jn1F8NYuG9D4mIjC+/bpiee+pdHhMFwmX
-    lL56hXz/wO3mAfBTnaxYjgMWLgioUNEtu+oq6JBpZDk4VJgxXokGBWxARueLIBTq8q/i
-    5q0/QArRdXLnBmoDt1T2V1zONfby+ocBMHjxHnY/B+bk8YUnseF8YYAtKJSfWKNtvvmK
-    /4ybXntJFgnPwLNO/FNeAR+qclwc2s6Vtwj/WQwnhfxbRAj0Id1ruWlSRgOd+FhZjWnv
-    Cg1g==
-Authentication-Results: strato.com;
-    dkim=none
-X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4pWA8pmE1A=="
-X-RZG-CLASS-ID: mo00
-Received: from gerhold.net
-    by smtp.strato.de (RZmta 47.33.8 DYNA|AUTH)
-    with ESMTPSA id 301038x94KuxKT3
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
-        (Client did not present a certificate);
-    Mon, 4 Oct 2021 22:56:59 +0200 (CEST)
-Date:   Mon, 4 Oct 2021 22:56:54 +0200
-From:   Stephan Gerhold <stephan@gerhold.net>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        id S234918AbhJDVUv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Oct 2021 17:20:51 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37784 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234436AbhJDVUv (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 4 Oct 2021 17:20:51 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 5636E613AC;
+        Mon,  4 Oct 2021 21:19:01 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1633382341;
+        bh=RvwJaSm2IzBmay3+24hmVDZYFPmd8sn2wzbowb9Aao4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=Uq8OECIrjflYbJ9TP1tiOVFxXYacY66Rh/5iIprnwjrH2fL1u1g6QoXyjw8kXf7X3
+         4DxeJ7TVo5s0LHkLDYT6PGY9lMiWCVC1Y/N10miC2qxmAEddLWTq77Wd0IW0HIwoWx
+         1bxbdutXITLem1TBMMjWRELI1W2ySP/I0tO+vL0m5fqh3lqewM9BcFouaTODLYBUOA
+         acpcpUQrJzxq7hBUK3mwj/J7yUg5fxxphrYw6uBUtZtTwsgSnFbSsmQpA02xeX91na
+         Yy+6vQ3SrBCuL4NWmgNWatsEwRvHu1L1357zlYk0s0tq5Ec1W3WFSLjhWdME1I10oo
+         4FegStatcRjzA==
+Date:   Mon, 4 Oct 2021 22:18:59 +0100
+From:   Mark Brown <broonie@kernel.org>
+To:     Luca Weiss <luca@z3ntu.xyz>
+Cc:     linux-arm-msm@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht,
         Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        devicetree@vger.kernel.org,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS
-        <devicetree@vger.kernel.org>, Hans de Goede <hdegoede@redhat.com>, Andy
-        Shevchenko <andy.shevchenko@gmail.com>," 
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        phone-devel@vger.kernel.org
-Subject: Re: [PATCH 08/15] dt-bindings: arm: cpus: Document qcom,msm8916-smp
- enable-method
-Message-ID: <YVtnfNA1yF3uB35Q@gerhold.net>
-References: <20210928171231.12766-1-stephan@gerhold.net>
- <20210928171231.12766-9-stephan@gerhold.net>
- <YVtJIm6Tu2z+Ph/V@robh.at.kernel.org>
- <CAL_Jsq+nJH8WgSL0S4LAW6Ru_W-000+AxGQrtxskrPWViRqN5w@mail.gmail.com>
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 03/11] regulator: qcom-rpmh: Add PM6350 regulators
+Message-ID: <YVtvwy4egA3sEgBy@sirena.org.uk>
+References: <20211003083141.613509-1-luca@z3ntu.xyz>
+ <20211003083141.613509-4-luca@z3ntu.xyz>
+ <YVr1iymQo1hwQtW1@sirena.org.uk>
+ <4777503.XO8xY86g4A@g550jk>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
+Content-Type: multipart/signed; micalg=pgp-sha512;
+        protocol="application/pgp-signature"; boundary="DaWr1DfhDK1DbabH"
 Content-Disposition: inline
-In-Reply-To: <CAL_Jsq+nJH8WgSL0S4LAW6Ru_W-000+AxGQrtxskrPWViRqN5w@mail.gmail.com>
+In-Reply-To: <4777503.XO8xY86g4A@g550jk>
+X-Cookie: If it heals good, say it.
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 04, 2021 at 01:37:58PM -0500, Rob Herring wrote:
-> On Mon, Oct 4, 2021 at 1:34 PM Rob Herring <robh@kernel.org> wrote:
-> >
-> > On Tue, Sep 28, 2021 at 07:12:24PM +0200, Stephan Gerhold wrote:
-> > > Document the qcom,msm8916-smp enable method. It is actually just
-> > > an alias for qcom,msm8226-smp since it should be implemented identically.
-> > >
-> > > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> > > ---
-> > >  Documentation/devicetree/bindings/arm/cpus.yaml | 4 +++-
-> > >  1 file changed, 3 insertions(+), 1 deletion(-)
-> > >
-> > > diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Documentation/devicetree/bindings/arm/cpus.yaml
-> > > index 11e3e09da2e5..5602a8f3c513 100644
-> > > --- a/Documentation/devicetree/bindings/arm/cpus.yaml
-> > > +++ b/Documentation/devicetree/bindings/arm/cpus.yaml
-> > > @@ -211,6 +211,7 @@ properties:
-> > >            - qcom,kpss-acc-v1
-> > >            - qcom,kpss-acc-v2
-> > >            - qcom,msm8226-smp
-> > > +          - qcom,msm8916-smp
-> >
-> > I thought arm64 is PSCI only.
-> 
-> I see the explanation now. Please add that to this commit as well and
-> a comment here that this is for 32-bit only.
-> 
 
-I'm not sure why this is literally the only patch in the series where
-I omitted the explanation. Sorry for the confusion! :)
+--DaWr1DfhDK1DbabH
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-I clarified this in v2 and added the comment as you suggested.
+On Mon, Oct 04, 2021 at 10:44:25PM +0200, Luca Weiss wrote:
+> On Montag, 4. Oktober 2021 14:37:31 CEST Mark Brown wrote:
 
-Thanks!
-Stephan
+> > If you don't know don't fix it into ABI, just don't specify anything
+> > until someone figures out something accurate to put in there.
+
+> The RPMH_VREG macro expects _supply_name so what should I put there inste=
+ad?
+
+NULL should do the right thing, or make a new macro.
+
+> > > Additionally leave out configuration of smps3 - smps5 and ldo17 as th=
+ese
+> > > are not configured in the downstream kernel.
+
+> > Just describe everything that's there - nothing will get touched if the
+> > board doesn't explicitly enable doing so, otherwise everything is read
+> > only.
+
+> Problem is I do not know which types those regulators are, e.g. pldo or n=
+ldo.=20
+> The ones I described are experimentally verified because the wrong config=
+uration=20
+> makes the driver probe fail.
+> So I can't really put anything there, unless there's another way to do th=
+is.
+
+That makes sense, please explain in the commit log that only are they
+not initialized but also you don't know what types they are.
+
+--DaWr1DfhDK1DbabH
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmFbb8IACgkQJNaLcl1U
+h9CDxgf/cnDDgq3YrJyfk9Y+cWHSfUD+zS3JYMWNk7Ls9bqQLF785/UJfSDIXM90
+AQLilcFnv1OpEb8L0e9BJ4tXnQskiV2QuX/itrB214rHJYIxzjnLaV5bUWcHMqDb
+u35FEaeSGJaA2lGzNPx9Qq2L3Yvv/L6LCw4y+0FdKsu4WUg/KvtjJpO0eVTxd6iG
+PlnlEe68ZSFdY+N2Do60Sy2eQnr4+UBtVZokg3g1x30BbN1lx9hKdoAmCY7EYONJ
+rcC4NGUpaXWPIvtWvDNAXhH/cRi9ibvp6rQS6engFz9biQC3CUpmbNu0bsNnd/go
+DEQdhIvsjuDsLO4CLZp1ktXqoljTNg==
+=bM9F
+-----END PGP SIGNATURE-----
+
+--DaWr1DfhDK1DbabH--
