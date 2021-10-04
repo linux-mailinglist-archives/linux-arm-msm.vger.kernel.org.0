@@ -2,156 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E7905421680
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 20:30:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 79E51421693
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 20:34:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238677AbhJDScH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Oct 2021 14:32:07 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51300 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234120AbhJDScH (ORCPT
+        id S238404AbhJDSgC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Oct 2021 14:36:02 -0400
+Received: from mail-ot1-f42.google.com ([209.85.210.42]:44672 "EHLO
+        mail-ot1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229487AbhJDSgC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Oct 2021 14:32:07 -0400
-Received: from mail-oi1-x234.google.com (mail-oi1-x234.google.com [IPv6:2607:f8b0:4864:20::234])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C8CA2C061745
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Oct 2021 11:30:17 -0700 (PDT)
-Received: by mail-oi1-x234.google.com with SMTP id s69so22773696oie.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Oct 2021 11:30:17 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=uCLhCIedrLItIW/fIfQqIROcIoOGMNaU28b9WsBMQnI=;
-        b=P6zsoL37SUGXaq+jlFKw64cq/gWi8DvYuFwDk7R/ncTC7gIPttZrqFNxbIRwzBNhr6
-         +Hl2duvFMKp+P7YDAvnH6BQvwbL6mXtoVK/ouAC5FZ9ctWYaECxF+t3inL5aMlosIDL6
-         EsZIbQyPHZZQNirMUwPuEQRxA5IKRGFyosR3g=
+        Mon, 4 Oct 2021 14:36:02 -0400
+Received: by mail-ot1-f42.google.com with SMTP id h9-20020a9d2f09000000b005453f95356cso22789341otb.11;
+        Mon, 04 Oct 2021 11:34:12 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=uCLhCIedrLItIW/fIfQqIROcIoOGMNaU28b9WsBMQnI=;
-        b=ryPJZKjviybPBWjhRRIITLRgTJtpynHpBr1Gu9enFqVBKcam2DXANRIrYabR/Im0SI
-         OvupfQ7I4N4NfPwlEgcVyqNC1hreGuY2hmUW6EYqBVj5v95oBt8F/DMP8/URqMeZU1Ih
-         MeEKraGGgPWElWvuG03DW6/7SwnucnRZppMH55mzildD2GwwHZnP++vJ/ZukpyyAYuzs
-         yMaVJtx5nsDbU+LWc8U9Q8EleqjKo1bgtoXkWhxrmSgkDSj7vcPf+pbINeqTDV/6jNZ0
-         8TBZCZiMNSHa2qNMPXSWDQX9mpyvzX2DoNlmFZa/4/dyhYFvLjBBXzoq5LZnCpE7UPoJ
-         A4xw==
-X-Gm-Message-State: AOAM533gkXnsJHjkXJjX6vbZQlrH8L0jneSGxqAOcDnApPeRqyDeZ0cw
-        OwEg786d4s0p5bdxvxRWN+JyI4Xy6gNReCOojKKnVA==
-X-Google-Smtp-Source: ABdhPJwMewBiHcj4UTVv/PT20GzfqwNCqVLYizMCffyKapvUT9VTsB2dEfJCzOign0BlblGRDjGR712uoYIlg7cG0mg=
-X-Received: by 2002:aca:42d7:: with SMTP id p206mr14586908oia.32.1633372217132;
- Mon, 04 Oct 2021 11:30:17 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Mon, 4 Oct 2021 14:30:16 -0400
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=knUJ++gCkH0YzfTgjeyyFLEPM19JWGgrMdgeiG9dfr0=;
+        b=ZH9ZKZX0LoAVx1BPHd0qQA4Lf2M1zW8gJRtWF+Ivrkn2CwWqX/x43nD2A7iWthx58w
+         EJnYJGOKBrxjqRj1jYYUOpnMh0GuRmly0C1Zoo6qf3kVkfotqc8m2FsM2bWREDOCRQB1
+         SZC6hFNpDvn740PrvnkHeiZH+gw2Wlxnjsw2A25b/Ue0zrjXbpjP0mS3/U0KZDD4OQ3W
+         g0Wov47pmq4SLupjZ7Z3r+LcFEK9YNmZg9GSv8FDiGCbRA6T7/aZu+V1Fb+IPRXLFx39
+         8EpKtPAC3p1xJ3m9vD4o+lfVLsVHFLgW4iKkTFnJ6u3Olv080EiIFXcl7Y7S7GErm4Q2
+         QSLQ==
+X-Gm-Message-State: AOAM530kjN1hXI3TR9jw+J6/BHQot6L2KwhZMbkFVvoPSdUIj0jBW+cZ
+        rS4sMMKS7rArkzI0dCV8zQ==
+X-Google-Smtp-Source: ABdhPJxhmFsq7jhbIvHuobTSpWL78IuEztcmQg9POgKTR3rQa6/xqPU/Koa7Xfnl0PLxskCnxrbbLQ==
+X-Received: by 2002:a05:6830:1c1:: with SMTP id r1mr10850663ota.372.1633372452441;
+        Mon, 04 Oct 2021 11:34:12 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id p8sm3003547oti.15.2021.10.04.11.34.11
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Oct 2021 11:34:11 -0700 (PDT)
+Received: (nullmailer pid 1621450 invoked by uid 1000);
+        Mon, 04 Oct 2021 18:34:10 -0000
+Date:   Mon, 4 Oct 2021 13:34:10 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Stephan Gerhold <stephan@gerhold.net>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+Subject: Re: [PATCH 08/15] dt-bindings: arm: cpus: Document qcom,msm8916-smp
+ enable-method
+Message-ID: <YVtJIm6Tu2z+Ph/V@robh.at.kernel.org>
+References: <20210928171231.12766-1-stephan@gerhold.net>
+ <20210928171231.12766-9-stephan@gerhold.net>
 MIME-Version: 1.0
-In-Reply-To: <1633330133-29617-2-git-send-email-pillair@codeaurora.org>
-References: <1633330133-29617-1-git-send-email-pillair@codeaurora.org> <1633330133-29617-2-git-send-email-pillair@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Mon, 4 Oct 2021 14:30:16 -0400
-Message-ID: <CAE-0n50_Qtz4OfZ9og8BWUZRe8DYRPnoSkOSAHgzTd3bpA32cw@mail.gmail.com>
-Subject: Re: [PATCH v6 1/3] dt-bindings: remoteproc: qcom: adsp: Convert
- binding to YAML
-To:     Rakesh Pillai <pillair@codeaurora.org>, agross@kernel.org,
-        bjorn.andersson@linaro.org, mathieu.poirier@linaro.org,
-        ohad@wizery.com, p.zabel@pengutronix.de, robh+dt@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, sibis@codeaurora.org,
-        mpubbise@codeaurora.org, kuabhs@chromium.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210928171231.12766-9-stephan@gerhold.net>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Rakesh Pillai (2021-10-03 23:48:51)
-> diff --git a/Documentation/devicetree/bindings/remoteproc/qcom,qcs404-cdsp-pil.yaml b/Documentation/devicetree/bindings/remoteproc/qcom,qcs404-cdsp-pil.yaml
-> new file mode 100644
-> index 0000000..b698bb7
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/remoteproc/qcom,qcs404-cdsp-pil.yaml
-> @@ -0,0 +1,167 @@
-[...]
-> +
-> +  qcom,smem-state-names:
-> +    $ref: /schemas/types.yaml#/definitions/string
-> +    description: The names of the state bits used for SMP2P output
-> +    items:
-> +      - const: stop
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - interrupts-extended
-> +  - interrupt-names
-> +  - clocks
-> +  - clock-names
-> +  - power-domains
-> +  - reset
-> +  - reset-names
-> +  - qcom,halt-regs
-> +  - memory-region
-> +  - qcom,smem-states
-> +  - qcom,smem-state-names
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/interrupt-controller/arm-gic.h>
-> +    #include <dt-bindings/clock/qcom,gcc-qcs404.h>
-> +    #include <dt-bindings/clock/qcom,turingcc-qcs404.h>
-> +    remoteproc@b00000 {
-> +        compatible = "qcom,qcs404-cdsp-pas";
-> +        reg = <0x00b00000 0x4040>;
-> +
-> +        interrupts-extended = <&intc GIC_SPI 229 IRQ_TYPE_EDGE_RISING>,
-> +                              <&cdsp_smp2p_in 0 IRQ_TYPE_EDGE_RISING>,
-> +                              <&cdsp_smp2p_in 1 IRQ_TYPE_EDGE_RISING>,
-> +                              <&cdsp_smp2p_in 2 IRQ_TYPE_EDGE_RISING>,
-> +                              <&cdsp_smp2p_in 3 IRQ_TYPE_EDGE_RISING>;
-> +        interrupt-names = "wdog", "fatal", "ready",
-> +                          "handover", "stop-ack";
-> +
-> +        clocks = <&xo_board>,
-> +                 <&gcc GCC_CDSP_CFG_AHB_CLK>,
-> +                 <&gcc GCC_CDSP_TBU_CLK>,
-> +                 <&gcc GCC_BIMC_CDSP_CLK>,
-> +                 <&turingcc TURING_WRAPPER_AON_CLK>,
-> +                 <&turingcc TURING_Q6SS_AHBS_AON_CLK>,
-> +                 <&turingcc TURING_Q6SS_AHBM_AON_CLK>,
-> +                 <&turingcc TURING_Q6SS_Q6_AXIM_CLK>;
-> +        clock-names = "xo",
-> +                      "sway",
-> +                      "tbu",
-> +                      "bimc",
-> +                      "ahb_aon",
-> +                      "q6ss_slave",
-> +                      "q6ss_master",
-> +                      "q6_axim";
-> +
-> +        resets = <&gcc GCC_CDSP_RESTART>;
-> +        reset-names = "restart";
-> +
-> +        qcom,halt-regs = <&tcsr 0x19004>;
-> +
-> +        memory-region = <&cdsp_fw_mem>;
-> +
-> +        qcom,smem-states = <&cdsp_smp2p_out 0>;
-> +        qcom,smem-state-names = "stop";
-> +
-> +        glink-edge {
+On Tue, Sep 28, 2021 at 07:12:24PM +0200, Stephan Gerhold wrote:
+> Document the qcom,msm8916-smp enable method. It is actually just
+> an alias for qcom,msm8226-smp since it should be implemented identically.
+> 
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> ---
+>  Documentation/devicetree/bindings/arm/cpus.yaml | 4 +++-
+>  1 file changed, 3 insertions(+), 1 deletion(-)
+> 
+> diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Documentation/devicetree/bindings/arm/cpus.yaml
+> index 11e3e09da2e5..5602a8f3c513 100644
+> --- a/Documentation/devicetree/bindings/arm/cpus.yaml
+> +++ b/Documentation/devicetree/bindings/arm/cpus.yaml
+> @@ -211,6 +211,7 @@ properties:
+>            - qcom,kpss-acc-v1
+>            - qcom,kpss-acc-v2
+>            - qcom,msm8226-smp
+> +          - qcom,msm8916-smp
 
-Where is glink-edge documented as a property?
+I thought arm64 is PSCI only.
 
-> +            interrupts = <GIC_SPI 141 IRQ_TYPE_EDGE_RISING>;
-> +
-> +            qcom,remote-pid = <5>;
-> +            mboxes = <&apcs_glb 12>;
-> +
-> +            label = "cdsp";
-
-It would be good to have these properties defined as well and maybe
-include the common schema for a glink edge that way.
-
-> +        };
-> +    };
+>            - renesas,apmu
+>            - renesas,r9a06g032-smp
+>            - rockchip,rk3036-smp
+> @@ -295,7 +296,8 @@ properties:
+>        Specifies the ACC* node associated with this CPU.
+>  
+>        Required for systems that have an "enable-method" property
+> -      value of "qcom,kpss-acc-v1", "qcom,kpss-acc-v2" or "qcom,msm8226-smp"
+> +      value of "qcom,kpss-acc-v1", "qcom,kpss-acc-v2", "qcom,msm8226-smp"
+> +      or "qcom,msm8916-smp".
+>  
+>        * arm/msm/qcom,kpss-acc.txt
+>  
+> -- 
+> 2.33.0
+> 
+> 
