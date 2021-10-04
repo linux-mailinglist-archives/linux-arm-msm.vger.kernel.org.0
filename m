@@ -2,83 +2,71 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B5A7A4216AA
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 20:38:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B94F84216AD
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 20:38:28 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238794AbhJDSkB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Oct 2021 14:40:01 -0400
-Received: from mail.kernel.org ([198.145.29.99]:49658 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234678AbhJDSkB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Oct 2021 14:40:01 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id BBD7561452;
-        Mon,  4 Oct 2021 18:38:11 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1633372691;
-        bh=x5bt+un83rZ53EMAYG2mxV6QukR6GDj1eslkVtR6NDU=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=FIVwx0yzR+mo1u3ocDMsMG1G1PnzIEcIPjOkhwNCTJka+/FLXy7pCnv9m6CNxzTjB
-         wnav7Ct14zlWziNmxRYIU83KRjTz0ZzwElSVH8bAix3xcGAcOxQmwMvrEyNUYRZISN
-         a1/NipI6n7dt95i1ZjuRyv2ZxR0fyVx+j0ob1snUvqUl/Bj8DtCpZ2LpyE/DcdOYS1
-         /cAbReJz2OepIb+uhd9yFoo3UUCtd1wCUbOYwypO9RD8Zo+WKF5OjfXyZnLKeBXN/K
-         QJpUYIm8mnW5MFvFJapM9IrnSMvA0mmZzC6LwZAC6+I6+/ROKGtXED8+YShHxHRGPC
-         qAai9lgTiyEkg==
-Received: by mail-ed1-f53.google.com with SMTP id r18so68407868edv.12;
-        Mon, 04 Oct 2021 11:38:11 -0700 (PDT)
-X-Gm-Message-State: AOAM530B9vfbkKKqYVIlJYwADL6TszCjfimXsIIhcIEiRHtHg70ZCdh+
-        UCayiKRkqAj+vqNFcxBMHBKA2kY6GKPtILXtUQ==
-X-Google-Smtp-Source: ABdhPJx1cgQdv8Bc8FSVPhRofbbm1ROtX2bmVXKzC/0au6fnKhc7qAIXFjcufJkz9Lu+LRVqLW5+hwv3B8+lodTB6eM=
-X-Received: by 2002:a17:906:70c4:: with SMTP id g4mr18422075ejk.363.1633372690322;
- Mon, 04 Oct 2021 11:38:10 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210928171231.12766-1-stephan@gerhold.net> <20210928171231.12766-9-stephan@gerhold.net>
- <YVtJIm6Tu2z+Ph/V@robh.at.kernel.org>
-In-Reply-To: <YVtJIm6Tu2z+Ph/V@robh.at.kernel.org>
+        id S238727AbhJDSkQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Oct 2021 14:40:16 -0400
+Received: from mail-ot1-f52.google.com ([209.85.210.52]:35647 "EHLO
+        mail-ot1-f52.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234678AbhJDSkP (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 4 Oct 2021 14:40:15 -0400
+Received: by mail-ot1-f52.google.com with SMTP id 77-20020a9d0ed3000000b00546e10e6699so22811062otj.2;
+        Mon, 04 Oct 2021 11:38:26 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Gi9whHJHCckrxGFMJNFgaZ43tSyX5tZHz5rNi4nABKg=;
+        b=RAya1rv7SBXKP18l0CBpXqRLxknvUkVYw8uW5ko2Ol+VJvP4mXRqLCCARQL+jRYPSl
+         J7h5pL5Lnqf36zcvPH6XDJmSHl1vDyxhGPdSYjzvTY4gktioUeJDjLuUw6nolURJEEKm
+         mXQxzZLc9X/uW2gJ3iTA7MxAznTw5gqWbHeX0hw/0j6gdH3TpMVJg/QGnmLKOjrB2XLN
+         mFQ8GmEQn8cZIql1lGROuJ+l2DXGDzwxRwFYj6Yv2fwIyNTMdKlLjgj1qvkSmSdha6ft
+         eXqAnIpZ8MoTPAQ+B6/dAbgOjY6d5+feUNnffKN+MnYd+VgTA2o4326RVCqnLYeKkVEx
+         wbyQ==
+X-Gm-Message-State: AOAM530DsPYGn8WMF71su0z8t+ePdcQPxyDtmWrumXRw8D0gs55Poxi7
+        qF3Gw2gtgmu9/817Q+VBkfcex8tarw==
+X-Google-Smtp-Source: ABdhPJxuxXQQZFMuwC+FOU/i6MqUOi2PEIw5HNg+VX/IARPsfBFJemh87ZiOr1JXLMQrJnQ/y5Ufug==
+X-Received: by 2002:a05:6830:204d:: with SMTP id f13mr10563025otp.123.1633372706295;
+        Mon, 04 Oct 2021 11:38:26 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id s13sm1204984oou.11.2021.10.04.11.38.25
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 04 Oct 2021 11:38:25 -0700 (PDT)
+Received: (nullmailer pid 1627915 invoked by uid 1000);
+        Mon, 04 Oct 2021 18:38:24 -0000
+Date:   Mon, 4 Oct 2021 13:38:24 -0500
 From:   Rob Herring <robh@kernel.org>
-Date:   Mon, 4 Oct 2021 13:37:58 -0500
-X-Gmail-Original-Message-ID: <CAL_Jsq+nJH8WgSL0S4LAW6Ru_W-000+AxGQrtxskrPWViRqN5w@mail.gmail.com>
-Message-ID: <CAL_Jsq+nJH8WgSL0S4LAW6Ru_W-000+AxGQrtxskrPWViRqN5w@mail.gmail.com>
-Subject: Re: [PATCH 08/15] dt-bindings: arm: cpus: Document qcom,msm8916-smp enable-method
 To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        devicetree@vger.kernel.org,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS
-        <devicetree@vger.kernel.org>, Hans de Goede <hdegoede@redhat.com>, Andy
-        Shevchenko <andy.shevchenko@gmail.com>," 
-        <~postmarketos/upstreaming@lists.sr.ht>,
-        phone-devel@vger.kernel.org
-Content-Type: text/plain; charset="UTF-8"
+Cc:     Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, phone-devel@vger.kernel.org
+Subject: Re: [PATCH 10/15] dt-bindings: soc: qcom: spm: Document
+ qcom,msm8916-saw2-v3.0-cpu
+Message-ID: <YVtKINeJ2Z2dslMT@robh.at.kernel.org>
+References: <20210928171231.12766-1-stephan@gerhold.net>
+ <20210928171231.12766-11-stephan@gerhold.net>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210928171231.12766-11-stephan@gerhold.net>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 4, 2021 at 1:34 PM Rob Herring <robh@kernel.org> wrote:
->
-> On Tue, Sep 28, 2021 at 07:12:24PM +0200, Stephan Gerhold wrote:
-> > Document the qcom,msm8916-smp enable method. It is actually just
-> > an alias for qcom,msm8226-smp since it should be implemented identically.
-> >
-> > Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> > ---
-> >  Documentation/devicetree/bindings/arm/cpus.yaml | 4 +++-
-> >  1 file changed, 3 insertions(+), 1 deletion(-)
-> >
-> > diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Documentation/devicetree/bindings/arm/cpus.yaml
-> > index 11e3e09da2e5..5602a8f3c513 100644
-> > --- a/Documentation/devicetree/bindings/arm/cpus.yaml
-> > +++ b/Documentation/devicetree/bindings/arm/cpus.yaml
-> > @@ -211,6 +211,7 @@ properties:
-> >            - qcom,kpss-acc-v1
-> >            - qcom,kpss-acc-v2
-> >            - qcom,msm8226-smp
-> > +          - qcom,msm8916-smp
->
-> I thought arm64 is PSCI only.
+On Tue, 28 Sep 2021 19:12:26 +0200, Stephan Gerhold wrote:
+> Document the qcom,msm8916-saw2-v3.0-cpu compatible that is needed
+> for cpuidle for MSM8916 on some devices with outdated (signed) firmware
+> which is only capable of booting ARM32 kernels without PSCI.
+> 
+> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
+> ---
+>  Documentation/devicetree/bindings/soc/qcom/qcom,spm.yaml | 1 +
+>  1 file changed, 1 insertion(+)
+> 
 
-I see the explanation now. Please add that to this commit as well and
-a comment here that this is for 32-bit only.
-
-Rob
+Acked-by: Rob Herring <robh@kernel.org>
