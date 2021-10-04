@@ -2,180 +2,107 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 771EC421813
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 22:00:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BA8A842182B
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 22:08:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235313AbhJDUCr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Oct 2021 16:02:47 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44394 "EHLO
+        id S234217AbhJDUJx (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Oct 2021 16:09:53 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46024 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233317AbhJDUCr (ORCPT
+        with ESMTP id S229945AbhJDUJx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Oct 2021 16:02:47 -0400
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B14C4C061749
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Oct 2021 13:00:57 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id g62-20020a9d2dc4000000b0054752cfbc59so23141074otb.1
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Oct 2021 13:00:57 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=J/N5xXP3XszcLimjb3V0HTC1MVBpgM9ZA1sK5TjSsuA=;
-        b=fb1ynP6sdAZcOAKPf6k0RP4Z/fnaQKYx7e04HillspFj6WBenAjxlvclyFWB1u2TZ9
-         7Rtsh8/fQRbD5ApkZsPyqQ37XTRuI7F/kS0OahUBHXC2YvMGVYPgHCo+xWLMiRTczbKM
-         JxF+o1KgtYXMwpDvUg5xEbyNIOnrMtY/lc30PehqZbXMQ2+yBNucEIS78+2oWiqJcDTf
-         vRG7+zhoSPdMOuv5l77jMhPvyoGJR9j2QnhrZXR7uvc/UE8GrmY5AWSYG8+VCU2kzqCg
-         qFqzD3u+nI/nvPFOmCbwc+wTR3RKxZ8LRqtWOERt+yCpkBEP2M/a1nlSUTzDH79CeeZ1
-         68Ug==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=J/N5xXP3XszcLimjb3V0HTC1MVBpgM9ZA1sK5TjSsuA=;
-        b=nZ3TPLcuzxGU3Pu0JsrpN7GUm8x7t+2Q+dUr5t2sFJ1aJtgr0v5D2GH5NnJ4d7rj+x
-         HOiXuhEN+NuAf1v1Tg9b/TZnbDk9G6qpgdcdOzaIbdOgsljsWJ6/W40ACr1JvS7qTXO+
-         fSSKqq407j3GB3uWXwnKod0C4kG1+EbF2e5Ny6Va+taUIrpVYaWJpshTjxHevVtfZBtU
-         iu16g+/iUuKHsJjSwm6ovisCCmgDXdA8IMomhewe4uq+D42J06qBW9wgIr9Ki7ov2QH6
-         w+qRQNZH6CmzLAg7PUriy9qZe3kd//cEAjx9x+XYCepPOJjgF0dVP4GH2wJXjyHnqnHV
-         r0fw==
-X-Gm-Message-State: AOAM531wxuvh9OSTIK5j9kBkQvsAdfAE3SWk7bmRtH6bnNVjzVAsWgEz
-        5ffsvz3nH/PtP1sF5vIy0WYGYw==
-X-Google-Smtp-Source: ABdhPJwuV9CjiGCB4paZPKDuSfcGCVQJII2+BskiX5DRJsygA14pmy/OLbebzffWeLf1NgXHPzxkuw==
-X-Received: by 2002:a9d:458b:: with SMTP id x11mr10945333ote.313.1633377656946;
-        Mon, 04 Oct 2021 13:00:56 -0700 (PDT)
-Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id c5sm3052476otb.35.2021.10.04.13.00.56
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Oct 2021 13:00:56 -0700 (PDT)
-Date:   Mon, 4 Oct 2021 15:00:54 -0500
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Sean Paul <sean@poorly.run>
-Cc:     dri-devel@lists.freedesktop.org, intel-gfx@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, swboyd@chromium.org,
-        jani.nikula@linux.intel.com, Sean Paul <seanpaul@chromium.org>,
-        Rob Herring <robh@kernel.org>, Rob Clark <robdclark@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org
-Subject: Re: [PATCH v3 12/14] dt-bindings: msm/dp: Add bindings for HDCP
- registers
-Message-ID: <YVtddoe6Ty841Kra@builder.lan>
-References: <20211001151145.55916-1-sean@poorly.run>
- <20211001151145.55916-13-sean@poorly.run>
+        Mon, 4 Oct 2021 16:09:53 -0400
+Received: from bombadil.infradead.org (unknown [IPv6:2607:7c80:54:e::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D04F7C061745;
+        Mon,  4 Oct 2021 13:08:03 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; q=dns/txt; c=relaxed/relaxed;
+        d=infradead.org; s=bombadil.20210309; h=Content-Transfer-Encoding:
+        Content-Type:In-Reply-To:MIME-Version:Date:Message-ID:From:References:Cc:To:
+        Subject:Sender:Reply-To:Content-ID:Content-Description;
+        bh=6NiXQi8FxQNfm2NDse7N8BfGltA2mCF/JILct9+dz5A=; b=IvWFtcK7h4k7Vmy6dpdXujm7yI
+        mQdPZ4B0HaT3PYtufSwlwh/xglhOMcG20bRkm4jBUJQYB3Hf4XdzG4M6rBO9U849TDLp/JhD659kY
+        Gwoa0rfBOy/GIu172JyiyMUTDyuT3hn2rcmMjll/B6GqhzAjsQzbsLDfn/S+9Ec+kEjxivzW4uv3T
+        de5BndTeYo4ENzV5OrgNTTxSOa6Ykw7bI0wRpm1pt6ML40YSFf0RPjXn9D2Nm2L9jYOfeb6a3JA51
+        7ET4f8Q4lVKxtAtW8Gbbx+16A5+s9b/UfkceikvMhe297oYqr1qDTh2rGJFcp+8VNQzki9cqP+dGh
+        HNpp933g==;
+Received: from [2601:1c0:6280:3f0::aa0b]
+        by bombadil.infradead.org with esmtpsa (Exim 4.94.2 #2 (Red Hat Linux))
+        id 1mXUFm-007wSC-Qt; Mon, 04 Oct 2021 20:08:02 +0000
+Subject: Re: [PATCH V0 4/7] usb: common: eud: Added the driver support for
+ Embedded USB Debugger(EUD)
+To:     Souradeep Chowdhury <schowdhu@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        devicetree@vger.kernel.org,
+        Bryan O'Donoghue <pure.logic@nexus-software.ie>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Greg KH <greg@kroah.com>
+Cc:     linux-kernel@vger.kernel.org, ckadabi@codeaurora.org,
+        tsoni@codeaurora.org, bryanh@codeaurora.org,
+        psodagud@codeaurora.org, satyap@codeaurora.org,
+        pheragu@codeaurora.org, Rajendra Nayak <rnayak@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+References: <cover.1633343547.git.schowdhu@codeaurora.org>
+ <e6df4a21a283e822d15dedb7ffb3ae62c241999c.1633343547.git.schowdhu@codeaurora.org>
+From:   Randy Dunlap <rdunlap@infradead.org>
+Message-ID: <73c1eb4f-6870-1c30-9b23-d991b8c8b35d@infradead.org>
+Date:   Mon, 4 Oct 2021 13:08:01 -0700
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.13.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211001151145.55916-13-sean@poorly.run>
+In-Reply-To: <e6df4a21a283e822d15dedb7ffb3ae62c241999c.1633343547.git.schowdhu@codeaurora.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 01 Oct 10:11 CDT 2021, Sean Paul wrote:
+On 10/4/21 4:16 AM, Souradeep Chowdhury wrote:
+> Add support for control peripheral of EUD (Embedded USB Debugger) to
+> listen to events such as USB attach/detach, pet EUD to indicate software
 
-> From: Sean Paul <seanpaul@chromium.org>
+   I don't quite understand: what pets the EUD? how does it do that?
+
+> is functional.Reusing the platform device kobj, sysfs entry 'enable' is
+
+      functional. Reusing
+
+> created to enable or disable EUD.
 > 
-> This patch adds the bindings for the MSM DisplayPort HDCP registers
-> which are required to write the HDCP key into the display controller as
-> well as the registers to enable HDCP authentication/key
-> exchange/encryption.
+> To enable the eud the following needs to be done
+> echo 1 >/sys/bus/platform/.../enable
 > 
-> We'll use a new compatible string for this since the fields are optional.
+> To disable eud, following is the command
+> echo 0 >/sys/bus/platform/.../enable
 > 
-> Cc: Rob Herring <robh@kernel.org>
-> Cc: Stephen Boyd <swboyd@chromium.org>
-> Signed-off-by: Sean Paul <seanpaul@chromium.org>
-> Link: https://patchwork.freedesktop.org/patch/msgid/20210913175747.47456-13-sean@poorly.run #v1
-> Link: https://patchwork.freedesktop.org/patch/msgid/20210915203834.1439-13-sean@poorly.run #v2
-> 
-> Changes in v2:
-> -Drop register range names (Stephen)
-> -Fix yaml errors (Rob)
-> Changes in v3:
-> -Add new compatible string for dp-hdcp
-> -Add descriptions to reg
-> -Add minItems/maxItems to reg
-> -Make reg depend on the new hdcp compatible string
+> Signed-off-by: Souradeep Chowdhury<schowdhu@codeaurora.org>
 > ---
+>   Documentation/ABI/testing/sysfs-driver-eud |   7 +
+>   drivers/usb/common/Kconfig                 |   9 +
+>   drivers/usb/common/Makefile                |   1 +
+>   drivers/usb/common/qcom_eud.c              | 256 +++++++++++++++++++++++++++++
+>   4 files changed, 273 insertions(+)
+>   create mode 100644 Documentation/ABI/testing/sysfs-driver-eud
+>   create mode 100644 drivers/usb/common/qcom_eud.c
 > 
-> Disclaimer: I really don't know if this is the right way to approach
-> this. I tried using examples from other bindings, but feedback would be
-> very much welcome on how I could add the optional register ranges.
-> 
-> 
->  .../bindings/display/msm/dp-controller.yaml   | 34 ++++++++++++++++---
->  1 file changed, 30 insertions(+), 4 deletions(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-> index 64d8d9e5e47a..a176f97b2f4c 100644
-> --- a/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-> +++ b/Documentation/devicetree/bindings/display/msm/dp-controller.yaml
-> @@ -17,9 +17,10 @@ properties:
->    compatible:
->      enum:
->        - qcom,sc7180-dp
-> +      - qcom,sc7180-dp-hdcp
->  
-> -  reg:
-> -    maxItems: 1
-> +  # See compatible-specific constraints below.
-> +  reg: true
->  
->    interrupts:
->      maxItems: 1
-> @@ -89,6 +90,29 @@ required:
->    - power-domains
->    - ports
->  
-> +allOf:
-> +  - if:
-> +      properties:
-> +        compatible:
-> +          contains:
-> +            const: qcom,sc7180-dp-hdcp
-> +    then:
-> +      properties:
-> +        reg:
-> +          minItems: 3
-> +          maxItems: 3
-> +          items:
-> +            - description: Registers for base DP functionality
-> +            - description: (Optional) Registers for HDCP device key injection
-> +            - description: (Optional) Registers for HDCP TrustZone interaction
-> +    else:
-> +      properties:
-> +        reg:
-> +          minItems: 1
-> +          maxItems: 1
-> +          items:
-> +            - description: Registers for base DP functionality
-> +
->  additionalProperties: false
->  
->  examples:
-> @@ -99,8 +123,10 @@ examples:
->      #include <dt-bindings/power/qcom-rpmpd.h>
->  
->      displayport-controller@ae90000 {
-> -        compatible = "qcom,sc7180-dp";
-> -        reg = <0xae90000 0x1400>;
-> +        compatible = "qcom,sc7180-dp-hdcp";
-> +        reg = <0 0x0ae90000 0 0x1400>,
-> +              <0 0x0aed1000 0 0x174>,
-> +              <0 0x0aee1000 0 0x2c>;
+> diff --git a/Documentation/ABI/testing/sysfs-driver-eud b/Documentation/ABI/testing/sysfs-driver-eud
+> new file mode 100644
+> index 0000000..14a02da
+> --- /dev/null
+> +++ b/Documentation/ABI/testing/sysfs-driver-eud
+> @@ -0,0 +1,7 @@
+> +What:		/sys/bus/platform/.../enable
+> +Date:           October 2021
+> +Contact:        Souradeep Chowdhury<schowdhu@codeaurora.org>
+> +Description:
+> +		The Enable/Disable sysfs interface for Embedded
+> +		USB Debugger(EUD).This enables and disables the
 
-Forgot to mention, #address-cells = #size-cells = <1> in the example
-"environment", so you have to omit the lone 0s in the example to make it
-pass the tests.
+		    Debugger (EUD). This enables
 
-Regards,
-Bjorn
+> +		EUD based on a 1 or a 0 value.
 
->          interrupt-parent = <&mdss>;
->          interrupts = <12>;
->          clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> -- 
-> Sean Paul, Software Engineer, Google / Chromium OS
-> 
+
+-- 
+~Randy
