@@ -2,98 +2,161 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F962420509
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 05:01:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 634C142052D
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 06:20:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232299AbhJDDDZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 3 Oct 2021 23:03:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34462 "EHLO
+        id S232358AbhJDEVp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Oct 2021 00:21:45 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51290 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230295AbhJDDDY (ORCPT
+        with ESMTP id S230193AbhJDEVn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 3 Oct 2021 23:03:24 -0400
-Received: from mail-pf1-x42b.google.com (mail-pf1-x42b.google.com [IPv6:2607:f8b0:4864:20::42b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4ACDBC0613EC
-        for <linux-arm-msm@vger.kernel.org>; Sun,  3 Oct 2021 20:01:36 -0700 (PDT)
-Received: by mail-pf1-x42b.google.com with SMTP id u7so13216555pfg.13
-        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Oct 2021 20:01:36 -0700 (PDT)
+        Mon, 4 Oct 2021 00:21:43 -0400
+Received: from mail-pl1-x62e.google.com (mail-pl1-x62e.google.com [IPv6:2607:f8b0:4864:20::62e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC286C0613EC
+        for <linux-arm-msm@vger.kernel.org>; Sun,  3 Oct 2021 21:19:55 -0700 (PDT)
+Received: by mail-pl1-x62e.google.com with SMTP id c4so10215354pls.6
+        for <linux-arm-msm@vger.kernel.org>; Sun, 03 Oct 2021 21:19:55 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to:user-agent;
-        bh=TjNWNuR+gMWf2t1n3s/D7Jq0z4ZiFV+w9SGfLF5kxQg=;
-        b=luns9ZSXpq0KwYmC30LME0ipn/Lhv8Yc/t39g1t4rSTQ+iFcOhBgGlExIX37NFUhbZ
-         UaTJcfqDK0CKntIhETTytNStKpEhyWRnVsUW8cNqFrA8dzM5rgNDOQn5RW7cD4D/E63Y
-         KrsltA8CCHxXkhKbsSNyFUrhxDCfowCmtCBTQ4hHx+YsmrwWUh2+HwiLk8Hs+wIhsQcm
-         +wH+OiQMG8XFTB/o8n0eKyOUDztOs1MMG1bYOTKZEfosWVRY/egh6kHWy/rK9GzD7tGs
-         HrwSr0yzEDxi5nSqgG+41GwZdW+eFpI/fGRp9/aHYhKcc24xmF1Sq9/GVnZd5cUhYhIa
-         Jp/w==
+        bh=nkBLnfIsoJnhn8NRb8usqu66QRMK/RQn75Px35J6+AY=;
+        b=ot2u8Z/Yt5Y0ISRxv8cit0uhhE08cvJeaL0HcPO+pnukIRlTCL8euTXBY2lNukLRPF
+         2UCy6Yn30smr1/SpsDEl3Ppxx0n0iegZdv9qthlHsdQRtUL8DAcKm7YJpS69/EBK2sd2
+         RBdMYYwD5hkQh9zIqMZugdXquRaXrVVcypWrNuVmFPPlboTnHpVArF44Ap03dGbgARTW
+         9X10YSGSvRGWQn69t2jh0tUOXOPZm6AiGLS4xPfSKW2APdBrIofimyqa4iKUaPVgCmNX
+         gHSzoAYBXuucfaL6uKcy2LzID0wQtmYkeu6ZZ7QKrphwNp5AV5OEI7ShXmv+5RRPcsjl
+         ISkQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to:user-agent;
-        bh=TjNWNuR+gMWf2t1n3s/D7Jq0z4ZiFV+w9SGfLF5kxQg=;
-        b=TV93mCgaoq6m1Dem4APUyS8waENMK4KtaeNwR+v3jAAfOUCEtwf573lXCHkNg36XV7
-         fSusAvlpFj2G5hulndyQUIVlOh36w7PsM/EPgbS34SGXpfV4eqeLlLfXliKoVNeS65PC
-         MllMJazN+sQ4aACA6QycfFyxcbCgjK2qARKcCDvtKc33lTCN9ZR+COOqqtdReBjfm22P
-         v+zf3fl+0au3YwhcuGNqmhuHOFwRkN9Y0yU8PbckT8o0ScKQZLG12Sq545+6vWenDafK
-         c1ao5ffDTwq1M4tAzM8jHS48OIw3O01QBEGZ5odfLIFjctFkvwb0tEMW+ZXZUrPhBvk9
-         fNZA==
-X-Gm-Message-State: AOAM532s8JoZghFWOND/FRJ8fSFnrkFxsaEBr2D7aYyuC5NJEpuioL1/
-        Zi5wA3ts3gRm6TwQmGncR95uzhgfsz///g==
-X-Google-Smtp-Source: ABdhPJx8e9TmH82hx3DHUZCdh+Mi5WHU8V7twDoiKMJ9iWdcG6G1h07M6jVbiAmzYwvghqe9IEqi/A==
-X-Received: by 2002:a63:c5d:: with SMTP id 29mr5780720pgm.100.1633316495627;
-        Sun, 03 Oct 2021 20:01:35 -0700 (PDT)
-Received: from dragon (80.251.214.228.16clouds.com. [80.251.214.228])
-        by smtp.gmail.com with ESMTPSA id t1sm11656919pgf.78.2021.10.03.20.01.33
+        bh=nkBLnfIsoJnhn8NRb8usqu66QRMK/RQn75Px35J6+AY=;
+        b=ZHMnsUjJ0Whzd8NSzyAqCis4Vahnt8Inhmtkh/esoNxDK58ifee2Hsl0cV4ohbtFRC
+         HEn/+RtljgVmYYIui0aHqUm7tBkJRAVHyu+vIbtdvc3XTGkVu377PqFEZbGrfpYucDez
+         9zh+uhJrANwGRDTF/zfnnGvconR5ovYWK83cCbjh6+J1OKOS/vbEPftr6V1wDfxd7uDr
+         0md2kTv3hoCp/cWCmcqAemg5wjj4ei7C4kaxqZ6Ymht9ir3DLrz2a3QotkGqSg3/4KU+
+         V9mmVE4hGkAgefhk1vterMlncojx+1dHKy9BFO02aibzi++Z+vVpqP0sunckL1e2NN9q
+         08Yw==
+X-Gm-Message-State: AOAM532CD/LVLwe0OkSC0Nwmu+/RAFhSxWKETrns6x7gvknpczQOZAxD
+        djwYMiB6IwEAxaCpqrBSYYZ3
+X-Google-Smtp-Source: ABdhPJwtQWBeQqrtBE+6wxqEVwZ0D1JaosowhqtpKk0F8kGR/QDu96iWhiOtM5i6ncvsnyPMFCna3g==
+X-Received: by 2002:a17:902:9895:b0:13c:94f8:d74b with SMTP id s21-20020a170902989500b0013c94f8d74bmr22483622plp.20.1633321194891;
+        Sun, 03 Oct 2021 21:19:54 -0700 (PDT)
+Received: from workstation ([120.138.13.170])
+        by smtp.gmail.com with ESMTPSA id g27sm12887048pfk.173.2021.10.03.21.19.50
         (version=TLS1_2 cipher=ECDHE-ECDSA-CHACHA20-POLY1305 bits=256/256);
-        Sun, 03 Oct 2021 20:01:35 -0700 (PDT)
-Date:   Mon, 4 Oct 2021 11:01:29 +0800
-From:   Shawn Guo <shawn.guo@linaro.org>
-To:     Vinod Koul <vkoul@kernel.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Jami Kettunen <jamipkettunen@gmail.com>,
-        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 0/3] Add missing vdd-supply for QUSB2 PHY
-Message-ID: <20211004030128.GC13320@dragon>
-References: <20210928022002.26286-1-shawn.guo@linaro.org>
- <YVbD12kTfbGmRYId@matsya>
+        Sun, 03 Oct 2021 21:19:54 -0700 (PDT)
+Date:   Mon, 4 Oct 2021 09:49:49 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     kishon@ti.com, lorenzo.pieralisi@arm.com, bhelgaas@google.com,
+        robh@kernel.org
+Cc:     devicetree@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        hemantk@codeaurora.org, bjorn.andersson@linaro.org,
+        sallenki@codeaurora.org, skananth@codeaurora.org,
+        vpernami@codeaurora.org, vbadigan@codeaurora.org
+Subject: Re: [PATCH v8 0/3] Add Qualcomm PCIe Endpoint driver support
+Message-ID: <20211004041949.GA16442@workstation>
+References: <20210920065946.15090-1-manivannan.sadhasivam@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YVbD12kTfbGmRYId@matsya>
+In-Reply-To: <20210920065946.15090-1-manivannan.sadhasivam@linaro.org>
 User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Vinod,
-
-On Fri, Oct 01, 2021 at 01:46:23PM +0530, Vinod Koul wrote:
-> Hi Shawn,
+On Mon, Sep 20, 2021 at 12:29:43PM +0530, Manivannan Sadhasivam wrote:
+> Hello,
 > 
-> On 28-09-21, 10:19, Shawn Guo wrote:
-> > The series adds missing vdd-supply for QUSB2 PHY which is required for
-> > digital circuit.  The driver works right now likely because firmware
-> > already sets it up.  Add it to bindings, driver and DTS that miss the
-> > supply.
-> > 
-> > It should not cause problem for existing DTBs:
-> > - SC7180, SDM630, SDM845 based platforms already specified vdd-supply
-> >   in the DTBs.
-> > - MSM8996 and MSM8998 platform DTBs miss vdd-supply, but dummy regulator
-> >   will ensure QUSB2 PHY driver works as before on these platforms.
+> This series adds support for Qualcomm PCIe Endpoint controller found
+> in platforms like SDX55. The Endpoint controller is based on the designware
+> core with additional Qualcomm wrappers around the core.
 > 
-> What about the rest.. I checked SM8350 and SM8250 mtp ones are missing
-> this. With the property made mandatory, I guess it would cause these to
-> fail right..
+> The driver is added separately unlike other Designware based drivers that
+> combine RC and EP in a single driver. This is done to avoid complexity and
+> to maintain this driver autonomously.
+> 
+> The driver has been validated with an out of tree MHI function driver on
+> SDX55 based Telit FN980 EVB connected to x86 host machine over PCIe.
+> 
 
-From what I can see, SM8350 and SM8250 use qcom-snps-femto-v2 PHY
-rather than qcom-qusb2.  So they should not be affected by this series.
+Ping on this series! Patchwork says the state is still "New". Both
+binding and driver patches got enough reviews I believe. Are there any
+issues pending to be addressed?
 
-Shawn
+Thanks,
+Mani
+
+> Thanks,
+> Mani
+> 
+> Changes in v8:
+> 
+> * Added Reviewed-by tag from Rob for the driver patch
+> * Rebased on top of v5.15-rc1
+> 
+> Changes in v7:
+> 
+> * Used existing naming convention for callback functions
+> * Used active low state for PERST# gpio
+> 
+> Changes in v6:
+> 
+> * Removed status property in DT and added reviewed tag from Rob
+> * Switched to _relaxed variants as suggested by Rob
+> 
+> Changes in v5:
+> 
+> * Removed the DBI register settings that are not needed
+> * Used the standard definitions available in pci_regs.h
+> * Added defines for all the register fields
+> * Removed the left over code from previous iteration
+> 
+> Changes in v4:
+> 
+> * Removed the active_config settings needed for IPA integration
+> * Switched to writel for couple of relaxed versions that sneaked in
+> 
+> Changes in v3:
+> 
+> * Lot of minor cleanups to the driver patch based on review from Bjorn and Stan.
+> * Noticeable changes are:
+>   - Got rid of _relaxed calls and used readl/writel
+>   - Got rid of separate TCSR memory region and used syscon for getting the
+>     register offsets for Perst registers
+>   - Changed the wake gpio handling logic
+>   - Added remove() callback and removed "suppress_bind_attrs"
+>   - stop_link() callback now just disables PERST IRQ
+> * Added MMIO region and doorbell interrupt to the binding
+> * Added logic to write MMIO physicall address to MHI base address as it is
+>   for the function driver to work
+> 
+> Changes in v2:
+> 
+> * Addressed the comments from Rob on bindings patch
+> * Modified the driver as per binding change
+> * Fixed the warnings reported by Kbuild bot
+> * Removed the PERST# "enable_irq" call from probe()
+> 
+> Manivannan Sadhasivam (3):
+>   dt-bindings: pci: Add devicetree binding for Qualcomm PCIe EP
+>     controller
+>   PCI: qcom-ep: Add Qualcomm PCIe Endpoint controller driver
+>   MAINTAINERS: Add entry for Qualcomm PCIe Endpoint driver and binding
+> 
+>  .../devicetree/bindings/pci/qcom,pcie-ep.yaml | 158 ++++
+>  MAINTAINERS                                   |  10 +-
+>  drivers/pci/controller/dwc/Kconfig            |  10 +
+>  drivers/pci/controller/dwc/Makefile           |   1 +
+>  drivers/pci/controller/dwc/pcie-qcom-ep.c     | 710 ++++++++++++++++++
+>  5 files changed, 888 insertions(+), 1 deletion(-)
+>  create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+>  create mode 100644 drivers/pci/controller/dwc/pcie-qcom-ep.c
+> 
+> -- 
+> 2.25.1
+> 
