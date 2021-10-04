@@ -2,177 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E54DA421840
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 22:13:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 00F12421854
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 22:22:09 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235908AbhJDUPe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Oct 2021 16:15:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47316 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235919AbhJDUPd (ORCPT
+        id S236055AbhJDUXy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Oct 2021 16:23:54 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.53]:24257 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235957AbhJDUXv (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Oct 2021 16:15:33 -0400
-Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 691DAC061753
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Oct 2021 13:13:44 -0700 (PDT)
-Received: by mail-oi1-x22a.google.com with SMTP id v10so23160025oic.12
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Oct 2021 13:13:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=zOyi2S95uxdbFdCGOc7m3K4Adp+itmzmW8gzb/ESD2A=;
-        b=NHcT5M3mp7sXlQg/hJy4HQmFI4Ixa+1mArVErtOuxeYthCkG0IflqNJ/vr9/va2C/R
-         vMtejRNBeHnf4z7M3fn+9rVBrsLQxmwiEnroet1ZokIGN27QHSMcLyKYVLS7gHO16r4C
-         lrvB/VqjSugs30zuuNtHbfHjZOB3VXgBslVUO7alXhs1I9njL90EVQGFYy1lmUZR4LMc
-         DLKnlYwrW3HjtS6ClV31364qZD4dUvxBJLOEcSnqGVRmrWNTV/on8w2bqtnzpI0tO6VE
-         MLn4lq3Ajh8LxlsXqaqKreIVh/Wim+AxRy5V+wOQ+aAgkEbl3amzJiKA6Z+/HXnNFDDr
-         bZfA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=zOyi2S95uxdbFdCGOc7m3K4Adp+itmzmW8gzb/ESD2A=;
-        b=wt6jnet5zggPmywyKY3TTfmyY0mVfgs7n6/2TNsf+k9DJ3AnEvo6aD/uP1uNYtlFrD
-         2IIFMr5/fpXByOYNQqKOddw6mSMUx5wn0ueuHF6AV93hx6gC9nN1pa9DY2gzM64QytVk
-         mMqmUkYjLVqq7sKgre686e+mbErrBYu7QP1useUq/w21Afs7HOcX+/LixV4/v6mjA7Fn
-         W0w8A2nAieSwnALd0h/zT8K0liPHudwcEle0XNymV6uOcmIXOV5XJqVnfQNppn61SEik
-         8w8gWvyNgjwbt4IMQjTzipT4pCHPAkHGHos0ywwBgN9/DyjqyYhm74YkRDuUXA/5jFC7
-         nA2w==
-X-Gm-Message-State: AOAM5312H5gJDTCQBz5z79wCKhGi7EjPH/V8t5e2lBpQrg2CreF8j/I2
-        APzdVQX+TNkGdzytMt7tlmErt+IdYCJRJw==
-X-Google-Smtp-Source: ABdhPJwZYp6jBuxmxXIgtPCA5/ZWf29iADPg6Bjiibxne53m0r1ddxNDFt0NNc+s8iNXD2sqzb7o/w==
-X-Received: by 2002:a05:6808:8d4:: with SMTP id k20mr4026876oij.116.1633378423736;
-        Mon, 04 Oct 2021 13:13:43 -0700 (PDT)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id s13sm1249546oou.11.2021.10.04.13.13.42
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Oct 2021 13:13:43 -0700 (PDT)
-Date:   Mon, 4 Oct 2021 13:15:26 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Matthias Kaehlcke <mka@chromium.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v2 4/4] arm64: dts: qcom: sdm845: mtp: Add vadc channels
- and thermal zones
-Message-ID: <YVtg3lcR1HMqVdAJ@ripper>
-References: <20210923212311.2877048-1-bjorn.andersson@linaro.org>
- <20210923212311.2877048-5-bjorn.andersson@linaro.org>
- <YVSzJZ8G43CLml3L@google.com>
+        Mon, 4 Oct 2021 16:23:51 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1633378909;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=Message-Id:Date:Subject:Cc:To:From:Cc:Date:From:Subject:Sender;
+    bh=Rw43gEOu/P1J7qJPNGkaVXLbdg5QG/1YaX+fJ13gV1Q=;
+    b=J2qf0rBjbGtUWzQV8OyMhZuAHoUm1tHTiqQnO91PTsLc8+Htxv9vXLzZ6XnYcctw0b
+    aVG8Az10jfkic2hbEdqYObpPorcBhHYzdGellOcMLN/j+eYxHVYg6RVP9iOM6dhkJrT4
+    kizIfsDZPy9FpsRCEALPMUfFjXOpHwE9NDRtwLzBGsBofcjLOdkKvlU5PMrl8r7XusMl
+    mR/gLuJ7dyCklk2IgIK8FFxO02CkRbJ21PfVk5HY6fFXS7khJ/9TpaDP/ukfot5qIYW9
+    UiZVJG2nJjmC1mG0ZOTu3Lyz2v5DOhCZ7YwQDiJw2yfGF3Azh1eNQ4Y1nMYg4bJDGd2j
+    Il8g==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVORvLd4SsytBXTbAOHjRHIhr2eFePxBA="
+X-RZG-CLASS-ID: mo00
+Received: from droid..
+    by smtp.strato.de (RZmta 47.33.8 DYNA|AUTH)
+    with ESMTPSA id 301038x94KLnKQk
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Mon, 4 Oct 2021 22:21:49 +0200 (CEST)
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
+Subject: [PATCH v2 00/15] Add support for Samsung Galaxy S4 Mini Value Edition
+Date:   Mon,  4 Oct 2021 22:19:06 +0200
+Message-Id: <20211004201921.18526-1-stephan@gerhold.net>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <YVSzJZ8G43CLml3L@google.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 29 Sep 11:40 PDT 2021, Matthias Kaehlcke wrote:
+This series adds support for booting mainline Linux on the Samsung Galaxy
+S4 Mini Value Edition. The device is based on the Qualcomm MSM8916 SoC and quite
+similar to the already supported Samsung Galaxy A3/A5. With some additional
+patches it is almost fully functional, including display, touch screen, GPU,
+audio, modem (voice calls, SMS, mobile data) and sensors.
 
-> On Thu, Sep 23, 2021 at 02:23:11PM -0700, Bjorn Andersson wrote:
-> > Downstream defines four ADC channels related to thermal sensors external
-> > to the PM8998 and two channels for internal voltage measurements.
-> > 
-> > Add these to the upstream SDM845 MTP, describe the thermal monitor
-> > channels and add thermal_zones for these.
-> > 
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > ---
-> > 
-> > In addition to the iio channels exposed by v1, Daniel wanted thermal_zones...
-> > 
-> > Changes since v1:
-> > - Enable the pm8998_adc_tm and describe the ADC channels
-> > - Add thermal-zones for the new channels
-> > 
-> >  arch/arm64/boot/dts/qcom/sdm845-mtp.dts | 128 ++++++++++++++++++++++++
-> >  1 file changed, 128 insertions(+)
-> > 
-> > diff --git a/arch/arm64/boot/dts/qcom/sdm845-mtp.dts b/arch/arm64/boot/dts/qcom/sdm845-mtp.dts
-[..]
-> > +&pm8998_adc {
-> > +	adc-chan@4c {
-> > +		reg = <ADC5_XO_THERM_100K_PU>;
-> > +		label = "xo_therm";
-> > +	};
-> > +
-> > +	adc-chan@4d {
-> > +		reg = <ADC5_AMUX_THM1_100K_PU>;
-> > +		label = "msm_therm";
-> > +	};
-> > +
-> > +	adc-chan@4f {
-> > +		reg = <ADC5_AMUX_THM3_100K_PU>;
-> > +		label = "pa_therm1";
-> > +	};
-> > +
-> > +	adc-chan@51 {
-> > +		reg = <ADC5_AMUX_THM5_100K_PU>;
-> > +		label = "quiet_therm";
-> > +	};
-> > +
-> > +	adc-chan@83 {
-> > +		reg = <ADC5_VPH_PWR>;
-> > +		label = "vph_pwr";
-> > +	};
-> > +
-> > +	adc-chan@85 {
-> > +		reg = <ADC5_VCOIN>;
-> > +		label = "vcoin";
-> > +	};
-> > +};
-> > +
-> > +&pm8998_adc_tm {
-> > +	status = "okay";
-> > +
-> > +	xo-thermistor@1 {
-> > +		reg = <1>;
-> > +		io-channels = <&pm8998_adc ADC5_XO_THERM_100K_PU>;
-> > +		qcom,ratiometric;
-> > +		qcom,hw-settle-time-us = <200>;
-> > +	};
-> > +
-> > +	msm-thermistor@2 {
-> > +		reg = <2>;
-> > +		io-channels = <&pm8998_adc ADC5_AMUX_THM1_100K_PU>;
-> > +		qcom,ratiometric;
-> > +		qcom,hw-settle-time-us = <200>;
-> > +	};
-> > +
-> > +	pa-thermistor@3 {
-> > +		reg = <3>;
-> > +		io-channels = <&pm8998_adc ADC5_AMUX_THM3_100K_PU>;
-> > +		qcom,ratiometric;
-> > +		qcom,hw-settle-time-us = <200>;
-> > +	};
-> > +
-> > +	quiet-thermistor@4 {
-> > +		reg = <4>;
-> > +		io-channels = <&pm8998_adc ADC5_AMUX_THM5_100K_PU>;
-> > +		qcom,ratiometric;
-> > +		qcom,hw-settle-time-us = <200>;
-> > +	};
-> > +};
-> > +
-> 
-> The example in the 'qcom,spmi-adc-tm5' binding specifies 'qcom,ratiometric'
-> and 'qcom,hw-settle-time-us' for both the ADC and the thermal monitor, so do
-> several board files (e.g. sm8250-mtp.dts and qrb5165-rb5.dts). This apparent
-> redundancy bothered me earlier, it's not really clear to me whether it's
-> needed/recommended or not. Do you happen to have any insights on this?
+I made most of the patches almost 2 years ago but I was long unsure if I should
+submit them upstream. This is because the device has one big limitation:
+Samsung released it with a signed 32-bit-only TrustZone firmware which is not
+able to boot ARM64 Linux. This means the device can actually only boot ARM32.
 
-Hmm, you're right and I missed this in defining my channels. I've not
-looked at this detail, just got reasonable readings from my thermal
-zones and was happy about that.
+However, since device trees are independent of the kernel architecture and all
+the necessary drivers compile on ARM32 as well it is actually extremely
+straightforward to build an ARM32 kernel for MSM8916 (which is normally arm64).
 
-Dmitry, do you have any further insights why these properties are
-supposed to be duplicated between the adc channel and the thermal zones?
+The only necessary additions are for SMP/cpuidle without PSCI on ARM32. However,
+the diffstat below makes it quite obvious that the maintenance overhead for this
+is absolutely negligible. The SoC is almost identical to previous 32-bit SoCs
+like MSM8226, so it is pretty much just adding new definitions/compatibles for
+already existing code.
 
-Thanks,
-Bjorn
+Being able to boot ARM32 Linux on MSM8916 might be also a possible opportunity
+for CI systems. At the moment, 32-bit Qualcomm platforms are not very well
+represented there. Booting ARM32 on MSM8916/APQ8016 would allow re-using the
+DragonBoard 410c which is often already used for automated CI testing.
+
+Changes in v2:
+  - Add missing word in a comment in PATCH 1/15
+  - Clarify ARM32 situation in dt-bindings patches
+
+v1: https://lore.kernel.org/phone-devel/20210928171231.12766-1-stephan@gerhold.net/
+
+Lina Iyer (1):
+  soc: qcom: spm: Add 8916 SPM register data
+
+Stephan Gerhold (14):
+  arm64: dts: qcom: Add device tree for Samsung Galaxy S4 Mini Value
+    Edition
+  arm64: dts: qcom: msm8916-samsung-serranove: Add touch screen
+  arm64: dts: qcom: msm8916-samsung-serranove: Add touch key
+  arm64: dts: qcom: msm8916-samsung-serranove: Add IMU
+  arm64: dts: qcom: msm8916-samsung-serranove: Add rt5033 battery
+  arm64: dts: qcom: msm8916-samsung-serranove: Add NFC
+  ARM: qcom: Add ARCH_MSM8916 for MSM8916 on ARM32
+  dt-bindings: arm: cpus: Document qcom,msm8916-smp enable-method
+  ARM: qcom: Add qcom,msm8916-smp enable-method identical to MSM8226
+  dt-bindings: soc: qcom: spm: Document qcom,msm8916-saw2-v3.0-cpu
+  firmware: qcom: scm: Add support for MC boot address API
+  arm64: dts: qcom: msm8916: Add CPU ACC and SAW/SPM
+  ARM: dts: qcom: msm8916: Add include for SMP without PSCI on ARM32
+  ARM: dts: qcom: msm8916-samsung-serranove: Include dts from arm64
+
+ .../devicetree/bindings/arm/cpus.yaml         |   5 +-
+ .../bindings/soc/qcom/qcom,spm.yaml           |   1 +
+ arch/arm/boot/dts/Makefile                    |   1 +
+ .../dts/qcom-msm8916-samsung-serranove.dts    |   3 +
+ arch/arm/boot/dts/qcom-msm8916-smp.dtsi       |  62 ++
+ arch/arm/mach-qcom/Kconfig                    |  10 +
+ arch/arm/mach-qcom/platsmp.c                  |   1 +
+ arch/arm64/boot/dts/qcom/Makefile             |   1 +
+ .../dts/qcom/msm8916-samsung-serranove.dts    | 534 ++++++++++++++++++
+ arch/arm64/boot/dts/qcom/msm8916.dtsi         |  56 ++
+ drivers/firmware/qcom_scm.c                   |  84 ++-
+ drivers/firmware/qcom_scm.h                   |   4 +
+ drivers/soc/qcom/spm.c                        |  21 +
+ 13 files changed, 765 insertions(+), 18 deletions(-)
+ create mode 100644 arch/arm/boot/dts/qcom-msm8916-samsung-serranove.dts
+ create mode 100644 arch/arm/boot/dts/qcom-msm8916-smp.dtsi
+ create mode 100644 arch/arm64/boot/dts/qcom/msm8916-samsung-serranove.dts
+
+-- 
+2.33.0
+
