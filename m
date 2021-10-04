@@ -2,95 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 79E51421693
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 20:34:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9639542169C
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 20:35:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238404AbhJDSgC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Oct 2021 14:36:02 -0400
-Received: from mail-ot1-f42.google.com ([209.85.210.42]:44672 "EHLO
-        mail-ot1-f42.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229487AbhJDSgC (ORCPT
+        id S238745AbhJDShr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Oct 2021 14:37:47 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52686 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238591AbhJDShq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Oct 2021 14:36:02 -0400
-Received: by mail-ot1-f42.google.com with SMTP id h9-20020a9d2f09000000b005453f95356cso22789341otb.11;
-        Mon, 04 Oct 2021 11:34:12 -0700 (PDT)
+        Mon, 4 Oct 2021 14:37:46 -0400
+Received: from mail-oi1-x232.google.com (mail-oi1-x232.google.com [IPv6:2607:f8b0:4864:20::232])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 95909C06174E
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Oct 2021 11:35:57 -0700 (PDT)
+Received: by mail-oi1-x232.google.com with SMTP id s24so22844704oij.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Oct 2021 11:35:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=hXHHXCyhxvnGT3QgfcApqG6moWz0bf7iL02kdOIh9PQ=;
+        b=HRBTgWhCYpNHFgX6gVtv0Fhea1PCx8OnfEDJAoF0JSHT4GU6PZiyevQlrJo8r1xGFd
+         hoL0zYqtr7NMbNr+wgjuJYA8sZJts5glM7htXHl07e8YUYWCf09mCXa+sH7n0GuV9TVz
+         aznweM1wvnoBQ3lS9t+S4gp7pHQ7lY/Czua8E=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=knUJ++gCkH0YzfTgjeyyFLEPM19JWGgrMdgeiG9dfr0=;
-        b=ZH9ZKZX0LoAVx1BPHd0qQA4Lf2M1zW8gJRtWF+Ivrkn2CwWqX/x43nD2A7iWthx58w
-         EJnYJGOKBrxjqRj1jYYUOpnMh0GuRmly0C1Zoo6qf3kVkfotqc8m2FsM2bWREDOCRQB1
-         SZC6hFNpDvn740PrvnkHeiZH+gw2Wlxnjsw2A25b/Ue0zrjXbpjP0mS3/U0KZDD4OQ3W
-         g0Wov47pmq4SLupjZ7Z3r+LcFEK9YNmZg9GSv8FDiGCbRA6T7/aZu+V1Fb+IPRXLFx39
-         8EpKtPAC3p1xJ3m9vD4o+lfVLsVHFLgW4iKkTFnJ6u3Olv080EiIFXcl7Y7S7GErm4Q2
-         QSLQ==
-X-Gm-Message-State: AOAM530kjN1hXI3TR9jw+J6/BHQot6L2KwhZMbkFVvoPSdUIj0jBW+cZ
-        rS4sMMKS7rArkzI0dCV8zQ==
-X-Google-Smtp-Source: ABdhPJxhmFsq7jhbIvHuobTSpWL78IuEztcmQg9POgKTR3rQa6/xqPU/Koa7Xfnl0PLxskCnxrbbLQ==
-X-Received: by 2002:a05:6830:1c1:: with SMTP id r1mr10850663ota.372.1633372452441;
-        Mon, 04 Oct 2021 11:34:12 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id p8sm3003547oti.15.2021.10.04.11.34.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Oct 2021 11:34:11 -0700 (PDT)
-Received: (nullmailer pid 1621450 invoked by uid 1000);
-        Mon, 04 Oct 2021 18:34:10 -0000
-Date:   Mon, 4 Oct 2021 13:34:10 -0500
-From:   Rob Herring <robh@kernel.org>
-To:     Stephan Gerhold <stephan@gerhold.net>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-arm-kernel@lists.infradead.org,
-        ~postmarketos/upstreaming@lists.sr.ht, phone-devel@vger.kernel.org
-Subject: Re: [PATCH 08/15] dt-bindings: arm: cpus: Document qcom,msm8916-smp
- enable-method
-Message-ID: <YVtJIm6Tu2z+Ph/V@robh.at.kernel.org>
-References: <20210928171231.12766-1-stephan@gerhold.net>
- <20210928171231.12766-9-stephan@gerhold.net>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=hXHHXCyhxvnGT3QgfcApqG6moWz0bf7iL02kdOIh9PQ=;
+        b=nZl1Vboi7XkWMI+no+QXO7nxM48fIlJFwoGYV9G/DHoed2gpIoKwSZokscyZUTv0Tx
+         MLYfiaGzLwIVCN+pNdryea8J8yMVJW+BX1Pcbl6SADM2MwD3MZNbhuy8fAuW3K+jgrLo
+         klCTv4V5hbZHU2JzAWYQyXsnMpfBV6Dj+Lp4FprWq5Z4zve1Tdpnm9pu8gyrS9ock9f6
+         J+24OhqdVIkzu+EsW/ZN2s7vwA8fYmeqN6opPcB3OQ7WJlm517BJsoaVx9Zgod/BznoI
+         IEjFyOk8eGeTtOH/fVu7q6yqGG5B/wZ+GpxXfwMZj0NUiY7bxbn0JLGLaIfwUGcb8ABI
+         TFGQ==
+X-Gm-Message-State: AOAM531h9Zmk8908g/LfoviV04H5cDHWCp1RrGLuO7OEMqqpj/0XZGKz
+        8+w7CD9NURx15zmy2hNfQ9aYRoQy8yQnq6Z2q04M0A==
+X-Google-Smtp-Source: ABdhPJyEaUIn4jKNa/faVuYQtFHfhH/wNnzeZuhXD9ZXzTI2+gVLl7lVZFKDzAY6df30uzyTknavPIhXv7wOs9lXFB4=
+X-Received: by 2002:a05:6808:f8f:: with SMTP id o15mr14513558oiw.164.1633372556918;
+ Mon, 04 Oct 2021 11:35:56 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Mon, 4 Oct 2021 14:35:56 -0400
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210928171231.12766-9-stephan@gerhold.net>
+In-Reply-To: <1633330133-29617-4-git-send-email-pillair@codeaurora.org>
+References: <1633330133-29617-1-git-send-email-pillair@codeaurora.org> <1633330133-29617-4-git-send-email-pillair@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Mon, 4 Oct 2021 14:35:56 -0400
+Message-ID: <CAE-0n51cMX95kuuFUAusqhFOUUZeGsGfA_=5u+5O8w1C=toLzA@mail.gmail.com>
+Subject: Re: [PATCH v6 3/3] remoteproc: qcom: q6v5_wpss: Add support for
+ sc7280 WPSS
+To:     Rakesh Pillai <pillair@codeaurora.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, mathieu.poirier@linaro.org,
+        ohad@wizery.com, p.zabel@pengutronix.de, robh+dt@kernel.org
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, sibis@codeaurora.org,
+        mpubbise@codeaurora.org, kuabhs@chromium.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Sep 28, 2021 at 07:12:24PM +0200, Stephan Gerhold wrote:
-> Document the qcom,msm8916-smp enable method. It is actually just
-> an alias for qcom,msm8226-smp since it should be implemented identically.
-> 
-> Signed-off-by: Stephan Gerhold <stephan@gerhold.net>
-> ---
->  Documentation/devicetree/bindings/arm/cpus.yaml | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
-> 
-> diff --git a/Documentation/devicetree/bindings/arm/cpus.yaml b/Documentation/devicetree/bindings/arm/cpus.yaml
-> index 11e3e09da2e5..5602a8f3c513 100644
-> --- a/Documentation/devicetree/bindings/arm/cpus.yaml
-> +++ b/Documentation/devicetree/bindings/arm/cpus.yaml
-> @@ -211,6 +211,7 @@ properties:
->            - qcom,kpss-acc-v1
->            - qcom,kpss-acc-v2
->            - qcom,msm8226-smp
-> +          - qcom,msm8916-smp
+Quoting Rakesh Pillai (2021-10-03 23:48:53)
+> Add support for PIL loading of WPSS processor for SC7280
+> - WPSS boot will be requested by the wifi driver and hence
+>   disable auto-boot for WPSS.
+> - Add a separate shutdown sequence handler for WPSS.
+> - Add multiple power-domain voting support
+>
+> Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
-I thought arm64 is PSCI only.
+This changed? Please don't keep reviewed-by if things changed
+significantly.
 
->            - renesas,apmu
->            - renesas,r9a06g032-smp
->            - rockchip,rk3036-smp
-> @@ -295,7 +296,8 @@ properties:
->        Specifies the ACC* node associated with this CPU.
->  
->        Required for systems that have an "enable-method" property
-> -      value of "qcom,kpss-acc-v1", "qcom,kpss-acc-v2" or "qcom,msm8226-smp"
-> +      value of "qcom,kpss-acc-v1", "qcom,kpss-acc-v2", "qcom,msm8226-smp"
-> +      or "qcom,msm8916-smp".
->  
->        * arm/msm/qcom,kpss-acc.txt
->  
-> -- 
-> 2.33.0
-> 
-> 
+> diff --git a/drivers/remoteproc/qcom_q6v5_adsp.c b/drivers/remoteproc/qcom_q6v5_adsp.c
+> index 098362e6..b6d3c3d 100644
+> --- a/drivers/remoteproc/qcom_q6v5_adsp.c
+> +++ b/drivers/remoteproc/qcom_q6v5_adsp.c
+> @@ -531,15 +685,40 @@ static const struct adsp_pil_data cdsp_resource_init = {
+>         .ssr_name = "cdsp",
+>         .sysmon_name = "cdsp",
+>         .ssctl_id = 0x17,
+> +       .is_wpss = false,
+> +       .auto_boot = true,
+>         .clk_ids = (const char*[]) {
+>                 "sway", "tbu", "bimc", "ahb_aon", "q6ss_slave", "q6ss_master",
+>                 "q6_axim", NULL
+>         },
+>         .num_clks = 7,
+> +       .proxy_pd_names = (const char*[]) {
+> +               "cx", NULL
+> +       },
+> +};
+> +
+> +static const struct adsp_pil_data wpss_resource_init = {
+> +       .crash_reason_smem = 626,
+> +       .firmware_name = "wpss.mdt",
+> +       .ssr_name = "wpss",
+> +       .sysmon_name = "wpss",
+> +       .ssctl_id = 0x19,
+> +       .is_wpss = true,
+> +       .auto_boot = false,
+> +       .load_state = "wpss",
+> +       .clk_ids = (const char*[]) {
+> +               "gcc_wpss_ahb_bdg_mst_clk", "gcc_wpss_ahb_clk",
+> +               "gcc_wpss_rscp_clk", NULL
+
+Please remove "gcc_wpss_" prefix and "_clk" postfix. Does that make this
+match the binding?
+
+> +       },
+> +       .num_clks = 3,
+> +       .proxy_pd_names = (const char*[]) {
+> +               "cx", "mx", NULL
+> +       },
+>  };
+>
