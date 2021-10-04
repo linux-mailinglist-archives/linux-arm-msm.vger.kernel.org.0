@@ -2,157 +2,131 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 41FED420AD2
-	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 14:21:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BABC9420AE4
+	for <lists+linux-arm-msm@lfdr.de>; Mon,  4 Oct 2021 14:29:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232958AbhJDMXY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Oct 2021 08:23:24 -0400
-Received: from mail-oi1-f174.google.com ([209.85.167.174]:40645 "EHLO
-        mail-oi1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232426AbhJDMXU (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Oct 2021 08:23:20 -0400
-Received: by mail-oi1-f174.google.com with SMTP id t189so21287400oie.7;
-        Mon, 04 Oct 2021 05:21:31 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
-         :message-id;
-        bh=qS2akTv9YqsMuUb53B7mFgtOnLLKGm85YgY9TacMqmY=;
-        b=OA9hKiJa20/+5uy2tZR1OY0CN4GqZYlO9q+VBn6zlwwRFuxXINI307nT4k0N2Oz77U
-         gYOfgarCQfaZTzscd7ZIDNIy/I6nHr8vQ5ta8PwysxbaBIDE5wxIWpjid45Op70q6OKa
-         qn7vp5R9kSVTckXlPa99NQggA+KuGpVTPDh/SaAWYKTAhSYeV4cunQiIfg2gjCZwEcQD
-         qrap5lI9czjVs6itjppb8SZO0vyobGv4e9U8u1nS4cpfz+7pYhChCh33S8AnNRxk8v0c
-         5FYsdMjlZRKOczN2a0LbAooadlWUo6XbDjUTosvTmWv8VnaHmX7dQ/CUgqaTp3cB5vNE
-         c7+g==
-X-Gm-Message-State: AOAM530hg19p7M1hv/m9UlDg59OLud+msLwnaXUJ5vcLd/gkkrgqdH6F
-        VF+iaV2N+cZ9yY77X/RkDg==
-X-Google-Smtp-Source: ABdhPJzdnf2EwPxql4AYBhnzBsgk6qkV3+X2Uxf8FueJAo4KwgFZRmGtkLyaP4ruJo+LENqN8yIKHw==
-X-Received: by 2002:a05:6808:43:: with SMTP id v3mr13704443oic.115.1633350091397;
-        Mon, 04 Oct 2021 05:21:31 -0700 (PDT)
-Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id w1sm2895408ote.41.2021.10.04.05.21.30
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Oct 2021 05:21:30 -0700 (PDT)
-Received: (nullmailer pid 1051510 invoked by uid 1000);
-        Mon, 04 Oct 2021 12:21:26 -0000
-From:   Rob Herring <robh@kernel.org>
-To:     Rakesh Pillai <pillair@codeaurora.org>
-Cc:     mathieu.poirier@linaro.org, swboyd@chromium.org,
-        p.zabel@pengutronix.de, devicetree@vger.kernel.org,
-        bjorn.andersson@linaro.org, linux-kernel@vger.kernel.org,
-        robh+dt@kernel.org, sibis@codeaurora.org, kuabhs@chromium.org,
-        agross@kernel.org, ohad@wizery.com, linux-arm-msm@vger.kernel.org,
-        mpubbise@codeaurora.org
-In-Reply-To: <1633330133-29617-3-git-send-email-pillair@codeaurora.org>
-References: <1633330133-29617-1-git-send-email-pillair@codeaurora.org> <1633330133-29617-3-git-send-email-pillair@codeaurora.org>
-Subject: Re: [PATCH v6 2/3] dt-bindings: remoteproc: qcom: Add SC7280 WPSS support
-Date:   Mon, 04 Oct 2021 07:21:26 -0500
-Message-Id: <1633350086.759437.1051509.nullmailer@robh.at.kernel.org>
+        id S232308AbhJDMbY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Oct 2021 08:31:24 -0400
+Received: from mail.kernel.org ([198.145.29.99]:51672 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230418AbhJDMbY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 4 Oct 2021 08:31:24 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 4658C611F0;
+        Mon,  4 Oct 2021 12:29:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1633350575;
+        bh=oCtFEAWJjcmkfj0mvzoc76dWPQAtKadeKfZmqR7yG7s=;
+        h=Date:Subject:To:Cc:References:From:In-Reply-To:From;
+        b=R6+m6Ki6TkjdwXplaCn73CUz0UuAzkoWgK1bd2l1kLbodSO2a4cuUiaWZXODRFMIQ
+         CrfKYwrrMsnaTdcAr2UD4ONa4ycJE3SnNJl/dyKkcGA5DJcPmx7QP3Sml3A6P35dwR
+         t5I1xqRdeXf4IFs7fdt6+GlcWuQ9e8rQIMQzfyxGGBF2MaxakTTBXh+pZgdVfgQpda
+         8XeJohdTS/Azuu5MpMnyv+/ziKaax8ZmAjclhxXMbFCB3FdJ9j9faZ6cLcGNb36i+a
+         MTlxi+CYIes9mTE3T/T0UOAMXG8hkdBJAFHf2pinkn15S1MVKOFdW2R6GsgKqp81Bo
+         t/ePLz+jBLaUg==
+Message-ID: <bc2e5c1a-be92-d9c2-08ca-52f4901c7c22@kernel.org>
+Date:   Mon, 4 Oct 2021 15:29:31 +0300
+MIME-Version: 1.0
+Subject: Re: [PATCH] interconnect: qcom: Fix endianness in an intermediate
+ storage
+Content-Language: en-US
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org
+References: <20210930122254.8899-1-vladimir.zapolskiy@linaro.org>
+From:   Georgi Djakov <djakov@kernel.org>
+In-Reply-To: <20210930122254.8899-1-vladimir.zapolskiy@linaro.org>
+Content-Type: text/plain; charset=UTF-8; format=flowed
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 04 Oct 2021 12:18:52 +0530, Rakesh Pillai wrote:
-> Add WPSS PIL loading support for SC7280 SoCs.
+Hi Vladimir,
+
+Thanks for working on this!
+
+On 30.09.21 15:22, Vladimir Zapolskiy wrote:
+> A minor issue is reported by sparse:
 > 
-> Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
+> bcm-voter.c:72:77: warning: restricted __le16 degrades to integer
+> bcm-voter.c:76:78: warning: restricted __le16 degrades to integer
+> bcm-voter.c:82:66: warning: incorrect type in argument 2 (different base types)
+> bcm-voter.c:82:66:    expected unsigned int [usertype] base
+> bcm-voter.c:82:66:    got restricted __le32 [usertype] unit
+> bcm-voter.c:85:66: warning: incorrect type in argument 2 (different base types)
+> bcm-voter.c:85:66:    expected unsigned int [usertype] base
+> bcm-voter.c:85:66:    got restricted __le32 [usertype] unit
+> 
+> icc-rpmh.c:165:28: warning: incorrect type in assignment (different base types)
+> icc-rpmh.c:165:28:    expected restricted __le32 [usertype] unit
+> icc-rpmh.c:165:28:    got unsigned int [usertype]
+> icc-rpmh.c:166:29: warning: incorrect type in assignment (different base types)
+> icc-rpmh.c:166:29:    expected restricted __le16 [usertype] width
+> icc-rpmh.c:166:29:    got unsigned short [usertype]
+> 
+> The change is intended to be non-functional, only the stored data of
+> 'struct bcm_db' is changed and build time warnings from above are gone.
+
+Nice! But with your patch i see another sparse warning. Could you fix
+it too, please?
+
+bcm-voter.c:117:21: warning: restricted __le32 degrades to integer
+bcm-voter.c:117:21: warning: restricted __le32 degrades to integer
+
+Thanks,
+Georgi
+
+> 
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
 > ---
->  .../bindings/remoteproc/qcom,sc7280-wpss-pil.yaml  | 196 +++++++++++++++++++++
->  1 file changed, 196 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/remoteproc/qcom,sc7280-wpss-pil.yaml
+>   drivers/interconnect/qcom/bcm-voter.c | 8 ++++----
+>   drivers/interconnect/qcom/icc-rpmh.c  | 4 ++--
+>   2 files changed, 6 insertions(+), 6 deletions(-)
 > 
-
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
-
-yamllint warnings/errors:
-
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-wpss-pil.yaml: properties:interrupts: 'oneOf' conditional failed, one must be fixed:
-	[{'description': 'Watchdog interrupt'}, {'description': 'Fatal interrupt'}, {'description': 'Ready interrupt'}, {'description': 'Handover interrupt'}, {'description': 'Stop acknowledge interrupt'}, {'description': 'Shutdown acknowledge interrupt'}] is too long
-	[{'description': 'Watchdog interrupt'}, {'description': 'Fatal interrupt'}, {'description': 'Ready interrupt'}, {'description': 'Handover interrupt'}, {'description': 'Stop acknowledge interrupt'}, {'description': 'Shutdown acknowledge interrupt'}] is too short
-	False schema does not allow 6
-	1 was expected
-	6 is greater than the maximum of 2
-	6 is greater than the maximum of 3
-	6 is greater than the maximum of 4
-	6 is greater than the maximum of 5
-	hint: "minItems" is only needed if less than the "items" list length
-	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-wpss-pil.yaml: properties:interrupt-names: 'oneOf' conditional failed, one must be fixed:
-	[{'const': 'wdog'}, {'const': 'fatal'}, {'const': 'ready'}, {'const': 'handover'}, {'const': 'stop-ack'}, {'const': 'shutdown-ack'}] is too long
-	[{'const': 'wdog'}, {'const': 'fatal'}, {'const': 'ready'}, {'const': 'handover'}, {'const': 'stop-ack'}, {'const': 'shutdown-ack'}] is too short
-	False schema does not allow 6
-	1 was expected
-	6 is greater than the maximum of 2
-	6 is greater than the maximum of 3
-	6 is greater than the maximum of 4
-	6 is greater than the maximum of 5
-	hint: "minItems" is only needed if less than the "items" list length
-	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-wpss-pil.yaml: properties:clocks: 'oneOf' conditional failed, one must be fixed:
-	[{'description': 'GCC WPSS AHB BDG Master clock'}, {'description': 'GCC WPSS AHB clock'}, {'description': 'GCC WPSS RSCP clock'}, {'description': 'XO clock'}] is too long
-	[{'description': 'GCC WPSS AHB BDG Master clock'}, {'description': 'GCC WPSS AHB clock'}, {'description': 'GCC WPSS RSCP clock'}, {'description': 'XO clock'}] is too short
-	False schema does not allow 4
-	1 was expected
-	4 is greater than the maximum of 2
-	4 is greater than the maximum of 3
-	hint: "minItems" is only needed if less than the "items" list length
-	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-wpss-pil.yaml: properties:clock-names: 'oneOf' conditional failed, one must be fixed:
-	[{'const': 'ahb_bdg'}, {'const': 'ahb'}, {'const': 'rscp'}, {'const': 'xo'}] is too long
-	[{'const': 'ahb_bdg'}, {'const': 'ahb'}, {'const': 'rscp'}, {'const': 'xo'}] is too short
-	False schema does not allow 4
-	1 was expected
-	4 is greater than the maximum of 2
-	4 is greater than the maximum of 3
-	hint: "minItems" is only needed if less than the "items" list length
-	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-wpss-pil.yaml: properties:power-domains: 'oneOf' conditional failed, one must be fixed:
-	[{'description': 'CX power domain'}, {'description': 'MX power domain'}] is too long
-	[{'description': 'CX power domain'}, {'description': 'MX power domain'}] is too short
-	False schema does not allow 2
-	1 was expected
-	hint: "minItems" is only needed if less than the "items" list length
-	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-wpss-pil.yaml: properties:power-domain-names: 'oneOf' conditional failed, one must be fixed:
-	[{'const': 'cx'}, {'const': 'mx'}] is too long
-	[{'const': 'cx'}, {'const': 'mx'}] is too short
-	False schema does not allow 2
-	1 was expected
-	hint: "minItems" is only needed if less than the "items" list length
-	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-wpss-pil.yaml: properties:resets: 'oneOf' conditional failed, one must be fixed:
-	[{'description': 'AOSS restart'}, {'description': 'PDC SYNC'}] is too long
-	[{'description': 'AOSS restart'}, {'description': 'PDC SYNC'}] is too short
-	False schema does not allow 2
-	1 was expected
-	hint: "minItems" is only needed if less than the "items" list length
-	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-wpss-pil.yaml: properties:reset-names: 'oneOf' conditional failed, one must be fixed:
-	[{'const': 'restart'}, {'const': 'pdc_sync'}] is too long
-	[{'const': 'restart'}, {'const': 'pdc_sync'}] is too short
-	False schema does not allow 2
-	1 was expected
-	hint: "minItems" is only needed if less than the "items" list length
-	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-wpss-pil.yaml: ignoring, error in schema: properties: interrupts
-warning: no schema found in file: ./Documentation/devicetree/bindings/remoteproc/qcom,sc7280-wpss-pil.yaml
-Documentation/devicetree/bindings/remoteproc/qcom,sc7280-wpss-pil.example.dt.yaml:0:0: /example-0/remoteproc@8a00000: failed to match any schema with compatible: ['qcom,sc7280-wpss-pil']
-
-doc reference errors (make refcheckdocs):
-
-See https://patchwork.ozlabs.org/patch/1535950
-
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
-
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
-
-pip3 install dtschema --upgrade
-
-Please check and re-submit.
+> diff --git a/drivers/interconnect/qcom/bcm-voter.c b/drivers/interconnect/qcom/bcm-voter.c
+> index 8f385f9c2dd3..976938a84bd1 100644
+> --- a/drivers/interconnect/qcom/bcm-voter.c
+> +++ b/drivers/interconnect/qcom/bcm-voter.c
+> @@ -69,20 +69,20 @@ static void bcm_aggregate(struct qcom_icc_bcm *bcm)
+>   	for (bucket = 0; bucket < QCOM_ICC_NUM_BUCKETS; bucket++) {
+>   		for (i = 0; i < bcm->num_nodes; i++) {
+>   			node = bcm->nodes[i];
+> -			temp = bcm_div(node->sum_avg[bucket] * bcm->aux_data.width,
+> +			temp = bcm_div(node->sum_avg[bucket] * le16_to_cpu(bcm->aux_data.width),
+>   				       node->buswidth * node->channels);
+>   			agg_avg[bucket] = max(agg_avg[bucket], temp);
+>   
+> -			temp = bcm_div(node->max_peak[bucket] * bcm->aux_data.width,
+> +			temp = bcm_div(node->max_peak[bucket] * le16_to_cpu(bcm->aux_data.width),
+>   				       node->buswidth);
+>   			agg_peak[bucket] = max(agg_peak[bucket], temp);
+>   		}
+>   
+>   		temp = agg_avg[bucket] * bcm->vote_scale;
+> -		bcm->vote_x[bucket] = bcm_div(temp, bcm->aux_data.unit);
+> +		bcm->vote_x[bucket] = bcm_div(temp, le32_to_cpu(bcm->aux_data.unit));
+>   
+>   		temp = agg_peak[bucket] * bcm->vote_scale;
+> -		bcm->vote_y[bucket] = bcm_div(temp, bcm->aux_data.unit);
+> +		bcm->vote_y[bucket] = bcm_div(temp, le32_to_cpu(bcm->aux_data.unit));
+>   	}
+>   
+>   	if (bcm->keepalive && bcm->vote_x[QCOM_ICC_BUCKET_AMC] == 0 &&
+> diff --git a/drivers/interconnect/qcom/icc-rpmh.c b/drivers/interconnect/qcom/icc-rpmh.c
+> index 3eb7936d2cf6..e8533027ce38 100644
+> --- a/drivers/interconnect/qcom/icc-rpmh.c
+> +++ b/drivers/interconnect/qcom/icc-rpmh.c
+> @@ -162,8 +162,8 @@ int qcom_icc_bcm_init(struct qcom_icc_bcm *bcm, struct device *dev)
+>   		return -EINVAL;
+>   	}
+>   
+> -	bcm->aux_data.unit = le32_to_cpu(data->unit);
+> -	bcm->aux_data.width = le16_to_cpu(data->width);
+> +	bcm->aux_data.unit = data->unit;
+> +	bcm->aux_data.width = data->width;
+>   	bcm->aux_data.vcd = data->vcd;
+>   	bcm->aux_data.reserved = data->reserved;
+>   	INIT_LIST_HEAD(&bcm->list);
+> 
 
