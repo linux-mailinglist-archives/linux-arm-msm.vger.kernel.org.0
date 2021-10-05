@@ -2,254 +2,130 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C0B4942215D
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 10:56:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CB2B84221A9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 11:05:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233366AbhJEI6Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Oct 2021 04:58:24 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:55056 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232992AbhJEI6Y (ORCPT
+        id S233174AbhJEJHs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Oct 2021 05:07:48 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52972 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233289AbhJEJHs (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Oct 2021 04:58:24 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1633424193; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=ME6k5ppnQNHOtBFfmVbGGGL200n+G2K+4nbw1O/P4E0=; b=GO5eE8y9WkLuudQlKlSquWqg+Q/VrC6YZAIG9ddB30XDG80Y7a/8SdPiGK1+VJ9A5Z+U0BQa
- XMEbnqTDGWnUA2FPcWBovv1q6IGcFl7s0JALLSIzsFgjpoVL0IsXjAGFoVw2bePfWPSXtPid
- USA6yxEyI5ZS7mBRnJxdU3avPzQ=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n04.prod.us-west-2.postgun.com with SMTP id
- 615c133bfc6e34f8cd74f028 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 05 Oct 2021 08:56:27
- GMT
-Sender: mkshah=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4915BC4360D; Tue,  5 Oct 2021 08:56:27 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.29.129] (unknown [49.36.85.177])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1F71CC4338F;
-        Tue,  5 Oct 2021 08:56:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 1F71CC4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH v9 2/5] soc: qcom: Add SoC sleep stats driver
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     swboyd@chromium.org, mka@chromium.org, evgreen@chromium.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        agross@kernel.org, dianders@chromium.org, linux@roeck-us.net,
-        rnayak@codeaurora.org, lsrao@codeaurora.org,
-        Mahesh Sivasubramanian <msivasub@codeaurora.org>,
-        Lina Iyer <ilina@codeaurora.org>
-References: <1630906083-32194-1-git-send-email-mkshah@codeaurora.org>
- <1630906083-32194-3-git-send-email-mkshah@codeaurora.org>
- <YU5dUlscQzGXloKc@builder.lan>
-From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <8f76552b-76c6-d4f7-22d2-1dd61d191c00@codeaurora.org>
-Date:   Tue, 5 Oct 2021 14:26:19 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        Tue, 5 Oct 2021 05:07:48 -0400
+Received: from mail-wm1-x336.google.com (mail-wm1-x336.google.com [IPv6:2a00:1450:4864:20::336])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 902F6C061753
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Oct 2021 02:05:57 -0700 (PDT)
+Received: by mail-wm1-x336.google.com with SMTP id m42so5220947wms.2
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Oct 2021 02:05:57 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=Sch0aWxDBNQdpah51FulP42zKP3FSOyTJMCjs7CVLTM=;
+        b=bY1lQ0osNyWKNqBAua4Kg5sBOYow4ldD0jTiPF6AlazJXq8jACkl3c0roM248Trihg
+         IP1KhGgFlPLVdLbcJ1LQeVgaTZDTX8dl62IlXg5NzbZv3pc/nkiVxgPatKf/tZaHm1dL
+         kWzZPcxsZ1+0mJeUm2cRo7GK1UtZzJCa6edlGwQPdzpIgr6QnEosRGm68aQsotwzRJXF
+         CDbleSXqI0i4BrCEaC5F1nDeuw3Wo75cHlLNBDTaOZrwrqkmq0tiaCjWf2eIqL13yYp3
+         wOpHJgeVAURft6aB7hMKER+PDuAzkvCD3WYlBBpsOe5ccbcbMWKY+sZV6UI69i1B+isa
+         q/4Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=Sch0aWxDBNQdpah51FulP42zKP3FSOyTJMCjs7CVLTM=;
+        b=hzBvjZXPxT0ckXcv6Fhm+AgmqQ9yFNi+aJZ07P9AmP6fJGUIrhSYSazTOLhJ8orPOg
+         8FPYR1ytoLCbLJkvU5reMlT8qQ52TrdHcgZQmyYynM7OgfsGCBNiMKvyb0EDrLwhD32z
+         dWtDD7pvvy+usRWm2QsW6fD+Gi+jRSGV0SCuPCeO1KW5pXPw3Qi+cw2tG1im06mXekdT
+         FaBgkMJkmRNrS45XIpvHbCPvhlUxE6nfjc5YrCsgq+kO2NOdXQ7eAS/K8LKi8PdezFsQ
+         jotGpbejZ5pWvE5ahihY1GixFjecyW6jBL4EiYhAWJmyOAH2gWJprKBPK+c/rs75szvH
+         YJdQ==
+X-Gm-Message-State: AOAM531ISXkpVg/HrSPWhV5OnubB1sFymRNxvrz3R9Aq96nTb8LNjmXH
+        OuKhZbgeBnMOvenwYw9A1/zIXw==
+X-Google-Smtp-Source: ABdhPJxihmBnUHQnbQ4fyua0XZJasSFmZfAkJOHSSqxnk0Vb1yLrCSgSEA7VR57yIqbCyZjlKhl21w==
+X-Received: by 2002:a05:600c:4e86:: with SMTP id f6mr2195141wmq.52.1633424756122;
+        Tue, 05 Oct 2021 02:05:56 -0700 (PDT)
+Received: from maple.lan (cpc141216-aztw34-2-0-cust174.18-1.cable.virginm.net. [80.7.220.175])
+        by smtp.gmail.com with ESMTPSA id k9sm16658777wrz.22.2021.10.05.02.05.54
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Oct 2021 02:05:55 -0700 (PDT)
+Date:   Tue, 5 Oct 2021 10:05:53 +0100
+From:   Daniel Thompson <daniel.thompson@linaro.org>
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        Courtney Cavin <courtney.cavin@sonymobile.com>,
+        Bryan Wu <cooloney@gmail.com>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 01/10] backlight: qcom-wled: Pass number of elements to
+ read to read_u32_array
+Message-ID: <20211005090553.zoqzzz4767srvwzb@maple.lan>
+References: <20211004192741.621870-1-marijn.suijten@somainline.org>
+ <20211004192741.621870-2-marijn.suijten@somainline.org>
 MIME-Version: 1.0
-In-Reply-To: <YU5dUlscQzGXloKc@builder.lan>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211004192741.621870-2-marijn.suijten@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
-
-On 9/25/2021 4:50 AM, Bjorn Andersson wrote:
-> On Mon 06 Sep 00:28 CDT 2021, Maulik Shah wrote:
+On Mon, Oct 04, 2021 at 09:27:32PM +0200, Marijn Suijten wrote:
+> of_property_read_u32_array takes the number of elements to read as last
+> argument. This does not always need to be 4 (sizeof(u32)) but should
+> instead be the size of the array in DT as read just above with
+> of_property_count_elems_of_size.
 > 
->> From: Mahesh Sivasubramanian <msivasub@codeaurora.org>
->>
->> Let's add a driver to read the stats from remote processor and
->> export to debugfs.
->>
->> The driver creates "qcom_sleep_stats" directory in debugfs and
->> adds files for various low power mode available. Below is sample
->> output with command
->>
->> cat /sys/kernel/debug/qcom_sleep_stats/ddr
->> count = 0
->> Last Entered At = 0
->> Last Exited At = 0
->> Accumulated Duration = 0
->>
->> Signed-off-by: Mahesh Sivasubramanian <msivasub@codeaurora.org>
->> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
->> [mkshah: add subsystem sleep stats, create one file for each stat]
->> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
->> ---
->>   drivers/soc/qcom/Kconfig           |  10 ++
->>   drivers/soc/qcom/Makefile          |   1 +
->>   drivers/soc/qcom/soc_sleep_stats.c | 241 +++++++++++++++++++++++++++++++++++++
->>   3 files changed, 252 insertions(+)
->>   create mode 100644 drivers/soc/qcom/soc_sleep_stats.c
->>
->> diff --git a/drivers/soc/qcom/Kconfig b/drivers/soc/qcom/Kconfig
->> index 79b568f..e80b63a 100644
->> --- a/drivers/soc/qcom/Kconfig
->> +++ b/drivers/soc/qcom/Kconfig
->> @@ -190,6 +190,16 @@ config QCOM_SOCINFO
->>   	 Say yes here to support the Qualcomm socinfo driver, providing
->>   	 information about the SoC to user space.
->>   
->> +config QCOM_SOC_SLEEP_STATS
->> +	tristate "Qualcomm Technologies, Inc. (QTI) SoC sleep stats driver"
->> +	depends on ARCH_QCOM && DEBUG_FS || COMPILE_TEST
->> +	depends on QCOM_SMEM
->> +	help
->> +	  Qualcomm Technologies, Inc. (QTI) SoC sleep stats driver to read
->> +	  the shared memory exported by the remote processor related to
->> +	  various SoC level low power modes statistics and export to debugfs
->> +	  interface.
->> +
->>   config QCOM_WCNSS_CTRL
->>   	tristate "Qualcomm WCNSS control driver"
->>   	depends on ARCH_QCOM || COMPILE_TEST
->> diff --git a/drivers/soc/qcom/Makefile b/drivers/soc/qcom/Makefile
->> index ad675a6..5f30d74 100644
->> --- a/drivers/soc/qcom/Makefile
->> +++ b/drivers/soc/qcom/Makefile
->> @@ -20,6 +20,7 @@ obj-$(CONFIG_QCOM_SMEM_STATE) += smem_state.o
->>   obj-$(CONFIG_QCOM_SMP2P)	+= smp2p.o
->>   obj-$(CONFIG_QCOM_SMSM)	+= smsm.o
->>   obj-$(CONFIG_QCOM_SOCINFO)	+= socinfo.o
->> +obj-$(CONFIG_QCOM_SOC_SLEEP_STATS)	+= soc_sleep_stats.o
+> To not make such an error go unnoticed again the driver now bails
+> accordingly when of_property_read_u32_array returns an error.
 > 
-> I know that the rest of the modules here does a bad job and have
-> completely generic names, but could we rename this "qcom_sleep_stats"
-> instead?
+> Fixes: 775d2ffb4af6 ("backlight: qcom-wled: Restructure the driver for WLED3")
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 
-Sure renamed in v10.
+Reviewed-by: Daniel Thompson <daniel.thompson@linaro.org>
 
+
+> ---
+>  drivers/video/backlight/qcom-wled.c | 13 ++++++++++---
+>  1 file changed, 10 insertions(+), 3 deletions(-)
 > 
->>   obj-$(CONFIG_QCOM_WCNSS_CTRL) += wcnss_ctrl.o
->>   obj-$(CONFIG_QCOM_APR) += apr.o
->>   obj-$(CONFIG_QCOM_LLCC) += llcc-qcom.o
->> diff --git a/drivers/soc/qcom/soc_sleep_stats.c b/drivers/soc/qcom/soc_sleep_stats.c
-> [..]
->> +static int qcom_soc_sleep_stats_probe(struct platform_device *pdev)
->> +{
->> +	struct resource *res;
->> +	void __iomem *reg;
->> +	struct dentry *root;
->> +	const struct stats_config *config;
->> +	struct stats_data *d;
->> +	int i;
->> +
->> +	config = device_get_match_data(&pdev->dev);
->> +	if (!config)
->> +		return -ENODEV;
->> +
->> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
->> +	if (!res)
->> +		return PTR_ERR(res);
+> diff --git a/drivers/video/backlight/qcom-wled.c b/drivers/video/backlight/qcom-wled.c
+> index d094299c2a48..6af808af2328 100644
+> --- a/drivers/video/backlight/qcom-wled.c
+> +++ b/drivers/video/backlight/qcom-wled.c
+> @@ -1528,11 +1528,18 @@ static int wled_configure(struct wled *wled)
+>  	string_len = of_property_count_elems_of_size(dev->of_node,
+>  						     "qcom,enabled-strings",
+>  						     sizeof(u32));
+> -	if (string_len > 0)
+> -		of_property_read_u32_array(dev->of_node,
+> +	if (string_len > 0) {
+> +		rc = of_property_read_u32_array(dev->of_node,
+>  						"qcom,enabled-strings",
+>  						wled->cfg.enabled_strings,
+> -						sizeof(u32));
+> +						string_len);
+> +		if (rc) {
+> +			dev_err(dev, "Failed to read %d elements from "
+> +				"qcom,enabled-strings: %d\n",
+> +				string_len, rc);
+> +			return -EINVAL;
+> +		}
+> +	}
+>  
+>  	return 0;
+>  }
+> -- 
+> 2.33.0
 > 
-> You no longer use this "res".
-
-Thanks for catching this, removed in v10.
-
-> 
->> +
->> +	reg = devm_platform_get_and_ioremap_resource(pdev, 0, NULL);
->> +	if (!reg)
-> 
-> IS_ERR()
-
-Updated in v10 to use IS_ERR().
-
-> 
->> +		return -ENOMEM;
->> +
->> +	d = devm_kcalloc(&pdev->dev, config->num_records,
->> +			 sizeof(*d), GFP_KERNEL);
->> +	if (!d)
->> +		return -ENOMEM;
->> +
->> +	for (i = 0; i < config->num_records; i++)
->> +		d[i].appended_stats_avail = config->appended_stats_avail;
->> +
->> +	root = debugfs_create_dir("qcom_sleep_stats", NULL);
->> +
->> +	qcom_create_subsystem_stat_files(root);
->> +	qcom_create_soc_sleep_stat_files(root, reg, d, config->num_records);
->> +
->> +	platform_set_drvdata(pdev, root);
->> +
->> +	return 0;
->> +}
->> +
->> +static int qcom_soc_sleep_stats_remove(struct platform_device *pdev)
->> +{
->> +	struct dentry *root = platform_get_drvdata(pdev);
->> +
->> +	debugfs_remove_recursive(root);
->> +
->> +	return 0;
->> +}
->> +
->> +static const struct stats_config rpm_data = {
->> +	.num_records = 2,
->> +	.appended_stats_avail = true,
->> +};
->> +
->> +static const struct stats_config rpmh_data = {
->> +	.num_records = 3,
->> +	.appended_stats_avail = false,
->> +};
->> +
->> +static const struct of_device_id qcom_soc_sleep_stats_table[] = {
->> +	{ .compatible = "qcom,rpm-sleep-stats", .data = &rpm_data },
->> +	{ .compatible = "qcom,rpmh-sleep-stats", .data = &rpmh_data },
->> +	{ }
->> +};
-> 
-> MODULE_DEVICE_TABLE(of, qcom_soc_sleep_stats_table);
-> 
-> Otherwise the module doesn't load automatically.
-> 
-> Regards,
-> Bjorn
-
-Added MODULE_DEVICE_TABLE in v10.
-
-Thanks,
-Maulik
-
-> 
->> +
->> +static struct platform_driver soc_sleep_stats = {
->> +	.probe = qcom_soc_sleep_stats_probe,
->> +	.remove = qcom_soc_sleep_stats_remove,
->> +	.driver = {
->> +		.name = "soc_sleep_stats",
->> +		.of_match_table = qcom_soc_sleep_stats_table,
->> +	},
->> +};
->> +module_platform_driver(soc_sleep_stats);
->> +
->> +MODULE_DESCRIPTION("Qualcomm Technologies, Inc. (QTI) SoC Sleep Stats driver");
->> +MODULE_LICENSE("GPL v2");
->> -- 
->> QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
->> of Code Aurora Forum, hosted by The Linux Foundation
->>
-
--- 
-QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a 
-member of Code Aurora Forum, hosted by The Linux Foundation
