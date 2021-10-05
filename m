@@ -2,134 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 386414227CA
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 15:28:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A0E1742286C
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 15:50:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234801AbhJENam (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Oct 2021 09:30:42 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58904 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234103AbhJENal (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Oct 2021 09:30:41 -0400
-Received: from mail-oo1-xc31.google.com (mail-oo1-xc31.google.com [IPv6:2607:f8b0:4864:20::c31])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D868C06174E
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Oct 2021 06:28:51 -0700 (PDT)
-Received: by mail-oo1-xc31.google.com with SMTP id z11-20020a4ad1ab000000b0029f085f5f64so6399035oor.5
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Oct 2021 06:28:51 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-transfer-encoding:content-language;
-        bh=/c/eEsD9A8CxATtvLzMZQW23g57As6UAdQJI9w6Phqg=;
-        b=bg5XmOUO242fmOQv8vEUB0Cjo6mWlkROXJONC02dINX3+OI8ALc60dv0KtIbK2+c7p
-         IHmpGY/1PO3CPlIsxo04yhI3jQj+N0QDEowHxbVtBnBqDkBXt7cFH8RYIw4XaFeSH+d9
-         tK0bNVb2W9f1bvU8MyOogwyuOkkg0eVLc02r/dMNPE5ydZkWETleFwvfBb4y1QtfvmgK
-         VF3WTyceJJmEaHQh9JC7D2mt4a6yFJMJQNPwEiBWCChxia9pgQCzKyDtvZpxKtpHzoeO
-         pwWwl2b4silmLI8jp9Jz7Ny4w1GIKKO67tjMLexLI7O2XFc8ito9YIv6FGm6ZPpaTQ/p
-         4MKg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-transfer-encoding
-         :content-language;
-        bh=/c/eEsD9A8CxATtvLzMZQW23g57As6UAdQJI9w6Phqg=;
-        b=rMiDCM0pCccjAHglyHUCuuOWRNvPqMkRwJSKw5nLSoTyNeLFXT8KlP/Nx+lErKLYL1
-         mp/zaEd6mnbRQeZtscG+xN380RbQ5EZMC3eoVtgbfyFRuprokr/jwX6RxblnMQ0aODyZ
-         rTlaiuUh+i4wpBtboF8M2yZZ37VO++k2CG6+ccAYvYFkYJqc3GbU2rx5t/UVZ2wngc4u
-         AjQmyWB9sRUte6vtYb7Qz0ZIPu811cb3VKYd7KyUUHTrdQo16FNxg7o+4wZ8mRO6qmsG
-         pnNnk+9lR+w0usbkPbeG4K93CBjwM59DHRBUcvA/naCuVr24DcMOrEM4xZjpJ+mxoxMN
-         pMaw==
-X-Gm-Message-State: AOAM531nBjUXoJaTJjwL/FEu6O0IOW5ut66nVDJTtMZhcLVemDLih+K1
-        243hBBHlE0Dn2ipFjLfIr0gb2Q==
-X-Google-Smtp-Source: ABdhPJz3CfmfGZl6xSv0Z4HSYsSEnz8bqO7Nzcc52AAmW4xAyZEI7fUz3MewVmDxzFH7LxRJa1xCYQ==
-X-Received: by 2002:a4a:ac47:: with SMTP id q7mr13415845oon.90.1633440530656;
-        Tue, 05 Oct 2021 06:28:50 -0700 (PDT)
-Received: from MacBook-Pro.hackershack.net (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
-        by smtp.gmail.com with ESMTPSA id c12sm3498484oos.16.2021.10.05.06.28.49
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 05 Oct 2021 06:28:50 -0700 (PDT)
-Subject: Re: [PATCH 2/5] arm64: dts: qcom: sdm845: Disable Adreno, modem and
- Venus by default
-To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
-        ~postmarketos/upstreaming@lists.sr.ht
-Cc:     martin.botka@somainline.org,
-        angelogioacchino.delregno@somainline.org,
-        marijn.suijten@somainline.org, jamipkettunen@somainline.org,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20211002001358.45920-1-konrad.dybcio@somainline.org>
- <20211002001358.45920-3-konrad.dybcio@somainline.org>
- <67e12e31-2eb3-fea6-822e-56836aabc0d2@kali.org>
- <255059cf-b91c-1d29-0474-6b4b8fcef141@somainline.org>
-From:   Steev Klimaszewski <steev@kali.org>
-Message-ID: <afcde09c-c930-ca6c-9ccc-7888d86a150a@kali.org>
-Date:   Tue, 5 Oct 2021 08:28:48 -0500
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:78.0)
- Gecko/20100101 Thunderbird/78.14.0
+        id S235345AbhJENwa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Oct 2021 09:52:30 -0400
+Received: from mail.kernel.org ([198.145.29.99]:58930 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235289AbhJENwX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 5 Oct 2021 09:52:23 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id D830361506;
+        Tue,  5 Oct 2021 13:50:31 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1633441833;
+        bh=by9GtSUX11HWhHVBkgN2q4BLfuacQPdQ+x5SSxgs4Kw=;
+        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
+        b=GAcG/n8fKBrrYTAeJnp790E2kaGkW0m4fP8bgu9aklUdM0LhRbLOXGmWlRjSozytS
+         ZC46Z5TqRvx15p3imPunoA1MDJ88wjWWGKxPCJ/rZ/KhpyBahUXt12f1GHGGBLeBmm
+         QgnpT8CM9YGl2z9zQrxz9sdnBuPux/wAoqQ8spTy/yH42AxaSK97pCOErjNBMgBQhr
+         7tvxyjYCsZgSbdEAy+nAASNqD6RgotqZjAZhvk+seEUSRePVsP7QX0K2bRpFD176Ak
+         zIlM5IacQYwquMrNB0sVypiD5xlmKzHgkSJ7ZGVR2M2xEI9kPtSW/3QeaFo6dpPI1Y
+         pXrx/0Cz7L0+A==
+From:   Sasha Levin <sashal@kernel.org>
+To:     linux-kernel@vger.kernel.org, stable@vger.kernel.org
+Cc:     Shawn Guo <shawn.guo@linaro.org>, Rob Herring <robh@kernel.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Georgi Djakov <djakov@kernel.org>,
+        Sasha Levin <sashal@kernel.org>, agross@kernel.org,
+        bjorn.andersson@linaro.org, robh+dt@kernel.org, kholk11@gmail.com,
+        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org
+Subject: [PATCH AUTOSEL 5.14 06/40] dt-bindings: interconnect: sdm660: Add missing a2noc qos clocks
+Date:   Tue,  5 Oct 2021 09:49:45 -0400
+Message-Id: <20211005135020.214291-6-sashal@kernel.org>
+X-Mailer: git-send-email 2.33.0
+In-Reply-To: <20211005135020.214291-1-sashal@kernel.org>
+References: <20211005135020.214291-1-sashal@kernel.org>
 MIME-Version: 1.0
-In-Reply-To: <255059cf-b91c-1d29-0474-6b4b8fcef141@somainline.org>
-Content-Type: text/plain; charset=utf-8
+X-stable: review
+X-Patchwork-Hint: Ignore
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Shawn Guo <shawn.guo@linaro.org>
 
-On 10/2/21 5:51 PM, Konrad Dybcio wrote:
-> On 03.10.2021 00:25, Steev Klimaszewski wrote:
->> This missed the Lenovo Yoga C630 inherits from sdm845 and breaks it.
-> Welp, qcom decided to give laptops +5 sdm points and that made me overlook it :P
->
->
-> If the rest of the patch looks good, could you add this diff Bjorn to fix that?:
->
->
-> diff --git a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> index a3b61cb3cfad..b96ecf537ff1 100644
-> --- a/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> +++ b/arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dts
-> @@ -343,7 +343,12 @@ &gcc {
->                            <GCC_LPASS_SWAY_CLK>;
->  };
->  
-> +&gmu {
-> +       status = "okay";
-> +};
-> +
->  &gpu {
-> +       status = "okay";
->         zap-shader {
->                 memory-region = <&gpu_mem>;
->                 firmware-name = "qcom/LENOVO/81JL/qcdxkmsuc850.mbn";
-> @@ -461,6 +466,7 @@ &mdss {
->  };
->  
->  &mss_pil {
-> +       status = "okay";
->         firmware-name = "qcom/LENOVO/81JL/qcdsp1v2850.mbn", "qcom/LENOVO/81JL/qcdsp2850.mbn";
->  };
->  
-> @@ -722,6 +728,10 @@ &usb_2_qmpphy {
->         vdda-pll-supply = <&vdda_usb2_ss_core>;
->  };
->  
-> +&venus {
-> +       status = "okay";
-> +};
-> +
->  &wcd9340{
->         pinctrl-0 = <&wcd_intr_default>;
->         pinctrl-names = "default";
->
->
-> Konrad
->
-With the above applied, all is well on the Lenovo Yoga C630.
+[ Upstream commit cf49e366020396ad83845c1c3bdbaa3c1406f5ce ]
 
-Tested-By: Steev Klimaszewski <steev@kali.org>
+It adds the missing a2noc clocks required for QoS registers programming
+per downstream kernel[1].
+
+[1] https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/arch/arm/boot/dts/qcom/sdm660-bus.dtsi?h=LA.UM.8.2.r1-04800-sdm660.0#n43
+
+Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
+Reviewed-by: Rob Herring <robh@kernel.org>
+Acked-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
+Link: https://lore.kernel.org/r/20210824043435.23190-2-shawn.guo@linaro.org
+Signed-off-by: Georgi Djakov <djakov@kernel.org>
+Signed-off-by: Sasha Levin <sashal@kernel.org>
+---
+ .../bindings/interconnect/qcom,sdm660.yaml    | 46 +++++++++++++++++--
+ 1 file changed, 42 insertions(+), 4 deletions(-)
+
+diff --git a/Documentation/devicetree/bindings/interconnect/qcom,sdm660.yaml b/Documentation/devicetree/bindings/interconnect/qcom,sdm660.yaml
+index 29de7807df54..bcd41e491f1d 100644
+--- a/Documentation/devicetree/bindings/interconnect/qcom,sdm660.yaml
++++ b/Documentation/devicetree/bindings/interconnect/qcom,sdm660.yaml
+@@ -31,11 +31,11 @@ properties:
+ 
+   clocks:
+     minItems: 1
+-    maxItems: 3
++    maxItems: 7
+ 
+   clock-names:
+     minItems: 1
+-    maxItems: 3
++    maxItems: 7
+ 
+ required:
+   - compatible
+@@ -72,6 +72,32 @@ allOf:
+           contains:
+             enum:
+               - qcom,sdm660-a2noc
++    then:
++      properties:
++        clocks:
++          items:
++            - description: Bus Clock.
++            - description: Bus A Clock.
++            - description: IPA Clock.
++            - description: UFS AXI Clock.
++            - description: Aggregate2 UFS AXI Clock.
++            - description: Aggregate2 USB3 AXI Clock.
++            - description: Config NoC USB2 AXI Clock.
++        clock-names:
++          items:
++            - const: bus
++            - const: bus_a
++            - const: ipa
++            - const: ufs_axi
++            - const: aggre2_ufs_axi
++            - const: aggre2_usb3_axi
++            - const: cfg_noc_usb2_axi
++
++  - if:
++      properties:
++        compatible:
++          contains:
++            enum:
+               - qcom,sdm660-bimc
+               - qcom,sdm660-cnoc
+               - qcom,sdm660-gnoc
+@@ -91,6 +117,7 @@ examples:
+   - |
+       #include <dt-bindings/clock/qcom,rpmcc.h>
+       #include <dt-bindings/clock/qcom,mmcc-sdm660.h>
++      #include <dt-bindings/clock/qcom,gcc-sdm660.h>
+ 
+       bimc: interconnect@1008000 {
+               compatible = "qcom,sdm660-bimc";
+@@ -123,9 +150,20 @@ examples:
+               compatible = "qcom,sdm660-a2noc";
+               reg = <0x01704000 0xc100>;
+               #interconnect-cells = <1>;
+-              clock-names = "bus", "bus_a";
++              clock-names = "bus",
++                            "bus_a",
++                            "ipa",
++                            "ufs_axi",
++                            "aggre2_ufs_axi",
++                            "aggre2_usb3_axi",
++                            "cfg_noc_usb2_axi";
+               clocks = <&rpmcc RPM_SMD_AGGR2_NOC_CLK>,
+-                       <&rpmcc RPM_SMD_AGGR2_NOC_A_CLK>;
++                       <&rpmcc RPM_SMD_AGGR2_NOC_A_CLK>,
++                       <&rpmcc RPM_SMD_IPA_CLK>,
++                       <&gcc GCC_UFS_AXI_CLK>,
++                       <&gcc GCC_AGGRE2_UFS_AXI_CLK>,
++                       <&gcc GCC_AGGRE2_USB3_AXI_CLK>,
++                       <&gcc GCC_CFG_NOC_USB2_AXI_CLK>;
+       };
+ 
+       mnoc: interconnect@1745000 {
+-- 
+2.33.0
 
