@@ -2,97 +2,127 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DA890422C0F
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 17:13:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CABD2422BF9
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 17:11:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235322AbhJEPP0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Oct 2021 11:15:26 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:54063 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229626AbhJEPPZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Oct 2021 11:15:25 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1633446815; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=s3Xb4IsSqsYB8Xe3c7qxyiGRJeLbjA3gkFSG8+CibCw=; b=YS0rkOpB4q9ONKPFZURacTfXywhYybXYkHHVFXVdRaPDVaLgQe1l/XXQKVujadzpj0wKs1zA
- Gdi0zJJxlmYuym+atDUGsmUkaM7n6ait2jX+8+TTSGVL0TTNL2bsuYjuzmFIHbm6ozqbcViZ
- 2JPV2faBZnYY8gKkOJcOamYi+N4=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 615c6b934ccc4cf2c7c421cd (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 05 Oct 2021 15:13:23
- GMT
-Sender: srivasam=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 42FD3C4361C; Tue,  5 Oct 2021 15:13:23 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [192.168.1.102] (unknown [157.48.255.211])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: srivasam)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 7DCE6C4360C;
-        Tue,  5 Oct 2021 15:13:14 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 7DCE6C4360C
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH] ASoC: qcom: soundwire: Enable soundwire bus clock for
- version 1.6
-To:     Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>,
-        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        swboyd@chromium.org, judyhsiao@chromium.org
-Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>
-References: <1633105471-30928-1-git-send-email-srivasam@codeaurora.org>
- <a2b6a9c7-2191-4bc9-b03b-3b22b495a4be@linux.intel.com>
- <2c18ff0c-cd24-356c-0104-086837ed7ff0@codeaurora.org>
- <d485af5f-4dfb-df08-9a22-901b7534ca3b@linux.intel.com>
-From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Organization: Qualcomm India Private Limited.
-Message-ID: <f7fbf5e2-2f09-1df5-475a-cfe04f33059a@codeaurora.org>
-Date:   Tue, 5 Oct 2021 20:43:11 +0530
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        id S230059AbhJEPNq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Oct 2021 11:13:46 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55440 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229936AbhJEPNo (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 5 Oct 2021 11:13:44 -0400
+Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38769C061749;
+        Tue,  5 Oct 2021 08:11:54 -0700 (PDT)
+Received: by mail-pg1-x52b.google.com with SMTP id r2so20057825pgl.10;
+        Tue, 05 Oct 2021 08:11:54 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=QSrcQ531lYvMDyqtMmSNSg1D9eOHYmXdh6Sn4g0VZLQ=;
+        b=LE+nGxihu74oC3P/yXCbRUT8joVuLjedGgQjvKmK8f3RDbhsFz2Vi3/sS9u9wXnGcX
+         K2GgrTHQM2kjOTjbHfEDKSOGaIQ95GlbZ/QF327Ospm5XEbm5TPf6490GoZyuWQ1E/y+
+         IeJKKHDWKXVrwoDC9bWA7CsdXkqo8n4aTYFKKesOpEGc2WcdjcTgXydrApYSun1UVsgw
+         iY76WfnFfYcz9KR5eDOdItpIDV0s68u3xP+x9H5iDGJotHLBIZgkU1UDs/KH+Jtv0Uja
+         Hd84BWPjshr5CEK7HmMKnP/2imJsZdYLGNfIk8+cWZQTHfe+FZ/z7BP+9G5U4gsshMEp
+         MPpQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=QSrcQ531lYvMDyqtMmSNSg1D9eOHYmXdh6Sn4g0VZLQ=;
+        b=TPx0nSg7Oo3WUEieReIc7H3ZnnkTeonmVnRGx+fefPPxff3r1k0bVqRQ8XChVzIwba
+         NAT+gw3IwSedCDOmmwlb6Ec+n42FQbm1REpgpG/fQlzPF+l1QFUfvIjxsjcmLTZUg1lx
+         dQtdKbLrMsEkBDr6cogjK5Hv5xUP60VETCnR0RsvBVBCJwdDLkL/5YnRIbUNjT2WJrKC
+         ugyaOEm04fyYrizVBHR8Z/VCFR46hwal5U2sv3H1lhodje6CPTiZJfwmmLwGo0Y1z9pX
+         pMiQ0FA7addAlicNXo1FrRkxwNqZTAq4eVvBdIPxX7+6bYNDb8MqJCcuz4ZfywJcLVku
+         ahNg==
+X-Gm-Message-State: AOAM532D6A5l/D6MTQ6tpCkaqcQoNGyAiHSJ1TEezIVf68hYIg7VVw8f
+        QMV/ErlwlBHMs2GqtvgbW3I=
+X-Google-Smtp-Source: ABdhPJxO3G+HWzM6JzFUJostwno3QxJkFsVc0ojvp/XHIKEdzTvHkYlD/6vx1y3wEb8mXk5HXIWGFA==
+X-Received: by 2002:aa7:828c:0:b0:44c:28d1:46b9 with SMTP id s12-20020aa7828c000000b0044c28d146b9mr19508978pfm.43.1633446713563;
+        Tue, 05 Oct 2021 08:11:53 -0700 (PDT)
+Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
+        by smtp.gmail.com with ESMTPSA id k22sm18388032pfi.149.2021.10.05.08.11.51
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Oct 2021 08:11:51 -0700 (PDT)
+From:   Rob Clark <robdclark@gmail.com>
+To:     dri-devel@lists.freedesktop.org
+Cc:     linux-arm-kernel@lists.infradead.org,
+        freedreno@lists.freedesktop.org,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Will Deacon <will@kernel.org>,
+        Rob Clark <robdclark@chromium.org>,
+        Akhil P Oommen <akhilpo@codeaurora.org>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
+        Douglas Anderson <dianders@chromium.org>,
+        Georgi Djakov <quic_c_gdjako@quicinc.com>,
+        iommu@lists.linux-foundation.org (open list:IOMMU DRIVERS),
+        "Isaac J. Manjarres" <isaacm@codeaurora.org>,
+        Joerg Roedel <jroedel@suse.de>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        linux-kernel@vger.kernel.org (open list),
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
+        Sharat Masetty <smasetty@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
+        Sven Peter <sven@svenpeter.dev>,
+        Yangtao Li <tiny.windzz@gmail.com>,
+        Yong Wu <yong.wu@mediatek.com>
+Subject: [PATCH v2 0/3] io-pgtable-arm + drm/msm: Extend iova fault debugging
+Date:   Tue,  5 Oct 2021 08:16:24 -0700
+Message-Id: <20211005151633.1738878-1-robdclark@gmail.com>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-In-Reply-To: <d485af5f-4dfb-df08-9a22-901b7534ca3b@linux.intel.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Transfer-Encoding: 8bit
-Content-Language: en-US
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+From: Rob Clark <robdclark@chromium.org>
 
-On 10/5/2021 8:33 PM, Pierre-Louis Bossart wrote:
-> Thanks for Your time Bossart!!!
->
->>>> +        ctrl->swrm_hctl_reg = devm_ioremap(&pdev->dev,
->>>> swrm_hctl_reg, 0x4);
->>> if (!ctrl->swrm_hctl_reg)
->>>       return -ENODEV;
->>>
->>> ?
->> I think here error check is not required, as this change is required
->> only for soundwire version 1.6 and above.
-> My comment had nothing to do with versions, it's just that ioremap can
-> fail and in general it's wise to test for errors...
+This series extends io-pgtable-arm with a method to retrieve the page
+table entries traversed in the process of address translation, and then
+beefs up drm/msm gpu devcore dump to include this (and additional info)
+in the devcore dump.
 
-Okay. My intention is if offset (swrm_hctl_reg) is zero, devm_ioremap 
-may return error.
+The motivation is tracking down an obscure iova fault triggered crash on
+the address of the IB1 cmdstream.  This is one of the few places where
+the GPU address written into the cmdstream is soley under control of the
+kernel mode driver, so I don't think it can be a userspace bug.  The
+logged cmdstream from the devcore's I've looked at look correct, and the
+TTBR0 read back from arm-smmu agrees with the kernel emitted cmdstream.
+Unfortunately it happens infrequently enough (something like once per
+1000hrs of usage, from what I can tell from our telemetry) that actually
+reproducing it with an instrumented debug kernel is not an option.  So
+further spiffying out the devcore dumps and hoping we can spot a clue is
+the plan I'm shooting for.
 
-In that case we need to ignore error.
+See https://gitlab.freedesktop.org/drm/msm/-/issues/8 for more info on
+the issue I'm trying to debug.
+
+v2: Fix an armv7/32b build error in the last patch
+
+Rob Clark (3):
+  iommu/io-pgtable-arm: Add way to debug pgtable walk
+  drm/msm: Show all smmu info for iova fault devcore dumps
+  drm/msm: Extend gpu devcore dumps with pgtbl info
+
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c   |  2 +-
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 35 +++++++++++++++++-----
+ drivers/gpu/drm/msm/msm_gpu.c           | 10 +++++++
+ drivers/gpu/drm/msm/msm_gpu.h           | 10 ++++++-
+ drivers/gpu/drm/msm/msm_iommu.c         | 17 +++++++++++
+ drivers/gpu/drm/msm/msm_mmu.h           |  2 ++
+ drivers/iommu/io-pgtable-arm.c          | 40 ++++++++++++++++++++-----
+ include/linux/io-pgtable.h              |  9 ++++++
+ 8 files changed, 107 insertions(+), 18 deletions(-)
 
 -- 
-Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+2.31.1
 
