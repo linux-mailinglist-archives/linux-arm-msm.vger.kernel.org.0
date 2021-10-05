@@ -2,248 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0DEFC422273
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 11:36:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E7DB142225D
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 11:33:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233721AbhJEJiW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Oct 2021 05:38:22 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:42349 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233645AbhJEJiU (ORCPT
+        id S233608AbhJEJf0 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Oct 2021 05:35:26 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59578 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S233583AbhJEJfZ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Oct 2021 05:38:20 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1633426590; h=References: In-Reply-To: Message-Id: Date:
- Subject: Cc: To: From: Sender;
- bh=R+LERM0seDW8SBOw059obORoY8z/0IQsjwzbtxrxc5Q=; b=KMIM7YfzN2JMPkig9Z6MzlNmDAu2iihTk5fqzPpDhe4L+tncA4abv57q4qH0U/lN2VKay70O
- hK+4Xy6KJcr1ueCVGxzpF/HfRIxImbscujHagh2y8pGnn14FbIrRbm99DKCr0RPu8AkU2hzo
- DHoNJQX3il7X8kndKnQ0IFCWMcw=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 615c1c8a47d64efb6d061c0d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 05 Oct 2021 09:36:10
- GMT
-Sender: deesin=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id A3C65C43616; Tue,  5 Oct 2021 09:36:10 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from deesin-linux.qualcomm.com (unknown [202.46.22.19])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: deesin)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1EB4CC4360D;
-        Tue,  5 Oct 2021 09:36:06 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 1EB4CC4360D
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Deepak Kumar Singh <deesin@codeaurora.org>
-To:     bjorn.andersson@linaro.org, clew@codeaurora.org
-Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        linux-remoteproc@vger.kernel.org,
-        Deepak Kumar Singh <deesin@codeaurora.org>,
-        Andy Gross <agross@kernel.org>
-Subject: [PATCH V3 2/2] soc: qcom: smem: validate fields of shared structures
-Date:   Tue,  5 Oct 2021 15:02:45 +0530
-Message-Id: <1633426371-4827-3-git-send-email-deesin@codeaurora.org>
-X-Mailer: git-send-email 2.7.4
-In-Reply-To: <1633426371-4827-1-git-send-email-deesin@codeaurora.org>
-References: <1633426371-4827-1-git-send-email-deesin@codeaurora.org>
+        Tue, 5 Oct 2021 05:35:25 -0400
+Received: from mail-wm1-x330.google.com (mail-wm1-x330.google.com [IPv6:2a00:1450:4864:20::330])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C0CE5C061749
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Oct 2021 02:33:34 -0700 (PDT)
+Received: by mail-wm1-x330.google.com with SMTP id b136-20020a1c808e000000b0030d60716239so2369981wmd.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Oct 2021 02:33:34 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=84i4+SzL9tiQo/SOSLeEzwo8g6Lg9b2B2s8GHO0rn9o=;
+        b=WaWK+vO3GHH71aqMogJcK7UAKifrVXNE9OzaJrTvObEyqj74YLfbafdzDVMQL0coEu
+         CuNwRzCsT1pVdmPLSvb4NBANiT41zxtJI/SZc5EkT941+DLJJyiDYjAU6StNuECZ33K8
+         UrZluNpRWi00T6c6c4EaouBbA9mcnyzrkZgctEJrBrB8Nke/hS1CXTY1pSMh7lwQF7p7
+         yXXoS1QvI5knJ31FblmsHibRFJO1PkYCaZiAzVVeV9rqDo1asr/fVvHsMuwQczohxNNk
+         77assjsCcZsguQ5DbAWzKSTtiYb3ovZVTa34BZSleiF8LlfWIek22ADi0zk9ZvLtaLNn
+         cS6Q==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=84i4+SzL9tiQo/SOSLeEzwo8g6Lg9b2B2s8GHO0rn9o=;
+        b=1cxpE4TiHMYe1DMBmHRKNTekruqXI+xClQsS1OfhJTB4bUmdVFl3VviSbBnMHlt1O/
+         Is4VHHKsUvb6REUyez6CR/FGDZzwONmvlNBeBh9Fd8ADoVJXvWRgi8+RP1gycX4G2KQW
+         8dWBiS/0rJKC9gW+a0x4WXCgirjePQGoz5/XeOFySOg662kCnBiQEJ+PNFbx3dlnG1X0
+         Ji8Qdy/O/ZAhotnybbVP7cTp9bppaR9d/eke1t0cFsrZRVsBeXss++COvCyttbKDuO/3
+         TFclZWGvnt+QshvlcDEY5MHmdC6/3WMS6GfA9TJ+sD7tcpJcS2xYtmr60L2Og8B15Wm0
+         pZkA==
+X-Gm-Message-State: AOAM530/e8bdp7zz24fdxYszZHjD3xnFMmemc8yQ2qfHcsFuBlj05cYZ
+        YMhWb5+RCCjwA7bkhpfYbGZb9A==
+X-Google-Smtp-Source: ABdhPJw0zjXOLhlcSRooceJ4ayxqpv13Rbw1Of426+AbhSJDGcM2mvcDifH9KLoqa9i1dBz8lo0OzA==
+X-Received: by 2002:a1c:4e0f:: with SMTP id g15mr2276144wmh.74.1633426413360;
+        Tue, 05 Oct 2021 02:33:33 -0700 (PDT)
+Received: from maple.lan (cpc141216-aztw34-2-0-cust174.18-1.cable.virginm.net. [80.7.220.175])
+        by smtp.gmail.com with ESMTPSA id r9sm17065679wru.2.2021.10.05.02.33.32
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Tue, 05 Oct 2021 02:33:32 -0700 (PDT)
+Date:   Tue, 5 Oct 2021 10:33:31 +0100
+From:   Daniel Thompson <daniel.thompson@linaro.org>
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        Courtney Cavin <courtney.cavin@sonymobile.com>,
+        Bryan Wu <cooloney@gmail.com>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 09/10] backlight: qcom-wled: Consistently use
+ enabled-strings in set_brightness
+Message-ID: <20211005093331.4houxsc5b6lfzmbz@maple.lan>
+References: <20211004192741.621870-1-marijn.suijten@somainline.org>
+ <20211004192741.621870-10-marijn.suijten@somainline.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211004192741.621870-10-marijn.suijten@somainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Structures in shared memory that can be modified by remote
-processors may have untrusted values, they should be validated
-before use.
+On Mon, Oct 04, 2021 at 09:27:40PM +0200, Marijn Suijten wrote:
+> The hardware is capable of controlling any non-contiguous sequence of
+> LEDs specified in the DT using qcom,enabled-strings as u32
+> array, and this also follows from the DT-bindings documentation.  The
+> numbers specified in this array represent indices of the LED strings
+> that are to be enabled and disabled.
+> 
+> Its value is appropriately used to setup and enable string modules, but
+> completely disregarded in the set_brightness paths which only iterate
+> over the number of strings linearly.
+> Take an example where only string 2 is enabled with
+> qcom,enabled_strings=<2>: this string is appropriately enabled but
+> subsequent brightness changes would have only touched the zero'th
+> brightness register because num_strings is 1 here.  This is simply
+> addressed by looking up the string for this index in the enabled_strings
+> array just like the other codepaths that iterate over num_strings.
 
-Adding proper validation before using fields of shared
-structures.
+This isn't true until patch 10 is applied!
 
-Signed-off-by: Deepak Kumar Singh <deesin@codeaurora.org>
----
- drivers/soc/qcom/smem.c | 79 ++++++++++++++++++++++++++++++++++++++++++-------
- 1 file changed, 69 insertions(+), 10 deletions(-)
+Given both patches fix the same issue in different functions I'd prefer
+these to be squashed together (and doubly so because the autodetect code
+uses set_brightness() as a helper function).
 
-diff --git a/drivers/soc/qcom/smem.c b/drivers/soc/qcom/smem.c
-index dfbd06b..5cd3ddb 100644
---- a/drivers/soc/qcom/smem.c
-+++ b/drivers/soc/qcom/smem.c
-@@ -366,13 +366,18 @@ static int qcom_smem_alloc_private(struct qcom_smem *smem,
- 	struct smem_partition_header *phdr;
- 	size_t alloc_size;
- 	void *cached;
-+	void *p_end;
- 
- 	phdr = (struct smem_partition_header __force *)part->virt_base;
-+	p_end = (void *)phdr + part->size;
- 
- 	hdr = phdr_to_first_uncached_entry(phdr);
- 	end = phdr_to_last_uncached_entry(phdr);
- 	cached = phdr_to_last_cached_entry(phdr);
- 
-+	if (WARN_ON((void *)end > p_end || (void *)cached > p_end))
-+		return -EINVAL;
-+
- 	while (hdr < end) {
- 		if (hdr->canary != SMEM_PRIVATE_CANARY)
- 			goto bad_canary;
-@@ -382,6 +387,9 @@ static int qcom_smem_alloc_private(struct qcom_smem *smem,
- 		hdr = uncached_entry_next(hdr);
- 	}
- 
-+	if (WARN_ON((void *)hdr > p_end))
-+		return -EINVAL;
-+
- 	/* Check that we don't grow into the cached region */
- 	alloc_size = sizeof(*hdr) + ALIGN(size, 8);
- 	if ((void *)hdr + alloc_size > cached) {
-@@ -500,6 +508,8 @@ static void *qcom_smem_get_global(struct qcom_smem *smem,
- 	struct smem_header *header;
- 	struct smem_region *region;
- 	struct smem_global_entry *entry;
-+	u64 entry_offset;
-+	u32 e_size;
- 	u32 aux_base;
- 	unsigned i;
- 
-@@ -514,9 +524,16 @@ static void *qcom_smem_get_global(struct qcom_smem *smem,
- 		region = &smem->regions[i];
- 
- 		if (region->aux_base == aux_base || !aux_base) {
-+			e_size = le32_to_cpu(entry->size);
-+			entry_offset = le32_to_cpu(entry->offset);
-+
-+			if (WARN_ON(e_size + entry_offset > region->size))
-+				return ERR_PTR(-EINVAL);
-+
- 			if (size != NULL)
--				*size = le32_to_cpu(entry->size);
--			return region->virt_base + le32_to_cpu(entry->offset);
-+				*size = e_size;
-+
-+			return region->virt_base + entry_offset;
- 		}
- 	}
- 
-@@ -530,8 +547,12 @@ static void *qcom_smem_get_private(struct qcom_smem *smem,
- {
- 	struct smem_private_entry *e, *end;
- 	struct smem_partition_header *phdr;
-+	void *item_ptr, *p_end;
-+	u32 padding_data;
-+	u32 e_size;
- 
- 	phdr = (struct smem_partition_header __force *)part->virt_base;
-+	p_end = (void *)phdr + part->size;
- 
- 	e = phdr_to_first_uncached_entry(phdr);
- 	end = phdr_to_last_uncached_entry(phdr);
-@@ -541,36 +562,65 @@ static void *qcom_smem_get_private(struct qcom_smem *smem,
- 			goto invalid_canary;
- 
- 		if (le16_to_cpu(e->item) == item) {
--			if (size != NULL)
--				*size = le32_to_cpu(e->size) -
--					le16_to_cpu(e->padding_data);
-+			if (size != NULL) {
-+				e_size = le32_to_cpu(e->size);
-+				padding_data = le16_to_cpu(e->padding_data);
-+
-+				if (WARN_ON(e_size > part->size || padding_data > e_size))
-+					return ERR_PTR(-EINVAL);
-+
-+				*size = e_size - padding_data;
-+			}
-+
-+			item_ptr = uncached_entry_to_item(e);
-+			if (WARN_ON(item_ptr > p_end))
-+				return ERR_PTR(-EINVAL);
- 
--			return uncached_entry_to_item(e);
-+			return item_ptr;
- 		}
- 
- 		e = uncached_entry_next(e);
- 	}
- 
-+	if (WARN_ON((void *)e > p_end))
-+		return ERR_PTR(-EINVAL);
-+
- 	/* Item was not found in the uncached list, search the cached list */
- 
- 	e = phdr_to_first_cached_entry(phdr, part->cacheline);
- 	end = phdr_to_last_cached_entry(phdr);
- 
-+	if (WARN_ON((void *)e < (void *)phdr || (void *)end > p_end))
-+		return ERR_PTR(-EINVAL);
-+
- 	while (e > end) {
- 		if (e->canary != SMEM_PRIVATE_CANARY)
- 			goto invalid_canary;
- 
- 		if (le16_to_cpu(e->item) == item) {
--			if (size != NULL)
--				*size = le32_to_cpu(e->size) -
--					le16_to_cpu(e->padding_data);
-+			if (size != NULL) {
-+				e_size = le32_to_cpu(e->size);
-+				padding_data = le16_to_cpu(e->padding_data);
-+
-+				if (WARN_ON(e_size > part->size || padding_data > e_size))
-+					return ERR_PTR(-EINVAL);
-+
-+				*size = e_size - padding_data;
-+			}
- 
--			return cached_entry_to_item(e);
-+			item_ptr = cached_entry_to_item(e);
-+			if (WARN_ON(item_ptr < (void *)phdr))
-+				return ERR_PTR(-EINVAL);
-+
-+			return item_ptr;
- 		}
- 
- 		e = cached_entry_next(e, part->cacheline);
- 	}
- 
-+	if (WARN_ON((void *)e < (void *)phdr))
-+		return ERR_PTR(-EINVAL);
-+
- 	return ERR_PTR(-ENOENT);
- 
- invalid_canary:
-@@ -647,14 +697,23 @@ int qcom_smem_get_free_space(unsigned host)
- 		phdr = part->virt_base;
- 		ret = le32_to_cpu(phdr->offset_free_cached) -
- 		      le32_to_cpu(phdr->offset_free_uncached);
-+
-+		if (ret > le32_to_cpu(part->size))
-+			return -EINVAL;
- 	} else if (__smem->global_partition.virt_base) {
- 		part = &__smem->global_partition;
- 		phdr = part->virt_base;
- 		ret = le32_to_cpu(phdr->offset_free_cached) -
- 		      le32_to_cpu(phdr->offset_free_uncached);
-+
-+		if (ret > le32_to_cpu(part->size))
-+			return -EINVAL;
- 	} else {
- 		header = __smem->regions[0].virt_base;
- 		ret = le32_to_cpu(header->available);
-+
-+		if (ret > __smem->regions[0].size)
-+			return -EINVAL;
- 	}
- 
- 	return ret;
--- 
-The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-a Linux Foundation Collaborative Project
 
+Daniel.
