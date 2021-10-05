@@ -2,33 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 78007423166
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 22:13:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A39DB423177
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 22:17:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235679AbhJEUPQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Oct 2021 16:15:16 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:11804 "EHLO m43-7.mailgun.net"
+        id S235581AbhJEUSs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Oct 2021 16:18:48 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:43360 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229920AbhJEUPQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Oct 2021 16:15:16 -0400
+        id S229805AbhJEUSj (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 5 Oct 2021 16:18:39 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1633464805; h=Message-ID: References: In-Reply-To: Subject:
+ s=smtp; t=1633465009; h=Message-ID: References: In-Reply-To: Subject:
  Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=YLC/Q/jdvQ6/AOXqkmsIgNmFnLhtq0kwWRcsTJ1mOpY=;
- b=KQuqMdRXLQSWar/GcjGgqM62SpwkD6v3PV6MR7KtS8Nq/TuLQGlmnAGe5FkvSwy9Q6GXVdWO
- pTW+bjyvTIMkHCw2rWj24JyMYdZvnTJvl0fRySyDhP4Sw8z+i21fcTF2kdPpwMY9+Cb4xbRI
- hxpn1sIIIdBHwjWuj1P1sZaDofc=
+ MIME-Version: Sender; bh=LLYWj2cR3RQ0XRJuW8Ce2jrEoU1FZsckcPyjTmeI2us=;
+ b=HlEx6fVz8yKIujgM3DBR2MPjAondVpsDPpTnODaVUQoyKXfCqxid+Yrar4/xpdfnWy/pW98M
+ oDb1A2a2aQ5IvVdTE2aEFocRQ79GRZdl67dbMJpT1BhQa0bEYk47MLcCPPZKs5Mm4/3yKIvq
+ eDHhTtbgbmcQcn+3pgpEo16eHvM=
 X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 615cb1d6ff0285fb0a75c163 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 05 Oct 2021 20:13:10
+ smtp-out-n04.prod.us-east-1.postgun.com with SMTP id
+ 615cb2a209ab553889c26fe9 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 05 Oct 2021 20:16:34
  GMT
 Sender: abhinavk=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id BF179C43617; Tue,  5 Oct 2021 20:13:09 +0000 (UTC)
+        id 2DF12C4361A; Tue,  5 Oct 2021 20:16:34 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -38,13 +38,13 @@ Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
         (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
         (No client certificate requested)
         (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 907DEC4338F;
-        Tue,  5 Oct 2021 20:13:08 +0000 (UTC)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B9750C4360C;
+        Tue,  5 Oct 2021 20:16:31 +0000 (UTC)
 MIME-Version: 1.0
 Content-Type: text/plain; charset=US-ASCII;
  format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Tue, 05 Oct 2021 13:13:08 -0700
+Date:   Tue, 05 Oct 2021 13:16:31 -0700
 From:   abhinavk@codeaurora.org
 To:     Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
@@ -57,12 +57,12 @@ Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
         Stephen Boyd <swboyd@chromium.org>,
         linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
         freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [Freedreno] [PATCH v3 2/5] drm/msm/dp: Modify prototype of
- encoder based API
-In-Reply-To: <20211001180058.1021913-3-bjorn.andersson@linaro.org>
+Subject: Re: [Freedreno] [PATCH v3 3/5] drm/msm/dp: Support up to 3 DP
+ controllers
+In-Reply-To: <20211001180058.1021913-4-bjorn.andersson@linaro.org>
 References: <20211001180058.1021913-1-bjorn.andersson@linaro.org>
- <20211001180058.1021913-3-bjorn.andersson@linaro.org>
-Message-ID: <1b86ea5b536d11335ec457fb729886ce@codeaurora.org>
+ <20211001180058.1021913-4-bjorn.andersson@linaro.org>
+Message-ID: <737b902fd0599d9659f4d22ec143b4a7@codeaurora.org>
 X-Sender: abhinavk@codeaurora.org
 User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
@@ -70,108 +70,327 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 2021-10-01 11:00, Bjorn Andersson wrote:
-> Functions in the DisplayPort code that relates to individual instances
-> (encoders) are passed both the struct msm_dp and the struct 
-> drm_encoder. But
-> in a situation where multiple DP instances would exist this means that
-> the caller need to resolve which struct msm_dp relates to the struct
-> drm_encoder at hand.
+> Based on the removal of the g_dp_display and the movement of the
+> priv->dp lookup into the DP code it's now possible to have multiple
+> DP instances.
 > 
-> Store a reference to the struct msm_dp associated with each
-> dpu_encoder_virt to allow the particular instance to be associate with
-> the encoder in the following patch.
+> In line with the other controllers in the MSM driver, introduce a
+> per-compatible list of base addresses which is used to resolve the
+> "instance id" for the given DP controller. This instance id is used as
+> index in the priv->dp[] array.
 > 
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Then extend the initialization code to initialize struct drm_encoder 
+> for
+> each of the registered priv->dp[] and update the logic for associating
+> each struct msm_dp with the struct dpu_encoder_virt.
+> 
+> Lastly, bump the number of struct msm_dp instances carries by priv->dp
+> to 3, the currently known maximum number of controllers found in a
+> Qualcomm SoC.
+> 
 > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
 > ---
 > 
 > Changes since v2:
-> - None
+> - Added MSM_DRM_DP_COUNT to link the two 3s
+> - Moved NULL check for msm_dp_debugfs_init() to the call site
+> - Made struct dp_display_private->id unsigned
 > 
->  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 23 ++++++++++++---------
->  1 file changed, 13 insertions(+), 10 deletions(-)
+> I also implemented added connector_type to each of the DP instances and
+> propagated this to dp_drm_connector_init() but later dropped this again 
+> per
+> Doug's suggestion that we'll base this on the presence/absence of a 
+> associated
+> drm bridge or panel.
+> 
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c   |  2 +-
+>  drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c       | 66 +++++++++++--------
+>  .../gpu/drm/msm/disp/msm_disp_snapshot_util.c |  8 ++-
+>  drivers/gpu/drm/msm/dp/dp_display.c           | 44 ++++++++++++-
+>  drivers/gpu/drm/msm/msm_drv.h                 |  4 +-
+>  5 files changed, 90 insertions(+), 34 deletions(-)
 > 
 > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
 > b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index 0e9d3fa1544b..b7f33da2799c 100644
+> index b7f33da2799c..9cd9539a1504 100644
 > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
 > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -168,6 +168,7 @@ enum dpu_enc_rc_states {
->   * @vsync_event_work:		worker to handle vsync event for autorefresh
->   * @topology:                   topology of the display
->   * @idle_timeout:		idle timeout duration in milliseconds
-> + * @dp:				msm_dp pointer, for DP encoders
->   */
->  struct dpu_encoder_virt {
->  	struct drm_encoder base;
-> @@ -206,6 +207,8 @@ struct dpu_encoder_virt {
->  	struct msm_display_topology topology;
-> 
->  	u32 idle_timeout;
-> +
-> +	struct msm_dp *dp;
->  };
-> 
->  #define to_dpu_encoder_virt(x) container_of(x, struct 
-> dpu_encoder_virt, base)
-> @@ -1000,8 +1003,8 @@ static void dpu_encoder_virt_mode_set(struct
-> drm_encoder *drm_enc,
-> 
->  	trace_dpu_enc_mode_set(DRMID(drm_enc));
-> 
-> -	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS && priv->dp)
-> -		msm_dp_display_mode_set(priv->dp, drm_enc, mode, adj_mode);
-> +	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS)
-> +		msm_dp_display_mode_set(dpu_enc->dp, drm_enc, mode, adj_mode);
-> 
->  	list_for_each_entry(conn_iter, connector_list, head)
->  		if (conn_iter->encoder == drm_enc)
-> @@ -1182,9 +1185,8 @@ static void dpu_encoder_virt_enable(struct
-> drm_encoder *drm_enc)
-> 
->  	_dpu_encoder_virt_enable_helper(drm_enc);
-> 
-> -	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS && priv->dp) {
-> -		ret = msm_dp_display_enable(priv->dp,
-> -						drm_enc);
-> +	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS) {
-> +		ret = msm_dp_display_enable(dpu_enc->dp, drm_enc);
->  		if (ret) {
->  			DPU_ERROR_ENC(dpu_enc, "dp display enable failed: %d\n",
->  				ret);
-> @@ -1224,8 +1226,8 @@ static void dpu_encoder_virt_disable(struct
-> drm_encoder *drm_enc)
->  	/* wait for idle */
->  	dpu_encoder_wait_for_event(drm_enc, MSM_ENC_TX_COMPLETE);
-> 
-> -	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS && priv->dp) {
-> -		if (msm_dp_display_pre_disable(priv->dp, drm_enc))
-> +	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS) {
-> +		if (msm_dp_display_pre_disable(dpu_enc->dp, drm_enc))
->  			DPU_ERROR_ENC(dpu_enc, "dp display push idle failed\n");
->  	}
-> 
-> @@ -1253,8 +1255,8 @@ static void dpu_encoder_virt_disable(struct
-> drm_encoder *drm_enc)
-> 
->  	DPU_DEBUG_ENC(dpu_enc, "encoder disabled\n");
-> 
-> -	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS && priv->dp) {
-> -		if (msm_dp_display_disable(priv->dp, drm_enc))
-> +	if (drm_enc->encoder_type == DRM_MODE_ENCODER_TMDS) {
-> +		if (msm_dp_display_disable(dpu_enc->dp, drm_enc))
->  			DPU_ERROR_ENC(dpu_enc, "dp display disable failed\n");
->  	}
-> 
-> @@ -2170,7 +2172,8 @@ int dpu_encoder_setup(struct drm_device *dev,
+> @@ -2173,7 +2173,7 @@ int dpu_encoder_setup(struct drm_device *dev,
 > struct drm_encoder *enc,
->  		timer_setup(&dpu_enc->vsync_event_timer,
 >  				dpu_encoder_vsync_event_handler,
 >  				0);
-> -
-> +	else if (disp_info->intf_type == DRM_MODE_ENCODER_TMDS)
-> +		dpu_enc->dp = priv->dp;
+>  	else if (disp_info->intf_type == DRM_MODE_ENCODER_TMDS)
+> -		dpu_enc->dp = priv->dp;
+> +		dpu_enc->dp = priv->dp[disp_info->h_tile_instance[0]];
+
+At this point this is a nit but not sure if this is right to use the 
+tile_instance as the index.
+In the future if we chose to assign another index to the 
+h_tile_instance, this would break.
+But I cant think of the use-case for that yet, Hence
+Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
+
 > 
 >  	INIT_DELAYED_WORK(&dpu_enc->delayed_off_work,
 >  			dpu_encoder_off_work);
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> index f655adbc2421..875b07e7183d 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c
+> @@ -188,6 +188,7 @@ static int dpu_kms_debugfs_init(struct msm_kms
+> *kms, struct drm_minor *minor)
+>  	struct dentry *entry;
+>  	struct drm_device *dev;
+>  	struct msm_drm_private *priv;
+> +	int i;
+> 
+>  	if (!p)
+>  		return -EINVAL;
+> @@ -203,8 +204,10 @@ static int dpu_kms_debugfs_init(struct msm_kms
+> *kms, struct drm_minor *minor)
+>  	dpu_debugfs_vbif_init(dpu_kms, entry);
+>  	dpu_debugfs_core_irq_init(dpu_kms, entry);
+> 
+> -	if (priv->dp)
+> -		msm_dp_debugfs_init(priv->dp, minor);
+> +	for (i = 0; i < ARRAY_SIZE(priv->dp); i++) {
+> +		if (priv->dp[i])
+> +			msm_dp_debugfs_init(priv->dp[i], minor);
+> +	}
+> 
+>  	return dpu_core_perf_debugfs_init(dpu_kms, entry);
+>  }
+> @@ -544,35 +547,42 @@ static int
+> _dpu_kms_initialize_displayport(struct drm_device *dev,
+>  {
+>  	struct drm_encoder *encoder = NULL;
+>  	struct msm_display_info info;
+> -	int rc = 0;
+> +	int rc;
+> +	int i;
+> 
+> -	if (!priv->dp)
+> -		return rc;
+> +	for (i = 0; i < ARRAY_SIZE(priv->dp); i++) {
+> +		if (!priv->dp[i])
+> +			continue;
+> 
+> -	encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_TMDS);
+> -	if (IS_ERR(encoder)) {
+> -		DPU_ERROR("encoder init failed for dsi display\n");
+> -		return PTR_ERR(encoder);
+> -	}
+> +		encoder = dpu_encoder_init(dev, DRM_MODE_ENCODER_TMDS);
+> +		if (IS_ERR(encoder)) {
+> +			DPU_ERROR("encoder init failed for dsi display\n");
+> +			return PTR_ERR(encoder);
+> +		}
+> 
+> -	memset(&info, 0, sizeof(info));
+> -	rc = msm_dp_modeset_init(priv->dp, dev, encoder);
+> -	if (rc) {
+> -		DPU_ERROR("modeset_init failed for DP, rc = %d\n", rc);
+> -		drm_encoder_cleanup(encoder);
+> -		return rc;
+> -	}
+> +		memset(&info, 0, sizeof(info));
+> +		rc = msm_dp_modeset_init(priv->dp[i], dev, encoder);
+> +		if (rc) {
+> +			DPU_ERROR("modeset_init failed for DP, rc = %d\n", rc);
+> +			drm_encoder_cleanup(encoder);
+> +			return rc;
+> +		}
+> 
+> -	priv->encoders[priv->num_encoders++] = encoder;
+> +		priv->encoders[priv->num_encoders++] = encoder;
+> 
+> -	info.num_of_h_tiles = 1;
+> -	info.capabilities = MSM_DISPLAY_CAP_VID_MODE;
+> -	info.intf_type = encoder->encoder_type;
+> -	rc = dpu_encoder_setup(dev, encoder, &info);
+> -	if (rc)
+> -		DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
+> -			  encoder->base.id, rc);
+> -	return rc;
+> +		info.num_of_h_tiles = 1;
+> +		info.h_tile_instance[0] = i;
+> +		info.capabilities = MSM_DISPLAY_CAP_VID_MODE;
+> +		info.intf_type = encoder->encoder_type;
+> +		rc = dpu_encoder_setup(dev, encoder, &info);
+> +		if (rc) {
+> +			DPU_ERROR("failed to setup DPU encoder %d: rc:%d\n",
+> +				  encoder->base.id, rc);
+> +			return rc;
+> +		}
+> +	}
+> +
+> +	return 0;
+>  }
+> 
+>  /**
+> @@ -792,6 +802,7 @@ static int dpu_irq_postinstall(struct msm_kms *kms)
+>  {
+>  	struct msm_drm_private *priv;
+>  	struct dpu_kms *dpu_kms = to_dpu_kms(kms);
+> +	int i;
+> 
+>  	if (!dpu_kms || !dpu_kms->dev)
+>  		return -EINVAL;
+> @@ -800,7 +811,8 @@ static int dpu_irq_postinstall(struct msm_kms *kms)
+>  	if (!priv)
+>  		return -EINVAL;
+> 
+> -	msm_dp_irq_postinstall(priv->dp);
+> +	for (i = 0; i < ARRAY_SIZE(priv->dp); i++)
+> +		msm_dp_irq_postinstall(priv->dp[i]);
+> 
+>  	return 0;
+>  }
+> diff --git a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+> b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+> index cabe15190ec1..2e1acb1bc390 100644
+> --- a/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+> +++ b/drivers/gpu/drm/msm/disp/msm_disp_snapshot_util.c
+> @@ -126,8 +126,12 @@ void msm_disp_snapshot_capture_state(struct
+> msm_disp_state *disp_state)
+>  	priv = drm_dev->dev_private;
+>  	kms = priv->kms;
+> 
+> -	if (priv->dp)
+> -		msm_dp_snapshot(disp_state, priv->dp);
+> +	for (i = 0; i < ARRAY_SIZE(priv->dp); i++) {
+> +		if (!priv->dp[i])
+> +			continue;
+> +
+> +		msm_dp_snapshot(disp_state, priv->dp[i]);
+> +	}
+> 
+>  	for (i = 0; i < ARRAY_SIZE(priv->dsi); i++) {
+>  		if (!priv->dsi[i])
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c
+> b/drivers/gpu/drm/msm/dp/dp_display.c
+> index 5d3ee5ef07c2..ff3477474c5d 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -78,6 +78,8 @@ struct dp_display_private {
+>  	char *name;
+>  	int irq;
+> 
+> +	unsigned int id;
+> +
+>  	/* state variables */
+>  	bool core_initialized;
+>  	bool hpd_irq_on;
+> @@ -115,8 +117,18 @@ struct dp_display_private {
+>  	struct dp_audio *audio;
+>  };
+> 
+> +struct msm_dp_config {
+> +	phys_addr_t io_start[MSM_DRM_DP_COUNT];
+> +	size_t num_descs;
+> +};
+> +
+> +static const struct msm_dp_config sc7180_dp_cfg = {
+> +	.io_start = { 0x0ae90000 },
+> +	.num_descs = 1,
+> +};
+> +
+>  static const struct of_device_id dp_dt_match[] = {
+> -	{.compatible = "qcom,sc7180-dp"},
+> +	{ .compatible = "qcom,sc7180-dp", .data = &sc7180_dp_cfg },
+>  	{}
+>  };
+> 
+> @@ -211,7 +223,7 @@ static int dp_display_bind(struct device *dev,
+> struct device *master,
+> 
+>  	dp->dp_display.drm_dev = drm;
+>  	priv = drm->dev_private;
+> -	priv->dp = &(dp->dp_display);
+> +	priv->dp[dp->id] = &(dp->dp_display);
+> 
+>  	rc = dp->parser->parse(dp->parser);
+>  	if (rc) {
+> @@ -249,7 +261,7 @@ static void dp_display_unbind(struct device *dev,
+> struct device *master,
+> 
+>  	dp_power_client_deinit(dp->power);
+>  	dp_aux_unregister(dp->aux);
+> -	priv->dp = NULL;
+> +	priv->dp[dp->id] = NULL;
+>  }
+> 
+>  static const struct component_ops dp_display_comp_ops = {
+> @@ -1180,10 +1192,31 @@ int dp_display_request_irq(struct msm_dp 
+> *dp_display)
+>  	return 0;
+>  }
+> 
+> +static int dp_display_find_id(struct platform_device *pdev)
+> +{
+> +	const struct msm_dp_config *cfg = 
+> of_device_get_match_data(&pdev->dev);
+> +	struct resource *res;
+> +	int i;
+> +
+> +
+> +	res = platform_get_resource(pdev, IORESOURCE_MEM, 0);
+> +	if (!res)
+> +		return -EINVAL;
+> +
+> +	for (i = 0; i < cfg->num_descs; i++) {
+> +		if (cfg->io_start[i] == res->start)
+> +			return i;
+> +	}
+> +
+> +	dev_err(&pdev->dev, "unknown displayport instance\n");
+> +	return -EINVAL;
+> +}
+> +
+>  static int dp_display_probe(struct platform_device *pdev)
+>  {
+>  	int rc = 0;
+>  	struct dp_display_private *dp;
+> +	int id;
+> 
+>  	if (!pdev || !pdev->dev.of_node) {
+>  		DRM_ERROR("pdev not found\n");
+> @@ -1194,8 +1227,13 @@ static int dp_display_probe(struct 
+> platform_device *pdev)
+>  	if (!dp)
+>  		return -ENOMEM;
+> 
+> +	id = dp_display_find_id(pdev);
+> +	if (id < 0)
+> +		return id;
+> +
+>  	dp->pdev = pdev;
+>  	dp->name = "drm_dp";
+> +	dp->id = id;
+> 
+>  	rc = dp_init_sub_modules(dp);
+>  	if (rc) {
+> diff --git a/drivers/gpu/drm/msm/msm_drv.h 
+> b/drivers/gpu/drm/msm/msm_drv.h
+> index 8b005d1ac899..b20a6dd221f7 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.h
+> +++ b/drivers/gpu/drm/msm/msm_drv.h
+> @@ -135,6 +135,8 @@ struct msm_drm_thread {
+>  	struct kthread_worker *worker;
+>  };
+> 
+> +#define MSM_DRM_DP_COUNT	3
+> +
+>  struct msm_drm_private {
+> 
+>  	struct drm_device *dev;
+> @@ -161,7 +163,7 @@ struct msm_drm_private {
+>  	/* DSI is shared by mdp4 and mdp5 */
+>  	struct msm_dsi *dsi[2];
+> 
+> -	struct msm_dp *dp;
+> +	struct msm_dp *dp[MSM_DRM_DP_COUNT];
+> 
+>  	/* when we have more than one 'msm_gpu' these need to be an array: */
+>  	struct msm_gpu *gpu;
