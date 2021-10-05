@@ -2,236 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B83A9422B55
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 16:43:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E40D8422BC3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 17:05:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235218AbhJEOpd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Oct 2021 10:45:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48774 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234355AbhJEOpc (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Oct 2021 10:45:32 -0400
-Received: from mail-lf1-x129.google.com (mail-lf1-x129.google.com [IPv6:2a00:1450:4864:20::129])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5FE2C061753
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Oct 2021 07:43:41 -0700 (PDT)
-Received: by mail-lf1-x129.google.com with SMTP id b20so87946176lfv.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Oct 2021 07:43:41 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=E2YJV+cRv0tFDhiSivfR6SvH37WdzUlDmvLwCor6dDY=;
-        b=RNO75ywst6VusRTOSyrP3384uvp9Io+Kr0VZ6hSkOXSkwALBRjXIyk51iRKNeCFPA2
-         r9621ip4YjSvLjNE7Eq3ZINWyeiByJqNJliNuoaGSBwxvzU5cJfAA74DefpokBzIf6VV
-         BGHplVtWfLYZ2bI7Ct+QQYi8bkcnnfDNoCzNOnWEvvCh/l8wTyB5gyMlaqQCYuqEWAzN
-         4ZRgFQzETdFf7l5dMYUjAkDE/qZ6cez+DBQf4x6GIbIFRIDQPrvxFwLXemgy3LDmxnUT
-         6CJutLLxL5/EIWJAcDNyJnTgJ8lsL/OweKuR99+Gow6YVWoKsAKqF9wzRM8Q3VRkoRyJ
-         6bTA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=E2YJV+cRv0tFDhiSivfR6SvH37WdzUlDmvLwCor6dDY=;
-        b=gJgnDtRCq3tSIUaIOA3UyhzHfsheUIUJ2P0c8r776CYgcPqI8wX5ws/pLr+7KTEYmW
-         DQD/pkgzM0VR9PO1UOBztzoaFxOJN4ixDowWn0uRX29Pp4FZdtv60Z9GN9jsFDn0Kr6G
-         yAUiIfN4Vo6Tz/7eSMtP4q3sKVQr7xjgTv27CB4nakZc4K+pv8cEK5ivgTSqhoFegzkN
-         cj9BaQJFl2ml8/0/qa4jSAIhUdnljz/urKPb6+fcTOffQO/6/WLj9j9NP7h9xnTaEUaC
-         eHg1JHuCHZ/2UcChE4V1G+18jqVbor8C3vFWc4Ix7IjR+6RG++ZR/pV7LjcS7PWlEsMC
-         VtNw==
-X-Gm-Message-State: AOAM530GIXFcs94sXQY30zhuatq9n2XJFZk5GhFflmAxbOh1J5mGEPbI
-        rNGWLPFr6OAetTJYttLWWE34zA==
-X-Google-Smtp-Source: ABdhPJwz6Wcl94gRDUuXQqk3D99wuFnF0Zgc0vx8qCPNjS61Fatmf+enEuNGqpqGaoJX2KNPMemtuA==
-X-Received: by 2002:a05:6512:128b:: with SMTP id u11mr4097553lfs.24.1633445020052;
-        Tue, 05 Oct 2021 07:43:40 -0700 (PDT)
-Received: from umbar.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id t22sm1987173ljc.120.2021.10.05.07.43.39
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Oct 2021 07:43:39 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v2 6/6] pinctrl: qcom: spmi-mpp: add support for hierarchical IRQ chip
-Date:   Tue,  5 Oct 2021 17:43:29 +0300
-Message-Id: <20211005144329.2405315-7-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <20211005144329.2405315-1-dmitry.baryshkov@linaro.org>
-References: <20211005144329.2405315-1-dmitry.baryshkov@linaro.org>
+        id S235090AbhJEPHM (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Oct 2021 11:07:12 -0400
+Received: from mga18.intel.com ([134.134.136.126]:53938 "EHLO mga18.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S235022AbhJEPHL (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 5 Oct 2021 11:07:11 -0400
+X-IronPort-AV: E=McAfee;i="6200,9189,10128"; a="212696560"
+X-IronPort-AV: E=Sophos;i="5.85,349,1624345200"; 
+   d="scan'208";a="212696560"
+Received: from fmsmga008.fm.intel.com ([10.253.24.58])
+  by orsmga106.jf.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Oct 2021 08:04:01 -0700
+X-IronPort-AV: E=Sophos;i="5.85,349,1624345200"; 
+   d="scan'208";a="523803649"
+Received: from emccutch-mobl.amr.corp.intel.com (HELO [10.212.34.81]) ([10.212.34.81])
+  by fmsmga008-auth.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 05 Oct 2021 08:03:59 -0700
+Subject: Re: [PATCH] ASoC: qcom: soundwire: Enable soundwire bus clock for
+ version 1.6
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
+        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        swboyd@chromium.org, judyhsiao@chromium.org
+Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>
+References: <1633105471-30928-1-git-send-email-srivasam@codeaurora.org>
+ <a2b6a9c7-2191-4bc9-b03b-3b22b495a4be@linux.intel.com>
+ <2c18ff0c-cd24-356c-0104-086837ed7ff0@codeaurora.org>
+From:   Pierre-Louis Bossart <pierre-louis.bossart@linux.intel.com>
+Message-ID: <d485af5f-4dfb-df08-9a22-901b7534ca3b@linux.intel.com>
+Date:   Tue, 5 Oct 2021 10:03:56 -0500
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Firefox/78.0 Thunderbird/78.13.0
 MIME-Version: 1.0
+In-Reply-To: <2c18ff0c-cd24-356c-0104-086837ed7ff0@codeaurora.org>
+Content-Type: text/plain; charset=utf-8
+Content-Language: en-US
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-spmi-mpp did not have any irqchip support so consumers of this in
-device tree would need to call gpio[d]_to_irq() in order to get the
-proper IRQ on the underlying PMIC. IRQ chips in device tree should be
-usable from the start without the consumer having to make an additional
-call to get the proper IRQ on the parent. This patch adds hierarchical
-IRQ chip support to the spmi-mpp code to correct this issue.
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/pinctrl/qcom/pinctrl-spmi-mpp.c | 86 ++++++++++++++++++++-----
- 1 file changed, 69 insertions(+), 17 deletions(-)
 
-diff --git a/drivers/pinctrl/qcom/pinctrl-spmi-mpp.c b/drivers/pinctrl/qcom/pinctrl-spmi-mpp.c
-index a9f994863126..b80723928b7e 100644
---- a/drivers/pinctrl/qcom/pinctrl-spmi-mpp.c
-+++ b/drivers/pinctrl/qcom/pinctrl-spmi-mpp.c
-@@ -103,7 +103,6 @@
- /**
-  * struct pmic_mpp_pad - keep current MPP settings
-  * @base: Address base in SPMI device.
-- * @irq: IRQ number which this MPP generate.
-  * @is_enabled: Set to false when MPP should be put in high Z state.
-  * @out_value: Cached pin output value.
-  * @output_enabled: Set to true if MPP output logic is enabled.
-@@ -121,7 +120,6 @@
-  */
- struct pmic_mpp_pad {
- 	u16		base;
--	int		irq;
- 	bool		is_enabled;
- 	bool		out_value;
- 	bool		output_enabled;
-@@ -143,6 +141,7 @@ struct pmic_mpp_state {
- 	struct regmap	*map;
- 	struct pinctrl_dev *ctrl;
- 	struct gpio_chip chip;
-+	struct irq_chip irq;
- };
- 
- static const struct pinconf_generic_params pmic_mpp_bindings[] = {
-@@ -622,16 +621,6 @@ static int pmic_mpp_of_xlate(struct gpio_chip *chip,
- 	return gpio_desc->args[0] - PMIC_MPP_PHYSICAL_OFFSET;
- }
- 
--static int pmic_mpp_to_irq(struct gpio_chip *chip, unsigned pin)
--{
--	struct pmic_mpp_state *state = gpiochip_get_data(chip);
--	struct pmic_mpp_pad *pad;
--
--	pad = state->ctrl->desc->pins[pin].drv_data;
--
--	return pad->irq;
--}
--
- static void pmic_mpp_dbg_show(struct seq_file *s, struct gpio_chip *chip)
- {
- 	struct pmic_mpp_state *state = gpiochip_get_data(chip);
-@@ -651,7 +640,6 @@ static const struct gpio_chip pmic_mpp_gpio_template = {
- 	.request		= gpiochip_generic_request,
- 	.free			= gpiochip_generic_free,
- 	.of_xlate		= pmic_mpp_of_xlate,
--	.to_irq			= pmic_mpp_to_irq,
- 	.dbg_show		= pmic_mpp_dbg_show,
- };
- 
-@@ -796,13 +784,53 @@ static int pmic_mpp_populate(struct pmic_mpp_state *state,
- 	return 0;
- }
- 
-+static int pmic_mpp_domain_translate(struct irq_domain *domain,
-+				      struct irq_fwspec *fwspec,
-+				      unsigned long *hwirq,
-+				      unsigned int *type)
-+{
-+	struct pmic_mpp_state *state = container_of(domain->host_data,
-+						     struct pmic_mpp_state,
-+						     chip);
-+
-+	if (fwspec->param_count != 2 ||
-+	    fwspec->param[0] < 1 || fwspec->param[0] > state->chip.ngpio)
-+		return -EINVAL;
-+
-+	*hwirq = fwspec->param[0] - PMIC_MPP_PHYSICAL_OFFSET;
-+	*type = fwspec->param[1];
-+
-+	return 0;
-+}
-+
-+static unsigned int pmic_mpp_child_offset_to_irq(struct gpio_chip *chip,
-+						  unsigned int offset)
-+{
-+	return offset + PMIC_MPP_PHYSICAL_OFFSET;
-+}
-+
-+static int pmic_mpp_child_to_parent_hwirq(struct gpio_chip *chip,
-+					   unsigned int child_hwirq,
-+					   unsigned int child_type,
-+					   unsigned int *parent_hwirq,
-+					   unsigned int *parent_type)
-+{
-+	*parent_hwirq = child_hwirq + 0xc0;
-+	*parent_type = child_type;
-+
-+	return 0;
-+}
-+
- static int pmic_mpp_probe(struct platform_device *pdev)
- {
-+	struct irq_domain *parent_domain;
-+	struct device_node *parent_node;
- 	struct device *dev = &pdev->dev;
- 	struct pinctrl_pin_desc *pindesc;
- 	struct pinctrl_desc *pctrldesc;
- 	struct pmic_mpp_pad *pad, *pads;
- 	struct pmic_mpp_state *state;
-+	struct gpio_irq_chip *girq;
- 	int ret, npins, i;
- 	u32 reg;
- 
-@@ -857,10 +885,6 @@ static int pmic_mpp_probe(struct platform_device *pdev)
- 		pindesc->number = i;
- 		pindesc->name = pmic_mpp_groups[i];
- 
--		pad->irq = platform_get_irq(pdev, i);
--		if (pad->irq < 0)
--			return pad->irq;
--
- 		pad->base = reg + i * PMIC_MPP_ADDRESS_RANGE;
- 
- 		ret = pmic_mpp_populate(state, pad);
-@@ -880,6 +904,34 @@ static int pmic_mpp_probe(struct platform_device *pdev)
- 	if (IS_ERR(state->ctrl))
- 		return PTR_ERR(state->ctrl);
- 
-+	parent_node = of_irq_find_parent(state->dev->of_node);
-+	if (!parent_node)
-+		return -ENXIO;
-+
-+	parent_domain = irq_find_host(parent_node);
-+	of_node_put(parent_node);
-+	if (!parent_domain)
-+		return -ENXIO;
-+
-+	state->irq.name = "spmi-mpp",
-+	state->irq.irq_ack = irq_chip_ack_parent,
-+	state->irq.irq_mask = irq_chip_mask_parent,
-+	state->irq.irq_unmask = irq_chip_unmask_parent,
-+	state->irq.irq_set_type = irq_chip_set_type_parent,
-+	state->irq.irq_set_wake = irq_chip_set_wake_parent,
-+	state->irq.flags = IRQCHIP_MASK_ON_SUSPEND,
-+
-+	girq = &state->chip.irq;
-+	girq->chip = &state->irq;
-+	girq->default_type = IRQ_TYPE_NONE;
-+	girq->handler = handle_level_irq;
-+	girq->fwnode = of_node_to_fwnode(state->dev->of_node);
-+	girq->parent_domain = parent_domain;
-+	girq->child_to_parent_hwirq = pmic_mpp_child_to_parent_hwirq;
-+	girq->populate_parent_alloc_arg = gpiochip_populate_parent_fwspec_fourcell;
-+	girq->child_offset_to_irq = pmic_mpp_child_offset_to_irq;
-+	girq->child_irq_domain_ops.translate = pmic_mpp_domain_translate;
-+
- 	ret = gpiochip_add_data(&state->chip, state);
- 	if (ret) {
- 		dev_err(state->dev, "can't add gpio chip\n");
--- 
-2.30.2
+>>> +        ctrl->swrm_hctl_reg = devm_ioremap(&pdev->dev,
+>>> swrm_hctl_reg, 0x4);
+>> if (!ctrl->swrm_hctl_reg)
+>>      return -ENODEV;
+>>
+>> ?
+> I think here error check is not required, as this change is required
+> only for soundwire version 1.6 and above.
 
+My comment had nothing to do with versions, it's just that ioremap can
+fail and in general it's wise to test for errors...
