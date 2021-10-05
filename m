@@ -2,149 +2,150 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B390422EA4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 19:00:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 50F9E422F48
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 19:34:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236636AbhJERB5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Oct 2021 13:01:57 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53562 "EHLO
+        id S229588AbhJERgB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Oct 2021 13:36:01 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33228 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235716AbhJERB4 (ORCPT
+        with ESMTP id S234701AbhJERf5 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Oct 2021 13:01:56 -0400
-Received: from mail-ot1-x332.google.com (mail-ot1-x332.google.com [IPv6:2607:f8b0:4864:20::332])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id F03D4C061749
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Oct 2021 10:00:05 -0700 (PDT)
-Received: by mail-ot1-x332.google.com with SMTP id x33-20020a9d37a4000000b0054733a85462so26683492otb.10
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Oct 2021 10:00:05 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=eT4QRWTiJcs1knqD0fms3lf+fPlsl7moqQX0wdYcY2M=;
-        b=sLzQMGXP4lgmvW6RIos0qJsSgfnvDPNPlxKz2aHtLdzE6GdRTycaBnkCKNjXGOEDRC
-         wrzfyJIZNmfz0HPapn33yfabQJTY5IZQNOzdjM3rXsVolGMtMpmAe40khV59mmixH6CM
-         whbo3qoGSQxWG/UHNB169e90vg9khpC5JY1Zd12yJCa3tNsluVTzjHVdfKJG9eYENNBv
-         U3gqZe+LI9wtybSg/larb2Nq2bMKax1sf1aWgwrR15QKY0l5h5ocm+Bgiskj6+NlZM4+
-         nu8WfFDGDV1NaNMsyKV3rlECx6QgSz7avNXjrrpIoLoMdb7LttswJTUeRvkHjnV5qB2e
-         Cymg==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=eT4QRWTiJcs1knqD0fms3lf+fPlsl7moqQX0wdYcY2M=;
-        b=MY0W59hCy10wc5HFf3tv568e5O39hXyYuxHXPJLM4sostgb57klxfKGABnJUv4LHQ1
-         GJwdjochqXg1pXBFYxKptEHV83Wl7HEBmpOLvpTVSkrkae/3d57FXgK4hihAT/e7twTi
-         F5JQXxXLM/HTED3Ls7LSwdph2SoFRVxKpiAt2XOo3x8PExkM0O34TaJk/+hnaLgWKRd2
-         6afWghiWWoXkI6c9YDA3YC5obnbpCukVn3ve1Kuhl0h7amYTZKYzy9wtAEwiEo7ilbIk
-         H2gE678acmhU5zqdPh6uXlSWD92pWzJALo3VskR5iX0V27wBJiE1qKmZv+o+5lZJFmXz
-         P4qw==
-X-Gm-Message-State: AOAM5336DOtG6L2h77RvMYI823T8QlqX91KlSpmPtIc0B4HF9FT43X9W
-        Pqs3CQocmMPBzZT5e28dZHd4tw==
-X-Google-Smtp-Source: ABdhPJxY2jmsRmi0yUIG27/p4uC6tH4JPn1TN2xDpW8nkkRfeciD9lUi6d1YiRKW4hjAqu6mxi4HeQ==
-X-Received: by 2002:a05:6830:2906:: with SMTP id z6mr15861929otu.257.1633453205311;
-        Tue, 05 Oct 2021 10:00:05 -0700 (PDT)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id u2sm3664543otg.51.2021.10.05.10.00.04
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Oct 2021 10:00:04 -0700 (PDT)
-Date:   Tue, 5 Oct 2021 10:01:47 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Cc:     agross@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
-        robh+dt@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org,
-        Venkata Prasad Potturu <potturu@codeaurora.org>
-Subject: Re: [PATCH] ASoC: qcom: soundwire: Enable soundwire bus clock for
- version 1.6
-Message-ID: <YVyE+ytKVmOh85c3@ripper>
-References: <1633105471-30928-1-git-send-email-srivasam@codeaurora.org>
+        Tue, 5 Oct 2021 13:35:57 -0400
+Received: from relay08.th.seeweb.it (relay08.th.seeweb.it [IPv6:2001:4b7a:2000:18::169])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C4F83C061749
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Oct 2021 10:34:03 -0700 (PDT)
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id A557E3EBAC;
+        Tue,  5 Oct 2021 19:34:01 +0200 (CEST)
+Date:   Tue, 5 Oct 2021 19:34:00 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Daniel Thompson <daniel.thompson@linaro.org>
+Cc:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        Courtney Cavin <courtney.cavin@sonymobile.com>,
+        Bryan Wu <cooloney@gmail.com>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 05/10] backlight: qcom-wled: Fix off-by-one maximum with
+ default num_strings
+Message-ID: <20211005173400.lyu3gabbalv2l3uq@SoMainline.org>
+Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>, Jingoo Han <jingoohan1@gmail.com>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        Courtney Cavin <courtney.cavin@sonymobile.com>,
+        Bryan Wu <cooloney@gmail.com>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20211004192741.621870-1-marijn.suijten@somainline.org>
+ <20211004192741.621870-6-marijn.suijten@somainline.org>
+ <20211005091947.7msztp5l554c7cy4@maple.lan>
+ <20211005100606.faxra73mzkvjd4f6@SoMainline.org>
+ <20211005103843.heufyonycnudxnzd@maple.lan>
+ <20211005105312.kqiyzoqtzzjxayhg@maple.lan>
+ <20211005114435.phyq2jsbdyroa6kn@SoMainline.org>
+ <20211005140349.kefi26yev3gy3zhv@maple.lan>
+ <20211005152326.5k5cb53ajqnactrg@SoMainline.org>
+ <20211005162453.ozckxhm47jcarsza@maple.lan>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <1633105471-30928-1-git-send-email-srivasam@codeaurora.org>
+In-Reply-To: <20211005162453.ozckxhm47jcarsza@maple.lan>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri 01 Oct 09:24 PDT 2021, Srinivasa Rao Mandadapu wrote:
-
-> Add support for soundwire 1.6 version to gate RX/TX bus clock.
+On 2021-10-05 17:24:53, Daniel Thompson wrote:
+> On Tue, Oct 05, 2021 at 05:23:26PM +0200, Marijn Suijten wrote:
+> > On 2021-10-05 15:03:49, Daniel Thompson wrote:
+> > [..]
+> > > > At that point one might ask why qcom,num_strings remains at all when
+> > > > DT can use qcom,enabled_strings instead.  We will supposedly have to
+> > > > keep backwards compatibility with DTs in mind so none of this can be
+> > > > removed or made mutually exclusive from a driver standpoint, that all
+> > > > has to be done in dt-bindings yaml to be enforced on checked-in DTs.
+> > > 
+> > > So... perhaps I made a make offering a Reviewed-by: to a patch
+> > > that allows len(enabled-strings) to have precedence. If anything
+> > > currently uses enabled-strings then it *will* be 4 cells long and
+> > > is relying on num-strings to ensure the right things happens ;-) .
+> > 
+> > Unfortunately Konrad (one of my team members) landed such a patch at the
+> > beginning of this year because I failed to submit this patchset in time
+> > while it has been sitting in my queue since 2019 after being used in a
+> > downstream project.  This is in pmi8994 which doesn't have anything
+> > widely used / production ready yet, so I'd prefer to fix the DT instead
+> > and remove / fix his comment:
+> > 
+> >     /* Yes, all four strings *have to* be defined or things won't work. */
+> > 
+> > But this is mostly because, prior to this patchset, no default was set
+> > for WLED4 so the 0'th string would get enabled num-strings (3 in
+> > pmi8994's case) times.
+> > 
+> > Aside that there's only one more PMIC (also being worked on by
+> > SoMainline) that sets qcom,enabled-strings: this is pm660l, pulled from
+> > our local tree, and it actually has enabled-strings of length 2 which is
+> > broken in its current form, exactly because of relying on this patchset.
+> > 
+> > Finally, we already discussed this inside SoMainline and the
+> > number/enabled leds should most likely be moved out of the PMIC dtsi's
+> > as they're probably panel, hence board or even device dependent.
+> > 
+> > > We'd like that case to keep working so we must allow num-strings to have
+> > > precedence. In other words, when you add the new code, please put it at
+> > > the end of the function!
+> > 
+> > Since there don't seem to be any substantial platforms/PMICs using this
+> > functionality in a working manner, can I talk you into agreeing with
+> > fixing the DT instead?
 > 
-> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-> ---
->  drivers/soundwire/qcom.c | 12 +++++++++++-
->  1 file changed, 11 insertions(+), 1 deletion(-)
+> I've no objections to seeing the DT updated. However I don't really see
+> what benefit we get from breaking existing DTs in order to do so.
 > 
-> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-> index 0ef79d6..599b3ed 100644
-> --- a/drivers/soundwire/qcom.c
-> +++ b/drivers/soundwire/qcom.c
-> @@ -127,6 +127,7 @@ struct qcom_swrm_ctrl {
->  	struct device *dev;
->  	struct regmap *regmap;
->  	void __iomem *mmio;
-> +	char __iomem *swrm_hctl_reg;
->  	struct completion broadcast;
->  	struct completion enumeration;
->  	struct work_struct slave_work;
-> @@ -610,6 +611,12 @@ static int qcom_swrm_init(struct qcom_swrm_ctrl *ctrl)
->  	val = FIELD_PREP(SWRM_MCP_FRAME_CTRL_BANK_ROW_CTRL_BMSK, ctrl->rows_index);
->  	val |= FIELD_PREP(SWRM_MCP_FRAME_CTRL_BANK_COL_CTRL_BMSK, ctrl->cols_index);
->  
-> +	if (ctrl->swrm_hctl_reg) {
-> +		val = ioread32(ctrl->swrm_hctl_reg);
-> +		val &= 0xFFFFFFFD;
+> "Cleaning up annoying legacy" is seldom a good reason to break existing
+> DTs since, if we could break DTs whenever we choose, there would never
+> be any annoying legacy to worry about. When conflicting properties
+> result in uninterpretable DTs then a break may be justified but that is
+> not the case here.
 
-That's a tricky way of saying:
+As mentioned in my message and repeated by Konrad, the only "existing
+DT" that could possibly be broken is a platform that's brought up by us
+(SoMainline) and we're more than happy to improve the driver and leave
+legacy DT behind us, unless there's more DT in circulation that hasn't
+landed in Linux mainline but should be taken into account?
 
-	val &= ~BIT(1);
+Anyway the plan is to leave qcom,num-strings in place so that the
+default enabled_strings list in this driver actually serves a purpose.
+Then, if num-strings and enabled-strings is provided the former has
+precedence (assuming it doesn't exceed the size of the latter) but we'll
+print a warning about this (now unnecessary) ambiguity, and if possible
+at all - haven't found an example yet - make the properties mutually
+exclusive in dt-bindings.
 
-That said, naming bit 1 is still a very good thing.
+Disallowing both cases would only simplify the code in the end but we
+can spend a few lines to support the desired legacy.
 
-> +		iowrite32(val, ctrl->swrm_hctl_reg);
-> +	}
-> +
->  	ctrl->reg_write(ctrl, SWRM_MCP_FRAME_CTRL_BANK_ADDR(0), val);
->  
->  	/* Enable Auto enumeration */
-> @@ -1200,7 +1207,7 @@ static int qcom_swrm_probe(struct platform_device *pdev)
->  	struct qcom_swrm_ctrl *ctrl;
->  	const struct qcom_swrm_data *data;
->  	int ret;
-> -	u32 val;
-> +	int val, swrm_hctl_reg = 0;
->  
->  	ctrl = devm_kzalloc(dev, sizeof(*ctrl), GFP_KERNEL);
->  	if (!ctrl)
-> @@ -1251,6 +1258,9 @@ static int qcom_swrm_probe(struct platform_device *pdev)
->  	ctrl->bus.port_ops = &qcom_swrm_port_ops;
->  	ctrl->bus.compute_params = &qcom_swrm_compute_params;
->  
-> +	if (!of_property_read_u32(dev->of_node, "qcom,swrm-hctl-reg", &swrm_hctl_reg))
-> +		ctrl->swrm_hctl_reg = devm_ioremap(&pdev->dev, swrm_hctl_reg, 0x4);
-
-Nack.
-
-You may not pull an address to a single register out of an undocumented
-DT property and blindly ioremap that.
-
-And you surely should check for errors here, to avoid magical errors
-caused by this ioremap failing and your bit not being cleared.
-
-Thanks,
-Bjorn
-
-> +
->  	ret = qcom_swrm_get_port_config(ctrl);
->  	if (ret)
->  		goto err_clk;
-> -- 
-> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-> is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
-> 
+- Marijn
