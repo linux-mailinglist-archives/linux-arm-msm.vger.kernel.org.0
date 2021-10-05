@@ -2,467 +2,148 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CE74342339F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 00:41:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 968B3423397
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 00:40:30 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236827AbhJEWnR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Oct 2021 18:43:17 -0400
-Received: from ixit.cz ([94.230.151.217]:57594 "EHLO ixit.cz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230113AbhJEWnQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Oct 2021 18:43:16 -0400
-Received: from localhost.localdomain (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id 57FA823B26;
-        Wed,  6 Oct 2021 00:41:22 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1633473682;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=gPP+EZvbi6W6qW7LjMu0BhA+uxez+4MncR6SZjTBgrE=;
-        b=ksleezG9XpKS1boJTEY/AUfq3PgPxl1S1k8J10DJwZEHANCLMibJsE4YbDfY9d7R6EnbbR
-        k3BVDfYi5HOYRZ620cTDJiiQ1gMjk6LsVqM7xAe5sYbJWWZyzX/9XA6AldbXdciQ+iHDZE
-        0jIYHGmqURw3diScAuzSzzJxbrP7Znw=
-From:   David Heidelberg <david@ixit.cz>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Ivan Belokobylskiy <belokobylskij@gmail.com>,
-        David Heidelberg <david@ixit.cz>
-Subject: [PATCH] [RFC] ARM: dts: nexus4: initial dts
-Date:   Wed,  6 Oct 2021 00:39:54 +0200
-Message-Id: <20211005223954.59735-1-david@ixit.cz>
-X-Mailer: git-send-email 2.33.0
+        id S230477AbhJEWmU (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Oct 2021 18:42:20 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47590 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230113AbhJEWmU (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 5 Oct 2021 18:42:20 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 182BBC061749
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Oct 2021 15:40:29 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id k7so2439031wrd.13
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Oct 2021 15:40:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=gmail.com; s=20210112;
+        h=mime-version:from:date:message-id:subject:to:cc;
+        bh=EE1N+bfCKEtcpLH1yw49Mo8q4RWVpXJnrOOxJFV+Jv0=;
+        b=aOxpbCHYROLznpuQovQBi0rIqnI6816Fhr/qwjEMNljQWdB3ZAJ8wc/2fCWWivlUpb
+         6Tzxs8R3zoltWS7N22fGP0KTgK+emvhwHqcVOoblfKThzStwJD+BRUBS9B8SuRi8TYAV
+         CapeeuOe3V8LYFcaLAgJQtjY3f01eL0Hr8kZOJeA0PokBoffnpSXBJNjjk6bCwt7iqkF
+         XraCA1Y1D2LyiWLWSY6jvpSydIIQ/58zmzPBxNwlHJkqKTlId4iABI/8isw2MU/V0tQe
+         33GDTY8b975uh4SlEEiv92B9ZDNm7UxsHP76YyYbELuhVnyXP//495rsHx8wob6HhqAr
+         BH6A==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:from:date:message-id:subject:to:cc;
+        bh=EE1N+bfCKEtcpLH1yw49Mo8q4RWVpXJnrOOxJFV+Jv0=;
+        b=vGGw/zBj7R+2FlUWIzM6alv9WEjnY/5Nmy5Gsrl0IxoBra6nNgvJjtHcEVMVzRJr7o
+         Rc+HD0NMstEOhL5+nOupbb4vb5dxugV8/LUQhpjrcEorq6u9meU85uNqvhmejs5Ru3h8
+         qXMMNjizM5QPku9osIAKIPEO/7dmtnr2SKpfTwWIKBDIGfBCEXpEfy9pV5OATiXRngGo
+         YCT7qR7buAZ5vM003M85AqAgyNFWsa9bHsbKco3sn9WdOWsUHrP7IohlfLufly5mze5I
+         FwDNK1bTrWNTWH351KBWmwzUs4lcJ2NkrLgzTw1pVqGZ7LsPgiWhVuDYIKIeu/1ursxV
+         LaMQ==
+X-Gm-Message-State: AOAM530fmrJva7LLjQG1K8XtZk7SqvcHtb6WcX74yUfpGSksGeJZOlle
+        P414WkF9n/ZTBkkSBr07VVuZqkWkkI+eXheKuvk=
+X-Google-Smtp-Source: ABdhPJx0sdIpsZBhUxzcVpRCcsIH+vvrgS7Q3nlkNKE5Yx0pjP4fCvXO7FECC8I3BRQFwLhdovlEBz0buniwJPZ4NPw=
+X-Received: by 2002:a5d:4908:: with SMTP id x8mr11146817wrq.251.1633473627674;
+ Tue, 05 Oct 2021 15:40:27 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+From:   Rob Clark <robdclark@gmail.com>
+Date:   Tue, 5 Oct 2021 15:45:02 -0700
+Message-ID: <CAF6AEGtD4u7yyiy+BQLmibUCbn=AdDRu7FrmdViHVx0QrcGf8g@mail.gmail.com>
+Subject: [pull] drm/msm: drm-msm-fixes-2021-10-05 for v5.15-rc5
+To:     Dave Airlie <airlied@gmail.com>, Daniel Vetter <daniel@ffwll.ch>
+Cc:     freedreno <freedreno@lists.freedesktop.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Jordan Crouse <jordan@cosmicpenguin.net>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Ivan Belokobylskiy <belokobylskij@gmail.com>
+Hi Dave & Daniel,
 
-Add initial support for LGE Nexus 4 (mako).
+A few fixes for v5.15:
 
-Features currently working: regulators, eMMC, WiFi, LCD backlight and volume keys.
+* Fix a new crash on dev file close if the dev file was opened when
+  GPU is not loaded (such as missing fw in initrd)
+* Switch to single drm_sched_entity per priority level per drm_file
+  to unbreak multi-context userspace
+* Serialize GMU access to fix GMU OOB errors
+* Various error path fixes
+* A couple integer overflow fixes
+* Fix mdp5 cursor plane WARNs
 
-Signed-off-by: Ivan Belokobylskiy <belokobylskij@gmail.com>
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
- arch/arm/boot/dts/Makefile                    |   1 +
- .../boot/dts/qcom-apq8064-lge-nexus4-mako.dts | 387 ++++++++++++++++++
- 2 files changed, 388 insertions(+)
- create mode 100644 arch/arm/boot/dts/qcom-apq8064-lge-nexus4-mako.dts
+The following changes since commit 5816b3e6577eaa676ceb00a848f0fd65fe2adc29:
 
-diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
-index 5ffab0486665..2da2235d4370 100644
---- a/arch/arm/boot/dts/Makefile
-+++ b/arch/arm/boot/dts/Makefile
-@@ -948,6 +948,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
- 	qcom-apq8064-ifc6410.dtb \
- 	qcom-apq8064-sony-xperia-yuga.dtb \
- 	qcom-apq8064-asus-nexus7-flo.dtb \
-+	qcom-apq8064-lge-nexus4-mako.dtb \
- 	qcom-apq8074-dragonboard.dtb \
- 	qcom-apq8084-ifc6540.dtb \
- 	qcom-apq8084-mtp.dtb \
-diff --git a/arch/arm/boot/dts/qcom-apq8064-lge-nexus4-mako.dts b/arch/arm/boot/dts/qcom-apq8064-lge-nexus4-mako.dts
-new file mode 100644
-index 000000000000..a76688b1bc1d
---- /dev/null
-+++ b/arch/arm/boot/dts/qcom-apq8064-lge-nexus4-mako.dts
-@@ -0,0 +1,387 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+#include "qcom-apq8064-v2.0.dtsi"
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/input.h>
-+#include <dt-bindings/mfd/qcom-rpm.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-+/ {
-+	model = "LGE Nexus 4 (mako)";
-+	compatible = "lge,nexus4-mako", "qcom,apq8064";
-+
-+	aliases {
-+		serial0 = &gsbi7_serial;
-+		serial1 = &gsbi6_serial;
-+		serial2 = &gsbi4_serial;
-+	};
-+
-+	chosen {
-+		stdout-path = "serial2:115200n8";
-+	};
-+
-+	reserved-memory {
-+		#address-cells = <1>;
-+		#size-cells = <1>;
-+		ranges;
-+
-+		ramoops@88d00000{
-+			compatible = "ramoops";
-+			reg = <0x88d00000 0x100000>;
-+			record-size	 = <0x00020000>;
-+			console-size	= <0x00020000>;
-+			ftrace-size	 = <0x00020000>;
-+		};
-+	};
-+
-+	battery_cell: battery-cell {
-+		compatible = "simple-battery";
-+		constant-charge-current-max-microamp = <900000>;
-+		operating-range-celsius = <0 45>;
-+	};
-+
-+	soc {
-+		pinctrl@800000 {
-+			gsbi4_uart_pin_a: gsbi4-uart-pin-active {
-+				rx {
-+					pins = "gpio11";
-+					function = "gsbi4";
-+					drive-strength = <2>;
-+					bias-disable;
-+				};
-+
-+				tx {
-+					pins = "gpio10";
-+					function = "gsbi4";
-+					drive-strength = <4>;
-+					bias-disable;
-+				};
-+			};
-+		};
-+
-+		rpm@108000 {
-+			regulators {
-+				vdd_l1_l2_l12_l18-supply = <&pm8921_s4>;
-+				vin_lvs1_3_6-supply = <&pm8921_s4>;
-+				vin_lvs4_5_7-supply = <&pm8921_s4>;
-+
-+				vdd_l24-supply = <&pm8921_s1>;
-+				vdd_l25-supply = <&pm8921_s1>;
-+				vin_lvs2-supply = <&pm8921_s1>;
-+
-+				vdd_l26-supply = <&pm8921_s7>;
-+				vdd_l27-supply = <&pm8921_s7>;
-+				vdd_l28-supply = <&pm8921_s7>;
-+
-+				/* Buck SMPS */
-+				s1 {
-+					regulator-always-on;
-+					regulator-min-microvolt = <1225000>;
-+					regulator-max-microvolt = <1225000>;
-+					qcom,switch-mode-frequency = <3200000>;
-+					bias-pull-down;
-+				};
-+				s2 {
-+					regulator-min-microvolt = <1300000>;
-+					regulator-max-microvolt = <1300000>;
-+					qcom,switch-mode-frequency = <1600000>;
-+					bias-pull-down;
-+				};
-+
-+				/* msm otg HSUSB_VDDCX */
-+				s3 {
-+					regulator-min-microvolt = <500000>;
-+					regulator-max-microvolt = <1150000>;
-+					qcom,switch-mode-frequency = <4800000>;
-+					bias-pull-down;
-+				};
-+
-+				/*
-+				 * msm_sdcc.1-sdc-vdd_io
-+				 * tabla2x-slim-CDC_VDDA_RX
-+				 * tabla2x-slim-CDC_VDDA_TX
-+				 * tabla2x-slim-CDC_VDD_CP
-+				 * tabla2x-slim-VDDIO_CDC
-+				 */
-+				s4 {
-+					regulator-always-on;
-+					regulator-min-microvolt	= <1800000>;
-+					regulator-max-microvolt	= <1800000>;
-+					qcom,switch-mode-frequency = <1600000>;
-+					bias-pull-down;
-+					qcom,force-mode = <QCOM_RPM_FORCE_MODE_AUTO>;
-+				};
-+
-+				/*
-+				 * supply vdd_l26, vdd_l27, vdd_l28
-+				 */
-+				s7 {
-+					regulator-min-microvolt = <1300000>;
-+					regulator-max-microvolt = <1300000>;
-+					qcom,switch-mode-frequency = <3200000>;
-+				};
-+
-+				s8 {
-+					regulator-min-microvolt = <2200000>;
-+					regulator-max-microvolt = <2200000>;
-+					qcom,switch-mode-frequency = <1600000>;
-+				};
-+
-+				l1 {
-+					regulator-min-microvolt = <1100000>;
-+					regulator-max-microvolt = <1100000>;
-+					regulator-always-on;
-+					bias-pull-down;
-+				};
-+
-+				/* mipi_dsi.1-dsi1_pll_vdda */
-+				l2 {
-+					regulator-min-microvolt = <1200000>;
-+					regulator-max-microvolt = <1200000>;
-+					bias-pull-down;
-+				};
-+
-+				/* msm_otg-HSUSB_3p3 */
-+				l3 {
-+					regulator-min-microvolt = <3075000>;
-+					regulator-max-microvolt = <3500000>;
-+					bias-pull-down;
-+				};
-+
-+				/* msm_otg-HSUSB_1p8 */
-+				l4 {
-+					regulator-always-on;
-+					regulator-min-microvolt = <1800000>;
-+					regulator-max-microvolt = <1800000>;
-+				};
-+
-+				/* msm_sdcc.1-sdc_vdd */
-+				l5 {
-+					regulator-min-microvolt = <2950000>;
-+					regulator-max-microvolt = <2950000>;
-+					bias-pull-down;
-+				};
-+
-+				/* earjack_debug */
-+				l6 {
-+					regulator-min-microvolt = <3000000>;
-+					regulator-max-microvolt = <3000000>;
-+					bias-pull-down;
-+				};
-+
-+				/* mipi_dsi.1-dsi_vci */
-+				l8 {
-+					regulator-min-microvolt = <2800000>;
-+					regulator-max-microvolt = <3000000>;
-+					bias-pull-down;
-+				};
-+
-+				/* wcnss_wlan.0-iris_vddpa */
-+				l10 {
-+					regulator-min-microvolt = <2900000>;
-+					regulator-max-microvolt = <2900000>;
-+					bias-pull-down;
-+				};
-+
-+				/* mipi_dsi.1-dsi1_avdd */
-+				l11 {
-+					regulator-min-microvolt = <2850000>;
-+					regulator-max-microvolt = <2850000>;
-+					bias-pull-down;
-+				};
-+
-+				/* touch_vdd */
-+				l15 {
-+					regulator-min-microvolt = <1800000>;
-+					regulator-max-microvolt = <2950000>;
-+					bias-pull-down;
-+				};
-+
-+				/* slimport_dvdd */
-+				l18 {
-+					regulator-min-microvolt = <1100000>;
-+					regulator-max-microvolt = <1100000>;
-+					bias-pull-down;
-+				};
-+
-+				/* touch_io */
-+				l22 {
-+					regulator-min-microvolt = <1800000>;
-+					regulator-max-microvolt = <1800000>;
-+					bias-pull-down;
-+				};
-+
-+				/*
-+				 * mipi_dsi.1-dsi_vddio
-+				 * pil_qdsp6v4.1-pll_vdd
-+				 * pil_qdsp6v4.2-pll_vdd
-+				 * msm_ehci_host.0-HSUSB_1p8
-+				 * msm_ehci_host.1-HSUSB_1p8
-+				 */
-+				l23 {
-+					regulator-min-microvolt = <1800000>;
-+					regulator-max-microvolt = <1800000>;
-+					bias-pull-down;
-+				};
-+
-+				/*
-+				 * tabla2x-slim-CDC_VDDA_A_1P2V
-+				 * tabla2x-slim-VDDD_CDC_D
-+				 */
-+				l24 {
-+					regulator-min-microvolt = <750000>;
-+					regulator-max-microvolt = <1150000>;
-+					bias-pull-down;
-+				};
-+
-+				l25 {
-+					regulator-min-microvolt = <1250000>;
-+					regulator-max-microvolt = <1250000>;
-+					regulator-always-on;
-+					bias-pull-down;
-+				};
-+
-+				l26 {
-+					regulator-min-microvolt = <375000>;
-+					regulator-max-microvolt = <1050000>;
-+					regulator-always-on;
-+					bias-pull-down;
-+				};
-+
-+				l27 {
-+					regulator-min-microvolt = <1100000>;
-+					regulator-max-microvolt = <1100000>;
-+				};
-+
-+				l28 {
-+					regulator-min-microvolt = <1050000>;
-+					regulator-max-microvolt = <1050000>;
-+					bias-pull-down;
-+				};
-+
-+				/* wcnss_wlan.0-iris_vddio */
-+				lvs1 {
-+					bias-pull-down;
-+				};
-+
-+				/* wcnss_wlan.0-iris_vdddig */
-+				lvs2 {
-+					bias-pull-down;
-+				};
-+
-+				lvs3 {
-+					bias-pull-down;
-+				};
-+
-+				lvs4 {
-+					bias-pull-down;
-+				};
-+
-+				lvs5 {
-+					bias-pull-down;
-+				};
-+
-+				/* mipi_dsi.1-dsi_iovcc */
-+				lvs6 {
-+					bias-pull-down;
-+				};
-+
-+				/*
-+				 * pil_riva-pll_vdd
-+				 * lvds.0-lvds_vdda
-+				 * mipi_dsi.1-dsi1_vddio
-+				 * hdmi_msm.0-hdmi_vdda
-+				 */
-+				lvs7 {
-+					bias-pull-down;
-+				};
-+
-+				ncp {
-+					regulator-min-microvolt = <1800000>;
-+					regulator-max-microvolt = <1800000>;
-+					qcom,switch-mode-frequency = <1600000>;
-+				};
-+			};
-+		};
-+
-+		qcom,ssbi@500000 {
-+			pmic@0 {
-+				keypad@148 {
-+					compatible = "qcom,pm8921-keypad";
-+					reg = <0x148>;
-+					interrupt-parent = <&pmicintc>;
-+					interrupts = <74 1>, <75 1>;
-+					linux,keymap = <
-+						MATRIX_KEY(0, 0, KEY_VOLUMEDOWN)
-+						MATRIX_KEY(0, 1, KEY_VOLUMEUP)
-+					>;
-+
-+					keypad,num-rows = <1>;
-+					keypad,num-columns = <5>;
-+					debounce = <15>;
-+					scan-delay = <32>;
-+					row-hold = <91500>;
-+				};
-+			};
-+		};
-+
-+		gsbi@12440000 {
-+			status = "okay";
-+			qcom,mode = <GSBI_PROT_I2C>;
-+
-+			gsbi1_i2c: i2c@12460000 {
-+				status = "okay";
-+				clock-frequency = <200000>;
-+				pinctrl-0 = <&i2c1_pins>;
-+				pinctrl-names = "default";
-+
-+				backlight: lm3530@38 {
-+					compatible = "backlight,lm3530";
-+					status = "okay";
-+					reg = <0x38>;
-+					lm3530,en_gpio = <&pm8921_gpio 24 GPIO_ACTIVE_HIGH>;
-+					lm3530,max_current = /bits/ 8 <0x17>;
-+					lm3530,default_brt = /bits/ 8 <0x10>;
-+					lm3530,max_brt = /bits/ 8 <0x72>;
-+					lm3530,mode = /bits/ 8 <0>; /* Manual Mode */
-+					lm3530,linear_map = /bits/ 8 <1>; /* Linear map */
-+					lm3530,brt_ramp_fall = /bits/ 8 <0>;
-+					lm3530,brt_ramp_rise = /bits/ 8 <0>;
-+					lm3530,no_regulator;
-+				};
-+			};
-+		};
-+
-+		gsbi@16300000 {
-+			status = "okay";
-+			qcom,mode = <GSBI_PROT_I2C_UART>;
-+
-+			gsbi4_serial: serial@16340000 {
-+				compatible = "qcom,msm-uartdm-v1.3", "qcom,msm-uartdm";
-+				reg = <0x16340000 0x1000>,
-+				  <0x16300000 0x1000>;
-+				interrupts = <GIC_SPI 152 IRQ_TYPE_LEVEL_HIGH>;
-+				clocks = <&gcc GSBI4_UART_CLK>, <&gcc GSBI4_H_CLK>;
-+				clock-names = "core", "iface";
-+				status = "okay";
-+
-+				pinctrl-names = "default";
-+				pinctrl-0 = <&gsbi4_uart_pin_a>;
-+			};
-+		};
-+
-+		amba {
-+			/* eMMC */
-+			sdcc@12400000 {
-+				status = "okay";
-+				vmmc-supply = <&pm8921_l5>;
-+				vqmmc-supply = <&pm8921_s4>;
-+			};
-+		};
-+
-+		riva-pil@3204000 {
-+			status = "okay";
-+			pinctrl-names = "default";
-+			pinctrl-0 = <&riva_wlan_pin_a>;
-+		};
-+	};
-+};
-+
--- 
-2.33.0
+  Linux 5.15-rc3 (2021-09-26 14:08:19 -0700)
 
+are available in the Git repository at:
+
+  https://gitlab.freedesktop.org/drm/msm.git drm-msm-fixes-2021-10-05
+
+for you to fetch changes up to c6921fbc88e120b2279c55686a071ca312d058e9:
+
+  drm/msm/dsi: fix off by one in dsi_bus_clk_enable error handling
+(2021-10-04 08:08:07 -0700)
+
+----------------------------------------------------------------
+Arnd Bergmann (1):
+      drm/msm/submit: fix overflow check on 64-bit architectures
+
+Colin Ian King (1):
+      drm/msm: Fix null pointer dereference on pointer edp
+
+Dan Carpenter (4):
+      drm/msm/a4xx: fix error handling in a4xx_gpu_init()
+      drm/msm/a3xx: fix error handling in a3xx_gpu_init()
+      drm/msm/dsi: Fix an error code in msm_dsi_modeset_init()
+      drm/msm/dsi: fix off by one in dsi_bus_clk_enable error handling
+
+Dmitry Baryshkov (2):
+      drm/msm/mdp5: fix cursor-related warnings
+      drm/msm/dsi/phy: fix clock names in 28nm_8960 phy
+
+Fabio Estevam (1):
+      drm/msm: Do not run snapshot on non-DPU devices
+
+Kuogee Hsieh (1):
+      drm/msm/dp: only signal audio when disconnected detected at dp_pm_resume
+
+Marek Vasut (1):
+      drm/msm: Avoid potential overflow in timeout_to_jiffies()
+
+Marijn Suijten (1):
+      drm/msm/dsi: dsi_phy_14nm: Take ready-bit into account in poll_for_ready
+
+Rob Clark (5):
+      drm/msm: Fix crash on dev file close
+      drm/msm/a6xx: Serialize GMU communication
+      drm/msm/a6xx: Track current ctx by seqno
+      drm/msm: A bit more docs + cleanup
+      drm/msm: One sched entity per process per priority
+
+Robert Foss (1):
+      drm/msm/dpu: Fix address of SM8150 PINGPONG5 IRQ register
+
+Stephan Gerhold (1):
+      drm/msm: Fix devfreq NULL pointer dereference on a3xx
+
+ drivers/gpu/drm/msm/adreno/a3xx_gpu.c           |  9 ++--
+ drivers/gpu/drm/msm/adreno/a4xx_gpu.c           |  9 ++--
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.c           |  6 +++
+ drivers/gpu/drm/msm/adreno/a6xx_gmu.h           |  3 ++
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.c           | 46 ++++++++++++----
+ drivers/gpu/drm/msm/adreno/a6xx_gpu.h           | 11 +++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c  |  2 +-
+ drivers/gpu/drm/msm/disp/mdp5/mdp5_crtc.c       | 16 ++++++
+ drivers/gpu/drm/msm/dp/dp_display.c             | 10 ++--
+ drivers/gpu/drm/msm/dsi/dsi.c                   |  4 +-
+ drivers/gpu/drm/msm/dsi/dsi_host.c              |  2 +-
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c      | 30 +++++------
+ drivers/gpu/drm/msm/dsi/phy/dsi_phy_28nm_8960.c |  4 +-
+ drivers/gpu/drm/msm/edp/edp_ctrl.c              |  3 +-
+ drivers/gpu/drm/msm/msm_drv.c                   | 15 ++++--
+ drivers/gpu/drm/msm/msm_drv.h                   | 47 +---------------
+ drivers/gpu/drm/msm/msm_gem_submit.c            |  7 +--
+ drivers/gpu/drm/msm/msm_gpu.h                   | 66 ++++++++++++++++++++++-
+ drivers/gpu/drm/msm/msm_gpu_devfreq.c           |  6 +++
+ drivers/gpu/drm/msm/msm_submitqueue.c           | 72 ++++++++++++++++++++-----
+ 20 files changed, 256 insertions(+), 112 deletions(-)
