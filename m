@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 22F9B421CE6
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 05:23:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 503FC421CE3
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 05:23:55 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231822AbhJEDZp (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Oct 2021 23:25:45 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59852 "EHLO
+        id S231705AbhJEDZm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 4 Oct 2021 23:25:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59860 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231552AbhJEDZk (ORCPT
+        with ESMTP id S231637AbhJEDZl (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Oct 2021 23:25:40 -0400
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AC8FFC061760
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Oct 2021 20:23:50 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id o59-20020a9d2241000000b0054745f28c69so24148498ota.13
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Oct 2021 20:23:50 -0700 (PDT)
+        Mon, 4 Oct 2021 23:25:41 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A1A09C06174E
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Oct 2021 20:23:51 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id 97-20020a9d006a000000b00545420bff9eso24230778ota.8
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Oct 2021 20:23:51 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=5F9P+rsu48FUbDV9TizntpJNt5FGTMagwmpzztCYYIw=;
-        b=Vgnf2JNJ6OouXm7x/ldZOtSiEBU9yaIGBuePc25n9LYJz7oTjHqtLMbpOy+DiE8yIC
-         +bCLgob2aVTyOTtF+ltOjjwjX0Nro3SOfDRrylKn17hldGv6KKiQIqacFJumID5GcZEN
-         cjoX0u1fz/8xwfXhSSISiSmb/8YZIO2o9zcqU6QwgEPzSfnnMK6kalPihkksXoEyBdjq
-         0U+GG1xvEb89Q9uSNygFIdMIRKA8BX48trA5bdmoeXsOD8D+jHKmJ3z5gxQlLN4dgP+L
-         bRmtdhiTa0mCO6vvbhL6mU4f53vxCvA6973/kQYNdgKqNQ7Dz5heVCyNOKtZYESt41Xn
-         XCww==
+        bh=SvFCR87aiu5ds1ai63pEGRyATYSJy34i9VrTijqqATk=;
+        b=vXNxhAPVm30L6Xwd7l1KDcxjU3BcId0umPpRZ+QRXrcRF/NNweADvP03yj3W16MmqC
+         t+TU6TUsj3/p6FhOBj1Ywr8CI3d/EnJjW+QbRZMUlrT/JHQLY/rPw0Cp0oPoVfc0qIxy
+         5ysF0+II44twkSwSjQ66eJNFuNcWHhtnJ8l35QnrHCVgZ/rPxk2+Tr2/zwRDQ7xbQMJx
+         tNqwefRDwAFJDYTxHxDNlfP/piepyb/GlMnhZjlirSC5ZkkOciIZfv1hJeDU8/gxCffQ
+         rfXb2a+B2ICQYVYGQaAEtBNTF7rO0B8cOd41MeBZSmWHgMbBq0i+o28Nxn5wug6vdv6N
+         S3IQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=5F9P+rsu48FUbDV9TizntpJNt5FGTMagwmpzztCYYIw=;
-        b=TK8qj82+Okxw3urBmI6oEF4FnTS69wKlOJbTCNmu4PLHk2+OlQYs4klX1HgwHW/i+C
-         uN5UgmsD6+nRADb1YoQAKVpozqsaT/wmedIhYYj881VFvK8LIDeoo7LNDyK6R7OFYtVa
-         kFa5HIPE6saxRCN40GkENRNZolSIgVyyQFq4u08YIk3mG8mjk8mVYhwvEZilpK3jj2Tt
-         OWrfoToWOEyk7ezK7zIXekx5Av3aQNMINUrzn8EHO+RuceefHYnPyEGRi0V35GaoZagf
-         K3ivjrPPWngkLr0Xbh9mbwgvmot3FOQhe699mSNmqqDA/+l6gXL74CWQBxJ7DOlD6tjK
-         /Kvg==
-X-Gm-Message-State: AOAM532CG+CyVU/NyufGxF3pRAlCw8q+95CS/VeO6CU8uZuiZ21WfrKS
-        5Yq1pYHvwi3YklX8ep9JdVVRWQ==
-X-Google-Smtp-Source: ABdhPJwlAARTmLd3RxM8TmQEU67BvdMOr6403mm2vbc3R957cl9jAHBfr0HIn7uK4/BRRaB/LZkTEA==
-X-Received: by 2002:a05:6830:22d6:: with SMTP id q22mr11873976otc.344.1633404230029;
-        Mon, 04 Oct 2021 20:23:50 -0700 (PDT)
+        bh=SvFCR87aiu5ds1ai63pEGRyATYSJy34i9VrTijqqATk=;
+        b=HB7F3aZddk+OPn9WEdvN2z/B8ix2hf2eILMRb74aP13BwBBTrb8P9tqY9JYkxpUzfM
+         j832O62OvyL2/18U3aXUMbyalt1zhIxMwJ81VOwpWCOV3hVBz+Jp4FYN4rUDXV5VDYBv
+         2qF7avYif3yWx8EFmeqdILLciHAffNafdE4H8/UAbIiAAool9lVMV+CybZmUIukTRHJZ
+         wxJmTNoIJrio/2wkZoXpvMKJ9R0LpeWVeBmdx/khjatrcCPTr6DpvDmhrO7kb+c0uguC
+         a3FXYHe6m2ZZa6qdpgTFu3R5mhXlPCQlr6aDY0ci9AR1M05CB/K6aMdFkMWNlM6zo9eE
+         Y8MA==
+X-Gm-Message-State: AOAM530DPSk4ixvXviHyBnZgA9U4TDMPQv/bkOCprBDviYMgGvds4Yzc
+        9jWZwSLR5n4Yk0qUNWmPApOPMg==
+X-Google-Smtp-Source: ABdhPJxSSslvoW0rwWInaRPbH4TQYAA0/DWTIUmmyUTD8TNYQ48VnwLlvqg+BiZluVnaq9t2DjPRdQ==
+X-Received: by 2002:a05:6830:793:: with SMTP id w19mr11859830ots.23.1633404231018;
+        Mon, 04 Oct 2021 20:23:51 -0700 (PDT)
 Received: from localhost.localdomain ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id j4sm3111955oia.56.2021.10.04.20.23.49
+        by smtp.gmail.com with ESMTPSA id j4sm3111955oia.56.2021.10.04.20.23.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Oct 2021 20:23:49 -0700 (PDT)
+        Mon, 04 Oct 2021 20:23:50 -0700 (PDT)
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -59,9 +59,9 @@ To:     Andy Gross <agross@kernel.org>,
         Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
         devicetree@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v3 1/4] dt-bindings: thermal: qcom: add HC variant of adc-thermal monitor bindings
-Date:   Mon,  4 Oct 2021 20:25:28 -0700
-Message-Id: <20211005032531.2251928-2-bjorn.andersson@linaro.org>
+Subject: [PATCH v3 2/4] thermal/drivers/qcom/spmi-adc-tm5: Add support for HC variant
+Date:   Mon,  4 Oct 2021 20:25:29 -0700
+Message-Id: <20211005032531.2251928-3-bjorn.andersson@linaro.org>
 X-Mailer: git-send-email 2.29.2
 In-Reply-To: <20211005032531.2251928-1-bjorn.andersson@linaro.org>
 References: <20211005032531.2251928-1-bjorn.andersson@linaro.org>
@@ -71,176 +71,99 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The HC generation of the ADC Thermal Monitor is quite similar to the 5th
-generation, but differs in valid values for a few properties. Create a
-new binding for the HC version of the hardware, rather than sprinkle
-conditionals throughout the existing binding.
+The variant of the ADC Thermal Monitor block found in e.g. PM8998 is
+"HC", add support for this variant to the ADC TM5 driver in order to
+support using VADC channels as thermal_zones on SDM845 et al.
 
 Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
 ---
 
 Changes since v2:
-- None
+- Dropped conditional return ret right before unconditionatl return ret;
 
- .../bindings/thermal/qcom-spmi-adc-tm-hc.yaml | 149 ++++++++++++++++++
- 1 file changed, 149 insertions(+)
- create mode 100644 Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm-hc.yaml
+ drivers/thermal/qcom/qcom-spmi-adc-tm5.c | 41 +++++++++++++++++++++++-
+ 1 file changed, 40 insertions(+), 1 deletion(-)
 
-diff --git a/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm-hc.yaml b/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm-hc.yaml
-new file mode 100644
-index 000000000000..8273ac55b63f
---- /dev/null
-+++ b/Documentation/devicetree/bindings/thermal/qcom-spmi-adc-tm-hc.yaml
-@@ -0,0 +1,149 @@
-+# SPDX-License-Identifier: (GPL-2.0 OR BSD-2-Clause)
-+%YAML 1.2
-+---
-+$id: http://devicetree.org/schemas/thermal/qcom-spmi-adc-tm-hc.yaml#
-+$schema: http://devicetree.org/meta-schemas/core.yaml#
+diff --git a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+index 8494cc04aa21..824671cf494a 100644
+--- a/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
++++ b/drivers/thermal/qcom/qcom-spmi-adc-tm5.c
+@@ -82,6 +82,7 @@ struct adc_tm5_data {
+ 	const u32	full_scale_code_volt;
+ 	unsigned int	*decimation;
+ 	unsigned int	*hw_settle;
++	bool		is_hc;
+ };
+ 
+ enum adc_tm5_cal_method {
+@@ -146,6 +147,14 @@ static const struct adc_tm5_data adc_tm5_data_pmic = {
+ 					 64000, 128000 },
+ };
+ 
++static const struct adc_tm5_data adc_tm_hc_data_pmic = {
++	.full_scale_code_volt = 0x70e4,
++	.decimation = (unsigned int []) { 256, 512, 1024 },
++	.hw_settle = (unsigned int []) { 0, 100, 200, 300, 400, 500, 600, 700,
++					 1000, 2000, 4000, 6000, 8000, 10000 },
++	.is_hc = true,
++};
 +
-+title: Qualcomm's SPMI PMIC ADC HC Thermal Monitoring
-+maintainers:
-+  - Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+ static int adc_tm5_read(struct adc_tm5_chip *adc_tm, u16 offset, u8 *data, int len)
+ {
+ 	return regmap_bulk_read(adc_tm->regmap, adc_tm->base + offset, data, len);
+@@ -375,6 +384,29 @@ static int adc_tm5_register_tzd(struct adc_tm5_chip *adc_tm)
+ 	return 0;
+ }
+ 
++static int adc_tm_hc_init(struct adc_tm5_chip *chip)
++{
++	unsigned int i;
++	u8 buf[2];
++	int ret;
 +
-+properties:
-+  compatible:
-+    const: qcom,spmi-adc-tm-hc
++	for (i = 0; i < chip->nchannels; i++) {
++		if (chip->channels[i].channel >= ADC_TM5_NUM_CHANNELS) {
++			dev_err(chip->dev, "Invalid channel %d\n", chip->channels[i].channel);
++			return -EINVAL;
++		}
++	}
 +
-+  reg:
-+    maxItems: 1
++	buf[0] = chip->decimation;
++	buf[1] = chip->avg_samples | ADC_TM5_FAST_AVG_EN;
 +
-+  interrupts:
-+    maxItems: 1
++	ret = adc_tm5_write(chip, ADC_TM5_ADC_DIG_PARAM, buf, sizeof(buf));
++	if (ret)
++		dev_err(chip->dev, "block write failed: %d\n", ret);
 +
-+  "#thermal-sensor-cells":
-+    const: 1
-+    description:
-+      Number of cells required to uniquely identify the thermal sensors. Since
-+      we have multiple sensors this is set to 1
++	return ret;
++}
 +
-+  "#address-cells":
-+    const: 1
-+
-+  "#size-cells":
-+    const: 0
-+
-+  qcom,avg-samples:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    description: Number of samples to be used for measurement.
-+    enum:
-+      - 1
-+      - 2
-+      - 4
-+      - 8
-+      - 16
-+    default: 1
-+
-+  qcom,decimation:
-+    $ref: /schemas/types.yaml#/definitions/uint32
-+    description: This parameter is used to decrease ADC sampling rate.
-+            Quicker measurements can be made by reducing decimation ratio.
-+    enum:
-+      - 256
-+      - 512
-+      - 1024
-+    default: 1024
-+
-+patternProperties:
-+  "^([-a-z0-9]*)@[0-7]$":
-+    type: object
-+    description:
-+      Represent one thermal sensor.
-+
-+    properties:
-+      reg:
-+        description: Specify the sensor channel. There are 8 channels in PMIC5's ADC TM
-+        minimum: 0
-+        maximum: 7
-+
-+      io-channels:
-+        description:
-+          From common IIO binding. Used to pipe PMIC ADC channel to thermal monitor
-+
-+      qcom,ratiometric:
-+        $ref: /schemas/types.yaml#/definitions/flag
-+        description:
-+          Channel calibration type.
-+          If this property is specified VADC will use the VDD reference
-+          (1.875V) and GND for channel calibration. If property is not found,
-+          channel will be calibrated with 0V and 1.25V reference channels,
-+          also known as absolute calibration.
-+
-+      qcom,hw-settle-time-us:
-+        description: Time between AMUX getting configured and the ADC starting conversion.
-+        enum: [0, 100, 200, 300, 400, 500, 600, 700, 1000, 2000, 4000, 6000, 8000, 10000]
-+
-+      qcom,pre-scaling:
-+        $ref: /schemas/types.yaml#/definitions/uint32-array
-+        description: Used for scaling the channel input signal before the
-+          signal is fed to VADC. The configuration for this node is to know the
-+          pre-determined ratio and use it for post scaling. It is a pair of
-+          integers, denoting the numerator and denominator of the fraction by
-+          which input signal is multiplied. For example, <1 3> indicates the
-+          signal is scaled down to 1/3 of its value before ADC measurement.  If
-+          property is not found default value depending on chip will be used.
-+        items:
-+          - const: 1
-+          - enum: [ 1, 3, 4, 6, 20, 8, 10 ]
-+
-+    required:
-+      - reg
-+      - io-channels
-+
-+    additionalProperties:
-+      false
-+
-+required:
-+  - compatible
-+  - reg
-+  - interrupts
-+  - "#address-cells"
-+  - "#size-cells"
-+  - "#thermal-sensor-cells"
-+
-+additionalProperties: false
-+
-+examples:
-+  - |
-+    #include <dt-bindings/iio/qcom,spmi-vadc.h>
-+    #include <dt-bindings/interrupt-controller/irq.h>
-+    spmi_bus {
-+        #address-cells = <1>;
-+        #size-cells = <0>;
-+        pm8998_adc: adc@3100 {
-+            reg = <0x3100>;
-+            compatible = "qcom,spmi-adc-rev2";
-+            #address-cells = <1>;
-+            #size-cells = <0>;
-+            #io-channel-cells = <1>;
-+
-+            /* Other propreties are omitted */
-+            adc-chan@4c {
-+                reg = <ADC5_XO_THERM_100K_PU>;
-+            };
-+        };
-+
-+        pm8998_adc_tm: adc-tm@3400 {
-+            compatible = "qcom,spmi-adc-tm-hc";
-+            reg = <0x3400>;
-+            interrupts = <0x2 0x34 0x0 IRQ_TYPE_EDGE_RISING>;
-+            #thermal-sensor-cells = <1>;
-+            #address-cells = <1>;
-+            #size-cells = <0>;
-+
-+            thermistor@1 {
-+                reg = <1>;
-+                io-channels = <&pm8998_adc ADC5_XO_THERM_100K_PU>;
-+                qcom,ratiometric;
-+                qcom,hw-settle-time-us = <200>;
-+            };
-+        };
-+    };
-+...
+ static int adc_tm5_init(struct adc_tm5_chip *chip)
+ {
+ 	u8 buf[4], channels_available;
+@@ -591,7 +623,10 @@ static int adc_tm5_probe(struct platform_device *pdev)
+ 		return ret;
+ 	}
+ 
+-	ret = adc_tm5_init(adc_tm);
++	if (adc_tm->data->is_hc)
++		ret = adc_tm_hc_init(adc_tm);
++	else
++		ret = adc_tm5_init(adc_tm);
+ 	if (ret) {
+ 		dev_err(dev, "adc-tm init failed\n");
+ 		return ret;
+@@ -612,6 +647,10 @@ static const struct of_device_id adc_tm5_match_table[] = {
+ 		.compatible = "qcom,spmi-adc-tm5",
+ 		.data = &adc_tm5_data_pmic,
+ 	},
++	{
++		.compatible = "qcom,spmi-adc-tm-hc",
++		.data = &adc_tm_hc_data_pmic,
++	},
+ 	{ }
+ };
+ MODULE_DEVICE_TABLE(of, adc_tm5_match_table);
 -- 
 2.29.2
 
