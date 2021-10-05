@@ -2,66 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BF1A9422673
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 14:27:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 06BED42266E
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 14:26:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234832AbhJEM2u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Oct 2021 08:28:50 -0400
-Received: from mail-oi1-f172.google.com ([209.85.167.172]:42959 "EHLO
-        mail-oi1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234835AbhJEM2m (ORCPT
+        id S234875AbhJEM2r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Oct 2021 08:28:47 -0400
+Received: from mail-ot1-f48.google.com ([209.85.210.48]:44631 "EHLO
+        mail-ot1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234732AbhJEM2j (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Oct 2021 08:28:42 -0400
-Received: by mail-oi1-f172.google.com with SMTP id x124so25920159oix.9;
-        Tue, 05 Oct 2021 05:26:52 -0700 (PDT)
+        Tue, 5 Oct 2021 08:28:39 -0400
+Received: by mail-ot1-f48.google.com with SMTP id h9-20020a9d2f09000000b005453f95356cso25595567otb.11;
+        Tue, 05 Oct 2021 05:26:49 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
          :message-id;
-        bh=2osazg+rgssFYou7cJPxJJYsoEViInPF7W7tjIEWU+o=;
-        b=7kM7P46OQSeYaRinmjadZwEO1OMmhvK2c80/tXcDKNw2uq4nq8N5Jc+8OfAycMf/TE
-         3qCAcYXT6ZqwMRMSyqGIhD34ZoY8JPIEyK3mwZnzI1vLaYLdVe6hB7hj8vCqCRuam+ij
-         ZyyTI/u72Np0fhsBu3Qd2t3wVNpb87z1y/0WtjbkVic3tPWWsTzvy4H97L0t5ys5oqbz
-         QHOlBMqZD9t9VrKYw4W+nGDo4HSlLKM3we1f2MimyG01rEJzeFf4neOILHZOtdkwbQer
-         NDZyV1ZCHDrKXJTiX9YHPgn7+8Jys0cUWqW3QUPtGQ1qFavJu/6+kb3KLollY3KziUEk
-         9TAg==
-X-Gm-Message-State: AOAM531lNnGDJWcodNOeNsMCwNAh0pmTWjKPXGUG0mmJ5dplHpfa1C1d
-        lOJIJJxvwoQA+Sn1gAjHFQ==
-X-Google-Smtp-Source: ABdhPJzfEZ9aViNQ+wNyxoesg87WpUSfv1C3aSQXrqzcF2YV68dCtOeQlDw/DwWo1foaIpxrZVtVEA==
-X-Received: by 2002:aca:ab4d:: with SMTP id u74mr2218524oie.120.1633436811833;
-        Tue, 05 Oct 2021 05:26:51 -0700 (PDT)
+        bh=w/FK/ML78245XHAIchDVDOq8/sxzIBzb2YgmaSlt68M=;
+        b=BNmj+N/ixDvm9UXW0KHDpUe09qO1ZqlJseu17K0pNM7Hp+6EjLtsyRxsApGJltf8iQ
+         Scjv2h8eBupi9FmJoBJuG1vOnyQRKQaBRCshZw80Yo2tYQCWzwX6BPWaod46+2HQc9hL
+         VQIaogH66m+Wu1LTrXERb0eANEDHtVcKJckyACCZz3OVffv8O7Y6YRZ+HQazrsEqi71I
+         0GtBHIW1XLl6DIfr9BdJBZmbJpTaeneuUWDVk5Fl6jWczZWf5kUCS4zk5bP+wBnGUJVt
+         7JgAfl0EtECVSesQ9l1VJYay0Es1m/zDNX2WOhAe99zxOMODMcEDR2OKU8n0sFAi3bkw
+         SLnw==
+X-Gm-Message-State: AOAM533XquHuVScvQaos+QVpBzYiPJy1c/QqTjBXaFwOmmE6IEaOBSoA
+        QZ8vEhTPIrldL/yb/bhW9g==
+X-Google-Smtp-Source: ABdhPJysfIpY+AlZGPd1aq069xpRzqdiEWvovmqueORSOfYiFbk/wJ4mm+HHZh3UGFbHFe4HlLF1Mg==
+X-Received: by 2002:a05:6830:1bc6:: with SMTP id v6mr13950334ota.299.1633436808863;
+        Tue, 05 Oct 2021 05:26:48 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id k3sm2593351otn.16.2021.10.05.05.26.50
+        by smtp.gmail.com with ESMTPSA id h26sm3505109otn.67.2021.10.05.05.26.47
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Oct 2021 05:26:51 -0700 (PDT)
-Received: (nullmailer pid 3226800 invoked by uid 1000);
+        Tue, 05 Oct 2021 05:26:48 -0700 (PDT)
+Received: (nullmailer pid 3226814 invoked by uid 1000);
         Tue, 05 Oct 2021 12:26:38 -0000
 From:   Rob Herring <robh@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     devicetree@vger.kernel.org, linux-gpio@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Linus Walleij <linus.walleij@linaro.org>,
-        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-In-Reply-To: <20211004232225.2260665-2-dmitry.baryshkov@linaro.org>
-References: <20211004232225.2260665-1-dmitry.baryshkov@linaro.org> <20211004232225.2260665-2-dmitry.baryshkov@linaro.org>
-Subject: Re: [PATCH 1/6] dt-bindings: pinctrl: qcom,pmic-mpp: Convert qcom pmic mpp bindings to YAML
+To:     Maulik Shah <mkshah@codeaurora.org>
+Cc:     devicetree@vger.kernel.org, bjorn.andersson@linaro.org,
+        evgreen@chromium.org, agross@kernel.org, swboyd@chromium.org,
+        linux-arm-msm@vger.kernel.org, Lina Iyer <ilina@codeaurora.org>,
+        dianders@chromium.org,
+        Mahesh Sivasubramanian <msivasub@codeaurora.org>,
+        mka@chromium.org, rnayak@codeaurora.org, linux@roeck-us.net,
+        lsrao@codeaurora.org, linux-kernel@vger.kernel.org
+In-Reply-To: <1633425065-7927-2-git-send-email-mkshah@codeaurora.org>
+References: <1633425065-7927-1-git-send-email-mkshah@codeaurora.org> <1633425065-7927-2-git-send-email-mkshah@codeaurora.org>
+Subject: Re: [PATCH v10 1/5] dt-bindings: Introduce SoC sleep stats bindings
 Date:   Tue, 05 Oct 2021 07:26:38 -0500
-Message-Id: <1633436798.574602.3226799.nullmailer@robh.at.kernel.org>
+Message-Id: <1633436798.669118.3226812.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 05 Oct 2021 02:22:20 +0300, Dmitry Baryshkov wrote:
-> Convert Qualcomm PMIC MPP bindings from .txt to .yaml format.
+On Tue, 05 Oct 2021 14:41:01 +0530, Maulik Shah wrote:
+> From: Mahesh Sivasubramanian <msivasub@codeaurora.org>
 > 
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Add device binding documentation for Qualcomm Technologies, Inc. (QTI)
+> SoC sleep stats driver. The driver is used for displaying SoC sleep
+> statistic maintained by Always On Processor or Resource Power Manager.
+> 
+> Cc: devicetree@vger.kernel.org
+> Signed-off-by: Mahesh Sivasubramanian <msivasub@codeaurora.org>
+> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+> Reviewed-by: Rob Herring <robh@kernel.org>
+> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 > ---
->  .../bindings/pinctrl/qcom,pmic-mpp.txt        | 187 ------------------
->  .../bindings/pinctrl/qcom,pmic-mpp.yaml       | 178 +++++++++++++++++
->  2 files changed, 178 insertions(+), 187 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.txt
->  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
+>  .../bindings/soc/qcom/soc-sleep-stats.yaml         | 47 ++++++++++++++++++++++
+>  1 file changed, 47 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.yaml
 > 
 
 My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
@@ -70,12 +80,14 @@ on your patch (DT_CHECKER_FLAGS is new in v5.13):
 yamllint warnings/errors:
 
 dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.example.dt.yaml: mpps@a000: 'interrupt-controller' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.example.dt.yaml: memory@c3f0000: 'device_type' is a required property
+	From schema: /usr/local/lib/python3.8/dist-packages/dtschema/schemas/memory.yaml
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.example.dt.yaml: memory@4690000: 'device_type' is a required property
+	From schema: /usr/local/lib/python3.8/dist-packages/dtschema/schemas/memory.yaml
 
 doc reference errors (make refcheckdocs):
 
-See https://patchwork.ozlabs.org/patch/1536426
+See https://patchwork.ozlabs.org/patch/1536587
 
 This check can fail if there are any dependencies. The base for a patch
 series is generally the most recent rc1.
