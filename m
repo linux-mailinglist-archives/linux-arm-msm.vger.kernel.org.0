@@ -2,61 +2,62 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A64ED422036
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 10:11:19 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5F31C422035
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 10:11:17 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233433AbhJEINF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Oct 2021 04:13:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39854 "EHLO
+        id S233389AbhJEIND (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Oct 2021 04:13:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39846 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233355AbhJEINC (ORCPT
+        with ESMTP id S233344AbhJEINB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Oct 2021 04:13:02 -0400
-Received: from mail-ed1-x532.google.com (mail-ed1-x532.google.com [IPv6:2a00:1450:4864:20::532])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2D60AC061765
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Oct 2021 01:11:11 -0700 (PDT)
-Received: by mail-ed1-x532.google.com with SMTP id x7so72933150edd.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Oct 2021 01:11:11 -0700 (PDT)
+        Tue, 5 Oct 2021 04:13:01 -0400
+Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74AE5C061762
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Oct 2021 01:11:10 -0700 (PDT)
+Received: by mail-ed1-x52c.google.com with SMTP id g8so75300635edt.7
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Oct 2021 01:11:10 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=yiKrIzBiKlW3d0EztEYlz/TsXaJItbUI5JDPiVLlN/g=;
-        b=YmIChPJXJMaKsNpip6EixH2hiIiMBjlqpIVxWPX4NrD1wNja+xWPabsHk8wLRgNtjc
-         yjbqkxRmJCOcI0yOjaxlJ2Y+yrNSr5WqpSNCLeIaKsqrl91e+PzDxJ1/Q4Pzz91XaWa3
-         jzO4KM0zkTIKH28RAtZ+tDkkam1rWSM1TCJ86zpwMf2cGHo8Z7IVv4mgYuD6Sh+dG6a+
-         VrE2cFJM4aF7BXW7eSfWaQM2c26pwvqbWTYrvdeM8t6d6+V7uTfgjHn5sJaQfZrsQde8
-         vF2LURw1AzgGzdIMm4h3nsX3+8caNM25fgYOiNMPCB5S9B79IT4AZHoGnPx1657jMHEp
-         k4eA==
+        bh=Ls8RstZxqwEUsOoWPu8ndBv6d6AzlNnldZDH8PTFT0s=;
+        b=nO4PomRi8oyFYlAiKXx3pgeRDpA6tK4u/+itS+BRrE3bXCb44RNKaDruBFZ49gqxZU
+         dfwndLroqe4h5ihs8+0PLL3U8FcjbkLNr4JTAhvoT4/wNPPRaXmRK1D9qHByepPzOvwz
+         sigWiLZIMlmuVAMOVYW4CoB/Y2iEyrgdJUMX1V7vHvOMV75yhgIQY57oOvSpKTp9QCmc
+         0H2He5ZxubbvMovD+e/2Fz5WTqiVkDMIcw3mdNnZCEsbow/CxIdKnZ0OCdVVfKiaCpJl
+         ZkghlpXCH3t38FKJPT4w8H1JD6wgQOgzoqplAF2d9s8UOiYx+Ii06g+vTi7EahvV7zFM
+         aMkw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=yiKrIzBiKlW3d0EztEYlz/TsXaJItbUI5JDPiVLlN/g=;
-        b=17EqD1Vk9YivyJA8J/Fdq9JG2d53i7WElNxrAT1vC2KVfoZlM+ViR5nw7i7a6YvxF1
-         bLtiWcROQepAUd8CZEYc1tpHDQsM5zO3+w9wc1k7Nk6KgVQscCjVHw8v3TsKreO/icT2
-         lHYZicZWgAG8Bm+NtNPwmXAscXZ14MIJK/4AqLKVYM/F7mDwxikFuQUogZRMBCwba5BO
-         HCUw/dBeUxK9shbF153U6N9c0MydCVty45kWPJ/GsoXbjcBDnS4/popXkHATmhldDlWx
-         1CYzbpPKCbWvtnk3VNdZ4WYvmm06Cav6kryqmcwAE9BHypVLT7oVan0TgMWqCfJdnX6P
-         yX1g==
-X-Gm-Message-State: AOAM531y5wUEJIq07THUGuNQ8uV3YUM6cboA7E99Oh4YvcR7c9WF3pl7
-        hkD23C9/vhsmQRmMLbQZd8v5xQ==
-X-Google-Smtp-Source: ABdhPJwJhu3jjo/3YXeQJcXgRFl6tItMWzZAqXsrRZo1PPfuyGlAD0IoFfE1hMBVYWR+E7TfseDzSQ==
-X-Received: by 2002:a17:906:c18d:: with SMTP id g13mr22603666ejz.518.1633421468198;
+        bh=Ls8RstZxqwEUsOoWPu8ndBv6d6AzlNnldZDH8PTFT0s=;
+        b=Pk1vCwEQXBp5V5NOwqM2TJ62CCI8D3fixEtfQVVMk+JXgQzF+jf8QSt61aYb2qgWb1
+         oaAF8RnfXfOh/fxXK/TBTLg9NQWYsUgprbVNqvbQQAfh0nTBiPQVXH0txPBX9bOI67KE
+         7UGilgx4y55TBelc1V5/9C+1pXOMqbPfrABv4ssYQMZBOACjTbpQLbqI98/vTuiSLUoT
+         KVNBe64aigR+70NAii4PW70LsUKMSgxVS7UD7lZBEc6PqsRnm+pd5svmy1m6pQBOtqlp
+         oewEdsRMgm2bIateYwhNPUXNNL8sbYOUFnIddD4+kys0wGpJ7xb20CPFRw/+wFiLX+7E
+         ERQA==
+X-Gm-Message-State: AOAM530cYAOVfh3pTmgAA4q0L9hHC1YA86Ek5tSEngxsyeoU7cDgriw5
+        UypP/gkPMroF84if+ZkmNdccsQ==
+X-Google-Smtp-Source: ABdhPJyckDi2ds1mQmeg1dj3SRksmDbvdNoYJGhzAFsHs7NmG8BLc4++eLGXCqVX3PoAxzTNmoyyEA==
+X-Received: by 2002:a17:906:6dd4:: with SMTP id j20mr22885943ejt.316.1633421468984;
         Tue, 05 Oct 2021 01:11:08 -0700 (PDT)
 Received: from localhost.localdomain ([84.238.208.199])
-        by smtp.gmail.com with ESMTPSA id f1sm3096258edz.47.2021.10.05.01.11.07
+        by smtp.gmail.com with ESMTPSA id f1sm3096258edz.47.2021.10.05.01.11.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Oct 2021 01:11:07 -0700 (PDT)
+        Tue, 05 Oct 2021 01:11:08 -0700 (PDT)
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
 To:     linux-media@vger.kernel.org
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         vgarodia@codeaurora.org,
         Dikshita Agarwal <dikshita@codeaurora.org>,
+        Mansur Alisha Shaik <mansur@codeaurora.org>,
         Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH v5 3/7] media: venus: Add num_vpp_pipes to resource structure
-Date:   Tue,  5 Oct 2021 11:10:44 +0300
-Message-Id: <20211005081048.3095252-4-stanimir.varbanov@linaro.org>
+Subject: [PATCH v5 4/7] media: venus: hfi: Skip AON register programming for V6 1pipe
+Date:   Tue,  5 Oct 2021 11:10:45 +0300
+Message-Id: <20211005081048.3095252-5-stanimir.varbanov@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20211005081048.3095252-1-stanimir.varbanov@linaro.org>
 References: <20211005081048.3095252-1-stanimir.varbanov@linaro.org>
@@ -68,127 +69,43 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Dikshita Agarwal <dikshita@codeaurora.org>
 
-V6 HW can have vpp pipes as 1 or 4, add num_vpp_pipes
-to resource struture to differentiate.
+AON register programming is used to set NOC to low power mode
+during V6 power off sequence. However AON register memory map
+is not applicable to 1pipe, hence skipping AON register programming.
 
+Co-developed-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
+Co-developed-by: Vikash Garodia <vgarodia@codeaurora.org>
+Signed-off-by: Vikash Garodia <vgarodia@codeaurora.org>
 Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
 Acked-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 ---
- drivers/media/platform/qcom/venus/core.c            |  2 ++
- drivers/media/platform/qcom/venus/core.h            |  1 +
- drivers/media/platform/qcom/venus/helpers.c         |  2 +-
- drivers/media/platform/qcom/venus/hfi_platform.c    | 13 -------------
- drivers/media/platform/qcom/venus/hfi_platform.h    |  2 --
- drivers/media/platform/qcom/venus/hfi_platform_v6.c |  6 ------
- 6 files changed, 4 insertions(+), 22 deletions(-)
+ drivers/media/platform/qcom/venus/hfi_venus.c | 4 ++++
+ 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/venus/core.c b/drivers/media/platform/qcom/venus/core.c
-index e5af4d74e504..de7b32caa8b8 100644
---- a/drivers/media/platform/qcom/venus/core.c
-+++ b/drivers/media/platform/qcom/venus/core.c
-@@ -727,6 +727,7 @@ static const struct venus_resources sm8250_res = {
- 	.vcodec_num = 1,
- 	.max_load = 7833600,
- 	.hfi_version = HFI_VERSION_6XX,
-+	.num_vpp_pipes = 4,
- 	.vmem_id = VIDC_RESOURCE_NONE,
- 	.vmem_size = 0,
- 	.vmem_addr = 0,
-@@ -778,6 +779,7 @@ static const struct venus_resources sc7280_res = {
- 	.opp_pmdomain = (const char *[]) { "cx", NULL },
- 	.vcodec_num = 1,
- 	.hfi_version = HFI_VERSION_6XX,
-+	.num_vpp_pipes = 1,
- 	.vmem_id = VIDC_RESOURCE_NONE,
- 	.vmem_size = 0,
- 	.vmem_addr = 0,
-diff --git a/drivers/media/platform/qcom/venus/core.h b/drivers/media/platform/qcom/venus/core.h
-index 5ec851115eca..62228cc6b032 100644
---- a/drivers/media/platform/qcom/venus/core.h
-+++ b/drivers/media/platform/qcom/venus/core.h
-@@ -68,6 +68,7 @@ struct venus_resources {
- 	const char * const resets[VIDC_RESETS_NUM_MAX];
- 	unsigned int resets_num;
- 	enum hfi_version hfi_version;
-+	u8 num_vpp_pipes;
- 	u32 max_load;
- 	unsigned int vmem_id;
- 	u32 vmem_size;
-diff --git a/drivers/media/platform/qcom/venus/helpers.c b/drivers/media/platform/qcom/venus/helpers.c
-index 8012f5c7bf34..1f46a6f4456a 100644
---- a/drivers/media/platform/qcom/venus/helpers.c
-+++ b/drivers/media/platform/qcom/venus/helpers.c
-@@ -583,7 +583,7 @@ static int platform_get_bufreq(struct venus_inst *inst, u32 buftype,
- 		return -EINVAL;
+diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
+index ce98c523b3c6..3a75a27632fb 100644
+--- a/drivers/media/platform/qcom/venus/hfi_venus.c
++++ b/drivers/media/platform/qcom/venus/hfi_venus.c
+@@ -551,6 +551,9 @@ static int venus_halt_axi(struct venus_hfi_device *hdev)
+ 	if (IS_V6(hdev->core)) {
+ 		writel(0x3, cpu_cs_base + CPU_CS_X2RPMH_V6);
  
- 	params.version = version;
--	params.num_vpp_pipes = hfi_platform_num_vpp_pipes(version);
-+	params.num_vpp_pipes = inst->core->res->num_vpp_pipes;
++		if (hdev->core->res->num_vpp_pipes == 1)
++			goto skip_aon_mvp_noc;
++
+ 		writel(0x1, aon_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
+ 		ret = readl_poll_timeout(aon_base + AON_WRAPPER_MVP_NOC_LPI_STATUS,
+ 					 val,
+@@ -560,6 +563,7 @@ static int venus_halt_axi(struct venus_hfi_device *hdev)
+ 		if (ret)
+ 			return -ETIMEDOUT;
  
- 	if (is_dec) {
- 		params.width = inst->width;
-diff --git a/drivers/media/platform/qcom/venus/hfi_platform.c b/drivers/media/platform/qcom/venus/hfi_platform.c
-index f5b4e1f4764f..f16f8962273c 100644
---- a/drivers/media/platform/qcom/venus/hfi_platform.c
-+++ b/drivers/media/platform/qcom/venus/hfi_platform.c
-@@ -66,16 +66,3 @@ hfi_platform_get_codec_lp_freq(enum hfi_version version, u32 codec, u32 session_
- 	return freq;
- }
++skip_aon_mvp_noc:
+ 		mask_val = (BIT(2) | BIT(1) | BIT(0));
+ 		writel(mask_val, wrapper_base + WRAPPER_DEBUG_BRIDGE_LPI_CONTROL_V6);
  
--u8 hfi_platform_num_vpp_pipes(enum hfi_version version)
--{
--	const struct hfi_platform *plat;
--
--	plat = hfi_platform_get(version);
--	if (!plat)
--		return 0;
--
--	if (plat->num_vpp_pipes)
--		return plat->num_vpp_pipes();
--
--	return 0;
--}
-diff --git a/drivers/media/platform/qcom/venus/hfi_platform.h b/drivers/media/platform/qcom/venus/hfi_platform.h
-index 2dbe608c53af..1dcf4085928c 100644
---- a/drivers/media/platform/qcom/venus/hfi_platform.h
-+++ b/drivers/media/platform/qcom/venus/hfi_platform.h
-@@ -52,7 +52,6 @@ struct hfi_platform {
- 	unsigned long (*codec_lp_freq)(u32 session_type, u32 codec);
- 	void (*codecs)(u32 *enc_codecs, u32 *dec_codecs, u32 *count);
- 	const struct hfi_plat_caps *(*capabilities)(unsigned int *entries);
--	u8 (*num_vpp_pipes)(void);
- 	int (*bufreq)(struct hfi_plat_buffers_params *params, u32 session_type,
- 		      u32 buftype, struct hfi_buffer_requirements *bufreq);
- };
-@@ -67,5 +66,4 @@ unsigned long hfi_platform_get_codec_vsp_freq(enum hfi_version version, u32 code
- 					      u32 session_type);
- unsigned long hfi_platform_get_codec_lp_freq(enum hfi_version version, u32 codec,
- 					     u32 session_type);
--u8 hfi_platform_num_vpp_pipes(enum hfi_version version);
- #endif
-diff --git a/drivers/media/platform/qcom/venus/hfi_platform_v6.c b/drivers/media/platform/qcom/venus/hfi_platform_v6.c
-index d8243b22568a..c10618e44f5d 100644
---- a/drivers/media/platform/qcom/venus/hfi_platform_v6.c
-+++ b/drivers/media/platform/qcom/venus/hfi_platform_v6.c
-@@ -322,17 +322,11 @@ static unsigned long codec_lp_freq(u32 session_type, u32 codec)
- 	return 0;
- }
- 
--static u8 num_vpp_pipes(void)
--{
--	return 4;
--}
--
- const struct hfi_platform hfi_plat_v6 = {
- 	.codec_vpp_freq = codec_vpp_freq,
- 	.codec_vsp_freq = codec_vsp_freq,
- 	.codec_lp_freq = codec_lp_freq,
- 	.codecs = get_codecs,
- 	.capabilities = get_capabilities,
--	.num_vpp_pipes = num_vpp_pipes,
- 	.bufreq = hfi_plat_bufreq_v6,
- };
 -- 
 2.25.1
 
