@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CABD2422BF9
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 17:11:56 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 41B6C422C01
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 17:12:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230059AbhJEPNq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Oct 2021 11:13:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55440 "EHLO
+        id S235762AbhJEPNy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Oct 2021 11:13:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55484 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229936AbhJEPNo (ORCPT
+        with ESMTP id S235709AbhJEPNx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Oct 2021 11:13:44 -0400
-Received: from mail-pg1-x52b.google.com (mail-pg1-x52b.google.com [IPv6:2607:f8b0:4864:20::52b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 38769C061749;
-        Tue,  5 Oct 2021 08:11:54 -0700 (PDT)
-Received: by mail-pg1-x52b.google.com with SMTP id r2so20057825pgl.10;
-        Tue, 05 Oct 2021 08:11:54 -0700 (PDT)
+        Tue, 5 Oct 2021 11:13:53 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 80D2CC061749;
+        Tue,  5 Oct 2021 08:12:03 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id oa12-20020a17090b1bcc00b0019f715462a8so2750601pjb.3;
+        Tue, 05 Oct 2021 08:12:03 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=QSrcQ531lYvMDyqtMmSNSg1D9eOHYmXdh6Sn4g0VZLQ=;
-        b=LE+nGxihu74oC3P/yXCbRUT8joVuLjedGgQjvKmK8f3RDbhsFz2Vi3/sS9u9wXnGcX
-         K2GgrTHQM2kjOTjbHfEDKSOGaIQ95GlbZ/QF327Ospm5XEbm5TPf6490GoZyuWQ1E/y+
-         IeJKKHDWKXVrwoDC9bWA7CsdXkqo8n4aTYFKKesOpEGc2WcdjcTgXydrApYSun1UVsgw
-         iY76WfnFfYcz9KR5eDOdItpIDV0s68u3xP+x9H5iDGJotHLBIZgkU1UDs/KH+Jtv0Uja
-         Hd84BWPjshr5CEK7HmMKnP/2imJsZdYLGNfIk8+cWZQTHfe+FZ/z7BP+9G5U4gsshMEp
-         MPpQ==
+        h=from:to:cc:subject:date:message-id:in-reply-to:references
+         :mime-version:content-transfer-encoding;
+        bh=SPs/YU00jcqG3AvmdBwQDSbULCjfF0c6tzOeWHqJ2/g=;
+        b=a7cvXNPXbG0P/xuJG6LtxY1YUObRQJXMgbnBzT22veeOKSozfJUftZyqdKKm3F5M7E
+         4DkpXJvhSVRZohvC1D60+nsRaahKrFrVIOgXffrWRgBU8VOn4hcKlVXpe469yIfdk/Ic
+         3+/XbYzF3cWuafVfcY5blNhPdsdVS2tQIm5uV8CDXGs1XM5TI6u//gzRH0bjxV149beB
+         ie44vCp1yufq3j+lQn1RJkpwobJlf6lOzt7Fu1weJURfG+uZJ9NfJM5imEzgYddTgfNZ
+         pbL5MjJUvaNjoJesRU82Hglg6MbRrYXNZi7/VKDtUXyIhF3eWc7m6rvTO/UInEk5hNgh
+         xjug==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=QSrcQ531lYvMDyqtMmSNSg1D9eOHYmXdh6Sn4g0VZLQ=;
-        b=TPx0nSg7Oo3WUEieReIc7H3ZnnkTeonmVnRGx+fefPPxff3r1k0bVqRQ8XChVzIwba
-         NAT+gw3IwSedCDOmmwlb6Ec+n42FQbm1REpgpG/fQlzPF+l1QFUfvIjxsjcmLTZUg1lx
-         dQtdKbLrMsEkBDr6cogjK5Hv5xUP60VETCnR0RsvBVBCJwdDLkL/5YnRIbUNjT2WJrKC
-         ugyaOEm04fyYrizVBHR8Z/VCFR46hwal5U2sv3H1lhodje6CPTiZJfwmmLwGo0Y1z9pX
-         pMiQ0FA7addAlicNXo1FrRkxwNqZTAq4eVvBdIPxX7+6bYNDb8MqJCcuz4ZfywJcLVku
-         ahNg==
-X-Gm-Message-State: AOAM532D6A5l/D6MTQ6tpCkaqcQoNGyAiHSJ1TEezIVf68hYIg7VVw8f
-        QMV/ErlwlBHMs2GqtvgbW3I=
-X-Google-Smtp-Source: ABdhPJxO3G+HWzM6JzFUJostwno3QxJkFsVc0ojvp/XHIKEdzTvHkYlD/6vx1y3wEb8mXk5HXIWGFA==
-X-Received: by 2002:aa7:828c:0:b0:44c:28d1:46b9 with SMTP id s12-20020aa7828c000000b0044c28d146b9mr19508978pfm.43.1633446713563;
-        Tue, 05 Oct 2021 08:11:53 -0700 (PDT)
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
+         :references:mime-version:content-transfer-encoding;
+        bh=SPs/YU00jcqG3AvmdBwQDSbULCjfF0c6tzOeWHqJ2/g=;
+        b=G1eL/4Lkax8ZGrnjehi7Er/xQYpSZ3qjkSPmO/55SjdZ0wB7at5SzUdTp6tcBk9VB6
+         S55g/kF1JYdbS/GORKBJor1uc/+zosAcvx3DlDkLpoNv2mRWKY2PY/xXq4eaMpmv6GBF
+         f6hGLp8hwjbCUYllD+gvBh54oHWJPM+Y+/kpV//L8aicg2ItQ03Tgwu31FbOJzG7sa2E
+         nPsLZBtfsdKs0mZtdh5YRZihXQ09lID32zvprht0GhHS/4lCVxtngtGCPwPI5+g3EVfP
+         G8H143mKOnra/Jui9FnO/CzpMo9cbo6lSkWQXfJGuVwIoLNbeFxY6cWdF+9651bdfS4F
+         WkFQ==
+X-Gm-Message-State: AOAM531NxHc+KY9lpxAAcrtvHnriqqZav4t9tAzTlXpUbBfUhadBNJpw
+        KjmUUSZcGsR792OuHy8pBbg=
+X-Google-Smtp-Source: ABdhPJyYPe3GWtsu0pADrVqdldHqgcDqJKKvF9EPgdV7/1w4n7Do4WsXaIRLQvFBUp6e7vSTJdjGNQ==
+X-Received: by 2002:a17:90a:718c:: with SMTP id i12mr4498701pjk.182.1633446723043;
+        Tue, 05 Oct 2021 08:12:03 -0700 (PDT)
 Received: from localhost (c-73-25-156-94.hsd1.or.comcast.net. [73.25.156.94])
-        by smtp.gmail.com with ESMTPSA id k22sm18388032pfi.149.2021.10.05.08.11.51
+        by smtp.gmail.com with ESMTPSA id e1sm18677200pgi.43.2021.10.05.08.12.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Oct 2021 08:11:51 -0700 (PDT)
+        Tue, 05 Oct 2021 08:12:01 -0700 (PDT)
 From:   Rob Clark <robdclark@gmail.com>
 To:     dri-devel@lists.freedesktop.org
 Cc:     linux-arm-kernel@lists.infradead.org,
@@ -56,28 +56,25 @@ Cc:     linux-arm-kernel@lists.infradead.org,
         Robin Murphy <robin.murphy@arm.com>,
         Will Deacon <will@kernel.org>,
         Rob Clark <robdclark@chromium.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
         Akhil P Oommen <akhilpo@codeaurora.org>,
-        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-        Douglas Anderson <dianders@chromium.org>,
-        Georgi Djakov <quic_c_gdjako@quicinc.com>,
-        iommu@lists.linux-foundation.org (open list:IOMMU DRIVERS),
-        "Isaac J. Manjarres" <isaacm@codeaurora.org>,
-        Joerg Roedel <jroedel@suse.de>,
         Jonathan Marek <jonathan@marek.ca>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
-        linux-kernel@vger.kernel.org (open list),
         Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
         Sharat Masetty <smasetty@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Suravee Suthikulpanit <suravee.suthikulpanit@amd.com>,
-        Sven Peter <sven@svenpeter.dev>,
+        Douglas Anderson <dianders@chromium.org>,
+        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
         Yangtao Li <tiny.windzz@gmail.com>,
-        Yong Wu <yong.wu@mediatek.com>
-Subject: [PATCH v2 0/3] io-pgtable-arm + drm/msm: Extend iova fault debugging
-Date:   Tue,  5 Oct 2021 08:16:24 -0700
-Message-Id: <20211005151633.1738878-1-robdclark@gmail.com>
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        linux-arm-msm@vger.kernel.org (open list:DRM DRIVER FOR MSM ADRENO GPU),
+        linux-kernel@vger.kernel.org (open list)
+Subject: [PATCH v2 2/3] drm/msm: Show all smmu info for iova fault devcore dumps
+Date:   Tue,  5 Oct 2021 08:16:26 -0700
+Message-Id: <20211005151633.1738878-3-robdclark@gmail.com>
 X-Mailer: git-send-email 2.31.1
+In-Reply-To: <20211005151633.1738878-1-robdclark@gmail.com>
+References: <20211005151633.1738878-1-robdclark@gmail.com>
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
@@ -86,43 +83,80 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Rob Clark <robdclark@chromium.org>
 
-This series extends io-pgtable-arm with a method to retrieve the page
-table entries traversed in the process of address translation, and then
-beefs up drm/msm gpu devcore dump to include this (and additional info)
-in the devcore dump.
-
-The motivation is tracking down an obscure iova fault triggered crash on
-the address of the IB1 cmdstream.  This is one of the few places where
-the GPU address written into the cmdstream is soley under control of the
-kernel mode driver, so I don't think it can be a userspace bug.  The
-logged cmdstream from the devcore's I've looked at look correct, and the
-TTBR0 read back from arm-smmu agrees with the kernel emitted cmdstream.
-Unfortunately it happens infrequently enough (something like once per
-1000hrs of usage, from what I can tell from our telemetry) that actually
-reproducing it with an instrumented debug kernel is not an option.  So
-further spiffying out the devcore dumps and hoping we can spot a clue is
-the plan I'm shooting for.
-
-See https://gitlab.freedesktop.org/drm/msm/-/issues/8 for more info on
-the issue I'm trying to debug.
-
-v2: Fix an armv7/32b build error in the last patch
-
-Rob Clark (3):
-  iommu/io-pgtable-arm: Add way to debug pgtable walk
-  drm/msm: Show all smmu info for iova fault devcore dumps
-  drm/msm: Extend gpu devcore dumps with pgtbl info
-
+Signed-off-by: Rob Clark <robdclark@chromium.org>
+---
  drivers/gpu/drm/msm/adreno/a6xx_gpu.c   |  2 +-
- drivers/gpu/drm/msm/adreno/adreno_gpu.c | 35 +++++++++++++++++-----
- drivers/gpu/drm/msm/msm_gpu.c           | 10 +++++++
- drivers/gpu/drm/msm/msm_gpu.h           | 10 ++++++-
- drivers/gpu/drm/msm/msm_iommu.c         | 17 +++++++++++
- drivers/gpu/drm/msm/msm_mmu.h           |  2 ++
- drivers/iommu/io-pgtable-arm.c          | 40 ++++++++++++++++++++-----
- include/linux/io-pgtable.h              |  9 ++++++
- 8 files changed, 107 insertions(+), 18 deletions(-)
+ drivers/gpu/drm/msm/adreno/adreno_gpu.c | 25 +++++++++++++++++--------
+ drivers/gpu/drm/msm/msm_gpu.h           |  2 +-
+ 3 files changed, 19 insertions(+), 10 deletions(-)
 
+diff --git a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+index 34fede935ac0..96e0ca986c54 100644
+--- a/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/a6xx_gpu.c
+@@ -1282,7 +1282,7 @@ static int a6xx_fault_handler(void *arg, unsigned long iova, int flags, void *da
+ 		/* Turn off the hangcheck timer to keep it from bothering us */
+ 		del_timer(&gpu->hangcheck_timer);
+ 
+-		gpu->fault_info.ttbr0 = info->ttbr0;
++		gpu->fault_info.smmu_info = *info;
+ 		gpu->fault_info.iova  = iova;
+ 		gpu->fault_info.flags = flags;
+ 		gpu->fault_info.type  = type;
+diff --git a/drivers/gpu/drm/msm/adreno/adreno_gpu.c b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+index 748665232d29..42e522a60623 100644
+--- a/drivers/gpu/drm/msm/adreno/adreno_gpu.c
++++ b/drivers/gpu/drm/msm/adreno/adreno_gpu.c
+@@ -685,19 +685,28 @@ void adreno_show(struct msm_gpu *gpu, struct msm_gpu_state *state,
+ 			adreno_gpu->rev.major, adreno_gpu->rev.minor,
+ 			adreno_gpu->rev.patchid);
+ 	/*
+-	 * If this is state collected due to iova fault, so fault related info
++	 * If this is state collected due to iova fault, show fault related
++	 * info
+ 	 *
+-	 * TTBR0 would not be zero, so this is a good way to distinguish
++	 * TTBR0 would not be zero in this case, so this is a good way to
++	 * distinguish
+ 	 */
+-	if (state->fault_info.ttbr0) {
++	if (state->fault_info.smmu_info.ttbr0) {
+ 		const struct msm_gpu_fault_info *info = &state->fault_info;
++		const struct adreno_smmu_fault_info *smmu_info = &info->smmu_info;
+ 
+ 		drm_puts(p, "fault-info:\n");
+-		drm_printf(p, "  - ttbr0=%.16llx\n", info->ttbr0);
+-		drm_printf(p, "  - iova=%.16lx\n", info->iova);
+-		drm_printf(p, "  - dir=%s\n", info->flags & IOMMU_FAULT_WRITE ? "WRITE" : "READ");
+-		drm_printf(p, "  - type=%s\n", info->type);
+-		drm_printf(p, "  - source=%s\n", info->block);
++		drm_printf(p, "  - far: %.16llx\n", smmu_info->far);
++		drm_printf(p, "  - ttbr0: %.16llx\n", smmu_info->ttbr0);
++		drm_printf(p, "  - contextidr: %.8x\n", smmu_info->contextidr);
++		drm_printf(p, "  - fsr: %.8x\n", smmu_info->fsr);
++		drm_printf(p, "  - fsynr0: %.8x\n", smmu_info->fsynr0);
++		drm_printf(p, "  - fsynr1: %.8x\n", smmu_info->fsynr1);
++		drm_printf(p, "  - cbfrsynra: %.8x\n", smmu_info->cbfrsynra);
++		drm_printf(p, "  - iova: %.16lx\n", info->iova);
++		drm_printf(p, "  - dir: %s\n", info->flags & IOMMU_FAULT_WRITE ? "WRITE" : "READ");
++		drm_printf(p, "  - type: %s\n", info->type);
++		drm_printf(p, "  - source: %s\n", info->block);
+ 	}
+ 
+ 	drm_printf(p, "rbbm-status: 0x%08x\n", state->rbbm_status);
+diff --git a/drivers/gpu/drm/msm/msm_gpu.h b/drivers/gpu/drm/msm/msm_gpu.h
+index 9801a965816c..0e132795123f 100644
+--- a/drivers/gpu/drm/msm/msm_gpu.h
++++ b/drivers/gpu/drm/msm/msm_gpu.h
+@@ -73,7 +73,7 @@ struct msm_gpu_funcs {
+ 
+ /* Additional state for iommu faults: */
+ struct msm_gpu_fault_info {
+-	u64 ttbr0;
++	struct adreno_smmu_fault_info smmu_info;
+ 	unsigned long iova;
+ 	int flags;
+ 	const char *type;
 -- 
 2.31.1
 
