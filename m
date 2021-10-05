@@ -2,76 +2,79 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 06BED42266E
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 14:26:59 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 87C17422667
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 14:26:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234875AbhJEM2r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Oct 2021 08:28:47 -0400
-Received: from mail-ot1-f48.google.com ([209.85.210.48]:44631 "EHLO
-        mail-ot1-f48.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234732AbhJEM2j (ORCPT
+        id S234779AbhJEM2i (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Oct 2021 08:28:38 -0400
+Received: from mail-oo1-f54.google.com ([209.85.161.54]:41699 "EHLO
+        mail-oo1-f54.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234780AbhJEM2g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Oct 2021 08:28:39 -0400
-Received: by mail-ot1-f48.google.com with SMTP id h9-20020a9d2f09000000b005453f95356cso25595567otb.11;
-        Tue, 05 Oct 2021 05:26:49 -0700 (PDT)
+        Tue, 5 Oct 2021 08:28:36 -0400
+Received: by mail-oo1-f54.google.com with SMTP id b5-20020a4ac285000000b0029038344c3dso6342924ooq.8;
+        Tue, 05 Oct 2021 05:26:45 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
          :message-id;
-        bh=w/FK/ML78245XHAIchDVDOq8/sxzIBzb2YgmaSlt68M=;
-        b=BNmj+N/ixDvm9UXW0KHDpUe09qO1ZqlJseu17K0pNM7Hp+6EjLtsyRxsApGJltf8iQ
-         Scjv2h8eBupi9FmJoBJuG1vOnyQRKQaBRCshZw80Yo2tYQCWzwX6BPWaod46+2HQc9hL
-         VQIaogH66m+Wu1LTrXERb0eANEDHtVcKJckyACCZz3OVffv8O7Y6YRZ+HQazrsEqi71I
-         0GtBHIW1XLl6DIfr9BdJBZmbJpTaeneuUWDVk5Fl6jWczZWf5kUCS4zk5bP+wBnGUJVt
-         7JgAfl0EtECVSesQ9l1VJYay0Es1m/zDNX2WOhAe99zxOMODMcEDR2OKU8n0sFAi3bkw
-         SLnw==
-X-Gm-Message-State: AOAM533XquHuVScvQaos+QVpBzYiPJy1c/QqTjBXaFwOmmE6IEaOBSoA
-        QZ8vEhTPIrldL/yb/bhW9g==
-X-Google-Smtp-Source: ABdhPJysfIpY+AlZGPd1aq069xpRzqdiEWvovmqueORSOfYiFbk/wJ4mm+HHZh3UGFbHFe4HlLF1Mg==
-X-Received: by 2002:a05:6830:1bc6:: with SMTP id v6mr13950334ota.299.1633436808863;
-        Tue, 05 Oct 2021 05:26:48 -0700 (PDT)
+        bh=12B425lue7e7bkxC1MmLr36fhfhw6Ghp6FxDgU81lTI=;
+        b=2ZvG6cRtRoQjw9TDwvPnA1TmO7OhqJ6eaJoK+UE/2H2KxmT0yPkim3HJ0SwNxgH+Z7
+         L4qfZL3FosZuTGVTVUwZ55JKyoLs9wObGO2QmDmq93cHAA0krvj0VAGxIGzH0B7t7GHk
+         E/ZrHImSvCpcGnvI15KWiQrBDn+ZStyY8k6E+aQbxedRW6XejOZdoR+K0IZTiBME4+eB
+         R7hGEnxcbG+u1YfMifCl0MjgwSYYXVG4WjfV2ohZCkDz3uDr+YRZd/4X2+FGMxeUtvlL
+         kTf6wrQahHRAHpC3IOoTrbrBKtdpMrZwU7JEk4BNkivYetrZ+JaSx//8GE3eGhMqYQzB
+         /J3A==
+X-Gm-Message-State: AOAM5335Z1tshfYxBdJgSgmTYQXDvLnF9Hw7PfTztOFx54noCi97LlR0
+        a4gs7jqglkDLP3ab2HPtdg==
+X-Google-Smtp-Source: ABdhPJzviUxP+uSvuH4E4JBAfoTZZ7tkOF4YnI98mcMiSAVS1rlPEbdZ3k7X70uJfL7DNdiD2Hhe0w==
+X-Received: by 2002:a4a:b994:: with SMTP id e20mr12894523oop.50.1633436805397;
+        Tue, 05 Oct 2021 05:26:45 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id h26sm3505109otn.67.2021.10.05.05.26.47
+        by smtp.gmail.com with ESMTPSA id g21sm3490872ooc.31.2021.10.05.05.26.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Oct 2021 05:26:48 -0700 (PDT)
-Received: (nullmailer pid 3226814 invoked by uid 1000);
+        Tue, 05 Oct 2021 05:26:44 -0700 (PDT)
+Received: (nullmailer pid 3226798 invoked by uid 1000);
         Tue, 05 Oct 2021 12:26:38 -0000
 From:   Rob Herring <robh@kernel.org>
-To:     Maulik Shah <mkshah@codeaurora.org>
-Cc:     devicetree@vger.kernel.org, bjorn.andersson@linaro.org,
-        evgreen@chromium.org, agross@kernel.org, swboyd@chromium.org,
-        linux-arm-msm@vger.kernel.org, Lina Iyer <ilina@codeaurora.org>,
-        dianders@chromium.org,
-        Mahesh Sivasubramanian <msivasub@codeaurora.org>,
-        mka@chromium.org, rnayak@codeaurora.org, linux@roeck-us.net,
-        lsrao@codeaurora.org, linux-kernel@vger.kernel.org
-In-Reply-To: <1633425065-7927-2-git-send-email-mkshah@codeaurora.org>
-References: <1633425065-7927-1-git-send-email-mkshah@codeaurora.org> <1633425065-7927-2-git-send-email-mkshah@codeaurora.org>
-Subject: Re: [PATCH v10 1/5] dt-bindings: Introduce SoC sleep stats bindings
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     Stephen Boyd <sboyd@kernel.org>, Taniya Das <tdas@codeaurora.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        linux-kernel@vger.kernel.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Martin Botka <martin.botka@somainline.org>,
+        linux-clk@vger.kernel.org, devicetree@vger.kernel.org,
+        phone-devel@vger.kernel.org
+In-Reply-To: <20211004195255.701220-2-marijn.suijten@somainline.org>
+References: <20211004195255.701220-1-marijn.suijten@somainline.org> <20211004195255.701220-2-marijn.suijten@somainline.org>
+Subject: Re: [PATCH v5 1/2] dt-bindings: clk: qcom: Document MSM8976 Global Clock Controller
 Date:   Tue, 05 Oct 2021 07:26:38 -0500
-Message-Id: <1633436798.669118.3226812.nullmailer@robh.at.kernel.org>
+Message-Id: <1633436798.553183.3226797.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 05 Oct 2021 14:41:01 +0530, Maulik Shah wrote:
-> From: Mahesh Sivasubramanian <msivasub@codeaurora.org>
+On Mon, 04 Oct 2021 21:52:54 +0200, Marijn Suijten wrote:
+> Document the required properties and firmware clocks for gcc-msm8976 to
+> operate nominally, and add header definitions for referencing the clocks
+> from firmware.
 > 
-> Add device binding documentation for Qualcomm Technologies, Inc. (QTI)
-> SoC sleep stats driver. The driver is used for displaying SoC sleep
-> statistic maintained by Always On Processor or Resource Power Manager.
-> 
-> Cc: devicetree@vger.kernel.org
-> Signed-off-by: Mahesh Sivasubramanian <msivasub@codeaurora.org>
-> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
-> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
+> Reviewed-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
 > ---
->  .../bindings/soc/qcom/soc-sleep-stats.yaml         | 47 ++++++++++++++++++++++
->  1 file changed, 47 insertions(+)
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.yaml
+>  .../bindings/clock/qcom,gcc-msm8976.yaml      |  95 +++++++
+>  include/dt-bindings/clock/qcom,gcc-msm8976.h  | 240 ++++++++++++++++++
+>  2 files changed, 335 insertions(+)
+>  create mode 100644 Documentation/devicetree/bindings/clock/qcom,gcc-msm8976.yaml
+>  create mode 100644 include/dt-bindings/clock/qcom,gcc-msm8976.h
 > 
 
 My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
@@ -80,14 +83,12 @@ on your patch (DT_CHECKER_FLAGS is new in v5.13):
 yamllint warnings/errors:
 
 dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.example.dt.yaml: memory@c3f0000: 'device_type' is a required property
-	From schema: /usr/local/lib/python3.8/dist-packages/dtschema/schemas/memory.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/soc/qcom/soc-sleep-stats.example.dt.yaml: memory@4690000: 'device_type' is a required property
-	From schema: /usr/local/lib/python3.8/dist-packages/dtschema/schemas/memory.yaml
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,gcc-msm8976.example.dt.yaml: clock-controller@1800000: 'vdd_gfx-supply' is a required property
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/clock/qcom,gcc-msm8976.yaml
 
 doc reference errors (make refcheckdocs):
 
-See https://patchwork.ozlabs.org/patch/1536587
+See https://patchwork.ozlabs.org/patch/1536345
 
 This check can fail if there are any dependencies. The base for a patch
 series is generally the most recent rc1.
