@@ -2,62 +2,61 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5F31C422035
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 10:11:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DC9A6422038
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 10:11:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233389AbhJEIND (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Oct 2021 04:13:03 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39846 "EHLO
+        id S232929AbhJEINE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Oct 2021 04:13:04 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39824 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233344AbhJEINB (ORCPT
+        with ESMTP id S233357AbhJEINC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Oct 2021 04:13:01 -0400
-Received: from mail-ed1-x52c.google.com (mail-ed1-x52c.google.com [IPv6:2a00:1450:4864:20::52c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 74AE5C061762
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Oct 2021 01:11:10 -0700 (PDT)
-Received: by mail-ed1-x52c.google.com with SMTP id g8so75300635edt.7
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Oct 2021 01:11:10 -0700 (PDT)
+        Tue, 5 Oct 2021 04:13:02 -0400
+Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A0E43C06174E
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Oct 2021 01:11:11 -0700 (PDT)
+Received: by mail-ed1-x530.google.com with SMTP id p13so47102603edw.0
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Oct 2021 01:11:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=Ls8RstZxqwEUsOoWPu8ndBv6d6AzlNnldZDH8PTFT0s=;
-        b=nO4PomRi8oyFYlAiKXx3pgeRDpA6tK4u/+itS+BRrE3bXCb44RNKaDruBFZ49gqxZU
-         dfwndLroqe4h5ihs8+0PLL3U8FcjbkLNr4JTAhvoT4/wNPPRaXmRK1D9qHByepPzOvwz
-         sigWiLZIMlmuVAMOVYW4CoB/Y2iEyrgdJUMX1V7vHvOMV75yhgIQY57oOvSpKTp9QCmc
-         0H2He5ZxubbvMovD+e/2Fz5WTqiVkDMIcw3mdNnZCEsbow/CxIdKnZ0OCdVVfKiaCpJl
-         ZkghlpXCH3t38FKJPT4w8H1JD6wgQOgzoqplAF2d9s8UOiYx+Ii06g+vTi7EahvV7zFM
-         aMkw==
+        bh=F0rxTAIDQUC00gIGQ2hZRmANNTx894FvV5JJnWTgTsY=;
+        b=ralaYkL5Xw7qbWeLgFH9tju3bNrClp1qrs40/XNH+JU1eDpEbbLPT2ItFrp/WwdzY7
+         X86qpw1ZLWfkBOY0nbQkOvUh+gmdd390wSlCufXebSRTBfI0BXQOcXSzKoyrgD4WOWUw
+         ETvXsXHT2FzybdlBglxdaHCP4Nx6aR1p3CZF9xsL5Ww1Vk0GE4vD3Xj89ZmXVfYg7pdM
+         MPOEvzOkVtIvMzDrml3C1ZXf3VLfb4GQHuK8wCiTp8q6GI7JFEKnUkvio5tXyUdtxT0h
+         rRNqznL4oRzNcNX2RjMlTjr7H4xgRegF5MDf15vLE7k+yt7CjiFJYMm0rBLS3Zv+QWBO
+         OMnQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=Ls8RstZxqwEUsOoWPu8ndBv6d6AzlNnldZDH8PTFT0s=;
-        b=Pk1vCwEQXBp5V5NOwqM2TJ62CCI8D3fixEtfQVVMk+JXgQzF+jf8QSt61aYb2qgWb1
-         oaAF8RnfXfOh/fxXK/TBTLg9NQWYsUgprbVNqvbQQAfh0nTBiPQVXH0txPBX9bOI67KE
-         7UGilgx4y55TBelc1V5/9C+1pXOMqbPfrABv4ssYQMZBOACjTbpQLbqI98/vTuiSLUoT
-         KVNBe64aigR+70NAii4PW70LsUKMSgxVS7UD7lZBEc6PqsRnm+pd5svmy1m6pQBOtqlp
-         oewEdsRMgm2bIateYwhNPUXNNL8sbYOUFnIddD4+kys0wGpJ7xb20CPFRw/+wFiLX+7E
-         ERQA==
-X-Gm-Message-State: AOAM530cYAOVfh3pTmgAA4q0L9hHC1YA86Ek5tSEngxsyeoU7cDgriw5
-        UypP/gkPMroF84if+ZkmNdccsQ==
-X-Google-Smtp-Source: ABdhPJyckDi2ds1mQmeg1dj3SRksmDbvdNoYJGhzAFsHs7NmG8BLc4++eLGXCqVX3PoAxzTNmoyyEA==
-X-Received: by 2002:a17:906:6dd4:: with SMTP id j20mr22885943ejt.316.1633421468984;
-        Tue, 05 Oct 2021 01:11:08 -0700 (PDT)
+        bh=F0rxTAIDQUC00gIGQ2hZRmANNTx894FvV5JJnWTgTsY=;
+        b=shGc6y+6ccYImRG+QwzAwdl1jHFBainTaCVtUERmvm1fQPDHSvh7UI0Q+lBtToMT4t
+         LGrCzVz7tWOLKHDxWMVeBGEIVUyx+bQXfwjyLGxFhSvBGwlnrgsBENx7dtiWhmV6p15V
+         +kpH9JMnLv+7J1PrwrlnKl+VcVQManvbWYEP6/Z/G/WTr4cc6pOHWltDHNhT368b93wp
+         9D1R5XYNqWPnlIQNeB/7NSEdrnAxNdRws9QyFpV/6DsOGI27EzhV8d7zIWrjZFvBun4W
+         lfzivKNFq/ADU72Ivhg5g+8qe1zkczrId6oMe7bwcbJx6HOzIBy7cihXbrurRVGa5iDk
+         oGjg==
+X-Gm-Message-State: AOAM532/CC+gaNIdj321JZ77x0D6tdKfiIqnoP+YEm7QPz7sTkA/cefs
+        L/6jZhsrzCjJ5wz9pXNsp0D2sw==
+X-Google-Smtp-Source: ABdhPJzHG6QcpyJuJ3Le4bg387qad0Rbw6o1l3Bs2pO2kHXim+gSQAUu37bwJlYnOzNwoJGKqEXOZQ==
+X-Received: by 2002:a17:906:f2cd:: with SMTP id gz13mr15507022ejb.278.1633421470068;
+        Tue, 05 Oct 2021 01:11:10 -0700 (PDT)
 Received: from localhost.localdomain ([84.238.208.199])
-        by smtp.gmail.com with ESMTPSA id f1sm3096258edz.47.2021.10.05.01.11.08
+        by smtp.gmail.com with ESMTPSA id f1sm3096258edz.47.2021.10.05.01.11.09
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Oct 2021 01:11:08 -0700 (PDT)
+        Tue, 05 Oct 2021 01:11:09 -0700 (PDT)
 From:   Stanimir Varbanov <stanimir.varbanov@linaro.org>
 To:     linux-media@vger.kernel.org
 Cc:     linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
         vgarodia@codeaurora.org,
         Dikshita Agarwal <dikshita@codeaurora.org>,
-        Mansur Alisha Shaik <mansur@codeaurora.org>,
         Stanimir Varbanov <stanimir.varbanov@linaro.org>
-Subject: [PATCH v5 4/7] media: venus: hfi: Skip AON register programming for V6 1pipe
-Date:   Tue,  5 Oct 2021 11:10:45 +0300
-Message-Id: <20211005081048.3095252-5-stanimir.varbanov@linaro.org>
+Subject: [PATCH v5 5/7] venus: vdec: set work route to fw
+Date:   Tue,  5 Oct 2021 11:10:46 +0300
+Message-Id: <20211005081048.3095252-6-stanimir.varbanov@linaro.org>
 X-Mailer: git-send-email 2.25.1
 In-Reply-To: <20211005081048.3095252-1-stanimir.varbanov@linaro.org>
 References: <20211005081048.3095252-1-stanimir.varbanov@linaro.org>
@@ -69,43 +68,96 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 From: Dikshita Agarwal <dikshita@codeaurora.org>
 
-AON register programming is used to set NOC to low power mode
-during V6 power off sequence. However AON register memory map
-is not applicable to 1pipe, hence skipping AON register programming.
+Set work route to FW based on num of vpp pipes.
 
-Co-developed-by: Mansur Alisha Shaik <mansur@codeaurora.org>
-Signed-off-by: Mansur Alisha Shaik <mansur@codeaurora.org>
-Co-developed-by: Vikash Garodia <vgarodia@codeaurora.org>
-Signed-off-by: Vikash Garodia <vgarodia@codeaurora.org>
 Signed-off-by: Dikshita Agarwal <dikshita@codeaurora.org>
-Acked-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 Signed-off-by: Stanimir Varbanov <stanimir.varbanov@linaro.org>
 ---
- drivers/media/platform/qcom/venus/hfi_venus.c | 4 ++++
- 1 file changed, 4 insertions(+)
 
-diff --git a/drivers/media/platform/qcom/venus/hfi_venus.c b/drivers/media/platform/qcom/venus/hfi_venus.c
-index ce98c523b3c6..3a75a27632fb 100644
---- a/drivers/media/platform/qcom/venus/hfi_venus.c
-+++ b/drivers/media/platform/qcom/venus/hfi_venus.c
-@@ -551,6 +551,9 @@ static int venus_halt_axi(struct venus_hfi_device *hdev)
- 	if (IS_V6(hdev->core)) {
- 		writel(0x3, cpu_cs_base + CPU_CS_X2RPMH_V6);
- 
-+		if (hdev->core->res->num_vpp_pipes == 1)
-+			goto skip_aon_mvp_noc;
+Added space after 'if'
+Return directly hfi_session_set_property
+
+ drivers/media/platform/qcom/venus/hfi_cmds.c   |  7 +++++++
+ drivers/media/platform/qcom/venus/hfi_helper.h |  5 +++++
+ drivers/media/platform/qcom/venus/vdec.c       | 17 +++++++++++++++++
+ 3 files changed, 29 insertions(+)
+
+diff --git a/drivers/media/platform/qcom/venus/hfi_cmds.c b/drivers/media/platform/qcom/venus/hfi_cmds.c
+index 60f4b8e4b8d0..5aea07307e02 100644
+--- a/drivers/media/platform/qcom/venus/hfi_cmds.c
++++ b/drivers/media/platform/qcom/venus/hfi_cmds.c
+@@ -1299,6 +1299,13 @@ pkt_session_set_property_6xx(struct hfi_session_set_property_pkt *pkt,
+ 		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*cq);
+ 		break;
+ 	}
++	case HFI_PROPERTY_PARAM_WORK_ROUTE: {
++		struct hfi_video_work_route *in = pdata, *wr = prop_data;
 +
- 		writel(0x1, aon_base + AON_WRAPPER_MVP_NOC_LPI_CONTROL);
- 		ret = readl_poll_timeout(aon_base + AON_WRAPPER_MVP_NOC_LPI_STATUS,
- 					 val,
-@@ -560,6 +563,7 @@ static int venus_halt_axi(struct venus_hfi_device *hdev)
- 		if (ret)
- 			return -ETIMEDOUT;
++		wr->video_work_route = in->video_work_route;
++		pkt->shdr.hdr.size += sizeof(u32) + sizeof(*wr);
++		break;
++	}
+ 	default:
+ 		return pkt_session_set_property_4xx(pkt, cookie, ptype, pdata);
+ 	}
+diff --git a/drivers/media/platform/qcom/venus/hfi_helper.h b/drivers/media/platform/qcom/venus/hfi_helper.h
+index bec4feb63ceb..253911272b4c 100644
+--- a/drivers/media/platform/qcom/venus/hfi_helper.h
++++ b/drivers/media/platform/qcom/venus/hfi_helper.h
+@@ -448,6 +448,7 @@
+ #define HFI_PROPERTY_PARAM_MVC_BUFFER_LAYOUT			0x100f
+ #define HFI_PROPERTY_PARAM_MAX_SESSIONS_SUPPORTED		0x1010
+ #define HFI_PROPERTY_PARAM_WORK_MODE				0x1015
++#define HFI_PROPERTY_PARAM_WORK_ROUTE				0x1017
  
-+skip_aon_mvp_noc:
- 		mask_val = (BIT(2) | BIT(1) | BIT(0));
- 		writel(mask_val, wrapper_base + WRAPPER_DEBUG_BRIDGE_LPI_CONTROL_V6);
+ /*
+  * HFI_PROPERTY_CONFIG_COMMON_START
+@@ -873,6 +874,10 @@ struct hfi_video_work_mode {
+ 	u32 video_work_mode;
+ };
  
++struct hfi_video_work_route {
++	u32 video_work_route;
++};
++
+ struct hfi_h264_vui_timing_info {
+ 	u32 enable;
+ 	u32 fixed_framerate;
+diff --git a/drivers/media/platform/qcom/venus/vdec.c b/drivers/media/platform/qcom/venus/vdec.c
+index c129b061a325..88cd9e46c333 100644
+--- a/drivers/media/platform/qcom/venus/vdec.c
++++ b/drivers/media/platform/qcom/venus/vdec.c
+@@ -656,6 +656,19 @@ static int vdec_set_properties(struct venus_inst *inst)
+ 	return 0;
+ }
+ 
++static int vdec_set_work_route(struct venus_inst *inst)
++{
++	u32 ptype = HFI_PROPERTY_PARAM_WORK_ROUTE;
++	struct hfi_video_work_route wr;
++
++	if (!IS_V6(inst->core))
++		return 0;
++
++	wr.video_work_route = inst->core->res->num_vpp_pipes;
++
++	return hfi_session_set_property(inst, ptype, &wr);
++}
++
+ #define is_ubwc_fmt(fmt) (!!((fmt) & HFI_COLOR_FORMAT_UBWC_BASE))
+ 
+ static int vdec_output_conf(struct venus_inst *inst)
+@@ -1042,6 +1055,10 @@ static int vdec_start_output(struct venus_inst *inst)
+ 	if (ret)
+ 		return ret;
+ 
++	ret = vdec_set_work_route(inst);
++	if (ret)
++		return ret;
++
+ 	ret = vdec_output_conf(inst);
+ 	if (ret)
+ 		return ret;
 -- 
 2.25.1
 
