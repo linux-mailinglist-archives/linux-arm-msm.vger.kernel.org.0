@@ -2,162 +2,98 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 92920421CFF
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 05:35:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 42034421D29
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 06:16:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230526AbhJEDhq (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 4 Oct 2021 23:37:46 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34324 "EHLO
+        id S230321AbhJEESG (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Oct 2021 00:18:06 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43226 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230462AbhJEDhl (ORCPT
+        with ESMTP id S229955AbhJEESG (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 4 Oct 2021 23:37:41 -0400
-Received: from mail-ot1-x329.google.com (mail-ot1-x329.google.com [IPv6:2607:f8b0:4864:20::329])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7D0C5C061749
-        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Oct 2021 20:35:51 -0700 (PDT)
-Received: by mail-ot1-x329.google.com with SMTP id c6-20020a9d2786000000b005471981d559so24193230otb.5
-        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Oct 2021 20:35:51 -0700 (PDT)
+        Tue, 5 Oct 2021 00:18:06 -0400
+Received: from mail-pj1-x102b.google.com (mail-pj1-x102b.google.com [IPv6:2607:f8b0:4864:20::102b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 47B86C061753
+        for <linux-arm-msm@vger.kernel.org>; Mon,  4 Oct 2021 21:16:16 -0700 (PDT)
+Received: by mail-pj1-x102b.google.com with SMTP id qe4-20020a17090b4f8400b0019f663cfcd1so974490pjb.1
+        for <linux-arm-msm@vger.kernel.org>; Mon, 04 Oct 2021 21:16:16 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=n1sIofEKORsTR+BKeozYVhAx4/whk5x8HA7cir8+0Rs=;
-        b=bqdhqIyb/rrIB3tr4O1+Y5bzOlc/VapTa2T6YM2GSnffpAN6gA5SSi2TG/O83hmClo
-         482YwpGqNQTJRjUXkEVyCxzeJ/wOKJBNQOCMYEmkefYIypNd7pxu9qyioG/AnIUcy91Y
-         L39eL4FFDO/UZZIP2uL+bLHXDi6Vc0dSghkqO1XCwqJxO7aWShNx7YrjIHfgt+gDnruj
-         8LLfyLn6Q6vRCuZhEU1mc6F6hjcy1E/ZJQbUF7FLzvae5ISUF7Eoz1F8Uv4osvGOMZFv
-         WdVYuPYZIpNTXsDSejLgSKy5OUd9/RPD1zS73rw6yxh0jU7dbhrPumnMFjDvsNKFXpoH
-         nreA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to:user-agent;
+        bh=p1j1I2scRSEAWBnAZJ9GeKwlwHQmZVoeQLMfF6u5ax8=;
+        b=zCtcfBkP4XpVESphXhppU3WAsq/CQ3HZBw26R7A+z1foMTo+7960o4r5mahZCsxyCw
+         DHAaW+wnK94zGIZmp2e77B/9GuaCz8u7rF6dsh5c/ORptRcHEgCxmjsQbbkef4snvf3Y
+         1x4O/sscCkLhmhjKjEcOBnhgSLy7XwgSW5JGKUplqOMB9CGzn1TW3ufvZR5cJRg3MARe
+         hsqDHrWMQfB5eIHVyMhgcoSa8FC78UDUFieuDsalK6FMBLxqRLtaE3hsvmY+iZGF2HEO
+         aU2t4X6V7NbW9lkMFp6+UaPfOTauZttyZIpWF34rjJdHZFuFSDIqLKLuFI41a38M9A+m
+         6tig==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=n1sIofEKORsTR+BKeozYVhAx4/whk5x8HA7cir8+0Rs=;
-        b=r3V1RnKxKivahqe5BoD8TQ3KKnwwW27CX3T5d1jH1K4iZPnCSHioxusA9kFGb1hXXR
-         eCQYCqdxr9iO+5fCj5Yqvhl0s0/JmH+5uvm+kPhILEkHD7hO4rFsx/qVIs7MybJYn5GO
-         aYCyxOxRDH3HC0YqSNNfJCfJcrWeP+kyRrI9E8Jx0PK8o6ZWTfOPJR85/ydDmo8GTrBd
-         OFlWOOP4AHphwkfTbOvzVQwQAldeHa4RpifsFCQ2EXzRdY1xcXel2m6ul+C4NAQb6lsM
-         EPDf6VC4hQgM6fCcjinc8FirTbFB+y7h5kGezC3Bohi64yt78uVyXc7S69TZJcGJ/QaX
-         NnxA==
-X-Gm-Message-State: AOAM533O/tXEnk3fNwx6MfFCfT+fYaGahY7KR7xLP3QEASLjKbZJhYYI
-        V9NZ6qBBToxIxMxJvaXYwDyhrw==
-X-Google-Smtp-Source: ABdhPJzDMQWh9R0Akj/n4iwivgOsF6bWnpo67N8Y0fKzCgGtLK0N9e+9JiW5btQzwzjFxPMj52KJUA==
-X-Received: by 2002:a05:6830:128d:: with SMTP id z13mr12717938otp.19.1633404950695;
-        Mon, 04 Oct 2021 20:35:50 -0700 (PDT)
-Received: from localhost.localdomain ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id e16sm3075101oie.17.2021.10.04.20.35.49
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to:user-agent;
+        bh=p1j1I2scRSEAWBnAZJ9GeKwlwHQmZVoeQLMfF6u5ax8=;
+        b=3x9BuEStrFR+CqQg/+av0SeBqnlGzVB5B9cnKcrFFN/kENOQc7qYiL7tuJM+ERbHit
+         W2XXEtm7NFe5gau9Odo/ztWGRjv4+CYOhCUWLG7y7vLoO3OlxWvL3PZOY0+zzB4cIoMH
+         Sqf/LckcsU28d5XF+r2TljjldPQc8ozY1+vpD4VyUyx1h5yffTThkPllxWpqw4ZOfDau
+         H7ht36XnDPldHJRXqNhgVUMVv0Bx7NfoNqL5ju8ZJTfVVUgP1XTES9tJb57HKypv+FpW
+         Q6psPv/5YBS8zQFkkoYgh485vxPXiWp+RFirNx5G/nj58aob7+i1Yv1SozW2yabjXEsP
+         viug==
+X-Gm-Message-State: AOAM530FaBw1xS+FDP9KkRqAV8G6mTjd9bSVWI1ppVljaIQqvYez0w9x
+        QlRQYlyyvbBSZWCkQidwqcBHvq0NU40dTQ==
+X-Google-Smtp-Source: ABdhPJxHSQjJ/j6EVYsE31yE9AdH8e2NY5uUk2ixfKGZ3eYCxp7BCwzAOc62Yn7xZ9Xp3pPkbogOfA==
+X-Received: by 2002:a17:90b:4b07:: with SMTP id lx7mr1122929pjb.195.1633407375622;
+        Mon, 04 Oct 2021 21:16:15 -0700 (PDT)
+Received: from localhost ([122.171.247.18])
+        by smtp.gmail.com with ESMTPSA id e13sm15559450pfd.205.2021.10.04.21.16.14
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 04 Oct 2021 20:35:50 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>
-Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v3] soc: qcom: rpmhpd: Make power_on actually enable the domain
-Date:   Mon,  4 Oct 2021 20:37:32 -0700
-Message-Id: <20211005033732.2284447-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.29.2
+        Mon, 04 Oct 2021 21:16:15 -0700 (PDT)
+Date:   Tue, 5 Oct 2021 09:46:10 +0530
+From:   Viresh Kumar <viresh.kumar@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        rafael@kernel.org, robh+dt@kernel.org, linux-pm@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Rob Herring <robh@kernel.org>
+Subject: Re: [PATCH] dt-bindings: cpufreq: cpufreq-qcom-hw: Convert to YAML
+ bindings
+Message-ID: <20211005041610.byncxlv3aeo65frw@vireshk-i7>
+References: <20211004044317.34809-1-manivannan.sadhasivam@linaro.org>
+ <20211004070531.sexvnqmnkoe4j6a2@vireshk-i7>
+ <20211004072222.GE16442@workstation>
+ <YVszd2UMw9F5LqWC@ripper>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YVszd2UMw9F5LqWC@ripper>
+User-Agent: NeoMutt/20180716-391-311a52
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The general expectation is that powering on a power-domain should make
-the power domain deliver some power, and if a specific performance state
-is needed further requests has to be made.
+On 04-10-21, 10:01, Bjorn Andersson wrote:
+> If you wrote the patch, then Angelo handled it, then you handled it
+> again the double S-o-b captures that nicely.
+> 
+> Looking it from the other angle, if you remove the first S-o-b, then you
+> forgot to signed it off when you authored the original patch and if you
+> skip the last S-o-b then you didn't adequately sign off the final
+> result.
 
-But in contrast with other power-domain implementations (e.g. rpmpd) the
-RPMh does not have an interface to enable the power, so the driver has
-to vote for a particular corner (performance level) in rpmh_power_on().
+Hmm, interesting that it can be looked this way. I am wondering if
+between 10 different versions two people ping pong the ownership of
+the patch, then will we need to capture 5-5 signed-off-by's from each
+of them :)
 
-But the corner is never initialized, so a typical request to simply
-enable the power domain would not actually turn on the hardware. Further
-more, when no more clients vote for a performance state (i.e. the
-aggregated vote is 0) the power domain would be turned off.
+From my understanding, that I had until now, the list of tags specify
+who all performed what different roles in the patch
+development/submission and when did that happen (sort of timeline), so
+last tag is added by the new handler of the patch. But adding two
+signed-off-by's by a single guy looks fishy, though it may actually be
+correct :)
 
-Fix both of these issues by always voting for a corner with non-zero
-value, when the power domain is enabled.
-
-The tracking of the lowest non-zero corner is performed to handle the
-corner case if there's ever a domain with a non-zero lowest corner, in
-which case both rpmh_power_on() and rpmh_rpmhpd_set_performance_state()
-would be allowed to use this lowest corner.
-
-Fixes: 279b7e8a62cc ("soc: qcom: rpmhpd: Add RPMh power domain driver")
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
-
-Changes since v2:
-- Fixed two spelling mistakes in the commit message
-- Changed the last hunk to search for first non-zero level, rather than the
-  first non-zero index (i.e. 1)
-
- drivers/soc/qcom/rpmhpd.c | 18 ++++++++++++++----
- 1 file changed, 14 insertions(+), 4 deletions(-)
-
-diff --git a/drivers/soc/qcom/rpmhpd.c b/drivers/soc/qcom/rpmhpd.c
-index e280a8194725..0ca77ed22c6c 100644
---- a/drivers/soc/qcom/rpmhpd.c
-+++ b/drivers/soc/qcom/rpmhpd.c
-@@ -30,6 +30,7 @@
-  * @active_only:	True if it represents an Active only peer
-  * @corner:		current corner
-  * @active_corner:	current active corner
-+ * @enable_corner:	lowest non-zero corner
-  * @level:		An array of level (vlvl) to corner (hlvl) mappings
-  *			derived from cmd-db
-  * @level_count:	Number of levels supported by the power domain. max
-@@ -47,6 +48,7 @@ struct rpmhpd {
- 	const bool	active_only;
- 	unsigned int	corner;
- 	unsigned int	active_corner;
-+	unsigned int	enable_corner;
- 	u32		level[RPMH_ARC_MAX_LEVELS];
- 	size_t		level_count;
- 	bool		enabled;
-@@ -401,13 +403,13 @@ static int rpmhpd_aggregate_corner(struct rpmhpd *pd, unsigned int corner)
- static int rpmhpd_power_on(struct generic_pm_domain *domain)
- {
- 	struct rpmhpd *pd = domain_to_rpmhpd(domain);
--	int ret = 0;
-+	unsigned int corner;
-+	int ret;
- 
- 	mutex_lock(&rpmhpd_lock);
- 
--	if (pd->corner)
--		ret = rpmhpd_aggregate_corner(pd, pd->corner);
--
-+	corner = max(pd->corner, pd->enable_corner);
-+	ret = rpmhpd_aggregate_corner(pd, corner);
- 	if (!ret)
- 		pd->enabled = true;
- 
-@@ -452,6 +454,10 @@ static int rpmhpd_set_performance_state(struct generic_pm_domain *domain,
- 		i--;
- 
- 	if (pd->enabled) {
-+		/* Ensure that the domain isn't turn off */
-+		if (i < pd->enable_corner)
-+			i = pd->enable_corner;
-+
- 		ret = rpmhpd_aggregate_corner(pd, i);
- 		if (ret)
- 			goto out;
-@@ -488,6 +494,10 @@ static int rpmhpd_update_level_mapping(struct rpmhpd *rpmhpd)
- 	for (i = 0; i < rpmhpd->level_count; i++) {
- 		rpmhpd->level[i] = buf[i];
- 
-+		/* Remember the first corner with non-zero level */
-+		if (!rpmhpd->level[rpmhpd->enable_corner] && rpmhpd->level[i])
-+			rpmhpd->enable_corner = i;
-+
- 		/*
- 		 * The AUX data may be zero padded.  These 0 valued entries at
- 		 * the end of the map must be ignored.
 -- 
-2.29.2
-
+viresh
