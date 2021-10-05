@@ -2,292 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 267D9422F40
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 19:33:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id B4B6A422FA5
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 20:06:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229936AbhJERfJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Oct 2021 13:35:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33034 "EHLO
+        id S234916AbhJESI2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Oct 2021 14:08:28 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40534 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234144AbhJERfI (ORCPT
+        with ESMTP id S234628AbhJESI0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Oct 2021 13:35:08 -0400
-Received: from mail-oi1-x22e.google.com (mail-oi1-x22e.google.com [IPv6:2607:f8b0:4864:20::22e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 49E8EC061749
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Oct 2021 10:33:17 -0700 (PDT)
-Received: by mail-oi1-x22e.google.com with SMTP id e24so226555oig.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Oct 2021 10:33:17 -0700 (PDT)
+        Tue, 5 Oct 2021 14:08:26 -0400
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 48B99C06174E
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Oct 2021 11:06:35 -0700 (PDT)
+Received: by mail-oi1-x235.google.com with SMTP id y201so419930oie.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Oct 2021 11:06:35 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=71HyGq5jsXAg+sz6VrDwqjua1AYi4Yt0h0vLPVrLYyc=;
-        b=VnWFO8feQ/jKEVNNYcCNDgAAFbjuPqav1DCKCE9RS6Bp1XdLPhtam4xcpTf/CpbsSc
-         sinYpgamBHCflpT7bzw8WIfJEuxLdPEHmYh5wao0uqEsHHJ++9P/kORPaXtY8dmQK/El
-         Ux06+7ABy1HOzZj/rOyETgeQkA65BgnrbBhzPw+CjK75rnN32pdEKiVj0rVK+VacAGq5
-         ZwLEa9IZ6fhtgVRR1hdLKPrT5OkI3XfbnQnlf/LZ0OmrqkSKWUuHXFaMFdO8+4dUJGmC
-         fsmaRyXKuHdNnKr/WD6JJNWQsJyyl6XjVMU+F/3Zxjkh+2i/odHMHUnjQO+x4QhJIBGy
-         MliA==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=ZhJmS/oaFcG0CCC1jcKsenxPXA1oO8fnKa8QfXuwC6Y=;
+        b=P7Ks9E3jRuLaebd0/Wgoc5DyaqIFcAoRmR/amJcDKI4CaK0QQU9tSBKiH9TeEonza9
+         dPqOzNonsSRhVVPt1vmxKtKvXmkLnWG1nFcbJlQeV85bHrVIQHqSC79AN1TE9cchxjUC
+         xQdRIiwPCeK3dAGVmMlBOIcoSJpYJ7prn2A34=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=71HyGq5jsXAg+sz6VrDwqjua1AYi4Yt0h0vLPVrLYyc=;
-        b=uM4eXJ7KzyaJi2rVZi2H1xN4HfSlHPueiRnEEWe54UqLjsLatT4+HYVJ06EkqVaOG/
-         YY0uGByKu38w/yT9GTW2bM5riTw84V0p9k/m2IiIHc917IlTiTM3peXQaj6182WyQ7jo
-         h/9B8M1vAtd0AQZkfMoCvdrM4Om3kEJ7tmow3ZJCh4ezZeN4RZVJeGulriEXMnT1Bv5y
-         UgSxNkIMhipaYkN426VjH0eRaYFhMTlTttSJbtO2mMvP9HaaSLjxYq9cxX86L3UMfKhv
-         QDjJksfyoRHdhYkoBW0dSkpIvcWYkumIcpLXr21GCAYt97PP7qHenwgXUb/mjucNTdYk
-         OExw==
-X-Gm-Message-State: AOAM533RzvbC2BXBj+9tKpvOwbmALO78v3PFzwzXVh+5cgyBZe57Cjl6
-        FxC8VW/uo9g1d2eOn6KuID8K3Q==
-X-Google-Smtp-Source: ABdhPJxzcAx07ei8MxkmvHD51By4pDDo5yRTYN4AEghG3fL3svXbWySvfo7kHw+8THu/Opnn39LMDA==
-X-Received: by 2002:a05:6808:187:: with SMTP id w7mr3646625oic.140.1633455196519;
-        Tue, 05 Oct 2021 10:33:16 -0700 (PDT)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id d4sm3664803oth.47.2021.10.05.10.33.15
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Oct 2021 10:33:16 -0700 (PDT)
-Date:   Tue, 5 Oct 2021 10:34:58 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Doug Anderson <dianders@chromium.org>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>
-Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Vara Reddy <varar@codeaurora.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Chandan Uddaraju <chandanu@codeaurora.org>
-Subject: Re: [RFC] drm/msm/dp: Allow attaching a drm_panel
-Message-ID: <YVyMwsvLl6XalJxB@ripper>
-References: <20210726231351.655302-1-bjorn.andersson@linaro.org>
- <CAD=FV=UGtHXD==Yy8CVCOioYGb=2hqGQOoNWftD1Jj7OiEp51g@mail.gmail.com>
- <YVd3YdfgFVc0Br5T@ripper>
- <CAD=FV=U=xVLuKOYHbGPTkLjGa8_U+F1ZtEvJt4LGaRuR5SsKFw@mail.gmail.com>
- <YVumL1lHLqtb/HKS@ripper>
- <CAD=FV=W9uKq00wXn4H1ax0u2D=R8Wn3J-Je43uxcPyDtk7AK7Q@mail.gmail.com>
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=ZhJmS/oaFcG0CCC1jcKsenxPXA1oO8fnKa8QfXuwC6Y=;
+        b=qcDsoR+XtU8aDIsrVi0QP9oB/RessbUeWBtRKQvCKAMoi2DZQglD1AtScypkVNr4H5
+         wqzPpn5La4H9hs/+pR5ZIwUFVr9Zf1WD8lbzAKvqaHbVw/LErJ59QImFZIQdxqgTWyUe
+         rNQjZGoWwonUpm/z0HyjvHjH7fJ+3RAGAXOibsT6JQG7TxV1+3cwsPqf+X7PN7QD85Ku
+         9rvwdCcE57lHkCdNjvSn9fbH4nwU8wWrgdvUWh9VXskx4kGT20o+PRwrore33jzHDNTS
+         hoKyAaFy/kcRuSzvO9FxOrj58svu2zfXYGECxVfMJqnFp6KSDisNPFUtrVwnTV75kxPC
+         XySg==
+X-Gm-Message-State: AOAM533BXxRp4WNXYtSSfKszZ8bBdsr20JrxN+x82VHxxJsMgJlGgCv6
+        sZff4TGOIj3M3YHZPLgVYNxRFHcMNjak5QltE/gm9A==
+X-Google-Smtp-Source: ABdhPJwy7XEXx1crzpVbI98jIWwyHysBUIuro9gRyQtRlRRB27rta23ocJ1zayjMe/m6FjoIgKNVHGMbx873MznmCeE=
+X-Received: by 2002:aca:42d7:: with SMTP id p206mr3684143oia.32.1633457194655;
+ Tue, 05 Oct 2021 11:06:34 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 5 Oct 2021 11:06:33 -0700
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAD=FV=W9uKq00wXn4H1ax0u2D=R8Wn3J-Je43uxcPyDtk7AK7Q@mail.gmail.com>
+In-Reply-To: <1633427071-19523-1-git-send-email-mkrishn@codeaurora.org>
+References: <1633427071-19523-1-git-send-email-mkrishn@codeaurora.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Tue, 5 Oct 2021 11:06:33 -0700
+Message-ID: <CAE-0n535JFD9QDeeDk5Tik4DKqt68pQRsHTbW9sxvHijXhOE3g@mail.gmail.com>
+Subject: Re: [PATCH v1] drm/msm: use compatible string to find mdp node
+To:     Krishna Manikandan <mkrishn@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     kalyan_t@codeaurora.org, robdclark@gmail.com,
+        bjorn.andersson@linaro.org, freedreno@lists.freedesktop.org,
+        dri-devel@lists.freedesktop.org
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 05 Oct 08:39 PDT 2021, Doug Anderson wrote:
+Quoting Krishna Manikandan (2021-10-05 02:44:31)
+> In the current implementation, substring comparison
+> using device node name is used to find mdp node
+> during driver probe. Use compatible string instead
+> of node name to get mdp node from the parent mdss node.
+>
+> Signed-off-by: Krishna Manikandan <mkrishn@codeaurora.org>
+> ---
+>  drivers/gpu/drm/msm/msm_drv.c | 13 ++++++++++---
+>  1 file changed, 10 insertions(+), 3 deletions(-)
+>
+> diff --git a/drivers/gpu/drm/msm/msm_drv.c b/drivers/gpu/drm/msm/msm_drv.c
+> index 2e6fc18..50a23cf 100644
+> --- a/drivers/gpu/drm/msm/msm_drv.c
+> +++ b/drivers/gpu/drm/msm/msm_drv.c
+> @@ -1241,9 +1241,16 @@ static int add_components_mdp(struct device *mdp_dev,
+>         return 0;
+>  }
+>
+> -static int compare_name_mdp(struct device *dev, void *data)
+> +static int find_mdp_node(struct device *dev, void *data)
+>  {
+> -       return (strstr(dev_name(dev), "mdp") != NULL);
+> +       return of_device_is_compatible(dev->of_node, "qcom,mdp4") ||
 
-> Hi,
-> 
-> On Mon, Oct 4, 2021 at 6:09 PM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
-> >
-> > On Mon 04 Oct 17:36 PDT 2021, Doug Anderson wrote:
-> >
-> > > Hi,
-> > >
-> > > On Fri, Oct 1, 2021 at 2:00 PM Bjorn Andersson
-> > > <bjorn.andersson@linaro.org> wrote:
-> > > >
-> > > > On Fri 27 Aug 13:52 PDT 2021, Doug Anderson wrote:
-> > > >
-> > > > > Hi,
-> > > > >
-> > > > > On Mon, Jul 26, 2021 at 4:15 PM Bjorn Andersson
-> > > > > <bjorn.andersson@linaro.org> wrote:
-> > > > > >
-> > > > > > +static int dp_parser_find_panel(struct dp_parser *parser)
-> > > > > > +{
-> > > > > > +       struct device_node *np = parser->pdev->dev.of_node;
-> > > > > > +       int rc;
-> > > > > > +
-> > > > > > +       rc = drm_of_find_panel_or_bridge(np, 2, 0, &parser->drm_panel, NULL);
-> > > > >
-> > > > > Why port 2? Shouldn't this just be port 1 always? The yaml says that
-> > > > > port 1 is "Output endpoint of the controller". We should just use port
-> > > > > 1 here, right?
-> > > > >
-> > > >
-> > > > Finally got back to this, changed it to 1 and figured out why I left it
-> > > > at 2.
-> > > >
-> > > > drm_of_find_panel_or_bridge() on a DP controller will find the of_graph
-> > > > reference to the USB-C controller, scan through the registered panels
-> > > > and conclude that the of_node of the USB-C controller isn't a registered
-> > > > panel and return -EPROBE_DEFER.
-> > >
-> > > I'm confused, but maybe it would help if I could see something
-> > > concrete. Is there a specific board this was happening on?
-> > >
-> >
-> > Right, let's make this more concrete with a snippet from the actual
-> > SC8180x DT.
-> >
-> > > Under the DP node in the device tree I expect:
-> > >
-> > > ports {
-> > >   port@1 {
-> > >     reg = <1>;
-> > >     edp_out: endpoint {
-> > >       remote-endpoint = <&edp_panel_in>;
-> > >     };
-> > >   };
-> > > };
-> > >
-> >
-> > /* We got a panel */
-> > panel {
-> >     ...
-> >     ports {
-> >         port {
-> >             auo_b133han05_in: endpoint {
-> >                 remote-endpoint = <&mdss_edp_out>;
-> >             };
-> >         };
-> >     };
-> > };
-> >
-> > /* And a 2-port USB-C controller */
-> > type-c-controller {
-> >     ...
-> >     connector@0 {
-> >         ports {
-> >             port@0 {
-> >                 reg = <0>;
-> >                 ucsi_port_0_dp: endpoint {
-> >                     remote-endpoint = <&dp0_mode>;
-> >                 };
-> >             };
-> >
-> >             port@1 {
-> >                 reg = <1>;
-> >                 ucsi_port_0_switch: endpoint {
-> >                     remote-endpoint = <&primary_qmp_phy>;
-> >                 };
-> >             };
-> >         };
-> >     };
-> >
-> >         connector@1 {
-> >         ports {
-> >             port@0 {
-> >                 reg = <0>;
-> >                 ucsi_port_1_dp: endpoint {
-> >                     remote-endpoint = <&dp1_mode>;
-> >                 };
-> >             };
-> >
-> >             port@1 {
-> >                 reg = <1>;
-> >                 ucsi_port_1_switch: endpoint {
-> >                     remote-endpoint = <&second_qmp_phy>;
-> >                 };
-> >             };
-> >         };
-> >         };
-> > };
-> >
-> > /* And then our 2 DP and single eDP controllers */
-> > &mdss_dp0 {
-> >     ports {
-> >         port@1 {
-> >             reg = <1>;
-> >             dp0_mode: endpoint {
-> >                 remote-endpoint = <&ucsi_port_0_dp>;
-> >             };
-> >         };
-> >     };
-> > };
-> >
-> > &mdss_dp1 {
-> >     ports {
-> >         port@1 {
-> >             reg = <1>;
-> >             dp1_mode: endpoint {
-> >                 remote-endpoint = <&ucsi_port_1_dp>;
-> >             };
-> >         };
-> >     };
-> > };
-> >
-> > &mdss_edp {
-> >     ports {
-> >         port@1 {
-> >             reg = <1>;
-> >             mdss_edp_out: endpoint {
-> >                 remote-endpoint = <&auo_b133han05_in>;
-> >             };
-> >         };
-> >     };
-> > };
-> >
-> > > If you have "port@1" pointing to a USB-C controller but this instance
-> > > of the DP controller is actually hooked up straight to a panel then
-> > > you should simply delete the "port@1" that points to the typeC and
-> > > replace it with one that points to a panel, right?
-> > >
-> >
-> > As you can see, port 1 on &mdss_dp0 and &mdss_dp1 points to the two UCSI
-> > connectors and the eDP points to the panel, exactly like we agreed.
-> >
-> > So now I call:
-> >     drm_of_find_panel_or_bridge(dev->of_node, 1, 0, &panel, NULL);
-> >
-> > which for the two DP nodes will pass respective UCSI connector to
-> > drm_find_panel() and get EPROBE_DEFER back - because they are not on
-> > panel_list.
-> >
-> > There's nothing indicating in the of_graph that the USB connectors
-> > aren't panels (or bridges), so I don't see a way to distinguish the two
-> > types remotes.
-> 
-> As far as I can tell the way this would be solved would be to actually
-> pass &bridge in and then make sure that a bridge would be in place for
-> the DP connector. In the full DP case you'll get an -EPROBE_DEFER if
-> the connector hasn't been probed but once it's probed then it should
-> register as a bridge and thus give you the info you need (AKA that
-> this isn't a panel).
-> 
-> I haven't done the digging to see how all this works, but according to
-> Laurent [1]: "Physical connectors are already handled as bridges, see
-> drivers/gpu/drm/bridge/display-connector.c"
-> 
+Why do we care about mdp4? It looks like this function is only called if
+get_mdp_ver() returns 5 or DPU, in which case 4 isn't relevant?
 
-All this seems to make sense for both eDP and "native" DP.
+> +               of_device_is_compatible(dev->of_node, "qcom,mdp5") ||
+> +               of_device_is_compatible(dev->of_node, "qcom,mdss_mdp") ||
+> +               of_device_is_compatible(dev->of_node, "qcom,sdm845-dpu") ||
+> +               of_device_is_compatible(dev->of_node, "qcom,sm8150-dpu") ||
+> +               of_device_is_compatible(dev->of_node, "qcom,sm8250-dpu") ||
+> +               of_device_is_compatible(dev->of_node, "qcom,sc7180-dpu") ||
+> +               of_device_is_compatible(dev->of_node, "qcom,sc7280-dpu");
 
-> So basically I think this is solvable in code and there's no reason to
-> mess with the devicetree bindings to solve this problem. Does that
-> sound right?
-> 
+Instead of this duplicate string check why not use canonical compatible
+lists?
 
-But I don't have a DisplayPort connector.
-
-I have a USB-C connector, that upon determining that it's time to play
-DisplayPort will use the typec_mux abstraction to tell someone on the
-other side of the of_graph about DisplayPort events (HPD).
-
-So where would I put this drm_bridge in the USB-C case?
-
-I don't see that it fits in the Type-C side of things and putting it on
-the DP side would leave us with exactly the problem we have here. So we
-would have to put a fake "DP connector" inbetween the DP node and the
-Type-C controller?
+	return of_match_node(dpu_dt_match, dev->of_node) ||
+	       of_match_node(mdp5_dt_match, dev->of_node);
 
 
-For reference, this is how I thought one is supposed to tie the Type-C
-controller to the display driver:
-https://lore.kernel.org/all/20211005022451.2037405-1-bjorn.andersson@linaro.org/
+This way we're not constantly updating this list of compatibles in two
+places.
 
-
-I'm afraid I must be missing something in Laurent and yours proposal
-(although I think Laurent is talking about the native DP case?).
-
-Regards,
-Bjorn
-
-> [1] https://lore.kernel.org/r/YUvMv+Y8tFcWPEHd@pendragon.ideasonboard.com/
+>  }
+>
+>  static int add_display_components(struct platform_device *pdev,
+> @@ -1268,7 +1275,7 @@ static int add_display_components(struct platform_device *pdev,
+>                         return ret;
+>                 }
+>
+> -               mdp_dev = device_find_child(dev, NULL, compare_name_mdp);
+> +               mdp_dev = device_find_child(dev, NULL, find_mdp_node);
+>                 if (!mdp_dev) {
+>                         DRM_DEV_ERROR(dev, "failed to find MDSS MDP node\n");
+>                         of_platform_depopulate(dev);
