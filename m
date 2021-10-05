@@ -2,101 +2,298 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DD98C4233C1
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 00:46:07 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 3ECB84233CE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 00:46:16 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230113AbhJEWr5 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Oct 2021 18:47:57 -0400
-Received: from mail-oi1-f169.google.com ([209.85.167.169]:46931 "EHLO
-        mail-oi1-f169.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236866AbhJEWr4 (ORCPT
+        id S236920AbhJEWsE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Oct 2021 18:48:04 -0400
+Received: from mail-oo1-f50.google.com ([209.85.161.50]:33287 "EHLO
+        mail-oo1-f50.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236912AbhJEWsB (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Oct 2021 18:47:56 -0400
-Received: by mail-oi1-f169.google.com with SMTP id s69so1319201oie.13;
-        Tue, 05 Oct 2021 15:46:05 -0700 (PDT)
+        Tue, 5 Oct 2021 18:48:01 -0400
+Received: by mail-oo1-f50.google.com with SMTP id i26-20020a4ad09a000000b002a9d58c24f5so297579oor.0;
+        Tue, 05 Oct 2021 15:46:09 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
          :message-id;
-        bh=1pxND7BCUQcsSSy7TZxTVSdJeMVhe7/yxhkqlpU5RsE=;
-        b=qhHXB0KOH9CJzlOz5wyVTJohOosZCupknk+SiLbXzmTUEMrkrB4K2dHyeqgaYS5t/7
-         dKlEX8vGbCkIZEE5L8Rt5vX3ZeDZzCob1vYd/wIVkYztTCxnY0dD8dC+hZTmg+A4U1mT
-         PRdD6X3zHbgtmLinUiyqQFkYctdQw2A16f2Hi3EUGr7ysagE/bMsvbGS1kgRjTe1YThw
-         RbJ6RHTD0o1Dq56HoQxaisWw6m2xixVk/Xhow9T8CXoT2o3maiv8SzKDbZ+OT7ZVl05G
-         8LmwiSmkX5mK0c/sh1eLPIsk3tC+Z9sBbE7kMOSDe6Xm4YQ6WNC7iYVg7FBwQPzzoskB
-         5EHQ==
-X-Gm-Message-State: AOAM533TiLPdFkKLBQE50uzgDy8D43rJ/a/556wsOxlOhjmQbZPgROQg
-        NbabXMtDHpa7SDKrbQsud2zoMjj+nQ==
-X-Google-Smtp-Source: ABdhPJzOguD4l2kCjKfnxpvalktU+y3R8MfzP+cj3IqJDlV+LBYM1M+tbREdb4g60bxvG1vfkOBTew==
-X-Received: by 2002:a05:6808:bcf:: with SMTP id o15mr4696483oik.171.1633473965166;
-        Tue, 05 Oct 2021 15:46:05 -0700 (PDT)
+        bh=CfIHHtT0TFEzmaXEkxfsHiOsCOuFZLojk7Wuirezz8k=;
+        b=RlJhroWdVjeUWTGCQLt7tgTTogAs3vTHhesMcprJebxJzMfiDqdFB3ri4Ad3znPm9f
+         s3BWFzJtxit4wutvTcTjNZdxQ4Di7PGOFKHDRoEJM88aORK4pcUNkfL2sgyEYENGeFkH
+         Kq5JFLwPKXtg7IAar4q5y+vINA94V3CRfvoY/tTBtl7IlNbFz6obmUa+a+TttXIjhu1i
+         rHC/OTTJ6axEidaBfOfeBN9UbjXuCZ+lANpjYUBBV9RGquyy7Be5fUcqtXEzwpWQY7NV
+         avrltik8TddD080FdifqucxVPQ9Rzz+4NuA1vU5f5S497OrenOIwTfm/0xcUHJBDMSXj
+         pumg==
+X-Gm-Message-State: AOAM532perrGtbIHccRcLJam91joNnlOSBUAmLlXEbIG1fu130g6O+EG
+        nw1k2TTxF5McCi41IJJXhg==
+X-Google-Smtp-Source: ABdhPJxj/toN99B+/P+e9cC9jSTAVyJFULlFRQXEGUDvemxQeEmRCyqoAajCpacQjUDpDSlbQXvd8g==
+X-Received: by 2002:a4a:8789:: with SMTP id b9mr5979966ooi.9.1633473969273;
+        Tue, 05 Oct 2021 15:46:09 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id k23sm3760510ook.45.2021.10.05.15.46.03
+        by smtp.gmail.com with ESMTPSA id p14sm1924640oov.0.2021.10.05.15.46.08
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Oct 2021 15:46:04 -0700 (PDT)
-Received: (nullmailer pid 106773 invoked by uid 1000);
+        Tue, 05 Oct 2021 15:46:08 -0700 (PDT)
+Received: (nullmailer pid 106804 invoked by uid 1000);
         Tue, 05 Oct 2021 22:45:59 -0000
 From:   Rob Herring <robh@kernel.org>
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Cc:     rohitkr@codeaurora.org, perex@perex.cz, agross@kernel.org,
-        linux-arm-msm@vger.kernel.org, plai@codeaurora.org,
-        devicetree@vger.kernel.org, tiwai@suse.com, lgirdwood@gmail.com,
-        linux-kernel@vger.kernel.org, bjorn.andersson@linaro.org,
-        srinivas.kandagatla@linaro.org, broonie@kernel.org,
-        robh+dt@kernel.org, bgoswami@codeaurora.org,
-        alsa-devel@alsa-project.org, swboyd@chromium.org,
-        Venkata Prasad Potturu <potturu@codeaurora.org>,
-        judyhsiao@chromium.org
-In-Reply-To: <1633441974-15353-7-git-send-email-srivasam@codeaurora.org>
-References: <1633441974-15353-1-git-send-email-srivasam@codeaurora.org> <1633441974-15353-7-git-send-email-srivasam@codeaurora.org>
-Subject: Re: [PATCH v2 6/9] ASoC: dt-bindings: Add SC7280 sound card bindings
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, devicetree@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Rob Herring <robh+dt@kernel.org>,
+        linux-gpio@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+In-Reply-To: <20211005144329.2405315-3-dmitry.baryshkov@linaro.org>
+References: <20211005144329.2405315-1-dmitry.baryshkov@linaro.org> <20211005144329.2405315-3-dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v2 2/6] dt-bindings: pinctrl: qcom,pmic-mpp: switch to #interrupt-cells
 Date:   Tue, 05 Oct 2021 17:45:59 -0500
-Message-Id: <1633473959.357662.106769.nullmailer@robh.at.kernel.org>
+Message-Id: <1633473959.446136.106800.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 05 Oct 2021 19:22:51 +0530, Srinivasa Rao Mandadapu wrote:
-> Add bindings for lpass sc7280 based soundcards which supports
-> audio over i2s based speaker, soundwire based headset, msm dmics
-> and HDMI Port.
+On Tue, 05 Oct 2021 17:43:25 +0300, Dmitry Baryshkov wrote:
+> Stop specifying individual interrupts properties. Use #interrupt-cells
+> instead as we are switching qcom,spmi-mpp and qcom,ssbi-mpp to
+> hierarchical IRQ setup.
 > 
-> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  .../devicetree/bindings/sound/qcom,lpass-cpu.yaml  | 69 +++++++++++++++++++---
->  1 file changed, 61 insertions(+), 8 deletions(-)
+>  .../devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml | 14 +++++++-------
+>  1 file changed, 7 insertions(+), 7 deletions(-)
 > 
 
-My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-on your patch (DT_CHECKER_FLAGS is new in v5.13):
+Running 'make dtbs_check' with the schema in this patch gives the
+following warnings. Consider if they are expected or the schema is
+incorrect. These may not be new warnings.
 
-yamllint warnings/errors:
+Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+This will change in the future.
 
-dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.example.dt.yaml: lpass@62d80000: reg: [[0, 1658351616, 0, 425984], [0, 1659895808, 0, 167936]] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.example.dt.yaml: lpass@62d80000: reg-names: ['lpass-hdmiif', 'lpass-lpaif'] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.example.dt.yaml: lpass@62d80000: interrupts: [[0, 160, 1], [0, 268, 1]] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.example.dt.yaml: lpass@62d80000: interrupt-names: ['lpass-irq-lpaif', 'lpass-irq-hdmi'] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.example.dt.yaml: lpass@62d80000: iommus: [[4294967295, 4128, 0], [4294967295, 4146, 0]] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/sound/qcom,lpass-cpu.yaml
+Full log is available here: https://patchwork.ozlabs.org/patch/1536696
 
-doc reference errors (make refcheckdocs):
 
-See https://patchwork.ozlabs.org/patch/1536654
+mpp@50: 'gpio-ranges' is a required property
+	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
 
-This check can fail if there are any dependencies. The base for a patch
-series is generally the most recent rc1.
+mpp@50: 'interrupt-controller' is a required property
+	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
 
-If you already ran 'make dt_binding_check' and didn't see the above
-error(s), then make sure 'yamllint' is installed and dt-schema is up to
-date:
+mpp@50: 'interrupts' does not match any of the regexes: '-state$', 'pinctrl-[0-9]+'
+	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
 
-pip3 install dtschema --upgrade
+mpps@50: 'cm3605-mpps', 'interrupts' do not match any of the regexes: '-state$', 'pinctrl-[0-9]+'
+	arch/arm/boot/dts/qcom-apq8060-dragonboard.dt.yaml
 
-Please check and re-submit.
+mpps@50: 'gpio-ranges' is a required property
+	arch/arm/boot/dts/qcom-apq8060-dragonboard.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml
+	arch/arm/boot/dts/qcom-msm8660-surf.dt.yaml
+
+mpps@50: 'interrupt-controller' is a required property
+	arch/arm/boot/dts/qcom-apq8060-dragonboard.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml
+	arch/arm/boot/dts/qcom-msm8660-surf.dt.yaml
+
+mpps@50: 'interrupts' does not match any of the regexes: '-state$', 'pinctrl-[0-9]+'
+	arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml
+	arch/arm/boot/dts/qcom-msm8660-surf.dt.yaml
+
+mpps@a000: compatible: ['qcom,pm8916-mpp'] is too short
+	arch/arm64/boot/dts/qcom/apq8016-sbc.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-samsung-a3u-eur.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dt.yaml
+
+mpps@a000: compatible: ['qcom,pm8994-mpp'] is too short
+	arch/arm64/boot/dts/qcom/apq8094-sony-xperia-kitakami-karin_windy.dt.yaml
+	arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml
+	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8992-msft-lumia-octagon-talkman.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon-cityman.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-ivy.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-karin.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-satsuki.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-sumire.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-suzuran.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-keyaki.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dt.yaml
+
+mpps@a000: 'gpio-ranges' is a required property
+	arch/arm64/boot/dts/qcom/apq8016-sbc.dt.yaml
+	arch/arm64/boot/dts/qcom/apq8094-sony-xperia-kitakami-karin_windy.dt.yaml
+	arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml
+	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-samsung-a3u-eur.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8992-msft-lumia-octagon-talkman.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon-cityman.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-ivy.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-karin.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-satsuki.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-sumire.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-suzuran.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-keyaki.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dt.yaml
+	arch/arm/boot/dts/qcom-apq8074-dragonboard.dt.yaml
+	arch/arm/boot/dts/qcom-apq8074-dragonboard.dt.yaml
+	arch/arm/boot/dts/qcom-apq8084-ifc6540.dt.yaml
+	arch/arm/boot/dts/qcom-apq8084-mtp.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-samsung-klte.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-sony-xperia-amami.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-sony-xperia-amami.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dt.yaml
+
+mpps@a000: 'interrupt-controller' is a required property
+	arch/arm64/boot/dts/qcom/apq8016-sbc.dt.yaml
+	arch/arm64/boot/dts/qcom/apq8094-sony-xperia-kitakami-karin_windy.dt.yaml
+	arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml
+	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-samsung-a3u-eur.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8992-msft-lumia-octagon-talkman.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon-cityman.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-ivy.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-karin.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-satsuki.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-sumire.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-suzuran.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-keyaki.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dt.yaml
+	arch/arm/boot/dts/qcom-apq8074-dragonboard.dt.yaml
+	arch/arm/boot/dts/qcom-apq8074-dragonboard.dt.yaml
+	arch/arm/boot/dts/qcom-apq8084-ifc6540.dt.yaml
+	arch/arm/boot/dts/qcom-apq8084-mtp.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-samsung-klte.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-sony-xperia-amami.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-sony-xperia-amami.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dt.yaml
+
+mpps@a000: 'interrupts' does not match any of the regexes: '-state$', 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/apq8094-sony-xperia-kitakami-karin_windy.dt.yaml
+	arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml
+	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-alcatel-idol347.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-huawei-g7.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-longcheer-l8150.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-longcheer-l8910.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-samsung-a3u-eur.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-samsung-a5u-eur.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8916-wingtech-wt88047.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8992-bullhead-rev-101.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8992-msft-lumia-octagon-talkman.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8992-xiaomi-libra.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-msft-lumia-octagon-cityman.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-ivy.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-karin.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-satsuki.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-sumire.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8994-sony-xperia-kitakami-suzuran.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-keyaki.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dt.yaml
+	arch/arm/boot/dts/qcom-apq8074-dragonboard.dt.yaml
+	arch/arm/boot/dts/qcom-apq8074-dragonboard.dt.yaml
+	arch/arm/boot/dts/qcom-apq8084-ifc6540.dt.yaml
+	arch/arm/boot/dts/qcom-apq8084-mtp.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-fairphone-fp2.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-lge-nexus5-hammerhead.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-samsung-klte.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-sony-xperia-amami.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-sony-xperia-amami.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-sony-xperia-castor.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dt.yaml
+	arch/arm/boot/dts/qcom-msm8974-sony-xperia-honami.dt.yaml
+
+mpps@a000: 'interrupts', 'pm8916-mpp4', 'pm8916-mpps-leds' do not match any of the regexes: '-state$', 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/apq8016-sbc.dt.yaml
+
+mpps@a000: pm8994-mpps-default-state: 'oneOf' conditional failed, one must be fixed:
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-keyaki.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dt.yaml
 
