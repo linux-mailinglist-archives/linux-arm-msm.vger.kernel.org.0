@@ -2,104 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B7913422328
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 12:12:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DAB1D4223AF
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 12:37:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234101AbhJEKOf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Oct 2021 06:14:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40884 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233986AbhJEKOY (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Oct 2021 06:14:24 -0400
-Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D967FC06161C;
-        Tue,  5 Oct 2021 03:12:33 -0700 (PDT)
-Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id E09AC3F0AC;
-        Tue,  5 Oct 2021 12:12:31 +0200 (CEST)
-Date:   Tue, 5 Oct 2021 12:12:30 +0200
-From:   Marijn Suijten <marijn.suijten@somainline.org>
-To:     Daniel Thompson <daniel.thompson@linaro.org>
-Cc:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Pavel Dubrova <pashadubrova@gmail.com>,
-        Kiran Gunda <kgunda@codeaurora.org>,
-        Courtney Cavin <courtney.cavin@sonymobile.com>,
-        Bryan Wu <cooloney@gmail.com>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH 09/10] backlight: qcom-wled: Consistently use
- enabled-strings in set_brightness
-Message-ID: <20211005101230.sp2ldu3gfvh5eiit@SoMainline.org>
-Mail-Followup-To: Daniel Thompson <daniel.thompson@linaro.org>,
-        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Lee Jones <lee.jones@linaro.org>, Jingoo Han <jingoohan1@gmail.com>,
-        ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Pavel Dubrova <pashadubrova@gmail.com>,
-        Kiran Gunda <kgunda@codeaurora.org>,
-        Courtney Cavin <courtney.cavin@sonymobile.com>,
-        Bryan Wu <cooloney@gmail.com>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-References: <20211004192741.621870-1-marijn.suijten@somainline.org>
- <20211004192741.621870-10-marijn.suijten@somainline.org>
- <20211005093331.4houxsc5b6lfzmbz@maple.lan>
+        id S233490AbhJEKji (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Oct 2021 06:39:38 -0400
+Received: from mail.kernel.org ([198.145.29.99]:35438 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S232723AbhJEKjh (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 5 Oct 2021 06:39:37 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 77BAD6124F;
+        Tue,  5 Oct 2021 10:37:46 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1633430267;
+        bh=Wv/SF6G50tw+P67CaN7frd0E2WbmInm7Ve/ayZJ5bdA=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ik9VseNoVdNFMsjnX5croDf4AaLO02QYa4ZHgBBTEK4vialF2XDUjVBR3chww9IPJ
+         EtL4IHhBhjr5x9n7g6Se7z7JxiTuQDpGUR/EOuySmF2D6aEGIbfkq84ae8QoZbyd6C
+         9OsL4GispnTdlj2f9nXb8PwJCslOTavI1InLY2bxlXIQZ11+bSp3PX2LXmwx4tpj4V
+         ZNDfTGphTM+gmFvP+p4Z0yPAMf07YM60o+jvawp/3g0T7hoR6150A9NtYjvVU6a9kk
+         2zZk5kC6x04prVWqm2dGsOOwOoDIJCjY2Op9VpYDtT+Z0d+7ZNv4OMCAyd7BhWPR54
+         YV4oLM0Vok8+w==
+Date:   Tue, 5 Oct 2021 16:07:43 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Kishon Vijay Abraham I <kishon@ti.com>,
+        Vivek Gautam <vivek.gautam@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, linux-phy@lists.infradead.org
+Subject: Re: [PATCH v2] phy: qcom-qusb2: Fix a memory leak on probe
+Message-ID: <YVwq9593hJFc1XaU@matsya>
+References: <20210922233548.2150244-1-vladimir.zapolskiy@linaro.org>
+ <YVbYDIUdyTQD6gXq@matsya>
+ <56c4530b-2f66-f325-b703-e58e90c3c66a@linaro.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211005093331.4houxsc5b6lfzmbz@maple.lan>
+In-Reply-To: <56c4530b-2f66-f325-b703-e58e90c3c66a@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-10-05 10:33:31, Daniel Thompson wrote:
-> On Mon, Oct 04, 2021 at 09:27:40PM +0200, Marijn Suijten wrote:
-> > The hardware is capable of controlling any non-contiguous sequence of
-> > LEDs specified in the DT using qcom,enabled-strings as u32
-> > array, and this also follows from the DT-bindings documentation.  The
-> > numbers specified in this array represent indices of the LED strings
-> > that are to be enabled and disabled.
+On 01-10-21, 14:04, Vladimir Zapolskiy wrote:
+> On 10/1/21 12:42 PM, Vinod Koul wrote:
+> > On 23-09-21, 02:35, Vladimir Zapolskiy wrote:
+> > > On success nvmem_cell_read() returns a pointer to a dynamically allocated
+> > > buffer, and therefore it shall be freed after usage.
+> > > 
+> > > The issue is reported by kmemleak:
+> > > 
+> > >    # cat /sys/kernel/debug/kmemleak
+> > >    unreferenced object 0xffff3b3803e4b280 (size 128):
+> > >      comm "kworker/u16:1", pid 107, jiffies 4294892861 (age 94.120s)
+> > >      hex dump (first 32 bytes):
+> > >        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+> > >        00 00 00 00 00 00 00 00 00 00 00 00 00 00 00 00  ................
+> > >      backtrace:
+> > >        [<000000007739afdc>] __kmalloc+0x27c/0x41c
+> > >        [<0000000071c0fbf8>] nvmem_cell_read+0x40/0xe0
+> > >        [<00000000e803ef1f>] qusb2_phy_init+0x258/0x5bc
+> > >        [<00000000fc81fcfa>] phy_init+0x70/0x110
+> > >        [<00000000e3d48a57>] dwc3_core_soft_reset+0x4c/0x234
+> > >        [<0000000027d1dbd4>] dwc3_core_init+0x68/0x990
+> > >        [<000000001965faf9>] dwc3_probe+0x4f4/0x730
+> > >        [<000000002f7617ca>] platform_probe+0x74/0xf0
+> > >        [<00000000a2576cac>] really_probe+0xc4/0x470
+> > >        [<00000000bc77f2c5>] __driver_probe_device+0x11c/0x190
+> > >        [<00000000130db71f>] driver_probe_device+0x48/0x110
+> > >        [<0000000019f36c2b>] __device_attach_driver+0xa4/0x140
+> > >        [<00000000e5812ff7>]  bus_for_each_drv+0x84/0xe0
+> > >        [<00000000f4bac574>] __device_attach+0xe4/0x1c0
+> > >        [<00000000d3beb631>] device_initial_probe+0x20/0x30
+> > >        [<000000008019b9db>] bus_probe_device+0xa4/0xb0
+> > > 
+> > > Fixes: ca04d9d3e1b1 ("phy: qcom-qusb2: New driver for QUSB2 PHY on Qcom chips")
+> > > Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> > > ---
+> > > Changes from v1 to v2:
+> > > * fixed a memory leak in case of reading a zero value and return,
+> > > * corrected the fixed commit, the memory leak is present before a rename.
+> > > 
+> > >   drivers/phy/qualcomm/phy-qcom-qusb2.c | 16 ++++++++++------
+> > >   1 file changed, 10 insertions(+), 6 deletions(-)
+> > > 
+> > > diff --git a/drivers/phy/qualcomm/phy-qcom-qusb2.c b/drivers/phy/qualcomm/phy-qcom-qusb2.c
+> > > index 3c1d3b71c825..f1d97fbd1331 100644
+> > > --- a/drivers/phy/qualcomm/phy-qcom-qusb2.c
+> > > +++ b/drivers/phy/qualcomm/phy-qcom-qusb2.c
+> > > @@ -561,7 +561,7 @@ static void qusb2_phy_set_tune2_param(struct qusb2_phy *qphy)
+> > >   {
+> > >   	struct device *dev = &qphy->phy->dev;
+> > >   	const struct qusb2_phy_cfg *cfg = qphy->cfg;
+> > > -	u8 *val;
+> > > +	u8 *val, hstx_trim;
+> > >   	/* efuse register is optional */
+> > >   	if (!qphy->cell)
+> > > @@ -575,7 +575,13 @@ static void qusb2_phy_set_tune2_param(struct qusb2_phy *qphy)
+> > >   	 * set while configuring the phy.
+> > >   	 */
+> > >   	val = nvmem_cell_read(qphy->cell, NULL);
+> > > -	if (IS_ERR(val) || !val[0]) {
+> > > +	if (IS_ERR(val)) {
+> > > +		dev_dbg(dev, "failed to read a valid hs-tx trim value\n");
 > > 
-> > Its value is appropriately used to setup and enable string modules, but
-> > completely disregarded in the set_brightness paths which only iterate
-> > over the number of strings linearly.
-> > Take an example where only string 2 is enabled with
-> > qcom,enabled_strings=<2>: this string is appropriately enabled but
-> > subsequent brightness changes would have only touched the zero'th
-> > brightness register because num_strings is 1 here.  This is simply
-> > addressed by looking up the string for this index in the enabled_strings
-> > array just like the other codepaths that iterate over num_strings.
+> > not an error log..?
+> > 
 > 
-> This isn't true until patch 10 is applied!
+> It's a copy from the existing code, no changes on error but the memory leak fix.
+> 
+> If CONFIG_NVMEM is not set, then nvmem_cell_read() returns ERR_PTR(-EOPNOTSUPP),
+> still it allows to build/run the phy driver, so it seems to be a valid option,
+> please correct me.
 
-Patch 9 and 10 were split up at a last resort to prevent a clash in the
-title, apologies for that.
+Yes it is not relevant to the leak fix here, so I will apply it
 
-> Given both patches fix the same issue in different functions I'd prefer
-> these to be squashed together (and doubly so because the autodetect code
-> uses set_brightness() as a helper function).
-
-That's a fair reason, and solution I agree on.  I'll figure out how to
-generify the title and re-spin this patchset except if there are other
-reviewers/maintainers I should wait for.
-
-- Marijn
-
-> Daniel.
+-- 
+~Vinod
