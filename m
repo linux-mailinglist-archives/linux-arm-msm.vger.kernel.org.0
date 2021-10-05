@@ -2,200 +2,293 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 2DE7D4230B4
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 21:21:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5290E423158
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 22:11:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235157AbhJETXZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Oct 2021 15:23:25 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60152 "EHLO mail.kernel.org"
+        id S231266AbhJEUNm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Oct 2021 16:13:42 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:11804 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235361AbhJETXY (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Oct 2021 15:23:24 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id AA57761154;
-        Tue,  5 Oct 2021 19:21:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1633461693;
-        bh=M62TAUo+09n/pFjm3mE9/03lQLtfj7sPmGMZwJ6g/bA=;
-        h=Date:From:To:Cc:Subject:In-Reply-To:From;
-        b=Ql+LqFMIoFiVmsk2GVJiJC/64iVnAjQjwndueuqwbKdSVeiEnuh+YfbXn8j/2/RAi
-         y/dn9eLG4VCUEphU8AgVjSoqf0Ixg4AWMDsDRY3PSa3d99ya8O/IdqYKbxWF4tbJ9Q
-         ccJ7su+bSpUIPmnEWqVSFwOvjA7xnb2OiPxoECAt1yvogP10qH7ATPF+ZtWEfR7ZEi
-         UMkBzXk2jlAdJtMB5qcFnnMKHvUNr4QXOod2rL8u73IP3Kb30VcYIXnI6SCfXVHTxE
-         P+e7DdAlqO4NzuQiymtOgExlzeNObIwfaZ8gc3hjYI/ZtcDiaIFsAFvvivRS1+WFV2
-         WxoehdS+fH6Mg==
-Date:   Tue, 5 Oct 2021 14:21:31 -0500
-From:   Bjorn Helgaas <helgaas@kernel.org>
-To:     Prasad Malisetty <pmaliset@codeaurora.org>
-Cc:     agross@kernel.org, bjorn.andersson@linaro.org, bhelgaas@google.com,
-        robh+dt@kernel.org, swboyd@chromium.org, lorenzo.pieralisi@arm.com,
-        svarbanov@mm-sol.com, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dianders@chromium.org,
-        mka@chromium.org, vbadigan@codeaurora.org, sallenki@codeaurora.org,
-        manivannan.sadhasivam@linaro.org, linux-pci@vger.kernel.org
-Subject: Re: [PATCH v11 4/5] PCI: qcom: Add a flag in match data along with
- ops
-Message-ID: <20211005192131.GA1111392@bhelgaas>
+        id S229851AbhJEUNm (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 5 Oct 2021 16:13:42 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1633464711; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=P0DRo+mb9v24WUz418XHZJLSk+CMLADwzwicec1u7rc=;
+ b=rld50psNmv8bwPCj7j8MWCwZH+JMH2fYUvdSEHrRdnoUDfi+9CCqntxzOZOTUMdwxaHXxpux
+ F80+swIlNtcWz3ghzZwYLjmksBdIl5+/mIvVIe4qLrT7Ul6a4GbiWEq3M8m9ZLvdKJkTaS86
+ 3uN1AcqTsHFZIqcfed1lK0m8Wro=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 615cb17d4ccdf4fe575f4e01 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 05 Oct 2021 20:11:41
+ GMT
+Sender: abhinavk=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 30B9FC43616; Tue,  5 Oct 2021 20:11:39 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
+        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: abhinavk)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id BDEF2C4360D;
+        Tue,  5 Oct 2021 20:11:36 +0000 (UTC)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1633459359-31517-5-git-send-email-pmaliset@codeaurora.org>
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
+Content-Transfer-Encoding: 7bit
+Date:   Tue, 05 Oct 2021 13:11:36 -0700
+From:   abhinavk@codeaurora.org
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Kuogee Hsieh <khsieh@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [Freedreno] [PATCH v3 1/5] drm/msm/dp: Remove global g_dp_display
+ variable
+In-Reply-To: <20211001180058.1021913-2-bjorn.andersson@linaro.org>
+References: <20211001180058.1021913-1-bjorn.andersson@linaro.org>
+ <20211001180058.1021913-2-bjorn.andersson@linaro.org>
+Message-ID: <4e36028549fcadd5e31a6b5694d6be8f@codeaurora.org>
+X-Sender: abhinavk@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 06, 2021 at 12:12:38AM +0530, Prasad Malisetty wrote:
-> Add pipe_clk_need_muxing flag in match data and configure
-> If the platform needs to switch pipe_clk_src.
+On 2021-10-01 11:00, Bjorn Andersson wrote:
+> As the Qualcomm DisplayPort driver only supports a single instance of
+> the driver the commonly used struct dp_display is kept in a global
+> variable. As we introduce additional instances this obviously doesn't
+> work.
 > 
-> Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
+> Replace this with a combination of existing references to adjacent
+> objects and drvdata.
+> 
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
 > ---
->  drivers/pci/controller/dwc/pcie-qcom.c | 70 ++++++++++++++++++++++++++++------
->  1 file changed, 59 insertions(+), 11 deletions(-)
 > 
-> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
-> index 8a7a300..1d7a9cb 100644
-> --- a/drivers/pci/controller/dwc/pcie-qcom.c
-> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
-> @@ -189,6 +189,11 @@ struct qcom_pcie_ops {
->  	int (*config_sid)(struct qcom_pcie *pcie);
+> Changes since v2:
+> - None
+> 
+>  drivers/gpu/drm/msm/dp/dp_display.c | 80 ++++++++---------------------
+>  1 file changed, 21 insertions(+), 59 deletions(-)
+> 
+> diff --git a/drivers/gpu/drm/msm/dp/dp_display.c
+> b/drivers/gpu/drm/msm/dp/dp_display.c
+> index fbe4c2cd52a3..5d3ee5ef07c2 100644
+> --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> @@ -27,7 +27,6 @@
+>  #include "dp_audio.h"
+>  #include "dp_debug.h"
+> 
+> -static struct msm_dp *g_dp_display;
+>  #define HPD_STRING_SIZE 30
+> 
+>  enum {
+> @@ -121,6 +120,13 @@ static const struct of_device_id dp_dt_match[] = {
+>  	{}
 >  };
->  
-> +struct qcom_pcie_cfg {
-> +	const struct qcom_pcie_ops *ops;
-> +	unsigned int pipe_clk_need_muxing:1;
-> +};
-
-Thanks for splitting this up; it's 90% of the way there.
-
-It would be better if this patch added only the definition and use of
-qcom_pcie_cfg:
-
-  +struct qcom_pcie_cfg {
-  +     const struct qcom_pcie_ops *ops;
-  +};
-
-and then the subsequent patch added the clock muxing stuff:
-
-   struct qcom_pcie_cfg {
-  +	unsigned int pipe_clk_need_muxing:1;
-
-   struct qcom_pcie {
-  +	unsigned int pipe_clk_need_muxing:1;
-
-   static const struct qcom_pcie_cfg sc7280_cfg = {
-  +	.pipe_clk_need_muxing = true,
-
-  static int qcom_pcie_probe(struct platform_device *pdev)
-  +	pcie->pipe_clk_need_muxing = pcie_cfg->pipe_clk_need_muxing;
-
-That way everything related to pipe_clk_need_muxing would be in a
-single patch.
-
->  struct qcom_pcie {
->  	struct dw_pcie *pci;
->  	void __iomem *parf;			/* DT parf */
-> @@ -197,6 +202,7 @@ struct qcom_pcie {
->  	struct phy *phy;
->  	struct gpio_desc *reset;
->  	const struct qcom_pcie_ops *ops;
-> +	unsigned int pipe_clk_need_muxing:1;
->  };
->  
->  #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
-> @@ -1456,6 +1462,39 @@ static const struct qcom_pcie_ops ops_1_9_0 = {
->  	.config_sid = qcom_pcie_config_sid_sm8250,
->  };
->  
-> +static const struct qcom_pcie_cfg apq8084_cfg = {
-> +	.ops = &ops_1_0_0,
-> +};
+> 
+> +static struct dp_display_private *dev_get_dp_display_private(struct
+> device *dev)
+> +{
+> +	struct msm_dp *dp = dev_get_drvdata(dev);
 > +
-> +static const struct qcom_pcie_cfg ipq8064_cfg = {
-> +	.ops = &ops_2_1_0,
-> +};
+> +	return container_of(dp, struct dp_display_private, dp_display);
+> +}
 > +
-> +static const struct qcom_pcie_cfg msm8996_cfg = {
-> +	.ops = &ops_2_3_2,
-> +};
-> +
-> +static const struct qcom_pcie_cfg ipq8074_cfg = {
-> +	.ops = &ops_2_3_3,
-> +};
-> +
-> +static const struct qcom_pcie_cfg ipq4019_cfg = {
-> +	.ops = &ops_2_4_0,
-> +};
-> +
-> +static const struct qcom_pcie_cfg sdm845_cfg = {
-> +	.ops = &ops_2_7_0,
-> +};
-> +
-> +static const struct qcom_pcie_cfg sm8250_cfg = {
-> +	.ops = &ops_1_9_0,
-> +};
-> +
-> +static const struct qcom_pcie_cfg sc7280_cfg = {
-> +	.ops = &ops_1_9_0,
-> +	.pipe_clk_need_muxing = true,
-> +};
-> +
->  static const struct dw_pcie_ops dw_pcie_ops = {
->  	.link_up = qcom_pcie_link_up,
->  	.start_link = qcom_pcie_start_link,
-> @@ -1467,6 +1506,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  	struct pcie_port *pp;
->  	struct dw_pcie *pci;
->  	struct qcom_pcie *pcie;
-> +	const struct qcom_pcie_cfg *pcie_cfg;
->  	int ret;
->  
->  	pcie = devm_kzalloc(dev, sizeof(*pcie), GFP_KERNEL);
-> @@ -1488,7 +1528,14 @@ static int qcom_pcie_probe(struct platform_device *pdev)
->  
->  	pcie->pci = pci;
->  
-> -	pcie->ops = of_device_get_match_data(dev);
-> +	pcie_cfg = of_device_get_match_data(dev);
-> +	if (!pcie_cfg || !pcie_cfg->ops) {
-> +		dev_err(dev, "Invalid platform data\n");
-> +		return NULL;
-> +	}
-> +
-> +	pcie->ops = pcie_cfg->ops;
-> +	pcie->pipe_clk_need_muxing = pcie_cfg->pipe_clk_need_muxing;
->  
->  	pcie->reset = devm_gpiod_get_optional(dev, "perst", GPIOD_OUT_HIGH);
->  	if (IS_ERR(pcie->reset)) {
-> @@ -1545,16 +1592,17 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  static int dp_add_event(struct dp_display_private *dp_priv, u32 event,
+>  						u32 data, u32 delay)
+>  {
+> @@ -197,15 +203,12 @@ static int dp_display_bind(struct device *dev,
+> struct device *master,
+>  			   void *data)
+>  {
+>  	int rc = 0;
+> -	struct dp_display_private *dp;
+> -	struct drm_device *drm;
+> +	struct dp_display_private *dp = dev_get_dp_display_private(dev);
+>  	struct msm_drm_private *priv;
+> +	struct drm_device *drm;
+> 
+>  	drm = dev_get_drvdata(master);
+> 
+> -	dp = container_of(g_dp_display,
+> -			struct dp_display_private, dp_display);
+> -
+>  	dp->dp_display.drm_dev = drm;
+>  	priv = drm->dev_private;
+>  	priv->dp = &(dp->dp_display);
+> @@ -240,13 +243,10 @@ static int dp_display_bind(struct device *dev,
+> struct device *master,
+>  static void dp_display_unbind(struct device *dev, struct device 
+> *master,
+>  			      void *data)
+>  {
+> -	struct dp_display_private *dp;
+> +	struct dp_display_private *dp = dev_get_dp_display_private(dev);
+>  	struct drm_device *drm = dev_get_drvdata(master);
+>  	struct msm_drm_private *priv = drm->dev_private;
+> 
+> -	dp = container_of(g_dp_display,
+> -			struct dp_display_private, dp_display);
+> -
+>  	dp_power_client_deinit(dp->power);
+>  	dp_aux_unregister(dp->aux);
+>  	priv->dp = NULL;
+> @@ -379,38 +379,17 @@ static void dp_display_host_deinit(struct
+> dp_display_private *dp)
+> 
+>  static int dp_display_usbpd_configure_cb(struct device *dev)
+>  {
+> -	int rc = 0;
+> -	struct dp_display_private *dp;
+> -
+> -	if (!dev) {
+> -		DRM_ERROR("invalid dev\n");
+> -		rc = -EINVAL;
+> -		goto end;
+> -	}
+> -
+> -	dp = container_of(g_dp_display,
+> -			struct dp_display_private, dp_display);
+> +	struct dp_display_private *dp = dev_get_dp_display_private(dev);
+> 
+>  	dp_display_host_init(dp, false);
+> 
+> -	rc = dp_display_process_hpd_high(dp);
+> -end:
+> -	return rc;
+> +	return dp_display_process_hpd_high(dp);
 >  }
->  
->  static const struct of_device_id qcom_pcie_match[] = {
-> -	{ .compatible = "qcom,pcie-apq8084", .data = &ops_1_0_0 },
-> -	{ .compatible = "qcom,pcie-ipq8064", .data = &ops_2_1_0 },
-> -	{ .compatible = "qcom,pcie-ipq8064-v2", .data = &ops_2_1_0 },
-> -	{ .compatible = "qcom,pcie-apq8064", .data = &ops_2_1_0 },
-> -	{ .compatible = "qcom,pcie-msm8996", .data = &ops_2_3_2 },
-> -	{ .compatible = "qcom,pcie-ipq8074", .data = &ops_2_3_3 },
-> -	{ .compatible = "qcom,pcie-ipq4019", .data = &ops_2_4_0 },
-> -	{ .compatible = "qcom,pcie-qcs404", .data = &ops_2_4_0 },
-> -	{ .compatible = "qcom,pcie-sdm845", .data = &ops_2_7_0 },
-> -	{ .compatible = "qcom,pcie-sm8250", .data = &ops_1_9_0 },
-> +	{ .compatible = "qcom,pcie-apq8084", .data = &apq8084_cfg },
-> +	{ .compatible = "qcom,pcie-ipq8064", .data = &ipq8064_cfg },
-> +	{ .compatible = "qcom,pcie-ipq8064-v2", .data = &ipq8064_cfg },
-> +	{ .compatible = "qcom,pcie-apq8064", .data = &ipq8064_cfg },
-> +	{ .compatible = "qcom,pcie-msm8996", .data = &msm8996_cfg },
-> +	{ .compatible = "qcom,pcie-ipq8074", .data = &ipq8074_cfg },
-> +	{ .compatible = "qcom,pcie-ipq4019", .data = &ipq4019_cfg },
-> +	{ .compatible = "qcom,pcie-qcs404", .data = &ipq4019_cfg },
-> +	{ .compatible = "qcom,pcie-sdm845", .data = &sdm845_cfg },
-> +	{ .compatible = "qcom,pcie-sm8250", .data = &sm8250_cfg },
-> +	{ .compatible = "qcom,pcie-sc7280", .data = &sc7280_cfg },
->  	{ }
->  };
->  
-> -- 
-> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
-> a Linux Foundation Collaborative Project
 > 
+>  static int dp_display_usbpd_disconnect_cb(struct device *dev)
+>  {
+>  	int rc = 0;
+> -	struct dp_display_private *dp;
+> -
+> -	if (!dev) {
+> -		DRM_ERROR("invalid dev\n");
+> -		rc = -EINVAL;
+> -		return rc;
+> -	}
+> -
+> -	dp = container_of(g_dp_display,
+> -			struct dp_display_private, dp_display);
+> +	struct dp_display_private *dp = dev_get_dp_display_private(dev);
+> 
+>  	dp_add_event(dp, EV_USER_NOTIFICATION, false, 0);
+> 
+> @@ -472,15 +451,7 @@ static int dp_display_usbpd_attention_cb(struct
+> device *dev)
+>  {
+>  	int rc = 0;
+>  	u32 sink_request;
+> -	struct dp_display_private *dp;
+> -
+> -	if (!dev) {
+> -		DRM_ERROR("invalid dev\n");
+> -		return -EINVAL;
+> -	}
+> -
+> -	dp = container_of(g_dp_display,
+> -			struct dp_display_private, dp_display);
+> +	struct dp_display_private *dp = dev_get_dp_display_private(dev);
+> 
+>  	/* check for any test request issued by sink */
+>  	rc = dp_link_process_request(dp->link);
+> @@ -647,7 +618,7 @@ static int dp_hpd_unplug_handle(struct
+> dp_display_private *dp, u32 data)
+> 
+>  	DRM_DEBUG_DP("hpd_state=%d\n", state);
+>  	/* signal the disconnect event early to ensure proper teardown */
+> -	dp_display_handle_plugged_change(g_dp_display, false);
+> +	dp_display_handle_plugged_change(&dp->dp_display, false);
+> 
+>  	/* enable HDP plug interrupt to prepare for next plugin */
+>  	dp_catalog_hpd_config_intr(dp->catalog, DP_DP_HPD_PLUG_INT_MASK, 
+> true);
+> @@ -842,9 +813,7 @@ static int dp_display_prepare(struct msm_dp *dp)
+>  static int dp_display_enable(struct dp_display_private *dp, u32 data)
+>  {
+>  	int rc = 0;
+> -	struct msm_dp *dp_display;
+> -
+> -	dp_display = g_dp_display;
+> +	struct msm_dp *dp_display = &dp->dp_display;
+> 
+>  	DRM_DEBUG_DP("sink_count=%d\n", dp->link->sink_count);
+>  	if (dp_display->power_on) {
+> @@ -880,9 +849,7 @@ static int dp_display_post_enable(struct msm_dp 
+> *dp_display)
+> 
+>  static int dp_display_disable(struct dp_display_private *dp, u32 data)
+>  {
+> -	struct msm_dp *dp_display;
+> -
+> -	dp_display = g_dp_display;
+> +	struct msm_dp *dp_display = &dp->dp_display;
+> 
+>  	if (!dp_display->power_on)
+>  		return 0;
+> @@ -1237,14 +1204,13 @@ static int dp_display_probe(struct
+> platform_device *pdev)
+>  	}
+> 
+>  	mutex_init(&dp->event_mutex);
+> -	g_dp_display = &dp->dp_display;
+> 
+>  	/* Store DP audio handle inside DP display */
+> -	g_dp_display->dp_audio = dp->audio;
+> +	dp->dp_display.dp_audio = dp->audio;
+> 
+>  	init_completion(&dp->audio_comp);
+> 
+> -	platform_set_drvdata(pdev, g_dp_display);
+> +	platform_set_drvdata(pdev, &dp->dp_display);
+> 
+>  	rc = component_add(&pdev->dev, &dp_display_comp_ops);
+>  	if (rc) {
+> @@ -1257,10 +1223,7 @@ static int dp_display_probe(struct 
+> platform_device *pdev)
+> 
+>  static int dp_display_remove(struct platform_device *pdev)
+>  {
+> -	struct dp_display_private *dp;
+> -
+> -	dp = container_of(g_dp_display,
+> -			struct dp_display_private, dp_display);
+> +	struct dp_display_private *dp = 
+> dev_get_dp_display_private(&pdev->dev);
+> 
+>  	dp_display_deinit_sub_modules(dp);
+> 
+> @@ -1315,8 +1278,7 @@ static int dp_pm_resume(struct device *dev)
+>  	else
+>  		dp->dp_display.is_connected = false;
+> 
+> -	dp_display_handle_plugged_change(g_dp_display,
+> -				dp->dp_display.is_connected);
+> +	dp_display_handle_plugged_change(dp_display, 
+> dp->dp_display.is_connected);
+> 
+>  	DRM_DEBUG_DP("After, sink_count=%d is_connected=%d core_inited=%d
+> power_on=%d\n",
+>  			dp->link->sink_count, dp->dp_display.is_connected,
