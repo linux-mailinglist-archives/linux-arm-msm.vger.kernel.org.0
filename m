@@ -2,76 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8B64B422676
-	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 14:27:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BF1A9422673
+	for <lists+linux-arm-msm@lfdr.de>; Tue,  5 Oct 2021 14:27:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234917AbhJEM2v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Oct 2021 08:28:51 -0400
-Received: from mail-oi1-f181.google.com ([209.85.167.181]:35565 "EHLO
-        mail-oi1-f181.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234857AbhJEM2o (ORCPT
+        id S234832AbhJEM2u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Oct 2021 08:28:50 -0400
+Received: from mail-oi1-f172.google.com ([209.85.167.172]:42959 "EHLO
+        mail-oi1-f172.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234835AbhJEM2m (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Oct 2021 08:28:44 -0400
-Received: by mail-oi1-f181.google.com with SMTP id n64so25991759oih.2;
-        Tue, 05 Oct 2021 05:26:53 -0700 (PDT)
+        Tue, 5 Oct 2021 08:28:42 -0400
+Received: by mail-oi1-f172.google.com with SMTP id x124so25920159oix.9;
+        Tue, 05 Oct 2021 05:26:52 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
          :message-id;
-        bh=bfmACICGOmWfPzZ+fa6p+DSX46Smp7cp4Xl40pW5V0I=;
-        b=o5GUb7zYi8c1lKb3oAkQNxx3tOAkLYWdqcNRyR5CPS3aHGQjzqsrt7HVCFE79rU+SP
-         MjCRtRnkEnUnW6k3mwOlKJxZghgksp39o+N3CW0vEhdb4pKk5vSEUVLtunA+UTd5cVg6
-         iTgCgiQX6D4AlKMsJO1pp5qGPrhhj1W2gyC0GfNfZ1YD0iLNKFczlgPc0SY8a+0srDut
-         SoMCENSOmHBpGfC9Qqc1pSuPkKXlMwgtU4oNdNbJ5/mje04k3W+oTo/5oGLncrfxpUpU
-         8otqr+oLrWD0090Boe9RMhnrFrHBaCH4X6k2JJQHcM2kzctUI55KsUxcnjm//Z+VFqlk
-         BvOA==
-X-Gm-Message-State: AOAM533V1QY5Jalnh9jsdHty3GlGVwpSR6TCu6NgXGmeT+jhU5J94GP1
-        YqZGSMs5eLMLTv0uWWxVRsLqN5CJ2g==
-X-Google-Smtp-Source: ABdhPJwGyYN3i6dySAYhusJoss2TO9w7xq/j51h4VZbLySVVJUG2myZcdz9rvTBTFMxh7/4/7dK6fA==
-X-Received: by 2002:a05:6808:1494:: with SMTP id e20mr2214637oiw.28.1633436813466;
-        Tue, 05 Oct 2021 05:26:53 -0700 (PDT)
+        bh=2osazg+rgssFYou7cJPxJJYsoEViInPF7W7tjIEWU+o=;
+        b=7kM7P46OQSeYaRinmjadZwEO1OMmhvK2c80/tXcDKNw2uq4nq8N5Jc+8OfAycMf/TE
+         3qCAcYXT6ZqwMRMSyqGIhD34ZoY8JPIEyK3mwZnzI1vLaYLdVe6hB7hj8vCqCRuam+ij
+         ZyyTI/u72Np0fhsBu3Qd2t3wVNpb87z1y/0WtjbkVic3tPWWsTzvy4H97L0t5ys5oqbz
+         QHOlBMqZD9t9VrKYw4W+nGDo4HSlLKM3we1f2MimyG01rEJzeFf4neOILHZOtdkwbQer
+         NDZyV1ZCHDrKXJTiX9YHPgn7+8Jys0cUWqW3QUPtGQ1qFavJu/6+kb3KLollY3KziUEk
+         9TAg==
+X-Gm-Message-State: AOAM531lNnGDJWcodNOeNsMCwNAh0pmTWjKPXGUG0mmJ5dplHpfa1C1d
+        lOJIJJxvwoQA+Sn1gAjHFQ==
+X-Google-Smtp-Source: ABdhPJzfEZ9aViNQ+wNyxoesg87WpUSfv1C3aSQXrqzcF2YV68dCtOeQlDw/DwWo1foaIpxrZVtVEA==
+X-Received: by 2002:aca:ab4d:: with SMTP id u74mr2218524oie.120.1633436811833;
+        Tue, 05 Oct 2021 05:26:51 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id d7sm3461684otl.19.2021.10.05.05.26.52
+        by smtp.gmail.com with ESMTPSA id k3sm2593351otn.16.2021.10.05.05.26.50
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Oct 2021 05:26:52 -0700 (PDT)
-Received: (nullmailer pid 3226809 invoked by uid 1000);
+        Tue, 05 Oct 2021 05:26:51 -0700 (PDT)
+Received: (nullmailer pid 3226800 invoked by uid 1000);
         Tue, 05 Oct 2021 12:26:38 -0000
 From:   Rob Herring <robh@kernel.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     rafael@kernel.org,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        viresh.kumar@linaro.org, linux-arm-msm@vger.kernel.org,
-        robh+dt@kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org,
-        bjorn.andersson@linaro.org
-In-Reply-To: <20211005044920.78544-1-manivannan.sadhasivam@linaro.org>
-References: <20211005044920.78544-1-manivannan.sadhasivam@linaro.org>
-Subject: Re: [PATCH v2] dt-bindings: cpufreq: cpufreq-qcom-hw: Convert to YAML bindings
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     devicetree@vger.kernel.org, linux-gpio@vger.kernel.org,
+        Rob Herring <robh+dt@kernel.org>,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+In-Reply-To: <20211004232225.2260665-2-dmitry.baryshkov@linaro.org>
+References: <20211004232225.2260665-1-dmitry.baryshkov@linaro.org> <20211004232225.2260665-2-dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH 1/6] dt-bindings: pinctrl: qcom,pmic-mpp: Convert qcom pmic mpp bindings to YAML
 Date:   Tue, 05 Oct 2021 07:26:38 -0500
-Message-Id: <1633436798.641210.3226807.nullmailer@robh.at.kernel.org>
+Message-Id: <1633436798.574602.3226799.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, 05 Oct 2021 10:19:20 +0530, Manivannan Sadhasivam wrote:
-> Convert Qualcomm cpufreq devicetree binding to YAML.
+On Tue, 05 Oct 2021 02:22:20 +0300, Dmitry Baryshkov wrote:
+> Convert Qualcomm PMIC MPP bindings from .txt to .yaml format.
 > 
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-> Signed-off-by: AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
-> 
-> Changes in v2:
-> 
-> * Removed maxItems property as reported by the bot
-> 
->  .../bindings/cpufreq/cpufreq-qcom-hw.txt      | 172 ---------------
->  .../bindings/cpufreq/cpufreq-qcom-hw.yaml     | 201 ++++++++++++++++++
->  2 files changed, 201 insertions(+), 172 deletions(-)
->  delete mode 100644 Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.txt
->  create mode 100644 Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
+>  .../bindings/pinctrl/qcom,pmic-mpp.txt        | 187 ------------------
+>  .../bindings/pinctrl/qcom,pmic-mpp.yaml       | 178 +++++++++++++++++
+>  2 files changed, 178 insertions(+), 187 deletions(-)
+>  delete mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.txt
+>  create mode 100644 Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
 > 
 
 My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
@@ -80,20 +70,12 @@ on your patch (DT_CHECKER_FLAGS is new in v5.13):
 yamllint warnings/errors:
 
 dtschema/dtc warnings/errors:
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/dvfs/performance-domain.example.dt.yaml: performance-controller@12340000: reg: [[305397760, 4096]] is too short
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/dvfs/performance-domain.example.dt.yaml: performance-controller@12340000: 'clocks' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/dvfs/performance-domain.example.dt.yaml: performance-controller@12340000: 'clock-names' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/dvfs/performance-domain.example.dt.yaml: performance-controller@12340000: '#freq-domain-cells' is a required property
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
-/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/dvfs/performance-domain.example.dt.yaml: performance-controller@12340000: '#performance-domain-cells' does not match any of the regexes: 'pinctrl-[0-9]+'
-	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/cpufreq/cpufreq-qcom-hw.yaml
+/builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.example.dt.yaml: mpps@a000: 'interrupt-controller' is a required property
+	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/pinctrl/qcom,pmic-mpp.yaml
 
 doc reference errors (make refcheckdocs):
 
-See https://patchwork.ozlabs.org/patch/1536466
+See https://patchwork.ozlabs.org/patch/1536426
 
 This check can fail if there are any dependencies. The base for a patch
 series is generally the most recent rc1.
