@@ -2,96 +2,467 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D0E10423392
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 00:36:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CE74342339F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 00:41:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231658AbhJEWig (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Oct 2021 18:38:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46778 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231304AbhJEWif (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Oct 2021 18:38:35 -0400
-Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BD50EC06174E
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Oct 2021 15:36:44 -0700 (PDT)
-Received: by mail-ot1-x32b.google.com with SMTP id g62-20020a9d2dc4000000b0054752cfbc59so886333otb.1
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Oct 2021 15:36:44 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=Ft48Hk1n68Pbbbv8PEM8uaK94jbB+3DvpTmrUODshWs=;
-        b=fuO8D1HZqE0QRC5GpyS800L44yJkv8eq3KoFfIz9YbzMy8gLkKwMt3ak48h8SgP/6a
-         MQeVZSrXVzFGIZXzKkPlnHuvR/smgI79Gp9ry26Wtn83BDr+9N+s5hf0vtcSiqIJXkCr
-         dCVLzMRfCGWeT4zL/RhFyyGcPZALadT1LfwAs=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=Ft48Hk1n68Pbbbv8PEM8uaK94jbB+3DvpTmrUODshWs=;
-        b=KulWE2kBw61WfkqH6qCYEMpL6DtN1xwllKKYb+FIzXy4OwGCwPElOiR9WFdJusNP6f
-         y4xfQRqgmObJlLUvxTQ6WecjV6WJ+BIJP0qwmWndoUyk/NqnjB5tDIsJKKr1v+PJj0yc
-         fNM5pVsP+j32YaUUEGkIyH5WFjQaGQLSj/kxHt/1BL0p0s1U/k26dy7NaYnK021sZpcI
-         w+lw/JBeRKRxzVWEIlZiN+XCPdZHGGkDEQ3N5glQdUPVemot0etfZ1Lxrt0xzUpRZOc3
-         lymo5iIfz9qVNuqNMu0YzXVFqmvcOnHTkMavsd6uAM9D7LVqiE2vsFBIBRqRyQdPgzqV
-         O6xA==
-X-Gm-Message-State: AOAM533/T6FlXmlsWoeqKYCWTy1oYrG4HSF1FCsZ81ZwHYp3HRYJShPv
-        L2ymCRkQR2EaTa4WsRGmOTKFNLZ1GgTXt8MQCI9uZg==
-X-Google-Smtp-Source: ABdhPJwXTb3iHipqtroSzM7KoB3GtcUPf2KB8S66ztGQmawIKW5iKloHtwS37bzAg5v7wipOcEhtT5hf+0xu3KA/PDA=
-X-Received: by 2002:a9d:6a0f:: with SMTP id g15mr17124450otn.126.1633473404179;
- Tue, 05 Oct 2021 15:36:44 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 5 Oct 2021 15:36:43 -0700
+        id S236827AbhJEWnR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Oct 2021 18:43:17 -0400
+Received: from ixit.cz ([94.230.151.217]:57594 "EHLO ixit.cz"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230113AbhJEWnQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 5 Oct 2021 18:43:16 -0400
+Received: from localhost.localdomain (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by ixit.cz (Postfix) with ESMTPSA id 57FA823B26;
+        Wed,  6 Oct 2021 00:41:22 +0200 (CEST)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
+        t=1633473682;
+        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
+         to:to:cc:cc:mime-version:mime-version:
+         content-transfer-encoding:content-transfer-encoding;
+        bh=gPP+EZvbi6W6qW7LjMu0BhA+uxez+4MncR6SZjTBgrE=;
+        b=ksleezG9XpKS1boJTEY/AUfq3PgPxl1S1k8J10DJwZEHANCLMibJsE4YbDfY9d7R6EnbbR
+        k3BVDfYi5HOYRZ620cTDJiiQ1gMjk6LsVqM7xAe5sYbJWWZyzX/9XA6AldbXdciQ+iHDZE
+        0jIYHGmqURw3diScAuzSzzJxbrP7Znw=
+From:   David Heidelberg <david@ixit.cz>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Ivan Belokobylskiy <belokobylskij@gmail.com>,
+        David Heidelberg <david@ixit.cz>
+Subject: [PATCH] [RFC] ARM: dts: nexus4: initial dts
+Date:   Wed,  6 Oct 2021 00:39:54 +0200
+Message-Id: <20211005223954.59735-1-david@ixit.cz>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-In-Reply-To: <YVzGVmJXEDH0HfIL@ripper>
-References: <20211005023750.2037631-1-bjorn.andersson@linaro.org>
- <CAE-0n52wN1s=Ph4r4iLposxNPfa562Bv1mM81j1KvNmWOQS1-Q@mail.gmail.com> <YVzGVmJXEDH0HfIL@ripper>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Tue, 5 Oct 2021 15:36:43 -0700
-Message-ID: <CAE-0n53FC7JCCJoye_uKeqaLKrZeHXLtvObxWFedaUzjirmBaA@mail.gmail.com>
-Subject: Re: [PATCH] drm/msm/dp: Shorten SETUP timeout
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Sankeerth Billakanti <sbillaka@codeaurora.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2021-10-05 14:40:38)
-> On Tue 05 Oct 11:45 PDT 2021, Stephen Boyd wrote:
->
-> > Quoting Bjorn Andersson (2021-10-04 19:37:50)
-> > > Found in the middle of a patch from Sankeerth was the reduction of the
-> > > INIT_SETUP timeout from 10s to 100ms. Upon INIT_SETUP timeout the host
-> > > is initalized and HPD interrupt start to be serviced, so in the case of
-> > > eDP this reduction improves the user experience dramatically - i.e.
-> > > removes 9.9s of bland screen time at boot.
-> > >
-> > > Suggested-by: Sankeerth Billakanti <sbillaka@codeaurora.org>
-> > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > ---
-> >
-> > Any Fixes tag? BTW, the delay design is pretty convoluted. I had to go
-> > re-read the code a couple times to understand that it's waiting 100ms
-> > times the 'delay' number. Whaaaaat?
-> >
->
-> I assume you're happy with the current 10s delay on the current
-> devices, so I don't think we should push for this to be backported.
-> I have no need for it to be backported on my side at least.
->
+From: Ivan Belokobylskiy <belokobylskij@gmail.com>
 
-Sure. Fixes tag != backported to stable trees but it is close.
+Add initial support for LGE Nexus 4 (mako).
 
-> > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
->
+Features currently working: regulators, eMMC, WiFi, LCD backlight and volume keys.
+
+Signed-off-by: Ivan Belokobylskiy <belokobylskij@gmail.com>
+Signed-off-by: David Heidelberg <david@ixit.cz>
+---
+ arch/arm/boot/dts/Makefile                    |   1 +
+ .../boot/dts/qcom-apq8064-lge-nexus4-mako.dts | 387 ++++++++++++++++++
+ 2 files changed, 388 insertions(+)
+ create mode 100644 arch/arm/boot/dts/qcom-apq8064-lge-nexus4-mako.dts
+
+diff --git a/arch/arm/boot/dts/Makefile b/arch/arm/boot/dts/Makefile
+index 5ffab0486665..2da2235d4370 100644
+--- a/arch/arm/boot/dts/Makefile
++++ b/arch/arm/boot/dts/Makefile
+@@ -948,6 +948,7 @@ dtb-$(CONFIG_ARCH_QCOM) += \
+ 	qcom-apq8064-ifc6410.dtb \
+ 	qcom-apq8064-sony-xperia-yuga.dtb \
+ 	qcom-apq8064-asus-nexus7-flo.dtb \
++	qcom-apq8064-lge-nexus4-mako.dtb \
+ 	qcom-apq8074-dragonboard.dtb \
+ 	qcom-apq8084-ifc6540.dtb \
+ 	qcom-apq8084-mtp.dtb \
+diff --git a/arch/arm/boot/dts/qcom-apq8064-lge-nexus4-mako.dts b/arch/arm/boot/dts/qcom-apq8064-lge-nexus4-mako.dts
+new file mode 100644
+index 000000000000..a76688b1bc1d
+--- /dev/null
++++ b/arch/arm/boot/dts/qcom-apq8064-lge-nexus4-mako.dts
+@@ -0,0 +1,387 @@
++// SPDX-License-Identifier: GPL-2.0-only
++#include "qcom-apq8064-v2.0.dtsi"
++#include <dt-bindings/gpio/gpio.h>
++#include <dt-bindings/input/input.h>
++#include <dt-bindings/mfd/qcom-rpm.h>
++#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
++/ {
++	model = "LGE Nexus 4 (mako)";
++	compatible = "lge,nexus4-mako", "qcom,apq8064";
++
++	aliases {
++		serial0 = &gsbi7_serial;
++		serial1 = &gsbi6_serial;
++		serial2 = &gsbi4_serial;
++	};
++
++	chosen {
++		stdout-path = "serial2:115200n8";
++	};
++
++	reserved-memory {
++		#address-cells = <1>;
++		#size-cells = <1>;
++		ranges;
++
++		ramoops@88d00000{
++			compatible = "ramoops";
++			reg = <0x88d00000 0x100000>;
++			record-size	 = <0x00020000>;
++			console-size	= <0x00020000>;
++			ftrace-size	 = <0x00020000>;
++		};
++	};
++
++	battery_cell: battery-cell {
++		compatible = "simple-battery";
++		constant-charge-current-max-microamp = <900000>;
++		operating-range-celsius = <0 45>;
++	};
++
++	soc {
++		pinctrl@800000 {
++			gsbi4_uart_pin_a: gsbi4-uart-pin-active {
++				rx {
++					pins = "gpio11";
++					function = "gsbi4";
++					drive-strength = <2>;
++					bias-disable;
++				};
++
++				tx {
++					pins = "gpio10";
++					function = "gsbi4";
++					drive-strength = <4>;
++					bias-disable;
++				};
++			};
++		};
++
++		rpm@108000 {
++			regulators {
++				vdd_l1_l2_l12_l18-supply = <&pm8921_s4>;
++				vin_lvs1_3_6-supply = <&pm8921_s4>;
++				vin_lvs4_5_7-supply = <&pm8921_s4>;
++
++				vdd_l24-supply = <&pm8921_s1>;
++				vdd_l25-supply = <&pm8921_s1>;
++				vin_lvs2-supply = <&pm8921_s1>;
++
++				vdd_l26-supply = <&pm8921_s7>;
++				vdd_l27-supply = <&pm8921_s7>;
++				vdd_l28-supply = <&pm8921_s7>;
++
++				/* Buck SMPS */
++				s1 {
++					regulator-always-on;
++					regulator-min-microvolt = <1225000>;
++					regulator-max-microvolt = <1225000>;
++					qcom,switch-mode-frequency = <3200000>;
++					bias-pull-down;
++				};
++				s2 {
++					regulator-min-microvolt = <1300000>;
++					regulator-max-microvolt = <1300000>;
++					qcom,switch-mode-frequency = <1600000>;
++					bias-pull-down;
++				};
++
++				/* msm otg HSUSB_VDDCX */
++				s3 {
++					regulator-min-microvolt = <500000>;
++					regulator-max-microvolt = <1150000>;
++					qcom,switch-mode-frequency = <4800000>;
++					bias-pull-down;
++				};
++
++				/*
++				 * msm_sdcc.1-sdc-vdd_io
++				 * tabla2x-slim-CDC_VDDA_RX
++				 * tabla2x-slim-CDC_VDDA_TX
++				 * tabla2x-slim-CDC_VDD_CP
++				 * tabla2x-slim-VDDIO_CDC
++				 */
++				s4 {
++					regulator-always-on;
++					regulator-min-microvolt	= <1800000>;
++					regulator-max-microvolt	= <1800000>;
++					qcom,switch-mode-frequency = <1600000>;
++					bias-pull-down;
++					qcom,force-mode = <QCOM_RPM_FORCE_MODE_AUTO>;
++				};
++
++				/*
++				 * supply vdd_l26, vdd_l27, vdd_l28
++				 */
++				s7 {
++					regulator-min-microvolt = <1300000>;
++					regulator-max-microvolt = <1300000>;
++					qcom,switch-mode-frequency = <3200000>;
++				};
++
++				s8 {
++					regulator-min-microvolt = <2200000>;
++					regulator-max-microvolt = <2200000>;
++					qcom,switch-mode-frequency = <1600000>;
++				};
++
++				l1 {
++					regulator-min-microvolt = <1100000>;
++					regulator-max-microvolt = <1100000>;
++					regulator-always-on;
++					bias-pull-down;
++				};
++
++				/* mipi_dsi.1-dsi1_pll_vdda */
++				l2 {
++					regulator-min-microvolt = <1200000>;
++					regulator-max-microvolt = <1200000>;
++					bias-pull-down;
++				};
++
++				/* msm_otg-HSUSB_3p3 */
++				l3 {
++					regulator-min-microvolt = <3075000>;
++					regulator-max-microvolt = <3500000>;
++					bias-pull-down;
++				};
++
++				/* msm_otg-HSUSB_1p8 */
++				l4 {
++					regulator-always-on;
++					regulator-min-microvolt = <1800000>;
++					regulator-max-microvolt = <1800000>;
++				};
++
++				/* msm_sdcc.1-sdc_vdd */
++				l5 {
++					regulator-min-microvolt = <2950000>;
++					regulator-max-microvolt = <2950000>;
++					bias-pull-down;
++				};
++
++				/* earjack_debug */
++				l6 {
++					regulator-min-microvolt = <3000000>;
++					regulator-max-microvolt = <3000000>;
++					bias-pull-down;
++				};
++
++				/* mipi_dsi.1-dsi_vci */
++				l8 {
++					regulator-min-microvolt = <2800000>;
++					regulator-max-microvolt = <3000000>;
++					bias-pull-down;
++				};
++
++				/* wcnss_wlan.0-iris_vddpa */
++				l10 {
++					regulator-min-microvolt = <2900000>;
++					regulator-max-microvolt = <2900000>;
++					bias-pull-down;
++				};
++
++				/* mipi_dsi.1-dsi1_avdd */
++				l11 {
++					regulator-min-microvolt = <2850000>;
++					regulator-max-microvolt = <2850000>;
++					bias-pull-down;
++				};
++
++				/* touch_vdd */
++				l15 {
++					regulator-min-microvolt = <1800000>;
++					regulator-max-microvolt = <2950000>;
++					bias-pull-down;
++				};
++
++				/* slimport_dvdd */
++				l18 {
++					regulator-min-microvolt = <1100000>;
++					regulator-max-microvolt = <1100000>;
++					bias-pull-down;
++				};
++
++				/* touch_io */
++				l22 {
++					regulator-min-microvolt = <1800000>;
++					regulator-max-microvolt = <1800000>;
++					bias-pull-down;
++				};
++
++				/*
++				 * mipi_dsi.1-dsi_vddio
++				 * pil_qdsp6v4.1-pll_vdd
++				 * pil_qdsp6v4.2-pll_vdd
++				 * msm_ehci_host.0-HSUSB_1p8
++				 * msm_ehci_host.1-HSUSB_1p8
++				 */
++				l23 {
++					regulator-min-microvolt = <1800000>;
++					regulator-max-microvolt = <1800000>;
++					bias-pull-down;
++				};
++
++				/*
++				 * tabla2x-slim-CDC_VDDA_A_1P2V
++				 * tabla2x-slim-VDDD_CDC_D
++				 */
++				l24 {
++					regulator-min-microvolt = <750000>;
++					regulator-max-microvolt = <1150000>;
++					bias-pull-down;
++				};
++
++				l25 {
++					regulator-min-microvolt = <1250000>;
++					regulator-max-microvolt = <1250000>;
++					regulator-always-on;
++					bias-pull-down;
++				};
++
++				l26 {
++					regulator-min-microvolt = <375000>;
++					regulator-max-microvolt = <1050000>;
++					regulator-always-on;
++					bias-pull-down;
++				};
++
++				l27 {
++					regulator-min-microvolt = <1100000>;
++					regulator-max-microvolt = <1100000>;
++				};
++
++				l28 {
++					regulator-min-microvolt = <1050000>;
++					regulator-max-microvolt = <1050000>;
++					bias-pull-down;
++				};
++
++				/* wcnss_wlan.0-iris_vddio */
++				lvs1 {
++					bias-pull-down;
++				};
++
++				/* wcnss_wlan.0-iris_vdddig */
++				lvs2 {
++					bias-pull-down;
++				};
++
++				lvs3 {
++					bias-pull-down;
++				};
++
++				lvs4 {
++					bias-pull-down;
++				};
++
++				lvs5 {
++					bias-pull-down;
++				};
++
++				/* mipi_dsi.1-dsi_iovcc */
++				lvs6 {
++					bias-pull-down;
++				};
++
++				/*
++				 * pil_riva-pll_vdd
++				 * lvds.0-lvds_vdda
++				 * mipi_dsi.1-dsi1_vddio
++				 * hdmi_msm.0-hdmi_vdda
++				 */
++				lvs7 {
++					bias-pull-down;
++				};
++
++				ncp {
++					regulator-min-microvolt = <1800000>;
++					regulator-max-microvolt = <1800000>;
++					qcom,switch-mode-frequency = <1600000>;
++				};
++			};
++		};
++
++		qcom,ssbi@500000 {
++			pmic@0 {
++				keypad@148 {
++					compatible = "qcom,pm8921-keypad";
++					reg = <0x148>;
++					interrupt-parent = <&pmicintc>;
++					interrupts = <74 1>, <75 1>;
++					linux,keymap = <
++						MATRIX_KEY(0, 0, KEY_VOLUMEDOWN)
++						MATRIX_KEY(0, 1, KEY_VOLUMEUP)
++					>;
++
++					keypad,num-rows = <1>;
++					keypad,num-columns = <5>;
++					debounce = <15>;
++					scan-delay = <32>;
++					row-hold = <91500>;
++				};
++			};
++		};
++
++		gsbi@12440000 {
++			status = "okay";
++			qcom,mode = <GSBI_PROT_I2C>;
++
++			gsbi1_i2c: i2c@12460000 {
++				status = "okay";
++				clock-frequency = <200000>;
++				pinctrl-0 = <&i2c1_pins>;
++				pinctrl-names = "default";
++
++				backlight: lm3530@38 {
++					compatible = "backlight,lm3530";
++					status = "okay";
++					reg = <0x38>;
++					lm3530,en_gpio = <&pm8921_gpio 24 GPIO_ACTIVE_HIGH>;
++					lm3530,max_current = /bits/ 8 <0x17>;
++					lm3530,default_brt = /bits/ 8 <0x10>;
++					lm3530,max_brt = /bits/ 8 <0x72>;
++					lm3530,mode = /bits/ 8 <0>; /* Manual Mode */
++					lm3530,linear_map = /bits/ 8 <1>; /* Linear map */
++					lm3530,brt_ramp_fall = /bits/ 8 <0>;
++					lm3530,brt_ramp_rise = /bits/ 8 <0>;
++					lm3530,no_regulator;
++				};
++			};
++		};
++
++		gsbi@16300000 {
++			status = "okay";
++			qcom,mode = <GSBI_PROT_I2C_UART>;
++
++			gsbi4_serial: serial@16340000 {
++				compatible = "qcom,msm-uartdm-v1.3", "qcom,msm-uartdm";
++				reg = <0x16340000 0x1000>,
++				  <0x16300000 0x1000>;
++				interrupts = <GIC_SPI 152 IRQ_TYPE_LEVEL_HIGH>;
++				clocks = <&gcc GSBI4_UART_CLK>, <&gcc GSBI4_H_CLK>;
++				clock-names = "core", "iface";
++				status = "okay";
++
++				pinctrl-names = "default";
++				pinctrl-0 = <&gsbi4_uart_pin_a>;
++			};
++		};
++
++		amba {
++			/* eMMC */
++			sdcc@12400000 {
++				status = "okay";
++				vmmc-supply = <&pm8921_l5>;
++				vqmmc-supply = <&pm8921_s4>;
++			};
++		};
++
++		riva-pil@3204000 {
++			status = "okay";
++			pinctrl-names = "default";
++			pinctrl-0 = <&riva_wlan_pin_a>;
++		};
++	};
++};
++
+-- 
+2.33.0
+
