@@ -2,114 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 74BE5423D63
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 14:00:33 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id BE03A423DA1
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 14:21:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238117AbhJFMCY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Oct 2021 08:02:24 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59452 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238167AbhJFMCW (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Oct 2021 08:02:22 -0400
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19AB0C061749
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Oct 2021 05:00:30 -0700 (PDT)
-Received: by mail-pf1-x431.google.com with SMTP id u7so2124593pfg.13
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Oct 2021 05:00:30 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=c3ET/nfws4iXh0TbxNZd9sSPG0B+4WbRQ4COCMRwWGI=;
-        b=Z5zrUTDmnGq1VSpPNQ0Hjb4wLy45LvVqOLaVEy4qLott5uha+aLi4Haevp00Qk7JXG
-         IXH2N1GvNytw5Ppe0Uv4exBmxklHJk7ZDh6G0F5MwaNNH+1EmcrXDE0bDuz6DGx2DQ/i
-         0JpG/5VA14AOV1zIV8MODlVaCk0brhWnzmJnJ1xmtwlnSXvK7Nt2RZmwO4EQBVjFLxr1
-         MAZsmokQuTcFJzRuL7RH4CSrpaw73ZGMLQbOQcXEU+XaxWZn9cWNlfE+iAYdFSXCuQPi
-         ZobkqBtrzEkip0VcmfGI8YBpJqNWQ9aQ9UoJJ0/7mLtul0etgsn/BwUe4kqPQilb1BHo
-         r83Q==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=c3ET/nfws4iXh0TbxNZd9sSPG0B+4WbRQ4COCMRwWGI=;
-        b=FjmugHUF/N+mqE6qPVTLlqhNdM0RIXWvws8aNtkZGGpgCN+XHY9Pl0dgnkaTVLAxaR
-         TnFcTRzUgoMbVYhitEdjr5N9vPLHWgP5FcFgZLdHcOSx/YV9MHxvlZmBzB/tyTKCh8tf
-         LRIzvNhVZ2dfigL8ICKUruXh3aXuXOROPKvg59QG9/uab7j2M3hI8jLrciBxAMoNjFOz
-         L4iUe8n6LTNUNVIWa4YnFPsh3/3QniO2I5zXRFXULMBJUwumCS4m9n+xM95+7HORqEUB
-         SxdQ9VQKbRLbnAYolQJmTh6P8tqvs2mbcNTGXFkoYgaD8ZiyoW3sUW5mJ58fJGdD7zNn
-         69Lg==
-X-Gm-Message-State: AOAM5331PCPhLlWePPWTkx7ne1T91SiRdeEV6BRuVNoibXRD90NtrSt/
-        vty7RdCK35AyUxQ5DCTSyiAz3nXuZZgPoum0S/qUVbYCKgnk7Q==
-X-Google-Smtp-Source: ABdhPJz70XHpmr5/3xRf5CrIu4GFrUI79dpFQKhruWqA5Y7J4CLsWuCHQ3GQni8vs6mZaZkyeOnvX2pWuBSZ9G+rfTs=
-X-Received: by 2002:a63:e115:: with SMTP id z21mr20626784pgh.306.1633521629436;
- Wed, 06 Oct 2021 05:00:29 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210708230329.395976-1-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20210708230329.395976-1-dmitry.baryshkov@linaro.org>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Wed, 6 Oct 2021 14:00:18 +0200
-Message-ID: <CAG3jFystLjgs=s2R1ATzPGzWDjR16Q5ee0gy=h4r6=h2CLsv1A@mail.gmail.com>
-Subject: Re: [PATCH] drm/bridge/lontium-lt9611uxc: fix provided connector suport
+        id S238087AbhJFMXQ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Oct 2021 08:23:16 -0400
+Received: from mail.kernel.org ([198.145.29.99]:54030 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S238197AbhJFMXN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 6 Oct 2021 08:23:13 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 91B4D610A2;
+        Wed,  6 Oct 2021 12:21:20 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1633522881;
+        bh=GlThTDzBAd5thEStBftgifgtznEXIW3TSZCzgZWRZTI=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=KaKKiACjqlqzEvj9oeeX+pYahECM+10wBZS5riS3oZe6nm4gbOUIQXRnPVxcVmWmd
+         JzuysCiH+Atm+DnnlsDHx8M/Si+ZngFoXxEG0zUzBH4HLB75AoGz+DDoJ39ZUQXHK/
+         bZZh3Yrfxj4dy0aN+M9ZdQetLiaCEgW1axodVQg8M2sVVunbu3BASYvuoZwNIGOTm9
+         V18+17ezDPeWQyz7Rebb28aXY01hq4x1DJj0E/nyrIC5Un11svUGgP2zoM6h+lsLQx
+         5C6I4yvWnQtgo0/qC9SLdQqXgQwYjg6n8f+HRPNQFlwzBpB0xQJPmate4ojKjQ5gcA
+         delg3LsdSPZag==
+Date:   Wed, 6 Oct 2021 17:51:17 +0530
+From:   Vinod Koul <vkoul@kernel.org>
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@siol.net>,
+Cc:     Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
         David Airlie <airlied@linux.ie>,
         Daniel Vetter <daniel@ffwll.ch>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        MSM <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        Jonathan Marek <jonathan@marek.ca>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+Subject: Re: [PATCH 06/11] drm/msm/disp/dpu1: Add DSC support in hw_ctl
+Message-ID: <YV2Uvb0VAAxNO1f0@matsya>
+References: <20210715065203.709914-1-vkoul@kernel.org>
+ <20210715065203.709914-7-vkoul@kernel.org>
+ <79e693c8-ff9c-d4a8-d4a8-8a1f075f77c7@linaro.org>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <79e693c8-ff9c-d4a8-d4a8-8a1f075f77c7@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Applied to drm-misc-next
+On 30-07-21, 01:15, Dmitry Baryshkov wrote:
+> On 15/07/2021 09:51, Vinod Koul wrote:
+> > Later gens of hardware have DSC bits moved to hw_ctl, so configure these
+> > bits so that DSC would work there as well
+> > 
+> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> > ---
+> >   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c | 7 ++++++-
+> >   1 file changed, 6 insertions(+), 1 deletion(-)
+> > 
+> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> > index 2d4645e01ebf..aeea6add61ee 100644
+> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_ctl.c
+> > @@ -25,6 +25,8 @@
+> >   #define   CTL_MERGE_3D_ACTIVE           0x0E4
+> >   #define   CTL_INTF_ACTIVE               0x0F4
+> >   #define   CTL_MERGE_3D_FLUSH            0x100
+> > +#define   CTL_DSC_ACTIVE                0x0E8
+> > +#define   CTL_DSC_FLUSH                0x104
+> >   #define   CTL_INTF_FLUSH                0x110
+> >   #define   CTL_INTF_MASTER               0x134
+> >   #define   CTL_FETCH_PIPE_ACTIVE         0x0FC
+> > @@ -34,6 +36,7 @@
+> >   #define DPU_REG_RESET_TIMEOUT_US        2000
+> >   #define  MERGE_3D_IDX   23
+> > +#define  DSC_IDX        22
+> >   #define  INTF_IDX       31
+> >   #define CTL_INVALID_BIT                 0xffff
+> > @@ -120,6 +123,7 @@ static u32 dpu_hw_ctl_get_pending_flush(struct dpu_hw_ctl *ctx)
+> >   static inline void dpu_hw_ctl_trigger_flush_v1(struct dpu_hw_ctl *ctx)
+> >   {
+> > +	DPU_REG_WRITE(&ctx->hw, CTL_DSC_FLUSH, BIT(0) | BIT(1) | BIT(2) | BIT(3));
+> 
+> Please pass DSC indices using intf cfg and use them to configure register
+> writes.
 
-On Fri, 9 Jul 2021 at 01:03, Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
->
-> - set DRM_CONNECTOR_POLL_HPD as the connector will generate hotplug
->   events on its own
->
-> - do not call drm_kms_helper_hotplug_event() unless mode_config.funcs
->   pointer is not NULL to remove possible kernel oops.
->
-> Fixes: bc6fa8676ebb ("drm/bridge/lontium-lt9611uxc: move HPD notification out of IRQ handler")
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/gpu/drm/bridge/lontium-lt9611uxc.c | 9 ++++++---
->  1 file changed, 6 insertions(+), 3 deletions(-)
->
-> diff --git a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-> index 3cac16db970f..010657ea7af7 100644
-> --- a/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-> +++ b/drivers/gpu/drm/bridge/lontium-lt9611uxc.c
-> @@ -167,9 +167,10 @@ static void lt9611uxc_hpd_work(struct work_struct *work)
->         struct lt9611uxc *lt9611uxc = container_of(work, struct lt9611uxc, work);
->         bool connected;
->
-> -       if (lt9611uxc->connector.dev)
-> -               drm_kms_helper_hotplug_event(lt9611uxc->connector.dev);
-> -       else {
-> +       if (lt9611uxc->connector.dev) {
-> +               if (lt9611uxc->connector.dev->mode_config.funcs)
-> +                       drm_kms_helper_hotplug_event(lt9611uxc->connector.dev);
-> +       } else {
->
->                 mutex_lock(&lt9611uxc->ocm_lock);
->                 connected = lt9611uxc->hdmi_connected;
-> @@ -339,6 +340,8 @@ static int lt9611uxc_connector_init(struct drm_bridge *bridge, struct lt9611uxc
->                 return -ENODEV;
->         }
->
-> +       lt9611uxc->connector.polled = DRM_CONNECTOR_POLL_HPD;
-> +
->         drm_connector_helper_add(&lt9611uxc->connector,
->                                  &lt9611uxc_bridge_connector_helper_funcs);
->         ret = drm_connector_init(bridge->dev, &lt9611uxc->connector,
-> --
-> 2.30.2
->
+Yes I have modified the intf cfg dsc from bool to pass actual indices.
+So this patch goes next (as a dependency reorder) and we use this only
+when DSC is enabled and use the indices set. Thanks for the suggestion
+
+-- 
+~Vinod
