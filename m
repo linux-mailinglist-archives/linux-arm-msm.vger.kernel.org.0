@@ -2,84 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1745D423E05
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 14:47:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A9B33424050
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 16:44:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238337AbhJFMt3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Oct 2021 08:49:29 -0400
-Received: from mail.kernel.org ([198.145.29.99]:33684 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229894AbhJFMt2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Oct 2021 08:49:28 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id BF58660F59;
-        Wed,  6 Oct 2021 12:47:35 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1633524456;
-        bh=tTQVklaQ/ldVLqaoEK1050e3eup4oM5ED69uVhqEmSo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=Kl7HkcYSlA5eh1NwBNeZasuALZA6nFX5EtgDlzo5SclCOpq0vmtzwzBYscFYfkHBD
-         1UxWTCmLKoO1hrWIy05JfryPwMBkltkYgu/kCXSP705D+h8CgetgOmyfKQiZAKfBDs
-         +osIlln5+g87KtAF8PpBBstrU20CWwzZ6U1cEomEj0I7Jz5P0OvoONsTHcPbadcPof
-         qa8ia7v1UYz7rJVZ/jMGvbPCkv32B7fLDl1I7rjVeT4U1POqWUen5UEgbKKFUCEJ2E
-         B5HxRQxyLXdvr6yPrC/oPtHb3QKTH+tER39egWbeojdfWs9FaeM2Rduy0n/d/c+2Sq
-         Q5WJm/ErR7ATw==
-Date:   Wed, 6 Oct 2021 18:17:32 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     abhinavk@codeaurora.org
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
+        id S238325AbhJFOqn (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Oct 2021 10:46:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41224 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231823AbhJFOql (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 6 Oct 2021 10:46:41 -0400
+Received: from mail-wr1-x434.google.com (mail-wr1-x434.google.com [IPv6:2a00:1450:4864:20::434])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 51A02C061760
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Oct 2021 07:44:49 -0700 (PDT)
+Received: by mail-wr1-x434.google.com with SMTP id o20so9580821wro.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Oct 2021 07:44:49 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=D8IjD/aX+SAqkEjm7xgEe5lxocD/PXw4l5YWyLqfbtc=;
+        b=sjymcv1htUJfHr/ek8Mjj/Jzt/jL4wvmG/taOYRNvKcZWk9BkgQtJjHgO7wbXBFrHy
+         meZmY5A0tTIXo7CrDb1wtV1kVUe0zpcretTP/oJR1dUYtCogFfD4itlw7SlETG69n6Xi
+         cRM1/7X/fYoubACDyBPEiCkkKuAUi0hY2aAzKxEFA/nDteTiuhRMStnHbhpfANKS6SOo
+         aZ2uU5GuqODutpS9OMjadts9W8OOjuOAgFSiKeYSCLDwsbW9Cov/zeNYAJFIXp8iKB4R
+         qB3jLqqhLJY0SdzrfSgr+y6OWem7CqBIbjFWChJaTT0M0IN9Rp0D7UjF4OBKnk8d1pUl
+         rGUg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=D8IjD/aX+SAqkEjm7xgEe5lxocD/PXw4l5YWyLqfbtc=;
+        b=iGh7h3g13hJSoUQENSZC+nXB6Hl1tdrkymjirtiUaY2vFve8D89qicrX6CTjOV5sqD
+         QWKXsmS3TZh0lt7gy6zO3ic5TGeFo5COgtzxKZxKaMnVotV4nNIwSZlb916hY6o93VSn
+         LwA6j36NBMa8apFA01ZkEqM+0KPziE4NEnV0kdViq40ptVI1llggZpJ2LodG6pus5kWL
+         caITqh2rtWhTji6vUYHCQ3B2DW/1EOK51v0dg52EI1OWF/hZL+GLncjrnGV9xR2xX5xU
+         BWWD/FQROMk3IUA+zDwNueVsI04Y3ZQWCmToSSI6o7Ypu/kqbbnaLfGQ6M7fHBNxOHmR
+         90eg==
+X-Gm-Message-State: AOAM532qV2yuINSahcbx5pxo+RHHotp2moA82AQerwL1AsiGxrZBzIj8
+        pi7QITmt9a4DrRtbc+I6WLnEHA==
+X-Google-Smtp-Source: ABdhPJzOIM/pk9tWOTUWl5e+TDTH0xpNOQTnfj4KEfoU6EtOZONtFMHK6lwbDtQM4rXB6YpRldnDdg==
+X-Received: by 2002:a1c:5413:: with SMTP id i19mr10372676wmb.31.1633531487682;
+        Wed, 06 Oct 2021 07:44:47 -0700 (PDT)
+Received: from maple.lan (cpc141216-aztw34-2-0-cust174.18-1.cable.virginm.net. [80.7.220.175])
+        by smtp.gmail.com with ESMTPSA id f7sm3104178wmj.20.2021.10.06.07.44.46
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Oct 2021 07:44:46 -0700 (PDT)
+Date:   Wed, 6 Oct 2021 15:44:44 +0100
+From:   Daniel Thompson <daniel.thompson@linaro.org>
+To:     Marijn Suijten <marijn.suijten@somainline.org>
+Cc:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        dri-devel@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno@lists.freedesktop.org,
-        Sumit Semwal <sumit.semwal@linaro.org>
-Subject: Re: [Freedreno] [PATCH 08/11] drm/msm/disp/dpu1: Add support for DSC
- in encoder
-Message-ID: <YV2a5MzDUWMTotpP@matsya>
-References: <20210715065203.709914-1-vkoul@kernel.org>
- <20210715065203.709914-9-vkoul@kernel.org>
- <70d5abae07b4dbf63d8dbf47ba31262d@codeaurora.org>
+        Lee Jones <lee.jones@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        Courtney Cavin <courtney.cavin@sonymobile.com>,
+        Bryan Wu <cooloney@gmail.com>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 05/10] backlight: qcom-wled: Fix off-by-one maximum with
+ default num_strings
+Message-ID: <20211006144444.6q3qm3bzfrhzwa46@maple.lan>
+References: <20211004192741.621870-6-marijn.suijten@somainline.org>
+ <20211005091947.7msztp5l554c7cy4@maple.lan>
+ <20211005100606.faxra73mzkvjd4f6@SoMainline.org>
+ <20211005103843.heufyonycnudxnzd@maple.lan>
+ <20211005105312.kqiyzoqtzzjxayhg@maple.lan>
+ <20211005114435.phyq2jsbdyroa6kn@SoMainline.org>
+ <20211005140349.kefi26yev3gy3zhv@maple.lan>
+ <20211005152326.5k5cb53ajqnactrg@SoMainline.org>
+ <20211005162453.ozckxhm47jcarsza@maple.lan>
+ <20211005173400.lyu3gabbalv2l3uq@SoMainline.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <70d5abae07b4dbf63d8dbf47ba31262d@codeaurora.org>
+In-Reply-To: <20211005173400.lyu3gabbalv2l3uq@SoMainline.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02-08-21, 17:57, abhinavk@codeaurora.org wrote:
-> On 2021-07-14 23:52, Vinod Koul wrote:
-> > When DSC is enabled in DT, we need to configure the encoder for DSC
-> > configuration, calculate DSC parameters for the given timing.
+On Tue, Oct 05, 2021 at 07:34:00PM +0200, Marijn Suijten wrote:
+> On 2021-10-05 17:24:53, Daniel Thompson wrote:
+> > On Tue, Oct 05, 2021 at 05:23:26PM +0200, Marijn Suijten wrote:
+> > > Since there don't seem to be any substantial platforms/PMICs using this
+> > > functionality in a working manner, can I talk you into agreeing with
+> > > fixing the DT instead?
 > > 
-> > This patch adds that support by adding dpu_encoder_prep_dsc() which is
-> > invoked when DSC is enabled in DT
-> correct me if wrong but this commit text is not valid anymore in my opinion.
-> are there any params you are getting from DT now? I thought its all coming
-> from the panel
-> driver directly.
-
-Yes thanks for spotting this, updated!
-
+> > I've no objections to seeing the DT updated. However I don't really see
+> > what benefit we get from breaking existing DTs in order to do so.
 > > 
-> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
-> agree with dmitry's comment's
-> https://patchwork.freedesktop.org/patch/444078/?series=90413&rev=2
+> > "Cleaning up annoying legacy" is seldom a good reason to break existing
+> > DTs since, if we could break DTs whenever we choose, there would never
+> > be any annoying legacy to worry about. When conflicting properties
+> > result in uninterpretable DTs then a break may be justified but that is
+> > not the case here.
 > 
-> instead of dsc being part of priv->dsc it should be per encoder.
+> As mentioned in my message and repeated by Konrad, the only "existing
+> DT" that could possibly be broken is a platform that's brought up by us
+> (SoMainline) and we're more than happy to improve the driver and leave
+> legacy DT behind us, unless there's more DT in circulation that hasn't
+> landed in Linux mainline but should be taken into account?
+
+Devicetrees are supposed to be the domain of firmware (e.g. not part of
+the kernel).
+
+I'm therefore reluctant to adopt an "it only exists if it is upstream"
+approach for documented DT bindings. Doubly so when it is our bugs that
+causes DTs to be written in a manner which we then retrospectively
+declare to be wrong.
+
+
+> Anyway the plan is to leave qcom,num-strings in place so that the
+> default enabled_strings list in this driver actually serves a purpose.
+> Then, if num-strings and enabled-strings is provided the former has
+> precedence (assuming it doesn't exceed the size of the latter) but
+> we'll print a warning about this (now unnecessary) ambiguity, and if
+> possible at all - haven't found an example yet - make the properties
+> mutually exclusive in dt-bindings.
 > 
-> On top of his comment, I also think that like on the newer chipsets, moving
-> the dsc related
-> encoder configuration to a dpu_encoder_dce.c will help for future expansion
-> of other topologies
-> and also for other compression algorithms.
+> Disallowing both cases would only simplify the code in the end but we
+> can spend a few lines to support the desired legacy.
 
-As replied to Dimitry, the DP and other topology support needs to be
-comprehended so this should be done when we know how DP, other
-compression algorithms and other topologies would be modeled here :)
+Yes, warning is OK for me.
 
--- 
-~Vinod
+
+Daniel.
