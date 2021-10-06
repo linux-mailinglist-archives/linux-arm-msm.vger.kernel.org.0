@@ -2,136 +2,84 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 31F57423DEA
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 14:43:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1745D423E05
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 14:47:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231259AbhJFMpN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Oct 2021 08:45:13 -0400
-Received: from mail.kernel.org ([198.145.29.99]:60518 "EHLO mail.kernel.org"
+        id S238337AbhJFMt3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Oct 2021 08:49:29 -0400
+Received: from mail.kernel.org ([198.145.29.99]:33684 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229894AbhJFMpM (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Oct 2021 08:45:12 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id E8A5B60F23;
-        Wed,  6 Oct 2021 12:43:19 +0000 (UTC)
+        id S229894AbhJFMt2 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 6 Oct 2021 08:49:28 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id BF58660F59;
+        Wed,  6 Oct 2021 12:47:35 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1633524200;
-        bh=NXX/YVeSC1/xMv0e7rgZCXBKEbXgorLqIvzRSnMfkfA=;
+        s=k20201202; t=1633524456;
+        bh=tTQVklaQ/ldVLqaoEK1050e3eup4oM5ED69uVhqEmSo=;
         h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=KiwZEZTBaFLkFv2VNrd0e9f56QbQwT/fvCufaFLfozr4TRjxw1yntvxAKGYX8gbtL
-         s9Ilw6I4jGZr/w9X7NtIvuZBR2GqSG6mxyfJASQ3v5p7+U+SARrT3cEhZb+M6CmAzf
-         wuc/FZIYjZdMGAyTNDB5etmzBwMaNXjlOqmrartbq1wcGlBcESlsAvP/siFZz9aO1j
-         RFXVme+4roOdlkjaxzxSKMj3IdwVZUGhE+w6aTMpGS/UywqEhpcmvZDPU4sAByK1Ao
-         rjEd7tzi+ZToE5W7ngVUO56CiBeG1rbLXAbpkrlhLeDRWbVXD8ZuyJN685m37EY1C+
-         2Ja2arWnSxQeA==
-Date:   Wed, 6 Oct 2021 18:13:16 +0530
+        b=Kl7HkcYSlA5eh1NwBNeZasuALZA6nFX5EtgDlzo5SclCOpq0vmtzwzBYscFYfkHBD
+         1UxWTCmLKoO1hrWIy05JfryPwMBkltkYgu/kCXSP705D+h8CgetgOmyfKQiZAKfBDs
+         +osIlln5+g87KtAF8PpBBstrU20CWwzZ6U1cEomEj0I7Jz5P0OvoONsTHcPbadcPof
+         qa8ia7v1UYz7rJVZ/jMGvbPCkv32B7fLDl1I7rjVeT4U1POqWUen5UEgbKKFUCEJ2E
+         B5HxRQxyLXdvr6yPrC/oPtHb3QKTH+tER39egWbeojdfWs9FaeM2Rduy0n/d/c+2Sq
+         Q5WJm/ErR7ATw==
+Date:   Wed, 6 Oct 2021 18:17:32 +0530
 From:   Vinod Koul <vkoul@kernel.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Clark <robdclark@gmail.com>, linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
+To:     abhinavk@codeaurora.org
+Cc:     Rob Clark <robdclark@gmail.com>,
         Jonathan Marek <jonathan@marek.ca>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
         Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-Subject: Re: [PATCH 08/11] drm/msm/disp/dpu1: Add support for DSC in encoder
-Message-ID: <YV2Z5JbfFAgLo0n6@matsya>
+        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        dri-devel@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno@lists.freedesktop.org,
+        Sumit Semwal <sumit.semwal@linaro.org>
+Subject: Re: [Freedreno] [PATCH 08/11] drm/msm/disp/dpu1: Add support for DSC
+ in encoder
+Message-ID: <YV2a5MzDUWMTotpP@matsya>
 References: <20210715065203.709914-1-vkoul@kernel.org>
  <20210715065203.709914-9-vkoul@kernel.org>
- <0227846a-47b1-96e7-f14c-7dc3b4f1ba47@linaro.org>
+ <70d5abae07b4dbf63d8dbf47ba31262d@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <0227846a-47b1-96e7-f14c-7dc3b4f1ba47@linaro.org>
+In-Reply-To: <70d5abae07b4dbf63d8dbf47ba31262d@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 29-07-21, 23:54, Dmitry Baryshkov wrote:
-> On 15/07/2021 09:52, Vinod Koul wrote:
+On 02-08-21, 17:57, abhinavk@codeaurora.org wrote:
+> On 2021-07-14 23:52, Vinod Koul wrote:
+> > When DSC is enabled in DT, we need to configure the encoder for DSC
+> > configuration, calculate DSC parameters for the given timing.
+> > 
+> > This patch adds that support by adding dpu_encoder_prep_dsc() which is
+> > invoked when DSC is enabled in DT
+> correct me if wrong but this commit text is not valid anymore in my opinion.
+> are there any params you are getting from DT now? I thought its all coming
+> from the panel
+> driver directly.
 
-> > diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > index 8d942052db8a..41140b781e66 100644
-> > --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> > @@ -21,12 +21,17 @@
-> >   #include "dpu_hw_intf.h"
-> >   #include "dpu_hw_ctl.h"
-> >   #include "dpu_hw_dspp.h"
-> > +#include "dpu_hw_dsc.h"
-> >   #include "dpu_formats.h"
-> >   #include "dpu_encoder_phys.h"
-> >   #include "dpu_crtc.h"
-> >   #include "dpu_trace.h"
-> >   #include "dpu_core_irq.h"
-> > +#define DSC_MODE_SPLIT_PANEL		BIT(0)
-> > +#define DSC_MODE_MULTIPLEX		BIT(1)
-> > +#define DSC_MODE_VIDEO			BIT(2)
+Yes thanks for spotting this, updated!
+
+> > 
+> > Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> agree with dmitry's comment's
+> https://patchwork.freedesktop.org/patch/444078/?series=90413&rev=2
 > 
-> This should go into dpu_hw_dsc.h. Ah. They are already defined there and
-> just redefined there. Remove the defines here.
-
-Sure, updated
-
-> It might be cleaner to add bool flags to struct msm_display_dsc_config and
-> then calculate common mode in the dpu_hw_dsc_config().
-
-How would that be better than calculating here? I dont see much of an
-advantage.
-
-> > +static void dpu_encoder_dsc_pipe_cfg(struct dpu_hw_dsc *hw_dsc,
-> > +				     struct dpu_hw_pingpong *hw_pp,
-> > +				     struct msm_display_dsc_config *dsc,
-> > +				     u32 common_mode)
-> > +{
-> > +	if (hw_dsc->ops.dsc_config)
-> > +		hw_dsc->ops.dsc_config(hw_dsc, dsc, common_mode);
-> > +
-> > +	if (hw_dsc->ops.dsc_config_thresh)
-> > +		hw_dsc->ops.dsc_config_thresh(hw_dsc, dsc);
-> > +
-> > +	if (hw_pp->ops.setup_dsc)
-> > +		hw_pp->ops.setup_dsc(hw_pp);
-> > +
-> > +	if (hw_pp->ops.enable_dsc)
-> > +		hw_pp->ops.enable_dsc(hw_pp);
+> instead of dsc being part of priv->dsc it should be per encoder.
 > 
-> I think, we do not need to split these operations, I'd suggest having just
-> hw_dsc->ops.dsc_config() and hw_pp->ops.enable_dsc(), merging
-> dsc_config_thres() and setup_dsc() into respective methods.
+> On top of his comment, I also think that like on the newer chipsets, moving
+> the dsc related
+> encoder configuration to a dpu_encoder_dce.c will help for future expansion
+> of other topologies
+> and also for other compression algorithms.
 
-Merging hw_dsc->ops.dsc_config() and hw_dsc->ops.dsc_config_thresh() would make
-it from L to XL size, so lets keep them split.
-
-We could merge the small hw_pp->ops.setup_dsc() and
-hw_pp->ops.enable_dsc() though.
-
-> >   void dpu_encoder_prepare_for_kickoff(struct drm_encoder *drm_enc)
-> >   {
-> >   	struct dpu_encoder_virt *dpu_enc;
-> >   	struct dpu_encoder_phys *phys;
-> > +	struct msm_drm_private *priv;
-> >   	bool needs_hw_reset = false;
-> >   	unsigned int i;
-> > @@ -1841,6 +1977,10 @@ void dpu_encoder_prepare_for_kickoff(struct drm_encoder *drm_enc)
-> >   			dpu_encoder_helper_hw_reset(dpu_enc->phys_encs[i]);
-> >   		}
-> >   	}
-> > +
-> > +	priv = drm_enc->dev->dev_private;
-> > +	if (priv->dsc)
-> > +		dpu_encoder_prep_dsc(dpu_enc, priv->dsc);
-> 
-> Not quite. This makes dsc config global, while we can have several encoders
-> enabled at once (think of DSI + DP). So the dsc should be a per-encoder
-> setting rather than global.
-
-I agree it would make sense to have per-encoder. The DP part needs to be
-comprehended for DSC and would need more changes. I think updating this
-for DP then and making it generic as required for DP would be better,
-right? In that case I will skip moving to encoder for now.
+As replied to Dimitry, the DP and other topology support needs to be
+comprehended so this should be done when we know how DP, other
+compression algorithms and other topologies would be modeled here :)
 
 -- 
 ~Vinod
