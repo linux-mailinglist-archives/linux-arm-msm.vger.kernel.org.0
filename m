@@ -2,234 +2,278 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 39FE74247E7
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 22:26:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A5556424807
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 22:38:05 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231749AbhJFU2k (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Oct 2021 16:28:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36730 "EHLO
+        id S230062AbhJFUj4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Oct 2021 16:39:56 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39354 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231593AbhJFU2j (ORCPT
+        with ESMTP id S230047AbhJFUjz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Oct 2021 16:28:39 -0400
-Received: from mail-qk1-x735.google.com (mail-qk1-x735.google.com [IPv6:2607:f8b0:4864:20::735])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4199CC061746
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Oct 2021 13:26:47 -0700 (PDT)
-Received: by mail-qk1-x735.google.com with SMTP id z40so2485416qko.7
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Oct 2021 13:26:47 -0700 (PDT)
+        Wed, 6 Oct 2021 16:39:55 -0400
+Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB73FC061753
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Oct 2021 13:38:02 -0700 (PDT)
+Received: by mail-ot1-x334.google.com with SMTP id c26-20020a056830349a00b0054d96d25c1eso4700478otu.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Oct 2021 13:38:02 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=lu8a1oMfv1PlvGzAjuTv4umEJnKxweShTUwEP9yiz5o=;
-        b=UeaQ7vgGNpndM0NnFF1jOdfY/UqOmn3K6v40Jg07RiSmQM2J9ZK4tPwa6OSZN+EMMa
-         MBUkU89eGCRfDrqD9JH8bxRz1yk03PtOucaGTnCGicXDNiDPpf9Y2pDcUnqshMb/Q7Df
-         +p0yQ92TrUzT3Mv8Ox9KnRVU8Wu5A0nKBo4XM=
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=z60aFSRGx0ByB0Z/S5Nod4Oslys3m/NDoJpIVRIWCNw=;
+        b=bMSN0ps/rC57sD8yDecc/7bjDGG40s9KPEUkJMwtyb48DXyFVVKaw99DNX/t4bFLNQ
+         7D2ltCrfBOCDmdCZXs7bOcPUrB931dmmOoyp1bTZ8WXVf7k59doBCbBrZWWaca6K+iT0
+         LsPNpEfGxSSyJdFGPs5PzzFjQwSy78guF+VMQ7GTZFlWV6vNsYG7Jkq6+Zg4WoX0nCJC
+         OWwrCSesetTa7Tw6oM7M6cfck029beQgY4QwGwPL3IGSUS+uJ3AiPP4wUbpd7LNvWOvV
+         6pQsmaARw3ek4+gvA/Ugqijnvwo1DAJkeAgXAHRykv10u5fnPXA17CuX5FZyM6pisunt
+         Woiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=lu8a1oMfv1PlvGzAjuTv4umEJnKxweShTUwEP9yiz5o=;
-        b=3U5c+NCEYeOrX/42XJyP4a1+4tDyyHe203xCRE5qLCw5eZjswkWV7g7Th3Xwxmehvr
-         YtBwhoEgcxGXTTuZxJqySJNbTbMGCuUggM6AfCvJ/l+dXrmGtnZ6NspaFrTp9ADo75k8
-         W0MYeHn6eB2Wn85dBx6kv6KYNUPVX7nN2CfSYpXrJEOXQ8hWbwgFVSdXU6rmRjDSmiLR
-         xDT5Fo3p0I3EPGick4gbRtpIKUmls0NCTe5U8TpjHERHIVC/7mRTO/DrPAkNJogQ8yl2
-         ACNOzpmhw3tad9lJGwzSDP+Yj2yLFbW6phRifjs5i8SH9SrTK5YoLdothiJENt7jUQSj
-         UZxQ==
-X-Gm-Message-State: AOAM532ZEsckIAzCGbK63FKqUo2bNAlS6bByv1WZuqXqDx6eEH8NIqoM
-        4uN3Ql/2WXdiRyhqaI+WrGrFTl07vCIsVFffwbkOVw==
-X-Google-Smtp-Source: ABdhPJwFmUlqc3JmgK/IC/BH5HLPfaPqWf/mbTEN6xy7fjKf/1rAebatDK7kbwhLuBCIzIYePaT2m7ibCI2pnw0WvVE=
-X-Received: by 2002:a37:a50c:: with SMTP id o12mr153721qke.181.1633552006340;
- Wed, 06 Oct 2021 13:26:46 -0700 (PDT)
-MIME-Version: 1.0
-References: <20210726231351.655302-1-bjorn.andersson@linaro.org>
- <CAD=FV=UGtHXD==Yy8CVCOioYGb=2hqGQOoNWftD1Jj7OiEp51g@mail.gmail.com>
- <YVd3YdfgFVc0Br5T@ripper> <CAD=FV=U=xVLuKOYHbGPTkLjGa8_U+F1ZtEvJt4LGaRuR5SsKFw@mail.gmail.com>
- <YVumL1lHLqtb/HKS@ripper> <CAD=FV=W9uKq00wXn4H1ax0u2D=R8Wn3J-Je43uxcPyDtk7AK7Q@mail.gmail.com>
- <YVyMwsvLl6XalJxB@ripper> <CAD=FV=WY+g38p7--QKZCaQnSqx7VvdwC36jH-VKnrEWoxK=XHQ@mail.gmail.com>
- <YV0KBWxVtKgOp2Cj@ripper> <CAD=FV=X5JFE3u9BtxxocaUrYNSpYXJN90UJ8HOvXZE6oYiVsDQ@mail.gmail.com>
-In-Reply-To: <CAD=FV=X5JFE3u9BtxxocaUrYNSpYXJN90UJ8HOvXZE6oYiVsDQ@mail.gmail.com>
-From:   Prashant Malani <pmalani@chromium.org>
-Date:   Wed, 6 Oct 2021 13:26:35 -0700
-Message-ID: <CACeCKac4b_ej87cQD692TNwpsoFsmBwDcSeLy5fp+pvLX1si7g@mail.gmail.com>
-Subject: Re: [RFC] drm/msm/dp: Allow attaching a drm_panel
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=z60aFSRGx0ByB0Z/S5Nod4Oslys3m/NDoJpIVRIWCNw=;
+        b=oA93pfd5Xb7a29/MKlfUuH/30FiQdkA9p2uimkD3MPNrHCDPRsGDEWgVH/UY/QHzAX
+         9LiVMNNpe9QEaeeXmaBnkryqSbwGB/XEuM1cHKdJj5i6QXzczZ+UwgpZqD96gJoSzObc
+         nAEY+sSc4w0qjbBcFEdSgNxnxYncBPT5I8ehYdjKuX8VwWQEdmLccXuax/iKPc3XMCbM
+         OVa5boU4FqZ8DcwhqNbM2pS5ZHjlChbvZKI3qGvPGtBQ8bOQIoVsllfEN3UTrcV2PuPj
+         gqvNlSQPUcpF3sjlNHZtdauoqsv5lnOjROSQq+CJzr+/Jix9zNkJ1G3cBVGLnBob4hat
+         pcTw==
+X-Gm-Message-State: AOAM530ZKp5nDBvZPPYUQWEYckUzKGIagkDqonoJyhuYeSC5n1pNbJHW
+        JRLtXMaiaSaFmr1WTMPwJxgVgw==
+X-Google-Smtp-Source: ABdhPJz+HEl4pR76e6CTjyNRya7MHTPoztvqelL40AQ/FLSuz3aYtw7gxlq5qMFYEhC7T1esU+omUQ==
+X-Received: by 2002:a9d:1b7:: with SMTP id e52mr313487ote.210.1633552682117;
+        Wed, 06 Oct 2021 13:38:02 -0700 (PDT)
+Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id y17sm183023oto.42.2021.10.06.13.38.01
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Oct 2021 13:38:01 -0700 (PDT)
+Date:   Wed, 6 Oct 2021 13:39:42 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
         Daniel Vetter <daniel@ffwll.ch>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Stephen Boyd <swboyd@chromium.org>,
+        David Airlie <airlied@linux.ie>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
         Kuogee Hsieh <khsieh@codeaurora.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        Vara Reddy <varar@codeaurora.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
-        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
-        Benson Leung <bleung@chromium.org>,
-        Heikki Krogerus <heikki.krogerus@linux.intel.com>
-Content-Type: text/plain; charset="UTF-8"
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 5/7] drm/msm/dp: Support up to 3 DP controllers
+Message-ID: <YV4JjutldSujvoT8@ripper>
+References: <20211005231323.2663520-6-bjorn.andersson@linaro.org>
+ <CAE-0n52gOCC8bUfMFnNHRKFoq2=q4Ho8a-UYH5JKgumguhUD2A@mail.gmail.com>
+ <YVz/NOL3AFn2zBA0@ripper>
+ <CAE-0n513cs282Dh_YFMHK2uKCVFSWxtNyfRaFwWGyUvpfShixw@mail.gmail.com>
+ <YV0MAF/Y5BR1e6My@ripper>
+ <CAE-0n53TwEyycpAaWVpRUKPpos4z-gqwrvyUdgobh1V88VUsXg@mail.gmail.com>
+ <YV3XxadYE/KU2w89@ripper>
+ <CAE-0n52q=iEhRO1V-ked6SEesJGozLWv-H1mK81oyP7zAeO6QQ@mail.gmail.com>
+ <YV3lVWjct5RQ5FEK@ripper>
+ <CAE-0n537_YLDkWOX0kBHZHPHMi4-XTODeJ8TB=_xOrZwJc1HfQ@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAE-0n537_YLDkWOX0kBHZHPHMi4-XTODeJ8TB=_xOrZwJc1HfQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-(CC+ Heikki)
+On Wed 06 Oct 11:59 PDT 2021, Stephen Boyd wrote:
 
-Hi,
-
-On Wed, Oct 6, 2021 at 8:19 AM Doug Anderson <dianders@chromium.org> wrote:
->
-> Hi,
->
-> On Tue, Oct 5, 2021 at 7:27 PM Bjorn Andersson
-> <bjorn.andersson@linaro.org> wrote:
+> Quoting Bjorn Andersson (2021-10-06 11:05:09)
+> > On Wed 06 Oct 10:19 PDT 2021, Stephen Boyd wrote:
 > >
-> > > > For reference, this is how I thought one is supposed to tie the Type-C
-> > > > controller to the display driver:
-> > > > https://lore.kernel.org/all/20211005022451.2037405-1-bjorn.andersson@linaro.org/
+> > > Quoting Bjorn Andersson (2021-10-06 10:07:17)
+> > > > On Tue 05 Oct 21:26 PDT 2021, Stephen Boyd wrote:
+> > > >
+> > > > > Quoting Bjorn Andersson (2021-10-05 19:37:52)
+> > > > > > On Tue 05 Oct 19:06 PDT 2021, Stephen Boyd wrote:
+> > > > > >
+> > > > > > > Quoting Bjorn Andersson (2021-10-05 18:43:16)
+> > > > > > > > On Tue 05 Oct 17:43 PDT 2021, Stephen Boyd wrote:
+> > > > > > > >
+> > > > > > > > > Quoting Bjorn Andersson (2021-10-05 16:13:21)
+> > > > > > > > > > diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> > > > > > > > > > index bdaf227f05dc..674cddfee5b0 100644
+> > > > > > > > > > --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> > > > > > > > > > +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> > > > > > > > > > @@ -1233,7 +1239,7 @@ static int dp_display_probe(struct platform_device *pdev)
+> > > > > > > > > >         if (!dp)
+> > > > > > > > > >                 return -ENOMEM;
+> > > > > > > > > >
+> > > > > > > > > > -       desc = dp_display_get_desc(pdev);
+> > > > > > > > > > +       desc = dp_display_get_desc(pdev, &dp->id);
+> > > > > > > > >
+> > > > > > > > > I'm sad that dp->id has to match the number in the SoC specific
+> > > > > > > > > dpu_intf_cfg array in drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> > > > > > > > > still. Is there any way we can avoid that? Also, notice how those arrays
+> > > > > > > > > already have INTF_DP macros, which makes me think that it may be better
+> > > > > > > > > to connect this to those arrays instead of making an msm_dp_desc
+> > > > > > > > > structure and then make sure the 'type' member matches a connector
+> > > > > > > > > type number. Otherwise this code is super fragile.
+> > > > > > > > >
+> > > > > > > >
+> > > > > > > > I'm afraid I don't understand what you're proposing. Or which part you
+> > > > > > > > consider fragile, the indices of the INTF_DP instances aren't going to
+> > > > > > > > move around...
+> > > > > > > >
+> > > > > > > > I have N instances of the DP driver that I need to match to N entries
+> > > > > > > > from the platform specific intf array, I need some stable reference
+> > > > > > > > between them. When I started this journey I figured I could rely on the
+> > > > > > > > of_graph between the DPU and the interface controllers, but the values
+> > > > > > > > used there today are just bogus, so that was a no go.
+> > > > > > > >
+> > > > > > > > We can use whatever, as long as _dpu_kms_initialize_displayport() can
+> > > > > > > > come up with an identifier to put in h_tile_instance[0] so that
+> > > > > > > > dpu_encoder_setup_display() can find the relevant INTF.
+> > > > > > > >
+> > > > > > >
+> > > > > > > To make it more concrete we can look at sc7180
+> > > > > > >
+> > > > > > > static const struct dpu_intf_cfg sc7180_intf[] = {
+> > > > > > >         INTF_BLK("intf_0", INTF_0, 0x6A000, INTF_DP, 0, 24,
+> > > > > > > INTF_SC7180_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
+> > > > > > >                                                      ^
+> > > > > > >                                                      |
+> > > > > > >
+> > > > > > > intf0 is irrelevant. Also the address is irrelevant. But here we have a
+> > > > > > > zero, the number after INTF_DP, and that is very relevant. That number
+> > > > > > > needs to match the dp->id. Somewhere we have a match between
+> > > > > > > controller_id and dp->id in the code.
+> > > > > >
+> > > > > > That number (the 0, not INTF_0) is what the code matches against dp->id
+> > > > > > in _dpu_kms_initialize_displayport(), in order to figure out that this
+> > > > > > is INTF_0 in dpu_encoder_setup_display().
+> > > > > >
+> > > > > > I.e. look at the sc8180x patch:
+> > > > > >
+> > > > > > INTF_BLK("intf_0", INTF_0, 0x6A000, INTF_DP, 0, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
+> > > > > > INTF_BLK("intf_1", INTF_1, 0x6A800, INTF_DSI, 0, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 26, 27),
+> > > > > > INTF_BLK("intf_2", INTF_2, 0x6B000, INTF_DSI, 1, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 28, 29),
+> > > > > > /* INTF_3 is for MST, wired to INTF_DP 0 and 1, use dummy index until this is supported */
+> > > > > > INTF_BLK("intf_3", INTF_3, 0x6B800, INTF_DP, 999, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 30, 31),
+> > > > > > INTF_BLK("intf_4", INTF_4, 0x6C000, INTF_DP, 1, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 20, 21),
+> > > > > > INTF_BLK("intf_5", INTF_5, 0x6C800, INTF_DP, 2, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 22, 23),
+> > > > > >
+> > > > > > Where the DP driver defines the 3 controllers with dp->id of 0, 1 and 2,
+> > > > > > which the DPU code will match against to INTF_0, INTF_4 and INTF_5.
+> > > > > >
+> > > > >
+> > > > > Yep. I'm saying that having to make that number in this intf array match
+> > > > > the order of the register mapping descriptor array is fragile. Why can't
+> > > > > we indicate the interface is DP or eDP with INTF_DP or INTF_EDP and then
+> > > > > map from the descriptor array to this intf array somehow so that the
+> > > > > order of the descriptor array doesn't matter? Then we don't have to put
+> > > > > the connector type in the descriptor array, and we don't have to keep
+> > > > > the order of the array a certain way to match this intf descriptor.
+> > > > >
+> > > > > Maybe
+> > > > >
+> > > > >       struct msm_dp_desc {
+> > > > >               phys_addr_t io_start;
+> > > > >               unsigned int id;
+> > > >
+> > > > The INTF_<N> constants are a property of the DPU driver and not
+> > > > available in the DP driver and the msm_dp struct is a property of the DP
+> > > > driver and can't be dereferenced in the DPU driver.
+> > > >
+> > > > The proposed way around this is that the descs array defines the order
+> > > > in priv->dp[N] and this N is used as controller_id.
 > > >
-> > > OK, so I looked at that a bit. Fair warning that I've never looked at
-> > > the type C code before today so anything I say could be totally wrong!
-> > > :-)
+> > > I'm pretty sure I'm following along.
 > > >
-> > > ...but I _think_ you're abusing the "mux" API for this. I think a type
-> > > C port can have exactly 1 mux, right? Right now you are claiming to be
-> > > _the_ mux in the DP driver, but what about for other alt modes? If
-> > > those wanted to be notified about similar things it would be
-> > > impossible because you're already _the_ mux, right?
+> > > >
+> > > > So the only thing that I don't find straight forward here is that the
+> > > > eDP controller is considered just a DP controller, so you have to use
+> > > > INTF_DP, <N> for that, and not just INTF_EDP, 0.
+> > > >
+> > > > >       };
+> > > > >
+> > > > > and then have msm_dp_desc::id equal INTF_<N> and then look through the
+> > > > > intf from DPU here in the DP driver to find the id and type of connector
+> > > > > that should be used by default? Still sort of fragile because the only
+> > > > > connection is an unsigned int which isn't great, but at least it's
+> > > > > explicit instead of implicit based on the array order.
+> > > >
+> > > > No matter how I look at this, you need to put some number somewhere here
+> > > > that will be used to match up the INTF with the right DSI/DP encoder.
 > > >
-> >
-> > I actually don't think so, because I acquire the typec_mux handle by the
-> > means of:
-> >
-> > mux_desc.svid = USB_TYPEC_DP_SID;
-> > mux_desc.mode = USB_TYPEC_DP_MODE;
-> > alt_port->mux = fwnode_typec_mux_get(fwnode, &mux_desc);
->
-> Hrm, I guess I need to go find that code. Ah, I see it in your WIP
-> tree, but not posted anywhere. :-P The only code I can see calling
-> fwnode_typec_mux_get() is `drivers/platform/chrome/cros_ec_typec.c`.
-> In that code it passes NULL for the mux_desc and I'm nearly certain
-> that it just handles one "mux" per connector despite the fact that it
-> handles lots of different types of alternate modes. That doesn't mean
-> that the cros_ec implementation is correct / finalized, but it's a
-> reference point.
->
->
-> > And in the DisplayPort node I provide svid = /bits/ 16 <0xff01>;
-> >
-> > So I will be able to reference multiple different altmode
-> > implementors using this scheme.
->
-> OK, so I'm trying to grok this more. Let's see.
->
-> I'm looking at ucsi_glink_probe() and looking at the matching dts in
-> your WIP tree [1] in "sc8180x-lenovo-flex-5g.dts" OK, so:
->
-> 1. It's looping once per _connector_ by looping with
-> `device_for_each_child_node(dev, fwnode)`.
->
-> 2. For each connector, it has exactly one `alt_port` structure.
->
-> 3. For each `alt_port` structure it has exactly one `mux`.
->
-> ...so currently with your WIP tree there is one "mux" per type C connector.
->
->
-> Perhaps what you're saying, though, is that the UCSI code in your WIP
-> tree can/should be changed to support more than one mux per port. Then
-> I guess it would have logic figuring out what muxes to notify about
-> which things? ...and I guess that would mean that it's currently a bug
-> that the ucsi_altmode_enable_usb() notifies "the DP type C mux" about
-> USB changes?
->
->
-> > > I _think_ a mux is supposed to be something more like
-> > > `drivers/phy/rockchip/phy-rockchip-typec.c` (though that code predates
-> > > the type C framework we're looking at here). There the phy can do all
-> > > the work of remuxing things / flipping orientation / etc. I don't
-> > > think it's a requirement that every SoC be able to do this remuxing
-> > > itself but (if memory serves) rk3399 implemented it so we didn't have
-> > > to do it on the TCPC and could use a cheaper solution there.
+> > > Correct.
 > > >
-> >
-> > I'm afraid I don't see how this interacts with a display controller.
->
-> This was actually kinda my point. ;-) Specifically I think
-> `phy-rockchip-typec.c` is the thing that's supposed to be a "mux". I
-> think your display controller isn't a mux. Yeah, it's handy that muxes
-> get told about DP HPD status, but that doesn't mean it's the right
-> abstraction for you to implement. In my mental model, it's the same as
-> implementing your "i2c" controller with a "pinctrl" driver. :-P
->
->
-> > It
-> > seems more like it's the phy side of things, what we have split between
-> > the Type-C controller and the QMP phy to set the pins in the right
-> > state.
-> >
-> > > In any case, my point is that I think there is supposed to be a
-> > > _single_ mux per port that handles reassigning pins and that's what
-> > > this API is for.
+> > > >
+> > > > Using the proposed number scheme follows the numbering of all the DP
+> > > > controllers from the documentation.
+> > > >
 > > >
-> >
-> > If that's the case things such as typec_mux_match() is just completely
-> > backwards.
->
-> Yeah, I have no explanation for typec_mux_match(). Let me see if I can
-> lure some type C folks into this discussion.
-
-This aligns with the model I have in my mind (not that that is
-necessarily the right one).
-I took that matching code to be meant to handle cases where the
-firmware doesn't explicitly
-define a "mode-switch" for the port (and so we look at the SVIDs
-listed in the Mux fwnode descriptor).
-
-The matcher code does suggest there could be a mux for each alternate
-mode. But then, how does the
-bus code know which mux to set [2] ? In that code, the struct altmode
-has a pointer to the struct typec_mux, but I
-don't see where that pointer is assigned. I assumed that it was set to
-whatever the mux node of the
-Type C port was whenever the port driver registered its altmodes for
-each port, but I can't substantiate
-that assumption in code.
-
-Heikki, do you have any guidance regarding what the expected usage is
-here? One typec_mux struct per type C port? Or
-1 typec_mux per altmode per port?
-
->
->
-> > > ...so I will still assert that the right thing to do is to have a
-> > > drm_bridge for the type c connector and _that's_ what should be
-> > > sending HPD.
+> > > Maybe I can make a better example. I have this for sc7280 in dpu_hw_catalog.c:
 > > >
+> > >       static const struct dpu_intf_cfg sc7280_intf[] = {
+> > >               INTF_BLK("intf_0", INTF_0, 0x34000, INTF_DP, CONTROLLER_ID_A, 24,
+> > > INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
+> > >               INTF_BLK("intf_1", INTF_1, 0x35000, INTF_DSI, 0, 24,
+> > > INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 26, 27),
+> > >               INTF_BLK("intf_5", INTF_5, 0x39000, INTF_DP, CONTROLLER_ID_B, 24,
+> > > INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 22, 23),
+> > >       };
+> > >
+> > > And then this array for sc7280 in dp_display.c:
+> > >
+> > >       static const struct msm_dp_desc sc7280_dp_cfg = {
+> > >               .desc = {
+> > >                       [CONTROLLER_ID_A] = { 0xaea0000, DRM_MODE_CONNECTOR_eDP },
+> > >                       [CONTROLLER_ID_B] = { 0xae90000, DRM_MODE_CONNECTOR_DisplayPort },
+> > >               },
+> > >               .num_dp = 2,
+> > >       };
+> > >
+> > > So these two arrays must match based on CONTROLLER_ID_{A,B}. I don't
+> > > like having to make these two numbers match so if it was explicit, even
+> > > possibly by having a bunch of macros put in both places then I would be
+> > > happy. I spent a few hours when I messed up the order of the
+> > > sc7280_dp_cfg.desc array trying to figure out why things weren't
+> > > working.
 > >
-> > That still implies that all the current typec_mux code got it all wrong
-> > and should be thrown out. If you instead consider that you have a Type-C
-> > controller that upon switching DisplayPort on/off calls typec_mux_set()
-> > to inform the functions that things has changed then all the current
-> > code makes sense.
+> > So essentially, you didn't know that the controller_id has to match the
+> > index in priv->dsi[] and priv->dp[] and providing a define for them
+> > would make this more obvious?
+> 
+> Now you got it!
+> 
 > >
-> > It also maps nicely to how the TypeC controller would call
-> > typec_switch_set() to inform, in our case the QMP phy that the
-> > orientation has switched.
+> > I think per your argument the 0 following INTF_DSI should also be using
+> > this scheme, so we'd have multiple CONTROLLER_ID_A, which probably is
+> > confusing as well.
+> 
+> Agreed.
+> 
 > >
+> > I tried it out with below patch; it documents the relationship, provides
+> > constants for the magic 2 and 3 for number of DSI and DP controllers in
+> > struct msm_drm_private.
 > >
-> > It seems reasonable to have some common helper code that registers the
-> > typec_mux and turn its notifications into HPD notifications to the
-> > display code, but I still think that should live in the DRM framework,
-> > separate from the USB code.
->
-> I think I'm going to step back and hope that the experts can chime in.
->
->
-> [1] https://github.com/andersson/kernel/commits/wip/sc8180x-next-20210819
-[2]: https://elixir.bootlin.com/linux/v5.15-rc4/source/drivers/usb/typec/bus.c#L27
+> > I like it.
+> 
+> Thanks. I prefer this approach as well.
 
->
-> -Doug
+Sweet, I'll update my patch set accordingly.
+
+> I can see now why qcom always wants to change the output ports on the
+> DPU node in DT to match the INTF number. If they would have described
+> this problem it may have made sense to have the graph endpoints with
+> reg properties matching the interface number in the intf array. Sigh.
+
+Yes, I think the supposed design is that you should use the of_graph and
+then call of_find_possible_crtcs() to figure out your links.
+
+Unfortunately that doesn't work with the design of the DPU driver,
+because the crtcs doesn't represent the INTFs - and as you say, the
+existing of_graphs are full of incorrect data.
+
+Which also means that I don't know why we keep filling out the of_graph,
+because afaict it's not used and it contains invalid information.
+
+Thanks,
+Bjorn
