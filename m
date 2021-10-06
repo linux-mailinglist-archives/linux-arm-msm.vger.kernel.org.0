@@ -2,85 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 7737342388F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 09:09:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 747A54238BC
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 09:21:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237482AbhJFHLk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Oct 2021 03:11:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47950 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237551AbhJFHLe (ORCPT
+        id S233968AbhJFHWv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Oct 2021 03:22:51 -0400
+Received: from gandalf.ozlabs.org ([150.107.74.76]:60069 "EHLO
+        gandalf.ozlabs.org" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229861AbhJFHWu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Oct 2021 03:11:34 -0400
-Received: from mail-ot1-x32d.google.com (mail-ot1-x32d.google.com [IPv6:2607:f8b0:4864:20::32d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64F00C06176C
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Oct 2021 00:09:42 -0700 (PDT)
-Received: by mail-ot1-x32d.google.com with SMTP id j11-20020a9d190b000000b00546fac94456so1952896ota.6
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Oct 2021 00:09:42 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=HfTHUhLPFuNYu+1s+5X0I1ftdKhtGk97U1HjbXbHe2o=;
-        b=MFJcPHrnKWIcIkMutzo8P/bcT7APg9bV6rqSWArphXMQM8qVEv3/2CHyvz9IGsTCkk
-         oR5muMjWB8iM1Twlo3tukBoIIcpK2u44tZmqMm/ve0gintVkb92yXeDz2se9QZSt/VX2
-         xqeDp+xVcN2Mx83FyOYrr9Vgufc/ytalTD4O4=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=HfTHUhLPFuNYu+1s+5X0I1ftdKhtGk97U1HjbXbHe2o=;
-        b=HRTtcuKbwOmCFaZY+wWrcxxKh805C21WGh998K2FOYdOPQN5WkEF2NyTAEDG2DpKTN
-         1cXrxSAk10zkN+xyCAVSWWWjBi5nDQB6fZfTqcP8lU10q4NiBXYctkKhHjXMkLN9XxbC
-         cE0b++RRluIfWGaQqDX1Gcoz5+jJ8WQT5EnGQxLONM0CbjJ+wLRUUq1spqtAMPzmtFmd
-         mbDYMGOk7ud6HGddTQ4AjyKJcL1ing8wJMF5ROnoTxQMdcXr1MRchTKlIi0orsSaWoH2
-         HmjWjKC3fH8Kx1vegPxotwNo18Pbyzj1araQly8Kkb8RHurLJFn1/Q2/zrmtFZFEMPyf
-         8YYA==
-X-Gm-Message-State: AOAM533LP8hWygLh26VgwYcJQ3Hh9TExs4CSGhUNuHHNiyP2McEgwRkQ
-        RsizhEiBWiq1fngoruk+p6ZcUiipGsdIoHew3w0GHA==
-X-Google-Smtp-Source: ABdhPJzivuyKoDsjOOPOWdoEgQDyWy6eq7Yz1Nv43Y/7dsaEcPdBJmpGtrjRzBtq40vOOSw1Ry91dEzksSzUwC1Qe7Y=
-X-Received: by 2002:a05:6830:4116:: with SMTP id w22mr4893118ott.159.1633504181834;
- Wed, 06 Oct 2021 00:09:41 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Wed, 6 Oct 2021 00:09:41 -0700
+        Wed, 6 Oct 2021 03:22:50 -0400
+Received: from authenticated.ozlabs.org (localhost [127.0.0.1])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (4096 bits) server-digest SHA256)
+        (No client certificate requested)
+        by mail.ozlabs.org (Postfix) with ESMTPSA id 4HPQpv135dz4xbC;
+        Wed,  6 Oct 2021 18:20:53 +1100 (AEDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canb.auug.org.au;
+        s=201702; t=1633504857;
+        bh=5xLfVkrTGqN/HJjioq+vxTiY7Z/CCJV7NwAHksIQlwo=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:References:From;
+        b=Ap4KEyNJxlqFppjTdHI9ntGJz2X9R7/2EpBdM+G1YRpkBDnKCtDBEGtNsd4lPjlWP
+         RKxIVvRy5d/ALyz3HNs6JE2rV7Df0O8QgoaTwxcnGBPSS64Ny+FVan8MN+P2tm6KLU
+         kxhltuYM1WDq3qGNZvCrL/pKRXSg6kexsTcPBwkaBV9tFln+3ziK8wkzixRZ7ytCkR
+         3n95lHlHyq/mVifnvxkMElaGLxzV8/fcIh/NNfMge6tO7YPbAd3L5r+t0/4CD8JaxP
+         6Ty39mdTPD9zaOwc96hZJaQA6RRMy34hH9lmEYoLxRZqb2Qv90pXWM0n/8CW2aQk0g
+         Qv7WL8Unf71lg==
+Date:   Wed, 6 Oct 2021 18:20:52 +1100
+From:   Stephen Rothwell <sfr@canb.auug.org.au>
+To:     Randy Dunlap <rdunlap@infradead.org>
+Cc:     akpm@linux-foundation.org, broonie@kernel.org,
+        linux-fsdevel@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-mm@kvack.org, linux-next@vger.kernel.org, mhocko@suse.cz,
+        mm-commits@vger.kernel.org, Rob Clark <robdclark@gmail.com>,
+        Sean Paul <sean@poorly.run>, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org,
+        Christian =?UTF-8?B?S8O2bmln?= <christian.koenig@amd.com>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Intel Graphics <intel-gfx@lists.freedesktop.org>,
+        DRI <dri-devel@lists.freedesktop.org>
+Subject: Re: mmotm 2021-10-05-19-53 uploaded
+ (drivers/gpu/drm/msm/hdmi/hdmi_phy.o)
+Message-ID: <20211006182052.6ecc17cf@canb.auug.org.au>
+In-Reply-To: <58fbf2ff-b367-2137-aa77-fcde6c46bbb7@infradead.org>
+References: <20211006025350.a5PczFZP4%akpm@linux-foundation.org>
+        <58fbf2ff-b367-2137-aa77-fcde6c46bbb7@infradead.org>
 MIME-Version: 1.0
-In-Reply-To: <006801d7ba70$54daae00$fe900a00$@codeaurora.org>
-References: <1633330133-29617-1-git-send-email-pillair@codeaurora.org>
- <1633330133-29617-3-git-send-email-pillair@codeaurora.org>
- <1633350086.759437.1051509.nullmailer@robh.at.kernel.org> <006801d7ba70$54daae00$fe900a00$@codeaurora.org>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Wed, 6 Oct 2021 00:09:41 -0700
-Message-ID: <CAE-0n51rsfFX_-Vxn2tumWiw9K-Tf244rhTedc76UKx5ADzKyg@mail.gmail.com>
-Subject: RE: [PATCH v6 2/3] dt-bindings: remoteproc: qcom: Add SC7280 WPSS support
-To:     Rob Herring <robh@kernel.org>, pillair@codeaurora.org
-Cc:     mathieu.poirier@linaro.org, p.zabel@pengutronix.de,
-        devicetree@vger.kernel.org, bjorn.andersson@linaro.org,
-        linux-kernel@vger.kernel.org, robh+dt@kernel.org,
-        sibis@codeaurora.org, kuabhs@chromium.org, agross@kernel.org,
-        ohad@wizery.com, linux-arm-msm@vger.kernel.org,
-        mpubbise@codeaurora.org
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: multipart/signed; boundary="Sig_/8lmLGN7R8.LIgbOOVm06hk1";
+ protocol="application/pgp-signature"; micalg=pgp-sha256
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting pillair@codeaurora.org (2021-10-05 22:09:18)
->
-> >
-> > If you already ran 'make dt_binding_check' and didn't see the above
-> error(s),
-> > then make sure 'yamllint' is installed and dt-schema is up to
-> > date:
-> >
-> > pip3 install dtschema --upgrade
-> >
-> > Please check and re-submit.
->
->
-> I have updated the dtschema (2021.7) and still not seeing these errors. I
-> will fix the errors mentioned in this log though.
-> Is there any other flag/setting, which is to be enabled ?
->
+--Sig_/8lmLGN7R8.LIgbOOVm06hk1
+Content-Type: text/plain; charset=US-ASCII
+Content-Transfer-Encoding: quoted-printable
 
-I have dtschema-2021.10 installed.
+Hi Randy,
+
+On Tue, 5 Oct 2021 22:48:03 -0700 Randy Dunlap <rdunlap@infradead.org> wrot=
+e:
+>
+> on i386:
+>=20
+> ld: drivers/gpu/drm/msm/hdmi/hdmi_phy.o:(.rodata+0x3f0): undefined refere=
+nce to `msm_hdmi_phy_8996_cfg'
+>=20
+>=20
+> Full randconfig fle is attached.
+
+This would be because CONFIG_DRM_MSM is set but CONFIG_COMMON_CLOCK is
+not and has been exposed by commit
+
+  b3ed524f84f5 ("drm/msm: allow compile_test on !ARM")
+
+from the drm-misc tree.
+
+--=20
+Cheers,
+Stephen Rothwell
+
+--Sig_/8lmLGN7R8.LIgbOOVm06hk1
+Content-Type: application/pgp-signature
+Content-Description: OpenPGP digital signature
+
+-----BEGIN PGP SIGNATURE-----
+
+iQEzBAEBCAAdFiEENIC96giZ81tWdLgKAVBC80lX0GwFAmFdTlQACgkQAVBC80lX
+0GxFqggAoHnUDKXJzMXUDWJ9VVsg/j6q0XdAv2bkB5kFOB2Ze0YDuQfPouTmgW2j
+JXMPeBswphq91GNUCjHi9/rzSgugDJ3Z9RY5NJU090Ldx+8BJ2fasHwMqwDUIO/K
+JRAeSffxlfunKiGfjVmtkTtTYV/ejVP6DXJLw3aeToop3xJSaDwBDp/tZxZFFfnl
+77hBxteurp1EDJKsyTWUbjXL2swhd0ekMh8ZK2xlL7wzb6IBGSSNyQdluOaBQxJg
+uH97ebQ7gbSXYIGrKrOAKtttwNKSqvDl2BB4M9gwi6uoiGixf0NmBEls+iZoW265
+3nOiKtVNsnBGjQZ+d9fFM8CyFtBToQ==
+=XhpG
+-----END PGP SIGNATURE-----
+
+--Sig_/8lmLGN7R8.LIgbOOVm06hk1--
