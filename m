@@ -2,130 +2,374 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EECA24235B5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 04:08:50 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9C7074235C9
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 04:27:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237202AbhJFCKk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Oct 2021 22:10:40 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38022 "EHLO
+        id S231867AbhJFC3g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Oct 2021 22:29:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42132 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237200AbhJFCKk (ORCPT
+        with ESMTP id S229908AbhJFC3g (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Oct 2021 22:10:40 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 2F37CC06174E
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Oct 2021 19:08:49 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id e24so1873904oig.11
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Oct 2021 19:08:49 -0700 (PDT)
+        Tue, 5 Oct 2021 22:29:36 -0400
+Received: from mail-ot1-x32b.google.com (mail-ot1-x32b.google.com [IPv6:2607:f8b0:4864:20::32b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 06FCEC061749
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Oct 2021 19:27:45 -0700 (PDT)
+Received: by mail-ot1-x32b.google.com with SMTP id r43-20020a05683044ab00b0054716b40005so1308487otv.4
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Oct 2021 19:27:44 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=date:from:to:cc:subject:message-id:references:mime-version
          :content-disposition:in-reply-to;
-        bh=lYqbd1yY6Vt/MStunvcBDmbeftnynuSmElbE65yJeuI=;
-        b=GC6d96YWZxDnlnByKPE8fzKDBgpe+/UipmMF6p4IzkEANqw1A+OhrXdDLSPEZdgDy4
-         am8AsWG52xoFc6BD1SSQypkjO8/pMZdsimyMa0CTKwTOCVB+58kihH0X4CilBV7FzGrF
-         WX+AM7FGM1t8QjqF2kVBwQD9XAkawVs5tMe1myGfh2X0jlwxR1lHFmp9rcMmyVJus8aw
-         UeUQPVSmfb/2fCUwCtXoCf9AWZy/mAxrPsHgnJXkKS4gxCFRGBQ470PbFnKB6H9COVJd
-         wbYZ9vaA9bqwPHC45Dj+ztPNh5EvwRv0UkZjFKEBmxNs6zXDyVgpTk2NuMug5pg2dXW6
-         SpEA==
+        bh=ctR1cokXAwmItjiMPfDRY881NbdQTs9Vf1LWVT6hHds=;
+        b=airbaT/+5STqFzWVU9qMFiytHYONXy4ji+WgSNwUSkY/mvWRsfBeoNjIyhiI46MXBE
+         OckyiNIaJO8Wc49P8E6N0kf1wzXra8U6QoJQUhek42tKs6HZdeircNeEohpyZbu92Pqr
+         EFomM3kCdRIz5dv1uAFhpHtqOebAB2P30zWs+w3A+XyP4oihfUO06Xan/3jLRNtYOO77
+         9cuZEfKRhL8vg38kC9/iw7tZAOSY9vmcVzLq7hkuUf9fLdoN9OXr+Ey/PnkIs+J4ZgQL
+         qRfzFB/ip7OOwEhkq616CO6hO208CGD+qgKWHNutGQ2Lbiv645qL1+B2vUQ9WKqxWXWh
+         H6pw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:date:from:to:cc:subject:message-id:references
          :mime-version:content-disposition:in-reply-to;
-        bh=lYqbd1yY6Vt/MStunvcBDmbeftnynuSmElbE65yJeuI=;
-        b=MM8Pr6/l1VTTP1bez2T6w/r6LAvxmvl2do8xVT7G8PgNEOmfmUtCX93ijgEKztCkAa
-         rRVNi2C8AJqOLMGaei80r9s1sXKyphmejDAk0G4NPBgexGowiEf2EQFcDYquuK/yyaG+
-         T69oMFPV+9G5m26v3wZsIawecSQevgygvOGJLGCMIpSmnRZ8Ao5YKp9M/WgdkEcw5R4o
-         7R+PEYXk6peC1bYjKIfHA/Skvxwqqs2+e/oZ3kA+luu/KB5wp2MudfFpwdWpvcITRGOU
-         J4RqBcPECg6GWGYqQyGe2RtsZDYTVkNgdO2YNcw5AlRdzCnclefQq4VSxfKPZPx90DEY
-         988w==
-X-Gm-Message-State: AOAM531jeyW87V2UbNpgi/LEYl7+KaxTDXHuImapY8fNCnlsB2QudSQ5
-        Q3fF5IG52wJepwJCyVsv0Nme+g==
-X-Google-Smtp-Source: ABdhPJwOAzvNXUWrQOMZZ6Pn52U6g6WPpbGpk9AzF5O1hc8wZyZsEDHPz1VOQo1RF640zOdBhAsitA==
-X-Received: by 2002:a05:6808:a99:: with SMTP id q25mr5117219oij.162.1633486128519;
-        Tue, 05 Oct 2021 19:08:48 -0700 (PDT)
+        bh=ctR1cokXAwmItjiMPfDRY881NbdQTs9Vf1LWVT6hHds=;
+        b=Bkqnlhl4gc6zHIZJ7PjIhNd8fwxD1W3KKCLptu6IfP6aCQHctE8vXjGqImg8loXgbG
+         OmFl+hpDYorsS6o40aCBF4Trf8GpNSi2VAmgv3lAvJ+xr3KfoWvjITnbvRk42swKOR65
+         15G37gmj7LL4XJVBtS0djQrA67NQGKFkOYRvTe8+t6/HUyo8uU1sUYAtaIGEtSvPu+na
+         qti3YiRGRjgC5N463STWvgiDgHIzq7fd5k8CJWPS70I7FCKwZzyWb5UjplXuN/fyyNv+
+         kDf45fDL93JTiTzxXOigH0yc9PXnaFKBpV4bKlAQV4H8FslnFbq0FT+sBW2h/bcQiFZ0
+         +gyQ==
+X-Gm-Message-State: AOAM5315pl0PAv4ivRETd48X5c+TdGrwgqyBSdyxqEijlShxlSBGrUp9
+        3zHkH85XZvWHPCir3DP0mnHY3w==
+X-Google-Smtp-Source: ABdhPJwmWDFSgL5ZJyC9eJC71MTzzmXZdmMYZ58H97Zj6PuIBt/AWQl53YgikIpdKcSJfrCaV2gSbQ==
+X-Received: by 2002:a05:6830:40b0:: with SMTP id x48mr17273031ott.246.1633487264086;
+        Tue, 05 Oct 2021 19:27:44 -0700 (PDT)
 Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id l23sm3535076otk.21.2021.10.05.19.08.47
+        by smtp.gmail.com with ESMTPSA id g9sm467239otj.78.2021.10.05.19.27.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Oct 2021 19:08:48 -0700 (PDT)
-Date:   Tue, 5 Oct 2021 19:10:29 -0700
+        Tue, 05 Oct 2021 19:27:43 -0700 (PDT)
+Date:   Tue, 5 Oct 2021 19:29:25 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     khsieh@codeaurora.org
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Sankeerth Billakanti <sbillaka@codeaurora.org>
-Subject: Re: [PATCH] drm/msm/dp: Shorten SETUP timeout
-Message-ID: <YV0FlTyMEzlyNsN9@ripper>
-References: <20211005023750.2037631-1-bjorn.andersson@linaro.org>
- <CAE-0n52wN1s=Ph4r4iLposxNPfa562Bv1mM81j1KvNmWOQS1-Q@mail.gmail.com>
- <YVzGVmJXEDH0HfIL@ripper>
- <CAE-0n53FC7JCCJoye_uKeqaLKrZeHXLtvObxWFedaUzjirmBaA@mail.gmail.com>
- <a4a4980e586a70e3b7de989bc61a3e33@codeaurora.org>
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Kuogee Hsieh <khsieh@codeaurora.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Vara Reddy <varar@codeaurora.org>,
+        freedreno <freedreno@lists.freedesktop.org>
+Subject: Re: [RFC] drm/msm/dp: Allow attaching a drm_panel
+Message-ID: <YV0KBWxVtKgOp2Cj@ripper>
+References: <20210726231351.655302-1-bjorn.andersson@linaro.org>
+ <CAD=FV=UGtHXD==Yy8CVCOioYGb=2hqGQOoNWftD1Jj7OiEp51g@mail.gmail.com>
+ <YVd3YdfgFVc0Br5T@ripper>
+ <CAD=FV=U=xVLuKOYHbGPTkLjGa8_U+F1ZtEvJt4LGaRuR5SsKFw@mail.gmail.com>
+ <YVumL1lHLqtb/HKS@ripper>
+ <CAD=FV=W9uKq00wXn4H1ax0u2D=R8Wn3J-Je43uxcPyDtk7AK7Q@mail.gmail.com>
+ <YVyMwsvLl6XalJxB@ripper>
+ <CAD=FV=WY+g38p7--QKZCaQnSqx7VvdwC36jH-VKnrEWoxK=XHQ@mail.gmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <a4a4980e586a70e3b7de989bc61a3e33@codeaurora.org>
+In-Reply-To: <CAD=FV=WY+g38p7--QKZCaQnSqx7VvdwC36jH-VKnrEWoxK=XHQ@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue 05 Oct 16:04 PDT 2021, khsieh@codeaurora.org wrote:
+On Tue 05 Oct 16:09 PDT 2021, Doug Anderson wrote:
 
-> On 2021-10-05 15:36, Stephen Boyd wrote:
-> > Quoting Bjorn Andersson (2021-10-05 14:40:38)
-> > > On Tue 05 Oct 11:45 PDT 2021, Stephen Boyd wrote:
-> > > 
-> > > > Quoting Bjorn Andersson (2021-10-04 19:37:50)
-> > > > > Found in the middle of a patch from Sankeerth was the reduction of the
-> > > > > INIT_SETUP timeout from 10s to 100ms. Upon INIT_SETUP timeout the host
-> > > > > is initalized and HPD interrupt start to be serviced, so in the case of
-> > > > > eDP this reduction improves the user experience dramatically - i.e.
-> > > > > removes 9.9s of bland screen time at boot.
-> > > > >
-> > > > > Suggested-by: Sankeerth Billakanti <sbillaka@codeaurora.org>
-> > > > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > > > ---
-> > > >
-> > > > Any Fixes tag? BTW, the delay design is pretty convoluted. I had to go
-> > > > re-read the code a couple times to understand that it's waiting 100ms
-> > > > times the 'delay' number. Whaaaaat?
-> > > >
-> > > 
-> > > I assume you're happy with the current 10s delay on the current
-> > > devices, so I don't think we should push for this to be backported.
-> > > I have no need for it to be backported on my side at least.
-> > > 
-> > 
-> > Sure. Fixes tag != backported to stable trees but it is close.
-> > 
-> > > > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> > > 
->   dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 1); <== to 100ms
+> Hi,
 > 
-> This patch will prevent usb3 from working due to dp driver initialize phy
-> earlier than usb3 which cause timeout error at power up usb3 phy when both
-> edp and dp are enabled.
+> On Tue, Oct 5, 2021 at 10:33 AM Bjorn Andersson
+> <bjorn.andersson@linaro.org> wrote:
+> >
+> > On Tue 05 Oct 08:39 PDT 2021, Doug Anderson wrote:
+> >
+> > > Hi,
+> > >
+> > > On Mon, Oct 4, 2021 at 6:09 PM Bjorn Andersson
+> > > <bjorn.andersson@linaro.org> wrote:
+> > > >
+> > > > On Mon 04 Oct 17:36 PDT 2021, Doug Anderson wrote:
+> > > >
+> > > > > Hi,
+> > > > >
+> > > > > On Fri, Oct 1, 2021 at 2:00 PM Bjorn Andersson
+> > > > > <bjorn.andersson@linaro.org> wrote:
+> > > > > >
+> > > > > > On Fri 27 Aug 13:52 PDT 2021, Doug Anderson wrote:
+> > > > > >
+> > > > > > > Hi,
+> > > > > > >
+> > > > > > > On Mon, Jul 26, 2021 at 4:15 PM Bjorn Andersson
+> > > > > > > <bjorn.andersson@linaro.org> wrote:
+> > > > > > > >
+> > > > > > > > +static int dp_parser_find_panel(struct dp_parser *parser)
+> > > > > > > > +{
+> > > > > > > > +       struct device_node *np = parser->pdev->dev.of_node;
+> > > > > > > > +       int rc;
+> > > > > > > > +
+> > > > > > > > +       rc = drm_of_find_panel_or_bridge(np, 2, 0, &parser->drm_panel, NULL);
+> > > > > > >
+> > > > > > > Why port 2? Shouldn't this just be port 1 always? The yaml says that
+> > > > > > > port 1 is "Output endpoint of the controller". We should just use port
+> > > > > > > 1 here, right?
+> > > > > > >
+> > > > > >
+> > > > > > Finally got back to this, changed it to 1 and figured out why I left it
+> > > > > > at 2.
+> > > > > >
+> > > > > > drm_of_find_panel_or_bridge() on a DP controller will find the of_graph
+> > > > > > reference to the USB-C controller, scan through the registered panels
+> > > > > > and conclude that the of_node of the USB-C controller isn't a registered
+> > > > > > panel and return -EPROBE_DEFER.
+> > > > >
+> > > > > I'm confused, but maybe it would help if I could see something
+> > > > > concrete. Is there a specific board this was happening on?
+> > > > >
+> > > >
+> > > > Right, let's make this more concrete with a snippet from the actual
+> > > > SC8180x DT.
+> > > >
+> > > > > Under the DP node in the device tree I expect:
+> > > > >
+> > > > > ports {
+> > > > >   port@1 {
+> > > > >     reg = <1>;
+> > > > >     edp_out: endpoint {
+> > > > >       remote-endpoint = <&edp_panel_in>;
+> > > > >     };
+> > > > >   };
+> > > > > };
+> > > > >
+> > > >
+> > > > /* We got a panel */
+> > > > panel {
+> > > >     ...
+> > > >     ports {
+> > > >         port {
+> > > >             auo_b133han05_in: endpoint {
+> > > >                 remote-endpoint = <&mdss_edp_out>;
+> > > >             };
+> > > >         };
+> > > >     };
+> > > > };
+> > > >
+> > > > /* And a 2-port USB-C controller */
+> > > > type-c-controller {
+> > > >     ...
+> > > >     connector@0 {
+> > > >         ports {
+> > > >             port@0 {
+> > > >                 reg = <0>;
+> > > >                 ucsi_port_0_dp: endpoint {
+> > > >                     remote-endpoint = <&dp0_mode>;
+> > > >                 };
+> > > >             };
+> > > >
+> > > >             port@1 {
+> > > >                 reg = <1>;
+> > > >                 ucsi_port_0_switch: endpoint {
+> > > >                     remote-endpoint = <&primary_qmp_phy>;
+> > > >                 };
+> > > >             };
+> > > >         };
+> > > >     };
+> > > >
+> > > >         connector@1 {
+> > > >         ports {
+> > > >             port@0 {
+> > > >                 reg = <0>;
+> > > >                 ucsi_port_1_dp: endpoint {
+> > > >                     remote-endpoint = <&dp1_mode>;
+> > > >                 };
+> > > >             };
+> > > >
+> > > >             port@1 {
+> > > >                 reg = <1>;
+> > > >                 ucsi_port_1_switch: endpoint {
+> > > >                     remote-endpoint = <&second_qmp_phy>;
+> > > >                 };
+> > > >             };
+> > > >         };
+> > > >         };
+> > > > };
+> > > >
+> > > > /* And then our 2 DP and single eDP controllers */
+> > > > &mdss_dp0 {
+> > > >     ports {
+> > > >         port@1 {
+> > > >             reg = <1>;
+> > > >             dp0_mode: endpoint {
+> > > >                 remote-endpoint = <&ucsi_port_0_dp>;
+> > > >             };
+> > > >         };
+> > > >     };
+> > > > };
+> > > >
+> > > > &mdss_dp1 {
+> > > >     ports {
+> > > >         port@1 {
+> > > >             reg = <1>;
+> > > >             dp1_mode: endpoint {
+> > > >                 remote-endpoint = <&ucsi_port_1_dp>;
+> > > >             };
+> > > >         };
+> > > >     };
+> > > > };
+> > > >
+> > > > &mdss_edp {
+> > > >     ports {
+> > > >         port@1 {
+> > > >             reg = <1>;
+> > > >             mdss_edp_out: endpoint {
+> > > >                 remote-endpoint = <&auo_b133han05_in>;
+> > > >             };
+> > > >         };
+> > > >     };
+> > > > };
+> > > >
+> > > > > If you have "port@1" pointing to a USB-C controller but this instance
+> > > > > of the DP controller is actually hooked up straight to a panel then
+> > > > > you should simply delete the "port@1" that points to the typeC and
+> > > > > replace it with one that points to a panel, right?
+> > > > >
+> > > >
+> > > > As you can see, port 1 on &mdss_dp0 and &mdss_dp1 points to the two UCSI
+> > > > connectors and the eDP points to the panel, exactly like we agreed.
+> > > >
+> > > > So now I call:
+> > > >     drm_of_find_panel_or_bridge(dev->of_node, 1, 0, &panel, NULL);
+> > > >
+> > > > which for the two DP nodes will pass respective UCSI connector to
+> > > > drm_find_panel() and get EPROBE_DEFER back - because they are not on
+> > > > panel_list.
+> > > >
+> > > > There's nothing indicating in the of_graph that the USB connectors
+> > > > aren't panels (or bridges), so I don't see a way to distinguish the two
+> > > > types remotes.
+> 
+> To summarize where I think our out-of-band discussion went, I think
+> you're OK w/ keeping this at "port@1" for both the DP and eDP case and
+> we'll figure out _some_ way to make it work.
+> 
+> 
+> > > As far as I can tell the way this would be solved would be to actually
+> > > pass &bridge in and then make sure that a bridge would be in place for
+> > > the DP connector. In the full DP case you'll get an -EPROBE_DEFER if
+> > > the connector hasn't been probed but once it's probed then it should
+> > > register as a bridge and thus give you the info you need (AKA that
+> > > this isn't a panel).
+> > >
+> > > I haven't done the digging to see how all this works, but according to
+> > > Laurent [1]: "Physical connectors are already handled as bridges, see
+> > > drivers/gpu/drm/bridge/display-connector.c"
+> > >
+> >
+> > All this seems to make sense for both eDP and "native" DP.
+> >
+> > > So basically I think this is solvable in code and there's no reason to
+> > > mess with the devicetree bindings to solve this problem. Does that
+> > > sound right?
+> > >
+> >
+> > But I don't have a DisplayPort connector.
+> >
+> > I have a USB-C connector, that upon determining that it's time to play
+> > DisplayPort will use the typec_mux abstraction to tell someone on the
+> > other side of the of_graph about DisplayPort events (HPD).
+> >
+> > So where would I put this drm_bridge in the USB-C case?
+> >
+> > I don't see that it fits in the Type-C side of things and putting it on
+> > the DP side would leave us with exactly the problem we have here. So we
+> > would have to put a fake "DP connector" inbetween the DP node and the
+> > Type-C controller?
+> >
+> >
+> > For reference, this is how I thought one is supposed to tie the Type-C
+> > controller to the display driver:
+> > https://lore.kernel.org/all/20211005022451.2037405-1-bjorn.andersson@linaro.org/
+> 
+> OK, so I looked at that a bit. Fair warning that I've never looked at
+> the type C code before today so anything I say could be totally wrong!
+> :-)
+> 
+> ...but I _think_ you're abusing the "mux" API for this. I think a type
+> C port can have exactly 1 mux, right? Right now you are claiming to be
+> _the_ mux in the DP driver, but what about for other alt modes? If
+> those wanted to be notified about similar things it would be
+> impossible because you're already _the_ mux, right?
+> 
 
-Can you please help me understand what you mean here, I use this on my
-sc8180x with both eDP and USB-C/DP right now. What is it that doesn't
-work? Or am I just lucky in some race condition?
+I actually don't think so, because I acquire the typec_mux handle by the
+means of:
 
-Thanks,
+mux_desc.svid = USB_TYPEC_DP_SID;
+mux_desc.mode = USB_TYPEC_DP_MODE;
+alt_port->mux = fwnode_typec_mux_get(fwnode, &mux_desc);
+
+And in the DisplayPort node I provide svid = /bits/ 16 <0xff01>;
+
+So I will be able to reference multiple different altmode
+implementors using this scheme.
+
+> I _think_ a mux is supposed to be something more like
+> `drivers/phy/rockchip/phy-rockchip-typec.c` (though that code predates
+> the type C framework we're looking at here). There the phy can do all
+> the work of remuxing things / flipping orientation / etc. I don't
+> think it's a requirement that every SoC be able to do this remuxing
+> itself but (if memory serves) rk3399 implemented it so we didn't have
+> to do it on the TCPC and could use a cheaper solution there.
+> 
+
+I'm afraid I don't see how this interacts with a display controller. It
+seems more like it's the phy side of things, what we have split between
+the Type-C controller and the QMP phy to set the pins in the right
+state.
+
+> In any case, my point is that I think there is supposed to be a
+> _single_ mux per port that handles reassigning pins and that's what
+> this API is for.
+> 
+
+If that's the case things such as typec_mux_match() is just completely
+backwards.
+
+> ...so I will still assert that the right thing to do is to have a
+> drm_bridge for the type c connector and _that's_ what should be
+> sending HPD.
+> 
+
+That still implies that all the current typec_mux code got it all wrong
+and should be thrown out. If you instead consider that you have a Type-C
+controller that upon switching DisplayPort on/off calls typec_mux_set()
+to inform the functions that things has changed then all the current
+code makes sense.
+
+It also maps nicely to how the TypeC controller would call
+typec_switch_set() to inform, in our case the QMP phy that the
+orientation has switched.
+
+
+It seems reasonable to have some common helper code that registers the
+typec_mux and turn its notifications into HPD notifications to the
+display code, but I still think that should live in the DRM framework,
+separate from the USB code.
+
+Regards,
 Bjorn
 
-> I had prepared a patch (drm/msm/dp: do not initialize combo phy until plugin
-> interrupt) to fix this problem.
-> Unfortunately, my patch is depend on Bjorn's patch (PATCH v3 3/5]
-> drm/msm/dp: Support up to 3 DP controllers).
-> I will submit my patch for review once Bjorn's patches merged in.
-> Therefore I would think this patch should go after both Bjorn's patches and
-> my patch.
 > 
-> 
-> 
+> > I'm afraid I must be missing something in Laurent and yours proposal
+> > (although I think Laurent is talking about the native DP case?).
+> >
+> > Regards,
+> > Bjorn
+> >
+> > > [1] https://lore.kernel.org/r/YUvMv+Y8tFcWPEHd@pendragon.ideasonboard.com/
