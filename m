@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DB4EC42351F
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 02:36:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FB3242353D
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 02:43:13 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237024AbhJFAib (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Oct 2021 20:38:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45800 "EHLO
+        id S237096AbhJFApD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Oct 2021 20:45:03 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47320 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233994AbhJFAib (ORCPT
+        with ESMTP id S237062AbhJFApC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Oct 2021 20:38:31 -0400
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D228FC06174E
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Oct 2021 17:36:39 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id r43-20020a05683044ab00b0054716b40005so1069162otv.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Oct 2021 17:36:39 -0700 (PDT)
+        Tue, 5 Oct 2021 20:45:02 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9C7A1C06174E
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Oct 2021 17:43:11 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id w190so1690816oif.5
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Oct 2021 17:43:11 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=chromium.org; s=google;
         h=mime-version:in-reply-to:references:from:user-agent:date:message-id
          :subject:to:cc;
-        bh=34FHsnThWd5cJ2Bu4AZwOiJDWeSTgTUmslcydMZU27I=;
-        b=h3+Dekiu7PeXTtrw/wymCYT7cideBYDpY3zS3TTprVL+pZ/JWaEDq0UbstfC69POmj
-         BCjmQtm9drcLf1tPYRVACnccuJW2IkEp7c7K2yBKmYv4a7PKHG6clmum+9hszB3Zep+v
-         eyeSZ8UgbMQLzlkO1onJyYElAVEA9VIQRdgbc=
+        bh=wKt6Nae01mSLjqjYH36TB6q2xyVedx1Ybson8Q1DwNo=;
+        b=iFAJ9/IgDbQ7Sy4xqhyBxFt3v9D8bevCQfBgMV5P6XDy12y+C8h/tYzAwW05HvLVoq
+         GKGeSuk+uuQYFr/xhhCWujoSKaXnwZ6F0I3iIo3xYZyyhO5TtALLjhLHeoq7cZU88mD+
+         b+wsFarnUhcTgAiki9DVDpNtzwpTkktWrQwPc=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:in-reply-to:references:from
          :user-agent:date:message-id:subject:to:cc;
-        bh=34FHsnThWd5cJ2Bu4AZwOiJDWeSTgTUmslcydMZU27I=;
-        b=0Tl9cOWP7Zn6cJe0n2TD2CxwK8W9B7F3ObMDSH1EknvXoWSmOCHspYUH82QkM6vmkC
-         b6wFYVM1OT5E+uRfr0sWyrtri9TdzYsFmkdm/Y6ZvcsIitewdN+zPwFuoLUudbojRG2O
-         cO3Gd1WCQug7AzIPUIUgIv/FM2frKDA10FOpxUJbSGAjPcPd310WswmAt8BEeSnXl7W4
-         REs3ddjQkHtlR7FL/ZwbBGOegCeFIBuABTqT1kesvYyz62Hy9a+VN6ul4XrHDPQv3MTJ
-         bovliN2NSRim71hndeQztkmfegkqBxdcJQu637i22KCdmOpYKvnkvNj0VJGTCygjTwlP
-         VWdg==
-X-Gm-Message-State: AOAM533ztfNWzoKRqjPwXJiR9VMfTRqFb2E5yzpK1FQbJFUA5fMPggiR
-        0cyM0PiOEOtRp5102aFczT8EtzYM7UdJVAK0vXs66w==
-X-Google-Smtp-Source: ABdhPJzLtds0BffH3uZEHTiFhq527czugxVx7eDlpHa/6QzckkoMEfbzawgp/QBcet9u1WshjOzIz2lqcbc5Ej7qgYw=
-X-Received: by 2002:a05:6830:4116:: with SMTP id w22mr3879148ott.159.1633480599234;
- Tue, 05 Oct 2021 17:36:39 -0700 (PDT)
+        bh=wKt6Nae01mSLjqjYH36TB6q2xyVedx1Ybson8Q1DwNo=;
+        b=uUunV2naQOp3glyAQFoBd9M21/UJxLExcFO444QAQaE3c2CMv/WqMrWMqt2/AKV1hQ
+         884f47NcfqrpFr7jU8jRPK5kHcuRw3x0h8AxFhj8+E8XZUfyVrGelw0LLvJfpXBCObAP
+         aQdYdekX1BmOf86k6LN7TcuOT9xpUYdzTyPKoN8kwcQ26w3BHFXV5o1UcWx9Oxu8FrMH
+         mTGSeaAc8wvzonNDrl2+XyBqI4GcXna5ANJtqHr6D4GHEZ1Mfx7rSGHnFGgkp9gqigwX
+         s9CJOaxBCkUQFAJ3nmJAmP4ZF/tJWrmzcGCLOenAgMPxTq9S5xXgiCM4GewO1L05zlGX
+         AQoQ==
+X-Gm-Message-State: AOAM532oXH6tXlngdyVJcEdsaoWb8ZOH73EsrfRVDw6ZGs4ArkQA23tN
+        FoMiatwSL0FhrvQabHvwU5uXJy0TlzOOBMwndUpDuA==
+X-Google-Smtp-Source: ABdhPJya2fZABu/CNUYa983sa9i2c4DPhWV3wKcrOj61v8RSJ6oV5qsUFBtRizZg3Lv11yJZ04jeeHU1MRPlii5J3mY=
+X-Received: by 2002:aca:42d7:: with SMTP id p206mr5038548oia.32.1633480990745;
+ Tue, 05 Oct 2021 17:43:10 -0700 (PDT)
 Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Tue, 5 Oct 2021 17:36:38 -0700
+ HTTPREST; Tue, 5 Oct 2021 17:43:10 -0700
 MIME-Version: 1.0
-In-Reply-To: <20211005231323.2663520-8-bjorn.andersson@linaro.org>
-References: <20211005231323.2663520-1-bjorn.andersson@linaro.org> <20211005231323.2663520-8-bjorn.andersson@linaro.org>
+In-Reply-To: <20211005231323.2663520-6-bjorn.andersson@linaro.org>
+References: <20211005231323.2663520-1-bjorn.andersson@linaro.org> <20211005231323.2663520-6-bjorn.andersson@linaro.org>
 From:   Stephen Boyd <swboyd@chromium.org>
 User-Agent: alot/0.9.1
-Date:   Tue, 5 Oct 2021 17:36:38 -0700
-Message-ID: <CAE-0n52MhUk_bE23FpDCrrk9errV3CvSAhNV-xm_5eiRyQ1zLw@mail.gmail.com>
-Subject: Re: [PATCH v4 7/7] drm/msm/dp: Add sc8180x DP controllers
+Date:   Tue, 5 Oct 2021 17:43:10 -0700
+Message-ID: <CAE-0n52gOCC8bUfMFnNHRKFoq2=q4Ho8a-UYH5JKgumguhUD2A@mail.gmail.com>
+Subject: Re: [PATCH v4 5/7] drm/msm/dp: Support up to 3 DP controllers
 To:     Abhinav Kumar <abhinavk@codeaurora.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Daniel Vetter <daniel@ffwll.ch>,
@@ -67,44 +67,56 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Bjorn Andersson (2021-10-05 16:13:23)
-> The sc8180x has 2 DP and 1 eDP controllers, add support for these to the
-> DP driver.
->
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->
-> Changes since v3:
-> - Rebased upon previous patches in series
->
->  drivers/gpu/drm/msm/dp/dp_display.c | 11 +++++++++++
->  1 file changed, 11 insertions(+)
->
+Quoting Bjorn Andersson (2021-10-05 16:13:21)
 > diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> index 674cddfee5b0..29c2c1c52ddb 100644
+> index bdaf227f05dc..674cddfee5b0 100644
 > --- a/drivers/gpu/drm/msm/dp/dp_display.c
 > +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> @@ -135,8 +135,19 @@ static const struct msm_dp_config sc7180_dp_cfg = {
->         .num_descs = 1,
->  };
+> @@ -79,6 +79,8 @@ struct dp_display_private {
+>         char *name;
+>         int irq;
 >
-> +static const struct msm_dp_config sc8180x_dp_cfg = {
-> +       .descs = (struct msm_dp_desc[]) {
-
-const?
-
-> +               { .io_start = 0x0ae90000, .connector_type = DRM_MODE_CONNECTOR_DisplayPort },
-> +               { .io_start = 0x0ae98000, .connector_type = DRM_MODE_CONNECTOR_DisplayPort },
-> +               { .io_start = 0x0ae9a000, .connector_type = DRM_MODE_CONNECTOR_eDP },
-> +       },
-> +       .num_descs = 3,
-> +};
+> +       unsigned int id;
 > +
->  static const struct of_device_id dp_dt_match[] = {
->         { .compatible = "qcom,sc7180-dp", .data = &sc7180_dp_cfg },
-> +       { .compatible = "qcom,sc8180x-dp", .data = &sc8180x_dp_cfg },
-> +       { .compatible = "qcom,sc8180x-edp", .data = &sc8180x_dp_cfg },
+>         /* state variables */
+>         bool core_initialized;
+>         bool hpd_irq_on;
+> @@ -229,7 +231,7 @@ static int dp_display_bind(struct device *dev, struct device *master,
+>
+>         dp->dp_display.drm_dev = drm;
+>         priv = drm->dev_private;
+> -       priv->dp = &(dp->dp_display);
+> +       priv->dp[dp->id] = &(dp->dp_display);
 
-Otherwise
+Can we drop the extra parenthesis?
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+>
+>         rc = dp->parser->parse(dp->parser, dp->dp_display.connector_type);
+>         if (rc) {
+> @@ -269,7 +271,7 @@ static void dp_display_unbind(struct device *dev, struct device *master,
+>
+>         dp_power_client_deinit(dp->power);
+>         dp_aux_unregister(dp->aux);
+> -       priv->dp = NULL;
+> +       priv->dp[dp->id] = NULL;
+>  }
+>
+>  static const struct component_ops dp_display_comp_ops = {
+> @@ -1233,7 +1239,7 @@ static int dp_display_probe(struct platform_device *pdev)
+>         if (!dp)
+>                 return -ENOMEM;
+>
+> -       desc = dp_display_get_desc(pdev);
+> +       desc = dp_display_get_desc(pdev, &dp->id);
+
+I'm sad that dp->id has to match the number in the SoC specific
+dpu_intf_cfg array in drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+still. Is there any way we can avoid that? Also, notice how those arrays
+already have INTF_DP macros, which makes me think that it may be better
+to connect this to those arrays instead of making an msm_dp_desc
+structure and then make sure the 'type' member matches a connector
+type number. Otherwise this code is super fragile.
+
+>         if (!desc)
+>                 return -EINVAL;
+>
