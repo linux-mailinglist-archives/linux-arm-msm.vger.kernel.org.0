@@ -2,96 +2,140 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 027074236C0
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 05:57:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8E94A4236E3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 06:12:27 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237592AbhJFD6u (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Oct 2021 23:58:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32976 "EHLO
+        id S230450AbhJFEOR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Oct 2021 00:14:17 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36956 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237954AbhJFD5d (ORCPT
+        with ESMTP id S230358AbhJFEON (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Oct 2021 23:57:33 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id AF912C0613AD
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Oct 2021 20:54:26 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id u18so4430797lfd.12
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Oct 2021 20:54:26 -0700 (PDT)
+        Wed, 6 Oct 2021 00:14:13 -0400
+Received: from mail-ot1-x32f.google.com (mail-ot1-x32f.google.com [IPv6:2607:f8b0:4864:20::32f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D4E78C061755
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Oct 2021 21:12:21 -0700 (PDT)
+Received: by mail-ot1-x32f.google.com with SMTP id g62-20020a9d2dc4000000b0054752cfbc59so1620151otb.1
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Oct 2021 21:12:21 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=DZOpdA3eYjpudg4OpQFFkH8jLHw3BxsNdxzTMff7kgw=;
-        b=Vqowca4UgiaC+fBXqBcu/uY1PBquzcLUSNLvI4m85X7UrokO3SMSU2VjgjwlLvMQmh
-         qsx0PVYwuS97nctSczbW0/EPVJ0QBpI8npXxHwrFMaNxAVtaIlRSrtfDr/01lMkJFIzk
-         NeLaREUo2x9NAHKctYTeKFJdcbLKG3DGrW4TE6vnxKsvxVRzGpwnzWZPAhbV6qTOP1TZ
-         8albRcafCq9VIoNGF5i1EtEgCzTR7YeJxiTMPsw8rZxBFCSGpBQwXD+jrBjbyyQnVjnb
-         ujZ8iI+IoHoh/d/5ZhPx+FNiAsGnS4MzGWDOWNQ3qbBfyZhavzipupkGO+MkveylWsCR
-         B8HA==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=JeqQPQlkPMyybH7Ylv9LL4C+2+30wYTv9mWLfCOyW68=;
+        b=XEjeIZfNuBmJTMi6wtAtetYggf2aHs3GPhHg1KwJz1egGXL5njhCRw3DDPgbsH7cJv
+         OUWOA1oOvi2LLIVGnWT3wGH+TmJA95TyM0M6gC2kao6MWJu+bZzC5cnO84s06z3CI1AA
+         XVvMCCFyDHcpCO8U8QelLmZi7fD9CRI8OYcPo6qSRxfBbT/AxB2YjYAxUJ6hV57S0w7A
+         tv9MugLiCri9LD2ijJPmIfSvtHSZYv6q8bsMiyIMxl6jokP6DoYrt1m4hdtVohghtVTl
+         EEr+bbftzq4eN6V4Bov3juUBbxPCEkxk4V/sQTSbb+6ENfzMeMK65PcTxz1DE8SImzIX
+         +iKw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=DZOpdA3eYjpudg4OpQFFkH8jLHw3BxsNdxzTMff7kgw=;
-        b=rd6f9/rFXagdxrPQiShjond1OoyTfbznNX8hiilxJrT2GYkqWjnXK19uDIMTmEpSXS
-         Au6DJ/eG8g5D8cXGvZIZ8GrdgwygeyCtmGiHV+URDFG9RcgYkjunsgZvXloq4HuKz7FL
-         Oz7C6fSFu/84u+O6yiyEoRD7GxaM3XAPJy3AIH85gN5/vfl0tGw0uE/ERPPXYhIqrRnW
-         X+ZANuEw4A4/ZJgTT/Xx3Ts9rJvxENMfYF7cjiMfYByghJzIZLJaOCjEu8KzowNxZDjQ
-         5l6pZtbd9HHIZM0M8n8txT/4SxZA52/+7+NEHfSLlMtqwMGAx8U1/QKUZF0ausO0Of4r
-         TpKw==
-X-Gm-Message-State: AOAM531EM3eBjc0fXpfg/zLXjwblaW5KD0F02GAfvJij4Y4VU0R4DIE0
-        7i5huyU+9HAb0R1rDPXP3sxuWQ==
-X-Google-Smtp-Source: ABdhPJzAuciR0Bs89UsVK2ICmqc78PA7gPD8wfVqylDag0DqJdI3Y1HguWHKaOEbTu8SD0HZCDgojQ==
-X-Received: by 2002:a2e:480a:: with SMTP id v10mr25910067lja.268.1633492465108;
-        Tue, 05 Oct 2021 20:54:25 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id s4sm2142967lfd.103.2021.10.05.20.54.24
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=JeqQPQlkPMyybH7Ylv9LL4C+2+30wYTv9mWLfCOyW68=;
+        b=Qw3wKq9dBg7pzdJXDs8AT0JXRyJqJo+ch1w9dr0sUdBF7nJws1TzqMouC+2qBmeM8l
+         cpHES/i1D9/gGPo2W+M7Upw6KvptQKjFBcm5bhEkndEFSgpz/DCBWimAj3KcFmzYLLVx
+         1oK5XsvwHXxeinqsw4atdoO4OvmbtDcxnE2Q+VhJTGWPI9Z1AcGUJ6exy+AX7vwOlg7U
+         G8CRMDhdyBbL/mh8Y1F8lSGWlStaAaB19CZ3ccYDleOuMb5QKQHDdKKmn3xTClmwFIeu
+         nCQhuI25+FMgT5GVZqNfBJOR7GbmC3HM9rB3ULUr2oaPkFBf3344R8jrszqDIIQldxln
+         e40w==
+X-Gm-Message-State: AOAM533Kw0msSE3SDnoTJxJIy0M5Bf2pOdLtwov3Pri/9HoPlIF5hTAq
+        CrlkBvkbo/uFTo6wuqXUYhxOIw==
+X-Google-Smtp-Source: ABdhPJx/5egmLBcK43fNwucfO1oEx4RaFxVzQH0A8+50zHcH+LenRxckCdmVbnSpKpPJhWTVbKHZbA==
+X-Received: by 2002:a9d:12c8:: with SMTP id g66mr276609otg.7.1633493541062;
+        Tue, 05 Oct 2021 21:12:21 -0700 (PDT)
+Received: from yoga ([2600:1700:a0:3dc8:c84c:8eff:fe1e:256f])
+        by smtp.gmail.com with ESMTPSA id u12sm4009329otq.20.2021.10.05.21.12.19
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 05 Oct 2021 20:54:24 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        Marcel Holtmann <marcel@holtmann.org>,
-        Johan Hedberg <johan.hedberg@gmail.com>,
-        Luiz Augusto von Dentz <luiz.dentz@gmail.com>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>
-Cc:     linux-arm-msm@vger.kernel.org, linux-mmc@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
-        netdev@vger.kernel.org
-Subject: [PATCH v1 15/15] WIP: arm64: dts: qcom: qrb5165-rb5: add bus-pwrseq property to pcie0
-Date:   Wed,  6 Oct 2021 06:54:07 +0300
-Message-Id: <20211006035407.1147909-16-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20211006035407.1147909-1-dmitry.baryshkov@linaro.org>
-References: <20211006035407.1147909-1-dmitry.baryshkov@linaro.org>
+        Tue, 05 Oct 2021 21:12:20 -0700 (PDT)
+Date:   Tue, 5 Oct 2021 23:12:18 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Uwe Kleine-K?nig <u.kleine-koenig@pengutronix.de>,
+        Lee Jones <lee.jones@linaro.org>, linux-leds@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-pwm@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+Subject: Re: [PATCH v9 1/2] dt-bindings: leds: Add Qualcomm Light Pulse
+ Generator binding
+Message-ID: <YV0iIlTra++r9dL0@yoga>
+References: <20210623035039.772660-1-bjorn.andersson@linaro.org>
+ <YToluIBXlNJEFhcb@google.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YToluIBXlNJEFhcb@google.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts | 1 +
- 1 file changed, 1 insertion(+)
+On Thu 09 Sep 10:18 CDT 2021, Matthias Kaehlcke wrote:
 
-diff --git a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-index 326330f528fc..0c347cb6f8e0 100644
---- a/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-+++ b/arch/arm64/boot/dts/qcom/qrb5165-rb5.dts
-@@ -689,6 +689,7 @@ wifi-therm@1 {
- 
- &pcie0 {
- 	status = "okay";
-+	bus-pwrseq = <&qca_pwrseq 0>;
- };
- 
- &pcie0_phy {
--- 
-2.33.0
+> On Tue, Jun 22, 2021 at 08:50:38PM -0700, Bjorn Andersson wrote:
+[..]
+> > +  - |
+> > +    #include <dt-bindings/leds/common.h>
+> > +
+> > +    lpg {
+> > +      compatible = "qcom,pmi8994-lpg";
+> > +
+> > +      #address-cells = <1>;
+> > +      #size-cells = <0>;
+> > +
+> > +      qcom,power-source = <1>;
+> > +
+> > +      multi-led {
+> > +        color = <LED_COLOR_ID_RGB>;
+> > +        function = LED_FUNCTION_STATUS;
+> > +
+> > +        #address-cells = <1>;
+> > +        #size-cells = <0>;
+> > +
+> > +        led@1 {
+> > +          reg = <1>;
+> > +          color = <LED_COLOR_ID_RED>;
+> > +        };
+> > +
+> > +        led@2 {
+> > +          reg = <2>;
+> > +          color = <LED_COLOR_ID_GREEN>;
+> > +        };
+> > +
+> > +        led@3 {
+> > +          reg = <3>;
+> > +          color = <LED_COLOR_ID_BLUE>;
+> > +        };
+> > +      };
+> > +    };
+> > +  - |
+> > +    lpg {
+> 
+> nit: should the node be named 'lpg-pwm'?
+> 
+> IIUC a PMIC .dtsi could have both a 'lpg' and a 'lpg-pwm' node, even though
+> only one of them can be enabled at any time.
+> 
 
+No, there's only the one "LPG", with N channels. The lpg exposes a pwm
+chip and the child nodes may describe LEDs connected to the channels.
+So this example is the configuration where there's no LEDs attached.
+
+The compatible is "pwm", because the PM8916 lacks the pattern and RGB
+blocks that makes up the LPG - and is hence named "PWM" in the datasheet
+instead. So perhaps the example should be generically named "pwm"
+instead.
+
+In all other PMICs I know of the hardware block is named "lpg".
+
+Regards,
+Bjorn
+
+> > +      compatible = "qcom,pm8916-pwm";
+> > +      #pwm-cells = <2>;
+> > +    };
