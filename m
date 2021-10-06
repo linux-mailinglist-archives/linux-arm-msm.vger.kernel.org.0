@@ -2,216 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4B126424838
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 22:48:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 808884248BA
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 23:18:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232147AbhJFUuZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Oct 2021 16:50:25 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41972 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231749AbhJFUuZ (ORCPT
+        id S232093AbhJFVU3 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Oct 2021 17:20:29 -0400
+Received: from mail-oo1-f51.google.com ([209.85.161.51]:37635 "EHLO
+        mail-oo1-f51.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230053AbhJFVU2 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Oct 2021 16:50:25 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7DCF6C061746
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Oct 2021 13:48:32 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id y26so15803919lfa.11
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Oct 2021 13:48:32 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=omBxJqx/FyuXHNB3iSfAI33Nu5vXJyXne6zSU6njhHw=;
-        b=kMXzRWnKXIXhCAcuRaafEUEmwhOd6NWc2nEUh4LClHTs3R5bCtkIYFIrS9/Raog3Ku
-         D9NVdxNw0AhF7oynGKTQtWVEkdlzqV4QVksSstJ7iiiXsM1irYJUsF4WQmFQMcUOkvcZ
-         4W4rzmCo2Z7QfJwiCOliCag0FYJ2x6Q9lLE2Khlexe0X5VsDoP1uaIMhMD+zlz6shRjs
-         qqAskVVYkxk9n2HLXFN+odr0++5h6qMv5XJbr+200nIyXOA6Q2Q96ND3AVjU7nPpOYYX
-         7q9tnCZr6z7eugPd1jwCd+Da5GcGR3etXmaPv5WLAwd2rbOMi8BF+3oMoUyyrx3QckY0
-         fCJQ==
+        Wed, 6 Oct 2021 17:20:28 -0400
+Received: by mail-oo1-f51.google.com with SMTP id h11-20020a4aa74b000000b002a933d156cbso1273920oom.4;
+        Wed, 06 Oct 2021 14:18:36 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=omBxJqx/FyuXHNB3iSfAI33Nu5vXJyXne6zSU6njhHw=;
-        b=eDFzwtQgf1JIpPDtRHBlxIV7BfuZQmMb5hqCa95MOs1zCkLdGGYsLJqNZ/Ed56YXuE
-         ULwh1ovSy0qi+xeZcYYJVeOBUxdj9dazhIp8hqkz8AijCSQc5ftx+PirKuGaAbp2nrE1
-         ob2xke80QUWlSQDQPskYIoAU0+mWJ1EbBspD2oPJpBYaeZM5fnGUJJhfb1zmC1cEpOJT
-         LVqihOVb4JmstLFffAjGX4zAcwFaMl/D+wbdmasZEy5UN7Bf6IGDIFNqb4hocBsu16fb
-         RS1oXcP6OSLHSydrUw5DODRWaPhlGhBbrKn/vatJKeB4FGujHGzLeSEFK2EBWw2FGmj8
-         shPw==
-X-Gm-Message-State: AOAM530G9JVODF7xWADnAYUkDC5ozz2cXKDwil/GQNP6MHKKxkYkzwwW
-        ygBGwmYFWCi/madqKOMejElSILEWzCtlsQ==
-X-Google-Smtp-Source: ABdhPJwzRAoSXLNBfgkpGRLNZ/6a2V7s0SldbWKOa+R9EMgjB1wOVpraMIWLbcsaUID8xKyMa2a4Ew==
-X-Received: by 2002:a05:6512:1291:: with SMTP id u17mr238075lfs.226.1633553310810;
-        Wed, 06 Oct 2021 13:48:30 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id y19sm2378787ljc.116.2021.10.06.13.48.30
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=nztvh6IbkiikPBshf+nxM9zD+bQnj+yJie9stb0db+U=;
+        b=xoCJ7pdowsm+sxL+Ezh2oiHV3nRFwqNGdI7VEOHyUXC+LUwrsvlVZU+atP1wCH4h/U
+         x1JfuOPpe7LAo6jm1VrjiOs6fI1b1eiPYQhJyCYKbR0WPWNKH4+AWJC1RJOnO5S4JspT
+         fcZZlB3hv+4DWUJISNa3W1TrqInGaGEdHEOm1hdWVyzzgCZ9C6SQ69wBeNVBEIeYqUnF
+         eJXXd46aQEstNXZWKB77t8a3EKYAt/ie/e4G2ktRAX2D9K1v7Bz2nz2cOhgAaU1t+d10
+         ZubXsElfYFRwZTCk935C9Hur1oFwDGVGpUalGY2frZ7qRTb6XcPj3zzbSja+4pot2ywG
+         Hysw==
+X-Gm-Message-State: AOAM531io177c3PUCud9QFsF2yuT+NnHICdWTH5+n1zUZiC2dENLQauE
+        4Os4T+PlP4K4fBcTNG1J6w==
+X-Google-Smtp-Source: ABdhPJygDBfzJdSEGwLTIJVzJx9WbinbeLrrLPsydYtDBcJz9RWZDmNtNSRDmxN7ctBdNKliuNjsiA==
+X-Received: by 2002:a4a:dc1a:: with SMTP id p26mr518103oov.6.1633555115683;
+        Wed, 06 Oct 2021 14:18:35 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id u9sm4538894oiu.19.2021.10.06.14.18.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Oct 2021 13:48:30 -0700 (PDT)
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <abhinavk@codeaurora.org>
-Cc:     Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
-Subject: [PATCH 2/2] drm/msm/dsi: stop setting clock parents manually
-Date:   Wed,  6 Oct 2021 23:48:28 +0300
-Message-Id: <20211006204828.1218225-2-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20211006204828.1218225-1-dmitry.baryshkov@linaro.org>
-References: <20211006204828.1218225-1-dmitry.baryshkov@linaro.org>
+        Wed, 06 Oct 2021 14:18:35 -0700 (PDT)
+Received: (nullmailer pid 2893756 invoked by uid 1000);
+        Wed, 06 Oct 2021 21:18:33 -0000
+Date:   Wed, 6 Oct 2021 16:18:33 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
+        Frank Rowand <frowand.list@gmail.com>,
+        Chris Lew <clew@codeaurora.org>, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Deepak Kumar Singh <deesin@codeaurora.org>
+Subject: Re: [PATCH v2 1/4] dt-bindings: sram: Document qcom,rpm-msg-ram
+Message-ID: <YV4SqRsCvsTDPF4/@robh.at.kernel.org>
+References: <20210930182111.57353-1-bjorn.andersson@linaro.org>
+ <20210930182111.57353-2-bjorn.andersson@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20210930182111.57353-2-bjorn.andersson@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is no reason to set clock parents manually, use device tree to
-assign DSI/display clock parents to DSI PHY clocks. Dropping this manual
-setup allows us to drop repeating code and to move registration of hw
-clock providers to generic place.
+On Thu, 30 Sep 2021 11:21:08 -0700, Bjorn Andersson wrote:
+> The Qualcomm SMEM binding always depended on a reference to a SRAM node
+> of compatible "qcom,rpm-msg-ram", document this as part of the SRAM
+> binding.
+> 
+> The SRAM is consumed as a whole and not split up using subnodes, so
+> properties related to this are not required.
+> 
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
+> 
+> Changes since v1:
+> - New patch, to resolve issue with the existing qcom,smem example
+> 
+>  Documentation/devicetree/bindings/sram/sram.yaml | 5 ++++-
+>  1 file changed, 4 insertions(+), 1 deletion(-)
+> 
 
-Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
----
- drivers/gpu/drm/msm/dsi/dsi.h         |  2 -
- drivers/gpu/drm/msm/dsi/dsi_host.c    | 53 ---------------------------
- drivers/gpu/drm/msm/dsi/dsi_manager.c | 11 +-----
- drivers/gpu/drm/msm/dsi/phy/dsi_phy.c | 11 ------
- 4 files changed, 2 insertions(+), 75 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
-index 7dfb6d198ca9..c03a8d09c764 100644
---- a/drivers/gpu/drm/msm/dsi/dsi.h
-+++ b/drivers/gpu/drm/msm/dsi/dsi.h
-@@ -173,8 +173,6 @@ int msm_dsi_phy_enable(struct msm_dsi_phy *phy,
- void msm_dsi_phy_disable(struct msm_dsi_phy *phy);
- void msm_dsi_phy_set_usecase(struct msm_dsi_phy *phy,
- 			     enum msm_dsi_phy_usecase uc);
--int msm_dsi_phy_get_clk_provider(struct msm_dsi_phy *phy,
--	struct clk **byte_clk_provider, struct clk **pixel_clk_provider);
- void msm_dsi_phy_pll_save_state(struct msm_dsi_phy *phy);
- int msm_dsi_phy_pll_restore_state(struct msm_dsi_phy *phy);
- void msm_dsi_phy_snapshot(struct msm_disp_state *disp_state, struct msm_dsi_phy *phy);
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
-index 1ffcd0577e99..9600b4fa27eb 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_host.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
-@@ -2232,59 +2232,6 @@ void msm_dsi_host_set_phy_mode(struct mipi_dsi_host *host,
- 	msm_host->cphy_mode = src_phy->cphy_mode;
- }
- 
--int msm_dsi_host_set_src_pll(struct mipi_dsi_host *host,
--	struct msm_dsi_phy *src_phy)
--{
--	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
--	struct clk *byte_clk_provider, *pixel_clk_provider;
--	int ret;
--
--	msm_host->cphy_mode = src_phy->cphy_mode;
--
--	ret = msm_dsi_phy_get_clk_provider(src_phy,
--				&byte_clk_provider, &pixel_clk_provider);
--	if (ret) {
--		pr_info("%s: can't get provider from pll, don't set parent\n",
--			__func__);
--		return 0;
--	}
--
--	ret = clk_set_parent(msm_host->byte_clk_src, byte_clk_provider);
--	if (ret) {
--		pr_err("%s: can't set parent to byte_clk_src. ret=%d\n",
--			__func__, ret);
--		goto exit;
--	}
--
--	ret = clk_set_parent(msm_host->pixel_clk_src, pixel_clk_provider);
--	if (ret) {
--		pr_err("%s: can't set parent to pixel_clk_src. ret=%d\n",
--			__func__, ret);
--		goto exit;
--	}
--
--	if (msm_host->dsi_clk_src) {
--		ret = clk_set_parent(msm_host->dsi_clk_src, pixel_clk_provider);
--		if (ret) {
--			pr_err("%s: can't set parent to dsi_clk_src. ret=%d\n",
--				__func__, ret);
--			goto exit;
--		}
--	}
--
--	if (msm_host->esc_clk_src) {
--		ret = clk_set_parent(msm_host->esc_clk_src, byte_clk_provider);
--		if (ret) {
--			pr_err("%s: can't set parent to esc_clk_src. ret=%d\n",
--				__func__, ret);
--			goto exit;
--		}
--	}
--
--exit:
--	return ret;
--}
--
- void msm_dsi_host_reset_phy(struct mipi_dsi_host *host)
- {
- 	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
-diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-index 49a0a0841487..9342a822ad20 100644
---- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
-+++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
-@@ -78,10 +78,7 @@ static int dsi_mgr_setup_components(int id)
- 
- 		msm_dsi_phy_set_usecase(msm_dsi->phy, MSM_DSI_PHY_STANDALONE);
- 		msm_dsi_host_set_phy_mode(msm_dsi->host, msm_dsi->phy);
--		ret = msm_dsi_host_set_src_pll(msm_dsi->host, msm_dsi->phy);
--	} else if (!other_dsi) {
--		ret = 0;
--	} else {
-+	} else if (other_dsi) {
- 		struct msm_dsi *master_link_dsi = IS_MASTER_DSI_LINK(id) ?
- 							msm_dsi : other_dsi;
- 		struct msm_dsi *slave_link_dsi = IS_MASTER_DSI_LINK(id) ?
-@@ -107,13 +104,9 @@ static int dsi_mgr_setup_components(int id)
- 					MSM_DSI_PHY_SLAVE);
- 		msm_dsi_host_set_phy_mode(msm_dsi->host, msm_dsi->phy);
- 		msm_dsi_host_set_phy_mode(other_dsi->host, other_dsi->phy);
--		ret = msm_dsi_host_set_src_pll(msm_dsi->host, clk_master_dsi->phy);
--		if (ret)
--			return ret;
--		ret = msm_dsi_host_set_src_pll(other_dsi->host, clk_master_dsi->phy);
- 	}
- 
--	return ret;
-+	return 0;
- }
- 
- static int enable_phy(struct msm_dsi *msm_dsi,
-diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-index 8c65ef6968ca..8ec331e751a2 100644
---- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-+++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy.c
-@@ -890,17 +890,6 @@ bool msm_dsi_phy_set_continuous_clock(struct msm_dsi_phy *phy, bool enable)
- 	return phy->cfg->ops.set_continuous_clock(phy, enable);
- }
- 
--int msm_dsi_phy_get_clk_provider(struct msm_dsi_phy *phy,
--	struct clk **byte_clk_provider, struct clk **pixel_clk_provider)
--{
--	if (byte_clk_provider)
--		*byte_clk_provider = phy->provided_clocks->hws[DSI_BYTE_PLL_CLK]->clk;
--	if (pixel_clk_provider)
--		*pixel_clk_provider = phy->provided_clocks->hws[DSI_PIXEL_PLL_CLK]->clk;
--
--	return 0;
--}
--
- void msm_dsi_phy_pll_save_state(struct msm_dsi_phy *phy)
- {
- 	if (phy->cfg->ops.save_pll_state) {
--- 
-2.33.0
-
+Acked-by: Rob Herring <robh@kernel.org>
