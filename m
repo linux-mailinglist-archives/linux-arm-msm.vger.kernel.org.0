@@ -2,80 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 78CE1423DAB
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 14:22:44 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 52AB1423DC3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 14:30:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238036AbhJFMYf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Oct 2021 08:24:35 -0400
-Received: from mail.kernel.org ([198.145.29.99]:54460 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231335AbhJFMYe (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Oct 2021 08:24:34 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id E6881610A2;
-        Wed,  6 Oct 2021 12:22:41 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1633522962;
-        bh=gtGj1ZK3qFauXUTVt0mwKMorMTrcx2LU7cWdijC2pBo=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=F5Y3YD1OS4WWQxkIzADJfP7SsvCxK5JOgkgYUHVE2VqN+sP9dgq0q6aiWTOHuomFQ
-         MiiPptBcgS/eqfKoO5jR4CyHpN6BTduD8clzM9aIbpzogi6szC7W3ueUFc8y4aNhDd
-         UjqEwIa5klJzAIueWubIVlA/PZ7DE8IiAeaqTAC4TXHOBL2gCT4tBVpKcE5bmOsz8q
-         nAH1+zKCw88kNy6nl9FRGBMvkDPcAI8MYmogzAPUO2kyaR8Ac2c08nhxgCV7/DM5KX
-         UCYuo1F2b3Mt9k2o6tZ/0DK5FKDkfMNVhWnzCmI9QCXwYiba0rDWfCwQjMDGgV5zYO
-         ao2y896JArvJQ==
-Date:   Wed, 6 Oct 2021 17:52:38 +0530
-From:   Vinod Koul <vkoul@kernel.org>
-To:     abhinavk@codeaurora.org
-Cc:     Rob Clark <robdclark@gmail.com>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
-        linux-kernel@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        dri-devel@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno@lists.freedesktop.org,
-        Sumit Semwal <sumit.semwal@linaro.org>
-Subject: Re: [Freedreno] [PATCH 07/11] drm/msm/disp/dpu1: Don't use DSC with
- mode_3d
-Message-ID: <YV2VDtYMhPJgTXoQ@matsya>
-References: <20210715065203.709914-1-vkoul@kernel.org>
- <20210715065203.709914-8-vkoul@kernel.org>
- <cd5d1e1fb3a8ce1a9970c29a39df1b4b@codeaurora.org>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <cd5d1e1fb3a8ce1a9970c29a39df1b4b@codeaurora.org>
+        id S238476AbhJFMcm (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Oct 2021 08:32:42 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:12249 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238463AbhJFMcl (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 6 Oct 2021 08:32:41 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1633523449; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=G5VectM1qHdAaz1q+gplVOdSjt+FyTefrjOw0flqLEM=; b=WacHgFb1zofi1/R44YQkNGaaCuJVX4TnRfRJWXp8nkiEsQ+vZzjTu1a+MWNVWx++UqKil9/T
+ 7XnxsX2yM+P+pLG+Lc0psT+siraUtrYgbuHaqtgu6vNB/U2qLW2cQgo6ufXKAsciHliy/JPV
+ W/H6U2WYybzW2XdqYeNE+ABAtC4=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 615d96db4ccc4cf2c7bf6338 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 06 Oct 2021 12:30:19
+ GMT
+Sender: bgodavar=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 71769C43460; Wed,  6 Oct 2021 12:30:19 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from bgodavar-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: bgodavar)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id E3798C4338F;
+        Wed,  6 Oct 2021 12:30:14 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org E3798C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Balakrishna Godavarthi <bgodavar@codeaurora.org>
+To:     marcel@holtmann.org, bjorn.andersson@linaro.org,
+        johan.hedberg@gmail.com
+Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, bgodavar@codeaurora.org,
+        rjliao@codeaurora.org, pharish@codeaurora.org,
+        abhishekpandit@chromium.org
+Subject: [PATCH v1 1/2] arm64: dts: qcom: sc7280: Add bluetooth node on SC7280 IDP board
+Date:   Wed,  6 Oct 2021 18:00:02 +0530
+Message-Id: <1633523403-32264-1-git-send-email-bgodavar@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 02-08-21, 17:24, abhinavk@codeaurora.org wrote:
-> On 2021-07-14 23:51, Vinod Koul wrote:
-> > We cannot enable mode_3d when we are using the DSC. So pass
-> > configuration to detect DSC is enabled and not enable mode_3d
-> > when we are using DSC
-> > 
-> > We add a helper dpu_encoder_helper_get_dsc_mode() to detect dsc
-> > enabled and pass this to .setup_intf_cfg()
-> > 
-> This is not entirely correct. This is true only for the 2-2-1 topology you
-> are using
-> on this panel.
-> 
-> When you are using 2-2-1, you are using 2 LMs, 2 DSCs and 1 DSI.
-> So 3D mux shouldnt be used.
-> 
-> If you are using something like 4-2-1 or 4-2-2, then you have 4LMs,
-> 2 DSCs and 2/1 DSI.
-> 
-> Here you need the 3D mux to convert the data from 4LMs to 2 DSCs.
-> 
-> So please correct the commit text here and also add a check for the
-> topology.
+Add bluetooth SoC WCN6750 node for SC7280 IDP board.
 
-Ack, we should mention this and modify it in future when more topology
-support is added.
+Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
+---
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts  |  2 ++
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 31 +++++++++++++++++++++++++++++++
+ 2 files changed, 33 insertions(+)
 
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+index 64fc22a..d3f5393 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
++++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+@@ -17,6 +17,8 @@
+ 
+ 	aliases {
+ 		serial0 = &uart5;
++		bluetooth0 = &bluetooth;
++		hsuart0 = &uart7;
+ 	};
+ 
+ 	chosen {
+diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+index 272d5ca..05aa729 100644
+--- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
++++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+@@ -393,6 +393,24 @@
+ 				<&tlmm 31 IRQ_TYPE_EDGE_FALLING>;
+ 	pinctrl-names = "default", "sleep";
+ 	pinctrl-1 = <&qup_uart7_sleep_cts>, <&qup_uart7_sleep_rts>, <&qup_uart7_sleep_tx>, <&qup_uart7_sleep_rx>;
++
++	bluetooth: wcn6750-bt {
++		compatible = "qcom,wcn6750-bt";
++		pinctrl-names = "default";
++		pinctrl-0 = <&bt_en_default>;
++		enable-gpios = <&tlmm 85 GPIO_ACTIVE_HIGH>; /* BT_EN */
++		swctrl-gpios = <&tlmm 86 GPIO_ACTIVE_HIGH>; /* SW_CTRL */
++		vddio-supply = <&vreg_l19b_1p8>;
++		vddaon-supply = <&vreg_s7b_0p9>;
++		vddbtcxmx-supply = <&vreg_s7b_0p9>;
++		vddrfacmn-supply = <&vreg_s7b_0p9>;
++		vddrfa0p8-supply = <&vreg_s7b_0p9>;
++		vddrfa1p7-supply = <&vreg_s1b_1p8>;
++		vddrfa1p2-supply = <&vreg_s8b_1p2>;
++		vddrfa2p2-supply = <&vreg_s1c_2p2>;
++		vddasd-supply = <&vreg_l11c_2p8>;
++		max-speed = <3200000>;
++	};
+ };
+ 
+ /* PINCTRL - additions to nodes defined in sc7280.dtsi */
+@@ -504,6 +522,19 @@
+ 		 */
+ 		bias-pull-up;
+ 	};
++
++	bt_en_default: bt_en_default {
++		pinmux {
++			pins = "gpio85";
++			function = "gpio";
++		};
++		pinconf {
++			pins = "gpio85";
++			drive-strength = <2>;
++			output-low;
++			bias-pull-down;
++		};
++	};
+ };
+ 
+ &sdc1_on {
 -- 
-~Vinod
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
