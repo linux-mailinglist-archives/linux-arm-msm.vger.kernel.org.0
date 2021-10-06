@@ -2,113 +2,109 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1511642434D
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 18:48:24 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 99CF242437F
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 18:56:37 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238569AbhJFQuO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Oct 2021 12:50:14 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42416 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234375AbhJFQuN (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Oct 2021 12:50:13 -0400
-Received: from mail-lf1-x12a.google.com (mail-lf1-x12a.google.com [IPv6:2a00:1450:4864:20::12a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 15C7CC061755
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Oct 2021 09:48:21 -0700 (PDT)
-Received: by mail-lf1-x12a.google.com with SMTP id x27so13109390lfu.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Oct 2021 09:48:20 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=T5u+J7YA0xyzY2Zlfv0fcrmW+q1VsOAFPY6Ha0RmHOE=;
-        b=u8L4jIMS/HGyekro207nIeVOIKfA1ny77lQmEPpWOo9LwShdKuQnJ81hp2wC8LOKuK
-         LGtOhHR55N9EGyTsaboWrjeJVsyJytWoTlEYvyMuq+BBvoZkDw9gLMQIgYiFa+MsLU0S
-         klwADza94UIFHPRMb60HUvztbhdNUd6NEGdx9qSNom5hhQXa9u7Xeb2KtxZF17AQviNS
-         mSNzKkbK/AzkYKiaHscsG0VER7YuQWRKFxY0rGgLdcJV8SKbr1v9GlGpLeBPEYmxo1d7
-         BtsG1ICumXRpZqFmXFFGfPPdOVTcopTn9Vbf3Oc3raTj3/1uAqwGChVYvdnjoIz8Fe46
-         B00A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=T5u+J7YA0xyzY2Zlfv0fcrmW+q1VsOAFPY6Ha0RmHOE=;
-        b=pFF4cYoNLqSYt+m72HtAtbYZl4jWr5NV2Qs8Rp+XfKXw2vpAnUFIiEpvHrK5KX6vFb
-         CfkAvUcUzt2r9GD811Ur1lFJR59p9COGZSup2J6QTExiu7hcP5sZ2RdhJcKqjWKCpn0D
-         haBJ+ar9i0H35E0vzQ0lv6f/FxIpjDLl6mJpBNv7pXs2TH8R44hnz7i6Fn2nqwDzHc8k
-         Q+/kK9KIFBPNupBq6T1mVJd96DsXdZsJbvBnvdCum+iG+Cx+lyIwoJO5p/seSop7i3/v
-         Stcgjv7erFqDpftJosjRxtunYbTguClL0BtVuvOZPq0ZyvWteKhT9HcDK3e5tWm46C+u
-         KX2g==
-X-Gm-Message-State: AOAM532JM41d4klnSuR1aoc0lU7FYvb0u4C1SayyoE7bGKhoP83Snv3i
-        iyv0v2v1G8PxkdAKp5sWsK6aig==
-X-Google-Smtp-Source: ABdhPJwykGa9j4WMyyGvBIei36WIcpCoX1P2RK6lI1Ho4lBv9Yss8vTWSq77ZmlujYErN9ZemHKcyg==
-X-Received: by 2002:a2e:9012:: with SMTP id h18mr29776988ljg.336.1633538899360;
-        Wed, 06 Oct 2021 09:48:19 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id w13sm2313400lft.94.2021.10.06.09.48.18
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 06 Oct 2021 09:48:18 -0700 (PDT)
-Subject: Re: [PATCH v1 2/2] arm64: dts: qcom: sc7280: update bluetooth node in
- SC7280 IDP2 board
-To:     Balakrishna Godavarthi <bgodavar@codeaurora.org>,
-        marcel@holtmann.org, bjorn.andersson@linaro.org,
-        johan.hedberg@gmail.com
-Cc:     mka@chromium.org, linux-kernel@vger.kernel.org,
-        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
-        linux-arm-msm@vger.kernel.org, rjliao@codeaurora.org,
-        pharish@codeaurora.org, abhishekpandit@chromium.org
-References: <1633523403-32264-1-git-send-email-bgodavar@codeaurora.org>
- <1633523403-32264-2-git-send-email-bgodavar@codeaurora.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <fee220ea-4d20-79a2-fe3a-4df09535eca1@linaro.org>
-Date:   Wed, 6 Oct 2021 19:48:16 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        id S239444AbhJFQ62 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Oct 2021 12:58:28 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:61235 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S238116AbhJFQ61 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 6 Oct 2021 12:58:27 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1633539395; h=Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Message-ID: Date: Subject: In-Reply-To: References: Cc:
+ To: From: Sender; bh=lQZLnUbAnV1z1oOtEcGvv/ll8WYBTl5+AI3Ku0BvaiY=; b=B6ul1SXON7hqfCYxjEnoJPKPaTWtyJXkbGRLN+nk6phk8+QpukTEK/nLOlcNgDa9dTVxcHHW
+ Fua8a3cfsv40nt2ajxh90LZvPZhAGM4BPa2daNRnyAe+w31A/ih01zTJcYbxwa40UQBrlMwQ
+ pk+/PxUmqTXEzRUcV35Lzwd9/20=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
+ 615dd538ff0285fb0a9e0c00 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 06 Oct 2021 16:56:24
+ GMT
+Sender: pillair=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id CA6E7C4314D; Wed,  6 Oct 2021 16:56:24 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from PILLAIR1 (unknown [103.155.223.104])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: pillair)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 6679DC43460;
+        Wed,  6 Oct 2021 16:56:18 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 6679DC43460
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   <pillair@codeaurora.org>
+To:     "'Stephen Boyd'" <swboyd@chromium.org>,
+        "'Rob Herring'" <robh@kernel.org>
+Cc:     <mathieu.poirier@linaro.org>, <p.zabel@pengutronix.de>,
+        <devicetree@vger.kernel.org>, <bjorn.andersson@linaro.org>,
+        <linux-kernel@vger.kernel.org>, <robh+dt@kernel.org>,
+        <sibis@codeaurora.org>, <kuabhs@chromium.org>, <agross@kernel.org>,
+        <ohad@wizery.com>, <linux-arm-msm@vger.kernel.org>,
+        <mpubbise@codeaurora.org>
+References: <1633330133-29617-1-git-send-email-pillair@codeaurora.org> <1633330133-29617-3-git-send-email-pillair@codeaurora.org> <1633350086.759437.1051509.nullmailer@robh.at.kernel.org> <006801d7ba70$54daae00$fe900a00$@codeaurora.org> <CAE-0n51rsfFX_-Vxn2tumWiw9K-Tf244rhTedc76UKx5ADzKyg@mail.gmail.com>
+In-Reply-To: <CAE-0n51rsfFX_-Vxn2tumWiw9K-Tf244rhTedc76UKx5ADzKyg@mail.gmail.com>
+Subject: RE: [PATCH v6 2/3] dt-bindings: remoteproc: qcom: Add SC7280 WPSS support
+Date:   Wed, 6 Oct 2021 22:26:15 +0530
+Message-ID: <006a01d7bad3$1758f290$460ad7b0$@codeaurora.org>
 MIME-Version: 1.0
-In-Reply-To: <1633523403-32264-2-git-send-email-bgodavar@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
+Content-Type: text/plain;
+        charset="utf-8"
 Content-Transfer-Encoding: 7bit
+X-Mailer: Microsoft Outlook 16.0
+thread-index: AQKwJKLJ4tjmgoIJWycFdR/OOcUEpAEIhLzCAlTlvmMBQz416ALxzEPWqdjIsSA=
+Content-Language: en-us
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 06/10/2021 15:30, Balakrishna Godavarthi wrote:
-> This patch updates bluetooth node in SC7280 IDP2 board.
+
+
+> -----Original Message-----
+> From: Stephen Boyd <swboyd@chromium.org>
+> Sent: Wednesday, October 6, 2021 12:40 PM
+> To: Rob Herring <robh@kernel.org>; pillair@codeaurora.org
+> Cc: mathieu.poirier@linaro.org; p.zabel@pengutronix.de;
+> devicetree@vger.kernel.org; bjorn.andersson@linaro.org; linux-
+> kernel@vger.kernel.org; robh+dt@kernel.org; sibis@codeaurora.org;
+> kuabhs@chromium.org; agross@kernel.org; ohad@wizery.com; linux-arm-
+> msm@vger.kernel.org; mpubbise@codeaurora.org
+> Subject: RE: [PATCH v6 2/3] dt-bindings: remoteproc: qcom: Add SC7280
+> WPSS support
 > 
-> Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
-> ---
->   arch/arm64/boot/dts/qcom/sc7280-idp2.dts | 6 ++++++
->   1 file changed, 6 insertions(+)
+> Quoting pillair@codeaurora.org (2021-10-05 22:09:18)
+> >
+> > >
+> > > If you already ran 'make dt_binding_check' and didn't see the above
+> > error(s),
+> > > then make sure 'yamllint' is installed and dt-schema is up to
+> > > date:
+> > >
+> > > pip3 install dtschema --upgrade
+> > >
+> > > Please check and re-submit.
+> >
+> >
+> > I have updated the dtschema (2021.7) and still not seeing these
+> > errors. I will fix the errors mentioned in this log though.
+> > Is there any other flag/setting, which is to be enabled ?
+> >
 > 
-> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp2.dts b/arch/arm64/boot/dts/qcom/sc7280-idp2.dts
-> index 1fc2add..5c8d54b 100644
-> --- a/arch/arm64/boot/dts/qcom/sc7280-idp2.dts
-> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp2.dts
-> @@ -15,9 +15,15 @@
->   
->   	aliases {
->   		serial0 = &uart5;
-> +		bluetooth0 = &bluetooth;
-> +		hsuart0 = &uart7;
+> I have dtschema-2021.10 installed.
 
-hsuartX does not follow existing aliases definition, so it was frowned 
-upon by Rob Herring in the past.
+Thanks Stephen. Yes, my dtschema, for some reason, was not getting updated.
+After upgrading it to 2021.10, I was able to see the same errors.
+I will send out the next patchset with these errors fixed.
 
->   	};
->   
->   	chosen {
->   		stdout-path = "serial0:115200n8";
->   	};
->   };
-> +
-> +&bluetooth: wcn6750-bt {
-> +	vddio-supply = <&vreg_l18b_1p8>;
-> +};
-> 
+Thanks,
+Rakesh Pillai.
 
-
--- 
-With best wishes
-Dmitry
