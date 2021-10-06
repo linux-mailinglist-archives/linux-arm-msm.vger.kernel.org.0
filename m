@@ -2,32 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5C01342357B
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 03:39:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 78AD6423581
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 03:39:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237167AbhJFBlS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Oct 2021 21:41:18 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:27471 "EHLO
+        id S237163AbhJFBlb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Oct 2021 21:41:31 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:38231 "EHLO
         so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237159AbhJFBlR (ORCPT
+        with ESMTP id S237195AbhJFBlb (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Oct 2021 21:41:17 -0400
+        Tue, 5 Oct 2021 21:41:31 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1633484366; h=Message-Id: Date: Subject: Cc: To: From:
- Sender; bh=k4u+e8XmwbFQeOOTZ4Upb+G4IuEc1vosQijxdZl+V9A=; b=IvNU5LqXJXwugS2dWzwVWWqoU4j5db3qFlvlKmaRvZcfIY3KT4I2Pd4+p2yazHsW09G9O4sL
- Yw2TfRFu8//4++Hu11vA2XTrK6Uy5BhYkP7zP3MbVz83DgqCJgl/iWKYuPZfSQswnepYd//j
- fqPaljJR8tHr/VTQqR8+l+lZ/2M=
+ s=smtp; t=1633484380; h=References: In-Reply-To: Message-Id: Date:
+ Subject: Cc: To: From: Sender;
+ bh=/AbtKm3Kv3F5NwlVOfYrRp31inTzpKm7HlHaS6uEh2o=; b=cm5BYoDlG8rZtgzz+MDBYMItMeSRKmzQUfRzNbvTvdmY3SnEv7iua7+ZYVjiHsmMZV8m8/Ca
+ dOFlhUXVkRxManQzQ1g6kHwk+jcnTDJHGYiH+il6vHJUSkoyeIj8Tes8VL0k4mXXLF1JEECa
+ lRl3kpch8v0nFT6WE7D+PdRtfDo=
 X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 615cfe4d4ccc4cf2c7266ca0 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 06 Oct 2021 01:39:25
+ smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
+ 615cfe574ccdf4fe578224db (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 06 Oct 2021 01:39:35
  GMT
 Sender: tdas=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 9901DC43618; Wed,  6 Oct 2021 01:39:25 +0000 (UTC)
+        id 1E754C4361B; Wed,  6 Oct 2021 01:39:34 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -37,9 +38,9 @@ Received: from tdas-linux.qualcomm.com (unknown [202.46.22.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: tdas)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8D230C4338F;
-        Wed,  6 Oct 2021 01:39:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 8D230C4338F
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 8B9FAC4338F;
+        Wed,  6 Oct 2021 01:39:29 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 8B9FAC4338F
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
 From:   Taniya Das <tdas@codeaurora.org>
@@ -50,57 +51,124 @@ Cc:     Rajendra Nayak <rnayak@codeaurora.org>,
         linux-clk@vger.kernel.org, linux-kernel@vger.kernel.org,
         devicetree@vger.kernel.org, robh@kernel.org, robh+dt@kernel.org,
         Taniya Das <tdas@codeaurora.org>
-Subject: [PATCH 1/3] clk: qcom: Kconfig: Sort the symbol for SC_LPASS_CORECC_7180
-Date:   Wed,  6 Oct 2021 07:05:44 +0530
-Message-Id: <1633484146-19514-1-git-send-email-tdas@codeaurora.org>
+Subject: [PATCH 2/3] dt-bindings: clock: Add YAML schemas for LPASS clocks on SC7280
+Date:   Wed,  6 Oct 2021 07:05:45 +0530
+Message-Id: <1633484146-19514-2-git-send-email-tdas@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
+In-Reply-To: <1633484146-19514-1-git-send-email-tdas@codeaurora.org>
+References: <1633484146-19514-1-git-send-email-tdas@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Fix the order of the Kconfig symbol for SC_LPASS_CORECC_7180.
+The LPASS(Low Power Audio Subsystem) clock provider have a bunch of generic
+properties that are needed in a device tree. Add the LPASS clock IDs for
+LPASS PIL client to request for the clocks.
 
 Signed-off-by: Taniya Das <tdas@codeaurora.org>
 ---
- drivers/clk/qcom/Kconfig | 18 +++++++++---------
- 1 file changed, 9 insertions(+), 9 deletions(-)
+ .../bindings/clock/qcom,sc7280-lpasscc.yaml        | 68 ++++++++++++++++++++++
+ include/dt-bindings/clock/qcom,lpass-sc7280.h      | 16 +++++
+ 2 files changed, 84 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml
+ create mode 100644 include/dt-bindings/clock/qcom,lpass-sc7280.h
 
-diff --git a/drivers/clk/qcom/Kconfig b/drivers/clk/qcom/Kconfig
-index 0a55967..f9c36a1 100644
---- a/drivers/clk/qcom/Kconfig
-+++ b/drivers/clk/qcom/Kconfig
-@@ -385,15 +385,6 @@ config SC_GCC_8180X
- 	  Say Y if you want to use peripheral devices such as UART, SPI,
- 	  I2C, USB, UFS, SDCC, etc.
-
--config SC_LPASS_CORECC_7180
--	tristate "SC7180 LPASS Core Clock Controller"
--	select SC_GCC_7180
--	help
--	  Support for the LPASS(Low Power Audio Subsystem) core clock controller
--	  on SC7180 devices.
--	  Say Y if you want to use LPASS clocks and power domains of the LPASS
--	  core clock controller.
--
- config SC_GPUCC_7180
- 	tristate "SC7180 Graphics Clock Controller"
- 	select SC_GCC_7180
-@@ -410,6 +401,15 @@ config SC_GPUCC_7280
- 	  Say Y if you want to support graphics controller devices and
- 	  functionality such as 3D graphics.
-
-+config SC_LPASS_CORECC_7180
-+	tristate "SC7180 LPASS Core Clock Controller"
-+	select SC_GCC_7180
-+	help
-+	  Support for the LPASS(Low Power Audio Subsystem) core clock controller
-+	  on SC7180 devices.
-+	  Say Y if you want to use LPASS clocks and power domains of the LPASS
-+	  core clock controller.
+diff --git a/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml
+new file mode 100644
+index 0000000..47028d7
+--- /dev/null
++++ b/Documentation/devicetree/bindings/clock/qcom,sc7280-lpasscc.yaml
+@@ -0,0 +1,68 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/clock/qcom,sc7280-lpasscc.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
 +
- config SC_MSS_7180
- 	tristate "SC7180 Modem Clock Controller"
- 	select SC_GCC_7180
++title: Qualcomm LPASS Core Clock Controller Binding for SC7280
++
++maintainers:
++  - Taniya Das <tdas@codeaurora.org>
++
++description: |
++  Qualcomm LPASS core clock control module which supports the clocks and
++  power domains on SC7280.
++
++  See also:
++  - dt-bindings/clock/qcom,lpass-sc7280.h
++
++properties:
++  compatible:
++    enum:
++      - qcom,sc7280-lpasscc
++
++  clocks:
++    items:
++      - description: gcc_cfg_noc_lpass_clk from GCC
++
++  clock-names:
++    items:
++      - const: iface
++
++  '#clock-cells':
++    const: 1
++
++  reg:
++    items:
++      - description: LPASS qdsp6ss register
++      - description: LPASS top-cc register
++      - description: LPASS cc register
++
++  reg-names:
++    items:
++      - const: qdsp6ss
++      - const: top_cc
++      - const: cc
++
++required:
++  - compatible
++  - reg
++  - clocks
++  - clock-names
++  - '#clock-cells'
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/clock/qcom,gcc-sc7280.h>
++    #include <dt-bindings/clock/qcom,lpass-sc7280.h>
++    clock-controller@3000000 {
++      compatible = "qcom,sc7280-lpasscc";
++      reg = <0x03000000 0x40>, <0x03c04000 0x4>, <0x03389000 0x24>;
++      reg-names = "qdsp6ss", "top_cc", "cc";
++      clocks = <&gcc GCC_CFG_NOC_LPASS_CLK>;
++      clock-names = "iface";
++      #clock-cells = <1>;
++    };
++...
+diff --git a/include/dt-bindings/clock/qcom,lpass-sc7280.h b/include/dt-bindings/clock/qcom,lpass-sc7280.h
+new file mode 100644
+index 0000000..e71ccac
+--- /dev/null
++++ b/include/dt-bindings/clock/qcom,lpass-sc7280.h
+@@ -0,0 +1,16 @@
++/* SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause) */
++/*
++ * Copyright (c) 2021, The Linux Foundation. All rights reserved.
++ */
++
++#ifndef _DT_BINDINGS_CLK_QCOM_LPASS_SC7280_H
++#define _DT_BINDINGS_CLK_QCOM_LPASS_SC7280_H
++
++#define LPASS_Q6SS_AHBM_CLK				0
++#define LPASS_Q6SS_AHBS_CLK				1
++#define LPASS_TOP_CC_LPI_Q6_AXIM_HS_CLK			2
++#define LPASS_QDSP6SS_XO_CLK				3
++#define LPASS_QDSP6SS_SLEEP_CLK				4
++#define LPASS_QDSP6SS_CORE_CLK				5
++
++#endif
 --
 Qualcomm INDIA, on behalf of Qualcomm Innovation Center, Inc.is a member
 of the Code Aurora Forum, hosted by the  Linux Foundation.
