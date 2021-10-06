@@ -2,107 +2,100 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 797F64234E4
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 02:22:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 9227C4234FE
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 02:29:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236953AbhJFAXu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 5 Oct 2021 20:23:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42424 "EHLO
+        id S230218AbhJFAbk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 5 Oct 2021 20:31:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:44236 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236909AbhJFAXr (ORCPT
+        with ESMTP id S236909AbhJFAbh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 5 Oct 2021 20:23:47 -0400
-Received: from mail-yb1-xb29.google.com (mail-yb1-xb29.google.com [IPv6:2607:f8b0:4864:20::b29])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3D83BC061753
-        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Oct 2021 17:21:56 -0700 (PDT)
-Received: by mail-yb1-xb29.google.com with SMTP id w10so1505654ybt.4
-        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Oct 2021 17:21:56 -0700 (PDT)
+        Tue, 5 Oct 2021 20:31:37 -0400
+Received: from mail-ot1-x32c.google.com (mail-ot1-x32c.google.com [IPv6:2607:f8b0:4864:20::32c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 7E6FFC061749
+        for <linux-arm-msm@vger.kernel.org>; Tue,  5 Oct 2021 17:29:46 -0700 (PDT)
+Received: by mail-ot1-x32c.google.com with SMTP id 66-20020a9d0548000000b0054e21cd00f4so905730otw.12
+        for <linux-arm-msm@vger.kernel.org>; Tue, 05 Oct 2021 17:29:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=Nexdehnj3A/Q4zSCMfs4Cp9vmGRF+EuUGSAwg+1xmZ4=;
-        b=S0m/IHaElRUnXHQLukKv5K2F/NOiaHimmkJHw4Y6ljjMZCsOTMz/plMk0JEzsjD3Y7
-         2gh5v+xfAv9Rx9E1m/QA2lQwPSJgRDlXosw6XMSwaJNybM9+/aL5w7JQ3jmxkwNVoIX+
-         qr7Rn+JhdLL0c35GhOwHkXfH+PeIYVkxWFw7a0jcWt9KTPfZlTdq5R5yrXhY/JY3HrML
-         VxL6sOw5pyKzYv/rs8dX2dnGiuYEx34mP1Dy1dwaOyV58riLliZfhILaL8jq6Vp6Nrc6
-         wfToj27DsJDvYQg9dDRpdh21uy3fmiHWZVPdaPYxuDBLNlhIUWzzzDV1YkILGDjuzBk5
-         WDpQ==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=rJXZL/E2rjizDw2g+xUTHgR6xfpHLrz6baH//WpupIA=;
+        b=eILFxHdQkwHM2kDcZ7UcWGBVC7H2Pu2GtoXIw+Mf1tmpqUPjk0FxN9egL2wcdGHjmQ
+         +TKV21OleaafcJGX/LlBIYkxSSU6MkgB7ayxOOdJpYOdNbeXmMUXrv6DIdkyfT7ip8yV
+         xevbRV4FwvKdg7BuJcnjAihYLxXU3fqbBhPIo=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=Nexdehnj3A/Q4zSCMfs4Cp9vmGRF+EuUGSAwg+1xmZ4=;
-        b=UiiF13WQdVzCt1JyZVVx7AAsOAvlspznTgXOoD1w0MGOLYJ9kfdM5mFVAgX/i2UqpX
-         5ZYrVTrWJdHCvrKj9ziojdYstj4hsqSSkuz+dHPYpqQ/hqoK8v4vFA2HnTbv1jcxzg2o
-         2+zMaDvNWefKi4pbW7zhBSC5wl0iqxch4DTBGlsEYqPD/Y3ae0p0+Ivj+3Tdvj5EBUzy
-         7rv3KkLeoW8Wk8EjZrA8Yi4pNnneGO1zUxUfzKLTtcwPK76Jr2LS2yaGK+mPhbTbmL9W
-         zZxlro27O8ObjH+YTW23xaBLybJyvib7p5fMuDj9i/RFJvecgKcq0D6fztDH45X5/N5P
-         fsYw==
-X-Gm-Message-State: AOAM533Q/wN1P8XCDb5kxWqfYQvkvGMX/khZB8qKTG4wpcBtzVUdgVgo
-        Uzn9Ouw+KDX13u0D7dgI41LQ1Y4pWjvduEUV7hk9CA==
-X-Google-Smtp-Source: ABdhPJyQbG+9/VI5LhOU/2D3mNx0S3Lh07wfACLKHor+iEK/YT/NP7MKSU5n4XUeiNfMOFR0CuIyDJMyrqXI2XZUX0k=
-X-Received: by 2002:a25:db91:: with SMTP id g139mr23977947ybf.391.1633479715227;
- Tue, 05 Oct 2021 17:21:55 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=rJXZL/E2rjizDw2g+xUTHgR6xfpHLrz6baH//WpupIA=;
+        b=ci+dv6e58/ADraBOGs31jqRKqVYr+vEJM7gdk91E8PYNQ+0yAKyUjuilqNgr7ogIVm
+         4r5/eCewYTVHRiTByKvIcj0a1mitPRa3WJoUMRFpeeQhqVk7xDatIUINDxsWkKMFd30E
+         +DTx0Ya1VljOdMWB4gHrJ4CdVtOYcXMu4Qgr6dxwmLn9B4JarthjRhVTaS8xFxdiqNKc
+         WQWbQcE2WBbo7G8nJP43pETKtmCP68HmfzegPvvUxiiYRH/jvNAez0z6FMLsVOaFgFeB
+         d1vuyXXDZKsj8nG42IIvGrstpM0qyaHXyDd4zYNd9rlBy8fMlNFIQU05vy1MTH9A1t43
+         HRZQ==
+X-Gm-Message-State: AOAM531huqFf2PxfRtdVfm52p+qD9K9AcfAKkAx6U9JDmCSu7kD+ESNj
+        UAciUilzbPCCJk4iP+BplnXhNTZDeQ6DsLsNxIcUxw==
+X-Google-Smtp-Source: ABdhPJxzCxjnxno+e1ko51qFrcaIW6A2GioGxAa2xz6r8QTE5XFA3HZvXeCGDv6WRirQFECvcUk6zhmJwJvvexsKQPo=
+X-Received: by 2002:a9d:1f4:: with SMTP id e107mr16724345ote.77.1633480185918;
+ Tue, 05 Oct 2021 17:29:45 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Tue, 5 Oct 2021 17:29:45 -0700
 MIME-Version: 1.0
-References: <20210927204830.4018624-1-dmitry.baryshkov@linaro.org>
- <CAGETcx-3Y3rOSoXu3SbDa6BP_jcT8uSQA+MV55QCY4b0Oe7L-A@mail.gmail.com>
- <11fe1793-1455-ae44-b213-9afe47dfa370@linaro.org> <CAGETcx_HRmvDKuXQEJkMk7zBpedLGkQmvJ24tAWpCHFf4DPX_w@mail.gmail.com>
- <61ce03c1-1b31-bb56-8951-7b71ecdd66a9@linaro.org>
-In-Reply-To: <61ce03c1-1b31-bb56-8951-7b71ecdd66a9@linaro.org>
-From:   Saravana Kannan <saravanak@google.com>
-Date:   Tue, 5 Oct 2021 17:21:19 -0700
-Message-ID: <CAGETcx-vG1wnRoSppWC7Z6JN6NdEih9OMEYCb1OUvLgH99wNHA@mail.gmail.com>
-Subject: Re: [PATCH] Revert "of: property: fw_devlink: Add support for remote-endpoint"
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>,
-        Frank Rowand <frowand.list@gmail.com>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        Stephen Boyd <sboyd@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+In-Reply-To: <20211005231323.2663520-4-bjorn.andersson@linaro.org>
+References: <20211005231323.2663520-1-bjorn.andersson@linaro.org> <20211005231323.2663520-4-bjorn.andersson@linaro.org>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Tue, 5 Oct 2021 17:29:45 -0700
+Message-ID: <CAE-0n53bGyVSBC9zsFu9Uacp+t=56vrttq+fWj155zA_LXJbuw@mail.gmail.com>
+Subject: Re: [PATCH v4 3/7] drm/msm/dp: Allow specifying connector_type per controller
+To:     Abhinav Kumar <abhinavk@codeaurora.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Kuogee Hsieh <khsieh@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>
+Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Fri, Oct 1, 2021 at 6:04 PM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
+Quoting Bjorn Andersson (2021-10-05 16:13:19)
+> As the following patches introduced support for multiple DP blocks in a
+> platform and some of those block might be eDP it becomes useful to be
+> able to specify the connector type per block.
 >
-> On 28/09/2021 04:13, Saravana Kannan wrote:
-> > On Mon, Sep 27, 2021 at 5:56 PM Dmitry Baryshkov
-
-<snip>
-
-> >> After doing the analysis, I can confirm that I was too quick regarding
-> >> the mdss links preventing it from being probed. Sorry about that.
-> >>
-> >> It all went up to the DP phy having a link with usb-c-connector. I was
-> >> running the kernel 5.15-rc1, so your tcpm fix is already present.
-> >> However my colleague has disabled the tcpm device (which I did not
-> >> notice). So the driver did not call fw_devlink_purge_absent_suppliers().
-> >> The devlink still exists:
-> >
-> > Let me take a closer look at this before the end of this week. Can you
-> > point me to the exact DT changes that were made that's causing this
-> > issue? It should help me debug the issue. I have a guess on what the
-> > issue might be.
+> Although there's only a single block at this point, the array of descs
+> and the search in dp_display_get_desc() are introduced here to simplify
+> the next patch, that does introduce support for multiple DP blocks.
 >
-> Here is the kernel source:
-> https://git.linaro.org/people/bryan.odonoghue/kernel.git/log/?h=5.15-rc1-camss-v2
+> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> ---
 >
-> The change that causes PHY driver to silently stop probing, causing an
-> avalanche of devices not being probed:
->
-> https://git.linaro.org/people/bryan.odonoghue/kernel.git/commit/?h=5.15-rc1-camss-v2&id=d0bf3fc47c132968c302965154eeb5c88007fa73
+> Changes since v3:
+> - New patch
+> - Extended msm_dp_config with connector_type, wrapped in inner struct
+> - Refactored out of the next patch
+> - Pass the connector_type to drm_connector_init(), from yet another patch
+> - Dropped double newline and unnecessary {}
 
-Sorry, I haven't had a chance to look into this yet, but I still have
-a strong hunch that this is related to how of_device_is_available()
-doesn't recurse up till the root to check if a node is disabled (if a
-parent is disabled, the child should also be considered disabled). And
-I think patch series should help your case due to a side effect (it
-wasn't meant as a fix for your issue). Can you give it a shot?
+BTW, I see that we check for the connector type in debugfs.
 
-https://lore.kernel.org/lkml/20210929000735.585237-1-saravanak@google.com/
+$ git grep DRM_MODE_CONNECTOR_DisplayPort -- drivers/gpu/drm/msm/dp/
+drivers/gpu/drm/msm/dp/dp_debug.c:
+DRM_MODE_CONNECTOR_DisplayPort)
+drivers/gpu/drm/msm/dp/dp_debug.c:
+DRM_MODE_CONNECTOR_DisplayPort)
+drivers/gpu/drm/msm/dp/dp_debug.c:
+DRM_MODE_CONNECTOR_DisplayPort)
+drivers/gpu/drm/msm/dp/dp_debug.c:
+DRM_MODE_CONNECTOR_DisplayPort)
 
--Saravana
+So do those need to be updated to handle either connector type?
