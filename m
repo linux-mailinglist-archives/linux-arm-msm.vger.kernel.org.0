@@ -2,278 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A5556424807
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 22:38:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 74A56424836
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 22:48:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230062AbhJFUj4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Oct 2021 16:39:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39354 "EHLO
+        id S229677AbhJFUuY (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Oct 2021 16:50:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41970 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230047AbhJFUjz (ORCPT
+        with ESMTP id S232147AbhJFUuY (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Oct 2021 16:39:55 -0400
-Received: from mail-ot1-x334.google.com (mail-ot1-x334.google.com [IPv6:2607:f8b0:4864:20::334])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DB73FC061753
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Oct 2021 13:38:02 -0700 (PDT)
-Received: by mail-ot1-x334.google.com with SMTP id c26-20020a056830349a00b0054d96d25c1eso4700478otu.9
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Oct 2021 13:38:02 -0700 (PDT)
+        Wed, 6 Oct 2021 16:50:24 -0400
+Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BA677C061746
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Oct 2021 13:48:31 -0700 (PDT)
+Received: by mail-lf1-x136.google.com with SMTP id y26so15803842lfa.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Oct 2021 13:48:31 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=z60aFSRGx0ByB0Z/S5Nod4Oslys3m/NDoJpIVRIWCNw=;
-        b=bMSN0ps/rC57sD8yDecc/7bjDGG40s9KPEUkJMwtyb48DXyFVVKaw99DNX/t4bFLNQ
-         7D2ltCrfBOCDmdCZXs7bOcPUrB931dmmOoyp1bTZ8WXVf7k59doBCbBrZWWaca6K+iT0
-         LsPNpEfGxSSyJdFGPs5PzzFjQwSy78guF+VMQ7GTZFlWV6vNsYG7Jkq6+Zg4WoX0nCJC
-         OWwrCSesetTa7Tw6oM7M6cfck029beQgY4QwGwPL3IGSUS+uJ3AiPP4wUbpd7LNvWOvV
-         6pQsmaARw3ek4+gvA/Ugqijnvwo1DAJkeAgXAHRykv10u5fnPXA17CuX5FZyM6pisunt
-         Woiw==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=R4j4McPlc/+lAeM9Wl4HLExls29kqJZ7/vF2Ck1kcqA=;
+        b=E2FXwHy8vYhenDZFy+97/bSDcaYarSzPGF4sKDxUKKPWqdg5Tns39SAxX794DM65P8
+         HcAl5sl3nnD40tEvkP9CRBxm9xNOv9W5DH6Z+iYtMnED+gg6acg7JwcrTHePZpOHFzNJ
+         nTFURiSbmPdimg/Ukm00wyj2NOUfqk2ZdY1RRWENhfUKOcCUpZlMnJOcb5024ypR8vWj
+         jAZKQ8h4kUY/GJEZezMmoYJCq12mLXHy+Zve0eDTz6dTKFabySzxDORciw9MmK/tGo0/
+         06zLs98mKrC8GuP9KgEXA4kpRxyJ462SJWPtaRfkFmyT39NfZhcc6uLU6b9IfStCH9HA
+         /wog==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=z60aFSRGx0ByB0Z/S5Nod4Oslys3m/NDoJpIVRIWCNw=;
-        b=oA93pfd5Xb7a29/MKlfUuH/30FiQdkA9p2uimkD3MPNrHCDPRsGDEWgVH/UY/QHzAX
-         9LiVMNNpe9QEaeeXmaBnkryqSbwGB/XEuM1cHKdJj5i6QXzczZ+UwgpZqD96gJoSzObc
-         nAEY+sSc4w0qjbBcFEdSgNxnxYncBPT5I8ehYdjKuX8VwWQEdmLccXuax/iKPc3XMCbM
-         OVa5boU4FqZ8DcwhqNbM2pS5ZHjlChbvZKI3qGvPGtBQ8bOQIoVsllfEN3UTrcV2PuPj
-         gqvNlSQPUcpF3sjlNHZtdauoqsv5lnOjROSQq+CJzr+/Jix9zNkJ1G3cBVGLnBob4hat
-         pcTw==
-X-Gm-Message-State: AOAM530ZKp5nDBvZPPYUQWEYckUzKGIagkDqonoJyhuYeSC5n1pNbJHW
-        JRLtXMaiaSaFmr1WTMPwJxgVgw==
-X-Google-Smtp-Source: ABdhPJz+HEl4pR76e6CTjyNRya7MHTPoztvqelL40AQ/FLSuz3aYtw7gxlq5qMFYEhC7T1esU+omUQ==
-X-Received: by 2002:a9d:1b7:: with SMTP id e52mr313487ote.210.1633552682117;
-        Wed, 06 Oct 2021 13:38:02 -0700 (PDT)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id y17sm183023oto.42.2021.10.06.13.38.01
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=R4j4McPlc/+lAeM9Wl4HLExls29kqJZ7/vF2Ck1kcqA=;
+        b=zOhB3Dw3XqKn/iLsSc7y3DU2tT2xMLXoxEPs08EUTCF5eM2N2iZJVxREzXkSg4buy5
+         FEn7n0e7lDh+Q3kqSaY2Z8k19zyTVWCLXkQDTR8BYm3yG3XgeRg2b+ZsVSRC0ONUW7rI
+         PfZCrlBheBzDQU3dPnljSmXN1UQXMCgUdfSbm9s7Gf8iM3UMWEwdYiMZYBudNIXudi8L
+         DGr3k+HImFUGP6TRAPDAIDNqKyJBrfDfRXknD7M4QMtdjahwLAOT9NafyO75W/819RCg
+         XKyeb2qi+NkFnF2SkXaXqqYy6YUWniCAX1TGLg6I/W0fbXRBoWgOXAoqi9JPzPn8B7AJ
+         WC2g==
+X-Gm-Message-State: AOAM5306SfXpFSxcc9xDvz/VHlIBse3P5HvSsBYSk92BiJ8tOBP8u0G7
+        wMRMPgeR8xkJ60GJCPpdY+2y3w==
+X-Google-Smtp-Source: ABdhPJwpskYvbnXFarxIr/6JKRf3qn0rHbCDumnq9HTNk2sRM5W2ywQqg1tBs2thLAAZtvu4S3Ejng==
+X-Received: by 2002:a2e:7203:: with SMTP id n3mr229653ljc.195.1633553310086;
+        Wed, 06 Oct 2021 13:48:30 -0700 (PDT)
+Received: from eriador.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id y19sm2378787ljc.116.2021.10.06.13.48.29
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 06 Oct 2021 13:38:01 -0700 (PDT)
-Date:   Wed, 6 Oct 2021 13:39:42 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Abhinav Kumar <abhinavk@codeaurora.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Kalyan Thota <kalyan_t@codeaurora.org>,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
+        Wed, 06 Oct 2021 13:48:29 -0700 (PDT)
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
         Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Rob Herring <robh+dt@kernel.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v4 5/7] drm/msm/dp: Support up to 3 DP controllers
-Message-ID: <YV4JjutldSujvoT8@ripper>
-References: <20211005231323.2663520-6-bjorn.andersson@linaro.org>
- <CAE-0n52gOCC8bUfMFnNHRKFoq2=q4Ho8a-UYH5JKgumguhUD2A@mail.gmail.com>
- <YVz/NOL3AFn2zBA0@ripper>
- <CAE-0n513cs282Dh_YFMHK2uKCVFSWxtNyfRaFwWGyUvpfShixw@mail.gmail.com>
- <YV0MAF/Y5BR1e6My@ripper>
- <CAE-0n53TwEyycpAaWVpRUKPpos4z-gqwrvyUdgobh1V88VUsXg@mail.gmail.com>
- <YV3XxadYE/KU2w89@ripper>
- <CAE-0n52q=iEhRO1V-ked6SEesJGozLWv-H1mK81oyP7zAeO6QQ@mail.gmail.com>
- <YV3lVWjct5RQ5FEK@ripper>
- <CAE-0n537_YLDkWOX0kBHZHPHMi4-XTODeJ8TB=_xOrZwJc1HfQ@mail.gmail.com>
+        Abhinav Kumar <abhinavk@codeaurora.org>
+Cc:     Jonathan Marek <jonathan@marek.ca>,
+        Stephen Boyd <sboyd@kernel.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org
+Subject: [PATCH 1/2] drm/msm/dsi: untangle cphy setting from the src pll setting
+Date:   Wed,  6 Oct 2021 23:48:27 +0300
+Message-Id: <20211006204828.1218225-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAE-0n537_YLDkWOX0kBHZHPHMi4-XTODeJ8TB=_xOrZwJc1HfQ@mail.gmail.com>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed 06 Oct 11:59 PDT 2021, Stephen Boyd wrote:
+Move DPHY/CPHY setting from msm_dsi_host_set_src_pll() to new function
+msm_dsi_host_set_phy_mode().
 
-> Quoting Bjorn Andersson (2021-10-06 11:05:09)
-> > On Wed 06 Oct 10:19 PDT 2021, Stephen Boyd wrote:
-> >
-> > > Quoting Bjorn Andersson (2021-10-06 10:07:17)
-> > > > On Tue 05 Oct 21:26 PDT 2021, Stephen Boyd wrote:
-> > > >
-> > > > > Quoting Bjorn Andersson (2021-10-05 19:37:52)
-> > > > > > On Tue 05 Oct 19:06 PDT 2021, Stephen Boyd wrote:
-> > > > > >
-> > > > > > > Quoting Bjorn Andersson (2021-10-05 18:43:16)
-> > > > > > > > On Tue 05 Oct 17:43 PDT 2021, Stephen Boyd wrote:
-> > > > > > > >
-> > > > > > > > > Quoting Bjorn Andersson (2021-10-05 16:13:21)
-> > > > > > > > > > diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-> > > > > > > > > > index bdaf227f05dc..674cddfee5b0 100644
-> > > > > > > > > > --- a/drivers/gpu/drm/msm/dp/dp_display.c
-> > > > > > > > > > +++ b/drivers/gpu/drm/msm/dp/dp_display.c
-> > > > > > > > > > @@ -1233,7 +1239,7 @@ static int dp_display_probe(struct platform_device *pdev)
-> > > > > > > > > >         if (!dp)
-> > > > > > > > > >                 return -ENOMEM;
-> > > > > > > > > >
-> > > > > > > > > > -       desc = dp_display_get_desc(pdev);
-> > > > > > > > > > +       desc = dp_display_get_desc(pdev, &dp->id);
-> > > > > > > > >
-> > > > > > > > > I'm sad that dp->id has to match the number in the SoC specific
-> > > > > > > > > dpu_intf_cfg array in drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
-> > > > > > > > > still. Is there any way we can avoid that? Also, notice how those arrays
-> > > > > > > > > already have INTF_DP macros, which makes me think that it may be better
-> > > > > > > > > to connect this to those arrays instead of making an msm_dp_desc
-> > > > > > > > > structure and then make sure the 'type' member matches a connector
-> > > > > > > > > type number. Otherwise this code is super fragile.
-> > > > > > > > >
-> > > > > > > >
-> > > > > > > > I'm afraid I don't understand what you're proposing. Or which part you
-> > > > > > > > consider fragile, the indices of the INTF_DP instances aren't going to
-> > > > > > > > move around...
-> > > > > > > >
-> > > > > > > > I have N instances of the DP driver that I need to match to N entries
-> > > > > > > > from the platform specific intf array, I need some stable reference
-> > > > > > > > between them. When I started this journey I figured I could rely on the
-> > > > > > > > of_graph between the DPU and the interface controllers, but the values
-> > > > > > > > used there today are just bogus, so that was a no go.
-> > > > > > > >
-> > > > > > > > We can use whatever, as long as _dpu_kms_initialize_displayport() can
-> > > > > > > > come up with an identifier to put in h_tile_instance[0] so that
-> > > > > > > > dpu_encoder_setup_display() can find the relevant INTF.
-> > > > > > > >
-> > > > > > >
-> > > > > > > To make it more concrete we can look at sc7180
-> > > > > > >
-> > > > > > > static const struct dpu_intf_cfg sc7180_intf[] = {
-> > > > > > >         INTF_BLK("intf_0", INTF_0, 0x6A000, INTF_DP, 0, 24,
-> > > > > > > INTF_SC7180_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
-> > > > > > >                                                      ^
-> > > > > > >                                                      |
-> > > > > > >
-> > > > > > > intf0 is irrelevant. Also the address is irrelevant. But here we have a
-> > > > > > > zero, the number after INTF_DP, and that is very relevant. That number
-> > > > > > > needs to match the dp->id. Somewhere we have a match between
-> > > > > > > controller_id and dp->id in the code.
-> > > > > >
-> > > > > > That number (the 0, not INTF_0) is what the code matches against dp->id
-> > > > > > in _dpu_kms_initialize_displayport(), in order to figure out that this
-> > > > > > is INTF_0 in dpu_encoder_setup_display().
-> > > > > >
-> > > > > > I.e. look at the sc8180x patch:
-> > > > > >
-> > > > > > INTF_BLK("intf_0", INTF_0, 0x6A000, INTF_DP, 0, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
-> > > > > > INTF_BLK("intf_1", INTF_1, 0x6A800, INTF_DSI, 0, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 26, 27),
-> > > > > > INTF_BLK("intf_2", INTF_2, 0x6B000, INTF_DSI, 1, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 28, 29),
-> > > > > > /* INTF_3 is for MST, wired to INTF_DP 0 and 1, use dummy index until this is supported */
-> > > > > > INTF_BLK("intf_3", INTF_3, 0x6B800, INTF_DP, 999, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 30, 31),
-> > > > > > INTF_BLK("intf_4", INTF_4, 0x6C000, INTF_DP, 1, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 20, 21),
-> > > > > > INTF_BLK("intf_5", INTF_5, 0x6C800, INTF_DP, 2, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 22, 23),
-> > > > > >
-> > > > > > Where the DP driver defines the 3 controllers with dp->id of 0, 1 and 2,
-> > > > > > which the DPU code will match against to INTF_0, INTF_4 and INTF_5.
-> > > > > >
-> > > > >
-> > > > > Yep. I'm saying that having to make that number in this intf array match
-> > > > > the order of the register mapping descriptor array is fragile. Why can't
-> > > > > we indicate the interface is DP or eDP with INTF_DP or INTF_EDP and then
-> > > > > map from the descriptor array to this intf array somehow so that the
-> > > > > order of the descriptor array doesn't matter? Then we don't have to put
-> > > > > the connector type in the descriptor array, and we don't have to keep
-> > > > > the order of the array a certain way to match this intf descriptor.
-> > > > >
-> > > > > Maybe
-> > > > >
-> > > > >       struct msm_dp_desc {
-> > > > >               phys_addr_t io_start;
-> > > > >               unsigned int id;
-> > > >
-> > > > The INTF_<N> constants are a property of the DPU driver and not
-> > > > available in the DP driver and the msm_dp struct is a property of the DP
-> > > > driver and can't be dereferenced in the DPU driver.
-> > > >
-> > > > The proposed way around this is that the descs array defines the order
-> > > > in priv->dp[N] and this N is used as controller_id.
-> > >
-> > > I'm pretty sure I'm following along.
-> > >
-> > > >
-> > > > So the only thing that I don't find straight forward here is that the
-> > > > eDP controller is considered just a DP controller, so you have to use
-> > > > INTF_DP, <N> for that, and not just INTF_EDP, 0.
-> > > >
-> > > > >       };
-> > > > >
-> > > > > and then have msm_dp_desc::id equal INTF_<N> and then look through the
-> > > > > intf from DPU here in the DP driver to find the id and type of connector
-> > > > > that should be used by default? Still sort of fragile because the only
-> > > > > connection is an unsigned int which isn't great, but at least it's
-> > > > > explicit instead of implicit based on the array order.
-> > > >
-> > > > No matter how I look at this, you need to put some number somewhere here
-> > > > that will be used to match up the INTF with the right DSI/DP encoder.
-> > >
-> > > Correct.
-> > >
-> > > >
-> > > > Using the proposed number scheme follows the numbering of all the DP
-> > > > controllers from the documentation.
-> > > >
-> > >
-> > > Maybe I can make a better example. I have this for sc7280 in dpu_hw_catalog.c:
-> > >
-> > >       static const struct dpu_intf_cfg sc7280_intf[] = {
-> > >               INTF_BLK("intf_0", INTF_0, 0x34000, INTF_DP, CONTROLLER_ID_A, 24,
-> > > INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
-> > >               INTF_BLK("intf_1", INTF_1, 0x35000, INTF_DSI, 0, 24,
-> > > INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 26, 27),
-> > >               INTF_BLK("intf_5", INTF_5, 0x39000, INTF_DP, CONTROLLER_ID_B, 24,
-> > > INTF_SC7280_MASK, MDP_SSPP_TOP0_INTR, 22, 23),
-> > >       };
-> > >
-> > > And then this array for sc7280 in dp_display.c:
-> > >
-> > >       static const struct msm_dp_desc sc7280_dp_cfg = {
-> > >               .desc = {
-> > >                       [CONTROLLER_ID_A] = { 0xaea0000, DRM_MODE_CONNECTOR_eDP },
-> > >                       [CONTROLLER_ID_B] = { 0xae90000, DRM_MODE_CONNECTOR_DisplayPort },
-> > >               },
-> > >               .num_dp = 2,
-> > >       };
-> > >
-> > > So these two arrays must match based on CONTROLLER_ID_{A,B}. I don't
-> > > like having to make these two numbers match so if it was explicit, even
-> > > possibly by having a bunch of macros put in both places then I would be
-> > > happy. I spent a few hours when I messed up the order of the
-> > > sc7280_dp_cfg.desc array trying to figure out why things weren't
-> > > working.
-> >
-> > So essentially, you didn't know that the controller_id has to match the
-> > index in priv->dsi[] and priv->dp[] and providing a define for them
-> > would make this more obvious?
-> 
-> Now you got it!
-> 
-> >
-> > I think per your argument the 0 following INTF_DSI should also be using
-> > this scheme, so we'd have multiple CONTROLLER_ID_A, which probably is
-> > confusing as well.
-> 
-> Agreed.
-> 
-> >
-> > I tried it out with below patch; it documents the relationship, provides
-> > constants for the magic 2 and 3 for number of DSI and DP controllers in
-> > struct msm_drm_private.
-> >
-> > I like it.
-> 
-> Thanks. I prefer this approach as well.
+Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+---
+ drivers/gpu/drm/msm/dsi/dsi.h         | 2 ++
+ drivers/gpu/drm/msm/dsi/dsi_host.c    | 8 ++++++++
+ drivers/gpu/drm/msm/dsi/dsi_manager.c | 3 +++
+ 3 files changed, 13 insertions(+)
 
-Sweet, I'll update my patch set accordingly.
+diff --git a/drivers/gpu/drm/msm/dsi/dsi.h b/drivers/gpu/drm/msm/dsi/dsi.h
+index b50db91cb8a7..7dfb6d198ca9 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi.h
++++ b/drivers/gpu/drm/msm/dsi/dsi.h
+@@ -118,6 +118,8 @@ unsigned long msm_dsi_host_get_mode_flags(struct mipi_dsi_host *host);
+ struct drm_bridge *msm_dsi_host_get_bridge(struct mipi_dsi_host *host);
+ int msm_dsi_host_register(struct mipi_dsi_host *host, bool check_defer);
+ void msm_dsi_host_unregister(struct mipi_dsi_host *host);
++void msm_dsi_host_set_phy_mode(struct mipi_dsi_host *host,
++			struct msm_dsi_phy *src_phy);
+ int msm_dsi_host_set_src_pll(struct mipi_dsi_host *host,
+ 			struct msm_dsi_phy *src_phy);
+ void msm_dsi_host_reset_phy(struct mipi_dsi_host *host);
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_host.c b/drivers/gpu/drm/msm/dsi/dsi_host.c
+index e269df285136..1ffcd0577e99 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_host.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_host.c
+@@ -2224,6 +2224,14 @@ void msm_dsi_host_cmd_xfer_commit(struct mipi_dsi_host *host, u32 dma_base,
+ 	wmb();
+ }
+ 
++void msm_dsi_host_set_phy_mode(struct mipi_dsi_host *host,
++	struct msm_dsi_phy *src_phy)
++{
++	struct msm_dsi_host *msm_host = to_msm_dsi_host(host);
++
++	msm_host->cphy_mode = src_phy->cphy_mode;
++}
++
+ int msm_dsi_host_set_src_pll(struct mipi_dsi_host *host,
+ 	struct msm_dsi_phy *src_phy)
+ {
+diff --git a/drivers/gpu/drm/msm/dsi/dsi_manager.c b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+index c41d39f5b7cf..49a0a0841487 100644
+--- a/drivers/gpu/drm/msm/dsi/dsi_manager.c
++++ b/drivers/gpu/drm/msm/dsi/dsi_manager.c
+@@ -77,6 +77,7 @@ static int dsi_mgr_setup_components(int id)
+ 			return ret;
+ 
+ 		msm_dsi_phy_set_usecase(msm_dsi->phy, MSM_DSI_PHY_STANDALONE);
++		msm_dsi_host_set_phy_mode(msm_dsi->host, msm_dsi->phy);
+ 		ret = msm_dsi_host_set_src_pll(msm_dsi->host, msm_dsi->phy);
+ 	} else if (!other_dsi) {
+ 		ret = 0;
+@@ -104,6 +105,8 @@ static int dsi_mgr_setup_components(int id)
+ 					MSM_DSI_PHY_MASTER);
+ 		msm_dsi_phy_set_usecase(clk_slave_dsi->phy,
+ 					MSM_DSI_PHY_SLAVE);
++		msm_dsi_host_set_phy_mode(msm_dsi->host, msm_dsi->phy);
++		msm_dsi_host_set_phy_mode(other_dsi->host, other_dsi->phy);
+ 		ret = msm_dsi_host_set_src_pll(msm_dsi->host, clk_master_dsi->phy);
+ 		if (ret)
+ 			return ret;
+-- 
+2.33.0
 
-> I can see now why qcom always wants to change the output ports on the
-> DPU node in DT to match the INTF number. If they would have described
-> this problem it may have made sense to have the graph endpoints with
-> reg properties matching the interface number in the intf array. Sigh.
-
-Yes, I think the supposed design is that you should use the of_graph and
-then call of_find_possible_crtcs() to figure out your links.
-
-Unfortunately that doesn't work with the design of the DPU driver,
-because the crtcs doesn't represent the INTFs - and as you say, the
-existing of_graphs are full of incorrect data.
-
-Which also means that I don't know why we keep filling out the of_graph,
-because afaict it's not used and it contains invalid information.
-
-Thanks,
-Bjorn
