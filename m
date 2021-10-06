@@ -2,292 +2,197 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C7441423CD5
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 13:31:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 670BE423CE3
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 13:35:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S238001AbhJFLdI (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Oct 2021 07:33:08 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52596 "EHLO
+        id S238270AbhJFLhh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Oct 2021 07:37:37 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53632 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238091AbhJFLdH (ORCPT
+        with ESMTP id S238166AbhJFLhd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Oct 2021 07:33:07 -0400
-Received: from mail-pl1-x62f.google.com (mail-pl1-x62f.google.com [IPv6:2607:f8b0:4864:20::62f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D76EFC061753
-        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Oct 2021 04:31:13 -0700 (PDT)
-Received: by mail-pl1-x62f.google.com with SMTP id n11so1055513plf.4
-        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Oct 2021 04:31:13 -0700 (PDT)
+        Wed, 6 Oct 2021 07:37:33 -0400
+Received: from mail-qt1-x82e.google.com (mail-qt1-x82e.google.com [IPv6:2607:f8b0:4864:20::82e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id DE35FC061755
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Oct 2021 04:35:40 -0700 (PDT)
+Received: by mail-qt1-x82e.google.com with SMTP id t2so2168724qtx.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Oct 2021 04:35:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=Gia1QQnXEqZ0IHaAay2qz6311LHsI6yQ4uNChEXC7f4=;
-        b=CASN7zGbYBrcm6AFxeUl+DJMKUCrNV6rsw2g7MQn6B9NjMA4LklFLFCnLSwpVOPZKy
-         TZWvyRxlPGEnuDbbQpKWeloeFED8y+riIxhC3LRZ4PJNLVU0nceF+/kDLg6GQnBd6ShT
-         IygamWxr4l8Fz3gCJdfb3rDs7ipvsCj2D93NUMbEnTTCiMfplikJRJ7jClgALV4HhbHj
-         2KrMbZJs1qEtkNLj3fLJgp98gHrlNZFB2k6iedXQJT9rKDEqjW5xwua1dctvMBr3huCF
-         zwYBC4Y3tKQFxXyPfZOzT4k2oPWlyjUwS8RG1aXAw8Qhq5eeW8IGC6LBpuDRsrtjTDJY
-         t4sA==
+        bh=tpd3jdV9Ywj/INu9icrCWOgQz9TG3sjirde2+WE+zhE=;
+        b=c2roWpVqwdpcWn5AE39gKv+0/Khwap6UoAuiy6NfaZqDgedxpN0PxAYAOIlKEC2qPb
+         e1qtB3E81QftOs72xrT9ZI1xs8QdGRTjFuH+qPJkREeWEoxQyVdBVP1xPxIFK7YKdFi6
+         Jj0sDdVxsel1OEMJgdLexgaLE0TNgB2PEgBLr0E9A3GBRp1tHwXGGJrBuo1JIf5oRDrL
+         hTBSqNkZJu6bRwkcUqCSJK1n4bT8wALGaqXiYZ/p0sXOv5WSrAsR9AuO2cMKu7QAA9V4
+         kelQ+6nb4REu5RZoYwqOsjDZk/85XAtB00X1u8DRr0e0EJMV0vLgz+Z+8/YHSMCJC8yA
+         gpiw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=Gia1QQnXEqZ0IHaAay2qz6311LHsI6yQ4uNChEXC7f4=;
-        b=CuOitA+B2EPu0vysqp8f2eip5E+i381Wopt3Qy1JJ0RAim3OsnLUMCrs+eZzIihcZM
-         Lz3O3mzZvRXQWZrOk8GVCApSFItP+HSBTwQkxTcFH+UdRSfecmjYZs07SGWAA1aSDy4N
-         P9nPi8YFBdYR70DMQUuEI0SqwajaQL4lNTic1uEp4+kx1QvmARgvjTrGwmHQZvF9eh44
-         9zjKVtUE5EH2X7IQtiKfJ8FRkYQhhqVtYw1rgBLsqXpcS8ba12iw/O4qKQOnqH+8dXtN
-         8kSHC8PLe3ISd5ihvXkQBBRuMaPMtmd3xeDRb0obL1eiGdaIlxA/PLeBRCKX+ivFd2gE
-         RpFw==
-X-Gm-Message-State: AOAM532sC60ONrYDmE6KM5FSxR1iviAQnTK6tkiw2YbjkL9LdBuW9IUo
-        UOFAUVJYBkdr0QmNwtw+2IMw24XHn+0OKB3U6BB7dQ==
-X-Google-Smtp-Source: ABdhPJye4H+jVkrQ0+lywQ/EqobK++QdIlFGiqZBddWzZiyhFTtNpA8cM9eFAvdsGPhr3DvgmuELR2ahyy1pMmQcx2w=
-X-Received: by 2002:a17:90b:4c0d:: with SMTP id na13mr10510639pjb.232.1633519873150;
- Wed, 06 Oct 2021 04:31:13 -0700 (PDT)
+        bh=tpd3jdV9Ywj/INu9icrCWOgQz9TG3sjirde2+WE+zhE=;
+        b=CQoDlmdO4uO+c97C7TlmxR5RuBpS+cSsw289FXV28AHDQ/a8wAErgK+/rW31RYXGvd
+         eaDh8P+AsDWkLdiXnUuxyKBP8GO0N7dNUAGRE3X5JtdLc6Bko/w2UD2GDBaIjfZrexBh
+         brB+myDZ0wmxAmH7e1zrntpllvUnjdE+vprIJsnxr8Chls+Z5abwXPiOXks9FAYmXND0
+         8tuCGBSqtWeVTPScC+e1f+msBLV/aBpGUp6t4iL1Lf+XEWCZtcC4bqmlavJNF2w0RrBy
+         KCquWKIfEWGJUbH/FOOXZg6RXd4VQP8HRyO/hBQ+qFCHaOftxAvAmY2k7ZCaaANrO1F9
+         /e+A==
+X-Gm-Message-State: AOAM532wbrmNeRK4x/E90CQENOvVo5qxRtzM8oyvR80QOljEv5eGhfmc
+        iBSiwW34Tk5PXf1GGlSIr7eE1oD1VdayRXJlihc77g==
+X-Google-Smtp-Source: ABdhPJzzR+2kfHwR2KjITqsCZh6KhF8o32hjDia0N3xy4u0rg5EetS6fvFTVg52fKqVP8G1DEZ8Ek/X1FfNPRmWOelM=
+X-Received: by 2002:ac8:1011:: with SMTP id z17mr26242757qti.388.1633520139911;
+ Wed, 06 Oct 2021 04:35:39 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210825221600.1498939-1-bjorn.andersson@linaro.org>
-In-Reply-To: <20210825221600.1498939-1-bjorn.andersson@linaro.org>
-From:   Robert Foss <robert.foss@linaro.org>
-Date:   Wed, 6 Oct 2021 13:31:02 +0200
-Message-ID: <CAG3jFysa9ou9qbXi7dmz9k0GguAFOtgQdmXKwX3QcyULWrequQ@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: sm8350: Add CPU topology and idle-states
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        MSM <linux-arm-msm@vger.kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-kernel <linux-kernel@vger.kernel.org>
+References: <20211005231323.2663520-1-bjorn.andersson@linaro.org>
+ <20211005231323.2663520-6-bjorn.andersson@linaro.org> <CAE-0n52gOCC8bUfMFnNHRKFoq2=q4Ho8a-UYH5JKgumguhUD2A@mail.gmail.com>
+ <YVz/NOL3AFn2zBA0@ripper> <CAE-0n513cs282Dh_YFMHK2uKCVFSWxtNyfRaFwWGyUvpfShixw@mail.gmail.com>
+ <YV0MAF/Y5BR1e6My@ripper> <CAE-0n53TwEyycpAaWVpRUKPpos4z-gqwrvyUdgobh1V88VUsXg@mail.gmail.com>
+ <CAA8EJpou8ssBD2VGqfKKg43Gu031X-Bm+eirS_AL3Dr2AcdOJg@mail.gmail.com> <CAE-0n51S+DRXfJPWY93DS+4MMqVadfuP0bg0dJMH10pDvtabBg@mail.gmail.com>
+In-Reply-To: <CAE-0n51S+DRXfJPWY93DS+4MMqVadfuP0bg0dJMH10pDvtabBg@mail.gmail.com>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Wed, 6 Oct 2021 14:35:28 +0300
+Message-ID: <CAA8EJpqMOG8NASXkcimpNOnkSXfTqeYHuaKg1ApC0sFuwYzx=w@mail.gmail.com>
+Subject: Re: [PATCH v4 5/7] drm/msm/dp: Support up to 3 DP controllers
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Kuogee Hsieh <khsieh@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        open list <linux-kernel@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 26 Aug 2021 at 00:14, Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> Add CPU topology and define the idle states for the silver and gold
-> cores as well as the cluster.
->
-> Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> ---
->  arch/arm64/boot/dts/qcom/sm8350.dtsi | 141 +++++++++++++++++++++++++++
->  1 file changed, 141 insertions(+)
->
-> diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> index c6e1febaee46..35e8935bc1fa 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-> @@ -48,6 +48,8 @@ CPU0: cpu@0 {
->                         enable-method = "psci";
->                         next-level-cache = <&L2_0>;
->                         qcom,freq-domain = <&cpufreq_hw 0>;
-> +                       power-domains = <&CPU_PD0>;
-> +                       power-domain-names = "psci";
->                         #cooling-cells = <2>;
->                         L2_0: l2-cache {
->                               compatible = "cache";
-> @@ -65,6 +67,8 @@ CPU1: cpu@100 {
->                         enable-method = "psci";
->                         next-level-cache = <&L2_100>;
->                         qcom,freq-domain = <&cpufreq_hw 0>;
-> +                       power-domains = <&CPU_PD1>;
-> +                       power-domain-names = "psci";
->                         #cooling-cells = <2>;
->                         L2_100: l2-cache {
->                               compatible = "cache";
-> @@ -79,6 +83,8 @@ CPU2: cpu@200 {
->                         enable-method = "psci";
->                         next-level-cache = <&L2_200>;
->                         qcom,freq-domain = <&cpufreq_hw 0>;
-> +                       power-domains = <&CPU_PD2>;
-> +                       power-domain-names = "psci";
->                         #cooling-cells = <2>;
->                         L2_200: l2-cache {
->                               compatible = "cache";
-> @@ -93,6 +99,8 @@ CPU3: cpu@300 {
->                         enable-method = "psci";
->                         next-level-cache = <&L2_300>;
->                         qcom,freq-domain = <&cpufreq_hw 0>;
-> +                       power-domains = <&CPU_PD3>;
-> +                       power-domain-names = "psci";
->                         #cooling-cells = <2>;
->                         L2_300: l2-cache {
->                               compatible = "cache";
-> @@ -107,6 +115,8 @@ CPU4: cpu@400 {
->                         enable-method = "psci";
->                         next-level-cache = <&L2_400>;
->                         qcom,freq-domain = <&cpufreq_hw 1>;
-> +                       power-domains = <&CPU_PD4>;
-> +                       power-domain-names = "psci";
->                         #cooling-cells = <2>;
->                         L2_400: l2-cache {
->                               compatible = "cache";
-> @@ -121,6 +131,8 @@ CPU5: cpu@500 {
->                         enable-method = "psci";
->                         next-level-cache = <&L2_500>;
->                         qcom,freq-domain = <&cpufreq_hw 1>;
-> +                       power-domains = <&CPU_PD5>;
-> +                       power-domain-names = "psci";
->                         #cooling-cells = <2>;
->                         L2_500: l2-cache {
->                               compatible = "cache";
-> @@ -136,6 +148,8 @@ CPU6: cpu@600 {
->                         enable-method = "psci";
->                         next-level-cache = <&L2_600>;
->                         qcom,freq-domain = <&cpufreq_hw 1>;
-> +                       power-domains = <&CPU_PD6>;
-> +                       power-domain-names = "psci";
->                         #cooling-cells = <2>;
->                         L2_600: l2-cache {
->                               compatible = "cache";
-> @@ -150,12 +164,86 @@ CPU7: cpu@700 {
->                         enable-method = "psci";
->                         next-level-cache = <&L2_700>;
->                         qcom,freq-domain = <&cpufreq_hw 2>;
-> +                       power-domains = <&CPU_PD7>;
-> +                       power-domain-names = "psci";
->                         #cooling-cells = <2>;
->                         L2_700: l2-cache {
->                               compatible = "cache";
->                               next-level-cache = <&L3_0>;
->                         };
->                 };
-> +
-> +               cpu-map {
-> +                       cluster0 {
-> +                               core0 {
-> +                                       cpu = <&CPU0>;
-> +                               };
-> +
-> +                               core1 {
-> +                                       cpu = <&CPU1>;
-> +                               };
-> +
-> +                               core2 {
-> +                                       cpu = <&CPU2>;
-> +                               };
-> +
-> +                               core3 {
-> +                                       cpu = <&CPU3>;
-> +                               };
-> +
-> +                               core4 {
-> +                                       cpu = <&CPU4>;
-> +                               };
-> +
-> +                               core5 {
-> +                                       cpu = <&CPU5>;
-> +                               };
-> +
-> +                               core6 {
-> +                                       cpu = <&CPU6>;
-> +                               };
-> +
-> +                               core7 {
-> +                                       cpu = <&CPU7>;
-> +                               };
-> +                       };
-> +               };
-> +
-> +               idle-states {
-> +                       entry-method = "psci";
-> +
-> +                       LITTLE_CPU_SLEEP_0: cpu-sleep-0-0 {
-> +                               compatible = "arm,idle-state";
-> +                               idle-state-name = "silver-rail-power-collapse";
-> +                               arm,psci-suspend-param = <0x40000004>;
-> +                               entry-latency-us = <355>;
-> +                               exit-latency-us = <909>;
-> +                               min-residency-us = <3934>;
-> +                               local-timer-stop;
-> +                       };
-> +
-> +                       BIG_CPU_SLEEP_0: cpu-sleep-1-0 {
-> +                               compatible = "arm,idle-state";
-> +                               idle-state-name = "gold-rail-power-collapse";
-> +                               arm,psci-suspend-param = <0x40000004>;
-> +                               entry-latency-us = <241>;
-> +                               exit-latency-us = <1461>;
-> +                               min-residency-us = <4488>;
-> +                               local-timer-stop;
-> +                       };
-> +               };
-> +
-> +               domain-idle-states {
-> +                       CLUSTER_SLEEP_0: cluster-sleep-0 {
-> +                               compatible = "domain-idle-state";
-> +                               idle-state-name = "cluster-power-collapse";
-> +                               arm,psci-suspend-param = <0x4100c344>;
-> +                               entry-latency-us = <3263>;
-> +                               exit-latency-us = <6562>;
-> +                               min-residency-us = <9987>;
-> +                               local-timer-stop;
-> +                       };
-> +               };
->         };
->
->         firmware {
-> @@ -179,6 +267,59 @@ pmu {
->         psci {
->                 compatible = "arm,psci-1.0";
->                 method = "smc";
-> +
-> +               CPU_PD0: cpu0 {
-> +                       #power-domain-cells = <0>;
-> +                       power-domains = <&CLUSTER_PD>;
-> +                       domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-> +               };
-> +
-> +               CPU_PD1: cpu1 {
-> +                       #power-domain-cells = <0>;
-> +                       power-domains = <&CLUSTER_PD>;
-> +                       domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-> +               };
-> +
-> +               CPU_PD2: cpu2 {
-> +                       #power-domain-cells = <0>;
-> +                       power-domains = <&CLUSTER_PD>;
-> +                       domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-> +               };
-> +
-> +               CPU_PD3: cpu3 {
-> +                       #power-domain-cells = <0>;
-> +                       power-domains = <&CLUSTER_PD>;
-> +                       domain-idle-states = <&LITTLE_CPU_SLEEP_0>;
-> +               };
-> +
-> +               CPU_PD4: cpu4 {
-> +                       #power-domain-cells = <0>;
-> +                       power-domains = <&CLUSTER_PD>;
-> +                       domain-idle-states = <&BIG_CPU_SLEEP_0>;
-> +               };
-> +
-> +               CPU_PD5: cpu5 {
-> +                       #power-domain-cells = <0>;
-> +                       power-domains = <&CLUSTER_PD>;
-> +                       domain-idle-states = <&BIG_CPU_SLEEP_0>;
-> +               };
-> +
-> +               CPU_PD6: cpu6 {
-> +                       #power-domain-cells = <0>;
-> +                       power-domains = <&CLUSTER_PD>;
-> +                       domain-idle-states = <&BIG_CPU_SLEEP_0>;
-> +               };
-> +
-> +               CPU_PD7: cpu7 {
-> +                       #power-domain-cells = <0>;
-> +                       power-domains = <&CLUSTER_PD>;
-> +                       domain-idle-states = <&BIG_CPU_SLEEP_0>;
-> +               };
-> +
-> +               CLUSTER_PD: cpu-cluster0 {
-> +                       #power-domain-cells = <0>;
-> +                       domain-idle-states = <&CLUSTER_SLEEP_0>;
-> +               };
->         };
->
->         reserved_memory: reserved-memory {
+Hi,
 
-This looks good to me, and introduces no new issues to dtbs_check.
+On Wed, 6 Oct 2021 at 10:06, Stephen Boyd <swboyd@chromium.org> wrote:
+>
+> Quoting Dmitry Baryshkov (2021-10-05 23:10:22)
+> > On Wed, 6 Oct 2021 at 07:26, Stephen Boyd <swboyd@chromium.org> wrote:
+> > >
+> > > Quoting Bjorn Andersson (2021-10-05 19:37:52)
+> > > > On Tue 05 Oct 19:06 PDT 2021, Stephen Boyd wrote:
+> > > >
+> > > > > Quoting Bjorn Andersson (2021-10-05 18:43:16)
+> > > > > > On Tue 05 Oct 17:43 PDT 2021, Stephen Boyd wrote:
+> > > > > >
+> > > > > > > Quoting Bjorn Andersson (2021-10-05 16:13:21)
+> > > > > > > > diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> > > > > > > > index bdaf227f05dc..674cddfee5b0 100644
+> > > > > > > > --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> > > > > > > > +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> > > > > > > > @@ -1233,7 +1239,7 @@ static int dp_display_probe(struct platform_device *pdev)
+> > > > > > > >         if (!dp)
+> > > > > > > >                 return -ENOMEM;
+> > > > > > > >
+> > > > > > > > -       desc = dp_display_get_desc(pdev);
+> > > > > > > > +       desc = dp_display_get_desc(pdev, &dp->id);
+> > > > > > >
+> > > > > > > I'm sad that dp->id has to match the number in the SoC specific
+> > > > > > > dpu_intf_cfg array in drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> > > > > > > still. Is there any way we can avoid that? Also, notice how those arrays
+> > > > > > > already have INTF_DP macros, which makes me think that it may be better
+> > > > > > > to connect this to those arrays instead of making an msm_dp_desc
+> > > > > > > structure and then make sure the 'type' member matches a connector
+> > > > > > > type number. Otherwise this code is super fragile.
+> > > > > > >
+> > > > > >
+> > > > > > I'm afraid I don't understand what you're proposing. Or which part you
+> > > > > > consider fragile, the indices of the INTF_DP instances aren't going to
+> > > > > > move around...
+> > > > > >
+> > > > > > I have N instances of the DP driver that I need to match to N entries
+> > > > > > from the platform specific intf array, I need some stable reference
+> > > > > > between them. When I started this journey I figured I could rely on the
+> > > > > > of_graph between the DPU and the interface controllers, but the values
+> > > > > > used there today are just bogus, so that was a no go.
+> > > > > >
+> > > > > > We can use whatever, as long as _dpu_kms_initialize_displayport() can
+> > > > > > come up with an identifier to put in h_tile_instance[0] so that
+> > > > > > dpu_encoder_setup_display() can find the relevant INTF.
+> > > > > >
+> > > > >
+> > > > > To make it more concrete we can look at sc7180
+> > > > >
+> > > > > static const struct dpu_intf_cfg sc7180_intf[] = {
+> > > > >         INTF_BLK("intf_0", INTF_0, 0x6A000, INTF_DP, 0, 24,
+> > > > > INTF_SC7180_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
+> > > > >                                                      ^
+> > > > >                                                      |
+> > > > >
+> > > > > intf0 is irrelevant. Also the address is irrelevant. But here we have a
+> > > > > zero, the number after INTF_DP, and that is very relevant. That number
+> > > > > needs to match the dp->id. Somewhere we have a match between
+> > > > > controller_id and dp->id in the code.
+> > > >
+> > > > That number (the 0, not INTF_0) is what the code matches against dp->id
+> > > > in _dpu_kms_initialize_displayport(), in order to figure out that this
+> > > > is INTF_0 in dpu_encoder_setup_display().
+> > > >
+> > > > I.e. look at the sc8180x patch:
+> > > >
+> > > > INTF_BLK("intf_0", INTF_0, 0x6A000, INTF_DP, 0, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
+> > > > INTF_BLK("intf_1", INTF_1, 0x6A800, INTF_DSI, 0, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 26, 27),
+> > > > INTF_BLK("intf_2", INTF_2, 0x6B000, INTF_DSI, 1, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 28, 29),
+> > > > /* INTF_3 is for MST, wired to INTF_DP 0 and 1, use dummy index until this is supported */
+> > > > INTF_BLK("intf_3", INTF_3, 0x6B800, INTF_DP, 999, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 30, 31),
+> > > > INTF_BLK("intf_4", INTF_4, 0x6C000, INTF_DP, 1, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 20, 21),
+> > > > INTF_BLK("intf_5", INTF_5, 0x6C800, INTF_DP, 2, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 22, 23),
+> > > >
+> > > > Where the DP driver defines the 3 controllers with dp->id of 0, 1 and 2,
+> > > > which the DPU code will match against to INTF_0, INTF_4 and INTF_5.
+> > > >
+> > >
+> > > Yep. I'm saying that having to make that number in this intf array match
+> > > the order of the register mapping descriptor array is fragile. Why can't
+> > > we indicate the interface is DP or eDP with INTF_DP or INTF_EDP and then
+> > > map from the descriptor array to this intf array somehow so that the
+> > > order of the descriptor array doesn't matter? Then we don't have to put
+> > > the connector type in the descriptor array, and we don't have to keep
+> > > the order of the array a certain way to match this intf descriptor.
+> >
+> > The order of the descriptor array does not matter currently (or we do
+> > not understand fully your concern).
+> > The encoder is mapped to intf using type + controller_id (next field
+> > after INTF_foo).
+> > Also having the controller_id in the descs array allows us to simplify
+> > DSI code (where DSI_0 is master and DSI_1 is slave, no matter which
+> > INTF they are associated with).
+>
+> The order seems to matter for me. Otherwise I get various vblank
+> timeouts and the eDP panel doesn't light up. I'm using the previous
+> version of this patch series though so maybe something got fixed in the
+> meantime. If I change the controller_id to match my new ordering of the
+> descriptor array then it works again. So somehow controller_id needs to
+> match dp->id?
 
-Reviewed-by: Robert Foss <robert.foss@linaro.org>
+Yes, controller_id should match. However the order of entries in the
+array should not matter. If it does, it's clearly an issue somewhere.
+
+>
+> >
+> > Last, but not least, maybe I'd point you to one of the proposed
+> > cleanup patches:
+> > https://lore.kernel.org/linux-arm-msm/20210515225757.1989955-5-dmitry.baryshkov@linaro.org/
+> > It removes one extra level of indirection in interface association.
+> >
+>
+> Thanks for the link.
+
+
+
+-- 
+With best wishes
+Dmitry
