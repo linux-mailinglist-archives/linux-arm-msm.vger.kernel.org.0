@@ -2,168 +2,223 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AD6FC42460A
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 20:26:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8A6C7424623
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 20:35:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231624AbhJFS2Q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Oct 2021 14:28:16 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37674 "EHLO
+        id S238130AbhJFShd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Oct 2021 14:37:33 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39818 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229564AbhJFS2P (ORCPT
+        with ESMTP id S238119AbhJFShd (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Oct 2021 14:28:15 -0400
-Received: from mail-qk1-x736.google.com (mail-qk1-x736.google.com [IPv6:2607:f8b0:4864:20::736])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C3676C061746;
-        Wed,  6 Oct 2021 11:26:22 -0700 (PDT)
-Received: by mail-qk1-x736.google.com with SMTP id x12so3476962qkf.9;
-        Wed, 06 Oct 2021 11:26:22 -0700 (PDT)
+        Wed, 6 Oct 2021 14:37:33 -0400
+Received: from mail-oi1-x22a.google.com (mail-oi1-x22a.google.com [IPv6:2607:f8b0:4864:20::22a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 125B7C061753
+        for <linux-arm-msm@vger.kernel.org>; Wed,  6 Oct 2021 11:35:41 -0700 (PDT)
+Received: by mail-oi1-x22a.google.com with SMTP id y207so2166914oia.11
+        for <linux-arm-msm@vger.kernel.org>; Wed, 06 Oct 2021 11:35:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=MW5tHpMjCfEp2ujWAs5HwJDY4QO3gYqom+zIppRuqpk=;
-        b=Qc6hmZMtR7hj7SMkVwT3Qp9i91IzcDo8nkb8LT1TUO9Z9h35Xn25e+VUXjOrRAr62H
-         ebRrgIXcE+yfW6HdsGVBDF+DkmtYWJTtWzq6I0v3GQ7honc7LA9gZzUZnYftECbtmTsh
-         aIp7UrBYbBM2++qmIu78d8pph3C5QX7mac5/Q4RkLWsMTzwVANyFhVEJcF84tcDHOtBu
-         livJ7yU3agWK2L/cSli2EIfxpGV/XrLq7nVv/wLPfyqNGKxRep2+g3MZbKWbzDmrd5Hr
-         3rUAohixBxdzX7WCbbyVpjfYNNPKFKnKfF08EjeJIdkHQBV8QR2OUf8PAqolkwPwJBYV
-         LWzQ==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=VplqQGFhfdV0Gx7nfGCRGgat2VVdcmVBWMAuKtT7Nyk=;
+        b=UV08iB8ruUgWTEqnzMZx49PQYYwUHeyU6+4t64MtU/12EQl82p6srE62u+N0rCD+6+
+         15bNgU8t7j+yrZ+ILVmCiHGO9PjO+Kjs3gD3g7JJWi0qTHSuABitdqDhaxf5rUpGV3hS
+         O0f5dygQgiR/v38ln6ufT7BooKv6ErkUplgDtQdbTvzbx/9p4ybFRDTY4c69veB0LM9E
+         6bz//w2256jNj6q+Rwzt6HmoJASvOpvv1uPhUGp/Z7/fmYhWl4wHEDF0ii8zq3xyYU3d
+         AoVN3+n/f+LTdgZDMzsY1si8A9MJv/hbTP/awnyWkPhLiFd/IxxzlAdaYvbeEQmA7Tu3
+         vs6g==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=MW5tHpMjCfEp2ujWAs5HwJDY4QO3gYqom+zIppRuqpk=;
-        b=fPvCcJ8hL1wq3F5ZgivMqyHQSUWgfukNJaB3fr7dz1Q68c0zlM6fYLnfRcZ6+TL/Tx
-         eWZauykmkftYjjWAKwBwEwbvu5Fipoxj01Ktbp5+AMLrNMmt0C4Py7R0i5gvm+zpfdht
-         G9EsA3FOd1WfN7FeS42f6A09BBDAYnbholHPlC74bT4qsiI5BdHNuv0ohQ4bqgrnpO+P
-         CkXbvaKHH8UiLcIdGBPIMXL0oE/SY8zJgtRYL05MG6oy3DH1yoNuYUEH8NmPxtuTfo38
-         QeD2LnythzTvNOKJcqwPWzO91kG3y2EKHVJX3bUNlHiFI6IxpJFg6yZBUPsR83vajH0k
-         E0cQ==
-X-Gm-Message-State: AOAM531aYQwq0C2A3W91nh7qfbjOBs179hovlTNmyXl7xNCH/nFESTZH
-        gf9nbUoFXqMkcOeEKNtghD2WAza4aOV9i9qzLL8=
-X-Google-Smtp-Source: ABdhPJzLcLJsxRSBGw+zSWXGMASZJrbr2DfMYmSywwZ8SZRVzhbbVnYAZtC3YPyNrHooddEvk2Gk1UeKldkZnL/sTQ8=
-X-Received: by 2002:a37:af02:: with SMTP id y2mr209498qke.33.1633544781895;
- Wed, 06 Oct 2021 11:26:21 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=VplqQGFhfdV0Gx7nfGCRGgat2VVdcmVBWMAuKtT7Nyk=;
+        b=5+2fbK2sDvoYUzG9NcrEEiGidPGAK6qZ6kR9QZoG5T0gvWZzgu/RBF9gxiszS7CJxL
+         ZbvOEbyP/Cg/BFm+ECUt6VcbZrItK3yEKiB4X2PT3GY013y8wV1TOsCu6GDArmmBojNh
+         siHuC1N13qdVFBjihqU+hnzf9TY7VTKhJebZki/ico9YHG4WcQbS3wYYl5YVIg2Loj5r
+         RXDhXhBq3sifjbbthpINDdzO/5Wx+ljg0xgloZhSc7X21qGVnhvy2BBsDXRjH/rr9WNj
+         8yqJ9DjZ8PBNy/VNbKIhUWMDWIb5Odb1a2hkPNMbgeTszNmRXHatU6A/9Fv/OvRhUVNn
+         I7mQ==
+X-Gm-Message-State: AOAM532DG3M+5cgobgz3AxdpwJsfUT/SFjSRf2P3XQ/Nyw1U/f35hBAi
+        dF1M0+LZZ/Ci75pkGzNNNRHqzw==
+X-Google-Smtp-Source: ABdhPJwwnpNDTgj+KY21Bpv2Fw+MGDncLTHPgoaFh+mCKuAVva3QSRR0Un4Z5ABDSupouidoC+oFWQ==
+X-Received: by 2002:aca:b5c3:: with SMTP id e186mr8651269oif.51.1633545340268;
+        Wed, 06 Oct 2021 11:35:40 -0700 (PDT)
+Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id d14sm4293797otq.65.2021.10.06.11.35.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 06 Oct 2021 11:35:39 -0700 (PDT)
+Date:   Wed, 6 Oct 2021 11:37:20 -0700
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Stephen Boyd <swboyd@chromium.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        David Airlie <airlied@linux.ie>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Kuogee Hsieh <khsieh@codeaurora.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH v4 5/7] drm/msm/dp: Support up to 3 DP controllers
+Message-ID: <YV3s4L7h/KyMAQtu@ripper>
+References: <20211005231323.2663520-1-bjorn.andersson@linaro.org>
+ <20211005231323.2663520-6-bjorn.andersson@linaro.org>
+ <CAE-0n52gOCC8bUfMFnNHRKFoq2=q4Ho8a-UYH5JKgumguhUD2A@mail.gmail.com>
+ <YVz/NOL3AFn2zBA0@ripper>
+ <CAE-0n513cs282Dh_YFMHK2uKCVFSWxtNyfRaFwWGyUvpfShixw@mail.gmail.com>
+ <YV0MAF/Y5BR1e6My@ripper>
+ <CAE-0n53TwEyycpAaWVpRUKPpos4z-gqwrvyUdgobh1V88VUsXg@mail.gmail.com>
+ <YV3XxadYE/KU2w89@ripper>
+ <2073d18c-f5d5-562f-0ddb-38abc8a4457b@linaro.org>
 MIME-Version: 1.0
-References: <20210902214708.1776690-1-robimarko@gmail.com> <YUf3aKn78+41Cb/G@builder.lan>
- <CAOX2RU5b46H7nqm6G4mHLSqEhGiWktwWjUKF5w10Ut+AdKea-A@mail.gmail.com>
- <632a7d28c23a8497d35ea009bfe89883@codeaurora.org> <CAOX2RU5+jeXiqz8oss8Sd-BWa059uAv5xu=7nx_YF4RYpG2S6w@mail.gmail.com>
- <YUurqDL/S15RziCQ@builder.lan> <20211006182419.GC33862@thinkpad>
-In-Reply-To: <20211006182419.GC33862@thinkpad>
-From:   Robert Marko <robimarko@gmail.com>
-Date:   Wed, 6 Oct 2021 20:26:10 +0200
-Message-ID: <CAOX2RU43D72yx1Kyb0jRMMOLgBd1OMscWLH-dEdp0P=L-5quHQ@mail.gmail.com>
-Subject: Re: [PATCH] arm64: dts: qcom: ipq8074: add SMEM support
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Kathiravan T <kathirav@codeaurora.org>, agross@kernel.org,
-        robh+dt@kernel.org, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org,
-        open list <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <2073d18c-f5d5-562f-0ddb-38abc8a4457b@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 6 Oct 2021 at 20:24, Manivannan Sadhasivam
-<manivannan.sadhasivam@linaro.org> wrote:
->
-> On Wed, Sep 22, 2021 at 05:18:16PM -0500, Bjorn Andersson wrote:
-> > On Wed 22 Sep 15:23 CDT 2021, Robert Marko wrote:
-> >
-> > > On Tue, 21 Sept 2021 at 08:24, Kathiravan T <kathirav@codeaurora.org> wrote:
-> > > >
-> > > > On 2021-09-20 14:55, Robert Marko wrote:
-> > > > > On Mon, 20 Sept 2021 at 04:52, Bjorn Andersson
-> > > > > <bjorn.andersson@linaro.org> wrote:
-> > > > >>
-> > > > >> On Thu 02 Sep 16:47 CDT 2021, Robert Marko wrote:
-> > > > >>
-> > > > >> > IPQ8074 uses SMEM like other modern QCA SoC-s, so since its already
-> > > > >> > supported by the kernel add the required DT nodes.
-> > > > >> >
-> > > > >> > Signed-off-by: Robert Marko <robimarko@gmail.com>
-> > > > >>
-> > > > >> Thanks for your patch Robert.
-> > > > >>
-> > > > >> > ---
-> > > > >> >  arch/arm64/boot/dts/qcom/ipq8074.dtsi | 28 +++++++++++++++++++++++++++
-> > > > >> >  1 file changed, 28 insertions(+)
-> > > > >> >
-> > > > >> > diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> > > > >> > index a620ac0d0b19..83e9243046aa 100644
-> > > > >> > --- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> > > > >> > +++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-> > > > >> > @@ -82,6 +82,29 @@ scm {
-> > > > >> >               };
-> > > > >> >       };
-> > > > >> >
-> > > > >> > +     reserved-memory {
-> > > > >> > +             #address-cells = <2>;
-> > > > >> > +             #size-cells = <2>;
-> > > > >> > +             ranges;
-> > > > >> > +
-> > > > >> > +             smem_region: memory@4ab00000 {
-> > > > >> > +                     no-map;
-> > > > >> > +                     reg = <0x0 0x4ab00000 0x0 0x00100000>;
-> > > > >> > +             };
-> > > > >> > +     };
-> > > > >> > +
-> > > > >> > +     tcsr_mutex: hwlock {
-> > > > >> > +             compatible = "qcom,tcsr-mutex";
-> > > > >> > +             syscon = <&tcsr_mutex_regs 0 0x80>;
-> > > > >>
-> > > > >> Since it's not okay to have a lone "syscon" and I didn't think it was
-> > > > >> worth coming up with a binding for the TCSR mutex "syscon" I rewrote
-> > > > >> the
-> > > > >> binding a while back. As such qcom,tcsr-mutex should now live in /soc
-> > > > >> directly.
-> > > > >>
-> > > > >> So can you please respin accordingly?
-> > > > >
-> > > > > Sure, can you just confirm that the:
-> > > > > reg = <0x01905000 0x8000>;
-> > > > >
-> > > > > Is the whole TCSR range as I don't have docs?
-> > > >
-> > > > Robert,
-> > > >
-> > > > TCSR_MUTEX block starts from 0x01905000 and has size 0x20000 (128KB)
-> > >
-> > > Thanks, Kathiravan,
-> > > TSCR mutex with MMIO reg under it works, but there is some weird probe
-> > > ordering issue.
-> > >
-> > > For whatever reason, SMEM will get probed only after MTD does and this
-> > > will cause issues
-> > > if SMEM parser is used as it will return -EPROBE_DEFER but the MTD
-> > > core does not really
-> > > handle it correctly and causes the device to reboot after failed parsing.
-> > >
-> > > Now, I have no idea why does this variant which uses MMIO regmap probe
-> > > so much later?
-> > >
-> >
-> > Mani, do you have any input related to the probe deferral of the SMEM
-> > partition parser, because SMEM not yet probed?
-> >
->
-> Sorry, missed this earlier. I did face the probe deferral issue before and
-> submitted a small series for fixing that:
->
-> https://lore.kernel.org/linux-mtd/20210302132757.225395-1-manivannan.sadhasivam@linaro.org/
->
-> These 2 patches are in mainline now. Robert, can you make sure that you have
-> these 2 patches in your tree?
+On Wed 06 Oct 10:19 PDT 2021, Dmitry Baryshkov wrote:
 
-Hi Mani,
-Yes, I have those patches as I am running this on top of 5.15-rc4 currently.
+> On 06/10/2021 20:07, Bjorn Andersson wrote:
+> > On Tue 05 Oct 21:26 PDT 2021, Stephen Boyd wrote:
+> > 
+> > > Quoting Bjorn Andersson (2021-10-05 19:37:52)
+> > > > On Tue 05 Oct 19:06 PDT 2021, Stephen Boyd wrote:
+> > > > 
+> > > > > Quoting Bjorn Andersson (2021-10-05 18:43:16)
+> > > > > > On Tue 05 Oct 17:43 PDT 2021, Stephen Boyd wrote:
+> > > > > > 
+> > > > > > > Quoting Bjorn Andersson (2021-10-05 16:13:21)
+> > > > > > > > diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
+> > > > > > > > index bdaf227f05dc..674cddfee5b0 100644
+> > > > > > > > --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> > > > > > > > +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> > > > > > > > @@ -1233,7 +1239,7 @@ static int dp_display_probe(struct platform_device *pdev)
+> > > > > > > >          if (!dp)
+> > > > > > > >                  return -ENOMEM;
+> > > > > > > > 
+> > > > > > > > -       desc = dp_display_get_desc(pdev);
+> > > > > > > > +       desc = dp_display_get_desc(pdev, &dp->id);
+> > > > > > > 
+> > > > > > > I'm sad that dp->id has to match the number in the SoC specific
+> > > > > > > dpu_intf_cfg array in drivers/gpu/drm/msm/disp/dpu1/dpu_hw_catalog.c
+> > > > > > > still. Is there any way we can avoid that? Also, notice how those arrays
+> > > > > > > already have INTF_DP macros, which makes me think that it may be better
+> > > > > > > to connect this to those arrays instead of making an msm_dp_desc
+> > > > > > > structure and then make sure the 'type' member matches a connector
+> > > > > > > type number. Otherwise this code is super fragile.
+> > > > > > > 
+> > > > > > 
+> > > > > > I'm afraid I don't understand what you're proposing. Or which part you
+> > > > > > consider fragile, the indices of the INTF_DP instances aren't going to
+> > > > > > move around...
+> > > > > > 
+> > > > > > I have N instances of the DP driver that I need to match to N entries
+> > > > > > from the platform specific intf array, I need some stable reference
+> > > > > > between them. When I started this journey I figured I could rely on the
+> > > > > > of_graph between the DPU and the interface controllers, but the values
+> > > > > > used there today are just bogus, so that was a no go.
+> > > > > > 
+> > > > > > We can use whatever, as long as _dpu_kms_initialize_displayport() can
+> > > > > > come up with an identifier to put in h_tile_instance[0] so that
+> > > > > > dpu_encoder_setup_display() can find the relevant INTF.
+> > > > > > 
+> > > > > 
+> > > > > To make it more concrete we can look at sc7180
+> > > > > 
+> > > > > static const struct dpu_intf_cfg sc7180_intf[] = {
+> > > > >          INTF_BLK("intf_0", INTF_0, 0x6A000, INTF_DP, 0, 24,
+> > > > > INTF_SC7180_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
+> > > > >                                                       ^
+> > > > >                                                       |
+> > > > > 
+> > > > > intf0 is irrelevant. Also the address is irrelevant. But here we have a
+> > > > > zero, the number after INTF_DP, and that is very relevant. That number
+> > > > > needs to match the dp->id. Somewhere we have a match between
+> > > > > controller_id and dp->id in the code.
+> > > > 
+> > > > That number (the 0, not INTF_0) is what the code matches against dp->id
+> > > > in _dpu_kms_initialize_displayport(), in order to figure out that this
+> > > > is INTF_0 in dpu_encoder_setup_display().
+> > > > 
+> > > > I.e. look at the sc8180x patch:
+> > > > 
+> > > > INTF_BLK("intf_0", INTF_0, 0x6A000, INTF_DP, 0, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 24, 25),
+> > > > INTF_BLK("intf_1", INTF_1, 0x6A800, INTF_DSI, 0, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 26, 27),
+> > > > INTF_BLK("intf_2", INTF_2, 0x6B000, INTF_DSI, 1, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 28, 29),
+> > > > /* INTF_3 is for MST, wired to INTF_DP 0 and 1, use dummy index until this is supported */
+> > > > INTF_BLK("intf_3", INTF_3, 0x6B800, INTF_DP, 999, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 30, 31),
+> > > > INTF_BLK("intf_4", INTF_4, 0x6C000, INTF_DP, 1, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 20, 21),
+> > > > INTF_BLK("intf_5", INTF_5, 0x6C800, INTF_DP, 2, 24, INTF_SC8180X_MASK, MDP_SSPP_TOP0_INTR, 22, 23),
+> > > > 
+> > > > Where the DP driver defines the 3 controllers with dp->id of 0, 1 and 2,
+> > > > which the DPU code will match against to INTF_0, INTF_4 and INTF_5.
+> > > > 
+> > > 
+> > > Yep. I'm saying that having to make that number in this intf array match
+> > > the order of the register mapping descriptor array is fragile. Why can't
+> > > we indicate the interface is DP or eDP with INTF_DP or INTF_EDP and then
+> > > map from the descriptor array to this intf array somehow so that the
+> > > order of the descriptor array doesn't matter? Then we don't have to put
+> > > the connector type in the descriptor array, and we don't have to keep
+> > > the order of the array a certain way to match this intf descriptor.
+> > > 
+> > > Maybe
+> > > 
+> > > 	struct msm_dp_desc {
+> > > 		phys_addr_t io_start;
+> > > 		unsigned int id;
+> > 
+> > The INTF_<N> constants are a property of the DPU driver and not
+> > available in the DP driver and the msm_dp struct is a property of the DP
+> > driver and can't be dereferenced in the DPU driver.
+> > 
+> > The proposed way around this is that the descs array defines the order
+> > in priv->dp[N] and this N is used as controller_id.
+> > 
+> > 
+> > So the only thing that I don't find straight forward here is that the
+> > eDP controller is considered just a DP controller, so you have to use
+> > INTF_DP, <N> for that, and not just INTF_EDP, 0.
+> 
+> Would it be better if we change the DPU driver to handle INTF_EDP too?
+> 
+
+I looked at that a while back and given that we can't look inside any of
+the DP structs the only sensible solution I could come up with was to
+create another array in struct msm_drm_private with "edp controllers".
+
+But that means everywhere we today poke at priv->dp we need to also poke
+at priv->edp. And the only gain is that we can say that the eDP
+controller is INTF_EDP. And if there's ever a controller that could do
+both, then that breaks down anyways.
 
 Regards,
-Robert
->
-> Thanks,
-> Mani
->
-> > Thanks,
+Bjorn
+
+> > 
+> > > 	};
+> > > 
+> > > and then have msm_dp_desc::id equal INTF_<N> and then look through the
+> > > intf from DPU here in the DP driver to find the id and type of connector
+> > > that should be used by default? Still sort of fragile because the only
+> > > connection is an unsigned int which isn't great, but at least it's
+> > > explicit instead of implicit based on the array order.
+> > 
+> > No matter how I look at this, you need to put some number somewhere here
+> > that will be used to match up the INTF with the right DSI/DP encoder.
+> > 
+> > Using the proposed number scheme follows the numbering of all the DP
+> > controllers from the documentation.
+> > 
+> > Regards,
 > > Bjorn
+> > 
+> 
+> 
+> -- 
+> With best wishes
+> Dmitry
