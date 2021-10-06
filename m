@@ -2,260 +2,190 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 93DFB423767
-	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 07:09:40 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id CD4BE423776
+	for <lists+linux-arm-msm@lfdr.de>; Wed,  6 Oct 2021 07:24:51 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231128AbhJFFLa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 6 Oct 2021 01:11:30 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:20361 "EHLO m43-7.mailgun.net"
+        id S230080AbhJFF0l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 6 Oct 2021 01:26:41 -0400
+Received: from mail.kernel.org ([198.145.29.99]:37122 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S230080AbhJFFLa (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 6 Oct 2021 01:11:30 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1633496978; h=Content-Transfer-Encoding: Content-Type:
- MIME-Version: Message-ID: Date: Subject: In-Reply-To: References: Cc:
- To: From: Sender; bh=+kyodXuHFG7FzF09R13HJQkRJAU5Fcpb+u3xxEOyrpY=; b=w4bh9oLnep1lOxbM8UK+HL90N1pTGdj2DKSR6hyWSKR3aqJFKAoWpEI4CWtWuo4jZpg41dbz
- 9fGFL+DUz8/HejQ/kDd02O5kEdQfIAbL/aCYR8jhlJ7AiSnsVBITpMoqNALpRFKacjRPS7/y
- +flURLtNHtX42TUktfLO2pxNEnE=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 615d2f884ccc4cf2c79a7f87 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 06 Oct 2021 05:09:28
- GMT
-Sender: pillair=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 62080C43460; Wed,  6 Oct 2021 05:09:28 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
-        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
-Received: from PILLAIR1 (unknown [103.155.223.104])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: pillair)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 61C10C4338F;
-        Wed,  6 Oct 2021 05:09:21 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 61C10C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   <pillair@codeaurora.org>
-To:     "'Rob Herring'" <robh@kernel.org>
-Cc:     <mathieu.poirier@linaro.org>, <swboyd@chromium.org>,
-        <p.zabel@pengutronix.de>, <devicetree@vger.kernel.org>,
-        <bjorn.andersson@linaro.org>, <linux-kernel@vger.kernel.org>,
-        <robh+dt@kernel.org>, <sibis@codeaurora.org>,
-        <kuabhs@chromium.org>, <agross@kernel.org>, <ohad@wizery.com>,
-        <linux-arm-msm@vger.kernel.org>, <mpubbise@codeaurora.org>
-References: <1633330133-29617-1-git-send-email-pillair@codeaurora.org> <1633330133-29617-3-git-send-email-pillair@codeaurora.org> <1633350086.759437.1051509.nullmailer@robh.at.kernel.org>
-In-Reply-To: <1633350086.759437.1051509.nullmailer@robh.at.kernel.org>
-Subject: RE: [PATCH v6 2/3] dt-bindings: remoteproc: qcom: Add SC7280 WPSS support
-Date:   Wed, 6 Oct 2021 10:39:18 +0530
-Message-ID: <006801d7ba70$54daae00$fe900a00$@codeaurora.org>
+        id S229579AbhJFF0l (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 6 Oct 2021 01:26:41 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 3AAEE611C5;
+        Wed,  6 Oct 2021 05:24:48 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1633497890;
+        bh=cMNu6FCqgjsDuLKBexlofzbQh1accEh+KkJp8jMeKJU=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=ROe8Bm8gBydsupMVtG3HdpW6qsLjipMrqBLxHcBeI/cajE/eRrtK0/lq7FmVQ3Gng
+         VnxBvjDgsTRqJy52DHX6DcQqOqmUNt4c10cEAX/dlyBN0XZQR+BVnx31TfLjqMARLt
+         VOJy4AhiwfalHBNSnBswAuPnauM+0T/9lIyNyhJnpLP6PQeIWBbj68DTvCI3yY+AoB
+         Lxu4m3QCR4x8jxAQseu0ordikEPgXJw7P6HDbcQ+lBYWs67hjVtxULMLWawUk/Kl+o
+         +pGAstLJ3m2I8So2VbmFikcXCZ3gMhd0CamS4SyW2hrfkZLiG9K6HZrUn76PBj3wg8
+         REkVQXxX5rLww==
+Date:   Wed, 6 Oct 2021 10:54:45 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     abhinavk@codeaurora.org
+Cc:     Rob Clark <robdclark@gmail.com>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        David Airlie <airlied@linux.ie>, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        dri-devel@lists.freedesktop.org, Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        freedreno@lists.freedesktop.org,
+        Sumit Semwal <sumit.semwal@linaro.org>
+Subject: Re: [Freedreno] [PATCH 01/11] drm/msm/dsi: add support for dsc data
+Message-ID: <YV0zHet/25Zx9ld5@matsya>
+References: <20210715065203.709914-1-vkoul@kernel.org>
+ <20210715065203.709914-2-vkoul@kernel.org>
+ <c411e4d60efd3029b2dc6b0d899ea8a9@codeaurora.org>
 MIME-Version: 1.0
-Content-Type: text/plain;
-        charset="us-ascii"
-Content-Transfer-Encoding: 7bit
-X-Mailer: Microsoft Outlook 16.0
-thread-index: AQKwJKLJ4tjmgoIJWycFdR/OOcUEpAEIhLzCAlTlvmOp+auOkA==
-Content-Language: en-us
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <c411e4d60efd3029b2dc6b0d899ea8a9@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Abhinav,
 
+On 02-08-21, 15:55, abhinavk@codeaurora.org wrote:
 
-> -----Original Message-----
-> From: Rob Herring <robh@kernel.org>
-> Sent: Monday, October 4, 2021 5:51 PM
-> To: Rakesh Pillai <pillair@codeaurora.org>
-> Cc: mathieu.poirier@linaro.org; swboyd@chromium.org;
-> p.zabel@pengutronix.de; devicetree@vger.kernel.org;
-> bjorn.andersson@linaro.org; linux-kernel@vger.kernel.org;
-> robh+dt@kernel.org; sibis@codeaurora.org; kuabhs@chromium.org;
-> agross@kernel.org; ohad@wizery.com; linux-arm-msm@vger.kernel.org;
-> mpubbise@codeaurora.org
-> Subject: Re: [PATCH v6 2/3] dt-bindings: remoteproc: qcom: Add SC7280
-> WPSS support
-> 
-> On Mon, 04 Oct 2021 12:18:52 +0530, Rakesh Pillai wrote:
-> > Add WPSS PIL loading support for SC7280 SoCs.
-> >
-> > Signed-off-by: Rakesh Pillai <pillair@codeaurora.org>
-> > ---
-> >  .../bindings/remoteproc/qcom,sc7280-wpss-pil.yaml  | 196
-> > +++++++++++++++++++++
-> >  1 file changed, 196 insertions(+)
-> >  create mode 100644
-> > Documentation/devicetree/bindings/remoteproc/qcom,sc7280-wpss-
-> pil.yaml
-> >
-> 
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m
-> dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> 
-> yamllint warnings/errors:
-> 
-> dtschema/dtc warnings/errors:
-> /builds/robherring/linux-dt-
-> review/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-
-> wpss-pil.yaml: properties:interrupts: 'oneOf' conditional failed, one must
-be
-> fixed:
-> 	[{'description': 'Watchdog interrupt'}, {'description': 'Fatal
-interrupt'},
-> {'description': 'Ready interrupt'}, {'description': 'Handover interrupt'},
-> {'description': 'Stop acknowledge interrupt'}, {'description': 'Shutdown
-> acknowledge interrupt'}] is too long
-> 	[{'description': 'Watchdog interrupt'}, {'description': 'Fatal
-interrupt'},
-> {'description': 'Ready interrupt'}, {'description': 'Handover interrupt'},
-> {'description': 'Stop acknowledge interrupt'}, {'description': 'Shutdown
-> acknowledge interrupt'}] is too short
-> 	False schema does not allow 6
-> 	1 was expected
-> 	6 is greater than the maximum of 2
-> 	6 is greater than the maximum of 3
-> 	6 is greater than the maximum of 4
-> 	6 is greater than the maximum of 5
-> 	hint: "minItems" is only needed if less than the "items" list length
-> 	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-> /builds/robherring/linux-dt-
-> review/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-
-> wpss-pil.yaml: properties:interrupt-names: 'oneOf' conditional failed, one
-> must be fixed:
-> 	[{'const': 'wdog'}, {'const': 'fatal'}, {'const': 'ready'},
-{'const':
-> 'handover'}, {'const': 'stop-ack'}, {'const': 'shutdown-ack'}] is too long
-> 	[{'const': 'wdog'}, {'const': 'fatal'}, {'const': 'ready'},
-{'const':
-> 'handover'}, {'const': 'stop-ack'}, {'const': 'shutdown-ack'}] is too
-short
-> 	False schema does not allow 6
-> 	1 was expected
-> 	6 is greater than the maximum of 2
-> 	6 is greater than the maximum of 3
-> 	6 is greater than the maximum of 4
-> 	6 is greater than the maximum of 5
-> 	hint: "minItems" is only needed if less than the "items" list length
-> 	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-> /builds/robherring/linux-dt-
-> review/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-
-> wpss-pil.yaml: properties:clocks: 'oneOf' conditional failed, one must be
-> fixed:
-> 	[{'description': 'GCC WPSS AHB BDG Master clock'}, {'description':
-> 'GCC WPSS AHB clock'}, {'description': 'GCC WPSS RSCP clock'},
-{'description':
-> 'XO clock'}] is too long
-> 	[{'description': 'GCC WPSS AHB BDG Master clock'}, {'description':
-> 'GCC WPSS AHB clock'}, {'description': 'GCC WPSS RSCP clock'},
-{'description':
-> 'XO clock'}] is too short
-> 	False schema does not allow 4
-> 	1 was expected
-> 	4 is greater than the maximum of 2
-> 	4 is greater than the maximum of 3
-> 	hint: "minItems" is only needed if less than the "items" list length
-> 	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-> /builds/robherring/linux-dt-
-> review/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-
-> wpss-pil.yaml: properties:clock-names: 'oneOf' conditional failed, one
-must
-> be fixed:
-> 	[{'const': 'ahb_bdg'}, {'const': 'ahb'}, {'const': 'rscp'},
-{'const': 'xo'}] is
-> too long
-> 	[{'const': 'ahb_bdg'}, {'const': 'ahb'}, {'const': 'rscp'},
-{'const': 'xo'}] is
-> too short
-> 	False schema does not allow 4
-> 	1 was expected
-> 	4 is greater than the maximum of 2
-> 	4 is greater than the maximum of 3
-> 	hint: "minItems" is only needed if less than the "items" list length
-> 	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-> /builds/robherring/linux-dt-
-> review/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-
-> wpss-pil.yaml: properties:power-domains: 'oneOf' conditional failed, one
-> must be fixed:
-> 	[{'description': 'CX power domain'}, {'description': 'MX power
-> domain'}] is too long
-> 	[{'description': 'CX power domain'}, {'description': 'MX power
-> domain'}] is too short
-> 	False schema does not allow 2
-> 	1 was expected
-> 	hint: "minItems" is only needed if less than the "items" list length
-> 	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-> /builds/robherring/linux-dt-
-> review/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-
-> wpss-pil.yaml: properties:power-domain-names: 'oneOf' conditional failed,
-> one must be fixed:
-> 	[{'const': 'cx'}, {'const': 'mx'}] is too long
-> 	[{'const': 'cx'}, {'const': 'mx'}] is too short
-> 	False schema does not allow 2
-> 	1 was expected
-> 	hint: "minItems" is only needed if less than the "items" list length
-> 	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-> /builds/robherring/linux-dt-
-> review/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-
-> wpss-pil.yaml: properties:resets: 'oneOf' conditional failed, one must be
-> fixed:
-> 	[{'description': 'AOSS restart'}, {'description': 'PDC SYNC'}] is
-too long
-> 	[{'description': 'AOSS restart'}, {'description': 'PDC SYNC'}] is
-too short
-> 	False schema does not allow 2
-> 	1 was expected
-> 	hint: "minItems" is only needed if less than the "items" list length
-> 	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-> /builds/robherring/linux-dt-
-> review/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-
-> wpss-pil.yaml: properties:reset-names: 'oneOf' conditional failed, one
-must
-> be fixed:
-> 	[{'const': 'restart'}, {'const': 'pdc_sync'}] is too long
-> 	[{'const': 'restart'}, {'const': 'pdc_sync'}] is too short
-> 	False schema does not allow 2
-> 	1 was expected
-> 	hint: "minItems" is only needed if less than the "items" list length
-> 	from schema $id: http://devicetree.org/meta-schemas/items.yaml#
-> /builds/robherring/linux-dt-
-> review/Documentation/devicetree/bindings/remoteproc/qcom,sc7280-
-> wpss-pil.yaml: ignoring, error in schema: properties: interrupts
-> warning: no schema found in file:
-> ./Documentation/devicetree/bindings/remoteproc/qcom,sc7280-wpss-
-> pil.yaml
-> Documentation/devicetree/bindings/remoteproc/qcom,sc7280-wpss-
-> pil.example.dt.yaml:0:0: /example-0/remoteproc@8a00000: failed to match
-> any schema with compatible: ['qcom,sc7280-wpss-pil']
-> 
-> doc reference errors (make refcheckdocs):
-> 
-> See https://patchwork.ozlabs.org/patch/1535950
-> 
-> This check can fail if there are any dependencies. The base for a patch
-series
-> is generally the most recent rc1.
-> 
-> If you already ran 'make dt_binding_check' and didn't see the above
-error(s),
-> then make sure 'yamllint' is installed and dt-schema is up to
-> date:
-> 
-> pip3 install dtschema --upgrade
-> 
-> Please check and re-submit.
+> > +static int dsi_populate_dsc_params(struct msm_display_dsc_config *dsc)
+> > +{
+> > +	int mux_words_size;
+> > +	int groups_per_line, groups_total;
+> > +	int min_rate_buffer_size;
+> > +	int hrd_delay;
+> > +	int pre_num_extra_mux_bits, num_extra_mux_bits;
+> > +	int slice_bits;
+> > +	int target_bpp_x16;
+> > +	int data;
+> > +	int final_value, final_scale;
+> > +	int i;
+> > +
+> > +	dsc->drm->rc_model_size = 8192;
+> > +	dsc->drm->first_line_bpg_offset = 12;
+> > +	dsc->drm->rc_edge_factor = 6;
+> > +	dsc->drm->rc_tgt_offset_high = 3;
+> > +	dsc->drm->rc_tgt_offset_low = 3;
+> > +	dsc->drm->simple_422 = 0;
+> > +	dsc->drm->convert_rgb = 1;
+> > +	dsc->drm->vbr_enable = 0;
+> > +
+> > +	/* handle only bpp = bpc = 8 */
+> > +	for (i = 0; i < DSC_NUM_BUF_RANGES - 1 ; i++)
+> > +		dsc->drm->rc_buf_thresh[i] = dsi_dsc_rc_buf_thresh[i];
+> > +
+> > +	for (i = 0; i < DSC_NUM_BUF_RANGES; i++) {
+> > +		dsc->drm->rc_range_params[i].range_min_qp = min_qp[i];
+> > +		dsc->drm->rc_range_params[i].range_max_qp = max_qp[i];
+> > +		dsc->drm->rc_range_params[i].range_bpg_offset = bpg_offset[i];
+> > +	}
+> > +
+> > +	dsc->drm->initial_offset = 6144; /* Not bpp 12 */
+> > +	if (dsc->drm->bits_per_pixel != 8)
+> > +		dsc->drm->initial_offset = 2048;	/* bpp = 12 */
+> > +
+> > +	mux_words_size = 48;		/* bpc == 8/10 */
+> > +	if (dsc->drm->bits_per_component == 12)
+> > +		mux_words_size = 64;
+> > +
+> > +	dsc->drm->initial_xmit_delay = 512;
+> > +	dsc->drm->initial_scale_value = 32;
+> > +	dsc->drm->first_line_bpg_offset = 12;
+> > +	dsc->drm->line_buf_depth = dsc->drm->bits_per_component + 1;
+> > +
+> > +	/* bpc 8 */
+> > +	dsc->drm->flatness_min_qp = 3;
+> > +	dsc->drm->flatness_max_qp = 12;
+> > +	dsc->det_thresh_flatness = 7 + 2 * (dsc->drm->bits_per_component - 8);
+> > +	dsc->drm->rc_quant_incr_limit0 = 11;
+> > +	dsc->drm->rc_quant_incr_limit1 = 11;
+> > +	dsc->drm->mux_word_size = DSC_MUX_WORD_SIZE_8_10_BPC;
+> > +
+> > +	/* FIXME: need to call drm_dsc_compute_rc_parameters() so that rest of
+> > +	 * params are calculated
+> > +	 */
+> > +	dsc->slice_last_group_size = 3 - (dsc->drm->slice_width % 3);
+> > +	groups_per_line = DIV_ROUND_UP(dsc->drm->slice_width, 3);
+> > +	dsc->drm->slice_chunk_size = dsc->drm->slice_width *
+> > dsc->drm->bits_per_pixel / 8;
+> > +	if ((dsc->drm->slice_width * dsc->drm->bits_per_pixel) % 8)
+> > +		dsc->drm->slice_chunk_size++;
+> > +
+> > +	/* rbs-min */
+> > +	min_rate_buffer_size =  dsc->drm->rc_model_size -
+> > dsc->drm->initial_offset +
+> > +				dsc->drm->initial_xmit_delay * dsc->drm->bits_per_pixel +
+> > +				groups_per_line * dsc->drm->first_line_bpg_offset;
+> > +
+> > +	hrd_delay = DIV_ROUND_UP(min_rate_buffer_size,
+> > dsc->drm->bits_per_pixel);
+> > +
+> > +	dsc->drm->initial_dec_delay = hrd_delay -
+> > dsc->drm->initial_xmit_delay;
+> > +
+> > +	dsc->drm->initial_scale_value = 8 * dsc->drm->rc_model_size /
+> > +				       (dsc->drm->rc_model_size - dsc->drm->initial_offset);
+> > +
+> > +	slice_bits = 8 * dsc->drm->slice_chunk_size * dsc->drm->slice_height;
+> > +
+> > +	groups_total = groups_per_line * dsc->drm->slice_height;
+> > +
+> > +	data = dsc->drm->first_line_bpg_offset * 2048;
+> > +
+> > +	dsc->drm->nfl_bpg_offset = DIV_ROUND_UP(data, (dsc->drm->slice_height
+> > - 1));
+> > +
+> > +	pre_num_extra_mux_bits = 3 * (mux_words_size + (4 *
+> > dsc->drm->bits_per_component + 4) - 2);
+> > +
+> > +	num_extra_mux_bits = pre_num_extra_mux_bits - (mux_words_size -
+> > +			     ((slice_bits - pre_num_extra_mux_bits) % mux_words_size));
+> > +
+> > +	data = 2048 * (dsc->drm->rc_model_size - dsc->drm->initial_offset +
+> > num_extra_mux_bits);
+> > +	dsc->drm->slice_bpg_offset = DIV_ROUND_UP(data, groups_total);
+> > +
+> > +	/* bpp * 16 + 0.5 */
+> > +	data = dsc->drm->bits_per_pixel * 16;
+> > +	data *= 2;
+> > +	data++;
+> > +	data /= 2;
+> > +	target_bpp_x16 = data;
+> > +
+> > +	data = (dsc->drm->initial_xmit_delay * target_bpp_x16) / 16;
+> > +	final_value =  dsc->drm->rc_model_size - data + num_extra_mux_bits;
+> As we discussed, can you please check why there is an additional + 8 and /16
+> in the upstream final_offset calculation?
+> If we can eliminate or root-cause the difference in the calculations, either
+> this patch can be substantially reduced or
+> we will atleast know for future reference what was the delta and can leave a
+> comment.
 
+I am checking this as well, I think there is something more, so will
+continue to debug on that.
 
-I have updated the dtschema (2021.7) and still not seeing these errors. I
-will fix the errors mentioned in this log though.
-Is there any other flag/setting, which is to be enabled ?
+Meanwhile I propose we continue this and then switch once we have
+concluded.
 
-Thanks,
-Rakesh Pillai.
+> > +/* DSC config */
+> > +struct msm_display_dsc_config {
+> > +	struct drm_dsc_config *drm;
+> > +	u8 scr_rev;
+> Can scr_rev also move into drm_dsc_config? SCR itself is not QC specific.
+> Its just telling there was a change request
+> for that DSC revision.
+> In QC side, we only use this scr_rev to have some different tables. This can
+> even be true for other vendors.
+> So moving this to drm_dsc_config will only help.
 
+So I checked and looks like this is not used here in the code, so will
+drop it for now. Once we add support for this, we can add this back in
+drm_dsc_config
 
+-- 
+~Vinod
