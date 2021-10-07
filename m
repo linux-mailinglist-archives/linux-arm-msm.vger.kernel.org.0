@@ -2,147 +2,76 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 92D434253CA
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 15:12:42 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C0A434254A4
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 15:49:23 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241253AbhJGNOd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Oct 2021 09:14:33 -0400
-Received: from foss.arm.com ([217.140.110.172]:53224 "EHLO foss.arm.com"
+        id S241659AbhJGNvP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Oct 2021 09:51:15 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:60957 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S241234AbhJGNOd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Oct 2021 09:14:33 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3910D6D;
-        Thu,  7 Oct 2021 06:12:39 -0700 (PDT)
-Received: from lpieralisi (e121166-lin.cambridge.arm.com [10.1.196.255])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 717E43F66F;
-        Thu,  7 Oct 2021 06:12:37 -0700 (PDT)
-Date:   Thu, 7 Oct 2021 14:12:32 +0100
-From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     kishon@ti.com, bhelgaas@google.com, robh@kernel.org,
-        devicetree@vger.kernel.org, linux-pci@vger.kernel.org,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        hemantk@codeaurora.org, bjorn.andersson@linaro.org,
-        sallenki@codeaurora.org, skananth@codeaurora.org,
-        vpernami@codeaurora.org, vbadigan@codeaurora.org
-Subject: Re: [PATCH v8 0/3] Add Qualcomm PCIe Endpoint driver support
-Message-ID: <20211007131232.GA19662@lpieralisi>
-References: <20210920065946.15090-1-manivannan.sadhasivam@linaro.org>
- <20211004041949.GA16442@workstation>
- <20211007125724.GA27987@thinkpad>
-MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20211007125724.GA27987@thinkpad>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+        id S241764AbhJGNvO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 Oct 2021 09:51:14 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1633614560; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=LJlIsAmhsWWtNJvtDA2z8gf+SVO6RTgCLs6jKSGxJaU=; b=gMVeHhvDm087fZ5CmHVAHb2Se+rYmnQKIHTeACW96MrQSMW/e9jar0myNkpVCcpUckAb2yys
+ xYpJYNwz215HhZi5WzSxb3i2LvUi/a6nVyHJzjhKzoTVjUdGov+Z03wJ6HuHjgC9Z6cK7E0f
+ NTZZvnVIuaPnaKcHrqS4ArnpI00=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 615efacbff0285fb0ab7bf5d (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 07 Oct 2021 13:48:59
+ GMT
+Sender: srivasam=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id D52C2C4361C; Thu,  7 Oct 2021 13:48:58 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from hu-srivasam-hyd.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: srivasam)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id C796FC4338F;
+        Thu,  7 Oct 2021 13:48:52 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org C796FC4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
+        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
+        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
+        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, alsa-devel@alsa-project.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        swboyd@chromium.org, judyhsiao@chromium.org
+Cc:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Subject: [PATCH 0/3] Add pin control support for lpass sc7280
+Date:   Thu,  7 Oct 2021 19:18:36 +0530
+Message-Id: <1633614519-26680-1-git-send-email-srivasam@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 07, 2021 at 06:27:24PM +0530, Manivannan Sadhasivam wrote:
-> On Mon, Oct 04, 2021 at 09:49:49AM +0530, Manivannan Sadhasivam wrote:
-> > On Mon, Sep 20, 2021 at 12:29:43PM +0530, Manivannan Sadhasivam wrote:
-> > > Hello,
-> > > 
-> > > This series adds support for Qualcomm PCIe Endpoint controller found
-> > > in platforms like SDX55. The Endpoint controller is based on the designware
-> > > core with additional Qualcomm wrappers around the core.
-> > > 
-> > > The driver is added separately unlike other Designware based drivers that
-> > > combine RC and EP in a single driver. This is done to avoid complexity and
-> > > to maintain this driver autonomously.
-> > > 
-> > > The driver has been validated with an out of tree MHI function driver on
-> > > SDX55 based Telit FN980 EVB connected to x86 host machine over PCIe.
-> > > 
-> > 
-> > Ping on this series! Patchwork says the state is still "New". Both
-> > binding and driver patches got enough reviews I believe. Are there any
-> > issues pending to be addressed?
-> > 
-> 
-> Sorry for the noise. But not seeing any activity on this series is tempting me
-> to ping this thread. This series has been under review for almost 3 releases and
-> I don't want to miss this one too without any obvious reasons.
+This patch series is to make lpass variant independent pin control
+functions common and to add lpass sc7280 pincontrol support.
+It also includes dt-bindings for lpass sc7280 lpi compatible. 
 
-You won't and thanks for your patience, I will pull it.
+Srinivasa Rao Mandadapu (3):
+  pinctrl: qcom: Update lpass variant independent functions as generic
+  dt-bindings: pinctrl: qcom: Add sc7280 lpass lpi pinctrl compatible
+  pinctrl: qcom: Add SC7280 lpass pin configuration
 
-Lorenzo
+ .../bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml   |  4 +-
+ drivers/pinctrl/qcom/pinctrl-lpass-lpi.c           | 57 +++++++++++++++++++---
+ 2 files changed, 52 insertions(+), 9 deletions(-)
 
-> 
-> Thanks,
-> Mani
-> 
-> > Thanks,
-> > Mani
-> > 
-> > > Thanks,
-> > > Mani
-> > > 
-> > > Changes in v8:
-> > > 
-> > > * Added Reviewed-by tag from Rob for the driver patch
-> > > * Rebased on top of v5.15-rc1
-> > > 
-> > > Changes in v7:
-> > > 
-> > > * Used existing naming convention for callback functions
-> > > * Used active low state for PERST# gpio
-> > > 
-> > > Changes in v6:
-> > > 
-> > > * Removed status property in DT and added reviewed tag from Rob
-> > > * Switched to _relaxed variants as suggested by Rob
-> > > 
-> > > Changes in v5:
-> > > 
-> > > * Removed the DBI register settings that are not needed
-> > > * Used the standard definitions available in pci_regs.h
-> > > * Added defines for all the register fields
-> > > * Removed the left over code from previous iteration
-> > > 
-> > > Changes in v4:
-> > > 
-> > > * Removed the active_config settings needed for IPA integration
-> > > * Switched to writel for couple of relaxed versions that sneaked in
-> > > 
-> > > Changes in v3:
-> > > 
-> > > * Lot of minor cleanups to the driver patch based on review from Bjorn and Stan.
-> > > * Noticeable changes are:
-> > >   - Got rid of _relaxed calls and used readl/writel
-> > >   - Got rid of separate TCSR memory region and used syscon for getting the
-> > >     register offsets for Perst registers
-> > >   - Changed the wake gpio handling logic
-> > >   - Added remove() callback and removed "suppress_bind_attrs"
-> > >   - stop_link() callback now just disables PERST IRQ
-> > > * Added MMIO region and doorbell interrupt to the binding
-> > > * Added logic to write MMIO physicall address to MHI base address as it is
-> > >   for the function driver to work
-> > > 
-> > > Changes in v2:
-> > > 
-> > > * Addressed the comments from Rob on bindings patch
-> > > * Modified the driver as per binding change
-> > > * Fixed the warnings reported by Kbuild bot
-> > > * Removed the PERST# "enable_irq" call from probe()
-> > > 
-> > > Manivannan Sadhasivam (3):
-> > >   dt-bindings: pci: Add devicetree binding for Qualcomm PCIe EP
-> > >     controller
-> > >   PCI: qcom-ep: Add Qualcomm PCIe Endpoint controller driver
-> > >   MAINTAINERS: Add entry for Qualcomm PCIe Endpoint driver and binding
-> > > 
-> > >  .../devicetree/bindings/pci/qcom,pcie-ep.yaml | 158 ++++
-> > >  MAINTAINERS                                   |  10 +-
-> > >  drivers/pci/controller/dwc/Kconfig            |  10 +
-> > >  drivers/pci/controller/dwc/Makefile           |   1 +
-> > >  drivers/pci/controller/dwc/pcie-qcom-ep.c     | 710 ++++++++++++++++++
-> > >  5 files changed, 888 insertions(+), 1 deletion(-)
-> > >  create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
-> > >  create mode 100644 drivers/pci/controller/dwc/pcie-qcom-ep.c
-> > > 
-> > > -- 
-> > > 2.25.1
-> > > 
+-- 
+Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
+is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
+
