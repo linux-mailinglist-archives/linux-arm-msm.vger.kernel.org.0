@@ -2,306 +2,152 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8FA3C425B3F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 21:00:43 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C17DA425B62
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 21:13:08 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243855AbhJGTCd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Oct 2021 15:02:33 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36500 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233866AbhJGTC3 (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Oct 2021 15:02:29 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 542BAC061570
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Oct 2021 12:00:35 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id t4so8543660oie.5
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Oct 2021 12:00:35 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=g77xOnbp78pPRDYD8I2QJCJPz5LX5guTJqD3/cAwzVQ=;
-        b=EJ/p95tlN1nrvagQ68sX2wd3ekM1PINVj+O8OF5nsrNpRJNBt8QM5Ujp6mQ3PBJtpY
-         8C5bRtzIpBnEN6oTtxxN10wUZiznihP2KuONC/xS6UI+WJ65ozsZqTYftGw+SGSViy4c
-         /FNqa9iHj58KRml2TnyBGxk+rChmspdHF6jbUlK0ZoeFYkBhlOeB8iUe7RUpc9NeZoKs
-         8XY4uPuKIeiKXBoTma3PxyhJU1e2l/d+b2hhKvn2yQJYGurBB25UluLbRJxPqDEoVQI7
-         pViW12NzQ650y05JrFXlW2Dct/rGf/Mxv29q43eKEYaHNy8liMdI6UwfZoapP89WYghZ
-         8bPA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=g77xOnbp78pPRDYD8I2QJCJPz5LX5guTJqD3/cAwzVQ=;
-        b=WUqiFFeh1mn1Y4syiKFe+hHknPdbsAQcRdb3pq3O1XIbAGtYBTaaQVX+m738xE22yw
-         6BbZ5LCoir0trkKQ11uI8QO3dBXWJ65ucdVdvHKnwQL1wuFtsddkxITEtw6NUyy5XiAK
-         xPSNLVIc3sgfZL+nJyenA4A/JbTtx6xPGyrt2lKu/zA8HZQ8X8/Z1DvOfoHnLLjLar2k
-         1JDEvSdgHVueoWmq36zZUvgtouAaH6kXcSz+GTwsU4mF4+2aZ7+oJQai7iADgmhBJQw6
-         m9F1BinhJcxisj/l0iZPQtAoHxSL3zE9UpNNIV1dgZ2Db7zH0zZGnsd0syVsd0EC9YB8
-         YULw==
-X-Gm-Message-State: AOAM532EtSqkSmdzD/nBX6qdPpYsDPR/E+aaOcY6vL3gvRsuWXI7WWmB
-        AEk4gmQK8LU2rIm8rfUEpyNioA==
-X-Google-Smtp-Source: ABdhPJzk9jzjpX61jekzS5NvI9IU0NvmMbLzJJhX7OAMQPZbBLSiDuJu2njNOIExY9/5TaDMC4hfGw==
-X-Received: by 2002:aca:120f:: with SMTP id 15mr12524966ois.62.1633633233234;
-        Thu, 07 Oct 2021 12:00:33 -0700 (PDT)
-Received: from localhost.localdomain ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id j65sm75116oif.5.2021.10.07.12.00.32
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Oct 2021 12:00:32 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH v2] drm/msm/dp: Simplify the dp_debug debugfs show function
-Date:   Thu,  7 Oct 2021 12:02:11 -0700
-Message-Id: <20211007190211.3158868-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.29.2
+        id S233907AbhJGTPB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Oct 2021 15:15:01 -0400
+Received: from mail.kernel.org ([198.145.29.99]:45834 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233879AbhJGTPB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 Oct 2021 15:15:01 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 433A260F23;
+        Thu,  7 Oct 2021 19:13:06 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1633633986;
+        bh=4097i7mkFkqGG7g6bmJrh8yORC7/TSKWh6X6Z6f10a8=;
+        h=Date:From:To:Cc:Subject:In-Reply-To:From;
+        b=PAW7l7d+uZ/uWAbylFNHh7bfq4jdELPttvGO0mPiMMM7jV3YRMIcNp8m6qVATu0qA
+         e+3Xmr1sEvqzA9ww/tVvPj93ZR6u0X7F3iDfcdcWtGw89juUigk2q9KbvXXCN2HRIJ
+         LD9hahvTR136Q83ZBxxA4b3qoLBgYxrv7236PtPtZCyLAPD6KyFi04VSiG8O0QQSrt
+         ao3Pi07O4Zcjwm/s37c4/NsB9eDUArdO/HPfBIih1LkHKmGMo24lAF57paB1pAP49a
+         UrhLLUzQGVwumGu7L1Pf85Yh4ipTiX3hso7CTmA3JTDovpos7y/7Pvb1N5PGEd4GyC
+         9JOh66/bkHhag==
+Date:   Thu, 7 Oct 2021 14:13:04 -0500
+From:   Bjorn Helgaas <helgaas@kernel.org>
+To:     Prasad Malisetty <pmaliset@codeaurora.org>
+Cc:     agross@kernel.org, bjorn.andersson@linaro.org, bhelgaas@google.com,
+        robh+dt@kernel.org, swboyd@chromium.org, lorenzo.pieralisi@arm.com,
+        svarbanov@mm-sol.com, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
+        linux-kernel@vger.kernel.org, dianders@chromium.org,
+        mka@chromium.org, vbadigan@codeaurora.org, sallenki@codeaurora.org,
+        manivannan.sadhasivam@linaro.org, linux-pci@vger.kernel.org
+Subject: Re: [PATCH v12 5/5] PCI: qcom: Switch pcie_1_pipe_clk_src after PHY
+ init in SC7280
+Message-ID: <20211007191304.GA1256620@bhelgaas>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1633628923-25047-6-git-send-email-pmaliset@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The "dp_debug" show function allocates a buffer and piecemeal appends
-line by line, checking for buffer overflows etc.
+On Thu, Oct 07, 2021 at 11:18:43PM +0530, Prasad Malisetty wrote:
+> On the SC7280, the clock source for gcc_pcie_1_pipe_clk_src
+> must be the TCXO while gdsc is enabled. After PHY init successful
+> clock source should switch to pipe clock for gcc_pcie_1_pipe_clk_src.
+> 
+> Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
-Migrate the function to seq_file, to remove all the extra book keeping
-and simplify the function.
+Thanks a lot for sorting out the patch 4/5 and 5/5 contents!
 
-Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
-
-Changes since v1:
-- const drm_mode
-
- drivers/gpu/drm/msm/dp/dp_debug.c | 163 +++++-------------------------
- 1 file changed, 25 insertions(+), 138 deletions(-)
-
-diff --git a/drivers/gpu/drm/msm/dp/dp_debug.c b/drivers/gpu/drm/msm/dp/dp_debug.c
-index 2f6247e80e9d..af709d93bb9f 100644
---- a/drivers/gpu/drm/msm/dp/dp_debug.c
-+++ b/drivers/gpu/drm/msm/dp/dp_debug.c
-@@ -31,177 +31,69 @@ struct dp_debug_private {
- 	struct dp_debug dp_debug;
- };
- 
--static int dp_debug_check_buffer_overflow(int rc, int *max_size, int *len)
-+static int dp_debug_show(struct seq_file *seq, void *p)
- {
--	if (rc >= *max_size) {
--		DRM_ERROR("buffer overflow\n");
--		return -EINVAL;
--	}
--	*len += rc;
--	*max_size = SZ_4K - *len;
--
--	return 0;
--}
--
--static ssize_t dp_debug_read_info(struct file *file, char __user *user_buff,
--		size_t count, loff_t *ppos)
--{
--	struct dp_debug_private *debug = file->private_data;
--	char *buf;
--	u32 len = 0, rc = 0;
-+	struct dp_debug_private *debug = seq->private;
- 	u64 lclk = 0;
--	u32 max_size = SZ_4K;
- 	u32 link_params_rate;
--	struct drm_display_mode *drm_mode;
-+	const struct drm_display_mode *drm_mode;
- 
- 	if (!debug)
- 		return -ENODEV;
- 
--	if (*ppos)
--		return 0;
--
--	buf = kzalloc(SZ_4K, GFP_KERNEL);
--	if (!buf)
--		return -ENOMEM;
--
- 	drm_mode = &debug->panel->dp_mode.drm_mode;
- 
--	rc = snprintf(buf + len, max_size, "\tname = %s\n", DEBUG_NAME);
--	if (dp_debug_check_buffer_overflow(rc, &max_size, &len))
--		goto error;
--
--	rc = snprintf(buf + len, max_size,
--			"\tdp_panel\n\t\tmax_pclk_khz = %d\n",
-+	seq_printf(seq, "\tname = %s\n", DEBUG_NAME);
-+	seq_printf(seq, "\tdp_panel\n\t\tmax_pclk_khz = %d\n",
- 			debug->panel->max_pclk_khz);
--	if (dp_debug_check_buffer_overflow(rc, &max_size, &len))
--		goto error;
--
--	rc = snprintf(buf + len, max_size,
--			"\tdrm_dp_link\n\t\trate = %u\n",
-+	seq_printf(seq, "\tdrm_dp_link\n\t\trate = %u\n",
- 			debug->panel->link_info.rate);
--	if (dp_debug_check_buffer_overflow(rc, &max_size, &len))
--		goto error;
--
--	rc = snprintf(buf + len, max_size,
--			 "\t\tnum_lanes = %u\n",
-+	seq_printf(seq, "\t\tnum_lanes = %u\n",
- 			debug->panel->link_info.num_lanes);
--	if (dp_debug_check_buffer_overflow(rc, &max_size, &len))
--		goto error;
--
--	rc = snprintf(buf + len, max_size,
--			"\t\tcapabilities = %lu\n",
-+	seq_printf(seq, "\t\tcapabilities = %lu\n",
- 			debug->panel->link_info.capabilities);
--	if (dp_debug_check_buffer_overflow(rc, &max_size, &len))
--		goto error;
--
--	rc = snprintf(buf + len, max_size,
--			"\tdp_panel_info:\n\t\tactive = %dx%d\n",
-+	seq_printf(seq, "\tdp_panel_info:\n\t\tactive = %dx%d\n",
- 			drm_mode->hdisplay,
- 			drm_mode->vdisplay);
--	if (dp_debug_check_buffer_overflow(rc, &max_size, &len))
--		goto error;
--
--	rc = snprintf(buf + len, max_size,
--			"\t\tback_porch = %dx%d\n",
-+	seq_printf(seq, "\t\tback_porch = %dx%d\n",
- 			drm_mode->htotal - drm_mode->hsync_end,
- 			drm_mode->vtotal - drm_mode->vsync_end);
--	if (dp_debug_check_buffer_overflow(rc, &max_size, &len))
--		goto error;
--
--	rc = snprintf(buf + len, max_size,
--			"\t\tfront_porch = %dx%d\n",
-+	seq_printf(seq, "\t\tfront_porch = %dx%d\n",
- 			drm_mode->hsync_start - drm_mode->hdisplay,
- 			drm_mode->vsync_start - drm_mode->vdisplay);
--	if (dp_debug_check_buffer_overflow(rc, &max_size, &len))
--		goto error;
--
--	rc = snprintf(buf + len, max_size,
--			"\t\tsync_width = %dx%d\n",
-+	seq_printf(seq, "\t\tsync_width = %dx%d\n",
- 			drm_mode->hsync_end - drm_mode->hsync_start,
- 			drm_mode->vsync_end - drm_mode->vsync_start);
--	if (dp_debug_check_buffer_overflow(rc, &max_size, &len))
--		goto error;
--
--	rc = snprintf(buf + len, max_size,
--			"\t\tactive_low = %dx%d\n",
-+	seq_printf(seq, "\t\tactive_low = %dx%d\n",
- 			debug->panel->dp_mode.h_active_low,
- 			debug->panel->dp_mode.v_active_low);
--	if (dp_debug_check_buffer_overflow(rc, &max_size, &len))
--		goto error;
--
--	rc = snprintf(buf + len, max_size,
--			"\t\th_skew = %d\n",
-+	seq_printf(seq, "\t\th_skew = %d\n",
- 			drm_mode->hskew);
--	if (dp_debug_check_buffer_overflow(rc, &max_size, &len))
--		goto error;
--
--	rc = snprintf(buf + len, max_size,
--			"\t\trefresh rate = %d\n",
-+	seq_printf(seq, "\t\trefresh rate = %d\n",
- 			drm_mode_vrefresh(drm_mode));
--	if (dp_debug_check_buffer_overflow(rc, &max_size, &len))
--		goto error;
--
--	rc = snprintf(buf + len, max_size,
--			"\t\tpixel clock khz = %d\n",
-+	seq_printf(seq, "\t\tpixel clock khz = %d\n",
- 			drm_mode->clock);
--	if (dp_debug_check_buffer_overflow(rc, &max_size, &len))
--		goto error;
--
--	rc = snprintf(buf + len, max_size,
--			"\t\tbpp = %d\n",
-+	seq_printf(seq, "\t\tbpp = %d\n",
- 			debug->panel->dp_mode.bpp);
--	if (dp_debug_check_buffer_overflow(rc, &max_size, &len))
--		goto error;
- 
- 	/* Link Information */
--	rc = snprintf(buf + len, max_size,
--			"\tdp_link:\n\t\ttest_requested = %d\n",
-+	seq_printf(seq, "\tdp_link:\n\t\ttest_requested = %d\n",
- 			debug->link->sink_request);
--	if (dp_debug_check_buffer_overflow(rc, &max_size, &len))
--		goto error;
--
--	rc = snprintf(buf + len, max_size,
--			"\t\tnum_lanes = %d\n",
-+	seq_printf(seq, "\t\tnum_lanes = %d\n",
- 			debug->link->link_params.num_lanes);
--	if (dp_debug_check_buffer_overflow(rc, &max_size, &len))
--		goto error;
--
- 	link_params_rate = debug->link->link_params.rate;
--	rc = snprintf(buf + len, max_size,
--			"\t\tbw_code = %d\n",
-+	seq_printf(seq, "\t\tbw_code = %d\n",
- 			drm_dp_link_rate_to_bw_code(link_params_rate));
--	if (dp_debug_check_buffer_overflow(rc, &max_size, &len))
--		goto error;
--
- 	lclk = debug->link->link_params.rate * 1000;
--	rc = snprintf(buf + len, max_size,
--			"\t\tlclk = %lld\n", lclk);
--	if (dp_debug_check_buffer_overflow(rc, &max_size, &len))
--		goto error;
--
--	rc = snprintf(buf + len, max_size,
--			"\t\tv_level = %d\n",
-+	seq_printf(seq, "\t\tlclk = %lld\n", lclk);
-+	seq_printf(seq, "\t\tv_level = %d\n",
- 			debug->link->phy_params.v_level);
--	if (dp_debug_check_buffer_overflow(rc, &max_size, &len))
--		goto error;
--
--	rc = snprintf(buf + len, max_size,
--			"\t\tp_level = %d\n",
-+	seq_printf(seq, "\t\tp_level = %d\n",
- 			debug->link->phy_params.p_level);
--	if (dp_debug_check_buffer_overflow(rc, &max_size, &len))
--		goto error;
--
--	if (copy_to_user(user_buff, buf, len))
--		goto error;
--
--	*ppos += len;
- 
--	kfree(buf);
--	return len;
-- error:
--	kfree(buf);
--	return -EINVAL;
-+	return 0;
- }
-+DEFINE_SHOW_ATTRIBUTE(dp_debug);
- 
- static int dp_test_data_show(struct seq_file *m, void *data)
- {
-@@ -349,11 +241,6 @@ static int dp_test_active_open(struct inode *inode,
- 			inode->i_private);
- }
- 
--static const struct file_operations dp_debug_fops = {
--	.open = simple_open,
--	.read = dp_debug_read_info,
--};
--
- static const struct file_operations test_active_fops = {
- 	.owner = THIS_MODULE,
- 	.open = dp_test_active_open,
--- 
-2.29.2
-
+> ---
+>  drivers/pci/controller/dwc/pcie-qcom.c | 29 +++++++++++++++++++++++++++++
+>  1 file changed, 29 insertions(+)
+> 
+> diff --git a/drivers/pci/controller/dwc/pcie-qcom.c b/drivers/pci/controller/dwc/pcie-qcom.c
+> index 41132dd..ded70e6 100644
+> --- a/drivers/pci/controller/dwc/pcie-qcom.c
+> +++ b/drivers/pci/controller/dwc/pcie-qcom.c
+> @@ -166,6 +166,9 @@ struct qcom_pcie_resources_2_7_0 {
+>  	struct regulator_bulk_data supplies[2];
+>  	struct reset_control *pci_reset;
+>  	struct clk *pipe_clk;
+> +	struct clk *pipe_clk_src;
+> +	struct clk *phy_pipe_clk;
+> +	struct clk *ref_clk_src;
+>  };
+>  
+>  union qcom_pcie_resources {
+> @@ -191,6 +194,7 @@ struct qcom_pcie_ops {
+>  
+>  struct qcom_pcie_cfg {
+>  	const struct qcom_pcie_ops *ops;
+> +	unsigned int pipe_clk_need_muxing:1;
+>  };
+>  
+>  struct qcom_pcie {
+> @@ -201,6 +205,7 @@ struct qcom_pcie {
+>  	struct phy *phy;
+>  	struct gpio_desc *reset;
+>  	const struct qcom_pcie_ops *ops;
+> +	unsigned int pipe_clk_need_muxing:1;
+>  };
+>  
+>  #define to_qcom_pcie(x)		dev_get_drvdata((x)->dev)
+> @@ -1171,6 +1176,20 @@ static int qcom_pcie_get_resources_2_7_0(struct qcom_pcie *pcie)
+>  	if (ret < 0)
+>  		return ret;
+>  
+> +	if (pcie->pipe_clk_need_muxing) {
+> +		res->pipe_clk_src = devm_clk_get(dev, "pipe_mux");
+> +		if (IS_ERR(res->pipe_clk_src))
+> +			return PTR_ERR(res->pipe_clk_src);
+> +
+> +		res->phy_pipe_clk = devm_clk_get(dev, "phy_pipe");
+> +		if (IS_ERR(res->phy_pipe_clk))
+> +			return PTR_ERR(res->phy_pipe_clk);
+> +
+> +		res->ref_clk_src = devm_clk_get(dev, "ref");
+> +		if (IS_ERR(res->ref_clk_src))
+> +			return PTR_ERR(res->ref_clk_src);
+> +	}
+> +
+>  	res->pipe_clk = devm_clk_get(dev, "pipe");
+>  	return PTR_ERR_OR_ZERO(res->pipe_clk);
+>  }
+> @@ -1189,6 +1208,10 @@ static int qcom_pcie_init_2_7_0(struct qcom_pcie *pcie)
+>  		return ret;
+>  	}
+>  
+> +	/* Set TCXO as clock source for pcie_pipe_clk_src */
+> +	if (pcie->pipe_clk_need_muxing)
+> +		clk_set_parent(res->pipe_clk_src, res->ref_clk_src);
+> +
+>  	ret = clk_bulk_prepare_enable(res->num_clks, res->clks);
+>  	if (ret < 0)
+>  		goto err_disable_regulators;
+> @@ -1260,6 +1283,10 @@ static int qcom_pcie_post_init_2_7_0(struct qcom_pcie *pcie)
+>  {
+>  	struct qcom_pcie_resources_2_7_0 *res = &pcie->res.v2_7_0;
+>  
+> +	/* Set pipe clock as clock source for pcie_pipe_clk_src */
+> +	if (pcie->pipe_clk_need_muxing)
+> +		clk_set_parent(res->pipe_clk_src, res->phy_pipe_clk);
+> +
+>  	return clk_prepare_enable(res->pipe_clk);
+>  }
+>  
+> @@ -1490,6 +1517,7 @@ static const struct qcom_pcie_cfg sm8250_cfg = {
+>  
+>  static const struct qcom_pcie_cfg sc7280_cfg = {
+>  	.ops = &ops_1_9_0,
+> +	.pipe_clk_need_muxing = true,
+>  };
+>  
+>  static const struct dw_pcie_ops dw_pcie_ops = {
+> @@ -1532,6 +1560,7 @@ static int qcom_pcie_probe(struct platform_device *pdev)
+>  	}
+>  
+>  	pcie->ops = pcie_cfg->ops;
+> +	pcie->pipe_clk_need_muxing = pcie_cfg->pipe_clk_need_muxing;
+>  
+>  	pcie->reset = devm_gpiod_get_optional(dev, "perst", GPIOD_OUT_HIGH);
+>  	if (IS_ERR(pcie->reset)) {
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
+> 
