@@ -2,398 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0336C425ED3
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 23:25:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8BDEE425EE5
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 23:28:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241640AbhJGV1e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Oct 2021 17:27:34 -0400
-Received: from mail.z3ntu.xyz ([128.199.32.197]:59038 "EHLO mail.z3ntu.xyz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S241554AbhJGV11 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Oct 2021 17:27:27 -0400
-Received: from localhost.localdomain (ip-213-127-63-121.ip.prioritytelecom.net [213.127.63.121])
-        by mail.z3ntu.xyz (Postfix) with ESMTPSA id 8CBA0C91C2;
-        Thu,  7 Oct 2021 21:25:32 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=simple/simple; d=z3ntu.xyz; s=z3ntu;
-        t=1633641932; bh=sWk+xj23wI0PKxnlXeVVu9dDXXYY2pME7W1fAJbQNTc=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References;
-        b=e7tTMU/6Ts9caGz6ogvtU/W+WpbsSHHXUcyoLOndpJA1yDu6lK53BgBj0D2eepx+X
-         CW/oxXgunIkQissN09w9gYxx9lcSH8xftdShgXNLzGSZeHkAsB9fOr/zTItKYR2bGy
-         lyL+WBO7OXkFIEOjGmJe9eOMHOYhw6fKh3pIdgwU=
-From:   Luca Weiss <luca@z3ntu.xyz>
-To:     linux-arm-msm@vger.kernel.org
-Cc:     ~postmarketos/upstreaming@lists.sr.ht,
-        konrad.dybcio@somainline.org, Luca Weiss <luca@z3ntu.xyz>,
-        Andy Gross <agross@kernel.org>,
+        id S241411AbhJGVaW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Oct 2021 17:30:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42342 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S241283AbhJGVaV (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 Oct 2021 17:30:21 -0400
+Received: from relay05.th.seeweb.it (relay05.th.seeweb.it [IPv6:2001:4b7a:2000:18::166])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5B323C061570;
+        Thu,  7 Oct 2021 14:28:27 -0700 (PDT)
+Received: from SoMainline.org (94-209-165-62.cable.dynamic.v4.ziggo.nl [94.209.165.62])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange ECDHE (P-256) server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by m-r2.th.seeweb.it (Postfix) with ESMTPSA id F08043E7BE;
+        Thu,  7 Oct 2021 23:28:22 +0200 (CEST)
+Date:   Thu, 7 Oct 2021 23:28:21 +0200
+From:   Marijn Suijten <marijn.suijten@somainline.org>
+To:     Daniel Thompson <daniel.thompson@linaro.org>
+Cc:     phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>, devicetree@vger.kernel.org,
+        Lee Jones <lee.jones@linaro.org>,
+        Jingoo Han <jingoohan1@gmail.com>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        Courtney Cavin <courtney.cavin@sonymobile.com>,
+        Bryan Wu <cooloney@gmail.com>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org,
         linux-kernel@vger.kernel.org
-Subject: [PATCH v2 11/11] arm64: dts: qcom: sm7225: Add device tree for Fairphone 4
-Date:   Thu,  7 Oct 2021 23:24:38 +0200
-Message-Id: <20211007212444.328034-12-luca@z3ntu.xyz>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20211007212444.328034-1-luca@z3ntu.xyz>
-References: <20211007212444.328034-1-luca@z3ntu.xyz>
+Subject: Re: [PATCH 05/10] backlight: qcom-wled: Fix off-by-one maximum with
+ default num_strings
+Message-ID: <20211007212821.57x2ndggugwfd725@SoMainline.org>
+Mail-Followup-To: Marijn Suijten <marijn.suijten@somainline.org>,
+        Daniel Thompson <daniel.thompson@linaro.org>,
+        phone-devel@vger.kernel.org, Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Lee Jones <lee.jones@linaro.org>, Jingoo Han <jingoohan1@gmail.com>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        AngeloGioacchino Del Regno <angelogioacchino.delregno@somainline.org>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Martin Botka <martin.botka@somainline.org>,
+        Jami Kettunen <jami.kettunen@somainline.org>,
+        Pavel Dubrova <pashadubrova@gmail.com>,
+        Kiran Gunda <kgunda@codeaurora.org>,
+        Courtney Cavin <courtney.cavin@sonymobile.com>,
+        Bryan Wu <cooloney@gmail.com>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, linux-fbdev@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+References: <20211005091947.7msztp5l554c7cy4@maple.lan>
+ <20211005100606.faxra73mzkvjd4f6@SoMainline.org>
+ <20211005103843.heufyonycnudxnzd@maple.lan>
+ <20211005105312.kqiyzoqtzzjxayhg@maple.lan>
+ <20211005114435.phyq2jsbdyroa6kn@SoMainline.org>
+ <20211005140349.kefi26yev3gy3zhv@maple.lan>
+ <20211005152326.5k5cb53ajqnactrg@SoMainline.org>
+ <20211005162453.ozckxhm47jcarsza@maple.lan>
+ <20211005173400.lyu3gabbalv2l3uq@SoMainline.org>
+ <20211006144444.6q3qm3bzfrhzwa46@maple.lan>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211006144444.6q3qm3bzfrhzwa46@maple.lan>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add device tree for the Fairphone 4 smartphone which is based on
-Snapdragon 750G (sm7225) which is basically sm6350.
+On 2021-10-06 15:44:44, Daniel Thompson wrote:
+> On Tue, Oct 05, 2021 at 07:34:00PM +0200, Marijn Suijten wrote:
+> > On 2021-10-05 17:24:53, Daniel Thompson wrote:
+> > > On Tue, Oct 05, 2021 at 05:23:26PM +0200, Marijn Suijten wrote:
+> > > > Since there don't seem to be any substantial platforms/PMICs using this
+> > > > functionality in a working manner, can I talk you into agreeing with
+> > > > fixing the DT instead?
+> > > 
+> > > I've no objections to seeing the DT updated. However I don't really see
+> > > what benefit we get from breaking existing DTs in order to do so.
+> > > 
+> > > "Cleaning up annoying legacy" is seldom a good reason to break existing
+> > > DTs since, if we could break DTs whenever we choose, there would never
+> > > be any annoying legacy to worry about. When conflicting properties
+> > > result in uninterpretable DTs then a break may be justified but that is
+> > > not the case here.
+> > 
+> > As mentioned in my message and repeated by Konrad, the only "existing
+> > DT" that could possibly be broken is a platform that's brought up by us
+> > (SoMainline) and we're more than happy to improve the driver and leave
+> > legacy DT behind us, unless there's more DT in circulation that hasn't
+> > landed in Linux mainline but should be taken into account?
+> 
+> Devicetrees are supposed to be the domain of firmware (e.g. not part of
+> the kernel).
+> 
+> I'm therefore reluctant to adopt an "it only exists if it is upstream"
+> approach for documented DT bindings. Doubly so when it is our bugs that
+> causes DTs to be written in a manner which we then retrospectively
+> declare to be wrong.
 
-Currently supported are UART, physical buttons (power & volume), screen
-(based on simple-framebuffer set up by the bootloader), regulators and
-USB.
+I'm aware that DT is considered firmware and is ""intended"" to be
+shipped separately (and probably only once out of the factory) but it
+seems so far there's an advantage in updating DT in parallel with the
+kernel.  However this is the first time hearing that having dt-bindings
+documentation available contributes to considering the DT contract
+(more) stable.  Either way I'd expect these bindings to have been fixed
+much sooner if it was really actively used.
 
-Signed-off-by: Luca Weiss <luca@z3ntu.xyz>
----
-v2: improve pinctrl node for volume buttons and add R-b
+> > Anyway the plan is to leave qcom,num-strings in place so that the
+> > default enabled_strings list in this driver actually serves a purpose.
+> > Then, if num-strings and enabled-strings is provided the former has
+> > precedence (assuming it doesn't exceed the size of the latter) but
+> > we'll print a warning about this (now unnecessary) ambiguity, and if
+> > possible at all - haven't found an example yet - make the properties
+> > mutually exclusive in dt-bindings.
+> > 
+> > Disallowing both cases would only simplify the code in the end but we
+> > can spend a few lines to support the desired legacy.
+> 
+> Yes, warning is OK for me.
 
- arch/arm64/boot/dts/qcom/Makefile             |   1 +
- .../boot/dts/qcom/sm7225-fairphone-fp4.dts    | 320 ++++++++++++++++++
- 2 files changed, 321 insertions(+)
- create mode 100644 arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
+Great, sending v2 shortly.
 
-diff --git a/arch/arm64/boot/dts/qcom/Makefile b/arch/arm64/boot/dts/qcom/Makefile
-index 59ece83abad0..9ed189e9c197 100644
---- a/arch/arm64/boot/dts/qcom/Makefile
-+++ b/arch/arm64/boot/dts/qcom/Makefile
-@@ -85,6 +85,7 @@ dtb-$(CONFIG_ARCH_QCOM)	+= sdm845-xiaomi-beryllium.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sdm850-lenovo-yoga-c630.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm6125-sony-xperia-seine-pdx201.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm6350-sony-xperia-lena-pdx213.dtb
-+dtb-$(CONFIG_ARCH_QCOM)	+= sm7225-fairphone-fp4.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-hdk.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-microsoft-surface-duo.dtb
- dtb-$(CONFIG_ARCH_QCOM)	+= sm8150-mtp.dtb
-diff --git a/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-new file mode 100644
-index 000000000000..8d6fd22873e0
---- /dev/null
-+++ b/arch/arm64/boot/dts/qcom/sm7225-fairphone-fp4.dts
-@@ -0,0 +1,320 @@
-+// SPDX-License-Identifier: BSD-3-Clause
-+/*
-+ * Copyright (c) 2021, Luca Weiss <luca@z3ntu.xyz>
-+ */
-+
-+/dts-v1/;
-+
-+#include <dt-bindings/gpio/gpio.h>
-+#include <dt-bindings/input/input.h>
-+#include <dt-bindings/pinctrl/qcom,pmic-gpio.h>
-+#include <dt-bindings/regulator/qcom,rpmh-regulator.h>
-+#include "sm7225.dtsi"
-+#include "pm6350.dtsi"
-+
-+/ {
-+	model = "Fairphone 4";
-+	compatible = "fairphone,fp4", "qcom,sm7225";
-+
-+	/* required for bootloader to select correct board */
-+	qcom,msm-id = <434 0x10000>, <459 0x10000>;
-+	qcom,board-id = <8 32>;
-+
-+	aliases {
-+		serial0 = &uart2;
-+	};
-+
-+	chosen {
-+		#address-cells = <2>;
-+		#size-cells = <2>;
-+		ranges;
-+
-+		stdout-path = "serial0:115200n8";
-+
-+		framebuffer0: framebuffer@a000000 {
-+			compatible = "simple-framebuffer";
-+			reg = <0 0xa0000000 0 (2340 * 1080 * 4)>;
-+			width = <1080>;
-+			height = <2340>;
-+			stride = <(1080 * 4)>;
-+			format = "a8r8g8b8";
-+		};
-+	};
-+
-+	gpio-keys {
-+		compatible = "gpio-keys";
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&gpio_keys_pin>;
-+
-+		volume-up {
-+			label = "volume_up";
-+			linux,code = <KEY_VOLUMEUP>;
-+			gpios = <&pm6350_gpios 2 GPIO_ACTIVE_LOW>;
-+		};
-+	};
-+};
-+
-+&apps_rsc {
-+	pm6350-rpmh-regulators {
-+		compatible = "qcom,pm6350-rpmh-regulators";
-+		qcom,pmic-id = "a";
-+
-+		vreg_s1a: smps1 {
-+			regulator-min-microvolt = <1000000>;
-+			regulator-max-microvolt = <1200000>;
-+		};
-+
-+		vreg_s2a: smps2 {
-+			regulator-min-microvolt = <1503000>;
-+			regulator-max-microvolt = <2048000>;
-+		};
-+
-+		vreg_l2a: ldo2 {
-+			regulator-min-microvolt = <1503000>;
-+			regulator-max-microvolt = <1980000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3a: ldo3 {
-+			regulator-min-microvolt = <2700000>;
-+			regulator-max-microvolt = <3300000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l4a: ldo4 {
-+			regulator-min-microvolt = <352000>;
-+			regulator-max-microvolt = <801000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l5a: ldo5 {
-+			regulator-min-microvolt = <1503000>;
-+			regulator-max-microvolt = <1980000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l6a: ldo6 {
-+			regulator-min-microvolt = <1710000>;
-+			regulator-max-microvolt = <3544000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l7a: ldo7 {
-+			regulator-min-microvolt = <1620000>;
-+			regulator-max-microvolt = <1980000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l8a: ldo8 {
-+			regulator-min-microvolt = <2800000>;
-+			regulator-max-microvolt = <2800000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l9a: ldo9 {
-+			regulator-min-microvolt = <1650000>;
-+			regulator-max-microvolt = <3401000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l11a: ldo11 {
-+			regulator-min-microvolt = <1800000>;
-+			regulator-max-microvolt = <2000000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l12a: ldo12 {
-+			regulator-min-microvolt = <1620000>;
-+			regulator-max-microvolt = <1980000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l13a: ldo13 {
-+			regulator-min-microvolt = <570000>;
-+			regulator-max-microvolt = <650000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l14a: ldo14 {
-+			regulator-min-microvolt = <1700000>;
-+			regulator-max-microvolt = <1900000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l15a: ldo15 {
-+			regulator-min-microvolt = <1100000>;
-+			regulator-max-microvolt = <1305000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l16a: ldo16 {
-+			regulator-min-microvolt = <830000>;
-+			regulator-max-microvolt = <921000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l18a: ldo18 {
-+			regulator-min-microvolt = <788000>;
-+			regulator-max-microvolt = <1049000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l19a: ldo19 {
-+			regulator-min-microvolt = <1080000>;
-+			regulator-max-microvolt = <1305000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l20a: ldo20 {
-+			regulator-min-microvolt = <530000>;
-+			regulator-max-microvolt = <801000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l21a: ldo21 {
-+			regulator-min-microvolt = <751000>;
-+			regulator-max-microvolt = <825000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l22a: ldo22 {
-+			regulator-min-microvolt = <1080000>;
-+			regulator-max-microvolt = <1305000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+	};
-+
-+	pm6150l-rpmh-regulators {
-+		compatible = "qcom,pm6150l-rpmh-regulators";
-+		qcom,pmic-id = "e";
-+
-+		vreg_s8e: smps8 {
-+			regulator-min-microvolt = <313000>;
-+			regulator-max-microvolt = <1395000>;
-+		};
-+
-+		vreg_l1e: ldo1 {
-+			regulator-min-microvolt = <1620000>;
-+			regulator-max-microvolt = <1980000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l2e: ldo2 {
-+			regulator-min-microvolt = <1170000>;
-+			regulator-max-microvolt = <1305000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l3e: ldo3 {
-+			regulator-min-microvolt = <1100000>;
-+			regulator-max-microvolt = <1299000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l4e: ldo4 {
-+			regulator-min-microvolt = <1620000>;
-+			regulator-max-microvolt = <3300000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l5e: ldo5 {
-+			regulator-min-microvolt = <1620000>;
-+			regulator-max-microvolt = <3300000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l6e: ldo6 {
-+			regulator-min-microvolt = <1700000>;
-+			regulator-max-microvolt = <3544000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l7e: ldo7 {
-+			regulator-min-microvolt = <2700000>;
-+			regulator-max-microvolt = <3544000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l8e: ldo8 {
-+			regulator-min-microvolt = <1620000>;
-+			regulator-max-microvolt = <2000000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l9e: ldo9 {
-+			regulator-min-microvolt = <2700000>;
-+			regulator-max-microvolt = <3544000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l10e: ldo10 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3401000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_l11e: ldo11 {
-+			regulator-min-microvolt = <3000000>;
-+			regulator-max-microvolt = <3401000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_HPM>;
-+		};
-+
-+		vreg_bob: bob {
-+			regulator-min-microvolt = <1620000>;
-+			regulator-max-microvolt = <5492000>;
-+			regulator-initial-mode = <RPMH_REGULATOR_MODE_AUTO>;
-+			regulator-allow-bypass;
-+		};
-+	};
-+};
-+
-+&pm6350_gpios {
-+	gpio_keys_pin: gpio-keys-pin {
-+		pins = "gpio2";
-+		function = PMIC_GPIO_FUNC_NORMAL;
-+		bias-pull-up;
-+		input-enable;
-+		power-source = <0>;
-+	};
-+};
-+
-+&pm6350_resin {
-+	status = "okay";
-+	linux,code = <KEY_VOLUMEDOWN>;
-+};
-+
-+&qupv3_id_1 {
-+	status = "okay";
-+};
-+
-+&tlmm {
-+	gpio-reserved-ranges = <13 4>, <56 2>;
-+};
-+
-+&uart2 {
-+	status = "okay";
-+};
-+
-+&usb_1 {
-+	status = "okay";
-+};
-+
-+&usb_1_dwc3 {
-+	maximum-speed = "super-speed";
-+	dr_mode = "peripheral";
-+};
-+
-+&usb_1_hsphy {
-+	status = "okay";
-+
-+	vdd-supply = <&vreg_l18a>;
-+	vdda-pll-supply = <&vreg_l2a>;
-+	vdda-phy-dpdm-supply = <&vreg_l3a>;
-+};
-+
-+&usb_1_qmpphy {
-+	status = "okay";
-+
-+	vdda-phy-supply = <&vreg_l22a>;
-+	vdda-pll-supply = <&vreg_l16a>;
-+};
--- 
-2.33.0
-
+- Marijn
