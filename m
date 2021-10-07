@@ -2,126 +2,154 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 20832425974
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 19:29:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6A0954259CD
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 19:49:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242202AbhJGRbN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Oct 2021 13:31:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:42942 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235301AbhJGRbN (ORCPT
+        id S243159AbhJGRvX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Oct 2021 13:51:23 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:52325 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S243084AbhJGRvX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Oct 2021 13:31:13 -0400
-Received: from mail-ed1-x534.google.com (mail-ed1-x534.google.com [IPv6:2a00:1450:4864:20::534])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 00020C061570;
-        Thu,  7 Oct 2021 10:29:18 -0700 (PDT)
-Received: by mail-ed1-x534.google.com with SMTP id x7so25121818edd.6;
-        Thu, 07 Oct 2021 10:29:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=hYLvmWFA5adKzLqY8vh9rsTQj1QLK0NjY6Bw35bbszk=;
-        b=ZxU/kKXF7cyEIXZI9nPCJqFh8bFK61q/s4Xpg3CwLpqPocUeSV2ge0BsFLjYKIQ90g
-         SpaiktjcqpUS/FkUxJ/Grbc5CJSMvdWuw42INjaoPWPa17iK0rpQ0hLGr6NAuzubczu4
-         eYJ4SUMiyBLNUwwMMQNI9PG28LNtu5g+IuibXsd5SrRu0m7/hJvzPtT27H8GZnWJqFF+
-         2bsrvxdZlR65/ZpeFtp6UzHJvaEvFfmAxS2VWgQ0cB8bx2WLbE7kzT9AOd8fn1W5Elde
-         SpuCXjfOzRVMQJV/+9C3rf4s8T5cuKtnc1tTFyrtvCkmIbDcA5ANRXGgy9R6IDWprIex
-         jy8g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=hYLvmWFA5adKzLqY8vh9rsTQj1QLK0NjY6Bw35bbszk=;
-        b=xqrzGu1I70Az7yyibs4cxErKQaolhOSce7Xk5ATogJM7/38wE2V+YTSlyT57d3WI/f
-         6j8PAxVZScZoNef0Cpnp1plp/h7B739Wv3wT57rYH5PMnVHxeKy5O+Q34y/VlBsUim5U
-         99EfdWoYxNCNJZ4BZV1Cd0oot8+hRwPVa/L0p4ykM0tAZ/ZxhbnXRRESj0jFhbiYghi4
-         fXJJLgmCkww8dpLE+ab7HrVY2M6JaPRXhojFI/ySMUA+PWHRIbDnrp9xQxGPzNs7Crya
-         sLifFW8qFYu06qYTjJeU2VmRv84VKZlCXDcStBM9D144VLUOjuEP3qWHFQbYrZnYpXLL
-         tIWg==
-X-Gm-Message-State: AOAM532Vv7SUfZoCyQowOzz3nXMipfDzAuiL9ozMFNgEgZ2kyjf8Vaw8
-        pwavSPHydKaG3K84iPqK5QTBsLswDHk=
-X-Google-Smtp-Source: ABdhPJxMEDMaeFqCL9p94v6LFA50CgO6F7/U7k5UrDG275Hca+Re167GlxvIKzQniCJ9+OL0sWiNXA==
-X-Received: by 2002:a17:906:1e51:: with SMTP id i17mr7221216ejj.528.1633627756962;
-        Thu, 07 Oct 2021 10:29:16 -0700 (PDT)
-Received: from Ansuel-xps.localdomain (93-42-71-246.ip85.fastwebnet.it. [93.42.71.246])
-        by smtp.googlemail.com with ESMTPSA id g23sm35316edt.1.2021.10.07.10.29.16
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Oct 2021 10:29:16 -0700 (PDT)
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Amit Kucheria <amitk@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Zhang Rui <rui.zhang@intel.com>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-pm@vger.kernel.org,
-        linux-kernel@vger.kernel.org
-Cc:     Ansuel Smith <ansuelsmth@gmail.com>
-Subject: [RESEND PATCH v3] drivers: thermal: tsens: add timeout to get_temp_tsens_valid
-Date:   Thu,  7 Oct 2021 19:28:59 +0200
-Message-Id: <20211007172859.583-1-ansuelsmth@gmail.com>
-X-Mailer: git-send-email 2.32.0
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Thu, 7 Oct 2021 13:51:23 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1633628969; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=kfORCF2GEFvCeQKcnUI4BSJAbKcW66pq4L84uJV6G5Q=; b=SDrvpF12A9ucwNlQv2DCJgMl3/plKlwaunrh0bbvIZGSqU1CHGuSVf5WoAC72mZ6mkAo53hh
+ PXw4fO22ZuiDkzOwDkaahJqrMNMU1/kx+ip3PiW09UHjtp2dm8KhE8MZemiOlv4bgIVhgca5
+ +D10ECOnRznz5WRJ9YlH/CYwDHU=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 615f3310446c6db0cb55a1b4 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 07 Oct 2021 17:49:04
+ GMT
+Sender: pmaliset=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id CEF0AC43618; Thu,  7 Oct 2021 17:49:03 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from pmaliset-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: pmaliset)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id B52FCC4338F;
+        Thu,  7 Oct 2021 17:48:57 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org B52FCC4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Prasad Malisetty <pmaliset@codeaurora.org>
+To:     agross@kernel.org, bjorn.andersson@linaro.org, bhelgaas@google.com,
+        robh+dt@kernel.org, swboyd@chromium.org, lorenzo.pieralisi@arm.com,
+        svarbanov@mm-sol.com
+Cc:     devicetree@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, linux-kernel@vger.kernel.org,
+        dianders@chromium.org, mka@chromium.org, vbadigan@codeaurora.org,
+        sallenki@codeaurora.org, manivannan.sadhasivam@linaro.org,
+        linux-pci@vger.kernel.org,
+        Prasad Malisetty <pmaliset@codeaurora.org>
+Subject: [PATCH v12 0/5] Add DT bindings and DT nodes for PCIe and PHY in SC7280
+Date:   Thu,  7 Oct 2021 23:18:38 +0530
+Message-Id: <1633628923-25047-1-git-send-email-pmaliset@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The function can loop and lock the system if for whatever reason the bit
-for the target sensor is NEVER valid. This is the case if a sensor is
-disabled by the factory and the valid bit is never reported as actually
-valid. Add a timeout check and exit if a timeout occurs. As this is
-a very rare condition, handle the timeout only if the first read fails.
-While at it also rework the function to improve readability and convert
-to poll_timeout generic macro.
+Changes added in v12:
 
-Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
----
- drivers/thermal/qcom/tsens.c | 29 ++++++++++++++---------------
- 1 file changed, 14 insertions(+), 15 deletions(-)
+	* Sorted pipe_clk muxing changes in patch 4 & 5 as per the commit log.
+	  -Suggested by Bjorn.
 
-diff --git a/drivers/thermal/qcom/tsens.c b/drivers/thermal/qcom/tsens.c
-index b1162e566a70..99a8d9f3e03c 100644
---- a/drivers/thermal/qcom/tsens.c
-+++ b/drivers/thermal/qcom/tsens.c
-@@ -603,22 +603,21 @@ int get_temp_tsens_valid(const struct tsens_sensor *s, int *temp)
- 	int ret;
- 
- 	/* VER_0 doesn't have VALID bit */
--	if (tsens_version(priv) >= VER_0_1) {
--		ret = regmap_field_read(priv->rf[valid_idx], &valid);
--		if (ret)
--			return ret;
--		while (!valid) {
--			/* Valid bit is 0 for 6 AHB clock cycles.
--			 * At 19.2MHz, 1 AHB clock is ~60ns.
--			 * We should enter this loop very, very rarely.
--			 */
--			ndelay(400);
--			ret = regmap_field_read(priv->rf[valid_idx], &valid);
--			if (ret)
--				return ret;
--		}
--	}
-+	if (tsens_version(priv) == VER_0)
-+		goto get_temp;
-+
-+	/* Valid bit is 0 for 6 AHB clock cycles.
-+	 * At 19.2MHz, 1 AHB clock is ~60ns.
-+	 * We should enter this loop very, very rarely.
-+	 * Wait 1 us since it's the min of poll_timeout macro.
-+	 * Old value was 400 ns.
-+	 */
-+	ret = regmap_field_read_poll_timeout(priv->rf[valid_idx], valid,
-+					     valid, 1, 20 * USEC_PER_MSEC);
-+	if (ret)
-+		return ret;
- 
-+get_temp:
- 	/* Valid bit is set, OK to read the temperature */
- 	*temp = tsens_hw_to_mC(s, temp_idx);
- 
+Changes added in v11:
+
+	* Modified nvme_pwren name as nvme_pwren.
+	* Removed bias-pullup option in nvme_pwren entry [v11 Patch 3/5].
+	* Changed pcie1_default_state name to pcie1_clkreq_n.
+	* Added NULL pointer check for pcie_cfg.
+
+Changes added in v10:
+
+	* v9 [Patch 4/4/] has been split into two separate patches
+	* Addressed all comments in IDP [Patch 3/4] file.
+ 	
+Changes added in v9:
+    * Added fixed regulator entry for nvme.suggested by Stephen Boyd
+    * Added NULL pointer check before accessing ops in pcie probe
+      Suggested by Stephen Boyd
+
+Changes added in v8:
+
+    * Added seperate pinctrl state for NVMe LDO enable pin [v8 P3/4]
+    * Removed pointer initialization for pcie_cfg [v8 P4/4]
+    * Replaced bool pcie_pipe_clk_src with unsigned int:1 [v8 P4/4]
+    * Changed gcc_pcie_1_pipe_clk_src to pipe_clk_src
+
+Changes added in v7:
+
+        * Removed two fallbacks qcom,pcie-sm8250 and snps,dw-pcie.
+        * Replaced compatible method in get_resources_2_7_0 with
+            flag approach suggested by Bjorn Helgaas .
+        * Setting gcc_pcie_1_clk_src as XO in init_2_7_0 for
+          gdsc enable.
+        * Added specific NVMe GPIO entries for SKU1 and SKU2 support
+          in idp.dts and idp2.dts respectively.
+        * Moved pcie_1 and pcie_1_phy board specific entries into common
+          board file sc7280-idp.dtsi file.
+
+Changes in v6:
+
+    * Removed platform check while setting gcc_pcie_1_pipe_clk_src
+          as clk_set_parent will return 0 with nop if platform doesn't
+          need to switch pipe clk source.
+        * Moved wake-n gpio to board specific file sc7280-idp.dtsi
+        * Sorted gpio.h header entry in sc7280.dtsi file
+
+Changes in v5:
+
+        * Re ordered PCIe, PHY nodes in Soc and board specific dtsi files.
+        * Removed ref_clk entry in current patch [PATCH v4 P4/4].
+        * I will add ref clk entry in suspend/ resume commits.
+        * Added boolean flag in Soc specific dtsi file to differentiate
+          SM8250 and SC7280 platforms. based on boolean flag, platforms will handle
+          the pipe clk handling.
+
+Changes in v4 as suggested by Bjorn:
+
+        * Changed pipe clk mux name as gcc_pcie_1_pipe_clk_src.
+        * Changed pipe_ext_src as phy_pipe_clk.
+        * Updated commit message for [PATCH v4 4/4].
+
+Changes in v3:
+        * Changed pipe clock names in dt bindings as pipe_mux and phy_pipe.
+        * Moved reset and NVMe GPIO pin configs into board specific file.
+        * Updated pipe clk mux commit message.
+
+Changes in v2:
+        * Moved pcie pin control settings into IDP file.
+        * Replaced pipe_clk_src with pipe_clk_mux in pcie driver
+        * Included pipe clk mux setting change set in this series
+
+Prasad Malisetty (5):
+  dt-bindings: pci: qcom: Document PCIe bindings for SC7280
+  arm64: dts: qcom: sc7280: Add PCIe and PHY related nodes
+  arm64: dts: qcom: sc7280: Add PCIe nodes for IDP board
+  PCI: qcom: Add a flag in match data along with ops
+  PCI: qcom: Switch pcie_1_pipe_clk_src after PHY init in SC7280
+
+ .../devicetree/bindings/pci/qcom,pcie.txt          |  17 +++
+ arch/arm64/boot/dts/qcom/sc7280-idp.dts            |   8 ++
+ arch/arm64/boot/dts/qcom/sc7280-idp.dtsi           |  50 +++++++++
+ arch/arm64/boot/dts/qcom/sc7280-idp2.dts           |   8 ++
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               | 118 +++++++++++++++++++++
+ drivers/pci/controller/dwc/pcie-qcom.c             |  95 +++++++++++++++--
+ 6 files changed, 285 insertions(+), 11 deletions(-)
+
 -- 
-2.32.0
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
 
