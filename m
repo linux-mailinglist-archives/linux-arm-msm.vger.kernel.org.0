@@ -2,79 +2,170 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 43860425326
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 14:35:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 49E96425387
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 14:57:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S241261AbhJGMhu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Oct 2021 08:37:50 -0400
-Received: from mail.kernel.org ([198.145.29.99]:34496 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S241238AbhJGMht (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Oct 2021 08:37:49 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id AAFA360F93;
-        Thu,  7 Oct 2021 12:35:55 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1633610156;
-        bh=6N4+qgtMfBxspS0JmtTqIeZ5IOVPp5soyqeLUMpHPSE=;
-        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
-        b=bRwwZH5wCt6PdnH0bLE8X/7hjayq5WPI7EROZPn9tThH7u3t2Hxayiw6SNgVRVWIb
-         kLX4mR10NcyLQJ1rLJb9JbxknYSSszwmxPPu6k2AkRtvUivNxOVBejrnziraGKM9q2
-         ayNJMrQzulHIkt3shn88BvD0zj5flvSn5jHEydatSmgTGDpSonvUqP3VUnH5S5XJLX
-         i3bJWglcaO1aDY+RtFCu13LyKSObSSferLGNQCO/rqZ55U46w/W+eRXGaLdmzeCWAh
-         kQRxPb32QwTLkOFpuBsaMxKdqGB7eNTjV0PjAz6lcSw+o+SnVcfImMtHGhFzz4w5cB
-         gGImsO/t1tG+g==
-Date:   Thu, 7 Oct 2021 13:35:53 +0100
-From:   Mark Brown <broonie@kernel.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        id S232986AbhJGM71 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Oct 2021 08:59:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34168 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232897AbhJGM70 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 Oct 2021 08:59:26 -0400
+Received: from mail-pl1-x629.google.com (mail-pl1-x629.google.com [IPv6:2607:f8b0:4864:20::629])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03F46C061755
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Oct 2021 05:57:33 -0700 (PDT)
+Received: by mail-pl1-x629.google.com with SMTP id l6so3845258plh.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Oct 2021 05:57:32 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=vQY2vR3JgZ7UpKkWrQZDehl7P8KiMsXS+BrIiJW4faw=;
+        b=bJomXKg/1nq3R2YS3lQKJ7igUG7a7MxOQThIPFhHbftHvmvrdGqDEIW79PQhyKvxVK
+         qPv1ngrKQOeadlDBNPyU5hcBB1bKVzqkwDZzBIyX0BemoAl5JjRQ2USYjYzBdEJIincc
+         4sCIG3uEdrnrBKtANe13OFMiEYrDpn/BuF0suYziikgWqhH0oRYIFOzbfqVjwyuwVnJE
+         5ZEFj/JJfCERacrVLTV1gn4GeLhwG4YNEtr7/92G5GKbW4FqgSL7YnX0XpXOoPZEi6gK
+         7oCCIbIhjGPLsJuHDK2v2Dcgu94pZH06MxvIuAa8sfL59IHT37o7DmILh7+JWcD+r5dQ
+         kCUQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=vQY2vR3JgZ7UpKkWrQZDehl7P8KiMsXS+BrIiJW4faw=;
+        b=UPV/BpcmuU8Buc7N058osVEjHrvZ2FOX/UJ2DRVNfR8K68PL1gTdZDBWszpyvTBj3r
+         mezMQxSxQ8+dNMt5FLkqud5FII3WhgD1b8SVlen+GKElcoUjDTt/knSNa5EYoMUUI9s/
+         Ld2vksDgsMf/r8ryEMZS12wglpSycXhVOxvJfXAY425TTOXREaoF2JlPn4OaLkwQbA2/
+         pLH0xOKDmAyrk9EH+ORQDR8SV5Dluqu9xkzmpQZ5n09rwtJk91Er4KaXh6bPF8+On+Xk
+         0qgHar50AewyzWpo4w+7MB48qBt2KBRo06Wf4AUS23fW3dMQJKzzZuD+qOtgHRhdvL95
+         Y79g==
+X-Gm-Message-State: AOAM532ufj3SBJgMeE/AFRWDzO7umUOE2I8WUZIKdB+EcZ/rK4sDdNOS
+        c9HRZzelHnWMJa6FVzu2DMNV
+X-Google-Smtp-Source: ABdhPJyYuVz4xSiU1qQP1SwuVkloHPNzNlgzKo/0anLbdAkCS6A455j327vkwO03/OU8G/f5B8dbwQ==
+X-Received: by 2002:a17:902:e0c2:b0:13e:7f73:f181 with SMTP id e2-20020a170902e0c200b0013e7f73f181mr3600459pla.10.1633611452428;
+        Thu, 07 Oct 2021 05:57:32 -0700 (PDT)
+Received: from thinkpad ([117.202.189.72])
+        by smtp.gmail.com with ESMTPSA id rm6sm2881121pjb.18.2021.10.07.05.57.26
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 07 Oct 2021 05:57:31 -0700 (PDT)
+Date:   Thu, 7 Oct 2021 18:27:24 +0530
+From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+To:     kishon@ti.com, lorenzo.pieralisi@arm.com, bhelgaas@google.com,
+        robh@kernel.org
+Cc:     devicetree@vger.kernel.org, linux-pci@vger.kernel.org,
         linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Jaroslav Kysela <perex@perex.cz>,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Russell King <rmk+kernel@arm.linux.org.uk>,
-        Saravana Kannan <saravanak@google.com>
-Subject: Re: [PATCH v2 31/34] ASoC: codecs: wcd938x: Migrate to aggregate
- driver
-Message-ID: <YV7pqY2FMaYy7Vkq@sirena.org.uk>
-References: <20211006193819.2654854-1-swboyd@chromium.org>
- <20211006193819.2654854-32-swboyd@chromium.org>
+        hemantk@codeaurora.org, bjorn.andersson@linaro.org,
+        sallenki@codeaurora.org, skananth@codeaurora.org,
+        vpernami@codeaurora.org, vbadigan@codeaurora.org
+Subject: Re: [PATCH v8 0/3] Add Qualcomm PCIe Endpoint driver support
+Message-ID: <20211007125724.GA27987@thinkpad>
+References: <20210920065946.15090-1-manivannan.sadhasivam@linaro.org>
+ <20211004041949.GA16442@workstation>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="1Flv7GPR/yQ1psFZ"
+Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <20211006193819.2654854-32-swboyd@chromium.org>
-X-Cookie: Colors may fade.
+In-Reply-To: <20211004041949.GA16442@workstation>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+On Mon, Oct 04, 2021 at 09:49:49AM +0530, Manivannan Sadhasivam wrote:
+> On Mon, Sep 20, 2021 at 12:29:43PM +0530, Manivannan Sadhasivam wrote:
+> > Hello,
+> > 
+> > This series adds support for Qualcomm PCIe Endpoint controller found
+> > in platforms like SDX55. The Endpoint controller is based on the designware
+> > core with additional Qualcomm wrappers around the core.
+> > 
+> > The driver is added separately unlike other Designware based drivers that
+> > combine RC and EP in a single driver. This is done to avoid complexity and
+> > to maintain this driver autonomously.
+> > 
+> > The driver has been validated with an out of tree MHI function driver on
+> > SDX55 based Telit FN980 EVB connected to x86 host machine over PCIe.
+> > 
+> 
+> Ping on this series! Patchwork says the state is still "New". Both
+> binding and driver patches got enough reviews I believe. Are there any
+> issues pending to be addressed?
+> 
 
---1Flv7GPR/yQ1psFZ
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
+Sorry for the noise. But not seeing any activity on this series is tempting me
+to ping this thread. This series has been under review for almost 3 releases and
+I don't want to miss this one too without any obvious reasons.
 
-On Wed, Oct 06, 2021 at 12:38:16PM -0700, Stephen Boyd wrote:
-> Use an aggregate driver instead of component ops so that we can get
-> proper driver probe ordering of the aggregate device with respect to all
-> the component devices that make up the aggregate device.
+Thanks,
+Mani
 
-Acked-by: Mark Brown <broonie@kernel.org>
-
---1Flv7GPR/yQ1psFZ
-Content-Type: application/pgp-signature; name="signature.asc"
-
------BEGIN PGP SIGNATURE-----
-
-iQEzBAABCgAdFiEEreZoqmdXGLWf4p/qJNaLcl1Uh9AFAmFe6agACgkQJNaLcl1U
-h9BXYwgAhSJ8+Nsp/fnvma50fxoPjfxJlaILrA7KNR4UFgO76J6jeemfnwtDi7DE
-jGs0zTwsvrRHcoqkLmc0pDv/zDc4uKIQuudO34AtZ6VHq0ZZ4mAFoIITNIUQuQoH
-8OSes8CDhwe6a7jZqIhk60LbcQPuW83UefDgPsqO6jHZXFDE52Ix/YAnYvj3gLE3
-b5sfypPKzUgntV6rlsvZ88N7TJZFuQEFFaE5k/DBZmA6ksuZvzsCxiK4JKFgpqir
-16b+m/CPV5x/KNkJ3RLTqOMkkIs7N0Uu/k7ykroYdkRe9qBTrUCyJpM7JtFO/Ix6
-8pSYl3GgK/QD+f05XZ4Yj7VcQWESPQ==
-=XOZo
------END PGP SIGNATURE-----
-
---1Flv7GPR/yQ1psFZ--
+> Thanks,
+> Mani
+> 
+> > Thanks,
+> > Mani
+> > 
+> > Changes in v8:
+> > 
+> > * Added Reviewed-by tag from Rob for the driver patch
+> > * Rebased on top of v5.15-rc1
+> > 
+> > Changes in v7:
+> > 
+> > * Used existing naming convention for callback functions
+> > * Used active low state for PERST# gpio
+> > 
+> > Changes in v6:
+> > 
+> > * Removed status property in DT and added reviewed tag from Rob
+> > * Switched to _relaxed variants as suggested by Rob
+> > 
+> > Changes in v5:
+> > 
+> > * Removed the DBI register settings that are not needed
+> > * Used the standard definitions available in pci_regs.h
+> > * Added defines for all the register fields
+> > * Removed the left over code from previous iteration
+> > 
+> > Changes in v4:
+> > 
+> > * Removed the active_config settings needed for IPA integration
+> > * Switched to writel for couple of relaxed versions that sneaked in
+> > 
+> > Changes in v3:
+> > 
+> > * Lot of minor cleanups to the driver patch based on review from Bjorn and Stan.
+> > * Noticeable changes are:
+> >   - Got rid of _relaxed calls and used readl/writel
+> >   - Got rid of separate TCSR memory region and used syscon for getting the
+> >     register offsets for Perst registers
+> >   - Changed the wake gpio handling logic
+> >   - Added remove() callback and removed "suppress_bind_attrs"
+> >   - stop_link() callback now just disables PERST IRQ
+> > * Added MMIO region and doorbell interrupt to the binding
+> > * Added logic to write MMIO physicall address to MHI base address as it is
+> >   for the function driver to work
+> > 
+> > Changes in v2:
+> > 
+> > * Addressed the comments from Rob on bindings patch
+> > * Modified the driver as per binding change
+> > * Fixed the warnings reported by Kbuild bot
+> > * Removed the PERST# "enable_irq" call from probe()
+> > 
+> > Manivannan Sadhasivam (3):
+> >   dt-bindings: pci: Add devicetree binding for Qualcomm PCIe EP
+> >     controller
+> >   PCI: qcom-ep: Add Qualcomm PCIe Endpoint controller driver
+> >   MAINTAINERS: Add entry for Qualcomm PCIe Endpoint driver and binding
+> > 
+> >  .../devicetree/bindings/pci/qcom,pcie-ep.yaml | 158 ++++
+> >  MAINTAINERS                                   |  10 +-
+> >  drivers/pci/controller/dwc/Kconfig            |  10 +
+> >  drivers/pci/controller/dwc/Makefile           |   1 +
+> >  drivers/pci/controller/dwc/pcie-qcom-ep.c     | 710 ++++++++++++++++++
+> >  5 files changed, 888 insertions(+), 1 deletion(-)
+> >  create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+> >  create mode 100644 drivers/pci/controller/dwc/pcie-qcom-ep.c
+> > 
+> > -- 
+> > 2.25.1
+> > 
