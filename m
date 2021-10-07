@@ -2,80 +2,93 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 478F7425A59
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 20:06:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0128F425A60
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 20:08:21 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243430AbhJGSIo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Oct 2021 14:08:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:51996 "EHLO
+        id S233709AbhJGSKN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Oct 2021 14:10:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:52390 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243268AbhJGSIn (ORCPT
+        with ESMTP id S243281AbhJGSKN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Oct 2021 14:08:43 -0400
-Received: from mail-oi1-x236.google.com (mail-oi1-x236.google.com [IPv6:2607:f8b0:4864:20::236])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C2EB0C061755
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Oct 2021 11:06:49 -0700 (PDT)
-Received: by mail-oi1-x236.google.com with SMTP id v10so10092735oic.12
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Oct 2021 11:06:49 -0700 (PDT)
+        Thu, 7 Oct 2021 14:10:13 -0400
+Received: from mail-ua1-x935.google.com (mail-ua1-x935.google.com [IPv6:2607:f8b0:4864:20::935])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6B44EC061570
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Oct 2021 11:08:19 -0700 (PDT)
+Received: by mail-ua1-x935.google.com with SMTP id c33so4867160uae.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Oct 2021 11:08:19 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
-         :subject:to:cc;
-        bh=SF++BOLAlw+gmm2whEMt+9+RSjiVl4Y2q05QuVk4Bi8=;
-        b=JZUaORpsBwKxCbhGCZt/3OvFehX/ZlMOjau9tKi7+z6xpNwYIt1zuCmCkfwEglbruc
-         J8OZV8RKA3NXLumvqbyNfDifsmDTF2igARFQvGcaHdtQvHP+VNSTxt9Tcya6GuhKPOTB
-         KOVQOInU7Vu3fm+/FryIhsq3PpPd9yW6ghyD0=
+        d=gmail.com; s=20210112;
+        h=mime-version:reply-to:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=e0GlWMYbLlSs51H/1CmfnGWYUQ7y8tN5RFueql5kGZQ=;
+        b=Ae824ZeJKc51BOLdteAAZVqUUrojt0BhTYRJNtX1Ha4DcVhWKIrEeY3ZGDFEAi9u58
+         u7ZUgDyLr9ND54eWegOogIuod8zlP1HCDH28lorUIee4da881sv2wMllbdiXoHngsiEh
+         tS5P5Jha+uCvZHuJ5VVHT0+qndFFGkt5Mj6MLz/LYtfDqZNi7VpMBt7DihFInYpuB0Ju
+         UjF9Sh0k3uA/0Hd9MxUhFiGGbg0LJUNwns9reCuc8tsk4Oq2Uj5TB67aSAaZHtdQ3laX
+         b82wnsj90dIN451u6q+q2PwX8kbwLG9fslG0f8nLfgGkcFfimLLSF+meHe9hgYMEeykg
+         GaTA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:in-reply-to:references:from
-         :user-agent:date:message-id:subject:to:cc;
-        bh=SF++BOLAlw+gmm2whEMt+9+RSjiVl4Y2q05QuVk4Bi8=;
-        b=FABy0B7GVYpbcAHM0DbG/2Dle9Ipc5PeNH914FOvusH3yKkRbOm80yoOnxBOmwjpdH
-         09+BRgS9DLvfI6yHjUvJ3t9aNMSmnnGZeJVhGPT7333EP2mOJDPilseTnoi978baaF7B
-         vW/sZXSziVTuJPqABaU2ljZB/5vh5xUNA8dMfdA9WXUgxcol0DS3MQCvfk2AAc99RBsX
-         PH1NCYKqP39CakC4YFWqhs9C7veXsYZn3hDEVG05ZVAqx4h41iYKC2x0h8sod2qJ04XY
-         RhFhRn2nMYueNdC6VzshaMtTWhUT0k3H+BYDaWcTIz+SoXCciHQ2DzixTdlPL/fl3frq
-         62VA==
-X-Gm-Message-State: AOAM533XcfR/ekpTCZNyANLJ4BkJoxk4Gmth4iot0kleUONdDsMERgpr
-        xt+mWmDH7kT5uxBF2hadYml/9oGld+WBH/tJgR9aHQ==
-X-Google-Smtp-Source: ABdhPJxT78LC/jFpZgqZ7+FEhoNmAoI/1qtnz4jLeheFfZGuTZ4oIZcVBly+qSTc29jruR3Jqoqm6fohXJ6TdNNiEO0=
-X-Received: by 2002:a05:6808:f8f:: with SMTP id o15mr12828011oiw.164.1633630009087;
- Thu, 07 Oct 2021 11:06:49 -0700 (PDT)
-Received: from 753933720722 named unknown by gmailapi.google.com with
- HTTPREST; Thu, 7 Oct 2021 14:06:48 -0400
+        h=x-gm-message-state:mime-version:reply-to:from:date:message-id
+         :subject:to:content-transfer-encoding;
+        bh=e0GlWMYbLlSs51H/1CmfnGWYUQ7y8tN5RFueql5kGZQ=;
+        b=U290AjSTizTrgNqekWcnj9/hqYMtXJFVDPq4nG8KGQ6E1QUsW5Cu59pUsc+euuRwEt
+         prawJIlhu2HhYrgdrqFRwqjvUtcTH3pxBgyx8VgP/5X1oqv3LnFuccEGnsEwhsUUMf2U
+         s7wmdpcsEhFY3Oytr65AmovfAhs1CXPsxe/KC0qmtGPavrl+Ta4sasIswkfW0kYKvDnp
+         IxZlp6vX5V+OmsP3nVcFhIIjxVx7v5VdDEV4bd+ekNTo5e3CdfFrcQ7LspobsmEiAJcC
+         9VdTfqBdAeggHREwybWS4FIKTcSO71nGEZ+If2mH7me1ITUHWYC5rTFIciIqh9yrUwrt
+         AIWA==
+X-Gm-Message-State: AOAM533D0DVIDC0QsnC/Aks7Vu778I6gx+x30AeSfKna9ebKeYBKE6ex
+        UY8kbVW49WWlOtSmrTk0zohRAs1tp3jt0fcLGNE=
+X-Google-Smtp-Source: ABdhPJwKnI9q5rv/I5YM5UeyvVwpifo0CLyKGt4nIVfYDzcYOmJEFg0E8k0lRaF2A+hHqA1rdY1jE41AoegVOiRPYu0=
+X-Received: by 2002:ab0:8c1:: with SMTP id o1mr6304156uaf.113.1633630098608;
+ Thu, 07 Oct 2021 11:08:18 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20211007052812.3717-1-quic_saipraka@quicinc.com>
-References: <20211007052812.3717-1-quic_saipraka@quicinc.com>
-From:   Stephen Boyd <swboyd@chromium.org>
-User-Agent: alot/0.9.1
-Date:   Thu, 7 Oct 2021 14:06:48 -0400
-Message-ID: <CAE-0n51EBGqOZ7D+sn5=M-ig=6p_NUb+8veaaXXQJo+UrLoQfA@mail.gmail.com>
-Subject: Re: [PATCH] arm64: defconfig: Enable QTI SC7280 pinctrl, gcc and interconnect
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Sai Prakash Ranjan <quic_saipraka@quicinc.com>
-Cc:     Matthias Kaehlcke <mka@chromium.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
+Received: by 2002:a67:c088:0:0:0:0:0 with HTTP; Thu, 7 Oct 2021 11:08:18 -0700 (PDT)
+Reply-To: tonyelumelu5501@gmail.com
+From:   POST OFFICE <morenagnellab55@gmail.com>
+Date:   Thu, 7 Oct 2021 18:08:18 +0000
+Message-ID: <CAMpi6QMrLLrkK4rkQMJTgPK0rsffoM2eFdTM3g68TX2rr5=RrA@mail.gmail.com>
+Subject: =?UTF-8?B?Q2llbsSramFtYWlzIGZvbmRhIMSrcGHFoW5pZWsh?=
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: base64
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Sai Prakash Ranjan (2021-10-06 22:28:12)
-> diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-> index 156d96afbbfc..87584769cf71 100644
-> --- a/arch/arm64/configs/defconfig
-> +++ b/arch/arm64/configs/defconfig
-> @@ -984,6 +985,7 @@ CONFIG_MSM_MMCC_8996=y
->  CONFIG_MSM_GCC_8998=y
->  CONFIG_QCS_GCC_404=y
->  CONFIG_SC_GCC_7180=y
-> +CONFIG_SC_GCC_7280=y
-
-Any reason to not enable DISPCC or GPUCC which selects the GCC config?
-Same goes for sc7180.
-
->  CONFIG_SDM_CAMCC_845=m
->  CONFIG_SDM_GCC_845=y
->  CONFIG_SDM_GPUCC_845=y
+Q2llbsSramFtYWlzIGZvbmRhIMSrcGHFoW5pZWshDQoNCkVzIG5vc8WrdMSranUganVtcyDFoW8g
+dsSTc3R1bGkgcGlybXMgbcSTbmXFoWEsIGJldCBlcyBuZWR6aXJkxJNqdSBubyBqdW1zLA0KZXMg
+bmVlc211IHDEgXJsaWVjaW7EgXRzLCB2YWkgasWrcyB0byBzYcWGxJNtxIF0LiBVbiB0xIFwxJNj
+IGVzIHRvIHNha3UNCnbEk2xyZWl6OiBwaXJta8SBcnQsIGVzIGVzbXUgS3Jpc3RhbGluYSBHZW9y
+Z2lldmEga3VuZHplLCBTdGFycHRhdXRpc2vEgQ0KVmFsxat0YXMgZm9uZGEgcsSra290xIFqZGly
+ZWt0b3JlIHVuIHByZXppZGVudGUuDQoNClBhdGllc8SrYsSBIG3Ek3MgZXNhbSBwxIFyc2thdMSr
+anXFoWkgdmlzdXMgxaHEt8STcsWhxLx1cyB1biBwcm9ibMSTbWFzLCBrYXMNCnNhaXN0xKt0YXMg
+YXIgasWrc3UgbmVwYWJlaWd0byBkYXLEq2p1bXUgdW4gasWrc3UgbmVzcMSTanUgaXpwaWxkxKt0
+DQpwxIFyc2thaXTEq2p1bWEgbWFrc3UsIGthcyBubyBqdW1zIGlla2FzxJN0YSBubyBpZXByaWVr
+xaHEk2rEgW0NCnDEgXJza2FpdMSranVtYSBpZXNwxJNqxIFtLiBBcHN0aXByaW7EgWp1bXUgc2th
+dGlldCBtxatzdSB2aWV0bsSTIDM4IMKwIDUz4oCyNTYNCuKAsyBOIDc3IMKwIDIg4oCyIDM5IOKA
+syBXDQoNCk3Ek3MsIERpcmVrdG9ydSBwYWRvbWUsIFBhc2F1bGVzIEJhbmthIHVuIFN0YXJwdGF1
+dGlza2FpcyBWYWzFq3RhcyBmb25kcw0KKFNWRikgVmHFoWluZ3RvbmEsIHNhZGFyYsSrYsSBIGFy
+IEFTViBWYWxzdHMga2FzaSB1biBkYcW+xIFtIGNpdMSBbQ0KYXRiaWxzdG/FocSBbSBwxJN0xKtq
+dW11IGHEo2VudMWrcsSBbSDFoWVpdCwgQVNWLiBpciBwYXbEk2zEk2ppcyBtxatzdSDEgHJ2YWxz
+dHUNCm1ha3PEgWp1bXUgcMSBcnZlZHVtdSBub2RhxLxhaSwgxIBmcmlrYXMgQXB2aWVub3RhamFp
+IGJhbmthaSBMb21lIFRvZ28sDQppenNuaWVndCBqdW1zIFZJU0Ega2FydGksIHV6IGt1cnUgdGlr
+cyBub3PFq3TEq3RzIGrFq3N1IGZvbmRzIChVU0QgMSwyDQptaWxqb25pKSwgbGFpIHbEk2zEgWsg
+aXrFhmVtdHUgbm8gasWrc3UgZm9uZGEuDQoNCkl6bWVrbMSTxaFhbmFzIGxhaWvEgSBtxJNzIGJp
+asSBbSBwxIFyc3RlaWd0aSwga2Ega29ydW1wxJN0xIFzIGJhbmthcw0KYW1hdHBlcnNvbmFzIG5l
+dmFqYWR6xKtnaSBrYXbEk2phIG3Fq3N1IG1ha3PEgWp1bXUsIGNlbsWhb3RpZXMgbm92aXJ6xKt0
+DQpzYXZ1cyBsxKtkemVrxLx1cyB1eiBzYXZpZW0gcHJpdsSBdGFqaWVtIGtvbnRpZW0uDQoNClVu
+IMWhb2RpZW4gbcSTcyBqxatzIGluZm9ybcSTamFtLCBrYSBqxatzdSBmb25kcyBpciBpZXNrYWl0
+xKt0cyBVQkEgYmFua2FzDQpWSVNBIGthcnTEkyB1biBpciBnYXRhdnMgYXLEqyBwaWVnxIFkZWku
+IFRhZ2FkIHNhemluaWV0aWVzIGFyIFVCQSBiYW5rYXMNCnNla3JldMSBcnUuIFZpxYZ1IHNhdWMg
+VG9uaWpzIEVsdW1lbHUga3VuZ3MsDQoNCktvbnRha3RwZXJzb25hcyBlIC1wYXN0czogKHRvbnll
+bHVtZWx1NTUwMUBnbWFpbC5jb20pDQoNCkzFq2R6dSwgbm9zxat0aWV0IHZpxYZhbSDFocSBZHUg
+aW5mb3JtxIFjaWp1IHBhciBqxatzdSBha3JlZGl0xJN0xIFzIEFUTSBWSVNBDQprYXJ0ZXMgcGll
+Z8SBZGkgdXogasWrc3UgYWRyZXNpLg0KDQpKxatzdSBwaWxucyB2xIFyZHM6ID09PT09PT09PT09
+PT09PT09PT09DQoNCkrFq3N1IG3Eq3RuZXMgdmFsc3RzOiA9PT09PT09PT09PT09PT09PT09PQ0K
+DQpKxatzdSBtxIFqYXMgYWRyZXNlOiA9PT09PT09PT09PT09PT09DQoNCkrFq3N1IHTEgWxydcWG
+YSBudW11cnM6ID09PT09PT09PT09PT09PT09PT0NCg0KV2hhdHNBcHAgdMSBbHJ1xYZhIG51bXVy
+cyArMjI4OTE4ODk3NzMNCg0KU3ZlaWNpZW5pLA0KS3Jpc3RhbGluYSBHZW9yZ2lldmEga3VuZHpl
+Lg0K
