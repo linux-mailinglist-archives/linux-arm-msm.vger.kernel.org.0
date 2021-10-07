@@ -2,122 +2,108 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 45CE142500C
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 11:28:22 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 231E3425051
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 11:48:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240638AbhJGJaN convert rfc822-to-8bit (ORCPT
-        <rfc822;lists+linux-arm-msm@lfdr.de>); Thu, 7 Oct 2021 05:30:13 -0400
-Received: from mail-vk1-f176.google.com ([209.85.221.176]:34727 "EHLO
-        mail-vk1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240592AbhJGJaN (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Oct 2021 05:30:13 -0400
-Received: by mail-vk1-f176.google.com with SMTP id z202so2461191vkd.1;
-        Thu, 07 Oct 2021 02:28:19 -0700 (PDT)
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc:content-transfer-encoding;
-        bh=hzHW72Ay3gWV8fEJFQ+iu6g37baZLnF8PQ8Ot4oxoaI=;
-        b=qeBLCc16D7buQsBfZGYlmXCUZ/w243AJOQ/U9QHKzS8K+xLM2qCRhGiy46ZP6fUfXE
-         wflMWuY4ySLkJOr0B63wuuO2a8BwGCV9e7qkaAw8/ZzB6DGcWaNnDahpcn0Cx6v/WT38
-         tl0HznkRYarmgx8JI4FdafIVXuuU+20dVaKn1V/MmTuiYsu55hcreNXyCb3QN/aM9c0A
-         kuZ2YnarftLtP1i7yn0yi3TrmD4ONGm2T4j79mvyRLDPq2oFYmFZ5T9ez1TY4G7yB6p/
-         ZOp0dvUxO+6NwVfsKTDsuyE3PimfpBpPL/9L1Hsni9KkFg1/hf7a2I/vIhT7fxNR6kqN
-         ndlA==
-X-Gm-Message-State: AOAM533Vo9TjIYD9FhXlfUCQ9Tn+xG8GOvKlU+BaMXSXQZYc0gGzJqbF
-        g9wCorUjRUnV5b8xxQJXpfXLpcIb//4VbUO93xE=
-X-Google-Smtp-Source: ABdhPJxa3fwE1gntWrjljDsvFH6UlsS62TRi8FeltjZ+YAQFTMpawuIEL6cDelrBaNePH9pbfBWO3F+KAs1dSlBCJEY=
-X-Received: by 2002:a1f:3a4b:: with SMTP id h72mr2286297vka.19.1633598898975;
- Thu, 07 Oct 2021 02:28:18 -0700 (PDT)
-MIME-Version: 1.0
-References: <20211006025350.a5PczFZP4%akpm@linux-foundation.org>
- <58fbf2ff-b367-2137-aa77-fcde6c46bbb7@infradead.org> <20211006182052.6ecc17cf@canb.auug.org.au>
- <f877a1c9-1898-23f3-bba3-3442dc1f3979@amd.com>
-In-Reply-To: <f877a1c9-1898-23f3-bba3-3442dc1f3979@amd.com>
-From:   Geert Uytterhoeven <geert@linux-m68k.org>
-Date:   Thu, 7 Oct 2021 11:28:07 +0200
-Message-ID: <CAMuHMdV3eMchpgUasU6BBHrDQyjCc2TrqJ+zJgFhgAySpqVGfw@mail.gmail.com>
-Subject: Re: mmotm 2021-10-05-19-53 uploaded (drivers/gpu/drm/msm/hdmi/hdmi_phy.o)
-To:     =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
-Cc:     Stephen Rothwell <sfr@canb.auug.org.au>,
-        Randy Dunlap <rdunlap@infradead.org>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Mark Brown <broonie@kernel.org>,
-        Linux FS Devel <linux-fsdevel@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linux MM <linux-mm@kvack.org>,
-        Linux-Next <linux-next@vger.kernel.org>,
-        Michal Hocko <mhocko@suse.cz>, mm-commits@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        id S240370AbhJGJuc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Oct 2021 05:50:32 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:15507 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S240551AbhJGJub (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 Oct 2021 05:50:31 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1633600118; h=Content-Type: MIME-Version: Message-ID:
+ In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
+ bh=vGI68wyoqpDAZBA89Pt6Cbg+azmy5aIwL+2+C+Cr1xA=; b=VQONH5PEtvJrVLkaE5qyYfD4oEDQRDUaxbYYt5Xwi+SmOawyG1Vj8X3EOTHM6sBHJDR42MpA
+ elt/LKb7sFWAk0CBnZ3SZERYA87aN8RRs0q+fqHtOOOQ6lG2LwjwPWHx6r0ZdEy7JMMR+1SP
+ rLOGCgLN4iiVRRbjlZ0D35CdvgM=
+X-Mailgun-Sending-Ip: 69.72.43.7
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
+ 615ec26ba45ca753078edd36 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 07 Oct 2021 09:48:27
+ GMT
+Sender: kvalo=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id BDE82C43616; Thu,  7 Oct 2021 09:48:26 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
+        autolearn=no autolearn_force=no version=3.4.0
+Received: from tykki (tynnyri.adurom.net [51.15.11.48])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: kvalo)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 56A93C4338F;
+        Thu,  7 Oct 2021 09:48:24 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 56A93C4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Kalle Valo <kvalo@codeaurora.org>
+To:     Loic Poulain <loic.poulain@linaro.org>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        ath11k@lists.infradead.org, linux-wireless@vger.kernel.org,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno@lists.freedesktop.org,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        Intel Graphics <intel-gfx@lists.freedesktop.org>,
-        DRI <dri-devel@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: 8BIT
+        regressions@lists.linux.dev, mhi <mhi@lists.linux.dev>
+Subject: Re: [regression] mhi: ath11k resume fails on some devices
+References: <871r5p0x2u.fsf@codeaurora.org>
+        <CAMZdPi8UJLvBFQd8-nf-iHAQh8cEuihq97PUFfZ7Q=rxRQoPsg@mail.gmail.com>
+        <877df6tlnq.fsf@codeaurora.org>
+        <CAMZdPi8P7YZPhPir+WfS3cY_a7He1m2Pq2uqBhczPdEeoNRb0Q@mail.gmail.com>
+Date:   Thu, 07 Oct 2021 12:48:19 +0300
+In-Reply-To: <CAMZdPi8P7YZPhPir+WfS3cY_a7He1m2Pq2uqBhczPdEeoNRb0Q@mail.gmail.com>
+        (Loic Poulain's message of "Fri, 24 Sep 2021 11:43:55 +0200")
+Message-ID: <87a6jl9ndo.fsf@codeaurora.org>
+User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+MIME-Version: 1.0
+Content-Type: text/plain
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Christian,
+(adding the new mhi list, yay)
 
-On Wed, Oct 6, 2021 at 9:28 AM Christian König <christian.koenig@amd.com> wrote:
-> Am 06.10.21 um 09:20 schrieb Stephen Rothwell:
-> > On Tue, 5 Oct 2021 22:48:03 -0700 Randy Dunlap <rdunlap@infradead.org> wrote:
-> >> on i386:
-> >>
-> >> ld: drivers/gpu/drm/msm/hdmi/hdmi_phy.o:(.rodata+0x3f0): undefined reference to `msm_hdmi_phy_8996_cfg'
-> >>
-> >>
-> >> Full randconfig fle is attached.
-> > This would be because CONFIG_DRM_MSM is set but CONFIG_COMMON_CLOCK is
-> > not and has been exposed by commit
-> >
-> >    b3ed524f84f5 ("drm/msm: allow compile_test on !ARM")
-> >
-> > from the drm-misc tree.
+Hi Loic,
+
+Loic Poulain <loic.poulain@linaro.org> writes:
+
+>> Loic Poulain <loic.poulain@linaro.org> writes:
+>>
+>> > On Thu, 16 Sept 2021 at 10:00, Kalle Valo <kvalo@codeaurora.org> wrote:
+>>
+>> >> At the moment I'm running my tests with commit 020d3b26c07a reverted and
+>> >> everything works without problems. Is there a simple way to fix this? Or
+>> >> maybe we should just revert the commit? Commit log and kernel logs from
+>> >> a failing case below.
+>> >
+>> > Do you have log of success case?
+>>
+>> A log from a successful case in the end of email, using v5.15-rc1 plus
+>> revert of commit 020d3b26c07abe27.
+>>
+>> > To me, the device loses power, that is why MHI resuming is failing.
+>> > Normally the device should be properly recovered/reinitialized. Before
+>> > that patch the power loss was simply not detected (or handled at
+>> > higher stack level).
+>>
+>> Currently in ath11k we always keep the firmware running when in suspend,
+>> this is a workaround due to problems between mac80211 and MHI stack.
+>> IIRC the problem was something related MHI creating struct device during
+>> resume or something like that.
 >
-> Good point, how about this change:
->
-> diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
-> index 5879f67bc88c..d9879b011fb0 100644
-> --- a/drivers/gpu/drm/msm/Kconfig
-> +++ b/drivers/gpu/drm/msm/Kconfig
-> @@ -5,7 +5,7 @@ config DRM_MSM
->          depends on DRM
->          depends on ARCH_QCOM || SOC_IMX5 || COMPILE_TEST
->          depends on IOMMU_SUPPORT
-> -       depends on (OF && COMMON_CLK) || COMPILE_TEST
-> +       depends on (OF || COMPILE_TEST) && COMMON_CLK
+> Could you give a try with the attached patch? It should solve your
+> issue without breaking modem support.
 
-I'd make that:
+Sorry for taking so long, but I now tested your patch on top of
+v5.15-rc3 and, as expected, everything works as before with QCA6390 on
+NUC x86 testbox.
 
-    -        depends on DRM
-    +       depends on COMMON_CLK && DRM && IOMMU_SUPPORT
-            depends on ARCH_QCOM || SOC_IMX5 || COMPILE_TEST
-    -        depends on IOMMU_SUPPORT
-    -       depends on (OF && COMMON_CLK) || COMPILE_TEST
-    +       depends on OF || COMPILE_TEST
-
-to keep a better separation between hard and soft dependencies.
-
-Note that the "depends on OF || COMPILE_TEST" can even be
-deleted, as the dependency on ARCH_QCOM || SOC_IMX5 implies OF.
-
->          depends on QCOM_OCMEM || QCOM_OCMEM=n
->          depends on QCOM_LLCC || QCOM_LLCC=n
->          depends on QCOM_COMMAND_DB || QCOM_COMMAND_DB=n
->
-
-Gr{oetje,eeting}s,
-
-                        Geert
+Tested-by: Kalle Valo <kvalo@codeaurora.org>
 
 -- 
-Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
+https://patchwork.kernel.org/project/linux-wireless/list/
 
-In personal conversations with technical people, I call myself a hacker. But
-when I'm talking to journalists I just say "programmer" or something like that.
-                                -- Linus Torvalds
+https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
