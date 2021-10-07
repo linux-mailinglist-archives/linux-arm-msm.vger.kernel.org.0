@@ -2,173 +2,194 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0977042561E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 17:08:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 97768425633
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 17:10:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242311AbhJGPKB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Oct 2021 11:10:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36848 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S242284AbhJGPKA (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Oct 2021 11:10:00 -0400
-Received: from mail-oo1-xc32.google.com (mail-oo1-xc32.google.com [IPv6:2607:f8b0:4864:20::c32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 140A2C061755
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Oct 2021 08:08:07 -0700 (PDT)
-Received: by mail-oo1-xc32.google.com with SMTP id j11-20020a4a92cb000000b002902ae8cb10so1982006ooh.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Oct 2021 08:08:07 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=f2IEE2E4YHMVJEM5MQhvt3XmAUfnTsdYPx8v3MA4L2s=;
-        b=m4PzpRc+xMfv6d0tmbyjSiiE6f6chCnHuTBcaFnzvTdWfe5DKRBF2dUiSN6rFOXHnh
-         XRQTyab0VAr+zGfGlrBoV8oygk90Z87oqI8XmKNLMRXAqMGzZoL482PFlgnRaLs3dAXZ
-         CbY0kBoc7esmzMsfxNzyM+g8OgZ03e4HNWyHhxgcr6QfjHzV2P2nv0mDMe6sTMmFhWXo
-         AAiXwZR0OAu9Y8D8ZTuYfWZf4bhSK8Yj5d5R4VxRUituwyNAhVdCHK2YHo09ANJpITu2
-         KiuO8CXL/Dj/SNOY07hIvZ1rPdMabIWMQiQgAwogEIcDMBqZTaZOiWlbT1UvFKyp6oSD
-         5MwA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=f2IEE2E4YHMVJEM5MQhvt3XmAUfnTsdYPx8v3MA4L2s=;
-        b=28YfwYAFB+uSOSj5XMQHZlZRlSPJAIx0JvFWIe2GNIfF4fcq97tio3W4XnyLzZZwhX
-         9f3aHD1lL/VNKVO510/7ynp9s8nVgNVQk98WaGvkHVmr3x7v85qSid/C5PfN9XhkR5xm
-         x1u3/TsbB2nKsi8aqwWwAlHiYacnsWFUssuFiJr5ksdGZYaQVV2YWyN4FLjjC3h28frp
-         bX5jZAwBWlxy7ce4Gc6hW4zJXyVoBEw+SCFkou0BOY++9FCc1BHb49IB0WY7LeRhJ5aI
-         4exYWnpaQRgSBX7Vuv2dE8iqhei9igjlv5LbM+R/aZaH0xp++eUf7t/AF8aIJq++ifqI
-         9LMA==
-X-Gm-Message-State: AOAM531BDnJZO4PJeaIXclR2kzJbz0w8aHAJN+th8HAlrkiDL+DJ4cdP
-        QinANT/h8RuThyMOao2cYnrhmA==
-X-Google-Smtp-Source: ABdhPJyv4HAG1yrz2NFpdFEebej0KM8Fmqp1jTDYgGE4mHhwFS6GiaodYZLoQDgFhA462a2jXpWOPQ==
-X-Received: by 2002:a4a:d151:: with SMTP id o17mr3698904oor.63.1633619285911;
-        Thu, 07 Oct 2021 08:08:05 -0700 (PDT)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id r4sm4638927oiw.36.2021.10.07.08.08.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Oct 2021 08:08:05 -0700 (PDT)
-Date:   Thu, 7 Oct 2021 08:09:45 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Stephen Boyd <sboyd@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-clk@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        linux-kernel@vger.kernel.org
-Subject: Re: [PATCH v7 3/8] clk: qcom: dispcc-sm8250: use runtime PM for the
- clock controller
-Message-ID: <YV8NudkKvURyNqg7@ripper>
-References: <20210829154757.784699-1-dmitry.baryshkov@linaro.org>
- <20210829154757.784699-4-dmitry.baryshkov@linaro.org>
+        id S242294AbhJGPMS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Oct 2021 11:12:18 -0400
+Received: from mail.kernel.org ([198.145.29.99]:59652 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S242275AbhJGPMR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 Oct 2021 11:12:17 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 4B0B26113E;
+        Thu,  7 Oct 2021 15:10:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1633619423;
+        bh=6XparVng5W/AReJHiKchmXlIe9lsC3Z91YzkLUlPNCg=;
+        h=From:To:Cc:Subject:Date:From;
+        b=uGBU3w5ZPcovOtfzM/FIsHTD7h3JxuPJygqvsc/Akx8WIgRCpgs3UgXZBZTV82I1O
+         pW+TIPVurN88xf3WvDzFDkgp4KUNa7HpHH0yruRMhNm5135jx5bqq+/CKSzQGvE9Do
+         ViwsXF7lFqxOsI6bHhr9Jy2jv4XcchqTsLVaQi+z5d/b1rYbgoS7hR41kw3y30v3an
+         GfXh2Vp3SSFv+/Ic2Yauk4D9evUCiGVqN10/ZzGkA3ER8QQimEVtKd0+OTGa/g7KUM
+         0ggiEgI2DrGim19ev5P6YtxGkOvCy0ZLC7gw6ICyGtfCMR5AINWv1keeKoUptUyCZ3
+         OdUDZ2/BTlnCQ==
+From:   Arnd Bergmann <arnd@kernel.org>
+To:     linux-kernel@vger.kernel.org
+Cc:     linux-arm-kernel@lists.infradead.org, linux-ia64@vger.kernel.org,
+        linux-mips@vger.kernel.org, linux-parisc@vger.kernel.org,
+        linux-riscv@lists.infradead.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        iommu@lists.linux-foundation.org, linux-media@vger.kernel.org,
+        linux-mmc@vger.kernel.org, netdev@vger.kernel.org,
+        ath10k@lists.infradead.org, linux-wireless@vger.kernel.org,
+        linux-gpio@vger.kernel.org, Arnd Bergmann <arnd@arndb.de>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Charles Keepax <ckeepax@opensource.cirrus.com>,
+        Will Deacon <will@kernel.org>, Mark Brown <broonie@kernel.org>,
+        Liam Girdwood <lgirdwood@gmail.com>,
+        Simon Trimmer <simont@opensource.cirrus.com>,
+        Michael Ellerman <mpe@ellerman.id.au>
+Subject: [PATCH v2 1/2] firmware: include drivers/firmware/Kconfig unconditionally
+Date:   Thu,  7 Oct 2021 17:10:09 +0200
+Message-Id: <20211007151010.333516-1-arnd@kernel.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <20210829154757.784699-4-dmitry.baryshkov@linaro.org>
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun 29 Aug 08:47 PDT 2021, Dmitry Baryshkov wrote:
+From: Arnd Bergmann <arnd@arndb.de>
 
-> On sm8250 dispcc and videocc registers are powered up by the MMCX power
-> domain. Use runtime PM calls to make sure that required power domain is
-> powered on while we access clock controller's registers.
-> 
+Compile-testing drivers that require access to a firmware layer
+fails when that firmware symbol is unavailable. This happened
+twice this week:
 
-As I said on previous iterations, the clock framework will ensure that
-the power domain is powered up around all calls back into the clock
-driver, so for clocks this isn't needed.
+ - My proposed to change to rework the QCOM_SCM firmware symbol
+   broke on ppc64 and others.
 
-But after digging some more, the gdsc registration needs this and I
-don't mind keeping it on for the duration of the registration, rather
-than having the clock framework turn it on and off.
+ - The cs_dsp firmware patch added device specific firmware loader
+   into drivers/firmware, which broke on the same set of
+   architectures.
 
-As far as I can see the reset_controller won't actually access the
-hardware during registration.
+We should probably do the same thing for other subsystems as well,
+but fix this one first as this is a dependency for other patches
+getting merged.
 
 Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Reviewed-by: Charles Keepax <ckeepax@opensource.cirrus.com>
+Acked-by: Will Deacon <will@kernel.org>
+Acked-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Mark Brown <broonie@kernel.org>
+Cc: Liam Girdwood <lgirdwood@gmail.com>
+Cc: Charles Keepax <ckeepax@opensource.cirrus.com>
+Cc: Simon Trimmer <simont@opensource.cirrus.com>
+Cc: Michael Ellerman <mpe@ellerman.id.au>
+Reviewed-by: Mark Brown <broonie@kernel.org>
+Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+---
+No changes in v2, but it's now queued in my asm-generic
+tree for v5.15
 
+ arch/arm/Kconfig    | 2 --
+ arch/arm64/Kconfig  | 2 --
+ arch/ia64/Kconfig   | 2 --
+ arch/mips/Kconfig   | 2 --
+ arch/parisc/Kconfig | 2 --
+ arch/riscv/Kconfig  | 2 --
+ arch/x86/Kconfig    | 2 --
+ drivers/Kconfig     | 2 ++
+ 8 files changed, 2 insertions(+), 14 deletions(-)
 
+diff --git a/arch/arm/Kconfig b/arch/arm/Kconfig
+index fc196421b2ce..59baf6c132a7 100644
+--- a/arch/arm/Kconfig
++++ b/arch/arm/Kconfig
+@@ -1989,8 +1989,6 @@ config ARCH_HIBERNATION_POSSIBLE
+ 
+ endmenu
+ 
+-source "drivers/firmware/Kconfig"
+-
+ if CRYPTO
+ source "arch/arm/crypto/Kconfig"
+ endif
+diff --git a/arch/arm64/Kconfig b/arch/arm64/Kconfig
+index 077f2ec4eeb2..407b4addea36 100644
+--- a/arch/arm64/Kconfig
++++ b/arch/arm64/Kconfig
+@@ -1931,8 +1931,6 @@ source "drivers/cpufreq/Kconfig"
+ 
+ endmenu
+ 
+-source "drivers/firmware/Kconfig"
+-
+ source "drivers/acpi/Kconfig"
+ 
+ source "arch/arm64/kvm/Kconfig"
+diff --git a/arch/ia64/Kconfig b/arch/ia64/Kconfig
+index 045792cde481..1e33666fa679 100644
+--- a/arch/ia64/Kconfig
++++ b/arch/ia64/Kconfig
+@@ -388,8 +388,6 @@ config CRASH_DUMP
+ 	  help
+ 	    Generate crash dump after being started by kexec.
+ 
+-source "drivers/firmware/Kconfig"
+-
+ endmenu
+ 
+ menu "Power management and ACPI options"
+diff --git a/arch/mips/Kconfig b/arch/mips/Kconfig
+index 771ca53af06d..6b8f591c5054 100644
+--- a/arch/mips/Kconfig
++++ b/arch/mips/Kconfig
+@@ -3316,8 +3316,6 @@ source "drivers/cpuidle/Kconfig"
+ 
+ endmenu
+ 
+-source "drivers/firmware/Kconfig"
+-
+ source "arch/mips/kvm/Kconfig"
+ 
+ source "arch/mips/vdso/Kconfig"
+diff --git a/arch/parisc/Kconfig b/arch/parisc/Kconfig
+index 4742b6f169b7..27a8b49af11f 100644
+--- a/arch/parisc/Kconfig
++++ b/arch/parisc/Kconfig
+@@ -384,6 +384,4 @@ config KEXEC_FILE
+ 
+ endmenu
+ 
+-source "drivers/firmware/Kconfig"
+-
+ source "drivers/parisc/Kconfig"
+diff --git a/arch/riscv/Kconfig b/arch/riscv/Kconfig
+index c3f3fd583e04..8bc71ab143e3 100644
+--- a/arch/riscv/Kconfig
++++ b/arch/riscv/Kconfig
+@@ -561,5 +561,3 @@ menu "Power management options"
+ source "kernel/power/Kconfig"
+ 
+ endmenu
+-
+-source "drivers/firmware/Kconfig"
+diff --git a/arch/x86/Kconfig b/arch/x86/Kconfig
+index 4e001bbbb425..4dca39744ee9 100644
+--- a/arch/x86/Kconfig
++++ b/arch/x86/Kconfig
+@@ -2828,8 +2828,6 @@ config HAVE_ATOMIC_IOMAP
+ 	def_bool y
+ 	depends on X86_32
+ 
+-source "drivers/firmware/Kconfig"
+-
+ source "arch/x86/kvm/Kconfig"
+ 
+ source "arch/x86/Kconfig.assembler"
+diff --git a/drivers/Kconfig b/drivers/Kconfig
+index 30d2db37cc87..0d399ddaa185 100644
+--- a/drivers/Kconfig
++++ b/drivers/Kconfig
+@@ -17,6 +17,8 @@ source "drivers/bus/Kconfig"
+ 
+ source "drivers/connector/Kconfig"
+ 
++source "drivers/firmware/Kconfig"
++
+ source "drivers/gnss/Kconfig"
+ 
+ source "drivers/mtd/Kconfig"
+-- 
+2.29.2
 
-That said, qcom_reset_{assert,deassert}() doesn't seem to be performed
-under a pm_runtime_get() section, so I believe that should be addressed
-as well.  I don't see that we have a problem with this in practice as of
-today, but it seems worthy to correct - unless I'm just missing
-something.
-
-Regards,
-Bjorn
-
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->  drivers/clk/qcom/dispcc-sm8250.c | 27 +++++++++++++++++++++++++--
->  1 file changed, 25 insertions(+), 2 deletions(-)
-> 
-> diff --git a/drivers/clk/qcom/dispcc-sm8250.c b/drivers/clk/qcom/dispcc-sm8250.c
-> index 601c7c0ba483..108dd1249b6a 100644
-> --- a/drivers/clk/qcom/dispcc-sm8250.c
-> +++ b/drivers/clk/qcom/dispcc-sm8250.c
-> @@ -6,6 +6,7 @@
->  #include <linux/clk-provider.h>
->  #include <linux/module.h>
->  #include <linux/platform_device.h>
-> +#include <linux/pm_runtime.h>
->  #include <linux/regmap.h>
->  #include <linux/reset-controller.h>
->  
-> @@ -1226,13 +1227,31 @@ static const struct of_device_id disp_cc_sm8250_match_table[] = {
->  };
->  MODULE_DEVICE_TABLE(of, disp_cc_sm8250_match_table);
->  
-> +static void disp_cc_sm8250_pm_runtime_disable(void *data)
-> +{
-> +	pm_runtime_disable(data);
-> +}
-> +
->  static int disp_cc_sm8250_probe(struct platform_device *pdev)
->  {
->  	struct regmap *regmap;
-> +	int ret;
-> +
-> +	pm_runtime_enable(&pdev->dev);
-> +
-> +	ret = devm_add_action_or_reset(&pdev->dev, disp_cc_sm8250_pm_runtime_disable, &pdev->dev);
-> +	if (ret)
-> +		return ret;
-> +
-> +	ret = pm_runtime_resume_and_get(&pdev->dev);
-> +	if (ret)
-> +		return ret;
->  
->  	regmap = qcom_cc_map(pdev, &disp_cc_sm8250_desc);
-> -	if (IS_ERR(regmap))
-> +	if (IS_ERR(regmap)) {
-> +		pm_runtime_put(&pdev->dev);
->  		return PTR_ERR(regmap);
-> +	}
->  
->  	/* note: trion == lucid, except for the prepare() op */
->  	BUILD_BUG_ON(CLK_ALPHA_PLL_TYPE_TRION != CLK_ALPHA_PLL_TYPE_LUCID);
-> @@ -1257,7 +1276,11 @@ static int disp_cc_sm8250_probe(struct platform_device *pdev)
->  	/* DISP_CC_XO_CLK always-on */
->  	regmap_update_bits(regmap, 0x605c, BIT(0), BIT(0));
->  
-> -	return qcom_cc_really_probe(pdev, &disp_cc_sm8250_desc, regmap);
-> +	ret = qcom_cc_really_probe(pdev, &disp_cc_sm8250_desc, regmap);
-> +
-> +	pm_runtime_put(&pdev->dev);
-> +
-> +	return ret;
->  }
->  
->  static struct platform_driver disp_cc_sm8250_driver = {
-> -- 
-> 2.33.0
-> 
