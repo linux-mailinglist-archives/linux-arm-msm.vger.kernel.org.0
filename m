@@ -2,125 +2,182 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 4A21C42507B
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 11:56:02 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 95B7E425085
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 11:58:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231797AbhJGJ5y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Oct 2021 05:57:54 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:20920 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231557AbhJGJ5y (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Oct 2021 05:57:54 -0400
+        id S240540AbhJGKAB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Oct 2021 06:00:01 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:38220 "EHLO m43-7.mailgun.net"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S234934AbhJGKAB (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 Oct 2021 06:00:01 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1633600560; h=Content-Type: MIME-Version: Message-ID:
- In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
- bh=JPSPpsHMPoMb0VA37Z4j/oJJWZ6PIItI66wnYCMe2qo=; b=kg67rkRz8WYgijpwGcW1/NP8Ex4Fc5kqa3cOpuniWDqJomMv8/346O0dseDNL1s7M7aF7Ij8
- TxTnRJ3pMOFUNC/Y9z8FgNabfJuceY/QFfP/JpAo6u9Tj4hCF4eG92UOUt+aB2b0CRV8gW+1
- sTgUax2K/9dOn7ZjRRFkS1DhtqY=
-X-Mailgun-Sending-Ip: 198.61.254.9
+ s=smtp; t=1633600688; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=6hC+rPfJS1lHtqn1RaKYzz4YiMXdF5CwInQW6kXzIRA=; b=VpwOxgxu8huVgeWGnFZeWN4mO/LQExN4vyLKybBW1FQ2moo87wzTG31M5mmsjP2RkpkfxRCv
+ ewC5HbnO7huq9OsyXne2aIkm4Gti+E+SGXJwD08K4HjRSTJmnjGVDJpRHCaBJHIUU+cQ6Mnd
+ YLMd55wRL7SJI5GMEpE4I68FPWM=
+X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 615ec430ff0285fb0ad22797 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 07 Oct 2021 09:56:00
+ smtp-out-n07.prod.us-west-2.postgun.com with SMTP id
+ 615ec4a08ea00a941f601198 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 07 Oct 2021 09:57:52
  GMT
-Sender: kvalo=codeaurora.org@mg.codeaurora.org
+Sender: mkshah=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id C17CEC43616; Thu,  7 Oct 2021 09:55:59 +0000 (UTC)
+        id ACC85C43617; Thu,  7 Oct 2021 09:57:52 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
         autolearn=no autolearn_force=no version=3.4.0
-Received: from tykki (tynnyri.adurom.net [51.15.11.48])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
+Received: from mkshah-linux.qualcomm.com (unknown [202.46.22.19])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
-        (Authenticated sender: kvalo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 399CBC4338F;
-        Thu,  7 Oct 2021 09:55:56 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 399CBC4338F
+        (Authenticated sender: mkshah)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 124FBC4338F;
+        Thu,  7 Oct 2021 09:57:47 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 124FBC4338F
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Kalle Valo <kvalo@codeaurora.org>
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Cc:     Carl Huang <cjhuang@codeaurora.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        ath11k@lists.infradead.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        linux-wireless@vger.kernel.org, regressions@lists.linux.dev,
-        mhi <mhi@lists.linux.dev>
-Subject: Re: [regression] mhi: ath11k resume fails on some devices
-References: <871r5p0x2u.fsf@codeaurora.org>
-        <CAMZdPi8UJLvBFQd8-nf-iHAQh8cEuihq97PUFfZ7Q=rxRQoPsg@mail.gmail.com>
-        <20210916111218.GA12918@thinkpad>
-        <CAMZdPi94607mZorp+Zmkw3seWXak6p9Jr05CQ5hhfgKQoG8n7Q@mail.gmail.com>
-        <20210916163529.GA9027@thinkpad> <87k0jgxyjp.fsf@codeaurora.org>
-        <20210916171927.GB9027@thinkpad>
-        <b7c0906041dcafb43be215bd4f55326a@codeaurora.org>
-        <20210923085926.GD6083@thinkpad> <8735putk82.fsf@codeaurora.org>
-        <20210924095755.GB19050@workstation>
-Date:   Thu, 07 Oct 2021 12:55:52 +0300
-In-Reply-To: <20210924095755.GB19050@workstation> (Manivannan Sadhasivam's
-        message of "Fri, 24 Sep 2021 15:27:55 +0530")
-Message-ID: <874k9t9n13.fsf@codeaurora.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
-MIME-Version: 1.0
-Content-Type: text/plain
+From:   Maulik Shah <mkshah@codeaurora.org>
+To:     swboyd@chromium.org, mka@chromium.org, evgreen@chromium.org,
+        bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        agross@kernel.org, dianders@chromium.org, linux@roeck-us.net,
+        rnayak@codeaurora.org, lsrao@codeaurora.org,
+        Maulik Shah <mkshah@codeaurora.org>
+Subject: [PATCH v11 0/5] Introduce SoC sleep stats driver
+Date:   Thu,  7 Oct 2021 15:27:24 +0530
+Message-Id: <1633600649-7164-1-git-send-email-mkshah@codeaurora.org>
+X-Mailer: git-send-email 2.7.4
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-(adding also mhi list)
+Changes in v10:
+- Address Bjorn's comments from v10
+- Add a case for RPM based targets dynamic offset in driver
+- Update commit messages to use qcom sleep stats instead of soc sleep stats
+- Drop individual target dtsi changes for sc7180 and sc7280
+- Add single change to enable sleep stats for RPMh based targets
+- Add single change to enable sleep stats for RPM based targets
 
-Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
+Changes in v10:
+- Updated device node name to use memory instead of aop_msgram
+- Remove Lina's email from maintainers 
+- Rename driver to qcom_sleep_stats. Update makefile, Kconfig accordingly
+- Address Bjorn's comments from v9
 
-> On Fri, Sep 24, 2021 at 12:07:41PM +0300, Kalle Valo wrote:
->> Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org> writes:
->> 
->> > For aid debugging, please see the state the device is in during mhi_pm_resume().
->> > You can use below diff:
->> >
->> > diff --git a/drivers/bus/mhi/core/pm.c b/drivers/bus/mhi/core/pm.c
->> > index fb99e3727155..482d55dd209e 100644
->> > --- a/drivers/bus/mhi/core/pm.c
->> > +++ b/drivers/bus/mhi/core/pm.c
->> > @@ -898,6 +898,9 @@ int mhi_pm_resume(struct mhi_controller *mhi_cntrl)
->> >         if (MHI_PM_IN_ERROR_STATE(mhi_cntrl->pm_state))
->> >                 return -EIO;
->> >  
->> > +       dev_info(dev, "Device state: %s\n",
->> > +                TO_MHI_STATE_STR(mhi_get_mhi_state(mhi_cntrl)));
->> > +
->> >         if (mhi_get_mhi_state(mhi_cntrl) != MHI_STATE_M3)
->> >                 return -EINVAL;
->> 
->> This is what I get with my NUC testbox:
->> 
->> [  970.488202] ACPI: EC: event unblocked
->> [  970.492484] hpet: Lost 1587 RTC interrupts
->> [  970.492749] mhi mhi0: Device state: RESET
->
-> Looks like the MHI device went into RESET state! It also looks to be a
-> firmware thing. But let's nail this down before adding any workaround in
-> the MHI stack.
->
-> Can you also rebuild the kernel with MHI debug enabled and capture the
-> logs in faliure case?
+Changes in v9:
+- Remove soft dependency on smem module
+- Return -EIO to userspace in case of error
+- Make struct sleep_stats *stat a const pointer
+- Remove the driver from soc_sleep_stats_driver name
+- Remove offset address and directly mention the msgram address in dtsi
+- Use devm_platform_get_and_ioremap_resource() to ioremap dtsi address
+- Update device node name to mention aop_msgram instead rpmh-sleep-stats
+- Update dtsi and documentation accordingly but retain the reviews
 
-So what I should exactly do to enable debug messages?
+Changes in v8:
+- Addressed bjorn's comments in driver from v7
+- Update aoss_qmp device node reg size for sc7280
 
-I have this in my Kconfig:
+Changes in v7:
+- Fix example in bindings documentation as per #address/size-cells = <1>.
+- Add comment in driver from where 'ddr' subsystems name is read.
+- Update comment in driver to s/beside/besides and others from v6.
+- Rename debugfs_create_entries() from v6.
+- Drop use of memcpy_fromio() to find the name.
+- Use sizeof(*prv_data) in devm_kzalloc().
+- Add change to define readq() if its not yet defined for compile support.
+- Add wpss subsystem in the list of subsystems.
+- Add module soft dependency on smem module.
+- Add new change to add device node for sc7280.
 
-CONFIG_MHI_BUS=m
-# CONFIG_MHI_BUS_DEBUG is not set
-# CONFIG_MHI_BUS_PCI_GENERIC is not set
+Changes in v6:
+- Address stephen's comments from v5 which includes below
+- Pad 0 in documentation example to make address 8 digit
+- define macro to calculate offset in driver
+- Add appended_stats_avail to prv_data instead of using entire stats_config
+- make array subsystems[] as const
+- Add comment for SSR case
+- Use memcpy_fromio() and devm_kcalloc() during probe
+- Change file permission mode from 444 to 400 
 
-And AFAICS CONFIG_MHI_BUS_DEBUG only enables the debugfs interface, I
-doubt you meant that.
+- Address guenter's comments to add depends on QCOM_SMEM
+
+- Add adsp_island and cdsp_island subsystems
+- Use strim() to remove whitespace in stat name
+
+Changes in v5:
+- Remove underscore from node name in Documentation and DTSI change
+- Remove global config from driver change
+
+Changes in v4:
+- Address bjorn's comments from v3 on change 2.
+- Add bjorn's Reviewed-by on change 3 and 4.
+
+Changes in v3:
+- Address stephen's comments from v2 in change 1 and 2.
+- Address bjorn's comments from v2 in change 3 and 4.
+- Add Rob and bjorn's Reviewed-by on YAML change.
+
+Changes in v2:
+- Convert Documentation to YAML.
+- Address stephen's comments from v1.
+- Use debugfs instead of sysfs.
+- Add sc7180 dts changes for sleep stats
+- Add defconfig changes to enable driver
+- Include subsystem stats from [1] in this single stats driver.
+- Address stephen's comments from [1]
+- Update cover letter inline to mention [1]
+
+Qualcomm Technologies, Inc. (QTI)'s chipsets support SoC level low power
+modes. SoCs Always On Processor/Resource Power Manager produces statistics
+of the SoC sleep modes involving lowering or powering down of the rails and
+the oscillator clock.
+
+Additionally multiple subsystems present on SoC like modem, spss, adsp,
+cdsp maintains their low power mode statistics in shared memory (SMEM).
+
+Statistics includes SoC sleep mode type, number of times LPM entered, time
+of last entry, exit, and accumulated sleep duration in seconds.
+
+This series adds a driver to read the stats and export to debugfs.
+
+[1] https://lore.kernel.org/patchwork/patch/1149381/
+
+Mahesh Sivasubramanian (2):
+  dt-bindings: Introduce QCOM Sleep stats bindings
+  soc: qcom: Add Sleep stats driver
+
+Maulik Shah (3):
+  arm64: defconfig: Enable Sleep stats driver
+  arm64: dts: qcom: Enable RPMh Sleep stats
+  arm64: dts: qcom: Enable RPM Sleep stats
+
+ .../bindings/soc/qcom/qcom-sleep-stats.yaml        |  47 ++++
+ arch/arm64/boot/dts/qcom/msm8996.dtsi              |   5 +
+ arch/arm64/boot/dts/qcom/msm8998.dtsi              |   5 +
+ arch/arm64/boot/dts/qcom/qcs404.dtsi               |   5 +
+ arch/arm64/boot/dts/qcom/sc7180.dtsi               |   7 +-
+ arch/arm64/boot/dts/qcom/sc7280.dtsi               |   7 +-
+ arch/arm64/boot/dts/qcom/sdm630.dtsi               |   5 +
+ arch/arm64/boot/dts/qcom/sm6125.dtsi               |   5 +
+ arch/arm64/boot/dts/qcom/sm8150.dtsi               |   7 +-
+ arch/arm64/boot/dts/qcom/sm8250.dtsi               |   7 +-
+ arch/arm64/boot/dts/qcom/sm8350.dtsi               |   7 +-
+ arch/arm64/configs/defconfig                       |   1 +
+ drivers/soc/qcom/Kconfig                           |  10 +
+ drivers/soc/qcom/Makefile                          |   1 +
+ drivers/soc/qcom/qcom_sleep_stats.c                | 259 +++++++++++++++++++++
+ 15 files changed, 373 insertions(+), 5 deletions(-)
+ create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom-sleep-stats.yaml
+ create mode 100644 drivers/soc/qcom/qcom_sleep_stats.c
 
 -- 
-https://patchwork.kernel.org/project/linux-wireless/list/
+QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
+of Code Aurora Forum, hosted by The Linux Foundation
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
