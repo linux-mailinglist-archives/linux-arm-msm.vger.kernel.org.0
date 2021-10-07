@@ -2,166 +2,69 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 60D46424EA7
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 10:08:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E5C36424F96
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 10:56:54 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240570AbhJGIJz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Oct 2021 04:09:55 -0400
-Received: from foss.arm.com ([217.140.110.172]:35602 "EHLO foss.arm.com"
+        id S232620AbhJGI6r (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Oct 2021 04:58:47 -0400
+Received: from mail.kernel.org ([198.145.29.99]:56896 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S240573AbhJGIJw (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Oct 2021 04:09:52 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id C6C82113E;
-        Thu,  7 Oct 2021 01:07:58 -0700 (PDT)
-Received: from e123648.arm.com (unknown [10.57.18.236])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPA id D36D53F766;
-        Thu,  7 Oct 2021 01:07:55 -0700 (PDT)
-From:   Lukasz Luba <lukasz.luba@arm.com>
-To:     linux-kernel@vger.kernel.org, linux-pm@vger.kernel.org
-Cc:     linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, lukasz.luba@arm.com,
-        sudeep.holla@arm.com, will@kernel.org, catalin.marinas@arm.com,
-        linux@armlinux.org.uk, gregkh@linuxfoundation.org,
-        rafael@kernel.org, viresh.kumar@linaro.org, amitk@kernel.org,
-        daniel.lezcano@linaro.org, amit.kachhap@gmail.com,
-        thara.gopinath@linaro.org, bjorn.andersson@linaro.org,
-        agross@kernel.org
-Subject: [PATCH 5/5] arch_topology: Remove unused topology_set_thermal_pressure() and related
-Date:   Thu,  7 Oct 2021 09:07:29 +0100
-Message-Id: <20211007080729.8262-6-lukasz.luba@arm.com>
-X-Mailer: git-send-email 2.17.1
-In-Reply-To: <20211007080729.8262-1-lukasz.luba@arm.com>
-References: <20211007080729.8262-1-lukasz.luba@arm.com>
+        id S232573AbhJGI6r (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 Oct 2021 04:58:47 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id ADB0560F59;
+        Thu,  7 Oct 2021 08:56:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1633597013;
+        bh=tGpzmiv6pVVsRqKqVpTwy7imiBRGTLNRryr1xxIDdg4=;
+        h=Date:From:To:Cc:Subject:References:In-Reply-To:From;
+        b=hhYS54kF3UYSF0kSXd3keMiH+8Lv0ca2K0NQ9OxOrSDq3VxfPM6Y6tcz07d0Jt524
+         MNXFs4OKPPad7AB9Dz5ujjdkXsNYK82btH6KA7F4c8vcPffWDomLoXzDUx+L2hB7EC
+         J8Oz2kOpGTsfcsFadb9PZSTrWuus/WkQnugpbIdhl6dIQjofY2Iq3u0ylpxipE79H8
+         03CdidP0g7tI3RDkh2iyk11dBDK3vLaBt5YMLMcGtpm2P4o9wt/baLwerapl+iCf/l
+         loBIdt/FPzqa9li8UtzErLcot5StnFgZeIaKjFMAEgW52CcXzmIIKSkj718eHkQfct
+         4CylOsvkl2u8A==
+Date:   Thu, 7 Oct 2021 14:26:49 +0530
+From:   Vinod Koul <vkoul@kernel.org>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Shawn Guo <shawn.guo@linaro.org>, Rob Herring <robh+dt@kernel.org>,
+        linux-phy@lists.infradead.org, devicetree@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Subject: Re: [PATCH 02/10] dt-bindings: phy: qcom,qmp: IPQ6018 and IPQ8074
+ PCIe PHY require no supply
+Message-ID: <YV62USm8pSvAKdvo@matsya>
+References: <20210929034253.24570-1-shawn.guo@linaro.org>
+ <20210929034253.24570-3-shawn.guo@linaro.org>
+ <YVvx9jEGS3g9LD8X@matsya>
+ <YVxzdiVKWOF9AVVV@ripper>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <YVxzdiVKWOF9AVVV@ripper>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-There is no need of this function (and related) since code has been
-converted to use the new arch_thermal_pressure_update() API. The old
-code can be removed.
+On 05-10-21, 08:47, Bjorn Andersson wrote:
+> On Mon 04 Oct 23:34 PDT 2021, Vinod Koul wrote:
+> 
+> > On 29-09-21, 11:42, Shawn Guo wrote:
+> > > The qmp-phy driver suggests that 'vdda-phy-supply' and 'vdda-pll-supply'
+> > > are not required for IPQ6018 and IPQ8074 QMP PCIe PHY.  Update the
+> > > bindings to reflect it.
+> > > 
+> > > While at it, also correct the clock properies for IPQ8074 QMP PCIe PHY.
+> > > And as the result, 'qcom,ipq8074-qmp-pcie-phy' and
+> > > 'qcom,ipq6018-qmp-pcie-phy' share the same clock, reset and supply
+> > > bindings.
+> > 
+> > Acked-By: Vinod Koul <vkoul@kernel.org>
+> > 
+> 
+> I think it's better if you take the two dt-bindings through your tree,
+> so we avoid any potential merge conflicts related to possible other
+> changes.
 
-Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
----
- arch/arm/include/asm/topology.h   |  1 -
- arch/arm64/include/asm/topology.h |  1 -
- drivers/base/arch_topology.c      | 17 +++++------------
- include/linux/arch_topology.h     |  3 ---
- include/linux/sched/topology.h    |  7 -------
- init/Kconfig                      |  2 +-
- 6 files changed, 6 insertions(+), 25 deletions(-)
+Okay picked up the binding patches
 
-diff --git a/arch/arm/include/asm/topology.h b/arch/arm/include/asm/topology.h
-index aee6c456c085..5e51fdcfcbd4 100644
---- a/arch/arm/include/asm/topology.h
-+++ b/arch/arm/include/asm/topology.h
-@@ -23,7 +23,6 @@
- 
- /* Replace task scheduler's default thermal pressure API */
- #define arch_scale_thermal_pressure topology_get_thermal_pressure
--#define arch_set_thermal_pressure   topology_set_thermal_pressure
- #define arch_thermal_pressure_update	topology_thermal_pressure_update
- 
- #else
-diff --git a/arch/arm64/include/asm/topology.h b/arch/arm64/include/asm/topology.h
-index c997015402bc..92cd1288906f 100644
---- a/arch/arm64/include/asm/topology.h
-+++ b/arch/arm64/include/asm/topology.h
-@@ -32,7 +32,6 @@ void update_freq_counters_refs(void);
- 
- /* Replace task scheduler's default thermal pressure API */
- #define arch_scale_thermal_pressure topology_get_thermal_pressure
--#define arch_set_thermal_pressure   topology_set_thermal_pressure
- #define arch_thermal_pressure_update	topology_thermal_pressure_update
- 
- #include <asm-generic/topology.h>
-diff --git a/drivers/base/arch_topology.c b/drivers/base/arch_topology.c
-index ad31513d0104..84f093146ea5 100644
---- a/drivers/base/arch_topology.c
-+++ b/drivers/base/arch_topology.c
-@@ -159,16 +159,6 @@ void topology_set_cpu_scale(unsigned int cpu, unsigned long capacity)
- 
- DEFINE_PER_CPU(unsigned long, thermal_pressure);
- 
--void topology_set_thermal_pressure(const struct cpumask *cpus,
--			       unsigned long th_pressure)
--{
--	int cpu;
--
--	for_each_cpu(cpu, cpus)
--		WRITE_ONCE(per_cpu(thermal_pressure, cpu), th_pressure);
--}
--EXPORT_SYMBOL_GPL(topology_set_thermal_pressure);
--
- /**
-  * topology_thermal_pressure_update() - Update thermal pressure for CPUs
-  * @cpus	: The related CPUs which capacity has been reduced
-@@ -184,7 +174,7 @@ EXPORT_SYMBOL_GPL(topology_set_thermal_pressure);
- void topology_thermal_pressure_update(const struct cpumask *cpus,
- 				      unsigned long capped_freq)
- {
--	unsigned long max_capacity, capacity;
-+	unsigned long max_capacity, capacity, th_pressure;
- 	int cpu;
- 
- 	if (!cpus)
-@@ -199,7 +189,10 @@ void topology_thermal_pressure_update(const struct cpumask *cpus,
- 	capacity = capped_freq * max_capacity;
- 	capacity /= per_cpu(freq_factor, cpu);
- 
--	arch_set_thermal_pressure(cpus, max_capacity - capacity);
-+	th_pressure = max_capacity - capacity;
-+
-+	for_each_cpu(cpu, cpus)
-+		WRITE_ONCE(per_cpu(thermal_pressure, cpu), th_pressure);
- }
- EXPORT_SYMBOL_GPL(topology_thermal_pressure_update);
- 
-diff --git a/include/linux/arch_topology.h b/include/linux/arch_topology.h
-index 9e183621a59b..9b95e5b29ee9 100644
---- a/include/linux/arch_topology.h
-+++ b/include/linux/arch_topology.h
-@@ -56,9 +56,6 @@ static inline unsigned long topology_get_thermal_pressure(int cpu)
- 	return per_cpu(thermal_pressure, cpu);
- }
- 
--void topology_set_thermal_pressure(const struct cpumask *cpus,
--				   unsigned long th_pressure);
--
- void topology_thermal_pressure_update(const struct cpumask *cpus,
- 				      unsigned long capped_freq);
- 
-diff --git a/include/linux/sched/topology.h b/include/linux/sched/topology.h
-index 990d14814427..f31da5454baa 100644
---- a/include/linux/sched/topology.h
-+++ b/include/linux/sched/topology.h
-@@ -259,13 +259,6 @@ unsigned long arch_scale_thermal_pressure(int cpu)
- }
- #endif
- 
--#ifndef arch_set_thermal_pressure
--static __always_inline
--void arch_set_thermal_pressure(const struct cpumask *cpus,
--			       unsigned long th_pressure)
--{ }
--#endif
--
- #ifndef arch_thermal_pressure_update
- static __always_inline
- void arch_thermal_pressure_update(const struct cpumask *cpus,
-diff --git a/init/Kconfig b/init/Kconfig
-index f494e405c156..334c302e588f 100644
---- a/init/Kconfig
-+++ b/init/Kconfig
-@@ -559,7 +559,7 @@ config SCHED_THERMAL_PRESSURE
- 	  i.e. put less load on throttled CPUs than on non/less throttled ones.
- 
- 	  This requires the architecture to implement
--	  arch_set_thermal_pressure() and arch_scale_thermal_pressure().
-+	  arch_thermal_pressure_update() and arch_scale_thermal_pressure().
- 
- config BSD_PROCESS_ACCT
- 	bool "BSD Process Accounting"
 -- 
-2.17.1
-
+~Vinod
