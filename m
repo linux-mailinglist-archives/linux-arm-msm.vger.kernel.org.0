@@ -2,136 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 19F49426008
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 00:47:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C81B2426058
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 01:26:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229778AbhJGWsz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Oct 2021 18:48:55 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:60104 "EHLO
+        id S232813AbhJGX23 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Oct 2021 19:28:29 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40628 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238708AbhJGWsy (ORCPT
+        with ESMTP id S229778AbhJGX22 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Oct 2021 18:48:54 -0400
-Received: from mail-io1-xd32.google.com (mail-io1-xd32.google.com [IPv6:2607:f8b0:4864:20::d32])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3FEC5C061570
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Oct 2021 15:47:00 -0700 (PDT)
-Received: by mail-io1-xd32.google.com with SMTP id x1so4623445iof.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Oct 2021 15:47:00 -0700 (PDT)
+        Thu, 7 Oct 2021 19:28:28 -0400
+Received: from mail-ua1-x92f.google.com (mail-ua1-x92f.google.com [IPv6:2607:f8b0:4864:20::92f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CCB8C061570
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Oct 2021 16:26:34 -0700 (PDT)
+Received: by mail-ua1-x92f.google.com with SMTP id c33so5424604uae.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Oct 2021 16:26:34 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=COVdMKi4vGrLOvs+TWC65+Lqr3T2s/9tiuZQIejj6cA=;
-        b=F3PD+1Hhdv7vBXT3BtD+4QLQhBQljFGKDrltOTGEjZnGbEhHZzSjtOs4iRGtPObT1B
-         C5CoWXV2BESIIXFng4L7iwuiFTbsVrhDvRlK4Z08ex6QsBRgKjmSx5B7Guh4Mzlobk61
-         41irwdC8dhfMkqK+vWH3cH7zDBLxcjTFjweBA=
+        d=gmail.com; s=20210112;
+        h=mime-version:sender:from:date:message-id:subject:to
+         :content-transfer-encoding;
+        bh=38jXb/auw6ftk0USmaV+RFOFIT1FCKxJKkiAqOI2WoI=;
+        b=RqFC/KTnCM2psOLmn4FWMiiSZr0czmCcIEoP5HqdEqpXlfTHWpSiI/sXuPUFWJMljq
+         jZbE2i3qcNFU+JUCWE1l1R9//412gac+6RMzq40tkqbg0aKMgNTfP+sHSPbCHR7W7UYG
+         u9uc/xnr0uMYOKjdvtFqYjkb68Xwiq2GnLCJLkKx2oyChvvDbHUGdRYbtGhJjVg5Jlh6
+         GGvPV52LnPWTfxcMyPriYcNkG6B5Z8bNFY3/60dAM1eVZXMFdmOKudYZ5U9GPd3o8l7g
+         65mE/I2av/avnnjxcAo7GP2C2utTkqtXE+9caXV1SajKhhC22CtL9b0RwI7lEsGwP8ha
+         gnIw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=COVdMKi4vGrLOvs+TWC65+Lqr3T2s/9tiuZQIejj6cA=;
-        b=kbRRG8xxMvPP6fvSq+VDuhhcW9qP/8vbtLkJeEIx5YcMWmYRdav8E422DY05zmxrHE
-         +lCW/FihrRWXbMqUZ6ldn1G0T5G6erGWsbT9qen6N5nlNXopd6nRj0MUNAehWStopmIq
-         o3UyWG7xaYf0DMLCrwIKVbXl7A+SUh6z+8mzM6oPnasp44znMc8QB3GnbZ023AlZ2WVQ
-         eXa21R4ggVSXWycx8SEByXU8iMZ3Zt7uxlG42hp+UiC1TkdQ+QcyK2ivvBDl6VF/YFUC
-         FhFkxSm18Lj3HAn5WUIHIZDddaanmEdJTD00R6rvBbeNsnMLy+RV97Xgs6DpmU11u4V5
-         B+YA==
-X-Gm-Message-State: AOAM533y7QhNSd+wafj5yZRlAXRJZPrAJ7hYLrZWMSqMAiB8lx7FV7rx
-        KQo08aQpeg7jX4Az1n0OGNFW9FmG+nNvew==
-X-Google-Smtp-Source: ABdhPJwXISRPj4m5H2M+QIJ18Favh6zuUS3gufJ9uEwI52F2n936F6NczWD0N6W+NfF955XBczr8XA==
-X-Received: by 2002:a02:620b:: with SMTP id d11mr5122717jac.69.1633646819398;
-        Thu, 07 Oct 2021 15:46:59 -0700 (PDT)
-Received: from mail-io1-f52.google.com (mail-io1-f52.google.com. [209.85.166.52])
-        by smtp.gmail.com with ESMTPSA id j20sm226926ioo.35.2021.10.07.15.46.58
-        for <linux-arm-msm@vger.kernel.org>
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 07 Oct 2021 15:46:58 -0700 (PDT)
-Received: by mail-io1-f52.google.com with SMTP id s17so3405156ioa.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Oct 2021 15:46:58 -0700 (PDT)
-X-Received: by 2002:a02:cba7:: with SMTP id v7mr2701595jap.54.1633646818484;
- Thu, 07 Oct 2021 15:46:58 -0700 (PDT)
+        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
+         :to:content-transfer-encoding;
+        bh=38jXb/auw6ftk0USmaV+RFOFIT1FCKxJKkiAqOI2WoI=;
+        b=C6A2HkI+c85h0Z4Bwx744KFTVXZhzNNxpH3XIdA8vkpo/P7BbxScd8GHLOqHSs3AM+
+         ilnHU/OmWopbno9S1M2zcI1104RYHGdB/eUNgJ6YpVdmaiZMOAorckFdA6D8bJXuH3ua
+         CLvEMnfQt5Zw3oPCoYc78BTBec4XzR6o0PdGxyMXDLlo49tBaFPBTsnjDkxVwZzObVsE
+         I5cBUq8RgGglbiXhYxF70gZ0PtuVyMyiuNJfbpnOtTXbzRcMkjK2mMQ/PjwcXroMISPE
+         W8ysTSWhQ3isjV9HBO2dHmuxz6Dv9f01MY5xenr8HQDAOKAkXmxIn7UlAynWxnJCoMII
+         qytw==
+X-Gm-Message-State: AOAM530zEoCOr6usHyXkuauzsj+bUiNqHja2UiMAMBy9w3iFG+sgql5D
+        s/KRh/s8d0XDSV2XDwyw7qWC8Nniid6Ne69NiyY=
+X-Google-Smtp-Source: ABdhPJwNs4ZMmbwOcFiYqCZYD6IEb/IphWqNuo2EIYov46DH569Rmo0QETXJOaL+UGw1dcoTlItJr8aPMidMA9t6SXM=
+X-Received: by 2002:ab0:4a5e:: with SMTP id r30mr8162674uae.106.1633649193525;
+ Thu, 07 Oct 2021 16:26:33 -0700 (PDT)
 MIME-Version: 1.0
-References: <20210929173343.v2.1.Ib7e63ae17e827ce0636a09d5dec9796043e4f80a@changeid>
- <CAD=FV=XP+mJCEG+=meCXDb06bmfPwze2SP9FaMuKZkSh25JCSg@mail.gmail.com> <CA+cxXhn3Bw4d_F2LwP34ko1UuDGHHoQWLxcdK17L-PoDJ3n+ug@mail.gmail.com>
-In-Reply-To: <CA+cxXhn3Bw4d_F2LwP34ko1UuDGHHoQWLxcdK17L-PoDJ3n+ug@mail.gmail.com>
-From:   Doug Anderson <dianders@chromium.org>
-Date:   Thu, 7 Oct 2021 15:46:46 -0700
-X-Gmail-Original-Message-ID: <CAD=FV=X1wTNE1wgou57UC6LcmN+4vTFJV9co9Sg9NgAXZm927A@mail.gmail.com>
-Message-ID: <CAD=FV=X1wTNE1wgou57UC6LcmN+4vTFJV9co9Sg9NgAXZm927A@mail.gmail.com>
-Subject: Re: [PATCH v2 1/3] arm64: dts: sc7180: Factor out ti-sn65dsi86 support
-To:     Philip Chen <philipchen@chromium.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Sender: mcdonnalouise@gmail.com
+Received: by 2002:a59:2345:0:b0:235:f317:d78b with HTTP; Thu, 7 Oct 2021
+ 16:26:33 -0700 (PDT)
+From:   Jackie Fowler <jackiefowler597@gmail.com>
+Date:   Thu, 7 Oct 2021 23:26:33 +0000
+X-Google-Sender-Auth: Yn1bPQB9fMg0EyckV1zShfKeSZ0
+Message-ID: <CAPVGnmX4rvZALgw8eGiqDf37VnKEWBHjGNc9zTeaYGhUcMbVYw@mail.gmail.com>
+Subject: Good Day My beloved,
+To:     undisclosed-recipients:;
 Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Gooday,
 
-On Thu, Oct 7, 2021 at 3:29 PM Philip Chen <philipchen@chromium.org> wrote:
->
-> Hi
->
-> On Thu, Sep 30, 2021 at 9:22 AM Doug Anderson <dianders@chromium.org> wrote:
-> >
-> > Hi,
-> >
-> > On Wed, Sep 29, 2021 at 5:35 PM Philip Chen <philipchen@chromium.org> wrote:
-> > >
-> > > Factor out ti-sn65dsi86 edp bridge as a separate dts fragment.
-> > > This helps us introduce the second source edp bridge later.
-> > >
-> > > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> > > Signed-off-by: Philip Chen <philipchen@chromium.org>
-> > > ---
-> > >
-> > > Changes in v2:
-> > > - Move edp_brij_i2c completely out of sc7180-trogdor.dtsi to the
-> > >   bridge dts fragment, so that we can cleanly assign different
-> > >   edp bridge in every board rev.
-> > >
-> > >  .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  |  1 +
-> > >  .../boot/dts/qcom/sc7180-trogdor-lazor.dtsi   |  1 +
-> > >  .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi  |  1 +
-> > >  .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts |  1 +
-> > >  .../dts/qcom/sc7180-trogdor-ti-sn65dsi86.dtsi | 90 +++++++++++++++++++
-> > >  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 86 ------------------
-> > >  6 files changed, 94 insertions(+), 86 deletions(-)
-> > >  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-ti-sn65dsi86.dtsi
-> > >
-> > > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-> > > index a758e4d22612..1d13fba3bd2f 100644
-> > > --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-> > > +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
-> > > @@ -11,6 +11,7 @@
-> > >  ap_h1_spi: &spi0 {};
-> > >
-> > >  #include "sc7180-trogdor.dtsi"
-> > > +#include "sc7180-trogdor-ti-sn65dsi86.dtsi"
-> >
-> > It looks like you're missing homestar, aren't you? I'd expect that
-> > after applying your change that:
-> >
-> > git grep -A1 include.*sc7180-trogdor.dtsi
-> >
-> > ...should show your new include right after all includes of
-> > sc7180-trogdor.dtsi, but I don't see it for homestar.
->
-> I can't find homestar dts file in my upstream checkout.
-> But I found: https://patchwork.kernel.org/project/linux-arm-msm/patch/20210909122053.1.Ieafda79b74f74a2b15ed86e181c06a3060706ec5@changeid/
-> ...Is it merged anywhere?
-
-The device trees need to be posted against the Qualcomm tree.
-
-git://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git
-
-It should be in the for-next branch there.
-
--Doug
+  I sent this mail praying it will get to you in a good condition of
+health, since I myself are in a very critical health condition in
+which I sleep every night without knowing if I may be alive to see the
+next day. I bring peace and love to you. It is by the grace of God, I
+had no choice than to do what is lawful and right in the sight of God
+for eternal life and in the sight of man, for witness of God=E2=80=99s merc=
+y
+and glory upon my life. I am Mrs.Jackie Fowler,a widow and citizen of
+Canada.I am suffering from a long time brain tumor, It has defiled all
+forms of medical treatment, and right now I have about a few months to
+leave, according to medical experts. The situation has gotten
+complicated recently with my inability to hear proper, am
+communicating with you with the help of the chief nurse herein the
+hospital, from all indication my conditions is really deteriorating
+and it is quite obvious that, according to my doctors they have
+advised me that I may not live too long, Because this illness has
+gotten to a very bad stage. I plead that you will not expose or betray
+this trust and confidence that I am about to repose on you for the
+mutual benefit of the orphans and the less privilege. I have some
+funds I inherited from my late husband, the sum of ($ 12,500,000.00
+Dollars).Having known my condition, I decided to donate this fund to
+you believing that you will utilize it the way i am going to instruct
+herein.
+ I need you to assist me and reclaim this money and use it for Charity
+works, for orphanages and gives justice and help to the poor, needy
+and widows says The Lord." Jeremiah 22:15-16.=E2=80=9C and also build schoo=
+ls
+for less privilege that will be named after my late husband if
+possible and to promote the word of God and the effort that the house
+of God is maintained. I do not want a situation where this money will
+be used in an ungodly manner. That's why I'm taking this decision. I'm
+not afraid of death, so I know where I'm going. I accept this decision
+because I do not have any child who will inherit this money after I
+die. Please I want your sincerely and urgent answer to know if you
+will be able to execute this project for the glory of God, and I will
+give you more information on how the fund will be transferred to your
+bank account. May the grace, peace, love and the truth in the Word of
+God be with you and all those that you love and care for.
+I'm waiting for your immediate reply.
+Respectfully.
+Mrs.Jackie Fowler.
+Writting From the hospital.
+May God Bless you,
