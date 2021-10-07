@@ -2,84 +2,117 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E517E425F3F
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 23:38:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DF34F425FD6
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 00:29:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S242066AbhJGVkH (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Oct 2021 17:40:07 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51986 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S242333AbhJGVkE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Oct 2021 17:40:04 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 2F86B61245;
-        Thu,  7 Oct 2021 21:38:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1633642690;
-        bh=4vRh1y+xg/pfgwZWyOIc9oYS+SyNhWVKlApXMzlafFM=;
-        h=From:To:Cc:Subject:Date:In-Reply-To:References:From;
-        b=qk+xMv47J8u8vh4QEs92r0oEkKY4tQReLijaMwkLCJDbxpMGAKb6Is8y7+feI7RvE
-         pp3akkZeROrwMosXVTOt/Lu0ulZX5o5Btdvkp+5bqj+mSqlPQBwTV9+93UfpPS5Ypr
-         qryJocO/3lgs+VVhBWxpxs2kHfZchef/OnAgIZ+rphytjuU09fRPtvlS65wUMe5nkd
-         GXdy6kCg0TUpp6xa+G/hmE6d4h8DBGsp0rJe7zsPS+Ykshz6PtrWg1Uo2zB0fGksxm
-         rhlSNRO1xEJEGjZw0CVezPdJXgonfmA6MakV2ZHUr5Yd6r2gYJ17CWMLuLdEBII3jf
-         yAWq16282CdKg==
-From:   Mark Brown <broonie@kernel.org>
-To:     devicetree@vger.kernel.org, agross@kernel.org,
-        rohitkr@codeaurora.org, robh+dt@kernel.org, perex@perex.cz,
-        linux-kernel@vger.kernel.org, alsa-devel@alsa-project.org,
-        swboyd@chromium.org, plai@codeaurora.org,
-        srinivas.kandagatla@linaro.org, lgirdwood@gmail.com,
-        judyhsiao@chromium.org, bgoswami@codeaurora.org,
-        linux-arm-msm@vger.kernel.org,
-        Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        tiwai@suse.com, bjorn.andersson@linaro.org
-Cc:     Mark Brown <broonie@kernel.org>,
-        Venkata Prasad Potturu <potturu@codeaurora.org>
-Subject: Re: [PATCH] ASoC: wcd938x: Fix jack detection issue
-Date:   Thu,  7 Oct 2021 22:37:34 +0100
-Message-Id: <163364264608.649699.14554141644947512653.b4-ty@kernel.org>
-X-Mailer: git-send-email 2.30.2
-In-Reply-To: <1633614619-27026-1-git-send-email-srivasam@codeaurora.org>
-References: <1633614619-27026-1-git-send-email-srivasam@codeaurora.org>
+        id S234621AbhJGWbN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Oct 2021 18:31:13 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56180 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S234140AbhJGWbM (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 Oct 2021 18:31:12 -0400
+Received: from mail-yb1-xb2e.google.com (mail-yb1-xb2e.google.com [IPv6:2607:f8b0:4864:20::b2e])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 8C399C061760
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Oct 2021 15:29:18 -0700 (PDT)
+Received: by mail-yb1-xb2e.google.com with SMTP id u32so16744089ybd.9
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Oct 2021 15:29:18 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=vfTVFiINmIY6UFMHbXcxPSbLfMBK2gvbq9x+fWTLigY=;
+        b=fm8fNapj6cv7jEuvRUnTgxhkE/7LPu1Xhi5MQFHABrW45dz/chNi2zpSw+Mrupyp0F
+         KeQ5yHXEkPxpzUdhd0ZlBL0F5rYVkSUXYjFs7fMSumZX/3ZUJMAj/gjJNSiPjfy/03E/
+         5Qq4ZJ3ZP8vhVvHOslqM84evlajprp7bKAFvg=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=vfTVFiINmIY6UFMHbXcxPSbLfMBK2gvbq9x+fWTLigY=;
+        b=wvuwgxZLUX8O/py2UnsK7AsCYPaqI5B/GoGwRStEsusqNz8eTkqi9EaSSFXRzhyPZF
+         dnQW5O2A3h6gCZvwxRdq28zYiUV8EX16/2dNmUvmJyyXnqjscUnC220NeMqXaCafFxKr
+         2Co6EwSIybpIWiFX9/ZZ/cMF+3rq2UL8Z/OfdSf1ckEaQEJU23kxRad2gvx6DK4CfC0W
+         1v2ncD22yAT4/AXBQeeMPB52aA5rNkc01xDRy1pq9UXy6V5ZJ8g38koGF7hbLUQ9OLlq
+         5TYgG1bVT1jzw0v71R+t5BChRfOsO42/UpQvvhKGN5tfku9HlUejJaNSXthBP3Lg4hE0
+         zFPQ==
+X-Gm-Message-State: AOAM530IemIL0KjdK8X3tC+sX4xpRhf32zaAfEZoRNJnnftd0e62IqGf
+        0Ie/zVDzF8zKMM0cLK4OkPnUDwegLcD5llcYS5r4YQ==
+X-Google-Smtp-Source: ABdhPJxcAJ4KyzDkJW4oIS4zvj5BhTUN+q0gQP7cUPWu/LFMm+spExO4FNIlXXgO6PkpUlbbDS/bo6dPaBOOd3/+4Rk=
+X-Received: by 2002:a25:54c5:: with SMTP id i188mr7898822ybb.43.1633645757774;
+ Thu, 07 Oct 2021 15:29:17 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset="utf-8"
-Content-Transfer-Encoding: 8bit
+References: <20210929173343.v2.1.Ib7e63ae17e827ce0636a09d5dec9796043e4f80a@changeid>
+ <CAD=FV=XP+mJCEG+=meCXDb06bmfPwze2SP9FaMuKZkSh25JCSg@mail.gmail.com>
+In-Reply-To: <CAD=FV=XP+mJCEG+=meCXDb06bmfPwze2SP9FaMuKZkSh25JCSg@mail.gmail.com>
+From:   Philip Chen <philipchen@chromium.org>
+Date:   Thu, 7 Oct 2021 15:29:07 -0700
+Message-ID: <CA+cxXhn3Bw4d_F2LwP34ko1UuDGHHoQWLxcdK17L-PoDJ3n+ug@mail.gmail.com>
+Subject: Re: [PATCH v2 1/3] arm64: dts: sc7180: Factor out ti-sn65dsi86 support
+To:     Doug Anderson <dianders@chromium.org>
+Cc:     LKML <linux-kernel@vger.kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 7 Oct 2021 19:20:19 +0530, Srinivasa Rao Mandadapu wrote:
-> This patch is to fix audio 3.5mm jack detection failure
-> on wcd938x codec based target.
-> 
-> Fixes: bcee7ed09b8e (ASoC: codecs: wcd938x: add Multi Button Headset Control support)
-> 
-> 
+Hi
 
-Applied to
+On Thu, Sep 30, 2021 at 9:22 AM Doug Anderson <dianders@chromium.org> wrote:
+>
+> Hi,
+>
+> On Wed, Sep 29, 2021 at 5:35 PM Philip Chen <philipchen@chromium.org> wrote:
+> >
+> > Factor out ti-sn65dsi86 edp bridge as a separate dts fragment.
+> > This helps us introduce the second source edp bridge later.
+> >
+> > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+> > Signed-off-by: Philip Chen <philipchen@chromium.org>
+> > ---
+> >
+> > Changes in v2:
+> > - Move edp_brij_i2c completely out of sc7180-trogdor.dtsi to the
+> >   bridge dts fragment, so that we can cleanly assign different
+> >   edp bridge in every board rev.
+> >
+> >  .../boot/dts/qcom/sc7180-trogdor-coachz.dtsi  |  1 +
+> >  .../boot/dts/qcom/sc7180-trogdor-lazor.dtsi   |  1 +
+> >  .../boot/dts/qcom/sc7180-trogdor-pompom.dtsi  |  1 +
+> >  .../arm64/boot/dts/qcom/sc7180-trogdor-r1.dts |  1 +
+> >  .../dts/qcom/sc7180-trogdor-ti-sn65dsi86.dtsi | 90 +++++++++++++++++++
+> >  arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi  | 86 ------------------
+> >  6 files changed, 94 insertions(+), 86 deletions(-)
+> >  create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-ti-sn65dsi86.dtsi
+> >
+> > diff --git a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
+> > index a758e4d22612..1d13fba3bd2f 100644
+> > --- a/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
+> > +++ b/arch/arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi
+> > @@ -11,6 +11,7 @@
+> >  ap_h1_spi: &spi0 {};
+> >
+> >  #include "sc7180-trogdor.dtsi"
+> > +#include "sc7180-trogdor-ti-sn65dsi86.dtsi"
+>
+> It looks like you're missing homestar, aren't you? I'd expect that
+> after applying your change that:
+>
+> git grep -A1 include.*sc7180-trogdor.dtsi
+>
+> ...should show your new include right after all includes of
+> sc7180-trogdor.dtsi, but I don't see it for homestar.
 
-   https://git.kernel.org/pub/scm/linux/kernel/git/broonie/sound.git for-next
+I can't find homestar dts file in my upstream checkout.
+But I found: https://patchwork.kernel.org/project/linux-arm-msm/patch/20210909122053.1.Ieafda79b74f74a2b15ed86e181c06a3060706ec5@changeid/
+...Is it merged anywhere?
 
-Thanks!
-
-[1/1] ASoC: wcd938x: Fix jack detection issue
-      commit: db0767b8a6e620b99459d2e688c1983c2e5add0d
-
-All being well this means that it will be integrated into the linux-next
-tree (usually sometime in the next 24 hours) and sent to Linus during
-the next merge window (or sooner if it is a bug fix), however if
-problems are discovered then the patch may be dropped or reverted.
-
-You may get further e-mails resulting from automated or manual testing
-and review of the tree, please engage with people reporting problems and
-send followup patches addressing any issues that are reported if needed.
-
-If any updates are required or you are submitting further changes they
-should be sent as incremental updates against current git, existing
-patches will not be replaced.
-
-Please add any relevant lists and maintainers to the CCs when replying
-to this mail.
-
-Thanks,
-Mark
+>
+> Other than that this looks good to me. Feel free to add my Reviewed-by.
