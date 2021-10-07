@@ -2,141 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CA135425A7E
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 20:15:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AB74C425AC6
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 20:29:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243530AbhJGSRs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Oct 2021 14:17:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54108 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S243522AbhJGSRr (ORCPT
+        id S229490AbhJGSbi (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Oct 2021 14:31:38 -0400
+Received: from mo4-p01-ob.smtp.rzone.de ([85.215.255.51]:36278 "EHLO
+        mo4-p01-ob.smtp.rzone.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229511AbhJGSbh (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Oct 2021 14:17:47 -0400
-Received: from mail-yb1-xb34.google.com (mail-yb1-xb34.google.com [IPv6:2607:f8b0:4864:20::b34])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9BA27C061755
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Oct 2021 11:15:53 -0700 (PDT)
-Received: by mail-yb1-xb34.google.com with SMTP id h2so15252619ybi.13
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Oct 2021 11:15:53 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=chromium.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=hxNCZni7OLjbLUM2oQ+zPYdyzTwxKlKSIw1gMRbxwKc=;
-        b=HaA4A6Ta2mUHIBcxZL2CKjoRtG9GcR6ieEqiqwqdPenP1IGuK5WthHbwO3ou61Tnh9
-         IdZm+AhwWUzQTSCgHbQKPmWzZQYr/mbmKac8PrBY5Lc/RuCrMSXsaua/89j3JLwStEy/
-         xgH8m+0bsbtYNUN/XhdgaDjnNxH9xWtwMWdzE=
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=hxNCZni7OLjbLUM2oQ+zPYdyzTwxKlKSIw1gMRbxwKc=;
-        b=0VTy0LjpNNduJLQvvC10DDeAAXQLS4wASc/VRjb+qpr/bZ1/WZ7nRRbfdc2ImAc2Ix
-         JXDa25QKd0cYt1LMV+3juAdnwv44xgVJijAOTw5uNmFIRlzKbWElN5+Av/GpUy1C7Kep
-         9hByE4rlGKUvboGDPzHa0W7uiCKGvHBSfqJ62MKQSmov8neXSTwFr1O6HeAQY2hurfdP
-         KK1uRJ1soxs/U06cso2k6NIdsU8mFakH+RCenqiANdQgi1TpP/GLCfRw7Z8pY4WvrpbN
-         jwveGvciSjkiVzZklYV6MjzWcJnIQoljhnU5DqbR1qWJzqlrAxSR1CfJrOsKe8/PiwoM
-         +QHQ==
-X-Gm-Message-State: AOAM533sCIJ+BTwKlOL/N/l59DWpqhN23x9F+gytg3UHGMN4lch94bDC
-        n0i5SfD7s994DQw13aFstMdkYIFis9Um3RLtVjowYw==
-X-Google-Smtp-Source: ABdhPJxonSF0ODbOA/KcRix4iq6ySNPKYDrYvWJYF++/VLTpja7FfdjmRMXdslLNYtDIGSEpvodrSddisABnGwahNNI=
-X-Received: by 2002:a25:54c5:: with SMTP id i188mr6584598ybb.43.1633630552920;
- Thu, 07 Oct 2021 11:15:52 -0700 (PDT)
+        Thu, 7 Oct 2021 14:31:37 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; t=1633631361;
+    s=strato-dkim-0002; d=gerhold.net;
+    h=In-Reply-To:References:Message-ID:Subject:Cc:To:From:Date:Cc:Date:
+    From:Subject:Sender;
+    bh=y+ZVoE7qvcX3dWBAXSBwFesU2ut2MT+SqkKvb13XGbo=;
+    b=DwMUQt1GkP+JDXX3EyCgGOsJaQEWrgh9jv+3dgC31T6rLd2fH0zc19/ccPF+gvOjHn
+    bW7lNOE/WHfj5i+0Srlh8u1DA1Mv2+fkxgtZji15ck+TR0VV/pU38a6Fc4xIeyDvqkuf
+    5X830QxC2K9ijIhaPVh9DWMATknZqMqf0LMNIjFSVLAo2S6T0QLqcd1XZ5PCUNy7BABe
+    h4xLIe0mir3STtrRrIPxzwy/phAIb2nsijnL+ih6efj5BkjZWJK3HwLndFAt4qAXuptd
+    owZ/W1ACDc/2DX2PMe6GU9XfRo8wyrPxinCoZyxgP7LsYdix2L9vg3Wgo7zSynpZzvIa
+    0AlA==
+Authentication-Results: strato.com;
+    dkim=none
+X-RZG-AUTH: ":P3gBZUipdd93FF5ZZvYFPugejmSTVR2nRPhVOQ/OcYgojyw4j34+u261EJF5OxJD4pSA8pmE1A=="
+X-RZG-CLASS-ID: mo00
+Received: from gerhold.net
+    by smtp.strato.de (RZmta 47.33.8 DYNA|AUTH)
+    with ESMTPSA id 301038x97ITLfFt
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256 bits))
+        (Client did not present a certificate);
+    Thu, 7 Oct 2021 20:29:21 +0200 (CEST)
+Date:   Thu, 7 Oct 2021 20:29:16 +0200
+From:   Stephan Gerhold <stephan@gerhold.net>
+To:     Maulik Shah <mkshah@codeaurora.org>
+Cc:     swboyd@chromium.org, mka@chromium.org, evgreen@chromium.org,
+        bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
+        linux-kernel@vger.kernel.org, agross@kernel.org,
+        dianders@chromium.org, linux@roeck-us.net, rnayak@codeaurora.org,
+        lsrao@codeaurora.org,
+        Mahesh Sivasubramanian <msivasub@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Yassine Oudjana <y.oudjana@protonmail.com>
+Subject: Re: [PATCH v11 2/5] soc: qcom: Add Sleep stats driver
+Message-ID: <YV88fNYF0i1Wkr73@gerhold.net>
+References: <1633600649-7164-1-git-send-email-mkshah@codeaurora.org>
+ <1633600649-7164-3-git-send-email-mkshah@codeaurora.org>
 MIME-Version: 1.0
-References: <20210929173343.v2.1.Ib7e63ae17e827ce0636a09d5dec9796043e4f80a@changeid>
- <20210929173343.v2.3.I630340a51130f4582dbe14e42f673b74e0531a2b@changeid>
- <CAE-0n53EBvKv-RdMwiiOsUkb+LOKAKwrpP7cDavx4meA2vbvcA@mail.gmail.com> <CAD=FV=XoOhSNP2EXurkA=G9iG2BnH9VzkvSEiNJ8W71s8N9bgg@mail.gmail.com>
-In-Reply-To: <CAD=FV=XoOhSNP2EXurkA=G9iG2BnH9VzkvSEiNJ8W71s8N9bgg@mail.gmail.com>
-From:   Philip Chen <philipchen@chromium.org>
-Date:   Thu, 7 Oct 2021 11:15:42 -0700
-Message-ID: <CA+cxXhkM9Gzc+0EVapZVu=pJZ3WZawgucG5J2=bokYEJXFNKCQ@mail.gmail.com>
-Subject: Re: [PATCH v2 3/3] arm64: dts: sc7180: Support Parade ps8640 edp bridge
-To:     Doug Anderson <dianders@chromium.org>
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
-        <devicetree@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1633600649-7164-3-git-send-email-mkshah@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+Hi Maulik,
 
-On Thu, Sep 30, 2021 at 9:22 AM Doug Anderson <dianders@chromium.org> wrote:
->
-> Hi,
->
-> On Wed, Sep 29, 2021 at 9:02 PM Stephen Boyd <swboyd@chromium.org> wrote:
-> >
-> > > +       pp3300_brij_ps8640: pp3300-brij-ps8640 {
-> > > +               compatible = "regulator-fixed";
-> > > +               status = "okay";
-> > > +               regulator-name = "pp3300_brij_ps8640";
-> > > +
-> > > +               regulator-min-microvolt = <3300000>;
-> > > +               regulator-max-microvolt = <3300000>;
-> > > +
-> > > +               gpio = <&tlmm 32 GPIO_ACTIVE_HIGH>;
-> >
-> > Doesn't this need
-> >
-> >                 enable-active-high;
->
-> Looks like it. Without that it looks like it assumes active low.
-Thanks for catching this.
-I'll fix it in v3.
+On Thu, Oct 07, 2021 at 03:27:26PM +0530, Maulik Shah wrote:
+> From: Mahesh Sivasubramanian <msivasub@codeaurora.org>
+> 
+> Let's add a driver to read the stats from remote processor and
+> export to debugfs.
+> 
+> The driver creates "qcom_sleep_stats" directory in debugfs and
+> adds files for various low power mode available. Below is sample
+> output with command
+> 
+> cat /sys/kernel/debug/qcom_sleep_stats/ddr
+> count = 0
+> Last Entered At = 0
+> Last Exited At = 0
+> Accumulated Duration = 0
+> 
+> Signed-off-by: Mahesh Sivasubramanian <msivasub@codeaurora.org>
+> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+> [mkshah: add subsystem sleep stats, create one file for each stat]
+> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
+> ---
+>  drivers/soc/qcom/Kconfig            |  10 ++
+>  drivers/soc/qcom/Makefile           |   1 +
+>  drivers/soc/qcom/qcom_sleep_stats.c | 259 ++++++++++++++++++++++++++++++++++++
+>  3 files changed, 270 insertions(+)
+>  create mode 100644 drivers/soc/qcom/qcom_sleep_stats.c
+> 
+> [...]
+> +
+> +static int qcom_subsystem_sleep_stats_show(struct seq_file *s, void *unused)
+> +{
+> +	struct subsystem_data *subsystem = s->private;
+> +	struct sleep_stats *stat;
+> +
+> +	/* Items are allocated lazily, so lookup pointer each time */
+> +	stat = qcom_smem_get(subsystem->pid, subsystem->smem_item, NULL);
+> +	if (IS_ERR(stat))
+> +		return -EIO;
+> +
+> [...]
+> +
+> +static void qcom_create_subsystem_stat_files(struct dentry *root)
+> +{
+> +	const struct sleep_stats *stat;
+> +	int i;
+> +
+> +	for (i = 0; i < ARRAY_SIZE(subsystems); i++) {
+> +		stat = qcom_smem_get(subsystems[i].pid, subsystems[i].smem_item, NULL);
+> +		if (IS_ERR(stat))
+> +			continue;
+> +
+> +		debugfs_create_file(subsystems[i].name, 0400, root, (void *)&subsystems[i],
+> +				    &qcom_subsystem_sleep_stats_fops);
 
->
->
-> > > +
-> > > +               pinctrl-names = "default";
-> > > +               pinctrl-0 = <&en_pp3300_edp_brij_ps8640>;
-> > > +
-> > > +               vin-supply = <&pp3300_a>;
-> > > +       };
-> > > +};
-> > > +
-> > > +&dsi0_out {
-> > > +       remote-endpoint = <&ps8640_in>;
-> >
-> > Should this also have data-lanes to be "complete"?
->
-> That's still back in the main trogdor.dtsi, isn't it?
-Yes, I think so.
-Plus, ti-sn65 dts doesn't define data-lanes for input either.
+This causes WARNINGs on MSM8996 and MSM8916:
 
->
->
-> > > +edp_brij_i2c: &i2c2 {
-> > > +       status = "okay";
-> > > +       clock-frequency = <400000>;
-> > > +
-> > > +       ps8640_bridge: edp-bridge@8 {
-> >
-> > Just bridge@8 to match ti bridge? Also, is the label used? If not
-> > please drop it.
->
-> I agree with Stephen about it being "bridge@8". Personally I don't
-> mind labels like this even if they're not used since they don't hurt
-> and it creates less churn to add them now, but I won't fight hard to
-> keep them.
-I will make it "bridge@8" to match ti-sn65 dts.
-Meanwhile, can we keep "ps8640_bridge" label to match ti-sn65 dts?
+[    0.503054] ------------[ cut here ]------------
+[    0.503100] WARNING: CPU: 1 PID: 1 at drivers/soc/qcom/smem.c:587 qcom_smem_get+0x184/0x1b0
+[    0.503184] CPU: 1 PID: 1 Comm: swapper/0 Not tainted 5.15.0-rc4+ #378
+[    0.503218] Hardware name: Xiaomi Mi Note 2 (DT)
+[    0.503278] pc : qcom_smem_get+0x184/0x1b0
+[    0.503307] lr : qcom_sleep_stats_probe+0xfc/0x20
+[    0.503875] Call trace:
+[    0.503896]  qcom_smem_get+0x184/0x1b0
+[    0.503925]  qcom_sleep_stats_probe+0xfc/0x270
 
->
->
-> > > +               aux_bus: aux-bus {
-> >
-> > Is this label used either?
->
-> Yeah, I'd get rid of this one since there you didn't add it in the
-> sn65dsi86 dtsi file and it seems exceedingly unlikely we'd need it for
-> any reason.
-Sure, I will remove "aux_bus" label in v3.
+AFAICT from downstream the smem subsystem information is only read in
+the rpmh_master_stat.c driver, should this be specific to RPMh?
 
->
-> -Doug
+There is a rpm_master_stat.c too but that looks quite different,
+so I guess the approach is different with RPM?
+
+Two more (unrelated) issues here:
+
+  1. This will silently not register anything if SMEM probes after the
+     qcom-sleep-stats driver (qcom_smem_get() will return -EPROBE_DEFER)
+     and you will just skip registering the debugfs files.
+
+  2. In qcom_subsystem_sleep_stats_show() you say
+     /* Items are allocated lazily, so lookup pointer each time */
+
+     But, if the lookup fails here you don't register the debugfs file
+     at all. Does this work if the subsystem is started after this driver?
+
+Thanks,
+Stephan
