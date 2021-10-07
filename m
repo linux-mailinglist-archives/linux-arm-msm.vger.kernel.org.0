@@ -2,119 +2,147 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A4C2F4253A1
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 15:05:05 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 92D434253CA
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 15:12:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240954AbhJGNG4 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Oct 2021 09:06:56 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35942 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233100AbhJGNGz (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Oct 2021 09:06:55 -0400
-Received: from mail-ed1-x52f.google.com (mail-ed1-x52f.google.com [IPv6:2a00:1450:4864:20::52f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EBA1AC061570
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Oct 2021 06:05:00 -0700 (PDT)
-Received: by mail-ed1-x52f.google.com with SMTP id l7so23106989edq.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Oct 2021 06:05:00 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=aleksander-es.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:from:date:message-id:subject:to;
-        bh=0+hdZx8z8H2qo9C8aFQUZoFEogRKFiNOVXMBEJOTQgY=;
-        b=k5jtdjAzmhTyr2xbQJ45IXDZYAixHjVtvUr1+OWKqfrgnKSqdkZpvNbIWjc0w8Znm9
-         OW9q5H1ZyzOXxUoqhGkJqf61ZTHucoQJQlY+xUIsx2QSi4pdg52hHnk4oqTGgRd5EK4c
-         v46EMPqhIzncHZSY9kW47GdNlC8h91KeogZk2WjAT3USSBDjLH8c4L9nkLiVNELxxov7
-         Sqvn+5ONe81xJ/9vHdKMLUY/nulYe5GXpcVNITYb3efEVSzSY/ADIm3ZWj6eD1i8jSnO
-         wqzNSSybCO56pMlTbm0VOAX5o4OcFEW5nmc0Tu9KBTsRZQVtfVk3WZnWiuH+ErFM9wdV
-         wM2A==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:from:date:message-id:subject:to;
-        bh=0+hdZx8z8H2qo9C8aFQUZoFEogRKFiNOVXMBEJOTQgY=;
-        b=cQMgd529mdj6LLzc7anYZpREr5ynIS2oyZLXnBkU3WN6ezpvICkmniZYGUphsLQJHg
-         gzooyunwlZzQnWUF4FEHYHRXKxsmJQN+n6N5US19yMGAmoxmxEkfxhwDmxWikeXHIw1a
-         V+cszYAVoQGqIk99/7Rv2NbeKqu74gls0/qmekW8/6sOQHE2baXEQmQsoUGSn6qTQH7P
-         LAgLNgmGGLrfd+CrrCL3vmIUeNML+tka4bixkMo7x4UkowPuxSDfnlYo/D1GK1SZD1RF
-         5P6asc3hzsLv/XpCkOlm7ZiBtJkfZQ7nXim7//UVLdnNN7/+tob1cUSy6x+RRzlV7wkf
-         sCTw==
-X-Gm-Message-State: AOAM533i+bvnt1peboKpLXul70ZPf90/YLRgeXjnbL1CfIW8e7wLGyfn
-        FFW6Ar67FybW20t70esUzMwPdR6fCmTZXt4KcMqqJ8gai7s1aw==
-X-Google-Smtp-Source: ABdhPJz75tS2eMrwsZ1ZbCe9QmrvIFGUHBdF0HBTesxKuS2c37R7bwCjtDigbQKFjI+WacR4fr3xoWArUCokMFL3fh4=
-X-Received: by 2002:a17:906:5e17:: with SMTP id n23mr5595005eju.258.1633611895532;
- Thu, 07 Oct 2021 06:04:55 -0700 (PDT)
+        id S241253AbhJGNOd (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Oct 2021 09:14:33 -0400
+Received: from foss.arm.com ([217.140.110.172]:53224 "EHLO foss.arm.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S241234AbhJGNOd (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 Oct 2021 09:14:33 -0400
+Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
+        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 3910D6D;
+        Thu,  7 Oct 2021 06:12:39 -0700 (PDT)
+Received: from lpieralisi (e121166-lin.cambridge.arm.com [10.1.196.255])
+        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id 717E43F66F;
+        Thu,  7 Oct 2021 06:12:37 -0700 (PDT)
+Date:   Thu, 7 Oct 2021 14:12:32 +0100
+From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
+To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
+Cc:     kishon@ti.com, bhelgaas@google.com, robh@kernel.org,
+        devicetree@vger.kernel.org, linux-pci@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        hemantk@codeaurora.org, bjorn.andersson@linaro.org,
+        sallenki@codeaurora.org, skananth@codeaurora.org,
+        vpernami@codeaurora.org, vbadigan@codeaurora.org
+Subject: Re: [PATCH v8 0/3] Add Qualcomm PCIe Endpoint driver support
+Message-ID: <20211007131232.GA19662@lpieralisi>
+References: <20210920065946.15090-1-manivannan.sadhasivam@linaro.org>
+ <20211004041949.GA16442@workstation>
+ <20211007125724.GA27987@thinkpad>
 MIME-Version: 1.0
-From:   Aleksander Morgado <aleksander@aleksander.es>
-Date:   Thu, 7 Oct 2021 15:04:44 +0200
-Message-ID: <CAAP7ucLJYfftfCuKxnW8Q7-duyEuGgHA5gk+h2JyyAzNq75QSA@mail.gmail.com>
-Subject: Sierra Wireless EM9191 integration issues in mhi+wwan
-To:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>,
-        Thomas Perrot <thomas.perrot@bootlin.com>,
-        hemantk@codeaurora.org,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211007125724.GA27987@thinkpad>
+User-Agent: Mutt/1.9.4 (2018-02-28)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey all,
+On Thu, Oct 07, 2021 at 06:27:24PM +0530, Manivannan Sadhasivam wrote:
+> On Mon, Oct 04, 2021 at 09:49:49AM +0530, Manivannan Sadhasivam wrote:
+> > On Mon, Sep 20, 2021 at 12:29:43PM +0530, Manivannan Sadhasivam wrote:
+> > > Hello,
+> > > 
+> > > This series adds support for Qualcomm PCIe Endpoint controller found
+> > > in platforms like SDX55. The Endpoint controller is based on the designware
+> > > core with additional Qualcomm wrappers around the core.
+> > > 
+> > > The driver is added separately unlike other Designware based drivers that
+> > > combine RC and EP in a single driver. This is done to avoid complexity and
+> > > to maintain this driver autonomously.
+> > > 
+> > > The driver has been validated with an out of tree MHI function driver on
+> > > SDX55 based Telit FN980 EVB connected to x86 host machine over PCIe.
+> > > 
+> > 
+> > Ping on this series! Patchwork says the state is still "New". Both
+> > binding and driver patches got enough reviews I believe. Are there any
+> > issues pending to be addressed?
+> > 
+> 
+> Sorry for the noise. But not seeing any activity on this series is tempting me
+> to ping this thread. This series has been under review for almost 3 releases and
+> I don't want to miss this one too without any obvious reasons.
 
-I'm working on a setup using a RPi CM4 based board and a Sierra
-Wireless EM9191 module, running OpenWRT 21.02 and backported mhi+wwan
-drivers (from latest 5.15 rc). The kernel also has the
-mhi_pci_dev_info entry written by Thomas, as per
-https://forum.sierrawireless.com/t/sierra-wireless-airprime-em919x-pcie-support/24927
+You won't and thanks for your patience, I will pull it.
 
-The EM9191 is now running 02.08.01.00 (latest firmware from Sierra),
-upgraded in several steps back from the original 01.04.01.02 the
-module came with. The firmware upgrades were done with
-qmi-firmware-update and the module in USB mode  in a desktop PC.
+Lorenzo
 
-Most of the system boots end up with the mhi driver reporting that the
-module firmware crashed in different ways:
-
-[    7.060730] mhi-pci-generic 0000:01:00.0: MHI PCI device found: sierra-em919x
-[    7.067906] mhi-pci-generic 0000:01:00.0: BAR 0: assigned [mem
-0x600000000-0x600000fff 64bit]
-[    7.076455] mhi-pci-generic 0000:01:00.0: enabling device (0000 -> 0002)
-[    7.083277] mhi-pci-generic 0000:01:00.0: using shared MSI
-[    7.089508] mhi mhi0: Requested to power ON
-[    7.094080] mhi mhi0: Attempting power on with EE: PASS THROUGH,
-state: SYS ERROR
-[    7.180371] mhi mhi0: local ee: INVALID_EE state: RESET device ee:
-PASS THROUGH state: SYS ERROR
-[    7.187146] mhi mhi0: Power on setup success
-[    7.187219] mhi mhi0: Handling state transition: PBL
-[    7.189165] mhi mhi0: System error detected
-[    7.189178] mhi mhi0: Device MHI is not in valid state
-[    7.189189] mhi-pci-generic 0000:01:00.0: firmware crashed (7)
-[    7.213682] mhi mhi0: Handling state transition: SYS ERROR
-[    7.219183] mhi mhi0: Transitioning from PM state: Linkdown or
-Error Fatal Detect to: SYS ERROR Process
-[    7.228590] mhi-pci-generic 0000:01:00.0: firmware crashed (6)
-[    7.234429] mhi mhi0: Failed to transition from PM state: Linkdown
-or Error Fatal Detect to: SYS ERROR Process
-[    7.244433] mhi mhi0: Exiting with PM state: Linkdown or Error
-Fatal Detect, MHI state: RESET
-[    7.252963] mhi mhi0: Handling state transition: DISABLE
-[    7.258278] mhi mhi0: Processing disable transition with PM state:
-Linkdown or Error Fatal Detect
-[    7.267155] mhi mhi0: Waiting for all pending event ring processing
-to complete
-[    7.274480] mhi mhi0: Waiting for all pending threads to complete
-[    7.280576] mhi mhi0: Reset all active channels and remove MHI devices
-[    7.287110] mhi mhi0: Resetting EV CTXT and CMD CTXT
-[    7.292077] mhi mhi0: Exiting with PM state: DISABLE, MHI state: RESET
-[    7.298683] mhi-pci-generic 0000:01:00.0: failed to power up MHI controller
-[    7.306184] mhi-pci-generic: probe of 0000:01:00.0 failed with error -110
-
-Some of the boots successfully finish and I can talk to both the QMI
-and MBIM ports exposed by the WWAN subsystem, but the success rate is
-extremely low.
-
-Thomas, are you seeing similar issues in your setup?
-
--- 
-Aleksander
-https://aleksander.es
+> 
+> Thanks,
+> Mani
+> 
+> > Thanks,
+> > Mani
+> > 
+> > > Thanks,
+> > > Mani
+> > > 
+> > > Changes in v8:
+> > > 
+> > > * Added Reviewed-by tag from Rob for the driver patch
+> > > * Rebased on top of v5.15-rc1
+> > > 
+> > > Changes in v7:
+> > > 
+> > > * Used existing naming convention for callback functions
+> > > * Used active low state for PERST# gpio
+> > > 
+> > > Changes in v6:
+> > > 
+> > > * Removed status property in DT and added reviewed tag from Rob
+> > > * Switched to _relaxed variants as suggested by Rob
+> > > 
+> > > Changes in v5:
+> > > 
+> > > * Removed the DBI register settings that are not needed
+> > > * Used the standard definitions available in pci_regs.h
+> > > * Added defines for all the register fields
+> > > * Removed the left over code from previous iteration
+> > > 
+> > > Changes in v4:
+> > > 
+> > > * Removed the active_config settings needed for IPA integration
+> > > * Switched to writel for couple of relaxed versions that sneaked in
+> > > 
+> > > Changes in v3:
+> > > 
+> > > * Lot of minor cleanups to the driver patch based on review from Bjorn and Stan.
+> > > * Noticeable changes are:
+> > >   - Got rid of _relaxed calls and used readl/writel
+> > >   - Got rid of separate TCSR memory region and used syscon for getting the
+> > >     register offsets for Perst registers
+> > >   - Changed the wake gpio handling logic
+> > >   - Added remove() callback and removed "suppress_bind_attrs"
+> > >   - stop_link() callback now just disables PERST IRQ
+> > > * Added MMIO region and doorbell interrupt to the binding
+> > > * Added logic to write MMIO physicall address to MHI base address as it is
+> > >   for the function driver to work
+> > > 
+> > > Changes in v2:
+> > > 
+> > > * Addressed the comments from Rob on bindings patch
+> > > * Modified the driver as per binding change
+> > > * Fixed the warnings reported by Kbuild bot
+> > > * Removed the PERST# "enable_irq" call from probe()
+> > > 
+> > > Manivannan Sadhasivam (3):
+> > >   dt-bindings: pci: Add devicetree binding for Qualcomm PCIe EP
+> > >     controller
+> > >   PCI: qcom-ep: Add Qualcomm PCIe Endpoint controller driver
+> > >   MAINTAINERS: Add entry for Qualcomm PCIe Endpoint driver and binding
+> > > 
+> > >  .../devicetree/bindings/pci/qcom,pcie-ep.yaml | 158 ++++
+> > >  MAINTAINERS                                   |  10 +-
+> > >  drivers/pci/controller/dwc/Kconfig            |  10 +
+> > >  drivers/pci/controller/dwc/Makefile           |   1 +
+> > >  drivers/pci/controller/dwc/pcie-qcom-ep.c     | 710 ++++++++++++++++++
+> > >  5 files changed, 888 insertions(+), 1 deletion(-)
+> > >  create mode 100644 Documentation/devicetree/bindings/pci/qcom,pcie-ep.yaml
+> > >  create mode 100644 drivers/pci/controller/dwc/pcie-qcom-ep.c
+> > > 
+> > > -- 
+> > > 2.25.1
+> > > 
