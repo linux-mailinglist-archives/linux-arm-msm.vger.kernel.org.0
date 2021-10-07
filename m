@@ -2,106 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C81B2426058
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 01:26:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 253574260B2
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 01:46:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232813AbhJGX23 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Oct 2021 19:28:29 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:40628 "EHLO
+        id S234222AbhJGXst (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Oct 2021 19:48:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45270 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229778AbhJGX22 (ORCPT
+        with ESMTP id S231513AbhJGXss (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Oct 2021 19:28:28 -0400
-Received: from mail-ua1-x92f.google.com (mail-ua1-x92f.google.com [IPv6:2607:f8b0:4864:20::92f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 6CCB8C061570
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Oct 2021 16:26:34 -0700 (PDT)
-Received: by mail-ua1-x92f.google.com with SMTP id c33so5424604uae.9
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Oct 2021 16:26:34 -0700 (PDT)
+        Thu, 7 Oct 2021 19:48:48 -0400
+Received: from mail-ot1-x333.google.com (mail-ot1-x333.google.com [IPv6:2607:f8b0:4864:20::333])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 53E91C061760
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Oct 2021 16:46:54 -0700 (PDT)
+Received: by mail-ot1-x333.google.com with SMTP id g62-20020a9d2dc4000000b0054752cfbc59so9663629otb.1
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Oct 2021 16:46:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=mime-version:sender:from:date:message-id:subject:to
-         :content-transfer-encoding;
-        bh=38jXb/auw6ftk0USmaV+RFOFIT1FCKxJKkiAqOI2WoI=;
-        b=RqFC/KTnCM2psOLmn4FWMiiSZr0czmCcIEoP5HqdEqpXlfTHWpSiI/sXuPUFWJMljq
-         jZbE2i3qcNFU+JUCWE1l1R9//412gac+6RMzq40tkqbg0aKMgNTfP+sHSPbCHR7W7UYG
-         u9uc/xnr0uMYOKjdvtFqYjkb68Xwiq2GnLCJLkKx2oyChvvDbHUGdRYbtGhJjVg5Jlh6
-         GGvPV52LnPWTfxcMyPriYcNkG6B5Z8bNFY3/60dAM1eVZXMFdmOKudYZ5U9GPd3o8l7g
-         65mE/I2av/avnnjxcAo7GP2C2utTkqtXE+9caXV1SajKhhC22CtL9b0RwI7lEsGwP8ha
-         gnIw==
+        d=chromium.org; s=google;
+        h=mime-version:in-reply-to:references:from:user-agent:date:message-id
+         :subject:to:cc;
+        bh=gVE/1ADkJ8MTOhXMg6RxOoE4mte4x5DusQmTFFGGsBU=;
+        b=WoVlPccxHbuRTr5ECO9lMIta1ZkIBn8OSGWFIgYT2q5pUtArA7URZdzzXp35EDfPSy
+         KEigeax+oRE1HBvTYEr4YUpbI8NLvI0ma+lLdK38aDH4lzNGWrgK6AUTcv/yalhej6S0
+         NOlhvK9kCoW2oDdzEVJoL/HY6DGgCG1vxQODk=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:sender:from:date:message-id:subject
-         :to:content-transfer-encoding;
-        bh=38jXb/auw6ftk0USmaV+RFOFIT1FCKxJKkiAqOI2WoI=;
-        b=C6A2HkI+c85h0Z4Bwx744KFTVXZhzNNxpH3XIdA8vkpo/P7BbxScd8GHLOqHSs3AM+
-         ilnHU/OmWopbno9S1M2zcI1104RYHGdB/eUNgJ6YpVdmaiZMOAorckFdA6D8bJXuH3ua
-         CLvEMnfQt5Zw3oPCoYc78BTBec4XzR6o0PdGxyMXDLlo49tBaFPBTsnjDkxVwZzObVsE
-         I5cBUq8RgGglbiXhYxF70gZ0PtuVyMyiuNJfbpnOtTXbzRcMkjK2mMQ/PjwcXroMISPE
-         W8ysTSWhQ3isjV9HBO2dHmuxz6Dv9f01MY5xenr8HQDAOKAkXmxIn7UlAynWxnJCoMII
-         qytw==
-X-Gm-Message-State: AOAM530zEoCOr6usHyXkuauzsj+bUiNqHja2UiMAMBy9w3iFG+sgql5D
-        s/KRh/s8d0XDSV2XDwyw7qWC8Nniid6Ne69NiyY=
-X-Google-Smtp-Source: ABdhPJwNs4ZMmbwOcFiYqCZYD6IEb/IphWqNuo2EIYov46DH569Rmo0QETXJOaL+UGw1dcoTlItJr8aPMidMA9t6SXM=
-X-Received: by 2002:ab0:4a5e:: with SMTP id r30mr8162674uae.106.1633649193525;
- Thu, 07 Oct 2021 16:26:33 -0700 (PDT)
+        h=x-gm-message-state:mime-version:in-reply-to:references:from
+         :user-agent:date:message-id:subject:to:cc;
+        bh=gVE/1ADkJ8MTOhXMg6RxOoE4mte4x5DusQmTFFGGsBU=;
+        b=VmgddXwT5ZF4ISRQwPbAyjBASAZZLJ7J2LWnKU79gIkHpKEna06XhNgcqYp3IQM/pO
+         F9T5/fc3AGqvlLryPP7BoNPNfOhNllwm0dSlSZAW1uadqe2JgpRiVPgFJRWZy9Pfwz/d
+         zQesFDGIvuGQg0Qes/eN0GwC1GXS/WwyOJW9R5uP9PEpurh4PEjZ6jeMH1ZLr6+1zKb2
+         Hdh7Vj8omTjaYHydOlA0UJwUl5pbjzqL9GhemJzqhTsuDjxeYzJ9k7g3g8NCaI/6s1/C
+         C2Top51M9/Q/MLjhcpK4EC6/K+flHqevsoUDxtHj+104DQu9aqcU3iWbqgwnML7pEKws
+         cBQw==
+X-Gm-Message-State: AOAM533Ove4go8q6bduun/kRH583mvNTDxdu8r6ttVKzqaKH0ns5MQfa
+        OKm8nby1uggL5L543+1c5nyN73NRgKUBa7G3/soLqfcEDFc=
+X-Google-Smtp-Source: ABdhPJxlFP1/S8B0xAWuFNOhsUPgTNfrPc0wkMbmhmTCldN7UU+Qjct3D18HQXZEaHm/3kIj7Vvs8oXLVNcbNBEbTbE=
+X-Received: by 2002:a9d:5a90:: with SMTP id w16mr21830oth.126.1633650413709;
+ Thu, 07 Oct 2021 16:46:53 -0700 (PDT)
+Received: from 753933720722 named unknown by gmailapi.google.com with
+ HTTPREST; Thu, 7 Oct 2021 19:46:53 -0400
 MIME-Version: 1.0
-Sender: mcdonnalouise@gmail.com
-Received: by 2002:a59:2345:0:b0:235:f317:d78b with HTTP; Thu, 7 Oct 2021
- 16:26:33 -0700 (PDT)
-From:   Jackie Fowler <jackiefowler597@gmail.com>
-Date:   Thu, 7 Oct 2021 23:26:33 +0000
-X-Google-Sender-Auth: Yn1bPQB9fMg0EyckV1zShfKeSZ0
-Message-ID: <CAPVGnmX4rvZALgw8eGiqDf37VnKEWBHjGNc9zTeaYGhUcMbVYw@mail.gmail.com>
-Subject: Good Day My beloved,
-To:     undisclosed-recipients:;
+In-Reply-To: <20211007140854.1.I70615769f27bbaf7e480419d0f660f802b1fea43@changeid>
+References: <20211007140854.1.I70615769f27bbaf7e480419d0f660f802b1fea43@changeid>
+From:   Stephen Boyd <swboyd@chromium.org>
+User-Agent: alot/0.9.1
+Date:   Thu, 7 Oct 2021 19:46:53 -0400
+Message-ID: <CAE-0n53Ch+YYTzO31w0Gv5zvn6oUJGRMGxqdO_h4_ULaQ+7_fA@mail.gmail.com>
+Subject: Re: [PATCH] arm64: dts: qcom: sc7280: Add Herobrine
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        Rob Herring <robh+dt@kernel.org>
+Cc:     devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        Douglas Anderson <dianders@chromium.org>,
+        linux-arm-msm@vger.kernel.org
 Content-Type: text/plain; charset="UTF-8"
-Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Gooday,
+Quoting Matthias Kaehlcke (2021-10-07 14:09:11)
+> Herobrine is a Chrome OS board/platform based on the QCA SC7280.
+> Add a .dtsi for the platform parts and a .dts for the board
+> specific bits. Currently the .dtsi has everything except the
+> compatible strings, things will likely get shuffled around in the
+> future as we learn more about the differences between boards.
+>
+> Signed-off-by: Matthias Kaehlcke <mka@chromium.org>
+> ---
 
-  I sent this mail praying it will get to you in a good condition of
-health, since I myself are in a very critical health condition in
-which I sleep every night without knowing if I may be alive to see the
-next day. I bring peace and love to you. It is by the grace of God, I
-had no choice than to do what is lawful and right in the sight of God
-for eternal life and in the sight of man, for witness of God=E2=80=99s merc=
-y
-and glory upon my life. I am Mrs.Jackie Fowler,a widow and citizen of
-Canada.I am suffering from a long time brain tumor, It has defiled all
-forms of medical treatment, and right now I have about a few months to
-leave, according to medical experts. The situation has gotten
-complicated recently with my inability to hear proper, am
-communicating with you with the help of the chief nurse herein the
-hospital, from all indication my conditions is really deteriorating
-and it is quite obvious that, according to my doctors they have
-advised me that I may not live too long, Because this illness has
-gotten to a very bad stage. I plead that you will not expose or betray
-this trust and confidence that I am about to repose on you for the
-mutual benefit of the orphans and the less privilege. I have some
-funds I inherited from my late husband, the sum of ($ 12,500,000.00
-Dollars).Having known my condition, I decided to donate this fund to
-you believing that you will utilize it the way i am going to instruct
-herein.
- I need you to assist me and reclaim this money and use it for Charity
-works, for orphanages and gives justice and help to the poor, needy
-and widows says The Lord." Jeremiah 22:15-16.=E2=80=9C and also build schoo=
-ls
-for less privilege that will be named after my late husband if
-possible and to promote the word of God and the effort that the house
-of God is maintained. I do not want a situation where this money will
-be used in an ungodly manner. That's why I'm taking this decision. I'm
-not afraid of death, so I know where I'm going. I accept this decision
-because I do not have any child who will inherit this money after I
-die. Please I want your sincerely and urgent answer to know if you
-will be able to execute this project for the glory of God, and I will
-give you more information on how the fund will be transferred to your
-bank account. May the grace, peace, love and the truth in the Word of
-God be with you and all those that you love and care for.
-I'm waiting for your immediate reply.
-Respectfully.
-Mrs.Jackie Fowler.
-Writting From the hospital.
-May God Bless you,
+Reviewed-by: Stephen Boyd <swboyd@chromium.org>
