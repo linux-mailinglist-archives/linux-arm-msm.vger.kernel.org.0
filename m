@@ -2,112 +2,122 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9AA3F425009
-	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 11:27:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 45CE142500C
+	for <lists+linux-arm-msm@lfdr.de>; Thu,  7 Oct 2021 11:28:22 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240610AbhJGJ3a (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Oct 2021 05:29:30 -0400
-Received: from so254-9.mailgun.net ([198.61.254.9]:27033 "EHLO
-        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240592AbhJGJ3Z (ORCPT
+        id S240638AbhJGJaN convert rfc822-to-8bit (ORCPT
+        <rfc822;lists+linux-arm-msm@lfdr.de>); Thu, 7 Oct 2021 05:30:13 -0400
+Received: from mail-vk1-f176.google.com ([209.85.221.176]:34727 "EHLO
+        mail-vk1-f176.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S240592AbhJGJaN (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Oct 2021 05:29:25 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1633598851; h=Content-Type: MIME-Version: Message-ID:
- In-Reply-To: Date: References: Subject: Cc: To: From: Sender;
- bh=UG+p5YLM6Eum4VbBhk0do8XgFzWdXG+uYfvVRUIhFuk=; b=N1AL961qTW8Vfhf39c/2RF7cQLq2jrR1e04zTl8aPuwzS9VDy8wcMIM79URlF1I1iVPoMsU8
- O+pUgoMaQrv/e3LEAyBjKs9ulWEX6eoRaJVT+/fy90Qq/4nCovztGIHd4BGDk2Ejl3whxh5P
- jW2/S2y1mEVOBeSmUZU4YQgRci0=
-X-Mailgun-Sending-Ip: 198.61.254.9
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
- 615ebd7230ce13d2b4d69a7c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 07 Oct 2021 09:27:14
- GMT
-Sender: kvalo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id F13B3C43616; Thu,  7 Oct 2021 09:27:13 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL
-        autolearn=no autolearn_force=no version=3.4.0
-Received: from tykki (tynnyri.adurom.net [51.15.11.48])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: kvalo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 372A4C4338F;
-        Thu,  7 Oct 2021 09:27:11 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 372A4C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-From:   Kalle Valo <kvalo@codeaurora.org>
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     "open list\:DRM DRIVER FOR MSM ADRENO GPU" 
-        <linux-arm-msm@vger.kernel.org>, ath11k@lists.infradead.org,
-        Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-Subject: Re: ath11k/mhi backtraces on shutdown with linux-next
-References: <CAA8EJppRhRCVOrXT0=nxomCFonna3YHhNEv-YFLyjaQX4gRptw@mail.gmail.com>
-        <878sa34ni7.fsf@codeaurora.org>
-        <CAA8EJppwnfy-Hi9pabGL-g9BgEcac6bs3jn8J1n=PPr9-y-d-A@mail.gmail.com>
-        <87y2hxvbu8.fsf@codeaurora.org>
-Date:   Thu, 07 Oct 2021 12:27:09 +0300
-In-Reply-To: <87y2hxvbu8.fsf@codeaurora.org> (Kalle Valo's message of "Wed, 16
-        Dec 2020 20:34:55 +0200")
-Message-ID: <871r4xchhu.fsf@codeaurora.org>
-User-Agent: Gnus/5.13 (Gnus v5.13) Emacs/26.1 (gnu/linux)
+        Thu, 7 Oct 2021 05:30:13 -0400
+Received: by mail-vk1-f176.google.com with SMTP id z202so2461191vkd.1;
+        Thu, 07 Oct 2021 02:28:19 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc:content-transfer-encoding;
+        bh=hzHW72Ay3gWV8fEJFQ+iu6g37baZLnF8PQ8Ot4oxoaI=;
+        b=qeBLCc16D7buQsBfZGYlmXCUZ/w243AJOQ/U9QHKzS8K+xLM2qCRhGiy46ZP6fUfXE
+         wflMWuY4ySLkJOr0B63wuuO2a8BwGCV9e7qkaAw8/ZzB6DGcWaNnDahpcn0Cx6v/WT38
+         tl0HznkRYarmgx8JI4FdafIVXuuU+20dVaKn1V/MmTuiYsu55hcreNXyCb3QN/aM9c0A
+         kuZ2YnarftLtP1i7yn0yi3TrmD4ONGm2T4j79mvyRLDPq2oFYmFZ5T9ez1TY4G7yB6p/
+         ZOp0dvUxO+6NwVfsKTDsuyE3PimfpBpPL/9L1Hsni9KkFg1/hf7a2I/vIhT7fxNR6kqN
+         ndlA==
+X-Gm-Message-State: AOAM533Vo9TjIYD9FhXlfUCQ9Tn+xG8GOvKlU+BaMXSXQZYc0gGzJqbF
+        g9wCorUjRUnV5b8xxQJXpfXLpcIb//4VbUO93xE=
+X-Google-Smtp-Source: ABdhPJxa3fwE1gntWrjljDsvFH6UlsS62TRi8FeltjZ+YAQFTMpawuIEL6cDelrBaNePH9pbfBWO3F+KAs1dSlBCJEY=
+X-Received: by 2002:a1f:3a4b:: with SMTP id h72mr2286297vka.19.1633598898975;
+ Thu, 07 Oct 2021 02:28:18 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain
+References: <20211006025350.a5PczFZP4%akpm@linux-foundation.org>
+ <58fbf2ff-b367-2137-aa77-fcde6c46bbb7@infradead.org> <20211006182052.6ecc17cf@canb.auug.org.au>
+ <f877a1c9-1898-23f3-bba3-3442dc1f3979@amd.com>
+In-Reply-To: <f877a1c9-1898-23f3-bba3-3442dc1f3979@amd.com>
+From:   Geert Uytterhoeven <geert@linux-m68k.org>
+Date:   Thu, 7 Oct 2021 11:28:07 +0200
+Message-ID: <CAMuHMdV3eMchpgUasU6BBHrDQyjCc2TrqJ+zJgFhgAySpqVGfw@mail.gmail.com>
+Subject: Re: mmotm 2021-10-05-19-53 uploaded (drivers/gpu/drm/msm/hdmi/hdmi_phy.o)
+To:     =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>
+Cc:     Stephen Rothwell <sfr@canb.auug.org.au>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Mark Brown <broonie@kernel.org>,
+        Linux FS Devel <linux-fsdevel@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linux MM <linux-mm@kvack.org>,
+        Linux-Next <linux-next@vger.kernel.org>,
+        Michal Hocko <mhocko@suse.cz>, mm-commits@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno@lists.freedesktop.org,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Intel Graphics <intel-gfx@lists.freedesktop.org>,
+        DRI <dri-devel@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: 8BIT
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Kalle Valo <kvalo@codeaurora.org> writes:
+Hi Christian,
 
-> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
+On Wed, Oct 6, 2021 at 9:28 AM Christian König <christian.koenig@amd.com> wrote:
+> Am 06.10.21 um 09:20 schrieb Stephen Rothwell:
+> > On Tue, 5 Oct 2021 22:48:03 -0700 Randy Dunlap <rdunlap@infradead.org> wrote:
+> >> on i386:
+> >>
+> >> ld: drivers/gpu/drm/msm/hdmi/hdmi_phy.o:(.rodata+0x3f0): undefined reference to `msm_hdmi_phy_8996_cfg'
+> >>
+> >>
+> >> Full randconfig fle is attached.
+> > This would be because CONFIG_DRM_MSM is set but CONFIG_COMMON_CLOCK is
+> > not and has been exposed by commit
+> >
+> >    b3ed524f84f5 ("drm/msm: allow compile_test on !ARM")
+> >
+> > from the drm-misc tree.
 >
->> On Sat, 12 Dec 2020 at 08:11, Kalle Valo <kvalo@codeaurora.org> wrote:
->>>
->>> Dmitry Baryshkov <dmitry.baryshkov@linaro.org> writes:
->>>
->>> > Hello,
->>> >
->>> > I've noticed the following backtrace during shutdown stage when
->>> > rebooting RB5 board,
->>> > using linux-next/master:
->>> >
->>> > [   31.060483] ath11k_pci 0000:01:00.0: shutdown
->>> > [   31.067844] ------------[ cut here ]------------
->>> > [   31.073111] WARNING: CPU: 4 PID: 101 at
->>> > drivers/iommu/io-pgtable-arm.c:583 __arm_lpae_unmap+0x39c/0x550
->>>
->>> Do you have CONFIG_DMA_API_DEBUG disabled? There is one commit fixing a
->>> DMA API debug warning but that should be in linux-next already:
->>>
->>> cd6181ff7e93 ath11k: dp_rx: fix monitor status dma unmap direction
->>
->> I have enabled CONFIG_DMA_API_DEBUG (and _SG too). Got no additional
->> traces during boot and the same trace during reboot.
+> Good point, how about this change:
 >
-> On x86 I see this during rmmod when iommu is enabled:
->
-> [  +0.012066] DMAR: DRHD: handling fault status reg 2
-> [ +0.000022] DMAR: [DMA Write] Request device [06:00.0] PASID ffffffff
-> fault addr 0 [fault reason 05] PTE Write access is not set
-> [  +0.014657] DMAR: DRHD: handling fault status reg 2
-> [ +0.000017] DMAR: [DMA Write] Request device [06:00.0] PASID ffffffff
-> fault addr 0 [fault reason 05] PTE Write access is not set
->
-> Is that the similar issue you are seeing, but just the printouts are
-> different due to different iommu implementation?
+> diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
+> index 5879f67bc88c..d9879b011fb0 100644
+> --- a/drivers/gpu/drm/msm/Kconfig
+> +++ b/drivers/gpu/drm/msm/Kconfig
+> @@ -5,7 +5,7 @@ config DRM_MSM
+>          depends on DRM
+>          depends on ARCH_QCOM || SOC_IMX5 || COMPILE_TEST
+>          depends on IOMMU_SUPPORT
+> -       depends on (OF && COMMON_CLK) || COMPILE_TEST
+> +       depends on (OF || COMPILE_TEST) && COMMON_CLK
 
-BTW, this patch should fix this:
+I'd make that:
 
-https://patchwork.kernel.org/project/linux-wireless/patch/20210913180246.193388-5-jouni@codeaurora.org/
+    -        depends on DRM
+    +       depends on COMMON_CLK && DRM && IOMMU_SUPPORT
+            depends on ARCH_QCOM || SOC_IMX5 || COMPILE_TEST
+    -        depends on IOMMU_SUPPORT
+    -       depends on (OF && COMMON_CLK) || COMPILE_TEST
+    +       depends on OF || COMPILE_TEST
+
+to keep a better separation between hard and soft dependencies.
+
+Note that the "depends on OF || COMPILE_TEST" can even be
+deleted, as the dependency on ARCH_QCOM || SOC_IMX5 implies OF.
+
+>          depends on QCOM_OCMEM || QCOM_OCMEM=n
+>          depends on QCOM_LLCC || QCOM_LLCC=n
+>          depends on QCOM_COMMAND_DB || QCOM_COMMAND_DB=n
+>
+
+Gr{oetje,eeting}s,
+
+                        Geert
 
 -- 
-https://patchwork.kernel.org/project/linux-wireless/list/
+Geert Uytterhoeven -- There's lots of Linux beyond ia32 -- geert@linux-m68k.org
 
-https://wireless.wiki.kernel.org/en/developers/documentation/submittingpatches
+In personal conversations with technical people, I call myself a hacker. But
+when I'm talking to journalists I just say "programmer" or something like that.
+                                -- Linus Torvalds
