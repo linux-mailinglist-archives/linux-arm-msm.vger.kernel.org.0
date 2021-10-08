@@ -2,195 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 21878426CC9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 16:33:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E379F426D2A
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 17:01:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232200AbhJHOfa (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Oct 2021 10:35:30 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48026 "EHLO
+        id S242715AbhJHPDg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Oct 2021 11:03:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54502 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230456AbhJHOfa (ORCPT
+        with ESMTP id S237929AbhJHPDf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Oct 2021 10:35:30 -0400
-Received: from mail-oi1-x230.google.com (mail-oi1-x230.google.com [IPv6:2607:f8b0:4864:20::230])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14593C061762
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Oct 2021 07:33:35 -0700 (PDT)
-Received: by mail-oi1-x230.google.com with SMTP id v10so13956547oic.12
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Oct 2021 07:33:35 -0700 (PDT)
+        Fri, 8 Oct 2021 11:03:35 -0400
+Received: from mail-io1-xd35.google.com (mail-io1-xd35.google.com [IPv6:2607:f8b0:4864:20::d35])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 64B1BC061570
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Oct 2021 08:01:40 -0700 (PDT)
+Received: by mail-io1-xd35.google.com with SMTP id n7so2207005iod.0
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Oct 2021 08:01:40 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=QgfxwBmF1+monDAdjg0g2KuWwbKnod/mIT9QO6h2iro=;
-        b=kZZWfT+PowKkZ01WdnR/B1jT/bbJbNn/nk3qm9dOEkSnkXGMSnwCE5oj5OyGVzAKlD
-         8g7BU3Wbwxtygo0NG7m8z1G1h91Zn2H8Uzr6zZItNJ+ctbiNn8SP2V+Uei79rv/VMoD6
-         ntkssCThEGK9QfAG36PGku21bWbycBVhaBd+4krVLC28qKTTxXCMLIp6Q6SLREmWI5YP
-         poopFO0ZBSFYuieiYcNJh9uxZr4n3JzdYH53+9son7vCgu+hw17EoMk6xX/GYczF28lB
-         NvWQ/hyqS4KHgD/S6OdDWD81XkhNT9Q0SJewpDCE1gE/AYAeqc74WsjlHK9Oj/CEj1Sk
-         MeqQ==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=3PHGp/IoliwDCxdoVOVUncmgSF/FJQTnGLZNrPyOlwA=;
+        b=mkfXRSkvYk7hX2Lcm22WsVUopafbV3eNIv217yFGxzNv+iQnUQ7cVp5CxLzZEB1j9p
+         ufOz/xVXo1fZl0wM0hoQHrdirNX4ui7nUg0xXYhz6krBWkM2WXjul7B4gC3NWBnLGVlD
+         JgidE1CmT2OG6Yow/Z/orP7HJWvJwFVdoPGpw=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=QgfxwBmF1+monDAdjg0g2KuWwbKnod/mIT9QO6h2iro=;
-        b=Oh3pX5uVPuRNwZY4e+5xYtUOvmaiORBla8K2oIK7727K42HfoOf9uino8rN8PNTrYD
-         p8NsZ/EThJkdGJYMe0zbj7zLY+yD+4gX52Mp1A7BBQcQobWFOmxbnQ19bz1t5boIqsYA
-         G5yoDwzb1Ux1oYCTziR75X4Htj6ldRqJUfXXMjMeZtKTqOQ9AMyrPf41w8b2q+qrw3wP
-         D5cep/WV4QZg5fGCnvnqXrJrO5mj7va8LUGRkXv1XqBElJnHJAluMKLYGz6C8boNXJDq
-         tXIyEgC7JrhTidvhXQ30D2qZHbUqxQmfcZwJJQnibuVn7Oo5OBwnEoVpr04RlQtjCzXi
-         61LA==
-X-Gm-Message-State: AOAM532d3mmqm5tRtHY9IDRyFiJdVdrNmGZsENfIN3tbtJgEtH9wfhJv
-        amqiz6zT7FTRncz/FwIENlvhAw==
-X-Google-Smtp-Source: ABdhPJztPy3B1mNAjhJ8cMLMpGBuT+PpLTVRAsaup4KklmIJNTxLcde2Bhdop0OObqSvkVfXvO+m7Q==
-X-Received: by 2002:aca:3656:: with SMTP id d83mr16497564oia.176.1633703614214;
-        Fri, 08 Oct 2021 07:33:34 -0700 (PDT)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id u9sm720809oiu.19.2021.10.08.07.33.33
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Oct 2021 07:33:33 -0700 (PDT)
-Date:   Fri, 8 Oct 2021 07:35:12 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Cc:     agross@kernel.org, lgirdwood@gmail.com, broonie@kernel.org,
-        robh+dt@kernel.org, plai@codeaurora.org, bgoswami@codeaurora.org,
-        perex@perex.cz, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org,
-        Venkata Prasad Potturu <potturu@codeaurora.org>
-Subject: Re: [PATCH v3] ASoC: qcom: soundwire: Enable soundwire bus clock for
- version 1.6
-Message-ID: <YWBXIIjPP7Qunyvf@ripper>
-References: <1633671232-30310-1-git-send-email-srivasam@codeaurora.org>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=3PHGp/IoliwDCxdoVOVUncmgSF/FJQTnGLZNrPyOlwA=;
+        b=a8GhdYqfDSfNvFMux8IXKRgPGU4BA/Vmw+EYj4ksX9kDAZ7Y5bL+OqUDfeAtHzuPFO
+         J+tqlqUEtxxnTFijMaB5ZcqT1fXVcxnR92pBf/KYioXzQm/eQv0Wmh7ewdSMZB2oiJzk
+         6KwDDTfE80WfJasUtTzQkjyB34z44k5h4MP85LhqiCL2T7rRAOuBvNtviKVpGbuNRa8i
+         iAfhUiL2sa4nGYWI2XEWC7Xeobbo66TJLw0tyW05vv/5j7aNDXF/IL+sQxY6yV36VVYo
+         6w9DqVmpZiSzs6SMipY0SHd4PGATiRAYc3LHaJknd4/SNgkkamxkB/RyOGMbRd3rvtC9
+         eiIQ==
+X-Gm-Message-State: AOAM530cezH2bTqihtCEZePnqzwjRgBDZ4drJusMURcGaO9mdPn9LSyE
+        1bY0ZlfFhMJcBFtVq0qmmADmTvBnzFmwLQ==
+X-Google-Smtp-Source: ABdhPJxRJTOffvYmeZDP6WHXoFacoqQg3yEMc7b5HHFos/NPej5zAGijZDPqF7NvcbpqoSfwJvtT2Q==
+X-Received: by 2002:a05:6602:240d:: with SMTP id s13mr7808914ioa.94.1633705299697;
+        Fri, 08 Oct 2021 08:01:39 -0700 (PDT)
+Received: from mail-io1-f44.google.com (mail-io1-f44.google.com. [209.85.166.44])
+        by smtp.gmail.com with ESMTPSA id b83sm1054832iof.5.2021.10.08.08.01.39
+        for <linux-arm-msm@vger.kernel.org>
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Fri, 08 Oct 2021 08:01:39 -0700 (PDT)
+Received: by mail-io1-f44.google.com with SMTP id y197so11030670iof.11
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Oct 2021 08:01:39 -0700 (PDT)
+X-Received: by 2002:a6b:f915:: with SMTP id j21mr7947271iog.98.1633705294174;
+ Fri, 08 Oct 2021 08:01:34 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1633671232-30310-1-git-send-email-srivasam@codeaurora.org>
+References: <20211005231323.2663520-1-bjorn.andersson@linaro.org>
+ <20211005231323.2663520-5-bjorn.andersson@linaro.org> <28fbd8f5b2d6bae7bedfc7e81e3fddd9@codeaurora.org>
+In-Reply-To: <28fbd8f5b2d6bae7bedfc7e81e3fddd9@codeaurora.org>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Fri, 8 Oct 2021 08:01:22 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XxXGP+JEmi-rtW+sTS6K1fKAV79GQ61fw34QqNRwMT9Q@mail.gmail.com>
+Message-ID: <CAD=FV=XxXGP+JEmi-rtW+sTS6K1fKAV79GQ61fw34QqNRwMT9Q@mail.gmail.com>
+Subject: Re: [Freedreno] [PATCH v4 4/7] drm/msm/dp: Allow attaching a drm_panel
+To:     Abhinav Kumar <abhinavk@codeaurora.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Kalyan Thota <kalyan_t@codeaurora.org>,
+        Kuogee Hsieh <khsieh@codeaurora.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu 07 Oct 22:33 PDT 2021, Srinivasa Rao Mandadapu wrote:
+Hi,
 
-> Add support for soundwire 1.6 version to gate RX/TX bus clock.
-> 
+On Tue, Oct 5, 2021 at 5:35 PM <abhinavk@codeaurora.org> wrote:
+>
+> > +     parser->panel_bridge = devm_drm_panel_bridge_add(dev, panel);
+> > +     if (IS_ERR(parser->panel_bridge)) {
+> > +             DRM_ERROR("failed to create panel bridge\n");
+> > +             return PTR_ERR(parser->panel_bridge);
+> > +     }
+>
+> When we add a bridge using devm_drm_panel_bridge_add(), it will register
+> with default bridge functions which is fine
+> because we need the panel power to be controlled here.
+>
+>
+> 140 static const struct drm_bridge_funcs panel_bridge_bridge_funcs = {
+> 141     .attach = panel_bridge_attach,
+> 142     .detach = panel_bridge_detach,
+> 143     .pre_enable = panel_bridge_pre_enable,
+> 144     .enable = panel_bridge_enable,
+> 145     .disable = panel_bridge_disable,
+> 146     .post_disable = panel_bridge_post_disable,
+> 147     .get_modes = panel_bridge_get_modes,
+>
+> But what about the EDID related things, the DP/eDP driver already reads
+> the EDID and gets the modes so we need to skip
+> that in this case as otherwise it will end up calling the
+> panel_get_modes in the eDP panel which will be redundant.
+>
+> Let me know if I am missing something in this proposal.
 
-Are you really adding soundwire 1.6 support in order to gate RX/TX bus
-clock?
+I haven't followed all the discussion of this patch series, but I've
+been keenly involved in the EDID problem in ti-sn65dsi86. What we
+ended up settling on for the TI bridge chip (ti-sn65dsi86.c) is:
 
-Could it be that you're ungating the bus clock so that soundwire 1.6
-starts working? The commit message should properly describe why you're
-doing your change.
+1. If you have a panel, the panel driver is in charge of EDID reading.
+This allows the panel to power itself up before it tries to read the
+EDID.
 
-> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+2. The EDP controller is in charge of providing the DP AUX bus to the
+panel driver.
 
-Venkata is the first who certified the origin of this patch, yet you're
-the author. Either this should be From Venkata (i.e. git commit
---author) or perhaps you need a Co-developed-by here to say that you
-collaborated on this and both certify its origin.
-
-> ---
-> Changes since v2:
->     -- Update error check after ioremap.
-
-What about the other things I noted in v2?
-
-> Changes since v1:
->     -- Add const name to mask value.
-> 
->  drivers/soundwire/qcom.c | 15 ++++++++++++++-
->  1 file changed, 14 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/soundwire/qcom.c b/drivers/soundwire/qcom.c
-> index 0ef79d6..bd6fabd 100644
-> --- a/drivers/soundwire/qcom.c
-> +++ b/drivers/soundwire/qcom.c
-> @@ -109,6 +109,7 @@
->  #define SWR_MAX_CMD_ID	14
->  #define MAX_FIFO_RD_RETRY 3
->  #define SWR_OVERFLOW_RETRY_COUNT 30
-> +#define SWRM_HCTL_REG_MASK ~BIT(1)
->  
->  struct qcom_swrm_port_config {
->  	u8 si;
-> @@ -127,6 +128,7 @@ struct qcom_swrm_ctrl {
->  	struct device *dev;
->  	struct regmap *regmap;
->  	void __iomem *mmio;
-> +	char __iomem *swrm_hctl_reg;
->  	struct completion broadcast;
->  	struct completion enumeration;
->  	struct work_struct slave_work;
-> @@ -610,6 +612,12 @@ static int qcom_swrm_init(struct qcom_swrm_ctrl *ctrl)
->  	val = FIELD_PREP(SWRM_MCP_FRAME_CTRL_BANK_ROW_CTRL_BMSK, ctrl->rows_index);
->  	val |= FIELD_PREP(SWRM_MCP_FRAME_CTRL_BANK_COL_CTRL_BMSK, ctrl->cols_index);
->  
-> +	if (ctrl->swrm_hctl_reg) {
-> +		val = ioread32(ctrl->swrm_hctl_reg);
-> +		val &= SWRM_HCTL_REG_MASK;
-
-Make a define with a name that clarifies what BIT(1) is and use that
-here, hiding a magic number in an empty define isn't making this more
-maintainable.
-
-Essentially put the name of the bit in the register description in a
-define and use that here.
-
-> +		iowrite32(val, ctrl->swrm_hctl_reg);
-> +	}
-> +
->  	ctrl->reg_write(ctrl, SWRM_MCP_FRAME_CTRL_BANK_ADDR(0), val);
->  
->  	/* Enable Auto enumeration */
-> @@ -1200,7 +1208,7 @@ static int qcom_swrm_probe(struct platform_device *pdev)
->  	struct qcom_swrm_ctrl *ctrl;
->  	const struct qcom_swrm_data *data;
->  	int ret;
-> -	u32 val;
-> +	int val, swrm_hctl_reg = 0;
-
-Don't you get a warning from passing val as an int to a function that
-takes a u32 pointer?
-
-Also there's no reason to zero-initialize swrm_hctl_reg.
-
->  
->  	ctrl = devm_kzalloc(dev, sizeof(*ctrl), GFP_KERNEL);
->  	if (!ctrl)
-> @@ -1251,6 +1259,11 @@ static int qcom_swrm_probe(struct platform_device *pdev)
->  	ctrl->bus.port_ops = &qcom_swrm_port_ops;
->  	ctrl->bus.compute_params = &qcom_swrm_compute_params;
->  
-> +	if (!of_property_read_u32(dev->of_node, "qcom,swrm-hctl-reg", &swrm_hctl_reg)) {
-
-As I said in my feedback of v2, this property is not documented in the
-DT binding.
+3. If the EDP controller needs to be powered up for DP AUX bus reads
+to happen, it should power itself up in the AUX bus transfer function
+and use "autosuspend" to keep from turning off and on constantly.
 
 
-But more important, upstream we do not approve of the downstream
-methodology of having properties pointing to single registers in some
-memory block somewhere.
+The above not only solves the EDID problem but also allows the generic
+eDP-panel code to work and also allows panels with DP AUX backlight
+control to work.
 
-Describe the hardware block that you reference fully in devicetree and
-make a proper reference to it.
 
-Unfortunately your patch lacks details necessary to know where this
-register lives, so it's not possible for me to recommend a proper
-design.
+For short term "getting something working", though, you could just
+rely on a hardcoded mode in the panel driver for now and forget about
+trying to read the EDID case for eDP.
 
-Regards,
-Bjorn
 
-> +		ctrl->swrm_hctl_reg = devm_ioremap(&pdev->dev, swrm_hctl_reg, 0x4);
-> +		if (!ctrl->swrm_hctl_reg)
-> +			return -ENODEV;
-> +	}
->  	ret = qcom_swrm_get_port_config(ctrl);
->  	if (ret)
->  		goto err_clk;
-> -- 
-> Qualcomm India Private Limited, on behalf of Qualcomm Innovation Center, Inc.,
-> is a member of Code Aurora Forum, a Linux Foundation Collaborative Project.
-> 
+NOTE: At the moment I think if you don't have a panel you should
+continue to read the EDID in the DP driver. That could always be
+changed in the future, but it was what Laurent was pushing for for
+ti-sn65dsi86.c.
+
+
+-Doug
