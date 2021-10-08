@@ -2,119 +2,133 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8280A427169
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 21:27:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5ED50427185
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 21:49:06 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240659AbhJHT3C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Oct 2021 15:29:02 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59890 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240480AbhJHT27 (ORCPT
+        id S241384AbhJHTvA (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Oct 2021 15:51:00 -0400
+Received: from mail-oi1-f174.google.com ([209.85.167.174]:37634 "EHLO
+        mail-oi1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231350AbhJHTu4 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Oct 2021 15:28:59 -0400
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id BF0DAC061755
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Oct 2021 12:27:03 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id w10-20020a056830280a00b0054e4e6c85a6so3898324otu.5
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Oct 2021 12:27:03 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=At+rzAF9JxliFGjcUgoCAeEDAuwuDjjyfL8d49BtplE=;
-        b=wxctF5hXYa0N79Ws1NmAATw4BqGCV9oYImePuBFjconnTc3/551vNWtiMD4qiUnRek
-         keuE4Hx+jRJ2ETervwUL1uSEqtxuA09JBA/Oi7XUrz1aBnyNEGFA7yLiFm/l46K/ihGM
-         pDfb/lT+zGw4WxKqKrKFaZM41xCZyf1IKQXfATwTLN43V94gsAmHLAbIYMO1XgG38VOt
-         3EXnLqCSpe5cgeVBJFeDa//fIRmHtzb89i/zbwDDoElGirfxrvDJMj97P+uBVD5khBr0
-         UhxJVuvYUZcg6gT7EDzjStgiQtlG+4WyfjXrWgYTwoOYPc5ZBgZkan3e2IK4VwkWLdIb
-         yX2w==
+        Fri, 8 Oct 2021 15:50:56 -0400
+Received: by mail-oi1-f174.google.com with SMTP id o83so7681102oif.4;
+        Fri, 08 Oct 2021 12:49:00 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=At+rzAF9JxliFGjcUgoCAeEDAuwuDjjyfL8d49BtplE=;
-        b=niIzZXB8061wgVOqsDp37N5MJptEztWw6sxex8yuzFPPkB0ULFl1jRg71YfdAvx4vf
-         tXR+k6hyimCyr29oJV+nS1HRqpGQ8JLpvsGkEAiSTUAKz1vJifSp/jeBhfku+jbVbpBL
-         uwkrNDx6VUKx0NcBXXB7fTUDnTpwXDHPFNwe2MtjAPfaUiZ8qqPozOCbHIUeHFhWa+Uw
-         YbnIQ7c08PAxfhKZEghvBYRdZZhAYLegCXIK2GhXzWd85cpZYWxuh9eP5vt3Sn1dWxYH
-         b+ZI6VEkgKgONZPQNPBvav8ExHthQNbxhnCMDGCP9xFmTcu6KINwFPZfy4z1gmZ9tLGF
-         fyqA==
-X-Gm-Message-State: AOAM530u7xJg5BQtplCK60LXAmzN9Q7aeScAcTg7UXRx09MSTKiXh044
-        1x452sQZV/KKqa5M7V/hbAeq4w==
-X-Google-Smtp-Source: ABdhPJyWpJLxOkZw0kyBxjYbEJdbXbpNO4H5eRTVP0sIn+HSfMN83JCI/sRWOF10LiWtStfKiX28ag==
-X-Received: by 2002:a9d:6a85:: with SMTP id l5mr10697270otq.122.1633721223062;
-        Fri, 08 Oct 2021 12:27:03 -0700 (PDT)
-Received: from localhost.localdomain ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id f2sm58397oia.44.2021.10.08.12.27.02
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=AyVTeSC8Yf3uhrD+x/CO53ijqdVFcAJcsxUhs3MRvmM=;
+        b=66t+NCfcwQzVMs5dck7HI9RARQEZY98Du0rcxGpN5NnakH+ZzWaF89Cc2f7bjui3s+
+         370PeYITtI1sZXC5ByWEe5ri4ZRkg8aWO6ZJVvYemyJLgAOWGV3G9z1wFRqbIU82eWX8
+         YFugSQM3GgaKAjKS6CKqq97KWHwTCuoU23r9awU+FHCk0L/P0dJFo6qofBdFi0aQo/2m
+         2f2Niz0IQj1qLLGjXeqB0bMtAFNBdIMUT55nk+6vqyicItsBMkXw1hIoiIrjf7poOdUu
+         0r/b8ebkiNJLXJHXjY5VbNqdknXAfgi+y2fXz8rztfy/yvowLcWUNtBfPB/ugniUw838
+         rrzA==
+X-Gm-Message-State: AOAM530VowKJHZ3d/r3+UOiZ3W89UpfEKZlr4uEszCQzg11ebx3wRbde
+        Ypo4Pu8vR+9QqBpzf+315Q==
+X-Google-Smtp-Source: ABdhPJxfsMuBS32ogXG9PGtxIo/2x9osllcxajr/6xd0Jr7jQHCTqWEa16x2E6BS+7PFnBz0C84cOw==
+X-Received: by 2002:aca:b388:: with SMTP id c130mr18261120oif.39.1633722540517;
+        Fri, 08 Oct 2021 12:49:00 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id k2sm42536oot.37.2021.10.08.12.48.58
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Fri, 08 Oct 2021 12:27:02 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Catalin Marinas <catalin.marinas@arm.com>,
-        Will Deacon <will@kernel.org>, Shawn Guo <shawnguo@kernel.org>,
-        linux-arm-kernel@lists.infradead.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org,
-        Stephan Gerhold <stephan@gerhold.net>
-Subject: [PATCH] arm64: defconfig: Enable Qualcomm prima/pronto drivers
-Date:   Fri,  8 Oct 2021 12:28:40 -0700
-Message-Id: <20211008192840.3593362-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.29.2
-MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+        Fri, 08 Oct 2021 12:48:59 -0700 (PDT)
+Received: (nullmailer pid 3211957 invoked by uid 1000);
+        Fri, 08 Oct 2021 19:48:56 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Cc:     broonie@kernel.org, lgirdwood@gmail.com,
+        linux-arm-msm@vger.kernel.org, plai@codeaurora.org,
+        devicetree@vger.kernel.org,
+        Venkata Prasad Potturu <potturu@codeaurora.org>,
+        robh+dt@kernel.org, perex@perex.cz, tiwai@suse.com,
+        swboyd@chromium.org, linux-kernel@vger.kernel.org,
+        srinivas.kandagatla@linaro.org, rohitkr@codeaurora.org,
+        judyhsiao@chromium.org, bgoswami@codeaurora.org, agross@kernel.org,
+        alsa-devel@alsa-project.org, bjorn.andersson@linaro.org
+In-Reply-To: <1633702144-19017-3-git-send-email-srivasam@codeaurora.org>
+References: <1633702144-19017-1-git-send-email-srivasam@codeaurora.org> <1633702144-19017-3-git-send-email-srivasam@codeaurora.org>
+Subject: Re: [PATCH v3 2/5] ASoC: qcom: dt-bindings: Add compatible names for lpass sc7280 digital codecs
+Date:   Fri, 08 Oct 2021 14:48:56 -0500
+Message-Id: <1633722536.892404.3211956.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The Qualcomm prima/pronto drivers consists of a remoteproc driver boot
-the combined WiFi and Bluetooth firmware on the related co-processor, a
-control driver to load calibration and settings firmware, the wcn36xx
-WiFi driver and the SMD based Bluetooth driver.
+On Fri, 08 Oct 2021 19:39:01 +0530, Srinivasa Rao Mandadapu wrote:
+> Update compatible names in va, wsa, rx and tx macro codes for lpass sc7280
+> 
+> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> ---
+>  Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml  | 4 +++-
+>  Documentation/devicetree/bindings/sound/qcom,lpass-tx-macro.yaml  | 4 +++-
+>  Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml  | 4 +++-
+>  Documentation/devicetree/bindings/sound/qcom,lpass-wsa-macro.yaml | 4 +++-
+>  4 files changed, 12 insertions(+), 4 deletions(-)
+> 
 
-Enable these in the defconfig to provide Bluetooth and WiFi on devices
-such as the Qualcomm Dragonboard 410c.
+Running 'make dtbs_check' with the schema in this patch gives the
+following warnings. Consider if they are expected or the schema is
+incorrect. These may not be new warnings.
 
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
----
- arch/arm64/configs/defconfig | 5 +++++
- 1 file changed, 5 insertions(+)
+Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+This will change in the future.
 
-diff --git a/arch/arm64/configs/defconfig b/arch/arm64/configs/defconfig
-index 39a448e9edd3..c39c96f14208 100644
---- a/arch/arm64/configs/defconfig
-+++ b/arch/arm64/configs/defconfig
-@@ -201,6 +201,7 @@ CONFIG_BT_HCIUART=m
- CONFIG_BT_HCIUART_LL=y
- CONFIG_BT_HCIUART_BCM=y
- CONFIG_BT_HCIUART_QCA=y
-+CONFIG_BT_QCOMSMD=m
- CONFIG_CFG80211=m
- CONFIG_MAC80211=m
- CONFIG_MAC80211_LEDS=y
-@@ -380,6 +381,7 @@ CONFIG_USB_NET_MCS7830=m
- CONFIG_ATH10K=m
- CONFIG_ATH10K_PCI=m
- CONFIG_ATH10K_SNOC=m
-+CONFIG_WCN36XX=m
- CONFIG_BRCMFMAC=m
- CONFIG_MWIFIEX=m
- CONFIG_MWIFIEX_PCIE=m
-@@ -1020,6 +1022,8 @@ CONFIG_REMOTEPROC=y
- CONFIG_QCOM_Q6V5_MSS=m
- CONFIG_QCOM_Q6V5_PAS=m
- CONFIG_QCOM_SYSMON=m
-+CONFIG_QCOM_WCNSS_PIL=m
-+CONFIG_RPMSG_CHAR=m
- CONFIG_RPMSG_QCOM_GLINK_RPM=y
- CONFIG_RPMSG_QCOM_GLINK_SMEM=m
- CONFIG_RPMSG_QCOM_SMD=y
-@@ -1043,6 +1047,7 @@ CONFIG_QCOM_SMD_RPM=y
- CONFIG_QCOM_SMP2P=y
- CONFIG_QCOM_SMSM=y
- CONFIG_QCOM_SOCINFO=m
-+CONFIG_QCOM_WCNSS_CTRL=m
- CONFIG_QCOM_APR=m
- CONFIG_ARCH_R8A774A1=y
- CONFIG_ARCH_R8A774B1=y
--- 
-2.29.2
+Full log is available here: https://patchwork.ozlabs.org/patch/1538394
+
+
+codec@3240000: 'clock-frequency' does not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-hdk.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dt.yaml
+
+codec@3240000: clock-names:4: 'fsgen' was expected
+	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-hdk.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dt.yaml
+
+codec@3240000: clock-names: Additional items are not allowed ('fsgen' was unexpected)
+	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-hdk.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dt.yaml
+
+codec@3240000: clock-names: ['mclk', 'npl', 'macro', 'dcodec', 'va', 'fsgen'] is too long
+	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-hdk.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dt.yaml
+
+codec@3240000: clocks: [[75, 1], [75, 0], [76, 102, 1], [76, 103, 1], [77, 0], [78]] is too long
+	arch/arm64/boot/dts/qcom/sm8250-hdk.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml
+
+codec@3240000: clocks: [[78, 1], [78, 0], [79, 102, 1], [79, 103, 1], [80, 0], [81]] is too long
+	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dt.yaml
+
+codec@3240000: clocks: [[86, 1], [86, 0], [87, 102, 1], [87, 103, 1], [88, 0], [89]] is too long
+	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
+
+codec@3370000: 'clock-frequency' does not match any of the regexes: 'pinctrl-[0-9]+'
+	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-hdk.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dt.yaml
+
+codec@3370000: clock-names:1: 'core' was expected
+	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-hdk.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dt.yaml
+	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dt.yaml
 
