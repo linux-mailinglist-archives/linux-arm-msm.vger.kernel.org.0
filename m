@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D6C864261D3
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 03:25:46 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 06A0E4261D5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 03:25:48 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S236988AbhJHB1g (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Oct 2021 21:27:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38912 "EHLO
+        id S239061AbhJHB1l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Oct 2021 21:27:41 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38906 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S237830AbhJHB1b (ORCPT
+        with ESMTP id S236805AbhJHB1c (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Oct 2021 21:27:31 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2F27C061764
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Oct 2021 18:25:36 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id n8so30599077lfk.6
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Oct 2021 18:25:36 -0700 (PDT)
+        Thu, 7 Oct 2021 21:27:32 -0400
+Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F99CC061772
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Oct 2021 18:25:37 -0700 (PDT)
+Received: by mail-lf1-x131.google.com with SMTP id b20so32911285lfv.3
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Oct 2021 18:25:37 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=y8Kd+xfjEORBsc4n3BHzpntVG1Hf41evxmwe7Q2QRKE=;
-        b=lCqUcM67pzlHiAgtQf7DThs1V02qml9XsYsykqJuO9bO4pqrtKSpRNE6Vix9wzFr+i
-         G3e35aULKRtlM1eL6Uba/fti8dmqhRQxfTxAmT1RwFQnv1P/gu9e6G9OsRXIK7+IpzWF
-         TDrRHAHK/v5tglF6Tk3LuK6dazkZLklskVUTODbH0a8owKNzVQC0c8of/tn1mJz41gW2
-         mM5iT6lG13VEdvQxELS+1jmz0L5halJwMPklKAGhl2+8Wds9B27zBAJLV6ZLfdky9w6c
-         UWJ6w/lfXcYeMQRAF7vJVcQNVPlmheYAI7K/C6ZMpQC8Sg0aDFnSYXrD527DSDGCSxVD
-         SM7g==
+        bh=+kHxD4AyFKHTUkzUIxG/0HGOEUmjqFeIEbITSocdKfU=;
+        b=FnMeBDx4co3rsikNmA1+yvAsBmxVSkiWs5uWbbwykTb4OfQVbqqzyofcLbaA/OeBbU
+         5lFh3JQm9/xHlSNWM+xdsRNLzzGpKY3s6B0sSE9eU2GB9wZUmHhUTEJEYX1kOya4MV6q
+         L6DpFPTtXVpbVwnhr3bryYfzAUjfRnoUAtw6ofnOu/+RhslY7TUA54T0xBekKxQYKGRK
+         prTgFfgfgau71HWn0+4NAjzNk3yfvqx5JV4yY77kXNJ/ArBufx0hc7zKJ2E9YdsiYJzg
+         VCbEwswd+sq9yDKO2D5o88li6S7B9gJu1lHpH29lOiff0ULC1S2dpxlwCZqnI0U21OqY
+         4mqg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=y8Kd+xfjEORBsc4n3BHzpntVG1Hf41evxmwe7Q2QRKE=;
-        b=2E+zHL4hTb0+fWfSzh1FywyY3x7weQXfX6IIhNrLNcwd96K43Pmq2zzmsFgmNnmT1j
-         YITxzVYjacyc+e08RYkf4XKjc9MY3LXs0Te2gpyAaeMYmRQ/jrsQ0e1cckoDsS+rxsb2
-         skK+O4L6dFCmaOuI4Hj77F1trYE2sDSipJheUztxiVuRc9vQoMGG2kISJYp56YpApGvH
-         tbtfimVAyPQ6vUuOCf02j+AZA6q4Z+ei9ahtOQ9uGf0QDF5c3KMEepIPKKZEtHraqo3T
-         W5b/jsbZ82/ReHqaHbgwIEjxYTB77RsifZ/RmDKAAhDzMeWumLfEh9v1ysf1tFvqwzD7
-         6nww==
-X-Gm-Message-State: AOAM530aZmcc8LtBTprAUgALTSpB2yBYhnkrJgXR+jJs6Vii1iifCu5g
-        MT9wyLIAorZh71f5zSVYAowxPQ==
-X-Google-Smtp-Source: ABdhPJwEzudtRN+UIRr5UjSZt36BotkT/oqZHPeRL1+Y8hKKotIxmNoTgLuKsSa/3NgQtg732V8QlQ==
-X-Received: by 2002:a2e:2f1b:: with SMTP id v27mr357533ljv.448.1633656335324;
-        Thu, 07 Oct 2021 18:25:35 -0700 (PDT)
+        bh=+kHxD4AyFKHTUkzUIxG/0HGOEUmjqFeIEbITSocdKfU=;
+        b=o89GZAKW8PU1NcLyz5dFETxXfxT7s3wqX4uO09rgiFD0t8iQarGfPrsvpwTeynuog4
+         picJqpCTudD/XI330Y9kvBBbVwCMsrL49kS2PQN3uuQ4W29zbl5XiJ6Nyle2RmyDDOBP
+         2R4+lI4vcl8TTWbbcNK7jsXAttcmChaBp+zhkFQQS1ZWZ059ccNBrcRXZPqOXBzZQj8T
+         X/Gvcj+XJ7nZ4n881bT55YPoSxcb0kEJKqnXGLX8ymIJ7pt7Wwys8l23SfHqLhVRRt19
+         xEO4ISMHFrg2BEObQD8beS4Lq4De637KLD7jXulkUtSh2zKHz/vvLANOQ8JkOKucy8eD
+         e5Ww==
+X-Gm-Message-State: AOAM533tusRA0h4fpfX7K7A1aMJ4MqSZIXDGIbSPyBqhJFHEoD2OAcwz
+        icJTYzL3n7PZbWaQbm9YwQf15Q==
+X-Google-Smtp-Source: ABdhPJy80doFhzt0+g2B6bpAXm2L2Zu5Oaz1R/LM20rb7sLWCWSe8CY9FhMqcWitOVN9d1RDTYrHrA==
+X-Received: by 2002:a05:6512:3d13:: with SMTP id d19mr7190869lfv.607.1633656336004;
+        Thu, 07 Oct 2021 18:25:36 -0700 (PDT)
 Received: from umbar.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id s4sm112875ljp.115.2021.10.07.18.25.34
+        by smtp.gmail.com with ESMTPSA id s4sm112875ljp.115.2021.10.07.18.25.35
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Oct 2021 18:25:34 -0700 (PDT)
+        Thu, 07 Oct 2021 18:25:35 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -55,9 +55,9 @@ To:     Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>
 Cc:     linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
-Subject: [PATCH v3 11/25] arm64: dts: qcom: pm8994: fix mpps device tree node
-Date:   Fri,  8 Oct 2021 04:25:10 +0300
-Message-Id: <20211008012524.481877-12-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 12/25] arm64: dts: qcom: apq8016-sbc: fix mpps state names
+Date:   Fri,  8 Oct 2021 04:25:11 +0300
+Message-Id: <20211008012524.481877-13-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20211008012524.481877-1-dmitry.baryshkov@linaro.org>
 References: <20211008012524.481877-1-dmitry.baryshkov@linaro.org>
@@ -67,32 +67,37 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add missing "qcom,spmi-mpp" to the compatible list as required by the
-node description. Also add gpio-ranges property to mpps device tree
-node, adding the mapping between pinctrl and GPIO pins.
+The majority of device tree nodes for mpps use xxxx-state as pinctrl
+nodes. Change names of mpps pinctrl nodes for the apq8016-sbc board to
+follow that pattern.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/pm8994.dtsi | 3 ++-
- 1 file changed, 2 insertions(+), 1 deletion(-)
+ arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/pm8994.dtsi b/arch/arm64/boot/dts/qcom/pm8994.dtsi
-index ad19016df047..88a9d19b60ac 100644
---- a/arch/arm64/boot/dts/qcom/pm8994.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm8994.dtsi
-@@ -119,10 +119,11 @@ pm8994_gpios: gpios@c000 {
- 		};
+diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+index f8d8f3e3664e..a250145849cd 100644
+--- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
++++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
+@@ -809,7 +809,7 @@ &pm8916_mpps {
+ 	pinctrl-names = "default";
+ 	pinctrl-0 = <&ls_exp_gpio_f>;
  
- 		pm8994_mpps: mpps@a000 {
--			compatible = "qcom,pm8994-mpp";
-+			compatible = "qcom,pm8994-mpp", "qcom,spmi-mpp";
- 			reg = <0xa000>;
- 			gpio-controller;
- 			#gpio-cells = <2>;
-+			gpio-ranges = <&pm8994_mpps 0 0 8>;
- 			interrupts = <0 0xa0 0 IRQ_TYPE_NONE>,
- 				     <0 0xa1 0 IRQ_TYPE_NONE>,
- 				     <0 0xa2 0 IRQ_TYPE_NONE>,
+-	ls_exp_gpio_f: pm8916-mpp4 {
++	ls_exp_gpio_f: pm8916-mpp4-state {
+ 		pins = "mpp4";
+ 		function = "digital";
+ 
+@@ -817,7 +817,7 @@ ls_exp_gpio_f: pm8916-mpp4 {
+ 		power-source = <PM8916_MPP_L5>;	// 1.8V
+ 	};
+ 
+-	pm8916_mpps_leds: pm8916-mpps-leds {
++	pm8916_mpps_leds: pm8916-mpps-state {
+ 		pins = "mpp2", "mpp3";
+ 		function = "digital";
+ 
 -- 
 2.30.2
 
