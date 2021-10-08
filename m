@@ -2,64 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 23804426639
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 10:50:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 068B2426677
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 11:15:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229853AbhJHIwt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Oct 2021 04:52:49 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:38970 "EHLO m43-7.mailgun.net"
+        id S229853AbhJHJR1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Oct 2021 05:17:27 -0400
+Received: from m43-7.mailgun.net ([69.72.43.7]:54427 "EHLO m43-7.mailgun.net"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229673AbhJHIwr (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Oct 2021 04:52:47 -0400
+        id S229637AbhJHJR1 (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 8 Oct 2021 05:17:27 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1633683052; h=Content-Transfer-Encoding: Content-Type:
+ s=smtp; t=1633684532; h=Content-Transfer-Encoding: Content-Type:
  In-Reply-To: MIME-Version: Date: Message-ID: From: References: Cc: To:
- Subject: Sender; bh=ssTCzAJW4KsbNSp7XkqqLGqNhNhRH4PblSGftvSlO10=; b=Jsq5+iTLC+kp1LymT9ivOxZcsauKntQXUC/A9vDfPP0VQijPiPriTebetaKSAwnVrVAFgZRH
- AO2vNzFwJ9/ubhFwAHln03/Mw0qCAHckG/Bvhplmm2Kf+HV8+FxaZOErL6VQNjgq2yioalxl
- yfi6wXXmCJe5uNVovChZJ5cGDmw=
+ Subject: Sender; bh=O1dvGLkJryt1Np3uFmSn2mRuBEvcRBygeog5lcPNHVE=; b=YcXW9un6pBTz3edSfQJffpFpZ3z3yNso0Ndfhozulmi5Ad3GxhgP5b6Q2AqFkWo76CUmuGiE
+ 8Z8CfAMJJck0N71Pv70d250RTmkNj8Q9fDB7y6tGiV2RS4X6P41fvcbkbrBPSsPigYmnq7wY
+ DNNYmYBwnw61kZKkc9G3wq7Ch9c=
 X-Mailgun-Sending-Ip: 69.72.43.7
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-east-1.postgun.com with SMTP id
- 6160065a446c6db0cb94b58d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 08 Oct 2021 08:50:34
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 61600c324ccc4cf2c7e0540e (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 08 Oct 2021 09:15:30
  GMT
 Sender: mkshah=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 45283C43460; Fri,  8 Oct 2021 08:50:33 +0000 (UTC)
+        id C0D12C43618; Fri,  8 Oct 2021 09:15:29 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
 X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
+        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
 Received: from [192.168.29.129] (unknown [49.36.85.177])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id C2662C4338F;
-        Fri,  8 Oct 2021 08:50:27 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org C2662C4338F
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id D8D66C4338F;
+        Fri,  8 Oct 2021 09:15:22 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org D8D66C4338F
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Subject: Re: [PATCH v11 1/5] dt-bindings: Introduce QCOM Sleep stats bindings
+Subject: Re: [PATCH v11 2/5] soc: qcom: Add Sleep stats driver
 To:     Stephan Gerhold <stephan@gerhold.net>
 Cc:     swboyd@chromium.org, mka@chromium.org, evgreen@chromium.org,
         bjorn.andersson@linaro.org, linux-arm-msm@vger.kernel.org,
         linux-kernel@vger.kernel.org, agross@kernel.org,
         dianders@chromium.org, linux@roeck-us.net, rnayak@codeaurora.org,
-        lsrao@codeaurora.org, devicetree@vger.kernel.org
+        lsrao@codeaurora.org,
+        Mahesh Sivasubramanian <msivasub@codeaurora.org>,
+        Lina Iyer <ilina@codeaurora.org>,
+        Yassine Oudjana <y.oudjana@protonmail.com>
 References: <1633600649-7164-1-git-send-email-mkshah@codeaurora.org>
- <1633600649-7164-2-git-send-email-mkshah@codeaurora.org>
- <YV9PN1JNPhVQb8jN@gerhold.net>
+ <1633600649-7164-3-git-send-email-mkshah@codeaurora.org>
+ <YV88fNYF0i1Wkr73@gerhold.net>
 From:   Maulik Shah <mkshah@codeaurora.org>
-Message-ID: <b4c26217-67b1-516a-325f-a58e321c4e09@codeaurora.org>
-Date:   Fri, 8 Oct 2021 14:20:24 +0530
+Message-ID: <acaf7b6e-c5b7-ae27-c4ba-37f375f05f19@codeaurora.org>
+Date:   Fri, 8 Oct 2021 14:45:20 +0530
 User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
  Thunderbird/78.14.0
 MIME-Version: 1.0
-In-Reply-To: <YV9PN1JNPhVQb8jN@gerhold.net>
+In-Reply-To: <YV88fNYF0i1Wkr73@gerhold.net>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-GB
 Content-Transfer-Encoding: 7bit
@@ -67,135 +69,127 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephan,
+Hi,
 
-On 10/8/2021 1:20 AM, Stephan Gerhold wrote:
-> On Thu, Oct 07, 2021 at 03:27:25PM +0530, Maulik Shah wrote:
+On 10/7/2021 11:59 PM, Stephan Gerhold wrote:
+> Hi Maulik,
+> 
+> On Thu, Oct 07, 2021 at 03:27:26PM +0530, Maulik Shah wrote:
 >> From: Mahesh Sivasubramanian <msivasub@codeaurora.org>
 >>
->> Add device binding documentation for Qualcomm Technologies, Inc. (QTI)
->> Sleep stats driver. The driver is used for displaying Sleep statistic maintained
->> by Always On Processor or Resource Power Manager.
+>> Let's add a driver to read the stats from remote processor and
+>> export to debugfs.
 >>
->> Cc: devicetree@vger.kernel.org
+>> The driver creates "qcom_sleep_stats" directory in debugfs and
+>> adds files for various low power mode available. Below is sample
+>> output with command
+>>
+>> cat /sys/kernel/debug/qcom_sleep_stats/ddr
+>> count = 0
+>> Last Entered At = 0
+>> Last Exited At = 0
+>> Accumulated Duration = 0
+>>
 >> Signed-off-by: Mahesh Sivasubramanian <msivasub@codeaurora.org>
 >> Signed-off-by: Lina Iyer <ilina@codeaurora.org>
+>> [mkshah: add subsystem sleep stats, create one file for each stat]
 >> Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
->> Reviewed-by: Rob Herring <robh@kernel.org>
->> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 >> ---
->>   .../bindings/soc/qcom/qcom-sleep-stats.yaml        | 47 ++++++++++++++++++++++
->>   1 file changed, 47 insertions(+)
->>   create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom-sleep-stats.yaml
+>>   drivers/soc/qcom/Kconfig            |  10 ++
+>>   drivers/soc/qcom/Makefile           |   1 +
+>>   drivers/soc/qcom/qcom_sleep_stats.c | 259 ++++++++++++++++++++++++++++++++++++
+>>   3 files changed, 270 insertions(+)
+>>   create mode 100644 drivers/soc/qcom/qcom_sleep_stats.c
 >>
->> diff --git a/Documentation/devicetree/bindings/soc/qcom/qcom-sleep-stats.yaml b/Documentation/devicetree/bindings/soc/qcom/qcom-sleep-stats.yaml
->> new file mode 100644
->> index 0000000..5213daf
->> --- /dev/null
->> +++ b/Documentation/devicetree/bindings/soc/qcom/qcom-sleep-stats.yaml
->> @@ -0,0 +1,47 @@
->> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
->> +%YAML 1.2
->> +---
->> +$id: http://devicetree.org/schemas/soc/qcom/qcom-sleep-stats.yaml#
->> +$schema: http://devicetree.org/meta-schemas/core.yaml#
+>> [...]
 >> +
->> +title: Qualcomm Technologies, Inc. (QTI) Sleep stats bindings
+>> +static int qcom_subsystem_sleep_stats_show(struct seq_file *s, void *unused)
+>> +{
+>> +	struct subsystem_data *subsystem = s->private;
+>> +	struct sleep_stats *stat;
 >> +
->> +maintainers:
->> +  - Maulik Shah <mkshah@codeaurora.org>
+>> +	/* Items are allocated lazily, so lookup pointer each time */
+>> +	stat = qcom_smem_get(subsystem->pid, subsystem->smem_item, NULL);
+>> +	if (IS_ERR(stat))
+>> +		return -EIO;
 >> +
->> +description:
->> +  Always On Processor/Resource Power Manager maintains statistics of the SoC
->> +  sleep modes involving powering down of the rails and oscillator clock.
+>> [...]
 >> +
->> +  Statistics includes SoC sleep mode type, number of times low power mode were
->> +  entered, time of last entry, time of last exit and accumulated sleep duration.
+>> +static void qcom_create_subsystem_stat_files(struct dentry *root)
+>> +{
+>> +	const struct sleep_stats *stat;
+>> +	int i;
 >> +
->> +properties:
->> +  compatible:
->> +    enum:
->> +      - qcom,rpmh-sleep-stats
->> +      - qcom,rpm-sleep-stats
+>> +	for (i = 0; i < ARRAY_SIZE(subsystems); i++) {
+>> +		stat = qcom_smem_get(subsystems[i].pid, subsystems[i].smem_item, NULL);
+>> +		if (IS_ERR(stat))
+>> +			continue;
 >> +
->> +  reg:
->> +    maxItems: 1
->> +
->> +required:
->> +  - compatible
->> +  - reg
->> +
->> +additionalProperties: false
->> +
->> +examples:
->> +  # Example of rpmh sleep stats
->> +  - |
->> +    sram@c3f0000 {
->> +      compatible = "qcom,rpmh-sleep-stats";
->> +      reg = <0x0c3f0000 0x400>;
->> +    };
->> +  # Example of rpm sleep stats
->> +  - |
->> +    sram@4690000 {
->> +      compatible = "qcom,rpm-sleep-stats";
->> +      reg = <0x04690000 0x400>;
->> +    };
+>> +		debugfs_create_file(subsystems[i].name, 0400, root, (void *)&subsystems[i],
+>> +				    &qcom_subsystem_sleep_stats_fops);
 > 
-> Does this region really only contain "rpm-*sleep*-stats"? AFAICT this is
-> really a more generic memory region where various offsets are read from.
+> This causes WARNINGs on MSM8996 and MSM8916:
+> 
+> [    0.503054] ------------[ cut here ]------------
+> [    0.503100] WARNING: CPU: 1 PID: 1 at drivers/soc/qcom/smem.c:587 qcom_smem_get+0x184/0x1b0
+> [    0.503184] CPU: 1 PID: 1 Comm: swapper/0 Not tainted 5.15.0-rc4+ #378
+> [    0.503218] Hardware name: Xiaomi Mi Note 2 (DT)
+> [    0.503278] pc : qcom_smem_get+0x184/0x1b0
+> [    0.503307] lr : qcom_sleep_stats_probe+0xfc/0x20
+> [    0.503875] Call trace:
+> [    0.503896]  qcom_smem_get+0x184/0x1b0
+> [    0.503925]  qcom_sleep_stats_probe+0xfc/0x270
+> 
+> AFAICT from downstream the smem subsystem information is only read in
+> the rpmh_master_stat.c driver, should this be specific to RPMh?
 
-Right the area contains all kind of sleep stats/logs.
+Thanks for checking this on MSM8996. Probably it doesnot have SMEM items 
+allocated so causes WARNINGs.
+
+Keeping subsystem stats info in SMEM is not limited to only RPMH 
+targets. Downstream has some RPM targets which also uses SMEM to store
+subsystem stats so the driver is kept generic.
 
 > 
-> These are all the offsets in msm8998-pm.dtsi downstream [1]:
->    ...9000c: rpm-rail-stats offset
->    ...90014: rpm-sleep-stats offset (RPM_DYNAMIC_ADDR in your driver)
->    ...90018: rpm-log offset
->    ...9001c: "RPM FREE HEAP SPACE"
-> 
-> How would you set up any of the other drivers if the entire region
-> is declared as "rpm-sleep-stats"?
+> There is a rpm_master_stat.c too but that looks quite different,
+> so I guess the approach is different with RPM?
 
-We don't need to setup other drivers.
-The idea is to have single stats driver (qcom_sleep_stats) that can be 
-enahanced to to read other stats also on both RPM/ PRMH targets.
-
-Today this driver reads only sleep stats from offset 0x90014.
-if in future say, we want to read rpm-rail-stats from offset 0x9000c 
-then it can be added in the existing driver.
-
-In the rpm data, add one more entry to indicate reading rpm-rail-stats,
-something like below and add new compatible flag for the target, may be
-"qcom,rpm-sleep-stats-legacy" and should work like,
-
-#define RPM_RAIL_STATS_ADDR 0xc
-
-static const struct stats_config rpm_data = {
-         .stats_offset = 0,
-         .num_records = 2,
-         .appended_stats_avail = true,
-         .dynamic_offset = true,
-         .rpm_rail_stats = true,
-};
-
-and check in driver probe like
-
-         if (config->rpm_rail_stats) {
-	//create rpm rail stats related files.
-         }
-
-Similarly for other rpm-logs / any other stats can be added in same driver.
-
-Hope this clarifies.
+Right. on existing upstream RPM targets i can skip to create/get SMEM 
+items since
+they are not guranteed to be present and one should continue to use 
+rpm_master_stats.c to get subsystem stats. (this uses entirely different 
+data structure for sleep stats and are not part of RPM data ram/SMEM and 
+are deprecated in downstream).
 
 > 
-> Perhaps this region should have a more generic name that represents what
-> it actually is and not only one of the information it contains, similar
-> to "qcom,rpm-msg-ram"?
+> Two more (unrelated) issues here:
+> 
+>    1. This will silently not register anything if SMEM probes after the
+>       qcom-sleep-stats driver (qcom_smem_get() will return -EPROBE_DEFER)
+>       and you will just skip registering the debugfs files.
 
-sram looks good to me. Actually on RPM targets its RPM data ram and RPMH 
-targets its msgram. To keep the name common sram is used here.
+I think module loading internally takes care of this.
+we're making a direct function call into the qcom_smem driver, so we
+already have a hard dependency on qcom_smem.ko being loaded.
+
+> 
+>    2. In qcom_subsystem_sleep_stats_show() you say
+>       /* Items are allocated lazily, so lookup pointer each time */
+> 
+>       But, if the lookup fails here you don't register the debugfs file
+>       at all. Does this work if the subsystem is started after this driver?
+
+Good catch. if the subsystem starts after this driver is loaded, the 
+look up fails during probe and we don't create debugfs file for the 
+subsystem.
+
+one need to unload/load the driver again after sometime in bootup so by 
+that time all the subsytems (modem, adsp, cdsp, etc) are up and we 
+create debugfs file for them.
+
+we have downstream fix for this to create the debugfs files irrespective 
+of look up fails or not. i have plan to add it once the base driver gets 
+merged.
 
 Thanks,
 Maulik
@@ -203,8 +197,6 @@ Maulik
 > 
 > Thanks,
 > Stephan
-> 
-> [1]: https://source.codeaurora.org/quic/la/kernel/msm-4.4/tree/arch/arm/boot/dts/qcom/msm8998-pm.dtsi?h=LA.UM.8.4.1.c25#n271
 > 
 
 -- 
