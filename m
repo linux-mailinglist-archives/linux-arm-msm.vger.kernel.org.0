@@ -2,99 +2,82 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id D26C342731F
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 23:38:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C143F427357
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 23:58:18 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S243446AbhJHVkF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Oct 2021 17:40:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33574 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231714AbhJHVkC (ORCPT
+        id S243505AbhJHWAL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Oct 2021 18:00:11 -0400
+Received: from mail-oi1-f170.google.com ([209.85.167.170]:35368 "EHLO
+        mail-oi1-f170.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231774AbhJHWAL (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Oct 2021 17:40:02 -0400
-Received: from mail-io1-xd2a.google.com (mail-io1-xd2a.google.com [IPv6:2607:f8b0:4864:20::d2a])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 50D69C061755
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Oct 2021 14:38:06 -0700 (PDT)
-Received: by mail-io1-xd2a.google.com with SMTP id i189so4499420ioa.1
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Oct 2021 14:38:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=google.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=b/00gewG7UHvLp0h/Ly/IXeN+qoVZwxiCoqxtVebbaI=;
-        b=dQ0efTIPLYgHkP9U3dBEnvmvLY8za0lfnn/jylE/ulZ7zzSc1RBgqjCPWTJbCywGq6
-         cpcZej1RcJAyZQ/UhxVaE7tvdYg7DQI/2Els9a0Xjzo6Si3dcWw3ltdvGFRVsCniX3+0
-         LABaOfhs3fvNty6v0UECd4B4StXBRl+6QmoiwtXAfBPgIvUqenZJEs+NqDqIM9rGE9Rf
-         QhXCblG3djveSWk5T98TPMRXSDvDnmaNIOsPKPZyXJKg4hjzaw+Cv1z4APTMPb1YMLy4
-         A3X643heB80Rhlfhmo6o2AFNOf4UfJEKkndgWAky5btmvpHG/9hVh1G1AJGX9Cjolc2i
-         WkpQ==
+        Fri, 8 Oct 2021 18:00:11 -0400
+Received: by mail-oi1-f170.google.com with SMTP id n64so15562778oih.2;
+        Fri, 08 Oct 2021 14:58:15 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=b/00gewG7UHvLp0h/Ly/IXeN+qoVZwxiCoqxtVebbaI=;
-        b=7xWe6dtXgtDkBJz4BM1Ax2cfvb+zRQx6Svz7pWjQLU587MDUzZXga9pgcbcnSVifEv
-         eLpEZfcygAv2kqgSq/jga9S5f+1z+6YGSG9eMyOKFB7xyGecTvDeR+6xtwxOmFcBNmKU
-         xxhJecxGdfk0yeiXUvvSZVPkkLj0dciBccNnJoEFyhNPjNrFOm9DtKt9sYyiWa6ynXtS
-         +iCoFW9CmFuwAwrBZ9pmex+mWLg/6xcqyzubsFt+EV2yS24azG8gmA6t4mm7RlkzvMuL
-         U/IzC/OV52/zM9RQMvHApSWDHtFGSFpuQsr3r/FsGMosLy9AQ1tV3dPu+bTq8P6C5vOA
-         g8gw==
-X-Gm-Message-State: AOAM533M7fAtXGGHMOdF3OosFoAQQTfc+Anmfx0qTyBgauxzJ8IYTrJK
-        dThTUSFPA354k27dkQN9yaUTYLUG4ewhVz05MHuwxg==
-X-Google-Smtp-Source: ABdhPJyTKjP0ROPI3lwiR64pOofPrdgty82JjDrOFyBtUPNFTt7D9ijmUlMj5dyBjrcq0P+6VIjSXFzDNz2EEnEXtzw=
-X-Received: by 2002:a6b:f915:: with SMTP id j21mr9273745iog.98.1633729085509;
- Fri, 08 Oct 2021 14:38:05 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=J+PB1GhDEx5QjCPzMUbl+MUlC9KDbTpIS4i7gs7AJxk=;
+        b=WEpqOwVb6ngRBTjKo40dkiEIb1Ft3DuWUy8tVBfXpKr2uevMR/QhaS48xEkmhFvPvP
+         10H7KEV3+WHJjYbqOH9TAnc9LQj0PRg/dncQbOCPlSv47K1a8DCFzZPTQUPdHV6gpaej
+         kyeF1fnrE4QnZm3EdX7GMm/zBg9+gdfj4ASyXgFMjhUkGiDpQ8dJO1pa4FpzZv0EhQK+
+         4MqTPIGuS5jHi8Xw4KG+qa0oJvHHu7o7vf49RlwTmwBNuZaSRfNld89LomKe5rn+NFzb
+         d7xh8kE7FavD/UdeqrPnwIeTxZjMIa8Q3ri3qlxgsD0M0LYvfn/WGiZOZClRA1yH0QtU
+         LKpw==
+X-Gm-Message-State: AOAM531gaLiTyukCoRe6B2kpPAw8BVWAsDCFKL/kEKjxtPP8yvIU/iTe
+        Jr+DSHd2anUkbmYw2OXUXg==
+X-Google-Smtp-Source: ABdhPJwJXLGgMO3pWGsrCW8mdAxa0PsY9A5IlolFsjx2OCeIr+FJ1Tl1xWw/2AZ+gYpjjrSfvCRY2w==
+X-Received: by 2002:aca:4303:: with SMTP id q3mr11391664oia.9.1633730295280;
+        Fri, 08 Oct 2021 14:58:15 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id i24sm134566oie.42.2021.10.08.14.58.14
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Oct 2021 14:58:14 -0700 (PDT)
+Received: (nullmailer pid 3389719 invoked by uid 1000);
+        Fri, 08 Oct 2021 21:58:13 -0000
+Date:   Fri, 8 Oct 2021 16:58:13 -0500
+From:   Rob Herring <robh@kernel.org>
+To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+Cc:     srinivas.kandagatla@linaro.org, plai@codeaurora.org,
+        robh+dt@kernel.org, lgirdwood@gmail.com, judyhsiao@chromium.org,
+        broonie@kernel.org, tiwai@suse.com, rohitkr@codeaurora.org,
+        devicetree@vger.kernel.org, agross@kernel.org,
+        bgoswami@codeaurora.org, perex@perex.cz,
+        linux-arm-msm@vger.kernel.org, bjorn.andersson@linaro.org,
+        swboyd@chromium.org, linux-kernel@vger.kernel.org,
+        alsa-devel@alsa-project.org,
+        Venkata Prasad Potturu <potturu@codeaurora.org>
+Subject: Re: [PATCH v3 2/5] ASoC: qcom: dt-bindings: Add compatible names for
+ lpass sc7280 digital codecs
+Message-ID: <YWC+9TjkadLfJcV0@robh.at.kernel.org>
+References: <1633702144-19017-1-git-send-email-srivasam@codeaurora.org>
+ <1633702144-19017-3-git-send-email-srivasam@codeaurora.org>
 MIME-Version: 1.0
-References: <20210930030557.1426-1-bjorn.andersson@linaro.org>
- <20210930030557.1426-3-bjorn.andersson@linaro.org> <YV5vIyhy+m+Nx/gQ@ripper>
-In-Reply-To: <YV5vIyhy+m+Nx/gQ@ripper>
-From:   Doug Anderson <dianders@google.com>
-Date:   Fri, 8 Oct 2021 14:37:52 -0700
-Message-ID: <CAD=FV=UZoZ6amH9KfJOMWy9AHfGOuEpCPJYDy5YCtks6WqVkLw@mail.gmail.com>
-Subject: Re: [PATCH v6 3/3] drm/bridge: ti-sn65dsi86: Implement the pwm_chip
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Robert Foss <robert.foss@linaro.org>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
-        Neil Armstrong <narmstrong@baylibre.com>,
-        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
-        Jonas Karlman <jonas@kwiboo.se>,
-        Jernej Skrabec <jernej.skrabec@gmail.com>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Thierry Reding <thierry.reding@gmail.com>,
-        "Uwe Kleine-K?nig" <u.kleine-koenig@pengutronix.de>,
-        Lee Jones <lee.jones@linaro.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        LKML <linux-kernel@vger.kernel.org>,
-        linux-pwm <linux-pwm@vger.kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <1633702144-19017-3-git-send-email-srivasam@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi,
+On Fri, 08 Oct 2021 19:39:01 +0530, Srinivasa Rao Mandadapu wrote:
+> Update compatible names in va, wsa, rx and tx macro codes for lpass sc7280
+> 
+> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
+> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> ---
+>  Documentation/devicetree/bindings/sound/qcom,lpass-rx-macro.yaml  | 4 +++-
+>  Documentation/devicetree/bindings/sound/qcom,lpass-tx-macro.yaml  | 4 +++-
+>  Documentation/devicetree/bindings/sound/qcom,lpass-va-macro.yaml  | 4 +++-
+>  Documentation/devicetree/bindings/sound/qcom,lpass-wsa-macro.yaml | 4 +++-
+>  4 files changed, 12 insertions(+), 4 deletions(-)
+> 
 
-On Wed, Oct 6, 2021 at 8:51 PM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
->
-> On Wed 29 Sep 20:05 PDT 2021, Bjorn Andersson wrote:
->
-> > The SN65DSI86 provides the ability to supply a PWM signal on GPIO 4,
-> > with the primary purpose of controlling the backlight of the attached
-> > panel. Add an implementation that exposes this using the standard PWM
-> > framework, to allow e.g. pwm-backlight to expose this to the user.
-> >
-> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->
-> Any feedback on this?
 
-I feel like Uwe and you have spent enough time on all the math and it
-is clearly working well for you, so I continued to not dive deep into
-it. However, in general I think this has been spun enough and it's
-ready / beneficial to land.
+Please add Acked-by/Reviewed-by tags when posting new versions. However,
+there's no need to repost patches *only* to add the tags. The upstream
+maintainer will do that for acks received on the version they apply.
 
-It sounds like Robert has agreed to do the honors (assuming Uwe acks
-patch #1) and that suits me fine.
+If a tag was not added on purpose, please state why and what changed.
 
-Reviewed-by: Douglas Anderson <dianders@chromium.org>
