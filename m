@@ -2,119 +2,95 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 33742426FB9
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 19:48:17 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 585D6426FC5
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 19:54:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231237AbhJHRuK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Oct 2021 13:50:10 -0400
-Received: from foss.arm.com ([217.140.110.172]:38918 "EHLO foss.arm.com"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231217AbhJHRuH (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Oct 2021 13:50:07 -0400
-Received: from usa-sjc-imap-foss1.foss.arm.com (unknown [10.121.207.14])
-        by usa-sjc-mx-foss1.foss.arm.com (Postfix) with ESMTP id 8332B1063;
-        Fri,  8 Oct 2021 10:48:11 -0700 (PDT)
-Received: from lpieralisi (e121166-lin.cambridge.arm.com [10.1.196.255])
-        by usa-sjc-imap-foss1.foss.arm.com (Postfix) with ESMTPSA id D6FFC3F766;
-        Fri,  8 Oct 2021 10:48:09 -0700 (PDT)
-Date:   Fri, 8 Oct 2021 18:48:03 +0100
-From:   Lorenzo Pieralisi <lorenzo.pieralisi@arm.com>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Bjorn Helgaas <helgaas@kernel.org>,
-        Bjorn Helgaas <bhelgaas@google.com>,
-        Rob Herring <robh+dt@kernel.org>,
-        Jingoo Han <jingoohan1@gmail.com>,
-        Gustavo Pimentel <gustavo.pimentel@synopsys.com>,
-        Krzysztof Wilczy??ski <kw@linux.com>,
-        Stanimir Varbanov <svarbanov@mm-sol.com>,
-        linux-arm-msm@vger.kernel.org, linux-pci@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        vidyas@nvidia.com
-Subject: Re: [PATCH v2 1/2] PCI: dwc: Perform host_init() before registering
- msi
-Message-ID: <20211008174803.GA32277@lpieralisi>
-References: <YSVTdedrDSgSYgwm@ripper>
- <20210824202925.GA3491441@bjorn-Precision-5520>
- <YSVjQgDmatkkCxtn@ripper>
+        id S231328AbhJHR4t (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Oct 2021 13:56:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37928 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231305AbhJHR4t (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 8 Oct 2021 13:56:49 -0400
+Received: from mail-pj1-x102f.google.com (mail-pj1-x102f.google.com [IPv6:2607:f8b0:4864:20::102f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id EB757C061755
+        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Oct 2021 10:54:53 -0700 (PDT)
+Received: by mail-pj1-x102f.google.com with SMTP id g13-20020a17090a3c8d00b00196286963b9so9903716pjc.3
+        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Oct 2021 10:54:53 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=375qw9HEG1zeGWnh05aU0MtkYE91fpb3mTQ4zx4UO9E=;
+        b=YH+ZNiYawAnxu0lRHakpiZFKCiAOXHCcdwcFSxDBzu/fPu5Rhu523cQ/QxX5iuOIq6
+         vcBWyCBgSuAhPlzcvDDNSQn9ZZ8pIiC6gCOFTvIJkHtP6Rnhd7ZRnmuWaCCOPMyFuS6r
+         x6KbX/vvxqHkmnx6JRhU+LwY7/8T57DrFoKBY+AhiMPvfZVHUwORjUQrnECqmeyPgrGy
+         sUBu8quofrHLqgVElK9orjQI9AhWhnpofECsZAobyY8FRjwVkOFRTtcdyS/HEcuSAhkU
+         SqwQ5wc+NJO9AzZEbkpAEdHrSt03ThRodDaPG8AqSwnXCE4FRK+EBVV5d5EzjivqLtVH
+         gkjQ==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=375qw9HEG1zeGWnh05aU0MtkYE91fpb3mTQ4zx4UO9E=;
+        b=RiDnk3oW4j2XwLbmsMa+YU4DHIekipXywDtf1eZ0I09JY3jcjQmttlaliMn+8PReO9
+         dPIr6duDDNH26gXtof5vQjaFCLToynTHupANb2omnK9q6WsBesYSdt03/f9HsRSBtycR
+         GeLNYmQnznb5RHLN8b7wetXhemI4CdhOmmh/wlwFlwYuSSt21kfNdtrlo0LzOPWCvOST
+         q9SUoPnxwqsUZ48l2apJ2uHow860Mdv1xgkhnOfX8DL33E5OUMeoXwJhYcaZlBSWOTMM
+         aCh0w6kyexSWY1zMDHsDpFkfL22jueV2OSNSAwRvxZsmhsLMR8jipdPhS7mg9+ISNh+c
+         uA8Q==
+X-Gm-Message-State: AOAM5322SKuL+3UUsLwKhIRpIfXecNydvxbv53MCUf577oVuz+ZbUf90
+        mXLQnQm8avblUqLfIV59B+YvWQ==
+X-Google-Smtp-Source: ABdhPJyGFRepbYfMRdvCwKHA+/CTcojukfMWZRbMkJ7WM5XQglqrst+WuLl14+Mxu3PdByg2aTU1Hw==
+X-Received: by 2002:a17:90a:d58b:: with SMTP id v11mr13155906pju.207.1633715693383;
+        Fri, 08 Oct 2021 10:54:53 -0700 (PDT)
+Received: from p14s (S0106889e681aac74.cg.shawcable.net. [68.147.0.187])
+        by smtp.gmail.com with ESMTPSA id g9sm31425pfv.80.2021.10.08.10.54.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Fri, 08 Oct 2021 10:54:51 -0700 (PDT)
+Date:   Fri, 8 Oct 2021 11:54:49 -0600
+From:   Mathieu Poirier <mathieu.poirier@linaro.org>
+To:     Deepak Kumar Singh <deesin@codeaurora.org>
+Cc:     bjorn.andersson@linaro.org, swboyd@chromium.org,
+        clew@codeaurora.org, linux-kernel@vger.kernel.org,
+        linux-arm-msm@vger.kernel.org, linux-remoteproc@vger.kernel.org
+Subject: Re: [PATCH V1 0/3] rpmsg and glink signaling api support
+Message-ID: <20211008175449.GA3620020@p14s>
+References: <1633015924-881-1-git-send-email-deesin@codeaurora.org>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
-In-Reply-To: <YSVjQgDmatkkCxtn@ripper>
-User-Agent: Mutt/1.9.4 (2018-02-28)
+In-Reply-To: <1633015924-881-1-git-send-email-deesin@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-[+Vidya]
+Hi Deepak,
 
-On Tue, Aug 24, 2021 at 02:23:14PM -0700, Bjorn Andersson wrote:
-> On Tue 24 Aug 13:29 PDT 2021, Bjorn Helgaas wrote:
+On Thu, Sep 30, 2021 at 09:02:00PM +0530, Deepak Kumar Singh wrote:
+> This patch series provides support for serial like signals (DTR, RTS etc)
+> over glink. Clients on local host can use this interface for sending and 
+> receiving these signals to and from modem for flow control purpose.
 > 
-> > On Tue, Aug 24, 2021 at 01:15:49PM -0700, Bjorn Andersson wrote:
-> > > On Tue 24 Aug 12:05 PDT 2021, Bjorn Helgaas wrote:
-> > > 
-> > > > On Mon, Aug 23, 2021 at 08:49:57AM -0700, Bjorn Andersson wrote:
-> > > > > On the Qualcomm sc8180x platform the bootloader does something related
-> > > > > to PCI that leaves a pending "msi" interrupt, which with the current
-> > > > > ordering often fires before init has a chance to enable the clocks that
-> > > > > are necessary for the interrupt handler to access the hardware.
-> > > > > 
-> > > > > Move the host_init() call before the registration of the "msi" interrupt
-> > > > > handler to ensure the host driver has a chance to enable the clocks.
-> > > > 
-> > > > Did you audit other drivers for similar issues?  If they do, we should
-> > > > fix them all at once.
-> > > 
-> > > I only looked at the DesignWware drivers, in an attempt to find any
-> > > issues the proposed reordering.
-> > > 
-> > > The set of bugs causes by drivers registering interrupts before critical
-> > > resources tends to be rather visible and I don't know if there's much
-> > > value in speculatively "fixing" drivers.
-> > > 
-> > > E.g. a quick look through the drivers I see a similar pattern in
-> > > pci-tegra.c, but it's unlikely that they have the similar problem in
-> > > practice and I have no way to validate that a change to the order would
-> > > have a positive effect - or any side effects.
-> > > 
-> > > Or am I misunderstanding your request?
-> > 
-> > That is exactly my request.
+> Deepak Kumar Singh (3):
+>   rpmsg: core: Add signal API support
+>   rpmsg: glink: Add support to handle signals command
+>   rpmsg: char: Add TIOCMGET/TIOCMSET ioctl support
 > 
-> Okay.
+>  drivers/rpmsg/qcom_glink_native.c | 75 +++++++++++++++++++++++++++++++++++++++
+>  drivers/rpmsg/rpmsg_char.c        | 43 ++++++++++++++++++++++
+>  drivers/rpmsg/rpmsg_core.c        | 21 +++++++++++
+>  drivers/rpmsg/rpmsg_internal.h    |  2 ++
+>  include/linux/rpmsg.h             | 15 ++++++++
+>  5 files changed, 156 insertions(+)
 > 
-> > I'm not sure if the potential issue you
-> > noticed in pci-tegra.c is similar to the one I mentioned here:
-> > 
-> >   https://lore.kernel.org/linux-pci/20210624224040.GA3567297@bjorn-Precision-5520/
-> > 
-> 
-> As I still have the tegra driver open, I share your concern about the
-> use of potentially uninitialized variables.
-> 
-> The problem I was concerned about was however the same as in my patch
-> and the rockchip one, that if the tegra hardware isn't clocked the
-> pm_runtime_get_sync() (which would turn on power and clock) happens
-> after setting up the msi chain handler...
-> 
-> > but I am actually in favor of speculatively fixing drivers even though
-> > they're hard to test.  Code like this tends to get copied to other
-> > places, and fixing several drivers sometimes exposes opportunities for
-> > refactoring and sharing code.
-> > 
-> 
-> Looking through the other cases mentioned in your reply above certainly
-> gives a feeling that this problem has been inherited from driver to
-> driver...
-> 
-> I've added a ticket to my backlog to take a deeper look at this.
 
-Vidya, can you look into this please ? In the meantime I would merge
-this series.
+I have started to review this set - comments to follow next weeks.
 
 Thanks,
-Lorenzo
+Mathieu
 
+> -- 
+> The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+> a Linux Foundation Collaborative Project
 > 
-> Regards,
-> Bjorn
