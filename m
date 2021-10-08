@@ -2,97 +2,125 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 48C79426235
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 03:59:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 37D6F426258
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 04:12:58 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233400AbhJHCBE (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Oct 2021 22:01:04 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:43568 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231259AbhJHCBE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Oct 2021 22:01:04 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1633658349; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=GCFiim/rTvfKlleCreUXvJn479MEzv6lw3Z8MYg2T+8=;
- b=qBG80E2IY3hYj325c9/pUm/JcbOnh3biCBmXO0AG476o9iGm/vz93Vxp0UGlq0ibE8GKRvxY
- QBucz3ROcoxHCgqHplXa8fPAaaIFDUbEI/HouCVVcuYrazS9mP8h66Pco3XB1/wBtBe8NO56
- 7hf8gR95DVc0DPWtdQfu9dvmxOk=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
- 615fa5eaf3e5b80f1f0c829e (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Fri, 08 Oct 2021 01:59:06
- GMT
-Sender: pmaliset=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 46D66C43619; Fri,  8 Oct 2021 01:59:06 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        id S234904AbhJHCOv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Oct 2021 22:14:51 -0400
+Received: from bhuna.collabora.co.uk ([46.235.227.227]:41774 "EHLO
+        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229501AbhJHCOu (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 7 Oct 2021 22:14:50 -0400
+Received: from notapiano (unknown [IPv6:2806:105e:7:9ede::6])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES256-GCM-SHA384 (256/256 bits))
         (No client certificate requested)
-        (Authenticated sender: pmaliset)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 84BBEC4338F;
-        Fri,  8 Oct 2021 01:59:05 +0000 (UTC)
+        (Authenticated sender: nfraprado)
+        by bhuna.collabora.co.uk (Postfix) with ESMTPSA id 027D21F45416;
+        Fri,  8 Oct 2021 03:12:49 +0100 (BST)
+Date:   Thu, 7 Oct 2021 21:12:45 -0500
+From:   =?utf-8?B?TsOtY29sYXMgRi4gUi4gQS4=?= Prado 
+        <nfraprado@collabora.com>
+To:     Jacek Anaszewski <jacek.anaszewski@gmail.com>
+Cc:     Pavel Machek <pavel@ucw.cz>, Dan Murphy <dmurphy@ti.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>, linux-leds@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        Brian Masney <masneyb@onstation.org>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Russell King <linux@armlinux.org.uk>,
+        Georgi Djakov <georgi.djakov@linaro.org>,
+        linux-kernel@vger.kernel.org, phone-devel@vger.kernel.org,
+        ~postmarketos/upstreaming@lists.sr.ht, ~lkcamp/patches@lists.sr.ht,
+        =?utf-8?B?QW5kcsOp?= Almeida <andrealmeid@collabora.com>,
+        kernel@collabora.com
+Subject: Re: [PATCH v3 2/5] leds: Add driver for QCOM SPMI Flash LEDs
+Message-ID: <20211008021245.barkpi4fd4lakt36@notapiano>
+References: <20210803162641.1525980-1-nfraprado@collabora.com>
+ <20210803162641.1525980-3-nfraprado@collabora.com>
+ <b1060e9a-f78e-fbe9-bde3-2b4d89cbc73e@gmail.com>
+ <20210824214515.ekjpvaymkgxltlzp@notapiano>
+ <278ea1e8-8b21-457d-78d7-fbb32544fe0a@gmail.com>
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
-Content-Transfer-Encoding: 7bit
-Date:   Fri, 08 Oct 2021 07:29:05 +0530
-From:   Prasad Malisetty <pmaliset@codeaurora.org>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     agross@kernel.org, bhelgaas@google.com, bjorn.andersson@linaro.org,
-        lorenzo.pieralisi@arm.com, robh+dt@kernel.org,
-        svarbanov@mm-sol.com, devicetree@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org, linux-usb@vger.kernel.org,
-        linux-kernel@vger.kernel.org, dianders@chromium.org,
-        mka@chromium.org, vbadigan@codeaurora.org, sallenki@codeaurora.org,
-        manivannan.sadhasivam@linaro.org, linux-pci@vger.kernel.org
-Subject: Re: [PATCH v12 4/5] PCI: qcom: Add a flag in match data along with
- ops
-In-Reply-To: <CAE-0n51NfLevCSwDDK0pxg=zmdw7pqw-wGEV2_MxBZZvh_caOQ@mail.gmail.com>
-References: <1633628923-25047-1-git-send-email-pmaliset@codeaurora.org>
- <1633628923-25047-5-git-send-email-pmaliset@codeaurora.org>
- <CAE-0n51NfLevCSwDDK0pxg=zmdw7pqw-wGEV2_MxBZZvh_caOQ@mail.gmail.com>
-Message-ID: <6007d4168a942dd95661705a675bd8dc@codeaurora.org>
-X-Sender: pmaliset@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <278ea1e8-8b21-457d-78d7-fbb32544fe0a@gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-10-07 23:33, Stephen Boyd wrote:
-> Quoting Prasad Malisetty (2021-10-07 10:48:42)
->> Add pipe_clk_need_muxing flag in match data and configure
+Hi Jacek,
+
+> > > > +static int qcom_flash_flcdev_strobe_set(struct led_classdev_flash *fled_cdev,
+> > > > +					bool state)
+> > > > +{
+> > > > +	struct qcom_flash_led *led = flcdev_to_led(fled_cdev);
+> > > > +	struct qcom_flash_device *leds_dev = led_to_leds_dev(led);
+> > > > +	unsigned int bright;
+> > > > +	unsigned int i;
+> > > > +	int rc;
+> > > > +
+> > > > +	/* Can't operate on flash if torch is on */
+> > > > +	if (leds_dev->torch_enabled)
+> > > > +		return -EBUSY;
+> > > > +
+> > > > +	mutex_lock(&leds_dev->lock);
+> > > > +	if (!state) {
+> > > > +		rc = qcom_flash_fled_off(led);
+> > > > +	} else {
+> > > > +		/*
+> > > > +		 * Turn off flash LEDs from previous strobe
+> > > > +		 */
+> > > > +		rc = qcom_flash_check_timedout(leds_dev);
+> > > > +		if (rc > 0) {
+> > > > +			for (i = 0; i < leds_dev->num_leds; i++) {
+> > > > +				rc = qcom_flash_fled_off(&leds_dev->leds[i]);
+> > > > +				if (rc)
+> > > > +					goto unlock;
+> > > > +			}
+> > > > +		} else if (rc < 0) {
+> > > > +			goto unlock;
+> > > > +		}
+> > > 
+> > > What if flash gets timed out after this check here? Why do you need to
+> > > call qcom_flash_fled_off() if it has already timed out?
+> > 
+> > The issue is that after the flash times out, the hardware is not ready for
+> > another strobe.
+> > 
+> > When I strobe LED0 for example, the STATUS register, 0x10, gets set to 0x08
+> > indicating the LED0 is on. After the timeout, it changes to 0x04. At that point
+> > if I try to strobe LED0 again, it doesn't work. When I turn the LED0 off (write
+> > 0x00 to either the ENABLE or STROBE register), the STATUS is reset to 0x00. Now
+> > I'm able to strobe the LED0 again.
+> > 
+> > I'm not sure if this is the normal behavior on other flash LED controllers, and
+> > maybe there's even some configuration of this PMIC that resets the LED status
+> > automatically after the strobe timeout, but I have not been able to do that. So
+> > that's why I reset the status manually everytime it's needed.
 > 
-> This commit text isn't accurate. The flag isn't added in this patch
-> anymore. Same goes for the commit title/subject. Can you please update
-> it to say something like "Point match data to config struct"?
+> My point was that the flash may time out after reading STATUS register
+> and before writing QCOM_FLASH_ADDR_LED_STROBE_CTRL.
+> You can't be 100% sure that you know the exact STATUS state just
+> a moment before strobing.
+
+That's true, but that scenario only happens if there's an ongoing flash strobe
+happening and userspace triggers another strobe. Is that a scenario that really
+needs to be taken care of, and if so, what would be the correct behavior? Does
+the timeout need to be reset for this new strobe, possibly using updated
+brightness and timeout values? (Currently none of this happens)
+
+The purpose of this check is not to know if an ongoing flash strobe has
+timed out, but rather to differentiate if the previous time the LED was strobed
+was as a flash (with timeout) or torch (no timeout), because the flash
+case needs an extra reset step that can be ommited in the torch case. For this
+purpose there's no race condition.
+
 > 
-Hi Bjorn,
+> To alleviate that I propose to avoid checking the status and always
+> calling qcom_flash_fled_off() before initiating a new strobe.
 
-Could you please update below commit text while taking this patch.
-
-"PCI: qcom: Replace ops with struct pcie_cfg in pcie match data.
-
-Add struct qcom_pcie_cfg as match data for all platforms.
-Assign appropriate platform ops into qcom_pcie_cfg and read
-Using of_device_is_compatible in pcie probe. "
-
-Thanks
--Prasad
-
->> If the platform needs to switch pipe_clk_src.
->> 
->> Signed-off-by: Prasad Malisetty <pmaliset@codeaurora.org>
->> ---
-> 
-> Otherwise code looks fine:
-> 
-> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
+Thanks,
+Nicolas
