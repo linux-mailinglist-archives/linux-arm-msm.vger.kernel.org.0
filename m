@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 06A0E4261D5
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 03:25:48 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 58F5B4261DA
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 03:25:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239061AbhJHB1l (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Oct 2021 21:27:41 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38906 "EHLO
+        id S241640AbhJHB1m (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Oct 2021 21:27:42 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38868 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S236805AbhJHB1c (ORCPT
+        with ESMTP id S234268AbhJHB1d (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Oct 2021 21:27:32 -0400
-Received: from mail-lf1-x131.google.com (mail-lf1-x131.google.com [IPv6:2a00:1450:4864:20::131])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9F99CC061772
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Oct 2021 18:25:37 -0700 (PDT)
-Received: by mail-lf1-x131.google.com with SMTP id b20so32911285lfv.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Oct 2021 18:25:37 -0700 (PDT)
+        Thu, 7 Oct 2021 21:27:33 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3CCF8C061570
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Oct 2021 18:25:38 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id n8so30599291lfk.6
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Oct 2021 18:25:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=+kHxD4AyFKHTUkzUIxG/0HGOEUmjqFeIEbITSocdKfU=;
-        b=FnMeBDx4co3rsikNmA1+yvAsBmxVSkiWs5uWbbwykTb4OfQVbqqzyofcLbaA/OeBbU
-         5lFh3JQm9/xHlSNWM+xdsRNLzzGpKY3s6B0sSE9eU2GB9wZUmHhUTEJEYX1kOya4MV6q
-         L6DpFPTtXVpbVwnhr3bryYfzAUjfRnoUAtw6ofnOu/+RhslY7TUA54T0xBekKxQYKGRK
-         prTgFfgfgau71HWn0+4NAjzNk3yfvqx5JV4yY77kXNJ/ArBufx0hc7zKJ2E9YdsiYJzg
-         VCbEwswd+sq9yDKO2D5o88li6S7B9gJu1lHpH29lOiff0ULC1S2dpxlwCZqnI0U21OqY
-         4mqg==
+        bh=B1tfgMXD/HCZM2/dbxQ/czHnewIDG6QY34tUjSKvwfk=;
+        b=HREMM7YvdSBGH5yCfeBE1GD/MG6qFX3jZvB/hGwR7HZ7db3jFWbR6EjuTL16AfB5UQ
+         koYroB34dm/ZoDXxlxZVaIHC4zdDpnu6Vy7uRPrWOm4t2C6XxRFlKNFN4bTUuSTVTNQY
+         vWACLWBR1Dx5Fz8akQdBCY0VkhkjI8/HeGv+6PNn0pwg170Zq0EUF59oUw3iZN0/fLHe
+         czilOud48xH7CG4PmSkcxH9wRtV9Z1XSRrA24s+ddMsvShtrB0qTXgf9QcU0USltGVH/
+         1Do+dge+n5Hnn6CI7GkrIBwFtvS0ZZ7AmfQJzIjXrhHvobw1K1U5m8Eo4xvBONkk8TOi
+         wjZA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=+kHxD4AyFKHTUkzUIxG/0HGOEUmjqFeIEbITSocdKfU=;
-        b=o89GZAKW8PU1NcLyz5dFETxXfxT7s3wqX4uO09rgiFD0t8iQarGfPrsvpwTeynuog4
-         picJqpCTudD/XI330Y9kvBBbVwCMsrL49kS2PQN3uuQ4W29zbl5XiJ6Nyle2RmyDDOBP
-         2R4+lI4vcl8TTWbbcNK7jsXAttcmChaBp+zhkFQQS1ZWZ059ccNBrcRXZPqOXBzZQj8T
-         X/Gvcj+XJ7nZ4n881bT55YPoSxcb0kEJKqnXGLX8ymIJ7pt7Wwys8l23SfHqLhVRRt19
-         xEO4ISMHFrg2BEObQD8beS4Lq4De637KLD7jXulkUtSh2zKHz/vvLANOQ8JkOKucy8eD
-         e5Ww==
-X-Gm-Message-State: AOAM533tusRA0h4fpfX7K7A1aMJ4MqSZIXDGIbSPyBqhJFHEoD2OAcwz
-        icJTYzL3n7PZbWaQbm9YwQf15Q==
-X-Google-Smtp-Source: ABdhPJy80doFhzt0+g2B6bpAXm2L2Zu5Oaz1R/LM20rb7sLWCWSe8CY9FhMqcWitOVN9d1RDTYrHrA==
-X-Received: by 2002:a05:6512:3d13:: with SMTP id d19mr7190869lfv.607.1633656336004;
+        bh=B1tfgMXD/HCZM2/dbxQ/czHnewIDG6QY34tUjSKvwfk=;
+        b=5MJL2/lhHd9AoGazBHBz+RR1RQcEgwCvMv+hEtSFLJbE3EGmmmkCzCa02UanBcIsXG
+         FmfkEOIwUvtZ7u7L31879OxyELlJDzX7jvN29+0YrZdiJTXZy/MKSaBvdr4TnzqyFGjs
+         lwSAhyWdB/7YMhOaQObruGEZijjndndclcjqRBzJe2uqpJIeEw+q/PGZPOt4Beo6K5eQ
+         WxKOZeN8Dkm0CafE8XfI1FAfTNsTAeH3zn36PSmIvo9E+YLjNW3jC1/3cWtX3OkcCx3E
+         OKbgha/Ru02xOAfd/DoZaNl+/Yxt2N+pSRLS9nUGeCiNcmMoWgBg9nVrjilsxQYKV8U6
+         ZEIQ==
+X-Gm-Message-State: AOAM533sETCEfZ9vqtgoXfuR7R4QueveQKVl16efaarQXbhS8UFWSiYI
+        LH6dA4HvFJX5e8oevCcn3OotHA==
+X-Google-Smtp-Source: ABdhPJzKdd8/qODtRD3p+6nMYsqC38bIDPZxHTkZ4qvkzYmr0yp6kv6J7YzSEnI+Jxi416yc+t6QVA==
+X-Received: by 2002:a05:6512:96f:: with SMTP id v15mr7510057lft.455.1633656336652;
         Thu, 07 Oct 2021 18:25:36 -0700 (PDT)
 Received: from umbar.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id s4sm112875ljp.115.2021.10.07.18.25.35
+        by smtp.gmail.com with ESMTPSA id s4sm112875ljp.115.2021.10.07.18.25.36
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Oct 2021 18:25:35 -0700 (PDT)
+        Thu, 07 Oct 2021 18:25:36 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -55,9 +55,9 @@ To:     Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>
 Cc:     linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
-Subject: [PATCH v3 12/25] arm64: dts: qcom: apq8016-sbc: fix mpps state names
-Date:   Fri,  8 Oct 2021 04:25:11 +0300
-Message-Id: <20211008012524.481877-13-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 13/25] pinctrl: qcom: ssbi-mpp: hardcode IRQ counts
+Date:   Fri,  8 Oct 2021 04:25:12 +0300
+Message-Id: <20211008012524.481877-14-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20211008012524.481877-1-dmitry.baryshkov@linaro.org>
 References: <20211008012524.481877-1-dmitry.baryshkov@linaro.org>
@@ -67,37 +67,71 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The majority of device tree nodes for mpps use xxxx-state as pinctrl
-nodes. Change names of mpps pinctrl nodes for the apq8016-sbc board to
-follow that pattern.
+The probing of this driver calls platform_irq_count, which will
+setup all of the IRQs that are configured in device tree. In
+preparation for converting this driver to be a hierarchical IRQ
+chip, hardcode the IRQ count based on the hardware type so that all
+the IRQs are not configured immediately and are configured on an
+as-needed basis later in the boot process.
+
+This change will also allow for the removal of the interrupts property
+later in this patch series once the hierarchical IRQ chip support is in.
+
+This patch also removes the generic qcom,ssbi-mpp OF match since we
+don't know the number of pins. All of the existing upstream bindings
+already include the more-specific binding.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi | 4 ++--
- 1 file changed, 2 insertions(+), 2 deletions(-)
+ drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c | 22 ++++++++--------------
+ 1 file changed, 8 insertions(+), 14 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-index f8d8f3e3664e..a250145849cd 100644
---- a/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-+++ b/arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi
-@@ -809,7 +809,7 @@ &pm8916_mpps {
- 	pinctrl-names = "default";
- 	pinctrl-0 = <&ls_exp_gpio_f>;
+diff --git a/drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c b/drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c
+index 92e7f2602847..a90cada1d657 100644
+--- a/drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c
++++ b/drivers/pinctrl/qcom/pinctrl-ssbi-mpp.c
+@@ -733,13 +733,12 @@ static int pm8xxx_pin_populate(struct pm8xxx_mpp *pctrl,
+ }
  
--	ls_exp_gpio_f: pm8916-mpp4 {
-+	ls_exp_gpio_f: pm8916-mpp4-state {
- 		pins = "mpp4";
- 		function = "digital";
+ static const struct of_device_id pm8xxx_mpp_of_match[] = {
+-	{ .compatible = "qcom,pm8018-mpp" },
+-	{ .compatible = "qcom,pm8038-mpp" },
+-	{ .compatible = "qcom,pm8058-mpp" },
+-	{ .compatible = "qcom,pm8917-mpp" },
+-	{ .compatible = "qcom,pm8821-mpp" },
+-	{ .compatible = "qcom,pm8921-mpp" },
+-	{ .compatible = "qcom,ssbi-mpp" },
++	{ .compatible = "qcom,pm8018-mpp", .data = (void *) 6 },
++	{ .compatible = "qcom,pm8038-mpp", .data = (void *) 6 },
++	{ .compatible = "qcom,pm8058-mpp", .data = (void *) 12 },
++	{ .compatible = "qcom,pm8821-mpp", .data = (void *) 4 },
++	{ .compatible = "qcom,pm8917-mpp", .data = (void *) 10 },
++	{ .compatible = "qcom,pm8921-mpp", .data = (void *) 12 },
+ 	{ },
+ };
+ MODULE_DEVICE_TABLE(of, pm8xxx_mpp_of_match);
+@@ -750,19 +749,14 @@ static int pm8xxx_mpp_probe(struct platform_device *pdev)
+ 	struct pinctrl_pin_desc *pins;
+ 	struct pm8xxx_mpp *pctrl;
+ 	int ret;
+-	int i, npins;
++	int i;
  
-@@ -817,7 +817,7 @@ ls_exp_gpio_f: pm8916-mpp4 {
- 		power-source = <PM8916_MPP_L5>;	// 1.8V
- 	};
+ 	pctrl = devm_kzalloc(&pdev->dev, sizeof(*pctrl), GFP_KERNEL);
+ 	if (!pctrl)
+ 		return -ENOMEM;
  
--	pm8916_mpps_leds: pm8916-mpps-leds {
-+	pm8916_mpps_leds: pm8916-mpps-state {
- 		pins = "mpp2", "mpp3";
- 		function = "digital";
+ 	pctrl->dev = &pdev->dev;
+-	npins = platform_irq_count(pdev);
+-	if (!npins)
+-		return -EINVAL;
+-	if (npins < 0)
+-		return npins;
+-	pctrl->npins = npins;
++	pctrl->npins = (uintptr_t) device_get_match_data(&pdev->dev);
  
+ 	pctrl->regmap = dev_get_regmap(pdev->dev.parent, NULL);
+ 	if (!pctrl->regmap) {
 -- 
 2.30.2
 
