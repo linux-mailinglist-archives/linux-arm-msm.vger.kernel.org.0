@@ -2,150 +2,162 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 49106426A80
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 14:12:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5A3F5426B03
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 14:38:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S240772AbhJHMOo (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Fri, 8 Oct 2021 08:14:44 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43770 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S240479AbhJHMOo (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Fri, 8 Oct 2021 08:14:44 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 92A38C061755
-        for <linux-arm-msm@vger.kernel.org>; Fri,  8 Oct 2021 05:12:48 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id y26so38801544lfa.11
-        for <linux-arm-msm@vger.kernel.org>; Fri, 08 Oct 2021 05:12:48 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=unTpf7x1Zh6JRpmWN02YBcJMyEDfP5RqTCFbqPM8fdM=;
-        b=fLHObyHwvExZ2uwtIURuHTokmgPMLOoI13yXgx7J2tO4djlc/TRcIOGWD2AkkStj1R
-         kidKUiPwAWCHaHUq20y5+gpwFYknlcdxNmRi0vpts9ewZxGw0iCuV5J3WJK94tCQoyCw
-         fIusWF7VSQ7fHLBaEou0EfT080Y+6nncMMLvoHRX5qyfCtcmxxP+AAsJJz5ZXccL4z6r
-         YX30n2a8ry6i39tzQXiSqGmoSe05IOWcOdup60gsUKum0WVr8VFdfvdUcM1m5GCO/Qqj
-         c7yZprUqDRYcRRhLcI06TxKeHJAEczWJDSLq7sqt/tsH0JvKno+lKxRG2TlviBjomxho
-         dy2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=unTpf7x1Zh6JRpmWN02YBcJMyEDfP5RqTCFbqPM8fdM=;
-        b=nWyVXqAo6YXSF/C5JKS0RdjPiPVSw0CqVM+/f9y3tPc6PKq6L3JExOBpes0nYvslwx
-         n8eq2jyyLtx/7bbc35s2KN6dAbtFAgdu38nOtuNBGH+M8Z1BFIzfJGq3erFECQhRj3oz
-         CEC/iNg+dRZH+BS1BTJjrHXuStwq9L7v+2V/f5Dg4oebXrwtQ6JFeb92TXirnvtXfm4R
-         cbiJjxrbIM7eZM6GNtaaPzVNNrSBOUF0vQ72/FJIUkizCYpYFq3Unz+nwo0V28ttk24i
-         X3ABDLP83U2f6rp6XxxGCto4bAM568YhZDXJhLx2qiNUX5dWr3RI6wMVNW75sFLvf1Wy
-         N9kQ==
-X-Gm-Message-State: AOAM531upIQUQXJUjO3f1BIZOgp732Nw0cUpu3GhEOmCL/4tBYv22Fir
-        VfdAjmaecMkmYAdRL4ZidycIS4p83DFOtZHV8Wmf+Q==
-X-Google-Smtp-Source: ABdhPJxf19NU+QPvfRT/N467g3ccGQlt314KORg+0xxNxgDfSfY7SuyLB1ZmTmPxF4MrWRNgXgPbZVRhZQtJoZbOAtc=
-X-Received: by 2002:a05:651c:4c9:: with SMTP id e9mr3216170lji.229.1633695166786;
- Fri, 08 Oct 2021 05:12:46 -0700 (PDT)
-MIME-Version: 1.0
-References: <20211004024935.15326-1-shawn.guo@linaro.org>
-In-Reply-To: <20211004024935.15326-1-shawn.guo@linaro.org>
-From:   Ulf Hansson <ulf.hansson@linaro.org>
-Date:   Fri, 8 Oct 2021 14:12:10 +0200
-Message-ID: <CAPDyKFrNq4J9TsyqXhXnQuxCotUPQE=4qjUQWk2bpNGvS7Rm4Q@mail.gmail.com>
-Subject: Re: [PATCH] mmc: sdhci: Map more voltage level to SDHCI_POWER_330
-To:     Shawn Guo <shawn.guo@linaro.org>
-Cc:     Adrian Hunter <adrian.hunter@intel.com>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-mmc <linux-mmc@vger.kernel.org>,
+        id S241727AbhJHMk1 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Fri, 8 Oct 2021 08:40:27 -0400
+Received: from mga14.intel.com ([192.55.52.115]:6120 "EHLO mga14.intel.com"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S230253AbhJHMkX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Fri, 8 Oct 2021 08:40:23 -0400
+X-IronPort-AV: E=McAfee;i="6200,9189,10130"; a="226785209"
+X-IronPort-AV: E=Sophos;i="5.85,357,1624345200"; 
+   d="diff'?scan'208";a="226785209"
+Received: from fmsmga001.fm.intel.com ([10.253.24.23])
+  by fmsmga103.fm.intel.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 08 Oct 2021 05:38:26 -0700
+X-ExtLoop1: 1
+X-IronPort-AV: E=Sophos;i="5.85,357,1624345200"; 
+   d="diff'?scan'208";a="624724638"
+Received: from kuha.fi.intel.com ([10.237.72.162])
+  by fmsmga001.fm.intel.com with SMTP; 08 Oct 2021 05:38:21 -0700
+Received: by kuha.fi.intel.com (sSMTP sendmail emulation); Fri, 08 Oct 2021 15:38:21 +0300
+Date:   Fri, 8 Oct 2021 15:38:21 +0300
+From:   Heikki Krogerus <heikki.krogerus@linux.intel.com>
+To:     Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc:     Prashant Malani <pmalani@chromium.org>,
+        Doug Anderson <dianders@chromium.org>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+        LKML <linux-kernel@vger.kernel.org>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Stephen Boyd <swboyd@chromium.org>,
+        Kuogee Hsieh <khsieh@codeaurora.org>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Vara Reddy <varar@codeaurora.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Enric Balletbo i Serra <enric.balletbo@collabora.com>,
+        Benson Leung <bleung@chromium.org>
+Subject: Re: [RFC] drm/msm/dp: Allow attaching a drm_panel
+Message-ID: <YWA7vXp+4QbKWU1S@kuha.fi.intel.com>
+References: <CAD=FV=U=xVLuKOYHbGPTkLjGa8_U+F1ZtEvJt4LGaRuR5SsKFw@mail.gmail.com>
+ <YVumL1lHLqtb/HKS@ripper>
+ <CAD=FV=W9uKq00wXn4H1ax0u2D=R8Wn3J-Je43uxcPyDtk7AK7Q@mail.gmail.com>
+ <YVyMwsvLl6XalJxB@ripper>
+ <CAD=FV=WY+g38p7--QKZCaQnSqx7VvdwC36jH-VKnrEWoxK=XHQ@mail.gmail.com>
+ <YV0KBWxVtKgOp2Cj@ripper>
+ <CAD=FV=X5JFE3u9BtxxocaUrYNSpYXJN90UJ8HOvXZE6oYiVsDQ@mail.gmail.com>
+ <CACeCKac4b_ej87cQD692TNwpsoFsmBwDcSeLy5fp+pvLX1si7g@mail.gmail.com>
+ <YV7JNH9QvI4cBz5s@kuha.fi.intel.com>
+ <YV8dEKMhNKKl20j6@ripper>
+MIME-Version: 1.0
+Content-Type: multipart/mixed; boundary="d5CDzt0vLc4LIaGn"
+Content-Disposition: inline
+In-Reply-To: <YV8dEKMhNKKl20j6@ripper>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, 4 Oct 2021 at 04:49, Shawn Guo <shawn.guo@linaro.org> wrote:
->
-> On Thundercomm TurboX CM2290, the eMMC OCR reports vdd = 23 (3.5 ~ 3.6 V),
-> which is being treated as an invalid value by sdhci_set_power_noreg().
-> And thus eMMC is totally broken on the platform.
->
-> [    1.436599] ------------[ cut here ]------------
-> [    1.436606] mmc0: Invalid vdd 0x17
-> [    1.436640] WARNING: CPU: 2 PID: 69 at drivers/mmc/host/sdhci.c:2048 sdhci_set_power_noreg+0x168/0x2b4
-> [    1.436655] Modules linked in:
-> [    1.436662] CPU: 2 PID: 69 Comm: kworker/u8:1 Tainted: G        W         5.15.0-rc1+ #137
-> [    1.436669] Hardware name: Thundercomm TurboX CM2290 (DT)
-> [    1.436674] Workqueue: events_unbound async_run_entry_fn
-> [    1.436685] pstate: 60000005 (nZCv daif -PAN -UAO -TCO -DIT -SSBS BTYPE=--)
-> [    1.436692] pc : sdhci_set_power_noreg+0x168/0x2b4
-> [    1.436698] lr : sdhci_set_power_noreg+0x168/0x2b4
-> [    1.436703] sp : ffff800010803a60
-> [    1.436705] x29: ffff800010803a60 x28: ffff6a9102465f00 x27: ffff6a9101720a70
-> [    1.436715] x26: ffff6a91014de1c0 x25: ffff6a91014de010 x24: ffff6a91016af280
-> [    1.436724] x23: ffffaf7b1b276640 x22: 0000000000000000 x21: ffff6a9101720000
-> [    1.436733] x20: ffff6a9101720370 x19: ffff6a9101720580 x18: 0000000000000020
-> [    1.436743] x17: 0000000000000000 x16: 0000000000000004 x15: ffffffffffffffff
-> [    1.436751] x14: 0000000000000000 x13: 00000000fffffffd x12: ffffaf7b1b84b0bc
-> [    1.436760] x11: ffffaf7b1b720d10 x10: 000000000000000a x9 : ffff800010803a60
-> [    1.436769] x8 : 000000000000000a x7 : 000000000000000f x6 : 00000000fffff159
-> [    1.436778] x5 : 0000000000000000 x4 : 0000000000000000 x3 : 00000000ffffffff
-> [    1.436787] x2 : 0000000000000000 x1 : 0000000000000000 x0 : ffff6a9101718d80
-> [    1.436797] Call trace:
-> [    1.436800]  sdhci_set_power_noreg+0x168/0x2b4
-> [    1.436805]  sdhci_set_ios+0xa0/0x7fc
-> [    1.436811]  mmc_power_up.part.0+0xc4/0x164
-> [    1.436818]  mmc_start_host+0xa0/0xb0
-> [    1.436824]  mmc_add_host+0x60/0x90
-> [    1.436830]  __sdhci_add_host+0x174/0x330
-> [    1.436836]  sdhci_msm_probe+0x7c0/0x920
-> [    1.436842]  platform_probe+0x68/0xe0
-> [    1.436850]  really_probe.part.0+0x9c/0x31c
-> [    1.436857]  __driver_probe_device+0x98/0x144
-> [    1.436863]  driver_probe_device+0xc8/0x15c
-> [    1.436869]  __device_attach_driver+0xb4/0x120
-> [    1.436875]  bus_for_each_drv+0x78/0xd0
-> [    1.436881]  __device_attach_async_helper+0xac/0xd0
-> [    1.436888]  async_run_entry_fn+0x34/0x110
-> [    1.436895]  process_one_work+0x1d0/0x354
-> [    1.436903]  worker_thread+0x13c/0x470
-> [    1.436910]  kthread+0x150/0x160
-> [    1.436915]  ret_from_fork+0x10/0x20
-> [    1.436923] ---[ end trace fcfac44cb045c3a8 ]---
->
-> Fix the issue by mapping MMC_VDD_35_36 (and MMC_VDD_34_35) to
-> SDHCI_POWER_330 as well.
->
-> Signed-off-by: Shawn Guo <shawn.guo@linaro.org>
 
-Applied for fixes and by adding a stable tag, thanks!
+--d5CDzt0vLc4LIaGn
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
 
-Kind regards
-Uffe
+Hi,
 
+On Thu, Oct 07, 2021 at 09:15:12AM -0700, Bjorn Andersson wrote:
+> The one thing that I still don't understand though is, if the typec_mux
+> is used by the typec controller to inform _the_ mux about the function
+> to be used, what's up with the complexity in typec_mux_match()? This is
+> what lead me to believe that typec_mux was enabling/disabling individual
+> altmodes, rather just flipping the physical switch at the bottom.
 
-> ---
-> Changes since RFC:
-> - Add a comment for 3.4 ~ 3.6V voltage range.
->
->  drivers/mmc/host/sdhci.c | 6 ++++++
->  1 file changed, 6 insertions(+)
->
-> diff --git a/drivers/mmc/host/sdhci.c b/drivers/mmc/host/sdhci.c
-> index 8eefa7d5fe85..2d80a04e11d8 100644
-> --- a/drivers/mmc/host/sdhci.c
-> +++ b/drivers/mmc/host/sdhci.c
-> @@ -2042,6 +2042,12 @@ void sdhci_set_power_noreg(struct sdhci_host *host, unsigned char mode,
->                         break;
->                 case MMC_VDD_32_33:
->                 case MMC_VDD_33_34:
-> +               /*
-> +                * 3.4 ~ 3.6V are valid only for those platforms where it's
-> +                * known that the voltage range is supported by hardware.
-> +                */
-> +               case MMC_VDD_34_35:
-> +               case MMC_VDD_35_36:
->                         pwr = SDHCI_POWER_330;
->                         break;
->                 default:
-> --
-> 2.17.1
->
+Ah, typec_mux_match() is a mess. I'm sorry about that. I think most of
+the code in that function is not used by anybody. If I remember
+correctly, all that complexity is attempting to solve some
+hypothetical corner case(s). Probable a case where we have multiple
+muxes per port to deal with.
+
+I think it would probable be best to clean the function to the bare
+minimum by keeping only the parts that are actually used today
+(attached).
+
+thanks,
+
+-- 
+heikki
+
+--d5CDzt0vLc4LIaGn
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: attachment; filename="mux.diff"
+
+diff --git a/drivers/usb/typec/mux.c b/drivers/usb/typec/mux.c
+index c8340de0ed495..44f168c9bd9bf 100644
+--- a/drivers/usb/typec/mux.c
++++ b/drivers/usb/typec/mux.c
+@@ -193,56 +193,15 @@ static int mux_fwnode_match(struct device *dev, const void *fwnode)
+ static void *typec_mux_match(struct fwnode_handle *fwnode, const char *id,
+ 			     void *data)
+ {
+-	const struct typec_altmode_desc *desc = data;
+ 	struct device *dev;
+-	bool match;
+-	int nval;
+-	u16 *val;
+-	int ret;
+-	int i;
+ 
+ 	/*
+-	 * Check has the identifier already been "consumed". If it
+-	 * has, no need to do any extra connection identification.
++	 * The connection identifier will be needed with device graph (OF graph).
++	 * Device graph is not supported by this code yet, so bailing out.
+ 	 */
+-	match = !id;
+-	if (match)
+-		goto find_mux;
+-
+-	/* Accessory Mode muxes */
+-	if (!desc) {
+-		match = fwnode_property_present(fwnode, "accessory");
+-		if (match)
+-			goto find_mux;
+-		return NULL;
+-	}
+-
+-	/* Alternate Mode muxes */
+-	nval = fwnode_property_count_u16(fwnode, "svid");
+-	if (nval <= 0)
+-		return NULL;
+-
+-	val = kcalloc(nval, sizeof(*val), GFP_KERNEL);
+-	if (!val)
+-		return ERR_PTR(-ENOMEM);
+-
+-	ret = fwnode_property_read_u16_array(fwnode, "svid", val, nval);
+-	if (ret < 0) {
+-		kfree(val);
+-		return ERR_PTR(ret);
+-	}
+-
+-	for (i = 0; i < nval; i++) {
+-		match = val[i] == desc->svid;
+-		if (match) {
+-			kfree(val);
+-			goto find_mux;
+-		}
+-	}
+-	kfree(val);
+-	return NULL;
++	if (id)
++		return ERR_PTR(-ENOTSUPP);
+ 
+-find_mux:
+ 	dev = class_find_device(&typec_mux_class, NULL, fwnode,
+ 				mux_fwnode_match);
+ 
+
+--d5CDzt0vLc4LIaGn--
