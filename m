@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C8FE34261F2
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 03:25:55 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0B6524261FD
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 03:25:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229529AbhJHB1s (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Oct 2021 21:27:48 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38942 "EHLO
+        id S242269AbhJHB1v (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Oct 2021 21:27:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38918 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239238AbhJHB1p (ORCPT
+        with ESMTP id S242147AbhJHB1q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Oct 2021 21:27:45 -0400
-Received: from mail-lf1-x134.google.com (mail-lf1-x134.google.com [IPv6:2a00:1450:4864:20::134])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 77B66C061772
-        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Oct 2021 18:25:45 -0700 (PDT)
-Received: by mail-lf1-x134.google.com with SMTP id y26so32781696lfa.11
-        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Oct 2021 18:25:45 -0700 (PDT)
+        Thu, 7 Oct 2021 21:27:46 -0400
+Received: from mail-lf1-x12f.google.com (mail-lf1-x12f.google.com [IPv6:2a00:1450:4864:20::12f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3B9F7C0617AA
+        for <linux-arm-msm@vger.kernel.org>; Thu,  7 Oct 2021 18:25:46 -0700 (PDT)
+Received: by mail-lf1-x12f.google.com with SMTP id j5so32413955lfg.8
+        for <linux-arm-msm@vger.kernel.org>; Thu, 07 Oct 2021 18:25:46 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=eRXNWHuPd38vN0RWOcJ4q4RHGL96UR0p/zcT0YWhKTU=;
-        b=sXE/eokBQnk60sMw5lWBy7jhROc6GuZGLiOdTuXJ6YRADlfelKLdAijTh9GVCPCPh9
-         X5f2UvW6CMDzqkGyBaA9E/pTjKqxOqXMaBnJxiqkNzCbxnSv/Qi90sD6fjN01SjI6Ldc
-         qsMqDtoHT8VswmMd01z3Fds+in+YbSjA7wV9WQ54W+GQTebOsi+sPuVkd8A+cJPmOk+P
-         Y73mGGD7ec2z/tQZ7Y37BZL0qtVEdH/yZSRVbt0SipTEeINgPdG4bejlX52XxBhvGfaQ
-         0fKpH7N6iTh9+0L9LmgAHaxtjhwUI6zEYcLsu5Jc/cLnGF+RbHn7MoRLSBQkMFcNorgA
-         NIng==
+        bh=KFilYJCf+KpWxQtdiRPdV9UvPSg+EjF5wR3x+/r1PaM=;
+        b=b8Kp3IwxAUvtNck1lwmE1eCa2D0sGIsH53MbErRUDrC2x71IDEeSO3vr05y1QVRK4N
+         XakZEvxTVTCJoW6tMZBIYBX/OG+JhezlK5lWV5NOdoQHGX0+rTsfhWvBNBnaVCuW9AyW
+         Zz7ecnwkpFi50/0o52sev5frAGtUqJVwgnOltDFcGy8uO1SJyMd4kfeG1+IcmeaP7Umw
+         XGa+so+3NFhLAaR8YhR6IxjuVSBBRKOw6zjWJnPgHtdJ5cIqNZJLYcPv0WZprgJAD6R5
+         +6R0XY03fdtOtAGn7S0VZZBkahD0uahB29LjDZlkHKfMFmERBxl4Zx4rsrZ8IpToiGg9
+         5MHg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=eRXNWHuPd38vN0RWOcJ4q4RHGL96UR0p/zcT0YWhKTU=;
-        b=2AdYIlkxFctKi0yAJUVH+J466mtWW9QvF6pxZXm2fU5N2A+IRwxRzExUqr+laLGeqM
-         e1JPAGTO1vdGqjSeYKS/7OzDhhs9oaZehQyzRaP2qF0OIPCTU84EX/o7/fIBEZIRCOdp
-         PSVVrMJjgXlBJwIxexm+ioYpgB4QlAfpsbImH1UH9+3Ee4PrqHnDZGSy92X7NC9Xv6e+
-         aiWyoZDpyQsubK8rFin3y0AzgoY387gXBtzpcXRAVx8qbJuo7ohvfAENBkALRxxT9B5t
-         2kiH1XcmTyz2Q73CnTiOelpPs+Ue+xaNsK3PnBDo+kP3wP9EZEVopNL5DM+UfJNqCDKH
-         rSJQ==
-X-Gm-Message-State: AOAM533dQ3Jd96pUntxDWlXUVULRkXq4d3G18NQOQmMkPfaoAMECA7GO
-        c9kvso572AytygP9FizheQcSXQ==
-X-Google-Smtp-Source: ABdhPJzdwYYOHak+ok2LG8aFPMRytg1r0MqaPHeikvw5/pVuEW0puGgbKabv9hmR2usFiGg0yJHryQ==
-X-Received: by 2002:ac2:54a6:: with SMTP id w6mr7407261lfk.61.1633656343905;
-        Thu, 07 Oct 2021 18:25:43 -0700 (PDT)
+        bh=KFilYJCf+KpWxQtdiRPdV9UvPSg+EjF5wR3x+/r1PaM=;
+        b=gODM3KzGw1RBfQb1Detfud8r4ndcWszZiW6msdGMPP+MrGGxBUXZhDhPwNSsmGisLT
+         Sp8ly9AsQGEK58Mjd7lXuVMYrmdINNIBftuLHo9IdETAUXoz1vUqfkxt9XQ+xqHI8Kep
+         RMZb+2Xb7FrWjE4Gw7zjNZZNafeFi7y6MUBBmgjw4v6nz7SBTWPN8a1BB+ejiGjM+cHv
+         GhyQqs0JLF1a2A9m9ygxIYsza/NrkRysCfLGyv8moy2cGpYCodMoyNoiSWr+35/S/yD5
+         vsIgVpMjrDr4sin93XxKJE17D8P1vDjnNX36dQeovjcbHCjMO0uBufnpZuk+2b0jJn6t
+         Iq0w==
+X-Gm-Message-State: AOAM530+cogE81h2IEKO22kFJJFm74UWgXtGlE6/I0skkCMU+Wn3U/25
+        fIdo2KM3Zhyixrh2AIJZBSoVVw==
+X-Google-Smtp-Source: ABdhPJxOJu2O2CcCiy90VFNaP0Nc8PeIaVHfboDJZJSdT8OBJFAdj/N6EY6pIN9ZkS0YixLqBwRILA==
+X-Received: by 2002:a2e:5702:: with SMTP id l2mr373823ljb.370.1633656344600;
+        Thu, 07 Oct 2021 18:25:44 -0700 (PDT)
 Received: from umbar.lan ([37.153.55.125])
         by smtp.gmail.com with ESMTPSA id s4sm112875ljp.115.2021.10.07.18.25.43
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Oct 2021 18:25:43 -0700 (PDT)
+        Thu, 07 Oct 2021 18:25:44 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -55,9 +55,9 @@ To:     Andy Gross <agross@kernel.org>,
         Rob Herring <robh+dt@kernel.org>
 Cc:     linux-gpio@vger.kernel.org, devicetree@vger.kernel.org,
         linux-arm-msm@vger.kernel.org
-Subject: [PATCH v3 24/25] arm64: dts: qcom: pm8916: add interrupt controller properties
-Date:   Fri,  8 Oct 2021 04:25:23 +0300
-Message-Id: <20211008012524.481877-25-dmitry.baryshkov@linaro.org>
+Subject: [PATCH v3 25/25] arm64: dts: qcom: pm8994: add interrupt controller properties
+Date:   Fri,  8 Oct 2021 04:25:24 +0300
+Message-Id: <20211008012524.481877-26-dmitry.baryshkov@linaro.org>
 X-Mailer: git-send-email 2.30.2
 In-Reply-To: <20211008012524.481877-1-dmitry.baryshkov@linaro.org>
 References: <20211008012524.481877-1-dmitry.baryshkov@linaro.org>
@@ -73,26 +73,30 @@ The interrupts property is no longer needed so remove it.
 
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/pm8916.dtsi | 6 ++----
- 1 file changed, 2 insertions(+), 4 deletions(-)
+ arch/arm64/boot/dts/qcom/pm8994.dtsi | 10 ++--------
+ 1 file changed, 2 insertions(+), 8 deletions(-)
 
-diff --git a/arch/arm64/boot/dts/qcom/pm8916.dtsi b/arch/arm64/boot/dts/qcom/pm8916.dtsi
-index 7d9e25dd9e3a..55a386d05809 100644
---- a/arch/arm64/boot/dts/qcom/pm8916.dtsi
-+++ b/arch/arm64/boot/dts/qcom/pm8916.dtsi
-@@ -96,10 +96,8 @@ pm8916_mpps: mpps@a000 {
+diff --git a/arch/arm64/boot/dts/qcom/pm8994.dtsi b/arch/arm64/boot/dts/qcom/pm8994.dtsi
+index 88a9d19b60ac..5ab46117d737 100644
+--- a/arch/arm64/boot/dts/qcom/pm8994.dtsi
++++ b/arch/arm64/boot/dts/qcom/pm8994.dtsi
+@@ -124,14 +124,8 @@ pm8994_mpps: mpps@a000 {
  			gpio-controller;
  			#gpio-cells = <2>;
- 			gpio-ranges = <&pm8916_mpps 0 0 4>;
+ 			gpio-ranges = <&pm8994_mpps 0 0 8>;
 -			interrupts = <0 0xa0 0 IRQ_TYPE_NONE>,
 -				     <0 0xa1 0 IRQ_TYPE_NONE>,
 -				     <0 0xa2 0 IRQ_TYPE_NONE>,
--				     <0 0xa3 0 IRQ_TYPE_NONE>;
+-				     <0 0xa3 0 IRQ_TYPE_NONE>,
+-				     <0 0xa4 0 IRQ_TYPE_NONE>,
+-				     <0 0xa5 0 IRQ_TYPE_NONE>,
+-				     <0 0xa6 0 IRQ_TYPE_NONE>,
+-				     <0 0xa7 0 IRQ_TYPE_NONE>;
 +			interrupt-controller;
 +			#interrupt-cells = <2>;
  		};
+ 	};
  
- 		pm8916_gpios: gpios@c000 {
 -- 
 2.30.2
 
