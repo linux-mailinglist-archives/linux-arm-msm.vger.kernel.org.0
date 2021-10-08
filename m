@@ -2,68 +2,66 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6B2CE426283
-	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 04:46:23 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 566EA426296
+	for <lists+linux-arm-msm@lfdr.de>; Fri,  8 Oct 2021 04:46:41 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235478AbhJHCsP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 7 Oct 2021 22:48:15 -0400
-Received: from mail-ot1-f46.google.com ([209.85.210.46]:35727 "EHLO
-        mail-ot1-f46.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229571AbhJHCsN (ORCPT
+        id S239061AbhJHCsb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 7 Oct 2021 22:48:31 -0400
+Received: from mail-ot1-f53.google.com ([209.85.210.53]:40837 "EHLO
+        mail-ot1-f53.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238786AbhJHCsW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 7 Oct 2021 22:48:13 -0400
-Received: by mail-ot1-f46.google.com with SMTP id 77-20020a9d0ed3000000b00546e10e6699so10053490otj.2;
-        Thu, 07 Oct 2021 19:46:18 -0700 (PDT)
+        Thu, 7 Oct 2021 22:48:22 -0400
+Received: by mail-ot1-f53.google.com with SMTP id l16-20020a9d6a90000000b0053b71f7dc83so9967423otq.7;
+        Thu, 07 Oct 2021 19:46:28 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
          :message-id;
-        bh=+ZfkYND9mkqvpRdZR/wr5agCqOn0wi+sKDUIWLp3qNc=;
-        b=gjLXjESNa67CiBVtiMUJ10TASXoyLsy5T/XAoTiRk/SryUomIEgPmE2s/pbn5jQQ+y
-         HW3WcC14B7Q1rf0KXTG7E67aJ8uLPLjYoD7rA7keEU+WQk4kYVrc7v+WhKaYgQgbbJip
-         BEoyKku1quyUhKnvdgKUXY32v/pTaYG8DhxAbqU/3MrQolCC4BpC7BFlN1LKUdCBzFpW
-         hkjkrqKakR23mW+H38kvLurfxr83gnjbfTRjD660oGAWe5dzzzbH/GmHZb52JCSBY21R
-         riXbda4vAut5rFJZK0/TVhPPWi3Oo5Ktp/QG5D6Q1kX95fEuOHy9tm5HCnYy1HQ6ukEl
-         xh9g==
-X-Gm-Message-State: AOAM533YrBCQrdGuQSmpcw7NKRx17fpvGuAAkHx0jMGRL7fXFY+VQ+Hi
-        Of630yDhtSIFSBjtUloIIQ==
-X-Google-Smtp-Source: ABdhPJwZc/YodnC4tiG0MfEqh9/9OaH0sUM1UbNJHC7VMjv7SKhumSL5j9KfvEJ11mtKlvtIk3nMhA==
-X-Received: by 2002:a05:6830:4411:: with SMTP id q17mr6360383otv.67.1633661178183;
-        Thu, 07 Oct 2021 19:46:18 -0700 (PDT)
+        bh=1fsdcw0Uf2Bf5Gbc+boXtc/UJXaHXY4TE9dopsOWLPk=;
+        b=r1KwlI4qZv3eggHJ6eqzXYWvT9lUfUFWykVwBYSTHwtMAHcQHyjXhFd3gL5md6rTBV
+         NPuu4Fr3jiMc8EhZkstVn4kiFpkadAp+/dnPZzr2MI4CvrWcE5rpu0nYZIbl6UxYcAIM
+         UIK2Tb8PDawOItX+GvZJ3m0NlmFEBHs3eNnkFztn62d0ReeYc3RxwECVHiLLSBQTgVvg
+         fAoP+Th4+vzD/U5voHmjW18Y+HADgp+4GsUADnPzDO8UPsbv0CLIAvIbwHSeu6s8weQK
+         qf4uamVmFeAO9rHu68NRqwJAtrBR5JZpRFlUQ1w5WiMqZsRMUs2DF8D9qgzKWdYJHPgR
+         s32A==
+X-Gm-Message-State: AOAM532Lii7rZwqArNOxvgSDLxWB7q3VItJg5eLbMApGYegc9VavOK5R
+        eZsnizct6XLaTqQSgJzmra3nN+xrfg==
+X-Google-Smtp-Source: ABdhPJypncZGWzOgZa5B53d0Gh2RTElDVyWKE+Q98gVGcQzFUW+QCgDy6Z/YhOPTG+BqYI9dk01O4w==
+X-Received: by 2002:a05:6830:1d4d:: with SMTP id p13mr6673779oth.134.1633661187827;
+        Thu, 07 Oct 2021 19:46:27 -0700 (PDT)
 Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
-        by smtp.gmail.com with ESMTPSA id 21sm307434oix.1.2021.10.07.19.46.16
+        by smtp.gmail.com with ESMTPSA id 33sm267601otm.28.2021.10.07.19.46.26
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 07 Oct 2021 19:46:17 -0700 (PDT)
-Received: (nullmailer pid 1409602 invoked by uid 1000);
+        Thu, 07 Oct 2021 19:46:27 -0700 (PDT)
+Received: (nullmailer pid 1409608 invoked by uid 1000);
         Fri, 08 Oct 2021 02:46:12 -0000
 From:   Rob Herring <robh@kernel.org>
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-Cc:     linux-kernel@vger.kernel.org, bgoswami@codeaurora.org,
-        perex@perex.cz, judyhsiao@chromium.org, plai@codeaurora.org,
-        agross@kernel.org, broonie@kernel.org,
-        Venkata Prasad Potturu <potturu@codeaurora.org>,
-        swboyd@chromium.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        robh+dt@kernel.org, tiwai@suse.com, srinivas.kandagatla@linaro.org,
-        rohitkr@codeaurora.org, bjorn.andersson@linaro.org,
-        lgirdwood@gmail.com
-In-Reply-To: <1633614519-26680-3-git-send-email-srivasam@codeaurora.org>
-References: <1633614519-26680-1-git-send-email-srivasam@codeaurora.org> <1633614519-26680-3-git-send-email-srivasam@codeaurora.org>
-Subject: Re: [PATCH 2/3] dt-bindings: pinctrl: qcom: Add sc7280 lpass lpi pinctrl compatible
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, Andy Gross <agross@kernel.org>,
+        linux-gpio@vger.kernel.org,
+        Linus Walleij <linus.walleij@linaro.org>,
+        linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        devicetree@vger.kernel.org
+In-Reply-To: <20211008012524.481877-3-dmitry.baryshkov@linaro.org>
+References: <20211008012524.481877-1-dmitry.baryshkov@linaro.org> <20211008012524.481877-3-dmitry.baryshkov@linaro.org>
+Subject: Re: [PATCH v3 02/25] dt-bindings: mfd: qcom-pm8xxx: add missing child nodes
 Date:   Thu, 07 Oct 2021 21:46:12 -0500
-Message-Id: <1633661172.649691.1409601.nullmailer@robh.at.kernel.org>
+Message-Id: <1633661172.685600.1409607.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, 07 Oct 2021 19:18:38 +0530, Srinivasa Rao Mandadapu wrote:
-> Add device tree binding compatible name for Qualcomm SC7280 LPASS LPI pinctrl driver.
+On Fri, 08 Oct 2021 04:25:01 +0300, Dmitry Baryshkov wrote:
+> Add gpio@[0-9a-f]+, mpps@[0-9a-f]+ and xoadc@[0-9a-f]+ as possible child
+> nodes of qcom,pm8xxx, referencing existint schema files. Schema for
+> other possible nodes does not exist yet.
 > 
-> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 > ---
->  Documentation/devicetree/bindings/pinctrl/qcom,lpass-lpi-pinctrl.yaml | 4 +++-
->  1 file changed, 3 insertions(+), 1 deletion(-)
+>  .../devicetree/bindings/mfd/qcom-pm8xxx.yaml         | 12 ++++++++++++
+>  1 file changed, 12 insertions(+)
 > 
 
 Running 'make dtbs_check' with the schema in this patch gives the
@@ -73,90 +71,77 @@ incorrect. These may not be new warnings.
 Note that it is not yet a requirement to have 0 warnings for dtbs_check.
 This will change in the future.
 
-Full log is available here: https://patchwork.ozlabs.org/patch/1537726
+Full log is available here: https://patchwork.ozlabs.org/patch/1538158
 
 
-pinctrl@33c0000: dmic01-active-pins: 'clk', 'data' do not match any of the regexes: 'pinctrl-[0-9]+'
-	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-hdk.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dt.yaml
+pmic@0: compatible:0: 'qcom,pm8018' is not one of ['qcom,pm8058', 'qcom,pm8821', 'qcom,pm8921']
+	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
 
-pinctrl@33c0000: dmic01-active-pins: 'function' is a required property
-	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-hdk.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dt.yaml
+pmic@0: compatible: Additional items are not allowed ('qcom,pm8921' was unexpected)
+	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
 
-pinctrl@33c0000: dmic01-active-pins: 'pins' is a required property
-	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-hdk.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dt.yaml
+pmic@0: compatible: ['qcom,pm8018', 'qcom,pm8921'] is too long
+	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
 
-pinctrl@33c0000: dmic01-sleep-pins: 'clk', 'data' do not match any of the regexes: 'pinctrl-[0-9]+'
-	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-hdk.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dt.yaml
+pmic@0: gpio@150: 'ak8975-gpios', 'bmp085-gpios', 'cm3605-gpios', 'ethernet-gpios', 'mpu3050-gpios', 'sdcc3-gpios', 'sdcc5-gpios', 'veth-gpios' do not match any of the regexes: '-state$', 'pinctrl-[0-9]+'
+	arch/arm/boot/dts/qcom-apq8060-dragonboard.dt.yaml
 
-pinctrl@33c0000: dmic01-sleep-pins: 'function' is a required property
-	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-hdk.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dt.yaml
+pmic@0: gpio@150: 'gpio-keys-pin-active' does not match any of the regexes: '-state$', 'pinctrl-[0-9]+'
+	arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml
 
-pinctrl@33c0000: dmic01-sleep-pins: 'pins' is a required property
-	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-hdk.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dt.yaml
+pmic@0: gpio@150: 'nled', 'wlan-gpios' do not match any of the regexes: '-state$', 'pinctrl-[0-9]+'
+	arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml
 
-pinctrl@33c0000: wsa-swr-active-pins: 'clk', 'data' do not match any of the regexes: 'pinctrl-[0-9]+'
-	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-hdk.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dt.yaml
+pmic@0: gpio@150: 'reg' is a required property
+	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
 
-pinctrl@33c0000: wsa-swr-active-pins: 'function' is a required property
-	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-hdk.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dt.yaml
+pmic@0: gpio@150: 'usb_vbus_5v_pins' does not match any of the regexes: '-state$', 'pinctrl-[0-9]+'
+	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
 
-pinctrl@33c0000: wsa-swr-active-pins: 'pins' is a required property
-	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-hdk.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dt.yaml
+pmic@0: gpio@150: 'wlan-gpios' does not match any of the regexes: '-state$', 'pinctrl-[0-9]+'
+	arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml
 
-pinctrl@33c0000: wsa-swr-sleep-pins: 'clk', 'data' do not match any of the regexes: 'pinctrl-[0-9]+'
-	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-hdk.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dt.yaml
+pmic@0: 'keypad@148', 'led@131', 'led@132', 'led@133', 'led@48', 'pwrkey@1c', 'vibrator@4a' do not match any of the regexes: 'gpio@[0-9a-f]+$', 'mpps@[0-9a-f]+$', 'pinctrl-[0-9]+', 'rtc@[0-9a-f]+$', 'xoadc@[0-9a-f]+$'
+	arch/arm/boot/dts/qcom-apq8060-dragonboard.dt.yaml
 
-pinctrl@33c0000: wsa-swr-sleep-pins: 'function' is a required property
-	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-hdk.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dt.yaml
+pmic@0: 'keypad@148', 'pwrkey@1c' do not match any of the regexes: 'gpio@[0-9a-f]+$', 'mpps@[0-9a-f]+$', 'pinctrl-[0-9]+', 'rtc@[0-9a-f]+$', 'xoadc@[0-9a-f]+$'
+	arch/arm/boot/dts/qcom-msm8960-cdp.dt.yaml
 
-pinctrl@33c0000: wsa-swr-sleep-pins: 'pins' is a required property
-	arch/arm64/boot/dts/qcom/qrb5165-rb5.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-hdk.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx203.dt.yaml
-	arch/arm64/boot/dts/qcom/sm8250-sony-xperia-edo-pdx206.dt.yaml
+pmic@0: 'keypad@148', 'pwrkey@1c', 'vibrator@4a' do not match any of the regexes: 'gpio@[0-9a-f]+$', 'mpps@[0-9a-f]+$', 'pinctrl-[0-9]+', 'rtc@[0-9a-f]+$', 'xoadc@[0-9a-f]+$'
+	arch/arm/boot/dts/qcom-msm8660-surf.dt.yaml
+
+pmic@0: 'mpp@50', 'pwrkey@1c' do not match any of the regexes: 'gpio@[0-9a-f]+$', 'mpps@[0-9a-f]+$', 'pinctrl-[0-9]+', 'rtc@[0-9a-f]+$', 'xoadc@[0-9a-f]+$'
+	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
+
+pmic@0: mpps@50: 'cm3605-mpps' does not match any of the regexes: '-state$', 'pinctrl-[0-9]+'
+	arch/arm/boot/dts/qcom-apq8060-dragonboard.dt.yaml
+
+pmic@0: mpps@50: 'gpio-ranges' is a required property
+	arch/arm/boot/dts/qcom-apq8060-dragonboard.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml
+	arch/arm/boot/dts/qcom-msm8660-surf.dt.yaml
+
+pmic@0: 'pwrkey@1c' does not match any of the regexes: 'gpio@[0-9a-f]+$', 'mpps@[0-9a-f]+$', 'pinctrl-[0-9]+', 'rtc@[0-9a-f]+$', 'xoadc@[0-9a-f]+$'
+	arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml
+
+pmic@0: rtc@11d:compatible: Additional items are not allowed ('qcom,pm8921-rtc' was unexpected)
+	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
+
+pmic@0: rtc@11d:compatible: ['qcom,pm8018-rtc', 'qcom,pm8921-rtc'] is too long
+	arch/arm/boot/dts/qcom-mdm9615-wp8548-mangoh-green.dt.yaml
+
+pmic@0: xoadc@197: 'mpp5@5', 'mpp6@6', 'mpp7@7', 'mpp8@8', 'mpp9@9' do not match any of the regexes: '^(adc-channel@)[0-9a-f]$', 'pinctrl-[0-9]+'
+	arch/arm/boot/dts/qcom-apq8060-dragonboard.dt.yaml
+
+pmic@1: mpps@50: 'gpio-ranges' is a required property
+	arch/arm/boot/dts/qcom-apq8064-asus-nexus7-flo.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-cm-qs600.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-ifc6410.dt.yaml
+	arch/arm/boot/dts/qcom-apq8064-sony-xperia-yuga.dt.yaml
 
