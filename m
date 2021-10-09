@@ -2,138 +2,123 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E79C8427926
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Oct 2021 12:51:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5BC00427BE4
+	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Oct 2021 18:22:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232288AbhJIKxf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 9 Oct 2021 06:53:35 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:39104 "EHLO
+        id S230006AbhJIQYk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 9 Oct 2021 12:24:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:55998 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231718AbhJIKxe (ORCPT
+        with ESMTP id S229790AbhJIQYj (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 9 Oct 2021 06:53:34 -0400
-Received: from mail-pl1-x62d.google.com (mail-pl1-x62d.google.com [IPv6:2607:f8b0:4864:20::62d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 25A6EC061570
-        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Oct 2021 03:51:38 -0700 (PDT)
-Received: by mail-pl1-x62d.google.com with SMTP id n11so7406403plf.4
-        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Oct 2021 03:51:38 -0700 (PDT)
+        Sat, 9 Oct 2021 12:24:39 -0400
+Received: from mail-qv1-xf31.google.com (mail-qv1-xf31.google.com [IPv6:2607:f8b0:4864:20::f31])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 830E6C061570
+        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Oct 2021 09:22:42 -0700 (PDT)
+Received: by mail-qv1-xf31.google.com with SMTP id o13so8346737qvm.4
+        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Oct 2021 09:22:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=i5m1bDZX6BzubWql3UAIuZA6GltWOA4c/7s9u8XQ6cA=;
-        b=AFQ7SZWA1Pthmuhzgoq8UkZaFcvAlCpzVaOgk0X/rXg/EsbHx8XINbxua2aHIlfCWp
-         SRCNFnqosXE+aksvq8WsRoJRJQKr71wEzFDLI3Ec7a2hJOaW+RBJAROZmJZ1h7kXsZAx
-         nmkCTXAvd4e8hETRNSLi6FsskjRPyFcOmOW2QQZiju13v3MRTUVCXylyDKHozJbKKexr
-         jIHESozBiKOKnvqOnegfZlJ19nrEw2f0A2GuLfgZtPo9msliqKBLgGl2dMJkgELp4lRr
-         WyC8AzPhJwv9j2wgQSJZ9U8CGUTzTGN/HPWVyL5aIWCMt1eplvhGQfI3GUpr+nEU26Ok
-         qR9w==
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=ps7DiQtOW0yxAPEQdZyI3WtmSKsINX3O22ig4yrRkE0=;
+        b=KzlqXDDtk47pPSC9GsMmBzmf0IOh6D1Wcti108dAkQdpZd3NdNTFOpp6HBtqRizfC1
+         p1AGFQXVSP0TU4XlTlXrsywxgYv4sMRSvwwY1MU+c4QOqn1doef7DUUcZIcgUO+xBI3t
+         UMbr2b+fPYdo3DWT1uKjaLvE2CHqwI2TqQl8sKiMyukknM+51UUBxL3EmfDM717VGwSO
+         UbY4OE78Gw2aG0lSjuKDZe/XA77HMe6/iiMQaSTpS0Mn7uObsnZV2kRCf9oYbVe4AOL7
+         vKwrJ1ZvVLTj0770a3GgR/Whp34ZdScZLoaLoJ2xq0YrCQdovB0oerOr7msSwpViC4zW
+         WySQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=i5m1bDZX6BzubWql3UAIuZA6GltWOA4c/7s9u8XQ6cA=;
-        b=1EDcVw7bvOwAbJEi8SIFkA0Za7GsDw98uHAWwD6nsbKvjpU9MQtzKqephM2TlX0iNl
-         oe3AafYb4Wod/vd4GS47VckpnakZcuRT2Oh7zatOrq237MIxIZXb+ExKLVX0O+WVgJe6
-         lMkCi5PgJZPNpZMBD7yQQsGy4xN+noaJ4m8u7y38L5187FgS5zKLPel6pMhUBbcP18el
-         lEapiHmk5OeD26bTwWDDccMSDyzBoLk0ohx93uYRQ0UmanjHhDgsFQ9Mhc5HPS2DkLGy
-         QDGAIFfo9Iv/WeIjA0xXkbQfbdHxl34auThHJP4oHZYU/Kt+ni9UE0SPSziM4INAr2uG
-         p+XQ==
-X-Gm-Message-State: AOAM533xdOf/gFUQjlNLP3c4sW1h7dzdntr6ON11tR9DxjgEgbsgWryb
-        kJgyFwD9Bkfb/0tyBibbVPBjQbyesOhs
-X-Google-Smtp-Source: ABdhPJzHQNce6Kko7wnqx/rnh5MRsP67c20EdBFFfG4bvqMj5ouDl5+dM/ldap7lS+C2Gz8BnFIOwA==
-X-Received: by 2002:a17:90b:38c3:: with SMTP id nn3mr17680562pjb.110.1633776697048;
-        Sat, 09 Oct 2021 03:51:37 -0700 (PDT)
-Received: from thinkpad ([117.215.115.53])
-        by smtp.gmail.com with ESMTPSA id e7sm1899950pfc.114.2021.10.09.03.51.34
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 09 Oct 2021 03:51:36 -0700 (PDT)
-Date:   Sat, 9 Oct 2021 16:21:32 +0530
-From:   Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>
-To:     Aleksander Morgado <aleksander@aleksander.es>
-Cc:     Loic Poulain <loic.poulain@linaro.org>,
-        Thomas Perrot <thomas.perrot@bootlin.com>,
-        hemantk@codeaurora.org,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        bbhatt@codeaurora.org
-Subject: Re: Sierra Wireless EM9191 integration issues in mhi+wwan
-Message-ID: <20211009105132.GA204538@thinkpad>
-References: <CAAP7ucLJYfftfCuKxnW8Q7-duyEuGgHA5gk+h2JyyAzNq75QSA@mail.gmail.com>
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=ps7DiQtOW0yxAPEQdZyI3WtmSKsINX3O22ig4yrRkE0=;
+        b=bau1xZzljL5UNEPLdnUIP6nzNISQSq3rQnP4+AlIM7VGAzJPUugk9WwBFVcR/vkr0S
+         Peiu5FAX2a51qv9ETdex13/uF8zUxg+JTtD0jg4eQ6gUd4DQ7j9YpcCSC7Cda09S2hag
+         cN3JP3RnI8OaeYY/LamKePN+q8PFP01bj1gK1SDEmVEc9QW1u0rtE1CQmm+tF5PTzXmO
+         KlxpJ80XN1kBQUswdJkg7V2cwEKEwCDV5Fgleo7QWs+kh928HzxZTg7gKcvtNHsuorpy
+         0BVKCpeCEBLIhVGSccnOXGBAo0s7VC0SsiE8Pb+h445SgTLraGJba/UfZFFtG3Z62INV
+         98+A==
+X-Gm-Message-State: AOAM532NGOgCtUb7lnz2YSRclP093NUYiDtwOgm5bFXYCtL8mnwqMnpg
+        wrlhMAfYvwu5uXPnx489dIzlqVm2kaJUyF7456Dy+iujQWE=
+X-Google-Smtp-Source: ABdhPJyzMbqYmICxCJiO0kJAwrdaVGemEC/CVJakJfw0G7PzEcywRdikyCTJ7DRm4WhyRdmW4SyQq2iRexvTKx8A0pA=
+X-Received: by 2002:a05:6214:70f:: with SMTP id b15mr15970638qvz.16.1633796561708;
+ Sat, 09 Oct 2021 09:22:41 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAAP7ucLJYfftfCuKxnW8Q7-duyEuGgHA5gk+h2JyyAzNq75QSA@mail.gmail.com>
+References: <20210926001005.3442668-1-dmitry.baryshkov@linaro.org>
+ <20210926001005.3442668-3-dmitry.baryshkov@linaro.org> <YWG3oC7Bp54tIYkN@ravnborg.org>
+In-Reply-To: <YWG3oC7Bp54tIYkN@ravnborg.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Sat, 9 Oct 2021 19:22:30 +0300
+Message-ID: <CAA8EJppeW=s8ngS59hvUyCqmhodtTO3f8k7Aof=-umudCvs2jA@mail.gmail.com>
+Subject: Re: [PATCH v3 2/2] drm/panel: Add support for Sharp LS060T1SX01 panel
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-+ Bhaumik
+On Sat, 9 Oct 2021 at 18:39, Sam Ravnborg <sam@ravnborg.org> wrote:
+>
+> Hi Dmityry,
+>
+> On Sun, Sep 26, 2021 at 03:10:05AM +0300, Dmitry Baryshkov wrote:
+> > Add driver to support Sharp LS06T1SX01 FullHD panel. The panel uses
+> > nt35695 driver IC. For example this LCD module can be found in the
+> > kwaek.ca Dragonboard Display Adapter Bundle.
+> >
+> > Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+>
+> The driver looks fine. It would have been nicer could you have used
+> regulator_bulk - but I guess timing constraints prevents that - right?
 
-On Thu, Oct 07, 2021 at 03:04:44PM +0200, Aleksander Morgado wrote:
-> Hey all,
-> 
-> I'm working on a setup using a RPi CM4 based board and a Sierra
-> Wireless EM9191 module, running OpenWRT 21.02 and backported mhi+wwan
-> drivers (from latest 5.15 rc). The kernel also has the
-> mhi_pci_dev_info entry written by Thomas, as per
-> https://forum.sierrawireless.com/t/sierra-wireless-airprime-em919x-pcie-support/24927
-> 
-> The EM9191 is now running 02.08.01.00 (latest firmware from Sierra),
-> upgraded in several steps back from the original 01.04.01.02 the
-> module came with. The firmware upgrades were done with
-> qmi-firmware-update and the module in USB mode  in a desktop PC.
-> 
-> Most of the system boots end up with the mhi driver reporting that the
-> module firmware crashed in different ways:
-> 
-> [    7.060730] mhi-pci-generic 0000:01:00.0: MHI PCI device found: sierra-em919x
-> [    7.067906] mhi-pci-generic 0000:01:00.0: BAR 0: assigned [mem
-> 0x600000000-0x600000fff 64bit]
-> [    7.076455] mhi-pci-generic 0000:01:00.0: enabling device (0000 -> 0002)
-> [    7.083277] mhi-pci-generic 0000:01:00.0: using shared MSI
-> [    7.089508] mhi mhi0: Requested to power ON
-> [    7.094080] mhi mhi0: Attempting power on with EE: PASS THROUGH,
-> state: SYS ERROR
-> [    7.180371] mhi mhi0: local ee: INVALID_EE state: RESET device ee:
-> PASS THROUGH state: SYS ERROR
-> [    7.187146] mhi mhi0: Power on setup success
-> [    7.187219] mhi mhi0: Handling state transition: PBL
-> [    7.189165] mhi mhi0: System error detected
-> [    7.189178] mhi mhi0: Device MHI is not in valid state
-> [    7.189189] mhi-pci-generic 0000:01:00.0: firmware crashed (7)
-> [    7.213682] mhi mhi0: Handling state transition: SYS ERROR
-> [    7.219183] mhi mhi0: Transitioning from PM state: Linkdown or
-> Error Fatal Detect to: SYS ERROR Process
-> [    7.228590] mhi-pci-generic 0000:01:00.0: firmware crashed (6)
-> [    7.234429] mhi mhi0: Failed to transition from PM state: Linkdown
-> or Error Fatal Detect to: SYS ERROR Process
-> [    7.244433] mhi mhi0: Exiting with PM state: Linkdown or Error
-> Fatal Detect, MHI state: RESET
-> [    7.252963] mhi mhi0: Handling state transition: DISABLE
-> [    7.258278] mhi mhi0: Processing disable transition with PM state:
-> Linkdown or Error Fatal Detect
-> [    7.267155] mhi mhi0: Waiting for all pending event ring processing
-> to complete
-> [    7.274480] mhi mhi0: Waiting for all pending threads to complete
-> [    7.280576] mhi mhi0: Reset all active channels and remove MHI devices
-> [    7.287110] mhi mhi0: Resetting EV CTXT and CMD CTXT
-> [    7.292077] mhi mhi0: Exiting with PM state: DISABLE, MHI state: RESET
-> [    7.298683] mhi-pci-generic 0000:01:00.0: failed to power up MHI controller
-> [    7.306184] mhi-pci-generic: probe of 0000:01:00.0 failed with error -110
-> 
-> Some of the boots successfully finish and I can talk to both the QMI
-> and MBIM ports exposed by the WWAN subsystem, but the success rate is
-> extremely low.
+Yes, there are explicit timing constraints in the datasheet, so I had
+to follow them and to turn regulators on and off one by one.
+
+>
+> Please address the following checkpatch warnings:
+>
+> -:181: WARNING:MSLEEP: msleep < 20ms can sleep for up to 20ms; see Documentation/timers/timers-howto.rst
+> #181: FILE: drivers/gpu/drm/panel/panel-sharp-ls060t1sx01.c:129:
+> +       msleep(1);
+>
+> -:187: WARNING:MSLEEP: msleep < 20ms can sleep for up to 20ms; see Documentation/timers/timers-howto.rst
+> #187: FILE: drivers/gpu/drm/panel/panel-sharp-ls060t1sx01.c:135:
+> +       msleep(10);
+>
+> -:193: WARNING:MSLEEP: msleep < 20ms can sleep for up to 20ms; see Documentation/timers/timers-howto.rst
+> #193: FILE: drivers/gpu/drm/panel/panel-sharp-ls060t1sx01.c:141:
+> +       msleep(10);
+>
+> -:210: WARNING:MSLEEP: msleep < 20ms can sleep for up to 20ms; see Documentation/timers/timers-howto.rst
+> #210: FILE: drivers/gpu/drm/panel/panel-sharp-ls060t1sx01.c:158:
+> +       msleep(10);
+>
+> -:241: WARNING:MSLEEP: msleep < 20ms can sleep for up to 20ms; see Documentation/timers/timers-howto.rst
+> #241: FILE: drivers/gpu/drm/panel/panel-sharp-ls060t1sx01.c:189:
+> +       msleep(10);
 >
 
-Can you share the success log also?
+Ack, I'll fix the msleep's and send the v4.
 
-Thanks,
-Mani
- 
-> Thomas, are you seeing similar issues in your setup?
-> 
-> -- 
-> Aleksander
-> https://aleksander.es
+>
+> I expect patches to be checkpatch --strict clean - or it is mentioned in
+> the changelog otherwise.
+>
+>         Sam
+
+
+
+-- 
+With best wishes
+Dmitry
