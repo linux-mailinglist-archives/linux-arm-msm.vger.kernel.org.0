@@ -2,147 +2,270 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id BB8EA427EF3
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Oct 2021 06:34:15 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 06976427EF8
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Oct 2021 06:37:42 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229732AbhJJEgL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 10 Oct 2021 00:36:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45626 "EHLO
+        id S230124AbhJJEjg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 10 Oct 2021 00:39:36 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46366 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229645AbhJJEgL (ORCPT
+        with ESMTP id S229694AbhJJEjf (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 10 Oct 2021 00:36:11 -0400
-Received: from mail-oo1-xc2b.google.com (mail-oo1-xc2b.google.com [IPv6:2607:f8b0:4864:20::c2b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0D93AC061570
-        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Oct 2021 21:34:13 -0700 (PDT)
-Received: by mail-oo1-xc2b.google.com with SMTP id w9-20020a4adec9000000b002b696945457so3710288oou.10
-        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Oct 2021 21:34:13 -0700 (PDT)
+        Sun, 10 Oct 2021 00:39:35 -0400
+Received: from mail-oi1-x22b.google.com (mail-oi1-x22b.google.com [IPv6:2607:f8b0:4864:20::22b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 14388C061570
+        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Oct 2021 21:37:38 -0700 (PDT)
+Received: by mail-oi1-x22b.google.com with SMTP id a3so19556099oid.6
+        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Oct 2021 21:37:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=kali.org; s=google;
-        h=message-id:date:mime-version:user-agent:subject:content-language:to
-         :cc:references:from:in-reply-to:content-transfer-encoding;
-        bh=oS3/7Iu8XaPwbDFyRTMleM8YCizK9D6llJsSxGhaoZk=;
-        b=SEDuDwvxsH2QVF7SHxwlWidbjjslBC9HcB3wX9ErK+x+/nEFa2IyjzOhtAu1kLxXet
-         buQvB5yR3jH4Q+FPja2FK8Vux56XYLiMAQyXzqeUjb0PKQmCpimI+LPw4KDEmycjRKop
-         lkK/5Zv3g7COM7QSep84giDmz4EviwuZcExXjSdXPK9xDCT4LzulXS3XavDIAhklXGDG
-         +BGXHHzpl2hNhnxOnyHV/0Tk95v4FJ/K1PBY0/ClBvjBMhYJp3yiqvrMXjQMX8k+RVvO
-         z6InxZihbD8YYZ+EoHjwvjh4Y/J+n61Veqk129gbKC6lCs5BRQa9QSInnB4HWyjyY2Bg
-         RGRA==
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=LND76CQ9d5nw6mEeTiH1H1kGnaK21DZuSx57AAvuFmo=;
+        b=U9qgvdrcWvJCuxBEb3LCtSFlTqLZTCVK662QSjs/0Ug4sEjKZ7LIpcqyw14X9vsvtp
+         YoOrQW57gy0t6cvV3qf5S+9JCEs/hITTSVCQudWuswb7Kldt1wXxf/r6XYb6exi1sZpt
+         WY1yK8d3UtYPjehrNxzi60za6+wo8HkEi0swlqgdKk0r1h/cwyulBMd+6og21p3VCtLB
+         +37Z/IHDJbUlTFjLtzMtVbAnqV4CNBAmVaFuACI1yS/yPDvVx0mmSWhBm/vPaVwVHq0t
+         A1BjzrFX3VZTedktp9WeEjdv68aslH49xFFT70OFc6vgd4tA4njgja/2Hiw95VbN4KzQ
+         TDqw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:message-id:date:mime-version:user-agent:subject
-         :content-language:to:cc:references:from:in-reply-to
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=oS3/7Iu8XaPwbDFyRTMleM8YCizK9D6llJsSxGhaoZk=;
-        b=18vN1KkDj6oGKkBrlQFegNEWVDGcBsDgU3uFJEfihZu7UbioooIYqRNYZHMffJxirV
-         0vtjd0e21LIz6XeqAXjNvX4SAiwknpua30qpbv6XdWYd42PgPTR5tbXu9aoO0o31fPWW
-         NMSJystulbYXr1wvzuUXqiJ/HKdVzpxgSWVTpBrKrrKWIB+qcOf2WPbOBPr3Sgr6GBeb
-         2FVyXX7gT7FVhTLXjYdg6/RoyH2Q14zJo6jUpqXpqbss699ix0IdLs52dBvqDEOpru5T
-         +kzRSaDOhl8mSCzglcyjQS3xRdJYFpN9UeXCp+VBdBzMWLFxVJzql+x6jYQTpQeBWQOA
-         6SaA==
-X-Gm-Message-State: AOAM530mKZ3uNEFLoC1QudrmOZpP3gzVfZLjwxtRNOuBIYXU1FE33hTz
-        cwyK16roMtRlYsOd75eQ4SOoCQ==
-X-Google-Smtp-Source: ABdhPJzrwmeoXn6Y5xr6p12gTvhnt86mUjAglqoTyIVyPu75x5wt5v/wozGrKV4qeXn1YjW2BaTrBw==
-X-Received: by 2002:a4a:b64b:: with SMTP id f11mr14083092ooo.18.1633840452285;
-        Sat, 09 Oct 2021 21:34:12 -0700 (PDT)
-Received: from [192.168.11.48] (cpe-173-173-107-246.satx.res.rr.com. [173.173.107.246])
-        by smtp.gmail.com with ESMTPSA id n7sm899946oij.46.2021.10.09.21.34.11
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Sat, 09 Oct 2021 21:34:11 -0700 (PDT)
-Message-ID: <defac383-4a87-9a1c-86f1-4dde49dd9d2f@kali.org>
-Date:   Sat, 9 Oct 2021 23:34:10 -0500
+        bh=LND76CQ9d5nw6mEeTiH1H1kGnaK21DZuSx57AAvuFmo=;
+        b=P/B3PdQN/gjG9untIeY3mE3FNrvlugEo1JPDDQT2wnFAUAKkpPhTuub8C4NIz5ASVy
+         qhd6ep+pecDIaHmmkO/aulmIS3jCI3KgFjYiJxlwLgyivBJprUm7b5QV1WXR2U6kc+ec
+         PZkbS158LWIdi2GIb3Q3nfsA2gMfqrBGMfMzfTpBOW7aeXfQPIZ9v74VDVd3e1hHJFSh
+         l3CkfiN8Q02oOGA8mhxlKBIEcpqoDAd1/BlepCivnrf985TBfL2xg1lqDas5mY7IkwiO
+         B7SIQyVb0m+aMxz6mup0rVjWStwQumMBlFKjMwazopG/lQMfUn5s9Q50GSVO+WErbH68
+         5DBQ==
+X-Gm-Message-State: AOAM532Sj7naW1rcxBTD3o7HSYAPXNF10NzJ0Lzt3kxma7M/GOllHZxk
+        WpwwseZyq4d8m+OJd2vA4NE+5A==
+X-Google-Smtp-Source: ABdhPJzip9nKq4R/a7WcDDunO7xjCpX1JoNYTsoeiVxo51L3J5P8tZ/YNHvrWwtYmDFQ1qFHenG4VA==
+X-Received: by 2002:aca:3556:: with SMTP id c83mr17828600oia.95.1633840657276;
+        Sat, 09 Oct 2021 21:37:37 -0700 (PDT)
+Received: from localhost.localdomain ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id p14sm811685oov.0.2021.10.09.21.37.36
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Sat, 09 Oct 2021 21:37:36 -0700 (PDT)
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Pavel Machek <pavel@ucw.cz>, Rob Herring <robh+dt@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        =?UTF-8?q?Uwe=20Kleine-K=C3=B6nig?= 
+        <u.kleine-koenig@pengutronix.de>, Lee Jones <lee.jones@linaro.org>
+Cc:     linux-leds@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        linux-pwm@vger.kernel.org,
+        Marijn Suijten <marijn.suijten@somainline.org>,
+        Yassine Oudjana <y.oudjana@protonmail.com>,
+        Luca Weiss <luca@z3ntu.xyz>,
+        Subbaraman Narayanamurthy <subbaram@codeaurora.org>
+Subject: [PATCH v10 1/2] dt-bindings: leds: Add Qualcomm Light Pulse Generator binding
+Date:   Sat,  9 Oct 2021 21:39:11 -0700
+Message-Id: <20211010043912.136640-1-bjorn.andersson@linaro.org>
+X-Mailer: git-send-email 2.29.2
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:91.0)
- Gecko/20100101 Thunderbird/91.1.2
-Subject: Re: [PATCH] iommu: fix ARM_SMMU vs QCOM_SCM compilation
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Thierry Reding <treding@nvidia.com>
-Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
-        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Daniel Lezcano <daniel.lezcano@linaro.org>
-References: <20211010023350.978638-1-dmitry.baryshkov@linaro.org>
-From:   Steev Klimaszewski <steev@kali.org>
-In-Reply-To: <20211010023350.978638-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+This adds the binding document describing the three hardware blocks
+related to the Light Pulse Generator found in a wide range of Qualcomm
+PMICs.
 
-On 10/9/21 9:33 PM, Dmitry Baryshkov wrote:
-> After commit 424953cf3c66 ("qcom_scm: hide Kconfig symbol") arm-smmu got
-> qcom_smmu_impl_init() call guarded by IS_ENABLED(CONFIG_ARM_SMMU_QCOM).
-> However the CONFIG_ARM_SMMU_QCOM Kconfig entry does not exist, so the
-> qcom_smmu_impl_init() is never called.
->
-> So, let's fix this by always calling qcom_smmu_impl_init(). It does not
-> touch the smmu passed unless the device is a non-Qualcomm one. Make
-> ARM_SMMU select QCOM_SCM for ARCH_QCOM.
->
-> Fixes: 424953cf3c66 ("qcom_scm: hide Kconfig symbol")
-> Cc: Arnd Bergmann <arnd@arndb.de>
-> Reported-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-> ---
->   drivers/iommu/Kconfig                      | 1 +
->   drivers/iommu/arm/arm-smmu/Makefile        | 3 +--
->   drivers/iommu/arm/arm-smmu/arm-smmu-impl.c | 9 +++++++--
->   3 files changed, 9 insertions(+), 4 deletions(-)
->
-> diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
-> index c5c71b7ab7e8..a4593e53fe7d 100644
-> --- a/drivers/iommu/Kconfig
-> +++ b/drivers/iommu/Kconfig
-> @@ -309,6 +309,7 @@ config ARM_SMMU
->   	tristate "ARM Ltd. System MMU (SMMU) Support"
->   	depends on ARM64 || ARM || (COMPILE_TEST && !GENERIC_ATOMIC64)
->   	select IOMMU_API
-> +	select QCOM_SCM
->   	select IOMMU_IO_PGTABLE_LPAE
->   	select ARM_DMA_USE_IOMMU if ARM
->   	help
-> diff --git a/drivers/iommu/arm/arm-smmu/Makefile b/drivers/iommu/arm/arm-smmu/Makefile
-> index b0cc01aa20c9..e240a7bcf310 100644
-> --- a/drivers/iommu/arm/arm-smmu/Makefile
-> +++ b/drivers/iommu/arm/arm-smmu/Makefile
-> @@ -1,5 +1,4 @@
->   # SPDX-License-Identifier: GPL-2.0
->   obj-$(CONFIG_QCOM_IOMMU) += qcom_iommu.o
->   obj-$(CONFIG_ARM_SMMU) += arm_smmu.o
-> -arm_smmu-objs += arm-smmu.o arm-smmu-impl.o arm-smmu-nvidia.o
-> -arm_smmu-$(CONFIG_ARM_SMMU_QCOM) += arm-smmu-qcom.o
-> +arm_smmu-objs += arm-smmu.o arm-smmu-impl.o arm-smmu-nvidia.o arm-smmu-qcom.o
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
-> index 2c25cce38060..8199185dd262 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
-> @@ -215,8 +215,13 @@ struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu)
->   	    of_device_is_compatible(np, "nvidia,tegra186-smmu"))
->   		return nvidia_smmu_impl_init(smmu);
->   
-> -	if (IS_ENABLED(CONFIG_ARM_SMMU_QCOM))
-> -		smmu = qcom_smmu_impl_init(smmu);
-> +	/*
-> +	 * qcom_smmu_impl_init() will not touch smmu if the device is not
-> +	 * a Qualcomm one.
-> +	 */
-> +	smmu = qcom_smmu_impl_init(smmu);
-> +	if (IS_ERR(smmu))
-> +		return smmu;
->   
->   	if (of_device_is_compatible(np, "marvell,ap806-smmu-500"))
->   		smmu->impl = &mrvl_mmu500_impl;
+Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+---
 
-Without this applied, my Lenovo Yoga C630 just boot loops with 
-424953cf3c66 applied when it gets to the smmu.  This fixes it.
+Changes since v9:
+- "led" child of "multi-led" now needed a patternProperties
+- use generic "led-controller" and "pwm-controller" in example
 
-Tested-By: Steev Klimaszewski <steev@kali.org>
+ .../bindings/leds/leds-qcom-lpg.yaml          | 173 ++++++++++++++++++
+ 1 file changed, 173 insertions(+)
+ create mode 100644 Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+
+diff --git a/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+new file mode 100644
+index 000000000000..336bd8e10efd
+--- /dev/null
++++ b/Documentation/devicetree/bindings/leds/leds-qcom-lpg.yaml
+@@ -0,0 +1,173 @@
++# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
++%YAML 1.2
++---
++$id: http://devicetree.org/schemas/leds/leds-qcom-lpg.yaml#
++$schema: http://devicetree.org/meta-schemas/core.yaml#
++
++title: Qualcomm Light Pulse Generator
++
++maintainers:
++  - Bjorn Andersson <bjorn.andersson@linaro.org>
++
++description: >
++  The Qualcomm Light Pulse Generator consists of three different hardware blocks;
++  a ramp generator with lookup table, the light pulse generator and a three
++  channel current sink. These blocks are found in a wide range of Qualcomm PMICs.
++
++properties:
++  compatible:
++    enum:
++      - qcom,pm8150b-lpg
++      - qcom,pm8150l-lpg
++      - qcom,pm8916-pwm
++      - qcom,pm8941-lpg
++      - qcom,pm8994-lpg
++      - qcom,pmc8180c-lpg
++      - qcom,pmi8994-lpg
++      - qcom,pmi8998-lpg
++
++  "#pwm-cells":
++    const: 2
++
++  "#address-cells":
++    const: 1
++
++  "#size-cells":
++    const: 0
++
++  qcom,power-source:
++    $ref: /schemas/types.yaml#/definitions/uint32
++    description:
++      power-source used to drive the output, as defined in the datasheet.
++      Should be specified if the TRILED block is present
++    enum: [0, 1, 3]
++
++  qcom,dtest:
++    $ref: /schemas/types.yaml#/definitions/uint32-matrix
++    description: >
++      A list of integer pairs, where each pair represent the dtest line the
++      particular channel should be connected to and the flags denoting how the
++      value should be outputed, as defined in the datasheet. The number of
++      pairs should be the same as the number of channels.
++    items:
++      items:
++        - description: dtest line to attach
++        - description: flags for the attachment
++
++  multi-led:
++    type: object
++    $ref: leds-class-multicolor.yaml#
++    properties:
++      "#address-cells":
++        const: 1
++
++      "#size-cells":
++        const: 0
++
++    patternProperties:
++      "^led@[0-9a-f]$":
++        type: object
++        $ref: common.yaml#
++
++patternProperties:
++  "^led@[0-9a-f]$":
++    type: object
++    $ref: common.yaml#
++
++    properties:
++      reg: true
++
++    required:
++      - reg
++
++required:
++  - compatible
++
++additionalProperties: false
++
++examples:
++  - |
++    #include <dt-bindings/leds/common.h>
++
++    led-controller {
++      compatible = "qcom,pmi8994-lpg";
++
++      #address-cells = <1>;
++      #size-cells = <0>;
++
++      qcom,power-source = <1>;
++
++      qcom,dtest = <0 0>,
++                   <0 0>,
++                   <0 0>,
++                   <4 1>;
++
++      led@1 {
++        reg = <1>;
++        color = <LED_COLOR_ID_GREEN>;
++        function = LED_FUNCTION_INDICATOR;
++        function-enumerator = <1>;
++      };
++
++      led@2 {
++        reg = <2>;
++        color = <LED_COLOR_ID_GREEN>;
++        function = LED_FUNCTION_INDICATOR;
++        function-enumerator = <0>;
++        default-state = "on";
++      };
++
++      led@3 {
++        reg = <3>;
++        color = <LED_COLOR_ID_GREEN>;
++        function = LED_FUNCTION_INDICATOR;
++        function-enumerator = <2>;
++      };
++
++      led@4 {
++        reg = <4>;
++        color = <LED_COLOR_ID_GREEN>;
++        function = LED_FUNCTION_INDICATOR;
++        function-enumerator = <3>;
++      };
++    };
++  - |
++    #include <dt-bindings/leds/common.h>
++
++    led-controller {
++      compatible = "qcom,pmi8994-lpg";
++
++      #address-cells = <1>;
++      #size-cells = <0>;
++
++      qcom,power-source = <1>;
++
++      multi-led {
++        color = <LED_COLOR_ID_RGB>;
++        function = LED_FUNCTION_STATUS;
++
++        #address-cells = <1>;
++        #size-cells = <0>;
++
++        led@1 {
++          reg = <1>;
++          color = <LED_COLOR_ID_RED>;
++        };
++
++        led@2 {
++          reg = <2>;
++          color = <LED_COLOR_ID_GREEN>;
++        };
++
++        led@3 {
++          reg = <3>;
++          color = <LED_COLOR_ID_BLUE>;
++        };
++      };
++    };
++  - |
++    pwm-controller {
++      compatible = "qcom,pm8916-pwm";
++      #pwm-cells = <2>;
++    };
++...
+-- 
+2.29.2
 
