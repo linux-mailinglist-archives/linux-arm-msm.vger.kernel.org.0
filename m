@@ -2,313 +2,143 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 0F087427E77
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Oct 2021 05:03:10 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1ECDD427E9A
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Oct 2021 05:38:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229792AbhJJDFB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 9 Oct 2021 23:05:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54180 "EHLO
+        id S229792AbhJJDkb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 9 Oct 2021 23:40:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33618 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229740AbhJJDFA (ORCPT
+        with ESMTP id S229744AbhJJDka (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 9 Oct 2021 23:05:00 -0400
-Received: from mail-ot1-x335.google.com (mail-ot1-x335.google.com [IPv6:2607:f8b0:4864:20::335])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9CAF8C061762
-        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Oct 2021 20:03:02 -0700 (PDT)
-Received: by mail-ot1-x335.google.com with SMTP id k2-20020a056830168200b0054e523d242aso7285264otr.6
-        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Oct 2021 20:03:02 -0700 (PDT)
+        Sat, 9 Oct 2021 23:40:30 -0400
+Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9D13C061570
+        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Oct 2021 20:38:32 -0700 (PDT)
+Received: by mail-pj1-x1035.google.com with SMTP id g13-20020a17090a3c8d00b00196286963b9so12130297pjc.3
+        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Oct 2021 20:38:32 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
+        d=gmail.com; s=20210112;
         h=from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=dULes5+aKNO9I+xG1qAGVCL0ir0FJqSn6Fpl0VJVQKg=;
-        b=IrfhRy1H3cFzWgH10PhI0r5z0+eWTpL+BooBqTktyj/FHdmNLVj6svwXEIOi7EktUs
-         EDv6OFCJ4aLOFipxOt93n0rF4Dr0qPyrhg+F9diminBuXyprOk5oeGxIDrzumXPH3yxw
-         CVrpuMzmXQG/P0vPwjS0VLEvizsmVgNZ/IspDoHLADHINn6a7mZYz1bq6OYxiMEC6rL8
-         Ts/ZqxS/oPktK1E+Ec7rJQbVS3bWnR1jsBA4FMRkPrLYwKn130U10JHJW7vL0mS3gKH3
-         F5v3EdFeHWzSo8N4JMxgGKli6AfGZxwuWG77tVrI6m6Q33neQ/JfS3WvrdZfklUJzVCT
-         bqBw==
+        bh=TnmMUol9PPoUaRCFJDxnuRaBuXtA7V5GZJLCXirxsqQ=;
+        b=jAENpBx+8R/69yS2vdv3S8qbbeZCqlfe9QDGJSTsa2OswFY25jzL206gbeL4x5Z8jc
+         Qy/Q2YJ1/UTDfusZmbUTuvTyPhdQYqMLZg0yl/HJyWyAZl9aoOsyy9RM+w20YjPx4Zpa
+         GQeh+RVuGgzfxwHjtihf20ST9G1T2xolddTIDRVjpbdVwRhjc1mJ1GdMGrFTW//ZUMOb
+         CsfLlkd0ffj6v1C/0iTjPTP2SSdjyecn0EwP5CP6CQSGaHltXpLnkglW0lIqGaBFKQi+
+         L0rDSQw6Jlc5VmioYbAgEbvrjPxHLnbGpFMSgdS2RMltS4hln/24B7yvMbvleC/Yf+X8
+         CBKQ==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
          :content-transfer-encoding;
-        bh=dULes5+aKNO9I+xG1qAGVCL0ir0FJqSn6Fpl0VJVQKg=;
-        b=Mgyh3pAr1ij86RZQF29puZZnsor84eg0P4AhmRx3MWcdqEapeCI4N80TPs/2G1fRcL
-         MF/OtBZLYRRaXuF0NE/s0zrGSjJlNL+grp+kwVDMaNg+0vMZEom6q10hd1+7PkaZiArg
-         sTmc4UYi9tOzfp2weLqTCWEu2MGZ+a7Kp+QKHs4OYhm7lPOfWg0E/AdrjW5RLSu8leNw
-         IdGLQChKNiUtx5VX1Nob3oyRmvWW0tDk5EUfvqyuuTXhcFzNY2DcKvv/01FV2eascovZ
-         Oeh71puNwFHBNQQ9ht7JDgEKpb7NvWd5S6sPlKMkAFq3Son4PPqqrTFhVaU++LGynYcQ
-         hFtg==
-X-Gm-Message-State: AOAM533X3pDmc2HyhjE+xck92mfFtKulzACKXu3cRt6olr2prC2sHF+x
-        /ubPkM5EZd1G5ROhTw3oCYCG9Q==
-X-Google-Smtp-Source: ABdhPJyla0z0yyMYy+ZmMtAsDPkpQKZ/s6cNhagJT2URxlyS37YKvJSmjB+MIKrSb4TcY1g//DJkEQ==
-X-Received: by 2002:a05:6830:3093:: with SMTP id f19mr2218948ots.97.1633834980511;
-        Sat, 09 Oct 2021 20:03:00 -0700 (PDT)
-Received: from localhost.localdomain ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id s22sm894943ois.32.2021.10.09.20.02.58
+        bh=TnmMUol9PPoUaRCFJDxnuRaBuXtA7V5GZJLCXirxsqQ=;
+        b=O3MphJlqgwveLkDB3XJTRlkDHdZU7SlAExdImgdDSZNMybghFwilzq7oEwgZxXOczk
+         qalsXLE17tZWd7blRhBRtbKok0HWJTBk+fhsgXmWMeI5imT2EYKxw6lzPe2H/rXaOGsh
+         GRnHDZ8iH6Lxm/6ZuSPWFz2cTZys1vGBnkCmMJmeB2+7HMzQJd0M4thfQHDoNb12plQV
+         aKxJfIIkko17GhsllkhFqF7GLE+qkHu41jHiJISDdvMfMFIfHHcONmsP8wVqQ2y0iuMN
+         brEIPAHqsYAnhZ8kfzvDncQQwAgsC34PYTTrUfjk3tupCl4LX3vlDMnIN06EFKZuAOKg
+         5CkA==
+X-Gm-Message-State: AOAM533m1kCemedoZzfEJWvoU626K1Q49nD1rA1//uyUVD7t5jOlndG7
+        x7MTXET3Olle2CQ3sB7saVE=
+X-Google-Smtp-Source: ABdhPJzB4X/RTPQaYLPPE33gxu3Xs1Bbd4ikHZ/iCY533cWlTkyeO1BGrsCnSC6gi5U3xFQLvrZZ1A==
+X-Received: by 2002:a17:902:b593:b0:12d:7aa5:de2d with SMTP id a19-20020a170902b59300b0012d7aa5de2dmr17908010pls.31.1633837112277;
+        Sat, 09 Oct 2021 20:38:32 -0700 (PDT)
+Received: from localhost.localdomain ([117.193.191.46])
+        by smtp.googlemail.com with ESMTPSA id z68sm19522pgz.90.2021.10.09.20.38.30
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 09 Oct 2021 20:02:59 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     Rob Clark <robdclark@gmail.com>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-kernel@vger.kernel.org
-Subject: [PATCH] drm/msm/dp: Use the connector passed to dp_debug_get()
-Date:   Sat,  9 Oct 2021 20:04:35 -0700
-Message-Id: <20211010030435.4000642-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.29.2
+        Sat, 09 Oct 2021 20:38:31 -0700 (PDT)
+From:   "J.R. Divya Antony" <d.antony.jr@gmail.com>
+To:     bjorn.andersson@linaro.org
+Cc:     linux-arm-msm@vger.kernel.org,
+        "J.R. Divya Antony" <d.antony.jr@gmail.com>
+Subject: [PATCH] arm64: dts: qcom: msm8916-asus-z00l: Add sensors
+Date:   Sun, 10 Oct 2021 09:07:50 +0530
+Message-Id: <20211010033750.15204-1-d.antony.jr@gmail.com>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The debugfs code is provided an array of a single drm_connector. Then to
-access the connector, the list of all connectors of the DRM device is
-traversed and all non-DisplayPort connectors are skipped, to find the
-one and only DisplayPort connector.
+This device has MPU-6515 imu and Asahi Kasei AK09911 magnetometer.
+Add support for it.
 
-But as we move to support multiple DisplayPort controllers this will now
-find multiple connectors and has no way to distinguish them.
-
-Pass the single connector to dp_debug_get() and use this in the debugfs
-functions instead, both to simplify the code and the support the
-multiple instances.
-
-Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+Signed-off-by: J.R. Divya Antony <d.antony.jr@gmail.com>
 ---
- drivers/gpu/drm/msm/dp/dp_debug.c   | 131 ++++++++++------------------
- drivers/gpu/drm/msm/dp/dp_debug.h   |   2 +-
- drivers/gpu/drm/msm/dp/dp_display.c |   2 +-
- 3 files changed, 46 insertions(+), 89 deletions(-)
+ .../arm64/boot/dts/qcom/msm8916-asus-z00l.dts | 51 +++++++++++++++++++
+ 1 file changed, 51 insertions(+)
 
-diff --git a/drivers/gpu/drm/msm/dp/dp_debug.c b/drivers/gpu/drm/msm/dp/dp_debug.c
-index af709d93bb9f..da4323556ef3 100644
---- a/drivers/gpu/drm/msm/dp/dp_debug.c
-+++ b/drivers/gpu/drm/msm/dp/dp_debug.c
-@@ -24,7 +24,7 @@ struct dp_debug_private {
- 	struct dp_usbpd *usbpd;
- 	struct dp_link *link;
- 	struct dp_panel *panel;
--	struct drm_connector **connector;
-+	struct drm_connector *connector;
- 	struct device *dev;
- 	struct drm_device *drm_dev;
+diff --git a/arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts b/arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts
+index cee451e59385..f43ad0b306f0 100644
+--- a/arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts
++++ b/arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts
+@@ -48,6 +48,41 @@ usb_id: usb-id {
+ 	};
+ };
  
-@@ -97,59 +97,35 @@ DEFINE_SHOW_ATTRIBUTE(dp_debug);
- 
- static int dp_test_data_show(struct seq_file *m, void *data)
- {
--	struct drm_device *dev;
--	struct dp_debug_private *debug;
--	struct drm_connector *connector;
--	struct drm_connector_list_iter conn_iter;
-+	const struct dp_debug_private *debug = m->private;
-+	const struct drm_connector *connector = debug->connector;
- 	u32 bpc;
- 
--	debug = m->private;
--	dev = debug->drm_dev;
--	drm_connector_list_iter_begin(dev, &conn_iter);
--	drm_for_each_connector_iter(connector, &conn_iter) {
--
--		if (connector->connector_type !=
--			DRM_MODE_CONNECTOR_DisplayPort)
--			continue;
--
--		if (connector->status == connector_status_connected) {
--			bpc = debug->link->test_video.test_bit_depth;
--			seq_printf(m, "hdisplay: %d\n",
--					debug->link->test_video.test_h_width);
--			seq_printf(m, "vdisplay: %d\n",
--					debug->link->test_video.test_v_height);
--			seq_printf(m, "bpc: %u\n",
--					dp_link_bit_depth_to_bpc(bpc));
--		} else
--			seq_puts(m, "0");
-+	if (connector->status == connector_status_connected) {
-+		bpc = debug->link->test_video.test_bit_depth;
-+		seq_printf(m, "hdisplay: %d\n",
-+				debug->link->test_video.test_h_width);
-+		seq_printf(m, "vdisplay: %d\n",
-+				debug->link->test_video.test_v_height);
-+		seq_printf(m, "bpc: %u\n",
-+				dp_link_bit_depth_to_bpc(bpc));
-+	} else {
-+		seq_puts(m, "0");
- 	}
- 
--	drm_connector_list_iter_end(&conn_iter);
--
- 	return 0;
- }
- DEFINE_SHOW_ATTRIBUTE(dp_test_data);
- 
- static int dp_test_type_show(struct seq_file *m, void *data)
- {
--	struct dp_debug_private *debug = m->private;
--	struct drm_device *dev = debug->drm_dev;
--	struct drm_connector *connector;
--	struct drm_connector_list_iter conn_iter;
--
--	drm_connector_list_iter_begin(dev, &conn_iter);
--	drm_for_each_connector_iter(connector, &conn_iter) {
--
--		if (connector->connector_type !=
--			DRM_MODE_CONNECTOR_DisplayPort)
--			continue;
-+	const struct dp_debug_private *debug = m->private;
-+	const struct drm_connector *connector = debug->connector;
- 
--		if (connector->status == connector_status_connected)
--			seq_printf(m, "%02x", DP_TEST_LINK_VIDEO_PATTERN);
--		else
--			seq_puts(m, "0");
--	}
--	drm_connector_list_iter_end(&conn_iter);
-+	if (connector->status == connector_status_connected)
-+		seq_printf(m, "%02x", DP_TEST_LINK_VIDEO_PATTERN);
-+	else
-+		seq_puts(m, "0");
- 
- 	return 0;
- }
-@@ -161,14 +137,12 @@ static ssize_t dp_test_active_write(struct file *file,
- {
- 	char *input_buffer;
- 	int status = 0;
--	struct dp_debug_private *debug;
--	struct drm_device *dev;
--	struct drm_connector *connector;
--	struct drm_connector_list_iter conn_iter;
-+	const struct dp_debug_private *debug;
-+	const struct drm_connector *connector;
- 	int val = 0;
- 
- 	debug = ((struct seq_file *)file->private_data)->private;
--	dev = debug->drm_dev;
-+	connector = debug->connector;
- 
- 	if (len == 0)
- 		return 0;
-@@ -179,30 +153,22 @@ static ssize_t dp_test_active_write(struct file *file,
- 
- 	DRM_DEBUG_DRIVER("Copied %d bytes from user\n", (unsigned int)len);
- 
--	drm_connector_list_iter_begin(dev, &conn_iter);
--	drm_for_each_connector_iter(connector, &conn_iter) {
--		if (connector->connector_type !=
--			DRM_MODE_CONNECTOR_DisplayPort)
--			continue;
--
--		if (connector->status == connector_status_connected) {
--			status = kstrtoint(input_buffer, 10, &val);
--			if (status < 0)
--				break;
--			DRM_DEBUG_DRIVER("Got %d for test active\n", val);
--			/* To prevent erroneous activation of the compliance
--			 * testing code, only accept an actual value of 1 here
--			 */
--			if (val == 1)
--				debug->panel->video_test = true;
--			else
--				debug->panel->video_test = false;
-+	if (connector->status == connector_status_connected) {
-+		status = kstrtoint(input_buffer, 10, &val);
-+		if (status < 0) {
-+			kfree(input_buffer);
-+			return status;
- 		}
-+		DRM_DEBUG_DRIVER("Got %d for test active\n", val);
-+		/* To prevent erroneous activation of the compliance
-+		 * testing code, only accept an actual value of 1 here
-+		 */
-+		if (val == 1)
-+			debug->panel->video_test = true;
-+		else
-+			debug->panel->video_test = false;
- 	}
--	drm_connector_list_iter_end(&conn_iter);
- 	kfree(input_buffer);
--	if (status < 0)
--		return status;
- 
- 	*offp += len;
- 	return len;
-@@ -211,25 +177,16 @@ static ssize_t dp_test_active_write(struct file *file,
- static int dp_test_active_show(struct seq_file *m, void *data)
- {
- 	struct dp_debug_private *debug = m->private;
--	struct drm_device *dev = debug->drm_dev;
--	struct drm_connector *connector;
--	struct drm_connector_list_iter conn_iter;
--
--	drm_connector_list_iter_begin(dev, &conn_iter);
--	drm_for_each_connector_iter(connector, &conn_iter) {
--		if (connector->connector_type !=
--			DRM_MODE_CONNECTOR_DisplayPort)
--			continue;
--
--		if (connector->status == connector_status_connected) {
--			if (debug->panel->video_test)
--				seq_puts(m, "1");
--			else
--				seq_puts(m, "0");
--		} else
-+	struct drm_connector *connector = debug->connector;
++&blsp_i2c2 {
++	status = "okay";
 +
-+	if (connector->status == connector_status_connected) {
-+		if (debug->panel->video_test)
-+			seq_puts(m, "1");
-+		else
- 			seq_puts(m, "0");
-+	} else {
-+		seq_puts(m, "0");
- 	}
--	drm_connector_list_iter_end(&conn_iter);
++	magnetometer@c {
++		compatible = "asahi-kasei,ak09911";
++		reg = <0x0c>;
++
++		vdd-supply = <&pm8916_l8>;
++		vid-supply = <&pm8916_l6>;
++
++		reset-gpios = <&msmgpio 112 GPIO_ACTIVE_LOW>;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&mag_reset_default>;
++	};
++
++	imu@68 {
++		compatible = "invensense,mpu6515";
++		reg = <0x68>;
++
++		interrupt-parent = <&msmgpio>;
++		interrupts = <36 IRQ_TYPE_EDGE_RISING>;
++
++		vdd-supply = <&pm8916_l17>;
++		vddio-supply = <&pm8916_l6>;
++
++		pinctrl-names = "default";
++		pinctrl-0 = <&imu_default>;
++
++		mount-matrix = "1",  "0", "0",
++			       "0", "-1", "0",
++			       "0",  "0", "1";
++	};
++};
++
+ &blsp1_uart2 {
+ 	status = "okay";
+ };
+@@ -185,6 +220,22 @@ gpio_keys_default: gpio-keys-default {
+ 		bias-pull-up;
+ 	};
  
- 	return 0;
- }
-@@ -278,7 +235,7 @@ static int dp_debug_init(struct dp_debug *dp_debug, struct drm_minor *minor)
- 
- struct dp_debug *dp_debug_get(struct device *dev, struct dp_panel *panel,
- 		struct dp_usbpd *usbpd, struct dp_link *link,
--		struct drm_connector **connector, struct drm_minor *minor)
-+		struct drm_connector *connector, struct drm_minor *minor)
- {
- 	int rc = 0;
- 	struct dp_debug_private *debug;
-diff --git a/drivers/gpu/drm/msm/dp/dp_debug.h b/drivers/gpu/drm/msm/dp/dp_debug.h
-index 7eaedfbb149c..3f90acfffc5a 100644
---- a/drivers/gpu/drm/msm/dp/dp_debug.h
-+++ b/drivers/gpu/drm/msm/dp/dp_debug.h
-@@ -43,7 +43,7 @@ struct dp_debug {
-  */
- struct dp_debug *dp_debug_get(struct device *dev, struct dp_panel *panel,
- 		struct dp_usbpd *usbpd, struct dp_link *link,
--		struct drm_connector **connector,
-+		struct drm_connector *connector,
- 		struct drm_minor *minor);
- 
- /**
-diff --git a/drivers/gpu/drm/msm/dp/dp_display.c b/drivers/gpu/drm/msm/dp/dp_display.c
-index 1708b7cdc1b3..41a6f58916e6 100644
---- a/drivers/gpu/drm/msm/dp/dp_display.c
-+++ b/drivers/gpu/drm/msm/dp/dp_display.c
-@@ -1464,7 +1464,7 @@ void msm_dp_debugfs_init(struct msm_dp *dp_display, struct drm_minor *minor)
- 	dev = &dp->pdev->dev;
- 
- 	dp->debug = dp_debug_get(dev, dp->panel, dp->usbpd,
--					dp->link, &dp->dp_display.connector,
-+					dp->link, dp->dp_display.connector,
- 					minor);
- 	if (IS_ERR(dp->debug)) {
- 		rc = PTR_ERR(dp->debug);
++	imu_default: imu-default {
++		pins = "gpio36";
++		function = "gpio";
++
++		drive-strength = <2>;
++		bias-disable;
++	};
++
++	mag_reset_default: mag-reset-default {
++		pins = "gpio112";
++		function = "gpio";
++
++		drive-strength = <2>;
++		bias-disable;
++	};
++
+ 	usb_id_default: usb-id-default {
+ 		pins = "gpio110";
+ 		function = "gpio";
 -- 
-2.29.2
+2.33.0
 
