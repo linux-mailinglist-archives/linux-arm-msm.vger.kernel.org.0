@@ -2,456 +2,135 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E8186427D5D
-	for <lists+linux-arm-msm@lfdr.de>; Sat,  9 Oct 2021 22:38:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id DDB29427E6E
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Oct 2021 04:34:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230139AbhJIUkJ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 9 Oct 2021 16:40:09 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56042 "EHLO
+        id S229704AbhJJCfy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sat, 9 Oct 2021 22:35:54 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47986 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230052AbhJIUkJ (ORCPT
+        with ESMTP id S229685AbhJJCfw (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 9 Oct 2021 16:40:09 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9E5BC061762
-        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Oct 2021 13:38:11 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id z11so45910426lfj.4
-        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Oct 2021 13:38:11 -0700 (PDT)
+        Sat, 9 Oct 2021 22:35:52 -0400
+Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 67CBDC061570
+        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Oct 2021 19:33:54 -0700 (PDT)
+Received: by mail-lf1-x12b.google.com with SMTP id x27so56704331lfa.9
+        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Oct 2021 19:33:54 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-transfer-encoding;
-        bh=bpF9Xx7xR4+38VJoGN57YNwQ36S3/2L1gngIwIhNZF8=;
-        b=mqZhzn7wg/oKpy+bLPPcw3nhRiTJACpEBBROCKKyP1U1+I7tlioT+DIQoPdkscWQRv
-         JpQnyU1yGQ7/m6BPBjs5zSh7rdgoZD/V6kczlNEiujXgGvdpdpz60BXsrvpdnFlApo5Q
-         7T75sBe+gyrsPYr4a0o3D11fdzbD5dI2MkoMaKN3Zu/UZWf2QEEj5Avzip6PZmz5Arjp
-         Tydn6p4lro3oimCb8BwuTrsCpcFpWp1afbB9zSHf3UkffVBSLYiewucJdUF5HFyuelAC
-         ZsNwdrxwEmWlvRwWtjW4+orynSIjPx3GMeHDTLuZlJmXaSWZSOgxyzLGRJuXj8h7kvnV
-         gFmA==
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=H8MR/G+R6dUa+Wsak7wjS+wkWi7PQwjwNuQYwbKSDbs=;
+        b=zsm4QGk8rPd0xznOtFQ4jM80KtqL6ElVzYNVtbULnt2VHGFGaqGQ7IBeRCpToy8QqY
+         jhZJajveM8niezxDR4oPUnd6i2H+QSkDf0koHaqlaS/jjfuhzl1LDxD5n3UrISdt612y
+         3QOjwAj8MnSWmCzR4bLzRBMKSxRgRuLZQkxq2ZM1CZttdVdZfbI8blnawJ+G5wHMimro
+         OEcln7Qkhx0sFcTamb0Aa6vJloLkLAyPGGJm4pclFSG8/0/6zUpdjepSBRWKJwPIceKm
+         RJtGgOkyHwxbcllHuO0MHDiJvyN3jRzuQAZUnei00npwrQaDOPCkpuhPqSSKi8XF0wTX
+         xIYA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-transfer-encoding;
-        bh=bpF9Xx7xR4+38VJoGN57YNwQ36S3/2L1gngIwIhNZF8=;
-        b=34DDZX+RHP8WwFOqrMBZOIO/iP5pnoj6GVZGsY8o0uaLFrXH6lzuvGTXW7NZ+9JC8u
-         mAuA68p4dKJ04N3HpwZARRs0Qoml8s8mmqBHL4VEbCNnYimtzDbXF2P0oYzeI6BE7qMY
-         0fxm3rZm6PpbxWAAlLd1hdy8EV7F8Y5SBYbAZLjJ4/We1PY/pV9XPDXR37EplB+7xF74
-         OfutlHKCbop0cnAsZxfLn1fIb+nIbhE8jg6ccS5vVkQIh4SuDruDKOoYJl0jwZb0wL79
-         k6bFraBqr59c7fvu0xq0chEzhJlijd1QYNW1Y2E4CT2HA6LVawzialePsCJq2wG3sV7C
-         Kqiw==
-X-Gm-Message-State: AOAM531IF3gIFGBzm9iU68N9ESHLlFKaLmrfF8Pps+3jFrMWFIHLjF1c
-        llXE2Bxw9cD67WAXO39Xwkok5Q==
-X-Google-Smtp-Source: ABdhPJwnnuPpIOaHTpI7yDZXJA7PPvwrUWdFbJ9FVJpFCRAgjhpJ8JRfimo0Ya2hF/nTGyHIuxkJEQ==
-X-Received: by 2002:a05:6512:1592:: with SMTP id bp18mr8234153lfb.122.1633811889946;
-        Sat, 09 Oct 2021 13:38:09 -0700 (PDT)
-Received: from eriador.lan ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id q187sm303794ljb.6.2021.10.09.13.38.09
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=H8MR/G+R6dUa+Wsak7wjS+wkWi7PQwjwNuQYwbKSDbs=;
+        b=qVbs85KCjDL63fpDfnGlRVOiIUm0sZ0YySmHM3CpT4/DNvJK3URu3qgQCHMw+yPoiX
+         qL9q/UKO5/izHTHZN5gR/4brbrRgkGOOe6yKgPVbXlb/nKRcMyayqg6Bx+ns2x+HxQcl
+         n2YAko6Vd8aQ12VsQcjkAMVe6++wPs3w3t2IFZ0iazAvfmbIEVlpJAxQOga9KgWPjAPf
+         irCY1//ndQURLACvrSZCcz8GAojb9Oh7N4sWNnKTlMpSIP7sYebBpjyShaS2xvtFwaHF
+         Crf9X+ARhv7Xl28F/GmqhQmcseuQH629qV6S67CYSl6Zf/CYYwt+uqSaXPbBuiR7k2Zt
+         fhVg==
+X-Gm-Message-State: AOAM530O7vxtlsA3XJ3C5P6o3pH4WIMZT8eU5ShwdRX/hmZr7jz02f5i
+        jOaCfC9KkP0ufjlQ7wxPREhB3A==
+X-Google-Smtp-Source: ABdhPJwSGRHUjgYDj6ZuRGbJ8leAofMXLbnvvETRVb2XglZdualtHhvMW4bmUmSAHrmweRUkmAHnFw==
+X-Received: by 2002:a2e:6e0b:: with SMTP id j11mr13538657ljc.527.1633833232637;
+        Sat, 09 Oct 2021 19:33:52 -0700 (PDT)
+Received: from umbar.lan ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id p23sm345322lfd.127.2021.10.09.19.33.51
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 09 Oct 2021 13:38:09 -0700 (PDT)
+        Sat, 09 Oct 2021 19:33:52 -0700 (PDT)
 From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-To:     Thierry Reding <thierry.reding@gmail.com>,
-        Sam Ravnborg <sam@ravnborg.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH v5 2/2] drm/panel: Add support for Sharp LS060T1SX01 panel
-Date:   Sat,  9 Oct 2021 23:38:06 +0300
-Message-Id: <20211009203806.56821-3-dmitry.baryshkov@linaro.org>
-X-Mailer: git-send-email 2.33.0
-In-Reply-To: <20211009203806.56821-1-dmitry.baryshkov@linaro.org>
-References: <20211009203806.56821-1-dmitry.baryshkov@linaro.org>
+To:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Thierry Reding <treding@nvidia.com>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Daniel Lezcano <daniel.lezcano@linaro.org>
+Subject: [PATCH] iommu: fix ARM_SMMU vs QCOM_SCM compilation
+Date:   Sun, 10 Oct 2021 05:33:50 +0300
+Message-Id: <20211010023350.978638-1-dmitry.baryshkov@linaro.org>
+X-Mailer: git-send-email 2.30.2
 MIME-Version: 1.0
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Add driver to support Sharp LS06T1SX01 FullHD panel. The panel uses
-nt35695 driver IC. For example this LCD module can be found in the
-kwaek.ca Dragonboard Display Adapter Bundle.
+After commit 424953cf3c66 ("qcom_scm: hide Kconfig symbol") arm-smmu got
+qcom_smmu_impl_init() call guarded by IS_ENABLED(CONFIG_ARM_SMMU_QCOM).
+However the CONFIG_ARM_SMMU_QCOM Kconfig entry does not exist, so the
+qcom_smmu_impl_init() is never called.
 
+So, let's fix this by always calling qcom_smmu_impl_init(). It does not
+touch the smmu passed unless the device is a non-Qualcomm one. Make
+ARM_SMMU select QCOM_SCM for ARCH_QCOM.
+
+Fixes: 424953cf3c66 ("qcom_scm: hide Kconfig symbol")
+Cc: Arnd Bergmann <arnd@arndb.de>
+Reported-by: Daniel Lezcano <daniel.lezcano@linaro.org>
 Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 ---
- drivers/gpu/drm/panel/Kconfig                 |  10 +
- drivers/gpu/drm/panel/Makefile                |   1 +
- .../gpu/drm/panel/panel-sharp-ls060t1sx01.c   | 333 ++++++++++++++++++
- 3 files changed, 344 insertions(+)
- create mode 100644 drivers/gpu/drm/panel/panel-sharp-ls060t1sx01.c
+ drivers/iommu/Kconfig                      | 1 +
+ drivers/iommu/arm/arm-smmu/Makefile        | 3 +--
+ drivers/iommu/arm/arm-smmu/arm-smmu-impl.c | 9 +++++++--
+ 3 files changed, 9 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/panel/Kconfig b/drivers/gpu/drm/panel/Kconfig
-index 369cb76512fe..eb01549a6ccb 100644
---- a/drivers/gpu/drm/panel/Kconfig
-+++ b/drivers/gpu/drm/panel/Kconfig
-@@ -519,6 +519,16 @@ config DRM_PANEL_SHARP_LS043T1LE01
- 	  Say Y here if you want to enable support for Sharp LS043T1LE01 qHD
- 	  (540x960) DSI panel as found on the Qualcomm APQ8074 Dragonboard
+diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
+index c5c71b7ab7e8..a4593e53fe7d 100644
+--- a/drivers/iommu/Kconfig
++++ b/drivers/iommu/Kconfig
+@@ -309,6 +309,7 @@ config ARM_SMMU
+ 	tristate "ARM Ltd. System MMU (SMMU) Support"
+ 	depends on ARM64 || ARM || (COMPILE_TEST && !GENERIC_ATOMIC64)
+ 	select IOMMU_API
++	select QCOM_SCM
+ 	select IOMMU_IO_PGTABLE_LPAE
+ 	select ARM_DMA_USE_IOMMU if ARM
+ 	help
+diff --git a/drivers/iommu/arm/arm-smmu/Makefile b/drivers/iommu/arm/arm-smmu/Makefile
+index b0cc01aa20c9..e240a7bcf310 100644
+--- a/drivers/iommu/arm/arm-smmu/Makefile
++++ b/drivers/iommu/arm/arm-smmu/Makefile
+@@ -1,5 +1,4 @@
+ # SPDX-License-Identifier: GPL-2.0
+ obj-$(CONFIG_QCOM_IOMMU) += qcom_iommu.o
+ obj-$(CONFIG_ARM_SMMU) += arm_smmu.o
+-arm_smmu-objs += arm-smmu.o arm-smmu-impl.o arm-smmu-nvidia.o
+-arm_smmu-$(CONFIG_ARM_SMMU_QCOM) += arm-smmu-qcom.o
++arm_smmu-objs += arm-smmu.o arm-smmu-impl.o arm-smmu-nvidia.o arm-smmu-qcom.o
+diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
+index 2c25cce38060..8199185dd262 100644
+--- a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
++++ b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
+@@ -215,8 +215,13 @@ struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu)
+ 	    of_device_is_compatible(np, "nvidia,tegra186-smmu"))
+ 		return nvidia_smmu_impl_init(smmu);
  
-+config DRM_PANEL_SHARP_LS060T1SX01
-+	tristate "Sharp LS060T1SX01 FullHD video mode panel"
-+	depends on OF
-+	depends on DRM_MIPI_DSI
-+	depends on BACKLIGHT_CLASS_DEVICE
-+	help
-+	  Say Y here if you want to enable support for Sharp LS060T1SX01 6.0"
-+	  FullHD (1080x1920) DSI panel as found in Dragonboard Display Adapter
-+	  Bundle.
-+
- config DRM_PANEL_SITRONIX_ST7701
- 	tristate "Sitronix ST7701 panel driver"
- 	depends on OF
-diff --git a/drivers/gpu/drm/panel/Makefile b/drivers/gpu/drm/panel/Makefile
-index 6e30640b9099..bca4cc1f2715 100644
---- a/drivers/gpu/drm/panel/Makefile
-+++ b/drivers/gpu/drm/panel/Makefile
-@@ -53,6 +53,7 @@ obj-$(CONFIG_DRM_PANEL_SEIKO_43WVF1G) += panel-seiko-43wvf1g.o
- obj-$(CONFIG_DRM_PANEL_SHARP_LQ101R1SX01) += panel-sharp-lq101r1sx01.o
- obj-$(CONFIG_DRM_PANEL_SHARP_LS037V7DW01) += panel-sharp-ls037v7dw01.o
- obj-$(CONFIG_DRM_PANEL_SHARP_LS043T1LE01) += panel-sharp-ls043t1le01.o
-+obj-$(CONFIG_DRM_PANEL_SHARP_LS060T1SX01) += panel-sharp-ls060t1sx01.o
- obj-$(CONFIG_DRM_PANEL_SITRONIX_ST7701) += panel-sitronix-st7701.o
- obj-$(CONFIG_DRM_PANEL_SITRONIX_ST7703) += panel-sitronix-st7703.o
- obj-$(CONFIG_DRM_PANEL_SITRONIX_ST7789V) += panel-sitronix-st7789v.o
-diff --git a/drivers/gpu/drm/panel/panel-sharp-ls060t1sx01.c b/drivers/gpu/drm/panel/panel-sharp-ls060t1sx01.c
-new file mode 100644
-index 000000000000..e12570561629
---- /dev/null
-+++ b/drivers/gpu/drm/panel/panel-sharp-ls060t1sx01.c
-@@ -0,0 +1,333 @@
-+// SPDX-License-Identifier: GPL-2.0-only
-+/* Copyright (c) 2021 Linaro Ltd.
-+ * Generated with linux-mdss-dsi-panel-driver-generator from vendor device tree:
-+ *   Copyright (c) 2013-2014, The Linux Foundation. All rights reserved.
-+ */
-+
-+#include <linux/delay.h>
-+#include <linux/gpio/consumer.h>
-+#include <linux/module.h>
-+#include <linux/of.h>
-+#include <linux/regulator/consumer.h>
-+
-+#include <video/mipi_display.h>
-+
-+#include <drm/drm_mipi_dsi.h>
-+#include <drm/drm_modes.h>
-+#include <drm/drm_panel.h>
-+
-+struct sharp_ls060 {
-+	struct drm_panel panel;
-+	struct mipi_dsi_device *dsi;
-+	struct regulator *vddi_supply;
-+	struct regulator *vddh_supply;
-+	struct regulator *avdd_supply;
-+	struct regulator *avee_supply;
-+	struct gpio_desc *reset_gpio;
-+	bool prepared;
-+};
-+
-+static inline struct sharp_ls060 *to_sharp_ls060(struct drm_panel *panel)
-+{
-+	return container_of(panel, struct sharp_ls060, panel);
-+}
-+
-+#define dsi_dcs_write_seq(dsi, seq...) ({				\
-+		static const u8 d[] = { seq };				\
-+									\
-+		mipi_dsi_dcs_write_buffer(dsi, d, ARRAY_SIZE(d));	\
-+	})
-+
-+static void sharp_ls060_reset(struct sharp_ls060 *ctx)
-+{
-+	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
-+	usleep_range(10000, 11000);
-+	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
-+	usleep_range(10000, 11000);
-+	gpiod_set_value_cansleep(ctx->reset_gpio, 0);
-+	usleep_range(10000, 11000);
-+}
-+
-+static int sharp_ls060_on(struct sharp_ls060 *ctx)
-+{
-+	struct mipi_dsi_device *dsi = ctx->dsi;
-+	struct device *dev = &dsi->dev;
-+	int ret;
-+
-+	dsi->mode_flags |= MIPI_DSI_MODE_LPM;
-+
-+	ret = dsi_dcs_write_seq(dsi, 0xbb, 0x13);
-+	if (ret < 0) {
-+		dev_err(dev, "Failed to send command: %d\n", ret);
-+		return ret;
-+	}
-+
-+	ret = dsi_dcs_write_seq(dsi, MIPI_DCS_WRITE_MEMORY_START);
-+	if (ret < 0) {
-+		dev_err(dev, "Failed to send command: %d\n", ret);
-+		return ret;
-+	}
-+
-+	ret = mipi_dsi_dcs_exit_sleep_mode(dsi);
-+	if (ret < 0) {
-+		dev_err(dev, "Failed to exit sleep mode: %d\n", ret);
-+		return ret;
-+	}
-+	msleep(120);
-+
-+	ret = mipi_dsi_dcs_set_display_on(dsi);
-+	if (ret < 0) {
-+		dev_err(dev, "Failed to set display on: %d\n", ret);
-+		return ret;
-+	}
-+	msleep(50);
-+
-+	return 0;
-+}
-+
-+static int sharp_ls060_off(struct sharp_ls060 *ctx)
-+{
-+	struct mipi_dsi_device *dsi = ctx->dsi;
-+	struct device *dev = &dsi->dev;
-+	int ret;
-+
-+	dsi->mode_flags &= ~MIPI_DSI_MODE_LPM;
-+
-+	ret = mipi_dsi_dcs_set_display_off(dsi);
-+	if (ret < 0) {
-+		dev_err(dev, "Failed to set display off: %d\n", ret);
-+		return ret;
-+	}
-+	usleep_range(2000, 3000);
-+
-+	ret = mipi_dsi_dcs_enter_sleep_mode(dsi);
-+	if (ret < 0) {
-+		dev_err(dev, "Failed to enter sleep mode: %d\n", ret);
-+		return ret;
-+	}
-+	msleep(121);
-+
-+	return 0;
-+}
-+
-+static int sharp_ls060_prepare(struct drm_panel *panel)
-+{
-+	struct sharp_ls060 *ctx = to_sharp_ls060(panel);
-+	struct device *dev = &ctx->dsi->dev;
-+	int ret;
-+
-+	if (ctx->prepared)
-+		return 0;
-+
-+	ret = regulator_enable(ctx->vddi_supply);
-+	if (ret < 0)
-+		return ret;
-+
-+	ret = regulator_enable(ctx->avdd_supply);
-+	if (ret < 0)
-+		goto err_avdd;
-+
-+	usleep_range(1000, 2000);
-+
-+	ret = regulator_enable(ctx->avee_supply);
-+	if (ret < 0)
-+		goto err_avee;
-+
-+	usleep_range(10000, 11000);
-+
-+	ret = regulator_enable(ctx->vddh_supply);
-+	if (ret < 0)
-+		goto err_vddh;
-+
-+	usleep_range(10000, 11000);
-+
-+	sharp_ls060_reset(ctx);
-+
-+	ret = sharp_ls060_on(ctx);
-+	if (ret < 0) {
-+		dev_err(dev, "Failed to initialize panel: %d\n", ret);
-+		goto err_on;
-+	}
-+
-+	ctx->prepared = true;
-+
-+	return 0;
-+
-+err_on:
-+	regulator_disable(ctx->vddh_supply);
-+
-+	usleep_range(10000, 11000);
-+
-+err_vddh:
-+	regulator_disable(ctx->avee_supply);
-+
-+err_avee:
-+	regulator_disable(ctx->avdd_supply);
-+
-+	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
-+
-+err_avdd:
-+	regulator_disable(ctx->vddi_supply);
-+
-+	return ret;
-+}
-+
-+static int sharp_ls060_unprepare(struct drm_panel *panel)
-+{
-+	struct sharp_ls060 *ctx = to_sharp_ls060(panel);
-+	struct device *dev = &ctx->dsi->dev;
-+	int ret;
-+
-+	if (!ctx->prepared)
-+		return 0;
-+
-+	ret = sharp_ls060_off(ctx);
-+	if (ret < 0)
-+		dev_err(dev, "Failed to un-initialize panel: %d\n", ret);
-+
-+	regulator_disable(ctx->vddh_supply);
-+
-+	usleep_range(10000, 11000);
-+
-+	regulator_disable(ctx->avee_supply);
-+	regulator_disable(ctx->avdd_supply);
-+
-+	gpiod_set_value_cansleep(ctx->reset_gpio, 1);
-+
-+	regulator_disable(ctx->vddi_supply);
-+
-+	ctx->prepared = false;
-+	return 0;
-+}
-+
-+static const struct drm_display_mode sharp_ls060_mode = {
-+	.clock = (1080 + 96 + 16 + 64) * (1920 + 4 + 1 + 16) * 60 / 1000,
-+	.hdisplay = 1080,
-+	.hsync_start = 1080 + 96,
-+	.hsync_end = 1080 + 96 + 16,
-+	.htotal = 1080 + 96 + 16 + 64,
-+	.vdisplay = 1920,
-+	.vsync_start = 1920 + 4,
-+	.vsync_end = 1920 + 4 + 1,
-+	.vtotal = 1920 + 4 + 1 + 16,
-+	.width_mm = 75,
-+	.height_mm = 132,
-+};
-+
-+static int sharp_ls060_get_modes(struct drm_panel *panel,
-+				 struct drm_connector *connector)
-+{
-+	struct drm_display_mode *mode;
-+
-+	mode = drm_mode_duplicate(connector->dev, &sharp_ls060_mode);
-+	if (!mode)
-+		return -ENOMEM;
-+
-+	drm_mode_set_name(mode);
-+
-+	mode->type = DRM_MODE_TYPE_DRIVER | DRM_MODE_TYPE_PREFERRED;
-+	connector->display_info.width_mm = mode->width_mm;
-+	connector->display_info.height_mm = mode->height_mm;
-+	drm_mode_probed_add(connector, mode);
-+
-+	return 1;
-+}
-+
-+static const struct drm_panel_funcs sharp_ls060_panel_funcs = {
-+	.prepare = sharp_ls060_prepare,
-+	.unprepare = sharp_ls060_unprepare,
-+	.get_modes = sharp_ls060_get_modes,
-+};
-+
-+static int sharp_ls060_probe(struct mipi_dsi_device *dsi)
-+{
-+	struct device *dev = &dsi->dev;
-+	struct sharp_ls060 *ctx;
-+	int ret;
-+
-+	ctx = devm_kzalloc(dev, sizeof(*ctx), GFP_KERNEL);
-+	if (!ctx)
-+		return -ENOMEM;
-+
-+	ctx->vddi_supply = devm_regulator_get(dev, "vddi");
-+	if (IS_ERR(ctx->vddi_supply))
-+		return PTR_ERR(ctx->vddi_supply);
-+
-+	ctx->vddh_supply = devm_regulator_get(dev, "vddh");
-+	if (IS_ERR(ctx->vddh_supply))
-+		return PTR_ERR(ctx->vddh_supply);
-+
-+	ctx->avdd_supply = devm_regulator_get(dev, "avdd");
-+	if (IS_ERR(ctx->avdd_supply))
-+		return PTR_ERR(ctx->avdd_supply);
-+
-+	ctx->avee_supply = devm_regulator_get(dev, "avee");
-+	if (IS_ERR(ctx->avee_supply))
-+		return PTR_ERR(ctx->avee_supply);
-+
-+	ctx->reset_gpio = devm_gpiod_get(dev, "reset", GPIOD_OUT_HIGH);
-+	if (IS_ERR(ctx->reset_gpio))
-+		return dev_err_probe(dev, PTR_ERR(ctx->reset_gpio),
-+				     "Failed to get reset-gpios\n");
-+
-+	ctx->dsi = dsi;
-+	mipi_dsi_set_drvdata(dsi, ctx);
-+
-+	dsi->lanes = 4;
-+	dsi->format = MIPI_DSI_FMT_RGB888;
-+	dsi->mode_flags = MIPI_DSI_MODE_VIDEO | MIPI_DSI_MODE_VIDEO_BURST |
-+			  MIPI_DSI_MODE_NO_EOT_PACKET |
-+			  MIPI_DSI_CLOCK_NON_CONTINUOUS;
-+
-+	drm_panel_init(&ctx->panel, dev, &sharp_ls060_panel_funcs,
-+		       DRM_MODE_CONNECTOR_DSI);
-+
-+	ret = drm_panel_of_backlight(&ctx->panel);
-+	if (ret)
-+		return dev_err_probe(dev, ret, "Failed to get backlight\n");
-+
-+	drm_panel_add(&ctx->panel);
-+
-+	ret = mipi_dsi_attach(dsi);
-+	if (ret < 0) {
-+		dev_err(dev, "Failed to attach to DSI host: %d\n", ret);
-+		drm_panel_remove(&ctx->panel);
-+		return ret;
-+	}
-+
-+	return 0;
-+}
-+
-+static int sharp_ls060_remove(struct mipi_dsi_device *dsi)
-+{
-+	struct sharp_ls060 *ctx = mipi_dsi_get_drvdata(dsi);
-+	int ret;
-+
-+	ret = mipi_dsi_detach(dsi);
-+	if (ret < 0)
-+		dev_err(&dsi->dev, "Failed to detach from DSI host: %d\n", ret);
-+
-+	drm_panel_remove(&ctx->panel);
-+
-+	return 0;
-+}
-+
-+static const struct of_device_id sharp_ls060t1sx01_of_match[] = {
-+	{ .compatible = "sharp,ls060t1sx01" },
-+	{ /* sentinel */ }
-+};
-+MODULE_DEVICE_TABLE(of, sharp_ls060t1sx01_of_match);
-+
-+static struct mipi_dsi_driver sharp_ls060_driver = {
-+	.probe = sharp_ls060_probe,
-+	.remove = sharp_ls060_remove,
-+	.driver = {
-+		.name = "panel-sharp-ls060t1sx01",
-+		.of_match_table = sharp_ls060t1sx01_of_match,
-+	},
-+};
-+module_mipi_dsi_driver(sharp_ls060_driver);
-+
-+MODULE_AUTHOR("Dmitry Baryshkov <dmitry.baryshkov@linaro.org>");
-+MODULE_DESCRIPTION("DRM driver for Sharp LS060T1SX01 1080p video mode dsi panel");
-+MODULE_LICENSE("GPL v2");
+-	if (IS_ENABLED(CONFIG_ARM_SMMU_QCOM))
+-		smmu = qcom_smmu_impl_init(smmu);
++	/*
++	 * qcom_smmu_impl_init() will not touch smmu if the device is not
++	 * a Qualcomm one.
++	 */
++	smmu = qcom_smmu_impl_init(smmu);
++	if (IS_ERR(smmu))
++		return smmu;
+ 
+ 	if (of_device_is_compatible(np, "marvell,ap806-smmu-500"))
+ 		smmu->impl = &mrvl_mmu500_impl;
 -- 
-2.33.0
+2.30.2
 
