@@ -2,143 +2,153 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1ECDD427E9A
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Oct 2021 05:38:35 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7ED53427EB0
+	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Oct 2021 06:16:44 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229792AbhJJDkb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sat, 9 Oct 2021 23:40:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:33618 "EHLO
+        id S229732AbhJJESk (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 10 Oct 2021 00:18:40 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41844 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229744AbhJJDka (ORCPT
+        with ESMTP id S229651AbhJJESk (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sat, 9 Oct 2021 23:40:30 -0400
-Received: from mail-pj1-x1035.google.com (mail-pj1-x1035.google.com [IPv6:2607:f8b0:4864:20::1035])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E9D13C061570
-        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Oct 2021 20:38:32 -0700 (PDT)
-Received: by mail-pj1-x1035.google.com with SMTP id g13-20020a17090a3c8d00b00196286963b9so12130297pjc.3
-        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Oct 2021 20:38:32 -0700 (PDT)
+        Sun, 10 Oct 2021 00:18:40 -0400
+Received: from mail-oi1-x235.google.com (mail-oi1-x235.google.com [IPv6:2607:f8b0:4864:20::235])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4B4A7C061570
+        for <linux-arm-msm@vger.kernel.org>; Sat,  9 Oct 2021 21:16:42 -0700 (PDT)
+Received: by mail-oi1-x235.google.com with SMTP id o4so19482431oia.10
+        for <linux-arm-msm@vger.kernel.org>; Sat, 09 Oct 2021 21:16:42 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=TnmMUol9PPoUaRCFJDxnuRaBuXtA7V5GZJLCXirxsqQ=;
-        b=jAENpBx+8R/69yS2vdv3S8qbbeZCqlfe9QDGJSTsa2OswFY25jzL206gbeL4x5Z8jc
-         Qy/Q2YJ1/UTDfusZmbUTuvTyPhdQYqMLZg0yl/HJyWyAZl9aoOsyy9RM+w20YjPx4Zpa
-         GQeh+RVuGgzfxwHjtihf20ST9G1T2xolddTIDRVjpbdVwRhjc1mJ1GdMGrFTW//ZUMOb
-         CsfLlkd0ffj6v1C/0iTjPTP2SSdjyecn0EwP5CP6CQSGaHltXpLnkglW0lIqGaBFKQi+
-         L0rDSQw6Jlc5VmioYbAgEbvrjPxHLnbGpFMSgdS2RMltS4hln/24B7yvMbvleC/Yf+X8
-         CBKQ==
+        d=linaro.org; s=google;
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=9dKksHyZGIoBAPrBU/GqwD12Fnz5BhKh8zQvkAEnzwI=;
+        b=iCjZiCxoSer6nwXKtggrDTz0n8s8SkVXF46eVVf+dAXR7iAWmg2pOFnaz+uVwYkvcR
+         8r/6AvZwj+EfCRbp3HGARx5fYbAxihUt6E+Frj2tjhGXpfgMKKn5CZMd1RxmMpW9QdVt
+         dXTbLisBUVmNM6Wdyhbgny2tJnO6R5EF4qqH5xTBbfvGCr6FIHoUwiISBgEWodBNl+Mb
+         //n8m5+LA2xS9jwEkiXTxHsVZtLeeYM1OanjAvYd1xRdnlcA7HvDjCQH2IyTvcMCUCBt
+         q3SDVuwNDLKDrfRJmpBg+F5Ety22YhHWZsbkgTfcKBe1FD8ZYqLbziAGwiT2warMuoMO
+         7L8A==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=TnmMUol9PPoUaRCFJDxnuRaBuXtA7V5GZJLCXirxsqQ=;
-        b=O3MphJlqgwveLkDB3XJTRlkDHdZU7SlAExdImgdDSZNMybghFwilzq7oEwgZxXOczk
-         qalsXLE17tZWd7blRhBRtbKok0HWJTBk+fhsgXmWMeI5imT2EYKxw6lzPe2H/rXaOGsh
-         GRnHDZ8iH6Lxm/6ZuSPWFz2cTZys1vGBnkCmMJmeB2+7HMzQJd0M4thfQHDoNb12plQV
-         aKxJfIIkko17GhsllkhFqF7GLE+qkHu41jHiJISDdvMfMFIfHHcONmsP8wVqQ2y0iuMN
-         brEIPAHqsYAnhZ8kfzvDncQQwAgsC34PYTTrUfjk3tupCl4LX3vlDMnIN06EFKZuAOKg
-         5CkA==
-X-Gm-Message-State: AOAM533m1kCemedoZzfEJWvoU626K1Q49nD1rA1//uyUVD7t5jOlndG7
-        x7MTXET3Olle2CQ3sB7saVE=
-X-Google-Smtp-Source: ABdhPJzB4X/RTPQaYLPPE33gxu3Xs1Bbd4ikHZ/iCY533cWlTkyeO1BGrsCnSC6gi5U3xFQLvrZZ1A==
-X-Received: by 2002:a17:902:b593:b0:12d:7aa5:de2d with SMTP id a19-20020a170902b59300b0012d7aa5de2dmr17908010pls.31.1633837112277;
-        Sat, 09 Oct 2021 20:38:32 -0700 (PDT)
-Received: from localhost.localdomain ([117.193.191.46])
-        by smtp.googlemail.com with ESMTPSA id z68sm19522pgz.90.2021.10.09.20.38.30
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=9dKksHyZGIoBAPrBU/GqwD12Fnz5BhKh8zQvkAEnzwI=;
+        b=55vpPFzWROU547eF7eyOyHNGvVVYNkFLYhy31VwrBmseNasstJSlQEz84IlcjtBu+X
+         PFCqO/+GszoFJwMoTnKTw+6erIyzso1PMxCwVDiNh189uA0rPOANtmoobWAdauW1oD/Y
+         f9jd5ARlrMgn7wxbDV6Pw7MeyzsiceI53LPjcFkndZ6AHwZ4RftCRKsiMK4liAlpWtlh
+         16SE1PT7lpzM/Vs4wTH0xIzJxM3OWoczwwmcJvrZOmqdBNlswYkNTJc/xXzCNzvUly53
+         XGsltZkWNA1Ova5BvnYt54MT+4A1qF0ttYk8N/5UQ7+/AA0b1JZ4RxhzcrAhCaoAMSZy
+         h2cw==
+X-Gm-Message-State: AOAM533PqOpGaAVxVdP/c30Rzn/wsz5dUIhQhbdHK6N2BSXdSzlUJQF/
+        POLOiJoAvCICM1IEm83CI38QEw==
+X-Google-Smtp-Source: ABdhPJxnOE3APNnnhnQmDWVAu7V3BvKoUVtdoeSGZ4XRGgWVmuQ54HqxcfsBWYHkiC1jZ4YcsSvprA==
+X-Received: by 2002:a05:6808:1816:: with SMTP id bh22mr13248863oib.69.1633839401460;
+        Sat, 09 Oct 2021 21:16:41 -0700 (PDT)
+Received: from yoga ([2600:1700:a0:3dc8:c84c:8eff:fe1e:256f])
+        by smtp.gmail.com with ESMTPSA id 38sm907603oti.13.2021.10.09.21.16.40
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Sat, 09 Oct 2021 20:38:31 -0700 (PDT)
-From:   "J.R. Divya Antony" <d.antony.jr@gmail.com>
-To:     bjorn.andersson@linaro.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        "J.R. Divya Antony" <d.antony.jr@gmail.com>
-Subject: [PATCH] arm64: dts: qcom: msm8916-asus-z00l: Add sensors
-Date:   Sun, 10 Oct 2021 09:07:50 +0530
-Message-Id: <20211010033750.15204-1-d.antony.jr@gmail.com>
-X-Mailer: git-send-email 2.33.0
+        Sat, 09 Oct 2021 21:16:40 -0700 (PDT)
+Date:   Sat, 9 Oct 2021 23:16:38 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        Arnd Bergmann <arnd@arndb.de>,
+        Thierry Reding <treding@nvidia.com>,
+        Andy Gross <agross@kernel.org>, linux-arm-msm@vger.kernel.org,
+        iommu@lists.linux-foundation.org, linux-kernel@vger.kernel.org,
+        linux-arm-kernel@lists.infradead.org,
+        Daniel Lezcano <daniel.lezcano@linaro.org>
+Subject: Re: [PATCH] iommu: fix ARM_SMMU vs QCOM_SCM compilation
+Message-ID: <YWJpJnaQ2Nr4PUwr@yoga>
+References: <20211010023350.978638-1-dmitry.baryshkov@linaro.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <20211010023350.978638-1-dmitry.baryshkov@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This device has MPU-6515 imu and Asahi Kasei AK09911 magnetometer.
-Add support for it.
+On Sat 09 Oct 21:33 CDT 2021, Dmitry Baryshkov wrote:
 
-Signed-off-by: J.R. Divya Antony <d.antony.jr@gmail.com>
----
- .../arm64/boot/dts/qcom/msm8916-asus-z00l.dts | 51 +++++++++++++++++++
- 1 file changed, 51 insertions(+)
+> After commit 424953cf3c66 ("qcom_scm: hide Kconfig symbol") arm-smmu got
+> qcom_smmu_impl_init() call guarded by IS_ENABLED(CONFIG_ARM_SMMU_QCOM).
+> However the CONFIG_ARM_SMMU_QCOM Kconfig entry does not exist, so the
+> qcom_smmu_impl_init() is never called.
+> 
+> So, let's fix this by always calling qcom_smmu_impl_init(). It does not
+> touch the smmu passed unless the device is a non-Qualcomm one. Make
+> ARM_SMMU select QCOM_SCM for ARCH_QCOM.
+> 
 
-diff --git a/arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts b/arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts
-index cee451e59385..f43ad0b306f0 100644
---- a/arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts
-+++ b/arch/arm64/boot/dts/qcom/msm8916-asus-z00l.dts
-@@ -48,6 +48,41 @@ usb_id: usb-id {
- 	};
- };
- 
-+&blsp_i2c2 {
-+	status = "okay";
-+
-+	magnetometer@c {
-+		compatible = "asahi-kasei,ak09911";
-+		reg = <0x0c>;
-+
-+		vdd-supply = <&pm8916_l8>;
-+		vid-supply = <&pm8916_l6>;
-+
-+		reset-gpios = <&msmgpio 112 GPIO_ACTIVE_LOW>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&mag_reset_default>;
-+	};
-+
-+	imu@68 {
-+		compatible = "invensense,mpu6515";
-+		reg = <0x68>;
-+
-+		interrupt-parent = <&msmgpio>;
-+		interrupts = <36 IRQ_TYPE_EDGE_RISING>;
-+
-+		vdd-supply = <&pm8916_l17>;
-+		vddio-supply = <&pm8916_l6>;
-+
-+		pinctrl-names = "default";
-+		pinctrl-0 = <&imu_default>;
-+
-+		mount-matrix = "1",  "0", "0",
-+			       "0", "-1", "0",
-+			       "0",  "0", "1";
-+	};
-+};
-+
- &blsp1_uart2 {
- 	status = "okay";
- };
-@@ -185,6 +220,22 @@ gpio_keys_default: gpio-keys-default {
- 		bias-pull-up;
- 	};
- 
-+	imu_default: imu-default {
-+		pins = "gpio36";
-+		function = "gpio";
-+
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
-+	mag_reset_default: mag-reset-default {
-+		pins = "gpio112";
-+		function = "gpio";
-+
-+		drive-strength = <2>;
-+		bias-disable;
-+	};
-+
- 	usb_id_default: usb-id-default {
- 		pins = "gpio110";
- 		function = "gpio";
--- 
-2.33.0
+Arnd's intention was to not force QCOM_SCM to be built on non-Qualcomm
+devices. But as Daniel experienced, attempting to boot most Qualcomm
+boards without this results in a instant reboot.
 
+I think it's okay if we tinker with CONFIG_ARM_SMMU_QCOM for v5.16, but
+we're getting late in v5.15 so I would prefer if we make sure this works
+out of the box.
+
+Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+
+Regards,
+Bjorn
+
+> Fixes: 424953cf3c66 ("qcom_scm: hide Kconfig symbol")
+> Cc: Arnd Bergmann <arnd@arndb.de>
+> Reported-by: Daniel Lezcano <daniel.lezcano@linaro.org>
+> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> ---
+>  drivers/iommu/Kconfig                      | 1 +
+>  drivers/iommu/arm/arm-smmu/Makefile        | 3 +--
+>  drivers/iommu/arm/arm-smmu/arm-smmu-impl.c | 9 +++++++--
+>  3 files changed, 9 insertions(+), 4 deletions(-)
+> 
+> diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
+> index c5c71b7ab7e8..a4593e53fe7d 100644
+> --- a/drivers/iommu/Kconfig
+> +++ b/drivers/iommu/Kconfig
+> @@ -309,6 +309,7 @@ config ARM_SMMU
+>  	tristate "ARM Ltd. System MMU (SMMU) Support"
+>  	depends on ARM64 || ARM || (COMPILE_TEST && !GENERIC_ATOMIC64)
+>  	select IOMMU_API
+> +	select QCOM_SCM
+>  	select IOMMU_IO_PGTABLE_LPAE
+>  	select ARM_DMA_USE_IOMMU if ARM
+>  	help
+> diff --git a/drivers/iommu/arm/arm-smmu/Makefile b/drivers/iommu/arm/arm-smmu/Makefile
+> index b0cc01aa20c9..e240a7bcf310 100644
+> --- a/drivers/iommu/arm/arm-smmu/Makefile
+> +++ b/drivers/iommu/arm/arm-smmu/Makefile
+> @@ -1,5 +1,4 @@
+>  # SPDX-License-Identifier: GPL-2.0
+>  obj-$(CONFIG_QCOM_IOMMU) += qcom_iommu.o
+>  obj-$(CONFIG_ARM_SMMU) += arm_smmu.o
+> -arm_smmu-objs += arm-smmu.o arm-smmu-impl.o arm-smmu-nvidia.o
+> -arm_smmu-$(CONFIG_ARM_SMMU_QCOM) += arm-smmu-qcom.o
+> +arm_smmu-objs += arm-smmu.o arm-smmu-impl.o arm-smmu-nvidia.o arm-smmu-qcom.o
+> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
+> index 2c25cce38060..8199185dd262 100644
+> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
+> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
+> @@ -215,8 +215,13 @@ struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu)
+>  	    of_device_is_compatible(np, "nvidia,tegra186-smmu"))
+>  		return nvidia_smmu_impl_init(smmu);
+>  
+> -	if (IS_ENABLED(CONFIG_ARM_SMMU_QCOM))
+> -		smmu = qcom_smmu_impl_init(smmu);
+> +	/*
+> +	 * qcom_smmu_impl_init() will not touch smmu if the device is not
+> +	 * a Qualcomm one.
+> +	 */
+> +	smmu = qcom_smmu_impl_init(smmu);
+> +	if (IS_ERR(smmu))
+> +		return smmu;
+>  
+>  	if (of_device_is_compatible(np, "marvell,ap806-smmu-500"))
+>  		smmu->impl = &mrvl_mmu500_impl;
+> -- 
+> 2.30.2
+> 
