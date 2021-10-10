@@ -2,141 +2,102 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CCFE04282AE
-	for <lists+linux-arm-msm@lfdr.de>; Sun, 10 Oct 2021 19:42:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 28EBD4283F6
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Oct 2021 00:04:26 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231621AbhJJRoS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Sun, 10 Oct 2021 13:44:18 -0400
-Received: from mout.kundenserver.de ([212.227.17.13]:51211 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231134AbhJJRoS (ORCPT
+        id S231383AbhJJWGW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Sun, 10 Oct 2021 18:06:22 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48770 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231136AbhJJWGW (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Sun, 10 Oct 2021 13:44:18 -0400
-Received: from mail-wr1-f42.google.com ([209.85.221.42]) by
- mrelayeu.kundenserver.de (mreue108 [213.165.67.113]) with ESMTPSA (Nemesis)
- id 1N0G9p-1mw7Oo2dkd-00xIKV; Sun, 10 Oct 2021 19:42:17 +0200
-Received: by mail-wr1-f42.google.com with SMTP id y3so14981417wrl.1;
-        Sun, 10 Oct 2021 10:42:17 -0700 (PDT)
-X-Gm-Message-State: AOAM532svRuFPxZUNHvlD5UZfO4v7yFNlgwh5svx0fIeT/WBfrChfeE7
-        O6ug4P9JxHxSVZjQGe7YXdfZWRM2vlVQhgngLBo=
-X-Google-Smtp-Source: ABdhPJxAjKU8yfXgt2rjYVImjIKCImbIW4poCzzJGpBcz8kno/AlWQFANYktYRG2caQHUL2ye2HhyFkPp3obwvzre5s=
-X-Received: by 2002:a1c:4b08:: with SMTP id y8mr6006483wma.98.1633887737269;
- Sun, 10 Oct 2021 10:42:17 -0700 (PDT)
+        Sun, 10 Oct 2021 18:06:22 -0400
+Received: from mail-qt1-x831.google.com (mail-qt1-x831.google.com [IPv6:2607:f8b0:4864:20::831])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 12BFCC061570
+        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Oct 2021 15:04:23 -0700 (PDT)
+Received: by mail-qt1-x831.google.com with SMTP id t16so2562045qto.5
+        for <linux-arm-msm@vger.kernel.org>; Sun, 10 Oct 2021 15:04:23 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=/5ObYAYd+03W3YBA6Pn4wWGWrRT1oHT143L5O16ds/c=;
+        b=iixu0wmaF8IUA/xgeB9L8/92WlYvhOjmVUz0NDhb7kc/TIkwUAvwGCjxbIEzhrY/US
+         1Tstm41AyFKwl9H9laUcb6Fn/MF0aEdslMb3FioJKkqXR8tbPLlETMQx//2ilxqsYqsB
+         0KsvVU1zlidSTC672lVuh3XkD2H9S9Lo7LXjpOuwoJzO05nXbbL3yTNglVHRUHqDu36o
+         80V0HkaB6g70lrKGIwq6IU65xFwxRRebxM70QpwYUeWz8dF225DqIMYUAVNNjdJ22urD
+         v3BovLFWSW5j+qpi3Ui9NMFgQDnTY3k14oG4t/Qhudz04dy3vj0sBi/0+mzok/dFnZ2f
+         TWfg==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=/5ObYAYd+03W3YBA6Pn4wWGWrRT1oHT143L5O16ds/c=;
+        b=k7Sf+l9I+1yJMY17nCUWu5NeMkn0qw+M4wsyJ5CVHyJ6z1jpFT6Dht29+z/rK2mRrO
+         dbEHXYTdktq8t6Wt3iamqUaZ/Y7bYa6mROYlXupdzh4Q9JRXXe91VjD/+JcrUxGhqS79
+         kJ+vXXy0i4NJdHbMYM4nYTmF9kUYy7WcA4jjsDkczl2xjjLU3DbsjKMIO43Cyxzy0B1u
+         1V353l5DJ9S0SEeD2ybnCUMGbQrv+WMQpGXpWpchPD9F+OqzcvAwkFmeoSOa6EwUZkk6
+         WXcVaZ/uW4n9v60goXHTOpQkeXsqw//34hABcsu3tO8OnBIzPQhU1ZWIwAFJeCrsXHe4
+         mRrw==
+X-Gm-Message-State: AOAM532vpztmN1w28b0m+3Ru0+Q/LsrxiZGOBM0tXL5lzxLGRxb0zciU
+        OWrS86g4Ghs0qTT7SmzRXM6s42nKyVvHuwwEa464NA==
+X-Google-Smtp-Source: ABdhPJywgah7MRxRl8oRmiYWPWnUYFa6xvG6BmWJ9xvv5CRsXI3mGQPiMXd8S0SIeI6iXs311/kDxlBcrKOgV+4Dhn4=
+X-Received: by 2002:a05:622a:409:: with SMTP id n9mr11463895qtx.153.1633903462263;
+ Sun, 10 Oct 2021 15:04:22 -0700 (PDT)
 MIME-Version: 1.0
-References: <20211010023350.978638-1-dmitry.baryshkov@linaro.org> <YWJpJnaQ2Nr4PUwr@yoga>
-In-Reply-To: <YWJpJnaQ2Nr4PUwr@yoga>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Sun, 10 Oct 2021 19:42:00 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a3irqEVH2e9wCK4MSSBKRW-n8pFSzYBks9ri-hepewkUw@mail.gmail.com>
-Message-ID: <CAK8P3a3irqEVH2e9wCK4MSSBKRW-n8pFSzYBks9ri-hepewkUw@mail.gmail.com>
-Subject: Re: [PATCH] iommu: fix ARM_SMMU vs QCOM_SCM compilation
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Thierry Reding <treding@nvidia.com>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>
+References: <20211009203806.56821-1-dmitry.baryshkov@linaro.org> <YWMj8Yj5XM7YUPqs@ravnborg.org>
+In-Reply-To: <YWMj8Yj5XM7YUPqs@ravnborg.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Date:   Mon, 11 Oct 2021 01:04:11 +0300
+Message-ID: <CAA8EJppqiGa4sgLVNxCO5w0FksfO-a+w_EwFEdjkZ05vU7Jr9Q@mail.gmail.com>
+Subject: Re: [PATCH v5 0/2] Add support for Sharp LS060T1SX01 panel
+To:     Sam Ravnborg <sam@ravnborg.org>
+Cc:     Thierry Reding <thierry.reding@gmail.com>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Rob Herring <robh+dt@kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <linux-arm-msm@vger.kernel.org>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <dri-devel@lists.freedesktop.org>,
+        "open list:OPEN FIRMWARE AND FLATTENED DEVICE TREE BINDINGS" 
+        <devicetree@vger.kernel.org>
 Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:jVG6/l1Sg3kgqLyDpuWv74nnT8ektUJ4DDBI9ZLM/lPylGA3rr0
- HVQVjft4IguLUExdmpqPucvVzz7boSAVEkSJjguaSkLvdxS81umeCUEPrtaT9KlSvCt4DlM
- 86jCwVVc0u8HR5WNQ66W+xSnatPhFyGz7Abpqjt97ugYX++FM5Wz+S1qzE2QyBH0DEvfMJo
- iR+T/2Jr0OMJJV4oZr89A==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:r4Iu1hR8NXU=:zjwDXYeJb7ylUVSVOiFk0B
- NFPr8MhoKc7A+8uXNcBwTD9tiFKs9uOeDL+bCLbaW3USNPBZS1uAJb34u65uVai+R3Yfswiaa
- pkzDrwe/XUMo5fnS3p/ev3V4MOLr+fzFwVh3HegQHuG9bwPjEPuCH2Wfl6Ahz7dVAfFnwUGW0
- /+GCZUq18vf+hmHzlldxAXrAz4w9kb8ZOe5SiRGWQ3Bhp5ROXfkE3P7SomytvlR82iaqJF8uG
- wcKKzBMhGK5Zdgcr2ETWy0QJtO8yMBZzkCiD3uZwjimB7pqAXMBcfmTGksa/fJBxCdqBzNHTz
- Daap7mWe4+TVsxdKDlSIpITh7xcshkEGbuUBJIhIlzvjSQIm2QVeKruwxnxJZvkrhh2jv4hrU
- jRghjo/X9/cteVWdjNx5nq5L721hKoFRVfoKJjo+mpaNUfYI2ZOD2QMQxf6Uvokt7eovtuGTA
- kt6PFwY/a+6ZWUIolVdEwh3LaQXRWyXRvstxVY0upa39TEtsfPSTgG8YwmdwjwdYzFZt8+AEf
- ELfvPptbWlIxwcTg3k1ETlnn0TiO9BeVq9PBjkZUqaAscTpYn/XzpntRZyJ37Gu7XG75c2OZo
- qLag3vtEGDuQvTcEEFaiSIPoWBD1c6hnda8MdVeC7adBzk7Pu2PfzOZYrpHk39b0MlzQNRSwn
- zgs+T8w1BYK5tD0jJ2GF9h4+6GKnSPwV3Qn14rcEoQbFCzYazumRrn1Fq+8MQcoHxqAkl67Hy
- srHyK889ZVKmwoqksp6bleCA60RY/4qArm2gdg==
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Sun, Oct 10, 2021 at 6:17 AM Bjorn Andersson
-<bjorn.andersson@linaro.org> wrote:
+On Sun, 10 Oct 2021 at 20:33, Sam Ravnborg <sam@ravnborg.org> wrote:
 >
-> On Sat 09 Oct 21:33 CDT 2021, Dmitry Baryshkov wrote:
+> Hi Dmitry,
 >
-> > After commit 424953cf3c66 ("qcom_scm: hide Kconfig symbol") arm-smmu got
-> > qcom_smmu_impl_init() call guarded by IS_ENABLED(CONFIG_ARM_SMMU_QCOM).
-> > However the CONFIG_ARM_SMMU_QCOM Kconfig entry does not exist, so the
-> > qcom_smmu_impl_init() is never called.
+> On Sat, Oct 09, 2021 at 11:38:04PM +0300, Dmitry Baryshkov wrote:
+> > Add driver to support Sharp LS06T1SX01 6.0" FullHD panel found e.g. in
+> > the kwaek.ca Dragonboard Display Adapter Bundle.
 > >
-> > So, let's fix this by always calling qcom_smmu_impl_init(). It does not
-> > touch the smmu passed unless the device is a non-Qualcomm one. Make
-> > ARM_SMMU select QCOM_SCM for ARCH_QCOM.
-
-Sorry about this bug. I was sure I had it working, but I lost part of the commit
-during a rebase, and my randconfig builds still succeeded without it, so I
-sent a wrong version.
-
-> Arnd's intention was to not force QCOM_SCM to be built on non-Qualcomm
-> devices. But as Daniel experienced, attempting to boot most Qualcomm
-> boards without this results in a instant reboot.
+> > Changes since v4:
+> >  - Use MIPI_DSI_MODE_NO_EOT_PACKET instead of the old name
+> >
+> > Changes since v3:
+> >  - Replaced small msleeps with usleep_range
+> >
+> > Changes since v2:
+> >  - Add missing power supplies used by the panel according to the
+> >    datasheet
+> >
+> > Changes since v1:
+> >  - Fix the id in the schema file
+> >
+> > ----------------------------------------------------------------
+> > Dmitry Baryshkov (2):
+> >       dt-bindings: add bindings for the Sharp LS060T1SX01 panel
+> >       drm/panel: Add support for Sharp LS060T1SX01 panel
 >
-> I think it's okay if we tinker with CONFIG_ARM_SMMU_QCOM for v5.16, but
-> we're getting late in v5.15 so I would prefer if we make sure this works
-> out of the box.
+> Applied to drm-misc-next and this time on purpose.
+> Thanks for the quick fixes.
 
-Yes, makes sense. For reference, see below for how I would fix this properly,
-this is what I had intended to have in the patch. Feel free to pick
-either version
-as the immediate bugfix. I'll give the below a little more randconfig testing
-overnight though. The pasted version of the patch is probably
-whitespace-damaged,
-let me know if you would like me to send it as a proper patch.
+Thank you and sorry for the confusion/mess during the merge.
 
-       Arnd
-
-8<-----
-Subject: iommu: fix ARM_SMMU_QCOM compilation
-
-My previous bugfix ended up making things worse for the QCOM IOMMU
-driver when it forgot to add the Kconfig symbol that is getting used to
-control the compilation of the SMMU implementation specific code
-for Qualcomm.
-
-Fixes: 424953cf3c66 ("qcom_scm: hide Kconfig symbol")
-Reported-by: Daniel Lezcano <daniel.lezcano@linaro.org>
-Reported-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-----
-diff --git a/drivers/iommu/Kconfig b/drivers/iommu/Kconfig
-index c5c71b7ab7e8..2dfe744ddd97 100644
---- a/drivers/iommu/Kconfig
-+++ b/drivers/iommu/Kconfig
-@@ -311,6 +311,7 @@ config ARM_SMMU
-        select IOMMU_API
-        select IOMMU_IO_PGTABLE_LPAE
-        select ARM_DMA_USE_IOMMU if ARM
-+       select QCOM_SCM if ARM_SMMU_QCOM
-        help
-          Support for implementations of the ARM System MMU architecture
-          versions 1 and 2.
-@@ -355,6 +356,13 @@ config ARM_SMMU_DISABLE_BYPASS_BY_DEFAULT
-          'arm-smmu.disable_bypass' will continue to override this
-          config.
-
-+config ARM_SMMU_QCOM
-+       def_bool y
-+       depends on ARM_SMMU && ARCH_QCOM
-+       help
-+         When running on a Qualcomm platform that has the custom variant
-+         of the ARM SMMU, this needs to be built into the SMMU driver.
-+
- config ARM_SMMU_V3
-        tristate "ARM Ltd. System MMU Version 3 (SMMUv3) Support"
-        depends on ARM64
+-- 
+With best wishes
+Dmitry
