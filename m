@@ -2,131 +2,225 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 8CD954298A8
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Oct 2021 23:09:49 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C60E64298B9
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Oct 2021 23:15:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231593AbhJKVLs (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Oct 2021 17:11:48 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:63944 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S235122AbhJKVLs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Oct 2021 17:11:48 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1633986587; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=mcbzMvbJjsJzfGMVHA2HceukDUBg6GF8UwE11dJYi1E=;
- b=lsj8debvUwv9P22eGb7sAHT2yBDQz6rsb7TlySQaHfVLmCEf9w5E1EYdGurlMQ1RvRjikbO/
- hggVvqMa2kWc3cGWsL3RZ+TkKzEnT6hbxZkEsaSXXge6LQOEET6PyaYU0pKoxoMQiV1iCdC5
- TOa5kA21vuKT4dOR/T7tu6ga+yw=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-east-1.postgun.com with SMTP id
- 6164a81bab9da96e64d20c08 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 11 Oct 2021 21:09:47
- GMT
-Sender: abhinavk=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 94D03C43618; Mon, 11 Oct 2021 21:09:46 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        URIBL_BLOCKED autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: abhinavk)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 9096CC43460;
-        Mon, 11 Oct 2021 21:09:45 +0000 (UTC)
+        id S235169AbhJKVRc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Oct 2021 17:17:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53014 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235049AbhJKVRa (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 11 Oct 2021 17:17:30 -0400
+Received: from mail-qv1-xf29.google.com (mail-qv1-xf29.google.com [IPv6:2607:f8b0:4864:20::f29])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E1900C061570
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Oct 2021 14:15:29 -0700 (PDT)
+Received: by mail-qv1-xf29.google.com with SMTP id a16so11749528qvm.2
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Oct 2021 14:15:29 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=oRt/0xfqDMIYdNSP0wJTSosZJDZg5crujf+a2Cp5VBg=;
+        b=d8JKBIR773ZV5J6VHjN/DvFgPB/9YH+LOLMlYjwZHMmuX8YlvGMnQEkhu/Vv/ke8/I
+         bzcuN5qu1+GupZnOmsediccE3KHQSokxAabM6XQ3wcb9dtLg58rAqw0lxQNVvl2AU1Kw
+         qbRZl+QhBoNOlo3OITApqaMuoZrweRYOOaaEEVBKWQBq0aSIZ/FArDXhOjbyV7cX7vSB
+         l64RlfakfwcljB0kVjaENqtl6pVYMD1gORO7Bj6egsCZcpEBOZfgrSpYFvbm796tieUC
+         zKCVhG5EyBR/5osbu0HxJZi21jR2H0fq73iF5IhPUkuxjlBHNrvIPIXSDmCwNAiP88qE
+         NESA==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=oRt/0xfqDMIYdNSP0wJTSosZJDZg5crujf+a2Cp5VBg=;
+        b=sam+d3hrOA1wHg9X+jnKaWMgRYnQ8QxFx/UJ+o3964j9GlTHST8e5mcZVo0MHx13il
+         BpBWrfDB0HueWY05Q08t8DKh7Ftawl0ewZRHH7UMMGZNyfA+/teyOY6/YjbRGEj2xXrV
+         hAdP1d1QA9aa6Lxy8H8z53+LjvJPHpzZNGxSE8VUMouzFsS7Ov81lZMucpSeMA/MrlVa
+         bKarz29KwVNyogBo6Z/xLOVblNnVyK3+uoGYha1gInMsXuPL4frvrVZXBF1ZVYtmtOAV
+         7a8+5TsWuHn3M3ECsmv6M/5gPTd2tXV6xgE7GhOq73M19ew3SNuOGmvOIRPPAAgt6Fnj
+         k3ww==
+X-Gm-Message-State: AOAM531r2i1GhDjRF6WIlhNi64M6BrIY4p4e7NzH4AI/0zxN9fjxjwRz
+        FKmEuI0ug/M1cleVN8uwVYVu2Q==
+X-Google-Smtp-Source: ABdhPJw7/3h6SJV4zGg+1+ClRXbq+u/Qyuelpsok1iZhMwQTwP/q7Zlg+VNpaTfBX2QLKoyPgTzbPA==
+X-Received: by 2002:ad4:5748:: with SMTP id q8mr15947224qvx.52.1633986928957;
+        Mon, 11 Oct 2021 14:15:28 -0700 (PDT)
+Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.gmail.com with ESMTPSA id s203sm4746181qke.21.2021.10.11.14.15.27
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Oct 2021 14:15:28 -0700 (PDT)
+Subject: Re: [PATCH 1/5] arch_topology: Introduce thermal pressure update
+ function
+To:     Lukasz Luba <lukasz.luba@arm.com>, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org
+Cc:     linux-arm-kernel@lists.infradead.org,
+        linux-arm-msm@vger.kernel.org, sudeep.holla@arm.com,
+        will@kernel.org, catalin.marinas@arm.com, linux@armlinux.org.uk,
+        gregkh@linuxfoundation.org, rafael@kernel.org,
+        viresh.kumar@linaro.org, amitk@kernel.org,
+        daniel.lezcano@linaro.org, amit.kachhap@gmail.com,
+        bjorn.andersson@linaro.org, agross@kernel.org
+References: <20211007080729.8262-1-lukasz.luba@arm.com>
+ <20211007080729.8262-2-lukasz.luba@arm.com>
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Message-ID: <0ee4bc3b-0ad8-598d-417f-b8fe0a8fb8b1@linaro.org>
+Date:   Mon, 11 Oct 2021 17:15:27 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <20211007080729.8262-2-lukasz.luba@arm.com>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
 Content-Transfer-Encoding: 7bit
-Date:   Mon, 11 Oct 2021 14:09:45 -0700
-From:   abhinavk@codeaurora.org
-To:     Marijn Suijten <marijn.suijten@somainline.org>
-Cc:     phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Martin Botka <martin.botka@somainline.org>,
-        Jami Kettunen <jami.kettunen@somainline.org>,
-        Pavel Dubrova <pashadubrova@gmail.com>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Stephen Boyd <swboyd@chromium.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: Re: [Freedreno] [PATCH v2] drm/msm/dsi: Use division result from
- div_u64_rem in 7nm and 14nm PLL
-In-Reply-To: <20211011201642.167700-1-marijn.suijten@somainline.org>
-References: <20211011201642.167700-1-marijn.suijten@somainline.org>
-Message-ID: <51e9b0197656385025cd5c8a25bf01e8@codeaurora.org>
-X-Sender: abhinavk@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 2021-10-11 13:16, Marijn Suijten wrote:
-> div_u64_rem provides the result of the division and additionally the
-> remainder; don't use this function to solely calculate the remainder
-> while calculating the division again with div_u64.
+
+
+On 10/7/21 4:07 AM, Lukasz Luba wrote:
+> The thermal pressure is a mechanism which is used for providing
+> information about reduced CPU performance to the scheduler. Usually code
+> has to convert the value from frequency units into capacity units,
+> which are understandable by the scheduler. Create a common conversion code
+> which can be just used via a handy API.
 > 
-> A similar improvement was applied earlier to the 10nm pll in
-> 5c191fef4ce2 ("drm/msm/dsi_pll_10nm: Fix dividing the same numbers
-> twice").
-> 
-> Signed-off-by: Marijn Suijten <marijn.suijten@somainline.org>
-Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
+> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
 > ---
+>   arch/arm/include/asm/topology.h   |  1 +
+>   arch/arm64/include/asm/topology.h |  1 +
+>   drivers/base/arch_topology.c      | 36 ++++++++++++++++++++++++++++++-
+>   include/linux/arch_topology.h     |  3 +++
+>   include/linux/sched/topology.h    |  7 ++++++
+>   5 files changed, 47 insertions(+), 1 deletion(-)
 > 
-> Changes in v2:
-> - Corrected two typos in the first commit-message sentence.
+> diff --git a/arch/arm/include/asm/topology.h b/arch/arm/include/asm/topology.h
+> index 470299ee2fba..aee6c456c085 100644
+> --- a/arch/arm/include/asm/topology.h
+> +++ b/arch/arm/include/asm/topology.h
+> @@ -24,6 +24,7 @@
+>   /* Replace task scheduler's default thermal pressure API */
+>   #define arch_scale_thermal_pressure topology_get_thermal_pressure
+>   #define arch_set_thermal_pressure   topology_set_thermal_pressure
+> +#define arch_thermal_pressure_update	topology_thermal_pressure_update
+>   
+>   #else
+>   
+> diff --git a/arch/arm64/include/asm/topology.h b/arch/arm64/include/asm/topology.h
+> index ec2db3419c41..c997015402bc 100644
+> --- a/arch/arm64/include/asm/topology.h
+> +++ b/arch/arm64/include/asm/topology.h
+> @@ -33,6 +33,7 @@ void update_freq_counters_refs(void);
+>   /* Replace task scheduler's default thermal pressure API */
+>   #define arch_scale_thermal_pressure topology_get_thermal_pressure
+>   #define arch_set_thermal_pressure   topology_set_thermal_pressure
+> +#define arch_thermal_pressure_update	topology_thermal_pressure_update
+>   
+>   #include <asm-generic/topology.h>
+>   
+> diff --git a/drivers/base/arch_topology.c b/drivers/base/arch_topology.c
+> index 43407665918f..ad31513d0104 100644
+> --- a/drivers/base/arch_topology.c
+> +++ b/drivers/base/arch_topology.c
+> @@ -25,6 +25,7 @@
+>   static DEFINE_PER_CPU(struct scale_freq_data __rcu *, sft_data);
+>   static struct cpumask scale_freq_counters_mask;
+>   static bool scale_freq_invariant;
+> +static DEFINE_PER_CPU(u32, freq_factor) = 1;
+>   
+>   static bool supports_scale_freq_counters(const struct cpumask *cpus)
+>   {
+> @@ -168,6 +169,40 @@ void topology_set_thermal_pressure(const struct cpumask *cpus,
+>   }
+>   EXPORT_SYMBOL_GPL(topology_set_thermal_pressure);
+>   
+> +/**
+> + * topology_thermal_pressure_update() - Update thermal pressure for CPUs
+> + * @cpus	: The related CPUs which capacity has been reduced
+
+The related CPUs "for" which
+
+> + * @capped_freq	: The maximum allowed frequency that CPUs can run at
+> + *
+> + * Update the value of thermal pressure for all @cpus in the mask. The
+> + * cpumask should include all (online+offline) affected CPUs, to avoid
+> + * operating on stale data when hot-plug is used for some CPUs. The
+> + * @capped_freq must be less or equal to the max possible frequency and
+> + * reflects the currently allowed max CPUs frequency due to thermal capping.
+> + * The @capped_freq must be provided in kHz.
+> + */
+> +void topology_thermal_pressure_update(const struct cpumask *cpus,
+> +				      unsigned long capped_freq)
+> +{
+> +	unsigned long max_capacity, capacity;
+> +	int cpu;
+> +
+> +	if (!cpus)
+> +		return;
+> +
+> +	cpu = cpumask_first(cpus);
+> +	max_capacity = arch_scale_cpu_capacity(cpu);
+> +
+> +	/* Convert to MHz scale which is used in 'freq_factor' */
+> +	capped_freq /= 1000;
+> +
+> +	capacity = capped_freq * max_capacity;
+> +	capacity /= per_cpu(freq_factor, cpu);
+
+use mult_frac as used in other implementations ?
+
+-- 
+Warm Regards
+Thara (She/Her/Hers)
+
+> +
+> +	arch_set_thermal_pressure(cpus, max_capacity - capacity);
+> +}
+> +EXPORT_SYMBOL_GPL(topology_thermal_pressure_update);
+> +
+>   static ssize_t cpu_capacity_show(struct device *dev,
+>   				 struct device_attribute *attr,
+>   				 char *buf)
+> @@ -220,7 +255,6 @@ static void update_topology_flags_workfn(struct work_struct *work)
+>   	update_topology = 0;
+>   }
+>   
+> -static DEFINE_PER_CPU(u32, freq_factor) = 1;
+>   static u32 *raw_capacity;
+>   
+>   static int free_raw_capacity(void)
+> diff --git a/include/linux/arch_topology.h b/include/linux/arch_topology.h
+> index f180240dc95f..9e183621a59b 100644
+> --- a/include/linux/arch_topology.h
+> +++ b/include/linux/arch_topology.h
+> @@ -59,6 +59,9 @@ static inline unsigned long topology_get_thermal_pressure(int cpu)
+>   void topology_set_thermal_pressure(const struct cpumask *cpus,
+>   				   unsigned long th_pressure);
+>   
+> +void topology_thermal_pressure_update(const struct cpumask *cpus,
+> +				      unsigned long capped_freq);
+> +
+>   struct cpu_topology {
+>   	int thread_id;
+>   	int core_id;
+> diff --git a/include/linux/sched/topology.h b/include/linux/sched/topology.h
+> index 8f0f778b7c91..990d14814427 100644
+> --- a/include/linux/sched/topology.h
+> +++ b/include/linux/sched/topology.h
+> @@ -266,6 +266,13 @@ void arch_set_thermal_pressure(const struct cpumask *cpus,
+>   { }
+>   #endif
+>   
+> +#ifndef arch_thermal_pressure_update
+> +static __always_inline
+> +void arch_thermal_pressure_update(const struct cpumask *cpus,
+> +				      unsigned long capped_frequency)
+> +{ }
+> +#endif
+> +
+>   static inline int task_node(const struct task_struct *p)
+>   {
+>   	return cpu_to_node(task_cpu(p));
 > 
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c | 4 +---
->  drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c  | 4 +---
->  2 files changed, 2 insertions(+), 6 deletions(-)
-> 
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-> index 9a959a5dcc1e..de3c6556a587 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_14nm.c
-> @@ -215,9 +215,7 @@ static void pll_14nm_dec_frac_calc(struct
-> dsi_pll_14nm *pll, struct dsi_pll_conf
->  	DBG("vco_clk_rate=%lld ref_clk_rate=%lld", vco_clk_rate, fref);
-> 
->  	dec_start_multiple = div_u64(vco_clk_rate * multiplier, fref);
-> -	div_u64_rem(dec_start_multiple, multiplier, &div_frac_start);
-> -
-> -	dec_start = div_u64(dec_start_multiple, multiplier);
-> +	dec_start = div_u64_rem(dec_start_multiple, multiplier, 
-> &div_frac_start);
-> 
->  	pconf->dec_start = (u32)dec_start;
->  	pconf->div_frac_start = div_frac_start;
-> diff --git a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> index 9f7c408325ba..36eb6109cb88 100644
-> --- a/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> +++ b/drivers/gpu/drm/msm/dsi/phy/dsi_phy_7nm.c
-> @@ -114,9 +114,7 @@ static void dsi_pll_calc_dec_frac(struct
-> dsi_pll_7nm *pll, struct dsi_pll_config
-> 
->  	multiplier = 1 << FRAC_BITS;
->  	dec_multiple = div_u64(pll_freq * multiplier, divider);
-> -	div_u64_rem(dec_multiple, multiplier, &frac);
-> -
-> -	dec = div_u64(dec_multiple, multiplier);
-> +	dec = div_u64_rem(dec_multiple, multiplier, &frac);
-> 
->  	if (!(pll->phy->cfg->quirks & DSI_PHY_7NM_QUIRK_V4_1))
->  		config->pll_clock_inverters = 0x28;
-> --
-> 2.33.0
+
+
