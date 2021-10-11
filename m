@@ -2,89 +2,141 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 59B90428A39
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Oct 2021 11:55:41 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4165C428A3D
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Oct 2021 11:57:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235624AbhJKJ5j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Oct 2021 05:57:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:37416 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235599AbhJKJ5j (ORCPT
+        id S235686AbhJKJ7M (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Oct 2021 05:59:12 -0400
+Received: from mout.kundenserver.de ([217.72.192.75]:38753 "EHLO
+        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S235608AbhJKJ7M (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Oct 2021 05:57:39 -0400
-Received: from mail-lf1-x135.google.com (mail-lf1-x135.google.com [IPv6:2a00:1450:4864:20::135])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4BEA9C061570
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Oct 2021 02:55:39 -0700 (PDT)
-Received: by mail-lf1-x135.google.com with SMTP id y15so71343854lfk.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Oct 2021 02:55:39 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=kBarjcZyLGiMmFvfK+amIgyffwqYFHfGdnIAQ0ZFp2o=;
-        b=rYeD11KIuoPJThVYkeB5rzUzibSLWoGNxT+6aTE0groDYRXL/JHFEJTXZHsFinPxuy
-         JtFSeAXGAxJiH3Wm7yokhzb3VISE8ZkIWckcS1ufXs/Yu/5ncUZH9MzDT44hTKLGkg4c
-         jiRyTxToJ1KftcIOdA/PcRftLDtnqlbEQu6g5KqpFyX9FamMBo+WJC2GlJIRZ9NCFY6d
-         vV8JhEAV9Vvxtd7J1PkmnVl0eqkY6RyBKL1967TORxSTG1PdmSe3Dejx7jtHSvNCZrar
-         srph6nOHMugapsLaeym+1BFPkmv9Gxe6Ult/8v2s2noLZ+RYbvCEzXlgWR6wUA5Hi9/K
-         zZ+w==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=kBarjcZyLGiMmFvfK+amIgyffwqYFHfGdnIAQ0ZFp2o=;
-        b=epF2eGuQ2OalMLwN4OnU6cHP26TJGG9njghUnnB9xxQm73CE/XyS95/XXqCHXqosFd
-         rf42EClU198z1bu14/e3Smvr1/Ulh9d9NRPVCSVyaNcM/K+rC5dK5htluGGyKYhySPmp
-         ehrdXxp8QXQLeShFeBEntCcQdUZymRpw8BSUX89NkuM+f3BhsvoxVehBKpUaIWH0yjNS
-         SnNGlrVDrUL5HVUYIBZUbiE7CI14Cr+8B1ZCcajbhBDlr+cVapX/t0pQ2Nu4SI2RFR16
-         y/1zmiUHeDz4rXQeMmc1RB8eZuQMRUMirG/n8QjxbgZuFeBOhMlOmGI8Qia2Qo0KAI3o
-         N/jQ==
-X-Gm-Message-State: AOAM5314Ly5SUyDlGgf7GKa9XxGYGOyQ7sve2RpTpMPL22fRpKgfpx0u
-        PLVxVdI4yrgE+3dVY90cCof+yg==
-X-Google-Smtp-Source: ABdhPJziEqkbBzWOz4Rl56dfiWZg5Pw8RIf2s/vb0RdTbZVPffhDLHLq3/+7CcK+kz0XxuhNGkihGA==
-X-Received: by 2002:a2e:b053:: with SMTP id d19mr12536957ljl.290.1633946137602;
-        Mon, 11 Oct 2021 02:55:37 -0700 (PDT)
-Received: from localhost.localdomain (62-248-207-242.elisa-laajakaista.fi. [62.248.207.242])
-        by smtp.gmail.com with ESMTPSA id h4sm689183lft.184.2021.10.11.02.55.37
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Oct 2021 02:55:37 -0700 (PDT)
-From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-To:     Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Thara Gopinath <thara.gopinath@linaro.org>
-Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
-        devicetree@vger.kernel.org
-Subject: [PATCH] arm64: dts: sdm845: Fix Qualcomm crypto engine bus clock
-Date:   Mon, 11 Oct 2021 12:55:34 +0300
-Message-Id: <20211011095534.1580406-1-vladimir.zapolskiy@linaro.org>
-X-Mailer: git-send-email 2.33.0
+        Mon, 11 Oct 2021 05:59:12 -0400
+Received: from mail-wr1-f50.google.com ([209.85.221.50]) by
+ mrelayeu.kundenserver.de (mreue108 [213.165.67.113]) with ESMTPSA (Nemesis)
+ id 1M7sM0-1meprY40LS-0053ld; Mon, 11 Oct 2021 11:57:10 +0200
+Received: by mail-wr1-f50.google.com with SMTP id r10so54318641wra.12;
+        Mon, 11 Oct 2021 02:57:10 -0700 (PDT)
+X-Gm-Message-State: AOAM531KQFaylaynQsx0T9bgDsskPjI96gQ7o0qP/4B0Yw7UgEDJVstP
+        6Jc584lj3C4pxF+JkSQydd1SkIQNyqLVsoqwWdc=
+X-Google-Smtp-Source: ABdhPJxAE0aTicIaLYe2qnN2pp2cTh2YlBgwyXsBeIGZ6xRxR2Cgvhms/FkNW5VQT+nJ6ErHbjgjqQ/uoPWW1e+ZyE4=
+X-Received: by 2002:a05:600c:1548:: with SMTP id f8mr7487209wmg.35.1633946230518;
+ Mon, 11 Oct 2021 02:57:10 -0700 (PDT)
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+References: <20211010023350.978638-1-dmitry.baryshkov@linaro.org>
+ <YWJpJnaQ2Nr4PUwr@yoga> <CAK8P3a3irqEVH2e9wCK4MSSBKRW-n8pFSzYBks9ri-hepewkUw@mail.gmail.com>
+ <CAA8EJpoD4Th1tdwYQLnZur2oA0xX0LojSrNFLyJqdi6+rnB3YQ@mail.gmail.com>
+ <CAK8P3a3JwQP1b0KeLRN0UCMmzFn3+gY2oexYUwGyt2bOqC0P4A@mail.gmail.com> <CAA8EJppAx_bweNhQuQuA5pQkWpyvtYNqttL-fiKgqpJpRqHMKw@mail.gmail.com>
+In-Reply-To: <CAA8EJppAx_bweNhQuQuA5pQkWpyvtYNqttL-fiKgqpJpRqHMKw@mail.gmail.com>
+From:   Arnd Bergmann <arnd@arndb.de>
+Date:   Mon, 11 Oct 2021 11:56:54 +0200
+X-Gmail-Original-Message-ID: <CAK8P3a3DLP3qPee0us4VZfU7h9ND8vtzA-Lv3a5JVGd=RnxsNg@mail.gmail.com>
+Message-ID: <CAK8P3a3DLP3qPee0us4VZfU7h9ND8vtzA-Lv3a5JVGd=RnxsNg@mail.gmail.com>
+Subject: Re: [PATCH] iommu: fix ARM_SMMU vs QCOM_SCM compilation
+To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
+        Robin Murphy <robin.murphy@arm.com>,
+        Kalle Valo <kvalo@codeaurora.org>,
+        Thierry Reding <treding@nvidia.com>,
+        Andy Gross <agross@kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        "open list:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linux ARM <linux-arm-kernel@lists.infradead.org>,
+        Daniel Lezcano <daniel.lezcano@linaro.org>
+Content-Type: text/plain; charset="UTF-8"
+X-Provags-ID: V03:K1:OJpcktUK+3q1MfYvEF4TOG0S4bE5DgsF2wI86U5t9e1/GOwiMST
+ TMRwlMvr6vK8gbCK25Jy4eWvv5JUlTI1ZeeOqdEWMzfG0veNdUu7E0diyqxcysKUthS/U0j
+ Z+40LKNIGmAmFJhbG0RZ2fhworRbvZXYvNpZZCUXCuGvjN+bDguHxJTIUFJhalZMgvBe5eM
+ cdH2hnGxQ/f/1RrCtF2Kw==
+X-Spam-Flag: NO
+X-UI-Out-Filterresults: notjunk:1;V03:K0:e7NJ3ff+BN0=:KAdCZLYI26A5mmtzviLZrv
+ PclcHxot8Z9xEalQF7UFc44rFf9doKrYGMsgq/mV4nUn69UIRASfcLUQ9Cg2/RQHwBhEfQCbk
+ 8AyhFOuV3UL+LPgCIOsZhj112XpWLD6c24F5RjveHNXzVHXU/QZYMTm8/VnggZz2lqSoeFx8e
+ cFozdTkDq46n4Nz1KUoCGaOC8it7ufhOraumXbi1LdorTbWo+IJFyVC3v0OtuKRCVLsjtBTSn
+ 8Kkg346tCyuRcureD6uhCjfUQEpwKA0vaIv620vMMITHyfCXfMuPZ5LWvSLi/mMLn7ebNKtfG
+ Vz8KcarvxoXUCnVAbYcpK2udlLo2bGj74zKjpE7Bd7nhFnqRLLcAXqPBsWywLuvswzRVzVS08
+ 1oM28W11UUWAAqfl3imobC417Q88Z7JUkB9MMPJ+5enamJ53Ooh79kOp9oPP57kdttN628KdX
+ RJOCDexSuAeCkM/lY2tStYZ/b5qq4m5C9/U6w8Jym0Vz2I5H18JeULkOnfx52gyUwa/cPHP7M
+ 89zzhxz0LRVoOspAdo1hdzURC3Y9GSgp2QLXhjSN0xhf/wqgqFoR2zlyTmbfbKG16mfRobvYU
+ wI+mBxpiSVVaWFSJ7hf/Vtubd+zE7nt2PE8WK2GGhCalCP0w7V4I3EWLWie6MKQ4lvN0aro48
+ chdOIg+kCMSImD0bJz6Upb04V0zK1O+efwZuMo/Y/T7yC8CGUo5JOILY0Io4UdEcHbCkpRz9C
+ 84RMizk7VABdukXhkZvPkJNzE8BFQHubd5SoSA==
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The change corrects the described bus clock of the QCE.
+On Mon, Oct 11, 2021 at 11:10 AM Dmitry Baryshkov
+<dmitry.baryshkov@linaro.org> wrote:
+>
+> On Mon, 11 Oct 2021 at 09:09, Arnd Bergmann <arnd@arndb.de> wrote:
+> >
+> > On Mon, Oct 11, 2021 at 6:11 AM Dmitry Baryshkov
+> > <dmitry.baryshkov@linaro.org> wrote:
+> > > On Sun, 10 Oct 2021 at 20:42, Arnd Bergmann <arnd@arndb.de> wrote:
+> > >
+> > > The patch seems correct, but it becomes overcomplicated. What about:
+> > > - restoring QCOM_SCM stubs
+> >
+> > The stubs are what has led to the previous bugs in this area to often
+> > go unnoticed for too long, as illustrated by your suggestion
+> >
+> > > - making ARM_SMMU select QCOM_SCM if ARM_SMMU_QCOM
+> >
+> > I assume you meant "select QCOM_SCM if ARCH_QCOM",
+> > after we stop using ARM_SMMU_QCOM?
+> >
+> > > This would have almost the same result as with your patch, but without
+> > > extra ARM_SMMU_QCOM Kconfig symbol.
+> >
+> > The "almost" is the problem: consider the case of
+> >
+> > CONFIG_ARM=y
+> > CONFIG_COMPILE_TEST=y
+> > CONFIG_ARCH_QCOM=n
+> > CONFIG_ARM_SMMU=y
+> > CONFIG_DRM_MSM=m
+> > CONFIG_QCOM_SCM=m (selected by DRM_MSM)
+> >
+> > The stubs here lead to ARM_SMMU linking against the QCOM_SCM
+> > driver from built-in code, which fails because QCOM_SCM itself
+> > is a loadable module.
+>
+> I see. The idealist in me wishes to change my suggestion to
+> 'select QCOM_SCM if ARCH_QCOM || COMPILE_TEST'
+> but I have the subtle feeling that this also might fail somehow.
 
-Fixes: 3e482859f1ef ("dts: qcom: sdm845: Add dt entries to support crypto engine.")
-Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
----
- arch/arm64/boot/dts/qcom/sdm845.dtsi | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+I think that would actually work, but it has the nasty side-effect
+that simply flipping 'CONFIG_COMPILE_TEST' changes what
+the kernel does, rather than just hiding or unhiding additional
+options.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index b051adfed4a9..79a87eeee090 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -2376,7 +2376,7 @@ crypto: crypto@1dfa000 {
- 			compatible = "qcom,crypto-v5.4";
- 			reg = <0 0x01dfa000 0 0x6000>;
- 			clocks = <&gcc GCC_CE1_AHB_CLK>,
--				 <&gcc GCC_CE1_AHB_CLK>,
-+				 <&gcc GCC_CE1_AXI_CLK>,
- 				 <&rpmhcc 15>;
- 			clock-names = "iface", "bus", "core";
- 			dmas = <&cryptobam 6>, <&cryptobam 7>;
--- 
-2.33.0
+> > We can move the "select QCOM_SCM" in the ARM_SMMU_QCOM
+> > symbol if we make that a tristate though, if you want to separate it
+> > a little more.
+>
+> This would complicate things a bit, as we would no longer be able to
+> use 'arm-smmu-$(CONFIG_ARM_SMMU_QCOM) +=' construct.
 
+I'm fairly sure we could still use that, Kbuild is smart enough
+to include both 'file-m +=' and 'file-y += ' in 'file.ko', see
+scripts/Makefile.lib:
+
+# If $(foo-objs), $(foo-y), $(foo-m), or $(foo-) exists, foo.o is a
+composite object
+multi-obj-y := $(call multi-search, $(obj-y), .o, -objs -y)
+multi-obj-m := $(call multi-search, $(obj-m), .o, -objs -y -m)
+multi-obj-ym := $(multi-obj-y) $(multi-obj-m)
+
+# Replace multi-part objects by their individual parts,
+# including built-in.a from subdirectories
+real-obj-y := $(call real-search, $(obj-y), .o, -objs -y)
+real-obj-m := $(call real-search, $(obj-m), .o, -objs -y -m)
+
+What doesn't work is having a built-in driver in a directory that is
+guarded with a =m symbol, or including a =m object into a =y
+module.
+
+        Arnd
