@@ -2,74 +2,65 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6F76F4297EE
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Oct 2021 22:06:52 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 574E34297F7
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Oct 2021 22:10:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234829AbhJKUIt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Oct 2021 16:08:49 -0400
-Received: from ixit.cz ([94.230.151.217]:50770 "EHLO ixit.cz"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S234814AbhJKUIs (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Oct 2021 16:08:48 -0400
-Received: from localhost.localdomain (ip-89-176-96-70.net.upcbroadband.cz [89.176.96.70])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by ixit.cz (Postfix) with ESMTPSA id 48F6620064;
-        Mon, 11 Oct 2021 22:06:40 +0200 (CEST)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=ixit.cz; s=dkim;
-        t=1633982800;
-        h=from:from:reply-to:subject:subject:date:date:message-id:message-id:
-         to:to:cc:cc:mime-version:mime-version:
-         content-transfer-encoding:content-transfer-encoding;
-        bh=sFSERW+c0MCFdwR7sVEFwPDbMSHIzzONuOZe7rm99XM=;
-        b=DanC5hcXCtw32h3wFeYqJOUDTQ75eh96RxFxLUZyOq3XL9bQZfE+lQQy+CPJewLC/KdWjk
-        CpgcjzKcGO4bppxtdMzqE79vBxMTeFepFMhWz1CfARbfWtzZh3CaeaOAtT18Zhuz6p1IeP
-        U3rKQSvPTlOiHYLNGexCZAUE5HqhO+4=
-From:   David Heidelberg <david@ixit.cz>
-To:     Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Kees Cook <keescook@chromium.org>,
-        Anton Vorontsov <anton@enomsg.org>,
-        Colin Cross <ccross@android.com>,
-        Tony Luck <tony.luck@intel.com>
-Cc:     linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, ~okias/devicetree@lists.sr.ht,
-        David Heidelberg <david@ixit.cz>,
-        Caleb Connolly <caleb@connolly.tech>
-Subject: [PATCH] arm64: dts: qcom: sdm845-oneplus: remove devinfo-size from ramoops node
-Date:   Mon, 11 Oct 2021 22:01:38 +0200
-Message-Id: <20211011200138.115688-1-david@ixit.cz>
-X-Mailer: git-send-email 2.33.0
+        id S233528AbhJKUMz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Oct 2021 16:12:55 -0400
+Received: from alexa-out-sd-01.qualcomm.com ([199.106.114.38]:49286 "EHLO
+        alexa-out-sd-01.qualcomm.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S231926AbhJKUMz (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Mon, 11 Oct 2021 16:12:55 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1633983054; x=1665519054;
+  h=date:from:to:cc:subject:message-id:references:
+   mime-version:in-reply-to;
+  bh=4qalDZAuMz1rcxjvxkin+MMISbyKSsDOpZCfQg7Dd3k=;
+  b=vikJIBzelfZBl2K00xCQIiJy5tL+j4f2cZTinBszu5RlID4q6TWZPJKI
+   D+NtDlAN9JcGS+d7kjixZ1lZ7gzFjuR65tJzFJQruixK7b3SCRob1BuxV
+   hij264Yse8HGVWHDBsTj7YRokpu88iIYqCGDIH/kQ7C6laSwnnTIXeYy0
+   Y=;
+Received: from unknown (HELO ironmsg02-sd.qualcomm.com) ([10.53.140.142])
+  by alexa-out-sd-01.qualcomm.com with ESMTP; 11 Oct 2021 13:10:54 -0700
+X-QCInternal: smtphost
+Received: from nasanex01b.na.qualcomm.com ([10.46.141.250])
+  by ironmsg02-sd.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 11 Oct 2021 13:10:54 -0700
+Received: from hu-gurus-sd.qualcomm.com (10.80.80.8) by
+ nasanex01b.na.qualcomm.com (10.46.141.250) with Microsoft SMTP Server
+ (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7;
+ Mon, 11 Oct 2021 13:10:54 -0700
+Date:   Mon, 11 Oct 2021 13:10:53 -0700
+From:   Guru Das Srinagesh <quic_gurus@quicinc.com>
+To:     Stephen Boyd <swboyd@chromium.org>
+CC:     Dan Carpenter <dan.carpenter@oracle.com>,
+        <linux-arm-msm@vger.kernel.org>
+Subject: Re: [bug report] firmware: qcom_scm: Make
+ __qcom_scm_is_call_available() return bool
+Message-ID: <20211011201053.GA28665@hu-gurus-sd.qualcomm.com>
+References: <20211011092054.GA6793@kili>
+ <20211011184022.GA18698@hu-gurus-sd.qualcomm.com>
+ <CAE-0n51tW3jwAPHaoDTMM89ADcPQuWb4UyjCSbkRXHF3wPe4og@mail.gmail.com>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset="us-ascii"
+Content-Disposition: inline
+In-Reply-To: <CAE-0n51tW3jwAPHaoDTMM89ADcPQuWb4UyjCSbkRXHF3wPe4og@mail.gmail.com>
+User-Agent: Mutt/1.5.24 (2015-08-30)
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nasanex01b.na.qualcomm.com (10.46.141.250)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-This property doesn't exist in Linux kernel.
+On Mon, Oct 11, 2021 at 12:06:13PM -0700, Stephen Boyd wrote:
+> Resend as a proper patch?
+> 
+> Reviewed-by: Stephen Boyd <swboyd@chromium.org>
 
-Fixes: 288ef8a42612 ("arm64: dts: sdm845: add oneplus6/6t devices")
+Done: https://lore.kernel.org/lkml/1633982414-28347-1-git-send-email-quic_gurus@quicinc.com/
 
-Reviewed-by: Caleb Connolly <caleb@connolly.tech>
-Signed-off-by: David Heidelberg <david@ixit.cz>
----
- arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi | 1 -
- 1 file changed, 1 deletion(-)
+Thank you.
 
-diff --git a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-index d4355522374a..dec2ac9cbb08 100644
---- a/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845-oneplus-common.dtsi
-@@ -93,7 +93,6 @@ ramoops: ramoops@ac300000 {
- 			console-size = <0x40000>;
- 			ftrace-size = <0x40000>;
- 			pmsg-size = <0x200000>;
--			devinfo-size = <0x1000>;
- 			ecc-size = <16>;
- 		};
- 	};
--- 
-2.33.0
-
+Guru Das.
