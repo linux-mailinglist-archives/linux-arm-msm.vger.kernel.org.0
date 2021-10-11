@@ -2,104 +2,101 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A6B724286A2
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Oct 2021 08:09:04 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 016E04287AA
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Oct 2021 09:31:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233943AbhJKGLD (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Oct 2021 02:11:03 -0400
-Received: from mout.kundenserver.de ([212.227.126.134]:54963 "EHLO
-        mout.kundenserver.de" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233802AbhJKGLC (ORCPT
+        id S234457AbhJKHdy (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Oct 2021 03:33:54 -0400
+Received: from smtp-relay-internal-0.canonical.com ([185.125.188.122]:57110
+        "EHLO smtp-relay-internal-0.canonical.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S234455AbhJKHdx (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Oct 2021 02:11:02 -0400
-Received: from mail-wr1-f50.google.com ([209.85.221.50]) by
- mrelayeu.kundenserver.de (mreue011 [213.165.67.97]) with ESMTPSA (Nemesis) id
- 1MJVY8-1mKM0T3AHQ-00Jt7C; Mon, 11 Oct 2021 08:09:01 +0200
-Received: by mail-wr1-f50.google.com with SMTP id r10so52365117wra.12;
-        Sun, 10 Oct 2021 23:09:01 -0700 (PDT)
-X-Gm-Message-State: AOAM532lz6m3N6wq5WHFxRi0kS3Pf8DZqAzJ+NMmuNsycz5kBkXRMSJP
-        sZyxKZO7Fr+Xw/hm8fe/yrQUrsZfw9WLgyr3Bjg=
-X-Google-Smtp-Source: ABdhPJzokqOl1FjpKWa7hPmI46vA3MbqNwtIHx5QkXa4cBkJuMWag11qBpJwNxvearH05lPT0JSjYqMCvI8xjMjduAg=
-X-Received: by 2002:a05:600c:1548:: with SMTP id f8mr6604283wmg.35.1633932541412;
- Sun, 10 Oct 2021 23:09:01 -0700 (PDT)
-MIME-Version: 1.0
-References: <20211010023350.978638-1-dmitry.baryshkov@linaro.org>
- <YWJpJnaQ2Nr4PUwr@yoga> <CAK8P3a3irqEVH2e9wCK4MSSBKRW-n8pFSzYBks9ri-hepewkUw@mail.gmail.com>
- <CAA8EJpoD4Th1tdwYQLnZur2oA0xX0LojSrNFLyJqdi6+rnB3YQ@mail.gmail.com>
-In-Reply-To: <CAA8EJpoD4Th1tdwYQLnZur2oA0xX0LojSrNFLyJqdi6+rnB3YQ@mail.gmail.com>
-From:   Arnd Bergmann <arnd@arndb.de>
-Date:   Mon, 11 Oct 2021 08:08:44 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a3JwQP1b0KeLRN0UCMmzFn3+gY2oexYUwGyt2bOqC0P4A@mail.gmail.com>
-Message-ID: <CAK8P3a3JwQP1b0KeLRN0UCMmzFn3+gY2oexYUwGyt2bOqC0P4A@mail.gmail.com>
-Subject: Re: [PATCH] iommu: fix ARM_SMMU vs QCOM_SCM compilation
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
+        Mon, 11 Oct 2021 03:33:53 -0400
+Received: from mail-ed1-f71.google.com (mail-ed1-f71.google.com [209.85.208.71])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by smtp-relay-internal-0.canonical.com (Postfix) with ESMTPS id BA89240000
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Oct 2021 07:31:52 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=canonical.com;
+        s=20210705; t=1633937512;
+        bh=XwHbWdp7VVwQ/yycSh88XsBspIrkx9lp92AdUBkvmF8=;
+        h=From:To:Cc:Subject:Date:Message-Id:MIME-Version;
+        b=vNvYQN/o9SY69ky2ld9Dwi7jjXmcrd032m0fIvdhmCbEc/TajrcOg60ftavWKQGnx
+         XzzOtlXeLmZy8gFONZxu5h4kyD/wN+TScOAjDASeHj2ElQDWfv7IehHAZ48+avDYPr
+         j9/WX+dlQhjnIV2kAF1cb3hiymYYnHIXNvghz4ADCHBxjHQHS9o/h8q+z/HcDYm8dT
+         U207tIOq4kSDWAIKXuRrMbCz0nPiKQ9B4XrjczHDSuaoNyoCnJV4u6EkgWB1j2mDMY
+         UrDrJYZrTwQWpnSc/NdJN4hqvbmUTPTRRye04/WqA8F540INOCSH7PteXnwYl0RIqD
+         bo6I2ovYFn/SQ==
+Received: by mail-ed1-f71.google.com with SMTP id d3-20020a056402516300b003db863a248eso3045127ede.16
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Oct 2021 00:31:52 -0700 (PDT)
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=XwHbWdp7VVwQ/yycSh88XsBspIrkx9lp92AdUBkvmF8=;
+        b=HVSg/jx9AIs7plRfs1UTAi7bRH7V0LsVKrSDlANQsdpY7zK0SQ41PsYjgvrjWLbEvf
+         zZhdzy0OVWrZOrpWEVGic2y2ZBH36k3XQszQlaQPR5KjpRGt6H+PVBx9oVGu8If6fF5I
+         iO7YxpyWXEGJQIaXaYmWFXOAxOLW7fhaO8z4AQ0g2F3AF6FoFWgkVZGrkUc3V/DfHxHI
+         88mlhX4Gbyf8pznFC5QVwXUkbHyPjj2chHPLW+8XdZu0iKpu+pLnx8jMQLUsL8AVUzL+
+         xB3XeF+u8iSCaaAvb7pDyhF4j0EwSvdsXFap1dCcyY+DVi4ASM8fHF6CgnYPoptYO8j6
+         Qe6Q==
+X-Gm-Message-State: AOAM530TYeuzkQ5yn2mXjqjCZ0FH5TA7G2BURYd4tLEt0rr0BhDscHpo
+        vKMG2lQUPeXnBcCPjy7QmpFf8MESOZH7jyl0/V8v8WQXkM0W4ZaODolH0I7Vo7YSitU7eTpQdgs
+        8TXxvorxS7SBU0OiRDcw/JQCuSyV6Ru6az8tEeymA4fk=
+X-Received: by 2002:a05:6402:5215:: with SMTP id s21mr34199911edd.113.1633937512229;
+        Mon, 11 Oct 2021 00:31:52 -0700 (PDT)
+X-Google-Smtp-Source: ABdhPJywCR4sOtwh0YCcCUI9FHmKswBlDB3H3/tQT8Wk1uf3GQGN52eB0kGY3pjRUV8qGtdaaS42gQ==
+X-Received: by 2002:a05:6402:5215:: with SMTP id s21mr34199896edd.113.1633937512032;
+        Mon, 11 Oct 2021 00:31:52 -0700 (PDT)
+Received: from localhost.localdomain (78-11-189-27.static.ip.netia.com.pl. [78.11.189.27])
+        by smtp.gmail.com with ESMTPSA id dt4sm3054377ejb.27.2021.10.11.00.31.50
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Oct 2021 00:31:51 -0700 (PDT)
+From:   Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Joerg Roedel <joro@8bytes.org>, Will Deacon <will@kernel.org>,
-        Robin Murphy <robin.murphy@arm.com>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Thierry Reding <treding@nvidia.com>,
-        Andy Gross <agross@kernel.org>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        "open list:IOMMU DRIVERS" <iommu@lists.linux-foundation.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linux ARM <linux-arm-kernel@lists.infradead.org>,
-        Daniel Lezcano <daniel.lezcano@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
-X-Provags-ID: V03:K1:k+HcbtuOTQpaVMTxJPM3+h+Of3AscCILByFUfjZe8V5Ish9HFzm
- zAHAi1G5NcqyLCyWORR4QmMEgvgvxk43ANxwFHVBjsmFWIbVrcC5g8H7k/3d0U75sf9NRX8
- Pu4u7C55QYC3a8MYqQ3lKnR2RDuYIR7Hs/Z8q8zwY6I8fOEUBYBqUXHvOat//U7csEQC3/9
- IV88+vmsKVPYYZ8GSipCQ==
-X-Spam-Flag: NO
-X-UI-Out-Filterresults: notjunk:1;V03:K0:RznMQPZqWBg=:mbLYd1e0vkH/3H6mM6vpcR
- wXTo5qdMg3zcExQ2H0RC226AW62psyQW/R6kvDFmBiecSRGHHe/23ImFQOgXA/hDJpklAbbpy
- MiaPHKrtgBT0FqWc6xgXYGI47zURXKrM3lfxWJml/hJpF/IDC3hcbypzrJhAeaWTryYQI1Q7F
- AMPxil4CqTGqLkLz1/zC2szPo1qmFACY+glJzOW2jLlCl+t6ESaJtf2SpCTqa3tOWeWKsE7eT
- RvMzZ9/SjJSrupp8BYAncBuM67ceAFXjrs/qBLxWSu39z4Gfnis7hdH5O5ILrazqszNTRmKYt
- JLZHNMpsNITzdbyuHBVixsnb2ZK0/58BH8jFxwRZ3vJZOgPmyAzjlBmrgloHOEkG8FXY9fs+N
- ItKQ6k3ZxFwZHMqv/UNUhQf4PDXvMJUys7TPofMZWsJHLfZ8wQDlNWxbZ50ETa/a1rR9A64FD
- ovhDpea4Zg/zHK7lfs7tmZq5N08w09GzX3hTdwzVzJRpR6cLKfg0TC0qjvHmJmBVJUNbUyBDw
- tf9w9X238WTIRFiPw7bEvW+NrX/0mq5q3ibSxell4r2eaWqZhpo30TiYj5Ku77yAwVQQEyA1V
- cvllKK+lLzDqRp8ljRj39Pr394e1TiPwz8IAxs7uDcFNWFtcU/wjs67CfrNkAzYC5Qpm5QtVP
- lt1O5/t/gG3N9znj+79ec1VaQV79DIzRYbRDPEC87CvymomGruAij71reLYqbCXpWClJuqn4Z
- iTm2p0fLcGIA5GB5X96mszwqUuU46I/jrzqkBg==
+        Rob Herring <robh+dt@kernel.org>,
+        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
+        linux-kernel@vger.kernel.org
+Cc:     Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+Subject: [PATCH] arm64: dts: qcom: msm8996: move clock-frequency from PN547 NFC to I2C bus
+Date:   Mon, 11 Oct 2021 09:31:43 +0200
+Message-Id: <20211011073143.32645-1-krzysztof.kozlowski@canonical.com>
+X-Mailer: git-send-email 2.30.2
+MIME-Version: 1.0
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon, Oct 11, 2021 at 6:11 AM Dmitry Baryshkov
-<dmitry.baryshkov@linaro.org> wrote:
-> On Sun, 10 Oct 2021 at 20:42, Arnd Bergmann <arnd@arndb.de> wrote:
->
-> The patch seems correct, but it becomes overcomplicated. What about:
-> - restoring QCOM_SCM stubs
+Although the early NXP NCI NFC bindings required the clock-frequency
+property, it was never used by the driver and it is actually a property
+of I2C bus, not I2C slave.
 
-The stubs are what has led to the previous bugs in this area to often
-go unnoticed for too long, as illustrated by your suggestion
+Signed-off-by: Krzysztof Kozlowski <krzysztof.kozlowski@canonical.com>
+---
+ arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
 
-> - making ARM_SMMU select QCOM_SCM if ARM_SMMU_QCOM
+diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
+index d239b01b8505..01e573f0dfbf 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
+@@ -185,12 +185,12 @@ &adsp_pil {
+ &blsp2_i2c2 {
+ 	status = "okay";
+ 	label = "NFC_I2C";
++	clock-frequency = <400000>;
+ 
+ 	nfc: pn548@28 {
+ 		compatible = "nxp,nxp-nci-i2c";
+ 
+ 		reg = <0x28>;
+-		clock-frequency = <400000>;
+ 
+ 		interrupt-parent = <&tlmm>;
+ 		interrupts = <9 IRQ_TYPE_LEVEL_HIGH>;
+-- 
+2.30.2
 
-I assume you meant "select QCOM_SCM if ARCH_QCOM",
-after we stop using ARM_SMMU_QCOM?
-
-> This would have almost the same result as with your patch, but without
-> extra ARM_SMMU_QCOM Kconfig symbol.
-
-The "almost" is the problem: consider the case of
-
-CONFIG_ARM=y
-CONFIG_COMPILE_TEST=y
-CONFIG_ARCH_QCOM=n
-CONFIG_ARM_SMMU=y
-CONFIG_DRM_MSM=m
-CONFIG_QCOM_SCM=m (selected by DRM_MSM)
-
-The stubs here lead to ARM_SMMU linking against the QCOM_SCM
-driver from built-in code, which fails because QCOM_SCM itself
-is a loadable module.
-
-We can move the "select QCOM_SCM" in the ARM_SMMU_QCOM
-symbol if we make that a tristate though, if you want to separate it
-a little more.
-
-        Arnd
