@@ -2,122 +2,474 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id A311A4298C3
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Oct 2021 23:17:14 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 588604299EB
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Oct 2021 01:41:46 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235255AbhJKVTL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Oct 2021 17:19:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:53388 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235256AbhJKVTK (ORCPT
+        id S231707AbhJKXno (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Oct 2021 19:43:44 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:52242 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229576AbhJKXno (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Oct 2021 17:19:10 -0400
-Received: from mail-qt1-x82c.google.com (mail-qt1-x82c.google.com [IPv6:2607:f8b0:4864:20::82c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 35E62C061745
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Oct 2021 14:17:10 -0700 (PDT)
-Received: by mail-qt1-x82c.google.com with SMTP id r17so12381927qtx.10
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Oct 2021 14:17:10 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=aFaiNjeTvld1X0vmZ2G8WJDTc5Mp6lRCwddZ5BoVR2Q=;
-        b=Gb2RHde2HCKly4rPx15NmHm1f7OWhrDTPB3a0iaNuflguTgncOk7Kvaw1KLKEdTaJO
-         J3AGNOCXxeWy7w2MnHfbSydxQuJhSg4TWodM8k8FSXRmijzpYmSwwufNcfKGVqScyex+
-         2Ozg675RNYEVr4++41Mr1WyJwkpyvI6Gt2UuzdHqsTjlUaRrtfxqCgiLIjrIYqhOo1zk
-         7LT0LEsYSqoEn4P2vgDEl2xHywR5AZulDVopV0wnwTW9xV2e6ncAFzzUXosQGjpp1txA
-         zIylJcrs6sMShuvPgi8O+by4rUyYbYOXiTVrQnoRjeWfM4dz+kVNmgl+hHigM/8Z/uzx
-         LDHA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=aFaiNjeTvld1X0vmZ2G8WJDTc5Mp6lRCwddZ5BoVR2Q=;
-        b=2Qsm2MawuHUBzJdGxmqxIpFC3fns9jxIad/y+400wES1g0JUYeaF0JUZLS71jAQHso
-         7SerkAvCki5flmWMvT19+0xi/ez7xqTinzepLg0BXoGKlN2e/a29yDybi0tZp/wl1w4X
-         TbODmrgOhtG4UaE5lZQqnE218ONwFbZp0vrFUq43RwLoCGhTc87ch+fKDwSNeYK8Z7M1
-         1NSc6/j481YiCAt9TLVLPV1MpOOb/1kren3Mhn1XdO9nvGEi218V+VtPwW/HU1Fse1dh
-         tDsUMImWJUYFDctJxDuhAVxzAjN5BiDGF8SlCDhVIEOdF1PgUboP3oNEbZmSHMbpUURB
-         YFHw==
-X-Gm-Message-State: AOAM533yJokq3EZRWCCGVMPlBJA0u+xQ1XR25CaQMbXje8Px0ozUMWr+
-        ACTUTnPND5J4K2bI/BMDxHi/2Q==
-X-Google-Smtp-Source: ABdhPJz7OaV0k5DNpo+Cq2aVen8Ye/B/FsyQaMp+I9D3BUe3XJWtXSXSh7FNWC9QRXKN+u3xiB6WjA==
-X-Received: by 2002:ac8:3e8a:: with SMTP id y10mr17839236qtf.31.1633987029152;
-        Mon, 11 Oct 2021 14:17:09 -0700 (PDT)
-Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
-        by smtp.gmail.com with ESMTPSA id c7sm3252830qke.78.2021.10.11.14.17.08
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Mon, 11 Oct 2021 14:17:08 -0700 (PDT)
-Subject: Re: [PATCH 3/5] cpufreq: qcom-cpufreq-hw: Update offline CPUs per-cpu
- thermal pressure
-To:     Lukasz Luba <lukasz.luba@arm.com>, linux-kernel@vger.kernel.org,
-        linux-pm@vger.kernel.org
-Cc:     linux-arm-kernel@lists.infradead.org,
-        linux-arm-msm@vger.kernel.org, sudeep.holla@arm.com,
-        will@kernel.org, catalin.marinas@arm.com, linux@armlinux.org.uk,
-        gregkh@linuxfoundation.org, rafael@kernel.org,
-        viresh.kumar@linaro.org, amitk@kernel.org,
-        daniel.lezcano@linaro.org, amit.kachhap@gmail.com,
-        bjorn.andersson@linaro.org, agross@kernel.org
-References: <20211007080729.8262-1-lukasz.luba@arm.com>
- <20211007080729.8262-4-lukasz.luba@arm.com>
-From:   Thara Gopinath <thara.gopinath@linaro.org>
-Message-ID: <be6fb99f-90bc-9ba1-b5a7-034b30734158@linaro.org>
-Date:   Mon, 11 Oct 2021 17:17:08 -0400
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.11.0
-MIME-Version: 1.0
-In-Reply-To: <20211007080729.8262-4-lukasz.luba@arm.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+        Mon, 11 Oct 2021 19:43:44 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1633995703; h=Message-Id: Date: Subject: Cc: To: From:
+ Sender; bh=x49jqxX7el0L2THVuXp3QUU9RJugVljPgBNXB06LnWw=; b=noALvlgO35j0xMjrkQ0qD2H7RqA4NhSBxm4taOEkyal8MfzHjfXWx7mE/5dDj+LF1a4rIWj5
+ eOhDDej1YoiZUrTzOVTc0Bx05blFdToEO+iE9ywgRTxERK37RsutROCpXUmbfSfrTsHDAU3W
+ PHf7K+ntgb8HBaJeeWRLul4fMGI=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n02.prod.us-west-2.postgun.com with SMTP id
+ 6164cbb68ea00a941f98a94a (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Mon, 11 Oct 2021 23:41:42
+ GMT
+Sender: jesszhan=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id 9D74AC43460; Mon, 11 Oct 2021 23:41:42 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,SPF_FAIL,
+        URIBL_BLOCKED autolearn=no autolearn_force=no version=3.4.0
+Received: from jesszhan-linux.qualcomm.com (i-global254.qualcomm.com [199.106.103.254])
+        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
+        (No client certificate requested)
+        (Authenticated sender: jesszhan)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 801BFC4338F;
+        Mon, 11 Oct 2021 23:41:40 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 801BFC4338F
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
+Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
+From:   Jessica Zhang <jesszhan@codeaurora.org>
+To:     freedreno@lists.freedesktop.org
+Cc:     Jessica Zhang <jesszhan@codeaurora.org>,
+        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
+        nganji@codeaurora.org, aravindh@codeaurora.org,
+        khsieh@codeaurora.org, dmitry.baryshkov@linaro.org,
+        abhinavk@codeaurora.org, markyacoub@google.com
+Subject: [PATCH] drm/msm/dpu: Add CRC support for DPU
+Date:   Mon, 11 Oct 2021 16:41:23 -0700
+Message-Id: <20211011234123.1033-1-jesszhan@codeaurora.org>
+X-Mailer: git-send-email 2.17.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Add CRC support to DPU, which is currently not supported by
+this driver. Only supports CRC for CRTC for now, but will extend support
+to other blocks later on.
 
+Tested on Qualcomm RB3 (debian, sdm845)
 
-On 10/7/21 4:07 AM, Lukasz Luba wrote:
-> The thermal pressure signal gives information to the scheduler about
-> reduced CPU capacity due to thermal. It is based on a value stored in
-> a per-cpu 'thermal_pressure' variable. The online CPUs will get the
-> new value there, while the offline won't. Unfortunately, when the CPU
-> is back online, the value read from per-cpu variable might be wrong
-> (stale data).  This might affect the scheduler decisions, since it
-> sees the CPU capacity differently than what is actually available.
-> 
-> Fix it by making sure that all online+offline CPUs would get the
-> proper value in their per-cpu variable when there is throttling
-> or throttling is removed.
-> 
-> Fixes: 275157b367f479 ("cpufreq: qcom-cpufreq-hw: Add dcvs interrupt support")
-> Signed-off-by: Lukasz Luba <lukasz.luba@arm.com>
+Signed-off-by: Jessica Zhang <jesszhan@codeaurora.org>
+---
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 169 +++++++++++++++++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h    |  20 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c   |  46 +++++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h   |  13 +-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h |   9 +-
+ 5 files changed, 251 insertions(+), 6 deletions(-)
 
-Thanks for the fix.
-
-Reviewed-by: Thara Gopinath <thara.gopinath@linaro.org>
-
-> ---
->   drivers/cpufreq/qcom-cpufreq-hw.c | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/drivers/cpufreq/qcom-cpufreq-hw.c b/drivers/cpufreq/qcom-cpufreq-hw.c
-> index a2be0df7e174..0138b2ec406d 100644
-> --- a/drivers/cpufreq/qcom-cpufreq-hw.c
-> +++ b/drivers/cpufreq/qcom-cpufreq-hw.c
-> @@ -304,7 +304,8 @@ static void qcom_lmh_dcvs_notify(struct qcom_cpufreq_data *data)
->   	if (capacity > max_capacity)
->   		capacity = max_capacity;
->   
-> -	arch_set_thermal_pressure(policy->cpus, max_capacity - capacity);
-> +	arch_set_thermal_pressure(policy->related_cpus,
-> +				  max_capacity - capacity);
->   
->   	/*
->   	 * In the unlikely case policy is unregistered do not enable
-> 
-
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+index 768012243b44..6ebf989c4e67 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
+@@ -1,6 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+ /*
+- * Copyright (c) 2014-2018 The Linux Foundation. All rights reserved.
++ * Copyright (c) 2014-2021 The Linux Foundation. All rights reserved.
+  * Copyright (C) 2013 Red Hat
+  * Author: Rob Clark <robdclark@gmail.com>
+  */
+@@ -70,6 +70,121 @@ static struct drm_encoder *get_encoder_from_crtc(struct drm_crtc *crtc)
+ 	return NULL;
+ }
+ 
++static enum dpu_crtc_crc_source dpu_crtc_parse_crc_source(const char *src_name)
++{
++	if (!src_name || !strcmp(src_name, "none"))
++		return DPU_CRTC_CRC_SOURCE_NONE;
++	if (!strcmp(src_name, "auto") || !strcmp(src_name, "lm"))
++		return DPU_CRTC_CRC_SOURCE_LAYER_MIXER;
++
++	return DPU_CRTC_CRC_SOURCE_INVALID;
++}
++
++static bool dpu_crtc_is_valid_crc_source(enum dpu_crtc_crc_source source)
++{
++	return (source > DPU_CRTC_CRC_SOURCE_NONE &&
++		source < DPU_CRTC_CRC_SOURCE_MAX);
++}
++
++int dpu_crtc_verify_crc_source(struct drm_crtc *crtc, const char *src_name, size_t *values_cnt)
++{
++	enum dpu_crtc_crc_source source = dpu_crtc_parse_crc_source(src_name);
++	struct dpu_crtc_state *crtc_state = to_dpu_crtc_state(crtc->state);
++
++	if (source < 0) {
++		DRM_DEBUG_DRIVER("Invalid source %s for CRTC%d\n", src_name, crtc->index);
++		return -EINVAL;
++	}
++
++	if (source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER)
++		*values_cnt = crtc_state->num_mixers;
++
++	return 0;
++}
++
++int dpu_crtc_set_crc_source(struct drm_crtc *crtc, const char *src_name)
++{
++	enum dpu_crtc_crc_source source = dpu_crtc_parse_crc_source(src_name);
++	enum dpu_crtc_crc_source current_source;
++	struct drm_crtc_commit *commit;
++	struct dpu_crtc_state *crtc_state;
++	struct drm_device *drm_dev = crtc->dev;
++	struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
++	struct dpu_crtc_mixer *m;
++
++	bool was_enabled;
++	bool enable = false;
++	int i, ret = 0;
++
++	if (source < 0) {
++		DRM_DEBUG_DRIVER("Invalid CRC source %s for CRTC%d\n", src_name, crtc->index);
++		return -EINVAL;
++	}
++
++	ret = drm_modeset_lock(&crtc->mutex, NULL);
++
++	if (ret)
++		return ret;
++
++	/* Wait for any pending commits to finish */
++	spin_lock(&crtc->commit_lock);
++	commit = list_first_entry_or_null(&crtc->commit_list, struct drm_crtc_commit, commit_entry);
++
++	if (commit)
++		drm_crtc_commit_get(commit);
++	spin_unlock(&crtc->commit_lock);
++
++	if (commit) {
++		ret = wait_for_completion_interruptible_timeout(&commit->hw_done, 10 * HZ);
++
++		if (ret)
++			goto cleanup;
++	}
++
++	enable = dpu_crtc_is_valid_crc_source(source);
++	crtc_state = to_dpu_crtc_state(crtc->state);
++
++	spin_lock_irq(&drm_dev->event_lock);
++	current_source = dpu_crtc->crc_source;
++	spin_unlock_irq(&drm_dev->event_lock);
++
++	was_enabled = !(current_source == DPU_CRTC_CRC_SOURCE_NONE);
++
++	if (!was_enabled && enable) {
++		ret = drm_crtc_vblank_get(crtc);
++
++		if (ret)
++			goto cleanup;
++
++	} else if (was_enabled && !enable) {
++		drm_crtc_vblank_put(crtc);
++	}
++
++	spin_lock_irq(&drm_dev->event_lock);
++	dpu_crtc->crc_source = source;
++	spin_unlock_irq(&drm_dev->event_lock);
++
++	crtc_state->skip_count = 0;
++
++	for (i = 0; i < crtc_state->num_mixers; ++i) {
++		m = &crtc_state->mixers[i];
++
++		if (!m->hw_lm || !m->hw_lm->ops.collect_misr || !m->hw_lm->ops.setup_misr)
++			continue;
++
++		/* Calculate MISR over 1 frame */
++		m->hw_lm->ops.setup_misr(m->hw_lm, true, 1);
++	}
++
++
++cleanup:
++	if (commit)
++		drm_crtc_commit_put(commit);
++	drm_modeset_unlock(&crtc->mutex);
++
++	return ret;
++}
++
+ static u32 dpu_crtc_get_vblank_counter(struct drm_crtc *crtc)
+ {
+ 	struct drm_encoder *encoder;
+@@ -83,6 +198,52 @@ static u32 dpu_crtc_get_vblank_counter(struct drm_crtc *crtc)
+ 	return dpu_encoder_get_frame_count(encoder);
+ }
+ 
++
++static void dpu_crtc_get_crc(struct drm_crtc *crtc)
++{
++	struct dpu_crtc *dpu_crtc;
++	struct dpu_crtc_state *crtc_state;
++	struct dpu_crtc_mixer *m;
++	u32 *crcs;
++
++	int i = 0;
++	int rc = 0;
++
++	if (!crtc) {
++		DPU_ERROR("Invalid crtc\n");
++		return;
++	}
++
++	crtc_state = to_dpu_crtc_state(crtc->state);
++	dpu_crtc = to_dpu_crtc(crtc);
++	crcs = kcalloc(crtc_state->num_mixers, sizeof(*crcs), GFP_KERNEL);
++
++	/* Skip first 2 frames in case of "uncooked" CRCs */
++	if (crtc_state->skip_count < 2) {
++		crtc_state->skip_count++;
++		return;
++	}
++
++	for (i = 0; i < crtc_state->num_mixers; ++i) {
++
++		m = &crtc_state->mixers[i];
++
++		if (!m->hw_lm || !m->hw_lm->ops.collect_misr
++			|| !m->hw_lm->ops.setup_misr)
++			continue;
++
++		rc = m->hw_lm->ops.collect_misr(m->hw_lm, &crcs[i]);
++
++		if (rc) {
++			DRM_DEBUG_DRIVER("MISR read failed\n");
++			return;
++		}
++	}
++
++	drm_crtc_add_crc_entry(crtc, true,
++			drm_crtc_accurate_vblank_count(crtc), crcs);
++}
++
+ static bool dpu_crtc_get_scanout_position(struct drm_crtc *crtc,
+ 					   bool in_vblank_irq,
+ 					   int *vpos, int *hpos,
+@@ -389,6 +550,10 @@ void dpu_crtc_vblank_callback(struct drm_crtc *crtc)
+ 		dpu_crtc->vblank_cb_time = ktime_get();
+ 	else
+ 		dpu_crtc->vblank_cb_count++;
++
++	if (dpu_crtc_is_valid_crc_source(dpu_crtc->crc_source))
++		dpu_crtc_get_crc(crtc);
++
+ 	drm_crtc_handle_vblank(crtc);
+ 	trace_dpu_crtc_vblank_cb(DRMID(crtc));
+ }
+@@ -1332,6 +1497,8 @@ static const struct drm_crtc_funcs dpu_crtc_funcs = {
+ 	.atomic_destroy_state = dpu_crtc_destroy_state,
+ 	.late_register = dpu_crtc_late_register,
+ 	.early_unregister = dpu_crtc_early_unregister,
++	.verify_crc_source = dpu_crtc_verify_crc_source,
++	.set_crc_source = dpu_crtc_set_crc_source,
+ 	.enable_vblank  = msm_crtc_enable_vblank,
+ 	.disable_vblank = msm_crtc_disable_vblank,
+ 	.get_vblank_timestamp = drm_crtc_vblank_helper_get_vblank_timestamp,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+index cec3474340e8..e9940f1d5d15 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
+@@ -1,6 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0-only */
+ /*
+- * Copyright (c) 2015-2018 The Linux Foundation. All rights reserved.
++ * Copyright (c) 2015-2021 The Linux Foundation. All rights reserved.
+  * Copyright (C) 2013 Red Hat
+  * Author: Rob Clark <robdclark@gmail.com>
+  */
+@@ -69,6 +69,19 @@ struct dpu_crtc_smmu_state_data {
+ 	uint32_t transition_error;
+ };
+ 
++/**
++ * enum dpu_crtc_crc_source: CRC source
++ * @DPU_CRTC_CRC_SOURCE_NONE: no source set
++ * @DPU_CRTC_CRC_SOURCE_LAYER_MIXER: CRC in layer mixer
++ * @DPU_CRTC_CRC_SOURCE_INVALID: Invalid source
++ */
++enum dpu_crtc_crc_source {
++	DPU_CRTC_CRC_SOURCE_NONE = 0,
++	DPU_CRTC_CRC_SOURCE_LAYER_MIXER,
++	DPU_CRTC_CRC_SOURCE_MAX,
++	DPU_CRTC_CRC_SOURCE_INVALID = -1
++};
++
+ /**
+  * struct dpu_crtc_mixer: stores the map for each virtual pipeline in the CRTC
+  * @hw_lm:	LM HW Driver context
+@@ -139,6 +152,7 @@ struct dpu_crtc_frame_event {
+  * @event_lock    : Spinlock around event handling code
+  * @phandle: Pointer to power handler
+  * @cur_perf      : current performance committed to clock/bandwidth driver
++ * @crc_source    : CRC source
+  */
+ struct dpu_crtc {
+ 	struct drm_crtc base;
+@@ -171,8 +185,8 @@ struct dpu_crtc {
+ 	spinlock_t event_lock;
+ 
+ 	struct dpu_core_perf_params cur_perf;
+-
+ 	struct dpu_crtc_smmu_state_data smmu_state;
++	enum dpu_crtc_crc_source crc_source;
+ };
+ 
+ #define to_dpu_crtc(x) container_of(x, struct dpu_crtc, base)
+@@ -210,6 +224,8 @@ struct dpu_crtc_state {
+ 
+ 	u32 num_ctls;
+ 	struct dpu_hw_ctl *hw_ctls[CRTC_DUAL_MIXERS];
++
++	int skip_count;
+ };
+ 
+ #define to_dpu_crtc_state(x) \
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+index cb6bb7a22c15..679b3728e891 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
+@@ -1,5 +1,6 @@
+ // SPDX-License-Identifier: GPL-2.0-only
+-/* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
++/*
++ * Copyright (c) 2015-2021, The Linux Foundation. All rights reserved.
+  */
+ 
+ #include "dpu_kms.h"
+@@ -24,6 +25,9 @@
+ #define LM_BLEND0_FG_ALPHA               0x04
+ #define LM_BLEND0_BG_ALPHA               0x08
+ 
++#define LM_MISR_CTRL                     0x310
++#define LM_MISR_SIGNATURE                0x314
++
+ static const struct dpu_lm_cfg *_lm_offset(enum dpu_lm mixer,
+ 		const struct dpu_mdss_cfg *m,
+ 		void __iomem *addr,
+@@ -96,6 +100,44 @@ static void dpu_hw_lm_setup_border_color(struct dpu_hw_mixer *ctx,
+ 	}
+ }
+ 
++static void dpu_hw_lm_setup_misr(struct dpu_hw_mixer *ctx, bool enable, u32 frame_count)
++{
++	struct dpu_hw_blk_reg_map *c = &ctx->hw;
++	u32 config = 0;
++
++	DPU_REG_WRITE(c, LM_MISR_CTRL, MISR_CTRL_STATUS_CLEAR);
++
++	/* Clear MISR data */
++	wmb();
++
++	if (enable)
++		config = (frame_count & MISR_FRAME_COUNT_MASK) |
++			MISR_CTRL_ENABLE | INTF_MISR_CTRL_FREE_RUN_MASK;
++
++	DPU_REG_WRITE(c, LM_MISR_CTRL, config);
++}
++
++static int dpu_hw_lm_collect_misr(struct dpu_hw_mixer *ctx, u32 *misr_value)
++{
++	struct dpu_hw_blk_reg_map *c = &ctx->hw;
++	u32 ctrl = 0;
++
++	if (!misr_value)
++		return -EINVAL;
++
++	ctrl = DPU_REG_READ(c, LM_MISR_CTRL);
++
++	if (!(ctrl & MISR_CTRL_ENABLE))
++		return -EINVAL;
++
++	if (!(ctrl & MISR_CTRL_STATUS))
++		return -EINVAL;
++
++	*misr_value = DPU_REG_READ(c, LM_MISR_SIGNATURE);
++
++	return 0;
++}
++
+ static void dpu_hw_lm_setup_blend_config_sdm845(struct dpu_hw_mixer *ctx,
+ 	u32 stage, u32 fg_alpha, u32 bg_alpha, u32 blend_op)
+ {
+@@ -158,6 +200,8 @@ static void _setup_mixer_ops(const struct dpu_mdss_cfg *m,
+ 		ops->setup_blend_config = dpu_hw_lm_setup_blend_config;
+ 	ops->setup_alpha_out = dpu_hw_lm_setup_color3;
+ 	ops->setup_border_color = dpu_hw_lm_setup_border_color;
++	ops->setup_misr = dpu_hw_lm_setup_misr;
++	ops->collect_misr = dpu_hw_lm_collect_misr;
+ }
+ 
+ struct dpu_hw_mixer *dpu_hw_lm_init(enum dpu_lm idx,
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h
+index 4a6b2de19ef6..d8052fb2d5da 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h
+@@ -1,5 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0-only */
+-/* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
++/*
++ * Copyright (c) 2015-2021, The Linux Foundation. All rights reserved.
+  */
+ 
+ #ifndef _DPU_HW_LM_H
+@@ -53,6 +54,16 @@ struct dpu_hw_lm_ops {
+ 	void (*setup_border_color)(struct dpu_hw_mixer *ctx,
+ 		struct dpu_mdss_color *color,
+ 		u8 border_en);
++
++	/**
++	 * setup_misr: Enable/disable MISR
++	 */
++	void (*setup_misr)(struct dpu_hw_mixer *ctx, bool enable, u32 frame_count);
++
++	/**
++	 * collect_misr: Read MISR signature
++	 */
++	int (*collect_misr)(struct dpu_hw_mixer *ctx, u32 *misr_value);
+ };
+ 
+ struct dpu_hw_mixer {
+diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+index ff3cffde84cd..506d4af7d018 100644
+--- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
++++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
+@@ -1,5 +1,6 @@
+ /* SPDX-License-Identifier: GPL-2.0-only */
+-/* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
++/*
++ * Copyright (c) 2015-2021, The Linux Foundation. All rights reserved.
+  */
+ 
+ #ifndef _DPU_HW_UTIL_H
+@@ -309,6 +310,12 @@ int dpu_reg_read(struct dpu_hw_blk_reg_map *c, u32 reg_off);
+ #define DPU_REG_WRITE(c, off, val) dpu_reg_write(c, off, val, #off)
+ #define DPU_REG_READ(c, off) dpu_reg_read(c, off)
+ 
++#define MISR_FRAME_COUNT_MASK           0xFF
++#define MISR_CTRL_ENABLE                BIT(8)
++#define MISR_CTRL_STATUS                BIT(9)
++#define MISR_CTRL_STATUS_CLEAR          BIT(10)
++#define INTF_MISR_CTRL_FREE_RUN_MASK    BIT(31)
++
+ void *dpu_hw_util_get_dir(void);
+ 
+ void dpu_hw_setup_scaler3(struct dpu_hw_blk_reg_map *c,
 -- 
-Warm Regards
-Thara (She/Her/Hers)
+The Qualcomm Innovation Center, Inc. is a member of the Code Aurora Forum,
+a Linux Foundation Collaborative Project
+
