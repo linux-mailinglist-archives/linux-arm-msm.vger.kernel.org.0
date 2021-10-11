@@ -2,203 +2,145 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 80390429598
-	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Oct 2021 19:28:51 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id C27A84295A5
+	for <lists+linux-arm-msm@lfdr.de>; Mon, 11 Oct 2021 19:32:03 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232954AbhJKRau (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Oct 2021 13:30:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58310 "EHLO
+        id S230358AbhJKReC (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Oct 2021 13:34:02 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:59042 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232866AbhJKRat (ORCPT
+        with ESMTP id S229816AbhJKReC (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Oct 2021 13:30:49 -0400
-Received: from mail-oo1-xc2d.google.com (mail-oo1-xc2d.google.com [IPv6:2607:f8b0:4864:20::c2d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 97994C06161C
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Oct 2021 10:28:49 -0700 (PDT)
-Received: by mail-oo1-xc2d.google.com with SMTP id j11-20020a4a92cb000000b002902ae8cb10so5594038ooh.7
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Oct 2021 10:28:49 -0700 (PDT)
+        Mon, 11 Oct 2021 13:34:02 -0400
+Received: from mail-qv1-xf33.google.com (mail-qv1-xf33.google.com [IPv6:2607:f8b0:4864:20::f33])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B48CAC061570
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Oct 2021 10:32:01 -0700 (PDT)
+Received: by mail-qv1-xf33.google.com with SMTP id j12so11362788qvk.12
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Oct 2021 10:32:01 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=4MH/pEzVgo/ojExwE7YAhFK3vsORj8Zyi8WpQdJ1rDI=;
-        b=chTqXWqb1JnYIW5QmBJ/4Lj1qC9axFR7iY86cpbQ8wWU+FxIT7FcHYI9+Kha3r7NKH
-         UsQM3Rx99zM+xxWEZjKvQyvBLE+3oWv9xSkcSCbJjmTs7noyF4yIzhqAoWnP4md48bgA
-         dq7RYa2cyurSn2Ipo7LS654T2dlUDm3ALmhZsKA58z6gfvkkeJVvOfC4aDhPItap3c5a
-         yY0YA7p26I+BA43xJ7tCA48sVATeAuhZ0ZJ/iIS4vabzBfqvQyIBRYvzLzVX51B5GmtP
-         34x/I88wRRarwZHOCDXdgCj2jwh22v+nUEvIxfE3rUcIhDmdffWt93pVIF5ykfybH0J3
-         9E1g==
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=k3jF8V+6+8C8o6OjJMiPBIzA7aLqP1KpqHxkTYn+8VE=;
+        b=BiVzpbHdOLf08YE1YClnZmLy0ruQHvw7Y1tn3rRaaxJE1PECPVEnKbrpvtlKirvu4j
+         yEJdbhLKsFa9VHQLdU8zk5ek/fXZaWoRA0DJ8vn+yFD7sACxnjyTc3kMXMHa9FQK4kA/
+         9x8wW1HNzjteVQ0wUwz79W4eae8+kvu+iR14Gum/zlil4PZSeQBqnC1b2dX78aKU2iWe
+         Z7ZKNgESTk74OpiH82kbZDzpmZVeYOvWJ/winABuUUvLpnzJG1dRMTIUnetweTce0ksB
+         favAnpN/DRCYCwDv1NveuSBBjKpoWCybPk7hXNoZGEJDQqDC7x+/qGYZgJaxUWk36Gbg
+         7DRw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=4MH/pEzVgo/ojExwE7YAhFK3vsORj8Zyi8WpQdJ1rDI=;
-        b=14Jr8xlsEvANzs/e9RVfgpMofsQa7SgU5MyMaP9sqGBoOdAop+cZhf8dhmkCfrtIaX
-         EbbIOWSLgzqPsVduoQNCjLM/J/XKu81FTNp90Dfg7oRRRQ2ZYERA4Yoqi6HBYRTO5P6i
-         GVrazpRAtyGKD3ldlrGFBbq3zBD8JkOTV7PTMk7h1Sulol2mJwD08fH9PTWVWCMNm0KZ
-         uueOiyyUTCH3lnzpDFg/tOMrbhaGMn83cAtANY30LP8gUHgWlwJH9sMBL7Y9qEtRL07A
-         eWk0McbuXCpuTGJCjp+yUILxvrjnQXlwf0KETU/srVM5QtcMW/1V4QgMdsT62BivWprP
-         +DAg==
-X-Gm-Message-State: AOAM533VNg6l4kkbJVU8nbgbI36VH5+JcaD4QzLPLngcHBevk6zuWx2F
-        XoXh+YPXlh/TaU3GYVqKtNOehQ==
-X-Google-Smtp-Source: ABdhPJzd3YrNICV57tvx33jWscFS6h1B7SofDme+36l6NCXoCT53hk4WkFaKqNiPYHv/+98SM0aE2w==
-X-Received: by 2002:a4a:5343:: with SMTP id n64mr20019128oob.30.1633973328783;
-        Mon, 11 Oct 2021 10:28:48 -0700 (PDT)
-Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
-        by smtp.gmail.com with ESMTPSA id i13sm1377807oig.35.2021.10.11.10.28.47
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Mon, 11 Oct 2021 10:28:48 -0700 (PDT)
-Date:   Mon, 11 Oct 2021 10:30:22 -0700
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     khsieh@codeaurora.org
-Cc:     Stephen Boyd <swboyd@chromium.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        David Airlie <airlied@linux.ie>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org,
-        Sankeerth Billakanti <sbillaka@codeaurora.org>
-Subject: Re: [PATCH] drm/msm/dp: Shorten SETUP timeout
-Message-ID: <YWR0rrC4yoKtXXTL@ripper>
-References: <YV0FlTyMEzlyNsN9@ripper>
- <3dbe0fe48da88af9dee396a85b940e76@codeaurora.org>
- <YV3dddt/GOidTmlN@ripper>
- <9dc50145fb3e9b189fd38857b20f326a@codeaurora.org>
- <YV9TQEKPh4SXYFF/@ripper>
- <0c72f3fd8c49cdada09bb6ee366b53a6@codeaurora.org>
- <CAE-0n51bvKXmHj0X_cvR2fdk4-mh4SRsrEE33H0e1Q+p=7iPxA@mail.gmail.com>
- <ad244133bdba4570b0b45871fd136350@codeaurora.org>
- <YWB1cXoaGRXfGau1@ripper>
- <44ffcac32270a8ea72dcfc044e2b2585@codeaurora.org>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=k3jF8V+6+8C8o6OjJMiPBIzA7aLqP1KpqHxkTYn+8VE=;
+        b=WBYg46H0Ql5GGOK74G8nWQuzs944If6VWrBVFo1oeeg10DKZI9rB4dmgKXaxAXrYDY
+         C1K5SRL98XxrSwHs+g8Zp43C4so95Zyfwq1Yl0fZoreOgz5s2n7scbeX01LBmSFIeL4D
+         r3put/2BmrlHKXaT6hV0vuWCmno8Ad6bb3UuefdH87z6hxeKhxFTpL4SjU7qfeXENaLk
+         W6ESItlpG8sP2YRSNDgdahcT4vFCSrzizowScVFfUdqCm23/ovHssR6J7ClJRBgIzY37
+         65/TUbjp8n2AyvpBKKfi3n0Adqc97tfIiONI0I2eMJcYsdlNNwJsshz038ghqN6RHteX
+         m35A==
+X-Gm-Message-State: AOAM530dFPOf8E5phnHdnha29Ob5cOVCkOZl9GyF6lIpF4zTFPsXobn0
+        XMvjmTOaV5MD8Gs38DlHvrIOeA==
+X-Google-Smtp-Source: ABdhPJw6+VH+PzW3P2iTwmrzr4y7d19NK/k1ihNB7lMfB8yLm1jucpTj7H33M0KHD0HF4CgCXQcIjA==
+X-Received: by 2002:a05:6214:a0d:: with SMTP id dw13mr16326199qvb.51.1633973520852;
+        Mon, 11 Oct 2021 10:32:00 -0700 (PDT)
+Received: from [192.168.1.93] (pool-71-163-245-5.washdc.fios.verizon.net. [71.163.245.5])
+        by smtp.gmail.com with ESMTPSA id c16sm4456606qkk.113.2021.10.11.10.32.00
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Mon, 11 Oct 2021 10:32:00 -0700 (PDT)
+Subject: Re: [PATCH] dts: qcom: msm8996: Add device tree entries to support
+ crypto engine
+To:     Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Andy Gross <agross@kernel.org>
+Cc:     Rob Herring <robh+dt@kernel.org>, linux-arm-msm@vger.kernel.org,
+        devicetree@vger.kernel.org
+References: <20211011094822.1580122-1-vladimir.zapolskiy@linaro.org>
+From:   Thara Gopinath <thara.gopinath@linaro.org>
+Message-ID: <5ee9bb9a-ec62-bbab-4fd5-374abb5551ed@linaro.org>
+Date:   Mon, 11 Oct 2021 13:31:59 -0400
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.11.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <44ffcac32270a8ea72dcfc044e2b2585@codeaurora.org>
+In-Reply-To: <20211011094822.1580122-1-vladimir.zapolskiy@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Mon 11 Oct 08:24 PDT 2021, khsieh@codeaurora.org wrote:
 
-> On 2021-10-08 09:44, Bjorn Andersson wrote:
-> > On Fri 08 Oct 09:07 PDT 2021, khsieh@codeaurora.org wrote:
-> > 
-> > > On 2021-10-07 15:34, Stephen Boyd wrote:
-> > > > Quoting khsieh@codeaurora.org (2021-10-07 13:28:12)
-> > > > > On 2021-10-07 13:06, Bjorn Andersson wrote:
-> > > > > > On Thu 07 Oct 12:51 PDT 2021, khsieh@codeaurora.org wrote:
-> > > > > >
-> > > > > >> On 2021-10-06 10:31, Bjorn Andersson wrote:
-> > > > > >> > On Wed 06 Oct 08:37 PDT 2021, khsieh@codeaurora.org wrote:
-> > > > > >> >
-> > > > > >> > > On 2021-10-05 19:10, Bjorn Andersson wrote:
-> > > > > >> > > > On Tue 05 Oct 16:04 PDT 2021, khsieh@codeaurora.org wrote:
-> > > > > >> > > >
-> > > > > >> > > > > On 2021-10-05 15:36, Stephen Boyd wrote:
-> > > > > >> > > > > > Quoting Bjorn Andersson (2021-10-05 14:40:38)
-> > > > > >> > > > > > > On Tue 05 Oct 11:45 PDT 2021, Stephen Boyd wrote:
-> > > > > >> > > > > > >
-> > > > > >> > > > > > > > Quoting Bjorn Andersson (2021-10-04 19:37:50)
-> > > > > >> > > > > > > > > Found in the middle of a patch from Sankeerth was the reduction of the
-> > > > > >> > > > > > > > > INIT_SETUP timeout from 10s to 100ms. Upon INIT_SETUP timeout the host
-> > > > > >> > > > > > > > > is initalized and HPD interrupt start to be serviced, so in the case of
-> > > > > >> > > > > > > > > eDP this reduction improves the user experience dramatically - i.e.
-> > > > > >> > > > > > > > > removes 9.9s of bland screen time at boot.
-> > > > > >> > > > > > > > >
-> > > > > >> > > > > > > > > Suggested-by: Sankeerth Billakanti <sbillaka@codeaurora.org>
-> > > > > >> > > > > > > > > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
-> > > > > >> > > > > > > > > ---
-> > > > > >> > > > > > > >
-> > > > > >> > > > > > > > Any Fixes tag? BTW, the delay design is pretty convoluted. I had to go
-> > > > > >> > > > > > > > re-read the code a couple times to understand that it's waiting 100ms
-> > > > > >> > > > > > > > times the 'delay' number. Whaaaaat?
-> > > > > >> > > > > > > >
-> > > > > >> > > > > > >
-> > > > > >> > > > > > > I assume you're happy with the current 10s delay on the current
-> > > > > >> > > > > > > devices, so I don't think we should push for this to be backported.
-> > > > > >> > > > > > > I have no need for it to be backported on my side at least.
-> > > > > >> > > > > > >
-> > > > > >> > > > > >
-> > > > > >> > > > > > Sure. Fixes tag != backported to stable trees but it is close.
-> > > > > >> > > > > >
-> > > > > >> > > > > > > > Reviewed-by: Stephen Boyd <swboyd@chromium.org>
-> > > > > >> > > > > > >
-> > > > > >> > > > >   dp_add_event(dp, EV_HPD_INIT_SETUP, 0, 1); <== to 100ms
-> > > > > >> > > > >
-> > > > > >> > > > > This patch will prevent usb3 from working due to dp driver
-> > > > > >> > > > > initialize phy
-> > > > > >> > > > > earlier than usb3 which cause timeout error at power up usb3 phy
-> > > > > >> > > > > when both
-> > > > > >> > > > > edp and dp are enabled.
-> > > > > >> > > >
-> > > > > >> > > > Can you please help me understand what you mean here, I use this on my
-> > > > > >> > > > sc8180x with both eDP and USB-C/DP right now. What is it that doesn't
-> > > > > >> > > > work? Or am I just lucky in some race condition?
-> > > > > >> > > >
-> > > > > >> > > > Thanks,
-> > > > > >> > > > Bjorn
-> > > > > >> > > >
-> > > > > >> > > The problem is seen at sc7280.
-> > > > > >> > > Apple dongle have both  hdmi and usb port.
-> > > > > >> > > plug Apple dongle into type-c, then plug DP into apple's hdmi port
-> > > > > >> > > and usb
-> > > > > >> > > mouse into apple's usb port.
-> > > > > >> > > If edp enabled at this time, then usb mouse will not work due to
-> > > > > >> > > timeout at
-> > > > > >> > > phy power up.
-> > > > > >> > >
-> > > > > >> >
-> > > > > >> > Okay, so you're saying that if the DP driver invokes phy_power_on()
-> > > > > >> > before the USB driver does, USB initialization fails (or at least USB
-> > > > > >> > doesn't work)?
-> > > > > >>
-> > > > > >> if dp driver call qcom_qmp_phy_init() before usb3 call
-> > > > > >> qcom_qmp_phy_init(),
-> > > > > >> usb3 driver will timeout at readl_poll_timeout(status, val, (val &
-> > > > > >> mask) ==
-> > > > > >> ready, 10, PHY_INIT_COMPLETE_TIMEOUT) of qcom_qmp_phy_power_on().
-> > > > > >
-> > > > > > Thanks, I will try to reproduce this on my side. So the 10 seconds here
-> > > > > > is strictly to give good enough time for the dwc3 driver to probe...
-> > > > > >
-> > > > > > Any idea why you're saying that this is specific to sc7280, what
-> > > > > > changed
-> > > > > > from sc7180?
-> > > > >
-> > > > > I did not have sc7180 with edp before so that i am not sure it will
-> > > > > happen on sc7180 or not.
-> > > > > The usb3 does not work when both edp and dp enabled I just seen at
-> > > > > sc7280.
-> > > > > Current at sc7280 EC is not boot up correctly when system power up.
-> > > > > I have to manual reboot EC from linux kernel shell before DP/usb3 can
-> > > > > work.
-> > > > > I am not sure this contribute to this problem or not.
-> > > > >
-> > > >
-> > > > Can you make the usb driver into a module and only load that module
-> > > > later in boot after the DP driver calls qcom_qmp_phy_init()? That would
-> > > > be an easy way to move usb probe after DP probe and expose this problem.
-> > > 
-> > > we need usb calls qcom_qmp_phy_init() before dp.
-> > 
-> > Why?
-> I do not know the details.
-> But I did see below scenario,
+
+On 10/11/21 5:48 AM, Vladimir Zapolskiy wrote:
+> The change adds description of Qualcomm crypto engine controller and
+> BAM associated with it. The change is inspired by commit 3e482859f1ef
+> ("dts: qcom: sdm845: Add dt entries to support crypto engine.")
 > 
-> if dp driver call qcom_qmp_phy_init() before usb3 call
-> qcom_qmp_phy_init(),
-> usb3 driver will timeout at readl_poll_timeout(status, val, (val &
-> mask) ==
-> ready, 10, PHY_INIT_COMPLETE_TIMEOUT) of qcom_qmp_phy_power_on().
+> While performance of cryptographic algorithms executed on QCE is lower
+> than e.g. ones tinkered for ARM NEON, the offloaded execution would
+> make sense:
+> 
+>      # cryptsetup benchmark | grep aes
+>      aes-cbc        128b        71.0 MiB/s        71.9 MiB/s
+>      aes-cbc        256b        62.4 MiB/s        62.4 MiB/s
+>      aes-xts        256b        70.7 MiB/s        70.8 MiB/s
+>      aes-xts        512b        62.0 MiB/s        63.3 MiB/s
+> 
+> Signed-off-by: Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+> Cc: Thara Gopinath <thara.gopinath@linaro.org>
+> ---
+>   arch/arm64/boot/dts/qcom/msm8996.dtsi | 22 ++++++++++++++++++++++
+>   1 file changed, 22 insertions(+)
+> 
+> diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> index 52df22ab3f6a..a03cbeb58246 100644
+> --- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> +++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+> @@ -705,6 +705,28 @@ tsens1: thermal-sensor@4ad000 {
+>   			#thermal-sensor-cells = <1>;
+>   		};
+>   
+> +		cryptobam: dma@644000 {
+> +			compatible = "qcom,bam-v1.7.0";
+> +			reg = <0x00644000 0x24000>;
+> +			interrupts = <GIC_SPI 206 IRQ_TYPE_LEVEL_HIGH>;
+> +			clocks = <&gcc GCC_CE1_CLK>;
+> +			clock-names = "bam_clk";
+> +			#dma-cells = <1>;
+> +			qcom,ee = <0>;
+> +			qcom,controlled-remotely = <1>;
+> +		};
+> +
+> +		crypto: crypto@67a000 {
+> +			compatible = "qcom,crypto-v5.4";
+> +			reg = <0x0067a000 0x6000>;
+> +			clocks = <&gcc GCC_CE1_AHB_CLK>,
+> +				 <&gcc GCC_CE1_AXI_CLK>,
+> +				 <&gcc GCC_CE1_CLK>;
+> +			clock-names = "iface", "bus", "core";
+> +			dmas = <&cryptobam 6>, <&cryptobam 7>;
+> +			dma-names = "rx", "tx";
+> +		};
+> +
 
-Sounds like a bug in the QMP driver, something that could easily be
-reproduced by waiting for DP to be up before we bring up USB - either by
-chance, or following Stephen's suggestion on purpose.
+Hi Vlad,
 
-Someone will have to look into this, so that we don't need a 10 second
-workaround in the (e)DP driver.
+Hi Vladimir,
 
-Regards,
-Bjorn
+I am surprised that you don't need to specify iommu to get this working.
+Everything else looks okay to me, though I don't have the h/w to test.
+So,
+
+Acked-by: Thara Gopinath <thara.gopinath@linaro.org>
+
+
+>   		tcsr_mutex_regs: syscon@740000 {
+>   			compatible = "syscon";
+>   			reg = <0x00740000 0x40000>;
+> 
+
+-- 
+Warm Regards
+Thara (She/Her/Hers)
