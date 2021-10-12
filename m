@@ -2,128 +2,111 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E8E6D42AB07
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Oct 2021 19:43:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 8101242AB0D
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Oct 2021 19:44:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230394AbhJLRpS (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Oct 2021 13:45:18 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48230 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232949AbhJLRpP (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Oct 2021 13:45:15 -0400
-Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D74B3C061746
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Oct 2021 10:43:12 -0700 (PDT)
-Received: by mail-oi1-x22f.google.com with SMTP id u69so335091oie.3
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Oct 2021 10:43:12 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Oieb4OrqRN1dvVsQsrZ8bxCmGZsPPNS5A9M+zq6bmd4=;
-        b=K5eo+RZXFaThvBbu7DX1pVieUg0Ax/2kCH4lBO8oCVsnT6wlWfzWhQ/VUqAdiT63LX
-         8YgG3SnMuRQbyqmNpGn3CrsCXCEdzeRzgDx7lQyg0t1S7RQKnXvIRD6cy/NyLNNwlnwp
-         Jney/AUPnZeOMGvFKmz717WFO+/qdoHBnaO8cSptQt/raO7M81Z0BYqQzhXp9Hp6nWoX
-         v1y3ZHSV1PUF+lCPH4gd3RyHiCRW9rRzLulPlhLPZ/LvaijClq7iho/36MAneaPU9fSR
-         3Ho+ImD4dXeNx792rH2HKgQzW34q+YM4idwmZGGG1RUgALwSsdqBwQdu0WK8NazHMLcZ
-         0B+g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Oieb4OrqRN1dvVsQsrZ8bxCmGZsPPNS5A9M+zq6bmd4=;
-        b=ndoxpK9s0EIXyBCKyc5W0vIqg4tbqOlT1zgEo9RlezJY8kTDyNHfngSgafKajWE43Q
-         MfTonN7NMR3DXjcxLaPjb3ZVr1alZD5Y4DUhfArcjEsGDk+TGtOdCn6ogY6Slw9NNJRr
-         cTKyTqs4mCYS8IoaeyytZ8Cz638p2h10UPPCAxnYyjIZdVBvV8FxLV9Q7i91wryKtj27
-         xSwVjCbzxgl+yYjCsxDVZqY2FS2BhzmsZEilF4DnQS6hZzrzP99htcL28YIKuhu1vTqi
-         P4FwTQAj79O+fQZug1Q3gDc7tC5a+aked5pBLnBViHCQaTawxtoAjJRfm3s10unTgH2R
-         c6HA==
-X-Gm-Message-State: AOAM5319yiGyxwkpnFwkB/GrqfbGf8RqDHEcPc0n+Vfva2lqGLYjyrN2
-        C6QGvXiV4lO+jAQhALyWxchDFw==
-X-Google-Smtp-Source: ABdhPJwbRYpYCOiC7RrwkZEX7PfVxFvC0rnVgXF0S2YNuSJBtPh+qxPMIrAWKmlSOcroSMAjPb0SMg==
-X-Received: by 2002:a54:4807:: with SMTP id j7mr4571885oij.140.1634060592214;
-        Tue, 12 Oct 2021 10:43:12 -0700 (PDT)
-Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id s20sm65487oiw.44.2021.10.12.10.43.11
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Oct 2021 10:43:11 -0700 (PDT)
-From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     arm@kernel.org, soc@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Olof Johansson <olof@lixom.net>,
-        Kevin Hilman <khilman@baylibre.com>,
-        David Heidelberg <david@ixit.cz>, Luca Weiss <luca@z3ntu.xyz>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Vamsi krishna Lanka <quic_vamslank@quicinc.com>
-Subject: [GIT PULL] Qualcomm DTS updates for v5.16
-Date:   Tue, 12 Oct 2021 12:43:10 -0500
-Message-Id: <20211012174310.1017857-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.32.0
+        id S231756AbhJLRqg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Oct 2021 13:46:36 -0400
+Received: from mail.kernel.org ([198.145.29.99]:57590 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229495AbhJLRqg (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 12 Oct 2021 13:46:36 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id 25E2D610C9;
+        Tue, 12 Oct 2021 17:44:34 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1634060674;
+        bh=lVL3q5uChIkTh3tk08GPoiBOGZxjg76dso8RpirFeW8=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=Pp5n6k+vHngx0oAzK71EV4QIwnREZETfdcp4S/ZxjDE9o9jSmqwltgIZpu312Poaq
+         Gme3coZ2DzgLrgs9vv4/KBmDKwQXfJq49XpxKINR4Qe0DikHCQl6MUfI2gJuHxRDs4
+         hnbkGTD0AiR8Qgxrb1AB/A9pUiNlJBCbX6mVDAm7DbmVPiSrgB+25QMPaZs5Lb7onX
+         UHT22W8UInOMIsE8yMDs63GE+b5zb1ZJgFpZvs5nCs7Hr808YJlazigsdAY9MkiokZ
+         8O0tDK5X2kGpr7/BPQV+FZEmvt0uW4PAn5+2KHSd3briMs2UEqhnbMzuQdKcy2a6qn
+         XGbYrznEcQuew==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1631860384-26608-6-git-send-email-quic_fenglinw@quicinc.com>
+References: <1631860384-26608-1-git-send-email-quic_fenglinw@quicinc.com> <1631860384-26608-6-git-send-email-quic_fenglinw@quicinc.com>
+Subject: Re: [RESEND PATCH v1 5/9] spmi: pmic-arb: correct duplicate APID to PPID mapping logic
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     collinsd@codeaurora.org, subbaram@codeaurora.org,
+        quic_fenglinw@quicinc.com
+To:     Fenglin Wu <quic_fenglinw@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Date:   Tue, 12 Oct 2021 10:44:32 -0700
+Message-ID: <163406067294.936959.15501496135258886323@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The following changes since commit 6880fa6c56601bb8ed59df6c30fd390cc5f6dd8f:
+Quoting Fenglin Wu (2021-09-16 23:33:00)
+> From: David Collins <collinsd@codeaurora.org>
+>=20
+> Correct the way that duplicate PPID mappings are handled for PMIC
+> arbiter v5.  The final APID mapped to a given PPID should be the
+> one which has write owner =3D APPS EE, if it exists, or if not
+> that, then the first APID mapped to the PPID, if it exists.
+>=20
+> Signed-off-by: David Collins <collinsd@codeaurora.org>
+> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+> ---
 
-  Linux 5.15-rc1 (2021-09-12 16:28:37 -0700)
+Does this need a Fixes tag?
 
-are available in the Git repository at:
+>  drivers/spmi/spmi-pmic-arb.c | 13 +++++++------
+>  1 file changed, 7 insertions(+), 6 deletions(-)
+>=20
+> diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
+> index 59c445b..f1b72d8 100644
+> --- a/drivers/spmi/spmi-pmic-arb.c
+> +++ b/drivers/spmi/spmi-pmic-arb.c
+> @@ -918,7 +918,8 @@ static int pmic_arb_read_apid_map_v5(struct spmi_pmic=
+_arb *pmic_arb)
+>          * version 5, there is more than one APID mapped to each PPID.
+>          * The owner field for each of these mappings specifies the EE wh=
+ich is
+>          * allowed to write to the APID.  The owner of the last (highest)=
+ APID
+> -        * for a given PPID will receive interrupts from the PPID.
+> +        * which has the IRQ owner bit set for a given PPID will receive
+> +        * interrupts from the PPID.
+>          */
+>         for (i =3D 0; ; i++, apidd++) {
+>                 offset =3D pmic_arb->ver_ops->apid_map_offset(i);
+> @@ -941,16 +942,16 @@ static int pmic_arb_read_apid_map_v5(struct spmi_pm=
+ic_arb *pmic_arb)
+>                 apid =3D pmic_arb->ppid_to_apid[ppid] & ~PMIC_ARB_APID_VA=
+LID;
+>                 prev_apidd =3D &pmic_arb->apid_data[apid];
+> =20
+> -               if (valid && is_irq_ee &&
+> -                               prev_apidd->write_ee =3D=3D pmic_arb->ee)=
+ {
+> +               if (!valid || apidd->write_ee =3D=3D pmic_arb->ee) {
+> +                       /* First PPID mapping or one for this EE */
+> +                       pmic_arb->ppid_to_apid[ppid] =3D i | PMIC_ARB_API=
+D_VALID;
+> +               } else if (valid && is_irq_ee &&
+> +                          prev_apidd->write_ee =3D=3D pmic_arb->ee) {
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-dts-for-5.16
+This can be one line please.
 
-for you to fetch changes up to 9304af37d07b63244e4b3c80e5a245c978beb015:
-
-  dt-bindings: arm: qcom, add missing devices (2021-09-19 23:33:06 -0500)
-
-----------------------------------------------------------------
-Qualcomm DTS updates for v5.16
-
-This extends the previous limited description of MSM8226 with SDHC,
-UART, I2C, SCM, SMEM, RPM and basic PMIC definitions. Based on this,
-initial support for the LG G Watch R smartwatch is introduced.
-
-APQ8064 gets a couple of DT updates, one which will allow the GPU driver
-to drop supporting legacy "opp tables" in the future.
-
-DT bindings and DTS files are updated with additional compatibles, for
-completeness.
-
-----------------------------------------------------------------
-David Heidelberg (4):
-      ARM: dts: qcom: apq8064: Convert adreno from legacy gpu-pwrlevels to opp-v2
-      ARM: dts: qcom: apq8064: adjust memory node according to specs
-      ARM: dts: qcom: fill secondary compatible for multiple boards
-      dt-bindings: arm: qcom, add missing devices
-
-Luca Weiss (4):
-      ARM: dts: qcom: msm8226: Add more SoC bits
-      ARM: dts: qcom: Add pm8226 PMIC
-      dt-bindings: arm: qcom: Document APQ8026 SoC binding
-      ARM: dts: qcom: Add support for LG G Watch R
-
-Marijn Suijten (1):
-      ARM: dts: qcom: msm8974: Add xo_board reference clock to DSI0 PHY
-
-Vamsi krishna Lanka (1):
-      dt-bindings: arm: qcom: Document SDX65 platform and boards
-
- Documentation/devicetree/bindings/arm/qcom.yaml |  16 ++
- arch/arm/boot/dts/Makefile                      |   1 +
- arch/arm/boot/dts/qcom-apq8026-lge-lenok.dts    | 237 +++++++++++++++++++++
- arch/arm/boot/dts/qcom-apq8064.dtsi             |  18 +-
- arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c1.dts |   2 +-
- arch/arm/boot/dts/qcom-ipq4019-ap.dk04.1-c3.dts |   2 +-
- arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c1.dts |   2 +-
- arch/arm/boot/dts/qcom-ipq4019-ap.dk07.1-c2.dts |   2 +-
- arch/arm/boot/dts/qcom-ipq8064-ap148.dts        |   2 +-
- arch/arm/boot/dts/qcom-msm8226.dtsi             | 263 +++++++++++++++++++++++-
- arch/arm/boot/dts/qcom-msm8974.dtsi             |   4 +-
- arch/arm/boot/dts/qcom-pm8226.dtsi              |  27 +++
- 12 files changed, 554 insertions(+), 22 deletions(-)
- create mode 100644 arch/arm/boot/dts/qcom-apq8026-lge-lenok.dts
- create mode 100644 arch/arm/boot/dts/qcom-pm8226.dtsi
+>                         /*
+>                          * Duplicate PPID mapping after the one for this =
+EE;
+>                          * override the irq owner
+>                          */
+>                         prev_apidd->irq_ee =3D apidd->irq_ee;
+> -               } else if (!valid || is_irq_ee) {
+> -                       /* First PPID mapping or duplicate for another EE=
+ */
+> -                       pmic_arb->ppid_to_apid[ppid] =3D i | PMIC_ARB_API=
+D_VALID;
+>                 }
+> =20
+>                 apidd->ppid =3D ppid;
+> --=20
+> 2.7.4
+>
