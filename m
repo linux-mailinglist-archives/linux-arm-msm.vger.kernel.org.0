@@ -2,172 +2,245 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 6D46C429BC7
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Oct 2021 05:11:39 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E3236429BE3
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Oct 2021 05:22:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231951AbhJLDNg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Mon, 11 Oct 2021 23:13:36 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46964 "EHLO
+        id S232226AbhJLDYb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Mon, 11 Oct 2021 23:24:31 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49378 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S232063AbhJLDNf (ORCPT
+        with ESMTP id S232223AbhJLDY0 (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Mon, 11 Oct 2021 23:13:35 -0400
-Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D6EF3C061749
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Oct 2021 20:11:34 -0700 (PDT)
-Received: by mail-lf1-x12c.google.com with SMTP id c16so26689839lfb.3
-        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Oct 2021 20:11:34 -0700 (PDT)
+        Mon, 11 Oct 2021 23:24:26 -0400
+Received: from mail-oi1-x22f.google.com (mail-oi1-x22f.google.com [IPv6:2607:f8b0:4864:20::22f])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 0CCA3C06174E
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Oct 2021 20:22:26 -0700 (PDT)
+Received: by mail-oi1-x22f.google.com with SMTP id u69so14822916oie.3
+        for <linux-arm-msm@vger.kernel.org>; Mon, 11 Oct 2021 20:22:26 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=w2FJM5xq0hHLOwYkxQq9HjtkvFRksFK+c9CUBnhMlUA=;
-        b=ECxgpBAgFN57M9Muv6HgPW+2gsbKzFTgbdkbk/wcoXHhkLozGpRLLlOMDYegVvygHN
-         2py0lXASeUR5ykVbr81UL/hPafzHt+NJHhyIvmIYcmytMQ6GdAJ8dUABYBTqcJvXUoDk
-         df377gxkJR4hl2XnoHq6H5fg1PhPosrjlO+vw06vz95++L7FV4HiYbwq2J1WFfNnN/jf
-         Mx2ogkRKfRgA5smJ82Ca1+NvpsHAbDGCT+LpTXs64ymH6okmPAuVxvDsTmmJO9KVLgUG
-         pZxdks765lI2PhK8KGoyJxBi3yRR/GHoeDDoq3qeWcq50tyooD3LpiVGlx8t8P9OlzUu
-         Hbhg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=kFWCWKAWWoaL3SV5gzB8CEd18a1l6a6FD7ldIFD7Pw4=;
+        b=H1RfEtfl628J9zd0S0kNDOa95V8Wemjo6fWE24pMxl3rr4x6vq+gSRWq1uKpWq8gv+
+         t3MNe5F+IoGr8j4ixeJzkXPMU/cfpzUPuqd3KYP/lUwTDsPk0CePJjb4E0Zpf7amrw5g
+         0Lm3rpE/iqXtfIS6H7Tn+fyRkAAVl1xsGij6Yeydf46bw6zfFg7Ka6WsijCz0aK0NGC3
+         wERRBAjgCivkm9LIb1W1DE7flexUm6omx092fj85tRxGYcE9k6WpDXth0cXkbo7U/cQd
+         /p9svKOkZWNq3p4HK9FysAeKdk9jAzMuO18dhi6pACikv+e+YOrXqCiKSHxZEWbfQrsV
+         JBew==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=w2FJM5xq0hHLOwYkxQq9HjtkvFRksFK+c9CUBnhMlUA=;
-        b=NgypkUpYImhKTY7BBVtMYaliegeDXo8XaURi7Ynna4ZXjsWzIT7GkKW7+ue/ZdkyzI
-         sWCK6zNLsWkqLhpKAlRMg/moG3jn7gRMFoMsJJeM1iExjtm1wQauguz0ltqMFDJyElfP
-         s1yvVjHM0Hv+IDjimBnvklxMefqxITaKFBG+347oL08du9gmpxLd4jbuDRzMMvJ+dPMy
-         qhl3njzYFaseOYkJrWrPVadMHUUbwwgBkE7PP2+UQngScFhDD56FYsXTgH8wcFhhtXRZ
-         8qtXMfvRh4YrUmedqwDAwiQAxyzBmljK4zccvY49r60MSIssB/cebiyvlvF1qWZ0U8pY
-         j6FQ==
-X-Gm-Message-State: AOAM532vyWqFUJ7agVWFqhHl2EUjajPCh+JRPsGbsshc6OiFPAE40A9c
-        vaokP1EKqkUqOEkoVX3pA3hUc2BQ4d/2q5LW14iKjw==
-X-Google-Smtp-Source: ABdhPJyrNsMKS3+CiKmx5Tie0/Y10h5OgwLQcjWxqMC9cxgYiRdOXIj2B1esdvuIxFjjlUZ3q1gGQg9rDQ/7FbCROq4=
-X-Received: by 2002:a05:651c:b21:: with SMTP id b33mr25766490ljr.515.1634008293091;
- Mon, 11 Oct 2021 20:11:33 -0700 (PDT)
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=kFWCWKAWWoaL3SV5gzB8CEd18a1l6a6FD7ldIFD7Pw4=;
+        b=dgG4DvjR5L7WSy5d1XFl629843Ilxp7YtIPy4s2XFzMSjxmDakoKaASgXqA8DnT5Yg
+         +MC3gvK03P22j6IzScGqF0bHx0luqyvU/mRi0B3XxEUvr4bNPIKuMcp5sIV2z+U3fvd4
+         6lBWBduIm7nUQnYipcowXbHNP9RR8F1/itBpiofcOpMVdlfOOkfi7PagFEC9VQhqgQsH
+         mtbUfjXOFdkgEotwWb8gpFnANz4xKB7sgMyjAETDcN+kkAdia7xNpmkPQ9aEHu1DjGCt
+         vCD2XQMnMFwTjVDOZt4oaXV6QRE0CO0rVLzlXnpEDWfm4CaK1VCaddMF5OrmBOQ19Vmu
+         Uw8w==
+X-Gm-Message-State: AOAM533+S/Uoa2WjHqa+NpPlSb47G1yzUxc8Gf4yGjXKBR3DbBMZeDgA
+        xnS1fICt6/ZXZUz4p3CjklJtFQ==
+X-Google-Smtp-Source: ABdhPJyXQxggU4Zx7haQPwT/hy0aC9lAGeEMnTLcMvco6zQgl82Zj6qAV9dmwbaEucOMPvuLc3GCkg==
+X-Received: by 2002:aca:e004:: with SMTP id x4mr1905158oig.155.1634008944889;
+        Mon, 11 Oct 2021 20:22:24 -0700 (PDT)
+Received: from yoga ([2600:1700:a0:3dc8:c84c:8eff:fe1e:256f])
+        by smtp.gmail.com with ESMTPSA id s10sm2104750oib.58.2021.10.11.20.22.23
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Mon, 11 Oct 2021 20:22:24 -0700 (PDT)
+Date:   Mon, 11 Oct 2021 22:22:22 -0500
+From:   Bjorn Andersson <bjorn.andersson@linaro.org>
+To:     schowdhu@codeaurora.org
+Cc:     Rob Herring <robh@kernel.org>, linux-arm-msm@vger.kernel.org,
+        linux-usb@vger.kernel.org, devicetree@vger.kernel.org,
+        Bryan O'Donoghue <pure.logic@nexus-software.ie>,
+        Greg KH <greg@kroah.com>, linux-kernel@vger.kernel.org,
+        ckadabi@codeaurora.org, tsoni@codeaurora.org,
+        bryanh@codeaurora.org, psodagud@codeaurora.org,
+        satyap@codeaurora.org, pheragu@codeaurora.org,
+        Rajendra Nayak <rnayak@codeaurora.org>,
+        Sibi Sankar <sibis@codeaurora.org>,
+        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>
+Subject: Re: [PATCH V0 1/7] dt-bindings: connector: Add property for eud type
+ c connector
+Message-ID: <YWT/buCujyK3D0WE@yoga>
+References: <cover.1633343547.git.schowdhu@codeaurora.org>
+ <246c9d24da27b6ce91d5f1e536fa96ac5656a0b2.1633343547.git.schowdhu@codeaurora.org>
+ <YVsttQySDnaXxOuI@robh.at.kernel.org>
+ <b3d10d7b874c11462604a5f78bc0e8cf@codeaurora.org>
+ <YVx/U+w8zS6/P6oa@ripper>
+ <ad4f944d1166882c80a91b3fbbd15fc5@codeaurora.org>
 MIME-Version: 1.0
-References: <20211007151010.333516-1-arnd@kernel.org> <20211007151010.333516-2-arnd@kernel.org>
-In-Reply-To: <20211007151010.333516-2-arnd@kernel.org>
-From:   John Stultz <john.stultz@linaro.org>
-Date:   Mon, 11 Oct 2021 20:11:20 -0700
-Message-ID: <CALAqxLVVEi67HQbjCSvfDPmfjeeZ4ROvqa8yfYMnRmeyi34Ddw@mail.gmail.com>
-Subject: Re: [PATCH v2 2/2] qcom_scm: hide Kconfig symbol
-To:     Arnd Bergmann <arnd@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     lkml <linux-kernel@vger.kernel.org>,
-        linux-arm-kernel <linux-arm-kernel@lists.infradead.org>,
-        linux-ia64@vger.kernel.org, linux-mips@vger.kernel.org,
-        linux-parisc@vger.kernel.org, linux-riscv@lists.infradead.org,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        dri-devel <dri-devel@lists.freedesktop.org>,
-        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
-        <freedreno@lists.freedesktop.org>,
-        "list@263.net:IOMMU DRIVERS <iommu@lists.linux-foundation.org>, Joerg
-        Roedel <joro@8bytes.org>," <iommu@lists.linux-foundation.org>,
-        linux-media <linux-media@vger.kernel.org>,
-        linux-mmc <linux-mmc@vger.kernel.org>,
-        Network Development <netdev@vger.kernel.org>,
-        ath10k <ath10k@lists.infradead.org>,
-        linux-wireless@vger.kernel.org,
-        "open list:GPIO SUBSYSTEM" <linux-gpio@vger.kernel.org>,
-        Arnd Bergmann <arnd@arndb.de>,
-        Kalle Valo <kvalo@codeaurora.org>,
-        Alex Elder <elder@linaro.org>,
-        Amit Pundir <amit.pundir@linaro.org>,
-        Caleb Connolly <caleb.connolly@linaro.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <ad4f944d1166882c80a91b3fbbd15fc5@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 7, 2021 at 8:10 AM Arnd Bergmann <arnd@kernel.org> wrote:
->
-> From: Arnd Bergmann <arnd@arndb.de>
->
-> Now that SCM can be a loadable module, we have to add another
-> dependency to avoid link failures when ipa or adreno-gpu are
-> built-in:
->
-> aarch64-linux-ld: drivers/net/ipa/ipa_main.o: in function `ipa_probe':
-> ipa_main.c:(.text+0xfc4): undefined reference to `qcom_scm_is_available'
->
-> ld.lld: error: undefined symbol: qcom_scm_is_available
-> >>> referenced by adreno_gpu.c
-> >>>               gpu/drm/msm/adreno/adreno_gpu.o:(adreno_zap_shader_load) in archive drivers/built-in.a
->
-> This can happen when CONFIG_ARCH_QCOM is disabled and we don't select
-> QCOM_MDT_LOADER, but some other module selects QCOM_SCM. Ideally we'd
-> use a similar dependency here to what we have for QCOM_RPROC_COMMON,
-> but that causes dependency loops from other things selecting QCOM_SCM.
->
-> This appears to be an endless problem, so try something different this
-> time:
->
->  - CONFIG_QCOM_SCM becomes a hidden symbol that nothing 'depends on'
->    but that is simply selected by all of its users
->
->  - All the stubs in include/linux/qcom_scm.h can go away
->
->  - arm-smccc.h needs to provide a stub for __arm_smccc_smc() to
->    allow compile-testing QCOM_SCM on all architectures.
->
->  - To avoid a circular dependency chain involving RESET_CONTROLLER
->    and PINCTRL_SUNXI, drop the 'select RESET_CONTROLLER' statement.
->    According to my testing this still builds fine, and the QCOM
->    platform selects this symbol already.
->
-> Acked-by: Kalle Valo <kvalo@codeaurora.org>
-> Acked-by: Alex Elder <elder@linaro.org>
-> Signed-off-by: Arnd Bergmann <arnd@arndb.de>
-> ---
-> Changes in v2:
-> - fix the iommu dependencies
+On Thu 07 Oct 04:25 CDT 2021, schowdhu@codeaurora.org wrote:
 
-Hey Arnd,
-   Thanks again so much for working out these details. Also my
-apologies, as Bjorn asked for me to test this patch, but I wasn't able
-to get to it before it landed.  Unfortunately I've hit an issue that
-is keeping the db845c from booting with this.
+> On 2021-10-05 22:07, Bjorn Andersson wrote:
+> > On Tue 05 Oct 06:11 PDT 2021, schowdhu@codeaurora.org wrote:
+> > 
+> > > On 2021-10-04 22:07, Rob Herring wrote:
+> > > > On Mon, Oct 04, 2021 at 04:46:19PM +0530, Souradeep Chowdhury wrote:
+> > > > > Added the property for EUD(Embedded USB Debug) connector.Added
+> > > > > the "reg" and "interrupts" property which is needed for EUD.
+> > > >
+> > > > You are going to need a better explanation of this h/w.
+> > > 
+> > > Ack. Will update this with the detailed hardware description
+> > > in the next version.
+> > > 
+> > > >
+> > > > >
+> > > > > Signed-off-by: Souradeep Chowdhury <schowdhu@codeaurora.org>
+> > > > > ---
+> > > > >  .../devicetree/bindings/connector/usb-connector.yaml      | 15
+> > > > > +++++++++++++++
+> > > > >  1 file changed, 15 insertions(+)
+> > > > >
+> > > > > diff --git
+> > > > > a/Documentation/devicetree/bindings/connector/usb-connector.yaml
+> > > > > b/Documentation/devicetree/bindings/connector/usb-connector.yaml
+> > > > > index 7eb8659..908129f 100644
+> > > > > --- a/Documentation/devicetree/bindings/connector/usb-connector.yaml
+> > > > > +++ b/Documentation/devicetree/bindings/connector/usb-connector.yaml
+> > > > > @@ -30,6 +30,21 @@ properties:
+> > > > >            - const: samsung,usb-connector-11pin
+> > > > >            - const: usb-b-connector
+> > > > >
+> > > > > +      - items:
+> > > > > +          - enum:
+> > > > > +              - qcom,sc7280-usb-connector-eud
+> > > > > +          - const: qcom,usb-connector-eud
+> > > > > +          - const: usb-c-connector
+> > > > > +
+> > > > > +  reg:
+> > > > > +    items:
+> > > > > +      - description: EUD Base Register Region
+> > > > > +      - description: EUD Mode Manager Region
+> > > >
+> > > > A connector node represents the physical connector on a board. That
+> > > > can't really be an MMIO peripheral. Maybe you need a node for EUD and
+> > > > then it should have a connector child node? Don't really know without
+> > > > understanding this h/w.
+> > > 
+> > > As per the previous discussion on the EUD, it was agreed upon to map
+> > > EUD
+> > > as a type C connector and use Role-Switch to change the USB role
+> > > instead
+> > > of extcon interface that was being used previously. The link for the
+> > > same
+> > > is as follows:-
+> > > 
+> > > https://lore.kernel.org/lkml/5db1a666-62ec-c850-6626-ad33d337b452@codeaurora.org/
+> > > 
+> > 
+> > Not using extcon is the right thing, but perhaps we should make the EUD
+> > a role_switch provider and client, so that we can describe how it sits
+> > inbetween the connector and the controller.
+> > 
+> > That way it has the power to pass through or override requests from the
+> > upstream role-switcher, based on the status of EUD.
+> > 
+> > 
+> > That said, I'm still curious to what happens if I renegotiate the roles
+> > dynamically in a Type-C environment, while enabling EUD. How would the
+> > device on the other end of the cable know that it's supposed to be a
+> > host? Or there's simply a reset of the link when this happens?
+> > 
+> > Thanks,
+> > Bjorn
+> 
+> Hi Bjorn,
+> 
 
-> diff --git a/drivers/iommu/arm/arm-smmu/Makefile b/drivers/iommu/arm/arm-smmu/Makefile
-> index e240a7bcf310..b0cc01aa20c9 100644
-> --- a/drivers/iommu/arm/arm-smmu/Makefile
-> +++ b/drivers/iommu/arm/arm-smmu/Makefile
-> @@ -1,4 +1,5 @@
->  # SPDX-License-Identifier: GPL-2.0
->  obj-$(CONFIG_QCOM_IOMMU) += qcom_iommu.o
->  obj-$(CONFIG_ARM_SMMU) += arm_smmu.o
-> -arm_smmu-objs += arm-smmu.o arm-smmu-impl.o arm-smmu-nvidia.o arm-smmu-qcom.o
-> +arm_smmu-objs += arm-smmu.o arm-smmu-impl.o arm-smmu-nvidia.o
-> +arm_smmu-$(CONFIG_ARM_SMMU_QCOM) += arm-smmu-qcom.o
-> diff --git a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
-> index 9f465e146799..2c25cce38060 100644
-> --- a/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
-> +++ b/drivers/iommu/arm/arm-smmu/arm-smmu-impl.c
-> @@ -215,7 +215,8 @@ struct arm_smmu_device *arm_smmu_impl_init(struct arm_smmu_device *smmu)
->             of_device_is_compatible(np, "nvidia,tegra186-smmu"))
->                 return nvidia_smmu_impl_init(smmu);
->
-> -       smmu = qcom_smmu_impl_init(smmu);
-> +       if (IS_ENABLED(CONFIG_ARM_SMMU_QCOM))
-> +               smmu = qcom_smmu_impl_init(smmu);
->
->         if (of_device_is_compatible(np, "marvell,ap806-smmu-500"))
->                 smmu->impl = &mrvl_mmu500_impl;
+Hi Souradeep
+
+> By making EUD Role-Switch provider and client do you mean that
+> we should have a EUD node which will have a connector node as
+> child and this connector node will have a port that points towards
+> the drd role-switch?
+> 
+> So that my device tree node will look like the following in that case
+> 
+> eud@88e0000 {
+>         compatible = "qcom,usb-connector-eud";
+>         reg = <0 0x88e0000 0 0x2000>,
+>               <0 0x88e2000 0 0x1000>;
+>         interrupt-parent = <&pdc>;
+>         interrupts = <11 IRQ_TYPE_LEVEL_HIGH>;
+>         usb_con: connector {
+>                 compatible = "usb-c-connector";
+>                 label = "USB-C";
+>                 port {
+>                       eud_usb_output: endpoint {
+>                       remote-endpoint = <&eud_usb3_input>;
+>                  };
+>         };
+> 
+> };
+> 
+> 
+> @usb2 {
+>     dwc3 {
+>        usb-role-switch;
+>        port {
+>              eud_usb3_input: endpoint {
+>                    remote-endpoint = <&eud_usb_output>;
+>              };
+>      };
+> };
+
+While your "output" and "input" matches the direction of the role
+switching, I think the connection should be describe in the other
+direction.
+
+Also my suggestion was that EUD is both connector for the dwc3 and has a
+reference to the connector described in the TypeC controller - to
+properly describe the relationship:
+
+  DWC -> EUD -> connector
+
+With the role switching request going from the connector (pmic_glink
+driver) to DWC through the EUD, which can override the vote.
 
 
-The problem with these two chunks is that there is currently no
-CONFIG_ARM_SMMU_QCOM option. :)
+That said, this is just my suggestion. You need to ensure that Rob
+understands the hardware design well enough to approve your proposed
+binding.
 
-Was that something you intended to add in the patch?
 
-I'm working up a Kconfig patch to do so, so I'll send that out in a
-second here, but let me know if you already have that somewhere (I
-suspect you implemented it and just forgot to add the change to the
-commit), as I'm sure your Kconfig help text will be better than mine.
-:)
+E.g. The connector in the EUD isn't a usb-c-connector, it's some
+type of internal connection, the next step in that chain is the actual
+usb-c-connector.
 
-Again, I'm so sorry I didn't get over to testing your patch before
-seeing this here!
+Regards,
+Bjorn
 
-thanks
--john
+> 
+> Also EUD functions only in device mode, so when the role-switch is done by
+> the controller
+> to set the device mode, the PC on the other end becomes the host.
+> 
+> Thanks,
+> Souradeep
+> 
+> > 
+> > > >
+> > > > > +
+> > > > > +  interrupts:
+> > > > > +    description:
+> > > > > +      EUD interrupt
+> > > > > +
+> > > > >    label:
+> > > > >      description: Symbolic name for the connector.
+> > > > >
+> > > > > --
+> > > > > QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a
+> > > > > member
+> > > > > of Code Aurora Forum, hosted by The Linux Foundation
+> > > > >
+> > > > >
