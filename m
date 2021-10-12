@@ -2,145 +2,167 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3345242A092
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Oct 2021 11:05:36 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1405E42A16E
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Oct 2021 11:55:36 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235520AbhJLJHe (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Oct 2021 05:07:34 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:41728 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S235229AbhJLJHa (ORCPT
+        id S235496AbhJLJ5e (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Oct 2021 05:57:34 -0400
+Received: from so254-9.mailgun.net ([198.61.254.9]:33497 "EHLO
+        so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230389AbhJLJ5e (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Oct 2021 05:07:30 -0400
-Received: from mail-wr1-x431.google.com (mail-wr1-x431.google.com [IPv6:2a00:1450:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 411D7C061745
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Oct 2021 02:05:29 -0700 (PDT)
-Received: by mail-wr1-x431.google.com with SMTP id v17so64635395wrv.9
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Oct 2021 02:05:29 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=wr/2NPJuS3pCGpcja/YdLD+ws/Bsmb2EvXsaz8P7nBk=;
-        b=c7IxciNHtOvpD93/zJf8U7mD2WwzdWpgTLDmu07hiDi8Wfl4HHdL5aazSay0mgUrPd
-         BWzDgu9hbnY2dGuy8OC0n3CwQ/ckOB/bp1oEq17L0WVFtWSNaCDnEglLBNyvWl/Kznaf
-         ZPrfxdOfTlZkRlH1ShlbVnyxdcezK92VgTpHJfxf5P4h4MpN4PyHW7X5z3J57bFA3D/k
-         0a7pM7AphUImc2xHdrzCi1W2mgUL4wUUI0l26dK0ui35nDLRs5y7lEuFuM+5GaQf1e/S
-         TyoUmr5kGUgu3QJCDo0dmCtANxufQAL/hEbl51pzlD34dt9/RqbDdat9+jOUND9oGuVL
-         Cbpw==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=wr/2NPJuS3pCGpcja/YdLD+ws/Bsmb2EvXsaz8P7nBk=;
-        b=q5I+Bk8WUpzQeatzBJIxRXBd6ZFYTkZtIla0UD5DMFylfg09YEbBFbxTIEbwSYbL7s
-         AAj7f8IC28lJLc6Z4Ljou2LnE9+2YbVk9DTcg07sOg6WVK9a8Zdy5IhAHUgO2FednvXy
-         FQf575gk6shLLghCrMtNF4Nm7XujNzRiN77Ba+KcEypXecrl8cGkKpumdcrTGtH1hKYd
-         1P36ANCF1BRBEqYBSb4uCssDiksEv003FSDPL3Tmm1eENe5grlTJP21rH5cLaZ5orzyz
-         9rEpfigJ9YtaQODKhJicjt82rQ8vRfXWQtOKAQFoDz2Aa9Wqfxrr7LcB5R1t0ZrvewW/
-         qb6g==
-X-Gm-Message-State: AOAM532D9xzWgfienoIgOBoQj5AOnicbwECT+XohuI5YwIXwSnUpJdW0
-        SOCjBh1nbEE+lCPfV66i4RQnXg==
-X-Google-Smtp-Source: ABdhPJzaM6vlGT8UtCZ7Hx0Ajh7TCVZxn9HXjngx99Nxx4cftOosPSp98BNwQTw4tPX0u8Kke6EvkQ==
-X-Received: by 2002:adf:a34c:: with SMTP id d12mr30919653wrb.267.1634029527864;
-        Tue, 12 Oct 2021 02:05:27 -0700 (PDT)
-Received: from [192.168.86.34] (cpc86377-aztw32-2-0-cust226.18-1.cable.virginm.net. [92.233.226.227])
-        by smtp.googlemail.com with ESMTPSA id p8sm1892712wmg.15.2021.10.12.02.05.26
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Tue, 12 Oct 2021 02:05:27 -0700 (PDT)
-Subject: Re: [PATCH v3 1/5] ASoC: qcom: Add compatible names in va,wsa,rx,tx
- codec drivers for sc7280
-To:     Srinivasa Rao Mandadapu <srivasam@codeaurora.org>,
-        agross@kernel.org, bjorn.andersson@linaro.org, lgirdwood@gmail.com,
-        broonie@kernel.org, robh+dt@kernel.org, plai@codeaurora.org,
-        bgoswami@codeaurora.org, perex@perex.cz, tiwai@suse.com,
-        rohitkr@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        alsa-devel@alsa-project.org, devicetree@vger.kernel.org,
-        linux-kernel@vger.kernel.org, swboyd@chromium.org,
-        judyhsiao@chromium.org
-Cc:     Venkata Prasad Potturu <potturu@codeaurora.org>
-References: <1633702144-19017-1-git-send-email-srivasam@codeaurora.org>
- <1633702144-19017-2-git-send-email-srivasam@codeaurora.org>
-From:   Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-Message-ID: <8886b174-f3d3-7bad-a2b9-ea7def2a36e4@linaro.org>
-Date:   Tue, 12 Oct 2021 10:05:26 +0100
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.13.0
+        Tue, 12 Oct 2021 05:57:34 -0400
+DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
+ s=smtp; t=1634032533; h=Message-ID: References: In-Reply-To: Subject:
+ Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
+ MIME-Version: Sender; bh=5qSQYtrGHjpBWl/ojCdJhEuYiM0d4NPaFPe3p9m6H/w=;
+ b=Aqf/9lFmnt1sIUODnSWdosourSez/yRXRhla9PscFzwkyEYLiqVZl56rWHY52IR8qnXYTs/m
+ L6vcIs9WxXzJvVmZmNOnT7ZsaEzj35njiwH8fMt1K7orQEFI3aysbB83ymbo/aRAvXf1teVV
+ tKwD7iH6Fzt7tMhyHIsNfDUHHE4=
+X-Mailgun-Sending-Ip: 198.61.254.9
+X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
+Received: from smtp.codeaurora.org
+ (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
+ smtp-out-n01.prod.us-west-2.postgun.com with SMTP id
+ 61655b8103355859c84bb50c (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Tue, 12 Oct 2021 09:55:13
+ GMT
+Sender: bgodavar=codeaurora.org@mg.codeaurora.org
+Received: by smtp.codeaurora.org (Postfix, from userid 1001)
+        id F012AC4360C; Tue, 12 Oct 2021 09:55:12 +0000 (UTC)
+X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
+        aws-us-west-2-caf-mail-1.web.codeaurora.org
+X-Spam-Level: 
+X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
+        autolearn=unavailable autolearn_force=no version=3.4.0
+Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
+        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
+        (No client certificate requested)
+        (Authenticated sender: bgodavar)
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 45EAEC4338F;
+        Tue, 12 Oct 2021 09:55:11 +0000 (UTC)
 MIME-Version: 1.0
-In-Reply-To: <1633702144-19017-2-git-send-email-srivasam@codeaurora.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
+Content-Type: text/plain; charset=US-ASCII;
+ format=flowed
 Content-Transfer-Encoding: 7bit
+Date:   Tue, 12 Oct 2021 15:25:11 +0530
+From:   bgodavar@codeaurora.org
+To:     Matthias Kaehlcke <mka@chromium.org>
+Cc:     marcel@holtmann.org, bjorn.andersson@linaro.org,
+        johan.hedberg@gmail.com, linux-kernel@vger.kernel.org,
+        linux-bluetooth@vger.kernel.org, hemantg@codeaurora.org,
+        linux-arm-msm@vger.kernel.org, rjliao@codeaurora.org,
+        pharish@codeaurora.org, abhishekpandit@chromium.org
+Subject: Re: [PATCH v1 1/2] arm64: dts: qcom: sc7280: Add bluetooth node on
+ SC7280 IDP board
+In-Reply-To: <YV3cVzI4aVeCjMt2@google.com>
+References: <1633523403-32264-1-git-send-email-bgodavar@codeaurora.org>
+ <YV3cVzI4aVeCjMt2@google.com>
+Message-ID: <bac51fc71002bdd9c20b92571d3e1c7e@codeaurora.org>
+X-Sender: bgodavar@codeaurora.org
+User-Agent: Roundcube Webmail/1.3.9
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
+Hi Matthias,
 
-
-On 08/10/2021 15:09, Srinivasa Rao Mandadapu wrote:
-> Add compatible names for sc7280 based targets in digital codec drivers
-> va,wsa,rx and tx.
+On 2021-10-06 22:56, Matthias Kaehlcke wrote:
+> On Wed, Oct 06, 2021 at 06:00:02PM +0530, Balakrishna Godavarthi wrote:
+>> Add bluetooth SoC WCN6750 node for SC7280 IDP board.
+>> 
+>> Signed-off-by: Balakrishna Godavarthi <bgodavar@codeaurora.org>
+>> ---
+>>  arch/arm64/boot/dts/qcom/sc7280-idp.dts  |  2 ++
+>>  arch/arm64/boot/dts/qcom/sc7280-idp.dtsi | 31 
+>> +++++++++++++++++++++++++++++++
+>>  2 files changed, 33 insertions(+)
+>> 
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dts 
+>> b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+>> index 64fc22a..d3f5393 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dts
+>> @@ -17,6 +17,8 @@
+>> 
+>>  	aliases {
+>>  		serial0 = &uart5;
+>> +		bluetooth0 = &bluetooth;
+>> +		hsuart0 = &uart7;
 > 
-> Signed-off-by: Venkata Prasad Potturu <potturu@codeaurora.org>
-> Signed-off-by: Srinivasa Rao Mandadapu <srivasam@codeaurora.org>
-> ---
-
-Reviewed-by: Srinivas Kandagatla <srinivas.kandagatla@linaro.org>
-
-
->   sound/soc/codecs/lpass-rx-macro.c  | 1 +
->   sound/soc/codecs/lpass-tx-macro.c  | 1 +
->   sound/soc/codecs/lpass-va-macro.c  | 1 +
->   sound/soc/codecs/lpass-wsa-macro.c | 1 +
->   4 files changed, 4 insertions(+)
+> Sort aliases alphabetically.
 > 
-> diff --git a/sound/soc/codecs/lpass-rx-macro.c b/sound/soc/codecs/lpass-rx-macro.c
-> index 196b068..c2b9333 100644
-> --- a/sound/soc/codecs/lpass-rx-macro.c
-> +++ b/sound/soc/codecs/lpass-rx-macro.c
-> @@ -3577,6 +3577,7 @@ static int rx_macro_remove(struct platform_device *pdev)
->   }
->   
->   static const struct of_device_id rx_macro_dt_match[] = {
-> +	{ .compatible = "qcom,sc7280-lpass-rx-macro" },
->   	{ .compatible = "qcom,sm8250-lpass-rx-macro" },
->   	{ }
->   };
-> diff --git a/sound/soc/codecs/lpass-tx-macro.c b/sound/soc/codecs/lpass-tx-macro.c
-> index 27a0d5d..5dcae73 100644
-> --- a/sound/soc/codecs/lpass-tx-macro.c
-> +++ b/sound/soc/codecs/lpass-tx-macro.c
-> @@ -1843,6 +1843,7 @@ static int tx_macro_remove(struct platform_device *pdev)
->   }
->   
->   static const struct of_device_id tx_macro_dt_match[] = {
-> +	{ .compatible = "qcom,sc7280-lpass-tx-macro" },
->   	{ .compatible = "qcom,sm8250-lpass-tx-macro" },
->   	{ }
->   };
-> diff --git a/sound/soc/codecs/lpass-va-macro.c b/sound/soc/codecs/lpass-va-macro.c
-> index 56c93f4..70f09b4 100644
-> --- a/sound/soc/codecs/lpass-va-macro.c
-> +++ b/sound/soc/codecs/lpass-va-macro.c
-> @@ -1472,6 +1472,7 @@ static int va_macro_remove(struct platform_device *pdev)
->   }
->   
->   static const struct of_device_id va_macro_dt_match[] = {
-> +	{ .compatible = "qcom,sc7280-lpass-va-macro" },
->   	{ .compatible = "qcom,sm8250-lpass-va-macro" },
->   	{}
->   };
-> diff --git a/sound/soc/codecs/lpass-wsa-macro.c b/sound/soc/codecs/lpass-wsa-macro.c
-> index d3ac318..75baf8e 100644
-> --- a/sound/soc/codecs/lpass-wsa-macro.c
-> +++ b/sound/soc/codecs/lpass-wsa-macro.c
-> @@ -2445,6 +2445,7 @@ static int wsa_macro_remove(struct platform_device *pdev)
->   }
->   
->   static const struct of_device_id wsa_macro_dt_match[] = {
-> +	{.compatible = "qcom,sc7280-lpass-wsa-macro"},
->   	{.compatible = "qcom,sm8250-lpass-wsa-macro"},
->   	{}
->   };
+> Also 'hsuart' should not be used, as Dmitry already pointed out on
+> patch 2/2. I suppose it should be 'serial1', as in 'second serial
+> port of the board'.
 > 
+[Bala]: will update it.
+>>  	};
+>> 
+>>  	chosen {
+>> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi 
+>> b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> index 272d5ca..05aa729 100644
+>> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
+>> @@ -393,6 +393,24 @@
+>>  				<&tlmm 31 IRQ_TYPE_EDGE_FALLING>;
+>>  	pinctrl-names = "default", "sleep";
+>>  	pinctrl-1 = <&qup_uart7_sleep_cts>, <&qup_uart7_sleep_rts>, 
+>> <&qup_uart7_sleep_tx>, <&qup_uart7_sleep_rx>;
+>> +
+>> +	bluetooth: wcn6750-bt {
+>> +		compatible = "qcom,wcn6750-bt";
+>> +		pinctrl-names = "default";
+>> +		pinctrl-0 = <&bt_en_default>;
+> 
+> Do we also need a pinctrl entry for 'swctrl' ?
+[Bala]: It is in input to APPS and op of BT SoC.
+I don't think to set any configuration as BT SOC will take care of it.
+
+> 
+>> +		enable-gpios = <&tlmm 85 GPIO_ACTIVE_HIGH>; /* BT_EN */
+>> +		swctrl-gpios = <&tlmm 86 GPIO_ACTIVE_HIGH>; /* SW_CTRL */
+> 
+> The comments aren't useful, the property names say the same.
+> 
+[Bala]: will remove them
+
+>> +		vddio-supply = <&vreg_l19b_1p8>;
+>> +		vddaon-supply = <&vreg_s7b_0p9>;
+>> +		vddbtcxmx-supply = <&vreg_s7b_0p9>;
+>> +		vddrfacmn-supply = <&vreg_s7b_0p9>;
+>> +		vddrfa0p8-supply = <&vreg_s7b_0p9>;
+>> +		vddrfa1p7-supply = <&vreg_s1b_1p8>;
+>> +		vddrfa1p2-supply = <&vreg_s8b_1p2>;
+>> +		vddrfa2p2-supply = <&vreg_s1c_2p2>;
+>> +		vddasd-supply = <&vreg_l11c_2p8>;
+>> +		max-speed = <3200000>;
+>> +	};
+>>  };
+>> 
+>>  /* PINCTRL - additions to nodes defined in sc7280.dtsi */
+>> @@ -504,6 +522,19 @@
+>>  		 */
+>>  		bias-pull-up;
+>>  	};
+>> +
+>> +	bt_en_default: bt_en_default {
+> 
+> 	bt_en: bt-en {
+> 
+>> +		pinmux {
+>> +			pins = "gpio85";
+>> +			function = "gpio";
+>> +		};
+>> +		pinconf {
+>> +			pins = "gpio85";
+>> +			drive-strength = <2>;
+>> +			output-low;
+>> +			bias-pull-down;
+>> +		};
+> 
+> No pinmux & pinconf nodes, see configuration for other pins.
+[Bala]: Thanks for pointing will update in next version
+
+
