@@ -2,92 +2,106 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id F319942AB27
-	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Oct 2021 19:51:13 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 66F6542AB74
+	for <lists+linux-arm-msm@lfdr.de>; Tue, 12 Oct 2021 20:02:59 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231756AbhJLRxO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Oct 2021 13:53:14 -0400
-Received: from cloudserver094114.home.pl ([79.96.170.134]:65156 "EHLO
-        cloudserver094114.home.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233005AbhJLRxN (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Oct 2021 13:53:13 -0400
-Received: from localhost (127.0.0.1) (HELO v370.home.net.pl)
- by /usr/run/smtp (/usr/run/postfix/private/idea_relay_lmtp) via UNIX with SMTP (IdeaSmtpServer 3.0.0)
- id 3fae2874a0632811; Tue, 12 Oct 2021 19:51:10 +0200
-Received: from kreacher.localnet (unknown [213.134.187.88])
-        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
-         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
-        (No client certificate requested)
-        by v370.home.net.pl (Postfix) with ESMTPSA id F2F3466A819;
-        Tue, 12 Oct 2021 19:51:09 +0200 (CEST)
-From:   "Rafael J. Wysocki" <rjw@rjwysocki.net>
-To:     Linux ACPI <linux-acpi@vger.kernel.org>
-Cc:     LKML <linux-kernel@vger.kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        linux-arm-msm@vger.kernel.org
-Subject: [PATCH v1 7/7] perf: qcom_l2_pmu: ACPI: Use ACPI_COMPANION() directly
-Date:   Tue, 12 Oct 2021 19:50:28 +0200
-Message-ID: <3338400.QJadu78ljV@kreacher>
-In-Reply-To: <4369779.LvFx2qVVIh@kreacher>
-References: <4369779.LvFx2qVVIh@kreacher>
+        id S233869AbhJLSEc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Oct 2021 14:04:32 -0400
+Received: from mail.kernel.org ([198.145.29.99]:36952 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S233357AbhJLSEW (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Tue, 12 Oct 2021 14:04:22 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id E9B15604DA;
+        Tue, 12 Oct 2021 18:02:19 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1634061740;
+        bh=IA9bq939HFIthWZowdjpzrEL9kw+TYWcbEgjEet03Ug=;
+        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
+        b=svmJ5mNLvHOtxjPznYH+3g2TTlo6RwUN53E9jlQqQR6sQYnaRS5BONRC8Xo1zZ91m
+         5udB0bi6UrQZojOQ6pfqbbIjy+mEucEP/oqnBVS4FLmdTInpXEBizyRzfeQKCde857
+         zXgH73ite2ix+1TnOxTNks+QmWsy6F3PYYYORMHqScIWFcAKXut0ebTB7OkuZPYDHD
+         DtrCr8de0WOnZuMqa23tHQoheCSFq46hpXaTEA1xzsqE7/XK5ZeUsWVg3SaviiPVZf
+         52/SAE6Kp8cJ3NZ8TKI0n1toJlOZC47Pdtmmioz2x9RMBhZViR5047zneon8O7njy8
+         uJxSku4dMraYw==
+Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
-Content-Transfer-Encoding: 7Bit
-Content-Type: text/plain; charset="UTF-8"
-X-CLIENT-IP: 213.134.187.88
-X-CLIENT-HOSTNAME: 213.134.187.88
-X-VADE-SPAMSTATE: clean
-X-VADE-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvtddrvddtkedguddugecutefuodetggdotefrodftvfcurfhrohhfihhlvgemucfjqffogffrnfdpggftiffpkfenuceurghilhhouhhtmecuudehtdenucesvcftvggtihhpihgvnhhtshculddquddttddmnecujfgurhephffvufffkfgjfhgggfgtsehtufertddttdejnecuhfhrohhmpedftfgrfhgrvghlucflrdcuhgihshhotghkihdfuceorhhjfiesrhhjfiihshhotghkihdrnhgvtheqnecuggftrfgrthhtvghrnhepvdejlefghfeiudektdelkeekvddugfeghffggeejgfeukeejleevgffgvdeluddtnecukfhppedvudefrddufeegrddukeejrdekkeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvudefrddufeegrddukeejrdekkedphhgvlhhopehkrhgvrggthhgvrhdrlhhotggrlhhnvghtpdhmrghilhhfrhhomhepfdftrghfrggvlhculfdrucghhihsohgtkhhifdcuoehrjhifsehrjhifhihsohgtkhhirdhnvghtqedprhgtphhtthhopehlihhnuhigqdgrtghpihesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopehlihhnuhigqdhkvghrnhgvlhesvhhgvghrrdhkvghrnhgvlhdrohhrghdprhgtphhtthhopegrghhrohhssheskhgvrhhnvghlrdhorhhgpdhrtghpthhtohepsghjohhrnhdrrghnuggvrhhsshhonheslhhinhgrrhhordhorhhgpdhrtghpthhtoheplhhinhhugidqrghrmhdqmhhs
- mhesvhhgvghrrdhkvghrnhgvlhdrohhrgh
-X-DCC--Metrics: v370.home.net.pl 1024; Body=5 Fuz1=5 Fuz2=5
+Content-Transfer-Encoding: quoted-printable
+In-Reply-To: <1631860384-26608-4-git-send-email-quic_fenglinw@quicinc.com>
+References: <1631860384-26608-1-git-send-email-quic_fenglinw@quicinc.com> <1631860384-26608-4-git-send-email-quic_fenglinw@quicinc.com>
+Subject: Re: [RESEND PATCH v1 3/9] spmi: pmic-arb: check apid against limits before calling irq handler
+From:   Stephen Boyd <sboyd@kernel.org>
+Cc:     collinsd@codeaurora.org, subbaram@codeaurora.org,
+        quic_fenglinw@quicinc.com
+To:     Fenglin Wu <quic_fenglinw@quicinc.com>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Date:   Tue, 12 Oct 2021 11:02:18 -0700
+Message-ID: <163406173869.936959.6395787327312518099@swboyd.mtv.corp.google.com>
+User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Rafael J. Wysocki <rafael@kernel.org>
+Quoting Fenglin Wu (2021-09-16 23:32:58)
+> From: David Collins <collinsd@codeaurora.org>
+>=20
+> Check that the apid for an SPMI interrupt falls between the
+> min_apid and max_apid that can be handled by the APPS processor
+> before invoking the per-apid interrupt handler:
+> periph_interrupt().
+>=20
+> This avoids an access violation in rare cases where the status
+> bit is set for an interrupt that is not owned by the APPS
+> processor.
+>=20
+> Signed-off-by: David Collins <collinsd@codeaurora.org>
+> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+> ---
 
-The ACPI_HANDLE() macro is a wrapper arond the ACPI_COMPANION()
-macro and the ACPI handle produced by the former comes from the
-ACPI device object produced by the latter, so it is way more
-straightforward to evaluate the latter directly instead of passing
-the handle produced by the former to acpi_bus_get_device().
+Fixes? BTW, a lot of these patches are irqchip specific. It would be
+good to get review from irqchip maintainers. Maybe we should split the
+irqchip driver off via the auxiliary bus so that irqchip maintainers can
+review. Please Cc them on irqchip related patches.
 
-Modify l2_cache_pmu_probe_cluster() accordingly (no intentional
-functional impact).
+IRQCHIP DRIVERS
+M:      Thomas Gleixner <tglx@linutronix.de>
+M:      Marc Zyngier <maz@kernel.org>
 
-While at it, rename the ACPI device pointer to adev for more
-clarity.
+>  drivers/spmi/spmi-pmic-arb.c | 6 ++++++
+>  1 file changed, 6 insertions(+)
+>=20
+> diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
+> index 4d7ad004..c4adc06 100644
+> --- a/drivers/spmi/spmi-pmic-arb.c
+> +++ b/drivers/spmi/spmi-pmic-arb.c
+> @@ -535,6 +535,12 @@ static void pmic_arb_chained_irq(struct irq_desc *de=
+sc)
+>                         id =3D ffs(status) - 1;
+>                         status &=3D ~BIT(id);
+>                         apid =3D id + i * 32;
+> +                       if (apid < pmic_arb->min_apid
+> +                           || apid > pmic_arb->max_apid) {
 
-Signed-off-by: Rafael J. Wysocki <rafael@kernel.org>
----
- drivers/perf/qcom_l2_pmu.c |    7 ++-----
- 1 file changed, 2 insertions(+), 5 deletions(-)
+The || goes on the line above. What about making a local variable for
+first and last and then shifting by 5 in the loop?
 
-Index: linux-pm/drivers/perf/qcom_l2_pmu.c
-===================================================================
---- linux-pm.orig/drivers/perf/qcom_l2_pmu.c
-+++ linux-pm/drivers/perf/qcom_l2_pmu.c
-@@ -840,17 +840,14 @@ static int l2_cache_pmu_probe_cluster(st
- {
- 	struct platform_device *pdev = to_platform_device(dev->parent);
- 	struct platform_device *sdev = to_platform_device(dev);
-+	struct acpi_device *adev = ACPI_COMPANION(dev);
- 	struct l2cache_pmu *l2cache_pmu = data;
- 	struct cluster_pmu *cluster;
--	struct acpi_device *device;
- 	unsigned long fw_cluster_id;
- 	int err;
- 	int irq;
- 
--	if (acpi_bus_get_device(ACPI_HANDLE(dev), &device))
--		return -ENODEV;
--
--	if (kstrtoul(device->pnp.unique_id, 10, &fw_cluster_id) < 0) {
-+	if (!adev || kstrtoul(adev->pnp.unique_id, 10, &fw_cluster_id) < 0) {
- 		dev_err(&pdev->dev, "unable to read ACPI uid\n");
- 		return -ENODEV;
- 	}
+int first =3D pmic_arb->min_apid;
+int last =3D pmic_arb->max_apid;
 
+for (i =3D first >> 5; i <=3D last >> 5; i++)
 
+	if (apid < first || apid > last)
 
+> +                               WARN_ONCE(true, "spurious spmi irq receiv=
+ed for apid=3D%d\n",
+> +                                       apid);
+
+Is there any way to recover from this? Or once the mapping is wrong
+we're going to get interrupts that we don't know what to do with
+forever?
+
+> +                               continue;
+> +                       }
+>                         enable =3D readl_relaxed(
+>                                         ver_ops->acc_enable(pmic_arb, api=
+d));
+>                         if (enable & SPMI_PIC_ACC_ENABLE_BIT)
