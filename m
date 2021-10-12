@@ -2,377 +2,351 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 1862642AFFE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 01:12:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4BA0342B052
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 01:36:38 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S233180AbhJLXOB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Oct 2021 19:14:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:38332 "EHLO
+        id S235991AbhJLXij (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Oct 2021 19:38:39 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:43746 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229588AbhJLXOB (ORCPT
+        with ESMTP id S236054AbhJLXii (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Oct 2021 19:14:01 -0400
-Received: from mail-ot1-x331.google.com (mail-ot1-x331.google.com [IPv6:2607:f8b0:4864:20::331])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFBEAC061570
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Oct 2021 16:11:58 -0700 (PDT)
-Received: by mail-ot1-x331.google.com with SMTP id w12-20020a056830410c00b0054e7ceecd88so1340714ott.2
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Oct 2021 16:11:58 -0700 (PDT)
+        Tue, 12 Oct 2021 19:38:38 -0400
+Received: from mail-ot1-x32a.google.com (mail-ot1-x32a.google.com [IPv6:2607:f8b0:4864:20::32a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 4E1BFC061745
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Oct 2021 16:36:36 -0700 (PDT)
+Received: by mail-ot1-x32a.google.com with SMTP id x33-20020a9d37a4000000b0054733a85462so1330646otb.10
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Oct 2021 16:36:36 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
-        h=from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Pm1At8Dggcntra8NtNt6a/fC+vuXFf3QCA+nevKtcO0=;
-        b=Mu3uFqg3XbowpiU5ETaMpfEn9U8kzdUmUlOVNIyWCIoPBXR1mJ4H9vY+LppKdqVjOr
-         I5QPYtbrnZUf6Rvmee5rfNUghpYu7bBPcQ3Q+R0Fd52GYlsHGhRgnWAIfunY5eVMmkYu
-         lfQM79Ufyvchl96aRqLwP+oLIskONW/d39gBNDLu3ouoDA4Uh95a4N3rxTN9tZQrKjYs
-         k/lXmhMK0tvQ/Vbg/mtsfiTZzWnX5EtZ88h2jmWiBmUkA0XvtRf/ppIRDasOfeY3z4YN
-         r1E+ivJUyGmssvBo1PYjE9VmKP4bMTnXefYQd5+vuBiSLBGAJh1Qp9JBlXXAWgCkx24r
-         Fsgg==
+        h=date:from:to:cc:subject:message-id:references:mime-version
+         :content-disposition:in-reply-to;
+        bh=AKtjnoi14KbYsp2b4AsV44DlnxqjPoofzGyFVUKZsXk=;
+        b=qADfwZeTHj6SvdlF+UJnx4Otd0Sojk7hyI+S7+sZU1F46fG9/1hUtgJSj/Nf+RnhOj
+         CTM+feW7IvbUJUq8riIsf7GFnWONyyZq0jO2DoTZOPApLEdI8wJ1+uZAh4R6HJBmOK12
+         qCnXptFOToXQAfYngUWL56yAJtftFgfti/usSKuMyF2A8RLokbl1WzHJh9aWRnsNWlDZ
+         Cqc8ANCOecuG9CPx1zn7gGe5IPEVlekRzkFarLIPN/Ck9MyIJe5YShB0xaXHJ0EkCNig
+         +4DUD19uD8d6QW6F2kj1EYPb4k9ZYmoryuG9YFa5EXCVMUBqQxIVNpqgLI0Wo7FkbI0O
+         mC6w==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
-         :content-transfer-encoding;
-        bh=Pm1At8Dggcntra8NtNt6a/fC+vuXFf3QCA+nevKtcO0=;
-        b=SVxgTvkyjd1MtUEd6z+vA9tVyQwpOIz7IhvmhRwpQVmuIUEzhA1Zz32O3dyWjwwccB
-         yg9GAmNdWOyS4P7OeY3DXjhPa2zZ3V0PdMI/0CU89yoxo8BUHOqTtaUJBsbjsYP1AGnB
-         haYAl+X1DLrpaHL/Wm1L5YFWHU2az/soHYE3z1Uy2r8etTTnEUUBE7IPpPKg64uddoxw
-         L5ZaIZUnS2i9arUn7TKdgoa1hXTTnweUK7j3Sq24TkI8pWRH2kVJHb0bTRXrL4JN4dLX
-         zSy40w3dWK0YpFiaUiUkW2+GHyrKtkSwUnWE5Sewg4oOdK+6t12zJeuuuqn75GRiAMoD
-         IDYQ==
-X-Gm-Message-State: AOAM533BQPb1gm0Lsf/WSNyDjSmGackpBTcZX5AlZUCZRJZ/H9FnlIle
-        veEetaSi9UmA5w2TUiio4GkNFA==
-X-Google-Smtp-Source: ABdhPJz8+lOY/Cnl4CgDLbOUn/g8oaA9zDWk3gEnXCSdLQHuvxwcW5kg3gGeLe2O/6b1ufkvYMWZjQ==
-X-Received: by 2002:a05:6830:2146:: with SMTP id r6mr28292338otd.1.1634080317861;
-        Tue, 12 Oct 2021 16:11:57 -0700 (PDT)
-Received: from builder.lan ([2600:1700:a0:3dc8:3697:f6ff:fe85:aac9])
-        by smtp.gmail.com with ESMTPSA id n13sm2670108otf.3.2021.10.12.16.11.56
+        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=AKtjnoi14KbYsp2b4AsV44DlnxqjPoofzGyFVUKZsXk=;
+        b=tf8sehUHfruTK0jZHFO5yxXm4p+c1KVDqVz4axMDxldZuVw7nuBUBO2jsA8A8rCOJa
+         TOrAiQ3SEOInUOwkQ/SY13SDLNIe75phDxMiZBM6MVh988ZGwl9I5ZiXEiFpb6FsQ7uV
+         f0+31AZAf5N0XOalmvXxKvBauXqKbOUbwB9xxnenbNs24f52xH1H8QnMMAI069Zgt403
+         H+rSu6y/324yYp//MN3uCnYtyMKg5HNy8rCI7OvMqZPNUe+naIMdGvTv5209VvFJd576
+         UmO3Wrt6F1SUH85He7bH210FmZqn55pM8k6deWnhVaJsIfsWqS/OG3hPLhSog1XsjRK1
+         Lj4A==
+X-Gm-Message-State: AOAM532iSuKZ1+xfLOProHj6jLlj2VszgudZ0ZIxpAq1/C0eyGK9hXwW
+        qg3ZwcA3m6Ty8TpV6VD/b9AiqA==
+X-Google-Smtp-Source: ABdhPJzNHEmyAERLK8Q9bksHdOc1tnQqViYMal0w/hgiqj1Yumw/8ZTJWKpfNczS/O1gc4aElQiN+A==
+X-Received: by 2002:a05:6830:3190:: with SMTP id p16mr27854254ots.85.1634081795483;
+        Tue, 12 Oct 2021 16:36:35 -0700 (PDT)
+Received: from ripper ([2600:1700:a0:3dc8:205:1bff:fec0:b9b3])
+        by smtp.gmail.com with ESMTPSA id bn18sm1491706oib.43.2021.10.12.16.36.34
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Oct 2021 16:11:57 -0700 (PDT)
+        Tue, 12 Oct 2021 16:36:35 -0700 (PDT)
+Date:   Tue, 12 Oct 2021 16:38:07 -0700
 From:   Bjorn Andersson <bjorn.andersson@linaro.org>
-To:     arm@kernel.org, soc@kernel.org
-Cc:     linux-arm-msm@vger.kernel.org,
-        linux-arm-kernel@lists.infradead.org,
-        Andy Gross <agross@kernel.org>, Arnd Bergmann <arnd@arndb.de>,
-        Olof Johansson <olof@lixom.net>,
-        Kevin Hilman <khilman@baylibre.com>,
-        AngeloGioacchino Del Regno 
-        <angelogioacchino.delregno@somainline.org>,
-        Konrad Dybcio <konrad.dybcio@somainline.org>,
-        Sibi Sankar <sibis@codeaurora.org>,
-        Stephan Gerhold <stephan@gerhold.net>,
-        Shawn Guo <shawn.guo@linaro.org>,
-        Roja Rani Yarubandi <rojay@codeaurora.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Douglas Anderson <dianders@chromium.org>,
-        Rajesh Patil <rajpat@codeaurora.org>,
-        Yassine Oudjana <y.oudjana@protonmail.com>,
-        Marijn Suijten <marijn.suijten@somainline.org>,
-        Matthias Kaehlcke <mka@chromium.org>,
-        Rajendra Nayak <rnayak@codeaurora.org>,
-        Robert Marko <robimarko@gmail.com>,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        Fabio Estevam <festevam@gmail.com>,
-        Kathiravan T <kathirav@codeaurora.org>,
-        Kuogee Hsieh <khsieh@codeaurora.org>,
-        Manaf Meethalavalappu Pallikunhi <manafm@codeaurora.org>,
-        Raffaele Tranquillini <raffaele.tranquillini@gmail.com>,
-        Sai Prakash Ranjan <saiprakash.ranjan@codeaurora.org>,
-        Shaik Sajida Bhanu <sbhanu@codeaurora.org>,
-        Steev Klimaszewski <steev@kali.org>,
+To:     abhinavk@codeaurora.org
+Cc:     Rob Clark <robdclark@gmail.com>,
         Stephen Boyd <swboyd@chromium.org>,
-        Sujit Kautkar <sujitka@chromium.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        satya priya <skakit@codeaurora.org>
-Subject: [GIT PULL] Qualcomm ARM64 dts updates for v5.16
-Date:   Tue, 12 Oct 2021 18:11:55 -0500
-Message-Id: <20211012231155.1036519-1-bjorn.andersson@linaro.org>
-X-Mailer: git-send-email 2.32.0
+        Kuogee Hsieh <khsieh@codeaurora.org>,
+        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
+        Sean Paul <sean@poorly.run>, David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        linux-kernel@vger.kernel.org
+Subject: Re: [PATCH] drm/msm/dp: Use the connector passed to dp_debug_get()
+Message-ID: <YWYcXxZzjU8gLNf5@ripper>
+References: <20211010030435.4000642-1-bjorn.andersson@linaro.org>
+ <50925d684962690e42b2eb8ab8479835@codeaurora.org>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <50925d684962690e42b2eb8ab8479835@codeaurora.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-The following changes since commit 6880fa6c56601bb8ed59df6c30fd390cc5f6dd8f:
+On Tue 12 Oct 16:03 PDT 2021, abhinavk@codeaurora.org wrote:
 
-  Linux 5.15-rc1 (2021-09-12 16:28:37 -0700)
+> On 2021-10-09 20:04, Bjorn Andersson wrote:
+> > The debugfs code is provided an array of a single drm_connector. Then to
+> > access the connector, the list of all connectors of the DRM device is
+> > traversed and all non-DisplayPort connectors are skipped, to find the
+> > one and only DisplayPort connector.
+> > 
+> > But as we move to support multiple DisplayPort controllers this will now
+> > find multiple connectors and has no way to distinguish them.
+> > 
+> > Pass the single connector to dp_debug_get() and use this in the debugfs
+> > functions instead, both to simplify the code and the support the
+> > multiple instances.
+> > 
+> Change itself is fine, hence
+> Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
+> 
 
-are available in the Git repository at:
+Thanks.
 
-  https://git.kernel.org/pub/scm/linux/kernel/git/qcom/linux.git tags/qcom-arm64-for-5.16
+> What has to be checked now is now to create multiple DP nodes for multi-DP
+> cases.
+> Today, the debug node will be created only once :
+> 
+> https://gitlab.freedesktop.org/drm/msm/-/blob/msm-next/drivers/gpu/drm/msm/disp/dpu1/dpu_kms.c#L206
+> 
+> This also needs to be expanded for multi-DP to make the solution complete.
+> 
 
-for you to fetch changes up to c22441a7cbd014e2546329af89363b2a43cc8bf2:
+In my multi-DP support patch I end up invoking msm_dp_debugfs_init() for
+each of the DP/eDP instances and in its current form the first one gets
+registered and any others will fail because of the resulting name
+collision.
 
-  arm64: dts: qcom: sdm630-nile: Correct regulator label name (2021-09-28 10:36:30 -0500)
+This patch came as a byproduct of the effort of addressing that problem.
 
-----------------------------------------------------------------
-Qualcomm ARM64 dts updates for v5.16
+Regards,
+Bjorn
 
-MSM8916 gained some DT cleanup fixes. The Dragonboard 410c gains updated
-firmware paths to the device specific firmware for modem and WiFi, to
-allow these to be pushed to linux-next. The Longcheer L8150 gains extcon
-support and the interrupt configuration for the accelerometer and
-magnetometer are corrected.
-
-MSM8998 gained descriptions for the multimedia clock controller and
-iommu, as well as the GPU and its dedicated IOMMU. The QFPROM node is
-updated to access the CRC corrected value space, the white LED (for
-backlight) found in PMI8998 is described and GCC gains references to the
-missing XO and sleep_clk reference clocks.
-On top of this initial support for the Fxtec Pro1 QX1000 is added and
-then the Sony Xperia XZ1, Xperia XZ1 Compact and the Xperia XZ Premium,
-with USB, touchscreen, SDHCI, Bluetooth and vibrator supported.
-
-The Xiaomi Mi 5 and Xiaomi Mi Note 2, based on the MSM8996 platform was
-added, with support for frame buffer, GPU, audio, video encoder/decoder
-and touchscreen.
-
-The USB controller and PHY found in IPA6018 is described to provide USB
-support. IPQ8074 gains a description of the SPMI controller.
-
-The highlight on SC7180 is the introduction of the just released
-"Homestar" device.  CPU power coefficients are corrected based on
-measurements, IMEM is described to ensure that remoteproc relocation
-information is carried to post mortem debug tools and a few smaller
-fixes are introduced.
-
-The SC7280 gains QSPI, low speed (i2c/spi/uart), GPU, thermal zones,
-modem, CPU topology and updated memory map.
-
-On SDM845 the "Limits hardware" is described and increases the
-throttling temperature of the hardware from ~70C to 95C, with up to 30%
-improvement in benchmarks as result.  Relying on hardware throttling and
-thermal pressure, the CPU cooling devices are dropped.
-The power for the second WiFi channel is properly described for the
-Lenovo Yoga C630, to ensure they are both powered.
-
-reboot-modes are defined for the PM660 PMIC, found in SDM630 and SDM660.
-
-Initial support for the Snapdragon 690 (aka SM6350) is introduced, with
-support for clocks, regulators, pinctrl, storage, thermal sensors, USB,
-SMMU and CPUfreq. On top of this support for the Sony Xperia 10 III is
-introduced.
-
-----------------------------------------------------------------
-Akhil P Oommen (1):
-      arm64: dts: qcom: sc7280: Add gpu support
-
-AngeloGioacchino Del Regno (17):
-      arm64: dts: qcom: msm8998: Configure the MultiMedia Clock Controller (MMCC)
-      arm64: dts: qcom: msm8998: Configure the multimedia subsystem iommu
-      arm64: dts: qcom: msm8998: Fix CPU/L2 idle state latency and residency
-      arm64: dts: qcom: msm8998: Move qfprom iospace to calibrated values
-      arm64: dts: qcom: msm8998: Configure Adreno GPU and related IOMMU
-      arm64: dts: qcom: pmi8998: Add node for WLED
-      arm64: dts: qcom: msm8998: Introduce support for Sony Yoshino platform
-      arm64: dts: qcom: msm8998-xperia: Add RMI4 touchscreen support
-      arm64: dts: qcom: msm8998-xperia: Add support for wcn3990 Bluetooth
-      arm64: dts: qcom: msm8998-xperia: Add support for gpio vibrator
-      arm64: dts: qcom: msm8998-xperia: Configure display boost regulators
-      arm64: dts: qcom: msm8998-xperia: Add camera regulators
-      arm64: dts: qcom: msm8998-xperia: Add audio clock and its pin
-      arm64: dts: qcom: Add support for MSM8998 F(x)tec Pro1 QX1000
-      arm64: dts: qcom: msm8998-fxtec-pro1: Add physical keyboard leds
-      arm64: dts: qcom: msm8998-fxtec-pro1: Add Goodix GT9286 touchscreen
-      arm64: dts: qcom: msm8998-fxtec-pro1: Add tlmm keyboard keys
-
-Bhupesh Sharma (1):
-      arm64: dts: qcom: sdm845: Use RPMH_CE_CLK macro directly
-
-Bjorn Andersson (1):
-      arm64: dts: qcom: apq8016-sbc: Update modem and WiFi firmware path
-
-Dmitry Baryshkov (3):
-      arm64: dts: qcom: pm8150: use qcom,pm8998-pon binding
-      arm64: dts: qcom: pm8150: specify reboot mode magics
-      arm64: dts: qcom: qrb5165-rb5: enabled pwrkey and resin nodes
-
-Douglas Anderson (3):
-      arm64: dts: qcom: sc7180: Base dynamic CPU power coefficients in reality
-      arm64: dts: qcom: sc7280: Move the SD CD GPIO pin out of the dtsi file
-      arm64: dts: qcom: sc7180: Base homestar's power coefficients in reality
-
-Fabio Estevam (1):
-      arm64: dts: qcom: sm6125: Remove leading zeroes
-
-Kathiravan T (1):
-      arm64: dts: qcom: ipq6018: add usb3 DT description
-
-Konrad Dybcio (17):
-      dt-bindings: arm: cpus: Add Kryo 560 CPUs
-      arm64: dts: qcom: Add SM6350 device tree
-      arm64: dts: qcom: sm6350: Add LLCC node
-      arm64: dts: qcom: sm6350: Add RPMHCC node
-      arm64: dts: qcom: sm6350: Add GCC node
-      arm64: dts: qcom: sm6350: Add TLMM block node
-      arm64: dts: qcom: sm6350: Add USB1 nodes
-      arm64: dts: qcom: sm6350: Add cpufreq-hw support
-      arm64: dts: qcom: sm6350: Add TSENS nodes
-      arm64: dts: qcom: sm6350: Add AOSS_QMP
-      arm64: dts: qcom: sm6350: Add SPMI bus
-      arm64: dts: qcom: sm6350: Add PRNG node
-      arm64: dts: qcom: sm6350: Add RPMHPD and BCM voter
-      arm64: dts: qcom: sm6350: Add SDHCI1/2 nodes
-      arm64: dts: qcom: sm6350: Add apps_smmu and assign iommus prop to USB1
-      arm64: dts: qcom: sm6350: Add device tree for Sony Xperia 10 III
-      arm64: dts: qcom: pm6150l: Add missing include
-
-Kuogee Hsieh (1):
-      arm64: dts: qcom: sc7280: fix display port phy reg property
-
-Manaf Meethalavalappu Pallikunhi (1):
-      arm64: dts: qcom: sc7280: Add gpu thermal zone cooling support
-
-Marijn Suijten (2):
-      arm64: dts: qcom: msm8998: Provide missing "xo" and "sleep_clk" to GCC
-      arm64: dts: qcom: sm6125: Improve indentation of multiline properties
-
-Matthias Kaehlcke (2):
-      arm64: dts: qcom: sc7180-trogdor: Delete ADC config for unused thermistors
-      arm64: dts: qcom: Add sc7180-trogdor-homestar
-
-Raffaele Tranquillini (1):
-      arm64: dts: qcom: msm8996: xiaomi-gemini: Add support for Xiaomi Mi 5
-
-Rajendra Nayak (2):
-      arm64: dts: qcom: sc7280-idp: Add vcc-supply for qfprom
-      arm64: dts: qcom: sc7280: Define CPU topology
-
-Rajesh Patil (3):
-      arm64: dts: qcom: sc7280: Configure SPI-NOR FLASH for sc7280-idp
-      arm64: dts: qcom: sc7280: Configure uart7 to support bluetooth on sc7280-idp
-      arm64: dts: qcom: sc7280: Add aliases for I2C and SPI
-
-Robert Marko (2):
-      arm64: dts: qcom: ipq8074: remove USB tx-fifo-resize property
-      arm64: dts: qcom: ipq8074: add SPMI bus
-
-Roja Rani Yarubandi (4):
-      arm64: dts: qcom: sc7280: Add QSPI node
-      arm64: dts: qcom: sc7280: Add QUPv3 wrapper_0 nodes
-      arm64: dts: qcom: sc7280: Update QUPv3 UART5 DT node
-      arm64: dts: qcom: sc7280: Add QUPv3 wrapper_1 nodes
-
-Sai Prakash Ranjan (1):
-      arm64: dts: qcom: sc7180: Add IMEM and pil info regions
-
-Shaik Sajida Bhanu (1):
-      arm64: dts: qcom: sc7180: Use maximum drive strength values for eMMC
-
-Shawn Guo (6):
-      arm64: dts: qcom: ipq6018: Fix qcom,controlled-remotely property
-      arm64: dts: qcom: ipq8074: Fix qcom,controlled-remotely property
-      arm64: dts: qcom: sdm845: Fix qcom,controlled-remotely property
-      arm64: dts: qcom: Update BAM DMA node name per DT schema
-      arm64: dts: qcom: pm660: Add reboot mode support
-      arm64: dts: qcom: sdm630-nile: Correct regulator label name
-
-Sibi Sankar (11):
-      arm64: dts: qcom: sc7180: Use QMP property to control load state
-      arm64: dts: qcom: sc7280: Use QMP property to control load state
-      arm64: dts: qcom: sdm845: Use QMP property to control load state
-      arm64: dts: qcom: sm8150: Use QMP property to control load state
-      arm64: dts: qcom: sm8250: Use QMP property to control load state
-      arm64: dts: qcom: sm8350: Use QMP property to control load state
-      arm64: dts: qcom: sc7280: Update reserved memory map
-      arm64: dts: qcom: sc7280: Add/Delete/Update reserved memory nodes
-      arm64: dts: qcom: sc7280: Add nodes to boot modem
-      arm64: dts: qcom: sc7280: Add Q6V5 MSS node
-      arm64: dts: qcom: sc7280: Update Q6V5 MSS node
-
-Steev Klimaszewski (1):
-      arm64: dts: qcom: c630: add second channel for wifi
-
-Stephan Gerhold (7):
-      arm64: dts: qcom: msm8916: Add unit name for /soc node
-      arm64: dts: qcom: msm8916: Add "qcom,msm8916-sdhci" compatible
-      arm64: dts: qcom: msm8916-longcheer-l8150: Add missing sensor interrupts
-      arm64: dts: qcom: msm8916: Fix Secondary MI2S bit clock
-      arm64: dts: qcom: pm8916: Remove wrong reg-names for rtc@6000
-      arm64: dts: qcom: pm8916: Add pm8941-misc extcon for USB detection
-      arm64: dts: qcom: msm8916-longcheer-l8150: Use &pm8916_usbin extcon
-
-Stephen Boyd (1):
-      arm64: dts: qcom: sc7280: Use GIC_SPI for intc cells
-
-Sujit Kautkar (1):
-      arm64: dts: qcom: sc7180-trogdor: Enable IPA on LTE only SKUs
-
-Taniya Das (1):
-      arm64: dts: qcom: sc7280: Add clock controller ID headers
-
-Thara Gopinath (2):
-      arm64: dts: qcom: sdm845: Add support for LMh node
-      arm64: dts: qcom: sdm845: Remove cpufreq cooling devices for CPU thermal zones
-
-Yassine Oudjana (3):
-      arm64: dts: qcom: db820c: Move blsp1_uart2 pin states to msm8996.dtsi
-      arm64: dts: qcom: msm8996: Add blsp2_i2c3
-      arm64: dts: qcom: msm8996: Add support for the Xiaomi MSM8996 platform
-
-satya priya (1):
-      arm64: dts: qcom: sc7280: Add volume up support for sc7280-idp
-
- Documentation/devicetree/bindings/arm/cpus.yaml    |    1 +
- arch/arm64/boot/dts/qcom/Makefile                  |    9 +
- arch/arm64/boot/dts/qcom/apq8016-sbc.dtsi          |   12 +
- arch/arm64/boot/dts/qcom/apq8096-db820c.dtsi       |   29 -
- arch/arm64/boot/dts/qcom/ipq6018.dtsi              |   85 +-
- arch/arm64/boot/dts/qcom/ipq8074.dtsi              |   25 +-
- .../boot/dts/qcom/msm8916-longcheer-l8150.dts      |   62 +-
- arch/arm64/boot/dts/qcom/msm8916.dtsi              |   16 +-
- .../arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi |  673 ++++
- arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts |  431 +++
- .../arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dts |  431 +++
- arch/arm64/boot/dts/qcom/msm8996.dtsi              |   53 +-
- arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts    |  319 ++
- .../dts/qcom/msm8998-sony-xperia-yoshino-lilac.dts |   30 +
- .../dts/qcom/msm8998-sony-xperia-yoshino-maple.dts |   54 +
- .../qcom/msm8998-sony-xperia-yoshino-poplar.dts    |   35 +
- .../boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi |  670 ++++
- arch/arm64/boot/dts/qcom/msm8998.dtsi              |  200 +-
- arch/arm64/boot/dts/qcom/pm6150l.dtsi              |    1 +
- arch/arm64/boot/dts/qcom/pm660.dtsi                |    5 +-
- arch/arm64/boot/dts/qcom/pm8150.dtsi               |    4 +-
- arch/arm64/boot/dts/qcom/pm8916.dtsi               |    9 +-
- arch/arm64/boot/dts/qcom/pmi8998.dtsi              |   12 +
- arch/arm64/boot/dts/qcom/qrb5165-rb5.dts           |   10 +
- .../boot/dts/qcom/sc7180-trogdor-coachz-r1.dts     |   14 +
- .../arm64/boot/dts/qcom/sc7180-trogdor-coachz.dtsi |    2 +-
- .../boot/dts/qcom/sc7180-trogdor-homestar-r2.dts   |   20 +
- .../boot/dts/qcom/sc7180-trogdor-homestar-r3.dts   |   15 +
- .../boot/dts/qcom/sc7180-trogdor-homestar.dtsi     |  335 ++
- arch/arm64/boot/dts/qcom/sc7180-trogdor-lazor.dtsi |   12 +
- .../boot/dts/qcom/sc7180-trogdor-lte-sku.dtsi      |   11 +
- .../boot/dts/qcom/sc7180-trogdor-pompom-r1.dts     |    8 +
- .../boot/dts/qcom/sc7180-trogdor-pompom-r2.dts     |    8 +
- .../arm64/boot/dts/qcom/sc7180-trogdor-pompom.dtsi |    8 +-
- arch/arm64/boot/dts/qcom/sc7180-trogdor.dtsi       |   15 +-
- arch/arm64/boot/dts/qcom/sc7180.dtsi               |   76 +-
- arch/arm64/boot/dts/qcom/sc7280-idp.dtsi           |  225 +-
- arch/arm64/boot/dts/qcom/sc7280.dtsi               | 3430 +++++++++++++++-----
- .../boot/dts/qcom/sdm630-sony-xperia-nile.dtsi     |    8 +-
- arch/arm64/boot/dts/qcom/sdm845.dtsi               |  182 +-
- .../boot/dts/qcom/sdm850-lenovo-yoga-c630.dts      |    5 +
- arch/arm64/boot/dts/qcom/sm6125.dtsi               |   52 +-
- .../dts/qcom/sm6350-sony-xperia-lena-pdx213.dts    |   57 +
- arch/arm64/boot/dts/qcom/sm6350.dtsi               |  934 ++++++
- arch/arm64/boot/dts/qcom/sm8150.dtsi               |   28 +-
- arch/arm64/boot/dts/qcom/sm8250.dtsi               |   22 +-
- arch/arm64/boot/dts/qcom/sm8350.dtsi               |   30 +-
- 47 files changed, 7534 insertions(+), 1139 deletions(-)
- create mode 100644 arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
- create mode 100644 arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
- create mode 100644 arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dts
- create mode 100644 arch/arm64/boot/dts/qcom/msm8998-fxtec-pro1.dts
- create mode 100644 arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino-lilac.dts
- create mode 100644 arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino-maple.dts
- create mode 100644 arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino-poplar.dts
- create mode 100644 arch/arm64/boot/dts/qcom/msm8998-sony-xperia-yoshino.dtsi
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r2.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar-r3.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sc7180-trogdor-homestar.dtsi
- create mode 100644 arch/arm64/boot/dts/qcom/sm6350-sony-xperia-lena-pdx213.dts
- create mode 100644 arch/arm64/boot/dts/qcom/sm6350.dtsi
+> > Signed-off-by: Bjorn Andersson <bjorn.andersson@linaro.org>
+> > ---
+> >  drivers/gpu/drm/msm/dp/dp_debug.c   | 131 ++++++++++------------------
+> >  drivers/gpu/drm/msm/dp/dp_debug.h   |   2 +-
+> >  drivers/gpu/drm/msm/dp/dp_display.c |   2 +-
+> >  3 files changed, 46 insertions(+), 89 deletions(-)
+> > 
+> > diff --git a/drivers/gpu/drm/msm/dp/dp_debug.c
+> > b/drivers/gpu/drm/msm/dp/dp_debug.c
+> > index af709d93bb9f..da4323556ef3 100644
+> > --- a/drivers/gpu/drm/msm/dp/dp_debug.c
+> > +++ b/drivers/gpu/drm/msm/dp/dp_debug.c
+> > @@ -24,7 +24,7 @@ struct dp_debug_private {
+> >  	struct dp_usbpd *usbpd;
+> >  	struct dp_link *link;
+> >  	struct dp_panel *panel;
+> > -	struct drm_connector **connector;
+> > +	struct drm_connector *connector;
+> >  	struct device *dev;
+> >  	struct drm_device *drm_dev;
+> > 
+> > @@ -97,59 +97,35 @@ DEFINE_SHOW_ATTRIBUTE(dp_debug);
+> > 
+> >  static int dp_test_data_show(struct seq_file *m, void *data)
+> >  {
+> > -	struct drm_device *dev;
+> > -	struct dp_debug_private *debug;
+> > -	struct drm_connector *connector;
+> > -	struct drm_connector_list_iter conn_iter;
+> > +	const struct dp_debug_private *debug = m->private;
+> > +	const struct drm_connector *connector = debug->connector;
+> >  	u32 bpc;
+> > 
+> > -	debug = m->private;
+> > -	dev = debug->drm_dev;
+> > -	drm_connector_list_iter_begin(dev, &conn_iter);
+> > -	drm_for_each_connector_iter(connector, &conn_iter) {
+> > -
+> > -		if (connector->connector_type !=
+> > -			DRM_MODE_CONNECTOR_DisplayPort)
+> > -			continue;
+> > -
+> > -		if (connector->status == connector_status_connected) {
+> > -			bpc = debug->link->test_video.test_bit_depth;
+> > -			seq_printf(m, "hdisplay: %d\n",
+> > -					debug->link->test_video.test_h_width);
+> > -			seq_printf(m, "vdisplay: %d\n",
+> > -					debug->link->test_video.test_v_height);
+> > -			seq_printf(m, "bpc: %u\n",
+> > -					dp_link_bit_depth_to_bpc(bpc));
+> > -		} else
+> > -			seq_puts(m, "0");
+> > +	if (connector->status == connector_status_connected) {
+> > +		bpc = debug->link->test_video.test_bit_depth;
+> > +		seq_printf(m, "hdisplay: %d\n",
+> > +				debug->link->test_video.test_h_width);
+> > +		seq_printf(m, "vdisplay: %d\n",
+> > +				debug->link->test_video.test_v_height);
+> > +		seq_printf(m, "bpc: %u\n",
+> > +				dp_link_bit_depth_to_bpc(bpc));
+> > +	} else {
+> > +		seq_puts(m, "0");
+> >  	}
+> > 
+> > -	drm_connector_list_iter_end(&conn_iter);
+> > -
+> >  	return 0;
+> >  }
+> >  DEFINE_SHOW_ATTRIBUTE(dp_test_data);
+> > 
+> >  static int dp_test_type_show(struct seq_file *m, void *data)
+> >  {
+> > -	struct dp_debug_private *debug = m->private;
+> > -	struct drm_device *dev = debug->drm_dev;
+> > -	struct drm_connector *connector;
+> > -	struct drm_connector_list_iter conn_iter;
+> > -
+> > -	drm_connector_list_iter_begin(dev, &conn_iter);
+> > -	drm_for_each_connector_iter(connector, &conn_iter) {
+> > -
+> > -		if (connector->connector_type !=
+> > -			DRM_MODE_CONNECTOR_DisplayPort)
+> > -			continue;
+> > +	const struct dp_debug_private *debug = m->private;
+> > +	const struct drm_connector *connector = debug->connector;
+> > 
+> > -		if (connector->status == connector_status_connected)
+> > -			seq_printf(m, "%02x", DP_TEST_LINK_VIDEO_PATTERN);
+> > -		else
+> > -			seq_puts(m, "0");
+> > -	}
+> > -	drm_connector_list_iter_end(&conn_iter);
+> > +	if (connector->status == connector_status_connected)
+> > +		seq_printf(m, "%02x", DP_TEST_LINK_VIDEO_PATTERN);
+> > +	else
+> > +		seq_puts(m, "0");
+> > 
+> >  	return 0;
+> >  }
+> > @@ -161,14 +137,12 @@ static ssize_t dp_test_active_write(struct file
+> > *file,
+> >  {
+> >  	char *input_buffer;
+> >  	int status = 0;
+> > -	struct dp_debug_private *debug;
+> > -	struct drm_device *dev;
+> > -	struct drm_connector *connector;
+> > -	struct drm_connector_list_iter conn_iter;
+> > +	const struct dp_debug_private *debug;
+> > +	const struct drm_connector *connector;
+> >  	int val = 0;
+> > 
+> >  	debug = ((struct seq_file *)file->private_data)->private;
+> > -	dev = debug->drm_dev;
+> > +	connector = debug->connector;
+> > 
+> >  	if (len == 0)
+> >  		return 0;
+> > @@ -179,30 +153,22 @@ static ssize_t dp_test_active_write(struct file
+> > *file,
+> > 
+> >  	DRM_DEBUG_DRIVER("Copied %d bytes from user\n", (unsigned int)len);
+> > 
+> > -	drm_connector_list_iter_begin(dev, &conn_iter);
+> > -	drm_for_each_connector_iter(connector, &conn_iter) {
+> > -		if (connector->connector_type !=
+> > -			DRM_MODE_CONNECTOR_DisplayPort)
+> > -			continue;
+> > -
+> > -		if (connector->status == connector_status_connected) {
+> > -			status = kstrtoint(input_buffer, 10, &val);
+> > -			if (status < 0)
+> > -				break;
+> > -			DRM_DEBUG_DRIVER("Got %d for test active\n", val);
+> > -			/* To prevent erroneous activation of the compliance
+> > -			 * testing code, only accept an actual value of 1 here
+> > -			 */
+> > -			if (val == 1)
+> > -				debug->panel->video_test = true;
+> > -			else
+> > -				debug->panel->video_test = false;
+> > +	if (connector->status == connector_status_connected) {
+> > +		status = kstrtoint(input_buffer, 10, &val);
+> > +		if (status < 0) {
+> > +			kfree(input_buffer);
+> > +			return status;
+> >  		}
+> > +		DRM_DEBUG_DRIVER("Got %d for test active\n", val);
+> > +		/* To prevent erroneous activation of the compliance
+> > +		 * testing code, only accept an actual value of 1 here
+> > +		 */
+> > +		if (val == 1)
+> > +			debug->panel->video_test = true;
+> > +		else
+> > +			debug->panel->video_test = false;
+> >  	}
+> > -	drm_connector_list_iter_end(&conn_iter);
+> >  	kfree(input_buffer);
+> > -	if (status < 0)
+> > -		return status;
+> > 
+> >  	*offp += len;
+> >  	return len;
+> > @@ -211,25 +177,16 @@ static ssize_t dp_test_active_write(struct file
+> > *file,
+> >  static int dp_test_active_show(struct seq_file *m, void *data)
+> >  {
+> >  	struct dp_debug_private *debug = m->private;
+> > -	struct drm_device *dev = debug->drm_dev;
+> > -	struct drm_connector *connector;
+> > -	struct drm_connector_list_iter conn_iter;
+> > -
+> > -	drm_connector_list_iter_begin(dev, &conn_iter);
+> > -	drm_for_each_connector_iter(connector, &conn_iter) {
+> > -		if (connector->connector_type !=
+> > -			DRM_MODE_CONNECTOR_DisplayPort)
+> > -			continue;
+> > -
+> > -		if (connector->status == connector_status_connected) {
+> > -			if (debug->panel->video_test)
+> > -				seq_puts(m, "1");
+> > -			else
+> > -				seq_puts(m, "0");
+> > -		} else
+> > +	struct drm_connector *connector = debug->connector;
+> > +
+> > +	if (connector->status == connector_status_connected) {
+> > +		if (debug->panel->video_test)
+> > +			seq_puts(m, "1");
+> > +		else
+> >  			seq_puts(m, "0");
+> > +	} else {
+> > +		seq_puts(m, "0");
+> >  	}
+> > -	drm_connector_list_iter_end(&conn_iter);
+> > 
+> >  	return 0;
+> >  }
+> > @@ -278,7 +235,7 @@ static int dp_debug_init(struct dp_debug
+> > *dp_debug, struct drm_minor *minor)
+> > 
+> >  struct dp_debug *dp_debug_get(struct device *dev, struct dp_panel
+> > *panel,
+> >  		struct dp_usbpd *usbpd, struct dp_link *link,
+> > -		struct drm_connector **connector, struct drm_minor *minor)
+> > +		struct drm_connector *connector, struct drm_minor *minor)
+> >  {
+> >  	int rc = 0;
+> >  	struct dp_debug_private *debug;
+> > diff --git a/drivers/gpu/drm/msm/dp/dp_debug.h
+> > b/drivers/gpu/drm/msm/dp/dp_debug.h
+> > index 7eaedfbb149c..3f90acfffc5a 100644
+> > --- a/drivers/gpu/drm/msm/dp/dp_debug.h
+> > +++ b/drivers/gpu/drm/msm/dp/dp_debug.h
+> > @@ -43,7 +43,7 @@ struct dp_debug {
+> >   */
+> >  struct dp_debug *dp_debug_get(struct device *dev, struct dp_panel
+> > *panel,
+> >  		struct dp_usbpd *usbpd, struct dp_link *link,
+> > -		struct drm_connector **connector,
+> > +		struct drm_connector *connector,
+> >  		struct drm_minor *minor);
+> > 
+> >  /**
+> > diff --git a/drivers/gpu/drm/msm/dp/dp_display.c
+> > b/drivers/gpu/drm/msm/dp/dp_display.c
+> > index 1708b7cdc1b3..41a6f58916e6 100644
+> > --- a/drivers/gpu/drm/msm/dp/dp_display.c
+> > +++ b/drivers/gpu/drm/msm/dp/dp_display.c
+> > @@ -1464,7 +1464,7 @@ void msm_dp_debugfs_init(struct msm_dp
+> > *dp_display, struct drm_minor *minor)
+> >  	dev = &dp->pdev->dev;
+> > 
+> >  	dp->debug = dp_debug_get(dev, dp->panel, dp->usbpd,
+> > -					dp->link, &dp->dp_display.connector,
+> > +					dp->link, dp->dp_display.connector,
+> >  					minor);
+> >  	if (IS_ERR(dp->debug)) {
+> >  		rc = PTR_ERR(dp->debug);
