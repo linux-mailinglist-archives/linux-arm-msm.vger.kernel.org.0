@@ -2,55 +2,55 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 198FF42B0A4
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 01:55:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7EE8742B0AA
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 01:59:50 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S235119AbhJLX5B (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Tue, 12 Oct 2021 19:57:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:47910 "EHLO
+        id S234903AbhJMABv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Tue, 12 Oct 2021 20:01:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48962 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S234140AbhJLX5A (ORCPT
+        with ESMTP id S232243AbhJMABu (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Tue, 12 Oct 2021 19:57:00 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1243AC061746
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Oct 2021 16:54:58 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id ec8so2590084edb.6
-        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Oct 2021 16:54:57 -0700 (PDT)
+        Tue, 12 Oct 2021 20:01:50 -0400
+Received: from mail-ed1-x52a.google.com (mail-ed1-x52a.google.com [IPv6:2a00:1450:4864:20::52a])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E2B2EC061570
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Oct 2021 16:59:47 -0700 (PDT)
+Received: by mail-ed1-x52a.google.com with SMTP id d3so2690172edp.3
+        for <linux-arm-msm@vger.kernel.org>; Tue, 12 Oct 2021 16:59:47 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=mime-version:references:in-reply-to:from:date:message-id:subject:to
          :cc;
-        bh=JsDhOlqzhOapvl8qxZ/zkHGlh54hY6Kt5vSuddjS2m8=;
-        b=jNR2hBGDsozEooWWvO9GWItqGjJUZg4h7ASntvUqvgN263KyNqEKuIkQ+9JwuLlHJC
-         rmMLJRkNYZtc+mINxh1zuZgPeE1Y4VHbmk5J0p2QfEeWGRRVHfTTtkVfOwrQiQhSrjuC
-         wXLlSvn688W0u9euPEq04KXD994cwEft8X/wUu06OvI4u8Gb8GqvFos8PCsl6d0SEvhM
-         9VX55ChOyMd28ZGMxsrOEwLfTO5YnsL4LipilL3VlmJxj5khEcDbb2+84Lqk1ixZucX5
-         tEPLqip+3aX6X/FIve2FBOCF0p0gtx1yFx+m6jHuel+Nzt7P6GFO+uHVzcBN85JYvbLI
-         MQWQ==
+        bh=pA/RLR0KfHQo0D8Z/6AcxihH5fdEamebhyEqoCoH4js=;
+        b=NgLAwMaGbmUpS08qwcfFBxXGk97MvrDJzl+Zy9GxbMz2FgHsuLSjIoLw29SgHz0bae
+         9e9QKK7XDIYQSljiJg1Z2S1XkPpGL4PizP+l+uzo73L5GL/Lzhx7AuHHJLSVKt5Pp+x/
+         nFCrSmi4+L5gStAt3H06UFjMdRUI9sBX7bYOI0zbH3BJ67b75khA7bizEA83aiHrB64i
+         CbJl2UHuxXGEcxCTTJ9VoBoiPDE+SYy6fGMu5L4FlyCOHxqlCgZfxhB4onKVCgDgAmlf
+         HCBk/c3Pv809yvj759/8HZvIeipZswDs9pI0ZLXPbmJhW7V+iVUfFWuvVbgKAcwZwR8k
+         5iyw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:mime-version:references:in-reply-to:from:date
          :message-id:subject:to:cc;
-        bh=JsDhOlqzhOapvl8qxZ/zkHGlh54hY6Kt5vSuddjS2m8=;
-        b=V2LvlQuvAOjy3cGsmIHRAEE9C0QwxFk13nC04EQIoLUtjLrcEvfN43RMmVEf6+v0P/
-         zAAYHDH0GOnd+lsB6gMI69HLKdsemJQEwGVBohksDdCHIPk9HQNiOxFVL4I4z+7ApvgM
-         SJXwowu38LZXNMvBaEyoXGCulqj3fICy2LhjWeXtHEjWOIyAf0rOjlJwMFiy0un13mQP
-         LHoVHpKE7A5b14hweyc7XlN8bUoV4VeQA+mExQAVeuAT9T8JD2phJL+sJpvVKY8rIDDC
-         m0zs/cbAFVMXs+GLAh8O8EqOgA5dwkYOPEz8BhMoGoduH48mB1zdTqxhW6yKcWbWi+Hf
-         JN+g==
-X-Gm-Message-State: AOAM531o2w75u3lTOuSEi8jJrXjpqBL0mP8Co/PtDKNDHG/ZGUx72rpp
-        WUF91XUOyQMzi7L0xNstIGxbuFKsIwkpgwzSEdsoLw==
-X-Google-Smtp-Source: ABdhPJy0Ta/y0E0vjs17iI7GLoMijAuqH+qD48WZvbHmNnsvA0FTaJkHEiqVaJJ7O8N7vTMtkohDE4idInHyytpVcjc=
-X-Received: by 2002:a17:907:118d:: with SMTP id uz13mr38510164ejb.382.1634082896509;
- Tue, 12 Oct 2021 16:54:56 -0700 (PDT)
+        bh=pA/RLR0KfHQo0D8Z/6AcxihH5fdEamebhyEqoCoH4js=;
+        b=5OujBv1woUKtCTX3YlRj7pSGTlu1TepkBb5EVyecFjpreXp6hPvJlnuG/gOkA/0Acq
+         CCK7D2L5rS8R6WJYJLhw0angj+Ctk3KQqcs2yNjoybPUOVy8p9Kyr16ROoV56SoxOobt
+         hy1OW+CSG0Agla/TRFhzXMccQz3YB/kYMiOj+nEnfsWtwGdquyGRmmrJiLciJ+evMnOc
+         0UrFY8CbHg3XemCS12zWTc/V2rFpibVFsrGNeeszZDYNrUsYM+6qT0N18AeHnHNMb+iT
+         rSuA0KkBM6YCLc+7/fj433ez4IUdaGXeFAghPoyZLb3EJH8EdYyCCwwmcno2FsRUuGNy
+         5O7g==
+X-Gm-Message-State: AOAM532IAV/P+jS1rHSjPk/E1NvYP7Ov1ZYGYM4F8k9j6/c1M8YwkwJO
+        S6HsJ8njsfGO33K8TP+up0DHSvT1d27j+gG18e9mXg==
+X-Google-Smtp-Source: ABdhPJxbTyvOlEME29e2j+RkbfPt0NEPM4IQeMGrTtrmsNasAnyXtTpQbfSjPAEtbeGr0KaEdx7nUJlQAMiUSRr8oeU=
+X-Received: by 2002:a05:6402:410:: with SMTP id q16mr4556268edv.286.1634083186495;
+ Tue, 12 Oct 2021 16:59:46 -0700 (PDT)
 MIME-Version: 1.0
-References: <20211008012524.481877-1-dmitry.baryshkov@linaro.org> <20211008012524.481877-4-dmitry.baryshkov@linaro.org>
-In-Reply-To: <20211008012524.481877-4-dmitry.baryshkov@linaro.org>
+References: <20211008012524.481877-1-dmitry.baryshkov@linaro.org>
+In-Reply-To: <20211008012524.481877-1-dmitry.baryshkov@linaro.org>
 From:   Linus Walleij <linus.walleij@linaro.org>
-Date:   Wed, 13 Oct 2021 01:54:45 +0200
-Message-ID: <CACRpkdZEdJU9sjV2VPejSPc7Rpth3JFrtYihuT9P0VJVnqLqyA@mail.gmail.com>
-Subject: Re: [PATCH v3 03/25] ARM: dts: qcom-apq8064: add gpio-ranges to mpps nodes
+Date:   Wed, 13 Oct 2021 01:59:35 +0200
+Message-ID: <CACRpkda_hW7vbvC1jizRa05ZdgeL-FkU3_zF+rvCfRBuRB3+VQ@mail.gmail.com>
+Subject: Re:
 To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 Cc:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
@@ -66,12 +66,23 @@ X-Mailing-List: linux-arm-msm@vger.kernel.org
 On Fri, Oct 8, 2021 at 3:25 AM Dmitry Baryshkov
 <dmitry.baryshkov@linaro.org> wrote:
 
-> Add gpio-ranges property to mpps device tree nodes, adding the mapping between
-> pinctrl and GPIO pins.
+> In 2019 (in kernel 5.4) spmi-gpio and ssbi-gpio drivers were converted
+> to hierarchical IRQ helpers, however MPP drivers were not converted at
+> that moment. Complete this by converting MPP drivers.
 >
-> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+> Changes since v2:
+>  - Add patches fixing/updating mpps nodes in the existing device trees
 
-Reviewed-by: Linus Walleij <linus.walleij@linaro.org>
+Thanks a *lot* for being thorough and fixing all this properly!
+
+I am happy to apply the pinctrl portions to the pinctrl tree, I'm
+uncertain about Rob's syntax checker robot here, are there real
+problems? Sometimes it complains about things being changed
+in the DTS files at the same time.
+
+I could apply all of this (including DTS changes) to an immutable
+branch and offer to Bjorn if he is fine with the patches and
+the general approach.
 
 Yours,
 Linus Walleij
