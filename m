@@ -2,172 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 74EEC42C0ED
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 15:05:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 502C342C1A8
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 15:45:20 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234712AbhJMNHb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Oct 2021 09:07:31 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:58180 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S233368AbhJMNHY (ORCPT
+        id S231644AbhJMNrV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Oct 2021 09:47:21 -0400
+Received: from new2-smtp.messagingengine.com ([66.111.4.224]:43331 "EHLO
+        new2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229611AbhJMNrV (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Oct 2021 09:07:24 -0400
-Received: from mail-lf1-x136.google.com (mail-lf1-x136.google.com [IPv6:2a00:1450:4864:20::136])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id B5913C061753
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Oct 2021 06:05:19 -0700 (PDT)
-Received: by mail-lf1-x136.google.com with SMTP id u18so11479326lfd.12
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Oct 2021 06:05:19 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=xowPA0KXkDimH5diDPNJR7+P4PZbybslKdAEHgBwaCw=;
-        b=s0FRSbCg+aUO1rTNrATLxL+l6IGjLXN7+TMv7tgNoLErDOmqGT4xWn8Nq2zNs5i2w/
-         hwbTSI1PehHXFY8S83cprG48o3vRAtSypgkUvfhzp6YOV/IF267y4MCwLBo+5vDWyvqC
-         d4xWpeAmaX+GUMLAmCerk7PIMuyz+pIw+KwWkG3Gdtd89570uxLA6J9Il7nWB0NAwXJH
-         KK7SQD/V60XnmgKJCe9BVXg3PWsTLliMa3EMExdohHirPOwhbM0vXm8avgYdMHPp5IIX
-         uMPBrtUxkB0LxUz5iQJ/bLx18aaaovVXN49vcjjxs2L8mSBu7pmG7fHVo0+74k2UQf4+
-         CEBA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=xowPA0KXkDimH5diDPNJR7+P4PZbybslKdAEHgBwaCw=;
-        b=hi/w43FQhg0czryCNDOMn2oEpD5CU7BPe+mzUb+F9l+ccoGtzNrOGjbG2RRVzPROIP
-         PICwg0p8T9Ijz0AT/H4ELCRRRKav/v3rOxbGSHnlJERFkArZBFju39N4m+f1zlfcgS16
-         0V5Fz/VmB/GjjwAKnsbJEFqPvuiEuAvEHzrt5Tgwzu2ysgnUXNSzbAtT4Q0eG4Cm8fU0
-         He9JTA8GQ7FrHIGBFsZgZ/FHmz47bR76/hFk7JTgLuJUn+AdIVB5KBjzjBk8PrAxfsr5
-         qrRlSIIDipchiuUwuUDT6nl1RFHMusvbTxxKgd4QcRsS/8vi2jmv0q0OSDmge+Qkp/rT
-         Ipew==
-X-Gm-Message-State: AOAM53279sOPSJYiz/iaLpp8POxSvRJebRH8sNq7SyHbibx0I4c2i2vS
-        omz7n/MDnQkssnDlf3USu4nmyQ==
-X-Google-Smtp-Source: ABdhPJwIZLLaMhm3M7J6QiDzYJdWa2mNtm9tk6WbTR9xWYATnnQynUkZYRkYvQjmnu3/QYJxqIxtAQ==
-X-Received: by 2002:a05:651c:514:: with SMTP id o20mr37782556ljp.305.1634130318011;
-        Wed, 13 Oct 2021 06:05:18 -0700 (PDT)
-Received: from [192.168.1.102] (62-248-207-242.elisa-laajakaista.fi. [62.248.207.242])
-        by smtp.gmail.com with ESMTPSA id y6sm1327449lfa.122.2021.10.13.06.05.17
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Oct 2021 06:05:17 -0700 (PDT)
-Subject: Re: [PATCH v4 07/20] dt-bindings: qcom-qce: Convert bindings to yaml
-To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
-        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org
-Cc:     bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
-        devicetree@vger.kernel.org, robh+dt@kernel.org, agross@kernel.org,
-        herbert@gondor.apana.org.au, davem@davemloft.net,
-        Thara Gopinath <thara.gopinath@linaro.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Herring <robh@kernel.org>
-References: <20211013105541.68045-1-bhupesh.sharma@linaro.org>
- <20211013105541.68045-8-bhupesh.sharma@linaro.org>
-From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Message-ID: <f58d549a-5ce3-a51d-c371-a3ffdc76496d@linaro.org>
-Date:   Wed, 13 Oct 2021 16:05:17 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.1
+        Wed, 13 Oct 2021 09:47:21 -0400
+Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
+        by mailnew.nyi.internal (Postfix) with ESMTP id 6E91658109A;
+        Wed, 13 Oct 2021 09:45:17 -0400 (EDT)
+Received: from mailfrontend1 ([10.202.2.162])
+  by compute6.internal (MEProxy); Wed, 13 Oct 2021 09:45:17 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=
+        date:from:to:cc:subject:message-id:references:mime-version
+        :content-type:in-reply-to; s=fm1; bh=FgY2hnPsjJYOKFF2DfGAEdLl833
+        3nbKBOAi3tBKnQlQ=; b=ILAGaEIzzGT1Crwgs6sVwiM8jp7fDV292TfRxD9WjM3
+        nLQuvEp7LxnDwPl1JxXScK1ThPlXr4Wf49BDFVjOdlOqjYi4pTMXr45knwt8FhRO
+        ckI1ffIItH6jTDPHsxyOee0Vp6brQISi1OJuf4jMReH/04LAi2CeRvWmCnxI+jJf
+        6RTKViyIiRk/EzZf8+voCBu1+rodC5nYkFMtqnrOm46yKv/SRareb1ZcSBA8kNgh
+        6nInIt13Gs3YMi77ME49LtJtwSCSbP2zHBOECWl1vOcrDVOwmi/IykIIIsN76YIv
+        9rq4xzNZB4B8ghtuVHx0fjuDbd19pbONRY5JR96sClw==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-type:date:from:in-reply-to
+        :message-id:mime-version:references:subject:to:x-me-proxy
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=FgY2hn
+        PsjJYOKFF2DfGAEdLl8333nbKBOAi3tBKnQlQ=; b=MCzneJUdJskivibM/B8m58
+        p2fJLYMp7cyea/+gacO5Q5XzORoDOfwMLAuHquGTCq+IubJQtv8azQTrSFtmfY+T
+        xI3QG2RpB71HWqh/nV2uukpdKivNfJmIMX1UtjwghV2kEvwi5oS5GpPDHwdujSyD
+        eu1HU7jVf4oMxdjgMJ9GpsZcIfrAHk+ngxFzOLWShE+blBVtTKn4gJkS269elpSU
+        cO4AOodQSEOOr50Ur7bJ6wfWzqSoAzEnuIBbsz82iFFUUmewYkzlPJsCpFBUY1lx
+        6m8Be/NzoY4gM7vBWt38OSeYvkBgWr8SadMPsgQlpyfhLVJ1sc/riwGsoVB8op7Q
+        ==
+X-ME-Sender: <xms:6-JmYT_Z-TnrdWsnG0qgims4_VgA5CMDoXKnsChz4Hi9tQEkX9i40g>
+    <xme:6-JmYfs1mlil60fbhZCpXwSBBQhGDAbSiWZlMPPM8xuLcufbMIM-lLYKPZVhHrT3C
+    Oc8oDIMSVglG0qVfKs>
+X-ME-Received: <xmr:6-JmYRDW7Ko8H9rRg5acJMSiNT3bm9NH7S1_rjcsTzsk9GgmguxJX8lqdPGfBiPNPrB_C19niqYJQIXemaYSb42GMmHmW18oBwdGDBbP>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvddutddgieejucetufdoteggodetrfdotf
+    fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
+    uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
+    cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpeforgigihhm
+    vgcutfhiphgrrhguuceomhgrgihimhgvsegtvghrnhhordhtvggthheqnecuggftrfgrth
+    htvghrnhepudfhgeffjedvueegudehgeevgefhgfdujeeguedvgeelgeeuffeifedtheet
+    leeinecuffhomhgrihhnpehfrhgvvgguvghskhhtohhprdhorhhgpdhlihhnrghrohdroh
+    hrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehm
+    rgigihhmvgestggvrhhnohdrthgvtghh
+X-ME-Proxy: <xmx:6-JmYffwzApL3L4WQhcOYb-3771Otqxn9jsWg_yLnO87TsS8nZvBEg>
+    <xmx:6-JmYYNHuEuEJKhvTyNMtYEUHSe7hNvRytMC7_3KoGGmt-qktJ1vbQ>
+    <xmx:6-JmYRnBYNUJTjZusigkIzqQJ_hxZTVsvrH6WhonWbSoc8PzZNOQbA>
+    <xmx:7eJmYbioKLHlBrVGP2IgnvTOW-FAvO43thR-PKrmfHMMsh-wnfd0Cw>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 13 Oct 2021 09:45:15 -0400 (EDT)
+Date:   Wed, 13 Oct 2021 15:45:13 +0200
+From:   Maxime Ripard <maxime@cerno.tech>
+To:     John Stultz <john.stultz@linaro.org>
+Cc:     Andrzej Hajda <a.hajda@samsung.com>,
+        Sam Ravnborg <sam@ravnborg.org>,
+        Daniel Vetter <daniel.vetter@intel.com>,
+        David Airlie <airlied@linux.ie>,
+        Jonas Karlman <jonas@kwiboo.se>,
+        Laurent Pinchart <Laurent.pinchart@ideasonboard.com>,
+        Thierry Reding <thierry.reding@gmail.com>,
+        Maarten Lankhorst <maarten.lankhorst@linux.intel.com>,
+        Thomas Zimmermann <tzimmermann@suse.de>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Robert Foss <robert.foss@linaro.org>,
+        Jernej Skrabec <jernej.skrabec@gmail.com>,
+        Sean Paul <sean@poorly.run>,
+        "open list:DRM DRIVER FOR MSM ADRENO GPU" 
+        <freedreno@lists.freedesktop.org>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        lkml <linux-kernel@vger.kernel.org>,
+        Xinliang Liu <xinliang.liu@linaro.org>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Tian Tao <tiantao6@hisilicon.com>,
+        Inki Dae <inki.dae@samsung.com>,
+        Linux Samsung SOC <linux-samsung-soc@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        dri-devel <dri-devel@lists.freedesktop.org>,
+        Chen Feng <puck.chen@hisilicon.com>,
+        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+        Joonyoung Shim <jy0922.shim@samsung.com>
+Subject: Re: [PATCH v4 00/24] drm/bridge: Make panel and bridge probe order
+ consistent
+Message-ID: <20211013134513.hm6ftktkbh4kpudv@gilmour>
+References: <20210910101218.1632297-1-maxime@cerno.tech>
+ <CALAqxLUqdkxXogmPhPgHv4Bgx-4b3mxe12LzzvWb07pLSnb2kA@mail.gmail.com>
+ <CALAqxLUYb=ge4AZZzmk71Qr-92vnnE6sJxwCNUdEz4=VDKr1kg@mail.gmail.com>
+ <CALAqxLX7oK6DeoCPZhMTpHKCihSYq7KZDrt5UKb46=ZBbJd9fA@mail.gmail.com>
+ <CALAqxLW=dJSmfaHAL=BfYVVxZHQvzJWu4UjMixwgM=Nh85JVNw@mail.gmail.com>
 MIME-Version: 1.0
-In-Reply-To: <20211013105541.68045-8-bhupesh.sharma@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+Content-Type: multipart/signed; micalg=pgp-sha256;
+        protocol="application/pgp-signature"; boundary="yp3sab3u3qe3qd7a"
+Content-Disposition: inline
+In-Reply-To: <CALAqxLW=dJSmfaHAL=BfYVVxZHQvzJWu4UjMixwgM=Nh85JVNw@mail.gmail.com>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Bhupesh,
 
-On 10/13/21 1:55 PM, Bhupesh Sharma wrote:
-> Convert Qualcomm QCE crypto devicetree binding to YAML.
-> 
-> Cc: Thara Gopinath <thara.gopinath@linaro.org>
-> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
-> Reviewed-by: Rob Herring <robh@kernel.org>
-> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> ---
->   .../devicetree/bindings/crypto/qcom-qce.yaml  | 67 +++++++++++++++++++
->   1 file changed, 67 insertions(+)
->   create mode 100644 Documentation/devicetree/bindings/crypto/qcom-qce.yaml
-> 
-> diff --git a/Documentation/devicetree/bindings/crypto/qcom-qce.yaml b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
-> new file mode 100644
-> index 000000000000..b7ae873dc943
-> --- /dev/null
-> +++ b/Documentation/devicetree/bindings/crypto/qcom-qce.yaml
-> @@ -0,0 +1,67 @@
-> +# SPDX-License-Identifier: (GPL-2.0-only OR BSD-2-Clause)
-> +%YAML 1.2
-> +---
-> +$id: http://devicetree.org/schemas/crypto/qcom-qce.yaml#
-> +$schema: http://devicetree.org/meta-schemas/core.yaml#
-> +
-> +title: Qualcomm crypto engine driver
-> +
-> +maintainers:
-> +  - Bhupesh Sharma <bhupesh.sharma@linaro.org>
-> +
-> +description: |
-> +  This document defines the binding for the QCE crypto
-> +  controller found on Qualcomm parts.
-> +
-> +properties:
-> +  compatible:
-> +    const: qcom,crypto-v5.1
-> +
-> +  reg:
-> +    maxItems: 1
-> +
-> +  clocks:
-> +    items:
-> +      - description: iface clocks register interface.
-> +      - description: bus clocks data transfer interface.
-> +      - description: core clocks rest of the crypto block.
-> +
-> +  clock-names:
-> +    items:
-> +      - const: iface
-> +      - const: bus
-> +      - const: core
-> +
-> +  dmas:
-> +    items:
-> +      - description: DMA specifiers for tx dma channel.
-> +      - description: DMA specifiers for rx dma channel.
+--yp3sab3u3qe3qd7a
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+Content-Transfer-Encoding: quoted-printable
 
-Please consider to swap the description lines, so that they'll
-be matching the dma-names below and a regular order found in
-dts files.
+Hi John,
 
-> +
-> +  dma-names:
-> +    items:
-> +      - const: rx
-> +      - const: tx
-> +
-> +required:
-> +  - compatible
-> +  - reg
-> +  - clocks
-> +  - clock-names
-> +  - dmas
-> +  - dma-names
-> +
-> +additionalProperties: false
-> +
-> +examples:
-> +  - |
-> +    #include <dt-bindings/clock/qcom,gcc-apq8084.h>
-> +    crypto-engine@fd45a000 {
-> +        compatible = "qcom,crypto-v5.1";
-> +        reg = <0xfd45a000 0x6000>;
-> +        clocks = <&gcc GCC_CE2_AHB_CLK>,
-> +                 <&gcc GCC_CE2_AXI_CLK>,
-> +                 <&gcc GCC_CE2_CLK>;
-> +        clock-names = "iface", "bus", "core";
-> +        dmas = <&cryptobam 2>, <&cryptobam 3>;
-> +        dma-names = "rx", "tx";
-> +    };
-> 
+On Wed, Sep 29, 2021 at 04:29:42PM -0700, John Stultz wrote:
+> On Wed, Sep 29, 2021 at 2:51 PM John Stultz <john.stultz@linaro.org> wrot=
+e:
+> >
+> > On Wed, Sep 29, 2021 at 2:32 PM John Stultz <john.stultz@linaro.org> wr=
+ote:
+> > > On Wed, Sep 29, 2021 at 2:27 PM John Stultz <john.stultz@linaro.org> =
+wrote:
+> > > > On Fri, Sep 10, 2021 at 3:12 AM Maxime Ripard <maxime@cerno.tech> w=
+rote:
+> > > > > The best practice to avoid those issues is to register its functi=
+ons only after
+> > > > > all its dependencies are live. We also shouldn't wait any longer =
+than we should
+> > > > > to play nice with the other components that are waiting for us, s=
+o in our case
+> > > > > that would mean moving the DSI device registration to the bridge =
+probe.
+> > > > >
+> > > > > I also had a look at all the DSI hosts, and it seems that exynos,=
+ kirin and msm
+> > > > > would be affected by this and wouldn't probe anymore after those =
+changes.
+> > > > > Exynos and kirin seems to be simple enough for a mechanical chang=
+e (that still
+> > > > > requires to be tested), but the changes in msm seemed to be far m=
+ore important
+> > > > > and I wasn't confortable doing them.
+> > > >
+> > > >
+> > > > Hey Maxime,
+> > > >   Sorry for taking so long to get to this, but now that plumbers is
+> > > > over I've had a chance to check it out on kirin
+> > > >
+> > > > Rob Clark pointed me to his branch with some fixups here:
+> > > >    https://gitlab.freedesktop.org/robclark/msm/-/commits/for-mripar=
+d/bridge-rework
+> > > >
+> > > > But trying to boot hikey with that, I see the following loop indefi=
+nitely:
+> > > > [    4.632132] adv7511 2-0039: supply avdd not found, using dummy r=
+egulator
+> > > > [    4.638961] adv7511 2-0039: supply dvdd not found, using dummy r=
+egulator
+> > > > [    4.645741] adv7511 2-0039: supply pvdd not found, using dummy r=
+egulator
+> > > > [    4.652483] adv7511 2-0039: supply a2vdd not found, using dummy =
+regulator
+> > > > [    4.659342] adv7511 2-0039: supply v3p3 not found, using dummy r=
+egulator
+> > > > [    4.666086] adv7511 2-0039: supply v1p2 not found, using dummy r=
+egulator
+> > > > [    4.681898] adv7511 2-0039: failed to find dsi host
+> > >
+> > > I just realized Rob's tree is missing the kirin patch. My apologies!
+> > > I'll retest and let you know.
+> >
+> > Ok, just retested including the kirin patch and unfortunately I'm
+> > still seeing the same thing.  :(
+> >
+> > Will dig a bit and let you know when I find more.
+>=20
+> Hey Maxime!
+>   I chased down the issue. The dsi probe code was still calling
+> drm_of_find_panel_or_bridge() in order to succeed.
+>=20
+> I've moved the logic that looks for the bridge into the bridge_init
+> and with that it seems to work.
+>=20
+> Feel free (assuming it looks ok) to fold this change into your kirin patc=
+h:
+>   https://git.linaro.org/people/john.stultz/android-dev.git/commit/?id=3D=
+4a35ccc4d7a53f68d6d93da3b47e232a7c75b91d
 
---
-Best wishes,
-Vladimir
+Thanks for testing, I've picked and squashed your fixup
+
+Maxime
+
+--yp3sab3u3qe3qd7a
+Content-Type: application/pgp-signature; name="signature.asc"
+
+-----BEGIN PGP SIGNATURE-----
+
+iHUEABYIAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCYWbi6QAKCRDj7w1vZxhR
+xWrqAQDj1jImF6Y4lt74Rko+bxO0mdKNx+0pGLW7VlQhBEicrwEAk7tEp5uOOwcw
+jaEEUSlRzwDB0bV4i3OaMZN48bhI7wA=
+=KNVX
+-----END PGP SIGNATURE-----
+
+--yp3sab3u3qe3qd7a--
