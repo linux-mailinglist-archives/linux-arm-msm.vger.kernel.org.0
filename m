@@ -2,102 +2,217 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id E340C42BF32
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 13:49:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id ED2C142BF9A
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 14:14:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231883AbhJMLvO (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Oct 2021 07:51:14 -0400
-Received: from mail.kernel.org ([198.145.29.99]:50628 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229535AbhJMLvN (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Oct 2021 07:51:13 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 481956113E;
-        Wed, 13 Oct 2021 11:49:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1634125750;
-        bh=08cmMCW6GG9gWIOhjxYfXSFIYClklm6HhvdpGKvi16g=;
-        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
-        b=a8/bDma6IeOw47+CVOZM0/AVmVmBWj1bzuEKec7UQcITca/iyIJH9GPAJIvAVnR2H
-         gIj1lAPQWNgzGnxnDjDyDaF32C+R5o6fUz/YUAp3c1YZe/9hIP383TAgZJNW4BPXEl
-         xYD+h/4uCsU8H8vRNmQD46ZYx8EtXiEsgIDmEbcLam7Kgy7p0D1CEyyWBZc8Oo5s4s
-         mKx9gm2Et/G27qN8h5upJOFFpTZWaLQUyDXCOPY+Lk6JU5Ixx50zk5XTqJg6j3RoFm
-         M2wBcpLSkUUaqE3EQb6QT7vjrO8+tWKwpsFH21EvMrrffZtKhX7xSJj6hkqXb9k04J
-         n/uD/fERi9WNA==
-Received: by mail-wr1-f47.google.com with SMTP id u18so7454311wrg.5;
-        Wed, 13 Oct 2021 04:49:10 -0700 (PDT)
-X-Gm-Message-State: AOAM5336sVVSTv4GlHgyv6EXioK/K2NL0aV6Jg7okZrRAzM61oFdCg9f
-        1ZjYZgvJn6hw+C66/MlVwogV4enydqLgkjA86v0=
-X-Google-Smtp-Source: ABdhPJxAPtyVc3G/tOtzJ7z3+RdpcFSsTVHBBrdmAoAeaOD1MZ0LF/ObKmsWMXdtxVVGB9gwLelX+Cl/3S/Jhom+ziQ=
-X-Received: by 2002:a1c:2358:: with SMTP id j85mr12179996wmj.1.1634125748613;
- Wed, 13 Oct 2021 04:49:08 -0700 (PDT)
-MIME-Version: 1.0
-References: <20211006025350.a5PczFZP4%akpm@linux-foundation.org>
- <58fbf2ff-b367-2137-aa77-fcde6c46bbb7@infradead.org> <20211006182052.6ecc17cf@canb.auug.org.au>
- <f877a1c9-1898-23f3-bba3-3442dc1f3979@amd.com> <CAMuHMdV3eMchpgUasU6BBHrDQyjCc2TrqJ+zJgFhgAySpqVGfw@mail.gmail.com>
- <CAK8P3a1LLABstZ2rPYpsXRTxMdbSTrh0y753vrfGbRovv9fS8A@mail.gmail.com>
-In-Reply-To: <CAK8P3a1LLABstZ2rPYpsXRTxMdbSTrh0y753vrfGbRovv9fS8A@mail.gmail.com>
-From:   Arnd Bergmann <arnd@kernel.org>
-Date:   Wed, 13 Oct 2021 13:48:52 +0200
-X-Gmail-Original-Message-ID: <CAK8P3a1PoL4KMJfRyOB59tNYR6-cn3rWqDfqXeeW5ggMVGaeVg@mail.gmail.com>
-Message-ID: <CAK8P3a1PoL4KMJfRyOB59tNYR6-cn3rWqDfqXeeW5ggMVGaeVg@mail.gmail.com>
-Subject: Re: mmotm 2021-10-05-19-53 uploaded (drivers/gpu/drm/msm/hdmi/hdmi_phy.o)
-To:     Geert Uytterhoeven <geert@linux-m68k.org>
-Cc:     =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
-        Stephen Rothwell <sfr@canb.auug.org.au>,
-        Randy Dunlap <rdunlap@infradead.org>,
-        Andrew Morton <akpm@linux-foundation.org>,
-        Mark Brown <broonie@kernel.org>,
-        Linux FS Devel <linux-fsdevel@vger.kernel.org>,
-        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
-        Linux MM <linux-mm@kvack.org>,
-        Linux-Next <linux-next@vger.kernel.org>,
-        Michal Hocko <mhocko@suse.cz>, mm-commits@vger.kernel.org,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        freedreno <freedreno@lists.freedesktop.org>,
+        id S232749AbhJMMQt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Oct 2021 08:16:49 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:46126 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S232491AbhJMMQq (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 13 Oct 2021 08:16:46 -0400
+Received: from mail-wr1-x435.google.com (mail-wr1-x435.google.com [IPv6:2a00:1450:4864:20::435])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A5749C061749
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Oct 2021 05:14:42 -0700 (PDT)
+Received: by mail-wr1-x435.google.com with SMTP id v17so7600752wrv.9
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Oct 2021 05:14:42 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=ffwll.ch; s=google;
+        h=date:from:to:cc:subject:message-id:mail-followup-to:references
+         :mime-version:content-disposition:in-reply-to;
+        bh=dMRaftnF9U+W3ku1B/GD71FJ+aEgoWgdI3sg+irCBSU=;
+        b=MhciuyvSk02sHng4PyOacoSMmXkEirv4ROaG/YFOPm3C/PGs4IaqJa0KzfxdG/7GZy
+         j0erLuzznKPfPq1SooRZKFK4Ph0eeQeU9mpXHHT+jpz7xE3bhD8wZpm0IH5MWOlJV1Vs
+         JSjS/+eukQ+3NvBveep9Rvje8X5OHCWQU9oNk=
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:date:from:to:cc:subject:message-id
+         :mail-followup-to:references:mime-version:content-disposition
+         :in-reply-to;
+        bh=dMRaftnF9U+W3ku1B/GD71FJ+aEgoWgdI3sg+irCBSU=;
+        b=UoW6EsWHYEexdlQT1vWzA75cG/1BIqZmp09uSK2Xel/67mDxPOR1+7/sVe3ZVeOitb
+         ux1ny3WTncLcbHkGPoOkudJi4RvDODZY7f19tjHCmd+10xvnuudS7o7qDmkOfAl7BMSt
+         3uEwS/ufyuBn6fW/bn889g3Mu+5qGVTSHwmCwBImHvsLAY60S9YjgLb/IiL/0y58HZop
+         YviftfhNCgZHyn76biccR74bjYBlQ5IyCpQj7z6ihvKq6sZZWSxzgWGnrB0y3QWfH13V
+         7rmXm/RssQoLOngyIjZWECxwM1ds6Ag6+jDKVGlmDVyaR6EPSds5PhHoqY2KZ1gEbFT3
+         sN1Q==
+X-Gm-Message-State: AOAM531ojW4AOWVHvV5GA7LyCtVGW9gyI4DT+Xzb3RTyrwoO+x79czfL
+        naIP7umMBP24EyDaXtt9YdydIA==
+X-Google-Smtp-Source: ABdhPJwjQFtFTLxMhkElGP+tQ3IDjeuJllYWlfjQHSU4ZkxQZ996sxB4SGM/CwV1ziLNNbEonMsSKw==
+X-Received: by 2002:a05:600c:4ba9:: with SMTP id e41mr12535688wmp.70.1634127281038;
+        Wed, 13 Oct 2021 05:14:41 -0700 (PDT)
+Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
+        by smtp.gmail.com with ESMTPSA id q16sm13619647wru.39.2021.10.13.05.14.39
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Oct 2021 05:14:40 -0700 (PDT)
+Date:   Wed, 13 Oct 2021 14:14:37 +0200
+From:   Daniel Vetter <daniel@ffwll.ch>
+To:     Stephen Boyd <swboyd@chromium.org>
+Cc:     Andrzej Hajda <andrzej.hajda@gmail.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Arnd Bergmann <arnd@arndb.de>,
+        Benjamin Gaignard <benjamin.gaignard@linaro.org>,
+        Chen Feng <puck.chen@hisilicon.com>,
+        Chen-Yu Tsai <wens@csie.org>,
+        Christian Gmeiner <christian.gmeiner@gmail.com>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
         Daniel Vetter <daniel.vetter@ffwll.ch>,
-        Intel Graphics <intel-gfx@lists.freedesktop.org>,
-        DRI <dri-devel@lists.freedesktop.org>
-Content-Type: text/plain; charset="UTF-8"
+        Emma Anholt <emma@anholt.net>,
+        Heiko =?iso-8859-1?Q?St=FCbner?= <heiko@sntech.de>,
+        Inki Dae <inki.dae@samsung.com>,
+        James Qian Wang <james.qian.wang@arm.com>,
+        Jaroslav Kysela <perex@perex.cz>,
+        Joerg Roedel <joro@8bytes.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Jyri Sarha <jyri.sarha@iki.fi>,
+        Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        linux-fbdev@vger.kernel.org, linux-omap@vger.kernel.org,
+        linux-pm@vger.kernel.org, Liviu Dudau <liviu.dudau@arm.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Mark Brown <broonie@kernel.org>,
+        Maxime Ripard <mripard@kernel.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Russell King <linux+etnaviv@armlinux.org.uk>,
+        Russell King <rmk+kernel@arm.linux.org.uk>,
+        Sandy Huang <hjc@rock-chips.com>,
+        Saravana Kannan <saravanak@google.com>,
+        Sebastian Reichel <sre@kernel.org>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Takashi Iwai <tiwai@suse.com>,
+        Tian Tao <tiantao6@hisilicon.com>,
+        Tomas Winkler <tomas.winkler@intel.com>,
+        Tomi Valkeinen <tomba@kernel.org>,
+        Will Deacon <will@kernel.org>,
+        Xinliang Liu <xinliang.liu@linaro.org>,
+        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+        Yong Wu <yong.wu@mediatek.com>
+Subject: Re: [PATCH v2 00/34] component: Make into an aggregate bus
+Message-ID: <YWbNrfxQ0IqV7vsO@phenom.ffwll.local>
+Mail-Followup-To: Stephen Boyd <swboyd@chromium.org>,
+        Andrzej Hajda <andrzej.hajda@gmail.com>,
+        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
+        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
+        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
+        Arnd Bergmann <arnd@arndb.de>,
+        Benjamin Gaignard <benjamin.gaignard@linaro.org>,
+        Chen Feng <puck.chen@hisilicon.com>, Chen-Yu Tsai <wens@csie.org>,
+        Christian Gmeiner <christian.gmeiner@gmail.com>,
+        Chun-Kuang Hu <chunkuang.hu@kernel.org>,
+        Emma Anholt <emma@anholt.net>,
+        Heiko =?iso-8859-1?Q?St=FCbner?= <heiko@sntech.de>,
+        Inki Dae <inki.dae@samsung.com>,
+        James Qian Wang <james.qian.wang@arm.com>,
+        Jaroslav Kysela <perex@perex.cz>, Joerg Roedel <joro@8bytes.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Joonyoung Shim <jy0922.shim@samsung.com>,
+        Jyri Sarha <jyri.sarha@iki.fi>,
+        Kai Vehmanen <kai.vehmanen@linux.intel.com>,
+        Kyungmin Park <kyungmin.park@samsung.com>,
+        Laurent Pinchart <laurent.pinchart@ideasonboard.com>,
+        linux-fbdev@vger.kernel.org, linux-omap@vger.kernel.org,
+        linux-pm@vger.kernel.org, Liviu Dudau <liviu.dudau@arm.com>,
+        Lucas Stach <l.stach@pengutronix.de>,
+        Mark Brown <broonie@kernel.org>, Maxime Ripard <mripard@kernel.org>,
+        Neil Armstrong <narmstrong@baylibre.com>,
+        Paul Cercueil <paul@crapouillou.net>,
+        Philipp Zabel <p.zabel@pengutronix.de>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Clark <robdclark@gmail.com>,
+        Russell King <linux@armlinux.org.uk>,
+        Russell King <linux+etnaviv@armlinux.org.uk>,
+        Russell King <rmk+kernel@arm.linux.org.uk>,
+        Sandy Huang <hjc@rock-chips.com>,
+        Saravana Kannan <saravanak@google.com>,
+        Sebastian Reichel <sre@kernel.org>,
+        Seung-Woo Kim <sw0312.kim@samsung.com>,
+        Takashi Iwai <tiwai@suse.com>, Tian Tao <tiantao6@hisilicon.com>,
+        Tomas Winkler <tomas.winkler@intel.com>,
+        Tomi Valkeinen <tomba@kernel.org>, Will Deacon <will@kernel.org>,
+        Xinliang Liu <xinliang.liu@linaro.org>,
+        Xinwei Kong <kong.kongxinwei@hisilicon.com>,
+        Yong Wu <yong.wu@mediatek.com>
+References: <20211006193819.2654854-1-swboyd@chromium.org>
+ <5d3f4343-da38-04b4-fdb9-cb2dd4983db2@gmail.com>
+ <CAE-0n50s_cOLA0xRa8mmUS2Nawd5X7WiQE3PvOLHu+i=hE3Eow@mail.gmail.com>
+MIME-Version: 1.0
+Content-Type: text/plain; charset=us-ascii
+Content-Disposition: inline
+In-Reply-To: <CAE-0n50s_cOLA0xRa8mmUS2Nawd5X7WiQE3PvOLHu+i=hE3Eow@mail.gmail.com>
+X-Operating-System: Linux phenom 5.10.0-8-amd64 
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 13, 2021 at 12:54 PM Arnd Bergmann <arnd@kernel.org> wrote:
-> On Thu, Oct 7, 2021 at 11:51 AM Geert Uytterhoeven <geert@linux-m68k.org> wrote:
->
-> -msm-$(CONFIG_DRM_FBDEV_EMULATION) += msm_fbdev.o
-> -msm-$(CONFIG_COMMON_CLK) += disp/mdp4/mdp4_lvds_pll.o
-> -msm-$(CONFIG_COMMON_CLK) += hdmi/hdmi_pll_8960.o
-> -msm-$(CONFIG_COMMON_CLK) += hdmi/hdmi_phy_8996.o
-> +msm-$(CONFIG_DRM_FBDEV_EMULATION) += msm_fbdev.o \
-> + disp/mdp4/mdp4_lvds_pll.o \
-> + hdmi/hdmi_pll_8960.o \
-> + hdmi/hdmi_phy_8996.o
->
->  msm-$(CONFIG_DRM_MSM_HDMI_HDCP) += hdmi/hdmi_hdcp.o
+On Thu, Oct 07, 2021 at 04:46:22PM -0400, Stephen Boyd wrote:
+> Quoting Andrzej Hajda (2021-10-07 03:16:27)
+> > Hi Stephen,
+> >
+> > On 06.10.2021 21:37, Stephen Boyd wrote:
+> > > This series is from discussion we had on reordering the device lists for
+> > > drm shutdown paths[1]. I've introduced an 'aggregate' bus that we put
+> > > the aggregate device onto and then we probe the aggregate device once
+> > > all the components are probed and call component_add(). The probe/remove
+> > > hooks are where the bind/unbind calls go, and then a shutdown hook is
+> > > added that can be used to shutdown the drm display pipeline at the right
+> > > time.
+> > >
+> > > This works for me on my sc7180 board. I no longer get a warning from i2c
+> > > at shutdown that we're trying to make an i2c transaction after the i2c
+> > > bus has been shutdown. There's more work to do on the msm drm driver to
+> > > extract component device resources like clks, regulators, etc. out of
+> > > the component bind function into the driver probe but I wanted to move
+> > > everything over now in other component drivers before tackling that
+> > > problem.
+> >
+> >
+> > As I understand you have DSI host with i2c-controlled DSI bridge. And
+> > there is an issue that bridge is shutdown before msmdrm. Your solution
+> > is to 'adjust' device order on pm list.
+> > I had similar issue and solved it locally by adding notification from
+> > DSI bridge to DSI host that is has to be removed: mipi_dsi_detach, this
+> > notification escalates in DSI host to component_del and this allow to
+> > react properly.
+> >
+> > Advantages:
+> > - it is local (only involves DSI host and DSI device),
+> > - it does not depend on PM internals,
+> > - it can be used in other scenarios as well - unbinding DSI device driver
+> >
+> > Disadvantage:
+> > - It is DSI specific (but this is your case), I have advertised some
+> > time ago more general approach [1][2].
+> >
+> > [1]: https://static.sched.com/hosted_files/osseu18/0f/deferred_problem.pdf
+> > [2]: https://lwn.net/Articles/625454/
+> >
+> 
+> I think these are all points for or against using the component code in
+> general? Maybe you can send patches that you think can solve the problem
+> I'm experiencing and we can review them on the list.
 
-I fixed my local copy now after noticing that these should not go
-after CONFIG_DRM_FBDEV_EMULATION but the top-level option:
+Yeah I think this is entirely orthogonal. If you use component, then
+component should provide a way to handle this.
 
-@@ -23,8 +23,10 @@ msm-y := \
-        hdmi/hdmi_i2c.o \
-        hdmi/hdmi_phy.o \
-        hdmi/hdmi_phy_8960.o \
-+       hdmi/hdmi_phy_8996.o
-        hdmi/hdmi_phy_8x60.o \
-        hdmi/hdmi_phy_8x74.o \
-+       hdmi/hdmi_pll_8960.o \
-        edp/edp.o \
-        edp/edp_aux.o \
-        edp/edp_bridge.o \
-@@ -37,6 +39,7 @@ msm-y := \
-        disp/mdp4/mdp4_dtv_encoder.o \
-        disp/mdp4/mdp4_lcdc_encoder.o \
-        disp/mdp4/mdp4_lvds_connector.o \
-+       disp/mdp4/mdp4_lvds_pll.o \
-        disp/mdp4/mdp4_irq.o \
-        disp/mdp4/mdp4_kms.o \
-        disp/mdp4/mdp4_plane.o \
+If you use something else, like drm_bridge or dsi or whatever, then that
+part should provide a solution to stage stuff correctly and handle all the
+ordering.
 
-           Arnd
+Now there's a bunch of drivers which mix up component with bridge use and
+hilarity ensues, but since there's no real effort to fix that I think it's
+toally fine to just improve component.c meanwhile.
+-Daniel
+-- 
+Daniel Vetter
+Software Engineer, Intel Corporation
+http://blog.ffwll.ch
