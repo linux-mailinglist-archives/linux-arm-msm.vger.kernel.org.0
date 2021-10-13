@@ -2,121 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 44E6D42C3BE
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 16:43:21 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6F38142C600
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 18:16:34 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S234081AbhJMOpW (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Oct 2021 10:45:22 -0400
-Received: from mail.kernel.org ([198.145.29.99]:51490 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S236976AbhJMOpR (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Oct 2021 10:45:17 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id E667661166;
-        Wed, 13 Oct 2021 14:43:10 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1634136193;
-        bh=3YOpUj7zJIjHOwNL7dHDpxdkIPlsudzfvv538+Bhka0=;
-        h=From:To:Cc:Subject:Date:From;
-        b=ioHRl71JgzZ0mbftYm/WArKiGSk5dzcVQvzsXVP7zv2nWL4M22qfgruxeGeqOkzHO
-         +u7kIJ7Af439F+wP9OuveVQDGGLgnD1nwQc3CmOlSsyLO8t4AiyWj0DzN6eZwWTCal
-         tnuHzV/3oZaLuOHeGuB0wpxSoNmTRYNA9GHWnA0Qp3uh+p5iaLH6j6Ez/ldAjVxHS1
-         vmL2is+oMpacdVpqgx0ymn1tCl+Gx0KEVSnalG5F5eDYtceNwRNUSkLc45R5hdO0Sr
-         Udc8D60oJar4TuxLNhJnjjoS391ykJf7K2SswEs6zjPZkTxWxRvvtL0XwgaHQKjDal
-         DxliTR8fRQprw==
-From:   Arnd Bergmann <arnd@kernel.org>
-To:     Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>
-Cc:     Arnd Bergmann <arnd@arndb.de>,
-        Randy Dunlap <rdunlap@infradead.org>,
-        Geert Uytterhoeven <geert@linux-m68k.org>,
-        Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Alex Elder <elder@linaro.org>,
-        =?UTF-8?q?Christian=20K=C3=B6nig?= <christian.koenig@amd.com>,
-        Akhil P Oommen <akhilpo@codeaurora.org>,
-        Rajeev Nandan <rajeevny@codeaurora.org>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org, linux-kernel@vger.kernel.org
-Subject: [PATCH] drm: msm: fix building without CONFIG_COMMON_CLK
-Date:   Wed, 13 Oct 2021 16:42:56 +0200
-Message-Id: <20211013144308.2248978-1-arnd@kernel.org>
-X-Mailer: git-send-email 2.29.2
+        id S229941AbhJMQSf (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Oct 2021 12:18:35 -0400
+Received: from cloudserver094114.home.pl ([79.96.170.134]:59708 "EHLO
+        cloudserver094114.home.pl" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229529AbhJMQSe (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 13 Oct 2021 12:18:34 -0400
+Received: from localhost (127.0.0.1) (HELO v370.home.net.pl)
+ by /usr/run/smtp (/usr/run/postfix/private/idea_relay_lmtp) via UNIX with SMTP (IdeaSmtpServer 3.0.0)
+ id ec34a90093cf9904; Wed, 13 Oct 2021 18:16:30 +0200
+Received: from kreacher.localnet (unknown [213.134.161.244])
+        (using TLSv1.3 with cipher TLS_AES_256_GCM_SHA384 (256/256 bits)
+         key-exchange X25519 server-signature RSA-PSS (2048 bits) server-digest SHA256)
+        (No client certificate requested)
+        by v370.home.net.pl (Postfix) with ESMTPSA id 3B18D66A871;
+        Wed, 13 Oct 2021 18:16:29 +0200 (CEST)
+From:   "Rafael J. Wysocki" <rjw@rjwysocki.net>
+To:     Linux ACPI <linux-acpi@vger.kernel.org>
+Cc:     LKML <linux-kernel@vger.kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org
+Subject: [PATCH v2 7/7] perf: qcom_l2_pmu: ACPI: Use ACPI_COMPANION() directly
+Date:   Wed, 13 Oct 2021 18:15:33 +0200
+Message-ID: <21252081.EfDdHjke4D@kreacher>
+In-Reply-To: <3338400.QJadu78ljV@kreacher>
+References: <4369779.LvFx2qVVIh@kreacher> <3338400.QJadu78ljV@kreacher>
 MIME-Version: 1.0
-Content-Transfer-Encoding: 8bit
+Content-Transfer-Encoding: 7Bit
+Content-Type: text/plain; charset="UTF-8"
+X-CLIENT-IP: 213.134.161.244
+X-CLIENT-HOSTNAME: 213.134.161.244
+X-VADE-SPAMSTATE: clean
+X-VADE-SPAMCAUSE: gggruggvucftvghtrhhoucdtuddrgedvtddrvddutddgleeiucetufdoteggodetrfdotffvucfrrhhofhhilhgvmecujffqoffgrffnpdggtffipffknecuuegrihhlohhuthemucduhedtnecusecvtfgvtghiphhivghnthhsucdlqddutddtmdenucfjughrpefhvffufffkjghfggfgtgesthfuredttddtjeenucfhrhhomhepfdftrghfrggvlhculfdrucghhihsohgtkhhifdcuoehrjhifsehrjhifhihsohgtkhhirdhnvghtqeenucggtffrrghtthgvrhhnpedvjeelgffhiedukedtleekkedvudfggefhgfegjefgueekjeelvefggfdvledutdenucfkphepvddufedrudefgedrudeiuddrvdeggeenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepihhnvghtpedvudefrddufeegrdduiedurddvgeegpdhhvghlohepkhhrvggrtghhvghrrdhlohgtrghlnhgvthdpmhgrihhlfhhrohhmpedftfgrfhgrvghlucflrdcuhgihshhotghkihdfuceorhhjfiesrhhjfiihshhotghkihdrnhgvtheqpdhrtghpthhtoheplhhinhhugidqrggtphhisehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheplhhinhhugidqkhgvrhhnvghlsehvghgvrhdrkhgvrhhnvghlrdhorhhgpdhrtghpthhtoheprghgrhhoshhssehkvghrnhgvlhdrohhrghdprhgtphhtthhopegsjhhorhhnrdgrnhguvghrshhsohhnsehlihhnrghrohdrohhrghdprhgtphhtthhopehlihhnuhigqdgrrhhmqdhm
+ shhmsehvghgvrhdrkhgvrhhnvghlrdhorhhg
+X-DCC--Metrics: v370.home.net.pl 1024; Body=5 Fuz1=5 Fuz2=5
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-From: Arnd Bergmann <arnd@arndb.de>
+From: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 
-When CONFIG_COMMON_CLOCK is disabled, the 8996 specific
-phy code is left out, which results in a link failure:
+The ACPI_HANDLE() macro is a wrapper arond the ACPI_COMPANION()
+macro and the ACPI handle produced by the former comes from the
+ACPI device object produced by the latter, so it is way more
+straightforward to evaluate the latter directly instead of passing
+the handle produced by the former to acpi_bus_get_device().
 
-ld: drivers/gpu/drm/msm/hdmi/hdmi_phy.o:(.rodata+0x3f0): undefined reference to `msm_hdmi_phy_8996_cfg'
+Modify l2_cache_pmu_probe_cluster() accordingly (no intentional
+functional impact).
 
-This was only exposed after it became possible to build
-test the driver without the clock interfaces.
+While at it, rename the ACPI device pointer to adev for more
+clarity.
 
-Make COMMON_CLK a hard dependency for compile testing,
-and simplify it a little based on that.
-
-Fixes: b3ed524f84f5 ("drm/msm: allow compile_test on !ARM")
-Reported-by: Randy Dunlap <rdunlap@infradead.org>
-Suggested-by: Geert Uytterhoeven <geert@linux-m68k.org>
-Signed-off-by: Arnd Bergmann <arnd@arndb.de>
+Signed-off-by: Rafael J. Wysocki <rafael.j.wysocki@intel.com>
 ---
- drivers/gpu/drm/msm/Kconfig  | 2 +-
- drivers/gpu/drm/msm/Makefile | 6 +++---
- 2 files changed, 4 insertions(+), 4 deletions(-)
 
-diff --git a/drivers/gpu/drm/msm/Kconfig b/drivers/gpu/drm/msm/Kconfig
-index f5107b6ded7b..cb204912e0f4 100644
---- a/drivers/gpu/drm/msm/Kconfig
-+++ b/drivers/gpu/drm/msm/Kconfig
-@@ -4,8 +4,8 @@ config DRM_MSM
- 	tristate "MSM DRM"
- 	depends on DRM
- 	depends on ARCH_QCOM || SOC_IMX5 || COMPILE_TEST
-+	depends on COMMON_CLK
- 	depends on IOMMU_SUPPORT
--	depends on (OF && COMMON_CLK) || COMPILE_TEST
- 	depends on QCOM_OCMEM || QCOM_OCMEM=n
- 	depends on QCOM_LLCC || QCOM_LLCC=n
- 	depends on QCOM_COMMAND_DB || QCOM_COMMAND_DB=n
-diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
-index 904535eda0c4..bbee22b54b0c 100644
---- a/drivers/gpu/drm/msm/Makefile
-+++ b/drivers/gpu/drm/msm/Makefile
-@@ -23,8 +23,10 @@ msm-y := \
- 	hdmi/hdmi_i2c.o \
- 	hdmi/hdmi_phy.o \
- 	hdmi/hdmi_phy_8960.o \
-+	hdmi/hdmi_phy_8996.o \
- 	hdmi/hdmi_phy_8x60.o \
- 	hdmi/hdmi_phy_8x74.o \
-+	hdmi/hdmi_pll_8960.o \
- 	edp/edp.o \
- 	edp/edp_aux.o \
- 	edp/edp_bridge.o \
-@@ -37,6 +39,7 @@ msm-y := \
- 	disp/mdp4/mdp4_dtv_encoder.o \
- 	disp/mdp4/mdp4_lcdc_encoder.o \
- 	disp/mdp4/mdp4_lvds_connector.o \
-+	disp/mdp4/mdp4_lvds_pll.o \
- 	disp/mdp4/mdp4_irq.o \
- 	disp/mdp4/mdp4_kms.o \
- 	disp/mdp4/mdp4_plane.o \
-@@ -117,9 +120,6 @@ msm-$(CONFIG_DRM_MSM_DP)+= dp/dp_aux.o \
- 	dp/dp_audio.o
+v1 -> v2:
+   * Resend with a different From and S-o-b address.  No other changes.
+
+---
+ drivers/perf/qcom_l2_pmu.c |    7 ++-----
+ 1 file changed, 2 insertions(+), 5 deletions(-)
+
+Index: linux-pm/drivers/perf/qcom_l2_pmu.c
+===================================================================
+--- linux-pm.orig/drivers/perf/qcom_l2_pmu.c
++++ linux-pm/drivers/perf/qcom_l2_pmu.c
+@@ -840,17 +840,14 @@ static int l2_cache_pmu_probe_cluster(st
+ {
+ 	struct platform_device *pdev = to_platform_device(dev->parent);
+ 	struct platform_device *sdev = to_platform_device(dev);
++	struct acpi_device *adev = ACPI_COMPANION(dev);
+ 	struct l2cache_pmu *l2cache_pmu = data;
+ 	struct cluster_pmu *cluster;
+-	struct acpi_device *device;
+ 	unsigned long fw_cluster_id;
+ 	int err;
+ 	int irq;
  
- msm-$(CONFIG_DRM_FBDEV_EMULATION) += msm_fbdev.o
--msm-$(CONFIG_COMMON_CLK) += disp/mdp4/mdp4_lvds_pll.o
--msm-$(CONFIG_COMMON_CLK) += hdmi/hdmi_pll_8960.o
--msm-$(CONFIG_COMMON_CLK) += hdmi/hdmi_phy_8996.o
- 
- msm-$(CONFIG_DRM_MSM_HDMI_HDCP) += hdmi/hdmi_hdcp.o
- 
--- 
-2.29.2
+-	if (acpi_bus_get_device(ACPI_HANDLE(dev), &device))
+-		return -ENODEV;
+-
+-	if (kstrtoul(device->pnp.unique_id, 10, &fw_cluster_id) < 0) {
++	if (!adev || kstrtoul(adev->pnp.unique_id, 10, &fw_cluster_id) < 0) {
+ 		dev_err(&pdev->dev, "unable to read ACPI uid\n");
+ 		return -ENODEV;
+ 	}
+
+
 
