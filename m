@@ -2,100 +2,75 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 752C442B3EB
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 06:10:16 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 4285542B3F4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 06:15:49 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229491AbhJMEMR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Oct 2021 00:12:17 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:48048 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229455AbhJMEMQ (ORCPT
+        id S229667AbhJMERt (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Oct 2021 00:17:49 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:29638 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229453AbhJMERt (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Oct 2021 00:12:16 -0400
-Received: from mail-pf1-x431.google.com (mail-pf1-x431.google.com [IPv6:2607:f8b0:4864:20::431])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 5E062C061570;
-        Tue, 12 Oct 2021 21:10:14 -0700 (PDT)
-Received: by mail-pf1-x431.google.com with SMTP id y7so1292303pfg.8;
-        Tue, 12 Oct 2021 21:10:14 -0700 (PDT)
+        Wed, 13 Oct 2021 00:17:49 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=from:to:cc:subject:date:message-id:in-reply-to:references
-         :mime-version:content-disposition:content-transfer-encoding;
-        bh=veH4x5sZ0wWvTp8mChrhEWWmXKy3+vBBDBajnwyCPHo=;
-        b=bHujX44TNM4ZNeM8Us6qSs0RXR591DDGUmWJ7S6H67FtRcZTOPSJQ+rclHDDBmuB30
-         YRCm1mtc/G4Jd3IBWJ89fXSBim+PMdBuTB9gRcM67hKJrM9sKP1Rn/PAW99zlEwq8vAI
-         iwQqCuqKvpaTE2MkVRFVImAqPIZ69vcafp+H2rjvJvHL8N0c9Ptr/JHSaDt9vI9ds38g
-         hz4ZrHhUI00X4zQFgWEPvHRbxnZZwmtMKitu1JKd1N+9uA5FG/zCdBTdpDpnLG552bhb
-         9cpaxdRZI1k5G1Mw20R8sIYNW7f/pNmlWN3EOHhxbkvotmReIwOPeXRXaFNCZNrav6lA
-         TEZQ==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
-         :references:mime-version:content-disposition
-         :content-transfer-encoding;
-        bh=veH4x5sZ0wWvTp8mChrhEWWmXKy3+vBBDBajnwyCPHo=;
-        b=aPWJe8Sqt+fuvMkG/QcG5b31wEJKEHQmUIbCtEJB8JeVjODmqJBkOc7zld6lwypu2m
-         T61OOTb/tQhljrfWzaU1+c7K28flRhIY7dkbSFGLsD7xqeFU8sXmmXr/8YKB8NkWcKxc
-         xn6LEPaEeTQGmcTFDJ5OcUP+m4N5nEA8F7TG0ws0iatcrKJ8oGVPAYa8ON68U2arUBDL
-         RKidr7yu5hFlMrTAy5OjvgVBcdUywiIhcBDAn0t7+sqIcsXa8DmmbmxrCQpuvGNJ7QP4
-         hftadNJdnJZNgsTmbzHXk4jTcIR6ojdx+VkQTrRQKrcwYXggjNaRmAmyykEE3WWSjTZI
-         NlkQ==
-X-Gm-Message-State: AOAM531GGcj0DlZHwhfRQDzkL2apPWM8BcXZam0612HZniI6rCGnr7fL
-        qM4WbY5GCYjf0IWiDIaLesw=
-X-Google-Smtp-Source: ABdhPJxtt2jGRQ+K8fs+/kPUqSUPPWECZP45M29TohvgZXBVADXgymBoXD3hYkSVQl8qTojaPvc+hw==
-X-Received: by 2002:a63:cf44:: with SMTP id b4mr26338884pgj.215.1634098213803;
-        Tue, 12 Oct 2021 21:10:13 -0700 (PDT)
-Received: from localhost.localdomain ([171.211.26.24])
-        by smtp.gmail.com with ESMTPSA id z9sm4231826pji.42.2021.10.12.21.10.07
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Tue, 12 Oct 2021 21:10:13 -0700 (PDT)
-From:   DENG Qingfang <dqfext@gmail.com>
-To:     Ansuel Smith <ansuelsmth@gmail.com>
-Cc:     Andrew Lunn <andrew@lunn.ch>,
-        Vivien Didelot <vivien.didelot@gmail.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
-        Jakub Kicinski <kuba@kernel.org>,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Russell King <linux@armlinux.org.uk>,
-        John Crispin <john@phrozen.org>, netdev@vger.kernel.org,
-        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
-        linux-arm-msm@vger.kernel.org
-Subject: Re: [net-next PATCH v6 05/16] net: dsa: qca8k: add support for cpu port 6
-Date:   Wed, 13 Oct 2021 12:10:04 +0800
-Message-Id: <20211013041004.29805-1-dqfext@gmail.com>
-X-Mailer: git-send-email 2.25.1
-In-Reply-To: <20211013011622.10537-6-ansuelsmth@gmail.com>
-References: <20211013011622.10537-1-ansuelsmth@gmail.com> <20211013011622.10537-6-ansuelsmth@gmail.com>
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1634098547; x=1665634547;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=14DSdTniDqdncTmwpMPC/7a3w4g78QTRnhRuSB5a/4E=;
+  b=dMVvCvBwkdlB4jcKI4Xq5JxDCDv5YEowlMjOr+S+ViThUnsO5fhZsGsK
+   eiBQQlDv99s1e7CqPpFGmMKpwGa9ts1kzBeL+AP5zg2RGZLJql8dWNVY4
+   6asepGVPpBQd2yktbJBM65d85TJe4VK03ziqLzrOS97t1Z/AwMz7CKAOH
+   U=;
+Received: from ironmsg09-lv.qualcomm.com ([10.47.202.153])
+  by alexa-out.qualcomm.com with ESMTP; 12 Oct 2021 21:15:46 -0700
+X-QCInternal: smtphost
+Received: from nalasex01c.na.qualcomm.com ([10.47.97.35])
+  by ironmsg09-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Oct 2021 21:15:46 -0700
+Received: from [10.231.205.174] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7; Tue, 12 Oct 2021
+ 21:15:44 -0700
+Subject: Re: [RESEND PATCH v1 1/9] spmi: pmic-arb: add a print in cleanup_irq
+To:     Stephen Boyd <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     <collinsd@codeaurora.org>, <subbaram@codeaurora.org>,
+        Abhijeet Dharmapurikar <adharmap@codeaurora.org>
+References: <1631860384-26608-1-git-send-email-quic_fenglinw@quicinc.com>
+ <1631860384-26608-2-git-send-email-quic_fenglinw@quicinc.com>
+ <163406078422.936959.12726677103787301939@swboyd.mtv.corp.google.com>
+From:   Fenglin Wu <quic_fenglinw@quicinc.com>
+Message-ID: <6c91a6ad-0ff2-a431-138a-2ec83f2bfa74@quicinc.com>
+Date:   Wed, 13 Oct 2021 12:15:42 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: 8bit
+In-Reply-To: <163406078422.936959.12726677103787301939@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
+Content-Transfer-Encoding: 7bit
+Content-Language: en-US
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, Oct 13, 2021 at 03:16:11AM +0200, Ansuel Smith wrote:
-> @@ -1017,13 +1033,14 @@ static int
->  qca8k_setup(struct dsa_switch *ds)
->  {
->  	struct qca8k_priv *priv = (struct qca8k_priv *)ds->priv;
-> +	u8 cpu_port;
->  	int ret, i;
->  	u32 mask;
->  
-> -	/* Make sure that port 0 is the cpu port */
-> -	if (!dsa_is_cpu_port(ds, 0)) {
-> -		dev_err(priv->dev, "port 0 is not the CPU port");
-> -		return -EINVAL;
-> +	cpu_port = qca8k_find_cpu_port(ds);
-> +	if (cpu_port < 0) {
 
-cpu_port should be of type int, otherwise this is always false.
+On 10/13/2021 1:46 AM, Stephen Boyd wrote:
+> Quoting Fenglin Wu (2021-09-16 23:32:56)
+>> From: Abhijeet Dharmapurikar <adharmap@codeaurora.org>
+>>
+>> The cleanup_irq() was meant to clear and mask interrupts that were
+>> left enabled in the hardware but there was no interrupt handler
+>> registered for it. Add an error print when it gets invoked.
+> Why? Don't we get the genirq spurious irq message in this scenario?
 
-> +		dev_err(priv->dev, "No cpu port configured in both cpu port0 and port6");
-> +		return cpu_port;
->  	}
+Thanks for reviewing the change.
+
+No, there is no existing message printed out in this special case ( IRQ 
+fired for not registered interrupt).
+
+>> Signed-off-by: Abhijeet Dharmapurikar <adharmap@codeaurora.org>
+>> Signed-off-by: David Collins <collinsd@codeaurora.org>
+>> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
