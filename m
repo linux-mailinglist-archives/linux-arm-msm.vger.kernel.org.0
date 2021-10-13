@@ -2,33 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3DC9B42CD7C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Oct 2021 00:10:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1681C42CD80
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Oct 2021 00:10:33 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231249AbhJMWMR (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Oct 2021 18:12:17 -0400
-Received: from mail.kernel.org ([198.145.29.99]:42334 "EHLO mail.kernel.org"
+        id S231281AbhJMWMZ (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Oct 2021 18:12:25 -0400
+Received: from mail.kernel.org ([198.145.29.99]:42460 "EHLO mail.kernel.org"
         rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S231229AbhJMWMQ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Oct 2021 18:12:16 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 1B29861039;
-        Wed, 13 Oct 2021 22:10:13 +0000 (UTC)
+        id S231223AbhJMWMX (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 13 Oct 2021 18:12:23 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id D3E05610FE;
+        Wed, 13 Oct 2021 22:10:19 +0000 (UTC)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1634163013;
-        bh=SyR96/qkh3mZJMjGgD+4H7RM4fsK8t9JZGJaVb7lo00=;
+        s=k20201202; t=1634163019;
+        bh=xHyUgCyrHzK7POkCLQIsezCDmmu/utKR8BIGbsFHzrY=;
         h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=O3lEeL/RTydm/Ac5PDPgbY+kDQMI0wW7eiB52vVVmx95qGYvYfd0welW3vc8bpI+U
-         igMJmGsxxyyY2v5lm4ij6RTmSVhZO5wx7KTTVtEYip+hEfJSzqQMU8gD9BioYWNfen
-         JrrqIOXjxQCCjT8pVR3v42MM9iHS+n/elxh2TetoyakYMQBRc7plDSTvASgo9rEEot
-         EsvO2k8k9nvFVVHlsGkozX+wPrCY4Hx7iruyjUP/cqw+YypfVfIYp3NZkGRuD02RjI
-         tARk4AvIdIlelSEUulve308ywhlX2if78gqQFPSX7w+6IggOgtDkjBEyFpx0nmPz+m
-         g7Nw2gtgR+xuw==
+        b=HLqONRDrGzQB9q7qViO+47O4IjHWprVw0DsTdZoQhlBiIxg4lMPUANskaou2bMiJv
+         cHg+LAlJ1xW2H2S6Cfhs2HkH8k5CPcgfloTW/H6KfjtgbXOEnlo5ti/uomT7US9mwR
+         wM0pyZEBAN1tLAZig0tcav9oRFfA6Ow+mjTIqAwHJ7fjYrZn8O2dOSu6qyb6wBZgqO
+         if0pXlPFdtBB+UDKJQe3tV5Ip4feZD/cMOTRmKszn5IAOhB3i1T3WyGXwiRs3iLjgh
+         IazxGm8UH9Gb1/462mtVQBhp16PctFKQIF7LqCIeV8EIxFIpalraNyXXyrhvDricQU
+         X8s90c0vZrrDA==
 Content-Type: text/plain; charset="utf-8"
 MIME-Version: 1.0
 Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <20210923162645.23257-7-konrad.dybcio@somainline.org>
-References: <20210923162645.23257-1-konrad.dybcio@somainline.org> <20210923162645.23257-7-konrad.dybcio@somainline.org>
-Subject: Re: [PATCH v4 7/9] clk: qcom: gcc-msm8994: Add modem reset
+In-Reply-To: <20210923162645.23257-8-konrad.dybcio@somainline.org>
+References: <20210923162645.23257-1-konrad.dybcio@somainline.org> <20210923162645.23257-8-konrad.dybcio@somainline.org>
+Subject: Re: [PATCH v4 8/9] clk: qcom: gcc-msm8994: Add proper msm8992 support
 From:   Stephen Boyd <sboyd@kernel.org>
 Cc:     martin.botka@somainline.org,
         angelogioacchino.delregno@somainline.org,
@@ -37,20 +37,20 @@ Cc:     martin.botka@somainline.org,
         Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Michael Turquette <mturquette@baylibre.com>,
-        Rob Herring <robh+dt@kernel.org>,
         linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
-        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org
+        linux-kernel@vger.kernel.org
 To:     Konrad Dybcio <konrad.dybcio@somainline.org>,
         ~postmarketos/upstreaming@lists.sr.ht
-Date:   Wed, 13 Oct 2021 15:10:11 -0700
-Message-ID: <163416301196.936110.4873624693308718315@swboyd.mtv.corp.google.com>
+Date:   Wed, 13 Oct 2021 15:10:18 -0700
+Message-ID: <163416301873.936110.13341261000793759064@swboyd.mtv.corp.google.com>
 User-Agent: alot/0.9.1
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Konrad Dybcio (2021-09-23 09:26:40)
-> This will be required to support the modem.
+Quoting Konrad Dybcio (2021-09-23 09:26:41)
+> MSM8992 is a cut-down version of MSM8994, featuring
+> largely the same hardware.
 >=20
 > Signed-off-by: Konrad Dybcio <konrad.dybcio@somainline.org>
 > ---
