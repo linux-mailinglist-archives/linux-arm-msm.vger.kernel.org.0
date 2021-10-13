@@ -2,52 +2,52 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C1CC542BE09
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 12:56:27 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5D92742BE0B
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 12:56:32 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232243AbhJMK6X (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Oct 2021 06:58:23 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56346 "EHLO
+        id S231623AbhJMK6Y (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Oct 2021 06:58:24 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56400 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231597AbhJMK6F (ORCPT
+        with ESMTP id S232211AbhJMK6O (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Oct 2021 06:58:05 -0400
-Received: from mail-pj1-x1031.google.com (mail-pj1-x1031.google.com [IPv6:2607:f8b0:4864:20::1031])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 1C535C06174E
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Oct 2021 03:56:02 -0700 (PDT)
-Received: by mail-pj1-x1031.google.com with SMTP id pi19-20020a17090b1e5300b0019fdd3557d3so1921116pjb.5
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Oct 2021 03:56:02 -0700 (PDT)
+        Wed, 13 Oct 2021 06:58:14 -0400
+Received: from mail-pl1-x634.google.com (mail-pl1-x634.google.com [IPv6:2607:f8b0:4864:20::634])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 19A00C06176A
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Oct 2021 03:56:07 -0700 (PDT)
+Received: by mail-pl1-x634.google.com with SMTP id x8so1529982plv.8
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Oct 2021 03:56:07 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=linaro.org; s=google;
         h=from:to:cc:subject:date:message-id:in-reply-to:references
          :mime-version:content-transfer-encoding;
-        bh=fRXyuG4K4UcrJ1NjhumTmbpE2063xuupe5W8qPOe4Yw=;
-        b=v48ZoqGZB7XBFy4q3wSP+rpZ4GvKK73lK9ne2goyM63IJhmVaW5O+PoWh7UvL/I0KF
-         B/omhA9z9YSDHUDu9EgRKqapA+FW9CNquP/e/jP4UzDiEM+pNTbxvlcfh81uVJMyXuSD
-         SkcPYHLqv4TZDCgfVWQbxsddBJaqZZe3Q4HMM92J8rMn/j6k3pBZAKREGSyU3ho9zES0
-         G1Tzh47VXyZpu7Sw+vsvfjDudRSo19tdatCXJ65NuQ3rTXIevmofT9i9cWaRqyEmYUPF
-         Fs0pBL7u3wfYkH1fHRD2ImyOb6zybW+SiEMQUD+SdeSofu/hU3YgvxJ7HYKj97kpuwhZ
-         iuGA==
+        bh=LL9CpSaKrwIGmzf5gUizL7uHqJVR8v2f7iF2al5I2gY=;
+        b=mxHA9h0fvl0IV6lqG/ITsAIHHgpNrWhGbL8wzkufFz91H7ItJqO3eFvtZeFcBE25Me
+         eXLDK86XM4C6uCH99pHIDHinaiwO8GzO4sT08bzTzTqnsETHwZupKrAaMjl6jbTMzMLa
+         gZbL+YAz5ZvaJ5b1ulkwfbogdKK938pwYvQbZ9TcKLC2IHlSo6UYfoI9y9PuhosQz8Fd
+         TRrwI1Ir8CWcFlUZvdmt3HlssDOURZXFSx0ZoNWvb3DoKQX+83yVF6s8NoWY4z3VuE6f
+         +pD0hd5UY1Xjm7KUtAtLyjW7kTAucKEgBfT/qjX2CA79qg7G7Gk0CP/4cOb90oEt6oyT
+         E9aw==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:from:to:cc:subject:date:message-id:in-reply-to
          :references:mime-version:content-transfer-encoding;
-        bh=fRXyuG4K4UcrJ1NjhumTmbpE2063xuupe5W8qPOe4Yw=;
-        b=Fbw2UyCo29lLzhqeJVYirV79x6BMn+DKp93lwmnhOu89g1LAbjRZWBZOF00ADNiCXK
-         OkCPBILmUX5w/qXK3ugCQgdPxhKCsMhg/sY1EtoSJDpJp+DvXhC8NkCyo0g31kc/m2B5
-         0jeZuIy8jZfO8tqQAcA16BSkwJBI1EFCwczNZ4ZXGy34ooyEC0QebyZqAtHDefajWomQ
-         5INp5uOSUwpduaH0VxgIl3Gdf4TJvH2CtAFIHzcQZAaGP7vnJvb14VEb5pOgFT4pYOKL
-         iWDiCMlym7TznAlsgFdP9QdeujWWJJBSGGZd/fhhSklWdqD62jXKRMHJdfo1qpNweOCH
-         YmNg==
-X-Gm-Message-State: AOAM533A84o13gbPdaomerhMcP/KC8HwthlMX0wKAt/uLDIN54QnnDX2
-        3mIxUT4cEZP0oevORYtls96FqAJc/OjlzA==
-X-Google-Smtp-Source: ABdhPJxmJGsHbblFvtmcLLVBxQ5sWiyEypF+LZjUgEWQKbSz5GPyxK01w4yn2G1a1clXidIKtRMpGg==
-X-Received: by 2002:a17:90a:1504:: with SMTP id l4mr12586375pja.181.1634122561455;
-        Wed, 13 Oct 2021 03:56:01 -0700 (PDT)
+        bh=LL9CpSaKrwIGmzf5gUizL7uHqJVR8v2f7iF2al5I2gY=;
+        b=M5EcBiI2DDEE59KQ7BZ0C6Ffdjhwwhm/OSjXXbeAIt38beEczqD+GD3ZvQcHTOiPd2
+         eKUjR8sNeSzzw88kAszcxbpEC/aXddR5UxpMUKKPIMu/3qDBkHT87Nzej/ipJ4GjBZeU
+         28uz8jvhs0UuUNKok3Vwjv3wUgRGdcB1pZb/fV7b4d+2UUMPxzh8lhhgPCN6wOdJfV73
+         Rk0QJ1BjxIm/9AEUxF1zODNt02/2ZOQtNINmqT/9D9+AlkvrVWoCGTehSSVNfwNoXvMX
+         4sPy3FG6hPC54R6zHcZGhj3ep/J8h48ln7ZsA+b84a9sNhybT1/vT8r5d1HCE6+j26/+
+         Sigw==
+X-Gm-Message-State: AOAM533wWrmdJ0GtLOPCelKsT4yIj9Wa7QyCeCizwwUowk9lXJF0aYsu
+        IpiTe5IsIaPH78Td2EIq1MUerzm+ROC+gg==
+X-Google-Smtp-Source: ABdhPJxpVn6s06BcFRv7MNatv5Gi4Lr15alhu+KdWwOD+0qh74bxiXioA5VZD8McVcgCoxmkDnyJOg==
+X-Received: by 2002:a17:90a:5108:: with SMTP id t8mr12571728pjh.201.1634122566438;
+        Wed, 13 Oct 2021 03:56:06 -0700 (PDT)
 Received: from localhost.name ([122.161.48.68])
-        by smtp.gmail.com with ESMTPSA id b13sm6155351pjl.15.2021.10.13.03.55.57
+        by smtp.gmail.com with ESMTPSA id b13sm6155351pjl.15.2021.10.13.03.56.01
         (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Oct 2021 03:56:01 -0700 (PDT)
+        Wed, 13 Oct 2021 03:56:06 -0700 (PDT)
 From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
 To:     linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org
 Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
@@ -55,9 +55,9 @@ Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
         robh+dt@kernel.org, agross@kernel.org, herbert@gondor.apana.org.au,
         davem@davemloft.net, Thara Gopinath <thara.gopinath@linaro.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>
-Subject: [PATCH v4 01/20] arm64/dts: qcom: Fix 'dma' & 'qcom,controlled-remotely' nodes in dts
-Date:   Wed, 13 Oct 2021 16:25:22 +0530
-Message-Id: <20211013105541.68045-2-bhupesh.sharma@linaro.org>
+Subject: [PATCH v4 02/20] arm64/dts: qcom: ipq6018: Remove unused 'qcom,config-pipe-trust-reg' property
+Date:   Wed, 13 Oct 2021 16:25:23 +0530
+Message-Id: <20211013105541.68045-3-bhupesh.sharma@linaro.org>
 X-Mailer: git-send-email 2.31.1
 In-Reply-To: <20211013105541.68045-1-bhupesh.sharma@linaro.org>
 References: <20211013105541.68045-1-bhupesh.sharma@linaro.org>
@@ -67,24 +67,19 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Preparatory patch for subsequent patch in this series which
-converts the qcom_bam_dma device-tree binding into YAML format.
+'qcom,config-pipe-trust-reg' property doesn't seem to be
+used by the qcom, bam_dma driver, so remove the same
+from 'ipq6018' dts.
 
-A few qcom device-tree files define dma-controller nodes
-with non-standard 'node names' and also set
-the bool property 'qcom,controlled-remotely' incorrectly, which
-leads to following errors with 'make dtbs_check':
+This is a preparatory patch for subsequent patch in
+this series which converts the qcom_bam_dma device-tree
+binding into YAML format.
 
- $ arch/arm64/boot/dts/qcom/sdm850-lenovo-yoga-c630.dt.yaml:
-     dma@1dc4000: $nodename:0: 'dma@1dc4000' does not match
-     '^dma-controller(@.*)?$'
-
- $ arch/arm64/boot/dts/qcom/sm8250-mtp.dt.yaml:
-     dma@1dc4000: qcom,controlled-remotely: 'oneOf' conditional
-     failed, one must be fixed:
-	[[1]] is not of type 'boolean'
-	True was expected
-	[[1]] is not of type 'null'
+Without this change, 'make dtbs_check' leads to the following
+error:
+ $ arch/arm64/boot/dts/qcom/ipq6018-cp01-c1.dt.yaml:
+     dma-controller@704000: 'qcom,config-pipe-trust-reg' does not match
+     any of the regexes: 'pinctrl-[0-9]+'
 
 Fix the same.
 
@@ -93,105 +88,21 @@ Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
 Cc: Rob Herring <robh+dt@kernel.org>
 Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
 ---
- arch/arm64/boot/dts/qcom/ipq6018.dtsi | 2 +-
- arch/arm64/boot/dts/qcom/ipq8074.dtsi | 4 ++--
- arch/arm64/boot/dts/qcom/msm8996.dtsi | 4 ++--
- arch/arm64/boot/dts/qcom/msm8998.dtsi | 2 +-
- arch/arm64/boot/dts/qcom/sdm845.dtsi  | 4 ++--
- 5 files changed, 8 insertions(+), 8 deletions(-)
+ arch/arm64/boot/dts/qcom/ipq6018.dtsi | 1 -
+ 1 file changed, 1 deletion(-)
 
 diff --git a/arch/arm64/boot/dts/qcom/ipq6018.dtsi b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-index d2fe58e0eb7a..7b6205c180df 100644
+index 7b6205c180df..6a05ee82547f 100644
 --- a/arch/arm64/boot/dts/qcom/ipq6018.dtsi
 +++ b/arch/arm64/boot/dts/qcom/ipq6018.dtsi
-@@ -200,7 +200,7 @@ cryptobam: dma-controller@704000 {
- 			clock-names = "bam_clk";
+@@ -201,7 +201,6 @@ cryptobam: dma-controller@704000 {
  			#dma-cells = <1>;
  			qcom,ee = <1>;
--			qcom,controlled-remotely = <1>;
-+			qcom,controlled-remotely;
- 			qcom,config-pipe-trust-reg = <0>;
+ 			qcom,controlled-remotely;
+-			qcom,config-pipe-trust-reg = <0>;
  		};
  
-diff --git a/arch/arm64/boot/dts/qcom/ipq8074.dtsi b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-index db333001df4d..99668e84953e 100644
---- a/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-+++ b/arch/arm64/boot/dts/qcom/ipq8074.dtsi
-@@ -212,7 +212,7 @@ prng: rng@e3000 {
- 			status = "disabled";
- 		};
- 
--		cryptobam: dma@704000 {
-+		cryptobam: dma-controller@704000 {
- 			compatible = "qcom,bam-v1.7.0";
- 			reg = <0x00704000 0x20000>;
- 			interrupts = <GIC_SPI 207 IRQ_TYPE_LEVEL_HIGH>;
-@@ -220,7 +220,7 @@ cryptobam: dma@704000 {
- 			clock-names = "bam_clk";
- 			#dma-cells = <1>;
- 			qcom,ee = <1>;
--			qcom,controlled-remotely = <1>;
-+			qcom,controlled-remotely;
- 			status = "disabled";
- 		};
- 
-diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-index 52df22ab3f6a..390468e1b62e 100644
---- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
-@@ -2686,7 +2686,7 @@ sdhc2: sdhci@74a4900 {
- 			status = "disabled";
- 		 };
- 
--		blsp1_dma: dma@7544000 {
-+		blsp1_dma: dma-controller@7544000 {
- 			compatible = "qcom,bam-v1.7.0";
- 			reg = <0x07544000 0x2b000>;
- 			interrupts = <GIC_SPI 238 IRQ_TYPE_LEVEL_HIGH>;
-@@ -2743,7 +2743,7 @@ blsp1_i2c3: i2c@7577000 {
- 			status = "disabled";
- 		};
- 
--		blsp2_dma: dma@7584000 {
-+		blsp2_dma: dma-controller@7584000 {
- 			compatible = "qcom,bam-v1.7.0";
- 			reg = <0x07584000 0x2b000>;
- 			interrupts = <GIC_SPI 239 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-index 34039b5c8017..a46838f1e310 100644
---- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
-+++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
-@@ -2187,7 +2187,7 @@ blsp1_i2c6: i2c@c17a000 {
- 			#size-cells = <0>;
- 		};
- 
--		blsp2_dma: dma@c184000 {
-+		blsp2_dma: dma-controller@c184000 {
- 			compatible = "qcom,bam-v1.7.0";
- 			reg = <0x0c184000 0x25000>;
- 			interrupts = <GIC_SPI 239 IRQ_TYPE_LEVEL_HIGH>;
-diff --git a/arch/arm64/boot/dts/qcom/sdm845.dtsi b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-index b3b911926184..72ec48c4e03c 100644
---- a/arch/arm64/boot/dts/qcom/sdm845.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sdm845.dtsi
-@@ -2312,7 +2312,7 @@ ufs_mem_phy_lanes: lanes@1d87400 {
- 			};
- 		};
- 
--		cryptobam: dma@1dc4000 {
-+		cryptobam: dma-controller@1dc4000 {
- 			compatible = "qcom,bam-v1.7.0";
- 			reg = <0 0x01dc4000 0 0x24000>;
- 			interrupts = <GIC_SPI 272 IRQ_TYPE_LEVEL_HIGH>;
-@@ -2320,7 +2320,7 @@ cryptobam: dma@1dc4000 {
- 			clock-names = "bam_clk";
- 			#dma-cells = <1>;
- 			qcom,ee = <0>;
--			qcom,controlled-remotely = <1>;
-+			qcom,controlled-remotely;
- 			iommus = <&apps_smmu 0x704 0x1>,
- 				 <&apps_smmu 0x706 0x1>,
- 				 <&apps_smmu 0x714 0x1>,
+ 		crypto: crypto@73a000 {
 -- 
 2.31.1
 
