@@ -2,133 +2,119 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id B1AB042BCD1
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 12:30:11 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A784F42BDE4
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 12:55:07 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S239359AbhJMKcN (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Oct 2021 06:32:13 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:50344 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S239036AbhJMKcM (ORCPT
-        <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Oct 2021 06:32:12 -0400
-Received: from mail-ed1-x52e.google.com (mail-ed1-x52e.google.com [IPv6:2a00:1450:4864:20::52e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 615ACC061570;
-        Wed, 13 Oct 2021 03:30:08 -0700 (PDT)
-Received: by mail-ed1-x52e.google.com with SMTP id y12so8221644eda.4;
-        Wed, 13 Oct 2021 03:30:08 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=gmail.com; s=20210112;
-        h=date:from:to:cc:subject:message-id:references:mime-version
-         :content-disposition:in-reply-to;
-        bh=y/rnqiiRDqzhToYNQ2Zuvuqbkbv5/WaDX5sqgB4Xrno=;
-        b=Jj86qHBhhjlKiPDP7CjiDwa3rXVoGd38psAEjP9nnnGjHqsZ6KyPzsMvLr/y1ZtBq3
-         SPap+O09GBgNCsF4KtMo0HDfjtGGHrhiIEJLH2OM+fpeNCtWsyRkenG/CNcEBgC9I5QJ
-         pF3w4/RvuVplPCiEjB2l3haCyBtqmyjEymOwsYjzj2WDzo8csLhW8WPmlpnM7Te6tFpu
-         Bf0c+bR1FkgM8wa4pMLgZa6W9RRE1HqpEm3rpZ7jmF9teFL82zYEP4IGOmjh7bhfpxFA
-         EBzuXPgODZGqfoeebSIEnlR38UhDlWimz5u2A2BCpphsOu9wsHm4FfijGEvswqMLkPxQ
-         nu2g==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=y/rnqiiRDqzhToYNQ2Zuvuqbkbv5/WaDX5sqgB4Xrno=;
-        b=zwqCwqw1E6hYEZpUjSVTU7uZqo/1Tfa6aXzehw/G32lYAv6XrwS0KiUI7AabLdv/AZ
-         lTc/kmMFhACzLxjGats0755rgZu4jmcsySRx2WCvpAT8sdd/wjx1W592TwVMw/2ZBgwI
-         p2unMd1BZupKCNle5uVhjohLkFfaBwaadFodUCgsC2aOE+WqORbXgm9NX41d0h0qjEIp
-         Kn9apkqN8Mip9ajzNCTiFd/HhwdQg2ai19p2thoidSFzOvEWy+FuHeAnDdM52FmBGjcL
-         UST11J8wgHFvBlup3rCKGznExWcI1h8KKbnqyJzxYk4xSFdyUmkek8Vs6H9RCmIqc37h
-         aojQ==
-X-Gm-Message-State: AOAM533tRNa/+J/mus+4tXqyM62U0/vpIts4+ggqy9Iw6octpHxNOJ2o
-        3XUCrbIh24i1+8Z3erw7pDg=
-X-Google-Smtp-Source: ABdhPJyz3L+DI2qSA77Phw1w3Asc0E2qWte8XGDO3iCC/qA5s5ah4fZ6hEl79BhG1vwc6Lx7oII4iw==
-X-Received: by 2002:a17:906:1707:: with SMTP id c7mr37987499eje.377.1634121006829;
-        Wed, 13 Oct 2021 03:30:06 -0700 (PDT)
-Received: from Ansuel-xps.localdomain (93-42-71-246.ip85.fastwebnet.it. [93.42.71.246])
-        by smtp.gmail.com with ESMTPSA id h18sm6430351ejt.29.2021.10.13.03.30.05
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Wed, 13 Oct 2021 03:30:06 -0700 (PDT)
-Date:   Wed, 13 Oct 2021 12:30:03 +0200
-From:   Ansuel Smith <ansuelsmth@gmail.com>
-To:     Rob Herring <robh@kernel.org>
-Cc:     Jakub Kicinski <kuba@kernel.org>,
-        "David S. Miller" <davem@davemloft.net>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        netdev@vger.kernel.org, Matthew Hagan <mnhagan88@gmail.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        Rob Herring <robh+dt@kernel.org>,
-        Andy Gross <agross@kernel.org>, linux-kernel@vger.kernel.org,
-        Andrew Lunn <andrew@lunn.ch>,
-        Vivien Didelot <vivien.didelot@gmail.com>,
-        Vladimir Oltean <olteanv@gmail.com>,
-        Florian Fainelli <f.fainelli@gmail.com>,
-        John Crispin <john@phrozen.org>,
-        Russell King <linux@armlinux.org.uk>
-Subject: Re: [net-next PATCH v6 15/16] dt-bindings: net: dsa: qca8k: convert
- to YAML schema
-Message-ID: <YWa1KwlM2SFP5jM0@Ansuel-xps.localdomain>
-References: <20211013011622.10537-1-ansuelsmth@gmail.com>
- <20211013011622.10537-16-ansuelsmth@gmail.com>
- <1634094529.487895.3858822.nullmailer@robh.at.kernel.org>
+        id S230005AbhJMK5I (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Oct 2021 06:57:08 -0400
+Received: from mail.kernel.org ([198.145.29.99]:55694 "EHLO mail.kernel.org"
+        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
+        id S229602AbhJMK5H (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 13 Oct 2021 06:57:07 -0400
+Received: by mail.kernel.org (Postfix) with ESMTPSA id B3886610D1;
+        Wed, 13 Oct 2021 10:55:04 +0000 (UTC)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
+        s=k20201202; t=1634122504;
+        bh=cHJwlE/4hKjsg8N9PIPkUgBxfg4CYIeT2a/7mtQ0gV4=;
+        h=References:In-Reply-To:From:Date:Subject:To:Cc:From;
+        b=Gvd6nNUOzZ1UK/F83pyQaR5TauDo53BnYMnJejta47hA700Gc4nEjGIFnHwmjOADo
+         AKNy+aONpGH/0IsqLm0Dcpm6wjEJavnew940SDLuN/5a6FYUw3ELyYcU0A3Q/NRQek
+         QfoThQlCQv7p+iOVnXWOAHkCznwBtAwOy+ujza96o7WAaFxFjrC8XZ1wckA/fZVTbk
+         VwI4mJWJKdlfyh1Lt6ftM0G3FhFyxA8FUoE+m7e14+8RRL2PlJvv9hf7Oz7NJ/FAwC
+         wgr7gidywOLH4DV+TxM46MeGP/by3gM7M3FjX3pF1U7UjvwkkKAPLPGpJwUDxBDIsM
+         sv3E+u1PeyN3A==
+Received: by mail-wr1-f45.google.com with SMTP id o20so6930614wro.3;
+        Wed, 13 Oct 2021 03:55:04 -0700 (PDT)
+X-Gm-Message-State: AOAM530iZXvF4GxMweqi4kkfiz7ZUk97vL95SLqNn2ulZn679H1I9FS6
+        nYyJQLDddw3zeAFg/BNgI5e/wVU24xPXuOhmPUE=
+X-Google-Smtp-Source: ABdhPJzW6QwF+fpri3xax3BToB6ExyXZ9H+Kw/HXMbby5km4lbFfKsXJq/EA3ZMCLu9RmweZx7YA8FnfMM0PPRf9Pg4=
+X-Received: by 2002:a05:600c:4f42:: with SMTP id m2mr9273874wmq.82.1634122503094;
+ Wed, 13 Oct 2021 03:55:03 -0700 (PDT)
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <1634094529.487895.3858822.nullmailer@robh.at.kernel.org>
+References: <20211006025350.a5PczFZP4%akpm@linux-foundation.org>
+ <58fbf2ff-b367-2137-aa77-fcde6c46bbb7@infradead.org> <20211006182052.6ecc17cf@canb.auug.org.au>
+ <f877a1c9-1898-23f3-bba3-3442dc1f3979@amd.com> <CAMuHMdV3eMchpgUasU6BBHrDQyjCc2TrqJ+zJgFhgAySpqVGfw@mail.gmail.com>
+In-Reply-To: <CAMuHMdV3eMchpgUasU6BBHrDQyjCc2TrqJ+zJgFhgAySpqVGfw@mail.gmail.com>
+From:   Arnd Bergmann <arnd@kernel.org>
+Date:   Wed, 13 Oct 2021 12:54:47 +0200
+X-Gmail-Original-Message-ID: <CAK8P3a1LLABstZ2rPYpsXRTxMdbSTrh0y753vrfGbRovv9fS8A@mail.gmail.com>
+Message-ID: <CAK8P3a1LLABstZ2rPYpsXRTxMdbSTrh0y753vrfGbRovv9fS8A@mail.gmail.com>
+Subject: Re: mmotm 2021-10-05-19-53 uploaded (drivers/gpu/drm/msm/hdmi/hdmi_phy.o)
+To:     Geert Uytterhoeven <geert@linux-m68k.org>
+Cc:     =?UTF-8?Q?Christian_K=C3=B6nig?= <christian.koenig@amd.com>,
+        Stephen Rothwell <sfr@canb.auug.org.au>,
+        Randy Dunlap <rdunlap@infradead.org>,
+        Andrew Morton <akpm@linux-foundation.org>,
+        Mark Brown <broonie@kernel.org>,
+        Linux FS Devel <linux-fsdevel@vger.kernel.org>,
+        Linux Kernel Mailing List <linux-kernel@vger.kernel.org>,
+        Linux MM <linux-mm@kvack.org>,
+        Linux-Next <linux-next@vger.kernel.org>,
+        Michal Hocko <mhocko@suse.cz>, mm-commits@vger.kernel.org,
+        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        freedreno <freedreno@lists.freedesktop.org>,
+        Daniel Vetter <daniel.vetter@ffwll.ch>,
+        Intel Graphics <intel-gfx@lists.freedesktop.org>,
+        DRI <dri-devel@lists.freedesktop.org>
+Content-Type: text/plain; charset="UTF-8"
+Content-Transfer-Encoding: quoted-printable
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Tue, Oct 12, 2021 at 10:08:49PM -0500, Rob Herring wrote:
-> On Wed, 13 Oct 2021 03:16:21 +0200, Ansuel Smith wrote:
-> > From: Matthew Hagan <mnhagan88@gmail.com>
-> > 
-> > Convert the qca8k bindings to YAML format.
-> > 
-> > Signed-off-by: Matthew Hagan <mnhagan88@gmail.com>
-> > Co-developed-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > Signed-off-by: Ansuel Smith <ansuelsmth@gmail.com>
-> > ---
-> >  .../devicetree/bindings/net/dsa/qca8k.txt     | 245 ------------
-> >  .../devicetree/bindings/net/dsa/qca8k.yaml    | 362 ++++++++++++++++++
-> >  2 files changed, 362 insertions(+), 245 deletions(-)
-> >  delete mode 100644 Documentation/devicetree/bindings/net/dsa/qca8k.txt
-> >  create mode 100644 Documentation/devicetree/bindings/net/dsa/qca8k.yaml
-> > 
-> 
-> My bot found errors running 'make DT_CHECKER_FLAGS=-m dt_binding_check'
-> on your patch (DT_CHECKER_FLAGS is new in v5.13):
-> 
-> yamllint warnings/errors:
-> ./Documentation/devicetree/bindings/net/dsa/qca8k.yaml:362:7: [error] no new line character at the end of file (new-line-at-end-of-file)
+On Thu, Oct 7, 2021 at 11:51 AM Geert Uytterhoeven <geert@linux-m68k.org> w=
+rote:
+> On Wed, Oct 6, 2021 at 9:28 AM Christian K=C3=B6nig <christian.koenig@amd=
+.com> wrote:
+> > Am 06.10.21 um 09:20 schrieb Stephen Rothwell:
+> > > On Tue, 5 Oct 2021 22:48:03 -0700 Randy Dunlap <rdunlap@infradead.org=
+> wrote:
+> > >> on i386:
+> > >>
+> > >> ld: drivers/gpu/drm/msm/hdmi/hdmi_phy.o:(.rodata+0x3f0): undefined r=
+eference to `msm_hdmi_phy_8996_cfg'
+
+I ran into the same thing now as well.
+E_TEST) && COMMON_CLK
 >
+> I'd make that:
+>
+>     -        depends on DRM
+>     +       depends on COMMON_CLK && DRM && IOMMU_SUPPORT
+>             depends on ARCH_QCOM || SOC_IMX5 || COMPILE_TEST
+>     -        depends on IOMMU_SUPPORT
+>     -       depends on (OF && COMMON_CLK) || COMPILE_TEST
+>     +       depends on OF || COMPILE_TEST
+>
+> to keep a better separation between hard and soft dependencies.
+>
+> Note that the "depends on OF || COMPILE_TEST" can even be
+> deleted, as the dependency on ARCH_QCOM || SOC_IMX5 implies OF.
 
-Stupid me will fix that...
+Looks good to me, I would also drop that last line in this case, and maybe
+add this change as building without COMMON_CLK is no longer possible:
 
-> dtschema/dtc warnings/errors:
-> /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/net/qcom,ipq8064-mdio.example.dt.yaml: switch@10: 'oneOf' conditional failed, one must be fixed:
-> 	'ports' is a required property
-> 	'ethernet-ports' is a required property
-> 	From schema: /builds/robherring/linux-dt-review/Documentation/devicetree/bindings/net/dsa/qca8k.yaml
-> 
+diff --git a/drivers/gpu/drm/msm/Makefile b/drivers/gpu/drm/msm/Makefile
+index 904535eda0c4..a5d87e03812f 100644
+--- a/drivers/gpu/drm/msm/Makefile
++++ b/drivers/gpu/drm/msm/Makefile
+@@ -116,10 +116,10 @@ msm-$(CONFIG_DRM_MSM_DP)+=3D dp/dp_aux.o \
+  dp/dp_power.o \
+  dp/dp_audio.o
 
-About this i fixed with the next patch. Should I include that in this
-patch? Or i can ignore this error?
+-msm-$(CONFIG_DRM_FBDEV_EMULATION) +=3D msm_fbdev.o
+-msm-$(CONFIG_COMMON_CLK) +=3D disp/mdp4/mdp4_lvds_pll.o
+-msm-$(CONFIG_COMMON_CLK) +=3D hdmi/hdmi_pll_8960.o
+-msm-$(CONFIG_COMMON_CLK) +=3D hdmi/hdmi_phy_8996.o
++msm-$(CONFIG_DRM_FBDEV_EMULATION) +=3D msm_fbdev.o \
++ disp/mdp4/mdp4_lvds_pll.o \
++ hdmi/hdmi_pll_8960.o \
++ hdmi/hdmi_phy_8996.o
 
-> doc reference errors (make refcheckdocs):
-> 
-> See https://patchwork.ozlabs.org/patch/1540096
-> 
-> This check can fail if there are any dependencies. The base for a patch
-> series is generally the most recent rc1.
-> 
-> If you already ran 'make dt_binding_check' and didn't see the above
-> error(s), then make sure 'yamllint' is installed and dt-schema is up to
-> date:
-> 
-> pip3 install dtschema --upgrade
-> 
-> Please check and re-submit.
-> 
+ msm-$(CONFIG_DRM_MSM_HDMI_HDCP) +=3D hdmi/hdmi_hdcp.o
 
--- 
-	Ansuel
+Has anyone submitted a patch already, or should I send the version
+that I am using locally now?
+
+        Arnd
