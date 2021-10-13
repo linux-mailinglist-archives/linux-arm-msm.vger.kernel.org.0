@@ -2,64 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 502C342C1A8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 15:45:20 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 0F09642C2AF
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 16:16:35 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231644AbhJMNrV (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Oct 2021 09:47:21 -0400
-Received: from new2-smtp.messagingengine.com ([66.111.4.224]:43331 "EHLO
-        new2-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
-        by vger.kernel.org with ESMTP id S229611AbhJMNrV (ORCPT
+        id S229647AbhJMOSg (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Oct 2021 10:18:36 -0400
+Received: from new1-smtp.messagingengine.com ([66.111.4.221]:59829 "EHLO
+        new1-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229562AbhJMOSg (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Oct 2021 09:47:21 -0400
-Received: from compute6.internal (compute6.nyi.internal [10.202.2.46])
-        by mailnew.nyi.internal (Postfix) with ESMTP id 6E91658109A;
-        Wed, 13 Oct 2021 09:45:17 -0400 (EDT)
+        Wed, 13 Oct 2021 10:18:36 -0400
+Received: from compute4.internal (compute4.nyi.internal [10.202.2.44])
+        by mailnew.nyi.internal (Postfix) with ESMTP id 7EFE4580693;
+        Wed, 13 Oct 2021 10:16:32 -0400 (EDT)
 Received: from mailfrontend1 ([10.202.2.162])
-  by compute6.internal (MEProxy); Wed, 13 Oct 2021 09:45:17 -0400
+  by compute4.internal (MEProxy); Wed, 13 Oct 2021 10:16:32 -0400
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=cerno.tech; h=
         date:from:to:cc:subject:message-id:references:mime-version
-        :content-type:in-reply-to; s=fm1; bh=FgY2hnPsjJYOKFF2DfGAEdLl833
-        3nbKBOAi3tBKnQlQ=; b=ILAGaEIzzGT1Crwgs6sVwiM8jp7fDV292TfRxD9WjM3
-        nLQuvEp7LxnDwPl1JxXScK1ThPlXr4Wf49BDFVjOdlOqjYi4pTMXr45knwt8FhRO
-        ckI1ffIItH6jTDPHsxyOee0Vp6brQISi1OJuf4jMReH/04LAi2CeRvWmCnxI+jJf
-        6RTKViyIiRk/EzZf8+voCBu1+rodC5nYkFMtqnrOm46yKv/SRareb1ZcSBA8kNgh
-        6nInIt13Gs3YMi77ME49LtJtwSCSbP2zHBOECWl1vOcrDVOwmi/IykIIIsN76YIv
-        9rq4xzNZB4B8ghtuVHx0fjuDbd19pbONRY5JR96sClw==
+        :content-type:in-reply-to; s=fm1; bh=rGNU8kUNWf7tAnmnlNM2GITTDVA
+        GlhsbYEpSWnytylk=; b=BVPqeKTkvAtWIQoRe2eSalP7zJRo/c68m9s3z16Zfqc
+        nn2Rnfo+w+6k3PzVho1ftDBv2ds4RFbIglm3+t47r7J90w11TqUk/OxGLYNm85Gg
+        BdLq1lZlJTSYGuG9BFNRUOdUbfCai9/BZhlBjPqVblqKAEpN60WSWmwSK8t+s3lh
+        riPJRLwYBkKw+j8cEFAmUbjwoIf3FWhDEYFAvJ0xl04gZvrPwqH0lrOF+0LbWj8F
+        Xm2kSIA1sPHQGF+H0Cgo/quR0FpcOGN/cnb3KKIjorI9WbBeXoviFs65d7dbcDq9
+        LSyCVR2m4/hubErBvPhk5Fn9/cRxzT+UXMl6/oSm6Xw==
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
         messagingengine.com; h=cc:content-type:date:from:in-reply-to
         :message-id:mime-version:references:subject:to:x-me-proxy
-        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=FgY2hn
-        PsjJYOKFF2DfGAEdLl8333nbKBOAi3tBKnQlQ=; b=MCzneJUdJskivibM/B8m58
-        p2fJLYMp7cyea/+gacO5Q5XzORoDOfwMLAuHquGTCq+IubJQtv8azQTrSFtmfY+T
-        xI3QG2RpB71HWqh/nV2uukpdKivNfJmIMX1UtjwghV2kEvwi5oS5GpPDHwdujSyD
-        eu1HU7jVf4oMxdjgMJ9GpsZcIfrAHk+ngxFzOLWShE+blBVtTKn4gJkS269elpSU
-        cO4AOodQSEOOr50Ur7bJ6wfWzqSoAzEnuIBbsz82iFFUUmewYkzlPJsCpFBUY1lx
-        6m8Be/NzoY4gM7vBWt38OSeYvkBgWr8SadMPsgQlpyfhLVJ1sc/riwGsoVB8op7Q
+        :x-me-proxy:x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=rGNU8k
+        UNWf7tAnmnlNM2GITTDVAGlhsbYEpSWnytylk=; b=LuQ5gvEGAGY9AFPS1OJ8R8
+        6PH5lRPtp7oFk21QzE/+4qPUqskShFmaJxlabtL8IKUGyxjkxkllcIhBs6nuiMZs
+        2RoJf/akIMmKZ5kcTXXGVnWoHjKm1bxiI4yNdFa1zxE5zzgCrTp2utAy2BqsiX0N
+        zNW1j53byqhxa/yrbVliTVahpFcOqMrT/4a5l8VGLo3MWcVl1cHfuq4O4Q5+qfqj
+        P8ycTu5tpv/fGw8yAylyJ+OKk+bn4kJ2dwXnVKS8wwcJYTBaV6VH34Z8aJVLFcHc
+        YDMLDg7jz9UHuE5fAqg+vc2buz3FIfs+aUNjZ8685IGiFAo2GN49xiSW4A7yCCSg
         ==
-X-ME-Sender: <xms:6-JmYT_Z-TnrdWsnG0qgims4_VgA5CMDoXKnsChz4Hi9tQEkX9i40g>
-    <xme:6-JmYfs1mlil60fbhZCpXwSBBQhGDAbSiWZlMPPM8xuLcufbMIM-lLYKPZVhHrT3C
-    Oc8oDIMSVglG0qVfKs>
-X-ME-Received: <xmr:6-JmYRDW7Ko8H9rRg5acJMSiNT3bm9NH7S1_rjcsTzsk9GgmguxJX8lqdPGfBiPNPrB_C19niqYJQIXemaYSb42GMmHmW18oBwdGDBbP>
-X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvddutddgieejucetufdoteggodetrfdotf
+X-ME-Sender: <xms:P-pmYdns-rWvS-4r6xyklkIGU14AVU2a8X46PWxo5g6i8UVbaid1Og>
+    <xme:P-pmYY3qo7or-LaQDNj3r0Ky1em9nALLkqD06phYlYjJWX-C6z0qu4JYoQQMsTBre
+    jObXWOhODy1pYvVjWQ>
+X-ME-Received: <xmr:P-pmYTrk4TPDWI52t0Cqc8mIS_4BvPQJ2WYKpRdyfYvtKVIf4e3TUSllNy3g0wyREPaFmF1pVwEn5tBUjknHO2zWz8u3HlvsYCfHgLvs>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvddutddgjedvucetufdoteggodetrfdotf
     fvucfrrhhofhhilhgvmecuhfgrshhtofgrihhlpdfqfgfvpdfurfetoffkrfgpnffqhgen
     uceurghilhhouhhtmecufedttdenucesvcftvggtihhpihgvnhhtshculddquddttddmne
     cujfgurhepfffhvffukfhfgggtuggjsehgtderredttddvnecuhfhrohhmpeforgigihhm
     vgcutfhiphgrrhguuceomhgrgihimhgvsegtvghrnhhordhtvggthheqnecuggftrfgrth
-    htvghrnhepudfhgeffjedvueegudehgeevgefhgfdujeeguedvgeelgeeuffeifedtheet
-    leeinecuffhomhgrihhnpehfrhgvvgguvghskhhtohhprdhorhhgpdhlihhnrghrohdroh
-    hrghenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehm
+    htvghrnhepkefgffekffelgfeukedvhffggeehtedugfekgeeihfefhfehieeukeevffev
+    hfefnecuffhomhgrihhnpehfrhgvvgguvghskhhtohhprdhorhhgpdgtrghlvggsshdrug
+    gvvhenucevlhhushhtvghrufhiiigvpedtnecurfgrrhgrmhepmhgrihhlfhhrohhmpehm
     rgigihhmvgestggvrhhnohdrthgvtghh
-X-ME-Proxy: <xmx:6-JmYffwzApL3L4WQhcOYb-3771Otqxn9jsWg_yLnO87TsS8nZvBEg>
-    <xmx:6-JmYYNHuEuEJKhvTyNMtYEUHSe7hNvRytMC7_3KoGGmt-qktJ1vbQ>
-    <xmx:6-JmYRnBYNUJTjZusigkIzqQJ_hxZTVsvrH6WhonWbSoc8PzZNOQbA>
-    <xmx:7eJmYbioKLHlBrVGP2IgnvTOW-FAvO43thR-PKrmfHMMsh-wnfd0Cw>
+X-ME-Proxy: <xmx:P-pmYdm0lQBxSkcxsDnGJq7LCQdLAuBnaJgtAAK_4Fvyv0PhjW42bg>
+    <xmx:P-pmYb26iOIzYfale8JdDrWm9VKEfeNVRnzXgLcWxM0dG8YxgeZZSQ>
+    <xmx:P-pmYcvsH9lWxXJjCtMV0ppzt9f5o2_TNeqbfNrdfxmLTc1MVTHd7g>
+    <xmx:QOpmYaBNUIPJQ_ZlRoLIc31Ei5BVLrlUt7xRfhbvD4fNU7nWbYnKVw>
 Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
- 13 Oct 2021 09:45:15 -0400 (EDT)
-Date:   Wed, 13 Oct 2021 15:45:13 +0200
+ 13 Oct 2021 10:16:30 -0400 (EDT)
+Date:   Wed, 13 Oct 2021 16:16:29 +0200
 From:   Maxime Ripard <maxime@cerno.tech>
-To:     John Stultz <john.stultz@linaro.org>
-Cc:     Andrzej Hajda <a.hajda@samsung.com>,
+To:     Rob Clark <robdclark@gmail.com>,
+        Caleb Connolly <caleb.connolly@linaro.org>
+Cc:     Amit Pundir <amit.pundir@linaro.org>,
+        John Stultz <john.stultz@linaro.org>,
+        Andrzej Hajda <a.hajda@samsung.com>,
         Sam Ravnborg <sam@ravnborg.org>,
         Daniel Vetter <daniel.vetter@intel.com>,
         David Airlie <airlied@linux.ie>,
@@ -82,123 +85,141 @@ Cc:     Andrzej Hajda <a.hajda@samsung.com>,
         Inki Dae <inki.dae@samsung.com>,
         Linux Samsung SOC <linux-samsung-soc@vger.kernel.org>,
         linux-arm-msm <linux-arm-msm@vger.kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
         dri-devel <dri-devel@lists.freedesktop.org>,
         Chen Feng <puck.chen@hisilicon.com>,
         Xinwei Kong <kong.kongxinwei@hisilicon.com>,
         Joonyoung Shim <jy0922.shim@samsung.com>
 Subject: Re: [PATCH v4 00/24] drm/bridge: Make panel and bridge probe order
  consistent
-Message-ID: <20211013134513.hm6ftktkbh4kpudv@gilmour>
+Message-ID: <20211013141629.qfeqwsyi5yobzjca@gilmour>
 References: <20210910101218.1632297-1-maxime@cerno.tech>
  <CALAqxLUqdkxXogmPhPgHv4Bgx-4b3mxe12LzzvWb07pLSnb2kA@mail.gmail.com>
  <CALAqxLUYb=ge4AZZzmk71Qr-92vnnE6sJxwCNUdEz4=VDKr1kg@mail.gmail.com>
  <CALAqxLX7oK6DeoCPZhMTpHKCihSYq7KZDrt5UKb46=ZBbJd9fA@mail.gmail.com>
- <CALAqxLW=dJSmfaHAL=BfYVVxZHQvzJWu4UjMixwgM=Nh85JVNw@mail.gmail.com>
+ <CAF6AEGuJgrYrg7FXpVj8P_qf73CXb4=0KysSYQaobJuheDeUSA@mail.gmail.com>
+ <YXiZIuao6wNch7j-D3ZktdSR3_IRAQ3oSeL8sLCCX8lEhwsoWaouE6_eV6C2Zv9r2_dww_Mtal18UBJfc4fz4g==@protonmail.internalid>
+ <CAMi1Hd0sUUFvNzYwt29af9d99o1-x+LiXBPCrQ8=9H0tHvxVHg@mail.gmail.com>
+ <b57fbc24-9ef3-a57b-17d4-2cb33fb409d4@linaro.org>
 MIME-Version: 1.0
 Content-Type: multipart/signed; micalg=pgp-sha256;
-        protocol="application/pgp-signature"; boundary="yp3sab3u3qe3qd7a"
+        protocol="application/pgp-signature"; boundary="bigl5w3rjallwyk4"
 Content-Disposition: inline
-In-Reply-To: <CALAqxLW=dJSmfaHAL=BfYVVxZHQvzJWu4UjMixwgM=Nh85JVNw@mail.gmail.com>
+In-Reply-To: <b57fbc24-9ef3-a57b-17d4-2cb33fb409d4@linaro.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 
---yp3sab3u3qe3qd7a
+--bigl5w3rjallwyk4
 Content-Type: text/plain; charset=us-ascii
 Content-Disposition: inline
 Content-Transfer-Encoding: quoted-printable
 
-Hi John,
+Hi Caleb,
 
-On Wed, Sep 29, 2021 at 04:29:42PM -0700, John Stultz wrote:
-> On Wed, Sep 29, 2021 at 2:51 PM John Stultz <john.stultz@linaro.org> wrot=
-e:
-> >
-> > On Wed, Sep 29, 2021 at 2:32 PM John Stultz <john.stultz@linaro.org> wr=
-ote:
-> > > On Wed, Sep 29, 2021 at 2:27 PM John Stultz <john.stultz@linaro.org> =
+On Thu, Sep 30, 2021 at 09:20:52PM +0100, Caleb Connolly wrote:
+> Hi,
+>=20
+> On 30/09/2021 20:49, Amit Pundir wrote:
+> > On Thu, 30 Sept 2021 at 04:50, Rob Clark <robdclark@gmail.com> wrote:
+> > >=20
+> > > On Wed, Sep 29, 2021 at 2:51 PM John Stultz <john.stultz@linaro.org> =
 wrote:
-> > > > On Fri, Sep 10, 2021 at 3:12 AM Maxime Ripard <maxime@cerno.tech> w=
-rote:
-> > > > > The best practice to avoid those issues is to register its functi=
-ons only after
-> > > > > all its dependencies are live. We also shouldn't wait any longer =
-than we should
-> > > > > to play nice with the other components that are waiting for us, s=
-o in our case
-> > > > > that would mean moving the DSI device registration to the bridge =
-probe.
-> > > > >
-> > > > > I also had a look at all the DSI hosts, and it seems that exynos,=
- kirin and msm
-> > > > > would be affected by this and wouldn't probe anymore after those =
-changes.
-> > > > > Exynos and kirin seems to be simple enough for a mechanical chang=
-e (that still
-> > > > > requires to be tested), but the changes in msm seemed to be far m=
-ore important
-> > > > > and I wasn't confortable doing them.
-> > > >
-> > > >
-> > > > Hey Maxime,
-> > > >   Sorry for taking so long to get to this, but now that plumbers is
-> > > > over I've had a chance to check it out on kirin
-> > > >
-> > > > Rob Clark pointed me to his branch with some fixups here:
-> > > >    https://gitlab.freedesktop.org/robclark/msm/-/commits/for-mripar=
-d/bridge-rework
-> > > >
-> > > > But trying to boot hikey with that, I see the following loop indefi=
-nitely:
-> > > > [    4.632132] adv7511 2-0039: supply avdd not found, using dummy r=
-egulator
-> > > > [    4.638961] adv7511 2-0039: supply dvdd not found, using dummy r=
-egulator
-> > > > [    4.645741] adv7511 2-0039: supply pvdd not found, using dummy r=
-egulator
-> > > > [    4.652483] adv7511 2-0039: supply a2vdd not found, using dummy =
-regulator
-> > > > [    4.659342] adv7511 2-0039: supply v3p3 not found, using dummy r=
-egulator
-> > > > [    4.666086] adv7511 2-0039: supply v1p2 not found, using dummy r=
-egulator
-> > > > [    4.681898] adv7511 2-0039: failed to find dsi host
-> > >
-> > > I just realized Rob's tree is missing the kirin patch. My apologies!
-> > > I'll retest and let you know.
-> >
-> > Ok, just retested including the kirin patch and unfortunately I'm
-> > still seeing the same thing.  :(
-> >
-> > Will dig a bit and let you know when I find more.
+> > > >=20
+> > > > On Wed, Sep 29, 2021 at 2:32 PM John Stultz <john.stultz@linaro.org=
+> wrote:
+> > > > > On Wed, Sep 29, 2021 at 2:27 PM John Stultz <john.stultz@linaro.o=
+rg> wrote:
+> > > > > > On Fri, Sep 10, 2021 at 3:12 AM Maxime Ripard <maxime@cerno.tec=
+h> wrote:
+> > > > > > > The best practice to avoid those issues is to register its fu=
+nctions only after
+> > > > > > > all its dependencies are live. We also shouldn't wait any lon=
+ger than we should
+> > > > > > > to play nice with the other components that are waiting for u=
+s, so in our case
+> > > > > > > that would mean moving the DSI device registration to the bri=
+dge probe.
+> > > > > > >=20
+> > > > > > > I also had a look at all the DSI hosts, and it seems that exy=
+nos, kirin and msm
+> > > > > > > would be affected by this and wouldn't probe anymore after th=
+ose changes.
+> > > > > > > Exynos and kirin seems to be simple enough for a mechanical c=
+hange (that still
+> > > > > > > requires to be tested), but the changes in msm seemed to be f=
+ar more important
+> > > > > > > and I wasn't confortable doing them.
+> > > > > >=20
+> > > > > >=20
+> > > > > > Hey Maxime,
+> > > > > >    Sorry for taking so long to get to this, but now that plumbe=
+rs is
+> > > > > > over I've had a chance to check it out on kirin
+> > > > > >=20
+> > > > > > Rob Clark pointed me to his branch with some fixups here:
+> > > > > >     https://gitlab.freedesktop.org/robclark/msm/-/commits/for-m=
+ripard/bridge-rework
+> > > > > >=20
+> > > > > > But trying to boot hikey with that, I see the following loop in=
+definitely:
+> > > > > > [    4.632132] adv7511 2-0039: supply avdd not found, using dum=
+my regulator
+> > > > > > [    4.638961] adv7511 2-0039: supply dvdd not found, using dum=
+my regulator
+> > > > > > [    4.645741] adv7511 2-0039: supply pvdd not found, using dum=
+my regulator
+> > > > > > [    4.652483] adv7511 2-0039: supply a2vdd not found, using du=
+mmy regulator
+> > > > > > [    4.659342] adv7511 2-0039: supply v3p3 not found, using dum=
+my regulator
+> > > > > > [    4.666086] adv7511 2-0039: supply v1p2 not found, using dum=
+my regulator
+> > > > > > [    4.681898] adv7511 2-0039: failed to find dsi host
+> > > > >=20
+> > > > > I just realized Rob's tree is missing the kirin patch. My apologi=
+es!
+> > > > > I'll retest and let you know.
+> > > >=20
+> > > > Ok, just retested including the kirin patch and unfortunately I'm
+> > > > still seeing the same thing.  :(
+> > > >=20
+> > > > Will dig a bit and let you know when I find more.
+> > >=20
+> > > Did you have a chance to test it on anything using drm/msm with DSI
+> > > panels?  That would at least confirm that I didn't miss anything in
+> > > the drm/msm patch to swap the dsi-host vs bridge ordering..
+> >=20
+> > Hi, smoke tested
+> > https://gitlab.freedesktop.org/robclark/msm/-/commits/for-mripard/bridg=
+e-rework
+> > on Pocophone F1 (sdm845 / A630) with v5.15-rc3. I see no obvious
+> > regressions in my limited testing so far including video (youtube)
+> > playback.
+> Tested on the OnePlus 6 too booting AOSP, works fine. This *fixes*
+> FBDEV_EMULATION (so we can get a working framebuffer console) which was
+> otherwise broken on 5.15.
 >=20
-> Hey Maxime!
->   I chased down the issue. The dsi probe code was still calling
-> drm_of_find_panel_or_bridge() in order to succeed.
->=20
-> I've moved the logic that looks for the bridge into the bridge_init
-> and with that it seems to work.
->=20
-> Feel free (assuming it looks ok) to fold this change into your kirin patc=
-h:
->   https://git.linaro.org/people/john.stultz/android-dev.git/commit/?id=3D=
-4a35ccc4d7a53f68d6d93da3b47e232a7c75b91d
+> However it spits out some warnings during boot: https://p.calebs.dev/gucy=
+sowyna.yaml
 
-Thanks for testing, I've picked and squashed your fixup
+Thanks for testing. It looks like the runtime_pm ordering between the
+msm devices changed a bit with the conversion Rob did.
 
+Rob, do you know what could be going on?
+
+Thanks!
 Maxime
 
---yp3sab3u3qe3qd7a
+--bigl5w3rjallwyk4
 Content-Type: application/pgp-signature; name="signature.asc"
 
 -----BEGIN PGP SIGNATURE-----
 
-iHUEABYIAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCYWbi6QAKCRDj7w1vZxhR
-xWrqAQDj1jImF6Y4lt74Rko+bxO0mdKNx+0pGLW7VlQhBEicrwEAk7tEp5uOOwcw
-jaEEUSlRzwDB0bV4i3OaMZN48bhI7wA=
-=KNVX
+iHUEABYIAB0WIQRcEzekXsqa64kGDp7j7w1vZxhRxQUCYWbqPQAKCRDj7w1vZxhR
+xdOTAQDjb3huzaE7pHvCyz07hJC57832ndc9T6cZOvvFbklnIQD7BQXSVG/1e0Hb
+rq4X+WgysJ3GbuqAFdQEOjb839HmzAE=
+=KNRT
 -----END PGP SIGNATURE-----
 
---yp3sab3u3qe3qd7a--
+--bigl5w3rjallwyk4--
