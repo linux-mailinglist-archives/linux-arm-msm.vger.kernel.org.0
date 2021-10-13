@@ -2,607 +2,201 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EFCAC42CAE8
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 22:21:26 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1510042CB53
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 22:48:56 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229710AbhJMUX2 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Oct 2021 16:23:28 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:61056 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229605AbhJMUXZ (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Oct 2021 16:23:25 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1634156482; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: From: References: Cc: To: Subject: MIME-Version: Date:
- Message-ID: Sender; bh=lIXhguUVoEdZUGzaXaEtTtvxvclCgk09VP1kyKz58SQ=; b=MxbvY5dsUY/wjSfukAY5RSfTFXAkmTqBZ1SwXTwkKKgk7wm8Uw8kdCnAnBWo1ZS4cPjKUiK1
- 4K21nUlWWnrA0SarmAZTJHd6LVCW3nektnMz3wlJOJMKw4bqpOH3DSSag0SdFR93ZoShxY0Y
- fvGSAPH1H8ribYVSeIJQHGxyqLI=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-west-2.postgun.com with SMTP id
- 61673fb14ccc4cf2c72d3d99 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 13 Oct 2021 20:21:05
- GMT
-Sender: jesszhan=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4F9E4C43460; Wed, 13 Oct 2021 20:21:05 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL,URIBL_BLOCKED autolearn=no autolearn_force=no
-        version=3.4.0
-Received: from [192.168.1.2] (cpe-70-95-175-72.san.res.rr.com [70.95.175.72])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: jesszhan)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 29B53C4338F;
-        Wed, 13 Oct 2021 20:21:02 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 29B53C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Message-ID: <8f52ceab-607d-3e8e-c022-933e0d4d3993@codeaurora.org>
-Date:   Wed, 13 Oct 2021 13:21:01 -0700
+        id S229627AbhJMUu6 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Oct 2021 16:50:58 -0400
+Received: from new3-smtp.messagingengine.com ([66.111.4.229]:47481 "EHLO
+        new3-smtp.messagingengine.com" rhost-flags-OK-OK-OK-OK)
+        by vger.kernel.org with ESMTP id S229496AbhJMUu5 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 13 Oct 2021 16:50:57 -0400
+Received: from compute2.internal (compute2.nyi.internal [10.202.2.42])
+        by mailnew.nyi.internal (Postfix) with ESMTP id D8351581176;
+        Wed, 13 Oct 2021 16:48:52 -0400 (EDT)
+Received: from mailfrontend2 ([10.202.2.163])
+  by compute2.internal (MEProxy); Wed, 13 Oct 2021 16:48:52 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=u92.eu; h=from
+        :to:cc:subject:date:message-id:mime-version
+        :content-transfer-encoding; s=fm3; bh=K+ngjCbNvg5biFXc4iBRazvtWT
+        DSOI4XVs1u0aTjJbw=; b=Tvjc1tOnjj3zGJw0lJZ80K3vhPCpmQ4oICUTkyXtHN
+        d7S1dTjM0HnRfgzQAGPwFDs9wkg/mNeRZq9Je/IyIvnILR5i8vUw0FDq7i8kdoXV
+        8OHXQb6b0gaPZooAr41EXUe6kdR/u2VNxZ1tb16g76/ABq36qxZzcvpzyFsH0Nvy
+        1v/g/4w7KD7gxDOjBICloby6BV/tSrE9+92QC/XD5Y2FsVwGd1M6M0a6rPleh2Dh
+        XUEbfzqDWq6wqv3Q26I5gIBkYyfR06Y5/UMcqxiWJWL7MHEHqqwUAz4tmEiGb0HN
+        rG9pP9UfmgTfvnZumPqlt+SruCihex0E4PYas5mlL+Eg==
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=
+        messagingengine.com; h=cc:content-transfer-encoding:date:from
+        :message-id:mime-version:subject:to:x-me-proxy:x-me-proxy
+        :x-me-sender:x-me-sender:x-sasl-enc; s=fm1; bh=K+ngjCbNvg5biFXc4
+        iBRazvtWTDSOI4XVs1u0aTjJbw=; b=OT0uXg/paNJS3IjRzXVsRS3ataNv4/0v8
+        iujH8IUrJogzX5gw5E1nzExfP/VmXpNF2YvQ4+Thm826+TxyEGUmrfG1bAWQvb6l
+        5H1VXUXQgY2+GHvB4DzYN4tR4QMzddEJIpYRdFJ9XQa99otYc7hzGyeRSEumFnzQ
+        66O0UA3Vsh7wKat3UHns2X0lStQvL+7yCZMmCtqWClFLfykwHR2pOrFEUjOpUDHi
+        wjCuGJbmQznTkg2+Eu4Lb9VbAXetiym8lqt9C0K1e5dgqdQbbrZYNEO3TJwNP+DE
+        v6wBXVOZWsFW0vo1ryZqbaFMdjcEOq4l3VzjXDxlSsVe3q+0KcF6g==
+X-ME-Sender: <xms:NEZnYaCj1HzF6opwzNRsaxopnIaizVToTfF_GQ_o2D9sy-jd4jnNQw>
+    <xme:NEZnYUiHARGY_-ZTWQ0rdC32Utq73HPHz7K1iaBLzSCii3qxCQqV0HGOrWtliaw7D
+    PkFT2duxEkBraCMjQ>
+X-ME-Received: <xmr:NEZnYdmh8boRq2KjNANujOFlMBrPY-6cbIDRh3M1u5jy8UEs33e2CLP4vLorS2dzgluD>
+X-ME-Proxy-Cause: gggruggvucftvghtrhhoucdtuddrgedvtddrvddutddgudehudcutefuodetggdotefrod
+    ftvfcurfhrohhfihhlvgemucfhrghsthforghilhdpqfgfvfdpuffrtefokffrpgfnqfgh
+    necuuegrihhlohhuthemuceftddtnecunecujfgurhephffvufffkffoggfgsedtkeertd
+    ertddtnecuhfhrohhmpefhvghrnhgrnhguohcutfgrmhhoshcuoehgrhgvvghnfhhoohes
+    uhelvddrvghuqeenucggtffrrghtthgvrhhnpeegtdehgeduteehkeeugedtuedugfffhe
+    fguedtudefvddtgeevudeuleegkeeitdenucffohhmrghinhepkhgvrhhnvghlrdhorhhg
+    necuvehluhhsthgvrhfuihiivgeptdenucfrrghrrghmpehmrghilhhfrhhomhepghhrvg
+    gvnhhfohhosehuledvrdgvuh
+X-ME-Proxy: <xmx:NEZnYYxLOlfgjCsN1mknSxUY6OhEw46SW-6i569oRrbxhEE8YwYWFg>
+    <xmx:NEZnYfS2Bc0lpW3Gb6nLbgi9EIH56SRdvdvEwM6YhPe2zSRll0cEpQ>
+    <xmx:NEZnYTa6pC95ZCv7oO6YlghtPySmIb7yOZAu8Z0w90Q8ryfcN3GZ4A>
+    <xmx:NEZnYU9n6XIbyHQQuIU_I61tKhKiUR7mz1O7X6E3BPRW9P_35jNWyQ>
+Received: by mail.messagingengine.com (Postfix) with ESMTPA; Wed,
+ 13 Oct 2021 16:48:49 -0400 (EDT)
+From:   Fernando Ramos <greenfoo@u92.eu>
+To:     dri-devel@lists.freedesktop.org
+Cc:     linux-kernel@vger.kernel.org, sean@poorly.run,
+        linux-doc@vger.kernel.org, amd-gfx@lists.freedesktop.org,
+        intel-gfx@lists.freedesktop.org, linux-arm-msm@vger.kernel.org,
+        freedreno@lists.freedesktop.org, nouveau@lists.freedesktop.org,
+        linux-renesas-soc@vger.kernel.org, linux-tegra@vger.kernel.org
+Subject: [PATCH v4 00/20] drm: cleanup: Use DRM_MODESET_LOCK_ALL_* helpers
+Date:   Wed, 13 Oct 2021 22:48:26 +0200
+Message-Id: <20211013204846.90026-1-greenfoo@u92.eu>
+X-Mailer: git-send-email 2.33.0
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.0
-Subject: Re: [PATCH] drm/msm/dpu: Add CRC support for DPU
-Content-Language: en-US
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        freedreno@lists.freedesktop.org
-Cc:     linux-arm-msm@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        robdclark@gmail.com, seanpaul@chromium.org, swboyd@chromium.org,
-        nganji@codeaurora.org, aravindh@codeaurora.org,
-        khsieh@codeaurora.org, abhinavk@codeaurora.org,
-        markyacoub@google.com
-References: <20211011234123.1033-1-jesszhan@codeaurora.org>
- <554749ae-dc23-a729-89b7-7ea553817010@linaro.org>
-From:   Jessica Zhang <jesszhan@codeaurora.org>
-In-Reply-To: <554749ae-dc23-a729-89b7-7ea553817010@linaro.org>
-Content-Type: text/plain; charset=UTF-8; format=flowed
 Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/11/2021 7:01 PM, Dmitry Baryshkov wrote:
-> On 12/10/2021 02:41, Jessica Zhang wrote:
->> Add CRC support to DPU, which is currently not supported by
->> this driver. Only supports CRC for CRTC for now, but will extend support
->> to other blocks later on.
->>
->> Tested on Qualcomm RB3 (debian, sdm845)
->>
->> Signed-off-by: Jessica Zhang <jesszhan@codeaurora.org>
->> ---
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c    | 169 +++++++++++++++++++-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h    |  20 ++-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c   |  46 +++++-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h   |  13 +-
->>   drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h |   9 +-
->>   5 files changed, 251 insertions(+), 6 deletions(-)
->>
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->> index 768012243b44..6ebf989c4e67 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c
->> @@ -1,6 +1,6 @@
->>   // SPDX-License-Identifier: GPL-2.0-only
->>   /*
->> - * Copyright (c) 2014-2018 The Linux Foundation. All rights reserved.
->> + * Copyright (c) 2014-2021 The Linux Foundation. All rights reserved.
->>    * Copyright (C) 2013 Red Hat
->>    * Author: Rob Clark <robdclark@gmail.com>
->>    */
->> @@ -70,6 +70,121 @@ static struct drm_encoder 
->> *get_encoder_from_crtc(struct drm_crtc *crtc)
->>       return NULL;
->>   }
->>   +static enum dpu_crtc_crc_source dpu_crtc_parse_crc_source(const 
->> char *src_name)
->> +{
->> +    if (!src_name || !strcmp(src_name, "none"))
->> +        return DPU_CRTC_CRC_SOURCE_NONE;
->
-> Newlines after || please. this would improve readability.
-Noted.
->
->> +    if (!strcmp(src_name, "auto") || !strcmp(src_name, "lm"))
->> +        return DPU_CRTC_CRC_SOURCE_LAYER_MIXER;
->> +
->> +    return DPU_CRTC_CRC_SOURCE_INVALID;
->> +}
->> +
->> +static bool dpu_crtc_is_valid_crc_source(enum dpu_crtc_crc_source 
->> source)
->> +{
->> +    return (source > DPU_CRTC_CRC_SOURCE_NONE &&
->> +        source < DPU_CRTC_CRC_SOURCE_MAX);
->> +}
->> +
->> +int dpu_crtc_verify_crc_source(struct drm_crtc *crtc, const char 
->> *src_name, size_t *values_cnt)
->> +{
->> +    enum dpu_crtc_crc_source source = 
->> dpu_crtc_parse_crc_source(src_name);
->> +    struct dpu_crtc_state *crtc_state = to_dpu_crtc_state(crtc->state);
->> +
->> +    if (source < 0) {
->
-> Just use dpu_crtc_is_valid_crtc_source() here.
+Hi all,
 
-dpu_crtc_is_valid_crc_source() is not exactly the same as checking if 
-the source *name* is valid, as "none" is a valid source name (e.g. would 
-pass the `source < 0` check), but 
-dpu_crtc_is_valid_crc_source(DPU_CRTC_CRC_SOURCE_NONE) would return 
-false as DPU_CRTC_CRC_SOURCE_NONE represents when the CRC source is set 
-to nothing. The general purpose of dpu_crc_is_valid_crtc_source() is to 
-check that the source specified is able to return a CRC value, so a 
-source set to "none" would return false, even though "none" is a 
-technically valid source name.
+One of the things in the DRM TODO list ("Documentation/gpu/todo.rst") was to
+"use DRM_MODESET_LOCAL_ALL_* helpers instead of boilerplate". That's what this
+patch series is about.
 
-Seems like the root issue is that the name 
-"dpu_crtc_is_valid_crc_source" is misleading and it would be better to 
-rename the helper method to something clearer. Or replace the 
-dpu_crtc_is_valid_crc_source() checks with a check against 
-DPU_CRTC_CRC_SOURCE_NONE instead.
+You will find two types of changes here:
 
->
->> +        DRM_DEBUG_DRIVER("Invalid source %s for CRTC%d\n", src_name, 
->> crtc->index);
->> +        return -EINVAL;
->> +    }
->> +
->> +    if (source == DPU_CRTC_CRC_SOURCE_LAYER_MIXER)
->> +        *values_cnt = crtc_state->num_mixers;
->> +
->> +    return 0;
->> +}
->> +
->> +int dpu_crtc_set_crc_source(struct drm_crtc *crtc, const char 
->> *src_name)
->> +{
->> +    enum dpu_crtc_crc_source source = 
->> dpu_crtc_parse_crc_source(src_name);
->> +    enum dpu_crtc_crc_source current_source;
->> +    struct drm_crtc_commit *commit;
->> +    struct dpu_crtc_state *crtc_state;
->> +    struct drm_device *drm_dev = crtc->dev;
->> +    struct dpu_crtc *dpu_crtc = to_dpu_crtc(crtc);
->> +    struct dpu_crtc_mixer *m;
->> +
->> +    bool was_enabled;
->> +    bool enable = false;
->> +    int i, ret = 0;
->> +
->> +    if (source < 0) {
->> +        DRM_DEBUG_DRIVER("Invalid CRC source %s for CRTC%d\n", 
->> src_name, crtc->index);
->> +        return -EINVAL;
->> +    }
->> +
->> +    ret = drm_modeset_lock(&crtc->mutex, NULL);
->> +
->> +    if (ret)
->> +        return ret;
->> +
->> +    /* Wait for any pending commits to finish */
->> +    spin_lock(&crtc->commit_lock);
->> +    commit = list_first_entry_or_null(&crtc->commit_list, struct 
->> drm_crtc_commit, commit_entry);
->> +
->> +    if (commit)
->> +        drm_crtc_commit_get(commit);
->> +    spin_unlock(&crtc->commit_lock);
->> +
->> +    if (commit) {
->> +        ret = 
->> wait_for_completion_interruptible_timeout(&commit->hw_done, 10 * HZ);
->> +
->> +        if (ret)
->> +            goto cleanup;
->> +    }
->
-> AMD drivers waits for the commit to finish, because it's commit tail 
-> can modify CRC-related registers. It unique, no other drivers seem to 
-> do this kind of wait. Why do we need to do it? And if we really need, 
-> I'd prefer to have this code in some kind of DRM helper function.
->
-Makes sense. I wanted to include it to be safe, but as far as I know 
-nothing that happens during a commit will affect reading the CRC for 
-this driver. I've also tested without the wait for commit and it doesn't 
-seem to affect the CRC read, so I'll remove it.
->
->> +    enable = dpu_crtc_is_valid_crc_source(source);
->> +    crtc_state = to_dpu_crtc_state(crtc->state);
->> +
->> +    spin_lock_irq(&drm_dev->event_lock);
->> +    current_source = dpu_crtc->crc_source;
->> +    spin_unlock_irq(&drm_dev->event_lock);
->> +
->> +    was_enabled = !(current_source == DPU_CRTC_CRC_SOURCE_NONE);
->
-> current_source != DPU_CRTC_CRC_SOURCE_NONE would be easier.
->
-Noted.
->> +
->> +    if (!was_enabled && enable) {
->> +        ret = drm_crtc_vblank_get(crtc);
->> +
->> +        if (ret)
->> +            goto cleanup;
->> +
->> +    } else if (was_enabled && !enable) {
->> +        drm_crtc_vblank_put(crtc);
->> +    }
->> +
->> +    spin_lock_irq(&drm_dev->event_lock);
->> +    dpu_crtc->crc_source = source;
->> +    spin_unlock_irq(&drm_dev->event_lock);
->> +
->> +    crtc_state->skip_count = 0;
->> +
->> +    for (i = 0; i < crtc_state->num_mixers; ++i) {
->> +        m = &crtc_state->mixers[i];
->> +
->> +        if (!m->hw_lm || !m->hw_lm->ops.collect_misr || 
->> !m->hw_lm->ops.setup_misr)
->> +            continue;
->
-> No need to check for collect_misr here, it is not used.
->
-Noted.
->> +
->> +        /* Calculate MISR over 1 frame */
->> +        m->hw_lm->ops.setup_misr(m->hw_lm, true, 1);
->> +    }
->> +
->> +
->> +cleanup:
->> +    if (commit)
->> +        drm_crtc_commit_put(commit);
->> +    drm_modeset_unlock(&crtc->mutex);
->> +
->> +    return ret;
->> +}
->> +
->>   static u32 dpu_crtc_get_vblank_counter(struct drm_crtc *crtc)
->>   {
->>       struct drm_encoder *encoder;
->> @@ -83,6 +198,52 @@ static u32 dpu_crtc_get_vblank_counter(struct 
->> drm_crtc *crtc)
->>       return dpu_encoder_get_frame_count(encoder);
->>   }
->>   +
->> +static void dpu_crtc_get_crc(struct drm_crtc *crtc)
->> +{
->> +    struct dpu_crtc *dpu_crtc;
->> +    struct dpu_crtc_state *crtc_state;
->> +    struct dpu_crtc_mixer *m;
->> +    u32 *crcs;
->> +
->> +    int i = 0;
->> +    int rc = 0;
->> +
->> +    if (!crtc) {
->> +        DPU_ERROR("Invalid crtc\n");
->> +        return;
->> +    }
->> +
->> +    crtc_state = to_dpu_crtc_state(crtc->state);
->> +    dpu_crtc = to_dpu_crtc(crtc);
->> +    crcs = kcalloc(crtc_state->num_mixers, sizeof(*crcs), GFP_KERNEL);
->
-> This would be constantly leaking the memory. You missed kfree in all 
-> return paths (both error and non-error). Since you are limited by the 
-> max amount of mixers in the crtc (which is 2 currently and can be 4 at 
-> max IIRC), I'd use the on-stack array rather than calling into memory 
-> allocator.
->
-Noted.
->> +
->> +    /* Skip first 2 frames in case of "uncooked" CRCs */
->> +    if (crtc_state->skip_count < 2) {
->> +        crtc_state->skip_count++;
->
-> You see, missing kfree() here.
->
-Noted.
->> +        return;
->> +    }
->> +
->> +    for (i = 0; i < crtc_state->num_mixers; ++i) {
->> +
->> +        m = &crtc_state->mixers[i];
->> +
->> +        if (!m->hw_lm || !m->hw_lm->ops.collect_misr
->> +            || !m->hw_lm->ops.setup_misr)
->
-> And here we do not use setup_misr, do we?
->
-Noted, removed setup_misr check.
->> +            continue;
->> +
->> +        rc = m->hw_lm->ops.collect_misr(m->hw_lm, &crcs[i]);
->> +
->> +        if (rc) {
->> +            DRM_DEBUG_DRIVER("MISR read failed\n");
->
-> And here
->
->> +            return;
->> +        }
->> +    }
->> +
->> +    drm_crtc_add_crc_entry(crtc, true,
->> +            drm_crtc_accurate_vblank_count(crtc), crcs);
->
-> And even here.
->
-> Also I'd propagate the erorr code here. We might not care later, but 
-> let's not ignore it if we can.
->
-Noted.
->> +}
->> +
->>   static bool dpu_crtc_get_scanout_position(struct drm_crtc *crtc,
->>                          bool in_vblank_irq,
->>                          int *vpos, int *hpos,
->> @@ -389,6 +550,10 @@ void dpu_crtc_vblank_callback(struct drm_crtc 
->> *crtc)
->>           dpu_crtc->vblank_cb_time = ktime_get();
->>       else
->>           dpu_crtc->vblank_cb_count++;
->> +
->> +    if (dpu_crtc_is_valid_crc_source(dpu_crtc->crc_source))
->> +        dpu_crtc_get_crc(crtc);
->> +
->>       drm_crtc_handle_vblank(crtc);
->>       trace_dpu_crtc_vblank_cb(DRMID(crtc));
->>   }
->> @@ -1332,6 +1497,8 @@ static const struct drm_crtc_funcs 
->> dpu_crtc_funcs = {
->>       .atomic_destroy_state = dpu_crtc_destroy_state,
->>       .late_register = dpu_crtc_late_register,
->>       .early_unregister = dpu_crtc_early_unregister,
->> +    .verify_crc_source = dpu_crtc_verify_crc_source,
->> +    .set_crc_source = dpu_crtc_set_crc_source,
->>       .enable_vblank  = msm_crtc_enable_vblank,
->>       .disable_vblank = msm_crtc_disable_vblank,
->>       .get_vblank_timestamp = 
->> drm_crtc_vblank_helper_get_vblank_timestamp,
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
->> index cec3474340e8..e9940f1d5d15 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.h
->> @@ -1,6 +1,6 @@
->>   /* SPDX-License-Identifier: GPL-2.0-only */
->>   /*
->> - * Copyright (c) 2015-2018 The Linux Foundation. All rights reserved.
->> + * Copyright (c) 2015-2021 The Linux Foundation. All rights reserved.
->>    * Copyright (C) 2013 Red Hat
->>    * Author: Rob Clark <robdclark@gmail.com>
->>    */
->> @@ -69,6 +69,19 @@ struct dpu_crtc_smmu_state_data {
->>       uint32_t transition_error;
->>   };
->>   +/**
->> + * enum dpu_crtc_crc_source: CRC source
->> + * @DPU_CRTC_CRC_SOURCE_NONE: no source set
->> + * @DPU_CRTC_CRC_SOURCE_LAYER_MIXER: CRC in layer mixer
->> + * @DPU_CRTC_CRC_SOURCE_INVALID: Invalid source
->> + */
->> +enum dpu_crtc_crc_source {
->> +    DPU_CRTC_CRC_SOURCE_NONE = 0,
->> +    DPU_CRTC_CRC_SOURCE_LAYER_MIXER,
->> +    DPU_CRTC_CRC_SOURCE_MAX,
->> +    DPU_CRTC_CRC_SOURCE_INVALID = -1
->> +};
->> +
->>   /**
->>    * struct dpu_crtc_mixer: stores the map for each virtual pipeline 
->> in the CRTC
->>    * @hw_lm:    LM HW Driver context
->> @@ -139,6 +152,7 @@ struct dpu_crtc_frame_event {
->>    * @event_lock    : Spinlock around event handling code
->>    * @phandle: Pointer to power handler
->>    * @cur_perf      : current performance committed to 
->> clock/bandwidth driver
->> + * @crc_source    : CRC source
->>    */
->>   struct dpu_crtc {
->>       struct drm_crtc base;
->> @@ -171,8 +185,8 @@ struct dpu_crtc {
->>       spinlock_t event_lock;
->>         struct dpu_core_perf_params cur_perf;
->> -
->
-> Unrelated
->
-Noted.
+  - Replacing "drm_modeset_lock_all_ctx()" (and surrounding boilerplate) with
+    "DRM_MODESET_LOCK_ALL_BEGIN()/END()" in the remaining places (as it has
+    already been done in previous commits such as b7ea04d2)
 
->>       struct dpu_crtc_smmu_state_data smmu_state;
->> +    enum dpu_crtc_crc_source crc_source;
->
-> I think it would find a better place at the dpu_crtc_state, wouldn't it?
->
-Makes sense.
->>   };
->>     #define to_dpu_crtc(x) container_of(x, struct dpu_crtc, base)
->> @@ -210,6 +224,8 @@ struct dpu_crtc_state {
->>         u32 num_ctls;
->>       struct dpu_hw_ctl *hw_ctls[CRTC_DUAL_MIXERS];
->> +
->> +    int skip_count;
->
-> What are we skipping? Could you please rename it so that usage is 
-> clearer.
->
-Noted.
->>   };
->>     #define to_dpu_crtc_state(x) \
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
->> index cb6bb7a22c15..679b3728e891 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.c
->> @@ -1,5 +1,6 @@
->>   // SPDX-License-Identifier: GPL-2.0-only
->> -/* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
->> +/*
->> + * Copyright (c) 2015-2021, The Linux Foundation. All rights reserved.
->>    */
->>     #include "dpu_kms.h"
->> @@ -24,6 +25,9 @@
->>   #define LM_BLEND0_FG_ALPHA               0x04
->>   #define LM_BLEND0_BG_ALPHA               0x08
->>   +#define LM_MISR_CTRL                     0x310
->> +#define LM_MISR_SIGNATURE                0x314
->> +
->>   static const struct dpu_lm_cfg *_lm_offset(enum dpu_lm mixer,
->>           const struct dpu_mdss_cfg *m,
->>           void __iomem *addr,
->> @@ -96,6 +100,44 @@ static void dpu_hw_lm_setup_border_color(struct 
->> dpu_hw_mixer *ctx,
->>       }
->>   }
->>   +static void dpu_hw_lm_setup_misr(struct dpu_hw_mixer *ctx, bool 
->> enable, u32 frame_count)
->> +{
->> +    struct dpu_hw_blk_reg_map *c = &ctx->hw;
->> +    u32 config = 0;
->> +
->> +    DPU_REG_WRITE(c, LM_MISR_CTRL, MISR_CTRL_STATUS_CLEAR);
->> +
->> +    /* Clear MISR data */
->> +    wmb();
->
-> Do we need wmb here? Maybe it would be more logical to setup 
-> LM_MISR_CTRL and clear the status afterwards?
->
-We want to guarantee that MISR_SIGNATURE is cleared before it's read in 
-case MISR_SIGNATURE is read before a new value is calculated.
->> +
->> +    if (enable)
->> +        config = (frame_count & MISR_FRAME_COUNT_MASK) |
->> +            MISR_CTRL_ENABLE | INTF_MISR_CTRL_FREE_RUN_MASK;
->> +
->> +    DPU_REG_WRITE(c, LM_MISR_CTRL, config);
->
-> I think the following might be better:
->
-> if (enable)
->    DPU_REG_WRITE(c, LM_MISR_CTRL, config);
-> else
->    DPU_REG_WRITE(c, LM_MISR_CTRL, 0);
->
-Hmm... agreed. I can see how this may increase readability.
->> +}
->> +
->> +static int dpu_hw_lm_collect_misr(struct dpu_hw_mixer *ctx, u32 
->> *misr_value)
->> +{
->> +    struct dpu_hw_blk_reg_map *c = &ctx->hw;
->> +    u32 ctrl = 0;
->> +
->> +    if (!misr_value)
->> +        return -EINVAL;
->> +
->> +    ctrl = DPU_REG_READ(c, LM_MISR_CTRL);
->> +
->> +    if (!(ctrl & MISR_CTRL_ENABLE))
->> +        return -EINVAL;
->> +
->> +    if (!(ctrl & MISR_CTRL_STATUS))
->> +        return -EINVAL;
->> +
->> +    *misr_value = DPU_REG_READ(c, LM_MISR_SIGNATURE);
->> +
->> +    return 0;
->> +}
->> +
->>   static void dpu_hw_lm_setup_blend_config_sdm845(struct dpu_hw_mixer 
->> *ctx,
->>       u32 stage, u32 fg_alpha, u32 bg_alpha, u32 blend_op)
->>   {
->> @@ -158,6 +200,8 @@ static void _setup_mixer_ops(const struct 
->> dpu_mdss_cfg *m,
->>           ops->setup_blend_config = dpu_hw_lm_setup_blend_config;
->>       ops->setup_alpha_out = dpu_hw_lm_setup_color3;
->>       ops->setup_border_color = dpu_hw_lm_setup_border_color;
->> +    ops->setup_misr = dpu_hw_lm_setup_misr;
->> +    ops->collect_misr = dpu_hw_lm_collect_misr;
->>   }
->>     struct dpu_hw_mixer *dpu_hw_lm_init(enum dpu_lm idx,
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h
->> index 4a6b2de19ef6..d8052fb2d5da 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_lm.h
->> @@ -1,5 +1,6 @@
->>   /* SPDX-License-Identifier: GPL-2.0-only */
->> -/* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
->> +/*
->> + * Copyright (c) 2015-2021, The Linux Foundation. All rights reserved.
->>    */
->>     #ifndef _DPU_HW_LM_H
->> @@ -53,6 +54,16 @@ struct dpu_hw_lm_ops {
->>       void (*setup_border_color)(struct dpu_hw_mixer *ctx,
->>           struct dpu_mdss_color *color,
->>           u8 border_en);
->> +
->> +    /**
->> +     * setup_misr: Enable/disable MISR
->> +     */
->> +    void (*setup_misr)(struct dpu_hw_mixer *ctx, bool enable, u32 
->> frame_count);
->> +
->> +    /**
->> +     * collect_misr: Read MISR signature
->> +     */
->> +    int (*collect_misr)(struct dpu_hw_mixer *ctx, u32 *misr_value);
->>   };
->>     struct dpu_hw_mixer {
->> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h 
->> b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
->> index ff3cffde84cd..506d4af7d018 100644
->> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
->> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_util.h
->> @@ -1,5 +1,6 @@
->>   /* SPDX-License-Identifier: GPL-2.0-only */
->> -/* Copyright (c) 2015-2018, The Linux Foundation. All rights reserved.
->> +/*
->> + * Copyright (c) 2015-2021, The Linux Foundation. All rights reserved.
->>    */
->>     #ifndef _DPU_HW_UTIL_H
->> @@ -309,6 +310,12 @@ int dpu_reg_read(struct dpu_hw_blk_reg_map *c, 
->> u32 reg_off);
->>   #define DPU_REG_WRITE(c, off, val) dpu_reg_write(c, off, val, #off)
->>   #define DPU_REG_READ(c, off) dpu_reg_read(c, off)
->>   +#define MISR_FRAME_COUNT_MASK           0xFF
->> +#define MISR_CTRL_ENABLE                BIT(8)
->> +#define MISR_CTRL_STATUS                BIT(9)
->> +#define MISR_CTRL_STATUS_CLEAR          BIT(10)
->> +#define INTF_MISR_CTRL_FREE_RUN_MASK    BIT(31)
->> +
->
-> This seems totally unrelated to dpu_hw_util.h  Please move to 
-> dpu_hw_lm.c where they belong. And please fix the prefixes.
->
-Noted.
->>   void *dpu_hw_util_get_dir(void);
->>     void dpu_hw_setup_scaler3(struct dpu_hw_blk_reg_map *c,
->>
->
->
-Thanks for the feedback!
+  - Replacing "drm_modeset_lock_all()" with "DRM_MODESET_LOCK_ALL_BEGIN()/END()"
+    in the remaining places (as it has already been done in previous commits
+    such as 57037094)
+    
+Most of the changes are straight forward, except for a few cases in the "amd"
+and "i915" drivers where some extra dancing was needed to overcome the
+limitation that the DRM_MODESET_LOCK_ALL_BEGIN()/END() macros can only be used
+once inside the same function (the reason being that the macro expansion
+includes *labels*, and you can not have two labels named the same inside one
+function)
+
+Notice that, even after this patch series, some places remain where
+"drm_modeset_lock_all()" and "drm_modeset_lock_all_ctx()" are still present,
+all inside drm core (which makes sense), except for two (in "amd" and "i915")
+which cannot be replaced due to the way they are being used.
+
+Changes in v2:
+  - Fix commit message typo
+  - Use the value returned by DRM_MODESET_LOCK_ALL_END when possible
+  - Split drm/i915 patch into two simpler ones
+  - Remove drm_modeset_(un)lock_all()
+  - Fix build problems in non-x86 platforms
+
+Changes in v3:
+  - Fix in drm/i915 driver to make sure global context is no longer used
+  - Fix in drm/amdgpu driver to make sure global context is no longer used
+  - Split amdgpu driver to make it easier to understand
+  - Remove acquire_ctx from drm_mode_config 
+  - Rebase on top of drm-tip
+  - WARNING: There is some discussion going on regarding whether the new macros
+    should be used (or not) in the i915 driver, as a different set of functions
+    has been proposed in the past (see here:
+    https://lore.kernel.org/dri-devel/YVriZxCeipBUgc8O@intel.com/).
+    In that case I will need to create a v4 where i915 files are left unchanged.
+    Let me know your thoughts regarding this.
+
+Changes in v4:
+  - Fix missing "Signed-off-by" in one commit
+  - No extra comments received in one week
+  - Rebase on top of drm-tip
+
+Fernando Ramos (20):
+  drm: cleanup: drm_modeset_lock_all_ctx() -->
+    DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/i915: cleanup: drm_modeset_lock_all_ctx() -->
+    DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/msm: cleanup: drm_modeset_lock_all_ctx() -->
+    DRM_MODESET_LOCK_ALL_BEGIN()
+  drm: cleanup: drm_modeset_lock_all() --> DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/vmwgfx: cleanup: drm_modeset_lock_all() -->
+    DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/tegra: cleanup: drm_modeset_lock_all() -->
+    DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/shmobile: cleanup: drm_modeset_lock_all() -->
+    DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/radeon: cleanup: drm_modeset_lock_all() -->
+    DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/omapdrm: cleanup: drm_modeset_lock_all() -->
+    DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/nouveau: cleanup: drm_modeset_lock_all() -->
+    DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/msm: cleanup: drm_modeset_lock_all() -->
+    DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/i915: cleanup: drm_modeset_lock_all() -->
+    DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/i915: cleanup: drm_modeset_lock_all() -->
+    DRM_MODESET_LOCK_ALL_BEGIN() [part 2]
+  drm/i915: cleanup: drm_modeset_lock_all() -->
+    DRM_MODESET_LOCK_ALL_BEGIN() [part 3]
+  drm/gma500: cleanup: drm_modeset_lock_all() -->
+    DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/amd: cleanup: drm_modeset_lock_all() -->
+    DRM_MODESET_LOCK_ALL_BEGIN()
+  drm/amd: cleanup: drm_modeset_lock_all() -->
+    DRM_MODESET_LOCK_ALL_BEGIN() [part 2]
+  drm/amd: cleanup: drm_modeset_lock_all() -->
+    DRM_MODESET_LOCK_ALL_BEGIN() [part 3]
+  drm: cleanup: remove drm_modeset_(un)lock_all()
+  drm: cleanup: remove acquire_ctx from drm_mode_config
+
+ drivers/gpu/drm/amd/amdgpu/amdgpu_display.c   | 21 +++--
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.c | 58 ++++++------
+ .../gpu/drm/amd/display/amdgpu_dm/amdgpu_dm.h |  3 +-
+ .../amd/display/amdgpu_dm/amdgpu_dm_debugfs.c | 25 ++---
+ drivers/gpu/drm/drm_client_modeset.c          | 14 ++-
+ drivers/gpu/drm/drm_crtc_helper.c             | 18 ++--
+ drivers/gpu/drm/drm_fb_helper.c               | 10 +-
+ drivers/gpu/drm/drm_framebuffer.c             |  6 +-
+ drivers/gpu/drm/drm_modeset_lock.c            | 94 +------------------
+ drivers/gpu/drm/gma500/psb_device.c           | 18 ++--
+ drivers/gpu/drm/i915/display/intel_audio.c    | 16 ++--
+ drivers/gpu/drm/i915/display/intel_display.c  | 25 ++---
+ .../drm/i915/display/intel_display_debugfs.c  | 46 +++++----
+ drivers/gpu/drm/i915/display/intel_overlay.c  | 46 ++++-----
+ drivers/gpu/drm/i915/display/intel_pipe_crc.c |  7 +-
+ drivers/gpu/drm/i915/i915_drv.c               | 13 ++-
+ drivers/gpu/drm/msm/disp/dpu1/dpu_crtc.c      | 10 +-
+ .../gpu/drm/msm/disp/msm_disp_snapshot_util.c | 12 +--
+ drivers/gpu/drm/nouveau/dispnv50/disp.c       | 15 ++-
+ drivers/gpu/drm/omapdrm/omap_fb.c             |  9 +-
+ drivers/gpu/drm/radeon/radeon_device.c        | 21 +++--
+ drivers/gpu/drm/radeon/radeon_dp_mst.c        | 10 +-
+ drivers/gpu/drm/shmobile/shmob_drm_drv.c      |  6 +-
+ drivers/gpu/drm/tegra/dsi.c                   |  6 +-
+ drivers/gpu/drm/tegra/hdmi.c                  |  6 +-
+ drivers/gpu/drm/tegra/sor.c                   | 11 ++-
+ drivers/gpu/drm/vmwgfx/vmwgfx_ioctl.c         | 11 ++-
+ drivers/gpu/drm/vmwgfx/vmwgfx_kms.c           | 12 ++-
+ include/drm/drm_mode_config.h                 | 10 --
+ include/drm/drm_modeset_lock.h                |  2 -
+ 30 files changed, 272 insertions(+), 289 deletions(-)
 
 
-Best,
-
-Jessica Zhang
+base-commit: 3fdfa1de4774903b9cb4fb308102b5a2d762d829
+-- 
+2.33.0
 
