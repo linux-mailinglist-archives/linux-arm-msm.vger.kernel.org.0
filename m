@@ -2,147 +2,124 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id DBE9E42B54A
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 07:31:03 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id D708642B54F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 07:31:29 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229770AbhJMFdF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Oct 2021 01:33:05 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:14512 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S237660AbhJMFdE (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Oct 2021 01:33:04 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1634103062; h=Message-ID: References: In-Reply-To: Subject:
- Cc: To: From: Date: Content-Transfer-Encoding: Content-Type:
- MIME-Version: Sender; bh=Knclx6wR1kvoxnA2zY3oGlpVlJCs7kumqLTKNns8fg0=;
- b=EGonT9laoR7/vT8F1nQj3UtDs6R+CBmQ9L551MBpCDTuf/bXLPqK5doannxTMcQDQhKqehjc
- ZLbj5weWLXP0bVijIFWWiCFVUTCICZC2sAyahpt4poXBxtPYTiziUe/ec79NNVxleRhtLP1i
- SsihKMP7rLl2B38cfIUuYzYDZJQ=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 61666f0ca45ca7530706e46d (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 13 Oct 2021 05:30:52
- GMT
-Sender: bgodavar=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 4EB1CC43617; Wed, 13 Oct 2021 05:30:51 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00
-        autolearn=unavailable autolearn_force=no version=3.4.0
-Received: from mail.codeaurora.org (localhost.localdomain [127.0.0.1])
-        (using TLSv1 with cipher ECDHE-RSA-AES256-SHA (256/256 bits))
-        (No client certificate requested)
-        (Authenticated sender: bgodavar)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 938D0C4338F;
-        Wed, 13 Oct 2021 05:30:50 +0000 (UTC)
+        id S229817AbhJMFdb (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Oct 2021 01:33:31 -0400
+Received: from alexa-out.qualcomm.com ([129.46.98.28]:20321 "EHLO
+        alexa-out.qualcomm.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S237706AbhJMFda (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 13 Oct 2021 01:33:30 -0400
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+  d=quicinc.com; i=@quicinc.com; q=dns/txt; s=qcdkim;
+  t=1634103087; x=1665639087;
+  h=subject:to:cc:references:from:message-id:date:
+   mime-version:in-reply-to:content-transfer-encoding;
+  bh=R5yN/bebUFx9ehiYvk0KzgmQXPxl9EYqebEotv3PG+8=;
+  b=giJXUzuy4YoYVrxXfKwRpxBZDrr8Ib01xnfgLkv7Bv7aoettdh8v3lej
+   PbJ6etNEkiRMgBV214kys205Bq/8AzdWU4JoWCdXIeyT9RW+10iaMuYem
+   mkfAxmLURJH+Ku7dGkgObbBTNNFSz4B4ikY6pa/Dr3OsjILSuCrec10KP
+   8=;
+Received: from ironmsg08-lv.qualcomm.com ([10.47.202.152])
+  by alexa-out.qualcomm.com with ESMTP; 12 Oct 2021 22:31:27 -0700
+X-QCInternal: smtphost
+Received: from nalasex01c.na.qualcomm.com ([10.47.97.35])
+  by ironmsg08-lv.qualcomm.com with ESMTP/TLS/ECDHE-RSA-AES256-GCM-SHA384; 12 Oct 2021 22:31:26 -0700
+Received: from [10.231.205.174] (10.80.80.8) by nalasex01c.na.qualcomm.com
+ (10.47.97.35) with Microsoft SMTP Server (version=TLS1_2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.2.922.7; Tue, 12 Oct 2021
+ 22:31:24 -0700
+Subject: Re: [RESEND PATCH v1 3/9] spmi: pmic-arb: check apid against limits
+ before calling irq handler
+To:     Stephen Boyd <sboyd@kernel.org>, <linux-arm-msm@vger.kernel.org>,
+        <linux-kernel@vger.kernel.org>
+CC:     <collinsd@codeaurora.org>, <subbaram@codeaurora.org>,
+        <tglx@linutronix.de>, <maz@kernel.org>
+References: <1631860384-26608-1-git-send-email-quic_fenglinw@quicinc.com>
+ <1631860384-26608-4-git-send-email-quic_fenglinw@quicinc.com>
+ <163406173869.936959.6395787327312518099@swboyd.mtv.corp.google.com>
+From:   Fenglin Wu <quic_fenglinw@quicinc.com>
+Message-ID: <7efffba4-5e8b-1b71-8bee-3dffe65cfdf5@quicinc.com>
+Date:   Wed, 13 Oct 2021 13:31:22 +0800
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=US-ASCII;
- format=flowed
+In-Reply-To: <163406173869.936959.6395787327312518099@swboyd.mtv.corp.google.com>
+Content-Type: text/plain; charset="utf-8"; format=flowed
 Content-Transfer-Encoding: 7bit
-Date:   Wed, 13 Oct 2021 11:00:50 +0530
-From:   bgodavar@codeaurora.org
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     bjorn.andersson@linaro.org, johan.hedberg@gmail.com,
-        marcel@holtmann.org, mka@chromium.org,
-        linux-kernel@vger.kernel.org, linux-bluetooth@vger.kernel.org,
-        hemantg@codeaurora.org, linux-arm-msm@vger.kernel.org,
-        pharish@codeaurora.org, rjliao@codeaurora.org,
-        hbandi@codeaurora.org, saluvala@codeaurora.org,
-        abhishekpandit@chromium.org
-Subject: Re: [PATCH v2] arm64: dts: qcom: sc7280: Add bluetooth node on SC7280
-In-Reply-To: <CAE-0n52uUh5TrKpJq9-qkJTdWWU_EZFvoROWFeGEjuc1Ebc8xg@mail.gmail.com>
-References: <1634043698-20256-1-git-send-email-bgodavar@codeaurora.org>
- <CAE-0n52uUh5TrKpJq9-qkJTdWWU_EZFvoROWFeGEjuc1Ebc8xg@mail.gmail.com>
-Message-ID: <46cc793cf651822ef90c448682598a02@codeaurora.org>
-X-Sender: bgodavar@codeaurora.org
-User-Agent: Roundcube Webmail/1.3.9
+Content-Language: en-US
+X-Originating-IP: [10.80.80.8]
+X-ClientProxiedBy: nasanex01a.na.qualcomm.com (10.52.223.231) To
+ nalasex01c.na.qualcomm.com (10.47.97.35)
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Stephen Boyd,
 
-On 2021-10-12 22:54, Stephen Boyd wrote:
-> Quoting Balakrishna Godavarthi (2021-10-12 06:01:38)
->> diff --git a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi 
->> b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> index 272d5ca..09adc802 100644
->> --- a/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> +++ b/arch/arm64/boot/dts/qcom/sc7280-idp.dtsi
->> @@ -393,6 +393,23 @@
->>                                 <&tlmm 31 IRQ_TYPE_EDGE_FALLING>;
->>         pinctrl-names = "default", "sleep";
->>         pinctrl-1 = <&qup_uart7_sleep_cts>, <&qup_uart7_sleep_rts>, 
->> <&qup_uart7_sleep_tx>, <&qup_uart7_sleep_rx>;
->> +
->> +       bluetooth: wcn6750-bt {
-> 
-> bluetooth: bluetooth {
-> 
-> Node names should be generic.
-> 
-
-[Bala]: will update in next patch.
-
->> +               compatible = "qcom,wcn6750-bt";
->> +               pinctrl-names = "default";
->> +               pinctrl-0 = <&bt_en_default>;
->> +               enable-gpios = <&tlmm 85 GPIO_ACTIVE_HIGH>;
->> +               swctrl-gpios = <&tlmm 86 GPIO_ACTIVE_HIGH>;
-> 
-> Is there any pinctrl config for gpio 86?
-> 
-[Bala]: This is input GPIO to apps, BT SOC will handle configurations.
-
->> +               vddaon-supply = <&vreg_s7b_0p9>;
->> +               vddbtcxmx-supply = <&vreg_s7b_0p9>;
->> +               vddrfacmn-supply = <&vreg_s7b_0p9>;
->> +               vddrfa0p8-supply = <&vreg_s7b_0p9>;
->> +               vddrfa1p7-supply = <&vreg_s1b_1p8>;
->> +               vddrfa1p2-supply = <&vreg_s8b_1p2>;
->> +               vddrfa2p2-supply = <&vreg_s1c_2p2>;
->> +               vddasd-supply = <&vreg_l11c_2p8>;
->> +               max-speed = <3200000>;
->> +       };
->>  };
->> 
->>  /* PINCTRL - additions to nodes defined in sc7280.dtsi */
->> @@ -504,6 +521,14 @@
->>                  */
->>                 bias-pull-up;
->>         };
->> +
->> +       bt_en_default: bt_en_default {
-> 
-> bt_en: bt-en {
-> 
-> Node names shouldn't have underscores and 'default' is redundant.
-> 
-[Bala]: will update in next patch.
-
->> +               pins = "gpio85";
->> +               function = "gpio";
->> +               drive-strength = <2>;
->> +               output-low;
->> +               bias-pull-down;
-> 
-> Why is there a pull down on an output gpio? Shouldn't this be
-> bias-disable?
-> 
-
-[Bala]: BT_EN pin is OP of apps and input to BT SoC.
-by default we want the state of BT_EN to be low. so used pull down 
-instead of bias-disable
-as AFAIK bias-disable may trigger a tristate on BT_EN pin, which may 
-trigger BT SoC enable
-if it is not actually triggered.
-
->> +       };
->>  };
->> 
->>  &sdc1_on {
+On 10/13/2021 2:02 AM, Stephen Boyd wrote:
+> Quoting Fenglin Wu (2021-09-16 23:32:58)
+>> From: David Collins <collinsd@codeaurora.org>
+>>
+>> Check that the apid for an SPMI interrupt falls between the
+>> min_apid and max_apid that can be handled by the APPS processor
+>> before invoking the per-apid interrupt handler:
+>> periph_interrupt().
+>>
+>> This avoids an access violation in rare cases where the status
+>> bit is set for an interrupt that is not owned by the APPS
+>> processor.
+>>
+>> Signed-off-by: David Collins <collinsd@codeaurora.org>
+>> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
+>> ---
+> Fixes? BTW, a lot of these patches are irqchip specific. It would be
+> good to get review from irqchip maintainers. Maybe we should split the
+> irqchip driver off via the auxiliary bus so that irqchip maintainers can
+> review. Please Cc them on irqchip related patches.
+>
+> IRQCHIP DRIVERS
+> M:      Thomas Gleixner <tglx@linutronix.de>
+> M:      Marc Zyngier <maz@kernel.org>
+Sure, copied Thomas and Marc for code review.
+This is a fix to avoid the register access violation in a case that an
+interrupt is fired in a PMIC module which is not owned by APPS
+processor.
+>>   drivers/spmi/spmi-pmic-arb.c | 6 ++++++
+>>   1 file changed, 6 insertions(+)
+>>
+>> diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb.c
+>> index 4d7ad004..c4adc06 100644
+>> --- a/drivers/spmi/spmi-pmic-arb.c
+>> +++ b/drivers/spmi/spmi-pmic-arb.c
+>> @@ -535,6 +535,12 @@ static void pmic_arb_chained_irq(struct irq_desc *desc)
+>>                          id = ffs(status) - 1;
+>>                          status &= ~BIT(id);
+>>                          apid = id + i * 32;
+>> +                       if (apid < pmic_arb->min_apid
+>> +                           || apid > pmic_arb->max_apid) {
+> The || goes on the line above. What about making a local variable for
+> first and last and then shifting by 5 in the loop?
+>
+> int first = pmic_arb->min_apid;
+> int last = pmic_arb->max_apid;
+>
+> for (i = first >> 5; i <= last >> 5; i++)
+>
+> 	if (apid < first || apid > last)
+ACK, will update it following this.
+>> +                               WARN_ONCE(true, "spurious spmi irq received for apid=%d\n",
+>> +                                       apid);
+> Is there any way to recover from this? Or once the mapping is wrong
+> we're going to get interrupts that we don't know what to do with
+> forever?
+This is a rare case that the unexpected interrupt is fired in a module
+not owned by APPS process, so the interrupt itself is not expected hence
+no need to recover from this but just bail out to avoid following register
+access violation.
+>> +                               continue;
+>> +                       }
+>>                          enable = readl_relaxed(
+>>                                          ver_ops->acc_enable(pmic_arb, apid));
+>>                          if (enable & SPMI_PIC_ACC_ENABLE_BIT)
