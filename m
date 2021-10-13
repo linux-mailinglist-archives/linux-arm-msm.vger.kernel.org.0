@@ -2,68 +2,67 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id C1FD642CE1B
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Oct 2021 00:31:58 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1EED242CE1F
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Oct 2021 00:32:00 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231668AbhJMWdF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Oct 2021 18:33:05 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49010 "EHLO
+        id S231571AbhJMWdL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Oct 2021 18:33:11 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:49154 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231544AbhJMWck (ORCPT
+        with ESMTP id S231637AbhJMWcq (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Oct 2021 18:32:40 -0400
-Received: from mail-io1-xd2e.google.com (mail-io1-xd2e.google.com [IPv6:2607:f8b0:4864:20::d2e])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A72ADC061746
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Oct 2021 15:30:34 -0700 (PDT)
-Received: by mail-io1-xd2e.google.com with SMTP id i189so1530962ioa.1
-        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Oct 2021 15:30:34 -0700 (PDT)
+        Wed, 13 Oct 2021 18:32:46 -0400
+Received: from mail-il1-x133.google.com (mail-il1-x133.google.com [IPv6:2607:f8b0:4864:20::133])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 03AB3C061768
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Oct 2021 15:30:42 -0700 (PDT)
+Received: by mail-il1-x133.google.com with SMTP id a8so1362629ilj.10
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Oct 2021 15:30:41 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=ieee.org; s=google;
         h=subject:to:cc:references:from:message-id:date:user-agent
          :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=hHiPs/gfwiQ9sIPDSoZQFdd7zvmeZywPocUYefGGRO4=;
-        b=EYSukUru/jts3OTTxhPNC/oADo3i15QFV8ecLYL4LzeEEDEnEFjcJQGESBSdymg8Du
-         SWKmQKR1jdByPgPmAgciWPziRZneqeQGbYsEliNtIwypnw0aT5lY4k7Yu1hwzUrZGSJZ
-         4sSSWDSNtRioWFp4HtQBhAUbTSTMgL3ZyqprA=
+        bh=6KWRzxS7RS7gFHwEtjqDdzgNfclWJ4qG/XJ3mOFIAP0=;
+        b=d+MYhpo6ZiTH7g2UjJ/hkjxCdFhWZif8eMB0Dht4/V5NNmz1HEjsR8x9gVeS+26bC9
+         0FhaYuuy9fiq8lx30VegJ/ePcZz5qBUpezeIob+oQ7DstiunNBj/lGhgK9BbRJjMhz/u
+         DpcR6iVpZwDVb0CQ2VyhTZOdXugQAm5AwG0zI=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
         h=x-gm-message-state:subject:to:cc:references:from:message-id:date
          :user-agent:mime-version:in-reply-to:content-language
          :content-transfer-encoding;
-        bh=hHiPs/gfwiQ9sIPDSoZQFdd7zvmeZywPocUYefGGRO4=;
-        b=dArapLmEEhqqDppsisTe732MCJ7Uw6kQ2Gwu6DIxYoY+7p9EirmnmgXQrsKmY+ChcL
-         QMmefEgNxYiXxuDlUau/ro32mDHfWgKQk+goJCK/t2teB8MqOndOKkv7UxytBWnmCKqu
-         ScT4m5CstC2e2xFRbjh30AgPOuE3p7I1KFIR4z+viq8tF2CsFytp3ylRf4i34ZaOYN5V
-         dTCmPzq9lRqBrIUhDoHqcIQ16KAYLYp3GOXaZVl9GL5LZZwMLeuYqe6cL6OIFZP6iAgW
-         5lTxl9Gax2jP0dBO3vkQQXCa6ZqVtzv32uJoXDmUrhZIOV8jz1plfxLDL0RVxvVeAfUb
-         ziSA==
-X-Gm-Message-State: AOAM531gSXLP74cI9sWRq1SMcTHPcHYyVrqbiK8ZI5xHhzCo7DgfAl8J
-        m4KHYPOV3JO8P2RKM5yeOUb36uxUutqBmw==
-X-Google-Smtp-Source: ABdhPJyP3eGZ368Jec+j6FW+wVWTmCaXH/FAwxbXUsNkBNjH+oZ7rLECv+N4gi0h1d2+leeD9K07fQ==
-X-Received: by 2002:a6b:8d4a:: with SMTP id p71mr1570545iod.16.1634164234137;
-        Wed, 13 Oct 2021 15:30:34 -0700 (PDT)
+        bh=6KWRzxS7RS7gFHwEtjqDdzgNfclWJ4qG/XJ3mOFIAP0=;
+        b=tTyiLOYbV/lhNR6ENRMbRbBuAK7KKNF1q42P5ynN7OAuUkAkAsjZrVkzrTqY1v3jjK
+         fnxi2i7otaOoyse8/K5KrIcT3mLLX3iSNFjnlSdoqmyawgBOABpk8Fx6opVbBf8zikH3
+         9JS1WMjGdED86RkvPwNdrsCKgBfMT+3Keoc6sC3SGKBZHf4zmYRS7W/uf6j3nFfjKJu+
+         V71uT2/uk5iwPZyOLif9fZgl4IASTR8d3ZonUlCIzWlwNE2W+Q4LzgiobIP3r2AvwYkq
+         8Ym4ZoLzhrwnlJlAfUs3asqn2aZh84sPGQjjLSc1pI7PxXC3JscTRcjht2FoVh6lfPHM
+         mdVg==
+X-Gm-Message-State: AOAM530Ltnus3yyiyjhBaWv5OWBuLfYgnCitfKLqpRXlsOzvcX4z96w3
+        ovUpW6f+Y055TDIH1XsiD7y5DA==
+X-Google-Smtp-Source: ABdhPJzWGm64Wq8hXXz3sdVXA85HPc+8mYJCDwh1Z9frlGoNMSgAaEMkjNcOhjS9Quw13FvMy7Tp5w==
+X-Received: by 2002:a05:6e02:1808:: with SMTP id a8mr1342785ilv.217.1634164241359;
+        Wed, 13 Oct 2021 15:30:41 -0700 (PDT)
 Received: from [172.22.22.4] (c-73-185-129-58.hsd1.mn.comcast.net. [73.185.129.58])
-        by smtp.googlemail.com with ESMTPSA id s18sm350553ilo.14.2021.10.13.15.30.32
+        by smtp.googlemail.com with ESMTPSA id i125sm363180iof.7.2021.10.13.15.30.39
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Wed, 13 Oct 2021 15:30:33 -0700 (PDT)
-Subject: Re: [RFC PATCH 13/17] net: ipa: Add support for IPA v2.x in the
- driver's QMI interface
+        Wed, 13 Oct 2021 15:30:40 -0700 (PDT)
+Subject: Re: [RFC PATCH 14/17] net: ipa: Add support for IPA v2
+ microcontroller
 To:     Sireesh Kodali <sireeshkodali1@gmail.com>,
         phone-devel@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
         netdev@vger.kernel.org, linux-kernel@vger.kernel.org,
         linux-arm-msm@vger.kernel.org, elder@kernel.org
-Cc:     Vladimir Lypak <vladimir.lypak@gmail.com>,
-        "David S. Miller" <davem@davemloft.net>,
+Cc:     "David S. Miller" <davem@davemloft.net>,
         Jakub Kicinski <kuba@kernel.org>
 References: <20210920030811.57273-1-sireeshkodali1@gmail.com>
- <20210920030811.57273-14-sireeshkodali1@gmail.com>
+ <20210920030811.57273-15-sireeshkodali1@gmail.com>
 From:   Alex Elder <elder@ieee.org>
-Message-ID: <d50312f8-823d-01b1-47a5-7190be93408d@ieee.org>
-Date:   Wed, 13 Oct 2021 17:30:32 -0500
+Message-ID: <1317bce4-60d4-b502-0792-ad57b56f2280@ieee.org>
+Date:   Wed, 13 Oct 2021 17:30:39 -0500
 User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
  Thunderbird/78.11.0
 MIME-Version: 1.0
-In-Reply-To: <20210920030811.57273-14-sireeshkodali1@gmail.com>
+In-Reply-To: <20210920030811.57273-15-sireeshkodali1@gmail.com>
 Content-Type: text/plain; charset=utf-8; format=flowed
 Content-Language: en-US
 Content-Transfer-Encoding: 7bit
@@ -72,103 +71,210 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 On 9/19/21 10:08 PM, Sireesh Kodali wrote:
-> On IPA v2.x, the modem doesn't send a DRIVER_INIT_COMPLETED, so we have
-> to rely on the uc's IPA_UC_RESPONSE_INIT_COMPLETED to know when its
-> ready. We add a function here that marks uc_ready = true. This function
-> is called by ipa_uc.c when IPA_UC_RESPONSE_INIT_COMPLETED is handled.
+> There are some minor differences between IPA v2.x and later revisions
+> with regards to the uc. The biggeset difference is the shared memory's
+> layout. There are also some changes to the command numbers, but these
+> are not too important, since the mainline driver doesn't use them.
 
-This should use the new ipa_mem_find() interface for getting the
-memory information for the ZIP region.
-
-I don't know where the IPA_UC_RESPONSE_INIT_COMPLETED gets sent
-but I presume it ends up calling ipa_qmi_signal_uc_loaded().
-
-I think actually the DRIVER_INIT_COMPLETE message from the modem
-is saying "I finished initializing the microcontroller."  And
-I've wondered why there is a duplicate mechanism.  Maybe there
-was a race or something.
+It's a shame that so much has to be rearranged when the
+structure definitions are changed.  If I spent more time
+thinking about this I might suggest a different way of
+abstracting the two, but for now this looks fine.
 
 					-Alex
 
+
 > Signed-off-by: Sireesh Kodali <sireeshkodali1@gmail.com>
-> Signed-off-by: Vladimir Lypak <vladimir.lypak@gmail.com>
 > ---
->   drivers/net/ipa/ipa_qmi.c | 27 ++++++++++++++++++++++++++-
->   drivers/net/ipa/ipa_qmi.h | 10 ++++++++++
->   2 files changed, 36 insertions(+), 1 deletion(-)
+>   drivers/net/ipa/ipa_uc.c | 96 ++++++++++++++++++++++++++--------------
+>   1 file changed, 63 insertions(+), 33 deletions(-)
 > 
-> diff --git a/drivers/net/ipa/ipa_qmi.c b/drivers/net/ipa/ipa_qmi.c
-> index 7e2fe701cc4d..876e2a004f70 100644
-> --- a/drivers/net/ipa/ipa_qmi.c
-> +++ b/drivers/net/ipa/ipa_qmi.c
-> @@ -68,6 +68,11 @@
->    * - The INDICATION_REGISTER request and INIT_COMPLETE indication are
->    *   optional for non-initial modem boots, and have no bearing on the
->    *   determination of when things are "ready"
-> + *
-> + * Note that on IPA v2.x, the modem doesn't send a DRIVER_INIT_COMPLETE
-> + * request. Thus, we rely on the uc's IPA_UC_RESPONSE_INIT_COMPLETED to know
-> + * when the uc is ready. The rest of the process is the same on IPA v2.x and
-> + * later IPA versions
+> diff --git a/drivers/net/ipa/ipa_uc.c b/drivers/net/ipa/ipa_uc.c
+> index 856e55a080a7..bf6b25098301 100644
+> --- a/drivers/net/ipa/ipa_uc.c
+> +++ b/drivers/net/ipa/ipa_uc.c
+> @@ -39,11 +39,12 @@
+>   #define IPA_SEND_DELAY		100	/* microseconds */
+>   
+>   /**
+> - * struct ipa_uc_mem_area - AP/microcontroller shared memory area
+> + * union ipa_uc_mem_area - AP/microcontroller shared memory area
+>    * @command:		command code (AP->microcontroller)
+>    * @reserved0:		reserved bytes; avoid reading or writing
+>    * @command_param:	low 32 bits of command parameter (AP->microcontroller)
+>    * @command_param_hi:	high 32 bits of command parameter (AP->microcontroller)
+> + *			Available since IPA v3.0
+>    *
+>    * @response:		response code (microcontroller->AP)
+>    * @reserved1:		reserved bytes; avoid reading or writing
+> @@ -59,31 +60,58 @@
+>    * @reserved3:		reserved bytes; avoid reading or writing
+>    * @interface_version:	hardware-reported interface version
+>    * @reserved4:		reserved bytes; avoid reading or writing
+> + * @reserved5:		reserved bytes; avoid reading or writing
+>    *
+>    * A shared memory area at the base of IPA resident memory is used for
+>    * communication with the microcontroller.  The region is 128 bytes in
+>    * size, but only the first 40 bytes (structured this way) are used.
 >    */
+> -struct ipa_uc_mem_area {
+> -	u8 command;		/* enum ipa_uc_command */
+> -	u8 reserved0[3];
+> -	__le32 command_param;
+> -	__le32 command_param_hi;
+> -	u8 response;		/* enum ipa_uc_response */
+> -	u8 reserved1[3];
+> -	__le32 response_param;
+> -	u8 event;		/* enum ipa_uc_event */
+> -	u8 reserved2[3];
+> -
+> -	__le32 event_param;
+> -	__le32 first_error_address;
+> -	u8 hw_state;
+> -	u8 warning_counter;
+> -	__le16 reserved3;
+> -	__le16 interface_version;
+> -	__le16 reserved4;
+> +union ipa_uc_mem_area {
+> +	struct {
+> +		u8 command;		/* enum ipa_uc_command */
+> +		u8 reserved0[3];
+> +		__le32 command_param;
+> +		u8 response;		/* enum ipa_uc_response */
+> +		u8 reserved1[3];
+> +		__le32 response_param;
+> +		u8 event;		/* enum ipa_uc_event */
+> +		u8 reserved2[3];
+> +
+> +		__le32 event_param;
+> +		__le32 reserved3;
+> +		__le32 first_error_address;
+> +		u8 hw_state;
+> +		u8 warning_counter;
+> +		__le16 reserved4;
+> +		__le16 interface_version;
+> +		__le16 reserved5;
+> +	} v2;
+> +	struct {
+> +		u8 command;		/* enum ipa_uc_command */
+> +		u8 reserved0[3];
+> +		__le32 command_param;
+> +		__le32 command_param_hi;
+> +		u8 response;		/* enum ipa_uc_response */
+> +		u8 reserved1[3];
+> +		__le32 response_param;
+> +		u8 event;		/* enum ipa_uc_event */
+> +		u8 reserved2[3];
+> +
+> +		__le32 event_param;
+> +		__le32 first_error_address;
+> +		u8 hw_state;
+> +		u8 warning_counter;
+> +		__le16 reserved3;
+> +		__le16 interface_version;
+> +		__le16 reserved4;
+> +	} v3;
+>   };
 >   
->   #define IPA_HOST_SERVICE_SVC_ID		0x31
-> @@ -345,7 +350,12 @@ init_modem_driver_req(struct ipa_qmi *ipa_qmi)
->   			req.hdr_proc_ctx_tbl_info.start + mem->size - 1;
->   	}
+> +#define UC_FIELD(_ipa, _field)			\
+> +	*((_ipa->version >= IPA_VERSION_3_0) ?	\
+> +	  &(ipa_uc_shared(_ipa)->v3._field) :	\
+> +	  &(ipa_uc_shared(_ipa)->v2._field))
+> +
+>   /** enum ipa_uc_command - commands from the AP to the microcontroller */
+>   enum ipa_uc_command {
+>   	IPA_UC_COMMAND_NO_OP		= 0x0,
+> @@ -95,6 +123,7 @@ enum ipa_uc_command {
+>   	IPA_UC_COMMAND_CLK_UNGATE	= 0x6,
+>   	IPA_UC_COMMAND_MEMCPY		= 0x7,
+>   	IPA_UC_COMMAND_RESET_PIPE	= 0x8,
+> +	/* Next two commands are present for IPA v3.0+ */
+>   	IPA_UC_COMMAND_REG_WRITE	= 0x9,
+>   	IPA_UC_COMMAND_GSI_CH_EMPTY	= 0xa,
+>   };
+> @@ -114,7 +143,7 @@ enum ipa_uc_event {
+>   	IPA_UC_EVENT_LOG_INFO		= 0x2,
+>   };
 >   
-> -	/* Nothing to report for the compression table (zip_tbl_info) */
-> +	mem = &ipa->mem[IPA_MEM_ZIP];
-> +	if (mem->size) {
-> +		req.zip_tbl_info_valid = 1;
-> +		req.zip_tbl_info.start = ipa->mem_offset + mem->offset;
-> +		req.zip_tbl_info.end = ipa->mem_offset + mem->size - 1;
-> +	}
+> -static struct ipa_uc_mem_area *ipa_uc_shared(struct ipa *ipa)
+> +static union ipa_uc_mem_area *ipa_uc_shared(struct ipa *ipa)
+>   {
+>   	const struct ipa_mem *mem = ipa_mem_find(ipa, IPA_MEM_UC_SHARED);
+>   	u32 offset = ipa->mem_offset + mem->offset;
+> @@ -125,22 +154,22 @@ static struct ipa_uc_mem_area *ipa_uc_shared(struct ipa *ipa)
+>   /* Microcontroller event IPA interrupt handler */
+>   static void ipa_uc_event_handler(struct ipa *ipa, enum ipa_irq_id irq_id)
+>   {
+> -	struct ipa_uc_mem_area *shared = ipa_uc_shared(ipa);
+>   	struct device *dev = &ipa->pdev->dev;
+> +	u32 event = UC_FIELD(ipa, event);
 >   
->   	mem = ipa_mem_find(ipa, IPA_MEM_V4_ROUTE_HASHED);
->   	if (mem->size) {
-> @@ -525,6 +535,21 @@ int ipa_qmi_setup(struct ipa *ipa)
->   	return ret;
+> -	if (shared->event == IPA_UC_EVENT_ERROR)
+> +	if (event == IPA_UC_EVENT_ERROR)
+>   		dev_err(dev, "microcontroller error event\n");
+> -	else if (shared->event != IPA_UC_EVENT_LOG_INFO)
+> +	else if (event != IPA_UC_EVENT_LOG_INFO)
+>   		dev_err(dev, "unsupported microcontroller event %u\n",
+> -			shared->event);
+> +			event);
+>   	/* The LOG_INFO event can be safely ignored */
 >   }
 >   
-> +/* With IPA v2 modem is not required to send DRIVER_INIT_COMPLETE request to AP.
-> + * We start operation as soon as IPA_UC_RESPONSE_INIT_COMPLETED irq is triggered.
-> + */
-> +void ipa_qmi_signal_uc_loaded(struct ipa *ipa)
-> +{
-> +	struct ipa_qmi *ipa_qmi = &ipa->qmi;
-> +
-> +	/* This is needed only on IPA 2.x */
-> +	if (ipa->version > IPA_VERSION_2_6L)
-> +		return;
-> +
-> +	ipa_qmi->uc_ready = true;
-> +	ipa_qmi_ready(ipa_qmi);
-> +}
-> +
->   /* Tear down IPA QMI handles */
->   void ipa_qmi_teardown(struct ipa *ipa)
+>   /* Microcontroller response IPA interrupt handler */
+>   static void ipa_uc_response_hdlr(struct ipa *ipa, enum ipa_irq_id irq_id)
 >   {
-> diff --git a/drivers/net/ipa/ipa_qmi.h b/drivers/net/ipa/ipa_qmi.h
-> index 856ef629ccc8..4962d88b0d22 100644
-> --- a/drivers/net/ipa/ipa_qmi.h
-> +++ b/drivers/net/ipa/ipa_qmi.h
-> @@ -55,6 +55,16 @@ struct ipa_qmi {
->    */
->   int ipa_qmi_setup(struct ipa *ipa);
+> -	struct ipa_uc_mem_area *shared = ipa_uc_shared(ipa);
+>   	struct device *dev = &ipa->pdev->dev;
+> +	u32 response = UC_FIELD(ipa, response);
 >   
-> +/**
-> + * ipa_qmi_signal_uc_loaded() - Signal that the UC has been loaded
-> + * @ipa:		IPA pointer
-> + *
-> + * This is called when the uc indicates that it is ready. This exists, because
-> + * on IPA v2.x, the modem does not send a DRIVER_INIT_COMPLETED. Thus we have
-> + * to rely on the uc's INIT_COMPLETED response to know if it was initialized
-> + */
-> +void ipa_qmi_signal_uc_loaded(struct ipa *ipa);
-> +
->   /**
->    * ipa_qmi_teardown() - Tear down IPA QMI handles
->    * @ipa:		IPA pointer
+>   	/* An INIT_COMPLETED response message is sent to the AP by the
+>   	 * microcontroller when it is operational.  Other than this, the AP
+> @@ -150,20 +179,21 @@ static void ipa_uc_response_hdlr(struct ipa *ipa, enum ipa_irq_id irq_id)
+>   	 * We can drop the power reference taken in ipa_uc_power() once we
+>   	 * know the microcontroller has finished its initialization.
+>   	 */
+> -	switch (shared->response) {
+> +	switch (response) {
+>   	case IPA_UC_RESPONSE_INIT_COMPLETED:
+>   		if (ipa->uc_powered) {
+>   			ipa->uc_loaded = true;
+>   			pm_runtime_mark_last_busy(dev);
+>   			(void)pm_runtime_put_autosuspend(dev);
+>   			ipa->uc_powered = false;
+> +			ipa_qmi_signal_uc_loaded(ipa);
+>   		} else {
+>   			dev_warn(dev, "unexpected init_completed response\n");
+>   		}
+>   		break;
+>   	default:
+>   		dev_warn(dev, "unsupported microcontroller response %u\n",
+> -			 shared->response);
+> +			 response);
+>   		break;
+>   	}
+>   }
+> @@ -216,16 +246,16 @@ void ipa_uc_power(struct ipa *ipa)
+>   /* Send a command to the microcontroller */
+>   static void send_uc_command(struct ipa *ipa, u32 command, u32 command_param)
+>   {
+> -	struct ipa_uc_mem_area *shared = ipa_uc_shared(ipa);
+>   	u32 offset;
+>   	u32 val;
+>   
+>   	/* Fill in the command data */
+> -	shared->command = command;
+> -	shared->command_param = cpu_to_le32(command_param);
+> -	shared->command_param_hi = 0;
+> -	shared->response = 0;
+> -	shared->response_param = 0;
+> +	UC_FIELD(ipa, command) = command;
+> +	UC_FIELD(ipa, command_param) = cpu_to_le32(command_param);
+> +	if (ipa->version >= IPA_VERSION_3_0)
+> +		ipa_uc_shared(ipa)->v3.command_param_hi = 1;
+> +	UC_FIELD(ipa, response) = 0;
+> +	UC_FIELD(ipa, response_param) = 0;
+>   
+>   	/* Use an interrupt to tell the microcontroller the command is ready */
+>   	val = u32_encode_bits(1, UC_INTR_FMASK);
 > 
 
