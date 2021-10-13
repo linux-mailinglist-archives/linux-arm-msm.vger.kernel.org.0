@@ -2,115 +2,110 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id CCDE642C9FC
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 21:25:29 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 7703842CA01
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 21:26:25 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229941AbhJMT1c (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Oct 2021 15:27:32 -0400
-Received: from mail.kernel.org ([198.145.29.99]:57724 "EHLO mail.kernel.org"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229664AbhJMT1c (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Oct 2021 15:27:32 -0400
-Received: by mail.kernel.org (Postfix) with ESMTPSA id 4CC97611C2;
-        Wed, 13 Oct 2021 19:25:28 +0000 (UTC)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/simple; d=kernel.org;
-        s=k20201202; t=1634153128;
-        bh=wsyadpnFPzQgJjy5NCRs++eEdp+fySv4oOIBLQK45lI=;
-        h=In-Reply-To:References:Subject:From:Cc:To:Date:From;
-        b=FuqhcnflJJxh0fNXtJhuO0n977ucnwMCXbU3/wyRn4isISHezbh7b95VPe+znVxGO
-         QJy1GJDDMsU+nhrmqt0hDwQwMmyUcIyih3vBRRUgud57CRTFfhOKDr51HzpggY8OJD
-         0/fCRqV22xZp5J8qZfCfK/K52XkebO/i9sTtAQeYznB8RY+AOkTJRTcXRk3RNQF0hX
-         Z24YNVXTNbSoeUlXqffSl8wSoyY1v/JZaQzPNBBeKPuXz3KLGzudXeaOOSwEGHJtMe
-         viF6G1YvowDyY0Bj0LZ244yo0PZJ2Ywuf9lcBD09Cli5avdDvKvcDgYfu03MNVVcJB
-         ItFlrji5MY8Fw==
-Content-Type: text/plain; charset="utf-8"
+        id S238815AbhJMT21 (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Oct 2021 15:28:27 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:34920 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S236935AbhJMT20 (ORCPT
+        <rfc822;linux-arm-msm@vger.kernel.org>);
+        Wed, 13 Oct 2021 15:28:26 -0400
+Received: from mail-lf1-x12c.google.com (mail-lf1-x12c.google.com [IPv6:2a00:1450:4864:20::12c])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CFA81C061746
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Oct 2021 12:26:22 -0700 (PDT)
+Received: by mail-lf1-x12c.google.com with SMTP id p16so16601073lfa.2
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Oct 2021 12:26:22 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=Cqg6OlscZqEMvb/ReYXudBaSyipapWX2ho/bKAy2P6s=;
+        b=QIG+ixl2Q4prZfyV2wCaaV06GK34fLeJljGPY2tmislnOnnZgid7OA0rtWBo2t1esQ
+         afLbkXegUw8WteZuauN8DY9jGP1mQwJQaW3ImwlYDIdxUiDuLqIcY27qyI0RyBSXan/Z
+         McxnsDpDOA8ZCTeLKYdTVX4lPhTSWMxeZUVvyNIxDQlqzvLav/ktJErSDZFwdFdV+OXC
+         gwVnso03jrqpF7HGBdkBDmGG5QzCb9hOn71y9ANa75N0QrsXa4Wv9Eg/MSg2+nL6JtGX
+         jPWdB7AWpsfuPYHmi5FfPW7/vIs8PGanB/plcFVlvijuJGnn+ii7JWR5WkwWhkEFVOlf
+         pn1g==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=Cqg6OlscZqEMvb/ReYXudBaSyipapWX2ho/bKAy2P6s=;
+        b=jIsnVVULBu81OVZ5hvR9+8TQ/qcoRt3Kgq9Nw52WE9988mVKA2971ynHXt6DlSNQMG
+         y+jM2yVMDPtOHCIGjATiOnp4W0upu6pNwdIPYkoGVcjx/aExgkLA8TbiUatjovziXW0x
+         k8sLuFy5uUJ5Okg4EeVU/DAUvjolu7Iq6mggE823hk14vqLO0haGzUhduNv5Iyp2n6aS
+         T6Gm/QW7jLjdarzx0L98BNP/0OvMyEwyNGS1aPi6uByUfo0Hz6wJ8HG6tRhVwd0asw5T
+         wFLgVbiqgyYUlouG2ZlkBfXkwbAVEn6jKl5FUSoNjDeMh92IhnX0YwUAiaD3+APT/zOx
+         AuyQ==
+X-Gm-Message-State: AOAM530SPZAu5K3uSZ3rSgUBM/0F4lw7BQUp/7/qMGIeMK9K5pjyLFi1
+        zvogEayrO5aSIdjjrQLmda7kcg==
+X-Google-Smtp-Source: ABdhPJznjZnDpqOvqSdheZSC8P42iPnMdQCzy/Tnq4TKbALGTxj9GhVYDaxKh0Q/72NXCoIRKjTuew==
+X-Received: by 2002:a05:6512:14b:: with SMTP id m11mr811712lfo.410.1634153181254;
+        Wed, 13 Oct 2021 12:26:21 -0700 (PDT)
+Received: from [192.168.1.102] (62-248-207-242.elisa-laajakaista.fi. [62.248.207.242])
+        by smtp.gmail.com with ESMTPSA id g7sm31776lfr.113.2021.10.13.12.26.20
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Wed, 13 Oct 2021 12:26:21 -0700 (PDT)
+Subject: Re: [PATCH v4 17/20] crypto: qce: Print a failure msg in case probe()
+ fails
+To:     Bhupesh Sharma <bhupesh.sharma@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org
+Cc:     bhupesh.linux@gmail.com, linux-kernel@vger.kernel.org,
+        devicetree@vger.kernel.org, robh+dt@kernel.org, agross@kernel.org,
+        herbert@gondor.apana.org.au, davem@davemloft.net,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Thara Gopinath <thara.gopinath@linaro.org>
+References: <20211013105541.68045-1-bhupesh.sharma@linaro.org>
+ <20211013105541.68045-18-bhupesh.sharma@linaro.org>
+From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
+Message-ID: <2699de22-4943-685f-5700-82137a4326ae@linaro.org>
+Date:   Wed, 13 Oct 2021 22:26:20 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.6.1
 MIME-Version: 1.0
-Content-Transfer-Encoding: quoted-printable
-In-Reply-To: <7efffba4-5e8b-1b71-8bee-3dffe65cfdf5@quicinc.com>
-References: <1631860384-26608-1-git-send-email-quic_fenglinw@quicinc.com> <1631860384-26608-4-git-send-email-quic_fenglinw@quicinc.com> <163406173869.936959.6395787327312518099@swboyd.mtv.corp.google.com> <7efffba4-5e8b-1b71-8bee-3dffe65cfdf5@quicinc.com>
-Subject: Re: [RESEND PATCH v1 3/9] spmi: pmic-arb: check apid against limits before calling irq handler
-From:   Stephen Boyd <sboyd@kernel.org>
-Cc:     collinsd@codeaurora.org, subbaram@codeaurora.org,
-        tglx@linutronix.de, maz@kernel.org
-To:     Fenglin Wu <quic_fenglinw@quicinc.com>,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
-Date:   Wed, 13 Oct 2021 12:25:27 -0700
-Message-ID: <163415312707.936959.13741150880359468709@swboyd.mtv.corp.google.com>
-User-Agent: alot/0.9.1
+In-Reply-To: <20211013105541.68045-18-bhupesh.sharma@linaro.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-US
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Quoting Fenglin Wu (2021-10-12 22:31:22)
->=20
-> On 10/13/2021 2:02 AM, Stephen Boyd wrote:
-> > Quoting Fenglin Wu (2021-09-16 23:32:58)
-> >> From: David Collins <collinsd@codeaurora.org>
-> >>
-> >> Check that the apid for an SPMI interrupt falls between the
-> >> min_apid and max_apid that can be handled by the APPS processor
-> >> before invoking the per-apid interrupt handler:
-> >> periph_interrupt().
-> >>
-> >> This avoids an access violation in rare cases where the status
-> >> bit is set for an interrupt that is not owned by the APPS
-> >> processor.
-> >>
-> >> Signed-off-by: David Collins <collinsd@codeaurora.org>
-> >> Signed-off-by: Fenglin Wu <quic_fenglinw@quicinc.com>
-> >> ---
-> > Fixes? BTW, a lot of these patches are irqchip specific. It would be
-> > good to get review from irqchip maintainers. Maybe we should split the
-> > irqchip driver off via the auxiliary bus so that irqchip maintainers can
-> > review. Please Cc them on irqchip related patches.
-> >
-> > IRQCHIP DRIVERS
-> > M:      Thomas Gleixner <tglx@linutronix.de>
-> > M:      Marc Zyngier <maz@kernel.org>
-> Sure, copied Thomas and Marc for code review.
-> This is a fix to avoid the register access violation in a case that an
-> interrupt is fired in a PMIC module which is not owned by APPS
-> processor.
+Hi Bhupesh,
 
-Got it.
+On 10/13/21 1:55 PM, Bhupesh Sharma wrote:
+> Print a failure message (dev_err) in case the qcom qce crypto
+> driver probe() fails.
+> 
+> Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+> Cc: Rob Herring <robh+dt@kernel.org>
+> Reviewed-by: Thara Gopinath <thara.gopinath@linaro.org>
+> Signed-off-by: Bhupesh Sharma <bhupesh.sharma@linaro.org>
+> ---
+>   drivers/crypto/qce/core.c | 2 ++
+>   1 file changed, 2 insertions(+)
+> 
+> diff --git a/drivers/crypto/qce/core.c b/drivers/crypto/qce/core.c
+> index 576c416461f9..cb8c77709e1e 100644
+> --- a/drivers/crypto/qce/core.c
+> +++ b/drivers/crypto/qce/core.c
+> @@ -281,6 +281,8 @@ static int qce_crypto_probe(struct platform_device *pdev)
+>   	icc_set_bw(qce->mem_path, 0, 0);
+>   err_mem_path_put:
+>   	icc_put(qce->mem_path);
+> +
+> +	dev_err(dev, "%s failed : %d\n", __func__, ret);
+>   	return ret;
+>   }
+>   
 
-> >>   drivers/spmi/spmi-pmic-arb.c | 6 ++++++
-> >>   1 file changed, 6 insertions(+)
-> >>
-> >> diff --git a/drivers/spmi/spmi-pmic-arb.c b/drivers/spmi/spmi-pmic-arb=
-.c
-> >> index 4d7ad004..c4adc06 100644
-> >> --- a/drivers/spmi/spmi-pmic-arb.c
-> >> +++ b/drivers/spmi/spmi-pmic-arb.c
-> >> @@ -535,6 +535,12 @@ static void pmic_arb_chained_irq(struct irq_desc =
-*desc)
-> >>                          id =3D ffs(status) - 1;
-> >>                          status &=3D ~BIT(id);
-> >>                          apid =3D id + i * 32;
-> >> +                       if (apid < pmic_arb->min_apid
-> >> +                           || apid > pmic_arb->max_apid) {
-> > The || goes on the line above. What about making a local variable for
-> > first and last and then shifting by 5 in the loop?
-> >
-> > int first =3D pmic_arb->min_apid;
-> > int last =3D pmic_arb->max_apid;
-> >
-> > for (i =3D first >> 5; i <=3D last >> 5; i++)
-> >
-> >       if (apid < first || apid > last)
-> ACK, will update it following this.
-> >> +                               WARN_ONCE(true, "spurious spmi irq rec=
-eived for apid=3D%d\n",
-> >> +                                       apid);
-> > Is there any way to recover from this? Or once the mapping is wrong
-> > we're going to get interrupts that we don't know what to do with
-> > forever?
-> This is a rare case that the unexpected interrupt is fired in a module
-> not owned by APPS process, so the interrupt itself is not expected hence
-> no need to recover from this but just bail out to avoid following register
-> access violation.
+As for me the rationale of this change is quite non-obvious, a user is well
+informed, if a driver probe fails. I would rather ask you to consider to
+drop this change.
 
-And then the irq stops coming? It feels like a misconfiguration in the
-firmware that we're trying to hide, hence the WARN_ONCE(). Can we
-somehow silence irqs that aren't owned by the APPS when this driver
-probes so that they can't even happen after probe?
+--
+Best wishes,
+Vladimir
