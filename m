@@ -2,173 +2,203 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EF95842C648
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 18:25:01 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 5FB6A42C64F
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 18:25:45 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229715AbhJMQ1C (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Oct 2021 12:27:02 -0400
-Received: from bhuna.collabora.co.uk ([46.235.227.227]:38902 "EHLO
-        bhuna.collabora.co.uk" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229941AbhJMQ1C (ORCPT
+        id S229939AbhJMQ1q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Oct 2021 12:27:46 -0400
+Received: from mail-4319.protonmail.ch ([185.70.43.19]:57617 "EHLO
+        mail-4319.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S229552AbhJMQ1q (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Oct 2021 12:27:02 -0400
-Received: from [127.0.0.1] (localhost [127.0.0.1])
-        (Authenticated sender: sre)
-        with ESMTPSA id F2D4C1F43B79
-Received: by earth.universe (Postfix, from userid 1000)
-        id 339733C0CA8; Wed, 13 Oct 2021 18:24:55 +0200 (CEST)
-Date:   Wed, 13 Oct 2021 18:24:55 +0200
-From:   Sebastian Reichel <sebastian.reichel@collabora.com>
-To:     Stephen Boyd <swboyd@chromium.org>,
-        Linus Walleij <linus.walleij@linaro.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        linux-pm@vger.kernel.org, Daniel Vetter <daniel.vetter@ffwll.ch>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Russell King <rmk+kernel@arm.linux.org.uk>,
-        Saravana Kannan <saravanak@google.com>
-Subject: Re: [PATCH v2 28/34] power: supply: ab8500: Migrate to aggregate
- driver
-Message-ID: <20211013162455.2srbgmxw6dgoplzo@earth.universe>
-References: <20211006193819.2654854-1-swboyd@chromium.org>
- <20211006193819.2654854-29-swboyd@chromium.org>
+        Wed, 13 Oct 2021 12:27:46 -0400
+Date:   Wed, 13 Oct 2021 16:25:30 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail; t=1634142340;
+        bh=vnZvf739HKzpLgZYiGExCIHF155ARwhshzwdwIziQqs=;
+        h=Date:To:From:Cc:Reply-To:Subject:From;
+        b=IcFqdAglvcrEPsynVkP5fv+K5EW1i7dyfxsiugIRid9DChh7wDgBiwR6/eb4owQ1B
+         HV3wmA6T/zs2L7yShdojcFbIS8VsVY37VybjLv3hIVwUIZo5L3nIHKt+BuXqye0Zhx
+         bIivorXdqFNlTjk1fajCMqNY8tjoCA56ygiatBgQ=
+To:     Maulik Shah <mkshah@codeaurora.org>
+From:   Yassine Oudjana <y.oudjana@protonmail.com>
+Cc:     Yassine Oudjana <y.oudjana@protonmail.com>, swboyd@chromium.org,
+        mka@chromium.org, evgreen@chromium.org, bjorn.andersson@linaro.org,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
+        agross@kernel.org, dianders@chromium.org, linux@roeck-us.net,
+        rnayak@codeaurora.org, lsrao@codeaurora.org,
+        Stephan Gerhold <stephan@gerhold.net>
+Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
+Subject: Re: [PATCH v12 0/5] Introduce SoC sleep stats driver
+Message-ID: <20211013162356.7106-1-y.oudjana@protonmail.com>
 MIME-Version: 1.0
-Content-Type: multipart/signed; micalg=pgp-sha512;
-        protocol="application/pgp-signature"; boundary="5zizh2cyz6jxazcg"
-Content-Disposition: inline
-In-Reply-To: <20211006193819.2654854-29-swboyd@chromium.org>
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-
---5zizh2cyz6jxazcg
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-Content-Transfer-Encoding: quoted-printable
-
-Hi,
-
-[+cc Linus Walleij (I guess we should add a MAINTAINERS entry for
-the ab8500* power-supply drivers)]
-
-On Wed, Oct 06, 2021 at 12:38:13PM -0700, Stephen Boyd wrote:
-> Use an aggregate driver instead of component ops so that we can get
-> proper driver probe ordering of the aggregate device with respect to all
-> the component devices that make up the aggregate device.
+On Wed, 13 Oct 2021 12:08:19 +0530, Maulik Shah wrote:
+> Changes in v12:
+> - Address Stephan's comments from v11
+> - Rename driver and compatible to qcom,rpm(h)-stats
+> - Skip reading SMEM for RPM targets
+> - Make driver register in late_init to avoid -EPROBE_DEFER from smem.
+> - Change size to 0x10000 for RPM targets since area contains many others =
+stats.
 >=20
-> Cc: Sebastian Reichel <sre@kernel.org>
-> Cc: <linux-pm@vger.kernel.org>
-> Cc: Daniel Vetter <daniel.vetter@ffwll.ch>
-> Cc: "Rafael J. Wysocki" <rafael@kernel.org>
-> Cc: Rob Clark <robdclark@gmail.com>
-> Cc: Russell King <rmk+kernel@arm.linux.org.uk>
-> Cc: Saravana Kannan <saravanak@google.com>
-> Signed-off-by: Stephen Boyd <swboyd@chromium.org>
-> ---
-
-Acked-by: Sebastian Reichel <sre@kernel.org>
-
--- Sebastian
-
->  drivers/power/supply/ab8500_charger.c | 22 +++++++++++++---------
->  1 file changed, 13 insertions(+), 9 deletions(-)
+> Changes in v11:
+> - Address Bjorn's comments from v10
+> - Add a case for RPM based targets dynamic offset in driver
+> - Update commit messages to use qcom sleep stats instead of soc sleep sta=
+ts
+> - Drop individual target dtsi changes for sc7180 and sc7280
+> - Add single change to enable sleep stats for RPMh based targets
+> - Add single change to enable sleep stats for RPM based targets
 >=20
-> diff --git a/drivers/power/supply/ab8500_charger.c b/drivers/power/supply=
-/ab8500_charger.c
-> index 15eadaf46f14..52d4105e28f2 100644
-> --- a/drivers/power/supply/ab8500_charger.c
-> +++ b/drivers/power/supply/ab8500_charger.c
-> @@ -3312,8 +3312,9 @@ static const struct power_supply_desc ab8500_usb_ch=
-g_desc =3D {
->  	.get_property	=3D ab8500_charger_usb_get_property,
->  };
-> =20
-> -static int ab8500_charger_bind(struct device *dev)
-> +static int ab8500_charger_bind(struct aggregate_device *adev)
->  {
-> +	struct device *dev =3D adev->parent;
->  	struct ab8500_charger *di =3D dev_get_drvdata(dev);
->  	int ch_stat;
->  	int ret;
-> @@ -3354,8 +3355,9 @@ static int ab8500_charger_bind(struct device *dev)
->  	return 0;
->  }
-> =20
-> -static void ab8500_charger_unbind(struct device *dev)
-> +static void ab8500_charger_unbind(struct aggregate_device *adev)
->  {
-> +	struct device *dev =3D adev->parent;
->  	struct ab8500_charger *di =3D dev_get_drvdata(dev);
->  	int ret;
-> =20
-> @@ -3380,9 +3382,13 @@ static void ab8500_charger_unbind(struct device *d=
-ev)
->  	component_unbind_all(dev, di);
->  }
-> =20
-> -static const struct component_master_ops ab8500_charger_comp_ops =3D {
-> -	.bind =3D ab8500_charger_bind,
-> -	.unbind =3D ab8500_charger_unbind,
-> +static struct aggregate_driver ab8500_charger_aggregate_driver =3D {
-> +	.probe =3D ab8500_charger_bind,
-> +	.remove =3D ab8500_charger_unbind,
-> +	.driver =3D {
-> +		.name =3D "ab8500_charger_agg",
-> +		.owner =3D THIS_MODULE,
-> +	},
->  };
-> =20
->  static struct platform_driver *const ab8500_charger_component_drivers[] =
-=3D {
-> @@ -3663,9 +3669,7 @@ static int ab8500_charger_probe(struct platform_dev=
-ice *pdev)
->  	}
-> =20
-> =20
-> -	ret =3D component_master_add_with_match(&pdev->dev,
-> -					      &ab8500_charger_comp_ops,
-> -					      match);
-> +	ret =3D component_aggregate_register(&pdev->dev, &ab8500_charger_aggreg=
-ate_driver, match);
->  	if (ret) {
->  		dev_err(dev, "failed to add component master\n");
->  		goto free_notifier;
-> @@ -3688,7 +3692,7 @@ static int ab8500_charger_remove(struct platform_de=
-vice *pdev)
->  {
->  	struct ab8500_charger *di =3D platform_get_drvdata(pdev);
-> =20
-> -	component_master_del(&pdev->dev, &ab8500_charger_comp_ops);
-> +	component_aggregate_unregister(&pdev->dev, &ab8500_charger_aggregate_dr=
-iver);
-> =20
->  	usb_unregister_notifier(di->usb_phy, &di->nb);
->  	usb_put_phy(di->usb_phy);
+> Changes in v10:
+> - Updated device node name to use memory instead of aop_msgram
+> - Remove Lina's email from maintainers=20
+> - Rename driver to qcom_sleep_stats. Update makefile, Kconfig accordingly
+> - Address Bjorn's comments from v9
+>=20
+> Changes in v9:
+> - Remove soft dependency on smem module
+> - Return -EIO to userspace in case of error
+> - Make struct sleep_stats *stat a const pointer
+> - Remove the driver from soc_sleep_stats_driver name
+> - Remove offset address and directly mention the msgram address in dtsi
+> - Use devm_platform_get_and_ioremap_resource() to ioremap dtsi address
+> - Update device node name to mention aop_msgram instead rpmh-sleep-stats
+> - Update dtsi and documentation accordingly but retain the reviews
+>=20
+> Changes in v8:
+> - Addressed bjorn's comments in driver from v7
+> - Update aoss_qmp device node reg size for sc7280
+>=20
+> Changes in v7:
+> - Fix example in bindings documentation as per #address/size-cells =3D <1=
+>.
+> - Add comment in driver from where 'ddr' subsystems name is read.
+> - Update comment in driver to s/beside/besides and others from v6.
+> - Rename debugfs_create_entries() from v6.
+> - Drop use of memcpy_fromio() to find the name.
+> - Use sizeof(*prv_data) in devm_kzalloc().
+> - Add change to define readq() if its not yet defined for compile support=
+.
+> - Add wpss subsystem in the list of subsystems.
+> - Add module soft dependency on smem module.
+> - Add new change to add device node for sc7280.
+>=20
+> Changes in v6:
+> - Address stephen's comments from v5 which includes below
+> - Pad 0 in documentation example to make address 8 digit
+> - define macro to calculate offset in driver
+> - Add appended_stats_avail to prv_data instead of using entire stats_conf=
+ig
+> - make array subsystems[] as const
+> - Add comment for SSR case
+> - Use memcpy_fromio() and devm_kcalloc() during probe
+> - Change file permission mode from 444 to 400=20
+>=20
+> - Address guenter's comments to add depends on QCOM_SMEM
+>=20
+> - Add adsp_island and cdsp_island subsystems
+> - Use strim() to remove whitespace in stat name
+>=20
+> Changes in v5:
+> - Remove underscore from node name in Documentation and DTSI change
+> - Remove global config from driver change
+>=20
+> Changes in v4:
+> - Address bjorn's comments from v3 on change 2.
+> - Add bjorn's Reviewed-by on change 3 and 4.
+>=20
+> Changes in v3:
+> - Address stephen's comments from v2 in change 1 and 2.
+> - Address bjorn's comments from v2 in change 3 and 4.
+> - Add Rob and bjorn's Reviewed-by on YAML change.
+>=20
+> Changes in v2:
+> - Convert Documentation to YAML.
+> - Address stephen's comments from v1.
+> - Use debugfs instead of sysfs.
+> - Add sc7180 dts changes for sleep stats
+> - Add defconfig changes to enable driver
+> - Include subsystem stats from [1] in this single stats driver.
+> - Address stephen's comments from [1]
+> - Update cover letter inline to mention [1]
+>=20
+> Qualcomm Technologies, Inc. (QTI)'s chipsets support SoC level low power
+> modes. SoCs Always On Processor/Resource Power Manager produces statistic=
+s
+> of the SoC sleep modes involving lowering or powering down of the rails a=
+nd
+> the oscillator clock.
+>=20
+> Additionally multiple subsystems present on SoC like modem, spss, adsp,
+> cdsp maintains their low power mode statistics in shared memory (SMEM).
+>=20
+> Statistics includes SoC sleep mode type, number of times LPM entered, tim=
+e
+> of last entry, exit, and accumulated sleep duration in seconds.
+>=20
+> This series adds a driver to read the stats and export to debugfs.
+>=20
+> [1] https://lore.kernel.org/patchwork/patch/1149381/
+>=20
+> Mahesh Sivasubramanian (2):
+>   dt-bindings: Introduce QCOM Sleep stats bindings
+>   soc: qcom: Add Sleep stats driver
+>=20
+> Maulik Shah (3):
+>   arm64: defconfig: Enable Sleep stats driver
+>   arm64: dts: qcom: Enable RPMh Sleep stats
+>   arm64: dts: qcom: Enable RPM Sleep stats
+>=20
+>  .../devicetree/bindings/soc/qcom/qcom-stats.yaml   |  47 ++++
+>  arch/arm64/boot/dts/qcom/msm8996.dtsi              |   5 +
+>  arch/arm64/boot/dts/qcom/msm8998.dtsi              |   5 +
+>  arch/arm64/boot/dts/qcom/qcs404.dtsi               |   5 +
+>  arch/arm64/boot/dts/qcom/sc7180.dtsi               |   7 +-
+>  arch/arm64/boot/dts/qcom/sc7280.dtsi               |   7 +-
+>  arch/arm64/boot/dts/qcom/sdm630.dtsi               |   5 +
+>  arch/arm64/boot/dts/qcom/sm6125.dtsi               |   5 +
+>  arch/arm64/boot/dts/qcom/sm8150.dtsi               |   7 +-
+>  arch/arm64/boot/dts/qcom/sm8250.dtsi               |   7 +-
+>  arch/arm64/boot/dts/qcom/sm8350.dtsi               |   7 +-
+>  arch/arm64/configs/defconfig                       |   1 +
+>  drivers/soc/qcom/Kconfig                           |  10 +
+>  drivers/soc/qcom/Makefile                          |   1 +
+>  drivers/soc/qcom/qcom_stats.c                      | 277 +++++++++++++++=
+++++++
+>  15 files changed, 391 insertions(+), 5 deletions(-)
+>  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom-stats=
+.yaml
+>  create mode 100644 drivers/soc/qcom/qcom_stats.c
+>=20
 > --=20
-> https://chromeos.dev
->=20
 
---5zizh2cyz6jxazcg
-Content-Type: application/pgp-signature; name="signature.asc"
+On msm8996-xiaomi-scorpio:
 
------BEGIN PGP SIGNATURE-----
+# cat /sys/kernel/debug/qcom_stats/*
+Count: 0
+Last Entered At: 0
+Last Exited At: 0
+Accumulated Duration: 0
+Client Votes: 0x0
+Count: 0
+Last Entered At: 0
+Last Exited At: 0
+Accumulated Duration: 0
+Client Votes: 0x0
 
-iQIzBAABCgAdFiEE72YNB0Y/i3JqeVQT2O7X88g7+poFAmFnCFcACgkQ2O7X88g7
-+poL0g/9HRcH5yucLIwM0Y2DrOctm8HymvKJoN7B93ea2cEtO6LZKjyEhlOl5vtp
-75+K607L5FgwhV/GFgrbfZxK3vdQw5CN0srVtZRpXVB05EURul1GLGKlPQEKW1kY
-cOzqPLZx6lJtO80OnDuClJSI+uP5MpwRZzXRdjCm63BR3/+rVHM1NY8LY7SCLM9v
-Edr812kResYp7WkbtYLwy5z/ddCebtE+t+3Cv31Ber6MVbhHHuM0igQ24FiEVQI8
-SIUXFKMMAv1n7eRfWRMJf84ZBOzC7yFxFo4ZwC/saCiePvttjiE64KlG5TLcNjTA
-tPd/FWHeM6YVCU+YJ1vqfvh1tW69XpGFxv90eAX+nMIo0znaZir5pykGfDKCP1zL
-3uVSiz+KnGdCNwljg8MEBXd2E742pLSwnnr/Sckyk6O4zDbTBul7pTSY6NIy2dZW
-+4ahnTtc0qq62+RH1wfbLHsVu04WTxZTMFbpTlQI7EGQsVMzGdx/TAwqbb1cVxjS
-9hiZsgvXoP4C58VGLC/3DHcjzEm+O1U/emJRwo3MZ8M0K1bQY36bj3NWnIpDAgY+
-hf/FkBbjSesZtBqG81wT85DA/rcDc+8qoEGVTnCt7jQrdyDqmQvKtioZLEhGtB/P
-BZOx9e+yo8JHDUlGSwPCZSvl3Uk9jBNIjstThsEjuZU6U+lcx1Q=
-=A2IV
------END PGP SIGNATURE-----
+Also, the warnings from v11 are no longer showing up.
 
---5zizh2cyz6jxazcg--
+Tested-by: Yassine Oudjana <y.oudjana@protonmail.com>
+
