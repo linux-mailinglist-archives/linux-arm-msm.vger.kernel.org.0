@@ -2,33 +2,33 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 9A64B42B7A6
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 08:39:38 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2D92C42B796
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 08:39:10 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S237968AbhJMGlh (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Oct 2021 02:41:37 -0400
+        id S238150AbhJMGlK (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Oct 2021 02:41:10 -0400
 Received: from so254-9.mailgun.net ([198.61.254.9]:50733 "EHLO
         so254-9.mailgun.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S238105AbhJMGlg (ORCPT
+        with ESMTP id S238129AbhJMGlH (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Oct 2021 02:41:36 -0400
+        Wed, 13 Oct 2021 02:41:07 -0400
 DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1634107173; h=References: In-Reply-To: Message-Id: Date:
+ s=smtp; t=1634107145; h=References: In-Reply-To: Message-Id: Date:
  Subject: Cc: To: From: Sender;
- bh=F1lLYGit3bpkKZWfWZM5ylK4KUCjBPnb7F42PPDhAmQ=; b=fXU48vyAQOCliA5JDNS9Xrz8ooZGhEtPym6x8jdBXbzFJEuhKOX8j+cLqTxrsOwdn2QjXyce
- aCIqdFBeuOGdtDyI4BHTFD/SkrsaUmcNIThK0voUNa1J4HFaLagWu7fYNquVh4tODv8ECc3A
- P5xNLd+dUSpps77sfZHkcJZ+AFo=
+ bh=HRZTod0NNoz5dU+I+xxxQaygpEEjr0GHkgK3KQtbUdA=; b=ZBicNixvDcJkiLmIibt0iS0YOy9nZfUieOpx0NdUXGhhIU2wKmU74pX5UuFNxwB5D8TF0BFK
+ x+4ggfXAKS7SMux4y9Q/zoPebDCS+6QEdvZitYRfpfAuope92OFFW1xoV0gW6tsQoKjWOMo8
+ TCBDmyaSaADHJc/5Gb82X02y7Ts=
 X-Mailgun-Sending-Ip: 198.61.254.9
 X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
 Received: from smtp.codeaurora.org
  (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n03.prod.us-east-1.postgun.com with SMTP id
- 61667f05a45ca75307289f4c (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 13 Oct 2021 06:39:01
+ smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
+ 61667f088ea00a941f632092 (version=TLS1.2,
+ cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Wed, 13 Oct 2021 06:39:04
  GMT
 Sender: mkshah=codeaurora.org@mg.codeaurora.org
 Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 2DE21C43617; Wed, 13 Oct 2021 06:39:00 +0000 (UTC)
+        id 8318BC43635; Wed, 13 Oct 2021 06:39:04 +0000 (UTC)
 X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
         aws-us-west-2-caf-mail-1.web.codeaurora.org
 X-Spam-Level: 
@@ -38,9 +38,9 @@ Received: from mkshah-linux.qualcomm.com (unknown [202.46.22.19])
         (using TLSv1.2 with cipher ECDHE-RSA-AES128-SHA256 (128/128 bits))
         (No client certificate requested)
         (Authenticated sender: mkshah)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 5FECDC4361A;
-        Wed, 13 Oct 2021 06:38:54 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 5FECDC4361A
+        by smtp.codeaurora.org (Postfix) with ESMTPSA id 1C5BAC4338F;
+        Wed, 13 Oct 2021 06:38:58 +0000 (UTC)
+DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 1C5BAC4338F
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
 Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
 From:   Maulik Shah <mkshah@codeaurora.org>
@@ -50,9 +50,9 @@ Cc:     linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
         agross@kernel.org, dianders@chromium.org, linux@roeck-us.net,
         rnayak@codeaurora.org, lsrao@codeaurora.org,
         Maulik Shah <mkshah@codeaurora.org>, devicetree@vger.kernel.org
-Subject: [PATCH v12 4/5] arm64: dts: qcom: Enable RPMh Sleep stats
-Date:   Wed, 13 Oct 2021 12:08:23 +0530
-Message-Id: <1634107104-22197-5-git-send-email-mkshah@codeaurora.org>
+Subject: [PATCH v12 5/5] arm64: dts: qcom: Enable RPM Sleep stats
+Date:   Wed, 13 Oct 2021 12:08:24 +0530
+Message-Id: <1634107104-22197-6-git-send-email-mkshah@codeaurora.org>
 X-Mailer: git-send-email 2.7.4
 In-Reply-To: <1634107104-22197-1-git-send-email-mkshah@codeaurora.org>
 References: <1634107104-22197-1-git-send-email-mkshah@codeaurora.org>
@@ -61,143 +61,99 @@ List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
 Add device node for Sleep stats driver which provides various
-low power mode stats on sc7180, sc7280, sm8150, sm8250 and sm8350.
-
-Also update the reg size of aoss_qmp device to 0x400.
+low power mode stats on msm8996, msm8998, qcs404, sdm630 and
+sm6125.
 
 Cc: devicetree@vger.kernel.org
 Signed-off-by: Maulik Shah <mkshah@codeaurora.org>
 ---
- arch/arm64/boot/dts/qcom/sc7180.dtsi | 7 ++++++-
- arch/arm64/boot/dts/qcom/sc7280.dtsi | 7 ++++++-
- arch/arm64/boot/dts/qcom/sm8150.dtsi | 7 ++++++-
- arch/arm64/boot/dts/qcom/sm8250.dtsi | 7 ++++++-
- arch/arm64/boot/dts/qcom/sm8350.dtsi | 7 ++++++-
- 5 files changed, 30 insertions(+), 5 deletions(-)
+ arch/arm64/boot/dts/qcom/msm8996.dtsi | 5 +++++
+ arch/arm64/boot/dts/qcom/msm8998.dtsi | 5 +++++
+ arch/arm64/boot/dts/qcom/qcs404.dtsi  | 5 +++++
+ arch/arm64/boot/dts/qcom/sdm630.dtsi  | 5 +++++
+ arch/arm64/boot/dts/qcom/sm6125.dtsi  | 5 +++++
+ 5 files changed, 25 insertions(+)
 
-diff --git a/arch/arm64/boot/dts/qcom/sc7180.dtsi b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-index f10217c..30efae7 100644
---- a/arch/arm64/boot/dts/qcom/sc7180.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7180.dtsi
-@@ -3219,13 +3219,18 @@
- 
- 		aoss_qmp: power-controller@c300000 {
- 			compatible = "qcom,sc7180-aoss-qmp";
--			reg = <0 0x0c300000 0 0x100000>;
-+			reg = <0 0x0c300000 0 0x400>;
- 			interrupts = <GIC_SPI 389 IRQ_TYPE_EDGE_RISING>;
- 			mboxes = <&apss_shared 0>;
- 
- 			#clock-cells = <0>;
+diff --git a/arch/arm64/boot/dts/qcom/msm8996.dtsi b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+index eb3ec5f..465cd19 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996.dtsi
+@@ -1523,6 +1523,11 @@
+ 			};
  		};
  
-+		sram@c3f0000 {
-+			compatible = "qcom,rpmh-stats";
-+			reg = <0 0x0c3f0000 0 0x400>;
++		sram@290000 {
++			compatible = "qcom,rpm-stats";
++			reg = <0x00290000 0x10000>;
 +		};
 +
- 		spmi_bus: spmi@c440000 {
+ 		spmi_bus: qcom,spmi@400f000 {
  			compatible = "qcom,spmi-pmic-arb";
- 			reg = <0 0x0c440000 0 0x1100>,
-diff --git a/arch/arm64/boot/dts/qcom/sc7280.dtsi b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-index 39635da..d74a4c8 100644
---- a/arch/arm64/boot/dts/qcom/sc7280.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sc7280.dtsi
-@@ -2637,7 +2637,7 @@
- 
- 		aoss_qmp: power-controller@c300000 {
- 			compatible = "qcom,sc7280-aoss-qmp";
--			reg = <0 0x0c300000 0 0x100000>;
-+			reg = <0 0x0c300000 0 0x400>;
- 			interrupts-extended = <&ipcc IPCC_CLIENT_AOP
- 						     IPCC_MPROC_SIGNAL_GLINK_QMP
- 						     IRQ_TYPE_EDGE_RISING>;
-@@ -2647,6 +2647,11 @@
- 			#clock-cells = <0>;
+ 			reg = <0x0400f000 0x1000>,
+diff --git a/arch/arm64/boot/dts/qcom/msm8998.dtsi b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+index 3c1f133..887ba7c 100644
+--- a/arch/arm64/boot/dts/qcom/msm8998.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8998.dtsi
+@@ -2022,6 +2022,11 @@
+ 			};
  		};
  
-+		sram@c3f0000 {
-+			compatible = "qcom,rpmh-stats";
-+			reg = <0 0x0c3f0000 0 0x400>;
++		sram@290000 {
++			compatible = "qcom,rpm-stats";
++			reg = <0x00290000 0x10000>;
 +		};
 +
- 		spmi_bus: spmi@c440000 {
+ 		spmi_bus: spmi@800f000 {
  			compatible = "qcom,spmi-pmic-arb";
- 			reg = <0 0x0c440000 0 0x1100>,
-diff --git a/arch/arm64/boot/dts/qcom/sm8150.dtsi b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-index 8a03569..123d641 100644
---- a/arch/arm64/boot/dts/qcom/sm8150.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8150.dtsi
-@@ -3170,13 +3170,18 @@
- 
- 		aoss_qmp: power-controller@c300000 {
- 			compatible = "qcom,sm8150-aoss-qmp";
--			reg = <0x0 0x0c300000 0x0 0x100000>;
-+			reg = <0x0 0x0c300000 0x0 0x400>;
- 			interrupts = <GIC_SPI 389 IRQ_TYPE_EDGE_RISING>;
- 			mboxes = <&apss_shared 0>;
- 
- 			#clock-cells = <0>;
+ 			reg =	<0x0800f000 0x1000>,
+diff --git a/arch/arm64/boot/dts/qcom/qcs404.dtsi b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+index 339790b..8abede3 100644
+--- a/arch/arm64/boot/dts/qcom/qcs404.dtsi
++++ b/arch/arm64/boot/dts/qcom/qcs404.dtsi
+@@ -719,6 +719,11 @@
+ 			reg = <0x01937000 0x25000>;
  		};
  
-+		sram@c3f0000 {
-+			compatible = "qcom,rpmh-stats";
-+			reg = <0 0x0c3f0000 0 0x400>;
++		sram@290000 {
++			compatible = "qcom,rpm-stats";
++			reg = <0x00290000 0x10000>;
 +		};
 +
- 		tsens0: thermal-sensor@c263000 {
- 			compatible = "qcom,sm8150-tsens", "qcom,tsens-v2";
- 			reg = <0 0x0c263000 0 0x1ff>, /* TM */
-diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-index 2796b27..e4bba03 100644
---- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-@@ -2899,7 +2899,7 @@
- 
- 		aoss_qmp: power-controller@c300000 {
- 			compatible = "qcom,sm8250-aoss-qmp";
--			reg = <0 0x0c300000 0 0x100000>;
-+			reg = <0 0x0c300000 0 0x400>;
- 			interrupts-extended = <&ipcc IPCC_CLIENT_AOP
- 						     IPCC_MPROC_SIGNAL_GLINK_QMP
- 						     IRQ_TYPE_EDGE_RISING>;
-@@ -2909,6 +2909,11 @@
- 			#clock-cells = <0>;
- 		};
- 
-+		sram@c3f0000 {
-+			compatible = "qcom,rpmh-stats";
-+			reg = <0 0x0c3f0000 0 0x400>;
-+		};
-+
- 		spmi_bus: spmi@c440000 {
+ 		spmi_bus: spmi@200f000 {
  			compatible = "qcom,spmi-pmic-arb";
- 			reg = <0x0 0x0c440000 0x0 0x0001100>,
-diff --git a/arch/arm64/boot/dts/qcom/sm8350.dtsi b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-index 6c83cd5..90a0e19 100644
---- a/arch/arm64/boot/dts/qcom/sm8350.dtsi
-+++ b/arch/arm64/boot/dts/qcom/sm8350.dtsi
-@@ -788,7 +788,7 @@
- 
- 		aoss_qmp: power-controller@c300000 {
- 			compatible = "qcom,sm8350-aoss-qmp";
--			reg = <0 0x0c300000 0 0x100000>;
-+			reg = <0 0x0c300000 0 0x400>;
- 			interrupts-extended = <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLINK_QMP
- 						     IRQ_TYPE_EDGE_RISING>;
- 			mboxes = <&ipcc IPCC_CLIENT_AOP IPCC_MPROC_SIGNAL_GLINK_QMP>;
-@@ -796,6 +796,11 @@
- 			#clock-cells = <0>;
+ 			reg = <0x0200f000 0x001000>,
+diff --git a/arch/arm64/boot/dts/qcom/sdm630.dtsi b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+index 9c7f87e..4b66305 100644
+--- a/arch/arm64/boot/dts/qcom/sdm630.dtsi
++++ b/arch/arm64/boot/dts/qcom/sdm630.dtsi
+@@ -1176,6 +1176,11 @@
+ 			status = "disabled";
  		};
  
-+		sram@c3f0000 {
-+			compatible = "qcom,rpmh-stats";
-+			reg = <0 0x0c3f0000 0 0x400>;
++		sram@290000 {
++			compatible = "qcom,rpm-stats";
++			reg = <0x00290000 0x10000>;
 +		};
 +
- 		spmi_bus: spmi@c440000 {
+ 		spmi_bus: spmi@800f000 {
  			compatible = "qcom,spmi-pmic-arb";
- 			reg = <0x0 0xc440000 0x0 0x1100>,
+ 			reg =	<0x0800f000 0x1000>,
+diff --git a/arch/arm64/boot/dts/qcom/sm6125.dtsi b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+index c2317dd..6b03beb 100644
+--- a/arch/arm64/boot/dts/qcom/sm6125.dtsi
++++ b/arch/arm64/boot/dts/qcom/sm6125.dtsi
+@@ -460,6 +460,11 @@
+ 			};
+ 		};
+ 
++		sram@4690000 {
++			compatible = "qcom,rpm-stats";
++			reg = <0x04690000 0x10000>;
++		};
++
+ 		spmi_bus: spmi@1c40000 {
+ 			compatible = "qcom,spmi-pmic-arb";
+ 			reg = <0x01c40000 0x1100>,
 -- 
 QUALCOMM INDIA, on behalf of Qualcomm Innovation Center, Inc. is a member
 of Code Aurora Forum, hosted by The Linux Foundation
