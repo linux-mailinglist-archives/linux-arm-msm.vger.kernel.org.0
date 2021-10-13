@@ -2,203 +2,97 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 5FB6A42C64F
-	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 18:25:45 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id AD66A42C718
+	for <lists+linux-arm-msm@lfdr.de>; Wed, 13 Oct 2021 18:59:24 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229939AbhJMQ1q (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Wed, 13 Oct 2021 12:27:46 -0400
-Received: from mail-4319.protonmail.ch ([185.70.43.19]:57617 "EHLO
-        mail-4319.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229552AbhJMQ1q (ORCPT
+        id S237959AbhJMRAv (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Wed, 13 Oct 2021 13:00:51 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:56996 "EHLO
+        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S238064AbhJMRAn (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Wed, 13 Oct 2021 12:27:46 -0400
-Date:   Wed, 13 Oct 2021 16:25:30 +0000
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1634142340;
-        bh=vnZvf739HKzpLgZYiGExCIHF155ARwhshzwdwIziQqs=;
-        h=Date:To:From:Cc:Reply-To:Subject:From;
-        b=IcFqdAglvcrEPsynVkP5fv+K5EW1i7dyfxsiugIRid9DChh7wDgBiwR6/eb4owQ1B
-         HV3wmA6T/zs2L7yShdojcFbIS8VsVY37VybjLv3hIVwUIZo5L3nIHKt+BuXqye0Zhx
-         bIivorXdqFNlTjk1fajCMqNY8tjoCA56ygiatBgQ=
-To:     Maulik Shah <mkshah@codeaurora.org>
-From:   Yassine Oudjana <y.oudjana@protonmail.com>
-Cc:     Yassine Oudjana <y.oudjana@protonmail.com>, swboyd@chromium.org,
-        mka@chromium.org, evgreen@chromium.org, bjorn.andersson@linaro.org,
-        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org,
-        agross@kernel.org, dianders@chromium.org, linux@roeck-us.net,
-        rnayak@codeaurora.org, lsrao@codeaurora.org,
-        Stephan Gerhold <stephan@gerhold.net>
-Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
-Subject: Re: [PATCH v12 0/5] Introduce SoC sleep stats driver
-Message-ID: <20211013162356.7106-1-y.oudjana@protonmail.com>
+        Wed, 13 Oct 2021 13:00:43 -0400
+Received: from mail-pj1-x1029.google.com (mail-pj1-x1029.google.com [IPv6:2607:f8b0:4864:20::1029])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id CDCA5C061762
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Oct 2021 09:58:39 -0700 (PDT)
+Received: by mail-pj1-x1029.google.com with SMTP id ls18so2695113pjb.3
+        for <linux-arm-msm@vger.kernel.org>; Wed, 13 Oct 2021 09:58:39 -0700 (PDT)
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=linaro.org; s=google;
+        h=from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=CZvmW6gpOIY8Lg6BO5LxT0GXA1DWFikx8MVUy0O3nh8=;
+        b=jZafkBYRZZJL19BVpl8cMT5Fu/VthOYrmwDlAsl618GUnhD7IY3piXwR9KEUvHtA+G
+         P7jCxmWDy90NyrqudklXJ9Ts+DRXY4n2y2YQjLny2i65guTFuED/QohCcNzQzr22oMeH
+         CppHbgGPggCyDMj/IBQi2TexTyMIpRxwY8jqbGVQeXT7UoPiJXDtvpyCd4FAXslkqxbn
+         MuPK/zgpLBWV7IIHSxW6jbaemE24sfDH9QTbVOlWc01Nf+hvdE+3qHnBuSeDwdI9V9nh
+         Pa3MMkZ6G4rRYSIy1RwXvWG72dZFt8LmvmLM3d5opsEfWcUe32JP7gRvGRLVatpjtFbA
+         Y/Zw==
+X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
+        d=1e100.net; s=20210112;
+        h=x-gm-message-state:from:to:cc:subject:date:message-id:mime-version
+         :content-transfer-encoding;
+        bh=CZvmW6gpOIY8Lg6BO5LxT0GXA1DWFikx8MVUy0O3nh8=;
+        b=h82SD8AhKYRsmkC6KNztlj1nFn+8aj463YZNNWDD4zzGtClVZ8lri4TOimY/42uQZr
+         89/clC/IrtHcEzKv0jJQaiLMTKMUjVGcxI61wPKaqDORQPGKynNyQc3A5uXzzsZr7jOA
+         vd6YlWBMBB3NTiR4SrgStz1QPB13LdviyUPY3jGq/7mLY5H40X38Io3qIcscwvqD9J8f
+         UEs6wOl0NEGLMp9oHyaI5QDcsceHRndALiQL9ng8WPlUs5bCamDQDJR7tG882AAI0yPL
+         fHonbHk/V/BO52VPWVOG/g6KybiJGnB1uEI0VvrL0I5I2ZLuXHoDw2ig3zYmpspA//lK
+         86hw==
+X-Gm-Message-State: AOAM532Ka/HQDjo4eI05BATAdiyL/lv9z26XB9X2GcK8G0+Y/kveZIVO
+        r0vZ66VD9LZbmwSJ+sC63zmaehK/lIY=
+X-Google-Smtp-Source: ABdhPJzMxHk/aANrs4y+2UIcI5V5euPkOIsB5ME2tTGztPXFvWzA4Wi9RYOD2KaSn6Tey8y0qlvlGQ==
+X-Received: by 2002:a17:902:8648:b0:13e:dc2c:a594 with SMTP id y8-20020a170902864800b0013edc2ca594mr335542plt.23.1634144319026;
+        Wed, 13 Oct 2021 09:58:39 -0700 (PDT)
+Received: from localhost.name ([122.161.48.68])
+        by smtp.gmail.com with ESMTPSA id z11sm6661602pjl.45.2021.10.13.09.58.34
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Wed, 13 Oct 2021 09:58:38 -0700 (PDT)
+From:   Bhupesh Sharma <bhupesh.sharma@linaro.org>
+To:     linux-arm-msm@vger.kernel.org, linux-crypto@vger.kernel.org
+Cc:     bhupesh.sharma@linaro.org, bhupesh.linux@gmail.com,
+        linux-kernel@vger.kernel.org, devicetree@vger.kernel.org,
+        robh+dt@kernel.org, agross@kernel.org, herbert@gondor.apana.org.au,
+        davem@davemloft.net, Thara Gopinath <thara.gopinath@linaro.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+Subject: [PATCH 0/2] Enable Qualcomm Crypto Engine on sm8150
+Date:   Wed, 13 Oct 2021 22:28:21 +0530
+Message-Id: <20211013165823.88123-1-bhupesh.sharma@linaro.org>
+X-Mailer: git-send-email 2.31.1
 MIME-Version: 1.0
-Content-Type: text/plain; charset=utf-8
-Content-Transfer-Encoding: quoted-printable
-X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
-        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
-        autolearn=disabled version=3.4.4
-X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
-        mailout.protonmail.ch
+Content-Transfer-Encoding: 8bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Wed, 13 Oct 2021 12:08:19 +0530, Maulik Shah wrote:
-> Changes in v12:
-> - Address Stephan's comments from v11
-> - Rename driver and compatible to qcom,rpm(h)-stats
-> - Skip reading SMEM for RPM targets
-> - Make driver register in late_init to avoid -EPROBE_DEFER from smem.
-> - Change size to 0x10000 for RPM targets since area contains many others =
-stats.
->=20
-> Changes in v11:
-> - Address Bjorn's comments from v10
-> - Add a case for RPM based targets dynamic offset in driver
-> - Update commit messages to use qcom sleep stats instead of soc sleep sta=
-ts
-> - Drop individual target dtsi changes for sc7180 and sc7280
-> - Add single change to enable sleep stats for RPMh based targets
-> - Add single change to enable sleep stats for RPM based targets
->=20
-> Changes in v10:
-> - Updated device node name to use memory instead of aop_msgram
-> - Remove Lina's email from maintainers=20
-> - Rename driver to qcom_sleep_stats. Update makefile, Kconfig accordingly
-> - Address Bjorn's comments from v9
->=20
-> Changes in v9:
-> - Remove soft dependency on smem module
-> - Return -EIO to userspace in case of error
-> - Make struct sleep_stats *stat a const pointer
-> - Remove the driver from soc_sleep_stats_driver name
-> - Remove offset address and directly mention the msgram address in dtsi
-> - Use devm_platform_get_and_ioremap_resource() to ioremap dtsi address
-> - Update device node name to mention aop_msgram instead rpmh-sleep-stats
-> - Update dtsi and documentation accordingly but retain the reviews
->=20
-> Changes in v8:
-> - Addressed bjorn's comments in driver from v7
-> - Update aoss_qmp device node reg size for sc7280
->=20
-> Changes in v7:
-> - Fix example in bindings documentation as per #address/size-cells =3D <1=
->.
-> - Add comment in driver from where 'ddr' subsystems name is read.
-> - Update comment in driver to s/beside/besides and others from v6.
-> - Rename debugfs_create_entries() from v6.
-> - Drop use of memcpy_fromio() to find the name.
-> - Use sizeof(*prv_data) in devm_kzalloc().
-> - Add change to define readq() if its not yet defined for compile support=
-.
-> - Add wpss subsystem in the list of subsystems.
-> - Add module soft dependency on smem module.
-> - Add new change to add device node for sc7280.
->=20
-> Changes in v6:
-> - Address stephen's comments from v5 which includes below
-> - Pad 0 in documentation example to make address 8 digit
-> - define macro to calculate offset in driver
-> - Add appended_stats_avail to prv_data instead of using entire stats_conf=
-ig
-> - make array subsystems[] as const
-> - Add comment for SSR case
-> - Use memcpy_fromio() and devm_kcalloc() during probe
-> - Change file permission mode from 444 to 400=20
->=20
-> - Address guenter's comments to add depends on QCOM_SMEM
->=20
-> - Add adsp_island and cdsp_island subsystems
-> - Use strim() to remove whitespace in stat name
->=20
-> Changes in v5:
-> - Remove underscore from node name in Documentation and DTSI change
-> - Remove global config from driver change
->=20
-> Changes in v4:
-> - Address bjorn's comments from v3 on change 2.
-> - Add bjorn's Reviewed-by on change 3 and 4.
->=20
-> Changes in v3:
-> - Address stephen's comments from v2 in change 1 and 2.
-> - Address bjorn's comments from v2 in change 3 and 4.
-> - Add Rob and bjorn's Reviewed-by on YAML change.
->=20
-> Changes in v2:
-> - Convert Documentation to YAML.
-> - Address stephen's comments from v1.
-> - Use debugfs instead of sysfs.
-> - Add sc7180 dts changes for sleep stats
-> - Add defconfig changes to enable driver
-> - Include subsystem stats from [1] in this single stats driver.
-> - Address stephen's comments from [1]
-> - Update cover letter inline to mention [1]
->=20
-> Qualcomm Technologies, Inc. (QTI)'s chipsets support SoC level low power
-> modes. SoCs Always On Processor/Resource Power Manager produces statistic=
-s
-> of the SoC sleep modes involving lowering or powering down of the rails a=
-nd
-> the oscillator clock.
->=20
-> Additionally multiple subsystems present on SoC like modem, spss, adsp,
-> cdsp maintains their low power mode statistics in shared memory (SMEM).
->=20
-> Statistics includes SoC sleep mode type, number of times LPM entered, tim=
-e
-> of last entry, exit, and accumulated sleep duration in seconds.
->=20
-> This series adds a driver to read the stats and export to debugfs.
->=20
-> [1] https://lore.kernel.org/patchwork/patch/1149381/
->=20
-> Mahesh Sivasubramanian (2):
->   dt-bindings: Introduce QCOM Sleep stats bindings
->   soc: qcom: Add Sleep stats driver
->=20
-> Maulik Shah (3):
->   arm64: defconfig: Enable Sleep stats driver
->   arm64: dts: qcom: Enable RPMh Sleep stats
->   arm64: dts: qcom: Enable RPM Sleep stats
->=20
->  .../devicetree/bindings/soc/qcom/qcom-stats.yaml   |  47 ++++
->  arch/arm64/boot/dts/qcom/msm8996.dtsi              |   5 +
->  arch/arm64/boot/dts/qcom/msm8998.dtsi              |   5 +
->  arch/arm64/boot/dts/qcom/qcs404.dtsi               |   5 +
->  arch/arm64/boot/dts/qcom/sc7180.dtsi               |   7 +-
->  arch/arm64/boot/dts/qcom/sc7280.dtsi               |   7 +-
->  arch/arm64/boot/dts/qcom/sdm630.dtsi               |   5 +
->  arch/arm64/boot/dts/qcom/sm6125.dtsi               |   5 +
->  arch/arm64/boot/dts/qcom/sm8150.dtsi               |   7 +-
->  arch/arm64/boot/dts/qcom/sm8250.dtsi               |   7 +-
->  arch/arm64/boot/dts/qcom/sm8350.dtsi               |   7 +-
->  arch/arm64/configs/defconfig                       |   1 +
->  drivers/soc/qcom/Kconfig                           |  10 +
->  drivers/soc/qcom/Makefile                          |   1 +
->  drivers/soc/qcom/qcom_stats.c                      | 277 +++++++++++++++=
-++++++
->  15 files changed, 391 insertions(+), 5 deletions(-)
->  create mode 100644 Documentation/devicetree/bindings/soc/qcom/qcom-stats=
-.yaml
->  create mode 100644 drivers/soc/qcom/qcom_stats.c
->=20
-> --=20
+Qualcomm crypto engine is available on sm8150 SoC as well.
+It supports hardware accelerated algorithms for encryption
+and authentication. It also provides support for aes, des, 3des
+encryption algorithms and sha1, sha256, hmac(sha1), hmac(sha256)
+authentication algorithms.
 
-On msm8996-xiaomi-scorpio:
+Tested the enabled crypto algorithms with cryptsetup test utilities
+on sm8150-mtp and sa8155p-adp boards (see [1]) and also with crypto self-tests,
+including the fuzz tests (CONFIG_CRYPTO_MANAGER_EXTRA_TESTS=y).
 
-# cat /sys/kernel/debug/qcom_stats/*
-Count: 0
-Last Entered At: 0
-Last Exited At: 0
-Accumulated Duration: 0
-Client Votes: 0x0
-Count: 0
-Last Entered At: 0
-Last Exited At: 0
-Accumulated Duration: 0
-Client Votes: 0x0
+Note that this series is rebased on the corresponding 
+crypto engine enablement series for sm8250 SoCs (see [2]).
 
-Also, the warnings from v11 are no longer showing up.
+[1]. https://linux.die.net/man/8/cryptsetup
+[2]. https://lore.kernel.org/lkml/20211013105541.68045-1-bhupesh.sharma@linaro.org/T/#t 
 
-Tested-by: Yassine Oudjana <y.oudjana@protonmail.com>
+Cc: Thara Gopinath <thara.gopinath@linaro.org>
+Cc: Bjorn Andersson <bjorn.andersson@linaro.org>
+Cc: Rob Herring <robh+dt@kernel.org>
+
+Bhupesh Sharma (2):
+  crypto: qce: Add 'sm8150-qce' compatible string check
+  arm64/dts: qcom: sm8150: Add dt entries to support crypto engine.
+
+ arch/arm64/boot/dts/qcom/sm8150.dtsi | 28 ++++++++++++++++++++++++++++
+ drivers/crypto/qce/core.c            |  1 +
+ 2 files changed, 29 insertions(+)
+
+-- 
+2.31.1
 
