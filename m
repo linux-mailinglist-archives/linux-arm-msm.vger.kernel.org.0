@@ -2,146 +2,134 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id AA62B42DB36
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Oct 2021 16:13:08 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A06D642DBAA
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Oct 2021 16:31:53 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S231481AbhJNOPL (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Oct 2021 10:15:11 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:36338 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231388AbhJNOPL (ORCPT
+        id S232003AbhJNOdX (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Oct 2021 10:33:23 -0400
+Received: from mail-oi1-f174.google.com ([209.85.167.174]:46893 "EHLO
+        mail-oi1-f174.google.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S231910AbhJNOdQ (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Oct 2021 10:15:11 -0400
-Received: from mail-lf1-x12d.google.com (mail-lf1-x12d.google.com [IPv6:2a00:1450:4864:20::12d])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 3DAFFC061570
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 07:13:06 -0700 (PDT)
-Received: by mail-lf1-x12d.google.com with SMTP id u21so24458889lff.8
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 07:13:06 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=mPHb2hx0sfWR9f6qb39jfc2B/9EpjbwMaysbXJnZmqQ=;
-        b=i00gdk+k6Di/6Uhs+xHpBM7Vz7FqWJce2Ss/829bgNY8njQClQ6hJQgWC1UA72miis
-         Rn9NtW7d7rDBHRVyhg6MyutfwTtI8fSgvTa6mIKloQvgkdDBZE17Ax4U7UEpYBomS7TZ
-         jcqV/MV6Ci43kBdJwArUTP42udxtb/EAWV/DPD0oN94GLtmf5MVVUQnxjQFh/hm1zljZ
-         2nBeZkjo3tr90DhCBzxobRzVyOT3875yHFQqE+xPMKT6ofrZ9A0oegq//GhMsxvHJ4uu
-         8IU5DxwEcmTZgHDMHeioXC84YFpP028WcgjRVJX9oML9+Fu5Foxxi6RGE7yPhcaTJ7PS
-         036g==
+        Thu, 14 Oct 2021 10:33:16 -0400
+Received: by mail-oi1-f174.google.com with SMTP id o204so8658560oih.13;
+        Thu, 14 Oct 2021 07:31:11 -0700 (PDT)
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=mPHb2hx0sfWR9f6qb39jfc2B/9EpjbwMaysbXJnZmqQ=;
-        b=B+buYMZrcSQ9ExYvPkV7Qn/AKTSpLupcPo0rv8VNvLm5trXvTbR2/zi3m0M9ZijVPv
-         fMAtZqVkg8iFBZCtMzhTkR+29ahdc0sWLr0g3sEapEd1RZD+hwnW8qZJLVa7vp+vne+4
-         ZYeX93XpiebktjyKO4yfmvt9VbwPpdVLmug6ckqLqddrmmPy4qSx3kS4dXO54z3b7Ast
-         9sEAc1eG7p6pvM944oV06Ul119xvQUaJsHFx1I8YiEAzoWattG8g+hHnYNmtVPdyPMEk
-         C3n5CVx/NFb72VNyUamyAKe1Rv45gFFcuH2r3CcAHyqqX9zqhib37/spZCeUIqCfdGCe
-         xTAg==
-X-Gm-Message-State: AOAM530PWl6IVHwS+F+P/TEJSpAeHMYSBUxtqdTEa7K/IcaWp3QHTwQK
-        5WzaXBhVcdIB+C/jiZGDmMotzw==
-X-Google-Smtp-Source: ABdhPJx/tnCMs/UheIphCGmhXc1nhoSH2IBSPnU9k73oo5IAxKNDzBENOmHAn4+XLXLVGTDjZwKprQ==
-X-Received: by 2002:a19:761a:: with SMTP id c26mr3922280lff.242.1634220783726;
-        Thu, 14 Oct 2021 07:13:03 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id s7sm234940lfe.258.2021.10.14.07.13.02
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Oct 2021 07:13:03 -0700 (PDT)
-Subject: Re: [PATCH v2 09/11] drm/msm/disp/dpu1: Add support for DSC in
- topology
-To:     Vinod Koul <vkoul@kernel.org>, Rob Clark <robdclark@gmail.com>
-Cc:     linux-arm-msm@vger.kernel.org,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
-        Sumit Semwal <sumit.semwal@linaro.org>,
-        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
-        freedreno@lists.freedesktop.org
-References: <20211007070900.456044-1-vkoul@kernel.org>
- <20211007070900.456044-10-vkoul@kernel.org>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <020ab810-c975-d58b-a572-57eb3010d6c0@linaro.org>
-Date:   Thu, 14 Oct 2021 17:13:02 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
-MIME-Version: 1.0
-In-Reply-To: <20211007070900.456044-10-vkoul@kernel.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+        h=x-gm-message-state:from:to:cc:in-reply-to:references:subject:date
+         :message-id;
+        bh=LIGlTpgW1tWbiwTKp+gXJ96FX9IdJratUHQ3TqZY3b0=;
+        b=hxNTomxh9KLjQqCp7hx1ediqTfBIGVdG8ECwk++KSI3sxSNQgO7c3C4fRWDpxZ1iB4
+         GbhjAU38CzcuAQFBCdIjRm8rmDPNGfTqJEFtKqPLD9T4karGOe+O1zjVViMsFEAYefSR
+         pKqPin/Nku3wN4lilU7baI2/nfTqXspm6H3GGez+/cLDhCP+kk/f1+jseT0BvERLAxyE
+         UD+EYcfMI2gUKWQp0MCTxRep8Adzkc5axRhXNCcUIpETicoG7Ok6TqOmuKr6Odq8i+lq
+         UgpgOzs0PycNISP7Zc7/Ja9BzbMlj6jC6by5Gwy+O3Rbty5KYKdGzBhOToLK2SXLSPAK
+         VyOw==
+X-Gm-Message-State: AOAM533K7Ur5nkBdnw33Eb8K1wSfggMQ+n5mLEF0IL+cZK5Dc9xjc9ak
+        7mt0uQ67SaZ53y4s01UfsA==
+X-Google-Smtp-Source: ABdhPJw/trDzPyr4wm7mQqsmQls0HHi+6ZgTWKM/1st60QAbZ/vPRbSVcXQBdXrjDoyPcU+mZ85fXQ==
+X-Received: by 2002:a05:6808:1250:: with SMTP id o16mr4293459oiv.63.1634221871201;
+        Thu, 14 Oct 2021 07:31:11 -0700 (PDT)
+Received: from robh.at.kernel.org (66-90-148-213.dyn.grandenetworks.net. [66.90.148.213])
+        by smtp.gmail.com with ESMTPSA id x18sm472578oov.13.2021.10.14.07.31.09
+        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
+        Thu, 14 Oct 2021 07:31:10 -0700 (PDT)
+Received: (nullmailer pid 3295883 invoked by uid 1000);
+        Thu, 14 Oct 2021 14:31:04 -0000
+From:   Rob Herring <robh@kernel.org>
+To:     Yassine Oudjana <y.oudjana@protonmail.com>
+Cc:     Loic Poulain <loic.poulain@linaro.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Andy Gross <agross@kernel.org>, phone-devel@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-pm@vger.kernel.org,
+        Viresh Kumar <vireshk@kernel.org>, linux-clk@vger.kernel.org,
+        linux-kernel@vger.kernel.org,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        ~postmarketos/upstreaming@lists.sr.ht,
+        linux-arm-msm@vger.kernel.org,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        Nishanth Menon <nm@ti.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>
+In-Reply-To: <20211014083016.137441-3-y.oudjana@protonmail.com>
+References: <20211014083016.137441-1-y.oudjana@protonmail.com> <20211014083016.137441-3-y.oudjana@protonmail.com>
+Subject: Re: [PATCH 2/8] dt-bindings: clk: qcom: msm8996-apcc: Add MSM8996 Pro compatible
+Date:   Thu, 14 Oct 2021 09:31:04 -0500
+Message-Id: <1634221864.197594.3295882.nullmailer@robh.at.kernel.org>
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 07/10/2021 10:08, Vinod Koul wrote:
-> For DSC to work we typically need a 2,2,1 configuration. This should
-> suffice for resolutions upto 4k. For more resolutions like 8k this won't
-> work.
+On Thu, 14 Oct 2021 08:32:04 +0000, Yassine Oudjana wrote:
+> Add a compatible string for msm8996pro-apcc.
 > 
-> Also, it is better to use 2 LMs and DSC instances as half width results
-> in lesser power consumption as compared to single LM, DSC at full width.
-> 
-> The panel has been tested only with 2,2,1 configuration, so for
-> now we blindly create 2,2,1 topology when DSC is enabled
-> 
-> Co-developed-by: Abhinav Kumar <abhinavk@codeaurora.org>
-> Signed-off-by: Abhinav Kumar <abhinavk@codeaurora.org>
-> Signed-off-by: Vinod Koul <vkoul@kernel.org>
+> Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
 > ---
-> Changes since
-> RFC:
->   - Add more details in changelog
-> 
->   drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c | 16 ++++++++++++++++
->   1 file changed, 16 insertions(+)
-> 
-> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> index aac51c1bdf94..70f57a071165 100644
-> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_encoder.c
-> @@ -538,6 +538,8 @@ static struct msm_display_topology dpu_encoder_get_topology(
->   			struct drm_display_mode *mode)
->   {
->   	struct msm_display_topology topology = {0};
-> +	struct drm_encoder *drm_enc;
-> +	struct msm_drm_private *priv;
->   	int i, intf_count = 0;
->   
->   	for (i = 0; i < MAX_PHYS_ENCODERS_PER_VIRTUAL; i++)
-> @@ -572,8 +574,22 @@ static struct msm_display_topology dpu_encoder_get_topology(
->   	topology.num_enc = 0;
->   	topology.num_intf = intf_count;
->   
-> +	drm_enc = &dpu_enc->base;
-> +	priv = drm_enc->dev->dev_private;
-> +	if (priv && priv->dsc) {
-> +		/* In case of Display Stream Compression DSC, we would use
-> +		 * 2 encoders, 2 line mixers and 1 interface
-> +		 * this is power optimal and can drive upto (including) 4k
-> +		 * screens
-> +		 */
-> +		topology.num_enc = 2;
-> +		topology.num_intf = 1;
-> +		topology.num_lm = 2;
-
-So, here you'd set the topology.num_rm.
-
-> +	}
-> +
->   	return topology;
->   }
-> +
->   static int dpu_encoder_virt_atomic_check(
->   		struct drm_encoder *drm_enc,
->   		struct drm_crtc_state *crtc_state,
+>  Documentation/devicetree/bindings/clock/qcom,msm8996-apcc.yaml | 1 +
+>  1 file changed, 1 insertion(+)
 > 
 
+Running 'make dtbs_check' with the schema in this patch gives the
+following warnings. Consider if they are expected or the schema is
+incorrect. These may not be new warnings.
 
--- 
-With best wishes
-Dmitry
+Note that it is not yet a requirement to have 0 warnings for dtbs_check.
+This will change in the future.
+
+Full log is available here: https://patchwork.ozlabs.org/patch/1540829
+
+
+clock-controller@6400000: clock-names:0: 'pwrcl_pll' was expected
+	arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml
+	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-keyaki.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dt.yaml
+
+clock-controller@6400000: clock-names: ['xo'] is too short
+	arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml
+	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-keyaki.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dt.yaml
+
+clock-controller@6400000: clocks: [[29]] is too short
+	arch/arm64/boot/dts/qcom/msm8996-mtp.dt.yaml
+
+clock-controller@6400000: clocks: [[33]] is too short
+	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dt.yaml
+
+clock-controller@6400000: clocks: [[36]] is too short
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-keyaki.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dt.yaml
+
+clock-controller@6400000: clocks: [[41]] is too short
+	arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml
+
+clock-controller@6400000: reg: [[104857600, 589824]] is too short
+	arch/arm64/boot/dts/qcom/apq8096-db820c.dt.yaml
+	arch/arm64/boot/dts/qcom/apq8096-ifc6640.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-mtp.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-pmi8996-sony-xperia-tone-keyaki.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-dora.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-kagura.dt.yaml
+	arch/arm64/boot/dts/qcom/msm8996-sony-xperia-tone-keyaki.dt.yaml
+
