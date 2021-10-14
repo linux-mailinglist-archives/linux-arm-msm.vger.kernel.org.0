@@ -2,112 +2,120 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 3E4B842D684
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Oct 2021 11:53:47 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 366C042D6B5
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Oct 2021 12:04:31 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230030AbhJNJzu (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Oct 2021 05:55:50 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:32904 "EHLO
+        id S230153AbhJNKGc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Oct 2021 06:06:32 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35450 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229468AbhJNJzt (ORCPT
+        with ESMTP id S230054AbhJNKGX (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Oct 2021 05:55:49 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id D8440C061570
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 02:53:44 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id y15so24482962lfk.7
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 02:53:44 -0700 (PDT)
+        Thu, 14 Oct 2021 06:06:23 -0400
+Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A42F8C06174E
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 03:04:18 -0700 (PDT)
+Received: by mail-ed1-x536.google.com with SMTP id y30so5570102edi.0
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 03:04:18 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=/KsJRdiob87Ja5PgF5X/ti+BR7dI5FBOZcD9kz6Ozto=;
-        b=h9409aXB6YV05xq/pABEkmxSxFhTfpqrruXdlc5z7R9nLrph5NnzM/EBjSxJ9VBEd1
-         6NMrB5sswM/Ks9ujE5TeT+LdGjhG5OW/Sthv0VyCQ+5TDGCWjs3BSdQpHqLJR32u/IVy
-         3yA7DnbG9F5PlUNRf80NI+u/iJrs96xdUBoYX07isyy2y2gEVggGj6uEw2GiV0+H3vCm
-         DLkuhQVpOZ2Epai5CX0uonVB6S/iAKC0NtfkPPQdQlX2OHtmG+crZfWual8sefpN/EVe
-         CILMtmLbkDVMdRNOJKLfW1mb3VJ5MpatvmEAXlRj9OHXTVA9YNMAOi0HLak+NWmk/Vjg
-         WwYA==
+        d=aleksander-es.20210112.gappssmtp.com; s=20210112;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=qbD1dxruVQ/6KPY7ss5Qw3vQLmfKZDPuxq3BiKfnPSc=;
+        b=beO/pg1wUBQsgx39q/Rax5HiKKcTBAXRTYJhuk4nxWCq/JxJfcEQef8+9d2a39xGdT
+         bk9i++uHcA+J7wSZhx/nHXklVQRIGE4OwXNPk7Fuws8QKKGXC5GttFzZB+MIbvDh7f7J
+         RyWiY+sfjRwu3NSkZ4VBOyd3l1mu0nMLTVBtQIZvR8i7WidkISyMrsGE/oEjJcYqTghG
+         Q8/qphtrF7ekiufdLuJa2WD1fl7hyB7bAOrjU1ejN2471l7nOs5F48tRZ7Y07mWwPfmw
+         TseR8BPJlEKtZiCbnEuNExfmbszLyK8dyLGCWzZbjb5j+OISH07rISHJcC7ZQ4TSFF1l
+         ZVNA==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=/KsJRdiob87Ja5PgF5X/ti+BR7dI5FBOZcD9kz6Ozto=;
-        b=6LgUh/gdJr4+Dyx0izbcePCIWoRiBEdVFxfIftcRKpXBzXGCThccCUmHRqo31u03bJ
-         /D/I5AgX6p16toRsvhYo6b/gLIIS7/hDBsafC/ulEm9V8/7pqxylbjq2WyJK8iC0zKUv
-         VfJ8IMK2WHTgwFpqWKikjxTYTGKJg/tcU9tEqkinGUA6f+4WMFZMaqbfqZQkWvhraM3I
-         UWqosyFvYt+H6cOiElGj3sA9laHDC7E2KpFqzXRj6WtTCtb2BO3asac7ajfDMc4lC+bV
-         r9wAFiFF21cj0lbP+hWurtwZgrWSg89idl5A3/ma9pKiyNreNJ0+Vbt/HqFWNFN1kXCb
-         bzaQ==
-X-Gm-Message-State: AOAM530YYaiCCjzPT6hbJVvh8TiJBplESarEoofLlHI+k7NKNUm9dzjo
-        Y3W8wV/bCadVCxizXSNxD8yWow==
-X-Google-Smtp-Source: ABdhPJyyYEu0EPxRrb37K9hW8OcK5o+4Jwzf2jK9MJng9VLqg4T97Er87U0t4/FYgeISUNHmm0nAUw==
-X-Received: by 2002:a05:6512:b08:: with SMTP id w8mr4024902lfu.505.1634205223215;
-        Thu, 14 Oct 2021 02:53:43 -0700 (PDT)
-Received: from [192.168.1.211] ([37.153.55.125])
-        by smtp.gmail.com with ESMTPSA id s11sm181297lfd.262.2021.10.14.02.53.42
-        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Oct 2021 02:53:42 -0700 (PDT)
-Subject: Re: [PATCH v7 7/8] clk: qcom: dispcc-sm8250: stop using mmcx
- regulator
-To:     Stephen Boyd <sboyd@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>
-Cc:     Andy Gross <agross@kernel.org>, Rob Herring <robh+dt@kernel.org>,
-        Taniya Das <tdas@codeaurora.org>,
-        Jonathan Marek <jonathan@marek.ca>,
-        Michael Turquette <mturquette@baylibre.com>,
-        linux-arm-msm@vger.kernel.org, devicetree@vger.kernel.org,
-        linux-clk@vger.kernel.org,
-        Bryan O'Donoghue <bryan.odonoghue@linaro.org>,
-        Mark Brown <broonie@kernel.org>,
-        Ulf Hansson <ulf.hansson@linaro.org>,
-        linux-kernel@vger.kernel.org
-References: <20210829154757.784699-1-dmitry.baryshkov@linaro.org>
- <20210829154757.784699-8-dmitry.baryshkov@linaro.org>
- <YV8WsQb9H7+CaLjP@ripper> <4614587c-b87a-4375-cb6a-6af6f5462c6b@linaro.org>
- <163415465484.936110.9292145029740247591@swboyd.mtv.corp.google.com>
-From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
-Message-ID: <070b1b25-3718-5f3a-869b-a3954fdcc7c5@linaro.org>
-Date:   Thu, 14 Oct 2021 12:53:41 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.14.0
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=qbD1dxruVQ/6KPY7ss5Qw3vQLmfKZDPuxq3BiKfnPSc=;
+        b=v4RKHSffDxrwpjpMLSVzxgVJR0IKLl6VBMlmfkoSIb1jllmGs+MoFF+9MN1J0HVY0o
+         5N+DScAx2ogYPDemaaF9O/pFLw048JnteKAMRjutLGXyCxMxPDA8KLKgvqidwD3rRIqT
+         5IF85f9/XKcrOxoeIKeTLERcfuttj86iRpJaLDZ6ZCCOXhMQDrwlaFPqVwZcNvOz8ePG
+         J9hKGr+AWTiyzLxMOIlFhzf1IMcp9R40UoN+9zAKvE+QjfSZ5/iYrwoHLhfmmatExg9C
+         GleeJimDvCu12MWA5J9qLE72qcZaebVlvIHw99cyuy2C/6s4vWnDPwGAwhlzCTcKkwx0
+         kYNQ==
+X-Gm-Message-State: AOAM533h8aZs/CNx8usKiqEhkbgBMF38yEpAR3DtDpVJsJembbRcIm3m
+        taVK4WHS7zD6AHxENa9Xox7U7lozy+Y6BsvNV2jCgw==
+X-Google-Smtp-Source: ABdhPJyaHSQoTlgmlobRW88GrBFDHN8CKYf5zR2qMmeRlK4z1xSbCEAKdZuMsSYehfQfrzwW3YUSTsHM82QVWq7rt14=
+X-Received: by 2002:a17:907:939:: with SMTP id au25mr2700676ejc.166.1634205854776;
+ Thu, 14 Oct 2021 03:04:14 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <163415465484.936110.9292145029740247591@swboyd.mtv.corp.google.com>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-GB
-Content-Transfer-Encoding: 7bit
+References: <CAAP7ucLJYfftfCuKxnW8Q7-duyEuGgHA5gk+h2JyyAzNq75QSA@mail.gmail.com>
+ <da0ed6cf2c0a07295a09758259521b03a7bcdc19.camel@bootlin.com>
+ <CAAP7ucLu9JJjo+gN6fsSZVGKHX6VGoYkgBmsA0s9qsA-hdH6=A@mail.gmail.com> <2c34a05884cd68eb08e061e9d4d1aa572d78f03c.camel@bootlin.com>
+In-Reply-To: <2c34a05884cd68eb08e061e9d4d1aa572d78f03c.camel@bootlin.com>
+From:   Aleksander Morgado <aleksander@aleksander.es>
+Date:   Thu, 14 Oct 2021 12:04:03 +0200
+Message-ID: <CAAP7ucLVBn3Vk25jqL18Qxtsd=PmCpTiNY5j_pgai4BBbTOGWA@mail.gmail.com>
+Subject: Re: Sierra Wireless EM9191 integration issues in mhi+wwan
+To:     Thomas Perrot <thomas.perrot@bootlin.com>
+Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
+        Loic Poulain <loic.poulain@linaro.org>, hemantk@codeaurora.org,
+        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 13/10/2021 22:50, Stephen Boyd wrote:
-> Quoting Dmitry Baryshkov (2021-10-07 09:16:13)
->> On 07/10/2021 18:48, Bjorn Andersson wrote:
->>> On Sun 29 Aug 08:47 PDT 2021, Dmitry Baryshkov wrote:
->>>
->>>> Now as the common qcom clock controller code has been taught about power
->>>> domains, stop mentioning mmcx supply as a way to power up the clock
->>>> controller's gdsc.
->>>>
->>>> Signed-off-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
->>>> Reviewed-by: Bjorn Andersson <bjorn.andersson@linaro.org>
->>>
->>> Once we merge these, I expect that the boards will start crashing if
->>> the kernel is booted using an existing DTB?
->>>
->>> Is it okay to just merge the first 6 patches in the series now and
->>> postpone these two until we've had the dts change sitting for a while?
->>
->> Sure it is.
->>
-> 
-> What's the merge strategy? It goes through arm-soc?
+Hey Thomas,
 
-I think this should go through the clk tree. There is little chance of 
-conflicts.
+> > > Otherwise, when responses are received, we also can observe strange
+> > > things: unexpected messages, response to previous commands or queue
+> > > buffer issue.
+> > >
+> >
+> > Are you testing this with qmicli + mbimcli + ModemManager? And if so,
+> > are you running the qmicli/mbimcli commands with the "-p" option in
+> > order to always use the intermediate qmi-proxy/mbim-proxy? I'd
+> > suggest
+> > to always do that to avoid having multiple processes talking to the
+> > ports at the same time.
+> >
+>
+> In first, I'm testing with qmicli/mbimcli commands with the "-p" option
+> in order to always use the intermediate qmi-proxy/mbim-proxy that that
+> I run in debug mode beforehand.
+>
 
+Ah, nice, that helps to clarify. When using the proxies, there should
+be always one single process accessing the ports.
+
+> >
+> > > I updated the topic opened on the Sierra Wireless forum, with our
+> > > latest progress and as well as additional information.
+> > >
+> > > In addition, we observed some strange behavior of the EM919x after
+> > > warm
+> > > reboots.
+> > >
+> >
+> > Is the log after the warm reboots similar to the one I showed in my
+> > first email, i.e. with the 2 reported "firmware crashes"? Or does it
+> > look totally different?
+>
+> After warm reboots, we observe no explain message indicating an error,
+> but we use an old firmware version.
+>
+
+Ok.
+
+> > And, do you always see the module booting properly on cold boots? Or
+> > do you see failed boots like the one i showed in my first email?
+>
+> The module doesn't always booting properly, you see failed boots like
+> the one you showed.
+
+This is good, because it confirms that our fully different platforms
+running the same kernel driver show the same symptoms. So it shouldn't
+be an issue of the platform, it's likely either the driver or the
+module firmware.
 
 -- 
-With best wishes
-Dmitry
+Aleksander
+https://aleksander.es
