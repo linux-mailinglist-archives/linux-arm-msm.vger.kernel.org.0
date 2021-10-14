@@ -2,128 +2,181 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 740E342DFBB
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Oct 2021 18:54:37 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 2090142DFC1
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Oct 2021 18:55:40 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S232536AbhJNQ4j (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Oct 2021 12:56:39 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45500 "EHLO
+        id S231166AbhJNQ5n (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Oct 2021 12:57:43 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:45780 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S231455AbhJNQ4i (ORCPT
+        with ESMTP id S231328AbhJNQ5n (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Oct 2021 12:56:38 -0400
-Received: from mail-lf1-x12b.google.com (mail-lf1-x12b.google.com [IPv6:2a00:1450:4864:20::12b])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 9A44EC061753
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 09:54:33 -0700 (PDT)
-Received: by mail-lf1-x12b.google.com with SMTP id g36so12994790lfv.3
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 09:54:33 -0700 (PDT)
+        Thu, 14 Oct 2021 12:57:43 -0400
+Received: from mail-io1-xd36.google.com (mail-io1-xd36.google.com [IPv6:2607:f8b0:4864:20::d36])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id 262C9C061753
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 09:55:38 -0700 (PDT)
+Received: by mail-io1-xd36.google.com with SMTP id y67so4547438iof.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 09:55:38 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=linaro.org; s=google;
-        h=subject:to:cc:references:from:message-id:date:user-agent
-         :mime-version:in-reply-to:content-language:content-transfer-encoding;
-        bh=FB7jURQ/cloxZX95b1lZK2eA7ZD1Fvj6ppcELfN+v1Y=;
-        b=Fva9P2qYbLMXvPYYCUTLzGQVBRium3jhyc/Vv5l8krP4vjJdvYXkE7bn49sOnLidY7
-         EhIpcHZPJqGAdSZ860b58YbSqb0K7oSR4zUYfUF7RFlK8zPrJ9ZQzoejl1ttjuwlT9wZ
-         ehEZ8Jm6pYVhDh1KoMwD460X2rxoXq91Chtd4zyy3yYNqYSpUMKPTTkQZspa1s/iJ69D
-         TMcdTy8fm0obj9E20VLM6GEHyCEkGBbJ0HN8ySi9YcnLwVRzCG+HNwK8rKEtXQE7O22Y
-         KUZycXk/IZAfV2gOieqT1m7wzIeiouQL+gzeZr+sTDnHDM6wrX04aXcvw+luBY5m3mNE
-         U79Q==
+        d=chromium.org; s=google;
+        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
+         :cc;
+        bh=o+zdN+lceoRdZihF10APOuMOlB4igBR3wLSssTOtiUA=;
+        b=of8KjvQt3adKeW4QyIHeBuZURPUIWHs4W5yXZEkTXy1acQdYCNrZgDFZNwt5/EJ5qa
+         ecqjwW3evura2DG1Q4b07dmnoP3owujuF9zT0j68F5/+VIHwzBBJKV5Efy65kRKgia2C
+         2snvrlCcAB/iU58FcoIlcblp1Lk5D/uvw8EWs=
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
-         :user-agent:mime-version:in-reply-to:content-language
-         :content-transfer-encoding;
-        bh=FB7jURQ/cloxZX95b1lZK2eA7ZD1Fvj6ppcELfN+v1Y=;
-        b=hd07wQQKPHLy3TsJtndym9cYec4jKKUWdbiaLsp5fAR88ccLD3bdeZwalfh7pXsLai
-         eO9uMNY7Q7CD/Tq+klCR8rQt1MMir9+b6CowD3BbheLqlHnWVKbcWeRwiMnc7GYMy4Kk
-         Uq2oP9TwdE15Azj0Cv6lNRnjou07nO73sSs+q6YWA8OUxvCA2QVqGGIDAoqd7A8XJL4v
-         31Loil3TQ/M9c+kBq0HE+vscOCBA3UPs0hD4AbgoiMNiQO9oG8er1xkN+rT9UQrm+jqy
-         NEUov+FAYm3SDlEUTTWrLX8tZarsolt/6QeoMRja29KGDZ+m5JMso3t+J07bLw4tu3bL
-         Djiw==
-X-Gm-Message-State: AOAM532vKNPkIj8Mal+zdyjK+qgtC7mFaaN/77SbBcXUsxcJfzUKJojI
-        CrmPc4Y5wWTwXY1/OHzv6e8WuA==
-X-Google-Smtp-Source: ABdhPJxF+akf386pidSJ6bww34Ya7ziich6BCGwkslriO2XJi8SbN0D5iMJNBzDIq7se8Wcrm9rKHA==
-X-Received: by 2002:ac2:5627:: with SMTP id b7mr6096938lff.670.1634230471954;
-        Thu, 14 Oct 2021 09:54:31 -0700 (PDT)
-Received: from [192.168.1.102] (62-248-207-242.elisa-laajakaista.fi. [62.248.207.242])
-        by smtp.gmail.com with ESMTPSA id b9sm302732ljq.137.2021.10.14.09.54.31
+        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
+         :message-id:subject:to:cc;
+        bh=o+zdN+lceoRdZihF10APOuMOlB4igBR3wLSssTOtiUA=;
+        b=isRVw5HWI9IOAx/GnI2f/KG0qnDYm6MwcrIjy7WR7dSs+2g8KtKJglI6QGavAKy+S2
+         wwOH3xeI+SQ97KG5zgFS/Y4rEuGq1dcUtIN7uwSpSFJs7S/6zYrQRNSzDTX5C3zdSkIW
+         MqJAKC7J/9J7w965ctOjrTAuP6emjTiJRDzM2MiLlWDNU58/NbDHY9ezSGvtDDHkoQo/
+         wm6UtUZGolR0KtDIWqq8fqRTeph9SGXmFK8dAzoshCJMo3O7nc+e6TIzRc3i+uIIn363
+         hG/jLPmHRuCKSDojoJky+hTgDLXausbdHXhSMYIHByWqSOO2bnTbY9+5y34iP/YVUCUu
+         krng==
+X-Gm-Message-State: AOAM530GNQ50+yRgbuGu5D5KD4C6E4yA7AWYLnLZYcmKIBaokf4VEGxt
+        HQ27Tk3L97h73kvyFttNsHtbwaANzZzTew==
+X-Google-Smtp-Source: ABdhPJxNAKDjb3NdWhg51f86vjoGskIFGmI/BJpI+mBo6XEKtGNxNFfIhnYq4hjrq6BZqJDAYlyYNQ==
+X-Received: by 2002:a6b:7847:: with SMTP id h7mr56218iop.115.1634230537299;
+        Thu, 14 Oct 2021 09:55:37 -0700 (PDT)
+Received: from mail-il1-f174.google.com (mail-il1-f174.google.com. [209.85.166.174])
+        by smtp.gmail.com with ESMTPSA id u2sm1367127ion.54.2021.10.14.09.55.36
+        for <linux-arm-msm@vger.kernel.org>
         (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
-        Thu, 14 Oct 2021 09:54:31 -0700 (PDT)
-Subject: Re: Revert "arm64: dts: qcom: sm8250: remove bus clock from the mdss
- node for sm8250 target"
-To:     Dmitry Baryshkov <dmitry.baryshkov@linaro.org>,
-        Andy Gross <agross@kernel.org>,
-        Bjorn Andersson <bjorn.andersson@linaro.org>,
-        Rob Clark <robdclark@gmail.com>, Sean Paul <sean@poorly.run>,
-        Abhinav Kumar <abhinavk@codeaurora.org>,
-        Rob Herring <robh+dt@kernel.org>
-Cc:     Jonathan Marek <jonathan@marek.ca>,
-        Stephen Boyd <sboyd@kernel.org>,
-        David Airlie <airlied@linux.ie>,
-        Daniel Vetter <daniel@ffwll.ch>, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        devicetree@vger.kernel.org, Amit Pundir <amit.pundir@linaro.org>
-References: <20211014135410.4136412-1-dmitry.baryshkov@linaro.org>
-From:   Vladimir Zapolskiy <vladimir.zapolskiy@linaro.org>
-Message-ID: <3af41112-7ccd-5da8-c189-3ed8d22273c0@linaro.org>
-Date:   Thu, 14 Oct 2021 19:54:30 +0300
-User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
- Thunderbird/78.6.1
+        Thu, 14 Oct 2021 09:55:36 -0700 (PDT)
+Received: by mail-il1-f174.google.com with SMTP id a8so4194241ilj.10
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 09:55:36 -0700 (PDT)
+X-Received: by 2002:a05:6e02:1785:: with SMTP id y5mr88932ilu.142.1634230535952;
+ Thu, 14 Oct 2021 09:55:35 -0700 (PDT)
 MIME-Version: 1.0
-In-Reply-To: <20211014135410.4136412-1-dmitry.baryshkov@linaro.org>
-Content-Type: text/plain; charset=utf-8; format=flowed
-Content-Language: en-US
-Content-Transfer-Encoding: 7bit
+References: <20210625052213.32260-1-vkoul@kernel.org> <20210625052213.32260-5-vkoul@kernel.org>
+ <CAD=FV=UfZxKyUZMK9c74KmMBBqgYROn1zp+vLfHaj_ghUK1t+g@mail.gmail.com> <YWhVIm+rqRMmkMMn@matsya>
+In-Reply-To: <YWhVIm+rqRMmkMMn@matsya>
+From:   Doug Anderson <dianders@chromium.org>
+Date:   Thu, 14 Oct 2021 09:55:24 -0700
+X-Gmail-Original-Message-ID: <CAD=FV=XMrurp4TLD7BCpVR9-+daHidHhkHG6P7u69HOBcvkMxA@mail.gmail.com>
+Message-ID: <CAD=FV=XMrurp4TLD7BCpVR9-+daHidHhkHG6P7u69HOBcvkMxA@mail.gmail.com>
+Subject: Re: [PATCH v3 4/5] spi: spi-geni-qcom: Add support for GPI dma
+To:     Vinod Koul <vkoul@kernel.org>
+Cc:     Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Mark Brown <broonie@kernel.org>, Wolfram Sang <wsa@kernel.org>,
+        Andy Gross <agross@kernel.org>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        Matthias Kaehlcke <mka@chromium.org>,
+        linux-spi <linux-spi@vger.kernel.org>,
+        linux-i2c <linux-i2c@vger.kernel.org>,
+        linux-arm-msm <linux-arm-msm@vger.kernel.org>,
+        LKML <linux-kernel@vger.kernel.org>
+Content-Type: text/plain; charset="UTF-8"
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hi Dmitry,
+Hi,
 
-On 10/14/21 4:54 PM, Dmitry Baryshkov wrote:
-> From: Amit Pundir <amit.pundir@linaro.org>
-> 
-> This reverts commit 001ce9785c0674d913531345e86222c965fc8bf4.
-> 
-> This upstream commit broke AOSP (post Android 12 merge) build
-> on RB5. The device either silently crashes into USB crash mode
-> after android boot animation or we see a blank blue screen
-> with following dpu errors in dmesg:
-> 
-> [  T444] hw recovery is not complete for ctl:3
-> [  T444] [drm:dpu_encoder_phys_vid_prepare_for_kickoff:539] [dpu error]enc31 intf1 ctl 3 reset failure: -22
-> [  T444] [drm:dpu_encoder_phys_vid_wait_for_commit_done:513] [dpu error]vblank timeout
-> [  T444] [drm:dpu_kms_wait_for_commit_done:454] [dpu error]wait for commit done returned -110
-> [    C7] [drm:dpu_encoder_frame_done_timeout:2127] [dpu error]enc31 frame done timeout
-> [  T444] [drm:dpu_encoder_phys_vid_wait_for_commit_done:513] [dpu error]vblank timeout
-> [  T444] [drm:dpu_kms_wait_for_commit_done:454] [dpu error]wait for commit done returned -110
-> 
-> Signed-off-by: Amit Pundir <amit.pundir@linaro.org>
 
-your sob tag is missing.
+On Thu, Oct 14, 2021 at 9:04 AM Vinod Koul <vkoul@kernel.org> wrote:
+> > > +static bool geni_can_dma(struct spi_controller *ctlr,
+> > > +                        struct spi_device *slv, struct spi_transfer *xfer)
+> > > +{
+> > > +       struct spi_geni_master *mas = spi_master_get_devdata(slv->master);
+> > > +
+> > > +       /* check if dma is supported */
+> > > +       if (mas->cur_xfer_mode == GENI_GPI_DMA)
+> > > +               return true;
+> > > +
+> > > +       return false;
+> > > +}
+> >
+> > nit: might as well handle GENI_SE_DMA as well since it's just as easy
+> > to test against GENI_SE_FIFO?
+>
+> I think I will leave that for the person adding GENI_SE_DMA support :)
 
-> ---
->   arch/arm64/boot/dts/qcom/sm8250.dtsi | 3 ++-
->   1 file changed, 2 insertions(+), 1 deletion(-)
-> 
-> diff --git a/arch/arm64/boot/dts/qcom/sm8250.dtsi b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> index 8c15d9fed08f..d12e4cbfc852 100644
-> --- a/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> +++ b/arch/arm64/boot/dts/qcom/sm8250.dtsi
-> @@ -2590,9 +2590,10 @@
->   			power-domains = <&dispcc MDSS_GDSC>;
->   
->   			clocks = <&dispcc DISP_CC_MDSS_AHB_CLK>,
-> +				 <&gcc GCC_DISP_HF_AXI_CLK>,
->   				 <&gcc GCC_DISP_SF_AXI_CLK>,
->   				 <&dispcc DISP_CC_MDSS_MDP_CLK>;
-> -			clock-names = "iface", "nrt_bus", "core";
-> +			clock-names = "iface", "bus", "nrt_bus", "core";
->   
->   			assigned-clocks = <&dispcc DISP_CC_MDSS_MDP_CLK>;
->   			assigned-clock-rates = <460000000>;
-> 
+I was just thinking of changing the "if" statement:
 
---
-Best wishes,
-Vladimir
+if (mas->cur_xfer_mode != GENI_SE_FIFO)
+
+It's no skin off your teeth and would make one fewer line to change
+if/when the other DMA mode is supported. In any case, I won't push it.
+;-)
+
+
+> > > @@ -738,6 +1021,14 @@ static int spi_geni_probe(struct platform_device *pdev)
+> > >         if (ret)
+> > >                 goto spi_geni_probe_runtime_disable;
+> > >
+> > > +       /*
+> > > +        * check the mode supported and set_cs for fifo mode only
+> > > +        * for dma (gsi) mode, the gsi will set cs based on params passed in
+> > > +        * TRE
+> > > +        */
+> > > +       if (mas->cur_xfer_mode == GENI_SE_FIFO)
+> > > +               spi->set_cs = spi_geni_set_cs;
+> >
+> > I'm curious: is there no way to get set_cs() working in GPI mode? In
+> > an off-thread conversation Qualcomm seemed to indicate that it was
+> > possible, but maybe they didn't quite understand what I was asking.
+> >
+> > Without an implementation of set_cs() there will be drivers in Linux
+> > that simply aren't compatible because they make the assumption that
+> > they can lock the bus, set the CS, and do several transfers that are
+> > part of some logical "transaction". I believe that both of the SPI
+> > peripherals on boards that I work on, cros-ec and the SPI TPM make
+> > this assumption. I don't even believe that the drivers can be "fixed"
+> > because the requirement is more at the protocol level. The protocol
+> > requires you to do things like:
+> >
+> > 0. Lock the bus.
+> > 1. Set the CS.
+> > 2. Transfer a few bytes, reading the response as you go.
+> > 3. Once you see the other side respond that it's ready, transfer some
+> > more bytes.
+> > 4. Release the CS.
+> > 5. Unlock the bus.
+> >
+> > You can't do this without a set_cs() implementation because of the
+> > requirement to read the responses of the other side before moving on
+> > to the next phase of the transfer.
+> >
+> > As I understand it this is roughly the equivalent of i2c clock
+> > stretching but much more ad-hoc and defined peripherals-by-peripheral.
+> >
+> > In any case, I guess you must have examples of peripherals that need
+> > GPI mode and don't need set_cs() so we shouldn't block your way
+> > forward, but I'm just curious if you had more info on this.
+>
+> So I have asked some qcom folks, they tell me it is _possible_ to use
+> the cs bit in the TRE and it can work. But TBH I am not yet convinced it
+> would work as advertised. So do you enable the GPI mode for chrome books
+> or it is SE DMA mode (i think SE DMA mode might be simpler to use for
+> your case)
+
+Sounds promising. I'm curious about why you're not convinced it would
+work as advertised? Right now we have all our SPI devices running in
+FIFO mode (!) and we've been trying to find a way to get them in DMA
+mode. I think Qualcomm is trying to avoid supporting both SE DMA and
+GPI DMA mode so they are saying that once GPI mode works then we can
+just use that.
+
+I don't really have a huge objection to that, but I also have zero
+experience with GPI DMA mode. We don't have any need (at the moment)
+to share our SPI bus with multiple execution environments, but it
+seems like GPI mode _could_ still work as long as the chip select
+problem is solved. I did manage to get some more documentation and I
+do see a "LOCK" command, so maybe that combined with leaving the CS
+asserted would solve the problem? Maybe Mark would allow your driver
+to get called from spi_bus_lock() and spi_bus_unlock(). That seems
+like it would be important to do anyway to match the Linux SPI client
+model...
+
+NOTE: in reality, we sorta paper over the "chip select" problem anyway
+on Chromebooks. We just configure the chip select lines as GPIOs and
+let Linux manage them. There is much less overhead in setting a GPIO
+compared to messaging a QUP, so this improves performance. As long as
+this continues to work, perhaps we don't care about whether we can
+really tell GPI mode to leave the CS asserted.
+
+-Doug
