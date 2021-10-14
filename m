@@ -2,145 +2,160 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 34BC842D23D
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Oct 2021 08:22:12 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id A323942D25C
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Oct 2021 08:24:14 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S229502AbhJNGYP (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Oct 2021 02:24:15 -0400
-Received: from m43-7.mailgun.net ([69.72.43.7]:26740 "EHLO m43-7.mailgun.net"
-        rhost-flags-OK-OK-OK-OK) by vger.kernel.org with ESMTP
-        id S229457AbhJNGYO (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Oct 2021 02:24:14 -0400
-DKIM-Signature: a=rsa-sha256; v=1; c=relaxed/relaxed; d=mg.codeaurora.org; q=dns/txt;
- s=smtp; t=1634192530; h=Content-Transfer-Encoding: Content-Type:
- In-Reply-To: From: References: Cc: To: Subject: MIME-Version: Date:
- Message-ID: Sender; bh=lTLIJG2i4OAIzGVAjEZbpCIr/J4WAHviqABtv7QEgV8=; b=TTRWrFqcnrKM+DFnrQvw4ATRbZR4FPyaN2gd0gGy/5E1lTbVJhMw8NolN4JXrB0Lr2xHw1vB
- ZpUDDaeMOIhlTS7KIhYJTnU4uLoK6r4ynzYNd1Ea6E/nyB5u4VqcMo/QsgoD4q6wpxdpguSe
- 57fk2890hdtHV9KgSul/3I3g/IM=
-X-Mailgun-Sending-Ip: 69.72.43.7
-X-Mailgun-Sid: WyI1MzIzYiIsICJsaW51eC1hcm0tbXNtQHZnZXIua2VybmVsLm9yZyIsICJiZTllNGEiXQ==
-Received: from smtp.codeaurora.org
- (ec2-35-166-182-171.us-west-2.compute.amazonaws.com [35.166.182.171]) by
- smtp-out-n06.prod.us-west-2.postgun.com with SMTP id
- 6167cc8903355859c890c693 (version=TLS1.2,
- cipher=TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256); Thu, 14 Oct 2021 06:22:01
- GMT
-Sender: akhilpo=codeaurora.org@mg.codeaurora.org
-Received: by smtp.codeaurora.org (Postfix, from userid 1001)
-        id 8F626C43616; Thu, 14 Oct 2021 06:22:01 +0000 (UTC)
-X-Spam-Checker-Version: SpamAssassin 3.4.0 (2014-02-07) on
-        aws-us-west-2-caf-mail-1.web.codeaurora.org
-X-Spam-Level: 
-X-Spam-Status: No, score=-2.9 required=2.0 tests=ALL_TRUSTED,BAYES_00,
-        NICE_REPLY_A,SPF_FAIL autolearn=no autolearn_force=no version=3.4.0
-Received: from [192.168.1.10] (unknown [117.217.235.147])
-        (using TLSv1.2 with cipher ECDHE-RSA-AES128-GCM-SHA256 (128/128 bits))
-        (No client certificate requested)
-        (Authenticated sender: akhilpo)
-        by smtp.codeaurora.org (Postfix) with ESMTPSA id 51059C4338F;
-        Thu, 14 Oct 2021 06:21:58 +0000 (UTC)
-DMARC-Filter: OpenDMARC Filter v1.4.1 smtp.codeaurora.org 51059C4338F
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; dmarc=none (p=none dis=none) header.from=codeaurora.org
-Authentication-Results: aws-us-west-2-caf-mail-1.web.codeaurora.org; spf=fail smtp.mailfrom=codeaurora.org
-Message-ID: <b69f0e6c-3121-1b88-938b-34556a5013e6@codeaurora.org>
-Date:   Thu, 14 Oct 2021 11:51:56 +0530
+        id S229846AbhJNG0O (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Oct 2021 02:26:14 -0400
+Received: from mail-eopbgr1320103.outbound.protection.outlook.com ([40.107.132.103]:24672
+        "EHLO APC01-PU1-obe.outbound.protection.outlook.com"
+        rhost-flags-OK-OK-OK-FAIL) by vger.kernel.org with ESMTP
+        id S229984AbhJNG0K (ORCPT <rfc822;linux-arm-msm@vger.kernel.org>);
+        Thu, 14 Oct 2021 02:26:10 -0400
+ARC-Seal: i=1; a=rsa-sha256; s=arcselector9901; d=microsoft.com; cv=none;
+ b=JMT5Lotan5ErfdDVz04GIZskjhFwnJUFh9XwRcCzjRgA92L+NjWoT9qcG3yyAAfFVWT8tsQMt6walVA2Le38sQFK/sxYqGzuhuNawR5WFfvjvEgdiDT6Seawpal1ZzOLdPgXJHWIvBohr9b0s3D5WX+MnKFHqR27LtsxRIwLLGzWgpR36PQf5fLT4lXwfNoaHb6x5JDiuV182jGHWyB722i/c7gS7yTHU47V/1RhmwgttWuE3xqvggb9xw7smm+dMNMdc0T2z+wYYpQXvK/5ImaG2CTkVcoE3cXnpE1tDJ3e5F8qQTVPo5tTKp5fRthByLqO5VTFMrKVnlnA1d0IOA==
+ARC-Message-Signature: i=1; a=rsa-sha256; c=relaxed/relaxed; d=microsoft.com;
+ s=arcselector9901;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-AntiSpam-MessageData-ChunkCount:X-MS-Exchange-AntiSpam-MessageData-0:X-MS-Exchange-AntiSpam-MessageData-1;
+ bh=t8zYZ0Nyf81eD8XSOdOi3nGw8IjcLa1/3R7wutRIGBs=;
+ b=afIl4oRqF+Ws5BNgrfocYi0U2g30aN2hx1tBaPuh5/yiw0DAtTIi5ah+aQ/WkwqsuRinBk3OyIWfQoxBRF36ZAcONJJ8Z2xFFTIOVXBG3tkiLeve8ReZxXb9uzivhTpgEQQxZxwbyy05XlY5tZyJ9Q4k9IpR+q4pDW4RhvgH0yYtgqrNRGjEcp1+v6AO6QliLA82C4ClVF1t5dIHu5rORuDR+L7c8GVeEj5yVU5Rp+W/QJVr3FFKKiq1C8CXbYA0+6Ni0gPPLrMcmzB8WKrDcf6FwVm1H8YZR+C3Foy5LKIC8MJ43yK4cT584fl4e1viUV3s/3rlu/dmO9iZQ4jjDQ==
+ARC-Authentication-Results: i=1; mx.microsoft.com 1; spf=pass
+ smtp.mailfrom=vivo.com; dmarc=pass action=none header.from=vivo.com;
+ dkim=pass header.d=vivo.com; arc=none
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=vivo0.onmicrosoft.com;
+ s=selector2-vivo0-onmicrosoft-com;
+ h=From:Date:Subject:Message-ID:Content-Type:MIME-Version:X-MS-Exchange-SenderADCheck;
+ bh=t8zYZ0Nyf81eD8XSOdOi3nGw8IjcLa1/3R7wutRIGBs=;
+ b=SUyGUX+ufTlZQkR3fHvhyEx1InAPX+CXkCCZ0UnOJcVLWF9krsnguIc7wOn2FYrNh8FvpFw0TGXt77lEUSZyaqAdOYqt15LT95o1CjlK8mjQ5oumEqvagKCpaCMHiw7uP8qLikM3042mzbx7Sc8+3Hn/VpyNWApHPao3cxobT2c=
+Authentication-Results: kernel.org; dkim=none (message not signed)
+ header.d=none;kernel.org; dmarc=none action=none header.from=vivo.com;
+Received: from SG2PR06MB3367.apcprd06.prod.outlook.com (2603:1096:4:78::19) by
+ SG2PR06MB2460.apcprd06.prod.outlook.com (2603:1096:4:65::20) with Microsoft
+ SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id
+ 15.20.4587.25; Thu, 14 Oct 2021 06:24:03 +0000
+Received: from SG2PR06MB3367.apcprd06.prod.outlook.com
+ ([fe80::fc12:4e1b:cc77:6c0]) by SG2PR06MB3367.apcprd06.prod.outlook.com
+ ([fe80::fc12:4e1b:cc77:6c0%6]) with mapi id 15.20.4608.016; Thu, 14 Oct 2021
+ 06:24:02 +0000
+From:   Wan Jiabing <wanjiabing@vivo.com>
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        linux-arm-msm@vger.kernel.org, linux-kernel@vger.kernel.org
+Cc:     kael_w@yeah.net, Wan Jiabing <wanjiabing@vivo.com>
+Subject: [PATCH] soc: qcom: smp2p: Add of_node_put() before goto
+Date:   Thu, 14 Oct 2021 02:23:49 -0400
+Message-Id: <20211014062350.8942-1-wanjiabing@vivo.com>
+X-Mailer: git-send-email 2.20.1
+Content-Transfer-Encoding: 8bit
+Content-Type: text/plain
+X-ClientProxiedBy: HK2PR03CA0046.apcprd03.prod.outlook.com
+ (2603:1096:202:17::16) To SG2PR06MB3367.apcprd06.prod.outlook.com
+ (2603:1096:4:78::19)
 MIME-Version: 1.0
-User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:91.0) Gecko/20100101
- Thunderbird/91.1.1
-Subject: Re: [bug report] drm/msm/a6xx: Fix llcc configuration for a660 gpu
-Content-Language: en-US
-To:     Dan Carpenter <dan.carpenter@oracle.com>
-Cc:     linux-arm-msm@vger.kernel.org, freedreno@lists.freedesktop.org
-References: <20211012100029.GA3379@kili>
-From:   Akhil P Oommen <akhilpo@codeaurora.org>
-In-Reply-To: <20211012100029.GA3379@kili>
-Content-Type: text/plain; charset=UTF-8; format=flowed
-Content-Transfer-Encoding: 7bit
+Received: from localhost.localdomain (218.213.202.190) by HK2PR03CA0046.apcprd03.prod.outlook.com (2603:1096:202:17::16) with Microsoft SMTP Server (version=TLS1_2, cipher=TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384) id 15.20.4628.9 via Frontend Transport; Thu, 14 Oct 2021 06:24:01 +0000
+X-MS-PublicTrafficType: Email
+X-MS-Office365-Filtering-Correlation-Id: 9d421e62-4219-40a7-73eb-08d98edb3716
+X-MS-TrafficTypeDiagnostic: SG2PR06MB2460:
+X-MS-Exchange-Transport-Forked: True
+X-Microsoft-Antispam-PRVS: <SG2PR06MB2460AE01C71CBC117674A748ABB89@SG2PR06MB2460.apcprd06.prod.outlook.com>
+X-MS-Oob-TLC-OOBClassifiers: OLM:1227;
+X-MS-Exchange-SenderADCheck: 1
+X-MS-Exchange-AntiSpam-Relay: 0
+X-Microsoft-Antispam: BCL:0;
+X-Microsoft-Antispam-Message-Info: 3dYXWRqc1/9VCm0wOjLkv9Hm1PWFd+fT5+0GUDtMx9R6iUeDnUXfUpuZaescvFiVoPvhQ3JGXeKNUhAEhzUJhiJKb9nYqPPerdXE6HjILhxW06vt4RhJOMULdYc15/Sad4oVM62Fn4Gp4+R+ptAjpenUoJWI0V+MrTpP7ZkZ4Ghb8UrwnpjI++drizT/z9SnUwIVq0Mihh6cKGmt+yAdE0IzMQZhwZLkwN/KNmOndBDh/SsFkz22405PqMKn1JF713fcTrV2ANeJfrhYFaCGPPDa5MVEtyOL8+Ss8oB5DxJmyIYfYb7Eva0/ImUv4z6VJm/HIqTN5JQX8CRtR2tzsXD6NK2DzLRGjlJ6sIS2yk1YPZD631a9lwqFuDwI00iTIaBmT9NAKh4mJHFzpUY0hWwXn8uHsiJHSr0t/YlkDXMZHpYGafqYOU0/sVH48UWJAoL4hbZaRQNTN9aAMMh0rkldhcQFMUY2b3ExAUA9ngyZDaIqxDIuMKpoVp830A++c/DaDbBEmrWS5prSmHn64DCjHjwPIc4clw55ERSskyAPitp6vcnfp7QM/20oQ3dDBEw/H62VOefVkZTf7TRRyLQWTaBUdFzbCgwetryN7tVayDOoyqG+HxhAzV/L1T3uAEmKbX4EXncmCsLeaO6TrLRTEyWEhXbnmgNMEWADP54heRK/QxeMrr/onH3cANov
+X-Forefront-Antispam-Report: CIP:255.255.255.255;CTRY:;LANG:en;SCL:1;SRV:;IPV:NLI;SFV:NSPM;H:SG2PR06MB3367.apcprd06.prod.outlook.com;PTR:;CAT:NONE;SFS:(4636009)(366004)(4326008)(38100700002)(6512007)(6486002)(107886003)(66946007)(83380400001)(86362001)(508600001)(2616005)(36756003)(38350700002)(66476007)(6506007)(6666004)(316002)(8936002)(26005)(66556008)(5660300002)(2906002)(1076003)(8676002)(110136005)(52116002)(186003)(956004);DIR:OUT;SFP:1102;
+X-MS-Exchange-AntiSpam-MessageData-ChunkCount: 1
+X-MS-Exchange-AntiSpam-MessageData-0: =?us-ascii?Q?2QAmlKT1p6hoJPSQLxN/gDnDiM+QrzJs8phkMrJ5WGI9ly3TrxEu9/10uP3G?=
+ =?us-ascii?Q?gutCbQHtwgpaZSEifJNXQltPlUOXFgFm6yBnuyPvv5xiXEisQMBwkh9YMOt6?=
+ =?us-ascii?Q?hvKbEx1RwdKxxpnppXYqzwl+5xsWhcIu2xPPtPHC0fXvao2zbJlumtm2vuT0?=
+ =?us-ascii?Q?5jSSfZt3P73wMkOCMJ9DoOsX/yVc1f4DDNDr7xoRLsJQaaL0FMGsQpCBFRWc?=
+ =?us-ascii?Q?8tKHp8PFWYPe1w6IrdE6vbnYyQeT6QWoJ6w0UeCiUR4BNB59aqAwH8cVeCrX?=
+ =?us-ascii?Q?moXGEnnJpR0U15CSRf+bGPoNomJZRaa+c+oHKL9Nsyig20d2Af7CLeQaFhfs?=
+ =?us-ascii?Q?QXuEKsnvWe0nZgvPS3/hPxZl6ZLSadji6BEmNahbBrqPIb5VkzQdaYmwhpfi?=
+ =?us-ascii?Q?3pCNUH++Xf35uQ3HTAyE8cfvk9i05T0ps2NDosOuwQVtQHL0WnS3W8LPnc8p?=
+ =?us-ascii?Q?gJQTv7+DwSYvjh8d6zXjejFZzWlua1FjHNlme1+WNSEjinIBVXbBcq9mBCkw?=
+ =?us-ascii?Q?T8nndHrUaTTOuy/7LIJgCGkWpWPu1hUJV60FwNlQJC9jydljgm4wGPXoxuJb?=
+ =?us-ascii?Q?V+BO11IXIwjmMgQlbr1sd91UIh5xigphnQZY6FSLh7OA3b7m0uvW9jiS0PBt?=
+ =?us-ascii?Q?bWV+SQWv7Aj2ZOi/6G+nyevDWPPdBfwLcD1nEhyayOidzJZgBK37HkBpKwpk?=
+ =?us-ascii?Q?zQvEktHSqL5HCEIP1Ius/6VjGU/tzwCqagi+RTycqa3QUrNoFjjxvva6mNEd?=
+ =?us-ascii?Q?ivKaDK3NQsEAxLgBAh1uoPzF47X6oww5ol+g/NZ/skks5yTLHPAptm9REZiS?=
+ =?us-ascii?Q?E3g6+XMMxEPqtJDlhR0enrtEGPX2bVpOc7Roo5EVI2IbuDdQKnzBnVx4YH8i?=
+ =?us-ascii?Q?2PLZ4T3qNzM0MLUX+wMDMIXu/EkkNGjP342pywzD5jWmLvPWmaT4fswkj0QS?=
+ =?us-ascii?Q?r9+YuPIlA4eQUl6iPjX1T1q9Qj0S/LWJa17Za5fqmNTtsPbTMxljDi4kBK87?=
+ =?us-ascii?Q?3aqPMOXi2yCJmDuHU/P7+BZizg9whoKM2KwJ15hsWPcS2CMOjnsHbX1/FM76?=
+ =?us-ascii?Q?JDhVahWRgG9qLkLFw42G6HWJ8YfL9VqTZuqYb8FatI3Q1FVINPinuYj/f2+m?=
+ =?us-ascii?Q?xjcEzyCBDp++nnEk9ejuH0uMh/UaLihsGQ6S28HrkCv4DNUVINc0tvkIq/lF?=
+ =?us-ascii?Q?Jq3nJgvr9aQwHKYSn480Mgn7YZl5gZHM/G66J3hn/sm8cnCRENBVguXPA8Wc?=
+ =?us-ascii?Q?l/EtWdwjPYUcJebAQSEX6/E11lD8nEwOZv//NPfGnEYkgHia/W6VYQv/Ukoj?=
+ =?us-ascii?Q?4HVa3sB4vBWpPEJjFlCDOpSW?=
+X-OriginatorOrg: vivo.com
+X-MS-Exchange-CrossTenant-Network-Message-Id: 9d421e62-4219-40a7-73eb-08d98edb3716
+X-MS-Exchange-CrossTenant-AuthSource: SG2PR06MB3367.apcprd06.prod.outlook.com
+X-MS-Exchange-CrossTenant-AuthAs: Internal
+X-MS-Exchange-CrossTenant-OriginalArrivalTime: 14 Oct 2021 06:24:02.7073
+ (UTC)
+X-MS-Exchange-CrossTenant-FromEntityHeader: Hosted
+X-MS-Exchange-CrossTenant-Id: 923e42dc-48d5-4cbe-b582-1a797a6412ed
+X-MS-Exchange-CrossTenant-MailboxType: HOSTED
+X-MS-Exchange-CrossTenant-UserPrincipalName: w7nHOX68LiMOmTN5Y0KTXU8GuS0nPFxFy8X6SqxkYL/QRCzmRW85RywO8ybEbsXXsUvebdko6pN0jAXhFn2lLw==
+X-MS-Exchange-Transport-CrossTenantHeadersStamped: SG2PR06MB2460
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On 10/12/2021 3:30 PM, Dan Carpenter wrote:
-> Hello Akhil P Oommen,
-> 
-> The patch a6f24383f6c0: "drm/msm/a6xx: Fix llcc configuration for
-> a660 gpu" from Jul 30, 2021, leads to the following Smatch static
-> checker warning:
-> 
-> 	drivers/gpu/drm/msm/adreno/a6xx_gpu.c:1480 a6xx_llc_activate()
-> 	error: uninitialized symbol 'gpu_scid'.
-> 
-> drivers/gpu/drm/msm/adreno/a6xx_gpu.c
->      1423 static void a6xx_llc_activate(struct a6xx_gpu *a6xx_gpu)
->      1424 {
->      1425         struct adreno_gpu *adreno_gpu = &a6xx_gpu->base;
->      1426         struct msm_gpu *gpu = &adreno_gpu->base;
->      1427         u32 gpu_scid, cntl1_regval = 0;
->      1428
->      1429         if (IS_ERR(a6xx_gpu->llc_mmio))
->      1430                 return;
->      1431
->      1432         if (!llcc_slice_activate(a6xx_gpu->llc_slice)) {
->      1433                 gpu_scid = llcc_get_slice_id(a6xx_gpu->llc_slice);
->      1434
->      1435                 gpu_scid &= 0x1f;
->      1436                 cntl1_regval = (gpu_scid << 0) | (gpu_scid << 5) | (gpu_scid << 10) |
->      1437                                (gpu_scid << 15) | (gpu_scid << 20);
->      1438         }
-> 
-> gpu_scid not initialized on the else path.
-> 
->      1439
->      1440         /*
->      1441          * For targets with a MMU500, activate the slice but don't program the
->      1442          * register.  The XBL will take care of that.
->      1443          */
->      1444         if (!llcc_slice_activate(a6xx_gpu->htw_llc_slice)) {
->      1445                 if (!a6xx_gpu->have_mmu500) {
->      1446                         u32 gpuhtw_scid = llcc_get_slice_id(a6xx_gpu->htw_llc_slice);
->      1447
->      1448                         gpuhtw_scid &= 0x1f;
->      1449                         cntl1_regval |= FIELD_PREP(GENMASK(29, 25), gpuhtw_scid);
->      1450                 }
->      1451         }
->      1452
->      1453         if (!cntl1_regval)
->      1454                 return;
->      1455
->      1456         /*
->      1457          * Program the slice IDs for the various GPU blocks and GPU MMU
->      1458          * pagetables
->      1459          */
->      1460         if (!a6xx_gpu->have_mmu500) {
->      1461                 a6xx_llc_write(a6xx_gpu,
->      1462                         REG_A6XX_CX_MISC_SYSTEM_CACHE_CNTL_1, cntl1_regval);
->      1463
->      1464                 /*
->      1465                  * Program cacheability overrides to not allocate cache
->      1466                  * lines on a write miss
->      1467                  */
->      1468                 a6xx_llc_rmw(a6xx_gpu,
->      1469                         REG_A6XX_CX_MISC_SYSTEM_CACHE_CNTL_0, 0xF, 0x03);
->      1470                 return;
->      1471         }
->      1472
->      1473         gpu_rmw(gpu, REG_A6XX_GBIF_SCACHE_CNTL1, GENMASK(24, 0), cntl1_regval);
->      1474
->      1475         /* On A660, the SCID programming for UCHE traffic is done in
->      1476          * A6XX_GBIF_SCACHE_CNTL0[14:10]
->      1477          */
->      1478         if (adreno_is_a660_family(adreno_gpu))
->      1479                 gpu_rmw(gpu, REG_A6XX_GBIF_SCACHE_CNTL0, (0x1f << 10) |
-> --> 1480                         (1 << 8), (gpu_scid << 10) | (1 << 8));
->                                              ^^^^^^^^^^^^^^
-> Used here.
-> 
->      1481 }
-> 
-> regards,
-> dan carpenter
-> 
+Fix following coccicheck warning:
+./drivers/soc/qcom/smp2p.c:501:1-33: WARNING: Function
+for_each_available_child_of_node should have of_node_put() before goto
 
-Thanks, Dan. I will fix this in the stack I share.
+Early exits from for_each_available_child_of_node should decrement the
+node reference counter. 
 
--Akhil.
+Signed-off-by: Wan Jiabing <wanjiabing@vivo.com>
+---
+ drivers/soc/qcom/smp2p.c | 13 ++++++++++---
+ 1 file changed, 10 insertions(+), 3 deletions(-)
+
+diff --git a/drivers/soc/qcom/smp2p.c b/drivers/soc/qcom/smp2p.c
+index 38585a7edfe7..2733f494009f 100644
+--- a/drivers/soc/qcom/smp2p.c
++++ b/drivers/soc/qcom/smp2p.c
+@@ -502,6 +502,7 @@ static int qcom_smp2p_probe(struct platform_device *pdev)
+ 		entry = devm_kzalloc(&pdev->dev, sizeof(*entry), GFP_KERNEL);
+ 		if (!entry) {
+ 			ret = -ENOMEM;
++			of_node_put(node);
+ 			goto unwind_interfaces;
+ 		}
+ 
+@@ -509,19 +510,25 @@ static int qcom_smp2p_probe(struct platform_device *pdev)
+ 		spin_lock_init(&entry->lock);
+ 
+ 		ret = of_property_read_string(node, "qcom,entry-name", &entry->name);
+-		if (ret < 0)
++		if (ret < 0) {
++			of_node_put(node);
+ 			goto unwind_interfaces;
++		}
+ 
+ 		if (of_property_read_bool(node, "interrupt-controller")) {
+ 			ret = qcom_smp2p_inbound_entry(smp2p, entry, node);
+-			if (ret < 0)
++			if (ret < 0) {
++				of_node_put(node);
+ 				goto unwind_interfaces;
++			}
+ 
+ 			list_add(&entry->node, &smp2p->inbound);
+ 		} else  {
+ 			ret = qcom_smp2p_outbound_entry(smp2p, entry, node);
+-			if (ret < 0)
++			if (ret < 0) {
++				of_node_put(node);
+ 				goto unwind_interfaces;
++			}
+ 
+ 			list_add(&entry->node, &smp2p->outbound);
+ 		}
+-- 
+2.20.1
+
