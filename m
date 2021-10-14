@@ -2,24 +2,24 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id EDE0C42D4E3
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Oct 2021 10:30:53 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 6D6D842D4EE
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Oct 2021 10:31:47 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230199AbhJNIcz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Oct 2021 04:32:55 -0400
-Received: from mail-0201.mail-europe.com ([51.77.79.158]:52468 "EHLO
+        id S230243AbhJNIdr (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Oct 2021 04:33:47 -0400
+Received: from mail-0201.mail-europe.com ([51.77.79.158]:53187 "EHLO
         mail-0201.mail-europe.com" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229970AbhJNIcz (ORCPT
+        with ESMTP id S230221AbhJNIdp (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Oct 2021 04:32:55 -0400
-Date:   Thu, 14 Oct 2021 08:30:38 +0000
+        Thu, 14 Oct 2021 04:33:45 -0400
+Date:   Thu, 14 Oct 2021 08:31:32 +0000
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
-        s=protonmail; t=1634200246;
-        bh=dYBtx/f72FXDYETSYLf5EAjO7iUAZoohiB+Y/H5mUU0=;
-        h=Date:To:From:Cc:Reply-To:Subject:From;
-        b=I8a9Rl4QsX2UuPOvVMYlUxxXgztYNgff7Vaf223KD4KAhJcfPaqG/tZS9CBWXGBZ6
-         hUrTCrUApoOEEtsMxuvFdPhHb1nZYwRTWnQqxj4SEzeiV78Ia67O8Y3bfMXavEEmnG
-         wVFvSlB4BNVt8CDZ42a8x9etqiBLIF/+EZYCUUMI=
+        s=protonmail; t=1634200296;
+        bh=xvQBlmwCdU7fyQyVEeG5Hg3WKO2oNNUQWC2o9rpBt60=;
+        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
+        b=gXV1QQReCwCZN3+X1V+MMnkWg8gdsGOuFI4sSMMqfDxCNaqRTjMEM5kot3SdbvKRR
+         QbdY/AnE7wiBICXpnn6FhfXpsT0Z2kwVVu9RAvinj3SrlB57uMVnkpqCWWajdP5BqP
+         Q/RHpsdsod99aDG/bVPi+SaOuajFmYVJr6gRGVrk=
 To:     Andy Gross <agross@kernel.org>,
         Bjorn Andersson <bjorn.andersson@linaro.org>,
         Michael Turquette <mturquette@baylibre.com>,
@@ -39,8 +39,10 @@ Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
         linux-pm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
         phone-devel@vger.kernel.org
 Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
-Subject: [PATCH 0/8] Add support for MSM8996 Pro
-Message-ID: <20211014083016.137441-1-y.oudjana@protonmail.com>
+Subject: [PATCH 1/8] dt-bindings: clk: qcom: msm8996-apcc: Add CBF
+Message-ID: <20211014083016.137441-2-y.oudjana@protonmail.com>
+In-Reply-To: <20211014083016.137441-1-y.oudjana@protonmail.com>
+References: <20211014083016.137441-1-y.oudjana@protonmail.com>
 MIME-Version: 1.0
 Content-Type: text/plain; charset=utf-8
 Content-Transfer-Encoding: quoted-printable
@@ -53,55 +55,51 @@ Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-MSM8996 Pro (also known as MSM8996SG) is a newer revision of MSM8996
-with different CPU/CBF/GPU frequencies and CPR parameters. Its CBF clock al=
-so
-has a different divisor.
+Add CBF clock and reg.
 
-This series handles the difference in the CBF clock and adds a new DTSI for
-MSM8996 Pro with CPU and GPU OPPs. It also removes reading msm-id from SMEM
-in qcom-cpufreq-nvmem as it becomes no longer necessary. Separating MSM8996
-and MSM8996 Pro will help with implementing CBF scaling and CPR; since they
-have different CPR parameters and CPU:CBF OPP mapping which is difficult to
-implement in the same cluster OPP tables.
+Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+---
+ .../devicetree/bindings/clock/qcom,msm8996-apcc.yaml   | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
 
-Dependencies:
-- clk: qcom: msm8996-cpu: Add CBF support
-  https://lore.kernel.org/linux-arm-msm/20210528192541.1120703-1-konrad.dyb=
-cio@somainline.org/
-- arm64: dts: qcom: msm8996: Add support for the CBF clock
-  https://lore.kernel.org/linux-arm-msm/20210528192541.1120703-2-konrad.dyb=
-cio@somainline.org/
-
-Yassine Oudjana (8):
-  dt-bindings: clk: qcom: msm8996-apcc: Add CBF
-  dt-bindings: clk: qcom: msm8996-apcc: Add MSM8996 Pro compatible
-  clk: qcom: msm8996-cpu: Add MSM8996 Pro CBF support
-  cpufreq: qcom_cpufreq_nvmem: Simplify reading kryo speedbin
-  dt-bindings: opp: Convert qcom-nvmem-cpufreq to DT schema
-  dt-bindings: opp: qcom-cpufreq-nvmem: Remove SMEM
-  arm64: dts: qcom: msm8996: Add MSM8996 Pro support
-  arm64: dts: qcom: msm8996-xiaomi-scorpio: Include msm8996pro.dtsi
-
- .../bindings/clock/qcom,msm8996-apcc.yaml     |  11 +-
- .../bindings/opp/qcom-cpufreq-nvmem.yaml      | 557 ++++++++++++
- .../bindings/opp/qcom-nvmem-cpufreq.txt       | 796 ------------------
- MAINTAINERS                                   |   2 +-
- .../boot/dts/qcom/msm8996-xiaomi-common.dtsi  |   3 -
- .../boot/dts/qcom/msm8996-xiaomi-gemini.dts   |   1 +
- .../boot/dts/qcom/msm8996-xiaomi-scorpio.dts  |   2 +-
- arch/arm64/boot/dts/qcom/msm8996.dtsi         |  82 +-
- arch/arm64/boot/dts/qcom/msm8996pro.dtsi      | 281 +++++++
- drivers/clk/qcom/clk-cpu-8996.c               |  61 +-
- drivers/cpufreq/Kconfig.arm                   |   1 -
- drivers/cpufreq/qcom-cpufreq-nvmem.c          |  75 +-
- 12 files changed, 935 insertions(+), 937 deletions(-)
- create mode 100644 Documentation/devicetree/bindings/opp/qcom-cpufreq-nvme=
-m.yaml
- delete mode 100644 Documentation/devicetree/bindings/opp/qcom-nvmem-cpufre=
-q.txt
- create mode 100644 arch/arm64/boot/dts/qcom/msm8996pro.dtsi
-
+diff --git a/Documentation/devicetree/bindings/clock/qcom,msm8996-apcc.yaml=
+ b/Documentation/devicetree/bindings/clock/qcom,msm8996-apcc.yaml
+index a20cb10636dd..325f8aef53b2 100644
+--- a/Documentation/devicetree/bindings/clock/qcom,msm8996-apcc.yaml
++++ b/Documentation/devicetree/bindings/clock/qcom,msm8996-apcc.yaml
+@@ -10,8 +10,8 @@ maintainers:
+   - Loic Poulain <loic.poulain@linaro.org>
+=20
+ description: |
+-  Qualcomm CPU clock controller for MSM8996 CPUs, clock 0 is for Power clu=
+ster
+-  and clock 1 is for Perf cluster.
++  Qualcomm CPU clock controller for MSM8996 CPUs, clock 0 is for Power clu=
+ster,
++  clock 1 is for Perf cluster, and clock 2 is for Coherent bus fabric (CBF=
+).
+=20
+ properties:
+   compatible:
+@@ -19,7 +19,9 @@ properties:
+       - qcom,msm8996-apcc
+=20
+   reg:
+-    maxItems: 1
++    items:
++      - description: Cluster clock registers
++      - description: CBF clock registers
+=20
+   '#clock-cells':
+     const: 1
+@@ -49,6 +51,6 @@ examples:
+   - |
+     kryocc: clock-controller@6400000 {
+         compatible =3D "qcom,msm8996-apcc";
+-        reg =3D <0x6400000 0x90000>;
++        reg =3D <0x6400000 0x90000>, <0x09a11000 0x10000>;
+         #clock-cells =3D <1>;
+     };
 --=20
 2.33.0
 
