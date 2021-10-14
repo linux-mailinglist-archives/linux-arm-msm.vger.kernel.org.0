@@ -2,120 +2,118 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id 366C042D6B5
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Oct 2021 12:04:31 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id E3A1E42D797
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Oct 2021 13:00:52 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230153AbhJNKGc (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Oct 2021 06:06:32 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:35450 "EHLO
-        lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S230054AbhJNKGX (ORCPT
+        id S230137AbhJNLCz (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Oct 2021 07:02:55 -0400
+Received: from mail-40140.protonmail.ch ([185.70.40.140]:45294 "EHLO
+        mail-40140.protonmail.ch" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
+        with ESMTP id S230030AbhJNLCz (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Oct 2021 06:06:23 -0400
-Received: from mail-ed1-x536.google.com (mail-ed1-x536.google.com [IPv6:2a00:1450:4864:20::536])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id A42F8C06174E
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 03:04:18 -0700 (PDT)
-Received: by mail-ed1-x536.google.com with SMTP id y30so5570102edi.0
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 03:04:18 -0700 (PDT)
-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=aleksander-es.20210112.gappssmtp.com; s=20210112;
-        h=mime-version:references:in-reply-to:from:date:message-id:subject:to
-         :cc;
-        bh=qbD1dxruVQ/6KPY7ss5Qw3vQLmfKZDPuxq3BiKfnPSc=;
-        b=beO/pg1wUBQsgx39q/Rax5HiKKcTBAXRTYJhuk4nxWCq/JxJfcEQef8+9d2a39xGdT
-         bk9i++uHcA+J7wSZhx/nHXklVQRIGE4OwXNPk7Fuws8QKKGXC5GttFzZB+MIbvDh7f7J
-         RyWiY+sfjRwu3NSkZ4VBOyd3l1mu0nMLTVBtQIZvR8i7WidkISyMrsGE/oEjJcYqTghG
-         Q8/qphtrF7ekiufdLuJa2WD1fl7hyB7bAOrjU1ejN2471l7nOs5F48tRZ7Y07mWwPfmw
-         TseR8BPJlEKtZiCbnEuNExfmbszLyK8dyLGCWzZbjb5j+OISH07rISHJcC7ZQ4TSFF1l
-         ZVNA==
-X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=1e100.net; s=20210112;
-        h=x-gm-message-state:mime-version:references:in-reply-to:from:date
-         :message-id:subject:to:cc;
-        bh=qbD1dxruVQ/6KPY7ss5Qw3vQLmfKZDPuxq3BiKfnPSc=;
-        b=v4RKHSffDxrwpjpMLSVzxgVJR0IKLl6VBMlmfkoSIb1jllmGs+MoFF+9MN1J0HVY0o
-         5N+DScAx2ogYPDemaaF9O/pFLw048JnteKAMRjutLGXyCxMxPDA8KLKgvqidwD3rRIqT
-         5IF85f9/XKcrOxoeIKeTLERcfuttj86iRpJaLDZ6ZCCOXhMQDrwlaFPqVwZcNvOz8ePG
-         J9hKGr+AWTiyzLxMOIlFhzf1IMcp9R40UoN+9zAKvE+QjfSZ5/iYrwoHLhfmmatExg9C
-         GleeJimDvCu12MWA5J9qLE72qcZaebVlvIHw99cyuy2C/6s4vWnDPwGAwhlzCTcKkwx0
-         kYNQ==
-X-Gm-Message-State: AOAM533h8aZs/CNx8usKiqEhkbgBMF38yEpAR3DtDpVJsJembbRcIm3m
-        taVK4WHS7zD6AHxENa9Xox7U7lozy+Y6BsvNV2jCgw==
-X-Google-Smtp-Source: ABdhPJyaHSQoTlgmlobRW88GrBFDHN8CKYf5zR2qMmeRlK4z1xSbCEAKdZuMsSYehfQfrzwW3YUSTsHM82QVWq7rt14=
-X-Received: by 2002:a17:907:939:: with SMTP id au25mr2700676ejc.166.1634205854776;
- Thu, 14 Oct 2021 03:04:14 -0700 (PDT)
+        Thu, 14 Oct 2021 07:02:55 -0400
+Date:   Thu, 14 Oct 2021 11:00:43 +0000
+DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed; d=protonmail.com;
+        s=protonmail; t=1634209249;
+        bh=n4mPtVUr59VWCEZFnidSyoUyIQYDVsWqg6brIjzb/V0=;
+        h=Date:To:From:Cc:Reply-To:Subject:In-Reply-To:References:From;
+        b=hJbkHlvxKU5St/2CCdsloP3Enf4Y57xvBMKs2JmqmHQQtYkBSH9esuI96PrJFMau2
+         ZxVMrNaSnlpEnJtC+/Kr3RoGYNWeFCrtfXx91bsJ1amiUxNbWkqBouKKILIK1so5Zr
+         ilQgYf2ectR+fS/ku9R5a5w8CixIot5wcXHUeuVo=
+To:     Andy Gross <agross@kernel.org>,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        Michael Turquette <mturquette@baylibre.com>,
+        Stephen Boyd <sboyd@kernel.org>,
+        Rob Herring <robh+dt@kernel.org>,
+        Ilia Lin <ilia.lin@kernel.org>,
+        Viresh Kumar <vireshk@kernel.org>, Nishanth Menon <nm@ti.com>,
+        "Rafael J. Wysocki" <rafael@kernel.org>,
+        Loic Poulain <loic.poulain@linaro.org>
+From:   Yassine Oudjana <y.oudjana@protonmail.com>
+Cc:     Yassine Oudjana <y.oudjana@protonmail.com>,
+        Konrad Dybcio <konrad.dybcio@somainline.org>,
+        AngeloGioacchino Del Regno 
+        <angelogioacchino.delregno@somainline.org>,
+        linux-arm-msm@vger.kernel.org, linux-clk@vger.kernel.org,
+        devicetree@vger.kernel.org, linux-kernel@vger.kernel.org,
+        linux-pm@vger.kernel.org, ~postmarketos/upstreaming@lists.sr.ht,
+        phone-devel@vger.kernel.org
+Reply-To: Yassine Oudjana <y.oudjana@protonmail.com>
+Subject: [PATCH 8/8] arm64: dts: qcom: msm8996-xiaomi-scorpio: Include msm8996pro.dtsi
+Message-ID: <20211014110024.5869-1-y.oudjana@protonmail.com>
+In-Reply-To: <20211014083016.137441-1-y.oudjana@protonmail.com>
+References: <20211014083016.137441-1-y.oudjana@protonmail.com>
 MIME-Version: 1.0
-References: <CAAP7ucLJYfftfCuKxnW8Q7-duyEuGgHA5gk+h2JyyAzNq75QSA@mail.gmail.com>
- <da0ed6cf2c0a07295a09758259521b03a7bcdc19.camel@bootlin.com>
- <CAAP7ucLu9JJjo+gN6fsSZVGKHX6VGoYkgBmsA0s9qsA-hdH6=A@mail.gmail.com> <2c34a05884cd68eb08e061e9d4d1aa572d78f03c.camel@bootlin.com>
-In-Reply-To: <2c34a05884cd68eb08e061e9d4d1aa572d78f03c.camel@bootlin.com>
-From:   Aleksander Morgado <aleksander@aleksander.es>
-Date:   Thu, 14 Oct 2021 12:04:03 +0200
-Message-ID: <CAAP7ucLVBn3Vk25jqL18Qxtsd=PmCpTiNY5j_pgai4BBbTOGWA@mail.gmail.com>
-Subject: Re: Sierra Wireless EM9191 integration issues in mhi+wwan
-To:     Thomas Perrot <thomas.perrot@bootlin.com>
-Cc:     Manivannan Sadhasivam <manivannan.sadhasivam@linaro.org>,
-        Loic Poulain <loic.poulain@linaro.org>, hemantk@codeaurora.org,
-        Thomas Petazzoni <thomas.petazzoni@bootlin.com>,
-        linux-arm-msm <linux-arm-msm@vger.kernel.org>
-Content-Type: text/plain; charset="UTF-8"
+Content-Type: text/plain; charset=utf-8
+Content-Transfer-Encoding: quoted-printable
+X-Spam-Status: No, score=-1.2 required=10.0 tests=ALL_TRUSTED,DKIM_SIGNED,
+        DKIM_VALID,DKIM_VALID_AU,DKIM_VALID_EF,FREEMAIL_FROM shortcircuit=no
+        autolearn=disabled version=3.4.4
+X-Spam-Checker-Version: SpamAssassin 3.4.4 (2020-01-24) on
+        mailout.protonmail.ch
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-Hey Thomas,
+Move msm8996.dtsi include to the end of the include chain.
 
-> > > Otherwise, when responses are received, we also can observe strange
-> > > things: unexpected messages, response to previous commands or queue
-> > > buffer issue.
-> > >
-> >
-> > Are you testing this with qmicli + mbimcli + ModemManager? And if so,
-> > are you running the qmicli/mbimcli commands with the "-p" option in
-> > order to always use the intermediate qmi-proxy/mbim-proxy? I'd
-> > suggest
-> > to always do that to avoid having multiple processes talking to the
-> > ports at the same time.
-> >
->
-> In first, I'm testing with qmicli/mbimcli commands with the "-p" option
-> in order to always use the intermediate qmi-proxy/mbim-proxy that that
-> I run in debug mode beforehand.
->
+Signed-off-by: Yassine Oudjana <y.oudjana@protonmail.com>
+---
+ arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi | 3 ---
+ arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts  | 1 +
+ arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dts | 2 +-
+ 3 files changed, 2 insertions(+), 4 deletions(-)
 
-Ah, nice, that helps to clarify. When using the proxies, there should
-be always one single process accessing the ports.
+diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi b/arch/arm=
+64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
+index d239b01b8505..831cd39aff14 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
++++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-common.dtsi
+@@ -3,9 +3,6 @@
+  * Copyright (c) 2020, Yassine Oudjana <y.oudjana@protonmail.com>
+  */
+=20
+-/dts-v1/;
+-
+-#include "msm8996.dtsi"
+ #include "pm8994.dtsi"
+ #include "pmi8994.dtsi"
+ #include <dt-bindings/input/input.h>
+diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts b/arch/arm6=
+4/boot/dts/qcom/msm8996-xiaomi-gemini.dts
+index 77d508e5164a..8ea5390f86ab 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
++++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-gemini.dts
+@@ -5,6 +5,7 @@
+=20
+ /dts-v1/;
+=20
++#include "msm8996.dtsi"
+ #include "msm8996-xiaomi-common.dtsi"
+ #include <dt-bindings/sound/qcom,q6afe.h>
+ #include <dt-bindings/sound/qcom,q6asm.h>
+diff --git a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dts b/arch/arm=
+64/boot/dts/qcom/msm8996-xiaomi-scorpio.dts
+index ea2ca271fe7d..4ffe7be34285 100644
+--- a/arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dts
++++ b/arch/arm64/boot/dts/qcom/msm8996-xiaomi-scorpio.dts
+@@ -5,6 +5,7 @@
+=20
+ /dts-v1/;
+=20
++#include "msm8996pro.dtsi"
+ #include "msm8996-xiaomi-common.dtsi"
+ #include "pmi8996.dtsi"
+ #include <dt-bindings/sound/qcom,q6afe.h>
+@@ -13,7 +14,6 @@
+ / {
+ =09model =3D "Xiaomi Mi Note 2";
+ =09compatible =3D "xiaomi,scorpio", "qcom,msm8996";
+-=09qcom,msm-id =3D <305 0x10000>;
+ =09qcom,board-id =3D <34 0>;
+=20
+ =09chosen {
+--=20
+2.33.0
 
-> >
-> > > I updated the topic opened on the Sierra Wireless forum, with our
-> > > latest progress and as well as additional information.
-> > >
-> > > In addition, we observed some strange behavior of the EM919x after
-> > > warm
-> > > reboots.
-> > >
-> >
-> > Is the log after the warm reboots similar to the one I showed in my
-> > first email, i.e. with the 2 reported "firmware crashes"? Or does it
-> > look totally different?
->
-> After warm reboots, we observe no explain message indicating an error,
-> but we use an old firmware version.
->
 
-Ok.
-
-> > And, do you always see the module booting properly on cold boots? Or
-> > do you see failed boots like the one i showed in my first email?
->
-> The module doesn't always booting properly, you see failed boots like
-> the one you showed.
-
-This is good, because it confirms that our fully different platforms
-running the same kernel driver show the same symptoms. So it shouldn't
-be an issue of the platform, it's likely either the driver or the
-module firmware.
-
--- 
-Aleksander
-https://aleksander.es
