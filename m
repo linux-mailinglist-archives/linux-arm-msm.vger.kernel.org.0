@@ -2,145 +2,181 @@ Return-Path: <linux-arm-msm-owner@vger.kernel.org>
 X-Original-To: lists+linux-arm-msm@lfdr.de
 Delivered-To: lists+linux-arm-msm@lfdr.de
 Received: from vger.kernel.org (vger.kernel.org [23.128.96.18])
-	by mail.lfdr.de (Postfix) with ESMTP id ED6AE42DA5C
-	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Oct 2021 15:27:57 +0200 (CEST)
+	by mail.lfdr.de (Postfix) with ESMTP id 1D61142DA69
+	for <lists+linux-arm-msm@lfdr.de>; Thu, 14 Oct 2021 15:31:02 +0200 (CEST)
 Received: (majordomo@vger.kernel.org) by vger.kernel.org via listexpand
-        id S230440AbhJNNaB (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
-        Thu, 14 Oct 2021 09:30:01 -0400
-Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54062 "EHLO
+        id S230010AbhJNNdF (ORCPT <rfc822;lists+linux-arm-msm@lfdr.de>);
+        Thu, 14 Oct 2021 09:33:05 -0400
+Received: from lindbergh.monkeyblade.net ([23.128.96.19]:54782 "EHLO
         lindbergh.monkeyblade.net" rhost-flags-OK-OK-OK-OK) by vger.kernel.org
-        with ESMTP id S229637AbhJNNaA (ORCPT
+        with ESMTP id S229994AbhJNNdF (ORCPT
         <rfc822;linux-arm-msm@vger.kernel.org>);
-        Thu, 14 Oct 2021 09:30:00 -0400
-Received: from mail-ed1-x530.google.com (mail-ed1-x530.google.com [IPv6:2a00:1450:4864:20::530])
-        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id C9170C061570
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 06:27:55 -0700 (PDT)
-Received: by mail-ed1-x530.google.com with SMTP id y12so24916417eda.4
-        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 06:27:55 -0700 (PDT)
+        Thu, 14 Oct 2021 09:33:05 -0400
+Received: from mail-lf1-x130.google.com (mail-lf1-x130.google.com [IPv6:2a00:1450:4864:20::130])
+        by lindbergh.monkeyblade.net (Postfix) with ESMTPS id E5F43C061753
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 06:30:59 -0700 (PDT)
+Received: by mail-lf1-x130.google.com with SMTP id y26so27067029lfa.11
+        for <linux-arm-msm@vger.kernel.org>; Thu, 14 Oct 2021 06:30:59 -0700 (PDT)
 DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
-        d=ffwll.ch; s=google;
-        h=date:from:to:cc:subject:message-id:mail-followup-to:references
-         :mime-version:content-disposition:in-reply-to;
-        bh=y2s4CtwV4h9cAS9JApc0nY1rQkilQmz/B6Blret2/cs=;
-        b=eGI4hTn3kMzcOZ/Sl1hHJuVcUTQb4suzrCd+MSMGv+9QCL6m0XZqppKcpAXNpdMxMy
-         7Qm4kVVcYwb+wvP0seJMKSKxA5gjL2USW5rqHLpHVQHAyIFu77VwYW1lBuBTBce9xC7g
-         FQTJkrZjgIpivzJ1KNizYqkS3Kb0iXbvZ93e0=
+        d=linaro.org; s=google;
+        h=subject:to:cc:references:from:message-id:date:user-agent
+         :mime-version:in-reply-to:content-language:content-transfer-encoding;
+        bh=nYqa67lm5E//W60F2Mgg5y1RQnUdgAfwOX5N53JTmxA=;
+        b=AOVClIDg1A9GB1XR0lVG+H44NgN+RDgQhZC/4yO/IKAb2ahOUlP3mYp2HZnadw5xhD
+         P2Th1ZUNehmFEdHhu25dpgNUwY7QB0OQaF+vJeRNqGiYAreKIU2ewL2l64F3Wuw3EREB
+         fib9IDDbaEQ/qs/a/f+tqg9zGIKgtPUKJKMq444uNykT5wYLJMupXYCIynrwwm6550pP
+         NhcYX/DUVexV07yeo5teCTcvuhvv5MH7s1ykLM4k3VM16yjtaLIOEfg/hWzLzPb5sLuw
+         CzCjnYtXYbebZSGh5ouBJPUwW/RVLRmESdbiEV0F9WLwFyn4Ev4kGW70iLeOqA4iOIVo
+         fKOg==
 X-Google-DKIM-Signature: v=1; a=rsa-sha256; c=relaxed/relaxed;
         d=1e100.net; s=20210112;
-        h=x-gm-message-state:date:from:to:cc:subject:message-id
-         :mail-followup-to:references:mime-version:content-disposition
-         :in-reply-to;
-        bh=y2s4CtwV4h9cAS9JApc0nY1rQkilQmz/B6Blret2/cs=;
-        b=vO4Eoke4R1Ox2vqtTX1MhzbNwVybJ9HDXqnGi6tWHYXZoIGLLzs26yceJ7PXfLaW6/
-         KJlJn7hQ6KSOChk7pUpzBbxKX+zUiEIYJXSiexW+fp9cAN+2cwGkv9vu4YwZZtQayeHK
-         tRm6FPS+y8g/f9DtEiHzH4zRINS3tnnA2C934pq72FCE6ghLKqkq1fR/iagOdCHxniZn
-         z+rp2F+mBi4BgGeCgDB1Q6HsUMt8L3feNHFNGQGGoypcwvYKVJ6gc/L8ok7O+xVg5LKO
-         aFKgAD3FUTZhcrr5/6Sp2wpHeHJhCrVFzjgzINgBAsiPSUq+DS7U1mUJ8m1UFHdHNmoj
-         HZlQ==
-X-Gm-Message-State: AOAM531752vMREgktU/542SARuzXMFLs5PJw81EvPxBLn9P12tKqznry
-        s0N8Kf11XhpfwbGdh2OZkx/RYQ==
-X-Google-Smtp-Source: ABdhPJwumLGYDY0kHwLV5V0BQOX5VMB1QAPhMACoI2uzyEYkWF+AW5GpvQ6h5sXa1kB3dnr6C/t24g==
-X-Received: by 2002:aa7:cb03:: with SMTP id s3mr8749943edt.334.1634218074167;
-        Thu, 14 Oct 2021 06:27:54 -0700 (PDT)
-Received: from phenom.ffwll.local ([2a02:168:57f4:0:efd0:b9e5:5ae6:c2fa])
-        by smtp.gmail.com with ESMTPSA id t4sm2265223edc.2.2021.10.14.06.27.53
-        (version=TLS1_3 cipher=TLS_AES_256_GCM_SHA384 bits=256/256);
-        Thu, 14 Oct 2021 06:27:53 -0700 (PDT)
-Date:   Thu, 14 Oct 2021 15:27:51 +0200
-From:   Daniel Vetter <daniel@ffwll.ch>
-To:     Stephen Boyd <swboyd@chromium.org>
-Cc:     Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        Daniel Vetter <daniel.vetter@ffwll.ch>,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Russell King <rmk+kernel@arm.linux.org.uk>,
-        Saravana Kannan <saravanak@google.com>
-Subject: Re: [PATCH v2 02/34] component: Introduce the aggregate bus_type
-Message-ID: <YWgwV3dW3Q9HQhlF@phenom.ffwll.local>
-Mail-Followup-To: Stephen Boyd <swboyd@chromium.org>,
-        Greg Kroah-Hartman <gregkh@linuxfoundation.org>,
-        linux-kernel@vger.kernel.org, linux-arm-msm@vger.kernel.org,
-        dri-devel@lists.freedesktop.org, freedreno@lists.freedesktop.org,
-        "Rafael J. Wysocki" <rafael@kernel.org>,
-        Rob Clark <robdclark@gmail.com>,
-        Russell King <rmk+kernel@arm.linux.org.uk>,
-        Saravana Kannan <saravanak@google.com>
-References: <20211006193819.2654854-1-swboyd@chromium.org>
- <20211006193819.2654854-3-swboyd@chromium.org>
- <YV6HpM8NlO29UjAI@kroah.com>
- <CAE-0n51QPTT3TcgNJf2jDoXaRdxNnnyQY6--UqpNTp9ZKToqbw@mail.gmail.com>
+        h=x-gm-message-state:subject:to:cc:references:from:message-id:date
+         :user-agent:mime-version:in-reply-to:content-language
+         :content-transfer-encoding;
+        bh=nYqa67lm5E//W60F2Mgg5y1RQnUdgAfwOX5N53JTmxA=;
+        b=0YOym6YIp59aMxOQ20fThonRz8ZvlN1Qnd3SPVWgFnS63M6hOLtYvgYSTXJNnGChik
+         EZTvvmGa/kAGT9KWfpmBR+m/5Gs5wAoDOXUkcbkIg0beDrOQug7+uv7GmvlPCmW+6P9k
+         zukktgj9opFC6TAqH/BsGLsODOI8IMjvdTaKiUPzZUP3NIQz8tZUE2RZfMtfsxuw1m8g
+         PKE23bTisMw1OCX3SKZZbVFFzvRTy2OLzg3ySGFkGuvhZQiQBXHp+9GGvEtQ78NSprr8
+         AWCPwY7hbydotWdQVqq+r68tDXl6yP4TGv3JwInmoImJacDqxmHGkxwKp1+z0u7vTLVQ
+         jQFw==
+X-Gm-Message-State: AOAM530Jd6OuovXSov3XnnljztVWX/uUgO4DcuKtOMwWiaEf4piVy/II
+        xRue1F54HKhqCT8maISSzqzLWg==
+X-Google-Smtp-Source: ABdhPJxsfTG2G5HFwTy75pL+xb47B6UhHSXnLoYvrtKTDpGu/+nE3fuL74jCLm0qjvOW0+ItO72snQ==
+X-Received: by 2002:a2e:750e:: with SMTP id q14mr6174147ljc.338.1634218258211;
+        Thu, 14 Oct 2021 06:30:58 -0700 (PDT)
+Received: from [192.168.1.211] ([37.153.55.125])
+        by smtp.gmail.com with ESMTPSA id o12sm229960lfl.33.2021.10.14.06.30.57
+        (version=TLS1_3 cipher=TLS_AES_128_GCM_SHA256 bits=128/128);
+        Thu, 14 Oct 2021 06:30:57 -0700 (PDT)
+Subject: Re: [PATCH v2 03/11] drm/msm/disp/dpu1: Add support for DSC in
+ pingpong block
+To:     Vinod Koul <vkoul@kernel.org>, Rob Clark <robdclark@gmail.com>
+Cc:     linux-arm-msm@vger.kernel.org,
+        Bjorn Andersson <bjorn.andersson@linaro.org>,
+        David Airlie <airlied@linux.ie>,
+        Daniel Vetter <daniel@ffwll.ch>,
+        Jonathan Marek <jonathan@marek.ca>,
+        Abhinav Kumar <abhinavk@codeaurora.org>,
+        Jeffrey Hugo <jeffrey.l.hugo@gmail.com>,
+        Sumit Semwal <sumit.semwal@linaro.org>,
+        linux-kernel@vger.kernel.org, dri-devel@lists.freedesktop.org,
+        freedreno@lists.freedesktop.org
+References: <20211007070900.456044-1-vkoul@kernel.org>
+ <20211007070900.456044-4-vkoul@kernel.org>
+From:   Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
+Message-ID: <14b405b7-8d12-73a2-0b52-f140ff642557@linaro.org>
+Date:   Thu, 14 Oct 2021 16:30:56 +0300
+User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:78.0) Gecko/20100101
+ Thunderbird/78.14.0
 MIME-Version: 1.0
-Content-Type: text/plain; charset=us-ascii
-Content-Disposition: inline
-In-Reply-To: <CAE-0n51QPTT3TcgNJf2jDoXaRdxNnnyQY6--UqpNTp9ZKToqbw@mail.gmail.com>
-X-Operating-System: Linux phenom 5.10.0-8-amd64 
+In-Reply-To: <20211007070900.456044-4-vkoul@kernel.org>
+Content-Type: text/plain; charset=utf-8; format=flowed
+Content-Language: en-GB
+Content-Transfer-Encoding: 7bit
 Precedence: bulk
 List-ID: <linux-arm-msm.vger.kernel.org>
 X-Mailing-List: linux-arm-msm@vger.kernel.org
 
-On Thu, Oct 07, 2021 at 04:42:48PM -0400, Stephen Boyd wrote:
-> Quoting Greg Kroah-Hartman (2021-10-06 22:37:40)
-> > On Wed, Oct 06, 2021 at 12:37:47PM -0700, Stephen Boyd wrote:
-> > >
-> > > Let's make the component driver into an actual device driver that has
-> > > probe/remove/shutdown functions. The driver will only be bound to the
-> > > aggregate device once all component drivers have called component_add()
-> > > to indicate they're ready to assemble the aggregate driver. This allows
-> > > us to attach shutdown logic (and in the future runtime PM logic) to the
-> > > aggregate driver so that it runs the hooks in the correct order.
-> >
-> > Why are you creating a new bus type and not using the auxiliary bus
-> > instead?
-> >
-> > You have seen Documentation/driver-api/auxiliary_bus.rst, right?
-> >
+On 07/10/2021 10:08, Vinod Koul wrote:
+> In SDM845, DSC can be enabled by writing to pingpong block registers, so
+> add support for DSC in hw_pp
 > 
-> Nope, but I read it now. Thanks for the pointer.
-> 
-> My read of it is that the auxiliary bus is a way to slice up a single IP
-> block into multiple devices and then have drivers attach to those
-> different "pieces" of the IP. It avoids polluting the platform bus with
-> devices that don't belong on the platform bus because they are sub
-> components of a larger IP block that sits on the platform bus.
-> 
-> The aggregate bus is solving the reverse problem. It is rounding up a
-> collection of IP blocks that live on some bus (platform, i2c, spi,
-> whatever) and presenting them as a single aggregate device (sound card,
-> display card, whatever) whenever all the component devices call
-> component_add(). For example, we don't want to do operations on the
-> entire display pipeline until all the devices that make up the display
-> are probed and drivers are attached. I suppose the aggregate_device in
-> this patch series has a 1:1 relationship with the drm class_type that
-> makes up /sys/class/drm/cardN but there's also a couple sound users and
-> a power_supply user so I don't know the equivalent there.
-> 
-> Long term, maybe all of this component code could be placed directly
-> into the driver core? That's probably even more invasive of a change but
-> I imagine we could make device links with component_add() as we're
-> already doing with these patches and then have driver core call some
-> class function pointer when all the links are probed. That would
-> handle the 'bind/probe' callback for the aggregate device but it won't
-> handle the component_bind_all() path where we call bind_component() for
-> each component device that makes up the aggregate device. Maybe we can
-> add even more devices for the components and then call probe there too.
-> 
-> Sorry that's a long-winded non-answer. I don't think they're solving the
-> same problem so using the same bus type looks wrong. We'd have to take
-> two different paths depending on what type of device it is (aggregate
-> vs. auxiliary) so there's not much of anything that is shared code-wise.
+> Reviewed-by: Abhinav Kumar <abhinavk@codeaurora.org>
+> Signed-off-by: Vinod Koul <vkoul@kernel.org>
 
-Yeah component is the reverse of auxiliary, and right now a lot of
-subsystems have their own hand-rolled version of this. I do hope that
-component.c does become more of a standard (that's why it's in
-drivers/base/), but I guess that's a bit tricky if the device model
-maintainer hasn't seen it yet ...
+Reviewed-by: Dmitry Baryshkov <dmitry.baryshkov@linaro.org>
 
-Hopefully putting more proper device model concepts into it can fix this
-problem :-)
--Daniel
+> ---
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c   | 32 +++++++++++++++++++
+>   .../gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h   | 14 ++++++++
+>   2 files changed, 46 insertions(+)
+> 
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+> index 55766c97c4c8..47c6ab6caf95 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.c
+> @@ -28,6 +28,9 @@
+>   #define PP_FBC_MODE                     0x034
+>   #define PP_FBC_BUDGET_CTL               0x038
+>   #define PP_FBC_LOSSY_MODE               0x03C
+> +#define PP_DSC_MODE                     0x0a0
+> +#define PP_DCE_DATA_IN_SWAP             0x0ac
+> +#define PP_DCE_DATA_OUT_SWAP            0x0c8
+>   
+>   #define PP_DITHER_EN			0x000
+>   #define PP_DITHER_BITDEPTH		0x004
+> @@ -245,6 +248,32 @@ static u32 dpu_hw_pp_get_line_count(struct dpu_hw_pingpong *pp)
+>   	return line;
+>   }
+>   
+> +static int dpu_hw_pp_dsc_enable(struct dpu_hw_pingpong *pp)
+> +{
+> +	struct dpu_hw_blk_reg_map *c = &pp->hw;
+> +
+> +	DPU_REG_WRITE(c, PP_DSC_MODE, 1);
+> +	return 0;
+> +}
+> +
+> +static void dpu_hw_pp_dsc_disable(struct dpu_hw_pingpong *pp)
+> +{
+> +	struct dpu_hw_blk_reg_map *c = &pp->hw;
+> +
+> +	DPU_REG_WRITE(c, PP_DSC_MODE, 0);
+> +}
+> +
+> +static int dpu_hw_pp_setup_dsc(struct dpu_hw_pingpong *pp)
+> +{
+> +	struct dpu_hw_blk_reg_map *pp_c = &pp->hw;
+> +	int data;
+> +
+> +	data = DPU_REG_READ(pp_c, PP_DCE_DATA_OUT_SWAP);
+> +	data |= BIT(18); /* endian flip */
+> +	DPU_REG_WRITE(pp_c, PP_DCE_DATA_OUT_SWAP, data);
+> +	return 0;
+> +}
+> +
+>   static void _setup_pingpong_ops(struct dpu_hw_pingpong *c,
+>   				unsigned long features)
+>   {
+> @@ -256,6 +285,9 @@ static void _setup_pingpong_ops(struct dpu_hw_pingpong *c,
+>   	c->ops.get_autorefresh = dpu_hw_pp_get_autorefresh_config;
+>   	c->ops.poll_timeout_wr_ptr = dpu_hw_pp_poll_timeout_wr_ptr;
+>   	c->ops.get_line_count = dpu_hw_pp_get_line_count;
+> +	c->ops.setup_dsc = dpu_hw_pp_setup_dsc;
+> +	c->ops.enable_dsc = dpu_hw_pp_dsc_enable;
+> +	c->ops.disable_dsc = dpu_hw_pp_dsc_disable;
+>   
+>   	if (test_bit(DPU_PINGPONG_DITHER, &features))
+>   		c->ops.setup_dither = dpu_hw_pp_setup_dither;
+> diff --git a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
+> index 89d08a715c16..12758468d9ca 100644
+> --- a/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
+> +++ b/drivers/gpu/drm/msm/disp/dpu1/dpu_hw_pingpong.h
+> @@ -124,6 +124,20 @@ struct dpu_hw_pingpong_ops {
+>   	 */
+>   	void (*setup_dither)(struct dpu_hw_pingpong *pp,
+>   			struct dpu_hw_dither_cfg *cfg);
+> +	/**
+> +	 * Enable DSC
+> +	 */
+> +	int (*enable_dsc)(struct dpu_hw_pingpong *pp);
+> +
+> +	/**
+> +	 * Disable DSC
+> +	 */
+> +	void (*disable_dsc)(struct dpu_hw_pingpong *pp);
+> +
+> +	/**
+> +	 * Setup DSC
+> +	 */
+> +	int (*setup_dsc)(struct dpu_hw_pingpong *pp);
+>   };
+>   
+>   struct dpu_hw_merge_3d;
+> 
+
+
 -- 
-Daniel Vetter
-Software Engineer, Intel Corporation
-http://blog.ffwll.ch
+With best wishes
+Dmitry
